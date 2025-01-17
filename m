@@ -4,85 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 14D72C02185
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8EE10C02183
 	for <qemu-devel@archiver.kernel.org>; Fri, 17 Jan 2025 13:54:04 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tYmm2-0002WH-Fu; Fri, 17 Jan 2025 08:52:34 -0500
+	id 1tYmm0-0002Vf-BR; Fri, 17 Jan 2025 08:52:32 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1tYmlu-0002U4-8y
+ id 1tYmlu-0002U5-Bn
  for qemu-devel@nongnu.org; Fri, 17 Jan 2025 08:52:26 -0500
-Received: from mail-wm1-x32c.google.com ([2a00:1450:4864:20::32c])
+Received: from mail-ej1-x62d.google.com ([2a00:1450:4864:20::62d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1tYmlr-0003kv-6M
+ id 1tYmlr-0003l6-6c
  for qemu-devel@nongnu.org; Fri, 17 Jan 2025 08:52:26 -0500
-Received: by mail-wm1-x32c.google.com with SMTP id
- 5b1f17b1804b1-436341f575fso22323415e9.1
- for <qemu-devel@nongnu.org>; Fri, 17 Jan 2025 05:52:20 -0800 (PST)
+Received: by mail-ej1-x62d.google.com with SMTP id
+ a640c23a62f3a-aab6fa3e20eso401427666b.2
+ for <qemu-devel@nongnu.org>; Fri, 17 Jan 2025 05:52:21 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1737121939; x=1737726739; darn=nongnu.org;
+ d=linaro.org; s=google; t=1737121940; x=1737726740; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=O9E60eH4NFvltUAEYDSdM5V//h4nzKoVHstzvrxeFhY=;
- b=eEpiqNoqza0cU6LkqIbyfHOsBNyFUu6u+6vma9YecLDLmT0GVoG2okc1xivodJbnx5
- EoHJfln8xRYAtP2JLwO2c12Znt2jzehMm2+/FtPbzKumbhDqPX6aolsmfqN2f+T7JJSY
- 2Mrc0Y6wCamXD1XnNXMRy59bjJXbBds2gKg4pmf8KDyrDIk8bR79WmSK+5LW5Hld1R8u
- 1+9RUBHpnxgCt0woEO0PwXaCZLHuLjPnar0C04yNm3S5nIuGLo+alF7e+NeKDmNXqdXw
- 032VrRqDh639pl2pQpF+25O8InTijGDpTNdtdR9DKBIxfg4OyKx4esjLy97/+ihWKkH2
- ByyQ==
+ bh=HtCDv3d7Fj7JdhWS0o/IEH/Zvi/ajW/ZDQ9T4eeCRh8=;
+ b=ijbLpktOx3ZPF0CEinUFtewiSich2KRhHN3ayksE7Gm05I3ZvR+wkX3sZ9eL/2a+pp
+ A8UIfuABoyLqnWag8sC69SNwPjEBAF8x37uiVKRqQ8CBSPnp4ORs3RbnJ5VBwaoT33qF
+ 8RdnZGtvt7Bgs/9GALivxL5sT45Epo1nEmdEWSfCNIId4wcAPtWreLQcjGd7W3V2Rm8K
+ BN1OwC8cPRQJFTbnXe6tjYvWZXp/KBKciFu12zKmsRHdO3FEua546TSRDTlIUGc9NzB6
+ J13gpy3c5hphRM9vLWdHkhOb+XpqFzAivPo9dC7RswSWxeP6L3jZIaHN9QhM0Ph+XvQU
+ iXKA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1737121939; x=1737726739;
+ d=1e100.net; s=20230601; t=1737121940; x=1737726740;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=O9E60eH4NFvltUAEYDSdM5V//h4nzKoVHstzvrxeFhY=;
- b=pAm9KHee8Y/fFKmW3QrdICanyf7Ri22rgtHyGBe3G+1fcU4BpngdttSWz8g+K+TBHO
- dnaV0NI7H0siWzIZq7b4K+vGf17suf2vDeugRbUiX6TZVu/4CNWPFS7ojSZNr1sU0Tin
- CHQZqbrHYMBscSsHlm+jdAFZw5ILXVzXmDH19/U4t3DDmD018Dz9h9QzL5uvTk1Fsx2o
- cSd2FK5m9DVEIhb9UZGClpZ1tMZdCd2PVtsmX3+B2FNc438Qhf3JWoslHUwdXTIQwEOz
- UiPQDGemEHKGiwMo4nGtd282XKB8s1nqyLvjF/y+PkAzvt15lxysqKdwqcJpKwBKIIRm
- 107Q==
-X-Gm-Message-State: AOJu0YwNqTpw285sEMDMBQ/eJ39Qoo/vCR7aRHWVa5MdbSy/zbUT9qFl
- VeeIMIWtbT6hJB/a8AAVWorgZikevgpRcF83u94RA6EI6RYmvfuuQo9aU9UEQv8=
-X-Gm-Gg: ASbGncvevLJKegkcA2m74jdeCq1BglGhHaFpknYQJEmaNPlay12kzHayXZwRpjzwbde
- LBm6nPKyayp6oCK+wogztNE+0wXFVFs7J9Nsgfh/brXilsLufUUxISyFlTJ4T9Ov1DJDnT4QBJs
- ceKmsbjjur3eGSvwd5Q0afljX16rfj8A7vIExJBTRsRUW7GLK58Lc81eKgVL70REI165TDlNW8H
- W1YNNZtGbVnC4gsod+fmAdmccXUE769+QplRJj+g/vj0lf87aBWEYg=
-X-Google-Smtp-Source: AGHT+IG5mcO1rxRyOUbTNuwhLXWjAL/+7wGngHsS4rZECwG9QK7TrsUE2tUSBjPSOA9n7LnzLzLYbA==
-X-Received: by 2002:a5d:6d86:0:b0:385:fc00:f5e1 with SMTP id
- ffacd0b85a97d-38bf5649261mr2859093f8f.9.1737121939007; 
- Fri, 17 Jan 2025 05:52:19 -0800 (PST)
+ bh=HtCDv3d7Fj7JdhWS0o/IEH/Zvi/ajW/ZDQ9T4eeCRh8=;
+ b=VhmicbRf98enW1OqU3S/vRl5mGse5fGCB3Z9TLrbX6UjxaSiV6Wk2+ZgCHo4EJh+/R
+ lq4LmYzBOtFFy3Z+FVhJmwb+sqqAYr8IAlWUzrMVWH3YyXKkssnKmqTTWAmrmdpHzX7w
+ uBp4OBTTWDZBvBBuIvak5gTNOYKMNAOPhWAq+FOr5FW6hKKQToH8nHkzH1+cYAY1fhZo
+ 8U91QNr6sZnNIYH2wyOnEq9Y4UI6SCtDeFD38/kq8NFn8xULY/BYv7wM8+0N/V6pqrus
+ jsXe2+drvYNC2ErddpbP79o5p/uLpRpjj2wodJxcMw2VZeSzRIL6+BdKItwPyNmXQ0ZX
+ nWIQ==
+X-Gm-Message-State: AOJu0YxrYdv9ipw6EYh3cIX/dwwrGc+EG1mhKSqPs/9CbOp8UtvI0tmy
+ 4SPxEtZVFDWWmY/zBzGKKIsEjs/M30KUv8wKHE0OqMDKh14vRBILNNHSDcj+ojI=
+X-Gm-Gg: ASbGncvGnscNBBHl5UAs58zZNfIcJDJ4PJ4gdLjqmLXcfOrACA2JwPKSeb5zF+Dj0wy
+ sKlrfN5j44W2M/tK7xlXZv3p0S89Q3I/aje6VAxggn2GHyXjbmtd6rcib8MdBoAxzA4ATSyitSj
+ MIXiZaEuNoBML9ay9Rp4G61L91HywLmiIsiJsx8oSEfAw1YS6XHvmGWBwjIGlQxW4iRjhxc3Wn7
+ 2mQ1h/JkGrsmfb+Fc0DxDtTt2UjxNPYNDXVk4RYDycUu5QZRRcVEDE=
+X-Google-Smtp-Source: AGHT+IEot0OJi02dAtKnC0F2Jjse2aekavj1JmXqkk9hpxKnQkkCGBlBw4Mww+b1TQWuBZGQhwGUMQ==
+X-Received: by 2002:a17:907:60d2:b0:aac:43e:ffa5 with SMTP id
+ a640c23a62f3a-ab38b1ff088mr231210666b.15.1737121940138; 
+ Fri, 17 Jan 2025 05:52:20 -0800 (PST)
 Received: from draig.lan ([85.9.250.243]) by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-ab384cea151sm173570766b.74.2025.01.17.05.52.16
+ a640c23a62f3a-ab384f86fa4sm174040666b.143.2025.01.17.05.52.17
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 17 Jan 2025 05:52:16 -0800 (PST)
+ Fri, 17 Jan 2025 05:52:19 -0800 (PST)
 Received: from draig.lan (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id 960BD608F7;
- Fri, 17 Jan 2025 13:43:00 +0000 (GMT)
+ by draig.lan (Postfix) with ESMTP id 66A1E608DD;
+ Fri, 17 Jan 2025 13:42:59 +0000 (GMT)
 From: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
 To: qemu-devel@nongnu.org
-Cc: Stefan Weil <sw@weilnetz.de>,
- Pierrick Bouvier <pierrick.bouvier@linaro.org>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
- John Snow <jsnow@redhat.com>, Cleber Rosa <crosa@redhat.com>
-Subject: [PULL 37/37] scripts/nsis.py: Run dependency check for each DLL file
- only once
-Date: Fri, 17 Jan 2025 13:42:56 +0000
-Message-Id: <20250117134256.2079356-38-alex.bennee@linaro.org>
+Cc: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Subject: [PULL 26/37] plugins: fix kdoc annotation
+Date: Fri, 17 Jan 2025 13:42:45 +0000
+Message-Id: <20250117134256.2079356-27-alex.bennee@linaro.org>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <20250117134256.2079356-1-alex.bennee@linaro.org>
 References: <20250117134256.2079356-1-alex.bennee@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32c;
- envelope-from=alex.bennee@linaro.org; helo=mail-wm1-x32c.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::62d;
+ envelope-from=alex.bennee@linaro.org; helo=mail-ej1-x62d.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -105,59 +101,25 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Stefan Weil <sw@weilnetz.de>
+The function is qemu_plugin_mem_get_value()
 
-Each DLL should only be checked once for dependencies, but
-several hundred (781 in my test) unneeded checks were done.
-
-Now the script is significantly faster (16 s in my build).
-
-Signed-off-by: Stefan Weil <sw@weilnetz.de>
 Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Message-Id: <20250111215244.1680931-1-sw@weilnetz.de>
 Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
-Message-Id: <20250116160306.1709518-38-alex.bennee@linaro.org>
+Message-Id: <20250116160306.1709518-27-alex.bennee@linaro.org>
 
-diff --git a/scripts/nsis.py b/scripts/nsis.py
-index 03ed7608a2..af4e064819 100644
---- a/scripts/nsis.py
-+++ b/scripts/nsis.py
-@@ -37,10 +37,10 @@ def find_deps(exe_or_dll, search_path, analyzed_deps):
+diff --git a/include/qemu/qemu-plugin.h b/include/qemu/qemu-plugin.h
+index 0fba36ae02..3a850aa216 100644
+--- a/include/qemu/qemu-plugin.h
++++ b/include/qemu/qemu-plugin.h
+@@ -583,7 +583,7 @@ QEMU_PLUGIN_API
+ bool qemu_plugin_mem_is_store(qemu_plugin_meminfo_t info);
  
-         analyzed_deps.add(dep)
-         # locate the dll dependencies recursively
--        rdeps = find_deps(dll, search_path, analyzed_deps)
-+        analyzed_deps, rdeps = find_deps(dll, search_path, analyzed_deps)
-         deps.extend(rdeps)
- 
--    return deps
-+    return analyzed_deps, deps
- 
- def main():
-     parser = argparse.ArgumentParser(description="QEMU NSIS build helper.")
-@@ -92,18 +92,18 @@ def main():
-         dlldir = os.path.join(destdir + prefix, "dll")
-         os.mkdir(dlldir)
- 
-+        analyzed_deps = set()
-         for exe in glob.glob(os.path.join(destdir + prefix, "*.exe")):
-             signcode(exe)
- 
-             # find all dll dependencies
--            deps = set(find_deps(exe, search_path, set()))
-+            analyzed_deps, deps = find_deps(exe, search_path, analyzed_deps)
-+            deps = set(deps)
-             deps.remove(exe)
- 
-             # copy all dlls to the DLLDIR
-             for dep in deps:
-                 dllfile = os.path.join(dlldir, os.path.basename(dep))
--                if (os.path.exists(dllfile)):
--                    continue
-                 print("Copying '%s' to '%s'" % (dep, dllfile))
-                 shutil.copy(dep, dllfile)
- 
+ /**
+- * qemu_plugin_mem_get_mem_value() - return last value loaded/stored
++ * qemu_plugin_mem_get_value() - return last value loaded/stored
+  * @info: opaque memory transaction handle
+  *
+  * Returns: memory value
 -- 
 2.39.5
 
