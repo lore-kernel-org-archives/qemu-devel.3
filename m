@@ -4,97 +4,95 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 80375C02183
-	for <qemu-devel@archiver.kernel.org>; Fri, 17 Jan 2025 18:44:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C0083C02183
+	for <qemu-devel@archiver.kernel.org>; Fri, 17 Jan 2025 19:01:23 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tYrJz-0003lE-JJ; Fri, 17 Jan 2025 13:43:56 -0500
+	id 1tYraF-0002CV-D5; Fri, 17 Jan 2025 14:00:43 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1tYrJw-0003kj-Vq
- for qemu-devel@nongnu.org; Fri, 17 Jan 2025 13:43:52 -0500
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1tYra1-00029X-03
+ for qemu-devel@nongnu.org; Fri, 17 Jan 2025 14:00:38 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1tYrJu-0002Ow-FO
- for qemu-devel@nongnu.org; Fri, 17 Jan 2025 13:43:52 -0500
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1tYrZz-0005Hz-Bu
+ for qemu-devel@nongnu.org; Fri, 17 Jan 2025 14:00:28 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1737139429;
+ s=mimecast20190719; t=1737140425;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=fP7I+7ZvJh7Ba16bfVNTaTOb20T2GjstRw5JtMGzZZY=;
- b=c9WNhUZXPLBQyalCDIlZd0Xf5BReM0d9iWthNkDdxe15lQQgS9xEzkkLR69nPrd7jBBVrm
- 02W/IbzXfn2v8XxxXG5sVkwuai2BwYu/Q1QvLdyK9aumQrk+jFOOzP60vybiSH3jv0MKtu
- l7tWbLGm5KUWQsP85GSqdIxrOiSlkhU=
-Received: from mail-wm1-f70.google.com (mail-wm1-f70.google.com
- [209.85.128.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=9Q095ncfrQw4FxQkDUGmgmKecj9SzWw/10eWEy99RXw=;
+ b=OwWACPFMB65INLCvwIMzVvTTu9KLWQHdBPBPGJNuabP8juAkH/0Fjhi4eXA7lyybutNb3Y
+ GMJ1pzXUsdpDDp4rTJocdFoHuJfbDmr9HGMORRlHUKabVhVVGMRSwBqTC4GUM0j9d8GJET
+ OsG+24kEVls1AyK2dG3mebPCHkiss28=
+Received: from mail-wr1-f71.google.com (mail-wr1-f71.google.com
+ [209.85.221.71]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-13-L5t3G-_RMfCP_Qmb6vcQmQ-1; Fri, 17 Jan 2025 13:43:45 -0500
-X-MC-Unique: L5t3G-_RMfCP_Qmb6vcQmQ-1
-X-Mimecast-MFC-AGG-ID: L5t3G-_RMfCP_Qmb6vcQmQ
-Received: by mail-wm1-f70.google.com with SMTP id
- 5b1f17b1804b1-4361f371908so17612085e9.0
- for <qemu-devel@nongnu.org>; Fri, 17 Jan 2025 10:43:44 -0800 (PST)
+ us-mta-45-FQWiB6LfMEanB9oy1jGhvw-1; Fri, 17 Jan 2025 14:00:21 -0500
+X-MC-Unique: FQWiB6LfMEanB9oy1jGhvw-1
+X-Mimecast-MFC-AGG-ID: FQWiB6LfMEanB9oy1jGhvw
+Received: by mail-wr1-f71.google.com with SMTP id
+ ffacd0b85a97d-385e03f54d0so1103919f8f.3
+ for <qemu-devel@nongnu.org>; Fri, 17 Jan 2025 11:00:11 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1737139424; x=1737744224;
- h=content-transfer-encoding:in-reply-to:autocrypt:from
- :content-language:references:cc:to:subject:user-agent:mime-version
- :date:message-id:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=fP7I+7ZvJh7Ba16bfVNTaTOb20T2GjstRw5JtMGzZZY=;
- b=UcOVKfZkR35wmn8AHRxymCvABM9iZ+1NyfqMde5l2xyng0KxMNgPVori+ttTs88WyA
- 68V1tgyL7lsijncbub8Xkj/Y9aU36AQiwTq1TifKGDo+LHsA8uWBHNDQVwgIfJ0QfCPr
- OkRzSPg0/xWq6cyt+aJYOYEn5C2b5a5G9sMpadbMDUSNBOKONYVAM2AwZl4oN4m6WSQI
- GGntUeuMvswS4oGOhENWbIC1KZdixLuknbZdWOgwdyzikimrQUhHCEgzeEdsVa4R/h59
- gI9xjSAse9VZNtjJbTVl2evsiFj6USw6msuILvFm968D7GyW0RWgGf7vhDMpBEOPDXby
- QX0w==
+ d=1e100.net; s=20230601; t=1737140411; x=1737745211;
+ h=content-transfer-encoding:in-reply-to:autocrypt:content-language
+ :from:references:cc:to:subject:user-agent:mime-version:date
+ :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=9Q095ncfrQw4FxQkDUGmgmKecj9SzWw/10eWEy99RXw=;
+ b=aLWulkQEPUdrmEkmDaYyj/26aLWx6Y60mGBMurudvsJy1VEvBkW00KqULWgasqNpqc
+ Gbm5gN7CKmoXdKLfzsaW1k367YWbc4JWJ2STn7t1wblUki843wCFZB7nstgs6Eq6Jxns
+ /VYDiVhG3943pEM+oc7do6inRGesae63ZsQOO558lcUei+UX/nONi7gXyM1EURby9vjp
+ Ht0h3H+1OFjZM2wI4EHk1Ql4HYL+Hh/8q3HF/M4BpwR/eYSp6lIA9Asza7aSJSzdnT4a
+ DO5eBCuMQ6d+HTmtgRj38u5l61D7yIe8Yz4L4cOQETRIiYsrwcyyCTozHQwoF0/D0kuR
+ 2Bzw==
 X-Forwarded-Encrypted: i=1;
- AJvYcCXZ0s+rt/+wlV785XJLasp97N/NH2RfVIJYQrQrHdvX8Rmfq1qIWSICIyCCPSzJTov47ujA+65v72es@nongnu.org
-X-Gm-Message-State: AOJu0YzPxokUerxEwfoOKWJVacauxewW/sZQbpcY9OYYglH/iErwJ3MV
- K1rE+FshSmMobx4vJBL22Qi3AVv9N5e8cmw6aplCf1pMMfpFLkdszBQTsbMlbzv3HzdE6Y4IfyY
- SNP0hPrtIUGrl0OV7d1jemFZ1hoKmIwc/dNdRuwZhWmjjpgWsJ6OY
-X-Gm-Gg: ASbGncsSkt8P4uIWR19vbI+D2GwtQlL4kHQUKoSvwAHwjVxPrOch8kZXYspAuGVPVJE
- 1EOVIkWReLnhWbVINkHrhsRztAocqSkRVS7gbW4ID9yu/uARfvvOVIHK7vYHQmpg8oZurhVz+Qy
- MNwcPvce1rNd4Gy/qSQh1QGzjb6azPUJRMNrgUGeTLkKSPbGamAlPoKasP3l3Fmbl76W5OTtpO0
- tfEmOrOIrARNyxJA/r7e6yxnzBxxkKO1Drr+TP52M/JxyBfvYH16I+DG7kS2lZMxMnKY4hKOADP
- JmWEuOvhKmUs
-X-Received: by 2002:a05:600c:4743:b0:434:a802:43d with SMTP id
- 5b1f17b1804b1-438914315afmr34324625e9.27.1737139423955; 
- Fri, 17 Jan 2025 10:43:43 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IFG/MRLOTDNjR+xeojUpYL30qgnmET+XokFUQqNwu0CKcyn4bHQGEYJPCbUGxJG795CMm5QKA==
-X-Received: by 2002:a05:600c:4743:b0:434:a802:43d with SMTP id
- 5b1f17b1804b1-438914315afmr34324395e9.27.1737139423573; 
- Fri, 17 Jan 2025 10:43:43 -0800 (PST)
+ AJvYcCV5eGCUTFv8nXZgvLAgsdSDDXtvDWkBzgv9QJeSHbhqZO9NMrp6ScavSIaNYNlmx93a08VZV7tj4uGj@nongnu.org
+X-Gm-Message-State: AOJu0Yzn3CWPb4UDH2AjBKnsij0nv1Afh4u5ed/7mH7cFLmv/msXZxKy
+ COCbp8RYOXFmm5kGUUJiFqMEe/bGXGKqrpsDZrCbFbsWGTG52G+skk/sc2lJQdo4kYZ4svjpDDC
+ IxG7Es9mxzXyb1sxGXL7r8cePhHnieWXHTiLPEnEO0zOTUcX5t70U
+X-Gm-Gg: ASbGncsWeB7dQl/y+XpkaLaIAjiopKVMIfGYA7+xnAZzgu8GpaDRSDibIhYwbl7KzMU
+ yZB6HO9OWesJxd7jKqtBKY++nNtPn4PIHU7MhyJShrjGaT1F/noNy8KkD/b7f+chyswv2WissgP
+ pDQw7oWiCcKoe9fruDyNKKREKx6V4eoX67O7hFIraXoB2cwvCBRK+Q0I3vL+Yn96TOqP+QA/M2k
+ 0o79yOLV2PHMx0TKSmfz8UhHOlI7Z/8XEeUfak3ZNqbuE+EFVe10gSaGxP9yLB6qcnpvQI4rLQh
+ A44EYONlar7q
+X-Received: by 2002:a05:6000:178e:b0:385:fd24:3303 with SMTP id
+ ffacd0b85a97d-38bf55c5f54mr4102324f8f.0.1737140410738; 
+ Fri, 17 Jan 2025 11:00:10 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IFVD9PUOhOc8fiUsFVxTKw0mWt9XXQp/YeyyKpXUeXF+cCCkik6ORlwxDUTN1Xd4GogkRTdeA==
+X-Received: by 2002:a05:6000:178e:b0:385:fd24:3303 with SMTP id
+ ffacd0b85a97d-38bf55c5f54mr4102295f8f.0.1737140410360; 
+ Fri, 17 Jan 2025 11:00:10 -0800 (PST)
 Received: from [192.168.0.7] (ip-109-42-51-119.web.vodafone.de.
  [109.42.51.119]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-437c7499932sm101797355e9.7.2025.01.17.10.43.42
+ ffacd0b85a97d-38bf322aa40sm3184051f8f.45.2025.01.17.11.00.08
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 17 Jan 2025 10:43:43 -0800 (PST)
-Message-ID: <ed04717a-0522-4898-913b-6f473b82fd21@redhat.com>
-Date: Fri, 17 Jan 2025 19:43:41 +0100
+ Fri, 17 Jan 2025 11:00:09 -0800 (PST)
+Message-ID: <3f7407e8-7fe7-407b-9110-651f3f13ab8f@redhat.com>
+Date: Fri, 17 Jan 2025 20:00:08 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 10/21] hw/virtio/virtio-pci: Remove
- VIRTIO_PCI_FLAG_DISABLE_PCIE definition
+Subject: Re: [PATCH 08/21] hw/net/e1000: Remove unused E1000_FLAG_MAC flag
 To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- qemu-devel@nongnu.org
+ Paolo Bonzini <pbonzini@redhat.com>, qemu-devel@nongnu.org
 Cc: Jason Wang <jasowang@redhat.com>, Hanna Reitz <hreitz@redhat.com>,
  Dmitry Fleytman <dmitry.fleytman@gmail.com>, qemu-block@nongnu.org,
- Fam Zheng <fam@euphon.net>, Paolo Bonzini <pbonzini@redhat.com>,
- "Michael S. Tsirkin" <mst@redhat.com>, Zhao Liu <zhao1.liu@intel.com>,
- Yanan Wang <wangyanan55@huawei.com>, Kevin Wolf <kwolf@redhat.com>,
- Eduardo Habkost <eduardo@habkost.net>,
+ Fam Zheng <fam@euphon.net>, "Michael S. Tsirkin" <mst@redhat.com>,
+ Zhao Liu <zhao1.liu@intel.com>, Yanan Wang <wangyanan55@huawei.com>,
+ Kevin Wolf <kwolf@redhat.com>, Eduardo Habkost <eduardo@habkost.net>,
  Richard Henderson <richard.henderson@linaro.org>,
  Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
  Gerd Hoffmann <kraxel@redhat.com>, John Snow <jsnow@redhat.com>
 References: <20250115232247.30364-1-philmd@linaro.org>
- <20250115232247.30364-11-philmd@linaro.org>
- <aa863f22-57fb-4ddd-bce4-1b0a86c9023b@redhat.com>
- <6b916259-da1a-4a16-84a3-64eb466714c8@linaro.org>
-Content-Language: en-US
+ <20250115232247.30364-9-philmd@linaro.org>
+ <75e7805f-1ffa-421d-9415-5132131d80a7@redhat.com>
+ <293b6780-17e6-4cee-a141-55022a9a75c2@linaro.org>
 From: Thomas Huth <thuth@redhat.com>
+Content-Language: en-US
 Autocrypt: addr=thuth@redhat.com; keydata=
  xsFNBFH7eUwBEACzyOXKU+5Pcs6wNpKzrlJwzRl3VGZt95VCdb+FgoU9g11m7FWcOafrVRwU
  yYkTm9+7zBUc0sW5AuPGR/dp3pSLX/yFWsA/UB4nJsHqgDvDU7BImSeiTrnpMOTXb7Arw2a2
@@ -137,7 +135,7 @@ Autocrypt: addr=thuth@redhat.com; keydata=
  oiT+z+/E59qj/EKfyce3sbC9XLjXv3mHMrq1tKX4G7IJGnS989E/fg6crv6NHae9Ckm7+lSs
  IQu4bBP2GxiRQ+NV3iV/KU3ebMRzqIC//DCOxzQNFNJAKldPe/bKZMCxEqtVoRkuJtNdp/5a
  yXFZ6TfE1hGKrDBYAm4vrnZ4CXFSBDllL59cFFOJCkn4Xboj/aVxxJxF30bn
-In-Reply-To: <6b916259-da1a-4a16-84a3-64eb466714c8@linaro.org>
+In-Reply-To: <293b6780-17e6-4cee-a141-55022a9a75c2@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=170.10.129.124; envelope-from=thuth@redhat.com;
@@ -149,7 +147,7 @@ X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.132,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -165,55 +163,83 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 17/01/2025 17.43, Philippe Mathieu-Daudé wrote:
-> On 17/1/25 10:08, Thomas Huth wrote:
+On 17/01/2025 17.41, Philippe Mathieu-Daudé wrote:
+> On 17/1/25 09:58, Thomas Huth wrote:
 >> On 16/01/2025 00.22, Philippe Mathieu-Daudé wrote:
->>> VIRTIO_PCI_FLAG_DISABLE_PCIE was only used by the
->>> hw_compat_2_4[] array, via the 'x-disable-pcie=false'
->>> property. We removed all machines using that array,
->>> lets remove all the code around VIRTIO_PCI_FLAG_DISABLE_PCIE.
+>>> E1000_FLAG_MAC was only used by the hw_compat_2_4[] array,
+>>> via the 'extra_mac_registers=off' property. We removed all
+>>> machines using that array, lets remove all the code around
+>>> E1000_FLAG_MAC.
 >>>
 >>> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 >>> ---
->>>   include/hw/virtio/virtio-pci.h | 4 ----
->>>   hw/virtio/virtio-pci.c         | 5 +----
->>>   2 files changed, 1 insertion(+), 8 deletions(-)
+>>>   hw/net/e1000.c | 63 +++++++++-----------------------------------------
+>>>   1 file changed, 11 insertions(+), 52 deletions(-)
 >>>
->>> diff --git a/include/hw/virtio/virtio-pci.h b/include/hw/virtio/ virtio- 
->>> pci.h
->>> index dd6eb9a4fc7..1ca7419cd43 100644
->>> --- a/include/hw/virtio/virtio-pci.h
->>> +++ b/include/hw/virtio/virtio-pci.h
->>> @@ -33,7 +33,6 @@ enum {
->>>       VIRTIO_PCI_FLAG_BUS_MASTER_BUG_MIGRATION_BIT,
->>>       VIRTIO_PCI_FLAG_USE_IOEVENTFD_BIT,
->>>       VIRTIO_PCI_FLAG_MODERN_PIO_NOTIFY_BIT,
->>> -    VIRTIO_PCI_FLAG_DISABLE_PCIE_BIT,
->>>       VIRTIO_PCI_FLAG_PAGE_PER_VQ_BIT,
->>>       VIRTIO_PCI_FLAG_ATS_BIT,
->>>       VIRTIO_PCI_FLAG_INIT_DEVERR_BIT,
+>>> diff --git a/hw/net/e1000.c b/hw/net/e1000.c
+>>> index 3d0b2277039..14d2133cd80 100644
+>>> --- a/hw/net/e1000.c
+>>> +++ b/hw/net/e1000.c
+>>> @@ -127,10 +127,8 @@ struct E1000State_st {
+>>>       QEMUTimer *flush_queue_timer;
+>>>   /* Compatibility flags for migration to/from qemu 1.3.0 and older */
+>>> -#define E1000_FLAG_MAC_BIT 2
+>>>   #define E1000_FLAG_TSO_BIT 3
+>>>   #define E1000_FLAG_VET_BIT 4
+>>> -#define E1000_FLAG_MAC (1 << E1000_FLAG_MAC_BIT)
+>>>   #define E1000_FLAG_TSO (1 << E1000_FLAG_TSO_BIT)
+>>>   #define E1000_FLAG_VET (1 << E1000_FLAG_VET_BIT)
+>>> @@ -1218,46 +1216,17 @@ enum { MAC_ACCESS_PARTIAL = 1, 
+>>> MAC_ACCESS_FLAG_NEEDED = 2 };
+>>>    * n - flag needed
+>>>    * p - partially implenented */
+>>>   static const uint8_t mac_reg_access[0x8000] = {
+>>> -    [IPAV]    = markflag(MAC),    [WUC]     = markflag(MAC),
+>>> -    [IP6AT]   = markflag(MAC),    [IP4AT]   = markflag(MAC),
+>>> -    [FFVT]    = markflag(MAC),    [WUPM]    = markflag(MAC),
+>>> -    [ECOL]    = markflag(MAC),    [MCC]     = markflag(MAC),
+>>> -    [DC]      = markflag(MAC),    [TNCRS]   = markflag(MAC),
+>>> -    [RLEC]    = markflag(MAC),    [XONRXC]  = markflag(MAC),
+>>> -    [XOFFTXC] = markflag(MAC),    [RFC]     = markflag(MAC),
+>>> -    [TSCTFC]  = markflag(MAC),    [MGTPRC]  = markflag(MAC),
+>>> -    [WUS]     = markflag(MAC),    [AIT]     = markflag(MAC),
+>>> -    [FFLT]    = markflag(MAC),    [FFMT]    = markflag(MAC),
+>>> -    [SCC]     = markflag(MAC),    [FCRUC]   = markflag(MAC),
+>>> -    [LATECOL] = markflag(MAC),    [COLC]    = markflag(MAC),
+>>> -    [SEQEC]   = markflag(MAC),    [CEXTERR] = markflag(MAC),
+>>> -    [XONTXC]  = markflag(MAC),    [XOFFRXC] = markflag(MAC),
+>>> -    [RJC]     = markflag(MAC),    [RNBC]    = markflag(MAC),
+>>> -    [MGTPDC]  = markflag(MAC),    [MGTPTC]  = markflag(MAC),
+>>> -    [RUC]     = markflag(MAC),    [ROC]     = markflag(MAC),
+>>> -    [GORCL]   = markflag(MAC),    [GORCH]   = markflag(MAC),
+>>> -    [GOTCL]   = markflag(MAC),    [GOTCH]   = markflag(MAC),
+>>> -    [BPRC]    = markflag(MAC),    [MPRC]    = markflag(MAC),
+>>> -    [TSCTC]   = markflag(MAC),    [PRC64]   = markflag(MAC),
+>>> -    [PRC127]  = markflag(MAC),    [PRC255]  = markflag(MAC),
+>>> -    [PRC511]  = markflag(MAC),    [PRC1023] = markflag(MAC),
+>>> -    [PRC1522] = markflag(MAC),    [PTC64]   = markflag(MAC),
+>>> -    [PTC127]  = markflag(MAC),    [PTC255]  = markflag(MAC),
+>>> -    [PTC511]  = markflag(MAC),    [PTC1023] = markflag(MAC),
+>>> -    [PTC1522] = markflag(MAC),    [MPTC]    = markflag(MAC),
+>>> -    [BPTC]    = markflag(MAC),
 >>
->> I assume it's ok that the other following bits change their value here?
+>> I think this is wrong. All those registers should still be marked with 
+>> MAC_ACCESS_FLAG_NEEDED, shouldn't they?
 > 
-> I followed previous commit 9a4c0e220d8 ("hw/virtio-pci:
-> fix virtio behaviour"):
+> I followed Paolo's removal in commit fa4ec9ffda7
+> ("e1000: remove old compatibility code"):
 > 
-> diff --git a/hw/virtio/virtio-pci.h b/hw/virtio/virtio-pci.h
-> index e4548c2f970..25fbf8a375d 100644
-> --- a/hw/virtio/virtio-pci.h
-> +++ b/hw/virtio/virtio-pci.h
-> @@ -61,8 +61,6 @@ typedef struct VirtioBusClass VirtioPCIBusClass;
->   enum {
->       VIRTIO_PCI_FLAG_BUS_MASTER_BUG_MIGRATION_BIT,
->       VIRTIO_PCI_FLAG_USE_IOEVENTFD_BIT,
-> -    VIRTIO_PCI_FLAG_DISABLE_LEGACY_BIT,
-> -    VIRTIO_PCI_FLAG_DISABLE_MODERN_BIT,
->       VIRTIO_PCI_FLAG_MIGRATE_EXTRA_BIT,
->       VIRTIO_PCI_FLAG_MODERN_PIO_NOTIFY_BIT,
->       VIRTIO_PCI_FLAG_DISABLE_PCIE_BIT,
+> -    [RDTR]    = markflag(MIT),    [TADV]    = markflag(MIT),
+> -    [RADV]    = markflag(MIT),    [ITR]     = markflag(MIT),
+> 
+> Is it the same problem?
 
-Ok, if it has been done before and nobody complained, the exact numbering 
-likely doesn't matter here :-)
+Oops, sorry, I think I got confused by that MAC_ACCESS_FLAG_NEEDED logic in 
+e1000_mmio_read() and e1000_mmio_write() ... after reading it more 
+carefully, I think it is ok what you did here.
+
+But maybe you could even remove the markflag macro and 
+MAC_ACCESS_FLAG_NEEDED now completely?
 
   Thomas
 
