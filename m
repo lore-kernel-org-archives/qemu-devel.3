@@ -4,150 +4,122 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C0083C02183
-	for <qemu-devel@archiver.kernel.org>; Fri, 17 Jan 2025 19:01:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 91015C02183
+	for <qemu-devel@archiver.kernel.org>; Fri, 17 Jan 2025 19:07:15 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tYraF-0002CV-D5; Fri, 17 Jan 2025 14:00:43 -0500
+	id 1tYrfs-0003uN-1X; Fri, 17 Jan 2025 14:06:34 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1tYra1-00029X-03
- for qemu-devel@nongnu.org; Fri, 17 Jan 2025 14:00:38 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1tYrZz-0005Hz-Bu
- for qemu-devel@nongnu.org; Fri, 17 Jan 2025 14:00:28 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1737140425;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=9Q095ncfrQw4FxQkDUGmgmKecj9SzWw/10eWEy99RXw=;
- b=OwWACPFMB65INLCvwIMzVvTTu9KLWQHdBPBPGJNuabP8juAkH/0Fjhi4eXA7lyybutNb3Y
- GMJ1pzXUsdpDDp4rTJocdFoHuJfbDmr9HGMORRlHUKabVhVVGMRSwBqTC4GUM0j9d8GJET
- OsG+24kEVls1AyK2dG3mebPCHkiss28=
-Received: from mail-wr1-f71.google.com (mail-wr1-f71.google.com
- [209.85.221.71]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-45-FQWiB6LfMEanB9oy1jGhvw-1; Fri, 17 Jan 2025 14:00:21 -0500
-X-MC-Unique: FQWiB6LfMEanB9oy1jGhvw-1
-X-Mimecast-MFC-AGG-ID: FQWiB6LfMEanB9oy1jGhvw
-Received: by mail-wr1-f71.google.com with SMTP id
- ffacd0b85a97d-385e03f54d0so1103919f8f.3
- for <qemu-devel@nongnu.org>; Fri, 17 Jan 2025 11:00:11 -0800 (PST)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1737140411; x=1737745211;
- h=content-transfer-encoding:in-reply-to:autocrypt:content-language
- :from:references:cc:to:subject:user-agent:mime-version:date
- :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=9Q095ncfrQw4FxQkDUGmgmKecj9SzWw/10eWEy99RXw=;
- b=aLWulkQEPUdrmEkmDaYyj/26aLWx6Y60mGBMurudvsJy1VEvBkW00KqULWgasqNpqc
- Gbm5gN7CKmoXdKLfzsaW1k367YWbc4JWJ2STn7t1wblUki843wCFZB7nstgs6Eq6Jxns
- /VYDiVhG3943pEM+oc7do6inRGesae63ZsQOO558lcUei+UX/nONi7gXyM1EURby9vjp
- Ht0h3H+1OFjZM2wI4EHk1Ql4HYL+Hh/8q3HF/M4BpwR/eYSp6lIA9Asza7aSJSzdnT4a
- DO5eBCuMQ6d+HTmtgRj38u5l61D7yIe8Yz4L4cOQETRIiYsrwcyyCTozHQwoF0/D0kuR
- 2Bzw==
-X-Forwarded-Encrypted: i=1;
- AJvYcCV5eGCUTFv8nXZgvLAgsdSDDXtvDWkBzgv9QJeSHbhqZO9NMrp6ScavSIaNYNlmx93a08VZV7tj4uGj@nongnu.org
-X-Gm-Message-State: AOJu0Yzn3CWPb4UDH2AjBKnsij0nv1Afh4u5ed/7mH7cFLmv/msXZxKy
- COCbp8RYOXFmm5kGUUJiFqMEe/bGXGKqrpsDZrCbFbsWGTG52G+skk/sc2lJQdo4kYZ4svjpDDC
- IxG7Es9mxzXyb1sxGXL7r8cePhHnieWXHTiLPEnEO0zOTUcX5t70U
-X-Gm-Gg: ASbGncsWeB7dQl/y+XpkaLaIAjiopKVMIfGYA7+xnAZzgu8GpaDRSDibIhYwbl7KzMU
- yZB6HO9OWesJxd7jKqtBKY++nNtPn4PIHU7MhyJShrjGaT1F/noNy8KkD/b7f+chyswv2WissgP
- pDQw7oWiCcKoe9fruDyNKKREKx6V4eoX67O7hFIraXoB2cwvCBRK+Q0I3vL+Yn96TOqP+QA/M2k
- 0o79yOLV2PHMx0TKSmfz8UhHOlI7Z/8XEeUfak3ZNqbuE+EFVe10gSaGxP9yLB6qcnpvQI4rLQh
- A44EYONlar7q
-X-Received: by 2002:a05:6000:178e:b0:385:fd24:3303 with SMTP id
- ffacd0b85a97d-38bf55c5f54mr4102324f8f.0.1737140410738; 
- Fri, 17 Jan 2025 11:00:10 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IFVD9PUOhOc8fiUsFVxTKw0mWt9XXQp/YeyyKpXUeXF+cCCkik6ORlwxDUTN1Xd4GogkRTdeA==
-X-Received: by 2002:a05:6000:178e:b0:385:fd24:3303 with SMTP id
- ffacd0b85a97d-38bf55c5f54mr4102295f8f.0.1737140410360; 
- Fri, 17 Jan 2025 11:00:10 -0800 (PST)
-Received: from [192.168.0.7] (ip-109-42-51-119.web.vodafone.de.
- [109.42.51.119]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-38bf322aa40sm3184051f8f.45.2025.01.17.11.00.08
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 17 Jan 2025 11:00:09 -0800 (PST)
-Message-ID: <3f7407e8-7fe7-407b-9110-651f3f13ab8f@redhat.com>
-Date: Fri, 17 Jan 2025 20:00:08 +0100
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1tYrfZ-0003tH-Ou
+ for qemu-devel@nongnu.org; Fri, 17 Jan 2025 14:06:16 -0500
+Received: from smtp-out1.suse.de ([2a07:de40:b251:101:10:150:64:1])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1tYrfW-000699-Vp
+ for qemu-devel@nongnu.org; Fri, 17 Jan 2025 14:06:13 -0500
+Received: from imap1.dmz-prg2.suse.org (imap1.dmz-prg2.suse.org
+ [IPv6:2a07:de40:b281:104:10:150:64:97])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested)
+ by smtp-out1.suse.de (Postfix) with ESMTPS id 9893921185;
+ Fri, 17 Jan 2025 19:06:07 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+ t=1737140767; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=Z18urq6cAEi94oRS3jSYXG7CGeQYatN8WWXVtaB/Ggo=;
+ b=h8mgvjQbe4xYDJz1YfDOFoBXGrTHC6cJoOo1ZF0YGZSQCejq2mVzN5OLqmdYDIw2GlgOHc
+ arc5pxUONO/yBfLj2kKGZB/Ix8guNIQ1XpHGlBOoa3/sc+tckryiPC4tgcBQ/s9ENZZaun
+ nus0vWyG75pHHIpkUtrpp92LwsfR9Ro=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+ s=susede2_ed25519; t=1737140767;
+ h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=Z18urq6cAEi94oRS3jSYXG7CGeQYatN8WWXVtaB/Ggo=;
+ b=gcWzxpVTuH8QM6bFF4qHhB4zXQUSOdkZj6iaTsUevFfMTG+RwOLcl7lg+eXQGIZhFSrxKo
+ xI+5yToy5V5XCUAw==
+Authentication-Results: smtp-out1.suse.de;
+ dkim=pass header.d=suse.de header.s=susede2_rsa header.b=h8mgvjQb;
+ dkim=pass header.d=suse.de header.s=susede2_ed25519 header.b=gcWzxpVT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+ t=1737140767; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=Z18urq6cAEi94oRS3jSYXG7CGeQYatN8WWXVtaB/Ggo=;
+ b=h8mgvjQbe4xYDJz1YfDOFoBXGrTHC6cJoOo1ZF0YGZSQCejq2mVzN5OLqmdYDIw2GlgOHc
+ arc5pxUONO/yBfLj2kKGZB/Ix8guNIQ1XpHGlBOoa3/sc+tckryiPC4tgcBQ/s9ENZZaun
+ nus0vWyG75pHHIpkUtrpp92LwsfR9Ro=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+ s=susede2_ed25519; t=1737140767;
+ h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=Z18urq6cAEi94oRS3jSYXG7CGeQYatN8WWXVtaB/Ggo=;
+ b=gcWzxpVTuH8QM6bFF4qHhB4zXQUSOdkZj6iaTsUevFfMTG+RwOLcl7lg+eXQGIZhFSrxKo
+ xI+5yToy5V5XCUAw==
+Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested)
+ by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 0EB4F13332;
+ Fri, 17 Jan 2025 19:06:06 +0000 (UTC)
+Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
+ by imap1.dmz-prg2.suse.org with ESMTPSA id DeSULx6qimdHQgAAD6G6ig
+ (envelope-from <farosas@suse.de>); Fri, 17 Jan 2025 19:06:06 +0000
+From: Fabiano Rosas <farosas@suse.de>
+To: Steven Sistare <steven.sistare@oracle.com>, qemu-devel@nongnu.org
+Cc: Peter Xu <peterx@redhat.com>, David Hildenbrand <david@redhat.com>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>, Eduardo Habkost
+ <eduardo@habkost.net>, Philippe Mathieu-Daude <philmd@linaro.org>, Paolo
+ Bonzini <pbonzini@redhat.com>, "Daniel P. Berrange" <berrange@redhat.com>,
+ Markus Armbruster <armbru@redhat.com>
+Subject: Re: [PATCH V7 24/24] migration: cpr-transfer documentation
+In-Reply-To: <19a1f016-981e-49ea-9ead-bc64f69fa0c1@oracle.com>
+References: <1736967650-129648-1-git-send-email-steven.sistare@oracle.com>
+ <1736967650-129648-25-git-send-email-steven.sistare@oracle.com>
+ <87tt9xec2y.fsf@suse.de> <68bee183-ba2b-420c-b885-a6ba630f74fe@oracle.com>
+ <87r051e9xb.fsf@suse.de> <19a1f016-981e-49ea-9ead-bc64f69fa0c1@oracle.com>
+Date: Fri, 17 Jan 2025 16:06:04 -0300
+Message-ID: <87o705dzvn.fsf@suse.de>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 08/21] hw/net/e1000: Remove unused E1000_FLAG_MAC flag
-To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Paolo Bonzini <pbonzini@redhat.com>, qemu-devel@nongnu.org
-Cc: Jason Wang <jasowang@redhat.com>, Hanna Reitz <hreitz@redhat.com>,
- Dmitry Fleytman <dmitry.fleytman@gmail.com>, qemu-block@nongnu.org,
- Fam Zheng <fam@euphon.net>, "Michael S. Tsirkin" <mst@redhat.com>,
- Zhao Liu <zhao1.liu@intel.com>, Yanan Wang <wangyanan55@huawei.com>,
- Kevin Wolf <kwolf@redhat.com>, Eduardo Habkost <eduardo@habkost.net>,
- Richard Henderson <richard.henderson@linaro.org>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- Gerd Hoffmann <kraxel@redhat.com>, John Snow <jsnow@redhat.com>
-References: <20250115232247.30364-1-philmd@linaro.org>
- <20250115232247.30364-9-philmd@linaro.org>
- <75e7805f-1ffa-421d-9415-5132131d80a7@redhat.com>
- <293b6780-17e6-4cee-a141-55022a9a75c2@linaro.org>
-From: Thomas Huth <thuth@redhat.com>
-Content-Language: en-US
-Autocrypt: addr=thuth@redhat.com; keydata=
- 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
-In-Reply-To: <293b6780-17e6-4cee-a141-55022a9a75c2@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=thuth@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -21
-X-Spam_score: -2.2
+Content-Type: text/plain
+X-Rspamd-Queue-Id: 9893921185
+X-Rspamd-Action: no action
+X-Spamd-Result: default: False [-3.01 / 50.00]; BAYES_HAM(-3.00)[100.00%];
+ SUSPICIOUS_RECIPS(1.50)[]; NEURAL_HAM_LONG(-1.00)[-1.000];
+ R_DKIM_ALLOW(-0.20)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
+ NEURAL_HAM_SHORT(-0.20)[-1.000]; MIME_GOOD(-0.10)[text/plain];
+ MX_GOOD(-0.01)[]; TO_MATCH_ENVRCPT_ALL(0.00)[];
+ FREEMAIL_ENVRCPT(0.00)[gmail.com];
+ FUZZY_BLOCKED(0.00)[rspamd.com];
+ RBL_SPAMHAUS_BLOCKED_OPENRESOLVER(0.00)[2a07:de40:b281:104:10:150:64:97:from]; 
+ TO_DN_SOME(0.00)[];
+ DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
+ MIME_TRACE(0.00)[0:+]; ARC_NA(0.00)[];
+ FREEMAIL_CC(0.00)[redhat.com,gmail.com,habkost.net,linaro.org];
+ DKIM_TRACE(0.00)[suse.de:+];
+ SPAMHAUS_XBL(0.00)[2a07:de40:b281:104:10:150:64:97:from];
+ RCVD_COUNT_TWO(0.00)[2]; MID_RHS_MATCH_FROM(0.00)[];
+ FROM_EQ_ENVFROM(0.00)[]; FROM_HAS_DN(0.00)[];
+ RCVD_TLS_ALL(0.00)[]; RCPT_COUNT_SEVEN(0.00)[10];
+ TAGGED_RCPT(0.00)[]; MISSING_XM_UA(0.00)[];
+ RECEIVED_SPAMHAUS_BLOCKED_OPENRESOLVER(0.00)[2a07:de40:b281:106:10:150:64:167:received];
+ ASN(0.00)[asn:25478, ipnet:::/0, country:RU];
+ RCVD_VIA_SMTP_AUTH(0.00)[];
+ DBL_BLOCKED_OPENRESOLVER(0.00)[suse.de:mid, suse.de:dkim, oracle.com:email,
+ imap1.dmz-prg2.suse.org:rdns, imap1.dmz-prg2.suse.org:helo]
+X-Rspamd-Server: rspamd1.dmz-prg2.suse.org
+Received-SPF: pass client-ip=2a07:de40:b251:101:10:150:64:1;
+ envelope-from=farosas@suse.de; helo=smtp-out1.suse.de
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.132,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -163,84 +135,439 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 17/01/2025 17.41, Philippe Mathieu-Daudé wrote:
-> On 17/1/25 09:58, Thomas Huth wrote:
->> On 16/01/2025 00.22, Philippe Mathieu-Daudé wrote:
->>> E1000_FLAG_MAC was only used by the hw_compat_2_4[] array,
->>> via the 'extra_mac_registers=off' property. We removed all
->>> machines using that array, lets remove all the code around
->>> E1000_FLAG_MAC.
+ Steven Sistare <steven.sistare@oracle.com> writes:
+
+> On 1/17/2025 10:29 AM, Fabiano Rosas wrote:
+>> Steven Sistare <steven.sistare@oracle.com> writes:
+>> 
+>>> On 1/17/2025 9:42 AM, Fabiano Rosas wrote:
+>>>> Steve Sistare <steven.sistare@oracle.com> writes:
+>>>>
+>>>>> Add documentation for the cpr-transfer migration mode.
+>>>>>
+>>>>> Signed-off-by: Steve Sistare <steven.sistare@oracle.com>
+>>>>> Reviewed-by: Peter Xu <peterx@redhat.com>
+>>>>> ---
+>>>>>    docs/devel/migration/CPR.rst | 182 ++++++++++++++++++++++++++++++++++++++++++-
+>>>>>    1 file changed, 180 insertions(+), 2 deletions(-)
+>>>>>
+>>>>> diff --git a/docs/devel/migration/CPR.rst b/docs/devel/migration/CPR.rst
+>>>>> index 63c3647..d6021d5 100644
+>>>>> --- a/docs/devel/migration/CPR.rst
+>>>>> +++ b/docs/devel/migration/CPR.rst
+>>>>> @@ -5,7 +5,7 @@ CPR is the umbrella name for a set of migration modes in which the
+>>>>>    VM is migrated to a new QEMU instance on the same host.  It is
+>>>>>    intended for use when the goal is to update host software components
+>>>>>    that run the VM, such as QEMU or even the host kernel.  At this time,
+>>>>> -cpr-reboot is the only available mode.
+>>>>> +the cpr-reboot and cpr-transfer modes are available.
+>>>>>    
+>>>>>    Because QEMU is restarted on the same host, with access to the same
+>>>>>    local devices, CPR is allowed in certain cases where normal migration
+>>>>> @@ -53,7 +53,7 @@ RAM is copied to the migration URI.
+>>>>>    Outgoing:
+>>>>>      * Set the migration mode parameter to ``cpr-reboot``.
+>>>>>      * Set the ``x-ignore-shared`` capability if desired.
+>>>>> -  * Issue the ``migrate`` command.  It is recommended the the URI be a
+>>>>> +  * Issue the ``migrate`` command.  It is recommended the URI be a
+>>>>>        ``file`` type, but one can use other types such as ``exec``,
+>>>>>        provided the command captures all the data from the outgoing side,
+>>>>>        and provides all the data to the incoming side.
+>>>>> @@ -145,3 +145,181 @@ Caveats
+>>>>>    
+>>>>>    cpr-reboot mode may not be used with postcopy, background-snapshot,
+>>>>>    or COLO.
+>>>>> +
+>>>>> +cpr-transfer mode
+>>>>> +-----------------
+>>>>> +
+>>>>> +This mode allows the user to transfer a guest to a new QEMU instance
+>>>>> +on the same host with minimal guest pause time, by preserving guest
+>>>>> +RAM in place, albeit with new virtual addresses in new QEMU.  Devices
+>>>>> +and their pinned memory pages will also be preserved in a future QEMU
+>>>>> +release.
+>>>>> +
+>>>>> +The user starts new QEMU on the same host as old QEMU, with command-
+>>>>> +line arguments to create the same machine, plus the ``-incoming``
+>>>>> +option for the main migration channel, like normal live migration.
+>>>>> +In addition, the user adds a second -incoming option with channel
+>>>>> +type ``cpr``.  This CPR channel must support file descriptor transfer
+>>>>> +with SCM_RIGHTS, i.e. it must be a UNIX domain socket.
+>>>>> +
+>>>>> +To initiate CPR, the user issues a migrate command to old QEMU,
+>>>>> +adding a second migration channel of type ``cpr`` in the channels
+>>>>> +argument.  Old QEMU stops the VM, saves state to the migration
+>>>>> +channels, and enters the postmigrate state.  Execution resumes in
+>>>>> +new QEMU.
+>>>>> +
+>>>>> +New QEMU reads the CPR channel before opening a monitor, hence
+>>>>> +the CPR channel cannot be specified in the list of channels for a
+>>>>> +migrate-incoming command.  It may only be specified on the command
+>>>>> +line.
+>>>>> +
+>>>>> +Usage
+>>>>> +^^^^^
+>>>>> +
+>>>>> +Memory backend objects must have the ``share=on`` attribute.
+>>>>> +
+>>>>> +The VM must be started with the ``-machine aux-ram-share=on``
+>>>>> +option.  This causes implicit RAM blocks (those not described by
+>>>>> +a memory-backend object) to be allocated by mmap'ing a memfd.
+>>>>> +Examples include VGA and ROM.
+>>>>> +
+>>>>> +Outgoing:
+>>>>> +  * Set the migration mode parameter to ``cpr-transfer``.
+>>>>> +  * Issue the ``migrate`` command, containing a main channel and
+>>>>> +    a cpr channel.
+>>>>> +
+>>>>> +Incoming:
+>>>>> +  * Start new QEMU with two ``-incoming`` options.
+>>>>> +  * If the VM was running when the outgoing ``migrate`` command was
+>>>>> +    issued, then QEMU automatically resumes VM execution.
+>>>>> +
+>>>>> +Caveats
+>>>>> +^^^^^^^
+>>>>> +
+>>>>> +cpr-transfer mode may not be used with postcopy, background-snapshot,
+>>>>> +or COLO.
+>>>>> +
+>>>>> +memory-backend-epc is not supported.
+>>>>> +
+>>>>> +The main incoming migration channel address cannot be a file type.
+>>>>> +
+>>>>> +If the main incoming channel address is an inet socket, then the port
+>>>>> +cannot be 0 (meaning dynamically choose a port).
+>>>>> +
+>>>>> +When using ``-incoming defer``, you must issue the migrate command to
+>>>>> +old QEMU before issuing any monitor commands to new QEMU, because new
+>>>>> +QEMU blocks waiting to read from the cpr channel before starting its
+>>>>> +monitor, and old QEMU does not write to the channel until the migrate
+>>>>> +command is issued.  However, new QEMU does not open and read the
+>>>>> +main migration channel until you issue the migrate incoming command.
+>>>>> +
+>>>>> +Example 1: incoming channel
+>>>>> +^^^^^^^^^^^^^^^^^^^^^^^^^^^
+>>>>> +
+>>>>> +In these examples, we simply restart the same version of QEMU, but
+>>>>> +in a real scenario one would start new QEMU on the incoming side.
+>>>>> +Note that new QEMU does not print the monitor prompt until old QEMU
+>>>>> +has issued the migrate command.  The outgoing side uses QMP because
+>>>>> +HMP cannot specify a CPR channel.  Some QMP responses are omitted for
+>>>>> +brevity.
+>>>>> +
+>>>>> +::
+>>>>> +
+>>>>> +  Outgoing:                             Incoming:
+>>>>> +
+>>>>> +  # qemu-kvm -qmp stdio
+>>>>> +  -object memory-backend-file,id=ram0,size=4G,
+>>>>> +  mem-path=/dev/shm/ram0,share=on -m 4G
+>>>>> +  -machine aux-ram-share=on
+>>>>> +  ...
+>>>>> +                                        # qemu-kvm -monitor stdio
+>>>>> +                                        -incoming tcp:0:44444
+>>>>> +                                        -incoming '{"channel-type": "cpr",
+>>>>> +                                          "addr": { "transport": "socket",
+>>>>> +                                          "type": "unix", "path": "cpr.sock"}}'
+>>>>> +                                        ...
+>>>>
+>>>> I'm attempting this and not having much success. Surely I'm missing
+>>>> something:
+>>>>
+>>>>
+>>>> $ qemu-system-x86_64 -cpu host -smp 16 -machine pc,accel=kvm \
+>>>>     -drive id=drive0,if=none,format=qcow2,file=img.qcow2 \
+>>>>     -device virtio-blk-pci,id=image1,drive=drive0,bootindex=0 \
+>>>>     -qmp unix:./dst-qmp.sock,server,wait=off \
+>>>>     -nographic -serial mon:stdio \
+>>>>     -object memory-backend-file,id=ram0,size=4G,mem-path=/dev/shm/ram0,share=on \
+>>>>     -m 4G -machine aux-ram-share=on \
+>>>>
+>>>>     -incoming tcp:0:44444 \
+>>>>     -incoming '{"channel-type": "cpr", "addr": { "transport": "socket", "type": "unix", "path": "cpr.sock"}}' \
+>>>>
+>>>>     -trace loadvm_* -trace cpr_* -trace migration_* -trace migrate_* -trace qemu_loadvm_*
+>>>>
+>>>> cpr_transfer_input cpr.sock
+>>>> cpr_state_load cpr-transfer mode
+>>>> cpr_find_fd pc.bios, id 0 returns 15
+>>>> cpr_find_fd pc.rom, id 0 returns 14
+>>>> cpr_find_fd 0000:00:02.0/vga.vram, id 0 returns 13
+>>>> cpr_find_fd 0000:00:02.0/vga.rom, id 0 returns 12
+>>>> cpr_find_fd 0000:00:03.0/e1000.rom, id 0 returns 11
+>>>> cpr_find_fd /rom@etc/acpi/tables, id 0 returns 10
+>>>> cpr_find_fd /rom@etc/table-loader, id 0 returns 8
+>>>> cpr_find_fd /rom@etc/acpi/rsdp, id 0 returns 3
+>>>> migrate_set_state new state setup
+>>>> migration_socket_incoming_accepted
+>>>> migration_set_incoming_channel ioc=0x564dc31e7000 ioctype=qio-channel-socket
+>>>> migrate_set_state new state active
+>>>> loadvm_state_setup
+>>>> qemu_loadvm_state_section 1
+>>>> qemu_loadvm_state_section_startfull 2(ram) 0 4
+>>>> qemu_loadvm_state_section 3
+>>>> qemu_loadvm_state_section_partend 2
+>>>> qemu_loadvm_state_section 4
+>>>> qemu_loadvm_state_section_startfull 0(timer) 0 2
+>>>> qemu_loadvm_state_section 4
+>>>> qemu_loadvm_state_section_startfull 1(slirp) 0 4
+>>>> qemu_loadvm_state_section 4
+>>>> qemu_loadvm_state_section_startfull 4(cpu_common) 0 1
+>>>> qemu_loadvm_state_section 4
+>>>> qemu_loadvm_state_section_startfull 5(cpu) 0 12
+>>>> qemu_loadvm_state_section 4
+>>>> qemu_loadvm_state_section_startfull 6(kvm-tpr-opt) 0 1
+>>>> qemu-system-x86_64: error while loading state for instance 0x0 of device 'kvm-tpr-opt'
+>>>> qemu_loadvm_state_post_main -1
+>>>> migrate_set_state new state failed
+>>>> migrate_error error=load of migration failed: Operation not permitted
+>>>> loadvm_state_cleanup
+>>>> qemu-system-x86_64: load of migration failed: Operation not permitted
 >>>
->>> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
->>> ---
->>>   hw/net/e1000.c | 63 +++++++++-----------------------------------------
->>>   1 file changed, 11 insertions(+), 52 deletions(-)
->>>
->>> diff --git a/hw/net/e1000.c b/hw/net/e1000.c
->>> index 3d0b2277039..14d2133cd80 100644
->>> --- a/hw/net/e1000.c
->>> +++ b/hw/net/e1000.c
->>> @@ -127,10 +127,8 @@ struct E1000State_st {
->>>       QEMUTimer *flush_queue_timer;
->>>   /* Compatibility flags for migration to/from qemu 1.3.0 and older */
->>> -#define E1000_FLAG_MAC_BIT 2
->>>   #define E1000_FLAG_TSO_BIT 3
->>>   #define E1000_FLAG_VET_BIT 4
->>> -#define E1000_FLAG_MAC (1 << E1000_FLAG_MAC_BIT)
->>>   #define E1000_FLAG_TSO (1 << E1000_FLAG_TSO_BIT)
->>>   #define E1000_FLAG_VET (1 << E1000_FLAG_VET_BIT)
->>> @@ -1218,46 +1216,17 @@ enum { MAC_ACCESS_PARTIAL = 1, 
->>> MAC_ACCESS_FLAG_NEEDED = 2 };
->>>    * n - flag needed
->>>    * p - partially implenented */
->>>   static const uint8_t mac_reg_access[0x8000] = {
->>> -    [IPAV]    = markflag(MAC),    [WUC]     = markflag(MAC),
->>> -    [IP6AT]   = markflag(MAC),    [IP4AT]   = markflag(MAC),
->>> -    [FFVT]    = markflag(MAC),    [WUPM]    = markflag(MAC),
->>> -    [ECOL]    = markflag(MAC),    [MCC]     = markflag(MAC),
->>> -    [DC]      = markflag(MAC),    [TNCRS]   = markflag(MAC),
->>> -    [RLEC]    = markflag(MAC),    [XONRXC]  = markflag(MAC),
->>> -    [XOFFTXC] = markflag(MAC),    [RFC]     = markflag(MAC),
->>> -    [TSCTFC]  = markflag(MAC),    [MGTPRC]  = markflag(MAC),
->>> -    [WUS]     = markflag(MAC),    [AIT]     = markflag(MAC),
->>> -    [FFLT]    = markflag(MAC),    [FFMT]    = markflag(MAC),
->>> -    [SCC]     = markflag(MAC),    [FCRUC]   = markflag(MAC),
->>> -    [LATECOL] = markflag(MAC),    [COLC]    = markflag(MAC),
->>> -    [SEQEC]   = markflag(MAC),    [CEXTERR] = markflag(MAC),
->>> -    [XONTXC]  = markflag(MAC),    [XOFFRXC] = markflag(MAC),
->>> -    [RJC]     = markflag(MAC),    [RNBC]    = markflag(MAC),
->>> -    [MGTPDC]  = markflag(MAC),    [MGTPTC]  = markflag(MAC),
->>> -    [RUC]     = markflag(MAC),    [ROC]     = markflag(MAC),
->>> -    [GORCL]   = markflag(MAC),    [GORCH]   = markflag(MAC),
->>> -    [GOTCL]   = markflag(MAC),    [GOTCH]   = markflag(MAC),
->>> -    [BPRC]    = markflag(MAC),    [MPRC]    = markflag(MAC),
->>> -    [TSCTC]   = markflag(MAC),    [PRC64]   = markflag(MAC),
->>> -    [PRC127]  = markflag(MAC),    [PRC255]  = markflag(MAC),
->>> -    [PRC511]  = markflag(MAC),    [PRC1023] = markflag(MAC),
->>> -    [PRC1522] = markflag(MAC),    [PTC64]   = markflag(MAC),
->>> -    [PTC127]  = markflag(MAC),    [PTC255]  = markflag(MAC),
->>> -    [PTC511]  = markflag(MAC),    [PTC1023] = markflag(MAC),
->>> -    [PTC1522] = markflag(MAC),    [MPTC]    = markflag(MAC),
->>> -    [BPTC]    = markflag(MAC),
->>
->> I think this is wrong. All those registers should still be marked with 
->> MAC_ACCESS_FLAG_NEEDED, shouldn't they?
-> 
-> I followed Paolo's removal in commit fa4ec9ffda7
-> ("e1000: remove old compatibility code"):
-> 
-> -    [RDTR]    = markflag(MIT),    [TADV]    = markflag(MIT),
-> -    [RADV]    = markflag(MIT),    [ITR]     = markflag(MIT),
-> 
-> Is it the same problem?
+>>> Check for a mismatch between the qemu args on the source vs dest.
+>>> Maybe -cpu.
+>> 
+>> No.. they're the same:
+>> 
+>> qemu-system-x86_64 -display none -cpu host -smp 4 -machine pc,accel=kvm
+>> -object
+>> memory-backend-file,id=ram0,size=4G,mem-path=/dev/shm/ram0,share=on -m
+>> 4G -machine aux-ram-share=on -qmp stdio
+>> 
+>> qemu-system-x86_64 -display none -cpu host -smp 4 -machine pc,accel=kvm
+>> -object
+>> memory-backend-file,id=ram0,size=4G,mem-path=/dev/shm/ram0,share=on -m
+>> 4G -machine aux-ram-share=on -incoming tcp:0:44444 -incoming
+>> '{"channel-type": "cpr", "addr": { "transport": "socket", "type":
+>> "unix", "path": "cpr.sock"}}' -monitor stdio
+>> 
+>> 
+>> Here's the whole log, see if you spot something:
+>> 
+>> $ (sleep 5; echo "{ 'execute': 'qmp_capabilities' }
+>>                   { 'execute': 'migrate-set-parameters','arguments':{ 'mode': 'cpr-transfer' } }
+>>                   { 'execute': 'migrate', 'arguments': \
+>>                     { 'channels': [ \
+>>                       {'channel-type': 'main', 'addr': { 'transport': 'socket', 'type': 'inet', \
+>>                                        'host': '0', 'port': '44444' }}, \
+>>                       {'channel-type': 'cpr', 'addr': { 'transport': 'socket', 'type': 'unix', \
+>>                                        'path': 'cpr.sock' }} \
+>>                     ]} \
+>>                   }") | /home/fabiano/qemu-system-x86_64 -display none
+>>                   -cpu host -smp 4 -machine pc,accel=kvm -qmp stdio
+>>                   -object
+>>                   memory-backend-file,id=ram0,size=4G,mem-path=/dev/shm/ram0,share=on
+>>                   -m 4G -machine aux-ram-share=on -trace cpr_* -trace
+>>                   migration_* -trace migrate_* -trace qemu_savevm_*
+>>                   -trace savevm_*
+>> 
+>> {"QMP": {"version": {"qemu": {"micro": 50, "minor": 2, "major": 9}, "package": "v9.2.0-987-gfd4129a8b9"}, "capabilities": ["oob"]}}
+>> cpr_find_fd pc.bios, id 0 returns -1
+>> cpr_save_fd pc.bios, id 0, fd 22
+>> cpr_find_fd pc.rom, id 0 returns -1
+>> cpr_save_fd pc.rom, id 0, fd 23
+>> cpr_find_fd 0000:00:02.0/vga.vram, id 0 returns -1
+>> cpr_save_fd 0000:00:02.0/vga.vram, id 0, fd 24
+>> cpr_find_fd 0000:00:02.0/vga.rom, id 0 returns -1
+>> cpr_save_fd 0000:00:02.0/vga.rom, id 0, fd 26
+>> cpr_find_fd 0000:00:03.0/e1000.rom, id 0 returns -1
+>> cpr_save_fd 0000:00:03.0/e1000.rom, id 0, fd 27
+>> cpr_find_fd /rom@etc/acpi/tables, id 0 returns -1
+>> cpr_save_fd /rom@etc/acpi/tables, id 0, fd 28
+>> cpr_find_fd /rom@etc/table-loader, id 0 returns -1
+>> cpr_save_fd /rom@etc/table-loader, id 0, fd 29
+>> cpr_find_fd /rom@etc/acpi/rsdp, id 0 returns -1
+>> cpr_save_fd /rom@etc/acpi/rsdp, id 0, fd 30
+>> migration_block_activation active-skipped
+>> {"return": {}}
+>> {"return": {}}
+>> migrate_set_state new state setup
+>> cpr_state_save cpr-transfer mode
+>> cpr_transfer_output cpr.sock
+>> {"return": {}}
+>> migration_socket_outgoing_connected hostname=0
+>> migration_set_outgoing_channel ioc=0x55748ba10270 ioctype=qio-channel-socket hostname=0 err=(nil)
+>> {"timestamp": {"seconds": 1737127025, "microseconds": 606998}, "event": "STOP"}
+>> migration_completion_vm_stop ret 0
+>> migration_transferred_bytes qemu_file 224 multifd 0 RDMA 0
+>> savevm_state_header
+>> savevm_state_setup
+>> migration_bitmap_sync_start
+>> migration_bitmap_sync_end dirty_pages 0
+>> migrate_set_state new state active
+>> migration_thread_setup_complete
+>> migration_transferred_bytes qemu_file 506 multifd 0 RDMA 0
+>> migrate_pending_estimate estimate pending size 0 (pre = 0 post=0)
+>> migration_thread_low_pending 0
+>> migrate_set_state new state device
+>> migration_block_activation inactive
+>> migration_precopy_complete
+>> savevm_section_start ram, section_id 2
+>> migration_bitmap_sync_start
+>> migration_bitmap_sync_end dirty_pages 0
+>> savevm_section_end ram, section_id 2 -> 0
+>> savevm_section_start timer, section_id 0
+>> savevm_section_end timer, section_id 0 -> 0
+>> savevm_section_start slirp, section_id 1
+>> savevm_section_end slirp, section_id 1 -> 0
+>> savevm_section_start cpu_common, section_id 4
+>> savevm_section_end cpu_common, section_id 4 -> 0
+>> savevm_section_start cpu, section_id 5
+>> savevm_section_end cpu, section_id 5 -> 0
+>> savevm_section_start kvm-tpr-opt, section_id 6
+>> savevm_section_end kvm-tpr-opt, section_id 6 -> 0
+>> savevm_section_start apic, section_id 7
+>> savevm_section_end apic, section_id 7 -> 0
+>> savevm_section_start cpu_common, section_id 8
+>> savevm_section_end cpu_common, section_id 8 -> 0
+>> savevm_section_start cpu, section_id 9
+>> savevm_section_end cpu, section_id 9 -> 0
+>> savevm_section_start apic, section_id 10
+>> savevm_section_end apic, section_id 10 -> 0
+>> savevm_section_start cpu_common, section_id 11
+>> savevm_section_end cpu_common, section_id 11 -> 0
+>> savevm_section_start cpu, section_id 12
+>> savevm_section_end cpu, section_id 12 -> 0
+>> savevm_section_start apic, section_id 13
+>> savevm_section_end apic, section_id 13 -> 0
+>> savevm_section_start cpu_common, section_id 14
+>> savevm_section_end cpu_common, section_id 14 -> 0
+>> savevm_section_start cpu, section_id 15
+>> savevm_section_end cpu, section_id 15 -> 0
+>> savevm_section_start apic, section_id 16
+>> savevm_section_end apic, section_id 16 -> 0
+>> savevm_section_start kvmclock, section_id 17
+>> savevm_section_end kvmclock, section_id 17 -> 0
+>> savevm_section_start 0000:00:00.0/I440FX, section_id 18
+>> savevm_section_end 0000:00:00.0/I440FX, section_id 18 -> 0
+>> savevm_section_start PCIHost, section_id 19
+>> savevm_section_end PCIHost, section_id 19 -> 0
+>> savevm_section_start PCIBUS, section_id 20
+>> savevm_section_end PCIBUS, section_id 20 -> 0
+>> savevm_section_start fw_cfg, section_id 21
+>> savevm_section_end fw_cfg, section_id 21 -> 0
+>> savevm_section_start dma, section_id 22
+>> savevm_section_end dma, section_id 22 -> 0
+>> savevm_section_start dma, section_id 23
+>> savevm_section_end dma, section_id 23 -> 0
+>> savevm_section_start mc146818rtc, section_id 24
+>> savevm_section_end mc146818rtc, section_id 24 -> 0
+>> savevm_section_start 0000:00:01.1/ide, section_id 25
+>> savevm_section_end 0000:00:01.1/ide, section_id 25 -> 0
+>> savevm_section_start i2c_bus, section_id 26
+>> savevm_section_end i2c_bus, section_id 26 -> 0
+>> savevm_section_start 0000:00:01.3/piix4_pm, section_id 27
+>> savevm_section_end 0000:00:01.3/piix4_pm, section_id 27 -> 0
+>> savevm_section_start 0000:00:01.0/PIIX3, section_id 28
+>> savevm_section_end 0000:00:01.0/PIIX3, section_id 28 -> 0
+>> savevm_section_start i8259, section_id 29
+>> savevm_section_end i8259, section_id 29 -> 0
+>> savevm_section_start i8259, section_id 30
+>> savevm_section_end i8259, section_id 30 -> 0
+>> savevm_section_start ioapic, section_id 31
+>> savevm_section_end ioapic, section_id 31 -> 0
+>> savevm_section_start 0000:00:02.0/vga, section_id 32
+>> savevm_section_end 0000:00:02.0/vga, section_id 32 -> 0
+>> savevm_section_start hpet, section_id 33
+>> savevm_section_end hpet, section_id 33 -> 0
+>> savevm_section_start i8254, section_id 34
+>> savevm_section_end i8254, section_id 34 -> 0
+>> savevm_section_start pcspk, section_id 35
+>> savevm_section_end pcspk, section_id 35 -> 0
+>> savevm_section_start serial, section_id 36
+>> savevm_section_end serial, section_id 36 -> 0
+>> savevm_section_start parallel_isa, section_id 37
+>> savevm_section_end parallel_isa, section_id 37 -> 0
+>> savevm_section_start fdc, section_id 38
+>> savevm_section_end fdc, section_id 38 -> 0
+>> savevm_section_start ps2kbd, section_id 39
+>> savevm_section_end ps2kbd, section_id 39 -> 0
+>> savevm_section_start ps2mouse, section_id 40
+>> savevm_section_end ps2mouse, section_id 40 -> 0
+>> savevm_section_start pckbd, section_id 41
+>> savevm_section_end pckbd, section_id 41 -> 0
+>> savevm_section_start vmmouse, section_id 42
+>> savevm_section_end vmmouse, section_id 42 -> 0
+>> savevm_section_start port92, section_id 43
+>> savevm_section_end port92, section_id 43 -> 0
+>> savevm_section_start 0000:00:03.0/e1000, section_id 44
+>> savevm_section_end 0000:00:03.0/e1000, section_id 44 -> 0
+>> savevm_section_skip smbus-eeprom, section_id 45
+>> savevm_section_skip smbus-eeprom, section_id 46
+>> savevm_section_skip smbus-eeprom, section_id 47
+>> savevm_section_skip smbus-eeprom, section_id 48
+>> savevm_section_skip smbus-eeprom, section_id 49
+>> savevm_section_skip smbus-eeprom, section_id 50
+>> savevm_section_skip smbus-eeprom, section_id 51
+>> savevm_section_skip smbus-eeprom, section_id 52
+>> savevm_section_start acpi_build, section_id 53
+>> savevm_section_end acpi_build, section_id 53 -> 0
+>> savevm_section_start globalstate, section_id 54
+>> migrate_global_state_pre_save saved state: running
+>> savevm_section_end globalstate, section_id 54 -> 0
+>> migrate_error error=Unable to write to socket: Connection reset by peer
+>> migrate_set_state new state failed
+>> migration_thread_after_loop
+>> migration_block_activation active
+>> {"timestamp": {"seconds": 1737127025, "microseconds": 625404}, "event": "RESUME"}
+>> migrate_fd_cleanup
+>> savevm_state_cleanup
+>> qemu-system-x86_64: Unable to write to socket: Connection reset by peer
+>> 
+>> 
+>> $ /home/fabiano/qemu-system-x86_64 -display none -cpu host -smp 4
+>> -machine pc,accel=kvm -object
+>> memory-backend-file,id=ram0,size=4G,mem-path=/dev/shm/ram0,share=on -m
+>> 4G -machine aux-ram-share=on -incoming tcp:0:44444 -incoming
+>> '{"channel-type": "cpr", "addr": { "transport": "socket", "type":
+>> "unix", "path": "cpr.sock"}}' -trace loadvm_* -trace cpr_* -trace
+>> migration_* -trace migrate_* -monitor stdio
+>> 
+>> cpr_transfer_input cpr.sock
+>> cpr_state_load cpr-transfer mode
+>> QEMU 9.2.50 monitor - type 'help' for more information
+>> cpr_find_fd pc.bios, id 0 returns 15
+>> cpr_find_fd pc.rom, id 0 returns 14
+>> cpr_find_fd 0000:00:02.0/vga.vram, id 0 returns 13
+>> cpr_find_fd 0000:00:02.0/vga.rom, id 0 returns 12
+>> cpr_find_fd 0000:00:03.0/e1000.rom, id 0 returns 11
+>> cpr_find_fd /rom@etc/acpi/tables, id 0 returns 10
+>> cpr_find_fd /rom@etc/table-loader, id 0 returns 8
+>> cpr_find_fd /rom@etc/acpi/rsdp, id 0 returns 3
+>> migrate_set_state new state setup
+>> (qemu) migration_socket_incoming_accepted
+>> migration_set_incoming_channel ioc=0x5565cccb8e70 ioctype=qio-channel-socket
+>> migrate_set_state new state active
+>> loadvm_state_setup
+>> qemu-system-x86_64: error while loading state for instance 0x0 of device 'kvm-tpr-opt'
+>> migrate_set_state new state failed
+>> migrate_error error=load of migration failed: Operation not permitted
+>> loadvm_state_cleanup
+>> qemu-system-x86_64: load of migration failed: Operation not permitted
+>
+> Thank-you for the simple example.  I reproduced the failure.
+> To fix, add "-machine aux-ram-share=on -machine memory-backend=ram0"
+> (The previous longer example had the former but lacked the latter).
+> Without that, the volatile pc.ram region is still in the mix.
 
-Oops, sorry, I think I got confused by that MAC_ACCESS_FLAG_NEEDED logic in 
-e1000_mmio_read() and e1000_mmio_write() ... after reading it more 
-carefully, I think it is ok what you did here.
+There you go, that kvm-tpr-opt message is almost always indicative of
+user error. I think because it's the first vmstate to be loaded.
 
-But maybe you could even remove the markflag macro and 
-MAC_ACCESS_FLAG_NEEDED now completely?
+Nonetheless, we better update the documentation to:
 
-  Thomas
+-object memory-backend-file,id=ram0,size=4G,mem-path=/dev/shm/ram0,share=on -m -4G \
+-machine memory-backend=ram0 \
+-machine aux-ram-share=on
 
+>
+> I have a patch that adds a blocker if volatile ram is present, and would
+> have clearly diagnosed this problem.  I will submit it now.
+
+Yes, I just tested and it's way better. Although the message asks for
+"share=on" and "aux-ram-share=on", which were already there. But there's
+not much we can do, basic proficiency with QEMU cmdline is a
+prerequisite.
+
+>
+> - Steve
 
