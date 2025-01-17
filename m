@@ -4,88 +4,147 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 29E8AC02183
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3BD43C02185
 	for <qemu-devel@archiver.kernel.org>; Fri, 17 Jan 2025 08:53:18 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tYi5b-00061W-SI; Fri, 17 Jan 2025 03:52:27 -0500
+	id 1tYi6B-0006H7-5f; Fri, 17 Jan 2025 03:53:03 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1tYi5Z-00061E-9J
- for qemu-devel@nongnu.org; Fri, 17 Jan 2025 03:52:25 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1tYi66-0006DK-Ui
+ for qemu-devel@nongnu.org; Fri, 17 Jan 2025 03:52:58 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1tYi5X-0006q4-A0
- for qemu-devel@nongnu.org; Fri, 17 Jan 2025 03:52:25 -0500
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1tYi64-0006sr-NY
+ for qemu-devel@nongnu.org; Fri, 17 Jan 2025 03:52:58 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1737103939;
+ s=mimecast20190719; t=1737103975;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:mime-version:mime-version:
- content-transfer-encoding:content-transfer-encoding;
- bh=Zz8oxn9ufOXFW8Yd3sGC3LxL3IdQd/KAiRJk38Hqlsg=;
- b=Kr+dn3jb00yxQbqoMyVdagAEmnIJDmS/FCO7P0OQSSPaJu+07LTAwbB1A0d/uzGkYYNFQp
- xQrRTDivRAfV+7zUC+U7pzCXk5A22w/UYVND7OtEd+0K31E054Kaq6Z+yfBeRPZBltOfcv
- 9z4ryEhabNs8JmFdGValbrqFb2gTGrQ=
-Received: from mail-ed1-f72.google.com (mail-ed1-f72.google.com
- [209.85.208.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+ bh=Nbz7pTOaIvfFkVMaVkfZmNSRTinSNx1/DExwTRtwD+8=;
+ b=c6vzGsLMqr+4AWU7V6rv7xstC+RuXUZSq96CsiGz7nqFEbzMjuKBYpDkNDqSgIoqraZYXG
+ oQ7xa5UczwQV3oSDADoryTyEqeBp0EaZdnljplKT8njuNlpnqq5z5q10L4uXU8yhXyuQnC
+ dKbeCbLjXQOEZt7zj51FuKXUwArd2FA=
+Received: from mail-wr1-f70.google.com (mail-wr1-f70.google.com
+ [209.85.221.70]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-246-gln8Vy7cPCmT6wFjAcWWQw-1; Fri, 17 Jan 2025 03:52:16 -0500
-X-MC-Unique: gln8Vy7cPCmT6wFjAcWWQw-1
-X-Mimecast-MFC-AGG-ID: gln8Vy7cPCmT6wFjAcWWQw
-Received: by mail-ed1-f72.google.com with SMTP id
- 4fb4d7f45d1cf-5d90a59999aso2041271a12.3
- for <qemu-devel@nongnu.org>; Fri, 17 Jan 2025 00:52:16 -0800 (PST)
+ us-mta-7-LufNnXYGOHiySACRcSn9pw-1; Fri, 17 Jan 2025 03:52:53 -0500
+X-MC-Unique: LufNnXYGOHiySACRcSn9pw-1
+X-Mimecast-MFC-AGG-ID: LufNnXYGOHiySACRcSn9pw
+Received: by mail-wr1-f70.google.com with SMTP id
+ ffacd0b85a97d-38bf5ef17a5so346328f8f.2
+ for <qemu-devel@nongnu.org>; Fri, 17 Jan 2025 00:52:53 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1737103935; x=1737708735;
- h=content-transfer-encoding:mime-version:message-id:date:subject:to
- :from:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=Zz8oxn9ufOXFW8Yd3sGC3LxL3IdQd/KAiRJk38Hqlsg=;
- b=XD5+I2RUBSl2k8fsH6NdnThH13YMaVGYlbk0mP4xBKwLrRO3KhQ/qFnZuPfcWi6lKR
- hicZJ8IUHXgFHy7C95XCTyYyJ6kKcddtYyvlA18NGystpLMm7d29vep8BBHP+YD2MYLe
- lMyFoauVfgBdlBkovEWxeqBuCzdcrgveuPEF1xApZ1pyktRDkcUWfmvHB0sVGqv52MA+
- vI6gAcUhNPhSiTrSGaS3euV8nNgm2B/E3vCOoMvBeFNOd1ZhZ12w0EbdX67Xubne+poE
- NDzx38k71PcsJgrnDPfxXsDeKFasCXqB1Pz8OBLTWw8Cb97nR+GapyxNG26KZM64PzQS
- eh/A==
-X-Gm-Message-State: AOJu0Yx64k1dhncEetiHAMjUSYe7e7Drj9DiqHHpimT/KzeEu03CL/Dh
- yWXxai7/NQJyHS0SKtroEtsIhJ+Ee384sdBhlXN4PB9WXeOE3f0DQ8+OUsFuYIcQql39FTCWh+s
- 3Wlzwwdy5XCwxbtXMK+A3MiovUZiM3rLarw2oHfz1q5lFc981dhrlU+VhtKu4OX2UKOKUiPRqvi
- Irhmmjuv3xrJ04iJ4dnP8ynSMZBxMjZu3H+J2I5TQ=
-X-Gm-Gg: ASbGncu/0MWaHqiH7Z998a3xRTNafalxyeIAOb9kGnqRYwlSVzZQALcl9/DSg8R2Q4k
- yNQhfXOkIdKz1ha1kCMXwQcEh6WcLHnq2m8RczrwEc0Tbsa5L2iidKRzkrPC+Gp1rAWA0SEen0s
- 9TvoseN/fxn4HvIec8pUmGTr3fEASjYlfgC8Cqd4pRLfoU5RvUcSBztG9WrQZYlJADjrlOGRUMm
- 9P6noVRJARL11UuGqnkCMlP+WABW+S6JTx3dImOwPz2Ok8lU7nr9fgNtaRX
-X-Received: by 2002:a05:6402:278f:b0:5d9:b50e:7008 with SMTP id
- 4fb4d7f45d1cf-5db7d2f8c49mr1350496a12.8.1737103935348; 
- Fri, 17 Jan 2025 00:52:15 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IHck5U2w8rE9O/spz8hdUBqgoUhMmqkT5ddfH57YPLNhB07NsCnaxhnXy8iz8cJnXzp67k09g==
-X-Received: by 2002:a05:6402:278f:b0:5d9:b50e:7008 with SMTP id
- 4fb4d7f45d1cf-5db7d2f8c49mr1350469a12.8.1737103934853; 
- Fri, 17 Jan 2025 00:52:14 -0800 (PST)
-Received: from [192.168.10.3] ([176.206.124.70])
- by smtp.gmail.com with ESMTPSA id
- 4fb4d7f45d1cf-5db73edcd02sm1173096a12.78.2025.01.17.00.52.13
- for <qemu-devel@nongnu.org>
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 17 Jan 2025 00:52:13 -0800 (PST)
-From: Paolo Bonzini <pbonzini@redhat.com>
-To: qemu-devel@nongnu.org
-Subject: [PULL v2 00/38] Rust, i386 patches for 2024-01-10
-Date: Fri, 17 Jan 2025 09:52:11 +0100
-Message-ID: <20250117085212.1044392-1-pbonzini@redhat.com>
-X-Mailer: git-send-email 2.47.1
+ d=1e100.net; s=20230601; t=1737103973; x=1737708773;
+ h=content-transfer-encoding:in-reply-to:autocrypt:content-language
+ :from:references:cc:to:subject:user-agent:mime-version:date
+ :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=Nbz7pTOaIvfFkVMaVkfZmNSRTinSNx1/DExwTRtwD+8=;
+ b=T9fuLAqsTSHmsgqm6dqwdHYdv9yd5ax+BtN/w6Nsu0Mu45NGavVRwgNy+ufR5xTwOw
+ srK5rY3OL4IfTex0DERpfMcv9hR4dHxzNZyDpqME1jhqQ0kDlujCLW2nfhYIUKdAoR0b
+ R9Ndjv99XHBt/zMt6FKaYUreuzDvYH34pvps55ny6xI8WL7jvA60X0vrvcOWigNaDBnm
+ ZX6lOso0Tls+k0pqJ115zSF1TdJnfXlv5+fSTEkWLbh0ModrISY+XbPW0kvtYaKdIxnE
+ bKasztGD1OohL+9cl9mBRSYqsuOi75YF63iIZqKlA1DsWREUcEPskxnngLVXsx9022aS
+ K7EQ==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCXDm7y1b+jCPDgLzOMPcho138uZ1/u5ubpsJIGRa7D5eLP1IVYGKbjkGxBNotusGA0feifiI7MpPM9Q@nongnu.org
+X-Gm-Message-State: AOJu0Yz3VbHqpBeJgRqtq8VtaVAWu8TYBDDqSh5CP4A64XJ/7zgWhv9J
+ nSaVEGLz6ysKxUkrd0TPPTmLg2qwK4cYS17ZJJdPcCxaw3gpHvUf2EG90OwNXP02HENndIkNOr7
+ 1nVbf49tZOEYlDvRioF6SoRZsmH1RdwRmz3EGHIiG70rMFHrluepY
+X-Gm-Gg: ASbGncuN6XD4ipEMzNhRKcxOFbN5stsVks4b1TmY6ESmFRrQKuiQOyWdzdeDrH4w1il
+ /JEVBsWQOA4w+xwW62I/DEpJPeeXDIaRxSdiUItMTJ5UVkuRFCDpOZmOfQmzaxgnbmjVhra2daw
+ Eb5H9dLKi09ZZeFqnmqt2q49s23cz5wwTYAbsBwlOQyoC1LqE7pAKx6FbPttiex5sNeT9QKDM7K
+ YSsGtUe1wgdiunENjASJguO1Ifsz3O+ujzJbUsjP5a7q+jCmehL39r1b8CpdGydBWE+HkfSsMIi
+ 6zk7rsoSkdYN
+X-Received: by 2002:a05:6000:178e:b0:388:c61d:43e4 with SMTP id
+ ffacd0b85a97d-38bf57b9d47mr1258797f8f.45.1737103972760; 
+ Fri, 17 Jan 2025 00:52:52 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IG1vAG4A4w2ulsi16D8ZB4wYfSAOaKt2HirTQ4tv+9x7MTYNaMoPFaWfhuz7y535EmrP5A3vg==
+X-Received: by 2002:a05:6000:178e:b0:388:c61d:43e4 with SMTP id
+ ffacd0b85a97d-38bf57b9d47mr1258775f8f.45.1737103972434; 
+ Fri, 17 Jan 2025 00:52:52 -0800 (PST)
+Received: from [192.168.0.7] (ip-109-42-51-119.web.vodafone.de.
+ [109.42.51.119]) by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-4389046885esm25669135e9.36.2025.01.17.00.52.50
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Fri, 17 Jan 2025 00:52:52 -0800 (PST)
+Message-ID: <9ee34c5f-d65c-447a-b128-96cf44b94b6e@redhat.com>
+Date: Fri, 17 Jan 2025 09:52:49 +0100
 MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 01/21] hw/i386/pc: Remove unused pc_compat_2_3 declarations
+To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ qemu-devel@nongnu.org, QEMU Trivial <qemu-trivial@nongnu.org>
+Cc: Jason Wang <jasowang@redhat.com>, Hanna Reitz <hreitz@redhat.com>,
+ Dmitry Fleytman <dmitry.fleytman@gmail.com>, qemu-block@nongnu.org,
+ Fam Zheng <fam@euphon.net>, Paolo Bonzini <pbonzini@redhat.com>,
+ "Michael S. Tsirkin" <mst@redhat.com>, Zhao Liu <zhao1.liu@intel.com>,
+ Yanan Wang <wangyanan55@huawei.com>, Kevin Wolf <kwolf@redhat.com>,
+ Eduardo Habkost <eduardo@habkost.net>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ Gerd Hoffmann <kraxel@redhat.com>, John Snow <jsnow@redhat.com>
+References: <20250115232247.30364-1-philmd@linaro.org>
+ <20250115232247.30364-2-philmd@linaro.org>
+From: Thomas Huth <thuth@redhat.com>
+Content-Language: en-US
+Autocrypt: addr=thuth@redhat.com; keydata=
+ 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
+In-Reply-To: <20250115232247.30364-2-philmd@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=thuth@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -39
-X-Spam_score: -4.0
-X-Spam_bar: ----
-X-Spam_report: (-4.0 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.093,
+X-Spam_score_int: -21
+X-Spam_score: -2.2
+X-Spam_bar: --
+X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.093,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-1.797,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -103,128 +162,32 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The following changes since commit 6528013b5f5ba6bb3934b7f5fe57a3110680530f:
+On 16/01/2025 00.22, Philippe Mathieu-Daudé wrote:
+> We removed the implementations in commit 46a2bd52571
+> ("hw/i386/pc: Remove deprecated pc-i440fx-2.3 machine")
+> but forgot to remove the declarations. Do it now.
+> 
+> Fixes: 46a2bd52571 ("hw/i386/pc: Remove deprecated pc-i440fx-2.3 machine")
+> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+> ---
+>   include/hw/i386/pc.h | 3 ---
+>   1 file changed, 3 deletions(-)
+> 
+> diff --git a/include/hw/i386/pc.h b/include/hw/i386/pc.h
+> index a558705cb9a..103b54301f8 100644
+> --- a/include/hw/i386/pc.h
+> +++ b/include/hw/i386/pc.h
+> @@ -302,9 +302,6 @@ extern const size_t pc_compat_2_5_len;
+>   extern GlobalProperty pc_compat_2_4[];
+>   extern const size_t pc_compat_2_4_len;
+>   
+> -extern GlobalProperty pc_compat_2_3[];
+> -extern const size_t pc_compat_2_3_len;
+> -
+>   #define DEFINE_PC_MACHINE(suffix, namestr, initfn, optsfn) \
+>       static void pc_machine_##suffix##_class_init(ObjectClass *oc, void *data) \
+>       { \
 
-  Merge tag 'qga-pull-2025-01-06' of https://github.com/kostyanf14/qemu into staging (2025-01-06 09:39:02 -0500)
-
-are available in the Git repository at:
-
-  https://gitlab.com/bonzini/qemu.git tags/for-upstream
-
-for you to fetch changes up to 99a637a86f55c8486b06c698656befdf012eec4d:
-
-  i386/cpu: Set and track CPUID_EXT3_CMP_LEG in env->features[FEAT_8000_0001_ECX] (2025-01-10 23:34:45 +0100)
-
-----------------------------------------------------------------
-* rust: miscellaneous changes
-* target/i386: small code generation improvements
-* target/i386: various cleanups and fixes
-* cpu: remove env->nr_cores
-
-----------------------------------------------------------------
-Paolo Bonzini (19):
-      rust: fix --enable-debug-mutex
-      rust: add --check-cfg test to rustc arguments
-      rust: qom: add ParentField
-      rust: add a utility module for compile-time type checks
-      rust: macros: check that #[derive(Object)] requires #[repr(C)]
-      rust: macros: check that the first field of a #[derive(Object)] struct is a ParentField
-      rust: qom: automatically use Drop trait to implement instance_finalize
-      rust: qom: move device_id to PL011 class side
-      rust: pl011: only leave embedded object initialization in instance_init
-      rust: qom: make INSTANCE_POST_INIT take a shared reference
-      rust: qemu-api-macros: extend error reporting facility to parse errors
-      rust: qemu-api-macros: add automatic TryFrom/TryInto derivation
-      rust: qdev: expose inherited methods to subclasses of SysBusDevice
-      rust: hide warnings for subprojects
-      qom: remove unused field
-      make-release: only leave tarball of wrap-file subprojects
-      target/i386: improve code generation for BT
-      target/i386: use shr to load high-byte registers into T0/T1
-      target/i386/kvm: Replace ARRAY_SIZE(msr_handlers) with KVM_MSR_FILTER_MAX_RANGES
-
-Xiaoyao Li (10):
-      i386/cpu: Extract a common fucntion to setup value of MSR_CORE_THREAD_COUNT
-      i386/cpu: Drop the variable smp_cores and smp_threads in x86_cpu_pre_plug()
-      i386/cpu: Drop cores_per_pkg in cpu_x86_cpuid()
-      i386/topology: Update the comment of x86_apicid_from_topo_ids()
-      i386/topology: Introduce helpers for various topology info of different level
-      i386/cpu: Track a X86CPUTopoInfo directly in CPUX86State
-      i386/cpu: Hoist check of CPUID_EXT3_TOPOEXT against threads_per_core
-      cpu: Remove nr_cores from struct CPUState
-      i386/cpu: Set up CPUID_HT in x86_cpu_expand_features() instead of cpu_x86_cpuid()
-      i386/cpu: Set and track CPUID_EXT3_CMP_LEG in env->features[FEAT_8000_0001_ECX]
-
-Zhao Liu (9):
-      i386/cpu: Mark avx10_version filtered when prefix is NULL
-      target/i386/kvm: Add feature bit definitions for KVM CPUID
-      target/i386/kvm: Remove local MSR_KVM_WALL_CLOCK and MSR_KVM_SYSTEM_TIME definitions
-      target/i386/kvm: Only save/load kvmclock MSRs when kvmclock enabled
-      target/i386/kvm: Drop workaround for KVM_X86_DISABLE_EXITS_HTL typo
-      target/i386/confidential-guest: Fix comment of x86_confidential_guest_kvm_type()
-      target/i386/kvm: Clean up return values of MSR filter related functions
-      target/i386/kvm: Return -1 when kvm_msr_energy_thread_init() fails
-      target/i386/kvm: Clean up error handling in kvm_arch_init()
-
- include/hw/core/cpu.h                              |   2 -
- include/hw/i386/topology.h                         |  30 +++-
- include/qom/object.h                               |   5 +-
- target/i386/confidential-guest.h                   |   2 +-
- target/i386/cpu.h                                  |  31 +++-
- hw/core/cpu-common.c                               |   1 -
- hw/i386/kvm/clock.c                                |   5 +-
- hw/i386/x86-common.c                               |  22 +--
- qom/object.c                                       |   1 -
- system/cpus.c                                      |   1 -
- target/i386/cpu-system.c                           |  11 ++
- target/i386/cpu.c                                  | 119 ++++++-------
- target/i386/hvf/x86_emu.c                          |   3 +-
- target/i386/kvm/kvm.c                              | 197 ++++++++++-----------
- target/i386/tcg/system/misc_helper.c               |   3 +-
- target/i386/tcg/translate.c                        |   2 +-
- target/i386/tcg/emit.c.inc                         |  59 ++++--
- rust/hw/char/pl011/src/device.rs                   |  79 ++++-----
- rust/hw/char/pl011/src/lib.rs                      |  28 +--
- rust/qemu-api-macros/src/lib.rs                    | 150 ++++++++++++----
- rust/qemu-api-macros/src/utils.rs                  |  26 +++
- rust/qemu-api/meson.build                          |   3 +-
- rust/qemu-api/src/assertions.rs                    |  90 ++++++++++
- rust/qemu-api/src/irq.rs                           |   3 +-
- rust/qemu-api/src/lib.rs                           |   1 +
- rust/qemu-api/src/prelude.rs                       |   2 +
- rust/qemu-api/src/qom.rs                           |  85 +++++++--
- rust/qemu-api/src/sysbus.rs                        |  23 ++-
- rust/qemu-api/tests/tests.rs                       |   4 +-
- scripts/make-release                               |  31 +++-
- scripts/rust/rustc_args.py                         |   2 +
- subprojects/arbitrary-int-1-rs.wrap                |   3 +
- subprojects/bilge-0.2-rs.wrap                      |   3 +
- subprojects/bilge-impl-0.2-rs.wrap                 |   3 +
- subprojects/either-1-rs.wrap                       |   3 +
- subprojects/itertools-0.11-rs.wrap                 |   3 +
- .../packagefiles/arbitrary-int-1-rs/meson.build    |   1 +
- subprojects/packagefiles/bilge-0.2-rs/meson.build  |   1 +
- .../packagefiles/bilge-impl-0.2-rs/meson.build     |   1 +
- subprojects/packagefiles/either-1-rs/meson.build   |   1 +
- .../packagefiles/itertools-0.11-rs/meson.build     |   1 +
- .../packagefiles/proc-macro-error-1-rs/meson.build |   1 +
- .../proc-macro-error-attr-1-rs/meson.build         |   1 +
- .../packagefiles/proc-macro2-1-rs/meson.build      |   1 +
- subprojects/packagefiles/quote-1-rs/meson.build    |   1 +
- subprojects/packagefiles/syn-2-rs/meson.build      |   1 +
- .../packagefiles/unicode-ident-1-rs/meson.build    |   1 +
- subprojects/proc-macro-error-1-rs.wrap             |   3 +
- subprojects/proc-macro-error-attr-1-rs.wrap        |   3 +
- subprojects/proc-macro2-1-rs.wrap                  |   3 +
- subprojects/quote-1-rs.wrap                        |   3 +
- subprojects/syn-2-rs.wrap                          |   3 +
- subprojects/unicode-ident-1-rs.wrap                |   3 +
- subprojects/unicode-ident-1-rs/meson.build         |  20 ---
- 54 files changed, 716 insertions(+), 369 deletions(-)
- create mode 100644 rust/qemu-api-macros/src/utils.rs
- create mode 100644 rust/qemu-api/src/assertions.rs
- delete mode 100644 subprojects/unicode-ident-1-rs/meson.build
--- 
-2.47.1
+Reviewed-by: Thomas Huth <thuth@redhat.com>
 
 
