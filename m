@@ -4,81 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D3B29C02183
-	for <qemu-devel@archiver.kernel.org>; Fri, 17 Jan 2025 18:27:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3A592C02185
+	for <qemu-devel@archiver.kernel.org>; Fri, 17 Jan 2025 18:29:00 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tYr2C-0004An-Lw; Fri, 17 Jan 2025 13:25:32 -0500
+	id 1tYr1y-00044c-1o; Fri, 17 Jan 2025 13:25:18 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1tYr22-000480-TG
- for qemu-devel@nongnu.org; Fri, 17 Jan 2025 13:25:22 -0500
-Received: from mail-pl1-x62e.google.com ([2607:f8b0:4864:20::62e])
+ id 1tYr1v-000418-C3
+ for qemu-devel@nongnu.org; Fri, 17 Jan 2025 13:25:15 -0500
+Received: from mail-pl1-x62f.google.com ([2607:f8b0:4864:20::62f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1tYr20-0007th-O8
- for qemu-devel@nongnu.org; Fri, 17 Jan 2025 13:25:22 -0500
-Received: by mail-pl1-x62e.google.com with SMTP id
- d9443c01a7336-216426b0865so44701975ad.0
- for <qemu-devel@nongnu.org>; Fri, 17 Jan 2025 10:25:19 -0800 (PST)
+ id 1tYr1t-0007rq-MO
+ for qemu-devel@nongnu.org; Fri, 17 Jan 2025 13:25:15 -0500
+Received: by mail-pl1-x62f.google.com with SMTP id
+ d9443c01a7336-21bc1512a63so49513685ad.1
+ for <qemu-devel@nongnu.org>; Fri, 17 Jan 2025 10:25:13 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1737138319; x=1737743119; darn=nongnu.org;
+ d=linaro.org; s=google; t=1737138311; x=1737743111; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=RfehOVGpYzJP7vz2pYEfQuMJrNb2n6xjeloWGc8gxK8=;
- b=A2hrSIniJ4KAi1gdqkwVpXd5e29kphY1Eiw0bk63Lr3+KbuoAvS9d7hqbeexi8g85B
- kddCFzpS1m9A40t3ovKwm4vX7Rj+HQjLm34Ux9goUJhpOyjL3nATH1z8BebXe0QO26qY
- txnj8ei7T0et/Ob4BzSc5kuCtE0QdAUuew+qc9dpUYBSutt03+fVjQB5GXmvDALl26Xs
- 8lL3nfXQGwYb1WlL1ptVaLtsIKdMTrxeRn9GqobunL75sdppKPrycJbj6sSO0WIKwZBP
- rJ8vokMm1Yj5z41Mr8dd+g8/qF1QlW/YTnDC2CLVuFHaUajXmBe6Bfl+HKW//+NFGd92
- acVg==
+ bh=odcV7Gvy5Hf81zTlTs/tKp0bKYUPWk8WsxFIWicd3Ik=;
+ b=P9PQNNq/7zecUpSDw7BAS4XFwvsmguoLZBmCim0vhaF4UHvmeCIW6LqGZQq/Jpf6YI
+ dkIaOJ+V4R9nlRQCDd4UogWwwBe9SPF29lj2P7m/9DFdSRs1vQ8U6tIekv76/Vtb/qAx
+ 5JIPHHqnkEyxhHmD1xPknzL4PTH5SLYnZPTb0ktnnO3Z4GHILj5D4z8Zjrayrr9R/d81
+ WxoyuUsd3voks8cglcohfdngs92k/ePoMWoceQvurkJI95NzHFFnghwtWaco0Ui3XOi6
+ x6nTVw6gw+kvodzrs8JhqMIAVbzfCETGLSvjQu073Zvgr4BsTChHDg8MpKc8DaYc+bzW
+ UtLw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1737138319; x=1737743119;
+ d=1e100.net; s=20230601; t=1737138311; x=1737743111;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=RfehOVGpYzJP7vz2pYEfQuMJrNb2n6xjeloWGc8gxK8=;
- b=TwUkOUUakQe+Fowm5z24zCxFE3Laifn9nuaw9ZhmyVK1fEG4kwuXqZ07ex6Anz70Ey
- TgNKMcP5cYdkMn8ExX9KhvZraeTckaFh/UpoyOQxdd7LGXnEzKu/FBtppYfmGDU+12A0
- k3jOkqjbo9F71bdTJYmhkhz2yi18bp5PBQjbbG39qS47l6GlvanHi797s85BiKZVFPYm
- +AOpPpRewXbdZNzhbe+KChMaYzhKz6KuxC3g6DPi0tsV8DMP7daxhKKRIp54ds34T5+8
- 8P7sIVQ96SlQceaFS67CfNZCcLPiQLGCA4qlH0thnBt6MNf2SKMoa2NNu56rLqADjcOE
- K/rg==
-X-Gm-Message-State: AOJu0Yx1rjA2gd+RdiqelKyKalUwGruzJ17semBM/BLcKZr5MrLJa6W0
- Lw7HsvOet1bzHWKay7xDVpeZdidgdUIgWmr6oV/wCKsfzZQSwOJj1Bz4/XDdFP4zYd7Y4sL20KP
- 6
-X-Gm-Gg: ASbGncsOaZCF5T1lp8rwj2Lo5kmdKALQ4y9oo1eajTd6pPZGSnUkWPPp5QO+HMHwb8Z
- 34d2lmI3G6Qwy3F0hTJOYdiyt5ot3grg/VLtk92gtF6/6V6iGAh6/0fNnbzrOo7c68lGrKlZycJ
- zTtiqF7gEKO0fIlWTSMRct2/w501dK6k0fLaogCOTiBgfuHKd8UoV3Gz+zcIwuFegv8rU6+YugJ
- pP5e/DIX/uAlOSpMjR7yxKR5r1EwD0nPrs71vYgO6cwK+d2zMPnCrePdFgByCzQ5kaNA4TwwTJO
- n1g6GGnp3ByabYU=
-X-Google-Smtp-Source: AGHT+IF6ijrxRnmVt5ovijKbUn8cIc2F9LBix6b5JAoWLhYDv1y4dQWn6KYx45beRX53xsWr8HkIyw==
-X-Received: by 2002:a17:902:e94f:b0:216:53fa:634f with SMTP id
- d9443c01a7336-21c355f6e31mr56756145ad.48.1737138318888; 
- Fri, 17 Jan 2025 10:25:18 -0800 (PST)
+ bh=odcV7Gvy5Hf81zTlTs/tKp0bKYUPWk8WsxFIWicd3Ik=;
+ b=isFeOV3qGViXO/eN8fHTbQwHhRLcyokcPlUzYvWLUEp1yIYY/QNUwOTXv18FsiZYp5
+ Ny+w7zvBRrvkoVHXF+VCA77d/lFL1WpVcIrBU0LAQAsgulxK0sXHNTIFj+44zB4AJGMg
+ Ci7orVh22pPpmxH3XTeYcvKdxQ0gim35/pzg5JNpxgdtcZ3a41NPsYAc4SzUlDHwJ5rG
+ haJmkTCFpb8iZYXQHp0+gz3l2ARAqwr5w6oNgo6MI/onlG+AT/JGFoFaaRKACdWxXgC9
+ mWFOE6Efcyn1ju4R4e6XHueXn5cd0ib28tzzPaPZnBeZUIn35eQb3V/xbb/61f2l4I+1
+ tDeA==
+X-Gm-Message-State: AOJu0YzK4LG8v7gPintP2Jn9PbmoETNdQ/uDIBs8HvzkrLJIVUKV1pfj
+ AFyL9REjXXv9eC3Vv18+vtkRNfbGVEHTM3lqcF1A2Ki7VN3vZbTbse14xjmGQMoq0TLB6kA1+Ck
+ c
+X-Gm-Gg: ASbGncsQ2ZCHnzVIx5YHbvE4lAwDHXOckjQT1k7LsM6Zr06WWw3qc7RG4UhubkSjHCy
+ GFFHXQ7SVvJMwQm3YofH9RfRj5NX2pyG6hRVsl3vwyPsJLzwjz3iL9QkClBpU3K3DYKOkA7Yh2a
+ EcziOA7V0+KyP3QLeFcIPJKfdKffzA4YLszVh51QhdqPb/N7P3ovcCadFVd7l8trvIHlUVhbH/B
+ 5ZlJuPbxj/eaLHI8raqoPWMc/VM5Cv7KSZSaja7QmOdh7NgJvh4z8PPqm6szQMywJhXPn5DNLuY
+ vhb8netVsdbXYD0=
+X-Google-Smtp-Source: AGHT+IGqVOR6ioxk61jvEJgmaM/7sg7TAczDzlPXJJrEn1aS/na1Ca4B7Lm6qbw+WJ1Ad07xu1opug==
+X-Received: by 2002:a17:902:da8b:b0:215:9642:4d7a with SMTP id
+ d9443c01a7336-21c34cc9574mr49719305ad.0.1737138310714; 
+ Fri, 17 Jan 2025 10:25:10 -0800 (PST)
 Received: from stoup.. (174-21-71-127.tukw.qwest.net. [174.21.71.127])
  by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-21c2d3acccesm18879005ad.123.2025.01.17.10.25.18
+ d9443c01a7336-21c2d3acccesm18879005ad.123.2025.01.17.10.25.10
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 17 Jan 2025 10:25:18 -0800 (PST)
+ Fri, 17 Jan 2025 10:25:10 -0800 (PST)
 From: Richard Henderson <richard.henderson@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PULL 28/68] tcg/s390x: Extract TCG_TARGET_HAS_foo defs to
- 'tcg-target-has.h'
-Date: Fri, 17 Jan 2025 10:24:16 -0800
-Message-ID: <20250117182456.2077110-29-richard.henderson@linaro.org>
+Subject: [PULL 18/68] tcg: Move fallback tcg_can_emit_vec_op out of line
+Date: Fri, 17 Jan 2025 10:24:06 -0800
+Message-ID: <20250117182456.2077110-19-richard.henderson@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20250117182456.2077110-1-richard.henderson@linaro.org>
 References: <20250117182456.2077110-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::62e;
- envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x62e.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::62f;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x62f.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -101,270 +100,52 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
-Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Message-ID: <20250108215156.8731-11-philmd@linaro.org>
----
- tcg/s390x/tcg-target-has.h | 124 +++++++++++++++++++++++++++++++++++++
- tcg/s390x/tcg-target.h     | 114 +---------------------------------
- 2 files changed, 125 insertions(+), 113 deletions(-)
- create mode 100644 tcg/s390x/tcg-target-has.h
+Don't reference TCG_TARGET_MAYBE_vec in a public header.
 
-diff --git a/tcg/s390x/tcg-target-has.h b/tcg/s390x/tcg-target-has.h
-new file mode 100644
-index 0000000000..4992d74f12
---- /dev/null
-+++ b/tcg/s390x/tcg-target-has.h
-@@ -0,0 +1,124 @@
-+/* SPDX-License-Identifier: MIT */
-+/*
-+ * Define target-specific opcode support
-+ * Copyright (c) 2009 Ulrich Hecht <uli@suse.de>
-+ */
-+
-+#ifndef TCG_TARGET_HAS_H
-+#define TCG_TARGET_HAS_H
-+
-+/* Facilities required for proper operation; checked at startup. */
-+
-+#define FACILITY_ZARCH_ACTIVE         2
-+#define FACILITY_LONG_DISP            18
-+#define FACILITY_EXT_IMM              21
-+#define FACILITY_GEN_INST_EXT         34
-+#define FACILITY_45                   45
-+
-+/* Facilities that are checked at runtime. */
-+
-+#define FACILITY_LOAD_ON_COND2        53
-+#define FACILITY_MISC_INSN_EXT2       58
-+#define FACILITY_MISC_INSN_EXT3       61
-+#define FACILITY_VECTOR               129
-+#define FACILITY_VECTOR_ENH1          135
-+
-+extern uint64_t s390_facilities[3];
-+
-+#define HAVE_FACILITY(X) \
-+    ((s390_facilities[FACILITY_##X / 64] >> (63 - FACILITY_##X % 64)) & 1)
-+
-+/* optional instructions */
-+#define TCG_TARGET_HAS_div2_i32       1
-+#define TCG_TARGET_HAS_rot_i32        1
-+#define TCG_TARGET_HAS_ext8s_i32      1
-+#define TCG_TARGET_HAS_ext16s_i32     1
-+#define TCG_TARGET_HAS_ext8u_i32      1
-+#define TCG_TARGET_HAS_ext16u_i32     1
-+#define TCG_TARGET_HAS_bswap16_i32    1
-+#define TCG_TARGET_HAS_bswap32_i32    1
-+#define TCG_TARGET_HAS_not_i32        HAVE_FACILITY(MISC_INSN_EXT3)
-+#define TCG_TARGET_HAS_andc_i32       HAVE_FACILITY(MISC_INSN_EXT3)
-+#define TCG_TARGET_HAS_orc_i32        HAVE_FACILITY(MISC_INSN_EXT3)
-+#define TCG_TARGET_HAS_eqv_i32        HAVE_FACILITY(MISC_INSN_EXT3)
-+#define TCG_TARGET_HAS_nand_i32       HAVE_FACILITY(MISC_INSN_EXT3)
-+#define TCG_TARGET_HAS_nor_i32        HAVE_FACILITY(MISC_INSN_EXT3)
-+#define TCG_TARGET_HAS_clz_i32        0
-+#define TCG_TARGET_HAS_ctz_i32        0
-+#define TCG_TARGET_HAS_ctpop_i32      1
-+#define TCG_TARGET_HAS_deposit_i32    1
-+#define TCG_TARGET_HAS_extract_i32    1
-+#define TCG_TARGET_HAS_sextract_i32   0
-+#define TCG_TARGET_HAS_extract2_i32   0
-+#define TCG_TARGET_HAS_negsetcond_i32 1
-+#define TCG_TARGET_HAS_add2_i32       1
-+#define TCG_TARGET_HAS_sub2_i32       1
-+#define TCG_TARGET_HAS_mulu2_i32      0
-+#define TCG_TARGET_HAS_muls2_i32      0
-+#define TCG_TARGET_HAS_muluh_i32      0
-+#define TCG_TARGET_HAS_mulsh_i32      0
-+#define TCG_TARGET_HAS_extr_i64_i32   0
-+#define TCG_TARGET_HAS_qemu_st8_i32   0
-+
-+#define TCG_TARGET_HAS_div2_i64       1
-+#define TCG_TARGET_HAS_rot_i64        1
-+#define TCG_TARGET_HAS_ext8s_i64      1
-+#define TCG_TARGET_HAS_ext16s_i64     1
-+#define TCG_TARGET_HAS_ext32s_i64     1
-+#define TCG_TARGET_HAS_ext8u_i64      1
-+#define TCG_TARGET_HAS_ext16u_i64     1
-+#define TCG_TARGET_HAS_ext32u_i64     1
-+#define TCG_TARGET_HAS_bswap16_i64    1
-+#define TCG_TARGET_HAS_bswap32_i64    1
-+#define TCG_TARGET_HAS_bswap64_i64    1
-+#define TCG_TARGET_HAS_not_i64        HAVE_FACILITY(MISC_INSN_EXT3)
-+#define TCG_TARGET_HAS_andc_i64       HAVE_FACILITY(MISC_INSN_EXT3)
-+#define TCG_TARGET_HAS_orc_i64        HAVE_FACILITY(MISC_INSN_EXT3)
-+#define TCG_TARGET_HAS_eqv_i64        HAVE_FACILITY(MISC_INSN_EXT3)
-+#define TCG_TARGET_HAS_nand_i64       HAVE_FACILITY(MISC_INSN_EXT3)
-+#define TCG_TARGET_HAS_nor_i64        HAVE_FACILITY(MISC_INSN_EXT3)
-+#define TCG_TARGET_HAS_clz_i64        1
-+#define TCG_TARGET_HAS_ctz_i64        0
-+#define TCG_TARGET_HAS_ctpop_i64      1
-+#define TCG_TARGET_HAS_deposit_i64    1
-+#define TCG_TARGET_HAS_extract_i64    1
-+#define TCG_TARGET_HAS_sextract_i64   0
-+#define TCG_TARGET_HAS_extract2_i64   0
-+#define TCG_TARGET_HAS_negsetcond_i64 1
-+#define TCG_TARGET_HAS_add2_i64       1
-+#define TCG_TARGET_HAS_sub2_i64       1
-+#define TCG_TARGET_HAS_mulu2_i64      1
-+#define TCG_TARGET_HAS_muls2_i64      HAVE_FACILITY(MISC_INSN_EXT2)
-+#define TCG_TARGET_HAS_muluh_i64      0
-+#define TCG_TARGET_HAS_mulsh_i64      0
-+
-+#define TCG_TARGET_HAS_qemu_ldst_i128 1
-+
-+#define TCG_TARGET_HAS_tst            1
-+
-+#define TCG_TARGET_HAS_v64            HAVE_FACILITY(VECTOR)
-+#define TCG_TARGET_HAS_v128           HAVE_FACILITY(VECTOR)
-+#define TCG_TARGET_HAS_v256           0
-+
-+#define TCG_TARGET_HAS_andc_vec       1
-+#define TCG_TARGET_HAS_orc_vec        HAVE_FACILITY(VECTOR_ENH1)
-+#define TCG_TARGET_HAS_nand_vec       HAVE_FACILITY(VECTOR_ENH1)
-+#define TCG_TARGET_HAS_nor_vec        1
-+#define TCG_TARGET_HAS_eqv_vec        HAVE_FACILITY(VECTOR_ENH1)
-+#define TCG_TARGET_HAS_not_vec        1
-+#define TCG_TARGET_HAS_neg_vec        1
-+#define TCG_TARGET_HAS_abs_vec        1
-+#define TCG_TARGET_HAS_roti_vec       1
-+#define TCG_TARGET_HAS_rots_vec       1
-+#define TCG_TARGET_HAS_rotv_vec       1
-+#define TCG_TARGET_HAS_shi_vec        1
-+#define TCG_TARGET_HAS_shs_vec        1
-+#define TCG_TARGET_HAS_shv_vec        1
-+#define TCG_TARGET_HAS_mul_vec        1
-+#define TCG_TARGET_HAS_sat_vec        0
-+#define TCG_TARGET_HAS_minmax_vec     1
-+#define TCG_TARGET_HAS_bitsel_vec     1
-+#define TCG_TARGET_HAS_cmpsel_vec     1
-+#define TCG_TARGET_HAS_tst_vec        0
-+
-+#endif
-diff --git a/tcg/s390x/tcg-target.h b/tcg/s390x/tcg-target.h
-index 223d3f6ca1..220ed68b1f 100644
---- a/tcg/s390x/tcg-target.h
-+++ b/tcg/s390x/tcg-target.h
-@@ -51,119 +51,7 @@ typedef enum TCGReg {
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+---
+ include/tcg/tcg.h | 7 -------
+ tcg/tcg.c         | 4 ++++
+ 2 files changed, 4 insertions(+), 7 deletions(-)
+
+diff --git a/include/tcg/tcg.h b/include/tcg/tcg.h
+index 2671321cb5..fc379bb122 100644
+--- a/include/tcg/tcg.h
++++ b/include/tcg/tcg.h
+@@ -1020,17 +1020,10 @@ extern tcg_prologue_fn *tcg_qemu_tb_exec;
  
- #define TCG_TARGET_NB_REGS 64
+ void tcg_register_jit(const void *buf, size_t buf_size);
  
--/* Facilities required for proper operation; checked at startup. */
--
--#define FACILITY_ZARCH_ACTIVE         2
--#define FACILITY_LONG_DISP            18
--#define FACILITY_EXT_IMM              21
--#define FACILITY_GEN_INST_EXT         34
--#define FACILITY_45                   45
--
--/* Facilities that are checked at runtime. */
--
--#define FACILITY_LOAD_ON_COND2        53
--#define FACILITY_MISC_INSN_EXT2       58
--#define FACILITY_MISC_INSN_EXT3       61
--#define FACILITY_VECTOR               129
--#define FACILITY_VECTOR_ENH1          135
--
--extern uint64_t s390_facilities[3];
--
--#define HAVE_FACILITY(X) \
--    ((s390_facilities[FACILITY_##X / 64] >> (63 - FACILITY_##X % 64)) & 1)
--
--/* optional instructions */
--#define TCG_TARGET_HAS_div2_i32       1
--#define TCG_TARGET_HAS_rot_i32        1
--#define TCG_TARGET_HAS_ext8s_i32      1
--#define TCG_TARGET_HAS_ext16s_i32     1
--#define TCG_TARGET_HAS_ext8u_i32      1
--#define TCG_TARGET_HAS_ext16u_i32     1
--#define TCG_TARGET_HAS_bswap16_i32    1
--#define TCG_TARGET_HAS_bswap32_i32    1
--#define TCG_TARGET_HAS_not_i32        HAVE_FACILITY(MISC_INSN_EXT3)
--#define TCG_TARGET_HAS_andc_i32       HAVE_FACILITY(MISC_INSN_EXT3)
--#define TCG_TARGET_HAS_orc_i32        HAVE_FACILITY(MISC_INSN_EXT3)
--#define TCG_TARGET_HAS_eqv_i32        HAVE_FACILITY(MISC_INSN_EXT3)
--#define TCG_TARGET_HAS_nand_i32       HAVE_FACILITY(MISC_INSN_EXT3)
--#define TCG_TARGET_HAS_nor_i32        HAVE_FACILITY(MISC_INSN_EXT3)
--#define TCG_TARGET_HAS_clz_i32        0
--#define TCG_TARGET_HAS_ctz_i32        0
--#define TCG_TARGET_HAS_ctpop_i32      1
--#define TCG_TARGET_HAS_deposit_i32    1
--#define TCG_TARGET_HAS_extract_i32    1
--#define TCG_TARGET_HAS_sextract_i32   0
--#define TCG_TARGET_HAS_extract2_i32   0
--#define TCG_TARGET_HAS_negsetcond_i32 1
--#define TCG_TARGET_HAS_add2_i32       1
--#define TCG_TARGET_HAS_sub2_i32       1
--#define TCG_TARGET_HAS_mulu2_i32      0
--#define TCG_TARGET_HAS_muls2_i32      0
--#define TCG_TARGET_HAS_muluh_i32      0
--#define TCG_TARGET_HAS_mulsh_i32      0
--#define TCG_TARGET_HAS_extr_i64_i32   0
--#define TCG_TARGET_HAS_qemu_st8_i32   0
--
--#define TCG_TARGET_HAS_div2_i64       1
--#define TCG_TARGET_HAS_rot_i64        1
--#define TCG_TARGET_HAS_ext8s_i64      1
--#define TCG_TARGET_HAS_ext16s_i64     1
--#define TCG_TARGET_HAS_ext32s_i64     1
--#define TCG_TARGET_HAS_ext8u_i64      1
--#define TCG_TARGET_HAS_ext16u_i64     1
--#define TCG_TARGET_HAS_ext32u_i64     1
--#define TCG_TARGET_HAS_bswap16_i64    1
--#define TCG_TARGET_HAS_bswap32_i64    1
--#define TCG_TARGET_HAS_bswap64_i64    1
--#define TCG_TARGET_HAS_not_i64        HAVE_FACILITY(MISC_INSN_EXT3)
--#define TCG_TARGET_HAS_andc_i64       HAVE_FACILITY(MISC_INSN_EXT3)
--#define TCG_TARGET_HAS_orc_i64        HAVE_FACILITY(MISC_INSN_EXT3)
--#define TCG_TARGET_HAS_eqv_i64        HAVE_FACILITY(MISC_INSN_EXT3)
--#define TCG_TARGET_HAS_nand_i64       HAVE_FACILITY(MISC_INSN_EXT3)
--#define TCG_TARGET_HAS_nor_i64        HAVE_FACILITY(MISC_INSN_EXT3)
--#define TCG_TARGET_HAS_clz_i64        1
--#define TCG_TARGET_HAS_ctz_i64        0
--#define TCG_TARGET_HAS_ctpop_i64      1
--#define TCG_TARGET_HAS_deposit_i64    1
--#define TCG_TARGET_HAS_extract_i64    1
--#define TCG_TARGET_HAS_sextract_i64   0
--#define TCG_TARGET_HAS_extract2_i64   0
--#define TCG_TARGET_HAS_negsetcond_i64 1
--#define TCG_TARGET_HAS_add2_i64       1
--#define TCG_TARGET_HAS_sub2_i64       1
--#define TCG_TARGET_HAS_mulu2_i64      1
--#define TCG_TARGET_HAS_muls2_i64      HAVE_FACILITY(MISC_INSN_EXT2)
--#define TCG_TARGET_HAS_muluh_i64      0
--#define TCG_TARGET_HAS_mulsh_i64      0
--
--#define TCG_TARGET_HAS_qemu_ldst_i128 1
--
--#define TCG_TARGET_HAS_tst            1
--
--#define TCG_TARGET_HAS_v64            HAVE_FACILITY(VECTOR)
--#define TCG_TARGET_HAS_v128           HAVE_FACILITY(VECTOR)
--#define TCG_TARGET_HAS_v256           0
--
--#define TCG_TARGET_HAS_andc_vec       1
--#define TCG_TARGET_HAS_orc_vec        HAVE_FACILITY(VECTOR_ENH1)
--#define TCG_TARGET_HAS_nand_vec       HAVE_FACILITY(VECTOR_ENH1)
--#define TCG_TARGET_HAS_nor_vec        1
--#define TCG_TARGET_HAS_eqv_vec        HAVE_FACILITY(VECTOR_ENH1)
--#define TCG_TARGET_HAS_not_vec        1
--#define TCG_TARGET_HAS_neg_vec        1
--#define TCG_TARGET_HAS_abs_vec        1
--#define TCG_TARGET_HAS_roti_vec       1
--#define TCG_TARGET_HAS_rots_vec       1
--#define TCG_TARGET_HAS_rotv_vec       1
--#define TCG_TARGET_HAS_shi_vec        1
--#define TCG_TARGET_HAS_shs_vec        1
--#define TCG_TARGET_HAS_shv_vec        1
--#define TCG_TARGET_HAS_mul_vec        1
--#define TCG_TARGET_HAS_sat_vec        0
--#define TCG_TARGET_HAS_minmax_vec     1
--#define TCG_TARGET_HAS_bitsel_vec     1
--#define TCG_TARGET_HAS_cmpsel_vec     1
--#define TCG_TARGET_HAS_tst_vec        0
-+#include "tcg-target-has.h"
+-#if TCG_TARGET_MAYBE_vec
+ /* Return zero if the tuple (opc, type, vece) is unsupportable;
+    return > 0 if it is directly supportable;
+    return < 0 if we must call tcg_expand_vec_op.  */
+ int tcg_can_emit_vec_op(TCGOpcode, TCGType, unsigned);
+-#else
+-static inline int tcg_can_emit_vec_op(TCGOpcode o, TCGType t, unsigned ve)
+-{
+-    return 0;
+-}
+-#endif
  
- #define TCG_TARGET_DEFAULT_MO (TCG_MO_ALL & ~TCG_MO_ST_LD)
- 
+ /* Expand the tuple (opc, type, vece) on the given arguments.  */
+ void tcg_expand_vec_op(TCGOpcode, TCGType, unsigned, TCGArg, ...);
+diff --git a/tcg/tcg.c b/tcg/tcg.c
+index 7f5d014973..505e43c128 100644
+--- a/tcg/tcg.c
++++ b/tcg/tcg.c
+@@ -170,6 +170,10 @@ static inline void tcg_out_vec_op(TCGContext *s, TCGOpcode opc,
+ {
+     g_assert_not_reached();
+ }
++int tcg_can_emit_vec_op(TCGOpcode o, TCGType t, unsigned ve)
++{
++    return 0;
++}
+ #endif
+ static void tcg_out_st(TCGContext *s, TCGType type, TCGReg arg, TCGReg arg1,
+                        intptr_t arg2);
 -- 
 2.43.0
 
