@@ -4,36 +4,35 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5EA28C02185
-	for <qemu-devel@archiver.kernel.org>; Fri, 17 Jan 2025 06:26:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DAD34C02183
+	for <qemu-devel@archiver.kernel.org>; Fri, 17 Jan 2025 06:30:26 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tYfo7-0006FY-WF; Fri, 17 Jan 2025 01:26:16 -0500
+	id 1tYfrf-0006zO-CC; Fri, 17 Jan 2025 01:29:55 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1tYfo6-0006FE-0W; Fri, 17 Jan 2025 01:26:14 -0500
+ id 1tYfrd-0006yo-Jg; Fri, 17 Jan 2025 01:29:53 -0500
 Received: from isrv.corpit.ru ([86.62.121.231])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1tYfo4-0001bm-AE; Fri, 17 Jan 2025 01:26:13 -0500
+ id 1tYfrb-0002kM-Jr; Fri, 17 Jan 2025 01:29:53 -0500
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id A5C22D96F5;
- Fri, 17 Jan 2025 09:26:02 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id 87C86D96F8;
+ Fri, 17 Jan 2025 09:29:41 +0300 (MSK)
 Received: from [192.168.177.130] (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id A676F19D09A;
- Fri, 17 Jan 2025 09:26:10 +0300 (MSK)
-Message-ID: <32fa246e-0fd1-4fbb-a4d8-ad2ad11a4fe8@tls.msk.ru>
-Date: Fri, 17 Jan 2025 09:26:10 +0300
+ by tsrv.corpit.ru (Postfix) with ESMTP id 8697519D09B;
+ Fri, 17 Jan 2025 09:29:49 +0300 (MSK)
+Message-ID: <1e110577-8784-4c6c-8d2c-f4f0c1321eb4@tls.msk.ru>
+Date: Fri, 17 Jan 2025 09:29:49 +0300
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] pci/msix: Fix msix pba read vector poll end calculation
-To: Nicholas Piggin <npiggin@gmail.com>, qemu-devel@nongnu.org
-Cc: "Michael S. Tsirkin" <mst@redhat.com>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- qemu-stable <qemu-stable@nongnu.org>
-References: <20241212120402.1475053-1-npiggin@gmail.com>
+Subject: Re: [PATCH 2/3] pci: acpi: Windows 'PCI Label Id' bug workaround
+To: Igor Mammedov <imammedo@redhat.com>, qemu-devel@nongnu.org
+Cc: mst@redhat.com, anisinha@redhat.com, qemu-stable <qemu-stable@nongnu.org>
+References: <20250115125342.3883374-1-imammedo@redhat.com>
+ <20250115125342.3883374-3-imammedo@redhat.com>
 Content-Language: en-US, ru-RU
 From: Michael Tokarev <mjt@tls.msk.ru>
 Autocrypt: addr=mjt@tls.msk.ru; keydata=
@@ -79,7 +78,7 @@ Autocrypt: addr=mjt@tls.msk.ru; keydata=
  YPkzzso6HT7rlapB5nulYmplJZSZ4RmE1ATZKf+wUPocDu6N10LtBNbwHWTT5NLtxNJAJAvl
  ojis6H1kRWZE/n5buyPY2NYeyWfjjrerOYt3er55n4C1I88RSCTGeejVmXWuo65QD2epvzE6
  3GgKngeVm7shlp7+d3D3+fAAHTvulQQqV3jOodz+B4yzuZ7WljkNrmrWrH8aI4uA98c=
-In-Reply-To: <20241212120402.1475053-1-npiggin@gmail.com>
+In-Reply-To: <20250115125342.3883374-3-imammedo@redhat.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 Received-SPF: pass client-ip=86.62.121.231; envelope-from=mjt@tls.msk.ru;
@@ -105,31 +104,99 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-12.12.2024 15:04, Nicholas Piggin wrote:
-> The end vector calculation has a bug that results in polling fewer
-> than required vectors when reading at a non-zero offset in PBA memory.
+15.01.2025 15:53, Igor Mammedov wrote:
+> Current versions of Windows call _DSM(func=7) regardless
+> of whether it is supported or not. It leads to NICs having bogus
+> 'PCI Label Id = 0', where none should be set at all.
 > 
-> Fixes: bbef882cc193 ("msi: add API to get notified about pending bit poll")
-> Signed-off-by: Nicholas Piggin <npiggin@gmail.com>
+> Also presence of 'PCI Label Id' triggers another Windows bug
+> on localized versions that leads to hangs. The later bug is fixed
+> in latest updates for 'Windows Server' but not in consumer
+> versions of Windows (and there is no plans to fix it
+> as far as I'm aware).
+> 
+> Given it's easy, implement Microsoft suggested workaround
+> (return invalid Package) so that affected Windows versions
+> could boot on QEMU.
+> This would effectvely remove bogus 'PCI Label Id's on NICs,
+> but MS teem confirmed that flipping 'PCI Label Id' should not
+> change 'Network Connection' ennumeration, so it should be safe
+> for QEMU to change _DSM without any compat code.
 
-This smells like a qemu-stable material?
-Though given the bug age, maybe not?
+While this is not a qemu bug fix, this change feels like a good
+candidate for qemu-stable, - what do you think?  I picked it up
+for current stable series, which are 7.2, 8.2, 9.1 and 9.2.
 
 Thanks,
 
 /mjt
 
-> diff --git a/hw/pci/msix.c b/hw/pci/msix.c
-> index 487e49834ee..cc6e79ec678 100644
-> --- a/hw/pci/msix.c
-> +++ b/hw/pci/msix.c
-> @@ -250,7 +250,7 @@ static uint64_t msix_pba_mmio_read(void *opaque, hwaddr addr,
->       PCIDevice *dev = opaque;
->       if (dev->msix_vector_poll_notifier) {
->           unsigned vector_start = addr * 8;
-> -        unsigned vector_end = MIN(addr + size * 8, dev->msix_entries_nr);
-> +        unsigned vector_end = MIN((addr + size) * 8, dev->msix_entries_nr);
->           dev->msix_vector_poll_notifier(dev, vector_start, vector_end);
+> Smoke tested with WinXP and WS2022
+> Resolves: https://gitlab.com/qemu-project/qemu/-/issues/774
+> Signed-off-by: Igor Mammedov <imammedo@redhat.com>
+> ---
+>   hw/i386/acpi-build.c | 33 +++++++++++++++++++++++----------
+>   1 file changed, 23 insertions(+), 10 deletions(-)
+> 
+> diff --git a/hw/i386/acpi-build.c b/hw/i386/acpi-build.c
+> index 733b8f0851..1311a0d4f3 100644
+> --- a/hw/i386/acpi-build.c
+> +++ b/hw/i386/acpi-build.c
+> @@ -654,6 +654,7 @@ static Aml *aml_pci_pdsm(void)
+>       Aml *acpi_index = aml_local(2);
+>       Aml *zero = aml_int(0);
+>       Aml *one = aml_int(1);
+> +    Aml *not_supp = aml_int(0xFFFFFFFF);
+>       Aml *func = aml_arg(2);
+>       Aml *params = aml_arg(4);
+>       Aml *bnum = aml_derefof(aml_index(params, aml_int(0)));
+> @@ -678,7 +679,7 @@ static Aml *aml_pci_pdsm(void)
+>            */
+>           ifctx1 = aml_if(aml_lnot(
+>                        aml_or(aml_equal(acpi_index, zero),
+> -                            aml_equal(acpi_index, aml_int(0xFFFFFFFF)), NULL)
+> +                            aml_equal(acpi_index, not_supp), NULL)
+>                    ));
+>           {
+>               /* have supported functions */
+> @@ -704,18 +705,30 @@ static Aml *aml_pci_pdsm(void)
+>       {
+>          Aml *pkg = aml_package(2);
+>   
+> -       aml_append(pkg, zero);
+> -       /*
+> -        * optional, if not impl. should return null string
+> -        */
+> -       aml_append(pkg, aml_string("%s", ""));
+> -       aml_append(ifctx, aml_store(pkg, ret));
+> -
+>          aml_append(ifctx, aml_store(aml_call2("AIDX", bnum, sunum), acpi_index));
+> +       aml_append(ifctx, aml_store(pkg, ret));
+>          /*
+> -        * update acpi-index to actual value
+> +        * Windows calls func=7 without checking if it's available,
+> +        * as workaround Microsoft has suggested to return invalid for func7
+> +        * Package, so return 2 elements package but only initialize elements
+> +        * when acpi_index is supported and leave them uninitialized, which
+> +        * leads elements to being Uninitialized ObjectType and should trip
+> +        * Windows into discarding result as an unexpected and prevent setting
+> +        * bogus 'PCI Label' on the device.
+>           */
+> -       aml_append(ifctx, aml_store(acpi_index, aml_index(ret, zero)));
+> +       ifctx1 = aml_if(aml_lnot(aml_lor(
+> +                    aml_equal(acpi_index, zero), aml_equal(acpi_index, not_supp)
+> +                )));
+> +       {
+> +           aml_append(ifctx1, aml_store(acpi_index, aml_index(ret, zero)));
+> +           /*
+> +            * optional, if not impl. should return null string
+> +            */
+> +           aml_append(ifctx1, aml_store(aml_string("%s", ""),
+> +                                        aml_index(ret, one)));
+> +       }
+> +       aml_append(ifctx, ifctx1);
+> +
+>          aml_append(ifctx, aml_return(ret));
 >       }
 >   
 
