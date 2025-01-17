@@ -4,94 +4,96 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 519FEC02183
-	for <qemu-devel@archiver.kernel.org>; Fri, 17 Jan 2025 19:41:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 81214C02188
+	for <qemu-devel@archiver.kernel.org>; Fri, 17 Jan 2025 19:41:28 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tYsCo-0001Xz-64; Fri, 17 Jan 2025 14:40:34 -0500
+	id 1tYsCY-0001WD-JY; Fri, 17 Jan 2025 14:40:18 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1tYsCY-0001WI-U1
- for qemu-devel@nongnu.org; Fri, 17 Jan 2025 14:40:18 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ id 1tYsCW-0001Un-ST
+ for qemu-devel@nongnu.org; Fri, 17 Jan 2025 14:40:16 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1tYsCX-0002By-7N
- for qemu-devel@nongnu.org; Fri, 17 Jan 2025 14:40:18 -0500
+ id 1tYsCV-0002BS-A6
+ for qemu-devel@nongnu.org; Fri, 17 Jan 2025 14:40:16 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1737142816;
+ s=mimecast20190719; t=1737142814;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=ZfIMapRdAVK5cr8WH2cqZZ26cbMwLQZzS74QVu30oqU=;
- b=Mvu9r7f/GQPBUiOCvXWDC/5kZBuSYOFR2YAotJjtwNLQbLGk8TPv6d2nBdU9SrHdL08x1R
- SLpLjqq8NDSEliYnPZY+ffajd4dbkzcGLPpH9aLTLUx7CMEym8E1zDflOqzmeToZh9H4Bx
- LlyPkICmedGEL6JMY5W0FVscdEonPek=
-Received: from mail-ej1-f72.google.com (mail-ej1-f72.google.com
- [209.85.218.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=vaboZ+TQyEKNVXlrPQA7ag9T+Mayf0OWrnAczy+Hp9Q=;
+ b=d3Vmz48bnYP+Qw1+uHf3DQRcrcv9z22eIb4YuNGxtt5NyRQBAb56fYv6BVu3qFmwRoM0AK
+ yLAjbXaBRbcuFdEbGrFJaPpYv33sVGqxu6aBHIstSxXZxesRTLs/wFaZShGDyvA/3LkuCx
+ VJM3+NRbzp0hn9JvKxAEi5JUYJecaTU=
+Received: from mail-ed1-f70.google.com (mail-ed1-f70.google.com
+ [209.85.208.70]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-378-sEnvASvLNtqCzVie-0-fxQ-1; Fri, 17 Jan 2025 14:40:15 -0500
-X-MC-Unique: sEnvASvLNtqCzVie-0-fxQ-1
-X-Mimecast-MFC-AGG-ID: sEnvASvLNtqCzVie-0-fxQ
-Received: by mail-ej1-f72.google.com with SMTP id
- a640c23a62f3a-aa68203d288so195006666b.1
- for <qemu-devel@nongnu.org>; Fri, 17 Jan 2025 11:40:15 -0800 (PST)
+ us-mta-451-GozuQNAlMNil04DBgb2Rrw-1; Fri, 17 Jan 2025 14:40:13 -0500
+X-MC-Unique: GozuQNAlMNil04DBgb2Rrw-1
+X-Mimecast-MFC-AGG-ID: GozuQNAlMNil04DBgb2Rrw
+Received: by mail-ed1-f70.google.com with SMTP id
+ 4fb4d7f45d1cf-5d40c0c728aso2307609a12.2
+ for <qemu-devel@nongnu.org>; Fri, 17 Jan 2025 11:40:12 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1737142813; x=1737747613;
+ d=1e100.net; s=20230601; t=1737142810; x=1737747610;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=ZfIMapRdAVK5cr8WH2cqZZ26cbMwLQZzS74QVu30oqU=;
- b=NH3rYEHlYyZqlTpQpGjKlb/tDw/lmFmi7VONhC2OqiqKNX7DS8EZ7coH3oaVx5Qi81
- hpUkXQnF82aPoQczL07Rf/jCxkmCoSyQ2z2slsJ7yFrrv6oWtV0zjcvAG+vMJ/VxQkPk
- uwlnY89/CbrnLtznt+jJfoNrhd5wht81zQaa7TZf92Q7oHucf03UPgyoVkuETY7o9es6
- nHRCYOTlUgW4xpaEsUCQ/fdJADrYKBgx1G7fc7ezqr/gZshjtcgZgHZIEpSVst+Ez4hM
- 52xR8nuu0oQDE8LPNCCp8k2r7nI/fnFGsZEhdL2QZjQfhOGDhRKsVCLkyCpqfb+KQXVW
- AOvg==
-X-Gm-Message-State: AOJu0YxyZwbA+lYXlLI0bMnKcOuBj7xDdMtYZ07AOzSNmhQolBEkfk9P
- tVrVWherVib5nue3m6fFu0g5OSAjES3atihEhnZKDlfWYioogOXHhSpTlT4nfyNQlyx5fjE/WqL
- Hjw1bPIO9S1HxP2mUESVZbTlB0z4n4H/eQmPn5GzniSMSKusA2EIrqAEnaT0KU5KMPNxQb56WGt
- g0s0ZjIf+sEjQzzsY2GM2rCsFgqKWCPcoExshNRBs=
-X-Gm-Gg: ASbGnct9EIUzEW4/PymXIdpwFx7fmEzMObRcOBU7EFvAmB15tS9BBlx0Z9uu0wmdGNt
- cR8av+uwuHCQH09exyyiX9MgLfKUnjHFcdrwOcSuTj72GamGzF+OBbg8HjfeVdInS7fIYfBcFwu
- 9NS1R281+Ak8mpirTXLRjXKf0szFmpU8PGT6mGZqGGrrjhTWKn6y5lTgXwQxMbQfcGqdQsQMX34
- gb/ZwSF55KQn4RoxIUQ52Dt/NCNVySMPaWYph/GWQ/mNtuCV9uBaNzdLEA0SA==
-X-Received: by 2002:a17:907:2d2c:b0:ab2:faed:f180 with SMTP id
- a640c23a62f3a-ab38b18bf29mr409514666b.33.1737142813561; 
- Fri, 17 Jan 2025 11:40:13 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IH6cJ0/MWso21JFMAHR/UQKmDuyGQq4mE3BUGlnLZ6Bn+aB2bkitJngAEw5J+sh3QwdPAQFAg==
-X-Received: by 2002:a17:907:2d2c:b0:ab2:faed:f180 with SMTP id
- a640c23a62f3a-ab38b18bf29mr409512266b.33.1737142813111; 
- Fri, 17 Jan 2025 11:40:13 -0800 (PST)
+ bh=vaboZ+TQyEKNVXlrPQA7ag9T+Mayf0OWrnAczy+Hp9Q=;
+ b=mEZ/tuClcEZ9NUKCqzKGMJiOdl2owGMeeqvDpHUXMbChUIcDpX7vt+LlTYx0uwZ8n2
+ 3etDK1sNBxAsbjVLF5cRY9aHQ4NT0BAgLwcVykmwQiADASSbiJw8jmRb4AmtniMOrSOy
+ FmPRNgp0zpFvF5BJKxzGRjTSdn+hxyNk4DHs4b5oSKKGNXEcj+t3rXvJhw+rLRCzCmy1
+ I9QsDpaJGgFsSDzdg6WRV8EVCIIwqhGIO/bjzZZQO6UaU3n1ZVWamPd17uBK4zHAWGcm
+ Y6UcjGZfKY5M0qXWcx5SMpDTJu/zWHOXsTU/WU+gD9ukgaQN70Y3oEG3D3Nj82tUob3S
+ mG9w==
+X-Gm-Message-State: AOJu0Yx8SNpNwDLtEFUxdC85JoHFULeX+ofCY3syh13T7sVtw77QDH8t
+ nYC2JQy5oGOIdL2LfDGj6YwNJRAd///8Zr21DBTuc2IjrXMH3oeYvVFV2TMj+/jNW9pqnwHM7fp
+ bBxMt0p50wgcPVFyfqhRuFsqS+oLCj22p0RDGsmCX8gPV0nZu1EeVEkbzGj8d6DnNsi8joo8wOv
+ iBIQDfwy/to3n4aKlOr0DtuPSjJ+9dYoffdcs12A0=
+X-Gm-Gg: ASbGnctViUnbf7f88otu7UgzzDjqGPKzcdFhcjsiJXHQfPYo3FGDdzhvUt8+9zeLITa
+ KiipTTcJyZCaS0Ty7XrLzKxXioDFUfVDRa3ZyXXYWvoxLcu+PGnSSELrkRqjkhiOK1Be6csPCrU
+ Li/1ZggqapFaMtYsNo5SPQC6t1wN8W+WvQZJOVXuRTwAZ3tHLJJLiQOpHzalpchkrFFiHuemsRF
+ 7fsculqwv7h32LvGqKSQJNPz2Gu4ZvL9+Qrk/Py7xUdyrEsZ+6ZRkr6solH4g==
+X-Received: by 2002:a05:6402:524b:b0:5d0:9054:b119 with SMTP id
+ 4fb4d7f45d1cf-5db7db07787mr8615037a12.21.1737142810512; 
+ Fri, 17 Jan 2025 11:40:10 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IHDQN3/+dlRteAovEglF5VL6vxcKS7afffhvsgRaXODoQ26l5oelB3KyewP+DUvzPrRvfyxEA==
+X-Received: by 2002:a05:6402:524b:b0:5d0:9054:b119 with SMTP id
+ 4fb4d7f45d1cf-5db7db07787mr8614735a12.21.1737142807492; 
+ Fri, 17 Jan 2025 11:40:07 -0800 (PST)
 Received: from [192.168.10.47] ([176.206.124.70])
  by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-ab384ce1bacsm220439066b.53.2025.01.17.11.40.09
+ 4fb4d7f45d1cf-5db73642247sm1949804a12.2.2025.01.17.11.40.05
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 17 Jan 2025 11:40:09 -0800 (PST)
+ Fri, 17 Jan 2025 11:40:05 -0800 (PST)
 From: Paolo Bonzini <pbonzini@redhat.com>
 To: qemu-devel@nongnu.org
-Cc: qemu-rust@nongnu.org
-Subject: [PATCH 03/10] rust: qom: add object creation functionality
-Date: Fri, 17 Jan 2025 20:39:56 +0100
-Message-ID: <20250117194003.1173231-4-pbonzini@redhat.com>
+Cc: qemu-rust@nongnu.org,
+	Zhao Liu <zhao1.liu@intel.com>
+Subject: [PATCH 01/10] rust: qemu-api: add sub-subclass to the integration
+ tests
+Date: Fri, 17 Jan 2025 20:39:54 +0100
+Message-ID: <20250117194003.1173231-2-pbonzini@redhat.com>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20250117194003.1173231-1-pbonzini@redhat.com>
 References: <20250117194003.1173231-1-pbonzini@redhat.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=pbonzini@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -39
-X-Spam_score: -4.0
-X-Spam_bar: ----
-X-Spam_report: (-4.0 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.132,
+X-Spam_score_int: -21
+X-Spam_score: -2.2
+X-Spam_bar: --
+X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.132,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-1.79,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -107,171 +109,105 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The basic object lifecycle test can now be implemented using safe code!
+From: Zhao Liu <zhao1.liu@intel.com>
 
-Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
+missing signed-off-by from zhao
 ---
- rust/hw/char/pl011/src/device.rs | 13 ++++++++-----
- rust/qemu-api/src/prelude.rs     |  1 +
- rust/qemu-api/src/qom.rs         | 23 +++++++++++++++++++++--
- rust/qemu-api/tests/tests.rs     | 30 +++++++++++-------------------
- 4 files changed, 41 insertions(+), 26 deletions(-)
+ rust/qemu-api/tests/tests.rs | 56 ++++++++++++++++++++++++++++++++++--
+ 1 file changed, 53 insertions(+), 3 deletions(-)
 
-diff --git a/rust/hw/char/pl011/src/device.rs b/rust/hw/char/pl011/src/device.rs
-index 27563700665..d8409f3d310 100644
---- a/rust/hw/char/pl011/src/device.rs
-+++ b/rust/hw/char/pl011/src/device.rs
-@@ -690,15 +690,18 @@ pub fn post_load(&self, _version_id: u32) -> Result<(), ()> {
-     irq: qemu_irq,
-     chr: *mut Chardev,
- ) -> *mut DeviceState {
-+    let pl011 = PL011State::new();
-     unsafe {
--        let dev: *mut DeviceState = qdev_new(PL011State::TYPE_NAME.as_ptr());
--        let sysbus: *mut SysBusDevice = dev.cast::<SysBusDevice>();
--
-+        let dev = pl011.as_mut_ptr::<DeviceState>();
-         qdev_prop_set_chr(dev, c_str!("chardev").as_ptr(), chr);
--        sysbus_realize_and_unref(sysbus, addr_of_mut!(error_fatal));
-+
-+        let sysbus = pl011.as_mut_ptr::<SysBusDevice>();
-+        sysbus_realize(sysbus, addr_of_mut!(error_fatal));
-         sysbus_mmio_map(sysbus, 0, addr);
-         sysbus_connect_irq(sysbus, 0, irq);
--        dev
-+
-+        // return the pointer, which is kept alive by the QOM tree; drop owned ref
-+        pl011.as_mut_ptr()
-     }
- }
- 
-diff --git a/rust/qemu-api/src/prelude.rs b/rust/qemu-api/src/prelude.rs
-index 2dc86e19b29..3df6a5c21ec 100644
---- a/rust/qemu-api/src/prelude.rs
-+++ b/rust/qemu-api/src/prelude.rs
-@@ -12,6 +12,7 @@
- pub use crate::qom::ObjectCast;
- pub use crate::qom::ObjectCastMut;
- pub use crate::qom::ObjectDeref;
-+pub use crate::qom::ObjectClassMethods;
- pub use crate::qom::ObjectMethods;
- pub use crate::qom::ObjectType;
- 
-diff --git a/rust/qemu-api/src/qom.rs b/rust/qemu-api/src/qom.rs
-index c404f8a1aa7..6f7db3eabcb 100644
---- a/rust/qemu-api/src/qom.rs
-+++ b/rust/qemu-api/src/qom.rs
-@@ -66,8 +66,8 @@
- 
- use crate::{
-     bindings::{
--        self, object_dynamic_cast, object_get_class, object_get_typename, object_ref, object_unref,
--        TypeInfo,
-+        self, object_dynamic_cast, object_get_class, object_get_typename, object_new, object_ref,
-+        object_unref, TypeInfo,
-     },
-     cell::bql_locked,
+diff --git a/rust/qemu-api/tests/tests.rs b/rust/qemu-api/tests/tests.rs
+index 526c3f4f8ea..5c3e75ed3d5 100644
+--- a/rust/qemu-api/tests/tests.rs
++++ b/rust/qemu-api/tests/tests.rs
+@@ -14,8 +14,8 @@
+     cell::{self, BqlCell},
+     declare_properties, define_property,
+     prelude::*,
+-    qdev::{DeviceImpl, DeviceState, Property},
+-    qom::{ObjectImpl, ParentField},
++    qdev::{DeviceClass, DeviceImpl, DeviceState, Property},
++    qom::{ClassInitImpl, ObjectImpl, ParentField},
+     vmstate::VMStateDescription,
+     zeroable::Zeroable,
  };
-@@ -717,6 +717,24 @@ fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+@@ -37,6 +37,10 @@ pub struct DummyState {
+ 
+ qom_isa!(DummyState: Object, DeviceState);
+ 
++pub struct DummyClass {
++    parent_class: <DeviceState as ObjectType>::Class,
++}
++
+ declare_properties! {
+     DUMMY_PROPERTIES,
+         define_property!(
+@@ -49,7 +53,7 @@ pub struct DummyState {
+ }
+ 
+ unsafe impl ObjectType for DummyState {
+-    type Class = <DeviceState as ObjectType>::Class;
++    type Class = DummyClass;
+     const TYPE_NAME: &'static CStr = c_str!("dummy");
+ }
+ 
+@@ -67,6 +71,51 @@ fn vmsd() -> Option<&'static VMStateDescription> {
      }
  }
  
-+/// Trait for class methods exposed by the Object class.  The methods can be
-+/// called on all objects that have the trait `IsA<Object>`.
-+///
-+/// The trait should only be used through the blanket implementation,
-+/// which guarantees safety via `IsA`
-+pub trait ObjectClassMethods: IsA<Object> {
-+    /// Return a new reference counted instance of this class
-+    fn new() -> Owned<Self> {
-+        assert!(bql_locked());
-+        // SAFETY: the object created by object_new is allocated on
-+        // the heap and has a reference count of 1
-+        unsafe {
-+            let obj = &*object_new(Self::TYPE_NAME.as_ptr());
-+            Owned::from_raw(obj.unsafe_cast::<Self>())
-+        }
++// `impl<T> ClassInitImpl<DummyClass> for T` doesn't work since it violates
++// orphan rule.
++impl ClassInitImpl<DummyClass> for DummyState {
++    fn class_init(klass: &mut DummyClass) {
++        <Self as ClassInitImpl<DeviceClass>>::class_init(&mut klass.parent_class);
 +    }
 +}
 +
- /// Trait for methods exposed by the Object class.  The methods can be
- /// called on all objects that have the trait `IsA<Object>`.
- ///
-@@ -757,4 +775,5 @@ fn debug_fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-     }
- }
++#[derive(qemu_api_macros::offsets)]
++#[repr(C)]
++#[derive(qemu_api_macros::Object)]
++pub struct DummyChildState {
++    parent: ParentField<DummyState>,
++}
++
++qom_isa!(DummyChildState: Object, DeviceState, DummyState);
++
++pub struct DummyChildClass {
++    parent_class: <DummyState as ObjectType>::Class,
++}
++
++unsafe impl ObjectType for DummyChildState {
++    type Class = DummyChildClass;
++    const TYPE_NAME: &'static CStr = c_str!("dummy_child");
++}
++
++impl ObjectImpl for DummyChildState {
++    type ParentType = DummyState;
++    const ABSTRACT: bool = false;
++}
++
++impl DeviceImpl for DummyChildState {}
++
++impl ClassInitImpl<DummyClass> for DummyChildState {
++    fn class_init(klass: &mut DummyClass) {
++        <Self as ClassInitImpl<DeviceClass>>::class_init(&mut klass.parent_class);
++    }
++}
++
++impl ClassInitImpl<DummyChildClass> for DummyChildState {
++    fn class_init(klass: &mut DummyChildClass) {
++        <Self as ClassInitImpl<DummyClass>>::class_init(&mut klass.parent_class);
++    }
++}
++
+ fn init_qom() {
+     static ONCE: BqlCell<bool> = BqlCell::new(false);
  
-+impl<T> ObjectClassMethods for T where T: IsA<Object> {}
- impl<R: ObjectDeref> ObjectMethods for R where R::Target: IsA<Object> {}
-diff --git a/rust/qemu-api/tests/tests.rs b/rust/qemu-api/tests/tests.rs
-index 5c3e75ed3d5..1944e65c8f3 100644
---- a/rust/qemu-api/tests/tests.rs
-+++ b/rust/qemu-api/tests/tests.rs
-@@ -3,8 +3,7 @@
- // SPDX-License-Identifier: GPL-2.0-or-later
- 
- use std::{
--    ffi::CStr,
--    os::raw::c_void,
-+    ffi::{c_void, CStr},
-     ptr::{addr_of, addr_of_mut},
- };
- 
-@@ -132,22 +131,16 @@ fn init_qom() {
- /// Create and immediately drop an instance.
- fn test_object_new() {
+@@ -85,6 +134,7 @@ fn test_object_new() {
      init_qom();
--    unsafe {
--        object_unref(object_new(DummyState::TYPE_NAME.as_ptr()).cast());
--        object_unref(object_new(DummyChildState::TYPE_NAME.as_ptr()).cast());
--    }
-+    drop(DummyState::new());
-+    drop(DummyChildState::new());
- }
- 
- #[test]
- /// Try invoking a method on an object.
- fn test_typename() {
-     init_qom();
--    let p: *mut DummyState = unsafe { object_new(DummyState::TYPE_NAME.as_ptr()).cast() };
--    let p_ref: &DummyState = unsafe { &*p };
--    assert_eq!(p_ref.typename(), "dummy");
--    unsafe {
--        object_unref(p_ref.as_object_mut_ptr().cast::<c_void>());
--    }
-+    let p = DummyState::new();
-+    assert_eq!(p.typename(), "dummy");
- }
- 
- // a note on all "cast" tests: usually, especially for downcasts the desired
-@@ -162,24 +155,23 @@ fn test_typename() {
- /// Test casts on shared references.
- fn test_cast() {
-     init_qom();
--    let p: *mut DummyState = unsafe { object_new(DummyState::TYPE_NAME.as_ptr()).cast() };
-+    let p = DummyState::new();
-+    let p_ptr: *mut DummyState = unsafe { p.as_mut_ptr() };
-+    let p_ref: &mut DummyState = unsafe { &mut *p_ptr };
- 
--    let p_ref: &DummyState = unsafe { &*p };
-     let obj_ref: &Object = p_ref.upcast();
--    assert_eq!(addr_of!(*obj_ref), p.cast());
-+    assert_eq!(addr_of!(*obj_ref), p_ptr.cast());
- 
-     let sbd_ref: Option<&SysBusDevice> = obj_ref.dynamic_cast();
-     assert!(sbd_ref.is_none());
- 
-     let dev_ref: Option<&DeviceState> = obj_ref.downcast();
--    assert_eq!(addr_of!(*dev_ref.unwrap()), p.cast());
-+    assert_eq!(addr_of!(*dev_ref.unwrap()), p_ptr.cast());
- 
-     // SAFETY: the cast is wrong, but the value is only used for comparison
      unsafe {
-         let sbd_ref: &SysBusDevice = obj_ref.unsafe_cast();
--        assert_eq!(addr_of!(*sbd_ref), p.cast());
--
--        object_unref(p_ref.as_object_mut_ptr().cast::<c_void>());
-+        assert_eq!(addr_of!(*sbd_ref), p_ptr.cast());
+         object_unref(object_new(DummyState::TYPE_NAME.as_ptr()).cast());
++        object_unref(object_new(DummyChildState::TYPE_NAME.as_ptr()).cast());
      }
  }
  
