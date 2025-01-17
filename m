@@ -4,67 +4,73 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C714FC02185
-	for <qemu-devel@archiver.kernel.org>; Fri, 17 Jan 2025 11:18:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 657F9C02185
+	for <qemu-devel@archiver.kernel.org>; Fri, 17 Jan 2025 11:26:02 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tYkM8-0004D5-3t; Fri, 17 Jan 2025 06:17:40 -0500
+	id 1tYkT4-00071r-PN; Fri, 17 Jan 2025 06:24:51 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <lvivier@redhat.com>)
- id 1tYkLr-0003zb-1Y
- for qemu-devel@nongnu.org; Fri, 17 Jan 2025 06:17:23 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1tYkT2-00071g-Rl
+ for qemu-devel@nongnu.org; Fri, 17 Jan 2025 06:24:48 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <lvivier@redhat.com>)
- id 1tYkLm-0002kr-94
- for qemu-devel@nongnu.org; Fri, 17 Jan 2025 06:17:22 -0500
+ (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1tYkSz-0003Xl-Vi
+ for qemu-devel@nongnu.org; Fri, 17 Jan 2025 06:24:48 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1737112634;
+ s=mimecast20190719; t=1737113084;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding;
- bh=Ct9/h8toHmrtR+AssX66a4eJxqZYBwxEz5hJlc+u/r8=;
- b=Ba5DsqVY+BnAwCCVWe5V7e4kTc1Qx5n8dsBm5dJTF61dA95HADIc6NcmeHZQBYLqTwYrYt
- IYnx+wnv3CefkizeqAk/K7g/A6VzWmJD/Dj607kDUYnEigcIwy+3vKkazeYv2U3iLbcneF
- 3g4w/4XWkcvz+oM4p05HxxRVxAuEkrY=
-Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=5vM9WhxgvuYwcMhLCch7HdF1mcoSgklVIalTHV1MYKU=;
+ b=YBUzyxKpJUglED+imq2eQNYM58+3WKV8odADYv3pRt4QE45PRnuayzxFcu5cytESTQVqVD
+ pEGxGuMk8IRqnhkTeLs5h/5xklb8Hku5cegWr9Xm6XF/9YEGaobYUpF0sKH6k568MReHej
+ ycjsgXuVSM49NiGKR24m0th2S5Fqw54=
+Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-356-Q5jZe8IfMZagFRqmUZMQlw-1; Fri,
- 17 Jan 2025 06:17:13 -0500
-X-MC-Unique: Q5jZe8IfMZagFRqmUZMQlw-1
-X-Mimecast-MFC-AGG-ID: Q5jZe8IfMZagFRqmUZMQlw
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-335-tAqiejv6OSOPCZbdk-cgBw-1; Fri,
+ 17 Jan 2025 06:24:40 -0500
+X-MC-Unique: tAqiejv6OSOPCZbdk-cgBw-1
+X-Mimecast-MFC-AGG-ID: tAqiejv6OSOPCZbdk-cgBw
 Received: from mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.15])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id CF6221953947
- for <qemu-devel@nongnu.org>; Fri, 17 Jan 2025 11:17:11 +0000 (UTC)
-Received: from lenovo-t14s.redhat.com (unknown [10.39.193.59])
- by mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id D5F15195608A; Fri, 17 Jan 2025 11:17:10 +0000 (UTC)
-From: Laurent Vivier <lvivier@redhat.com>
-To: qemu-devel@nongnu.org
-Cc: Jason Wang <jasowang@redhat.com>
-Subject: [PATCH 0/2] net: Fix announce_self with vhost
-Date: Fri, 17 Jan 2025 12:17:07 +0100
-Message-ID: <20250117111709.970789-1-lvivier@redhat.com>
-Content-Type: text/plain; charset="utf-8"
+ by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 395671956056; Fri, 17 Jan 2025 11:24:38 +0000 (UTC)
+Received: from redhat.com (unknown [10.39.194.176])
+ by mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 5ACCF195608A; Fri, 17 Jan 2025 11:24:34 +0000 (UTC)
+Date: Fri, 17 Jan 2025 12:24:31 +0100
+From: Kevin Wolf <kwolf@redhat.com>
+To: Philippe =?iso-8859-1?Q?Mathieu-Daud=E9?= <philmd@linaro.org>
+Cc: qemu-devel@nongnu.org, Kyle Evans <kevans@freebsd.org>,
+ Hanna Reitz <hreitz@redhat.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Warner Losh <imp@bsdimp.com>, Paolo Bonzini <pbonzini@redhat.com>,
+ qemu-block@nongnu.org, armbru@redhat.com,
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Subject: Re: [PATCH v2] qemu/compiler: Absorb 'clang-tsa.h'
+Message-ID: <Z4o9738w_9vNjVal@redhat.com>
+References: <20250116211111.53961-1-philmd@linaro.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20250116211111.53961-1-philmd@linaro.org>
 X-Scanned-By: MIMEDefang 3.0 on 10.30.177.15
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=lvivier@redhat.com;
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=kwolf@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -39
-X-Spam_score: -4.0
-X-Spam_bar: ----
-X-Spam_report: (-4.0 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.093,
+X-Spam_score_int: -21
+X-Spam_score: -2.2
+X-Spam_bar: --
+X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.093,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-1.797,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -82,26 +88,23 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-announce_self that sends a RARP packet after migration=0D
-or with announce_self QMP/HMP command doesn't work with=0D
-vhost because of the vnet headers.=0D
-=0D
-announce_self is the only user of QEMU_NET_PACKET_FLAG_RAW and=0D
-this flag is not correctly managed.=0D
-=0D
-This series fix a problem with this flag in filter-dump and in=0D
-qemu_deliver_packet_iov().=0D
-=0D
-Laurent Vivier (2):=0D
-  net: Fix announce_self=0D
-  net/dump: Correctly compute Ethernet packet offset=0D
-=0D
- net/dump.c | 3 ++-=0D
- net/net.c  | 1 +=0D
- 2 files changed, 3 insertions(+), 1 deletion(-)=0D
-=0D
--- =0D
-2.47.1=0D
-=0D
+Am 16.01.2025 um 22:11 hat Philippe Mathieu-Daudé geschrieben:
+> We already have "qemu/compiler.h" for compiler-specific arrangements,
+> automatically included by "qemu/osdep.h" for each source file. No
+> need to explicitly include a header for a Clang particularity,
+> let the common "qemu/compiler.h" deal with that by having it
+> include "qemu/clang-tsa.h" (renamed as qemu/clang-tsa.h.inc).
+> Add a check to not include "qemu/clang-tsa.h.inc" directly,
+> remove previous "qemu/clang-tsa.h" inclusions.
+> 
+> Suggested-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+
+Don't we normally try to reduce the number of header files that need to
+be opened during the build instead of increasing it?
+
+Either way, if we do want to do this, the implementation looks correct.
+
+Reviewed-by: Kevin Wolf <kwolf@redhat.com>
 
 
