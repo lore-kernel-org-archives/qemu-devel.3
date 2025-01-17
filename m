@@ -4,80 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 551A0C02185
-	for <qemu-devel@archiver.kernel.org>; Fri, 17 Jan 2025 06:48:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4CB01C02188
+	for <qemu-devel@archiver.kernel.org>; Fri, 17 Jan 2025 06:48:23 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tYg8t-0002xv-MC; Fri, 17 Jan 2025 01:47:43 -0500
+	id 1tYg8X-0002tG-Pz; Fri, 17 Jan 2025 01:47:21 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
- id 1tYg8n-0002wp-Ku
- for qemu-devel@nongnu.org; Fri, 17 Jan 2025 01:47:39 -0500
-Received: from mail-pj1-x1032.google.com ([2607:f8b0:4864:20::1032])
+ id 1tYg8V-0002sz-LZ
+ for qemu-devel@nongnu.org; Fri, 17 Jan 2025 01:47:19 -0500
+Received: from mail-pl1-x62d.google.com ([2607:f8b0:4864:20::62d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
- id 1tYg8b-00056H-FG
- for qemu-devel@nongnu.org; Fri, 17 Jan 2025 01:47:27 -0500
-Received: by mail-pj1-x1032.google.com with SMTP id
- 98e67ed59e1d1-2ef6c56032eso2382612a91.2
- for <qemu-devel@nongnu.org>; Thu, 16 Jan 2025 22:47:24 -0800 (PST)
+ id 1tYg8R-00055I-V3
+ for qemu-devel@nongnu.org; Fri, 17 Jan 2025 01:47:18 -0500
+Received: by mail-pl1-x62d.google.com with SMTP id
+ d9443c01a7336-2165448243fso39792435ad.1
+ for <qemu-devel@nongnu.org>; Thu, 16 Jan 2025 22:47:15 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=daynix-com.20230601.gappssmtp.com; s=20230601; t=1737096443; x=1737701243;
+ d=daynix-com.20230601.gappssmtp.com; s=20230601; t=1737096434; x=1737701234;
  darn=nongnu.org; 
- h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
- :mime-version:subject:date:from:from:to:cc:subject:date:message-id
- :reply-to; bh=qdmdAb2d8j2jwxZ4AeBFUh6ixb+QzL3NZeL44K9HsII=;
- b=14C01nMjFjQDQ5uqEO+oweu29yT61/wV0cOd5ZgGXesZwB4WepH/FHCh3TeIF6WIuy
- Z5PbvD4rxvHgwir+QLuUGR0oWXQQTI9e6EZvhu2xG5nXYq8++q9clS0ffH3BpX3gQYmZ
- ACP5DgTJLWvSUmF4Bsrn3mqGalJd6sVpKWjr6WLpD9xzNND6qnYTds8h6xyWGY+d05wh
- Aa8yQ6IQf6gwPa/PzxGHUdg1dJG3Y6dc8uqL/ahvEAAkJw3KqE+FMZKckAoQ5/g/0LF/
- Ac8Uz8Y1Q7aIufBD6ZzuLK8MHe1kd0wnL6itJ0zC+QcVoak4M7vIssOKHUGBEuZWCfhg
- mvrA==
+ h=cc:to:content-transfer-encoding:mime-version:message-id:date
+ :subject:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=RPGtldq2AToABPoGlvtRrOakExknZokmZy+QMhvNIp4=;
+ b=JW4QIS7PwaD4B3szwYBpAH1aSq1Gbj2Hyo3Wq+Dr0fDqoFSC4BZRuqG6T6BVAXCZ33
+ JH6dn/uNpESYT5tzptDG82nbO26omtHE7N2U2wNQGI2Byh0JQtZkJTXAiIvY7t9U59xC
+ kBs+9LSZidooIj8Ku5EQpROkGbCXqGo9OnYBCZSCdItgetwiHQ07bbmsQRckmp+eBHWo
+ YN6meM+hvBYqRT2cHi/NCgXe5YsE3YCv1W4pTXQTZT7fZh8mA7Pu9JbNatexYXjQnTUR
+ jwIk3vwR/SyLTq79Ihz/cXPZRFfmrYI/lLshppvJkBcLtM6Ie3KzQhQDtwbHUdp/1klU
+ 3XRQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1737096443; x=1737701243;
- h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
- :mime-version:subject:date:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=qdmdAb2d8j2jwxZ4AeBFUh6ixb+QzL3NZeL44K9HsII=;
- b=sqtVc5XreIZMbdNpYQtsvadUjwaBLWN9UuPJ7uO3w40eHaivywNUlKBbS4f63LOkZQ
- ZYBZZO71ruiq7CmDq76Oag70P6EwQqYVn6NajSXwBPZXAcZjuQZmkOWaKxgx4k3PjqWy
- gRhCXwdLMfYe07ytikdrQdCcZTVrFpIpnmUsnMCB0KUv0opItYJtDio86xIQCeRVI7Yl
- aeAU3QszLZXKR/ekQ/Yw5L1drh4SMvvk6FvJB/HpR3H9ZTrZi+bXBzIvh4CCFFxXEvZZ
- t9SMMJDB5ebHIzV+8xzttUVGXqxMnWsJ/It4M1GJt6dvLjz7cI94mZJcTpWRHsQmrZk7
- eqww==
-X-Gm-Message-State: AOJu0Yw9+UEv3JhOmQxw4jLkqq3K6A/BrhcwStPeSo5YM5zEfPvdB88p
- wPKRpXLi8g8gpeLaxgp5YlaFFZH8c8dYZqzyZDr59hvAOa1b5yFNCkC9g7iZtl0=
-X-Gm-Gg: ASbGnctbZf5o0xtTdV4qkk7YGIc0Z/2EGKXxBFmBrx5eHUbvdfum9O5E91FGv1j/U8n
- V/rjMy1yoQykmMFKkHBey7WKjvBaw1eOT0I3QHCTOSJgGo5wCFbsS8NkcpkSNYHfVjtjZh8BkVP
- EHsB5/aReIWwyvdGr+x2A+hQ1ML7ditA5udtidK9sn8rPs2QI2XgtWBPtmO6o2CUaEe2y9gli3z
- okZaKwFNAi8v8RDf33QpHhPpyXlZBRnfaYM2PSN3KB/A/7U6v9AKMcHUU8=
-X-Google-Smtp-Source: AGHT+IEuX0Td4PteDnvdTD/uRs0VsrvojFg/1YDJPmRTcCvjsRKKAMK/wTjHfn/HdcGOgR9LG4l26A==
-X-Received: by 2002:a17:90b:2748:b0:2ea:59e3:2d2e with SMTP id
- 98e67ed59e1d1-2f782c73b7fmr2321359a91.10.1737096443330; 
- Thu, 16 Jan 2025 22:47:23 -0800 (PST)
+ d=1e100.net; s=20230601; t=1737096434; x=1737701234;
+ h=cc:to:content-transfer-encoding:mime-version:message-id:date
+ :subject:from:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=RPGtldq2AToABPoGlvtRrOakExknZokmZy+QMhvNIp4=;
+ b=jumLgRmQmLhk95vvWnk9r/xJyMeE1z0tBKsGiDhzFKeNAUuyyyK3vGPHRe9QzXRnf6
+ s2ZAzFxtujHVDHyU/cm8si7i/iArwQRvfQHml/LneBCH/HsOs0yCnV87C1Kh+eOl0YhA
+ Gnas+MXa6LQ2KiE8Bdb4/GBlfrexm0Adt2IYbqgDu96U2BJ4e/VmxB9P/jbj9MUK5XED
+ jFtugrxHOK0STgfHAfpT7sBIkRGnssclRrfSbNC6BGv+SKl0PWvo2LbkxuJh2Q+4+1LB
+ KHOzj3stGysT8LTZo1aVG0v4zeFHG4TVPs4di5FQLcabMSY0U63dLj6PU0CGcD/+ooF9
+ kTNQ==
+X-Gm-Message-State: AOJu0Yw/b3JglZf+8QOfRe7aLp9ZARpMQ2V5m7CwaABpRiVO7VwJwP3N
+ jfM9WpWp5Zf7HJ6Z8cEFj6BFM7f9KAp6fN5F15onXU6aD1EE3gLnP6Jze0K6JPk=
+X-Gm-Gg: ASbGnctoZk9fkUjhVWqnnz1OvuuScbBleL7c46UtZ7Os9XHS0U5Qz5leR4t/EOqouM5
+ 6T8mIB1PCEG2dJrjIwX/dsJeKosZpzTkOkzWIc03Nzx8cDU1suFwQlNrziXotrYq48R2ZguiXTn
+ DpqaAuRi+xJ4dI2LnGXXNorxfJ9N+rwD7n+dVJV5V37dKyBsm7vCMyjxyQGxp1NvPlYo9Eehi3X
+ +1xbv4Uaj6uTsADmBTUUSkMzybHociiQgRL47GU6bRLubP2QIlZr7FApKU=
+X-Google-Smtp-Source: AGHT+IF4ziTWiN1zYOMCG6aNy9FKknQChL4hpMwe+6+4QHJRTSNGNjQPWoTGn5SsPQIsKeB2i1MtYw==
+X-Received: by 2002:a05:6a00:4fd3:b0:728:e1e3:3d88 with SMTP id
+ d2e1a72fcca58-72daf9bec6amr2792941b3a.7.1737096433975; 
+ Thu, 16 Jan 2025 22:47:13 -0800 (PST)
 Received: from localhost ([157.82.203.37]) by smtp.gmail.com with UTF8SMTPSA id
- 98e67ed59e1d1-2f70bd40b8csm2324740a91.1.2025.01.16.22.47.21
+ d2e1a72fcca58-72dab7f1776sm1068924b3a.7.2025.01.16.22.47.11
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 16 Jan 2025 22:47:23 -0800 (PST)
+ Thu, 16 Jan 2025 22:47:13 -0800 (PST)
 From: Akihiko Odaki <akihiko.odaki@daynix.com>
-Date: Fri, 17 Jan 2025 15:47:01 +0900
-Subject: [PATCH v4 2/3] audio: Add functions to initialize buffers
+Subject: [PATCH v4 0/3] coreaudio fixes
+Date: Fri, 17 Jan 2025 15:46:59 +0900
+Message-Id: <20250117-coreaudio-v4-0-f8d4fa4cb5f4@daynix.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20250117-coreaudio-v4-2-f8d4fa4cb5f4@daynix.com>
-References: <20250117-coreaudio-v4-0-f8d4fa4cb5f4@daynix.com>
-In-Reply-To: <20250117-coreaudio-v4-0-f8d4fa4cb5f4@daynix.com>
+X-B4-Tracking: v=1; b=H4sIAOP8iWcC/03MQQ6DIBCF4auYWZcGVKx21Xs0LgSGOouCgZZoD
+ HcvNV10+b+8fDtEDIQRrtUOARNF8q5Ee6pAz5N7ICNTGmpeSy74wLQPOL0NeaaHvu34BYXpNZT
+ /EtDSelj3sfRM8eXDdtCp+a4/Rcg/JTWMM2VUp7SSyg72ZqbN0XrW/gljzvkDZlDXLaMAAAA=
 To: Gerd Hoffmann <kraxel@redhat.com>, 
  =?utf-8?q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>, 
  Christian Schoenebeck <qemu_oss@crudebyte.com>
 Cc: qemu-devel@nongnu.org, devel@daynix.com, 
  Akihiko Odaki <akihiko.odaki@daynix.com>
 X-Mailer: b4 0.14-dev-fd6e3
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1032;
- envelope-from=akihiko.odaki@daynix.com; helo=mail-pj1-x1032.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::62d;
+ envelope-from=akihiko.odaki@daynix.com; helo=mail-pl1-x62d.google.com
 X-Spam_score_int: -18
 X-Spam_score: -1.9
 X-Spam_bar: -
@@ -99,85 +100,34 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-These functions can be used to re-initialize buffers when hardware
-parameters change due to device hotplug, for example.
+This series contains two fixes for coreaudio. See each one for details.
 
 Signed-off-by: Akihiko Odaki <akihiko.odaki@daynix.com>
 ---
+Changes in v4:
+- Splitted patch "audio: Add functions to initialize buffers" from
+  patch "coreaudio: Initialize the buffer for device change".
+- Changed the message of patch "coreaudio: Commit the result of init in
+  the end" to tell that early returns happen when there is a fatal error
+  or the device gets unplugged.
+- Link to v3: https://lore.kernel.org/r/20250115-coreaudio-v3-0-bdb6bcb5bf9f@daynix.com
+
+---
+Akihiko Odaki (3):
+      coreaudio: Commit the result of init in the end
+      audio: Add functions to initialize buffers
+      coreaudio: Initialize the buffer for device change
+
  audio/audio_int.h |  2 ++
  audio/audio.c     | 24 ++++++++++++++++++------
- 2 files changed, 20 insertions(+), 6 deletions(-)
+ audio/coreaudio.m | 50 ++++++++++++++++++++++++++++----------------------
+ 3 files changed, 48 insertions(+), 28 deletions(-)
+---
+base-commit: 38d0939b86e2eef6f6a622c6f1f7befda0146595
+change-id: 20250109-coreaudio-c984607e1d8c
 
-diff --git a/audio/audio_int.h b/audio/audio_int.h
-index 2d079d00a259..9ba4a144d571 100644
---- a/audio/audio_int.h
-+++ b/audio/audio_int.h
-@@ -187,9 +187,11 @@ struct audio_pcm_ops {
-     void   (*volume_in)(HWVoiceIn *hw, Volume *vol);
- };
- 
-+void audio_generic_initialize_buffer_in(HWVoiceIn *hw);
- void audio_generic_run_buffer_in(HWVoiceIn *hw);
- void *audio_generic_get_buffer_in(HWVoiceIn *hw, size_t *size);
- void audio_generic_put_buffer_in(HWVoiceIn *hw, void *buf, size_t size);
-+void audio_generic_initialize_buffer_out(HWVoiceOut *hw);
- void audio_generic_run_buffer_out(HWVoiceOut *hw);
- size_t audio_generic_buffer_get_free(HWVoiceOut *hw);
- void *audio_generic_get_buffer_out(HWVoiceOut *hw, size_t *size);
-diff --git a/audio/audio.c b/audio/audio.c
-index 87b4e9b6f2f3..17c6bbd0ae9e 100644
---- a/audio/audio.c
-+++ b/audio/audio.c
-@@ -1407,12 +1407,18 @@ void audio_run(AudioState *s, const char *msg)
- #endif
- }
- 
-+void audio_generic_initialize_buffer_in(HWVoiceIn *hw)
-+{
-+    g_free(hw->buf_emul);
-+    hw->size_emul = hw->samples * hw->info.bytes_per_frame;
-+    hw->buf_emul = g_malloc(hw->size_emul);
-+    hw->pos_emul = hw->pending_emul = 0;
-+}
-+
- void audio_generic_run_buffer_in(HWVoiceIn *hw)
- {
-     if (unlikely(!hw->buf_emul)) {
--        hw->size_emul = hw->samples * hw->info.bytes_per_frame;
--        hw->buf_emul = g_malloc(hw->size_emul);
--        hw->pos_emul = hw->pending_emul = 0;
-+        audio_generic_initialize_buffer_in(hw);
-     }
- 
-     while (hw->pending_emul < hw->size_emul) {
-@@ -1446,6 +1452,14 @@ void audio_generic_put_buffer_in(HWVoiceIn *hw, void *buf, size_t size)
-     hw->pending_emul -= size;
- }
- 
-+void audio_generic_initialize_buffer_out(HWVoiceOut *hw)
-+{
-+    g_free(hw->buf_emul);
-+    hw->size_emul = hw->samples * hw->info.bytes_per_frame;
-+    hw->buf_emul = g_malloc(hw->size_emul);
-+    hw->pos_emul = hw->pending_emul = 0;
-+}
-+
- size_t audio_generic_buffer_get_free(HWVoiceOut *hw)
- {
-     if (hw->buf_emul) {
-@@ -1477,9 +1491,7 @@ void audio_generic_run_buffer_out(HWVoiceOut *hw)
- void *audio_generic_get_buffer_out(HWVoiceOut *hw, size_t *size)
- {
-     if (unlikely(!hw->buf_emul)) {
--        hw->size_emul = hw->samples * hw->info.bytes_per_frame;
--        hw->buf_emul = g_malloc(hw->size_emul);
--        hw->pos_emul = hw->pending_emul = 0;
-+        audio_generic_initialize_buffer_out(hw);
-     }
- 
-     *size = MIN(hw->size_emul - hw->pending_emul,
-
+Best regards,
 -- 
-2.47.1
+Akihiko Odaki <akihiko.odaki@daynix.com>
 
 
