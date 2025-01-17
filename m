@@ -4,84 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 62FDCC02183
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id AC388C02188
 	for <qemu-devel@archiver.kernel.org>; Fri, 17 Jan 2025 13:47:13 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tYmdz-0002Nv-Si; Fri, 17 Jan 2025 08:44:16 -0500
+	id 1tYmdy-0002GX-EB; Fri, 17 Jan 2025 08:44:14 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1tYmd1-00012b-6J
+ id 1tYmd1-00012Z-3i
  for qemu-devel@nongnu.org; Fri, 17 Jan 2025 08:43:15 -0500
-Received: from mail-ej1-x62d.google.com ([2a00:1450:4864:20::62d])
+Received: from mail-ed1-x530.google.com ([2a00:1450:4864:20::530])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1tYmcz-0002Gd-Jn
+ id 1tYmcz-0002HD-H3
  for qemu-devel@nongnu.org; Fri, 17 Jan 2025 08:43:14 -0500
-Received: by mail-ej1-x62d.google.com with SMTP id
- a640c23a62f3a-aafc9d75f8bso357074966b.2
- for <qemu-devel@nongnu.org>; Fri, 17 Jan 2025 05:43:12 -0800 (PST)
+Received: by mail-ed1-x530.google.com with SMTP id
+ 4fb4d7f45d1cf-5d3cf094768so3703051a12.0
+ for <qemu-devel@nongnu.org>; Fri, 17 Jan 2025 05:43:13 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1737121391; x=1737726191; darn=nongnu.org;
+ d=linaro.org; s=google; t=1737121392; x=1737726192; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=jqP9s6i1XKCADbEJhUROhCpIYtt+5Tsr7aRO+xN3Yg4=;
- b=bykIVamnXCh7A2va4nJ1jzc00WssVmFkPAa1WM5pNFZ0+AwT8ikXp3lKf1NxIRERuU
- 4Ikmbx1l7kNDi4SiSilx0DTuhV8DifKwnLbK29hO4HZgDvNRChGaZkCiHhArweRQoXxL
- kONvV8EB62ju1ZHurCJ65W2t267fGca0OpSVsnEH9QCJ/xHqgq4z53aiYP9d4SS4jbc/
- Cwlp4BIGmGQxGRROhx9flfLznfqXFDtYGC0eF6fGCG08wopYZbmZ9ayY4rTfnApzaQ/B
- QYhu+1c8uVCAJ7n0obcHeIvDuS32/zKzRK2/dRyXyvtqE3Q38QfasyETuj+9HChmPWSa
- 7zwA==
+ bh=4xuiCI7PA8RfyoMtUNzdFe3eSRNq2phrVz5fhVl8TLw=;
+ b=d7qzB0Dg+c5stXWn2L321nKNY0XRVaQwlEJj7bHChaS6YvvIV2dh/bGRBM0AtsPi1n
+ VVMyonDB20skRHdrwTeKvniHjGV9VQ082ZFJr0WHnSYhRiFBY7IPku/7ka7Q+MNh/BiG
+ EakPDG7WsxbWW/fH2Hk+wokLTMEd8d7ODhlwijPJ5CAn4VW2vGdcKfh8nDZTugVV3eDs
+ cHALDCdgJ8EfGjDTNHp3hkIec5fAiH+UlAZ/YnumfuRINxpNjLTBiW44/xsqNL2XCHm8
+ 1v0ojXQ5SvNP7Ckl2UdJGLK5HgP7NZJMnaH8hH4xJzKauh5bstafW4W5MR/+3n2tgA7+
+ UOsg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1737121391; x=1737726191;
+ d=1e100.net; s=20230601; t=1737121392; x=1737726192;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=jqP9s6i1XKCADbEJhUROhCpIYtt+5Tsr7aRO+xN3Yg4=;
- b=GVw2Gvrj/m00cHa/uEXSZjNHVwUCjELDXNvkQPc8vxeJCT/TixgCPQKEZbHpxNL63h
- JMiT9lmf1tH8BJHJEsbNqhotivm+3fsbsqMBVPexZ4XBAdtdd30yg+TKZ+S6D7OvOwQQ
- yW5yvyp1oGJ9YT/qP8gJ9MIYnTUwxsQKH30oIZtGqqjbYxBQ54P/o1ArO6pNENwj+pjd
- 7T31x/kMcWZrFfZ2ISXI/kwIbXws6V5T2v8FGQZTbwpJ1MAGqmqVM+XUbgNkLRGo+CCp
- Haq5PUrftNZLZLT9J7NtVfmVI4tVc4lSqlvVS/oEQ7PZ6cM+0GhrcFlFpNsUelNpXwG/
- m90g==
-X-Gm-Message-State: AOJu0YyHMZ6sEyeCvCQWJMSlbfoGT4sHOCP3Y42l5xSrEUC0b0jKH4ZH
- zsCoM4a/n78Jf54RNNoFqQES4C1HLjqaWdcC53COrvIJ6ZTl3xEdL8QP4oxbpSo=
-X-Gm-Gg: ASbGncsrFvfEeVhP+6FJrHxGciB9El1QdoFbwgzPiXrnUEw3TL4qOq7IRT1p+nOE9gM
- hzpSgoH9sSKvfvVX2nDblbxl36vJbP5Xh95KGsRlk+aj3ExkENsQ2KMNU6951fbdYkGO6qGxar5
- aWugXpyj/0M5CCkSKM5hfJJoEhmJSEOjR+H5IW4ZQJdI+sfH68mK8KgCbvBfOTDpJ/zu+y7lYis
- 4EkY5s7AKFguMnFC4muGnqewvktmou5YqBHf7OzG4FQFI8TBkxMMTc=
-X-Google-Smtp-Source: AGHT+IF3kqH2/xNhwlDEsbXKNOLpAnEYoMvkTt9biQNWE8OkTIsEv3LFSKlZakxouIvn6vmLlOaYQw==
-X-Received: by 2002:a17:906:c107:b0:aac:29a:2817 with SMTP id
- a640c23a62f3a-ab38b2e4528mr224538566b.26.1737121390831; 
- Fri, 17 Jan 2025 05:43:10 -0800 (PST)
+ bh=4xuiCI7PA8RfyoMtUNzdFe3eSRNq2phrVz5fhVl8TLw=;
+ b=athHIcwTjT4tbChum8oqEHlmQSlb8rJaSPDRtYuBufRqZb+l5zQZhuP9pV8dsHkbrP
+ FBK4h/llPCvMgsDwF3/OGpDB33lvzUWT/TlNJyRxsbij3ihRcgiFfevNktZH9qgs6986
+ mBmE3w9T6dwY2Qmcb0WTXIfiz3CxcOlFKc5XcsHeQr00rtmZfAmDZvUwbQe/H8O2PhwU
+ 5UY5JvNVyrP+tbuXPkLr6xLdLfrHYjfWoCNovR+i24zk8aTi4P/DsCgAUaPYLMKw1wHb
+ MdROzHqPCe6ELXdi5xwpXRR09F+mGDRsymhf3gSN/sC1RG1GNAXfHop/+XtU36z2ZN5a
+ bbDw==
+X-Gm-Message-State: AOJu0Yya0m8MVw7TSFphfbLyOwvaT9OE1v/0vQiNZeQjnCcUBlCnJABS
+ lTFhAs8oaXQIypo+SSYMZi9Zbe9GhJxxBV8cWeMW6t6jnkPwsS9XEDUJW9YCBgw=
+X-Gm-Gg: ASbGncvqErAAD/uhj04SeEBjtUpLlH1b4z2idFV/Ze40xGw8ta1udTjZ+Ap2QRUmCZ3
+ oaFy2RBjCRcICCIWZk5I0lz81LrqQM736HZIK0lv8FSJPL+Djk5KeuqSLH+1OlEmOBZwQLq0G/B
+ Fsico2itVtjSv9KZ9b6Tgd1exoOkBQG6DRxvAZHHKrJdGNKsI1sqUjCSvNfjW27aix/eH04d3xc
+ U4gzaM6NFjEfZii5VSQEoKN5HWcPYwovr82zElFKH3ZGPDhEFRnOHA=
+X-Google-Smtp-Source: AGHT+IGF+Gm/f1PNYFKM83X+vDlXCClrRtie2cNqA1eMIbmFB+odbv9zJX0hBJFbVVvLFQgugzrmqg==
+X-Received: by 2002:a17:907:3e1d:b0:ab3:974:3d45 with SMTP id
+ a640c23a62f3a-ab38b0a186cmr298609666b.1.1737121392001; 
+ Fri, 17 Jan 2025 05:43:12 -0800 (PST)
 Received: from draig.lan ([85.9.250.243]) by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-ab384c639easm171521166b.22.2025.01.17.05.43.04
+ a640c23a62f3a-ab384ce0f58sm172496766b.48.2025.01.17.05.43.04
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
  Fri, 17 Jan 2025 05:43:07 -0800 (PST)
 Received: from draig.lan (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id AB960608E1;
+ by draig.lan (Postfix) with ESMTP id 7E7E26083E;
  Fri, 17 Jan 2025 13:42:59 +0000 (GMT)
 From: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Pierrick Bouvier <pierrick.bouvier@linaro.org>,
- Paolo Bonzini <pbonzini@redhat.com>, Peter Xu <peterx@redhat.com>,
- David Hildenbrand <david@redhat.com>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PULL 29/37] include/exec: fix some copy and paste errors in kdoc
-Date: Fri, 17 Jan 2025 13:42:48 +0000
-Message-Id: <20250117134256.2079356-30-alex.bennee@linaro.org>
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Subject: [PULL 27/37] editorconfig: update for perl scripts
+Date: Fri, 17 Jan 2025 13:42:46 +0000
+Message-Id: <20250117134256.2079356-28-alex.bennee@linaro.org>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <20250117134256.2079356-1-alex.bennee@linaro.org>
 References: <20250117134256.2079356-1-alex.bennee@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::62d;
- envelope-from=alex.bennee@linaro.org; helo=mail-ej1-x62d.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::530;
+ envelope-from=alex.bennee@linaro.org; helo=mail-ed1-x530.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -104,35 +101,37 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-A number of copy and paste kdoc comments are referring to the wrong
-definition. Fix those cases.
+We have two types of perl scripts in the tree. The ones from the
+kernel are mostly tab based where as scripts we have written ourselves
+use 4 space indentation.
+
+Attempt to codify that in our .editorconfig
 
 Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
-Message-Id: <20250116160306.1709518-30-alex.bennee@linaro.org>
+Message-Id: <20250116160306.1709518-28-alex.bennee@linaro.org>
 
-diff --git a/include/exec/memory.h b/include/exec/memory.h
-index 9458e2801d..605687befa 100644
---- a/include/exec/memory.h
-+++ b/include/exec/memory.h
-@@ -1194,7 +1194,7 @@ static inline bool MemoryRegionSection_eq(MemoryRegionSection *a,
- MemoryRegionSection *memory_region_section_new_copy(MemoryRegionSection *s);
- 
- /**
-- * memory_region_section_new_copy: Free a copied memory region section
-+ * memory_region_section_free_copy: Free a copied memory region section
-  *
-  * Free a copy of a memory section created via memory_region_section_new_copy().
-  * properly dropping references on all relevant members.
-@@ -2510,7 +2510,7 @@ MemoryRegionSection memory_region_find(MemoryRegion *mr,
- void memory_global_dirty_log_sync(bool last_stage);
- 
- /**
-- * memory_global_dirty_log_sync: synchronize the dirty log for all memory
-+ * memory_global_after_dirty_log_sync: synchronize the dirty log for all memory
-  *
-  * Synchronizes the vCPUs with a thread that is reading the dirty bitmap.
-  * This function must be called after the dirty log bitmap is cleared, and
+diff --git a/.editorconfig b/.editorconfig
+index 7303759ed7..a04cb9054c 100644
+--- a/.editorconfig
++++ b/.editorconfig
+@@ -47,3 +47,16 @@ emacs_mode = glsl
+ [*.json]
+ indent_style = space
+ emacs_mode = python
++
++# by default follow QEMU's style
++[*.pl]
++indent_style = space
++indent_size = 4
++emacs_mode = perl
++
++# but user kernel "style" for imported scripts
++[scripts/{kernel-doc,get_maintainer.pl,checkpatch.pl}]
++indent_style = tab
++indent_size = 8
++emacs_mode = perl
++
 -- 
 2.39.5
 
