@@ -4,89 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6CC86C02183
-	for <qemu-devel@archiver.kernel.org>; Fri, 17 Jan 2025 21:23:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8A3ACC02183
+	for <qemu-devel@archiver.kernel.org>; Fri, 17 Jan 2025 21:27:12 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tYtoZ-0005Fa-K7; Fri, 17 Jan 2025 16:23:39 -0500
+	id 1tYtrd-0006hY-U7; Fri, 17 Jan 2025 16:26:49 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1tYtoU-00056P-5j
- for qemu-devel@nongnu.org; Fri, 17 Jan 2025 16:23:36 -0500
-Received: from mail-ej1-x632.google.com ([2a00:1450:4864:20::632])
+ id 1tYtrc-0006hN-FV
+ for qemu-devel@nongnu.org; Fri, 17 Jan 2025 16:26:48 -0500
+Received: from mail-ed1-x535.google.com ([2a00:1450:4864:20::535])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1tYtoS-0000i1-Fs
- for qemu-devel@nongnu.org; Fri, 17 Jan 2025 16:23:33 -0500
-Received: by mail-ej1-x632.google.com with SMTP id
- a640c23a62f3a-aaec111762bso492590266b.2
- for <qemu-devel@nongnu.org>; Fri, 17 Jan 2025 13:23:31 -0800 (PST)
+ id 1tYtra-0001HM-RT
+ for qemu-devel@nongnu.org; Fri, 17 Jan 2025 16:26:48 -0500
+Received: by mail-ed1-x535.google.com with SMTP id
+ 4fb4d7f45d1cf-5d3e9a88793so4238028a12.1
+ for <qemu-devel@nongnu.org>; Fri, 17 Jan 2025 13:26:46 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1737149010; x=1737753810; darn=nongnu.org;
+ d=linaro.org; s=google; t=1737149205; x=1737754005; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:message-id:date:user-agent
  :references:in-reply-to:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=AQVliGBj/xNYeqnWgpiK/29YYP2+ghiH9j2yQp5FAQc=;
- b=L7iyncCOwCW8L3iA8N4HET/apu4+c1m8QXdMLFxkVl93SfguHhSuqnVQHVbFrdY7xz
- Q/tgkn6EHwg85I5hUGtFFneDYSd42Icx370acQwT3gjs9TUz6M2qs34rM42K0a6uiBBq
- IqNsX92L/lAgJwVIRmMa/ESKpdAWpMX0GcUcptDydshuVbPoA7um2mkQdqx0MnO2cbNZ
- hZBdWt9UrgpwvQsxsMz1Fx5R+rhL3tI1Lc2KIkgJIPtEdig7dGWkd6XKUBw4sypNQWTU
- 4M92Cl35a5O2NhlWXhmVU9O22HQUz95TkJNjCtuLGZPaMJLVJSpmXm6cKeNsPl798OIQ
- dmnw==
+ bh=wjumgF6EaKTNnP2Dl1TPlNPg+2Xnma+K5d1ucj8pPaA=;
+ b=XTlhrqkdaCVHw1+cnt449RRAhhbnXtYqSiNbzPmP9j5Np6CVFaUFRseDjB/Re1nDHM
+ 2ZbSVqwnNHMo5p6v6QM2IIFKYY1qeoBsGXZnN97KwpYTOx+CzbyeXNogsVlxZQtcRmqa
+ IOY15vwHC2Xv6jIDS4yoKntYWHVRJts0tViTaQlsiO+RwVUXwLXAVKEe2asAlNRlOSV5
+ 8WrfZStv/QBDz2tBsENAAmcT0eecY3L7r0dei0//ch+bDDUYlrQXgFJtgWjtADxC/bOR
+ gwWLZV1ALaX/65Z3bB0A2iytc4in3w0Wxs09PtcYmUe9FSMntBXBX2EmpzCkIf8lMOL1
+ tb6A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1737149010; x=1737753810;
+ d=1e100.net; s=20230601; t=1737149205; x=1737754005;
  h=content-transfer-encoding:mime-version:message-id:date:user-agent
  :references:in-reply-to:subject:cc:to:from:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=AQVliGBj/xNYeqnWgpiK/29YYP2+ghiH9j2yQp5FAQc=;
- b=w25qnwqUfAx0jl437tzYNIQqW2/XeZ4R8O54wsP2cYdtWQCQVZc2Gym/uaNTlpgkj1
- LHA2ZyXK7xnZ1lU1zvO7VXkQnQMPaiqXz6cJWtY+N6iSSoN505nZs1Ff2ftJFwyNCdks
- NLnPiBRrH7XNSvRj9UkIUm08UnHipdekgdHHkyKByh1BJFHCY0MpkIvKXv+SHlIVzSOz
- 1P/hrhVd9EkopazMbJ7U0Ut/C4S9mk5BGGExHly6HwemzH4c9UWa+6lMHmSTquSJhSN8
- 9A342hzUSjApNHL3PyftLdTlXJ5p7LP59r1NbGGg1G1KEsm4HqgCBkLnyp4vdZqGNXA/
- UmXg==
-X-Forwarded-Encrypted: i=1;
- AJvYcCWEXtaXWLrQh2mT37nUswqgGIX5JT+ysRGILqb5l5MOQgpPU7jhFYOhC5RB+rVHpkJVldwKSerPAiEi@nongnu.org
-X-Gm-Message-State: AOJu0Ywo1aJavSbR3uow0icKDk75KYx7qd9wn5pcHkYBLPYZ593B4GdU
- SPcpRLYVk4ybxOfK0EfgKiZZkzieQJGQpxVChTbRBE8WX1sIBU4R9/VX7c0BA3s=
-X-Gm-Gg: ASbGncuy5lIWfCPh7lHKgii57tzOrMu7HdQHQGCEvyF0/MW7S829zzMCREf9G1L2nKb
- YpkPgJbw//W0N7Gu/sPULXVR+c85SCao+4ZTHeI0YNOcc/RypZo6jD0+V/45FyOo3SRq52eU4N4
- D4U45/WbvSAsMb20Vilq7la12NST0FpU77Ie1hpnoYUFvad8NWWfuHSOxmXMZdtKQsbUea+SmlL
- 8HjxYxgHuC/loDfGAZS1l/SQJAWbmXMclYyi9jCBRowvZE9efsq9cc=
-X-Google-Smtp-Source: AGHT+IFiinzWu9R/X0uAD+klYND2y47IPeQoGELCFrjfyMBfzDGsXCg26wcUDY3nnB+JwBWbfBsk9w==
-X-Received: by 2002:a17:907:d0f:b0:aae:bd4c:2683 with SMTP id
- a640c23a62f3a-ab38b3c63f5mr416087166b.49.1737149010067; 
- Fri, 17 Jan 2025 13:23:30 -0800 (PST)
+ bh=wjumgF6EaKTNnP2Dl1TPlNPg+2Xnma+K5d1ucj8pPaA=;
+ b=YdpW3unIfDKMGGAuTxYHj7kvexwfmYZ4rL++PtMO1R4z51nhZpFWiqJ5NV0ke44uRa
+ 29plG0KvYn2hMXFDO/FSjl7nSMrMgvBF7h0JVry1xjHXKqRIiptKsqPZjlMnreu1Hd7S
+ ECgtV9lMpKy/w+ihIokq4h3lZBEBSD5lwnVwm5QGcoptbeGPVSccPux3IJsZhnkxvpwD
+ 7mAgmIMRf6Jc9mPH44WCkrMdwYVp42ypKP6UIiz/paYiBPyN75QcesWfpXBO7laCWvW/
+ a/+JiiCP1w+8azhbLahgUJjAQx/M+O7akHharuIP8Ae83CM0aUVO0SJZimHhW95a7Wi7
+ eGmA==
+X-Gm-Message-State: AOJu0YxkZSZM8vD5Bv22MYJaccIdb5eUj4P639GZ+e429im+Q8gK2/Ov
+ dp/yQUoSjHuN/jT7oAavZHMxJMzGkfGIFaJZK/iWcG723kE8jMBCuDWC+6HWxitU5X+/O8dZGSK
+ iZIY=
+X-Gm-Gg: ASbGncvjmh0//6GUTidAxPl4R2Jj/UOhMkSHGRLAhYM7udyUsAacunG97KzboP5ryWk
+ kDNz/EygRHKLUsvR3CSuPZJr5dqaEwqXWXxDC0g9k9yOc3FuxPskkf/uSe+Ld6gMLXXTkAbw2uZ
+ jMtzQ7j316NJXJDg/3zJunMAAhUgW5E2RZaiIqWx672Ifs7dn922uEJiaKQ2cXwTd8Jbms12WVQ
+ uDfaPpgdtEOkUVtQGhkG3hmWQqkkctzJCtVNPfhYS/EkJBAlTsO/H8=
+X-Google-Smtp-Source: AGHT+IHky/QNgtBnim2GTAY+HEfI1QV4FZMDtqp7IwmXzZdUmlhUpxzGNFw9OWAcTIvuMlanK8WgNA==
+X-Received: by 2002:a17:907:989:b0:aa6:a844:8791 with SMTP id
+ a640c23a62f3a-ab38b378d8fmr450432266b.45.1737149205011; 
+ Fri, 17 Jan 2025 13:26:45 -0800 (PST)
 Received: from draig.lan ([85.9.250.243]) by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-ab384f1e57bsm232133766b.104.2025.01.17.13.23.28
+ a640c23a62f3a-ab384f860e1sm231883066b.147.2025.01.17.13.26.42
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 17 Jan 2025 13:23:28 -0800 (PST)
+ Fri, 17 Jan 2025 13:26:43 -0800 (PST)
 Received: from draig (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id 3A87B6083E;
- Fri, 17 Jan 2025 21:23:28 +0000 (GMT)
+ by draig.lan (Postfix) with ESMTP id 037186083E;
+ Fri, 17 Jan 2025 21:26:42 +0000 (GMT)
 From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
-To: Ilya Leoshkevich <iii@linux.ibm.com>
-Cc: Warner Losh <imp@bsdimp.com>,  Riku Voipio <riku.voipio@iki.fi>,
- Laurent Vivier <laurent@vivier.eu>,  Paolo Bonzini <pbonzini@redhat.com>,
- Richard Henderson <richard.henderson@linaro.org>,  Kyle Evans
- <kevans@freebsd.org>,  Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?=
- <philmd@linaro.org>,
- qemu-devel@nongnu.org,  Daniel P . =?utf-8?Q?Berrang=C3=A9?=
- <berrange@redhat.com>
-Subject: Re: [PATCH v6 0/8] gdbstub: Allow late attachment
-In-Reply-To: <20250117001542.8290-1-iii@linux.ibm.com> (Ilya Leoshkevich's
- message of "Fri, 17 Jan 2025 01:11:25 +0100")
-References: <20250117001542.8290-1-iii@linux.ibm.com>
+To: Richard Henderson <richard.henderson@linaro.org>
+Cc: qemu-devel@nongnu.org,  philmd@linaro.org,  pierrick.bouvier@linaro.org
+Subject: Re: [PATCH v2 01/81] tcg: Move call abi parameters from
+ tcg-target.h to tcg-target.c.inc
+In-Reply-To: <20250107080112.1175095-2-richard.henderson@linaro.org> (Richard
+ Henderson's message of "Mon, 6 Jan 2025 23:59:52 -0800")
+References: <20250107080112.1175095-1-richard.henderson@linaro.org>
+ <20250107080112.1175095-2-richard.henderson@linaro.org>
 User-Agent: mu4e 1.12.8; emacs 29.4
-Date: Fri, 17 Jan 2025 21:23:28 +0000
-Message-ID: <87plklm8xb.fsf@draig.linaro.org>
+Date: Fri, 17 Jan 2025 21:26:41 +0000
+Message-ID: <87jzatm8ry.fsf@draig.linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::632;
- envelope-from=alex.bennee@linaro.org; helo=mail-ej1-x632.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::535;
+ envelope-from=alex.bennee@linaro.org; helo=mail-ed1-x535.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -109,33 +104,16 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Ilya Leoshkevich <iii@linux.ibm.com> writes:
+Richard Henderson <richard.henderson@linaro.org> writes:
 
-<snip>
+> These defines are not required outside of tcg/tcg.c,
+> which includes tcg-target.c.inc before use.
+> Reduces the exported symbol set of tcg-target.h.
 >
-> Hi,
->
-> This series adds the ability to attach GDB to a running qemu-user
-> instance. This is useful for debugging multi-process apps.
->
-> Patches 1 and 2 implement a small related feature: the ability to
-> create individual UNIX sockets for each child process.
->
-> Patches 3-5 add the required infrastructure. In particular, we need
-> to reserve a host signal for waking up threads, as discussed in [1].
-> By the way, the problem with atomicity of checking for pending signals
-> and invoking syscalls that I'm describing in that thread seems to
-> have already been solved by the safe_syscall infrastructure, so the
-> changes are fairly simple.
->
-> Patch 6 is the implementation, patch 7 is a documentation update,
-> patch 8 is a test. I tested this series on Linux and only
-> compile-tested on the BSDs.
->
-> If this series is accepted, I will rebase the all-stop series on top
-> of it.
+> Reviewed-by: Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org>
+> Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 
-Queued to gdbstub/next, thanks.
+Reviewed-by: Alex Benn=C3=A9e <alex.bennee@linaro.org>
 
 --=20
 Alex Benn=C3=A9e
