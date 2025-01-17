@@ -4,98 +4,63 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9EDF9C02183
-	for <qemu-devel@archiver.kernel.org>; Fri, 17 Jan 2025 00:18:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2D35BC02183
+	for <qemu-devel@archiver.kernel.org>; Fri, 17 Jan 2025 00:25:19 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tYa1t-00029U-Ol; Thu, 16 Jan 2025 19:16:05 -0500
+	id 1tYaAE-0007sJ-5p; Thu, 16 Jan 2025 19:24:42 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <iii@linux.ibm.com>) id 1tYa1q-00028D-RB
- for qemu-devel@nongnu.org; Thu, 16 Jan 2025 19:16:02 -0500
-Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
+ (Exim 4.90_1) (envelope-from <itaru.kitayama@linux.dev>)
+ id 1tYaAB-0007s1-A1
+ for qemu-devel@nongnu.org; Thu, 16 Jan 2025 19:24:40 -0500
+Received: from out-175.mta1.migadu.com ([95.215.58.175])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <iii@linux.ibm.com>) id 1tYa1n-0008KE-CE
- for qemu-devel@nongnu.org; Thu, 16 Jan 2025 19:16:02 -0500
-Received: from pps.filterd (m0360083.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 50GM0VKn007885;
- Fri, 17 Jan 2025 00:15:49 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-transfer-encoding:date:from:in-reply-to:message-id
- :mime-version:references:subject:to; s=pp1; bh=4fu3GDQOQ9FOS9iFS
- Yy+3L5RzBVEUo1P+XpIXrxmcI4=; b=hfuUJGmS9yRnv60GNAH5xgbUwzQsQNT/e
- 5hjsZVvInwm/rrAQzpwA3hizAz4g1/NsnNukjPLY+zyZ7XWq+Uvs6PK8GwYRIcsc
- Hq9dGHaAMQt/iKk/IPZjTxhgJ/ISCqle53+kKkCOGSANOI9VXc/1zBzRbjUSQw8e
- sX627N/dCFvzbmzNaKqxNwjHmzb5Ql5cYz9ekCkg4Zrla0vusvFBOQ7x2LCfn4gY
- ORBVotMFk62u8yPSCp6s9TGgVtkXLupm+odLqcsTjIYeP7SdNKj+upvPCer2TZ41
- 8niRsCvVFMitui2hmrqR2lcoZkkPYkMejIlD+ns76BDnoVIftH3BA==
-Received: from ppma12.dal12v.mail.ibm.com
- (dc.9e.1632.ip4.static.sl-reverse.com [50.22.158.220])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 446tkcnefy-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Fri, 17 Jan 2025 00:15:49 +0000 (GMT)
-Received: from pps.filterd (ppma12.dal12v.mail.ibm.com [127.0.0.1])
- by ppma12.dal12v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 50GKSMhW004540;
- Fri, 17 Jan 2025 00:15:48 GMT
-Received: from smtprelay05.fra02v.mail.ibm.com ([9.218.2.225])
- by ppma12.dal12v.mail.ibm.com (PPS) with ESMTPS id 4442yt0jk2-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Fri, 17 Jan 2025 00:15:48 +0000
-Received: from smtpav03.fra02v.mail.ibm.com (smtpav03.fra02v.mail.ibm.com
- [10.20.54.102])
- by smtprelay05.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 50H0FkK940042938
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Fri, 17 Jan 2025 00:15:46 GMT
-Received: from smtpav03.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id BB17C2004B;
- Fri, 17 Jan 2025 00:15:46 +0000 (GMT)
-Received: from smtpav03.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 49DEA20040;
- Fri, 17 Jan 2025 00:15:46 +0000 (GMT)
-Received: from heavy.ibm.com (unknown [9.171.62.46])
- by smtpav03.fra02v.mail.ibm.com (Postfix) with ESMTP;
- Fri, 17 Jan 2025 00:15:46 +0000 (GMT)
-From: Ilya Leoshkevich <iii@linux.ibm.com>
-To: Warner Losh <imp@bsdimp.com>, Riku Voipio <riku.voipio@iki.fi>,
- Laurent Vivier <laurent@vivier.eu>, Paolo Bonzini <pbonzini@redhat.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
-Cc: Kyle Evans <kevans@freebsd.org>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- qemu-devel@nongnu.org,
- =?UTF-8?q?Daniel=20P=20=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
- Ilya Leoshkevich <iii@linux.ibm.com>
-Subject: [PATCH v6 2/8] gdbstub: Try unlinking the unix socket before binding
-Date: Fri, 17 Jan 2025 01:11:27 +0100
-Message-ID: <20250117001542.8290-3-iii@linux.ibm.com>
-X-Mailer: git-send-email 2.47.1
-In-Reply-To: <20250117001542.8290-1-iii@linux.ibm.com>
-References: <20250117001542.8290-1-iii@linux.ibm.com>
-MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-TM-AS-GCONF: 00
-X-Proofpoint-ORIG-GUID: lBpMcVpkEUIGWomKJemK5xmVh_c4Nb3M
-X-Proofpoint-GUID: lBpMcVpkEUIGWomKJemK5xmVh_c4Nb3M
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1057,Hydra:6.0.680,FMLib:17.12.68.34
- definitions=2025-01-16_10,2025-01-16_01,2024-11-22_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- adultscore=0 malwarescore=0
- impostorscore=0 mlxscore=0 spamscore=0 priorityscore=1501
- lowpriorityscore=0 bulkscore=0 suspectscore=0 clxscore=1015
- mlxlogscore=923 phishscore=0 classifier=spam adjust=0 reason=mlx
- scancount=1 engine=8.19.0-2411120000 definitions=main-2501160178
-Received-SPF: pass client-ip=148.163.156.1; envelope-from=iii@linux.ibm.com;
- helo=mx0a-001b2d01.pphosted.com
-X-Spam_score_int: -44
-X-Spam_score: -4.5
-X-Spam_bar: ----
-X-Spam_report: (-4.5 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H2=-1.797, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+ (Exim 4.90_1) (envelope-from <itaru.kitayama@linux.dev>)
+ id 1tYaA8-0000rG-KP
+ for qemu-devel@nongnu.org; Thu, 16 Jan 2025 19:24:39 -0500
+Content-Type: text/plain;
+	charset=utf-8
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.dev; s=key1;
+ t=1737073473;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=LCKFR+/+9ig7WOQZWf5TdCH6BD1FyjSsB0Pw5mMJOIg=;
+ b=nyJ2kJ3uEjiYPzpLljaQb32xWcZvaoFlQ+xrfyxVOxhmeC+h+z9oUWbo384/oUX8Trb8qd
+ 3eafSTnX5EpQc6YXITCqI0l0gBbJgUJcZC5GH7JxEuMVPfOlXrWgWG3mGAk3x8/Pvej3Iz
+ ypxh/Uul5eS7yFDnH9u9YA+bqgsX78o=
+Mime-Version: 1.0 (Mac OS X Mail 16.0 \(3826.300.87.4.3\))
+Subject: Re: CXL emulation on aarch64
+X-Report-Abuse: Please report any abuse attempt to abuse@migadu.com and
+ include these headers.
+From: Itaru Kitayama <itaru.kitayama@linux.dev>
+In-Reply-To: <20250116105833.000056da@huawei.com>
+Date: Fri, 17 Jan 2025 09:24:15 +0900
+Cc: "Zhijian Li (Fujitsu)" <lizhijian@fujitsu.com>,
+ qemu-devel@nongnu.org
+Content-Transfer-Encoding: quoted-printable
+Message-Id: <C7740553-EA65-4576-9FAB-13780CA3D810@linux.dev>
+References: <0C019F50-9020-42ED-B051-998F03BFB709@linux.dev>
+ <483e8037-3c72-4560-b4b8-2437d37ca8c4@fujitsu.com>
+ <20250110123128.00004a5b@huawei.com>
+ <09D52CDC-44E5-48C4-8D32-E4DD0964F9AF@linux.dev>
+ <20250114102626.00000c53@huawei.com>
+ <88E9D774-A760-45F7-A173-24A07BB55733@linux.dev>
+ <20250116105833.000056da@huawei.com>
+To: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+X-Migadu-Flow: FLOW_OUT
+Received-SPF: pass client-ip=95.215.58.175;
+ envelope-from=itaru.kitayama@linux.dev; helo=out-175.mta1.migadu.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
+X-Spam_bar: --
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_PASS=-0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -112,123 +77,182 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-In case an emulated process execve()s another emulated process, bind()
-will fail, because the socket already exists. So try deleting it. Use
-the existing unix_listen() function which does this. Link qemu-user
-with qemu-sockets.c and add the monitor_get_fd() stub.
 
-Note that it is not possible to handle this in do_execv(): deleting
-gdbserver_user_state.socket_path before safe_execve() is not correct,
-because the latter may fail, and afterwards we may lose control.
 
-Signed-off-by: Ilya Leoshkevich <iii@linux.ibm.com>
----
- gdbstub/user.c     | 29 +++--------------------------
- stubs/meson.build  |  2 ++
- stubs/monitor-fd.c |  9 +++++++++
- util/meson.build   |  2 ++
- 4 files changed, 16 insertions(+), 26 deletions(-)
- create mode 100644 stubs/monitor-fd.c
+> On Jan 16, 2025, at 19:58, Jonathan Cameron =
+<Jonathan.Cameron@huawei.com> wrote:
+>=20
+> On Thu, 16 Jan 2025 15:04:53 +0900
+> Itaru Kitayama <itaru.kitayama@linux.dev> wrote:
+>=20
+>> Hi Jonathan,
+>>=20
+>>> On Jan 14, 2025, at 19:26, Jonathan Cameron =
+<Jonathan.Cameron@huawei.com> wrote:
+>>>=20
+>>> On Tue, 14 Jan 2025 12:03:03 +0900
+>>> Itaru Kitayama <itaru.kitayama@linux.dev> wrote:
+>>>=20
+>>>> Hi Jonathan,=20
+>>>>=20
+>>>>> On Jan 10, 2025, at 21:31, Jonathan Cameron =
+<Jonathan.Cameron@huawei.com> wrote:
+>>>>>=20
+>>>>> On Fri, 10 Jan 2025 09:20:54 +0000
+>>>>> "Zhijian Li (Fujitsu)" via <qemu-devel@nongnu.org> wrote:
+>>>>>=20
+>>>>>> On 10/01/2025 13:29, Itaru Kitayama wrote:   =20
+>>>>>>> Hi,
+>>>>>>> Is anybody working on the CXL emulation on aarch64?     =20
+>>>>>>=20
+>>>>>> I'm not currently working on the CXL emulation on aarch64.
+>>>>>>=20
+>>>>>> However, IIRC the CXL maintainer's tree should work.
+>>>>>> https://gitlab.com/jic23/qemu/   =20
+>>>>>=20
+>>>>> Pick up latest branch from there. I'm prepping a rebased version
+>>>>> with some new stuff but might take a few more days.   =20
+>>>>=20
+>>>> Thanks for sharing your work with us.  Your master and =
+cxl-2024-11-27 branches give:
+>>>>=20
+>>>> $ qemu-system-aarch64: -accel tcg,cxl=3Don: Property =
+'tcg-accel.cxl' not found =20
+>>>=20
+>>> cxl is a machine property not a accel one. So needs to be after virt
+>>> There are tests in the tree for bios tables. Copy the command line =
+from those.
+>>>=20
+>>>>=20
+>>>> My commands are below:
+>>>> $HOME/projects/qemu/build/qemu-system-aarch64 \
+>>>>       -M virt,virtualization=3Don,gic-version=3D3 \
+>>>>       -M acpi=3Doff -cpu max,sme=3Doff -m 8G -smp 4 \
+>>>>       -accel tcg,cxl=3Don \
+>>>>       -nographic \
+>>>>       -bios $HOME/cca-v4/out/bin/flash.bin \
+>>>>       -kernel Image-cca \
+>>>>       -drive =
+format=3Draw,if=3Dnone,file=3D$HOME/cca-v4/out-or/images/rootfs.ext2,id=3D=
+hd0 \
+>>>>       -device virtio-blk-pci,drive=3Dhd0 \
+>>>>       -append root=3D/dev/vda \
+>>>>       -nodefaults \
+>>>>       --serial tcp:localhost:54320 \
+>>>>        -serial tcp:localhost:54321 \
+>>>>        -append "root=3D/dev/vda earlycon console=3Dhvc0" \
+>>>>        -device virtio-net-pci,netdev=3Dnet0 \
+>>>>        -netdev user,id=3Dnet0 \
+>>>>        -device virtio-9p-device,fsdev=3Dshr0,mount_tag=3Dshr0 \
+>>>>        -fsdev local,security_model=3Dnone,path=3D../../,id=3Dshr0
+>>>>=20
+>>>> Yes, I=E2=80=99m using Linaro=E2=80=99s CCA capable OP-TEE builds =
+above. =20
+>>>=20
+>>> I'm a little curious why optee is relevant for this but shouldn't =
+matter as long
+>>> as an appropriate EDK2 is loaded.
+>>>=20
+>>=20
+>> I picked up your tree=E2=80=99s =E2=80=9Cmaster=E2=80=9D and =
+=E2=80=9Ccxl-next=E2=80=9D as of today, and only the latter at least =
+booted.
+>> The former gives:
+>>=20
+>> qemu-system-aarch64: Property 'virt-9.2-machine.cxl' not found
+>>=20
+>> Should I stick with the cxl-next? My concern is that the base QEMU =
+version is a bit old
+>> 7.0.50.
+>=20
+> Always use the latest dated branch on that tree.  I release whenever =
+there
+> is something new to carry or a major rebase needed.
+>=20
+> cxl-<date> is the right branch to use. Hope that helps.
+>=20
 
-diff --git a/gdbstub/user.c b/gdbstub/user.c
-index fd29d595f40..8225b702802 100644
---- a/gdbstub/user.c
-+++ b/gdbstub/user.c
-@@ -315,12 +315,10 @@ static bool gdb_accept_socket(int gdb_fd)
-     return true;
- }
- 
--static int gdbserver_open_socket(const char *path)
-+static int gdbserver_open_socket(const char *path, Error **errp)
- {
-     g_autoptr(GString) buf = g_string_new("");
--    struct sockaddr_un sockaddr = {};
-     char *pid_placeholder;
--    int fd, ret;
- 
-     pid_placeholder = strstr(path, "%d");
-     if (pid_placeholder != NULL) {
-@@ -330,28 +328,7 @@ static int gdbserver_open_socket(const char *path)
-         path = buf->str;
-     }
- 
--    fd = socket(AF_UNIX, SOCK_STREAM, 0);
--    if (fd < 0) {
--        perror("create socket");
--        return -1;
--    }
--
--    sockaddr.sun_family = AF_UNIX;
--    pstrcpy(sockaddr.sun_path, sizeof(sockaddr.sun_path) - 1, path);
--    ret = bind(fd, (struct sockaddr *)&sockaddr, sizeof(sockaddr));
--    if (ret < 0) {
--        perror("bind socket");
--        close(fd);
--        return -1;
--    }
--    ret = listen(fd, 1);
--    if (ret < 0) {
--        perror("listen socket");
--        close(fd);
--        return -1;
--    }
--
--    return fd;
-+    return unix_listen(path, errp);
- }
- 
- static bool gdb_accept_tcp(int gdb_fd)
-@@ -424,7 +401,7 @@ bool gdbserver_start(const char *port_or_path, Error **errp)
-     if (port > 0) {
-         gdb_fd = gdbserver_open_port(port, errp);
-     } else {
--        gdb_fd = gdbserver_open_socket(port_or_path);
-+        gdb_fd = gdbserver_open_socket(port_or_path, errp);
-     }
- 
-     if (gdb_fd < 0) {
-diff --git a/stubs/meson.build b/stubs/meson.build
-index e91614a874d..17168d03eed 100644
---- a/stubs/meson.build
-+++ b/stubs/meson.build
-@@ -61,6 +61,8 @@ if have_user
-   if not (have_system or have_tools)
-     stub_ss.add(files('qdev.c'))
-   endif
-+
-+  stub_ss.add(files('monitor-fd.c'))
- endif
- 
- if have_system
-diff --git a/stubs/monitor-fd.c b/stubs/monitor-fd.c
-new file mode 100644
-index 00000000000..9bb67498850
---- /dev/null
-+++ b/stubs/monitor-fd.c
-@@ -0,0 +1,9 @@
-+/* SPDX-License-Identifier: GPL-2.0-or-later */
-+
-+#include "qemu/osdep.h"
-+#include "monitor/monitor.h"
-+
-+int monitor_get_fd(Monitor *mon, const char *fdname, Error **errp)
-+{
-+    abort();
-+}
-diff --git a/util/meson.build b/util/meson.build
-index 5d8bef98912..780b5977a89 100644
---- a/util/meson.build
-+++ b/util/meson.build
-@@ -84,6 +84,8 @@ if have_block or have_ga
-   util_ss.add(files('qemu-coroutine.c', 'qemu-coroutine-lock.c', 'qemu-coroutine-io.c'))
-   util_ss.add(files(f'coroutine-@coroutine_backend@.c'))
-   util_ss.add(files('thread-pool.c', 'qemu-timer.c'))
-+endif
-+if have_block or have_ga or have_user
-   util_ss.add(files('qemu-sockets.c'))
- endif
- if have_block
--- 
-2.47.1
+Okay the cxl-2024-11-27 gives this:
+
+qemu-system-aarch64: CFMWS does not fit under PA limit
+
+Below is my QEMU options I use currently:
+
+/home/itaru/projects/qemu/build/qemu-system-aarch64 \
+         -M =
+virt,virtualization=3Don,pflash0=3Drom,pflash1=3Defivars,gic-version=3D3,v=
+irtualization=3Don,cxl=3Don -m 8192 \
+         -cpu cortex-a53 \
+         -smp 2 \
+         -accel tcg \
+         -nographic \
+         -display none \
+         -kernel ${HOME}/projects/linux/arch/arm64/boot/Image \
+         -append "root=3D/dev/vda rw earlycon acpi=3Dforce" \
+         -drive format=3Draw,if=3Dnone,file=3D${HOME}/ubuntu24.img,id=3Dhd=
+0 \
+         -device virtio-blk-pci,drive=3Dhd0 \
+         -nodefaults \
+         -serial mon:stdio \
+         -device virtio-net-pci,netdev=3Dnet0 \
+         -netdev user,id=3Dnet0,hostfwd=3Dtcp::8024-:22 \
+         -blockdev =
+node-name=3Drom,driver=3Dfile,filename=3Dedk2-aarch64-code.fd,read-only=3D=
+true \
+         -blockdev =
+node-name=3Defivars,driver=3Dfile,filename=3Dqemu-arm64-efivars.test \
+         -object =
+memory-backend-file,id=3Dcxl-mem1,share=3Don,mem-path=3D/tmp/cxltest.raw,s=
+ize=3D256M \
+         -object =
+memory-backend-file,id=3Dcxl-lsa1,share=3Don,mem-path=3D/tmp/lsa.raw,size=3D=
+256M \
+         -device pxb-cxl,bus_nr=3D12,bus=3Dpcie.0,id=3Dcxl.1 \
+         -device cxl-rp,port=3D0,bus=3Dcxl.1,id=3Droot_port13,chassis=3D0,=
+slot=3D2 \
+         -device =
+cxl-type3,bus=3Droot_port13,memdev=3Dcxl-mem1,lsa=3Dcxl-lsa1,id=3Dcxl-pmem=
+0 \
+         -M cxl-fmw.0.targets.0=3Dcxl.1,cxl-fmw.0.size=3D4G
+
+> Jonathan
+>=20
+>>=20
+>> Thanks,
+>> Itaru.
+>>=20
+>>> Jonathan
+>>>=20
+>>>>=20
+>>>> Let me know which branch you were suggesting.
+>>>>=20
+>>>> Thanks,
+>>>> Itaru.=20
+>>>>=20
+>>>>>=20
+>>>>> Note my main development work is on arm64 so that tends to work
+>>>>> more reliably than x86 which I only lightly test for stuff that
+>>>>> isn't ready for upstream yet.
+>>>>>=20
+>>>>> Give me a shout if you run into any problems.
+>>>>>=20
+>>>>> The main blocker on upstreaming this is resolving the missing =
+device tree
+>>>>> support for PCI expander bridges.  I've not made any progress on =
+this since
+>>>>> talk at Linaro connect in 2023.
+>>>>>=20
+>>>>> Jonathan
+>>>>>=20
+>>>>>=20
+>>>>>>=20
+>>>>>>=20
+>>>>>> Thanks
+>>>>>> Zhijian
+>>>>>>=20
+>>>>>>> If there=E2=80=99s a WIP branch, a pointer would be appreciated.
+>>>>>>>=20
+>>>>>>> Itaru     =20
+
 
 
