@@ -4,93 +4,89 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 11969C02183
-	for <qemu-devel@archiver.kernel.org>; Fri, 17 Jan 2025 07:21:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 86C1FC02183
+	for <qemu-devel@archiver.kernel.org>; Fri, 17 Jan 2025 08:05:11 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tYgf2-0006NJ-88; Fri, 17 Jan 2025 02:20:56 -0500
+	id 1tYhKn-0003Lm-Nj; Fri, 17 Jan 2025 03:04:05 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1tYgex-0006Mr-3q; Fri, 17 Jan 2025 02:20:51 -0500
-Received: from isrv.corpit.ru ([86.62.121.231])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1tYgeu-00011F-FN; Fri, 17 Jan 2025 02:20:50 -0500
-Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 1D0BBD97CF;
- Fri, 17 Jan 2025 10:20:36 +0300 (MSK)
-Received: from [192.168.177.130] (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id 2D73F19D0E0;
- Fri, 17 Jan 2025 10:20:44 +0300 (MSK)
-Message-ID: <9c06632b-751b-4a2f-aa87-e07691bebfba@tls.msk.ru>
-Date: Fri, 17 Jan 2025 10:20:44 +0300
+ (Exim 4.90_1) (envelope-from <r.peniaev@gmail.com>)
+ id 1tYhKm-0003J8-Ic
+ for qemu-devel@nongnu.org; Fri, 17 Jan 2025 03:04:04 -0500
+Received: from mail-lj1-x234.google.com ([2a00:1450:4864:20::234])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <r.peniaev@gmail.com>)
+ id 1tYhKk-0006dR-3K
+ for qemu-devel@nongnu.org; Fri, 17 Jan 2025 03:04:03 -0500
+Received: by mail-lj1-x234.google.com with SMTP id
+ 38308e7fff4ca-303548a933aso15784031fa.3
+ for <qemu-devel@nongnu.org>; Fri, 17 Jan 2025 00:04:00 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20230601; t=1737101039; x=1737705839; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=jbd5a/iALj6Zh3q4rOsOeTPG8nmgzacpvmEmW6NCWoY=;
+ b=GTsQnJqsYmtxXsAijO3UG4d1xBJhXZhlfpV4mRS4ZRFCpIQs/80N/GqJXWxA8yNnPp
+ UHwiOBrjY08zToxZ/GrpEZgzRJWPq/AF5alp5AZvjTp+NgV4gg8+gTTZWldslvDkgTv5
+ iPXwUtBYk6RRskkWFIJ6bD2gNAGoSC/YMzSrf8mMWsrcXCd7RkcxNVvqCrFxLNryQxT9
+ JR3ISzE5ih1vtkNLW/5WZIcQPn6+8vxMXTcrEnM7DUhAF0mpRdmFF+wd5cSTurpwtLXz
+ WYCTlokSR0E/cQrSyU4EO8bScItFaa7E/0ZxMHK5f2k5s4b9ZMjfFn/0/b+dl9b3pqMN
+ PlCA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1737101039; x=1737705839;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=jbd5a/iALj6Zh3q4rOsOeTPG8nmgzacpvmEmW6NCWoY=;
+ b=Rr4GyfBoLzU4tWng6N8O6EIFRMAxSPoVaxTFEqEhcCFz8vg72DndFo1TnB8p783Hmg
+ KLYV8knMMvztaKAltAetyu8pQK1QedtcE9e85WJ7Ix4eDs7TjxuWuIGZ9C27bxES7RP4
+ GranFrvnvTE97eaU1SOGU50D5Xz22aIraK0avjAT5/+KP11maiMHZxdX+7P8EIdwHh5b
+ JUOdKxjlmn5yO8yHdTlz+rqUVdCwOmPItTJcG0w622nDeukW+0+hsqeF1ziKJjzTfXxj
+ OybuZChrYNGaeA0AGE5X5HT440Gmv+lv7lEX2CP0roVOEZwrpbPPqlTJf2gfJmxrhl7S
+ 34jA==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCWXIvYqSlXivbMq8s2xkJB9nd3Bu9dyt9rQTVAbBpShXQRWIiwfPYYlxAhGNDm14/7y2Tasn/xpdkzt@nongnu.org
+X-Gm-Message-State: AOJu0YzMVahsxN4KYgrxg6GDAFSLHMEQTzCBTHqmS7xmyVVA9Oop7cxn
+ nOcYpOyWnnoVNsKYBkFOegRZMfmpu0UUfibHUodolLCqKb/XGi4C+zxNIjZRdZ4iNTXrzV9jFdn
+ Thl0FnDCAipLABXR55gG+o8wlEm4=
+X-Gm-Gg: ASbGncv5vB7eM2Kuk0ELQYkHIsBA0eemCHPbn+NBpCIycHzNYM69AGdPbAPVu/+yM+i
+ XMx2qsFUNP/L7AhdCQdnxHEN5w8H4CK0JkpUGNWMnCfQKSA1PsbnX87HPREFAVOKHwlUypqRd
+X-Google-Smtp-Source: AGHT+IFrI/YBM+RrwkYmsj1vS+8eJOaCuWpWxUXMQUa7oyW9hnxfFXgoNwy28nDqvfG536nTiE3Uk7FCbSF8seOXzN4=
+X-Received: by 2002:a2e:a987:0:b0:302:3d74:a1af with SMTP id
+ 38308e7fff4ca-3072ca99b62mr5438021fa.20.1737101038774; Fri, 17 Jan 2025
+ 00:03:58 -0800 (PST)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3] hw/cxl: Fix msix_notify: Assertion `vector <
- dev->msix_entries_nr`
-To: Li Zhijian <lizhijian@fujitsu.com>, qemu-devel@nongnu.org
-Cc: linux-cxl@vger.kernel.org, Jonathan Cameron
- <jonathan.cameron@huawei.com>, Fan Ni <fan.ni@samsung.com>,
- qemu-stable <qemu-stable@nongnu.org>
-References: <20250115075834.167504-1-lizhijian@fujitsu.com>
-Content-Language: en-US, ru-RU
-From: Michael Tokarev <mjt@tls.msk.ru>
-Autocrypt: addr=mjt@tls.msk.ru; keydata=
- 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
-In-Reply-To: <20250115075834.167504-1-lizhijian@fujitsu.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=86.62.121.231; envelope-from=mjt@tls.msk.ru;
- helo=isrv.corpit.ru
-X-Spam_score_int: -68
-X-Spam_score: -6.9
-X-Spam_bar: ------
-X-Spam_report: (-6.9 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_HI=-5,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+References: <20241016102605.459395-1-r.peniaev@gmail.com>
+ <20241016102605.459395-7-r.peniaev@gmail.com>
+ <CAJ+F1CLkn2WcmJEmNpJwNcc5VPriDTdSFWcv44QWaYtvHycKcQ@mail.gmail.com>
+ <87frmuwo6p.fsf@pond.sub.org>
+ <CACZ9PQUk7ZjwfYWVNq3z2Wp_pnkKO8ObhLc6uy5ABHq2yCL9Ag@mail.gmail.com>
+ <Z4jtJMNeXexEEpVZ@redhat.com>
+In-Reply-To: <Z4jtJMNeXexEEpVZ@redhat.com>
+From: Roman Penyaev <r.peniaev@gmail.com>
+Date: Fri, 17 Jan 2025 09:03:47 +0100
+X-Gm-Features: AbW1kva1CIjRSbJxyAYznbzAgDurxKTvQOg7XfBqsqN6pcrkRFQ0FmjF4b8iPDg
+Message-ID: <CACZ9PQVzRwgqix=6Do67kgLEJNP4xQZ4dHKrfONHh78vJU1CLg@mail.gmail.com>
+Subject: Re: [PATCH v4 6/8] chardev/char-mux: implement backend chardev
+ multiplexing
+To: Kevin Wolf <kwolf@redhat.com>
+Cc: Markus Armbruster <armbru@redhat.com>,
+ =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@gmail.com>, 
+ qemu-devel@nongnu.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:20::234;
+ envelope-from=r.peniaev@gmail.com; helo=mail-lj1-x234.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -106,44 +102,71 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-15.01.2025 10:58, Li Zhijian via wrote:
-> This assertion always happens when we sanitize the CXL memory device.
-> $ echo 1 > /sys/bus/cxl/devices/mem0/security/sanitize
-> 
-> It is incorrect to register an MSIX number beyond the device's capability.
-> 
-> Increase the device's MSIX number to cover the mailbox msix number(9).
+Hi Kevin,
 
-This seems to be like a qemu-stable material (8.2+), is it not?
+On Thu, Jan 16, 2025 at 12:27=E2=80=AFPM Kevin Wolf <kwolf@redhat.com> wrot=
+e:
+>
+> Am 17.12.2024 um 11:32 hat Roman Penyaev geschrieben:
+> > Hi Markus,
+> >
+> > Thanks for the explicit info. But I have a lot to ask :)
+> > Do I understand correctly that there are two ways to parse
+> > arguments: classic, via qemu_opts_parse_noisily() and modern, via
+> > qobject_input_visitor_new_str()? (for example, I look in
+> > net/net.c, netdev_parse_modern()). My goal is not to create a
+> > completely new option, but to add (extend) parameters for
+> > chardev, namely to add a new type of backend device. This
+> > complicates everything, since chardev uses
+> > qemu_opts_parse_noisily() for parsing and bypasses the modern
+> > way (I hope I'm not mistaken, maybe Marc can comment). And I'm
+> > not sure that it's easy to replace the classic way of parsing
+> > arguments with the modern way without breaking anything.
+>
+> A few years ago, I tried to unify the QMP and CLI code paths for
+> creating chardevs and this involved using QAPI for everything. As far as
+> I can remember, chardevs don't use any of the QemuOpts features that
+> don't exist in they keyval parser, so it's easy from that angle.
+>
+> What makes it more complicated is that CLI and QMP options have diverged
+> quite a bit, and while generally the same functionality is available, it
+> sometimes uses different names or is negated in one compared to the
+> other etc.
 
-Thanks,
+Right, I noticed that as well.
 
-/mjt
+>
+> So I ended up writing compatibility code that translated legacy CLI
+> options into QAPI-compatible ones, and then I could use the exising QAPI
+> types. Part of it made use of aliases, which would have been a new
+> feature in QAPI, but Markus didn't like them in the end. They could have
+> been replaced by manual conversion code, but I didn't have time (nor, to
+> be honest, motivation) to work it any more when Markus had finally made
+> that decision. It shouldn't actually be very hard.
+>
+> Anyway, if it's of any use for you, feel free to resurrect parts of it:
+>
+> https://repo.or.cz/qemu/kevin.git/shortlog/refs/tags/qapi-alias-chardev-v=
+4
 
-> Fixes: 43efb0bfad2b ("hw/cxl/mbox: Wire up interrupts for background completion")
-> Signed-off-by: Li Zhijian <lizhijian@fujitsu.com>
-> ---
-> V3:
->    Just increate the device's msix number, A new enumeration will be introduced in later patch. # Jonathan
-> 
-> V2:
->    Just increase msix number and add enum to maintainer their values # Jonathan
-> ---
->   hw/mem/cxl_type3.c | 2 +-
->   1 file changed, 1 insertion(+), 1 deletion(-)
-> 
-> diff --git a/hw/mem/cxl_type3.c b/hw/mem/cxl_type3.c
-> index bd7652740f4b..0ae1704a345c 100644
-> --- a/hw/mem/cxl_type3.c
-> +++ b/hw/mem/cxl_type3.c
-> @@ -843,7 +843,7 @@ static void ct3_realize(PCIDevice *pci_dev, Error **errp)
->       ComponentRegisters *regs = &cxl_cstate->crb;
->       MemoryRegion *mr = &regs->component_registers;
->       uint8_t *pci_conf = pci_dev->config;
-> -    unsigned short msix_num = 6;
-> +    unsigned short msix_num = 10;
->       int i, rc;
->       uint16_t count;
->   
+Nice, thanks for sharing, will take a look.
 
+>
+> (Or maybe I will eventually...)
+>
+> Whatever you choose to do, my one request for you would be that you
+> really make sure that CLI and QMP are structured and behave exactly the
+> same with your new option, to avoid making the problem worse than it
+> already is.
+
+I understand this as keeping compatibility between CLI and QAPI at the
+command line interface level. In simple words: a new command line option
+"list.0=3Did0,list.1=3Did1" should be parsed in CLI exactly as QAPI will pa=
+rse
+it in the possible bright future (I mean once the whole chardev is switched
+to QAPI). If my understanding is correct, then, with Markus and Mark-Andre
+help, I'm on the right track.
+
+--
+Roman
 
