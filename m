@@ -4,122 +4,205 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 91015C02183
-	for <qemu-devel@archiver.kernel.org>; Fri, 17 Jan 2025 19:07:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 21B71C02183
+	for <qemu-devel@archiver.kernel.org>; Fri, 17 Jan 2025 19:11:07 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tYrfs-0003uN-1X; Fri, 17 Jan 2025 14:06:34 -0500
+	id 1tYrju-00055E-9j; Fri, 17 Jan 2025 14:10:45 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1tYrfZ-0003tH-Ou
- for qemu-devel@nongnu.org; Fri, 17 Jan 2025 14:06:16 -0500
-Received: from smtp-out1.suse.de ([2a07:de40:b251:101:10:150:64:1])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1tYrfW-000699-Vp
- for qemu-devel@nongnu.org; Fri, 17 Jan 2025 14:06:13 -0500
-Received: from imap1.dmz-prg2.suse.org (imap1.dmz-prg2.suse.org
- [IPv6:2a07:de40:b281:104:10:150:64:97])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (No client certificate requested)
- by smtp-out1.suse.de (Postfix) with ESMTPS id 9893921185;
- Fri, 17 Jan 2025 19:06:07 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1737140767; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=Z18urq6cAEi94oRS3jSYXG7CGeQYatN8WWXVtaB/Ggo=;
- b=h8mgvjQbe4xYDJz1YfDOFoBXGrTHC6cJoOo1ZF0YGZSQCejq2mVzN5OLqmdYDIw2GlgOHc
- arc5pxUONO/yBfLj2kKGZB/Ix8guNIQ1XpHGlBOoa3/sc+tckryiPC4tgcBQ/s9ENZZaun
- nus0vWyG75pHHIpkUtrpp92LwsfR9Ro=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1737140767;
- h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=Z18urq6cAEi94oRS3jSYXG7CGeQYatN8WWXVtaB/Ggo=;
- b=gcWzxpVTuH8QM6bFF4qHhB4zXQUSOdkZj6iaTsUevFfMTG+RwOLcl7lg+eXQGIZhFSrxKo
- xI+5yToy5V5XCUAw==
-Authentication-Results: smtp-out1.suse.de;
- dkim=pass header.d=suse.de header.s=susede2_rsa header.b=h8mgvjQb;
- dkim=pass header.d=suse.de header.s=susede2_ed25519 header.b=gcWzxpVT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1737140767; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=Z18urq6cAEi94oRS3jSYXG7CGeQYatN8WWXVtaB/Ggo=;
- b=h8mgvjQbe4xYDJz1YfDOFoBXGrTHC6cJoOo1ZF0YGZSQCejq2mVzN5OLqmdYDIw2GlgOHc
- arc5pxUONO/yBfLj2kKGZB/Ix8guNIQ1XpHGlBOoa3/sc+tckryiPC4tgcBQ/s9ENZZaun
- nus0vWyG75pHHIpkUtrpp92LwsfR9Ro=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1737140767;
- h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=Z18urq6cAEi94oRS3jSYXG7CGeQYatN8WWXVtaB/Ggo=;
- b=gcWzxpVTuH8QM6bFF4qHhB4zXQUSOdkZj6iaTsUevFfMTG+RwOLcl7lg+eXQGIZhFSrxKo
- xI+5yToy5V5XCUAw==
-Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (No client certificate requested)
- by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 0EB4F13332;
- Fri, 17 Jan 2025 19:06:06 +0000 (UTC)
-Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
- by imap1.dmz-prg2.suse.org with ESMTPSA id DeSULx6qimdHQgAAD6G6ig
- (envelope-from <farosas@suse.de>); Fri, 17 Jan 2025 19:06:06 +0000
-From: Fabiano Rosas <farosas@suse.de>
-To: Steven Sistare <steven.sistare@oracle.com>, qemu-devel@nongnu.org
-Cc: Peter Xu <peterx@redhat.com>, David Hildenbrand <david@redhat.com>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>, Eduardo Habkost
- <eduardo@habkost.net>, Philippe Mathieu-Daude <philmd@linaro.org>, Paolo
- Bonzini <pbonzini@redhat.com>, "Daniel P. Berrange" <berrange@redhat.com>,
- Markus Armbruster <armbru@redhat.com>
-Subject: Re: [PATCH V7 24/24] migration: cpr-transfer documentation
-In-Reply-To: <19a1f016-981e-49ea-9ead-bc64f69fa0c1@oracle.com>
-References: <1736967650-129648-1-git-send-email-steven.sistare@oracle.com>
- <1736967650-129648-25-git-send-email-steven.sistare@oracle.com>
- <87tt9xec2y.fsf@suse.de> <68bee183-ba2b-420c-b885-a6ba630f74fe@oracle.com>
- <87r051e9xb.fsf@suse.de> <19a1f016-981e-49ea-9ead-bc64f69fa0c1@oracle.com>
-Date: Fri, 17 Jan 2025 16:06:04 -0300
-Message-ID: <87o705dzvn.fsf@suse.de>
+ (Exim 4.90_1) (envelope-from <steven.sistare@oracle.com>)
+ id 1tYrjg-00054k-UP
+ for qemu-devel@nongnu.org; Fri, 17 Jan 2025 14:10:29 -0500
+Received: from mx0a-00069f02.pphosted.com ([205.220.165.32])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <steven.sistare@oracle.com>)
+ id 1tYrje-0006cK-Bc
+ for qemu-devel@nongnu.org; Fri, 17 Jan 2025 14:10:28 -0500
+Received: from pps.filterd (m0246627.ppops.net [127.0.0.1])
+ by mx0b-00069f02.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 50HIBtDs001084;
+ Fri, 17 Jan 2025 19:10:23 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=oracle.com; h=cc
+ :content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=
+ corp-2023-11-20; bh=9gAczQ+GBsBbk5pOySwt8WBHue+bLVit/R4geFvOyfU=; b=
+ lhhotYZPOMD7J4YZUjR4uCeWGg8SaodZInAvSNqPherE3MqRoqKxbJyUcRciHCcs
+ T5fvrrRe1V1Zdv5Mt6yeMrzZvILEgkBfO5X5o/U6E5VV2cybWaS9eFLCM0drAZIi
+ MIh3q5BS5flIXtzso2nN1f79A4HL7/mZ03ltzrIO+9U1OMLts5nnnaSc+EJt97js
+ CYtsjGETWcqCRPv1KfkVFwFyF16ZFJQHOWCESkCgtihr6e+2yi+nfyvcIikuqHFO
+ AskqXMXA1k/YgozuuWdboyUBeB++QJLe1FN01lg+KPsZ40UxLOENy//QBCyV6n+R
+ Ql12Cq1bItEwpA4YrrgLGQ==
+Received: from iadpaimrmta02.imrmtpd1.prodappiadaev1.oraclevcn.com
+ (iadpaimrmta02.appoci.oracle.com [147.154.18.20])
+ by mx0b-00069f02.pphosted.com (PPS) with ESMTPS id 443f7yd69g-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Fri, 17 Jan 2025 19:10:22 +0000 (GMT)
+Received: from pps.filterd
+ (iadpaimrmta02.imrmtpd1.prodappiadaev1.oraclevcn.com [127.0.0.1])
+ by iadpaimrmta02.imrmtpd1.prodappiadaev1.oraclevcn.com (8.18.1.2/8.18.1.2)
+ with ESMTP id 50HIlw92020355; Fri, 17 Jan 2025 19:10:21 GMT
+Received: from nam02-bn1-obe.outbound.protection.outlook.com
+ (mail-bn1nam02lp2048.outbound.protection.outlook.com [104.47.51.48])
+ by iadpaimrmta02.imrmtpd1.prodappiadaev1.oraclevcn.com (PPS) with ESMTPS id
+ 443f3jw1np-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Fri, 17 Jan 2025 19:10:21 +0000
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=bPInyLK0d1tpxC7fqzJIF9+yhKBhDr12gZrqqvy3m4EoEXD6zjxnj7vnmx8U2fkRS84WLuSVUB4CoRqNtb75lwb5g256gMzXTEgfmTdaZtsRAzcYaosFe8ujrh4HcbuOI2e4uY74ZyU5Rxlp7SAZs3Wd2t7q7N/wQvZsWFWqpodVv2zRlvHBRSXDQDnmJDGJpIt+egMOpGLfs9tg8AVi1cH/Kul+jRnThBReLY0yG5/IH/bHE3yiq1owXAL6xgng2rctFS5XDg14u5xpFsbP+hGtwhMbXpbH7ns6lwjeYo/7m7ooh9R32+7yLXE8K5boIevhe8h5mmLzyuWILZ9kuA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=9gAczQ+GBsBbk5pOySwt8WBHue+bLVit/R4geFvOyfU=;
+ b=Q0/C87yUs5FZfkdA0A7OAdiWULAaHvR3kYU75zz2S2j8U7BFi+8cZcAPt08dakn9Cg/XTbYjyil5lDmG9KajEIuzVsn/l9ZxJeb3Vv0M9MTdCVitMprY9swefPEQcomrVIMDBA5CkvXkrKSjVmyY4T/SFOx7ayOi3d6J/m4zMqpWctW46F152lEqF+WDfW7xBZUWxM5qXBNAkpYYMEDa8FuyVKlv2E7S6pBlpTaJk/BwX2I9H8JVsIs1CUwZAyxwsO4vAuDO/TkZjK/IDTfY6T232w3pIE0hHPlNQDl6rghKaBsFgEP5ZzvCwrpa4loimNUQNuQjyymlACZGWKEuxQ==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=oracle.com; dmarc=pass action=none header.from=oracle.com;
+ dkim=pass header.d=oracle.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=oracle.onmicrosoft.com; s=selector2-oracle-onmicrosoft-com;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=9gAczQ+GBsBbk5pOySwt8WBHue+bLVit/R4geFvOyfU=;
+ b=oVjSGsuHRCZB6xcEtAwape2ibQ89E4ETVmNplvhk7tEkvdUjLuitsRmOz2xYIJDCxGA9+IC+CC4f0thCjtbqiKGdwN8EeqxasZbscB+B0j0htHmHCrngdx7O2zJcbvmhgyogcCtsOGW1s+GjH/uNyeHSkIG2WTHwTl06exszbBI=
+Received: from IA1PR10MB7447.namprd10.prod.outlook.com (2603:10b6:208:44c::10)
+ by CH0PR10MB7483.namprd10.prod.outlook.com (2603:10b6:610:18e::16)
+ with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.8356.13; Fri, 17 Jan
+ 2025 19:10:20 +0000
+Received: from IA1PR10MB7447.namprd10.prod.outlook.com
+ ([fe80::f2fe:d6c6:70c4:4572]) by IA1PR10MB7447.namprd10.prod.outlook.com
+ ([fe80::f2fe:d6c6:70c4:4572%3]) with mapi id 15.20.8356.014; Fri, 17 Jan 2025
+ 19:10:20 +0000
+Message-ID: <814d9205-8ba5-48a8-9940-6f16bbb097eb@oracle.com>
+Date: Fri, 17 Jan 2025 14:10:14 -0500
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] migration: ram block cpr blockers
+To: Peter Xu <peterx@redhat.com>
+Cc: qemu-devel@nongnu.org, Fabiano Rosas <farosas@suse.de>,
+ David Hildenbrand <david@redhat.com>,
+ Philippe Mathieu-Daude <philmd@linaro.org>,
+ Paolo Bonzini <pbonzini@redhat.com>
+References: <1737135971-132839-1-git-send-email-steven.sistare@oracle.com>
+ <Z4qelNxnBcgO87go@x1n>
+Content-Language: en-US
+From: Steven Sistare <steven.sistare@oracle.com>
+In-Reply-To: <Z4qelNxnBcgO87go@x1n>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: BYAPR01CA0034.prod.exchangelabs.com (2603:10b6:a02:80::47)
+ To IA1PR10MB7447.namprd10.prod.outlook.com
+ (2603:10b6:208:44c::10)
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Rspamd-Queue-Id: 9893921185
-X-Rspamd-Action: no action
-X-Spamd-Result: default: False [-3.01 / 50.00]; BAYES_HAM(-3.00)[100.00%];
- SUSPICIOUS_RECIPS(1.50)[]; NEURAL_HAM_LONG(-1.00)[-1.000];
- R_DKIM_ALLOW(-0.20)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
- NEURAL_HAM_SHORT(-0.20)[-1.000]; MIME_GOOD(-0.10)[text/plain];
- MX_GOOD(-0.01)[]; TO_MATCH_ENVRCPT_ALL(0.00)[];
- FREEMAIL_ENVRCPT(0.00)[gmail.com];
- FUZZY_BLOCKED(0.00)[rspamd.com];
- RBL_SPAMHAUS_BLOCKED_OPENRESOLVER(0.00)[2a07:de40:b281:104:10:150:64:97:from]; 
- TO_DN_SOME(0.00)[];
- DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
- MIME_TRACE(0.00)[0:+]; ARC_NA(0.00)[];
- FREEMAIL_CC(0.00)[redhat.com,gmail.com,habkost.net,linaro.org];
- DKIM_TRACE(0.00)[suse.de:+];
- SPAMHAUS_XBL(0.00)[2a07:de40:b281:104:10:150:64:97:from];
- RCVD_COUNT_TWO(0.00)[2]; MID_RHS_MATCH_FROM(0.00)[];
- FROM_EQ_ENVFROM(0.00)[]; FROM_HAS_DN(0.00)[];
- RCVD_TLS_ALL(0.00)[]; RCPT_COUNT_SEVEN(0.00)[10];
- TAGGED_RCPT(0.00)[]; MISSING_XM_UA(0.00)[];
- RECEIVED_SPAMHAUS_BLOCKED_OPENRESOLVER(0.00)[2a07:de40:b281:106:10:150:64:167:received];
- ASN(0.00)[asn:25478, ipnet:::/0, country:RU];
- RCVD_VIA_SMTP_AUTH(0.00)[];
- DBL_BLOCKED_OPENRESOLVER(0.00)[suse.de:mid, suse.de:dkim, oracle.com:email,
- imap1.dmz-prg2.suse.org:rdns, imap1.dmz-prg2.suse.org:helo]
-X-Rspamd-Server: rspamd1.dmz-prg2.suse.org
-Received-SPF: pass client-ip=2a07:de40:b251:101:10:150:64:1;
- envelope-from=farosas@suse.de; helo=smtp-out1.suse.de
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: IA1PR10MB7447:EE_|CH0PR10MB7483:EE_
+X-MS-Office365-Filtering-Correlation-Id: 24aa9ad5-6715-4b43-823f-08dd372a95d2
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;ARA:13230040|376014|1800799024|366016;
+X-Microsoft-Antispam-Message-Info: =?utf-8?B?SkF0T1lPejFwTWlCb2dRaXRLVjcreHowNWFneHZidkJjMzg5a3pNNnQyVVFV?=
+ =?utf-8?B?ZUhPZTE5UlhlZDNEeEVTbDJ5MXNEb1FlbTJLRkpnWGlGZzJzYllKMjFhYkp2?=
+ =?utf-8?B?aVNocVQveFNIUHhYMnlGYzVsalRhcUh6V2pGRW5UNm5qODVZendBRG04cVJC?=
+ =?utf-8?B?WFRLMGI3ODRuY0xxcWxQR3dhRUgxeXROdFFaMlhpeVVDUW80RERzMUVZQ2I0?=
+ =?utf-8?B?Q2Y3NUdudStCVXJ5V0Q4Q2o3UU11SHdVdlViRnZUcjlVYy9nTjFZNDc4OVdo?=
+ =?utf-8?B?cHRCM1hPMTB0dldOQUNHYndvZkhKNEVrRk93UXlCRnVQQTFHQ1JiOWVCOWp0?=
+ =?utf-8?B?SklzV0c4N3hNTVl1cWJ6Q2JlNk5SeGRSemVZT0hNSDBjb2ZsMU9mZEt6elpC?=
+ =?utf-8?B?ZmZXNE84aFhtNVNseHVMdkpYYlNqRTRRNHhGd3JXN2tEYWFEUjJqQ3dCMGw3?=
+ =?utf-8?B?c1JJcmQwQkRrQ3hQV1hqYkNtSnJKS04yYWNnNTJpbDJ5U3E1aGNhRWY4Y0s0?=
+ =?utf-8?B?UjNyNnlVb0E5OCszWTlLNC8vdWZNekMxZk50MlBxQkRReG1mcXJOb2daQTdr?=
+ =?utf-8?B?dmpVTHR2WmJoYlAzY2dMYU9uelJSS1FLRzNMNk0wV2lNaGhJM0g5RVNtdGgz?=
+ =?utf-8?B?ODNHYXh5Nm15TEE5SG45RXdkZWtiYUVVajg1OTdqcGNDSzc2b0VJano0eWU3?=
+ =?utf-8?B?WkFZL0ljcXdGWnJ3blYxYURMZVVWam1uQjNwR1M0SlFaTGFiUytkSkxuSyts?=
+ =?utf-8?B?OWduZ3haamxYWUdOZUdEVkhJKzA0S2w1VXhyT3BYeG5EVllHdXR3Mjdpdk1P?=
+ =?utf-8?B?ZitJa0U1TFVUSC9MS2t1Q1k3QW5NSlZKVjJCUG1EVHdHcHZRbmtvOTRjbith?=
+ =?utf-8?B?bVNDQWVUVTNDOXpTeHZFMjl0eUtjTEJQb2dWREpZeUxRbFlGZHhGMHdxbEFq?=
+ =?utf-8?B?MkhheEJyVnFOSlkwYVhTdGZNNTRqR2txdEhCMk8rTzZMcENJRE1YYWlKQnpx?=
+ =?utf-8?B?ZTc3L2hUUllWRVVRL2k3RSt2blkxUyttb0RwUHVGZ09TTHJhaUwyOXpjUmRC?=
+ =?utf-8?B?MFk1VFZuNmVUNGJORVpGM2tRNCtmSmdHS2ZPQWwwOEt3MytPSEFFZ3ljMDlD?=
+ =?utf-8?B?K04rMDd4SW9Pa1J4cG5OMnJDVkFrczJWRHUzN2R1dlBDSkxRdjJrbnlOT0hk?=
+ =?utf-8?B?emdpTDRxU2RXbU5UeEcyM3J2Ym1FK2lHNlVLQUNReDFlczZ6d216RHNVZHh3?=
+ =?utf-8?B?RFJ6bWhnRUR1WVY2UW5MYUtNQUQwVGt5eFB6QzN1OFpUNm9WV3FISUFUWkdI?=
+ =?utf-8?B?QkdUZWtNd0ZkRzFjUFdXSkUzQVk1RVc5MTlWa3kwNXUwQVI0bnJyTU5XSGkx?=
+ =?utf-8?B?RGU1NnFEZDlKZlUzSlcyZ0xld3dBd0t2SlljOE1oZ1VwTnZDcTNhWURCZU9S?=
+ =?utf-8?B?bVVKQXpNbkl1UEo1RVk4K3NYbEQzb0JRVENHaDNCS2sxT25MdmlaVUpnKzdK?=
+ =?utf-8?B?dFRRVzRYTktCeUdVZUFkUnFiUHZ0MG9lZWN4bTZ4RUZXcndJVDg2U29nWFhH?=
+ =?utf-8?B?RmRKNHU4Wnpzb0lOazhVdTZJY25xYTVzMCs0WFRDcDcyRWdtZ2tWWjI2RC9M?=
+ =?utf-8?B?ZEdlNDk4TE4xYkplajk5NlVZT2dmazJJcXRIODV2UDdHZXMzTjBBeW5YY1Rk?=
+ =?utf-8?B?c1l0WDltUmhGODFOZkpaUUtuWmN4SGtMUUNPTnlOYy9saVFvZFdEZ3QrekFG?=
+ =?utf-8?B?cWtiMUlLclJRYlc1UEppbVdsb1dWaXljbjgweHF6NW5HMGgyLzBsZkIxZEpw?=
+ =?utf-8?B?MWFhbHEyTzljaXBQTFVGblBkQkN3bmhPNHdhTzVtV3lydjQzaC80OG53UEZw?=
+ =?utf-8?Q?WxulLlaxTHbhZ?=
+X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:IA1PR10MB7447.namprd10.prod.outlook.com; PTR:; CAT:NONE;
+ SFS:(13230040)(376014)(1800799024)(366016); DIR:OUT; SFP:1101; 
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?eDJsOWdHT2FQemRqakRtNlIrTFB1TzFnZVEycHFTMVlEMTdqQXVxY2djelY3?=
+ =?utf-8?B?ZHpmd3N1NDU2K1ZUdkxmb3BFakZSSCtVazBhS0ZkY2tLYmI0SmRzVE9OU2tF?=
+ =?utf-8?B?SmhpTGl1TmdNejRobmhxY082Z3pKcVRQeG1CdmcrcDVrQUk2MmxiaVlHaE1Y?=
+ =?utf-8?B?aEhKdi83Q0ZqY21kTzY5KzRHR0dXMC9qRVpVSzNkRDZBdHpMY1d1V3ZoYVhr?=
+ =?utf-8?B?STBSZ2VmeVBrcU5oSXhGWXlLMzE5cEd4YXQ1ZDRVQlBvUi9aTGFCUU1DT3d0?=
+ =?utf-8?B?REkxSEpkbDB6eHpBRk9tbHdyMWVPdXhNNGEwV0V2N1BIVW1UcVlMV3pBalBG?=
+ =?utf-8?B?SHRmdkQ3M1lLM3B2Sk00VlVmcnZNcjNCa2VOQzVjUk1hZHVubnI3N29jWmxJ?=
+ =?utf-8?B?Nzl6ZGl0WVlWaGVhTkNjWFZxQTBXNkxKQVp5cHMwSTJZRVdyUk9DTFJ3TTlE?=
+ =?utf-8?B?RmxOOUxlbURvQ2VKMFlPSEdLVlpHRFBYSlV2TENtMmY4RFA1OVhWbURiTGdz?=
+ =?utf-8?B?bU5nZ2V5anJyZ2Q3a1pSREdVKzFCZ0psRE05QlhmTkVjSGtDcHhRNjBLYjFP?=
+ =?utf-8?B?VXlnejhUNVMrSnlMY3dRN2MycFBYKzZxRTU3ejZ0QkdrcU90TUtFTEIyc3Ry?=
+ =?utf-8?B?dzJhTjRoYXluNzJwd2pmK2lhRUFRSE52cU9BVFExZ215ZTRpTE9rRVZhTkhr?=
+ =?utf-8?B?S0pHNkM5dytEV0dRdVZvQ0s2aHh3TWROR1oyK1BPdFFNZWdXamIyMlJhcUts?=
+ =?utf-8?B?NHkvTmhkQ1l6V3ZXeXVZZ2ZtT3QrelhtTmVXUldjbFJySWNZT2ZHdk8rRDlq?=
+ =?utf-8?B?bjZxR0Q1MWlIZ0J6TmJ6a0R5b3hPcjYrM2xubzFYSks3Yk83Wm1SSzliakhV?=
+ =?utf-8?B?VllibDMzN0E2dlVxMk5XSjlWUElud0dkTThDSVBtU3h5OHdPcGxzaGMyb3Fj?=
+ =?utf-8?B?d3JndXJJSjg3WFZydzNERU5yd1NjTXNjemxUdkFkTElCek5nWjlkWVZFQ05M?=
+ =?utf-8?B?VlZzMkFtSTF5TTRiV285VzNESEpQQTF6OU9ObUZoeVk5YytQNjhaaThiQ0NM?=
+ =?utf-8?B?MDA1S240VHJMTGxqWEtGc2Qwa1dlWTV2bzNhU2VLRjhuWlhob0VzWFpVbWto?=
+ =?utf-8?B?NmhmSDc1Q0tnaXpHMDQ3Mzd6Q04zSnBPNlhnMnFQNlYvdE1LTmRqSmcrWUtl?=
+ =?utf-8?B?cnBnSDlPay9veVJOZ3NSMmh6eVZOWlFBQXJneGRxTXVpSmt5QzU2MnI1d0hH?=
+ =?utf-8?B?b1U2ejNZK1JGZ0NIcStKSFlBdDA2a2syK1FnZlAvanlTb2hKZVlzOHMxZDZZ?=
+ =?utf-8?B?c0ptM1ZaK2pYSkY5TU12bHJvc28xdkVGYmN4ZVpBU3AzQUV3djR3M2VxU0NN?=
+ =?utf-8?B?SlZ4WE9QNFp3bytkWnZCNTlWWm1BbjJIc3RWN0tlZys3RVJoL1V3aGdFYjBr?=
+ =?utf-8?B?aHRzTFdQTkZvdnpVRHd6S1hXMkhYVHhtL29lVUZrVmdjM2g5TURtUnVRL2ty?=
+ =?utf-8?B?bFVLbVk3V3BYeDc1UlpneVBNNmkwWktJSytKbnZabi9XbXArazJiQVVTazJo?=
+ =?utf-8?B?K1lCQVR4bmFSdTM2dFZJdXR0TVFPUml6OGlqRmYydVhyMGhOWlZmc3UyYVZZ?=
+ =?utf-8?B?eWZVZ2p5SkNnVnZENlF1R1M0M3FyMmFmaHFJU3dwZUFwaWI1YTJNMDA1QkMx?=
+ =?utf-8?B?OFN2MVBvajZjUWFON2F5UGRaUnpoL2w3UGNQcWdlNjl4NzR0UnptY3BvaUd1?=
+ =?utf-8?B?SWY5RnFYTmlha1hQK1ZOMlhxU1ZjYnNyNUVzNG9laE9mSEd2SmloNXRLc2M3?=
+ =?utf-8?B?Wnc2TnpBb1djRzZpa1JralU3alZUcVpJS0F0Yyt3TjZjVUlTK2xsd0x1Qkxu?=
+ =?utf-8?B?OUxjTVlwb01vNkg1ekprc0xyNzlFaUNiZjFRa0lEajFiVHM0T3V3QXZNQ2cv?=
+ =?utf-8?B?a1RjK1I1L2RQMkRYTlhXTG96azBnS0ZmS1RSWG5DZmlBSGMxOXBET1lhaEg5?=
+ =?utf-8?B?RWs3T2w2dkYxZ29FdlJ5aTY5QVRkMVR6dDkrV3lNa3pRcy83K1JpdHIwUStm?=
+ =?utf-8?B?Uld5TEJxM1VkYkxkRTFmU29IN1NDUTkrMWVVSFZKbExiekRkMXl6cG9tcVda?=
+ =?utf-8?B?NG1waGZQU25XYUJrVzhMZkRDVTFQMHdNOVNEN2JSQi82Tk5ydGJWSGpWOTJL?=
+ =?utf-8?B?a2c9PQ==?=
+X-MS-Exchange-AntiSpam-ExternalHop-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-ExternalHop-MessageData-0: 1O+N1YOB9gSQUhmglSmv3H57SZJa2EFVCmzCgQZDkRLAbTXSfspW0q0OUTdNSg+s9ll7rdfSUtxvRROKNBdyiWwadGkU73HBy4JdTa3A7GfB4JSsQcwBpWv3HWRXdtap0yKCE2w8B0DkdN0varHZm/1XYgXgNah7sh3Li/p7gn1xGGz4TGQQHcDzsRLtpCZzgSTYUkFLFjkNpywqvYJsPLtB+pWI5hNfk1+gh85L6wBSvGPUfvq6jPn/sor/JKNGZ21upMVjNfgv5IPpCZ/ISJywuiuMfyjhnFTcS7p8B3bEyh1h6P+PYJlDkAccEDbxTwUTopdWfpzYOOZRkS79jPTFkXHMPWlfwuHaPFW2vuD7t/LHeYYGpMwUU2JZv/WkaYMGFNnAOG271LqyUtqDEPUVdG56N3/sRP8WkipIZbgEUq0sjq0nXfpP8sXU/jztbqJl8jJRXJKzjOJN85/aMLPUnkoXxRloMcubU0zO+gHH4NGiNCPhWp60LI7X0V3fmDBUQ6tdluFgQ6S9TyNhT4m/yvRoM18+1LgqlxtSdhx+oX68qo+Yd1wvwxwb7Y8KfxstGowuFSVNplHV+UN0ci6sK8fj5Iu4+g+G5L6UsUU=
+X-OriginatorOrg: oracle.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 24aa9ad5-6715-4b43-823f-08dd372a95d2
+X-MS-Exchange-CrossTenant-AuthSource: IA1PR10MB7447.namprd10.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 17 Jan 2025 19:10:20.0485 (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 4e2c6054-71cb-48f1-bd6c-3a9705aca71b
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: a7r96vMYx8GdmHtJcua1VeOmtJ3qjX5N2AUoCO2sISe2Hrc0JCJyS6z6dW5TgfcuiZjyEKY2JJFiKLsAufoqfujNMjLzywN5IddCXO2mg9Q=
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: CH0PR10MB7483
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1057,Hydra:6.0.680,FMLib:17.12.68.34
+ definitions=2025-01-17_06,2025-01-16_01,2024-11-22_01
+X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 bulkscore=0
+ adultscore=0 spamscore=0
+ suspectscore=0 phishscore=0 malwarescore=0 mlxscore=0 mlxlogscore=999
+ classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2411120000
+ definitions=main-2501170150
+X-Proofpoint-ORIG-GUID: 8rvO2bKfDpPokhst2kp6UY5GVYuWmaex
+X-Proofpoint-GUID: 8rvO2bKfDpPokhst2kp6UY5GVYuWmaex
+Received-SPF: pass client-ip=205.220.165.32;
+ envelope-from=steven.sistare@oracle.com; helo=mx0a-00069f02.pphosted.com
+X-Spam_score_int: -45
+X-Spam_score: -4.6
+X-Spam_bar: ----
+X-Spam_report: (-4.6 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H2=-1.79,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -135,439 +218,66 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
- Steven Sistare <steven.sistare@oracle.com> writes:
+On 1/17/2025 1:16 PM, Peter Xu wrote:
+> On Fri, Jan 17, 2025 at 09:46:11AM -0800, Steve Sistare wrote:
+>> +/*
+>> + * Return true if ram contents would be lost during CPR.
+>> + * Return false for ram_device because it is remapped in new QEMU.  Do not
+>> + * exclude rom, even though it is readonly, because the rom file could change
+>> + * in new QEMU.  Return false for non-migratable blocks.  They are either
+>> + * re-created in new QEMU, or are handled specially, or are covered by a
+>> + * device-level CPR blocker.  Return false for an fd, because it is visible and
+>> + * can be remapped in new QEMU.
+>> + */
+>> +static bool ram_is_volatile(RAMBlock *rb)
+>> +{
+>> +    MemoryRegion *mr = rb->mr;
+>> +
+>> +    return mr &&
+>> +        memory_region_is_ram(mr) &&
+>> +        !memory_region_is_ram_device(mr) &&
+>> +        (!qemu_ram_is_shared(rb) || !qemu_ram_is_named_file(rb)) &&
+>> +        qemu_ram_is_migratable(rb) &&
+>> +        rb->fd < 0;
+>> +}
+> 
+> Blocking guest_memfd looks ok, but comparing to add one more block
+> notifier, can we check all ramblocks once in migrate_prepare(), and fail
+> that command directly if it fails the check?
 
-> On 1/17/2025 10:29 AM, Fabiano Rosas wrote:
->> Steven Sistare <steven.sistare@oracle.com> writes:
->> 
->>> On 1/17/2025 9:42 AM, Fabiano Rosas wrote:
->>>> Steve Sistare <steven.sistare@oracle.com> writes:
->>>>
->>>>> Add documentation for the cpr-transfer migration mode.
->>>>>
->>>>> Signed-off-by: Steve Sistare <steven.sistare@oracle.com>
->>>>> Reviewed-by: Peter Xu <peterx@redhat.com>
->>>>> ---
->>>>>    docs/devel/migration/CPR.rst | 182 ++++++++++++++++++++++++++++++++++++++++++-
->>>>>    1 file changed, 180 insertions(+), 2 deletions(-)
->>>>>
->>>>> diff --git a/docs/devel/migration/CPR.rst b/docs/devel/migration/CPR.rst
->>>>> index 63c3647..d6021d5 100644
->>>>> --- a/docs/devel/migration/CPR.rst
->>>>> +++ b/docs/devel/migration/CPR.rst
->>>>> @@ -5,7 +5,7 @@ CPR is the umbrella name for a set of migration modes in which the
->>>>>    VM is migrated to a new QEMU instance on the same host.  It is
->>>>>    intended for use when the goal is to update host software components
->>>>>    that run the VM, such as QEMU or even the host kernel.  At this time,
->>>>> -cpr-reboot is the only available mode.
->>>>> +the cpr-reboot and cpr-transfer modes are available.
->>>>>    
->>>>>    Because QEMU is restarted on the same host, with access to the same
->>>>>    local devices, CPR is allowed in certain cases where normal migration
->>>>> @@ -53,7 +53,7 @@ RAM is copied to the migration URI.
->>>>>    Outgoing:
->>>>>      * Set the migration mode parameter to ``cpr-reboot``.
->>>>>      * Set the ``x-ignore-shared`` capability if desired.
->>>>> -  * Issue the ``migrate`` command.  It is recommended the the URI be a
->>>>> +  * Issue the ``migrate`` command.  It is recommended the URI be a
->>>>>        ``file`` type, but one can use other types such as ``exec``,
->>>>>        provided the command captures all the data from the outgoing side,
->>>>>        and provides all the data to the incoming side.
->>>>> @@ -145,3 +145,181 @@ Caveats
->>>>>    
->>>>>    cpr-reboot mode may not be used with postcopy, background-snapshot,
->>>>>    or COLO.
->>>>> +
->>>>> +cpr-transfer mode
->>>>> +-----------------
->>>>> +
->>>>> +This mode allows the user to transfer a guest to a new QEMU instance
->>>>> +on the same host with minimal guest pause time, by preserving guest
->>>>> +RAM in place, albeit with new virtual addresses in new QEMU.  Devices
->>>>> +and their pinned memory pages will also be preserved in a future QEMU
->>>>> +release.
->>>>> +
->>>>> +The user starts new QEMU on the same host as old QEMU, with command-
->>>>> +line arguments to create the same machine, plus the ``-incoming``
->>>>> +option for the main migration channel, like normal live migration.
->>>>> +In addition, the user adds a second -incoming option with channel
->>>>> +type ``cpr``.  This CPR channel must support file descriptor transfer
->>>>> +with SCM_RIGHTS, i.e. it must be a UNIX domain socket.
->>>>> +
->>>>> +To initiate CPR, the user issues a migrate command to old QEMU,
->>>>> +adding a second migration channel of type ``cpr`` in the channels
->>>>> +argument.  Old QEMU stops the VM, saves state to the migration
->>>>> +channels, and enters the postmigrate state.  Execution resumes in
->>>>> +new QEMU.
->>>>> +
->>>>> +New QEMU reads the CPR channel before opening a monitor, hence
->>>>> +the CPR channel cannot be specified in the list of channels for a
->>>>> +migrate-incoming command.  It may only be specified on the command
->>>>> +line.
->>>>> +
->>>>> +Usage
->>>>> +^^^^^
->>>>> +
->>>>> +Memory backend objects must have the ``share=on`` attribute.
->>>>> +
->>>>> +The VM must be started with the ``-machine aux-ram-share=on``
->>>>> +option.  This causes implicit RAM blocks (those not described by
->>>>> +a memory-backend object) to be allocated by mmap'ing a memfd.
->>>>> +Examples include VGA and ROM.
->>>>> +
->>>>> +Outgoing:
->>>>> +  * Set the migration mode parameter to ``cpr-transfer``.
->>>>> +  * Issue the ``migrate`` command, containing a main channel and
->>>>> +    a cpr channel.
->>>>> +
->>>>> +Incoming:
->>>>> +  * Start new QEMU with two ``-incoming`` options.
->>>>> +  * If the VM was running when the outgoing ``migrate`` command was
->>>>> +    issued, then QEMU automatically resumes VM execution.
->>>>> +
->>>>> +Caveats
->>>>> +^^^^^^^
->>>>> +
->>>>> +cpr-transfer mode may not be used with postcopy, background-snapshot,
->>>>> +or COLO.
->>>>> +
->>>>> +memory-backend-epc is not supported.
->>>>> +
->>>>> +The main incoming migration channel address cannot be a file type.
->>>>> +
->>>>> +If the main incoming channel address is an inet socket, then the port
->>>>> +cannot be 0 (meaning dynamically choose a port).
->>>>> +
->>>>> +When using ``-incoming defer``, you must issue the migrate command to
->>>>> +old QEMU before issuing any monitor commands to new QEMU, because new
->>>>> +QEMU blocks waiting to read from the cpr channel before starting its
->>>>> +monitor, and old QEMU does not write to the channel until the migrate
->>>>> +command is issued.  However, new QEMU does not open and read the
->>>>> +main migration channel until you issue the migrate incoming command.
->>>>> +
->>>>> +Example 1: incoming channel
->>>>> +^^^^^^^^^^^^^^^^^^^^^^^^^^^
->>>>> +
->>>>> +In these examples, we simply restart the same version of QEMU, but
->>>>> +in a real scenario one would start new QEMU on the incoming side.
->>>>> +Note that new QEMU does not print the monitor prompt until old QEMU
->>>>> +has issued the migrate command.  The outgoing side uses QMP because
->>>>> +HMP cannot specify a CPR channel.  Some QMP responses are omitted for
->>>>> +brevity.
->>>>> +
->>>>> +::
->>>>> +
->>>>> +  Outgoing:                             Incoming:
->>>>> +
->>>>> +  # qemu-kvm -qmp stdio
->>>>> +  -object memory-backend-file,id=ram0,size=4G,
->>>>> +  mem-path=/dev/shm/ram0,share=on -m 4G
->>>>> +  -machine aux-ram-share=on
->>>>> +  ...
->>>>> +                                        # qemu-kvm -monitor stdio
->>>>> +                                        -incoming tcp:0:44444
->>>>> +                                        -incoming '{"channel-type": "cpr",
->>>>> +                                          "addr": { "transport": "socket",
->>>>> +                                          "type": "unix", "path": "cpr.sock"}}'
->>>>> +                                        ...
->>>>
->>>> I'm attempting this and not having much success. Surely I'm missing
->>>> something:
->>>>
->>>>
->>>> $ qemu-system-x86_64 -cpu host -smp 16 -machine pc,accel=kvm \
->>>>     -drive id=drive0,if=none,format=qcow2,file=img.qcow2 \
->>>>     -device virtio-blk-pci,id=image1,drive=drive0,bootindex=0 \
->>>>     -qmp unix:./dst-qmp.sock,server,wait=off \
->>>>     -nographic -serial mon:stdio \
->>>>     -object memory-backend-file,id=ram0,size=4G,mem-path=/dev/shm/ram0,share=on \
->>>>     -m 4G -machine aux-ram-share=on \
->>>>
->>>>     -incoming tcp:0:44444 \
->>>>     -incoming '{"channel-type": "cpr", "addr": { "transport": "socket", "type": "unix", "path": "cpr.sock"}}' \
->>>>
->>>>     -trace loadvm_* -trace cpr_* -trace migration_* -trace migrate_* -trace qemu_loadvm_*
->>>>
->>>> cpr_transfer_input cpr.sock
->>>> cpr_state_load cpr-transfer mode
->>>> cpr_find_fd pc.bios, id 0 returns 15
->>>> cpr_find_fd pc.rom, id 0 returns 14
->>>> cpr_find_fd 0000:00:02.0/vga.vram, id 0 returns 13
->>>> cpr_find_fd 0000:00:02.0/vga.rom, id 0 returns 12
->>>> cpr_find_fd 0000:00:03.0/e1000.rom, id 0 returns 11
->>>> cpr_find_fd /rom@etc/acpi/tables, id 0 returns 10
->>>> cpr_find_fd /rom@etc/table-loader, id 0 returns 8
->>>> cpr_find_fd /rom@etc/acpi/rsdp, id 0 returns 3
->>>> migrate_set_state new state setup
->>>> migration_socket_incoming_accepted
->>>> migration_set_incoming_channel ioc=0x564dc31e7000 ioctype=qio-channel-socket
->>>> migrate_set_state new state active
->>>> loadvm_state_setup
->>>> qemu_loadvm_state_section 1
->>>> qemu_loadvm_state_section_startfull 2(ram) 0 4
->>>> qemu_loadvm_state_section 3
->>>> qemu_loadvm_state_section_partend 2
->>>> qemu_loadvm_state_section 4
->>>> qemu_loadvm_state_section_startfull 0(timer) 0 2
->>>> qemu_loadvm_state_section 4
->>>> qemu_loadvm_state_section_startfull 1(slirp) 0 4
->>>> qemu_loadvm_state_section 4
->>>> qemu_loadvm_state_section_startfull 4(cpu_common) 0 1
->>>> qemu_loadvm_state_section 4
->>>> qemu_loadvm_state_section_startfull 5(cpu) 0 12
->>>> qemu_loadvm_state_section 4
->>>> qemu_loadvm_state_section_startfull 6(kvm-tpr-opt) 0 1
->>>> qemu-system-x86_64: error while loading state for instance 0x0 of device 'kvm-tpr-opt'
->>>> qemu_loadvm_state_post_main -1
->>>> migrate_set_state new state failed
->>>> migrate_error error=load of migration failed: Operation not permitted
->>>> loadvm_state_cleanup
->>>> qemu-system-x86_64: load of migration failed: Operation not permitted
->>>
->>> Check for a mismatch between the qemu args on the source vs dest.
->>> Maybe -cpu.
->> 
->> No.. they're the same:
->> 
->> qemu-system-x86_64 -display none -cpu host -smp 4 -machine pc,accel=kvm
->> -object
->> memory-backend-file,id=ram0,size=4G,mem-path=/dev/shm/ram0,share=on -m
->> 4G -machine aux-ram-share=on -qmp stdio
->> 
->> qemu-system-x86_64 -display none -cpu host -smp 4 -machine pc,accel=kvm
->> -object
->> memory-backend-file,id=ram0,size=4G,mem-path=/dev/shm/ram0,share=on -m
->> 4G -machine aux-ram-share=on -incoming tcp:0:44444 -incoming
->> '{"channel-type": "cpr", "addr": { "transport": "socket", "type":
->> "unix", "path": "cpr.sock"}}' -monitor stdio
->> 
->> 
->> Here's the whole log, see if you spot something:
->> 
->> $ (sleep 5; echo "{ 'execute': 'qmp_capabilities' }
->>                   { 'execute': 'migrate-set-parameters','arguments':{ 'mode': 'cpr-transfer' } }
->>                   { 'execute': 'migrate', 'arguments': \
->>                     { 'channels': [ \
->>                       {'channel-type': 'main', 'addr': { 'transport': 'socket', 'type': 'inet', \
->>                                        'host': '0', 'port': '44444' }}, \
->>                       {'channel-type': 'cpr', 'addr': { 'transport': 'socket', 'type': 'unix', \
->>                                        'path': 'cpr.sock' }} \
->>                     ]} \
->>                   }") | /home/fabiano/qemu-system-x86_64 -display none
->>                   -cpu host -smp 4 -machine pc,accel=kvm -qmp stdio
->>                   -object
->>                   memory-backend-file,id=ram0,size=4G,mem-path=/dev/shm/ram0,share=on
->>                   -m 4G -machine aux-ram-share=on -trace cpr_* -trace
->>                   migration_* -trace migrate_* -trace qemu_savevm_*
->>                   -trace savevm_*
->> 
->> {"QMP": {"version": {"qemu": {"micro": 50, "minor": 2, "major": 9}, "package": "v9.2.0-987-gfd4129a8b9"}, "capabilities": ["oob"]}}
->> cpr_find_fd pc.bios, id 0 returns -1
->> cpr_save_fd pc.bios, id 0, fd 22
->> cpr_find_fd pc.rom, id 0 returns -1
->> cpr_save_fd pc.rom, id 0, fd 23
->> cpr_find_fd 0000:00:02.0/vga.vram, id 0 returns -1
->> cpr_save_fd 0000:00:02.0/vga.vram, id 0, fd 24
->> cpr_find_fd 0000:00:02.0/vga.rom, id 0 returns -1
->> cpr_save_fd 0000:00:02.0/vga.rom, id 0, fd 26
->> cpr_find_fd 0000:00:03.0/e1000.rom, id 0 returns -1
->> cpr_save_fd 0000:00:03.0/e1000.rom, id 0, fd 27
->> cpr_find_fd /rom@etc/acpi/tables, id 0 returns -1
->> cpr_save_fd /rom@etc/acpi/tables, id 0, fd 28
->> cpr_find_fd /rom@etc/table-loader, id 0 returns -1
->> cpr_save_fd /rom@etc/table-loader, id 0, fd 29
->> cpr_find_fd /rom@etc/acpi/rsdp, id 0 returns -1
->> cpr_save_fd /rom@etc/acpi/rsdp, id 0, fd 30
->> migration_block_activation active-skipped
->> {"return": {}}
->> {"return": {}}
->> migrate_set_state new state setup
->> cpr_state_save cpr-transfer mode
->> cpr_transfer_output cpr.sock
->> {"return": {}}
->> migration_socket_outgoing_connected hostname=0
->> migration_set_outgoing_channel ioc=0x55748ba10270 ioctype=qio-channel-socket hostname=0 err=(nil)
->> {"timestamp": {"seconds": 1737127025, "microseconds": 606998}, "event": "STOP"}
->> migration_completion_vm_stop ret 0
->> migration_transferred_bytes qemu_file 224 multifd 0 RDMA 0
->> savevm_state_header
->> savevm_state_setup
->> migration_bitmap_sync_start
->> migration_bitmap_sync_end dirty_pages 0
->> migrate_set_state new state active
->> migration_thread_setup_complete
->> migration_transferred_bytes qemu_file 506 multifd 0 RDMA 0
->> migrate_pending_estimate estimate pending size 0 (pre = 0 post=0)
->> migration_thread_low_pending 0
->> migrate_set_state new state device
->> migration_block_activation inactive
->> migration_precopy_complete
->> savevm_section_start ram, section_id 2
->> migration_bitmap_sync_start
->> migration_bitmap_sync_end dirty_pages 0
->> savevm_section_end ram, section_id 2 -> 0
->> savevm_section_start timer, section_id 0
->> savevm_section_end timer, section_id 0 -> 0
->> savevm_section_start slirp, section_id 1
->> savevm_section_end slirp, section_id 1 -> 0
->> savevm_section_start cpu_common, section_id 4
->> savevm_section_end cpu_common, section_id 4 -> 0
->> savevm_section_start cpu, section_id 5
->> savevm_section_end cpu, section_id 5 -> 0
->> savevm_section_start kvm-tpr-opt, section_id 6
->> savevm_section_end kvm-tpr-opt, section_id 6 -> 0
->> savevm_section_start apic, section_id 7
->> savevm_section_end apic, section_id 7 -> 0
->> savevm_section_start cpu_common, section_id 8
->> savevm_section_end cpu_common, section_id 8 -> 0
->> savevm_section_start cpu, section_id 9
->> savevm_section_end cpu, section_id 9 -> 0
->> savevm_section_start apic, section_id 10
->> savevm_section_end apic, section_id 10 -> 0
->> savevm_section_start cpu_common, section_id 11
->> savevm_section_end cpu_common, section_id 11 -> 0
->> savevm_section_start cpu, section_id 12
->> savevm_section_end cpu, section_id 12 -> 0
->> savevm_section_start apic, section_id 13
->> savevm_section_end apic, section_id 13 -> 0
->> savevm_section_start cpu_common, section_id 14
->> savevm_section_end cpu_common, section_id 14 -> 0
->> savevm_section_start cpu, section_id 15
->> savevm_section_end cpu, section_id 15 -> 0
->> savevm_section_start apic, section_id 16
->> savevm_section_end apic, section_id 16 -> 0
->> savevm_section_start kvmclock, section_id 17
->> savevm_section_end kvmclock, section_id 17 -> 0
->> savevm_section_start 0000:00:00.0/I440FX, section_id 18
->> savevm_section_end 0000:00:00.0/I440FX, section_id 18 -> 0
->> savevm_section_start PCIHost, section_id 19
->> savevm_section_end PCIHost, section_id 19 -> 0
->> savevm_section_start PCIBUS, section_id 20
->> savevm_section_end PCIBUS, section_id 20 -> 0
->> savevm_section_start fw_cfg, section_id 21
->> savevm_section_end fw_cfg, section_id 21 -> 0
->> savevm_section_start dma, section_id 22
->> savevm_section_end dma, section_id 22 -> 0
->> savevm_section_start dma, section_id 23
->> savevm_section_end dma, section_id 23 -> 0
->> savevm_section_start mc146818rtc, section_id 24
->> savevm_section_end mc146818rtc, section_id 24 -> 0
->> savevm_section_start 0000:00:01.1/ide, section_id 25
->> savevm_section_end 0000:00:01.1/ide, section_id 25 -> 0
->> savevm_section_start i2c_bus, section_id 26
->> savevm_section_end i2c_bus, section_id 26 -> 0
->> savevm_section_start 0000:00:01.3/piix4_pm, section_id 27
->> savevm_section_end 0000:00:01.3/piix4_pm, section_id 27 -> 0
->> savevm_section_start 0000:00:01.0/PIIX3, section_id 28
->> savevm_section_end 0000:00:01.0/PIIX3, section_id 28 -> 0
->> savevm_section_start i8259, section_id 29
->> savevm_section_end i8259, section_id 29 -> 0
->> savevm_section_start i8259, section_id 30
->> savevm_section_end i8259, section_id 30 -> 0
->> savevm_section_start ioapic, section_id 31
->> savevm_section_end ioapic, section_id 31 -> 0
->> savevm_section_start 0000:00:02.0/vga, section_id 32
->> savevm_section_end 0000:00:02.0/vga, section_id 32 -> 0
->> savevm_section_start hpet, section_id 33
->> savevm_section_end hpet, section_id 33 -> 0
->> savevm_section_start i8254, section_id 34
->> savevm_section_end i8254, section_id 34 -> 0
->> savevm_section_start pcspk, section_id 35
->> savevm_section_end pcspk, section_id 35 -> 0
->> savevm_section_start serial, section_id 36
->> savevm_section_end serial, section_id 36 -> 0
->> savevm_section_start parallel_isa, section_id 37
->> savevm_section_end parallel_isa, section_id 37 -> 0
->> savevm_section_start fdc, section_id 38
->> savevm_section_end fdc, section_id 38 -> 0
->> savevm_section_start ps2kbd, section_id 39
->> savevm_section_end ps2kbd, section_id 39 -> 0
->> savevm_section_start ps2mouse, section_id 40
->> savevm_section_end ps2mouse, section_id 40 -> 0
->> savevm_section_start pckbd, section_id 41
->> savevm_section_end pckbd, section_id 41 -> 0
->> savevm_section_start vmmouse, section_id 42
->> savevm_section_end vmmouse, section_id 42 -> 0
->> savevm_section_start port92, section_id 43
->> savevm_section_end port92, section_id 43 -> 0
->> savevm_section_start 0000:00:03.0/e1000, section_id 44
->> savevm_section_end 0000:00:03.0/e1000, section_id 44 -> 0
->> savevm_section_skip smbus-eeprom, section_id 45
->> savevm_section_skip smbus-eeprom, section_id 46
->> savevm_section_skip smbus-eeprom, section_id 47
->> savevm_section_skip smbus-eeprom, section_id 48
->> savevm_section_skip smbus-eeprom, section_id 49
->> savevm_section_skip smbus-eeprom, section_id 50
->> savevm_section_skip smbus-eeprom, section_id 51
->> savevm_section_skip smbus-eeprom, section_id 52
->> savevm_section_start acpi_build, section_id 53
->> savevm_section_end acpi_build, section_id 53 -> 0
->> savevm_section_start globalstate, section_id 54
->> migrate_global_state_pre_save saved state: running
->> savevm_section_end globalstate, section_id 54 -> 0
->> migrate_error error=Unable to write to socket: Connection reset by peer
->> migrate_set_state new state failed
->> migration_thread_after_loop
->> migration_block_activation active
->> {"timestamp": {"seconds": 1737127025, "microseconds": 625404}, "event": "RESUME"}
->> migrate_fd_cleanup
->> savevm_state_cleanup
->> qemu-system-x86_64: Unable to write to socket: Connection reset by peer
->> 
->> 
->> $ /home/fabiano/qemu-system-x86_64 -display none -cpu host -smp 4
->> -machine pc,accel=kvm -object
->> memory-backend-file,id=ram0,size=4G,mem-path=/dev/shm/ram0,share=on -m
->> 4G -machine aux-ram-share=on -incoming tcp:0:44444 -incoming
->> '{"channel-type": "cpr", "addr": { "transport": "socket", "type":
->> "unix", "path": "cpr.sock"}}' -trace loadvm_* -trace cpr_* -trace
->> migration_* -trace migrate_* -monitor stdio
->> 
->> cpr_transfer_input cpr.sock
->> cpr_state_load cpr-transfer mode
->> QEMU 9.2.50 monitor - type 'help' for more information
->> cpr_find_fd pc.bios, id 0 returns 15
->> cpr_find_fd pc.rom, id 0 returns 14
->> cpr_find_fd 0000:00:02.0/vga.vram, id 0 returns 13
->> cpr_find_fd 0000:00:02.0/vga.rom, id 0 returns 12
->> cpr_find_fd 0000:00:03.0/e1000.rom, id 0 returns 11
->> cpr_find_fd /rom@etc/acpi/tables, id 0 returns 10
->> cpr_find_fd /rom@etc/table-loader, id 0 returns 8
->> cpr_find_fd /rom@etc/acpi/rsdp, id 0 returns 3
->> migrate_set_state new state setup
->> (qemu) migration_socket_incoming_accepted
->> migration_set_incoming_channel ioc=0x5565cccb8e70 ioctype=qio-channel-socket
->> migrate_set_state new state active
->> loadvm_state_setup
->> qemu-system-x86_64: error while loading state for instance 0x0 of device 'kvm-tpr-opt'
->> migrate_set_state new state failed
->> migrate_error error=load of migration failed: Operation not permitted
->> loadvm_state_cleanup
->> qemu-system-x86_64: load of migration failed: Operation not permitted
->
-> Thank-you for the simple example.  I reproduced the failure.
-> To fix, add "-machine aux-ram-share=on -machine memory-backend=ram0"
-> (The previous longer example had the former but lacked the latter).
-> Without that, the volatile pc.ram region is still in the mix.
+In an upcoming patch, I will be adding an option analogous to only-migratable which
+prevents QEMU from starting if anything would block cpr-transfer.  That option
+will be checked when blockers are added, like for only-migratable. migrate_prepare
+is too late.
 
-There you go, that kvm-tpr-opt message is almost always indicative of
-user error. I think because it's the first vmstate to be loaded.
+> OTOH, is there any simpler way to simplify the check conditions?  It'll be
+> at least nice to break these checks into smaller if conditions for
+> readability..
 
-Nonetheless, we better update the documentation to:
+I thought the function header comments made it clear, but I could move each
+comment next to each condition:
 
--object memory-backend-file,id=ram0,size=4G,mem-path=/dev/shm/ram0,share=on -m -4G \
--machine memory-backend=ram0 \
--machine aux-ram-share=on
+     ...
+     /*
+      * Return false for an fd, because it is visible and can be remapped in
+      * new QEMU.
+      */
+     if (rb->fd >= 0) {
+         return false;
+     }
+     ...
 
->
-> I have a patch that adds a blocker if volatile ram is present, and would
-> have clearly diagnosed this problem.  I will submit it now.
+> I wonder if we could stick with looping over all ramblocks, then make sure
+> each of them is on the cpr saved fd list.  It may need to make
+> cpr_save_fd() always register with the name of ramblock to do such lookup,
+> or maybe we could also cache the ramblock pointer in CprFd, then the lookup
+> will be a pointer match check.
 
-Yes, I just tested and it's way better. Although the message asks for
-"share=on" and "aux-ram-share=on", which were already there. But there's
-not much we can do, basic proficiency with QEMU cmdline is a
-prerequisite.
+Some ramblocks are not on the list, such as named files.  Plus looping in
+migrate_prepare is too late as noted above.
 
->
-> - Steve
+IMO what I have already implemented using blockers is clean and elegant.
+
+- Steve
+
 
