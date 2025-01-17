@@ -4,93 +4,111 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id F370BC02183
-	for <qemu-devel@archiver.kernel.org>; Fri, 17 Jan 2025 12:04:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 127EBC02183
+	for <qemu-devel@archiver.kernel.org>; Fri, 17 Jan 2025 12:14:06 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tYl4w-0002P1-6P; Fri, 17 Jan 2025 07:03:58 -0500
+	id 1tYlDn-00061N-Av; Fri, 17 Jan 2025 07:13:07 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <rakicaleksandar1999@gmail.com>)
- id 1tYl4t-0002N8-J7
- for qemu-devel@nongnu.org; Fri, 17 Jan 2025 07:03:55 -0500
-Received: from mail-wm1-x336.google.com ([2a00:1450:4864:20::336])
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1tYlDT-00060R-BX
+ for qemu-devel@nongnu.org; Fri, 17 Jan 2025 07:12:48 -0500
+Received: from smtp-out2.suse.de ([2a07:de40:b251:101:10:150:64:2])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <rakicaleksandar1999@gmail.com>)
- id 1tYl4p-0002Hn-En
- for qemu-devel@nongnu.org; Fri, 17 Jan 2025 07:03:55 -0500
-Received: by mail-wm1-x336.google.com with SMTP id
- 5b1f17b1804b1-43658c452f5so2707005e9.0
- for <qemu-devel@nongnu.org>; Fri, 17 Jan 2025 04:03:50 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1737115428; x=1737720228; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=Y5Wn8IdIujOf9r+OIV59CwZZpGZD/iuYJPnVCpa5bUY=;
- b=dA9x13znO2kojao601aXVpjHn8sIv7uacjbEX109YNKDMC+ELJQ9M86N9WpoNRF3qk
- 62JF5bmn5wZdq9GJ6IrdeyNWBemiAMr4HXr+fQ9R1bYhWqd+X7OfGmyUsaQqUvo2Mh/H
- Bwu+SuApiDCBDllXuDz4+lgN+fRUppwIhAPHTlCJGpPNPj/TG+nQImnJpwjV2sUwvf7l
- 9U7x6bxosdW3Feqyp6sixmemm3y5Ro52LhsmAGWP4Gn4W06oU6kSYfVJqInDghghjBuV
- xWxWw41JztNZ/LuWYXTuqc9dzenkG4Upp5TVAw6AAOEsF5g7nwsjzFE1XOyeL2K9nF0l
- W95Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1737115428; x=1737720228;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=Y5Wn8IdIujOf9r+OIV59CwZZpGZD/iuYJPnVCpa5bUY=;
- b=X9NhuS25f3tbYN5GcFgWnIW8bs8K04ZRyOxOWkL0CMqvWPeIt65wnFxXMo2zSnAvs1
- jQ5WqdHb/timzXSlTZg2dzWX+K7UI4z5PD+KuHlQt4aNWcx7XQeEpKLKnI7LmA7FofZ0
- k/WM3D4ZqojBrcvUzuDCjmdrpXElaRf3rFCkb57U25pNjDmjpKEOZI6rgu+Du6vEqQMk
- Jicch9dVuEtHyxU5yMfOYZzJ+zNdtfGVnLn2ZSSx+gLkZMU8TxC+I+UeA9qAb1Q2QZ9C
- Ep2hE8gVnNeUYEwemExTPrF51p1aXgOkWpClN6mwlvSr5OqcqirGzNY1yUrgCRIczkeV
- 7XyQ==
-X-Forwarded-Encrypted: i=1;
- AJvYcCXiLgUgMjJBWF43HJsUTE1cyZOkN8Ivfm/ZkwF9GpMwtROhii+Y/Lp2MRrV8VqbaXH89GN7WkB3iTiD@nongnu.org
-X-Gm-Message-State: AOJu0YwxWnPNFvIuDN9NmpRxiyPPJz6yqUCG3yeexDyRRS9UuRcF6pvh
- 0/jv2392IQ9qma7siiWc5w7oudf9qKAHDpBDZkCYze9V41OfuD1v
-X-Gm-Gg: ASbGncum+6/nRtbV1JBWRo2o/3hBo3KKCBg0RrmUW7BlYCY3YITEVRh25NAF6pmPgkK
- YTC52AHxhWLCSB0QeMYP7cj7VlQr1rbVoiVZ+UjRArJ5H1qAF7p/Zhdfv62gCVjdX1d5oz2TDhJ
- pWoNMlEyH74c+u+e2fSPjuY46Q1Gsmb0BL6bF9l6pgQUPd0iyMWKTLkSyhgJx9sC8Xx4utmu+vU
- e4y4gfCFDItAn4e1l2N2dEW0NVTFBVBwVDr7aiLmWA9zT3Q3HV3eD4gskomWXgy77JuiH37ecqa
- lmaX
-X-Google-Smtp-Source: AGHT+IFfIARa2+qF5qJ2/NuY+vfOu11uyBNEGC3RsIWf2ftIrQy5yp/zYJr9Xe4I5SWsPPM0PlOAUw==
-X-Received: by 2002:a05:600c:510b:b0:436:fb10:d595 with SMTP id
- 5b1f17b1804b1-438913bff64mr9508785e9.1.1737115427391; 
- Fri, 17 Jan 2025 04:03:47 -0800 (PST)
-Received: from L-H2N0CV05D839062.. ([79.175.87.218])
- by smtp.googlemail.com with ESMTPSA id
- 5b1f17b1804b1-4389046226asm30938075e9.31.2025.01.17.04.03.45
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 17 Jan 2025 04:03:46 -0800 (PST)
-From: Aleksandar Rakic <rakicaleksandar1999@gmail.com>
-X-Google-Original-From: Aleksandar Rakic <aleksandar.rakic@htecgroup.com>
-To: rakicaleksandar1999@gmail.com
-Cc: aleksandar.rakic@htecgroup.com, alex.bennee@linaro.org, arikalo@gmail.com,
- aurelien@aurel32.net, berrange@redhat.com, cfu@mips.com,
- djordje.todorovic@htecgroup.com, hreitz@redhat.com,
- jiaxun.yang@flygoat.com, kwolf@redhat.com, pbonzini@redhat.com,
- peter.maydell@linaro.org, philmd@linaro.org, pierrick.bouvier@linaro.org,
- qemu-devel@nongnu.org
-Subject: Re: [PATCH v3 3/4] target/mips: Enable MSA ASE using a CLI flag
-Date: Fri, 17 Jan 2025 13:03:32 +0100
-Message-Id: <20250117120332.795952-1-aleksandar.rakic@htecgroup.com>
-X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20241211151955.88016-1-aleksandar.rakic@htecgroup.com>
-References: <20241211151955.88016-1-aleksandar.rakic@htecgroup.com>
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1tYlDL-0003bU-S3
+ for qemu-devel@nongnu.org; Fri, 17 Jan 2025 07:12:46 -0500
+Received: from imap1.dmz-prg2.suse.org (unknown [10.150.64.97])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested)
+ by smtp-out2.suse.de (Postfix) with ESMTPS id C62881F387;
+ Fri, 17 Jan 2025 12:12:35 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+ t=1737115955; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=qtNZlFmeluL2vHJ/B5wT82VYf55BrpV6PgLMA/Gk0o0=;
+ b=TdoNmyFSNSwM6wlIpMcCTZVoytrTD6H1q0U4fXT2bntPViptnwkE33LA/TfDxkQ4eKEGrL
+ D3sjgVCF1yrrpdYZhJd7AI43JsTrUwyVddqpQnvCV4IS0BaefhsZwjQNSA0PxFWh30tIro
+ uhLiFxmGUKk4dz1zjsIfPdDy1Pvheqs=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+ s=susede2_ed25519; t=1737115955;
+ h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=qtNZlFmeluL2vHJ/B5wT82VYf55BrpV6PgLMA/Gk0o0=;
+ b=E9+Dhd1xSF4RojX4KKZrUsWSinUzJseRtVtcbLGmpKK01YtY71OL+lFtEqyQEhPwehb45A
+ JZ3qydAdj1dcY9Cg==
+Authentication-Results: smtp-out2.suse.de;
+	none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+ t=1737115955; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=qtNZlFmeluL2vHJ/B5wT82VYf55BrpV6PgLMA/Gk0o0=;
+ b=TdoNmyFSNSwM6wlIpMcCTZVoytrTD6H1q0U4fXT2bntPViptnwkE33LA/TfDxkQ4eKEGrL
+ D3sjgVCF1yrrpdYZhJd7AI43JsTrUwyVddqpQnvCV4IS0BaefhsZwjQNSA0PxFWh30tIro
+ uhLiFxmGUKk4dz1zjsIfPdDy1Pvheqs=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+ s=susede2_ed25519; t=1737115955;
+ h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=qtNZlFmeluL2vHJ/B5wT82VYf55BrpV6PgLMA/Gk0o0=;
+ b=E9+Dhd1xSF4RojX4KKZrUsWSinUzJseRtVtcbLGmpKK01YtY71OL+lFtEqyQEhPwehb45A
+ JZ3qydAdj1dcY9Cg==
+Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested)
+ by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 362B8139CB;
+ Fri, 17 Jan 2025 12:12:34 +0000 (UTC)
+Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
+ by imap1.dmz-prg2.suse.org with ESMTPSA id kcJNOTJJimc1XgAAD6G6ig
+ (envelope-from <farosas@suse.de>); Fri, 17 Jan 2025 12:12:34 +0000
+From: Fabiano Rosas <farosas@suse.de>
+To: Thomas Huth <thuth@redhat.com>, qemu-devel@nongnu.org, "Michael S.
+ Tsirkin" <mst@redhat.com>
+Cc: Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ devel@lists.libvirt.org,
+ =?utf-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>, Kashyap
+ Chamarthy
+ <kchamart@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>, Richard
+ Henderson <richard.henderson@linaro.org>, Marcel Apfelbaum
+ <marcel.apfelbaum@gmail.com>
+Subject: Re: [PATCH 1/3] tests/qtest/test-x86-cpuid-compat: Remove tests
+ related to pc-i440fx-2.3
+In-Reply-To: <20250117102738.59714-2-thuth@redhat.com>
+References: <20250117102738.59714-1-thuth@redhat.com>
+ <20250117102738.59714-2-thuth@redhat.com>
+Date: Fri, 17 Jan 2025 09:12:32 -0300
+Message-ID: <87wmetej0v.fsf@suse.de>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::336;
- envelope-from=rakicaleksandar1999@gmail.com; helo=mail-wm1-x336.google.com
-X-Spam_score_int: -17
-X-Spam_score: -1.8
-X-Spam_bar: -
-X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+Content-Type: text/plain
+X-Spamd-Result: default: False [-2.73 / 50.00]; BAYES_HAM(-2.93)[99.70%];
+ SUSPICIOUS_RECIPS(1.50)[]; NEURAL_HAM_LONG(-1.00)[-1.000];
+ NEURAL_HAM_SHORT(-0.20)[-1.000]; MIME_GOOD(-0.10)[text/plain];
+ FREEMAIL_ENVRCPT(0.00)[gmail.com]; TAGGED_RCPT(0.00)[];
+ RCVD_VIA_SMTP_AUTH(0.00)[]; ARC_NA(0.00)[];
+ MISSING_XM_UA(0.00)[]; RCVD_TLS_ALL(0.00)[];
+ MIME_TRACE(0.00)[0:+]; RCPT_COUNT_SEVEN(0.00)[10];
+ MID_RHS_MATCH_FROM(0.00)[];
+ DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
+ FROM_HAS_DN(0.00)[];
+ FREEMAIL_CC(0.00)[linaro.org,lists.libvirt.org,redhat.com,gmail.com];
+ TO_DN_SOME(0.00)[]; FROM_EQ_ENVFROM(0.00)[];
+ RCVD_COUNT_TWO(0.00)[2]; TO_MATCH_ENVRCPT_ALL(0.00)[];
+ FUZZY_BLOCKED(0.00)[rspamd.com];
+ DBL_BLOCKED_OPENRESOLVER(0.00)[imap1.dmz-prg2.suse.org:helo]
+Received-SPF: pass client-ip=2a07:de40:b251:101:10:150:64:2;
+ envelope-from=farosas@suse.de; helo=smtp-out2.suse.de
+X-Spam_score_int: -43
+X-Spam_score: -4.4
+X-Spam_bar: ----
+X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -107,11 +125,15 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi,
+Thomas Huth <thuth@redhat.com> writes:
 
-Could you please let us know if you have any comments
-on the latest version of this patch?
+> The pc-i440fx-2.3 machine type has been removed in commit 46a2bd5257
+> ("hw/i386/pc: Remove deprecated pc-i440fx-2.3 machine") already, so
+> these tests are just dead code by now.
+>
+> Signed-off-by: Thomas Huth <thuth@redhat.com>
 
-Kind regards,
-Aleksandar Rakic
+Reviewed-by: Fabiano Rosas <farosas@suse.de>
+
+I'm queuing this one individually for now.
 
