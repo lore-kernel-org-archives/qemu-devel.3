@@ -4,81 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6DF42C02183
-	for <qemu-devel@archiver.kernel.org>; Fri, 17 Jan 2025 18:34:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D0BDEC02188
+	for <qemu-devel@archiver.kernel.org>; Fri, 17 Jan 2025 18:34:17 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tYr5n-00060w-Ox; Fri, 17 Jan 2025 13:29:16 -0500
+	id 1tYr2R-0004Ym-0C; Fri, 17 Jan 2025 13:25:47 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1tYr5g-00056j-93
- for qemu-devel@nongnu.org; Fri, 17 Jan 2025 13:29:08 -0500
-Received: from mail-pj1-x1034.google.com ([2607:f8b0:4864:20::1034])
+ id 1tYr2D-0004B6-53
+ for qemu-devel@nongnu.org; Fri, 17 Jan 2025 13:25:34 -0500
+Received: from mail-pl1-x632.google.com ([2607:f8b0:4864:20::632])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1tYr5d-0000G0-Kd
- for qemu-devel@nongnu.org; Fri, 17 Jan 2025 13:29:07 -0500
-Received: by mail-pj1-x1034.google.com with SMTP id
- 98e67ed59e1d1-2ee46851b5eso3431985a91.1
- for <qemu-devel@nongnu.org>; Fri, 17 Jan 2025 10:29:05 -0800 (PST)
+ id 1tYr2B-0007vy-HI
+ for qemu-devel@nongnu.org; Fri, 17 Jan 2025 13:25:32 -0500
+Received: by mail-pl1-x632.google.com with SMTP id
+ d9443c01a7336-2165cb60719so46223415ad.0
+ for <qemu-devel@nongnu.org>; Fri, 17 Jan 2025 10:25:30 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1737138544; x=1737743344; darn=nongnu.org;
+ d=linaro.org; s=google; t=1737138330; x=1737743130; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=jDdcDXXMoyLv7/1KfJ1cMXQbpZKLIjBYNpE33H5vAuk=;
- b=jew4jib4anYgh6ENrzSCU0qHEuml5TRs9rGx013k/soI+ZzSc54dX4/02tXVcOi02Y
- VEYpTEbmcfzL9qcnO6E2PPCACszMFi6sCV1ovbMlsZR+X2sQ3aRxfNGS14gQTyC7GYep
- y6IyF1XKNwmRBe0jF4Bxt8O+Wl189yPriAZ/tVBe8AteDIAF5pAL6+tKjqhzYun2S2RJ
- v8nm5V7GHKIQsDbBRfUz9wmqDYSj5iU4jNOIYz6mVERrW2vNUu1n7yQIZx4eLz4W36fg
- cMgiM/zk6qzfqgBrgKXN6lWl0UFAmGVSDWM/uYY4/r2nTpI2kqRuzavNkNiUWeBNV57V
- qgdw==
+ bh=VP0y8NpW/X+aOIiXkj/XmIYJ8qwvnfqBp4uvWUSussY=;
+ b=kakt6d6GTdBxbVn6pw/B8pJKlL52PH7wC31G2gD2uixlo+J2mOtfowD7CLXyVrFd9i
+ UuEbaeQjdIVbW+g3gavvIn8RkfTT855QWY66KMxUX/2HvIBhd3cGILYqOot83qUraXEn
+ nTl4OyxDy9P1q9kUtNMIyptTmdKzcOAcqzfwfKst+5aPYGtgbhvtyyyt2dOpa+WMiNQr
+ tDCNCUM6X9fzeFDuj0n2GOu7D09qCh8oP/McLOsQBEc+hrUR2SLz4fRBCggT7XkYh9Bm
+ iZ+yv54v5YcJJvfqglR9rF84+Nx/mKAlG4JH6FMs7zN6WE8AaiaQFIzGML0PHt2KdJYl
+ /geA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1737138544; x=1737743344;
+ d=1e100.net; s=20230601; t=1737138330; x=1737743130;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=jDdcDXXMoyLv7/1KfJ1cMXQbpZKLIjBYNpE33H5vAuk=;
- b=Gun5/CBZNnTiYVLu0lL3NfvOm6ALEg6iQQYUDKgnJ9TjNGvUC4wZUtUyI1VHn1qMjd
- cyNQhhzhkHJpCAPoVK+6cRBo36+wEKgc/sZFqm1TVrLXT+//KN01xmBrYVPxQlciO1Cv
- 8KNCFF0LEkWSHtOdyGq4aV13gYZy3KjZDaXnsc+2vPbryyBVSkwKIyum3DoA3w1nycM1
- 0p0fb4eOQH8aP2yUj9koTR1bkpMWIHaobUGOin/LIa32dUcYFVIrxV0j971Hucyw+Ptr
- bhU7u8zWSzctJH6qcfqALmaLMrXsibH4Ic3wF1cUHzz6h8ecHavXIoS/6BTi8Yp/KFNJ
- t+lg==
-X-Gm-Message-State: AOJu0YzFnPBBqBEZOAU2OiLT0R2+TOofe4GGXqiUMYIgUROx+7I1SgpP
- aTHeZdK5iaFMjAB5P7+56WfKOx5NRrkzkyoTRRhb1Fi7Pk0EP4wdAmOtNLDJmat4ok7J8PsvPbO
- m
-X-Gm-Gg: ASbGncsvNIaHq1+r7/PBEWg1ERH4aRI8xA1NV1qwAw+BRPNQhQwcj9BfX54q6drm96K
- 6/Q/iM5xMWpog621sTJcJWUATILY2B5eOCZlDEU3a6L+4epOheKw1Pid5UVHS5eQSb7OJ7Wb0w7
- KAMjO6m6w5X1JAOgBMeaqbhOon088vqHjABF67ZLJn7QvHIzDUkGuQWCOmzX0FUFG8PuZRw8UnL
- mL8gNMg9mjcYa9tneABqYmOKTiaDwQxa7/b00PDFILcj8nq8oIhiLo3i0JkcAdj7N6x2R6+1/8L
- /A+oPsfsLjbWkPg=
-X-Google-Smtp-Source: AGHT+IG1L+NrxdDAhh/yi8SKVSTCvrjh7Fm7jFwfnD/sVUvvbJ2g/PP3TzMR/AsoxgNHnyNbtyJp9g==
-X-Received: by 2002:a17:90b:1f91:b0:2f4:465d:5c94 with SMTP id
- 98e67ed59e1d1-2f782c77124mr5469282a91.11.1737138544295; 
- Fri, 17 Jan 2025 10:29:04 -0800 (PST)
+ bh=VP0y8NpW/X+aOIiXkj/XmIYJ8qwvnfqBp4uvWUSussY=;
+ b=Y1gMyxGbD9LrjCpZgrFs7Pcn2UWiVqt1zC96DCN9wqppBPi/PA/3bFmqZdUet8aBqU
+ ihgrWLVVc2yGV+N2Qa5bTM3UdumJlqxko49v5yQKUaJ6HHj3nvUReOvgddBFXshqOwJK
+ uFFgIobFbRfXCZ9DH3xjU+Hq6dppQm6ocbA32gb888ZaWnj0YI6fwfoWCSGjgnmFrHwA
+ Qm1siobBaKPZyVqvG8sU1viyGcKKjiNcI3uRaDkk7NbQ7tEQWuls7qaxRGSHuVu3lsys
+ MtAZDrBGI6RxbiM1OiHsnBQQz5gmJpM1up0EZnKspq60uAlAg2C77DVyPG8n4VHWhb8v
+ oOEQ==
+X-Gm-Message-State: AOJu0YzUyffIuKENXRoHbEMorlZfjDq7D3Gl9TP/F0XcmxiuN9N2ueLR
+ 3+HQTA3TjyI5/v/TbNWa7hCKcZeWmGFMEyYWr50k8d0QxeLIW2oef7AEz+6+aTeYzD2eIrEWM/u
+ S
+X-Gm-Gg: ASbGncvqUskYrfInqe8VDYJmJujNjLmKHhSyju7am8z+nnAx1g6JJdveriKAeQeDySc
+ 76mOu/dqPN79D0Hl5E+F2rhvVKDUnwACIgEheuhm8PYPuAjbkTWHiMfOWGpIHt/MnNE/C1UpkrG
+ Pd81+JrGsGs25db44Jt2pGqlbPs86PjcNPosAEEm3Zqlzxtae+YFARDzvwzNz7pfxyCf6v1mb6q
+ EdHS8cKJf3qvANMUfR/EofMWPAnTLL/N92t4oCIZt/OhSXtWBRd0pI+9hk6t/jJgOIY/vkDgZr1
+ swtmCHdOdCBVIEE=
+X-Google-Smtp-Source: AGHT+IG0nft5Rk1AV79KilqcqkPA9Csasr530o42nlM2bNYacfTZZsrixV6XA/LqSh6Rul9UJcDoaA==
+X-Received: by 2002:a17:903:2447:b0:215:8ca3:3bac with SMTP id
+ d9443c01a7336-21c3540278dmr54210745ad.16.1737138329848; 
+ Fri, 17 Jan 2025 10:25:29 -0800 (PST)
 Received: from stoup.. (174-21-71-127.tukw.qwest.net. [174.21.71.127])
  by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-2f77629bf96sm2614105a91.36.2025.01.17.10.29.03
+ d9443c01a7336-21c2d3acccesm18879005ad.123.2025.01.17.10.25.28
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 17 Jan 2025 10:29:03 -0800 (PST)
+ Fri, 17 Jan 2025 10:25:28 -0800 (PST)
 From: Richard Henderson <richard.henderson@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PULL 52/68] tcg/loongarch64: Fold the ext{8, 16,
- 32}[us] cases into {s}extract
-Date: Fri, 17 Jan 2025 10:24:40 -0800
-Message-ID: <20250117182456.2077110-53-richard.henderson@linaro.org>
+Subject: [PULL 38/68] tcg: Constify tcg_op_defs
+Date: Fri, 17 Jan 2025 10:24:26 -0800
+Message-ID: <20250117182456.2077110-39-richard.henderson@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20250117182456.2077110-1-richard.henderson@linaro.org>
 References: <20250117182456.2077110-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1034;
- envelope-from=richard.henderson@linaro.org; helo=mail-pj1-x1034.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::632;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x632.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -101,109 +100,56 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Accept byte and word extensions with the extract opcodes.
-This is preparatory to removing the specialized extracts.
+Now that we're no longer assigning to TCGOpDef.args_ct,
+we can make the array constant.
 
 Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 ---
- tcg/loongarch64/tcg-target-has.h | 15 ++++++++++++--
- tcg/loongarch64/tcg-target.c.inc | 34 ++++++++++++++++++++++++++++++--
- 2 files changed, 45 insertions(+), 4 deletions(-)
+ include/tcg/tcg.h | 2 +-
+ tcg/tcg-common.c  | 2 +-
+ tcg/tcg.c         | 2 +-
+ 3 files changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/tcg/loongarch64/tcg-target-has.h b/tcg/loongarch64/tcg-target-has.h
-index e4333c36c6..ac7d2fcdf9 100644
---- a/tcg/loongarch64/tcg-target-has.h
-+++ b/tcg/loongarch64/tcg-target-has.h
-@@ -17,7 +17,7 @@
- #define TCG_TARGET_HAS_rot_i32          1
- #define TCG_TARGET_HAS_deposit_i32      1
- #define TCG_TARGET_HAS_extract_i32      1
--#define TCG_TARGET_HAS_sextract_i32     0
-+#define TCG_TARGET_HAS_sextract_i32     1
- #define TCG_TARGET_HAS_extract2_i32     0
- #define TCG_TARGET_HAS_add2_i32         0
- #define TCG_TARGET_HAS_sub2_i32         0
-@@ -52,7 +52,7 @@
- #define TCG_TARGET_HAS_rot_i64          1
- #define TCG_TARGET_HAS_deposit_i64      1
- #define TCG_TARGET_HAS_extract_i64      1
--#define TCG_TARGET_HAS_sextract_i64     0
-+#define TCG_TARGET_HAS_sextract_i64     1
- #define TCG_TARGET_HAS_extract2_i64     0
- #define TCG_TARGET_HAS_extr_i64_i32     1
- #define TCG_TARGET_HAS_ext8s_i64        1
-@@ -109,5 +109,16 @@
- #define TCG_TARGET_HAS_cmpsel_vec       0
- #define TCG_TARGET_HAS_tst_vec          0
+diff --git a/include/tcg/tcg.h b/include/tcg/tcg.h
+index e28894c57b..a4630e44bc 100644
+--- a/include/tcg/tcg.h
++++ b/include/tcg/tcg.h
+@@ -716,7 +716,7 @@ typedef struct TCGOpDef {
+     uint8_t flags;
+ } TCGOpDef;
  
-+#define TCG_TARGET_extract_valid(type, ofs, len)   1
-+
-+static inline bool
-+tcg_target_sextract_valid(TCGType type, unsigned ofs, unsigned len)
-+{
-+    if (type == TCG_TYPE_I64 && ofs + len == 32) {
-+        return true;
-+    }
-+    return ofs == 0 && (len == 8 || len == 16);
-+}
-+#define TCG_TARGET_sextract_valid  tcg_target_sextract_valid
+-extern TCGOpDef tcg_op_defs[];
++extern const TCGOpDef tcg_op_defs[];
+ extern const size_t tcg_op_defs_max;
  
- #endif
-diff --git a/tcg/loongarch64/tcg-target.c.inc b/tcg/loongarch64/tcg-target.c.inc
-index 3dff29facb..cebe8dd354 100644
---- a/tcg/loongarch64/tcg-target.c.inc
-+++ b/tcg/loongarch64/tcg-target.c.inc
-@@ -1375,10 +1375,38 @@ static void tcg_out_op(TCGContext *s, TCGOpcode opc, TCGType type,
-         break;
+ /*
+diff --git a/tcg/tcg-common.c b/tcg/tcg-common.c
+index 0f30e5b3ec..e98b3e5fdd 100644
+--- a/tcg/tcg-common.c
++++ b/tcg/tcg-common.c
+@@ -26,7 +26,7 @@
+ #include "tcg/tcg.h"
+ #include "tcg-has.h"
  
-     case INDEX_op_extract_i32:
--        tcg_out_opc_bstrpick_w(s, a0, a1, a2, a2 + args[3] - 1);
-+        if (a2 == 0 && args[3] <= 12) {
-+            tcg_out_opc_andi(s, a0, a1, (1 << args[3]) - 1);
-+        } else {
-+            tcg_out_opc_bstrpick_w(s, a0, a1, a2, a2 + args[3] - 1);
-+        }
-         break;
-     case INDEX_op_extract_i64:
--        tcg_out_opc_bstrpick_d(s, a0, a1, a2, a2 + args[3] - 1);
-+        if (a2 == 0 && args[3] <= 12) {
-+            tcg_out_opc_andi(s, a0, a1, (1 << args[3]) - 1);
-+        } else {
-+            tcg_out_opc_bstrpick_d(s, a0, a1, a2, a2 + args[3] - 1);
-+        }
-+        break;
-+
-+    case INDEX_op_sextract_i64:
-+        if (a2 + args[3] == 32) {
-+            if (a2 == 0) {
-+                tcg_out_ext32s(s, a0, a1);
-+            } else {
-+                tcg_out_opc_srai_w(s, a0, a1, a2);
-+            }
-+            break;
-+        }
-+        /* FALLTHRU */
-+    case INDEX_op_sextract_i32:
-+        if (a2 == 0 && args[3] == 8) {
-+            tcg_out_ext8s(s, TCG_TYPE_REG, a0, a1);
-+        } else if (a2 == 0 && args[3] == 16) {
-+            tcg_out_ext16s(s, TCG_TYPE_REG, a0, a1);
-+        } else {
-+            g_assert_not_reached();
-+        }
-         break;
+-TCGOpDef tcg_op_defs[] = {
++const TCGOpDef tcg_op_defs[] = {
+ #define DEF(s, oargs, iargs, cargs, flags) \
+          { #s, oargs, iargs, cargs, iargs + oargs + cargs, flags },
+ #include "tcg/tcg-opc.h"
+diff --git a/tcg/tcg.c b/tcg/tcg.c
+index df7c4dab88..32975fe298 100644
+--- a/tcg/tcg.c
++++ b/tcg/tcg.c
+@@ -3364,7 +3364,7 @@ static void process_constraint_sets(void)
  
-     case INDEX_op_deposit_i32:
-@@ -2243,6 +2271,8 @@ tcg_target_op_def(TCGOpcode op, TCGType type, unsigned flags)
-     case INDEX_op_not_i64:
-     case INDEX_op_extract_i32:
-     case INDEX_op_extract_i64:
-+    case INDEX_op_sextract_i32:
-+    case INDEX_op_sextract_i64:
-     case INDEX_op_bswap16_i32:
-     case INDEX_op_bswap16_i64:
-     case INDEX_op_bswap32_i32:
+ static const TCGArgConstraint *opcode_args_ct(const TCGOp *op)
+ {
+-    TCGOpDef *def = &tcg_op_defs[op->opc];
++    const TCGOpDef *def = &tcg_op_defs[op->opc];
+     TCGConstraintSetIndex con_set;
+ 
+     if (def->nb_iargs + def->nb_oargs == 0) {
 -- 
 2.43.0
 
