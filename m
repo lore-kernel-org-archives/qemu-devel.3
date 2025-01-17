@@ -4,92 +4,95 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 44318C02188
-	for <qemu-devel@archiver.kernel.org>; Fri, 17 Jan 2025 09:02:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 41077C02183
+	for <qemu-devel@archiver.kernel.org>; Fri, 17 Jan 2025 09:02:46 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tYiF4-0002kM-VS; Fri, 17 Jan 2025 04:02:15 -0500
+	id 1tYiF7-0002tL-Cn; Fri, 17 Jan 2025 04:02:17 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <cleger@rivosinc.com>)
- id 1tYiF1-0002ah-03
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1tYiF0-0002ag-At
  for qemu-devel@nongnu.org; Fri, 17 Jan 2025 04:02:12 -0500
-Received: from mail-wr1-x42b.google.com ([2a00:1450:4864:20::42b])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <cleger@rivosinc.com>)
- id 1tYiEy-0008Bh-Ol
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1tYiEx-0008Bi-9S
  for qemu-devel@nongnu.org; Fri, 17 Jan 2025 04:02:10 -0500
-Received: by mail-wr1-x42b.google.com with SMTP id
- ffacd0b85a97d-385f06d0c8eso974470f8f.0
- for <qemu-devel@nongnu.org>; Fri, 17 Jan 2025 01:02:07 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=rivosinc-com.20230601.gappssmtp.com; s=20230601; t=1737104526; x=1737709326;
- darn=nongnu.org; 
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=jCt7kzcuNwkvxmtrk64kX3QJrtJaNrqEtkO0ONKUO8Y=;
- b=cFw6uKTDyXfXVLAxd1+/HbHKxWSkRSukRoMeZZxAH1ENwrBKWkr43MEUITUZbHl3Xy
- uuXEh0SBa/uHWNFjWxhadJMCWmxTCwpkvsSe/PC6JFV1Q83N7aADM9WFPqmb/TLO2KxO
- xl31zGQnMQA9TqFU3zMl8tof7QTizm+y7xzkUv/zQ8Mz1VJ7MDHrGV/0AiReSYNUu8jp
- lfUg9oK9UEAQh/s1nHwtFh+Al2c7fC3wqdFJm4lx+9+0Q6aBCq2Hzeic7/zcWkHjqJlJ
- YFgStUYXQuJ4YpQclxQo8FG6lsabnJ0bMjlvrFyEKebYZaBmPa0N7+UFdMF/werPMiVa
- jxdQ==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1737104526;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=QcKUQtrDueRo7pBQ0SWKWSoQ8r+x6BtzsurQvn4mXbk=;
+ b=JKq3n+1XRUMf1oW5o96wzsM923qsimntJRhspO9/TecPZesEY2Jv1wXdK9A1cP1UOpCVep
+ OADDb9b7fmq2j+eGxoYJg6DerYBQ6o09T4aENtOvgOOpZZVoxRjYtvWiXW8EIo7gJHi1kX
+ ZCgP0o4z9SZoIzaE/5XDE9IOPhQUM0c=
+Received: from mail-ej1-f70.google.com (mail-ej1-f70.google.com
+ [209.85.218.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-655-k64KPMpxN_Kur8GO7tj0QA-1; Fri, 17 Jan 2025 04:00:57 -0500
+X-MC-Unique: k64KPMpxN_Kur8GO7tj0QA-1
+X-Mimecast-MFC-AGG-ID: k64KPMpxN_Kur8GO7tj0QA
+Received: by mail-ej1-f70.google.com with SMTP id
+ a640c23a62f3a-aa6a7bea04cso142818966b.3
+ for <qemu-devel@nongnu.org>; Fri, 17 Jan 2025 01:00:57 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1737104526; x=1737709326;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=jCt7kzcuNwkvxmtrk64kX3QJrtJaNrqEtkO0ONKUO8Y=;
- b=EbltINbVoOUrPuKwkMP5vGj/VPuchQm6xQGHf1rh1AUyPNj9ZlugOF3V5+jZ5W3AxU
- HD9PgAME/6FQT9UDmrbwxbAVK8z14LahTaVr1tBAwuRBzgIiPj9HswZsBy/xkJrT/cEH
- e5HRe9ZyhCRn+AHeiHhuJi5OSp5RrHw+5EcyUmxg0C1fhe4Mt9OH+2+0z8q1L7HVFsxP
- Ovtxonm5F5SC3H99Vyo+eXpzd5QdpbHEKqAEyoiDJcuDknY0GmZCQIXlIPEtGWAVTbyv
- YSxdjumACsDXm2Vjh+pcODKT61HtRgCLA7A+WR0PZ5zwgxU4KRVaQtezJ5SeTRy+zObK
- CJ7A==
-X-Forwarded-Encrypted: i=1;
- AJvYcCWPdYjtOyAhLWKzRXUv+VNQ/m76xdB+CbDhPUXDBvgHBPJyhGSkI6/WLA3IYdwHWVZIlQ0rbRACGzgg@nongnu.org
-X-Gm-Message-State: AOJu0YyvVIGuZzmdO3lOaNB7+PXAt1/APzB5SQ6TiiWfxfQ0ifJ+06qG
- 4qX32VaXmrCk1hXChzvaw5vfp7bjtj0tOnrpme3MGLyRt4qrW2G16pCFv/WLhz4=
-X-Gm-Gg: ASbGncsToZ1IuR49KH5Rp46Dx8gd0etwfYB3jYsmO+nKa/vQukKhywZR49L9P5w+2VW
- E4owfBkkOt8Z+u/bah1lh5cYzd9fxcQxmwP1tnWOnBLbVyTZMGtqdEKIEKSUQH9MiuWP54jUW/J
- ha38jYbZIpLTDh5D74p3Z9QF4bPQKbc4dH1vDAXVZXxBy/8METUib4Njp3okhNOXKLY6ksSEZ+K
- tjVkIHd8UoZ+MCD0wQ1uJPUc+hySthAj/JPF9pVsnrK+Rmpst0uYGluN2mbVrky6RRzqduS+b24
- RicXPuWB8WeVTP/RPoCK/CZpaA==
-X-Google-Smtp-Source: AGHT+IHwlm2AlHTH9dL9npjSppF7Cz+cBUZyqohmpo8XmZ5VECIMfKv/oboP8ma9XvwZdk5d4pB0Yw==
-X-Received: by 2002:a05:6000:1a45:b0:385:eecb:6f02 with SMTP id
- ffacd0b85a97d-38bf5798338mr1197135f8f.28.1737104525992; 
- Fri, 17 Jan 2025 01:02:05 -0800 (PST)
-Received: from ?IPV6:2a01:e0a:e17:9700:16d2:7456:6634:9626?
- ([2a01:e0a:e17:9700:16d2:7456:6634:9626])
+ d=1e100.net; s=20230601; t=1737104456; x=1737709256;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=QcKUQtrDueRo7pBQ0SWKWSoQ8r+x6BtzsurQvn4mXbk=;
+ b=cfBzl7Jb9p+kZ8j1SP32FgmtNbzuhlZu0j/cfoQBoZjArnO6C/lozg8SAQwc/Vnqfv
+ 8iVUCrlFdNv1HSx5PzddZdg9jTqSkf+ahCjH0VCDD5g7Gc3XFdxnYRS04Yu7kilHcjTx
+ n7ILzfE3kmNKms1w+9RwxT7wWYnlbIpTDBMZhjhdtvm/4q+hkB8S99kJXVu4ikxJ2IDZ
+ Qq1j7YhQ9awRsO0aw2zqE2CyHgf66tXfYusFgYr/f+PcNZ9o8HyLPXethnPY095UyD27
+ IdPMdndKRFWeFiA6nV9f4RYo7bWRvtNJucDj0YZQEsB+sv1u0r+G1CyWjknIcUKfwrVZ
+ NkIg==
+X-Gm-Message-State: AOJu0YwKIFnCC2Ssk2BsB6CkZYXvViu/4w22QUU6jYQvza5ehA6PiZte
+ iiUcsTUFpPM958KGe67/KgGRFktrpTa1XXM2RevdaeQHpSvTUG4uZICvpI/kbMFOZAMmwZqUBPp
+ CxNV/1aMlhy9wO5pF4sqcUAn0rHM9IqsWNEV/O07zgj6EJpMCwIrnBsskrf9TZR4IJlm3vl12zQ
+ m4BQD2ImS1MvED9E3fiMITevog2mYIsSMXoE7tnAo=
+X-Gm-Gg: ASbGnctBp86uldt2SGBh6CrHgjSWqnfx+VQc4JT9mjf9U/g3SwKyQslhROghCuBdOUw
+ oKkC9cdTCDmqQFZhmLQTm429UhfXxMQJHVopyL0ceGaQlK3scdDc3q9K2vlHaxgGzyvp0CVuO+/
+ 2gY+zjj0rcwzHwNqWcYpM6uTaQa1+rovRS5C8W7+whx9g6brL7NbhW5FEPFRj/zFWNgcaYJU1qu
+ HR1T1Ae46ECsLM0lisjlOeErxw3iug7cF36T6bfAQ0Gii3BWPqNHsSqq+Xj
+X-Received: by 2002:a17:907:7e92:b0:aab:eefc:92e5 with SMTP id
+ a640c23a62f3a-ab38b1f33e1mr162784566b.14.1737104455598; 
+ Fri, 17 Jan 2025 01:00:55 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IFZ7Vgh8tE9VcpYMeLU4Fo6rPJMcIyAgL7R/UTRL3pnynHVBJn2jPO6XB7YvXYDHkRMvb27Dw==
+X-Received: by 2002:a17:907:7e92:b0:aab:eefc:92e5 with SMTP id
+ a640c23a62f3a-ab38b1f33e1mr162778966b.14.1737104454943; 
+ Fri, 17 Jan 2025 01:00:54 -0800 (PST)
+Received: from [192.168.10.3] ([176.206.124.70])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-43890468480sm26174905e9.33.2025.01.17.01.02.05
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 17 Jan 2025 01:02:05 -0800 (PST)
-Message-ID: <957cd781-7d3b-4483-b2b1-5f1ec18beac7@rivosinc.com>
-Date: Fri, 17 Jan 2025 10:02:04 +0100
+ a640c23a62f3a-ab384c5700bsm135155566b.24.2025.01.17.01.00.53
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Fri, 17 Jan 2025 01:00:53 -0800 (PST)
+From: Paolo Bonzini <pbonzini@redhat.com>
+To: qemu-devel@nongnu.org
+Cc: zhao1.liu@intel.com,
+	qemu-rust@nongnu.org
+Subject: [PATCH 02/10] rust: vmstate: implement VMState for non-leaf types
+Date: Fri, 17 Jan 2025 10:00:38 +0100
+Message-ID: <20250117090046.1045010-3-pbonzini@redhat.com>
+X-Mailer: git-send-email 2.47.1
+In-Reply-To: <20250117090046.1045010-1-pbonzini@redhat.com>
+References: <20250117090046.1045010-1-pbonzini@redhat.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PULL 47/50] target/riscv: Add Smdbltrp ISA extension enable
- switch
-To: Alistair Francis <alistair23@gmail.com>, qemu-devel@nongnu.org
-Cc: Alistair Francis <alistair.francis@wdc.com>
-References: <20250117055552.108376-1-alistair.francis@wdc.com>
- <20250117055552.108376-48-alistair.francis@wdc.com>
-Content-Language: en-US
-From: =?UTF-8?B?Q2zDqW1lbnQgTMOpZ2Vy?= <cleger@rivosinc.com>
-In-Reply-To: <20250117055552.108376-48-alistair.francis@wdc.com>
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::42b;
- envelope-from=cleger@rivosinc.com; helo=mail-wr1-x42b.google.com
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=pbonzini@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -21
+X-Spam_score: -2.2
+X-Spam_bar: --
+X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.093,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -105,51 +108,121 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hey Alistair,
+Arrays, pointers and cells use a VMStateField that is based on that
+for the inner type.  The implementation therefore delegates to the
+VMState implementation of the inner type.
 
-While doing a non regression with default bios (OpenSBI 1.5) and max
-cpu, Atish found that this breaks boot with OpenSBI 1.5 since it does
-not have support for double trap clearing. On Henrique guidance,  I
-resent this patch alone with an associated fix. :
+Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
+---
+ rust/qemu-api/src/vmstate.rs | 79 +++++++++++++++++++++++++++++++++++-
+ 1 file changed, 78 insertions(+), 1 deletion(-)
 
-https://lore.kernel.org/qemu-riscv/7d3df2ef-14b0-47ad-a843-668f146e26de@ventanamicro.com/T/#t
-
-Sorry for the trouble, thanks,
-
-Clément
-
-On 17/01/2025 06:55, Alistair Francis wrote:
-> From: Clément Léger <cleger@rivosinc.com>
-> 
-> Add the switch to enable the Smdbltrp ISA extension.
-> 
-> Signed-off-by: Clément Léger <cleger@rivosinc.com>
-> Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
-> Message-ID: <20250110125441.3208676-10-cleger@rivosinc.com>
-> Signed-off-by: Alistair Francis <alistair.francis@wdc.com>
-> ---
->  target/riscv/cpu.c | 2 ++
->  1 file changed, 2 insertions(+)
-> 
-> diff --git a/target/riscv/cpu.c b/target/riscv/cpu.c
-> index e3ed11b0fd..bddf1ba75e 100644
-> --- a/target/riscv/cpu.c
-> +++ b/target/riscv/cpu.c
-> @@ -194,6 +194,7 @@ const RISCVIsaExtData isa_edata_arr[] = {
->      ISA_EXT_DATA_ENTRY(smcdeleg, PRIV_VERSION_1_13_0, ext_smcdeleg),
->      ISA_EXT_DATA_ENTRY(smcntrpmf, PRIV_VERSION_1_12_0, ext_smcntrpmf),
->      ISA_EXT_DATA_ENTRY(smcsrind, PRIV_VERSION_1_13_0, ext_smcsrind),
-> +    ISA_EXT_DATA_ENTRY(smdbltrp, PRIV_VERSION_1_13_0, ext_smdbltrp),
->      ISA_EXT_DATA_ENTRY(smepmp, PRIV_VERSION_1_12_0, ext_smepmp),
->      ISA_EXT_DATA_ENTRY(smrnmi, PRIV_VERSION_1_12_0, ext_smrnmi),
->      ISA_EXT_DATA_ENTRY(smmpm, PRIV_VERSION_1_13_0, ext_smmpm),
-> @@ -1626,6 +1627,7 @@ const RISCVCPUMultiExtConfig riscv_cpu_extensions[] = {
->      MULTI_EXT_CFG_BOOL("ssnpm", ext_ssnpm, false),
->  
->      MULTI_EXT_CFG_BOOL("smaia", ext_smaia, false),
-> +    MULTI_EXT_CFG_BOOL("smdbltrp", ext_smdbltrp, false),
->      MULTI_EXT_CFG_BOOL("smepmp", ext_smepmp, false),
->      MULTI_EXT_CFG_BOOL("smrnmi", ext_smrnmi, false),
->      MULTI_EXT_CFG_BOOL("smmpm", ext_smmpm, false),
+diff --git a/rust/qemu-api/src/vmstate.rs b/rust/qemu-api/src/vmstate.rs
+index b839a7d6b7f..abe15c96011 100644
+--- a/rust/qemu-api/src/vmstate.rs
++++ b/rust/qemu-api/src/vmstate.rs
+@@ -19,8 +19,9 @@
+ //!   `include/migration/vmstate.h`. These are not type-safe and should not be
+ //!   used if the equivalent functionality is available with `vmstate_of!`.
+ 
+-use core::marker::PhantomData;
++use core::{marker::PhantomData, mem, ptr::NonNull};
+ 
++use crate::bindings::VMStateFlags;
+ pub use crate::bindings::{VMStateDescription, VMStateField};
+ 
+ /// This macro is used to call a function with a generic argument bound
+@@ -102,6 +103,15 @@ macro_rules! vmstate_of {
+     };
+ }
+ 
++impl VMStateFlags {
++    const VMS_VARRAY_FLAGS: VMStateFlags = VMStateFlags(
++        VMStateFlags::VMS_VARRAY_INT32.0 |
++        VMStateFlags::VMS_VARRAY_UINT8.0 |
++        VMStateFlags::VMS_VARRAY_UINT16.0 |
++        VMStateFlags::VMS_VARRAY_UINT32.0
++    );
++}
++
+ // Add a couple builder-style methods to VMStateField, allowing
+ // easy derivation of VMStateField constants from other types.
+ impl VMStateField {
+@@ -111,6 +121,73 @@ pub const fn with_version_id(mut self, version_id: i32) -> Self {
+         self.version_id = version_id;
+         self
+     }
++
++    #[must_use]
++    pub const fn with_array_flag(mut self, num: usize) -> Self {
++        assert!(num <= 0x7FFF_FFFFusize);
++        assert!((self.flags.0 & VMStateFlags::VMS_ARRAY.0) == 0);
++        assert!((self.flags.0 & VMStateFlags::VMS_VARRAY_FLAGS.0) == 0);
++        if (self.flags.0 & VMStateFlags::VMS_POINTER.0) != 0 {
++            self.flags = VMStateFlags(self.flags.0 & !VMStateFlags::VMS_POINTER.0);
++            self.flags = VMStateFlags(self.flags.0 | VMStateFlags::VMS_ARRAY_OF_POINTER.0);
++        }
++        self.flags = VMStateFlags(self.flags.0 & !VMStateFlags::VMS_SINGLE.0);
++        self.flags = VMStateFlags(self.flags.0 | VMStateFlags::VMS_ARRAY.0);
++        self.num = num as i32;
++        self
++    }
++
++    #[must_use]
++    pub const fn with_pointer_flag(mut self) -> Self {
++        assert!((self.flags.0 & VMStateFlags::VMS_POINTER.0) == 0);
++        self.flags = VMStateFlags(self.flags.0 | VMStateFlags::VMS_POINTER.0);
++        self
++    }
++}
++
++// Transparent wrappers: just use the internal type
++
++macro_rules! impl_vmstate_transparent {
++    ($type:ty where $base:tt: VMState $($where:tt)*) => {
++        unsafe impl<$base> VMState for $type where $base: VMState $($where)* {
++            const BASE: VMStateField = VMStateField {
++                size: mem::size_of::<$type>(),
++                ..<$base as VMState>::BASE
++            };
++        }
++    };
++}
++
++impl_vmstate_transparent!(std::cell::Cell<T> where T: VMState);
++impl_vmstate_transparent!(std::cell::UnsafeCell<T> where T: VMState);
++impl_vmstate_transparent!(crate::cell::BqlCell<T> where T: VMState);
++impl_vmstate_transparent!(crate::cell::BqlRefCell<T> where T: VMState);
++
++// Pointer types using the underlying type's VMState plus VMS_POINTER
++// Note that references are not supported, though references to cells
++// could be allowed.
++
++macro_rules! impl_vmstate_pointer {
++    ($type:ty where $base:tt: VMState $($where:tt)*) => {
++        unsafe impl<$base> VMState for $type where $base: VMState $($where)* {
++            const BASE: VMStateField = <$base as VMState>::BASE.with_pointer_flag();
++        }
++    };
++}
++
++impl_vmstate_pointer!(*const T where T: VMState);
++impl_vmstate_pointer!(*mut T where T: VMState);
++impl_vmstate_pointer!(NonNull<T> where T: VMState);
++
++// Unlike C pointers, Box is always non-null therefore there is no need
++// to specify VMS_ALLOC.
++impl_vmstate_pointer!(Box<T> where T: VMState);
++
++// Arrays using the underlying type's VMState plus
++// VMS_ARRAY/VMS_ARRAY_OF_POINTER
++
++unsafe impl<T: VMState, const N: usize> VMState for [T; N] {
++    const BASE: VMStateField = <T as VMState>::BASE.with_array_flag(N);
+ }
+ 
+ #[doc(alias = "VMSTATE_UNUSED_BUFFER")]
+-- 
+2.47.1
 
 
