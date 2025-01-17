@@ -4,45 +4,45 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2D35BC02183
-	for <qemu-devel@archiver.kernel.org>; Fri, 17 Jan 2025 00:25:19 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D1247C02183
+	for <qemu-devel@archiver.kernel.org>; Fri, 17 Jan 2025 01:15:00 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tYaAE-0007sJ-5p; Thu, 16 Jan 2025 19:24:42 -0500
+	id 1tYaw3-0006Qd-Op; Thu, 16 Jan 2025 20:14:07 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <itaru.kitayama@linux.dev>)
- id 1tYaAB-0007s1-A1
- for qemu-devel@nongnu.org; Thu, 16 Jan 2025 19:24:40 -0500
-Received: from out-175.mta1.migadu.com ([95.215.58.175])
+ id 1tYaw1-0006QV-JV
+ for qemu-devel@nongnu.org; Thu, 16 Jan 2025 20:14:05 -0500
+Received: from out-188.mta1.migadu.com ([95.215.58.188])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <itaru.kitayama@linux.dev>)
- id 1tYaA8-0000rG-KP
- for qemu-devel@nongnu.org; Thu, 16 Jan 2025 19:24:39 -0500
+ id 1tYavw-0007fM-6e
+ for qemu-devel@nongnu.org; Thu, 16 Jan 2025 20:14:03 -0500
 Content-Type: text/plain;
 	charset=utf-8
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.dev; s=key1;
- t=1737073473;
+ t=1737076437;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=LCKFR+/+9ig7WOQZWf5TdCH6BD1FyjSsB0Pw5mMJOIg=;
- b=nyJ2kJ3uEjiYPzpLljaQb32xWcZvaoFlQ+xrfyxVOxhmeC+h+z9oUWbo384/oUX8Trb8qd
- 3eafSTnX5EpQc6YXITCqI0l0gBbJgUJcZC5GH7JxEuMVPfOlXrWgWG3mGAk3x8/Pvej3Iz
- ypxh/Uul5eS7yFDnH9u9YA+bqgsX78o=
+ bh=axqFJbdkp0GybOlyQTxxUDEIXag828M4UBelI/2OILE=;
+ b=QFziha0+wPdXeVb3Xw7UvNmu/pDbSHqx+ZLe4H3TD6dyTh2JLnlo9b4Se+ZhZdxZ6qIhIy
+ 35q7q5k3LmnX3VyY862+3oKvUrCTcsyyvp9Hei36I1sbS7f5d82mCYft8ceU6yxJX3Tdhc
+ l/Io3m/kukH0CoH+XzduUxh2SEx42k0=
 Mime-Version: 1.0 (Mac OS X Mail 16.0 \(3826.300.87.4.3\))
 Subject: Re: CXL emulation on aarch64
 X-Report-Abuse: Please report any abuse attempt to abuse@migadu.com and
  include these headers.
 From: Itaru Kitayama <itaru.kitayama@linux.dev>
 In-Reply-To: <20250116105833.000056da@huawei.com>
-Date: Fri, 17 Jan 2025 09:24:15 +0900
+Date: Fri, 17 Jan 2025 10:13:41 +0900
 Cc: "Zhijian Li (Fujitsu)" <lizhijian@fujitsu.com>,
  qemu-devel@nongnu.org
 Content-Transfer-Encoding: quoted-printable
-Message-Id: <C7740553-EA65-4576-9FAB-13780CA3D810@linux.dev>
+Message-Id: <9DF43D0C-E03E-420E-AB4E-0EE571D06A38@linux.dev>
 References: <0C019F50-9020-42ED-B051-998F03BFB709@linux.dev>
  <483e8037-3c72-4560-b4b8-2437d37ca8c4@fujitsu.com>
  <20250110123128.00004a5b@huawei.com>
@@ -52,8 +52,8 @@ References: <0C019F50-9020-42ED-B051-998F03BFB709@linux.dev>
  <20250116105833.000056da@huawei.com>
 To: Jonathan Cameron <Jonathan.Cameron@huawei.com>
 X-Migadu-Flow: FLOW_OUT
-Received-SPF: pass client-ip=95.215.58.175;
- envelope-from=itaru.kitayama@linux.dev; helo=out-175.mta1.migadu.com
+Received-SPF: pass client-ip=95.215.58.188;
+ envelope-from=itaru.kitayama@linux.dev; helo=out-188.mta1.migadu.com
 X-Spam_score_int: -27
 X-Spam_score: -2.8
 X-Spam_bar: --
@@ -170,51 +170,13 @@ there
 > is something new to carry or a major rebase needed.
 >=20
 > cxl-<date> is the right branch to use. Hope that helps.
+
+When do you think you want to get them (aarch64 specific?) merged =
+mainline. Any reason you want to carry the patches by yourself?
+
+Itaru.
+
 >=20
-
-Okay the cxl-2024-11-27 gives this:
-
-qemu-system-aarch64: CFMWS does not fit under PA limit
-
-Below is my QEMU options I use currently:
-
-/home/itaru/projects/qemu/build/qemu-system-aarch64 \
-         -M =
-virt,virtualization=3Don,pflash0=3Drom,pflash1=3Defivars,gic-version=3D3,v=
-irtualization=3Don,cxl=3Don -m 8192 \
-         -cpu cortex-a53 \
-         -smp 2 \
-         -accel tcg \
-         -nographic \
-         -display none \
-         -kernel ${HOME}/projects/linux/arch/arm64/boot/Image \
-         -append "root=3D/dev/vda rw earlycon acpi=3Dforce" \
-         -drive format=3Draw,if=3Dnone,file=3D${HOME}/ubuntu24.img,id=3Dhd=
-0 \
-         -device virtio-blk-pci,drive=3Dhd0 \
-         -nodefaults \
-         -serial mon:stdio \
-         -device virtio-net-pci,netdev=3Dnet0 \
-         -netdev user,id=3Dnet0,hostfwd=3Dtcp::8024-:22 \
-         -blockdev =
-node-name=3Drom,driver=3Dfile,filename=3Dedk2-aarch64-code.fd,read-only=3D=
-true \
-         -blockdev =
-node-name=3Defivars,driver=3Dfile,filename=3Dqemu-arm64-efivars.test \
-         -object =
-memory-backend-file,id=3Dcxl-mem1,share=3Don,mem-path=3D/tmp/cxltest.raw,s=
-ize=3D256M \
-         -object =
-memory-backend-file,id=3Dcxl-lsa1,share=3Don,mem-path=3D/tmp/lsa.raw,size=3D=
-256M \
-         -device pxb-cxl,bus_nr=3D12,bus=3Dpcie.0,id=3Dcxl.1 \
-         -device cxl-rp,port=3D0,bus=3Dcxl.1,id=3Droot_port13,chassis=3D0,=
-slot=3D2 \
-         -device =
-cxl-type3,bus=3Droot_port13,memdev=3Dcxl-mem1,lsa=3Dcxl-lsa1,id=3Dcxl-pmem=
-0 \
-         -M cxl-fmw.0.targets.0=3Dcxl.1,cxl-fmw.0.size=3D4G
-
 > Jonathan
 >=20
 >>=20
