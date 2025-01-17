@@ -4,82 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3C2EFC02188
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4C1D6C0218A
 	for <qemu-devel@archiver.kernel.org>; Fri, 17 Jan 2025 13:44:39 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tYmdH-0001Bq-5D; Fri, 17 Jan 2025 08:43:31 -0500
+	id 1tYmdq-0001lV-FM; Fri, 17 Jan 2025 08:44:07 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1tYmcv-0000y3-Bn
- for qemu-devel@nongnu.org; Fri, 17 Jan 2025 08:43:09 -0500
-Received: from mail-ej1-x632.google.com ([2a00:1450:4864:20::632])
+ id 1tYmcz-00011Q-Fv
+ for qemu-devel@nongnu.org; Fri, 17 Jan 2025 08:43:14 -0500
+Received: from mail-ej1-x634.google.com ([2a00:1450:4864:20::634])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1tYmcq-0002DF-9R
- for qemu-devel@nongnu.org; Fri, 17 Jan 2025 08:43:09 -0500
-Received: by mail-ej1-x632.google.com with SMTP id
- a640c23a62f3a-ab2aea81cd8so358244866b.2
- for <qemu-devel@nongnu.org>; Fri, 17 Jan 2025 05:43:03 -0800 (PST)
+ id 1tYmcw-0002Fk-MS
+ for qemu-devel@nongnu.org; Fri, 17 Jan 2025 08:43:13 -0500
+Received: by mail-ej1-x634.google.com with SMTP id
+ a640c23a62f3a-aab6fa3e20eso399602966b.2
+ for <qemu-devel@nongnu.org>; Fri, 17 Jan 2025 05:43:10 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1737121382; x=1737726182; darn=nongnu.org;
+ d=linaro.org; s=google; t=1737121389; x=1737726189; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=GXvDUDHkugKiilyR3D1H0/yadk87FxFT1Mw8vy1ltsA=;
- b=TNPyJykwJ6oxeyVdOc0KhqH7b75d7bWLjwdn1fIv/zZ2SyMcXIaWNIgxD9DzGv3eVF
- cUYUQ2qKj5qpjEl5rkrZIsIk8/LKCJwB+Y1uqtdUW3FSXRgOyJuZRIkqgfOyzSTeDQtB
- aNDbf5jBVEzAULRoQgHrraO/iEDqvPI/FRWGr/raBuhMF654Jb6D9EF8LC21F0+K5n60
- 757eO6LCyLHbxCb3HfrrLwtiAs3qUMIagnTYaHWNTENob0md2QtLPcJEy2PNig9TLF+Y
- keBEzrMurKx5jCsjtbBaSukEfZFXJJaqQCJ4i8MyFFufiCe5VsSBGTyUuPgxYodzyyhu
- tYfA==
+ bh=z0X1Y4uYNu2Kk1P4je8Zch9rD7a4QSWs3eQqhNJ9Els=;
+ b=WSXGy6rKTuQg8jBOZr8u4xFDqX/sr8RI77MdPZAS1jJ+FH0i6SVeWRXAj04fn6CO9o
+ QHCI7JXskUKqmjwQVNfbKIHCAr5KPOZfbtAClIRXaUOJKs7cAOe15lPGgeQ/yfJF0aGy
+ sghKEXHk/i20y2T8kaqiOh7VGC2NRDxAsiui+sZNflLfRZykVny4QRPkydSAgE1FGjXI
+ rpVKjN31MZe58hg7sUt6WnESMcG+CUVEfYnIDP38UuDauvFONZkuufN9FZIGZJM0ES4h
+ LJQzrJ71beoHDze1aBB4jySEHO2DYnbF4FG/5+UsfwIwZjNhkwNNp87yWu/JzTCInFhD
+ oBbA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1737121382; x=1737726182;
+ d=1e100.net; s=20230601; t=1737121389; x=1737726189;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=GXvDUDHkugKiilyR3D1H0/yadk87FxFT1Mw8vy1ltsA=;
- b=kw++KZmIDPZkWpwqF2gsnn9xu8x3QP8An7PhDd4CR+wv5I+uC8WvEgzyYLTKOmxOZZ
- cRIoPJ6UcTB8Bv5wIidbkBlyKqU/zruF9qOKRt/+J9A9pxmtM1bwB6i3MlmjfaQQamjA
- TsWerP7ahcoE8IZLsD8r88eD4uwr9f/xuiUojzZQmX/c0PQKC1R/kOnwKlWDeuiXJ1Lq
- lr/aSfoXDQdMFe+tDt1xHBu9ZvSiutsbEmTG4kMe+J8SdHb320m02MNsKJuZq4d/1ukL
- QwhHHJEOUxeXtZwEY6IeOqyX/CjJGF6UG3Kxlu3oALF8NuI/zc7xflJ/CJCt0UQw9PIu
- LpzQ==
-X-Gm-Message-State: AOJu0Yy17fOm7v3h7oRsGjTgfX/2ChcG8HH0Cb2yOm3KSIXaR36OjGTF
- TJ6v3/sXB2Fboz0616k2ZsmE1zxI9ZEuJIMtdmTcb2EpxMm93Sg0aQggJh3qk0M=
-X-Gm-Gg: ASbGncscSbc87BGNI3f86vjjaitPPcYeVDDyBGBqvH5pbvMdwV55SgGN8Izr4O9ZP3d
- TIIPDVfMlbXzio1iIke2URc9IatyRrY/V5mwoyp3G8DOMwP0s0Zuf/5pHD/HQfGN1M/JvcbuOOk
- /aiE1aIub9t+XVvV4lnWkZ36PjYMb6SPoM5yKl1Q/bItGhAMs7LJpU+HwiFFmOzyX79+mqQka/l
- IrQFAg0tgHtX/e2XhYZ8y4nZqXr20w6T7bFiN8us2MI3uudrwRwoCo=
-X-Google-Smtp-Source: AGHT+IE1zpEXn7HnexZkHIBenMuyo1Y5ptBd8phMZsxQSczT1drUGDh6ua8yULBrQ0oggC2f8/lJPw==
-X-Received: by 2002:a17:907:980b:b0:ab3:61e1:9b06 with SMTP id
- a640c23a62f3a-ab38b0a2221mr308042566b.5.1737121381863; 
- Fri, 17 Jan 2025 05:43:01 -0800 (PST)
+ bh=z0X1Y4uYNu2Kk1P4je8Zch9rD7a4QSWs3eQqhNJ9Els=;
+ b=IfflOKRSqEncFolydzx54hPG176sik/SX2mCLNV2WEyzpisA7sSwIOynnUYnVnQxzM
+ b1yLJucMLICZr06Tmxrfd45P3PJd39m2j4tK7tD+/ar3ScY5Ft5J1mQgxo8W2NcrB0Aa
+ yAGu7euSLJ2AndPVwep41UiXgA9pDpbghbBkAVSVoHkeW3tCxjHQUZyG3msxlK05Dv2N
+ SsK4lpdZdW3u0WKZ/j1lgUJwy3fJmRTda6oc7aUNzwcz6DeRO5WqGiLIOWQApcgyphgm
+ DYFFmTG6k3A5vPhT/9akt+UFi32bNMSrXIkIEWp00fICo0ECp4RaLWfp9kRobMZrjiwC
+ LTAA==
+X-Gm-Message-State: AOJu0YyC+udU8hliViC0EM6oNv0JLxqIeEJlDUvChr+uq4YKEnCqSQjx
+ x1HT0mV+Esrv9a8S5OsYSRhel70tvoYK94Y/aWm8wAFX+ojllZPxb/TV/GACfoI=
+X-Gm-Gg: ASbGncsBFKlJk9Z6JqSCvTTyyCPzvsDkHmHrrcjGAI8YMMDJ7YZwDV9bdJMR+ZQRaAF
+ xuRd8kQcpeCZ+2o0C7Oc733BrqrC4DtaOUmCeAw8m0H/+CzSzanRg7Z6Sd7n7gzsnsA536fsMp0
+ i/11wQeZ5soCdcoFXGcC5hQaOS5BGsJQKfas+fLGIgYe0IRbnMRgcDK9ZBVcXPdeg0h5J/JsYJa
+ Ku5Q5vcQy7SFolF9l/aXeMeOEsxAPo7IF7+ONnK2B7kN+3tECYgoJk=
+X-Google-Smtp-Source: AGHT+IG8sy+wJlhBjrnXX1CZ6NQTsDMJtl2oBKNY49ZZJlbGCk0pFKvlNmvGvueZQYCYOiD4WUkToA==
+X-Received: by 2002:a17:907:86a3:b0:ab2:db7b:5db3 with SMTP id
+ a640c23a62f3a-ab38b4c8520mr323435866b.54.1737121389093; 
+ Fri, 17 Jan 2025 05:43:09 -0800 (PST)
 Received: from draig.lan ([85.9.250.243]) by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-ab39aa6a7besm38093266b.68.2025.01.17.05.42.59
+ a640c23a62f3a-ab384c75283sm173209666b.8.2025.01.17.05.43.02
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 17 Jan 2025 05:43:00 -0800 (PST)
+ Fri, 17 Jan 2025 05:43:07 -0800 (PST)
 Received: from draig.lan (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id 8797F6086B;
- Fri, 17 Jan 2025 13:42:57 +0000 (GMT)
+ by draig.lan (Postfix) with ESMTP id F114660858;
+ Fri, 17 Jan 2025 13:42:58 +0000 (GMT)
 From: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
 To: qemu-devel@nongnu.org
-Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+Cc: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>,
+ Julian Ganz <neither@nut.email>,
  Richard Henderson <richard.henderson@linaro.org>,
- =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
-Subject: [PULL 07/37] semihosting/meson: Build config.o and console.o once
-Date: Fri, 17 Jan 2025 13:42:26 +0000
-Message-Id: <20250117134256.2079356-8-alex.bennee@linaro.org>
+ Paolo Bonzini <pbonzini@redhat.com>
+Subject: [PULL 22/37] accel/tcg: also suppress asynchronous IRQs for
+ cpu_io_recompile
+Date: Fri, 17 Jan 2025 13:42:41 +0000
+Message-Id: <20250117134256.2079356-23-alex.bennee@linaro.org>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <20250117134256.2079356-1-alex.bennee@linaro.org>
 References: <20250117134256.2079356-1-alex.bennee@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::632;
- envelope-from=alex.bennee@linaro.org; helo=mail-ej1-x632.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::634;
+ envelope-from=alex.bennee@linaro.org; helo=mail-ej1-x634.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -102,44 +105,34 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Philippe Mathieu-Daudé <philmd@linaro.org>
+While it would be technically correct to allow an IRQ to happen (as
+the offending instruction never really completed) it messes up
+instrumentation. We already take care to only use memory
+instrumentation on the block, we should also suppress IRQs.
 
-config.c and console.c don't use any target specific
-headers anymore, move them from specific_ss[] to
-system_ss[] so they are built once, but will also be
-linked once, removing global symbol clash in a single
-QEMU binary.
-
-Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Reviewed-by: Julian Ganz <neither@nut.email>
 Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-Message-Id: <20250103171037.11265-6-philmd@linaro.org>
 Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
-Message-Id: <20250116160306.1709518-8-alex.bennee@linaro.org>
+Message-Id: <20250116160306.1709518-23-alex.bennee@linaro.org>
 
-diff --git a/semihosting/meson.build b/semihosting/meson.build
-index 34933e5a19..86f5004bed 100644
---- a/semihosting/meson.build
-+++ b/semihosting/meson.build
-@@ -4,13 +4,16 @@ specific_ss.add(when: 'CONFIG_SEMIHOSTING', if_true: files(
- ))
+diff --git a/accel/tcg/translate-all.c b/accel/tcg/translate-all.c
+index 453eb20ec9..d56ca13cdd 100644
+--- a/accel/tcg/translate-all.c
++++ b/accel/tcg/translate-all.c
+@@ -633,9 +633,10 @@ void cpu_io_recompile(CPUState *cpu, uintptr_t retaddr)
+      * Exit the loop and potentially generate a new TB executing the
+      * just the I/O insns. We also limit instrumentation to memory
+      * operations only (which execute after completion) so we don't
+-     * double instrument the instruction.
++     * double instrument the instruction. Also don't let an IRQ sneak
++     * in before we execute it.
+      */
+-    cpu->cflags_next_tb = curr_cflags(cpu) | CF_MEMI_ONLY | n;
++    cpu->cflags_next_tb = curr_cflags(cpu) | CF_MEMI_ONLY | CF_NOIRQ | n;
  
- specific_ss.add(when: ['CONFIG_SEMIHOSTING', 'CONFIG_SYSTEM_ONLY'], if_true: files(
--  'config.c',
--  'console.c',
-   'uaccess.c',
- ))
- 
- common_ss.add(when: ['CONFIG_SEMIHOSTING', 'CONFIG_SYSTEM_ONLY'], if_false: files('stubs-all.c'))
--system_ss.add(when: ['CONFIG_SEMIHOSTING'], if_false: files('stubs-system.c'))
-+system_ss.add(when: ['CONFIG_SEMIHOSTING'], if_true: files(
-+  'config.c',
-+  'console.c',
-+), if_false: files(
-+  'stubs-system.c',
-+))
- 
- specific_ss.add(when: ['CONFIG_ARM_COMPATIBLE_SEMIHOSTING'],
- 		if_true: files('arm-compat-semi.c'))
+     if (qemu_loglevel_mask(CPU_LOG_EXEC)) {
+         vaddr pc = cpu->cc->get_pc(cpu);
 -- 
 2.39.5
 
