@@ -4,59 +4,59 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C9171C02183
-	for <qemu-devel@archiver.kernel.org>; Fri, 17 Jan 2025 00:17:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6FDB0C02187
+	for <qemu-devel@archiver.kernel.org>; Fri, 17 Jan 2025 00:17:10 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tYa1r-00028C-QO; Thu, 16 Jan 2025 19:16:03 -0500
+	id 1tYa1s-00029I-V8; Thu, 16 Jan 2025 19:16:05 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <iii@linux.ibm.com>) id 1tYa1p-00027p-5f
+ (Exim 4.90_1) (envelope-from <iii@linux.ibm.com>) id 1tYa1p-00027s-6l
  for qemu-devel@nongnu.org; Thu, 16 Jan 2025 19:16:01 -0500
 Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <iii@linux.ibm.com>) id 1tYa1n-0008KA-CF
+ (Exim 4.90_1) (envelope-from <iii@linux.ibm.com>) id 1tYa1m-0008KL-Ua
  for qemu-devel@nongnu.org; Thu, 16 Jan 2025 19:16:00 -0500
-Received: from pps.filterd (m0353725.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 50GE73hD025432;
- Fri, 17 Jan 2025 00:15:50 GMT
+Received: from pps.filterd (m0356516.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 50GNsP2U017931;
+ Fri, 17 Jan 2025 00:15:51 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
  :content-transfer-encoding:date:from:in-reply-to:message-id
- :mime-version:references:subject:to; s=pp1; bh=WBuOr1ZSrRUBNaILv
- a5B47YmUMZfjdf9mHbEGsDD8W8=; b=HmVBisqCxexRHzvBV7DLiD3FrX3Tl8Z/U
- Z0zM3uAYCDUSPPqkueRNEPZXGie/twAoe/SFGre0jAvansl5nesa65/ZeEeakUpT
- GUiKJUwJQqxMgJTis217KytASr3SpV+Hm8iuQ67xy7q6w0UJzr2lQ3PTi3k08uUK
- RnFyTFgLnQujmWxMqXXEKMGUnGvpYH45QlTubUSc15GMY8Y6RKV4qP3bPlNlTvfB
- XhaDXD4ZftioXS5BRopuax9Xmyrw2HnUgX8bRXyGFAm9ALwfa75dhKE4K136NVQJ
- fCco1xvJ3OXnjf5zXU/TMVd0K/hju1MdAJyFULHIb8fyNYvPc2PVg==
+ :mime-version:references:subject:to; s=pp1; bh=unkRP0OC+XAzxB3p+
+ /k73knFxmAaJB81U2h9oSuJOa0=; b=eVU7hRDtVU8g5yR9Qz3ukIgMhBJAp1KRk
+ AxIwNjofhTNqf4aytJgwVSdWcBwxIeinLWgdHEPslZkMK15966/LVoYqt9XPgZUR
+ RxhslfH7/3gCBKrb91AtstJHD08YlBvjtuwE/sqybsduM4goFWo/i33ffAI9Yz1o
+ +VsIGWgs1b3a5wu8S8K2MXr1SUGkzqjQHKqJHyIUM+yFtleLLMwQM7YoOM5w3eFp
+ lNH4+eT7nVJCPz03GNss33ukaEv+jkAVIKXER9paAevE/ksjD90ogxm9QXzhpDUI
+ mzv4cyhNunS6e8n2H3PtAHqqPGoI8P7Ds/F6oSt7pFt4bnj1Fz1QQ==
 Received: from ppma12.dal12v.mail.ibm.com
  (dc.9e.1632.ip4.static.sl-reverse.com [50.22.158.220])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4473k5akw5-1
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 447bxb033b-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Fri, 17 Jan 2025 00:15:50 +0000 (GMT)
+ Fri, 17 Jan 2025 00:15:51 +0000 (GMT)
 Received: from pps.filterd (ppma12.dal12v.mail.ibm.com [127.0.0.1])
- by ppma12.dal12v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 50GKHqLt004526;
- Fri, 17 Jan 2025 00:15:49 GMT
-Received: from smtprelay06.fra02v.mail.ibm.com ([9.218.2.230])
- by ppma12.dal12v.mail.ibm.com (PPS) with ESMTPS id 4442yt0jk5-1
+ by ppma12.dal12v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 50GK2RDw004576;
+ Fri, 17 Jan 2025 00:15:50 GMT
+Received: from smtprelay03.fra02v.mail.ibm.com ([9.218.2.224])
+ by ppma12.dal12v.mail.ibm.com (PPS) with ESMTPS id 4442yt0jk7-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Fri, 17 Jan 2025 00:15:49 +0000
+ Fri, 17 Jan 2025 00:15:50 +0000
 Received: from smtpav03.fra02v.mail.ibm.com (smtpav03.fra02v.mail.ibm.com
  [10.20.54.102])
- by smtprelay06.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 50H0FlXS30605904
+ by smtprelay03.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 50H0Fn6R56361220
  (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Fri, 17 Jan 2025 00:15:47 GMT
+ Fri, 17 Jan 2025 00:15:49 GMT
 Received: from smtpav03.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id CB6DE20043;
- Fri, 17 Jan 2025 00:15:47 +0000 (GMT)
+ by IMSVA (Postfix) with ESMTP id DEF1E20040;
+ Fri, 17 Jan 2025 00:15:48 +0000 (GMT)
 Received: from smtpav03.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 5A1F320040;
- Fri, 17 Jan 2025 00:15:47 +0000 (GMT)
+ by IMSVA (Postfix) with ESMTP id 6D07720043;
+ Fri, 17 Jan 2025 00:15:48 +0000 (GMT)
 Received: from heavy.ibm.com (unknown [9.171.62.46])
  by smtpav03.fra02v.mail.ibm.com (Postfix) with ESMTP;
- Fri, 17 Jan 2025 00:15:47 +0000 (GMT)
+ Fri, 17 Jan 2025 00:15:48 +0000 (GMT)
 From: Ilya Leoshkevich <iii@linux.ibm.com>
 To: Warner Losh <imp@bsdimp.com>, Riku Voipio <riku.voipio@iki.fi>,
  Laurent Vivier <laurent@vivier.eu>, Paolo Bonzini <pbonzini@redhat.com>,
@@ -67,25 +67,25 @@ Cc: Kyle Evans <kevans@freebsd.org>,
  qemu-devel@nongnu.org,
  =?UTF-8?q?Daniel=20P=20=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
  Ilya Leoshkevich <iii@linux.ibm.com>
-Subject: [PATCH v6 4/8] user: Introduce host_interrupt_signal
-Date: Fri, 17 Jan 2025 01:11:29 +0100
-Message-ID: <20250117001542.8290-5-iii@linux.ibm.com>
+Subject: [PATCH v6 6/8] gdbstub: Allow late attachment
+Date: Fri, 17 Jan 2025 01:11:31 +0100
+Message-ID: <20250117001542.8290-7-iii@linux.ibm.com>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20250117001542.8290-1-iii@linux.ibm.com>
 References: <20250117001542.8290-1-iii@linux.ibm.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-TM-AS-GCONF: 00
-X-Proofpoint-GUID: DwecRVtSR48ay6qOInSAezk7f7bYq3Dw
-X-Proofpoint-ORIG-GUID: DwecRVtSR48ay6qOInSAezk7f7bYq3Dw
+X-Proofpoint-ORIG-GUID: 4p-oiY5jxs9fPXQ_FYuQlWblNNE73f7n
+X-Proofpoint-GUID: 4p-oiY5jxs9fPXQ_FYuQlWblNNE73f7n
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1057,Hydra:6.0.680,FMLib:17.12.68.34
  definitions=2025-01-16_10,2025-01-16_01,2024-11-22_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- phishscore=0 spamscore=0
- adultscore=0 malwarescore=0 suspectscore=0 priorityscore=1501
- lowpriorityscore=0 bulkscore=0 mlxlogscore=999 impostorscore=0
- clxscore=1015 mlxscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ suspectscore=0
+ priorityscore=1501 spamscore=0 clxscore=1015 impostorscore=0
+ lowpriorityscore=0 mlxscore=0 adultscore=0 malwarescore=0 mlxlogscore=848
+ phishscore=0 bulkscore=0 classifier=spam adjust=0 reason=mlx scancount=1
  engine=8.19.0-2411120000 definitions=main-2501160178
 Received-SPF: pass client-ip=148.163.158.5; envelope-from=iii@linux.ibm.com;
  helo=mx0b-001b2d01.pphosted.com
@@ -112,156 +112,200 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Attaching to the gdbstub of a running process requires stopping its
-threads. For threads that run on a CPU, cpu_exit() is enough, but the
-only way to grab attention of a thread that is stuck in a long-running
-syscall is to interrupt it with a signal.
+Allow debugging individual processes in multi-process applications by
+starting them with export QEMU_GDB=/tmp/qemu-%d.sock,suspend=n.
+Currently one would have to attach to every process to ensure the app
+makes progress.
 
-Reserve a host realtime signal for this, just like it's already done
-for TARGET_SIGABRT on Linux. This may reduce the number of available
-guest realtime signals by one, but this is acceptable, since there are
-quite a lot of them, and it's unlikely that there are apps that need
-them all.
+In case suspend=n is not specified, the flow remains unchanged. If it
+is specified, then accepting the client connection is delegated to a
+thread. In the future this machinery may be reused for handling
+reconnections and interruptions.
 
-Set signal_pending for the safe_sycall machinery to prevent invoking
-the syscall. This is a lie, since we don't queue a guest signal, but
-process_pending_signals() can handle the absence of pending signals.
-The syscall returns with QEMU_ERESTARTSYS errno, which arranges for
-the automatic restart. This is important, because it helps avoiding
-disturbing poorly written guests.
+On accepting a connection, the thread schedules gdb_handlesig() on the
+first CPU and wakes it up with host_interrupt_signal. Note that the
+result of this gdb_handlesig() invocation is handled, as opposed to
+many other existing call sites. These other call sites probably need to
+be fixed separately.
 
-Reviewed-by: Warner Losh <imp@bsdimp.com>
 Signed-off-by: Ilya Leoshkevich <iii@linux.ibm.com>
 ---
- bsd-user/signal.c     | 12 ++++++++++++
- include/user/signal.h |  2 ++
- linux-user/signal.c   | 25 ++++++++++++++++++++-----
- 3 files changed, 34 insertions(+), 5 deletions(-)
+ bsd-user/main.c   |   1 -
+ gdbstub/user.c    | 115 +++++++++++++++++++++++++++++++++++++++++-----
+ linux-user/main.c |   1 -
+ 3 files changed, 103 insertions(+), 14 deletions(-)
 
-diff --git a/bsd-user/signal.c b/bsd-user/signal.c
-index 8c51f6ce653..ff2ccbbf605 100644
---- a/bsd-user/signal.c
-+++ b/bsd-user/signal.c
-@@ -51,6 +51,8 @@ static inline int sas_ss_flags(TaskState *ts, unsigned long sp)
-         on_sig_stack(ts, sp) ? SS_ONSTACK : 0;
- }
+diff --git a/bsd-user/main.c b/bsd-user/main.c
+index b2f6a9be2f2..fdb160bed0f 100644
+--- a/bsd-user/main.c
++++ b/bsd-user/main.c
+@@ -629,7 +629,6 @@ int main(int argc, char **argv)
  
-+int host_interrupt_signal = SIGRTMAX;
-+
- /*
-  * The BSD ABIs use the same signal numbers across all the CPU architectures, so
-  * (unlike Linux) these functions are just the identity mapping. This might not
-@@ -491,6 +493,12 @@ static void host_signal_handler(int host_sig, siginfo_t *info, void *puc)
-     uintptr_t pc = 0;
-     bool sync_sig = false;
- 
-+    if (host_sig == host_interrupt_signal) {
-+        ts->signal_pending = 1;
-+        cpu_exit(thread_cpu);
-+        return;
-+    }
-+
-     /*
-      * Non-spoofed SIGSEGV and SIGBUS are synchronous, and need special
-      * handling wrt signal blocking and unwinding.
-@@ -854,6 +862,9 @@ void signal_init(void)
- 
-     for (i = 1; i <= TARGET_NSIG; i++) {
-         host_sig = target_to_host_signal(i);
-+        if (host_sig == host_interrupt_signal) {
-+            continue;
-+        }
-         sigaction(host_sig, NULL, &oact);
-         if (oact.sa_sigaction == (void *)SIG_IGN) {
-             sigact_table[i - 1]._sa_handler = TARGET_SIG_IGN;
-@@ -872,6 +883,7 @@ void signal_init(void)
-             sigaction(host_sig, &act, NULL);
-         }
+     if (gdbstub) {
+         gdbserver_start(gdbstub, &error_fatal);
+-        gdb_handlesig(cpu, 0, NULL, NULL, 0);
      }
-+    sigaction(host_interrupt_signal, &act, NULL);
+     cpu_loop(env);
+     /* never exits */
+diff --git a/gdbstub/user.c b/gdbstub/user.c
+index 8225b702802..3730f32c415 100644
+--- a/gdbstub/user.c
++++ b/gdbstub/user.c
+@@ -22,6 +22,7 @@
+ #include "gdbstub/user.h"
+ #include "gdbstub/enums.h"
+ #include "hw/core/cpu.h"
++#include "user/signal.h"
+ #include "trace.h"
+ #include "internals.h"
+ 
+@@ -393,32 +394,122 @@ static int gdbserver_open_port(int port, Error **errp)
+     return fd;
  }
  
- static void handle_pending_signal(CPUArchState *env, int sig,
-diff --git a/include/user/signal.h b/include/user/signal.h
-index 19b6b9e5ddc..7fa33b05d91 100644
---- a/include/user/signal.h
-+++ b/include/user/signal.h
-@@ -20,4 +20,6 @@
-  */
- int target_to_host_signal(int sig);
- 
-+extern int host_interrupt_signal;
-+
- #endif
-diff --git a/linux-user/signal.c b/linux-user/signal.c
-index bffbef235cd..81a98c6d02f 100644
---- a/linux-user/signal.c
-+++ b/linux-user/signal.c
-@@ -517,6 +517,8 @@ static int core_dump_signal(int sig)
-     }
- }
- 
-+int host_interrupt_signal;
-+
- static void signal_table_init(const char *rtsig_map)
+-bool gdbserver_start(const char *port_or_path, Error **errp)
++static bool gdbserver_accept(int port, int gdb_fd, const char *path)
  {
-     int hsig, tsig, count;
-@@ -580,10 +582,10 @@ static void signal_table_init(const char *rtsig_map)
-          * Attempts for configure "missing" signals via sigaction will be
-          * silently ignored.
-          *
--         * Reserve one signal for internal usage (see below).
-+         * Reserve two signals for internal usage (see below).
-          */
- 
--        hsig = SIGRTMIN + 1;
-+        hsig = SIGRTMIN + 2;
-         for (tsig = TARGET_SIGRTMIN;
-              hsig <= SIGRTMAX && tsig <= TARGET_NSIG;
-              hsig++, tsig++) {
-@@ -604,12 +606,17 @@ static void signal_table_init(const char *rtsig_map)
-     host_to_target_signal_table[SIGABRT] = 0;
-     for (hsig = SIGRTMIN; hsig <= SIGRTMAX; hsig++) {
-         if (!host_to_target_signal_table[hsig]) {
--            host_to_target_signal_table[hsig] = TARGET_SIGABRT;
--            break;
-+            if (host_interrupt_signal) {
-+                host_to_target_signal_table[hsig] = TARGET_SIGABRT;
-+                break;
-+            } else {
-+                host_interrupt_signal = hsig;
-+            }
-         }
-     }
-     if (hsig > SIGRTMAX) {
--        fprintf(stderr, "No rt signals left for SIGABRT mapping\n");
-+        fprintf(stderr,
-+                "No rt signals left for interrupt and SIGABRT mapping\n");
-         exit(EXIT_FAILURE);
-     }
- 
-@@ -689,6 +696,8 @@ void signal_init(const char *rtsig_map)
-         }
-         sigact_table[tsig - 1]._sa_handler = thand;
-     }
+-    int port = g_ascii_strtoull(port_or_path, NULL, 10);
++    bool ret;
 +
-+    sigaction(host_interrupt_signal, &act, NULL);
- }
- 
- /* Force a synchronously taken signal. The kernel force_sig() function
-@@ -1036,6 +1045,12 @@ static void host_signal_handler(int host_sig, siginfo_t *info, void *puc)
-     bool sync_sig = false;
-     void *sigmask;
- 
-+    if (host_sig == host_interrupt_signal) {
-+        ts->signal_pending = 1;
-+        cpu_exit(thread_cpu);
-+        return;
++    if (port > 0) {
++        ret = gdb_accept_tcp(gdb_fd);
++    } else {
++        ret = gdb_accept_socket(gdb_fd);
++        if (ret) {
++            gdbserver_user_state.socket_path = g_strdup(path);
++        }
 +    }
 +
-     /*
-      * Non-spoofed SIGSEGV and SIGBUS are synchronous, and need special
-      * handling wrt signal blocking and unwinding.  Non-spoofed SIGILL,
++    if (!ret) {
++        close(gdb_fd);
++    }
++
++    return ret;
++}
++
++struct {
++    int port;
+     int gdb_fd;
++    char *path;
++} gdbserver_args;
++
++static void do_gdb_handlesig(CPUState *cs, run_on_cpu_data arg)
++{
++    int sig;
++
++    sig = target_to_host_signal(gdb_handlesig(cs, 0, NULL, NULL, 0));
++    if (sig >= 1 && sig < NSIG) {
++        qemu_kill_thread(gdb_get_cpu_index(cs), sig);
++    }
++}
++
++static void *gdbserver_accept_thread(void *arg)
++{
++    if (gdbserver_accept(gdbserver_args.port, gdbserver_args.gdb_fd,
++                         gdbserver_args.path)) {
++        CPUState *cs = first_cpu;
++
++        async_safe_run_on_cpu(cs, do_gdb_handlesig, RUN_ON_CPU_NULL);
++        qemu_kill_thread(gdb_get_cpu_index(cs), host_interrupt_signal);
++    }
++
++    g_free(gdbserver_args.path);
++    gdbserver_args.path = NULL;
++
++    return NULL;
++}
+ 
++#define USAGE "\nUsage: -g {port|path}[,suspend={y|n}]"
++
++bool gdbserver_start(const char *args, Error **errp)
++{
++    g_auto(GStrv) argv = g_strsplit(args, ",", 0);
++    const char *port_or_path = NULL;
++    bool suspend = true;
++    int gdb_fd, port;
++    GStrv arg;
++
++    for (arg = argv; *arg; arg++) {
++        g_auto(GStrv) tokens = g_strsplit(*arg, "=", 2);
++
++        if (g_strcmp0(tokens[0], "suspend") == 0) {
++            if (tokens[1] == NULL) {
++                error_setg(errp,
++                           "gdbstub: missing \"suspend\" option value" USAGE);
++                return false;
++            } else if (!qapi_bool_parse(tokens[0], tokens[1],
++                                        &suspend, errp)) {
++                return false;
++            }
++        } else {
++            if (port_or_path) {
++                error_setg(errp, "gdbstub: unknown option \"%s\"" USAGE, *arg);
++                return false;
++            }
++            port_or_path = *arg;
++        }
++    }
++    if (!port_or_path) {
++        error_setg(errp, "gdbstub: port or path not specified" USAGE);
++        return false;
++    }
++
++    port = g_ascii_strtoull(port_or_path, NULL, 10);
+     if (port > 0) {
+         gdb_fd = gdbserver_open_port(port, errp);
+     } else {
+         gdb_fd = gdbserver_open_socket(port_or_path, errp);
+     }
+-
+     if (gdb_fd < 0) {
+         return false;
+     }
+ 
+-    if (port > 0 && gdb_accept_tcp(gdb_fd)) {
+-        return true;
+-    } else if (gdb_accept_socket(gdb_fd)) {
+-        gdbserver_user_state.socket_path = g_strdup(port_or_path);
++    if (suspend) {
++        if (gdbserver_accept(port, gdb_fd, port_or_path)) {
++            gdb_handlesig(first_cpu, 0, NULL, NULL, 0);
++            return true;
++        } else {
++            error_setg(errp, "gdbstub: failed to accept connection");
++            return false;
++        }
++    } else {
++        QemuThread thread;
++
++        gdbserver_args.port = port;
++        gdbserver_args.gdb_fd = gdb_fd;
++        gdbserver_args.path = g_strdup(port_or_path);
++        qemu_thread_create(&thread, "gdb-accept",
++                           &gdbserver_accept_thread, NULL,
++                           QEMU_THREAD_DETACHED);
+         return true;
+     }
+-
+-    /* gone wrong */
+-    close(gdb_fd);
+-    error_setg(errp, "gdbstub: failed to accept connection");
+-    return false;
+ }
+ 
+ void gdbserver_fork_start(void)
+diff --git a/linux-user/main.c b/linux-user/main.c
+index 7198fa0986b..5c74c52cc52 100644
+--- a/linux-user/main.c
++++ b/linux-user/main.c
+@@ -1024,7 +1024,6 @@ int main(int argc, char **argv, char **envp)
+ 
+     if (gdbstub) {
+         gdbserver_start(gdbstub, &error_fatal);
+-        gdb_handlesig(cpu, 0, NULL, NULL, 0);
+     }
+ 
+ #ifdef CONFIG_SEMIHOSTING
 -- 
 2.47.1
 
