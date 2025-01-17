@@ -4,80 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3CBCDC02188
-	for <qemu-devel@archiver.kernel.org>; Fri, 17 Jan 2025 18:30:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9306CC02183
+	for <qemu-devel@archiver.kernel.org>; Fri, 17 Jan 2025 18:31:04 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tYr1t-0003zK-6U; Fri, 17 Jan 2025 13:25:13 -0500
+	id 1tYr21-00047b-Cq; Fri, 17 Jan 2025 13:25:21 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1tYr1r-0003wr-SG
- for qemu-devel@nongnu.org; Fri, 17 Jan 2025 13:25:11 -0500
-Received: from mail-pl1-x632.google.com ([2607:f8b0:4864:20::632])
+ id 1tYr1x-000448-HS
+ for qemu-devel@nongnu.org; Fri, 17 Jan 2025 13:25:17 -0500
+Received: from mail-pl1-x629.google.com ([2607:f8b0:4864:20::629])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1tYr1p-0007qm-Sy
- for qemu-devel@nongnu.org; Fri, 17 Jan 2025 13:25:11 -0500
-Received: by mail-pl1-x632.google.com with SMTP id
- d9443c01a7336-21654fdd5daso44789195ad.1
- for <qemu-devel@nongnu.org>; Fri, 17 Jan 2025 10:25:08 -0800 (PST)
+ id 1tYr1v-0007sT-K2
+ for qemu-devel@nongnu.org; Fri, 17 Jan 2025 13:25:17 -0500
+Received: by mail-pl1-x629.google.com with SMTP id
+ d9443c01a7336-2166022c5caso43157515ad.2
+ for <qemu-devel@nongnu.org>; Fri, 17 Jan 2025 10:25:15 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1737138307; x=1737743107; darn=nongnu.org;
+ d=linaro.org; s=google; t=1737138314; x=1737743114; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=QHTGG97acyPD34Tp+rqh/MGzijUGRlOPz3TDCzFvbmE=;
- b=wvDgaX1CZMgqETr9C8DS0SFJaEHe1T0EuKoYjBQ00VXt50/0TttO3veqRA8Xr6xcfA
- SlBzReCiJ/6EkIOo0MuN5k0RBvz0KDAAPyvXQiRxP7aIA2YLf03huxEYejxzsRlpIHi7
- I1dWEQCsddLODszYqrxrJRjE/CH0pXEmpu2+PDTcjkm9ANKWb3/ziR7/R8HxVsDsCM+W
- 2pKRZIccdv4y0b8bd//VaPh/GaE1JppCvVsRDIQ2uw7SXim7usIzRT+LUoHycSLz3S/z
- wefFfoGvF8jjaoWZJrRdSATxAWUrUh0V/adRr7lClXiutZ6sP9iggR+7Yqs1ebV6cq1/
- EJ8Q==
+ bh=rOSic346AHlhuVEPNh01g7q+WJfoUtr9PY21Tvlp0tM=;
+ b=eyvTq1UH4FerUJqZjeTbukml+wY2jmRmlH+8YHL96a3HpNCBe5tk0jAfuqBbstHMcS
+ 9sT2E4XP1H6UOIHsUm08zw2tI7AkIYoBdZAC6kz9SmW+76teuiaUnZSPyX+54sH4iTbW
+ 0FQQTwgT26Jxr5/g3RMDAnncDSvOOB+XROZEdh6doLWPRnaEfzKPW2ZUzrYuJqDBmP42
+ HOOInkbVqooM5rpguLU/nYCZ4/nJEwogpeBBXW1rFcwxK0Ai3vNGazXi5Dnyp+m23EiE
+ GwE/UW7XyvoOJoM/m3wE/vREla31ffrbd/1xUIt5MqpEd3W08G8uKbO+xA/Mwe5qRDde
+ WAFQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1737138307; x=1737743107;
+ d=1e100.net; s=20230601; t=1737138314; x=1737743114;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=QHTGG97acyPD34Tp+rqh/MGzijUGRlOPz3TDCzFvbmE=;
- b=cpiBWcDOFXHjMqLIBFCA0v/RJU5yeOximVsQr2GdXHx1BDfdMl6pM1dgayfW5TJBp3
- duXR412Dy+AW+RH8LEN9UlJ4WZBnWTnu/1C3wE7M8xWZfHd8Q8Z8EborzcwxnM6n2PG7
- fQ4K3sgILPzHKv56S6jJwrR/lKFQj/zzNXhs5mP06mgHr50pObnpsLjgSwazrdtz0bWa
- ZfyJ9GuQp/VeE+mpiQtKIIgZVC4emVsi1iitv5VwBvIP2ZFYzXOyZvUwFZZt3DXI1/KU
- cynVo3J+2cqGLzkwc5nkWXpd0KkYsXZDvdx6hXRc/yWxngg1aiVt40MY+OECbNnTllE2
- GtBQ==
-X-Gm-Message-State: AOJu0YyaYVdWPOahXAPwSwSKFIP3x3klMD+9xXhO02r3PbBDaXRRcp0K
- o0hwejSfiMuItH/vMh44p9bL02epUXN9FDypmBZv54Por5LWjwKQJn4eaot0fn/pLTxZAa6QfBK
- e
-X-Gm-Gg: ASbGncsEcdwwzMbIJZsRWs7ab1uG+JshekY0jNM+RCYbD/sIuIbG7OHqTBTNj988H87
- rF8nd7hgMM/taYday1YiT9ALURez3r9YXeFkY7e/ZP+RdX7EIToNIgF5Zduyb+1I4W1FwGC7AOk
- ECr0bgdUrm34OAGxs2qTdYEtnqV+fjsiGWgWGA05s9BZ7iyd7HfUitPN73cRCJ4dI1TA8+ryEsA
- L53mk7Ar+R7isQ7lxZxeZDaTcOv7sgae6uz7GlYclAGQ8u5CkVnIGhT3lgijG6K+XxFjwkBJ9Oz
- cIcfdHou4gsBtyY=
-X-Google-Smtp-Source: AGHT+IHz8XHiQyiyX/3oWdzP6xm5F2W+GU5ucJk340ib4Vahr3CDF8aMbknt2mg9T4tePdrt76lBpA==
-X-Received: by 2002:a17:902:db10:b0:215:a2e2:53fe with SMTP id
- d9443c01a7336-21c355c7a3dmr58479905ad.40.1737138307566; 
- Fri, 17 Jan 2025 10:25:07 -0800 (PST)
+ bh=rOSic346AHlhuVEPNh01g7q+WJfoUtr9PY21Tvlp0tM=;
+ b=MtX2hZIwCU56/QB97WSZm4twJiypov3DSYqEfp9Nm4/lCAs7gEFojhVRpv72MqOJD6
+ AJNG/zIqJAgq7PMS62RagQvykFhWgYbU3XPbe7fI3NiAtLr2Y4eNe9UoACTtUpVLyoLi
+ Ub7faRdEKdEylYBSUaHLzz2aF2TkkzFBymcsFaxtE5Pd0X6RCpGYnItjuabrEOK/ilqM
+ 2Ynje8EOH2eiJ6F7A/z0qBwIF5+tnp0NGkSjyKHGhCttBczR+lkIKYqTMgFW1i0hNMOA
+ YzBDjvIejQ3tLjePD/G/C+bz5ID3bd5qnsQefAzLE0bFeBNEGjoY3KF4vkEt7zEpAew9
+ AFzA==
+X-Gm-Message-State: AOJu0YyxlGpFpVQ4cfoFqR8MD33nCcX5Sjel0ojjBBSWcr6TSUZkUl3N
+ CzlCPfBvXDGDCBRRgiye5rvxg68n9D3vyk7yXK6VyQQfyabTYR4YEo7nq6bFZ3sTp2+hfjP21IB
+ r
+X-Gm-Gg: ASbGnctEM4q2xSxDQs6lL7zPzuUCOgY7X3CkZYEXi6I4TyNtileTiGqq+FhsMB7/PAj
+ bkSa1+CeKg3hIhlHaRucPpQK2MJdjhbfluCL/bJ82LcbhV4ei+aR5mtnG0xU2IxxeGvPuw5Zvqh
+ ixSrAOWv0813PKO2Of516KNcBusxbgpqcDAO8tSOkEZUor3bXdOrTTkPeUIcoBhlbY3Idp5WX5+
+ wnRpG+4sC4cMJR645rmCt+fs5UJYkGq/TXjS3fzDaNFVVUYPuG55t4ktLnQJA1nPp3u/N/y4oye
+ LsxoJ7a6e8tRzLU=
+X-Google-Smtp-Source: AGHT+IFyMjLoVlUoFqeP39e4dKFqWdd7ANAcBLQiUl/hKL+D2LrGf8b7pMCNAG+8n6oYlVvPd4aIIA==
+X-Received: by 2002:a17:902:f105:b0:216:7c33:8994 with SMTP id
+ d9443c01a7336-21c3561fef9mr40007565ad.53.1737138314049; 
+ Fri, 17 Jan 2025 10:25:14 -0800 (PST)
 Received: from stoup.. (174-21-71-127.tukw.qwest.net. [174.21.71.127])
  by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-21c2d3acccesm18879005ad.123.2025.01.17.10.25.07
+ d9443c01a7336-21c2d3acccesm18879005ad.123.2025.01.17.10.25.13
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 17 Jan 2025 10:25:07 -0800 (PST)
+ Fri, 17 Jan 2025 10:25:13 -0800 (PST)
 From: Richard Henderson <richard.henderson@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PULL 14/68] target/i386: Use tcg_op_supported
-Date: Fri, 17 Jan 2025 10:24:02 -0800
-Message-ID: <20250117182456.2077110-15-richard.henderson@linaro.org>
+Subject: [PULL 22/68] tcg/arm: Extract TCG_TARGET_HAS_foo defs to
+ 'tcg-target-has.h'
+Date: Fri, 17 Jan 2025 10:24:10 -0800
+Message-ID: <20250117182456.2077110-23-richard.henderson@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20250117182456.2077110-1-richard.henderson@linaro.org>
 References: <20250117182456.2077110-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::632;
- envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x632.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::629;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x629.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -100,39 +101,198 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Do not reference TCG_TARGET_HAS_* directly.
-
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Message-ID: <20250108215156.8731-5-philmd@linaro.org>
 ---
- target/i386/tcg/emit.c.inc | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ tcg/arm/tcg-target-has.h | 85 ++++++++++++++++++++++++++++++++++++++++
+ tcg/arm/tcg-target.h     | 74 +---------------------------------
+ 2 files changed, 86 insertions(+), 73 deletions(-)
+ create mode 100644 tcg/arm/tcg-target-has.h
 
-diff --git a/target/i386/tcg/emit.c.inc b/target/i386/tcg/emit.c.inc
-index a2b940a5c3..f305640182 100644
---- a/target/i386/tcg/emit.c.inc
-+++ b/target/i386/tcg/emit.c.inc
-@@ -24,9 +24,9 @@
-  * The exact opcode to check depends on 32- vs. 64-bit.
-  */
- #ifdef TARGET_X86_64
--#define TCG_TARGET_HAS_extract2_tl      TCG_TARGET_HAS_extract2_i64
-+#define INDEX_op_extract2_tl            INDEX_op_extract2_i64
- #else
--#define TCG_TARGET_HAS_extract2_tl      TCG_TARGET_HAS_extract2_i32
-+#define INDEX_op_extract2_tl            INDEX_op_extract2_i32
- #endif
+diff --git a/tcg/arm/tcg-target-has.h b/tcg/arm/tcg-target-has.h
+new file mode 100644
+index 0000000000..316185500d
+--- /dev/null
++++ b/tcg/arm/tcg-target-has.h
+@@ -0,0 +1,85 @@
++/* SPDX-License-Identifier: MIT */
++/*
++ * Define target-specific opcode support
++ * Copyright (c) 2008 Fabrice Bellard
++ * Copyright (c) 2008 Andrzej Zaborowski
++ */
++
++#ifndef TCG_TARGET_HAS_H
++#define TCG_TARGET_HAS_H
++
++extern int arm_arch;
++
++#define use_armv7_instructions  (__ARM_ARCH >= 7 || arm_arch >= 7)
++
++#ifdef __ARM_ARCH_EXT_IDIV__
++#define use_idiv_instructions  1
++#else
++extern bool use_idiv_instructions;
++#endif
++#ifdef __ARM_NEON__
++#define use_neon_instructions  1
++#else
++extern bool use_neon_instructions;
++#endif
++
++/* optional instructions */
++#define TCG_TARGET_HAS_ext8s_i32        1
++#define TCG_TARGET_HAS_ext16s_i32       1
++#define TCG_TARGET_HAS_ext8u_i32        0 /* and r0, r1, #0xff */
++#define TCG_TARGET_HAS_ext16u_i32       1
++#define TCG_TARGET_HAS_bswap16_i32      1
++#define TCG_TARGET_HAS_bswap32_i32      1
++#define TCG_TARGET_HAS_not_i32          1
++#define TCG_TARGET_HAS_rot_i32          1
++#define TCG_TARGET_HAS_andc_i32         1
++#define TCG_TARGET_HAS_orc_i32          0
++#define TCG_TARGET_HAS_eqv_i32          0
++#define TCG_TARGET_HAS_nand_i32         0
++#define TCG_TARGET_HAS_nor_i32          0
++#define TCG_TARGET_HAS_clz_i32          1
++#define TCG_TARGET_HAS_ctz_i32          use_armv7_instructions
++#define TCG_TARGET_HAS_ctpop_i32        0
++#define TCG_TARGET_HAS_deposit_i32      use_armv7_instructions
++#define TCG_TARGET_HAS_extract_i32      use_armv7_instructions
++#define TCG_TARGET_HAS_sextract_i32     use_armv7_instructions
++#define TCG_TARGET_HAS_extract2_i32     1
++#define TCG_TARGET_HAS_negsetcond_i32   1
++#define TCG_TARGET_HAS_mulu2_i32        1
++#define TCG_TARGET_HAS_muls2_i32        1
++#define TCG_TARGET_HAS_muluh_i32        0
++#define TCG_TARGET_HAS_mulsh_i32        0
++#define TCG_TARGET_HAS_div_i32          use_idiv_instructions
++#define TCG_TARGET_HAS_rem_i32          0
++#define TCG_TARGET_HAS_qemu_st8_i32     0
++
++#define TCG_TARGET_HAS_qemu_ldst_i128   0
++
++#define TCG_TARGET_HAS_tst              1
++
++#define TCG_TARGET_HAS_v64              use_neon_instructions
++#define TCG_TARGET_HAS_v128             use_neon_instructions
++#define TCG_TARGET_HAS_v256             0
++
++#define TCG_TARGET_HAS_andc_vec         1
++#define TCG_TARGET_HAS_orc_vec          1
++#define TCG_TARGET_HAS_nand_vec         0
++#define TCG_TARGET_HAS_nor_vec          0
++#define TCG_TARGET_HAS_eqv_vec          0
++#define TCG_TARGET_HAS_not_vec          1
++#define TCG_TARGET_HAS_neg_vec          1
++#define TCG_TARGET_HAS_abs_vec          1
++#define TCG_TARGET_HAS_roti_vec         0
++#define TCG_TARGET_HAS_rots_vec         0
++#define TCG_TARGET_HAS_rotv_vec         0
++#define TCG_TARGET_HAS_shi_vec          1
++#define TCG_TARGET_HAS_shs_vec          0
++#define TCG_TARGET_HAS_shv_vec          0
++#define TCG_TARGET_HAS_mul_vec          1
++#define TCG_TARGET_HAS_sat_vec          1
++#define TCG_TARGET_HAS_minmax_vec       1
++#define TCG_TARGET_HAS_bitsel_vec       1
++#define TCG_TARGET_HAS_cmpsel_vec       0
++#define TCG_TARGET_HAS_tst_vec          1
++
++#endif
+diff --git a/tcg/arm/tcg-target.h b/tcg/arm/tcg-target.h
+index 7f6e24f861..e114f7ddf4 100644
+--- a/tcg/arm/tcg-target.h
++++ b/tcg/arm/tcg-target.h
+@@ -26,10 +26,6 @@
+ #ifndef ARM_TCG_TARGET_H
+ #define ARM_TCG_TARGET_H
  
- #define MMX_OFFSET(reg)                        \
-@@ -2993,7 +2993,7 @@ static void gen_PMOVMSKB(DisasContext *s, X86DecodedInsn *decode)
-     tcg_gen_ld8u_tl(s->T0, tcg_env, offsetof(CPUX86State, xmm_t0.ZMM_B(vec_len - 1)));
-     while (vec_len > 8) {
-         vec_len -= 8;
--        if (TCG_TARGET_HAS_extract2_tl) {
-+        if (tcg_op_supported(INDEX_op_extract2_tl, TCG_TYPE_TL, 0)) {
-             /*
-              * Load the next byte of the result into the high byte of T.
-              * TCG does a similar expansion of deposit to shl+extract2; by
+-extern int arm_arch;
+-
+-#define use_armv7_instructions  (__ARM_ARCH >= 7 || arm_arch >= 7)
+-
+ #define TCG_TARGET_INSN_UNIT_SIZE 4
+ #define MAX_CODE_GEN_BUFFER_SIZE  UINT32_MAX
+ 
+@@ -74,75 +70,7 @@ typedef enum {
+ 
+ #define TCG_TARGET_NB_REGS 32
+ 
+-#ifdef __ARM_ARCH_EXT_IDIV__
+-#define use_idiv_instructions  1
+-#else
+-extern bool use_idiv_instructions;
+-#endif
+-#ifdef __ARM_NEON__
+-#define use_neon_instructions  1
+-#else
+-extern bool use_neon_instructions;
+-#endif
+-
+-/* optional instructions */
+-#define TCG_TARGET_HAS_ext8s_i32        1
+-#define TCG_TARGET_HAS_ext16s_i32       1
+-#define TCG_TARGET_HAS_ext8u_i32        0 /* and r0, r1, #0xff */
+-#define TCG_TARGET_HAS_ext16u_i32       1
+-#define TCG_TARGET_HAS_bswap16_i32      1
+-#define TCG_TARGET_HAS_bswap32_i32      1
+-#define TCG_TARGET_HAS_not_i32          1
+-#define TCG_TARGET_HAS_rot_i32          1
+-#define TCG_TARGET_HAS_andc_i32         1
+-#define TCG_TARGET_HAS_orc_i32          0
+-#define TCG_TARGET_HAS_eqv_i32          0
+-#define TCG_TARGET_HAS_nand_i32         0
+-#define TCG_TARGET_HAS_nor_i32          0
+-#define TCG_TARGET_HAS_clz_i32          1
+-#define TCG_TARGET_HAS_ctz_i32          use_armv7_instructions
+-#define TCG_TARGET_HAS_ctpop_i32        0
+-#define TCG_TARGET_HAS_deposit_i32      use_armv7_instructions
+-#define TCG_TARGET_HAS_extract_i32      use_armv7_instructions
+-#define TCG_TARGET_HAS_sextract_i32     use_armv7_instructions
+-#define TCG_TARGET_HAS_extract2_i32     1
+-#define TCG_TARGET_HAS_negsetcond_i32   1
+-#define TCG_TARGET_HAS_mulu2_i32        1
+-#define TCG_TARGET_HAS_muls2_i32        1
+-#define TCG_TARGET_HAS_muluh_i32        0
+-#define TCG_TARGET_HAS_mulsh_i32        0
+-#define TCG_TARGET_HAS_div_i32          use_idiv_instructions
+-#define TCG_TARGET_HAS_rem_i32          0
+-#define TCG_TARGET_HAS_qemu_st8_i32     0
+-
+-#define TCG_TARGET_HAS_qemu_ldst_i128   0
+-
+-#define TCG_TARGET_HAS_tst              1
+-
+-#define TCG_TARGET_HAS_v64              use_neon_instructions
+-#define TCG_TARGET_HAS_v128             use_neon_instructions
+-#define TCG_TARGET_HAS_v256             0
+-
+-#define TCG_TARGET_HAS_andc_vec         1
+-#define TCG_TARGET_HAS_orc_vec          1
+-#define TCG_TARGET_HAS_nand_vec         0
+-#define TCG_TARGET_HAS_nor_vec          0
+-#define TCG_TARGET_HAS_eqv_vec          0
+-#define TCG_TARGET_HAS_not_vec          1
+-#define TCG_TARGET_HAS_neg_vec          1
+-#define TCG_TARGET_HAS_abs_vec          1
+-#define TCG_TARGET_HAS_roti_vec         0
+-#define TCG_TARGET_HAS_rots_vec         0
+-#define TCG_TARGET_HAS_rotv_vec         0
+-#define TCG_TARGET_HAS_shi_vec          1
+-#define TCG_TARGET_HAS_shs_vec          0
+-#define TCG_TARGET_HAS_shv_vec          0
+-#define TCG_TARGET_HAS_mul_vec          1
+-#define TCG_TARGET_HAS_sat_vec          1
+-#define TCG_TARGET_HAS_minmax_vec       1
+-#define TCG_TARGET_HAS_bitsel_vec       1
+-#define TCG_TARGET_HAS_cmpsel_vec       0
+-#define TCG_TARGET_HAS_tst_vec          1
++#include "tcg-target-has.h"
+ 
+ #define TCG_TARGET_DEFAULT_MO (0)
+ 
 -- 
 2.43.0
 
