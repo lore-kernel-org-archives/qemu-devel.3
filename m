@@ -4,84 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A763DC0218C
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 922C4C0218B
 	for <qemu-devel@archiver.kernel.org>; Fri, 17 Jan 2025 06:03:42 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tYfOK-0003Xp-Ur; Fri, 17 Jan 2025 00:59:37 -0500
+	id 1tYfNa-0000yq-4i; Fri, 17 Jan 2025 00:58:50 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1tYfNd-0001Pw-2P
- for qemu-devel@nongnu.org; Fri, 17 Jan 2025 00:58:53 -0500
-Received: from mail-pl1-x630.google.com ([2607:f8b0:4864:20::630])
+ id 1tYfMt-000837-Od
+ for qemu-devel@nongnu.org; Fri, 17 Jan 2025 00:58:08 -0500
+Received: from mail-pl1-x62f.google.com ([2607:f8b0:4864:20::62f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1tYfNb-0006Df-AR
- for qemu-devel@nongnu.org; Fri, 17 Jan 2025 00:58:52 -0500
-Received: by mail-pl1-x630.google.com with SMTP id
- d9443c01a7336-2161eb94cceso20820495ad.2
- for <qemu-devel@nongnu.org>; Thu, 16 Jan 2025 21:58:50 -0800 (PST)
+ id 1tYfMs-00068b-83
+ for qemu-devel@nongnu.org; Fri, 17 Jan 2025 00:58:07 -0500
+Received: by mail-pl1-x62f.google.com with SMTP id
+ d9443c01a7336-21670dce0a7so38093675ad.1
+ for <qemu-devel@nongnu.org>; Thu, 16 Jan 2025 21:58:05 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1737093530; x=1737698330; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1737093485; x=1737698285; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=x6PYrAaud1A8fkgX2672cOm89fY4AZSHQAdDHt+jLww=;
- b=QxNpZzNctjZR/kPwzi8uovtnGR7FuW+gZds1pm3ippzazf8kIYcBqo0aCbg5YGlgTf
- 3RUyR0SlGQT4+tRK4OM6buKpPm0c6wcNibjGrccB6pdpJLlb5GaxBN/4rRlp4Gsy6csQ
- yNPnWiTYGzjnp7YcScCRHqRaFwSXVKvLkMahcgbY8Pj9MfXDdleqzThYI2eJkxoI0S1N
- NA/FECgmz4pvvXXRMtmh/9192+N14jzdCLDbXMm8MGydTosYcObqmFInBqHFwRWCrz07
- Jf4S48tA8Vm7sU5fxNYBNuEL5WjDXJA7ajE/6igpjhWB6EEivRd4M6/GVG5TO6jxY487
- e1hQ==
+ bh=JxBG/sCQsp/iAM/lHy+4Lr1ps18h2Gv4vOagJzfUaj4=;
+ b=a4EA5Exh7qzB6vCTk623UIbr4Gv932RggQoXb4fPJ49+QMzlcIDyay/48hATRQwYrH
+ MAuKajiRKy+YI5gGZQA8mOrxIBgl+LlNkbDWBTOifEUiaY4pF7V4GmofQY0dwEnN5AIn
+ SByHYYdPnvZMv/mDCHp9l+s+10irb9eWB4JmfvwO27g1kga0hnG580FVtZPLIT30YzUD
+ WjKNMfCFWJIJ03xoZB16L/kQTBA2VEnroP7Y/huEinx+WpemQWN0UtB8DOMRUObzX/ZU
+ C0Ru+9nO+TTb/gE6Zb14gqSf+Kn9X1zNQFKFq8cFaeDOxrMQPU8r4VPlKfq1yG7Utsn7
+ 6j4g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1737093530; x=1737698330;
+ d=1e100.net; s=20230601; t=1737093485; x=1737698285;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=x6PYrAaud1A8fkgX2672cOm89fY4AZSHQAdDHt+jLww=;
- b=gfVQau1zO47OVNDAkNSqk7ec8M1FtTmLGavToOj+q06/yvzKH17NFeDyZtxHrCxaUH
- Xj61UlUcfK/buzkHjkM3H1EuE1FEkpwa4IT8+AosJN0BmF1jkGAJ5DA1eXf3cEwwFApr
- IicGbXj5XBBW6vrlMOyKbz18J9k/BpvdXxfHVuJXnwWEk4A2uMbkQ2dDhCSfvYCmoYBk
- JFy/Go2lE6Y95CF2F28Mbs/a6znUpJ+ZB0jMgk0iwSgTD86woTX0MBcGJUd77+AJ9GFn
- UQH6QtfR6Madk+fjqeD/GePIwVpZ4LhbRja65eM+5hE/icpSIeCLmlz651GRvU1la53R
- VKGA==
-X-Gm-Message-State: AOJu0YwLEnuE7XIWdG91FbqwJDS/neY1JzenG0VXh/wVx0hsHjjLFA1C
- DTgCszzgN4IVlcv6PAIkXSZjtVHdbazfU0qkm6iBsq25AynMdp3iyX8U5A==
-X-Gm-Gg: ASbGncuwfBS8yNC7mh5kCSR0PnbOEoW/mn0XA9C1p5EtN6ucBEPOk2Cmp5j5JsFKHGZ
- blZdv8TA+mluPU6aIOChNHaj00xPC9tEVWx7TnSwsTDcxumgXpS0VNG4a18+BizZJWbIkFSBIk+
- FaDL3/76tyuoVVPA9IKjTTKZpwH6tF7p6SIufnv7T1/TOctYebvYDlCwWr7JP0HJJAFe/vrzOEn
- cXpsgT0gTeVR/m930d0LnPBSavVUh4BGCuiRnW1KpFTnHL2kA1db2dT55XHmO3iR6jJO/UJ8HRZ
- 0qTdhdR4Ul2dX6oXYvc8H5dGw23hk3hbonnE9nvPIC/pCSNJblxXUhu4gZLD
-X-Google-Smtp-Source: AGHT+IHjdVNQDaWMQuI3y9ijLMlZ9FsLb+bP1nFl+kg9zdaQ+Q6fEvhsVp3/FeqF/GprLvQT+gMapw==
-X-Received: by 2002:a17:903:230b:b0:216:554a:212c with SMTP id
- d9443c01a7336-21c355f703amr19157055ad.46.1737093529698; 
- Thu, 16 Jan 2025 21:58:49 -0800 (PST)
+ bh=JxBG/sCQsp/iAM/lHy+4Lr1ps18h2Gv4vOagJzfUaj4=;
+ b=JL659P8VBPEo1PGHgmRYYZ7lHZe2jEtb2jsv/rJQkDIj/qnZH3mFByOnNU3IVtPII7
+ l46x8xcR1LzIRc2qDyRdb/r0Uc/FagU2vaD0aRS7C3oIlct8Y1hgQjtX03WV53kJfL3y
+ QnHI3U1+1s+7ejMh42AKm0cTn7JEJ5WmTKCp/BZGcyUtknecjlIOJEO1ZlmvBuaJ+7Fo
+ KUF9LpD7rZaCPHrENQFbUP0kAXmAPzDvQVk5jBDbD5VCq+R0FwQ/faeaTNvJq/OvbK/q
+ V5YrUAffshYLtfndoQjqU2GjRAPRZ3vLGItrdohjMjusnrSQBURqNHALl7OUl321bSY7
+ zang==
+X-Gm-Message-State: AOJu0Yz0ovH+1u0WpJUFttG0WfTSYTGiQEQrDdiStyvTpq29hzoHZiS/
+ HlGln0ShkfkwMX6r/ZFQOezdAvoVKEMzgfGQH3/sB+jedYhHHzOqq7X8bQ==
+X-Gm-Gg: ASbGncsCbGd4v7qklnRk+bm8iwiLwSvC12xoqctSOJ8KIN8rXaUtqNqaPrQTK8/22Uw
+ A2alWtbUAQIH66Qbh/PqjniGFEzhDdJfIhgWkJdLcg93lTFR9mpkKSqkYn7tkSyefjuMWiNbdQh
+ HO7WcKTv5K9Gwi5Z1eJl0y+8B7La54CHFRH5xnMa7CnB+Va1vQcemRLodGN9qoEZeq/lCzuyVsk
+ Xp7L0jIlmxNBp96U1WyZpAButtnlYoBXtwxcmGZdjLMC2vfq4iuSTR9IBEUwjxlT5KBJeOD4spO
+ iy7GA3fZEAh/J0CSBGMNH3qTIzWxAe8IM4B4xKnFNwNK44+D2WW3yQiSpMuD
+X-Google-Smtp-Source: AGHT+IGwoimLsjnCI9vyYzadAkJMyXbNR5RBw8Pc9jBgER2nboWT8YPfACpsw3WhoyhVA34MfgHQKQ==
+X-Received: by 2002:a17:902:d4d2:b0:215:620f:8de4 with SMTP id
+ d9443c01a7336-21c352de109mr26801165ad.2.1737093484783; 
+ Thu, 16 Jan 2025 21:58:04 -0800 (PST)
 Received: from toolbox.alistair23.me
  (2403-580b-97e8-0-321-6fb2-58f1-a1b1.ip6.aussiebb.net.
  [2403:580b:97e8:0:321:6fb2:58f1:a1b1])
  by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-21c2d3d6fbbsm8563595ad.168.2025.01.16.21.58.47
+ d9443c01a7336-21c2d3d6fbbsm8563595ad.168.2025.01.16.21.58.01
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 16 Jan 2025 21:58:49 -0800 (PST)
+ Thu, 16 Jan 2025 21:58:04 -0800 (PST)
 From: Alistair Francis <alistair23@gmail.com>
 X-Google-Original-From: Alistair Francis <alistair.francis@wdc.com>
 To: qemu-devel@nongnu.org
-Cc: alistair23@gmail.com,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+Cc: alistair23@gmail.com, Atish Patra <atishp@rivosinc.com>,
  Alistair Francis <alistair.francis@wdc.com>
-Subject: [PULL 50/50] hw/char/riscv_htif: Convert HTIF_DEBUG() to trace events
-Date: Fri, 17 Jan 2025 15:55:52 +1000
-Message-ID: <20250117055552.108376-51-alistair.francis@wdc.com>
+Subject: [PULL 36/50] target/riscv: Invoke pmu init after feature enable
+Date: Fri, 17 Jan 2025 15:55:38 +1000
+Message-ID: <20250117055552.108376-37-alistair.francis@wdc.com>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20250117055552.108376-1-alistair.francis@wdc.com>
 References: <20250117055552.108376-1-alistair.francis@wdc.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::630;
- envelope-from=alistair23@gmail.com; helo=mail-pl1-x630.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::62f;
+ envelope-from=alistair23@gmail.com; helo=mail-pl1-x62f.google.com
 X-Spam_score_int: -17
 X-Spam_score: -1.8
 X-Spam_bar: -
@@ -105,69 +103,73 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Philippe Mathieu-Daudé <philmd@linaro.org>
+From: Atish Patra <atishp@rivosinc.com>
 
-Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+The dependant ISA features are enabled at the end of cpu_realize
+in finalize_features. Thus, PMU init should be invoked after that
+only. Move the init invocation to riscv_tcg_cpu_finalize_features.
+
 Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
-Message-ID: <20250116223609.81594-1-philmd@linaro.org>
+Signed-off-by: Atish Patra <atishp@rivosinc.com>
+Message-ID: <20250110-counter_delegation-v5-9-e83d797ae294@rivosinc.com>
 Signed-off-by: Alistair Francis <alistair.francis@wdc.com>
 ---
- hw/char/riscv_htif.c | 15 +++------------
- hw/char/trace-events |  4 ++++
- 2 files changed, 7 insertions(+), 12 deletions(-)
+ target/riscv/tcg/tcg-cpu.c | 28 ++++++++++++++--------------
+ 1 file changed, 14 insertions(+), 14 deletions(-)
 
-diff --git a/hw/char/riscv_htif.c b/hw/char/riscv_htif.c
-index 11a0e1a7b7..ec5db5a597 100644
---- a/hw/char/riscv_htif.c
-+++ b/hw/char/riscv_htif.c
-@@ -32,14 +32,7 @@
- #include "exec/tswap.h"
- #include "system/dma.h"
- #include "system/runstate.h"
--
--#define RISCV_DEBUG_HTIF 0
--#define HTIF_DEBUG(fmt, ...)                                                   \
--    do {                                                                       \
--        if (RISCV_DEBUG_HTIF) {                                                \
--            qemu_log_mask(LOG_TRACE, "%s: " fmt "\n", __func__, ##__VA_ARGS__);\
--        }                                                                      \
--    } while (0)
-+#include "trace.h"
- 
- #define HTIF_DEV_SHIFT          56
- #define HTIF_CMD_SHIFT          48
-@@ -159,8 +152,7 @@ static void htif_handle_tohost_write(HTIFState *s, uint64_t val_written)
-     uint64_t payload = val_written & 0xFFFFFFFFFFFFULL;
-     int resp = 0;
- 
--    HTIF_DEBUG("mtohost write: device: %d cmd: %d what: %02" PRIx64
--        " -payload: %016" PRIx64 "\n", device, cmd, payload & 0xFF, payload);
-+    trace_htif_uart_write_to_host(device, cmd, payload);
- 
-     /*
-      * Currently, there is a fixed mapping of devices:
-@@ -251,8 +243,7 @@ static void htif_handle_tohost_write(HTIFState *s, uint64_t val_written)
-         }
-     } else {
-         qemu_log("HTIF unknown device or command\n");
--        HTIF_DEBUG("device: %d cmd: %d what: %02" PRIx64
--            " payload: %016" PRIx64, device, cmd, payload & 0xFF, payload);
-+        trace_htif_uart_unknown_device_command(device, cmd, payload);
+diff --git a/target/riscv/tcg/tcg-cpu.c b/target/riscv/tcg/tcg-cpu.c
+index f94aa9f29e..48be24bbbe 100644
+--- a/target/riscv/tcg/tcg-cpu.c
++++ b/target/riscv/tcg/tcg-cpu.c
+@@ -963,6 +963,20 @@ void riscv_tcg_cpu_finalize_features(RISCVCPU *cpu, Error **errp)
+         error_propagate(errp, local_err);
+         return;
      }
-     /*
-      * Latest bbl does not set fromhost to 0 if there is a value in tohost.
-diff --git a/hw/char/trace-events b/hw/char/trace-events
-index 3ee7cfcdff..b2e3d25ae3 100644
---- a/hw/char/trace-events
-+++ b/hw/char/trace-events
-@@ -136,3 +136,7 @@ stm32f2xx_usart_read(char *id, unsigned size, uint64_t ofs, uint64_t val) " %s s
- stm32f2xx_usart_write(char *id, unsigned size, uint64_t ofs, uint64_t val) "%s size %d ofs 0x%02" PRIx64 " <- 0x%02" PRIx64
- stm32f2xx_usart_drop(char *id) " %s dropping the chars"
- stm32f2xx_usart_receive(char *id, uint8_t chr) " %s receiving '%c'"
++#ifndef CONFIG_USER_ONLY
++    if (cpu->cfg.pmu_mask) {
++        riscv_pmu_init(cpu, &local_err);
++        if (local_err != NULL) {
++            error_propagate(errp, local_err);
++            return;
++        }
 +
-+# riscv_htif.c
-+htif_uart_write_to_host(uint8_t device, uint8_t cmd, uint64_t payload) "device: %u cmd: %02u payload: %016" PRIx64
-+htif_uart_unknown_device_command(uint8_t device, uint8_t cmd, uint64_t payload) "device: %u cmd: %02u payload: %016" PRIx64
++        if (cpu->cfg.ext_sscofpmf) {
++            cpu->pmu_timer = timer_new_ns(QEMU_CLOCK_VIRTUAL,
++                                          riscv_pmu_timer_cb, cpu);
++        }
++    }
++#endif
+ }
+ 
+ void riscv_tcg_cpu_finalize_dynamic_decoder(RISCVCPU *cpu)
+@@ -1010,7 +1024,6 @@ static bool riscv_tcg_cpu_realize(CPUState *cs, Error **errp)
+ 
+ #ifndef CONFIG_USER_ONLY
+     CPURISCVState *env = &cpu->env;
+-    Error *local_err = NULL;
+ 
+     tcg_cflags_set(CPU(cs), CF_PCREL);
+ 
+@@ -1018,19 +1031,6 @@ static bool riscv_tcg_cpu_realize(CPUState *cs, Error **errp)
+         riscv_timer_init(cpu);
+     }
+ 
+-    if (cpu->cfg.pmu_mask) {
+-        riscv_pmu_init(cpu, &local_err);
+-        if (local_err != NULL) {
+-            error_propagate(errp, local_err);
+-            return false;
+-        }
+-
+-        if (cpu->cfg.ext_sscofpmf) {
+-            cpu->pmu_timer = timer_new_ns(QEMU_CLOCK_VIRTUAL,
+-                                          riscv_pmu_timer_cb, cpu);
+-        }
+-    }
+-
+     /* With H-Ext, VSSIP, VSTIP, VSEIP and SGEIP are hardwired to one. */
+     if (riscv_has_ext(env, RVH)) {
+         env->mideleg = MIP_VSSIP | MIP_VSTIP | MIP_VSEIP | MIP_SGEIP;
 -- 
 2.47.1
 
