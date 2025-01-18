@@ -4,90 +4,108 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 966B1C02185
-	for <qemu-devel@archiver.kernel.org>; Sat, 18 Jan 2025 10:12:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 193F6C02185
+	for <qemu-devel@archiver.kernel.org>; Sat, 18 Jan 2025 10:17:09 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tZ5oY-0006C0-QH; Sat, 18 Jan 2025 05:12:26 -0500
+	id 1tZ5sO-0007HE-MI; Sat, 18 Jan 2025 05:16:26 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <akihiko.odaki@gmail.com>)
- id 1tZ5oV-0006BO-2p
- for qemu-devel@nongnu.org; Sat, 18 Jan 2025 05:12:23 -0500
-Received: from mail-pl1-x629.google.com ([2607:f8b0:4864:20::629])
+ (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
+ id 1tZ5sA-0007GK-AT
+ for qemu-devel@nongnu.org; Sat, 18 Jan 2025 05:16:14 -0500
+Received: from mail-pl1-x62e.google.com ([2607:f8b0:4864:20::62e])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <akihiko.odaki@gmail.com>)
- id 1tZ5oT-0000AB-J2
- for qemu-devel@nongnu.org; Sat, 18 Jan 2025 05:12:22 -0500
-Received: by mail-pl1-x629.google.com with SMTP id
- d9443c01a7336-21a7ed0155cso46517745ad.3
- for <qemu-devel@nongnu.org>; Sat, 18 Jan 2025 02:12:21 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
+ id 1tZ5s6-0000fe-Gp
+ for qemu-devel@nongnu.org; Sat, 18 Jan 2025 05:16:10 -0500
+Received: by mail-pl1-x62e.google.com with SMTP id
+ d9443c01a7336-21675fd60feso65671135ad.2
+ for <qemu-devel@nongnu.org>; Sat, 18 Jan 2025 02:16:06 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1737195140; x=1737799940; darn=nongnu.org;
+ d=daynix-com.20230601.gappssmtp.com; s=20230601; t=1737195365; x=1737800165;
+ darn=nongnu.org; 
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=F5zwCBqQloyMpycJYlg1aT9PslF0mMz0TkFwRM5GNVs=;
- b=mvWz58K5/hrU5TyQsKzK1WfBKsTsWfVFPbcB4zFIF1q9y9E0n4kp5tPR3KzVKsRACk
- GUW8Y9KG5nGBeD7cnIX/J/Ly5j5n5LCTN131Uv13QnKO/vmOCfqiqYfwbtGOEl6Kf8Vg
- a8zFxqNtC82xy9UukS6l6l8mvPYpqoHATA0H1HuwdcmXvSXw04aB/Y0zvMXBp2kyqMau
- ydpS08ffWvdqrJz59ZPV3mLkhqpb76IFyNLrAr+yLpprVSBQgOIIW+R+IeQD3iLp1btm
- wpoZJlRzmsHQJlOtHbtPtDKJMWtBH/DrDyGtuCNcXp9Q45XHd53xHZq98a3r80Bo0Huk
- opcw==
+ bh=Lv1ypNPQkhX5bqVknkTujMduz3WKKylFiTA1mr2JVmo=;
+ b=QiT6NoiR2q1P0U8zwhn1qaLF8vNklUzF9YH8Sax227pkFtxN5Raj6eF49DfOYnyaa8
+ EnhVmjdk8oMDowKx2EXq+PaAtTUj6m3VRQwwsHCuOivPAoOPr91YlyHXAX76EQ7ton2/
+ AfPeK66H/WKnKoREhag8ngtzB6yiRhUOEAFKsE+jzDE758g2REhcYHpAmfU6up9kKrJ3
+ q/cef1BkpyU9XcLRdpGUiGQfaWvF6enRQJ07iZhgfF2zAzdO67+szmxF3IvcCMb1rJEM
+ lcYpixjlCMMMMWZPD8kGUvAfuL/eO3S0BgSGxY4oL55HAsd7t72P715pTI5w2DEnF0c6
+ fGWw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1737195140; x=1737799940;
+ d=1e100.net; s=20230601; t=1737195365; x=1737800165;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=F5zwCBqQloyMpycJYlg1aT9PslF0mMz0TkFwRM5GNVs=;
- b=SDTk5QosKfhRuT5OIkrFsnSTqTu1+greAbqVA82ucrEgaB9dfzD64qCXU51Tbdhb49
- tpiUnhvWpumrkPdeq3RGJA2WIRkMyD+uHgW5VwkdSDq96qz/nJfovWSQRX2KpII1yMmi
- mLCzImrszn4aSDhQmiEFufxVS8LHgMselb1S8i6WQ6lZ46KHm5U4tAcAjkFe5SC3JzPO
- sagPJRcOczLrrvxnHE1BwK7NB8I5vq/oXgZr1qJCDn5+zE0z3JWuYa3u8efsO9Pqc8Gk
- X1D3ViX1HJmO4NLXOUuK9hTyQcELV36DXgSveqs87or6OWUYLWiwP4qzCkru1FtXKbRE
- C7Gg==
+ bh=Lv1ypNPQkhX5bqVknkTujMduz3WKKylFiTA1mr2JVmo=;
+ b=UdI+Jydi8r85MkgGiEaByejaY1qDccnk1OCtmX/b4XG+/nkVA56YG9ZY48rfqzYB3S
+ wto/m5FPWjkgcGHuVRu4F6ot3EiHdeAechdc39Bxo4gRQQIVKdDVE8ykGpPr6DKCyzaq
+ w65nEoq6OHGIG1v6i0ozfkuREvxANy8BXdzlxdcRQvcle36+I3PJTuOwnGf6GKGH9l0H
+ XbLo2PsUJW8sl+bTJKcZm/Dh9ssVOJj8/QBpdScMPWaQmatZUE/N3ggjqImtVJJUxh6U
+ e91wGIB0dEy9ZKsb1Thq1GhmMIA9RcPE+Svb8r7typO0l7UXw5W9jrwu4/WSuQNz1rMc
+ 2Mkg==
 X-Forwarded-Encrypted: i=1;
- AJvYcCW7fn9ezHpIRz2C+k4FhIey3uqKKz87NsN5m8AhvgjFv/cdCaQ56TzWz0gnt2JJ4IyeGJF2pIU4agEQ@nongnu.org
-X-Gm-Message-State: AOJu0YxZs6McKP90odYZ/dC39Nbo1bbEsMCS9uh2rn7iGi8cSuzdPnaj
- f73+SQGZVwgBV++t+vHn0XXvsOdrULUCTSAwbezDaQo4Da+PB18v8qAta9Hp
-X-Gm-Gg: ASbGncv3Dntdkyq3SmwEqlEIAmEKUoBeu4uXuWgoFClPFx2M0ReYKWw31X/FusJ02tN
- nb/qLrB2Q5t+GsfX4Wh5iqK0bLqnFVWWQXcuqZou+qAN75hLWyBmywa7zjxSjJeRtfVv18OHQmR
- Bd7J1O+96x3Y0VTxUx8qUdX4wE1QOdESn20VpRcRhWP0rv43yE/qrf1OLV3KRC2M0y1/d9B9ncx
- W7n5TplllaOta2SwLehLhn94H866tHsCrJfzfYBTz+h90cAqetqWp5LYsMJiIms6uuYM3yKWL1T
- iw==
-X-Google-Smtp-Source: AGHT+IHohMPhMq927DUiadhGBU2WFVSDZNtrYEajT/CRqDPFPQAtqy7T3+ZTnL0fHGrYCv4RH2Zasg==
-X-Received: by 2002:a17:902:ce8d:b0:21a:8ce5:10dc with SMTP id
- d9443c01a7336-21c355835e0mr91239995ad.28.1737195139891; 
- Sat, 18 Jan 2025 02:12:19 -0800 (PST)
+ AJvYcCUZb7fWWR2U04wbzforsCqNEcJs4ZEKeV3T7VTJx+CEHN2PIn98ebpX6Lvy2W7l6JS74TzDNcbztajB@nongnu.org
+X-Gm-Message-State: AOJu0YzeFWGA1L1nR7kAx1krbMIyNHPSLHz8reICyI5qX83l2bPN9MXA
+ 1KeRVSsuB01cN2R3s4wNQ0nM311l51hlzuhX+RG9u9zLYqgYbrnLVGNfMVreU8A=
+X-Gm-Gg: ASbGnctOkOhqv+XD8MqnO5iL9dNmlu4eRpoPfAByVKtxd4BYOcWurALy+w3uXNS7Khk
+ htAfvgyep849+jIx8eYt4gLyUUCKbSg+G0222nndtvX0BdEznFO7nRJcOZhs4Cb6WwIjb8AWbUt
+ fx1GEZCpZyOlVNryGeWpfaFcw75EJAK5bZngndmOfNHthNuDIrM961XpXuyib6Lu2eHMhCNw/vT
+ SpuEagk35aMhdISrTgqBiiCPwoBdQiRo08RmWOJW/V8i0FIrXfWL04PwrXeGzNa4ZmtNHUd3V+N
+ 608=
+X-Google-Smtp-Source: AGHT+IEkUrAaI3nw44wXSgalqfx0CnVQNg5yj1AjByx0uvcqH6agT2Q8DkLQ2jug9w3RU5ai080d9w==
+X-Received: by 2002:a05:6a20:4303:b0:1e1:9fef:e975 with SMTP id
+ adf61e73a8af0-1eb215815a0mr7962363637.26.1737195365125; 
+ Sat, 18 Jan 2025 02:16:05 -0800 (PST)
 Received: from [10.4.77.176] ([118.103.63.141])
  by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-21c2d4027e3sm28792505ad.222.2025.01.18.02.12.17
+ d2e1a72fcca58-72dab81336esm3414992b3a.38.2025.01.18.02.15.58
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Sat, 18 Jan 2025 02:12:19 -0800 (PST)
-Message-ID: <cea3fcb3-cec6-496f-ad59-3bd0b5ed9ef0@gmail.com>
-Date: Sat, 18 Jan 2025 19:12:16 +0900
+ Sat, 18 Jan 2025 02:16:04 -0800 (PST)
+Message-ID: <d8ab7a88-cf34-4989-909a-bf5fad502f15@daynix.com>
+Date: Sat, 18 Jan 2025 19:15:56 +0900
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 2/2] net/dump: Correctly compute Ethernet packet offset
-To: Laurent Vivier <lvivier@redhat.com>, qemu-devel@nongnu.org
-Cc: Jason Wang <jasowang@redhat.com>
-References: <20250117111709.970789-1-lvivier@redhat.com>
- <20250117111709.970789-3-lvivier@redhat.com>
+Subject: Re: [PATCH v7 1/2] memory: Update inline documentation
+To: Peter Xu <peterx@redhat.com>
+Cc: BALATON Zoltan <balaton@eik.bme.hu>, Eduardo Habkost
+ <eduardo@habkost.net>, Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Yanan Wang <wangyanan55@huawei.com>, John Snow <jsnow@redhat.com>,
+ Jiaxun Yang <jiaxun.yang@flygoat.com>, Nicholas Piggin <npiggin@gmail.com>,
+ Daniel Henrique Barboza <danielhb413@gmail.com>,
+ David Gibson <david@gibson.dropbear.id.au>,
+ Harsh Prateek Bora <harshpb@linux.ibm.com>,
+ Alexey Kardashevskiy <aik@ozlabs.ru>, "Michael S. Tsirkin" <mst@redhat.com>,
+ =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Fabiano Rosas <farosas@suse.de>, Paolo Bonzini <pbonzini@redhat.com>,
+ David Hildenbrand <david@redhat.com>, Thomas Huth <thuth@redhat.com>,
+ Laurent Vivier <lvivier@redhat.com>, Peter Maydell
+ <peter.maydell@linaro.org>, qemu-devel@nongnu.org, qemu-block@nongnu.org,
+ qemu-ppc@nongnu.org, devel@daynix.com
+References: <Z4aYpo0VEgaQedKp@x1n>
+ <00a220df-b256-4b70-9974-f4c1fe018201@daynix.com> <Z4e7gFSqdhcmJPYb@x1n>
+ <dbf863f8-6174-4c37-9553-a2d94f06de00@daynix.com> <Z4fW_rI7Mfrtc1Fg@x1n>
+ <af018f8a-ce00-4ce2-9fe9-b6ba3f97bfa1@daynix.com> <Z4fezdR1ApN8ZLTS@x1n>
+ <99016684-b5f9-446c-b85f-0dc21d1edae6@daynix.com> <Z4kYxLsIbzq7jWzz@x1n>
+ <627beb0f-e6f7-4733-997b-038b70195485@daynix.com> <Z4qXfgJMAySLFeOm@x1n>
 Content-Language: en-US
-From: Akihiko Odaki <akihiko.odaki@gmail.com>
-In-Reply-To: <20250117111709.970789-3-lvivier@redhat.com>
+From: Akihiko Odaki <akihiko.odaki@daynix.com>
+In-Reply-To: <Z4qXfgJMAySLFeOm@x1n>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::629;
- envelope-from=akihiko.odaki@gmail.com; helo=mail-pl1-x629.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Received-SPF: pass client-ip=2607:f8b0:4864:20::62e;
+ envelope-from=akihiko.odaki@daynix.com; helo=mail-pl1-x62e.google.com
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -103,46 +121,149 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 2025/01/17 20:17, Laurent Vivier wrote:
-> When a packet is sent with QEMU_NET_PACKET_FLAG_RAW by QEMU it
-> never includes virtio-net header even if qemu_get_vnet_hdr_len()
-> is not 0, and filter-dump is not managing this case.
+On 2025/01/18 2:46, Peter Xu wrote:
+> On Fri, Jan 17, 2025 at 03:24:34PM +0900, Akihiko Odaki wrote:
+>> On 2025/01/16 23:33, Peter Xu wrote:
+>>> On Thu, Jan 16, 2025 at 02:37:38PM +0900, Akihiko Odaki wrote:
+>>>> On 2025/01/16 1:14, Peter Xu wrote:
+>>>>> On Thu, Jan 16, 2025 at 12:52:56AM +0900, Akihiko Odaki wrote:
+>>>>>> Functionally, the ordering of container/subregion finalization matters if
+>>>>>> some device tries to a container during finalization. In such a case,
+>>>>>                          |
+>>>>>                          ^ something is missing here, feel free to complete this.
+>>>>
+>>>> Oops, I meant: functionally, the ordering of container/subregion
+>>>> finalization matters if some device tries to use a container during
+>>>> finalization.
+>>>
+>>> This is true, though if we keep the concept of "all the MRs share the same
+>>> lifecycle of the owner" idea, another fix of such is simply moving the
+>>> container access before any detachment of MRs.
+>>>
+>>>>
+>>>>>
+>>>>>> removing subregions from the container at random timing can result in an
+>>>>>> unexpected behavior. There is little chance to have such a scenario but we
+>>>>>> should stay the safe side if possible.
+>>>>>
+>>>>> It sounds like a future feature, and I'm not sure we'll get there, so I
+>>>>> don't worry that much.  Keeping refcount core idea simple is still very
+>>>>> attractive to me.  I still prefer we have complete MR refcounting iff when
+>>>>> necessary.  It's also possible it'll never happen to QEMU.
+>>>>>
+>>>>
+>>>> It's not just about the future but also about compatibility with the current
+>>>> device implementations. I will not be surprised even if the random ordering
+>>>> of subregion finalization breaks one of dozens of devices we already have.
+>>>> We should pay attention the details as we are touching the core
+>>>> infrastructure.
+>>>
+>>> Yes, if we can find any such example that we must follow the order of MR
+>>> destruction, I think that could justify your approach will be required but
+>>> not optional.  It's just that per my understanding there should be none,
+>>> and even if there're very few outliers, it can still be trivially fixed as
+>>> mentioned above.
+>>
+>> It can be fixed but that means we need auditing the code of devices or wait
+>> until we get a bug report.
 > 
-> The only user of QEMU_NET_PACKET_FLAG_RAW is announce_self,
-> we can show the problem using it and tcpddump:
+> We'd better have a solid example.
 > 
-> - QEMU parameters:
+> And for this specific question, IIUC we can have such problem even if
+> internal-ref start to use MR refcounts.
 > 
->    .. -monitor stdio \
->       -netdev bridge,id=netdev0,br=virbr0 \
->       -device virtio-net,mac=9a:2b:2c:2d:2e:2f,netdev=netdev0 \
->       -object filter-dump,netdev=netdev0,file=log.pcap,id=pcap0
+> It's because we have a not very straightforward way of finalize() an
+> object, which is freeing all properties before its own finalize()..
 > 
-> - HMP command:
+> static void object_finalize(void *data)
+> {
+>      ...
+>      object_property_del_all(obj);
+>      object_deinit(obj, ti);
+>      ...
+> }
 > 
->    (qemu) announce_self
+> I think it used to be the other way round (which will be easier to
+> understand to me..), but changed after 76a6e1cc7cc.  It could boil down to
+> two dependencies: (1) children's unparent() callback wanting to have the
+> parent being present and valid, and (2) parent's finalize() callback
+> wanting to have all children being present and valid.  I guess we chose (1)
+> as of now.
 > 
-> - TCP dump:
-> 
->    $ tcpdump -nxr log.pcap
-> 
->    without the fix:
-> 
->      08:00:06:04:00:03 > 2e:2f:80:35:00:01, ethertype Unknown (0x9a2b), length 50:
->           0x0000:  2c2d 2e2f 0000 0000 9a2b 2c2d 2e2f 0000
->           0x0010:  0000 0000 0000 0000 0000 0000 0000 0000
->           0x0020:  0000 0000
-> 
->    with the fix:
-> 
->      ARP, Reverse Request who-is 9a:2b:2c:2d:2e:2f tell 9a:2b:2c:2d:2e:2f, length 46
->           0x0000:  0001 0800 0604 0003 9a2b 2c2d 2e2f 0000
->           0x0010:  0000 9a2b 2c2d 2e2f 0000 0000 0000 0000
->           0x0020:  0000 0000 0000 0000 0000 0000 0000
-> 
-> Fixes: 481c52320a26 ("net: Strip virtio-net header when dumping")
-> Cc: akihiko.odaki@daynix.com
-> Signed-off-by: Laurent Vivier <lvivier@redhat.com>
+> So I suppose it means even with your patch, it won't help either as long as
+> MRs are properties, and they can already all be gone in a device finalize()
+> even with your new patch.
 
-Reviewed-by: Akihiko Odaki <akihiko.odaki@daynix.com>
+The owner can object_ref() to keep the memory region alive.
+
+ > >  From that POV, qdev unrealize() could be a good place for such 
+cleanups
+> while making sure all properties are present.> >>
+>>>
+>>> My gut feeling is when we need serious MR refcounting (I'd expect due to
+>>> the current heavy code base it might be easier to start a new project if
+>>> that's required.. that's why I was thinking maybe it will not happen.. but
+>>> if it will..), we'll do more than your change, and that also means
+>>> memory_region_ref() must start to refcount MRs, because a serious MR
+>>> separate refcounting should mean MR can go on the fly before the owner.
+>>
+>> Actually there is one example: virtio_gpu_virgl_map_resource_blob() in
+>> hw/display/virtio-gpu-virgl.c creates a MR that can be removed before the
+>> device. To make this possible, it specifies MRs themselves as their and let
+>> them refcount without help of the device.
+> 
+> .. I am definitely surprised that we have code that assigns obj->parent to
+> be itself.
+> 
+> Putting the self parenting aside.. and to the topic: I don't think this is
+> an example for internal-MR use case?
+> 
+> When the owner is itself, then it's not sharing the owner of the parent MR
+> (which is b->hostmem in this case, which should probably be owned by
+> VirtIOGPU object instead).  So IIUC no matter which way we choose on the
+> current discussion, it won't affect the result.
+> 
+> Not to mention, the MRs are always properly detached always when the
+> resource is unmapped:
+> 
+> virtio_gpu_virgl_unmap_resource_blob():
+>          /* memory region owns self res->mr object and frees it by itself */
+>          memory_region_set_enabled(mr, false);
+>          memory_region_del_subregion(&b->hostmem, mr);
+> 
+> So from that POV it's a very good citizen.. it doesn't need anything to be
+> auto detached.
+> 
+> Below can be off topic, but since we're discussing this use case..
+> 
+> My gut feeling is that it can cause trouble at some point having MR itself
+> as parent.
+> 
+> For example, I will not be surprised that some day QMP command
+> qom-list-properties provide a --deep pararmeter, then this will hang that
+> command trying to look at child forever in a loop.
+> 
+> It can easily break in other ways too, e.g. when we add an assertion
+> anywhere for "obj->parent != obj" (which should really make sense.. from a
+> object model POV), or when we want to take a ref to parent (for obj->parent
+> reference) then it'll be a "real" circular reference, comparing to what
+> we're discussing on auto-detach so far (which is IIUC a pretty "weak"
+> circular ref; IOW, if del_subregion is always properly done, this patch not
+> needed).
+> 
+> Meanwhile the other free() overwrite:
+> 
+>      OBJECT(mr)->free = virtio_gpu_virgl_hostmem_region_free;
+> 
+> I suppose it can be error prone too whenever we want to provide a common
+> free() for MRs and this one can be easily overlooked..
+> 
+> I'm not familiar with GPU stuff, but reading it closer I do feel like it's
+> kind of a slight abuse on all above..
+> 
+> If to stick with "owner shares the same lifecycle for its MRs" idea and fix
+> all above, IMHO we could make virtio_gpu_virgl_hostmem_region to be a QOM
+> object, then it can be a proper parent for the MR.
+> 
+
 
