@@ -4,44 +4,91 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id ABCC5C02185
-	for <qemu-devel@archiver.kernel.org>; Sat, 18 Jan 2025 18:22:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 130A3C02185
+	for <qemu-devel@archiver.kernel.org>; Sat, 18 Jan 2025 20:17:50 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tZDRk-0001dz-2T; Sat, 18 Jan 2025 13:21:24 -0500
+	id 1tZFFk-0000hQ-9J; Sat, 18 Jan 2025 15:17:08 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@corpit.ru>)
- id 1tZDRg-0001cB-KP; Sat, 18 Jan 2025 13:21:20 -0500
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
+ id 1tZFFf-0000gy-SO; Sat, 18 Jan 2025 15:17:05 -0500
 Received: from isrv.corpit.ru ([86.62.121.231])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@corpit.ru>)
- id 1tZDRd-0003KQ-Vp; Sat, 18 Jan 2025 13:21:20 -0500
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
+ id 1tZFFd-0001u1-W7; Sat, 18 Jan 2025 15:17:03 -0500
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id B7BA4DA8F8;
- Sat, 18 Jan 2025 21:20:58 +0300 (MSK)
-Received: by tsrv.corpit.ru (Postfix, from userid 1000)
- id 2695C19E94D; Sat, 18 Jan 2025 21:21:09 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id 53328DA92E;
+ Sat, 18 Jan 2025 23:16:46 +0300 (MSK)
+Received: from [192.168.177.130] (mjt.wg.tls.msk.ru [192.168.177.130])
+ by tsrv.corpit.ru (Postfix) with ESMTP id CE48519EA74;
+ Sat, 18 Jan 2025 23:16:56 +0300 (MSK)
+Message-ID: <563fdc15-b52b-4683-a5bb-26dc0638fc8c@tls.msk.ru>
+Date: Sat, 18 Jan 2025 23:16:56 +0300
+MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] gdbstub/user-target: fix gdbserver int format (%d -> %x)
+To: Dominik 'Disconnect3d' Czarnota <dominik.b.czarnota@gmail.com>,
+ qemu-devel@nongnu.org
+Cc: alex.bennee@linaro.org, philmd@linaro.org, qemu-trivial@nongnu.org
+References: <20241227170413.72438-1-dominik.b.czarnota@gmail.com>
+Content-Language: en-US, ru-RU
 From: Michael Tokarev <mjt@tls.msk.ru>
-Date: Sat, 18 Jan 2025 20:35:31 +0300
-Subject: [PATCH] vvfat: refresh writing long filename
-To: qemu-devel@nongnu.org, Kevin Wolf <kwolf@redhat.com>,
- Hanna Reitz <hreitz@redhat.com>,
- =?UTF-8?q?Volker=20R=C3=BCmelin?= <vr_qemu@t-online.de>
-Cc: Pierrick Bouvier <pierrick.bouvier@linaro.org>, qemu-block@nongnu.org,
- qemu-trivial@nongnu.org
-Message-Id: <20250118182109.2695C19E94D@tsrv.corpit.ru>
-Received-SPF: pass client-ip=86.62.121.231; envelope-from=mjt@corpit.ru;
+Autocrypt: addr=mjt@tls.msk.ru; keydata=
+ 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
+In-Reply-To: <20241227170413.72438-1-dominik.b.czarnota@gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=86.62.121.231; envelope-from=mjt@tls.msk.ru;
  helo=isrv.corpit.ru
-X-Spam_score_int: -63
-X-Spam_score: -6.4
+X-Spam_score_int: -68
+X-Spam_score: -6.9
 X-Spam_bar: ------
-X-Spam_report: (-6.4 / 5.0 requ) BAYES_00=-1.9,
- HEADER_FROM_DIFFERENT_DOMAINS=0.248, PP_MIME_FAKE_ASCII_TEXT=0.241,
- RCVD_IN_DNSWL_HI=-5, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-6.9 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_HI=-5,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -57,131 +104,23 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-In function create_long_filname(), the array name[8 + 3] in
-struct direntry_t is used as if it were defined as name[32].
-This is intentional and works. It's nevertheless an out of
-bounds array access. To avoid this problem, this patch adds a
-struct lfn_direntry_t with multiple name arrays. A directory
-entry for a long FAT file name is significantly different from
-a directory entry for a regular FAT file name.
+27.12.2024 20:04, Dominik 'Disconnect3d' Czarnota wrote:
+> From: disconnect3d <dominik.b.czarnota@gmail.com>
+> 
+> This commit fixes an incorrect format string for formatting integers
+> provided to GDB when debugging a target run in QEMU user mode.
+> 
+> The correct format is hexadecimal for both success and errno values,
+> some of which can be seen here [0].
+> 
+> [0] https://github.com/bminor/binutils-gdb/blob/e65a355022d0dc6b5707310876a72b5693ec0aa5/gdbserver/hostio.cc#L196-L213
 
-This change makes whole logic dealing with the long filenames
-a bit more clear (hopefully).
+Reviewed-by: Michael Tokarev <mjt@tls.msk.ru>
 
-Based on ideas by Volker Rümelin.
+Unfortunately we can't apply this one without Signed-off-by: tag
+from you, and maybe without fixing the first From: line.
 
-Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
----
- block/vvfat.c | 69 ++++++++++++++++++++++++++++++++-------------------
- 1 file changed, 43 insertions(+), 26 deletions(-)
+Thanks,
 
-diff --git a/block/vvfat.c b/block/vvfat.c
-index 8ffe8b3b9b..8320733045 100644
---- a/block/vvfat.c
-+++ b/block/vvfat.c
-@@ -255,6 +255,17 @@ typedef struct direntry_t {
-     uint32_t size;
- } QEMU_PACKED direntry_t;
- 
-+typedef struct lfn_direntry_t {
-+    uint8_t sequence;
-+    uint8_t name01[10];
-+    uint8_t attributes;
-+    uint8_t direntry_type;
-+    uint8_t sfn_checksum;
-+    uint8_t name0e[12];
-+    uint16_t begin;
-+    uint8_t name1c[4];
-+} QEMU_PACKED lfn_direntry_t;
-+
- /* this structure are used to transparently access the files */
- 
- typedef struct mapping_t {
-@@ -399,11 +410,22 @@ static void init_mbr(BDRVVVFATState *s, int cyls, int heads, int secs)
- 
- /* direntry functions */
- 
-+static unsigned write_lfn_part(uint8_t *dest, unsigned dsize,
-+                               const gunichar2 *lptr, const gunichar2 *lend)
-+{
-+    unsigned i;
-+    for(i = 0; i < dsize / 2 && lptr + i < lend; ++i) {
-+        dest[i / 2 + 0] = lptr[i] & 0xff;
-+        dest[i / 2 + 1] = lptr[i] >> 8;
-+    }
-+    return i; /* return number of elements actually written */
-+}
-+
- static direntry_t *create_long_filename(BDRVVVFATState *s, const char *filename)
- {
--    int number_of_entries, i;
-+    unsigned number_of_entries, entidx;
-+    gunichar2 *lptr, *lend;
-     glong length;
--    direntry_t *entry;
- 
-     gunichar2 *longname = g_utf8_to_utf16(filename, -1, NULL, &length, NULL);
-     if (!longname) {
-@@ -411,31 +433,26 @@ static direntry_t *create_long_filename(BDRVVVFATState *s, const char *filename)
-         return NULL;
-     }
- 
--    number_of_entries = DIV_ROUND_UP(length * 2, 26);
--
--    for(i=0;i<number_of_entries;i++) {
--        entry=array_get_next(&(s->directory));
--        entry->attributes=0xf;
--        entry->reserved[0]=0;
--        entry->begin=0;
--        entry->name[0]=(number_of_entries-i)|(i==0?0x40:0);
--    }
--    for(i=0;i<26*number_of_entries;i++) {
--        int offset=(i%26);
--        if(offset<10) offset=1+offset;
--        else if(offset<22) offset=14+offset-10;
--        else offset=28+offset-22;
--        entry=array_get(&(s->directory),s->directory.next-1-(i/26));
--        if (i >= 2 * length + 2) {
--            entry->name[offset] = 0xff;
--        } else if (i % 2 == 0) {
--            entry->name[offset] = longname[i / 2] & 0xff;
--        } else {
--            entry->name[offset] = longname[i / 2] >> 8;
--        }
-+    /*
-+     * each lfn_direntry holds 13 utf16 chars (26 bytes) of the file name,
-+     * the name is split into several directory entries.
-+     */
-+    number_of_entries = DIV_ROUND_UP(length, 13);
-+
-+    lend = longname + length; /* pointer past the end of longname */
-+    for(entidx = 0, lptr = longname; entidx < number_of_entries; entidx++) {
-+        lfn_direntry_t *entry = array_get_next(&(s->directory));
-+        entry->sequence = (number_of_entries - entidx) | (entidx == 0 ? 0x40 : 0);
-+        entry->attributes = 0xf;
-+        entry->direntry_type = 0;
-+        entry->begin = 0;
-+        /* each lftn_direntry has 3 pieces to hold parts of long file name */
-+        lptr += write_lfn_part(entry->name01, sizeof(entry->name01), lptr, lend);
-+        lptr += write_lfn_part(entry->name0e, sizeof(entry->name0e), lptr, lend);
-+        lptr += write_lfn_part(entry->name1c, sizeof(entry->name1c), lptr, lend);
-     }
-     g_free(longname);
--    return array_get(&(s->directory),s->directory.next-number_of_entries);
-+    return array_get(&(s->directory), s->directory.next - number_of_entries);
- }
- 
- static char is_free(const direntry_t* direntry)
-@@ -731,7 +748,7 @@ static inline direntry_t* create_short_and_long_name(BDRVVVFATState* s,
-         /* calculate anew, because realloc could have taken place */
-         entry_long=array_get(&(s->directory),long_index);
-         while(entry_long<entry && is_long_name(entry_long)) {
--            entry_long->reserved[1]=chksum;
-+            ((lfn_direntry_t *)entry_long)->sfn_checksum = chksum;
-             entry_long++;
-         }
-     }
--- 
-2.39.5
-
+/mjt
 
