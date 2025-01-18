@@ -4,63 +4,63 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 79187C02187
-	for <qemu-devel@archiver.kernel.org>; Sat, 18 Jan 2025 07:09:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id AD501C02187
+	for <qemu-devel@archiver.kernel.org>; Sat, 18 Jan 2025 07:09:57 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tZ2xc-0003Gd-9H; Sat, 18 Jan 2025 02:09:36 -0500
+	id 1tZ2xS-0003Dc-PZ; Sat, 18 Jan 2025 02:09:27 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <npiggin@gmail.com>) id 1tZ2xa-0003GJ-Mo
- for qemu-devel@nongnu.org; Sat, 18 Jan 2025 02:09:34 -0500
-Received: from mail-pl1-x62a.google.com ([2607:f8b0:4864:20::62a])
+ (Exim 4.90_1) (envelope-from <npiggin@gmail.com>) id 1tZ2xG-0003CP-Ru
+ for qemu-devel@nongnu.org; Sat, 18 Jan 2025 02:09:17 -0500
+Received: from mail-pl1-x630.google.com ([2607:f8b0:4864:20::630])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <npiggin@gmail.com>) id 1tZ2xY-0007qy-Sn
- for qemu-devel@nongnu.org; Sat, 18 Jan 2025 02:09:34 -0500
-Received: by mail-pl1-x62a.google.com with SMTP id
- d9443c01a7336-21a7ed0155cso45360905ad.3
- for <qemu-devel@nongnu.org>; Fri, 17 Jan 2025 23:09:32 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <npiggin@gmail.com>) id 1tZ2xE-0007oB-Qk
+ for qemu-devel@nongnu.org; Sat, 18 Jan 2025 02:09:14 -0500
+Received: by mail-pl1-x630.google.com with SMTP id
+ d9443c01a7336-2161eb94cceso35890205ad.2
+ for <qemu-devel@nongnu.org>; Fri, 17 Jan 2025 23:09:12 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1737184171; x=1737788971; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1737184150; x=1737788950; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=zNO5lCbo8e/XtcQXdeEOm1z3tzxTfEs5Ck6HtIwTvS8=;
- b=ASi6HtQxLUyjt4LBGnqEzwueVSlJ+WcBWk7vWwMG6pCvAVIxdWUa8LFBwiArYJdNoT
- AGzS0hi9Nr1q7hjtfMPZiFY9fWObIhVvzWKEKQc9bG+ssrNRGkOhwX8Wlcm0hiVqlcdZ
- YUucBcfDOAuLU6mtpcn+syS7HrrjTp2t3Zf/1fQcmZKoS2PY0gkq2xCsaZNGv/fpWwxW
- 8p1qDYYiy1deuTXOYwgcxl+/0Gt4m3K2ub6ntp2YN1RqmO8SviRDld8C0+2DjPVbp4IL
- RSSNSIviRbPYfjHWTWYs7pqK18Avgp2YEssKHigLvxgHGHXDVytcS7RP0BQqRvMFlng1
- dU4w==
+ bh=/cx7Pxt/DNCLGhkMoyXvElc9TbIWqgkun0mAfcUqVZM=;
+ b=kiuHL/xee5wlwkfNvZbPWQB1y0NuwP9nwuQ08yScfdB4JOYcuoSTGn+fhLgr+YFh4s
+ uJBbvBz0XbIlJDLDZeVelO4/ltbuldcFTPORVZPSZ6/O3pbygzcZ7Nu2UVD17BqZRvoT
+ o2z70pTShwVVyvcV6oWWPGcuU1tyh8yF9fX+XmFSv+ucJ6WrkrFNTqvbiWJN/kiJwrWa
+ SljWqIByAUOEiMNqKTbB9hBIgHkHr27CWZ5ARdoVG+j+NCnQ792unndnduPTeONAEUn0
+ 2zNQlEJR5MxT+UMex/a8YmthoWmANoKHMvJCOi2KJa3uWU9xfTiyULmEIkCvkp5CbdeN
+ zlIA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1737184171; x=1737788971;
+ d=1e100.net; s=20230601; t=1737184150; x=1737788950;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=zNO5lCbo8e/XtcQXdeEOm1z3tzxTfEs5Ck6HtIwTvS8=;
- b=sHAoDC++ibafHdX1U++RZRXMQYQee0gzDyaP7im/6O6Lu5hh3qbmRYSF8PSEezeI82
- vy/Iq8OyYzxRC1oGgl6kTyJ0Az6OrbhIr5lQQ/nV/6O738SCR4M2FAuHejedqd4E78CL
- LGceejkSGOlY0plrKXhgFNycW4BluVGR47qrPMXNXpgIbCsg1YES58cxeUvbBg+0P1Vb
- p0MNmM8H9JVkaOgrKE5ssu+DxNDOdGj+dI+hV/TjibsWhOvVG12LL+nSOOPdVj3LByY2
- fxguxUbFevPHGQ+7yWnig25FiYRSenquJh1MeWfDy3unv2Kl9klSZLNHa1BhNQQY9K5G
- jSHA==
-X-Gm-Message-State: AOJu0YwgcIeD+nFRHnNeqR74vM20jjsZFkrS5nj/r6DJg4JwSL318zo0
- DFcBPnb1HHXp6DIIYu1oZAhWLkvhsPNa5qPALwPPy/7qW9eelVaEQzoEtg==
-X-Gm-Gg: ASbGncuxlCif+WUEvdMq0ZFPx6xXoq9Vi3uZULm8e7cwbKJS2aQt1k/NBbU1FVBvxsk
- RccMVZ5ej3H9YUykkeEmoIduego+B9kt95EfCbgMGVu6uR/3+R/G4v2DhivIphouXHhqZSdOBCt
- YDrX+g5r6CikABbICAuMbt2KG1/Q/VS8VWHSxb6qcUzTCuyUGrCXMkHIqipW9U1ogtxPJPfgemB
- 3VULnWMRCiapilZ5vo7+P3QFp4+/YdhaHBQTqQ5t0R61mv+TWEDCIl9maBluDRJybN/nEg1Ylb7
- KU6kDGxS2nuxfoWxV4BwXgUOP0XE
-X-Google-Smtp-Source: AGHT+IHTIyDz59+ao77xTX8w8z7Xcv6QgYRVD0mUOErdh75QSiXfyu86OuXYqFjDtKiPIGgnqlt0dg==
-X-Received: by 2002:a05:6a00:9082:b0:725:cfa3:bc6b with SMTP id
- d2e1a72fcca58-72daf931c0dmr9001992b3a.3.1737184171026; 
- Fri, 17 Jan 2025 23:09:31 -0800 (PST)
+ bh=/cx7Pxt/DNCLGhkMoyXvElc9TbIWqgkun0mAfcUqVZM=;
+ b=U04OkVQhmEjuxCVJOQUAzRHK65Iuzs6eNf0GH9jHa+cfyGOmVFfnhuCBEv8zDCRL4T
+ 6zUxlAY7Ip38sotZ0FndItFN6t9Q3d7x7dbUb/QKu7KHNEWPFGETunI+OWnq1ZdmlbK9
+ tLrklmhIcVbLB4OaRqByRtxo+6CeFTbc5qe/kAuNpI5j9jHb72rrac+HJlbXwGS0PyiK
+ W8CrL+01qG6ufBRiWwRyF2vmL+jKKXYsEmZQg6KUjdLI3sIOfTSgqWSZZX/pCivRA+7L
+ npZI39CRE2dR2Kmybd5pSA3VahIEmULFMiicNKn6vFypxBe0+D24Dsam4auwqvhK5/kF
+ 2uig==
+X-Gm-Message-State: AOJu0Yy35Nrd5/aX7ct2Ipyld7+UuhW9t+C8J+In7wprDm3e+QgS+qn0
+ pg9GrmtCua4wqTIoM3WYdLC3YskeXvk7nTPAgjQxSLXY6Km1+7PfYLIo9g==
+X-Gm-Gg: ASbGncsJCPMR9mHavsenpHjnjWHaMWLsWzzU8wa2YlYRoCZUC8w/BSP9+DqZnfBWDfr
+ UElV52NLDs1hX26KOx7Ic6L9iE3cfeUKcAEWfeMnR8rE+bZKqGWNvOyJ33dd5n0Id6zbnlfFVYU
+ /Bfa3LJ9hjtIvwC5crgdiYsYHTKcy7hqltRGMnPJ1WL4ZipiFKI1Oxfkufkn/r7yzwzHYFFGCdh
+ p1LmqjG4umFFCo+JQV9aZkfamccPNYyrGuGBwKycAUpqIs/nFsk9S3v+cIe6OJwHdSqDPhdTQWW
+ J3UOGdZxq3ORGa9gzMx2xgKO1czN
+X-Google-Smtp-Source: AGHT+IFqOuidF1n+qV3hPTMWqVK5wrAuoYBjE8s6o6zAgBZpsRzpqVXTrXXYo5T7/G3RNeoWw0rybw==
+X-Received: by 2002:a05:6a21:164e:b0:1e0:d1c3:97d1 with SMTP id
+ adf61e73a8af0-1eb215685b5mr10475199637.29.1737184150547; 
+ Fri, 17 Jan 2025 23:09:10 -0800 (PST)
 Received: from wheely.local0.net (124-169-212-233.tpgi.com.au.
  [124.169.212.233]) by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-72dab9c95adsm3192880b3a.107.2025.01.17.23.09.27
+ d2e1a72fcca58-72dab9c95adsm3192880b3a.107.2025.01.17.23.09.06
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 17 Jan 2025 23:09:30 -0800 (PST)
+ Fri, 17 Jan 2025 23:09:10 -0800 (PST)
 From: Nicholas Piggin <npiggin@gmail.com>
 To: qemu-devel@nongnu.org
 Cc: Nicholas Piggin <npiggin@gmail.com>, Paolo Bonzini <pbonzini@redhat.com>,
@@ -68,16 +68,17 @@ Cc: Nicholas Piggin <npiggin@gmail.com>, Paolo Bonzini <pbonzini@redhat.com>,
  Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
  Fabiano Rosas <farosas@suse.de>, Laurent Vivier <lvivier@redhat.com>,
  Phil Dennis-Jordan <phil@philjordan.eu>
-Subject: [PATCH v2 7/8] hw/usb/hcd-xhci-pci: Make PCI device more configurable
-Date: Sat, 18 Jan 2025 17:08:52 +1000
-Message-ID: <20250118070853.653778-8-npiggin@gmail.com>
+Subject: [PATCH v2 2/8] hw/usb/xhci: Rename and move HCD register region
+ constants to header
+Date: Sat, 18 Jan 2025 17:08:47 +1000
+Message-ID: <20250118070853.653778-3-npiggin@gmail.com>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20250118070853.653778-1-npiggin@gmail.com>
 References: <20250118070853.653778-1-npiggin@gmail.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::62a;
- envelope-from=npiggin@gmail.com; helo=mail-pl1-x62a.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::630;
+ envelope-from=npiggin@gmail.com; helo=mail-pl1-x630.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -100,179 +101,133 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-To prepare to support another USB PCI Host Controller, make some PCI
-configuration dynamic.
+This also adds some missing constants rather than open-coding
+offsets and sizes.
 
 Signed-off-by: Nicholas Piggin <npiggin@gmail.com>
 ---
- hw/usb/hcd-xhci-pci.h |  9 +++++
- hw/usb/hcd-xhci-pci.c | 87 +++++++++++++++++++++++++++++++++++++------
- 2 files changed, 85 insertions(+), 11 deletions(-)
+ hw/usb/hcd-xhci.h | 16 ++++++++++++++++
+ hw/usb/hcd-xhci.c | 48 ++++++++++++++++++++++-------------------------
+ 2 files changed, 38 insertions(+), 26 deletions(-)
 
-diff --git a/hw/usb/hcd-xhci-pci.h b/hw/usb/hcd-xhci-pci.h
-index 08f70ce97cc..213076aabf6 100644
---- a/hw/usb/hcd-xhci-pci.h
-+++ b/hw/usb/hcd-xhci-pci.h
-@@ -40,6 +40,15 @@ typedef struct XHCIPciState {
-     XHCIState xhci;
-     OnOffAuto msi;
-     OnOffAuto msix;
-+    uint8_t cache_line_size;
-+    uint8_t pm_cap_off;
-+    uint8_t pcie_cap_off;
-+    uint8_t msi_cap_off;
-+    uint8_t msix_cap_off;
-+    int msix_bar_nr;
-+    uint64_t msix_bar_size;
-+    uint32_t msix_table_off;
-+    uint32_t msix_pba_off;
- } XHCIPciState;
+diff --git a/hw/usb/hcd-xhci.h b/hw/usb/hcd-xhci.h
+index bd1d8e8e81a..8557f59dafe 100644
+--- a/hw/usb/hcd-xhci.h
++++ b/hw/usb/hcd-xhci.h
+@@ -115,6 +115,22 @@ typedef enum TRBCCode {
+     CC_SPLIT_TRANSACTION_ERROR
+ } TRBCCode;
  
- #endif
-diff --git a/hw/usb/hcd-xhci-pci.c b/hw/usb/hcd-xhci-pci.c
-index 49642aab58e..525537c2b7e 100644
---- a/hw/usb/hcd-xhci-pci.c
-+++ b/hw/usb/hcd-xhci-pci.c
-@@ -32,9 +32,6 @@
- #include "trace.h"
- #include "qapi/error.h"
++/* Register regions */
++#define XHCI_REGS_LENGTH_CAP         0x40
++#define XHCI_REGS_LENGTH_OPER        0x400
++#define XHCI_REGS_LENGTH_PORT        (XHCI_PORT_PR_SZ * XHCI_MAXPORTS)
++#define XHCI_REGS_LENGTH_RUNTIME     ((XHCI_MAXINTRS + 1) * XHCI_INTR_IR_SZ)
++/* XXX: Should doorbell length be *4 rather than *32? */
++#define XHCI_REGS_LENGTH_DOORBELL    ((XHCI_MAXSLOTS + 1) * 0x20)
++
++#define XHCI_REGS_OFFSET_CAP         0
++#define XHCI_REGS_OFFSET_OPER        (XHCI_REGS_OFFSET_CAP +   \
++                                      XHCI_REGS_LENGTH_CAP)
++#define XHCI_REGS_OFFSET_PORT        (XHCI_REGS_OFFSET_OPER +  \
++                                      XHCI_REGS_LENGTH_OPER)
++#define XHCI_REGS_OFFSET_RUNTIME     0x1000
++#define XHCI_REGS_OFFSET_DOORBELL    0x2000
++
+ /* Register definitions */
+ #define XHCI_HCCAP_REG_CAPLENGTH            0x00
+ #define XHCI_HCCAP_REG_HCIVERSION           0x02
+diff --git a/hw/usb/hcd-xhci.c b/hw/usb/hcd-xhci.c
+index d21b0543957..76eb473c150 100644
+--- a/hw/usb/hcd-xhci.c
++++ b/hw/usb/hcd-xhci.c
+@@ -46,22 +46,14 @@
+ #define COMMAND_LIMIT   256
+ #define TRANSFER_LIMIT  256
  
--#define OFF_MSIX_TABLE  0x3000
--#define OFF_MSIX_PBA    0x3800
+-#define LEN_CAP         0x40
+-#define LEN_OPER        (0x400 + XHCI_PORT_PR_SZ * XHCI_MAXPORTS)
+-#define LEN_RUNTIME     ((XHCI_MAXINTRS + 1) * XHCI_INTR_IR_SZ)
+-#define LEN_DOORBELL    ((XHCI_MAXSLOTS + 1) * 0x20)
 -
- static void xhci_pci_intr_update(XHCIState *xhci, int n, bool enable)
- {
-     XHCIPciState *s = container_of(xhci, XHCIPciState, xhci);
-@@ -105,6 +102,31 @@ static int xhci_pci_vmstate_post_load(void *opaque, int version_id)
-    return 0;
- }
+-#define OFF_OPER        LEN_CAP
+-#define OFF_RUNTIME     0x1000
+-#define OFF_DOORBELL    0x2000
+-
+-#if (OFF_OPER + LEN_OPER) > OFF_RUNTIME
+-#error Increase OFF_RUNTIME
++#if (XHCI_REGS_OFFSET_PORT + XHCI_REGS_LENGTH_PORT) > XHCI_REGS_OFFSET_RUNTIME
++#error Increase XHCI_REGS_OFFSET_RUNTIME
+ #endif
+-#if (OFF_RUNTIME + LEN_RUNTIME) > OFF_DOORBELL
+-#error Increase OFF_DOORBELL
++#if (XHCI_REGS_OFFSET_RUNTIME + XHCI_REGS_LENGTH_RUNTIME) >    \
++    XHCI_REGS_OFFSET_DOORBELL
++#error Increase XHCI_REGS_OFFSET_DOORBELL
+ #endif
+-#if (OFF_DOORBELL + LEN_DOORBELL) > XHCI_LEN_REGS
++#if (XHCI_REGS_OFFSET_DOORBELL + XHCI_REGS_LENGTH_DOORBELL) > XHCI_LEN_REGS
+ # error Increase XHCI_LEN_REGS
+ #endif
  
-+static int xhci_pci_add_pm_capability(PCIDevice *pci_dev, uint8_t offset,
-+                                      Error **errp)
-+{
-+    int err;
-+
-+    err = pci_add_capability(pci_dev, PCI_CAP_ID_PM, offset,
-+                             PCI_PM_SIZEOF, errp);
-+    if (err < 0) {
-+        return err;
-+    }
-+
-+    pci_set_word(pci_dev->config + offset + PCI_PM_PMC,
-+                 PCI_PM_CAP_VER_1_2 |
-+                 PCI_PM_CAP_D1 | PCI_PM_CAP_D2 |
-+                 PCI_PM_CAP_PME_D0 | PCI_PM_CAP_PME_D1 |
-+                 PCI_PM_CAP_PME_D2 | PCI_PM_CAP_PME_D3hot);
-+    pci_set_word(pci_dev->wmask + offset + PCI_PM_PMC, 0);
-+    pci_set_word(pci_dev->config + offset + PCI_PM_CTRL,
-+                 PCI_PM_CTRL_NO_SOFT_RESET);
-+    pci_set_word(pci_dev->wmask + offset + PCI_PM_CTRL,
-+                 PCI_PM_CTRL_STATE_MASK);
-+
-+    return 0;
-+}
-+
- static void usb_xhci_pci_realize(struct PCIDevice *dev, Error **errp)
- {
-     int ret;
-@@ -113,7 +135,7 @@ static void usb_xhci_pci_realize(struct PCIDevice *dev, Error **errp)
+@@ -2582,7 +2574,7 @@ static uint64_t xhci_cap_read(void *ptr, hwaddr reg, unsigned size)
  
-     dev->config[PCI_CLASS_PROG] = 0x30;    /* xHCI */
-     dev->config[PCI_INTERRUPT_PIN] = 0x01; /* interrupt pin 1 */
--    dev->config[PCI_CACHE_LINE_SIZE] = 0x10;
-+    dev->config[PCI_CACHE_LINE_SIZE] = s->cache_line_size;
-     dev->config[0x60] = 0x30; /* release number */
+     switch (reg) {
+     case XHCI_HCCAP_REG_CAPLENGTH: /* Covers HCIVERSION and CAPLENGTH */
+-        ret = 0x01000000 | LEN_CAP;
++        ret = 0x01000000 | XHCI_REGS_LENGTH_CAP;
+         break;
+     case XHCI_HCCAP_REG_HCSPARAMS1:
+         ret = ((xhci->numports_2+xhci->numports_3)<<24)
+@@ -2602,10 +2594,10 @@ static uint64_t xhci_cap_read(void *ptr, hwaddr reg, unsigned size)
+         }
+         break;
+     case XHCI_HCCAP_REG_DBOFF:
+-        ret = OFF_DOORBELL;
++        ret = XHCI_REGS_OFFSET_DOORBELL;
+         break;
+     case XHCI_HCCAP_REG_RTSOFF:
+-        ret = OFF_RUNTIME;
++        ret = XHCI_REGS_OFFSET_RUNTIME;
+         break;
  
-     object_property_set_link(OBJECT(&s->xhci), "host", OBJECT(s), NULL);
-@@ -126,8 +148,16 @@ static void usb_xhci_pci_realize(struct PCIDevice *dev, Error **errp)
-         s->xhci.nec_quirks = true;
-     }
+     /* extended capabilities */
+@@ -3255,22 +3247,26 @@ static void usb_xhci_realize(DeviceState *dev, Error **errp)
  
-+    if (s->pm_cap_off) {
-+        if (xhci_pci_add_pm_capability(dev, s->pm_cap_off, &err)) {
-+            error_propagate(errp, err);
-+            return;
-+        }
-+    }
-+
-     if (s->msi != ON_OFF_AUTO_OFF) {
--        ret = msi_init(dev, 0x70, s->xhci.numintrs, true, false, &err);
-+        ret = msi_init(dev, s->msi_cap_off, s->xhci.numintrs,
-+                       true, false, &err);
-         /*
-          * Any error other than -ENOTSUP(board's MSI support is broken)
-          * is a programming error
-@@ -144,22 +174,47 @@ static void usb_xhci_pci_realize(struct PCIDevice *dev, Error **errp)
-         /* With msi=auto, we fall back to MSI off silently */
-         error_free(err);
-     }
-+
-     pci_register_bar(dev, 0,
-                      PCI_BASE_ADDRESS_SPACE_MEMORY |
-                      PCI_BASE_ADDRESS_MEM_TYPE_64,
-                      &s->xhci.mem);
+     memory_region_init(&xhci->mem, OBJECT(dev), "xhci", XHCI_LEN_REGS);
+     memory_region_init_io(&xhci->mem_cap, OBJECT(dev), &xhci_cap_ops, xhci,
+-                          "capabilities", LEN_CAP);
++                          "capabilities", XHCI_REGS_LENGTH_CAP);
+     memory_region_init_io(&xhci->mem_oper, OBJECT(dev), &xhci_oper_ops, xhci,
+-                          "operational", 0x400);
++                          "operational", XHCI_REGS_LENGTH_OPER);
+     memory_region_init_io(&xhci->mem_runtime, OBJECT(dev), &xhci_runtime_ops,
+-                           xhci, "runtime", LEN_RUNTIME);
++                           xhci, "runtime", XHCI_REGS_LENGTH_RUNTIME);
+     memory_region_init_io(&xhci->mem_doorbell, OBJECT(dev), &xhci_doorbell_ops,
+-                           xhci, "doorbell", LEN_DOORBELL);
++                           xhci, "doorbell", XHCI_REGS_LENGTH_DOORBELL);
  
-     if (pci_bus_is_express(pci_get_bus(dev))) {
--        ret = pcie_endpoint_cap_init(dev, 0xa0);
-+        ret = pcie_endpoint_cap_init(dev, s->pcie_cap_off);
-         assert(ret > 0);
-     }
+-    memory_region_add_subregion(&xhci->mem, 0,            &xhci->mem_cap);
+-    memory_region_add_subregion(&xhci->mem, OFF_OPER,     &xhci->mem_oper);
+-    memory_region_add_subregion(&xhci->mem, OFF_RUNTIME,  &xhci->mem_runtime);
+-    memory_region_add_subregion(&xhci->mem, OFF_DOORBELL, &xhci->mem_doorbell);
++    memory_region_add_subregion(&xhci->mem, XHCI_REGS_OFFSET_CAP,
++                                &xhci->mem_cap);
++    memory_region_add_subregion(&xhci->mem, XHCI_REGS_OFFSET_OPER,
++                                &xhci->mem_oper);
++    memory_region_add_subregion(&xhci->mem, XHCI_REGS_OFFSET_RUNTIME,
++                                &xhci->mem_runtime);
++    memory_region_add_subregion(&xhci->mem, XHCI_REGS_OFFSET_DOORBELL,
++                                &xhci->mem_doorbell);
  
-     if (s->msix != ON_OFF_AUTO_OFF) {
--        /* TODO check for errors, and should fail when msix=on */
--        msix_init(dev, s->xhci.numintrs,
--                  &s->xhci.mem, 0, OFF_MSIX_TABLE,
--                  &s->xhci.mem, 0, OFF_MSIX_PBA,
--                  0x90, NULL);
-+        MemoryRegion *msix_bar = &s->xhci.mem;
-+
-+        if (s->msix_bar_nr != 0) {
-+            memory_region_init(&dev->msix_exclusive_bar, OBJECT(dev),
-+                               "xhci-msix", s->msix_bar_size);
-+            msix_bar = &dev->msix_exclusive_bar;
-+            pci_register_bar(dev, s->msix_bar_nr,
-+                             PCI_BASE_ADDRESS_SPACE_MEMORY |
-+                             PCI_BASE_ADDRESS_MEM_TYPE_64,
-+                             msix_bar);
-+        }
-+
-+        ret = msix_init(dev, s->xhci.numintrs,
-+                        msix_bar, s->msix_bar_nr, s->msix_table_off,
-+                        msix_bar, s->msix_bar_nr, s->msix_pba_off,
-+                        s->msix_cap_off, &err);
-+        if (ret == -ENOTSUP && s->msi == ON_OFF_AUTO_AUTO) {
-+            /* report that msix is not supported, but do not error out */
-+            warn_report_err(err);
-+        } else if (ret == -ENOTSUP) {
-+            /* Can't satisfy user's explicit msix=on request, fail */
-+            error_append_hint(&err, "You have to use msix=auto (default) or "
-+                    "msix=off with this machine type.\n");
-+            error_propagate(errp, err);
-+            return;
-+        } else if (ret < 0) {
-+            error_propagate(errp, err);
-+            return;
-+        }
-     }
-     s->xhci.as = pci_get_address_space(dev);
- }
-@@ -196,6 +251,16 @@ static void xhci_instance_init(Object *obj)
-     PCI_DEVICE(obj)->cap_present |= QEMU_PCI_CAP_EXPRESS;
-     object_initialize_child(obj, "xhci-core", &s->xhci, TYPE_XHCI);
-     qdev_alias_all_properties(DEVICE(&s->xhci), obj);
-+
-+    s->cache_line_size = 0x10;
-+    s->pm_cap_off = 0;
-+    s->pcie_cap_off = 0xa0;
-+    s->msi_cap_off = 0x70;
-+    s->msix_cap_off = 0x90;
-+    s->msix_bar_nr = 0;
-+    s->msix_bar_size = 0;
-+    s->msix_table_off = 0x3000;
-+    s->msix_pba_off = 0x3800;
- }
- 
- static const Property xhci_pci_properties[] = {
+     for (i = 0; i < xhci->numports; i++) {
+         XHCIPort *port = &xhci->ports[i];
+-        uint32_t offset = OFF_OPER + 0x400 + XHCI_PORT_PR_SZ * i;
++        uint32_t offset = XHCI_REGS_OFFSET_PORT + XHCI_PORT_PR_SZ * i;
+         port->xhci = xhci;
+         memory_region_init_io(&port->mem, OBJECT(dev), &xhci_port_ops, port,
+                               port->name, XHCI_PORT_PR_SZ);
 -- 
 2.45.2
 
