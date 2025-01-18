@@ -4,63 +4,63 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C52E8C02185
-	for <qemu-devel@archiver.kernel.org>; Sat, 18 Jan 2025 07:10:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C15A5C02185
+	for <qemu-devel@archiver.kernel.org>; Sat, 18 Jan 2025 07:11:10 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tZ2xX-0003Fn-1M; Sat, 18 Jan 2025 02:09:31 -0500
+	id 1tZ2xW-0003FA-1W; Sat, 18 Jan 2025 02:09:30 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <npiggin@gmail.com>) id 1tZ2xS-0003Dv-Oe
- for qemu-devel@nongnu.org; Sat, 18 Jan 2025 02:09:27 -0500
-Received: from mail-pj1-x1035.google.com ([2607:f8b0:4864:20::1035])
+ (Exim 4.90_1) (envelope-from <npiggin@gmail.com>) id 1tZ2xP-0003DH-QP
+ for qemu-devel@nongnu.org; Sat, 18 Jan 2025 02:09:24 -0500
+Received: from mail-pl1-x629.google.com ([2607:f8b0:4864:20::629])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <npiggin@gmail.com>) id 1tZ2xQ-0007ps-Rk
- for qemu-devel@nongnu.org; Sat, 18 Jan 2025 02:09:26 -0500
-Received: by mail-pj1-x1035.google.com with SMTP id
- 98e67ed59e1d1-2ef70c7efa5so4109691a91.2
- for <qemu-devel@nongnu.org>; Fri, 17 Jan 2025 23:09:24 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <npiggin@gmail.com>) id 1tZ2xO-0007pI-27
+ for qemu-devel@nongnu.org; Sat, 18 Jan 2025 02:09:23 -0500
+Received: by mail-pl1-x629.google.com with SMTP id
+ d9443c01a7336-2165448243fso66777965ad.1
+ for <qemu-devel@nongnu.org>; Fri, 17 Jan 2025 23:09:20 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1737184163; x=1737788963; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1737184159; x=1737788959; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=Auj/lFHkLSk6o6v8/a4KxcoWT3RjhdCD5eZzJWt0p3Y=;
- b=GCsphVSMJNz+jR0/gX7CYWAZtOHe1fquDmVI3h6vOhufqqm1bjUTBFcGkgCRLSNRM3
- hWMMw31474jl/uwAT98yFUm9kUqRlxLncLRJ6oLlJMxYqxDuFn48uejh0dcEVrQqmH0k
- nknXc0kpsQklX40sslj4hbV8IkpyCmI0QB/4mXL8/Gwwr4F10EX5/D+ZD22jbvXrFDRE
- 6y6h/ih2Bg+bPIhyN/Bd76LBgOkI+641zO7cuIfUDdGdKUfIBYbNf5af3BE9IxdfKFam
- YDao0gYG5xwjXgntZHuPcPeBlFnjUnWnnqpRz3fsIZ8ncF3z93mX5wRvU18lQZwtj8li
- LBfQ==
+ bh=v4VzgFnlAufaRydiep0qE8J1DEBNHc9FILqOQebNfGs=;
+ b=ZWIxXcz7F3qoPpbg60iLJMJ5G8TFU9Tx4D7kSrQYNMH3i6Gmh/Qu37mjgXcUogeF+C
+ vOzRPWVfKS6DKdUcrG3gEw9nnkcIqk+6gmXtEdFWGYX5PZEClreDFzXHav46O7Pss71E
+ YHInsKUhaxuw5ueQMb6KBeqtlxDR5tpa1zrOxfiO4K+g0Dqpa06orSAQqaVjygCLFT8Z
+ Jkl8ibafaYO95rrk1KTn4d2ZSCZZb4AX+nxm+rsEpsJJTWIZPORMRmL8ZShtDNpnHFw9
+ 3qTIzdVsJOrC3peh18YrWq8gudM/f7KoCTxmK1rFngDv1Tr344rFFpKZQC+pdNUETEDn
+ dtlw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1737184163; x=1737788963;
+ d=1e100.net; s=20230601; t=1737184159; x=1737788959;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=Auj/lFHkLSk6o6v8/a4KxcoWT3RjhdCD5eZzJWt0p3Y=;
- b=bhTq0aMOIgmWBWP7qJOpNBXNf7y2dVZ/xHeBWl8lbEyKdhpA0YkfcOFvRvAe0h9vUc
- dLAzAf8MmP3NcHFldjeV7mvoMI5gtEhcseASgyvTbBIm4SxoqPBzjVWZafnl2+2X5AAN
- 4DAvmjloyB9yJLyRH+eWzO7UoTz3+uNSdmSgsFfU0duAnpCLCe4njyCtdcnNCRBfeWl4
- qx2V0lmM0sNAogPlyXS9bkCJ0gAfIfJDMtDGSp0QtmXKdq+oy5y7QdY0zU1nx1dNwqI+
- pnIR3USrsYQhgQk+B2lymUqcB5MjRwmjQSJqEJgOzYwuNG49+MBKWkTPe/YYAu4TYQFz
- HQuA==
-X-Gm-Message-State: AOJu0YymuRXZuPjXo8LONpRm3zlZUhqtON2I2XSdit/pk/MvS3B/TsX7
- iR9ydojwzAxsI7VlNySA7+NuvwC37gQ9czMRXCJQUp88bO0jA63IjtrtKQ==
-X-Gm-Gg: ASbGnct7Ymn6TO0H7alu84HoU8DZTAZobJXhpffGfzG1DupM9ccwSqAjauWkOxMtt2N
- l1PxQhTg26T/4IJy/jg8KfGCDy/DaD0V6QJt5luxBLUkMboLKSXCyS0GkBkn7sptUjikbTfBW+D
- smKLj11JtdfeahypZ2AVJzbVApaK9WMFLAomh4cR/B9J1W+6gLdzCc28qaZ4gEw+4f9I19AxU0w
- dpQDq7IYo7V2bsl7RRyRtqg5D8Ly6WjwuKuSjvNg3r6Aoi4+Z6xc7GczxerHORS8REd2xI/RB6S
- a6LS2BTDNC81HL/U6feHNNfe/Vxj
-X-Google-Smtp-Source: AGHT+IH4Ln7YyDyAVGQur8xll+OxxFjkqlv83CnGLLq0I4r5KEJMBbg6taLXxuKnSG3WQPNSNmD/NA==
-X-Received: by 2002:a05:6a00:1a94:b0:725:ea30:aafc with SMTP id
- d2e1a72fcca58-72daf929f5cmr6365577b3a.5.1737184162848; 
- Fri, 17 Jan 2025 23:09:22 -0800 (PST)
+ bh=v4VzgFnlAufaRydiep0qE8J1DEBNHc9FILqOQebNfGs=;
+ b=Cl5KpbDWTLEq69H6haZiqw2tby0VXY9tecCjUcii6gw5VNCNRg+SpYyOvYxLxckaOA
+ H6L9p+OZYpOm/YCEaf/ACJ2zPTFY02qlt3sgYOBrZnItgHq5a3oSDOwQTvcP4M6CleDG
+ OJ3hrqF6F2AVZgp+NjN7eukpmhGIZ2jhAq27WHdT72vyTIV/NKCwoY1Q2iaGn2YmMkxK
+ gDvl1nJ5HYzb5IgMjlAPF4NOyUoA/jkCgZdMFuFUAXbDQAGEnyhR0l0fS6bHLuYIqp7U
+ 8PQLuUxy/IrMA0TPN76sni9sXFXsuxz4DOxqs1yhsn34UcFIwPjLyHQbH8rmPwYmu72r
+ /PVQ==
+X-Gm-Message-State: AOJu0Yy+3QNnDUaN9AGq3PMv8AMa6PJgpaAZrtdlsbfbe3vmmCUmBcFy
+ khXtHMiq5OcjUDcUPxJAiyyMVUVKw69WDuUbTpKiQhirCvgCqvRR0Tvjaw==
+X-Gm-Gg: ASbGncvmjTSVIT5E7IjU4Z6JdlH7NN6Cbg2Lhln7DdemQuKtg9zunUq8QLZ02Ty3MRk
+ 8M1970/jQT40vnXq6VQMRWAP/IoQLwWUhj+CPcUALtvgkukf5aFSyHo3+auLzxwBuRUF2bP+mSf
+ D5jBo7lZwRqLh1X02XITzzMLdMBSQkWiF0VbjnNJFjA1AeNAjF4zuRkPbXSOvBdjZFi5Z/p7zi1
+ dXZRsvR8vK/YoIrTmjaBE3eiBM7vV3K57eqTk2CF0H8vkkfknQJtGYo1b3EhVFl6N62XU0On0dU
+ 1K2ODRiLlMbtJ2JvBEuh1ZQoyTA8
+X-Google-Smtp-Source: AGHT+IEVZGUaGonDWGU/ppEhKH/xlMbup3a7MCMdcv83t90xMoyDnFls1udIPHlS6YLD5grw53SUGA==
+X-Received: by 2002:a05:6a20:3942:b0:1e0:c6c0:1e08 with SMTP id
+ adf61e73a8af0-1eb214afe1cmr7864173637.25.1737184158882; 
+ Fri, 17 Jan 2025 23:09:18 -0800 (PST)
 Received: from wheely.local0.net (124-169-212-233.tpgi.com.au.
  [124.169.212.233]) by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-72dab9c95adsm3192880b3a.107.2025.01.17.23.09.19
+ d2e1a72fcca58-72dab9c95adsm3192880b3a.107.2025.01.17.23.09.15
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 17 Jan 2025 23:09:22 -0800 (PST)
+ Fri, 17 Jan 2025 23:09:18 -0800 (PST)
 From: Nicholas Piggin <npiggin@gmail.com>
 To: qemu-devel@nongnu.org
 Cc: Nicholas Piggin <npiggin@gmail.com>, Paolo Bonzini <pbonzini@redhat.com>,
@@ -68,16 +68,16 @@ Cc: Nicholas Piggin <npiggin@gmail.com>, Paolo Bonzini <pbonzini@redhat.com>,
  Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
  Fabiano Rosas <farosas@suse.de>, Laurent Vivier <lvivier@redhat.com>,
  Phil Dennis-Jordan <phil@philjordan.eu>
-Subject: [PATCH v2 5/8] tests/qtest/xhci: add a test for TR NOOP commands
-Date: Sat, 18 Jan 2025 17:08:50 +1000
-Message-ID: <20250118070853.653778-6-npiggin@gmail.com>
+Subject: [PATCH v2 4/8] hw/usb/xhci: Support TR NOOP commands
+Date: Sat, 18 Jan 2025 17:08:49 +1000
+Message-ID: <20250118070853.653778-5-npiggin@gmail.com>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20250118070853.653778-1-npiggin@gmail.com>
 References: <20250118070853.653778-1-npiggin@gmail.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1035;
- envelope-from=npiggin@gmail.com; helo=mail-pj1-x1035.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::629;
+ envelope-from=npiggin@gmail.com; helo=mail-pl1-x629.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -100,69 +100,73 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Run some TR NOOP commands through the transfer ring.
+Implement XHCI TR NOOP commands by setting up then immediately
+completing the packet.
+
+The IBM AIX XHCI HCD driver uses NOOP commands to check driver and
+hardware health, which works after this change.
 
 Signed-off-by: Nicholas Piggin <npiggin@gmail.com>
 ---
- tests/qtest/usb-hcd-xhci-test.c | 36 ++++++++++++++++++++++++++++++++-
- 1 file changed, 35 insertions(+), 1 deletion(-)
+ hw/usb/hcd-xhci.c | 28 +++++++++++++++++++++++++++-
+ 1 file changed, 27 insertions(+), 1 deletion(-)
 
-diff --git a/tests/qtest/usb-hcd-xhci-test.c b/tests/qtest/usb-hcd-xhci-test.c
-index b9fb2356d26..63359fb70b9 100644
---- a/tests/qtest/usb-hcd-xhci-test.c
-+++ b/tests/qtest/usb-hcd-xhci-test.c
-@@ -361,9 +361,33 @@ static void submit_cr_trb(XHCIQState *s, XHCITRB *trb)
-     xhci_db_writel(s, 0, 0); /* doorbell 0 */
+diff --git a/hw/usb/hcd-xhci.c b/hw/usb/hcd-xhci.c
+index c68cf268365..256bee6c72f 100644
+--- a/hw/usb/hcd-xhci.c
++++ b/hw/usb/hcd-xhci.c
+@@ -1662,6 +1662,20 @@ static int xhci_fire_transfer(XHCIState *xhci, XHCITransfer *xfer, XHCIEPContext
+     return xhci_submit(xhci, xfer, epctx);
  }
  
-+static void submit_tr_trb(XHCIQState *s, int slot, XHCITRB *trb)
++static int xhci_noop_transfer(XHCIState *xhci, XHCITransfer *xfer)
 +{
-+    XHCIQSlotState *sl = &s->slots[slot];
-+    uint64_t tr_addr = sl->transfer_ring + sl->tr_trb_idx * TRB_SIZE;
-+    XHCITRB t;
-+
-+    trb->control |= sl->tr_trb_c; /* C */
-+
-+    t.parameter = cpu_to_le64(trb->parameter);
-+    t.status = cpu_to_le32(trb->status);
-+    t.control = cpu_to_le32(trb->control);
-+
-+    qtest_memwrite(s->parent->qts, tr_addr, &t, TRB_SIZE);
-+    sl->tr_trb_idx++;
-+    /* Last entry contains the link, so wrap back */
-+    if (sl->tr_trb_idx == sl->tr_trb_entries - 1) {
-+        set_link_trb(s, sl->transfer_ring, sl->tr_trb_c, sl->tr_trb_entries);
-+        sl->tr_trb_idx = 0;
-+        sl->tr_trb_c ^= 1;
++    /*
++     * TR NOOP conceptually probably better not call into USB subsystem
++     * (usb_packet_setup() via xhci_setup_packet()). In practice it
++     * works and avoids code duplication.
++     */
++    if (xhci_setup_packet(xfer) < 0) {
++        return -1;
 +    }
-+    xhci_db_writel(s, slot, 1); /* doorbell slot, EP0 target */
++    xhci_try_complete_packet(xfer);
++    return 0;
 +}
 +
- /*
-  * This test brings up an endpoint and runs some noops through its command
-- * ring and gets responses back on the event ring.
-+ * ring and gets responses back on the event ring, then brings up a device
-+ * context and runs some noops through its transfer ring.
-  *
-  * This could be librified in future (like AHCI0 to have a way to bring up
-  * an endpoint to test device protocols.
-@@ -519,6 +543,16 @@ static void pci_xhci_stress_rings(void)
+ static void xhci_kick_ep(XHCIState *xhci, unsigned int slotid,
+                          unsigned int epid, unsigned int streamid)
+ {
+@@ -1784,6 +1798,8 @@ static void xhci_kick_epctx(XHCIEPContext *epctx, unsigned int streamid)
  
-     /* XXX: Could check EP state is running */
- 
-+    /* Wrap the transfer ring a few times */
-+    for (i = 0; i < 100; i++) {
-+        /* Issue a transfer ring slot 0 noop */
-+        memset(&trb, 0, TRB_SIZE);
-+        trb.control |= TR_NOOP << TRB_TYPE_SHIFT;
-+        trb.control |= TRB_TR_IOC;
-+        submit_tr_trb(s, slotid, &trb);
-+        wait_event_trb(s, &trb);
-+    }
+     epctx->kick_active++;
+     while (1) {
++        bool noop = false;
 +
-     /* Shut it down */
-     qpci_msix_disable(s->dev);
+         length = xhci_ring_chain_length(xhci, ring);
+         if (length <= 0) {
+             if (epctx->type == ET_ISO_OUT || epctx->type == ET_ISO_IN) {
+@@ -1812,10 +1828,20 @@ static void xhci_kick_epctx(XHCIEPContext *epctx, unsigned int streamid)
+                 epctx->kick_active--;
+                 return;
+             }
++            if (type == TR_NOOP) {
++                noop = true;
++            }
+         }
+         xfer->streamid = streamid;
  
+-        if (epctx->epid == 1) {
++        if (noop) {
++            if (length != 1) {
++                qemu_log_mask(LOG_GUEST_ERROR,
++                              "%s: NOOP TR TRB within TRB chain!\n", __func__);
++                /* Undefined behavior, we no-op the entire chain */
++            }
++            xhci_noop_transfer(xhci, xfer);
++        } else if (epctx->epid == 1) {
+             xhci_fire_ctl_transfer(xhci, xfer);
+         } else {
+             xhci_fire_transfer(xhci, xfer, epctx);
 -- 
 2.45.2
 
