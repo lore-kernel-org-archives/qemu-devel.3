@@ -4,86 +4,91 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C15A5C02185
-	for <qemu-devel@archiver.kernel.org>; Sat, 18 Jan 2025 07:11:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id AFF2CC02187
+	for <qemu-devel@archiver.kernel.org>; Sat, 18 Jan 2025 07:39:22 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tZ2xW-0003FA-1W; Sat, 18 Jan 2025 02:09:30 -0500
+	id 1tZ3PV-0006Os-6K; Sat, 18 Jan 2025 02:38:25 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <npiggin@gmail.com>) id 1tZ2xP-0003DH-QP
- for qemu-devel@nongnu.org; Sat, 18 Jan 2025 02:09:24 -0500
-Received: from mail-pl1-x629.google.com ([2607:f8b0:4864:20::629])
+ (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
+ id 1tZ3PT-0006Oj-FW
+ for qemu-devel@nongnu.org; Sat, 18 Jan 2025 02:38:23 -0500
+Received: from mail-pj1-x102b.google.com ([2607:f8b0:4864:20::102b])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <npiggin@gmail.com>) id 1tZ2xO-0007pI-27
- for qemu-devel@nongnu.org; Sat, 18 Jan 2025 02:09:23 -0500
-Received: by mail-pl1-x629.google.com with SMTP id
- d9443c01a7336-2165448243fso66777965ad.1
- for <qemu-devel@nongnu.org>; Fri, 17 Jan 2025 23:09:20 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
+ id 1tZ3PR-0004hK-5A
+ for qemu-devel@nongnu.org; Sat, 18 Jan 2025 02:38:22 -0500
+Received: by mail-pj1-x102b.google.com with SMTP id
+ 98e67ed59e1d1-2ee76befe58so4979685a91.2
+ for <qemu-devel@nongnu.org>; Fri, 17 Jan 2025 23:38:20 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1737184159; x=1737788959; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=v4VzgFnlAufaRydiep0qE8J1DEBNHc9FILqOQebNfGs=;
- b=ZWIxXcz7F3qoPpbg60iLJMJ5G8TFU9Tx4D7kSrQYNMH3i6Gmh/Qu37mjgXcUogeF+C
- vOzRPWVfKS6DKdUcrG3gEw9nnkcIqk+6gmXtEdFWGYX5PZEClreDFzXHav46O7Pss71E
- YHInsKUhaxuw5ueQMb6KBeqtlxDR5tpa1zrOxfiO4K+g0Dqpa06orSAQqaVjygCLFT8Z
- Jkl8ibafaYO95rrk1KTn4d2ZSCZZb4AX+nxm+rsEpsJJTWIZPORMRmL8ZShtDNpnHFw9
- 3qTIzdVsJOrC3peh18YrWq8gudM/f7KoCTxmK1rFngDv1Tr344rFFpKZQC+pdNUETEDn
- dtlw==
+ d=daynix-com.20230601.gappssmtp.com; s=20230601; t=1737185899; x=1737790699;
+ darn=nongnu.org; 
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=fqvyK7+f012SWXxtKWNbx3TFj491ym0Hzq+UsmRdYgw=;
+ b=XDJFA6zn31XIfsri/C3hVYwvZok1n96mQUqfNfGovDs6sjfFAZ9lmphltfCPUtheYO
+ 9yLyaBmkNf+MDXI/sapwIHLoaU89GWtnYsZ9LRW2n35FLzGRu44c0DR3iL55BPsxgBSk
+ wHReyTe3ersA3kFJUg3BzrVWx+jwBfFPDzRR50OHF7vVaCW+Dgj20xhr69pcV5lMU69u
+ z79AmUj9HcuzrPQt27CXimlgsOKuUtH+IzcEuZMKaUAjOmzKM/GoOKKFtXQvWavB/OxX
+ kudlmSGXbfni1vqOgLKzoxZ+CI63lAZEkX7wC6qFWz7v72eY+oAIe3f1ZvnWPnlfaHCA
+ czjA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1737184159; x=1737788959;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=v4VzgFnlAufaRydiep0qE8J1DEBNHc9FILqOQebNfGs=;
- b=Cl5KpbDWTLEq69H6haZiqw2tby0VXY9tecCjUcii6gw5VNCNRg+SpYyOvYxLxckaOA
- H6L9p+OZYpOm/YCEaf/ACJ2zPTFY02qlt3sgYOBrZnItgHq5a3oSDOwQTvcP4M6CleDG
- OJ3hrqF6F2AVZgp+NjN7eukpmhGIZ2jhAq27WHdT72vyTIV/NKCwoY1Q2iaGn2YmMkxK
- gDvl1nJ5HYzb5IgMjlAPF4NOyUoA/jkCgZdMFuFUAXbDQAGEnyhR0l0fS6bHLuYIqp7U
- 8PQLuUxy/IrMA0TPN76sni9sXFXsuxz4DOxqs1yhsn34UcFIwPjLyHQbH8rmPwYmu72r
- /PVQ==
-X-Gm-Message-State: AOJu0Yy+3QNnDUaN9AGq3PMv8AMa6PJgpaAZrtdlsbfbe3vmmCUmBcFy
- khXtHMiq5OcjUDcUPxJAiyyMVUVKw69WDuUbTpKiQhirCvgCqvRR0Tvjaw==
-X-Gm-Gg: ASbGncvmjTSVIT5E7IjU4Z6JdlH7NN6Cbg2Lhln7DdemQuKtg9zunUq8QLZ02Ty3MRk
- 8M1970/jQT40vnXq6VQMRWAP/IoQLwWUhj+CPcUALtvgkukf5aFSyHo3+auLzxwBuRUF2bP+mSf
- D5jBo7lZwRqLh1X02XITzzMLdMBSQkWiF0VbjnNJFjA1AeNAjF4zuRkPbXSOvBdjZFi5Z/p7zi1
- dXZRsvR8vK/YoIrTmjaBE3eiBM7vV3K57eqTk2CF0H8vkkfknQJtGYo1b3EhVFl6N62XU0On0dU
- 1K2ODRiLlMbtJ2JvBEuh1ZQoyTA8
-X-Google-Smtp-Source: AGHT+IEVZGUaGonDWGU/ppEhKH/xlMbup3a7MCMdcv83t90xMoyDnFls1udIPHlS6YLD5grw53SUGA==
-X-Received: by 2002:a05:6a20:3942:b0:1e0:c6c0:1e08 with SMTP id
- adf61e73a8af0-1eb214afe1cmr7864173637.25.1737184158882; 
- Fri, 17 Jan 2025 23:09:18 -0800 (PST)
-Received: from wheely.local0.net (124-169-212-233.tpgi.com.au.
- [124.169.212.233]) by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-72dab9c95adsm3192880b3a.107.2025.01.17.23.09.15
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 17 Jan 2025 23:09:18 -0800 (PST)
-From: Nicholas Piggin <npiggin@gmail.com>
-To: qemu-devel@nongnu.org
-Cc: Nicholas Piggin <npiggin@gmail.com>, Paolo Bonzini <pbonzini@redhat.com>,
- "Michael S. Tsirkin" <mst@redhat.com>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- Fabiano Rosas <farosas@suse.de>, Laurent Vivier <lvivier@redhat.com>,
- Phil Dennis-Jordan <phil@philjordan.eu>
-Subject: [PATCH v2 4/8] hw/usb/xhci: Support TR NOOP commands
-Date: Sat, 18 Jan 2025 17:08:49 +1000
-Message-ID: <20250118070853.653778-5-npiggin@gmail.com>
-X-Mailer: git-send-email 2.45.2
-In-Reply-To: <20250118070853.653778-1-npiggin@gmail.com>
-References: <20250118070853.653778-1-npiggin@gmail.com>
+ d=1e100.net; s=20230601; t=1737185899; x=1737790699;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=fqvyK7+f012SWXxtKWNbx3TFj491ym0Hzq+UsmRdYgw=;
+ b=oulA2TIEWYtH6QpXYhxj4jRxBfZqjLAjxbNnsHTTe3WQN2BV+KnnUKgBMm81PioX2E
+ 53so+Ey1LJZRcnOkqmWou5o7oIq0Tc9hP0wrvoVF+R+SRLwfvDDK7YvVuAslUU374e+A
+ DlsrV+TpJaaUFmUJUcsW2Y4amMP6GXV/hOA88j2sth/dzShj6JL3gi0hTyB1MgXPoyRk
+ nCIBlaqrzMefm//7zPnehgrLl4gaF3t1dzw70gxl/jVZAQIeRXd9NAz3/tuP+nFbu531
+ 61knHCOiMi8UGZOZOCpHX5f1RtBoH9ttPCEx74pXneVEbWdkr6O0MRipu2Wbo/9snoKj
+ nG1Q==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCX06ggoN8cyOQhoanqgy+3BEGogTHz/Ow0qGZjLncRKID6HwFCCsBK4H9PLSBuUIjCygXENSDdF50xI@nongnu.org
+X-Gm-Message-State: AOJu0Yx4xPzDvfYszqXeTJpOt84+wTpDobeeYsCqurvarJ0MwBdsDmJF
+ EFkvJIlMHwtmo4kS91SDVnzbtF4FaZQnjuWuvPOAtKGrE5idzvnDN1zlJJ6sQmI=
+X-Gm-Gg: ASbGncuMU0MFMMlIySCbcRd8FJ2VqWa79dyhgrqoiudBMcqX4cGR46iGVoJRGKiSK9b
+ YwYwMMia4dB0PTpuiwRKmWW4KNUp9b7cdfbu/62c2XbenXppsS5wHhohae42+QgXnpBTNd+bGgB
+ ugNSwCtdx6ubIjtg8/7EtG0IDX16/i3Re2aA9uJ9ouvdi1knqdiLTnEATyxMWTPwIpovjS2v7V3
+ CU9jHe/Lh6lwmmxLQw/SB2UppYil2klkuZ1A0Sp6seHgDVCX1ambiFAm77i/6BZEm49OlHqjaQ9
+ b1k=
+X-Google-Smtp-Source: AGHT+IGOk/wpCV4VfEvaMKbIinQ/mzblgVF6yMIMhngcUluetv1ynA+1FRshn3ZsqMRMW10S/hbdeA==
+X-Received: by 2002:a05:6a00:802:b0:72a:a7a4:b4cd with SMTP id
+ d2e1a72fcca58-72dafbb61bemr8407780b3a.21.1737185899452; 
+ Fri, 17 Jan 2025 23:38:19 -0800 (PST)
+Received: from [10.4.77.142] ([118.103.63.134])
+ by smtp.gmail.com with ESMTPSA id
+ d2e1a72fcca58-72dab815f1bsm3227106b3a.65.2025.01.17.23.38.17
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Fri, 17 Jan 2025 23:38:18 -0800 (PST)
+Message-ID: <5c259a18-892c-409d-b0f3-f12b07a65c0a@daynix.com>
+Date: Sat, 18 Jan 2025 16:38:15 +0900
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::629;
- envelope-from=npiggin@gmail.com; helo=mail-pl1-x629.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 1/2] hw/pci/msix: Warn on PBA writes
+To: Nicholas Piggin <npiggin@gmail.com>, "Michael S . Tsirkin" <mst@redhat.com>
+Cc: Marcel Apfelbaum <marcel.apfelbaum@gmail.com>, qemu-devel@nongnu.org,
+ Dmitry Fleytman <dmitry.fleytman@gmail.com>,
+ Sriram Yagnaraman <sriram.yagnaraman@ericsson.com>
+References: <20250117172842.406338-1-npiggin@gmail.com>
+ <20250117172842.406338-2-npiggin@gmail.com>
+Content-Language: en-US
+From: Akihiko Odaki <akihiko.odaki@daynix.com>
+In-Reply-To: <20250117172842.406338-2-npiggin@gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::102b;
+ envelope-from=akihiko.odaki@daynix.com; helo=mail-pj1-x102b.google.com
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -100,74 +105,21 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Implement XHCI TR NOOP commands by setting up then immediately
-completing the packet.
+On 2025/01/18 2:28, Nicholas Piggin wrote:
+> Of the MSI-X PBA pending bits, the PCI Local Bus Specification says:
+> 
+>    Software should never write, and should only read
+>    Pending Bits. If software writes to Pending Bits, the
+>    result is undefined.
+> 
+> Log a GUEST_ERROR message if the PBA is written to by software.
+> 
+> Cc: Michael S. Tsirkin <mst@redhat.com>
+> Cc: Marcel Apfelbaum <marcel.apfelbaum@gmail.com>
+> Cc: Dmitry Fleytman <dmitry.fleytman@gmail.com>
+> Cc: Akihiko Odaki <akihiko.odaki@daynix.com>
+> Cc: Sriram Yagnaraman <sriram.yagnaraman@ericsson.com>
+> Signed-off-by: Nicholas Piggin <npiggin@gmail.com>
 
-The IBM AIX XHCI HCD driver uses NOOP commands to check driver and
-hardware health, which works after this change.
-
-Signed-off-by: Nicholas Piggin <npiggin@gmail.com>
----
- hw/usb/hcd-xhci.c | 28 +++++++++++++++++++++++++++-
- 1 file changed, 27 insertions(+), 1 deletion(-)
-
-diff --git a/hw/usb/hcd-xhci.c b/hw/usb/hcd-xhci.c
-index c68cf268365..256bee6c72f 100644
---- a/hw/usb/hcd-xhci.c
-+++ b/hw/usb/hcd-xhci.c
-@@ -1662,6 +1662,20 @@ static int xhci_fire_transfer(XHCIState *xhci, XHCITransfer *xfer, XHCIEPContext
-     return xhci_submit(xhci, xfer, epctx);
- }
- 
-+static int xhci_noop_transfer(XHCIState *xhci, XHCITransfer *xfer)
-+{
-+    /*
-+     * TR NOOP conceptually probably better not call into USB subsystem
-+     * (usb_packet_setup() via xhci_setup_packet()). In practice it
-+     * works and avoids code duplication.
-+     */
-+    if (xhci_setup_packet(xfer) < 0) {
-+        return -1;
-+    }
-+    xhci_try_complete_packet(xfer);
-+    return 0;
-+}
-+
- static void xhci_kick_ep(XHCIState *xhci, unsigned int slotid,
-                          unsigned int epid, unsigned int streamid)
- {
-@@ -1784,6 +1798,8 @@ static void xhci_kick_epctx(XHCIEPContext *epctx, unsigned int streamid)
- 
-     epctx->kick_active++;
-     while (1) {
-+        bool noop = false;
-+
-         length = xhci_ring_chain_length(xhci, ring);
-         if (length <= 0) {
-             if (epctx->type == ET_ISO_OUT || epctx->type == ET_ISO_IN) {
-@@ -1812,10 +1828,20 @@ static void xhci_kick_epctx(XHCIEPContext *epctx, unsigned int streamid)
-                 epctx->kick_active--;
-                 return;
-             }
-+            if (type == TR_NOOP) {
-+                noop = true;
-+            }
-         }
-         xfer->streamid = streamid;
- 
--        if (epctx->epid == 1) {
-+        if (noop) {
-+            if (length != 1) {
-+                qemu_log_mask(LOG_GUEST_ERROR,
-+                              "%s: NOOP TR TRB within TRB chain!\n", __func__);
-+                /* Undefined behavior, we no-op the entire chain */
-+            }
-+            xhci_noop_transfer(xhci, xfer);
-+        } else if (epctx->epid == 1) {
-             xhci_fire_ctl_transfer(xhci, xfer);
-         } else {
-             xhci_fire_transfer(xhci, xfer, epctx);
--- 
-2.45.2
-
+Reviewed-by: Akihiko Odaki <akihiko.odaki@daynix.com>
 
