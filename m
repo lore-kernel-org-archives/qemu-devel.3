@@ -4,117 +4,60 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 28E3EC02185
-	for <qemu-devel@archiver.kernel.org>; Sat, 18 Jan 2025 12:51:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9D183C02185
+	for <qemu-devel@archiver.kernel.org>; Sat, 18 Jan 2025 14:51:57 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tZ8HD-0004nv-7b; Sat, 18 Jan 2025 07:50:13 -0500
+	id 1tZAAW-00022e-JI; Sat, 18 Jan 2025 09:51:26 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1tZ8H3-0004jR-RQ
- for qemu-devel@nongnu.org; Sat, 18 Jan 2025 07:50:03 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1tZ8H2-0004a4-4L
- for qemu-devel@nongnu.org; Sat, 18 Jan 2025 07:50:01 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1737204598;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=8l/d5KV/8s3wkPJfWcuVSPM8mpiW0Rb/pYFHFNKELfk=;
- b=ajBpJ3oCrOHelRwzM/LeHgxVsTDb1Np7G5D6PlcMo6Gdqqdb9WIKvooM9YwxCcvHAGL5Ua
- RpGxHck15lVlYy4TZk7M5iqIh3vdF7ElHFoR0lxFdzJrpvFM4N1zI/aebeE2o3SMeH/FH3
- ccZlu/DptPDRQIRiQPT5v/X+hmGscn4=
-Received: from mail-qk1-f199.google.com (mail-qk1-f199.google.com
- [209.85.222.199]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-531-_t_zxh6kPcSFTxk0W1s84w-1; Sat, 18 Jan 2025 07:49:56 -0500
-X-MC-Unique: _t_zxh6kPcSFTxk0W1s84w-1
-X-Mimecast-MFC-AGG-ID: _t_zxh6kPcSFTxk0W1s84w
-Received: by mail-qk1-f199.google.com with SMTP id
- af79cd13be357-7b93c7ffaeeso583989385a.1
- for <qemu-devel@nongnu.org>; Sat, 18 Jan 2025 04:49:56 -0800 (PST)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1737204595; x=1737809395;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=8l/d5KV/8s3wkPJfWcuVSPM8mpiW0Rb/pYFHFNKELfk=;
- b=H7SeTm2lc5XP2b8qyGmw75nLsG7w7YXty68mjz7XPxD6Hc8lYpPA6qU51nt/MXuAub
- BV9A4P5H/Mze4WGbp+9AjR+o6JpMVpXMm4aB6sbzO0VMFuD3I3pwufYHRZR/8yLfCJ6i
- f4cUFVhRWjAfG5yKZP06xauwXm3hfbkTv486lh+Mof7On2Xywg2MQzA55VwS6QFn+NZj
- afVFXvWRhRhvHjnHh7Faf/CEJAYAtXhqJx9/yS0Hz2Ox7oBUF6/6PqmtIQtIE6WUWMFi
- ANoqUlF7gc6JWZoLvtCrRFc1FWVygMoJKceo7+6r9SmAAp3pdOfZCmdvnJtx2DHZPI7g
- bqQg==
-X-Forwarded-Encrypted: i=1;
- AJvYcCWQYS0ZxGupkZrhBn6YdHTDl4l9Bi1puHq45ae81yQnkZG7HwbI1UytbVUETvCHGKgzapfCdsak+7sc@nongnu.org
-X-Gm-Message-State: AOJu0YyBEQqD5gwfzy6vyNQmFkkuffDSt9bi9T0eJ0fvBsDka8/mHaLm
- khdrtqi7w7jdEgkrQonA33yJSdLpEXVP4It5Cy4KZuH72M5eYHk9VYsr3ztsu/xTW5e192bEAiu
- piAcTshATxisw6F7fD8pCZfZgOGyJ4FuGqkyxnhsqIbxGc1+16U6b
-X-Gm-Gg: ASbGncuAa9ZtYXCDbRVQlkh0kqm6+kTjX+yvVWNbe0pc0+t7ug5neK5RcLRRjqf2Yve
- KMGbgyAs1q4ZhPKpvR7MpjIjnPzVy/RPxeiK0UWh5XOvvyI0T0Q45esZsLb6bp2UapUGIQoM+8p
- Y1T/in34zcmqDiBzddhCdAEoQM7aBhOyfRJ6mzfwXI4fxPew4zbUcaSxxQoFOdYdeNia1xba4Nl
- mJbQl5Qjk+CdpZOrp+k8HcaPsKI4S0AkJcnT32KT6e8nAZrqHVkMKOuFgbYMtDt2JvbRaNdIVNR
- PtgmaM+3QR9X83NXsbRi2C7eg7UKFsE=
-X-Received: by 2002:ad4:5bee:0:b0:6d8:f005:b573 with SMTP id
- 6a1803df08f44-6e192b813fbmr230261276d6.1.1737204595561; 
- Sat, 18 Jan 2025 04:49:55 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IFXkf0h8fhUvSFDdW/CX0+VS3jBI8cELMSP9+v1TYSKY7yulhB6lNXIKatQkgaABHWRw+KFEA==
-X-Received: by 2002:ad4:5bee:0:b0:6d8:f005:b573 with SMTP id
- 6a1803df08f44-6e192b813fbmr230260796d6.1.1737204595132; 
- Sat, 18 Jan 2025 04:49:55 -0800 (PST)
-Received: from x1n (pool-99-254-114-190.cpe.net.cable.rogers.com.
- [99.254.114.190]) by smtp.gmail.com with ESMTPSA id
- 6a1803df08f44-6e1afcf7023sm21727486d6.122.2025.01.18.04.49.52
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sat, 18 Jan 2025 04:49:53 -0800 (PST)
-Date: Sat, 18 Jan 2025 07:49:51 -0500
-From: Peter Xu <peterx@redhat.com>
-To: Akihiko Odaki <akihiko.odaki@daynix.com>
-Cc: BALATON Zoltan <balaton@eik.bme.hu>, Eduardo Habkost <eduardo@habkost.net>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Yanan Wang <wangyanan55@huawei.com>, John Snow <jsnow@redhat.com>,
- Jiaxun Yang <jiaxun.yang@flygoat.com>, Nicholas Piggin <npiggin@gmail.com>,
- Daniel Henrique Barboza <danielhb413@gmail.com>,
- David Gibson <david@gibson.dropbear.id.au>,
- Harsh Prateek Bora <harshpb@linux.ibm.com>,
- Alexey Kardashevskiy <aik@ozlabs.ru>,
- "Michael S. Tsirkin" <mst@redhat.com>,
- Alex =?utf-8?Q?Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Fabiano Rosas <farosas@suse.de>, Paolo Bonzini <pbonzini@redhat.com>,
- David Hildenbrand <david@redhat.com>,
- Thomas Huth <thuth@redhat.com>, Laurent Vivier <lvivier@redhat.com>,
- Peter Maydell <peter.maydell@linaro.org>, qemu-devel@nongnu.org,
- qemu-block@nongnu.org, qemu-ppc@nongnu.org, devel@daynix.com
-Subject: Re: [PATCH v7 1/2] memory: Update inline documentation
-Message-ID: <Z4ujbzFJbRWTmOPK@x1n>
-References: <Z4e7gFSqdhcmJPYb@x1n>
- <dbf863f8-6174-4c37-9553-a2d94f06de00@daynix.com>
- <Z4fW_rI7Mfrtc1Fg@x1n>
- <af018f8a-ce00-4ce2-9fe9-b6ba3f97bfa1@daynix.com>
- <Z4fezdR1ApN8ZLTS@x1n>
- <99016684-b5f9-446c-b85f-0dc21d1edae6@daynix.com>
- <Z4kYxLsIbzq7jWzz@x1n>
- <627beb0f-e6f7-4733-997b-038b70195485@daynix.com>
- <Z4qXfgJMAySLFeOm@x1n>
- <d8ab7a88-cf34-4989-909a-bf5fad502f15@daynix.com>
+ (Exim 4.90_1) (envelope-from <tugy@chinatelecom.cn>)
+ id 1tZAAJ-000220-4w; Sat, 18 Jan 2025 09:51:11 -0500
+Received: from smtpnm6-06.21cn.com ([182.42.144.170] helo=chinatelecom.cn)
+ by eggs.gnu.org with esmtp (Exim 4.90_1)
+ (envelope-from <tugy@chinatelecom.cn>)
+ id 1tZAAG-0002g9-CN; Sat, 18 Jan 2025 09:51:10 -0500
+HMM_SOURCE_IP: 192.168.138.117:0.1188369201
+HMM_ATTACHE_NUM: 0000
+HMM_SOURCE_TYPE: SMTP
+Received: from clientip-125.70.78.163 (unknown [192.168.138.117])
+ by chinatelecom.cn (HERMES) with SMTP id 9E5F8E34B1;
+ Sat, 18 Jan 2025 22:39:47 +0800 (CST)
+X-189-SAVE-TO-SEND: +tugy@chinatelecom.cn
+Received: from  ([125.70.78.163])
+ by gateway-ssl-dep-84dfd8c7d7-bnxj5 with ESMTP id
+ 698b0ed951d4485e9c569b716afe0cf4 for berrange@redhat.com; 
+ Sat, 18 Jan 2025 22:39:51 CST
+X-Transaction-ID: 698b0ed951d4485e9c569b716afe0cf4
+X-Real-From: tugy@chinatelecom.cn
+X-Receive-IP: 125.70.78.163
+X-MEDUSA-Status: 0
+Message-ID: <00d9f300-97b6-40a9-84a6-08df71f1155c@chinatelecom.cn>
+Date: Sat, 18 Jan 2025 22:39:45 +0800
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <d8ab7a88-cf34-4989-909a-bf5fad502f15@daynix.com>
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=peterx@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -21
-X-Spam_score: -2.2
-X-Spam_bar: --
-X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.07,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+User-Agent: Mozilla Thunderbird
+Cc: tugy@chinatelecom.cn, eblake@redhat.com, armbru@redhat.com,
+ hreitz@redhat.com, qemu-block@nongnu.org, qemu-devel@nongnu.org
+Subject: Re: [PATCH 0/2] support block encryption/decryption in parallel
+To: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
+ Kevin Wolf <kwolf@redhat.com>
+References: <cover.1732789721.git.tugy@chinatelecom.cn>
+ <Z1xZK9u8L_ydtnAJ@redhat.com> <Z4j9mGpbbXyjKbmI@redhat.com>
+ <Z4pTMyvOTefCep87@redhat.com>
+Content-Language: en-US
+From: Guoyi Tu <tugy@chinatelecom.cn>
+In-Reply-To: <Z4pTMyvOTefCep87@redhat.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=182.42.144.170; envelope-from=tugy@chinatelecom.cn;
+ helo=chinatelecom.cn
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -130,86 +73,105 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Sat, Jan 18, 2025 at 07:15:56PM +0900, Akihiko Odaki wrote:
-> On 2025/01/18 2:46, Peter Xu wrote:
-> > On Fri, Jan 17, 2025 at 03:24:34PM +0900, Akihiko Odaki wrote:
-> > > On 2025/01/16 23:33, Peter Xu wrote:
-> > > > On Thu, Jan 16, 2025 at 02:37:38PM +0900, Akihiko Odaki wrote:
-> > > > > On 2025/01/16 1:14, Peter Xu wrote:
-> > > > > > On Thu, Jan 16, 2025 at 12:52:56AM +0900, Akihiko Odaki wrote:
-> > > > > > > Functionally, the ordering of container/subregion finalization matters if
-> > > > > > > some device tries to a container during finalization. In such a case,
-> > > > > >                          |
-> > > > > >                          ^ something is missing here, feel free to complete this.
-> > > > > 
-> > > > > Oops, I meant: functionally, the ordering of container/subregion
-> > > > > finalization matters if some device tries to use a container during
-> > > > > finalization.
-> > > > 
-> > > > This is true, though if we keep the concept of "all the MRs share the same
-> > > > lifecycle of the owner" idea, another fix of such is simply moving the
-> > > > container access before any detachment of MRs.
-> > > > 
-> > > > > 
-> > > > > > 
-> > > > > > > removing subregions from the container at random timing can result in an
-> > > > > > > unexpected behavior. There is little chance to have such a scenario but we
-> > > > > > > should stay the safe side if possible.
-> > > > > > 
-> > > > > > It sounds like a future feature, and I'm not sure we'll get there, so I
-> > > > > > don't worry that much.  Keeping refcount core idea simple is still very
-> > > > > > attractive to me.  I still prefer we have complete MR refcounting iff when
-> > > > > > necessary.  It's also possible it'll never happen to QEMU.
-> > > > > > 
-> > > > > 
-> > > > > It's not just about the future but also about compatibility with the current
-> > > > > device implementations. I will not be surprised even if the random ordering
-> > > > > of subregion finalization breaks one of dozens of devices we already have.
-> > > > > We should pay attention the details as we are touching the core
-> > > > > infrastructure.
-> > > > 
-> > > > Yes, if we can find any such example that we must follow the order of MR
-> > > > destruction, I think that could justify your approach will be required but
-> > > > not optional.  It's just that per my understanding there should be none,
-> > > > and even if there're very few outliers, it can still be trivially fixed as
-> > > > mentioned above.
-> > > 
-> > > It can be fixed but that means we need auditing the code of devices or wait
-> > > until we get a bug report.
-> > 
-> > We'd better have a solid example.
-> > 
-> > And for this specific question, IIUC we can have such problem even if
-> > internal-ref start to use MR refcounts.
-> > 
-> > It's because we have a not very straightforward way of finalize() an
-> > object, which is freeing all properties before its own finalize()..
-> > 
-> > static void object_finalize(void *data)
-> > {
-> >      ...
-> >      object_property_del_all(obj);
-> >      object_deinit(obj, ti);
-> >      ...
-> > }
-> > 
-> > I think it used to be the other way round (which will be easier to
-> > understand to me..), but changed after 76a6e1cc7cc.  It could boil down to
-> > two dependencies: (1) children's unparent() callback wanting to have the
-> > parent being present and valid, and (2) parent's finalize() callback
-> > wanting to have all children being present and valid.  I guess we chose (1)
-> > as of now.
-> > 
-> > So I suppose it means even with your patch, it won't help either as long as
-> > MRs are properties, and they can already all be gone in a device finalize()
-> > even with your new patch.
+Thank you for the additional background and suggestions.
+I will resend the second version.
+
+On 2025/1/17 20:55, Daniel 【外部账号】P. Berrangé wrote:
+> On Thu, Jan 16, 2025 at 01:37:44PM +0100, Kevin Wolf wrote:
+>> Am 13.12.2024 um 16:56 hat Daniel P. Berrangé geschrieben:
+>>> On Thu, Nov 28, 2024 at 06:51:20PM +0800, tugy@chinatelecom.cn wrote:
+>>>> From: Guoyi Tu <tugy@chinatelecom.cn>
+>>>>
+>>>> Currently, disk I/O encryption and decryption operations are performed sequentially
+>>>> in the main thread or IOthread. When the number of I/O requests increases,
+>>>> this becomes a performance bottleneck.
+>>>>
+>>>> To address this issue, this patch use thread pool to perform I/O encryption
+>>>> and decryption in parallel, improving overall efficiency.
+>>>
+>>> We already have support for parallel encryption through use of IO threads
+>>> since approximately this commit:
+>>>
+>>>    commit af206c284e4c1b17cdfb0f17e898b288c0fc1751
+>>>    Author: Stefan Hajnoczi <stefanha@redhat.com>
+>>>    Date:   Mon May 27 11:58:50 2024 -0400
+>>>
+>>>      block/crypto: create ciphers on demand
+>>>      
+>>>      Ciphers are pre-allocated by qcrypto_block_init_cipher() depending on
+>>>      the given number of threads. The -device
+>>>      virtio-blk-pci,iothread-vq-mapping= feature allows users to assign
+>>>      multiple IOThreads to a virtio-blk device, but the association between
+>>>      the virtio-blk device and the block driver happens after the block
+>>>      driver is already open.
+>>>      
+>>>      When the number of threads given to qcrypto_block_init_cipher() is
+>>>      smaller than the actual number of threads at runtime, the
+>>>      block->n_free_ciphers > 0 assertion in qcrypto_block_pop_cipher() can
+>>>      fail.
+>>>      
+>>>      Get rid of qcrypto_block_init_cipher() n_thread's argument and allocate
+>>>      ciphers on demand.
+>>>
+>>>
+>>> Say we have QEMU pinned to 4 host CPUs, and we've setup 4 IO threads
+>>> for the disk, then encryption can max out 4 host CPUs worth of resource.
+>>
+>> This is a lot of "if"s. Even just that it requires explicit
+>> configuration and doesn't work out of the box would be a strong point
+>> for me why having something that works by default (like a thread pool)
+>> is worth it.
+>>
+>> You're assuming that it's even possible to setup 4 iothreads which share
+>> the load evenly. That's not a given at all. The only device that can
+>> even make use of more than one iothread is virtio-blk. (And if we're
+>> looking at all devices that exist in QEMU, most devices can't even make
+>> use of a single iothread!) But if you do have a virtio-blk device, then
+>> that setup means one iothread per queue. In a Linux guest, if all I/O
+>> comes from a single CPU, then it will use the same queue and we'll have
+>> three idle iothreads and one that is overloaded.
+>>
+>> So in order to achieve a similar effect with iothreads, you must be
+>> using virtio-blk, you must explicitly configure four iothreads and four
+>> mappings of virtqueues to iothreads, and you must run a workload in the
+>> guest that performs I/O from four different threads running on different
+>> CPUs.
+>>
+>> There are certainly good use cases for iothreads, but with this number
+>> of preconditions, I don't think we can assume that they make it
+>> unnecessary to parallelise things in other ways, too.
 > 
-> The owner can object_ref() to keep the memory region alive.
-
-Do you mean explicitly (rather by the add_subregion)?  Why an owner need to
-do it at all, if it knows the MR is part of itself?
-
--- 
-Peter Xu
+> Ok thanks for the background, that all makes sense as a justification.
+> Lets capture a summary of this in the commit message.
+> 
+>>> How is this new proposed way to use a thread pool going to do better
+>>> than that in an apples-to-apples comparison ? ie allow same number
+>>> of host CPUs for both. The fundamental limit is still the AES performance
+>>> of the host CPU(s) that you allow QEMU to execute work on. If the thread
+>>> pool is allowed to use 4 host CPUs, it shouldn't be significantly different
+>>> from allowing use of 4 host CPUs for I/O threads surely ?
+>>>
+>>> Having multiple different ways to support parallel encryption is not
+>>> ideal. If there's something I/O threads can't do optimally right
+>>> now, is it practical to make them work better ?
+>>
+>> The limitations inside the guest obviously can't be changed by QEMU.
+>>
+>> We could in theory add iothread support to more devices, though if they
+>> don't have a concept of multiple queues that could be processed by
+>> different threads, it's pretty pointless (apart from working around
+>> limitations in the backends like you're suggesting here).
+>>
+>> And of course, the most interesting one would be solving the
+>> out-of-the-box aspect. This is far from trivial, because the optimal
+>> configuration really depends on your workload, and nothing on the host
+>> can know automatically what will eventually run in the guest. So it will
+>> be tough finding defaults that improve this case without also hurting
+>> other cases.
+> 
+> Yes, understood, I was missing the impact of the guest usage model.
+> 
+> With regards,
+> Daniel
 
 
