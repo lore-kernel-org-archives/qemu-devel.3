@@ -4,73 +4,74 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id F2CE8C02185
-	for <qemu-devel@archiver.kernel.org>; Sat, 18 Jan 2025 07:51:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4282FC02187
+	for <qemu-devel@archiver.kernel.org>; Sat, 18 Jan 2025 08:15:21 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tZ3bF-0000XB-4U; Sat, 18 Jan 2025 02:50:33 -0500
+	id 1tZ3yb-0004CQ-B3; Sat, 18 Jan 2025 03:14:41 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
- id 1tZ3bD-0000TV-H7
- for qemu-devel@nongnu.org; Sat, 18 Jan 2025 02:50:31 -0500
-Received: from mail-pl1-x62a.google.com ([2607:f8b0:4864:20::62a])
+ id 1tZ3yY-0004C7-Sb
+ for qemu-devel@nongnu.org; Sat, 18 Jan 2025 03:14:38 -0500
+Received: from mail-pl1-x633.google.com ([2607:f8b0:4864:20::633])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
- id 1tZ3bA-0006B5-T9
- for qemu-devel@nongnu.org; Sat, 18 Jan 2025 02:50:31 -0500
-Received: by mail-pl1-x62a.google.com with SMTP id
- d9443c01a7336-216401de828so52044025ad.3
- for <qemu-devel@nongnu.org>; Fri, 17 Jan 2025 23:50:27 -0800 (PST)
+ id 1tZ3yW-0001OG-UK
+ for qemu-devel@nongnu.org; Sat, 18 Jan 2025 03:14:38 -0500
+Received: by mail-pl1-x633.google.com with SMTP id
+ d9443c01a7336-21bc1512a63so57607025ad.1
+ for <qemu-devel@nongnu.org>; Sat, 18 Jan 2025 00:14:36 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=daynix-com.20230601.gappssmtp.com; s=20230601; t=1737186626; x=1737791426;
+ d=daynix-com.20230601.gappssmtp.com; s=20230601; t=1737188075; x=1737792875;
  darn=nongnu.org; 
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=V2GLSNYc6zJEIx3QeRPnxdnHPQ/jpWX6VYshOCDjmy8=;
- b=0Cu4knsJ7+Hy5Hv909rl5GPsQeLxaZffzhQ2dekcHD088mGsLXPwBSzTZhw9lY+aiL
- LPdiE3HA7kjSaZaAThs7pkmKqy+ZxsGnTfy3bl1O7P36EfOjoyE+xCXaK2Cp7Q4xAeQM
- npxv9LNpvXW/9GH1eEE7TBEdyb3u5w5mImfTHjIzf7bZ8hN7pSj+69pz+hGaOmhjKwpQ
- IoL/cBY8VdWXTmSC4g9bEJycpbyh+9NtaiFFGyHk6czM5M3x+8t3Zfc4EFHwd/qu5J3D
- wJi8tJpspGXXmxs7JLMRB4Mvq6W/azI0m8xEi4artdrjt3UHxRaDgvAN9GUNrSuUaCUE
- r7/w==
+ bh=q40Fy4uVj3RIXnxroUnCjm5TIDMHT+mIMjUjOLQYcc4=;
+ b=UsXTaKB/fDd8yUluONZjVwVEN2PW0I/PCu4t5R58FIlCXxUAkdQcxvSL84BZwDvyU9
+ VSZOib0a28Gucmu++Qr/9grFgqb4DiNQV3kr5+ko9ixEWK+tRB4CMFep78yTQXJ5wyJF
+ MfiqFMwBYiR5NL38x/sI7FuuyfBhp3DP2j1wDY4r+B1GOUvzzLDtMC/PC0cM4heJJwRU
+ W9Zy5NOR0wG/QdIzHj0md697LB6kcdgSzazGUI1CmSaDXVBd+/r45SGE2Z+vsvplQF6Z
+ 0LUZFCLkswb+HGoS2b0OBkuxMnaAXHBWixjP17dA1MBm1LXpDglLFUyi8Tt1J5glmExz
+ s6ag==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1737186626; x=1737791426;
+ d=1e100.net; s=20230601; t=1737188075; x=1737792875;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=V2GLSNYc6zJEIx3QeRPnxdnHPQ/jpWX6VYshOCDjmy8=;
- b=c6W99q2s2wxZZHjOZVQy/ZlewSzKL/hPwYywvC9ElqysXy7p9pS9GhaejxuJ8grA6w
- WlaPI9ZJvuT0bcyjAQlZMw5bOiyvfi1TvTF6+SQZqohr5FjlZU2HukREfyuaxCmtsQBR
- D17/y1xxZUJRasSbjuw+eXl/eQogSXah+x72jqKaUpt/TbN/AjYexwwnjVF2PA3UssKN
- TEaMpLb6mEdXW/34bRLE+Hpw3P39CyrLaKy6m+G42BDSIbcCmGYiulhPD0hUh6apAlKr
- mBe1XLFA1B+r6XBeLlL8WI8eyQW59WtJE3GL1DQSATJY21ejRY57NpwscWvUrEChcIQm
- vmIg==
+ bh=q40Fy4uVj3RIXnxroUnCjm5TIDMHT+mIMjUjOLQYcc4=;
+ b=or+TSQCrgXcowANCBG89D2RyeZiDiBXtcWaBg6w/UB6xWiADapmc3nZNx/JRHrW5h8
+ LjO3zcJ8hDd3WS36VWdWBywhnLahErF+HaTnkY0cVNkLRJYS5YQz0EAZux/+FiI/DAwD
+ CDJl3QB+AZvcyoDtQqXkCMziMrJ+cxtU7MKZzuoXkicRb6LTR+I2tfPYRrPPSa5cvYWU
+ 3NCT+TcsUXvpoDXEB9iqqosu4i5bTduDllE8UVijU2V2uiu4OjnHJ2ay12h0/BLDHbID
+ aOEbxFnktfqRTP3tInCJx+IxqLkT4ZQASgc4zWnjmBa01RNwa2PschmWTXhpR9xNL4Wi
+ iMRw==
 X-Forwarded-Encrypted: i=1;
- AJvYcCWoCVONu/kB52e7eufDhT+b0hMdSLHOgi791TIVNlcoDHS1prKlUWzoiJgIjD4T0mIDjpggrmclwGKR@nongnu.org
-X-Gm-Message-State: AOJu0Yy14bAxXLq9gBXCtdrD2qTL4fqPXQnGDpnOSCTAPNczWjOV//W7
- t5f5X36nloDvFNUBqc8sHSD22Eqe4KbInUqxsf7oAw/TNriZu4v7wGYuJ2LUEbs=
-X-Gm-Gg: ASbGncsOv5Pai6xwJlV9hg8FEuRMWsvawa5QcFawziuntLAS/+gsNYjsLH5IHSvX1+W
- sdJ4sW25amvRvaz/0hb5CfpxVf0BZK96tOsejSO30/GHgp7p/dl+ZQ7zchZ8MjUnISkHP2iN6W6
- Ihqae7qXIQ1lW2zseBB54EQcFx9iejVcxibgp467DKfmTySg2jRYNn3d596tGZAxXXnY+oj2OTM
- SpztHdms3fJ4JOefJXr3LSz3UeUBLXYrfRWo0Ih54zNHLTobndr7FAQE4OHtZ/Y0LGGgwhigRQo
- Ms0=
-X-Google-Smtp-Source: AGHT+IFt6EQtlHd6vOeeTE7TT2cVclmokJXbmkMvYy+3PNblfgiJjA7zegU+LS09zsfmyhqlknFu8A==
-X-Received: by 2002:a17:902:eccf:b0:215:7cde:7fa3 with SMTP id
- d9443c01a7336-21c355301e2mr76658835ad.25.1737186626191; 
- Fri, 17 Jan 2025 23:50:26 -0800 (PST)
+ AJvYcCVmaUs6jCEq8112Ie8oB8bnjhfbtHW9coJB+ncD8XSljb0/xEqltyzvaEfJQ0P4f81lNpw3HWjv5GtL@nongnu.org
+X-Gm-Message-State: AOJu0YxSt06QjB6nC+9KZNkspI8+CTOhBKQ7fUjeWEzyb39itDlsx5O7
+ Xawcsfo1x47cTEGhxmtB92CjSYkxiTAKG/KcnPW9Ek4ZewiU+SZRZN1M8j2LdEY=
+X-Gm-Gg: ASbGnctsbKGcXUuw+Eoi9X0Ks2+IVhB5QXC/iS3MdLC9Kq75l+ZAezWtfyZdWxc9bMt
+ UPL6zlW5bWVHIHPTdYaqJIDCqVd1zqUHrSuvXgtWOjspJa2BQM85dJI7i7dqwmOuI5IiKanxUYt
+ ZQnX1MisTmMrWJqAxh1eRmcQ8d1tPUwJql9198vOqJCYS/um/lYKspKO8OjOFa40ZSw6cSGmKlY
+ 3wAhdN+3Iz4V4kVIBYTrwXXw2w+Ix5ltu5z1ZQ1aD0mskdov0iEk1LerOpyogcPNntZ4iqyqk7i
+ zp8=
+X-Google-Smtp-Source: AGHT+IG99sHgD5g27rpEc6AeeBNslp2wkG+U41Z2wHQp8rgulVbAwfc/2GoRl7u6mYl/8gHgpU90HQ==
+X-Received: by 2002:a17:902:ce8c:b0:21a:8839:4f4d with SMTP id
+ d9443c01a7336-21c3553afa6mr64845885ad.6.1737188075063; 
+ Sat, 18 Jan 2025 00:14:35 -0800 (PST)
 Received: from [10.4.77.142] ([118.103.63.134])
  by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-21c2d40275csm26884805ad.215.2025.01.17.23.50.23
+ d9443c01a7336-21c2cea05bdsm27290595ad.30.2025.01.18.00.14.32
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 17 Jan 2025 23:50:25 -0800 (PST)
-Message-ID: <446f6d7c-d838-4ead-b967-5d6e52dbbb8a@daynix.com>
-Date: Sat, 18 Jan 2025 16:50:22 +0900
+ Sat, 18 Jan 2025 00:14:34 -0800 (PST)
+Message-ID: <0f1eab33-b5ef-49d5-801e-e579010db784@daynix.com>
+Date: Sat, 18 Jan 2025 17:14:31 +0900
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 8/9] net/e1000e: Fix xITR minimum value
+Subject: Re: [PATCH 3/9] qtest/e1000e|igb: assert irqs are clear before
+ triggering an irq
 To: Nicholas Piggin <npiggin@gmail.com>, qemu-devel@nongnu.org
 Cc: Dmitry Fleytman <dmitry.fleytman@gmail.com>,
  Jason Wang <jasowang@redhat.com>,
@@ -78,14 +79,14 @@ Cc: Dmitry Fleytman <dmitry.fleytman@gmail.com>,
  Fabiano Rosas <farosas@suse.de>, Laurent Vivier <lvivier@redhat.com>,
  Paolo Bonzini <pbonzini@redhat.com>
 References: <20250117170306.403075-1-npiggin@gmail.com>
- <20250117170306.403075-9-npiggin@gmail.com>
+ <20250117170306.403075-4-npiggin@gmail.com>
 Content-Language: en-US
 From: Akihiko Odaki <akihiko.odaki@daynix.com>
-In-Reply-To: <20250117170306.403075-9-npiggin@gmail.com>
+In-Reply-To: <20250117170306.403075-4-npiggin@gmail.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::62a;
- envelope-from=akihiko.odaki@daynix.com; helo=mail-pl1-x62a.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::633;
+ envelope-from=akihiko.odaki@daynix.com; helo=mail-pl1-x633.google.com
 X-Spam_score_int: -18
 X-Spam_score: -1.9
 X-Spam_bar: -
@@ -107,87 +108,121 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 2025/01/18 2:03, Nicholas Piggin wrote:
-> The ITR minimum value may be a mis-reading or ambiguity in the spec.
-> Section 10.2.4.2 says the maximum observable interrupt rate should never
-> exceed 7813, but that is in context of example of the interval being
-> programmed to 500. On the other hand 7.4.4 does say ITR rules permit
-> no more than that rate.
+On 2025/01/18 2:02, Nicholas Piggin wrote:
+> Assert there is no existing irq raised that would lead to a false
+> positive interrupt test.
 > 
-> There is no minimum value specified, and zero is explicitly allowed and
-> disables throttling logic (which is already supported behaviour in the
-> throttling code of the models). This seems to fall outside ITR rules, so
-> should not cause any limit.
-> 
-> Spec 7.4.4 also says that EITR registers should be initialised to zero.
-> 
-> Remove the minimum value from the ITR and EITR registers, and set ITR
-> default to 500.
+> e1000e has to disable interrupt throttling for this test, because
+> it can cause delayed superfluous interrupts which trip the assertions.
 > 
 > Signed-off-by: Nicholas Piggin <npiggin@gmail.com>
-
-Please squash this change into "[PATCH 2/9] net/e1000e: Permit disabling 
-interrupt throttling".
-
 > ---
->   hw/net/e1000e_core.c | 24 ++++++++++--------------
->   1 file changed, 10 insertions(+), 14 deletions(-)
+>   tests/qtest/libqos/e1000e.h |  1 +
+>   tests/qtest/e1000e-test.c   | 10 ++++++++++
+>   tests/qtest/igb-test.c      |  6 ++++++
+>   tests/qtest/libqos/e1000e.c |  9 ++++++++-
+>   4 files changed, 25 insertions(+), 1 deletion(-)
 > 
-> diff --git a/hw/net/e1000e_core.c b/hw/net/e1000e_core.c
-> index c5be20bcbbe..34bb5f8096b 100644
-> --- a/hw/net/e1000e_core.c
-> +++ b/hw/net/e1000e_core.c
-> @@ -51,8 +51,13 @@
->   
->   #include "trace.h"
->   
-> -/* No more then 7813 interrupts per second according to spec 10.2.4.2 */
-> -#define E1000E_MIN_XITR     (500)
-> +/*
-> + * A suggested range for ITR is 651-5580, according to spec 10.2.4.2, but
-> + * QEMU has traditionally set 500 here and spec 7.4.4 ITR rules says the
-> + * max observable interrupts from the adapter should be 7813/s (corresponding
-> + * to 500).
-> + */
-> +#define E1000E_DEFAULT_ITR (500)
->   
->   #define E1000E_MAX_TX_FRAGS (64)
->   
-> @@ -2831,11 +2836,7 @@ e1000e_set_itr(E1000ECore *core, int index, uint32_t val)
->       trace_e1000e_irq_itr_set(val);
->   
->       core->itr_guest_value = interval;
-> -    if (interval == 0) {
-> -        core->mac[index] = 0;
-> -    } else {
-> -        core->mac[index] = MAX(interval, E1000E_MIN_XITR);
-> -    }
-> +    core->mac[index] = interval;
+> diff --git a/tests/qtest/libqos/e1000e.h b/tests/qtest/libqos/e1000e.h
+> index 30643c80949..7154aec0339 100644
+> --- a/tests/qtest/libqos/e1000e.h
+> +++ b/tests/qtest/libqos/e1000e.h
+> @@ -54,6 +54,7 @@ static inline uint32_t e1000e_macreg_read(QE1000E *d, uint32_t reg)
+>       return qpci_io_readl(&d_pci->pci_dev, d_pci->mac_regs, reg);
 >   }
 >   
->   static void
-> @@ -2847,11 +2848,7 @@ e1000e_set_eitr(E1000ECore *core, int index, uint32_t val)
->       trace_e1000e_irq_eitr_set(eitr_num, val);
+> +bool e1000e_seen_isr(QE1000E *d, uint16_t msg_id);
+
+I would rather name it e1000e_pending_isr.
+We may have seen an interrupt in the past but it may no longer be pending.
+
+>   void e1000e_wait_isr(QE1000E *d, uint16_t msg_id);
+>   void e1000e_tx_ring_push(QE1000E *d, void *descr);
+>   void e1000e_rx_ring_push(QE1000E *d, void *descr);
+> diff --git a/tests/qtest/e1000e-test.c b/tests/qtest/e1000e-test.c
+> index 746d26cfb67..9ab81ecff5b 100644
+> --- a/tests/qtest/e1000e-test.c
+> +++ b/tests/qtest/e1000e-test.c
+> @@ -61,6 +61,9 @@ static void e1000e_send_verify(QE1000E *d, int *test_sockets, QGuestAllocator *a
+>                                      E1000_TXD_DTYP_D   |
+>                                      sizeof(buffer));
 >   
->       core->eitr_guest_value[eitr_num] = interval;
-> -    if (interval == 0) {
-> -        core->mac[index] = 0;
-> -    } else {
-> -        core->mac[index] = MAX(interval, E1000E_MIN_XITR);
-> -    }
-> +    core->mac[index] = interval;
+> +    /* Ensure the interrupt has not been taken already */
+> +    g_assert(!e1000e_seen_isr(d, E1000E_TX0_MSG_ID));
+> +
+>       /* Put descriptor to the ring */
+>       e1000e_tx_ring_push(d, &descr);
+>   
+> @@ -105,6 +108,9 @@ static void e1000e_receive_verify(QE1000E *d, int *test_sockets, QGuestAllocator
+>       char buffer[64];
+>       int ret;
+>   
+> +    /* Ensure the interrupt has not been taken already */
+> +    g_assert(!e1000e_seen_isr(d, E1000E_RX0_MSG_ID));
+> +
+>       /* Send a dummy packet to device's socket*/
+>       ret = iov_send(test_sockets[0], iov, 2, 0, sizeof(len) + sizeof(packet));
+>       g_assert_cmpint(ret, == , sizeof(packet) + sizeof(len));
+> @@ -188,6 +194,10 @@ static void test_e1000e_multiple_transfers(void *obj, void *data,
+>           return;
+>       }
+>   
+> +    /* Clear EITR because buggy QEMU throttle timer causes superfluous irqs */
+> +    e1000e_macreg_write(d, E1000_EITR + E1000E_RX0_MSG_ID * 4, 0);
+> +    e1000e_macreg_write(d, E1000_EITR + E1000E_TX0_MSG_ID * 4, 0);
+> +
+>       for (i = 0; i < iterations; i++) {
+>           e1000e_send_verify(d, data, alloc);
+>           e1000e_receive_verify(d, data, alloc);
+> diff --git a/tests/qtest/igb-test.c b/tests/qtest/igb-test.c
+> index cf8b4131cf2..1bbb4bea4c1 100644
+> --- a/tests/qtest/igb-test.c
+> +++ b/tests/qtest/igb-test.c
+> @@ -64,6 +64,9 @@ static void igb_send_verify(QE1000E *d, int *test_sockets, QGuestAllocator *allo
+>                                             E1000_TXD_DTYP_D   |
+>                                             sizeof(buffer));
+>   
+> +    /* Ensure the interrupt has not been taken already */
+> +    g_assert(!e1000e_seen_isr(d, E1000E_TX0_MSG_ID));
+> +
+>       /* Put descriptor to the ring */
+>       e1000e_tx_ring_push(d, &descr);
+>   
+> @@ -119,6 +122,9 @@ static void igb_receive_verify(QE1000E *d, int *test_sockets, QGuestAllocator *a
+>       memset(&descr, 0, sizeof(descr));
+>       descr.read.pkt_addr = cpu_to_le64(data);
+>   
+> +    /* Ensure the interrupt has not been taken already */
+> +    g_assert(!e1000e_seen_isr(d, E1000E_RX0_MSG_ID));
+> +
+>       /* Put descriptor to the ring */
+>       e1000e_rx_ring_push(d, &descr);
+>   
+> diff --git a/tests/qtest/libqos/e1000e.c b/tests/qtest/libqos/e1000e.c
+> index 925654c7fd4..4e4c387b0bf 100644
+> --- a/tests/qtest/libqos/e1000e.c
+> +++ b/tests/qtest/libqos/e1000e.c
+> @@ -77,13 +77,20 @@ static void e1000e_foreach_callback(QPCIDevice *dev, int devfn, void *data)
+>       g_free(dev);
 >   }
 >   
->   static void
-> @@ -3500,8 +3497,7 @@ static const uint32_t e1000e_mac_reg_init[] = {
->       [FACTPS]        = E1000_FACTPS_LAN0_ON | 0x20000000,
->       [SWSM]          = 1,
->       [RXCSUM]        = E1000_RXCSUM_IPOFLD | E1000_RXCSUM_TUOFLD,
-> -    [ITR]           = E1000E_MIN_XITR,
-> -    [EITR...EITR + E1000E_MSIX_VEC_NUM - 1] = E1000E_MIN_XITR,
-> +    [ITR]           = E1000E_DEFAULT_ITR,
->   };
+> +bool e1000e_seen_isr(QE1000E *d, uint16_t msg_id)
+> +{
+> +    QE1000E_PCI *d_pci = container_of(d, QE1000E_PCI, e1000e);
+> +
+> +    return qpci_msix_pending(&d_pci->pci_dev, msg_id);
+> +}
+> +
+>   void e1000e_wait_isr(QE1000E *d, uint16_t msg_id)
+>   {
+>       QE1000E_PCI *d_pci = container_of(d, QE1000E_PCI, e1000e);
+>       guint64 end_time = g_get_monotonic_time() + 5 * G_TIME_SPAN_SECOND;
 >   
->   static void e1000e_reset(E1000ECore *core, bool sw)
+>       do {
+> -        if (qpci_msix_pending(&d_pci->pci_dev, msg_id)) {
+> +        if (e1000e_seen_isr(d, msg_id)) {
+>               return;
+>           }
+>           qtest_clock_step(d_pci->pci_dev.bus->qts, 10000);
 
 
