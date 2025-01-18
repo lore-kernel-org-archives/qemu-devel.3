@@ -4,91 +4,71 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id AE280C02185
-	for <qemu-devel@archiver.kernel.org>; Sat, 18 Jan 2025 09:59:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A42D7C02185
+	for <qemu-devel@archiver.kernel.org>; Sat, 18 Jan 2025 10:05:39 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tZ5bK-0001wP-0Y; Sat, 18 Jan 2025 04:58:46 -0500
+	id 1tZ5hJ-0003QV-1x; Sat, 18 Jan 2025 05:04:57 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
- id 1tZ5bI-0001w7-JT
- for qemu-devel@nongnu.org; Sat, 18 Jan 2025 04:58:44 -0500
-Received: from mail-pl1-x635.google.com ([2607:f8b0:4864:20::635])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
- id 1tZ5bG-000744-Dh
- for qemu-devel@nongnu.org; Sat, 18 Jan 2025 04:58:44 -0500
-Received: by mail-pl1-x635.google.com with SMTP id
- d9443c01a7336-2167141dfa1so52933425ad.1
- for <qemu-devel@nongnu.org>; Sat, 18 Jan 2025 01:58:41 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=daynix-com.20230601.gappssmtp.com; s=20230601; t=1737194321; x=1737799121;
- darn=nongnu.org; 
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=HHmMhSLg3PnUO+1M56Qwm+8Zddrq6Jx57c1V+UQh3Do=;
- b=Hkl46OQcQfAhvn/aobWgsdjh/VZFv+S5mcTYH3mS66vZXEtfptkOTSlVUfN9LqYhEB
- +6ScXrQrAAHYXfqE2+9lEqJPsq2gc9jLn4fQooEiqD/fKrt21BcWEcZQzjT1X0IFLgfN
- aQn3n8e8NbqZxvprN3FqERd/uNym1LUJM6igtuJsldrKbXKAtjKUuovLPzvHBmzFyTDl
- 4jqAEWXwmRF+pbySaGdhYyHIuZqMI3qn0jsyUAld1NWnkhmrl04lDOWCGns9528mvSZx
- zcWaSWfj+EL9qX23yCZmfReaw16dVryL3WlY9HLVCSEshj41M1LMsFzEZnEf5oU75dV0
- Q3/Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1737194321; x=1737799121;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=HHmMhSLg3PnUO+1M56Qwm+8Zddrq6Jx57c1V+UQh3Do=;
- b=Jmx3Pm33O0crI6wNANl6hoTf2DsNDGMfVKJUhssh4HK/qpGzJ5bJGNJqWgwhkgavx7
- ifdF/qOWr+ROY207ZjG/c4eRWsL/7bqKPA2aF+HelCWRestos7s88ZKXrXGylQlSh8LG
- C28BOYQT/tWCwt1SSGdgxqZtAWfWcZ6EPTlA9ShdtJk75fP767scxSKPAuF9Rn0lX/ud
- PbDyjXZyjAdee10vnT16D7Oro94nl/7Nw9rf/uzRt3qYaoMwKJmRSF7os6CkgMmIeVjD
- w4QxxE10KOoOgt8aj0QJFCmr4J8FwAJDyZUyzwyx2C/IhdGfewF+u8fvmx1uUkeY1lEQ
- 1Mpw==
-X-Forwarded-Encrypted: i=1;
- AJvYcCWuuT9oVDQ0V12Bz3fRsdTbcDJ7MHtD4fP7w+mEu5/176hnBlRfPG79V4l/CTCOLE1mI95mTmBbqn/a@nongnu.org
-X-Gm-Message-State: AOJu0YzPsIZ3i3eGuRj3yqU0pIuhEUdiQ3pB6SAnknYHPspmqXWeXqh9
- gy/T0/1bdKi3kNGv1+ZSJUScWGnpt7bvkHTjQDezpnud5z/BsnEbrRXe9DRmMV8=
-X-Gm-Gg: ASbGncu/xOA1prW2+WqTrbA0uBuNoz+JWhU44ewI/5e0+Zo25JA7MfU0MyCB6+2ooWZ
- DXMdLiyt9Fxw2aFw9Mnd2R9JjJAc3VcJ4cqZciJX1K7CEJYEOPPI9t2mQAutV0z5KOk0CvXB4f/
- gjthOlMdHWNYnEgEK3iddshWUGw9JUI42hanSuBVN9aPaYkOGqjKchvovOw9SI4FrZQaeOpJlkD
- 3oX2NTbJab66ocTquGCdQmxnK2ZlF+r0stUOxfWaWo/shs8T0acBeAqpC79zAHbvuJrDj8Wngbc
- CYQ=
-X-Google-Smtp-Source: AGHT+IFekeI4l72SGbY9C/xuxiQuE6B/4DOh1mZXUrEGh6Z8JdJ3uaYKCyRzSHLYMaAmZFBTUlDz8A==
-X-Received: by 2002:a17:902:ce11:b0:216:11cf:790 with SMTP id
- d9443c01a7336-21bf0cbe70amr233209025ad.16.1737194320783; 
- Sat, 18 Jan 2025 01:58:40 -0800 (PST)
-Received: from [10.4.77.176] ([118.103.63.141])
- by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-21c2ceb9e7dsm28706935ad.77.2025.01.18.01.58.37
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Sat, 18 Jan 2025 01:58:40 -0800 (PST)
-Message-ID: <2fe1d8ef-dbd0-442e-8657-387b5aa00712@daynix.com>
-Date: Sat, 18 Jan 2025 18:58:35 +0900
-MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 0/4] qtest/libqos/pci: pci and msix fixes
-To: Nicholas Piggin <npiggin@gmail.com>, Fabiano Rosas <farosas@suse.de>
-Cc: John Snow <jsnow@redhat.com>, Laurent Vivier <lvivier@redhat.com>,
- Paolo Bonzini <pbonzini@redhat.com>, "Michael S . Tsirkin" <mst@redhat.com>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>, qemu-block@nongnu.org,
- qemu-devel@nongnu.org
-References: <20250117172244.406206-1-npiggin@gmail.com>
-Content-Language: en-US
-From: Akihiko Odaki <akihiko.odaki@daynix.com>
-In-Reply-To: <20250117172244.406206-1-npiggin@gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::635;
- envelope-from=akihiko.odaki@daynix.com; helo=mail-pl1-x635.google.com
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ (Exim 4.90_1) (envelope-from <maz@kernel.org>)
+ id 1tZ5hG-0003Pg-6e; Sat, 18 Jan 2025 05:04:54 -0500
+Received: from nyc.source.kernel.org ([2604:1380:45d1:ec00::3])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <maz@kernel.org>)
+ id 1tZ5hE-0007pT-Gc; Sat, 18 Jan 2025 05:04:53 -0500
+Received: from smtp.kernel.org (transwarp.subspace.kernel.org [100.75.92.58])
+ by nyc.source.kernel.org (Postfix) with ESMTP id 359F2A41412;
+ Sat, 18 Jan 2025 10:02:56 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AEC7EC4CED1;
+ Sat, 18 Jan 2025 10:04:43 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+ s=k20201202; t=1737194683;
+ bh=n6lk+IDDPFoEfytA9saYl9OKLXnh/xFJqbWobAiRjF4=;
+ h=Date:From:To:Cc:Subject:In-Reply-To:References:From;
+ b=klSrteoIAiaWy1P83hWvx9aM/376V6UCPMuxkf6HhOcbF0AY+WwAcSKbO2PWpEouh
+ 1wCEgl7x8Cq4oFW2dvf3M82viZlzSDat42mt0JXMmOTjSc+YfwLIVxigihcLdRIyaT
+ 6GxZm69w4JNXaB3d5pDejY96qQGm5V/PAoTNM8FhoSofkJy01qPouOGEz0pew44CD9
+ QyealEBQTyRF4Vi4B7jgan+0x2IfmOqr24BdHAvH7Q4klm4dZsbRFkaALG+roPGBml
+ N4j+5YLTp8lDwSf3bWk+FDofqEwcOridp13ayn2IKYzvPXEDN63T/rOq9veiLroR6I
+ MBWx7jHMwlISQ==
+Received: from sofa.misterjones.org ([185.219.108.64]
+ helo=wait-a-minute.misterjones.org)
+ by disco-boy.misterjones.org with esmtpsa (TLS1.3) tls
+ TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384 (Exim 4.95)
+ (envelope-from <maz@kernel.org>) id 1tZ5h3-00DMRm-Df;
+ Sat, 18 Jan 2025 10:04:41 +0000
+Date: Sat, 18 Jan 2025 10:04:37 +0000
+Message-ID: <87sepgtp3e.wl-maz@kernel.org>
+From: Marc Zyngier <maz@kernel.org>
+To: Kashyap Chamarthy <kchamart@redhat.com>
+Cc: qemu-devel@nongnu.org, qemu-arm@nongnu.org, sebott@redhat.com,
+ Peter Maydell <peter.maydell@linaro.org>
+Subject: Re: [PATCH 2/2] docs/cpu-features: Update "PAuth" (Pointer
+ Authentication) details
+In-Reply-To: <20250117191106.322363-3-kchamart@redhat.com>
+References: <20250117191106.322363-1-kchamart@redhat.com>
+ <20250117191106.322363-3-kchamart@redhat.com>
+User-Agent: Wanderlust/2.15.9 (Almost Unreal) SEMI-EPG/1.14.7 (Harue)
+ FLIM-LB/1.14.9 (=?UTF-8?B?R29qxY0=?=) APEL-LB/10.8 EasyPG/1.0.0 Emacs/29.4
+ (x86_64-pc-linux-gnu) MULE/6.0 (HANACHIRUSATO)
+MIME-Version: 1.0 (generated by SEMI-EPG 1.14.7 - "Harue")
+Content-Type: text/plain; charset=US-ASCII
+X-SA-Exim-Connect-IP: 185.219.108.64
+X-SA-Exim-Rcpt-To: kchamart@redhat.com, qemu-devel@nongnu.org,
+ qemu-arm@nongnu.org, sebott@redhat.com, peter.maydell@linaro.org
+X-SA-Exim-Mail-From: maz@kernel.org
+X-SA-Exim-Scanned: No (on disco-boy.misterjones.org);
+ SAEximRunCond expanded to false
+Received-SPF: pass client-ip=2604:1380:45d1:ec00::3;
+ envelope-from=maz@kernel.org; helo=nyc.source.kernel.org
+X-Spam_score_int: -44
+X-Spam_score: -4.5
+X-Spam_bar: ----
+X-Spam_report: (-4.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.132,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -105,39 +85,69 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 2025/01/18 2:22, Nicholas Piggin wrote:
-> Since v2:
+On Fri, 17 Jan 2025 19:11:06 +0000,
+Kashyap Chamarthy <kchamart@redhat.com> wrote:
 > 
-> The e1000e|igb series got decoupled from this one and split into
-> its own series.
+> PAuth (Pointer Authentication), a security feature in software, is
+> relevant for both KVM and QEMU.  Relect this fact into the docs:
+> 
+>   - For KVM, `pauth` is a binary, "on" vs "off" option.  The host CPU
+>     will choose the cryptographic algorithm.
+> 
+>   - For TCG, however, along with `pauth`, a couple of properties can be
+>     controlled -- they're are related to cryptographic algorithm choice.
+> 
+> Thanks to Peter Maydell and Marc Zyngier for explaining more about PAuth
+> on IRC (#qemu, OFTC).
+> 
+> Signed-off-by: Kashyap Chamarthy <kchamart@redhat.com>
+> ---
+>  docs/system/arm/cpu-features.rst | 23 +++++++++++++++++++----
+>  1 file changed, 19 insertions(+), 4 deletions(-)
+> 
+> diff --git a/docs/system/arm/cpu-features.rst b/docs/system/arm/cpu-features.rst
+> index 78f18c87a81..7f99f7614b4 100644
+> --- a/docs/system/arm/cpu-features.rst
+> +++ b/docs/system/arm/cpu-features.rst
+> @@ -204,11 +204,26 @@ the list of KVM vCPU features and their descriptions.
+>    the guest scheduler behavior and/or be exposed to the guest
+>    userspace.
+>  
+> -TCG vCPU Features
+> -=================
+> +"PAuth" (Pointer Authentication)
+> +================================
+> +
+> +PAuth (Pointer Authentication) is a security feature in software that
+> +was introduced in Armv8.3-A and Armv9.0-A.  It aims to protect against
 
-Thank you for working on e1000e/igb. I appreciate fixes for interrupt 
-throttling you added with the new version.
+nit: given that ARMv9.0 is congruent to ARMv8.5 and therefore has all
+the ARMv8.5 features, mentioning ARMv8.3 should be enough (but I don't
+feel strongly about this). I feel much strongly about the use of
+capital letters, but I live in a distant past... ;-)
 
-> 
-> Patch 4 was added.
+> +ROP (return-oriented programming) attacks.
+> +
+> +KVM
+> +---
+> +
+> +``pauth``
+> +
+> +  Enable or disable ``FEAT_Pauth``.  The host silicon will choose the
+> +  cryptographic algorithm.  No other properties can be controlled.
 
-For this series,
-Reviewed-by: Akihiko Odaki <akihiko.odaki@daynix.com>
+nit: "choose" is a an odd choice of word. The host implementation
+defines, or even imposes the signature algorithm, as well as the level
+of PAuth support (PAuth, EPAC, PAuth2, FPAC, FPACCOMBINE, ...), some
+of which are mutually exclusive (EPAC and PAuth2 are incompatible).
 
-> 
-> Thanks,
-> Nick
-> 
-> Nicholas Piggin (4):
->    qtest/libqos/pci: Do not write to PBA memory
->    qtest/libqos/pci: Enforce balanced iomap/unmap
->    qtest/libqos/pci: Fix qpci_msix_enable sharing bar0
->    qtest/libqos/pci: Factor msix entry helpers into pci common code
-> 
->   tests/qtest/libqos/ahci.h       |   1 +
->   tests/qtest/libqos/pci.h        |   6 ++
->   tests/qtest/libqos/virtio-pci.h |   1 +
->   tests/qtest/ahci-test.c         |   2 +
->   tests/qtest/libqos/ahci.c       |   6 ++
->   tests/qtest/libqos/pci.c        | 127 +++++++++++++++++++++++++++++---
->   tests/qtest/libqos/virtio-pci.c |  54 +++-----------
->   7 files changed, 144 insertions(+), 53 deletions(-)
-> 
+Maybe it would be worth capturing some of these details, as this has a
+direct influence on the ability to migrate a VM.
 
+Thanks,
+
+	M.
+
+-- 
+Without deviation from the norm, progress is not possible.
 
