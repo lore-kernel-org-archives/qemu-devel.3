@@ -4,81 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 45FBEC02185
-	for <qemu-devel@archiver.kernel.org>; Sat, 18 Jan 2025 16:42:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2D490C02187
+	for <qemu-devel@archiver.kernel.org>; Sat, 18 Jan 2025 16:42:14 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tZBt2-0003z4-5L; Sat, 18 Jan 2025 11:41:28 -0500
+	id 1tZBt3-00040a-LX; Sat, 18 Jan 2025 11:41:29 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <r.peniaev@gmail.com>)
- id 1tZBst-0003wa-27
- for qemu-devel@nongnu.org; Sat, 18 Jan 2025 11:41:20 -0500
-Received: from mail-ej1-x630.google.com ([2a00:1450:4864:20::630])
+ id 1tZBsv-0003we-5N
+ for qemu-devel@nongnu.org; Sat, 18 Jan 2025 11:41:23 -0500
+Received: from mail-ej1-x636.google.com ([2a00:1450:4864:20::636])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <r.peniaev@gmail.com>)
- id 1tZBsq-0007oK-PT
- for qemu-devel@nongnu.org; Sat, 18 Jan 2025 11:41:18 -0500
-Received: by mail-ej1-x630.google.com with SMTP id
- a640c23a62f3a-aaf0f1adef8so620804566b.3
- for <qemu-devel@nongnu.org>; Sat, 18 Jan 2025 08:41:15 -0800 (PST)
+ id 1tZBss-0007oU-Qn
+ for qemu-devel@nongnu.org; Sat, 18 Jan 2025 11:41:20 -0500
+Received: by mail-ej1-x636.google.com with SMTP id
+ a640c23a62f3a-aa67ac42819so463605966b.0
+ for <qemu-devel@nongnu.org>; Sat, 18 Jan 2025 08:41:17 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1737218474; x=1737823274; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=voproMK0qNLO31B6xoJmJki4e827lXTY8uYATHmgzcQ=;
- b=dWa6IkZGn2fwOVqtSwC7G1ka37a70gY6BTyf3ClTUGXvIBnIyexsRu17D/hYxABkXQ
- ZXXyYqynJIvHyu6t179yDYeoRu6MtJmwsGhUPb50eUi7CetCSZCAhDw3fmrbYMhMVjwd
- h6ovyQhhZdWvADHCAkTZ1dal1aU3JWjGOBuFnC7t1uvVEBQ9JcxeFB3e8Rj3DL4sGk/X
- 2bYq0jrwDV7kmftx4wPWVvtCklUS2/3GRNUJUoX4uIxot5nrsNUk+Zizfqq9rBZ9Mqrz
- 8hnra1bST2/Bv7csEg+DQcxNUIdvIMOVvdT6nhR35aGvIPFPEOJb4bDE0XNvBRkYJFsv
- OXvw==
+ d=gmail.com; s=20230601; t=1737218477; x=1737823277; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=YY54bev7L3dmyzD400AvB/ybrot8HwOgUnWozmkH4kE=;
+ b=UqWAhfm5yh4Pg96aONX7C3ZR0DrirIWZ1byIc9GwgmIprTNOvmvf8jsekb72HqxHWE
+ 7CCf3JGszbua6/gVpzzLKb6wIdJhPgElTEE/isP59+ZDTfqBUroovv86YJqQxGwhOPOH
+ s0AnaCFceHDj+QtA7b1W3ZpM3BBwQ73QrGof9C2zlGek9cDYZdyE5fpPSZBiBy0HbbIR
+ 5G8UkJ25dRre4BHRUsHVjLMFBYkIPdQmLDPvopgJH87s0EcqudkGwDkxPcMVUcX/jZ3p
+ bfbGhU+9fIDi9vXlgMJdfc4Cbl+x39s5VSop+1WS8IEmakhQdt95+cJToy/sec32MDtM
+ zfTA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1737218474; x=1737823274;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=voproMK0qNLO31B6xoJmJki4e827lXTY8uYATHmgzcQ=;
- b=NtH98eJhDY2NoGxeVdQQ+cZ3y1vyM11NbvFFvQNzVFuOUK7w4ua2ggmcn/KPVUc2RP
- gs4bpLuebrAYCdtjjFrQthbMyD96rqoiT541Uyr4CtDi30chJAk+iiehFK0DPPgagVFZ
- SQ7K4WRuMLoz/MolaupQjdUWJbJ3D+XmMV1+xigHJ9o+tw6oRUAH0WAQt6um5Ku8lsmX
- BEzDqUtURyqVXhYhkUYaiM4tmY+jkqWLY+2dvO1Bq7P2HA8mrjxgml0cNBauJBNHU34i
- 9vrBdg8O2OSRR6hN8c6I/Pht2tQAunn7QAl0Ksor20dWHDOxri9Js//5nK17P0M2gazS
- 3TTw==
+ d=1e100.net; s=20230601; t=1737218477; x=1737823277;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=YY54bev7L3dmyzD400AvB/ybrot8HwOgUnWozmkH4kE=;
+ b=CU4x2SwtjzxAGZQ8Q9mQ8iqWjm52PatlqyblSsi/+Tg1rmMzPKvQ9fa3aTdwfNxQ81
+ 87YY3sa1PVTXje16hG+4HVFqAgKHmyWz+RRG1IM8qKhthXXbp5+MwOGJwVu7Y2ZKgWqW
+ X4V2g8U4sillCTAF0YE9K1Du5Eq7Ty6YONad7191Fn10eXOfwyveTiEQHHoGbI75bFuS
+ vN/5j5JVGu00pDTEQGhWQVsK2mEJwA0D/83I0kHP2sgjbothIVvylLx3qylI1AJhEJPl
+ ksNiZYrKHqrtByTq3k6GkDzQa7mnAsmIyqe/B3Br4xczKJBxrBnI8iEYzmVuFR07jjFj
+ bTow==
 X-Forwarded-Encrypted: i=1;
- AJvYcCV3fC8xNdJOT5npe0NMkwltV1x7dsFz/07meMXhd8YL8znCjWblDmdIpzeDIzMl7CuwyIhEgogjE4gU@nongnu.org
-X-Gm-Message-State: AOJu0YwUEIuVQtNLDSUY+miskVLmoIwpU2eI+gLAtz3IXRnTfPQ/Ejm5
- 1jMo36HJ9fUZ+ekoqJuP+OTL/jCDU9CtdZDCLfuqrq8s8bfzy7jt
-X-Gm-Gg: ASbGncvxtfFn+YrhJBZnW2gCm89gFNqy6B0DqVSM0dwSlEkEXyuwprcZAbM7eX6qFvd
- Oqoe2GM28SrIDi8SII/N1ejsPOfqzNXnGOR/sKfWu8KMCEY8dsxfeD8X7VaPlN3vSjLCNSw+FMj
- Zg26XbNYmlC9I8To2q4ZfzuMz4Ytakq8P8Uitzt76Kw3QEvuixevqos7GUzIundIddr3+z2BAhw
- +y496gKzRlIyqmnYCM/0xObeu1MUWP99Bu7yV2qPhSWzrexUyPn3ZxPYwvUapJy2RpdTWfqWjZy
- ePo=
-X-Google-Smtp-Source: AGHT+IFbqo6yPhlnzoB1RHj7Qp9dLyiI+nFqRTErtf6e1suvyIyVzM4jlrrgxXwOZXVceyejU8/nKw==
-X-Received: by 2002:a17:907:d0f:b0:aae:bd4c:2683 with SMTP id
- a640c23a62f3a-ab38b3c63f5mr696372166b.49.1737218473777; 
- Sat, 18 Jan 2025 08:41:13 -0800 (PST)
+ AJvYcCX8MasGm1Ty91+C3xR8/UCk5AFezhitsM5sMsXKZka8dqyDONYVfHETKg44TETF1PWbelgYI6Q5+Qz6@nongnu.org
+X-Gm-Message-State: AOJu0YwVoH6mffHjx5ddUgPxcKuY7XDSVLWbrtimq0R7zcouGDtukYza
+ 3NVaoVov0KPytRyxjwoYJADNHzbeXqG3YeVVSgpj36htdAPUBFlv
+X-Gm-Gg: ASbGncvFYl/vIeAeKM2h9rLROgv24uuYhy2J6dINBJN4RS4NbMhyhmOXAXFTXB2/QDV
+ ILQiqVTq/mHZYDThJyFkAuLdHZAmvYU2bLxsfvW5fx2llOtpHz1PO0pLSTrCoA48CS2TXp0RkUT
+ 2bw7s5fzG82Ua22YMCS9nUvyDjP1qlU7cuFnrdq1h/fXmDJ2CdjlXizxJYvt1XSfVMJEUjeslU+
+ c1hKL4ZYTUe36bIU3LOUj9AlmPZejIaqP/ZKqOg2qPD1jMhYB84m7lAxMI2IW4O0hQcuecOnzkS
+ MdE=
+X-Google-Smtp-Source: AGHT+IHfYtK4ipygTEJharwXyH1UErQ1CAfSiTJRDSTUb6Ahriony8M51rfZJqDw6jIkMsBxbLfDiA==
+X-Received: by 2002:a17:906:dc8f:b0:ab3:ed0:8d7 with SMTP id
+ a640c23a62f3a-ab38b15cd26mr668831566b.23.1737218476563; 
+ Sat, 18 Jan 2025 08:41:16 -0800 (PST)
 Received: from think.fritz.box ([2a02:8109:8384:1400:d15a:20d8:4bbe:9a4c])
  by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-ab384f8624fsm358331266b.150.2025.01.18.08.41.13
+ a640c23a62f3a-ab384f8624fsm358331266b.150.2025.01.18.08.41.16
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sat, 18 Jan 2025 08:41:13 -0800 (PST)
+ Sat, 18 Jan 2025 08:41:16 -0800 (PST)
 From: Roman Penyaev <r.peniaev@gmail.com>
 To: 
 Cc: Roman Penyaev <r.peniaev@gmail.com>,
  =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
- Markus Armbruster <armbru@redhat.com>, Kevin Wolf <kwolf@redhat.com>,
  qemu-devel@nongnu.org
-Subject: [PATCH v7 0/4] chardev: implement backend chardev multiplexing
-Date: Sat, 18 Jan 2025 17:40:48 +0100
-Message-ID: <20250118164056.830721-1-r.peniaev@gmail.com>
+Subject: [PATCH v7 3/4] tests/unit/test-char: add unit tests for hub chardev
+ backend
+Date: Sat, 18 Jan 2025 17:40:51 +0100
+Message-ID: <20250118164056.830721-4-r.peniaev@gmail.com>
 X-Mailer: git-send-email 2.43.0
+In-Reply-To: <20250118164056.830721-1-r.peniaev@gmail.com>
+References: <20250118164056.830721-1-r.peniaev@gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::630;
- envelope-from=r.peniaev@gmail.com; helo=mail-ej1-x630.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::636;
+ envelope-from=r.peniaev@gmail.com; helo=mail-ej1-x636.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -101,151 +104,474 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Mux is a character backend (host side) device, which multiplexes
-multiple frontends with one backend device. The following is a
-few lines from the QEMU manpage [1]:
+This commit introduces a new test function `char_hub_test` to validate
+the functionality and constraints of the "hub" chardev backend in QEMU.
+The test includes multiple scenarios:
 
-  A multiplexer is a "1:N" device, and here the "1" end is your
-  specified chardev backend, and the "N" end is the various parts
-  of QEMU that can talk to a chardev.
+1. Invalid hub creation:
+   - Creating a hub without defining `chardevs.N` (expects an error).
+   - Creating a hub with an embedded multiplexer (`mux=on`) or a chardev
+     already in use (expects errors).
 
-But sadly multiple backends are not supported.
+2. Max backend limit:
+   - Ensures the hub does not accept more backends than the maximum
+     allowed, with appropriate error handling.
 
-This work implements a new chardev backend `hub` device, which
-aggregates input from multiple backend devices and forwards it to a
-single frontend device. Additionally, `hub` device takes the output
-from the frontend device and sends it back to all the connected
-backend devices. This allows for seamless interaction between
-different backend devices and a single frontend interface.
+3. Valid hub creation and data aggregation:
+   - Successfully creating a hub with two ring buffer backends.
+   - Verifying data aggregation from backends to a frontend and vice versa.
+   - Ensuring correct error handling for attempts to attach a hub multiple
+     times or remove busy chardevs.
 
-The motivation is the EVE project [2], where it would be very
-convenient to have a virtio console frontend device on the guest that
-can be controlled from multiple backend devices, namely VNC and local
-TTY emulator. The following is an example of the QEMU command line:
+4. Extended EAGAIN simulation (non-Windows only):
+   - Simulates a setup with three backends, including a pipe, to test
+     EAGAIN handling and watcher behavior.
+   - Verifies data flow and recovery in scenarios involving buffer
+     overflows and drained pipes.
 
-    -chardev pty,path=/tmp/pty,id=pty0 \
-    -chardev vc,id=vc0 \
-    -chardev hub,id=hub0,chardevs.0=pty0,chardevs.1=vc0 \
-    -device virtconsole,chardev=hub0 \
-    -vnc 0.0.0.0:0
-
-Which creates two backend devices:
-
-* Text virtual console (`vc0`)
-* A pseudo TTY (`pty0`) connected to the single virtio hvc console with the
-  help of a new backend aggregator (`hub0`)
-
-`vc0` renders text to an image, which can be shared over the VNC
-protocol.  `pty0` is a pseudo TTY backend which provides bidirectional
-communication to the virtio hvc console.
-
-Once QEMU starts, the VNC client and any TTY emulator can be used to
-control a single hvc console. For example, these two different
-consoles should have similar input and output due to the buffer
-aggregation:
-
-    # Start TTY emulator
-    tio /tmp/pty
-
-    # Start VNC client and switch to virtual console Ctrl-Alt-2
-    vncviewer :0
-
-'chardevs.N' list syntax is used for the sake of compatibility with
-the representation of JSON lists in 'key=val' pairs format of the
-util/keyval.c, despite the fact that modern QAPI way of parsing,
-namely qobject_input_visitor_new_str(), is not used. Choice of keeping
-QAPI list sytax may help to smoothly switch to modern parsing in the
-future.
-
-v6 .. v7:
-
-After discussing v6 it was decided to:
-
-* Rename "multiplexer" to "aggregator"
-* Rename "mux-be" device type to "hub"
-* Drop all changes related to the original multiplexer implementation
-
-Code changes:
-
-* Added counting of CHR_EVENT_OPENED and CHR_EVENT_CLOSED events
-coming from backend devices. This prevents frontend devices from
-closing if one of the backend devices has been disconnected. The
-logic is simple: "the last one turns off the light".
-
-v5 .. v6:
-
-* Rebased on latest master
-* Changed how chardev is attached to a multiplexer: with version 6
-mux should specify list elements with ID of chardevs:
-
-    chardevs.0=ID[,chardevs.N=ID]
-
-'chardevs.N' list syntax is used for the sake of compatibility with
-the representation of JSON lists in 'key=val' pairs format of the
-util/keyval.c, despite the fact that modern QAPI way of parsing,
-namely qobject_input_visitor_new_str(), is not used. Choice of keeping
-QAPI list sytax may help to smoothly switch to modern parsing in the
-future.
-
-v4 .. v5:
-
-* Spelling fixes in qemu-options description
-* Memory leaks fixes in mux-be tests
-* Add sanity checks to chardev to avoid stacking of mux devices
-* Add corresponding unit test case to cover the creation of stacked
-  muxers: `-chardev mux-be,mux-id-be=ID`, which is forbidden
-* Reflect the fact that stacking is not supported in the documentation
-
-v3 .. v4:
-
-* Rebase on latest chardev changes
-* Add unit tests which test corner cases:
-   * Inability to remove mux with active frontend
-   * Inability to add more chardevs to a mux than `MUX_MAX`
-   * Inability to mix mux-fe and mux-be for the same chardev
-
-v2 .. v3:
-
-* Split frontend and backend multiplexer implementations and
-  move them to separate files: char-mux-fe.c and char-mux-be.c
-
-v1 .. v2:
-
-* Separate type for the backend multiplexer `mux-be`
-* Handle EAGAIN on write to the backend device
-* Support of watch of previously failed backend device
-* Proper json support of the `mux-be-id` option
-* Unit test for the `mux-be` multiplexer
-
-[1] https://www.qemu.org/docs/master/system/qemu-manpage.html#hxtool-6
-[2] https://github.com/lf-edge/eve
+The test also ensures correct cleanup of chardevs in all cases, covering
+both valid and invalid configurations.
 
 Signed-off-by: Roman Penyaev <r.peniaev@gmail.com>
 Cc: "Marc-André Lureau" <marcandre.lureau@redhat.com>
-Cc: Markus Armbruster <armbru@redhat.com>
-Cc: Kevin Wolf <kwolf@redhat.com>
 Cc: qemu-devel@nongnu.org
+---
+ chardev/char-hub.c     |   4 +-
+ tests/unit/test-char.c | 399 +++++++++++++++++++++++++++++++++++++++++
+ 2 files changed, 401 insertions(+), 2 deletions(-)
 
-Roman Penyaev (4):
-  chardev/char-pty: send CHR_EVENT_CLOSED on disconnect
-  chardev/char-hub: implement backend chardev aggregator
-  tests/unit/test-char: add unit tests for hub chardev backend
-  qemu-options.hx: describe hub chardev and aggregation of several
-    backends
-
- chardev/char-fe.c          |   9 +
- chardev/char-hub.c         | 334 +++++++++++++++++++++++++++++++
- chardev/char-pty.c         |   3 +-
- chardev/char.c             |  26 ++-
- chardev/chardev-internal.h |  56 +++++-
- chardev/meson.build        |   1 +
- include/chardev/char.h     |   1 +
- qapi/char.json             |  27 +++
- qemu-options.hx            |  48 ++++-
- tests/unit/test-char.c     | 399 +++++++++++++++++++++++++++++++++++++
- 10 files changed, 896 insertions(+), 8 deletions(-)
- create mode 100644 chardev/char-hub.c
-
+diff --git a/chardev/char-hub.c b/chardev/char-hub.c
+index 9b53df51de44..fb514d92111b 100644
+--- a/chardev/char-hub.c
++++ b/chardev/char-hub.c
+@@ -223,8 +223,8 @@ static void hub_chr_update_read_handlers(Chardev *chr)
+ bool hub_chr_attach_frontend(HubChardev *d, CharBackend *b, Error **errp)
+ {
+     if (d->frontend) {
+-        error_setg(errp, "hub: multiplexed chardev '%s' is already used "
+-                   "for multiplexing", d->parent.label);
++        error_setg(errp, "hub: chardev '%s' is already used",
++                   d->parent.label);
+         return false;
+     }
+     d->frontend = b;
+diff --git a/tests/unit/test-char.c b/tests/unit/test-char.c
+index 98a60d86b143..e0b15f0b5d0d 100644
+--- a/tests/unit/test-char.c
++++ b/tests/unit/test-char.c
+@@ -359,6 +359,404 @@ static void char_mux_test(void)
+     qmp_chardev_remove("mux-label", &error_abort);
+ }
+ 
++static void char_hub_test(void)
++{
++    QemuOpts *opts;
++    Chardev *hub, *chr1, *chr2, *base;
++    char *data;
++    FeHandler h = { 0, false, 0, false, };
++    Error *error = NULL;
++    CharBackend chr_be;
++    int ret, i;
++
++#define RB_SIZE 128
++
++    /*
++     * Create invalid hub
++     * 1. Create hub without a 'chardevs.N' defined (expect error)
++     */
++    opts = qemu_opts_create(qemu_find_opts("chardev"), "hub0",
++                            1, &error_abort);
++    qemu_opt_set(opts, "backend", "hub", &error_abort);
++    hub = qemu_chr_new_from_opts(opts, NULL, &error);
++    g_assert_cmpstr(error_get_pretty(error), ==,
++                    "hub: 'chardevs' list is not defined");
++    error_free(error);
++    error = NULL;
++    qemu_opts_del(opts);
++
++    /*
++     * Create invalid hub
++     * 1. Create chardev with embedded mux: 'mux=on'
++     * 2. Create hub which refers mux
++     * 3. Create hub which refers chardev already attached
++     *    to the mux (already in use, expect error)
++     */
++    opts = qemu_opts_create(qemu_find_opts("chardev"), "chr0",
++                            1, &error_abort);
++    qemu_opt_set(opts, "mux", "on", &error_abort);
++    qemu_opt_set(opts, "backend", "ringbuf", &error_abort);
++    qemu_opt_set(opts, "size", stringify(RB_SIZE), &error_abort);
++    base = qemu_chr_new_from_opts(opts, NULL, &error_abort);
++    g_assert_nonnull(base);
++    qemu_opts_del(opts);
++
++    opts = qemu_opts_create(qemu_find_opts("chardev"), "hub0",
++                            1, &error_abort);
++    qemu_opt_set(opts, "backend", "hub", &error_abort);
++    qemu_opt_set(opts, "chardevs.0", "chr0", &error_abort);
++    hub = qemu_chr_new_from_opts(opts, NULL, &error);
++    g_assert_cmpstr(error_get_pretty(error), ==,
++                    "hub: multiplexers and hub devices can't be "
++                    "stacked, check chardev 'chr0', chardev should "
++                    "not be a hub device or have 'mux=on' enabled");
++    error_free(error);
++    error = NULL;
++    qemu_opts_del(opts);
++
++    opts = qemu_opts_create(qemu_find_opts("chardev"), "hub0",
++                            1, &error_abort);
++    qemu_opt_set(opts, "backend", "hub", &error_abort);
++    qemu_opt_set(opts, "chardevs.0", "chr0-base", &error_abort);
++    hub = qemu_chr_new_from_opts(opts, NULL, &error);
++    g_assert_cmpstr(error_get_pretty(error), ==,
++                    "chardev 'chr0-base' is already in use");
++    error_free(error);
++    error = NULL;
++    qemu_opts_del(opts);
++
++    /* Finalize chr0 */
++    qmp_chardev_remove("chr0", &error_abort);
++
++    /*
++     * Create invalid hub with more than maximum allowed backends
++     * 1. Create more than maximum allowed 'chardevs.%d' options for
++     *    hub (expect error)
++     */
++    opts = qemu_opts_create(qemu_find_opts("chardev"), "hub0",
++                            1, &error_abort);
++    for (i = 0; i < 10; i++) {
++        char key[32], val[32];
++
++        snprintf(key, sizeof(key), "chardevs.%d", i);
++        snprintf(val, sizeof(val), "chr%d", i);
++        qemu_opt_set(opts, key, val, &error);
++        if (error) {
++            char buf[64];
++
++            snprintf(buf, sizeof(buf), "Invalid parameter 'chardevs.%d'", i);
++            g_assert_cmpstr(error_get_pretty(error), ==, buf);
++            error_free(error);
++            break;
++        }
++    }
++    g_assert_nonnull(error);
++    error = NULL;
++    qemu_opts_del(opts);
++
++    /*
++     * Create hub with 2 backend chardevs and 1 frontend and perform
++     * data aggregation
++     * 1. Create 2 ringbuf backend chardevs
++     * 2. Create 1 frontend
++     * 3. Create hub which refers 2 backend chardevs
++     * 4. Attach hub to a frontend
++     * 5. Attach hub to a frontend second time (expect error)
++     * 6. Perform data aggregation
++     * 7. Remove chr1 ("chr1 is busy", expect error)
++     * 8. Remove hub0 ("hub0 is busy", expect error);
++     * 9. Finilize frontend, hub and backend chardevs in correct order
++     */
++
++    /* Create first chardev */
++    opts = qemu_opts_create(qemu_find_opts("chardev"), "chr1",
++                            1, &error_abort);
++    qemu_opt_set(opts, "backend", "ringbuf", &error_abort);
++    qemu_opt_set(opts, "size", stringify(RB_SIZE), &error_abort);
++    chr1 = qemu_chr_new_from_opts(opts, NULL, &error_abort);
++    g_assert_nonnull(chr1);
++    qemu_opts_del(opts);
++
++    /* Create second chardev */
++    opts = qemu_opts_create(qemu_find_opts("chardev"), "chr2",
++                            1, &error_abort);
++    qemu_opt_set(opts, "backend", "ringbuf", &error_abort);
++    qemu_opt_set(opts, "size", stringify(RB_SIZE), &error_abort);
++    chr2 = qemu_chr_new_from_opts(opts, NULL, &error_abort);
++    g_assert_nonnull(chr2);
++    qemu_opts_del(opts);
++
++    /* Create hub0 and refer 2 backend chardevs */
++    opts = qemu_opts_create(qemu_find_opts("chardev"), "hub0",
++                            1, &error_abort);
++    qemu_opt_set(opts, "backend", "hub", &error_abort);
++    qemu_opt_set(opts, "chardevs.0", "chr1", &error_abort);
++    qemu_opt_set(opts, "chardevs.1", "chr2", &error_abort);
++    hub = qemu_chr_new_from_opts(opts, NULL, &error_abort);
++    g_assert_nonnull(hub);
++    qemu_opts_del(opts);
++
++    /* Attach hub to a frontend */
++    qemu_chr_fe_init(&chr_be, hub, &error_abort);
++    qemu_chr_fe_set_handlers(&chr_be,
++                             fe_can_read,
++                             fe_read,
++                             fe_event,
++                             NULL,
++                             &h,
++                             NULL, true);
++
++    /* Fails second time */
++    qemu_chr_fe_init(&chr_be, hub, &error);
++    g_assert_cmpstr(error_get_pretty(error), ==, "hub: chardev "
++                    "'hub0' is already used");
++    error_free(error);
++    error = NULL;
++
++    /* Write to backend, chr1 */
++    base = qemu_chr_find("chr1");
++    g_assert_cmpint(qemu_chr_be_can_write(base), !=, 0);
++
++    qemu_chr_be_write(base, (void *)"hello", 6);
++    g_assert_cmpint(h.read_count, ==, 6);
++    g_assert_cmpstr(h.read_buf, ==, "hello");
++    h.read_count = 0;
++
++    /* Write to backend, chr2 */
++    base = qemu_chr_find("chr2");
++    g_assert_cmpint(qemu_chr_be_can_write(base), !=, 0);
++
++    qemu_chr_be_write(base, (void *)"olleh", 6);
++    g_assert_cmpint(h.read_count, ==, 6);
++    g_assert_cmpstr(h.read_buf, ==, "olleh");
++    h.read_count = 0;
++
++    /* Write to frontend, chr_be */
++    ret = qemu_chr_fe_write(&chr_be, (void *)"heyhey", 6);
++    g_assert_cmpint(ret, ==, 6);
++
++    data = qmp_ringbuf_read("chr1", RB_SIZE, false, 0, &error_abort);
++    g_assert_cmpint(strlen(data), ==, 6);
++    g_assert_cmpstr(data, ==, "heyhey");
++    g_free(data);
++
++    data = qmp_ringbuf_read("chr2", RB_SIZE, false, 0, &error_abort);
++    g_assert_cmpint(strlen(data), ==, 6);
++    g_assert_cmpstr(data, ==, "heyhey");
++    g_free(data);
++
++    /* Can't be removed, depends on hub0 */
++    qmp_chardev_remove("chr1", &error);
++    g_assert_cmpstr(error_get_pretty(error), ==, "Chardev 'chr1' is busy");
++    error_free(error);
++    error = NULL;
++
++    /* Can't be removed, depends on frontend chr_be */
++    qmp_chardev_remove("hub0", &error);
++    g_assert_cmpstr(error_get_pretty(error), ==, "Chardev 'hub0' is busy");
++    error_free(error);
++    error = NULL;
++
++    /* Finalize frontend */
++    qemu_chr_fe_deinit(&chr_be, false);
++
++    /* Finalize hub0 */
++    qmp_chardev_remove("hub0", &error_abort);
++
++    /* Finalize backend chardevs */
++    qmp_chardev_remove("chr1", &error_abort);
++    qmp_chardev_remove("chr2", &error_abort);
++
++#ifndef _WIN32
++    /*
++     * Create 3 backend chardevs to simulate EAGAIN and watcher.
++     * Mainly copied from char_pipe_test().
++     * 1. Create 2 ringbuf backend chardevs
++     * 2. Create 1 pipe backend chardev
++     * 3. Create 1 frontend
++     * 4. Create hub which refers 2 backend chardevs
++     * 5. Attach hub to a frontend
++     * 6. Perform data aggregation and check watcher
++     * 7. Finilize frontend, hub and backend chardevs in correct order
++     */
++    {
++        gchar *tmp_path = g_dir_make_tmp("qemu-test-char.XXXXXX", NULL);
++        gchar *in, *out, *pipe = g_build_filename(tmp_path, "pipe", NULL);
++        Chardev *chr3;
++        int fd, len;
++        char buf[128];
++
++        in = g_strdup_printf("%s.in", pipe);
++        if (mkfifo(in, 0600) < 0) {
++            abort();
++        }
++        out = g_strdup_printf("%s.out", pipe);
++        if (mkfifo(out, 0600) < 0) {
++            abort();
++        }
++
++        /* Create first chardev */
++        opts = qemu_opts_create(qemu_find_opts("chardev"), "chr1",
++                                1, &error_abort);
++        qemu_opt_set(opts, "backend", "ringbuf", &error_abort);
++        qemu_opt_set(opts, "size", stringify(RB_SIZE), &error_abort);
++        chr1 = qemu_chr_new_from_opts(opts, NULL, &error_abort);
++        g_assert_nonnull(chr1);
++        qemu_opts_del(opts);
++
++        /* Create second chardev */
++        opts = qemu_opts_create(qemu_find_opts("chardev"), "chr2",
++                                1, &error_abort);
++        qemu_opt_set(opts, "backend", "ringbuf", &error_abort);
++        qemu_opt_set(opts, "size", stringify(RB_SIZE), &error_abort);
++        chr2 = qemu_chr_new_from_opts(opts, NULL, &error_abort);
++        g_assert_nonnull(chr2);
++        qemu_opts_del(opts);
++
++        /* Create third chardev */
++        opts = qemu_opts_create(qemu_find_opts("chardev"), "chr3",
++                                1, &error_abort);
++        qemu_opt_set(opts, "backend", "pipe", &error_abort);
++        qemu_opt_set(opts, "path", pipe, &error_abort);
++        chr3 = qemu_chr_new_from_opts(opts, NULL, &error_abort);
++        g_assert_nonnull(chr3);
++
++        /* Create hub0 and refer 3 backend chardevs */
++        opts = qemu_opts_create(qemu_find_opts("chardev"), "hub0",
++                                1, &error_abort);
++        qemu_opt_set(opts, "backend", "hub", &error_abort);
++        qemu_opt_set(opts, "chardevs.0", "chr1", &error_abort);
++        qemu_opt_set(opts, "chardevs.1", "chr2", &error_abort);
++        qemu_opt_set(opts, "chardevs.2", "chr3", &error_abort);
++        hub = qemu_chr_new_from_opts(opts, NULL, &error_abort);
++        g_assert_nonnull(hub);
++        qemu_opts_del(opts);
++
++        /* Attach hub to a frontend */
++        qemu_chr_fe_init(&chr_be, hub, &error_abort);
++        qemu_chr_fe_set_handlers(&chr_be,
++                                 fe_can_read,
++                                 fe_read,
++                                 fe_event,
++                                 NULL,
++                                 &h,
++                                 NULL, true);
++
++        /* Write to frontend, chr_be */
++        ret = qemu_chr_fe_write(&chr_be, (void *)"thisis", 6);
++        g_assert_cmpint(ret, ==, 6);
++
++        data = qmp_ringbuf_read("chr1", RB_SIZE, false, 0, &error_abort);
++        g_assert_cmpint(strlen(data), ==, 6);
++        g_assert_cmpstr(data, ==, "thisis");
++        g_free(data);
++
++        data = qmp_ringbuf_read("chr2", RB_SIZE, false, 0, &error_abort);
++        g_assert_cmpint(strlen(data), ==, 6);
++        g_assert_cmpstr(data, ==, "thisis");
++        g_free(data);
++
++        fd = open(out, O_RDWR);
++        ret = read(fd, buf, sizeof(buf));
++        g_assert_cmpint(ret, ==, 6);
++        buf[ret] = 0;
++        g_assert_cmpstr(buf, ==, "thisis");
++        close(fd);
++
++        /* Add watch. 0 indicates no watches if nothing to wait for */
++        ret = qemu_chr_fe_add_watch(&chr_be, G_IO_OUT | G_IO_HUP,
++                                    NULL, NULL);
++        g_assert_cmpint(ret, ==, 0);
++
++        /*
++         * Write to frontend, chr_be, until EAGAIN. Make sure length is
++         * power of two to fit nicely the whole pipe buffer.
++         */
++        len = 0;
++        while ((ret = qemu_chr_fe_write(&chr_be, (void *)"thisisit", 8))
++               != -1) {
++            len += ret;
++        }
++        g_assert_cmpint(errno, ==, EAGAIN);
++
++        /* Further all writes should cause EAGAIN */
++        ret = qemu_chr_fe_write(&chr_be, (void *)"b", 1);
++        g_assert_cmpint(ret, ==, -1);
++        g_assert_cmpint(errno, ==, EAGAIN);
++
++        /*
++         * Add watch. Non 0 indicates we have a blocked chardev, which
++         * can wakes us up when write is possible.
++         */
++        ret = qemu_chr_fe_add_watch(&chr_be, G_IO_OUT | G_IO_HUP,
++                                    NULL, NULL);
++        g_assert_cmpint(ret, !=, 0);
++        g_source_remove(ret);
++
++        /* Drain pipe and ring buffers */
++        fd = open(out, O_RDWR);
++        while ((ret = read(fd, buf, MIN(sizeof(buf), len))) != -1 && len > 0) {
++            len -= ret;
++        }
++        close(fd);
++
++        data = qmp_ringbuf_read("chr1", RB_SIZE, false, 0, &error_abort);
++        g_assert_cmpint(strlen(data), ==, 128);
++        g_free(data);
++
++        data = qmp_ringbuf_read("chr2", RB_SIZE, false, 0, &error_abort);
++        g_assert_cmpint(strlen(data), ==, 128);
++        g_free(data);
++
++        /*
++         * Now we are good to go, first repeat "lost" sequence, which
++         * was already consumed and drained by the ring buffers, but
++         * pipe have not recieved that yet.
++         */
++        ret = qemu_chr_fe_write(&chr_be, (void *)"thisisit", 8);
++        g_assert_cmpint(ret, ==, 8);
++
++        ret = qemu_chr_fe_write(&chr_be, (void *)"streamisrestored", 16);
++        g_assert_cmpint(ret, ==, 16);
++
++        data = qmp_ringbuf_read("chr1", RB_SIZE, false, 0, &error_abort);
++        g_assert_cmpint(strlen(data), ==, 16);
++        /* Only last 16 bytes, see big comment above */
++        g_assert_cmpstr(data, ==, "streamisrestored");
++        g_free(data);
++
++        data = qmp_ringbuf_read("chr2", RB_SIZE, false, 0, &error_abort);
++        g_assert_cmpint(strlen(data), ==, 16);
++        /* Only last 16 bytes, see big comment above */
++        g_assert_cmpstr(data, ==, "streamisrestored");
++        g_free(data);
++
++        fd = open(out, O_RDWR);
++        ret = read(fd, buf, sizeof(buf));
++        g_assert_cmpint(ret, ==, 24);
++        buf[ret] = 0;
++        /* Both 8 and 16 bytes */
++        g_assert_cmpstr(buf, ==, "thisisitstreamisrestored");
++        close(fd);
++
++        g_free(in);
++        g_free(out);
++        g_free(tmp_path);
++        g_free(pipe);
++
++        /* Finalize frontend */
++        qemu_chr_fe_deinit(&chr_be, false);
++
++        /* Finalize hub0 */
++        qmp_chardev_remove("hub0", &error_abort);
++
++        /* Finalize backend chardevs */
++        qmp_chardev_remove("chr1", &error_abort);
++        qmp_chardev_remove("chr2", &error_abort);
++        qmp_chardev_remove("chr3", &error_abort);
++    }
++#endif
++}
+ 
+ static void websock_server_read(void *opaque, const uint8_t *buf, int size)
+ {
+@@ -1507,6 +1905,7 @@ int main(int argc, char **argv)
+     g_test_add_func("/char/invalid", char_invalid_test);
+     g_test_add_func("/char/ringbuf", char_ringbuf_test);
+     g_test_add_func("/char/mux", char_mux_test);
++    g_test_add_func("/char/hub", char_hub_test);
+ #ifdef _WIN32
+     g_test_add_func("/char/console/subprocess", char_console_test_subprocess);
+     g_test_add_func("/char/console", char_console_test);
 -- 
 2.43.0
 
