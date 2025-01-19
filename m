@@ -4,86 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4555CC02188
-	for <qemu-devel@archiver.kernel.org>; Sun, 19 Jan 2025 01:18:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 43507C02185
+	for <qemu-devel@archiver.kernel.org>; Sun, 19 Jan 2025 01:18:47 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tZJud-0003HD-96; Sat, 18 Jan 2025 20:15:42 -0500
+	id 1tZJst-0002x9-7B; Sat, 18 Jan 2025 20:13:51 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1tZJuQ-00030f-2Q
- for qemu-devel@nongnu.org; Sat, 18 Jan 2025 20:15:27 -0500
-Received: from mail-pj1-x1035.google.com ([2607:f8b0:4864:20::1035])
+ id 1tZJsr-0002nA-Ko
+ for qemu-devel@nongnu.org; Sat, 18 Jan 2025 20:13:49 -0500
+Received: from mail-pj1-x102e.google.com ([2607:f8b0:4864:20::102e])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1tZJuO-0003jJ-C3
- for qemu-devel@nongnu.org; Sat, 18 Jan 2025 20:15:25 -0500
-Received: by mail-pj1-x1035.google.com with SMTP id
- 98e67ed59e1d1-2ef6c56032eso4368938a91.2
- for <qemu-devel@nongnu.org>; Sat, 18 Jan 2025 17:15:24 -0800 (PST)
+ id 1tZJsp-0003G5-QY
+ for qemu-devel@nongnu.org; Sat, 18 Jan 2025 20:13:49 -0500
+Received: by mail-pj1-x102e.google.com with SMTP id
+ 98e67ed59e1d1-2f441904a42so6105181a91.1
+ for <qemu-devel@nongnu.org>; Sat, 18 Jan 2025 17:13:47 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1737249323; x=1737854123; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1737249226; x=1737854026; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=tmPrgsWPoZAq3tKJn0DJkbpcaPgkeDGdVdz1ucTeExc=;
- b=E9XDxDGr4NrGOdouSKyVns8CkR4layudU+qjWwwDsIlYrB3xqwdhoaHSpAC+HWwuHY
- hmMCfAJ79Y4nkzSkfCzgMYVdEd7UFxMVLsaMJFvpB1r5Q6oqiRa7bmja0COLjVAAotLh
- PDLzmZrerV+2tU+sY3z5vYaA2s3aPtwoWUgMyYNMLUj7MS7Nssd7ACDKKDJstMVCsrTd
- KvcJsX4uBGe9p8yFuWhB752IINIwmYDMzMVnY2dgLtogyl7viJymnyoUJQBGkIDikTaJ
- WvAxlZ4uITJipaqaLXuGakHqiugAeZ2FKWFiPnk5L8Leb2G9ZMGvd63yHKO3rfUdWBJw
- WoFg==
+ bh=nZSJ+p1yAQCwMdEMaZfFPCzep6ypElgVWhIRM+5ATyE=;
+ b=QH2EqNCGOICDrlUFEEVMA352DdGlvuyS2fS0LArz+NcJmPZnvy0r8mE8rU+a2dG6Ot
+ GYE9VBw1mFi8AtqH0K8gX+y0lQCULgsjjpnNXoaiz+rdMyRZdg1mthH8nZc5bX10PaLJ
+ ZmuJryMAq6ou65y403kJ6plNfmGkh7agQbCFS+QJxMDHqS//UT0Rwe+YgMJyoIkf+0KD
+ rNEkjvVhqlGzMASvMCjkuT14/jiKwwqHT0Fj3cpqXerJgwHo2aImBO/DJ10z8/EAqgZm
+ Qqqh7p5enPfD4Ka7K9t/5PD5ZSuay/7DSJOAFDENdj3/lp2Un8sAou4fHZ1pn0UL6PqZ
+ PkJA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1737249323; x=1737854123;
+ d=1e100.net; s=20230601; t=1737249226; x=1737854026;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=tmPrgsWPoZAq3tKJn0DJkbpcaPgkeDGdVdz1ucTeExc=;
- b=oy8UDO95hdGAS1hEck0k5OXiY+vw4HKyWoH4RyDyAKLBfw0mUKVbEWjOmPf7g0gf77
- xuAn59hU222aX6Oms1JBATNTe3g7btdN67Hfrx1Rmo5Mz37heWrfIS6N0xSCSKUsLrZ+
- e698rYCDHHjB1BY2kXNlTwopJABuOc4PnsMfMKRJ8Dzk+prTR0FqQDTs75yW79BlDNLj
- sWHewiPjXdcyUwxxWlmoU4UeLKS7OEstS2si3b46Z3s1Q060Vu6jh6Pu2VIKFOosBngs
- KkmVnz04a1WNd2w1eWM1kLhk6hUTsV4h1GDxPYz0SEX2J3ulUICmpIkpXmemh8NzHLUI
- Te0g==
-X-Gm-Message-State: AOJu0Yyx5ybZhqflB5DBwGh9f6Xixr50lav4HYRSc6mgrSCJqcxjrbcf
- 3l2Ncr2wERA2jWT3dRLKnQsL4tAcfo6DX8Ky6nVnVZB3DyChsq9otSSG2/HW
-X-Gm-Gg: ASbGncu0UZhJkj6UQOzSGMZdzAAzPUg06XbV6iUNzo7/aN9o5h1zm01hgzDB9pW1kOC
- WQd0SWUzOrxtiwA8MdpaHJ5KDUu8Ab9OxcggRtlRpRUOnUlTfNFQL80/ewlkWbSR+HvoGcDFri9
- cso9D4U9ZKAaMq8jBcBQaGZeSnyWa5DUmSqQZymKGyFKn8F2SOLbT8NcIMX0yhFQkD4EBl5hic9
- XH5Cf9QG9ra4+5rwZBiFibzSZKU8qgZNtngO+SIKZwzahJzulAEacpGl1LEEcCwNw+SqqAEIG/5
- g9tN8fKWbLnYq+Is1H40DVroyCA4QbppqP2n7dhCc9zrFgEZ+7RkpMQzkH0iPQATfHNLDmVF5Q=
+ bh=nZSJ+p1yAQCwMdEMaZfFPCzep6ypElgVWhIRM+5ATyE=;
+ b=IBCPlWDJyx/f6BrfgsetP527t3BYA/666JHTJTC7fcmvcFXlruImlpWKi5otP5pJRE
+ BS5SPPVonFKdv/4j276undzugnxRb41CdpsQ0rfB37s3HRelj3P8BZOGud2V2pGsc6fJ
+ 9DyLVI8YtgUNUZIXRrffHrVigsIgyCty2oq4wK4rRL+ngvXtj5mJ+8Cs+fChEu2R2foZ
+ vNj3F/TDN2VvcF0+wUDbxvTMma4l7ZN+OuZaSlLEhHRW+8rd2Cm0dCMMCUPmhIkbHXpy
+ RAMxpQhKPCkAHWc1WrVkFNOwPGMSN+ZR73ZI7vmDIn1zXV9fBgNpXX//Y/ddVAHCZ0Mx
+ M/VA==
+X-Gm-Message-State: AOJu0YxIo5hRM6VxLhyDJlOlVFG7GGJ/VoO7RBmHynO18Qvoug7kCQMx
+ UMSKdDQWVUZuwBT7TSBwhIvCfIIrEANFcfZ6sXqXLcyAqFJ0U8ggcYKHbUKE
+X-Gm-Gg: ASbGncsSOaa+MhVSlFfECike2KgY6iTqJ3u5NySj/WiL0U6rdWrm5qQb7Lj61bO/wef
+ 3uTl41MpkChQZgj3/uliaucgP01RyeynR5hmn+qFC1MtMQt0D89ZTSZvkZrqwvatFAk5jcfcRPB
+ 8g+czOQ9aKk4Z5fyfN6hMXJWllSsxgMn0c0phMGZKy2Ly1doOoSaw1p2jD4P2jr6efUMyPI1sFM
+ Ik4ssDyPJQ+5gN3svtdcVRNFM4zfUMUh2ZDBwjUeDrprGgCSYW6ElUE/xNRhg7o6mZqPM+os3LB
+ MF8eFHSpxuTTwkd8nR5ReqeIfrQVorWENw9NIoCzYDVmbNbMikbyv1BHGn6T5/N4lBOXEm5Jjw=
  =
-X-Google-Smtp-Source: AGHT+IGegqk0lJ7b3/R8dVMxLMDHdULpD+ODiA8wNJ7K4itIvjTtDKvI+RKmrsMl+dGdDKleJei42w==
-X-Received: by 2002:a17:90b:3a08:b0:2ee:dcf6:1c77 with SMTP id
- 98e67ed59e1d1-2f782c9cb1emr12583990a91.16.1737249322787; 
- Sat, 18 Jan 2025 17:15:22 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IElFcOwQkPikFhOIpWdIElEfDtPHY4ocECSWUOuEzaZFJv7B3+8n6QQtXc+0Y9CxemM/MxpEw==
+X-Received: by 2002:a17:90a:d00b:b0:2f6:f107:fae4 with SMTP id
+ 98e67ed59e1d1-2f782c93e5dmr11859931a91.8.1737249225925; 
+ Sat, 18 Jan 2025 17:13:45 -0800 (PST)
 Received: from toolbox.alistair23.me
  (2403-580b-97e8-0-321-6fb2-58f1-a1b1.ip6.aussiebb.net.
  [2403:580b:97e8:0:321:6fb2:58f1:a1b1])
  by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-2f776185b02sm4760314a91.21.2025.01.18.17.15.19
+ 98e67ed59e1d1-2f776185b02sm4760314a91.21.2025.01.18.17.13.42
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sat, 18 Jan 2025 17:15:22 -0800 (PST)
+ Sat, 18 Jan 2025 17:13:45 -0800 (PST)
 From: Alistair Francis <alistair23@gmail.com>
 X-Google-Original-From: Alistair Francis <alistair.francis@wdc.com>
 To: qemu-devel@nongnu.org
-Cc: alistair23@gmail.com,
- =?UTF-8?q?Cl=C3=A9ment=20L=C3=A9ger?= <cleger@rivosinc.com>,
- Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
+Cc: alistair23@gmail.com, Tommy Wu <tommy.wu@sifive.com>,
+ Frank Chang <frank.chang@sifive.com>,
  Alistair Francis <alistair.francis@wdc.com>
-Subject: [PULL v2 47/50] target/riscv: Add Smdbltrp ISA extension enable switch
-Date: Sun, 19 Jan 2025 11:12:22 +1000
-Message-ID: <20250119011225.11452-48-alistair.francis@wdc.com>
+Subject: [PULL v2 20/50] target/riscv: Add 'ext_smrnmi' in the RISCVCPUConfig
+Date: Sun, 19 Jan 2025 11:11:55 +1000
+Message-ID: <20250119011225.11452-21-alistair.francis@wdc.com>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250119011225.11452-1-alistair.francis@wdc.com>
 References: <20250119011225.11452-1-alistair.francis@wdc.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1035;
- envelope-from=alistair23@gmail.com; helo=mail-pj1-x1035.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::102e;
+ envelope-from=alistair23@gmail.com; helo=mail-pj1-x102e.google.com
 X-Spam_score_int: -17
 X-Spam_score: -1.8
 X-Spam_bar: -
@@ -107,64 +105,32 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Clément Léger <cleger@rivosinc.com>
+From: Tommy Wu <tommy.wu@sifive.com>
 
-Add the switch to enable the Smdbltrp ISA extension and disable it for
-the max cpu. Indeed, OpenSBI when Smdbltrp is present, M-mode double
-trap is enabled by default and MSTATUS.MDT needs to be cleared to avoid
-taking a double trap. OpenSBI does not currently support it so disable
-it for the max cpu to avoid breaking regression tests.
+The boolean variable 'ext_smrnmi' is used to determine whether the
+Smrnmi extension exists.
 
-Signed-off-by: Clément Léger <cleger@rivosinc.com>
-Reviewed-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
-Message-ID: <20250116131539.2475785-1-cleger@rivosinc.com>
+Signed-off-by: Frank Chang <frank.chang@sifive.com>
+Signed-off-by: Tommy Wu <tommy.wu@sifive.com>
+Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
+Message-ID: <20250106054336.1878291-2-frank.chang@sifive.com>
 Signed-off-by: Alistair Francis <alistair.francis@wdc.com>
 ---
- target/riscv/cpu.c         |  2 ++
- target/riscv/tcg/tcg-cpu.c | 10 ++++++++++
- 2 files changed, 12 insertions(+)
+ target/riscv/cpu_cfg.h | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/target/riscv/cpu.c b/target/riscv/cpu.c
-index e3ed11b0fd..bddf1ba75e 100644
---- a/target/riscv/cpu.c
-+++ b/target/riscv/cpu.c
-@@ -194,6 +194,7 @@ const RISCVIsaExtData isa_edata_arr[] = {
-     ISA_EXT_DATA_ENTRY(smcdeleg, PRIV_VERSION_1_13_0, ext_smcdeleg),
-     ISA_EXT_DATA_ENTRY(smcntrpmf, PRIV_VERSION_1_12_0, ext_smcntrpmf),
-     ISA_EXT_DATA_ENTRY(smcsrind, PRIV_VERSION_1_13_0, ext_smcsrind),
-+    ISA_EXT_DATA_ENTRY(smdbltrp, PRIV_VERSION_1_13_0, ext_smdbltrp),
-     ISA_EXT_DATA_ENTRY(smepmp, PRIV_VERSION_1_12_0, ext_smepmp),
-     ISA_EXT_DATA_ENTRY(smrnmi, PRIV_VERSION_1_12_0, ext_smrnmi),
-     ISA_EXT_DATA_ENTRY(smmpm, PRIV_VERSION_1_13_0, ext_smmpm),
-@@ -1626,6 +1627,7 @@ const RISCVCPUMultiExtConfig riscv_cpu_extensions[] = {
-     MULTI_EXT_CFG_BOOL("ssnpm", ext_ssnpm, false),
- 
-     MULTI_EXT_CFG_BOOL("smaia", ext_smaia, false),
-+    MULTI_EXT_CFG_BOOL("smdbltrp", ext_smdbltrp, false),
-     MULTI_EXT_CFG_BOOL("smepmp", ext_smepmp, false),
-     MULTI_EXT_CFG_BOOL("smrnmi", ext_smrnmi, false),
-     MULTI_EXT_CFG_BOOL("smmpm", ext_smmpm, false),
-diff --git a/target/riscv/tcg/tcg-cpu.c b/target/riscv/tcg/tcg-cpu.c
-index 48be24bbbe..0a137281de 100644
---- a/target/riscv/tcg/tcg-cpu.c
-+++ b/target/riscv/tcg/tcg-cpu.c
-@@ -1439,6 +1439,16 @@ static void riscv_init_max_cpu_extensions(Object *obj)
-         isa_ext_update_enabled(cpu, CPU_CFG_OFFSET(ext_smrnmi), false);
-         qemu_log("Smrnmi is disabled in the 'max' type CPU\n");
-     }
-+
-+    /*
-+     * ext_smdbltrp requires the firmware to clear MSTATUS.MDT on startup to
-+     * avoid generating a double trap. OpenSBI does not currently support it,
-+     * disable it for now.
-+     */
-+    if (cpu->cfg.ext_smdbltrp) {
-+        isa_ext_update_enabled(cpu, CPU_CFG_OFFSET(ext_smdbltrp), false);
-+        qemu_log("Smdbltrp is disabled in the 'max' type CPU\n");
-+    }
- }
- 
- static bool riscv_cpu_has_max_extensions(Object *cpu_obj)
+diff --git a/target/riscv/cpu_cfg.h b/target/riscv/cpu_cfg.h
+index a36d3fada3..ee7c908710 100644
+--- a/target/riscv/cpu_cfg.h
++++ b/target/riscv/cpu_cfg.h
+@@ -129,6 +129,7 @@ struct RISCVCPUConfig {
+     bool ext_ssaia;
+     bool ext_sscofpmf;
+     bool ext_smepmp;
++    bool ext_smrnmi;
+     bool ext_ssnpm;
+     bool ext_smnpm;
+     bool ext_smmpm;
 -- 
 2.48.1
 
