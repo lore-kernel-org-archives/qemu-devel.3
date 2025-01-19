@@ -4,67 +4,55 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 73552C02185
-	for <qemu-devel@archiver.kernel.org>; Sat, 18 Jan 2025 23:50:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E9494C02185
+	for <qemu-devel@archiver.kernel.org>; Sun, 19 Jan 2025 01:09:13 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tZIZd-0006fO-7h; Sat, 18 Jan 2025 18:49:53 -0500
+	id 1tZJnE-0008M3-Lk; Sat, 18 Jan 2025 20:08:00 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
- id 1tZIZa-0006en-0H
- for qemu-devel@nongnu.org; Sat, 18 Jan 2025 18:49:50 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
+ id 1tZJnD-0008La-BE; Sat, 18 Jan 2025 20:07:59 -0500
+Received: from zero.eik.bme.hu ([152.66.115.2])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
- id 1tZIZY-0002EK-54
- for qemu-devel@nongnu.org; Sat, 18 Jan 2025 18:49:49 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1737244183;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to; bh=62SQkMmioZEm/dyD+BRtmJWTudVhjWXbX4pwXw5tH/E=;
- b=Z/P1Ta+UG4swcrzfmIQU+u8gQrSAM9/se4yW1CVGo+tQbqIlUk82uUGG7rtGx7d9QI0AQi
- INM9FXEcIBJ+PSoU9y5sFZeRHe5Qm5cGxBgTm4R4JXi07g40x2vZKSieySbaH0xnDC81RI
- SLW1Y1CD3q/AGnsczxf92UeOvssdIm0=
-Received: from mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-678-agq5Xb8FPtiSkOdsLy2Y9g-1; Sat,
- 18 Jan 2025 18:49:39 -0500
-X-MC-Unique: agq5Xb8FPtiSkOdsLy2Y9g-1
-X-Mimecast-MFC-AGG-ID: agq5Xb8FPtiSkOdsLy2Y9g
-Received: from mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.15])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 3F3DC1956087; Sat, 18 Jan 2025 23:49:38 +0000 (UTC)
-Received: from localhost (unknown [10.2.16.37])
- by mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 90C42195608A; Sat, 18 Jan 2025 23:49:32 +0000 (UTC)
-Date: Sat, 18 Jan 2025 18:49:30 -0500
-From: Stefan Hajnoczi <stefanha@redhat.com>
-To: richard.henderson@linaro.org
-Cc: qemu-devel@nongnu.org
-Subject: Re: [PULL 00/68] tcg patch queue
-Message-ID: <20250118234930.GA448811@fedora>
+ (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
+ id 1tZJnB-0002bD-Gb; Sat, 18 Jan 2025 20:07:59 -0500
+Received: from zero.eik.bme.hu (localhost [127.0.0.1])
+ by zero.eik.bme.hu (Postfix) with ESMTP id 4B3894E6000;
+ Sun, 19 Jan 2025 02:07:53 +0100 (CET)
+X-Virus-Scanned: amavisd-new at eik.bme.hu
+Received: from zero.eik.bme.hu ([127.0.0.1])
+ by zero.eik.bme.hu (zero.eik.bme.hu [127.0.0.1]) (amavisd-new, port 10028)
+ with ESMTP id jGuCkFNVtorc; Sun, 19 Jan 2025 02:07:51 +0100 (CET)
+Received: by zero.eik.bme.hu (Postfix, from userid 432)
+ id 5032C4E6005; Sun, 19 Jan 2025 02:07:51 +0100 (CET)
+Received: from localhost (localhost [127.0.0.1])
+ by zero.eik.bme.hu (Postfix) with ESMTP id 4DD8074577D;
+ Sun, 19 Jan 2025 02:07:51 +0100 (CET)
+Date: Sun, 19 Jan 2025 02:07:51 +0100 (CET)
+From: BALATON Zoltan <balaton@eik.bme.hu>
+To: Michael Tokarev <mjt@tls.msk.ru>
+cc: qemu-devel@nongnu.org, Kevin Wolf <kwolf@redhat.com>, 
+ Hanna Reitz <hreitz@redhat.com>, 
+ =?ISO-8859-15?Q?Volker_R=FCmelin?= <vr_qemu@t-online.de>, 
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>, qemu-block@nongnu.org, 
+ qemu-trivial@nongnu.org
+Subject: Re: [PATCH] vvfat: refresh writing long filename
+In-Reply-To: <7b87000c-bdb4-41c0-8fe0-9bb0c4e8cd85@tls.msk.ru>
+Message-ID: <e77b7bcf-8629-3034-fd2b-9d9bd3744f07@eik.bme.hu>
+References: <20250118182109.2695C19E94D@tsrv.corpit.ru>
+ <df622cbd-32a1-29b3-5518-fa4d5e1d7c40@eik.bme.hu>
+ <7b87000c-bdb4-41c0-8fe0-9bb0c4e8cd85@tls.msk.ru>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha256;
- protocol="application/pgp-signature"; boundary="uHI82H1mNS8uRzSb"
-Content-Disposition: inline
-In-Reply-To: <20250117182456.2077110-1-richard.henderson@linaro.org>
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.15
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=stefanha@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -39
-X-Spam_score: -4.0
-X-Spam_bar: ----
-X-Spam_report: (-4.0 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.07,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-1.787,
+Content-Type: multipart/mixed;
+ boundary="3866299591-1871395700-1737248871=:91016"
+Received-SPF: pass client-ip=152.66.115.2; envelope-from=balaton@eik.bme.hu;
+ helo=zero.eik.bme.hu
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -82,34 +70,54 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+  This message is in MIME format.  The first part should be readable text,
+  while the remaining parts are likely unreadable without MIME-aware tools.
 
---uHI82H1mNS8uRzSb
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
+--3866299591-1871395700-1737248871=:91016
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8BIT
 
-Hi Richard,
-1. This pull request is not a signed tag. Please push a signed tag.
-2. I can't find a key for richard.henderson@linaro.org on
-   keys.openpgp.org. Please check again and send the key fingerprint.
+On Sun, 19 Jan 2025, Michael Tokarev wrote:
+> 18.01.2025 23:54, BALATON Zoltan wrote:
+>>> +typedef struct lfn_direntry_t {
+>>> +    uint8_t sequence;
+>>> +    uint8_t name01[10];
+>>> +    uint8_t attributes;
+>>> +    uint8_t direntry_type;
+>>> +    uint8_t sfn_checksum;
+>>> +    uint8_t name0e[12];
+>>> +    uint16_t begin;
+>>> +    uint8_t name1c[4];
+>>> +} QEMU_PACKED lfn_direntry_t;
+>
+>>> +static unsigned write_lfn_part(uint8_t *dest, unsigned dsize,
+>>> +                               const gunichar2 *lptr, const gunichar2 
+>>> *lend)
+>>> +{
+>>> +    unsigned i;
+>>> +    for(i = 0; i < dsize / 2 && lptr + i < lend; ++i) {
+>>> +        dest[i / 2 + 0] = lptr[i] & 0xff;
+>>> +        dest[i / 2 + 1] = lptr[i] >> 8;
+>> 
+>> Why not uint16_t and maybe cpu_to_le (or whatever that's called) if needed? 
+>> May be simpler than handling it byte by byte.
+>
+> The dest array is unaligned - this is, eg, name01 in the above struct.
+> Will it work to use entry->name01[i] = cpu_to_le16(lptr[i]) here,
+> provided lfn_direntry_t=>name is declared as uint16_t name[5] ?
 
-Thanks,
-Stefan
+I think it should work, I don't see why it would not. The compiler should 
+be able to figure out how to handle unaligned data where needed, you 
+should not need to do that by hand. Or I think you'd get a warning if it 
+would not work.
 
---uHI82H1mNS8uRzSb
-Content-Type: application/pgp-signature; name="signature.asc"
+Regards,
+BALATON Zoltan
 
------BEGIN PGP SIGNATURE-----
-
-iQEzBAEBCAAdFiEEhpWov9P5fNqsNXdanKSrs4Grc8gFAmeMPgoACgkQnKSrs4Gr
-c8jh7wf/QAujDrbhfCzGgTi1OYhT6N8pB6xO0VxpmMPqTBAl7r9N5JnHjdKLY3DZ
-vw9Skk1bMeD2nj9MLuc0dRYm55sWsmGjw8KGT3GLDKamdALdWao1nnrEoVrT/gp5
-m6RU/pfSjpPgAIcrstgaof1CB1TikgVO7YTBU2IQVFdg8Qko+N7Ka1pV0cnJEpoJ
-eJfyikHbNqZg3kQOTHTAnHs1hWiISh+dyqX8UvjCksRDMq6ewG9gMDTXC3vAV9+N
-HcLPBrLRy2eZu9+WDRb8axxhVc2XFo7+g3BB7xTZmLyx4n9RMkDjM4R7IVRGjAr0
-hf+LiBKDq8TVlEarOhYOeBE547yzMw==
-=mVSN
------END PGP SIGNATURE-----
-
---uHI82H1mNS8uRzSb--
-
+> I haven't done programming for quite a while... ;)
+>
+> /mjt
+>
+>
+--3866299591-1871395700-1737248871=:91016--
 
