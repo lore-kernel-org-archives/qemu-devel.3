@@ -4,43 +4,43 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DFA7DC02187
-	for <qemu-devel@archiver.kernel.org>; Sun, 19 Jan 2025 22:02:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 488FEC02188
+	for <qemu-devel@archiver.kernel.org>; Sun, 19 Jan 2025 22:03:05 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tZdN1-0006yv-RH; Sun, 19 Jan 2025 17:02:15 -0500
+	id 1tZdNi-000773-27; Sun, 19 Jan 2025 17:02:58 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <dmitry.osipenko@collabora.com>)
- id 1tZdMz-0006yl-Pc
- for qemu-devel@nongnu.org; Sun, 19 Jan 2025 17:02:14 -0500
+ id 1tZdNR-00071p-2l
+ for qemu-devel@nongnu.org; Sun, 19 Jan 2025 17:02:44 -0500
 Received: from sender4-pp-f112.zoho.com ([136.143.188.112])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <dmitry.osipenko@collabora.com>)
- id 1tZdMw-00087G-TF
- for qemu-devel@nongnu.org; Sun, 19 Jan 2025 17:02:13 -0500
-ARC-Seal: i=1; a=rsa-sha256; t=1737324112; cv=none; 
+ id 1tZdNP-0008B2-MH
+ for qemu-devel@nongnu.org; Sun, 19 Jan 2025 17:02:40 -0500
+ARC-Seal: i=1; a=rsa-sha256; t=1737324150; cv=none; 
  d=zohomail.com; s=zohoarc; 
- b=a6Lvm2xuwfOl6gl2YIChKDZ4+NZ4hUJOQn8ma+/tTli6BXOr0DjbJz0m96Wtl7Vv3NybCoe/ANLTCmbNcTbOkbefCc6fyMpfWt0y1pH/76R3s15YNhTaA9Fkb925bY4y8xc96SjMdjmYl+oqctJPLM7eEBE3KB+YBpKTC8Zjxn8=
+ b=XrUTD7n1YIIDa00NknuWMWS9E0YO6ziPiG+p1ro4TRMW5DxrS0CA8Ts8qt0BfccpXYkry9Bamprp+INAvDL7H4O9VpDNlGAHTSBKdKJK9sjikQ1eDFIuszXHrU+CHWGDubRNUCrFPGOgtss0dOle3psSBs4BMmOS2V+QK9f/i3U=
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=zohomail.com;
- s=zohoarc; t=1737324112;
- h=Content-Type:Content-Transfer-Encoding:Cc:Cc:Date:Date:From:From:MIME-Version:Message-ID:Subject:Subject:To:To:Message-Id:Reply-To;
- bh=5KV22j8fpmZ8XVK9fnwL+eHAmBMku7xLIqhPClLIXMU=; 
- b=Ctn6MkHmPgCkexlzG/6RHj1QeoqKhZKuXScLhoSEbjePNsyy0vhFHNOg9wYIKjj6hUh/x9t3Mq/aeFUota24qjEs3kFQYCsLgAP0v7lLdPWZiqhK7P2EI3zC9JX8VPAw6ZITrq/q2MTo/HesklZ+I9xcTHgN0RgfTdargXHxABI=
+ s=zohoarc; t=1737324150;
+ h=Content-Transfer-Encoding:Cc:Cc:Date:Date:From:From:In-Reply-To:MIME-Version:Message-ID:References:Subject:Subject:To:To:Message-Id:Reply-To;
+ bh=dgZGjN1Dldtp9uv17CwXmV/So7WmQBm5kydCciyiNVQ=; 
+ b=UwYaqNxFGCS47g9dzcL347YmfOjpCXHJXHo7ENr/f4NB5/B0nFPN7Qjhq6ds9tyjLteuUQu5My19p07Jsplgr47fFtfbw8Z8tySqdBxD/lOcd0GMiyFluM6WsVSLb+zHPH1T+hJ0hKAeZxCkDyJjsTgj5XPtHYM0CA9jzRGakQQ=
 ARC-Authentication-Results: i=1; mx.zohomail.com;
  dkim=pass  header.i=collabora.com;
  spf=pass  smtp.mailfrom=dmitry.osipenko@collabora.com;
  dmarc=pass header.from=<dmitry.osipenko@collabora.com>
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; t=1737324112; 
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; t=1737324150; 
  s=zohomail; d=collabora.com; i=dmitry.osipenko@collabora.com; 
- h=From:From:To:To:Cc:Cc:Subject:Subject:Date:Date:Message-ID:MIME-Version:Content-Type:Content-Transfer-Encoding:Message-Id:Reply-To;
- bh=5KV22j8fpmZ8XVK9fnwL+eHAmBMku7xLIqhPClLIXMU=;
- b=ialdMxK2SDWV9anrerqHvfrPqPhmNpp3NXq/Bo8lvNZW49qnibDK97ZLQb4N+J16
- s3fZjfnKopZaV4B7M6wXLcKLCi/e30kniqe6NIvgJFVQfvkN06ORn3/9clhWuOYGkUE
- XVLXTifE/iZv/0oCuixBLVVjBlE4QPs/B1isB/QQ=
-Received: by mx.zohomail.com with SMTPS id 1737324109599205.35630521334429;
- Sun, 19 Jan 2025 14:01:49 -0800 (PST)
+ h=From:From:To:To:Cc:Cc:Subject:Subject:Date:Date:Message-ID:In-Reply-To:References:MIME-Version:Content-Transfer-Encoding:Message-Id:Reply-To;
+ bh=dgZGjN1Dldtp9uv17CwXmV/So7WmQBm5kydCciyiNVQ=;
+ b=W4X/9cwtQFPGyhldXolSuq2deTuejGrU0D5IKfJj1CE1yxNAeSFWfOBObOStjzpH
+ SlN0HDPbjzr9I/UjFrP9bP8wrfvIItYRRCmH8zQ3EcWAvXoiDsTUWam0WgBxQSIZ8Rs
+ TY8ImYLm4myayeqsigUCs9Yl7fUumqgeaERPeldM=
+Received: by mx.zohomail.com with SMTPS id 1737324148678759.1945052567817;
+ Sun, 19 Jan 2025 14:02:28 -0800 (PST)
 From: Dmitry Osipenko <dmitry.osipenko@collabora.com>
 To: Akihiko Odaki <akihiko.odaki@daynix.com>, Huang Rui <ray.huang@amd.com>,
  =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
@@ -59,12 +59,13 @@ Cc: Gert Wollny <gert.wollny@collabora.com>, qemu-devel@nongnu.org,
  Honglei Huang <honglei1.huang@amd.com>, Julia Zhang <julia.zhang@amd.com>,
  Chen Jiqian <Jiqian.Chen@amd.com>, Rob Clark <robdclark@gmail.com>,
  Yiwei Zhang <zzyiwei@chromium.org>, Sergio Lopez Pascual <slp@redhat.com>
-Subject: [PATCH v5 0/8] Support virtio-gpu DRM native context
-Date: Mon, 20 Jan 2025 01:00:42 +0300
-Message-ID: <20250119220050.15167-1-dmitry.osipenko@collabora.com>
+Subject: [PATCH v5 7/8] ui/gtk: Don't disable scanout when display is refreshed
+Date: Mon, 20 Jan 2025 01:00:49 +0300
+Message-ID: <20250119220050.15167-8-dmitry.osipenko@collabora.com>
 X-Mailer: git-send-email 2.47.1
+In-Reply-To: <20250119220050.15167-1-dmitry.osipenko@collabora.com>
+References: <20250119220050.15167-1-dmitry.osipenko@collabora.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 X-ZohoMailClient: External
 Received-SPF: pass client-ip=136.143.188.112;
@@ -92,176 +93,46 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This patchset adds DRM native context support to VirtIO-GPU on Qemu.
+Display refreshment is invoked by a timer and it erroneously disables
+the active scanout if it happens to be invoked after scanout has been
+enabled. This offending scanout-disable race condition with a timer
+can be easily hit when Qemu runs with a disabled vsync by using SDL or
+GTK displays (with vblank_mode=0 for GTK). Refreshment of display's
+content shouldn't disable the active display. Fix it by keeping the
+scanout's state unchanged when display is redrawn.
 
-Contarary to Virgl and Venus contexts that mediates high level GFX APIs,
-DRM native context [1] mediates lower level kernel driver UAPI, which
-reflects in a less CPU overhead and less/simpler code needed to support it.
-DRM context consists of a host and guest parts that have to be implemented
-for each GPU driver. On a guest side, DRM context presents a virtual GPU as
-a real/native host GPU device for GL/VK applications.
+Reviewed-by: Akihiko Odaki <akihiko.odaki@daynix.com>
+Acked-by: Michael S. Tsirkin <mst@redhat.com>
+Signed-off-by: Dmitry Osipenko <dmitry.osipenko@collabora.com>
+---
+ ui/gtk-egl.c     | 1 -
+ ui/gtk-gl-area.c | 1 -
+ 2 files changed, 2 deletions(-)
 
-[1] https://www.youtube.com/watch?v=9sFP_yddLLQ
-
-Today there are four known DRM native context drivers existing in a wild:
-
-  - Freedreno (Qualcomm SoC GPUs), completely upstreamed
-  - AMDGPU, mostly merged into upstreams
-  - Intel (i915), merge requests are opened
-  - Asahi (Apple SoC GPUs), WIP status
-
-
-# How to try out DRM context:
-
-1. DRM context uses host blobs and requires latest developer version 
-of Linux kernel [2] that has necessary KVM fixes.
-
-[2] https://git.kernel.org/pub/scm/linux/kernel/git/next/linux-next.git/
-
-2. Use latest libvirglrenderer from upstream git/main for Freedreno
-and AMDGPU native contexts. For Intel use patches [3].
-
-[3] https://gitlab.freedesktop.org/virgl/virglrenderer/-/merge_requests/1384
-
-3. On guest, use latest Mesa version for Freedreno. For AMDGPU use
-Mesa patches [4], for Intel [5].
-
-[4] https://gitlab.freedesktop.org/mesa/mesa/-/merge_requests/21658
-[5] https://gitlab.freedesktop.org/mesa/mesa/-/merge_requests/29870
-
-4. On guest, use latest Linux kernel v6.6+. Apply patch [6] if you're
-   running Xorg in guest.
-
-[6] https://lore.kernel.org/dri-devel/20241020224725.179937-1-dmitry.osipenko@collabora.com/
-
-Example Qemu cmdline that enables DRM context:
-
-  qemu-system-x86_64 -device virtio-vga-gl,hostmem=4G,blob=on,drm_native_context=on \
-      -machine q35,accel=kvm,memory-backend=mem1 \
-      -object memory-backend-memfd,id=mem1,size=8G -m 8G
-
-
-# Note about known performance problem in Qemu:
-
-DRM contexts are mapping host blobs extensively and these mapping
-operations work slowly in Qemu. Exact reason is unknown. Mappings work
-fast on Crosvm For DRM contexts this problem is more visible than for
-Venus/Virgl.
-
-Changelog:
-
-v5: - Added r-bs from Akihiko Odaki.
-
-    - Added acks from Michael Tsirkin.
-
-    - Fixed compilation warning using older version of virglrenderer that
-      was reported by Alex Bennée. Noticed that I need to keep old
-      virgl_write_fence() code around for the older virglrenderer in
-      "Support  asynchronous fencing" patch, so added it back and verified
-      that old virglrenderer works properly.
-
-    - Added new patch from Alex Bennée that adds more virtio-gpu 
-      documentation with a couple corrections and additions to it from me.
-
-    - Rebased patches on top of latest staging tree.
-
-v4: - Improved SDL2/dmabuf patch by reusing existing Meson X11 config 
-      option, better handling EGL error and extending comment telling
-      that it's safe to enable SDL2 EGL preference hint. As was suggested
-      by Akihiko Odaki.
-
-    - Replaced another QSLIST_FOREACH_SAFE with QSLIST_EMPTY+FIRST in
-      the async-fencing patch for more consistency of the code. As was
-      suggested by Akihiko Odaki.
-
-    - Added missing braces around if-statement that was spotted by
-      Alex Bennée.
-
-    - Renamed 'drm=on' option of virtio-gpu-gl device to 
-      'drm_native_context=on' for more clarity as was suggested by 
-      Alex Bennée. Haven't added added new context-type option that 
-      was also proposed by Alex, might do it with a separate patch.
-      This context-type option will duplicate and depecate existing
-      options, but in a longer run likely will be worthwhile adding
-      it.
-
-    - Dropped Linux headers-update patch as headers has been updated
-      in the staging tree.
-
-v3: - Improved EGL presence-check code on X11 systems for the SDL2
-      hint that prefers EGL over GLX by using better ifdefs and checking
-      Xlib presence at a build time to avoid build failure if lib SDL2
-      and system are configured with a disabled X11 support. Also added
-      clarifying comment telling that X11 hint doesn't affect Wayland
-      systems. Suggested by Akihiko Odaki.
-
-    - Corrected strerror(err) that used negative error where it should
-      be positive and vice versa that was caught by Akihiko Odaki. Added
-      clarifying comment for the case where we get positive error code
-      from virglrenderer that differs from other virglrenderer API functions.
-
-    - Improved QSLIST usage by dropping mutex protecting the async fence
-      list and using atomic variant of QSLIST helpers instead. Switched away
-      from using FOREACH helper to improve readability of the code, showing
-      that we don't precess list in unoptimal way. Like was suggested by
-      Akihiko Odaki.
-
-    - Updated patchset base to Venus v18.
-
-v2: - Updated SDL2-dmabuf patch by making use of error_report() and
-      checking presense of X11+EGL in the system before making SDL2
-      to prefer EGL backend over GLX, suggested by Akihiko Odaki.
-
-    - Improved SDL2's dmabuf-presence check that wasn't done properly
-      in v1, where EGL was set up only after first console was fully
-      inited, and thus, SDL's display .has_dmabuf callback didn't work
-      for the first console. Now dmabuf support status is pre-checked
-      before console is registered.
-
-    - Updated commit description of the patch that fixes SDL2's context
-      switching logic with a more detailed explanation of the problem.
-      Suggested by Akihiko Odaki.
-
-    - Corrected rebase typo in the async-fencing patch and switched
-      async-fencing to use a sigle-linked list instead of the double,
-      as was suggested by Akihiko Odaki.
-
-    - Replaced "=true" with "=on" in the DRM native context documentation
-      example and made virtio_gpu_virgl_init() to fail with a error message
-      if DRM context can't be initialized instead of giving a warning
-      message, as was suggested by Akihiko Odaki.
-
-    - Added patchew's dependecy tag to the cover letter as was suggested by
-      Akihiko Odaki.
-
-
-Alex Bennée (1):
-  docs/system: Expand the virtio-gpu documentation
-
-Dmitry Osipenko (6):
-  ui/sdl2: Restore original context after new context creation
-  virtio-gpu: Handle virgl fence creation errors
-  virtio-gpu: Support asynchronous fencing
-  virtio-gpu: Support DRM native context
-  ui/sdl2: Don't disable scanout when display is refreshed
-  ui/gtk: Don't disable scanout when display is refreshed
-
-Pierre-Eric Pelloux-Prayer (1):
-  ui/sdl2: Implement dpy dmabuf functions
-
- docs/system/devices/virtio-gpu.rst | 105 +++++++++++++++++--
- hw/display/virtio-gpu-gl.c         |   5 +
- hw/display/virtio-gpu-virgl.c      | 159 ++++++++++++++++++++++++++++-
- hw/display/virtio-gpu.c            |  15 +++
- include/hw/virtio/virtio-gpu.h     |  16 +++
- include/ui/sdl2.h                  |   7 ++
- meson.build                        |   6 +-
- ui/gtk-egl.c                       |   1 -
- ui/gtk-gl-area.c                   |   1 -
- ui/sdl2-gl.c                       |  68 +++++++++++-
- ui/sdl2.c                          |  42 ++++++++
- 11 files changed, 411 insertions(+), 14 deletions(-)
-
+diff --git a/ui/gtk-egl.c b/ui/gtk-egl.c
+index f7a428c86a8d..0d1547d63ad0 100644
+--- a/ui/gtk-egl.c
++++ b/ui/gtk-egl.c
+@@ -179,7 +179,6 @@ void gd_egl_refresh(DisplayChangeListener *dcl)
+ 
+     if (vc->gfx.glupdates) {
+         vc->gfx.glupdates = 0;
+-        gtk_egl_set_scanout_mode(vc, false);
+         gd_egl_draw(vc);
+     }
+ }
+diff --git a/ui/gtk-gl-area.c b/ui/gtk-gl-area.c
+index 2c9a0db42571..53d81124f211 100644
+--- a/ui/gtk-gl-area.c
++++ b/ui/gtk-gl-area.c
+@@ -148,7 +148,6 @@ void gd_gl_area_refresh(DisplayChangeListener *dcl)
+ 
+     if (vc->gfx.glupdates) {
+         vc->gfx.glupdates = 0;
+-        gtk_gl_area_set_scanout_mode(vc, false);
+         gtk_gl_area_queue_render(GTK_GL_AREA(vc->gfx.drawing_area));
+     }
+ }
 -- 
 2.47.1
 
