@@ -4,78 +4,78 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1B81BC02185
-	for <qemu-devel@archiver.kernel.org>; Sun, 19 Jan 2025 01:18:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id AB7E8C02188
+	for <qemu-devel@archiver.kernel.org>; Sun, 19 Jan 2025 01:18:03 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tZJv1-00048f-Sf; Sat, 18 Jan 2025 20:16:03 -0500
+	id 1tZJuh-0003IW-0a; Sat, 18 Jan 2025 20:15:43 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1tZJua-0003HV-Uu
- for qemu-devel@nongnu.org; Sat, 18 Jan 2025 20:15:37 -0500
+ id 1tZJu9-0001o6-7Q
+ for qemu-devel@nongnu.org; Sat, 18 Jan 2025 20:15:10 -0500
 Received: from mail-pj1-x102d.google.com ([2607:f8b0:4864:20::102d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1tZJuZ-0003ke-BE
- for qemu-devel@nongnu.org; Sat, 18 Jan 2025 20:15:36 -0500
+ id 1tZJu5-0003Yw-5p
+ for qemu-devel@nongnu.org; Sat, 18 Jan 2025 20:15:07 -0500
 Received: by mail-pj1-x102d.google.com with SMTP id
- 98e67ed59e1d1-2ee46851b5eso4518900a91.1
- for <qemu-devel@nongnu.org>; Sat, 18 Jan 2025 17:15:34 -0800 (PST)
+ 98e67ed59e1d1-2ef714374c0so5276902a91.0
+ for <qemu-devel@nongnu.org>; Sat, 18 Jan 2025 17:15:04 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1737249333; x=1737854133; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1737249303; x=1737854103; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=hepX22FTlqXSa6p5bX3QV0CVCwBYpn5hMPqWA0qdSSQ=;
- b=DzVFNibvcFVY5obGXd1o6sHdb0Wgyqvit1AvHRi80+LOJvhfrEK01B6qrkAYe76TqP
- d914E3lmIUC37LvDueUZt5dcyHPmO7UnXH2Uk073NrURk6oq/P1Udl+ryhmZt0nSwkYn
- uhlQpy0GeL+bSYLdIuXYVkwxw+/kkRuj4Ag6vZhyHbM4NDwgsqNa47n87vxmLZUCF+DW
- 9rD6iyQMfuC2lH1IPnAlFVmi3OcfbiuqWRVRZp36pBLV+hkQh9f/DsG28UYdTSQTCFxF
- JZl4i9Yj3/OYpa+1XMYUqo7KMp6m743ngheehOMRzNjyefOR3LHPlfqGh+GE1jXNqHj0
- D+qA==
+ bh=usdi74Z2L8EQHLLHA61Sr3nutYeLak96FojtLJJZO5w=;
+ b=AGb0fXqyYjcBdMozoaVhf2b9rh8LHPOHEtcmLKyo45kF5dbOki0V4OONHxR4uqsptw
+ Kbnizkyy16sAcsOEj8WuNUx0pm0IqQKpZR2ccKPLIFiRUtS9hqYVlfW906dR6JT3SjPm
+ bJmWW3b25qyNjyfTmNnrO+IyJ8RhJWfMIXxCEsZJryDbh8Ac5I8APAKSFl3B7x7mHq+m
+ d54nRGeQ1DNmh1Rfnwgl/BrdQNdcr9hRrE9bHFSIHh784chz3FjRVGX3nuRjxO7+SOTh
+ IDDhLByASmBVSNEEB6UgMmSoP7cXoWI/6t6p5dOeBxQmDDDQ5ChA9u3KsMIF7IuY4Rw9
+ tMtQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1737249333; x=1737854133;
+ d=1e100.net; s=20230601; t=1737249303; x=1737854103;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=hepX22FTlqXSa6p5bX3QV0CVCwBYpn5hMPqWA0qdSSQ=;
- b=hOP9HqRkuG2wKMXhekl3PsLe7N7MzkLu8EpeWIPKR/lgRqMmIpyFZbudxttNjkvIs7
- yrEzi2lqogrjEB/RAx/d9tkbcahFvXQpCGtkWej2qNKeuOKQqiAVub3vl7cD8lKKdy6P
- qrQ2ogRrgij1JWKF4lmFpmCraJ4/AZIw9qZt0a3oXh4DK39afgUR/iPwWamUVimrJQTT
- 8MIOO1jq4CFONz20U77AqFHNdxjyQwMWZhaOASVJEt3qAXpeCA6gRuzTKfW9MXqN9lHM
- uN02PUUUMlvq2y18cQv9N2XDjQMz0TRxnBABcf/mgn7m/vnL3TAHdzE4FxTbYFBGRiwf
- aflg==
-X-Gm-Message-State: AOJu0YxTu5VmxJYLJ66t9vVNA2oi1+++83XKi2YcNy47Vg4MlD1fw7LU
- 7YpQPdWcNIB512//v8MMqapDXRoUhuTRiDVDXJ+mQniBT/hbY/F9WOYe5ak7
-X-Gm-Gg: ASbGncs3wftvIhfY/mmycRbPlRAI7mxvVmpFnOduWhCKRrKfMUXLvx6xHl3aWE8AXW1
- j8SLCGiUGaYCQNrM3TBySEXB3sRR3RyS86bzexYmQD24+G1vywKGsKXRVdSo7KbVLx2wu9EfHcl
- uLlxEomNHaJLBH4dKNkuxotATSI3jhPJV968hQXu3E1ojcDoDma+nkRI1DP4RwqfhNWYc5UE6ti
- 1ofpA1pQ53T4LKDkcAVe0MEhflbTamVAEGlNLCh9m5G7IOTfn7g9PMsCgOLliBmjzNX2c80C2gS
- jp99LbHi96pmquujEjjYuPVuZ/I31dhZ45V73FZ3mlalvEdgGKAHugaD7+PLFmB+fIFDSkLATQ=
+ bh=usdi74Z2L8EQHLLHA61Sr3nutYeLak96FojtLJJZO5w=;
+ b=nFBD+FlFff9ylNXhQ4CjOo3TRmIPVraCQzG0tV7ekERTkjCdSxTZv2xfGuXTT/yPdD
+ FrwHQweuSOX1gF1IFuUuGjy5u5xoMW0IsIhz/dy41z+Fr1ySPjadXdAKldIXISPWLf3c
+ AXWQ8e2I4UQBk1YWKrm7KMQ/N8pckO/Apzn3DxA+Aq7tYHJyVjblRZB+4e4V0o19KCsi
+ 4gOVLCs4DGg6iMThE0Q5fG3dHtSeP3EnxDeZAphPOmNeYU80rLzrjSEs9BInP8dVLe6j
+ HmNObHGffVlMQepAQjxlP4gFeSrUpcYhvH0GgRndMEPUcKkIc1skkTTVJD7CwXUZ5CVC
+ UfrA==
+X-Gm-Message-State: AOJu0YzGVBvMu7WhTYVAqlGkBqYjhMWEijLAgX5NKm/bnBCDlt3r/vg+
+ mk0bSMQPIdA/UahqHuwiypkcn3Fy2k6+3bqgKNGeRH2fJNZBCoLlTDakLnPV
+X-Gm-Gg: ASbGncujmtUA5zs3XYIP/C/jyIYhrZY+8KASyvvh73AbofLLHjXX4L3q+5+QAdA0PPu
+ FBRZC6OVHtxtab87JyYhm3BhpCsJQjzMDbn1cJ2DUIPZ5Hfnz/XUqVk5G0MmXBHKslMbHiipxcG
+ yCrTha3e+b9ZEEqC+Ge+IQsXOZAgmufXTyBs0NfdyFHpvNI5wrCAy15twDJNNUWL1ZtR4bXGN+6
+ lm+yNIMGbUCeVJA2QJYunzsH4T72MAhfsYYW1C9vuBj7YQK4QurOWH/84RqhAAj86ZznVtZSQyf
+ dbbA1CFmZsN2Dj2YFl9yooFAs6w9rWRvvharMWnzmIubYgp5hLotBoovCeyL/rKFKIcABoym6g=
  =
-X-Google-Smtp-Source: AGHT+IFFExOCzBrIeCEsMVLCdorywvVhLUyiADbeXukGTIqSF2Q38CMCGPEUZHNFXPPA+gxVenhoqg==
-X-Received: by 2002:a17:90a:c2c5:b0:2ee:8008:b583 with SMTP id
- 98e67ed59e1d1-2f782c9c88fmr12762086a91.16.1737249333565; 
- Sat, 18 Jan 2025 17:15:33 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IHl8E30wWlObsPF2BLmwx5b5HuDt0oxm0Ci8jimx7ujCt/DuSAmU7V1zaYYwkJwAGpaprJKOQ==
+X-Received: by 2002:a17:90b:1b46:b0:2ee:463d:8e8d with SMTP id
+ 98e67ed59e1d1-2f728e47195mr24969707a91.14.1737249303290; 
+ Sat, 18 Jan 2025 17:15:03 -0800 (PST)
 Received: from toolbox.alistair23.me
  (2403-580b-97e8-0-321-6fb2-58f1-a1b1.ip6.aussiebb.net.
  [2403:580b:97e8:0:321:6fb2:58f1:a1b1])
  by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-2f776185b02sm4760314a91.21.2025.01.18.17.15.30
+ 98e67ed59e1d1-2f776185b02sm4760314a91.21.2025.01.18.17.15.00
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sat, 18 Jan 2025 17:15:32 -0800 (PST)
+ Sat, 18 Jan 2025 17:15:02 -0800 (PST)
 From: Alistair Francis <alistair23@gmail.com>
 X-Google-Original-From: Alistair Francis <alistair.francis@wdc.com>
 To: qemu-devel@nongnu.org
 Cc: alistair23@gmail.com,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ =?UTF-8?q?Cl=C3=A9ment=20L=C3=A9ger?= <cleger@rivosinc.com>,
  Alistair Francis <alistair.francis@wdc.com>
-Subject: [PULL v2 50/50] hw/char/riscv_htif: Convert HTIF_DEBUG() to trace
- events
-Date: Sun, 19 Jan 2025 11:12:25 +1000
-Message-ID: <20250119011225.11452-51-alistair.francis@wdc.com>
+Subject: [PULL v2 41/50] target/riscv: Implement Ssdbltrp sret,
+ mret and mnret behavior
+Date: Sun, 19 Jan 2025 11:12:16 +1000
+Message-ID: <20250119011225.11452-42-alistair.francis@wdc.com>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250119011225.11452-1-alistair.francis@wdc.com>
 References: <20250119011225.11452-1-alistair.francis@wdc.com>
@@ -107,69 +107,95 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Philippe Mathieu-Daudé <philmd@linaro.org>
+From: Clément Léger <cleger@rivosinc.com>
 
-Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+When the Ssdbltrp extension is enabled, SSTATUS.SDT field is cleared
+when executing sret. When executing mret/mnret, SSTATUS.SDT is cleared
+when returning to U, VS or VU and VSSTATUS.SDT is cleared when returning
+to VU from HS.
+
+Signed-off-by: Clément Léger <cleger@rivosinc.com>
 Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
-Message-ID: <20250116223609.81594-1-philmd@linaro.org>
+Message-ID: <20250110125441.3208676-4-cleger@rivosinc.com>
 Signed-off-by: Alistair Francis <alistair.francis@wdc.com>
 ---
- hw/char/riscv_htif.c | 15 +++------------
- hw/char/trace-events |  4 ++++
- 2 files changed, 7 insertions(+), 12 deletions(-)
+ target/riscv/op_helper.c | 35 ++++++++++++++++++++++++++++++++++-
+ 1 file changed, 34 insertions(+), 1 deletion(-)
 
-diff --git a/hw/char/riscv_htif.c b/hw/char/riscv_htif.c
-index 11a0e1a7b7..ec5db5a597 100644
---- a/hw/char/riscv_htif.c
-+++ b/hw/char/riscv_htif.c
-@@ -32,14 +32,7 @@
- #include "exec/tswap.h"
- #include "system/dma.h"
- #include "system/runstate.h"
--
--#define RISCV_DEBUG_HTIF 0
--#define HTIF_DEBUG(fmt, ...)                                                   \
--    do {                                                                       \
--        if (RISCV_DEBUG_HTIF) {                                                \
--            qemu_log_mask(LOG_TRACE, "%s: " fmt "\n", __func__, ##__VA_ARGS__);\
--        }                                                                      \
--    } while (0)
-+#include "trace.h"
- 
- #define HTIF_DEV_SHIFT          56
- #define HTIF_CMD_SHIFT          48
-@@ -159,8 +152,7 @@ static void htif_handle_tohost_write(HTIFState *s, uint64_t val_written)
-     uint64_t payload = val_written & 0xFFFFFFFFFFFFULL;
-     int resp = 0;
- 
--    HTIF_DEBUG("mtohost write: device: %d cmd: %d what: %02" PRIx64
--        " -payload: %016" PRIx64 "\n", device, cmd, payload & 0xFF, payload);
-+    trace_htif_uart_write_to_host(device, cmd, payload);
- 
-     /*
-      * Currently, there is a fixed mapping of devices:
-@@ -251,8 +243,7 @@ static void htif_handle_tohost_write(HTIFState *s, uint64_t val_written)
-         }
-     } else {
-         qemu_log("HTIF unknown device or command\n");
--        HTIF_DEBUG("device: %d cmd: %d what: %02" PRIx64
--            " payload: %016" PRIx64, device, cmd, payload & 0xFF, payload);
-+        trace_htif_uart_unknown_device_command(device, cmd, payload);
-     }
-     /*
-      * Latest bbl does not set fromhost to 0 if there is a value in tohost.
-diff --git a/hw/char/trace-events b/hw/char/trace-events
-index 3ee7cfcdff..b2e3d25ae3 100644
---- a/hw/char/trace-events
-+++ b/hw/char/trace-events
-@@ -136,3 +136,7 @@ stm32f2xx_usart_read(char *id, unsigned size, uint64_t ofs, uint64_t val) " %s s
- stm32f2xx_usart_write(char *id, unsigned size, uint64_t ofs, uint64_t val) "%s size %d ofs 0x%02" PRIx64 " <- 0x%02" PRIx64
- stm32f2xx_usart_drop(char *id) " %s dropping the chars"
- stm32f2xx_usart_receive(char *id, uint8_t chr) " %s receiving '%c'"
+diff --git a/target/riscv/op_helper.c b/target/riscv/op_helper.c
+index c825336519..59c4bf28ed 100644
+--- a/target/riscv/op_helper.c
++++ b/target/riscv/op_helper.c
+@@ -294,6 +294,18 @@ target_ulong helper_sret(CPURISCVState *env)
+                         get_field(mstatus, MSTATUS_SPIE));
+     mstatus = set_field(mstatus, MSTATUS_SPIE, 1);
+     mstatus = set_field(mstatus, MSTATUS_SPP, PRV_U);
 +
-+# riscv_htif.c
-+htif_uart_write_to_host(uint8_t device, uint8_t cmd, uint64_t payload) "device: %u cmd: %02u payload: %016" PRIx64
-+htif_uart_unknown_device_command(uint8_t device, uint8_t cmd, uint64_t payload) "device: %u cmd: %02u payload: %016" PRIx64
++    if (riscv_cpu_cfg(env)->ext_ssdbltrp) {
++        if (riscv_has_ext(env, RVH)) {
++            target_ulong prev_vu = get_field(env->hstatus, HSTATUS_SPV) &&
++                                   prev_priv == PRV_U;
++            /* Returning to VU from HS, vsstatus.sdt = 0 */
++            if (!env->virt_enabled && prev_vu) {
++                env->vsstatus = set_field(env->vsstatus, MSTATUS_SDT, 0);
++            }
++        }
++        mstatus = set_field(mstatus, MSTATUS_SDT, 0);
++    }
+     if (env->priv_ver >= PRIV_VERSION_1_12_0) {
+         mstatus = set_field(mstatus, MSTATUS_MPRV, 0);
+     }
+@@ -304,7 +316,6 @@ target_ulong helper_sret(CPURISCVState *env)
+         target_ulong hstatus = env->hstatus;
+ 
+         prev_virt = get_field(hstatus, HSTATUS_SPV);
+-
+         hstatus = set_field(hstatus, HSTATUS_SPV, 0);
+ 
+         env->hstatus = hstatus;
+@@ -344,6 +355,22 @@ static void check_ret_from_m_mode(CPURISCVState *env, target_ulong retpc,
+         riscv_raise_exception(env, RISCV_EXCP_INST_ACCESS_FAULT, GETPC());
+     }
+ }
++static target_ulong ssdbltrp_mxret(CPURISCVState *env, target_ulong mstatus,
++                                   target_ulong prev_priv,
++                                   target_ulong prev_virt)
++{
++    /* If returning to U, VS or VU, sstatus.sdt = 0 */
++    if (prev_priv == PRV_U || (prev_virt &&
++        (prev_priv == PRV_S || prev_priv == PRV_U))) {
++        mstatus = set_field(mstatus, MSTATUS_SDT, 0);
++        /* If returning to VU, vsstatus.sdt = 0 */
++        if (prev_virt && prev_priv == PRV_U) {
++            env->vsstatus = set_field(env->vsstatus, MSTATUS_SDT, 0);
++        }
++    }
++
++    return mstatus;
++}
+ 
+ target_ulong helper_mret(CPURISCVState *env)
+ {
+@@ -361,6 +388,9 @@ target_ulong helper_mret(CPURISCVState *env)
+     mstatus = set_field(mstatus, MSTATUS_MPP,
+                         riscv_has_ext(env, RVU) ? PRV_U : PRV_M);
+     mstatus = set_field(mstatus, MSTATUS_MPV, 0);
++    if (riscv_cpu_cfg(env)->ext_ssdbltrp) {
++        mstatus = ssdbltrp_mxret(env, mstatus, prev_priv, prev_virt);
++    }
+     if ((env->priv_ver >= PRIV_VERSION_1_12_0) && (prev_priv != PRV_M)) {
+         mstatus = set_field(mstatus, MSTATUS_MPRV, 0);
+     }
+@@ -402,6 +432,9 @@ target_ulong helper_mnret(CPURISCVState *env)
+     if (prev_priv < PRV_M) {
+         env->mstatus = set_field(env->mstatus, MSTATUS_MPRV, false);
+     }
++    if (riscv_cpu_cfg(env)->ext_ssdbltrp) {
++        env->mstatus = ssdbltrp_mxret(env, env->mstatus, prev_priv, prev_virt);
++    }
+ 
+     if (riscv_has_ext(env, RVH) && prev_virt) {
+         riscv_cpu_swap_hypervisor_regs(env);
 -- 
 2.48.1
 
