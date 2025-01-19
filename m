@@ -4,90 +4,58 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 85D7EC02185
-	for <qemu-devel@archiver.kernel.org>; Sun, 19 Jan 2025 01:19:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A5D2AC02183
+	for <qemu-devel@archiver.kernel.org>; Sun, 19 Jan 2025 04:42:32 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tZJts-0000ba-2c; Sat, 18 Jan 2025 20:14:52 -0500
+	id 1tZN80-0005Vi-H9; Sat, 18 Jan 2025 23:41:40 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1tZJtp-0000LA-8U
- for qemu-devel@nongnu.org; Sat, 18 Jan 2025 20:14:49 -0500
-Received: from mail-pj1-x1031.google.com ([2607:f8b0:4864:20::1031])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1tZJtn-0003PU-C7
- for qemu-devel@nongnu.org; Sat, 18 Jan 2025 20:14:48 -0500
-Received: by mail-pj1-x1031.google.com with SMTP id
- 98e67ed59e1d1-2f43da61ba9so4501234a91.2
- for <qemu-devel@nongnu.org>; Sat, 18 Jan 2025 17:14:46 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1737249285; x=1737854085; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=tBdLRF0uol7FqBm4EOyL0TOCyZ3ye1dx/esQnUs6Ug0=;
- b=FdnrPXpcHPtFkJCcU+xzcMiVmdNcARHb9QaMSPjxTtFTErPUi9WR7FcmW/R4V0wAal
- i94fVNkYuI4mV3WREVtaom4gp4+tMov1z7AlkeeFTVwD9bBvUJF8U9Fagcm+x+4odjIr
- bBATkKjDPWkuezkFINYOH/espA7yPY8p0NFhBfbUJXWrhkgHRJIumu924rrNyM7bCkXI
- Mn+KZL/bENWafyDRoPcZkhk7hQV5Re0826UaC3+NaFjfzI2vdWPFLE4k7ddG2ZWpqabY
- XyB5Sb+dbIgoLcSBXyV+TDpH90pml0kM7+SC/sSk0nQZpiRj44OtAa8sn10oKJODjUQZ
- VBJA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1737249285; x=1737854085;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=tBdLRF0uol7FqBm4EOyL0TOCyZ3ye1dx/esQnUs6Ug0=;
- b=vpqOIl6QMzPoTK3SZraMRmhRVvkTRdvz+cIrbYwkkKu/BbpzDuJVYGS+zxfodd0lwF
- pV0Img5y0b529uevChGWqt7E7lr/gMHd0MAZB3QcaDSwKoGL4pHvs4IvNsmP4ad50eB1
- nrM6Ls7rvisR2XArQ5YSCES758gamSrLW7hQe60wYVqeu95Mfit7OETSfkNBQsuMJfts
- dYQy+k3CjUZm8WgQY/bKpybWeYwncdoQCD9gGJz/+G+CP4Fr0P6DNQ2PdAWB/LYFXpap
- PrZ77DY2SZJNfmJ5EFTV4X7lR6INhlO+njyspjbtAkRaHChaUl+OFjLCuIEZAJKQGyUT
- w57A==
-X-Gm-Message-State: AOJu0YzGWP3qS/tfYSymuT2bCqlrxBQsxymqA8QgJNFQ4ax24UEwcQis
- WXXAsokMZgwMRSbz152TfcyLa5nk1HQFQJiWtaT/TROQQMk0gX7N8k6NhkJp
-X-Gm-Gg: ASbGncs7Ve6WnjkIt1mEDhE8zgWpBGvuWEHjfoGXM8Po6Jc8EnCZ7h4aKMsKEsYfOS3
- 8b7b356u5u8uEyjE+DjnOiDrUsmB1hc3nI1IrOYnmS9CObsvBrx06ojXyCwata4q6WWx0T3TPKT
- P1BK0JfsIV/tXLBl5kyEm24PB4nvkgGcXhtXnF0TfiNEAlY+l8ok/vKxuezYVlY/qsbdw+Vd+6T
- 9EjjtSGQAEgWIX5F1a/KXCSyhBfmlYWty4aMQXZORjqHlpd5jYYmDHT7GfXgR+KuFSMu0Ma8R8S
- TaCS8Pn3rvajOsjvNYjGsKmslFJUHmvT7I5v0SzpKlaQBfiJvlSSJHNpLfxlWWV8mTNAhgHXiw=
- =
-X-Google-Smtp-Source: AGHT+IEWOT1KSj31fkWKAt7f7vcncsB9UzhvONskoP6hc7GcpVCrU+ncPIkzvpVAv3yOc5muAzXm2w==
-X-Received: by 2002:a17:90b:5146:b0:2ee:c04a:4281 with SMTP id
- 98e67ed59e1d1-2f782c6579dmr10503573a91.6.1737249285257; 
- Sat, 18 Jan 2025 17:14:45 -0800 (PST)
-Received: from toolbox.alistair23.me
- (2403-580b-97e8-0-321-6fb2-58f1-a1b1.ip6.aussiebb.net.
- [2403:580b:97e8:0:321:6fb2:58f1:a1b1])
- by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-2f776185b02sm4760314a91.21.2025.01.18.17.14.42
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sat, 18 Jan 2025 17:14:44 -0800 (PST)
-From: Alistair Francis <alistair23@gmail.com>
-X-Google-Original-From: Alistair Francis <alistair.francis@wdc.com>
-To: qemu-devel@nongnu.org
-Cc: alistair23@gmail.com, Atish Patra <atishp@rivosinc.com>,
- Alistair Francis <alistair.francis@wdc.com>
-Subject: [PULL v2 36/50] target/riscv: Invoke pmu init after feature enable
-Date: Sun, 19 Jan 2025 11:12:11 +1000
-Message-ID: <20250119011225.11452-37-alistair.francis@wdc.com>
-X-Mailer: git-send-email 2.48.1
-In-Reply-To: <20250119011225.11452-1-alistair.francis@wdc.com>
-References: <20250119011225.11452-1-alistair.francis@wdc.com>
+ (Exim 4.90_1) (envelope-from <deller@kernel.org>) id 1tZN7y-0005Ud-FG
+ for qemu-devel@nongnu.org; Sat, 18 Jan 2025 23:41:38 -0500
+Received: from nyc.source.kernel.org ([147.75.193.91])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <deller@kernel.org>) id 1tZN7w-0003Xw-MC
+ for qemu-devel@nongnu.org; Sat, 18 Jan 2025 23:41:38 -0500
+Received: from smtp.kernel.org (transwarp.subspace.kernel.org [100.75.92.58])
+ by nyc.source.kernel.org (Postfix) with ESMTP id 103B5A4005E;
+ Sun, 19 Jan 2025 04:39:48 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 24E02C4CED6;
+ Sun, 19 Jan 2025 04:41:33 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+ s=k20201202; t=1737261695;
+ bh=VrpxIp6ajcb8m1RwibVb7PCFaMtlMIRUlr7wJ5a/Ea0=;
+ h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+ b=kxWfnqmjMiuugTYWLxCG1Ml1J9JfBQZjtPay4UL+T6kAnHDdoCB+LkZRoDAAdoHNK
+ sUfYQLeIwLf3XNUbNKo5tOvqOa0Q9TqD2rFLVb33YV7JtbOVoyUMysxrqu/M1IPkno
+ XAVDjMyCbe4sUfbWAn+pVy158CFXs6ngpUIWmiHFS8CiHTYyiEEZFPDwyW8e22JJlG
+ uJE1MrAeUETH2Sw66/zVEtpLVHbgMqCoZ9peNl1N5o90yDHkxgZ0oCG9IfasRF9mg5
+ FSe4S0JsFlPTRs2vjHVnNNRSgdX2YF6c8adM9q6dLiD68G2XruahZX96FCYkUhmoBK
+ uHQit5/V9+fUA==
+From: deller@kernel.org
+To: Richard Henderson <richard.henderson@linaro.org>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Laurent Vivier <laurent@vivier.eu>, qemu-devel@nongnu.org,
+ Stefan Hajnoczi <stefanha@gmail.com>
+Cc: deller@gmx.de
+Subject: [PATCH v3 5/6] linux-user: netlink: add netlink neighbour emulation
+Date: Sun, 19 Jan 2025 05:41:21 +0100
+Message-ID: <20250119044122.9637-6-deller@kernel.org>
+X-Mailer: git-send-email 2.47.0
+In-Reply-To: <20250119044122.9637-1-deller@kernel.org>
+References: <20250119044122.9637-1-deller@kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1031;
- envelope-from=alistair23@gmail.com; helo=mail-pj1-x1031.google.com
-X-Spam_score_int: -17
-X-Spam_score: -1.8
-X-Spam_bar: -
-X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+Received-SPF: pass client-ip=147.75.193.91; envelope-from=deller@kernel.org;
+ helo=nyc.source.kernel.org
+X-Spam_score_int: -44
+X-Spam_score: -4.5
+X-Spam_bar: ----
+X-Spam_report: (-4.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.07,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -104,74 +72,203 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Atish Patra <atishp@rivosinc.com>
+From: Helge Deller <deller@gmx.de>
 
-The dependant ISA features are enabled at the end of cpu_realize
-in finalize_features. Thus, PMU init should be invoked after that
-only. Move the init invocation to riscv_tcg_cpu_finalize_features.
+Fixes various warnings in the testsuite while building gupnp:
+ gssdp-net-DEBUG: Failed to send netlink message: Operation not supported
+ gupnp-context-DEBUG: Mismatch between host header and host IP (example.com, expected: 127.0.0.1)
+ gupnp-context-DEBUG: Mismatch between host header and host port (80, expected 4711)
+ gupnp-context-DEBUG: Mismatch between host header and host IP (192.168.1.2, expected: 127.0.0.1)
+ gupnp-context-DEBUG: Mismatch between host header and host IP (fe80::01, expected: 127.0.0.1)
+ gupnp-context-DEBUG: Mismatch between host header and host port (80, expected 4711)
+ gupnp-context-DEBUG: Failed to parse HOST header from request: Invalid IPv6 address ?[fe80::01%1]? in URI
+ gupnp-context-DEBUG: Failed to parse HOST header from request: Invalid IPv6 address ?[fe80::01%eth0]? in URI
+ gupnp-context-DEBUG: Failed to parse HOST header from request: Could not parse port ?:1? in URI
+ gupnp-context-DEBUG: Mismatch between host header and host IP (example.com, expected: ::1)
+ gupnp-context-DEBUG: Mismatch between host header and host port (80, expected 4711)
+ gupnp-context-DEBUG: Mismatch between host header and host IP (example.com, expected: ::1)
+ gupnp-context-DEBUG: Mismatch between host header and host port (80, expected 4711)
+ gupnp-context-DEBUG: Mismatch between host header and host IP (example.com, expected: ::1)
 
-Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
-Signed-off-by: Atish Patra <atishp@rivosinc.com>
-Message-ID: <20250110-counter_delegation-v5-9-e83d797ae294@rivosinc.com>
-Signed-off-by: Alistair Francis <alistair.francis@wdc.com>
+Signed-off-by: Helge Deller <deller@gmx.de>
+Reviewed-by: Laurent Vivier <laurent@vivier.eu>
 ---
- target/riscv/tcg/tcg-cpu.c | 28 ++++++++++++++--------------
- 1 file changed, 14 insertions(+), 14 deletions(-)
+ linux-user/fd-trans.c | 100 ++++++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 100 insertions(+)
 
-diff --git a/target/riscv/tcg/tcg-cpu.c b/target/riscv/tcg/tcg-cpu.c
-index f94aa9f29e..48be24bbbe 100644
---- a/target/riscv/tcg/tcg-cpu.c
-+++ b/target/riscv/tcg/tcg-cpu.c
-@@ -963,6 +963,20 @@ void riscv_tcg_cpu_finalize_features(RISCVCPU *cpu, Error **errp)
-         error_propagate(errp, local_err);
-         return;
-     }
-+#ifndef CONFIG_USER_ONLY
-+    if (cpu->cfg.pmu_mask) {
-+        riscv_pmu_init(cpu, &local_err);
-+        if (local_err != NULL) {
-+            error_propagate(errp, local_err);
-+            return;
-+        }
+diff --git a/linux-user/fd-trans.c b/linux-user/fd-trans.c
+index a86ed2f4b4..a5e6c6b6f2 100644
+--- a/linux-user/fd-trans.c
++++ b/linux-user/fd-trans.c
+@@ -25,12 +25,16 @@
+ #ifdef CONFIG_RTNETLINK
+ #include <linux/rtnetlink.h>
+ #include <linux/if_bridge.h>
++#include <linux/neighbour.h>
+ #endif
+ #include "qemu.h"
+ #include "user-internals.h"
+ #include "fd-trans.h"
+ #include "signal-common.h"
+ 
++#define NDM_RTA(r)  ((struct rtattr*)(((char*)(r)) + \
++                    NLMSG_ALIGN(sizeof(struct ndmsg))))
 +
-+        if (cpu->cfg.ext_sscofpmf) {
-+            cpu->pmu_timer = timer_new_ns(QEMU_CLOCK_VIRTUAL,
-+                                          riscv_pmu_timer_cb, cpu);
-+        }
-+    }
-+#endif
+ enum {
+     QEMU_IFLA_BR_UNSPEC,
+     QEMU_IFLA_BR_FORWARD_DELAY,
+@@ -1210,6 +1214,35 @@ static abi_long host_to_target_data_route_rtattr(struct rtattr *rtattr)
+     return 0;
  }
  
- void riscv_tcg_cpu_finalize_dynamic_decoder(RISCVCPU *cpu)
-@@ -1010,7 +1024,6 @@ static bool riscv_tcg_cpu_realize(CPUState *cs, Error **errp)
++static abi_long host_to_target_data_neigh_rtattr(struct rtattr *rtattr)
++{
++    struct nda_cacheinfo *ndac;
++    uint32_t *u32;
++
++    switch (rtattr->rta_type) {
++    case NDA_UNSPEC:
++    case NDA_DST:
++    case NDA_LLADDR:
++        break;
++    case NDA_PROBES:
++        u32 = RTA_DATA(rtattr);
++        *u32 = tswap32(*u32);
++        break;
++    case NDA_CACHEINFO:
++        ndac = RTA_DATA(rtattr);
++        ndac->ndm_confirmed = tswap32(ndac->ndm_confirmed);
++        ndac->ndm_used      = tswap32(ndac->ndm_used);
++        ndac->ndm_updated   = tswap32(ndac->ndm_updated);
++        ndac->ndm_refcnt    = tswap32(ndac->ndm_refcnt);
++        break;
++    default:
++        qemu_log_mask(LOG_UNIMP, "Unknown host to target NEIGH type: %d\n",
++                      rtattr->rta_type);
++        break;
++    }
++    return 0;
++}
++
+ static abi_long host_to_target_link_rtattr(struct rtattr *rtattr,
+                                          uint32_t rtattr_len)
+ {
+@@ -1231,12 +1264,20 @@ static abi_long host_to_target_route_rtattr(struct rtattr *rtattr,
+                                           host_to_target_data_route_rtattr);
+ }
  
- #ifndef CONFIG_USER_ONLY
-     CPURISCVState *env = &cpu->env;
--    Error *local_err = NULL;
++static abi_long host_to_target_neigh_rtattr(struct rtattr *rtattr,
++                                         uint32_t rtattr_len)
++{
++    return host_to_target_for_each_rtattr(rtattr, rtattr_len,
++                                          host_to_target_data_neigh_rtattr);
++}
++
+ static abi_long host_to_target_data_route(struct nlmsghdr *nlh)
+ {
+     uint32_t nlmsg_len;
+     struct ifinfomsg *ifi;
+     struct ifaddrmsg *ifa;
+     struct rtmsg *rtm;
++    struct ndmsg *ndm;
  
-     tcg_cflags_set(CPU(cs), CF_PCREL);
+     nlmsg_len = nlh->nlmsg_len;
+     switch (nlh->nlmsg_type) {
+@@ -1263,6 +1304,17 @@ static abi_long host_to_target_data_route(struct nlmsghdr *nlh)
+                                        nlmsg_len - NLMSG_LENGTH(sizeof(*ifa)));
+         }
+         break;
++    case RTM_NEWNEIGH:
++    case RTM_DELNEIGH:
++    case RTM_GETNEIGH:
++        if (nlh->nlmsg_len >= NLMSG_LENGTH(sizeof(*ndm))) {
++            ndm = NLMSG_DATA(nlh);
++            ndm->ndm_ifindex = tswap32(ndm->ndm_ifindex);
++            ndm->ndm_state = tswap16(ndm->ndm_state);
++            host_to_target_neigh_rtattr(NDM_RTA(ndm),
++                                    nlmsg_len - NLMSG_LENGTH(sizeof(*ndm)));
++        }
++        break;
+     case RTM_NEWROUTE:
+     case RTM_DELROUTE:
+     case RTM_GETROUTE:
+@@ -1410,6 +1462,35 @@ static abi_long target_to_host_data_addr_rtattr(struct rtattr *rtattr)
+     return 0;
+ }
  
-@@ -1018,19 +1031,6 @@ static bool riscv_tcg_cpu_realize(CPUState *cs, Error **errp)
-         riscv_timer_init(cpu);
-     }
++static abi_long target_to_host_data_neigh_rtattr(struct rtattr *rtattr)
++{
++    struct nda_cacheinfo *ndac;
++    uint32_t *u32;
++
++    switch (rtattr->rta_type) {
++    case NDA_UNSPEC:
++    case NDA_DST:
++    case NDA_LLADDR:
++        break;
++    case NDA_PROBES:
++        u32 = RTA_DATA(rtattr);
++        *u32 = tswap32(*u32);
++        break;
++    case NDA_CACHEINFO:
++        ndac = RTA_DATA(rtattr);
++        ndac->ndm_confirmed = tswap32(ndac->ndm_confirmed);
++        ndac->ndm_used      = tswap32(ndac->ndm_used);
++        ndac->ndm_updated   = tswap32(ndac->ndm_updated);
++        ndac->ndm_refcnt    = tswap32(ndac->ndm_refcnt);
++        break;
++    default:
++        qemu_log_mask(LOG_UNIMP, "Unknown target NEIGH type: %d\n",
++                      rtattr->rta_type);
++        break;
++    }
++    return 0;
++}
++
+ static abi_long target_to_host_data_route_rtattr(struct rtattr *rtattr)
+ {
+     uint32_t *u32;
+@@ -1448,6 +1529,13 @@ static void target_to_host_addr_rtattr(struct rtattr *rtattr,
+                                    target_to_host_data_addr_rtattr);
+ }
  
--    if (cpu->cfg.pmu_mask) {
--        riscv_pmu_init(cpu, &local_err);
--        if (local_err != NULL) {
--            error_propagate(errp, local_err);
--            return false;
--        }
--
--        if (cpu->cfg.ext_sscofpmf) {
--            cpu->pmu_timer = timer_new_ns(QEMU_CLOCK_VIRTUAL,
--                                          riscv_pmu_timer_cb, cpu);
--        }
--    }
--
-     /* With H-Ext, VSSIP, VSTIP, VSEIP and SGEIP are hardwired to one. */
-     if (riscv_has_ext(env, RVH)) {
-         env->mideleg = MIP_VSSIP | MIP_VSTIP | MIP_VSEIP | MIP_SGEIP;
++static void target_to_host_neigh_rtattr(struct rtattr *rtattr,
++                                     uint32_t rtattr_len)
++{
++    target_to_host_for_each_rtattr(rtattr, rtattr_len,
++                                   target_to_host_data_neigh_rtattr);
++}
++
+ static void target_to_host_route_rtattr(struct rtattr *rtattr,
+                                      uint32_t rtattr_len)
+ {
+@@ -1460,6 +1548,7 @@ static abi_long target_to_host_data_route(struct nlmsghdr *nlh)
+     struct ifinfomsg *ifi;
+     struct ifaddrmsg *ifa;
+     struct rtmsg *rtm;
++    struct ndmsg *ndm;
+ 
+     switch (nlh->nlmsg_type) {
+     case RTM_NEWLINK:
+@@ -1486,6 +1575,17 @@ static abi_long target_to_host_data_route(struct nlmsghdr *nlh)
+                                        NLMSG_LENGTH(sizeof(*ifa)));
+         }
+         break;
++    case RTM_NEWNEIGH:
++    case RTM_DELNEIGH:
++    case RTM_GETNEIGH:
++        if (nlh->nlmsg_len >= NLMSG_LENGTH(sizeof(*ndm))) {
++            ndm = NLMSG_DATA(nlh);
++            ndm->ndm_ifindex = tswap32(ndm->ndm_ifindex);
++            ndm->ndm_state = tswap16(ndm->ndm_state);
++            target_to_host_neigh_rtattr(NDM_RTA(ndm), nlh->nlmsg_len -
++                                       NLMSG_LENGTH(sizeof(*ndm)));
++        }
++        break;
+     case RTM_NEWROUTE:
+     case RTM_DELROUTE:
+     case RTM_GETROUTE:
 -- 
-2.48.1
+2.47.0
 
 
