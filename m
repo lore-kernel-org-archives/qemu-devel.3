@@ -4,43 +4,43 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E18A9C02188
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DFA7DC02187
 	for <qemu-devel@archiver.kernel.org>; Sun, 19 Jan 2025 22:02:50 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tZdN4-0006zd-Kb; Sun, 19 Jan 2025 17:02:18 -0500
+	id 1tZdN1-0006yv-RH; Sun, 19 Jan 2025 17:02:15 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <dmitry.osipenko@collabora.com>)
- id 1tZdN3-0006zV-NG
- for qemu-devel@nongnu.org; Sun, 19 Jan 2025 17:02:17 -0500
+ id 1tZdMz-0006yl-Pc
+ for qemu-devel@nongnu.org; Sun, 19 Jan 2025 17:02:14 -0500
 Received: from sender4-pp-f112.zoho.com ([136.143.188.112])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <dmitry.osipenko@collabora.com>)
- id 1tZdN1-00088T-Sg
- for qemu-devel@nongnu.org; Sun, 19 Jan 2025 17:02:17 -0500
-ARC-Seal: i=1; a=rsa-sha256; t=1737324122; cv=none; 
+ id 1tZdMw-00087G-TF
+ for qemu-devel@nongnu.org; Sun, 19 Jan 2025 17:02:13 -0500
+ARC-Seal: i=1; a=rsa-sha256; t=1737324112; cv=none; 
  d=zohomail.com; s=zohoarc; 
- b=Cn0qTSvoODZto6H9a++Z8A94Gmhj9qEI6bggZ8KI2ZyHE79G/SpNJU+Ue+WkbQNNlrGC7w25MJm6Qtk+cOTWcDZ8J+Ey9IqW3FIm6mOttdqesz7xbmIMBSvWWysKINM1vL9/ApsRePAOOtT1Wjn5L4XT7+Lg+iyecwIxb8xtahg=
+ b=a6Lvm2xuwfOl6gl2YIChKDZ4+NZ4hUJOQn8ma+/tTli6BXOr0DjbJz0m96Wtl7Vv3NybCoe/ANLTCmbNcTbOkbefCc6fyMpfWt0y1pH/76R3s15YNhTaA9Fkb925bY4y8xc96SjMdjmYl+oqctJPLM7eEBE3KB+YBpKTC8Zjxn8=
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=zohomail.com;
- s=zohoarc; t=1737324122;
- h=Content-Transfer-Encoding:Cc:Cc:Date:Date:From:From:In-Reply-To:MIME-Version:Message-ID:References:Subject:Subject:To:To:Message-Id:Reply-To;
- bh=DpPWhIypfFDYHBoj2i6RsYn1N4Ci3PZZL6BPDqW8IvE=; 
- b=C9Tk9UCugy7qqCRkjiw6x8OMMKookP6n3RbkokEWslTQcnns4Oa0EOEiydiOpMqbfLXfHcxPolYvOQFAVvsK00ZLvANB5swL4C3lNol980u6eX9Kd4zHZIUdbQ59gGhtkNdhbgBWa89KDER9kOpUnc1yysSkeh0y7+ayPgwW4/U=
+ s=zohoarc; t=1737324112;
+ h=Content-Type:Content-Transfer-Encoding:Cc:Cc:Date:Date:From:From:MIME-Version:Message-ID:Subject:Subject:To:To:Message-Id:Reply-To;
+ bh=5KV22j8fpmZ8XVK9fnwL+eHAmBMku7xLIqhPClLIXMU=; 
+ b=Ctn6MkHmPgCkexlzG/6RHj1QeoqKhZKuXScLhoSEbjePNsyy0vhFHNOg9wYIKjj6hUh/x9t3Mq/aeFUota24qjEs3kFQYCsLgAP0v7lLdPWZiqhK7P2EI3zC9JX8VPAw6ZITrq/q2MTo/HesklZ+I9xcTHgN0RgfTdargXHxABI=
 ARC-Authentication-Results: i=1; mx.zohomail.com;
  dkim=pass  header.i=collabora.com;
  spf=pass  smtp.mailfrom=dmitry.osipenko@collabora.com;
  dmarc=pass header.from=<dmitry.osipenko@collabora.com>
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; t=1737324122; 
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; t=1737324112; 
  s=zohomail; d=collabora.com; i=dmitry.osipenko@collabora.com; 
- h=From:From:To:To:Cc:Cc:Subject:Subject:Date:Date:Message-ID:In-Reply-To:References:MIME-Version:Content-Transfer-Encoding:Message-Id:Reply-To;
- bh=DpPWhIypfFDYHBoj2i6RsYn1N4Ci3PZZL6BPDqW8IvE=;
- b=kcGOn1EdnSC4waPR0VTPBb9IFn4g+pgwmiRnRYY0ODAYSRDo7LFbQtqWrkXJDeuQ
- 6bfeWs8NDQWRpQbHrQX+AgOBGoVLL6XHs3wwOAicsZzu8vzz60uNavkJTAblhT8sHSF
- F3Xi1Vubom+2g2kJJk1DhdmzbumMmtI8r3tWl7Ns=
-Received: by mx.zohomail.com with SMTPS id 1737324120824538.5774136725563;
- Sun, 19 Jan 2025 14:02:00 -0800 (PST)
+ h=From:From:To:To:Cc:Cc:Subject:Subject:Date:Date:Message-ID:MIME-Version:Content-Type:Content-Transfer-Encoding:Message-Id:Reply-To;
+ bh=5KV22j8fpmZ8XVK9fnwL+eHAmBMku7xLIqhPClLIXMU=;
+ b=ialdMxK2SDWV9anrerqHvfrPqPhmNpp3NXq/Bo8lvNZW49qnibDK97ZLQb4N+J16
+ s3fZjfnKopZaV4B7M6wXLcKLCi/e30kniqe6NIvgJFVQfvkN06ORn3/9clhWuOYGkUE
+ XVLXTifE/iZv/0oCuixBLVVjBlE4QPs/B1isB/QQ=
+Received: by mx.zohomail.com with SMTPS id 1737324109599205.35630521334429;
+ Sun, 19 Jan 2025 14:01:49 -0800 (PST)
 From: Dmitry Osipenko <dmitry.osipenko@collabora.com>
 To: Akihiko Odaki <akihiko.odaki@daynix.com>, Huang Rui <ray.huang@amd.com>,
  =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
@@ -59,13 +59,12 @@ Cc: Gert Wollny <gert.wollny@collabora.com>, qemu-devel@nongnu.org,
  Honglei Huang <honglei1.huang@amd.com>, Julia Zhang <julia.zhang@amd.com>,
  Chen Jiqian <Jiqian.Chen@amd.com>, Rob Clark <robdclark@gmail.com>,
  Yiwei Zhang <zzyiwei@chromium.org>, Sergio Lopez Pascual <slp@redhat.com>
-Subject: [PATCH v5 2/8] ui/sdl2: Implement dpy dmabuf functions
-Date: Mon, 20 Jan 2025 01:00:44 +0300
-Message-ID: <20250119220050.15167-3-dmitry.osipenko@collabora.com>
+Subject: [PATCH v5 0/8] Support virtio-gpu DRM native context
+Date: Mon, 20 Jan 2025 01:00:42 +0300
+Message-ID: <20250119220050.15167-1-dmitry.osipenko@collabora.com>
 X-Mailer: git-send-email 2.47.1
-In-Reply-To: <20250119220050.15167-1-dmitry.osipenko@collabora.com>
-References: <20250119220050.15167-1-dmitry.osipenko@collabora.com>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 X-ZohoMailClient: External
 Received-SPF: pass client-ip=136.143.188.112;
@@ -93,233 +92,176 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Pierre-Eric Pelloux-Prayer <pierre-eric.pelloux-prayer@amd.com>
+This patchset adds DRM native context support to VirtIO-GPU on Qemu.
 
-If EGL is used, we can rely on dmabuf to import textures without
-doing copies.
+Contarary to Virgl and Venus contexts that mediates high level GFX APIs,
+DRM native context [1] mediates lower level kernel driver UAPI, which
+reflects in a less CPU overhead and less/simpler code needed to support it.
+DRM context consists of a host and guest parts that have to be implemented
+for each GPU driver. On a guest side, DRM context presents a virtual GPU as
+a real/native host GPU device for GL/VK applications.
 
-To get this working on X11, we use the existing SDL hint:
-SDL_HINT_VIDEO_X11_FORCE_EGL (because dmabuf can't be used with GLX).
+[1] https://www.youtube.com/watch?v=9sFP_yddLLQ
 
-Reviewed-by: Akihiko Odaki <akihiko.odaki@daynix.com>
-Acked-by: Michael S. Tsirkin <mst@redhat.com>
-Signed-off-by: Pierre-Eric Pelloux-Prayer <pierre-eric.pelloux-prayer@amd.com>
-Signed-off-by: Dmitry Osipenko <dmitry.osipenko@collabora.com>
----
- include/ui/sdl2.h |  7 ++++++
- meson.build       |  6 ++---
- ui/sdl2-gl.c      | 64 +++++++++++++++++++++++++++++++++++++++++++++++
- ui/sdl2.c         | 42 +++++++++++++++++++++++++++++++
- 4 files changed, 115 insertions(+), 4 deletions(-)
+Today there are four known DRM native context drivers existing in a wild:
 
-diff --git a/include/ui/sdl2.h b/include/ui/sdl2.h
-index dbe6e3d9739b..9daf5ecffae7 100644
---- a/include/ui/sdl2.h
-+++ b/include/ui/sdl2.h
-@@ -45,6 +45,7 @@ struct sdl2_console {
-     bool gui_keysym;
-     SDL_GLContext winctx;
-     QKbdState *kbd;
-+    bool has_dmabuf;
- #ifdef CONFIG_OPENGL
-     QemuGLShader *gls;
-     egl_fb guest_fb;
-@@ -96,5 +97,11 @@ void sdl2_gl_scanout_texture(DisplayChangeListener *dcl,
-                              void *d3d_tex2d);
- void sdl2_gl_scanout_flush(DisplayChangeListener *dcl,
-                            uint32_t x, uint32_t y, uint32_t w, uint32_t h);
-+void sdl2_gl_scanout_dmabuf(DisplayChangeListener *dcl,
-+                            QemuDmaBuf *dmabuf);
-+void sdl2_gl_release_dmabuf(DisplayChangeListener *dcl,
-+                            QemuDmaBuf *dmabuf);
-+bool sdl2_gl_has_dmabuf(DisplayChangeListener *dcl);
-+void sdl2_gl_console_init(struct sdl2_console *scon);
- 
- #endif /* SDL2_H */
-diff --git a/meson.build b/meson.build
-index 15a066043b7b..dfee104582b0 100644
---- a/meson.build
-+++ b/meson.build
-@@ -1964,10 +1964,8 @@ if get_option('gtk') \
-   endif
- endif
- 
--x11 = not_found
--if gtkx11.found()
--  x11 = dependency('x11', method: 'pkg-config', required: gtkx11.found())
--endif
-+x11 = dependency('x11', method: 'pkg-config', required: gtkx11.found())
-+
- png = not_found
- if get_option('png').allowed() and have_system
-    png = dependency('libpng', version: '>=1.6.34', required: get_option('png'),
-diff --git a/ui/sdl2-gl.c b/ui/sdl2-gl.c
-index b1fe96d6af22..8d53e340d40d 100644
---- a/ui/sdl2-gl.c
-+++ b/ui/sdl2-gl.c
-@@ -26,6 +26,8 @@
-  */
- 
- #include "qemu/osdep.h"
-+#include "qemu/main-loop.h"
-+#include "qemu/error-report.h"
- #include "ui/console.h"
- #include "ui/input.h"
- #include "ui/sdl2.h"
-@@ -249,3 +251,65 @@ void sdl2_gl_scanout_flush(DisplayChangeListener *dcl,
- 
-     SDL_GL_SwapWindow(scon->real_window);
- }
-+
-+void sdl2_gl_scanout_dmabuf(DisplayChangeListener *dcl,
-+                            QemuDmaBuf *dmabuf)
-+{
-+    struct sdl2_console *scon = container_of(dcl, struct sdl2_console, dcl);
-+
-+    assert(scon->opengl);
-+    SDL_GL_MakeCurrent(scon->real_window, scon->winctx);
-+
-+    egl_dmabuf_import_texture(dmabuf);
-+    if (!qemu_dmabuf_get_texture(dmabuf)) {
-+        error_report("%s: failed fd=%d", __func__, qemu_dmabuf_get_fd(dmabuf));
-+        return;
-+    }
-+
-+    sdl2_gl_scanout_texture(dcl, qemu_dmabuf_get_texture(dmabuf), false,
-+                            qemu_dmabuf_get_width(dmabuf),
-+                            qemu_dmabuf_get_height(dmabuf),
-+                            0, 0,
-+                            qemu_dmabuf_get_width(dmabuf),
-+                            qemu_dmabuf_get_height(dmabuf),
-+                            NULL);
-+
-+    if (qemu_dmabuf_get_allow_fences(dmabuf)) {
-+        scon->guest_fb.dmabuf = dmabuf;
-+    }
-+}
-+
-+void sdl2_gl_release_dmabuf(DisplayChangeListener *dcl,
-+                            QemuDmaBuf *dmabuf)
-+{
-+    egl_dmabuf_release_texture(dmabuf);
-+}
-+
-+bool sdl2_gl_has_dmabuf(DisplayChangeListener *dcl)
-+{
-+    struct sdl2_console *scon = container_of(dcl, struct sdl2_console, dcl);
-+
-+    return scon->has_dmabuf;
-+}
-+
-+void sdl2_gl_console_init(struct sdl2_console *scon)
-+{
-+    bool hidden = scon->hidden;
-+
-+    scon->hidden = true;
-+    scon->surface = qemu_create_displaysurface(1, 1);
-+    sdl2_window_create(scon);
-+
-+    /*
-+     * QEMU checks whether console supports dma-buf before switching
-+     * to the console.  To break this chicken-egg problem we pre-check
-+     * dma-buf availability beforehand using a dummy SDL window.
-+     */
-+    scon->has_dmabuf = qemu_egl_has_dmabuf();
-+
-+    sdl2_window_destroy(scon);
-+    qemu_free_displaysurface(scon->surface);
-+
-+    scon->surface = NULL;
-+    scon->hidden = hidden;
-+}
-diff --git a/ui/sdl2.c b/ui/sdl2.c
-index 445eb1dd9f9a..3e262b994231 100644
---- a/ui/sdl2.c
-+++ b/ui/sdl2.c
-@@ -36,6 +36,10 @@
- #include "qemu/log.h"
- #include "qemu-main.h"
- 
-+#ifdef CONFIG_X11
-+#include <X11/Xlib.h>
-+#endif
-+
- static int sdl2_num_outputs;
- static struct sdl2_console *sdl2_console;
- 
-@@ -121,6 +125,9 @@ void sdl2_window_create(struct sdl2_console *scon)
-         /* The SDL renderer is only used by sdl2-2D, when OpenGL is disabled */
-         scon->real_renderer = SDL_CreateRenderer(scon->real_window, -1, 0);
-     }
-+
-+    qemu_egl_display = eglGetCurrentDisplay();
-+
-     sdl_update_caption(scon);
- }
- 
-@@ -821,6 +828,10 @@ static const DisplayChangeListenerOps dcl_gl_ops = {
-     .dpy_gl_scanout_disable  = sdl2_gl_scanout_disable,
-     .dpy_gl_scanout_texture  = sdl2_gl_scanout_texture,
-     .dpy_gl_update           = sdl2_gl_scanout_flush,
-+
-+    .dpy_gl_scanout_dmabuf   = sdl2_gl_scanout_dmabuf,
-+    .dpy_gl_release_dmabuf   = sdl2_gl_release_dmabuf,
-+    .dpy_has_dmabuf          = sdl2_gl_has_dmabuf,
- };
- 
- static bool
-@@ -848,6 +859,35 @@ static void sdl2_display_early_init(DisplayOptions *o)
-     }
- }
- 
-+static void sdl2_set_hint_x11_force_egl(void)
-+{
-+#if defined(SDL_HINT_VIDEO_X11_FORCE_EGL) && defined(CONFIG_OPENGL) && \
-+    defined(CONFIG_X11)
-+    Display *x_disp = XOpenDisplay(NULL);
-+    EGLDisplay egl_display;
-+
-+    if (!x_disp) {
-+        return;
-+    }
-+
-+    /* Prefer EGL over GLX to get dma-buf support. */
-+    egl_display = eglGetDisplay((EGLNativeDisplayType)x_disp);
-+
-+    if (egl_display != EGL_NO_DISPLAY) {
-+        /*
-+         * Setting X11_FORCE_EGL hint doesn't make SDL to prefer X11 over
-+         * Wayland. SDL will use Wayland driver even if XWayland presents.
-+         * It's always safe to set the hint even if X11 is not used by SDL.
-+         * SDL will work regardless of the hint.
-+         */
-+        SDL_SetHint(SDL_HINT_VIDEO_X11_FORCE_EGL, "1");
-+        eglTerminate(egl_display);
-+    }
-+
-+    XCloseDisplay(x_disp);
-+#endif
-+}
-+
- static void sdl2_display_init(DisplayState *ds, DisplayOptions *o)
- {
-     uint8_t data = 0;
-@@ -878,6 +918,7 @@ static void sdl2_display_init(DisplayState *ds, DisplayOptions *o)
-     SDL_SetHint(SDL_HINT_ALLOW_ALT_TAB_WHILE_GRABBED, "0");
- #endif
-     SDL_SetHint(SDL_HINT_WINDOWS_NO_CLOSE_ON_ALT_F4, "1");
-+    sdl2_set_hint_x11_force_egl();
-     SDL_EnableScreenSaver();
-     memset(&info, 0, sizeof(info));
-     SDL_VERSION(&info.version);
-@@ -924,6 +965,7 @@ static void sdl2_display_init(DisplayState *ds, DisplayOptions *o)
-         sdl2_console[i].kbd = qkbd_state_init(con);
-         if (display_opengl) {
-             qemu_console_set_display_gl_ctx(con, &sdl2_console[i].dgc);
-+            sdl2_gl_console_init(&sdl2_console[i]);
-         }
-         register_displaychangelistener(&sdl2_console[i].dcl);
- 
+  - Freedreno (Qualcomm SoC GPUs), completely upstreamed
+  - AMDGPU, mostly merged into upstreams
+  - Intel (i915), merge requests are opened
+  - Asahi (Apple SoC GPUs), WIP status
+
+
+# How to try out DRM context:
+
+1. DRM context uses host blobs and requires latest developer version 
+of Linux kernel [2] that has necessary KVM fixes.
+
+[2] https://git.kernel.org/pub/scm/linux/kernel/git/next/linux-next.git/
+
+2. Use latest libvirglrenderer from upstream git/main for Freedreno
+and AMDGPU native contexts. For Intel use patches [3].
+
+[3] https://gitlab.freedesktop.org/virgl/virglrenderer/-/merge_requests/1384
+
+3. On guest, use latest Mesa version for Freedreno. For AMDGPU use
+Mesa patches [4], for Intel [5].
+
+[4] https://gitlab.freedesktop.org/mesa/mesa/-/merge_requests/21658
+[5] https://gitlab.freedesktop.org/mesa/mesa/-/merge_requests/29870
+
+4. On guest, use latest Linux kernel v6.6+. Apply patch [6] if you're
+   running Xorg in guest.
+
+[6] https://lore.kernel.org/dri-devel/20241020224725.179937-1-dmitry.osipenko@collabora.com/
+
+Example Qemu cmdline that enables DRM context:
+
+  qemu-system-x86_64 -device virtio-vga-gl,hostmem=4G,blob=on,drm_native_context=on \
+      -machine q35,accel=kvm,memory-backend=mem1 \
+      -object memory-backend-memfd,id=mem1,size=8G -m 8G
+
+
+# Note about known performance problem in Qemu:
+
+DRM contexts are mapping host blobs extensively and these mapping
+operations work slowly in Qemu. Exact reason is unknown. Mappings work
+fast on Crosvm For DRM contexts this problem is more visible than for
+Venus/Virgl.
+
+Changelog:
+
+v5: - Added r-bs from Akihiko Odaki.
+
+    - Added acks from Michael Tsirkin.
+
+    - Fixed compilation warning using older version of virglrenderer that
+      was reported by Alex Bennée. Noticed that I need to keep old
+      virgl_write_fence() code around for the older virglrenderer in
+      "Support  asynchronous fencing" patch, so added it back and verified
+      that old virglrenderer works properly.
+
+    - Added new patch from Alex Bennée that adds more virtio-gpu 
+      documentation with a couple corrections and additions to it from me.
+
+    - Rebased patches on top of latest staging tree.
+
+v4: - Improved SDL2/dmabuf patch by reusing existing Meson X11 config 
+      option, better handling EGL error and extending comment telling
+      that it's safe to enable SDL2 EGL preference hint. As was suggested
+      by Akihiko Odaki.
+
+    - Replaced another QSLIST_FOREACH_SAFE with QSLIST_EMPTY+FIRST in
+      the async-fencing patch for more consistency of the code. As was
+      suggested by Akihiko Odaki.
+
+    - Added missing braces around if-statement that was spotted by
+      Alex Bennée.
+
+    - Renamed 'drm=on' option of virtio-gpu-gl device to 
+      'drm_native_context=on' for more clarity as was suggested by 
+      Alex Bennée. Haven't added added new context-type option that 
+      was also proposed by Alex, might do it with a separate patch.
+      This context-type option will duplicate and depecate existing
+      options, but in a longer run likely will be worthwhile adding
+      it.
+
+    - Dropped Linux headers-update patch as headers has been updated
+      in the staging tree.
+
+v3: - Improved EGL presence-check code on X11 systems for the SDL2
+      hint that prefers EGL over GLX by using better ifdefs and checking
+      Xlib presence at a build time to avoid build failure if lib SDL2
+      and system are configured with a disabled X11 support. Also added
+      clarifying comment telling that X11 hint doesn't affect Wayland
+      systems. Suggested by Akihiko Odaki.
+
+    - Corrected strerror(err) that used negative error where it should
+      be positive and vice versa that was caught by Akihiko Odaki. Added
+      clarifying comment for the case where we get positive error code
+      from virglrenderer that differs from other virglrenderer API functions.
+
+    - Improved QSLIST usage by dropping mutex protecting the async fence
+      list and using atomic variant of QSLIST helpers instead. Switched away
+      from using FOREACH helper to improve readability of the code, showing
+      that we don't precess list in unoptimal way. Like was suggested by
+      Akihiko Odaki.
+
+    - Updated patchset base to Venus v18.
+
+v2: - Updated SDL2-dmabuf patch by making use of error_report() and
+      checking presense of X11+EGL in the system before making SDL2
+      to prefer EGL backend over GLX, suggested by Akihiko Odaki.
+
+    - Improved SDL2's dmabuf-presence check that wasn't done properly
+      in v1, where EGL was set up only after first console was fully
+      inited, and thus, SDL's display .has_dmabuf callback didn't work
+      for the first console. Now dmabuf support status is pre-checked
+      before console is registered.
+
+    - Updated commit description of the patch that fixes SDL2's context
+      switching logic with a more detailed explanation of the problem.
+      Suggested by Akihiko Odaki.
+
+    - Corrected rebase typo in the async-fencing patch and switched
+      async-fencing to use a sigle-linked list instead of the double,
+      as was suggested by Akihiko Odaki.
+
+    - Replaced "=true" with "=on" in the DRM native context documentation
+      example and made virtio_gpu_virgl_init() to fail with a error message
+      if DRM context can't be initialized instead of giving a warning
+      message, as was suggested by Akihiko Odaki.
+
+    - Added patchew's dependecy tag to the cover letter as was suggested by
+      Akihiko Odaki.
+
+
+Alex Bennée (1):
+  docs/system: Expand the virtio-gpu documentation
+
+Dmitry Osipenko (6):
+  ui/sdl2: Restore original context after new context creation
+  virtio-gpu: Handle virgl fence creation errors
+  virtio-gpu: Support asynchronous fencing
+  virtio-gpu: Support DRM native context
+  ui/sdl2: Don't disable scanout when display is refreshed
+  ui/gtk: Don't disable scanout when display is refreshed
+
+Pierre-Eric Pelloux-Prayer (1):
+  ui/sdl2: Implement dpy dmabuf functions
+
+ docs/system/devices/virtio-gpu.rst | 105 +++++++++++++++++--
+ hw/display/virtio-gpu-gl.c         |   5 +
+ hw/display/virtio-gpu-virgl.c      | 159 ++++++++++++++++++++++++++++-
+ hw/display/virtio-gpu.c            |  15 +++
+ include/hw/virtio/virtio-gpu.h     |  16 +++
+ include/ui/sdl2.h                  |   7 ++
+ meson.build                        |   6 +-
+ ui/gtk-egl.c                       |   1 -
+ ui/gtk-gl-area.c                   |   1 -
+ ui/sdl2-gl.c                       |  68 +++++++++++-
+ ui/sdl2.c                          |  42 ++++++++
+ 11 files changed, 411 insertions(+), 14 deletions(-)
+
 -- 
 2.47.1
 
