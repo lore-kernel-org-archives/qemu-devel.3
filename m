@@ -4,86 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D38E6C02185
-	for <qemu-devel@archiver.kernel.org>; Sun, 19 Jan 2025 01:18:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 50D98C02185
+	for <qemu-devel@archiver.kernel.org>; Sun, 19 Jan 2025 01:18:35 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tZJv1-00043y-Ex; Sat, 18 Jan 2025 20:16:03 -0500
+	id 1tZJsq-0002h0-Hm; Sat, 18 Jan 2025 20:13:48 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1tZJuJ-0002UT-T1
- for qemu-devel@nongnu.org; Sat, 18 Jan 2025 20:15:20 -0500
-Received: from mail-pj1-x102d.google.com ([2607:f8b0:4864:20::102d])
+ id 1tZJso-0002az-3E
+ for qemu-devel@nongnu.org; Sat, 18 Jan 2025 20:13:46 -0500
+Received: from mail-pj1-x102b.google.com ([2607:f8b0:4864:20::102b])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1tZJuH-0003hP-WA
- for qemu-devel@nongnu.org; Sat, 18 Jan 2025 20:15:19 -0500
-Received: by mail-pj1-x102d.google.com with SMTP id
- 98e67ed59e1d1-2f13acbe29bso7009505a91.1
- for <qemu-devel@nongnu.org>; Sat, 18 Jan 2025 17:15:17 -0800 (PST)
+ id 1tZJsm-0003FH-CN
+ for qemu-devel@nongnu.org; Sat, 18 Jan 2025 20:13:45 -0500
+Received: by mail-pj1-x102b.google.com with SMTP id
+ 98e67ed59e1d1-2f43d17b0e3so6125633a91.0
+ for <qemu-devel@nongnu.org>; Sat, 18 Jan 2025 17:13:43 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1737249316; x=1737854116; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1737249222; x=1737854022; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=rIpCKy5JQx0bR6D2mwy5LNfmO2MRj2In2XtJ3m1ANi0=;
- b=ce3BUzFsmElZ38cm8iWTSKmtbUXMiPk0/ypJ/N9TmTWXi8cK2D2OZWhNzgzyar5ftt
- JP4/oQsvMVL+lInLJlPSD18qzFxzku81VvO4fo2H/KWSvPDFOqOa1sehprAh0WiZVuWf
- R/nx7Hvrg4yF8mO0hqN19tyXfMXuljmVRbKNZS5WiA+KxSM5q5Mt4s4/Eslfg1BxSEeS
- AAl4Nc23wWejIW1d3OpI7IQMZAF520jAptkK/aXPtcpnalhdc77yyNWsCSEv21FeNZzw
- uWYs9CkLzZoRXH2wTUICnKO2Gm2vIyvnnwQuHcRYh4WbGeuv9qgqMyBybUzx+qRpIxBV
- QbEQ==
+ bh=wSAD1j708buAVXbbTj9KkPqf9zo6iZ9nlQUceWoK8SU=;
+ b=djoGPFGSf+zG9G4tdrrFCaHQKrq0+S8YJoxCQCvCANRrBoiON+R0PmzChuPS+RgdPM
+ UacSVcNIH4LprOoPpHywBbQtw47tPrOsRn8OnuoyewdZXs2oWacae1TLPhfdcjIGGkx1
+ TDgC5SZ7q4HoEKCyTULDvV5OxVTWOsrUaJdcUSZWCayfQTkLNFToQVeDc/7nZPf9WL6n
+ VHG26ICArNfMeGeILD5GYVBTu4cQ3t47g2aTj6cProJbj63pPBJBzsrkmXk7vSvtvaZ5
+ PXDlyu00mpkXcUaafWuM2kJntlmGFfbynZn2Uccu6butnSsClnKfHwOVGgptYHEIjUxX
+ mV8g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1737249316; x=1737854116;
+ d=1e100.net; s=20230601; t=1737249222; x=1737854022;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=rIpCKy5JQx0bR6D2mwy5LNfmO2MRj2In2XtJ3m1ANi0=;
- b=mvrwcT8YixN6x30zCN41QMxxK/mv/zyqaoCQCjvRAOQRzjj47BC0GkBsET6NGWEUlg
- ZMO6fwKiQt5b0BzZ5ubG/IFInRFEu+osHZ8Gid2VtxdmfJCw51UTPdfnv0K18KoUAM6/
- WzsJ40eEsp30zzGAobosDo/tIRufPwDj90Y1L3JYkRCj5eSttnr0/FeLixlScNbhHhsU
- PCU4XxqbNW3HbuX/WBeDAEhhBEXbHLTP2a1qO5yUY1qSO82o44+fDWSPKfkqS8KNQEEO
- s0M6V6NB8mF9+ciMnPHb/m25KyQDx3vHF3yo+Fh8T93S/VUvqiMxnZyhG9elzDwWlzZB
- LFUw==
-X-Gm-Message-State: AOJu0Yx05F6KX1fnfO0yBFGZtiToa4YcW8kBOhfpn/1hwNOR1MAgMx+G
- HrZlLRgsBYKS/pJX+PGu1Zmo6hAtZWe9MEopu3kAf0YCKqYXY5Bi8y9rnoXX
-X-Gm-Gg: ASbGnctpfd2o8IPqfu55irxVYSpWcFutC/QGCj/NRmiEu4mOI5mLneI99F7nI0TutgL
- HN/LSBeBswYfcDqdK9bfBJ/hIO8EATSw81BrFKcmu4LNqPgqN5GkN6K9sx8XE4XAVT9ELKXSSGC
- Ztg6aBuj4cVOsB91qQWiypn8s0YMxMmaKoiosXMCOX/KM+/MeG8JbiAcApJgJDGiS75tA7/J1P3
- 6OSc0U3AVJ7zBJgCI6xVQIX1C5hDflx1FiLlfrQC2l0Pd1uEdmZtcXQkz8Fq2nHGd9lWdMEPXbh
- HMEhAM3PpT+WmkcpDcLGzf3HUZylygG/THF/gLi94jkMDUO2DVIJR5umY4t8bqbVk2/2zA1S/g=
+ bh=wSAD1j708buAVXbbTj9KkPqf9zo6iZ9nlQUceWoK8SU=;
+ b=hYJY8voacXgyUGbKa3ZueGdLUO7VkKZB5OFVDK+ImSm1IXsA08UH37mYZkm797iTzJ
+ LNg/BxU4NS+o9CLLUQdT7YYOIykooCuNCDvY0XnhwnR8vuYjSFL/YI4Vc8W2mM7gD06n
+ 5EtVyDw2Mk5L3l2yllTiFgEZxtK1hnLxg0hJ2gVnzEIGytQbm6JKd69thKOeoM2OEU51
+ 3g3gEuzyxsbdfk4uaADaziTbLss6bbhfmvRh1j8cKbvH7uZRL+bfofcUC2ZPkSbRrALV
+ +QJyM8ycfUrG/YLVX6rN/IZ4YMgTH8dvMavrEGu2hjSQbznrahNL7feAD9KVK9TkcVeg
+ 1bIg==
+X-Gm-Message-State: AOJu0Yz0FAjwgRkMT1NhFTRJ2h4z+bY4qX9vyWYTUAlSocx9hY5WkN/Y
+ 8OscK0Z/WCbLnPLz2KSRnn0pDSE+4MWJFw94gP6VVpwwiI9jRuR9EnMaIBJn
+X-Gm-Gg: ASbGncsNViQYic5cw2NuSePaE6sxqwlcaAI0fiyC7Jdclv1U0QyhQByzwQYUWNTZPvN
+ MmvEWywm7CnqV7mSFZ2PXcAQFKeVC6eUlV0N+6mroB+EpQGqoJRtYMCPuIC0fx2/mx5Z/8NcQmE
+ lZHv85on5zG6NTepIfHztawzEYTBTfGXW4qVsgG0pNPDviyEHomJflN7NTKuRd1zE0UqJ2wnuzt
+ iT9/9QM9m0nriNnoB1XNtQdD2tKtOf+VpOiuBwsESJGghG7rWAwY/BfFZuWrcpXMELyyqep0kaU
+ FQrC4w1rEC+ZodPY6+V26hS2K5YIF4kqXjIrdvlsnJjaKtqwRGQXB8GWrx+jjJizIeE8WAZfbQ=
  =
-X-Google-Smtp-Source: AGHT+IGfCS1xDzUCBQ4dLcaH49+YOSkPH0mdHZQyf2ITJJESKGLAl8mH858HLAHS46zK3kvHIpho0Q==
-X-Received: by 2002:a17:90b:1e53:b0:2f5:5bc6:a78d with SMTP id
- 98e67ed59e1d1-2f728da3537mr23487166a91.3.1737249316292; 
- Sat, 18 Jan 2025 17:15:16 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IE9ZPjRfbwUezQEuOFNBAGXCHo5umD5rdnxopQvdztvduTf4ZqP0QxtNJ85XaR4JZE3uR7eLg==
+X-Received: by 2002:a17:90a:d004:b0:2ee:8ea0:6b9c with SMTP id
+ 98e67ed59e1d1-2f782c9404fmr13944403a91.12.1737249222498; 
+ Sat, 18 Jan 2025 17:13:42 -0800 (PST)
 Received: from toolbox.alistair23.me
  (2403-580b-97e8-0-321-6fb2-58f1-a1b1.ip6.aussiebb.net.
  [2403:580b:97e8:0:321:6fb2:58f1:a1b1])
  by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-2f776185b02sm4760314a91.21.2025.01.18.17.15.13
+ 98e67ed59e1d1-2f776185b02sm4760314a91.21.2025.01.18.17.13.39
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sat, 18 Jan 2025 17:15:15 -0800 (PST)
+ Sat, 18 Jan 2025 17:13:42 -0800 (PST)
 From: Alistair Francis <alistair23@gmail.com>
 X-Google-Original-From: Alistair Francis <alistair.francis@wdc.com>
 To: qemu-devel@nongnu.org
-Cc: alistair23@gmail.com,
- =?UTF-8?q?Cl=C3=A9ment=20L=C3=A9ger?= <cleger@rivosinc.com>,
+Cc: alistair23@gmail.com, Alexey Baturo <baturo.alexey@gmail.com>,
  Alistair Francis <alistair.francis@wdc.com>
-Subject: [PULL v2 45/50] target/riscv: Implement Smdbltrp sret,
- mret and mnret behavior
-Date: Sun, 19 Jan 2025 11:12:20 +1000
-Message-ID: <20250119011225.11452-46-alistair.francis@wdc.com>
+Subject: [PULL v2 19/50] target/riscv: Enable updates for pointer masking
+ variables and thus enable pointer masking extension
+Date: Sun, 19 Jan 2025 11:11:54 +1000
+Message-ID: <20250119011225.11452-20-alistair.francis@wdc.com>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250119011225.11452-1-alistair.francis@wdc.com>
 References: <20250119011225.11452-1-alistair.francis@wdc.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::102d;
- envelope-from=alistair23@gmail.com; helo=mail-pj1-x102d.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::102b;
+ envelope-from=alistair23@gmail.com; helo=mail-pj1-x102b.google.com
 X-Spam_score_int: -17
 X-Spam_score: -1.8
 X-Spam_bar: -
@@ -107,57 +105,48 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Clément Léger <cleger@rivosinc.com>
+From: Alexey Baturo <baturo.alexey@gmail.com>
 
-When the Ssdbltrp extension is enabled, SSTATUS.MDT field is cleared
-when executing sret if executed in M-mode. When executing mret/mnret,
-SSTATUS.MDT is cleared.
-
-Signed-off-by: Clément Léger <cleger@rivosinc.com>
+Signed-off-by: Alexey Baturo <baturo.alexey@gmail.com>
 Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
-Message-ID: <20250110125441.3208676-8-cleger@rivosinc.com>
+Message-ID: <20250106102346.1100149-8-baturo.alexey@gmail.com>
 Signed-off-by: Alistair Francis <alistair.francis@wdc.com>
 ---
- target/riscv/op_helper.c | 12 ++++++++++++
- 1 file changed, 12 insertions(+)
+ target/riscv/cpu.c | 6 ++++++
+ 1 file changed, 6 insertions(+)
 
-diff --git a/target/riscv/op_helper.c b/target/riscv/op_helper.c
-index 59c4bf28ed..ce1256f439 100644
---- a/target/riscv/op_helper.c
-+++ b/target/riscv/op_helper.c
-@@ -306,6 +306,9 @@ target_ulong helper_sret(CPURISCVState *env)
-         }
-         mstatus = set_field(mstatus, MSTATUS_SDT, 0);
-     }
-+    if (riscv_cpu_cfg(env)->ext_smdbltrp && env->priv >= PRV_M) {
-+        mstatus = set_field(mstatus, MSTATUS_MDT, 0);
-+    }
-     if (env->priv_ver >= PRIV_VERSION_1_12_0) {
-         mstatus = set_field(mstatus, MSTATUS_MPRV, 0);
-     }
-@@ -391,6 +394,9 @@ target_ulong helper_mret(CPURISCVState *env)
-     if (riscv_cpu_cfg(env)->ext_ssdbltrp) {
-         mstatus = ssdbltrp_mxret(env, mstatus, prev_priv, prev_virt);
-     }
-+    if (riscv_cpu_cfg(env)->ext_smdbltrp) {
-+        mstatus = set_field(mstatus, MSTATUS_MDT, 0);
-+    }
-     if ((env->priv_ver >= PRIV_VERSION_1_12_0) && (prev_priv != PRV_M)) {
-         mstatus = set_field(mstatus, MSTATUS_MPRV, 0);
-     }
-@@ -436,6 +442,12 @@ target_ulong helper_mnret(CPURISCVState *env)
-         env->mstatus = ssdbltrp_mxret(env, env->mstatus, prev_priv, prev_virt);
-     }
+diff --git a/target/riscv/cpu.c b/target/riscv/cpu.c
+index 99588e219e..d9eb2c04c3 100644
+--- a/target/riscv/cpu.c
++++ b/target/riscv/cpu.c
+@@ -193,11 +193,14 @@ const RISCVIsaExtData isa_edata_arr[] = {
+     ISA_EXT_DATA_ENTRY(smaia, PRIV_VERSION_1_12_0, ext_smaia),
+     ISA_EXT_DATA_ENTRY(smcntrpmf, PRIV_VERSION_1_12_0, ext_smcntrpmf),
+     ISA_EXT_DATA_ENTRY(smepmp, PRIV_VERSION_1_12_0, ext_smepmp),
++    ISA_EXT_DATA_ENTRY(smmpm, PRIV_VERSION_1_13_0, ext_smmpm),
++    ISA_EXT_DATA_ENTRY(smnpm, PRIV_VERSION_1_13_0, ext_smnpm),
+     ISA_EXT_DATA_ENTRY(smstateen, PRIV_VERSION_1_12_0, ext_smstateen),
+     ISA_EXT_DATA_ENTRY(ssaia, PRIV_VERSION_1_12_0, ext_ssaia),
+     ISA_EXT_DATA_ENTRY(ssccptr, PRIV_VERSION_1_11_0, has_priv_1_11),
+     ISA_EXT_DATA_ENTRY(sscofpmf, PRIV_VERSION_1_12_0, ext_sscofpmf),
+     ISA_EXT_DATA_ENTRY(sscounterenw, PRIV_VERSION_1_12_0, has_priv_1_12),
++    ISA_EXT_DATA_ENTRY(ssnpm, PRIV_VERSION_1_13_0, ext_ssnpm),
+     ISA_EXT_DATA_ENTRY(ssstateen, PRIV_VERSION_1_12_0, ext_ssstateen),
+     ISA_EXT_DATA_ENTRY(sstc, PRIV_VERSION_1_12_0, ext_sstc),
+     ISA_EXT_DATA_ENTRY(sstvala, PRIV_VERSION_1_12_0, has_priv_1_12),
+@@ -1595,9 +1598,12 @@ const RISCVCPUMultiExtConfig riscv_cpu_extensions[] = {
+     MULTI_EXT_CFG_BOOL("zvfh", ext_zvfh, false),
+     MULTI_EXT_CFG_BOOL("zvfhmin", ext_zvfhmin, false),
+     MULTI_EXT_CFG_BOOL("sstc", ext_sstc, true),
++    MULTI_EXT_CFG_BOOL("ssnpm", ext_ssnpm, false),
  
-+    if (riscv_cpu_cfg(env)->ext_smdbltrp) {
-+        if (prev_priv < PRV_M) {
-+            env->mstatus = set_field(env->mstatus, MSTATUS_MDT, 0);
-+        }
-+    }
-+
-     if (riscv_has_ext(env, RVH) && prev_virt) {
-         riscv_cpu_swap_hypervisor_regs(env);
-     }
+     MULTI_EXT_CFG_BOOL("smaia", ext_smaia, false),
+     MULTI_EXT_CFG_BOOL("smepmp", ext_smepmp, false),
++    MULTI_EXT_CFG_BOOL("smmpm", ext_smmpm, false),
++    MULTI_EXT_CFG_BOOL("smnpm", ext_smnpm, false),
+     MULTI_EXT_CFG_BOOL("smstateen", ext_smstateen, false),
+     MULTI_EXT_CFG_BOOL("ssaia", ext_ssaia, false),
+     MULTI_EXT_CFG_BOOL("svade", ext_svade, false),
 -- 
 2.48.1
 
