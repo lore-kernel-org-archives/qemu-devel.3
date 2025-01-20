@@ -4,87 +4,96 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D3DA3C02185
-	for <qemu-devel@archiver.kernel.org>; Mon, 20 Jan 2025 03:11:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 167B0C0218A
+	for <qemu-devel@archiver.kernel.org>; Mon, 20 Jan 2025 04:39:59 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tZiB1-0002J0-K3; Sun, 19 Jan 2025 22:10:11 -0500
+	id 1tZjZA-000490-Qf; Sun, 19 Jan 2025 23:39:12 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <lizhijian@fujitsu.com>)
- id 1tZiAz-0002Hh-Fa
- for qemu-devel@nongnu.org; Sun, 19 Jan 2025 22:10:09 -0500
-Received: from esa8.hc1455-7.c3s2.iphmx.com ([139.138.61.253])
+ (Exim 4.90_1) (envelope-from <anisinha@redhat.com>)
+ id 1tZjZ8-00048r-Sp
+ for qemu-devel@nongnu.org; Sun, 19 Jan 2025 23:39:10 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <lizhijian@fujitsu.com>)
- id 1tZiAx-0007hV-Nt
- for qemu-devel@nongnu.org; Sun, 19 Jan 2025 22:10:09 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple;
- d=fujitsu.com; i=@fujitsu.com; q=dns/txt; s=fj2;
- t=1737342607; x=1768878607;
- h=from:to:cc:subject:date:message-id:mime-version:
- content-transfer-encoding;
- bh=EQIXurmzibcHcsG4mInmq0nLx5Lm78b8PKA8N1qOnJo=;
- b=FkY/2OhMtiy7wqAYVRAo5Dd9EEsiAKqe97vNZM5KhIg2SQLDo12Txsk1
- IzN5ATzKMk7UOYuvtFZQsp5P7YrikjqIa/s1h9zthOhCrdAUcwdmsdM2/
- zLD7Nvhw0QFkvXdT9ut8IS9X/eglX/w0ifeLIBalz2FwH5mhEkbpZMb+O
- ANsIG0Tz4H/QCdbI1x5BRibdo/dm3XBvQIwFFRQQ9m/bZMAaATAqUb//2
- JGfn/bR+6M6zq2OXbYnnqLNu6+n9D8DnIV7A/nXQzc1QCzGnnIt9zXaQs
- tVXS0/mISvIemLEQaKkj/Xu0U8k9/6NI5bsCl+CG801IFRRHe5rMrffSn g==;
-X-CSE-ConnectionGUID: BpEIFR2QQG2fuaxt5eW//w==
-X-CSE-MsgGUID: jCYU9553Quafo2Bj+GPshQ==
-X-IronPort-AV: E=McAfee;i="6700,10204,11320"; a="175065607"
-X-IronPort-AV: E=Sophos;i="6.13,218,1732546800"; d="scan'208";a="175065607"
-Received: from unknown (HELO yto-r1.gw.nic.fujitsu.com) ([218.44.52.217])
- by esa8.hc1455-7.c3s2.iphmx.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 20 Jan 2025 12:09:59 +0900
-Received: from yto-m1.gw.nic.fujitsu.com (yto-nat-yto-m1.gw.nic.fujitsu.com
- [192.168.83.64])
- by yto-r1.gw.nic.fujitsu.com (Postfix) with ESMTP id F34FFD6EA9
- for <qemu-devel@nongnu.org>; Mon, 20 Jan 2025 12:09:56 +0900 (JST)
-Received: from kws-ab4.gw.nic.fujitsu.com (kws-ab4.gw.nic.fujitsu.com
- [192.51.206.22])
- by yto-m1.gw.nic.fujitsu.com (Postfix) with ESMTP id C4DECCFBB1
- for <qemu-devel@nongnu.org>; Mon, 20 Jan 2025 12:09:56 +0900 (JST)
-Received: from edo.cn.fujitsu.com (edo.cn.fujitsu.com [10.167.33.5])
- by kws-ab4.gw.nic.fujitsu.com (Postfix) with ESMTP id 447606BAC6
- for <qemu-devel@nongnu.org>; Mon, 20 Jan 2025 12:09:56 +0900 (JST)
-Received: from iaas-rpma.. (unknown [10.167.135.44])
- by edo.cn.fujitsu.com (Postfix) with ESMTP id 5C8891A0071;
- Mon, 20 Jan 2025 11:09:55 +0800 (CST)
-To: qemu-devel@nongnu.org
-Cc: Jonathan Cameron <jonathan.cameron@huawei.com>,
- Fan Ni <fan.ni@samsung.com>, linux-cxl@vger.kernel.org,
- Li Zhijian <lizhijian@fujitsu.com>
-Subject: [PATCH 1/3] hw/mem/cxl_type3: Add paired msix_uninit_exclusive_bar()
- call
-Date: Mon, 20 Jan 2025 11:09:45 +0800
-Message-Id: <20250120030947.254930-1-lizhijian@fujitsu.com>
-X-Mailer: git-send-email 2.31.1
+ (Exim 4.90_1) (envelope-from <anisinha@redhat.com>)
+ id 1tZjZ6-0008W7-S8
+ for qemu-devel@nongnu.org; Sun, 19 Jan 2025 23:39:10 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1737347946;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:
+ content-transfer-encoding:content-transfer-encoding;
+ bh=7EUQaw4Ll2a8+txo9+XnUM3XuZIX+56OswJm7XLZiS4=;
+ b=ele7wljbBp7vwA5Fzu7G9zSg4C2eJ1QiuHipFrq1tvmQwEN4oR3U2+2keqZ88nV0IRBbat
+ vRUhSxcj3wrBCV4l1wb0bWiUHtPwfTszwrHEsGPmm3JoMmDeVcHlks9w9RY2TA4dtivqx/
+ figWiQ6z49yxy30X9Z2H0r2TonJAHXM=
+Received: from mail-pl1-f197.google.com (mail-pl1-f197.google.com
+ [209.85.214.197]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-679-B4NI5QdHPeqKtICqqRsYiw-1; Sun, 19 Jan 2025 23:39:04 -0500
+X-MC-Unique: B4NI5QdHPeqKtICqqRsYiw-1
+X-Mimecast-MFC-AGG-ID: B4NI5QdHPeqKtICqqRsYiw
+Received: by mail-pl1-f197.google.com with SMTP id
+ d9443c01a7336-216266cc0acso81508235ad.0
+ for <qemu-devel@nongnu.org>; Sun, 19 Jan 2025 20:39:04 -0800 (PST)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1737347943; x=1737952743;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=7EUQaw4Ll2a8+txo9+XnUM3XuZIX+56OswJm7XLZiS4=;
+ b=ZlUX/sAb9Fn1/NwQ99HdZDfmy2anZ8wv4YrUVQlbU+yCOdu+Te88gsYTliBOYyPU94
+ XUtHqiGhOchTGIp2yi1BRvn1LcvRqvEdxn1RozV66s8EgLJ3Bu/1eEUXZcZHxhJeATVm
+ zWkzw8YPlbzx4iKTTQ7F0ITxH5Iww1osBOWJlp7HWlA5pocPs3nbcsvW1Hsv+kdpWIwT
+ HZ5br5eE8K6UT1Wr6pBM77HUsqrRR9omdMdqE8FUHbLc72tZBJ7qYDwgSllkJAjUyLEy
+ lTwT0B/mlUPP24KbtySThjR2wSAL9U2rNNNtgVCqNH6X7SCOTjk5Y5GgkFU/n8rQkNhQ
+ /mtw==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCWRHrnA1yWZCw1elqVude/0L0yqpBYkXVyMmTdchpEgNl8/1TKIBSzMfmB52tNeVdMLELKBiA2tJ3I/@nongnu.org
+X-Gm-Message-State: AOJu0Ywl6Knhpsou8EUb7zBtXP0BrEOhoxIk6iYFd1dUPDkub1csnRhx
+ GsAe0FKI+eR/u1O9U7QbsG9Q3u15wTKiW/LHBxxz2dmGcGAilapaSDwvOF60RC1yImEJ+yqLeSC
+ 2JsMYN2rZ7zQbnniyGkd+HWgjp9QkApXfrTR0o28feG5cY8JDPbQ7
+X-Gm-Gg: ASbGncsmdgK0/S68DxJ71vF5s29D37I+zqQ9vVOzgkR+k+GGEWjmOQMFqludYS6/0eN
+ NhJXNexgjdbnbX3ZEJAo4n/lkDsnyj7tDioeHkUeRYezj2FuHMtfV9TsSVG2YC6g27/2REyvLnC
+ vgKsYRqnjm0flohF5dCn4fPBXlObr7z14oTjtvQ6NiQtBzWR9wJnbpEvZc/VC5N6il3Kv79Uh6R
+ n//Pj4Z5gudc/XYcns8a1R4CP6hu3mo3afpPBE0adNHMbAqEdRzGCANiTpXTGF+5ZSh5k8untDZ
+ qYPYKM5fEvMobH0K
+X-Received: by 2002:a05:6a21:1085:b0:1d8:d5c0:ad74 with SMTP id
+ adf61e73a8af0-1eb024c6267mr34606450637.1.1737347943183; 
+ Sun, 19 Jan 2025 20:39:03 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IFhErxxxw5crfZylyCFSjPQ8b6liaGdQ9u6f4bTLBbFOEQ3RzJMFxr+aYDNtVdXkx3vp0C6iQ==
+X-Received: by 2002:a05:6a21:1085:b0:1d8:d5c0:ad74 with SMTP id
+ adf61e73a8af0-1eb024c6267mr34606402637.1.1737347942260; 
+ Sun, 19 Jan 2025 20:39:02 -0800 (PST)
+Received: from localhost.localdomain ([115.96.115.34])
+ by smtp.googlemail.com with ESMTPSA id
+ 41be03b00d2f7-a9bcc3232a4sm5889604a12.30.2025.01.19.20.38.58
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Sun, 19 Jan 2025 20:39:01 -0800 (PST)
+From: Ani Sinha <anisinha@redhat.com>
+To: 
+Cc: Ani Sinha <anisinha@redhat.com>, kraxel@redhat.com, farosas@suse.de,
+ lvivier@redhat.com, pbonzini@redhat.com, armbru@redhat.com,
+ philmd@linaro.org, berrange@redhat.com, qemu-devel@nongnu.org
+Subject: [PATCH v6 0/3] tests/qtest/libqos: add DMA support for writing and
+ reading fw_cfg files
+Date: Mon, 20 Jan 2025 10:08:31 +0530
+Message-ID: <20250120043847.954881-1-anisinha@redhat.com>
+X-Mailer: git-send-email 2.45.2
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-TM-AS-GCONF: 00
-X-TM-AS-Product-Ver: IMSS-9.1.0.1417-9.0.0.1002-28934.004
-X-TM-AS-User-Approved-Sender: Yes
-X-TMASE-Version: IMSS-9.1.0.1417-9.0.1002-28934.004
-X-TMASE-Result: 10-0.176100-10.000000
-X-TMASE-MatchedRID: toN6SH028bUy7r9tI4sSuomfV7NNMGm+1GdxOr7L6H2u9yzHHu0ZiSZl
- e49VkKqHIvrftAIhWmLy9zcRSkKatXwzxAv8kID0zr16YOzjZ13QiNv55aRoGrqln+jYe7Zh17f
- TaRrC7JloAzXI4Nhg5341niV9KymzHxPMjOKY7A/+HHE8LDNSg8RB0bsfrpPIcSqbxBgG0w4cPL
- OQ+phrrYqdbFd4X7QAKvPEkuwr1iSKfjOIOfJrLtIq+VrwLz72zNQ3fXMkh2SDToamn92pqqZUo
- ggwSSPywmvPT4lO6OdbjBuldNvkMkoq97WSHdFjfupJaud1uZCfRs6uIbkFVw==
-X-TMASE-SNAP-Result: 1.821001.0001-0-1-22:0,33:0,34:0-0
-Received-SPF: pass client-ip=139.138.61.253;
- envelope-from=lizhijian@fujitsu.com; helo=esa8.hc1455-7.c3s2.iphmx.com
-X-Spam_score_int: -43
-X-Spam_score: -4.4
-X-Spam_bar: ----
-X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=anisinha@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -60
+X-Spam_score: -6.1
+X-Spam_bar: ------
+X-Spam_report: (-6.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-2.996,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=-1, RCVD_IN_MSPIKE_WL=-0.01,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -97,42 +106,86 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-to:  Li Zhijian <lizhijian@fujitsu.com>
-From:  Li Zhijian via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-msix_uninit_exclusive_bar() should be paired with msix_init_exclusive_bar()
+This patchset enables DMA interface support for writing fw-cfg files in
+libqtest. The first patch is just a code refactoring so that fw-cfg
+directory parsing can be part of a separate helper function.
+The second patch is the actual patch that introduces two new apis for
+writing and reading fw-cfg files using DMA interface. The apis are
+tested by writing a new basic qtest for vmcoreinfo device in patch 3.
 
-Ensure proper resource cleanup by adding the missing
-`msix_uninit_exclusive_bar()` call for the Type3 CXL device.
+$ MALLOC_PERTURB_=255  QTEST_QEMU_BINARY=./qemu-system-x86_64  /workspace/qemu-ani/build/tests/qtest/vmcoreinfo-test
+TAP version 13
+# random seed: R02S33ea0ae4568aae69a6191a97e6ea37fc
+1..1
+# Start of x86_64 tests
+# Start of vmcoreinfo tests
+# starting QEMU: exec ./qemu-system-x86_64 -qtest unix:/tmp/qtest-267380.sock -qtest-log /dev/null -chardev socket,path=/tmp/qtest-267380.qmp,id=char0 -mon chardev=char0,mode=control -display none -audio none -device vmcoreinfo -accel qtest
+ok 1 /x86_64/vmcoreinfo/basic-write
+# End of vmcoreinfo tests
+# End of x86_64 tests
 
-Signed-off-by: Li Zhijian <lizhijian@fujitsu.com>
----
- hw/mem/cxl_type3.c | 2 ++
- 1 file changed, 2 insertions(+)
+CI pipeline is green with this patch series: https://gitlab.com/anisinha/qemu/-/pipelines/1629670893
 
-diff --git a/hw/mem/cxl_type3.c b/hw/mem/cxl_type3.c
-index f64af19ed6ae..9dad250f56d5 100644
---- a/hw/mem/cxl_type3.c
-+++ b/hw/mem/cxl_type3.c
-@@ -936,6 +936,7 @@ static void ct3_realize(PCIDevice *pci_dev, Error **errp)
- err_release_cdat:
-     cxl_doe_cdat_release(cxl_cstate);
- err_free_special_ops:
-+    msix_uninit_exclusive_bar(pci_dev);
-     g_free(regs->special_ops);
- err_address_space_free:
-     if (ct3d->dc.host_dc) {
-@@ -959,6 +960,7 @@ static void ct3_exit(PCIDevice *pci_dev)
- 
-     pcie_aer_exit(pci_dev);
-     cxl_doe_cdat_release(cxl_cstate);
-+    msix_uninit_exclusive_bar(pci_dev);
-     g_free(regs->special_ops);
-     if (ct3d->dc.host_dc) {
-         cxl_destroy_dc_regions(ct3d);
+checkpatch is clean:
+
+$ ./scripts/checkpatch.pl patches-v6/*
+Checking patches-v6/v6-0000-cover-letter.patch...
+total: 0 errors, 0 warnings, 0 lines checked
+
+patches-v6/v6-0000-cover-letter.patch has no obvious style problems and is ready for submission.
+Checking patches-v6/v6-0001-libqos-fw_cfg-refactor-file-directory-iteraton-to.patch...
+total: 0 errors, 0 warnings, 80 lines checked
+
+patches-v6/v6-0001-libqos-fw_cfg-refactor-file-directory-iteraton-to.patch has no obvious style problems and is ready for submission.
+Checking patches-v6/v6-0002-tests-qtest-libqos-add-DMA-support-for-writing-an.patch...
+total: 0 errors, 0 warnings, 175 lines checked
+
+patches-v6/v6-0002-tests-qtest-libqos-add-DMA-support-for-writing-an.patch has no obvious style problems and is ready for submission.
+Checking patches-v6/v6-0003-tests-qtest-vmcoreinfo-add-a-unit-test-to-exerciz.patch...
+total: 0 errors, 0 warnings, 111 lines checked
+
+patches-v6/v6-0003-tests-qtest-vmcoreinfo-add-a-unit-test-to-exerciz.patch has no obvious style problems and is ready for submission.
+
+
+cc: kraxel@redhat.com
+cc: farosas@suse.de
+cc: lvivier@redhat.com
+cc: pbonzini@redhat.com
+cc: armbru@redhat.com
+cc: philmd@linaro.org
+cc: berrange@redhat.com
+cc: qemu-devel@nongnu.org
+cc: farosas@suse.de
+
+changelog:
+v3: first working version of the patch.
+v4: refactoring without any new changes put into a new patch.
+v5: a new qtest added to exercize the two new write and read apis.
+v6: minor, coding style changed to standard qemu func prototype style - 
+phil's sugestion. tags added and rebased to the latest.
+  
+all along, other review feedbacks has been taken into account.
+
+Ani Sinha (3):
+  libqos/fw_cfg: refactor file directory iteraton to make it more
+    reusable
+  tests/qtest/libqos: add DMA support for writing and reading fw_cfg
+    files
+  tests/qtest/vmcoreinfo: add a unit test to exercize basic vmcoreinfo
+    function
+
+ MAINTAINERS                   |   2 +
+ tests/qtest/libqos/fw_cfg.c   | 202 ++++++++++++++++++++++++++++++----
+ tests/qtest/libqos/fw_cfg.h   |   6 +-
+ tests/qtest/meson.build       |   1 +
+ tests/qtest/vmcoreinfo-test.c |  90 +++++++++++++++
+ 5 files changed, 277 insertions(+), 24 deletions(-)
+ create mode 100644 tests/qtest/vmcoreinfo-test.c
+
 -- 
-2.47.0
+2.45.2
 
 
