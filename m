@@ -4,100 +4,93 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3C322C02185
-	for <qemu-devel@archiver.kernel.org>; Mon, 20 Jan 2025 04:40:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4183BC02185
+	for <qemu-devel@archiver.kernel.org>; Mon, 20 Jan 2025 05:33:08 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tZjZD-00049W-B7; Sun, 19 Jan 2025 23:39:15 -0500
+	id 1tZkOo-0002tu-Aj; Mon, 20 Jan 2025 00:32:35 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <anisinha@redhat.com>)
- id 1tZjZB-00049I-JZ
- for qemu-devel@nongnu.org; Sun, 19 Jan 2025 23:39:13 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <anisinha@redhat.com>)
- id 1tZjZA-0008WI-2K
- for qemu-devel@nongnu.org; Sun, 19 Jan 2025 23:39:13 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1737347950;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=+2dgrQDHc5fzCfLKC4fH5d2T13feJHoGpN7u1WbNm/k=;
- b=SVW0ifTiI7vxsQK6S+XYWqmMI9DijO4COlHSp59H+/x/t5N1hptyBOWdpiHIn0krAHxvJr
- 8e4dktZM6nEVSSfnNePjXoypnqc6pVpjpH9/2jjuFtdBgZ5ltjtyv6EgenRtYaqYywZX7I
- PugvF1TVVf3gphki7OirpN0g8/bAsSs=
-Received: from mail-pl1-f198.google.com (mail-pl1-f198.google.com
- [209.85.214.198]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-222-gvRfEmqxPXmKvsTj0pTB0Q-1; Sun, 19 Jan 2025 23:39:08 -0500
-X-MC-Unique: gvRfEmqxPXmKvsTj0pTB0Q-1
-X-Mimecast-MFC-AGG-ID: gvRfEmqxPXmKvsTj0pTB0Q
-Received: by mail-pl1-f198.google.com with SMTP id
- d9443c01a7336-2164fad3792so69720745ad.0
- for <qemu-devel@nongnu.org>; Sun, 19 Jan 2025 20:39:08 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tZkLc-0002Zy-UZ
+ for qemu-devel@nongnu.org; Mon, 20 Jan 2025 00:29:17 -0500
+Received: from mail-wm1-x330.google.com ([2a00:1450:4864:20::330])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tZkLb-0006pT-6B
+ for qemu-devel@nongnu.org; Mon, 20 Jan 2025 00:29:16 -0500
+Received: by mail-wm1-x330.google.com with SMTP id
+ 5b1f17b1804b1-435f8f29f8aso27980495e9.2
+ for <qemu-devel@nongnu.org>; Sun, 19 Jan 2025 21:29:09 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1737350948; x=1737955748; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=c5rAfiZJz+9oEvlJoSXxBPIfjutD28B8EZy7D2WO+Ns=;
+ b=bRLa65rLDr3bTZUva9Frx4dym7gpand44f4j82Uu6BpxKcOsTULcjuO7fu7HXCpmRY
+ L687HEyiAEO4b1tg0k1RYaZMriM532rZriUCJs52P7R5Zwrrv2VBwDA1y668MAERrjr3
+ DO5e6Wp5khzrjBGfBrkf0O58BOwdbzr4yHUz2iW0DLzQvq0uGcbGWHaIPx+nQ8mgWaBA
+ wr5tQjLgOVRk4EBDWhq7MbcgnMBLRIxiK60eGoeFjDq+OYNuzFlfza/JpRtpLrn8NZ4q
+ y9WS9hf/fp4HJulEY4UeZpSgnHAqdKSYKKNlIPuax6brtGDpow0pMYo5r9zfuR6hqppZ
+ ItbQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1737347946; x=1737952746;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=+2dgrQDHc5fzCfLKC4fH5d2T13feJHoGpN7u1WbNm/k=;
- b=ebxC4IICtX5W4JafQW7uer9TAdqxatU3qSF+iyB5CSCf1enMbmDyZ7jQFCgKytrqD6
- yBZ7PmWx7UH3m0GF3mUTV8N0o9iuYE35wl40i58mC88g1nFX+jKZoH5gvgNOI8OOqRQw
- Geiz53c/6Ow4eq/bXKAx25Bb+DpqCUJllyt73r5G2XSxBiBiAXZw2ZBv/SzBVxe6m3+2
- dHyYDLexSEPs0maClASL84DJ25Zlvj0VpTxVvbkhXcte7sQcalT64HkCQzOJZNKlRUc4
- ucDHn8LlGR8yGokDu4lKkodVz37UcItJ4vpUZ6isT15SwIufnjU6z6Bd5Rqlru5YxAp5
- lVeQ==
+ d=1e100.net; s=20230601; t=1737350948; x=1737955748;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=c5rAfiZJz+9oEvlJoSXxBPIfjutD28B8EZy7D2WO+Ns=;
+ b=q+jNP+Ti8mq+ZH74rKKBCjsFZUTo1yYoKhWEzMwNJEq4TMUPcatqLJcTN4fxPVWsKl
+ B9KpvIxMbhNcozbOq5MP+2JEjU7F3Qmb1cloWNLySRgLdcR1MHBHEWcjQgqA3GYJEYvR
+ uDh3BTHImdNEc0SKh5GYEcR26P5r3okkltmNCu8ixwTmwqt15JaiPtZmQJaSwRIAGcFz
+ n2dNWTWwVoakgB+I0whrW6ggmBLJsIMFYyBn8wvr0uMlsTZwAXoNz1rP9je5P+NEBKr1
+ UZW9MzMs/7911rcuEeqHS50jAkqGmNAOA79fVsTWpxWCQe475WHTD2yutV1SPnhbuPUb
+ u63A==
 X-Forwarded-Encrypted: i=1;
- AJvYcCWh+mw6V/UfD6N43qC4iMNchn9bGvjmhDQyf/rpU1/PPYyMjdNgOy+cNJEvMTU3ScqHX5jFgBPWrIMY@nongnu.org
-X-Gm-Message-State: AOJu0Yyy0xlWESh6o5Wewg9wonLe6lRJ5ADDpkdE0hiC+brKHFNTzSsE
- xrwbSgbaHJhfnyVPGpFnQ4V5mKfx7bMv2u3mwvCRsC7QW2UsoHvSvopBmrW8FK2YTGo+i4hXjVO
- jAz+41dH63Aay497rDrO799IyRx5RUVKBBzYS7KlC2n03oZOUYI20YFtXGQS2
-X-Gm-Gg: ASbGnctCQWFSRx/aCvlnAr0HuHNaiERNjBCG1XXJnSurEa+rAMUALomyLdEYegvgzUH
- r+oh4Liz8YOKOjeDKovv1MCosA6JfA5TUZRAsKCjso5/D7Q4syZuVWYp3JWMYLCtfJoQ5zYSpee
- JVZUaI5p6o7n87KX4u6nC7Y+bqCUMgyV/BZKCr3dECjbSRlB96+d+tq3RSXJ1ZNF3X5VziWP7kC
- b90cMaJn+JqJKmdq/Ww5F56LnEwAF9p3mTX1jS0g8GO64wkIcjICqJUWhlzeoU0uKZFl72cL3VD
- eRtMqbuPXgP76uPE
-X-Received: by 2002:a17:902:d48a:b0:212:67a5:ab2d with SMTP id
- d9443c01a7336-21c35604a08mr216829865ad.44.1737347946403; 
- Sun, 19 Jan 2025 20:39:06 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IFF8hKqkaK4fzLdyAqIIhK/M0nMI8lZRN0nyjDSxsa3utTy2xxSwtYL2OfVj3do9u6fPivrtg==
-X-Received: by 2002:a17:902:d48a:b0:212:67a5:ab2d with SMTP id
- d9443c01a7336-21c35604a08mr216829575ad.44.1737347946071; 
- Sun, 19 Jan 2025 20:39:06 -0800 (PST)
-Received: from localhost.localdomain ([115.96.115.34])
- by smtp.googlemail.com with ESMTPSA id
- 41be03b00d2f7-a9bcc3232a4sm5889604a12.30.2025.01.19.20.39.03
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sun, 19 Jan 2025 20:39:05 -0800 (PST)
-From: Ani Sinha <anisinha@redhat.com>
-To: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Gerd Hoffmann <kraxel@redhat.com>, Fabiano Rosas <farosas@suse.de>,
- Laurent Vivier <lvivier@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>
-Cc: Ani Sinha <anisinha@redhat.com>,
-	qemu-devel@nongnu.org
-Subject: [PATCH v6 1/3] libqos/fw_cfg: refactor file directory iteraton to
- make it more reusable
-Date: Mon, 20 Jan 2025 10:08:32 +0530
-Message-ID: <20250120043847.954881-2-anisinha@redhat.com>
-X-Mailer: git-send-email 2.45.2
-In-Reply-To: <20250120043847.954881-1-anisinha@redhat.com>
-References: <20250120043847.954881-1-anisinha@redhat.com>
+ AJvYcCUNW8Mx3reLucXu4twpmdkOTFTxT1kf0zXgQ6M/OGIxAlWsfaeHS3jbNtVhJYIs2OSxRDJIjD8L6XmV@nongnu.org
+X-Gm-Message-State: AOJu0Yygc47d1fNOHpE7cln4WW+TEQKyMqANS2dn8bY2Mm1MbsPZEFtT
+ OD02ZWlv+3YXLbn6KpAO10CL6bQ+BK62cpEiq9U5KUY4kUlDS2og8C9Tgu9cMoZcOlqsN8cSTrk
+ 2E/U=
+X-Gm-Gg: ASbGncsbvNHpvDqi1IrPafz7Sla8cMfqmLQRAVwyQ1tM6gbvoweOsszCTOLR5m6FFUj
+ KeMn6oPuOaCDWEiQVZzR6pzX7jQGlYYxp+dpqvVee6mE4J3zLI838nta0ivfvgFoXpLqUOsC478
+ DQFwVUabTOsNuLxBLkMYMhD95KYkw3L8dQ3vUtTLIaKen2SvMeGn5u1Dq0QefbqypuzWcBalRD3
+ clmVcNZUR9kIM0nZ2MA5O4GYQoue9A68dNSjsKwJlOygOtkFFCP2HINAec+4gsgq0nhEq5OYmDw
+ NAY5PZ6Q1M8/km/1GDoSVGqP9ZmmUGA8nLFc+Q==
+X-Google-Smtp-Source: AGHT+IF0GPfjd8bIW6bmq7/U5eWQ84xO0CCqrhisRqpAGZfZoGhRmXA0Y9vXYPpEbnCnKr3PbeWcNA==
+X-Received: by 2002:a05:600c:3b94:b0:434:9934:575 with SMTP id
+ 5b1f17b1804b1-438913e02f8mr127283675e9.16.1737350948485; 
+ Sun, 19 Jan 2025 21:29:08 -0800 (PST)
+Received: from [192.168.69.181] (88-187-86-199.subs.proxad.net.
+ [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-4389041fe29sm123825645e9.22.2025.01.19.21.29.06
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Sun, 19 Jan 2025 21:29:07 -0800 (PST)
+Message-ID: <0584eb66-ab11-40ab-bf97-64299eaab52d@linaro.org>
+Date: Mon, 20 Jan 2025 06:29:05 +0100
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=anisinha@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -50
-X-Spam_score: -5.1
-X-Spam_bar: -----
-X-Spam_report: (-5.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-2.996,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.024,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v3 2/4] qtest/libqos/pci: Enforce balanced iomap/unmap
+To: Nicholas Piggin <npiggin@gmail.com>, Fabiano Rosas <farosas@suse.de>
+Cc: John Snow <jsnow@redhat.com>, Laurent Vivier <lvivier@redhat.com>,
+ Paolo Bonzini <pbonzini@redhat.com>, Akihiko Odaki
+ <akihiko.odaki@daynix.com>, "Michael S . Tsirkin" <mst@redhat.com>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>, qemu-block@nongnu.org,
+ qemu-devel@nongnu.org
+References: <20250117172244.406206-1-npiggin@gmail.com>
+ <20250117172244.406206-3-npiggin@gmail.com>
+Content-Language: en-US
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <20250117172244.406206-3-npiggin@gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::330;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x330.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -113,105 +106,104 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-fw-cfg file directory iteration code can be used by other functions that may
-want to implement fw-cfg file operations. Refactor it into a smaller helper
-so that it can be reused.
+Hi Nick,
 
-No functional change.
+Only nitpicking comments...
 
-Signed-off-by: Ani Sinha <anisinha@redhat.com>
-Reviewed-by:  Fabiano Rosas <farosas@suse.de>
----
- tests/qtest/libqos/fw_cfg.c | 63 +++++++++++++++++++++++--------------
- 1 file changed, 40 insertions(+), 23 deletions(-)
+On 17/1/25 18:22, Nicholas Piggin wrote:
+> Add assertions to ensure a BAR is not mapped twice, and only
+> previously mapped BARs are unmapped. This can help catch some
+> bugs.
+> 
+> Reviewed-by: Fabiano Rosas <farosas@suse.de>
+> Signed-off-by: Nicholas Piggin <npiggin@gmail.com>
+> ---
+>   tests/qtest/libqos/ahci.h       |  1 +
+>   tests/qtest/libqos/pci.h        |  2 ++
+>   tests/qtest/libqos/virtio-pci.h |  1 +
+>   tests/qtest/ahci-test.c         |  2 ++
+>   tests/qtest/libqos/ahci.c       |  6 ++++++
+>   tests/qtest/libqos/pci.c        | 32 +++++++++++++++++++++++++++++++-
+>   tests/qtest/libqos/virtio-pci.c |  6 +++++-
+>   7 files changed, 48 insertions(+), 2 deletions(-)
 
-diff --git a/tests/qtest/libqos/fw_cfg.c b/tests/qtest/libqos/fw_cfg.c
-index 89f053ccac..22435873d9 100644
---- a/tests/qtest/libqos/fw_cfg.c
-+++ b/tests/qtest/libqos/fw_cfg.c
-@@ -60,6 +60,37 @@ static void mm_fw_cfg_select(QFWCFG *fw_cfg, uint16_t key)
-     qtest_writew(fw_cfg->qts, fw_cfg->base, key);
- }
- 
-+static bool find_pdir_entry(QFWCFG *fw_cfg, const char *filename,
-+                            uint16_t *sel, uint32_t *size)
-+{
-+    g_autofree unsigned char *filesbuf = NULL;
-+    uint32_t count;
-+    size_t dsize;
-+    FWCfgFile *pdir_entry;
-+    uint32_t i;
-+    bool found = false;
-+
-+    *size = 0;
-+    *sel = 0;
-+
-+    qfw_cfg_get(fw_cfg, FW_CFG_FILE_DIR, &count, sizeof(count));
-+    count = be32_to_cpu(count);
-+    dsize = sizeof(uint32_t) + count * sizeof(struct fw_cfg_file);
-+    filesbuf = g_malloc(dsize);
-+    qfw_cfg_get(fw_cfg, FW_CFG_FILE_DIR, filesbuf, dsize);
-+    pdir_entry = (FWCfgFile *)(filesbuf + sizeof(uint32_t));
-+    for (i = 0; i < count; ++i, ++pdir_entry) {
-+        if (!strcmp(pdir_entry->name, filename)) {
-+            *size = be32_to_cpu(pdir_entry->size);
-+            *sel = be16_to_cpu(pdir_entry->select);
-+            found = true;
-+            break;
-+        }
-+    }
-+
-+    return found;
-+}
-+
- /*
-  * The caller need check the return value. When the return value is
-  * nonzero, it means that some bytes have been transferred.
-@@ -73,34 +104,20 @@ static void mm_fw_cfg_select(QFWCFG *fw_cfg, uint16_t key)
-  * populated, it has received only a starting slice of the fw_cfg file.
-  */
- size_t qfw_cfg_get_file(QFWCFG *fw_cfg, const char *filename,
--                      void *data, size_t buflen)
-+                        void *data, size_t buflen)
- {
--    uint32_t count;
--    uint32_t i;
--    unsigned char *filesbuf = NULL;
--    size_t dsize;
--    FWCfgFile *pdir_entry;
-     size_t filesize = 0;
-+    uint32_t len;
-+    uint16_t sel;
- 
--    qfw_cfg_get(fw_cfg, FW_CFG_FILE_DIR, &count, sizeof(count));
--    count = be32_to_cpu(count);
--    dsize = sizeof(uint32_t) + count * sizeof(struct fw_cfg_file);
--    filesbuf = g_malloc(dsize);
--    qfw_cfg_get(fw_cfg, FW_CFG_FILE_DIR, filesbuf, dsize);
--    pdir_entry = (FWCfgFile *)(filesbuf + sizeof(uint32_t));
--    for (i = 0; i < count; ++i, ++pdir_entry) {
--        if (!strcmp(pdir_entry->name, filename)) {
--            uint32_t len = be32_to_cpu(pdir_entry->size);
--            uint16_t sel = be16_to_cpu(pdir_entry->select);
--            filesize = len;
--            if (len > buflen) {
--                len = buflen;
--            }
--            qfw_cfg_get(fw_cfg, sel, data, len);
--            break;
-+    if (find_pdir_entry(fw_cfg, filename, &sel, &len)) {
-+        filesize = len;
-+        if (len > buflen) {
-+            len = buflen;
-         }
-+        qfw_cfg_get(fw_cfg, sel, data, len);
-     }
--    g_free(filesbuf);
-+
-     return filesize;
- }
- 
--- 
-2.45.2
+Maybe put the AHCI fix in a preliminary patch?
 
+> diff --git a/tests/qtest/libqos/pci.h b/tests/qtest/libqos/pci.h
+> index 83896145235..9dc82ea723a 100644
+> --- a/tests/qtest/libqos/pci.h
+> +++ b/tests/qtest/libqos/pci.h
+
+Consider using a definition rather than a magic value:
+
+   #define PCI_BAR_COUNT 6
+
+> @@ -65,6 +65,8 @@ struct QPCIDevice
+>   {
+>       QPCIBus *bus;
+>       int devfn;
+> +    bool bars_mapped[6];
+> +    QPCIBar bars[6];
+
+
+> diff --git a/tests/qtest/libqos/pci.c b/tests/qtest/libqos/pci.c
+> index a59197b9922..05089a5f24f 100644
+> --- a/tests/qtest/libqos/pci.c
+> +++ b/tests/qtest/libqos/pci.c
+> @@ -93,12 +93,17 @@ QPCIDevice *qpci_device_find(QPCIBus *bus, int devfn)
+>   void qpci_device_init(QPCIDevice *dev, QPCIBus *bus, QPCIAddress *addr)
+>   {
+>       uint16_t vendor_id, device_id;
+> +    int i;
+>   
+>       qpci_device_set(dev, bus, addr->devfn);
+>       vendor_id = qpci_config_readw(dev, PCI_VENDOR_ID);
+>       device_id = qpci_config_readw(dev, PCI_DEVICE_ID);
+>       g_assert(!addr->vendor_id || vendor_id == addr->vendor_id);
+>       g_assert(!addr->device_id || device_id == addr->device_id);
+> +
+> +    for (i = 0; i < 6; i++) {
+> +        g_assert(!dev->bars_mapped[i]);
+> +    }
+>   }
+
+
+> @@ -572,12 +579,35 @@ QPCIBar qpci_iomap(QPCIDevice *dev, int barno, uint64_t *sizeptr)
+>       }
+>   
+>       bar.addr = loc;
+> +
+> +    dev->bars_mapped[barno] = true;
+> +    dev->bars[barno] = bar;
+> +
+>       return bar;
+>   }
+>   
+>   void qpci_iounmap(QPCIDevice *dev, QPCIBar bar)
+>   {
+> -    /* FIXME */
+> +    static const int bar_reg_map[] = {
+> +        PCI_BASE_ADDRESS_0, PCI_BASE_ADDRESS_1, PCI_BASE_ADDRESS_2,
+> +        PCI_BASE_ADDRESS_3, PCI_BASE_ADDRESS_4, PCI_BASE_ADDRESS_5,
+> +    };
+> +    int bar_reg;
+> +    int i;
+> +
+> +    for (i = 0; i < 6; i++) {
+> +        if (!dev->bars_mapped[i]) {
+> +            continue;
+> +        }
+> +        if (dev->bars[i].addr == bar.addr) {
+> +            dev->bars_mapped[i] = false;
+> +            bar_reg = bar_reg_map[i];
+> +            qpci_config_writel(dev, bar_reg, 0xFFFFFFFF);
+> +            /* FIXME: the address space is leaked */
+> +            return;
+> +        }
+> +    }
+> +    g_assert_not_reached();
+>   }
+Regards,
+
+Phil.
 
