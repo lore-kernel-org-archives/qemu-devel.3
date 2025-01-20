@@ -4,106 +4,90 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E2935C02181
-	for <qemu-devel@archiver.kernel.org>; Mon, 20 Jan 2025 17:22:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DE6ABC02181
+	for <qemu-devel@archiver.kernel.org>; Mon, 20 Jan 2025 17:29:25 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tZvTB-0006zP-4K; Mon, 20 Jan 2025 12:21:49 -0500
+	id 1tZvZW-00086S-Ck; Mon, 20 Jan 2025 12:28:22 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1tZvT9-0006zE-5f
- for qemu-devel@nongnu.org; Mon, 20 Jan 2025 12:21:47 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1tZvT7-0005eS-I5
- for qemu-devel@nongnu.org; Mon, 20 Jan 2025 12:21:46 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1737393704;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=mL5KsaA+J8HX4kylTc2rxPJqKAL2zEPRr2dApSOjV78=;
- b=h/36/RceN6+DKT1oBwIuYG34vLzXv4T8zuVBkR3Ea6Qo3p6Y5ZMUyJjbHGgifztBnRy8Q8
- API8DBVNoth6JVU3ETwfppX2zEPRvd/wJ5BB4s2cT3yhR6IaBsu/SHZahgLvHrI/Bs4vHJ
- pGVCaJcxYKqSKM8Zor2g/RayxqTtqFo=
-Received: from mail-qk1-f199.google.com (mail-qk1-f199.google.com
- [209.85.222.199]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-694-pgib3oZiMRGfALO17gD8KA-1; Mon, 20 Jan 2025 12:21:42 -0500
-X-MC-Unique: pgib3oZiMRGfALO17gD8KA-1
-X-Mimecast-MFC-AGG-ID: pgib3oZiMRGfALO17gD8KA
-Received: by mail-qk1-f199.google.com with SMTP id
- af79cd13be357-7b6eabd51cfso763774985a.0
- for <qemu-devel@nongnu.org>; Mon, 20 Jan 2025 09:21:42 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1tZvZU-000861-1J
+ for qemu-devel@nongnu.org; Mon, 20 Jan 2025 12:28:20 -0500
+Received: from mail-pj1-x102e.google.com ([2607:f8b0:4864:20::102e])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1tZvZS-0006gx-Fx
+ for qemu-devel@nongnu.org; Mon, 20 Jan 2025 12:28:19 -0500
+Received: by mail-pj1-x102e.google.com with SMTP id
+ 98e67ed59e1d1-2f44353649aso6265877a91.0
+ for <qemu-devel@nongnu.org>; Mon, 20 Jan 2025 09:28:17 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1737394097; x=1737998897; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=ydPdjLQH7he4EwRUO275VGHvblf5LC8rIkqVSx80WxY=;
+ b=cruQwXocmQAr8s7wUgOkBnITHSAhlsyRVM1TbHoZ8ShxsJ+HE5NlP7AryhSdxM8ne7
+ lyRIruFjmMcEcVggJb6Zf7zklDZEabAobRGS5cyZZL9D23nsHHIrk/aI1s2Y5PG2GdOp
+ 4oPke2mNwZTFyezJPT9zOR09plBzB5zIIu8C3wbD8A/NJLQOX7oeWBAtjp4CSwOaJYgU
+ /FrOyiksGICSClNoxAZ5An0PzBEMpsy/4rtIeWvK8DFg/mixXILIG1E7zW7PnTP599S9
+ wn9BFbocE6nUpQ4Xc5FLXd7qAyzBWlCUm3uaY2imJXF8jA4W4NUd6XUqMDPaGDYZub3y
+ NRsw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1737393702; x=1737998502;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=mL5KsaA+J8HX4kylTc2rxPJqKAL2zEPRr2dApSOjV78=;
- b=C5Nlem6JtHytJ+E7SAT6+qSZzSWdG4/TglItNCTzug0K7GZfRGN04g139zyOPXZZzX
- tXElnyFuw//Y7+vR39Bijq/XGPu8wpKiNypJBv/11qQ64HnKDX94Eh6GcoYI9lvEzSiX
- tJt5Imb9qID2AO+h/5kLlhYbpqgtoSgaWbGgOi4fXNpxgzoswvWcSbIEW/2a4QLPYGCL
- Ri/xZZc1LH24dJof/BgUHUkjBNmjcOzCIyd+RxvjJ2YlboLGIfk2HvqW6Eh8ZdL8vQPe
- VMfJ3WLttDqK7KZwxFOZNvC0THmymR+EZJIPnAeoX2PgdeHr2mBnQpKjUZyRmQDBQHES
- SHGA==
+ d=1e100.net; s=20230601; t=1737394097; x=1737998897;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=ydPdjLQH7he4EwRUO275VGHvblf5LC8rIkqVSx80WxY=;
+ b=OPbVZEwV8QyzwLAWIlbYIsLbaTyzdM1No1KFQN/iE/zwnYMUEvUO7SQYhLbcPry2Vm
+ 38PjwydJHldRyp8JE5eor/q0ILcoDUzb1dJmb2hOqslrVux4B7gpPtQ2Ue6zx5vxvAiM
+ JnDhDQU50cX14mtwr2rUhcbyPa7hp/oJqK2iTZMfP4xS6y3nmcn/r36Ttp4NGBvAIbI7
+ qbPT4Bsaa6n0MzyLrRWcsP57dGaUTGShpmb69k8L9NKQ9s/9y1+q15a7TppZOnzROozr
+ HjxU8SBKO4WUiJHmJfXDcJajfMhFok1JBNoCfdF9y28PEbCP8AlxpYNk17Jxs1MZB4Us
+ v31g==
 X-Forwarded-Encrypted: i=1;
- AJvYcCWGNfoblNugFco2jHnwuSg99AU3AnfHXZplRVqTl5c9U84o6r9qEJI4j5vStkboiFzi9m4FqoCFGY0C@nongnu.org
-X-Gm-Message-State: AOJu0YyS/paXABJF1xMeIn6Ahlg6iZXaGBsPV+NksGymG+R27hhzVELd
- bj7zSUQls/4Xm/pdRPl0dtIVpCGzbNjl1bTKWp3xpip9OE+GfNatKa5hWgGNa9+VQdjvZODab3K
- DW/HGwfe4TSmcUQj5hnFhiMx+jiNIHq1inxf2nV18vHZ/6fJxn1BR
-X-Gm-Gg: ASbGncswazYiOduVoBfjFDGzytE1Ekl+5pyiqTPOcTinZ8xuPla40j7XnLpcS2Ys/1r
- adPVjcbTTTrDGNvGUOyywYQlzNmlfZEWy7WGgeL1B8C5/tsCr80nQJLUi9dev7BVl+I2zcVkuSR
- izSd1x2ew/T3tLE0NKBhPWRDChCDewn+UeUQ+DyOZX/AyqHFIBSRvq7QPt7sff/oKsYkF/H62e/
- ZFG7HqixeQzrimafNBJ30n6d9YrqL54J2LcEPRhfO4Ee5PWY3CrdKmpwZAviBRI5RBrkg5Vnm8A
- Bt/DIvaMX3MOgszBy7qFk5Pi2L/XrNU=
-X-Received: by 2002:a05:620a:2985:b0:7b6:dc1f:b98c with SMTP id
- af79cd13be357-7be63287f05mr2040737285a.52.1737393702399; 
- Mon, 20 Jan 2025 09:21:42 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IEFNnJpd2iFAed03FBPaakMpDwUqsmMGvP5/UDmNrC09ir6dHFykZn418+CNUIU7gSz32XVIQ==
-X-Received: by 2002:a05:620a:2985:b0:7b6:dc1f:b98c with SMTP id
- af79cd13be357-7be63287f05mr2040735185a.52.1737393702117; 
- Mon, 20 Jan 2025 09:21:42 -0800 (PST)
-Received: from x1n (pool-99-254-114-190.cpe.net.cable.rogers.com.
- [99.254.114.190]) by smtp.gmail.com with ESMTPSA id
- af79cd13be357-7be61486925sm462496585a.54.2025.01.20.09.21.40
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 20 Jan 2025 09:21:41 -0800 (PST)
-Date: Mon, 20 Jan 2025 12:21:38 -0500
-From: Peter Xu <peterx@redhat.com>
-To: David Hildenbrand <david@redhat.com>
-Cc: Alexey Kardashevskiy <aik@amd.com>, Chenyi Qiang <chenyi.qiang@intel.com>,
- Paolo Bonzini <pbonzini@redhat.com>,
- Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Michael Roth <michael.roth@amd.com>, qemu-devel@nongnu.org,
- kvm@vger.kernel.org, Williams Dan J <dan.j.williams@intel.com>,
- Peng Chao P <chao.p.peng@intel.com>, Gao Chao <chao.gao@intel.com>,
- Xu Yilun <yilun.xu@intel.com>
-Subject: Re: [PATCH 2/7] guest_memfd: Introduce an object to manage the
- guest-memfd with RamDiscardManager
-Message-ID: <Z46GIsAcXJTPQ8yN@x1n>
-References: <20241213070852.106092-1-chenyi.qiang@intel.com>
- <20241213070852.106092-3-chenyi.qiang@intel.com>
- <d0b30448-5061-4e35-97ba-2d360d77f150@amd.com>
- <80ac1338-a116-48f5-9874-72d42b5b65b4@intel.com>
- <9dfde186-e3af-40e3-b79f-ad4c71a4b911@redhat.com>
- <c1723a70-68d8-4211-85f1-d4538ef2d7f7@amd.com>
- <f3aaffe7-7045-4288-8675-349115a867ce@redhat.com>
+ AJvYcCUwlA917W33sVBSOiAP3qyM2uy62ObMniV53kh16INDgDjMzAxoJeh4w12v3JsW8k+RtN3gu5C1XTKP@nongnu.org
+X-Gm-Message-State: AOJu0YwQG1j/OqE12fG5fmIOtxhJGPrGjDYlnz9PUSXaO+zLO2TxACGj
+ dh6eeQAuQvd3ib9izoVw/TRX7W4Qr3z6ru2LTo+6+Qlxy3T1nc710C0NChigEL8=
+X-Gm-Gg: ASbGncu5Tc4HExp44vZkSg0aMtXZ0vfmvCyHGGpmzH2/uqRmTyGvr9ric1XxObE8ueZ
+ +k6iU6h+q7M3wmpR6IKq9IxWSQOqzkl9K8TQ4TmSZ9nAobs/gWuW6To0wfkoEVy/e6L/QTAMGSK
+ q6tv/l759WQ5a6H0eoIqsisAF5kCcJK0c7URR1qaqKzRtFlwgIFThfTfVp/m0v9j8pSi0iH+6WY
+ 6rYiOcis6os0dtqWQjIQ0SU4tTSkeVlnmwNWvTt2lsNEbH0FLtMCzx9PdZTtc0JIGboZ+fNaIHL
+ DV+RDxgF6reOFCJuoWw8QGA4n+uTOFAIWVC+
+X-Google-Smtp-Source: AGHT+IGqDPxVxtFkcus3he0fd0zKYmKcaiyn03xGIGf5HcRZH0CdFvd8hQVNLWRV4rWUyQc3VXL3Aw==
+X-Received: by 2002:a05:6a00:179b:b0:729:a31:892d with SMTP id
+ d2e1a72fcca58-72daf94f5bdmr23977318b3a.8.1737394096843; 
+ Mon, 20 Jan 2025 09:28:16 -0800 (PST)
+Received: from [192.168.0.4] (174-21-71-127.tukw.qwest.net. [174.21.71.127])
+ by smtp.gmail.com with ESMTPSA id
+ d2e1a72fcca58-72dab7f07e9sm7339325b3a.1.2025.01.20.09.28.16
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Mon, 20 Jan 2025 09:28:16 -0800 (PST)
+Message-ID: <37ea5a30-8d23-497c-819a-281e0e856eca@linaro.org>
+Date: Mon, 20 Jan 2025 09:28:14 -0800
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <f3aaffe7-7045-4288-8675-349115a867ce@redhat.com>
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=peterx@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -50
-X-Spam_score: -5.1
-X-Spam_bar: -----
-X-Spam_report: (-5.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-3,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.036,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] target/riscv: throw debug exception before page fault
+To: Daniel Henrique Barboza <dbarboza@ventanamicro.com>, qemu-devel@nongnu.org
+Cc: qemu-riscv@nongnu.org, alistair.francis@wdc.com, bmeng@tinylab.org,
+ liwei1518@gmail.com, zhiwei_liu@linux.alibaba.com, palmer@rivosinc.com
+References: <20250120133949.1019000-1-dbarboza@ventanamicro.com>
+Content-Language: en-US
+From: Richard Henderson <richard.henderson@linaro.org>
+In-Reply-To: <20250120133949.1019000-1-dbarboza@ventanamicro.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::102e;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pj1-x102e.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -119,57 +103,45 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, Jan 20, 2025 at 11:48:39AM +0100, David Hildenbrand wrote:
-> Sorry, I was traveling end of last week. I wrote a mail on the train and
-> apparently it was swallowed somehow ...
-> 
-> > > Not sure that's the right place. Isn't it the (cc) machine that controls
-> > > the state?
-> > 
-> > KVM does, via MemoryRegion->RAMBlock->guest_memfd.
-> 
-> Right; I consider KVM part of the machine.
-> 
-> 
-> > 
-> > > It's not really the memory backend, that's just the memory provider.
-> > 
-> > Sorry but is not "providing memory" the purpose of "memory backend"? :)
-> 
-> Hehe, what I wanted to say is that a memory backend is just something to
-> create a RAMBlock. There are different ways to create a RAMBlock, even
-> guest_memfd ones.
-> 
-> guest_memfd is stored per RAMBlock. I assume the state should be stored per
-> RAMBlock as well, maybe as part of a "guest_memfd state" thing.
-> 
-> Now, the question is, who is the manager?
-> 
-> 1) The machine. KVM requests the machine to perform the transition, and the
-> machine takes care of updating the guest_memfd state and notifying any
-> listeners.
-> 
-> 2) The RAMBlock. Then we need some other Object to trigger that. Maybe
-> RAMBlock would have to become an object, or we allocate separate objects.
-> 
-> I'm leaning towards 1), but I might be missing something.
+On 1/20/25 05:39, Daniel Henrique Barboza wrote:
+> @@ -1708,10 +1709,25 @@ bool riscv_cpu_tlb_fill(CPUState *cs, vaddr address, int size,
+>       } else if (probe) {
+>           return false;
+>       } else {
+> -        raise_mmu_exception(env, address, access_type, pmp_violation,
+> -                            first_stage_error, two_stage_lookup,
+> -                            two_stage_indirect_error);
+> -        cpu_loop_exit_restore(cs, retaddr);
+> +        CPUWatchpoint *wp = riscv_cpu_addr_has_watchpoint(env, address);
+> +        int wp_access = 0;
+> +
+> +        if (wp) {
+> +            if (access_type == MMU_DATA_LOAD) {
+> +                wp_access |= BP_MEM_READ;
+> +            } else if (access_type == MMU_DATA_STORE) {
+> +                wp_access |= BP_MEM_WRITE;
+> +            }
+> +
+> +            cpu_check_watchpoint(cs, address, wp->len,
+> +                                 MEMTXATTRS_UNSPECIFIED,
+> +                                 wp_access, retaddr);
+> +        } else {
 
-A pure question: how do we process the bios gmemfds?  I assume they're
-shared when VM starts if QEMU needs to load the bios into it, but are they
-always shared, or can they be converted to private later?
+No point in walking the watchpoint list twice:
 
-I wonder if it's possible (now, or in the future so it can be >2 fds) that
-a VM can contain multiple guest_memfds, meanwhile they request different
-security levels. Then it could be more future proof that such idea be
-managed per-fd / per-ramblock / .. rather than per-VM. For example, always
-shared gmemfds can avoid the manager but be treated like normal memories,
-while some gmemfds can still be confidential to install the manager.
+     cpu_check_watchpoint(cs, address, size, MEMTXATTRS_UNSPECIFIED,
+                          wp_access, retaddr);
 
-But I'd confess this is pretty much whild guesses as of now.
+will return if and only if there is no wp match.
+Then just fall through to ...
 
-Thanks,
+> +            raise_mmu_exception(env, address, access_type, pmp_violation,
+> +                                first_stage_error, two_stage_lookup,
+> +                                two_stage_indirect_error);
+> +            cpu_loop_exit_restore(cs, retaddr);
 
--- 
-Peter Xu
+... this.
 
+
+r~
 
