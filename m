@@ -4,84 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4FE6AC02182
-	for <qemu-devel@archiver.kernel.org>; Mon, 20 Jan 2025 22:30:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 34D61C02181
+	for <qemu-devel@archiver.kernel.org>; Mon, 20 Jan 2025 23:53:30 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ta0H0-0006GL-9f; Mon, 20 Jan 2025 17:29:34 -0500
+	id 1ta1ZS-0005Xn-6s; Mon, 20 Jan 2025 18:52:42 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <dominik.b.czarnota@gmail.com>)
- id 1ta0Gx-0006G0-FD; Mon, 20 Jan 2025 17:29:32 -0500
-Received: from mail-ej1-x633.google.com ([2a00:1450:4864:20::633])
+ (Exim 4.90_1) (envelope-from <wuhaotsh@google.com>)
+ id 1ta1ZP-0005XO-Mm
+ for qemu-devel@nongnu.org; Mon, 20 Jan 2025 18:52:40 -0500
+Received: from mail-lf1-x130.google.com ([2a00:1450:4864:20::130])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <dominik.b.czarnota@gmail.com>)
- id 1ta0Gv-0002d0-HY; Mon, 20 Jan 2025 17:29:31 -0500
-Received: by mail-ej1-x633.google.com with SMTP id
- a640c23a62f3a-aa689a37dd4so939631866b.3; 
- Mon, 20 Jan 2025 14:29:26 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <wuhaotsh@google.com>)
+ id 1ta1ZN-0003rE-VS
+ for qemu-devel@nongnu.org; Mon, 20 Jan 2025 18:52:39 -0500
+Received: by mail-lf1-x130.google.com with SMTP id
+ 2adb3069b0e04-5401af8544bso9163e87.1
+ for <qemu-devel@nongnu.org>; Mon, 20 Jan 2025 15:52:36 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1737412164; x=1738016964; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=JNuI6F34CaAr2EXYPzwQhJW//zyLJWT68fhJ/Taz9IM=;
- b=MKDTx6/WjpJ9VsaYMzzIY4Kb4GTq6dQSXCoksmAJkMoKuS27ARLqQpAQPvv/tgXyLU
- tvsZLULmlwRq0HF3sF0DE9TeoWBe8dEWyNfBQqxC1aFaZ70qVwQ34+QPdeTwZecV/LLp
- JEGkfscMFJWVjLiPfXXqoa0T6yRP8Mc6vGHy8WhUCPuqm9xY/bbq/yPiE+XLT7XQGS6E
- 2POyvakdE3N3eLWgFRxFmBqgjSCvu1F6OG4Nuj/HQ3uI0ZevWK3ILfJmRvnSkv9xqQkw
- RcQ0m8l0CnlyD9RTrIsGHL5CR4GngcEFoIhjVr+qF5uid2ZRt8PxDltIeU5d4DO89vE0
- D2+g==
+ d=google.com; s=20230601; t=1737417154; x=1738021954; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=ISEyHJOQ5WFrqtdgAxL81FLvJauks5nM3LBV0hOWqoI=;
+ b=g7A2NuZxEqiHSXOKCuPUvSEfq+DwiulgZEY3KwwkBAZ/RlqejZPY7NDdQ1CioQqws5
+ 65QEowj0Dj3DdlHMEdqIdSGMlwy0Pnm7KGvnVLUPUgKZ8URWayyaXbLouHEsIrG2rHPN
+ SSa+mSVMWZzu0t1TfCMkuBL9LE4lTGkcZoZstLes8O2b0e/UBUbut8bEWrZUMzga5ZmE
+ uG/Lf3UIihJ83/TVkYCNWrSJqkRmzY+ffb6/c+MfvWiNfAI+oNeWO2PC2hM5jdm1CyZt
+ +3l/aU8q3Cu4n1pJPhUtt0pGzyWgeOZDTPTis/aggCH5UtZLPnbNMat25ZUOj/gKP3Sl
+ LgdQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1737412164; x=1738016964;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+ d=1e100.net; s=20230601; t=1737417154; x=1738021954;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=JNuI6F34CaAr2EXYPzwQhJW//zyLJWT68fhJ/Taz9IM=;
- b=Gl1VOTVOzuljwZmzBEhp3QptHLTVGO+Utioii+KPtsK9CLZ26dRFuXk2aFV4nv01P2
- +R4t2ZOl0MrPnrCSMIj6TxgUWOTT3zKJYfg8GmCJxrEKB5LSNBMda88SaNXZKfjKS1mM
- boBYKDumAR8v6zb0EDAcRFKEj3wCQchfoHy2tShSZ9MxxugBQAz91yxdTMlBw0Ay5/MF
- 4+Q5w7f7TNcWDSyH5LQyfu5xCGhE2PUF6oPpzPdmtxCSLUqMRPfTrnK88h6htgxkVbH6
- MBen4XSWxy+jqnFFOUQs7f2t0lOa6XpwxwfS5c3oAphCi0C36uxERC6WY4G5L5MPPXNn
- 40IA==
-X-Forwarded-Encrypted: i=1;
- AJvYcCWC4dD1MMRHcld6qaFYKSVfRVr9Ggbes5e4UPQq6HtcpyCnmELWz2x9oBvt66xQWxqY/xWW+yHomEzledo=@nongnu.org
-X-Gm-Message-State: AOJu0Yz3r69ZEOkg+Drw7BAmIWl113q/o8V/vRooaSmHRysPvDCG5rCl
- OdjVgMxTsx98UA8ePYKTJ0r5SWa9uuwSbkdYgg4Q0rjySa01+hHCu7w7Gb848AE=
-X-Gm-Gg: ASbGncvFBxGyywp8c84ESDPJhdoDsQm2cjT6A/NkvIq5Lpe6I6CETJer63TbSfo7EBt
- 40YsA9Jg4hwD18Qf0VH/2IC3fsmHa9w+jydtjn63Uhax/aIcd9nmqyEO4XFeckNkg+OD2X1JPv5
- CFdESsb9czVwJmS/0Oedj7eilO4LbNp3VskGn2uC8bRuXTJTmVe2umBLA8ckO6T/XOyxJnqNZe4
- DOswedQDx1BDtpGPJ/Up4ANuPN0+25L7rq5E2u8wK5uMmFIaV2lVzVmG9OzkOUAY8tFdo2r9FI1
- ZrCqxNOe2zK+kEPAh6HiuVMLdvkbx+MKLsMRloi2kT4k/E8ZALH76IBB8wpB9A==
-X-Google-Smtp-Source: AGHT+IHxbu9QV4aDQTFRArTihgj854Qug58xAo6INuqie8Bj6RquCPYC2mPQ8xPamcrRp5yb/udXYA==
-X-Received: by 2002:a17:907:7faa:b0:a9e:b150:a99d with SMTP id
- a640c23a62f3a-ab38b1b45aamr1454180466b.5.1737412163852; 
- Mon, 20 Jan 2025 14:29:23 -0800 (PST)
-Received: from localhost.localdomain (77-255-209-16.dynamic.inetia.pl.
- [77.255.209.16]) by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-ab384f86fe9sm672380266b.135.2025.01.20.14.29.23
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 20 Jan 2025 14:29:23 -0800 (PST)
-From: Dominik 'Disconnect3d' Czarnota <dominik.b.czarnota@gmail.com>
-To: qemu-devel@nongnu.org
-Cc: alex.bennee@linaro.org, philmd@linaro.org, qemu-trivial@nongnu.org,
- mjt@tls.msk.ru,
- Dominik 'Disconnect3d' Czarnota <dominik.b.czarnota@gmail.com>
-Subject: [PATCH v2] gdbstub/user-target: fix gdbserver int format (%d -> %x)
-Date: Mon, 20 Jan 2025 23:28:58 +0100
-Message-Id: <20250120222858.39547-1-dominik.b.czarnota@gmail.com>
-X-Mailer: git-send-email 2.30.2
+ bh=ISEyHJOQ5WFrqtdgAxL81FLvJauks5nM3LBV0hOWqoI=;
+ b=Q9VNNOEcRa+HlEP5mKVZGlaI6zy41tHo8D8NWI0HYZKFtUnC44VRPK5lRDcanpc+4+
+ GHw1TjMwlMf+cNqOFBrDCBiaqTq9YQB0ZTsorzhuvbBxfL4QVvryBcgUQMHJSlv/VmWC
+ w7yFbIjwoMQF9Lcitbyy0/eyhfGomzc4vn9XUuumHGjlJQg23JxHbH6cWQjuNiXhxt3S
+ pPRtXRRLpWnWymeRiGOJdfIFnwnxqMXIWA8jGWqqwsa2AEwkrNAK3Z8tEITcngYY5QAF
+ XF5tVBM8VYaVmfjZNOm7XoMtBcPBJbI4B8qNsCDMKnd3wSoQjXFzZAyQu8L8LsjEW6AB
+ L1vw==
+X-Gm-Message-State: AOJu0Yy8Y0Lpt803U6fEiEoCnki1RWy9tN9psKnJKh1s2vlMgmLl45ph
+ JIfna8NJoY/+FmZr4kCToAVFJfyB+P1c95vsqK999uFv9CIGae+n1O7bF5LANydlirIuSOE/JgM
+ sYFmyHGR9CogBFlRwNkfTl2ON5NvrygLL9+Xd
+X-Gm-Gg: ASbGncuSej/L73aH4hwPHBb5+urRHjX53KSRns9oSBSwmd/+5l5yvR9yr/mIVu36ugt
+ OhW8dWXC8StWXRQTnh3Ek8up4sVaQ5XM/D8K3mBZtKdVDAjwXKo3bmjtuS7qAI5rCoflU
+X-Google-Smtp-Source: AGHT+IG5y+K2o8vuXjA9PQTTTU2rUpXj6s9DcCjdz7SSqo3B4Vu+GoNK2JBaYoaQB+5jwtm00kjwYHC7UB+AHh+BKGM=
+X-Received: by 2002:ac2:4319:0:b0:542:9910:b298 with SMTP id
+ 2adb3069b0e04-543a4690357mr300953e87.7.1737417154335; Mon, 20 Jan 2025
+ 15:52:34 -0800 (PST)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::633;
- envelope-from=dominik.b.czarnota@gmail.com; helo=mail-ej1-x633.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+References: <20250120150049.3611864-1-alex.bennee@linaro.org>
+In-Reply-To: <20250120150049.3611864-1-alex.bennee@linaro.org>
+From: Hao Wu <wuhaotsh@google.com>
+Date: Tue, 21 Jan 2025 07:52:22 +0800
+X-Gm-Features: AbW1kvZ2xgysIX3NtM9L8XFfWJNWPOnMFDdwlR7-VuSg76CUGqfhYZMD-TjFHvA
+Message-ID: <CAGcCb10gHVZdN6CbUm02w7jTaUUoBH4-VTohmy+yiP1OLWFBxg@mail.gmail.com>
+Subject: Re: [RFC PATCH] tests/qtest: don't step clock at start of npcm7xx
+ periodic IRQ test
+To: =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>
+Cc: qemu-devel@nongnu.org, Tyrone Ting <kfting@nuvoton.com>, 
+ Fabiano Rosas <farosas@suse.de>, Laurent Vivier <lvivier@redhat.com>, 
+ Paolo Bonzini <pbonzini@redhat.com>,
+ "open list:Nuvoton NPCM7xx" <qemu-arm@nongnu.org>
+Content-Type: multipart/alternative; boundary="000000000000500298062c2bf4c5"
+Received-SPF: pass client-ip=2a00:1450:4864:20::130;
+ envelope-from=wuhaotsh@google.com; helo=mail-lf1-x130.google.com
+X-Spam_score_int: -175
+X-Spam_score: -17.6
+X-Spam_bar: -----------------
+X-Spam_report: (-17.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_MED=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ ENV_AND_HDR_SPF_MATCH=-0.5, HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001, USER_IN_DEF_DKIM_WL=-7.5,
+ USER_IN_DEF_SPF_WL=-7.5 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -97,63 +95,88 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This commit fixes an incorrect format string for formatting integers
-provided to GDB when debugging a target run in QEMU user mode.
+--000000000000500298062c2bf4c5
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-The correct format is hexadecimal for both success and errno values,
-some of which can be seen here [0].
+Have you tried that the test can pass with this? If I remember correctly,
+interrupt won't trigger properly if not advancing the timer
 
-[0] https://github.com/bminor/binutils-gdb/blob/e65a355022d0dc6b5707310876a72b5693ec0aa5/gdbserver/hostio.cc#L196-L213
+If the test passes it's probably fine to remove that.
 
-Signed-off-by: Dominik 'Disconnect3d' Czarnota <dominik.b.czarnota@gmail.com>
----
- gdbstub/user-target.c | 10 +++++-----
- 1 file changed, 5 insertions(+), 5 deletions(-)
+On Mon, Jan 20, 2025 at 11:00=E2=80=AFPM Alex Benn=C3=A9e <alex.bennee@lina=
+ro.org> wrote:
 
-diff --git a/gdbstub/user-target.c b/gdbstub/user-target.c
-index 22bf4008c0..4bfcf78aaa 100644
---- a/gdbstub/user-target.c
-+++ b/gdbstub/user-target.c
-@@ -317,9 +317,9 @@ void gdb_handle_v_file_open(GArray *params, void *user_ctx)
-     int fd = open(filename, flags, mode);
- #endif
-     if (fd < 0) {
--        g_string_printf(gdbserver_state.str_buf, "F-1,%d", errno);
-+        g_string_printf(gdbserver_state.str_buf, "F-1,%x", errno);
-     } else {
--        g_string_printf(gdbserver_state.str_buf, "F%d", fd);
-+        g_string_printf(gdbserver_state.str_buf, "F%x", fd);
-     }
-     gdb_put_strbuf();
- }
-@@ -329,7 +329,7 @@ void gdb_handle_v_file_close(GArray *params, void *user_ctx)
-     int fd = gdb_get_cmd_param(params, 0)->val_ul;
- 
-     if (close(fd) == -1) {
--        g_string_printf(gdbserver_state.str_buf, "F-1,%d", errno);
-+        g_string_printf(gdbserver_state.str_buf, "F-1,%x", errno);
-         gdb_put_strbuf();
-         return;
-     }
-@@ -352,7 +352,7 @@ void gdb_handle_v_file_pread(GArray *params, void *user_ctx)
- 
-     ssize_t n = pread(fd, buf, bufsiz, offset);
-     if (n < 0) {
--        g_string_printf(gdbserver_state.str_buf, "F-1,%d", errno);
-+        g_string_printf(gdbserver_state.str_buf, "F-1,%x", errno);
-         gdb_put_strbuf();
-         return;
-     }
-@@ -375,7 +375,7 @@ void gdb_handle_v_file_readlink(GArray *params, void *user_ctx)
-     ssize_t n = readlink(filename, buf, BUFSIZ);
- #endif
-     if (n < 0) {
--        g_string_printf(gdbserver_state.str_buf, "F-1,%d", errno);
-+        g_string_printf(gdbserver_state.str_buf, "F-1,%x", errno);
-         gdb_put_strbuf();
-         return;
-     }
--- 
-2.30.2
+> Until there are timers enabled the semantics of clock_step_next() will
+> fail. Since d524441a36 (system/qtest: properly feedback results of
+> clock_[step|set]) we will signal a FAIL if time doesn't advance.
+>
+> Signed-off-by: Alex Benn=C3=A9e <alex.bennee@linaro.org>
+> ---
+>  tests/qtest/npcm7xx_timer-test.c | 1 -
+>  1 file changed, 1 deletion(-)
+>
+> diff --git a/tests/qtest/npcm7xx_timer-test.c
+> b/tests/qtest/npcm7xx_timer-test.c
+> index 58f58c2f71..43711049ca 100644
+> --- a/tests/qtest/npcm7xx_timer-test.c
+> +++ b/tests/qtest/npcm7xx_timer-test.c
+> @@ -465,7 +465,6 @@ static void test_periodic_interrupt(gconstpointer
+> test_data)
+>      int i;
+>
+>      tim_reset(td);
+> -    clock_step_next();
+>
+>      tim_write_ticr(td, count);
+>      tim_write_tcsr(td, CEN | IE | MODE_PERIODIC | PRESCALE(ps));
+> --
+> 2.39.5
+>
+>
 
+--000000000000500298062c2bf4c5
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+
+<div dir=3D"ltr">Have you tried that the test can pass with this? If I reme=
+mber correctly, interrupt won&#39;t trigger properly if not advancing the t=
+imer<div><br></div><div>If the test passes it&#39;s probably fine to remove=
+ that.</div></div><br><div class=3D"gmail_quote gmail_quote_container"><div=
+ dir=3D"ltr" class=3D"gmail_attr">On Mon, Jan 20, 2025 at 11:00=E2=80=AFPM =
+Alex Benn=C3=A9e &lt;<a href=3D"mailto:alex.bennee@linaro.org">alex.bennee@=
+linaro.org</a>&gt; wrote:<br></div><blockquote class=3D"gmail_quote" style=
+=3D"margin:0px 0px 0px 0.8ex;border-left:1px solid rgb(204,204,204);padding=
+-left:1ex">Until there are timers enabled the semantics of clock_step_next(=
+) will<br>
+fail. Since d524441a36 (system/qtest: properly feedback results of<br>
+clock_[step|set]) we will signal a FAIL if time doesn&#39;t advance.<br>
+<br>
+Signed-off-by: Alex Benn=C3=A9e &lt;<a href=3D"mailto:alex.bennee@linaro.or=
+g" target=3D"_blank">alex.bennee@linaro.org</a>&gt;<br>
+---<br>
+=C2=A0tests/qtest/npcm7xx_timer-test.c | 1 -<br>
+=C2=A01 file changed, 1 deletion(-)<br>
+<br>
+diff --git a/tests/qtest/npcm7xx_timer-test.c b/tests/qtest/npcm7xx_timer-t=
+est.c<br>
+index 58f58c2f71..43711049ca 100644<br>
+--- a/tests/qtest/npcm7xx_timer-test.c<br>
++++ b/tests/qtest/npcm7xx_timer-test.c<br>
+@@ -465,7 +465,6 @@ static void test_periodic_interrupt(gconstpointer test_=
+data)<br>
+=C2=A0 =C2=A0 =C2=A0int i;<br>
+<br>
+=C2=A0 =C2=A0 =C2=A0tim_reset(td);<br>
+-=C2=A0 =C2=A0 clock_step_next();<br>
+<br>
+=C2=A0 =C2=A0 =C2=A0tim_write_ticr(td, count);<br>
+=C2=A0 =C2=A0 =C2=A0tim_write_tcsr(td, CEN | IE | MODE_PERIODIC | PRESCALE(=
+ps));<br>
+-- <br>
+2.39.5<br>
+<br>
+</blockquote></div>
+
+--000000000000500298062c2bf4c5--
 
