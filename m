@@ -4,93 +4,109 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E10A0C02181
-	for <qemu-devel@archiver.kernel.org>; Mon, 20 Jan 2025 20:43:25 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4CF30C02181
+	for <qemu-devel@archiver.kernel.org>; Mon, 20 Jan 2025 20:43:55 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tZyXR-000406-RU; Mon, 20 Jan 2025 15:38:25 -0500
+	id 1tZycQ-0002CO-Gl; Mon, 20 Jan 2025 15:43:34 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <shentey@gmail.com>)
- id 1tZyXL-0003wG-UM; Mon, 20 Jan 2025 15:38:22 -0500
-Received: from mail-ed1-x533.google.com ([2a00:1450:4864:20::533])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <shentey@gmail.com>)
- id 1tZyXJ-0002XS-Ul; Mon, 20 Jan 2025 15:38:19 -0500
-Received: by mail-ed1-x533.google.com with SMTP id
- 4fb4d7f45d1cf-5d3ecae02beso6857100a12.0; 
- Mon, 20 Jan 2025 12:38:16 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1737405495; x=1738010295; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=weJccw4T99I7vTGm3QItShv2l9pPh0ZQ8otXT2NBe34=;
- b=MOj0wOvY3Ow7oBaKp7QtyP/D1eyevEtO6MYJzv8i6+6LE5H5flO0avhqYNXyjnskBv
- Febsxa1z9Cae0T5nd66e122quqOqwb+B2zgulc14uFO8dlFBbsl3/t7UwqS6FLUf+Q00
- GInZQ/NfBHk9k0vbToKrB5LrdyCV12/FL5TcDhLTOkbI/kxnWUlkRcp0FMBzhA3IC0zv
- 7u7v6E6Rx6fzHIavrfpWAcoVAHzQLFNOr/EpzLwE0oxVvk9NYdnqt6VqAsJTA7y5e+6M
- /ZDBV+Y9bJkmLElOSvXaeOCwaTXHJWxErEKfwzR3ytba5YxqdO7JEk9p/j8GDnWDGeZ+
- EDpw==
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1tZycP-0002BJ-9m
+ for qemu-devel@nongnu.org; Mon, 20 Jan 2025 15:43:33 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1tZycN-0003sb-7z
+ for qemu-devel@nongnu.org; Mon, 20 Jan 2025 15:43:33 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1737405809;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=qEJylaPC9UjGUo5+ufQ7hbk2ePW92RAHA8rV0SRsPDk=;
+ b=a960CqV9fV7POgXpOFew1hvT4wJEmRQGMCEAGW5CWWW4WMPzsucCpVvud02Ai+fD6iWLy7
+ bBCFQtoMKPdBRAVlDt82ZmzbUnKyaOKjOwDZMD2oV981Pxj2J72fJt+LCG8h8nqYYrAF42
+ RFLoFUXKInB/BePzIgwhVINNP++CDvI=
+Received: from mail-qt1-f199.google.com (mail-qt1-f199.google.com
+ [209.85.160.199]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-277-maNhP4ZyN2K_LXhQ2puu3w-1; Mon, 20 Jan 2025 15:43:26 -0500
+X-MC-Unique: maNhP4ZyN2K_LXhQ2puu3w-1
+X-Mimecast-MFC-AGG-ID: maNhP4ZyN2K_LXhQ2puu3w
+Received: by mail-qt1-f199.google.com with SMTP id
+ d75a77b69052e-4679aeb21e6so84648001cf.0
+ for <qemu-devel@nongnu.org>; Mon, 20 Jan 2025 12:43:26 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1737405495; x=1738010295;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=weJccw4T99I7vTGm3QItShv2l9pPh0ZQ8otXT2NBe34=;
- b=tdTKo47IxTPXa9umASzKRGsQYVTlTbhRAXGHD/EFfmNBi1fNhpx43bO1ozyJIT4q82
- EPYsVkC9jRRKybqwkLhgEefy37c+bBfiemgoIcHSiXEpqBaEsyms4hLsmyz1je5J6Fxz
- 46GvbyTdPGK6VVcVeiVprMRRF+4PLh17E/OK5Ux+pzVggeVljvzPNy9k3uLF1koWMhqu
- 0ulUk06ZGSXSQDmNG2aB+Xr/xs9Xe/JYQx4pB/KmqjMIoLhzhbSqOu/0WE54ncX4Paky
- /l4/ivfNKkniTLLx8kXc7AQlSpD5mtwGOTopnMk9iRVsPFMi8kGz0EyfP1UTEQcZY162
- gdDg==
+ d=1e100.net; s=20230601; t=1737405806; x=1738010606;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=qEJylaPC9UjGUo5+ufQ7hbk2ePW92RAHA8rV0SRsPDk=;
+ b=ZoGpuoICgSFiXOkG34N0htebU5lVLXxQxGQQmsXq+z0qyzyx8l6cJZUPuUnVAieELq
+ rl2zvoDDL6djylNscqZd3/pyxt7rRevAFW+eJ0/4vnu792z14spxPEKmO0/U+axmUTls
+ bpTemFwg7Kobat7h5rGC6iSxvLaOX1MKtW3OLWlJHz4KMMzW6yRCIrV/3oiKVn1mIjRS
+ UkXHUgU+C1CdmE8MM87hWqS1rhQ9IyCO2obGu6LEIEeK9CSl5OzgjeraHFBon1+FSe8u
+ OiiKKjvONSMpYUFppRCPGGeDHfXs4l+Ur663ufXWVTBHET0DMU62khHzYaS3bvVniIeN
+ mFNQ==
 X-Forwarded-Encrypted: i=1;
- AJvYcCWhA4xOV6qRnYRCyMlL2wfh91PfT2W1mZteOo/sOiDOWaEcW3jRc5dPx2DRUWvlhoIMNYYSn8gQvg==@nongnu.org
-X-Gm-Message-State: AOJu0Yyom5557+F52uaUg/OgGs6+QDuzjkeBtal29m9fzLnpDC6NMH54
- L35MrMC8sHuOhRwDh7b46VeHoNelCuJqPIsbCpCh1hgU+gSxkcd325F0Sz+j
-X-Gm-Gg: ASbGncsYTrarJxkvgAv7MeiYdySoL3Um9h/+w8cUtHVEtXS+gxoazLXjCBCHCiAiL/b
- vi5fS9ePwFfMCIqHHvzYVB3+GVs5/z9gUmI9nnL7exaZaI6fuB8SzJrRXh1b5FLXETVj4bhotoV
- qdZNBSrXXbafjUwJGSEy3Bkm8rhugcaVmAZab4vDzGVHBJlmIHWz8N1wmyocURl7wBPu1cZ8nX2
- zhnVwTmCXJ+6WUn9N0vkbVUMlcDyJlUnyjhYv9l1Y+rsB+LKOC9VoFEF5mMaqYB2BcMWkvB1ig/
- HN2f5xjHjXleg082LPY7+NWe1E6iMo+ss/q53xKJMYUCwySptzkGmn/1chG+
-X-Google-Smtp-Source: AGHT+IF+kLgruZdfZICXTvGfks/QI0gXDEbBnkqmHkgXkXk7GC9kPOeOlNyOw9QkmtaMIIbcmQbf4A==
-X-Received: by 2002:a05:6402:2808:b0:5d3:bab1:513f with SMTP id
- 4fb4d7f45d1cf-5db7d3009b3mr15649921a12.18.1737405493615; 
- Mon, 20 Jan 2025 12:38:13 -0800 (PST)
-Received: from Provence.localdomain
- (dynamic-077-183-181-102.77.183.pool.telefonica.de. [77.183.181.102])
- by smtp.gmail.com with ESMTPSA id
- 4fb4d7f45d1cf-5db7364258csm6021077a12.1.2025.01.20.12.38.12
+ AJvYcCWy4Aud9Nh6LSxlx/86qgWKQiqKB3wsRmW/QpEtINzhRYlhEcbixJ+pd5hYgPA9+5RASwSWsKmDbn/z@nongnu.org
+X-Gm-Message-State: AOJu0Ywrp3g41g/u0QD75gJ8lRp7jyTAi6aB00Fqc8aPRuMBue92Tay6
+ ZeMrQsDVFjpRVzvlDJrXrCmQodSUS8SPWjDXFDEteU/i2XhUNQN976bP6nYRBEgwP3yZpczpqNu
+ C/YQ0w1lA4DDI7avp2pYtNXCOWpQTVmhz4RkAyaI2FQ14W+jEX4DJ
+X-Gm-Gg: ASbGncvYZ8wUzoBTE8/rvA7xgl9O6pf0ePj/pGuuNqD4Mtc8x+w6VG2GLvBMNBKsIoq
+ xChGJzj5OYBFt5olGrueKzD7kjfRGy9SW4sT8x/PPzz3S4lPakUYVIG/JRiE+EaKD+NjD5FNMiD
+ Y3d5kyxi2hFMb1W8Q+1ZeELRJdYqWK2SiLBMc6jB5gwCAwiwgiwTi3b/jXG7ZbSm50ooJ4gSRKR
+ FEZ0NczgXaoUBLTjU87Y7v8TC0ICAKyzsFecaM6CQ8BAxUR6DCkXhdma3ZWg6ZG42WokWOyzotM
+ byS4l1GAZmV0MFeYsFWy/vGUbslpVFw=
+X-Received: by 2002:ac8:5a55:0:b0:467:6692:c18b with SMTP id
+ d75a77b69052e-46e12a25294mr200228151cf.5.1737405806434; 
+ Mon, 20 Jan 2025 12:43:26 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IE+0kxEQTVD7cvUOES4l7LypBoFpfOst7eFJHArF7ULbk4HIdLxucWSrPdrV9Nh7ijCgKlxzA==
+X-Received: by 2002:ac8:5a55:0:b0:467:6692:c18b with SMTP id
+ d75a77b69052e-46e12a25294mr200227851cf.5.1737405806096; 
+ Mon, 20 Jan 2025 12:43:26 -0800 (PST)
+Received: from x1n (pool-99-254-114-190.cpe.net.cable.rogers.com.
+ [99.254.114.190]) by smtp.gmail.com with ESMTPSA id
+ d75a77b69052e-46e102ec4acsm46190671cf.13.2025.01.20.12.43.23
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 20 Jan 2025 12:38:12 -0800 (PST)
-From: Bernhard Beschow <shentey@gmail.com>
-To: qemu-devel@nongnu.org
-Cc: Paolo Bonzini <pbonzini@redhat.com>,
- =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
- Alistair Francis <alistair@alistair23.me>,
- Peter Maydell <peter.maydell@linaro.org>,
- Jean-Christophe Dubois <jcd@tribudubois.net>, qemu-arm@nongnu.org,
- Andrey Smirnov <andrew.smirnov@gmail.com>,
- "Edgar E. Iglesias" <edgar.iglesias@gmail.com>,
- Bernhard Beschow <shentey@gmail.com>
-Subject: [PATCH 11/21] hw/arm/fsl-imx8mp: Add I2C controllers
-Date: Mon, 20 Jan 2025 21:37:38 +0100
-Message-ID: <20250120203748.4687-12-shentey@gmail.com>
-X-Mailer: git-send-email 2.48.1
-In-Reply-To: <20250120203748.4687-1-shentey@gmail.com>
-References: <20250120203748.4687-1-shentey@gmail.com>
+ Mon, 20 Jan 2025 12:43:25 -0800 (PST)
+Date: Mon, 20 Jan 2025 15:43:20 -0500
+From: Peter Xu <peterx@redhat.com>
+To: David Hildenbrand <david@redhat.com>
+Cc: Alexey Kardashevskiy <aik@amd.com>, Chenyi Qiang <chenyi.qiang@intel.com>,
+ Paolo Bonzini <pbonzini@redhat.com>,
+ Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Michael Roth <michael.roth@amd.com>, qemu-devel@nongnu.org,
+ kvm@vger.kernel.org, Williams Dan J <dan.j.williams@intel.com>,
+ Peng Chao P <chao.p.peng@intel.com>, Gao Chao <chao.gao@intel.com>,
+ Xu Yilun <yilun.xu@intel.com>
+Subject: Re: [PATCH 2/7] guest_memfd: Introduce an object to manage the
+ guest-memfd with RamDiscardManager
+Message-ID: <Z461aGgm_sOqISfE@x1n>
+References: <80ac1338-a116-48f5-9874-72d42b5b65b4@intel.com>
+ <9dfde186-e3af-40e3-b79f-ad4c71a4b911@redhat.com>
+ <c1723a70-68d8-4211-85f1-d4538ef2d7f7@amd.com>
+ <f3aaffe7-7045-4288-8675-349115a867ce@redhat.com>
+ <Z46GIsAcXJTPQ8yN@x1n>
+ <7e60d2d8-9ee9-4e97-8a45-bd35a3b7b2a2@redhat.com>
+ <Z46W7Ltk-CWjmCEj@x1n>
+ <ba6ea305-fd04-4e88-8bdc-1d6c5dee95f8@redhat.com>
+ <Z46vxmZF_aGyjkgp@x1n>
+ <b812fd19-055b-4db1-bdff-9263c8b6b087@redhat.com>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::533;
- envelope-from=shentey@gmail.com; helo=mail-ed1-x533.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <b812fd19-055b-4db1-bdff-9263c8b6b087@redhat.com>
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=peterx@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -50
+X-Spam_score: -5.1
+X-Spam_bar: -----
+X-Spam_report: (-5.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-3,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -106,146 +122,16 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Signed-off-by: Bernhard Beschow <shentey@gmail.com>
----
- docs/system/arm/imx8mp-evk.rst |  1 +
- include/hw/arm/fsl-imx8mp.h    | 11 +++++++++++
- hw/arm/fsl-imx8mp.c            | 29 +++++++++++++++++++++++++++++
- hw/arm/Kconfig                 |  2 ++
- 4 files changed, 43 insertions(+)
+On Mon, Jan 20, 2025 at 09:25:51PM +0100, David Hildenbrand wrote:
+> Yes, calling it "attributes" popped up during RFC discussion: in theory,
+> disacard vs. populated and shared vs. private could co-exist (maybe in the
+> future with virtio-mem or something similar).
 
-diff --git a/docs/system/arm/imx8mp-evk.rst b/docs/system/arm/imx8mp-evk.rst
-index d974581fb1..2bcfe34f48 100644
---- a/docs/system/arm/imx8mp-evk.rst
-+++ b/docs/system/arm/imx8mp-evk.rst
-@@ -16,6 +16,7 @@ The ``imx8mp-evk`` machine implements the following devices:
-  * 3 USDHC Storage Controllers
-  * 1 Designware PCI Express Controller
-  * 5 GPIO Controllers
-+ * 6 I2C Controllers
-  * Secure Non-Volatile Storage (SNVS) including an RTC
-  * Clock Tree
- 
-diff --git a/include/hw/arm/fsl-imx8mp.h b/include/hw/arm/fsl-imx8mp.h
-index c91964a465..7e6f997d37 100644
---- a/include/hw/arm/fsl-imx8mp.h
-+++ b/include/hw/arm/fsl-imx8mp.h
-@@ -12,6 +12,7 @@
- #include "cpu.h"
- #include "hw/char/imx_serial.h"
- #include "hw/gpio/imx_gpio.h"
-+#include "hw/i2c/imx_i2c.h"
- #include "hw/intc/arm_gicv3_common.h"
- #include "hw/misc/imx7_snvs.h"
- #include "hw/misc/imx8mp_ccm.h"
-@@ -30,6 +31,7 @@ OBJECT_DECLARE_SIMPLE_TYPE(FslImx8mpState, FSL_IMX8MP)
- enum FslImx8mpConfiguration {
-     FSL_IMX8MP_NUM_CPUS         = 4,
-     FSL_IMX8MP_NUM_GPIOS        = 5,
-+    FSL_IMX8MP_NUM_I2CS         = 6,
-     FSL_IMX8MP_NUM_IRQS         = 160,
-     FSL_IMX8MP_NUM_UARTS        = 4,
-     FSL_IMX8MP_NUM_USDHCS       = 3,
-@@ -44,6 +46,7 @@ struct FslImx8mpState {
-     IMX8MPCCMState     ccm;
-     IMX8MPAnalogState  analog;
-     IMX7SNVSState      snvs;
-+    IMXI2CState        i2c[FSL_IMX8MP_NUM_I2CS];
-     IMXSerialState     uart[FSL_IMX8MP_NUM_UARTS];
-     SDHCIState         usdhc[FSL_IMX8MP_NUM_USDHCS];
-     DesignwarePCIEHost pcie;
-@@ -204,6 +207,11 @@ enum FslImx8mpIrqs {
-     FSL_IMX8MP_UART5_IRQ    = 30,
-     FSL_IMX8MP_UART6_IRQ    = 16,
- 
-+    FSL_IMX8MP_I2C1_IRQ     = 35,
-+    FSL_IMX8MP_I2C2_IRQ     = 36,
-+    FSL_IMX8MP_I2C3_IRQ     = 37,
-+    FSL_IMX8MP_I2C4_IRQ     = 38,
-+
-     FSL_IMX8MP_GPIO1_LOW_IRQ  = 64,
-     FSL_IMX8MP_GPIO1_HIGH_IRQ = 65,
-     FSL_IMX8MP_GPIO2_LOW_IRQ  = 66,
-@@ -215,6 +223,9 @@ enum FslImx8mpIrqs {
-     FSL_IMX8MP_GPIO5_LOW_IRQ  = 72,
-     FSL_IMX8MP_GPIO5_HIGH_IRQ = 73,
- 
-+    FSL_IMX8MP_I2C5_IRQ     = 76,
-+    FSL_IMX8MP_I2C6_IRQ     = 77,
-+
-     FSL_IMX8MP_PCI_INTA_IRQ = 126,
-     FSL_IMX8MP_PCI_INTB_IRQ = 125,
-     FSL_IMX8MP_PCI_INTC_IRQ = 124,
-diff --git a/hw/arm/fsl-imx8mp.c b/hw/arm/fsl-imx8mp.c
-index c62d0e4479..f2d890ffb3 100644
---- a/hw/arm/fsl-imx8mp.c
-+++ b/hw/arm/fsl-imx8mp.c
-@@ -211,6 +211,11 @@ static void fsl_imx8mp_init(Object *obj)
-         object_initialize_child(obj, name, &s->uart[i], TYPE_IMX_SERIAL);
-     }
- 
-+    for (i = 0; i < FSL_IMX8MP_NUM_I2CS; i++) {
-+        snprintf(name, NAME_SIZE, "i2c%d", i + 1);
-+        object_initialize_child(obj, name, &s->i2c[i], TYPE_IMX_I2C);
-+    }
-+
-     for (i = 0; i < FSL_IMX8MP_NUM_GPIOS; i++) {
-         snprintf(name, NAME_SIZE, "gpio%d", i + 1);
-         object_initialize_child(obj, name, &s->gpio[i], TYPE_IMX_GPIO);
-@@ -364,6 +369,29 @@ static void fsl_imx8mp_realize(DeviceState *dev, Error **errp)
-                            qdev_get_gpio_in(gicdev, serial_table[i].irq));
-     }
- 
-+    /* I2Cs */
-+    for (i = 0; i < FSL_IMX8MP_NUM_I2CS; i++) {
-+        static const struct {
-+            hwaddr addr;
-+            unsigned int irq;
-+        } i2c_table[FSL_IMX8MP_NUM_I2CS] = {
-+            { fsl_imx8mp_memmap[FSL_IMX8MP_I2C1].addr, FSL_IMX8MP_I2C1_IRQ },
-+            { fsl_imx8mp_memmap[FSL_IMX8MP_I2C2].addr, FSL_IMX8MP_I2C2_IRQ },
-+            { fsl_imx8mp_memmap[FSL_IMX8MP_I2C3].addr, FSL_IMX8MP_I2C3_IRQ },
-+            { fsl_imx8mp_memmap[FSL_IMX8MP_I2C4].addr, FSL_IMX8MP_I2C4_IRQ },
-+            { fsl_imx8mp_memmap[FSL_IMX8MP_I2C5].addr, FSL_IMX8MP_I2C5_IRQ },
-+            { fsl_imx8mp_memmap[FSL_IMX8MP_I2C6].addr, FSL_IMX8MP_I2C6_IRQ },
-+        };
-+
-+        if (!sysbus_realize(SYS_BUS_DEVICE(&s->i2c[i]), errp)) {
-+            return;
-+        }
-+
-+        sysbus_mmio_map(SYS_BUS_DEVICE(&s->i2c[i]), 0, i2c_table[i].addr);
-+        sysbus_connect_irq(SYS_BUS_DEVICE(&s->i2c[i]), 0,
-+                           qdev_get_gpio_in(gicdev, i2c_table[i].irq));
-+    }
-+
-     /* GPIOs */
-     for (i = 0; i < FSL_IMX8MP_NUM_GPIOS; i++) {
-         static const struct {
-@@ -474,6 +502,7 @@ static void fsl_imx8mp_realize(DeviceState *dev, Error **errp)
-         case FSL_IMX8MP_GIC_DIST:
-         case FSL_IMX8MP_GIC_REDIST:
-         case FSL_IMX8MP_GPIO1 ... FSL_IMX8MP_GPIO5:
-+        case FSL_IMX8MP_I2C1 ... FSL_IMX8MP_I2C6:
-         case FSL_IMX8MP_PCIE1:
-         case FSL_IMX8MP_PCIE_PHY1:
-         case FSL_IMX8MP_RAM:
-diff --git a/hw/arm/Kconfig b/hw/arm/Kconfig
-index f065718416..8d796e05c8 100644
---- a/hw/arm/Kconfig
-+++ b/hw/arm/Kconfig
-@@ -581,8 +581,10 @@ config FSL_IMX8MP
-     bool
-     imply PCI_DEVICES
-     imply TEST_DEVICES
-+    imply I2C_DEVICES
-     select ARM_GIC
-     select IMX
-+    select IMX_I2C
-     select PCI_EXPRESS_DESIGNWARE
-     select PCI_EXPRESS_FSL_IMX8M_PHY
-     select SDHCI
+Yes makes sense. The attribute then can be easily converted into something
+like "user_accessible" / ...  Then that can equal to "populated (plugged)
+&& shared" ultimately.
+
 -- 
-2.48.1
+Peter Xu
 
 
