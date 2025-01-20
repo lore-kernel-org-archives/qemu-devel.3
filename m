@@ -4,100 +4,93 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 17FBBC02182
-	for <qemu-devel@archiver.kernel.org>; Mon, 20 Jan 2025 21:03:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0D8C1C02185
+	for <qemu-devel@archiver.kernel.org>; Mon, 20 Jan 2025 21:03:32 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tZyuq-0001wd-WA; Mon, 20 Jan 2025 16:02:37 -0500
+	id 1tZyur-0001xU-Ax; Mon, 20 Jan 2025 16:02:37 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1tZyud-0001dG-2x
- for qemu-devel@nongnu.org; Mon, 20 Jan 2025 16:02:27 -0500
-Received: from mail-ej1-x631.google.com ([2a00:1450:4864:20::631])
+ id 1tZyua-0001cK-96
+ for qemu-devel@nongnu.org; Mon, 20 Jan 2025 16:02:22 -0500
+Received: from mail-ed1-x52e.google.com ([2a00:1450:4864:20::52e])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1tZyuZ-0002xY-Sf
- for qemu-devel@nongnu.org; Mon, 20 Jan 2025 16:02:22 -0500
-Received: by mail-ej1-x631.google.com with SMTP id
- a640c23a62f3a-aaedd529ba1so642826266b.1
- for <qemu-devel@nongnu.org>; Mon, 20 Jan 2025 13:02:18 -0800 (PST)
+ id 1tZyuW-0002wD-Mv
+ for qemu-devel@nongnu.org; Mon, 20 Jan 2025 16:02:19 -0500
+Received: by mail-ed1-x52e.google.com with SMTP id
+ 4fb4d7f45d1cf-5d9f0a6adb4so9995931a12.1
+ for <qemu-devel@nongnu.org>; Mon, 20 Jan 2025 13:02:16 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1737406938; x=1738011738; darn=nongnu.org;
+ d=linaro.org; s=google; t=1737406935; x=1738011735; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=5lDr+EsB9w5MfJH5NPFFSWodYWU+B9nCbgauMyudXbU=;
- b=Az4w/Z9q4iywCGT+7q0ob1d/BfxKZHYXG6gmdF4HgI/etCltM2XkZ3VY4sGir5OOlf
- Uo0SwWaXvjLkiXXSt2qxa9JyO5kZQGVDl5Uk0j0VwXjiL7augIDTEHjnmcyYPlv00AMM
- ymrZlxwOnlWGQLoGLhdTY97Df2b8buMnoI1oghKGVf5cor7mGUZjZYFRMQCFxhsRLN+V
- UADKfSkND+gwUI+CgrYJi0+5PFh2dR8kP7rqOO0QsVHc9XIYGgf85BfjDnpxf3HOF4fP
- /q6LJegICvtRrpTGwBGxaUheyzJWjr1hEDVLyQWvVESnZmUW6QZRVCiL8w86xkU1WXzo
- SJbA==
+ bh=oWOWHYCR1Up3N6CQ+zs5ErSlqDqJEtYq0Ac6711jAJE=;
+ b=wyWpY3rR9KQYuZUnINPqXmPOQGY2NENLUIlrlJOERruEY2NDcXDuYEWawxhq2pknKm
+ DR4TAXIhGhR0BPaEA/LQYr9YnCJEuuV00wU43b85igpxMATgIrGluj0O9FVs7DUX70av
+ S7knR0ay/zteYiyIgXBoSBjdJhLPiIFs9f2GemJsjhfgiH+HMqTKO7ZM3aAjsQkj17f1
+ 3EBwNigUbJZTwljXekud3mRHc8ttm9auq8287BkXULacy5TrymCetjH6hT5sA2EHLNb2
+ scNODD6SWpOqNrZLppuZkiM0p9r2aU3b9pImSmOhSSiQ9G7aGFNjjFL/9a79zE/LVk8Y
+ r9Rw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1737406938; x=1738011738;
+ d=1e100.net; s=20230601; t=1737406935; x=1738011735;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=5lDr+EsB9w5MfJH5NPFFSWodYWU+B9nCbgauMyudXbU=;
- b=gjPozcGEg945zU9E8Ph07txCl6fbYLffraV2EeMkNTxQV6lxSiBbbsp5OSUCieeKeS
- c9eqbIXiHrcl7BF6xF79GCwwGTfenLoLaJGYz3Dup4IE6Zole1B+klhEsis7enel8aYH
- uwIKdBfIq4N8fZXLWq6EGE2UNhgNonnyo9Mhcl/uZs5YRJrXZQqX/T8R7gsIUmyHZq5l
- Ua3EdwH4a41JC5atOdZc165LkscQ5NTz67KGqJ5t+JGD9008HTTxwVg0wvuCx9dN7La4
- dliBPM24N/Rh5C+CB5mVe8yUlArMByEh+iirlZLkZzwe0cRfgqD9MNsH5Ooxk3hWiuhg
- frxA==
-X-Gm-Message-State: AOJu0YyWYKH2eYjXnxRxPmoDbM9fQyjxmB8xRXwqfAOxCQ8WEc+on/qA
- 5KOpoSm16QIfAnPlfkhVa0YycVBStf7KHNGvTEx56HBy58hnRettzBfGdrJkN2s=
-X-Gm-Gg: ASbGncsq6UOw7arjD1naqhj3/AwGpAsw3dipAKJ02nV70+yl6gdkin3sdI57fgMyS7Y
- Y0pkvSKayA9XaovgVd3aZ3xi5c+1tt6yEL39LJD9U8uREB52DDjtAQEtUEZujPd2TUXRkZ6wo3y
- e7xuFhIY/u7gA4SCHAfxJniVj9TGdkGePkjf6tW2y7Rn4YJAMjFoxpx5iWOdykuDzkUYOp1kuiO
- P1YaJZyNTKLfRJ8wO9TvDDuOpQK25Hk3WCdKCWvGuUpPSUUPbs+agoxLKX9Oy2znx7+
-X-Google-Smtp-Source: AGHT+IGt5phQbJsPOIU1MYiH2i1CzsRaRuwXyZCdQ56zR+P+wc5pJ4/7zs+1e5DzaqbQZ1UN5A5VPQ==
-X-Received: by 2002:a05:6402:1d4e:b0:5d0:d491:2d5e with SMTP id
- 4fb4d7f45d1cf-5db7d2dc941mr33161083a12.7.1737406937605; 
- Mon, 20 Jan 2025 13:02:17 -0800 (PST)
+ bh=oWOWHYCR1Up3N6CQ+zs5ErSlqDqJEtYq0Ac6711jAJE=;
+ b=q9nEN/1SCIwp2D/MI7Jw7js5hzhbnKpHLQY0qCjFhPQCWGud3epX6v1ZXlASc42Ac1
+ Vpw/Y1rHvUmwXmhk3vBk1NC+g3lYuk3h+rbGPMAKCCenf2pMSNQ16bWdjrKltf+hnGfz
+ B64fobKE8W/0WPKju2WMVfTYGvQ9P93VJpkAWD5ZZB/zYc9CkprCk7Gow2RUavV81eEt
+ VDvKu2LpqdS4JHWP6mNdrvnXyl4UZULpUdktgjTuhxNdi7RKDupZSRPagSb1DNJI9C2H
+ kT6GhPGjjVYDw8fEARR4EahyUwdMIZGW3DLxdNv4T2NJL2DKxNXMq/MIes8OQ6fR6887
+ VXfA==
+X-Gm-Message-State: AOJu0YzFRKC616+rM+0eP4Xx1cp0lKUw3ymEpNkqy1c3ey6IQ19hTtOL
+ EIkALX3T/m2Nmd6OV+Zm4tfI1sTM5HQe+CMAv3y4d3TiMTbKLFnmKhZqskIlZNpgQS6E9bMFBY9
+ AKho=
+X-Gm-Gg: ASbGnctKmoBgkm1J4NZEGMqSFKxYpG8525afZ2jsbcxCAjIy5IksExb3BCldu/3LLKX
+ 1J5yRby15KlRRn9gDJGvYEdS/7/CcpLrXTu87WBViB7MznvnnvStMq987LgPi0QkBMmhQ1ZpOvF
+ yT3H7CPAXk9Oa6B6EK3/3o5hmmrMlGzdXYiqIoqD/5UUbllzZLok0aKEkAnwbvRrJJrz26by9L7
+ aZnJUmkGmxujS7i5B6C4W50sT3T3NSDerGGftj4/Gqlgvbvqg58t8LKjMX13jn7BFrK
+X-Google-Smtp-Source: AGHT+IErDS/5Wt7zJKLNVZ6e9Jeu/zsDBi4d6zj/1XSL66rmmb4TsVnqSJn6Wkx+5YLipE7odzfXkg==
+X-Received: by 2002:a05:6402:5194:b0:5d4:3105:c929 with SMTP id
+ 4fb4d7f45d1cf-5db7db07853mr14025988a12.23.1737406934983; 
+ Mon, 20 Jan 2025 13:02:14 -0800 (PST)
 Received: from draig.lan ([85.9.250.243]) by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-ab384c60751sm662877366b.30.2025.01.20.13.02.14
+ 4fb4d7f45d1cf-5db73edbaffsm6178874a12.66.2025.01.20.13.02.13
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 20 Jan 2025 13:02:16 -0800 (PST)
+ Mon, 20 Jan 2025 13:02:14 -0800 (PST)
 Received: from draig.lan (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id 4EF8B5FA07;
+ by draig.lan (Postfix) with ESMTP id 11BFD5F9D8;
  Mon, 20 Jan 2025 21:02:13 +0000 (GMT)
 From: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: qemu-s390x@nongnu.org, qemu-arm@nongnu.org, Thomas Huth <thuth@redhat.com>,
  Peter Maydell <peter.maydell@linaro.org>,
  =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Nicholas Piggin <npiggin@gmail.com>,
- Daniel Henrique Barboza <danielhb413@gmail.com>,
- Harsh Prateek Bora <harshpb@linux.ibm.com>,
- Palmer Dabbelt <palmer@dabbelt.com>,
- Alistair Francis <alistair.francis@wdc.com>, Bin Meng <bmeng.cn@gmail.com>,
- Weiwei Li <liwei1518@gmail.com>, Liu Zhiwei <zhiwei_liu@linux.alibaba.com>,
  Fabiano Rosas <farosas@suse.de>, Laurent Vivier <lvivier@redhat.com>,
- Paolo Bonzini <pbonzini@redhat.com>,
- qemu-ppc@nongnu.org (open list:sPAPR (pseries)),
- qemu-riscv@nongnu.org (open list:RISC-V TCG CPUs)
-Subject: [PATCH 5/7] tests/qtest: rename qtest_send_prefix and roll-up into
- qtest_send
-Date: Mon, 20 Jan 2025 21:02:10 +0000
-Message-Id: <20250120210212.3890255-6-alex.bennee@linaro.org>
+ Paolo Bonzini <pbonzini@redhat.com>
+Subject: [PATCH 2/7] tests/qtest: don't attempt to clock_step while waiting
+ for virtio ISR
+Date: Mon, 20 Jan 2025 21:02:07 +0000
+Message-Id: <20250120210212.3890255-3-alex.bennee@linaro.org>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <20250120210212.3890255-1-alex.bennee@linaro.org>
 References: <20250120210212.3890255-1-alex.bennee@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::631;
- envelope-from=alex.bennee@linaro.org; helo=mail-ej1-x631.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::52e;
+ envelope-from=alex.bennee@linaro.org; helo=mail-ed1-x52e.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -113,243 +106,56 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-qtest_send_prefix never actually sent something over the chardev, all
-it does is print the timestamp to the QTEST_LOG when enabled. So
-rename the function, make it static, remove the unused CharDev and
-simplify all the call sites by handling that directly with
-qtest_send (and qtest_log_send).
+This replicates the changes from 92cb8f8bf6 (tests/qtest: remove
+clock_steps from virtio tests) as there are no timers in the virtio
+code. We still busy wait and timeout though.
 
 Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
 ---
- include/system/qtest.h |  1 -
- hw/ppc/spapr_rtas.c    |  1 -
- hw/riscv/riscv_hart.c  |  1 -
- system/qtest.c         | 26 +++-----------------------
- 4 files changed, 3 insertions(+), 26 deletions(-)
+ tests/qtest/libqos/virtio-pci-modern.c | 6 ++----
+ tests/qtest/libqos/virtio-pci.c        | 6 ++----
+ 2 files changed, 4 insertions(+), 8 deletions(-)
 
-diff --git a/include/system/qtest.h b/include/system/qtest.h
-index c161d75165..6ddddc501b 100644
---- a/include/system/qtest.h
-+++ b/include/system/qtest.h
-@@ -24,7 +24,6 @@ static inline bool qtest_enabled(void)
- }
+diff --git a/tests/qtest/libqos/virtio-pci-modern.c b/tests/qtest/libqos/virtio-pci-modern.c
+index 18d118866f..f6e3e32891 100644
+--- a/tests/qtest/libqos/virtio-pci-modern.c
++++ b/tests/qtest/libqos/virtio-pci-modern.c
+@@ -173,13 +173,11 @@ static bool get_config_isr_status(QVirtioDevice *d)
  
- #ifndef CONFIG_USER_ONLY
--void qtest_send_prefix(CharBackend *chr);
- void G_GNUC_PRINTF(2, 3) qtest_sendf(CharBackend *chr, const char *fmt, ...);
- void qtest_set_command_cb(bool (*pc_cb)(CharBackend *chr, gchar **words));
- bool qtest_driver(void);
-diff --git a/hw/ppc/spapr_rtas.c b/hw/ppc/spapr_rtas.c
-index df2e837632..503d441b48 100644
---- a/hw/ppc/spapr_rtas.c
-+++ b/hw/ppc/spapr_rtas.c
-@@ -565,7 +565,6 @@ static bool spapr_qtest_callback(CharBackend *chr, gchar **words)
-         g_assert(rc == 0);
-         res = qtest_rtas_call(words[1], nargs, args, nret, ret);
- 
--        qtest_send_prefix(chr);
-         qtest_sendf(chr, "OK %"PRIu64"\n", res);
- 
-         return true;
-diff --git a/hw/riscv/riscv_hart.c b/hw/riscv/riscv_hart.c
-index ad67cd7645..a55d156668 100644
---- a/hw/riscv/riscv_hart.c
-+++ b/hw/riscv/riscv_hart.c
-@@ -94,7 +94,6 @@ static bool csr_qtest_callback(CharBackend *chr, gchar **words)
-         g_assert(rc == 0);
-         csr_call(words[1], cpu, csr, &val);
- 
--        qtest_send_prefix(chr);
-         qtest_sendf(chr, "OK 0 "TARGET_FMT_lx"\n", (target_ulong)val);
- 
-         return true;
-diff --git a/system/qtest.c b/system/qtest.c
-index bb1efba9fd..28b6fac37c 100644
---- a/system/qtest.c
-+++ b/system/qtest.c
-@@ -265,7 +265,7 @@ static int hex2nib(char ch)
-     }
- }
- 
--void qtest_send_prefix(CharBackend *chr)
-+static void qtest_log_timestamp(void)
+ static void wait_config_isr_status(QVirtioDevice *d, gint64 timeout_us)
  {
-     if (!qtest_log_fp || !qtest_opened) {
-         return;
-@@ -282,7 +282,7 @@ static void G_GNUC_PRINTF(1, 2) qtest_log_send(const char *fmt, ...)
-         return;
-     }
+-    QVirtioPCIDevice *dev = container_of(d, QVirtioPCIDevice, vdev);
+     gint64 start_time = g_get_monotonic_time();
  
--    qtest_send_prefix(NULL);
-+    qtest_log_timestamp();
+-    do {
++    while (!get_config_isr_status(d)) {
+         g_assert(g_get_monotonic_time() - start_time <= timeout_us);
+-        qtest_clock_step(dev->pdev->bus->qts, 100);
+-    } while (!get_config_isr_status(d));
++    } 
+ }
  
-     va_start(ap, fmt);
-     vfprintf(qtest_log_fp, fmt, ap);
-@@ -301,6 +301,7 @@ static void qtest_server_char_be_send(void *opaque, const char *str)
- 
- static void qtest_send(CharBackend *chr, const char *str)
+ static void queue_select(QVirtioDevice *d, uint16_t index)
+diff --git a/tests/qtest/libqos/virtio-pci.c b/tests/qtest/libqos/virtio-pci.c
+index 485b8f6b7e..002bf8b8c2 100644
+--- a/tests/qtest/libqos/virtio-pci.c
++++ b/tests/qtest/libqos/virtio-pci.c
+@@ -171,13 +171,11 @@ static bool qvirtio_pci_get_config_isr_status(QVirtioDevice *d)
+ static void qvirtio_pci_wait_config_isr_status(QVirtioDevice *d,
+                                                gint64 timeout_us)
  {
-+    qtest_log_timestamp();
-     qtest_server_send(qtest_server_send_opaque, str);
+-    QVirtioPCIDevice *dev = container_of(d, QVirtioPCIDevice, vdev);
+     gint64 start_time = g_get_monotonic_time();
+ 
+-    do {
++    while (!qvirtio_pci_get_config_isr_status(d)) {
+         g_assert(g_get_monotonic_time() - start_time <= timeout_us);
+-        qtest_clock_step(dev->pdev->bus->qts, 100);
+-    } while (!qvirtio_pci_get_config_isr_status(d));
++    }
  }
  
-@@ -324,7 +325,6 @@ static void qtest_irq_handler(void *opaque, int n, int level)
-     if (irq_levels[n] != level) {
-         CharBackend *chr = &qtest->qtest_chr;
-         irq_levels[n] = level;
--        qtest_send_prefix(chr);
-         qtest_sendf(chr, "IRQ %s %d\n",
-                     level ? "raise" : "lower", n);
-     }
-@@ -380,19 +380,16 @@ static void qtest_process_command(CharBackend *chr, gchar **words)
-         is_outbound = words[0][14] == 'o';
-         dev = DEVICE(object_resolve_path(words[1], NULL));
-         if (!dev) {
--            qtest_send_prefix(chr);
-             qtest_send(chr, "FAIL Unknown device\n");
-             return;
-         }
- 
-         if (is_named && !is_outbound) {
--            qtest_send_prefix(chr);
-             qtest_send(chr, "FAIL Interception of named in-GPIOs not yet supported\n");
-             return;
-         }
- 
-         if (irq_intercept_dev) {
--            qtest_send_prefix(chr);
-             if (irq_intercept_dev != dev) {
-                 qtest_send(chr, "FAIL IRQ intercept already enabled\n");
-             } else {
-@@ -419,7 +416,6 @@ static void qtest_process_command(CharBackend *chr, gchar **words)
-             }
-         }
- 
--        qtest_send_prefix(chr);
-         if (interception_succeeded) {
-             irq_intercept_dev = dev;
-             qtest_send(chr, "OK\n");
-@@ -438,7 +434,6 @@ static void qtest_process_command(CharBackend *chr, gchar **words)
- 
-         dev = DEVICE(object_resolve_path(words[1], NULL));
-         if (!dev) {
--            qtest_send_prefix(chr);
-             qtest_send(chr, "FAIL Unknown device\n");
-             return;
-         }
-@@ -457,7 +452,6 @@ static void qtest_process_command(CharBackend *chr, gchar **words)
-         irq = qdev_get_gpio_in_named(dev, name, num);
- 
-         qemu_set_irq(irq, level);
--        qtest_send_prefix(chr);
-         qtest_send(chr, "OK\n");
-     } else if (strcmp(words[0], "outb") == 0 ||
-                strcmp(words[0], "outw") == 0 ||
-@@ -480,7 +474,6 @@ static void qtest_process_command(CharBackend *chr, gchar **words)
-         } else if (words[0][3] == 'l') {
-             cpu_outl(addr, value);
-         }
--        qtest_send_prefix(chr);
-         qtest_send(chr, "OK\n");
-     } else if (strcmp(words[0], "inb") == 0 ||
-         strcmp(words[0], "inw") == 0 ||
-@@ -501,7 +494,6 @@ static void qtest_process_command(CharBackend *chr, gchar **words)
-         } else if (words[0][2] == 'l') {
-             value = cpu_inl(addr);
-         }
--        qtest_send_prefix(chr);
-         qtest_sendf(chr, "OK 0x%04x\n", value);
-     } else if (strcmp(words[0], "writeb") == 0 ||
-                strcmp(words[0], "writew") == 0 ||
-@@ -537,7 +529,6 @@ static void qtest_process_command(CharBackend *chr, gchar **words)
-             address_space_write(first_cpu->as, addr, MEMTXATTRS_UNSPECIFIED,
-                                 &data, 8);
-         }
--        qtest_send_prefix(chr);
-         qtest_send(chr, "OK\n");
-     } else if (strcmp(words[0], "readb") == 0 ||
-                strcmp(words[0], "readw") == 0 ||
-@@ -571,7 +562,6 @@ static void qtest_process_command(CharBackend *chr, gchar **words)
-                                &value, 8);
-             tswap64s(&value);
-         }
--        qtest_send_prefix(chr);
-         qtest_sendf(chr, "OK 0x%016" PRIx64 "\n", value);
-     } else if (strcmp(words[0], "read") == 0) {
-         g_autoptr(GString) enc = NULL;
-@@ -593,7 +583,6 @@ static void qtest_process_command(CharBackend *chr, gchar **words)
- 
-         enc = qemu_hexdump_line(NULL, data, len, 0, 0);
- 
--        qtest_send_prefix(chr);
-         qtest_sendf(chr, "OK 0x%s\n", enc->str);
- 
-         g_free(data);
-@@ -613,7 +602,6 @@ static void qtest_process_command(CharBackend *chr, gchar **words)
-         address_space_read(first_cpu->as, addr, MEMTXATTRS_UNSPECIFIED, data,
-                            len);
-         b64_data = g_base64_encode(data, len);
--        qtest_send_prefix(chr);
-         qtest_sendf(chr, "OK %s\n", b64_data);
- 
-         g_free(data);
-@@ -649,7 +637,6 @@ static void qtest_process_command(CharBackend *chr, gchar **words)
-                             len);
-         g_free(data);
- 
--        qtest_send_prefix(chr);
-         qtest_send(chr, "OK\n");
-     } else if (strcmp(words[0], "memset") == 0) {
-         uint64_t addr, len;
-@@ -673,7 +660,6 @@ static void qtest_process_command(CharBackend *chr, gchar **words)
-             g_free(data);
-         }
- 
--        qtest_send_prefix(chr);
-         qtest_send(chr, "OK\n");
-     }  else if (strcmp(words[0], "b64write") == 0) {
-         uint64_t addr, len;
-@@ -705,10 +691,8 @@ static void qtest_process_command(CharBackend *chr, gchar **words)
-         address_space_write(first_cpu->as, addr, MEMTXATTRS_UNSPECIFIED, data,
-                             len);
- 
--        qtest_send_prefix(chr);
-         qtest_send(chr, "OK\n");
-     } else if (strcmp(words[0], "endianness") == 0) {
--        qtest_send_prefix(chr);
-         if (target_words_bigendian()) {
-             qtest_sendf(chr, "OK big\n");
-         } else {
-@@ -726,7 +710,6 @@ static void qtest_process_command(CharBackend *chr, gchar **words)
-                                             QEMU_TIMER_ATTR_ALL);
-         }
-         new_ns = qemu_clock_advance_virtual_time(old_ns + ns);
--        qtest_send_prefix(chr);
-         qtest_sendf(chr, "%s %"PRIi64"\n",
-                     new_ns > old_ns ? "OK" : "FAIL", new_ns);
-     } else if (strcmp(words[0], "module_load") == 0) {
-@@ -734,7 +717,6 @@ static void qtest_process_command(CharBackend *chr, gchar **words)
-         int rv;
-         g_assert(words[1] && words[2]);
- 
--        qtest_send_prefix(chr);
-         rv = module_load(words[1], words[2], &local_err);
-         if (rv > 0) {
-             qtest_sendf(chr, "OK\n");
-@@ -752,13 +734,11 @@ static void qtest_process_command(CharBackend *chr, gchar **words)
-         ret = qemu_strtoi64(words[1], NULL, 0, &ns);
-         g_assert(ret == 0);
-         new_ns = qemu_clock_advance_virtual_time(ns);
--        qtest_send_prefix(chr);
-         qtest_sendf(chr, "%s %"PRIi64"\n",
-                     new_ns == ns ? "OK" : "FAIL", new_ns);
-     } else if (process_command_cb && process_command_cb(chr, words)) {
-         /* Command got consumed by the callback handler */
-     } else {
--        qtest_send_prefix(chr);
-         qtest_sendf(chr, "FAIL Unknown command '%s'\n", words[0]);
-     }
- }
+ static void qvirtio_pci_queue_select(QVirtioDevice *d, uint16_t index)
 -- 
 2.39.5
 
