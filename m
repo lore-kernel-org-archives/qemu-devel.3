@@ -4,109 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9712EC02181
-	for <qemu-devel@archiver.kernel.org>; Mon, 20 Jan 2025 20:47:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CBD7AC02182
+	for <qemu-devel@archiver.kernel.org>; Mon, 20 Jan 2025 20:49:54 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tZyg9-0004Cy-Hm; Mon, 20 Jan 2025 15:47:27 -0500
+	id 1tZyiB-0007c3-64; Mon, 20 Jan 2025 15:49:31 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1tZyfF-0003YT-GR
- for qemu-devel@nongnu.org; Mon, 20 Jan 2025 15:46:33 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1tZyfD-0004VB-3u
- for qemu-devel@nongnu.org; Mon, 20 Jan 2025 15:46:29 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1737405982;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=e3TVfm1hWW+SQ2qvpmt/ExAOGENiWUkkTKRie7+29lk=;
- b=MAl2SoDwdiCTCmrkAkJRIBzjKiZDEIHI+zuwYY7rDNkqmGqPYxK9DYeL7bMzpt73KKk1F1
- hXxDgVPqBTyE67/xlRh2B+i+n+5rZh/fr30rLmg2mOfSwEyR1XS6+HhrqPrT7NnKNzda46
- L9PgO7IWwM8MNorD4alP6QTfXWxAPaE=
-Received: from mail-qk1-f199.google.com (mail-qk1-f199.google.com
- [209.85.222.199]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-690-XxR1HyNwNnihjxoAHxxVNQ-1; Mon, 20 Jan 2025 15:46:19 -0500
-X-MC-Unique: XxR1HyNwNnihjxoAHxxVNQ-1
-X-Mimecast-MFC-AGG-ID: XxR1HyNwNnihjxoAHxxVNQ
-Received: by mail-qk1-f199.google.com with SMTP id
- af79cd13be357-7b93c7ffaeeso849017785a.1
- for <qemu-devel@nongnu.org>; Mon, 20 Jan 2025 12:46:18 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <dbarboza@ventanamicro.com>)
+ id 1tZyi1-0007Ga-Lx
+ for qemu-devel@nongnu.org; Mon, 20 Jan 2025 15:49:22 -0500
+Received: from mail-pl1-x632.google.com ([2607:f8b0:4864:20::632])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <dbarboza@ventanamicro.com>)
+ id 1tZyhz-0006Mm-SO
+ for qemu-devel@nongnu.org; Mon, 20 Jan 2025 15:49:21 -0500
+Received: by mail-pl1-x632.google.com with SMTP id
+ d9443c01a7336-21bc1512a63so91044135ad.1
+ for <qemu-devel@nongnu.org>; Mon, 20 Jan 2025 12:49:19 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=ventanamicro.com; s=google; t=1737406158; x=1738010958; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=w8Zk6h0bVmQwQ8Hz7dRn07keIxPfHL2v5GahEzPttlE=;
+ b=fvfQUnA4n2NHeb5zAiFVO5nsX8boOrRT5Ef08mwSZRp0XP878vwAGIFZpJAftSF4/U
+ qtuqoBGhVurPuHj/wYg8pAxSrq1ArcyrYTefQwF4KiZD1+j60Zw7Em1hY/fklNmhm+MT
+ a7s5IPWliUtvZrso2wcpSTZgKRyNd04dApLzh+lyzgzmRmpxoRB9ZzuhYSTo5CcNL+Tm
+ KyjM48Ttwg89Lv1ut9fVFpSXvcpJOjlDtGSmDzyT7t70TXdhSb1QJ8rDX2lMBc2PJefB
+ Ak3KZ+lXs0qgeRP75JbQX930kK0w4+n4o2NBplCKTfw3CNqmc6FV6KMk323239O23RJH
+ EjFg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1737405978; x=1738010778;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=e3TVfm1hWW+SQ2qvpmt/ExAOGENiWUkkTKRie7+29lk=;
- b=MMV/JUn6bF/td2ZTdkHB4S5o/YQjdERm3dJuTY6VQuQKt/uZqAedx74bM63z2OgvB7
- nFOCupP2j+UIrTeO5g4coset0DPfOxX20i4gTIjWwfr76mVTaF/1MGI+6f0NKrPxaThV
- 8F5iEtJUDurpRRI49qFGBldX0o3qOgaBRGTJQy4y4nb4bEfm1Jta1XlF287dLqlNQA6v
- z3nFCLkDaf3hXRSQHv3oQ3V4oRPqhUi0hT/MkSzm4NgKF66tKxGqy6HVmNVPaPZDQL5R
- fdha0Qvg4Ms8Jni5CkmS/+xESi+hpL8E54yZGHeQKDgDWXqKubr60tLxgum13CWzULlP
- R3cw==
-X-Forwarded-Encrypted: i=1;
- AJvYcCV/xxIUzCq8KW5bvwibjOqnFPUWvtCr/irv0I4IermEBkVzA+s5snX1nA3UT/hGOfjL7S86+62PvKiI@nongnu.org
-X-Gm-Message-State: AOJu0YyBpo+Lsm2QQWG/T6pYzuRsopMDXpmy8t2JJHI98p/Eer//Ykhp
- IMsdyBgTM64whjCEreIxCTkbM7Foutgdt8f0XL5k1Smu6s3QGoK/Xazuw3mJlc8ZLci5y0O6wxJ
- MChDhC+cuT7IxWTEE3ynsfYLj38SeQqny9HNNtk/KGkVV+l6LfiER
-X-Gm-Gg: ASbGnctSh4Cv+Oci/u7CDXkCTBk978oqHml/aS4rzCFTgmodqTsBnUYEp2tMZ8qdG7I
- E2mygK9JtGnhRy6vsjPkcq/90l9KYkdqSMfHNLNvHwhGWx/mjvxUDvt5rQVQyr+JAvtiuA3H774
- Wdk9wS9+ryT5gDfpObD7wg7Vdf8oafrhCrIbOW9F4KfevmpfmgTThGZ6JTOOanBXQlpFV9D0Pf0
- HF0N3GgGpnEdLmkBv46FmArOXPkAbwO6AKaHqlytYQyF6dYJvAiQW0JLMmwdJpjCMIsHXrEGY3r
- o6EOfbe0Mu/uXgwEk4hv5wD/Ws9TESU=
-X-Received: by 2002:a05:620a:410e:b0:7b8:5511:f72d with SMTP id
- af79cd13be357-7be523e28e0mr3531522485a.17.1737405978532; 
- Mon, 20 Jan 2025 12:46:18 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IGDCqhLZKUng+MCpmPy4o7DYVS+UaJHWrKhBKL4yg61rr9grwttwSS0WeRORTYCHwN3m8s3MA==
-X-Received: by 2002:a05:620a:410e:b0:7b8:5511:f72d with SMTP id
- af79cd13be357-7be523e28e0mr3531520385a.17.1737405978257; 
- Mon, 20 Jan 2025 12:46:18 -0800 (PST)
-Received: from x1n (pool-99-254-114-190.cpe.net.cable.rogers.com.
- [99.254.114.190]) by smtp.gmail.com with ESMTPSA id
- af79cd13be357-7be614d9af2sm482989285a.77.2025.01.20.12.46.16
+ d=1e100.net; s=20230601; t=1737406158; x=1738010958;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=w8Zk6h0bVmQwQ8Hz7dRn07keIxPfHL2v5GahEzPttlE=;
+ b=ISiuJRRsUz9cMFi/G5OdYKVjrW7q3EzVHnqv64zKWxX+XZpsImOIgxtScjTSXkM+it
+ nVumVFnk9duiK9DWnNri8Pvn5wCrUyx4aBVWTj+F54zGEJUhd+cxKDhxNAnKx/DixZkx
+ Eo4kheLfoJixvZ+/SDW4h+nlK3ISpo/VleRSn7QA8sOELD/GLEYV5EQVflvnx0Wujq6n
+ JOSOElaLPmDXjPRqcLsp8Fxn9O3SJw0/mB804vBV4pE37MVqoZKmYk9sQpDxY5j3me+C
+ SMeAVwEGMWdEo3KU8vKHoP4SHzn6QxSMs4xTraDoTm+lWYwIFeYqtiVs3fboJoVGsMLO
+ xunQ==
+X-Gm-Message-State: AOJu0YzVgwpkQmR+CtuIgntQZVtztylYS34DS6FgCuQw+W0YAdFurUzT
+ DYNKSjUS/sTSobp1Jmj1Gl28bSD3ReCHxZgDErIZm7HF5WWw7xGgK9fBouDVQeeLj70WEsQve0C
+ x
+X-Gm-Gg: ASbGncu6VnGQ1943IDlkFTTPlz5F6sNJ2UoPJ+kkd2EZbva3t9f9t4VSATEROqISnlc
+ J4qFxwKJucydaw2RfjxjQjCqlIT1v2RrKT/0suemhvJ6QfI9lezbI7BJqQLdTGGZFCDkIwEI1Bz
+ PBjZ/0YMdSFdZnTN7j33vunWxj7vBunKE4mXaM4HJKmDpcw8zISBmYd57/b2lIAFZ+s8ScQ8KaU
+ Jq3q+TGAjlYHpA1/+Z5l6HIPF37lTpeWeB8jRa/vsIjil6qX3SLgWHwBnjzSBXBIAUneTz8OA==
+X-Google-Smtp-Source: AGHT+IGRL/xtgKUFL2UvRPKXkznXNBImzsv/OFW2saAyuPU99lJDagf3DwQgzCtRgefwA9Gp0AIGTQ==
+X-Received: by 2002:a17:903:22d0:b0:215:63a0:b58c with SMTP id
+ d9443c01a7336-21c356780cfmr189555365ad.46.1737406158083; 
+ Mon, 20 Jan 2025 12:49:18 -0800 (PST)
+Received: from grind.. ([2804:7f0:bdcd:fb00:6501:2693:db52:c621])
+ by smtp.gmail.com with ESMTPSA id
+ d9443c01a7336-21c2cea08e4sm64865025ad.7.2025.01.20.12.49.15
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 20 Jan 2025 12:46:17 -0800 (PST)
-Date: Mon, 20 Jan 2025 15:46:15 -0500
-From: Peter Xu <peterx@redhat.com>
-To: Alexey Kardashevskiy <aik@amd.com>
-Cc: Chenyi Qiang <chenyi.qiang@intel.com>,
- David Hildenbrand <david@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
- Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Michael Roth <michael.roth@amd.com>, qemu-devel@nongnu.org,
- kvm@vger.kernel.org, Williams Dan J <dan.j.williams@intel.com>,
- Peng Chao P <chao.p.peng@intel.com>, Gao Chao <chao.gao@intel.com>,
- Xu Yilun <yilun.xu@intel.com>
-Subject: Re: [PATCH 2/7] guest_memfd: Introduce an object to manage the
- guest-memfd with RamDiscardManager
-Message-ID: <Z462F1Dwm6cUdCcy@x1n>
-References: <80ac1338-a116-48f5-9874-72d42b5b65b4@intel.com>
- <219a4a7a-7c96-4746-9aba-ed06a1a00f3e@amd.com>
- <58b96b74-bf9c-45d3-8c2e-459ec2206fc8@intel.com>
- <8c8e024d-03dc-4201-8038-9e9e60467fad@amd.com>
- <ca9bc239-d59b-4c53-9f14-aa212d543db9@intel.com>
- <4d22d3ce-a5a1-49f2-a578-8e0fe7d26893@amd.com>
- <2b799426-deaa-4644-aa17-6ef31899113b@intel.com>
- <2400268e-d26a-4933-80df-cfe44b38ae40@amd.com>
- <590432e1-4a26-4ae8-822f-ccfbac352e6b@intel.com>
- <2b2730f3-6e1a-4def-b126-078cf6249759@amd.com>
+ Mon, 20 Jan 2025 12:49:17 -0800 (PST)
+From: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
+To: qemu-devel@nongnu.org
+Cc: qemu-riscv@nongnu.org, alistair.francis@wdc.com, bmeng@tinylab.org,
+ liwei1518@gmail.com, zhiwei_liu@linux.alibaba.com, palmer@rivosinc.com,
+ richard.henderson@linaro.org,
+ Daniel Henrique Barboza <dbarboza@ventanamicro.com>
+Subject: [PATCH v2 0/2] target/riscv: throw debug exception before page fault
+Date: Mon, 20 Jan 2025 17:49:08 -0300
+Message-ID: <20250120204910.1317013-1-dbarboza@ventanamicro.com>
+X-Mailer: git-send-email 2.47.1
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <2b2730f3-6e1a-4def-b126-078cf6249759@amd.com>
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=peterx@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -50
-X-Spam_score: -5.1
-X-Spam_bar: -----
-X-Spam_report: (-5.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-3,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.036,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::632;
+ envelope-from=dbarboza@ventanamicro.com; helo=mail-pl1-x632.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -122,20 +98,38 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, Jan 20, 2025 at 09:22:50PM +1100, Alexey Kardashevskiy wrote:
-> > It is still uncertain how to implement the private MMIO. Our assumption
-> > is the private MMIO would also create a memory region with
-> > guest_memfd-like backend. Its mr->ram is true and should be managed by
-> > RamdDiscardManager which can skip doing DMA_MAP in VFIO's region_add
-> > listener.
-> 
-> My current working approach is to leave it as is in QEMU and VFIO.
+Hi,
 
-Agreed.  Setting ram=true to even private MMIO sounds hackish, at least
-currently QEMU heavily rely on that flag for any possible direct accesses.
-E.g., in memory_access_is_direct().
+This second version implements the change Richard suggested in v1, i.e.
+do not search for wps twice.
+
+To do that we need to make an assumption that a watchpoint for a 64 bit
+address will have size 8, in particular when the user does not set a
+watchpoint size. To be consistent we also need to consider that 32 bit
+CPUs would use watchpoints of size 4, which is something we're not
+considering.  Patch 1 was added to make things more consistent in this
+regard.
+
+Patches based on master.
+
+Changes from v1:
+- patch 1 (new):
+  - add watchpoints of size 4 when dealing with 32 bit addresses
+- patch 2:
+  - instead of looking for watchpoints twice, call
+    cpu_check_watchpoint() and rely on fall-through in case no
+    watchpoints are found
+- v1 link: https://mail.gnu.org/archive/html/qemu-devel/2025-01/msg03575.html
+
+Daniel Henrique Barboza (2):
+  target/riscv/debug.c: use wp size = 4 for 32-bit CPUs
+  target/riscv: throw debug exception before page fault
+
+ target/riscv/cpu_helper.c | 19 +++++++++++++++++++
+ target/riscv/debug.c      |  6 ++++--
+ 2 files changed, 23 insertions(+), 2 deletions(-)
 
 -- 
-Peter Xu
+2.47.1
 
 
