@@ -4,141 +4,104 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E91D8C02182
-	for <qemu-devel@archiver.kernel.org>; Mon, 20 Jan 2025 22:00:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 50F99C02182
+	for <qemu-devel@archiver.kernel.org>; Mon, 20 Jan 2025 22:05:54 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tZznt-0006t1-H1; Mon, 20 Jan 2025 16:59:29 -0500
+	id 1tZzta-0001yX-RO; Mon, 20 Jan 2025 17:05:22 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <Huibo.Wang@amd.com>)
- id 1tZzNP-0005LL-PO
- for qemu-devel@nongnu.org; Mon, 20 Jan 2025 16:32:09 -0500
-Received: from mail-dm6nam12on20620.outbound.protection.outlook.com
- ([2a01:111:f403:2417::620]
- helo=NAM12-DM6-obe.outbound.protection.outlook.com)
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <Huibo.Wang@amd.com>)
- id 1tZzNM-0000Ae-7p
- for qemu-devel@nongnu.org; Mon, 20 Jan 2025 16:32:06 -0500
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=p44sw0Fr8/3oF9AZONjOYM/SZfMNijA2zvdM3UE5Lkl2tPj9kAJrHZeWwIHRhPGrH10nO+jeS1jtdl1CxPviZGCvjKZZegjICPxyP6EajEe+dz1kwTF4oX0iaKsQvmqxafzBLgu5Mxa/hgEYah/22KzWsKeLs2ZaM4Eut3dKD7jyjFaL4iw3oapYoPP8OsAdod/j2mYtI6qjFaW97mJDI5vf4AQg5v6MplmqRVzhNIDDl/zbr1xEej2ZHgAJRBPC6A0JYs8uHXiLHGWkWP5qf9jSN5yqLnFriTH0wdZRvlYdAIlsio4jejawVK2XjQG9d0xSefDBd9jsSdSp4lJYVw==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=j2l8yRSZ0y9gIqCPFqo4uHuFSQMFdEflfSEpPyuuGtA=;
- b=Tc0yLzu0WZN9PbXaYNhnXSibAfNXpGCpOpXGmrWkHO8+UDz3qfy404d/+zTavLU5UczBRa3wyNdbrcjHgwTuVo+9XwqqaI74yAAoruK+B9lpATVz3qZWofkVzrS2DWAUz8UT4AqJHvf/mXhd5sx2Aa/1LIVCK019O5/VaZUzYhAzPtrVSGskgoDRGBk4qd+NjfbGjm6e9bhiUYZLnYomRno/T30HwbXcgPlD5wEJ0gQmsQUrTEG4PGIpx94U3yAMlgGmh+x1OW4ZYd9XKOd94RYbDsYepte+ZXPktNSU71vnkPAtYck2cjL28CU9JVNRmFzUWOt/aFd9MmuDmh2jyQ==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
- 165.204.84.17) smtp.rcpttodomain=nongnu.org smtp.mailfrom=amd.com; dmarc=pass
- (p=quarantine sp=quarantine pct=100) action=none header.from=amd.com;
- dkim=none (message not signed); arc=none (0)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=amd.com; s=selector1; 
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=j2l8yRSZ0y9gIqCPFqo4uHuFSQMFdEflfSEpPyuuGtA=;
- b=sydIUPLuOVy9eLX6WTpgPpc3TYTCBaTWbDGAESmBTkhxmnrRJFUNPheEL2y194OYrjZ+quc7AIzrBYlmUZzh9v6yrKqBxpgP8HbNGKiof+Zutq+18g45VgwS3r21u/0u5KZYGya9VpVoDQegFTomhonZJIpNsAucpP8iaX9ifCk=
-Received: from LV3P220CA0006.NAMP220.PROD.OUTLOOK.COM (2603:10b6:408:234::9)
- by SJ0PR12MB8114.namprd12.prod.outlook.com (2603:10b6:a03:4e8::18) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.8356.21; Mon, 20 Jan
- 2025 21:31:58 +0000
-Received: from BN1PEPF00004681.namprd03.prod.outlook.com
- (2603:10b6:408:234:cafe::7a) by LV3P220CA0006.outlook.office365.com
- (2603:10b6:408:234::9) with Microsoft SMTP Server (version=TLS1_3,
- cipher=TLS_AES_256_GCM_SHA384) id 15.20.8356.22 via Frontend Transport; Mon,
- 20 Jan 2025 21:31:57 +0000
-X-MS-Exchange-Authentication-Results: spf=pass (sender IP is 165.204.84.17)
- smtp.mailfrom=amd.com; dkim=none (message not signed)
- header.d=none;dmarc=pass action=none header.from=amd.com;
-Received-SPF: Pass (protection.outlook.com: domain of amd.com designates
- 165.204.84.17 as permitted sender) receiver=protection.outlook.com;
- client-ip=165.204.84.17; helo=SATLEXMB04.amd.com; pr=C
-Received: from SATLEXMB04.amd.com (165.204.84.17) by
- BN1PEPF00004681.mail.protection.outlook.com (10.167.243.87) with Microsoft
- SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
- 15.20.8377.8 via Frontend Transport; Mon, 20 Jan 2025 21:31:57 +0000
-Received: from ruby-9130host.amd.com (10.180.168.240) by SATLEXMB04.amd.com
- (10.181.40.145) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id 15.1.2507.39; Mon, 20 Jan
- 2025 15:31:56 -0600
-From: Melody Wang <huibo.wang@amd.com>
-To: <qemu-devel@nongnu.org>
-CC: Tom Lendacky <thomas.lendacky@amd.com>, Paolo Bonzini
- <pbonzini@redhat.com>, <eduardo@habkost.net>, <berrange@redhat.com>,
- <armbru@redhat.com>, <pankaj.gupta@amd.com>, <jroedel@suse.com>,
- <michael.roth@amd.com>, Melody Wang <huibo.wang@amd.com>
-Subject: [RFC PATCH v2 1/3] linux-headers: Update for 6.12 and SNP certificate
- support
-Date: Mon, 20 Jan 2025 21:31:14 +0000
-Message-ID: <20250120213116.521519-2-huibo.wang@amd.com>
-X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20250120213116.521519-1-huibo.wang@amd.com>
-References: <20250120213116.521519-1-huibo.wang@amd.com>
+ (Exim 4.90_1) (envelope-from <dbarboza@ventanamicro.com>)
+ id 1tZztZ-0001ws-1O
+ for qemu-devel@nongnu.org; Mon, 20 Jan 2025 17:05:21 -0500
+Received: from mail-pj1-x102a.google.com ([2607:f8b0:4864:20::102a])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <dbarboza@ventanamicro.com>)
+ id 1tZztW-00076L-I5
+ for qemu-devel@nongnu.org; Mon, 20 Jan 2025 17:05:20 -0500
+Received: by mail-pj1-x102a.google.com with SMTP id
+ 98e67ed59e1d1-2ef760a1001so8470183a91.0
+ for <qemu-devel@nongnu.org>; Mon, 20 Jan 2025 14:05:18 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=ventanamicro.com; s=google; t=1737410716; x=1738015516; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=HAcEusjzYH3QqmuK9Xi8ykEJwD47DNBc0rTmFjn7ETU=;
+ b=H+INtctJHU7KTr7BTysL3Wkd7w0hxQzxRScugLG4mFw7hipeLUWo9hcAf7soEY+lO5
+ nnfH6mxYwjrSOxP1w4w1eyQLUMhnk6YxvPRYHF2t951nXQW4kapn8KLzdBrjkYFP0kQb
+ E8PdyFFP5D1HFTEB0WUqFwZulVGwwmLK6rESwoWBmlGwZJncohRula0lVAWrxugx0foi
+ cEInfENGFzHJELiEsoGHwjozWMRdd95b7fu8QFKt4TJyR+paFl8dNoko0nHVMnScQd/O
+ Hji+/TwuA/rhE5HUYw1bofAFxw/Jbm3qx4VGKQMrgOvQshgFAp75f6BCJEHnr7+HFSIM
+ Yd8g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1737410716; x=1738015516;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=HAcEusjzYH3QqmuK9Xi8ykEJwD47DNBc0rTmFjn7ETU=;
+ b=jDn1XOhliK2MrDwJuF0EJgsuHDHkybl7fsEa3ecYLjfEsHSg8g7k3yebOmxXjVDMoI
+ pT5CRguhLmbK0c+Bih1ap7a/QG788rf1QYJQ/dvAsMfRRFf+slz3DeIj83Sp23fiwmYC
+ pAiJkEiU+F6BZQ69G7ulFvy5VVVteL8mK6Id899GURnxQt+L96rajbAau7Ii3XZmGDEm
+ lQEJlvH2BVQHm5puWoc0pHNBlAuhcOu+7xpUuuD3Nf6g6eO5FYf75md9A+Ag2UBm56q4
+ gjJABFO5hJ7sLREzXNyFyqm8LEF4y/GpqRi+ZmmC4V6ZMEEkmpvUKASnguzlH7UVSna6
+ xusQ==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCWgA7mudPomuhaCnwqqP5VLjWMMQsCgW4KKECng+btaUkQiPm+sBKwG/7UPwKR2uwCPsg4JVvzS8lGN@nongnu.org
+X-Gm-Message-State: AOJu0Yy7NWnxoV8vvgQUa8dSdDvsbpeSRGj6iDIFB6tB3SDZPDiuD+0O
+ RglvhZvBNRB4CYB3EmlPvo9pv4yOdP7ZSIwp3T9fjeWI/kdNkvbqHO5B4/iH+vY=
+X-Gm-Gg: ASbGncs2huu3Wi1gE4tvpY+4tlpq+oWrApFAklC9D6hutaO+IVjyVB3sYisY7RY5aWM
+ PHU1Jl/ojRyjqNyN1u76fDOCFPlRGeC3FIBtasxOEOOdj1BEXnFU3581SbHNpxOkBXwZ+ddXv4V
+ /w5MfGWLEqhUc69UYZDEYTVlUtLgmNg1H0Cdv/NE0DudWsmtTZQmkRseY7B5/fR1qHZ9+9UQIWh
+ MmelTJcXrmzbkl9ANwfIQCQ+54VQnh6wYZ9qVca9kwNGNDIqtK+8Jm284xv+qquy7tsce9IQjjw
+ JWhAY5sZ
+X-Google-Smtp-Source: AGHT+IFmvruijp1BEvAnBJfOm1j9+gPPi9V7Kkx3ueo6O/d/NXd36XGCBQQTWZBTOae1S2dEL7DSTw==
+X-Received: by 2002:a17:90b:5485:b0:2ee:ee77:2263 with SMTP id
+ 98e67ed59e1d1-2f782c4bd9amr23642731a91.7.1737410716602; 
+ Mon, 20 Jan 2025 14:05:16 -0800 (PST)
+Received: from [192.168.68.110] ([191.202.238.10])
+ by smtp.gmail.com with ESMTPSA id
+ 98e67ed59e1d1-2f72c17f6cdsm12535617a91.12.2025.01.20.14.05.11
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Mon, 20 Jan 2025 14:05:16 -0800 (PST)
+Message-ID: <5dfb0ac1-5f1b-4132-8041-16d6a8907319@ventanamicro.com>
+Date: Mon, 20 Jan 2025 19:05:09 -0300
 MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 5/7] tests/qtest: rename qtest_send_prefix and roll-up
+ into qtest_send
+To: =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ qemu-devel@nongnu.org
+Cc: qemu-s390x@nongnu.org, qemu-arm@nongnu.org, Thomas Huth
+ <thuth@redhat.com>, Peter Maydell <peter.maydell@linaro.org>,
+ Nicholas Piggin <npiggin@gmail.com>,
+ Daniel Henrique Barboza <danielhb413@gmail.com>,
+ Harsh Prateek Bora <harshpb@linux.ibm.com>,
+ Palmer Dabbelt <palmer@dabbelt.com>,
+ Alistair Francis <alistair.francis@wdc.com>, Bin Meng <bmeng.cn@gmail.com>,
+ Weiwei Li <liwei1518@gmail.com>, Liu Zhiwei <zhiwei_liu@linux.alibaba.com>,
+ Fabiano Rosas <farosas@suse.de>, Laurent Vivier <lvivier@redhat.com>,
+ Paolo Bonzini <pbonzini@redhat.com>,
+ "open list:sPAPR (pseries)" <qemu-ppc@nongnu.org>,
+ "open list:RISC-V TCG CPUs" <qemu-riscv@nongnu.org>
+References: <20250120210212.3890255-1-alex.bennee@linaro.org>
+ <20250120210212.3890255-6-alex.bennee@linaro.org>
+Content-Language: en-US
+From: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
+In-Reply-To: <20250120210212.3890255-6-alex.bennee@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Content-Type: text/plain
-X-Originating-IP: [10.180.168.240]
-X-ClientProxiedBy: SATLEXMB03.amd.com (10.181.40.144) To SATLEXMB04.amd.com
- (10.181.40.145)
-X-EOPAttributedMessage: 0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: BN1PEPF00004681:EE_|SJ0PR12MB8114:EE_
-X-MS-Office365-Filtering-Correlation-Id: db9a1247-6779-4968-dd5e-08dd3999de32
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;
- ARA:13230040|36860700013|376014|82310400026|1800799024; 
-X-Microsoft-Antispam-Message-Info: =?us-ascii?Q?J8Zk6+1bysTUJZiajneDEStF3SNubGfXY9a9909u4gZvtza/Qkwty2ZaR9vD?=
- =?us-ascii?Q?4LV1MRNEIih15zm5nGea36ecgCe5Zuoo0z4UCSazYjO7J6fhaoP7c2bILEPV?=
- =?us-ascii?Q?UWZBEcyyc8ITTej8T/0q2Y6GpRiB4jeCpWCX3kYkdBpFVE6fdDQ9HWGqmvSY?=
- =?us-ascii?Q?lD3W0l1yXCwnPlNkU6BtcXJmd+AviTV4dYwKW+2g4TzCL2QDsQXU3wnH3OzZ?=
- =?us-ascii?Q?UPnvzbeksmDtcykZYhddb0aMX5DCwU0TZnxBwhZM2UXg9LYiUl8QKOvW7YmL?=
- =?us-ascii?Q?5FLFA0U12HYZUZS6jjVzb1ziJjfTwAC5/wtrfjsbWvkGZjVwe01M85Yy3Tn9?=
- =?us-ascii?Q?rzII5m8sil/lV/XOX9xn5hjYGkAgGepPKQXEL44/xJVEkPGJAgX1UG0ehiNR?=
- =?us-ascii?Q?9r3BnPHmz8uFQYUlNpLmkDvW7BTKg5ckB20iBcn8m60vI4OvC5FQgl7ITBdP?=
- =?us-ascii?Q?gka8ivgTytvASOMSyxP9I+z6CKroZSoBgKHChnhHu8F7jfTzJOjVVfcxWv9h?=
- =?us-ascii?Q?ibCn+CX6f/Czf5gNhQOZcgDOUt70hpFNxqk0Mq8V3L6cfwIThgFi+fwLQNDh?=
- =?us-ascii?Q?kzK2rR9KqYNkhJqc9Orb5V6yw2qktQiisgUEdiIpD4ZDHd0dXyrwjnrD4ueZ?=
- =?us-ascii?Q?u30AoR0e0XbnlJJGwVFxRI2ICIeQxuvDxogrTrfXs5x12Ux+0P3kvEvrSuhu?=
- =?us-ascii?Q?jD7UDKSxAXllpe0kRKDfncx3+sk4UTsoE7ejR4VYNq13FRsKk/ZM4uDnToUs?=
- =?us-ascii?Q?VxAdW+4o0g6vxcvn4rhRNSj5J5Xfdpq0vkUPJaYwLQZ6ab6iu+FBXCUKqUY8?=
- =?us-ascii?Q?yHB4lPFIG3vJlY77idApbPjPw7dxKweN0pI3ZXksdjbho/sW9VH9vpNAxS4O?=
- =?us-ascii?Q?lTfFi5ej+HwU1ZlaQkFOxjNEtoOHJj6QQt1OrqSxRl36YTP626qpiyrxNR7k?=
- =?us-ascii?Q?hZQDLggLXl+Qd7kpTR+JclbCMlQZnZ2vd/rrO3SWYh8CYWoQrGXGa//5Vr0q?=
- =?us-ascii?Q?xZ8khluybrBOEY8yAFoYvbvLboH77fLIYx5Fs8M7Thha9H9HzWR7DPIsFVuo?=
- =?us-ascii?Q?OAkGe7hYuehmWVWq6k/egGJRRhutswj6EmdYqjDWwt5Z82m1LWWQkjAwa71h?=
- =?us-ascii?Q?vUM/pCSI9GweFbzOSuVZ5CV4MnXFasn0z8pdNbWDcNyVSXd91KjTOZlKDCKM?=
- =?us-ascii?Q?w5piBRh/5iKLsWTAUiQFt/VNmocGcpLe5ydXHgUzzvutzY24g3mqL8DDBhSp?=
- =?us-ascii?Q?kVlBYSsCBwyDKfRoAbdTpoRKQlT56Cb9CN/aRQtSvDPMSn2EhxWx/zqE+B55?=
- =?us-ascii?Q?tIIItleMy2Ix3FllvzYZsORvA86EVXMG9znyUjA5v26hQKnelSPIuEGpAp3g?=
- =?us-ascii?Q?BEPF1nDF3qmaz0YzSwC40SbeEFd4/X7HxI4/btIqT9gUYzOYhCUuAYnaaCPO?=
- =?us-ascii?Q?/cyXS4XC+UG9xa9fZtuOroipOjSWw0IbtQyv+72XNZxujUNKW2Xs9xADxoQb?=
- =?us-ascii?Q?Df0WvqEo67q6Jog=3D?=
-X-Forefront-Antispam-Report: CIP:165.204.84.17; CTRY:US; LANG:en; SCL:1; SRV:;
- IPV:CAL; SFV:NSPM; H:SATLEXMB04.amd.com; PTR:InfoDomainNonexistent; CAT:NONE;
- SFS:(13230040)(36860700013)(376014)(82310400026)(1800799024); DIR:OUT;
- SFP:1101; 
-X-OriginatorOrg: amd.com
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 20 Jan 2025 21:31:57.6508 (UTC)
-X-MS-Exchange-CrossTenant-Network-Message-Id: db9a1247-6779-4968-dd5e-08dd3999de32
-X-MS-Exchange-CrossTenant-Id: 3dd8961f-e488-4e60-8e11-a82d994e183d
-X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=3dd8961f-e488-4e60-8e11-a82d994e183d; Ip=[165.204.84.17];
- Helo=[SATLEXMB04.amd.com]
-X-MS-Exchange-CrossTenant-AuthSource: BN1PEPF00004681.namprd03.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Anonymous
-X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: SJ0PR12MB8114
-Received-SPF: permerror client-ip=2a01:111:f403:2417::620;
- envelope-from=Huibo.Wang@amd.com;
- helo=NAM12-DM6-obe.outbound.protection.outlook.com
-X-Spam_score_int: -50
-X-Spam_score: -5.1
-X-Spam_bar: -----
-X-Spam_report: (-5.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-3,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Received-SPF: pass client-ip=2607:f8b0:4864:20::102a;
+ envelope-from=dbarboza@ventanamicro.com; helo=mail-pj1-x102a.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
-X-Mailman-Approved-At: Mon, 20 Jan 2025 16:59:27 -0500
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -153,59 +116,248 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Michael Roth <michael.roth@amd.com>
 
-Add defines for SNP certificate support.
 
-Signed-off-by: Michael Roth <michael.roth@amd.com>
-Signed-off-by: Melody Wang <huibo.wang@amd.com>
----
- linux-headers/linux/kvm.h | 10 ++++++++++
- 1 file changed, 10 insertions(+)
+On 1/20/25 6:02 PM, Alex Bennée wrote:
+> qtest_send_prefix never actually sent something over the chardev, all
+> it does is print the timestamp to the QTEST_LOG when enabled. So
+> rename the function, make it static, remove the unused CharDev and
+> simplify all the call sites by handling that directly with
+> qtest_send (and qtest_log_send).
+> 
+> Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
+> ---
 
-diff --git a/linux-headers/linux/kvm.h b/linux-headers/linux/kvm.h
-index 3bcd4eabe3..10f6c908d9 100644
---- a/linux-headers/linux/kvm.h
-+++ b/linux-headers/linux/kvm.h
-@@ -135,6 +135,12 @@ struct kvm_xen_exit {
- 	} u;
- };
- 
-+struct kvm_exit_snp_req_certs {
-+	__u64 gfn;
-+	__u32 npages;
-+	__u32 ret;
-+};
-+
- #define KVM_S390_GET_SKEYS_NONE   1
- #define KVM_S390_SKEYS_MAX        1048576
- 
-@@ -178,6 +184,7 @@ struct kvm_xen_exit {
- #define KVM_EXIT_NOTIFY           37
- #define KVM_EXIT_LOONGARCH_IOCSR  38
- #define KVM_EXIT_MEMORY_FAULT     39
-+#define KVM_EXIT_SNP_REQ_CERTS    40
- 
- /* For KVM_EXIT_INTERNAL_ERROR */
- /* Emulate instruction failed. */
-@@ -438,6 +445,8 @@ struct kvm_run {
- 			__u64 gpa;
- 			__u64 size;
- 		} memory_fault;
-+		/* KVM_EXIT_SNP_REQ_CERTS */
-+		struct kvm_exit_snp_req_certs snp_req_certs;
- 		/* Fix the size of the union. */
- 		char padding[256];
- 	};
-@@ -925,6 +934,7 @@ struct kvm_enable_cap {
- #define KVM_CAP_PRE_FAULT_MEMORY 236
- #define KVM_CAP_X86_APIC_BUS_CYCLES_NS 237
- #define KVM_CAP_X86_GUEST_MODE 238
-+#define KVM_CAP_EXIT_SNP_REQ_CERTS 239
- 
- struct kvm_irq_routing_irqchip {
- 	__u32 irqchip;
--- 
-2.34.1
+Reviewed-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
+
+>   include/system/qtest.h |  1 -
+>   hw/ppc/spapr_rtas.c    |  1 -
+>   hw/riscv/riscv_hart.c  |  1 -
+>   system/qtest.c         | 26 +++-----------------------
+>   4 files changed, 3 insertions(+), 26 deletions(-)
+> 
+> diff --git a/include/system/qtest.h b/include/system/qtest.h
+> index c161d75165..6ddddc501b 100644
+> --- a/include/system/qtest.h
+> +++ b/include/system/qtest.h
+> @@ -24,7 +24,6 @@ static inline bool qtest_enabled(void)
+>   }
+>   
+>   #ifndef CONFIG_USER_ONLY
+> -void qtest_send_prefix(CharBackend *chr);
+>   void G_GNUC_PRINTF(2, 3) qtest_sendf(CharBackend *chr, const char *fmt, ...);
+>   void qtest_set_command_cb(bool (*pc_cb)(CharBackend *chr, gchar **words));
+>   bool qtest_driver(void);
+> diff --git a/hw/ppc/spapr_rtas.c b/hw/ppc/spapr_rtas.c
+> index df2e837632..503d441b48 100644
+> --- a/hw/ppc/spapr_rtas.c
+> +++ b/hw/ppc/spapr_rtas.c
+> @@ -565,7 +565,6 @@ static bool spapr_qtest_callback(CharBackend *chr, gchar **words)
+>           g_assert(rc == 0);
+>           res = qtest_rtas_call(words[1], nargs, args, nret, ret);
+>   
+> -        qtest_send_prefix(chr);
+>           qtest_sendf(chr, "OK %"PRIu64"\n", res);
+>   
+>           return true;
+> diff --git a/hw/riscv/riscv_hart.c b/hw/riscv/riscv_hart.c
+> index ad67cd7645..a55d156668 100644
+> --- a/hw/riscv/riscv_hart.c
+> +++ b/hw/riscv/riscv_hart.c
+> @@ -94,7 +94,6 @@ static bool csr_qtest_callback(CharBackend *chr, gchar **words)
+>           g_assert(rc == 0);
+>           csr_call(words[1], cpu, csr, &val);
+>   
+> -        qtest_send_prefix(chr);
+>           qtest_sendf(chr, "OK 0 "TARGET_FMT_lx"\n", (target_ulong)val);
+>   
+>           return true;
+> diff --git a/system/qtest.c b/system/qtest.c
+> index bb1efba9fd..28b6fac37c 100644
+> --- a/system/qtest.c
+> +++ b/system/qtest.c
+> @@ -265,7 +265,7 @@ static int hex2nib(char ch)
+>       }
+>   }
+>   
+> -void qtest_send_prefix(CharBackend *chr)
+> +static void qtest_log_timestamp(void)
+>   {
+>       if (!qtest_log_fp || !qtest_opened) {
+>           return;
+> @@ -282,7 +282,7 @@ static void G_GNUC_PRINTF(1, 2) qtest_log_send(const char *fmt, ...)
+>           return;
+>       }
+>   
+> -    qtest_send_prefix(NULL);
+> +    qtest_log_timestamp();
+>   
+>       va_start(ap, fmt);
+>       vfprintf(qtest_log_fp, fmt, ap);
+> @@ -301,6 +301,7 @@ static void qtest_server_char_be_send(void *opaque, const char *str)
+>   
+>   static void qtest_send(CharBackend *chr, const char *str)
+>   {
+> +    qtest_log_timestamp();
+>       qtest_server_send(qtest_server_send_opaque, str);
+>   }
+>   
+> @@ -324,7 +325,6 @@ static void qtest_irq_handler(void *opaque, int n, int level)
+>       if (irq_levels[n] != level) {
+>           CharBackend *chr = &qtest->qtest_chr;
+>           irq_levels[n] = level;
+> -        qtest_send_prefix(chr);
+>           qtest_sendf(chr, "IRQ %s %d\n",
+>                       level ? "raise" : "lower", n);
+>       }
+> @@ -380,19 +380,16 @@ static void qtest_process_command(CharBackend *chr, gchar **words)
+>           is_outbound = words[0][14] == 'o';
+>           dev = DEVICE(object_resolve_path(words[1], NULL));
+>           if (!dev) {
+> -            qtest_send_prefix(chr);
+>               qtest_send(chr, "FAIL Unknown device\n");
+>               return;
+>           }
+>   
+>           if (is_named && !is_outbound) {
+> -            qtest_send_prefix(chr);
+>               qtest_send(chr, "FAIL Interception of named in-GPIOs not yet supported\n");
+>               return;
+>           }
+>   
+>           if (irq_intercept_dev) {
+> -            qtest_send_prefix(chr);
+>               if (irq_intercept_dev != dev) {
+>                   qtest_send(chr, "FAIL IRQ intercept already enabled\n");
+>               } else {
+> @@ -419,7 +416,6 @@ static void qtest_process_command(CharBackend *chr, gchar **words)
+>               }
+>           }
+>   
+> -        qtest_send_prefix(chr);
+>           if (interception_succeeded) {
+>               irq_intercept_dev = dev;
+>               qtest_send(chr, "OK\n");
+> @@ -438,7 +434,6 @@ static void qtest_process_command(CharBackend *chr, gchar **words)
+>   
+>           dev = DEVICE(object_resolve_path(words[1], NULL));
+>           if (!dev) {
+> -            qtest_send_prefix(chr);
+>               qtest_send(chr, "FAIL Unknown device\n");
+>               return;
+>           }
+> @@ -457,7 +452,6 @@ static void qtest_process_command(CharBackend *chr, gchar **words)
+>           irq = qdev_get_gpio_in_named(dev, name, num);
+>   
+>           qemu_set_irq(irq, level);
+> -        qtest_send_prefix(chr);
+>           qtest_send(chr, "OK\n");
+>       } else if (strcmp(words[0], "outb") == 0 ||
+>                  strcmp(words[0], "outw") == 0 ||
+> @@ -480,7 +474,6 @@ static void qtest_process_command(CharBackend *chr, gchar **words)
+>           } else if (words[0][3] == 'l') {
+>               cpu_outl(addr, value);
+>           }
+> -        qtest_send_prefix(chr);
+>           qtest_send(chr, "OK\n");
+>       } else if (strcmp(words[0], "inb") == 0 ||
+>           strcmp(words[0], "inw") == 0 ||
+> @@ -501,7 +494,6 @@ static void qtest_process_command(CharBackend *chr, gchar **words)
+>           } else if (words[0][2] == 'l') {
+>               value = cpu_inl(addr);
+>           }
+> -        qtest_send_prefix(chr);
+>           qtest_sendf(chr, "OK 0x%04x\n", value);
+>       } else if (strcmp(words[0], "writeb") == 0 ||
+>                  strcmp(words[0], "writew") == 0 ||
+> @@ -537,7 +529,6 @@ static void qtest_process_command(CharBackend *chr, gchar **words)
+>               address_space_write(first_cpu->as, addr, MEMTXATTRS_UNSPECIFIED,
+>                                   &data, 8);
+>           }
+> -        qtest_send_prefix(chr);
+>           qtest_send(chr, "OK\n");
+>       } else if (strcmp(words[0], "readb") == 0 ||
+>                  strcmp(words[0], "readw") == 0 ||
+> @@ -571,7 +562,6 @@ static void qtest_process_command(CharBackend *chr, gchar **words)
+>                                  &value, 8);
+>               tswap64s(&value);
+>           }
+> -        qtest_send_prefix(chr);
+>           qtest_sendf(chr, "OK 0x%016" PRIx64 "\n", value);
+>       } else if (strcmp(words[0], "read") == 0) {
+>           g_autoptr(GString) enc = NULL;
+> @@ -593,7 +583,6 @@ static void qtest_process_command(CharBackend *chr, gchar **words)
+>   
+>           enc = qemu_hexdump_line(NULL, data, len, 0, 0);
+>   
+> -        qtest_send_prefix(chr);
+>           qtest_sendf(chr, "OK 0x%s\n", enc->str);
+>   
+>           g_free(data);
+> @@ -613,7 +602,6 @@ static void qtest_process_command(CharBackend *chr, gchar **words)
+>           address_space_read(first_cpu->as, addr, MEMTXATTRS_UNSPECIFIED, data,
+>                              len);
+>           b64_data = g_base64_encode(data, len);
+> -        qtest_send_prefix(chr);
+>           qtest_sendf(chr, "OK %s\n", b64_data);
+>   
+>           g_free(data);
+> @@ -649,7 +637,6 @@ static void qtest_process_command(CharBackend *chr, gchar **words)
+>                               len);
+>           g_free(data);
+>   
+> -        qtest_send_prefix(chr);
+>           qtest_send(chr, "OK\n");
+>       } else if (strcmp(words[0], "memset") == 0) {
+>           uint64_t addr, len;
+> @@ -673,7 +660,6 @@ static void qtest_process_command(CharBackend *chr, gchar **words)
+>               g_free(data);
+>           }
+>   
+> -        qtest_send_prefix(chr);
+>           qtest_send(chr, "OK\n");
+>       }  else if (strcmp(words[0], "b64write") == 0) {
+>           uint64_t addr, len;
+> @@ -705,10 +691,8 @@ static void qtest_process_command(CharBackend *chr, gchar **words)
+>           address_space_write(first_cpu->as, addr, MEMTXATTRS_UNSPECIFIED, data,
+>                               len);
+>   
+> -        qtest_send_prefix(chr);
+>           qtest_send(chr, "OK\n");
+>       } else if (strcmp(words[0], "endianness") == 0) {
+> -        qtest_send_prefix(chr);
+>           if (target_words_bigendian()) {
+>               qtest_sendf(chr, "OK big\n");
+>           } else {
+> @@ -726,7 +710,6 @@ static void qtest_process_command(CharBackend *chr, gchar **words)
+>                                               QEMU_TIMER_ATTR_ALL);
+>           }
+>           new_ns = qemu_clock_advance_virtual_time(old_ns + ns);
+> -        qtest_send_prefix(chr);
+>           qtest_sendf(chr, "%s %"PRIi64"\n",
+>                       new_ns > old_ns ? "OK" : "FAIL", new_ns);
+>       } else if (strcmp(words[0], "module_load") == 0) {
+> @@ -734,7 +717,6 @@ static void qtest_process_command(CharBackend *chr, gchar **words)
+>           int rv;
+>           g_assert(words[1] && words[2]);
+>   
+> -        qtest_send_prefix(chr);
+>           rv = module_load(words[1], words[2], &local_err);
+>           if (rv > 0) {
+>               qtest_sendf(chr, "OK\n");
+> @@ -752,13 +734,11 @@ static void qtest_process_command(CharBackend *chr, gchar **words)
+>           ret = qemu_strtoi64(words[1], NULL, 0, &ns);
+>           g_assert(ret == 0);
+>           new_ns = qemu_clock_advance_virtual_time(ns);
+> -        qtest_send_prefix(chr);
+>           qtest_sendf(chr, "%s %"PRIi64"\n",
+>                       new_ns == ns ? "OK" : "FAIL", new_ns);
+>       } else if (process_command_cb && process_command_cb(chr, words)) {
+>           /* Command got consumed by the callback handler */
+>       } else {
+> -        qtest_send_prefix(chr);
+>           qtest_sendf(chr, "FAIL Unknown command '%s'\n", words[0]);
+>       }
+>   }
 
 
