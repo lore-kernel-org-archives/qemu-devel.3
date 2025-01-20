@@ -4,49 +4,48 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0EDA2C02181
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0EDD9C02182
 	for <qemu-devel@archiver.kernel.org>; Mon, 20 Jan 2025 21:34:35 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tZzPG-0005j9-6O; Mon, 20 Jan 2025 16:34:02 -0500
+	id 1tZzPD-0005i5-Ga; Mon, 20 Jan 2025 16:33:59 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <deller@kernel.org>) id 1tZzPA-0005hd-Jv
+ (Exim 4.90_1) (envelope-from <deller@kernel.org>) id 1tZzPA-0005he-MQ
  for qemu-devel@nongnu.org; Mon, 20 Jan 2025 16:33:56 -0500
 Received: from dfw.source.kernel.org ([2604:1380:4641:c500::1])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <deller@kernel.org>) id 1tZzP9-0000ub-0X
+ (Exim 4.90_1) (envelope-from <deller@kernel.org>) id 1tZzP9-0000uc-1W
  for qemu-devel@nongnu.org; Mon, 20 Jan 2025 16:33:56 -0500
 Received: from smtp.kernel.org (transwarp.subspace.kernel.org [100.75.92.58])
- by dfw.source.kernel.org (Postfix) with ESMTP id 72A545C5E4C;
- Mon, 20 Jan 2025 21:33:05 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4D628C4CEDD;
- Mon, 20 Jan 2025 21:33:44 +0000 (UTC)
+ by dfw.source.kernel.org (Postfix) with ESMTP id A80C35C5E15;
+ Mon, 20 Jan 2025 21:33:03 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7AE98C4CEDD;
+ Mon, 20 Jan 2025 21:33:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
- s=k20201202; t=1737408825;
- bh=hiowJEZim/pl10ariAxbjJF8nbwVOGWFYrx0bQiDF1U=;
- h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
- b=MjB4xn1FLJpH5e2NjmdNt0mYlxktl1dCu//jnUe95BlgF/ttpcjZXFH88+pxbaySG
- brgpUdzMtcmDcreF6E2BAgTvRowQ5kEHcSTg3IjaHK15035dmHj/5GByKsoUwkO0p8
- ETMS1IVZgD4BLGiA+WUszClMSqI2Cb+4B48nEy4H4ejO8of7te/8OUaAPMATwtXCNQ
- tECwIziSZJ2h7ATTao7IGtgJJsMoqJpgx9HtrQLyVM41Zhy7XishB2n0jVHqe6oOib
- 1gF4jjyQwMRuUZaGClXsgIImKqfx9RMDcndlbkaQM522ISsEDnjwhMEKQ7yxrpG7Rv
- uqzy21n0FixPg==
+ s=k20201202; t=1737408823;
+ bh=YHCSlkY5uMLyiOUtY9zSq6Ifv8J+oAsOkxlCltkzlHo=;
+ h=From:To:Cc:Subject:Date:From;
+ b=NQkX/yZGdbuo3BCkM/u1ax1FBtG27DVlb5V3VBQO3x5PdP3XA5XhFqXPT0JwZCDUO
+ 5uNCaKtGlnKbA1TDD3VqW6e8vv/TL6hbfRrIvyQWMuvgsuxKvSbQ7Pkuxgf8STylo0
+ 2GpeSWsIo/+MDYurQpGY2xrSGdtK/pI6OMC5fY6QKMEfat86v6Blf5rX2jKJDs9XAT
+ 0SteGUPOJSeyZ1rWDt4C1GwJThdbVOnE7jWL7e96ucjaMumzygm6UKA+Y2Zsv+CGpP
+ OLm/F8ldGK4Z7XjGIHU+w0x1N1nl76AqbspoNstb/40LbIZgF2Hjm6Gtw4NG3m8kmR
+ YgI0s78ZsmvVw==
 From: deller@kernel.org
 To: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  Richard Henderson <richard.henderson@linaro.org>,
  Laurent Vivier <laurent@vivier.eu>, qemu-devel@nongnu.org,
  Stefan Hajnoczi <stefanha@gmail.com>
 Cc: deller@gmx.de
-Subject: [PATCH v4 1/7] linux-user: netlink: Add missing IFA_PROTO to
- host_to_target_data_addr_rtattr()
-Date: Mon, 20 Jan 2025 22:33:34 +0100
-Message-ID: <20250120213340.359195-2-deller@kernel.org>
+Subject: [PATCH v4 0/7] linux-user: Add support for various missing netlink
+ sockopt entries
+Date: Mon, 20 Jan 2025 22:33:33 +0100
+Message-ID: <20250120213340.359195-1-deller@kernel.org>
 X-Mailer: git-send-email 2.47.0
-In-Reply-To: <20250120213340.359195-1-deller@kernel.org>
-References: <20250120213340.359195-1-deller@kernel.org>
 MIME-Version: 1.0
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=2604:1380:4641:c500::1;
  envelope-from=deller@kernel.org; helo=dfw.source.kernel.org
@@ -74,56 +73,48 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Helge Deller <deller@gmx.de>
 
-Fixes this warning:
- Unknown host IFA type: 11
+This patchset adds various missing sockopt calls, so that qemu linux-user
+is able to successfully build the debian gupnp package in a chroot.
 
-IFA_PROTO has been introduced in kernel v5.18, and as such using it
-unconditionally breaks build on Ubuntu 22.04.  Instead convert the IFA_XXX
-values to QEMU_IDA_XXX values and use those instead.
-Already existing IFA_XXX usages are converted to QEMU_IFA_XXX in a
-followup-patch.
+Tested with a 32-bit big-endian hppa linux-user chroot running on a phyiscal
+x86-64 little-endian host.
+
+This fixes debian's bug report:
+https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=1044651
 
 Signed-off-by: Helge Deller <deller@gmx.de>
-Reviewed-by: Laurent Vivier <laurent@vivier.eu>
----
- linux-user/fd-trans.c | 17 +++++++++++++++++
- 1 file changed, 17 insertions(+)
 
-diff --git a/linux-user/fd-trans.c b/linux-user/fd-trans.c
-index c04a97c73a..05a944b32e 100644
---- a/linux-user/fd-trans.c
-+++ b/linux-user/fd-trans.c
-@@ -31,6 +31,22 @@
- #include "fd-trans.h"
- #include "signal-common.h"
- 
-+enum {
-+    QEMU_IFA_UNSPEC,
-+    QEMU_IFA_ADDRESS,
-+    QEMU_IFA_LOCAL,
-+    QEMU_IFA_LABEL,
-+    QEMU_IFA_BROADCAST,
-+    QEMU_IFA_ANYCAST,
-+    QEMU_IFA_CACHEINFO,
-+    QEMU_IFA_MULTICAST,
-+    QEMU_IFA_FLAGS,
-+    QEMU_IFA_RT_PRIORITY,
-+    QEMU_IFA_TARGET_NETNSID,
-+    QEMU_IFA_PROTO,
-+    QEMU__IFA__MAX,
-+};
-+
- enum {
-     QEMU_IFLA_BR_UNSPEC,
-     QEMU_IFLA_BR_FORWARD_DELAY,
-@@ -1140,6 +1156,7 @@ static abi_long host_to_target_data_addr_rtattr(struct rtattr *rtattr)
-     /* binary: depends on family type */
-     case IFA_ADDRESS:
-     case IFA_LOCAL:
-+    case QEMU_IFA_PROTO:
-         break;
-     /* string */
-     case IFA_LABEL:
+Please review patches #1 and #7.
+
+Changes in v4:
+- rewrote patch #1 to fix build on ubuntu 22.04 and add
+  cleanup-patch #7
+- added S-o-b from Laurent to patches #3 and #4
+
+Changes in v3:
+- Updated patches #3, #4 and #5 based on suggestions from
+  Laurent Vivier
+
+Changes in v2:
+- Moved IFA_PROTO in patch 1 as suggested by Laurent Vivier
+- Added Reviewed-by from Philippe Mathieu-Daudé and Laurent Vivier
+  in patch 2
+
+Helge Deller (7):
+  linux-user: netlink: Add missing IFA_PROTO to
+    host_to_target_data_addr_rtattr()
+  linux-user: Use unique error messages for cmsg parsing
+  linux-user: netlink: Add IP_PKTINFO cmsg parsing
+  linux-user: netlink: Add emulation of IP_MULTICAST_IF
+  linux-user: netlink: add netlink neighbour emulation
+  linux-user: netlink: Add missing QEMU_IFLA entries
+  linux-user: netlink: Use QEMU_IFA_XXX values instead of IFA_XXX
+
+ linux-user/fd-trans.c     | 169 ++++++++++++++++++++++++++++++++++++--
+ linux-user/syscall.c      |  34 ++++++--
+ linux-user/syscall_defs.h |   6 ++
+ 3 files changed, 192 insertions(+), 17 deletions(-)
+
 -- 
 2.47.0
 
