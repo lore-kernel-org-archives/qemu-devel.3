@@ -4,65 +4,65 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DD846C02181
-	for <qemu-devel@archiver.kernel.org>; Mon, 20 Jan 2025 21:03:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CB3A2C02182
+	for <qemu-devel@archiver.kernel.org>; Mon, 20 Jan 2025 21:04:03 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tZyuv-00022w-JE; Mon, 20 Jan 2025 16:02:41 -0500
+	id 1tZyv0-00029t-GJ; Mon, 20 Jan 2025 16:02:46 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1tZyug-0001g9-0d
- for qemu-devel@nongnu.org; Mon, 20 Jan 2025 16:02:28 -0500
-Received: from mail-ed1-x530.google.com ([2a00:1450:4864:20::530])
+ id 1tZyub-0001cU-GA
+ for qemu-devel@nongnu.org; Mon, 20 Jan 2025 16:02:25 -0500
+Received: from mail-ed1-x529.google.com ([2a00:1450:4864:20::529])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1tZyub-0002yL-7i
- for qemu-devel@nongnu.org; Mon, 20 Jan 2025 16:02:24 -0500
-Received: by mail-ed1-x530.google.com with SMTP id
- 4fb4d7f45d1cf-5d9f06f8cf2so9469623a12.3
- for <qemu-devel@nongnu.org>; Mon, 20 Jan 2025 13:02:20 -0800 (PST)
+ id 1tZyuY-0002x3-Rn
+ for qemu-devel@nongnu.org; Mon, 20 Jan 2025 16:02:21 -0500
+Received: by mail-ed1-x529.google.com with SMTP id
+ 4fb4d7f45d1cf-5d9837f201aso10886783a12.0
+ for <qemu-devel@nongnu.org>; Mon, 20 Jan 2025 13:02:17 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1737406939; x=1738011739; darn=nongnu.org;
+ d=linaro.org; s=google; t=1737406937; x=1738011737; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=EFe2HzElji14TI185hUsajOPss7t//BADmWsqkIN0JA=;
- b=pMKM+W6GooQ6tIwX770Eqn//b7J8BKK5QKTdpxzmY7cdSarXOKjCc/AHeCju40+AuP
- iPajOWlEjNiNP5n7cOKbU0Gmgo+hyI4N2f6LLBvLmftpJJ0XSBA5T8nVyHUAxmdoPz94
- X7ZTfpORf9ujZbX+cD3407o5vWgBlFx73sJCejKQWakzWFTnIZ0nuPYphtzkOweN61c6
- xZ9qWZf4xCHX7EpAIfZNKqKU7f3DiGWmBvJzAhtEHjXbpZxrNNxsECBk5djL8Po3ggd7
- 7gupysOvmZSI4L2uy+uUwnEYNShxeQX2Z7cacUXdJC9+T7ZoevRcF2dEJbNXWr+VCQxb
- d+BA==
+ bh=ptvjzIuVDQT2UCn5M7MTp4nlZSIRLqW4pGkuqXQqZnQ=;
+ b=gWL5oCrMq1p46LoYyWfGNHlihzfQlZ78aMZAxao9Sermz0HFtyJ+uE+lRNYDVy3d7C
+ /UK8T4/yfL+t4LKMDJMf/FfubZ/CZD1dL6tl7eT22f1oFezX3Ki32KKXvXOhntp9LkFI
+ e84qGhgWbPd6cB0/IragWLYrP6uZxZjB8wfiJprnl+Wwo9P9YPDpkMWs8dwQIsO3E9uc
+ 8TbBg/ngylzoAhaolDNC6h8HCdDNP0CzBgQdJL8I+eyaEvWO5JtWFYIE5kiy15Zuujz6
+ S7Qt57dOJzftAp+cVe2Cz9o1ANBKhHsc65ybWWvbxDfJ5yPjtYT6yqjpkYQFXtn/q5br
+ CD8w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1737406939; x=1738011739;
+ d=1e100.net; s=20230601; t=1737406937; x=1738011737;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=EFe2HzElji14TI185hUsajOPss7t//BADmWsqkIN0JA=;
- b=HmgOMJatMdvogHgwmZQwX2oLUHPAeEUGfQqunoyrJESJeNfoKKuXZeJC2qD8QRgpz6
- +IIqyBLd7HNM+Z/TMF4msWUBAz4hOpLkZilLOtAKeqEk7fuFJ1JeNZFsd5R6RbKrY1Gi
- kpy1MOlMshaluHqdjyVNggbr4K51l/5McLhOMTXuyeAM6RbSKJR9B6KKgvSY9b5b+xx3
- UDB+Vv859Smut129uGeG2oT43AMC/B+SHZu+rOow9YRbI2qS7hpKFdshwd0pClByZHQz
- nd8V7XIzc03NH+xsP/Dhxolt95nq2sRkNKDox7bQYUF7vXysdz73oCNrBOij6Hp4Xhqi
- LKEA==
-X-Gm-Message-State: AOJu0Yz9+G0WnhMyjYhKF6ejfSBQgAu8aBbzYteCACfeYGIS5liaqABV
- tqNqNJY2mF7CK3lrEVj5Q7kb333mpPeETBiDTbmCRei3mE2KMpb3QVWpPlZLDoo=
-X-Gm-Gg: ASbGncsuEQRqfaAhsHoTVDaNNp3d6z4cDA/BYbdnT2qBJgLpPLaP+1UAuEj7Zl27yCL
- SkIiZhxcGk8i8hvLACaR1DiLlAVmwM1tlQgJLbvRePHrCmzIKJznnw6cc6fysC4FDvvB/GIm/b6
- n7ckL6t6GJpv+0T/fKn2HIBR9+sLnZd4RTkN+VZVXpEO6AYks6A6Gmp4Ruwj9qH3lDgFo1RBoKR
- MVUagiKKR2iAoctxpxtsdOsOGMYeOVzW2wL4GXvCRM2LHCRt+h5e1SlPDJWH5w/6DLN
-X-Google-Smtp-Source: AGHT+IEFkr0P5M+4UovfrMwhQuhqZaKZ9IknMU5uk9qyiYpNjRLZAUZPwFAjooIvZAWoih2znZZu6g==
-X-Received: by 2002:a05:6402:5251:b0:5d2:d72a:77e4 with SMTP id
- 4fb4d7f45d1cf-5db7db1234bmr14902156a12.28.1737406939279; 
- Mon, 20 Jan 2025 13:02:19 -0800 (PST)
-Received: from draig.lan ([85.9.250.243]) by smtp.gmail.com with ESMTPSA id
- 4fb4d7f45d1cf-5db73edce5csm6200172a12.75.2025.01.20.13.02.14
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ bh=ptvjzIuVDQT2UCn5M7MTp4nlZSIRLqW4pGkuqXQqZnQ=;
+ b=xCdufuqjsHgHMx9jk3mJbDmPf+tOdh8e1LFj0UyksM5NaJtbUnBKkdFbB7IOr94BSM
+ D6jg/o+freIwO4I2bYuydlq6A7Hhpt8sE4pzJwyFkIKrd38Lb6GNK/527TmTo8+16xLy
+ ignmCW0lu3HuTQlNjaTOLB2zfQQ28XnVHues5x3ICga3fUAXzd8CQ2TnyIKhnEZ+NhKL
+ ilg9vv4yeWaEtk/g9H1isEUsQVDjJv9J2q09dX+e9A6q6GVficYYcYGq5/iQ0Qu7wPEl
+ 5vzGSld1Th/tKpDq/1u2c6Zx39vM0B/JgyR9aF9UePWVBVOE7uiyhhHCUguYQUSfrbJB
+ dkfQ==
+X-Gm-Message-State: AOJu0Ywrzg6Tw+5BVQbzQXThk37RHBmqLjOlbxVTl9/t9ey8bXUX6hfa
+ DK6LhkObUrpv1P1/xDe6kauC5lhUj7k4i2Mssi9JX8P9tmvO8gWAQCQrk8BS954=
+X-Gm-Gg: ASbGncv7g/lt2p5ers9ErkXqTQvCx6EZZnYMp/zelAFdNvVB2YFjF7uKILFLr+V2uzR
+ YxxHYZ/c63CeuIOg4OFCKQ7rwgCndqSkli13pr7UNF73MLInnCloDzIqzbp5yHU3ooKIFul04HG
+ oau5SFDFLFeiPQoxO0wANXB02E2Mmma99ZlfVcu3deq0Tk4OPkAZQeElpNlsmNlnM+ZxPBfs+UB
+ 3lPmKb3FuPC5NV3k6cg9NeZoQUlDQJBucOXT/eLXy25argc3T4oAarxVS3gEXWXyara
+X-Google-Smtp-Source: AGHT+IEy6CTvXjpH3hwX3WPd1J9MHnIjPXw6R7FGXXq6DCTUZoHI1DScxIs5x31kXdC4Odk5G/Kv8g==
+X-Received: by 2002:a17:906:794d:b0:aae:8687:c41e with SMTP id
+ a640c23a62f3a-ab38cd913ebmr1339787666b.26.1737406936897; 
  Mon, 20 Jan 2025 13:02:16 -0800 (PST)
+Received: from draig.lan ([85.9.250.243]) by smtp.gmail.com with ESMTPSA id
+ a640c23a62f3a-ab384f223f3sm664050266b.116.2025.01.20.13.02.13
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Mon, 20 Jan 2025 13:02:15 -0800 (PST)
 Received: from draig.lan (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id 61A675FA1B;
+ by draig.lan (Postfix) with ESMTP id 380E15F9F8;
  Mon, 20 Jan 2025 21:02:13 +0000 (GMT)
 From: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
 To: qemu-devel@nongnu.org
@@ -71,17 +71,17 @@ Cc: qemu-s390x@nongnu.org, qemu-arm@nongnu.org, Thomas Huth <thuth@redhat.com>,
  =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
  Fabiano Rosas <farosas@suse.de>, Laurent Vivier <lvivier@redhat.com>,
  Paolo Bonzini <pbonzini@redhat.com>
-Subject: [PATCH 6/7] tests/qtest: tighten up the checks on clock_step
-Date: Mon, 20 Jan 2025 21:02:11 +0000
-Message-Id: <20250120210212.3890255-7-alex.bennee@linaro.org>
+Subject: [PATCH 4/7] tests/qtest: simplify qtest_process_inbuf
+Date: Mon, 20 Jan 2025 21:02:09 +0000
+Message-Id: <20250120210212.3890255-5-alex.bennee@linaro.org>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <20250120210212.3890255-1-alex.bennee@linaro.org>
 References: <20250120210212.3890255-1-alex.bennee@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::530;
- envelope-from=alex.bennee@linaro.org; helo=mail-ed1-x530.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::529;
+ envelope-from=alex.bennee@linaro.org; helo=mail-ed1-x529.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -104,35 +104,53 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-It is invalid to call clock_step with an implied time to step forward
-as if no timers are running we won't be able to advance.
+Don't both creating a GString to temporarily hold our qtest command.
+Instead do a simpler g_strndup and use autofree to clean up
+afterwards.
 
 Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
 ---
- system/qtest.c | 7 ++++++-
- 1 file changed, 6 insertions(+), 1 deletion(-)
+ system/qtest.c | 20 ++++++++------------
+ 1 file changed, 8 insertions(+), 12 deletions(-)
 
 diff --git a/system/qtest.c b/system/qtest.c
-index 28b6fac37c..1a9bfd0b33 100644
+index e68ed0f2a8..bb1efba9fd 100644
 --- a/system/qtest.c
 +++ b/system/qtest.c
-@@ -708,10 +708,15 @@ static void qtest_process_command(CharBackend *chr, gchar **words)
-         } else {
-             ns = qemu_clock_deadline_ns_all(QEMU_CLOCK_VIRTUAL,
-                                             QEMU_TIMER_ATTR_ALL);
-+            if (ns < 0) {
-+                qtest_send(chr, "FAIL "
-+                           "no timers for clock_step to follow\n");
-+                return;
-+            }
-         }
-         new_ns = qemu_clock_advance_virtual_time(old_ns + ns);
-         qtest_sendf(chr, "%s %"PRIi64"\n",
--                    new_ns > old_ns ? "OK" : "FAIL", new_ns);
-+                    new_ns > old_ns ? "OK" : "FAIL could not advance time", new_ns);
-     } else if (strcmp(words[0], "module_load") == 0) {
-         Error *local_err = NULL;
-         int rv;
+@@ -763,25 +763,21 @@ static void qtest_process_command(CharBackend *chr, gchar **words)
+     }
+ }
+ 
++/*
++ * Process as much of @inbuf as we can in newline terminated chunks.
++ * Remove the processed commands from @inbuf as we go.
++ */
+ static void qtest_process_inbuf(CharBackend *chr, GString *inbuf)
+ {
+     char *end;
+ 
+     while ((end = strchr(inbuf->str, '\n')) != NULL) {
+-        size_t offset;
+-        GString *cmd;
+-        gchar **words;
+-
+-        offset = end - inbuf->str;
++        size_t len = end - inbuf->str;
++        g_autofree char *cmd = g_strndup(inbuf->str, len);
++        g_auto(GStrv) words = g_strsplit(cmd, " ", 0);
+ 
+-        cmd = g_string_new_len(inbuf->str, offset);
+-        g_string_erase(inbuf, 0, offset + 1);
+-
+-        words = g_strsplit(cmd->str, " ", 0);
++        g_string_erase(inbuf, 0, len + 1);
+         qtest_process_command(chr, words);
+-        g_strfreev(words);
+-
+-        g_string_free(cmd, TRUE);
+     }
+ }
+ 
 -- 
 2.39.5
 
