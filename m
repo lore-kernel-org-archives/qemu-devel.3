@@ -4,80 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 60EA7C0218B
-	for <qemu-devel@archiver.kernel.org>; Mon, 20 Jan 2025 21:03:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DD846C02181
+	for <qemu-devel@archiver.kernel.org>; Mon, 20 Jan 2025 21:03:37 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tZyun-0001rz-Hs; Mon, 20 Jan 2025 16:02:33 -0500
+	id 1tZyuv-00022w-JE; Mon, 20 Jan 2025 16:02:41 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1tZyub-0001cT-Db
- for qemu-devel@nongnu.org; Mon, 20 Jan 2025 16:02:23 -0500
-Received: from mail-ed1-x533.google.com ([2a00:1450:4864:20::533])
+ id 1tZyug-0001g9-0d
+ for qemu-devel@nongnu.org; Mon, 20 Jan 2025 16:02:28 -0500
+Received: from mail-ed1-x530.google.com ([2a00:1450:4864:20::530])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1tZyuY-0002wm-04
- for qemu-devel@nongnu.org; Mon, 20 Jan 2025 16:02:21 -0500
-Received: by mail-ed1-x533.google.com with SMTP id
- 4fb4d7f45d1cf-5d88c355e0dso9482174a12.0
- for <qemu-devel@nongnu.org>; Mon, 20 Jan 2025 13:02:17 -0800 (PST)
+ id 1tZyub-0002yL-7i
+ for qemu-devel@nongnu.org; Mon, 20 Jan 2025 16:02:24 -0500
+Received: by mail-ed1-x530.google.com with SMTP id
+ 4fb4d7f45d1cf-5d9f06f8cf2so9469623a12.3
+ for <qemu-devel@nongnu.org>; Mon, 20 Jan 2025 13:02:20 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1737406936; x=1738011736; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=ihiKrKRxDJxLxAaYATB66nrO+RRpI0LPvSiH9m1+/fU=;
- b=nG5pElsE0m1SeAyXGmYYpS3bWqCSYr8GZiedPTPZttIyxTP2P827n40JjHNX9didBu
- 44f4g2EoxGofWARROosMsVrS15CpN+ot/Cdy8ieUobDYWlNjBugx5uNyRjL+1Svhl8OO
- K6mEzs1UaoMMff6s8Uc9yvMNEdL8RE2RFDHcq8BvO56EGmV75zMF6YP6Z/CRtTnvlV3Q
- xshxPDgEzWyWisqi6vtkjTzl70pw76I4ni2JZWWM9mOla4wOhw+98RO3qGAeZqGyPXQE
- 5K0j2ljMwTXjP7EOdHKrG4GJ9lb9B63rU6orYDuzF61DCOK05NiDayPI2XJ+gfd+lIVg
- czSw==
+ d=linaro.org; s=google; t=1737406939; x=1738011739; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=EFe2HzElji14TI185hUsajOPss7t//BADmWsqkIN0JA=;
+ b=pMKM+W6GooQ6tIwX770Eqn//b7J8BKK5QKTdpxzmY7cdSarXOKjCc/AHeCju40+AuP
+ iPajOWlEjNiNP5n7cOKbU0Gmgo+hyI4N2f6LLBvLmftpJJ0XSBA5T8nVyHUAxmdoPz94
+ X7ZTfpORf9ujZbX+cD3407o5vWgBlFx73sJCejKQWakzWFTnIZ0nuPYphtzkOweN61c6
+ xZ9qWZf4xCHX7EpAIfZNKqKU7f3DiGWmBvJzAhtEHjXbpZxrNNxsECBk5djL8Po3ggd7
+ 7gupysOvmZSI4L2uy+uUwnEYNShxeQX2Z7cacUXdJC9+T7ZoevRcF2dEJbNXWr+VCQxb
+ d+BA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1737406936; x=1738011736;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=ihiKrKRxDJxLxAaYATB66nrO+RRpI0LPvSiH9m1+/fU=;
- b=TCbVHBpC4UTv5195w77CDbxTbvzioCl4km8Zv2fIF8nU2YadKRr90KFfGqKFAKun7L
- tmzcPy9QJ+GWnkwVTaOusgosTf0HyyItyPfezh+/wboEB9Uy1H9sB++TdBbh2DLySHcg
- JF7sWKg+kDthSm5My65qqAugY2PIdWG4JAiu+cLnLsZAuXgvc1IBEUa5IocVeQpBhZ1d
- T3p+puZqetRsJGZl/lrVmd7UjxbEwCK4clfNnYXHATeqYkTGk6UjM8gKzmX6WgKGI1Jo
- aMs+ajeMI9OM2FxHUrcx9by5a77eel9V8kjUblKfJVvF5qOEU6TCIXm2XrLNH6btZ2LY
- G/9A==
-X-Gm-Message-State: AOJu0Yx2Z0fn6BN7g/vcFnKY63/JyCbeulX6ei8KH/eRQCgR6JN1KaKz
- 7NJa1G6jV2vqNhNuVcpo8HrRP4lJrKMPlfG/NQE+VP3LIFAC71cR/J3pnwS4VtXkK2UKA4gXlR3
- /mKc=
-X-Gm-Gg: ASbGncuBldjW8y5mE0x49I16aySmEiehyw4CzzDicUN4rzvRI+tO2baXetRFDuUXNKp
- jb80ig/5gWeYF1Yrfwx1GgSLEuB8g3PM1+/Xg2KfxN8bf6nDmc6QZ7XWJovXz5Eu2HAySECitIf
- AEoCKxY08U1qGEr7mnmopoq+bqbelvONVrtKDbz4FWuiAggcfiTIY9v9E8EfG9bViLAiFpdl5Dy
- zW9Fr41lRbbVLORoK25mMJAgW10PcPh2Aj45uI4WQnoQ0LX3SiH146A11cfXt4P8aOi
-X-Google-Smtp-Source: AGHT+IHBHe/qLI/S6AsR179BQPMj/PPC/XwLLOL1fS9l1j4mvLxhnswmVJBmSvcVm77xJ+0uZKUl9g==
-X-Received: by 2002:a05:6402:2110:b0:5cf:e894:8de9 with SMTP id
- 4fb4d7f45d1cf-5db7d2e7da7mr13973182a12.3.1737406936337; 
- Mon, 20 Jan 2025 13:02:16 -0800 (PST)
+ d=1e100.net; s=20230601; t=1737406939; x=1738011739;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=EFe2HzElji14TI185hUsajOPss7t//BADmWsqkIN0JA=;
+ b=HmgOMJatMdvogHgwmZQwX2oLUHPAeEUGfQqunoyrJESJeNfoKKuXZeJC2qD8QRgpz6
+ +IIqyBLd7HNM+Z/TMF4msWUBAz4hOpLkZilLOtAKeqEk7fuFJ1JeNZFsd5R6RbKrY1Gi
+ kpy1MOlMshaluHqdjyVNggbr4K51l/5McLhOMTXuyeAM6RbSKJR9B6KKgvSY9b5b+xx3
+ UDB+Vv859Smut129uGeG2oT43AMC/B+SHZu+rOow9YRbI2qS7hpKFdshwd0pClByZHQz
+ nd8V7XIzc03NH+xsP/Dhxolt95nq2sRkNKDox7bQYUF7vXysdz73oCNrBOij6Hp4Xhqi
+ LKEA==
+X-Gm-Message-State: AOJu0Yz9+G0WnhMyjYhKF6ejfSBQgAu8aBbzYteCACfeYGIS5liaqABV
+ tqNqNJY2mF7CK3lrEVj5Q7kb333mpPeETBiDTbmCRei3mE2KMpb3QVWpPlZLDoo=
+X-Gm-Gg: ASbGncsuEQRqfaAhsHoTVDaNNp3d6z4cDA/BYbdnT2qBJgLpPLaP+1UAuEj7Zl27yCL
+ SkIiZhxcGk8i8hvLACaR1DiLlAVmwM1tlQgJLbvRePHrCmzIKJznnw6cc6fysC4FDvvB/GIm/b6
+ n7ckL6t6GJpv+0T/fKn2HIBR9+sLnZd4RTkN+VZVXpEO6AYks6A6Gmp4Ruwj9qH3lDgFo1RBoKR
+ MVUagiKKR2iAoctxpxtsdOsOGMYeOVzW2wL4GXvCRM2LHCRt+h5e1SlPDJWH5w/6DLN
+X-Google-Smtp-Source: AGHT+IEFkr0P5M+4UovfrMwhQuhqZaKZ9IknMU5uk9qyiYpNjRLZAUZPwFAjooIvZAWoih2znZZu6g==
+X-Received: by 2002:a05:6402:5251:b0:5d2:d72a:77e4 with SMTP id
+ 4fb4d7f45d1cf-5db7db1234bmr14902156a12.28.1737406939279; 
+ Mon, 20 Jan 2025 13:02:19 -0800 (PST)
 Received: from draig.lan ([85.9.250.243]) by smtp.gmail.com with ESMTPSA id
- 4fb4d7f45d1cf-5db73670dbbsm6283722a12.28.2025.01.20.13.02.13
+ 4fb4d7f45d1cf-5db73edce5csm6200172a12.75.2025.01.20.13.02.14
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 20 Jan 2025 13:02:15 -0800 (PST)
+ Mon, 20 Jan 2025 13:02:16 -0800 (PST)
 Received: from draig.lan (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id DCFB15F713;
- Mon, 20 Jan 2025 21:02:12 +0000 (GMT)
+ by draig.lan (Postfix) with ESMTP id 61A675FA1B;
+ Mon, 20 Jan 2025 21:02:13 +0000 (GMT)
 From: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: qemu-s390x@nongnu.org, qemu-arm@nongnu.org, Thomas Huth <thuth@redhat.com>,
  Peter Maydell <peter.maydell@linaro.org>,
- =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
-Subject: [PATCH 0/7] testing/next (qtest timer stuff)
-Date: Mon, 20 Jan 2025 21:02:05 +0000
-Message-Id: <20250120210212.3890255-1-alex.bennee@linaro.org>
+ =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Fabiano Rosas <farosas@suse.de>, Laurent Vivier <lvivier@redhat.com>,
+ Paolo Bonzini <pbonzini@redhat.com>
+Subject: [PATCH 6/7] tests/qtest: tighten up the checks on clock_step
+Date: Mon, 20 Jan 2025 21:02:11 +0000
+Message-Id: <20250120210212.3890255-7-alex.bennee@linaro.org>
 X-Mailer: git-send-email 2.39.5
+In-Reply-To: <20250120210212.3890255-1-alex.bennee@linaro.org>
+References: <20250120210212.3890255-1-alex.bennee@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::533;
- envelope-from=alex.bennee@linaro.org; helo=mail-ed1-x533.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::530;
+ envelope-from=alex.bennee@linaro.org; helo=mail-ed1-x530.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -100,51 +104,35 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi,
+It is invalid to call clock_step with an implied time to step forward
+as if no timers are running we won't be able to advance.
 
-Thomas found that a number of tests fail under CFI and other exotic
-setups. The eventual realisation was that --enable-slirp masks a lot
-of timer misuse because it ensures there is always a timer and
-therefor things tend to move on (until the system is shutting down).
+Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
+---
+ system/qtest.c | 7 ++++++-
+ 1 file changed, 6 insertions(+), 1 deletion(-)
 
-It turns out that bc02be4508 wasn't the solution after all. The first
-few patches are clean-ups and various tightening of test expectations
-before we revert the patch.
-
-Please review:
-
-  Revert "util/timer: avoid deadlock when shutting down"
-  tests/qtest: tighten up the checks on clock_step
-  tests/qtest: rename qtest_send_prefix and roll-up into qtest_send
-  tests/qtest: simplify qtest_process_inbuf
-  tests/qtest: don't step clock at start of npcm7xx periodic IRQ test
-  tests/qtest: don't attempt to clock_step while waiting for virtio ISR
-  tests/docker: replicate the check-rust-tools-nightly CI job
-
-Alex.
-
-Alex Bennée (7):
-  tests/docker: replicate the check-rust-tools-nightly CI job
-  tests/qtest: don't attempt to clock_step while waiting for virtio ISR
-  tests/qtest: don't step clock at start of npcm7xx periodic IRQ test
-  tests/qtest: simplify qtest_process_inbuf
-  tests/qtest: rename qtest_send_prefix and roll-up into qtest_send
-  tests/qtest: tighten up the checks on clock_step
-  Revert "util/timer: avoid deadlock when shutting down"
-
- include/system/qtest.h                 |  1 -
- hw/ppc/spapr_rtas.c                    |  1 -
- hw/riscv/riscv_hart.c                  |  1 -
- system/qtest.c                         | 53 +++++++++-----------------
- tests/qtest/libqos/virtio-pci-modern.c |  6 +--
- tests/qtest/libqos/virtio-pci.c        |  6 +--
- tests/qtest/npcm7xx_timer-test.c       |  1 -
- util/qemu-timer.c                      | 16 ++------
- tests/docker/Makefile.include          |  3 ++
- tests/docker/test-rust                 | 21 ++++++++++
- 10 files changed, 48 insertions(+), 61 deletions(-)
- create mode 100755 tests/docker/test-rust
-
+diff --git a/system/qtest.c b/system/qtest.c
+index 28b6fac37c..1a9bfd0b33 100644
+--- a/system/qtest.c
++++ b/system/qtest.c
+@@ -708,10 +708,15 @@ static void qtest_process_command(CharBackend *chr, gchar **words)
+         } else {
+             ns = qemu_clock_deadline_ns_all(QEMU_CLOCK_VIRTUAL,
+                                             QEMU_TIMER_ATTR_ALL);
++            if (ns < 0) {
++                qtest_send(chr, "FAIL "
++                           "no timers for clock_step to follow\n");
++                return;
++            }
+         }
+         new_ns = qemu_clock_advance_virtual_time(old_ns + ns);
+         qtest_sendf(chr, "%s %"PRIi64"\n",
+-                    new_ns > old_ns ? "OK" : "FAIL", new_ns);
++                    new_ns > old_ns ? "OK" : "FAIL could not advance time", new_ns);
+     } else if (strcmp(words[0], "module_load") == 0) {
+         Error *local_err = NULL;
+         int rv;
 -- 
 2.39.5
 
