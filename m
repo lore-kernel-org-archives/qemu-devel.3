@@ -4,85 +4,88 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CBD7AC02182
-	for <qemu-devel@archiver.kernel.org>; Mon, 20 Jan 2025 20:49:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 173CCC02181
+	for <qemu-devel@archiver.kernel.org>; Mon, 20 Jan 2025 20:50:45 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tZyiB-0007c3-64; Mon, 20 Jan 2025 15:49:31 -0500
+	id 1tZyip-0000Ww-Sa; Mon, 20 Jan 2025 15:50:12 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <dbarboza@ventanamicro.com>)
- id 1tZyi1-0007Ga-Lx
- for qemu-devel@nongnu.org; Mon, 20 Jan 2025 15:49:22 -0500
-Received: from mail-pl1-x632.google.com ([2607:f8b0:4864:20::632])
+ id 1tZyi7-0007Wm-Sj
+ for qemu-devel@nongnu.org; Mon, 20 Jan 2025 15:49:27 -0500
+Received: from mail-pl1-x630.google.com ([2607:f8b0:4864:20::630])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <dbarboza@ventanamicro.com>)
- id 1tZyhz-0006Mm-SO
- for qemu-devel@nongnu.org; Mon, 20 Jan 2025 15:49:21 -0500
-Received: by mail-pl1-x632.google.com with SMTP id
- d9443c01a7336-21bc1512a63so91044135ad.1
- for <qemu-devel@nongnu.org>; Mon, 20 Jan 2025 12:49:19 -0800 (PST)
+ id 1tZyi6-0006T1-6y
+ for qemu-devel@nongnu.org; Mon, 20 Jan 2025 15:49:27 -0500
+Received: by mail-pl1-x630.google.com with SMTP id
+ d9443c01a7336-21661be2c2dso86452715ad.1
+ for <qemu-devel@nongnu.org>; Mon, 20 Jan 2025 12:49:25 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=ventanamicro.com; s=google; t=1737406158; x=1738010958; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=w8Zk6h0bVmQwQ8Hz7dRn07keIxPfHL2v5GahEzPttlE=;
- b=fvfQUnA4n2NHeb5zAiFVO5nsX8boOrRT5Ef08mwSZRp0XP878vwAGIFZpJAftSF4/U
- qtuqoBGhVurPuHj/wYg8pAxSrq1ArcyrYTefQwF4KiZD1+j60Zw7Em1hY/fklNmhm+MT
- a7s5IPWliUtvZrso2wcpSTZgKRyNd04dApLzh+lyzgzmRmpxoRB9ZzuhYSTo5CcNL+Tm
- KyjM48Ttwg89Lv1ut9fVFpSXvcpJOjlDtGSmDzyT7t70TXdhSb1QJ8rDX2lMBc2PJefB
- Ak3KZ+lXs0qgeRP75JbQX930kK0w4+n4o2NBplCKTfw3CNqmc6FV6KMk323239O23RJH
- EjFg==
+ d=ventanamicro.com; s=google; t=1737406164; x=1738010964; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=15v7CjmqmiVnhIsisrdhFZVgAtNohMz6B6oxkmQn1Ww=;
+ b=ehBvQZGX7dce9hTnEunwfcgDI+Jp8kq+MkSh18sVpNSHf7EjAd2XzBIk24RBAENP4f
+ JmS19gABMxBioAZmfjLgoc1igD3b7OtwpKNg6fCtfPIjVg/rEF99ZHDkrrnuKsOe0alO
+ 8SNWnb2OtjOYmRe+LbN7E7uBf9KU8+s5vWJTSkQHFe9TfNNHI5PT3MWECYycRiFfMhHM
+ 6EnhhyzXU91RrHHAlw8U3PfNDhXAKjw+utAgT4pLvRL+0XR10Yumx9yKZnzDGjrTjIfZ
+ C9FDrljBbr9FtQ75x/kd2zIkqmlhipbe1l9M7FhtkK6Jm9Vvc+GL9s/lXeXDfW2RCK82
+ jkzA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1737406158; x=1738010958;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=w8Zk6h0bVmQwQ8Hz7dRn07keIxPfHL2v5GahEzPttlE=;
- b=ISiuJRRsUz9cMFi/G5OdYKVjrW7q3EzVHnqv64zKWxX+XZpsImOIgxtScjTSXkM+it
- nVumVFnk9duiK9DWnNri8Pvn5wCrUyx4aBVWTj+F54zGEJUhd+cxKDhxNAnKx/DixZkx
- Eo4kheLfoJixvZ+/SDW4h+nlK3ISpo/VleRSn7QA8sOELD/GLEYV5EQVflvnx0Wujq6n
- JOSOElaLPmDXjPRqcLsp8Fxn9O3SJw0/mB804vBV4pE37MVqoZKmYk9sQpDxY5j3me+C
- SMeAVwEGMWdEo3KU8vKHoP4SHzn6QxSMs4xTraDoTm+lWYwIFeYqtiVs3fboJoVGsMLO
- xunQ==
-X-Gm-Message-State: AOJu0YzVgwpkQmR+CtuIgntQZVtztylYS34DS6FgCuQw+W0YAdFurUzT
- DYNKSjUS/sTSobp1Jmj1Gl28bSD3ReCHxZgDErIZm7HF5WWw7xGgK9fBouDVQeeLj70WEsQve0C
- x
-X-Gm-Gg: ASbGncu6VnGQ1943IDlkFTTPlz5F6sNJ2UoPJ+kkd2EZbva3t9f9t4VSATEROqISnlc
- J4qFxwKJucydaw2RfjxjQjCqlIT1v2RrKT/0suemhvJ6QfI9lezbI7BJqQLdTGGZFCDkIwEI1Bz
- PBjZ/0YMdSFdZnTN7j33vunWxj7vBunKE4mXaM4HJKmDpcw8zISBmYd57/b2lIAFZ+s8ScQ8KaU
- Jq3q+TGAjlYHpA1/+Z5l6HIPF37lTpeWeB8jRa/vsIjil6qX3SLgWHwBnjzSBXBIAUneTz8OA==
-X-Google-Smtp-Source: AGHT+IGRL/xtgKUFL2UvRPKXkznXNBImzsv/OFW2saAyuPU99lJDagf3DwQgzCtRgefwA9Gp0AIGTQ==
-X-Received: by 2002:a17:903:22d0:b0:215:63a0:b58c with SMTP id
- d9443c01a7336-21c356780cfmr189555365ad.46.1737406158083; 
- Mon, 20 Jan 2025 12:49:18 -0800 (PST)
+ d=1e100.net; s=20230601; t=1737406164; x=1738010964;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=15v7CjmqmiVnhIsisrdhFZVgAtNohMz6B6oxkmQn1Ww=;
+ b=cboqwz9mpdtKY5pA9dMwsIEwojc1oO8KxYHY2nKLbepLRpYQUVQGvO3H/KNH0CfJn+
+ yYcDv0T5G8/0ubjiAlzKRy86HfcDJyyCBlY11m2x/Cxs4fc5UNx6+TpzUo4ITBvwGuhj
+ OwwdovuObKm61/tYXlhF43DqkGXrBPWPz/CsA1aY+QGVM4Dcm3LyjpqRNq5/zNtiBjR4
+ 6Z6ZwTqRK5psiHpeKKms9L9gJPlDsFkoz6qtr1hxWSL/U1M8VlsT1gpSQ6GebvuKN/ee
+ PAd/xsvqoesg5y+iqfvlVF+eRc2pLEVmPm63NfJvPad/l5c/bcqvhdYlu4W9bneB+W5/
+ NZCQ==
+X-Gm-Message-State: AOJu0Yyqc8FneITfBzsG5DnV5m/6jvhJF5WV9k7kvWP8mydaMCuXLb0F
+ BN/EFrJ5rdqOOxyqHVbeVtZvgF4J3/jBhrP6/+ZSA6sHCJrV6JF9o3HwcNyZsSJLc6YcdD4OI1i
+ Z
+X-Gm-Gg: ASbGnctJdPu8uuroE/+jELr4L600YI4Eb0ebOOsFUIxn1IuSkpEkQ0DNJM/+WRNosZ6
+ EZSmiZatqXBEv8HkCjd4ShtbnCHVeWOm5z20bDrzTGTIUVtBdI6bMes98kZ10OoJjGdDo62Ttg3
+ yCDjVbfW6oppgkD7i5EFBVHUWWHcmzww6WrMnypZuogZY1k0oTX1KzQlhfluX8l+qXvAxUPuf+T
+ jk/zR83WNPucAJ7OW8lDix5B/7slHdN/PJc2OwO31iOCNsC84C84S0z1zOUsAqrhInEAL/YUw==
+X-Google-Smtp-Source: AGHT+IFpupti+sEQlL8jzdcS281EHn3VhtE+Mbds10JMfVKEIIBlXbdHInGyT4gz0lVxStvGYU4UQQ==
+X-Received: by 2002:a17:902:d4cf:b0:215:a97a:c6bb with SMTP id
+ d9443c01a7336-21c35400a0dmr216826905ad.12.1737406164409; 
+ Mon, 20 Jan 2025 12:49:24 -0800 (PST)
 Received: from grind.. ([2804:7f0:bdcd:fb00:6501:2693:db52:c621])
  by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-21c2cea08e4sm64865025ad.7.2025.01.20.12.49.15
+ d9443c01a7336-21c2cea08e4sm64865025ad.7.2025.01.20.12.49.21
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 20 Jan 2025 12:49:17 -0800 (PST)
+ Mon, 20 Jan 2025 12:49:24 -0800 (PST)
 From: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
 To: qemu-devel@nongnu.org
 Cc: qemu-riscv@nongnu.org, alistair.francis@wdc.com, bmeng@tinylab.org,
  liwei1518@gmail.com, zhiwei_liu@linux.alibaba.com, palmer@rivosinc.com,
  richard.henderson@linaro.org,
  Daniel Henrique Barboza <dbarboza@ventanamicro.com>
-Subject: [PATCH v2 0/2] target/riscv: throw debug exception before page fault
-Date: Mon, 20 Jan 2025 17:49:08 -0300
-Message-ID: <20250120204910.1317013-1-dbarboza@ventanamicro.com>
+Subject: [PATCH v2 2/2] target/riscv: throw debug exception before page fault
+Date: Mon, 20 Jan 2025 17:49:10 -0300
+Message-ID: <20250120204910.1317013-3-dbarboza@ventanamicro.com>
 X-Mailer: git-send-email 2.47.1
+In-Reply-To: <20250120204910.1317013-1-dbarboza@ventanamicro.com>
+References: <20250120204910.1317013-1-dbarboza@ventanamicro.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::632;
- envelope-from=dbarboza@ventanamicro.com; helo=mail-pl1-x632.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::630;
+ envelope-from=dbarboza@ventanamicro.com; helo=mail-pl1-x630.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -98,37 +101,68 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi,
+In the RISC-V privileged ISA section 3.1.15 table 15, it is determined
+that a debug exception that is triggered from a load/store has a higher
+priority than a possible fault that this access might trigger.
 
-This second version implements the change Richard suggested in v1, i.e.
-do not search for wps twice.
+This is not the case ATM as shown in [1]. Adding a breakpoint in an
+address that deliberately will fault is causing a load page fault
+instead of a debug exception. The reason is that we're throwing in the
+page fault as soon as the fault occurs (end of riscv_cpu_tlb_fill(),
+raise_mmu_exception()), not allowing the installed watchpoints to
+trigger.
 
-To do that we need to make an assumption that a watchpoint for a 64 bit
-address will have size 8, in particular when the user does not set a
-watchpoint size. To be consistent we also need to consider that 32 bit
-CPUs would use watchpoints of size 4, which is something we're not
-considering.  Patch 1 was added to make things more consistent in this
-regard.
+Call cpu_check_watchpoint() in the page fault path to search and execute
+any watchpoints that might exist for the address, never returning back
+to the fault path. If no watchpoints are found cpu_check_watchpoint()
+will return and we'll fall-through the regular path to
+raise_mmu_exception().
 
-Patches based on master.
+[1] https://gitlab.com/qemu-project/qemu/-/issues/2627
 
-Changes from v1:
-- patch 1 (new):
-  - add watchpoints of size 4 when dealing with 32 bit addresses
-- patch 2:
-  - instead of looking for watchpoints twice, call
-    cpu_check_watchpoint() and rely on fall-through in case no
-    watchpoints are found
-- v1 link: https://mail.gnu.org/archive/html/qemu-devel/2025-01/msg03575.html
-
-Daniel Henrique Barboza (2):
-  target/riscv/debug.c: use wp size = 4 for 32-bit CPUs
-  target/riscv: throw debug exception before page fault
-
+Resolves: https://gitlab.com/qemu-project/qemu/-/issues/2627
+Signed-off-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
+---
  target/riscv/cpu_helper.c | 19 +++++++++++++++++++
- target/riscv/debug.c      |  6 ++++--
- 2 files changed, 23 insertions(+), 2 deletions(-)
+ 1 file changed, 19 insertions(+)
 
+diff --git a/target/riscv/cpu_helper.c b/target/riscv/cpu_helper.c
+index e1dfc4ecbf..ae0a659ec7 100644
+--- a/target/riscv/cpu_helper.c
++++ b/target/riscv/cpu_helper.c
+@@ -27,6 +27,7 @@
+ #include "exec/page-protection.h"
+ #include "instmap.h"
+ #include "tcg/tcg-op.h"
++#include "hw/core/tcg-cpu-ops.h"
+ #include "trace.h"
+ #include "semihosting/common-semi.h"
+ #include "system/cpu-timers.h"
+@@ -1708,6 +1709,24 @@ bool riscv_cpu_tlb_fill(CPUState *cs, vaddr address, int size,
+     } else if (probe) {
+         return false;
+     } else {
++        int wp_len = riscv_cpu_mxl(env) == MXL_RV64 ? 8 : 4;
++        int wp_access = 0;
++
++        if (access_type == MMU_DATA_LOAD) {
++            wp_access |= BP_MEM_READ;
++        } else if (access_type == MMU_DATA_STORE) {
++            wp_access |= BP_MEM_WRITE;
++        }
++
++        /*
++         * If a watchpoint isn't found for 'addr' this will
++         * be a no-op and we'll resume the mmu_exception path.
++         * Otherwise we'll throw a debug exception and execution
++         * will continue elsewhere.
++         */
++        cpu_check_watchpoint(cs, address, wp_len, MEMTXATTRS_UNSPECIFIED,
++                             wp_access, retaddr);
++
+         raise_mmu_exception(env, address, access_type, pmp_violation,
+                             first_stage_error, two_stage_lookup,
+                             two_stage_indirect_error);
 -- 
 2.47.1
 
