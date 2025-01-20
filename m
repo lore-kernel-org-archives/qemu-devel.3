@@ -4,98 +4,110 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 614F2C02181
-	for <qemu-devel@archiver.kernel.org>; Mon, 20 Jan 2025 18:10:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2ED19C02181
+	for <qemu-devel@archiver.kernel.org>; Mon, 20 Jan 2025 18:10:48 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tZwDS-00065k-Sd; Mon, 20 Jan 2025 13:09:38 -0500
+	id 1tZwEG-0006hR-Hb; Mon, 20 Jan 2025 13:10:28 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1tZwDM-00064Y-24
- for qemu-devel@nongnu.org; Mon, 20 Jan 2025 13:09:32 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <laurent@vivier.eu>) id 1tZwEC-0006dr-2D
+ for qemu-devel@nongnu.org; Mon, 20 Jan 2025 13:10:24 -0500
+Received: from mout.kundenserver.de ([212.227.126.134])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1tZwDJ-00041Z-Nu
- for qemu-devel@nongnu.org; Mon, 20 Jan 2025 13:09:31 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1737396566;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=EHf31zdeRsN+LrETSE3SYi4HGjOctajALm9Hz8KGoDY=;
- b=HuPB0QJpP8HP21e1CfYpsqfPYOMpUuCC+oNt4oF0SYFBbDPdLWsdYfLX5U/za3eIWPoMM/
- udIutuB2kzlE6OOktyS5JN2WmDigXCZnTbFuSfRZDAa90xFbVkntNqu0B4A3DSallkoD2I
- 51zoLgMe9Dj+Do+n01IRCb2ioUhVtV0=
-Received: from mail-qv1-f72.google.com (mail-qv1-f72.google.com
- [209.85.219.72]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-660-V1n1aMkoPcq3zdfbjzpFWA-1; Mon, 20 Jan 2025 13:09:23 -0500
-X-MC-Unique: V1n1aMkoPcq3zdfbjzpFWA-1
-X-Mimecast-MFC-AGG-ID: V1n1aMkoPcq3zdfbjzpFWA
-Received: by mail-qv1-f72.google.com with SMTP id
- 6a1803df08f44-6d8844560e9so109756346d6.3
- for <qemu-devel@nongnu.org>; Mon, 20 Jan 2025 10:09:23 -0800 (PST)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1737396563; x=1738001363;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=EHf31zdeRsN+LrETSE3SYi4HGjOctajALm9Hz8KGoDY=;
- b=DuM+EowV/iFptjI9B6uYosrjzaML6Rca3570ffbC87oXAb+AcKVT12+JzfIte2Ga6f
- WtKQJD5WChk28e9FNiaq+jx64KZEBCb/LFOOIw4QHV1812drk+pRmcKz9GggpM0WXibm
- 2OQYKi4ZZXEuT+YBI6RMcVIyng6hYI2L+2PDQ4eqTIng5okG7g9uyAOWHmszB7wv2tUV
- 3oMP9e8siXvFh3dhz0r5BlPWcTDhCt/FFRXaQ+SghALhZsskE2BNyhzYRW5UZ4z8eWbu
- RsRDT4cGa6VvJySKdJBWVSM/xOX/SqtxsMKpPnjguUKyThe0rLIL/UAyjDjJJW5/lUsj
- g3RQ==
-X-Forwarded-Encrypted: i=1;
- AJvYcCUzf9Z1b6C7SAwhVChylltIVsWmYwyiBgpoooTD7mxNWOB11nRwFojqN7LtRfNjtDxDPWBYiGTlMdW8@nongnu.org
-X-Gm-Message-State: AOJu0YxSSaP+okaPP4cp/SfHgvyg5R1192sy76I0XaqpjjIVbOkaheiQ
- KAM5y0NL9vlsB7H7t/y+sxfduzn62o2dJrU8eMKYRS4E+vWASIYcbDNeaVNjPtf7ZG0AD6T9A49
- falT7CCtsYWEZAGaeFXz8aVB3dBbB8QdNATtNYZbETWkCQ5t1FldI
-X-Gm-Gg: ASbGncsHb6Ym0CAUIivaYatEbkVF1UzD4q7c9AuB4xi4k2GZQhI1UV2qnHFrfamllln
- X1hIAoGQCIVHZP3CLNJi6Gmfhg/Ek3fMdM/T9RIGMTE9wmNpANr6PRW1eI5EHMqmOqQ5tJxj1G2
- qDsez+6DK6r45BBinu8jj4QvWJzgIdzv01RWb6STPv6f9JLrPoC7R/AxmDqRBrY0IUlixsfAWUH
- lR4YHtdqQlxl8EYJYNjLDD4Oj9mLy8evk8M8SoPJDiTpe6MhPhYOZPIdwSJeQwcGcxRMM/UNq3R
- Wbyn6rfwg/iD21fe4P7MQUnUL6MsGLE=
-X-Received: by 2002:a05:6214:3d87:b0:6d8:b562:efd7 with SMTP id
- 6a1803df08f44-6e1b2229dc0mr261335976d6.31.1737396562815; 
- Mon, 20 Jan 2025 10:09:22 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IGjzZIqFhBIxeSLxy8x+gO/zeP93RnHT4J++T8bkx1vgiv7xGXlLPbRz5jRLbhzBjJp51vTiQ==
-X-Received: by 2002:a05:6214:3d87:b0:6d8:b562:efd7 with SMTP id
- 6a1803df08f44-6e1b2229dc0mr261335756d6.31.1737396562607; 
- Mon, 20 Jan 2025 10:09:22 -0800 (PST)
-Received: from x1n (pool-99-254-114-190.cpe.net.cable.rogers.com.
- [99.254.114.190]) by smtp.gmail.com with ESMTPSA id
- 6a1803df08f44-6e1afc22e4asm43517376d6.56.2025.01.20.10.09.21
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 20 Jan 2025 10:09:22 -0800 (PST)
-Date: Mon, 20 Jan 2025 13:09:19 -0500
-From: Peter Xu <peterx@redhat.com>
-To: Chenyi Qiang <chenyi.qiang@intel.com>
-Cc: David Hildenbrand <david@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
- Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Michael Roth <michael.roth@amd.com>, qemu-devel@nongnu.org,
- kvm@vger.kernel.org, Williams Dan J <dan.j.williams@intel.com>,
- Peng Chao P <chao.p.peng@intel.com>, Gao Chao <chao.gao@intel.com>,
- Xu Yilun <yilun.xu@intel.com>
-Subject: Re: [PATCH 2/7] guest_memfd: Introduce an object to manage the
- guest-memfd with RamDiscardManager
-Message-ID: <Z46RT__q02nhz3dc@x1n>
-References: <20241213070852.106092-1-chenyi.qiang@intel.com>
- <20241213070852.106092-3-chenyi.qiang@intel.com>
+ (Exim 4.90_1) (envelope-from <laurent@vivier.eu>) id 1tZwE9-0004K1-LW
+ for qemu-devel@nongnu.org; Mon, 20 Jan 2025 13:10:23 -0500
+Received: from [192.168.100.1] ([82.64.211.94]) by mrelayeu.kundenserver.de
+ (mreue012 [213.165.67.103]) with ESMTPSA (Nemesis) id
+ 1MsJXG-1tFWzb2tGU-016Ugn; Mon, 20 Jan 2025 19:10:17 +0100
+Message-ID: <fc7a3ede-a321-4f7b-b9c3-6501e5cf2b74@vivier.eu>
+Date: Mon, 20 Jan 2025 19:10:17 +0100
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20241213070852.106092-3-chenyi.qiang@intel.com>
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=peterx@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -50
-X-Spam_score: -5.1
-X-Spam_bar: -----
-X-Spam_report: (-5.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-3,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.036,
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v3 3/6] linux-user: netlink: Add IP_PKTINFO cmsg parsing
+To: deller@kernel.org, Richard Henderson <richard.henderson@linaro.org>,
+ =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ qemu-devel@nongnu.org, Stefan Hajnoczi <stefanha@gmail.com>
+Cc: deller@gmx.de
+References: <20250119044122.9637-1-deller@kernel.org>
+ <20250119044122.9637-4-deller@kernel.org>
+Content-Language: fr
+From: Laurent Vivier <laurent@vivier.eu>
+Autocrypt: addr=laurent@vivier.eu; keydata=
+ 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
+In-Reply-To: <20250119044122.9637-4-deller@kernel.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+X-Provags-ID: V03:K1:GfukQGkNWGMayzdR+iJ1M2X1+UmxVgAResW+Q6RZUoYT+rs/vbj
+ exT+QxYS6zcriFrotZchxWg8nc1HWNod1QM3hIsM05iErVnCsqvU4z/zLkjOAqVVnZl5LX7
+ jhc9ALPu0TpjTASXFLeDvgXWgsw0/Eqgl8j7kneBuJI7urNfGRk2vUhtGbUejM0DpOrYuLm
+ WPwQFC5W2FO4hAo2c8c2A==
+UI-OutboundReport: notjunk:1;M01:P0:i59WJ8yHplg=;+jPl+H3QwfwUB82yyBMhZ+weVQe
+ WKGY8emIxybCXXMC2HeIZ67qw+XFUUMqnzwCYNsXk78DOIdeE3Dd6jZhFZU96bCsFNpvjnYCT
+ 78qbkGP/BEYnd5ombV3de8RiAirH71UzWe+DU3V6suzYVXt4I2l/WsxupPeMa9epMc3VaZfp/
+ Af0c4KjbIIy4Tj87N0L/Fv97GOERG2dr4dO4EbjyJvlYjVKovW226SqzSgjZQ0ndDuswcy0D+
+ 8l8UyDo7CGOmuUYMNLgoUpu5cayB5+F/qtivmwzjNxnweJanWRCYsoCJsTVblYNPx3WIo3PJc
+ H3xxZAqiu7FoZ1J4xdOSublr+HhAkgWn/dYylQiZLNsUd4R5SIA2ZV7qT+xehDIp+0mnG7iqJ
+ C/56RFXKKSslvo32E6q+PIt0VCYiv+AmJA91N8Qmc6KPeuEWPCOMZuJgO3m8XqFxum/sMTf0u
+ iHJudUoE5DZFgh/0X374C26A04YtD/00+4WQ3IeE736ZzKePvFZspRKsaQd6SF0moGEfCN/dC
+ 48t8vmvyf643Kxn/jpdQwJP+dJrE12RNuu20rcRDdtvXNk3amYpAeW+4/cKuXhcYph9ZzVAUe
+ f0/jOwuP0O492H/0XvrRbLme30lkc92seMmDEDmSjPRV0lUgRApckX5eGkYQw2oUjXIxLRD0W
+ wDu9lUSMyMx+0bQUuDLA0UElwmSOC3Cind7rlZ0qawSHZGLvJC5cILS6LoZlKlC9Lix9esT4B
+ XJ+elRLQX7Q7yo42P8xXU+4rBKET+aOpRaPpovZc+EeQLvNRh2AWwQ2fwX7aBEEibPT9uP2vY
+ Gi5ogGvX+8BKREjROf8Wykw4UBOaMKnqQZC17Iivtgxfm5YG9XYVDdkgmQj2wvxiTphZ3mFmz
+ bwdtpOB1tRMgvcWF6o1qlSCP4YzuMAOXc6Nh9oR2QR/QrygXsOe8HmEqH9FWBYtiKuVUp77kf
+ 6YfxkcR3/Uz7KyXMpa5gT2Ou/Snq5yky11QVd8fkm/KJ0K1y9JtGyNIJhX7jOKA+6R27JcQb5
+ 698/lPBIBq921Y5xC/0Hcr/IquEyPXQDj8pRlabOnO5R1D2PcDs+gHazvQk+5ROZ8uv8N0oX1
+ RSllA4648mIIfNQW/9N8H6W51v0FhJ6sU8M0XY53sRHZyJe9b57wphninloyLELAPKK86t7W4
+ =
+Received-SPF: pass client-ip=212.227.126.134; envelope-from=laurent@vivier.eu;
+ helo=mout.kundenserver.de
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_NONE=-0.0001,
+ RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -113,37 +125,59 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Two trivial comments I spot:
-
-On Fri, Dec 13, 2024 at 03:08:44PM +0800, Chenyi Qiang wrote:
-> +struct GuestMemfdManager {
-> +    Object parent;
+Le 19/01/2025 à 05:41, deller@kernel.org a écrit :
+> From: Helge Deller <deller@gmx.de>
+> 
+> Fixes those warnings:
+>   Unsupported host ancillary data: 0/8
+> 
+> Signed-off-by: Helge Deller <deller@gmx.de>
+> 
+> v2: (based on feedback by Laurent Vivier)
+> - add target_in_pktinfo struct and fix copying target_in_addr fields
+> ---
+>   linux-user/syscall.c      | 10 ++++++++++
+>   linux-user/syscall_defs.h |  6 ++++++
+>   2 files changed, 16 insertions(+)
+> 
+> diff --git a/linux-user/syscall.c b/linux-user/syscall.c
+> index a157abc40c..df8609b4d8 100644
+> --- a/linux-user/syscall.c
+> +++ b/linux-user/syscall.c
+> @@ -1998,6 +1998,16 @@ static inline abi_long host_to_target_cmsg(struct target_msghdr *target_msgh,
+>                       (void *) &errh->offender, sizeof(errh->offender));
+>                   break;
+>               }
+> +            case IP_PKTINFO:
+> +            {
+> +                struct in_pktinfo *pkti = data;
+> +                struct target_in_pktinfo *target_pi = target_data;
 > +
-> +    /* Managed memory region. */
-> +    MemoryRegion *mr;
-> +
-> +    /*
-> +     * 1-setting of the bit represents the memory is populated (shared).
-> +     */
-> +    int32_t bitmap_size;
-> +    unsigned long *bitmap;
-
-Might be clearer to name the bitmap directly as what it represents.  E.g.,
-shared_bitmap?
-
-> +
-> +    /* block size and alignment */
-> +    uint64_t block_size;
-
-Can we always fetch it from the MR/ramblock? If this is needed, better add
-some comment explaining why.
-
-> +
-> +    /* listeners to notify on populate/discard activity. */
-> +    QLIST_HEAD(, RamDiscardListener) rdl_list;
+> +                __put_user(pkti->ipi_ifindex, &target_pi->ipi_ifindex);
+> +                target_pi->ipi_spec_dst.s_addr = pkti->ipi_spec_dst.s_addr;
+> +                target_pi->ipi_addr.s_addr = pkti->ipi_addr.s_addr;
+> +                break;
+> +            }
+>               default:
+>                   goto unimplemented;
+>               }
+> diff --git a/linux-user/syscall_defs.h b/linux-user/syscall_defs.h
+> index faad9147c9..86d773add7 100644
+> --- a/linux-user/syscall_defs.h
+> +++ b/linux-user/syscall_defs.h
+> @@ -2622,6 +2622,12 @@ struct target_ucred {
+>       abi_uint gid;
+>   };
+>   
+> +struct target_in_pktinfo {
+> +    abi_int               ipi_ifindex;
+> +    struct target_in_addr ipi_spec_dst;
+> +    struct target_in_addr ipi_addr;
 > +};
+> +
+>   typedef abi_int target_timer_t;
+>   
+>   #define TARGET_SIGEV_MAX_SIZE 64
 
--- 
-Peter Xu
-
+Reviewed-by: Laurent Vivier <laurent@vivier.eu>
 
