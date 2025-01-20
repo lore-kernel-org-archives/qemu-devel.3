@@ -4,68 +4,136 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 148FBC02181
-	for <qemu-devel@archiver.kernel.org>; Mon, 20 Jan 2025 17:34:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 91434C02181
+	for <qemu-devel@archiver.kernel.org>; Mon, 20 Jan 2025 17:41:57 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tZvev-0001mp-Ps; Mon, 20 Jan 2025 12:33:57 -0500
+	id 1tZvlw-00046F-3y; Mon, 20 Jan 2025 12:41:12 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
- id 1tZveu-0001mM-S5
- for qemu-devel@nongnu.org; Mon, 20 Jan 2025 12:33:56 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1tZvlu-00042R-Rm
+ for qemu-devel@nongnu.org; Mon, 20 Jan 2025 12:41:10 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
- id 1tZves-0007u0-UQ
- for qemu-devel@nongnu.org; Mon, 20 Jan 2025 12:33:56 -0500
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1tZvls-0000TW-1v
+ for qemu-devel@nongnu.org; Mon, 20 Jan 2025 12:41:10 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1737394431;
+ s=mimecast20190719; t=1737394865;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:
- content-transfer-encoding:content-transfer-encoding;
- bh=LI69RojN9MS6X67G+6PFICT4TXr7Kpr6ojIMw/CF1Rs=;
- b=SS56Ut3PWIjZY06cfnHbi+HvVb2U8R5AAP71dwwX5CZwS5LG5XF8OgyRlRFec2PknT6CSI
- eMeBI80ZFyamEOVFLMdLTUP1rZ/61Q5Zf1GvTwJITct3WXKipWV8OYnfW83/1BUa37JgYR
- YLWP4olAdx48+Vud0JzHf3uOX2T7UH4=
-Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-25-7HuKB7TTNH2uPS1_un0EcQ-1; Mon,
- 20 Jan 2025 12:33:47 -0500
-X-MC-Unique: 7HuKB7TTNH2uPS1_un0EcQ-1
-X-Mimecast-MFC-AGG-ID: 7HuKB7TTNH2uPS1_un0EcQ
-Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id A2C4219560AA; Mon, 20 Jan 2025 17:33:45 +0000 (UTC)
-Received: from laptop.redhat.com (unknown [10.39.193.32])
- by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id CDDD019560A3; Mon, 20 Jan 2025 17:33:41 +0000 (UTC)
-From: Eric Auger <eric.auger@redhat.com>
-To: eric.auger.pro@gmail.com, eric.auger@redhat.com, qemu-devel@nongnu.org,
- mst@redhat.com, jasowang@redhat.com, sgarzare@redhat.com,
- lvivier@redhat.com
-Cc: zhenzhong.duan@intel.com
-Subject: [PATCH] hw/virtio/vhost: Disable IOTLB callbacks when IOMMU gets
- disabled
-Date: Mon, 20 Jan 2025 18:33:39 +0100
-Message-ID: <20250120173339.865681-1-eric.auger@redhat.com>
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+ bh=nrDPZogWummfwP6UXCqOyEtKBipn+Q/gEeyfQZ9WAfU=;
+ b=bWstKTn5dAzSy7A1EIPHqiY9UG8skx+abkWM4KE6scFBTqdgEFpB099y0iqbdwTZdsGs0C
+ LMYPDNE3+yJr3PGxipvmqxYJtVMV2eJa167vmidyGWeV9E3jpK/tHNZPJr2wDvm4L+RJcR
+ WJ8HYOsL6M8NEmYpGfQI8wgo19siEbU=
+Received: from mail-ej1-f69.google.com (mail-ej1-f69.google.com
+ [209.85.218.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-142-AjvkCw8hMQqkISllECNqjw-1; Mon, 20 Jan 2025 12:41:04 -0500
+X-MC-Unique: AjvkCw8hMQqkISllECNqjw-1
+X-Mimecast-MFC-AGG-ID: AjvkCw8hMQqkISllECNqjw
+Received: by mail-ej1-f69.google.com with SMTP id
+ a640c23a62f3a-aa68b4b957fso548253666b.3
+ for <qemu-devel@nongnu.org>; Mon, 20 Jan 2025 09:41:04 -0800 (PST)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1737394863; x=1737999663;
+ h=content-transfer-encoding:in-reply-to:autocrypt:content-language
+ :from:references:cc:to:subject:user-agent:mime-version:date
+ :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=nrDPZogWummfwP6UXCqOyEtKBipn+Q/gEeyfQZ9WAfU=;
+ b=olCF0NRw6tjtPWMfxp+fGrFOLaJ/2/jYno6E9pv+fkEYdwCUksGqtKGgmIAho8IFdJ
+ fMnMu4r4k3TtVidZH18yMQaoilhAS4riS6UT3BMJVzgNNYm4oGxIPDxEvPOF0Cs7o/nf
+ kWHdS4Cv51UGJb1wQFVX/4psqyAaS8dlBXiZxL1bQLQ9dBcinYqBuKV3n8WOvpOPGYor
+ mYQAg3Mi/AzTJrIUdSnoCsqzzFkOuC+vn/z6C+CgQbF7aMyBjDSUg3rGYIKUShdRurJw
+ /RP/SIakWlNHeK90kdetEuzDRPCV+YoHu3HFfgo+KS/eFCf2OTd87VgLBHvA+iyFvGKH
+ 3eow==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCVsuV7abp7/tsUbJc9h3P255PVEwohOcot98I0/xZZ3jR3kQfRaM01pDvDfSTohXq1UOfr6K7p7YGpW@nongnu.org
+X-Gm-Message-State: AOJu0YyXhl1NilBb0WWsm6AgrYOO/1Au/UnjHlKmcgi9E5UN7i51aQUL
+ wy0R28ufFztHHx9nDc1WYaKJsJ94QDy3zCccRjuvMaIqK6UggTfcN/kfydxLEF8xfW0tGDaQ9Td
+ OKVTemndW0UPE5vmYKUpl5/YUFvwVtKu8DwWcd4+WL0b1nu6lJMth
+X-Gm-Gg: ASbGncsIqwHbrS/EIP+hFzTDHtsFU8V9lWn0KCzDZc5a83q5YsDBhd5DbfvQ2T45asW
+ 551k/Gek7E2W3CWZwfpihRabTi6AqMD9ExxOwt3PchxG3wTEm7srxA2pwSHp1lVAyAR/rK3Il8v
+ P5MmvAATxJxyvSw4vraCoffdIvCEFzHsuxoqXduLsQyGt1Jol65M1CZ3j8ZTZWKWLrvbHZfcbWW
+ NQZJYW0YfUkCeMWcSU5RNcYl5tJQLkdyB8vv2Nbj6v7M5/VIbVOW4RjCYwpFfHLaMFU60J7A3Y=
+X-Received: by 2002:a17:907:94c7:b0:aab:daf0:3198 with SMTP id
+ a640c23a62f3a-ab38b36bed2mr1343343466b.40.1737394863078; 
+ Mon, 20 Jan 2025 09:41:03 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IGA5j2ZogzBl7aff4uh1C9p58LD09YXkqMdwRgbY2PWRMTbMvFsVRZM4PnbKhRwEYpTnRUzUA==
+X-Received: by 2002:a17:907:94c7:b0:aab:daf0:3198 with SMTP id
+ a640c23a62f3a-ab38b36bed2mr1343340966b.40.1737394862694; 
+ Mon, 20 Jan 2025 09:41:02 -0800 (PST)
+Received: from [192.168.10.47] ([176.206.124.70])
+ by smtp.googlemail.com with ESMTPSA id
+ a640c23a62f3a-ab384fcd90csm636363466b.181.2025.01.20.09.41.01
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Mon, 20 Jan 2025 09:41:02 -0800 (PST)
+Message-ID: <33692b30-464d-4f7c-b66c-86fcd9b4e55f@redhat.com>
+Date: Mon, 20 Jan 2025 18:41:00 +0100
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
-Received-SPF: pass client-ip=170.10.129.124;
- envelope-from=eric.auger@redhat.com; helo=us-smtp-delivery-124.mimecast.com
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 1/2] memattrs: Get rid of bit fields
+To: Zhao Liu <zhao1.liu@intel.com>, Peter Maydell <peter.maydell@linaro.org>
+Cc: Richard Henderson <richard.henderson@linaro.org>,
+ =?UTF-8?Q?Philippe_Mathieu-Daud=C3=83?= <philmd@linaro.org>,
+ qemu-devel@nongnu.org
+References: <20250120074258.2204342-1-zhao1.liu@intel.com>
+ <20250120074258.2204342-2-zhao1.liu@intel.com>
+ <CAFEAcA_VAOU+p_BC5bpnk2GKa5piywjf+yhFTh=-3O7TGut+uA@mail.gmail.com>
+ <Z458D/RuBQ8Kq0al@intel.com>
+From: Paolo Bonzini <pbonzini@redhat.com>
+Content-Language: en-US
+Autocrypt: addr=pbonzini@redhat.com; keydata=
+ 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
+In-Reply-To: <Z458D/RuBQ8Kq0al@intel.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -50
 X-Spam_score: -5.1
 X-Spam_bar: -----
 X-Spam_report: (-5.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-3,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.036,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -83,42 +151,45 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-When a guest exposed with a vhost device and protected by an
-intel IOMMU gets rebooted, we sometimes observe a spurious warning:
+On 1/20/25 17:38, Zhao Liu wrote:
+> Thanks for the reminder, yes it is currently full. I found I missed
+> a commnet from Paolo [*], that he suggested only convert `unspecified`
+> to a bool. My bad :-(
+> 
+> It still raises the size to 8 bytes but saves spare space, like:
+> 
+> typedef struct MemTxAttrs {
+>      unsigned int secure:1;
+>      unsigned int space:2;
+>      unsigned int user:1;
+>      unsigned int memory:1;
+>      unsigned int requester_id:16;
+>      unsigned int pid:8;
+>      bool unspecified;
+>      uint8_t _reserved1;
+>      uint16_t _reserved2;
+> } MemTxAttrs;
+> 
+> Similar to your comment above, to get pakced structure, I think I need
+> push `unspecified` field down to other bit fields.
 
-Fail to lookup the translated address ffffe000
+Right, this would allow for a 16-bit PASID, 19 free bits and no QEMU_PACKED:
 
-We observe that the IOMMU gets disabled through a write to the global
-command register (CMAR_GCMD.TE) before the vhost device gets stopped.
-When this warning happens it can be observed an inflight IOTLB
-miss occurs after the IOMMU disable and before the vhost stop. In
-that case a flat translation occurs and the check in
-vhost_memory_region_lookup() fails.
+typedef struct MemTxAttrs {
+     bool unspecified;
+     uint8_t int secure:1;
+     uint8_t int space:2;
+     uint8_t int user:1;
+     uint8_t memory:1;
+     uint16_t requester_id;
+     uint16_t pid;
+     uint16_t _reserved;
+} MemTxAttrs;
+QEMU_BUILD_BUG_ON(sizeof(MemTxAttrs) > 8);
 
-Let's disable the IOTLB callbacks when all IOMMU MRs have been
-unregistered.
+Together with const_zero!() that would be fine for both C and Rust, and 
+a bit more efficient too.
 
-Signed-off-by: Eric Auger <eric.auger@redhat.com>
----
- hw/virtio/vhost.c | 4 ++++
- 1 file changed, 4 insertions(+)
-
-diff --git a/hw/virtio/vhost.c b/hw/virtio/vhost.c
-index 6aa72fd434..128c2ab094 100644
---- a/hw/virtio/vhost.c
-+++ b/hw/virtio/vhost.c
-@@ -931,6 +931,10 @@ static void vhost_iommu_region_del(MemoryListener *listener,
-             break;
-         }
-     }
-+    if (QLIST_EMPTY(&dev->iommu_list) &&
-+        dev->vhost_ops->vhost_set_iotlb_callback) {
-+        dev->vhost_ops->vhost_set_iotlb_callback(dev, false);
-+    }
- }
- 
- void vhost_toggle_device_iotlb(VirtIODevice *vdev)
--- 
-2.47.1
+Paolo
 
 
