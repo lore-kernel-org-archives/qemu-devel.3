@@ -4,66 +4,66 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 558D3C02181
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 97879C02185
 	for <qemu-devel@archiver.kernel.org>; Mon, 20 Jan 2025 20:39:00 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tZyXP-0003xN-KJ; Mon, 20 Jan 2025 15:38:23 -0500
+	id 1tZyXB-0003sH-Ak; Mon, 20 Jan 2025 15:38:09 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <shentey@gmail.com>)
- id 1tZyXH-0003uV-Kx; Mon, 20 Jan 2025 15:38:16 -0500
-Received: from mail-ed1-x52b.google.com ([2a00:1450:4864:20::52b])
+ id 1tZyX9-0003qx-27; Mon, 20 Jan 2025 15:38:07 -0500
+Received: from mail-ed1-x533.google.com ([2a00:1450:4864:20::533])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <shentey@gmail.com>)
- id 1tZyXE-0002WE-LR; Mon, 20 Jan 2025 15:38:15 -0500
-Received: by mail-ed1-x52b.google.com with SMTP id
- 4fb4d7f45d1cf-5d4e2aa7ea9so9081892a12.2; 
- Mon, 20 Jan 2025 12:38:11 -0800 (PST)
+ id 1tZyX7-0002Uh-0n; Mon, 20 Jan 2025 15:38:06 -0500
+Received: by mail-ed1-x533.google.com with SMTP id
+ 4fb4d7f45d1cf-5d4e2aa7ea9so9081690a12.2; 
+ Mon, 20 Jan 2025 12:38:04 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1737405489; x=1738010289; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1737405482; x=1738010282; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=cA7O5qdyy7L6qxlGQzv6WrxKBhqdYSGnpUIYYsZuZEA=;
- b=IiKDVONbHydYLUmHFsEg0K+mByGzKSUVyNpJ6juIEm2XgIX7JcztHt/u3+mlq3CYdr
- lPQf5GZzCpEwIDy1tOjPyGNqDfOWS8vVlIGi8X5WDyaZEIRwJ0T/VunqiTkskfTFtF72
- bM7adtCuf2J0a6qACyxyqT9Qq7sm04b/55VcXGutMwF2FW3D5RNIU7L165BAiqhyTMdA
- Wio/SXaNhBTF4YHBD9XjhMbjC2S1XFcxnEvHxUDb8UUSrQKVcjUoAsy86cLm2G2rBrM7
- EX4upDtAPrqn+fdr4wQjN+M242WHOiskfd2zHI4WI6f5dbz5aHG2lgpjaURvnZ2GGdiL
- sCEA==
+ bh=KLFvPUTEzHTRcs1H1wLeCy8ZFAju0z66oOeORou2OaM=;
+ b=nQT2d1L6xylXvUys3CCUUwlkQmHV8Zsi42QYAfioXZlka5n+UTXrO3xPmY2ZTFKkpJ
+ QOkJwJ83i3nrEKvOZ+RLiK8zPEVsPcr71kFOLU/LUo/bUCslCoyOQPQs9X41NhOKOxMW
+ fYV085LN85HoEmi5LKs9vrL7xTm9jBR1q8Gqid/JoqcUTTaruKgFIhOB7NcvsTgpiBN7
+ /lL0zBppc/hunh2PjX+cNmCsHDIyHGv7mmH8iK8ZQp4sm3i/05Q7KAP2tYgmmPRtvT+d
+ ffBwL/hfNSDWiuLyelOVpdrYh+6aUQhZkQvmIHx4kg9KesiUqLGfwjUaKW/QksI1b9cM
+ 0QXQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1737405489; x=1738010289;
+ d=1e100.net; s=20230601; t=1737405482; x=1738010282;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=cA7O5qdyy7L6qxlGQzv6WrxKBhqdYSGnpUIYYsZuZEA=;
- b=vrCtDSQP4DgGJ3alTRYfINPfVuinSjBg5YnuZvPBciyfjy0fUekjT2maR0/gE+buw7
- +QZiIkawUiIMUiYoiBlOgvN87u0o5GN7VOz6XWSqsZntE4vKhRUyk2UBk2sooVRqjaW3
- K3FSFdhRliBhYOaSyV4UTGVgkQG1F1iKL57aWmcoWFzOpN92AT9C13Opo0xKFYhfBAFG
- qVdh/H9FI0RIFY+SwlTynzDEbRPB5wdbAzsVJy1qt3iFGFs76//Mh0/S2BUb14Djz8Ha
- l9C+kuef5u1G5rUVG6ruqhCdPH4GxDXValQaOpKcOa8341E5cJUl77WhXV2XM+q8flZv
- pu4w==
+ bh=KLFvPUTEzHTRcs1H1wLeCy8ZFAju0z66oOeORou2OaM=;
+ b=PaacGHKPEmNswOi8Zu3SASktYN55KHees7fsiy6Wk0SMrdFLVPD9frUh+IcK88aw/1
+ LIYg4OsUID8OxEuCMme2JmX+Mutq41Gh7vl39MIyXloLxwrOGaadIsCt8+l3MF/8gIFc
+ ESMDlC5OGH9IJcBzYvNBHvRDRUaKgSvkLpthAiC0coMLreAC0YRgIGjhIq/oOueYXFEC
+ MoSGJSYBVc7kGvsTD5zkqOe1D2BXaDs4MNnk/d61aouwKGLsTQ7LADSAwBoOAvOBZsna
+ +sYb+VdXbdZqTZVGG70znd/L4ZnA8iUm0kX38ZBjQkqI6I2pmdCKW9LSOYcZvFRdcy6b
+ U5sA==
 X-Forwarded-Encrypted: i=1;
- AJvYcCX5cg+yrH/NTLzbud2Uzx2mF8q0Z7M0ZK/PcAk8LSKvx0rPF7ef33GhwDm+AG1qIfZgQ2Qix+YXvA==@nongnu.org
-X-Gm-Message-State: AOJu0YykfsywK2m3Fjp8XrG3iyC9zKxwfmWxp1cuklf9/tkx3nOsYhy3
- v+h6dG0CZhaEfaKHffxHY+1TogTRUi8mtSU9OjyX7zyjuO7K9/4GR2w+uQqZ
-X-Gm-Gg: ASbGncuqqpGvtpIgvQjgm1EzNy2mVYRpwkKzUvQTp/4jtec9BgGZ2CUWizgsJntVsK3
- 93svnVGGyRKaTgK7GDKvppbD3TCTaMQlKzFykvkpT5MvKytFbgqzAdg5PLJgt2AHY/y99Qq/z2I
- HFbCYCd6VQoNkf4vq8kfISPDi9Ymnzd9ZuWPaAau8W3hW7RqCAbJeZOBHgtaJymwU9NE8CdxTTP
- oUoArpcqRYpGZMegvTcMFV+QRTPfUDdd0g0tSAGevLYUFNCtDzIlOdHpKdPzPr+xzd+N4mOCyr2
- IygZZGHONfUzVzQoR7cvaS0b7JPOT2mVl3CCHBlgMakxHB8zi5BhpfkyOnVh
-X-Google-Smtp-Source: AGHT+IHVAZz3usPw3rIBQt9CGVAZR/z4v5/ADPox0JUqqfcx0UbcS+xUQguJF8W6V5kqfbQ+BHsaPg==
-X-Received: by 2002:a05:6402:2812:b0:5cf:bcaf:98ec with SMTP id
- 4fb4d7f45d1cf-5db7db077b0mr12968293a12.26.1737405488981; 
- Mon, 20 Jan 2025 12:38:08 -0800 (PST)
+ AJvYcCUNw/XoyHT0euMdLH57QYnV4jGAYvAedEaUCi2TgYPoqqrOGjHPOdqQwBMsaN5yZAezxaMJIVSVjw==@nongnu.org
+X-Gm-Message-State: AOJu0Yy98cyacqqKZe8nf+SBGLeRkMQH4jIjiB2q0sC2p2rn+IqUQo/w
+ srf5AOB82QO+S59FIIj8IoVJmfT6kXcIAMipBj3Z2lblZ1K3sgnU9IoyTEYD
+X-Gm-Gg: ASbGnctaPz6JOV/mPO8qktfwd5m/tbLCmz/x683jYiiV/IJC8Ftp1A5VZyadvO5QeWj
+ X2oW0H/MS1swE5X8fkJZgHr0okix5VdDRdJkeA7KAmYCPI7cjzGJ7kW8AkFMvjvYPrgVlxMKLmn
+ ipil3iacwhDUJOpYX/PZzqY3jpKeLicqhlg784+g4fn4Wg6NPZhWfmGzU9eskqLEKE5C26PVbT1
+ Yi0hdSoap9D9dCU+KYuBQmy8eMFArG+unVVNiykeEOkcb8BgA8UTd/8g5iVRC3hsCaQcLwln8Kp
+ mHnovnibOLnWGzetEupUtdy6SMk+VU5GcFfWRjtiBAIUnXR0YwMGw4GH+cLS
+X-Google-Smtp-Source: AGHT+IHLnUCoF89QuorRxWGtfqVOzMLnYXntqR9WWd3jOG44qRwSgD2jGyYt/5WVjK9euI2wKOn3Bg==
+X-Received: by 2002:a05:6402:3590:b0:5db:67a7:e75c with SMTP id
+ 4fb4d7f45d1cf-5db7d2e87fcmr13205897a12.1.1737405481928; 
+ Mon, 20 Jan 2025 12:38:01 -0800 (PST)
 Received: from Provence.localdomain
  (dynamic-077-183-181-102.77.183.pool.telefonica.de. [77.183.181.102])
  by smtp.gmail.com with ESMTPSA id
- 4fb4d7f45d1cf-5db7364258csm6021077a12.1.2025.01.20.12.38.07
+ 4fb4d7f45d1cf-5db7364258csm6021077a12.1.2025.01.20.12.38.00
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 20 Jan 2025 12:38:08 -0800 (PST)
+ Mon, 20 Jan 2025 12:38:00 -0800 (PST)
 From: Bernhard Beschow <shentey@gmail.com>
 To: qemu-devel@nongnu.org
 Cc: Paolo Bonzini <pbonzini@redhat.com>,
@@ -74,16 +74,16 @@ Cc: Paolo Bonzini <pbonzini@redhat.com>,
  Andrey Smirnov <andrew.smirnov@gmail.com>,
  "Edgar E. Iglesias" <edgar.iglesias@gmail.com>,
  Bernhard Beschow <shentey@gmail.com>
-Subject: [PATCH 08/21] hw/arm/fsl-imx8mp: Add USDHC storage controllers
-Date: Mon, 20 Jan 2025 21:37:35 +0100
-Message-ID: <20250120203748.4687-9-shentey@gmail.com>
+Subject: [PATCH 03/21] hw/pci-host/designware: Expose MSI IRQ
+Date: Mon, 20 Jan 2025 21:37:30 +0100
+Message-ID: <20250120203748.4687-4-shentey@gmail.com>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250120203748.4687-1-shentey@gmail.com>
 References: <20250120203748.4687-1-shentey@gmail.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::52b;
- envelope-from=shentey@gmail.com; helo=mail-ed1-x52b.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::533;
+ envelope-from=shentey@gmail.com; helo=mail-ed1-x533.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -106,223 +106,226 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The USDHC emulation allows for running real-world images such as those generated
-by Buildroot. Convert the board documentation accordingly instead of running a
-Linux kernel with ephemeral storage.
+Fixes INTD and MSI interrupts poking the same IRQ line without keeping track of
+each other's IRQ level. Furthermore, SoCs such as the i.MX 8M Plus don't share
+the MSI IRQ with the INTx lines, so expose it as a dedicated pin.
 
 Signed-off-by: Bernhard Beschow <shentey@gmail.com>
 ---
- docs/system/arm/imx8mp-evk.rst | 39 +++++++++++++++++++++++-----------
- include/hw/arm/fsl-imx8mp.h    |  7 ++++++
- hw/arm/fsl-imx8mp.c            | 28 ++++++++++++++++++++++++
- hw/arm/imx8mp-evk.c            | 18 ++++++++++++++++
- hw/arm/Kconfig                 |  1 +
- 5 files changed, 81 insertions(+), 12 deletions(-)
+ include/hw/arm/fsl-imx6.h        |  4 +++-
+ include/hw/arm/fsl-imx7.h        |  4 +++-
+ include/hw/pci-host/designware.h |  1 +
+ hw/arm/fsl-imx6.c                | 13 ++++++++++++-
+ hw/arm/fsl-imx7.c                | 13 ++++++++++++-
+ hw/pci-host/designware.c         |  7 +++----
+ hw/arm/Kconfig                   |  2 ++
+ 7 files changed, 36 insertions(+), 8 deletions(-)
 
-diff --git a/docs/system/arm/imx8mp-evk.rst b/docs/system/arm/imx8mp-evk.rst
-index d7d08cc198..1514bc5864 100644
---- a/docs/system/arm/imx8mp-evk.rst
-+++ b/docs/system/arm/imx8mp-evk.rst
-@@ -13,6 +13,7 @@ The ``imx8mp-evk`` machine implements the following devices:
-  * Up to 4 Cortex-A53 Cores
-  * Generic Interrupt Controller (GICv3)
-  * 4 UARTs
-+ * 3 USDHC Storage Controllers
-  * Secure Non-Volatile Storage (SNVS) including an RTC
-  * Clock Tree
- 
-@@ -25,25 +26,39 @@ for loading a Linux kernel.
- Direct Linux Kernel Boot
- ''''''''''''''''''''''''
- 
--Linux mainline v6.12 release is tested at the time of writing. To build a Linux
--mainline kernel that can be booted by the ``imx8mp-evk`` machine, simply
--configure the kernel using the defconfig configuration:
-+Probably the easiest way to get started with a whole Linux system on the machine
-+is to generate an image with Buildroot. Version 2024.11.1 is tested at the time
-+of writing and involves three steps. First run the following command in the
-+toplevel directory of the Buildroot source tree:
- 
- .. code-block:: bash
- 
--  $ export ARCH=arm64
--  $ export CROSS_COMPILE=aarch64-linux-gnu-
--  $ make defconfig
-+  $ make freescale_imx8mpevk_defconfig
-   $ make
- 
--To boot the newly built Linux kernel in QEMU with the ``imx8mp-evk`` machine,
--run:
-+Once finished successfully there is an ``output/image`` subfolder. Navigate into
-+it and resize the SD card image to a power of two:
-+
-+.. code-block:: bash
-+
-+  $ qemu-img resize sdcard.img 256M
-+
-+Finally, the device tree needs to be patched with the following commands which
-+will remove the ``cpu-idle-states`` properties from CPU nodes:
-+
-+.. code-block:: bash
-+
-+  $ dtc imx8mp-evk.dtb | sed '/cpu-idle-states/d' > imx8mp-evk-patched.dts
-+  $ dtc imx8mp-evk-patched.dts -o imx8mp-evk-patched.dtb
-+
-+Now that everything is prepared the newly built image can be run in the QEMU
-+``imx8mp-evk`` machine:
- 
- .. code-block:: bash
- 
-   $ qemu-system-aarch64 -M imx8mp-evk -smp 4 -m 3G \
-       -display none -serial null -serial stdio \
--      -kernel arch/arm64/boot/Image \
--      -dtb arch/arm64/boot/dts/freescale/imx8mp-evk.dtb \
--      -initrd /path/to/rootfs.ext4 \
--      -append "root=/dev/ram"
-+      -kernel Image \
-+      -dtb imx8mp-evk-patched.dtb \
-+      -append "root=/dev/mmcblk2p2" \
-+      -drive file=sdcard.img,if=sd,bus=2,format=raw,id=mmcblk2
-diff --git a/include/hw/arm/fsl-imx8mp.h b/include/hw/arm/fsl-imx8mp.h
-index 9d2a757c2a..9832c05e8c 100644
---- a/include/hw/arm/fsl-imx8mp.h
-+++ b/include/hw/arm/fsl-imx8mp.h
-@@ -14,6 +14,7 @@
- #include "hw/intc/arm_gicv3_common.h"
- #include "hw/misc/imx7_snvs.h"
- #include "hw/misc/imx8mp_ccm.h"
-+#include "hw/sd/sdhci.h"
+diff --git a/include/hw/arm/fsl-imx6.h b/include/hw/arm/fsl-imx6.h
+index 61c593ffd2..9da32fc189 100644
+--- a/include/hw/arm/fsl-imx6.h
++++ b/include/hw/arm/fsl-imx6.h
+@@ -33,6 +33,7 @@
+ #include "hw/usb/chipidea.h"
+ #include "hw/usb/imx-usb-phy.h"
+ #include "hw/pci-host/designware.h"
++#include "hw/or-irq.h"
+ #include "exec/memory.h"
+ #include "cpu.h"
+ #include "qom/object.h"
+@@ -73,6 +74,7 @@ struct FslIMX6State {
+     ChipideaState      usb[FSL_IMX6_NUM_USBS];
+     IMXFECState        eth;
+     DesignwarePCIEHost pcie;
++    OrIRQState         pcie4_msi_irq;
+     MemoryRegion       rom;
+     MemoryRegion       caam;
+     MemoryRegion       ocram;
+@@ -457,7 +459,7 @@ struct FslIMX6State {
+ #define FSL_IMX6_PCIE1_IRQ 120
+ #define FSL_IMX6_PCIE2_IRQ 121
+ #define FSL_IMX6_PCIE3_IRQ 122
+-#define FSL_IMX6_PCIE4_IRQ 123
++#define FSL_IMX6_PCIE4_MSI_IRQ 123
+ #define FSL_IMX6_DCIC1_IRQ 124
+ #define FSL_IMX6_DCIC2_IRQ 125
+ #define FSL_IMX6_MLB150_HIGH_IRQ 126
+diff --git a/include/hw/arm/fsl-imx7.h b/include/hw/arm/fsl-imx7.h
+index 411fa1c2e3..aa7818c499 100644
+--- a/include/hw/arm/fsl-imx7.h
++++ b/include/hw/arm/fsl-imx7.h
+@@ -36,6 +36,7 @@
+ #include "hw/net/imx_fec.h"
+ #include "hw/pci-host/designware.h"
+ #include "hw/usb/chipidea.h"
++#include "hw/or-irq.h"
+ #include "cpu.h"
  #include "qom/object.h"
  #include "qemu/units.h"
+@@ -85,6 +86,7 @@ struct FslIMX7State {
+     IMX7GPRState       gpr;
+     ChipideaState      usb[FSL_IMX7_NUM_USBS];
+     DesignwarePCIEHost pcie;
++    OrIRQState         pcie4_msi_irq;
+     MemoryRegion       rom;
+     MemoryRegion       caam;
+     MemoryRegion       ocram;
+@@ -428,7 +430,7 @@ enum FslIMX7IRQs {
+     FSL_IMX7_PCI_INTA_IRQ = 125,
+     FSL_IMX7_PCI_INTB_IRQ = 124,
+     FSL_IMX7_PCI_INTC_IRQ = 123,
+-    FSL_IMX7_PCI_INTD_IRQ = 122,
++    FSL_IMX7_PCI_INTD_MSI_IRQ = 122,
  
-@@ -27,6 +28,7 @@ enum FslImx8mpConfiguration {
-     FSL_IMX8MP_NUM_CPUS         = 4,
-     FSL_IMX8MP_NUM_IRQS         = 160,
-     FSL_IMX8MP_NUM_UARTS        = 4,
-+    FSL_IMX8MP_NUM_USDHCS       = 3,
- };
+     FSL_IMX7_UART7_IRQ    = 126,
  
- struct FslImx8mpState {
-@@ -38,6 +40,7 @@ struct FslImx8mpState {
-     IMX8MPAnalogState  analog;
-     IMX7SNVSState      snvs;
-     IMXSerialState     uart[FSL_IMX8MP_NUM_UARTS];
-+    SDHCIState         usdhc[FSL_IMX8MP_NUM_USDHCS];
- };
+diff --git a/include/hw/pci-host/designware.h b/include/hw/pci-host/designware.h
+index c484e377a8..bf8b278978 100644
+--- a/include/hw/pci-host/designware.h
++++ b/include/hw/pci-host/designware.h
+@@ -86,6 +86,7 @@ struct DesignwarePCIEHost {
+         MemoryRegion io;
  
- enum FslImx8mpMemoryRegions {
-@@ -183,6 +186,10 @@ enum FslImx8mpMemoryRegions {
- };
+         qemu_irq     irqs[4];
++        qemu_irq     msi;
+     } pci;
  
- enum FslImx8mpIrqs {
-+    FSL_IMX8MP_USDHC1_IRQ   = 22,
-+    FSL_IMX8MP_USDHC2_IRQ   = 23,
-+    FSL_IMX8MP_USDHC3_IRQ   = 24,
-+
-     FSL_IMX8MP_UART1_IRQ    = 26,
-     FSL_IMX8MP_UART2_IRQ    = 27,
-     FSL_IMX8MP_UART3_IRQ    = 28,
-diff --git a/hw/arm/fsl-imx8mp.c b/hw/arm/fsl-imx8mp.c
-index 0abde2b1fc..612ea7bf93 100644
---- a/hw/arm/fsl-imx8mp.c
-+++ b/hw/arm/fsl-imx8mp.c
-@@ -210,6 +210,11 @@ static void fsl_imx8mp_init(Object *obj)
-         snprintf(name, NAME_SIZE, "uart%d", i + 1);
-         object_initialize_child(obj, name, &s->uart[i], TYPE_IMX_SERIAL);
-     }
-+
-+    for (i = 0; i < FSL_IMX8MP_NUM_USDHCS; i++) {
-+        snprintf(name, NAME_SIZE, "usdhc%d", i + 1);
-+        object_initialize_child(obj, name, &s->usdhc[i], TYPE_IMX_USDHC);
-+    }
+     MemoryRegion mmio;
+diff --git a/hw/arm/fsl-imx6.c b/hw/arm/fsl-imx6.c
+index ac8c66e242..88b9ccff49 100644
+--- a/hw/arm/fsl-imx6.c
++++ b/hw/arm/fsl-imx6.c
+@@ -106,6 +106,8 @@ static void fsl_imx6_init(Object *obj)
+     object_initialize_child(obj, "eth", &s->eth, TYPE_IMX_ENET);
+ 
+     object_initialize_child(obj, "pcie", &s->pcie, TYPE_DESIGNWARE_PCIE_HOST);
++    object_initialize_child(obj, "pcie4-msi-irq", &s->pcie4_msi_irq,
++                            TYPE_OR_IRQ);
  }
  
- static void fsl_imx8mp_realize(DeviceState *dev, Error **errp)
-@@ -350,6 +355,28 @@ static void fsl_imx8mp_realize(DeviceState *dev, Error **errp)
-                            qdev_get_gpio_in(gicdev, serial_table[i].irq));
+ static void fsl_imx6_realize(DeviceState *dev, Error **errp)
+@@ -435,14 +437,23 @@ static void fsl_imx6_realize(DeviceState *dev, Error **errp)
+     sysbus_realize(SYS_BUS_DEVICE(&s->pcie), &error_abort);
+     sysbus_mmio_map(SYS_BUS_DEVICE(&s->pcie), 0, FSL_IMX6_PCIe_REG_ADDR);
+ 
++    object_property_set_int(OBJECT(&s->pcie4_msi_irq), "num-lines", 2,
++                            &error_abort);
++    qdev_realize(DEVICE(&s->pcie4_msi_irq), NULL, &error_abort);
++
++    irq = qdev_get_gpio_in(DEVICE(&s->a9mpcore), FSL_IMX6_PCIE4_MSI_IRQ);
++    qdev_connect_gpio_out(DEVICE(&s->pcie4_msi_irq), 0, irq);
++
+     irq = qdev_get_gpio_in(DEVICE(&s->a9mpcore), FSL_IMX6_PCIE1_IRQ);
+     sysbus_connect_irq(SYS_BUS_DEVICE(&s->pcie), 0, irq);
+     irq = qdev_get_gpio_in(DEVICE(&s->a9mpcore), FSL_IMX6_PCIE2_IRQ);
+     sysbus_connect_irq(SYS_BUS_DEVICE(&s->pcie), 1, irq);
+     irq = qdev_get_gpio_in(DEVICE(&s->a9mpcore), FSL_IMX6_PCIE3_IRQ);
+     sysbus_connect_irq(SYS_BUS_DEVICE(&s->pcie), 2, irq);
+-    irq = qdev_get_gpio_in(DEVICE(&s->a9mpcore), FSL_IMX6_PCIE4_IRQ);
++    irq = qdev_get_gpio_in(DEVICE(&s->pcie4_msi_irq), 0);
+     sysbus_connect_irq(SYS_BUS_DEVICE(&s->pcie), 3, irq);
++    irq = qdev_get_gpio_in(DEVICE(&s->pcie4_msi_irq), 1);
++    sysbus_connect_irq(SYS_BUS_DEVICE(&s->pcie), 4, irq);
+ 
+     /*
+      * PCIe PHY
+diff --git a/hw/arm/fsl-imx7.c b/hw/arm/fsl-imx7.c
+index 05e3389fbe..004bf49937 100644
+--- a/hw/arm/fsl-imx7.c
++++ b/hw/arm/fsl-imx7.c
+@@ -150,6 +150,8 @@ static void fsl_imx7_init(Object *obj)
+      * PCIE
+      */
+     object_initialize_child(obj, "pcie", &s->pcie, TYPE_DESIGNWARE_PCIE_HOST);
++    object_initialize_child(obj, "pcie4-msi-irq", &s->pcie4_msi_irq,
++                            TYPE_OR_IRQ);
+ 
+     /*
+      * USBs
+@@ -597,14 +599,23 @@ static void fsl_imx7_realize(DeviceState *dev, Error **errp)
+     sysbus_realize(SYS_BUS_DEVICE(&s->pcie), &error_abort);
+     sysbus_mmio_map(SYS_BUS_DEVICE(&s->pcie), 0, FSL_IMX7_PCIE_REG_ADDR);
+ 
++    object_property_set_int(OBJECT(&s->pcie4_msi_irq), "num-lines", 2,
++                            &error_abort);
++    qdev_realize(DEVICE(&s->pcie4_msi_irq), NULL, &error_abort);
++
++    irq = qdev_get_gpio_in(DEVICE(&s->a7mpcore), FSL_IMX7_PCI_INTD_MSI_IRQ);
++    qdev_connect_gpio_out(DEVICE(&s->pcie4_msi_irq), 0, irq);
++
+     irq = qdev_get_gpio_in(DEVICE(&s->a7mpcore), FSL_IMX7_PCI_INTA_IRQ);
+     sysbus_connect_irq(SYS_BUS_DEVICE(&s->pcie), 0, irq);
+     irq = qdev_get_gpio_in(DEVICE(&s->a7mpcore), FSL_IMX7_PCI_INTB_IRQ);
+     sysbus_connect_irq(SYS_BUS_DEVICE(&s->pcie), 1, irq);
+     irq = qdev_get_gpio_in(DEVICE(&s->a7mpcore), FSL_IMX7_PCI_INTC_IRQ);
+     sysbus_connect_irq(SYS_BUS_DEVICE(&s->pcie), 2, irq);
+-    irq = qdev_get_gpio_in(DEVICE(&s->a7mpcore), FSL_IMX7_PCI_INTD_IRQ);
++    irq = qdev_get_gpio_in(DEVICE(&s->pcie4_msi_irq), 0);
+     sysbus_connect_irq(SYS_BUS_DEVICE(&s->pcie), 3, irq);
++    irq = qdev_get_gpio_in(DEVICE(&s->pcie4_msi_irq), 1);
++    sysbus_connect_irq(SYS_BUS_DEVICE(&s->pcie), 4, irq);
+ 
+     /*
+      * USBs
+diff --git a/hw/pci-host/designware.c b/hw/pci-host/designware.c
+index c3fc37b904..3e8c36e6a7 100644
+--- a/hw/pci-host/designware.c
++++ b/hw/pci-host/designware.c
+@@ -55,8 +55,6 @@
+ #define DESIGNWARE_PCIE_ATU_DEVFN(x)               (((x) >> 16) & 0xff)
+ #define DESIGNWARE_PCIE_ATU_UPPER_TARGET           0x91C
+ 
+-#define DESIGNWARE_PCIE_IRQ_MSI                    3
+-
+ static DesignwarePCIEHost *
+ designware_pcie_root_to_host(DesignwarePCIERoot *root)
+ {
+@@ -90,7 +88,7 @@ static void designware_pcie_root_msi_write(void *opaque, hwaddr addr,
+     root->msi.intr[0].status |= BIT(val) & root->msi.intr[0].enable;
+ 
+     if (root->msi.intr[0].status & ~root->msi.intr[0].mask) {
+-        qemu_set_irq(host->pci.irqs[DESIGNWARE_PCIE_IRQ_MSI], 1);
++        qemu_set_irq(host->pci.msi, 1);
      }
+ }
  
-+    /* USDHCs */
-+    for (i = 0; i < FSL_IMX8MP_NUM_USDHCS; i++) {
-+        static const struct {
-+            hwaddr addr;
-+            unsigned int irq;
-+        } usdhc_table[FSL_IMX8MP_NUM_USDHCS] = {
-+            { fsl_imx8mp_memmap[FSL_IMX8MP_USDHC1].addr, FSL_IMX8MP_USDHC1_IRQ },
-+            { fsl_imx8mp_memmap[FSL_IMX8MP_USDHC2].addr, FSL_IMX8MP_USDHC2_IRQ },
-+            { fsl_imx8mp_memmap[FSL_IMX8MP_USDHC3].addr, FSL_IMX8MP_USDHC3_IRQ },
-+        };
-+
-+        object_property_set_uint(OBJECT(&s->usdhc[i]), "vendor",
-+                                 SDHCI_VENDOR_IMX, &error_abort);
-+        if (!sysbus_realize(SYS_BUS_DEVICE(&s->usdhc[i]), errp)) {
-+            return;
-+        }
-+
-+        sysbus_mmio_map(SYS_BUS_DEVICE(&s->usdhc[i]), 0, usdhc_table[i].addr);
-+        sysbus_connect_irq(SYS_BUS_DEVICE(&s->usdhc[i]), 0,
-+                           qdev_get_gpio_in(gicdev, usdhc_table[i].irq));
-+    }
-+
-     /* SNVS */
-     if (!sysbus_realize(SYS_BUS_DEVICE(&s->snvs), errp)) {
-         return;
-@@ -367,6 +394,7 @@ static void fsl_imx8mp_realize(DeviceState *dev, Error **errp)
-         case FSL_IMX8MP_RAM:
-         case FSL_IMX8MP_SNVS_HP:
-         case FSL_IMX8MP_UART1 ... FSL_IMX8MP_UART4:
-+        case FSL_IMX8MP_USDHC1 ... FSL_IMX8MP_USDHC3:
-             /* device implemented and treated above */
-             break;
+@@ -335,7 +333,7 @@ static void designware_pcie_root_config_write(PCIDevice *d, uint32_t address,
+     case DESIGNWARE_PCIE_MSI_INTR0_STATUS:
+         root->msi.intr[0].status ^= val;
+         if (!root->msi.intr[0].status) {
+-            qemu_set_irq(host->pci.irqs[DESIGNWARE_PCIE_IRQ_MSI], 0);
++            qemu_set_irq(host->pci.msi, 0);
+         }
+         break;
  
-diff --git a/hw/arm/imx8mp-evk.c b/hw/arm/imx8mp-evk.c
-index 2756d4c21c..27d9e9e8ee 100644
---- a/hw/arm/imx8mp-evk.c
-+++ b/hw/arm/imx8mp-evk.c
-@@ -11,6 +11,7 @@
- #include "hw/arm/boot.h"
- #include "hw/arm/fsl-imx8mp.h"
- #include "hw/boards.h"
-+#include "hw/qdev-properties.h"
- #include "system/qtest.h"
- #include "qemu/error-report.h"
- #include "qapi/error.h"
-@@ -40,6 +41,23 @@ static void imx8mp_evk_init(MachineState *machine)
-     memory_region_add_subregion(get_system_memory(), FSL_IMX8MP_RAM_START,
-                                 machine->ram);
- 
-+    for (int i = 0; i < FSL_IMX8MP_NUM_USDHCS; i++) {
-+        BusState *bus;
-+        DeviceState *carddev;
-+        BlockBackend *blk;
-+        DriveInfo *di = drive_get(IF_SD, i, 0);
-+
-+        if (!di) {
-+            continue;
-+        }
-+
-+        blk = blk_by_legacy_dinfo(di);
-+        bus = qdev_get_child_bus(DEVICE(&s->usdhc[i]), "sd-bus");
-+        carddev = qdev_new(TYPE_SD_CARD);
-+        qdev_prop_set_drive_err(carddev, "drive", blk, &error_fatal);
-+        qdev_realize_and_unref(carddev, bus, &error_fatal);
-+    }
-+
-     if (!qtest_enabled()) {
-         arm_load_kernel(&s->cpu[0], machine, &boot_info);
+@@ -680,6 +678,7 @@ static void designware_pcie_host_realize(DeviceState *dev, Error **errp)
+     for (i = 0; i < ARRAY_SIZE(s->pci.irqs); i++) {
+         sysbus_init_irq(sbd, &s->pci.irqs[i]);
      }
++    sysbus_init_irq(sbd, &s->pci.msi);
+ 
+     memory_region_init_io(&s->mmio,
+                           OBJECT(s),
 diff --git a/hw/arm/Kconfig b/hw/arm/Kconfig
-index adb4ed8076..f880c03d35 100644
+index e779b5af95..fe47e259b8 100644
 --- a/hw/arm/Kconfig
 +++ b/hw/arm/Kconfig
-@@ -582,6 +582,7 @@ config FSL_IMX8MP
-     imply TEST_DEVICES
-     select ARM_GIC
-     select IMX
-+    select SDHCI
+@@ -513,6 +513,7 @@ config FSL_IMX6
+     select IMX_I2C
+     select IMX_USBPHY
+     select WDT_IMX2
++    select OR_IRQ
+     select PL310  # cache controller
+     select PCI_EXPRESS_DESIGNWARE
+     select SDHCI
+@@ -571,6 +572,7 @@ config FSL_IMX7
+     select IMX_FEC
+     select IMX_I2C
+     select WDT_IMX2
++    select OR_IRQ
+     select PCI_EXPRESS_DESIGNWARE
+     select SDHCI
      select UNIMP
- 
- config FSL_IMX8MP_EVK
 -- 
 2.48.1
 
