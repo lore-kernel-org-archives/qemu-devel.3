@@ -4,103 +4,101 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 50F99C02182
-	for <qemu-devel@archiver.kernel.org>; Mon, 20 Jan 2025 22:05:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 44EDAC02181
+	for <qemu-devel@archiver.kernel.org>; Mon, 20 Jan 2025 22:22:48 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tZzta-0001yX-RO; Mon, 20 Jan 2025 17:05:22 -0500
+	id 1ta09N-0004so-GN; Mon, 20 Jan 2025 17:21:41 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <dbarboza@ventanamicro.com>)
- id 1tZztZ-0001ws-1O
- for qemu-devel@nongnu.org; Mon, 20 Jan 2025 17:05:21 -0500
-Received: from mail-pj1-x102a.google.com ([2607:f8b0:4864:20::102a])
+ (Exim 4.90_1) (envelope-from <fahhem@fahhem.com>) id 1ta09L-0004sS-C4
+ for qemu-devel@nongnu.org; Mon, 20 Jan 2025 17:21:39 -0500
+Received: from mail-yb1-xb2a.google.com ([2607:f8b0:4864:20::b2a])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <dbarboza@ventanamicro.com>)
- id 1tZztW-00076L-I5
- for qemu-devel@nongnu.org; Mon, 20 Jan 2025 17:05:20 -0500
-Received: by mail-pj1-x102a.google.com with SMTP id
- 98e67ed59e1d1-2ef760a1001so8470183a91.0
- for <qemu-devel@nongnu.org>; Mon, 20 Jan 2025 14:05:18 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <fahhem@fahhem.com>) id 1ta09J-0001kS-Cp
+ for qemu-devel@nongnu.org; Mon, 20 Jan 2025 17:21:39 -0500
+Received: by mail-yb1-xb2a.google.com with SMTP id
+ 3f1490d57ef6-e5447fae695so8334265276.2
+ for <qemu-devel@nongnu.org>; Mon, 20 Jan 2025 14:21:37 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=ventanamicro.com; s=google; t=1737410716; x=1738015516; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=HAcEusjzYH3QqmuK9Xi8ykEJwD47DNBc0rTmFjn7ETU=;
- b=H+INtctJHU7KTr7BTysL3Wkd7w0hxQzxRScugLG4mFw7hipeLUWo9hcAf7soEY+lO5
- nnfH6mxYwjrSOxP1w4w1eyQLUMhnk6YxvPRYHF2t951nXQW4kapn8KLzdBrjkYFP0kQb
- E8PdyFFP5D1HFTEB0WUqFwZulVGwwmLK6rESwoWBmlGwZJncohRula0lVAWrxugx0foi
- cEInfENGFzHJELiEsoGHwjozWMRdd95b7fu8QFKt4TJyR+paFl8dNoko0nHVMnScQd/O
- Hji+/TwuA/rhE5HUYw1bofAFxw/Jbm3qx4VGKQMrgOvQshgFAp75f6BCJEHnr7+HFSIM
- Yd8g==
+ d=fahhem.com; s=google; t=1737411696; x=1738016496; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:references:in-reply-to:from
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=mDZQXxH0TD/ifJyMq0A2JhwzMvoxhjbh11jn58vdJDw=;
+ b=j39D0DPFL5gEGgJ9Ta0Z25mFxfDJGBy8om0OIVRT9stTz9jOqZH/ejFfpEzCnh8Bft
+ PxunMxDR9NAz0rwYyNUnuvlpnxyxujjh/7TnsdtFfSXyP/RKmVXL+0UVJ6lb8tBe2BC+
+ AKyl4pJyz2Sa+j4ONDit/xechM96GJdqdwI/phHFdyB+i6ihaQmPOMpnqdgAu5aNEeyN
+ to7BIXc2fconsv3FISJmfLHzLEkaztAaDqu2qaiwY6w7IVQrRPiSQONSirHZ0TftRyUm
+ /DoLPpQcRi5tlZl7hEW/Yy7UXHinGpKuZFAECVnotKQYBy2X6V5xXtogADNeJEn0mMSr
+ hOFQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1737410716; x=1738015516;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=HAcEusjzYH3QqmuK9Xi8ykEJwD47DNBc0rTmFjn7ETU=;
- b=jDn1XOhliK2MrDwJuF0EJgsuHDHkybl7fsEa3ecYLjfEsHSg8g7k3yebOmxXjVDMoI
- pT5CRguhLmbK0c+Bih1ap7a/QG788rf1QYJQ/dvAsMfRRFf+slz3DeIj83Sp23fiwmYC
- pAiJkEiU+F6BZQ69G7ulFvy5VVVteL8mK6Id899GURnxQt+L96rajbAau7Ii3XZmGDEm
- lQEJlvH2BVQHm5puWoc0pHNBlAuhcOu+7xpUuuD3Nf6g6eO5FYf75md9A+Ag2UBm56q4
- gjJABFO5hJ7sLREzXNyFyqm8LEF4y/GpqRi+ZmmC4V6ZMEEkmpvUKASnguzlH7UVSna6
- xusQ==
-X-Forwarded-Encrypted: i=1;
- AJvYcCWgA7mudPomuhaCnwqqP5VLjWMMQsCgW4KKECng+btaUkQiPm+sBKwG/7UPwKR2uwCPsg4JVvzS8lGN@nongnu.org
-X-Gm-Message-State: AOJu0Yy7NWnxoV8vvgQUa8dSdDvsbpeSRGj6iDIFB6tB3SDZPDiuD+0O
- RglvhZvBNRB4CYB3EmlPvo9pv4yOdP7ZSIwp3T9fjeWI/kdNkvbqHO5B4/iH+vY=
-X-Gm-Gg: ASbGncs2huu3Wi1gE4tvpY+4tlpq+oWrApFAklC9D6hutaO+IVjyVB3sYisY7RY5aWM
- PHU1Jl/ojRyjqNyN1u76fDOCFPlRGeC3FIBtasxOEOOdj1BEXnFU3581SbHNpxOkBXwZ+ddXv4V
- /w5MfGWLEqhUc69UYZDEYTVlUtLgmNg1H0Cdv/NE0DudWsmtTZQmkRseY7B5/fR1qHZ9+9UQIWh
- MmelTJcXrmzbkl9ANwfIQCQ+54VQnh6wYZ9qVca9kwNGNDIqtK+8Jm284xv+qquy7tsce9IQjjw
- JWhAY5sZ
-X-Google-Smtp-Source: AGHT+IFmvruijp1BEvAnBJfOm1j9+gPPi9V7Kkx3ueo6O/d/NXd36XGCBQQTWZBTOae1S2dEL7DSTw==
-X-Received: by 2002:a17:90b:5485:b0:2ee:ee77:2263 with SMTP id
- 98e67ed59e1d1-2f782c4bd9amr23642731a91.7.1737410716602; 
- Mon, 20 Jan 2025 14:05:16 -0800 (PST)
-Received: from [192.168.68.110] ([191.202.238.10])
- by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-2f72c17f6cdsm12535617a91.12.2025.01.20.14.05.11
+ d=1e100.net; s=20230601; t=1737411696; x=1738016496;
+ h=cc:to:subject:message-id:date:references:in-reply-to:from
+ :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=mDZQXxH0TD/ifJyMq0A2JhwzMvoxhjbh11jn58vdJDw=;
+ b=RZdZp1EiQxrSUV4oFajtXEf30B0t7oz/7iP93sYQjCnVyOh9l4oXfAs6smilF+dcSl
+ kJxJd98Ufl8Xz3UrPzqazbVZ03o+o4NMMdktHQYI7zNxhnGu8HBFH2R5m0xTD0GExaUB
+ Kx5rlU+21QdD7P29/f/518ftRv+JcwMRBiPs7evJFC4tzQPBi74SuDPlKCRhjQHE+t3i
+ VeRtY4so3t/O66cHwGrzji/QrMyj5HVEOZXEtmBrI5xDfZPGeotuGkzjtARrdVkkHhgF
+ gu6ePw7pP6GW95Q9zpWN47Ic283VufnFP11FXNMkzfoJwTCUyAMr3niqQsiIHygwGEPt
+ AfBw==
+X-Gm-Message-State: AOJu0YwfYu1xWzIbfXxh20qrffqJyYYQMPdufI2rof4arQ+TJ6IvUvj6
+ haCaPaAx6bctSiycYozewWJ6TFhC+fiAwkw89fIr0n2RcH/81v9mbbEmFoI8IHUZMr2tTh7+acc
+ =
+X-Gm-Gg: ASbGnctXVDFWP9M4cRW0RgFnlZef8DQ4Kg3q1gELFwqaI6T20XK2YHhxo91DC5c4Fa1
+ Pc1pJ0xmy3X7c+aAXXpFKVx0/zxXIrFHdMMn7Xvmonf1v2B91VBnltNd9doH8OF1hMmCixYaP4m
+ xoJH9rL1QpXKyqqvMPkdL+Rq5V6/AsuhAHIE3RNbv+D2LI5gwGIe408owH++yvJQiS3CGMJCBRj
+ Jz9G5WJhNuq2OzW9PZ3EwhHZA/j/vxaWw6C+XdfJ7RbvuDAcWSn4KxFYBgOBHCi3owl+hWXyduM
+ JScsQHYyJSnOYzjrgcAizTEoVw+CGHU1
+X-Google-Smtp-Source: AGHT+IFlqmf7La3EtE/8uddkhRn58g2yA9Mlqc7qV+IQXgOJRcjvREmCPecFviIpC821N8zeLUmFZA==
+X-Received: by 2002:a05:690c:6405:b0:6f4:8207:c68d with SMTP id
+ 00721157ae682-6f6eb65c9cfmr103870427b3.3.1737411695956; 
+ Mon, 20 Jan 2025 14:21:35 -0800 (PST)
+Received: from mail-yb1-f177.google.com (mail-yb1-f177.google.com.
+ [209.85.219.177]) by smtp.gmail.com with ESMTPSA id
+ 00721157ae682-6f6e63fddb1sm15213407b3.30.2025.01.20.14.21.35
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 20 Jan 2025 14:05:16 -0800 (PST)
-Message-ID: <5dfb0ac1-5f1b-4132-8041-16d6a8907319@ventanamicro.com>
-Date: Mon, 20 Jan 2025 19:05:09 -0300
+ Mon, 20 Jan 2025 14:21:35 -0800 (PST)
+Received: by mail-yb1-f177.google.com with SMTP id
+ 3f1490d57ef6-e549b0f8d57so8241361276.3; 
+ Mon, 20 Jan 2025 14:21:35 -0800 (PST)
+X-Forwarded-Encrypted: i=1;
+ AJvYcCWx3a2N1ZA1FgboOBFyazlyw1giHIb8Bnf7gCRdZZ5v52cEwH1QUlOWETCOXaDXvlOpmYVtSU5JnPEA@nongnu.org
+X-Received: by 2002:a05:690c:c94:b0:6ef:6035:828e with SMTP id
+ 00721157ae682-6f6eb9414ebmr111063737b3.35.1737411695357; Mon, 20 Jan 2025
+ 14:21:35 -0800 (PST)
+Received: from 281799484056 named unknown by gmailapi.google.com with
+ HTTPREST; Mon, 20 Jan 2025 14:21:34 -0800
+Received: from 281799484056 named unknown by gmailapi.google.com with
+ HTTPREST; Mon, 20 Jan 2025 14:21:34 -0800
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 5/7] tests/qtest: rename qtest_send_prefix and roll-up
- into qtest_send
-To: =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
- qemu-devel@nongnu.org
-Cc: qemu-s390x@nongnu.org, qemu-arm@nongnu.org, Thomas Huth
- <thuth@redhat.com>, Peter Maydell <peter.maydell@linaro.org>,
- Nicholas Piggin <npiggin@gmail.com>,
- Daniel Henrique Barboza <danielhb413@gmail.com>,
- Harsh Prateek Bora <harshpb@linux.ibm.com>,
- Palmer Dabbelt <palmer@dabbelt.com>,
- Alistair Francis <alistair.francis@wdc.com>, Bin Meng <bmeng.cn@gmail.com>,
- Weiwei Li <liwei1518@gmail.com>, Liu Zhiwei <zhiwei_liu@linux.alibaba.com>,
- Fabiano Rosas <farosas@suse.de>, Laurent Vivier <lvivier@redhat.com>,
- Paolo Bonzini <pbonzini@redhat.com>,
- "open list:sPAPR (pseries)" <qemu-ppc@nongnu.org>,
- "open list:RISC-V TCG CPUs" <qemu-riscv@nongnu.org>
-References: <20250120210212.3890255-1-alex.bennee@linaro.org>
- <20250120210212.3890255-6-alex.bennee@linaro.org>
-Content-Language: en-US
-From: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
-In-Reply-To: <20250120210212.3890255-6-alex.bennee@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::102a;
- envelope-from=dbarboza@ventanamicro.com; helo=mail-pj1-x102a.google.com
+From: Fahrzin Hemmati <fahhem@fahhem.com>
+X-Shortwave-Message-Id: m-0b747540-87a3-4ed9-addd-11235ab0ba93
+In-Reply-To: <b3e7b218-66eb-4d5f-b9ed-6a20dbca2a8a@tls.msk.ru>
+References: <20250120103711.836753-1-fahhem@fahhem.com>
+ <Z45ANK-m2XZazDi3@redhat.com>
+ <CAHJ_xmW3YCrKEpNGBJxRzqM99Aoe=nwOSJWF+BO5VbySP9763g@mail.gmail.com>
+ <b3e7b218-66eb-4d5f-b9ed-6a20dbca2a8a@tls.msk.ru>
+Date: Mon, 20 Jan 2025 14:21:34 -0800
+X-Gmail-Original-Message-ID: <CAHJ_xmVDZ159ixki4qpvOMdA1zLpwSkVnB_ukx_EfW1ve0o=+A@mail.gmail.com>
+X-Gm-Features: AbW1kvaVnQ7mxqEktqRZD1uuygmCSz5kbPvtBRnHHK2M87YlJkDtUedaj0qBdBM
+Message-ID: <CAHJ_xmVDZ159ixki4qpvOMdA1zLpwSkVnB_ukx_EfW1ve0o=+A@mail.gmail.com>
+Subject: Re: [PATCH] Skip resizing image to the same size
+To: Kevin Wolf <kwolf@redhat.com>, Michael Tokarev <mjt@tls.msk.ru>
+Cc: qemu-devel@nongnu.org, Hanna Reitz <hreitz@redhat.com>,
+ qemu-block@nongnu.org
+Content-Type: multipart/alternative; boundary="000000000000ee3bb8062c2aae53"
+Received-SPF: none client-ip=2607:f8b0:4864:20::b2a;
+ envelope-from=fahhem@fahhem.com; helo=mail-yb1-xb2a.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, HTML_MESSAGE=0.001,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_NONE=0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -116,248 +114,133 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+--000000000000ee3bb8062c2aae53
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+
+Happy to wait until your patchset is in.
+
+Yes, this is a no-op, but it reads the entire disk image to perform that
+no-op, so this is merely a time-saving improvement, not a behavior change.
+
+On Mon Jan 20, 2025, 09:49 PM GMT, Michael Tokarev <mjt@tls.msk.ru> wrote:
+
+20.01.2025 23:17, Fahrzin Hemmati wrote:
+
+My apologies, I saw the Signed-off-by requirement at first, but as I
+followed the docs I got to "git publish" and didn't realize "git publish"
+was
+actually able to send emails on my system (I don't remember setting up any
+SMTP settings). By that time, I forgot and thought this patch was short
+enough to not warrant much of a commit message.
+
+The main practical advantage is for users that call "qemu-img resize" via
+scripts or other systems (like Packer in my case) that don't check the
+image
+size ahead of time. I can upstream this change into them (by using
+"qemu-img info =E2=80=94output=3Djson ...") but I figured it would be usefu=
+l to more
+users here.
+
+This could trivially be added to block/io.c:bdrv_co_truncate(), as well as
+blockdev.c:qmp_block_resize() with a little more work. I'm not familiar
+with those workflows, but if needed I can do that as well.
+
+Here's the new patch:
+
+From 17f5c5f03d930c4816b92b97e0e54db0725d7b94 Mon Sep 17 00:00:00 2001
+From: Fahrzin Hemmati <fahhem@fahhem.com <mailto:fahhem@fahhem.com>>
+Date: Mon, 20 Jan 2025 01:56:24 -0800
+Subject: [PATCH] Skip resizing image to the same size
+
+Higher-level software, such as Packer, blindly call "qemu-img resize"
+even when the size is the same. This change can be pushed to those
+users, but it's very cheap to check and can save many other users more
+time here.
+
+Signed-off-by: Fahrzin Hemmati <fahhem@fahhem.com <mailto:fahhem@fahhem.com
+>>
+---
+qemu-img.c | 6 ++++++
+tests/qemu-iotests/061 | 8 ++++++++
+tests/qemu-iotests/061.out | 9 +++++++++
+3 files changed, 23 insertions(+)
+
+diff --git a/qemu-img.c b/qemu-img.c
+index 2f2fac90e8..3345c4e63f 100644
+--- a/qemu-img.c
++++ b/qemu-img.c
+@@ -4184,6 +4184,12 @@ static int img_resize(int argc, char **argv)
+goto out;
+}
+
++ if (total_size =3D=3D current_size) {
++ qprintf(quiet, "Image already has the desired size.\n");
++ ret =3D 0;
++ goto out;
++ }
 
 
-On 1/20/25 6:02 PM, Alex Bennée wrote:
-> qtest_send_prefix never actually sent something over the chardev, all
-> it does is print the timestamp to the QTEST_LOG when enabled. So
-> rename the function, make it static, remove the unused CharDev and
-> simplify all the call sites by handling that directly with
-> qtest_send (and qtest_log_send).
-> 
-> Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
-> ---
 
-Reviewed-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
+I don't think this is necessary: the actual operation is a no-op
+anyway, there's no need to special-case it.
 
->   include/system/qtest.h |  1 -
->   hw/ppc/spapr_rtas.c    |  1 -
->   hw/riscv/riscv_hart.c  |  1 -
->   system/qtest.c         | 26 +++-----------------------
->   4 files changed, 3 insertions(+), 26 deletions(-)
-> 
-> diff --git a/include/system/qtest.h b/include/system/qtest.h
-> index c161d75165..6ddddc501b 100644
-> --- a/include/system/qtest.h
-> +++ b/include/system/qtest.h
-> @@ -24,7 +24,6 @@ static inline bool qtest_enabled(void)
->   }
->   
->   #ifndef CONFIG_USER_ONLY
-> -void qtest_send_prefix(CharBackend *chr);
->   void G_GNUC_PRINTF(2, 3) qtest_sendf(CharBackend *chr, const char *fmt, ...);
->   void qtest_set_command_cb(bool (*pc_cb)(CharBackend *chr, gchar **words));
->   bool qtest_driver(void);
-> diff --git a/hw/ppc/spapr_rtas.c b/hw/ppc/spapr_rtas.c
-> index df2e837632..503d441b48 100644
-> --- a/hw/ppc/spapr_rtas.c
-> +++ b/hw/ppc/spapr_rtas.c
-> @@ -565,7 +565,6 @@ static bool spapr_qtest_callback(CharBackend *chr, gchar **words)
->           g_assert(rc == 0);
->           res = qtest_rtas_call(words[1], nargs, args, nret, ret);
->   
-> -        qtest_send_prefix(chr);
->           qtest_sendf(chr, "OK %"PRIu64"\n", res);
->   
->           return true;
-> diff --git a/hw/riscv/riscv_hart.c b/hw/riscv/riscv_hart.c
-> index ad67cd7645..a55d156668 100644
-> --- a/hw/riscv/riscv_hart.c
-> +++ b/hw/riscv/riscv_hart.c
-> @@ -94,7 +94,6 @@ static bool csr_qtest_callback(CharBackend *chr, gchar **words)
->           g_assert(rc == 0);
->           csr_call(words[1], cpu, csr, &val);
->   
-> -        qtest_send_prefix(chr);
->           qtest_sendf(chr, "OK 0 "TARGET_FMT_lx"\n", (target_ulong)val);
->   
->           return true;
-> diff --git a/system/qtest.c b/system/qtest.c
-> index bb1efba9fd..28b6fac37c 100644
-> --- a/system/qtest.c
-> +++ b/system/qtest.c
-> @@ -265,7 +265,7 @@ static int hex2nib(char ch)
->       }
->   }
->   
-> -void qtest_send_prefix(CharBackend *chr)
-> +static void qtest_log_timestamp(void)
->   {
->       if (!qtest_log_fp || !qtest_opened) {
->           return;
-> @@ -282,7 +282,7 @@ static void G_GNUC_PRINTF(1, 2) qtest_log_send(const char *fmt, ...)
->           return;
->       }
->   
-> -    qtest_send_prefix(NULL);
-> +    qtest_log_timestamp();
->   
->       va_start(ap, fmt);
->       vfprintf(qtest_log_fp, fmt, ap);
-> @@ -301,6 +301,7 @@ static void qtest_server_char_be_send(void *opaque, const char *str)
->   
->   static void qtest_send(CharBackend *chr, const char *str)
->   {
-> +    qtest_log_timestamp();
->       qtest_server_send(qtest_server_send_opaque, str);
->   }
->   
-> @@ -324,7 +325,6 @@ static void qtest_irq_handler(void *opaque, int n, int level)
->       if (irq_levels[n] != level) {
->           CharBackend *chr = &qtest->qtest_chr;
->           irq_levels[n] = level;
-> -        qtest_send_prefix(chr);
->           qtest_sendf(chr, "IRQ %s %d\n",
->                       level ? "raise" : "lower", n);
->       }
-> @@ -380,19 +380,16 @@ static void qtest_process_command(CharBackend *chr, gchar **words)
->           is_outbound = words[0][14] == 'o';
->           dev = DEVICE(object_resolve_path(words[1], NULL));
->           if (!dev) {
-> -            qtest_send_prefix(chr);
->               qtest_send(chr, "FAIL Unknown device\n");
->               return;
->           }
->   
->           if (is_named && !is_outbound) {
-> -            qtest_send_prefix(chr);
->               qtest_send(chr, "FAIL Interception of named in-GPIOs not yet supported\n");
->               return;
->           }
->   
->           if (irq_intercept_dev) {
-> -            qtest_send_prefix(chr);
->               if (irq_intercept_dev != dev) {
->                   qtest_send(chr, "FAIL IRQ intercept already enabled\n");
->               } else {
-> @@ -419,7 +416,6 @@ static void qtest_process_command(CharBackend *chr, gchar **words)
->               }
->           }
->   
-> -        qtest_send_prefix(chr);
->           if (interception_succeeded) {
->               irq_intercept_dev = dev;
->               qtest_send(chr, "OK\n");
-> @@ -438,7 +434,6 @@ static void qtest_process_command(CharBackend *chr, gchar **words)
->   
->           dev = DEVICE(object_resolve_path(words[1], NULL));
->           if (!dev) {
-> -            qtest_send_prefix(chr);
->               qtest_send(chr, "FAIL Unknown device\n");
->               return;
->           }
-> @@ -457,7 +452,6 @@ static void qtest_process_command(CharBackend *chr, gchar **words)
->           irq = qdev_get_gpio_in_named(dev, name, num);
->   
->           qemu_set_irq(irq, level);
-> -        qtest_send_prefix(chr);
->           qtest_send(chr, "OK\n");
->       } else if (strcmp(words[0], "outb") == 0 ||
->                  strcmp(words[0], "outw") == 0 ||
-> @@ -480,7 +474,6 @@ static void qtest_process_command(CharBackend *chr, gchar **words)
->           } else if (words[0][3] == 'l') {
->               cpu_outl(addr, value);
->           }
-> -        qtest_send_prefix(chr);
->           qtest_send(chr, "OK\n");
->       } else if (strcmp(words[0], "inb") == 0 ||
->           strcmp(words[0], "inw") == 0 ||
-> @@ -501,7 +494,6 @@ static void qtest_process_command(CharBackend *chr, gchar **words)
->           } else if (words[0][2] == 'l') {
->               value = cpu_inl(addr);
->           }
-> -        qtest_send_prefix(chr);
->           qtest_sendf(chr, "OK 0x%04x\n", value);
->       } else if (strcmp(words[0], "writeb") == 0 ||
->                  strcmp(words[0], "writew") == 0 ||
-> @@ -537,7 +529,6 @@ static void qtest_process_command(CharBackend *chr, gchar **words)
->               address_space_write(first_cpu->as, addr, MEMTXATTRS_UNSPECIFIED,
->                                   &data, 8);
->           }
-> -        qtest_send_prefix(chr);
->           qtest_send(chr, "OK\n");
->       } else if (strcmp(words[0], "readb") == 0 ||
->                  strcmp(words[0], "readw") == 0 ||
-> @@ -571,7 +562,6 @@ static void qtest_process_command(CharBackend *chr, gchar **words)
->                                  &value, 8);
->               tswap64s(&value);
->           }
-> -        qtest_send_prefix(chr);
->           qtest_sendf(chr, "OK 0x%016" PRIx64 "\n", value);
->       } else if (strcmp(words[0], "read") == 0) {
->           g_autoptr(GString) enc = NULL;
-> @@ -593,7 +583,6 @@ static void qtest_process_command(CharBackend *chr, gchar **words)
->   
->           enc = qemu_hexdump_line(NULL, data, len, 0, 0);
->   
-> -        qtest_send_prefix(chr);
->           qtest_sendf(chr, "OK 0x%s\n", enc->str);
->   
->           g_free(data);
-> @@ -613,7 +602,6 @@ static void qtest_process_command(CharBackend *chr, gchar **words)
->           address_space_read(first_cpu->as, addr, MEMTXATTRS_UNSPECIFIED, data,
->                              len);
->           b64_data = g_base64_encode(data, len);
-> -        qtest_send_prefix(chr);
->           qtest_sendf(chr, "OK %s\n", b64_data);
->   
->           g_free(data);
-> @@ -649,7 +637,6 @@ static void qtest_process_command(CharBackend *chr, gchar **words)
->                               len);
->           g_free(data);
->   
-> -        qtest_send_prefix(chr);
->           qtest_send(chr, "OK\n");
->       } else if (strcmp(words[0], "memset") == 0) {
->           uint64_t addr, len;
-> @@ -673,7 +660,6 @@ static void qtest_process_command(CharBackend *chr, gchar **words)
->               g_free(data);
->           }
->   
-> -        qtest_send_prefix(chr);
->           qtest_send(chr, "OK\n");
->       }  else if (strcmp(words[0], "b64write") == 0) {
->           uint64_t addr, len;
-> @@ -705,10 +691,8 @@ static void qtest_process_command(CharBackend *chr, gchar **words)
->           address_space_write(first_cpu->as, addr, MEMTXATTRS_UNSPECIFIED, data,
->                               len);
->   
-> -        qtest_send_prefix(chr);
->           qtest_send(chr, "OK\n");
->       } else if (strcmp(words[0], "endianness") == 0) {
-> -        qtest_send_prefix(chr);
->           if (target_words_bigendian()) {
->               qtest_sendf(chr, "OK big\n");
->           } else {
-> @@ -726,7 +710,6 @@ static void qtest_process_command(CharBackend *chr, gchar **words)
->                                               QEMU_TIMER_ATTR_ALL);
->           }
->           new_ns = qemu_clock_advance_virtual_time(old_ns + ns);
-> -        qtest_send_prefix(chr);
->           qtest_sendf(chr, "%s %"PRIi64"\n",
->                       new_ns > old_ns ? "OK" : "FAIL", new_ns);
->       } else if (strcmp(words[0], "module_load") == 0) {
-> @@ -734,7 +717,6 @@ static void qtest_process_command(CharBackend *chr, gchar **words)
->           int rv;
->           g_assert(words[1] && words[2]);
->   
-> -        qtest_send_prefix(chr);
->           rv = module_load(words[1], words[2], &local_err);
->           if (rv > 0) {
->               qtest_sendf(chr, "OK\n");
-> @@ -752,13 +734,11 @@ static void qtest_process_command(CharBackend *chr, gchar **words)
->           ret = qemu_strtoi64(words[1], NULL, 0, &ns);
->           g_assert(ret == 0);
->           new_ns = qemu_clock_advance_virtual_time(ns);
-> -        qtest_send_prefix(chr);
->           qtest_sendf(chr, "%s %"PRIi64"\n",
->                       new_ns == ns ? "OK" : "FAIL", new_ns);
->       } else if (process_command_cb && process_command_cb(chr, words)) {
->           /* Command got consumed by the callback handler */
->       } else {
-> -        qtest_send_prefix(chr);
->           qtest_sendf(chr, "FAIL Unknown command '%s'\n", words[0]);
->       }
->   }
+Please also refrain from changing qemu-img until my refresh
+patchset is either accepted or rejected. It was a large work
+and it'd be sad to lose it.
 
+Thanks,
+
+/mjt
+
+--000000000000ee3bb8062c2aae53
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+
+<html><body><div><div><span>Happy to wait until your patchset is in.</span>=
+</div><br><div><span>Yes, this is a no-op, but it reads the entire disk ima=
+ge to perform that no-op, so this is merely a time-saving improvement, not =
+a behavior change.</span></div></div><br><div><div>On Mon Jan 20, 2025, 09:=
+49 PM GMT, <a href=3D"mailto:mjt@tls.msk.ru">Michael Tokarev</a> wrote:<br>=
+</div><blockquote style=3D"margin:0 0 0 4pt;padding-left:4pt;border-left:1p=
+x solid #ccc"><div style=3D"color:#212121;font-size:14px;font-weight:normal=
+;line-height:20px">20.01.2025 23:17, Fahrzin Hemmati wrote:<blockquote>My a=
+pologies, I saw the Signed-off-by requirement at first, but as I followed t=
+he docs I got to &quot;git publish&quot; and didn&#39;t realize &quot;git p=
+ublish&quot; was <br>actually able to send emails on my system (I don&#39;t=
+ remember setting up any SMTP settings). By that time, I forgot and thought=
+ this patch was short <br>enough to not warrant much of a commit message.<b=
+r><br>The main practical advantage is for users that call &quot;qemu-img re=
+size&quot; via scripts or other systems (like Packer in my case) that don&#=
+39;t check the image <br>size ahead of time. I can upstream this change int=
+o them (by using &quot;qemu-img info =E2=80=94output=3Djson ...&quot;) but =
+I figured it would be useful to more users here.<br><br>This could triviall=
+y be added to block/io.c:bdrv_co_truncate(), as well as blockdev.c:qmp_bloc=
+k_resize() with a little more work. I&#39;m not familiar <br>with those wor=
+kflows, but if needed I can do that as well.<br><br>Here&#39;s the new patc=
+h:<br><br> From 17f5c5f03d930c4816b92b97e0e54db0725d7b94 Mon Sep 17 00:00:0=
+0 2001<br>From: Fahrzin Hemmati &lt;<a href=3D"mailto:fahhem@fahhem.com">fa=
+hhem@fahhem.com</a> &lt;mailto:<a href=3D"mailto:fahhem@fahhem.com">fahhem@=
+fahhem.com</a>&gt;&gt;<br>Date: Mon, 20 Jan 2025 01:56:24 -0800<br>Subject:=
+ [PATCH] Skip resizing image to the same size<br><br>Higher-level software,=
+ such as Packer, blindly call &quot;qemu-img resize&quot;<br>even when the =
+size is the same. This change can be pushed to those<br>users, but it&#39;s=
+ very cheap to check and can save many other users more<br>time here.<br><b=
+r>Signed-off-by: Fahrzin Hemmati &lt;<a href=3D"mailto:fahhem@fahhem.com">f=
+ahhem@fahhem.com</a> &lt;mailto:<a href=3D"mailto:fahhem@fahhem.com">fahhem=
+@fahhem.com</a>&gt;&gt;<br>---<br>qemu-img.c | 6 ++++++<br>tests/qemu-iotes=
+ts/061 | 8 ++++++++<br>tests/qemu-iotests/061.out | 9 +++++++++<br>3 files =
+changed, 23 insertions(+)<br><br>diff --git a/qemu-img.c b/qemu-img.c<br>in=
+dex 2f2fac90e8..3345c4e63f 100644<br>--- a/qemu-img.c<br>+++ b/qemu-img.c<b=
+r>@@ -4184,6 +4184,12 @@ static int img_resize(int argc, char **argv)<br>go=
+to out;<br>}<br><br>+ if (total_size =3D=3D current_size) {<br>+ qprintf(qu=
+iet, &quot;Image already has the desired size.\n&quot;);<br>+ ret =3D 0;<br=
+>+ goto out;<br>+ }</blockquote><br><br>I don&#39;t think this is necessary=
+: the actual operation is a no-op<br>anyway, there&#39;s no need to special=
+-case it.<br><br>Please also refrain from changing qemu-img until my refres=
+h<br>patchset is either accepted or rejected.  It was a large work<br>and i=
+t&#39;d be sad to lose it.<br><br>Thanks,<br><br>/mjt<br></div></blockquote=
+></div></body></html>
+
+--000000000000ee3bb8062c2aae53--
 
