@@ -4,87 +4,87 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 69935C02188
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4ECFDC02187
 	for <qemu-devel@archiver.kernel.org>; Mon, 20 Jan 2025 00:35:25 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tZfkj-0006qI-TP; Sun, 19 Jan 2025 19:34:53 -0500
+	id 1tZfki-0006qF-8D; Sun, 19 Jan 2025 19:34:53 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jasowang@redhat.com>)
- id 1tZfkf-0006q3-Gq
- for qemu-devel@nongnu.org; Sun, 19 Jan 2025 19:34:50 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ id 1tZfke-0006pp-58
+ for qemu-devel@nongnu.org; Sun, 19 Jan 2025 19:34:48 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jasowang@redhat.com>)
- id 1tZfkd-000471-Ry
- for qemu-devel@nongnu.org; Sun, 19 Jan 2025 19:34:49 -0500
+ id 1tZfkc-00046p-GD
+ for qemu-devel@nongnu.org; Sun, 19 Jan 2025 19:34:47 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1737333286;
+ s=mimecast20190719; t=1737333283;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=bRHiqA+Tg4XuUV7fQjItzR8Q7urlqtioweKD4uQAS6s=;
- b=ILofYmWFuqN+tlfmSzoe+gxa6bDil/FIJi7Ul4rwZ/6DSlenigPuy7AUn/D02TsrWN2j94
- PyKWuulk2smjO2rDueHtAY9nzH4phLb+LUbax+7RsakG/qA7lLGuNMmnHBJ7LYvP6PbiNy
- ClMBKRbxe5BbftfdUnMcDt+aD/Wc5NM=
-Received: from mail-pl1-f197.google.com (mail-pl1-f197.google.com
- [209.85.214.197]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=1GFUHYV/seV3Hjaqoj1ZH6QUB25vK2U6l1rlCmzHnLY=;
+ b=RFKRNvRuyXFQjX4bZyHqAlwadt0IQEvaDlYPyvND130w5kzK9w3S6h2gpzI8WjU2gzo0zm
+ n90q8+aoXlJRu2QmPloZn05mTgU28e7v+TjHQVUsb5bZbD+p8hBZMCNytb8PrzdRBR5y/X
+ N4R/z+RZS4dqCnA5MebWskHfUbXKQ7c=
+Received: from mail-pl1-f200.google.com (mail-pl1-f200.google.com
+ [209.85.214.200]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-573-AsKeNjUbNBi6aorYiRyW0w-1; Sun, 19 Jan 2025 19:34:44 -0500
-X-MC-Unique: AsKeNjUbNBi6aorYiRyW0w-1
-X-Mimecast-MFC-AGG-ID: AsKeNjUbNBi6aorYiRyW0w
-Received: by mail-pl1-f197.google.com with SMTP id
- d9443c01a7336-216750b679eso52639625ad.1
- for <qemu-devel@nongnu.org>; Sun, 19 Jan 2025 16:34:44 -0800 (PST)
+ us-mta-180-YTcjkOY3OtKwKACr01asAg-1; Sun, 19 Jan 2025 19:34:40 -0500
+X-MC-Unique: YTcjkOY3OtKwKACr01asAg-1
+X-Mimecast-MFC-AGG-ID: YTcjkOY3OtKwKACr01asAg
+Received: by mail-pl1-f200.google.com with SMTP id
+ d9443c01a7336-21638389f63so54691875ad.1
+ for <qemu-devel@nongnu.org>; Sun, 19 Jan 2025 16:34:40 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1737333283; x=1737938083;
+ d=1e100.net; s=20230601; t=1737333279; x=1737938079;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=bRHiqA+Tg4XuUV7fQjItzR8Q7urlqtioweKD4uQAS6s=;
- b=h5+72ddJMyw0HNGQ5uW7XlB6Ak6ldblDEYTp7wKE9qmrgq3RkqFEL2xE9xsmx8CuJ+
- YI7ZV92mLehjEHDHKlmjqKORwaLI0y9MYPa9P3EvBFfiG6owu7/5qgerKib8ZgBxvJfp
- pMtxjnaCFsR+pW2ntfucjOi1Ah6xK79d+BdwGt/kCoDufRz4nJSPkC7Yf1BdVpCRGuJY
- qSX3LwMWWc7/4hgOEcu3iWGTgRrbolUIh8VAlaH6duP8YgHw2zm9Mt0oMNMMsig64SkS
- gPJVISU4bGz6xcT03qaQEDO98X7JmewvpUJt5jSFAl6pc+/a1nSzfSwAFtD2JNXOrIqN
- kykQ==
-X-Gm-Message-State: AOJu0Yxa8ylgbkBKJ2GzqlL+nxG5t9zltlMTJl4LmaUlDVkKYSq3ZLc7
- MLznwlGLH10WMiGE7hbMOL8Ig45UFe4ZpFCI3gegYVPUTEPgboZpfec/4phmLRZHLcYzRRfpOeC
- VJN4V22u+A4APZiqahuMu+VwLP4HgMn5hPXnnPZK9oVUOcPW0biumGRKbb18zOeIhA4xDMN5cP4
- fhoGsqPHIpIbfQTCcCDXizjPauuhbt/4WJw8HfUA==
-X-Gm-Gg: ASbGncsQ8S5x+jWGRJNsyN+XuUQ0s+n6Talndk6VWS5UVXSk2CvDSFGyUpC1GFoR4hM
- +t7bAXGItFV9Dke3cHvFGGXfEnj97gtATAQ8UHIJeBcez8ElXs8O4
-X-Received: by 2002:a05:6a20:3d86:b0:1e0:9cc2:84b1 with SMTP id
- adf61e73a8af0-1eb2158d07amr19054641637.30.1737333283313; 
- Sun, 19 Jan 2025 16:34:43 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IGmtYmfSdqflvyiEMLDE1TkUDrWmzM73y7b4/rPYAO5+6Aujmr8IZ9C7hdThn4fLkTNbE52PyB62jH3j9VpGxs=
-X-Received: by 2002:a05:6a20:3d86:b0:1e0:9cc2:84b1 with SMTP id
- adf61e73a8af0-1eb2158d07amr19054610637.30.1737333282864; Sun, 19 Jan 2025
- 16:34:42 -0800 (PST)
+ bh=1GFUHYV/seV3Hjaqoj1ZH6QUB25vK2U6l1rlCmzHnLY=;
+ b=RwRMHEiI5fryoQ6X3xzEH2PIQ7jvxcGeQxIUErmcpLYyXqPF/SJvdjT5bNOdwOh1w2
+ uc2VC07gVxqaHNGTDcCdGPOuXok/74RPxM3sQ0OfD886w3vYnRWsBZrjWBWWdLETQ828
+ OhZVGp5HyJ2eZMt2Ee5Fzo6TqBAAWq4qITbL3LDOb2U50BsQ06HpnLniPkmCIfwoSmHj
+ tWzvaDoVsZZdAPZPQiIWSWlJGiTQFfxqD9piZslOKaYuRhJzoOmWB2Laj/b3zOJnxd8E
+ CbPH0iCBrcCU4jYlceCVIl0zWxT3kXdunlObv41aT5/Rzht739amuFrLEfj2+2jlEbJv
+ mkMA==
+X-Gm-Message-State: AOJu0YwFhzZqZDT45SppRlTrHmFAgkL4l8K3T9oWLMNNFf0eCYyPwHRd
+ u811Rrc4G4j9Cf2D/uxL+/R7vlXmVhVR0J7AYZg9sUEc7fjFeS93plcP8WBDXzhp0W6LZgUbDG5
+ KWjmsBu4zV/HPUeZazys+JTAFXPcnb6cLexyJU8J3clQ8D+gCF05KGdn1u3CzUNpmYuVKdx6pjO
+ 4zf7eNk1Z7UieJfwAPcPwdzKI2CkM=
+X-Gm-Gg: ASbGncsroyGvGcdimPLSBbooV6j+frrjEYZgWhWChoxtF+cmc8CpZ1mAvTOo4opUp2M
+ bpdASxZzxfEkldtBEX9/8eRvMB6IrTk4VZWVCbUi52DiqasKZ9B32
+X-Received: by 2002:a05:6a20:2450:b0:1e1:aef4:9ce8 with SMTP id
+ adf61e73a8af0-1eb215902e2mr19277467637.28.1737333279496; 
+ Sun, 19 Jan 2025 16:34:39 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IGj2/849JogWqXkYAYAsZ3ZAMHonrC5d4j2Pa2cRXJD4RIm9uCa8gPsDjZP2McaLp2DnMK4JyC3HQRyBRtEA7k=
+X-Received: by 2002:a05:6a20:2450:b0:1e1:aef4:9ce8 with SMTP id
+ adf61e73a8af0-1eb215902e2mr19277438637.28.1737333279026; Sun, 19 Jan 2025
+ 16:34:39 -0800 (PST)
 MIME-Version: 1.0
 References: <20250117111709.970789-1-lvivier@redhat.com>
- <20250117111709.970789-3-lvivier@redhat.com>
-In-Reply-To: <20250117111709.970789-3-lvivier@redhat.com>
+ <20250117111709.970789-2-lvivier@redhat.com>
+In-Reply-To: <20250117111709.970789-2-lvivier@redhat.com>
 From: Jason Wang <jasowang@redhat.com>
-Date: Mon, 20 Jan 2025 08:34:30 +0800
-X-Gm-Features: AbW1kvbentXiW8c0BJzXAGdYUoAkgWh0HNJ7KWYP-H0S5vBD3AyI8wCrLrtcpL8
-Message-ID: <CACGkMEsMEddt_-4Yj3xGbPRF-OcU87C6J9P8qehMoXsKEZzO8A@mail.gmail.com>
-Subject: Re: [PATCH 2/2] net/dump: Correctly compute Ethernet packet offset
+Date: Mon, 20 Jan 2025 08:34:27 +0800
+X-Gm-Features: AbW1kvYOCljyka5nKFSfdYuMlJhJTlGPKhJj4hTN6-69U0OC3DO3r7cBKoQVJzk
+Message-ID: <CACGkMEs+bWdxmaE6wrcZsomPb0Jt4UP=RWTaRxfpkEqgTdbxdw@mail.gmail.com>
+Subject: Re: [PATCH 1/2] net: Fix announce_self
 To: Laurent Vivier <lvivier@redhat.com>
 Cc: qemu-devel@nongnu.org
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=jasowang@redhat.com;
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=jasowang@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -60
-X-Spam_score: -6.1
-X-Spam_bar: ------
-X-Spam_report: (-6.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-2.996,
+X-Spam_score_int: -50
+X-Spam_score: -5.1
+X-Spam_bar: -----
+X-Spam_report: (-5.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-2.996,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=-1, RCVD_IN_MSPIKE_WL=-0.01,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.024,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -105,19 +105,22 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 On Fri, Jan 17, 2025 at 7:17=E2=80=AFPM Laurent Vivier <lvivier@redhat.com>=
  wrote:
 >
-> When a packet is sent with QEMU_NET_PACKET_FLAG_RAW by QEMU it
-> never includes virtio-net header even if qemu_get_vnet_hdr_len()
-> is not 0, and filter-dump is not managing this case.
+> b9ad513e1876 ("net: Remove receive_raw()") adds an iovec entry
+> in qemu_deliver_packet_iov() to add the virtio-net header
+> in the data when QEMU_NET_PACKET_FLAG_RAW is set but forgets
+> to increase the number of iovec entries in the array, so
+> receive_iov() will only send the first entry (the virtio-net
+> entry, full of 0) and no data. The packet will be discarded.
 >
-> The only user of QEMU_NET_PACKET_FLAG_RAW is announce_self,
-> we can show the problem using it and tcpddump:
+> The only user of QEMU_NET_PACKET_FLAG_RAW is announce_self.
+>
+> We can see the problem with tcpdump:
 >
 > - QEMU parameters:
 >
 >   .. -monitor stdio \
 >      -netdev bridge,id=3Dnetdev0,br=3Dvirbr0 \
 >      -device virtio-net,mac=3D9a:2b:2c:2d:2e:2f,netdev=3Dnetdev0 \
->      -object filter-dump,netdev=3Dnetdev0,file=3Dlog.pcap,id=3Dpcap0
 >
 > - HMP command:
 >
@@ -125,25 +128,23 @@ On Fri, Jan 17, 2025 at 7:17=E2=80=AFPM Laurent Vivier <lvivier@redhat.com>=
 >
 > - TCP dump:
 >
->   $ tcpdump -nxr log.pcap
+>   $ sudo tcpdump -nxi virbr0
 >
 >   without the fix:
 >
->     08:00:06:04:00:03 > 2e:2f:80:35:00:01, ethertype Unknown (0x9a2b), le=
-ngth 50:
->          0x0000:  2c2d 2e2f 0000 0000 9a2b 2c2d 2e2f 0000
->          0x0010:  0000 0000 0000 0000 0000 0000 0000 0000
->          0x0020:  0000 0000
+>     <nothing>
 >
 >   with the fix:
 >
->     ARP, Reverse Request who-is 9a:2b:2c:2d:2e:2f tell 9a:2b:2c:2d:2e:2f,=
- length 46
->          0x0000:  0001 0800 0604 0003 9a2b 2c2d 2e2f 0000
->          0x0010:  0000 9a2b 2c2d 2e2f 0000 0000 0000 0000
->          0x0020:  0000 0000 0000 0000 0000 0000 0000
+>    ARP, Reverse Request who-is 9a:2b:2c:2d:2e:2f tell 9a:2b:2c:2d:2e:2f, =
+length 46
+>         0x0000:  0001 0800 0604 0003 9a2b 2c2d 2e2f 0000
+>         0x0010:  0000 9a2b 2c2d 2e2f 0000 0000 0000 0000
+>         0x0020:  0000 0000 0000 0000 0000 0000 0000
 >
-> Fixes: 481c52320a26 ("net: Strip virtio-net header when dumping")
+> Reported-by: Xiaohui Li <xiaohli@redhat.com>
+> Bug: https://issues.redhat.com/browse/RHEL-73891
+> Fixes: b9ad513e1876 ("net: Remove receive_raw()")
 > Cc: akihiko.odaki@daynix.com
 > Signed-off-by: Laurent Vivier <lvivier@redhat.com>
 > ---
