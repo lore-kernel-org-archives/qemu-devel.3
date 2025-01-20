@@ -4,35 +4,35 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0CF60C02181
-	for <qemu-devel@archiver.kernel.org>; Mon, 20 Jan 2025 18:18:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B9062C02181
+	for <qemu-devel@archiver.kernel.org>; Mon, 20 Jan 2025 18:31:20 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tZwLM-0000K0-Qc; Mon, 20 Jan 2025 13:17:48 -0500
+	id 1tZwXf-00012F-NH; Mon, 20 Jan 2025 13:30:31 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <laurent@vivier.eu>) id 1tZwLL-0000Jm-Bd
- for qemu-devel@nongnu.org; Mon, 20 Jan 2025 13:17:47 -0500
-Received: from mout.kundenserver.de ([212.227.126.134])
+ (Exim 4.90_1) (envelope-from <laurent@vivier.eu>) id 1tZwXd-00010u-59
+ for qemu-devel@nongnu.org; Mon, 20 Jan 2025 13:30:29 -0500
+Received: from mout.kundenserver.de ([212.227.126.135])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <laurent@vivier.eu>) id 1tZwLJ-00056F-Dh
- for qemu-devel@nongnu.org; Mon, 20 Jan 2025 13:17:47 -0500
+ (Exim 4.90_1) (envelope-from <laurent@vivier.eu>) id 1tZwWy-0006Of-Qu
+ for qemu-devel@nongnu.org; Mon, 20 Jan 2025 13:29:50 -0500
 Received: from [192.168.100.1] ([82.64.211.94]) by mrelayeu.kundenserver.de
- (mreue012 [213.165.67.103]) with ESMTPSA (Nemesis) id
- 1MDeAZ-1thOrp0sDf-005kyR; Mon, 20 Jan 2025 19:17:42 +0100
-Message-ID: <5d94702a-acdc-411d-8af1-a41a62b3caa4@vivier.eu>
-Date: Mon, 20 Jan 2025 19:17:41 +0100
+ (mreue010 [213.165.67.103]) with ESMTPSA (Nemesis) id
+ 1M5wgF-1tbrGb0cId-00CFpU; Mon, 20 Jan 2025 19:29:46 +0100
+Message-ID: <17bbaf51-28b3-4147-8367-9ac80fa1ae4f@vivier.eu>
+Date: Mon, 20 Jan 2025 19:29:44 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 4/6] linux-user: netlink: Add emulation of
- IP_MULTICAST_IF
+Subject: Re: [PATCH v3 1/6] linux-user: netlink: Add missing IFA_PROTO to
+ host_to_target_data_addr_rtattr()
 To: deller@kernel.org, Richard Henderson <richard.henderson@linaro.org>,
  =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  qemu-devel@nongnu.org, Stefan Hajnoczi <stefanha@gmail.com>
 Cc: deller@gmx.de
 References: <20250119044122.9637-1-deller@kernel.org>
- <20250119044122.9637-5-deller@kernel.org>
+ <20250119044122.9637-2-deller@kernel.org>
 Content-Language: fr
 From: Laurent Vivier <laurent@vivier.eu>
 Autocrypt: addr=laurent@vivier.eu; keydata=
@@ -77,38 +77,38 @@ Autocrypt: addr=laurent@vivier.eu; keydata=
  OpKgu3nD0ahBDqANU/ZmNNarBJEwvM2vfusmNnWm3QMIwxNuJghRyuFfx694Im1js0ZY3LEU
  JGSHFG4ZynA+ZFUPA6Xf0wHeJOxGKCGIyeKORsteIqgnkINW9fnKJw2pgk8qHkwVc3Vu+wGS
  ZiJK0xFusPQehjWTHn9WjMG1zvQ5TQQHxau/2FkP45+nRPco6vVFQe8JmgtRF8WFJA==
-In-Reply-To: <20250119044122.9637-5-deller@kernel.org>
+In-Reply-To: <20250119044122.9637-2-deller@kernel.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-X-Provags-ID: V03:K1:t4f2JWkLOZC0U25gealj5KV+zpLjbXExwqwCyRxOU7jfld3tOYh
- s5b1Gc+97xNeGSml/+5ww+kOGJ+rfxq8zTUCNjfI/baNK4VJcOQJFpXvsjwpSOriogCVO8r
- FP6AuDAiKV56A5uTdp0WoR+9wiFlKOcbPuXGqi2H62zZeBsjCC5GhFZ5hC0Rt2Dd+7ALRUE
- auW6VTib2EcW1uKMrd29g==
-UI-OutboundReport: notjunk:1;M01:P0:IasWuPeuz00=;i4Ub1KaRkQFRqdhvqMsht8LThX2
- hUzsBcrkPKU9HORic+fyqV8AwdJ20HZJcMOLkZWi9uKrKzKkEpF0/7qpZ2rlxz2LKtXFxuC/4
- WGqfvngQibMwpNUq5KiHEwzqtXFD+mpXPvQ4g54CPPffcUBLjXWSYL/0RrxJ9i/xtHFuq4jzQ
- 6Gx8E1o8LAbP0iiM3qcx07kgdl+p5vHymA9ttv1uT87A5vUtk3AijdmBsFEhjJD+F1cagXpXx
- y/9Oyvxekl0vshIbvuICL9Fi5QcLBQqlvi8QdrN4/YuK0i4SNyTfXQATcou9a6MXf9JwpgExd
- 9QCbwjWspm8nIzqXDleXlD72z8kycAUL+0XosBdAvvgWBnhX7atoaoGa7E+2e5L603wax3IaZ
- iI84gwQ/j2xORSkFANPUK4iKxbtQwunjXa7pO1ow73FeEFOtPcGcL3xWFfWZ9YNzAZ2IUUFBQ
- DuB5QcAwVJcI9yyPQ6pNHZRrOEsBm7mh2RF3GikTOxy+QwQxVZKXKdENpJhrq2xPl+anSdFif
- HOYVDhkNjUJ0+uWGboKnYaoFz863MJTCb31mqyMY5HJX+J5NztV8q7n9aebM9icae0c4FCiUC
- Zxj7v/ZLSIMQFKB1fLoeUM48rgnNuT8AZLp0k/E/30jjn420Jq2oP6/YqWz389ZxlI9xpOmS1
- +Z/msc0+yKbhEGJZYDzJBUs/ySKrBAY0fa9aMDoNYjWsVX6Do1Pv8+SPnl0yIEoWVpEVBcVK9
- 5KiVByg7yTC3zhlB48Y1yDFbPze5rp/+xepy+xQqIvp6WA/GIBgk2tvkw4ItifuaAeIpZXQSr
- Hp2OErRiv9D8C0YkS6SH01KAs2iYVqffMYw2NM7hRpqxp/vqY5joqBVasPi6aKNin4OTYi2PH
- FvDLle1NJLQ6wgVG8I11bzB8jCpVk3NqYHBweE7KScY4zWvaddhD+p49JEaDZtLRxGBqtvOW0
- rFMox6z7uWdVFSwEMbqNo4IJJrX6e1lMrG4rSohILfjv9dmPznhmXG8FG2Ktc6OjnsQYnJN1M
- hO5HPq9yCEkQGz4L+ez1lUpMiRLizgQ4ZfP6cpmv4rgav8XCMenbNN6JljrhOUQhcg/+1hXrz
- Sj/IoVywpvfHxz4HM7n3e8FbGqdzv8dVBvLaIPcnCuqiyuAI/9zuac9eEaTix6gVm7g55zqOw
+X-Provags-ID: V03:K1:esMeilR5l8IL8DzjCaWeRbqcu50UsRSChq13nh9MNfoW3+vbEir
+ NGm4CBObQjX6MZstim3KSwHOlycJxGpg0vuNarpBkT39giDNYqtbw5HofgC4BVnSx0ZY5mx
+ mUF1DzT/Mg22WpSdUsNFwAEidFlkcMPRjkOitN1Pv6I98J2XX8mZyQA9mHt3BQxujYENW16
+ n5GJbnPBbZT1jXW5gGqTw==
+UI-OutboundReport: notjunk:1;M01:P0:Lsy3EuJMZrA=;fAtn7Xe9uB/K2+uGeD4ReE8EArE
+ U1yqPA/5AnSm8ZdGSIpVnl+b8vwDK1sDhXRpMOd3DbaH8HQxF31kQSokxjswqEa4eh89kg+XH
+ vGkQ4r5w2EEFdb7D6uRvsQwIV+Q8+N9DETbAAtUsVahSe6FhA/JBpcMFd8ElDYS1r0fXZqdnB
+ DBXRwQiGH5On3GO3r5MIxC/ISBNqKRcUmzhWZtTKMnrziSE3eTmbJl1+DFZ7gI0Dy1VhcEenK
+ yj+MOPwhdYSNA3nZxTHkVjQm00lH0DPif3NTxSQGvzttwJwsxuYxPn8tN4YBp99vDOJGU2IML
+ MNglMjShlAiR5Ww9vHN/dQARBJX++8oACSn46LdAWz9RWqtZ3Nf648mqaobqfIw+K9pxsDA1x
+ NtZ1J09lmt6QtUNHu3x+FcThd5Sk6xdQMjtFTZAz/yVFuGUsoPMB/e+DcwLvWK4qnXEm+qPxU
+ JLFfE134+5ysTNHWLabLaWV1brNOHPbJ2X1+jRePoXHjQrkKRLL05tAYMXOvz4j2srlMetHKI
+ YtDTQBFccJXmfOFOPRRyg5EiWuq6LkSXZ67C52IhYWBJNcXD4Yl6XDT/tGTRt0Q0Oy5BzKca8
+ b9Inktd4uB68zWx05WxFDhkc8AK/I+96n3ffjE7twWnwiPjtXNWFZLReLQmKed4nrUpGiQ/n0
+ h5ZPkxfaInQ1nd+FO/YSjT944Mf2VgGK/4+o83xnD65vaXoTkbRs3DM6dyMTeHviIUXmWXvt7
+ M/avYiZuD3nVJvV8p3ddcPt1W0sMN0Svox8RW/URq9/xb0RKADQ5bQkvs/n1kf5A+urlIKRWF
+ Cs6KI3oVxjz6AFl1hjfZNS/5StVGNmMsc1XxaJHzY3Xrj0eLEnqLB8ZWK77wAQTAff4p+x2nD
+ Wsghx9ST2wPmUDXDNp5tTPIkwXkUB8IQfXsEdAZfXZt52t4zB3rbItzCXvHF+Ajf42EFjTvpV
+ eTOAhcquJ3WDmSmP/Q9VdzOzIByODBwlfLEY2IgtEOGJxeiDbz2ff+uFl3nSYDVLghJ/eF0DM
+ BYEUPWhlXiyQA+ThiasCJTfZNgB0xK0iv6rmzbYITdOA1Ji4+RqbNRaRwFHBFQBYKAUbcTSGL
+ +Ih1T9OCJnirxkiVEu1w2FRUoK735ikyaybPfMSH0mcle2CtJUOKcP0G0vGA+W7CCCrrNNdd8
  =
-Received-SPF: pass client-ip=212.227.126.134; envelope-from=laurent@vivier.eu;
+Received-SPF: pass client-ip=212.227.126.135; envelope-from=laurent@vivier.eu;
  helo=mout.kundenserver.de
 X-Spam_score_int: -18
 X-Spam_score: -1.9
 X-Spam_bar: -
 X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_NONE=-0.0001,
- RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -129,118 +129,33 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Le 19/01/2025 à 05:41, deller@kernel.org a écrit :
 > From: Helge Deller <deller@gmx.de>
 > 
-> Add IP_MULTICAST_IF and share the code with IP_ADD_MEMBERSHIP / IP_DROP_MEMBERSHIP.
-> Sharing the code makes sense, because the manpage of ip(7)  says:
-> 
-> IP_MULTICAST_IF (since Linux 1.2)
->        Set the local device for a multicast socket.  The argument
->        for setsockopt(2) is an ip_mreqn or (since Linux 3.5)
->        ip_mreq structure similar to IP_ADD_MEMBERSHIP, or an
->        in_addr structure.  (The kernel determines which structure
->        is being passed based on the size passed in optlen.)  For
->        getsockopt(2), the argument is an in_addr structure.
+> Fixes this warning:
+>   Unknown host IFA type: 11
 > 
 > Signed-off-by: Helge Deller <deller@gmx.de>
-> 
-> v2: (based on feedback by Laurent Vivier)
-> - refined commit message and restructure the copying of ip_mreqn fields
-> 
-> diff --git a/linux-user/syscall.c b/linux-user/syscall.c
-> index bbe2560927..4360543e20 100644
-> --- a/linux-user/syscall.c
-> +++ b/linux-user/syscall.c
-> @@ -2130,16 +2130,23 @@ static abi_long do_setsockopt(int sockfd, int level, int optname,
->               }
->               ret = get_errno(setsockopt(sockfd, level, optname, &val, sizeof(val)));
->               break;
-> +        case IP_MULTICAST_IF:
->           case IP_ADD_MEMBERSHIP:
->           case IP_DROP_MEMBERSHIP:
->           {
->               struct ip_mreqn ip_mreq;
->               struct target_ip_mreqn *target_smreqn;
-> +            int min_size;
-> 
->               QEMU_BUILD_BUG_ON(sizeof(struct ip_mreq) !=
->                                 sizeof(struct target_ip_mreq));
-> 
-> -            if (optlen < sizeof (struct target_ip_mreq) ||
-> +            if (optname == IP_MULTICAST_IF) {
-> +                min_size = sizeof(struct in_addr);
-> +            } else {
-> +                min_size = sizeof(struct target_ip_mreq);
-> +            }
-> +            if (optlen < min_size ||
->                   optlen > sizeof (struct target_ip_mreqn)) {
->                   return -TARGET_EINVAL;
->               }
-> @@ -2149,7 +2156,9 @@ static abi_long do_setsockopt(int sockfd, int level, int optname,
->                   return -TARGET_EFAULT;
->               }
->               ip_mreq.imr_multiaddr.s_addr = target_smreqn->imr_multiaddr.s_addr;
-> -            ip_mreq.imr_address.s_addr = target_smreqn->imr_address.s_addr;
-> +            if (optlen >= sizeof(struct target_ip_mreq)) {
-> +                ip_mreq.imr_address.s_addr = target_smreqn->imr_address.s_addr;
-> +            }
->               if (optlen == sizeof(struct target_ip_mreqn)) {
->                   ip_mreq.imr_ifindex = tswapal(target_smreqn->imr_ifindex);
->                   optlen = sizeof(struct ip_mreqn);
-
-This part above seems to be in the commit message... and is the version 2, is this what you want?
-
+> Reviewed-by: Laurent Vivier <laurent@vivier.eu>
 > ---
->   linux-user/syscall.c | 20 ++++++++++++++------
->   1 file changed, 14 insertions(+), 6 deletions(-)
+>   linux-user/fd-trans.c | 1 +
+>   1 file changed, 1 insertion(+)
 > 
-> diff --git a/linux-user/syscall.c b/linux-user/syscall.c
-> index df8609b4d8..6ee02383da 100644
-> --- a/linux-user/syscall.c
-> +++ b/linux-user/syscall.c
-> @@ -2130,16 +2130,23 @@ static abi_long do_setsockopt(int sockfd, int level, int optname,
->               }
->               ret = get_errno(setsockopt(sockfd, level, optname, &val, sizeof(val)));
->               break;
-> +        case IP_MULTICAST_IF:
->           case IP_ADD_MEMBERSHIP:
->           case IP_DROP_MEMBERSHIP:
->           {
->               struct ip_mreqn ip_mreq;
->               struct target_ip_mreqn *target_smreqn;
-> +            int min_size;
->   
->               QEMU_BUILD_BUG_ON(sizeof(struct ip_mreq) !=
->                                 sizeof(struct target_ip_mreq));
->   
-> -            if (optlen < sizeof (struct target_ip_mreq) ||
-> +            if (optname == IP_MULTICAST_IF) {
-> +                min_size = sizeof(struct in_addr);
-> +            } else {
-> +                min_size = sizeof(struct target_ip_mreq);
-> +            }
-> +            if (optlen < min_size ||
->                   optlen > sizeof (struct target_ip_mreqn)) {
->                   return -TARGET_EINVAL;
->               }
-> @@ -2149,13 +2156,14 @@ static abi_long do_setsockopt(int sockfd, int level, int optname,
->                   return -TARGET_EFAULT;
->               }
->               ip_mreq.imr_multiaddr.s_addr = target_smreqn->imr_multiaddr.s_addr;
-> -            ip_mreq.imr_address.s_addr = target_smreqn->imr_address.s_addr;
-> -            if (optlen == sizeof(struct target_ip_mreqn)) {
-> -                ip_mreq.imr_ifindex = tswapal(target_smreqn->imr_ifindex);
-> -                optlen = sizeof(struct ip_mreqn);
-> +            if (optlen >= sizeof(struct target_ip_mreq)) {
-> +                ip_mreq.imr_address.s_addr = target_smreqn->imr_address.s_addr;
-> +                if (optlen >= sizeof(struct target_ip_mreqn)) {
-> +                    __put_user(target_smreqn->imr_ifindex, &ip_mreq.imr_ifindex);
-> +                    optlen = sizeof(struct ip_mreqn);
-> +                }
->               }
->               unlock_user(target_smreqn, optval_addr, 0);
-> -
->               ret = get_errno(setsockopt(sockfd, level, optname, &ip_mreq, optlen));
->               break;
->           }
+> diff --git a/linux-user/fd-trans.c b/linux-user/fd-trans.c
+> index c04a97c73a..a86ed2f4b4 100644
+> --- a/linux-user/fd-trans.c
+> +++ b/linux-user/fd-trans.c
+> @@ -1140,6 +1140,7 @@ static abi_long host_to_target_data_addr_rtattr(struct rtattr *rtattr)
+>       /* binary: depends on family type */
+>       case IFA_ADDRESS:
+>       case IFA_LOCAL:
+> +    case IFA_PROTO:
+>           break;
+>       /* string */
+>       case IFA_LABEL:
 
-Reviewed-by: Laurent Vivier <laurent@vivier.eu>
+Stefan has reported that it breaks build on ubuntu 22.04.
+IFA_PROTO has been introduced in kernel v5.18.
+
+I think you should define QEMU_IFA_XXXX enum as it was done for QEMU_IFLA_XXX, QEMU_RTA_XXX,...
+
+Thanks,
+Laurent
 
