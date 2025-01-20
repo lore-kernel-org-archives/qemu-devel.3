@@ -4,65 +4,60 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4D828C02181
-	for <qemu-devel@archiver.kernel.org>; Mon, 20 Jan 2025 16:20:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 221D5C02181
+	for <qemu-devel@archiver.kernel.org>; Mon, 20 Jan 2025 16:21:36 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tZuVJ-00023c-4Y; Mon, 20 Jan 2025 11:19:57 -0500
+	id 1tZuWe-0002gU-Mn; Mon, 20 Jan 2025 11:21:20 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1tZuVG-00023R-46
- for qemu-devel@nongnu.org; Mon, 20 Jan 2025 11:19:54 -0500
-Received: from mgamail.intel.com ([192.198.163.10])
+ id 1tZuWb-0002fz-GI; Mon, 20 Jan 2025 11:21:17 -0500
+Received: from mgamail.intel.com ([198.175.65.16])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1tZuVC-0005BX-SR
- for qemu-devel@nongnu.org; Mon, 20 Jan 2025 11:19:53 -0500
+ id 1tZuWY-0005ZK-Up; Mon, 20 Jan 2025 11:21:16 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1737389991; x=1768925991;
+ t=1737390075; x=1768926075;
  h=date:from:to:cc:subject:message-id:references:
  mime-version:in-reply-to;
- bh=CbA2GnEOPDu3SGJ0SDfwD4v/VuuqOtnKHiG+E4e1hB8=;
- b=RWowc352tyH+l1sG2E0ahO4MYe0g0+ec6pTgGOU1PMdnCWeLbKPP+Bqt
- 24GAqGOI5pnPgqBD8BC5KEVAmq0EOWBc4DpdhE7Ie0SkMuBGcdQstQW59
- H9FmO0nPFfwIrh5kF3+cKxGo2ldwAITViO5kTaoYqee5qo6Mw/RE+yFMx
- qLGS31QiakbSUjKZL5qP71AEvZUx7qKAzMnM8nJhtzqHiPPoWdot7dQVn
- sje0IlL2Joyg8R0xgj7hX7IsMRrMg8ftO1XpgyXoJuvRriD7vkNIVBeIx
- 1jXpfRyHPAIu74fAZEgHrE/+e3Nn994wHhT/P4cd8FQT7LOHI9l2FXWxE Q==;
-X-CSE-ConnectionGUID: bG4S+IJ8SR+dJ1khSvx+oA==
-X-CSE-MsgGUID: PxVjJHNBR/GyUtAmBRonJw==
-X-IronPort-AV: E=McAfee;i="6700,10204,11314"; a="49206688"
-X-IronPort-AV: E=Sophos;i="6.12,310,1728975600"; d="scan'208";a="49206688"
-Received: from fmviesa008.fm.intel.com ([10.60.135.148])
- by fmvoesa104.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 20 Jan 2025 08:19:47 -0800
-X-CSE-ConnectionGUID: sG/beUKVSPK+3ykQYIP3Tg==
-X-CSE-MsgGUID: ytWe6xW7RauXDOLkC4wauw==
+ bh=+iTxf/rzsT6x3RpKtv9b2/5/o8XDPL4U6LuZ9aV5Js4=;
+ b=lsZcmPC/hpT+juXSi0KlQUgLd2f7MvqVhPX+zLTcFcvX9noebcN2yqVq
+ rPvZqSKe89CRZPFVoPf9c0prFOrt1bjw1MkAaBGX63zxxGnmrwD9j9eVF
+ Hswi3qXgAIq4RfYyf3fGZ53ztEbPTJWiCcAqwO7T2QPAQEi1Zcx94dlh2
+ RsuXmWH2jD6zI+808tDhO5Y0WBnRo6kLG4U/iUigceXQKg1vEK3YrHCp3
+ Gj5VrQbAQ+bOwAtojUAlQ78WCXSbMeIJygdKw3qjKoGldsKwQ9c6qRWRB
+ BhU1CusRwuKBMdo0pHhAEPueRje+6Vjc38lRDKoN0MchgSqEXVxy/BI/Q g==;
+X-CSE-ConnectionGUID: go3K4oSiRd69jNs4rLjISg==
+X-CSE-MsgGUID: vcGFiHhKREubZjKt1OHdEw==
+X-IronPort-AV: E=McAfee;i="6700,10204,11321"; a="37946643"
+X-IronPort-AV: E=Sophos;i="6.13,219,1732608000"; d="scan'208";a="37946643"
+Received: from fmviesa007.fm.intel.com ([10.60.135.147])
+ by orvoesa108.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 20 Jan 2025 08:21:12 -0800
+X-CSE-ConnectionGUID: vC5L1ANbSRqcgqs0rvhEOw==
+X-CSE-MsgGUID: z2CXwILhSni7aeN+Df3P+Q==
 X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.13,219,1732608000"; d="scan'208";a="106687918"
+X-IronPort-AV: E=Sophos;i="6.13,219,1732608000"; d="scan'208";a="106498554"
 Received: from liuzhao-optiplex-7080.sh.intel.com (HELO localhost)
  ([10.239.160.39])
- by fmviesa008.fm.intel.com with ESMTP; 20 Jan 2025 08:19:46 -0800
-Date: Tue, 21 Jan 2025 00:38:39 +0800
+ by fmviesa007.fm.intel.com with ESMTP; 20 Jan 2025 08:21:11 -0800
+Date: Tue, 21 Jan 2025 00:40:04 +0800
 From: Zhao Liu <zhao1.liu@intel.com>
-To: Peter Maydell <peter.maydell@linaro.org>
-Cc: Paolo Bonzini <pbonzini@redhat.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- Philippe =?iso-8859-1?Q?Mathieu-Daud=C3?= <philmd@linaro.org>,
- qemu-devel@nongnu.org, Zhao Liu <zhao1.liu@intel.com>
-Subject: Re: [PATCH 1/2] memattrs: Get rid of bit fields
-Message-ID: <Z458D/RuBQ8Kq0al@intel.com>
-References: <20250120074258.2204342-1-zhao1.liu@intel.com>
- <20250120074258.2204342-2-zhao1.liu@intel.com>
- <CAFEAcA_VAOU+p_BC5bpnk2GKa5piywjf+yhFTh=-3O7TGut+uA@mail.gmail.com>
+To: Paolo Bonzini <pbonzini@redhat.com>
+Cc: qemu-devel@nongnu.org, qemu-rust@nongnu.org
+Subject: Re: [PATCH 01/10] rust: qemu-api: add sub-subclass to the
+ integration tests
+Message-ID: <Z458ZAMFg7aOKSVu@intel.com>
+References: <20250117194003.1173231-1-pbonzini@redhat.com>
+ <20250117194003.1173231-2-pbonzini@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <CAFEAcA_VAOU+p_BC5bpnk2GKa5piywjf+yhFTh=-3O7TGut+uA@mail.gmail.com>
-Received-SPF: pass client-ip=192.198.163.10; envelope-from=zhao1.liu@intel.com;
+In-Reply-To: <20250117194003.1173231-2-pbonzini@redhat.com>
+Received-SPF: pass client-ip=198.175.65.16; envelope-from=zhao1.liu@intel.com;
  helo=mgamail.intel.com
 X-Spam_score_int: -73
 X-Spam_score: -7.4
@@ -87,69 +82,23 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Peter,
+On Fri, Jan 17, 2025 at 08:39:54PM +0100, Paolo Bonzini wrote:
+> Date: Fri, 17 Jan 2025 20:39:54 +0100
+> From: Paolo Bonzini <pbonzini@redhat.com>
+> Subject: [PATCH 01/10] rust: qemu-api: add sub-subclass to the integration
+>  tests
+> X-Mailer: git-send-email 2.47.1
+> 
+> From: Zhao Liu <zhao1.liu@intel.com>
+> 
+> missing signed-off-by from zhao
 
-> >      /*
-> >       * PID (PCI PASID) support: Limited to 8 bits process identifier.
-> >       */
-> > -    unsigned int pid:8;
-> > -} MemTxAttrs;
-> > +    uint8_t pid;
-> > +
-> > +    /* Requester ID (for MSI for example) */
-> > +    uint16_t requester_id;
-> > +} QEMU_PACKED MemTxAttrs;
->
-> If we pull the requester_id up to the top of the struct
-> we don't need the QEMU_PACKED, I think? (You get worse codegen
-> on some platforms if you use 'packed' when you don't need to.)
+Thanks a lot!
 
-Yes! I agree.
+Signed-off-by: Zhao Liu <zhao1.liu@intel.com>
 
-> It would be good to note in the commit message:
-> (1) that this doesn't change the size of MemTxAttrs,
-> which is important because we pass it around directly,
-> not via a pointer (or does it raise it from 4 to 8 bytes?)
-
-MemTxAttrs is raised to 8 bytes (yes, I should mention this).
-
-> (2) that it does mean we have no spare space in the
-> struct for new fields without moving beyond 8 bytes.
-
-Thanks for the reminder, yes it is currently full. I found I missed
-a commnet from Paolo [*], that he suggested only convert `unspecified`
-to a bool. My bad :-(
-
-It still raises the size to 8 bytes but saves spare space, like:
-
-typedef struct MemTxAttrs {
-    unsigned int secure:1;
-    unsigned int space:2;
-    unsigned int user:1;
-    unsigned int memory:1;
-    unsigned int requester_id:16;
-    unsigned int pid:8;
-    bool unspecified;
-    uint8_t _reserved1;
-    uint16_t _reserved2;
-} MemTxAttrs;
-
-Similar to your comment above, to get pakced structure, I think I need
-push `unspecified` field down to other bit fields.
-
-The rust side would require extra work to ZERO the other bit fields
-though. I'll go back to that mail thread and discuss the details again.
-
-[*]: https://lore.kernel.org/qemu-devel/20241205060714.256270-1-zhao1.liu@intel.com/T/#m8b05874d630e3ec8834617babb97b32ec3b39fce
-
-> In particular we're talking about maybe adding a
-> "debug" attribute; so this is an unfortunate refactoring
-> from that point of view.
-
-Thank you for your comment. In v2, I will try converting only
-`unspecified` to a bool. Will that meet your expectations?
-
-Regards,
-Zhao
-
+> ---
+>  rust/qemu-api/tests/tests.rs | 56 ++++++++++++++++++++++++++++++++++--
+>  1 file changed, 53 insertions(+), 3 deletions(-)
+> 
 
