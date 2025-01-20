@@ -4,97 +4,90 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 87417C02187
-	for <qemu-devel@archiver.kernel.org>; Mon, 20 Jan 2025 00:39:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4D18FC0218A
+	for <qemu-devel@archiver.kernel.org>; Mon, 20 Jan 2025 03:10:54 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tZfoR-0000on-4r; Sun, 19 Jan 2025 19:38:43 -0500
+	id 1tZiB1-0002Ib-3k; Sun, 19 Jan 2025 22:10:11 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jasowang@redhat.com>)
- id 1tZfoP-0000oO-Bg
- for qemu-devel@nongnu.org; Sun, 19 Jan 2025 19:38:41 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <lizhijian@fujitsu.com>)
+ id 1tZiAz-0002Hf-Dy
+ for qemu-devel@nongnu.org; Sun, 19 Jan 2025 22:10:09 -0500
+Received: from esa1.hc1455-7.c3s2.iphmx.com ([207.54.90.47])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jasowang@redhat.com>)
- id 1tZfoN-0004aa-JI
- for qemu-devel@nongnu.org; Sun, 19 Jan 2025 19:38:41 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1737333517;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=DjWdn8xl/OI5t6Lswmbh/wxUTZQgdGoDKQ7FHZq4m0Q=;
- b=NmHIfzGFkqhxZFvIkZ7MCGUbM6ge4HEKgOH+cxokgrFIoQTN4/5GSN6Itl8HrEBDfPLaUE
- vK7Sr3E2UezgO5TYLsmqI6xmiF6wDQZXe+bP1EWnNLnnPYxji31tQtAqLXOqHdXg319X7F
- p6QqX7vLcC1wqYDEjwuGy6u6Ur8VOOg=
-Received: from mail-pj1-f72.google.com (mail-pj1-f72.google.com
- [209.85.216.72]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-518-IbwifaPfMoiJ0eGBZtAq4g-1; Sun, 19 Jan 2025 19:38:35 -0500
-X-MC-Unique: IbwifaPfMoiJ0eGBZtAq4g-1
-X-Mimecast-MFC-AGG-ID: IbwifaPfMoiJ0eGBZtAq4g
-Received: by mail-pj1-f72.google.com with SMTP id
- 98e67ed59e1d1-2f5538a2356so7207711a91.2
- for <qemu-devel@nongnu.org>; Sun, 19 Jan 2025 16:38:35 -0800 (PST)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1737333514; x=1737938314;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=DjWdn8xl/OI5t6Lswmbh/wxUTZQgdGoDKQ7FHZq4m0Q=;
- b=sv1phTeh1VyaOnkVKzprxkmKEWWCVXCOiQI+oMCT5Ut+j5bWIzGUlHzjmHzGatyt6c
- p2kcaXNbVoICfdr3qahYFZZWNU07DHBGlyDDRyEd7wVuT5O5hZFB09swa81c/Bi2i2mu
- it0SycmYUWiDnj1m9Xuz7y1vin3Wb3ZkhI9RTutddyj7WFEFTpMXEgX84MJ0bKqFhLlz
- r+XiSPRVo6rPGozbSr4qhzAMrGbtMoYp0yGjeFaPjiJgofsx27kzGdMy863fQeahRceK
- xC4LSCTPfUwoCWwKJkiL/d9YJnSd6eWJeH+Ww0Rbg9ttqFLHte6HFcjf9cZ7fsqBVS/h
- JRqA==
-X-Gm-Message-State: AOJu0YweWI4KTDOIqab/VNFDjwOKqNzmxUcPn9OyYp5TyH37L172cg6M
- blfXtIJmnG73vG6DCQkuRVREXmhoPxTCokqCEIpo8OBWQpQgFMyarT56s5p/IKo/GyH9O0LiB+a
- azz49febh21tHe+sfN+4CjR5DpdLELYqcqxJ5EFSNWoM9bjmTRn7UIpLD7x9lDqd7XpoRWIagsO
- ukAEJ3McitkTfGCR5ZlSX8sGQBzwJWxHvA6cEQZAka
-X-Gm-Gg: ASbGncuujUxuEF7kI4L5dtBfPJCg1ttLQ08Cv/wOCNX2waMKIVGn7zRD+TnPOk5SqZ+
- Z2VOgTfxvKYE6BnPNdYDSVtZ91TrErBVU2MarTW/LUNCyjEGQrRTn
-X-Received: by 2002:a17:90b:3a46:b0:2ee:ab29:1a63 with SMTP id
- 98e67ed59e1d1-2f782c519e2mr14220749a91.3.1737333514235; 
- Sun, 19 Jan 2025 16:38:34 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IGeI8e7xkkppAe8kylSGXaCsTWOQvepF5LeJEypsCvrJtdQ/S4LtJSBV6IdRNedDC5UjvIy4B1Tuyxtdqx6VLI=
-X-Received: by 2002:a17:90b:3a46:b0:2ee:ab29:1a63 with SMTP id
- 98e67ed59e1d1-2f782c519e2mr14220725a91.3.1737333513744; Sun, 19 Jan 2025
- 16:38:33 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <lizhijian@fujitsu.com>)
+ id 1tZiAx-0007hU-Cz
+ for qemu-devel@nongnu.org; Sun, 19 Jan 2025 22:10:09 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple;
+ d=fujitsu.com; i=@fujitsu.com; q=dns/txt; s=fj2;
+ t=1737342607; x=1768878607;
+ h=from:to:cc:subject:date:message-id:in-reply-to:
+ references:mime-version:content-transfer-encoding;
+ bh=nXzUK/sz09DWb4nGyQfonpqJK7eujChpZ4+W5SccXTM=;
+ b=JaEQcsbgnkZY9QDgaBwap8gdFiMToyyg4Gvshq3Aao4rFqAJdKR/GPX0
+ Gx/nnvK2+DBuyb711IgLzd2iw5wtFDNVM4kwMHcvkoAAkZxUPPgJ2Rc4a
+ bSapr2FtLdgQ4Ln5liLtodiS2+RwaanVzQqh/dv8IrnDuSI9NeJzR9HmR
+ LSBmDQReoo2imsImHkuxvIH+d2omqwaVb1q0VNM6wGn2qIqznXlN5+pJc
+ us1T+3ZY4FzGh67Kt9TswrmvGrwEw1cZyR4SSt+VM+OvI9I2oG2OTaLq6
+ U+zdCxT6/rm4ofqi4i3jrXVPnY99NHVodsTpcZ+n7N5zlJKcOWpzegGlc A==;
+X-CSE-ConnectionGUID: qhefXLhRQiyAPGQAQATjJg==
+X-CSE-MsgGUID: F/figfRlQ4mqtzCRm1KgsA==
+X-IronPort-AV: E=McAfee;i="6700,10204,11320"; a="187106267"
+X-IronPort-AV: E=Sophos;i="6.13,218,1732546800"; d="scan'208";a="187106267"
+Received: from unknown (HELO yto-r3.gw.nic.fujitsu.com) ([218.44.52.219])
+ by esa1.hc1455-7.c3s2.iphmx.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 20 Jan 2025 12:09:59 +0900
+Received: from yto-m2.gw.nic.fujitsu.com (yto-nat-yto-m2.gw.nic.fujitsu.com
+ [192.168.83.65])
+ by yto-r3.gw.nic.fujitsu.com (Postfix) with ESMTP id 3BFE2E8525
+ for <qemu-devel@nongnu.org>; Mon, 20 Jan 2025 12:09:57 +0900 (JST)
+Received: from kws-ab3.gw.nic.fujitsu.com (kws-ab3.gw.nic.fujitsu.com
+ [192.51.206.21])
+ by yto-m2.gw.nic.fujitsu.com (Postfix) with ESMTP id 1179DD5077
+ for <qemu-devel@nongnu.org>; Mon, 20 Jan 2025 12:09:57 +0900 (JST)
+Received: from edo.cn.fujitsu.com (edo.cn.fujitsu.com [10.167.33.5])
+ by kws-ab3.gw.nic.fujitsu.com (Postfix) with ESMTP id 8C14720074735
+ for <qemu-devel@nongnu.org>; Mon, 20 Jan 2025 12:09:56 +0900 (JST)
+Received: from iaas-rpma.. (unknown [10.167.135.44])
+ by edo.cn.fujitsu.com (Postfix) with ESMTP id 0D40D1A0073;
+ Mon, 20 Jan 2025 11:09:56 +0800 (CST)
+To: qemu-devel@nongnu.org
+Cc: Jonathan Cameron <jonathan.cameron@huawei.com>,
+ Fan Ni <fan.ni@samsung.com>, linux-cxl@vger.kernel.org,
+ Li Zhijian <lizhijian@fujitsu.com>
+Subject: [PATCH 2/3] hw/mem/cxl_type3: Fix special_ops memory leak on
+ msix_init_exclusive_bar() failure
+Date: Mon, 20 Jan 2025 11:09:46 +0800
+Message-Id: <20250120030947.254930-2-lizhijian@fujitsu.com>
+X-Mailer: git-send-email 2.31.1
+In-Reply-To: <20250120030947.254930-1-lizhijian@fujitsu.com>
+References: <20250120030947.254930-1-lizhijian@fujitsu.com>
 MIME-Version: 1.0
-References: <20241008-macvtap-v1-1-2032caa25b6d@daynix.com>
- <CACGkMEvmEsFdLRgF9CLQCEo0jt3dX8wAPLjRC2pNb4ofD8dLNQ@mail.gmail.com>
- <469f9995-9182-43c2-93d7-ab8dbefb9eb9@daynix.com>
- <CACGkMEs2hkX7S3QJK1yLbJjSxW=obiSOYwKA4w2xiJwuOooq4g@mail.gmail.com>
- <74d218be-2119-4977-8d2e-40a51cccde9d@daynix.com>
- <50e784b2-850d-4d1b-9fc8-7fb6076f101e@daynix.com>
- <CACGkMEu6sFRm+xVxEp6X+N_qRH+qcbi_W3onXxX3uRPjS0hiFA@mail.gmail.com>
- <db4deda5-2869-45d2-8d56-9ba390324cd6@daynix.com>
- <CACGkMEv0XwU=P-V6RiRgBFtzZt19En921SPuTj+bNhYFyMSrFQ@mail.gmail.com>
- <bd84bba9-3aef-4c4e-a88a-566815903599@daynix.com>
-In-Reply-To: <bd84bba9-3aef-4c4e-a88a-566815903599@daynix.com>
-From: Jason Wang <jasowang@redhat.com>
-Date: Mon, 20 Jan 2025 08:38:22 +0800
-X-Gm-Features: AbW1kvb_OftQGplZZYC0jczpza1xWQrB48yZW-66s4vwlKVRaFL6819pOpX9jBE
-Message-ID: <CACGkMEtRbiBxW5_n_Ja-V33gMVUuyBSynNqLtxXRVQEkigoEwQ@mail.gmail.com>
-Subject: Re: [PATCH] tap-linux: Open ipvtap and macvtap
-To: Akihiko Odaki <akihiko.odaki@daynix.com>
-Cc: qemu-devel@nongnu.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=jasowang@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -50
-X-Spam_score: -5.1
-X-Spam_bar: -----
-X-Spam_report: (-5.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-2.996,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.024,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Transfer-Encoding: 8bit
+X-TM-AS-GCONF: 00
+X-TM-AS-Product-Ver: IMSS-9.1.0.1417-9.0.0.1002-28934.004
+X-TM-AS-User-Approved-Sender: Yes
+X-TMASE-Version: IMSS-9.1.0.1417-9.0.1002-28934.004
+X-TMASE-Result: 10--4.187500-10.000000
+X-TMASE-MatchedRID: VbO/xkC3pzsHdJSFlLCdzomfV7NNMGm+w4SuXsUCGYgli8Y5a0svL9e3
+ 02kawuyZnuC4VmJFPYZZO+ygKNx8vKWgCWYvFMxFxVQFfLw4zf+6hgVvSdGKo8C5DTEMxpeQfiq
+ 1gj2xET856WD6kuo88S//MlDRqI8mEd0YyW6tLbmCM7Vvo31KuH0tCKdnhB589yM15V5aWpj6C0
+ ePs7A07aqzOOiUJy/IuinVLBUcG6y5uCtM/wfGlIx9zWcOKuXW2Kph7/SS809B/LeDv7BJAMkja
+ rEF4+w+uSGtLYy5tELefneus6YT/gd0ruCUrh2IhpPsVGqnTA8BxCsB8GHr28FEsV4fo4lIJMMP
+ 4MGO4TA=
+X-TMASE-SNAP-Result: 1.821001.0001-0-1-22:0,33:0,34:0-0
+Received-SPF: pass client-ip=207.54.90.47; envelope-from=lizhijian@fujitsu.com;
+ helo=esa1.hc1455-7.c3s2.iphmx.com
+X-Spam_score_int: -43
+X-Spam_score: -4.4
+X-Spam_bar: ----
+X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -107,197 +100,58 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-to:  Li Zhijian <lizhijian@fujitsu.com>
+From:  Li Zhijian via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, Jan 16, 2025 at 1:27=E2=80=AFPM Akihiko Odaki <akihiko.odaki@daynix=
-.com> wrote:
->
-> On 2025/01/16 10:17, Jason Wang wrote:
-> > On Wed, Jan 15, 2025 at 1:17=E2=80=AFPM Akihiko Odaki <akihiko.odaki@da=
-ynix.com> wrote:
-> >>
-> >> On 2025/01/13 11:59, Jason Wang wrote:
-> >>> On Sat, Jan 11, 2025 at 1:43=E2=80=AFPM Akihiko Odaki <akihiko.odaki@=
-daynix.com> wrote:
-> >>>>
-> >>>> Hi Jason,
-> >>>>
-> >>>> Can you check this patch again?
-> >>>
-> >>> I would like to have this if
-> >>>
-> >>> 1) it would be used by libvirt.
-> >>>
-> >>> or
-> >>>
-> >>> 2) there's no other way to do this
-> >>
-> >> I need this to make QEMU work with macvtap on mkosi, and this patch is
-> >> an effective way to accomplish the goal.
-> >
-> > I'm not sure how to define "effective" here.
->
-> I just meant it requires me writing less code.
->
-> >
-> >>
-> >> Requiring to pass a file descriptor is simply less convenient. Most (i=
-f
-> >> not all) aspects of QEMU can be configured without file descriptors; I
-> >> don't think there is a reason to make tap exceptional.
-> >
-> > TUNSETIFF requires CAP_NET_ADMIN and qemu doesn't want to run with
-> > privilege, so fd is prefered in the case of tuntap.
-> >
-> > For macvtap,ipvtap, though open, doesn't require any privilege.
-> > Passing fd via SCM_RIGHTS is still preferable as it eases the
-> > interaction with security facilities (for example, you may want to
-> > whitelist /dev/tapX for Qemu to access etc).
->
-> That is true for almost any kind of files, and QEMU provides options to
-> specify files with file descriptor for this reason. However, it also
-> provides alternative options to specify files with e.g., path for
-> convenience.
->
-> This patch does not add a entirely-new complex, high-level feature. It
-> only pushes the macvtap/ipvtap support to the same level with tuntap and
-> other features interacting with files.
+Address a memory leak issue by ensuring `regs->special_ops` is freed when
+`msix_init_exclusive_bar()` encounters an error during CXL Type3 device
+initialization.
 
-Fair enough. I've queued this.
+Additionally, this patch renames err_address_space_free to err_msix_uninit
+for better clarity and logical flow
 
-Thanks
+Signed-off-by: Li Zhijian <lizhijian@fujitsu.com>
+---
+ hw/mem/cxl_type3.c | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
->
-> Regards,
-> Akihiko Odaki
->
-> >
-> > Thanks
-> >
-> >>
-> >> Regards,
-> >> Akihiko Odaki
-> >>
-> >>>
-> >>> Thanks
-> >>>
-> >>>>
-> >>>> Regards,
-> >>>> Akihiko Odaki
-> >>>>
-> >>>> On 2024/10/22 13:59, Akihiko Odaki wrote:
-> >>>>> On 2024/10/18 17:10, Jason Wang wrote:
-> >>>>>> On Sat, Oct 12, 2024 at 5:05=E2=80=AFPM Akihiko Odaki
-> >>>>>> <akihiko.odaki@daynix.com> wrote:
-> >>>>>>>
-> >>>>>>> On 2024/10/09 16:41, Jason Wang wrote:
-> >>>>>>>> On Tue, Oct 8, 2024 at 2:52=E2=80=AFPM Akihiko Odaki
-> >>>>>>>> <akihiko.odaki@daynix.com> wrote:
-> >>>>>>>>>
-> >>>>>>>>> ipvtap and macvtap create a file for each interface unlike tunt=
-ap,
-> >>>>>>>>> which
-> >>>>>>>>> creates one file shared by all interfaces. Try to open a file
-> >>>>>>>>> dedicated
-> >>>>>>>>> to the interface first for ipvtap and macvtap.
-> >>>>>>>>>
-> >>>>>>>>
-> >>>>>>>> Management layers usually pass these fds via SCM_RIGHTS. Is this=
- for
-> >>>>>>>> testing purposes? (Note that we can use something like -netdev
-> >>>>>>>> tap,fd=3D10 10<>/dev/tap0).
-> >>>>>>>
-> >>>>>>> I used this for testing.
-> >>>>>>
-> >>>>>> Anything that prevents you from using fd redirection? If not
-> >>>>>> management interest and we had already had a way for testing, I te=
-nd
-> >>>>>> to not introduce new code as it may bring bugs.
-> >>>>>
-> >>>>> I don't know what ifindex the macvtap device has so it's easier to =
-use
-> >>>>> if QEMU can automatically figure out the it.
-> >>>>>
-> >>>>>>
-> >>>>>>>
-> >>>>>>>>
-> >>>>>>>>> Signed-off-by: Akihiko Odaki <akihiko.odaki@daynix.com>
-> >>>>>>>>> ---
-> >>>>>>>>>      net/tap-linux.c | 17 ++++++++++++++---
-> >>>>>>>>>      1 file changed, 14 insertions(+), 3 deletions(-)
-> >>>>>>>>>
-> >>>>>>>>> diff --git a/net/tap-linux.c b/net/tap-linux.c
-> >>>>>>>>> index 1226d5fda2d9..22ec2f45d2b7 100644
-> >>>>>>>>> --- a/net/tap-linux.c
-> >>>>>>>>> +++ b/net/tap-linux.c
-> >>>>>>>>> @@ -45,10 +45,21 @@ int tap_open(char *ifname, int ifname_size,=
- int
-> >>>>>>>>> *vnet_hdr,
-> >>>>>>>>>          int len =3D sizeof(struct virtio_net_hdr);
-> >>>>>>>>>          unsigned int features;
-> >>>>>>>>>
-> >>>>>>>>> -    fd =3D RETRY_ON_EINTR(open(PATH_NET_TUN, O_RDWR));
-> >>>>>>>>> +
-> >>>>>>>>> +    ret =3D if_nametoindex(ifname);
-> >>>>>>>>> +    if (ret) {
-> >>>>>>>>> +        g_autofree char *file =3D g_strdup_printf("/dev/tap%d"=
-, ret);
-> >>>>>>>>> +        fd =3D open(file, O_RDWR);
-> >>>>>>>>> +    } else {
-> >>>>>>>>> +        fd =3D -1;
-> >>>>>>>>> +    }
-> >>>>>>>>> +
-> >>>>>>>>>          if (fd < 0) {
-> >>>>>>>>> -        error_setg_errno(errp, errno, "could not open %s",
-> >>>>>>>>> PATH_NET_TUN);
-> >>>>>>>>> -        return -1;
-> >>>>>>>>> +        fd =3D RETRY_ON_EINTR(open(PATH_NET_TUN, O_RDWR));
-> >>>>>>>>
-> >>>>>>>> Any reason tuntap were tried after the macvtap/ipvtap?
-> >>>>>>>
-> >>>>>>> If we try tuntap first, we will know that it is not tuntap when c=
-alling
-> >>>>>>> TUNSETIFF. We will need to call TUNGETFEATURES and TUNSETVNETHDRS=
-Z again
-> >>>>>>> in such a case because they precede TUNSETIFF. Calling them twice=
- is
-> >>>>>>> troublesome.
-> >>>>>>
-> >>>>>> I may miss something, we are only at the phase of open() not TUNSE=
-TIFF?
-> >>>>>
-> >>>>> We can tell if it is macvtap/ipvtap just by trying opening the devi=
-ce
-> >>>>> file. That is not possible with tuntap because tuntap uses /dev/net=
-/tun,
-> >>>>> a device file common for all tuntap interfaces and its presence doe=
-s not
-> >>>>> tell if the interface is tuntap.
-> >>>>>
-> >>>>>>
-> >>>>>>>
-> >>>>>>> This is also consistent with libvirt. libvirt first checks if
-> >>>>>>> g_strdup_printf("/dev/tap%d", ifindex) exists, and falls back to =
-tuntap
-> >>>>>>> otherwise.
-> >>>>>>
-> >>>>>> This is not what I understand from how layered products work. Libv=
-irt
-> >>>>>> should align with Qemu for low level things like TAP, not the reve=
-rse.
-> >>>>>
-> >>>>> This change is intended for the use case where libvirt is not in us=
-e. In
-> >>>>> particular, I use mkosi, which is not a full fledged layering mecha=
-nism.
-> >>>>>
-> >>>>> Regards,
-> >>>>> Akihiko Odaki
-> >>>>
-> >>>
-> >>
-> >
->
+diff --git a/hw/mem/cxl_type3.c b/hw/mem/cxl_type3.c
+index 9dad250f56d5..9eb3d0979cf5 100644
+--- a/hw/mem/cxl_type3.c
++++ b/hw/mem/cxl_type3.c
+@@ -885,7 +885,7 @@ static void ct3_realize(PCIDevice *pci_dev, Error **errp)
+     /* MSI(-X) Initialization */
+     rc = msix_init_exclusive_bar(pci_dev, CXL_T3_MSIX_VECTOR_NR, 4, NULL);
+     if (rc) {
+-        goto err_address_space_free;
++        goto err_free_special_ops;
+     }
+     for (i = 0; i < CXL_T3_MSIX_VECTOR_NR; i++) {
+         msix_vector_use(pci_dev, i);
+@@ -899,7 +899,7 @@ static void ct3_realize(PCIDevice *pci_dev, Error **errp)
+     cxl_cstate->cdat.free_cdat_table = ct3_free_cdat_table;
+     cxl_cstate->cdat.private = ct3d;
+     if (!cxl_doe_cdat_init(cxl_cstate, errp)) {
+-        goto err_free_special_ops;
++        goto err_msix_uninit;
+     }
+ 
+     pcie_cap_deverr_init(pci_dev);
+@@ -936,9 +936,9 @@ static void ct3_realize(PCIDevice *pci_dev, Error **errp)
+ err_release_cdat:
+     cxl_doe_cdat_release(cxl_cstate);
+ err_free_special_ops:
+-    msix_uninit_exclusive_bar(pci_dev);
+     g_free(regs->special_ops);
+-err_address_space_free:
++err_msix_uninit:
++    msix_uninit_exclusive_bar(pci_dev);
+     if (ct3d->dc.host_dc) {
+         cxl_destroy_dc_regions(ct3d);
+         address_space_destroy(&ct3d->dc.host_dc_as);
+-- 
+2.47.0
 
 
