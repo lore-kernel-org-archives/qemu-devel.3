@@ -4,103 +4,88 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D2D13C0218C
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B5EA8C02182
 	for <qemu-devel@archiver.kernel.org>; Tue, 21 Jan 2025 10:39:53 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1taBfB-00020F-6E; Tue, 21 Jan 2025 05:39:17 -0500
+	id 1taBfX-0002E5-JL; Tue, 21 Jan 2025 05:39:39 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <SRS0=bIEm=UN=kaod.org=clg@ozlabs.org>)
- id 1taBf9-0001zR-8X; Tue, 21 Jan 2025 05:39:15 -0500
-Received: from mail.ozlabs.org ([2404:9400:2221:ea00::3])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <SRS0=bIEm=UN=kaod.org=clg@ozlabs.org>)
- id 1taBf6-0002aX-J4; Tue, 21 Jan 2025 05:39:15 -0500
-Received: from mail.ozlabs.org (mail.ozlabs.org [IPv6:2404:9400:2221:ea00::3])
- by gandalf.ozlabs.org (Postfix) with ESMTP id 4YckG901zfz4x8f;
- Tue, 21 Jan 2025 21:38:57 +1100 (AEDT)
-Received: from authenticated.ozlabs.org (localhost [127.0.0.1])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (Client did not present a certificate)
- by mail.ozlabs.org (Postfix) with ESMTPSA id 4YckG06Vqtz4wxm;
- Tue, 21 Jan 2025 21:38:48 +1100 (AEDT)
-Message-ID: <26daf2e4-dcf3-4da2-b9aa-63de37ecf877@kaod.org>
-Date: Tue, 21 Jan 2025 11:38:52 +0100
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1taBfU-0002DV-Bh
+ for qemu-devel@nongnu.org; Tue, 21 Jan 2025 05:39:36 -0500
+Received: from mail-wm1-x330.google.com ([2a00:1450:4864:20::330])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1taBfS-0002cL-CN
+ for qemu-devel@nongnu.org; Tue, 21 Jan 2025 05:39:35 -0500
+Received: by mail-wm1-x330.google.com with SMTP id
+ 5b1f17b1804b1-4361f796586so59447775e9.3
+ for <qemu-devel@nongnu.org>; Tue, 21 Jan 2025 02:39:33 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1737455972; x=1738060772; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=3PbUo/DhjJSDV0mHbiEXoyyVE69KmcTLVad0SAwjkkY=;
+ b=hqfuawl0ShdSDBMwBgnc8IdnJQ+9DlYciFoXxaUHGQZ1i2N5OJgethI783pRZ0BoF1
+ ucUVwJCDEhEc0QReDC6akqbHbQ0zMBjFXj46D/MUZ3OsTyMO7Bwo5WErWkiDHIRpus3V
+ ak4c6XtUFVxSFE2kB10jMeVZdW9s0qPf3cCXah+drbtFHXYp818kbjk/CgApkhThHq+2
+ Sj0V0kQkuFnDensGKwhApJ0u2vitn19f+N2hm57SN2QpBhx8ZpBC4t2/Y5P0NMp0inUp
+ abqjgXf/EeEooGwzxIiEqebhC5/MMfAhI+4nZSyDEhb+k5O5sG8COi7rlNIjcWEoyZRp
+ e+NA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1737455972; x=1738060772;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=3PbUo/DhjJSDV0mHbiEXoyyVE69KmcTLVad0SAwjkkY=;
+ b=u2kwze/X2TZ+iloI0HG4BtMrAwlzAa6w80iBvFDTcyIuJ6h6HBZ8ZNyJoDhNSQBXJt
+ L8b6VkbBOyvfvBqk1pidq8zrkbfmWvJn00wTqg0RVGowPXn6bH111FCNJbwytwxy2CmE
+ 5FHZeVNzKzjVEdGNUWxjGyFRoqwlyRD93KeZI7dgdz0wa+8sn9JcrmImsJb+vwCouZTF
+ Xrb4zMlm4x3N6DjjIbjeDUloz4/Vi5Asz0ehSBzU3GHkXhpd1jCjXV5cOjMyD307GQwG
+ 8CipZVSZmgwtbHpWvkIqGnlLjhmm2TiwGlLWMJ67gmomy4djDhApPSYG9BwioD2LbcoG
+ QYNg==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCXXun7VVQzzQhyCDe6jZ+0xDLHARIzkz6dpfY3+YPDhABZeOTKmml/FU+Q2qFJ4lsOrIfyju6ofsRfM@nongnu.org
+X-Gm-Message-State: AOJu0Yw+YP4L20j8tgTVCjHzR/MNP3FjF9OSd8jGVHyte+fxsrOP8+LH
+ 7P2OuHkpqtahxqcKLKPvlKRNGT2DqnL4SZojONo1rMPU4phShEPTmXxWEQfeLF4=
+X-Gm-Gg: ASbGncvAwqPxSrLqUP09796X9RDrk60WPzi5Au+Qj+l4N2LZxAQD9DslSz2ZBh1I76b
+ mC5RNyHAsA5pj3VpVBvIjgm8lSS8qn5q4yJ6ciPfBAJYmKqqgJAG6FH9AbKSlGB4gszpgoeFxLK
+ Ao1umZzdTsrIHiA7SczDQKv+jGCJspsq2CM67MG4l/C0BRsIEKvqOKYjC9I3PgIxDA5BuEs7klv
+ NNWtLE8vgRODU0qX+S3+OWGGFqLZ4V00JwulIxuculsc8peUmvXZh/D4EBYgrAzpG4CoXoKbbFc
+ rGGIjddI4NE7Nd56eRvG2SFVP/nNSaqLaHM+FQ==
+X-Google-Smtp-Source: AGHT+IHWRmjEuCZuu6azpeDtmPMn6pSrg2wJwGU3qvFDLZt40CzPPR3NRTSznTGBwuYtIvd9ybtfEQ==
+X-Received: by 2002:a05:600c:46cb:b0:434:f0df:9fd with SMTP id
+ 5b1f17b1804b1-438913c5b82mr159287145e9.2.1737455972074; 
+ Tue, 21 Jan 2025 02:39:32 -0800 (PST)
+Received: from [192.168.69.181] (88-187-86-199.subs.proxad.net.
+ [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-437c74c4751sm231288045e9.19.2025.01.21.02.39.31
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Tue, 21 Jan 2025 02:39:31 -0800 (PST)
+Message-ID: <4cdd0978-16c7-4cd6-93e8-ac7a2061e407@linaro.org>
+Date: Tue, 21 Jan 2025 11:39:30 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 2/3] hw/sd/sdhci: Introduce a new Write Protected pin
- inverted property
-To: Jamin Lin <jamin_lin@aspeedtech.com>,
- Peter Maydell <peter.maydell@linaro.org>,
- Steven Lee <steven_lee@aspeedtech.com>, Troy Lee <leetroy@gmail.com>,
- Andrew Jeffery <andrew@codeconstruct.com.au>, Joel Stanley <joel@jms.id.au>,
- =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Bin Meng <bmeng.cn@gmail.com>, "open list:ASPEED BMCs"
- <qemu-arm@nongnu.org>, "open list:All patches CC here"
- <qemu-devel@nongnu.org>, "open list:SD (Secure Card)"
- <qemu-block@nongnu.org>, Bernhard Beschow <shentey@gmail.com>
-Cc: troy_lee@aspeedtech.com, yunlin.tang@aspeedtech.com,
- =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
-References: <20241114094839.4128404-1-jamin_lin@aspeedtech.com>
- <20241114094839.4128404-3-jamin_lin@aspeedtech.com>
-Content-Language: en-US, fr
-From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>
-Autocrypt: addr=clg@kaod.org; keydata=
- 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
-In-Reply-To: <20241114094839.4128404-3-jamin_lin@aspeedtech.com>
+Subject: Re: [PATCH 03/13] linux-user: Emulate /proc/cpuinfo for Alpha
+To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
+Cc: Helge Deller <deller@gmx.de>, Michael Cree <mcree@orcon.net.nz>
+References: <20230824010237.1379735-1-richard.henderson@linaro.org>
+ <20230824010237.1379735-4-richard.henderson@linaro.org>
+Content-Language: en-US
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <20230824010237.1379735-4-richard.henderson@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2404:9400:2221:ea00::3;
- envelope-from=SRS0=bIEm=UN=kaod.org=clg@ozlabs.org; helo=mail.ozlabs.org
-X-Spam_score_int: -41
-X-Spam_score: -4.2
-X-Spam_bar: ----
-X-Spam_report: (-4.2 / 5.0 requ) BAYES_00=-1.9,
- HEADER_FROM_DIFFERENT_DOMAINS=0.001, RCVD_IN_DNSWL_MED=-2.3,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::330;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x330.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -116,80 +101,78 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Jamin,
+Hi Helge,
 
-+Bernhard
-
-On 11/14/24 10:48, Jamin Lin wrote:
-> The Write Protect pin of SDHCI model is default active low to match the SDHCI
-> spec. So, write enable the bit 19 should be 1 and write protected the bit 19
-> should be 0 at the Present State Register (0x24). However, some boards are
-> design Write Protected pin active high. In other words, write enable the bit 19
-> should be 0 and write protected the bit 19 should be 1 at the
-> Present State Register (0x24). To support it, introduces a new "wp-inverted"
-> property and set it false by default.
+On 24/8/23 03:02, Richard Henderson wrote:
+> From: Helge Deller <deller@gmx.de>
 > 
-> Signed-off-by: Jamin Lin <jamin_lin@aspeedtech.com>
-> Acked-by: Cédric Le Goater <clg@redhat.com>
-
-When you have some time, could you please check that this change fits
-the aspeed needs :
-
-   https://lore.kernel.org/qemu-devel/20250108092538.11474-9-shentey@gmail.com/
-
-It should be merged shortly.
-
-Thanks,
-
-C.
-
-
-
-
+> Add emulation for /proc/cpuinfo for the alpha architecture.
+> 
+> alpha output example:
+> 
+> (alpha-chroot)root@p100:/# cat /proc/cpuinfo
+> cpu                     : Alpha
+> cpu model               : ev67
+> cpu variation           : 0
+> cpu revision            : 0
+> cpu serial number       : JA00000000
+> system type             : QEMU
+> system variation        : QEMU_v8.0.92
+> system revision         : 0
+> system serial number    : AY00000000
+> cycle frequency [Hz]    : 250000000
+> timer frequency [Hz]    : 250.00
+> page size [bytes]       : 8192
+> phys. address bits      : 44
+> max. addr. space #      : 255
+> BogoMIPS                : 2500.00
+> platform string         : AlphaServer QEMU user-mode VM
+> cpus detected           : 8
+> cpus active             : 4
+> cpu active mask         : 0000000000000095
+> L1 Icache               : n/a
+> L1 Dcache               : n/a
+> L2 cache                : n/a
+> L3 cache                : n/a
+> 
+> Cc: Michael Cree <mcree@orcon.net.nz>
+> Signed-off-by: Helge Deller <deller@gmx.de>
+> Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+> Message-Id: <20230803214450.647040-4-deller@gmx.de>
+> Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 > ---
->   hw/sd/sdhci.c         | 6 ++++++
->   include/hw/sd/sdhci.h | 5 +++++
->   2 files changed, 11 insertions(+)
+>   linux-user/alpha/target_proc.h | 68 +++++++++++++++++++++++++++++++++-
+>   1 file changed, 67 insertions(+), 1 deletion(-)
 > 
-> diff --git a/hw/sd/sdhci.c b/hw/sd/sdhci.c
-> index 37875c02c3..06d1e24086 100644
-> --- a/hw/sd/sdhci.c
-> +++ b/hw/sd/sdhci.c
-> @@ -274,6 +274,10 @@ static void sdhci_set_readonly(DeviceState *dev, bool level)
->   {
->       SDHCIState *s = (SDHCIState *)dev;
->   
-> +    if (s->wp_inverted) {
-> +        level = !level;
-> +    }
+> diff --git a/linux-user/alpha/target_proc.h b/linux-user/alpha/target_proc.h
+> index 43fe29ca72..dac37dffc9 100644
+> --- a/linux-user/alpha/target_proc.h
+> +++ b/linux-user/alpha/target_proc.h
+> @@ -1 +1,67 @@
+> -/* No target-specific /proc support */
+> +/*
+> + * Alpha specific proc functions for linux-user
+> + *
+> + * SPDX-License-Identifier: GPL-2.0-or-later
+> + */
+> +#ifndef ALPHA_TARGET_PROC_H
+> +#define ALPHA_TARGET_PROC_H
 > +
->       if (level) {
->           s->prnsts &= ~SDHC_WRITE_PROTECT;
->       } else {
-> @@ -1550,6 +1554,8 @@ static Property sdhci_sysbus_properties[] = {
->                        false),
->       DEFINE_PROP_LINK("dma", SDHCIState,
->                        dma_mr, TYPE_MEMORY_REGION, MemoryRegion *),
-> +    DEFINE_PROP_BOOL("wp-inverted", SDHCIState,
-> +                     wp_inverted, false),
->       DEFINE_PROP_END_OF_LIST(),
->   };
->   
-> diff --git a/include/hw/sd/sdhci.h b/include/hw/sd/sdhci.h
-> index 6cd2822f1d..38c08e2859 100644
-> --- a/include/hw/sd/sdhci.h
-> +++ b/include/hw/sd/sdhci.h
-> @@ -100,6 +100,11 @@ struct SDHCIState {
->       uint8_t sd_spec_version;
->       uint8_t uhs_mode;
->       uint8_t vendor;        /* For vendor specific functionality */
-> +    /*
-> +     * Write Protect pin default active low for detecting SD card
-> +     * to be protected. Set wp_inverted to invert the signal.
-> +     */
-> +    bool wp_inverted;
->   };
->   typedef struct SDHCIState SDHCIState;
->   
+> +static int open_cpuinfo(CPUArchState *cpu_env, int fd)
+> +{
+> +    int max_cpus = sysconf(_SC_NPROCESSORS_CONF);
+> +    int num_cpus = sysconf(_SC_NPROCESSORS_ONLN);
+> +    unsigned long cpu_mask;
+> +    char model[32];
+> +    const char *p, *q;
+> +    int t;
+> +
+> +    p = object_class_get_name(OBJECT_CLASS(CPU_GET_CLASS(env_cpu(cpu_env))));
+
+Isn't it the same of:
+
+        p = object_get_typename(OBJECT(env_cpu(cpu_env)));
+
+?
 
 
