@@ -4,84 +4,88 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 90999C02182
-	for <qemu-devel@archiver.kernel.org>; Tue, 21 Jan 2025 12:52:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CA48CC02182
+	for <qemu-devel@archiver.kernel.org>; Tue, 21 Jan 2025 12:52:42 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1taDj3-0006pT-BW; Tue, 21 Jan 2025 07:51:25 -0500
+	id 1taDk6-0007Xr-KC; Tue, 21 Jan 2025 07:52:30 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1taDiz-0006og-O1
- for qemu-devel@nongnu.org; Tue, 21 Jan 2025 07:51:23 -0500
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1taDk1-0007OE-MJ
+ for qemu-devel@nongnu.org; Tue, 21 Jan 2025 07:52:26 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1taDiv-0005Rc-GC
- for qemu-devel@nongnu.org; Tue, 21 Jan 2025 07:51:21 -0500
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1taDjz-0005WH-FI
+ for qemu-devel@nongnu.org; Tue, 21 Jan 2025 07:52:24 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1737463874;
+ s=mimecast20190719; t=1737463941;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=2pG2uhhO+2ys+rKzycNpOYI49mEaIG9ue6yxLEqsFQA=;
- b=EqnufrTD72r4/lAbrps4isJONRiahienXoWeNrBnYAhPmFRf8RTb0ooR7Zxna3f9EDqShV
- tNdEpQ8p5BlnoM+VWkPVqX/5wELl/Cf65qJKYgdenewoWhL7bJHqlnFDECcRfEGiei6cwO
- 0C7tlxlSD4UJ1YFLQZbpspZLCHdOHKE=
-Received: from mail-qk1-f199.google.com (mail-qk1-f199.google.com
- [209.85.222.199]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=z35EzCDbc+CQYTWls//bFZ6X+OXu42ZALVtSrwU0u+M=;
+ b=iY1qOnVwPuCjlh7EIsIoqICgDY11WAKlS+llqfUGclL2y3ZXHWCACAAOUMrhLv425JfVCJ
+ ThxjOuqDDl5nBlHNv5+WWrsueDRPot/mkJfq/lwUY6AoCvKa2qYbaLybIwIxEEF9nM6tbZ
+ Mrpv7d3owpyG+Pv/FVm0u967isI5y8g=
+Received: from mail-qv1-f72.google.com (mail-qv1-f72.google.com
+ [209.85.219.72]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-510-ab1EEZZyMd-rHJzhD_1A7A-1; Tue, 21 Jan 2025 07:51:12 -0500
-X-MC-Unique: ab1EEZZyMd-rHJzhD_1A7A-1
-X-Mimecast-MFC-AGG-ID: ab1EEZZyMd-rHJzhD_1A7A
-Received: by mail-qk1-f199.google.com with SMTP id
- af79cd13be357-7b6e1b036e9so468762285a.1
- for <qemu-devel@nongnu.org>; Tue, 21 Jan 2025 04:51:12 -0800 (PST)
+ us-mta-694-8F07i15CPuOhsqXW5WzboA-1; Tue, 21 Jan 2025 07:52:19 -0500
+X-MC-Unique: 8F07i15CPuOhsqXW5WzboA-1
+X-Mimecast-MFC-AGG-ID: 8F07i15CPuOhsqXW5WzboA
+Received: by mail-qv1-f72.google.com with SMTP id
+ 6a1803df08f44-6df9ac8dcbeso197251476d6.3
+ for <qemu-devel@nongnu.org>; Tue, 21 Jan 2025 04:52:19 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1737463872; x=1738068672;
+ d=1e100.net; s=20230601; t=1737463939; x=1738068739;
  h=content-transfer-encoding:in-reply-to:autocrypt:content-language
  :from:references:cc:to:subject:user-agent:mime-version:date
  :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=2pG2uhhO+2ys+rKzycNpOYI49mEaIG9ue6yxLEqsFQA=;
- b=a5NObXm965L13bOq1taxRLCYju7cTr+GKYgXgKpIer7QNsCFOaLhAFYxYVejnwAnHH
- +IAi3hZVQmn5hrChJTlgEja6P0H7TQJPOP2evtAvsIcj3gcdaNqf7Y3xsQ15VPZIEE4N
- Ca5Hl85mwZsxO7fhoW3Rn2zFENryRO1QBrhdwHlCR5BW9a1Dzbusywj7GP+iTY+7KIBp
- PTQad/K7/NWvKKsW64kHA5K5d3uE29TWRXEznDD8LppGIXQl6ENJzJhitP9yWy9B69JK
- ZHqyc4yx4sgsZjT24fwvT3afpGH8tOexv+K4Gu6x6KdChWmhKeExrgoBIKN5q+Vj237N
- M71w==
+ bh=z35EzCDbc+CQYTWls//bFZ6X+OXu42ZALVtSrwU0u+M=;
+ b=RBrWZKFRvM9okRCSVd0ksRm9w2EO7GJu8H5+jEBQUT5WtIxaQdu73kFIfJZmLBSQrt
+ Bixo2tkg3VWqHpjwOSkSni4DuwTGogaroFYhM01YVVSVStE/ioXW8j2n3HO5NHzxPEVD
+ oyDU9Anntr6QUCUVuTKdlaxk0uRi6VdOaFImHG3pj2xeJtzi26sG8SOmoGz9Y3LWIajC
+ m66jZAJ6tk9LsVVvs7qG5Q4e0Qv9PdOBHsXGh8euHGV1fDNL9eVL4GwqM5thExsBa0z1
+ pe9BuHxeYddQ9cimbFZPu1QqPCggzmKhdjSi7jAjuitaIgcHYljml7yR65UvBkguK5pu
+ /pBw==
 X-Forwarded-Encrypted: i=1;
- AJvYcCVLMZ7upUe9ay8pbV9PtjQZZJwpUdcZVqLriekpMwPo+j+ledJpSz5vMFfO+wDSPVz7IgzsCeKC61eI@nongnu.org
-X-Gm-Message-State: AOJu0YyfLO0XIcj5PF454PWcsj19ri8cOUbhdyHm8MITMv4qNzO4i1+w
- 1uIBO8hA55gJzuxsm1/qzVwVWi5keH1q4t0EjWEXghA0LFopz6h2VYU8Sw+2/NPMqfWu9OvH2H6
- 3stUGvNE6GgPY984QVBj4c0Y+PWJ1Fp7GzUjf+95kmORaBp1cJJ+E
-X-Gm-Gg: ASbGncsgYMlliVu846NaTxPm0JV3hHN19kathoAFWzv8TT0uK43UdgdvyppX6Ggi0Fv
- Jh2YPVmG7luceGgy54aK3igktqCwhxlNJGsT7CKeTVV9i2Z9w2Vio3xVZfejX2S4qjN5e6WaYp1
- iCFbUJNrz/8/Y9WgASVn53bLgE9mU88htpnS7FUC7Ba7VjqxFnCGRsDRtl2u+8PNTjbD0njSHzJ
- 14F7nMH1OlqlkE+MWaHYSNHsrCm7AmtU0rywNSlrDYimJORabfCaijy347jGOfY+smUu4v+CvD1
- Pu0+0b0QCX4+3nUaIzUPo3B02A==
-X-Received: by 2002:a05:620a:2413:b0:7b6:e697:2090 with SMTP id
- af79cd13be357-7be631e71admr2662502385a.2.1737463872062; 
- Tue, 21 Jan 2025 04:51:12 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IGsj08+l8T5jSw2YkMX4TSZxb+ONfMOijcMaDbFVIvFPnB2a89GjET0TtYeQmaEzA/lBwrBbg==
-X-Received: by 2002:a05:620a:2413:b0:7b6:e697:2090 with SMTP id
- af79cd13be357-7be631e71admr2662499785a.2.1737463871761; 
- Tue, 21 Jan 2025 04:51:11 -0800 (PST)
+ AJvYcCWHIblnZk9RwcNITXJ0GcwiHfl2VgXsiByx+iWgCIP75UzoscrKIYXnHLdB7C/HJf0E9PwOYHsahbxF@nongnu.org
+X-Gm-Message-State: AOJu0YzL7/2bAEcCsbZR7Qg2SlhXXz0k1GJmvjek7lmUWxKuU5bmv/td
+ yKGIb4Sb0vklcoTbwBRKqXSiATQnGH9hpP9dfcOTrbhZIheaoiM2UKsrnE2YOSJskiHfZgBeesQ
+ 7e5pckwbJcfNRG2ObPqyosa/mC3yML0gKH2KDOXi9H7g5CO01jebW
+X-Gm-Gg: ASbGnctn0lVZi5JR0fINxELlf0Ycki2jZ0LVyVxNB6+ZBpVFe49xwwUXjL2oG6uqP0B
+ W2JYt+8YnMRiSC6U3YGvWZPLdZOQM5A5fSxh03P2KeWWvnlvD9UfYOS4bdHbHSE/51lB6poTnF2
+ f4jRlRIT4apdwKiRHGV+gWD/gTWoX42eO51V3qlNUdPgePG3rcjnccgfcVLcq6R+ljCQ/Sjb+Vf
+ 7ktgWiYhaSnV+RUGjl2o30+TdQ5TWN4FE86E5FDlZQFEJfjQgJomav5+tViYoAgqh/Kn4xjHJDh
+ bnNYanEXqk8feh2R0ofDffNsIw==
+X-Received: by 2002:a05:6214:23ce:b0:6d9:3016:d10d with SMTP id
+ 6a1803df08f44-6e1b2230a18mr298634016d6.42.1737463939047; 
+ Tue, 21 Jan 2025 04:52:19 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IGuOxuhvjsQz1BkN5BlN8oKR1FqpydPkU1t80xxOUh8Kw9gcKDxCEHMx/UvlQcR02AQFuik1A==
+X-Received: by 2002:a05:6214:23ce:b0:6d9:3016:d10d with SMTP id
+ 6a1803df08f44-6e1b2230a18mr298633656d6.42.1737463938753; 
+ Tue, 21 Jan 2025 04:52:18 -0800 (PST)
 Received: from [192.168.0.7] (ip-109-42-48-103.web.vodafone.de.
  [109.42.48.103]) by smtp.gmail.com with ESMTPSA id
- 6a1803df08f44-6e1afcd3868sm50784896d6.71.2025.01.21.04.51.10
+ 6a1803df08f44-6e1afcd66c2sm50828556d6.75.2025.01.21.04.52.16
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 21 Jan 2025 04:51:11 -0800 (PST)
-Message-ID: <28500692-705c-44dc-86a2-461a61e8526c@redhat.com>
-Date: Tue, 21 Jan 2025 13:51:07 +0100
+ Tue, 21 Jan 2025 04:52:18 -0800 (PST)
+Message-ID: <503fe36f-c0ce-42d7-a08d-21c46b495ab0@redhat.com>
+Date: Tue, 21 Jan 2025 13:52:14 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 0/7] testing/next (qtest timer stuff)
+Subject: Re: [PATCH 3/7] tests/qtest: don't step clock at start of npcm7xx
+ periodic IRQ test
 To: =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
  qemu-devel@nongnu.org
 Cc: qemu-s390x@nongnu.org, qemu-arm@nongnu.org,
- Peter Maydell <peter.maydell@linaro.org>
+ Peter Maydell <peter.maydell@linaro.org>, Tyrone Ting <kfting@nuvoton.com>,
+ Hao Wu <wuhaotsh@google.com>, Fabiano Rosas <farosas@suse.de>,
+ Laurent Vivier <lvivier@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>
 References: <20250120210212.3890255-1-alex.bennee@linaro.org>
+ <20250120210212.3890255-4-alex.bennee@linaro.org>
 From: Thomas Huth <thuth@redhat.com>
 Content-Language: en-US
 Autocrypt: addr=thuth@redhat.com; keydata=
@@ -126,7 +130,7 @@ Autocrypt: addr=thuth@redhat.com; keydata=
  oiT+z+/E59qj/EKfyce3sbC9XLjXv3mHMrq1tKX4G7IJGnS989E/fg6crv6NHae9Ckm7+lSs
  IQu4bBP2GxiRQ+NV3iV/KU3ebMRzqIC//DCOxzQNFNJAKldPe/bKZMCxEqtVoRkuJtNdp/5a
  yXFZ6TfE1hGKrDBYAm4vrnZ4CXFSBDllL59cFFOJCkn4Xboj/aVxxJxF30bn
-In-Reply-To: <20250120210212.3890255-1-alex.bennee@linaro.org>
+In-Reply-To: <20250120210212.3890255-4-alex.bennee@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=170.10.133.124; envelope-from=thuth@redhat.com;
@@ -138,7 +142,7 @@ X-Spam_report: (-5.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-2.996,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.086,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -155,43 +159,28 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 20/01/2025 22.02, Alex Bennée wrote:
-> Hi,
+> Until there are timers enabled the semantics of clock_step_next() will
+> fail. Since d524441a36 (system/qtest: properly feedback results of
+> clock_[step|set]) we will signal a FAIL if time doesn't advance.
 > 
-> Thomas found that a number of tests fail under CFI and other exotic
-> setups. The eventual realisation was that --enable-slirp masks a lot
-> of timer misuse because it ensures there is always a timer and
-> therefor things tend to move on (until the system is shutting down).
+> Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
+> ---
+>   tests/qtest/npcm7xx_timer-test.c | 1 -
+>   1 file changed, 1 deletion(-)
 > 
-> It turns out that bc02be4508 wasn't the solution after all. The first
-> few patches are clean-ups and various tightening of test expectations
-> before we revert the patch.
-> 
-> Please review:
-> 
->    Revert "util/timer: avoid deadlock when shutting down"
->    tests/qtest: tighten up the checks on clock_step
->    tests/qtest: rename qtest_send_prefix and roll-up into qtest_send
->    tests/qtest: simplify qtest_process_inbuf
->    tests/qtest: don't step clock at start of npcm7xx periodic IRQ test
->    tests/qtest: don't attempt to clock_step while waiting for virtio ISR
->    tests/docker: replicate the check-rust-tools-nightly CI job
-> 
-> Alex.
-> 
-> Alex Bennée (7):
->    tests/docker: replicate the check-rust-tools-nightly CI job
->    tests/qtest: don't attempt to clock_step while waiting for virtio ISR
->    tests/qtest: don't step clock at start of npcm7xx periodic IRQ test
->    tests/qtest: simplify qtest_process_inbuf
->    tests/qtest: rename qtest_send_prefix and roll-up into qtest_send
->    tests/qtest: tighten up the checks on clock_step
->    Revert "util/timer: avoid deadlock when shutting down"
+> diff --git a/tests/qtest/npcm7xx_timer-test.c b/tests/qtest/npcm7xx_timer-test.c
+> index 58f58c2f71..43711049ca 100644
+> --- a/tests/qtest/npcm7xx_timer-test.c
+> +++ b/tests/qtest/npcm7xx_timer-test.c
+> @@ -465,7 +465,6 @@ static void test_periodic_interrupt(gconstpointer test_data)
+>       int i;
+>   
+>       tim_reset(td);
+> -    clock_step_next();
+>   
+>       tim_write_ticr(td, count);
+>       tim_write_tcsr(td, CEN | IE | MODE_PERIODIC | PRESCALE(ps));
 
-Thanks, I've checked that this fixes the check-cfi-* CI jobs and it also 
-seems to help with the travis jobs that use --disable-slirp:
-
-  https://app.travis-ci.com/github/huth/qemu/builds/273921493
-
-Tested-by: Thomas Huth <thuth@redhat.com>
+Reviewed-by: Thomas Huth <thuth@redhat.com>
 
 
