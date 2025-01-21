@@ -4,81 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B5EA8C02182
-	for <qemu-devel@archiver.kernel.org>; Tue, 21 Jan 2025 10:39:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0CD5AC02182
+	for <qemu-devel@archiver.kernel.org>; Tue, 21 Jan 2025 10:44:19 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1taBfX-0002E5-JL; Tue, 21 Jan 2025 05:39:39 -0500
+	id 1taBj3-0003Z5-Mn; Tue, 21 Jan 2025 05:43:17 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1taBfU-0002DV-Bh
- for qemu-devel@nongnu.org; Tue, 21 Jan 2025 05:39:36 -0500
-Received: from mail-wm1-x330.google.com ([2a00:1450:4864:20::330])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1taBj2-0003Yk-4q
+ for qemu-devel@nongnu.org; Tue, 21 Jan 2025 05:43:16 -0500
+Received: from mail-wr1-x429.google.com ([2a00:1450:4864:20::429])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1taBfS-0002cL-CN
- for qemu-devel@nongnu.org; Tue, 21 Jan 2025 05:39:35 -0500
-Received: by mail-wm1-x330.google.com with SMTP id
- 5b1f17b1804b1-4361f796586so59447775e9.3
- for <qemu-devel@nongnu.org>; Tue, 21 Jan 2025 02:39:33 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1taBj0-0003Gr-IM
+ for qemu-devel@nongnu.org; Tue, 21 Jan 2025 05:43:15 -0500
+Received: by mail-wr1-x429.google.com with SMTP id
+ ffacd0b85a97d-3862d161947so2898386f8f.3
+ for <qemu-devel@nongnu.org>; Tue, 21 Jan 2025 02:43:13 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1737455972; x=1738060772; darn=nongnu.org;
+ d=linaro.org; s=google; t=1737456193; x=1738060993; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=3PbUo/DhjJSDV0mHbiEXoyyVE69KmcTLVad0SAwjkkY=;
- b=hqfuawl0ShdSDBMwBgnc8IdnJQ+9DlYciFoXxaUHGQZ1i2N5OJgethI783pRZ0BoF1
- ucUVwJCDEhEc0QReDC6akqbHbQ0zMBjFXj46D/MUZ3OsTyMO7Bwo5WErWkiDHIRpus3V
- ak4c6XtUFVxSFE2kB10jMeVZdW9s0qPf3cCXah+drbtFHXYp818kbjk/CgApkhThHq+2
- Sj0V0kQkuFnDensGKwhApJ0u2vitn19f+N2hm57SN2QpBhx8ZpBC4t2/Y5P0NMp0inUp
- abqjgXf/EeEooGwzxIiEqebhC5/MMfAhI+4nZSyDEhb+k5O5sG8COi7rlNIjcWEoyZRp
- e+NA==
+ bh=XWvjNI+oquW7gOCu3bcr0rKpVqFmdDU9b/bmzWiVX1g=;
+ b=IfJAMC+lRTd8PDZF5zH+bx+C/BwPuqzNg8CRtjaMPmN/6jEeWMQtot6agTv9Z7mwZ1
+ xNspTdvakaE+mwiFN5k3M26PfBQr/zCn2uoAkfOHEmt6Njd1RZ90kSnB/bZzz1nwrb1W
+ vGnPMNgj24L8lWQf6E3ezh6T1Iqz3vPxK02Mnu3y/S9UvZKdA3gKLRt5a938TxXttdC1
+ DKkfx3DHiQyh+sD3skbLO4oVPev1uVCkBdmZPy42pV7odrfMtfrOY7Adz+NkNahLUtml
+ 6NZMOtU7eEzht7O1fsZKkgA1oeVek4XbbifHzjMUsp12aLdB43zE/jOJLyhvuTTgSCVU
+ PjkA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1737455972; x=1738060772;
+ d=1e100.net; s=20230601; t=1737456193; x=1738060993;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=3PbUo/DhjJSDV0mHbiEXoyyVE69KmcTLVad0SAwjkkY=;
- b=u2kwze/X2TZ+iloI0HG4BtMrAwlzAa6w80iBvFDTcyIuJ6h6HBZ8ZNyJoDhNSQBXJt
- L8b6VkbBOyvfvBqk1pidq8zrkbfmWvJn00wTqg0RVGowPXn6bH111FCNJbwytwxy2CmE
- 5FHZeVNzKzjVEdGNUWxjGyFRoqwlyRD93KeZI7dgdz0wa+8sn9JcrmImsJb+vwCouZTF
- Xrb4zMlm4x3N6DjjIbjeDUloz4/Vi5Asz0ehSBzU3GHkXhpd1jCjXV5cOjMyD307GQwG
- 8CipZVSZmgwtbHpWvkIqGnlLjhmm2TiwGlLWMJ67gmomy4djDhApPSYG9BwioD2LbcoG
- QYNg==
+ bh=XWvjNI+oquW7gOCu3bcr0rKpVqFmdDU9b/bmzWiVX1g=;
+ b=LDHmYm1AagvnqBg6P9ukPEEMIvWBeNQkdZJnR+aP3GQwcQlNRIH3SbgtcdxUKUqXGX
+ xquwx8Y/92XVi97Bo9mR3Hy9jDRTcvJEsfOz+0AZ7S+1PtpTedsv6wyMz87cnedHv1sa
+ sHJT+iD3FewJPCnL0/t2+9S7jCiCNdiI2Vh9rMk2uK5OcBbFp3WEgQS0xIx+9zBCTVvC
+ +5G2AKlWmwrWXxqwXXf6kcgfunjaa9vg17uTpmgO4JcwFzSBEf5Pt4Mzt6QKR+OSfSCw
+ cgsDqh50M5Y+d35JbbmOdUFGmlZSsiEZpI9zBiI9GKv/2hkbe7gJLmRp8+yTGm3vbtQ/
+ qS9Q==
 X-Forwarded-Encrypted: i=1;
- AJvYcCXXun7VVQzzQhyCDe6jZ+0xDLHARIzkz6dpfY3+YPDhABZeOTKmml/FU+Q2qFJ4lsOrIfyju6ofsRfM@nongnu.org
-X-Gm-Message-State: AOJu0Yw+YP4L20j8tgTVCjHzR/MNP3FjF9OSd8jGVHyte+fxsrOP8+LH
- 7P2OuHkpqtahxqcKLKPvlKRNGT2DqnL4SZojONo1rMPU4phShEPTmXxWEQfeLF4=
-X-Gm-Gg: ASbGncvAwqPxSrLqUP09796X9RDrk60WPzi5Au+Qj+l4N2LZxAQD9DslSz2ZBh1I76b
- mC5RNyHAsA5pj3VpVBvIjgm8lSS8qn5q4yJ6ciPfBAJYmKqqgJAG6FH9AbKSlGB4gszpgoeFxLK
- Ao1umZzdTsrIHiA7SczDQKv+jGCJspsq2CM67MG4l/C0BRsIEKvqOKYjC9I3PgIxDA5BuEs7klv
- NNWtLE8vgRODU0qX+S3+OWGGFqLZ4V00JwulIxuculsc8peUmvXZh/D4EBYgrAzpG4CoXoKbbFc
- rGGIjddI4NE7Nd56eRvG2SFVP/nNSaqLaHM+FQ==
-X-Google-Smtp-Source: AGHT+IHWRmjEuCZuu6azpeDtmPMn6pSrg2wJwGU3qvFDLZt40CzPPR3NRTSznTGBwuYtIvd9ybtfEQ==
-X-Received: by 2002:a05:600c:46cb:b0:434:f0df:9fd with SMTP id
- 5b1f17b1804b1-438913c5b82mr159287145e9.2.1737455972074; 
- Tue, 21 Jan 2025 02:39:32 -0800 (PST)
+ AJvYcCXHzSNFioWksI1XqoUR+/DeA4d5zrhm4jWE5BmjKVokNfqHxa7qkGjP2Jz8lWSyppCkBKdN/G3aC6p+@nongnu.org
+X-Gm-Message-State: AOJu0Yyy/8chQmWHXXPIWdTA9xJ4YhhtqmoSNWRY6rDARRT6XLwpaxEd
+ 0fFxsONU7gStQr4LSEwZrz45izxOibcJSyWnGluAE8Wyh4jxiQnb1TQjtFGirUuwKKq+/G51BtZ
+ avm8=
+X-Gm-Gg: ASbGncvLQNAEqvmCKi8R6lhU4sBwOKGKXcLxa08Jt+eQMZQycEqeujBv/cInt+MPEq5
+ ooxr/vBSwtKyhMyybKzl9t2U83ghSiaTYU8G+Pmu3nGC/2Ef6hne+yviQGq/Eak4lFO6OU7TGFe
+ /hYdQINXsWRoor7bqctBAKwiIJqnSyMwBQ8NXdZ/8yAmtzih4VDKn0Em27BwbrkNnTWqLD2NyE/
+ LkBJ3CxoyuZjmRz3D8HyYCBj0sWSEN/7X2miUMbxja/H7sl+ZAS54AWlZtdfsKh1fm3f+6l64zI
+ g6rZrxr0XTxFLQz/UqlVfTvwAX8xkMxsn9E2ZQ==
+X-Google-Smtp-Source: AGHT+IHDpmImTd/EIp/+IDDLF/YRZUUp2MkUGxFGAy0YgV6RSjySzRo1LDcN1LSUtcOcfdjbZLYZhw==
+X-Received: by 2002:a5d:5f4d:0:b0:38a:614b:8632 with SMTP id
+ ffacd0b85a97d-38bf57a6969mr17110881f8f.39.1737456192304; 
+ Tue, 21 Jan 2025 02:43:12 -0800 (PST)
 Received: from [192.168.69.181] (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-437c74c4751sm231288045e9.19.2025.01.21.02.39.31
+ ffacd0b85a97d-38bf327de62sm12693987f8f.85.2025.01.21.02.43.11
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 21 Jan 2025 02:39:31 -0800 (PST)
-Message-ID: <4cdd0978-16c7-4cd6-93e8-ac7a2061e407@linaro.org>
-Date: Tue, 21 Jan 2025 11:39:30 +0100
+ Tue, 21 Jan 2025 02:43:11 -0800 (PST)
+Message-ID: <bfa02ef0-12a3-46b5-9749-c9e367145dc3@linaro.org>
+Date: Tue, 21 Jan 2025 11:43:11 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 03/13] linux-user: Emulate /proc/cpuinfo for Alpha
-To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
-Cc: Helge Deller <deller@gmx.de>, Michael Cree <mcree@orcon.net.nz>
-References: <20230824010237.1379735-1-richard.henderson@linaro.org>
- <20230824010237.1379735-4-richard.henderson@linaro.org>
+Subject: Re: [PATCH] hw/misc: i2c-echo: add tracing
+To: Titus Rwantare <titusr@google.com>, minyard@acm.org, its@irrelevant.dk
+Cc: qemu-arm@nongnu.org, qemu-devel@nongnu.org, clg@kaod.org
+References: <20250121103608.3056288-1-titusr@google.com>
 Content-Language: en-US
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20230824010237.1379735-4-richard.henderson@linaro.org>
+In-Reply-To: <20250121103608.3056288-1-titusr@google.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::330;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x330.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::429;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x429.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -101,78 +101,58 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Helge,
+Hi Titus,
 
-On 24/8/23 03:02, Richard Henderson wrote:
-> From: Helge Deller <deller@gmx.de>
+On 21/1/25 11:36, Titus Rwantare wrote:
+> This has been useful when debugging when unsure if the guest is
+> generating i2c traffic.
 > 
-> Add emulation for /proc/cpuinfo for the alpha architecture.
-> 
-> alpha output example:
-> 
-> (alpha-chroot)root@p100:/# cat /proc/cpuinfo
-> cpu                     : Alpha
-> cpu model               : ev67
-> cpu variation           : 0
-> cpu revision            : 0
-> cpu serial number       : JA00000000
-> system type             : QEMU
-> system variation        : QEMU_v8.0.92
-> system revision         : 0
-> system serial number    : AY00000000
-> cycle frequency [Hz]    : 250000000
-> timer frequency [Hz]    : 250.00
-> page size [bytes]       : 8192
-> phys. address bits      : 44
-> max. addr. space #      : 255
-> BogoMIPS                : 2500.00
-> platform string         : AlphaServer QEMU user-mode VM
-> cpus detected           : 8
-> cpus active             : 4
-> cpu active mask         : 0000000000000095
-> L1 Icache               : n/a
-> L1 Dcache               : n/a
-> L2 cache                : n/a
-> L3 cache                : n/a
-> 
-> Cc: Michael Cree <mcree@orcon.net.nz>
-> Signed-off-by: Helge Deller <deller@gmx.de>
-> Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-> Message-Id: <20230803214450.647040-4-deller@gmx.de>
-> Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+> Signed-off-by: Titus Rwantare <titusr@google.com>
 > ---
->   linux-user/alpha/target_proc.h | 68 +++++++++++++++++++++++++++++++++-
->   1 file changed, 67 insertions(+), 1 deletion(-)
+>   hw/misc/i2c-echo.c   | 13 +++++++++++++
+>   hw/misc/trace-events |  5 +++++
+>   2 files changed, 18 insertions(+)
 > 
-> diff --git a/linux-user/alpha/target_proc.h b/linux-user/alpha/target_proc.h
-> index 43fe29ca72..dac37dffc9 100644
-> --- a/linux-user/alpha/target_proc.h
-> +++ b/linux-user/alpha/target_proc.h
-> @@ -1 +1,67 @@
-> -/* No target-specific /proc support */
-> +/*
-> + * Alpha specific proc functions for linux-user
-> + *
-> + * SPDX-License-Identifier: GPL-2.0-or-later
-> + */
-> +#ifndef ALPHA_TARGET_PROC_H
-> +#define ALPHA_TARGET_PROC_H
+> diff --git a/hw/misc/i2c-echo.c b/hw/misc/i2c-echo.c
+> index 5ae3d0817e..06110e0f8e 100644
+> --- a/hw/misc/i2c-echo.c
+> +++ b/hw/misc/i2c-echo.c
+> @@ -13,6 +13,7 @@
+>   #include "qemu/main-loop.h"
+>   #include "block/aio.h"
+>   #include "hw/i2c/i2c.h"
+> +#include "trace.h"
+>   
+>   #define TYPE_I2C_ECHO "i2c-echo"
+>   OBJECT_DECLARE_SIMPLE_TYPE(I2CEchoState, I2C_ECHO)
+> @@ -80,11 +81,19 @@ static int i2c_echo_event(I2CSlave *s, enum i2c_event event)
+>       case I2C_START_RECV:
+>           state->pos = 0;
+>   
+> +        trace_i2c_echo_event(DEVICE(s)->canonical_path, "I2C_START_RECV");
+>           break;
+>   
+>       case I2C_START_SEND:
+>           state->pos = 0;
+>   
+> +        trace_i2c_echo_event(DEVICE(s)->canonical_path, "I2C_START_SEND");
+> +        break;
 > +
-> +static int open_cpuinfo(CPUArchState *cpu_env, int fd)
-> +{
-> +    int max_cpus = sysconf(_SC_NPROCESSORS_CONF);
-> +    int num_cpus = sysconf(_SC_NPROCESSORS_ONLN);
-> +    unsigned long cpu_mask;
-> +    char model[32];
-> +    const char *p, *q;
-> +    int t;
+> +    case I2C_START_SEND_ASYNC:
+> +        state->pos = 0;
 > +
-> +    p = object_class_get_name(OBJECT_CLASS(CPU_GET_CLASS(env_cpu(cpu_env))));
+> +        trace_i2c_echo_event(DEVICE(s)->canonical_path, "I2C_START_SEND_ASYNC");
 
-Isn't it the same of:
+This patch is doing a bit more that what it describes, since now
+START_SEND_ASYNC returns 0x00 instead of 0xff (besides updating pos).
 
-        p = object_get_typename(OBJECT(env_cpu(cpu_env)));
+Please split as one patch per logical change.
 
-?
+Thanks!
 
+Phil.
+
+>           break;
+>   
+>       case I2C_FINISH:
 
