@@ -4,27 +4,27 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id F20C7C02182
-	for <qemu-devel@archiver.kernel.org>; Tue, 21 Jan 2025 07:06:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C3DFEC02182
+	for <qemu-devel@archiver.kernel.org>; Tue, 21 Jan 2025 07:06:15 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ta8KD-00076i-NE; Tue, 21 Jan 2025 02:05:25 -0500
+	id 1ta8KQ-0007jG-QZ; Tue, 21 Jan 2025 02:05:39 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jamin_lin@aspeedtech.com>)
- id 1ta8KB-00071U-VP; Tue, 21 Jan 2025 02:05:24 -0500
+ id 1ta8KK-0007Ys-5Z; Tue, 21 Jan 2025 02:05:32 -0500
 Received: from mail.aspeedtech.com ([211.20.114.72] helo=TWMBX01.aspeed.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jamin_lin@aspeedtech.com>)
- id 1ta8KA-0001eA-Fm; Tue, 21 Jan 2025 02:05:23 -0500
+ id 1ta8KI-0001eA-HK; Tue, 21 Jan 2025 02:05:31 -0500
 Received: from TWMBX01.aspeed.com (192.168.0.62) by TWMBX01.aspeed.com
  (192.168.0.62) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1258.12; Tue, 21 Jan
- 2025 15:04:28 +0800
+ 2025 15:04:29 +0800
 Received: from localhost.localdomain (192.168.10.10) by TWMBX01.aspeed.com
  (192.168.0.62) with Microsoft SMTP Server id 15.2.1258.12 via Frontend
- Transport; Tue, 21 Jan 2025 15:04:28 +0800
+ Transport; Tue, 21 Jan 2025 15:04:29 +0800
 To: =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@kaod.org>, Peter Maydell
  <peter.maydell@linaro.org>, Steven Lee <steven_lee@aspeedtech.com>, Troy Lee
  <leetroy@gmail.com>, Andrew Jeffery <andrew@codeconstruct.com.au>, "Joel
@@ -32,10 +32,10 @@ To: =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@kaod.org>, Peter Maydell
  "open list:All patches CC here" <qemu-devel@nongnu.org>
 CC: <jamin_lin@aspeedtech.com>, <troy_lee@aspeedtech.com>,
  <yunlin.tang@aspeedtech.com>
-Subject: [PATCH v1 11/18] hw/misc/aspeed_scu: Add Support for AST2700/AST2750
- A1 Silicon Revisions
-Date: Tue, 21 Jan 2025 15:04:17 +0800
-Message-ID: <20250121070424.2465942-12-jamin_lin@aspeedtech.com>
+Subject: [PATCH v1 14/18] hw/arm/aspeed: Add SoC and Machine Support for
+ AST2700 A1
+Date: Tue, 21 Jan 2025 15:04:20 +0800
+Message-ID: <20250121070424.2465942-15-jamin_lin@aspeedtech.com>
 X-Mailer: git-send-email 2.25.1
 In-Reply-To: <20250121070424.2465942-1-jamin_lin@aspeedtech.com>
 References: <20250121070424.2465942-1-jamin_lin@aspeedtech.com>
@@ -67,52 +67,166 @@ From:  Jamin Lin via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Added new definitions for AST2700_A1_SILICON_REV and AST2750_A1_SILICON_REV to
-identify the A1 silicon revisions.
+The memory map for AST2700 A1 remains compatible with AST2700 A0.
+However, the IRQ mapping has been updated for AST2700 A1, with GIC interrupts
+now ranging from 192 to 201. Add a new IRQ map table for AST2700 A1.
 
-Update "aspeed_ast2700_scu_reset" to set the silicon_rev field in the SCU
-registers.
+Introduce "aspeed_machine_ast2700_evb_class_init" to initialize the AST2700 EVB
+machine. Add "aspeed_soc_ast2700_class_init" to initialize the AST2700 A1 SoC.
 
 Signed-off-by: Jamin Lin <jamin_lin@aspeedtech.com>
 ---
- hw/misc/aspeed_scu.c         | 3 +++
- include/hw/misc/aspeed_scu.h | 2 ++
- 2 files changed, 5 insertions(+)
+ hw/arm/aspeed.c         | 24 +++++++++++++
+ hw/arm/aspeed_ast27x0.c | 80 +++++++++++++++++++++++++++++++++++++++++
+ 2 files changed, 104 insertions(+)
 
-diff --git a/hw/misc/aspeed_scu.c b/hw/misc/aspeed_scu.c
-index bac1441b06..f049a9fd96 100644
---- a/hw/misc/aspeed_scu.c
-+++ b/hw/misc/aspeed_scu.c
-@@ -559,6 +559,8 @@ static uint32_t aspeed_silicon_revs[] = {
-     AST2700_A0_SILICON_REV,
-     AST2720_A0_SILICON_REV,
-     AST2750_A0_SILICON_REV,
-+    AST2700_A1_SILICON_REV,
-+    AST2750_A1_SILICON_REV,
+diff --git a/hw/arm/aspeed.c b/hw/arm/aspeed.c
+index 402d55c556..254fa5316d 100644
+--- a/hw/arm/aspeed.c
++++ b/hw/arm/aspeed.c
+@@ -1672,6 +1672,26 @@ static void aspeed_machine_ast2700a0_evb_class_init(ObjectClass *oc, void *data)
+     mc->default_ram_size = 1 * GiB;
+     aspeed_machine_class_init_cpus_defaults(mc);
+ }
++
++static void aspeed_machine_ast2700_evb_class_init(ObjectClass *oc, void *data)
++{
++    MachineClass *mc = MACHINE_CLASS(oc);
++    AspeedMachineClass *amc = ASPEED_MACHINE_CLASS(oc);
++
++    mc->desc = "Aspeed AST2700 EVB (Cortex-A35)";
++    amc->soc_name  = "ast2700-a1";
++    amc->hw_strap1 = AST2700_EVB_HW_STRAP1;
++    amc->hw_strap2 = AST2700_EVB_HW_STRAP2;
++    amc->fmc_model = "w25q01jvq";
++    amc->spi_model = "w25q512jv";
++    amc->num_cs    = 2;
++    amc->macs_mask = ASPEED_MAC0_ON | ASPEED_MAC1_ON | ASPEED_MAC2_ON;
++    amc->uart_default = ASPEED_DEV_UART12;
++    amc->i2c_init  = ast2700_evb_i2c_init;
++    mc->default_ram_size = 1 * GiB;
++    aspeed_machine_class_init_cpus_defaults(mc);
++}
++
+ #endif
+ 
+ static void aspeed_machine_qcom_dc_scm_v1_class_init(ObjectClass *oc,
+@@ -1798,6 +1818,10 @@ static const TypeInfo aspeed_machine_types[] = {
+         .name          = MACHINE_TYPE_NAME("ast2700a0-evb"),
+         .parent        = TYPE_ASPEED_MACHINE,
+         .class_init    = aspeed_machine_ast2700a0_evb_class_init,
++     }, {
++        .name          = MACHINE_TYPE_NAME("ast2700-evb"),
++        .parent        = TYPE_ASPEED_MACHINE,
++        .class_init    = aspeed_machine_ast2700_evb_class_init,
+ #endif
+     }, {
+         .name          = TYPE_ASPEED_MACHINE,
+diff --git a/hw/arm/aspeed_ast27x0.c b/hw/arm/aspeed_ast27x0.c
+index b32c4fcc35..e0a29c9053 100644
+--- a/hw/arm/aspeed_ast27x0.c
++++ b/hw/arm/aspeed_ast27x0.c
+@@ -119,6 +119,52 @@ static const int aspeed_soc_ast2700a0_irqmap[] = {
+     [ASPEED_DEV_SDHCI]     = 133,
  };
  
- bool is_supported_silicon_rev(uint32_t silicon_rev)
-@@ -938,6 +940,7 @@ static void aspeed_ast2700_scu_reset(DeviceState *dev)
-     AspeedSCUClass *asc = ASPEED_SCU_GET_CLASS(dev);
- 
-     memcpy(s->regs, asc->resets, asc->nr_regs * 4);
-+    s->regs[AST2700_SILICON_REV] = s->silicon_rev;
++static const int aspeed_soc_ast2700_irqmap[] = {
++    [ASPEED_DEV_UART0]     = 196,
++    [ASPEED_DEV_UART1]     = 196,
++    [ASPEED_DEV_UART2]     = 196,
++    [ASPEED_DEV_UART3]     = 196,
++    [ASPEED_DEV_UART4]     = 8,
++    [ASPEED_DEV_UART5]     = 196,
++    [ASPEED_DEV_UART6]     = 196,
++    [ASPEED_DEV_UART7]     = 196,
++    [ASPEED_DEV_UART8]     = 196,
++    [ASPEED_DEV_UART9]     = 196,
++    [ASPEED_DEV_UART10]    = 196,
++    [ASPEED_DEV_UART11]    = 196,
++    [ASPEED_DEV_UART12]    = 196,
++    [ASPEED_DEV_FMC]       = 195,
++    [ASPEED_DEV_SDMC]      = 0,
++    [ASPEED_DEV_SCU]       = 12,
++    [ASPEED_DEV_ADC]       = 194,
++    [ASPEED_DEV_XDMA]      = 5,
++    [ASPEED_DEV_EMMC]      = 15,
++    [ASPEED_DEV_GPIO]      = 194,
++    [ASPEED_DEV_RTC]       = 13,
++    [ASPEED_DEV_TIMER1]    = 16,
++    [ASPEED_DEV_TIMER2]    = 17,
++    [ASPEED_DEV_TIMER3]    = 18,
++    [ASPEED_DEV_TIMER4]    = 19,
++    [ASPEED_DEV_TIMER5]    = 20,
++    [ASPEED_DEV_TIMER6]    = 21,
++    [ASPEED_DEV_TIMER7]    = 22,
++    [ASPEED_DEV_TIMER8]    = 23,
++    [ASPEED_DEV_WDT]       = 195,
++    [ASPEED_DEV_PWM]       = 195,
++    [ASPEED_DEV_LPC]       = 192,
++    [ASPEED_DEV_IBT]       = 192,
++    [ASPEED_DEV_I2C]       = 194,
++    [ASPEED_DEV_PECI]      = 197,
++    [ASPEED_DEV_ETH1]      = 196,
++    [ASPEED_DEV_ETH2]      = 196,
++    [ASPEED_DEV_ETH3]      = 196,
++    [ASPEED_DEV_HACE]      = 4,
++    [ASPEED_DEV_KCS]       = 192,
++    [ASPEED_DEV_DP]        = 28,
++    [ASPEED_DEV_I3C]       = 195,
++    [ASPEED_DEV_SDHCI]     = 197,
++};
++
+ /* GICINT 128 */
+ /* GICINT 192 */
+ static const int ast2700_gic128_gic192_intcmap[] = {
+@@ -822,6 +868,34 @@ static void aspeed_soc_ast2700a0_class_init(ObjectClass *oc, void *data)
+     sc->get_irq      = aspeed_soc_ast2700_get_irq;
  }
  
- static void aspeed_2700_scu_class_init(ObjectClass *klass, void *data)
-diff --git a/include/hw/misc/aspeed_scu.h b/include/hw/misc/aspeed_scu.h
-index 356be95e45..684b48b722 100644
---- a/include/hw/misc/aspeed_scu.h
-+++ b/include/hw/misc/aspeed_scu.h
-@@ -54,6 +54,8 @@ struct AspeedSCUState {
- #define AST2700_A0_SILICON_REV   0x06000103U
- #define AST2720_A0_SILICON_REV   0x06000203U
- #define AST2750_A0_SILICON_REV   0x06000003U
-+#define AST2700_A1_SILICON_REV   0x06010103U
-+#define AST2750_A1_SILICON_REV   0x06010003U
++static void aspeed_soc_ast2700_class_init(ObjectClass *oc, void *data)
++{
++    static const char * const valid_cpu_types[] = {
++        ARM_CPU_TYPE_NAME("cortex-a35"),
++        NULL
++    };
++    DeviceClass *dc = DEVICE_CLASS(oc);
++    AspeedSoCClass *sc = ASPEED_SOC_CLASS(oc);
++
++    /* Reason: The Aspeed SoC can only be instantiated from a board */
++    dc->user_creatable = false;
++    dc->realize      = aspeed_soc_ast2700_realize;
++
++    sc->name         = "ast2700-a1";
++    sc->valid_cpu_types = valid_cpu_types;
++    sc->silicon_rev  = AST2700_A1_SILICON_REV;
++    sc->sram_size    = 0x20000;
++    sc->spis_num     = 3;
++    sc->wdts_num     = 8;
++    sc->macs_num     = 1;
++    sc->uarts_num    = 13;
++    sc->num_cpus     = 4;
++    sc->uarts_base   = ASPEED_DEV_UART0;
++    sc->irqmap       = aspeed_soc_ast2700_irqmap;
++    sc->memmap       = aspeed_soc_ast2700_memmap;
++    sc->get_irq      = aspeed_soc_ast2700_get_irq;
++}
++
+ static const TypeInfo aspeed_soc_ast27x0_types[] = {
+     {
+         .name           = TYPE_ASPEED27X0_SOC,
+@@ -834,6 +908,12 @@ static const TypeInfo aspeed_soc_ast27x0_types[] = {
+         .instance_init  = aspeed_soc_ast2700_init,
+         .class_init     = aspeed_soc_ast2700a0_class_init,
+     },
++    {
++        .name           = "ast2700-a1",
++        .parent         = TYPE_ASPEED27X0_SOC,
++        .instance_init  = aspeed_soc_ast2700_init,
++        .class_init     = aspeed_soc_ast2700_class_init,
++    },
+ };
  
- #define ASPEED_IS_AST2500(si_rev)     ((((si_rev) >> 24) & 0xff) == 0x04)
- 
+ DEFINE_TYPES(aspeed_soc_ast27x0_types)
 -- 
 2.34.1
 
