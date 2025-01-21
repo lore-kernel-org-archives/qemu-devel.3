@@ -4,82 +4,144 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DFE2FC0218B
-	for <qemu-devel@archiver.kernel.org>; Tue, 21 Jan 2025 13:06:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B5CBDC0218B
+	for <qemu-devel@archiver.kernel.org>; Tue, 21 Jan 2025 13:06:10 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1taDwT-0003yM-LG; Tue, 21 Jan 2025 08:05:17 -0500
+	id 1taDxD-0004Lg-90; Tue, 21 Jan 2025 08:06:03 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1taDwN-0003qj-C4
- for qemu-devel@nongnu.org; Tue, 21 Jan 2025 08:05:12 -0500
-Received: from mail-yb1-xb2b.google.com ([2607:f8b0:4864:20::b2b])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1taDwL-0007jW-Kq
- for qemu-devel@nongnu.org; Tue, 21 Jan 2025 08:05:11 -0500
-Received: by mail-yb1-xb2b.google.com with SMTP id
- 3f1490d57ef6-e3978c00a5aso8696741276.1
- for <qemu-devel@nongnu.org>; Tue, 21 Jan 2025 05:05:08 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1737464708; x=1738069508; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=L0LC9uCGFjyS38qgSUaB3bhc+kfZQqXdfM2lVdqqJog=;
- b=Q679xQ1tI72dBrbM0vIAyRKx0qZKCivOkxAJNznNbW0JxABL4pZB3GI+XwFVB/uXXW
- COHivdic+iHOBfmS2YzT/sIfKuRluilvXMXcVct1OakWfmw7DQnFrM/Ij+2gTo3m5qAk
- 4oVX3M2HqDcksFpKOiPQXSJM7FpcJ56IZGG2x1I46RsVH4pJ1nc7bpSdi+FWp5JWt3GA
- /rHuZBdbe5fhr3ka9pf99fTlv1BjVYdmQZlfnRanpAzZkSqJNKArUxH4IdDX/ZyWbHUU
- tN3/TwWU4SmWQerfieMfCiQs7gZKtEUV05rTKobdc5DhLeJiPdhXoFcg2tVB8Qf6mg3n
- OuIQ==
+ (Exim 4.90_1) (envelope-from <david@redhat.com>) id 1taDxA-0004Ku-Ur
+ for qemu-devel@nongnu.org; Tue, 21 Jan 2025 08:06:01 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <david@redhat.com>) id 1taDx9-0007tm-Af
+ for qemu-devel@nongnu.org; Tue, 21 Jan 2025 08:06:00 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1737464756;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+ bh=XiUbAhTQX1NUjhqK074VBwe1uYkz0jqo4aSLP15LyiI=;
+ b=SznHShYbrLj+wS+NRVt85nsun02MhxYkCjIHwcsZe+2DUBWmLNZzLhkPPLWqvu85XtZ2A4
+ mlWEO/Z1TVyc4Ba/htZYNSq0pK/gc4n9rWBDA0t63YR4CBOtZ4YEO1yE7WOgO+cphm9WZ/
+ bOeuTsMtC3JoDcZMwj6gwEoPjAZZ+jk=
+Received: from mail-wm1-f70.google.com (mail-wm1-f70.google.com
+ [209.85.128.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-319-odqd8sxzPVeNRrD--vOGBg-1; Tue, 21 Jan 2025 08:05:54 -0500
+X-MC-Unique: odqd8sxzPVeNRrD--vOGBg-1
+X-Mimecast-MFC-AGG-ID: odqd8sxzPVeNRrD--vOGBg
+Received: by mail-wm1-f70.google.com with SMTP id
+ 5b1f17b1804b1-436723db6c4so42700845e9.3
+ for <qemu-devel@nongnu.org>; Tue, 21 Jan 2025 05:05:54 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1737464708; x=1738069508;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=L0LC9uCGFjyS38qgSUaB3bhc+kfZQqXdfM2lVdqqJog=;
- b=H2vtEa7QgEe5AtJUcM6xMAuB1havDOaD7So1dU/9/E8lsYiP0+c5FLmgri7PZSCqap
- VCQSQrDoH83S3ouNd/IxKrqHGDk8VsPw+ZCzXz+t811mbERBB9J1aKea3Kf03W8O7ytX
- HaHXadPpY5FRersBH4TIg9E2lh++gDD9lGs7BEo8FWed1xGZ2nFM34BMft/tyEzCRva0
- plnvFdbQ+1OdvJ9CAf926lYnnubU2Mopq+bDJQkm4mlLazrvKxDmCq3/+h49Cc09kQdB
- k8MB/L5HlusYJYAZo75BoE+oCaJjZQ+LdnctlXd+6ORLUb21Y1ruyfXYdaV9MFM0m1rm
- YGfA==
-X-Gm-Message-State: AOJu0YzACTyZTmgJ5rsN2+OyRFC2iVukZw+BWlXmTr+RhYZdf7ln7At/
- scJCwIucmVZM6a6VPjNNFabnA1UOgGzYJSFoLnMiZcNwWFVAV8pBAJiQfh1ij3ym88T2/AineTd
- U4sr+nlr6KmDddsM+F/JgPWwpZiF0aaZx2iieNQ==
-X-Gm-Gg: ASbGncuMUSDl6EBFPMFdh04FiXO5xkXIGhPPdsT3ADA8bBiuI0wHQuKxCUsXA4xAhjT
- IkXL/AVEW2jJnIs1DN9r6pLM4wI2GHKcy5CmbUB+x/qtUJERSmSED
-X-Google-Smtp-Source: AGHT+IHIU3MO35jrOSaOuGgzQBJYDsWlT7SNbbIrhCg41B+5rBE7f3T1bnIov5TSaO3VDauYrcLShn9Cnxp0uxMmBu4=
-X-Received: by 2002:a05:6902:1b02:b0:e49:c11a:7580 with SMTP id
- 3f1490d57ef6-e57b10453eemr12505410276.7.1737464707734; Tue, 21 Jan 2025
- 05:05:07 -0800 (PST)
+ d=1e100.net; s=20230601; t=1737464753; x=1738069553;
+ h=content-transfer-encoding:in-reply-to:organization:autocrypt
+ :content-language:from:references:cc:to:subject:user-agent
+ :mime-version:date:message-id:x-gm-message-state:from:to:cc:subject
+ :date:message-id:reply-to;
+ bh=XiUbAhTQX1NUjhqK074VBwe1uYkz0jqo4aSLP15LyiI=;
+ b=dwAGb2N5s1Z5r49okqASjdc9TeIHiWdZYDMA/gazFjfojxsnU0wSadovYuZStSd9bC
+ cKQgz/yP1O1mnZD/dHFybcpui3rvPaWMNhj0dknBoBepKa9HbPoGPTuxfATgM5hCEBGu
+ eNIXa2xDk4/7JRt3r3uzqMgS49yfQVHNYA/rB2H7Eg1M2ZDYayRx0Sbi/PZBX7LdOHd1
+ d9pNGo/7NP/w+NsuXjq8jJnxZ53TglmwWVE+m70lGnHQJdNIzJI7ML/FliQJN3p5WY87
+ 7iwAN5OnNl99mY44RIKydf7vWhA/EUKNVQ+d+VWcYLDTmDJ6NlrYc3Ct+Zm9rsbDwiAo
+ c6/g==
+X-Gm-Message-State: AOJu0YwT9u7rCyMMDRfNpU8A8VgkhzDkQF/f4SFcrI9/NHIrM3K60D4M
+ sehcOmv+bzePhS0LhRi6v/reZKxZo6N8k/v51SN9TzGf2ekre3WxsyAS2NBMjQ+nkQU+UCgcMB/
+ ND62zwKl7TTorkJIzv3cwUpRXe543egGJLFLr4YnZ9m0V9OXab3wL
+X-Gm-Gg: ASbGncsr7qjXZBdUJSr0IeVYqn0yexWZQfG/ZXf8LBDXceqJWscTS8a7IEmJsEdlZGE
+ Ts29DDyJSX0jkjN9adOSSAM2ap99mwXvGj5XeDIkXyxd8QoLUSlG+uwlYvif6Glqr52EQ5mwIlt
+ bEqN39TOt8WHerwVJOfs25f47zcwc7TEwi8ocVOZ929W3BP3Q2Uk9ZBu2du1Q1qv/eBekvojjla
+ iOx4jM6paT8Tn/c8J/y6vMnpGHQRK2sEjxsHjNgSkNMlCeny4cxZZFIqUiVR9C0saOgFkgEg+t+
+ 7XId4iQueBg2IsRck6vri1I=
+X-Received: by 2002:a05:600c:4e93:b0:436:1b81:b65c with SMTP id
+ 5b1f17b1804b1-438913df89fmr161954605e9.15.1737464752957; 
+ Tue, 21 Jan 2025 05:05:52 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IF85pno/BMiUwrZvb+HEjLQiH0OMIR04SjuhOmOI5jm8XJHVK1+Z19E4XGsaA1VEuIKF1B7uQ==
+X-Received: by 2002:a05:600c:4e93:b0:436:1b81:b65c with SMTP id
+ 5b1f17b1804b1-438913df89fmr161954215e9.15.1737464752558; 
+ Tue, 21 Jan 2025 05:05:52 -0800 (PST)
+Received: from [192.168.3.141] (p5b0c6f60.dip0.t-ipconnect.de. [91.12.111.96])
+ by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-38bf322ace8sm13411475f8f.53.2025.01.21.05.05.50
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Tue, 21 Jan 2025 05:05:51 -0800 (PST)
+Message-ID: <967bd8b2-3a97-4cd8-9f5a-3de3d25fd2d6@redhat.com>
+Date: Tue, 21 Jan 2025 14:05:50 +0100
 MIME-Version: 1.0
-References: <20250120210212.3890255-1-alex.bennee@linaro.org>
- <20250120210212.3890255-7-alex.bennee@linaro.org>
-In-Reply-To: <20250120210212.3890255-7-alex.bennee@linaro.org>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Tue, 21 Jan 2025 13:04:56 +0000
-X-Gm-Features: AbW1kvZ-Pag_aRcTSJV0CQvvb9KJN0wMv3z415E0AitAhflfvfj1yHoVGvRiExQ
-Message-ID: <CAFEAcA_qceSO9be7wSj6U2a9yDvj9VhjQZuRugzGKsae+wEoog@mail.gmail.com>
-Subject: Re: [PATCH 6/7] tests/qtest: tighten up the checks on clock_step
-To: =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>
-Cc: qemu-devel@nongnu.org, qemu-s390x@nongnu.org, qemu-arm@nongnu.org, 
- Thomas Huth <thuth@redhat.com>, Fabiano Rosas <farosas@suse.de>,
- Laurent Vivier <lvivier@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::b2b;
- envelope-from=peter.maydell@linaro.org; helo=mail-yb1-xb2b.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] vfio: Support P2P access in confidential VM
+To: Wencheng Yang <east.moutain.yang@gmail.com>
+Cc: qemu-devel@nongnu.org, alex.williamson@redhat.com, clg@redhat.com,
+ pbonzini@redhat.com, peterx@redhat.com, philmd@linaro.org, mst@redhat.com,
+ sgarzare@redhat.com
+References: <20250116095355.41909-1-east.moutain.yang@gmail.com>
+ <479d79c7-2cb8-4f32-9bf0-fe1a50931925@redhat.com>
+ <CALrP2iXft+p2FiSDUpMn+PnvhUVxw57uRQdwAPGiiR8wjpo5TA@mail.gmail.com>
+From: David Hildenbrand <david@redhat.com>
+Content-Language: en-US
+Autocrypt: addr=david@redhat.com; keydata=
+ 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
+ WNyWQQ==
+Organization: Red Hat
+In-Reply-To: <CALrP2iXft+p2FiSDUpMn+PnvhUVxw57uRQdwAPGiiR8wjpo5TA@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=david@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -50
+X-Spam_score: -5.1
+X-Spam_bar: -----
+X-Spam_report: (-5.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-2.996,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -95,57 +157,31 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, 20 Jan 2025 at 21:02, Alex Benn=C3=A9e <alex.bennee@linaro.org> wro=
-te:
->
-> It is invalid to call clock_step with an implied time to step forward
-> as if no timers are running we won't be able to advance.
->
-> Signed-off-by: Alex Benn=C3=A9e <alex.bennee@linaro.org>
-> ---
->  system/qtest.c | 7 ++++++-
->  1 file changed, 6 insertions(+), 1 deletion(-)
->
-> diff --git a/system/qtest.c b/system/qtest.c
-> index 28b6fac37c..1a9bfd0b33 100644
-> --- a/system/qtest.c
-> +++ b/system/qtest.c
-> @@ -708,10 +708,15 @@ static void qtest_process_command(CharBackend *chr,=
- gchar **words)
->          } else {
->              ns =3D qemu_clock_deadline_ns_all(QEMU_CLOCK_VIRTUAL,
->                                              QEMU_TIMER_ATTR_ALL);
-> +            if (ns < 0) {
-> +                qtest_send(chr, "FAIL "
-> +                           "no timers for clock_step to follow\n");
+On 21.01.25 09:50, Wencheng Yang wrote:
+> hi, David,
+> 
 
-I think I would say
-"cannot advance clock to the next deadline because there is no pending dead=
-line"
-as being a bit clearer about what's gone wrong here.
+Hi,
 
-> +                return;
-> +            }
->          }
->          new_ns =3D qemu_clock_advance_virtual_time(old_ns + ns);
->          qtest_sendf(chr, "%s %"PRIi64"\n",
-> -                    new_ns > old_ns ? "OK" : "FAIL", new_ns);
-> +                    new_ns > old_ns ? "OK" : "FAIL could not advance tim=
-e", new_ns);
+>  > I'm wondering: isn't this something the kernel should be able to figure
+>  > out? Is this encrypted RAM (SMA) or not, and set the flag accordingly?
+>  > What are the challenges?
+> 
+> VFIO driver and IOMMU driver don't know the device(memory or device 
+> mmio) behind vaddr,
+> only device driver knows that, now that the device is managed by user 
+> space VFIO,
+> user should tell the info to VFIO driver.
 
-Maybe we should give up on trying to handle the OK and FAIL
-cases in the same qtest_sendf() call? It's not clear to me that
-printing the new clock value in the FAIL message is actually
-useful.
+what I am wondering was is: does it ever make sense to set the SME PTE 
+flag on anything that is not ordinary system RAM?
 
-For that matter, is it actually possible for the clock to not
-advance? It doesn't seem obvious that "advance the clock by 0 ticks"
-should be a failure case rather than a "does nothing" case,
-and once patch 7 is applied I don't think there's any case
-where qemu_clock_advance_virtual_time() could make the
-clock go backwards... Put another way, this would be moving
-back to the situation before your commit d524441a3610b.
+IOW: in which scenarios would we set it on a PTE that targets device 
+memory or device MMIO?
 
-thanks
--- PMM
+-- 
+Cheers,
+
+David / dhildenb
+
 
