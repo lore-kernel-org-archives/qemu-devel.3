@@ -4,64 +4,119 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8E69AC02182
-	for <qemu-devel@archiver.kernel.org>; Tue, 21 Jan 2025 13:46:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E6742C02182
+	for <qemu-devel@archiver.kernel.org>; Tue, 21 Jan 2025 13:51:04 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1taEZv-0000TZ-O8; Tue, 21 Jan 2025 08:46:04 -0500
+	id 1taEeS-0002ev-Oy; Tue, 21 Jan 2025 08:50:44 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1taEZe-0000RK-1d; Tue, 21 Jan 2025 08:45:46 -0500
-Received: from mgamail.intel.com ([192.198.163.14])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1taEZb-0005tB-S1; Tue, 21 Jan 2025 08:45:45 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
- d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1737467144; x=1769003144;
- h=from:to:cc:subject:date:message-id:in-reply-to:
- references:mime-version:content-transfer-encoding;
- bh=OsIWBqlrGVm71pj8dI8rY/GCT36H3RyHgbAeCp1q76o=;
- b=hD8g8EVbb0ZuGThAm0qkqF6NERKQNEtqcyiZ3x7Hf1ouSn8YSgZTnm9F
- Xgd/JZbgcCeTKXvO+vmejWi2zbhBxZgoPnvvHH6o3C4ZEbU7U08Vpt1NY
- Tw0VSiRKOwGprh15IdMIhG2igk55owwpXt8ZrbUMIzgakgcK5e1LG0dcc
- wlp3SpwJcyb9N9jNugQA75oSOpsTheCmrR15pnPzKytRx6DeIQgyyf+ER
- QOHEubkhv0y8QMUFLiU8e0bTCFiun/4IcZwXqwXOXbp4OfOPiNWXO4+1w
- twT587Sx677mKD13gXPd2Yq51Eenz3sGaYDagyZyi2z5aBFs8b+XDVjIz Q==;
-X-CSE-ConnectionGUID: LMexH0opSHO0rJT8v/tC0A==
-X-CSE-MsgGUID: TuBaYDdDQweKfMcxwkzagg==
-X-IronPort-AV: E=McAfee;i="6700,10204,11322"; a="38123112"
-X-IronPort-AV: E=Sophos;i="6.13,222,1732608000"; d="scan'208";a="38123112"
-Received: from orviesa006.jf.intel.com ([10.64.159.146])
- by fmvoesa108.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 21 Jan 2025 05:45:42 -0800
-X-CSE-ConnectionGUID: i0quFSvGQGq7jtnfXHqbDw==
-X-CSE-MsgGUID: ComJf3WDQkaqxVh6jfuklg==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.13,222,1732608000"; d="scan'208";a="106822617"
-Received: from liuzhao-optiplex-7080.sh.intel.com ([10.239.160.39])
- by orviesa006.jf.intel.com with ESMTP; 21 Jan 2025 05:45:40 -0800
-From: Zhao Liu <zhao1.liu@intel.com>
-To: Paolo Bonzini <pbonzini@redhat.com>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=83?= <philmd@linaro.org>
-Cc: qemu-devel@nongnu.org, qemu-rust@nongnu.org, Zhao Liu <zhao1.liu@intel.com>
-Subject: [PATCH RESEND 2/2] rust/pl011: Avoid bindings::*
-Date: Tue, 21 Jan 2025 22:04:57 +0800
-Message-Id: <20250121140457.84631-3-zhao1.liu@intel.com>
-X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20250121140457.84631-1-zhao1.liu@intel.com>
-References: <20250121140457.84631-1-zhao1.liu@intel.com>
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>)
+ id 1taEeQ-0002ds-1s; Tue, 21 Jan 2025 08:50:42 -0500
+Received: from smtp-out1.suse.de ([195.135.223.130])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>)
+ id 1taEeN-0006Qw-OR; Tue, 21 Jan 2025 08:50:41 -0500
+Received: from imap1.dmz-prg2.suse.org (imap1.dmz-prg2.suse.org
+ [IPv6:2a07:de40:b281:104:10:150:64:97])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested)
+ by smtp-out1.suse.de (Postfix) with ESMTPS id 765C721168;
+ Tue, 21 Jan 2025 13:50:36 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+ t=1737467436; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=tRX5FUOxVzYMcXAG+qDCvvIrO+z1A6IDexczs7hrlVM=;
+ b=ZO5MRIdmlQzXFGu0q0z8PLINmh1xKIjVE+0f8ez5cTu7B4ohH3Y46cW2w6OVKrZJTUvkS9
+ mc1geweFpPsm7EAoIlcpty2EQlvQJqX/03NRhP9VdqW4pgd92OR1UFsVQrlFz0bjUr3WNb
+ ioUOZcFXLxqhTEiNg/vxwbUL41+h0jo=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+ s=susede2_ed25519; t=1737467436;
+ h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=tRX5FUOxVzYMcXAG+qDCvvIrO+z1A6IDexczs7hrlVM=;
+ b=gXkkxhOVKRWLhUJbjddbAQLljGgXDCQwXemA0XCu7o1fXhfXLiCiNhsWgfbH+CcOLbCZOD
+ k0VTlV5IuwpZFjAQ==
+Authentication-Results: smtp-out1.suse.de;
+ dkim=pass header.d=suse.de header.s=susede2_rsa header.b=ZO5MRIdm;
+ dkim=pass header.d=suse.de header.s=susede2_ed25519 header.b=gXkkxhOV
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+ t=1737467436; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=tRX5FUOxVzYMcXAG+qDCvvIrO+z1A6IDexczs7hrlVM=;
+ b=ZO5MRIdmlQzXFGu0q0z8PLINmh1xKIjVE+0f8ez5cTu7B4ohH3Y46cW2w6OVKrZJTUvkS9
+ mc1geweFpPsm7EAoIlcpty2EQlvQJqX/03NRhP9VdqW4pgd92OR1UFsVQrlFz0bjUr3WNb
+ ioUOZcFXLxqhTEiNg/vxwbUL41+h0jo=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+ s=susede2_ed25519; t=1737467436;
+ h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=tRX5FUOxVzYMcXAG+qDCvvIrO+z1A6IDexczs7hrlVM=;
+ b=gXkkxhOVKRWLhUJbjddbAQLljGgXDCQwXemA0XCu7o1fXhfXLiCiNhsWgfbH+CcOLbCZOD
+ k0VTlV5IuwpZFjAQ==
+Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested)
+ by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id E3ED613963;
+ Tue, 21 Jan 2025 13:50:35 +0000 (UTC)
+Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
+ by imap1.dmz-prg2.suse.org with ESMTPSA id MxvpJyumj2cOagAAD6G6ig
+ (envelope-from <farosas@suse.de>); Tue, 21 Jan 2025 13:50:35 +0000
+From: Fabiano Rosas <farosas@suse.de>
+To: Alex =?utf-8?Q?Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ qemu-devel@nongnu.org
+Cc: qemu-s390x@nongnu.org, qemu-arm@nongnu.org, Thomas Huth
+ <thuth@redhat.com>, Peter Maydell <peter.maydell@linaro.org>, Alex
+ =?utf-8?Q?Benn=C3=A9e?= <alex.bennee@linaro.org>
+Subject: Re: [PATCH 0/7] testing/next (qtest timer stuff)
+In-Reply-To: <20250120210212.3890255-1-alex.bennee@linaro.org>
+References: <20250120210212.3890255-1-alex.bennee@linaro.org>
+Date: Tue, 21 Jan 2025 10:50:33 -0300
+Message-ID: <87y0z4e0nq.fsf@suse.de>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=192.198.163.14; envelope-from=zhao1.liu@intel.com;
- helo=mgamail.intel.com
-X-Spam_score_int: -73
-X-Spam_score: -7.4
-X-Spam_bar: -------
-X-Spam_report: (-7.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-2.996,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+X-Rspamd-Queue-Id: 765C721168
+X-Rspamd-Action: no action
+X-Spamd-Result: default: False [-4.51 / 50.00]; BAYES_HAM(-3.00)[99.99%];
+ NEURAL_HAM_LONG(-1.00)[-1.000];
+ R_DKIM_ALLOW(-0.20)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
+ NEURAL_HAM_SHORT(-0.20)[-1.000]; MIME_GOOD(-0.10)[text/plain];
+ MX_GOOD(-0.01)[];
+ DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
+ FUZZY_BLOCKED(0.00)[rspamd.com];
+ RBL_SPAMHAUS_BLOCKED_OPENRESOLVER(0.00)[2a07:de40:b281:104:10:150:64:97:from]; 
+ ARC_NA(0.00)[]; TO_MATCH_ENVRCPT_ALL(0.00)[];
+ TO_DN_SOME(0.00)[]; MIME_TRACE(0.00)[0:+]; FROM_HAS_DN(0.00)[];
+ DKIM_TRACE(0.00)[suse.de:+];
+ SPAMHAUS_XBL(0.00)[2a07:de40:b281:104:10:150:64:97:from];
+ MID_RHS_MATCH_FROM(0.00)[]; RCVD_COUNT_TWO(0.00)[2];
+ FROM_EQ_ENVFROM(0.00)[]; RCVD_TLS_ALL(0.00)[];
+ RCPT_COUNT_SEVEN(0.00)[7]; RCVD_VIA_SMTP_AUTH(0.00)[];
+ RECEIVED_SPAMHAUS_BLOCKED_OPENRESOLVER(0.00)[2a07:de40:b281:106:10:150:64:167:received];
+ MISSING_XM_UA(0.00)[];
+ ASN(0.00)[asn:25478, ipnet:::/0, country:RU];
+ DBL_BLOCKED_OPENRESOLVER(0.00)[suse.de:dkim, suse.de:mid, suse.de:email,
+ imap1.dmz-prg2.suse.org:rdns, imap1.dmz-prg2.suse.org:helo]
+X-Rspamd-Server: rspamd1.dmz-prg2.suse.org
+Received-SPF: pass client-ip=195.135.223.130; envelope-from=farosas@suse.de;
+ helo=smtp-out1.suse.de
+X-Spam_score_int: -43
+X-Spam_score: -4.4
+X-Spam_bar: ----
+X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
  RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
@@ -80,52 +135,54 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-List all the necessary bindings to better identify gaps in rust/qapi.
-And include the bindings wrapped by rust/qapi instead mapping the raw
-bindings directly.
+Alex Benn=C3=A9e <alex.bennee@linaro.org> writes:
 
-Inspired-by: Paolo Bonzini <pbonzini@redhat.com>
-Signed-off-by: Zhao Liu <zhao1.liu@intel.com>
----
- rust/hw/char/pl011/src/device.rs | 13 ++++++++++---
- 1 file changed, 10 insertions(+), 3 deletions(-)
+> Hi,
+>
+> Thomas found that a number of tests fail under CFI and other exotic
+> setups. The eventual realisation was that --enable-slirp masks a lot
+> of timer misuse because it ensures there is always a timer and
+> therefor things tend to move on (until the system is shutting down).
+>
+> It turns out that bc02be4508 wasn't the solution after all. The first
+> few patches are clean-ups and various tightening of test expectations
+> before we revert the patch.
+>
+> Please review:
+>
+>   Revert "util/timer: avoid deadlock when shutting down"
+>   tests/qtest: tighten up the checks on clock_step
+>   tests/qtest: rename qtest_send_prefix and roll-up into qtest_send
+>   tests/qtest: simplify qtest_process_inbuf
+>   tests/qtest: don't step clock at start of npcm7xx periodic IRQ test
+>   tests/qtest: don't attempt to clock_step while waiting for virtio ISR
+>   tests/docker: replicate the check-rust-tools-nightly CI job
+>
+> Alex.
+>
+> Alex Benn=C3=A9e (7):
+>   tests/docker: replicate the check-rust-tools-nightly CI job
+>   tests/qtest: don't attempt to clock_step while waiting for virtio ISR
+>   tests/qtest: don't step clock at start of npcm7xx periodic IRQ test
+>   tests/qtest: simplify qtest_process_inbuf
+>   tests/qtest: rename qtest_send_prefix and roll-up into qtest_send
+>   tests/qtest: tighten up the checks on clock_step
+>   Revert "util/timer: avoid deadlock when shutting down"
+>
+>  include/system/qtest.h                 |  1 -
+>  hw/ppc/spapr_rtas.c                    |  1 -
+>  hw/riscv/riscv_hart.c                  |  1 -
+>  system/qtest.c                         | 53 +++++++++-----------------
+>  tests/qtest/libqos/virtio-pci-modern.c |  6 +--
+>  tests/qtest/libqos/virtio-pci.c        |  6 +--
+>  tests/qtest/npcm7xx_timer-test.c       |  1 -
+>  util/qemu-timer.c                      | 16 ++------
+>  tests/docker/Makefile.include          |  3 ++
+>  tests/docker/test-rust                 | 21 ++++++++++
+>  10 files changed, 48 insertions(+), 61 deletions(-)
+>  create mode 100755 tests/docker/test-rust
 
-diff --git a/rust/hw/char/pl011/src/device.rs b/rust/hw/char/pl011/src/device.rs
-index c64af2684b7d..c95ab49fd62e 100644
---- a/rust/hw/char/pl011/src/device.rs
-+++ b/rust/hw/char/pl011/src/device.rs
-@@ -9,12 +9,19 @@
- };
- 
- use qemu_api::{
--    bindings::{self, *},
-+    bindings::{
-+        error_fatal, hwaddr, memory_region_init_io, qdev_init_clock_in, qdev_new,
-+        qdev_prop_set_chr, qemu_chr_fe_ioctl, qemu_chr_fe_set_handlers, qemu_chr_fe_write_all,
-+        qemu_irq, sysbus_connect_irq, sysbus_mmio_map, sysbus_realize_and_unref, CharBackend,
-+        Chardev, Clock, ClockEvent, MemoryRegion, QEMUChrEvent, CHR_IOCTL_SERIAL_SET_BREAK,
-+    },
-     c_str,
-     irq::InterruptSource,
-     prelude::*,
--    qdev::DeviceImpl,
-+    qdev::{DeviceImpl, DeviceState, Property},
-     qom::{ClassInitImpl, ObjectImpl, ParentField},
-+    sysbus::{SysBusDevice, SysBusDeviceClass},
-+    vmstate::VMStateDescription,
- };
- 
- use crate::{
-@@ -493,7 +500,7 @@ pub fn can_receive(&self) -> bool {
-     }
- 
-     pub fn event(&mut self, event: QEMUChrEvent) {
--        if event == bindings::QEMUChrEvent::CHR_EVENT_BREAK && !self.loopback_enabled() {
-+        if event == QEMUChrEvent::CHR_EVENT_BREAK && !self.loopback_enabled() {
-             self.put_fifo(registers::Data::BREAK.into());
-         }
-     }
--- 
-2.34.1
+Series:
 
+Acked-by: Fabiano Rosas <farosas@suse.de>
 
