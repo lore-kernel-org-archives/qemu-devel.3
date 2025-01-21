@@ -4,205 +4,106 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 86636C0218B
-	for <qemu-devel@archiver.kernel.org>; Tue, 21 Jan 2025 15:25:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 04230C02182
+	for <qemu-devel@archiver.kernel.org>; Tue, 21 Jan 2025 15:32:40 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1taG86-0007H2-L7; Tue, 21 Jan 2025 10:25:28 -0500
+	id 1taGEB-0001pa-EA; Tue, 21 Jan 2025 10:31:47 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jonah.palmer@oracle.com>)
- id 1taG7m-00077C-Ub
- for qemu-devel@nongnu.org; Tue, 21 Jan 2025 10:25:08 -0500
-Received: from mx0b-00069f02.pphosted.com ([205.220.177.32])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jonah.palmer@oracle.com>)
- id 1taG7g-0004qa-DB
- for qemu-devel@nongnu.org; Tue, 21 Jan 2025 10:25:04 -0500
-Received: from pps.filterd (m0246630.ppops.net [127.0.0.1])
- by mx0b-00069f02.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 50LFDw9S000558;
- Tue, 21 Jan 2025 15:24:53 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=oracle.com; h=cc
- :content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=
- corp-2023-11-20; bh=sk9fDSFJxdzPDYv9pkcUhykin+QBoIAt7gYnXz6h0Vw=; b=
- dSEBYrUhqjDBVuJ+x7SWXhS5TgcH7789iEa4jbWMsqkmMF58CSrPt/33DWMSYXqZ
- XP0SO/8OC5vTbdIhCQ1dQBalTPJdthCjG0bUNwxIRY+DvzqQ/k1wF1z5WfVaxQjT
- R4xDtVwm2KvbPij+AWwvkkV6kg9w99Lisv2aXKASQvi3gI9mGD6wl/zKG2Gfokw+
- 7jaSzjqOlHddlTfgU7SFN9ARvQwolvLuMwMcGFus5CK82Sl8lP17Z7K6mI6k81MI
- KViQO2C6HGK795+K4mRjSVpmG21dE5ljFmqICsg94gHlQptQkK0bNiocHiS4+9Xq
- WoSehv53WFUmjd/Lpz6DLQ==
-Received: from phxpaimrmta02.imrmtpd1.prodappphxaev1.oraclevcn.com
- (phxpaimrmta02.appoci.oracle.com [147.154.114.232])
- by mx0b-00069f02.pphosted.com (PPS) with ESMTPS id 4485nsdhry-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Tue, 21 Jan 2025 15:24:52 +0000 (GMT)
-Received: from pps.filterd
- (phxpaimrmta02.imrmtpd1.prodappphxaev1.oraclevcn.com [127.0.0.1])
- by phxpaimrmta02.imrmtpd1.prodappphxaev1.oraclevcn.com (8.18.1.2/8.18.1.2)
- with ESMTP id 50LEUsq8038157; Tue, 21 Jan 2025 15:24:51 GMT
-Received: from nam11-co1-obe.outbound.protection.outlook.com
- (mail-co1nam11lp2173.outbound.protection.outlook.com [104.47.56.173])
- by phxpaimrmta02.imrmtpd1.prodappphxaev1.oraclevcn.com (PPS) with ESMTPS id
- 4491a04d3f-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Tue, 21 Jan 2025 15:24:51 +0000
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=N+TSdkECIBXE8MMhp6B+j7wx+daQhBGXvc5CeyJTHiQog6U4FdimwO9F8oS4t29aEFe7QT3/DkEI2udENW/Aeo2XmQsD/I6mVLNfCF2qKfcpCqW+P2e739Mk+LCM4mUmoBjZt3L6aYJsg1IO1/syblPj1FZ5VdCOSiQS0OtcFc0KcWnKG4UH65rKKDHUoALlloll1MhcK2n8stzfIDPvOGIgaWBn5Cd0NmIoPjMz8xQ1XqKuvQG98sMHJpyAvfpSCYcHaL9FHkQmNKpsf1yM/vw+O9dDEKY019G9kQocCo2alcQu3kHGIOud/FuR28qbrMn1ggc+dDv3u1tPa8swjw==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=sk9fDSFJxdzPDYv9pkcUhykin+QBoIAt7gYnXz6h0Vw=;
- b=u7zkniOssNIRfAJgeg5VCx+EyGijvVOpLT6gW/p3Zha3XZ4KvdmAC5iqsHMsLD5v6VWkb/B3h/dMjd2Tj9j1MH3wvnNeydCco9i8sE5sjcfK0Vk8jGj0PFYq6mm5j6XcmBDQu1MQWI1gVuHhHFFA4JAHl7GMuC5wN0kILo6lLWqBbrAlbmfeAzsiq7eW5Jh4fHuE2r7SMVqT+OdkHBw/eTmV66EuQ9/JiLRtFfQ8K0oFK3f7RnAVDEV66SrbQLXjMVZ/MNOW6BcTyF2hFWNSKvRlmDoYsv01Z/jzGj+CyXDwoxTxJ12eUlwr1fVuQdYzT2rrcdgbkZiXrecfYSFPIA==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=oracle.com; dmarc=pass action=none header.from=oracle.com;
- dkim=pass header.d=oracle.com; arc=none
+ (Exim 4.90_1) (envelope-from <fahhem@fahhem.com>) id 1taGDT-0001l4-1e
+ for qemu-devel@nongnu.org; Tue, 21 Jan 2025 10:31:18 -0500
+Received: from mail-yb1-xb34.google.com ([2607:f8b0:4864:20::b34])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <fahhem@fahhem.com>) id 1taGDO-0006iI-8C
+ for qemu-devel@nongnu.org; Tue, 21 Jan 2025 10:30:56 -0500
+Received: by mail-yb1-xb34.google.com with SMTP id
+ 3f1490d57ef6-e46ebe19368so8311352276.0
+ for <qemu-devel@nongnu.org>; Tue, 21 Jan 2025 07:30:53 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oracle.onmicrosoft.com; s=selector2-oracle-onmicrosoft-com;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=sk9fDSFJxdzPDYv9pkcUhykin+QBoIAt7gYnXz6h0Vw=;
- b=FRhEKnzSq18ZdjqmL00LrZJMCCjncMmrs1kO5OS6JsuY0hdzbCmWfYLl8vPLfKI1CBTvSUiRy/OumxAJk9fVQC/x+NYm3c/x09pKVvfB6ZV+I9TupCXMbbZxurNfz6IltC9ZJHt5NT6xiur9XLdqsYMs+5c6C/wyk5xezVz6N5I=
-Received: from PH0PR10MB4664.namprd10.prod.outlook.com (2603:10b6:510:41::11)
- by MN2PR10MB4205.namprd10.prod.outlook.com (2603:10b6:208:1d3::9)
- with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.8356.21; Tue, 21 Jan
- 2025 15:24:49 +0000
-Received: from PH0PR10MB4664.namprd10.prod.outlook.com
- ([fe80::7635:ba00:5d5:c935]) by PH0PR10MB4664.namprd10.prod.outlook.com
- ([fe80::7635:ba00:5d5:c935%4]) with mapi id 15.20.8356.020; Tue, 21 Jan 2025
- 15:24:49 +0000
-Message-ID: <206d8dad-61a9-47af-a72c-92a7df2367e9@oracle.com>
-Date: Tue, 21 Jan 2025 10:24:47 -0500
-User-Agent: Mozilla Thunderbird
-Subject: Re: [RFC v3 3/5] vhost-vdpa: Implement the GPA->IOVA tree
-To: Eugenio Perez Martin <eperezma@redhat.com>
-Cc: qemu-devel@nongnu.org, mst@redhat.com, leiyang@redhat.com,
- peterx@redhat.com, dtatulea@nvidia.com, jasowang@redhat.com,
- si-wei.liu@oracle.com, boris.ostrovsky@oracle.com
-References: <20250110170837.2747532-1-jonah.palmer@oracle.com>
- <20250110170837.2747532-4-jonah.palmer@oracle.com>
- <CAJaqyWdv+Vh5SVGzqy08J8d0VEHYbYX8CK9YuNGZVpE85fOKKg@mail.gmail.com>
-Content-Language: en-US
-From: Jonah Palmer <jonah.palmer@oracle.com>
-In-Reply-To: <CAJaqyWdv+Vh5SVGzqy08J8d0VEHYbYX8CK9YuNGZVpE85fOKKg@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-X-ClientProxiedBy: BN0PR10CA0005.namprd10.prod.outlook.com
- (2603:10b6:408:143::19) To PH0PR10MB4664.namprd10.prod.outlook.com
- (2603:10b6:510:41::11)
+ d=fahhem.com; s=google; t=1737473453; x=1738078253; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:references:in-reply-to:from
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=EQAiz5YcY3KJs9AqwGd8ALQmMWrxl9M4bx30E1fBZ90=;
+ b=ikDBEpRBhOqDwVurq5M63VXwZ7WRaBpKORp7VZO4iVLzex2OREoUr4yrA3CY2xDKyQ
+ A62LvJwZYwAhiTpyszk2NmrMNK8z1Fr5HrwfsAt4i7He9yy6U6a+kSzDqAghnQAQchx2
+ YcJYbkp4QRGZU5sxiQotjngxVe9QrqycLE7MAUYHo4Y35/Gp0k8KCXehWAxAfpzDnKdM
+ 3Ok5TnaIyEtJkaDeBNANlrpedzTmc8JnZ568O1sTFZJIxaHDsnsMwNfugcam+hidL8IU
+ qDb6OQr9YsACKOsZG/FqX+wIwSeGzfivcV4vZ8HPwKqBA+wJvb9ybtH8Sls4rney5PF9
+ ZVyw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1737473453; x=1738078253;
+ h=cc:to:subject:message-id:date:references:in-reply-to:from
+ :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=EQAiz5YcY3KJs9AqwGd8ALQmMWrxl9M4bx30E1fBZ90=;
+ b=CR/S5R22uXuWVBRuGi+ws0+N1P1YqYVaSAgTr2TGDnjOHY7mtHa7k+M8XMNSh2GzUc
+ tvskcOQ+Q4ynRhzlZ1E0DAB5/g8XztD++bd6bPXkaDYR01YGAsjUDX0h3dVBK7RwLXIX
+ zKyaBGMS1g9IbKNc6UbXrGAVKDtkEFMvZ0yhOrjmRNolAR+s4d37tdad8SdCxttzPh3C
+ N/aHtMFx1Ryoq8lNSSam9S2NvNSX3VGRn/Na63aXG7u8OS4WK5fG38hR9e7bUhl27ain
+ e5TGds3gYconArfNQhQLcMYLDl1zj/VDfZD5zvAIQWOz/T/u9pe15gVDRH74xV0YpTqO
+ bRYA==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCWmqOcDt9PJPoD6YeFiuDY9cw42g6K8AUnjstItsO3z4GY0g74Bo4ay5n1xns+aR56DJlRGJGutg1/K@nongnu.org
+X-Gm-Message-State: AOJu0Yw/ALztX8cFWKodOzxopqXehAgh3uxAnUFoTefWMB287vbpbWFE
+ plVIehozgngezE9iJy9iYtYbwVeJi20yUQC+1DL7MroHjz4vnR9dqOk/4bzFPNfloME6GM3y4Lw
+ =
+X-Gm-Gg: ASbGncvODWgVNOn/Ca2mZR9P04Z81Sg6kmcPRPEbkLPHLWH3KDHb6XEyzuZkpJCjfmK
+ VfVvBpqwCaNHWf5sd39LmYcR9W8YR+x4dwN0UOGm/drTvvadHmlWNzL5V+LhtTZM9n4jKzSJFvS
+ 1CBaiV8oqATlDnmM922wYZANQd+xU6YFFMijstQD0Jfsw1f9BoZZ9BDd+LkidcSad2F+GIsDPqH
+ BlY9OdLfJJ1Ojfq2JogU4PMVh5qFfjtJZP/JbOP2/ikjEgPftArwLwO/nFkZimM4C8xKbuwhNo7
+ JhUIUSbG0ue0wC7hMfx9Fd7NDml5YkR0
+X-Google-Smtp-Source: AGHT+IH8UP1M9mZRESjdQ/b1U8Ydh2fuoLX+TJ97YjKYAgGHLDOUlylGCTamGHimnGm9/Il7Fd2CcA==
+X-Received: by 2002:a05:690c:968b:b0:6f6:d149:d64a with SMTP id
+ 00721157ae682-6f6eb908ca1mr134404447b3.27.1737473452730; 
+ Tue, 21 Jan 2025 07:30:52 -0800 (PST)
+Received: from mail-yb1-f172.google.com (mail-yb1-f172.google.com.
+ [209.85.219.172]) by smtp.gmail.com with ESMTPSA id
+ 00721157ae682-6f6e66d43c5sm17608097b3.82.2025.01.21.07.30.52
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Tue, 21 Jan 2025 07:30:52 -0800 (PST)
+Received: by mail-yb1-f172.google.com with SMTP id
+ 3f1490d57ef6-e46ebe19368so8311293276.0; 
+ Tue, 21 Jan 2025 07:30:52 -0800 (PST)
+X-Forwarded-Encrypted: i=1;
+ AJvYcCVpl0LX6bx6N7wBM3HsaGsy+WUcIJl6qWGC5mbNuFBzCONpEow3oeeK6xqyTBXdwKKJPsoeSG/VlB1X@nongnu.org,
+ AJvYcCWVzzO3OBL3uQMRGLYlYZSQ4h20qjScmtzFXqbeKwagdKguhUaoKmLMNUQ45dqE1Wy4QFFs4NrMgmemXw==@nongnu.org
+X-Received: by 2002:a05:690c:6710:b0:6ef:60f4:3d41 with SMTP id
+ 00721157ae682-6f6eb671c8cmr139427787b3.16.1737473451748; Tue, 21 Jan 2025
+ 07:30:51 -0800 (PST)
+Received: from 281799484056 named unknown by gmailapi.google.com with
+ HTTPREST; Tue, 21 Jan 2025 09:30:51 -0600
+Received: from 281799484056 named unknown by gmailapi.google.com with
+ HTTPREST; Tue, 21 Jan 2025 09:30:51 -0600
 MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: PH0PR10MB4664:EE_|MN2PR10MB4205:EE_
-X-MS-Office365-Filtering-Correlation-Id: 40c469c0-8e77-4a7f-c54e-08dd3a2fbe9e
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0; ARA:13230040|1800799024|376014|366016|10070799003;
-X-Microsoft-Antispam-Message-Info: =?utf-8?B?SW1Fc3ZkaC85U1hyOGZuQ1ZYbXRIYzZMeVA0YzVLTWJyVjMxc0g2cnNpNUZM?=
- =?utf-8?B?cWx1NnRWWFczZk54NGUxVDhiVWF3UWE0TmV2OVNudVBpNEJuRGQ5NE9TVFJ3?=
- =?utf-8?B?ZGJyKy9sNnZiM29MelVCMGZRYkZUc2F3eUVnMUhubU9qK3F4WDNuUmVVaVc2?=
- =?utf-8?B?YW1xS2RXMWU3Rm1YV0ZEakcrZ3YrNFNJVzFVbXMxTXo0SUVUTjkydzRyTlps?=
- =?utf-8?B?cmJIN3hHTEwxUjFXSlBzYVB1ZFdPSlh0UlBpUU0wemt2d2N2SVVtb2RFekdI?=
- =?utf-8?B?L1gvNG1WcnlVSWFGSHdTUHlJSzltcG1SRTF5Vml6S2pzZ2kzZkY1Q1F0RG94?=
- =?utf-8?B?NUZHOWU0VXR4anRnR2kra2NsQVJQTWNpb0NiQTNGM3c4N3dHVlhGbkRnV2JZ?=
- =?utf-8?B?MDBsczBZMjVhaldyd210dXp2N2tZL2x3VUtScy9OMlBRSDBxRmVMUTBGVGtS?=
- =?utf-8?B?VXhmYU1kSXVaUkI5TUNaNGw4THU5WHhTa2ZUcUgxaXRVcUs0MUFSeXFjQXRp?=
- =?utf-8?B?UHNrMEs4Y3VIVWF4aGNUUy8wckYxRTJKSUR5V2M4V3lSMWZvVjN2N3NOWVFu?=
- =?utf-8?B?Zi82VmRqMFpnTGFNWTBHUHNGZiszM1NVSENLVm41NmY3MkdFbURpM1RGclZx?=
- =?utf-8?B?RUlYKy8wM3FUWHV0eGNicm1kT3dKemJxOENMV0JsWWZjT216UmVCdEV0TnA3?=
- =?utf-8?B?Ly8zMTRuUVdhbzJVdVdHNVlJY1ZaWE5CNUc0SXdZY3IwekxvSmhmbmhMQzVn?=
- =?utf-8?B?TFdqUWg0cG8vVmJGdWNONTNPdkZ3N0E1eldIYTFXaGNuOWUyNHNBQU5nOVk0?=
- =?utf-8?B?d2JacG5wY1JoNEgrVlJIeG9MN0trR244NlE4ZnRsSklKS1EyNzdpZ2doNnR4?=
- =?utf-8?B?aUVMWDdPcXRWbjE2SVRzSUg1QnMyMmZXckdWYXFsM0s1TkxYUUUzT00remEw?=
- =?utf-8?B?eG00cTl6cjJsWXBOVCt5RllWcFVhU3VNSXcxZHNXM3J3N0RxVDh2ZjdkemVt?=
- =?utf-8?B?eUp0QWlzM3c2cytnMTJoQWpEZXU5YStuRmdVZVZxUWF2MnZ4Q1dWZjRUU0po?=
- =?utf-8?B?NllQdlA0RVFTRkRZOUhUcUZSZ2tmMHdsNXc4SS9HTUdBT1VKbUhpU0J3TEFw?=
- =?utf-8?B?TUtLNTFYYkNtMGo1UXJkcUFtTFZld3gwMU04OFA0N29WbzJ3NFdnSWVQZ2Uy?=
- =?utf-8?B?WHRVakZDUXFZWFpIam9NeGlwZ2RpSGhOb3RTVFc2SGZ4UEdzRzFBYWYzMXpS?=
- =?utf-8?B?TnhlcmZmQmJPTXFmcml4cUFNTVFSVFpUWUNVSW5PQmkwOEdXeTJjZEcwUEx2?=
- =?utf-8?B?c01JcTM2REdaTmh3MEVhWFUwQ3A1a08zamlxQzFKLzhvbi9SMEFNREpZNERL?=
- =?utf-8?B?eDZoWWtGQ2R0emx4VEgyVldpeWR5MEU3SjlNQTVEN0VaSWlmMlhwV1dNNkQ3?=
- =?utf-8?B?c3pJTlkyNWhFcThUaURQK211WXM2ZCtMUm1SUTNNRkhFd080QnlYdWs5Z2xm?=
- =?utf-8?B?Yko1UzBNaHBFbjV0NlR0SjFkaFlpalY3VXFDSlc3NzNZYUFhR1ZxeXo0M3Vi?=
- =?utf-8?B?ZVB1Y29aMVo5c0htYjFFRERTYXVSSGpkM2pGR25PeEpLYjhLM3JHMkxHWTFk?=
- =?utf-8?B?d0JDNW5TbkVPci8zZE5vaGRsQi9NWG1uS1FmYVB1R0pXMmkwTE03a0o0THo5?=
- =?utf-8?B?QjJJa3ZESzBDeTVzUGZYYjhMbitEaEV2S2NyL3hXMTd1RlJxK2NwWDJMamlM?=
- =?utf-8?B?WGxiUFFwN3JxOENXMDd1bVNaZEFJVExSY2ZrVzBzTm1wcmpBRXc0ZytXYnpq?=
- =?utf-8?B?a3ZHOFNKVzVlSllrVVUxc1B2cFlPeEJUS0dHbFNNV1hjV2hkZEYzMTlwUDcr?=
- =?utf-8?Q?9T2A2iFs+zeeX?=
-X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:PH0PR10MB4664.namprd10.prod.outlook.com; PTR:; CAT:NONE;
- SFS:(13230040)(1800799024)(376014)(366016)(10070799003); DIR:OUT; SFP:1101; 
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?NjZHWVRpcE9BVXE2RlovNUZyZlBBQlVIQ0lwSncxTGhKNUdNQVdkclI5U05U?=
- =?utf-8?B?LzZVekZSM3c1WnUvbTQ0cG9iWURPMzI5NFpOV2RDZlYwZTlqZHNqNGY4MDJm?=
- =?utf-8?B?UjV5dklrNnF5SjVnWVVCY1BNU29xRk1XYllpVEdVV2Jpc3NnYTlMZVh2cnF5?=
- =?utf-8?B?UTRrM0tiREhMZnRHZC9mcWQ1WlhOOWNnUm5FNURMdk5qVHZYeFc1WXZJUUMx?=
- =?utf-8?B?SmhsWi9VUkoweFduaW1hMitmWGpOWm9wMDZOTnF3VmNIWnd2S09HRzU0RUoz?=
- =?utf-8?B?WmpieFhGRE15ekVBOVhhUTJVZE1LMDJ3b2svS1R1NEtyYk9ZdFFudTdncWhH?=
- =?utf-8?B?UGJia2FVajc0LzVHV3MzSFYyUkVUVnRmaWlucDhnSE9KT1FVWW5RSzdyM1JY?=
- =?utf-8?B?TXBGRldtbmUxd2NtVWhqNXpVVWNsSE9GMTdIMnczMUNjYUtWY01xOGRsdDcv?=
- =?utf-8?B?OE41LzFQMGl6QXA3VUMrTFVzUG5hUWQxVzVUdHNyS2hHS2RMSTRCQlJCS3Z0?=
- =?utf-8?B?a0pVSWxiNDUra09jbElndGlWdGg5d2FVMTNmaW1UckdCbzkrK1dpQnN2MUJs?=
- =?utf-8?B?RUxHK0IrNUIxdUsvK2duNXhWc2Y5d2hRYzBUQjB4NWxqc1BzSFRXTVllSXRk?=
- =?utf-8?B?S0JKelcvYmJsclpGN3FPdkFtRXE1azBldWd2a1VHY3IzR3R3TDRYMEJwU3Br?=
- =?utf-8?B?amZCSlNaNkdzWFdkcCsrRGdlcUNDNnp0ZjZuSXpac0g5bndnZmViVk5STDFJ?=
- =?utf-8?B?bCtOUjBTTjdFbXVEakNpUERSTndnTkNsRVlFd1ZNMmlOaWdpM2ErT3BmQVpN?=
- =?utf-8?B?dEtXczdmRGFCNWszaXl3QXNObVZRMklaS2Q4Ymh0TlRlQ2ZaQzlLdVc1N2VX?=
- =?utf-8?B?bER1NHVHei9sT0Z6cFFCVDM3SHpPb092NTN3UUtDWEtMSlFQTmJ6QzRCa2o2?=
- =?utf-8?B?SENtQWtnV2R4VWZnTnZFKzZzYVR2dERoQWpZbWMwTmtWS2tubVd0Wmx1TzB0?=
- =?utf-8?B?bHdBckhpZW9WRXlJSXF2TnppZXZUR01Ndy9RQVowaGZOOHVoWU1NZGdRV0ty?=
- =?utf-8?B?VEE5RWtPN0NndWRqNmlydEJDd3Q2T3F6NnBFcXlkWnlGYVBtN1RFTjB3UGww?=
- =?utf-8?B?N0RCUlVaOWdCaFRpdXVZWVlkSktRZVd3bGhUVlFOdWRpVkZrR3hMZkk5VDN3?=
- =?utf-8?B?YjBOY20rNlEwNC9BRkZIeCtpWERTR3YrUGRxMGk1aEpMdnkxdHAvaVFmblQz?=
- =?utf-8?B?MktjZEhtcVR3NWovMXo0akdMMEhSa3hYM2hXVGFVVkxaSThsazZFaUtrejRS?=
- =?utf-8?B?eXdZakVtcDhKRm9ZUzhKY0dGNVBaYStkeTVDaG5vNkl1K3h5K01hZlNWZkFI?=
- =?utf-8?B?VEkzUkIxYVg5eE9kK0dtZmFtaE1xL2hVMk5BRXYzSDV3NTA5ci8vRjRxeUkv?=
- =?utf-8?B?NGNGQmpwZUVZejYyYVJrdGhESE54NHJVOTB6V0p0cTdYMGNOZXdJM3NUcjNW?=
- =?utf-8?B?NFY3RUl3R21pcWlQZmVLa1VVeDgrVmQ0UXAvM2R0WWw1Zyt4cDBQd3RaVDRq?=
- =?utf-8?B?K1V1aXBtTWhiWWJ5bTRkcDA0aU9QS25haHZJb0svSXA0TXRmODNGUGY0TzBz?=
- =?utf-8?B?U2hWaVVqeUJLaml1RUNMQm1ZQVZ1ZjdkVFptZUZuNlBnNmNnNlZYTUpXT1pv?=
- =?utf-8?B?b2JNSkhJUTgrU3lCVE9ldDhrSXpRbmtsOHBxd00xOHpKM0sxOVp1QlRna0Y1?=
- =?utf-8?B?d2E2cmp2Y2RBZGkra2lWM0VvRE5lK2xwYXFZSHhEV2dEMTNXT0xzV1BiMFMz?=
- =?utf-8?B?aEk3MjhHU29Hc2c3RXdjNE1qUjVrYnhnMUUvQjlubjZwcnIvUlRRS0ZXdGZj?=
- =?utf-8?B?bzBJUkJjNXFVdE85eURxcll6Wm9SNUdEcnZWMUQ0YnU2WG94R010N3FYL1B0?=
- =?utf-8?B?NzJzQ1N3cTBlQTFqUmh5dWVOV3NBM1QyTVJjdW1OdW5XTDJKekZLY3pkblRx?=
- =?utf-8?B?QTdRYXVBU0JTVVFKTXZsbS9KTXZLZ1RpZ1VBRGcyUDc3M3VEcWRBTm9pcFRj?=
- =?utf-8?B?Y3lHeEJkNlJHOUdsdGR4by9WeDV5R1U1S3RtNnZPQnpPeThpaUJRc2VQVHNV?=
- =?utf-8?B?WmtERzZjQlVFKyt6cVRWZC9WWUExMlM0aUVXSGpKaUtBQ2Z4TFJMaTkyVVRt?=
- =?utf-8?Q?prtBFzCrp2aIeKrI0N9mR5s=3D?=
-X-MS-Exchange-AntiSpam-ExternalHop-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-ExternalHop-MessageData-0: ydb1s0jd09mjBF4gG31HDn9+aUUo0FqLUUzX2oymozAJ74C3eSvvkuYarOpXezESJCwsveH6+Kp9P10uPgZNygSlusX4hpDcxLjxiqFY6QTYI4CxAOYYORiu1zUSbr54aRHmhNl5VdeVkozu/gU1uxXpnzZjzCOkEsOG1DtZuVCJg98aCtlvQLYrnft95cOdsXJvGleLBAvZpsrnezJitprrC5NKQresACrRSqQthRtVg7BUC7tCxUadzN8iTnFY7p+UndlwYVnnrSkXtcvjRQO6WATm1XgfbhTAKdf0kNNWBSCrZNRuOT+Gk4tG9giHOK41eHhkCQAqD0YddFsNbeoxhDvVKPjzHIB7idDcM5GfM+JAL2iUcW1JFLws46rxXweENsOuKsBkhXrISZ/FVlJaB637LcuBRTi/VVQ7J7urMu+QV0qTpVPtzuTMr6j4d5vHGMGlC17FkDQLva73ZWpPLHvNatgcMpzyya22laLc7sbARtvnJHoVRTM2UDM7ymJnWJt4GqARUZfNwVpI2W92XSGlW/6l9V+zqLwqVvATZ+5mhdkvfNZtlsIWPqckqKrfeSVJ70nRhXJfQ8XrtpzAyPF2KMwc6N5TNOkmiqA=
-X-OriginatorOrg: oracle.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 40c469c0-8e77-4a7f-c54e-08dd3a2fbe9e
-X-MS-Exchange-CrossTenant-AuthSource: PH0PR10MB4664.namprd10.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 21 Jan 2025 15:24:49.3771 (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 4e2c6054-71cb-48f1-bd6c-3a9705aca71b
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: Irvb0x+MhRWO1D/XB59MjNwolqvl8YPOYArSofsadBRARgLSsO1JMnIC/u+WuAVOvTRGSWg11F/rjmyvnHe3dw==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: MN2PR10MB4205
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1057,Hydra:6.0.680,FMLib:17.12.68.34
- definitions=2025-01-21_06,2025-01-21_03,2024-11-22_01
-X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 spamscore=0
- mlxlogscore=999
- suspectscore=0 phishscore=0 bulkscore=0 mlxscore=0 malwarescore=0
- adultscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2411120000 definitions=main-2501210125
-X-Proofpoint-GUID: WfOfKXTb8QyjkxF6Ksj-65EG-zibSCx0
-X-Proofpoint-ORIG-GUID: WfOfKXTb8QyjkxF6Ksj-65EG-zibSCx0
-Received-SPF: pass client-ip=205.220.177.32;
- envelope-from=jonah.palmer@oracle.com; helo=mx0b-00069f02.pphosted.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
+From: Fahrzin Hemmati <fahhem@fahhem.com>
+X-Shortwave-Message-Id: m-da9bb14d-1174-4a41-93a8-d9a34771ab32
+In-Reply-To: <Z4-HlVbF2gRAgi86@redhat.com>
+References: <20250120103711.836753-1-fahhem@fahhem.com>
+ <Z45ANK-m2XZazDi3@redhat.com>
+ <CAHJ_xmW3YCrKEpNGBJxRzqM99Aoe=nwOSJWF+BO5VbySP9763g@mail.gmail.com>
+ <b3e7b218-66eb-4d5f-b9ed-6a20dbca2a8a@tls.msk.ru>
+ <CAHJ_xmVDZ159ixki4qpvOMdA1zLpwSkVnB_ukx_EfW1ve0o=+A@mail.gmail.com>
+ <Z4-HlVbF2gRAgi86@redhat.com>
+Date: Tue, 21 Jan 2025 09:30:51 -0600
+X-Gmail-Original-Message-ID: <CAHJ_xmWn=86TBwKhG3Krp2JSfY+H3UOxHaq_JU5YfcxuQuNbfg@mail.gmail.com>
+X-Gm-Features: AbW1kvb-rqPAcDk-jagIDdtY8mpAj64T9Giv3Yd_UV1DtqsfPX_K6Y2YKjCTUQ0
+Message-ID: <CAHJ_xmWn=86TBwKhG3Krp2JSfY+H3UOxHaq_JU5YfcxuQuNbfg@mail.gmail.com>
+Subject: Re: [PATCH] Skip resizing image to the same size
+To: Kevin Wolf <kwolf@redhat.com>
+Cc: Michael Tokarev <mjt@tls.msk.ru>, qemu-devel@nongnu.org,
+ Hanna Reitz <hreitz@redhat.com>, qemu-block@nongnu.org
+Content-Type: multipart/alternative; boundary="000000000000e5fe3f062c390fd9"
+Received-SPF: none client-ip=2607:f8b0:4864:20::b34;
+ envelope-from=fahhem@fahhem.com; helo=mail-yb1-xb34.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, HTML_MESSAGE=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_NONE=0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -218,339 +119,173 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+--000000000000e5fe3f062c390fd9
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+
+I'm running packer, and with a qcow2 source image sized at 75000MB (but
+only 5GB on disk) when it runs "qemu-img resize ... 75000MB" it takes about
+10 seconds on my system. I guess it's not reading the whole disk since me
+nvme isn't that fast, but it's a non-trivial amount of work. It also runs a
+qemu-img convert call (again, from qcow2 to qcow2) that seems more like a
+cp, and that takes the same 10 seconds on my system.
+
+On Tue Jan 21, 2025, 11:40 AM GMT, Kevin Wolf <kwolf@redhat.com> wrote:
+
+Am 20.01.2025 um 23:21 hat Fahrzin Hemmati geschrieben:
+
+Happy to wait until your patchset is in.
+
+Yes, this is a no-op, but it reads the entire disk image to perform that
+no-op, so this is merely a time-saving improvement, not a behavior change.
 
 
-On 1/16/25 2:00 PM, Eugenio Perez Martin wrote:
-> On Fri, Jan 10, 2025 at 6:09 PM Jonah Palmer <jonah.palmer@oracle.com> wrote:
->>
->> Implements the GPA->IOVA tree for handling mapping and unmapping for
->> guest memory. This, alongside the SVQ IOVA->HVA tree & IOVA-only tree
->> implemented in the previous patches, allows us to handle guest and
->> host-only memory mapping operations separately via their own respective
->> trees.
->>
->> The next patches will implement a method to determine if an incomming
-> 
-> s/incomming/incoming/ (credits to google syntax highlight actually :) )
-> 
+Can you give more context on what exactly you're doing that it reads the
+entire disk image just to resize it? This sounds completely unexpected
+and if it does, there may be a different problem to be solved.
 
-Whoops! Good catch. Maybe I should add a spellchecker plugin to my Vim 
-configuration haha.
+In my test, for a raw image, I see a single ftruncate() call, which is
+unnecessary, but shouldn't cause any measurable time difference for the
+qemu-img run. qcow2 has a little more code in QEMU to figure out that
+there is nothing to do, but it doesn't involve any syscall and certainly
+not reading the whole image.
 
->> address for translation is backed by guest or host-only memory.
->>
->> Signed-off-by: Jonah Palmer <jonah.palmer@oracle.com>
->> ---
->>   hw/virtio/vhost-iova-tree.c | 50 +++++++++++++++++++++++++++++++++++++
->>   hw/virtio/vhost-iova-tree.h |  4 +++
->>   hw/virtio/vhost-vdpa.c      | 22 ++++++++++------
->>   include/qemu/iova-tree.h    | 22 ++++++++++++++++
->>   util/iova-tree.c            | 46 ++++++++++++++++++++++++++++++++++
->>   5 files changed, 136 insertions(+), 8 deletions(-)
->>
->> diff --git a/hw/virtio/vhost-iova-tree.c b/hw/virtio/vhost-iova-tree.c
->> index f6a5694857..540bc35660 100644
->> --- a/hw/virtio/vhost-iova-tree.c
->> +++ b/hw/virtio/vhost-iova-tree.c
->> @@ -31,6 +31,9 @@ struct VhostIOVATree {
->>
->>       /* Allocated IOVA addresses */
->>       IOVATree *iova_map;
->> +
->> +    /* GPA to IOVA address memory maps */
->> +    IOVATree *gpa_iova_map;
->>   };
->>
->>   /**
->> @@ -48,6 +51,7 @@ VhostIOVATree *vhost_iova_tree_new(hwaddr iova_first, hwaddr iova_last)
->>
->>       tree->iova_taddr_map = iova_tree_new();
->>       tree->iova_map = iova_tree_new();
->> +    tree->gpa_iova_map = gpa_tree_new();
->>       return tree;
->>   }
->>
->> @@ -58,6 +62,7 @@ void vhost_iova_tree_delete(VhostIOVATree *iova_tree)
->>   {
->>       iova_tree_destroy(iova_tree->iova_taddr_map);
->>       iova_tree_destroy(iova_tree->iova_map);
->> +    iova_tree_destroy(iova_tree->gpa_iova_map);
->>       g_free(iova_tree);
->>   }
->>
->> @@ -134,3 +139,48 @@ int vhost_iova_tree_insert(VhostIOVATree *iova_tree, DMAMap *map)
->>
->>       return iova_tree_insert(iova_tree->iova_taddr_map, map);
->>   }
->> +
->> +/** Insert a new GPA->IOVA mapping to the GPA->IOVA tree
->> + *
->> + * @iova_tree: The VhostIOVATree
->> + * @map: The GPA->IOVA mapping
->> + *
->> + * Returns:
->> + * - IOVA_OK if the map fits in the container
->> + * - IOVA_ERR_INVALID if the map does not make sense (e.g. size overflow)
->> + * - IOVA_ERR_OVERLAP if the GPA range overlaps with an existing range
->> + */
->> +int vhost_iova_tree_insert_gpa(VhostIOVATree *iova_tree, DMAMap *map)
->> +{
->> +    if (map->iova + map->size < map->iova || map->perm == IOMMU_NONE) {
->> +        return IOVA_ERR_INVALID;
->> +    }
->> +
->> +    return gpa_tree_insert(iova_tree->gpa_iova_map, map);
->> +}
->> +
->> +/**
->> + * Find the IOVA address stored from a guest memory address (GPA)
->> + *
->> + * @tree: The VhostIOVATree
->> + * @map: The map with the guest memory address
->> + *
->> + * Returns the stored GPA->IOVA mapping, or NULL if not found.
->> + */
->> +const DMAMap *vhost_iova_tree_find_gpa(const VhostIOVATree *tree,
->> +                                       const DMAMap *map)
->> +{
->> +    return iova_tree_find_iova(tree->gpa_iova_map, map);
->> +}
->> +
->> +/**
->> + * Remove existing mappings from the GPA->IOVA & IOVA trees
->> + *
->> + * @iova_tree: The VhostIOVATree
->> + * @map: The guest memory address map to remove
->> + */
->> +void vhost_iova_tree_remove_gpa(VhostIOVATree *iova_tree, DMAMap map)
->> +{
->> +    iova_tree_remove(iova_tree->gpa_iova_map, map);
->> +    iova_tree_remove(iova_tree->iova_map, map);
->> +}
->> diff --git a/hw/virtio/vhost-iova-tree.h b/hw/virtio/vhost-iova-tree.h
->> index 8bf7b64786..3e3dcd04fe 100644
->> --- a/hw/virtio/vhost-iova-tree.h
->> +++ b/hw/virtio/vhost-iova-tree.h
->> @@ -24,5 +24,9 @@ const DMAMap *vhost_iova_tree_find_iova(const VhostIOVATree *iova_tree,
->>   int vhost_iova_tree_map_alloc(VhostIOVATree *iova_tree, DMAMap *map);
->>   void vhost_iova_tree_remove(VhostIOVATree *iova_tree, DMAMap map);
->>   int vhost_iova_tree_insert(VhostIOVATree *iova_tree, DMAMap *map);
->> +int vhost_iova_tree_insert_gpa(VhostIOVATree *iova_tree, DMAMap *map);
->> +const DMAMap *vhost_iova_tree_find_gpa(const VhostIOVATree *iova_tree,
->> +                                       const DMAMap *map);
->> +void vhost_iova_tree_remove_gpa(VhostIOVATree *iova_tree, DMAMap map);
->>
->>   #endif
->> diff --git a/hw/virtio/vhost-vdpa.c b/hw/virtio/vhost-vdpa.c
->> index f5803f35f4..8587f3f6c8 100644
->> --- a/hw/virtio/vhost-vdpa.c
->> +++ b/hw/virtio/vhost-vdpa.c
->> @@ -361,10 +361,10 @@ static void vhost_vdpa_listener_region_add(MemoryListener *listener,
->>       if (s->shadow_data) {
->>           int r;
->>
->> -        mem_region.translated_addr = (hwaddr)(uintptr_t)vaddr,
->>           mem_region.size = int128_get64(llsize) - 1,
->>           mem_region.perm = IOMMU_ACCESS_FLAG(true, section->readonly),
->>
->> +        /* Allocate an IOVA range in the IOVA tree */
->>           r = vhost_iova_tree_map_alloc(s->iova_tree, &mem_region);
->>           if (unlikely(r != IOVA_OK)) {
->>               error_report("Can't allocate a mapping (%d)", r);
->> @@ -372,6 +372,14 @@ static void vhost_vdpa_listener_region_add(MemoryListener *listener,
->>           }
->>
->>           iova = mem_region.iova;
->> +        mem_region.translated_addr = section->offset_within_address_space;
->> +
->> +        /* Add GPA->IOVA mapping to the GPA->IOVA tree */
->> +        r = vhost_iova_tree_insert_gpa(s->iova_tree, &mem_region);
->> +        if (unlikely(r != IOVA_OK)) {
->> +            error_report("Can't add listener region mapping (%d)", r);
->> +            goto fail_map;
->> +        }
-> 
-> If we want to make the two disjoint trees, we need to make the
-> previous commits working. I mean, either insert hva and then switch to
-> gpa here, or merge patches, or something similar. Otherwise, bisection
-> breaks.
-> 
-> 
+Kevin
 
-Gotcha. In the future I'll be more careful and make sure individual 
-patches in a series actually work. My apologies.
+On Mon Jan 20, 2025, 09:49 PM GMT, Michael Tokarev <mjt@tls.msk.ru> wrote:
 
-Will fix this in the next series.
+20.01.2025 23:17, Fahrzin Hemmati wrote:
 
->>       }
->>
->>       vhost_vdpa_iotlb_batch_begin_once(s);
->> @@ -386,7 +394,7 @@ static void vhost_vdpa_listener_region_add(MemoryListener *listener,
->>
->>   fail_map:
->>       if (s->shadow_data) {
->> -        vhost_iova_tree_remove(s->iova_tree, mem_region);
->> +        vhost_iova_tree_remove_gpa(s->iova_tree, mem_region);
->>       }
->>
->>   fail:
->> @@ -440,21 +448,19 @@ static void vhost_vdpa_listener_region_del(MemoryListener *listener,
->>
->>       if (s->shadow_data) {
->>           const DMAMap *result;
->> -        const void *vaddr = memory_region_get_ram_ptr(section->mr) +
->> -            section->offset_within_region +
->> -            (iova - section->offset_within_address_space);
->>           DMAMap mem_region = {
->> -            .translated_addr = (hwaddr)(uintptr_t)vaddr,
->> +            .translated_addr = section->offset_within_address_space,
->>               .size = int128_get64(llsize) - 1,
->>           };
->>
->> -        result = vhost_iova_tree_find_iova(s->iova_tree, &mem_region);
->> +        /* Search the GPA->IOVA tree */
->> +        result = vhost_iova_tree_find_gpa(s->iova_tree, &mem_region);
->>           if (!result) {
->>               /* The memory listener map wasn't mapped */
->>               return;
->>           }
->>           iova = result->iova;
->> -        vhost_iova_tree_remove(s->iova_tree, *result);
->> +        vhost_iova_tree_remove_gpa(s->iova_tree, *result);
->>       }
->>       vhost_vdpa_iotlb_batch_begin_once(s);
->>       /*
->> diff --git a/include/qemu/iova-tree.h b/include/qemu/iova-tree.h
->> index 44a45931d5..8467912a0b 100644
->> --- a/include/qemu/iova-tree.h
->> +++ b/include/qemu/iova-tree.h
->> @@ -40,6 +40,15 @@ typedef struct DMAMap {
->>   } QEMU_PACKED DMAMap;
->>   typedef gboolean (*iova_tree_iterator)(DMAMap *map);
->>
->> +/**
->> + * gpa_tree_new:
->> + *
->> + * Create a new GPA->IOVA tree.
->> + *
->> + * Returns: the tree pointer on success, or NULL otherwise.
->> + */
->> +IOVATree *gpa_tree_new(void);
->> +
->>   /**
->>    * iova_tree_new:
->>    *
->> @@ -49,6 +58,19 @@ typedef gboolean (*iova_tree_iterator)(DMAMap *map);
->>    */
->>   IOVATree *iova_tree_new(void);
->>
->> +/**
->> + * gpa_tree_insert:
->> + *
->> + * @tree: The GPA->IOVA tree we're inserting the mapping to
->> + * @map: The GPA->IOVA mapping to insert
->> + *
->> + * Inserts a GPA range to the GPA->IOVA tree. If there are overlapped
->> + * ranges, IOVA_ERR_OVERLAP will be returned.
->> + *
->> + * Return: 0 if successful, < 0 otherwise.
->> + */
->> +int gpa_tree_insert(IOVATree *tree, const DMAMap *map);
->> +
->>   /**
->>    * iova_tree_insert:
->>    *
->> diff --git a/util/iova-tree.c b/util/iova-tree.c
->> index 06295e2755..f45e63c3de 100644
->> --- a/util/iova-tree.c
->> +++ b/util/iova-tree.c
->> @@ -55,6 +55,22 @@ static void iova_tree_alloc_args_iterate(struct IOVATreeAllocArgs *args,
->>       args->this = next;
->>   }
->>
->> +static int gpa_tree_compare(gconstpointer a, gconstpointer b, gpointer data)
->> +{
->> +    const DMAMap *m1 = a, *m2 = b;
->> +
->> +    if (m1->translated_addr > m2->translated_addr + m2->size) {
->> +        return 1;
->> +    }
->> +
->> +    if (m1->translated_addr + m1->size < m2->translated_addr) {
->> +        return -1;
->> +    }
->> +
->> +    /* Overlapped */
->> +    return 0;
->> +}
->> +
->>   static int iova_tree_compare(gconstpointer a, gconstpointer b, gpointer data)
->>   {
->>       const DMAMap *m1 = a, *m2 = b;
->> @@ -71,6 +87,15 @@ static int iova_tree_compare(gconstpointer a, gconstpointer b, gpointer data)
->>       return 0;
->>   }
->>
->> +IOVATree *gpa_tree_new(void)
->> +{
->> +    IOVATree *gpa_tree = g_new0(IOVATree, 1);
->> +
->> +    gpa_tree->tree = g_tree_new_full(gpa_tree_compare, NULL, g_free, NULL);
->> +
->> +    return gpa_tree;
->> +}
->> +
->>   IOVATree *iova_tree_new(void)
->>   {
->>       IOVATree *iova_tree = g_new0(IOVATree, 1);
->> @@ -121,6 +146,27 @@ static inline void iova_tree_insert_internal(GTree *gtree, DMAMap *range)
->>       g_tree_insert(gtree, range, range);
->>   }
->>
->> +int gpa_tree_insert(IOVATree *tree, const DMAMap *map)
->> +{
->> +    DMAMap *new;
->> +
->> +    if (map->translated_addr + map->size < map->translated_addr ||
->> +        map->perm == IOMMU_NONE) {
->> +        return IOVA_ERR_INVALID;
->> +    }
->> +
->> +    /* We don't allow inserting ranges that overlap with existing ones */
->> +    if (iova_tree_find(tree,map)) {
->> +        return IOVA_ERR_OVERLAP;
->> +    }
->> +
->> +    new = g_new0(DMAMap, 1);
->> +    memcpy(new, map, sizeof(*new));
->> +    iova_tree_insert_internal(tree->tree, new);
->> +
->> +    return IOVA_OK;
->> +}
->> +
-> 
-> I'm missing the advantage of using all of these functions, why not use
-> another iova_tree_new and iova_tree_insert? gpa_tree_compare seems
-> like a 1:1 copy of iova_tree_compare to me. Same with _insert.
-> 
+My apologies, I saw the Signed-off-by requirement at first, but as I
+followed the docs I got to "git publish" and didn't realize "git publish"
+was
+actually able to send emails on my system (I don't remember setting up any
+SMTP settings). By that time, I forgot and thought this patch was short
+enough to not warrant much of a commit message.
 
-It's mainly due to how the GPA tree is configured. That is, GPA->IOVA 
-(or translated_addr->iova).
+The main practical advantage is for users that call "qemu-img resize" via
+scripts or other systems (like Packer in my case) that don't check the
+image
+size ahead of time. I can upstream this change into them (by using
+"qemu-img info =E2=80=94output=3Djson ...") but I figured it would be usefu=
+l to more
+users here.
 
-The existing functions assume the configuration of the tree to be
-iova->translated_addr (e.g. IOVA->HVA).
+This could trivially be added to block/io.c:bdrv_co_truncate(), as well as
+blockdev.c:qmp_block_resize() with a little more work. I'm not familiar
+with those workflows, but if needed I can do that as well.
 
-I think I could still use the existing functions but then it'd have to 
-be a IOVA->GPA tree, else a GPA->IOVA tree would mean DMAMap map->iova 
-== GPA and map->translated_addr == IOVA, which obviously would cause 
-confusion for the API users.
+Here's the new patch:
 
->>   int iova_tree_insert(IOVATree *tree, const DMAMap *map)
->>   {
->>       DMAMap *new;
->> --
->> 2.43.5
+From 17f5c5f03d930c4816b92b97e0e54db0725d7b94 Mon Sep 17 00:00:00 2001
+From: Fahrzin Hemmati <fahhem@fahhem.com <mailto:fahhem@fahhem.com>>
+Date: Mon, 20 Jan 2025 01:56:24 -0800
+Subject: [PATCH] Skip resizing image to the same size
+
+Higher-level software, such as Packer, blindly call "qemu-img resize"
+even when the size is the same. This change can be pushed to those
+users, but it's very cheap to check and can save many other users more
+time here.
+
+Signed-off-by: Fahrzin Hemmati <fahhem@fahhem.com <mailto:fahhem@fahhem.com
 >>
-> 
+---
+qemu-img.c | 6 ++++++
+tests/qemu-iotests/061 | 8 ++++++++
+tests/qemu-iotests/061.out | 9 +++++++++
+3 files changed, 23 insertions(+)
 
+diff --git a/qemu-img.c b/qemu-img.c
+index 2f2fac90e8..3345c4e63f 100644
+--- a/qemu-img.c
++++ b/qemu-img.c
+@@ -4184,6 +4184,12 @@ static int img_resize(int argc, char **argv)
+goto out;
+}
+
++ if (total_size =3D=3D current_size) {
++ qprintf(quiet, "Image already has the desired size.\n");
++ ret =3D 0;
++ goto out;
++ }
+
+
+
+I don't think this is necessary: the actual operation is a no-op
+anyway, there's no need to special-case it.
+
+Please also refrain from changing qemu-img until my refresh
+patchset is either accepted or rejected. It was a large work
+and it'd be sad to lose it.
+
+Thanks,
+
+/mjt
+
+--000000000000e5fe3f062c390fd9
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+
+<html><body><div><div><span>I&#39;m running packer, and with a qcow2 source=
+ image sized at 75000MB (but only 5GB on disk) when it runs &quot;qemu-img =
+resize ... 75000MB&quot; it takes about 10 seconds on my system. I guess it=
+&#39;s not reading the whole disk since me nvme isn&#39;t that fast, but it=
+&#39;s a non-trivial amount of work. It also runs a qemu-img convert call (=
+again, from qcow2 to qcow2) that seems more like a cp, and that takes the s=
+ame 10 seconds on my system. </span></div></div><br><div><div>On Tue Jan 21=
+, 2025, 11:40 AM GMT, <a href=3D"mailto:kwolf@redhat.com">Kevin Wolf</a> wr=
+ote:<br></div><blockquote style=3D"margin:0 0 0 4pt;padding-left:4pt;border=
+-left:1px solid #ccc"><div style=3D"color:#212121;font-size:14px;font-weigh=
+t:normal;line-height:20px">Am 20.01.2025 um 23:21 hat Fahrzin Hemmati gesch=
+rieben:<blockquote>Happy to wait until your patchset is in.<br><br>Yes, thi=
+s is a no-op, but it reads the entire disk image to perform that<br>no-op, =
+so this is merely a time-saving improvement, not a behavior change.</blockq=
+uote><br>Can you give more context on what exactly you&#39;re doing that it=
+ reads the<br>entire disk image just to resize it? This sounds completely u=
+nexpected<br>and if it does, there may be a different problem to be solved.=
+<br><br>In my test, for a raw image, I see a single ftruncate() call, which=
+ is<br>unnecessary, but shouldn&#39;t cause any measurable time difference =
+for the<br>qemu-img run. qcow2 has a little more code in QEMU to figure out=
+ that<br>there is nothing to do, but it doesn&#39;t involve any syscall and=
+ certainly<br>not reading the whole image.<br><br>Kevin<br><blockquote>On M=
+on Jan 20, 2025, 09:49 PM GMT, Michael Tokarev &lt;<a href=3D"mailto:mjt@tl=
+s.msk.ru">mjt@tls.msk.ru</a>&gt; wrote:<br><br>20.01.2025 23:17, Fahrzin He=
+mmati wrote:<br><br>My apologies, I saw the Signed-off-by requirement at fi=
+rst, but as I<br>followed the docs I got to &quot;git publish&quot; and did=
+n&#39;t realize &quot;git publish&quot;<br>was<br>actually able to send ema=
+ils on my system (I don&#39;t remember setting up any<br>SMTP settings). By=
+ that time, I forgot and thought this patch was short<br>enough to not warr=
+ant much of a commit message.<br><br>The main practical advantage is for us=
+ers that call &quot;qemu-img resize&quot; via<br>scripts or other systems (=
+like Packer in my case) that don&#39;t check the<br>image<br>size ahead of =
+time. I can upstream this change into them (by using<br>&quot;qemu-img info=
+ =E2=80=94output=3Djson ...&quot;) but I figured it would be useful to more=
+<br>users here.<br><br>This could trivially be added to block/io.c:bdrv_co_=
+truncate(), as well as<br>blockdev.c:qmp_block_resize() with a little more =
+work. I&#39;m not familiar<br>with those workflows, but if needed I can do =
+that as well.<br><br>Here&#39;s the new patch:<br><br>From 17f5c5f03d930c48=
+16b92b97e0e54db0725d7b94 Mon Sep 17 00:00:00 2001<br>From: Fahrzin Hemmati =
+&lt;<a href=3D"mailto:fahhem@fahhem.com">fahhem@fahhem.com</a> &lt;mailto:<=
+a href=3D"mailto:fahhem@fahhem.com">fahhem@fahhem.com</a>&gt;&gt;<br>Date: =
+Mon, 20 Jan 2025 01:56:24 -0800<br>Subject: [PATCH] Skip resizing image to =
+the same size<br><br>Higher-level software, such as Packer, blindly call &q=
+uot;qemu-img resize&quot;<br>even when the size is the same. This change ca=
+n be pushed to those<br>users, but it&#39;s very cheap to check and can sav=
+e many other users more<br>time here.<br><br>Signed-off-by: Fahrzin Hemmati=
+ &lt;<a href=3D"mailto:fahhem@fahhem.com">fahhem@fahhem.com</a> &lt;mailto:=
+<a href=3D"mailto:fahhem@fahhem.com">fahhem@fahhem.com</a><br>&gt;&gt;<br>-=
+--<br>qemu-img.c | 6 ++++++<br>tests/qemu-iotests/061 | 8 ++++++++<br>tests=
+/qemu-iotests/061.out | 9 +++++++++<br>3 files changed, 23 insertions(+)<br=
+><br>diff --git a/qemu-img.c b/qemu-img.c<br>index 2f2fac90e8..3345c4e63f 1=
+00644<br>--- a/qemu-img.c<br>+++ b/qemu-img.c<br>@@ -4184,6 +4184,12 @@ sta=
+tic int img_resize(int argc, char **argv)<br>goto out;<br>}<br><br>+ if (to=
+tal_size =3D=3D current_size) {<br>+ qprintf(quiet, &quot;Image already has=
+ the desired size.\n&quot;);<br>+ ret =3D 0;<br>+ goto out;<br>+ }<br><br><=
+br><br>I don&#39;t think this is necessary: the actual operation is a no-op=
+<br>anyway, there&#39;s no need to special-case it.<br><br>Please also refr=
+ain from changing qemu-img until my refresh<br>patchset is either accepted =
+or rejected. It was a large work<br>and it&#39;d be sad to lose it.<br><br>=
+Thanks,<br><br>/mjt</blockquote><br></div></blockquote></div></body></html>
+
+--000000000000e5fe3f062c390fd9--
 
