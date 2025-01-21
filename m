@@ -4,99 +4,52 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 11C5FC02182
-	for <qemu-devel@archiver.kernel.org>; Tue, 21 Jan 2025 12:10:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A8D5EC0218B
+	for <qemu-devel@archiver.kernel.org>; Tue, 21 Jan 2025 12:11:00 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1taD50-0001go-CQ; Tue, 21 Jan 2025 07:10:02 -0500
+	id 1taD5h-0002IY-Vw; Tue, 21 Jan 2025 07:10:46 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jiaxun.yang@flygoat.com>)
- id 1taD4z-0001fI-4E
- for qemu-devel@nongnu.org; Tue, 21 Jan 2025 07:10:01 -0500
-Received: from fhigh-b8-smtp.messagingengine.com ([202.12.124.159])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jiaxun.yang@flygoat.com>)
- id 1taD4x-0007Ai-H2
- for qemu-devel@nongnu.org; Tue, 21 Jan 2025 07:10:00 -0500
-Received: from phl-compute-09.internal (phl-compute-09.phl.internal
- [10.202.2.49])
- by mailfhigh.stl.internal (Postfix) with ESMTP id 6A97F25401F2;
- Tue, 21 Jan 2025 07:09:58 -0500 (EST)
-Received: from phl-imap-12 ([10.202.2.86])
- by phl-compute-09.internal (MEProxy); Tue, 21 Jan 2025 07:09:58 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=flygoat.com; h=
- cc:content-transfer-encoding:content-type:content-type:date:date
- :from:from:in-reply-to:in-reply-to:message-id:mime-version
- :references:reply-to:subject:subject:to:to; s=fm1; t=1737461398;
- x=1737547798; bh=iAVzyZ0C870BZk/886kSbHhmH/4D/2VWz+rCkSFqN8c=; b=
- PfM28h9eCMksEeImUCyENABhHbzp16NmTdJzn107ImztdraLhGVXX/WOP8PnzsQP
- hYGxM7TiEyngaS4OgC3du+dMdOBJTyCeoodx/88GfwcW0CEAQy8mVJdMdyE9BlKP
- 3ZKfzasQMB1DsvdtaI7VBZYsiOjmxAGBH2vHHgj2Mtdv/ThT6DQywZug7R3HoZU8
- BYQmQ+hzLr7Qi3/nh18OtMDnE+bVoyTR1bonavx61GFvpLcxUCsqi9R9bqI1uI9g
- LPVDu2MI8chC68QRJxfDfHb1P7KKF5Td/CfSp1Ok5948mFxgiZDx+M8tG6hn4u9V
- A3C1XD+0GxFHojPYUS+cUA==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
- messagingengine.com; h=cc:content-transfer-encoding:content-type
- :content-type:date:date:feedback-id:feedback-id:from:from
- :in-reply-to:in-reply-to:message-id:mime-version:references
- :reply-to:subject:subject:to:to:x-me-proxy:x-me-sender
- :x-me-sender:x-sasl-enc; s=fm3; t=1737461398; x=1737547798; bh=i
- AVzyZ0C870BZk/886kSbHhmH/4D/2VWz+rCkSFqN8c=; b=xcqZbjKaLbxpgRfSO
- wm1p8O7azAkZtnyfVIjwG4dszhDUMYBOs+wfR/ytaCnib+yyprrmDNtBYUfH/R4K
- y0v+6921y7rNDHsTl1LKqMpNz9DL8sp9yml1J37Tum0INMfYCfcOgSfB4YUUCE6Y
- WfNP6VmoF+JuT7tA3zjy/kLo3XPT6Hg9RpwuxyuPc02LyGiepMgFnk71Nw3r6jef
- EQi3JIt5724GaH4/SYGJ0UqhvKylO+3U3YSdVDSwDGzu2fnxXKDjJkR1eNHQxLEw
- FdiF1E1fxiUYX9ejmedU/nq+UTDG/wtSuvQLJ10KJ1BWaRGivG8mvUJiq2fs8MAy
- UGJ0Q==
-X-ME-Sender: <xms:lo6PZ53FVyz8f5kRB-glMD6c02NsPdrt6F9P6tW2308h9QW5BlChWw>
- <xme:lo6PZwFOnFfyrJ1AJE6by8Cf2GVIdHXDeKYaPPMdNQ9662qalkoISRfzgNhtNuSvn
- WGNUJTEm452mSeSi54>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefuddrudejvddgtdejucetufdoteggodetrfdotf
- fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggvpdfu
- rfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnh
- htshculddquddttddmnecujfgurhepofggfffhvffkjghfufgtgfesthhqredtredtjeen
- ucfhrhhomhepfdflihgrgihunhcujggrnhhgfdcuoehjihgrgihunhdrhigrnhhgsehflh
- ihghhorghtrdgtohhmqeenucggtffrrghtthgvrhhnpeejvdfgteevhfffhfduffehleei
- ieevledvieelfffggefhfeekuefhudegfeelffenucevlhhushhtvghrufhiiigvpedtne
- curfgrrhgrmhepmhgrihhlfhhrohhmpehjihgrgihunhdrhigrnhhgsehflhihghhorght
- rdgtohhmpdhnsggprhgtphhtthhopeegpdhmohguvgepshhmthhpohhuthdprhgtphhtth
- hopegrrhhikhgrlhhosehgmhgrihhlrdgtohhmpdhrtghpthhtohepphhhihhlmhgusehl
- ihhnrghrohdrohhrghdprhgtphhtthhopehqvghmuhdquggvvhgvlhesnhhonhhgnhhurd
- horhhgpdhrtghpthhtohepthhhuhhthhesrhgvughhrghtrdgtohhm
-X-ME-Proxy: <xmx:lo6PZ5507nnKtAYU0r-FmjaqnTv5VyrJLNwxAIFH8TPqiReWmRooGg>
- <xmx:lo6PZ20H2fHFoBwNKLsiXi4xm6GyZonuN5goXXbHPo58EIhRZ4lnAg>
- <xmx:lo6PZ8Hb05DooNwFF1pJDtknm1fQu13I8y775t6agh83RUB7oCG14Q>
- <xmx:lo6PZ3-TdnZbSIBJTuc6DmhfR0oJPeGIb-wDsW3vgvcsQDZk8nbGTg>
- <xmx:lo6PZwBK6ALGc8VU547L19vKbvi7wKiWKFdSgNnPjqu_GZevu6tsef52>
-Feedback-ID: ifd894703:Fastmail
-Received: by mailuser.phl.internal (Postfix, from userid 501)
- id 08E841C20066; Tue, 21 Jan 2025 07:09:58 -0500 (EST)
-X-Mailer: MessagingEngine.com Webmail Interface
+ (Exim 4.90_1) (envelope-from <maobibo@loongson.cn>)
+ id 1taD5f-0002AG-83
+ for qemu-devel@nongnu.org; Tue, 21 Jan 2025 07:10:43 -0500
+Received: from mail.loongson.cn ([114.242.206.163])
+ by eggs.gnu.org with esmtp (Exim 4.90_1)
+ (envelope-from <maobibo@loongson.cn>) id 1taD5c-0007Pg-Pe
+ for qemu-devel@nongnu.org; Tue, 21 Jan 2025 07:10:42 -0500
+Received: from loongson.cn (unknown [10.2.5.213])
+ by gateway (Coremail) with SMTP id _____8BxYa+6jo9nMMNmAA--.5599S3;
+ Tue, 21 Jan 2025 20:10:34 +0800 (CST)
+Received: from localhost.localdomain (unknown [10.2.5.213])
+ by front1 (Coremail) with SMTP id qMiowMDxrcW4jo9nQ9ApAA--.26988S4;
+ Tue, 21 Jan 2025 20:10:33 +0800 (CST)
+From: Bibo Mao <maobibo@loongson.cn>
+To: Song Gao <gaosong@loongson.cn>
+Cc: Jiaxun Yang <jiaxun.yang@flygoat.com>,
+	qemu-devel@nongnu.org
+Subject: [PATCH 2/3] hw/loongarch/virt: Remove unused ipistate
+Date: Tue, 21 Jan 2025 20:10:31 +0800
+Message-Id: <20250121121032.475235-3-maobibo@loongson.cn>
+X-Mailer: git-send-email 2.39.3
+In-Reply-To: <20250121121032.475235-1-maobibo@loongson.cn>
+References: <20250121121032.475235-1-maobibo@loongson.cn>
 MIME-Version: 1.0
-Date: Tue, 21 Jan 2025 12:09:38 +0000
-From: "Jiaxun Yang" <jiaxun.yang@flygoat.com>
-To: "Thomas Huth" <thuth@redhat.com>, "QEMU devel" <qemu-devel@nongnu.org>,
- =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- "Aleksandar Rikalo" <arikalo@gmail.com>
-Message-Id: <f96de148-67e2-41ab-ad5e-23d68af25f85@app.fastmail.com>
-In-Reply-To: <b0accbae-b9ca-4fb2-a842-f08ac947ef0a@app.fastmail.com>
-References: <20250121103655.1285596-1-thuth@redhat.com>
- <b0accbae-b9ca-4fb2-a842-f08ac947ef0a@app.fastmail.com>
-Subject: Re: [PATCH] mips: Mark the "mipssim" machine as deprecated
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=202.12.124.159;
- envelope-from=jiaxun.yang@flygoat.com; helo=fhigh-b8-smtp.messagingengine.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
-X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Transfer-Encoding: 8bit
+X-CM-TRANSID: qMiowMDxrcW4jo9nQ9ApAA--.26988S4
+X-CM-SenderInfo: xpdruxter6z05rqj20fqof0/
+X-Coremail-Antispam: 1Uk129KBjDUn29KB7ZKAUJUUUUU529EdanIXcx71UUUUU7KY7
+ ZEXasCq-sGcSsGvfJ3UbIjqfuFe4nvWSU5nxnvy29KBjDU0xBIdaVrnUUvcSsGvfC2Kfnx
+ nUUI43ZEXa7xR_UUUUUUUUU==
+Received-SPF: pass client-ip=114.242.206.163; envelope-from=maobibo@loongson.cn;
+ helo=mail.loongson.cn
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -112,37 +65,55 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+Field ipistate in LoongArch CPU object is not used any more,
+remove it here.
 
+Signed-off-by: Bibo Mao <maobibo@loongson.cn>
+---
+ hw/loongarch/virt.c    | 5 -----
+ target/loongarch/cpu.h | 2 --
+ 2 files changed, 7 deletions(-)
 
-=E5=9C=A82025=E5=B9=B41=E6=9C=8821=E6=97=A5=E4=B8=80=E6=9C=88 =E4=B8=8B=E5=
-=8D=8812:07=EF=BC=8CJiaxun Yang=E5=86=99=E9=81=93=EF=BC=9A
-> =E5=9C=A82025=E5=B9=B41=E6=9C=8821=E6=97=A5=E4=B8=80=E6=9C=88 =E4=B8=8A=
-=E5=8D=8810:36=EF=BC=8CThomas Huth=E5=86=99=E9=81=93=EF=BC=9A
->> We are not aware of anybody still using this machine, support for it
->> has been withdrawn from the Linux kernel (i.e. there also won't be
->> any future development anymore), and we are not aware of any binaries
->> online that could be used for regression testing to avoid that the
->> machine bitrots ... thus let's mark it as deprecated now.
->>
->> Signed-off-by: Thomas Huth <thuth@redhat.com>
->> ---
->>  If anybody is still using this machine, please speak up now!
->
->
-> FYI I'm using it to run MIPS AVP (Architecture Verification Programs)
-> time by time to check TCG's compliance.
->
-> It is a proprietary software so unfortunately no binary available
-> to public :-(
->
-> AVP has two supported platforms, the first is plain old MIPSSIM
-> here, the second is OVPSim MIPS, which is compatible with my previous
-> MIPS virt machine effort.
->
-> Maybe I should bring MIPSSIM work back?
-                        ^ Oops I meant MIPS VIRT.
+diff --git a/hw/loongarch/virt.c b/hw/loongarch/virt.c
+index 15022505c7..97c7da4815 100644
+--- a/hw/loongarch/virt.c
++++ b/hw/loongarch/virt.c
+@@ -848,8 +848,6 @@ static void virt_irq_init(LoongArchVirtMachineState *lvms)
+     DeviceState *pch_pic, *pch_msi, *cpudev;
+     DeviceState *ipi, *extioi;
+     SysBusDevice *d;
+-    LoongArchCPU *lacpu;
+-    CPULoongArchState *env;
+     CPUState *cpu_state;
+     int cpu, pin, i, start, num;
+ 
+@@ -910,12 +908,9 @@ static void virt_irq_init(LoongArchVirtMachineState *lvms)
+     for (cpu = 0; cpu < ms->smp.cpus; cpu++) {
+         cpu_state = qemu_get_cpu(cpu);
+         cpudev = DEVICE(cpu_state);
+-        lacpu = LOONGARCH_CPU(cpu_state);
+-        env = &(lacpu->env);
+ 
+         /* connect ipi irq to cpu irq */
+         qdev_connect_gpio_out(ipi, cpu, qdev_get_gpio_in(cpudev, IRQ_IPI));
+-        env->ipistate = ipi;
+     }
+ 
+     /* Create EXTIOI device */
+diff --git a/target/loongarch/cpu.h b/target/loongarch/cpu.h
+index 8eee49a984..f2a23b7a43 100644
+--- a/target/loongarch/cpu.h
++++ b/target/loongarch/cpu.h
+@@ -385,8 +385,6 @@ typedef struct CPUArchState {
+     bool load_elf;
+     uint64_t elf_address;
+     uint32_t mp_state;
+-    /* Store ipistate to access from this struct */
+-    DeviceState *ipistate;
+ 
+     struct loongarch_boot_info *boot_info;
+ #endif
+-- 
+2.39.3
 
-Thanks
---=20
-- Jiaxun
 
