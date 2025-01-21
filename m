@@ -4,79 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0847FC02182
-	for <qemu-devel@archiver.kernel.org>; Tue, 21 Jan 2025 14:25:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0242BC02182
+	for <qemu-devel@archiver.kernel.org>; Tue, 21 Jan 2025 14:25:34 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1taFAT-0000Je-Cr; Tue, 21 Jan 2025 09:23:49 -0500
+	id 1taFB9-0000j9-2v; Tue, 21 Jan 2025 09:24:31 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1taFAS-0000IG-3I
- for qemu-devel@nongnu.org; Tue, 21 Jan 2025 09:23:48 -0500
-Received: from mail-wm1-x332.google.com ([2a00:1450:4864:20::332])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1taFB4-0000aN-6B
+ for qemu-devel@nongnu.org; Tue, 21 Jan 2025 09:24:26 -0500
+Received: from mail-wm1-x32d.google.com ([2a00:1450:4864:20::32d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1taFAP-0002wm-Vj
- for qemu-devel@nongnu.org; Tue, 21 Jan 2025 09:23:47 -0500
-Received: by mail-wm1-x332.google.com with SMTP id
- 5b1f17b1804b1-436345cc17bso41072825e9.0
- for <qemu-devel@nongnu.org>; Tue, 21 Jan 2025 06:23:45 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1taFB1-000379-Mz
+ for qemu-devel@nongnu.org; Tue, 21 Jan 2025 09:24:25 -0500
+Received: by mail-wm1-x32d.google.com with SMTP id
+ 5b1f17b1804b1-4368a293339so65574685e9.3
+ for <qemu-devel@nongnu.org>; Tue, 21 Jan 2025 06:24:23 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1737469424; x=1738074224; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=huBnZLMMoWYJ6yRI7yv6u3SXGmIuRg6gkaMshUEQcb4=;
- b=wf3kJWY2nzHFXuAKFGXVp+bjIkUfBgIzC6JWfyyzE8V5a8mEKk1/q+2HmbrzIUdtRL
- ahH03jR5fjKyld7zFTylCNDDfPrTnc6/bF6VOFyBhz4kUK5Dv1BtIA4viEadhvXdbYF9
- ULHthNGDW1/1MEx+CN4bppx2wmw7p26FRdxwpoD5fK22HL9VtO02PzoX2P9DKioWqt1C
- dZFrY7uOc7DlzfeguAQ3uUrvCVspN3tkvAzMNJVRIl8KzFXLnhpcA7629gnEYjmKg55z
- lMC47lhA5Gw2BhskEw/PwhjyJ2yPjbSlszHf/vn9lWYdfiur/DbTWzzLfKpZM/KsBkAj
- 16aA==
+ d=linaro.org; s=google; t=1737469462; x=1738074262; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=k0wDf/v1rzss+MDug7NzvC/4aBpdZSiYNuTsdH6L/x4=;
+ b=DZpJgyMKiq84AbJ+d9mDJcCdIeyXn+WnR44sn+SYVVr09UA81Z7rgE/AvBJyO1AiDi
+ Q4O+uhVd0CfxvU2xhxqCNq3il5CeHt/dGkPRvOdM54LzPwHXvN2y2qgECYzfR6INtU9X
+ GsU9BOzN1iFM/B+NOfZWxDORztQFKIBos1xv2RvcdrMz3vm/lPiRd3C1f6sQKCnsfZtJ
+ OBfYoxsqe4mgZFfjwGa9RoYKEHy4egDe01pL5OKIBqoCUTlN2vGwDtY/0uysO6BZdNPG
+ GIsv9icRlBK2POww3O4eH4d5q+0Hf66RDFbYLsZZu1QPeNyRPkumYdGrVRyFKYKh15yS
+ kLCA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1737469424; x=1738074224;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=huBnZLMMoWYJ6yRI7yv6u3SXGmIuRg6gkaMshUEQcb4=;
- b=GbWI0BL3AtUqgHxpyfztSNi1qw8PCCBe9ZSRD/wDRCpek+KSTQGhWgDCj/8Tep3JpK
- EuYOB5Ykv3dmg93Hj4JRvIwjbsT7NpBKc6sLppPf407M7jH/AEOZPb/xEVG2tWrbB90p
- 1GIqom1W+RptzQrYKmK8nbmgNBz6NFap62DvZaZVMoKOoG5t4AV6dxJ1blHbOKM+fMg/
- qm2MKm0xbqiZcnyh3204EOxaWGBQFSJHXEL1GewnF2NbHay4i1RC8BcMR4rJLgxw7ZFN
- Jyd/JJ0ppxDLJJd9QHjGMy8BDXV+B2sTSro8u6HtcxYD5bbjDufQ+9kebrPIvdZokuH7
- 1JGA==
-X-Gm-Message-State: AOJu0YxWdkNe2Oicl+Q1p9w9n1/lquuoKuHcIdPAYcLxyzZ2cJ61U7eI
- A99D9nvcI5qKltdm04Od4upSlGr9zEMtfn08hbdboixUWLtrJbEqNrhuDNIHl36fZzk43CDz0Ov
- wBDk=
-X-Gm-Gg: ASbGncvH0DbHkDdiQqPgXAHX5ZgCBToItReR7B+xKhxiE2zSTsvPPWX7fxcuLJgpFQA
- aW9y8RrkMzvkh+RTlHyXXCqyZ4uouda8BsaL04oRz/JXvGH+2FJt4izHCW1RA8NKuflk09ec0+e
- g8H6rh7vP36Mq6EYUiazRGtVZJLBRXR+8ICp8reOA6AKlBgp/7km5lGEKqo3OnKVd+9aJ5f6zHf
- LsT5cvoQnWgVVrFN1TFMiKCNo6KLUbWwSQ03NOi9f/YHRZkbKieYB7aVdRo4O97K0Qnc7SLve4j
- 3rBvqIwAgQkP39WkR7IVTApSTTfp5IhnfTCql7oOygWT
-X-Google-Smtp-Source: AGHT+IENTRqkRL3QRIymaYWOvoK2ecbtBLz5P2eTuEdDsBRulofhxM0CiB5iXk4AtpEAwZvnBOSL5g==
-X-Received: by 2002:a05:600c:1da8:b0:434:a711:ace4 with SMTP id
- 5b1f17b1804b1-4389eca3ca1mr159671455e9.17.1737469423851; 
- Tue, 21 Jan 2025 06:23:43 -0800 (PST)
+ d=1e100.net; s=20230601; t=1737469462; x=1738074262;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=k0wDf/v1rzss+MDug7NzvC/4aBpdZSiYNuTsdH6L/x4=;
+ b=l00hmFG/CkQSCuGnbJMrymSdOOumH5IbkByAxnnl0eZnpwdg0tW7TKad9/uVldud+t
+ 5PWCUuv/bpmSxSVT+ScgTsn7aAKe3A9ddK97juil4I+T70lk1Nu06u2ZYntFir12A2pX
+ 9wd8lknmkFjfHUyJ9rv9fDSNDvkVNMxrVNbPy2+fEa92ZRcjlDUq7A1sMnTnwd7YULlK
+ d7jb3usHwv2oJR1ZKzKLeHVK0rFbJYt6svzePeoxrvjO+djQFhuAZp9GoWuvPDBiwgmn
+ mKcS+efRoTipafuakJqLOz/h9OtT1R7cIYKF2rYPbGsTtzafPMo7Ina9vmxfEUFWXvUM
+ /RMQ==
+X-Gm-Message-State: AOJu0Yy3wLsDB8MwfOzPVGfSHAxhac+/4GCvqLlTgzvZ9eOnlWOF8dMl
+ 0uT+8vDeVbJ5OkcMbng7LujOvdxIaPntkPdPQo9VGxA6ZvboQLa/C/Oemx8F91nIXmLPCuAqEeH
+ UviE=
+X-Gm-Gg: ASbGncuCQUFKMFe4pk29iCBRnjGtpJkHlnOFDkJKBc3a5Fr44py7rFHVdFq3yuby2rf
+ 1jkNA+vtvQADkdL/s7jitmLOE4Xj8Tf3Xiqo19knPOHNs1nwUtvvygCwEsRe3fQnNlwt9UV2O9X
+ n31su7FzarSyJ7mFMJKNdUOTvABHYpOZcjKYrDKWOCSimo1QbLab4yIVVaUsQ7sjSFmPnv22wCS
+ nP29yF1yIdAESs/epxu5UIgI7/BDhVkddjDZiarjd6rpNUWE8Q51EZZfhpXaMoBhqjqwDNkhAhm
+ naeJbRG1O+dEdn8VoN//WhuzyUgET2efrk/87Ij9A68S
+X-Google-Smtp-Source: AGHT+IHYUFOS6tZvpJOkAfU3W0IUvXEkurbm7qTDimNOrMxqJ3vKyynrsbG/ez0xMFK9Dxc30Yf2ug==
+X-Received: by 2002:a05:600c:4f42:b0:434:a7e3:db5c with SMTP id
+ 5b1f17b1804b1-438913cafacmr182541425e9.11.1737469461663; 
+ Tue, 21 Jan 2025 06:24:21 -0800 (PST)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-43890469ba8sm178907415e9.37.2025.01.21.06.23.42
+ 5b1f17b1804b1-438a1f07e1bsm134634695e9.7.2025.01.21.06.24.20
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Tue, 21 Jan 2025 06:23:43 -0800 (PST)
+ Tue, 21 Jan 2025 06:24:21 -0800 (PST)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: qemu-arm@nongnu.org, qemu-s390x@nongnu.org, qemu-riscv@nongnu.org,
  qemu-ppc@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>,
  Richard Henderson <richard.henderson@linaro.org>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PATCH 00/28] cpus: Restrict CPU has_work() handlers to system
- emulation
-Date: Tue, 21 Jan 2025 15:23:13 +0100
-Message-ID: <20250121142341.17001-1-philmd@linaro.org>
+Subject: [PATCH 08/28] target/alpha: Move has_work() from CPUClass to
+ SysemuCPUOps
+Date: Tue, 21 Jan 2025 15:23:21 +0100
+Message-ID: <20250121142341.17001-9-philmd@linaro.org>
 X-Mailer: git-send-email 2.47.1
+In-Reply-To: <20250121142341.17001-1-philmd@linaro.org>
+References: <20250121142341.17001-1-philmd@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::332;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x332.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::32d;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x32d.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -99,80 +102,47 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On user emulation, threads always have work to do, and
-CPUClass::has_work() is never called. Restrict it to system
-emulation, allowing to simplify a bit and reduce code built
-on user emulation.
+Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+---
+ target/alpha/cpu.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-Based-on: <20250121114056.53949-1-philmd@linaro.org>
- "cpus: Prefer cached CpuClass over CPU_GET_CLASS() macro"
-
-Philippe Mathieu-Daudé (28):
-  target/hexagon: Ensure not being build on system emulation
-  target/rx: Ensure not being build on user emulation
-  target/tricore: Ensure not being build on user emulation
-  cpus: Restrict cpu_get_memory_mapping() to system emulation
-  cpus: Restrict cpu_has_work() to system emulation
-  cpus: Un-inline cpu_has_work()
-  cpus: Introduce SysemuCPUOps::has_work() handler
-  target/alpha: Move has_work() from CPUClass to SysemuCPUOps
-  target/arm: Move has_work() from CPUClass to SysemuCPUOps
-  target/avr: Move has_work() from CPUClass to SysemuCPUOps
-  target/hexagon: Remove CPUClass:has_work() handler
-  target/hppa: Move has_work() from CPUClass to SysemuCPUOps
-  target/i386: Move has_work() from CPUClass to SysemuCPUOps
-  target/loongarch: Move has_work() from CPUClass to SysemuCPUOps
-  target/m68k: Move has_work() from CPUClass to SysemuCPUOps
-  target/microblaze: Move has_work() from CPUClass to SysemuCPUOps
-  target/mips: Move has_work() from CPUClass to SysemuCPUOps
-  target/openrisc: Move has_work() from CPUClass to SysemuCPUOps
-  target/ppc: Move has_work() from CPUClass to SysemuCPUOps
-  target/riscv: Move has_work() from CPUClass to SysemuCPUOps
-  target/rx: Move has_work() from CPUClass to SysemuCPUOps
-  target/s390x: Restrict I/O handler installers to system emulation
-  target/s390x: Move has_work() from CPUClass to SysemuCPUOps
-  target/sh4: Move has_work() from CPUClass to SysemuCPUOps
-  target/sparc: Move has_work() from CPUClass to SysemuCPUOps
-  target/tricore: Move has_work() from CPUClass to SysemuCPUOps
-  target/xtensa: Move has_work() from CPUClass to SysemuCPUOps
-  cpus: Remove CPUClass::has_work() handler
-
- include/hw/core/cpu.h            | 30 ++++++++++++------------------
- include/hw/core/sysemu-cpu-ops.h |  4 ++++
- target/hexagon/cpu.h             |  4 ++++
- target/i386/cpu.h                |  4 ++--
- target/mips/internal.h           |  4 ++--
- target/riscv/cpu.h               |  9 +++++----
- target/riscv/internals.h         |  3 ---
- target/rx/cpu.h                  |  6 ++++--
- target/s390x/s390x-internal.h    |  5 +++++
- target/tricore/cpu.h             |  4 ++++
- hw/core/cpu-common.c             |  6 ------
- hw/core/cpu-system.c             |  6 ++++++
- target/alpha/cpu.c               |  4 +++-
- target/arm/cpu.c                 |  4 +++-
- target/avr/cpu.c                 |  2 +-
- target/hexagon/cpu.c             |  6 ------
- target/hppa/cpu.c                |  4 +++-
- target/i386/cpu.c                |  8 +++-----
- target/loongarch/cpu.c           |  8 +++-----
- target/m68k/cpu.c                |  4 +++-
- target/microblaze/cpu.c          |  4 +++-
- target/mips/cpu.c                |  4 +++-
- target/openrisc/cpu.c            |  4 +++-
- target/ppc/cpu_init.c            |  4 +++-
- target/riscv/cpu.c               |  8 +++-----
- target/rx/cpu.c                  |  8 +-------
- target/rx/helper.c               |  4 ----
- target/s390x/cpu-system.c        | 18 ++++++++++++++++++
- target/s390x/cpu.c               | 18 ------------------
- target/s390x/interrupt.c         |  8 ++------
- target/sh4/cpu.c                 |  4 ++--
- target/sparc/cpu.c               |  4 +++-
- target/tricore/cpu.c             |  2 +-
- target/xtensa/cpu.c              | 12 +++++-------
- 34 files changed, 114 insertions(+), 113 deletions(-)
-
+diff --git a/target/alpha/cpu.c b/target/alpha/cpu.c
+index e1b898e5755..83164a694d8 100644
+--- a/target/alpha/cpu.c
++++ b/target/alpha/cpu.c
+@@ -63,6 +63,7 @@ static void alpha_restore_state_to_opc(CPUState *cs,
+     }
+ }
+ 
++#ifndef CONFIG_USER_ONLY
+ static bool alpha_cpu_has_work(CPUState *cs)
+ {
+     /* Here we are checking to see if the CPU should wake up from HALT.
+@@ -77,6 +78,7 @@ static bool alpha_cpu_has_work(CPUState *cs)
+                                     | CPU_INTERRUPT_SMP
+                                     | CPU_INTERRUPT_MCHK);
+ }
++#endif /* !CONFIG_USER_ONLY */
+ 
+ static int alpha_cpu_mmu_index(CPUState *cs, bool ifetch)
+ {
+@@ -216,6 +218,7 @@ static void alpha_cpu_initfn(Object *obj)
+ #include "hw/core/sysemu-cpu-ops.h"
+ 
+ static const struct SysemuCPUOps alpha_sysemu_ops = {
++    .has_work = alpha_cpu_has_work,
+     .get_phys_page_debug = alpha_cpu_get_phys_page_debug,
+ };
+ #endif
+@@ -251,7 +254,6 @@ static void alpha_cpu_class_init(ObjectClass *oc, void *data)
+                                     &acc->parent_realize);
+ 
+     cc->class_by_name = alpha_cpu_class_by_name;
+-    cc->has_work = alpha_cpu_has_work;
+     cc->mmu_index = alpha_cpu_mmu_index;
+     cc->dump_state = alpha_cpu_dump_state;
+     cc->set_pc = alpha_cpu_set_pc;
 -- 
 2.47.1
 
