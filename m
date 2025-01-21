@@ -4,71 +4,56 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D03E6C0218C
-	for <qemu-devel@archiver.kernel.org>; Tue, 21 Jan 2025 14:54:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9AD7DC02182
+	for <qemu-devel@archiver.kernel.org>; Tue, 21 Jan 2025 14:59:06 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1taFdy-0002SC-IG; Tue, 21 Jan 2025 09:54:18 -0500
+	id 1taFi4-0005HK-IH; Tue, 21 Jan 2025 09:58:32 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1taFdv-0002Qx-Fo
- for qemu-devel@nongnu.org; Tue, 21 Jan 2025 09:54:15 -0500
-Received: from mgamail.intel.com ([198.175.65.19])
+ (Exim 4.90_1) (envelope-from <jonathan.cameron@huawei.com>)
+ id 1taFi2-0005H6-9l
+ for qemu-devel@nongnu.org; Tue, 21 Jan 2025 09:58:30 -0500
+Received: from frasgout.his.huawei.com ([185.176.79.56])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1taFdr-0000FV-U7
- for qemu-devel@nongnu.org; Tue, 21 Jan 2025 09:54:15 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
- d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1737471252; x=1769007252;
- h=from:to:cc:subject:date:message-id:in-reply-to:
- references:mime-version:content-transfer-encoding;
- bh=mJcr39zVdceK26Dc3tdY0horVyumXUMgAYBKyt4SGWA=;
- b=STECxUmx+NbvnbLl10bILzm4/+b8UXsnxeqOFmXabRZr/Bd59gz05oPQ
- Q8prZM7lm3RA8mDclobxncQcY30PWzzyktPf+oFFc7KltlbpGEBntC0nl
- 5+A19WNOlZ9Cw+biXxqC92YmrrYZU2clbSPjSIbarlSGALCOZPgMI15D9
- Bag3jqWmivS9K81Xyq09mpZELHaI6c+unC3jIjpFq68UPorgbsYvc9f9P
- CJt3SEdl9cCbNqjYmIPYm7KdITF4waVOvVyndJFPZiv5DpWBLsw98gtum
- hH0y05x2IdKZYUNC/heBNj4dwddb3WZ0kCNtFUHQRHhQRaMYb+hGe6v+E g==;
-X-CSE-ConnectionGUID: +34F/V1zRVGG7RtnTaA9Kg==
-X-CSE-MsgGUID: wv4Hl20KSWuZUeCh94pUJA==
-X-IronPort-AV: E=McAfee;i="6700,10204,11322"; a="37763517"
-X-IronPort-AV: E=Sophos;i="6.13,222,1732608000"; d="scan'208";a="37763517"
-Received: from fmviesa006.fm.intel.com ([10.60.135.146])
- by orvoesa111.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 21 Jan 2025 06:54:10 -0800
-X-CSE-ConnectionGUID: T+JeTdu9T+uyX40gzNy/UA==
-X-CSE-MsgGUID: GeAscZhlSxe8R58mbAvuqw==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.13,222,1732608000"; d="scan'208";a="106639887"
-Received: from liuzhao-optiplex-7080.sh.intel.com ([10.239.160.39])
- by fmviesa006.fm.intel.com with ESMTP; 21 Jan 2025 06:54:08 -0800
-From: Zhao Liu <zhao1.liu@intel.com>
-To: Paolo Bonzini <pbonzini@redhat.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=83?= <philmd@linaro.org>,
- Peter Maydell <peter.maydell@linaro.org>,
- =?UTF-8?q?Cl=C3=A9ment=20Mathieu--Drif?= <clement.mathieu--drif@eviden.com>
-Cc: qemu-devel@nongnu.org,
-	Zhao Liu <zhao1.liu@intel.com>
-Subject: [PATCH v2 1/2] memattrs: Convert unspecified member to bool
-Date: Tue, 21 Jan 2025 23:13:21 +0800
-Message-Id: <20250121151322.171832-2-zhao1.liu@intel.com>
-X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20250121151322.171832-1-zhao1.liu@intel.com>
-References: <20250121151322.171832-1-zhao1.liu@intel.com>
+ (Exim 4.90_1) (envelope-from <jonathan.cameron@huawei.com>)
+ id 1taFi0-0000oZ-8A
+ for qemu-devel@nongnu.org; Tue, 21 Jan 2025 09:58:30 -0500
+Received: from mail.maildlp.com (unknown [172.18.186.231])
+ by frasgout.his.huawei.com (SkyGuard) with ESMTP id 4Ycr1441kcz6K9JV;
+ Tue, 21 Jan 2025 22:58:00 +0800 (CST)
+Received: from frapeml500008.china.huawei.com (unknown [7.182.85.71])
+ by mail.maildlp.com (Postfix) with ESMTPS id CE4D9140B33;
+ Tue, 21 Jan 2025 22:58:13 +0800 (CST)
+Received: from localhost (10.203.177.66) by frapeml500008.china.huawei.com
+ (7.182.85.71) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.1.2507.39; Tue, 21 Jan
+ 2025 15:58:13 +0100
+Date: Tue, 21 Jan 2025 14:58:12 +0000
+To: Li Zhijian <lizhijian@fujitsu.com>
+CC: <qemu-devel@nongnu.org>, Fan Ni <fan.ni@samsung.com>,
+ <linux-cxl@vger.kernel.org>
+Subject: Re: [PATCH 2/3] hw/mem/cxl_type3: Fix special_ops memory leak on
+ msix_init_exclusive_bar() failure
+Message-ID: <20250121145812.00004c63@huawei.com>
+In-Reply-To: <20250120030947.254930-2-lizhijian@fujitsu.com>
+References: <20250120030947.254930-1-lizhijian@fujitsu.com>
+ <20250120030947.254930-2-lizhijian@fujitsu.com>
+X-Mailer: Claws Mail 4.3.0 (GTK 3.24.42; x86_64-w64-mingw32)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=198.175.65.19; envelope-from=zhao1.liu@intel.com;
- helo=mgamail.intel.com
-X-Spam_score_int: -73
-X-Spam_score: -7.4
-X-Spam_bar: -------
-X-Spam_report: (-7.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-2.996,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+Content-Type: text/plain; charset="US-ASCII"
+Content-Transfer-Encoding: 7bit
+X-Originating-IP: [10.203.177.66]
+X-ClientProxiedBy: lhrpeml100009.china.huawei.com (7.191.174.83) To
+ frapeml500008.china.huawei.com (7.182.85.71)
+Received-SPF: pass client-ip=185.176.79.56;
+ envelope-from=jonathan.cameron@huawei.com; helo=frasgout.his.huawei.com
+X-Spam_score_int: -42
+X-Spam_score: -4.3
+X-Spam_bar: ----
+X-Spam_report: (-4.3 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_MED=-2.3,
+ RCVD_IN_MSPIKE_H2=-0.086, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
  RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -83,74 +68,80 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-to:  Jonathan Cameron <Jonathan.Cameron@huawei.com>
+From:  Jonathan Cameron via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Convert `unspecified` member of MemTxAttrs from bit field to bool, so
-that bindgen could generate more ergonomic Rust binding with bool type.
+On Mon, 20 Jan 2025 11:09:46 +0800
+Li Zhijian <lizhijian@fujitsu.com> wrote:
 
-As a result, MemTxAttrs needs to be expanded from 4 bytes to 8 bytes.
+> Address a memory leak issue by ensuring `regs->special_ops` is freed when
+> `msix_init_exclusive_bar()` encounters an error during CXL Type3 device
+> initialization.
+> 
+> Additionally, this patch renames err_address_space_free to err_msix_uninit
+> for better clarity and logical flow
+> 
+> Signed-off-by: Li Zhijian <lizhijian@fujitsu.com>
+Hi.
 
-Therefore, move `unspecified` to after the bit fields and add reserved
-members to ensure that the whole structure is packed into 8 bytes.
+The need to reorder the cleanup calls made me look more
+closely at this patch. Either the order was wrong here or in the previous
+patch. I think the issue is here.
 
-Suggested-by: Richard Henderson <richard.henderson@linaro.org>
-Suggested-by: Paolo Bonzini <pbonzini@redhat.com>
-Signed-off-by: Zhao Liu <zhao1.liu@intel.com>
----
-Changes since v1:
- * Only convert `unspecified` to bool, to reserve spare space.
- * Mention the size has been changed. (I don't note the spare space
-   since reserved fields are enough.)
----
- include/exec/memattrs.h | 19 ++++++++++++-------
- 1 file changed, 12 insertions(+), 7 deletions(-)
+Jonathan
 
-diff --git a/include/exec/memattrs.h b/include/exec/memattrs.h
-index e27c18f3dc31..4fde4eee8439 100644
---- a/include/exec/memattrs.h
-+++ b/include/exec/memattrs.h
-@@ -23,12 +23,6 @@
-  * different semantics.
-  */
- typedef struct MemTxAttrs {
--    /* Bus masters which don't specify any attributes will get this
--     * (via the MEMTXATTRS_UNSPECIFIED constant), so that we can
--     * distinguish "all attributes deliberately clear" from
--     * "didn't specify" if necessary.
--     */
--    unsigned int unspecified:1;
-     /*
-      * ARM/AMBA: TrustZone Secure access
-      * x86: System Management Mode access
-@@ -57,6 +51,17 @@ typedef struct MemTxAttrs {
-      * PID (PCI PASID) support: Limited to 8 bits process identifier.
-      */
-     unsigned int pid:8;
-+
-+    /*
-+     * Bus masters which don't specify any attributes will get this
-+     * (via the MEMTXATTRS_UNSPECIFIED constant), so that we can
-+     * distinguish "all attributes deliberately clear" from
-+     * "didn't specify" if necessary.
-+     */
-+    bool unspecified;
-+
-+    uint8_t _reserved1;
-+    uint16_t _reserved2;
- } MemTxAttrs;
- 
- /* Bus masters which don't specify any attributes will get this,
-@@ -64,7 +69,7 @@ typedef struct MemTxAttrs {
-  * (so that we can distinguish "all attributes deliberately clear"
-  * from "didn't specify" if necessary).
-  */
--#define MEMTXATTRS_UNSPECIFIED ((MemTxAttrs) { .unspecified = 1 })
-+#define MEMTXATTRS_UNSPECIFIED ((MemTxAttrs) { .unspecified = true })
- 
- /* New-style MMIO accessors can indicate that the transaction failed.
-  * A zero (MEMTX_OK) response means success; anything else is a failure
--- 
-2.34.1
+> ---
+>  hw/mem/cxl_type3.c | 8 ++++----
+>  1 file changed, 4 insertions(+), 4 deletions(-)
+> 
+> diff --git a/hw/mem/cxl_type3.c b/hw/mem/cxl_type3.c
+> index 9dad250f56d5..9eb3d0979cf5 100644
+> --- a/hw/mem/cxl_type3.c
+> +++ b/hw/mem/cxl_type3.c
+> @@ -885,7 +885,7 @@ static void ct3_realize(PCIDevice *pci_dev, Error **errp)
+>      /* MSI(-X) Initialization */
+>      rc = msix_init_exclusive_bar(pci_dev, CXL_T3_MSIX_VECTOR_NR, 4, NULL);
+>      if (rc) {
+> -        goto err_address_space_free;
+> +        goto err_free_special_ops;
+>      }
+>      for (i = 0; i < CXL_T3_MSIX_VECTOR_NR; i++) {
+>          msix_vector_use(pci_dev, i);
+> @@ -899,7 +899,7 @@ static void ct3_realize(PCIDevice *pci_dev, Error **errp)
+>      cxl_cstate->cdat.free_cdat_table = ct3_free_cdat_table;
+>      cxl_cstate->cdat.private = ct3d;
+>      if (!cxl_doe_cdat_init(cxl_cstate, errp)) {
+> -        goto err_free_special_ops;
+> +        goto err_msix_uninit;
+>      }
+>  
+>      pcie_cap_deverr_init(pci_dev);
+> @@ -936,9 +936,9 @@ static void ct3_realize(PCIDevice *pci_dev, Error **errp)
+>  err_release_cdat:
+>      cxl_doe_cdat_release(cxl_cstate);
+>  err_free_special_ops:
+> -    msix_uninit_exclusive_bar(pci_dev);
+>      g_free(regs->special_ops);
+> -err_address_space_free:
+> +err_msix_uninit:
+> +    msix_uninit_exclusive_bar(pci_dev);
+
+This reorder doesn't look correct.
+
+Should end up I think as
+err_release_cdata:
+    cxl_doe_cdata_release(cxl_cstate);
+err_msix_uninit:
+    msix_uninit_eclusive_bar(pci_dev);
+err_free_special_ops:
+    g_free(regs->special_ops)
+err_address_space_free:
+etc.
+
+>      if (ct3d->dc.host_dc) {
+>          cxl_destroy_dc_regions(ct3d);
+>          address_space_destroy(&ct3d->dc.host_dc_as);
 
 
