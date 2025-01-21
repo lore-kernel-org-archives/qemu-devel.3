@@ -4,86 +4,93 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4AECFC02182
-	for <qemu-devel@archiver.kernel.org>; Tue, 21 Jan 2025 15:50:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C8AABC02182
+	for <qemu-devel@archiver.kernel.org>; Tue, 21 Jan 2025 15:50:52 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1taGVV-0000A7-RP; Tue, 21 Jan 2025 10:49:37 -0500
+	id 1taGWY-0001Fe-0d; Tue, 21 Jan 2025 10:50:42 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <r.peniaev@gmail.com>)
- id 1taGVP-00008d-RW
- for qemu-devel@nongnu.org; Tue, 21 Jan 2025 10:49:33 -0500
-Received: from mail-lf1-x12c.google.com ([2a00:1450:4864:20::12c])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <r.peniaev@gmail.com>)
- id 1taGVN-0000jb-Ni
- for qemu-devel@nongnu.org; Tue, 21 Jan 2025 10:49:31 -0500
-Received: by mail-lf1-x12c.google.com with SMTP id
- 2adb3069b0e04-54287a3ba3cso6258376e87.0
- for <qemu-devel@nongnu.org>; Tue, 21 Jan 2025 07:49:28 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1737474567; x=1738079367; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=Pg0sM0O21avLkPHNR1ym4ACdRrEJebVY8MaNVlggDfk=;
- b=nRswL6rVs3YKsI4YrZ2RhdjJ8YTKE7S+ZSxIrkuZImsMjYA4mvdlaHFyFSd9qZ/Ttw
- 76Q0NWYY8dAIR+WGNpC8jKdEfWBKgWc8i1OvdGEXWsT9NN4MqTOYR+5vMuPIYsnRv9V7
- f46QObM4Yj9rZ8mFBf5a5e4P1lCXgSCvg/hRkqmX100S5ZO71s7gtn+a0TSr9KCFyG/m
- ataDS6kPGwVh4E8Ch/p7njmTdcYM874RDlRdp/jp2J1iSiNXsWgZZNiyaKpRmyzlFotE
- FSAm5FcKRlvzWV1+R3kR0GTGZOOYUzAzoAt32nAyk+LlLgbnh/eoXseJm0nGrCIvXAm2
- Chlg==
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1taGWW-0001FH-V9
+ for qemu-devel@nongnu.org; Tue, 21 Jan 2025 10:50:40 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1taGWV-00012m-Al
+ for qemu-devel@nongnu.org; Tue, 21 Jan 2025 10:50:40 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1737474637;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=ErXCtCM9L3rwkAzYrdE0OO+c9hNOas68UTSCmgaEBGo=;
+ b=gFxHSY6vtq+rMzhYPINP3zMOBwhyT8dyDEINz2WzLLsd+Dk+M6DTmA7m0QlQ8RGtl8FNAX
+ dwBCmbd4+CHF/g0CT7/iFaISS2w7etlN2MtYUY0fedesqmjFB2ZElRJZ3OFJZdsAV0Hsn0
+ BAkQNVgfOaIcK17OsQfZBK4t2+ZnL4Y=
+Received: from mail-qk1-f197.google.com (mail-qk1-f197.google.com
+ [209.85.222.197]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-668-b8jCLGhqNPeG5_uSDXDHJA-1; Tue, 21 Jan 2025 10:50:32 -0500
+X-MC-Unique: b8jCLGhqNPeG5_uSDXDHJA-1
+X-Mimecast-MFC-AGG-ID: b8jCLGhqNPeG5_uSDXDHJA
+Received: by mail-qk1-f197.google.com with SMTP id
+ af79cd13be357-7b864496708so1589174485a.2
+ for <qemu-devel@nongnu.org>; Tue, 21 Jan 2025 07:50:32 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1737474567; x=1738079367;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=Pg0sM0O21avLkPHNR1ym4ACdRrEJebVY8MaNVlggDfk=;
- b=W74nAlgOGAbvHxfJmhUJoc4kYioQPMudG1vEpp0WxlvCKQAa/c8/YfZg2d0fqBsjz+
- vqmLD7/K8pFqsKlYPrr46j0qyidKC8GBvg+5gaKacyQ11f8Qmyoa5bgmaZaia35+1cdI
- 8evYMl0rBOacWCweMtqXQ4bn8/9D5CgnDTKExJh7FR3GCMWLlW7Mctmw08mCy0kpEuF7
- hW5KG5l2OHvWCcQVZn24UfAYSd/W9i6eJaZ4RhPiASqOjYESL3q9LkcVmWNeLzA2kQoB
- u5KTsxb7dkWazyHgXoe/7byH0sRcBkYIDWnEV5TWL5OeNcMh42yM2BKmYO+YhPQE1H9O
- uuzQ==
-X-Forwarded-Encrypted: i=1;
- AJvYcCVxx8B9XAyjLSXLGvVcT8pf930XlEluaD59iviLtVr8vgq3ZNmpVKNijevQGOoCZZJcxcFg3xwjs7RC@nongnu.org
-X-Gm-Message-State: AOJu0Yy3L9kGWDJszRdCx2Qyxngq4sAo2PD7tLI7KySxAzKanJA+HiRw
- 2FoWCkmpBQPasKoR2QTYmKHfqlz2ydwyrbeuK4n6tmb9pdoUwoywM++e7rD276ZbDl+C5aLyvON
- jWbD8hdejyIYhe6Fcv//jnxSv3ao=
-X-Gm-Gg: ASbGncuIQV5S5150qL/OIELUqtli2uCOJIlJzXqL25sTFRG4PZbc2L4VQ4tiv12Epk2
- jeZ4wThDzKHOVE+RA4d2jqSPcC78+WDn42IQ5QRdUo6OthdDPLUQ=
-X-Google-Smtp-Source: AGHT+IEVOeTTM7qPAfoQvUnhV6ryFesRj0ElvhDELhnbH7CU40yH23eyTqu1js5wg8IZ7rv/I3X6ka3k8s3syoMnaNc=
-X-Received: by 2002:a05:6512:3e0e:b0:542:23b2:8010 with SMTP id
- 2adb3069b0e04-542abfbdcc3mr8176217e87.23.1737474566395; Tue, 21 Jan 2025
- 07:49:26 -0800 (PST)
+ d=1e100.net; s=20230601; t=1737474632; x=1738079432;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=ErXCtCM9L3rwkAzYrdE0OO+c9hNOas68UTSCmgaEBGo=;
+ b=nmLC3564WMYXnu651sAJBF9N41m5/dc47c4NZB7eOliE691iHASw+N0LkeYqO4NR3W
+ /fPputQQd/ZsBFHQNX3ufNl9Kr871KAteAVpHMBrFJSdEdxlNTW2f3Hjtt7LhCOhuoBe
+ 1ONhvDzLYxL/LOtt2IAfYyJC/Sqd1huYl8D4toMULTcPJLVng25CrmoXVAS31aeMkdZA
+ a5PitIEsxKcZbkIm0pAfxSk8YS52cDLckfG8a+rCOL6YEuGPLMs4mKROCUHlS1dJGbaR
+ U4C1hE0jaognSYp2hvEImTnn1SZRIf7Ll3M531ykiy2KHSH9dsw52LAJuplXaulngoHi
+ iZow==
+X-Gm-Message-State: AOJu0Yy9XfIadWGJ5mFyWcpTxCCt9tBctjbYPensv8QdttLSKuZ8PemN
+ pVKFY9sDzuPfWoqw6hRA9XFGSFOsA9I+Cepp19ewpKFJjrI+MBlRmaL/4ehDndZ3Pq51FuxAPkq
+ uVGiOefRfizx0nTDOT1PLo9SzfqeH1yBBxCjJaV2imCGJaOcyMc6bQ7o8e2d+
+X-Gm-Gg: ASbGnctTfpkZpbJy3wCCdBmBAjx3TT6ToJA/I0E42ZBco9cXaG/DftzFusxg2cuoOs3
+ dk4SHK6vB+KmGHMDnlAqEnb99GI5h5lNDcHqMoKRV21Icd/oxKupL2DZkEaKT3p0OLKlxCLgE5+
+ 7PPQWqicuU0bFSDvu8qJg7EgweIEQ8rHJt6KRIMe1KbmxEEBuGsPyqM/KreoCIBHdAUsu3nOdjg
+ 3K6JL1b/EvPoXE6YG6bGLeLg1X84prqDtfAL9aJQEqZSVXzHPwUqpPSwtO6fRpmnu1Kd+ymkNZd
+ GdmFjrtrusdIapgN9XZqDkwPc89wqgU=
+X-Received: by 2002:a05:620a:440f:b0:7b6:7a87:744a with SMTP id
+ af79cd13be357-7be631e712amr2780099785a.5.1737474632279; 
+ Tue, 21 Jan 2025 07:50:32 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IH10yuAuWRmmuQK4AEe+FW2KrpcMd/vMVs6LdF6HZw8S1EWAdZnZn8435jnRM5bvRoHBSEOUw==
+X-Received: by 2002:a05:620a:440f:b0:7b6:7a87:744a with SMTP id
+ af79cd13be357-7be631e712amr2780095985a.5.1737474631983; 
+ Tue, 21 Jan 2025 07:50:31 -0800 (PST)
+Received: from x1n (pool-99-254-114-190.cpe.net.cable.rogers.com.
+ [99.254.114.190]) by smtp.gmail.com with ESMTPSA id
+ af79cd13be357-7be61480541sm565914585a.42.2025.01.21.07.50.30
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Tue, 21 Jan 2025 07:50:31 -0800 (PST)
+Date: Tue, 21 Jan 2025 10:50:29 -0500
+From: Peter Xu <peterx@redhat.com>
+To: Prasad Pandit <ppandit@redhat.com>
+Cc: qemu-devel@nongnu.org, farosas@suse.de, berrange@redhat.com,
+ Prasad Pandit <pjp@fedoraproject.org>
+Subject: Re: [PATCH v3 0/4] Allow to enable multifd and postcopy migration
+ together
+Message-ID: <Z4_CReUE4j6hz_Bh@x1n>
+References: <20250121131032.1611245-1-ppandit@redhat.com>
 MIME-Version: 1.0
-References: <20250118164056.830721-1-r.peniaev@gmail.com>
- <20250118164056.830721-5-r.peniaev@gmail.com>
- <87wmeonrar.fsf@draig.linaro.org>
- <CACZ9PQU1GH2XEH7HX7YXX7UmtGhJbyZR5-F63339F+7yu3M1GA@mail.gmail.com>
-In-Reply-To: <CACZ9PQU1GH2XEH7HX7YXX7UmtGhJbyZR5-F63339F+7yu3M1GA@mail.gmail.com>
-From: Roman Penyaev <r.peniaev@gmail.com>
-Date: Tue, 21 Jan 2025 16:49:15 +0100
-X-Gm-Features: AbW1kvb5Qd78Aw125kB6TNdhpogH5pVkGvbiMwvSc9e521z-ZIbHFB-G0-Xy91k
-Message-ID: <CACZ9PQWPhOHXg_+kwCGKkGtWWLpE1Wz5sX7wwh81AY9R8=BDPA@mail.gmail.com>
-Subject: Re: [PATCH v7 4/4] qemu-options.hx: describe hub chardev and
- aggregation of several backends
-To: =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>
-Cc: =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@redhat.com>, 
- qemu-devel@nongnu.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::12c;
- envelope-from=r.peniaev@gmail.com; helo=mail-lf1-x12c.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20250121131032.1611245-1-ppandit@redhat.com>
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=peterx@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -51
+X-Spam_score: -5.2
+X-Spam_bar: -----
+X-Spam_report: (-5.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-2.996,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.086,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -99,128 +106,47 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, Jan 21, 2025 at 4:23=E2=80=AFPM Roman Penyaev <r.peniaev@gmail.com>=
- wrote:
->
-> On Tue, Jan 21, 2025 at 4:02=E2=80=AFPM Alex Benn=C3=A9e <alex.bennee@lin=
-aro.org> wrote:
-> >
-> > Roman Penyaev <r.peniaev@gmail.com> writes:
-> >
-> > > This adds a few lines describing `hub` aggregator configuration
-> > > for aggregation of several backend devices with a single frontend
-> > > device.
-> > >
-> > > Signed-off-by: Roman Penyaev <r.peniaev@gmail.com>
-> > > Cc: "Marc-Andr=C3=A9 Lureau" <marcandre.lureau@redhat.com>
-> > > Cc: qemu-devel@nongnu.org
-> > > ---
-> > >  qemu-options.hx | 48 ++++++++++++++++++++++++++++++++++++++++++++---=
--
-> > >  1 file changed, 44 insertions(+), 4 deletions(-)
-> > >
-> > > diff --git a/qemu-options.hx b/qemu-options.hx
-> > > index 7090d59f6f10..fdc46f7e68b3 100644
-> > > --- a/qemu-options.hx
-> > > +++ b/qemu-options.hx
-> > > @@ -3720,7 +3720,7 @@ SRST
-> > >  The general form of a character device option is:
-> > >
-> > >  ``-chardev backend,id=3Did[,mux=3Don|off][,options]``
-> > > -    Backend is one of: ``null``, ``socket``, ``udp``, ``msmouse``,
-> > > +    Backend is one of: ``null``, ``socket``, ``udp``, ``msmouse``, `=
-`hub``,
-> > >      ``vc``, ``ringbuf``, ``file``, ``pipe``, ``console``, ``serial``=
-,
-> > >      ``pty``, ``stdio``, ``braille``, ``parallel``,
-> > >      ``spicevmc``, ``spiceport``. The specific backend will determine=
- the
-> > > @@ -3777,9 +3777,10 @@ The general form of a character device option =
-is:
-> > >      the QEMU monitor, and ``-nographic`` also multiplexes the consol=
-e
-> > >      and the monitor to stdio.
-> > >
-> > > -    There is currently no support for multiplexing in the other
-> > > -    direction (where a single QEMU front end takes input and output =
-from
-> > > -    multiple chardevs).
-> > > +    If you need to aggregate data in the opposite direction (where o=
-ne
-> > > +    QEMU frontend interface receives input and output from multiple
-> > > +    backend chardev devices), please refer to the paragraph below
-> > > +    regarding chardev ``hub`` aggregator device configuration.
-> > >
-> > >      Every backend supports the ``logfile`` option, which supplies th=
-e
-> > >      path to a file to record all data transmitted via the backend. T=
-he
-> > > @@ -3879,6 +3880,45 @@ The available backends are:
-> > >      Forward QEMU's emulated msmouse events to the guest. ``msmouse``
-> > >      does not take any options.
-> > >
-> > > +``-chardev hub,id=3Did,chardevs.0=3Did[,chardevs.N=3Did]`` Explicitl=
-y create
-> > > +    chardev backend hub device with the possibility to aggregate inp=
-ut
-> > > +    from multiple backend devices and forward it to a single fronten=
-d
-> > > +    device. Additionally, `hub` device takes the output from the
-> > > +    frontend device and sends it back to all the connected backend
-> > > +    devices. This allows for seamless interaction between different
-> > > +    backend devices and a single frontend interface. Aggregation
-> > > +    supported for up to 4 chardev devices. (Since 10.0)
-> > > +
-> > > +    For example, the following is a use case of 2 backend devices:
-> > > +    virtual console ``vc0`` and a pseudo TTY ``pty0`` connected to
-> > > +    a single virtio hvc console frontend device with a hub ``hub0``
-> > > +    help. Virtual console renders text to an image, which can be
-> > > +    shared over the VNC protocol. In turn, pty backend provides
-> > > +    bidirectional communication to the virtio hvc console over the
-> > > +    pseudo TTY file. The example configuration can be as follows:
-> > > +
-> > > +    ::
-> > > +
-> > > +       -chardev pty,path=3D/tmp/pty,id=3Dpty0 \
-> > > +       -chardev vc,id=3Dvc0 \
-> > > +       -chardev hub,id=3Dhub0,chardevs.0=3Dpty0,chardevs.1=3Dvc0 \
-> > > +       -device virtconsole,chardev=3Dhub0 \
-> > > +       -vnc 0.0.0.0:0
-> > > +
-> > > +    Once QEMU starts VNC client and any TTY emulator can be used to
-> > > +    control a single hvc console:
-> > > +
-> > > +    ::
-> > > +
-> > > +       # Start TTY emulator
-> > > +       tio /tmp/pty
-> > > +
-> > > +       # Start VNC client and switch to virtual console Ctrl-Alt-2
-> > > +       vncviewer :0
-> > > +
-> > > +    Several frontend devices is not supported. Stacking of multiplex=
-ers
-> > > +    and hub devices is not supported as well.
-> > > +
-> >
-> > Not sure why this breaks but I'm seeing:
-> >
-> >   FAILED: docs/docs.stamp
-> >   /usr/bin/env CONFDIR=3Detc/qemu /home/alex/lsrc/qemu.git/builds/all/p=
-yvenv/bin/sphinx-build -q -W -Dkerneldoc_werror=3D1 -j auto -Dversion=3D9.2=
-.50 -Drelease=3D -Ddepfile=3Ddocs/docs.d -Ddepfile_stamp=3Ddocs/docs.stamp =
--b html -d /home/alex/lsrc/qemu.git/builds/all/docs/manual.p /home/alex/lsr=
-c/qemu.git/docs /home/alex/lsrc/qemu.git/builds/all/docs/manual
-> >
-> >   Warning, treated as error:
-> >   /home/alex/lsrc/qemu.git/qemu-options.hx:3884:'any' reference target =
-not found: hub
->
-> This is odd, my make is silent. Can you please check this?
+On Tue, Jan 21, 2025 at 06:40:28PM +0530, Prasad Pandit wrote:
+> From: Prasad Pandit <pjp@fedoraproject.org>
+> 
+> Hello,
+> 
+> * Currently Multifd and Postcopy migration can not be used together.
+>   QEMU shows "Postcopy is not yet compatible with multifd" message.
+> 
+>   When migrating guests with large (100's GB) RAM, Multifd threads
+>   help to accelerate migration, but inability to use it with the
+>   Postcopy mode delays guest start up on the destination side.
+> 
+> * This patch series allows to enable both Multifd and Postcopy
+>   migration together. Precopy and Multifd threads work during
+>   the initial guest (RAM) transfer. When migration moves to the
+>   Postcopy phase, Multifd threads are restrained and the Postcopy
+>   threads start to request pages from the source side.
+> 
+> * This series removes magic value (4-bytes) introduced in the
+>   previous series for the Postcopy channel. And refactoring of
+>   the 'ram_save_target_page' function is made independent of
+>   the multifd & postcopy change.
+> 
+> * This series passes all existing 'tests/qtest/migration/*' test
+>   cases and adds a new one to enable multifd channels with postcopy
+>   migration.
+> 
+>   v2: https://lore.kernel.org/qemu-devel/20241129122256.96778-1-ppandit@redhat.com/T/#u
+>   v1: https://lore.kernel.org/qemu-devel/20241126115748.118683-1-ppandit@redhat.com/T/#u
+>   v0: https://lore.kernel.org/qemu-devel/20241029150908.1136894-1-ppandit@redhat.com/T/#u
 
-Docs generation was disabled on my side. My bad. The problem is in the
-`hub`, which should be ``hub``. Thanks for noticing that.
+Another comment for the cover letter (besides the test request): please
+consider adding some changelog into cover letter whenever possible.
 
---
-Roman
+Normally we don't suggest a changelog only if the wholeset has been
+drastically rewritten.  Otherwise having a changelog would help people
+understand what has happened between the versions.
+
+Thanks,
+
+-- 
+Peter Xu
+
 
