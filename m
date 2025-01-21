@@ -4,66 +4,49 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BC132C02182
-	for <qemu-devel@archiver.kernel.org>; Tue, 21 Jan 2025 06:59:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id EB2C7C02187
+	for <qemu-devel@archiver.kernel.org>; Tue, 21 Jan 2025 07:06:00 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ta8Df-00052W-E4; Tue, 21 Jan 2025 01:58:40 -0500
+	id 1ta8JV-0006eC-Li; Tue, 21 Jan 2025 02:04:41 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1ta8Dd-00052K-IG
- for qemu-devel@nongnu.org; Tue, 21 Jan 2025 01:58:37 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <jamin_lin@aspeedtech.com>)
+ id 1ta8JT-0006dP-5C; Tue, 21 Jan 2025 02:04:39 -0500
+Received: from mail.aspeedtech.com ([211.20.114.72] helo=TWMBX01.aspeed.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1ta8Da-0000n3-Rp
- for qemu-devel@nongnu.org; Tue, 21 Jan 2025 01:58:37 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1737442713;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:
- content-transfer-encoding:content-transfer-encoding;
- bh=g3C9tESw9lcwieDeyNzK/YNWLWBU59pAFfURA6LTMSE=;
- b=GxLgN0A/4Ue5Oijeg53k3RvmCzGgn04nwejeWRD2EQsav/49/TZGo6DhssVZOZGQYFtu5p
- yzjuc9FqDpc909mxPJur6Kc8Cyv8bEVjuQuQ0tgrc9WkyWSx9mqAE8VBG9msBjKLX5pb5M
- V4N5rG9YfVwNM1ChPgMkuESU/XCIuVo=
-Received: from mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-1-aBLi1rooN_62MGEsmoihfg-1; Tue,
- 21 Jan 2025 01:58:28 -0500
-X-MC-Unique: aBLi1rooN_62MGEsmoihfg-1
-X-Mimecast-MFC-AGG-ID: aBLi1rooN_62MGEsmoihfg
-Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id B6D311955DDE; Tue, 21 Jan 2025 06:58:22 +0000 (UTC)
-Received: from thuth-p1g4.redhat.com (unknown [10.39.192.56])
- by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 569AD3003E7F; Tue, 21 Jan 2025 06:58:15 +0000 (UTC)
-From: Thomas Huth <thuth@redhat.com>
-To: qemu-devel@nongnu.org,
- =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
-Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PATCH] tests/functional: Fix broken decorators with lamda functions
-Date: Tue, 21 Jan 2025 07:58:14 +0100
-Message-ID: <20250121065814.1092720-1-thuth@redhat.com>
+ (Exim 4.90_1) (envelope-from <jamin_lin@aspeedtech.com>)
+ id 1ta8JQ-0001Q8-GJ; Tue, 21 Jan 2025 02:04:38 -0500
+Received: from TWMBX01.aspeed.com (192.168.0.62) by TWMBX01.aspeed.com
+ (192.168.0.62) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1258.12; Tue, 21 Jan
+ 2025 15:04:24 +0800
+Received: from localhost.localdomain (192.168.10.10) by TWMBX01.aspeed.com
+ (192.168.0.62) with Microsoft SMTP Server id 15.2.1258.12 via Frontend
+ Transport; Tue, 21 Jan 2025 15:04:24 +0800
+To: =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@kaod.org>, Peter Maydell
+ <peter.maydell@linaro.org>, Steven Lee <steven_lee@aspeedtech.com>, Troy Lee
+ <leetroy@gmail.com>, Andrew Jeffery <andrew@codeconstruct.com.au>, "Joel
+ Stanley" <joel@jms.id.au>, "open list:ASPEED BMCs" <qemu-arm@nongnu.org>,
+ "open list:All patches CC here" <qemu-devel@nongnu.org>
+CC: <jamin_lin@aspeedtech.com>, <troy_lee@aspeedtech.com>,
+ <yunlin.tang@aspeedtech.com>
+Subject: [PATCH v1 00/18] Support AST2700 A1
+Date: Tue, 21 Jan 2025 15:04:06 +0800
+Message-ID: <20250121070424.2465942-1-jamin_lin@aspeedtech.com>
+X-Mailer: git-send-email 2.25.1
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=thuth@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -50
-X-Spam_score: -5.1
-X-Spam_bar: -----
-X-Spam_report: (-5.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-3,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+Content-Type: text/plain
+Received-SPF: pass client-ip=211.20.114.72;
+ envelope-from=jamin_lin@aspeedtech.com; helo=TWMBX01.aspeed.com
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_FAIL=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -76,96 +59,119 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-to:  Jamin Lin <jamin_lin@aspeedtech.com>
+From:  Jamin Lin via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The decorators that use a lambda function are currently broken
-and do not properly skip the test if the condition is not met.
-Using "return skipUnless(lambda: ...)" does not work as expected.
-To fix it, rewrite the decorators without lambda, it's simpler
-that way anyway.
-
-skipIfMissingImports also needs to exec() the import statement,
-otherwise we always try to import a module called "impname" which
-does not exist.
-
-Signed-off-by: Thomas Huth <thuth@redhat.com>
----
- I've noticed the problem while trying to get the migration test
- through the CI:
- https://gitlab.com/thuth/qemu/-/jobs/8901960783#L100
- ... the OpenSUSE containers apparently lack the "nc" binary ...
-
- tests/functional/qemu_test/decorators.py | 44 +++++++++++-------------
- 1 file changed, 21 insertions(+), 23 deletions(-)
-
-diff --git a/tests/functional/qemu_test/decorators.py b/tests/functional/qemu_test/decorators.py
-index df088bc090..7750af7b7d 100644
---- a/tests/functional/qemu_test/decorators.py
-+++ b/tests/functional/qemu_test/decorators.py
-@@ -16,15 +16,14 @@
-   @skipIfMissingCommands("mkisofs", "losetup")
- '''
- def skipIfMissingCommands(*args):
--    def has_cmds(cmdlist):
--        for cmd in cmdlist:
--            if not which(cmd):
--                return False
--        return True
--
--    return skipUnless(lambda: has_cmds(args),
--                      'required command(s) "%s" not installed' %
--                      ", ".join(args))
-+    has_cmds = True
-+    for cmd in args:
-+         if not which(cmd):
-+             has_cmds = False
-+             break
-+
-+    return skipUnless(has_cmds, 'required command(s) "%s" not installed' %
-+                                ", ".join(args))
+v1:
+ 1. Refactor INTC model to support both INTC0 and INTC1.
+ 2. Support AST2700 A1.
+ 3. Create ast2700a0-evb machine.
  
- '''
- Decorator to skip execution of a test if the current
-@@ -35,9 +34,9 @@ def has_cmds(cmdlist):
-   @skipIfNotMachine("x86_64", "aarch64")
- '''
- def skipIfNotMachine(*args):
--    return skipUnless(lambda: platform.machine() in args,
--                        'not running on one of the required machine(s) "%s"' %
--                        ", ".join(args))
-+    return skipUnless(platform.machine() in args,
-+                      'not running on one of the required machine(s) "%s"' %
-+                      ", ".join(args))
- 
- '''
- Decorator to skip execution of flaky tests, unless
-@@ -94,14 +93,13 @@ def skipBigDataTest():
-   @skipIfMissingImports("numpy", "cv2")
- '''
- def skipIfMissingImports(*args):
--    def has_imports(importlist):
--        for impname in importlist:
--            try:
--                import impname
--            except ImportError:
--                return False
--        return True
--
--    return skipUnless(lambda: has_imports(args),
--                      'required import(s) "%s" not installed' %
--                      ", ".join(args))
-+    has_imports = True
-+    for impname in args:
-+        try:
-+            exec('import %s' % impname)
-+        except ImportError:
-+            has_imports = False
-+            break
-+
-+    return skipUnless(has_imports, 'required import(s) "%s" not installed' %
-+                                   ", ".join(args))
+With the patch applied, QEMU now supports two machines for running AST2700 SoCs:
+ast2700a0-evb: Designed for AST2700 A0
+ast2700-evb: Designed for AST2700 A1
+
+Test information
+1. QEMU version: https://github.com/qemu/qemu/commit/d6430c17d7113d3c38480dc34e59d00b0504e2f7
+2. This patch series depends on the following patch series
+   https://patchwork.kernel.org/project/qemu-devel/cover/20250113064455.1660564-1-jamin_lin@aspeedtech.com/
+   https://patchwork.kernel.org/project/qemu-devel/cover/20241114094839.4128404-1-jamin_lin@aspeedtech.com/
+3. ASPEED SDK v09.05 pre-built image
+   https://github.com/AspeedTech-BMC/openbmc/releases/tag/v09.05
+   ast2700-default-obmc.tar.gz (A1)
+   https://github.com/AspeedTech-BMC/openbmc/releases/download/v09.05/ast2700-default-obmc.tar.gz
+
+Known Issue:
+The HACE crypto and hash engine is enable by default since AST2700 A1.
+However, aspeed_hace.c(HACE model) currently does not support the CRYPTO command.
+To boot AST2700 A1, I have created a Patch 18 which temporarily resolves the
+issue by sending an interrupt to notify the firmware that the cryptographic
+command has completed. It is a temporary workaround to resolve the boot issue
+in the Crypto Manager SelfTest.
+
+As a result, you will encounter the following kernel warning due to the
+Crypto Manager test failure. If you don't want to see these kernel warning,
+please add the following settings in your kernel config.
+
+```
+CONFIG_CRYPTO_MANAGER_DISABLE_TESTS=y
+```
+
+```
+alg: skcipher: aspeed-ctr-tdes encryption test failed (wrong result) on test vector 0, cfg="in-place (one sglist)"
+[    5.035966] alg: self-tests for ctr(des3_ede) using aspeed-ctr-tdes failed (rc=-22)
+[    5.036139] ------------[ cut here ]------------
+[    5.037188] alg: self-tests for ctr(des3_ede) using aspeed-ctr-tdes failed (rc=-22)
+[    5.037312] WARNING: CPU: 2 PID: 109 at /crypto/testmgr.c:5936 alg_test+0x42c/0x548
+[    5.038049] Modules linked in:
+[    5.038302] CPU: 2 PID: 109 Comm: cryptomgr_test Tainted: G        W          6.6.52-v00.06.04-gf52a0cf7c475 #1
+[    5.038787] Hardware name: AST2700-EVB (DT)
+[    5.038988] pstate: 60000005 (nZCv daif -PAN -UAO -TCO -DIT -SSBS BTYPE=--)
+[    5.039315] pc : alg_test+0x42c/0x548
+[    5.039505] lr : alg_test+0x42c/0x548
+[    5.039697] sp : ffffffc0825e3d50
+[    5.039862] x29: ffffffc0825e3df0 x28: 0000000000000004 x27: 0000000000000000
+[    5.040226] x26: ffffffc080bcada0 x25: ffffffc081dac9d0 x24: 0000000000000004
+[    5.040700] x23: 0000000000001285 x22: ffffff8003ded280 x21: ffffff8003ded200
+[    5.041458] x20: 00000000ffffffff x19: 00000000ffffffea x18: ffffffffffffffff
+[    5.041915] x17: 282064656c696166 x16: 20736564742d7274 x15: 00000000fffffffe
+[    5.042287] x14: 0000000000000000 x13: ffffffc081ba555c x12: 65742d666c657320
+[    5.042684] x11: 00000000fffeffff x10: ffffffc0818ff048 x9 : ffffffc0800a36e4
+[    5.043077] x8 : 000000000017ffe8 x7 : c0000000fffeffff x6 : 000000000057ffa8
+[    5.043461] x5 : 000000000000ffff x4 : 0000000000000000 x3 : 0000000000000000
+[    5.043751] x2 : 0000000000000000 x1 : 0000000000000000 x0 : ffffff800415e740
+[    5.045544] Call trace:
+[    5.045693]  alg_test+0x42c/0x548
+[    5.045878]  cryptomgr_test+0x28/0x48
+[    5.046052]  kthread+0x114/0x120
+[    5.046226]  ret_from_fork+0x10/0x20
+[    5.046413] ---[ end trace 0000000000000000 ]---
+[    5.071510] alg: skcipher: aspeed-ctr-des encryption test failed (wrong result) on test vector 0, cfg="in-place (one sglist)"
+[    5.072145] alg: self-tests for ctr(des) using aspeed-ctr-des failed (rc=-22)
+```
+
+
+Jamin Lin (18):
+  hw/intc/aspeed: Rename INTC to INTC0
+  hw/intc/aspeed: Support different memory region ops
+  hw/intc/aspeed: Introduce a new aspeed_2700_intc0_ops for INTC0
+  hw/intc/aspeed: Support setting different memory and register size
+  hw/intc/aspeed: Introduce helper functions for enable and status
+    registers
+  hw/intc/aspeed: Introduce AspeedINTCIRQ structure to save the irq
+    index and register address
+  hw/intc/aspeed: Introduce IRQ handler function to reduce code
+    duplication
+  hw/intc/aspeed: Add Support for Multi-Output IRQ Handling
+  hw/intc/aspeed: Add ID to trace events for better debugging
+  hw/intc/aspeed: Add Support for AST2700 INTC1 Controller
+  hw/misc/aspeed_scu: Add Support for AST2700/AST2750 A1 Silicon
+    Revisions
+  hw/arm/aspeed_ast27x0: Support two levels of INTC controllers for
+    AST2700 A1
+  hw/arm/aspeed: Rename IRQ table and machine name for AST2700 A0
+  hw/arm/aspeed: Add SoC and Machine Support for AST2700 A1
+  hw/misc/aspeed_hace: Fix coding style
+  hw/misc/aspeed_hace: Add AST2700 support
+  hw/arm/aspeed_ast27x0: Add HACE support for AST2700
+  hw/misc/aspeed_hace: (DROP) Fix boot issue in the Crypto Manager Self
+    Test(WORKAROUND)
+
+ hw/arm/aspeed.c               |  26 +-
+ hw/arm/aspeed_ast27x0.c       | 229 +++++++++--
+ hw/intc/aspeed_intc.c         | 689 +++++++++++++++++++++++++---------
+ hw/intc/trace-events          |  25 +-
+ hw/misc/aspeed_hace.c         |  44 ++-
+ hw/misc/aspeed_scu.c          |   3 +
+ include/hw/arm/aspeed_soc.h   |   5 +-
+ include/hw/intc/aspeed_intc.h |  35 +-
+ include/hw/misc/aspeed_hace.h |   1 +
+ include/hw/misc/aspeed_scu.h  |   2 +
+ 10 files changed, 817 insertions(+), 242 deletions(-)
+
 -- 
-2.48.1
+2.34.1
 
 
