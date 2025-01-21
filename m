@@ -4,94 +4,86 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 624ECC0218B
-	for <qemu-devel@archiver.kernel.org>; Tue, 21 Jan 2025 15:48:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4AECFC02182
+	for <qemu-devel@archiver.kernel.org>; Tue, 21 Jan 2025 15:50:02 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1taGTU-0007GK-N0; Tue, 21 Jan 2025 10:47:32 -0500
+	id 1taGVV-0000A7-RP; Tue, 21 Jan 2025 10:49:37 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1taGTS-0007Fd-Cr
- for qemu-devel@nongnu.org; Tue, 21 Jan 2025 10:47:31 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1taGTQ-0000Yl-J4
- for qemu-devel@nongnu.org; Tue, 21 Jan 2025 10:47:30 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1737474446;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=Pua/xHaxlZNyBjM1rG1Z4O+pGX8GF2uIul3GOSxD72s=;
- b=D5CgMvGkHdOzIjsLrJXdA30x+QI+xnSeeA8HyVNPMTR18NaxShCbWtjHUzYYhfhnh+6jLt
- CI8FYpGpXlbWZLeNBTXpc0fT91t6vVcyAxTSTP+q8ntAxhPzgHLan5CRJgkdT9t0IoI5nc
- T7eNSoiu11CFcyngodQX+j0cM5vYgJk=
-Received: from mail-qk1-f197.google.com (mail-qk1-f197.google.com
- [209.85.222.197]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-677-pIYdQT5IMsmHosgk9GLGjg-1; Tue, 21 Jan 2025 10:47:23 -0500
-X-MC-Unique: pIYdQT5IMsmHosgk9GLGjg-1
-X-Mimecast-MFC-AGG-ID: pIYdQT5IMsmHosgk9GLGjg
-Received: by mail-qk1-f197.google.com with SMTP id
- af79cd13be357-7b6e9fb0436so1739917285a.0
- for <qemu-devel@nongnu.org>; Tue, 21 Jan 2025 07:47:23 -0800 (PST)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1737474442; x=1738079242;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+ (Exim 4.90_1) (envelope-from <r.peniaev@gmail.com>)
+ id 1taGVP-00008d-RW
+ for qemu-devel@nongnu.org; Tue, 21 Jan 2025 10:49:33 -0500
+Received: from mail-lf1-x12c.google.com ([2a00:1450:4864:20::12c])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <r.peniaev@gmail.com>)
+ id 1taGVN-0000jb-Ni
+ for qemu-devel@nongnu.org; Tue, 21 Jan 2025 10:49:31 -0500
+Received: by mail-lf1-x12c.google.com with SMTP id
+ 2adb3069b0e04-54287a3ba3cso6258376e87.0
+ for <qemu-devel@nongnu.org>; Tue, 21 Jan 2025 07:49:28 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20230601; t=1737474567; x=1738079367; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
  :message-id:reply-to;
- bh=Pua/xHaxlZNyBjM1rG1Z4O+pGX8GF2uIul3GOSxD72s=;
- b=Ecjq00SxsseDpxf8F4RiiobDJX8lsv8c3LcJ50xHXlBOfRTHAseuM2OatM54bMoayY
- 35WCq0Y0biEiV9UWfwaQcS+WPkRju1ZjUfU5sBjkmAHwGWEDx5y7GwiU4/tIU0baUaLp
- V8DNt3SZNvEzk9PkpkXSdqXihtCC4Gsrrco0RxienzJXCQbJhIjZt5DtTstzuWwkfAMa
- PkksrCBVKDoyve5TrS25GloOvrmqpgrhUJInBPaw7ujha9WAhNk0QLsJIR6HGfAOfCCi
- ZKPNI2RAB7SPdYRmRivYL/WHcwfFOigyDZiv808oyrOWMcosH0TydL8fuRKP0f84EiSy
- i7sA==
-X-Gm-Message-State: AOJu0YwJ1Ql/6Na5sWFMyq/6CTisxDuaV3UCuH+QK+GnAJXGjt7BQDmq
- +yMLivJR/nP1z9VpPND4T5/LfC3iMv9qt6BqV/yYCzvf/wBTSPn0g3Qok/1cgtf9V0G6mak7Xll
- t53kmcZuveGlLi18f7WyZksNqGzbBBZ8kklB0xJ9izZp1Z7bT8IY+
-X-Gm-Gg: ASbGncs31Bs/mDwL5HvC4y4B9cnI0xG9GM8h+RjZa2+BfDXiQCdTvgDfNV46Vk7YPI2
- dyOmZXd+PbzWf1mtQAedvkhfqeq1AM37n3VQNeCcyE5r37X2PicmtjXuqjJLpSBG2QZP3s3HRLh
- eZogG41aVzRPYA83iSNOTYye6D+fwELo6wH73yVmOr+nHUPdGhuNM5tyv3yYt1NFcpPK+lLOSdc
- NUef0pWUiVx7+pROmsZjUAZ9stCrVT2MURVU9RYN3awb6axgB8Qs1rcszTG+0id80WdCGP1fzOZ
- zAWEIHggxutYVWIlXuUZFmraaEGHuhk=
-X-Received: by 2002:a05:620a:24c8:b0:7b6:eab3:cdd1 with SMTP id
- af79cd13be357-7be6325dc77mr3291818585a.49.1737474442678; 
- Tue, 21 Jan 2025 07:47:22 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IHN/uHodmUD9eeR+l2N4GC3CN0LIfUJWK8f7cfNze6QZYHDJHQ283N2jI6Ek1fc0atfzVtmWQ==
-X-Received: by 2002:a05:620a:24c8:b0:7b6:eab3:cdd1 with SMTP id
- af79cd13be357-7be6325dc77mr3291816285a.49.1737474442415; 
- Tue, 21 Jan 2025 07:47:22 -0800 (PST)
-Received: from x1n (pool-99-254-114-190.cpe.net.cable.rogers.com.
- [99.254.114.190]) by smtp.gmail.com with ESMTPSA id
- af79cd13be357-7be6148055bsm567396985a.43.2025.01.21.07.47.21
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 21 Jan 2025 07:47:21 -0800 (PST)
-Date: Tue, 21 Jan 2025 10:47:19 -0500
-From: Peter Xu <peterx@redhat.com>
-To: Prasad Pandit <ppandit@redhat.com>
-Cc: qemu-devel@nongnu.org, farosas@suse.de, berrange@redhat.com,
- Prasad Pandit <pjp@fedoraproject.org>
-Subject: Re: [PATCH v3 4/4] tests/qtest/migration: add postcopy test with
- multifd
-Message-ID: <Z4_Bh3ytv9REBero@x1n>
-References: <20250121131032.1611245-1-ppandit@redhat.com>
- <20250121131032.1611245-5-ppandit@redhat.com>
+ bh=Pg0sM0O21avLkPHNR1ym4ACdRrEJebVY8MaNVlggDfk=;
+ b=nRswL6rVs3YKsI4YrZ2RhdjJ8YTKE7S+ZSxIrkuZImsMjYA4mvdlaHFyFSd9qZ/Ttw
+ 76Q0NWYY8dAIR+WGNpC8jKdEfWBKgWc8i1OvdGEXWsT9NN4MqTOYR+5vMuPIYsnRv9V7
+ f46QObM4Yj9rZ8mFBf5a5e4P1lCXgSCvg/hRkqmX100S5ZO71s7gtn+a0TSr9KCFyG/m
+ ataDS6kPGwVh4E8Ch/p7njmTdcYM874RDlRdp/jp2J1iSiNXsWgZZNiyaKpRmyzlFotE
+ FSAm5FcKRlvzWV1+R3kR0GTGZOOYUzAzoAt32nAyk+LlLgbnh/eoXseJm0nGrCIvXAm2
+ Chlg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1737474567; x=1738079367;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=Pg0sM0O21avLkPHNR1ym4ACdRrEJebVY8MaNVlggDfk=;
+ b=W74nAlgOGAbvHxfJmhUJoc4kYioQPMudG1vEpp0WxlvCKQAa/c8/YfZg2d0fqBsjz+
+ vqmLD7/K8pFqsKlYPrr46j0qyidKC8GBvg+5gaKacyQ11f8Qmyoa5bgmaZaia35+1cdI
+ 8evYMl0rBOacWCweMtqXQ4bn8/9D5CgnDTKExJh7FR3GCMWLlW7Mctmw08mCy0kpEuF7
+ hW5KG5l2OHvWCcQVZn24UfAYSd/W9i6eJaZ4RhPiASqOjYESL3q9LkcVmWNeLzA2kQoB
+ u5KTsxb7dkWazyHgXoe/7byH0sRcBkYIDWnEV5TWL5OeNcMh42yM2BKmYO+YhPQE1H9O
+ uuzQ==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCVxx8B9XAyjLSXLGvVcT8pf930XlEluaD59iviLtVr8vgq3ZNmpVKNijevQGOoCZZJcxcFg3xwjs7RC@nongnu.org
+X-Gm-Message-State: AOJu0Yy3L9kGWDJszRdCx2Qyxngq4sAo2PD7tLI7KySxAzKanJA+HiRw
+ 2FoWCkmpBQPasKoR2QTYmKHfqlz2ydwyrbeuK4n6tmb9pdoUwoywM++e7rD276ZbDl+C5aLyvON
+ jWbD8hdejyIYhe6Fcv//jnxSv3ao=
+X-Gm-Gg: ASbGncuIQV5S5150qL/OIELUqtli2uCOJIlJzXqL25sTFRG4PZbc2L4VQ4tiv12Epk2
+ jeZ4wThDzKHOVE+RA4d2jqSPcC78+WDn42IQ5QRdUo6OthdDPLUQ=
+X-Google-Smtp-Source: AGHT+IEVOeTTM7qPAfoQvUnhV6ryFesRj0ElvhDELhnbH7CU40yH23eyTqu1js5wg8IZ7rv/I3X6ka3k8s3syoMnaNc=
+X-Received: by 2002:a05:6512:3e0e:b0:542:23b2:8010 with SMTP id
+ 2adb3069b0e04-542abfbdcc3mr8176217e87.23.1737474566395; Tue, 21 Jan 2025
+ 07:49:26 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20250121131032.1611245-5-ppandit@redhat.com>
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=peterx@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -50
-X-Spam_score: -5.1
-X-Spam_bar: -----
-X-Spam_report: (-5.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-2.996,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+References: <20250118164056.830721-1-r.peniaev@gmail.com>
+ <20250118164056.830721-5-r.peniaev@gmail.com>
+ <87wmeonrar.fsf@draig.linaro.org>
+ <CACZ9PQU1GH2XEH7HX7YXX7UmtGhJbyZR5-F63339F+7yu3M1GA@mail.gmail.com>
+In-Reply-To: <CACZ9PQU1GH2XEH7HX7YXX7UmtGhJbyZR5-F63339F+7yu3M1GA@mail.gmail.com>
+From: Roman Penyaev <r.peniaev@gmail.com>
+Date: Tue, 21 Jan 2025 16:49:15 +0100
+X-Gm-Features: AbW1kvb5Qd78Aw125kB6TNdhpogH5pVkGvbiMwvSc9e521z-ZIbHFB-G0-Xy91k
+Message-ID: <CACZ9PQWPhOHXg_+kwCGKkGtWWLpE1Wz5sX7wwh81AY9R8=BDPA@mail.gmail.com>
+Subject: Re: [PATCH v7 4/4] qemu-options.hx: describe hub chardev and
+ aggregation of several backends
+To: =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>
+Cc: =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@redhat.com>, 
+ qemu-devel@nongnu.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:20::12c;
+ envelope-from=r.peniaev@gmail.com; helo=mail-lf1-x12c.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -107,95 +99,128 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, Jan 21, 2025 at 06:40:32PM +0530, Prasad Pandit wrote:
-> From: Prasad Pandit <pjp@fedoraproject.org>
-> 
-> Add a new postcopy test 'migration/postcopy/multifd'
-> to run postcopy migration with multifd channels enabled.
-> Add a boolean field 'multifd' to the MigrateCommon struct.
-> It helps to enable multifd channels.
-> 
-> Signed-off-by: Prasad Pandit <pjp@fedoraproject.org>
-> ---
->  tests/qtest/migration/framework.c      |  8 ++++++++
->  tests/qtest/migration/framework.h      |  3 +++
->  tests/qtest/migration/postcopy-tests.c | 10 ++++++++++
->  3 files changed, 21 insertions(+)
-> 
-> diff --git a/tests/qtest/migration/framework.c b/tests/qtest/migration/framework.c
-> index 4550cda129..7f5abd760e 100644
-> --- a/tests/qtest/migration/framework.c
-> +++ b/tests/qtest/migration/framework.c
-> @@ -427,6 +427,14 @@ static int migrate_postcopy_prepare(QTestState **from_ptr,
->          migrate_set_capability(to, "postcopy-preempt", true);
->      }
->  
-> +    if (args->multifd) {
-> +        migrate_set_capability(from, "multifd", true);
-> +        migrate_set_capability(to, "multifd", true);
-> +
-> +        migrate_set_parameter_int(from, "multifd-channels", 8);
-> +        migrate_set_parameter_int(to, "multifd-channels", 8);
-> +    }
-> +
->      migrate_ensure_non_converge(from);
->  
->      migrate_prepare_for_dirty_mem(from);
-> diff --git a/tests/qtest/migration/framework.h b/tests/qtest/migration/framework.h
-> index 7991ee56b6..1b2320ebef 100644
-> --- a/tests/qtest/migration/framework.h
-> +++ b/tests/qtest/migration/framework.h
-> @@ -193,6 +193,9 @@ typedef struct {
->       */
->      bool live;
->  
-> +    /* set multifd on */
-> +    bool multifd;
-> +
->      /* Postcopy specific fields */
->      void *postcopy_data;
->      bool postcopy_preempt;
-> diff --git a/tests/qtest/migration/postcopy-tests.c b/tests/qtest/migration/postcopy-tests.c
-> index daf7449f2c..6eada6ccbc 100644
-> --- a/tests/qtest/migration/postcopy-tests.c
-> +++ b/tests/qtest/migration/postcopy-tests.c
-> @@ -27,6 +27,15 @@ static void test_postcopy(void)
->      test_postcopy_common(&args);
->  }
->  
-> +static void test_postcopy_multifd(void)
-> +{
-> +    MigrateCommon args = {
-> +        .multifd = true,
-> +    };
-> +
-> +    test_postcopy_common(&args);
-> +}
-> +
->  static void test_postcopy_suspend(void)
->  {
->      MigrateCommon args = {
-> @@ -83,6 +92,7 @@ void migration_test_add_postcopy(MigrationTestEnv *env)
->  {
->      if (env->has_uffd) {
->          migration_test_add("/migration/postcopy/plain", test_postcopy);
-> +        migration_test_add("/migration/postcopy/multifd", test_postcopy_multifd);
->          migration_test_add("/migration/postcopy/recovery/plain",
->                             test_postcopy_recovery);
->          migration_test_add("/migration/postcopy/preempt/plain",
-> --
-> 2.48.1
-> 
+On Tue, Jan 21, 2025 at 4:23=E2=80=AFPM Roman Penyaev <r.peniaev@gmail.com>=
+ wrote:
+>
+> On Tue, Jan 21, 2025 at 4:02=E2=80=AFPM Alex Benn=C3=A9e <alex.bennee@lin=
+aro.org> wrote:
+> >
+> > Roman Penyaev <r.peniaev@gmail.com> writes:
+> >
+> > > This adds a few lines describing `hub` aggregator configuration
+> > > for aggregation of several backend devices with a single frontend
+> > > device.
+> > >
+> > > Signed-off-by: Roman Penyaev <r.peniaev@gmail.com>
+> > > Cc: "Marc-Andr=C3=A9 Lureau" <marcandre.lureau@redhat.com>
+> > > Cc: qemu-devel@nongnu.org
+> > > ---
+> > >  qemu-options.hx | 48 ++++++++++++++++++++++++++++++++++++++++++++---=
+-
+> > >  1 file changed, 44 insertions(+), 4 deletions(-)
+> > >
+> > > diff --git a/qemu-options.hx b/qemu-options.hx
+> > > index 7090d59f6f10..fdc46f7e68b3 100644
+> > > --- a/qemu-options.hx
+> > > +++ b/qemu-options.hx
+> > > @@ -3720,7 +3720,7 @@ SRST
+> > >  The general form of a character device option is:
+> > >
+> > >  ``-chardev backend,id=3Did[,mux=3Don|off][,options]``
+> > > -    Backend is one of: ``null``, ``socket``, ``udp``, ``msmouse``,
+> > > +    Backend is one of: ``null``, ``socket``, ``udp``, ``msmouse``, `=
+`hub``,
+> > >      ``vc``, ``ringbuf``, ``file``, ``pipe``, ``console``, ``serial``=
+,
+> > >      ``pty``, ``stdio``, ``braille``, ``parallel``,
+> > >      ``spicevmc``, ``spiceport``. The specific backend will determine=
+ the
+> > > @@ -3777,9 +3777,10 @@ The general form of a character device option =
+is:
+> > >      the QEMU monitor, and ``-nographic`` also multiplexes the consol=
+e
+> > >      and the monitor to stdio.
+> > >
+> > > -    There is currently no support for multiplexing in the other
+> > > -    direction (where a single QEMU front end takes input and output =
+from
+> > > -    multiple chardevs).
+> > > +    If you need to aggregate data in the opposite direction (where o=
+ne
+> > > +    QEMU frontend interface receives input and output from multiple
+> > > +    backend chardev devices), please refer to the paragraph below
+> > > +    regarding chardev ``hub`` aggregator device configuration.
+> > >
+> > >      Every backend supports the ``logfile`` option, which supplies th=
+e
+> > >      path to a file to record all data transmitted via the backend. T=
+he
+> > > @@ -3879,6 +3880,45 @@ The available backends are:
+> > >      Forward QEMU's emulated msmouse events to the guest. ``msmouse``
+> > >      does not take any options.
+> > >
+> > > +``-chardev hub,id=3Did,chardevs.0=3Did[,chardevs.N=3Did]`` Explicitl=
+y create
+> > > +    chardev backend hub device with the possibility to aggregate inp=
+ut
+> > > +    from multiple backend devices and forward it to a single fronten=
+d
+> > > +    device. Additionally, `hub` device takes the output from the
+> > > +    frontend device and sends it back to all the connected backend
+> > > +    devices. This allows for seamless interaction between different
+> > > +    backend devices and a single frontend interface. Aggregation
+> > > +    supported for up to 4 chardev devices. (Since 10.0)
+> > > +
+> > > +    For example, the following is a use case of 2 backend devices:
+> > > +    virtual console ``vc0`` and a pseudo TTY ``pty0`` connected to
+> > > +    a single virtio hvc console frontend device with a hub ``hub0``
+> > > +    help. Virtual console renders text to an image, which can be
+> > > +    shared over the VNC protocol. In turn, pty backend provides
+> > > +    bidirectional communication to the virtio hvc console over the
+> > > +    pseudo TTY file. The example configuration can be as follows:
+> > > +
+> > > +    ::
+> > > +
+> > > +       -chardev pty,path=3D/tmp/pty,id=3Dpty0 \
+> > > +       -chardev vc,id=3Dvc0 \
+> > > +       -chardev hub,id=3Dhub0,chardevs.0=3Dpty0,chardevs.1=3Dvc0 \
+> > > +       -device virtconsole,chardev=3Dhub0 \
+> > > +       -vnc 0.0.0.0:0
+> > > +
+> > > +    Once QEMU starts VNC client and any TTY emulator can be used to
+> > > +    control a single hvc console:
+> > > +
+> > > +    ::
+> > > +
+> > > +       # Start TTY emulator
+> > > +       tio /tmp/pty
+> > > +
+> > > +       # Start VNC client and switch to virtual console Ctrl-Alt-2
+> > > +       vncviewer :0
+> > > +
+> > > +    Several frontend devices is not supported. Stacking of multiplex=
+ers
+> > > +    and hub devices is not supported as well.
+> > > +
+> >
+> > Not sure why this breaks but I'm seeing:
+> >
+> >   FAILED: docs/docs.stamp
+> >   /usr/bin/env CONFDIR=3Detc/qemu /home/alex/lsrc/qemu.git/builds/all/p=
+yvenv/bin/sphinx-build -q -W -Dkerneldoc_werror=3D1 -j auto -Dversion=3D9.2=
+.50 -Drelease=3D -Ddepfile=3Ddocs/docs.d -Ddepfile_stamp=3Ddocs/docs.stamp =
+-b html -d /home/alex/lsrc/qemu.git/builds/all/docs/manual.p /home/alex/lsr=
+c/qemu.git/docs /home/alex/lsrc/qemu.git/builds/all/docs/manual
+> >
+> >   Warning, treated as error:
+> >   /home/alex/lsrc/qemu.git/qemu-options.hx:3884:'any' reference target =
+not found: hub
+>
+> This is odd, my make is silent. Can you please check this?
 
-This is only one test out of many I listed in the previous email:
+Docs generation was disabled on my side. My bad. The problem is in the
+`hub`, which should be ``hub``. Thanks for noticing that.
 
-https://lore.kernel.org/qemu-devel/ZykJBq7ME5jgSzCA@x1n/
-
-Would you please add all the tests mentioned there?
-
-Thanks,
-
--- 
-Peter Xu
-
+--
+Roman
 
