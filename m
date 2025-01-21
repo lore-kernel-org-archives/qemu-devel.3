@@ -4,106 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3C6A8C02182
-	for <qemu-devel@archiver.kernel.org>; Tue, 21 Jan 2025 08:49:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B60F5C02182
+	for <qemu-devel@archiver.kernel.org>; Tue, 21 Jan 2025 08:51:08 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ta9wi-0005wK-Sy; Tue, 21 Jan 2025 03:49:16 -0500
+	id 1ta9yA-0006eT-Ih; Tue, 21 Jan 2025 03:50:46 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
- id 1ta9wh-0005w9-3q
- for qemu-devel@nongnu.org; Tue, 21 Jan 2025 03:49:15 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
- id 1ta9wf-0004qO-0j
- for qemu-devel@nongnu.org; Tue, 21 Jan 2025 03:49:14 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1737449351;
- h=from:from:reply-to:reply-to:subject:subject:date:date:
- message-id:message-id:to:to:cc:cc:mime-version:mime-version:
- content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=3E8WZVbI42sE57i6MfXxudvtOsuTq6YBaIygJ4wgNdM=;
- b=gz5z2jHaKuIlHVm4a+092LmTjl2ZrI+a3SePk5DoiU1gm9mt3wuLLyebi+FNFxmUL35oUf
- m9tmc1ebJvraUjNpCwb3aY3wFw92mLQhH7v96m1t0CVYGg3RrydijdCp+IM0K/01Ud4fGE
- UNhWfRBGRYndLP0fYTYtPsjnJG3ObZQ=
-Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com
- [209.85.128.71]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-595-zqKV3gOKOF6PBmJ7z9nLHA-1; Tue, 21 Jan 2025 03:49:09 -0500
-X-MC-Unique: zqKV3gOKOF6PBmJ7z9nLHA-1
-X-Mimecast-MFC-AGG-ID: zqKV3gOKOF6PBmJ7z9nLHA
-Received: by mail-wm1-f71.google.com with SMTP id
- 5b1f17b1804b1-436219070b4so26224765e9.1
- for <qemu-devel@nongnu.org>; Tue, 21 Jan 2025 00:49:08 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <east.moutain.yang@gmail.com>)
+ id 1ta9xs-0006c6-KB
+ for qemu-devel@nongnu.org; Tue, 21 Jan 2025 03:50:32 -0500
+Received: from mail-wr1-x430.google.com ([2a00:1450:4864:20::430])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <east.moutain.yang@gmail.com>)
+ id 1ta9xo-00056k-5W
+ for qemu-devel@nongnu.org; Tue, 21 Jan 2025 03:50:26 -0500
+Received: by mail-wr1-x430.google.com with SMTP id
+ ffacd0b85a97d-38632b8ae71so4315178f8f.0
+ for <qemu-devel@nongnu.org>; Tue, 21 Jan 2025 00:50:18 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20230601; t=1737449417; x=1738054217; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=VDzQCUICQRSClnuWhghJMM7wdVtPktltqMIYV+tt9f0=;
+ b=PqTzBSWC1ALnirFhh13+xi+CmMh2iVAGPAaVRt2RUFoy0JNWYK5OBYamhuX91y98//
+ a/RcFg714avMns9xdjdhOXGm+uCkibuAgTZGI5MevxDRR+tiS6Wtzzrf9fuEKyLxDKXZ
+ U06oju0vkCPHoi2TKKukGWw137ydPfLHrD0T7lpt/KODpo+mPjmlz0jY39yly7XT17cL
+ h//RXMj7foiBNKyBr+Ieckp+MyTJvQmFNu19cJNqnlkk2MiuSYjqARRLqPz9iILKStkq
+ XaO5e8kvn6/Bp2HgV+F+JJwQhp2qGQ8hzLzf8i0GoEwhzlToPQVHR1/iUPZ0gYYt2M4O
+ zZMg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1737449348; x=1738054148;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:reply-to:user-agent:mime-version:date
- :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+ d=1e100.net; s=20230601; t=1737449417; x=1738054217;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=3E8WZVbI42sE57i6MfXxudvtOsuTq6YBaIygJ4wgNdM=;
- b=QClejEDlc/Dck8WEyVkKE6wk0gQtp3sDKk06sVk/GWH4eSi4+NH1u821s84i/KphLB
- /NRudYGQlD+Hl0Kmw6YjKk4UVYNFRLvZGx047VYwXQM35zGgq8NoJAQZxXUercnD6BVi
- aHZ6VNuB+TXI1koWW0L8CM2Oc9ePB1M4X1O5au2nmjiGL1GRYCleoGAenvZo2WNmceAS
- 2izDd5wezk0MdeWRGcyCXrks8Uvx3wdM89ebsXQZGlEDGC6XSLh5uw8jrg3WS+rrkN4B
- FDckQtIbDzzN8iaaf+PNRgU58xrAc3tYU3Jhf6OYbXM+yQEXPCoIJifM4rW9DJtwzEdJ
- AlEw==
-X-Forwarded-Encrypted: i=1;
- AJvYcCVAu/VX0MDdOdnRvo6eSjRRAEbXAW4maa7k2k8AB0dOX/j1qluA4/15qm4LTDVkWnEKejqN8+fKkTAZ@nongnu.org
-X-Gm-Message-State: AOJu0YxAc9issly6W9rsEqyTgmhj0nG0DpzWEjZ7hnyk4gzmM4uknf6o
- ezLsXaDQeLH9AS/Epe2nBUZ6telXb2P0/ZXhhgHCERCC0EqmhYVonRn+A7eYG//qUR7IIb4O/oK
- wjkGb0mlKzziF+WmvLiOlq3I/25y1VKx/wbKo5njw02o84soqSQmo
-X-Gm-Gg: ASbGnctqKzMxQlJvr9XsZSADv+alcdvdHMMYPRPDOGdHBVFeSU1WUnn9CA4xHxsrX4K
- iCsvI7ig30MEeUB3vutHqddySBQO9849krANqRlE6Codxd7R+flLPEj6i/AXIp2G1/r+W6jWB+M
- nXHVc3r/UrCb6SBj6mQBSa3k3Blxf5hD5mexfyiThcGBzaBl7CEtEt6QzXmlGp8A28T+HnGgLtf
- gGFbFMJwzYdSlu7Xc2yV6PwTrGwQX8cr9PvShEsRtr2CfKX7FeYcA0yahEu/0lXWURF5sxmDRye
- JKk1JhuBc+0gsaUnIO3e2lSo9otj6sQdWJ/W8BtRYA==
-X-Received: by 2002:a05:600c:1f0b:b0:434:f270:a4f0 with SMTP id
- 5b1f17b1804b1-4389142e1a3mr127177285e9.21.1737449347815; 
- Tue, 21 Jan 2025 00:49:07 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IF5HVKGyNeXNvxaPY+kOpU+L1N/NtyK7s40pQbwLKz/zV59CIKLy9nHpeBMsGABbc55byWVug==
-X-Received: by 2002:a05:600c:1f0b:b0:434:f270:a4f0 with SMTP id
- 5b1f17b1804b1-4389142e1a3mr127176915e9.21.1737449347191; 
- Tue, 21 Jan 2025 00:49:07 -0800 (PST)
-Received: from ?IPV6:2a01:e0a:59e:9d80:527b:9dff:feef:3874?
- ([2a01:e0a:59e:9d80:527b:9dff:feef:3874])
- by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-437c74abb27sm226754145e9.9.2025.01.21.00.49.04
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 21 Jan 2025 00:49:05 -0800 (PST)
-Message-ID: <18571a8d-99d7-40da-8d19-1eb9410befbd@redhat.com>
-Date: Tue, 21 Jan 2025 09:49:04 +0100
+ bh=VDzQCUICQRSClnuWhghJMM7wdVtPktltqMIYV+tt9f0=;
+ b=Kvn+gAz5uKiXGSLOT6II6TacaLGItxBGBgz7pq9Edd6Hf8vPYxj217SZAvhNVlTIF8
+ Ecm/HBI7pK2i8USLQ3GBX8XlXJNF+yjvJvAOOuRlgx4PdJnQY+KT7/KzxI9yaN/ZXXMd
+ F76d3gfcKHar6f8JcyZXHjPumCFy/s158Zc+O3Nw+kSeSuf6rfAkc7txRt7NBkYQqksV
+ C0HySerNM3EDOqFjtQHKZ/amISkL+e9Oe1DaPO+P6EkyNpzWvCQ6qbBI2hQnn4/7OdY9
+ XyiKoMKy6GfWRJ042Evl1Dzl1NerNA8qsVXXjKHZLZL3oC/M3KZwWkb6O/1Jo2zzN/hm
+ PhWw==
+X-Gm-Message-State: AOJu0YxFNeyQlh7IAydRcLBLfPndudG8hw+GVhO4fLIeTU9Iub9yOsn5
+ dKTj+VQk+dvdhGRQTV/kxlHGEBVKtdm7Zljsvc84+6tHcmnjAFM/QIC5qTbtTVbAlI22TO9lfN8
+ SMhTLaqpyZLC6oy3Ls83ATzINMao=
+X-Gm-Gg: ASbGnctmbNLsKogNBoc64BdNXYnTnvwbeum9ceIlXUXJdL79aDbotjxxV9SjKL5JwW1
+ M4Ke6uHrDPu2Gk5vm3NsXm5BWBsPZTkmSD+CEOep035ppqaMu2cYt
+X-Google-Smtp-Source: AGHT+IF8jX26gxV/uhOLs8qDIfbfMFOC3R9lwpu6NIkcskCWdz92Rv/eqk5RPI8NDAefIqDJksiWOURDRJdfScTbL4A=
+X-Received: by 2002:a5d:59ad:0:b0:385:f560:7924 with SMTP id
+ ffacd0b85a97d-38bf5678104mr11454394f8f.4.1737449416773; Tue, 21 Jan 2025
+ 00:50:16 -0800 (PST)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] hw/virtio/vhost: Disable IOTLB callbacks when IOMMU gets
- disabled
-Content-Language: en-US
-To: Stefano Garzarella <sgarzare@redhat.com>,
- Laurent Vivier <lvivier@redhat.com>
-Cc: eric.auger.pro@gmail.com, qemu-devel@nongnu.org, mst@redhat.com,
- jasowang@redhat.com, zhenzhong.duan@intel.com
-References: <20250120173339.865681-1-eric.auger@redhat.com>
- <3aaaf5c8-b1f0-4237-b50e-bb28fd297bb1@redhat.com>
- <tuzwgcjnxyz5sw2xjo4nyyl3xw3b7j5xqk67hsi5xk4xj3tv3a@hmmydeoupl35>
-From: Eric Auger <eric.auger@redhat.com>
-In-Reply-To: <tuzwgcjnxyz5sw2xjo4nyyl3xw3b7j5xqk67hsi5xk4xj3tv3a@hmmydeoupl35>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.129.124;
- envelope-from=eric.auger@redhat.com; helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -50
-X-Spam_score: -5.1
-X-Spam_bar: -----
-X-Spam_report: (-5.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-3,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+References: <20250116095355.41909-1-east.moutain.yang@gmail.com>
+ <479d79c7-2cb8-4f32-9bf0-fe1a50931925@redhat.com>
+In-Reply-To: <479d79c7-2cb8-4f32-9bf0-fe1a50931925@redhat.com>
+From: Wencheng Yang <east.moutain.yang@gmail.com>
+Date: Tue, 21 Jan 2025 16:50:05 +0800
+X-Gm-Features: AbW1kva5RucnoVRD82tN1ECzm7BhppjrdSJ0NWqO3PP41BE62LVT30JWgb98d3o
+Message-ID: <CALrP2iXft+p2FiSDUpMn+PnvhUVxw57uRQdwAPGiiR8wjpo5TA@mail.gmail.com>
+Subject: Re: [PATCH] vfio: Support P2P access in confidential VM
+To: David Hildenbrand <david@redhat.com>
+Cc: qemu-devel@nongnu.org, alex.williamson@redhat.com, clg@redhat.com, 
+ pbonzini@redhat.com, peterx@redhat.com, philmd@linaro.org, mst@redhat.com, 
+ sgarzare@redhat.com
+Content-Type: multipart/alternative; boundary="0000000000004d5681062c337755"
+Received-SPF: pass client-ip=2a00:1450:4864:20::430;
+ envelope-from=east.moutain.yang@gmail.com; helo=mail-wr1-x430.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -116,75 +90,94 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: eric.auger@redhat.com
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Stefano,
+--0000000000004d5681062c337755
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
+hi, David,
 
-On 1/21/25 9:45 AM, Stefano Garzarella wrote:
-> On Tue, Jan 21, 2025 at 09:31:53AM +0100, Laurent Vivier wrote:
->> On 20/01/2025 18:33, Eric Auger wrote:
->>> When a guest exposed with a vhost device and protected by an
->>> intel IOMMU gets rebooted, we sometimes observe a spurious warning:
->>>
->>> Fail to lookup the translated address ffffe000
->>>
->>> We observe that the IOMMU gets disabled through a write to the global
->>> command register (CMAR_GCMD.TE) before the vhost device gets stopped.
->>> When this warning happens it can be observed an inflight IOTLB
->>> miss occurs after the IOMMU disable and before the vhost stop. In
->>> that case a flat translation occurs and the check in
->>> vhost_memory_region_lookup() fails.
->>>
->>> Let's disable the IOTLB callbacks when all IOMMU MRs have been
->>> unregistered.
->>>
->>> Signed-off-by: Eric Auger <eric.auger@redhat.com>
->>> ---
->>>  hw/virtio/vhost.c | 4 ++++
->>>  1 file changed, 4 insertions(+)
->>>
->>> diff --git a/hw/virtio/vhost.c b/hw/virtio/vhost.c
->>> index 6aa72fd434..128c2ab094 100644
->>> --- a/hw/virtio/vhost.c
->>> +++ b/hw/virtio/vhost.c
->>> @@ -931,6 +931,10 @@ static void
->>> vhost_iommu_region_del(MemoryListener *listener,
->>>              break;
->>>          }
->>>      }
->>> +    if (QLIST_EMPTY(&dev->iommu_list) &&
->>> +        dev->vhost_ops->vhost_set_iotlb_callback) {
->>> +        dev->vhost_ops->vhost_set_iotlb_callback(dev, false);
->>> +    }
->>>  }
->>>  void vhost_toggle_device_iotlb(VirtIODevice *vdev)
->>
->> I think you need the counterpart in vhost_iommu_region_del() (for 
->
-> I guess you meant vhost_iommu_region_add(). I was going to comment
-> exactly on that, I agree here.
->
->> instance if we have an add after a del that results in an empty list).
->> But you cannot unconditionally enable it (for instance if vhost is
->> not started)
->
-> Good point.
->
->>
->> Perhaps you should move the vhost_set_iotlb_callback() call from
->> vhost_start()/vhost_stop() to
->> vhost_iommu_region_add()/vhost_iommu_region_del()?
->
-> I also like this idea.
+> I'm wondering: isn't this something the kernel should be able to figure
+> out? Is this encrypted RAM (SMA) or not, and set the flag accordingly?
+> What are the challenges?
 
-OK makes sense. I will go in this direction.
+VFIO driver and IOMMU driver don't know the device(memory or device mmio)
+behind vaddr,
+only device driver knows that, now that the device is managed by user space
+VFIO,
+user should tell the info to VFIO driver.
 
-Eric
+On Mon, Jan 20, 2025 at 6:21=E2=80=AFPM David Hildenbrand <david@redhat.com=
+> wrote:
+
+> On 16.01.25 10:53, Wencheng Yang wrote:
+> > On confidential VM platform, for example, AMD-SEV, P2P doesn't work.
+> > The underlying reason is that IOMMU driver set encryption bit on
+> > IOMMU page table pte entry, it's reasonalbe if the pte maps iova
+> > to system memory. However, if the pte maps iova to device's
+> > mmio bar space, setting encryption bit on pte would cause IOMMU
+> > translates iova to incorrect bus address, rather than mmio bar
+> > address.
+> >
+> > To fix the issue, the key point is to let IOMMU driver know the
+> > target phyical address is system memory or device mmio.
 >
-> Stefano
+> I'm wondering: isn't this something the kernel should be able to figure
+> out? Is this encrypted RAM (SMA) or not, and set the flag accordingly?
+>
+> What are the challenges?
+>
+> --
+> Cheers,
+>
+> David / dhildenb
+>
 >
 
+--0000000000004d5681062c337755
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+
+<div dir=3D"ltr"><div>hi, David,</div><div><br></div><div>&gt; I&#39;m wond=
+ering: isn&#39;t this something the kernel should be able to figure<br>&gt;=
+ out? Is this encrypted RAM (SMA) or not, and set the flag accordingly?</di=
+v><div>&gt; What are the challenges?</div><div><br></div><div>VFIO driver a=
+nd IOMMU driver don&#39;t know the device(memory or device mmio) behind vad=
+dr,=C2=A0</div><div>only device driver knows that, now that the device is m=
+anaged by user space VFIO,</div><div>user should tell the info to VFIO driv=
+er.</div><br><div class=3D"gmail_quote gmail_quote_container"><div dir=3D"l=
+tr" class=3D"gmail_attr">On Mon, Jan 20, 2025 at 6:21=E2=80=AFPM David Hild=
+enbrand &lt;<a href=3D"mailto:david@redhat.com">david@redhat.com</a>&gt; wr=
+ote:<br></div><blockquote class=3D"gmail_quote" style=3D"margin:0px 0px 0px=
+ 0.8ex;border-left:1px solid rgb(204,204,204);padding-left:1ex">On 16.01.25=
+ 10:53, Wencheng Yang wrote:<br>
+&gt; On confidential VM platform, for example, AMD-SEV, P2P doesn&#39;t wor=
+k.<br>
+&gt; The underlying reason is that IOMMU driver set encryption bit on<br>
+&gt; IOMMU page table pte entry, it&#39;s reasonalbe if the pte maps iova<b=
+r>
+&gt; to system memory. However, if the pte maps iova to device&#39;s<br>
+&gt; mmio bar space, setting encryption bit on pte would cause IOMMU<br>
+&gt; translates iova to incorrect bus address, rather than mmio bar<br>
+&gt; address.<br>
+&gt; <br>
+&gt; To fix the issue, the key point is to let IOMMU driver know the<br>
+&gt; target phyical address is system memory or device mmio.<br>
+<br>
+I&#39;m wondering: isn&#39;t this something the kernel should be able to fi=
+gure <br>
+out? Is this encrypted RAM (SMA) or not, and set the flag accordingly?<br>
+<br>
+What are the challenges?<br>
+<br>
+-- <br>
+Cheers,<br>
+<br>
+David / dhildenb<br>
+<br>
+</blockquote></div></div>
+
+--0000000000004d5681062c337755--
 
