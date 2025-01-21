@@ -4,81 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3EC45C0218B
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 36F85C02182
 	for <qemu-devel@archiver.kernel.org>; Tue, 21 Jan 2025 14:35:22 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1taFB4-0000aF-2z; Tue, 21 Jan 2025 09:24:26 -0500
+	id 1taFB4-0000aJ-4c; Tue, 21 Jan 2025 09:24:26 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1taFAr-0000Uv-CG
- for qemu-devel@nongnu.org; Tue, 21 Jan 2025 09:24:13 -0500
-Received: from mail-wr1-x42b.google.com ([2a00:1450:4864:20::42b])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1taFAv-0000Wn-TN
+ for qemu-devel@nongnu.org; Tue, 21 Jan 2025 09:24:17 -0500
+Received: from mail-wm1-x32f.google.com ([2a00:1450:4864:20::32f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1taFAp-00033O-CI
- for qemu-devel@nongnu.org; Tue, 21 Jan 2025 09:24:12 -0500
-Received: by mail-wr1-x42b.google.com with SMTP id
- ffacd0b85a97d-3862a921123so4053260f8f.3
- for <qemu-devel@nongnu.org>; Tue, 21 Jan 2025 06:24:09 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1taFAs-00034M-58
+ for qemu-devel@nongnu.org; Tue, 21 Jan 2025 09:24:16 -0500
+Received: by mail-wm1-x32f.google.com with SMTP id
+ 5b1f17b1804b1-436345cc17bso41079805e9.0
+ for <qemu-devel@nongnu.org>; Tue, 21 Jan 2025 06:24:13 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1737469448; x=1738074248; darn=nongnu.org;
+ d=linaro.org; s=google; t=1737469452; x=1738074252; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=uL4Y+z6DzTKVC74EB8XgyjJw99XhZeyPYSd4sWJmzog=;
- b=kyyNbtL7qPBGpgMfbNJwFYYqeqULyktpceO19h6lQvNTWMgFX7/jLfVke35PIlf54u
- PYeJRNAIwzOxDqFp4kaeaUsG7pWxS+r/E+Jk0bj40R0zmiQK6Hpuj6ti+vuNfcm4WeUg
- zIC3n4/PniBI9/IhV4xUFPdNeA73lad829+63X6lObpPjo4I4/b3qquHzJHrBcQKrgn7
- DHzvHjyAHH70v7UhMWzjDYKWxuJnQdkorRXSYa5EQOieF7/YE5zq6WGhdxkpvpYwJgnS
- 2NFF4Gf/VT41UeCVkC28jczrcaoTQHYvck9pGJGlp14IjFWNYF9yQMnv4+FtOhKVuPOA
- FpHA==
+ bh=GxmkPvBiu38d4nUnNXUTFzs0Gc1uo0/SVUn8XW+hnMU=;
+ b=TjRGMuDOEFgJpuQbrjpiGAGfGLBjEeUWM5sfnTrFiYV9bhsUhPig3Z7YzBkdKgVL1Y
+ 411d6tyr6Wbrnlt7qGoECwX05YYWKssi23GenIOtMfdoPOXVIdw/8dX3MDBYkfZ21FKL
+ MVrbGTTvHLPLDkODw15gwrH8mQxnMUVjAooWGOUWQ5ei8Q8475WA2KBJUdnq+9lTG9Ec
+ dB4+tBiC7WKRXpZrA8vK5Lq+5nbXdzfy0LHhPd5aA/hiDMdH/wLxtBJwc8Tsu+aFmojr
+ QvXfepxz9v52KHHiXpARzUai+KYGqWlxcsgP2TazembSabebXUuz11YLqzKX3/OksM6U
+ jgow==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1737469448; x=1738074248;
+ d=1e100.net; s=20230601; t=1737469452; x=1738074252;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=uL4Y+z6DzTKVC74EB8XgyjJw99XhZeyPYSd4sWJmzog=;
- b=jCgf0ULPdtyLnUoI5utxR6mvkFNYY7dzfB+orljh+haLtV4t8KLD1NbbIO8HyYka6t
- Zs9GsUCfUo9hGbNQ++Zk5Jn37xIifmyRXCKB/PUevu4ohD/ygz3LTEn8cNJBXiE8JoqX
- f/6YlNFhzqk5ki9MKbxuoY73Zn3SvaEw2XdouRYk8o0yOqt9ncIuMiB8SpLt5VX9Y5jX
- rv+YHOscPffCCMbZeudQS4pwEuRLpTEXcNVpGtYfQIrTC0iTbLm/G87wD2iHpesNSL12
- 5NWgBtDQBEj5jyoPL3o95JZEEQjAY7P+31s05NMcv4IVxQ5mDwF2Op4jKuDM1ctCknDr
- CXZg==
-X-Gm-Message-State: AOJu0YxU++8uD+ytxaCpAG/dZKQfLpLPJs3d31RMHN6yLMpmfOIK13z7
- A1ohMyXpn9TaCRsMKcNAxxxmxYdUYMobXWO11WEsQX+eQSnbnuSXBHtx3EOIKsodaf25OxRKG6M
- xVDs=
-X-Gm-Gg: ASbGnctGikYZqn0LZpSubU03Tn99X2PQNd6zeOiX0oKsXCuxZtX+9NctV+WZV8rlRrA
- BD8hPww+8C9kK7peWF8G2TD5AgR+y0Um/W3Z92lw1v9nPpPIouiUbRNSnye4OGX58rQZz+sq+R0
- /FkF3/Jl6Joq8vYUgUe0zzuXkhUQ7CbsODzel1pezFryR50I3Z+XlQk5Ey0hR3+FT8YAtfgP9Ry
- L0PFTjbQ9QH+eN6hQUJjRU2l7lk7SfFw4aHrvTzxeg3RNB4kfdEbVyyovlsECnniCdjqY2RtfrQ
- bfebNysXi2jwvMcK3DAOrgLvZOO0Qipm1WJLvUj4ZBwM
-X-Google-Smtp-Source: AGHT+IG2J+fBTwBjziF/CKK3YvS7IkMDlLeRzzR/kuQ3HqnpmWiqykgSetll2TWOSALFBgnl02mvBg==
-X-Received: by 2002:a05:6000:1849:b0:38a:8888:c0b6 with SMTP id
- ffacd0b85a97d-38bf57bfcf5mr18393431f8f.51.1737469447276; 
- Tue, 21 Jan 2025 06:24:07 -0800 (PST)
+ bh=GxmkPvBiu38d4nUnNXUTFzs0Gc1uo0/SVUn8XW+hnMU=;
+ b=eOLYca+rlP+CGT+kCgkR9p1tMb5H8AtWd5+WqK2R1L1zRkOU8ZRBVA+rtabi8l8CI3
+ p6mYIwP0XiqkDERZbNhpv4qc5av4zNVrXeJTbuFykJ/xZJBU+/D5rvA2eMsxcTZi0CtZ
+ 9qlK9Van0VHXf46XSF9qDlWmsgG2sROGCF73v7/yE+qKa5PT9TKA/wZV/Huoq1FjR2m+
+ DuN23hYLLM6ja//H3Is2aGcHu8S+Go2h2+G87ir0mNFEzcf2I83oaCwVL+BkMSa/JaQy
+ Fux5daUwqtmXnnLYXMu1RzvXoXkIb3Q9EARTT9E/JuiyJwA9SoTEtWfTFltauNsw9toA
+ W8FQ==
+X-Gm-Message-State: AOJu0YyDAZfhlij+4GdjdZato4Qwi/fXKlYSpl9VeDiSLEGfsbRxxblJ
+ VJl2rwqyYbbyoclBO1LAS7Z3h5KX+WN5Rrb1EA65EW+gbZs9HwqDoqv7ybNLnEZrKxh7A/HYr/u
+ sHP8=
+X-Gm-Gg: ASbGncuX1igfI6W6e5vhUyJ//AcyG5aI21wclnvF91zg/92ssZK8/S1nQdXegv8CWxg
+ tvep5XDSx33EUU40rIiFTLWtibjgcuRpuViZxLRUXI6XSr8KUIZQbf0MSAcSAseH/Um0OOXtM10
+ L/LlC/acQtAq/kiLbnmsBV3ocVDb+Z2SiMOqSQGvEHVWjQgKJfs2TqNzKTk731HQDiJQDa60RhR
+ Gc0+LtPkO7l6e/Ieyj04aaLZjAFx62EfRf2QRmxl0SP9kfGHjtOM8O207AVEUCp0yKwyQLkV5lA
+ Ju1sbWLq3/ni5tztNcaqU2lY7EgeECKlvJC4XNTh5eIt
+X-Google-Smtp-Source: AGHT+IFZrFESwsFNUaYJimOkejXsWSHj1fmxkyRQ7dWj7lO3cgLc/tLtR93I3PvPnuqUDGaw2gsplA==
+X-Received: by 2002:a05:600c:4511:b0:434:f871:1b96 with SMTP id
+ 5b1f17b1804b1-438914388e5mr185146615e9.29.1737469452073; 
+ Tue, 21 Jan 2025 06:24:12 -0800 (PST)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-38bf3214fbdsm13815861f8f.19.2025.01.21.06.24.06
+ 5b1f17b1804b1-4389046885esm177866955e9.36.2025.01.21.06.24.11
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Tue, 21 Jan 2025 06:24:06 -0800 (PST)
+ Tue, 21 Jan 2025 06:24:11 -0800 (PST)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: qemu-arm@nongnu.org, qemu-s390x@nongnu.org, qemu-riscv@nongnu.org,
  qemu-ppc@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>,
  Richard Henderson <richard.henderson@linaro.org>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PATCH 05/28] cpus: Restrict cpu_has_work() to system emulation
-Date: Tue, 21 Jan 2025 15:23:18 +0100
-Message-ID: <20250121142341.17001-6-philmd@linaro.org>
+Subject: [PATCH 06/28] cpus: Un-inline cpu_has_work()
+Date: Tue, 21 Jan 2025 15:23:19 +0100
+Message-ID: <20250121142341.17001-7-philmd@linaro.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20250121142341.17001-1-philmd@linaro.org>
 References: <20250121142341.17001-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::42b;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x42b.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::32f;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x32f.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -101,60 +101,48 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This method is not used on user emulation, because there
-is always work to do there.
+In order to expand cpu_has_work(), un-inline it.
 
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 ---
- include/hw/core/cpu.h | 28 ++++++++++++++--------------
- 1 file changed, 14 insertions(+), 14 deletions(-)
+ include/hw/core/cpu.h | 6 +-----
+ hw/core/cpu-system.c  | 6 ++++++
+ 2 files changed, 7 insertions(+), 5 deletions(-)
 
 diff --git a/include/hw/core/cpu.h b/include/hw/core/cpu.h
-index 2402706c7d9..e094d54949d 100644
+index e094d54949d..d64c823e768 100644
 --- a/include/hw/core/cpu.h
 +++ b/include/hw/core/cpu.h
-@@ -748,6 +748,20 @@ int cpu_asidx_from_attrs(CPUState *cpu, MemTxAttrs attrs);
+@@ -756,11 +756,7 @@ bool cpu_virtio_is_big_endian(CPUState *cpu);
+  *
+  * Returns: %true if the CPU has work, %false otherwise.
   */
- bool cpu_virtio_is_big_endian(CPUState *cpu);
- 
-+/**
-+ * cpu_has_work:
-+ * @cpu: The vCPU to check.
-+ *
-+ * Checks whether the CPU has work to do.
-+ *
-+ * Returns: %true if the CPU has work, %false otherwise.
-+ */
-+static inline bool cpu_has_work(CPUState *cpu)
-+{
-+    g_assert(cpu->cc->has_work);
-+    return cpu->cc->has_work(cpu);
-+}
-+
- #endif /* CONFIG_USER_ONLY */
- 
- /**
-@@ -814,20 +828,6 @@ CPUState *cpu_create(const char *typename);
-  */
- const char *parse_cpu_option(const char *cpu_option);
- 
--/**
-- * cpu_has_work:
-- * @cpu: The vCPU to check.
-- *
-- * Checks whether the CPU has work to do.
-- *
-- * Returns: %true if the CPU has work, %false otherwise.
-- */
 -static inline bool cpu_has_work(CPUState *cpu)
 -{
 -    g_assert(cpu->cc->has_work);
 -    return cpu->cc->has_work(cpu);
 -}
--
- /**
-  * qemu_cpu_is_self:
-  * @cpu: The vCPU to check against.
++bool cpu_has_work(CPUState *cpu);
+ 
+ #endif /* CONFIG_USER_ONLY */
+ 
+diff --git a/hw/core/cpu-system.c b/hw/core/cpu-system.c
+index 37d54d04bf8..16d5efee12d 100644
+--- a/hw/core/cpu-system.c
++++ b/hw/core/cpu-system.c
+@@ -23,6 +23,12 @@
+ #include "exec/tswap.h"
+ #include "hw/core/sysemu-cpu-ops.h"
+ 
++bool cpu_has_work(CPUState *cpu)
++{
++    g_assert(cpu->cc->has_work);
++    return cpu->cc->has_work(cpu);
++}
++
+ bool cpu_paging_enabled(const CPUState *cpu)
+ {
+     if (cpu->cc->sysemu_ops->get_paging_enabled) {
 -- 
 2.47.1
 
