@@ -4,103 +4,107 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6A2EEC02182
-	for <qemu-devel@archiver.kernel.org>; Tue, 21 Jan 2025 16:33:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E53E3C0218B
+	for <qemu-devel@archiver.kernel.org>; Tue, 21 Jan 2025 16:36:01 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1taHAw-0000C4-1r; Tue, 21 Jan 2025 11:32:26 -0500
+	id 1taHDl-0001fw-RS; Tue, 21 Jan 2025 11:35:22 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
- id 1taHAu-0000BX-GI
- for qemu-devel@nongnu.org; Tue, 21 Jan 2025 11:32:24 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1taHDh-0001eY-Pm
+ for qemu-devel@nongnu.org; Tue, 21 Jan 2025 11:35:18 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
- id 1taHAs-0000F3-UG
- for qemu-devel@nongnu.org; Tue, 21 Jan 2025 11:32:24 -0500
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1taHDf-00013Y-Ge
+ for qemu-devel@nongnu.org; Tue, 21 Jan 2025 11:35:17 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1737477140;
- h=from:from:reply-to:reply-to:subject:subject:date:date:
- message-id:message-id:to:to:cc:cc:mime-version:mime-version:
- content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
+ s=mimecast20190719; t=1737477313;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=3PCuWFp1jsjRfisrPIACOvU2gY98pvzN80nZCkZJdG8=;
- b=aVfKJwyxpKWD5LnUXiv0fFTdsb5+bUSS5JVK1D76JVHRp4obsos3x6VHIeV0Y+ovXweHn3
- 5VOdN3msXc2DGhxOJ8PiK1d6FTCHYvyQFozpU0nP9mla7T/YnBPKq+5JogULPv1OK2wHCw
- oC8IWwwfuW/KDRrLRAv66qkL7FMgizY=
-Received: from mail-wr1-f72.google.com (mail-wr1-f72.google.com
- [209.85.221.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=5IicrbX29/PlrHURDmORDtKf+izW4RsJs/gkYLbWILo=;
+ b=I8nMmVZJ8HRAnLxmDlgaeCR9bdjEmc2nWUT44R3oyKOHr1HsRBlFkkx0gLq5cJcGNtV0bm
+ x/djbJZyLbdPwQ0G0819Iylm6eJVIVdUKVZixOhbAGeNOIzt55FukETt+vkdXjH+L2f2Iv
+ 4JIt5MoR2g6TjOwCUHsh3k+37jibGaM=
+Received: from mail-qt1-f198.google.com (mail-qt1-f198.google.com
+ [209.85.160.198]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-694-xmCDq0UmM9evFfJGQVFsJw-1; Tue, 21 Jan 2025 11:32:17 -0500
-X-MC-Unique: xmCDq0UmM9evFfJGQVFsJw-1
-X-Mimecast-MFC-AGG-ID: xmCDq0UmM9evFfJGQVFsJw
-Received: by mail-wr1-f72.google.com with SMTP id
- ffacd0b85a97d-3862a49fbdaso2555588f8f.1
- for <qemu-devel@nongnu.org>; Tue, 21 Jan 2025 08:32:16 -0800 (PST)
+ us-mta-609-1elxP1c9MYK2UBuoXsV18w-1; Tue, 21 Jan 2025 11:35:12 -0500
+X-MC-Unique: 1elxP1c9MYK2UBuoXsV18w-1
+X-Mimecast-MFC-AGG-ID: 1elxP1c9MYK2UBuoXsV18w
+Received: by mail-qt1-f198.google.com with SMTP id
+ d75a77b69052e-4675c482d6cso107210491cf.2
+ for <qemu-devel@nongnu.org>; Tue, 21 Jan 2025 08:35:12 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1737477135; x=1738081935;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:reply-to:user-agent:mime-version:date
- :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=3PCuWFp1jsjRfisrPIACOvU2gY98pvzN80nZCkZJdG8=;
- b=HsmGqv5TgAZMbwdc4Dxivy9C5+EA3+okpEwjwJIu8Rt9GP3WBiz32mBSYtGXal+5C/
- EsNSFad4HQzm3A52xbwVG0NhD+fb/xBx3+ul8s1WryBGKT7NTpFp7lY8atqcGAykz9rd
- Hxu155MmBnFFhWexHmb4zAWCvzIO20sfAW6/ekLG7h0dxwrnGhmbzWXJXzJGx72yaA4W
- qjIp9tE5jelkSKOWpsqmidbZEIq+EsdKRlAMeO4M3m9HCXBc5YW16s7cmrdHb5A9niw9
- pRZ8eclAAtU4RZTHHoDCwo/XZHvfcuULh6XlRT0sIfnrGhPGRhurfln1UIDMVijxJ8JO
- o1eQ==
+ d=1e100.net; s=20230601; t=1737477311; x=1738082111;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=5IicrbX29/PlrHURDmORDtKf+izW4RsJs/gkYLbWILo=;
+ b=CRBH6j11GKcZDDzc75OvOeUTpvazDqVKcXzaCx960UZ0dW/EbnsRtu/r0BeF/nD0kH
+ 4UuNFB3iQKrJSRw9JDOsdohc4f9I97EKmTAR2XHzuB5/I3rNeQBJ3Cq73OBBGxDsZcvi
+ 8LNkCKAWbPHVpdnpPNbreTa4Q2vAbVkd9TLMc+wyg1/hM14PuBQp+v56+oWdRfsZa53E
+ KdHrCh6uik9vN4acn1Az4SBI8nI5Mlv7+CFY3bvKTiY1ReqVaxhJcYZ0ILmXI16eFiAW
+ EgCVCk7BXqGBwmEGPJ57x2fYzl7okxaHsIpEzez9FqPkcP91U0z7Awu5WTtBPDvo3gjY
+ CR+w==
 X-Forwarded-Encrypted: i=1;
- AJvYcCUeRv3+VGz9ra8JRph9qGfPUnfdpOUSBqln4K1gXCJueqPe2gapf9FJ+XM5oZFtvzkajw1yc5XzVLaX@nongnu.org
-X-Gm-Message-State: AOJu0Yx1V3F+AQ4F2dWDbz+3oxxr9et+tCirYNAGb4p9AjU7g2DN1M5h
- 7+lxm8aXWLh/PDnkC2gyU3GV8yxBEhApMQqB/RuZ34btTj4XJygPqfBcDhEhFRFtjkXF1UnfGHa
- CtGgk3apnzAUAVfL5BH9ezMDxeWW86wjpvp/Lud9KCvSADvoFyVuL
-X-Gm-Gg: ASbGnctaE7xUZZehcQl1nShULGda7p4omf3yW33HaZ85PozXZWPMn4c9Njqlf5PMa38
- uoKXJ9gf4TxDt74K0XD0w245pn4o6Ab4p+JAyVfxyKt3BQdhwik6ta18PAclel8PGHDg/01JOBi
- m3A963wOALn5+xdognvRaMMx5Wqnqb9s0AcS5QGPZ0bp8cxbz8HKNIcELYDOZ1VcinBkmVKMOmF
- 5gmNHtZbuPa9jLYyumDqbo0sHpepYJiJMMEmhhuBemVgeZaitazzWuMBZwPWDJGZdY6+1UjI2Sg
- 0kD1B/fLYnBqR6NyP9E9uHYSfjrIjIfGQPR67vrUig==
-X-Received: by 2002:a5d:6d02:0:b0:38b:ece5:5fe3 with SMTP id
- ffacd0b85a97d-38bf565560amr15378702f8f.1.1737477135217; 
- Tue, 21 Jan 2025 08:32:15 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IErtl7JlyYlspi92mjf08aNnPNDbFWxSme/ByTt376DHXXjlLm11OwxOHsK7TLferY6hq5lMw==
-X-Received: by 2002:a5d:6d02:0:b0:38b:ece5:5fe3 with SMTP id
- ffacd0b85a97d-38bf565560amr15378672f8f.1.1737477134832; 
- Tue, 21 Jan 2025 08:32:14 -0800 (PST)
-Received: from ?IPV6:2a01:e0a:59e:9d80:527b:9dff:feef:3874?
- ([2a01:e0a:59e:9d80:527b:9dff:feef:3874])
- by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-38bf3221bf0sm13667302f8f.28.2025.01.21.08.32.13
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 21 Jan 2025 08:32:14 -0800 (PST)
-Message-ID: <b8c604ac-de82-47d3-b0bd-a24ea882a7d0@redhat.com>
-Date: Tue, 21 Jan 2025 17:32:12 +0100
+ AJvYcCU5JB6lSmcaorJz1qTqJhEwGdWFas0kml30SsSJQpAW+6d5hSBgcorOxT/aWwGy+O6bSxQHONIlCuHM@nongnu.org
+X-Gm-Message-State: AOJu0YxK8TLseYj5r31tY9qXwZCtfjFFkOQnBKZ7pvhkrheFHF/KPe1d
+ CkhSbLC9q76WvcFtMfMkehzJkrhb89QTmHvHQl1dMIs9ggbQcsKKp/p07kHkYq413Jr9lBpkzHu
+ 1OU0RoI6/vb8BH+oSZdwpmyFl7ew/u04LhcJVvg2FIs9R4efo5hKn
+X-Gm-Gg: ASbGncsGLo/JpCPeseQyP9gsreBS2NhJZaqlBxTo7G21DRCoe2h1v3URVvv9ZXT1PeM
+ c+wpDSF/dDDcpGFmNdV02r55QfeDoNZq0uY5ydF++X9T5bcZm5MVU+iJ3AB2eYptex/VxIhul0a
+ Y8qF5IpzZBo/nROFhLZbeZR6BhgUubN4gBthnrobBXpkVargeoc9rF2iy8/bGKiD2qvlayZxo/W
+ XGVGAS0p2mlv6vjURks0yf3l4YacBL8RKmRgZ3p9pFEOobYl4Q92WO8mlN4csbO2NEANpS4ZNSY
+ BBANry4bHpDA2SfkhETsHLpUUzGXa7Y=
+X-Received: by 2002:ac8:7f89:0:b0:46c:782f:5f6c with SMTP id
+ d75a77b69052e-46e12b20fbamr274079441cf.14.1737477311527; 
+ Tue, 21 Jan 2025 08:35:11 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IGEDpP3v3NvNnq0mrgQd+4/LqRJpg4iDbCa/9Y9xWB0RMJdvo/z2nBzTqrMy4G/8FCeBpRGtw==
+X-Received: by 2002:ac8:7f89:0:b0:46c:782f:5f6c with SMTP id
+ d75a77b69052e-46e12b20fbamr274078981cf.14.1737477311163; 
+ Tue, 21 Jan 2025 08:35:11 -0800 (PST)
+Received: from x1n (pool-99-254-114-190.cpe.net.cable.rogers.com.
+ [99.254.114.190]) by smtp.gmail.com with ESMTPSA id
+ af79cd13be357-7be614ef236sm569680685a.108.2025.01.21.08.35.09
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Tue, 21 Jan 2025 08:35:10 -0800 (PST)
+Date: Tue, 21 Jan 2025 11:35:08 -0500
+From: Peter Xu <peterx@redhat.com>
+To: Chenyi Qiang <chenyi.qiang@intel.com>
+Cc: David Hildenbrand <david@redhat.com>, Alexey Kardashevskiy <aik@amd.com>,
+ Paolo Bonzini <pbonzini@redhat.com>,
+ Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Michael Roth <michael.roth@amd.com>, qemu-devel@nongnu.org,
+ kvm@vger.kernel.org, Williams Dan J <dan.j.williams@intel.com>,
+ Peng Chao P <chao.p.peng@intel.com>, Gao Chao <chao.gao@intel.com>,
+ Xu Yilun <yilun.xu@intel.com>
+Subject: Re: [PATCH 2/7] guest_memfd: Introduce an object to manage the
+ guest-memfd with RamDiscardManager
+Message-ID: <Z4_MvGSq2B4zptGB@x1n>
+References: <20241213070852.106092-3-chenyi.qiang@intel.com>
+ <d0b30448-5061-4e35-97ba-2d360d77f150@amd.com>
+ <80ac1338-a116-48f5-9874-72d42b5b65b4@intel.com>
+ <9dfde186-e3af-40e3-b79f-ad4c71a4b911@redhat.com>
+ <c1723a70-68d8-4211-85f1-d4538ef2d7f7@amd.com>
+ <f3aaffe7-7045-4288-8675-349115a867ce@redhat.com>
+ <Z46GIsAcXJTPQ8yN@x1n>
+ <7e60d2d8-9ee9-4e97-8a45-bd35a3b7b2a2@redhat.com>
+ <Z46W7Ltk-CWjmCEj@x1n>
+ <8e144c26-b1f4-4156-b959-93dc19ab2984@intel.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] hw/virtio/vhost: Disable IOTLB callbacks when IOMMU gets
- disabled
-Content-Language: en-US
-To: Laurent Vivier <lvivier@redhat.com>, eric.auger.pro@gmail.com,
- qemu-devel@nongnu.org, mst@redhat.com, jasowang@redhat.com,
- sgarzare@redhat.com
-Cc: zhenzhong.duan@intel.com
-References: <20250120173339.865681-1-eric.auger@redhat.com>
- <3aaaf5c8-b1f0-4237-b50e-bb28fd297bb1@redhat.com>
-From: Eric Auger <eric.auger@redhat.com>
-In-Reply-To: <3aaaf5c8-b1f0-4237-b50e-bb28fd297bb1@redhat.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.133.124;
- envelope-from=eric.auger@redhat.com; helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -51
-X-Spam_score: -5.2
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <8e144c26-b1f4-4156-b959-93dc19ab2984@intel.com>
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=peterx@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -50
+X-Spam_score: -5.1
 X-Spam_bar: -----
-X-Spam_report: (-5.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-2.996,
+X-Spam_report: (-5.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-2.996,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.086,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -115,75 +119,100 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: eric.auger@redhat.com
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi,
+On Tue, Jan 21, 2025 at 09:35:26AM +0800, Chenyi Qiang wrote:
+> 
+> 
+> On 1/21/2025 2:33 AM, Peter Xu wrote:
+> > On Mon, Jan 20, 2025 at 06:54:14PM +0100, David Hildenbrand wrote:
+> >> On 20.01.25 18:21, Peter Xu wrote:
+> >>> On Mon, Jan 20, 2025 at 11:48:39AM +0100, David Hildenbrand wrote:
+> >>>> Sorry, I was traveling end of last week. I wrote a mail on the train and
+> >>>> apparently it was swallowed somehow ...
+> >>>>
+> >>>>>> Not sure that's the right place. Isn't it the (cc) machine that controls
+> >>>>>> the state?
+> >>>>>
+> >>>>> KVM does, via MemoryRegion->RAMBlock->guest_memfd.
+> >>>>
+> >>>> Right; I consider KVM part of the machine.
+> >>>>
+> >>>>
+> >>>>>
+> >>>>>> It's not really the memory backend, that's just the memory provider.
+> >>>>>
+> >>>>> Sorry but is not "providing memory" the purpose of "memory backend"? :)
+> >>>>
+> >>>> Hehe, what I wanted to say is that a memory backend is just something to
+> >>>> create a RAMBlock. There are different ways to create a RAMBlock, even
+> >>>> guest_memfd ones.
+> >>>>
+> >>>> guest_memfd is stored per RAMBlock. I assume the state should be stored per
+> >>>> RAMBlock as well, maybe as part of a "guest_memfd state" thing.
+> >>>>
+> >>>> Now, the question is, who is the manager?
+> >>>>
+> >>>> 1) The machine. KVM requests the machine to perform the transition, and the
+> >>>> machine takes care of updating the guest_memfd state and notifying any
+> >>>> listeners.
+> >>>>
+> >>>> 2) The RAMBlock. Then we need some other Object to trigger that. Maybe
+> >>>> RAMBlock would have to become an object, or we allocate separate objects.
+> >>>>
+> >>>> I'm leaning towards 1), but I might be missing something.
+> >>>
+> >>> A pure question: how do we process the bios gmemfds?  I assume they're
+> >>> shared when VM starts if QEMU needs to load the bios into it, but are they
+> >>> always shared, or can they be converted to private later?
+> >>
+> >> You're probably looking for memory_region_init_ram_guest_memfd().
+> > 
+> > Yes, but I didn't see whether such gmemfd needs conversions there.  I saw
+> > an answer though from Chenyi in another email:
+> > 
+> > https://lore.kernel.org/all/fc7194ee-ed21-4f6b-bf87-147a47f5f074@intel.com/
+> > 
+> > So I suppose the BIOS region must support private / share conversions too,
+> > just like the rest part.
+> 
+> Yes, the BIOS region can support conversion as well. I think guest_memfd
+> backed memory regions all follow the same sequence during setup time:
+> 
+> guest_memfd is shared when the guest_memfd fd is created by
+> kvm_create_guest_memfd() in ram_block_add(), But it will sooner be
+> converted to private just after kvm_set_user_memory_region() in
+> kvm_set_phys_mem(). So at the boot time of cc VM, the default attribute
+> is private. During runtime, the vBIOS can also do the conversion if it
+> wants.
 
+I see.
 
-On 1/21/25 9:31 AM, Laurent Vivier wrote:
-> On 20/01/2025 18:33, Eric Auger wrote:
->> When a guest exposed with a vhost device and protected by an
->> intel IOMMU gets rebooted, we sometimes observe a spurious warning:
->>
->> Fail to lookup the translated address ffffe000
->>
->> We observe that the IOMMU gets disabled through a write to the global
->> command register (CMAR_GCMD.TE) before the vhost device gets stopped.
->> When this warning happens it can be observed an inflight IOTLB
->> miss occurs after the IOMMU disable and before the vhost stop. In
->> that case a flat translation occurs and the check in
->> vhost_memory_region_lookup() fails.
->>
->> Let's disable the IOTLB callbacks when all IOMMU MRs have been
->> unregistered.
->>
->> Signed-off-by: Eric Auger <eric.auger@redhat.com>
->> ---
->>   hw/virtio/vhost.c | 4 ++++
->>   1 file changed, 4 insertions(+)
->>
->> diff --git a/hw/virtio/vhost.c b/hw/virtio/vhost.c
->> index 6aa72fd434..128c2ab094 100644
->> --- a/hw/virtio/vhost.c
->> +++ b/hw/virtio/vhost.c
->> @@ -931,6 +931,10 @@ static void
->> vhost_iommu_region_del(MemoryListener *listener,
->>               break;
->>           }
->>       }
->> +    if (QLIST_EMPTY(&dev->iommu_list) &&
->> +        dev->vhost_ops->vhost_set_iotlb_callback) {
->> +        dev->vhost_ops->vhost_set_iotlb_callback(dev, false);
->> +    }
->>   }
->>     void vhost_toggle_device_iotlb(VirtIODevice *vdev)
->
-> I think you need the counterpart in vhost_iommu_region_del() (for
-> instance if we have an add after a del that results in an empty list).
-> But you cannot unconditionally enable it (for instance if vhost is not
-> started)
-if we enter vhost_iommu_region_add(), this means that the iommu_listener
-has been registered in vhost_vdev_start() and thus vdev->vhost_started
-is set.
+> 
+> > 
+> > Though in that case, I'm not 100% sure whether that could also be done by
+> > reusing the major guest memfd with some specific offset regions.
+> 
+> Not sure if I understand you clearly. guest_memfd is per-Ramblock. It
+> will have its own slot. So the vBIOS can use its own guest_memfd to get
+> the specific offset regions.
 
->
-> Perhaps you should move the vhost_set_iotlb_callback() call from
-> vhost_start()/vhost_stop() to
-> vhost_iommu_region_add()/vhost_iommu_region_del()?
-I currently fail to understand whether we shouldn't keep listening to
-iotlb callbacks when the IOMMU gets disabled. In that case shouldn't we
-flush the kernel IOTLB and update the hdev->mem->regions to reflect the
-IOMMR MR disablement?
+Sorry to be confusing, please feel free to ignore my previous comment.
+That came from a very limited mindset that maybe one confidential VM should
+only have one gmemfd..
 
-Thanks
+Now I see it looks like it's by design open to multiple gmemfds for each
+VM, then it's definitely ok that bios has its own.
 
-Eric
+Do you know why the bios needs to be convertable?  I wonder whether the VM
+can copy it over to a private region and do whatever it wants, e.g.  attest
+the bios being valid.  However this is also more of a pure question.. and
+it can be offtopic to this series, so feel free to ignore.
 
->
-> Thanks,
-> Laurent
->
+Thanks,
+
+-- 
+Peter Xu
 
 
