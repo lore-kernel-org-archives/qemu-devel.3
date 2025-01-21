@@ -4,60 +4,91 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C940BC02182
-	for <qemu-devel@archiver.kernel.org>; Tue, 21 Jan 2025 15:53:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2CD66C02182
+	for <qemu-devel@archiver.kernel.org>; Tue, 21 Jan 2025 15:54:11 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1taGYR-0001zO-HH; Tue, 21 Jan 2025 10:52:40 -0500
+	id 1taGZY-0002Zn-3C; Tue, 21 Jan 2025 10:53:48 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jonathan.cameron@huawei.com>)
- id 1taGYN-0001zB-Vk
- for qemu-devel@nongnu.org; Tue, 21 Jan 2025 10:52:35 -0500
-Received: from frasgout.his.huawei.com ([185.176.79.56])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jonathan.cameron@huawei.com>)
- id 1taGYL-0001VB-Bk
- for qemu-devel@nongnu.org; Tue, 21 Jan 2025 10:52:35 -0500
-Received: from mail.maildlp.com (unknown [172.18.186.231])
- by frasgout.his.huawei.com (SkyGuard) with ESMTP id 4Ycs9h2b2sz6M4fG;
- Tue, 21 Jan 2025 23:50:32 +0800 (CST)
-Received: from frapeml500008.china.huawei.com (unknown [7.182.85.71])
- by mail.maildlp.com (Postfix) with ESMTPS id A869B140B30;
- Tue, 21 Jan 2025 23:52:26 +0800 (CST)
-Received: from localhost (10.203.177.66) by frapeml500008.china.huawei.com
- (7.182.85.71) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.1.2507.39; Tue, 21 Jan
- 2025 16:52:25 +0100
-Date: Tue, 21 Jan 2025 15:52:24 +0000
-To: Zhi Wang <zhiw@nvidia.com>
-CC: <qemu-devel@nongnu.org>, <dan.j.williams@intel.com>,
- <dave.jiang@intel.com>, <ira.weiny@intel.com>, <fan.ni@samsung.com>,
- <alex.williamson@redhat.com>, <alucerop@amd.com>, <clg@redhat.com>,
- <acurrid@nvidia.com>, <cjia@nvidia.com>, <smitra@nvidia.com>,
- <ankita@nvidia.com>, <aniketa@nvidia.com>, <kwankhede@nvidia.com>,
- <targupta@nvidia.com>, <zhiwang@kernel.org>
-Subject: Re: [PATCH 1/3] hw/cxl: factor out cxl_host_addr_to_dpa()
-Message-ID: <20250121155224.00005c8b@huawei.com>
-In-Reply-To: <20241212130422.69380-2-zhiw@nvidia.com>
-References: <20241212130422.69380-1-zhiw@nvidia.com>
- <20241212130422.69380-2-zhiw@nvidia.com>
-X-Mailer: Claws Mail 4.3.0 (GTK 3.24.42; x86_64-w64-mingw32)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1taGZW-0002ZO-JJ
+ for qemu-devel@nongnu.org; Tue, 21 Jan 2025 10:53:46 -0500
+Received: from mail-pj1-x1032.google.com ([2607:f8b0:4864:20::1032])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1taGZV-0001Zs-8F
+ for qemu-devel@nongnu.org; Tue, 21 Jan 2025 10:53:46 -0500
+Received: by mail-pj1-x1032.google.com with SMTP id
+ 98e67ed59e1d1-2ef714374c0so8974503a91.0
+ for <qemu-devel@nongnu.org>; Tue, 21 Jan 2025 07:53:44 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1737474823; x=1738079623; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=ZbfiC/E9KmgsPWktLeqcvcd7LTuzIburYx/aC0JZfc4=;
+ b=J29RkYpphJhEBJ1Dsm7PV+w7qdCgE+XXfN/OfioCugNHv11kKr+oa0Saoxl1IBRKbN
+ KPx+H+3+qofqOwTdMbO1Xwapb8vDeAnKXeOOrHaVsGCtyj8YMjNdLMPeRoJfordk24tK
+ cB1i3YVT+eQUm6l/29pycuiVIAL1vVhmafqC5IBhCORElraoKPy70mG1I7mUFpSD1MF8
+ +Kvvp8oPA5Nkvf1TKYp0x62VLsH0uFu9hxryepFEbKQ+FD3itsnoYId6LD99jRqGSyzg
+ +6290NASbYPLt5Y3SPS93HwVgCfC0wWhnfXeZ2xXmKleTBw500z9zKrsAJPic+OuzBVG
+ 0teA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1737474823; x=1738079623;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=ZbfiC/E9KmgsPWktLeqcvcd7LTuzIburYx/aC0JZfc4=;
+ b=pl6r21Mq1kPuXelO1eVHbyxsJWIC9Xq1/ssa4dIqBSkl71h80lVJXux46RYKLDI1aw
+ v0JP6yxJlABou1zZZlEcXDGJCwdI3VV/s/pCVptYunG03JfnpNEISbRhK3TTzaH3gaUr
+ Puo/6Ul/r77Mh9uYG9pmQPnKi1pVCWOd6Aq8vSE0gW/FTBvNYDk7b8jOHeDEi7hRN/XP
+ 9HlXBTwZMwOLCwwmBLLoSzO7p8rfL5UtDyo3tS60gwuJA03F1Tj4TdTeVjfYXDy3L8mL
+ 4UEo7uOSVmPTBErXS6pon5jkf3M365U5VzYmL1IxUllGWBTdm9L1/kcAIY0swRBdKkSy
+ m/jw==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCXvnqe09eFdIPPStazeyalzQDWBiC/gUc6DOcMW8C72Ueu4kQuUhwNPsPs7FW+g1piHUWUBCb8fNVgt@nongnu.org
+X-Gm-Message-State: AOJu0Yw+IR+RYSc452iiprbyOQNR3sw6BlN/Bh1YRplPARFdPNVfLSbP
+ cOUxfM2EmDSxPCf2MRCwiAzPDEOtqFr2n5g6Aqv/enwL6GJOee5AdhyZXPMk6Jk=
+X-Gm-Gg: ASbGnct8QdoqHplQBF8i8xYB/zCbGQWsM8SiK8jk86O4njI8Dx7xWYFGiqDFvB1MCUV
+ NQaK8uuM+iKFC12COzOzVw+DJNdSgne+3sW/RtcAPBfyi2/hFu0T8BXARZhB80/+IkKmBT5xhXq
+ 5unXvqx2N1f5LCs9JgpAgbtMbM8HmqVAWlaZ5jIwFiJLXJtOs9MXbRsrVS3UVYtmQuhVZsyccMr
+ f9naHcpgkIs/7AEz3jmha3ZCXiUDzqtWe0mqkogZ2Ml1sOIUryb6fq5ypGN3k/BawFht/O5STzu
+ 7Mukpe2W53z5usFliKRhLiUiKoPWm5f0GWX2
+X-Google-Smtp-Source: AGHT+IEC+EUdICEsqFlt9scRw/hnwGSTZj9aBF0ZRHjyAOsyI6jy3q34xE2LnsWSVcR25R1h9SakUQ==
+X-Received: by 2002:a17:90b:3eca:b0:2ee:8253:9a9f with SMTP id
+ 98e67ed59e1d1-2f728e48411mr39138179a91.11.1737474823559; 
+ Tue, 21 Jan 2025 07:53:43 -0800 (PST)
+Received: from [192.168.0.4] (174-21-71-127.tukw.qwest.net. [174.21.71.127])
+ by smtp.gmail.com with ESMTPSA id
+ 98e67ed59e1d1-2f77616117bsm9819532a91.20.2025.01.21.07.53.42
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Tue, 21 Jan 2025 07:53:43 -0800 (PST)
+Message-ID: <22fc1044-9e23-4ed8-a11a-2393903c6af4@linaro.org>
+Date: Tue, 21 Jan 2025 07:53:40 -0800
 MIME-Version: 1.0
-Content-Type: text/plain; charset="US-ASCII"
-Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.203.177.66]
-X-ClientProxiedBy: lhrpeml100004.china.huawei.com (7.191.162.219) To
- frapeml500008.china.huawei.com (7.182.85.71)
-Received-SPF: pass client-ip=185.176.79.56;
- envelope-from=jonathan.cameron@huawei.com; helo=frasgout.his.huawei.com
-X-Spam_score_int: -42
-X-Spam_score: -4.3
-X-Spam_bar: ----
-X-Spam_report: (-4.3 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_MED=-2.3,
- RCVD_IN_MSPIKE_H2=-0.086, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] target/i386: Pass const CPUX86State to
+ x86_cpu_pending_interrupt()
+To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ qemu-devel@nongnu.org
+Cc: Paolo Bonzini <pbonzini@redhat.com>, Eduardo Habkost
+ <eduardo@habkost.net>, Zhao Liu <zhao1.liu@intel.com>
+References: <20250120061544.81623-1-philmd@linaro.org>
+Content-Language: en-US
+From: Richard Henderson <richard.henderson@linaro.org>
+In-Reply-To: <20250120061544.81623-1-philmd@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1032;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pj1-x1032.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -71,37 +102,22 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-to:  Jonathan Cameron <Jonathan.Cameron@huawei.com>
-From:  Jonathan Cameron via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+On 1/19/25 22:15, Philippe Mathieu-Daudé wrote:
+> Directly pass CPUX86State to x86_cpu_pending_interrupt().
+> Since it doesn't modify the dereferenced fields, make the
+> argument const.
+> 
+> Signed-off-by: Philippe Mathieu-Daudé<philmd@linaro.org>
+> ---
+>   target/i386/cpu.h                   | 2 +-
+>   target/i386/cpu.c                   | 8 +++-----
+>   target/i386/tcg/system/seg_helper.c | 2 +-
+>   3 files changed, 5 insertions(+), 7 deletions(-)
 
-Hi Zhi,
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 
-> index 945ee6ffd0..abb2e874b2 100644
-> --- a/include/hw/cxl/cxl_component.h
-> +++ b/include/hw/cxl/cxl_component.h
-> @@ -268,6 +268,9 @@ uint8_t cxl_interleave_ways_enc(int iw, Error **errp);
->  int cxl_interleave_ways_dec(uint8_t iw_enc, Error **errp);
->  uint8_t cxl_interleave_granularity_enc(uint64_t gran, Error **errp);
->  
-> +bool cxl_host_addr_to_dpa(CXLComponentState *cxl_cstate, hwaddr host_addr,
-> +                          uint64_t *dpa);
-> +
-Other than this being a really odd place to put it (in the middle of interleave
-granularity functions.  This change seems like a logical enough change without
-the reuse.
-
-Also, I'm carrying a patch for 3/6/12 way support so I've merged this on top of that
-in general interest of reducing patches flying around when then are reasonable
-on their own.
-
-Jonathan
-
-
->  hwaddr cxl_decode_ig(int ig);
->  
->  CXLComponentState *cxl_get_hb_cstate(PCIHostState *hb);
-
+r~
 
