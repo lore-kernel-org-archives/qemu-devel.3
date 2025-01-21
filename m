@@ -4,145 +4,136 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DD9B2C02185
-	for <qemu-devel@archiver.kernel.org>; Tue, 21 Jan 2025 08:06:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BB2C7C02182
+	for <qemu-devel@archiver.kernel.org>; Tue, 21 Jan 2025 08:33:13 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ta9Go-0005i6-Ez; Tue, 21 Jan 2025 03:05:58 -0500
+	id 1ta9gD-0000eC-8G; Tue, 21 Jan 2025 03:32:13 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <david@redhat.com>) id 1ta9Gg-0005h4-FN
- for qemu-devel@nongnu.org; Tue, 21 Jan 2025 03:05:52 -0500
+ (Exim 4.90_1) (envelope-from <lvivier@redhat.com>)
+ id 1ta9gB-0000dT-5e
+ for qemu-devel@nongnu.org; Tue, 21 Jan 2025 03:32:11 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <david@redhat.com>) id 1ta9Gb-0007bQ-9i
- for qemu-devel@nongnu.org; Tue, 21 Jan 2025 03:05:48 -0500
+ (Exim 4.90_1) (envelope-from <lvivier@redhat.com>)
+ id 1ta9g9-0002wB-6a
+ for qemu-devel@nongnu.org; Tue, 21 Jan 2025 03:32:10 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1737446741;
+ s=mimecast20190719; t=1737448320;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=RkqCCa9rWjKSdac+9OIK7ygSVkkapeD57SDL8zY+bW4=;
- b=HdOcgG0zenNd0cGF6BFtd5oqvheGaIm5Wteh4X51VA2C93FjBIcqp6P7TsxpvrHC5lpbjG
- ykDOKWXrJOwdB5VqMpZZhK7SOJc3mxo3WEzLkVMcEQtX3pJldpm5skFzcqckJ7q+BLdgGB
- jsKtKGScB/l57y7sSc2MU5qtPJWHKa4=
-Received: from mail-wm1-f72.google.com (mail-wm1-f72.google.com
- [209.85.128.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=BfyVSrWMHEiziEzHGs6F8vZZOIls9tuwoD7VwZmXX5o=;
+ b=V8P0iYlinz7UPcZOVAyz3+qXBfm1XHct5t4lBELnlDqfW7XZYX1ecJKusM7EurVpKxS9qd
+ gJp14N6qBEv2Rtt361+YFlK/hijMPxiz6Esfo5JnNrgMjVpKcCctrE3AuHIgNePVeJfr4u
+ WWG3wyeGj0mNemWLk1uHDr1WVVgx02E=
+Received: from mail-wm1-f70.google.com (mail-wm1-f70.google.com
+ [209.85.128.70]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-556-i0scRFZtPnSY3SWG5MUPgg-1; Tue, 21 Jan 2025 03:05:39 -0500
-X-MC-Unique: i0scRFZtPnSY3SWG5MUPgg-1
-X-Mimecast-MFC-AGG-ID: i0scRFZtPnSY3SWG5MUPgg
-Received: by mail-wm1-f72.google.com with SMTP id
- 5b1f17b1804b1-436379713baso25781085e9.2
- for <qemu-devel@nongnu.org>; Tue, 21 Jan 2025 00:05:39 -0800 (PST)
+ us-mta-498-ddC2ER1BO5KkwdSFd5C2DA-1; Tue, 21 Jan 2025 03:31:56 -0500
+X-MC-Unique: ddC2ER1BO5KkwdSFd5C2DA-1
+X-Mimecast-MFC-AGG-ID: ddC2ER1BO5KkwdSFd5C2DA
+Received: by mail-wm1-f70.google.com with SMTP id
+ 5b1f17b1804b1-43621907030so41913655e9.1
+ for <qemu-devel@nongnu.org>; Tue, 21 Jan 2025 00:31:56 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1737446738; x=1738051538;
- h=content-transfer-encoding:in-reply-to:organization:autocrypt
- :content-language:from:references:cc:to:subject:user-agent
- :mime-version:date:message-id:x-gm-message-state:from:to:cc:subject
- :date:message-id:reply-to;
- bh=RkqCCa9rWjKSdac+9OIK7ygSVkkapeD57SDL8zY+bW4=;
- b=l/Nu6rirS6buKYyu2LF8NzzL0vvVmla1E6wFZSaTF+kId7PXNUsh0rUc1UaoL0RR7l
- +AQ107yTJz33SFE3Q/bHO+xfTnIQyzegDKLLZ72ez5Pg6hb5qy6e/MRmO+jkvTK3s636
- eZTat+QC3OKXA7X5MFXjySsqLnBfSRG0uL/kvCUrin5YSO44kNBGRBJIW53Xgeov9Btp
- /4eebggub1vxrqjE03wReVR7aJXg7PIUufN3tdQSssjSnVuk9r07XzZWf3UdGfp8xmNB
- 1XK6RAaEKajg6d7pau7uUn0ffyYVm/vgMsPh/CJ1Vfe2Fy0SjIgBXtgHFnaJAcP2CnnV
- O7+Q==
-X-Gm-Message-State: AOJu0Yy5pYkABXpJnk0jEv9pnnxS6E4Z0BJOhbEsbwINw2vW9W24uSxJ
- U2YD1T5go+Mbl93tmONE4mYBqjZ0VMfBBye1Uhe5DCXWlsUwdevShOg/suwgZZEeSHrsyrDMs02
- 3XhkzNAIStw0ig1sG90rTJabIvf/mWG5wki5J9jQ1+7YpOQq4WLX5
-X-Gm-Gg: ASbGnctwJGJptUnFCQBseGaH15HKZ5G4ma8hV2cjITUyxjNTitWOrzXSIneixmrt7rk
- 2cJXXsTwacAXdl81AP3h1POLW2t/fjcvAwEN9rpL6SBi6MftetNlqZw1d+h4eoa/CmZBDPbxqqI
- 3UZ/kA4qHAGkps5ysnH8SNjyeAopLzKkHUGlAS+E7CiBBg2zbAlMGODDsuOpwjvXxpiJUlOXnhb
- TN3lVmF0q3ZuCuSkEg0Rq3TBa3IN2DViG3AZy6S2spu9godGgVutjLpcCVTA8B+gLMbiOR8jW4T
- G+P/3oNEfN1dd9o0Ai64VaUFxvZ8dxeTHjRAavO/d88hYf25vRZpNSiarc3/xuN7QT9gfVC9yDW
- cuVZxZe1vESu5klFpG8c4XA==
-X-Received: by 2002:a05:600c:34c5:b0:434:b9c6:68f7 with SMTP id
- 5b1f17b1804b1-438914376bdmr127290225e9.26.1737446738239; 
- Tue, 21 Jan 2025 00:05:38 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IH/56QP7oy2XagjWlfRwdmg4JPGPs679UZtDebv0qEpaQbL/M+1cI43KlaWF0irNGvpq8kZWg==
-X-Received: by 2002:a05:600c:34c5:b0:434:b9c6:68f7 with SMTP id
- 5b1f17b1804b1-438914376bdmr127290005e9.26.1737446737887; 
- Tue, 21 Jan 2025 00:05:37 -0800 (PST)
-Received: from ?IPV6:2003:cb:c709:6200:16ba:af70:999d:6a1a?
- (p200300cbc709620016baaf70999d6a1a.dip0.t-ipconnect.de.
- [2003:cb:c709:6200:16ba:af70:999d:6a1a])
+ d=1e100.net; s=20230601; t=1737448315; x=1738053115;
+ h=content-transfer-encoding:in-reply-to:autocrypt:from
+ :content-language:references:cc:to:subject:user-agent:mime-version
+ :date:message-id:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=BfyVSrWMHEiziEzHGs6F8vZZOIls9tuwoD7VwZmXX5o=;
+ b=RVwVXHf4egeaZ1y+OoNS91zQxMSBRWaBCZ0aL0s4YajvqsYEeI4rYjw2FZMAL2jKAa
+ sj7zYnqBusXJ6bGxNRX8gceqyNsVyJcmwj/HGdMzubvzkjgTWE26doeFUKzkWIek+1hu
+ HTI+tMx5ASUasXXDETuGk+z5UNpZZ1ibM+rZvZJ+++FrSln01f+ha+FNqZSl9V+I2e6q
+ znlBeH4P9QNJMZXLDHm5BTWoi90JCcWC7m+O2kNE0O7EAmy9YRojZTc7HICFnBVdyFHR
+ 2K0vfbFYDhbKJoa+qJErusyYZByjB7MfgnUl240xUm/U6SoP/pje/pfnT/OJbGAD/LhR
+ b8Jw==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCVGQqDUP07QnXBfS+vEpK25LofNsj/ui6Z9ldl9AJ4HQ5C8CZfFSqUqGzXqzTd/CE7RULP2lCos+ugJ@nongnu.org
+X-Gm-Message-State: AOJu0YyicvSIlSJiDh9uj031pfhNb6+TM+LOITAw7Tyo+5G3/ULsMHHT
+ zfuBDnJKrxaUAt9y7wxk6H8H8nrmyDgx7L13kK5Zk7cStlpGgEc63isyncW0lRvwWLjo5KayT5A
+ rntt6yto6NicGvmM6TppLh4Jf0h6gS0325MXBjGB64scZJgemad3H
+X-Gm-Gg: ASbGnctkEc/tcsZvopbCr74xOp5jf4o3h+oP1Mae/+PXIVb2IltUEUE9IGQ/an9xM3h
+ i/+yGhTi14+CsumGIESRNygGKW/JSqWZDzPcbaa4ybf6e7h8Ux4bI6O4L3O+g52fjSH8PAx37yn
+ LP3xw23EGsbWKQOtqSJxmcxYDZ8vjVA6cotG1TjpWSY9EyQR74gBZGGL2qevI3AXnFx+9C+888E
+ A9QxK7E1fAnKeLBVj2Z1kJ9SruCDnkxsnH2nv+18wUqoL8m+4EehRh4KbU3/skMe6zzk1tR8QeK
+ DwtMBB/pwbYperCtkSDwJs+V6miem9KZ
+X-Received: by 2002:a05:600c:3d96:b0:434:a26c:8291 with SMTP id
+ 5b1f17b1804b1-4389143b5dbmr137259775e9.24.1737448315294; 
+ Tue, 21 Jan 2025 00:31:55 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IG6Zo/EnA5SV3PJWuFEu2GpdE8tNqjUIAouYuirlbpdtz7tfpdn571uqB13cMF1lIaCSzRi5Q==
+X-Received: by 2002:a05:600c:3d96:b0:434:a26c:8291 with SMTP id
+ 5b1f17b1804b1-4389143b5dbmr137259395e9.24.1737448314823; 
+ Tue, 21 Jan 2025 00:31:54 -0800 (PST)
+Received: from ?IPV6:2a01:e0a:e10:ef90:343a:68f:2e91:95c?
+ ([2a01:e0a:e10:ef90:343a:68f:2e91:95c])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-437c74c4e38sm227863345e9.21.2025.01.21.00.05.36
+ 5b1f17b1804b1-437c74ac712sm226732715e9.12.2025.01.21.00.31.53
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 21 Jan 2025 00:05:36 -0800 (PST)
-Message-ID: <5fd5f718-ec08-4b38-827f-99d13bc7e225@redhat.com>
-Date: Tue, 21 Jan 2025 09:05:35 +0100
+ Tue, 21 Jan 2025 00:31:53 -0800 (PST)
+Message-ID: <3aaaf5c8-b1f0-4237-b50e-bb28fd297bb1@redhat.com>
+Date: Tue, 21 Jan 2025 09:31:53 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 6/7] RAMBlock: make guest_memfd require coordinate discard
-To: Chenyi Qiang <chenyi.qiang@intel.com>, Paolo Bonzini
- <pbonzini@redhat.com>, Peter Xu <peterx@redhat.com>,
- =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Michael Roth <michael.roth@amd.com>
-Cc: qemu-devel@nongnu.org, kvm@vger.kernel.org,
- Williams Dan J <dan.j.williams@intel.com>,
- Peng Chao P <chao.p.peng@intel.com>, Gao Chao <chao.gao@intel.com>,
- Xu Yilun <yilun.xu@intel.com>
-References: <20241213070852.106092-1-chenyi.qiang@intel.com>
- <20241213070852.106092-7-chenyi.qiang@intel.com>
- <3e23b5b0-963c-4ca1-a26b-dd5f247a3a60@redhat.com>
- <b01003cd-c3d1-4e78-b442-a8d0ff19fb04@intel.com>
- <e1141052-1dec-435b-8635-a41881fedd4c@redhat.com>
- <46fcd4fd-999a-46ac-a268-e3651b94ef49@intel.com>
-From: David Hildenbrand <david@redhat.com>
+Subject: Re: [PATCH] hw/virtio/vhost: Disable IOTLB callbacks when IOMMU gets
+ disabled
+To: Eric Auger <eric.auger@redhat.com>, eric.auger.pro@gmail.com,
+ qemu-devel@nongnu.org, mst@redhat.com, jasowang@redhat.com,
+ sgarzare@redhat.com
+Cc: zhenzhong.duan@intel.com
+References: <20250120173339.865681-1-eric.auger@redhat.com>
 Content-Language: en-US
-Autocrypt: addr=david@redhat.com; keydata=
- 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
- WNyWQQ==
-Organization: Red Hat
-In-Reply-To: <46fcd4fd-999a-46ac-a268-e3651b94ef49@intel.com>
+From: Laurent Vivier <lvivier@redhat.com>
+Autocrypt: addr=lvivier@redhat.com; keydata=
+ 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
+In-Reply-To: <20250120173339.865681-1-eric.auger@redhat.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=david@redhat.com;
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=lvivier@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -50
 X-Spam_score: -5.1
@@ -167,75 +158,51 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 21.01.25 07:26, Chenyi Qiang wrote:
+On 20/01/2025 18:33, Eric Auger wrote:
+> When a guest exposed with a vhost device and protected by an
+> intel IOMMU gets rebooted, we sometimes observe a spurious warning:
 > 
+> Fail to lookup the translated address ffffe000
 > 
-> On 1/20/2025 9:11 PM, David Hildenbrand wrote:
->> On 14.01.25 02:38, Chenyi Qiang wrote:
->>>
->>>
->>> On 1/13/2025 6:56 PM, David Hildenbrand wrote:
->>>> On 13.12.24 08:08, Chenyi Qiang wrote:
->>>>> As guest_memfd is now managed by guest_memfd_manager with
->>>>> RamDiscardManager, only block uncoordinated discard.
->>>>>
->>>>> Signed-off-by: Chenyi Qiang <chenyi.qiang@intel.com>
->>>>> ---
->>>>>     system/physmem.c | 2 +-
->>>>>     1 file changed, 1 insertion(+), 1 deletion(-)
->>>>>
->>>>> diff --git a/system/physmem.c b/system/physmem.c
->>>>> index 532182a6dd..585090b063 100644
->>>>> --- a/system/physmem.c
->>>>> +++ b/system/physmem.c
->>>>> @@ -1872,7 +1872,7 @@ static void ram_block_add(RAMBlock *new_block,
->>>>> Error **errp)
->>>>>             assert(kvm_enabled());
->>>>>             assert(new_block->guest_memfd < 0);
->>>>>     -        ret = ram_block_discard_require(true);
->>>>> +        ret = ram_block_coordinated_discard_require(true);
->>>>>             if (ret < 0) {
->>>>>                 error_setg_errno(errp, -ret,
->>>>>                                  "cannot set up private guest memory:
->>>>> discard currently blocked");
->>>>
->>>> Would that also unlock virtio-mem by accident?
->>>
->>> Hum, that's true. At present, the rdm in MR can only point to one
->>> instance, thus if we unlock virtio-mem and try to use it with
->>> guest_memfd, it would trigger assert in
->>> memory_region_set_ram_discard_manager().
->>>
->>> Maybe we need to add some explicit check in virtio-mem to exclude it
->>> with guest_memfd at present?
->>
->> Likely we should make memory_region_set_ram_discard_manager() fail if
->> there is already something, and handle it in the callers?
->>
->> In case of virtio-mem, we'd have to undo what we did and fail realize().
->>
->> In case of CC, we'd have to bail out in a different way.
->>
->>
->> Then, I think if we see new_block->guest_memfd here, that we can assume
->> that any coordinated discard corresponds to only the guest_memfd one,
->> not to anything else?
+> We observe that the IOMMU gets disabled through a write to the global
+> command register (CMAR_GCMD.TE) before the vhost device gets stopped.
+> When this warning happens it can be observed an inflight IOTLB
+> miss occurs after the IOMMU disable and before the vhost stop. In
+> that case a flat translation occurs and the check in
+> vhost_memory_region_lookup() fails.
 > 
-> LGTM. In case of CC, I think we can also check the
-> memory_region_set_ram_discard_manager() failure, undo what we did and
-> make the ram_block_add() fail (set errno).
+> Let's disable the IOTLB callbacks when all IOMMU MRs have been
+> unregistered.
+> 
+> Signed-off-by: Eric Auger <eric.auger@redhat.com>
+> ---
+>   hw/virtio/vhost.c | 4 ++++
+>   1 file changed, 4 insertions(+)
+> 
+> diff --git a/hw/virtio/vhost.c b/hw/virtio/vhost.c
+> index 6aa72fd434..128c2ab094 100644
+> --- a/hw/virtio/vhost.c
+> +++ b/hw/virtio/vhost.c
+> @@ -931,6 +931,10 @@ static void vhost_iommu_region_del(MemoryListener *listener,
+>               break;
+>           }
+>       }
+> +    if (QLIST_EMPTY(&dev->iommu_list) &&
+> +        dev->vhost_ops->vhost_set_iotlb_callback) {
+> +        dev->vhost_ops->vhost_set_iotlb_callback(dev, false);
+> +    }
+>   }
+>   
+>   void vhost_toggle_device_iotlb(VirtIODevice *vdev)
 
-As we have memory_region_has_ram_discard_manager(), we could also check 
-that instead of failing memory_region_set_ram_discard_manager().
+I think you need the counterpart in vhost_iommu_region_del() (for instance if we have an 
+add after a del that results in an empty list).
+But you cannot unconditionally enable it (for instance if vhost is not started)
 
-But failing memory_region_set_ram_discard_manager() will force everybody 
-to handle that, so it might be the better choice.
+Perhaps you should move the vhost_set_iotlb_callback() call from 
+vhost_start()/vhost_stop() to vhost_iommu_region_add()/vhost_iommu_region_del()?
 
-Of course, setting it to "NULL" should be guaranteed to never fail.
-
--- 
-Cheers,
-
-David / dhildenb
+Thanks,
+Laurent
 
 
