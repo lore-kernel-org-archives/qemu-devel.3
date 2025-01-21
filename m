@@ -4,87 +4,88 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id F11EBC0218B
-	for <qemu-devel@archiver.kernel.org>; Tue, 21 Jan 2025 18:49:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9626BC02182
+	for <qemu-devel@archiver.kernel.org>; Tue, 21 Jan 2025 18:50:22 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1taJJH-0004ky-Iy; Tue, 21 Jan 2025 13:49:11 -0500
+	id 1taJJR-0005qu-AS; Tue, 21 Jan 2025 13:49:22 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <dbarboza@ventanamicro.com>)
- id 1taJJD-0004Tu-Ek
- for qemu-devel@nongnu.org; Tue, 21 Jan 2025 13:49:07 -0500
-Received: from mail-pl1-x634.google.com ([2607:f8b0:4864:20::634])
+ id 1taJJJ-00055j-Nc
+ for qemu-devel@nongnu.org; Tue, 21 Jan 2025 13:49:13 -0500
+Received: from mail-pl1-x62d.google.com ([2607:f8b0:4864:20::62d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <dbarboza@ventanamicro.com>)
- id 1taJJA-0005MX-LS
- for qemu-devel@nongnu.org; Tue, 21 Jan 2025 13:49:07 -0500
-Received: by mail-pl1-x634.google.com with SMTP id
- d9443c01a7336-2163b0c09afso109645405ad.0
- for <qemu-devel@nongnu.org>; Tue, 21 Jan 2025 10:49:04 -0800 (PST)
+ id 1taJJG-0005No-Dx
+ for qemu-devel@nongnu.org; Tue, 21 Jan 2025 13:49:13 -0500
+Received: by mail-pl1-x62d.google.com with SMTP id
+ d9443c01a7336-21649a7bcdcso102557235ad.1
+ for <qemu-devel@nongnu.org>; Tue, 21 Jan 2025 10:49:10 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=ventanamicro.com; s=google; t=1737485343; x=1738090143; darn=nongnu.org;
+ d=ventanamicro.com; s=google; t=1737485348; x=1738090148; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=Rvu1CgqxV7eAphnSN54+tDhlM3TA+qR/gcxjkFnEWjw=;
- b=LawOKZ8bYvT3S9S4oniFLOjamUu9VCrSOAdyl7RNzeR4BWeWqbnoNNLx+4kJSagZIW
- mK7A+9Sk6wkkkAGZ95SXomlC4X9CDmqIyFuwzc6q2jwfNVvownhiqCpLJqs890b0g4P6
- AonuO10IpvE+A7v+lcQufQeEmtD4WGIabUoO61vxHTvIoay3BL2iXmdDBOtQkj5YFqea
- H1F/DHmmhd3jBkhaDIq7KqwqYbrGX/UbW9sS7K8MYR7QwB+t1YTiEVptIktgvRpOhdtn
- Rx3N+qyeuS7W/EjYwhNp8/vj49HUhQ2eprhJLhKrlEtn4vhgKd83OkcYk/MNAv2k9sHZ
- At/A==
+ bh=YvLXXAKDH9ahcunPLK9b2L9XTGiX+9XTb+WMW9ld36E=;
+ b=eEiEz7aw4F43SF5blxeSRRixrmMbLpfGf+qbRExr9jvY4AjdicL6Q9DghtQVij9FaP
+ B9WUpQAUVG9eBwy8QjO2IOfGXJvYa7q7BlTaWl+Ew8E/gcFFxsqdWZnFDOic9BjFX5Us
+ hkgcfu/Se/kk+Iw2QCgfUylc22+Dg42SV/OmrcXwf6pJbQiZqYr5WcNaorHwLu3qjSnM
+ xQexYo9yr+Y7j+QExt0GLnkIJy3yLEFOFm+SLxQniIlM2gNRbkJQYJiykcb/i3iI8ZGK
+ YO2ci2O0xEA5hS4Om5+PmkY29PX2Qds7mEjRrJmCh7nZgZYSZOLDhACwMc/n6JNHb9fK
+ oS3A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1737485343; x=1738090143;
+ d=1e100.net; s=20230601; t=1737485348; x=1738090148;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=Rvu1CgqxV7eAphnSN54+tDhlM3TA+qR/gcxjkFnEWjw=;
- b=uBdCRFVK/MEer2of4HNlx/t39M83OAWn2a+fnXkCQ2Ufw+VsApZS8sVyjd32naFNGQ
- WDoyBXmDkC/kVjNj5HWJr/aorBMDWEK5pUmN1m/VA7n/CQRn0OwyKeIkQQqFnNRlC6QQ
- x3VpO7YnoS82EzlxGb+yXg4BYkfONZBrJA3QMHVhHJUsKlAWLOWR1i6ftKyFhu96SSZC
- SPto7CJQRRYW+63PoRiL5BV+R3WcfebXrz9itR3flAK3PVtG7CSsUpusMgMY2GbdOta7
- m9hT0EUZRlzkSJlg8hl57j9qlAFzaojmDqP45g/DcJWC3bocwoQyCEpFLqzvC0EblsHH
- q5dw==
-X-Gm-Message-State: AOJu0YyotD1xsdHIBrIbH4PF3/sZI6HzUzRml5TEvNbhLFK0uI1+oh5M
- XCiBI1YJ8ArgVNiKgX+ya0zEdYXYwt+3Sgi60DG9RDh8bHoJwyhdF/OfyVVfxcNtQjxipINB1pc
- w
-X-Gm-Gg: ASbGncsvWmPw5xGBSLSWjAejhDZKxbxdR4Jkz0adyZIFxmRI+ZCR2A9UD11SxbEtQLN
- x8a23/SH8EsJDL0V1yBZUskFc/xFCORJCviMRtrBcBLflswQ4lBb8DRC/0SR4v7bFwb9okiW5fu
- Om0k5DqenjAWiWahn+TdcIxf93nl03P/MdlN76v9Y1mdsZq1ylMRroI6gL/Tdy129aWxkAv74Qc
- qSJcW/+ClHdRYXwnBvOtTDfoOFb7FqoAlMRUwKeuA9tav/tK3hZYeJvXsN/duAJeMbd17t6
-X-Google-Smtp-Source: AGHT+IESP4i3tbzPGF4yXpQslSMUUd/AhTFYAxFzW9c0AJWvrEVtRb0L/dJKlBg3b8stpphikzKpZw==
-X-Received: by 2002:a17:902:d501:b0:20c:9821:6998 with SMTP id
- d9443c01a7336-21c352c798emr324610145ad.10.1737485342075; 
- Tue, 21 Jan 2025 10:49:02 -0800 (PST)
+ bh=YvLXXAKDH9ahcunPLK9b2L9XTGiX+9XTb+WMW9ld36E=;
+ b=Zt9XTvdZFfeGS7fke97AM8lcN+IDem3CgAAh/Qifioa1xZ0e4sA4xC2zZ098wrQYDa
+ +RmCLxHpfZVSf4K3qrYi5VlT0LK3Zy8VFGYCMROhi379xusF8esaPiGv+k+pSbGv+TzI
+ QfvfCrK7m0391kecOx187Uo5YWbVXEVo+RzGXbgjZ2+7JnHQckmox9xvQokses20USh/
+ ClF9ahlX9pbBxzBWcGgbDdElJ6zgSg7qFTjsDTovveZfvLHH+LBQG7UPWk0QsQioMboA
+ LOrsOoCjJ9aINcVeVClaFf1dnLmyMbb1QyiR8M5Lxy2sYb9rwp0wX9cyR3NATLAwIPjX
+ x1Jw==
+X-Gm-Message-State: AOJu0Yxz2LY7Rr8XqEGlp0WbqHeVUjMbfVjMW1LXOwIx9EZyIsOjHj0l
+ /SbOfkN/eUDhUuy+/yoKgYBInmouNwt+vqFx6LoBYOJOE+drIS7IfH9PPtTMT0pfY0ouQxW3plK
+ Q
+X-Gm-Gg: ASbGncuu2sEfAABfDupjiN8U6Bk8AHRB6wZyjUuhzNDPnQy7HFzc+E525TpHNKiToZN
+ 5s/b1qMNIDIX65dq1WHf65gCb50x2zI5eEOIkaPuw0MT8LbjaASPZv/3OyL2EOiXjbjaJRViryT
+ QkM1JHRumEvNi+G5Ts6NG7RFpQAAhCZtz2pfpdT/DWkw0zoJ6VFjcbjBjHdAQyzrwoGeijGN+5C
+ YwMnlxfVl2p49lgcb+f14jWI3krrVSexju1RndRwv7a1HrEuQf00BULeDZ71vHzEckddwRk
+X-Google-Smtp-Source: AGHT+IGemy6A+esvt/sUQ6h7P7vlMAEZgDNh/xiJfGyHmsLHZ1zQ/nDOezuNTESLT+1COu1kWoIy3Q==
+X-Received: by 2002:a17:903:32c1:b0:21b:d126:6d30 with SMTP id
+ d9443c01a7336-21c355c433amr246020075ad.33.1737485348333; 
+ Tue, 21 Jan 2025 10:49:08 -0800 (PST)
 Received: from grind.. ([191.202.238.10]) by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-21c2ceba56asm81121865ad.98.2025.01.21.10.48.59
+ d9443c01a7336-21c2ceba56asm81121865ad.98.2025.01.21.10.49.05
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 21 Jan 2025 10:49:01 -0800 (PST)
+ Tue, 21 Jan 2025 10:49:07 -0800 (PST)
 From: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
 To: qemu-devel@nongnu.org
 Cc: qemu-riscv@nongnu.org, alistair.francis@wdc.com, bmeng@tinylab.org,
  liwei1518@gmail.com, zhiwei_liu@linux.alibaba.com, palmer@rivosinc.com,
  peter.maydell@linaro.org,
  Daniel Henrique Barboza <dbarboza@ventanamicro.com>
-Subject: [PATCH 3/5] target/riscv/csr.c: fix deadcode in rmw_xiregi()
-Date: Tue, 21 Jan 2025 15:48:45 -0300
-Message-ID: <20250121184847.2109128-4-dbarboza@ventanamicro.com>
+Subject: [PATCH 5/5] target/riscv/cpu_helper.c: fix bad_shift in
+ riscv_cpu_interrupt()
+Date: Tue, 21 Jan 2025 15:48:47 -0300
+Message-ID: <20250121184847.2109128-6-dbarboza@ventanamicro.com>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20250121184847.2109128-1-dbarboza@ventanamicro.com>
 References: <20250121184847.2109128-1-dbarboza@ventanamicro.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::634;
- envelope-from=dbarboza@ventanamicro.com; helo=mail-pl1-x634.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::62d;
+ envelope-from=dbarboza@ventanamicro.com; helo=mail-pl1-x62d.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -100,75 +101,44 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Coverity found a DEADCODE issue in rmw_xiregi() claiming that we can't
-reach 'RISCV_EXCP_VIRT_INSTRUCTION_FAULT' at the 'done' label:
+Coverity reported a BAD_SHIFT issue in the following code:
 
- > 2652     done:
- >>>>      CID 1590357:  Control flow issues  (DEADCODE)
- >>>>      Execution cannot reach the expression "RISCV_EXCP_VIRT_INSTRUCTION_FAULT"
-     inside this statement: "return (env->virt_enabled &...".
- > 2653         return (env->virt_enabled && virt) ?
- > 2654                 RISCV_EXCP_VIRT_INSTRUCTION_FAULT : RISCV_EXCP_ILLEGAL_INST;
+ > 2097
+ >>>>      CID 1590355:  Integer handling issues  (BAD_SHIFT)
+ >>>>      In expression "hdeleg >> cause", right shifting by more than 63
+       bits has undefined behavior.  The shift amount, "cause", is at least 64.
+ > 2098         vsmode_exc = env->virt_enabled && (((hdeleg >> cause) & 1) || vs_injected);
+ > 2099         /*
 
-This happens because 'virt' is being set to 'false' and it will remain
-as 'false' in any code path where 'done' will be called. The label can
-be safely reduced to:
+It is not clear to me how the tool guarantees that '"cause" is at least
+64', but indeed there's no guarantees that it would be < 64 in the
+'async = true' code path.
 
-done:
-     return RISCV_EXCP_ILLEGAL_INST;
+A simple fix to avoid a potential UB is to add a 'cause < 64' guard like
+'mode' is already doing right before 'vsmode_exc'.
 
-And that will leave us with the following usage of a 'goto' skipping a
-single 'return' to do another single 'return':
-
-     } else {
-        goto done;
-     }
-
-     return rmw_xireg_csrind(env, csrno, isel, val, new_val, wr_mask);
-
-done:
-     return RISCV_EXCP_ILLEGAL_INST;
-
-Which we will eliminate it and just do 'return RISCV_EXCP_ILLEGAL_INST'
-instead.
-
-Resolves: Coverity CID 1590357
-Fixes: 5e33a20827 ("target/riscv: Support generic CSR indirect access")
+Resolves: Coverity CID 1590355
+Fixes: 967760f62c ("target/riscv: Implement Ssdbltrp exception handling")
 Signed-off-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
 ---
- target/riscv/csr.c | 8 +-------
- 1 file changed, 1 insertion(+), 7 deletions(-)
+ target/riscv/cpu_helper.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/target/riscv/csr.c b/target/riscv/csr.c
-index 0e83c3b045..75f21ccabb 100644
---- a/target/riscv/csr.c
-+++ b/target/riscv/csr.c
-@@ -2621,7 +2621,6 @@ static int rmw_xireg_csrind(CPURISCVState *env, int csrno,
- static int rmw_xiregi(CPURISCVState *env, int csrno, target_ulong *val,
-                       target_ulong new_val, target_ulong wr_mask)
- {
--    bool virt = false;
-     int ret = -EINVAL;
-     target_ulong isel;
+diff --git a/target/riscv/cpu_helper.c b/target/riscv/cpu_helper.c
+index e1dfc4ecbf..64d1d68550 100644
+--- a/target/riscv/cpu_helper.c
++++ b/target/riscv/cpu_helper.c
+@@ -2095,7 +2095,9 @@ void riscv_cpu_do_interrupt(CPUState *cs)
+     mode = env->priv <= PRV_S && cause < 64 &&
+         (((deleg >> cause) & 1) || s_injected || vs_injected) ? PRV_S : PRV_M;
  
-@@ -2642,16 +2641,11 @@ static int rmw_xiregi(CPURISCVState *env, int csrno, target_ulong *val,
-     } else if (CSR_VSIREG <= csrno && csrno <= CSR_VSIREG6 &&
-                csrno != CSR_VSIREG4 - 1) {
-         isel = env->vsiselect;
--        virt = true;
-     } else {
--        goto done;
-+        return RISCV_EXCP_ILLEGAL_INST;
-     }
- 
-     return rmw_xireg_csrind(env, csrno, isel, val, new_val, wr_mask);
--
--done:
--    return (env->virt_enabled && virt) ?
--            RISCV_EXCP_VIRT_INSTRUCTION_FAULT : RISCV_EXCP_ILLEGAL_INST;
- }
- 
- static RISCVException rmw_xireg(CPURISCVState *env, int csrno,
+-    vsmode_exc = env->virt_enabled && (((hdeleg >> cause) & 1) || vs_injected);
++    vsmode_exc = env->virt_enabled && cause < 64 &&
++        (((hdeleg >> cause) & 1) || vs_injected);
++
+     /*
+      * Check double trap condition only if already in S-mode and targeting
+      * S-mode
 -- 
 2.47.1
 
