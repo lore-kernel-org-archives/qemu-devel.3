@@ -4,77 +4,77 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5C8D2C02182
-	for <qemu-devel@archiver.kernel.org>; Tue, 21 Jan 2025 17:17:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C2C7CC02182
+	for <qemu-devel@archiver.kernel.org>; Tue, 21 Jan 2025 17:27:23 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1taHrH-0007UK-S6; Tue, 21 Jan 2025 12:16:11 -0500
+	id 1taI18-0001h6-On; Tue, 21 Jan 2025 12:26:23 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <eperezma@redhat.com>)
- id 1taHrF-0007RS-K7
- for qemu-devel@nongnu.org; Tue, 21 Jan 2025 12:16:09 -0500
+ id 1taI17-0001gx-P6
+ for qemu-devel@nongnu.org; Tue, 21 Jan 2025 12:26:21 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <eperezma@redhat.com>)
- id 1taHrB-0007se-BW
- for qemu-devel@nongnu.org; Tue, 21 Jan 2025 12:16:08 -0500
+ id 1taI15-0000bc-S9
+ for qemu-devel@nongnu.org; Tue, 21 Jan 2025 12:26:21 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1737479763;
+ s=mimecast20190719; t=1737480377;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=UPrhKFj+Ywjvf64erkxYhUiTwK4W2d8u2//UIfv+nRY=;
- b=f7DHO9etxB6MXyHI82CCGUCFoS7TgknVHbOkgSWOhSnNlhbdN6OEthT+oYRQ+7hnMFX8P/
- IdNR7GMpmwvpRT5GlUXo3Dy0Zsy6sDqmQPxwHYu08v7ZMXEiSobw4pVrO+AiKWPC96fOUl
- M85uztmiIns1jiBZIYynkrMN3uCBGG8=
+ bh=X9ixp/bERVOVED06lOYV0Qla86pQ4VX6y3xkatcWfIk=;
+ b=ZqQs0dPu0rMNq6RnPaaoLIbX9c7wqNXgL2djmW8OyTNqmco5LaM+a9oogsESBkZ2SscN2g
+ twxCfdtDPqiTM79iS4ncYhptEnCKd+OzyZ7Hg+an/+xDPfCzzo5qHkKjjPH4/58aN3MFrd
+ AVWCalsGScx54UpKeWHIhqaDxWsvlo0=
 Received: from mail-yb1-f199.google.com (mail-yb1-f199.google.com
  [209.85.219.199]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-370-11OLkly1NzWtJZsy9tDPJA-1; Tue, 21 Jan 2025 12:16:01 -0500
-X-MC-Unique: 11OLkly1NzWtJZsy9tDPJA-1
-X-Mimecast-MFC-AGG-ID: 11OLkly1NzWtJZsy9tDPJA
+ us-mta-246-jKllspWIM4ekRMAC1KdBwQ-1; Tue, 21 Jan 2025 12:26:14 -0500
+X-MC-Unique: jKllspWIM4ekRMAC1KdBwQ-1
+X-Mimecast-MFC-AGG-ID: jKllspWIM4ekRMAC1KdBwQ
 Received: by mail-yb1-f199.google.com with SMTP id
- 3f1490d57ef6-e3a0f608b88so13280023276.0
- for <qemu-devel@nongnu.org>; Tue, 21 Jan 2025 09:16:01 -0800 (PST)
+ 3f1490d57ef6-e5740c858beso15694329276.2
+ for <qemu-devel@nongnu.org>; Tue, 21 Jan 2025 09:26:14 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1737479761; x=1738084561;
+ d=1e100.net; s=20230601; t=1737480373; x=1738085173;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=UPrhKFj+Ywjvf64erkxYhUiTwK4W2d8u2//UIfv+nRY=;
- b=xQcdrYnfsizRxVsvElwLXIboLNxR4MhN6YET3pF7FcSiw4mEHz5H8NswnrPCrNrCk9
- UDd7WrkrOpQli1pRBBsaeMObIkVjO5LSY5iT+Ee/OhUtn9zsH8sDs0RpdPFDozuHCBap
- 9nR+A4Md++tqqf8jmjKIruN1wCCrWKIMnuoI0aGqrMqVtXsaIWjAt6dbNKuArZVK01gY
- QUDaFVbYR3qCftdnrIHwFuuYtDFRj0KYuv9RVlvk2ScKeKaIOEh8Aa4Ap0elqh+OXY4v
- 2Ucmda7tW0wZlwaxv7wjbQMTP2Px0+KyHvpNwUG7EZW8iclHw+HZFmHkhwIIyOUBQ3Ox
- 67+w==
-X-Gm-Message-State: AOJu0YzM75PugbKuDOT5azOioW7UviV8lWlwaHqEUHQZW9oIClFfwQEO
- 3mPObEbD6TT5PgBs+Mi6RNkRDR0hvoJJG+fMx0QCznsRUasS99bsAdq1LKww6pwU5yQC3+DDPlb
- 95PDd5nTTULdU7slF4QJbqqShdNGatvABNm4HFbBqCZE54Hi4FoWYQygBtuji01TwsMXEqNQrEB
- sgjF1N+7FVU8qaLvZYUUmDMuZwKL8=
-X-Gm-Gg: ASbGncvhkYfiRooe4AoTSm3rtDv/6hoHtoIZwDT0kb0GjDChjrsBr7V3GV6BwEHT1FC
- OJj0qFu2wdhaaAPjPF8GrGEci9YXLJa9PGPLTm5Brt3RMQxfobQ==
-X-Received: by 2002:a05:6902:2089:b0:e57:8bbb:b911 with SMTP id
- 3f1490d57ef6-e57b106410emr12062837276.19.1737479761091; 
- Tue, 21 Jan 2025 09:16:01 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IEyuFc8hNGIdHC/cdxRapVF/QVGBDbygPIMH/s9hQ7NFc9wzMaj3y7XbQTfULGoMW8dglYJiw3ToyCvTeZs6EQ=
-X-Received: by 2002:a05:6902:2089:b0:e57:8bbb:b911 with SMTP id
- 3f1490d57ef6-e57b106410emr12062803276.19.1737479760766; Tue, 21 Jan 2025
- 09:16:00 -0800 (PST)
+ bh=X9ixp/bERVOVED06lOYV0Qla86pQ4VX6y3xkatcWfIk=;
+ b=qufDo/qi8uDkuLZ3nfG07crGsD9LEZSWh2sjSQPtBS77VBzC78bfDCLyAiemNX3kpk
+ RiQokGt+RQ72PvkvvXMLC8bpJ1NTsaB3ShFBOdVWZzfoIONhUp+vmmarFqWNBGc/JOot
+ iuRaaMLZsKOJm83hWWVpCC/m3qzDsvr+dCMFL1l3/q1X77ZaXnOWG/OBoHaz4UQrgQ27
+ MRLHoqhaAbQnN0DAeGZHWeXzkNzviTcEuWExOPCe0VH1+upE3n58xbZUh654fZK9NI1E
+ rdLK/M7Dj+wJwR/fYHalcqsKPv6NwUsI1WGYhHCPM3SNVFbjxe/9y6YAI+B4Z2CxXEP/
+ uJiw==
+X-Gm-Message-State: AOJu0YzeEUbh100bEJlaz/nW5CpvupD7pM2mfvvaQR+dJLUSiVL4/ZSE
+ lGexK1GjIAJCePHnS1kvei956XtkMPwen83EUbn8hUfz7KHKZP8FX44Ce6s3+sad39YDFGIhV/l
+ uF0Yi2kUvvOTAEisllLwcTVxvVbtF64cs+i7+IK1/4IVqahwzZVGN3BHdPo6t0ZecH4SqbSdvyx
+ aBE7bJAKgDpW6s7BUfzTrhBrFDGmo=
+X-Gm-Gg: ASbGnctc3R3Tm4xW/reKT8iGqAZNVUoolV5/8aBSPQxbw3vSkn+nyopIqYNUF5mSq84
+ TwkyngBr0NM1VCAqBh+65/wzSAxmAAP0fziYTrZJC1aJ8QfzGSA==
+X-Received: by 2002:a05:6902:160e:b0:e58:9ac:81d with SMTP id
+ 3f1490d57ef6-e5809ac09c4mr1680108276.19.1737480373449; 
+ Tue, 21 Jan 2025 09:26:13 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IHzUckV0jHq6IoQqJIMbwKMHeFhDmOBbSqsFTS+TelGYm/XNlC+dNbJQO7iEMHdcfpSYR+O6gWGjApIzy9BeAU=
+X-Received: by 2002:a05:6902:160e:b0:e58:9ac:81d with SMTP id
+ 3f1490d57ef6-e5809ac09c4mr1680089276.19.1737480373122; Tue, 21 Jan 2025
+ 09:26:13 -0800 (PST)
 MIME-Version: 1.0
 References: <20250110170837.2747532-1-jonah.palmer@oracle.com>
- <20250110170837.2747532-4-jonah.palmer@oracle.com>
- <CAJaqyWdv+Vh5SVGzqy08J8d0VEHYbYX8CK9YuNGZVpE85fOKKg@mail.gmail.com>
- <206d8dad-61a9-47af-a72c-92a7df2367e9@oracle.com>
-In-Reply-To: <206d8dad-61a9-47af-a72c-92a7df2367e9@oracle.com>
+ <20250110170837.2747532-2-jonah.palmer@oracle.com>
+ <CAJaqyWc-ygnHZmb-aLBG9Hik3v9PbBsnFMdrxXTmGMxsMB+ZOA@mail.gmail.com>
+ <74eee431-a6b5-4da3-8a5d-344a3401a288@oracle.com>
+In-Reply-To: <74eee431-a6b5-4da3-8a5d-344a3401a288@oracle.com>
 From: Eugenio Perez Martin <eperezma@redhat.com>
-Date: Tue, 21 Jan 2025 18:15:24 +0100
-X-Gm-Features: AbW1kvbB2VNRJBwGRtdsBmpEFNpynahhqwd3kVMtBHWYuSy6jYm3H5HdA5fcvtQ
-Message-ID: <CAJaqyWfXX5G2TwrnmE-JduB9-6Ssxgz82K6wDs+zfRCzrB==+Q@mail.gmail.com>
-Subject: Re: [RFC v3 3/5] vhost-vdpa: Implement the GPA->IOVA tree
+Date: Tue, 21 Jan 2025 18:25:35 +0100
+X-Gm-Features: AbW1kvbSZbikxxNU-GnG4_IIvM_VFdZMPNwBioBb2T6d6NjfPQtPXftqleNpmyg
+Message-ID: <CAJaqyWfx0pbSzDE=taJm_OOCw_ijhu4naDYpeqB0s7zdPP+CGQ@mail.gmail.com>
+Subject: Re: [RFC v3 1/5] vhost-vdpa: Decouple the IOVA allocator
 To: Jonah Palmer <jonah.palmer@oracle.com>
 Cc: qemu-devel@nongnu.org, mst@redhat.com, leiyang@redhat.com, 
  peterx@redhat.com, dtatulea@nvidia.com, jasowang@redhat.com, 
@@ -106,381 +106,280 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, Jan 21, 2025 at 4:25=E2=80=AFPM Jonah Palmer <jonah.palmer@oracle.c=
+On Tue, Jan 21, 2025 at 3:53=E2=80=AFPM Jonah Palmer <jonah.palmer@oracle.c=
 om> wrote:
 >
 >
 >
-> On 1/16/25 2:00 PM, Eugenio Perez Martin wrote:
+> On 1/16/25 11:44 AM, Eugenio Perez Martin wrote:
 > > On Fri, Jan 10, 2025 at 6:09=E2=80=AFPM Jonah Palmer <jonah.palmer@orac=
 le.com> wrote:
 > >>
-> >> Implements the GPA->IOVA tree for handling mapping and unmapping for
-> >> guest memory. This, alongside the SVQ IOVA->HVA tree & IOVA-only tree
-> >> implemented in the previous patches, allows us to handle guest and
-> >> host-only memory mapping operations separately via their own respectiv=
-e
-> >> trees.
+> >> Decouples the IOVA allocator from the full IOVA->HVA tree to support a
+> >> SVQ IOVA->HVA tree for host-only memory mappings.
 > >>
-> >> The next patches will implement a method to determine if an incomming
+> >> The IOVA allocator still allocates an IOVA range but instead adds this
+> >> range to an IOVA-only tree (iova_map) that keeps track of allocated IO=
+VA
+> >> ranges for both guest & host-only memory mappings.
+> >>
+> >> A new API function vhost_iova_tree_insert() is also created for adding
+> >> IOVA->HVA mappings into the SVQ IOVA->HVA tree, since the allocator is
+> >> no longer doing that.
+> >>
 > >
-> > s/incomming/incoming/ (credits to google syntax highlight actually :) )
+> > What is the reason for not adding IOVA -> HVA tree on _alloc
+> > automatically? The problematic one is GPA -> HVA, isn't it? Doing this
+> > way we force all the allocations to do the two calls (alloc+insert),
+> > or the trees will be inconsistent.
 > >
 >
-> Whoops! Good catch. Maybe I should add a spellchecker plugin to my Vim
-> configuration haha.
+> Ah, I believe you also made a similar comment in RFC v1, saying it
+> wasn't intuitive for the user to follow up with a
+> vhost_iova_tree_insert() call afterwards (e.g. in
+> vhost_vdpa_svq_map_ring() or vhost_vdpa_cvq_map_buf()).
 >
-> >> address for translation is backed by guest or host-only memory.
-> >>
+> I believe what I ended up doing in RFC v2 was creating separate alloc
+> functions for host-only memory mapping (e.g. vhost_vdpa_svq_map_ring()
+> and vhost_vdpa_cvq_map_buf()) and guest-backed memory mapping (e.g.
+> vhost_vdpa_listener_region_add()).
+>
+> This way, for host-only memory, in the alloc function we allocate an
+> IOVA range (in the IOVA-only tree) and then also inserts the IOVA->HVA
+> mapping into the SVQ IOVA->HVA tree. Similarly, for guest-backed memory,
+> we create its own alloc function (e.g. vhost_iova_tree_map_alloc_gpa()),
+> allocate the IOVA range (in the IOVA-only tree) and then insert the
+> GPA->IOVA mapping into the GPA->IOVA tree.
+>
+> This was done so that we didn't have to rely on the user to also call
+> the insertion function after calling the allocation function.
+>
+> Is this kinda what you're thinking of here?
+>
+
+Right, I think it makes more sense. Do you think differently, maybe I
+missed any drawbacks?
+
 > >> Signed-off-by: Jonah Palmer <jonah.palmer@oracle.com>
 > >> ---
-> >>   hw/virtio/vhost-iova-tree.c | 50 +++++++++++++++++++++++++++++++++++=
-++
-> >>   hw/virtio/vhost-iova-tree.h |  4 +++
-> >>   hw/virtio/vhost-vdpa.c      | 22 ++++++++++------
-> >>   include/qemu/iova-tree.h    | 22 ++++++++++++++++
-> >>   util/iova-tree.c            | 46 ++++++++++++++++++++++++++++++++++
-> >>   5 files changed, 136 insertions(+), 8 deletions(-)
+> >>   hw/virtio/vhost-iova-tree.c | 35 +++++++++++++++++++++++++++++++----
+> >>   hw/virtio/vhost-iova-tree.h |  1 +
+> >>   hw/virtio/vhost-vdpa.c      | 21 ++++++++++++++++-----
+> >>   net/vhost-vdpa.c            | 13 +++++++++++--
+> >>   4 files changed, 59 insertions(+), 11 deletions(-)
 > >>
 > >> diff --git a/hw/virtio/vhost-iova-tree.c b/hw/virtio/vhost-iova-tree.c
-> >> index f6a5694857..540bc35660 100644
+> >> index 3d03395a77..b1cfd17843 100644
 > >> --- a/hw/virtio/vhost-iova-tree.c
 > >> +++ b/hw/virtio/vhost-iova-tree.c
-> >> @@ -31,6 +31,9 @@ struct VhostIOVATree {
+> >> @@ -28,12 +28,15 @@ struct VhostIOVATree {
 > >>
-> >>       /* Allocated IOVA addresses */
-> >>       IOVATree *iova_map;
+> >>       /* IOVA address to qemu memory maps. */
+> >>       IOVATree *iova_taddr_map;
 > >> +
-> >> +    /* GPA to IOVA address memory maps */
-> >> +    IOVATree *gpa_iova_map;
+> >> +    /* Allocated IOVA addresses */
+> >> +    IOVATree *iova_map;
 > >>   };
 > >>
 > >>   /**
-> >> @@ -48,6 +51,7 @@ VhostIOVATree *vhost_iova_tree_new(hwaddr iova_first=
-, hwaddr iova_last)
+> >> - * Create a new IOVA tree
+> >> + * Create a new VhostIOVATree
+> >>    *
+> >> - * Returns the new IOVA tree
+> >> + * Returns the new VhostIOVATree
+> >>    */
+> >>   VhostIOVATree *vhost_iova_tree_new(hwaddr iova_first, hwaddr iova_la=
+st)
+> >>   {
+> >> @@ -44,15 +47,17 @@ VhostIOVATree *vhost_iova_tree_new(hwaddr iova_fir=
+st, hwaddr iova_last)
+> >>       tree->iova_last =3D iova_last;
 > >>
 > >>       tree->iova_taddr_map =3D iova_tree_new();
-> >>       tree->iova_map =3D iova_tree_new();
-> >> +    tree->gpa_iova_map =3D gpa_tree_new();
+> >> +    tree->iova_map =3D iova_tree_new();
 > >>       return tree;
 > >>   }
 > >>
-> >> @@ -58,6 +62,7 @@ void vhost_iova_tree_delete(VhostIOVATree *iova_tree=
-)
+> >>   /**
+> >> - * Delete an iova tree
+> >> + * Delete a VhostIOVATree
+> >
+> > Thanks for fixing the doc of new and delete :) Maybe it is better to
+> > put it in an independent patch?
+> >
+>
+> Sure can :)
+>
+> >>    */
+> >>   void vhost_iova_tree_delete(VhostIOVATree *iova_tree)
 > >>   {
 > >>       iova_tree_destroy(iova_tree->iova_taddr_map);
-> >>       iova_tree_destroy(iova_tree->iova_map);
-> >> +    iova_tree_destroy(iova_tree->gpa_iova_map);
+> >> +    iova_tree_destroy(iova_tree->iova_map);
 > >>       g_free(iova_tree);
 > >>   }
 > >>
-> >> @@ -134,3 +139,48 @@ int vhost_iova_tree_insert(VhostIOVATree *iova_tr=
-ee, DMAMap *map)
+> >> @@ -94,7 +99,7 @@ int vhost_iova_tree_map_alloc(VhostIOVATree *tree, D=
+MAMap *map)
+> >>       }
 > >>
-> >>       return iova_tree_insert(iova_tree->iova_taddr_map, map);
+> >>       /* Allocate a node in IOVA address */
+> >> -    return iova_tree_alloc_map(tree->iova_taddr_map, map, iova_first,
+> >> +    return iova_tree_alloc_map(tree->iova_map, map, iova_first,
+> >>                                  tree->iova_last);
 > >>   }
+> >>
+> >> @@ -107,4 +112,26 @@ int vhost_iova_tree_map_alloc(VhostIOVATree *tree=
+, DMAMap *map)
+> >>   void vhost_iova_tree_remove(VhostIOVATree *iova_tree, DMAMap map)
+> >>   {
+> >>       iova_tree_remove(iova_tree->iova_taddr_map, map);
+> >> +    iova_tree_remove(iova_tree->iova_map, map);
+> >> +}
 > >> +
-> >> +/** Insert a new GPA->IOVA mapping to the GPA->IOVA tree
+> >> +/**
+> >> + * Insert a new mapping to the IOVA->HVA tree
 > >> + *
-> >> + * @iova_tree: The VhostIOVATree
-> >> + * @map: The GPA->IOVA mapping
+> >> + * @tree: The VhostIOVATree
+> >> + * @map: The IOVA->HVA mapping
 > >> + *
 > >> + * Returns:
 > >> + * - IOVA_OK if the map fits in the container
 > >> + * - IOVA_ERR_INVALID if the map does not make sense (e.g. size overf=
 low)
-> >> + * - IOVA_ERR_OVERLAP if the GPA range overlaps with an existing rang=
-e
+> >> + * - IOVA_ERR_OVERLAP if the IOVA range overlaps with an existing ran=
+ge
 > >> + */
-> >> +int vhost_iova_tree_insert_gpa(VhostIOVATree *iova_tree, DMAMap *map)
+> >> +int vhost_iova_tree_insert(VhostIOVATree *iova_tree, DMAMap *map)
 > >> +{
-> >> +    if (map->iova + map->size < map->iova || map->perm =3D=3D IOMMU_N=
-ONE) {
-> >> +        return IOVA_ERR_INVALID;
-> >> +    }
-> >> +
-> >> +    return gpa_tree_insert(iova_tree->gpa_iova_map, map);
-> >> +}
-> >> +
-> >> +/**
-> >> + * Find the IOVA address stored from a guest memory address (GPA)
-> >> + *
-> >> + * @tree: The VhostIOVATree
-> >> + * @map: The map with the guest memory address
-> >> + *
-> >> + * Returns the stored GPA->IOVA mapping, or NULL if not found.
-> >> + */
-> >> +const DMAMap *vhost_iova_tree_find_gpa(const VhostIOVATree *tree,
-> >> +                                       const DMAMap *map)
-> >> +{
-> >> +    return iova_tree_find_iova(tree->gpa_iova_map, map);
-> >> +}
-> >> +
-> >> +/**
-> >> + * Remove existing mappings from the GPA->IOVA & IOVA trees
-> >> + *
-> >> + * @iova_tree: The VhostIOVATree
-> >> + * @map: The guest memory address map to remove
-> >> + */
-> >> +void vhost_iova_tree_remove_gpa(VhostIOVATree *iova_tree, DMAMap map)
-> >> +{
-> >> +    iova_tree_remove(iova_tree->gpa_iova_map, map);
-> >> +    iova_tree_remove(iova_tree->iova_map, map);
-> >> +}
-> >> diff --git a/hw/virtio/vhost-iova-tree.h b/hw/virtio/vhost-iova-tree.h
-> >> index 8bf7b64786..3e3dcd04fe 100644
-> >> --- a/hw/virtio/vhost-iova-tree.h
-> >> +++ b/hw/virtio/vhost-iova-tree.h
-> >> @@ -24,5 +24,9 @@ const DMAMap *vhost_iova_tree_find_iova(const VhostI=
-OVATree *iova_tree,
-> >>   int vhost_iova_tree_map_alloc(VhostIOVATree *iova_tree, DMAMap *map)=
-;
-> >>   void vhost_iova_tree_remove(VhostIOVATree *iova_tree, DMAMap map);
-> >>   int vhost_iova_tree_insert(VhostIOVATree *iova_tree, DMAMap *map);
-> >> +int vhost_iova_tree_insert_gpa(VhostIOVATree *iova_tree, DMAMap *map)=
-;
-> >> +const DMAMap *vhost_iova_tree_find_gpa(const VhostIOVATree *iova_tree=
-,
-> >> +                                       const DMAMap *map);
-> >> +void vhost_iova_tree_remove_gpa(VhostIOVATree *iova_tree, DMAMap map)=
-;
-> >>
-> >>   #endif
-> >> diff --git a/hw/virtio/vhost-vdpa.c b/hw/virtio/vhost-vdpa.c
-> >> index f5803f35f4..8587f3f6c8 100644
-> >> --- a/hw/virtio/vhost-vdpa.c
-> >> +++ b/hw/virtio/vhost-vdpa.c
-> >> @@ -361,10 +361,10 @@ static void vhost_vdpa_listener_region_add(Memor=
-yListener *listener,
-> >>       if (s->shadow_data) {
-> >>           int r;
-> >>
-> >> -        mem_region.translated_addr =3D (hwaddr)(uintptr_t)vaddr,
-> >>           mem_region.size =3D int128_get64(llsize) - 1,
-> >>           mem_region.perm =3D IOMMU_ACCESS_FLAG(true, section->readonl=
-y),
-> >>
-> >> +        /* Allocate an IOVA range in the IOVA tree */
-> >>           r =3D vhost_iova_tree_map_alloc(s->iova_tree, &mem_region);
-> >>           if (unlikely(r !=3D IOVA_OK)) {
-> >>               error_report("Can't allocate a mapping (%d)", r);
-> >> @@ -372,6 +372,14 @@ static void vhost_vdpa_listener_region_add(Memory=
-Listener *listener,
-> >>           }
-> >>
-> >>           iova =3D mem_region.iova;
-> >> +        mem_region.translated_addr =3D section->offset_within_address=
-_space;
-> >> +
-> >> +        /* Add GPA->IOVA mapping to the GPA->IOVA tree */
-> >> +        r =3D vhost_iova_tree_insert_gpa(s->iova_tree, &mem_region);
-> >> +        if (unlikely(r !=3D IOVA_OK)) {
-> >> +            error_report("Can't add listener region mapping (%d)", r)=
-;
-> >> +            goto fail_map;
-> >> +        }
-> >
-> > If we want to make the two disjoint trees, we need to make the
-> > previous commits working. I mean, either insert hva and then switch to
-> > gpa here, or merge patches, or something similar. Otherwise, bisection
-> > breaks.
-> >
-> >
->
-> Gotcha. In the future I'll be more careful and make sure individual
-> patches in a series actually work. My apologies.
->
-> Will fix this in the next series.
->
-
-Great!
-
-> >>       }
-> >>
-> >>       vhost_vdpa_iotlb_batch_begin_once(s);
-> >> @@ -386,7 +394,7 @@ static void vhost_vdpa_listener_region_add(MemoryL=
-istener *listener,
-> >>
-> >>   fail_map:
-> >>       if (s->shadow_data) {
-> >> -        vhost_iova_tree_remove(s->iova_tree, mem_region);
-> >> +        vhost_iova_tree_remove_gpa(s->iova_tree, mem_region);
-> >>       }
-> >>
-> >>   fail:
-> >> @@ -440,21 +448,19 @@ static void vhost_vdpa_listener_region_del(Memor=
-yListener *listener,
-> >>
-> >>       if (s->shadow_data) {
-> >>           const DMAMap *result;
-> >> -        const void *vaddr =3D memory_region_get_ram_ptr(section->mr) =
-+
-> >> -            section->offset_within_region +
-> >> -            (iova - section->offset_within_address_space);
-> >>           DMAMap mem_region =3D {
-> >> -            .translated_addr =3D (hwaddr)(uintptr_t)vaddr,
-> >> +            .translated_addr =3D section->offset_within_address_space=
-,
-> >>               .size =3D int128_get64(llsize) - 1,
-> >>           };
-> >>
-> >> -        result =3D vhost_iova_tree_find_iova(s->iova_tree, &mem_regio=
-n);
-> >> +        /* Search the GPA->IOVA tree */
-> >> +        result =3D vhost_iova_tree_find_gpa(s->iova_tree, &mem_region=
-);
-> >>           if (!result) {
-> >>               /* The memory listener map wasn't mapped */
-> >>               return;
-> >>           }
-> >>           iova =3D result->iova;
-> >> -        vhost_iova_tree_remove(s->iova_tree, *result);
-> >> +        vhost_iova_tree_remove_gpa(s->iova_tree, *result);
-> >>       }
-> >>       vhost_vdpa_iotlb_batch_begin_once(s);
-> >>       /*
-> >> diff --git a/include/qemu/iova-tree.h b/include/qemu/iova-tree.h
-> >> index 44a45931d5..8467912a0b 100644
-> >> --- a/include/qemu/iova-tree.h
-> >> +++ b/include/qemu/iova-tree.h
-> >> @@ -40,6 +40,15 @@ typedef struct DMAMap {
-> >>   } QEMU_PACKED DMAMap;
-> >>   typedef gboolean (*iova_tree_iterator)(DMAMap *map);
-> >>
-> >> +/**
-> >> + * gpa_tree_new:
-> >> + *
-> >> + * Create a new GPA->IOVA tree.
-> >> + *
-> >> + * Returns: the tree pointer on success, or NULL otherwise.
-> >> + */
-> >> +IOVATree *gpa_tree_new(void);
-> >> +
-> >>   /**
-> >>    * iova_tree_new:
-> >>    *
-> >> @@ -49,6 +58,19 @@ typedef gboolean (*iova_tree_iterator)(DMAMap *map)=
-;
-> >>    */
-> >>   IOVATree *iova_tree_new(void);
-> >>
-> >> +/**
-> >> + * gpa_tree_insert:
-> >> + *
-> >> + * @tree: The GPA->IOVA tree we're inserting the mapping to
-> >> + * @map: The GPA->IOVA mapping to insert
-> >> + *
-> >> + * Inserts a GPA range to the GPA->IOVA tree. If there are overlapped
-> >> + * ranges, IOVA_ERR_OVERLAP will be returned.
-> >> + *
-> >> + * Return: 0 if successful, < 0 otherwise.
-> >> + */
-> >> +int gpa_tree_insert(IOVATree *tree, const DMAMap *map);
-> >> +
-> >>   /**
-> >>    * iova_tree_insert:
-> >>    *
-> >> diff --git a/util/iova-tree.c b/util/iova-tree.c
-> >> index 06295e2755..f45e63c3de 100644
-> >> --- a/util/iova-tree.c
-> >> +++ b/util/iova-tree.c
-> >> @@ -55,6 +55,22 @@ static void iova_tree_alloc_args_iterate(struct IOV=
-ATreeAllocArgs *args,
-> >>       args->this =3D next;
-> >>   }
-> >>
-> >> +static int gpa_tree_compare(gconstpointer a, gconstpointer b, gpointe=
-r data)
-> >> +{
-> >> +    const DMAMap *m1 =3D a, *m2 =3D b;
-> >> +
-> >> +    if (m1->translated_addr > m2->translated_addr + m2->size) {
-> >> +        return 1;
-> >> +    }
-> >> +
-> >> +    if (m1->translated_addr + m1->size < m2->translated_addr) {
-> >> +        return -1;
-> >> +    }
-> >> +
-> >> +    /* Overlapped */
-> >> +    return 0;
-> >> +}
-> >> +
-> >>   static int iova_tree_compare(gconstpointer a, gconstpointer b, gpoin=
-ter data)
-> >>   {
-> >>       const DMAMap *m1 =3D a, *m2 =3D b;
-> >> @@ -71,6 +87,15 @@ static int iova_tree_compare(gconstpointer a, gcons=
-tpointer b, gpointer data)
-> >>       return 0;
-> >>   }
-> >>
-> >> +IOVATree *gpa_tree_new(void)
-> >> +{
-> >> +    IOVATree *gpa_tree =3D g_new0(IOVATree, 1);
-> >> +
-> >> +    gpa_tree->tree =3D g_tree_new_full(gpa_tree_compare, NULL, g_free=
-, NULL);
-> >> +
-> >> +    return gpa_tree;
-> >> +}
-> >> +
-> >>   IOVATree *iova_tree_new(void)
-> >>   {
-> >>       IOVATree *iova_tree =3D g_new0(IOVATree, 1);
-> >> @@ -121,6 +146,27 @@ static inline void iova_tree_insert_internal(GTre=
-e *gtree, DMAMap *range)
-> >>       g_tree_insert(gtree, range, range);
-> >>   }
-> >>
-> >> +int gpa_tree_insert(IOVATree *tree, const DMAMap *map)
-> >> +{
-> >> +    DMAMap *new;
-> >> +
 > >> +    if (map->translated_addr + map->size < map->translated_addr ||
 > >> +        map->perm =3D=3D IOMMU_NONE) {
 > >> +        return IOVA_ERR_INVALID;
 > >> +    }
 > >> +
-> >> +    /* We don't allow inserting ranges that overlap with existing one=
-s */
-> >> +    if (iova_tree_find(tree,map)) {
-> >> +        return IOVA_ERR_OVERLAP;
+> >> +    return iova_tree_insert(iova_tree->iova_taddr_map, map);
+> >>   }
+> >> diff --git a/hw/virtio/vhost-iova-tree.h b/hw/virtio/vhost-iova-tree.h
+> >> index 4adfd79ff0..8bf7b64786 100644
+> >> --- a/hw/virtio/vhost-iova-tree.h
+> >> +++ b/hw/virtio/vhost-iova-tree.h
+> >> @@ -23,5 +23,6 @@ const DMAMap *vhost_iova_tree_find_iova(const VhostI=
+OVATree *iova_tree,
+> >>                                           const DMAMap *map);
+> >>   int vhost_iova_tree_map_alloc(VhostIOVATree *iova_tree, DMAMap *map)=
+;
+> >>   void vhost_iova_tree_remove(VhostIOVATree *iova_tree, DMAMap map);
+> >> +int vhost_iova_tree_insert(VhostIOVATree *iova_tree, DMAMap *map);
+> >>
+> >>   #endif
+> >> diff --git a/hw/virtio/vhost-vdpa.c b/hw/virtio/vhost-vdpa.c
+> >> index 3cdaa12ed5..f5803f35f4 100644
+> >> --- a/hw/virtio/vhost-vdpa.c
+> >> +++ b/hw/virtio/vhost-vdpa.c
+> >> @@ -1142,18 +1142,29 @@ static void vhost_vdpa_svq_unmap_rings(struct =
+vhost_dev *dev,
+> >>    *
+> >>    * @v: Vhost-vdpa device
+> >>    * @needle: The area to search iova
+> >> + * @taddr: The translated address (SVQ HVA)
+> >>    * @errorp: Error pointer
+> >>    */
+> >>   static bool vhost_vdpa_svq_map_ring(struct vhost_vdpa *v, DMAMap *ne=
+edle,
+> >> -                                    Error **errp)
+> >> +                                    hwaddr taddr, Error **errp)
+> >>   {
+> >>       int r;
+> >>
+> >> +    /* Allocate an IOVA range in the IOVA tree */
+> >>       r =3D vhost_iova_tree_map_alloc(v->shared->iova_tree, needle);
+> >>       if (unlikely(r !=3D IOVA_OK)) {
+> >>           error_setg(errp, "Cannot allocate iova (%d)", r);
+> >>           return false;
+> >>       }
+> >> +    needle->translated_addr =3D taddr;
+> >> +
+> >> +    /* Add IOVA->HVA mapping to the IOVA->HVA tree */
+> >> +    r =3D vhost_iova_tree_insert(v->shared->iova_tree, needle);
+> >> +    if (unlikely(r !=3D IOVA_OK)) {
+> >> +        error_setg(errp, "Cannot add SVQ vring mapping (%d)", r);
+> >> +        vhost_iova_tree_remove(v->shared->iova_tree, *needle);
+> >> +        return false;
 > >> +    }
+> >>
+> >>       r =3D vhost_vdpa_dma_map(v->shared, v->address_space_id, needle-=
+>iova,
+> >>                              needle->size + 1,
+> >> @@ -1192,11 +1203,11 @@ static bool vhost_vdpa_svq_map_rings(struct vh=
+ost_dev *dev,
+> >>       vhost_svq_get_vring_addr(svq, &svq_addr);
+> >>
+> >>       driver_region =3D (DMAMap) {
+> >> -        .translated_addr =3D svq_addr.desc_user_addr,
+> >>           .size =3D driver_size - 1,
+> >>           .perm =3D IOMMU_RO,
+> >>       };
+> >> -    ok =3D vhost_vdpa_svq_map_ring(v, &driver_region, errp);
+> >> +    ok =3D vhost_vdpa_svq_map_ring(v, &driver_region, svq_addr.desc_u=
+ser_addr,
+> >> +                                 errp);
+> >>       if (unlikely(!ok)) {
+> >>           error_prepend(errp, "Cannot create vq driver region: ");
+> >>           return false;
+> >> @@ -1206,11 +1217,11 @@ static bool vhost_vdpa_svq_map_rings(struct vh=
+ost_dev *dev,
+> >>       addr->avail_user_addr =3D driver_region.iova + avail_offset;
+> >>
+> >>       device_region =3D (DMAMap) {
+> >> -        .translated_addr =3D svq_addr.used_user_addr,
+> >>           .size =3D device_size - 1,
+> >>           .perm =3D IOMMU_RW,
+> >>       };
+> >> -    ok =3D vhost_vdpa_svq_map_ring(v, &device_region, errp);
+> >> +    ok =3D vhost_vdpa_svq_map_ring(v, &device_region, svq_addr.used_u=
+ser_addr,
+> >> +                                 errp);
+> >>       if (unlikely(!ok)) {
+> >>           error_prepend(errp, "Cannot create vq device region: ");
+> >>           vhost_vdpa_svq_unmap_ring(v, driver_region.translated_addr);
+> >> diff --git a/net/vhost-vdpa.c b/net/vhost-vdpa.c
+> >> index 231b45246c..1ef555e04e 100644
+> >> --- a/net/vhost-vdpa.c
+> >> +++ b/net/vhost-vdpa.c
+> >> @@ -512,14 +512,23 @@ static int vhost_vdpa_cvq_map_buf(struct vhost_v=
+dpa *v, void *buf, size_t size,
+> >>       DMAMap map =3D {};
+> >>       int r;
+> >>
+> >> -    map.translated_addr =3D (hwaddr)(uintptr_t)buf;
+> >>       map.size =3D size - 1;
+> >>       map.perm =3D write ? IOMMU_RW : IOMMU_RO,
 > >> +
-> >> +    new =3D g_new0(DMAMap, 1);
-> >> +    memcpy(new, map, sizeof(*new));
-> >> +    iova_tree_insert_internal(tree->tree, new);
+> >> +    /* Allocate an IOVA range in the IOVA tree */
+> >>       r =3D vhost_iova_tree_map_alloc(v->shared->iova_tree, &map);
+> >>       if (unlikely(r !=3D IOVA_OK)) {
+> >> -        error_report("Cannot map injected element");
+> >> +        error_report("Cannot allocate IOVA range for injected element=
+");
+> >>           return r;
+> >>       }
+> >> +    map.translated_addr =3D (hwaddr)(uintptr_t)buf;
 > >> +
-> >> +    return IOVA_OK;
-> >> +}
-> >> +
+> >> +    /* Add IOVA->HVA mapping to the IOVA->HVA tree */
+> >> +    r =3D vhost_iova_tree_insert(v->shared->iova_tree, &map);
+> >> +    if (unlikely(r !=3D IOVA_OK)) {
+> >> +        error_report("Cannot map injected element into IOVA->HVA tree=
+");
+> >> +        goto dma_map_err;
+> >> +    }
+> >>
+> >>       r =3D vhost_vdpa_dma_map(v->shared, v->address_space_id, map.iov=
+a,
+> >>                              vhost_vdpa_net_cvq_cmd_page_len(), buf, !=
+write);
+> >> --
+> >> 2.43.5
+> >>
 > >
-> > I'm missing the advantage of using all of these functions, why not use
-> > another iova_tree_new and iova_tree_insert? gpa_tree_compare seems
-> > like a 1:1 copy of iova_tree_compare to me. Same with _insert.
-> >
 >
-> It's mainly due to how the GPA tree is configured. That is, GPA->IOVA
-> (or translated_addr->iova).
->
-> The existing functions assume the configuration of the tree to be
-> iova->translated_addr (e.g. IOVA->HVA).
->
-> I think I could still use the existing functions but then it'd have to
-> be a IOVA->GPA tree, else a GPA->IOVA tree would mean DMAMap map->iova
-> =3D=3D GPA and map->translated_addr =3D=3D IOVA, which obviously would ca=
-use
-> confusion for the API users.
->
-
-Ook now I remember having this same doubt, a very good point :).
-
-In my opinion it is enough with a comment in the VhostIOVAtree struct
-definition as long as the usage keeps internal to it and well wrapped
-in the non static functions. MST, Jason, any thoughts on this?
-
-If we ever want to reduce the memory consumption of the tree we can
-also reuse the same node for both trees and reuse these functions.
 
 
