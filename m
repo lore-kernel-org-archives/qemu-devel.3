@@ -4,88 +4,88 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id AD3F6C02182
-	for <qemu-devel@archiver.kernel.org>; Tue, 21 Jan 2025 11:42:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5B4FBC0218B
+	for <qemu-devel@archiver.kernel.org>; Tue, 21 Jan 2025 11:42:06 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1taCdE-0004zr-Ew; Tue, 21 Jan 2025 06:41:20 -0500
+	id 1taCdC-0004y9-SO; Tue, 21 Jan 2025 06:41:19 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1taCdB-0004xh-5v
- for qemu-devel@nongnu.org; Tue, 21 Jan 2025 06:41:17 -0500
-Received: from mail-wr1-x430.google.com ([2a00:1450:4864:20::430])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1taCd5-0003LN-2f
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1taCdA-0004xW-Mq
  for qemu-devel@nongnu.org; Tue, 21 Jan 2025 06:41:16 -0500
-Received: by mail-wr1-x430.google.com with SMTP id
- ffacd0b85a97d-3862b40a6e0so3533497f8f.0
- for <qemu-devel@nongnu.org>; Tue, 21 Jan 2025 03:41:10 -0800 (PST)
+Received: from mail-wm1-x32e.google.com ([2a00:1450:4864:20::32e])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1taCd8-0003MX-N0
+ for qemu-devel@nongnu.org; Tue, 21 Jan 2025 06:41:16 -0500
+Received: by mail-wm1-x32e.google.com with SMTP id
+ 5b1f17b1804b1-436ce2ab251so38219165e9.1
+ for <qemu-devel@nongnu.org>; Tue, 21 Jan 2025 03:41:13 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1737459667; x=1738064467; darn=nongnu.org;
+ d=linaro.org; s=google; t=1737459672; x=1738064472; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=/3HlKJr0e+T3QTj2gDcsUT1Px2dX5i+yFz6MQF4ebrA=;
- b=mz8T6jYw/d8GZ3b/EqoHokECOyWY8EjmsAVzNuavU92ilP+6mmPsWRwIN963za2sRy
- QGzkoy1433rnFCmGXbOZOkgCvRuAQBGbDH5CuihGlaKSadfyDp3b0vTcnKi9dRz4UGgo
- rAGlU41SzZAfJ0hFY6yMF81k2V0It+/SckDmvUwSEotNKVJmOvL81IrgFi9h5sBKzRnP
- n5hy/dfOaidcQbyLDVTUckjR9PpPVWztAH7YtxStVFdvpHjdCptwcXvYyCBWJ+uoQrga
- 6JQ3lu+wNFTAP5ZC1i3uSH3ehNLkftD2aGNyeOC3pqP4y4AHMd4PngkV5Mxx7/CVuPVN
- ju8w==
+ bh=6+sqenivOKOaIj/HGMbrfNMWNgVlPE7OSpRM12hfj2M=;
+ b=tTVdLzTKZmAbxkkEyQRTJd180XusWURGXeTV9v1oQF3nzcQe/9ayODKiBLtup74tFH
+ PGJsHaC/EAytYXrLegp0xBCNT+stc8i5tSPY2kW8lTe9rkntbBA2fQjkNCb+CCSgL5Om
+ k0H6LbkBcOzdqPfy1YQDRoy9AK6GMlRFE8N579vrAdD/xKcs/c72xcaTO9YqbBIGjjhv
+ JEfNZkud9BtZbV8epRLjhoRp4ySTEH2DSubYSPZ5DJH0d1BMR4sSc4Irb4nRNmUCu/o/
+ sZfiX9dcGOOuxnvrV3qs2L5kGJSoOej1Lbr6Be7WMvPMO8Kj31UY+LQjXzsMf+EF9pwY
+ DtIQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1737459667; x=1738064467;
+ d=1e100.net; s=20230601; t=1737459672; x=1738064472;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=/3HlKJr0e+T3QTj2gDcsUT1Px2dX5i+yFz6MQF4ebrA=;
- b=pKjilkHE84TkNl53p8opa++gzAo7iP4G2r9t/2VY3UoiHR55vtPwuh8SmxSNbK0qK8
- 5Dsw2kwJtOY8yN+zFZET7EXvVYk1rTiRg4yMQx2RVMUSXFHXTpJfzxA0ERoc+t4gkY8L
- S4WGCo4dRX4Y3WYYhwzbZoPxc8OmtXOm98HHD8sT8TL3NVGfCibz65Z5AKNnWfuJWwO2
- 52Z6iWH36uQfIxT/t7OaTSTwy1CGUHVTiM4JWlYnORLsoMfZ+/7cUuBcYLKSv3W1NB63
- CX1O0pd1+E+Sd07Qj03ehOPW9cmMHrA2cMg//4uXas62KPHq1Jt3ZApft1jc2tCqrfU/
- 0siw==
-X-Gm-Message-State: AOJu0YzDTpXL2qxUji01EZRL1wRSy5gKtOhuvIIlOPEO248JGbD/cDnA
- 5VlKLDEOkOj1TttS3yzsa3BkFPpau0lX8WjECXnojg8z82n3+eA88mNgbmZ4sKMiavLfYvPR6gn
- 5Uhs=
-X-Gm-Gg: ASbGncuBFwg3E2GLaBrxWC1Erzi6U2fgAbp4WlV3aQRAzQDgLQJMrLa7v8vc9hYsjXT
- Tx2gB2Ss1XCTxbrVuq+9njfr5UCZQkhdY7TtjoivYSoIZ9ZCRM743wHSxezHnZh1T0n5FEgDUtC
- l1vQoY6ja9/uDFktkCN84JFHFdx8nL9heHI5Yh+rlrM+c831T4xCJxbwBhlKbdQtLxJALN9hIWY
- xSrcxXOS086a7WXq9WCdq2jm/BZhBuvRmD3rU6duAj/O4YGUmDY7P68DCz0P9vgWrGvJNmE0ecy
- 7z9Tt4qvCkHWhyfmczJkoOOEIsBzBxG/aWHzcVnUm0Xm
-X-Google-Smtp-Source: AGHT+IGs/ATla//lQ2AtPoPkcgm+ShlMsf7RR27CE1JH3r1iRxS5tELAIaHWMxn4/3oiZmjM0gynjA==
-X-Received: by 2002:adf:ef4f:0:b0:38a:418e:bee with SMTP id
- ffacd0b85a97d-38bf57a2843mr10469117f8f.42.1737459667407; 
- Tue, 21 Jan 2025 03:41:07 -0800 (PST)
+ bh=6+sqenivOKOaIj/HGMbrfNMWNgVlPE7OSpRM12hfj2M=;
+ b=UwQSL9qBJi1Ta4cfhcmS+hQ/7Cmzhb4PckW9XpPtkFg9BWdJZtHxs+LlX3+6x/J/8F
+ t4u7pzBNVPKXKUEjGQFOHBGNiyEYThAfCJBJbBchVABDhMJvwctczuQ4QZUr/rVoAgQe
+ zHc9LyGfdksLhUhY7uGUq4vOOdxfhwHQCYWCdSNA8DIKkai2tIQ6ZGS7kN/kMvNWpDKs
+ XVH9HKSQmenku2lRQanN+50HNRLf5Pvc6qUkG0mDhJn8cNeRx6kswb6glP0MifAFKA9f
+ Umt7lfp90hWI3lkJX3iWeZScHpkTmS+KVnWgK9yFC6v1kkRVb0TB8MVhGy5oiv8BmuIS
+ 0ewQ==
+X-Gm-Message-State: AOJu0YzBpuv3/r2RRl7wHKdHtCUHyy/31EuFMSuJq5SwuPsWFRybCPw9
+ GjqOjV8YXxiItvEWbZYWJyys47D/pydAbQobEsfT8q/sp+npBu/FsnAZSU/NrWiecFLoXgKnzNa
+ nhsU=
+X-Gm-Gg: ASbGncv0WFCgBbfzcVKiv5t8BuaLd8U6JCZ8cqRVTPHsxgi4ksWneb/FFwrKw69pyeA
+ Hyvpf+r97iNav2/4n9ujMRm3uhB9WGK1fdudzFv10vOwVZ2e0rCQu8SxFaKi/T7hP7V6LTx/oU9
+ V+d+/T9FiZyrOcZegv3c4hXA+Pwa2PzXmiY77U1SIp0ghogzxBhar4BAD2yUBPFkDT9YrcwGnNP
+ gkDlPQVE2VEXSc41q/MjOXKMjhIo+INWyLjHYi9WEurbVsxcISnpfIGhEkK4EudwBd4ELNP6NLw
+ vmr38xJAYc3cJImlSK0QVpJ4Bt4Nh0Y0p+PlLjt5TQGr
+X-Google-Smtp-Source: AGHT+IFAV++RtKn1KotX+3ii/fxqKc/fb8NWI3UzdXKs0eo21SJuKzQB4kr02Ht3HAyC4Lmg9PLMTg==
+X-Received: by 2002:a05:600c:138f:b0:436:ed50:4f8a with SMTP id
+ 5b1f17b1804b1-438913caeb9mr178310015e9.10.1737459672025; 
+ Tue, 21 Jan 2025 03:41:12 -0800 (PST)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-38bf327decbsm13358853f8f.90.2025.01.21.03.41.06
+ 5b1f17b1804b1-437c1664e8dsm179961565e9.1.2025.01.21.03.41.11
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Tue, 21 Jan 2025 03:41:06 -0800 (PST)
+ Tue, 21 Jan 2025 03:41:11 -0800 (PST)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Richard Henderson <richard.henderson@linaro.org>,
  =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
  qemu-arm@nongnu.org,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PATCH 02/11] cpus: Prefer cached CpuClass over CPU_GET_CLASS() macro
-Date: Tue, 21 Jan 2025 12:40:47 +0100
-Message-ID: <20250121114056.53949-3-philmd@linaro.org>
+Subject: [PATCH 03/11] accel: Prefer cached CpuClass over CPU_GET_CLASS() macro
+Date: Tue, 21 Jan 2025 12:40:48 +0100
+Message-ID: <20250121114056.53949-4-philmd@linaro.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20250121114056.53949-1-philmd@linaro.org>
 References: <20250121114056.53949-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::430;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x430.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::32e;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x32e.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -107,257 +107,108 @@ use it.
 
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 ---
- include/hw/core/cpu.h | 10 +++-----
- cpu-common.c          | 10 ++++----
- cpu-target.c          |  6 ++---
- hw/core/cpu-common.c  | 13 ++++------
- hw/core/cpu-system.c  | 55 +++++++++++++++----------------------------
- 5 files changed, 32 insertions(+), 62 deletions(-)
+ accel/accel-target.c      | 12 +++++-------
+ accel/tcg/tcg-accel-ops.c |  3 +--
+ accel/tcg/translate-all.c |  2 +-
+ accel/tcg/watchpoint.c    |  9 ++++-----
+ 4 files changed, 11 insertions(+), 15 deletions(-)
 
-diff --git a/include/hw/core/cpu.h b/include/hw/core/cpu.h
-index fb397cdfc53..b7367f6d808 100644
---- a/include/hw/core/cpu.h
-+++ b/include/hw/core/cpu.h
-@@ -824,10 +824,8 @@ const char *parse_cpu_option(const char *cpu_option);
-  */
- static inline bool cpu_has_work(CPUState *cpu)
+diff --git a/accel/accel-target.c b/accel/accel-target.c
+index 08626c00c2d..8a16c0c3ae0 100644
+--- a/accel/accel-target.c
++++ b/accel/accel-target.c
+@@ -112,22 +112,20 @@ void accel_init_interfaces(AccelClass *ac)
+ 
+ void accel_cpu_instance_init(CPUState *cpu)
  {
 -    CPUClass *cc = CPU_GET_CLASS(cpu);
 -
--    g_assert(cc->has_work);
--    return cc->has_work(cpu);
-+    g_assert(cpu->cc->has_work);
-+    return cpu->cc->has_work(cpu);
- }
- 
- /**
-@@ -966,9 +964,7 @@ void cpu_interrupt(CPUState *cpu, int mask);
-  */
- static inline void cpu_set_pc(CPUState *cpu, vaddr addr)
- {
--    CPUClass *cc = CPU_GET_CLASS(cpu);
--
--    cc->set_pc(cpu, addr);
-+    cpu->cc->set_pc(cpu, addr);
- }
- 
- /**
-diff --git a/cpu-common.c b/cpu-common.c
-index 4248b2d727e..3a409aacb2e 100644
---- a/cpu-common.c
-+++ b/cpu-common.c
-@@ -389,11 +389,10 @@ void process_queued_cpu_work(CPUState *cpu)
- int cpu_breakpoint_insert(CPUState *cpu, vaddr pc, int flags,
-                           CPUBreakpoint **breakpoint)
- {
--    CPUClass *cc = CPU_GET_CLASS(cpu);
-     CPUBreakpoint *bp;
- 
--    if (cc->gdb_adjust_breakpoint) {
--        pc = cc->gdb_adjust_breakpoint(cpu, pc);
-+    if (cpu->cc->gdb_adjust_breakpoint) {
-+        pc = cpu->cc->gdb_adjust_breakpoint(cpu, pc);
-     }
- 
-     bp = g_malloc(sizeof(*bp));
-@@ -419,11 +418,10 @@ int cpu_breakpoint_insert(CPUState *cpu, vaddr pc, int flags,
- /* Remove a specific breakpoint.  */
- int cpu_breakpoint_remove(CPUState *cpu, vaddr pc, int flags)
- {
--    CPUClass *cc = CPU_GET_CLASS(cpu);
-     CPUBreakpoint *bp;
- 
--    if (cc->gdb_adjust_breakpoint) {
--        pc = cc->gdb_adjust_breakpoint(cpu, pc);
-+    if (cpu->cc->gdb_adjust_breakpoint) {
-+        pc = cpu->cc->gdb_adjust_breakpoint(cpu, pc);
-     }
- 
-     QTAILQ_FOREACH(bp, &cpu->breakpoints, entry) {
-diff --git a/cpu-target.c b/cpu-target.c
-index 89874496a41..98e9e7cc4a1 100644
---- a/cpu-target.c
-+++ b/cpu-target.c
-@@ -159,10 +159,8 @@ bool cpu_exec_realizefn(CPUState *cpu, Error **errp)
- void cpu_exec_unrealizefn(CPUState *cpu)
- {
- #ifndef CONFIG_USER_ONLY
--    CPUClass *cc = CPU_GET_CLASS(cpu);
--
--    if (cc->sysemu_ops->legacy_vmsd != NULL) {
--        vmstate_unregister(NULL, cc->sysemu_ops->legacy_vmsd, cpu);
-+    if (cpu->cc->sysemu_ops->legacy_vmsd != NULL) {
-+        vmstate_unregister(NULL, cpu->cc->sysemu_ops->legacy_vmsd, cpu);
-     }
-     if (qdev_get_vmsd(DEVICE(cpu)) == NULL) {
-         vmstate_unregister(NULL, &vmstate_cpu_common, cpu);
-diff --git a/hw/core/cpu-common.c b/hw/core/cpu-common.c
-index ff605059c15..886aa793c04 100644
---- a/hw/core/cpu-common.c
-+++ b/hw/core/cpu-common.c
-@@ -40,9 +40,7 @@ CPUState *cpu_by_arch_id(int64_t id)
-     CPUState *cpu;
- 
-     CPU_FOREACH(cpu) {
--        CPUClass *cc = CPU_GET_CLASS(cpu);
--
--        if (cc->get_arch_id(cpu) == id) {
-+        if (cpu->cc->get_arch_id(cpu) == id) {
-             return cpu;
-         }
-     }
-@@ -101,11 +99,9 @@ static int cpu_common_gdb_write_register(CPUState *cpu, uint8_t *buf, int reg)
- 
- void cpu_dump_state(CPUState *cpu, FILE *f, int flags)
- {
--    CPUClass *cc = CPU_GET_CLASS(cpu);
--
--    if (cc->dump_state) {
-+    if (cpu->cc->dump_state) {
-         cpu_synchronize_state(cpu);
--        cc->dump_state(cpu, f, flags);
-+        cpu->cc->dump_state(cpu, f, flags);
+-    if (cc->accel_cpu && cc->accel_cpu->cpu_instance_init) {
+-        cc->accel_cpu->cpu_instance_init(cpu);
++    if (cpu->cc->accel_cpu && cpu->cc->accel_cpu->cpu_instance_init) {
++        cpu->cc->accel_cpu->cpu_instance_init(cpu);
      }
  }
  
-@@ -119,11 +115,10 @@ void cpu_reset(CPUState *cpu)
- static void cpu_common_reset_hold(Object *obj, ResetType type)
- {
-     CPUState *cpu = CPU(obj);
--    CPUClass *cc = CPU_GET_CLASS(cpu);
- 
-     if (qemu_loglevel_mask(CPU_LOG_RESET)) {
-         qemu_log("CPU Reset (CPU %d)\n", cpu->cpu_index);
--        log_cpu_state(cpu, cc->reset_dump_flags);
-+        log_cpu_state(cpu, cpu->cc->reset_dump_flags);
-     }
- 
-     cpu->interrupt_request = 0;
-diff --git a/hw/core/cpu-system.c b/hw/core/cpu-system.c
-index 6aae28a349a..37d54d04bf8 100644
---- a/hw/core/cpu-system.c
-+++ b/hw/core/cpu-system.c
-@@ -25,10 +25,8 @@
- 
- bool cpu_paging_enabled(const CPUState *cpu)
+ bool accel_cpu_common_realize(CPUState *cpu, Error **errp)
  {
 -    CPUClass *cc = CPU_GET_CLASS(cpu);
--
--    if (cc->sysemu_ops->get_paging_enabled) {
--        return cc->sysemu_ops->get_paging_enabled(cpu);
-+    if (cpu->cc->sysemu_ops->get_paging_enabled) {
-+        return cpu->cc->sysemu_ops->get_paging_enabled(cpu);
+     AccelState *accel = current_accel();
+     AccelClass *acc = ACCEL_GET_CLASS(accel);
+ 
+     /* target specific realization */
+-    if (cc->accel_cpu && cc->accel_cpu->cpu_target_realize
+-        && !cc->accel_cpu->cpu_target_realize(cpu, errp)) {
++    if (cpu->cc->accel_cpu
++        && cpu->cc->accel_cpu->cpu_target_realize
++        && !cpu->cc->accel_cpu->cpu_target_realize(cpu, errp)) {
+         return false;
      }
  
-     return false;
-@@ -37,10 +35,8 @@ bool cpu_paging_enabled(const CPUState *cpu)
- bool cpu_get_memory_mapping(CPUState *cpu, MemoryMappingList *list,
-                             Error **errp)
+diff --git a/accel/tcg/tcg-accel-ops.c b/accel/tcg/tcg-accel-ops.c
+index 6e3f1fa92b2..299d6176cfb 100644
+--- a/accel/tcg/tcg-accel-ops.c
++++ b/accel/tcg/tcg-accel-ops.c
+@@ -120,10 +120,9 @@ static inline int xlat_gdb_type(CPUState *cpu, int gdbtype)
+         [GDB_WATCHPOINT_ACCESS] = BP_GDB | BP_MEM_ACCESS,
+     };
+ 
+-    CPUClass *cc = CPU_GET_CLASS(cpu);
+     int cputype = xlat[gdbtype];
+ 
+-    if (cc->gdb_stop_before_watchpoint) {
++    if (cpu->cc->gdb_stop_before_watchpoint) {
+         cputype |= BP_STOP_BEFORE_ACCESS;
+     }
+     return cputype;
+diff --git a/accel/tcg/translate-all.c b/accel/tcg/translate-all.c
+index d56ca13cddf..5a378cb0281 100644
+--- a/accel/tcg/translate-all.c
++++ b/accel/tcg/translate-all.c
+@@ -622,7 +622,7 @@ void cpu_io_recompile(CPUState *cpu, uintptr_t retaddr)
+      * to account for the re-execution of the branch.
+      */
+     n = 1;
+-    cc = CPU_GET_CLASS(cpu);
++    cc = cpu->cc;
+     if (cc->tcg_ops->io_recompile_replay_branch &&
+         cc->tcg_ops->io_recompile_replay_branch(cpu, tb)) {
+         cpu->neg.icount_decr.u16.low++;
+diff --git a/accel/tcg/watchpoint.c b/accel/tcg/watchpoint.c
+index af57d182d5b..52e550dec6b 100644
+--- a/accel/tcg/watchpoint.c
++++ b/accel/tcg/watchpoint.c
+@@ -69,7 +69,6 @@ int cpu_watchpoint_address_matches(CPUState *cpu, vaddr addr, vaddr len)
+ void cpu_check_watchpoint(CPUState *cpu, vaddr addr, vaddr len,
+                           MemTxAttrs attrs, int flags, uintptr_t ra)
  {
 -    CPUClass *cc = CPU_GET_CLASS(cpu);
--
--    if (cc->sysemu_ops->get_memory_mapping) {
--        return cc->sysemu_ops->get_memory_mapping(cpu, list, errp);
-+    if (cpu->cc->sysemu_ops->get_memory_mapping) {
-+        return cpu->cc->sysemu_ops->get_memory_mapping(cpu, list, errp);
+     CPUWatchpoint *wp;
+ 
+     assert(tcg_enabled());
+@@ -85,9 +84,9 @@ void cpu_check_watchpoint(CPUState *cpu, vaddr addr, vaddr len,
+         return;
      }
  
-     error_setg(errp, "Obtaining memory mappings is unsupported on this CPU.");
-@@ -50,14 +46,12 @@ bool cpu_get_memory_mapping(CPUState *cpu, MemoryMappingList *list,
- hwaddr cpu_get_phys_page_attrs_debug(CPUState *cpu, vaddr addr,
-                                      MemTxAttrs *attrs)
- {
--    CPUClass *cc = CPU_GET_CLASS(cpu);
--
--    if (cc->sysemu_ops->get_phys_page_attrs_debug) {
--        return cc->sysemu_ops->get_phys_page_attrs_debug(cpu, addr, attrs);
-+    if (cpu->cc->sysemu_ops->get_phys_page_attrs_debug) {
-+        return cpu->cc->sysemu_ops->get_phys_page_attrs_debug(cpu, addr, attrs);
+-    if (cc->tcg_ops->adjust_watchpoint_address) {
++    if (cpu->cc->tcg_ops->adjust_watchpoint_address) {
+         /* this is currently used only by ARM BE32 */
+-        addr = cc->tcg_ops->adjust_watchpoint_address(cpu, addr, len);
++        addr = cpu->cc->tcg_ops->adjust_watchpoint_address(cpu, addr, len);
      }
-     /* Fallback for CPUs which don't implement the _attrs_ hook */
-     *attrs = MEMTXATTRS_UNSPECIFIED;
--    return cc->sysemu_ops->get_phys_page_debug(cpu, addr);
-+    return cpu->cc->sysemu_ops->get_phys_page_debug(cpu, addr);
- }
  
- hwaddr cpu_get_phys_page_debug(CPUState *cpu, vaddr addr)
-@@ -81,64 +75,53 @@ int cpu_asidx_from_attrs(CPUState *cpu, MemTxAttrs attrs)
- int cpu_write_elf32_qemunote(WriteCoreDumpFunction f, CPUState *cpu,
-                              void *opaque)
- {
--    CPUClass *cc = CPU_GET_CLASS(cpu);
--
--    if (!cc->sysemu_ops->write_elf32_qemunote) {
-+    if (!cpu->cc->sysemu_ops->write_elf32_qemunote) {
-         return 0;
-     }
--    return (*cc->sysemu_ops->write_elf32_qemunote)(f, cpu, opaque);
-+    return (*cpu->cc->sysemu_ops->write_elf32_qemunote)(f, cpu, opaque);
- }
+     assert((flags & ~BP_MEM_ACCESS) == 0);
+@@ -119,8 +118,8 @@ void cpu_check_watchpoint(CPUState *cpu, vaddr addr, vaddr len,
+             wp->hitattrs = attrs;
  
- int cpu_write_elf32_note(WriteCoreDumpFunction f, CPUState *cpu,
-                          int cpuid, void *opaque)
- {
--    CPUClass *cc = CPU_GET_CLASS(cpu);
--
--    if (!cc->sysemu_ops->write_elf32_note) {
-+    if (!cpu->cc->sysemu_ops->write_elf32_note) {
-         return -1;
-     }
--    return (*cc->sysemu_ops->write_elf32_note)(f, cpu, cpuid, opaque);
-+    return (*cpu->cc->sysemu_ops->write_elf32_note)(f, cpu, cpuid, opaque);
- }
- 
- int cpu_write_elf64_qemunote(WriteCoreDumpFunction f, CPUState *cpu,
-                              void *opaque)
- {
--    CPUClass *cc = CPU_GET_CLASS(cpu);
--
--    if (!cc->sysemu_ops->write_elf64_qemunote) {
-+    if (!cpu->cc->sysemu_ops->write_elf64_qemunote) {
-         return 0;
-     }
--    return (*cc->sysemu_ops->write_elf64_qemunote)(f, cpu, opaque);
-+    return (*cpu->cc->sysemu_ops->write_elf64_qemunote)(f, cpu, opaque);
- }
- 
- int cpu_write_elf64_note(WriteCoreDumpFunction f, CPUState *cpu,
-                          int cpuid, void *opaque)
- {
--    CPUClass *cc = CPU_GET_CLASS(cpu);
--
--    if (!cc->sysemu_ops->write_elf64_note) {
-+    if (!cpu->cc->sysemu_ops->write_elf64_note) {
-         return -1;
-     }
--    return (*cc->sysemu_ops->write_elf64_note)(f, cpu, cpuid, opaque);
-+    return (*cpu->cc->sysemu_ops->write_elf64_note)(f, cpu, cpuid, opaque);
- }
- 
- bool cpu_virtio_is_big_endian(CPUState *cpu)
- {
--    CPUClass *cc = CPU_GET_CLASS(cpu);
--
--    if (cc->sysemu_ops->virtio_is_big_endian) {
--        return cc->sysemu_ops->virtio_is_big_endian(cpu);
-+    if (cpu->cc->sysemu_ops->virtio_is_big_endian) {
-+        return cpu->cc->sysemu_ops->virtio_is_big_endian(cpu);
-     }
-     return target_words_bigendian();
- }
- 
- GuestPanicInformation *cpu_get_crash_info(CPUState *cpu)
- {
--    CPUClass *cc = CPU_GET_CLASS(cpu);
-     GuestPanicInformation *res = NULL;
- 
--    if (cc->sysemu_ops->get_crash_info) {
--        res = cc->sysemu_ops->get_crash_info(cpu);
-+    if (cpu->cc->sysemu_ops->get_crash_info) {
-+        res = cpu->cc->sysemu_ops->get_crash_info(cpu);
-     }
-     return res;
- }
+             if (wp->flags & BP_CPU
+-                && cc->tcg_ops->debug_check_watchpoint
+-                && !cc->tcg_ops->debug_check_watchpoint(cpu, wp)) {
++                && cpu->cc->tcg_ops->debug_check_watchpoint
++                && !cpu->cc->tcg_ops->debug_check_watchpoint(cpu, wp)) {
+                 wp->flags &= ~BP_WATCHPOINT_HIT;
+                 continue;
+             }
 -- 
 2.47.1
 
