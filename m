@@ -4,102 +4,92 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DF3B9C0218C
-	for <qemu-devel@archiver.kernel.org>; Tue, 21 Jan 2025 15:38:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 76C0CC0218C
+	for <qemu-devel@archiver.kernel.org>; Tue, 21 Jan 2025 15:48:03 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1taGKp-0005QR-NB; Tue, 21 Jan 2025 10:38:36 -0500
+	id 1taGTP-0007FD-Js; Tue, 21 Jan 2025 10:47:27 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1taGKi-0005M5-RX
- for qemu-devel@nongnu.org; Tue, 21 Jan 2025 10:38:30 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1taGKf-0007sq-SA
- for qemu-devel@nongnu.org; Tue, 21 Jan 2025 10:38:27 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1737473903;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=7vWlp2CUskTYXbSVehnKEKMyRmaqBpVNMhezv4fMKgM=;
- b=JXZSg1aEgZssqmi33MMdzSG8j5MhzK1YBA29Ci42MuZ728UxeGt9T48e8cDu6EZt0bCbOw
- DTbXj/E066jaZalF6Vn9A/XpxffV4cBA7vt12VurFU0G+AwAaGLdshIupBAyuhix2vWewT
- 41zgiM9NHBAGKgt+XfjJCiztfLoEAL8=
-Received: from mail-qv1-f69.google.com (mail-qv1-f69.google.com
- [209.85.219.69]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-548-V3BRIrspNEqbBXt3Bs0eLg-1; Tue, 21 Jan 2025 10:38:21 -0500
-X-MC-Unique: V3BRIrspNEqbBXt3Bs0eLg-1
-X-Mimecast-MFC-AGG-ID: V3BRIrspNEqbBXt3Bs0eLg
-Received: by mail-qv1-f69.google.com with SMTP id
- 6a1803df08f44-6d87d6c09baso85453006d6.3
- for <qemu-devel@nongnu.org>; Tue, 21 Jan 2025 07:38:21 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1taGTF-0007EQ-SI
+ for qemu-devel@nongnu.org; Tue, 21 Jan 2025 10:47:22 -0500
+Received: from mail-pl1-x62e.google.com ([2607:f8b0:4864:20::62e])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1taGTD-0000Xj-R6
+ for qemu-devel@nongnu.org; Tue, 21 Jan 2025 10:47:17 -0500
+Received: by mail-pl1-x62e.google.com with SMTP id
+ d9443c01a7336-21a7ed0155cso93486355ad.3
+ for <qemu-devel@nongnu.org>; Tue, 21 Jan 2025 07:47:15 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1737474434; x=1738079234; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=PsRphco2/yF7/RPpBLBla6FWBK7HFRFdg3GEMcsicCo=;
+ b=pD0Kk7IzS00jpvYT1SiT8A35on3O76Et/oz4K9A5zIyJWDwko2+Y3JPMdQySl/gTSM
+ c39gEiJxksz54PrFKa5iVGeq2hyKkL+OOrgK3IKI+gsHFTfhcvGZlQOaP1T8cQyf/Ibq
+ pxWlFuxJw9hYeFkA3VZkBOGJ1AfHONUR7k7gO0qE4mVMgr6/GWiv8tBmLD8MsB71UJZL
+ SM+BjrewBaud8nA3Hob7yZ6LRPlao0ivpqd6+E5VDQpN8RJKVEsYa3H7EZl9kfIl1G5X
+ JmBC0sckRKYP3EMXZF+6ejaaUKLVUpPHIlfjI2gYT+CZc+BgeQ8UzqR8Eoj7uV8dLgVn
+ X26A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1737473901; x=1738078701;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=7vWlp2CUskTYXbSVehnKEKMyRmaqBpVNMhezv4fMKgM=;
- b=jSoi+rV6UO34UxqwFiPKutB+kqOzYSbiC26LS2CfhlWBUZCw+Kcu6avdMnpeB3ax2Z
- TeusoCYqGZ0NNLofNOWzMYslq3OgoFKqYkGA4vAZoGWNsTME8cZerWja2Ug+oOQv7jCL
- +wfGuDUZs5OFLYKrra7n+UxkLoJBmzG4CUrKsDYuPmqGTAJXle1NO/nX4aE9AsTErkFj
- j5p1Kei51HoMuPRkmr5nPMafXHn4mz2XT2UoKu28ol7BrTN3D4gELO21lBClfBUQ+wa7
- pyRvyXozrYqmX8DPi/U6agLjo94GyP35OE/5bHUMmyaDkqO4q4LfUdQtdEk1lEtbUTDG
- JSlw==
+ d=1e100.net; s=20230601; t=1737474434; x=1738079234;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=PsRphco2/yF7/RPpBLBla6FWBK7HFRFdg3GEMcsicCo=;
+ b=Ozy/feKr7xLC2Ljst9ilZGnUWb8GuNTWPZrX31M9mseKgkgdRrUe6rTkQnSilYzkCK
+ WZ7+htWgy1WfEAyTTgoUIwlwY5sBc3aimBaLMc6IIHYL9b9Qh0QUh8TDea4C0JUYtYBl
+ rvXlc0cI4BhuT0mbuJor/nC220Khe8WFgjNEsx6kA7vEdr4dDVe+np+ecCYFH3jv6wqY
+ 6bzfwhABpAIpNEjMw+Ine3PH4FRJsASHYFL5sFvLqOR9POInGJv9lWcTPCwMaa0q9uYd
+ 1+NPBAeCX3RGFPKZXAvD30oR0Ftn75ud8qbVdUedUijuzaSdp2Bzb5qLXZyiBdNZb/VX
+ fo6A==
 X-Forwarded-Encrypted: i=1;
- AJvYcCVLA25P+3k+ioHAIlL4YiPDoBVvA+ottiK8j6gJWT7c8FV4es3f+QE0lMLKmWk762V196Nn7SXzrOd1@nongnu.org
-X-Gm-Message-State: AOJu0YwPCWv+sndPtS7D8R+K2hZgHHBM0keiJZcWzmcUMP0aEE9cd1eP
- 7+nAdjdQUv3pLURU5U7Fk49o0egJw1mX8TJxlea9mtMpbxru5Udo4yn/DOs8pTMCwh/ZmFBkRpx
- ttxSBSXbRTqJPJB9czMGTdLvUCw/v6V5cijBTWgNUFiaQwn2kVWFq
-X-Gm-Gg: ASbGncvuuxqjS4PjX8NV4MVQsYRqrZhNEI47npG7hXwRjPts0AN/1g7HiPhFINBzsyp
- D/CoUAC36jQUCaU2e09zfCQoHtHjwUXFh0MG5UfHIeTpW4CJMwrH4tep/OwTm5UF+W+IjqJf6Q+
- Bo3CyX6xupTf+GPsG/vZ7jRDSAfQM+OvQW2vE8RIZNK3QLXfZoYvlJQl6sStBA6CzNluO4/2Zts
- 0YDP1j2n0pMMOO6RH08CfxHXng8VbxwOZQ42jI4EXBAlszUdZsp3s8RAaK//LJFKON5jG61pQ1Q
- +wQBrMSFRp7Tm7ZdYIa3mLMIGfJ6VNo=
-X-Received: by 2002:a05:6214:1305:b0:6d3:fa03:23f1 with SMTP id
- 6a1803df08f44-6e1b2186a41mr285474056d6.13.1737473901083; 
- Tue, 21 Jan 2025 07:38:21 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IHgfx1VJkB5kdl2P+V5WFmu/JkUYutt6JPaRTYfjpiG4rWtIeQDLUTt4TZ3FFWubwJB5OXSGA==
-X-Received: by 2002:a05:6214:1305:b0:6d3:fa03:23f1 with SMTP id
- 6a1803df08f44-6e1b2186a41mr285473756d6.13.1737473900788; 
- Tue, 21 Jan 2025 07:38:20 -0800 (PST)
-Received: from x1n (pool-99-254-114-190.cpe.net.cable.rogers.com.
- [99.254.114.190]) by smtp.gmail.com with ESMTPSA id
- 6a1803df08f44-6e1afbf3783sm51948996d6.7.2025.01.21.07.38.19
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 21 Jan 2025 07:38:20 -0800 (PST)
-Date: Tue, 21 Jan 2025 10:38:11 -0500
-From: Peter Xu <peterx@redhat.com>
-To: Chenyi Qiang <chenyi.qiang@intel.com>
-Cc: David Hildenbrand <david@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
- Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Michael Roth <michael.roth@amd.com>, qemu-devel@nongnu.org,
- kvm@vger.kernel.org, Williams Dan J <dan.j.williams@intel.com>,
- Peng Chao P <chao.p.peng@intel.com>, Gao Chao <chao.gao@intel.com>,
- Xu Yilun <yilun.xu@intel.com>
-Subject: Re: [PATCH 2/7] guest_memfd: Introduce an object to manage the
- guest-memfd with RamDiscardManager
-Message-ID: <Z4-_Y-Yqmz_wBWaU@x1n>
-References: <20241213070852.106092-1-chenyi.qiang@intel.com>
- <20241213070852.106092-3-chenyi.qiang@intel.com>
- <Z46RT__q02nhz3dc@x1n>
- <a55048ec-c02d-4845-8595-cc79b7a5e340@intel.com>
+ AJvYcCXtHdHaPUrI1d5ORa7AfTK1tSCW3uwPG/6q4vwnbhZMva3Hq73fI/FgetWaKxgLPw6FbrWlfJQvNWwL@nongnu.org
+X-Gm-Message-State: AOJu0YxUieXYuMH9JBigLPgjo6zFaTQSfwdh9pk/pWFBCiy+ltma9A3i
+ q9BFRWNUfnMO02SsFOdE2vx1MSx8NeMN7zXO/NvpBt19uZTjN1VBFa9UHgtckog=
+X-Gm-Gg: ASbGnctsViTx//0ACNKRfHzWAQHsJ3lHp/Lg8EjkB+xnO1eufWlqksZmLqvnZXHUv4s
+ yANw0T1M+LSb5nhD8GLyRQEss9A52GKGF3pChArhKXNZ83WSiW76b1tJc2kDZpbXCekQGvfr/1j
+ 4lkLUHck9/35byDN4Rezcb22knrq8X+njkQBwh5/vMnc8emyFagybjGa07UUgBdtvP9AcVPIrzk
+ jc+Gl1TQyAMQ6kOsCG6NmUFsbjBGOSx0Fl4ovavnHjht2ls0jRo6BFEgNrWdKBB1rjPf0PbvyNa
+ 6I2nvcVlJFtPtkRPT/mVLfGjnT9Q8AlkNdan
+X-Google-Smtp-Source: AGHT+IFYB4xOIxG3I05AMrzGjS7l3XFq8FXmeUPffboOphdJ/Kts2W/YWI6N2YF5vDpkCYQ7Selghg==
+X-Received: by 2002:a05:6a20:9185:b0:1ea:e93d:7574 with SMTP id
+ adf61e73a8af0-1eb214c97a5mr29779720637.18.1737474434127; 
+ Tue, 21 Jan 2025 07:47:14 -0800 (PST)
+Received: from [192.168.0.4] (174-21-71-127.tukw.qwest.net. [174.21.71.127])
+ by smtp.gmail.com with ESMTPSA id
+ 41be03b00d2f7-aab358fc6d8sm5788145a12.51.2025.01.21.07.47.13
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Tue, 21 Jan 2025 07:47:13 -0800 (PST)
+Message-ID: <a2154af7-906c-4fbc-acca-75cac0b5c951@linaro.org>
+Date: Tue, 21 Jan 2025 07:47:10 -0800
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <a55048ec-c02d-4845-8595-cc79b7a5e340@intel.com>
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=peterx@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -51
-X-Spam_score: -5.2
-X-Spam_bar: -----
-X-Spam_report: (-5.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-2.996,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.086,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 2/2] target/riscv: throw debug exception before page
+ fault
+To: Daniel Henrique Barboza <dbarboza@ventanamicro.com>, qemu-devel@nongnu.org
+Cc: qemu-riscv@nongnu.org, alistair.francis@wdc.com, bmeng@tinylab.org,
+ liwei1518@gmail.com, zhiwei_liu@linux.alibaba.com, palmer@rivosinc.com
+References: <20250120204910.1317013-1-dbarboza@ventanamicro.com>
+ <20250120204910.1317013-3-dbarboza@ventanamicro.com>
+Content-Language: en-US
+From: Richard Henderson <richard.henderson@linaro.org>
+In-Reply-To: <20250120204910.1317013-3-dbarboza@ventanamicro.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::62e;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x62e.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -115,44 +105,74 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, Jan 21, 2025 at 05:00:45PM +0800, Chenyi Qiang wrote:
-> >> +
-> >> +    /* block size and alignment */
-> >> +    uint64_t block_size;
-> > 
-> > Can we always fetch it from the MR/ramblock? If this is needed, better add
-> > some comment explaining why.
+On 1/20/25 12:49, Daniel Henrique Barboza wrote:
+> In the RISC-V privileged ISA section 3.1.15 table 15, it is determined
+> that a debug exception that is triggered from a load/store has a higher
+> priority than a possible fault that this access might trigger.
 > 
-> The block_size is the granularity used to track the private/shared
-> attribute in the bitmap. It is currently hardcoded to 4K as guest_memfd
-> may manipulate the page conversion in at least 4K size and alignment.
-> I think It is somewhat a variable to cache the size and can avoid many
-> getpagesize() calls.
+> This is not the case ATM as shown in [1]. Adding a breakpoint in an
+> address that deliberately will fault is causing a load page fault
+> instead of a debug exception. The reason is that we're throwing in the
+> page fault as soon as the fault occurs (end of riscv_cpu_tlb_fill(),
+> raise_mmu_exception()), not allowing the installed watchpoints to
+> trigger.
+> 
+> Call cpu_check_watchpoint() in the page fault path to search and execute
+> any watchpoints that might exist for the address, never returning back
+> to the fault path. If no watchpoints are found cpu_check_watchpoint()
+> will return and we'll fall-through the regular path to
+> raise_mmu_exception().
+> 
+> [1] https://gitlab.com/qemu-project/qemu/-/issues/2627
+> 
+> Resolves: https://gitlab.com/qemu-project/qemu/-/issues/2627
+> Signed-off-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
+> ---
+>   target/riscv/cpu_helper.c | 19 +++++++++++++++++++
+>   1 file changed, 19 insertions(+)
+> 
+> diff --git a/target/riscv/cpu_helper.c b/target/riscv/cpu_helper.c
+> index e1dfc4ecbf..ae0a659ec7 100644
+> --- a/target/riscv/cpu_helper.c
+> +++ b/target/riscv/cpu_helper.c
+> @@ -27,6 +27,7 @@
+>   #include "exec/page-protection.h"
+>   #include "instmap.h"
+>   #include "tcg/tcg-op.h"
+> +#include "hw/core/tcg-cpu-ops.h"
+>   #include "trace.h"
+>   #include "semihosting/common-semi.h"
+>   #include "system/cpu-timers.h"
+> @@ -1708,6 +1709,24 @@ bool riscv_cpu_tlb_fill(CPUState *cs, vaddr address, int size,
+>       } else if (probe) {
+>           return false;
+>       } else {
+> +        int wp_len = riscv_cpu_mxl(env) == MXL_RV64 ? 8 : 4;
 
-Though qemu does it frequently.. e.g. qemu_real_host_page_size() wraps
-that.  So IIUC that's not a major concern, and if it's a concern maybe we
-can cache it globally instead.
+Surely 'size' may be relevant?
 
-OTOH, this is not a per-ramblock limitation either, IIUC.  So maybe instead
-of caching it per manager, we could have memory_attr_manager_get_psize()
-helper (or any better name..):
 
-memory_attr_manager_get_psize(MemoryAttrManager *mgr)
-{
-        /* Due to limitation of ... always notify with host psize */
-        return qemu_real_host_page_size();
-}
+r~
 
-Then in the future if necessary, switch to:
-
-memory_attr_manager_get_psize(MemoryAttrManager *mgr)
-{
-        return mgr->mr->ramblock->pagesize;
-}
-
-Thanks,
-
--- 
-Peter Xu
+> +        int wp_access = 0;
+> +
+> +        if (access_type == MMU_DATA_LOAD) {
+> +            wp_access |= BP_MEM_READ;
+> +        } else if (access_type == MMU_DATA_STORE) {
+> +            wp_access |= BP_MEM_WRITE;
+> +        }
+> +
+> +        /*
+> +         * If a watchpoint isn't found for 'addr' this will
+> +         * be a no-op and we'll resume the mmu_exception path.
+> +         * Otherwise we'll throw a debug exception and execution
+> +         * will continue elsewhere.
+> +         */
+> +        cpu_check_watchpoint(cs, address, wp_len, MEMTXATTRS_UNSPECIFIED,
+> +                             wp_access, retaddr);
+> +
+>           raise_mmu_exception(env, address, access_type, pmp_violation,
+>                               first_stage_error, two_stage_lookup,
+>                               two_stage_indirect_error);
 
 
