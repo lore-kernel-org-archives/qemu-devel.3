@@ -4,66 +4,206 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 72826C02182
-	for <qemu-devel@archiver.kernel.org>; Tue, 21 Jan 2025 15:35:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BE97BC0218B
+	for <qemu-devel@archiver.kernel.org>; Tue, 21 Jan 2025 15:37:57 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1taGHV-0003oz-2H; Tue, 21 Jan 2025 10:35:09 -0500
+	id 1taGJi-0004W9-5e; Tue, 21 Jan 2025 10:37:26 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jonathan.cameron@huawei.com>)
- id 1taGHO-0003mD-RY
- for qemu-devel@nongnu.org; Tue, 21 Jan 2025 10:35:03 -0500
-Received: from frasgout.his.huawei.com ([185.176.79.56])
+ (Exim 4.90_1) (envelope-from <jonah.palmer@oracle.com>)
+ id 1taGJa-0004Vi-9z
+ for qemu-devel@nongnu.org; Tue, 21 Jan 2025 10:37:19 -0500
+Received: from mx0b-00069f02.pphosted.com ([205.220.177.32])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jonathan.cameron@huawei.com>)
- id 1taGHL-0007VF-Pl
- for qemu-devel@nongnu.org; Tue, 21 Jan 2025 10:35:02 -0500
-Received: from mail.maildlp.com (unknown [172.18.186.216])
- by frasgout.his.huawei.com (SkyGuard) with ESMTP id 4YcrnT5WVyz6M4PV;
- Tue, 21 Jan 2025 23:33:01 +0800 (CST)
-Received: from frapeml500008.china.huawei.com (unknown [7.182.85.71])
- by mail.maildlp.com (Postfix) with ESMTPS id 05712140A70;
- Tue, 21 Jan 2025 23:34:56 +0800 (CST)
-Received: from localhost (10.203.177.66) by frapeml500008.china.huawei.com
- (7.182.85.71) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.1.2507.39; Tue, 21 Jan
- 2025 16:34:55 +0100
-Date: Tue, 21 Jan 2025 15:34:53 +0000
-To: Zhi Wang <zhiw@nvidia.com>
-CC: Alejandro Lucero Palau <alucerop@amd.com>, "qemu-devel@nongnu.org"
- <qemu-devel@nongnu.org>, "dan.j.williams@intel.com"
- <dan.j.williams@intel.com>, "dave.jiang@intel.com" <dave.jiang@intel.com>,
- "ira.weiny@intel.com" <ira.weiny@intel.com>, "fan.ni@samsung.com"
- <fan.ni@samsung.com>, "alex.williamson@redhat.com"
- <alex.williamson@redhat.com>, "clg@redhat.com" <clg@redhat.com>, "Andy
- Currid" <ACurrid@nvidia.com>, Neo Jia <cjia@nvidia.com>, Surath Mitra
- <smitra@nvidia.com>, Ankit Agrawal <ankita@nvidia.com>, Aniket Agashe
- <aniketa@nvidia.com>, Kirti Wankhede <kwankhede@nvidia.com>, "Tarun Gupta
- (SW-GPU)" <targupta@nvidia.com>, "zhiwang@kernel.org" <zhiwang@kernel.org>
-Subject: Re: [PATCH 0/3] Introduce CXL type-2 device emulation
-Message-ID: <20250121153453.000062ee@huawei.com>
-In-Reply-To: <7c8c7dd1-2e57-4a65-94f3-46ef6482474e@nvidia.com>
-References: <20241212130422.69380-1-zhiw@nvidia.com>
- <eb417797-04aa-3572-02cf-5b858866edc7@amd.com>
- <7c8c7dd1-2e57-4a65-94f3-46ef6482474e@nvidia.com>
-X-Mailer: Claws Mail 4.3.0 (GTK 3.24.42; x86_64-w64-mingw32)
+ (Exim 4.90_1) (envelope-from <jonah.palmer@oracle.com>)
+ id 1taGJW-0007ol-LD
+ for qemu-devel@nongnu.org; Tue, 21 Jan 2025 10:37:17 -0500
+Received: from pps.filterd (m0246632.ppops.net [127.0.0.1])
+ by mx0b-00069f02.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 50LFDv9o030865;
+ Tue, 21 Jan 2025 15:37:11 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=oracle.com; h=cc
+ :content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=
+ corp-2023-11-20; bh=99iMROIYvzPKZE8vNC3ojQqHoekFqYQXyCLJ3HCN/fQ=; b=
+ DbtiWiuVkhUQYt5fp4lW2/Xo2vdGA2QWgtvcgn5mqkXoYi0kGvyF79ibanhbPx4I
+ fTV7KtkLPzQ43HZSYUOTOqOdYECmUag5UHDxp2Q6WQiAJFp+SoTDKd6M/iqge8Or
+ 1uJ2Q/CYBVJ4Q2PtyjvC3p4rW66TCbiUnLge4SQOxUrFrnlC4IPpdzjZLmURK4a9
+ BFAx1Mw8ixgPBJFF5YFlkd/omuwVgPXcScIVzLgwKjcli2nVjdxaYeP6Itxj8Ugw
+ mVcWzknencR5HAA0XtHfOIdWlRZ4Ar5tzVWtS+SN0x48PjTatk9yg9bR9pjLFwtL
+ XVOB+saPpfDFPJu/NLamZQ==
+Received: from phxpaimrmta01.imrmtpd1.prodappphxaev1.oraclevcn.com
+ (phxpaimrmta01.appoci.oracle.com [138.1.114.2])
+ by mx0b-00069f02.pphosted.com (PPS) with ESMTPS id 4485qkwmys-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Tue, 21 Jan 2025 15:37:11 +0000 (GMT)
+Received: from pps.filterd
+ (phxpaimrmta01.imrmtpd1.prodappphxaev1.oraclevcn.com [127.0.0.1])
+ by phxpaimrmta01.imrmtpd1.prodappphxaev1.oraclevcn.com (8.18.1.2/8.18.1.2)
+ with ESMTP id 50LFX0F5036548; Tue, 21 Jan 2025 15:37:10 GMT
+Received: from nam11-co1-obe.outbound.protection.outlook.com
+ (mail-co1nam11lp2173.outbound.protection.outlook.com [104.47.56.173])
+ by phxpaimrmta01.imrmtpd1.prodappphxaev1.oraclevcn.com (PPS) with ESMTPS id
+ 44917pn7tr-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Tue, 21 Jan 2025 15:37:10 +0000
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=rFZnRBDXAeFGiNFWVVMWhgqZuhFpazcEHjwQpNOZdB4L5bIT1Z+cOMAW7SijB2t+iyW8O8Wlg2mIfGvuehXQwO7QvrH3xNT6ZqvQGpH8odJgyvVlfgpIwep+fzBYC+bD32uN4Ct4eejnw0WFjKOdJBed1A7BOvpPmB8I3qbYS+i4G9qZxh7pVKCjwvEZjBn6xRCZpS5EZmDfcXjdoM/xi62oTwHGdmAvel+HuroctE8ibkawmQdTo84q9gk6nGQ/IxJTywDk4TIafIUSx7FABIAqzLjLj+HMsDf2V7NzU7L2qHbMKDIeCmjNomdPWT7jd/7RoCNBUMLGfL+JYiTHow==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=99iMROIYvzPKZE8vNC3ojQqHoekFqYQXyCLJ3HCN/fQ=;
+ b=ka55EDp03IKTvnOQ5zA6DF+wfr8KZ3e0LnHHXqOcw302EupdBPi5IwdMjhsYjcNgiITh09OM0H+Ev9f5xH4dRzlndgAWvwDSYzuBCLMgTNPSrcnpknomaqfPwSz+A+YLVuPvxQVGBcHKj8pq87e4Z5q9hArgtYG2vN1fBBGDxf1lSwc/B+aB7R6ZOQgRbXYkJcE3ag11+KgiJBQ8FulpaYKdgfrEzgVIr1xdOot6PmjnKqBYYTTrjSx9mkUogYvZincCm+B5v/fiqhwCtLhOiourQZ/PteWsm8Od5EUBJ7YqaYW1aQxWQMECSGBrjOrVd1I4iDt0LquGqeQAl2XXrg==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=oracle.com; dmarc=pass action=none header.from=oracle.com;
+ dkim=pass header.d=oracle.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=oracle.onmicrosoft.com; s=selector2-oracle-onmicrosoft-com;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=99iMROIYvzPKZE8vNC3ojQqHoekFqYQXyCLJ3HCN/fQ=;
+ b=uIxU/03OEXhqTMRfJn0PdsojrWdW061Xx7yy5v2QOg+AfYI7CtRCZs5oPu99OKpxfRaXvZE8YJq98GYmvvBC7M3wy6rjKvBqwNUew0o7S7qtInzi2KLzHBU+9/0vNKD06ZBuKiyfv32eLRX4cv3bEG16hT56CL/oKR/0dMawnFQ=
+Received: from PH0PR10MB4664.namprd10.prod.outlook.com (2603:10b6:510:41::11)
+ by SJ0PR10MB6422.namprd10.prod.outlook.com (2603:10b6:a03:44c::14)
+ with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.8356.22; Tue, 21 Jan
+ 2025 15:37:08 +0000
+Received: from PH0PR10MB4664.namprd10.prod.outlook.com
+ ([fe80::7635:ba00:5d5:c935]) by PH0PR10MB4664.namprd10.prod.outlook.com
+ ([fe80::7635:ba00:5d5:c935%4]) with mapi id 15.20.8356.020; Tue, 21 Jan 2025
+ 15:37:08 +0000
+Message-ID: <ad4f21fb-5b6e-40cd-8d29-ecbfca792547@oracle.com>
+Date: Tue, 21 Jan 2025 10:36:59 -0500
+User-Agent: Mozilla Thunderbird
+Subject: Re: [RFC v3 5/5] svq: Support translations via GPAs in
+ vhost_svq_translate_addr
+To: Eugenio Perez Martin <eperezma@redhat.com>
+Cc: qemu-devel@nongnu.org, mst@redhat.com, leiyang@redhat.com,
+ peterx@redhat.com, dtatulea@nvidia.com, jasowang@redhat.com,
+ si-wei.liu@oracle.com, boris.ostrovsky@oracle.com
+References: <20250110170837.2747532-1-jonah.palmer@oracle.com>
+ <20250110170837.2747532-6-jonah.palmer@oracle.com>
+ <CAJaqyWdxTQ22z17Niw=1dPCL4JX551EMXVkNSbyDO7edeHZm+A@mail.gmail.com>
+Content-Language: en-US
+From: Jonah Palmer <jonah.palmer@oracle.com>
+In-Reply-To: <CAJaqyWdxTQ22z17Niw=1dPCL4JX551EMXVkNSbyDO7edeHZm+A@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+X-ClientProxiedBy: LO4P123CA0054.GBRP123.PROD.OUTLOOK.COM
+ (2603:10a6:600:152::23) To PH0PR10MB4664.namprd10.prod.outlook.com
+ (2603:10b6:510:41::11)
 MIME-Version: 1.0
-Content-Type: text/plain; charset="ISO-8859-1"
-Content-Transfer-Encoding: quoted-printable
-X-Originating-IP: [10.203.177.66]
-X-ClientProxiedBy: lhrpeml500012.china.huawei.com (7.191.174.4) To
- frapeml500008.china.huawei.com (7.182.85.71)
-Received-SPF: pass client-ip=185.176.79.56;
- envelope-from=jonathan.cameron@huawei.com; helo=frasgout.his.huawei.com
-X-Spam_score_int: -42
-X-Spam_score: -4.3
-X-Spam_bar: ----
-X-Spam_report: (-4.3 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_MED=-2.3,
- RCVD_IN_MSPIKE_H2=-0.086, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: PH0PR10MB4664:EE_|SJ0PR10MB6422:EE_
+X-MS-Office365-Filtering-Correlation-Id: a5603fb4-285b-46dd-dcb3-08dd3a3176cd
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0; ARA:13230040|376014|1800799024|366016|10070799003;
+X-Microsoft-Antispam-Message-Info: =?utf-8?B?QnNJeUsyWnNib0RmY0ZRVU1xVjBFWEtFYzhLRmkvSGVxWlBQL3ExT3VJaS9U?=
+ =?utf-8?B?TzhtZ0MwZnVkVTBRbVBTdEozUnBPM1BsenhoaGhYL0R0b2xOeXZoZnVQSGN3?=
+ =?utf-8?B?U245eDRibVZEWWdyTllxZmEzSnNYZjg3QzNFMTJIQmxNZ2JGQ1c1a1gvRHEw?=
+ =?utf-8?B?L3Robk4vYmVXZ0ZaYyt5blpqWDJ5N05NNTVjTGkrMW9CS0w3RlMzTllEMFRj?=
+ =?utf-8?B?S1kwcnc3eWsvSHk0RHJSNnNUR2hqQlhWaGVFdFlEdWFpbk9scDNqa1Q0RTkz?=
+ =?utf-8?B?dER3UkkvNnBEc3FHbW5iSGtUb01VWXFOZW5KUmJKNzNXK3d5eWpjNExWMjhu?=
+ =?utf-8?B?Q2tUVlp2dVZXUlNqRlAxWm5NTTRvN1ZWV2Z6MHgwUkNsckRCVWFiR1E5SW1j?=
+ =?utf-8?B?eFJEaDYxWWVOU1FKbWVoSFEvQ3lIMXpJclhxQ2JwclU5WG9nSkV6bk5SbTdt?=
+ =?utf-8?B?NG95eEp6UEo3Ky84c29RV0dpKzA4RWdrUjA1cUZLTzVRMTA1SkJHNnlKMUlV?=
+ =?utf-8?B?cVErY25mQU9OVVczcVVBblBJc0I2MUdkWTduM3UzM2JDZzM3VDJSRDV0MzdL?=
+ =?utf-8?B?RmQ0Z0I4aUkzNTZ2bnh2Rk1kZFFVTEc1NGV2VjNMWU9rNGN4a0U2WG42SXR0?=
+ =?utf-8?B?aWNzMW4xLzJoM3R1YW9qTW0rcnpnL1Qra09qRnlXYWl1akVTUTJEM0VscVFU?=
+ =?utf-8?B?bmZkZWxJOGRGUVRqcHpOWkFZV0lDWHNsYkE0Tyt4eWwreTVxQVdoOEN1NW9z?=
+ =?utf-8?B?WUJGVkxkZWpRM1ZOMjI0c0NNbFFIWkdZTi9GcHNKalNXaUd1S20vZWpucW5u?=
+ =?utf-8?B?bFl2d1Vxa09VN0oyRVQwK3NWTzJ2b24ra3BqcU5qZUNua3JTeHlTejQ0ZFdO?=
+ =?utf-8?B?bjFublgzRnJwRkVCVGY2WldpTUw5NmQ5QUZ2WkxIbjJxdXhydzRWbk8rdHQ3?=
+ =?utf-8?B?VHB3aUhHUjFBMWpTa2NGTEZ2bG9vWUNBMnE1Zk5ya0VDUXVZTi9VMWt1VTU4?=
+ =?utf-8?B?N0ZPUWt5TDVzUlNsM0hjejdIL0ZOVmhPNFg2eEhYSGQxTFRsd09BUDVUSWkz?=
+ =?utf-8?B?MUdTY25ZaS9TOThjM3hpN1NjUlFYdG1EYXFaNzZPaDhIRy9VVXBzdXUwNXM5?=
+ =?utf-8?B?dDRjSDE2Nk9sY20veDNrTVhaQU5rb3E5RXJOa3cxT21RbVJmQ2RsMFhWVCtR?=
+ =?utf-8?B?MVk0SlRkdW9Tb2FjeFZjMEkyWnMyQjFkSTl1K1JRN1diVEpQNzIyYUZJVzVn?=
+ =?utf-8?B?T2ZrY3VUbjNuMEdMUVlYcXZIUEVqc0gzangxeG9IT2VOS24wS2lYcnQxTGd2?=
+ =?utf-8?B?YUpXUmJQa3NpN0VGMUUzS0NPYVhweUlWRWRzeG1TUm53bFRwOG1xR3N6cktX?=
+ =?utf-8?B?eUlrcnhTSkpJanRBYytmQWZOMEtJQkNWQjY5cEFSSEdyU3Mxek1KblF1SjRv?=
+ =?utf-8?B?ZTdKT2pGdVNhWDdZcjFOcTk0d2RPYWtCSWEwTFZrZ2c5Z2t5VWxFRmtFQTdL?=
+ =?utf-8?B?enFLVGNFTW8wLzlnNU9yc1E0RURHMlVsYkR3a1N2MWJYV3gvN2hHVzZoamJC?=
+ =?utf-8?B?RzB1VUZDd0lNL3hkaFF5cXR2U0RrNjlPajZWRjd2Z3UwT25zU0VxdkgzNzBB?=
+ =?utf-8?B?OWVxZ2JPUHNJV3kxait3dVkwZWo5Qm9pSFhOckFvTTUralMrK0NoMFdrYzlC?=
+ =?utf-8?B?eklnNmpHQnVPc09QU2k4R0RNbFdDSWdNZ0hQMm1oSHdIK05jbTR5TU1VdWFx?=
+ =?utf-8?B?QkpJNDMzUklQL05iL2pUZGQrVGdjaHQ5NFhwTVpjbW5ZNWlTRkRBalpKRVFJ?=
+ =?utf-8?B?WkViRk1EbE9MTzI0UEJMbEMrM1B5dlFwb01tUERNWGpnbEo0RzdSc0NLNkNq?=
+ =?utf-8?Q?NMZEtT0SIMLmk?=
+X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:PH0PR10MB4664.namprd10.prod.outlook.com; PTR:; CAT:NONE;
+ SFS:(13230040)(376014)(1800799024)(366016)(10070799003); DIR:OUT; SFP:1101; 
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?QXRib3dUdS91MlNKQWw0Q2JNYTRMY1YvWjk2eThSWHgyQWlBRXNDaVJnKzIy?=
+ =?utf-8?B?MHNZVkg0NU1NeU5GY2ErZENVQmNxUUdCY2VYTSs4eWFtWEJUNHBDWG0yYU5B?=
+ =?utf-8?B?WGpQNllsMnYzQWsrNzVBVVZ3dGRmYjZ2UVhmdnl2aW0rNmtudklVOG45aHRG?=
+ =?utf-8?B?aUwyZ2RqN2pTb1AzZ0FyNHZFbit1R0hxeVNHNXkwSmNYajAyNmZnNkI5OU56?=
+ =?utf-8?B?T1ZnQmxBbGN1WUE4R0ZjcFNUMzU2VDA4VzZwMmQyOVlDdHpiODVGRlpzOWpa?=
+ =?utf-8?B?TG9RTDZmUXZUZlgrb1pkbkF5aGdyTzR3dktOdldsbHVxTjRvd1ZFSHJVOWI2?=
+ =?utf-8?B?RXNYT2ZSeGY4SEthV0VScVQzMWNncnBjVllWRTNkd2pteTgwRkYvMGRJV3lZ?=
+ =?utf-8?B?cmtwYTVza0RMR3VmQzNUSWlIM3ltNWpXV3R5SThTQk9qWExwMlRveUxUak1R?=
+ =?utf-8?B?Sk01MWdzcnBNTDRUbnZZUjBTNmxsUkU5UStvYkpTdFVZMUFJZHgvZTdESHdt?=
+ =?utf-8?B?SHIyU3hzTzhSQTVmcVR1Mzd4Z2FjSEpsKzljWXhKZ2NNV0F1ZWUrZkpBQm9U?=
+ =?utf-8?B?QzVoNGdDbjd4aGN6a29aUmg0ZmkyZ2QwODJ5WUM0dnZseTNjNURMM0lhSHli?=
+ =?utf-8?B?Y0FTM2VKei9qSE9EYWhwZFl5M1ZxbzBxUk5ML3k4NGxHd1pyVitocUU2dDlZ?=
+ =?utf-8?B?NnNhL0xwUW5yeWppcmQ4RmlndEtVc2E5T1VFRlpQMVJOWWVpRGRNcERQdVBJ?=
+ =?utf-8?B?L0VrTGk3bWlORWdBQ2RuTk9xS3d6L2tlcy9JdzZyNGZRMHNzcHEyOFBsMlNh?=
+ =?utf-8?B?OUwwSU5BUzFYdnhtdlcxWkJDSFl4RmdYdUdvN0hZU1Q3TEZjNCt6T1FPWU9w?=
+ =?utf-8?B?ZnovNXdPbW5HOEdxeHVGRHVMY2h0MEwzMnVOMnlsWWRsTTVvdGhOdlVaSVBG?=
+ =?utf-8?B?N2NCR3NQdyt6bmtXaEpMMUZPZlF1MEpxL1ZQZ2w1L3BjVmdlbCtMcFExRkt3?=
+ =?utf-8?B?UDVqWGtUUVdkTDI1UUoxN3pxVklkdW45S3d0SUNaSURPZ0ZmcmtvOEhNQW5N?=
+ =?utf-8?B?T3dRVC94d0dBMzJYZEhxSGg0VU9xZ0NMUTlKb2YzMG91SlNEKzZYS3V5VFJw?=
+ =?utf-8?B?TTI5MXk1WFptTWp6bVkrNzBidGpNVXR3aXpjZFZKWFZaZUVsNy9vaHZwWEpP?=
+ =?utf-8?B?Yy9NV04rdUhlTFlOaS91K3czUzBTS3VsNHYvSFl1RUhYSDBOTGxJWVZiejQx?=
+ =?utf-8?B?L3JBeENKTnh5d1V2R1UrUitlajQ4WFQwRXhnUmU0YkFvcTdPTjBpSllIUnpu?=
+ =?utf-8?B?ZlVHUGI3Qy9ublZrVHFsNGMvYnB5Ui91b1BEMTEvaTZWamdrWEpwdnVJVHhp?=
+ =?utf-8?B?NE9CZXdjQVVkeDE2YUtpSVRtSWh3VWpNZGx0RGp0YXgwTTl6ZWlZdEk3VlFv?=
+ =?utf-8?B?dzQ0SlNxNnJoYXFMWVRkSHdmNkJ6cEtlNDZsUlNCK2N0SU5HYUVWTzl3ZXNv?=
+ =?utf-8?B?Q1AzNVFRNGtSbkxYSWRVWXorNXhKMUZzQ25jdTdRZTFPTFMzSlljbm9YZ2xt?=
+ =?utf-8?B?dUxQYWtVdG9YbVlIODJ3Vm9WZWNFYWp2VnFNVzl0SyttRXRqY2N4VlVSN1p6?=
+ =?utf-8?B?M2F5RjZMdHZnZm5INmZ2eEIwQ2tMeis0Z1Faelc2YkpWRGdUZkJEZHpubklO?=
+ =?utf-8?B?OFdtbzNvL1hON1R6VDJlN2F2UEdsN09ycUdKelZ4KzJ1TkR5Sk95ZTFidmJW?=
+ =?utf-8?B?QVAxTklhRjAyQ2NreGhvTWZubElNbitRQ3MzUXFXaWx0cUdsc2hBYzRRNXg5?=
+ =?utf-8?B?TGltMStpeEpLcGh1QVhPSnM4L0RTSnN5akxDeXVpVGJMcDJLK1RBRjN4TWl6?=
+ =?utf-8?B?M0w2QWlqVU1KZmgxN2ZHOCtuUEQyQ1B3VHlXcllpWlZZQlduaCtSc1dGayth?=
+ =?utf-8?B?TlZLT3Q1Nm5TVjJrMmJCd0h5dE82Rmx5UHllN0JJRUl2TlRzMU5MNzJiK2xJ?=
+ =?utf-8?B?WmJFUXpCRHozaDNuK05NWGIzRFBYeUtRRDRBTmhUdndITVNnM3FnWG8xTkNv?=
+ =?utf-8?B?NHluNnVienpwT1NiNUpFalBJZ2s4SjIwZDdiVlNXc2NMMDVxZ0djY3hpWVVP?=
+ =?utf-8?B?R1VSLytJemdQWm1aRWRmK0svN1BSaFJMaXVJRDBOemJPMERVeWtCQnZRL0xj?=
+ =?utf-8?Q?h+yt2Z0RpEGDAvLCJZGYMNM=3D?=
+X-MS-Exchange-AntiSpam-ExternalHop-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-ExternalHop-MessageData-0: 6GMOs0zHx8e1CKu59ET03B34hR2YT4Vo0Ms8H3vZV3GlcgwMN49QxGA8qCsPMMaXRtiQAXVbOMR46HknVcprGFyWT8MUemdKBFPXbkDLQn5QuFJg+25lsdN4Z7zk3yrEgUS8tF/94YhT/eR389F7qwBJKD0GAHcgdSGTEutfZEFwrRvG8AfHNhQvMsJNBVwDwpgiHt+I3Ses/FuoDLwsmKuR9uy2nRlZvowI2RdEQRBH33jsGvHL/jdZb+O9kWRmG2/24uTKwYHVhIVw/Ur9Z7jMYgoN7gy+zPkgd6/XQGg6Lwr5Dq1fbO6HRmB3A+b4L1rnRD+SRaO5vClNknvKbBd+v9H4xJInbST9G1jCU0Dx+rLCRScIo3wTjB5We0RHPWlllEBmzD9rrtrQ1XxJriuehtVgTZNhloMSAid6gX+XYwYxOjsEYNUxnPkpUJL9NzmGaSAUJRaL4XQG9aZ/7IjX0LzOEGoYB4AhemRU54d0BaHpeUYC0s2wC33Uhn3W0wd0Xa/CdGvsPOJ2jOu1RnuXjLZ7MxJwxaC9DWv7g43mkf+it/QElZzr88FFdSqXAVu1/hy6Iv0fkS2Y4swTnha4DteCSkQ31Ixvmn0YXTo=
+X-OriginatorOrg: oracle.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: a5603fb4-285b-46dd-dcb3-08dd3a3176cd
+X-MS-Exchange-CrossTenant-AuthSource: PH0PR10MB4664.namprd10.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 21 Jan 2025 15:37:08.0567 (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 4e2c6054-71cb-48f1-bd6c-3a9705aca71b
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: OqeTXvRe8EOPwibUQOjh5PvA+0w4fL5Iwe9qgfT+6SYEBVzMGsLtK4e2EcRAVjalPTGA/vUd37zkG+PF7G3+iw==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: SJ0PR10MB6422
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1057,Hydra:6.0.680,FMLib:17.12.68.34
+ definitions=2025-01-21_06,2025-01-21_03,2024-11-22_01
+X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 adultscore=0
+ phishscore=0 mlxscore=0
+ spamscore=0 mlxlogscore=999 bulkscore=0 malwarescore=0 suspectscore=0
+ classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2411120000
+ definitions=main-2501210127
+X-Proofpoint-GUID: DpYP-mWrRf-_FKSGhunW100KJgNzYYvu
+X-Proofpoint-ORIG-GUID: DpYP-mWrRf-_FKSGhunW100KJgNzYYvu
+Received-SPF: pass client-ip=205.220.177.32;
+ envelope-from=jonah.palmer@oracle.com; helo=mx0b-00069f02.pphosted.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
+X-Spam_bar: --
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -76,174 +216,178 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-to:  Jonathan Cameron <Jonathan.Cameron@huawei.com>
-From:  Jonathan Cameron via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, 12 Dec 2024 18:10:10 +0000
-Zhi Wang <zhiw@nvidia.com> wrote:
 
-> On 12/12/2024 18.49, Alejandro Lucero Palau wrote:
-> >=20
-> > On 12/12/24 13:04, Zhi Wang wrote: =20
-> >> Hi folks:
-> >>
-> >> Per the discussion with Ira/Jonathan in the LPC 2024 and in the CXL
-> >> discord channel, we are trying to introduce a CXL type-2 device emulat=
-ion
-> >> in QEMU, as there are work currently on supporting CXL type-2 device [=
-1]
-> >> in Linux kernel and CXL type-2 device virtualization [2].
-> >>
-> >> It provides a bare minimum base for folks who would like to:
-> >>
-> >> - Contribute and test the CXL type-2 device support in the linux kernel
-> >> =A0=A0 and CXL type-2 virtualization without having an actual HW.
-> >> - Introduce more emulated features to prototype the kernel CXL type-2
-> >> =A0=A0 device features and CXL type-2 virtualization.
-> >>
-> >> To test this patchset, please refer to steps in [3]. Use this patcheset
-> >> with the latest QEMU repo to be the QEMU host. It achieves the same=20
-> >> output
-> >> as in the demo video [4]: The VFIO CXL core and VFIO CXL sample variant
-> >> driver can be attached to the emulated device in the L1 guest and=20
-> >> assigned
-> >> to the L2 guest. The sample driver in the L2 guest can attach to the
-> >> pass-thrued device and create the CXL region.
-> >>
-> >> Tested on the CXL type-2 virtualization RFC patches [3] with an extra
-> >> fix [5].
-> >>
-> >> [1] https://nam11.safelinks.protection.outlook.com/?=20
-> >> url=3Dhttps%3A%2F%2Flore.kernel.org%2Flinux-=20
-> >> cxl%2F20241209185429.54054-1-alejandro.lucero-=20
-> >> palau%40amd.com%2FT%2F%23t&data=3D05%7C02%7Czhiw%40nvidia.com%7C3a6113=
-9bf3554f4f38f408dd1accf1b9%7C43083d15727340c1b7db39efd9ccc17a%7C0%7C0%7C638=
-696189761390919%7CUnknown%7CTWFpbGZsb3d8eyJFbXB0eU1hcGkiOnRydWUsIlYiOiIwLjA=
-uMDAwMCIsIlAiOiJXaW4zMiIsIkFOIjoiTWFpbCIsIldUIjoyfQ%3D%3D%7C0%7C%7C%7C&sdat=
-a=3D6WziKnwMlZJQ4yxT2jLn7W1So0OfqYss78fOosuLiwA%3D&reserved=3D0
-> >> [2] https://nam11.safelinks.protection.outlook.com/?=20
-> >> url=3Dhttps%3A%2F%2Fwww.youtube.com%2Fwatch%3Fv%3De5OW1pR84Zs&data=3D0=
-5%7C02%7Czhiw%40nvidia.com%7C3a61139bf3554f4f38f408dd1accf1b9%7C43083d15727=
-340c1b7db39efd9ccc17a%7C0%7C0%7C638696189761413039%7CUnknown%7CTWFpbGZsb3d8=
-eyJFbXB0eU1hcGkiOnRydWUsIlYiOiIwLjAuMDAwMCIsIlAiOiJXaW4zMiIsIkFOIjoiTWFpbCI=
-sIldUIjoyfQ%3D%3D%7C0%7C%7C%7C&sdata=3DhTF%2F1I%2B4fYPQeCz7NhM0uvWd%2FrWfIz=
-aKdcteD5%2BrcZ0%3D&reserved=3D0
-> >> [3] https://nam11.safelinks.protection.outlook.com/?=20
-> >> url=3Dhttps%3A%2F%2Flore.kernel.org%2Fkvm%2F20240920223446.1908673-3-=
-=20
-> >> zhiw%40nvidia.com%2FT%2F&data=3D05%7C02%7Czhiw%40nvidia.com%7C3a61139b=
-f3554f4f38f408dd1accf1b9%7C43083d15727340c1b7db39efd9ccc17a%7C0%7C0%7C63869=
-6189761425646%7CUnknown%7CTWFpbGZsb3d8eyJFbXB0eU1hcGkiOnRydWUsIlYiOiIwLjAuM=
-DAwMCIsIlAiOiJXaW4zMiIsIkFOIjoiTWFpbCIsIldUIjoyfQ%3D%3D%7C0%7C%7C%7C&sdata=
-=3DWq3mr0mXZCbG3cXRKlibq%2BksTuwL8RGqiUS9jBFDfDY%3D&reserved=3D0
-> >> [4] https://nam11.safelinks.protection.outlook.com/?=20
-> >> url=3Dhttps%3A%2F%2Fyoutu.be%2Fzlk_ecX9bxs%3Fsi%3Dpf9CttcGT5KwUgiH&dat=
-a=3D05%7C02%7Czhiw%40nvidia.com%7C3a61139bf3554f4f38f408dd1accf1b9%7C43083d=
-15727340c1b7db39efd9ccc17a%7C0%7C0%7C638696189761437780%7CUnknown%7CTWFpbGZ=
-sb3d8eyJFbXB0eU1hcGkiOnRydWUsIlYiOiIwLjAuMDAwMCIsIlAiOiJXaW4zMiIsIkFOIjoiTW=
-FpbCIsIldUIjoyfQ%3D%3D%7C0%7C%7C%7C&sdata=3DSReTnBUC1bIhBwC%2BvASCXX%2F0ltI=
-YcfWAkHXMmi%2FTRRg%3D&reserved=3D0
-> >> [5] https://nam11.safelinks.protection.outlook.com/?=20
-> >> url=3Dhttps%3A%2F%2Flore.kernel.org%2Flinux-=20
-> >> cxl%2F20241212123959.68514-1-=20
-> >> zhiw%40nvidia.com%2FT%2F%23u&data=3D05%7C02%7Czhiw%40nvidia.com%7C3a61=
-139bf3554f4f38f408dd1accf1b9%7C43083d15727340c1b7db39efd9ccc17a%7C0%7C0%7C6=
-38696189761449589%7CUnknown%7CTWFpbGZsb3d8eyJFbXB0eU1hcGkiOnRydWUsIlYiOiIwL=
-jAuMDAwMCIsIlAiOiJXaW4zMiIsIkFOIjoiTWFpbCIsIldUIjoyfQ%3D%3D%7C0%7C%7C%7C&sd=
-ata=3DpmZ8JNctUlcLFwQLivNMkHj7fMt2PR24e%2BuHY%2Bk7bNA%3D&reserved=3D0
-> >>
-> >> Zhi Wang (3):
-> >> =A0=A0 hw/cxl: factor out cxl_host_addr_to_dpa()
-> >> =A0=A0 hw/cxl: introduce cxl_component_update_dvsec()
-> >> =A0=A0 hw/cxl: introduce CXL type-2 device emulation
-> >>
-> >> =A0 MAINTAINERS=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=
-=A0 |=A0=A0 1 +
-> >> =A0 docs/system/devices/cxl.rst=A0=A0=A0 |=A0 11 ++
-> >> =A0 hw/cxl/cxl-component-utils.c=A0=A0 | 103 ++++++++++-
-> >> =A0 hw/cxl/cxl-host.c=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0 |=A0 19 +-
-> >> =A0 hw/mem/Kconfig=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0 |=
-=A0=A0 5 +
-> >> =A0 hw/mem/cxl_accel.c=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0 | 319 +++++=
-++++++++++++++++++++++++++++
-> >> =A0 hw/mem/cxl_type3.c=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0 |=A0 61 +--=
-----
-> >> =A0 hw/mem/meson.build=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0 |=A0=A0 1 +
-> >> =A0 include/hw/cxl/cxl_component.h |=A0=A0 7 +
-> >> =A0 include/hw/cxl/cxl_device.h=A0=A0=A0 |=A0 25 +++
-> >> =A0 include/hw/pci/pci_ids.h=A0=A0=A0=A0=A0=A0 |=A0=A0 1 +
-> >> =A0 11 files changed, 484 insertions(+), 69 deletions(-)
-> >> =A0 create mode 100644 hw/mem/cxl_accel.c
-> >> =20
-> >=20
-> > Hi Zhi,
-> >=20
-> >=20
-> > Thank you for this patchset.
-> >=20
-> >=20
-> > I=A0 have a similar work done for helping in the Type2 support work, bu=
-t=20
-> > it is all quick-and-dirty changes.
-> >=20
-> >=20
-> > My main concern here is with the optional features for Type2: how to=20
-> > create an easy way for configuring Type2 devices using some qemu cxl=20
-> > param. I'm afraid I did not work on that so no suggestions at all!
-> >  =20
->=20
-> Hi Alejandro:
->=20
-> No worries. The work is to provide a minimum base for CXL folks and CXL=20
-> type-2 folks to start with, e.g. introducing more emulated features. As=20
-> the type-3 emulation has been quite complicated and I was thinking maybe=
-=20
-> having a clean start would help. For re-factoring, I was mostly thinking=
-=20
-> of a step by step style: E.g. when both emulation of devices are=20
-> reaching a point to have the common routines, then we re-factor them or=20
-> draw a glue layer.
->=20
-> Also, the patchset is good enough for people to test our works.
->=20
-> If folks are OK on this minimum emulation, I think the next thing would=20
-> be meaningful for us is aligning the plan for what features that we want=
-=20
-> to plug into this, so that we can share the efforts.
->=20
-> The items on my list are:
->=20
-> - Locked HDM decoder
-> - CDAT and DOE
->=20
-> I remembered you were talking about the configuration params, I think it=
-=20
-> can be very helpful on prototyping different features in the kernel as=20
-> well. Feel free to reach out for discussions.
->=20
-Rather than try to support every combination under the sun, I'd suggest
-a couple of representative choices.   Anyone developing the kernel can
-come and tweak if they need other combinations of features.
 
-Typical test cases, so everything on, everything off, a mix or
-two of features on.
+On 1/16/25 2:29 PM, Eugenio Perez Martin wrote:
+> On Fri, Jan 10, 2025 at 6:09 PM Jonah Palmer <jonah.palmer@oracle.com> wrote:
+>>
+>> Propagates the GPAs (in_xlat_addr/out_xlat_addr) of a VirtQueueElement
+>> to vhost_svq_translate_addr() to translate to IOVAs via GPA->IOVA tree
+>> when descriptors are backed by guest memory.
+>>
+>> For descriptors backed by guest memory, the translation is performed
+>> using GPAs via the GPA->IOVA tree. GPAs are unique in the guest's
+>> address space, so this ensures unambiguous IOVA translations.
+>>
+>> For descriptors not backed by guest memory, the existing IOVA->HVA tree
+>> is used.
+>>
+>> This avoids the issue where different GPAs map to the same HVA, causing
+>> the HVA->IOVA translation to potentially return an IOVA associated with
+>> the wrong intended GPA.
+>>
+> 
+> If SVQ is the only one needing xlat_addrs we can create a new
+> SVQElement, following the code of VirtIOBlockReq or VirtIOSCSIReq for
+> example.
+> 
+> But why do we need it? As long as svq->desc_state[qemu_head].elem !=
+> NULL the GPA is elem->in_addr or elem->out_addr, and we can use that
+> to look into the GPA tree, isn't it? If we don't have any elem, then
+> we need to go with "old" HVA -> IOVA lookup.
+> 
 
-Trying to make something really configurable via parameters will end
-up with nonsense combinations and just revealing bugs in the qemu emulation
-rather than what we actually want to test.
+Oh okay, interesting. I hadn't realized that I was actually duplicating 
+information already available in elem->in_addr and elem->out_addr with 
+in_xlat_addr and out_xlat_addr.
 
-If you want to go really general though feel free to pitch it and we'll
-see how bad it is.
+If this is indeed the case, then yea there's no need for these 
+in_xlat_addr and out_xlat_addr members.
 
-Jonathan
+I'll look into this! Thanks for your comments Eugenio =]
 
-> Z.
->=20
-> >=20
-> > Thank you
-> >  =20
->=20
+>> Signed-off-by: Jonah Palmer <jonah.palmer@oracle.com>
+>> ---
+>>   hw/virtio/vhost-shadow-virtqueue.c | 49 ++++++++++++++++++++++--------
+>>   1 file changed, 37 insertions(+), 12 deletions(-)
+>>
+>> diff --git a/hw/virtio/vhost-shadow-virtqueue.c b/hw/virtio/vhost-shadow-virtqueue.c
+>> index 37aca8b431..be0db94ab7 100644
+>> --- a/hw/virtio/vhost-shadow-virtqueue.c
+>> +++ b/hw/virtio/vhost-shadow-virtqueue.c
+>> @@ -78,24 +78,37 @@ uint16_t vhost_svq_available_slots(const VhostShadowVirtqueue *svq)
+>>    * @vaddr: Translated IOVA addresses
+>>    * @iovec: Source qemu's VA addresses
+>>    * @num: Length of iovec and minimum length of vaddr
+>> + * @gpas: Descriptors' GPAs, if backed by guest memory
+>>    */
+>>   static bool vhost_svq_translate_addr(const VhostShadowVirtqueue *svq,
+>>                                        hwaddr *addrs, const struct iovec *iovec,
+>> -                                     size_t num)
+>> +                                     size_t num, const hwaddr *gpas)
+>>   {
+>>       if (num == 0) {
+>>           return true;
+>>       }
+>>
+>>       for (size_t i = 0; i < num; ++i) {
+>> -        DMAMap needle = {
+>> -            .translated_addr = (hwaddr)(uintptr_t)iovec[i].iov_base,
+>> -            .size = iovec[i].iov_len,
+>> -        };
+>> +        const DMAMap *map;
+>> +        DMAMap needle;
+>>           Int128 needle_last, map_last;
+>>           size_t off;
+>>
+>> -        const DMAMap *map = vhost_iova_tree_find_iova(svq->iova_tree, &needle);
+>> +        if (gpas) {
+>> +            /* Search the GPA->IOVA tree */
+>> +            needle = (DMAMap) {
+>> +                .translated_addr = gpas[i],
+>> +                .size = iovec[i].iov_len,
+>> +            };
+>> +            map = vhost_iova_tree_find_gpa(svq->iova_tree, &needle);
+>> +        } else {
+>> +            /* Searh the IOVA->HVA tree */
+>> +            needle = (DMAMap) {
+>> +                .translated_addr = (hwaddr)(uintptr_t)iovec[i].iov_base,
+>> +                .size = iovec[i].iov_len,
+>> +            };
+>> +            map = vhost_iova_tree_find_iova(svq->iova_tree, &needle);
+>> +        }
+>>           /*
+>>            * Map cannot be NULL since iova map contains all guest space and
+>>            * qemu already has a physical address mapped
+>> @@ -132,12 +145,14 @@ static bool vhost_svq_translate_addr(const VhostShadowVirtqueue *svq,
+>>    * @num: iovec length
+>>    * @more_descs: True if more descriptors come in the chain
+>>    * @write: True if they are writeable descriptors
+>> + * @gpas: Descriptors' GPAs, if backed by guest memory
+>>    *
+>>    * Return true if success, false otherwise and print error.
+>>    */
+>>   static bool vhost_svq_vring_write_descs(VhostShadowVirtqueue *svq, hwaddr *sg,
+>>                                           const struct iovec *iovec, size_t num,
+>> -                                        bool more_descs, bool write)
+>> +                                        bool more_descs, bool write,
+>> +                                        const hwaddr *gpas)
+>>   {
+>>       uint16_t i = svq->free_head, last = svq->free_head;
+>>       unsigned n;
+>> @@ -149,7 +164,7 @@ static bool vhost_svq_vring_write_descs(VhostShadowVirtqueue *svq, hwaddr *sg,
+>>           return true;
+>>       }
+>>
+>> -    ok = vhost_svq_translate_addr(svq, sg, iovec, num);
+>> +    ok = vhost_svq_translate_addr(svq, sg, iovec, num, gpas);
+>>       if (unlikely(!ok)) {
+>>           return false;
+>>       }
+>> @@ -175,7 +190,8 @@ static bool vhost_svq_vring_write_descs(VhostShadowVirtqueue *svq, hwaddr *sg,
+>>   static bool vhost_svq_add_split(VhostShadowVirtqueue *svq,
+>>                                   const struct iovec *out_sg, size_t out_num,
+>>                                   const struct iovec *in_sg, size_t in_num,
+>> -                                unsigned *head)
+>> +                                unsigned *head, const hwaddr *in_gpas,
+>> +                                const hwaddr *out_gpas)
+>>   {
+>>       unsigned avail_idx;
+>>       vring_avail_t *avail = svq->vring.avail;
+>> @@ -192,12 +208,13 @@ static bool vhost_svq_add_split(VhostShadowVirtqueue *svq,
+>>       }
+>>
+>>       ok = vhost_svq_vring_write_descs(svq, sgs, out_sg, out_num, in_num > 0,
+>> -                                     false);
+>> +                                     false, out_gpas);
+>>       if (unlikely(!ok)) {
+>>           return false;
+>>       }
+>>
+>> -    ok = vhost_svq_vring_write_descs(svq, sgs, in_sg, in_num, false, true);
+>> +    ok = vhost_svq_vring_write_descs(svq, sgs, in_sg, in_num, false, true,
+>> +                                     in_gpas);
+>>       if (unlikely(!ok)) {
+>>           return false;
+>>       }
+>> @@ -253,12 +270,20 @@ int vhost_svq_add(VhostShadowVirtqueue *svq, const struct iovec *out_sg,
+>>       unsigned qemu_head;
+>>       unsigned ndescs = in_num + out_num;
+>>       bool ok;
+>> +    hwaddr *in_gpas = NULL;
+>> +    hwaddr *out_gpas = NULL;
+>>
+>>       if (unlikely(ndescs > vhost_svq_available_slots(svq))) {
+>>           return -ENOSPC;
+>>       }
+>>
+>> -    ok = vhost_svq_add_split(svq, out_sg, out_num, in_sg, in_num, &qemu_head);
+>> +    if (elem) {
+>> +        in_gpas = elem->in_xlat_addr;
+>> +        out_gpas = elem->out_xlat_addr;
+>> +    }
+>> +
+>> +    ok = vhost_svq_add_split(svq, out_sg, out_num, in_sg, in_num, &qemu_head,
+>> +                             in_gpas, out_gpas);
+>>       if (unlikely(!ok)) {
+>>           return -EINVAL;
+>>       }
+>> --
+>> 2.43.5
+>>
+> 
 
 
