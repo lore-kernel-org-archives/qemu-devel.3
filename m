@@ -4,95 +4,74 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7293FC0218B
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6061CC02182
 	for <qemu-devel@archiver.kernel.org>; Tue, 21 Jan 2025 13:42:49 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1taEWF-0007Md-4w; Tue, 21 Jan 2025 08:42:16 -0500
+	id 1taEWP-0007Nm-JG; Tue, 21 Jan 2025 08:42:26 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1taEWB-0007ME-K1
- for qemu-devel@nongnu.org; Tue, 21 Jan 2025 08:42:11 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
+ id 1taEWF-0007My-HF
+ for qemu-devel@nongnu.org; Tue, 21 Jan 2025 08:42:16 -0500
+Received: from mgamail.intel.com ([192.198.163.17])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1taEWA-0005SW-6m
- for qemu-devel@nongnu.org; Tue, 21 Jan 2025 08:42:11 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1737466929;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=C1Q0VoFSrJntrm+ixE/PmRZGLWS3C6/Mi6nmNcAEzs8=;
- b=bDmZKzIpnsPJu33mxP+PYthUI2bD4LQFq0jLoW33r0qGdJkAFEneAddi5Rm4lwYh3XSjEp
- vn1uBAjpXhydiaOLCKQW3k61juqOtNvMwFscciIm3ypmyahZvf7ZhMy8x0KHHLhCA6L3Um
- E1k8SZpoyeyEaZhjPZNri1S+XQUBZZs=
-Received: from mail-ed1-f72.google.com (mail-ed1-f72.google.com
- [209.85.208.72]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-644-L0eRR6lVOLGNX2d49Rm0Uw-1; Tue, 21 Jan 2025 08:42:07 -0500
-X-MC-Unique: L0eRR6lVOLGNX2d49Rm0Uw-1
-X-Mimecast-MFC-AGG-ID: L0eRR6lVOLGNX2d49Rm0Uw
-Received: by mail-ed1-f72.google.com with SMTP id
- 4fb4d7f45d1cf-5d3bf8874dbso7975796a12.2
- for <qemu-devel@nongnu.org>; Tue, 21 Jan 2025 05:42:07 -0800 (PST)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1737466926; x=1738071726;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=C1Q0VoFSrJntrm+ixE/PmRZGLWS3C6/Mi6nmNcAEzs8=;
- b=ECg4EEjEsg/iYpqwWexGuEmKiao8JlB7Zt3I3iS5QNDHRW5w7KrQKcZAzaxMM03K0L
- rLHLtjBtW8+djrLnxJOYs5xpf18/zJ3iucVSGal+TqINbva5oNN1d9Cg37pJYmd6edRT
- aMPceu9oUM+8IvGTpOtLLkTntHSAxnzknqMd8b2GXx/7U7zAiGm/UA8mSEyHIKHoWNKh
- D+vMLhw7Rr0GT+BfeiC+nV+ZOaGIJqySn7t46N0WzOGQuC7H9rPLyGa6/tUStvjk0ahb
- xdVn0ID6GuY9Vwv+R9uROY0uS69JpUkDKaxs5QBYnI5l/pDQJrsM54SuaNLeCl2ZySkW
- E6YQ==
-X-Gm-Message-State: AOJu0Yzd3ASFNgPW+xi/F9nkxv4TN+fYazs9a7KADgkeuduXdPyGUNWl
- 4kvAs0vLMY0YZsK9VMtflwP67YnO4QdKLq6HXiOKM9mahkVaLiXmH5/ZV6CStAwXRk3QQ3neaq9
- TOduOXc16S3LyKjlYm5aI4O8IcqQorX8Jike5KiKZhi3X4FCXLtWHH/dw+auOpUg=
-X-Gm-Gg: ASbGncukaFEqht0GeRdhYfQ7rzNK8l+zK8erW3TD+UJrC/GEBYDkQ9LGrk4FTf2mK2D
- IaFMFDbHTdbNPJ6NR4t7j2IVtfPeN+yUPHQw34hewpHpuhGHOFFRQrn1X2gKbAM+8ufkJeTKZDk
- b8NVMD9fFeiU4swWmEek6i4lrUz2+w9NYfbYPA0J55jg1Ex6Fg+bzLHEGkAV6iRwiIIiQD5i5G9
- sLJbfTVaDvr4Z+a2ThpBDKYBEyBKMhkuRwSOAf1BLO7YbE4xKn6EWwElBgjPmf565F/pl4nY38=
-X-Received: by 2002:a17:906:3a87:b0:ab3:a190:6cb2 with SMTP id
- a640c23a62f3a-ab3a1906e5cmr1131625866b.25.1737466925781; 
- Tue, 21 Jan 2025 05:42:05 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IEJXT9QREep+HI9y53zPsvjNU5rQoZTTZMAnPCZ+W7JlmSssr6NG2W9ym00HyHTnuHOUBvuqg==
-X-Received: by 2002:a17:906:3a87:b0:ab3:a190:6cb2 with SMTP id
- a640c23a62f3a-ab3a1906e5cmr1131624966b.25.1737466925406; 
- Tue, 21 Jan 2025 05:42:05 -0800 (PST)
-Received: from [192.168.10.47] ([176.206.124.70])
- by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-ab384ce1f1asm763787066b.58.2025.01.21.05.42.04
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 21 Jan 2025 05:42:04 -0800 (PST)
-From: Paolo Bonzini <pbonzini@redhat.com>
-To: Tao Su <tao1.su@linux.intel.com>
-Cc: qemu-devel@nongnu.org, pbonzini@redhat.com, imammedo@redhat.com,
- xiaoyao.li@intel.com, zhao1.liu@linux.intel.com, xuelian.guo@intel.com
-Subject: Re: [PATCH 0/4] Introduce SierraForest-v2 and ClearwaterForest CPU
- model
-Date: Tue, 21 Jan 2025 14:38:44 +0100
-Message-ID: <20250121133843.2112669-2-pbonzini@redhat.com>
-X-Mailer: git-send-email 2.47.1
-In-Reply-To: <20250121020650.1899618-1-tao1.su@linux.intel.com>
-References: 
+ (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
+ id 1taEWD-0005Sf-O9
+ for qemu-devel@nongnu.org; Tue, 21 Jan 2025 08:42:15 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+ d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+ t=1737466933; x=1769002933;
+ h=from:to:cc:subject:date:message-id:mime-version:
+ content-transfer-encoding;
+ bh=MZB7qv2zEFLJ0rFzdkMC19zKNxW1JIUku/QSmxpL4G8=;
+ b=JAF1spCyI+nLA9IbtKRs5FAF/R4t0wl9FIiDudGj9In5X9RszxQ085Kk
+ S1gs/CVFDA9w8brWy3X3Y0zqHdqFLtxQM6ZrjsR+7L4ISotOz68GFMMn3
+ UaCtKqcCgvx5uucacMIe3VqoNo7Ux20LFNBUi3MO0vOMs5hOrjmO22kuL
+ KvepYXqMcbCyS0a6NNZdXo4hVL6MTDJR4aRD9EHsb/m/iDvim6AUxJyt+
+ 4+ZgvT0wwUlknzVXnQrJJT7Q7HWZFT8C9XWn5s92jrO94xqjOWNXKUyvv
+ 9bQt4veLqdXQvePMi6y/Mrb9vr1Z+hl0qzCXrF+Yr5m4N1dyNC0IFsDRO g==;
+X-CSE-ConnectionGUID: MWpiQKV8Te2tnCPvfOTUHw==
+X-CSE-MsgGUID: neA9OuKDRlCbY4LEAZzcuA==
+X-IronPort-AV: E=McAfee;i="6700,10204,11322"; a="37793650"
+X-IronPort-AV: E=Sophos;i="6.13,222,1732608000"; d="scan'208";a="37793650"
+Received: from fmviesa009.fm.intel.com ([10.60.135.149])
+ by fmvoesa111.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 21 Jan 2025 05:42:09 -0800
+X-CSE-ConnectionGUID: JJYT/Lc4TqKe6/oAZdKrgQ==
+X-CSE-MsgGUID: Jk93buC+RlaJe0oR5arLFw==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.13,222,1732608000"; d="scan'208";a="107411954"
+Received: from liuzhao-optiplex-7080.sh.intel.com ([10.239.160.39])
+ by fmviesa009.fm.intel.com with ESMTP; 21 Jan 2025 05:42:07 -0800
+From: Zhao Liu <zhao1.liu@intel.com>
+To: Paolo Bonzini <pbonzini@redhat.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Eduardo Habkost <eduardo@habkost.net>,
+ "Michael S . Tsirkin" <mst@redhat.com>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ Igor Mammedov <imammedo@redhat.com>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=83?= <philmd@linaro.org>
+Cc: qemu-devel@nongnu.org,
+	Zhao Liu <zhao1.liu@intel.com>
+Subject: [PATCH RESEND] i386: Only configure HPET firmware info when HPET is
+ enabled
+Date: Tue, 21 Jan 2025 22:01:21 +0800
+Message-Id: <20250121140121.84550-1-zhao1.liu@intel.com>
+X-Mailer: git-send-email 2.34.1
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -51
-X-Spam_score: -5.2
-X-Spam_bar: -----
-X-Spam_report: (-5.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-2.996,
+Received-SPF: pass client-ip=192.198.163.17; envelope-from=zhao1.liu@intel.com;
+ helo=mgamail.intel.com
+X-Spam_score_int: -73
+X-Spam_score: -7.4
+X-Spam_bar: -------
+X-Spam_report: (-7.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-2.996,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.086,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -108,8 +87,46 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Queued with the tweaks suggested by Zoltan and Zhao; thanks!
+At present, the hpet_cfg is written unconditionally since 40ac17cd56eb
+("pass info about hpets to seabios.]"), because it concerns ACPI HPET is
+created unconditionally.
 
-Paolo
+But that fact has changed since 51124bbfd2ea ("i386: acpi: Don't build
+HPET ACPI entry if HPET is disabled") and ACPI checks if HPET device
+exists in (hw/i386/acpi-build.c).
+
+Therefore, configure HPET firmware information if and only if HPET is
+enabled.
+
+Signed-off-by: Zhao Liu <zhao1.liu@intel.com>
+---
+Resend:
+ * Resend the patch since it was missed on https://lore.kernel.org/qemu-devel/.
+---
+ hw/i386/fw_cfg.c | 9 ++++++++-
+ 1 file changed, 8 insertions(+), 1 deletion(-)
+
+diff --git a/hw/i386/fw_cfg.c b/hw/i386/fw_cfg.c
+index 91bf1df0f2e4..d2cb08715a21 100644
+--- a/hw/i386/fw_cfg.c
++++ b/hw/i386/fw_cfg.c
+@@ -149,7 +149,14 @@ FWCfgState *fw_cfg_arch_create(MachineState *ms,
+ #endif
+     fw_cfg_add_i32(fw_cfg, FW_CFG_IRQ0_OVERRIDE, 1);
+ 
+-    fw_cfg_add_bytes(fw_cfg, FW_CFG_HPET, &hpet_cfg, sizeof(hpet_cfg));
++#ifdef CONFIG_HPET
++    PCMachineState *pcms =
++        (PCMachineState *)object_dynamic_cast(OBJECT(ms), TYPE_PC_MACHINE);
++    if (pcms && pcms->hpet_enabled) {
++        fw_cfg_add_bytes(fw_cfg, FW_CFG_HPET, &hpet_cfg, sizeof(hpet_cfg));
++    }
++#endif
++
+     /* allocate memory for the NUMA channel: one (64bit) word for the number
+      * of nodes, one word for each VCPU->node and one word for each node to
+      * hold the amount of memory.
+-- 
+2.34.1
 
 
