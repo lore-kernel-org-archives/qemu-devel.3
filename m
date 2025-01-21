@@ -4,80 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E1EB0C0218B
-	for <qemu-devel@archiver.kernel.org>; Tue, 21 Jan 2025 18:52:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7B606C02182
+	for <qemu-devel@archiver.kernel.org>; Tue, 21 Jan 2025 18:54:17 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1taJJP-0005Zb-5l; Tue, 21 Jan 2025 13:49:19 -0500
+	id 1taJNh-0003pZ-S1; Tue, 21 Jan 2025 13:53:45 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <dbarboza@ventanamicro.com>)
- id 1taJJH-0004nm-CZ
- for qemu-devel@nongnu.org; Tue, 21 Jan 2025 13:49:12 -0500
-Received: from mail-pl1-x62a.google.com ([2607:f8b0:4864:20::62a])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1taJNf-0003oa-GV
+ for qemu-devel@nongnu.org; Tue, 21 Jan 2025 13:53:43 -0500
+Received: from mail-wm1-x32a.google.com ([2a00:1450:4864:20::32a])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <dbarboza@ventanamicro.com>)
- id 1taJJF-0005NC-1E
- for qemu-devel@nongnu.org; Tue, 21 Jan 2025 13:49:10 -0500
-Received: by mail-pl1-x62a.google.com with SMTP id
- d9443c01a7336-216426b0865so103696615ad.0
- for <qemu-devel@nongnu.org>; Tue, 21 Jan 2025 10:49:06 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1taJNd-0006F9-Bk
+ for qemu-devel@nongnu.org; Tue, 21 Jan 2025 13:53:42 -0500
+Received: by mail-wm1-x32a.google.com with SMTP id
+ 5b1f17b1804b1-436281c8a38so44155735e9.3
+ for <qemu-devel@nongnu.org>; Tue, 21 Jan 2025 10:53:40 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=ventanamicro.com; s=google; t=1737485345; x=1738090145; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=aFnox9paCwopK+iw70x8l4RBRO8z4SdTp83xgjmiXGE=;
- b=P39n/vObDA5bl+HO+C8vdgx5MYNbfVNJNrVOeaYzR2F9DjlP+4XqrvIhHYKxDu/OtA
- nYLJ/wpIHmk+QgBbZ35hn4C75XrkDM8q6zAQDPMFeWpywodEr1Zf4HGBKcBq4dsfTfSZ
- lrJqh2k/UTnHgOv+0Wb55kfQoqAe/iSg+pS07+kMv3AIx/6wsE8OlLEjDCyXb6/kM36p
- IvKa/ATZkkhkiuGq5yLtLJIuuxnR5egYLApSOjczP9gLcDL3RUvsqHXVQ2g1tAkw380G
- gCWzQCOc1hEJ3aj79a35z4L4fO2oxf0cebXYacAI+sNUNbbXxfKDHvSQmyAZ4ombmjJf
- vWOw==
+ d=linaro.org; s=google; t=1737485619; x=1738090419; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=1mp4kixCqNF5aY/wzjvtuJsTc0Evfg7uUcJP3WcQbTQ=;
+ b=KFjRmxjbO+fAJp6oNFs7a6XMgRF5H5Gd4d6BH6+izvwinVz675b6qCDASO4hW1Zorx
+ zk+3CI0wIKAAnE0+SdGHjmvNeVuaRM8F66O8oHIcns0iSuBY5/JOFx9vPiJE6DKBQLxc
+ lMBw6KtI8zlTkVHHVuCaHpI6yvhZG446dXwA/EhiSkU5q8nbNQOeaYoX5lYc04fImrcl
+ 3TsjY/+HVuySwl3CDwDaHvX8Yh9zn02jPd4EfWlB8HgRdM00QW3SHTV+/DESep2q1e8s
+ 1i8VCNHrKExZD2jSaKnWPA74m2uwWdoUXPi+xD2RYRJkFxoPn22sTyHTe4aj31zB9jCR
+ K4bQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1737485345; x=1738090145;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=aFnox9paCwopK+iw70x8l4RBRO8z4SdTp83xgjmiXGE=;
- b=RUlpZYGQ/hzw3eqEPswo4WE3IquNCWbh0PFWwyqwGZdMc/HA+v2XBVkP21+trEC2jE
- 7dCEfP/c7NX5wUITT58k2gGXyR90nOmiM13RIDm6jiHDxhaJs2M6UT6IA3JshFFXVvfL
- a2DqK4wEBaiDCKtsL8mNrQBO4vcZzZwPzqOjWIFwkeyu/jKf6MTJ1Jil0nfIZ+Q59t2D
- Ucoz4W63jPdw4n2UQDgppvBJL4q2JKlxY9LtsxrhcQ+hVRTsVreWkI1n3ixA12GppDc9
- TJZkWC/zOXHHDkkQobTbeQBeMrXmqQ6f61hH5/nmJSgksvV1jRicDoOobKOMGJ3NuFK0
- qxdA==
-X-Gm-Message-State: AOJu0YwLQ3yzLmmoo9OmQ0BgrqbNR1eHL2ldUAJOVjPfh/IhLUXXrKro
- q7Gy7ROWPfbtnFsv/n+Mk5ZlleefbQBlm4TsPjFmihPH34ZZH5D1oOF+9+DzaZPjPVyNKeaTNcv
- d
-X-Gm-Gg: ASbGncs7r2CgLH4Ld7ZJvqz1td0c2S1HcX3Me5s7NL12qZtW9lgjA+lPzYlTiAuvHpP
- 5ndbK6L3T51ZfjrKgzT07azUUfxMxAR8zcmQP590oyvJyqCdmwPFSs8C/onx6y6reBEK+vNdmLq
- wB9YkboB3J6mJN/X5D9VCR7A5uDQNY9qHy6rGXAyeSncgYeiAIhd751C67ON7g9ZLSCfBv30qrv
- ebcS305ND5LInpUuEQ8lqBlkmPiXE2NZwuGKcrwKvF23CiCoQxUZEm26UuW9zPlpTkTjbsQ
-X-Google-Smtp-Source: AGHT+IHbpsnBVrUf1PnyjrEd5diSaZNG27segl+kTh6f+rQJ0fRpX3TLg88OcpnqyW8y0MJkhlRmRQ==
-X-Received: by 2002:a17:902:ea10:b0:21a:8716:faab with SMTP id
- d9443c01a7336-21c352ec1f0mr259659385ad.16.1737485345158; 
- Tue, 21 Jan 2025 10:49:05 -0800 (PST)
-Received: from grind.. ([191.202.238.10]) by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-21c2ceba56asm81121865ad.98.2025.01.21.10.49.02
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 21 Jan 2025 10:49:04 -0800 (PST)
-From: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
-To: qemu-devel@nongnu.org
-Cc: qemu-riscv@nongnu.org, alistair.francis@wdc.com, bmeng@tinylab.org,
- liwei1518@gmail.com, zhiwei_liu@linux.alibaba.com, palmer@rivosinc.com,
- peter.maydell@linaro.org,
- Daniel Henrique Barboza <dbarboza@ventanamicro.com>
-Subject: [PATCH 4/5] target/riscv/csr.c: fix deadcode in aia_smode32()
-Date: Tue, 21 Jan 2025 15:48:46 -0300
-Message-ID: <20250121184847.2109128-5-dbarboza@ventanamicro.com>
-X-Mailer: git-send-email 2.47.1
-In-Reply-To: <20250121184847.2109128-1-dbarboza@ventanamicro.com>
-References: <20250121184847.2109128-1-dbarboza@ventanamicro.com>
+ d=1e100.net; s=20230601; t=1737485619; x=1738090419;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=1mp4kixCqNF5aY/wzjvtuJsTc0Evfg7uUcJP3WcQbTQ=;
+ b=B6UW4add9UuUY6Nny44Ew4tLx5R+Kz6K/emlxwODQE424AJYgINVGI7PBIFkq/CHqe
+ u3nBzAU8DFRPFmQiuvLlR6khj764nrfeSY4OQO7Wp91t87NQ1MD8oULIqz7F7EEVuw55
+ OqFq87pa1OHSFtCuHl6BIsU1Bc62xKGfUxsCkjFX7L3e1T59Kr/0YNGc9Me6YZEDHY0f
+ NcTYX7m7a1oUyAcFFTlyRjAxVbmdxNXlXWhMzL/ja4PtHhn4qTSEabiqz5Xcz8BTGzbq
+ am0QRvfxAywSN9B3pFNT2Ib3piHqM0GfIzGK8jqBoz+DzNUh2rVy+6Qpi1VxPvvzA/wL
+ g1cA==
+X-Gm-Message-State: AOJu0YwFVYOm/KShHXgN9TOc6uNen4oV3EVDk8cNiDgzXxMcL4E4jNKx
+ de8VM0iksQ7J4fF8YOPiEk052YLKDq+s4JrPnsWB+0nKiqhxIPbVitc94kYZoZ1ojYZIHRoKpuY
+ jAiQ=
+X-Gm-Gg: ASbGncu6/MkM0okojqZU2b2fx0lkK/p0bwp1+6ariVpMvW6BNTG7GE41luwCuLehH2u
+ gyQachU9x7MLqhl2nrz5f1kE2JRpTkzv5Fjc8iyjA7AhJz0YHm51I7aONqGD7JHyFL86wqvIRiF
+ 3xVlTyJBLjQAJZtRPv8WtwSFohTtf0pdndDlf3mG5XsgTgDrwv4Ov58qoMFUe1iX6RSzlZRAzyX
+ 6Qb3FUEf2BiXMJtjaGit+aB0yRru2FTeVRl9T6TM9MQmOf84sM1tzqXOLfRgx4FFky2kPmbzeos
+ 8gMqFEk5s/sr6wZlHSjHNKbcaYVS9TDt5eRGdQ==
+X-Google-Smtp-Source: AGHT+IGO8yqv3zKETuNLrHZbLjKMOpTtPhjzdTGGrEX0ZlfKUrs7B3cHEUln8mfJuSHcc0Xq+c2jWg==
+X-Received: by 2002:a05:600c:450c:b0:434:a91e:c709 with SMTP id
+ 5b1f17b1804b1-4389145145fmr157533605e9.28.1737485619042; 
+ Tue, 21 Jan 2025 10:53:39 -0800 (PST)
+Received: from [192.168.69.181] (88-187-86-199.subs.proxad.net.
+ [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-438b171e68bsm5143915e9.0.2025.01.21.10.53.38
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Tue, 21 Jan 2025 10:53:38 -0800 (PST)
+Message-ID: <67ed0028-e559-40d1-8266-0a220021b244@linaro.org>
+Date: Tue, 21 Jan 2025 19:53:37 +0100
 MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 08/11] hw/core/generic-loader: Prefer cached CpuClass over
+ CPU_GET_CLASS macro
+To: qemu-devel@nongnu.org
+Cc: Richard Henderson <richard.henderson@linaro.org>,
+ =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>, qemu-arm@nongnu.org
+References: <20250121114056.53949-1-philmd@linaro.org>
+ <20250121114056.53949-9-philmd@linaro.org>
+Content-Language: en-US
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <20250121114056.53949-9-philmd@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::62a;
- envelope-from=dbarboza@ventanamicro.com; helo=mail-pl1-x62a.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::32a;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x32a.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -100,50 +102,37 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Coverity reported a DEADCODE ticket in this function, as follows:
+On 21/1/25 12:40, Philippe Mathieu-Daudé wrote:
+> CpuState caches its CPUClass since commit 6fbdff87062
+> ("cpu: cache CPUClass in CPUState for hot code paths"),
+> use it.
+> 
+> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+> ---
+>   hw/core/generic-loader.c | 5 +----
+>   1 file changed, 1 insertion(+), 4 deletions(-)
+> 
+> diff --git a/hw/core/generic-loader.c b/hw/core/generic-loader.c
+> index fb354693aff..0ddb3a359a2 100644
+> --- a/hw/core/generic-loader.c
+> +++ b/hw/core/generic-loader.c
+> @@ -48,11 +48,8 @@ static void generic_loader_reset(void *opaque)
+>       GenericLoaderState *s = GENERIC_LOADER(opaque);
+>   
+>       if (s->set_pc) {
+> -        CPUClass *cc = CPU_GET_CLASS(s->cpu);
+>           cpu_reset(s->cpu);
+> -        if (cc) {
+> -            cc->set_pc(s->cpu, s->addr);
+> -        }
+> +        s->cpu->cc->set_pc(s->cpu, s->addr);
 
- >>>>      CID 1590358:  Control flow issues  (DEADCODE)
- >>>>      Execution cannot reach this statement: "return ret;".
- > 380             return ret;
- > 381         }
+I guess we can directly use:
 
-The cause is that the 'if (ret != RISCV_EXCP_NONE)' conditional is
-duplicated:
+            cpu_set_pc(s->cpu, s->addr);
 
-    ret = smstateen_acc_ok(env, 0, SMSTATEEN0_AIA);
-    if (ret != RISCV_EXCP_NONE) {
-        return ret;
-    }
-
-    if (ret != RISCV_EXCP_NONE) {
-        return ret;
-    }
-
-Remove the duplication to fix the deadcode.
-
-Resolves: Coverity CID 1590358
-Fixes: dbcb6e1ccf ("target/riscv: Enable S*stateen bits for AIA")
-Signed-off-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
----
- target/riscv/csr.c | 4 ----
- 1 file changed, 4 deletions(-)
-
-diff --git a/target/riscv/csr.c b/target/riscv/csr.c
-index 75f21ccabb..dc0a88a0f0 100644
---- a/target/riscv/csr.c
-+++ b/target/riscv/csr.c
-@@ -376,10 +376,6 @@ static RISCVException aia_smode32(CPURISCVState *env, int csrno)
-         return ret;
-     }
- 
--    if (ret != RISCV_EXCP_NONE) {
--        return ret;
--    }
--
-     return smode32(env, csrno);
- }
- 
--- 
-2.47.1
+>       }
+>   
+>       if (s->data_len) {
 
 
