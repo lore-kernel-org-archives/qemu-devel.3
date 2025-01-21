@@ -4,80 +4,67 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0ADA3C02182
-	for <qemu-devel@archiver.kernel.org>; Tue, 21 Jan 2025 10:36:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 68CD8C02182
+	for <qemu-devel@archiver.kernel.org>; Tue, 21 Jan 2025 10:37:25 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1taBcY-0000ef-7b; Tue, 21 Jan 2025 05:36:34 -0500
+	id 1taBd8-000154-3n; Tue, 21 Jan 2025 05:37:10 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from
- <3pHiPZwYKChcG5GHFE3BB381.zB9D19H-01I18ABA3AH.BE3@flex--titusr.bounces.google.com>)
- id 1taBcQ-0000cR-IW
- for qemu-devel@nongnu.org; Tue, 21 Jan 2025 05:36:26 -0500
-Received: from mail-qt1-x84a.google.com ([2607:f8b0:4864:20::84a])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from
- <3pHiPZwYKChcG5GHFE3BB381.zB9D19H-01I18ABA3AH.BE3@flex--titusr.bounces.google.com>)
- id 1taBcN-0002Se-0h
- for qemu-devel@nongnu.org; Tue, 21 Jan 2025 05:36:25 -0500
-Received: by mail-qt1-x84a.google.com with SMTP id
- d75a77b69052e-4679d6ef2f9so150374611cf.1
- for <qemu-devel@nongnu.org>; Tue, 21 Jan 2025 02:36:20 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=google.com; s=20230601; t=1737455780; x=1738060580; darn=nongnu.org;
- h=cc:to:from:subject:message-id:mime-version:date:from:to:cc:subject
- :date:message-id:reply-to;
- bh=OMbO0p1M9omrKU79xN5rgRVktWMV80RU838b/dw3Qzk=;
- b=t6cBxEzWYic9Ji8Ja+QoC9qYDpEwStgbUE7Y1j32I8DWluTDMUIGOfDI1mrNVNXPY3
- vlP1JJTIKjtf79BzQBSHle1b5kgrpeCivWmn1sEtoqZIRmDnm4GH+8NXcljkNrN92Oxs
- BOo5TxzvQK1jOG/fgCYsPnM0gEhMXJ5EFIXKrLVVo79eBw+1KeAeEwJnolvuyQZnMlF5
- RMwj31DDuM0R+wTBSDFcg9y282JU+2tKWvUmRjq5Th+cdamMmVODC+5IUV+Yqhr94912
- 7ubDnaYjaFpCIlZG197gfHNEUaa0ht2caoLc1ihuSvBQm3Scvsi6r24Oy2hfydnut9Qj
- XfFg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1737455780; x=1738060580;
- h=cc:to:from:subject:message-id:mime-version:date:x-gm-message-state
- :from:to:cc:subject:date:message-id:reply-to;
- bh=OMbO0p1M9omrKU79xN5rgRVktWMV80RU838b/dw3Qzk=;
- b=lnyeDnIFt35MmYA1OrLQY4j+TQjDYHWfr/Q8xaYBURReXabn1htmF1MRF56eB6gX1z
- 0Kg6eDRfqgj8J15/jvSct2FMrkClvCgtolufFhNw6tbB045IU7yekUGwTRS27lL6HBDz
- yM0kAIQpNaey62P8i/bPJfxuLX0PxPCcHLpEDdFeYfsyQyv3dJG2bL5Vte1HtsJgcrIT
- R2hU1OXnPEC7n87119HY05WkN7LjO+qAGRU0AGGG0YKlBmyysxmlG03QJbEH2MnOj8LZ
- gygG4uTnY5pntRPmj+K2iVYap1OJXDsBzn/+C4afLgk7IlG7h1aoM1ZoIxTz67eq6fZD
- oW1g==
-X-Forwarded-Encrypted: i=1;
- AJvYcCWKIftzaCooNxxlntb/rY724jHTBq89VjDkoUEDuuuWa3Z1qq407HplKslnhT9V2t3Fz/KiTU/i2Ma4@nongnu.org
-X-Gm-Message-State: AOJu0YwwD8pkaX5lf2HPMnGWGKWrl5ilkhHtqiLP5kifYn8YFdlOs681
- oljNCNBRR6GBZeVdEKyBtxZ0EpQ0ZMZhx3lckq9knB6bF/Vpq5N5XJHMz80gYWD2fcfciIBA7hc
- 3vQ==
-X-Google-Smtp-Source: AGHT+IGN5W8WGk7vBjoSq6LZyMwvXPwYmiDCj3FkQb6Lvg3li5DTqV5B3XqVJXK80TL3kkDCRuOW+PCBWJU=
-X-Received: from qthh13.prod.google.com ([2002:ac8:584d:0:b0:467:5057:4372])
- (user=titusr job=prod-delivery.src-stubby-dispatcher) by
- 2002:a05:622a:24b:b0:46d:faa2:b6e0
- with SMTP id d75a77b69052e-46e12a6138emr274948591cf.18.1737455780235; Tue, 21
- Jan 2025 02:36:20 -0800 (PST)
-Date: Tue, 21 Jan 2025 10:36:08 +0000
-Mime-Version: 1.0
-X-Mailer: git-send-email 2.48.0.rc2.279.g1de40edade-goog
-Message-ID: <20250121103608.3056288-1-titusr@google.com>
-Subject: [PATCH] hw/misc: i2c-echo: add tracing
-From: Titus Rwantare <titusr@google.com>
-To: minyard@acm.org, its@irrelevant.dk
-Cc: qemu-arm@nongnu.org, qemu-devel@nongnu.org, clg@kaod.org, 
- Titus Rwantare <titusr@google.com>
-Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::84a;
- envelope-from=3pHiPZwYKChcG5GHFE3BB381.zB9D19H-01I18ABA3AH.BE3@flex--titusr.bounces.google.com;
- helo=mail-qt1-x84a.google.com
-X-Spam_score_int: -95
-X-Spam_score: -9.6
-X-Spam_bar: ---------
-X-Spam_report: (-9.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_MED=-0.001,
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1taBd5-00014g-TE
+ for qemu-devel@nongnu.org; Tue, 21 Jan 2025 05:37:08 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1taBd3-0002US-H3
+ for qemu-devel@nongnu.org; Tue, 21 Jan 2025 05:37:06 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1737455824;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:
+ content-transfer-encoding:content-transfer-encoding;
+ bh=VQChVu75/3ZQaqIgYWZRr2JIP1bFgv7t4cXvNk/i71k=;
+ b=WBplcP8fAP0ndbsyDy1J6gBMN9PKlwYeE/RwxW8jA152AfumKE15wfickvntNVNOnhbmCS
+ wz7xN9QLDDceqljYYMRsOcwfwi+fw5zYCN7hfMuoO+CZPAOCnZue1zdUVyd2vRaKV38aZl
+ F8c/Dv2oioQ+1gMSP5Qg1xFiL0ktGzg=
+Received: from mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-694-kx7CzkljMDqWEDaIB4_evA-1; Tue,
+ 21 Jan 2025 05:37:01 -0500
+X-MC-Unique: kx7CzkljMDqWEDaIB4_evA-1
+X-Mimecast-MFC-AGG-ID: kx7CzkljMDqWEDaIB4_evA
+Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 621661955DD0; Tue, 21 Jan 2025 10:36:59 +0000 (UTC)
+Received: from thuth-p1g4.redhat.com (unknown [10.39.192.56])
+ by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id B0E3E195608E; Tue, 21 Jan 2025 10:36:56 +0000 (UTC)
+From: Thomas Huth <thuth@redhat.com>
+To: qemu-devel@nongnu.org,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Aleksandar Rikalo <arikalo@gmail.com>
+Cc: Jiaxun Yang <jiaxun.yang@flygoat.com>
+Subject: [PATCH] mips: Mark the "mipssim" machine as deprecated
+Date: Tue, 21 Jan 2025 11:36:55 +0100
+Message-ID: <20250121103655.1285596-1-thuth@redhat.com>
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=thuth@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -50
+X-Spam_score: -5.1
+X-Spam_bar: -----
+X-Spam_report: (-5.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-3,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- USER_IN_DEF_DKIM_WL=-7.5 autolearn=unavailable autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.036,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -93,89 +80,44 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This has been useful when debugging when unsure if the guest is
-generating i2c traffic.
+We are not aware of anybody still using this machine, support for it
+has been withdrawn from the Linux kernel (i.e. there also won't be
+any future development anymore), and we are not aware of any binaries
+online that could be used for regression testing to avoid that the
+machine bitrots ... thus let's mark it as deprecated now.
 
-Signed-off-by: Titus Rwantare <titusr@google.com>
+Signed-off-by: Thomas Huth <thuth@redhat.com>
 ---
- hw/misc/i2c-echo.c   | 13 +++++++++++++
- hw/misc/trace-events |  5 +++++
- 2 files changed, 18 insertions(+)
+ If anybody is still using this machine, please speak up now!
 
-diff --git a/hw/misc/i2c-echo.c b/hw/misc/i2c-echo.c
-index 5ae3d0817e..06110e0f8e 100644
---- a/hw/misc/i2c-echo.c
-+++ b/hw/misc/i2c-echo.c
-@@ -13,6 +13,7 @@
- #include "qemu/main-loop.h"
- #include "block/aio.h"
- #include "hw/i2c/i2c.h"
-+#include "trace.h"
+ docs/about/deprecated.rst | 13 +++++++++++++
+ 1 file changed, 13 insertions(+)
+
+diff --git a/docs/about/deprecated.rst b/docs/about/deprecated.rst
+index 4a3c302962..133c8bab93 100644
+--- a/docs/about/deprecated.rst
++++ b/docs/about/deprecated.rst
+@@ -257,6 +257,19 @@ Big-Endian variants of MicroBlaze ``petalogix-ml605`` and ``xlnx-zynqmp-pmu`` ma
+ Both ``petalogix-ml605`` and ``xlnx-zynqmp-pmu`` were added for little endian
+ CPUs. Big endian support is not tested.
  
- #define TYPE_I2C_ECHO "i2c-echo"
- OBJECT_DECLARE_SIMPLE_TYPE(I2CEchoState, I2C_ECHO)
-@@ -80,11 +81,19 @@ static int i2c_echo_event(I2CSlave *s, enum i2c_event event)
-     case I2C_START_RECV:
-         state->pos = 0;
- 
-+        trace_i2c_echo_event(DEVICE(s)->canonical_path, "I2C_START_RECV");
-         break;
- 
-     case I2C_START_SEND:
-         state->pos = 0;
- 
-+        trace_i2c_echo_event(DEVICE(s)->canonical_path, "I2C_START_SEND");
-+        break;
++Mips ``mipssim`` machine (since 10.0)
++'''''''''''''''''''''''''''''''''''''
 +
-+    case I2C_START_SEND_ASYNC:
-+        state->pos = 0;
++Linux dropped support for this virtual machine type in kernel v3.7, and
++there does not seem to be anybody around who is still using this board
++in QEMU: Most former MIPS-related people are working on other architectures
++in their everyday job nowadays, and we are also not aware of anybody still
++using old binaries with this board (i.e. there is also no binary available
++online to check that this board did not completely bitrot yet). It is
++recommended to use another MIPS machine for future MIPS code development
++instead.
 +
-+        trace_i2c_echo_event(DEVICE(s)->canonical_path, "I2C_START_SEND_ASYNC");
-         break;
- 
-     case I2C_FINISH:
-@@ -92,9 +101,11 @@ static int i2c_echo_event(I2CSlave *s, enum i2c_event event)
-         state->state = I2C_ECHO_STATE_START_SEND;
-         i2c_bus_master(state->bus, state->bh);
- 
-+        trace_i2c_echo_event(DEVICE(s)->canonical_path, "I2C_FINISH");
-         break;
- 
-     case I2C_NACK:
-+        trace_i2c_echo_event(DEVICE(s)->canonical_path, "I2C_NACK");
-         break;
- 
-     default:
-@@ -112,6 +123,7 @@ static uint8_t i2c_echo_recv(I2CSlave *s)
-         return 0xff;
-     }
- 
-+    trace_i2c_echo_recv(DEVICE(s)->canonical_path, state->data[state->pos]);
-     return state->data[state->pos++];
- }
- 
-@@ -119,6 +131,7 @@ static int i2c_echo_send(I2CSlave *s, uint8_t data)
- {
-     I2CEchoState *state = I2C_ECHO(s);
- 
-+    trace_i2c_echo_send(DEVICE(s)->canonical_path, data);
-     if (state->pos > 2) {
-         return -1;
-     }
-diff --git a/hw/misc/trace-events b/hw/misc/trace-events
-index cf1abe6928..d58dca2389 100644
---- a/hw/misc/trace-events
-+++ b/hw/misc/trace-events
-@@ -390,3 +390,8 @@ ivshmem_flat_read_write_mmr_invalid(uint64_t addr_offset) "No ivshmem register m
- ivshmem_flat_interrupt_invalid_peer(uint16_t peer_id) "Can't interrupt non-existing peer %u"
- ivshmem_flat_write_mmr(uint64_t addr_offset) "Write access at offset %"PRIu64
- ivshmem_flat_interrupt_peer(uint16_t peer_id, uint16_t vector_id) "Interrupting peer ID %u, vector %u..."
 +
-+#i2c-echo.c
-+i2c_echo_event(const char *id, const char *event) "%s: %s"
-+i2c_echo_recv(const char *id, uint8_t data) "%s: recv 0x%" PRIx8
-+i2c_echo_send(const char *id, uint8_t data) "%s: send 0x%" PRIx8
+ Backend options
+ ---------------
+ 
 -- 
-2.48.0.rc2.279.g1de40edade-goog
+2.48.1
 
 
