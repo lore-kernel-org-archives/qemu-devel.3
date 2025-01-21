@@ -4,27 +4,27 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 41450C02182
-	for <qemu-devel@archiver.kernel.org>; Tue, 21 Jan 2025 07:06:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7B785C02182
+	for <qemu-devel@archiver.kernel.org>; Tue, 21 Jan 2025 07:07:43 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ta8KN-0007eC-Q2; Tue, 21 Jan 2025 02:05:35 -0500
+	id 1ta8Jm-0006gQ-Bj; Tue, 21 Jan 2025 02:04:58 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jamin_lin@aspeedtech.com>)
- id 1ta8KH-0007Ne-Ol; Tue, 21 Jan 2025 02:05:29 -0500
+ id 1ta8Jd-0006fc-Cg; Tue, 21 Jan 2025 02:04:50 -0500
 Received: from mail.aspeedtech.com ([211.20.114.72] helo=TWMBX01.aspeed.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jamin_lin@aspeedtech.com>)
- id 1ta8KG-0001eA-5O; Tue, 21 Jan 2025 02:05:29 -0500
+ id 1ta8JX-0001Q8-8t; Tue, 21 Jan 2025 02:04:48 -0500
 Received: from TWMBX01.aspeed.com (192.168.0.62) by TWMBX01.aspeed.com
  (192.168.0.62) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1258.12; Tue, 21 Jan
- 2025 15:04:29 +0800
+ 2025 15:04:25 +0800
 Received: from localhost.localdomain (192.168.10.10) by TWMBX01.aspeed.com
  (192.168.0.62) with Microsoft SMTP Server id 15.2.1258.12 via Frontend
- Transport; Tue, 21 Jan 2025 15:04:29 +0800
+ Transport; Tue, 21 Jan 2025 15:04:25 +0800
 To: =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@kaod.org>, Peter Maydell
  <peter.maydell@linaro.org>, Steven Lee <steven_lee@aspeedtech.com>, Troy Lee
  <leetroy@gmail.com>, Andrew Jeffery <andrew@codeconstruct.com.au>, "Joel
@@ -32,10 +32,9 @@ To: =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@kaod.org>, Peter Maydell
  "open list:All patches CC here" <qemu-devel@nongnu.org>
 CC: <jamin_lin@aspeedtech.com>, <troy_lee@aspeedtech.com>,
  <yunlin.tang@aspeedtech.com>
-Subject: [PATCH v1 13/18] hw/arm/aspeed: Rename IRQ table and machine name for
- AST2700 A0
-Date: Tue, 21 Jan 2025 15:04:19 +0800
-Message-ID: <20250121070424.2465942-14-jamin_lin@aspeedtech.com>
+Subject: [PATCH v1 02/18] hw/intc/aspeed: Support different memory region ops
+Date: Tue, 21 Jan 2025 15:04:08 +0800
+Message-ID: <20250121070424.2465942-3-jamin_lin@aspeedtech.com>
 X-Mailer: git-send-email 2.25.1
 In-Reply-To: <20250121070424.2465942-1-jamin_lin@aspeedtech.com>
 References: <20250121070424.2465942-1-jamin_lin@aspeedtech.com>
@@ -67,86 +66,61 @@ From:  Jamin Lin via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Currently, AST2700 SoC only supports A0. To support AST2700 A1, rename its IRQ
-table and machine name.
+The previous implementation set the "aspeed_intc_ops" struct, containing read
+and write callbacks, to be used when I/O is performed on the INTC region.
+Both "aspeed_intc_read" and "aspeed_intc_write" callback functions were used
+for INTC0 (CPU DIE).
+
+To support the INTC1 (I/O DIE) model, introduces a new "reg_ops" class
+attribute. This allows setting different memory region operations to support
+different INTC models.
 
 Signed-off-by: Jamin Lin <jamin_lin@aspeedtech.com>
 ---
- hw/arm/aspeed.c         | 8 ++++----
- hw/arm/aspeed_ast27x0.c | 8 ++++----
- 2 files changed, 8 insertions(+), 8 deletions(-)
+ hw/intc/aspeed_intc.c         | 5 ++++-
+ include/hw/intc/aspeed_intc.h | 1 +
+ 2 files changed, 5 insertions(+), 1 deletion(-)
 
-diff --git a/hw/arm/aspeed.c b/hw/arm/aspeed.c
-index ae0405c654..402d55c556 100644
---- a/hw/arm/aspeed.c
-+++ b/hw/arm/aspeed.c
-@@ -1654,12 +1654,12 @@ static void ast2700_evb_i2c_init(AspeedMachineState *bmc)
-                             TYPE_TMP105, 0x4d);
- }
+diff --git a/hw/intc/aspeed_intc.c b/hw/intc/aspeed_intc.c
+index df4da759e1..628f69ea88 100644
+--- a/hw/intc/aspeed_intc.c
++++ b/hw/intc/aspeed_intc.c
+@@ -302,7 +302,7 @@ static void aspeed_intc_realize(DeviceState *dev, Error **errp)
+     AspeedINTCClass *aic = ASPEED_INTC_GET_CLASS(s);
+     int i;
  
--static void aspeed_machine_ast2700_evb_class_init(ObjectClass *oc, void *data)
-+static void aspeed_machine_ast2700a0_evb_class_init(ObjectClass *oc, void *data)
+-    memory_region_init_io(&s->iomem, OBJECT(s), &aspeed_intc_ops, s,
++    memory_region_init_io(&s->iomem, OBJECT(s), aic->reg_ops, s,
+                           TYPE_ASPEED_INTC ".regs", ASPEED_INTC_NR_REGS << 2);
+ 
+     sysbus_init_mmio(sbd, &s->iomem);
+@@ -319,11 +319,14 @@ static void aspeed_intc_realize(DeviceState *dev, Error **errp)
+ static void aspeed_intc_class_init(ObjectClass *klass, void *data)
  {
-     MachineClass *mc = MACHINE_CLASS(oc);
-     AspeedMachineClass *amc = ASPEED_MACHINE_CLASS(oc);
+     DeviceClass *dc = DEVICE_CLASS(klass);
++    AspeedINTCClass *aic = ASPEED_INTC_CLASS(klass);
  
--    mc->desc = "Aspeed AST2700 EVB (Cortex-A35)";
-+    mc->desc = "Aspeed AST2700 A0 EVB (Cortex-A35)";
-     amc->soc_name  = "ast2700-a0";
-     amc->hw_strap1 = AST2700_EVB_HW_STRAP1;
-     amc->hw_strap2 = AST2700_EVB_HW_STRAP2;
-@@ -1795,9 +1795,9 @@ static const TypeInfo aspeed_machine_types[] = {
-         .class_init     = aspeed_minibmc_machine_ast1030_evb_class_init,
- #ifdef TARGET_AARCH64
-     }, {
--        .name          = MACHINE_TYPE_NAME("ast2700-evb"),
-+        .name          = MACHINE_TYPE_NAME("ast2700a0-evb"),
-         .parent        = TYPE_ASPEED_MACHINE,
--        .class_init    = aspeed_machine_ast2700_evb_class_init,
-+        .class_init    = aspeed_machine_ast2700a0_evb_class_init,
- #endif
-     }, {
-         .name          = TYPE_ASPEED_MACHINE,
-diff --git a/hw/arm/aspeed_ast27x0.c b/hw/arm/aspeed_ast27x0.c
-index a95fed30cf..b32c4fcc35 100644
---- a/hw/arm/aspeed_ast27x0.c
-+++ b/hw/arm/aspeed_ast27x0.c
-@@ -73,7 +73,7 @@ static const hwaddr aspeed_soc_ast2700_memmap[] = {
- #define AST2700_MAX_IRQ 256
- 
- /* Shared Peripheral Interrupt values below are offset by -32 from datasheet */
--static const int aspeed_soc_ast2700_irqmap[] = {
-+static const int aspeed_soc_ast2700a0_irqmap[] = {
-     [ASPEED_DEV_UART0]     = 132,
-     [ASPEED_DEV_UART1]     = 132,
-     [ASPEED_DEV_UART2]     = 132,
-@@ -794,7 +794,7 @@ static void aspeed_soc_ast2700_realize(DeviceState *dev, Error **errp)
-     create_unimplemented_device("ast2700.io", 0x0, 0x4000000);
+     dc->desc = "ASPEED INTC Controller";
+     dc->realize = aspeed_intc_realize;
+     device_class_set_legacy_reset(dc, aspeed_intc_reset);
+     dc->vmsd = NULL;
++
++    aic->reg_ops = &aspeed_intc_ops;
  }
  
--static void aspeed_soc_ast2700_class_init(ObjectClass *oc, void *data)
-+static void aspeed_soc_ast2700a0_class_init(ObjectClass *oc, void *data)
- {
-     static const char * const valid_cpu_types[] = {
-         ARM_CPU_TYPE_NAME("cortex-a35"),
-@@ -817,7 +817,7 @@ static void aspeed_soc_ast2700_class_init(ObjectClass *oc, void *data)
-     sc->uarts_num    = 13;
-     sc->num_cpus     = 4;
-     sc->uarts_base   = ASPEED_DEV_UART0;
--    sc->irqmap       = aspeed_soc_ast2700_irqmap;
-+    sc->irqmap       = aspeed_soc_ast2700a0_irqmap;
-     sc->memmap       = aspeed_soc_ast2700_memmap;
-     sc->get_irq      = aspeed_soc_ast2700_get_irq;
- }
-@@ -832,7 +832,7 @@ static const TypeInfo aspeed_soc_ast27x0_types[] = {
-         .name           = "ast2700-a0",
-         .parent         = TYPE_ASPEED27X0_SOC,
-         .instance_init  = aspeed_soc_ast2700_init,
--        .class_init     = aspeed_soc_ast2700_class_init,
-+        .class_init     = aspeed_soc_ast2700a0_class_init,
-     },
+ static const TypeInfo aspeed_intc_info = {
+diff --git a/include/hw/intc/aspeed_intc.h b/include/hw/intc/aspeed_intc.h
+index 10718ed4a1..9a73661403 100644
+--- a/include/hw/intc/aspeed_intc.h
++++ b/include/hw/intc/aspeed_intc.h
+@@ -39,6 +39,7 @@ struct AspeedINTCClass {
+ 
+     uint32_t num_lines;
+     uint32_t num_ints;
++    const MemoryRegionOps *reg_ops;
  };
  
+ #endif /* ASPEED_INTC_H */
 -- 
 2.34.1
 
