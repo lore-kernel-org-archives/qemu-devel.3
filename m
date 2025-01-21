@@ -4,70 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3AA04C0218B
-	for <qemu-devel@archiver.kernel.org>; Tue, 21 Jan 2025 13:02:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DFE2FC0218B
+	for <qemu-devel@archiver.kernel.org>; Tue, 21 Jan 2025 13:06:04 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1taDt7-0001xw-8H; Tue, 21 Jan 2025 08:01:49 -0500
+	id 1taDwT-0003yM-LG; Tue, 21 Jan 2025 08:05:17 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1taDsn-0001tS-Ky
- for qemu-devel@nongnu.org; Tue, 21 Jan 2025 08:01:33 -0500
-Received: from mgamail.intel.com ([198.175.65.11])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1taDsj-0006nV-MF
- for qemu-devel@nongnu.org; Tue, 21 Jan 2025 08:01:27 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
- d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1737464486; x=1769000486;
- h=date:from:to:cc:subject:message-id:references:
- mime-version:in-reply-to;
- bh=v8RFzRdFY88AYI0wAuLKa0kSBnhRT8ckYNiub9jnlzE=;
- b=nOldkWGSJFdzyYmzzn/zB0UMO2BAUI12Q6Ql0LLTpR15sYqByw+lFXoh
- pUh7jSlQxAN+puPJP9ek9B1oN6NBhrIkYwvGRuaPo9fzZAqPfBiR6Z2+h
- O3Ph9J2eCNZ3yVPcfyYpIkBLhZCaY5wk7mtFvMkH1DR5Lr2G6C3hweP1f
- nlSd2WISAjdzqbxE8VO/n1gGONKwm0MF7vp4usLv4BV0Lt+qSHbEOgjCT
- MWLDAD3MEiULDJq3JcechRpZWyqX9vMPhkpr6ADqI2gxoJTppWVx2jY2Z
- 3BzH/tVi0Jn+8hT0uHDhY8QpaBsDcHgii2IbZFVDpkD+6/O/hr/wf6hxr Q==;
-X-CSE-ConnectionGUID: XLRlieDMQda9vENpqPjfYQ==
-X-CSE-MsgGUID: sC5LSRchQruXZ5NiMYGj8Q==
-X-IronPort-AV: E=McAfee;i="6700,10204,11322"; a="48371323"
-X-IronPort-AV: E=Sophos;i="6.13,222,1732608000"; d="scan'208";a="48371323"
-Received: from fmviesa009.fm.intel.com ([10.60.135.149])
- by orvoesa103.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 21 Jan 2025 05:01:07 -0800
-X-CSE-ConnectionGUID: Ztsp7ZkXRR+kLEqDniWE2g==
-X-CSE-MsgGUID: BuC4fh72QfK/qGpZAbGFcw==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.13,222,1732608000"; d="scan'208";a="107402327"
-Received: from liuzhao-optiplex-7080.sh.intel.com (HELO localhost)
- ([10.239.160.39])
- by fmviesa009.fm.intel.com with ESMTP; 21 Jan 2025 05:01:05 -0800
-Date: Tue, 21 Jan 2025 21:20:27 +0800
-From: Zhao Liu <zhao1.liu@intel.com>
-To: Tao Su <tao1.su@linux.intel.com>
-Cc: qemu-devel@nongnu.org, pbonzini@redhat.com, imammedo@redhat.com,
- xiaoyao.li@intel.com, zhao1.liu@linux.intel.com, xuelian.guo@intel.com
-Subject: Re: [PATCH 3/4] target/i386: Add new CPU model ClearwaterForest
-Message-ID: <Z4+fG8CTfRPqQ5x4@intel.com>
-References: <20250121020650.1899618-1-tao1.su@linux.intel.com>
- <20250121020650.1899618-4-tao1.su@linux.intel.com>
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1taDwN-0003qj-C4
+ for qemu-devel@nongnu.org; Tue, 21 Jan 2025 08:05:12 -0500
+Received: from mail-yb1-xb2b.google.com ([2607:f8b0:4864:20::b2b])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1taDwL-0007jW-Kq
+ for qemu-devel@nongnu.org; Tue, 21 Jan 2025 08:05:11 -0500
+Received: by mail-yb1-xb2b.google.com with SMTP id
+ 3f1490d57ef6-e3978c00a5aso8696741276.1
+ for <qemu-devel@nongnu.org>; Tue, 21 Jan 2025 05:05:08 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1737464708; x=1738069508; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=L0LC9uCGFjyS38qgSUaB3bhc+kfZQqXdfM2lVdqqJog=;
+ b=Q679xQ1tI72dBrbM0vIAyRKx0qZKCivOkxAJNznNbW0JxABL4pZB3GI+XwFVB/uXXW
+ COHivdic+iHOBfmS2YzT/sIfKuRluilvXMXcVct1OakWfmw7DQnFrM/Ij+2gTo3m5qAk
+ 4oVX3M2HqDcksFpKOiPQXSJM7FpcJ56IZGG2x1I46RsVH4pJ1nc7bpSdi+FWp5JWt3GA
+ /rHuZBdbe5fhr3ka9pf99fTlv1BjVYdmQZlfnRanpAzZkSqJNKArUxH4IdDX/ZyWbHUU
+ tN3/TwWU4SmWQerfieMfCiQs7gZKtEUV05rTKobdc5DhLeJiPdhXoFcg2tVB8Qf6mg3n
+ OuIQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1737464708; x=1738069508;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=L0LC9uCGFjyS38qgSUaB3bhc+kfZQqXdfM2lVdqqJog=;
+ b=H2vtEa7QgEe5AtJUcM6xMAuB1havDOaD7So1dU/9/E8lsYiP0+c5FLmgri7PZSCqap
+ VCQSQrDoH83S3ouNd/IxKrqHGDk8VsPw+ZCzXz+t811mbERBB9J1aKea3Kf03W8O7ytX
+ HaHXadPpY5FRersBH4TIg9E2lh++gDD9lGs7BEo8FWed1xGZ2nFM34BMft/tyEzCRva0
+ plnvFdbQ+1OdvJ9CAf926lYnnubU2Mopq+bDJQkm4mlLazrvKxDmCq3/+h49Cc09kQdB
+ k8MB/L5HlusYJYAZo75BoE+oCaJjZQ+LdnctlXd+6ORLUb21Y1ruyfXYdaV9MFM0m1rm
+ YGfA==
+X-Gm-Message-State: AOJu0YzACTyZTmgJ5rsN2+OyRFC2iVukZw+BWlXmTr+RhYZdf7ln7At/
+ scJCwIucmVZM6a6VPjNNFabnA1UOgGzYJSFoLnMiZcNwWFVAV8pBAJiQfh1ij3ym88T2/AineTd
+ U4sr+nlr6KmDddsM+F/JgPWwpZiF0aaZx2iieNQ==
+X-Gm-Gg: ASbGncuMUSDl6EBFPMFdh04FiXO5xkXIGhPPdsT3ADA8bBiuI0wHQuKxCUsXA4xAhjT
+ IkXL/AVEW2jJnIs1DN9r6pLM4wI2GHKcy5CmbUB+x/qtUJERSmSED
+X-Google-Smtp-Source: AGHT+IHIU3MO35jrOSaOuGgzQBJYDsWlT7SNbbIrhCg41B+5rBE7f3T1bnIov5TSaO3VDauYrcLShn9Cnxp0uxMmBu4=
+X-Received: by 2002:a05:6902:1b02:b0:e49:c11a:7580 with SMTP id
+ 3f1490d57ef6-e57b10453eemr12505410276.7.1737464707734; Tue, 21 Jan 2025
+ 05:05:07 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20250121020650.1899618-4-tao1.su@linux.intel.com>
-Received-SPF: pass client-ip=198.175.65.11; envelope-from=zhao1.liu@intel.com;
- helo=mgamail.intel.com
-X-Spam_score_int: -73
-X-Spam_score: -7.4
-X-Spam_bar: -------
-X-Spam_report: (-7.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-2.996,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+References: <20250120210212.3890255-1-alex.bennee@linaro.org>
+ <20250120210212.3890255-7-alex.bennee@linaro.org>
+In-Reply-To: <20250120210212.3890255-7-alex.bennee@linaro.org>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Tue, 21 Jan 2025 13:04:56 +0000
+X-Gm-Features: AbW1kvZ-Pag_aRcTSJV0CQvvb9KJN0wMv3z415E0AitAhflfvfj1yHoVGvRiExQ
+Message-ID: <CAFEAcA_qceSO9be7wSj6U2a9yDvj9VhjQZuRugzGKsae+wEoog@mail.gmail.com>
+Subject: Re: [PATCH 6/7] tests/qtest: tighten up the checks on clock_step
+To: =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>
+Cc: qemu-devel@nongnu.org, qemu-s390x@nongnu.org, qemu-arm@nongnu.org, 
+ Thomas Huth <thuth@redhat.com>, Fabiano Rosas <farosas@suse.de>,
+ Laurent Vivier <lvivier@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2607:f8b0:4864:20::b2b;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yb1-xb2b.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -84,42 +95,57 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, Jan 21, 2025 at 10:06:49AM +0800, Tao Su wrote:
-> Date: Tue, 21 Jan 2025 10:06:49 +0800
-> From: Tao Su <tao1.su@linux.intel.com>
-> Subject: [PATCH 3/4] target/i386: Add new CPU model ClearwaterForest
-> X-Mailer: git-send-email 2.34.1
-> 
-> According to table 1-2 in Intel Architecture Instruction Set Extensions
-> and Future Features (rev 056) [1], ClearwaterForest has the following new
-> features which have already been virtualized:
-> 
->     - AVX-VNNI-INT16 CPUID.(EAX=7,ECX=1):EDX[bit 10]
->     - SHA512 CPUID.(EAX=7,ECX=1):EAX[bit 0]
->     - SM3 CPUID.(EAX=7,ECX=1):EAX[bit 1]
->     - SM4 CPUID.(EAX=7,ECX=1):EAX[bit 2]
-> 
-> Add above features to new CPU model ClearwaterForest. Comparing with
-> SierraForest, ClearwaterForest bare-metal contains all features of
-> SierraForest-v2 CPU model and adds:
-> 
->     - PREFETCHI CPUID.(EAX=7,ECX=1):EDX[bit 14]
->     - DDPD_U CPUID.(EAX=7,ECX=2):EDX[bit 3]
->     - BHI_NO IA32_ARCH_CAPABILITIES[bit 20]
-> 
-> Add above and all features of SierraForest-v2 CPU model to new CPU model
-> ClearwaterForest.
-> 
-> [1] https://cdrdv2.intel.com/v1/dl/getContent/671368
-> 
-> Tested-by: Xuelian Guo <xuelian.guo@intel.com>
-> Signed-off-by: Tao Su <tao1.su@linux.intel.com>
+On Mon, 20 Jan 2025 at 21:02, Alex Benn=C3=A9e <alex.bennee@linaro.org> wro=
+te:
+>
+> It is invalid to call clock_step with an implied time to step forward
+> as if no timers are running we won't be able to advance.
+>
+> Signed-off-by: Alex Benn=C3=A9e <alex.bennee@linaro.org>
 > ---
->  target/i386/cpu.c | 135 ++++++++++++++++++++++++++++++++++++++++++++++
->  target/i386/cpu.h |  33 +++++++++---
->  2 files changed, 162 insertions(+), 6 deletions(-)
-> 
+>  system/qtest.c | 7 ++++++-
+>  1 file changed, 6 insertions(+), 1 deletion(-)
+>
+> diff --git a/system/qtest.c b/system/qtest.c
+> index 28b6fac37c..1a9bfd0b33 100644
+> --- a/system/qtest.c
+> +++ b/system/qtest.c
+> @@ -708,10 +708,15 @@ static void qtest_process_command(CharBackend *chr,=
+ gchar **words)
+>          } else {
+>              ns =3D qemu_clock_deadline_ns_all(QEMU_CLOCK_VIRTUAL,
+>                                              QEMU_TIMER_ATTR_ALL);
+> +            if (ns < 0) {
+> +                qtest_send(chr, "FAIL "
+> +                           "no timers for clock_step to follow\n");
 
-Reviewed-by: Zhao Liu <zhao1.liu@intel.com>
+I think I would say
+"cannot advance clock to the next deadline because there is no pending dead=
+line"
+as being a bit clearer about what's gone wrong here.
 
+> +                return;
+> +            }
+>          }
+>          new_ns =3D qemu_clock_advance_virtual_time(old_ns + ns);
+>          qtest_sendf(chr, "%s %"PRIi64"\n",
+> -                    new_ns > old_ns ? "OK" : "FAIL", new_ns);
+> +                    new_ns > old_ns ? "OK" : "FAIL could not advance tim=
+e", new_ns);
+
+Maybe we should give up on trying to handle the OK and FAIL
+cases in the same qtest_sendf() call? It's not clear to me that
+printing the new clock value in the FAIL message is actually
+useful.
+
+For that matter, is it actually possible for the clock to not
+advance? It doesn't seem obvious that "advance the clock by 0 ticks"
+should be a failure case rather than a "does nothing" case,
+and once patch 7 is applied I don't think there's any case
+where qemu_clock_advance_virtual_time() could make the
+clock go backwards... Put another way, this would be moving
+back to the situation before your commit d524441a3610b.
+
+thanks
+-- PMM
 
