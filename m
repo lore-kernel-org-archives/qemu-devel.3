@@ -4,85 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0C990C02182
-	for <qemu-devel@archiver.kernel.org>; Tue, 21 Jan 2025 23:13:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8AE3DC02182
+	for <qemu-devel@archiver.kernel.org>; Tue, 21 Jan 2025 23:14:52 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1taNRF-0007Cs-JD; Tue, 21 Jan 2025 18:13:41 -0500
+	id 1taNRz-0007ac-At; Tue, 21 Jan 2025 18:14:27 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1taNRE-0007CS-1U
- for qemu-devel@nongnu.org; Tue, 21 Jan 2025 18:13:40 -0500
-Received: from mail-pl1-x632.google.com ([2607:f8b0:4864:20::632])
+ id 1taNRx-0007U8-TI
+ for qemu-devel@nongnu.org; Tue, 21 Jan 2025 18:14:25 -0500
+Received: from mail-pl1-x635.google.com ([2607:f8b0:4864:20::635])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1taNRC-0005SV-Ag
- for qemu-devel@nongnu.org; Tue, 21 Jan 2025 18:13:39 -0500
-Received: by mail-pl1-x632.google.com with SMTP id
- d9443c01a7336-21619108a6bso107859795ad.3
- for <qemu-devel@nongnu.org>; Tue, 21 Jan 2025 15:13:37 -0800 (PST)
+ id 1taNRq-0005Y4-Lv
+ for qemu-devel@nongnu.org; Tue, 21 Jan 2025 18:14:25 -0500
+Received: by mail-pl1-x635.google.com with SMTP id
+ d9443c01a7336-216728b1836so106912565ad.0
+ for <qemu-devel@nongnu.org>; Tue, 21 Jan 2025 15:14:17 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1737501216; x=1738106016; darn=nongnu.org;
+ d=linaro.org; s=google; t=1737501256; x=1738106056; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=AR1Yd8p5mYWR9C9rJiJsxiYOh4BK5zPQ1mb74SRdRuI=;
- b=e+Icfgq1EAEvms57/ZhmF50aGOB/jh5RMo0DlKcrSd9wtADi3m7frAJeUY4hQ5BOQg
- K6e3K/x7Clzct8qiHwIk/qEUiT8wgDCo+QroCqs327u5ck1932JSk1tYqNO7nTZa9aY6
- UW+qs4BuOunSKAgkVTMJ4SeLnnGBKxtMS0CLI2khMRHw/B3plUOvgXCMaAnORC01PtS2
- 8RbWMs0ss1maG7F6Nvl4ozeHjBFoSc/qQaz6E/kWHMo+kb2AV/fc0wPrBZ75Ca7s/Tk5
- d0USaU4SAUioWdY3R5Ia1tOBEU9vq5mZl8uyFaVcBj5Lh9gJrw7HHEwTii/v0o6fETxm
- fabg==
+ :references:to:subject:user-agent:mime-version:date:message-id:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=t3z33tv6jwE/6TT4f++Ndz6EAuuOnCB38tAEgKhA4PE=;
+ b=fAsAbtG1bdJ7mvRV+YKmzhnxnCiEIpaUPnyeDd95FXak0fcB/WsF2geZkFaIt0TGyM
+ B1FRyZ0tB0hf8Y3jRBz0uPw8JyLTEsKpxLF1bgaVdMuBQNCulOYmN+QMRp/HAvJ0QNsE
+ gk6xgqJbkOTtP7u4/6mvVJFKoUdwH9yPcKtQGCBFugj+qhiajl//ANuY52AI10MHm3bC
+ Shak3MUoIsl8skblbtKiDOQiLMlB9twRTKGHUBPz/ISYXNoMgYm9OJnBXVnGHNtIK0mi
+ a9t9aF5buQYdsbQF9ZSbiwUG0uVf3HvOg4kQq6v8lRIqX+aBzSKI/+CQkJHHOezIM4WD
+ nshQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1737501216; x=1738106016;
+ d=1e100.net; s=20230601; t=1737501256; x=1738106056;
  h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :references:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=AR1Yd8p5mYWR9C9rJiJsxiYOh4BK5zPQ1mb74SRdRuI=;
- b=mNTDG3bIBfLIa/X/iN2WxyowiRZAW77V320araci9AgFXD9whxID7QV2sUK+Zffv2O
- A05Af8a8aE5cH3LNfUhNxYYqGSvayZxhiM1kN8gbY0U/URtSgISKDyZE8Ug6DxPo3+TE
- 5KA76U50GnXatVYCFXUcQpuF+XYxjv3nGBFnFH9gwtVbW5w9Buj2kNFe9FxX/tvrDJbL
- UH4wvnXg0KMm0H6tk66EMURVtaD8DWRmEFwsiJcL+oDTjshkhgVeu2Eu5AZ/8YTuEZU6
- HUo9K3oEtYHxNT13BziH6yTwO88pkje89er1OiQgkIT44CY/Jtl9Q0OyNDsZZ+ckRjBR
- d23g==
-X-Forwarded-Encrypted: i=1;
- AJvYcCUCDJnRnwACvDxLMpb02Ow2THy2nr4JZfBfWDw3MW40yTmMu4/Uw1UPiia0J5zxNZof1EmUnc1EuqiN@nongnu.org
-X-Gm-Message-State: AOJu0YyDZn3L6QCQa8j76aHhSTCHlsmha84RqIYEjsHFcIy2Wd8VEyvX
- mdlmHkBJ4Q9lBTlYlVIqIvoAKuodDg2yxcn7c53b6w0Q070crCniGehYA8Tikm8=
-X-Gm-Gg: ASbGncsTE/dMFYDbJKNDKGS5/BKdvxrAFxjPgGpwdN5tpmqQupma9RefQUh2bmsg3lj
- H//q1qLvACWrxzrnHWe8+baIDsghvn5nmmibn7yDrh2LDhjfcfRwV1wEW41AvV4df3s6aKbNwx9
- h5JS/Lu+6rJ8TLIWAziGyhBDyz6hlB5SvIiZLBElFwUp5iTxCkgJdbyx8KXM9n2mZVUVgZ9DDxz
- UvpNCJorjP/nKwkLbv0UhAvg9QIzg7w9l9faKWD1/KalylombMcn+KVBiOK/zug50ojtCptNlFE
- n693sNBp/EAeyfM5LSZQF2UQKhPqPEzJE8W9
-X-Google-Smtp-Source: AGHT+IHXQnuU+/ycq/EyPTYTD8GP97SyYdkty0iH1kd2JLlAXarCpC5rZnnbM2BUNDx92dd71A/q9Q==
-X-Received: by 2002:a17:902:f651:b0:215:8d49:e2a7 with SMTP id
- d9443c01a7336-21c3561cb39mr273079065ad.50.1737501216726; 
- Tue, 21 Jan 2025 15:13:36 -0800 (PST)
+ bh=t3z33tv6jwE/6TT4f++Ndz6EAuuOnCB38tAEgKhA4PE=;
+ b=l/cfNw/hmphzs4oTL8wWhbK8F5xgzboDJtg+nPzMIwjzg6wVuNAP+KCWkSqBvvBkeC
+ U+aSnvPcs/i2OKwTVD2X8Zjss5JaMzZ6IiaMNQDUvECW2Q7H7Aa66q8T0PfKUn5+lgCF
+ b1l6+Aw/mCc68yOzZrwef/Ox7lUrYFMXKzEvUtif/8Ub2fksQ94X73ph6MJYadYKRqiV
+ MsX2zuNKsMnGfjDP67olm0R9QGVLODTEmXgh9O1uZ2GoYrTLt1n95y0aaOTQDNFQZIbf
+ DMx8GQUU4r9HdBPB+Wnj/6h0uxc0MCLKC1U9BSkFrbJIxboMKxtl3K47ZRTCoUfTajHf
+ hV4A==
+X-Gm-Message-State: AOJu0Yxw1o/VhpfqFN7OGfCCiW6qfGfM1o6hL/knFEJmbipCIuqW5/mX
+ xHG7OJFo5AGyUoLc5oJAgvyQwtwJFcCd5zAOBU9lpfg3QDmVSEosDNFfTz6jJbngGaXceIcYt27
+ 6
+X-Gm-Gg: ASbGncvixW6UYhNBKLzWTp4+mcmkU/mhr47aPn+bXR7EFidp4HJIsl3jEnbOstJNzFY
+ EQw81dHDJaRLn8h3dV6fuNLVCwwBhvnox/Elu/n16X+z9jzWHjMv1JS1p8tOHOKmVkrn5kCL4EA
+ YDOLuDTzEBrDjLVZZkjksOw6iNorwmcMS8KOPuWWYsBVISWx4DpZHYm9gJ09ElSP1r5vDoNN3WK
+ jrgmQXP/O3HG9Xr1+Nv0uGfzNFyxuH05mobwfUX/2kyy5cMUOXNr1vZBRUpFQQOTTBk2KMo93jw
+ /5Jp11E/oBvEe4dOwM/j5/r1r7K2csnPvZIO
+X-Google-Smtp-Source: AGHT+IFkohuns2B0SiqJtzSBD9bZSHB1s3kR/r0eikNiKwtK2LXkawRILnBYUDugWeZP4bUoN9uQGw==
+X-Received: by 2002:a17:902:d4c8:b0:216:725c:a11a with SMTP id
+ d9443c01a7336-21c352c8145mr320367875ad.10.1737501256348; 
+ Tue, 21 Jan 2025 15:14:16 -0800 (PST)
 Received: from [192.168.0.4] (174-21-71-127.tukw.qwest.net. [174.21.71.127])
  by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-21c2d3ad20bsm82982245ad.128.2025.01.21.15.13.36
+ d9443c01a7336-21c2cea2c9fsm84071985ad.43.2025.01.21.15.14.15
+ for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 21 Jan 2025 15:13:36 -0800 (PST)
-Message-ID: <062800d7-10ea-4106-b3a3-7db7acc1b291@linaro.org>
-Date: Tue, 21 Jan 2025 15:13:34 -0800
+ Tue, 21 Jan 2025 15:14:16 -0800 (PST)
+Message-ID: <5f244bf1-f2f7-4c03-92fd-9542db7d412e@linaro.org>
+Date: Tue, 21 Jan 2025 15:14:14 -0800
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 2/2] target/riscv: throw debug exception before page
- fault
-To: Daniel Henrique Barboza <dbarboza@ventanamicro.com>, qemu-devel@nongnu.org
-Cc: qemu-riscv@nongnu.org, alistair.francis@wdc.com, bmeng@tinylab.org,
- liwei1518@gmail.com, zhiwei_liu@linux.alibaba.com, palmer@rivosinc.com
-References: <20250121170626.1992570-1-dbarboza@ventanamicro.com>
- <20250121170626.1992570-3-dbarboza@ventanamicro.com>
+Subject: Re: [PATCH] hw/sh4/r2d: Convert legacy qemu_allocate_irqs() to
+ qemu_init_irqs()
+To: qemu-devel@nongnu.org
+References: <20250121182445.35309-1-philmd@linaro.org>
 Content-Language: en-US
 From: Richard Henderson <richard.henderson@linaro.org>
-In-Reply-To: <20250121170626.1992570-3-dbarboza@ventanamicro.com>
+In-Reply-To: <20250121182445.35309-1-philmd@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::632;
- envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x632.google.com
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::635;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x635.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -105,34 +102,23 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 1/21/25 09:06, Daniel Henrique Barboza wrote:
-> In the RISC-V privileged ISA section 3.1.15 table 15, it is determined
-> that a debug exception that is triggered from a load/store has a higher
-> priority than a possible fault that this access might trigger.
+On 1/21/25 10:24, Philippe Mathieu-Daudé wrote:
+> The FPGA exposes a fixed set of IRQs. Hold them in the FPGA
+> state and initialize them in place calling qemu_init_irqs().
 > 
-> This is not the case ATM as shown in [1]. Adding a breakpoint in an
-> address that deliberately will fault is causing a load page fault
-> instead of a debug exception. The reason is that we're throwing in the
-> page fault as soon as the fault occurs (end of riscv_cpu_tlb_fill(),
-> raise_mmu_exception()), not allowing the installed watchpoints to
-> trigger.
+> Move r2d_fpga_irq enums earlier so we can use NR_IRQS within
+> the r2d_fpga_t structure. r2d_fpga_init() returns r2d_fpga_t,
+> and we dereference irq from it in r2d_init().
 > 
-> Call cpu_check_watchpoint() in the page fault path to search and execute
-> any watchpoints that might exist for the address, never returning back
-> to the fault path. If no watchpoints are found cpu_check_watchpoint()
-> will return and we'll fall-through the regular path to
-> raise_mmu_exception().
-> 
-> [1]https://gitlab.com/qemu-project/qemu/-/issues/2627
-> 
-> Resolves:https://gitlab.com/qemu-project/qemu/-/issues/2627
-> Signed-off-by: Daniel Henrique Barboza<dbarboza@ventanamicro.com>
+> Signed-off-by: Philippe Mathieu-Daudé<philmd@linaro.org>
 > ---
->   target/riscv/cpu_helper.c | 18 ++++++++++++++++++
->   1 file changed, 18 insertions(+)
+> Based-on:<20250121155526.29982-2-philmd@linaro.org>
+>            "hw/irq: Introduce qemu_init_irqs() helper"
+> ---
+>   hw/sh4/r2d.c | 38 +++++++++++++++++++++-----------------
+>   1 file changed, 21 insertions(+), 17 deletions(-)
 
 Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-
 
 r~
 
