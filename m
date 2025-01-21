@@ -4,150 +4,86 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E6208C0218B
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C84E7C02182
 	for <qemu-devel@archiver.kernel.org>; Tue, 21 Jan 2025 18:25:43 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1taIvj-0000Yc-4W; Tue, 21 Jan 2025 13:24:51 -0500
+	id 1taIvo-0000ZX-Lt; Tue, 21 Jan 2025 13:24:56 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <david@redhat.com>) id 1taIvc-0000Xu-Uh
- for qemu-devel@nongnu.org; Tue, 21 Jan 2025 13:24:45 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <david@redhat.com>) id 1taIvW-0000hZ-RF
- for qemu-devel@nongnu.org; Tue, 21 Jan 2025 13:24:44 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1737483875;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=z3achXjfure4B4kI7vvZKQv8XjdszCG6tMj8eEymL2U=;
- b=BdZU4ngi4v8zWAs3nS6cCLvq04/O/rl64PEWsxDxH8LUp8ntxWnf6z62xpvEiJlR/2K7k8
- 2EvDvrAAX5aI6wdgrXkQ0YP9nX9XQyxEP+rYbZ+cs1KiXwlhqVFFX5JroDbWMv23TeL+Pf
- tTOlDbqJ0DZm1cWYsTqt06UaO6ydQ4g=
-Received: from mail-wm1-f72.google.com (mail-wm1-f72.google.com
- [209.85.128.72]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-338-1A8bsAJbNs2trsKyTWoEzA-1; Tue, 21 Jan 2025 13:24:33 -0500
-X-MC-Unique: 1A8bsAJbNs2trsKyTWoEzA-1
-X-Mimecast-MFC-AGG-ID: 1A8bsAJbNs2trsKyTWoEzA
-Received: by mail-wm1-f72.google.com with SMTP id
- 5b1f17b1804b1-43673af80a6so46142315e9.1
- for <qemu-devel@nongnu.org>; Tue, 21 Jan 2025 10:24:33 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1taIvk-0000Z2-MB
+ for qemu-devel@nongnu.org; Tue, 21 Jan 2025 13:24:53 -0500
+Received: from mail-wm1-x332.google.com ([2a00:1450:4864:20::332])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1taIvi-0000iJ-OT
+ for qemu-devel@nongnu.org; Tue, 21 Jan 2025 13:24:52 -0500
+Received: by mail-wm1-x332.google.com with SMTP id
+ 5b1f17b1804b1-4363ae65100so66602525e9.0
+ for <qemu-devel@nongnu.org>; Tue, 21 Jan 2025 10:24:50 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1737483887; x=1738088687; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=yOWRnxzAlHtI8QW2bVm0IK8CuRFXNnYXHyfDzPFWGXw=;
+ b=T55Xe0nbMxV0aCXyGIJwkEZiqpGDjGmdzhWkkzQ8QoUHQNxvcZ80QWlhpV52N37LDV
+ mwQTwvcbcQ/ZZ0Yjiw/JZCRsNJBMNGmgXYo/JvUMC859YSArfZdEtz8sbIRf2qrzsI7C
+ csywd3FtdOORHFfKyOuHbpbr8sQghbkDKKMSxr6Bv0dXFI8PspyE4fr7DzncpvaeXRVM
+ /xLj2KVfpaj/V+zKLRRFpgJxrfaM9FMWYqh/b6t+w2KbfeXoSMH/aTLneHaym5KbHK6s
+ Gvr3C8+TUYcDw+yFjOsP7QBfy2ePoHkTffhu8VK5Nvf1wO8DiUnvWhAXW0vj8my0pQZs
+ yJ7Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1737483872; x=1738088672;
- h=content-transfer-encoding:in-reply-to:organization:autocrypt
- :content-language:from:references:cc:to:subject:user-agent
- :mime-version:date:message-id:x-gm-message-state:from:to:cc:subject
- :date:message-id:reply-to;
- bh=z3achXjfure4B4kI7vvZKQv8XjdszCG6tMj8eEymL2U=;
- b=Mk1ODwOT0IGhznuiEdS9wudlNcCVfNsVOG7SBEu/0sI0syTu0se0xVyi4PqIiK3/02
- YHnShYeZRSk+byy/qzKr+BkjUxBohK0unDETGdeUuTEbHX4eIrYRTPwEESEEJrj52Svw
- J9B2zGDm/CenBzb9vfu/VsfFwX+bohe00wYD0MQjSmfFzPX44T3THXjt+/qLjjPj1IGc
- P1nnbkU8GPvHtfaglYw/G+IPlvva3Gb4Dwml0ifDmXauyjP6TcyZJua7PZljzGU0AvUP
- 6pD3dEexDNa+DgKf8iuaj0HtbpttYufb1+0uaezSkmeTwD7NoviZy4Fjl2QfX0YY4IYw
- GfMw==
-X-Gm-Message-State: AOJu0Yw2KCFxqLEej9qMkwrqB+ay0rVKp9LTOnqZyG8KEe78t2+5yvPA
- R18Stb3XgvGxU/Ard16BRIVuiYxpRnqztww3HMnkhj3Gh1wtufa1M+m3EsbEAxmG0B2eZNLgQ89
- 2tqDLwEJekj+yc+jbSux/N6LbrlZKLDG0wHPIfiBDVi1AvsBq411l
-X-Gm-Gg: ASbGncuhiqb39icK6WtAftGhHwNLHShl4ZEjsxkVFF0dRlNHVAfckmR9E5vk54sJcrF
- SX6h6h3U9yfZiwZUF41u0aGniySFwpXKRe9I0g3oowvpIx/KKLSRxXcQmSHvPYd8839YBnG/Lrh
- p04kq08zeo1Gx7GU/sOyiq6YUMMaSI1FXet7Xn0MYVIE651xN8GdhmVdPYdyetdiY87Iu9KR70O
- cg2LJawo2ImAPKQ4n/nJpqm3An9hlTCKr+926nXLryAsXswdNQUAMp1u0S0diW5vfMJ+BpPR6X3
- jBKTVQ6Wuo1M7mtXy0G1NGQMiJaqb3wI7s+EwGLBXGX5Uf1TfoIEMdx1EOZrGfnrNMfiwgBqIsz
- dGsIMl+ChEqCTr/m80XmzYw==
-X-Received: by 2002:a05:600c:511b:b0:435:14d:f61a with SMTP id
- 5b1f17b1804b1-438914304a8mr135686985e9.25.1737483872617; 
- Tue, 21 Jan 2025 10:24:32 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IGugEDzx6DotqTVZMxWmyk6FJUbSeGGDY9M+0hEsu3zBQ/SDJu8N/EQfuFc1vfSSGhX6b6HkA==
-X-Received: by 2002:a05:600c:511b:b0:435:14d:f61a with SMTP id
- 5b1f17b1804b1-438914304a8mr135686825e9.25.1737483872261; 
- Tue, 21 Jan 2025 10:24:32 -0800 (PST)
-Received: from ?IPV6:2003:cb:c709:6200:16ba:af70:999d:6a1a?
- (p200300cbc709620016baaf70999d6a1a.dip0.t-ipconnect.de.
- [2003:cb:c709:6200:16ba:af70:999d:6a1a])
- by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-437c753bee8sm251379565e9.34.2025.01.21.10.24.29
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 21 Jan 2025 10:24:30 -0800 (PST)
-Message-ID: <fa29f4ef-f67d-44d7-93f0-753437cf12cb@redhat.com>
-Date: Tue, 21 Jan 2025 19:24:29 +0100
+ d=1e100.net; s=20230601; t=1737483887; x=1738088687;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=yOWRnxzAlHtI8QW2bVm0IK8CuRFXNnYXHyfDzPFWGXw=;
+ b=nVJuT8GEdzaRk4YX9TCJmKC7vN14SHZvD1yCCnOuIeE4cbeRAFKndKY7qmUP0H2n8b
+ EA9jEYMeRyM2asJuXpYTacN64W3Hu/I5Kfb3gsHM1IrDiNEyLUrOY8n0CNHBkSyCfa7X
+ KDz400OZauVu6abKxBW6M73AXMLotudGtAbqrvcqVxTjkcCqIpgJ2mSb/xCn/kgXrjTn
+ 5yNvG2ppIzLH8KXNMgAAi0H99d8pYxFFJ2VTs1qyq5Txc8Og3ArA/hc+dU0IJopLRXx6
+ ZUffzr3KKvas8a3V01DhO+z2qy4XLz5zm37uEZE5AIXnpisrO+FM0Bmi95eO6BfGx/7v
+ pSsQ==
+X-Gm-Message-State: AOJu0YzFITF2q8fzT1Gg6dVcEGL8F3HevXARY6jINpqpUXLVdXp5vvam
+ NTCSgQImXJemjuG3c5p8kY9EpWKvOduZUWJ0yuKWWWI2w/9yUhmX0E0cfGEoLb77qAI5p6BFbNJ
+ QVi4=
+X-Gm-Gg: ASbGnctXxKv2R4ESErZdq+PejB7wEyX8pLooW0z7ek/NGiZaZiJNGq1rxm+jdV1a08q
+ QjR86W2wZpdF961GQ+OnvFBYteocfqfl7LPAuIOrzuHt/4Y8zgVRQ28aL5WKn+rQHiInI8wk20a
+ WOO1mIJk7MQHmV4fvyKBQdBMUEfIMbEKN8BFyANq1hAPV3rw3oakhtdU6hnZTmF9SGPYZoG86jb
+ S//x/B4eMcknQtiw0b6bZSF5S7kdOiwSH8x8eSx9PmVaEVpr7oJYcb1juw+y39TTvvch4EsuY8P
+ G5Tp+jUhkly0mdDupfPiNyoOvHWbp3mk18SxV5e9DnDK
+X-Google-Smtp-Source: AGHT+IHIwLozA0WPINB/9g9nPBA2u+Gan0zg/oLc2wmukMkfsqdIGHTjM88UoIOs6qTGjl9lJff4gg==
+X-Received: by 2002:a5d:5986:0:b0:38a:9fdb:7307 with SMTP id
+ ffacd0b85a97d-38bf57a7c07mr18556554f8f.43.1737483886934; 
+ Tue, 21 Jan 2025 10:24:46 -0800 (PST)
+Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
+ [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-38bf32222d1sm14183151f8f.38.2025.01.21.10.24.46
+ (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
+ Tue, 21 Jan 2025 10:24:46 -0800 (PST)
+From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+To: qemu-devel@nongnu.org
+Cc: Bernhard Beschow <shentey@gmail.com>,
+ Yoshinori Sato <ysato@users.sourceforge.jp>,
+ Magnus Damm <magnus.damm@gmail.com>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Subject: [PATCH] hw/sh4/r2d: Convert legacy qemu_allocate_irqs() to
+ qemu_init_irqs()
+Date: Tue, 21 Jan 2025 19:24:45 +0100
+Message-ID: <20250121182445.35309-1-philmd@linaro.org>
+X-Mailer: git-send-email 2.47.1
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 07/49] HostMem: Add mechanism to opt in kvm guest memfd
- via MachineState
-To: Peter Xu <peterx@redhat.com>, Michael Roth <michael.roth@amd.com>
-Cc: qemu-devel@nongnu.org, kvm@vger.kernel.org,
- Tom Lendacky <thomas.lendacky@amd.com>, Paolo Bonzini <pbonzini@redhat.com>,
- =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
- Markus Armbruster <armbru@redhat.com>, Pankaj Gupta <pankaj.gupta@amd.com>,
- Xiaoyao Li <xiaoyao.li@intel.com>,
- Isaku Yamahata <isaku.yamahata@linux.intel.com>
-References: <20240320083945.991426-1-michael.roth@amd.com>
- <20240320083945.991426-8-michael.roth@amd.com> <Z4_b3Lrpbnyzyros@x1n>
-From: David Hildenbrand <david@redhat.com>
-Content-Language: en-US
-Autocrypt: addr=david@redhat.com; keydata=
- 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
- WNyWQQ==
-Organization: Red Hat
-In-Reply-To: <Z4_b3Lrpbnyzyros@x1n>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=david@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -51
-X-Spam_score: -5.2
-X-Spam_bar: -----
-X-Spam_report: (-5.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-2.996,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.086,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::332;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x332.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -163,108 +99,134 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 21.01.25 18:39, Peter Xu wrote:
-> On Wed, Mar 20, 2024 at 03:39:03AM -0500, Michael Roth wrote:
->> From: Xiaoyao Li <xiaoyao.li@intel.com>
->>
->> Add a new member "guest_memfd" to memory backends. When it's set
->> to true, it enables RAM_GUEST_MEMFD in ram_flags, thus private kvm
->> guest_memfd will be allocated during RAMBlock allocation.
->>
->> Memory backend's @guest_memfd is wired with @require_guest_memfd
->> field of MachineState. It avoid looking up the machine in phymem.c.
->>
->> MachineState::require_guest_memfd is supposed to be set by any VMs
->> that requires KVM guest memfd as private memory, e.g., TDX VM.
->>
->> Signed-off-by: Xiaoyao Li <xiaoyao.li@intel.com>
->> Reviewed-by: David Hildenbrand <david@redhat.com>
->> ---
->> Changes in v4:
->>   - rename "require_guest_memfd" to "guest_memfd" in struct
->>     HostMemoryBackend;	(David Hildenbrand)
->> Signed-off-by: Michael Roth <michael.roth@amd.com>
->> ---
->>   backends/hostmem-file.c  | 1 +
->>   backends/hostmem-memfd.c | 1 +
->>   backends/hostmem-ram.c   | 1 +
->>   backends/hostmem.c       | 1 +
->>   hw/core/machine.c        | 5 +++++
->>   include/hw/boards.h      | 2 ++
->>   include/sysemu/hostmem.h | 1 +
->>   7 files changed, 12 insertions(+)
->>
->> diff --git a/backends/hostmem-file.c b/backends/hostmem-file.c
->> index ac3e433cbd..3c69db7946 100644
->> --- a/backends/hostmem-file.c
->> +++ b/backends/hostmem-file.c
->> @@ -85,6 +85,7 @@ file_backend_memory_alloc(HostMemoryBackend *backend, Error **errp)
->>       ram_flags |= fb->readonly ? RAM_READONLY_FD : 0;
->>       ram_flags |= fb->rom == ON_OFF_AUTO_ON ? RAM_READONLY : 0;
->>       ram_flags |= backend->reserve ? 0 : RAM_NORESERVE;
->> +    ram_flags |= backend->guest_memfd ? RAM_GUEST_MEMFD : 0;
->>       ram_flags |= fb->is_pmem ? RAM_PMEM : 0;
->>       ram_flags |= RAM_NAMED_FILE;
->>       return memory_region_init_ram_from_file(&backend->mr, OBJECT(backend), name,
->> diff --git a/backends/hostmem-memfd.c b/backends/hostmem-memfd.c
->> index 3923ea9364..745ead0034 100644
->> --- a/backends/hostmem-memfd.c
->> +++ b/backends/hostmem-memfd.c
->> @@ -55,6 +55,7 @@ memfd_backend_memory_alloc(HostMemoryBackend *backend, Error **errp)
->>       name = host_memory_backend_get_name(backend);
->>       ram_flags = backend->share ? RAM_SHARED : 0;
->>       ram_flags |= backend->reserve ? 0 : RAM_NORESERVE;
->> +    ram_flags |= backend->guest_memfd ? RAM_GUEST_MEMFD : 0;
->>       return memory_region_init_ram_from_fd(&backend->mr, OBJECT(backend), name,
->>                                             backend->size, ram_flags, fd, 0, errp);
->>   }
->> diff --git a/backends/hostmem-ram.c b/backends/hostmem-ram.c
->> index d121249f0f..f7d81af783 100644
->> --- a/backends/hostmem-ram.c
->> +++ b/backends/hostmem-ram.c
->> @@ -30,6 +30,7 @@ ram_backend_memory_alloc(HostMemoryBackend *backend, Error **errp)
->>       name = host_memory_backend_get_name(backend);
->>       ram_flags = backend->share ? RAM_SHARED : 0;
->>       ram_flags |= backend->reserve ? 0 : RAM_NORESERVE;
->> +    ram_flags |= backend->guest_memfd ? RAM_GUEST_MEMFD : 0;
->>       return memory_region_init_ram_flags_nomigrate(&backend->mr, OBJECT(backend),
->>                                                     name, backend->size,
->>                                                     ram_flags, errp);
-> 
-> These change look a bit confusing to me, as I don't see how gmemfd can be
-> used with either file or ram typed memory backends..
+The FPGA exposes a fixed set of IRQs. Hold them in the FPGA
+state and initialize them in place calling qemu_init_irqs().
 
-I recall that the following should work:
+Move r2d_fpga_irq enums earlier so we can use NR_IRQS within
+the r2d_fpga_t structure. r2d_fpga_init() returns r2d_fpga_t,
+and we dereference irq from it in r2d_init().
 
-"private" memory will come from guest_memfd, "shared" (as in, accessible 
-by the host) will come from anonymous memory.
+Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+---
+Based-on: <20250121155526.29982-2-philmd@linaro.org>
+          "hw/irq: Introduce qemu_init_irqs() helper"
+---
+ hw/sh4/r2d.c | 38 +++++++++++++++++++++-----------------
+ 1 file changed, 21 insertions(+), 17 deletions(-)
 
-This "anon" memory cannot be "shared" with other processes, but 
-virtio-kernel etc. can just use it.
-
-To "share" the memory with other processes, we'd need memfd/file.
-
-> 
-> When specified gmemfd=on with those, IIUC it'll allocate both the memory
-> (ramblock->host) and gmemfd, but without using ->host.  Meanwhile AFAIU the
-> ramblock->host will start to conflict with gmemfd in the future when it
-> might be able to be mapp-able (having valid ->host).
-
-These will require a new guest_memfd memory backend (I recall that was 
-discussed a couple of times).
-
-> 
-> I have a local fix for this (and actually more than below.. but starting
-> from it), I'm not sure whether I overlooked something, but from reading the
-> cover letter it's only using memfd backend which makes perfect sense to me
-> so far. 
-
-Does the anon+guest_memfd combination not work or are you speculating 
-about the usability (which I hopefully addressed above).
-
+diff --git a/hw/sh4/r2d.c b/hw/sh4/r2d.c
+index 2fa439819e3..d68c94e82ef 100644
+--- a/hw/sh4/r2d.c
++++ b/hw/sh4/r2d.c
+@@ -63,6 +63,12 @@
+ #define PA_VERREG 0x32
+ #define PA_OUTPORT 0x36
+ 
++enum r2d_fpga_irq {
++    PCI_INTD, CF_IDE, CF_CD, PCI_INTC, SM501, KEY, RTC_A, RTC_T,
++    SDCARD, PCI_INTA, PCI_INTB, EXT, TP,
++    NR_IRQS
++};
++
+ typedef struct {
+     uint16_t bcr;
+     uint16_t irlmsk;
+@@ -88,15 +94,10 @@ typedef struct {
+ 
+ /* output pin */
+     qemu_irq irl;
++    IRQState irq[NR_IRQS];
+     MemoryRegion iomem;
+ } r2d_fpga_t;
+ 
+-enum r2d_fpga_irq {
+-    PCI_INTD, CF_IDE, CF_CD, PCI_INTC, SM501, KEY, RTC_A, RTC_T,
+-    SDCARD, PCI_INTA, PCI_INTB, EXT, TP,
+-    NR_IRQS
+-};
+-
+ static const struct { short irl; uint16_t msk; } irqtab[NR_IRQS] = {
+     [CF_IDE] =   {  1, 1 << 9 },
+     [CF_CD] =    {  2, 1 << 8 },
+@@ -186,8 +187,8 @@ static const MemoryRegionOps r2d_fpga_ops = {
+     .endianness = DEVICE_NATIVE_ENDIAN,
+ };
+ 
+-static qemu_irq *r2d_fpga_init(MemoryRegion *sysmem,
+-                               hwaddr base, qemu_irq irl)
++static r2d_fpga_t *r2d_fpga_init(MemoryRegion *sysmem,
++                                 hwaddr base, qemu_irq irl)
+ {
+     r2d_fpga_t *s;
+ 
+@@ -197,7 +198,10 @@ static qemu_irq *r2d_fpga_init(MemoryRegion *sysmem,
+ 
+     memory_region_init_io(&s->iomem, NULL, &r2d_fpga_ops, s, "r2d-fpga", 0x40);
+     memory_region_add_subregion(sysmem, base, &s->iomem);
+-    return qemu_allocate_irqs(r2d_fpga_irq_set, s, NR_IRQS);
++
++    qemu_init_irqs(s->irq, NR_IRQS, r2d_fpga_irq_set, s);
++
++    return s;
+ }
+ 
+ typedef struct ResetData {
+@@ -239,13 +243,13 @@ static void r2d_init(MachineState *machine)
+     ResetData *reset_info;
+     struct SH7750State *s;
+     MemoryRegion *sdram = g_new(MemoryRegion, 1);
+-    qemu_irq *irq;
+     DriveInfo *dinfo;
+     DeviceState *dev;
+     SysBusDevice *busdev;
+     MemoryRegion *address_space_mem = get_system_memory();
+     PCIBus *pci_bus;
+     USBBus *usb_bus;
++    r2d_fpga_t *fpga;
+ 
+     cpu = SUPERH_CPU(cpu_create(machine->cpu_type));
+     env = &cpu->env;
+@@ -260,7 +264,7 @@ static void r2d_init(MachineState *machine)
+     memory_region_add_subregion(address_space_mem, SDRAM_BASE, sdram);
+     /* Register peripherals */
+     s = sh7750_init(cpu, address_space_mem);
+-    irq = r2d_fpga_init(address_space_mem, 0x04000000, sh7750_irl(s));
++    fpga = r2d_fpga_init(address_space_mem, 0x04000000, sh7750_irl(s));
+ 
+     dev = qdev_new("sh_pci");
+     busdev = SYS_BUS_DEVICE(dev);
+@@ -268,10 +272,10 @@ static void r2d_init(MachineState *machine)
+     pci_bus = PCI_BUS(qdev_get_child_bus(dev, "pci"));
+     sysbus_mmio_map(busdev, 0, P4ADDR(0x1e200000));
+     sysbus_mmio_map(busdev, 1, A7ADDR(0x1e200000));
+-    sysbus_connect_irq(busdev, 0, irq[PCI_INTA]);
+-    sysbus_connect_irq(busdev, 1, irq[PCI_INTB]);
+-    sysbus_connect_irq(busdev, 2, irq[PCI_INTC]);
+-    sysbus_connect_irq(busdev, 3, irq[PCI_INTD]);
++    sysbus_connect_irq(busdev, 0, &fpga->irq[PCI_INTA]);
++    sysbus_connect_irq(busdev, 1, &fpga->irq[PCI_INTB]);
++    sysbus_connect_irq(busdev, 2, &fpga->irq[PCI_INTC]);
++    sysbus_connect_irq(busdev, 3, &fpga->irq[PCI_INTD]);
+ 
+     dev = qdev_new("sysbus-sm501");
+     busdev = SYS_BUS_DEVICE(dev);
+@@ -281,13 +285,13 @@ static void r2d_init(MachineState *machine)
+     sysbus_realize_and_unref(busdev, &error_fatal);
+     sysbus_mmio_map(busdev, 0, 0x10000000);
+     sysbus_mmio_map(busdev, 1, 0x13e00000);
+-    sysbus_connect_irq(busdev, 0, irq[SM501]);
++    sysbus_connect_irq(busdev, 0, &fpga->irq[SM501]);
+ 
+     /* onboard CF (True IDE mode, Master only). */
+     dinfo = drive_get(IF_IDE, 0, 0);
+     dev = qdev_new("mmio-ide");
+     busdev = SYS_BUS_DEVICE(dev);
+-    sysbus_connect_irq(busdev, 0, irq[CF_IDE]);
++    sysbus_connect_irq(busdev, 0, &fpga->irq[CF_IDE]);
+     qdev_prop_set_uint32(dev, "shift", 1);
+     sysbus_realize_and_unref(busdev, &error_fatal);
+     sysbus_mmio_map(busdev, 0, 0x14001000);
 -- 
-Cheers,
-
-David / dhildenb
+2.47.1
 
 
