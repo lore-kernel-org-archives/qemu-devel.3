@@ -4,91 +4,61 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E32FBC02182
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E3360C0218B
 	for <qemu-devel@archiver.kernel.org>; Tue, 21 Jan 2025 16:16:49 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1taGv0-0006vU-Le; Tue, 21 Jan 2025 11:15:59 -0500
+	id 1taGvP-00075A-BQ; Tue, 21 Jan 2025 11:16:23 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1taGuz-0006vF-Kd
- for qemu-devel@nongnu.org; Tue, 21 Jan 2025 11:15:57 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <jonathan.cameron@huawei.com>)
+ id 1taGvM-00074Z-SW
+ for qemu-devel@nongnu.org; Tue, 21 Jan 2025 11:16:20 -0500
+Received: from frasgout.his.huawei.com ([185.176.79.56])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1taGuy-0005TG-21
- for qemu-devel@nongnu.org; Tue, 21 Jan 2025 11:15:57 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1737476154;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:
- content-transfer-encoding:content-transfer-encoding;
- bh=AomZICEblHmS2tRR/TpaOZIzaerzgfZ1jQ2NFE9RpzI=;
- b=CpL70nSRyyNwkqWyP5wr7/szLJYp/1KGvM9kc7FXpvfz/Icrw1bwWgjQIAStwUWgI4aqKq
- fIZRLWXLTtjSr1p9A8jZALLCKS401eyuaFoTtf0TtHadfAkJitNGdqEpF09QiqyKiejneg
- i4Ms8PzRUh6PwxVgXwwEy+KWbPLZrsE=
-Received: from mail-ed1-f71.google.com (mail-ed1-f71.google.com
- [209.85.208.71]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-636-wB4NRJGjOAKO0NmZaAFc0w-1; Tue, 21 Jan 2025 11:15:52 -0500
-X-MC-Unique: wB4NRJGjOAKO0NmZaAFc0w-1
-X-Mimecast-MFC-AGG-ID: wB4NRJGjOAKO0NmZaAFc0w
-Received: by mail-ed1-f71.google.com with SMTP id
- 4fb4d7f45d1cf-5daa661ec3dso7009961a12.3
- for <qemu-devel@nongnu.org>; Tue, 21 Jan 2025 08:15:52 -0800 (PST)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1737476151; x=1738080951;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=AomZICEblHmS2tRR/TpaOZIzaerzgfZ1jQ2NFE9RpzI=;
- b=sGDC38vTn0Q0qP4fV4lQS6SXUmU/a1+rrc/F1aGSgoTK8dVsDNDTxBp2Gfq3YKaYXu
- c9e46y6XGGbAjc4E43s1xtdUgdz484onMQLv9nPkx7nr/44o0z3SNgdP3vKjghxE9uLg
- RbxKW+gzV6DLjDI8pWzX6YKjTJWP3hEktrfjq+Mihap2aQLBljUBOXR4y5l+GOVN5q1e
- qphuprp2T6b0hkJVgHffid9bPU2qzS0YLfk/92qfCKeVkUlm80oAPpKkEeCrHPMZUeK9
- qw/FBlgLjR+kz3ECBN3o05x7F7UPChaIumRSERSv4v4/atzv4HhbHuxRZlg/6EV8iBkN
- sc4w==
-X-Gm-Message-State: AOJu0Yze9DcFz3pRrnT9B1eb2YOpwmbtwf9wneyKYa20bvyxurjhDJu6
- t7tvRCvpw1Wc+KFYCw4rGmuggcVm+NZst+zvHnVQv2q/tfq5qOVbH9d0QR/lpO2HufB3rwfvfue
- zqfzFvs2+rv2fTMe4u5KbvPbxIh4EjlPLbDErRb88xHsfHlHWlDYOMfDEgOm1fDm5qTImWf8QA9
- riZslsxL5PGO1+pWcCpCE2noZWM7PmTjgs1ZxuEyU=
-X-Gm-Gg: ASbGncuC6RWXPF9Ukg77VMk0PeZtEGbWncMwmxIgudjQlWF7IZ636uVu43c0L7HWwEe
- 2pnP3L6yxmsCy3De3Oa6/FlA2gQkghXZPvlzQ5xFeeIr6XfBY/+MLykF52l1h0B9sG1QcAeY/2k
- fkEPIoI+/A97DZTFIh4mHNGTUiv+aQhpgUeBIRzf0IxDr5D44STgFabO3ZX0uSSsYapvot/8gol
- 1lmr9ipDFAzqe2OzdFzcC0XGNmXj68gxZ6HC3zSmkp3Bagzo5/TQU/6fo6obdHTOQUfeuWNcg==
-X-Received: by 2002:a05:6402:5207:b0:5d9:82bc:ad05 with SMTP id
- 4fb4d7f45d1cf-5db7d2f58c3mr16041510a12.8.1737476150799; 
- Tue, 21 Jan 2025 08:15:50 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IHopTWTbupbzDs6KZOqTeKtPALXTbAsTN1hhb51iQQdhQisM7VgB1bsuqHoJ2TupyP7ZsjSIw==
-X-Received: by 2002:a05:6402:5207:b0:5d9:82bc:ad05 with SMTP id
- 4fb4d7f45d1cf-5db7d2f58c3mr16041467a12.8.1737476150268; 
- Tue, 21 Jan 2025 08:15:50 -0800 (PST)
-Received: from [192.168.10.3] ([176.206.124.70])
- by smtp.gmail.com with ESMTPSA id
- 4fb4d7f45d1cf-5db73eb5b64sm7102643a12.57.2025.01.21.08.15.49
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 21 Jan 2025 08:15:49 -0800 (PST)
-From: Paolo Bonzini <pbonzini@redhat.com>
-To: qemu-devel@nongnu.org
-Cc: qemu-rust@nongnu.org
-Subject: [PATCH] rust: pl011: fix repr(C) for PL011Class
-Date: Tue, 21 Jan 2025 17:15:46 +0100
-Message-ID: <20250121161546.2233086-1-pbonzini@redhat.com>
-X-Mailer: git-send-email 2.47.1
+ (Exim 4.90_1) (envelope-from <jonathan.cameron@huawei.com>)
+ id 1taGvK-0005Wh-BW
+ for qemu-devel@nongnu.org; Tue, 21 Jan 2025 11:16:20 -0500
+Received: from mail.maildlp.com (unknown [172.18.186.31])
+ by frasgout.his.huawei.com (SkyGuard) with ESMTP id 4YcsjC0JKsz6FGVk;
+ Wed, 22 Jan 2025 00:14:23 +0800 (CST)
+Received: from frapeml500008.china.huawei.com (unknown [7.182.85.71])
+ by mail.maildlp.com (Postfix) with ESMTPS id E885714034D;
+ Wed, 22 Jan 2025 00:16:12 +0800 (CST)
+Received: from localhost (10.203.177.66) by frapeml500008.china.huawei.com
+ (7.182.85.71) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.1.2507.39; Tue, 21 Jan
+ 2025 17:16:12 +0100
+Date: Tue, 21 Jan 2025 16:16:10 +0000
+To: Zhi Wang <zhiw@nvidia.com>
+CC: <qemu-devel@nongnu.org>, <dan.j.williams@intel.com>,
+ <dave.jiang@intel.com>, <ira.weiny@intel.com>, <fan.ni@samsung.com>,
+ <alex.williamson@redhat.com>, <alucerop@amd.com>, <clg@redhat.com>,
+ <acurrid@nvidia.com>, <cjia@nvidia.com>, <smitra@nvidia.com>,
+ <ankita@nvidia.com>, <aniketa@nvidia.com>, <kwankhede@nvidia.com>,
+ <targupta@nvidia.com>, <zhiwang@kernel.org>
+Subject: Re: [PATCH 3/3] hw/cxl: introduce CXL type-2 device emulation
+Message-ID: <20250121161610.000025af@huawei.com>
+In-Reply-To: <20241212130422.69380-4-zhiw@nvidia.com>
+References: <20241212130422.69380-1-zhiw@nvidia.com>
+ <20241212130422.69380-4-zhiw@nvidia.com>
+X-Mailer: Claws Mail 4.3.0 (GTK 3.24.42; x86_64-w64-mingw32)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -51
-X-Spam_score: -5.2
-X-Spam_bar: -----
-X-Spam_report: (-5.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-2.996,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.086,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Type: text/plain; charset="US-ASCII"
+Content-Transfer-Encoding: 7bit
+X-Originating-IP: [10.203.177.66]
+X-ClientProxiedBy: lhrpeml500011.china.huawei.com (7.191.174.215) To
+ frapeml500008.china.huawei.com (7.182.85.71)
+Received-SPF: pass client-ip=185.176.79.56;
+ envelope-from=jonathan.cameron@huawei.com; helo=frasgout.his.huawei.com
+X-Spam_score_int: -42
+X-Spam_score: -4.3
+X-Spam_bar: ----
+X-Spam_report: (-4.3 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_MED=-2.3,
+ RCVD_IN_MSPIKE_H2=-0.086, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -101,27 +71,121 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-to:  Jonathan Cameron <Jonathan.Cameron@huawei.com>
+From:  Jonathan Cameron via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
----
- rust/hw/char/pl011/src/device.rs | 1 +
- 1 file changed, 1 insertion(+)
+On Thu, 12 Dec 2024 05:04:22 -0800
+Zhi Wang <zhiw@nvidia.com> wrote:
 
-diff --git a/rust/hw/char/pl011/src/device.rs b/rust/hw/char/pl011/src/device.rs
-index c95ab49fd62..4f1080ff19f 100644
---- a/rust/hw/char/pl011/src/device.rs
-+++ b/rust/hw/char/pl011/src/device.rs
-@@ -130,6 +130,7 @@ pub struct PL011State {
- 
- qom_isa!(PL011State : SysBusDevice, DeviceState, Object);
- 
-+#[repr(C)]
- pub struct PL011Class {
-     parent_class: <SysBusDevice as ObjectType>::Class,
-     /// The byte string that identifies the device.
--- 
-2.47.1
+> From: Zhi Wang <zhiwang@kernel.org>
+> 
+> Introduce a CXL type-2 device emulation that provides a minimum base for
+> testing kernel CXL core type-2 support and CXL type-2 virtualization. It
+> is also a good base for introducing the more emulated features.
+> 
+> Currently, it only supports:
+> 
+> - Emulating component registers with HDM decoders.
+> - Volatile memory backend and emualtion of region access.
+> 
+> The emulation is aimed to not tightly coupled with the current CXL type-3
+> emulation since many advanced CXL type-3 emulation features are not
+> implemented in a CXL type-2 device.
+> 
+> Co-developed-by: Ira Weiny <ira.weiny@intel.com>
+> Signed-off-by: Zhi Wang <zhiwang@kernel.org>
+
+Hi Zhi,
+
+A few passing comments.
+
+Jonathan
+
+> diff --git a/hw/mem/cxl_accel.c b/hw/mem/cxl_accel.c
+> new file mode 100644
+> index 0000000000..770072126d
+> --- /dev/null
+> +++ b/hw/mem/cxl_accel.c
+> @@ -0,0 +1,319 @@
+
+> +
+> +static void update_dvsecs(CXLAccelDev *acceld)
+
+Just to make them easier to search for and void clashes, good to prefix
+all functions with cxlacc or something like that.
+
+> +{
+
+/...
+
+
+> +static Property cxl_accel_props[] = {
+> +    DEFINE_PROP_LINK("volatile-memdev", CXLAccelDev, hostvmem,
+> +                     TYPE_MEMORY_BACKEND, HostMemoryBackend *),
+
+Does backing a type 2 device with a memdev provide any advantages?
+I'd have thought a device specific memory allocation would make more
+sense, like we'd do for a memory BAR on a PCI device.  That might
+complicate the cxl-host handling though so perhaps this is a good
+way to go for now.
+
+
+> +    DEFINE_PROP_END_OF_LIST(),
+
+When you get time, rebase as these have gone away recently.
+I aim to get a fresher staging tree out shortly.
+
+> +};
+> +
+> +static void cxl_accel_class_init(ObjectClass *oc, void *data)
+> +{
+> +    DeviceClass *dc = DEVICE_CLASS(oc);
+> +    PCIDeviceClass *pc = PCI_DEVICE_CLASS(oc);
+> +
+> +    pc->realize = cxl_accel_realize;
+> +    pc->exit = cxl_accel_exit;
+> +
+> +    pc->class_id = PCI_CLASS_CXL_QEMU_ACCEL;
+> +    pc->vendor_id = PCI_VENDOR_ID_INTEL;
+> +    pc->device_id = 0xd94;
+
+If you are posting these I hope you have those IDs reserved
+(which seems unlikely ;)
+We need to be absolutely sure we never hit an existing ID which generally
+means you need to find whoever controls those allocations in your company
+and get them to give you an ID for this.
+
+> +    pc->revision = 1;
+> +
+> +    set_bit(DEVICE_CATEGORY_STORAGE, dc->categories);
+> +    dc->desc = "CXL Accelerator Device (Type 2)";
+> +    device_class_set_legacy_reset(dc, cxl_accel_reset);
+> +    device_class_set_props(dc, cxl_accel_props);
+> +}
+
+>  void cxl_event_init(CXLDeviceState *cxlds, int start_msg_num);
+> diff --git a/include/hw/pci/pci_ids.h b/include/hw/pci/pci_ids.h
+> index f1a53fea8d..08bc469316 100644
+> --- a/include/hw/pci/pci_ids.h
+> +++ b/include/hw/pci/pci_ids.h
+> @@ -55,6 +55,7 @@
+>  #define PCI_CLASS_MEMORY_RAM             0x0500
+>  #define PCI_CLASS_MEMORY_FLASH           0x0501
+>  #define PCI_CLASS_MEMORY_CXL             0x0502
+> +#define PCI_CLASS_CXL_QEMU_ACCEL         0x0503
+
+Either this is a real device class (which seems unlikely given the name)
+or you need to choose something else.  PCI maintains a big list of
+class codes and currently 0x0502 is the highest one define in baseclass 05h
+(memory controllers)
+
+https://members.pcisig.com/wg/PCI-SIG/document/20113
+(behind a pcisig login)
+
+>  #define PCI_CLASS_MEMORY_OTHER           0x0580
+>  
+>  #define PCI_BASE_CLASS_BRIDGE            0x06
 
 
