@@ -4,98 +4,91 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CAF48C02182
-	for <qemu-devel@archiver.kernel.org>; Tue, 21 Jan 2025 18:19:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 09F4DC02182
+	for <qemu-devel@archiver.kernel.org>; Tue, 21 Jan 2025 18:23:07 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1taIpI-0005kp-W8; Tue, 21 Jan 2025 13:18:13 -0500
+	id 1taItO-0006sV-E4; Tue, 21 Jan 2025 13:22:26 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1taIpD-0005kZ-2J
- for qemu-devel@nongnu.org; Tue, 21 Jan 2025 13:18:07 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1taIpA-0008Ng-GE
- for qemu-devel@nongnu.org; Tue, 21 Jan 2025 13:18:06 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1737483481;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=ocOHFAZAwjFZIYfocUP33NOuDTCEUHrzSFH0aOCaMiI=;
- b=d109pl3upCy+r7N4kYAcONkYR1NJnMnTRW0EP9XX3PD1kLMAQnEP1vJHUVmUCi2OKDNwUs
- 5ty9npPNnIHKNcSWcCKYLVU28irndGubq0Gj4uplkJ8Vam6zSXjrL8wrPE5e8wxmY7OYH1
- 5s8y8Q9e/8afE2dbU4d2c2F+/rx2euI=
-Received: from mail-qk1-f197.google.com (mail-qk1-f197.google.com
- [209.85.222.197]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-257-VQ1hKqqqO0Ou-l1uiNnELw-1; Tue, 21 Jan 2025 13:17:58 -0500
-X-MC-Unique: VQ1hKqqqO0Ou-l1uiNnELw-1
-X-Mimecast-MFC-AGG-ID: VQ1hKqqqO0Ou-l1uiNnELw
-Received: by mail-qk1-f197.google.com with SMTP id
- af79cd13be357-7b6ebe1ab63so1651654585a.1
- for <qemu-devel@nongnu.org>; Tue, 21 Jan 2025 10:17:58 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1taItF-0006nh-9i
+ for qemu-devel@nongnu.org; Tue, 21 Jan 2025 13:22:19 -0500
+Received: from mail-wm1-x331.google.com ([2a00:1450:4864:20::331])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1taItC-0000S1-H0
+ for qemu-devel@nongnu.org; Tue, 21 Jan 2025 13:22:17 -0500
+Received: by mail-wm1-x331.google.com with SMTP id
+ 5b1f17b1804b1-43675b1155bso69017795e9.2
+ for <qemu-devel@nongnu.org>; Tue, 21 Jan 2025 10:22:13 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1737483732; x=1738088532; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=mrPZQDzms8mBGEhRALhXb1qTfXO5XhH+ZdNL3PgKFa0=;
+ b=zX9HnhOusO/Ax8yrJqyEH3h2gaEO+BHYWXxGg96FrwukLHPId7yh9IxiJpqT5FOxLg
+ lQWJQk6z+Z/3Zvrh1yZevhO70bRs3iq5FAvvDRcTTKiwrxA6q3XtycKFkgTqHZqK1nVq
+ AJq8bqVx8w7aedJg+cPKOnpMFZMiTjdD6IJ0usxMGV0Gf0pZzUVCNkG5Qk/V7tJs5A8D
+ 8eV5YjVzk7UfsVsLyVk0FXaFrazPl7mLiFhbgoNelNHI/rCXRL17viP6tBHsoEMeEw4S
+ rvEDWKqM6SdSTfmLm7ctSwVfhhoIDOP1NtrhRhexYdx9n0zm82bFayHQaf056WMhuwNZ
+ K99w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1737483478; x=1738088278;
- h=in-reply-to:content-transfer-encoding:content-disposition
- :mime-version:references:message-id:subject:cc:to:from:date
+ d=1e100.net; s=20230601; t=1737483732; x=1738088532;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=ocOHFAZAwjFZIYfocUP33NOuDTCEUHrzSFH0aOCaMiI=;
- b=aAqRDjQ9pQmQNt2Qry3o3cVIxtlAVxJ0hPrmshtgIy9KCzET4N5yw3Nkr47DETTkN9
- CYt7ctuy5Rgs4aCbg1u41tDUATZgYcyNLSMcN2gfWsC2/tGZhb1dUzkucllwZcoYIReL
- NDORMAsgx+38A2xHx26Bs6ubGxKHEj3gP9DGpf7dEJJ1X0EKBpBOjmYXqGtd4um1oTUF
- gmTimsNySgqCpD07LanrnE5Z4G34GzIHLEzZq9tAL5pG6OyCOh1XPu90AFlNanACS560
- uyMvvLZd+skz5VvHYe6oV9cwF0cOl97eb0DVOkriSdHzLb7Ib2PWlRV0IqJvwPWbUoXr
- dPbg==
+ bh=mrPZQDzms8mBGEhRALhXb1qTfXO5XhH+ZdNL3PgKFa0=;
+ b=LXN8144CO8psWU2A0O2exnH3qld5c1QcqIRoklXBNlRefOzcLoLfsQec2IAYTKq+3X
+ dUbldgPr9pF9VWlycK6f7KI3l+fHyx0kHoj+TT9KFYminC6N9igt/mnDq7atqh7SLiTq
+ fcrP1nnRG1SYkJdMfTTtJLhdT5S+6rBoTw3YafVtVRZ/r+iPTBuTiFVzb9i29bG7y4BV
+ CTxa2JYnZ327BALVCBq4JN0cXEdT5Q2sTY7VFI+njnoXtSqs7q+y/XdVit1L6l6jB2HI
+ 0KX9HH3Nwb/tzwySLivW6pYWwIRNRjBShPwtajuH1aNbEIeu+4lf91t39mgIxplcT5nB
+ nUug==
 X-Forwarded-Encrypted: i=1;
- AJvYcCWYMR78BZTgme6nrVP+Vpv1S3l8TiaiYOC8kDmPFLxEEO0xn3CcGnm+K0TXfizclFrwp/G0NtJ6QQQK@nongnu.org
-X-Gm-Message-State: AOJu0Yyj1RIIR9iNqm3Yp8P0OVu5Yh1jn/j/h+BS/zYHDZxgriWibG6q
- ndE7YLOA9Mk+J3dFUlNq8bdhva91qGVBhVNPX6DLHqVtd3phzeDJT/QLqfO8Fx7ipwoA1jKfZ8t
- ts4J7Jpqbmmp/oiUrm20JO6vei2so1VUUG+r9APR65RTT+QD1L3yY
-X-Gm-Gg: ASbGncuoRbOQ9tEBL5TkD04Lk4NrmnXn8TbIGdFpQ87kMNHHCKNzABq/zm7uZ+kBGMg
- tXdIPnMQ+vVKTizON4ujKVFo92yuUqYZP/v9pMg6jnp/uil3pktOKa0AbQFWadhVC5Ke/pOuBrX
- ZlloEOEm0NkElohg+aeFYEk8yXJeG7KNvU8rBZkgay8nOxuqMHmknkMkyKpoUMtTtWep1wF8dvi
- Yy4o5n8aEKrFPh87OtQuedHmNwqLcas2feVPl/kiBbO+OFTmvPMm0EUt8vaCAbjKScrKxIuA9T9
- 750xXlXJoBxvXr2abdU8SgQh4YBkc1A=
-X-Received: by 2002:a05:620a:2894:b0:7b6:e47a:8e14 with SMTP id
- af79cd13be357-7be6324fb5cmr2791329185a.35.1737483478246; 
- Tue, 21 Jan 2025 10:17:58 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IGXbRxKwoRt8zrHI/Un52UwCBfvEkQ7X1i8KsXNExg4qI/3ZlXLKQPT5YwidU3Qtoqrf59LgQ==
-X-Received: by 2002:a05:620a:2894:b0:7b6:e47a:8e14 with SMTP id
- af79cd13be357-7be6324fb5cmr2791325885a.35.1737483477913; 
- Tue, 21 Jan 2025 10:17:57 -0800 (PST)
-Received: from x1n (pool-99-254-114-190.cpe.net.cable.rogers.com.
- [99.254.114.190]) by smtp.gmail.com with ESMTPSA id
- af79cd13be357-7be6147fb69sm578545585a.33.2025.01.21.10.17.56
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 21 Jan 2025 10:17:57 -0800 (PST)
-Date: Tue, 21 Jan 2025 13:17:54 -0500
-From: Peter Xu <peterx@redhat.com>
-To: =?utf-8?Q?=E2=80=9CWilliam?= Roche <william.roche@oracle.com>
-Cc: david@redhat.com, qemu-devel@nongnu.org, pbonzini@redhat.com,
- philmd@linaro.org
-Subject: Re: [PATCH 1/1] system/physmem: take into account fd_offset for file
- fallocate
-Message-ID: <Z4_k0u7Gdv5OKa3S@x1n>
-References: <20250121175956.3030149-1-william.roche@oracle.com>
- <20250121175956.3030149-2-william.roche@oracle.com>
+ AJvYcCUxQZQiCnvOiClCN8i8bBII2FK5rNvOtboZTa2p0gPSbRmRMAd1iIOllKcaf7uuQgEkCB8uMlprlbJQ@nongnu.org
+X-Gm-Message-State: AOJu0YxMWxYk6/s9ChWz9lTc23NiKgyJSvCr0S+9C2Ctgkgp1eoWHCBI
+ lFSkAynxfzF0xLFQeAFNNzhLX2wgBM0rxMiupo6BYpxFbL866t+Nestt12wVfQA=
+X-Gm-Gg: ASbGncvfZ/iTZ2/qdfGrlBN6wPyCjtVOe5qs33+JTiRSubuEIZRcNFngUwuDz8BNlfm
+ LWDHP6d/cpx35Q+KsibweJEVREckwUE4t5VtoHfZ3nC32FSH8lHvQZOD+SCVrjukXHtGbr2KhHN
+ 1Du6yaU4BknNGr3Kx4Y4PY+cWPCa0N8g7BhaagxkLKhG1mGfTGY1iODqSCOtGNgNeztA/WA3skE
+ qeKbozrqtO2c51Jwuc7EU+k/A101VmuZ4ArUT+cbaw1hmU7Cg+LYWORbHSGbWR4MQ5zleT3wLC3
+ H5LCHe1N9xOEAlCMQStrLgzsHa2YmRoZWJNH4w==
+X-Google-Smtp-Source: AGHT+IGOUjAg7lHe1XSgaS53ATmwTHEppR1Rhy9SaB4yEw6eDuKOJmxDboSWjFPRyeVawAGT4+edUw==
+X-Received: by 2002:a05:600c:1da1:b0:434:a202:7a0d with SMTP id
+ 5b1f17b1804b1-4389141c227mr153198725e9.22.1737483731964; 
+ Tue, 21 Jan 2025 10:22:11 -0800 (PST)
+Received: from [192.168.69.181] (88-187-86-199.subs.proxad.net.
+ [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-43890408a66sm191775905e9.5.2025.01.21.10.22.11
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Tue, 21 Jan 2025 10:22:11 -0800 (PST)
+Message-ID: <93f508f5-d38c-4565-be45-eeec3428208a@linaro.org>
+Date: Tue, 21 Jan 2025 19:22:10 +0100
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v3 1/2] target/riscv/debug.c: use wp size = 4 for 32-bit
+ CPUs
+To: Daniel Henrique Barboza <dbarboza@ventanamicro.com>, qemu-devel@nongnu.org
+Cc: qemu-riscv@nongnu.org, alistair.francis@wdc.com, bmeng@tinylab.org,
+ liwei1518@gmail.com, zhiwei_liu@linux.alibaba.com, palmer@rivosinc.com,
+ richard.henderson@linaro.org
+References: <20250121170626.1992570-1-dbarboza@ventanamicro.com>
+ <20250121170626.1992570-2-dbarboza@ventanamicro.com>
+Content-Language: en-US
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <20250121170626.1992570-2-dbarboza@ventanamicro.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <20250121175956.3030149-2-william.roche@oracle.com>
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=peterx@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -50
-X-Spam_score: -5.1
-X-Spam_bar: -----
-X-Spam_report: (-5.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-2.996,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Received-SPF: pass client-ip=2a00:1450:4864:20::331;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x331.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -111,84 +104,40 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, Jan 21, 2025 at 05:59:56PM +0000, “William Roche wrote:
-> From: William Roche <william.roche@oracle.com>
+On 21/1/25 18:06, Daniel Henrique Barboza wrote:
+> The mcontrol select bit (19) is always zero, meaning our triggers will
+> always match virtual addresses. In this condition, if the user does not
+> specify a size for the trigger, the access size defaults to XLEN.
 > 
-> Punching a hole in a file with fallocate needs to take into account the
-> fd_offset value for a correct file location.
+> At this moment we're using def_size = 8 regardless of CPU XLEN. Use
+> def_size = 4 in case we're running 32 bits.
 > 
-> Fixes: 4b870dc4d0c0 ("hostmem-file: add offset option")
-> 
-> Signed-off-by: William Roche <william.roche@oracle.com>
+> Fixes: 95799e36c1 ("target/riscv: Add initial support for the Sdtrig extension")
+> Signed-off-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
 > ---
->  system/physmem.c | 14 ++++++++------
->  1 file changed, 8 insertions(+), 6 deletions(-)
+>   target/riscv/debug.c | 6 ++++--
+>   1 file changed, 4 insertions(+), 2 deletions(-)
 > 
-> diff --git a/system/physmem.c b/system/physmem.c
-> index c76503aea8..687ca94875 100644
-> --- a/system/physmem.c
-> +++ b/system/physmem.c
-> @@ -3689,18 +3689,20 @@ int ram_block_discard_range(RAMBlock *rb, uint64_t start, size_t length)
->              }
->  
->              ret = fallocate(rb->fd, FALLOC_FL_PUNCH_HOLE | FALLOC_FL_KEEP_SIZE,
-> -                            start, length);
-> +                            start + rb->fd_offset, length);
->              if (ret) {
->                  ret = -errno;
->                  error_report("%s: Failed to fallocate %s:%" PRIx64 " +%zx (%d)",
-> -                             __func__, rb->idstr, start, length, ret);
-> +                             __func__, rb->idstr, start + rb->fd_offset, length,
-> +                             ret);
->                  goto err;
->              }
->  #else
->              ret = -ENOSYS;
->              error_report("%s: fallocate not available/file"
->                           "%s:%" PRIx64 " +%zx (%d)",
-> -                         __func__, rb->idstr, start, length, ret);
-> +                         __func__, rb->idstr, start + rb->fd_offset, length,
-> +                         ret);
->              goto err;
->  #endif
->          }
+> diff --git a/target/riscv/debug.c b/target/riscv/debug.c
+> index f6241a80be..9db4048523 100644
+> --- a/target/riscv/debug.c
+> +++ b/target/riscv/debug.c
+> @@ -478,7 +478,7 @@ static void type2_breakpoint_insert(CPURISCVState *env, target_ulong index)
+>       bool enabled = type2_breakpoint_enabled(ctrl);
+>       CPUState *cs = env_cpu(env);
+>       int flags = BP_CPU | BP_STOP_BEFORE_ACCESS;
+> -    uint32_t size;
+> +    uint32_t size, def_size;
+>   
+>       if (!enabled) {
+>           return;
+> @@ -501,7 +501,9 @@ static void type2_breakpoint_insert(CPURISCVState *env, target_ulong index)
+>               cpu_watchpoint_insert(cs, addr, size, flags,
+>                                     &env->cpu_watchpoint[index]);
+>           } else {
+> -            cpu_watchpoint_insert(cs, addr, 8, flags,
+> +            def_size = riscv_cpu_mxl(env) == MXL_RV64 ? 8 : 4;
 
-We do have plenty of fd_offset bugs then.. this makes sense to me. Nitpick
-is we could use a var to cache the total offset.
-
-> @@ -3748,17 +3750,17 @@ int ram_block_discard_guest_memfd_range(RAMBlock *rb, uint64_t start,
->  
->  #ifdef CONFIG_FALLOCATE_PUNCH_HOLE
->      ret = fallocate(rb->guest_memfd, FALLOC_FL_PUNCH_HOLE | FALLOC_FL_KEEP_SIZE,
-> -                    start, length);
-> +                    start + rb->offset, length);
->  
->      if (ret) {
->          ret = -errno;
->          error_report("%s: Failed to fallocate %s:%" PRIx64 " +%zx (%d)",
-> -                     __func__, rb->idstr, start, length, ret);
-> +                     __func__, rb->idstr, start + rb->fd_offset, length, ret);
->      }
->  #else
->      ret = -ENOSYS;
->      error_report("%s: fallocate not available %s:%" PRIx64 " +%zx (%d)",
-> -                 __func__, rb->idstr, start, length, ret);
-> +                 __func__, rb->idstr, start + rb->fd_offset, length, ret);
->  #endif
-
-IIUC the offset doesn't apply to gmemfd, see:
-
-        new_block->guest_memfd = kvm_create_guest_memfd(new_block->max_length,
-                                                        0, errp);
-
-So my understanding is no matter how the host offset was specified, it
-ignores it at least in the qemu gmemfd code to always offset from 0, which
-makes sense to me, as gmemfd is anonymous anyway, and can be created more
-than one for each VM, so I don't yet see why a gmemfd needs an offset indeed.
-
-Thanks,
-
--- 
-Peter Xu
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 
 
