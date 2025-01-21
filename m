@@ -4,73 +4,87 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4D20CC02182
-	for <qemu-devel@archiver.kernel.org>; Tue, 21 Jan 2025 11:30:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 40EB6C02182
+	for <qemu-devel@archiver.kernel.org>; Tue, 21 Jan 2025 11:31:42 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1taCRD-0002SI-Hd; Tue, 21 Jan 2025 06:28:56 -0500
+	id 1taCTB-000301-LN; Tue, 21 Jan 2025 06:30:57 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1taCRA-0002S5-Lt
- for qemu-devel@nongnu.org; Tue, 21 Jan 2025 06:28:52 -0500
-Received: from mgamail.intel.com ([198.175.65.20])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1taCR6-00015U-01
- for qemu-devel@nongnu.org; Tue, 21 Jan 2025 06:28:52 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
- d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1737458928; x=1768994928;
- h=date:from:to:cc:subject:message-id:references:
- mime-version:in-reply-to;
- bh=qMhehAUOPAqa5X7J6dq6GW6QEAdV5p3S6NmI3tFCAxM=;
- b=lkMvXTIYbyJitHcrlZY2khDh+Zqnl5mKERnWt8v/qmCzgj3nLrdAEKTn
- 2Ukp2cV2TMedONjC9aoy1lDdQODMxQtlR87aq+u8Vq+e3IHVkdaJ2eZV0
- +hnjU39daHKRefjBesYP9PoG+dU81jQu4IOzmtzn3zNgIaXOgeXKPiw3g
- BxN5LLMRNKPhAlwuy6HGAxV6abSpf1S0kwgP5a2BUUEXJTy4E0qisGHZC
- qZD/Vu4O5tJ5LTmWCZNV1dKpWYH/Ho6iUEuTRM92oslLHImw5f+dTmKyI
- N4aow//UDV24ReyiBxN7R8w3Rq2kpGqsRXL6IEubamfnoAc8HTck3SVFq w==;
-X-CSE-ConnectionGUID: FozE5icuRV+IrjImBtWrZA==
-X-CSE-MsgGUID: CuddopwNS5WshFTq2FwD0w==
-X-IronPort-AV: E=McAfee;i="6700,10204,11321"; a="37564141"
-X-IronPort-AV: E=Sophos;i="6.13,221,1732608000"; d="scan'208";a="37564141"
-Received: from orviesa008.jf.intel.com ([10.64.159.148])
- by orvoesa112.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 21 Jan 2025 03:28:43 -0800
-X-CSE-ConnectionGUID: X/Yevj0VQ8KUO9ShoOtb2A==
-X-CSE-MsgGUID: XZ+14qdCScmyNhPMstuaNg==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.12,224,1728975600"; d="scan'208";a="107680168"
-Received: from liuzhao-optiplex-7080.sh.intel.com (HELO localhost)
- ([10.239.160.39])
- by orviesa008.jf.intel.com with ESMTP; 21 Jan 2025 03:28:41 -0800
-Date: Tue, 21 Jan 2025 19:48:02 +0800
-From: Zhao Liu <zhao1.liu@intel.com>
-To: Ani Sinha <anisinha@redhat.com>
-Cc: Sergio Lopez <slp@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- Eduardo Habkost <eduardo@habkost.net>,
- "Michael S. Tsirkin" <mst@redhat.com>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>, imammedo@redhat.com,
- qemu-devel@nongnu.org
-Subject: Re: [PATCH v3] hw/i386/cpu: remove default_cpu_version and simplify
-Message-ID: <Z4+Jct1P0Tj4tobY@intel.com>
-References: <20250116033418.226051-1-anisinha@redhat.com>
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1taCT3-0002xt-ND
+ for qemu-devel@nongnu.org; Tue, 21 Jan 2025 06:30:49 -0500
+Received: from mail-wr1-x430.google.com ([2a00:1450:4864:20::430])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1taCSZ-0001uS-BI
+ for qemu-devel@nongnu.org; Tue, 21 Jan 2025 06:30:25 -0500
+Received: by mail-wr1-x430.google.com with SMTP id
+ ffacd0b85a97d-385e27c75f4so4543317f8f.2
+ for <qemu-devel@nongnu.org>; Tue, 21 Jan 2025 03:30:18 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1737459016; x=1738063816; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=0rtGCuKXTuEWbszCwRV5C+wCQNbs2Gdh30z0rJAoE9w=;
+ b=b2pNKrIG1ccOf6h0VdrMZ7Ka/gDQeHFYE5hzkYsIAZO6PUjUVDjqKkRHoa/ysMvXkV
+ h7hXTGoModBs/VeJSlQAr/bZu6eul7sGDOgBEhPFwr3/VmkJ+Dsy25g4WKYno1uo3nm7
+ llQGe1AEE+kwb36HWnb0uhlpgGqAZ1uju6BV03f85gXbW7uYhqw0aqqAqSts/6r5XXmc
+ tPQJSIytwzCv66BjkL61Pe0gSLgoMwjvhI4WqU987IP1dN/wJ+7opZl0tz3PgFVVjmdq
+ MGbTIF+bOvcz8tpWX9aTk0NtGXA3DdXuvyMMiH56z+x1XQjebRdm7FyZ5rD2AD8M7PIs
+ 8NMQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1737459016; x=1738063816;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=0rtGCuKXTuEWbszCwRV5C+wCQNbs2Gdh30z0rJAoE9w=;
+ b=XeZaH/ltqAqj6NlQ3GhJ1fxpDS3wMwBo+LZXITywD7I0zE44Xw/a1JVjQj162UA9gQ
+ Feb3WTEUqEEcnSi5cnCVzC1epjYv234KWrJHmmSXUn0dIl9hQDq8g86yJwf5FXNXuAH7
+ IIXI+avap1EYdF4wrfOoSDlZtpODkYeFXdw3MAXWJhQscwg7EXzibCyWol799ep3eTyU
+ Mgpy5xnRRwY6hqzAiVp4tJ0u96/S0XvL3s5b2oYuA/ZMH/SNbCi8ObLaB25pFUugruHc
+ 0ygQ5yByfJC8q9V8fRZGaK71VV7w1Dd482ser8TqEjrlIUPIqqdl51aH1tGea3689OKl
+ E1oQ==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCXs1xX9cb0jFL1sXmOQ51x0AjnZA0QAhH8/CMKTJMdebnRHwISq3bgjPZ1Rc3adjPcl8DCtcLtr6SrQ@nongnu.org
+X-Gm-Message-State: AOJu0YyM0zaHqhMezoXOH78kJeA4UFAps8az3Gn4SyOLvozwar87sR7c
+ RLz+FEaz9Dx7+NfaucmQMzyZRgmsGSyEQEzbkJ9N8hA6C/qOBVk5wbIyfNP0VHw=
+X-Gm-Gg: ASbGncvve8mLGd0F7OVDWH3er2st9tX6QC2LuuBkgsV7SMt98zYvgWuMpLPrg1YLLu0
+ CraZLNkxCj31qy+GEvafKu6zHfQVJdq19rbod1okOMI6HDqS/5JD0LBpYBLvuzzB9CmPmNPAIim
+ YCxb+HgDv8yf5CwLUwAxQL22RshY8iEurN3Ako8TqHqpQndv4OmnqjOtK4d2fasRBKeGak/lSf1
+ UMKtg6RPEGXd9h8wsNcmCWQkd4fIHcABhBGuUbX14jPNl3hOPbt7e7MSLMvUUTzWD/omy4wiQnU
+ WkLtHx6rmadANu8wZv1KxL5iRYs+ZWz4f9FR5Q==
+X-Google-Smtp-Source: AGHT+IG5h6G8BxEhcgs3Ogs2YOLAYAWSruyj+tqdnLekIeamIuy/+2sxfSHIgcIIz31iV/WSUDSPHw==
+X-Received: by 2002:a05:6000:1a87:b0:38b:da31:3e3b with SMTP id
+ ffacd0b85a97d-38bf5678466mr15537947f8f.3.1737459016265; 
+ Tue, 21 Jan 2025 03:30:16 -0800 (PST)
+Received: from [192.168.69.181] (88-187-86-199.subs.proxad.net.
+ [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-38bf32151e6sm12872826f8f.20.2025.01.21.03.30.15
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Tue, 21 Jan 2025 03:30:15 -0800 (PST)
+Message-ID: <50fe71c0-4b15-427e-933f-68a95b0adf12@linaro.org>
+Date: Tue, 21 Jan 2025 12:30:15 +0100
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20250116033418.226051-1-anisinha@redhat.com>
-Received-SPF: pass client-ip=198.175.65.20; envelope-from=zhao1.liu@intel.com;
- helo=mgamail.intel.com
-X-Spam_score_int: -73
-X-Spam_score: -7.4
-X-Spam_bar: -------
-X-Spam_report: (-7.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-3,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] mips: Mark the "mipssim" machine as deprecated
+To: Thomas Huth <thuth@redhat.com>, qemu-devel@nongnu.org,
+ Aleksandar Rikalo <arikalo@gmail.com>
+Cc: Jiaxun Yang <jiaxun.yang@flygoat.com>
+References: <20250121103655.1285596-1-thuth@redhat.com>
+Content-Language: en-US
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <20250121103655.1285596-1-thuth@redhat.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::430;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x430.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -87,262 +101,20 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Ani,
-
-Sorry for late reply.
-
-On Thu, Jan 16, 2025 at 09:04:18AM +0530, Ani Sinha wrote:
-> Date: Thu, 16 Jan 2025 09:04:18 +0530
-> From: Ani Sinha <anisinha@redhat.com>
-> Subject: [PATCH v3] hw/i386/cpu: remove default_cpu_version and simplify
-> X-Mailer: git-send-email 2.45.2
+On 21/1/25 11:36, Thomas Huth wrote:
+> We are not aware of anybody still using this machine, support for it
+> has been withdrawn from the Linux kernel (i.e. there also won't be
+> any future development anymore), and we are not aware of any binaries
+> online that could be used for regression testing to avoid that the
+> machine bitrots ... thus let's mark it as deprecated now.
 > 
-> commit 0788a56bd1ae3 ("i386: Make unversioned CPU models be aliases")
-> introduced 'default_cpu_version' for PCMachineClass. This created three
-> categories of CPU models:
->  - Most unversioned CPU models would use version 1 by default.
->  - For machines 4.0.1 and older that do not support cpu model aliases, a
->    special default_cpu_version value of CPU_VERSION_LEGACY is used.
->  - It was thought that future machines would use the latest value of cpu
->    versions corresponding to default_cpu_version value of
->    CPU_VERSION_LATEST [1].
-> 
-> All pc machines still use the default cpu version of 1 for
-> unversioned cpu models. CPU_VERSION_LATEST is a moving target and
-> changes with time. Therefore, if machines use CPU_VERSION_LATEST, it would
-> mean that over a period of time, for the same machine type, the cpu version
-> would be different depending on what is latest at that time. This would
-> break guests even when they use a constant machine type. Therefore, for
-> pc machines, use of CPU_VERSION_LATEST is not possible. Currently, only
-> microvms use CPU_VERSION_LATEST.
-> 
-> This change cleans up the complicated logic around default_cpu_version
-> including getting rid of default_cpu_version property itself. A couple of new
-> flags are introduced, one for the legacy model for machines 4.0.1 and older
-> and other for microvms. For older machines, a new pc machine property is
-> introduced that separates pc machine versions 4.0.1 and older from the newer
-> machines. 4.0.1 and older machines are scheduled to be deleted towards
-> end of 2025 since they would be 6 years old by then. At that time, we can
-> remove all logic around legacy cpus. Microvms are the only machines that
-> continue to use the latest cpu version. If this changes later, we can
-> remove all logic around x86_cpu_model_last_version(). Default cpu version
-> for unversioned cpu models is hardcoded to the value 1 and applies
-> unconditionally for all pc machine types of version 4.1 and above.
-> 
-> This change also removes all complications around CPU_VERSION_AUTO
-> including removal of the value itself.
-
-I like the idea to remove CPU_VERSION_AUTO. Though this patch introduces
-2 more new static variables ("use_legacy_cpu" and "use_last_cpu_version"),
-as you said, once 4.0.1 and older machines are removed, it's easy to
-clean up "use_legacy_cpu".
-
-> 1) See commit dcafd1ef0af227 ("i386: Register versioned CPU models")
-> 
-> CC: imammedo@redhat.com
-> Signed-off-by: Ani Sinha <anisinha@redhat.com>
+> Signed-off-by: Thomas Huth <thuth@redhat.com>
 > ---
+>   If anybody is still using this machine, please speak up now!
+> 
+>   docs/about/deprecated.rst | 13 +++++++++++++
+>   1 file changed, 13 insertions(+)
 
-[snip]
-
-> -void x86_cpus_init(X86MachineState *x86ms, int default_cpu_version)
-> +void x86_legacy_cpus_init(X86MachineState *x86ms)
-> +{
-> +    machine_uses_legacy_cpu();
-> +    x86_cpus_init(x86ms);
-> +}
-> +
-> +void x86_cpus_init_with_latest_cpu_version(X86MachineState *x86ms)
-> +{
-> +    x86_cpu_uses_lastest_version();
-> +    x86_cpus_init(x86ms);
-> +}
-
-Could we simplify it even further, i.e., omit these two new helpers and
-just add x86_cpu_uses_lastest_version() and machine_uses_legacy_cpu() to
-the initialization of the PC & microvm, e.g.,
-
---- a/hw/i386/microvm.c
-+++ b/hw/i386/microvm.c
-@@ -458,7 +458,8 @@ static void microvm_machine_state_init(MachineState *machine)
-
-     microvm_memory_init(mms);
-
--    x86_cpus_init_with_latest_cpu_version(x86ms);
-+    x86_cpu_uses_lastest_version();
-+    x86_cpus_init(x86ms);
-
-     microvm_devices_init(mms);
- }
-
-and
-
---- a/include/hw/i386/pc.h
-+++ b/include/hw/i386/pc.h
-@@ -138,11 +138,10 @@ static inline void pc_init_cpus(MachineState *ms)
-
-     if (pcmc->no_versioned_cpu_model) {
-         /* use legacy cpu as it does not support versions */
--        x86_legacy_cpus_init(x86ms);
--    } else {
--        /* use non-legacy cpus */
--        x86_cpus_init(x86ms);
-+        machine_uses_legacy_cpu();
-     }
-+
-+    x86_cpus_init(x86ms);
- }
-
- /* ioapic.c */
-
-[snip]
-
-> diff --git a/include/hw/i386/pc.h b/include/hw/i386/pc.h
-> index a558705cb9..ad43a233d8 100644
-> --- a/include/hw/i386/pc.h
-> +++ b/include/hw/i386/pc.h
-> @@ -92,9 +92,6 @@ struct PCMachineClass {
->  
->      /* Compat options: */
->  
-> -    /* Default CPU model version.  See x86_cpu_set_default_version(). */
-> -    int default_cpu_version;
-> -
->      /* ACPI compat: */
->      bool has_acpi_build;
->      int pci_root_uid;
-> @@ -125,11 +122,29 @@ struct PCMachineClass {
->       * check for memory.
->       */
->      bool broken_32bit_mem_addr_check;
-> +
-> +    /* whether the machine supports versioned cpu models */
-> +    bool no_versioned_cpu_model;
->  };
->  
->  #define TYPE_PC_MACHINE "generic-pc-machine"
->  OBJECT_DECLARE_TYPE(PCMachineState, PCMachineClass, PC_MACHINE)
->  
-> +static inline void pc_init_cpus(MachineState *ms)
-
-I think there's no need to declare as `inline`.
-
-> +{
-> +    X86MachineState *x86ms = X86_MACHINE(ms);
-> +    PCMachineState *pcms = PC_MACHINE(ms);
-> +    PCMachineClass *pcmc = PC_MACHINE_GET_CLASS(pcms);
-> +
-> +    if (pcmc->no_versioned_cpu_model) {
-> +        /* use legacy cpu as it does not support versions */
-> +        x86_legacy_cpus_init(x86ms);
-> +    } else {
-> +        /* use non-legacy cpus */
-> +        x86_cpus_init(x86ms);
-> +    }
-> +}
-> +
->  /* ioapic.c */
-
-As my comment above, we can just call machine_uses_legacy_cpu()
-if pcmc->no_versioned_cpu_model is true.
-
-[snip]
-
-> -/*
-> - * We resolve CPU model aliases using -v1 when using "-machine
-> - * none", but this is just for compatibility while libvirt isn't
-> - * adapted to resolve CPU model versions before creating VMs.
-> - * See "Runnability guarantee of CPU models" at
-> - * docs/about/deprecated.rst.
-> - */
-> -X86CPUVersion default_cpu_version = 1;
-> +static bool use_legacy_cpu;
-> +void machine_uses_legacy_cpu(void)
-
-What about this name, "x86_cpu_set_legacy_version"?
-
-> +{
-> +    use_legacy_cpu = true;
-> +}
->  
-> -void x86_cpu_set_default_version(X86CPUVersion version)
-> +static bool use_last_cpu_version;
-
-Maybe "use_lastest_cpu"? Keep it in the same style as "use_legacy_cpu".
-
-> +void x86_cpu_uses_lastest_version(void)
-
-Similarly, What about "x86_cpu_set_latest_version"?
-
->  {
-> -    /* Translating CPU_VERSION_AUTO to CPU_VERSION_AUTO doesn't make sense */
-> -    assert(version != CPU_VERSION_AUTO);
-> -    default_cpu_version = version;
-> +    use_last_cpu_version = true;
->  }
->  
->  static X86CPUVersion x86_cpu_model_last_version(const X86CPUModel *model)
-> @@ -5376,14 +5375,11 @@ static X86CPUVersion x86_cpu_model_last_version(const X86CPUModel *model)
->  /* Return the actual version being used for a specific CPU model */
->  static X86CPUVersion x86_cpu_model_resolve_version(const X86CPUModel *model)
->  {
-> -    X86CPUVersion v = model->version;
-> -    if (v == CPU_VERSION_AUTO) {
-> -        v = default_cpu_version;
-> -    }
-> -    if (v == CPU_VERSION_LATEST) {
-> +    if (use_last_cpu_version) {
->          return x86_cpu_model_last_version(model);
->      }
-> -    return v;
-> +
-> +    return model->version;
->  }
->  
->  static const Property max_x86_cpu_properties[] = {
-> @@ -5987,6 +5983,12 @@ static char *x86_cpu_class_get_alias_of(X86CPUClass *cc)
->      if (!cc->model || !cc->model->is_alias) {
->          return NULL;
->      }
-> +
-> +    if (use_legacy_cpu) {
-> +        /* legacy cpu models do not support cpu aliases */
-> +        return NULL;
-> +    }
-> +
->      version = x86_cpu_model_resolve_version(cc->model);
->      if (version <= 0) {
-
-I understand this non-NULL check is origianl for legacy CPU version.
-So it's also necessary to remove it, or convert it to "assert(version)"?
-
->          return NULL;
-> @@ -6004,11 +6006,7 @@ static void x86_cpu_list_entry(gpointer data, gpointer user_data)
->      g_autofree char *model_id = x86_cpu_class_get_model_id(cc);
->  
->      if (!desc && alias_of) {
-> -        if (cc->model && cc->model->version == CPU_VERSION_AUTO) {
-> -            desc = g_strdup("(alias configured by machine type)");
-> -        } else {
->              desc = g_strdup_printf("(alias of %s)", alias_of);
-> -        }
->      }
->      if (!desc && cc->model && cc->model->note) {
->          desc = g_strdup_printf("%s [%s]", model_id, cc->model->note);
-> @@ -6115,7 +6113,7 @@ static void x86_cpu_definition_entry(gpointer data, gpointer user_data)
->       * Old machine types won't report aliases, so that alias translation
->       * doesn't break compatibility with previous QEMU versions.
->       */
-> -    if (default_cpu_version != CPU_VERSION_LEGACY) {
-> +    if (!use_legacy_cpu) {
->          info->alias_of = x86_cpu_class_get_alias_of(cc);
->      }
-
-Do we need the check of "!use_legacy_cpu"?
-
-x86_cpu_class_get_alias_of() returns NULL if use_legacy_cpu is true.
-
-Thanks,
-Zhao
+Acked-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 
 
