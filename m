@@ -4,82 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 955D2C02182
-	for <qemu-devel@archiver.kernel.org>; Tue, 21 Jan 2025 23:15:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6F618C02182
+	for <qemu-devel@archiver.kernel.org>; Tue, 21 Jan 2025 23:25:44 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1taNSd-0000Qq-OF; Tue, 21 Jan 2025 18:15:07 -0500
+	id 1taNbZ-000263-Si; Tue, 21 Jan 2025 18:24:21 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1taNSb-0000Jg-67
- for qemu-devel@nongnu.org; Tue, 21 Jan 2025 18:15:05 -0500
-Received: from mail-pl1-x636.google.com ([2607:f8b0:4864:20::636])
+ id 1taNbX-00025a-K3
+ for qemu-devel@nongnu.org; Tue, 21 Jan 2025 18:24:19 -0500
+Received: from mail-pl1-x629.google.com ([2607:f8b0:4864:20::629])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1taNSW-0005du-DX
- for qemu-devel@nongnu.org; Tue, 21 Jan 2025 18:15:02 -0500
-Received: by mail-pl1-x636.google.com with SMTP id
- d9443c01a7336-2165448243fso136084765ad.1
- for <qemu-devel@nongnu.org>; Tue, 21 Jan 2025 15:14:59 -0800 (PST)
+ id 1taNbQ-0007UL-8U
+ for qemu-devel@nongnu.org; Tue, 21 Jan 2025 18:24:19 -0500
+Received: by mail-pl1-x629.google.com with SMTP id
+ d9443c01a7336-21a7ed0155cso100831235ad.3
+ for <qemu-devel@nongnu.org>; Tue, 21 Jan 2025 15:24:08 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1737501297; x=1738106097; darn=nongnu.org;
+ d=linaro.org; s=google; t=1737501847; x=1738106647; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:to:subject:user-agent:mime-version:date:message-id:from
  :to:cc:subject:date:message-id:reply-to;
- bh=liWwEXX9lDKU9ZoErYY++lz9UK9hH/+L730wJDQab/k=;
- b=F9rGJ71FAR4Qxwb2Vh8nZt11+ndKdVtW1mgdbPxRFNw82VayiSnu1YWwdLNAW2gZuQ
- GNNEwJLDzUR04f3faC+PRx2L65JfJ9amKksVQX/4OivGtjTNbNurp6FwTmowNcRUZNtO
- HN/aG0pbRY/EbMEvY6DZcCZ44M+lS764z6dAa9klbCl/1m5aT1ik9fVcCvfxIr7RY/qY
- f00TgnrvHSQHQ3+h7FQtYL2fj5kq7TIZVF8Rl4RmL+B4904qbDHpQfvXBxRaisZkSHDt
- f+tXflJHavlDr90MeYYecDJvTzKS4qCzmce/7e4Vh7RXqWR/PPgmdZLUHjpLiadeA58P
- UGaQ==
+ bh=Rs3dCNUwSY0XOcZEFo3g20MbK4Lzwm6L6sxtsL4qksY=;
+ b=fNx1bIxXyvlZ22998M/SUYBuuGP9mPHHaWG6wlUfSegSVHS43DaCKcbjTxP4Jd7IJl
+ jG238AzU+wFfr+Dl5edJ+MxYMT5SMABmnin37wuTgKotc1p4HT/u5RTCtPL5Us8hk+9H
+ SgFZHsehipK6IMnOVnkLM1GB66GLmk8QNdOKG2iSTdK3VNkReH3kG8Jkxkn1QW0luh6M
+ d+BYa1+DBHQi1sfXf29wF6XVNItT9fuwcgznyFlJFz+zsPid0+UURXXBSL7rsjlK/8U5
+ W4ETYT7B73LwQPJSnahwdetlDs8Ft5dQueUZzXufMn8Ntu3WHWElzOQT7gaqa1gleVwA
+ fRkQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1737501297; x=1738106097;
+ d=1e100.net; s=20230601; t=1737501847; x=1738106647;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=liWwEXX9lDKU9ZoErYY++lz9UK9hH/+L730wJDQab/k=;
- b=B7MWDZ1foczbH7NXxXnzvfS46ni8KU3teI84xDYIQxDBaJ2iP9g7Tflu2TPKsjwAVh
- SVrQGQt/AkHZMgf6KAk6NE+a1FshFLVF4s7gyUL/RlAm5zm67smb5UMmTmFXzh6FRLgd
- f88sXkmaTWgw8HntWZElurro3zfjWZLScF1guz6pdEFyYDWEZSt4at8otzW+ytCMVlVP
- u/fBVwUYj5JP0hbuUeRgMPYarKcZOA0r0YoX8bgCgT1lWq3++JxxjmjrPfs0S+wAwphO
- PC4N2KEgW6xneETXsbaQ2z5JcTtgTmjoCzjv2ZZr4aPkDnO8wQitvKFdYuQ53ZhcqiN5
- uk/Q==
-X-Gm-Message-State: AOJu0YyQF9c/NAFIdT9qdgqrfpvlo953qPr+cZF8GYUmUeXz/Zb9zqRz
- 80aOmSmLJiWU/0A2097mIc1n35kRPOLZFbGTSixJOg0BQMTMYcuBelvWgacdR6bMMEU+MZXIZvW
- g
-X-Gm-Gg: ASbGncuM9m48igmedUrnMN0E0IZTsnJGQ2KpBkl/i3k8/Cntg2OHs4ZrNcPDsTPyKZV
- BlTJNgQfwqRyjcYTEfVaOmNYkuwf5wckYew0Te5Xx3QpzrrGr+zuNUoQdfAkDkBspwKYhFL8sFI
- aG5T0avreHPPnCWABFZE6eXH7264KRi2ADE6PrgSwEMloPddQ6SiexHV7DGFALz5X5sJC+wNehQ
- GAINCu8yZRx9inK93C1BS8ScXXWMX86mrL0lTwKV+RxvbKN6TYqTRlkFeIPo32M9YF2sNdcwqOW
- liWcypHBgjLeXg6sDyjfMXki7a28eEpWoOxFCM4a4XTPov0=
-X-Google-Smtp-Source: AGHT+IEsjI14cos6TZE3CkEcyKAFZZonkoJ904nSXmEfuMlZggoPsPVjEpHpLVmEps2qOIJGAtGNCA==
-X-Received: by 2002:a17:902:ccc8:b0:216:45b9:439b with SMTP id
- d9443c01a7336-21c3563c530mr277216495ad.50.1737501297647; 
- Tue, 21 Jan 2025 15:14:57 -0800 (PST)
+ bh=Rs3dCNUwSY0XOcZEFo3g20MbK4Lzwm6L6sxtsL4qksY=;
+ b=DQw5euXrgPd6eLXUoC0GlusCeHdjul+uaQT7b4vfrj+9Wzu0bR0c6RAT727o70NAvf
+ iUi4jp3I0tYop1Pl2nGkr4/NPxnUHNuowNgCi7n9/GVH9axwOjwYxSl03pZSbzq72AOc
+ 6VYccP9/SsIpYObiXfQ2Q+eQFLy2izJFLwu4D98BQ/xFiXbMz1pl7UeSxdvy/m1FAcVS
+ I2f6ze29Cr6pYgTzWxt+Zhsa25pLGOiKgRjGq5THOKotKZ3t6kAAMqK/k0UHwW/K9KQv
+ DMUrekawxVtPE5oYDV5Vm+gs6JhPWeFoyw74eolrsWrqMliHTVU4efDoC9BYQK1HgvpB
+ 2Qxw==
+X-Gm-Message-State: AOJu0YwXOGfCAAXqvEmRiuYiQTaiGpLurYjFGn3jtd/Xt3RghZipTTgS
+ 0Lugu73E02ozCYIRtDHjeq7XFkj1yMnPOqM/NMhUVfkA7MCLfBW8p0QRdnKkCprKT3+YYKspB3B
+ G
+X-Gm-Gg: ASbGnctVRMBybsT5UqPhWIrQpFg9taZ7GP5iCLs+N6cTUsU9iwuvg0WpCLOBrft/kur
+ VdoSAz2WxPKIoshdhiVAPTtYwVis37ei/XpSlgl9zJigH4kkkwRQocek+uWZjXJCFORn5oe8ZpY
+ cu4iU5FGVQduAIBuUs4yA1OBHXSMLXm7kjCtu4tsqN/WUvc0YiSU2fX86TswEFC5dAB+OpQQJrT
+ awRG+Cn0Ng7FW55KN6v3mOZKN89lE3HKl9ijoWHPW4cpGJdQvm3W/I5hkawz+PA1xgtwHqaMc01
+ QiFs1oWmv18WLkRKyajfh+l+METYWv4uTGBnb2+FJF+KljE=
+X-Google-Smtp-Source: AGHT+IFDJV2Lmj00IPDmMGrpk31r/jgWoOEsc43/QgJL+T+6kOKKhrMOAu/p17aTabB3kFyxJCKHPQ==
+X-Received: by 2002:a17:902:f54a:b0:21c:e19:5692 with SMTP id
+ d9443c01a7336-21c355c43famr276247475ad.36.1737501847108; 
+ Tue, 21 Jan 2025 15:24:07 -0800 (PST)
 Received: from [192.168.0.4] (174-21-71-127.tukw.qwest.net. [174.21.71.127])
  by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-21c2ceba906sm83504005ad.91.2025.01.21.15.14.57
+ d9443c01a7336-21c2d3a8a6dsm83110395ad.141.2025.01.21.15.24.06
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 21 Jan 2025 15:14:57 -0800 (PST)
-Message-ID: <ca9d93b9-cdb9-4ac2-90a2-a8e4bba16152@linaro.org>
-Date: Tue, 21 Jan 2025 15:14:55 -0800
+ Tue, 21 Jan 2025 15:24:06 -0800 (PST)
+Message-ID: <178b7292-4a53-4d5d-94a4-96175605f46f@linaro.org>
+Date: Tue, 21 Jan 2025 15:24:05 -0800
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] hw/char/pci-multi: Convert legacy qemu_allocate_irqs to
- qemu_init_irq
+Subject: Re: [PATCH] linux-user: Constify target_shmlba() argument
 To: qemu-devel@nongnu.org
-References: <20250121182828.45088-1-philmd@linaro.org>
+References: <20250121190339.58223-1-philmd@linaro.org>
 Content-Language: en-US
 From: Richard Henderson <richard.henderson@linaro.org>
-In-Reply-To: <20250121182828.45088-1-philmd@linaro.org>
+In-Reply-To: <20250121190339.58223-1-philmd@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::636;
- envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x636.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::629;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x629.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -102,19 +101,18 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 1/21/25 10:28, Philippe Mathieu-Daudé wrote:
-> There are a fixed number of PCI IRQs, known beforehand.
-> Allocate them within PCIMultiSerialState, and initialize
-> using qemu_init_irq(), allowing to remove the legacy
-> qemu_allocate_irqs() and qemu_free_irqs() calls.
+On 1/21/25 11:03, Philippe Mathieu-Daudé wrote:
+> Returning target segment low boundary address multiple
+> shouldn't need to modify the CPU env. Make it const.
 > 
 > Signed-off-by: Philippe Mathieu-Daudé<philmd@linaro.org>
 > ---
-> Based-on:<20250121155526.29982-2-philmd@linaro.org>
->            "hw/irq: Introduce qemu_init_irqs() helper"
-> ---
->   hw/char/serial-pci-multi.c | 7 +++----
->   1 file changed, 3 insertions(+), 4 deletions(-)
+>   linux-user/arm/target_syscall.h    | 2 +-
+>   linux-user/mips/target_syscall.h   | 2 +-
+>   linux-user/mips64/target_syscall.h | 2 +-
+>   linux-user/sh4/target_syscall.h    | 2 +-
+>   linux-user/sparc/target_syscall.h  | 2 +-
+>   5 files changed, 5 insertions(+), 5 deletions(-)
 
 Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 
