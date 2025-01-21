@@ -4,89 +4,99 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BA6A0C02185
-	for <qemu-devel@archiver.kernel.org>; Tue, 21 Jan 2025 08:45:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A1256C02185
+	for <qemu-devel@archiver.kernel.org>; Tue, 21 Jan 2025 08:46:09 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ta9sj-0002f6-AU; Tue, 21 Jan 2025 03:45:09 -0500
+	id 1ta9tU-0002rZ-L4; Tue, 21 Jan 2025 03:45:58 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1ta9sh-0002et-Nd
- for qemu-devel@nongnu.org; Tue, 21 Jan 2025 03:45:07 -0500
-Received: from mail-wm1-x32d.google.com ([2a00:1450:4864:20::32d])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1ta9sf-0004X1-HZ
- for qemu-devel@nongnu.org; Tue, 21 Jan 2025 03:45:07 -0500
-Received: by mail-wm1-x32d.google.com with SMTP id
- 5b1f17b1804b1-4361f664af5so61363725e9.1
- for <qemu-devel@nongnu.org>; Tue, 21 Jan 2025 00:45:05 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1737449103; x=1738053903; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=O9Odkfv+T0SBkcj1j7P4mQ5s3sBRtwgNR1LFLkXVhUw=;
- b=nwUvLYQ8Fhlmkn75EC0L6XSjr6zp+jIiY+epgr3uwGMrf+43/0mKb3d4VntF+nCXpf
- VZKTetFlsOkccbdOkiaJfLTjH0d3Q37xA6iENIbvNDF1nX3ploVJSLVLLW19IKDuaDXv
- BvtDMitAyOC9uUqQqquvrTWNvnT2mxhzggKMs4eIN5m73HR5FZuQwnTDUIrc0FNsx0Dq
- 4WwPQZnO+famBe4+C3O782kfVjtItYVObhJ8TLUeaRjmVIpZtCTqa/PlA9fQTZfBIjzG
- cGVYsHg5hmq/Pjs9xALdBSZ/JtvM/vMNZYt29/GwFfDc2QOJP9z5METKFXczHwDQA7Gp
- +oiA==
+ (Exim 4.90_1) (envelope-from <sgarzare@redhat.com>)
+ id 1ta9tA-0002n8-Ik
+ for qemu-devel@nongnu.org; Tue, 21 Jan 2025 03:45:41 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <sgarzare@redhat.com>)
+ id 1ta9t7-0004Z3-EB
+ for qemu-devel@nongnu.org; Tue, 21 Jan 2025 03:45:35 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1737449131;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=M0yM/iyV2dTCVPhnXXI5h8JH5ZH080qjdmtvRJtHf28=;
+ b=FgN4bPjv4mIRUYpwZ6wmhJdLIo9Kyr4KcG+XfzMd8+ZFYBPZd20riCqpsSIa9ozYIp4nCP
+ eIvnrVQ005rsBoCFzrHr8mc6xpIEohRKpF3keHNGNqbKUpSu+DTsrQHMOAwo/ZU/vlQ6QA
+ nUjYCvX8/2Nb3inlN/1Eu0nRjoHZ3Zo=
+Received: from mail-wm1-f69.google.com (mail-wm1-f69.google.com
+ [209.85.128.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-654-U8sVgSZPNJek6KVLNMsqXA-1; Tue, 21 Jan 2025 03:45:29 -0500
+X-MC-Unique: U8sVgSZPNJek6KVLNMsqXA-1
+X-Mimecast-MFC-AGG-ID: U8sVgSZPNJek6KVLNMsqXA
+Received: by mail-wm1-f69.google.com with SMTP id
+ 5b1f17b1804b1-43673af80a6so41648905e9.1
+ for <qemu-devel@nongnu.org>; Tue, 21 Jan 2025 00:45:29 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1737449103; x=1738053903;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=O9Odkfv+T0SBkcj1j7P4mQ5s3sBRtwgNR1LFLkXVhUw=;
- b=snlxwwvxkRSdoVbULKxxeXEgEqNYOeRA7wswUDjYG1e+oPFzwsZLczaTt+yIzIST4g
- reee5jH6iT7qODGpuMnJSYb4CJmlX4WCYjfT1c6wRcEhppt+3LHvnI+e2+y2EKvXhcKQ
- u5wNojU4fT1pFvwIDhwolNiYV2P1Lzj4w2Wc4+K9sr1KoDPcuJIxrIBK1upWkSWEa5go
- MHc1m90qY3KEs5dzFrSS+MGYxgIVya0g2XQRwoG7DJ6SZrAK4GtavCemvm8Nqe2LfILT
- HTI2OCIsTKo/32759pjdGgxr6fmIpD5e3ei1i85FMXJkIDFN2d+g8N5Lp+QwnuBsJoPz
- AEFg==
-X-Gm-Message-State: AOJu0YxC3V8RoyzuojH3sk9DDpsDia0kr7hu0DxXyOMf04hlVn6ImZor
- gMWWAaIxUAy3o5kR1z/iJGbpMSOc3nUuYydifwoZ1VxjdKX8bF0tY9SgovDlMLkcHujRitCnUTJ
- refI=
-X-Gm-Gg: ASbGncvhczsZv5I7dyAjv36Jxfz3tt9QENNJp3IqRlgt/N/QHPJpS9EJOH4UGsCWq1r
- ilGSf5mpLHnMImmEiTszO9LJ5iGdTVtUT2cGV1VFWFumJderwJqSqiGcdOW9/qlnmYIZqxbP33A
- KL6BMOw7TOuFLLY9dSGM3WgdMUT/IEVKCbZNVsHr16pb5yKUhvuDE3BOwdDT66kMjOF/LDP30C5
- rjlet0fitTVrv36dDgj02RE3mePUrjy0IGMkUA+HQhcNojOKUveAh2GbuVfGO8Jhs+aWmiNdbPv
- p9sIoVU1GH+zKOpeke1olOj+1gOb8Ywv24pyCu9SsXB4
-X-Google-Smtp-Source: AGHT+IEY6xw4OjY6ogtTXo+XUbqHVwYkQ6+X/EicVa+fgx2qsNOEscPOL/zXzJc9nZyvtsHwLa+hyg==
-X-Received: by 2002:a05:600c:1d1d:b0:434:a815:2b5d with SMTP id
- 5b1f17b1804b1-4389141c211mr130228225e9.24.1737449103567; 
- Tue, 21 Jan 2025 00:45:03 -0800 (PST)
-Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
- [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-437c7499821sm230496135e9.2.2025.01.21.00.45.02
- (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Tue, 21 Jan 2025 00:45:03 -0800 (PST)
-From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-To: qemu-devel@nongnu.org
-Cc: Alberto Garcia <berto@igalia.com>, Fabiano Rosas <farosas@suse.de>,
- Laurent Vivier <lvivier@redhat.com>, Bernhard Beschow <shentey@gmail.com>,
- =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
- Paolo Bonzini <pbonzini@redhat.com>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PATCH v2 2/2] hw/ipack: Remove legacy qemu_allocate_irqs() use
-Date: Tue, 21 Jan 2025 09:44:52 +0100
-Message-ID: <20250121084452.81941-3-philmd@linaro.org>
-X-Mailer: git-send-email 2.47.1
-In-Reply-To: <20250121084452.81941-1-philmd@linaro.org>
-References: <20250121084452.81941-1-philmd@linaro.org>
+ d=1e100.net; s=20230601; t=1737449128; x=1738053928;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=M0yM/iyV2dTCVPhnXXI5h8JH5ZH080qjdmtvRJtHf28=;
+ b=v0FgYi8NEeB2CZKkgf8WLCZMOEXiROV1rjxw9saPyZWCEXJX5HJgRsMm8iZ9FrFPNK
+ DV9j/MEa1fKN8mwKwqizX8w0Eyl1p1D9LVuWzihtvnizmlkda807ObAs7EwnnciVnTeq
+ 7hq1ytBh4CxlEgB4xT8o/mvUiKZT/c+Dz21xdTwJizWAGZOBShwDgZ/YV3z8gndrOHf5
+ PZlE+mBhQinf/2LjYhfLDYe7pKUaEXU8Oihi+8j2SILUfMy3cbtX8CJZxfLFZ/G5w4D/
+ 6F4FsYVeh8N7o/hrSQAPLfylQv0avc8d3Mx7UknF5aPY3PoPrbLOI/jy1YlG34xrRbdo
+ dDMg==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCXF2wo3w3gP1SwcH/APKYXuVd4DaVQ7AA3p9AEQ/0ZuN7JVw/yngrXf68BCcL5ltaIaEDoPey9HVqOH@nongnu.org
+X-Gm-Message-State: AOJu0YzlBLvEzRl8u76ghWvd+b52MxVbv1V36dg7VCcKyhWI8iCTRKvT
+ I3YQC6D5rshe3YmH2XYUnz0wMQda9lkhs3hom0kTlEnR/xT7TUaLvdRUxLPHNXNLfkMAuR8xboc
+ 2HLftcZjakmuUknJ4N70WirbEOLgE4csaMNdp+0kAGk8Ln8RGzUWj+ZQj2S9T
+X-Gm-Gg: ASbGncsXtwMWNPGIhL5Knt/AvQD+uFSWTtMrcfg04NQJecvz+W9CxXxgKgUYI3QBTNH
+ Ojb2Ozptx+g46sMNFqbLn1Ceu2Y/gW4UGz4VpW3K/3GP5jqwvmoQgwGdV4PNYsZsbYbfZQ3CA3n
+ cZsYTD9jZd0vLcxCXTqrCf27UxnI8GzYkTEZnjdnlMJxWPRK12jldDyvNxoXJzPtE4zFYCdv7Hk
+ OxvhM1oarYfXz0C+dPmfK37m03LPCspScl8VE0lbZ0fqW4wU7vFOuvrXkok5li+fMlqTtxi/q1z
+ 7IbXSSmu2niTWDaPjKxIps8r+IAAJeTfmSk5x/pBn6pLlQ==
+X-Received: by 2002:a7b:c3da:0:b0:438:a20b:6a62 with SMTP id
+ 5b1f17b1804b1-438a20b6d62mr87913125e9.28.1737449128275; 
+ Tue, 21 Jan 2025 00:45:28 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IHIfveKR9uqmIVjlD2bnXjWFi/WuhGeZT6eEJaKMn18vm2O9s8GHf7XCAnW07M1nAqG9rD/Sw==
+X-Received: by 2002:a7b:c3da:0:b0:438:a20b:6a62 with SMTP id
+ 5b1f17b1804b1-438a20b6d62mr87912685e9.28.1737449127521; 
+ Tue, 21 Jan 2025 00:45:27 -0800 (PST)
+Received: from sgarzare-redhat (host-82-53-134-100.retail.telecomitalia.it.
+ [82.53.134.100]) by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-438904087cbsm174656915e9.3.2025.01.21.00.45.26
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Tue, 21 Jan 2025 00:45:27 -0800 (PST)
+Date: Tue, 21 Jan 2025 09:45:21 +0100
+From: Stefano Garzarella <sgarzare@redhat.com>
+To: Laurent Vivier <lvivier@redhat.com>
+Cc: Eric Auger <eric.auger@redhat.com>, eric.auger.pro@gmail.com, 
+ qemu-devel@nongnu.org, mst@redhat.com, jasowang@redhat.com,
+ zhenzhong.duan@intel.com
+Subject: Re: [PATCH] hw/virtio/vhost: Disable IOTLB callbacks when IOMMU gets
+ disabled
+Message-ID: <tuzwgcjnxyz5sw2xjo4nyyl3xw3b7j5xqk67hsi5xk4xj3tv3a@hmmydeoupl35>
+References: <20250120173339.865681-1-eric.auger@redhat.com>
+ <3aaaf5c8-b1f0-4237-b50e-bb28fd297bb1@redhat.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32d;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x32d.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Type: text/plain; charset=us-ascii; format=flowed
+Content-Disposition: inline
+In-Reply-To: <3aaaf5c8-b1f0-4237-b50e-bb28fd297bb1@redhat.com>
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=sgarzare@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -50
+X-Spam_score: -5.1
+X-Spam_bar: -----
+X-Spam_report: (-5.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-3,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.036,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -102,130 +112,61 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-No need to dynamically allocate IRQ when we know before hands
-how many we'll use. Declare the 2 of them in IPackDevice state
-and initialize them in the DeviceRealize handler.
+On Tue, Jan 21, 2025 at 09:31:53AM +0100, Laurent Vivier wrote:
+>On 20/01/2025 18:33, Eric Auger wrote:
+>>When a guest exposed with a vhost device and protected by an
+>>intel IOMMU gets rebooted, we sometimes observe a spurious warning:
+>>
+>>Fail to lookup the translated address ffffe000
+>>
+>>We observe that the IOMMU gets disabled through a write to the global
+>>command register (CMAR_GCMD.TE) before the vhost device gets stopped.
+>>When this warning happens it can be observed an inflight IOTLB
+>>miss occurs after the IOMMU disable and before the vhost stop. In
+>>that case a flat translation occurs and the check in
+>>vhost_memory_region_lookup() fails.
+>>
+>>Let's disable the IOTLB callbacks when all IOMMU MRs have been
+>>unregistered.
+>>
+>>Signed-off-by: Eric Auger <eric.auger@redhat.com>
+>>---
+>>  hw/virtio/vhost.c | 4 ++++
+>>  1 file changed, 4 insertions(+)
+>>
+>>diff --git a/hw/virtio/vhost.c b/hw/virtio/vhost.c
+>>index 6aa72fd434..128c2ab094 100644
+>>--- a/hw/virtio/vhost.c
+>>+++ b/hw/virtio/vhost.c
+>>@@ -931,6 +931,10 @@ static void vhost_iommu_region_del(MemoryListener *listener,
+>>              break;
+>>          }
+>>      }
+>>+    if (QLIST_EMPTY(&dev->iommu_list) &&
+>>+        dev->vhost_ops->vhost_set_iotlb_callback) {
+>>+        dev->vhost_ops->vhost_set_iotlb_callback(dev, false);
+>>+    }
+>>  }
+>>  void vhost_toggle_device_iotlb(VirtIODevice *vdev)
+>
+>I think you need the counterpart in vhost_iommu_region_del() (for 
 
-Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
----
- include/hw/ipack/ipack.h | 7 ++-----
- hw/char/ipoctal232.c     | 4 ++--
- hw/ipack/ipack.c         | 7 +++----
- hw/ipack/tpci200.c       | 6 +++---
- 4 files changed, 10 insertions(+), 14 deletions(-)
+I guess you meant vhost_iommu_region_add(). I was going to comment 
+exactly on that, I agree here.
 
-diff --git a/include/hw/ipack/ipack.h b/include/hw/ipack/ipack.h
-index cbcdda509d3..00f397fd020 100644
---- a/include/hw/ipack/ipack.h
-+++ b/include/hw/ipack/ipack.h
-@@ -12,6 +12,7 @@
- #define QEMU_IPACK_H
- 
- #include "hw/qdev-core.h"
-+#include "hw/irq.h"
- #include "qom/object.h"
- 
- 
-@@ -19,10 +20,8 @@
- OBJECT_DECLARE_SIMPLE_TYPE(IPackBus, IPACK_BUS)
- 
- struct IPackBus {
--    /*< private >*/
-     BusState parent_obj;
- 
--    /* All fields are private */
-     uint8_t n_slots;
-     uint8_t free_slot;
-     qemu_irq_handler set_irq;
-@@ -58,13 +57,11 @@ struct IPackDeviceClass {
- };
- 
- struct IPackDevice {
--    /*< private >*/
-     DeviceState parent_obj;
--    /*< public >*/
- 
-     int32_t slot;
-     /* IRQ objects for the IndustryPack INT0# and INT1# */
--    qemu_irq *irq;
-+    IRQState irq[2];
- };
- 
- extern const VMStateDescription vmstate_ipack_device;
-diff --git a/hw/char/ipoctal232.c b/hw/char/ipoctal232.c
-index d1e5f6dad2e..a2879977fb3 100644
---- a/hw/char/ipoctal232.c
-+++ b/hw/char/ipoctal232.c
-@@ -184,9 +184,9 @@ static void update_irq(IPOctalState *dev, unsigned block)
-     unsigned intno = block / 2;
- 
-     if ((blk0->isr & blk0->imr) || (blk1->isr & blk1->imr)) {
--        qemu_irq_raise(idev->irq[intno]);
-+        qemu_irq_raise(&idev->irq[intno]);
-     } else {
--        qemu_irq_lower(idev->irq[intno]);
-+        qemu_irq_lower(&idev->irq[intno]);
-     }
- }
- 
-diff --git a/hw/ipack/ipack.c b/hw/ipack/ipack.c
-index ed75f791832..eeb48dd331c 100644
---- a/hw/ipack/ipack.c
-+++ b/hw/ipack/ipack.c
-@@ -55,22 +55,21 @@ static void ipack_device_realize(DeviceState *dev, Error **errp)
-     }
-     bus->free_slot = idev->slot + 1;
- 
--    idev->irq = qemu_allocate_irqs(bus->set_irq, idev, 2);
-+    for (int i = 0; i < ARRAY_SIZE(idev->irq); i++) {
-+        qemu_init_irq(&idev->irq[i], bus->set_irq, idev, i);
-+    }
- 
-     k->realize(dev, errp);
- }
- 
- static void ipack_device_unrealize(DeviceState *dev)
- {
--    IPackDevice *idev = IPACK_DEVICE(dev);
-     IPackDeviceClass *k = IPACK_DEVICE_GET_CLASS(dev);
- 
-     if (k->unrealize) {
-         k->unrealize(dev);
-         return;
-     }
--
--    qemu_free_irqs(idev->irq, 2);
- }
- 
- static const Property ipack_device_props[] = {
-diff --git a/hw/ipack/tpci200.c b/hw/ipack/tpci200.c
-index 88eef4b8308..470a4203ae4 100644
---- a/hw/ipack/tpci200.c
-+++ b/hw/ipack/tpci200.c
-@@ -275,11 +275,11 @@ static void tpci200_write_las0(void *opaque, hwaddr addr, uint64_t val,
-                 if (ip != NULL) {
-                     if (val & STATUS_INT(i, 0)) {
-                         DPRINTF("Clear IP %c INT0# status\n", 'A' + i);
--                        qemu_irq_lower(ip->irq[0]);
-+                        qemu_irq_lower(&ip->irq[0]);
-                     }
-                     if (val & STATUS_INT(i, 1)) {
-                         DPRINTF("Clear IP %c INT1# status\n", 'A' + i);
--                        qemu_irq_lower(ip->irq[1]);
-+                        qemu_irq_lower(&ip->irq[1]);
-                     }
-                 }
- 
-@@ -344,7 +344,7 @@ static uint64_t tpci200_read_las1(void *opaque, hwaddr addr, unsigned size)
-                 bool int_set = s->status & STATUS_INT(ip_n, intno);
-                 bool int_edge_sensitive = s->ctrl[ip_n] & CTRL_INT_EDGE(intno);
-                 if (int_set && !int_edge_sensitive) {
--                    qemu_irq_lower(ip->irq[intno]);
-+                    qemu_irq_lower(&ip->irq[intno]);
-                 }
-             }
- 
--- 
-2.47.1
+>instance if we have an add after a del that results in an empty list).
+>But you cannot unconditionally enable it (for instance if vhost is not 
+>started)
+
+Good point.
+
+>
+>Perhaps you should move the vhost_set_iotlb_callback() call from 
+>vhost_start()/vhost_stop() to 
+>vhost_iommu_region_add()/vhost_iommu_region_del()?
+
+I also like this idea.
+
+Stefano
 
 
