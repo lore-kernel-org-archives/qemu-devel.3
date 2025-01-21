@@ -4,146 +4,86 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1CB68C02182
-	for <qemu-devel@archiver.kernel.org>; Tue, 21 Jan 2025 18:26:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8A88BC02182
+	for <qemu-devel@archiver.kernel.org>; Tue, 21 Jan 2025 18:28:59 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1taIwb-0001Uh-St; Tue, 21 Jan 2025 13:25:47 -0500
+	id 1taIzS-0002SV-0K; Tue, 21 Jan 2025 13:28:42 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <david@redhat.com>) id 1taIwX-0001NI-43
- for qemu-devel@nongnu.org; Tue, 21 Jan 2025 13:25:41 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <david@redhat.com>) id 1taIwO-0000xJ-92
- for qemu-devel@nongnu.org; Tue, 21 Jan 2025 13:25:40 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1737483930;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=AMszHGMS5UYFSjYpLsmPXfGike3W9vOFzfLem7SLW50=;
- b=Lb3JVqT3/VN0Bh9x16t/C6DKnFNX2EVW1xLVlLeZETD0Jqx6P9VSvLBEa11FZ/bwZ3Lvxw
- hTW6mEdaeV1Fcx/n41Wd66g8yQfmOWCsFexSTZZPH2lEBUR3ugEvVrpY1fSP865J7tMwAE
- pWc0Wmop+WqFIJANTXymfnSMTFpjE9I=
-Received: from mail-wm1-f69.google.com (mail-wm1-f69.google.com
- [209.85.128.69]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-642-UcGRuv1MNIq6HhDScC7zgw-1; Tue, 21 Jan 2025 13:25:28 -0500
-X-MC-Unique: UcGRuv1MNIq6HhDScC7zgw-1
-X-Mimecast-MFC-AGG-ID: UcGRuv1MNIq6HhDScC7zgw
-Received: by mail-wm1-f69.google.com with SMTP id
- 5b1f17b1804b1-4361ac8b25fso32457635e9.2
- for <qemu-devel@nongnu.org>; Tue, 21 Jan 2025 10:25:28 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1taIzL-0002Rw-Hb
+ for qemu-devel@nongnu.org; Tue, 21 Jan 2025 13:28:37 -0500
+Received: from mail-wm1-x330.google.com ([2a00:1450:4864:20::330])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1taIzI-0001YP-DN
+ for qemu-devel@nongnu.org; Tue, 21 Jan 2025 13:28:35 -0500
+Received: by mail-wm1-x330.google.com with SMTP id
+ 5b1f17b1804b1-43624b2d453so66442915e9.2
+ for <qemu-devel@nongnu.org>; Tue, 21 Jan 2025 10:28:31 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1737484110; x=1738088910; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=ULfM9b6l8q4oeWzhXzTIGWvB5mpmQqM22IqQpo1/0fQ=;
+ b=Jhnxnbqsxj45eVm/39LeN+E+e9ciSQS4DPGiPUhrEuJKlDx3eu0RpwrJyVskV2qW08
+ I6uimuLtvBhSj4NC19XDMTglNkNszEUqNaDqinCnYHrMHJXCrq3alzg97iMgeZjLa32Q
+ NAJaAc0wjxeyzvNdkFMmAf3jwm3JSTQIBbURZtRqHcTUgBlDJjStrspFeGuDLz6NafY0
+ IyH7qXti275Z0WBZSpSdY9BXRw89SrJnkRmyp8LZ3qROcrBf12FszVz/Coto/GYxP0f7
+ QnqBLQwj3K57s0QVetMVZiTLP0/jfNRzZaLDADY/qBATp/qJBTqKEsIwyyMdd2lNQ5/P
+ 39ng==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1737483927; x=1738088727;
- h=content-transfer-encoding:in-reply-to:organization:autocrypt
- :content-language:from:references:cc:to:subject:user-agent
- :mime-version:date:message-id:x-gm-message-state:from:to:cc:subject
- :date:message-id:reply-to;
- bh=AMszHGMS5UYFSjYpLsmPXfGike3W9vOFzfLem7SLW50=;
- b=Nw82dcobxy8ecPdlUqRfyA7k8RoYSMZLRbDXL2mGlJJJErQXHCxS1wUAJdSsgegeLi
- 6ylBD3p0N/ljwM1XWbBMskjpO1wbGIFmIeqMxJx/Uz0RsmQbSO80LKc369V0+4pVbwAd
- Og8P+9UpxPPUEFoLcRw7V4IthPd67G0wmX6vCE7B7NHn/2FUp2YvJKbi4uIORnGnTVeb
- I9Qk4BU14Qt2ijxDOEPx6cOEAWwjkO/Ctg62CbEhydottoSb9vuOJd0AZjNQ8U8j0Enz
- WaXo+tdIHcKCjK0ZJImuNeynbvANu+HEQDp6R0poxekKUCXLAB4mgOOzcmqGUXt9+PHO
- YxrQ==
-X-Gm-Message-State: AOJu0YyWLWiLNvIRRYSHE/MU7x1o9RGnkXajn1jpKBJSWyoLCyuekilm
- g8p4npK6QxkjRJeKwDQokUR4iNAFGD9G2LdVjhWLM0YP43Hu5r43HDNs/QjKbZRSbKVAUNcbOOm
- LPr9iS6siCxWKzIUSCxuM/uQMb8nhjDGWzlvY+IxUtBBv6LdZX8hU
-X-Gm-Gg: ASbGncul0EX8A3HHhwCQFP3oHUDedOn9LiJCyKGU3CXF0Xnr1l3dMvj84zlHBr/kB97
- wM23sQb6TPXl3Ci+w+4fi8IDa1YMC1djAz8FpAEi7nLXKjyVIoH75KYxtltJDTEIseq7TXeIwHA
- tElfslc7PwIrO6/qnEYgYpRyexnyqzMZGeW7KDr9t/cy+pHXcyfdmhXExPWY5fQmlj2Y2Tl7qdK
- miZiUK/grYrnYCZU1mDr+9yi5AWzs55DuKhfMiYEFHkg6DhkKurEItCblucKYfYH0xyancL/rlx
- 7THVCBXwcqMy6bJKcgx2sffVq2FRvzk7vT8xHdElIC1amJXCZcQm2JYXTLcw//yaoi3W9JB2tfw
- TDq99hYwwGyruGCvfqfk9Aw==
-X-Received: by 2002:a7b:c44d:0:b0:434:9fac:b158 with SMTP id
- 5b1f17b1804b1-438a2b59615mr100763865e9.1.1737483927461; 
- Tue, 21 Jan 2025 10:25:27 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IFwgyk7O/Mxu9G31OAOyFsGNqu+Z7/4ic4tybdBgJgI6fnhn6D1rlcxtD1sqwa5samHYroXpw==
-X-Received: by 2002:a7b:c44d:0:b0:434:9fac:b158 with SMTP id
- 5b1f17b1804b1-438a2b59615mr100763675e9.1.1737483927095; 
- Tue, 21 Jan 2025 10:25:27 -0800 (PST)
-Received: from ?IPV6:2003:cb:c709:6200:16ba:af70:999d:6a1a?
- (p200300cbc709620016baaf70999d6a1a.dip0.t-ipconnect.de.
- [2003:cb:c709:6200:16ba:af70:999d:6a1a])
- by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-437c74ab449sm246573965e9.10.2025.01.21.10.25.25
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 21 Jan 2025 10:25:26 -0800 (PST)
-Message-ID: <a01b7a88-6d20-47cc-9631-85d9fdd48a87@redhat.com>
-Date: Tue, 21 Jan 2025 19:25:25 +0100
+ d=1e100.net; s=20230601; t=1737484110; x=1738088910;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=ULfM9b6l8q4oeWzhXzTIGWvB5mpmQqM22IqQpo1/0fQ=;
+ b=bp7d052XDvJ+M0nqwjxboM29HMqqAWQFFlqczkeOxcRq6WdqmLI6MibA7XtxLms0if
+ j+IoMjIomW/zIciFuzMxnBWSIIONvTCbPdePGB5Ya19Ciy7Q/dMJovx+ZbsTDPbK4EZG
+ D+6xC9taa4hIQefdc9ybOay6Bocwy9YEf93SMNi6NUlGOBx8RrtmrtWizHGoOjPFXrh7
+ p3v0VLshEi5Te+rtSXoTHsXFNkvGZFsMKdoq76YR9DPXLI+RTumkdPGWm2jjq3yvSfoE
+ AHU1ua1as372tEzpuwwFDBpeeXJ7ORy5PAsFVN4nM6DA7h9FXK6jW/kppsWn4MEDNl96
+ ZCUQ==
+X-Gm-Message-State: AOJu0Yyk4xQwAq252N7+fcOQwa+UyMhYv0MZYvZMsiZe+fQ2FdsFKAn/
+ a/k1dnFCDxZ3BwsxfUEoRmBvtyz2PZRLdKAkQSt8mi1j4iZ3Qj5ZS+umg0Szjmti6iooJUcJCSg
+ 33P4=
+X-Gm-Gg: ASbGncvTPlU8o0J/uR48CS7Ggs6ANL6WPkGRmG5LPEaZhIEkBEmApDhnEcB5hpgZhKJ
+ YJfZTn7Z1RGfz6CslVbttjeiUlGPn1xOlWbjtOYRBwtev0Kcqr1eLpo7YLcZttT4clX6GX6lc0c
+ N5FHAu4vSeEfA8CG0xuKwagwQt4uG3Bq3W13xKXENJMY7SxU7n+fb2Qgx/MTDLIugcFMEkzvMor
+ pl7xXe5X4SrWnLR+P7Z2NFT8qx6Tg1FPF+bnKgmmNUlMA++MzYtWdanpwwoLIAcfZYh22YhW717
+ I+Jaz2mMzLveJILkqe7ih6rcs638DbUueaHERW1glwwl
+X-Google-Smtp-Source: AGHT+IF2Qa2qK8s8Y+UCKtiJhau1PG+A2sBQ7kSaYSkfFP5KXukECsZ1ynUy5CWuypfgQn6+rpf+sA==
+X-Received: by 2002:a05:600c:3542:b0:434:fec5:4ed1 with SMTP id
+ 5b1f17b1804b1-43891453027mr153614025e9.26.1737484109806; 
+ Tue, 21 Jan 2025 10:28:29 -0800 (PST)
+Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
+ [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-4389041f7e9sm191996725e9.23.2025.01.21.10.28.28
+ (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
+ Tue, 21 Jan 2025 10:28:29 -0800 (PST)
+From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+To: qemu-devel@nongnu.org
+Cc: Bernhard Beschow <shentey@gmail.com>,
+ =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
+ Paolo Bonzini <pbonzini@redhat.com>, "Michael S. Tsirkin" <mst@redhat.com>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Subject: [PATCH] hw/char/pci-multi: Convert legacy qemu_allocate_irqs to
+ qemu_init_irq
+Date: Tue, 21 Jan 2025 19:28:28 +0100
+Message-ID: <20250121182828.45088-1-philmd@linaro.org>
+X-Mailer: git-send-email 2.47.1
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 1/1] system/physmem: take into account fd_offset for file
- fallocate
-To: Peter Xu <peterx@redhat.com>, =?UTF-8?Q?=E2=80=9CWilliam_Roche?=
- <william.roche@oracle.com>
-Cc: qemu-devel@nongnu.org, pbonzini@redhat.com, philmd@linaro.org
-References: <20250121175956.3030149-1-william.roche@oracle.com>
- <20250121175956.3030149-2-william.roche@oracle.com> <Z4_k0u7Gdv5OKa3S@x1n>
-From: David Hildenbrand <david@redhat.com>
-Content-Language: en-US
-Autocrypt: addr=david@redhat.com; keydata=
- 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
- WNyWQQ==
-Organization: Red Hat
-In-Reply-To: <Z4_k0u7Gdv5OKa3S@x1n>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=david@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -51
-X-Spam_score: -5.2
-X-Spam_bar: -----
-X-Spam_report: (-5.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-2.996,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.086,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Received-SPF: pass client-ip=2a00:1450:4864:20::330;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x330.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -159,92 +99,66 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 21.01.25 19:17, Peter Xu wrote:
-> On Tue, Jan 21, 2025 at 05:59:56PM +0000, “William Roche wrote:
->> From: William Roche <william.roche@oracle.com>
->>
->> Punching a hole in a file with fallocate needs to take into account the
->> fd_offset value for a correct file location.
->>
->> Fixes: 4b870dc4d0c0 ("hostmem-file: add offset option")
->>
->> Signed-off-by: William Roche <william.roche@oracle.com>
->> ---
->>   system/physmem.c | 14 ++++++++------
->>   1 file changed, 8 insertions(+), 6 deletions(-)
->>
->> diff --git a/system/physmem.c b/system/physmem.c
->> index c76503aea8..687ca94875 100644
->> --- a/system/physmem.c
->> +++ b/system/physmem.c
->> @@ -3689,18 +3689,20 @@ int ram_block_discard_range(RAMBlock *rb, uint64_t start, size_t length)
->>               }
->>   
->>               ret = fallocate(rb->fd, FALLOC_FL_PUNCH_HOLE | FALLOC_FL_KEEP_SIZE,
->> -                            start, length);
->> +                            start + rb->fd_offset, length);
->>               if (ret) {
->>                   ret = -errno;
->>                   error_report("%s: Failed to fallocate %s:%" PRIx64 " +%zx (%d)",
->> -                             __func__, rb->idstr, start, length, ret);
->> +                             __func__, rb->idstr, start + rb->fd_offset, length,
->> +                             ret);
->>                   goto err;
->>               }
->>   #else
->>               ret = -ENOSYS;
->>               error_report("%s: fallocate not available/file"
->>                            "%s:%" PRIx64 " +%zx (%d)",
->> -                         __func__, rb->idstr, start, length, ret);
->> +                         __func__, rb->idstr, start + rb->fd_offset, length,
->> +                         ret);
->>               goto err;
->>   #endif
->>           }
-> 
-> We do have plenty of fd_offset bugs then.. this makes sense to me. Nitpick
-> is we could use a var to cache the total offset.
+There are a fixed number of PCI IRQs, known beforehand.
+Allocate them within PCIMultiSerialState, and initialize
+using qemu_init_irq(), allowing to remove the legacy
+qemu_allocate_irqs() and qemu_free_irqs() calls.
 
-Agreed that makes sense.
+Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+---
+Based-on: <20250121155526.29982-2-philmd@linaro.org>
+          "hw/irq: Introduce qemu_init_irqs() helper"
+---
+ hw/char/serial-pci-multi.c | 7 +++----
+ 1 file changed, 3 insertions(+), 4 deletions(-)
 
-> 
->> @@ -3748,17 +3750,17 @@ int ram_block_discard_guest_memfd_range(RAMBlock *rb, uint64_t start,
->>   
->>   #ifdef CONFIG_FALLOCATE_PUNCH_HOLE
->>       ret = fallocate(rb->guest_memfd, FALLOC_FL_PUNCH_HOLE | FALLOC_FL_KEEP_SIZE,
->> -                    start, length);
->> +                    start + rb->offset, length);
->>   
->>       if (ret) {
->>           ret = -errno;
->>           error_report("%s: Failed to fallocate %s:%" PRIx64 " +%zx (%d)",
->> -                     __func__, rb->idstr, start, length, ret);
->> +                     __func__, rb->idstr, start + rb->fd_offset, length, ret);
->>       }
->>   #else
->>       ret = -ENOSYS;
->>       error_report("%s: fallocate not available %s:%" PRIx64 " +%zx (%d)",
->> -                 __func__, rb->idstr, start, length, ret);
->> +                 __func__, rb->idstr, start + rb->fd_offset, length, ret);
->>   #endif
-> 
-> IIUC the offset doesn't apply to gmemfd, see:
-> 
->          new_block->guest_memfd = kvm_create_guest_memfd(new_block->max_length,
->                                                          0, errp);
-> 
-> So my understanding is no matter how the host offset was specified, it
-> ignores it at least in the qemu gmemfd code to always offset from 0, which
-> makes sense to me, as gmemfd is anonymous anyway, and can be created more
-> than one for each VM, so I don't yet see why a gmemfd needs an offset indeed.
-
-Right.
-
-Reviewed-by: David Hildenbrand <david@redhat.com>
-
+diff --git a/hw/char/serial-pci-multi.c b/hw/char/serial-pci-multi.c
+index 7578e863cfe..718ae251317 100644
+--- a/hw/char/serial-pci-multi.c
++++ b/hw/char/serial-pci-multi.c
+@@ -45,7 +45,7 @@ typedef struct PCIMultiSerialState {
+     char         *name[PCI_SERIAL_MAX_PORTS];
+     SerialState  state[PCI_SERIAL_MAX_PORTS];
+     uint32_t     level[PCI_SERIAL_MAX_PORTS];
+-    qemu_irq     *irqs;
++    IRQState     irqs[PCI_SERIAL_MAX_PORTS];
+     uint8_t      prog_if;
+ } PCIMultiSerialState;
+ 
+@@ -61,7 +61,6 @@ static void multi_serial_pci_exit(PCIDevice *dev)
+         memory_region_del_subregion(&pci->iobar, &s->io);
+         g_free(pci->name[i]);
+     }
+-    qemu_free_irqs(pci->irqs, pci->ports);
+ }
+ 
+ static void multi_serial_irq_mux(void *opaque, int n, int level)
+@@ -102,7 +101,6 @@ static void multi_serial_pci_realize(PCIDevice *dev, Error **errp)
+     pci->dev.config[PCI_INTERRUPT_PIN] = 0x01;
+     memory_region_init(&pci->iobar, OBJECT(pci), "multiserial", 8 * nports);
+     pci_register_bar(&pci->dev, 0, PCI_BASE_ADDRESS_SPACE_IO, &pci->iobar);
+-    pci->irqs = qemu_allocate_irqs(multi_serial_irq_mux, pci, nports);
+ 
+     for (i = 0; i < nports; i++) {
+         s = pci->state + i;
+@@ -110,7 +108,7 @@ static void multi_serial_pci_realize(PCIDevice *dev, Error **errp)
+             multi_serial_pci_exit(dev);
+             return;
+         }
+-        s->irq = pci->irqs[i];
++        s->irq = &pci->irqs[i];
+         pci->name[i] = g_strdup_printf("uart #%zu", i + 1);
+         memory_region_init_io(&s->io, OBJECT(pci), &serial_io_ops, s,
+                               pci->name[i], 8);
+@@ -183,6 +181,7 @@ static void multi_serial_init(Object *o)
+     size_t i, nports = multi_serial_get_port_count(PCI_DEVICE_GET_CLASS(dev));
+ 
+     for (i = 0; i < nports; i++) {
++        qemu_init_irq(&pms->irqs[i], multi_serial_irq_mux, pms, i);
+         object_initialize_child(o, "serial[*]", &pms->state[i], TYPE_SERIAL);
+     }
+ }
 -- 
-Cheers,
-
-David / dhildenb
+2.47.1
 
 
