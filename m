@@ -4,94 +4,144 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B92F4C02182
-	for <qemu-devel@archiver.kernel.org>; Tue, 21 Jan 2025 20:23:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 94A69C0218B
+	for <qemu-devel@archiver.kernel.org>; Tue, 21 Jan 2025 20:43:05 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1taKlA-00023i-3W; Tue, 21 Jan 2025 15:22:04 -0500
+	id 1taL4i-0006b1-9J; Tue, 21 Jan 2025 15:42:16 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1taKl8-00023L-8b
- for qemu-devel@nongnu.org; Tue, 21 Jan 2025 15:22:02 -0500
+ (Exim 4.90_1) (envelope-from <david@redhat.com>) id 1taL4e-0006al-UI
+ for qemu-devel@nongnu.org; Tue, 21 Jan 2025 15:42:14 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1taKl5-0001Xl-29
- for qemu-devel@nongnu.org; Tue, 21 Jan 2025 15:22:02 -0500
+ (Exim 4.90_1) (envelope-from <david@redhat.com>) id 1taL4d-0004yu-4g
+ for qemu-devel@nongnu.org; Tue, 21 Jan 2025 15:42:12 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1737490915;
+ s=mimecast20190719; t=1737492129;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=mt99Q6PTtiVRyEYeMJowEAmD8Ow8/OY0SKvysNI4H7s=;
- b=inKIVjfKdymgmZYkd0h48BVw15meCsXAWvgDAZYRNKXs2aVmZ5eHnW461VmNcGhr5ZprhO
- /GtG6jn9HF2RlD5zp8ns5iHZjo2DJnGklwTdcANnmRPAoPrlPRHBLpX5UBizZVEELV5bon
- C45pp2C/1+nCkd8dzitLIXszjYg4QdQ=
-Received: from mail-qt1-f199.google.com (mail-qt1-f199.google.com
- [209.85.160.199]) by relay.mimecast.com with ESMTP with STARTTLS
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+ bh=bV+nRwACZuxKEgybFrFqH2UzM+9UPRa+IzmD8p7kJqY=;
+ b=BC5Nnizp13neFTShNxQWMHgZ/QnpUh6O5miQmqTGftO50GmACEoEEBhxL/0lq0r4QrR7b5
+ 44bnabctDnYJDxODy7K/jtpZXmqzcgJ8oFWDpWcxOFwJJFq2kUvEo6GCWk4pLT4GmyROgT
+ uXMDE4859NVtyolbDow92cvCmz1Encw=
+Received: from mail-wr1-f72.google.com (mail-wr1-f72.google.com
+ [209.85.221.72]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-131-GjfjCKdvO7q0zX9yrbhghw-1; Tue, 21 Jan 2025 15:21:53 -0500
-X-MC-Unique: GjfjCKdvO7q0zX9yrbhghw-1
-X-Mimecast-MFC-AGG-ID: GjfjCKdvO7q0zX9yrbhghw
-Received: by mail-qt1-f199.google.com with SMTP id
- d75a77b69052e-46e2504c3aaso52218501cf.1
- for <qemu-devel@nongnu.org>; Tue, 21 Jan 2025 12:21:53 -0800 (PST)
+ us-mta-677-li0Ur9uDMRuaf-f-QFR8sg-1; Tue, 21 Jan 2025 15:42:00 -0500
+X-MC-Unique: li0Ur9uDMRuaf-f-QFR8sg-1
+X-Mimecast-MFC-AGG-ID: li0Ur9uDMRuaf-f-QFR8sg
+Received: by mail-wr1-f72.google.com with SMTP id
+ ffacd0b85a97d-385dcae001fso2739089f8f.1
+ for <qemu-devel@nongnu.org>; Tue, 21 Jan 2025 12:42:00 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1737490913; x=1738095713;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=mt99Q6PTtiVRyEYeMJowEAmD8Ow8/OY0SKvysNI4H7s=;
- b=P3pttqQJixEtWP7aOGlXNdfPWhErg4v75e5eDozGCSGhCKZ/2oJiO0ng1bzr+3kFTV
- B+Vx1/zZ7qIo2IgaKrzPkm1pTIDrAA848nnwj4N7joK1cuGU3QUOkjALor1+psLE1wI2
- WP6has1jpij52CKqn7vZiu9EC+LbOSPQrWvGYNjQH7XJJy1f8OO9c9h0qInfsNWNmRQ/
- VxmSBNpEywwH62QkqbsBiFHNJccLng73bQpLkXc5F4drX0Q2wU0BeaPUyEjUbBWrn0kL
- 4Qiz0/gxllc/zWEVA6tj/DAlDhMSePF74qtNkpLQfzXjdS2VJMEIBTRVdUgtgvKuor9q
- gp1w==
+ d=1e100.net; s=20230601; t=1737492119; x=1738096919;
+ h=content-transfer-encoding:in-reply-to:organization:autocrypt
+ :content-language:from:references:cc:to:subject:user-agent
+ :mime-version:date:message-id:x-gm-message-state:from:to:cc:subject
+ :date:message-id:reply-to;
+ bh=bV+nRwACZuxKEgybFrFqH2UzM+9UPRa+IzmD8p7kJqY=;
+ b=Aee65m3sPTSwNxXvuWaoCs7zK7xsSIyO+79eMs9tCvwT3tVuOe3gr9aqzyM3ThnuB9
+ 5kCBswmXG3Q3W8SYdHtginj32RDU6eZ79dRv8k520Dh3W5yI03hEq6Tz33oMvNmxEkE9
+ TbKwbNb4CFSwiikIrX3ZJn5FjCqctyl4s+BqwdJ7v8pbetC0mBfQ0p18+hkn04qhcDpv
+ bqBRTcHP1vFGJSjsVkoUyMgLym+pdIwA4xGrD7pBdiEbI1unbI69gDYR5BIHvcGQUJxy
+ kXlBNKsP/e8QO3SuOmfDpYsESYwaejQ82pnmMF0m33il/aGnLXP4gZCtGyTMj+ZsYZ6u
+ cpzw==
 X-Forwarded-Encrypted: i=1;
- AJvYcCW9BhNuO4J+mJTNNBwLroybkwW22IyVgZ6vTkIzfpuUHNqMwK3SC71NnLUWdup1YhG1ptnD0K0Ahxmf@nongnu.org
-X-Gm-Message-State: AOJu0YycB+M9zckmBITomnjDFJYs3vYzzEDTt6OgqLRNz9n58aVrQ62y
- 2c8xjVYYjargcnZQP/2nqm2IZQc5YPBiRzL9GcoIAY2bGftTTC5Z3pUx3b4tOGpUHoQNpw1XQf3
- 5cJW0AdN6ZZH45xWs1VGVn6/cYEsJQRb0hBqjDPhBpQM7pz8g0/ly
-X-Gm-Gg: ASbGncvvo3IJnzkm2FDzSUdzhWjtXb7jCGS34uGNpnvX6/Cx7Sl6XdUq6t30AUeOQNf
- mM6LrQv3LIdzOO/GtcZhpPS3FMafR/DvIJSKE8R9vcBRj/2XXdjxjibBGri1baYweyhiFrrgsyQ
- M3NBoe22796lJQp2j73R0g288mJ6yOxJEnHt+sv7qijc3jvP+gs/d9arWSnYZZPjcXtqhZT22SI
- rJRF/Q+/nbyhiVEVe/GsBaIF7Bx5cQ+sQL10GdBeGJ+uHKoPyU21H8I2IvoOx/q7chNN/tboAEp
- e2zH2WVn3f3MGcspqwF+8QfZB26f46o=
-X-Received: by 2002:a05:622a:1116:b0:467:59f6:3e56 with SMTP id
- d75a77b69052e-46e12b56ef7mr286167141cf.36.1737490913035; 
- Tue, 21 Jan 2025 12:21:53 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IHhKqh/niV03ikVCafvYgoRQT21WqQAnCgYjazIyuuJxjrOz+2e+gwnsOhhs8U6ygSh0qOixw==
-X-Received: by 2002:a05:622a:1116:b0:467:59f6:3e56 with SMTP id
- d75a77b69052e-46e12b56ef7mr286166701cf.36.1737490912642; 
- Tue, 21 Jan 2025 12:21:52 -0800 (PST)
-Received: from x1n (pool-99-254-114-190.cpe.net.cable.rogers.com.
- [99.254.114.190]) by smtp.gmail.com with ESMTPSA id
- d75a77b69052e-46e102eeafcsm56434351cf.16.2025.01.21.12.21.51
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 21 Jan 2025 12:21:51 -0800 (PST)
-Date: Tue, 21 Jan 2025 15:21:49 -0500
-From: Peter Xu <peterx@redhat.com>
-To: David Hildenbrand <david@redhat.com>
+ AJvYcCWDSQTFCWBz4XivCzoxx71Pe9+JcVVTyRdnidj8Pcr2lzj4NK7TYmr9+erdKbNKYjYFlultKWYFRp60@nongnu.org
+X-Gm-Message-State: AOJu0Yz+i5q7uEou0AeP9tLSejeu46PqgmVetkehx1ylv1qiZGD7v3VE
+ yinWluCj3NoYa/WrmefHV+pwuB6dDp2UFyQ4ZkRLn9MM4KPzlsV5kY6/P2QFDzQV2B7KZSjh2Gk
+ tYgKSzqCQbi8I7mjq391gOUgvLzEdUjC9aazsb5qD2L3GrR7GEwL+
+X-Gm-Gg: ASbGncuC2sG1xpkWA/C/md89j38uJ4idzQkSrkQK1Y3VwfK0EO8OiOCYPLa2Q6mjo2C
+ OViCFpJQYvE4ocf+1lVthwOel+WwGumVnv74JFW0J1pCNF5R+38KOWcO9W/F7AF05uvjkQeFWT+
+ SLy46GjWqT/59MBKNz9atptR+2EZAilVVS8X78KIZBGrDpjJSZ/RnpTFQ5DIsDBzN8BnKcjHNl5
+ pTprCvAXC+FltUr1kYRT0wnkEFk6R2Qrg9Q6Brym2OFe5AitFQtwBX1DypMZ1U0FYxUg2Kc7gSg
+ AkDH/DD8typAeIH84xtb7UbKqcVP4+Q8lLZDXgSal8AEiijklUZKO7qZTJ8LUoSQ/6MVtTQ+blB
+ cIL1R0jqWcXpUUzrdwf1pbQ==
+X-Received: by 2002:adf:cc90:0:b0:38a:4b8a:e47d with SMTP id
+ ffacd0b85a97d-38bf5674f99mr13452391f8f.26.1737492119328; 
+ Tue, 21 Jan 2025 12:41:59 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IH0/IGfSRFqD5a1cp4PYttFZEQK6OSIhNeNeDTCMSeqJHpzVP1bbzOd8PElCu3iC/ATqtzc0g==
+X-Received: by 2002:adf:cc90:0:b0:38a:4b8a:e47d with SMTP id
+ ffacd0b85a97d-38bf5674f99mr13452373f8f.26.1737492118899; 
+ Tue, 21 Jan 2025 12:41:58 -0800 (PST)
+Received: from ?IPV6:2003:cb:c709:6200:16ba:af70:999d:6a1a?
+ (p200300cbc709620016baaf70999d6a1a.dip0.t-ipconnect.de.
+ [2003:cb:c709:6200:16ba:af70:999d:6a1a])
+ by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-38bf327e19fsm14701763f8f.93.2025.01.21.12.41.56
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Tue, 21 Jan 2025 12:41:57 -0800 (PST)
+Message-ID: <bc0b4372-d8ca-4d5c-aee8-6e2521ebb2ec@redhat.com>
+Date: Tue, 21 Jan 2025 21:41:55 +0100
+MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v3 07/49] HostMem: Add mechanism to opt in kvm guest memfd
+ via MachineState
+To: Peter Xu <peterx@redhat.com>
 Cc: Michael Roth <michael.roth@amd.com>, qemu-devel@nongnu.org,
  kvm@vger.kernel.org, Tom Lendacky <thomas.lendacky@amd.com>,
- Paolo Bonzini <pbonzini@redhat.com>,
- Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>,
- Markus Armbruster <armbru@redhat.com>, Pankaj Gupta <pankaj.gupta@amd.com>,
- Xiaoyao Li <xiaoyao.li@intel.com>,
+ Paolo Bonzini <pbonzini@redhat.com>, =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?=
+ <berrange@redhat.com>, Markus Armbruster <armbru@redhat.com>,
+ Pankaj Gupta <pankaj.gupta@amd.com>, Xiaoyao Li <xiaoyao.li@intel.com>,
  Isaku Yamahata <isaku.yamahata@linux.intel.com>
-Subject: Re: [PATCH v3 07/49] HostMem: Add mechanism to opt in kvm guest
- memfd via MachineState
-Message-ID: <Z5AB3SlwRYo19dOa@x1n>
 References: <20240320083945.991426-1-michael.roth@amd.com>
- <20240320083945.991426-8-michael.roth@amd.com>
- <Z4_b3Lrpbnyzyros@x1n>
- <fa29f4ef-f67d-44d7-93f0-753437cf12cb@redhat.com>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <fa29f4ef-f67d-44d7-93f0-753437cf12cb@redhat.com>
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=peterx@redhat.com;
+ <20240320083945.991426-8-michael.roth@amd.com> <Z4_b3Lrpbnyzyros@x1n>
+ <fa29f4ef-f67d-44d7-93f0-753437cf12cb@redhat.com> <Z5AB3SlwRYo19dOa@x1n>
+From: David Hildenbrand <david@redhat.com>
+Content-Language: en-US
+Autocrypt: addr=david@redhat.com; keydata=
+ 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
+ WNyWQQ==
+Organization: Red Hat
+In-Reply-To: <Z5AB3SlwRYo19dOa@x1n>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=david@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -50
 X-Spam_score: -5.1
@@ -116,137 +166,101 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, Jan 21, 2025 at 07:24:29PM +0100, David Hildenbrand wrote:
-> On 21.01.25 18:39, Peter Xu wrote:
-> > On Wed, Mar 20, 2024 at 03:39:03AM -0500, Michael Roth wrote:
-> > > From: Xiaoyao Li <xiaoyao.li@intel.com>
-> > > 
-> > > Add a new member "guest_memfd" to memory backends. When it's set
-> > > to true, it enables RAM_GUEST_MEMFD in ram_flags, thus private kvm
-> > > guest_memfd will be allocated during RAMBlock allocation.
-> > > 
-> > > Memory backend's @guest_memfd is wired with @require_guest_memfd
-> > > field of MachineState. It avoid looking up the machine in phymem.c.
-> > > 
-> > > MachineState::require_guest_memfd is supposed to be set by any VMs
-> > > that requires KVM guest memfd as private memory, e.g., TDX VM.
-> > > 
-> > > Signed-off-by: Xiaoyao Li <xiaoyao.li@intel.com>
-> > > Reviewed-by: David Hildenbrand <david@redhat.com>
-> > > ---
-> > > Changes in v4:
-> > >   - rename "require_guest_memfd" to "guest_memfd" in struct
-> > >     HostMemoryBackend;	(David Hildenbrand)
-> > > Signed-off-by: Michael Roth <michael.roth@amd.com>
-> > > ---
-> > >   backends/hostmem-file.c  | 1 +
-> > >   backends/hostmem-memfd.c | 1 +
-> > >   backends/hostmem-ram.c   | 1 +
-> > >   backends/hostmem.c       | 1 +
-> > >   hw/core/machine.c        | 5 +++++
-> > >   include/hw/boards.h      | 2 ++
-> > >   include/sysemu/hostmem.h | 1 +
-> > >   7 files changed, 12 insertions(+)
-> > > 
-> > > diff --git a/backends/hostmem-file.c b/backends/hostmem-file.c
-> > > index ac3e433cbd..3c69db7946 100644
-> > > --- a/backends/hostmem-file.c
-> > > +++ b/backends/hostmem-file.c
-> > > @@ -85,6 +85,7 @@ file_backend_memory_alloc(HostMemoryBackend *backend, Error **errp)
-> > >       ram_flags |= fb->readonly ? RAM_READONLY_FD : 0;
-> > >       ram_flags |= fb->rom == ON_OFF_AUTO_ON ? RAM_READONLY : 0;
-> > >       ram_flags |= backend->reserve ? 0 : RAM_NORESERVE;
-> > > +    ram_flags |= backend->guest_memfd ? RAM_GUEST_MEMFD : 0;
-> > >       ram_flags |= fb->is_pmem ? RAM_PMEM : 0;
-> > >       ram_flags |= RAM_NAMED_FILE;
-> > >       return memory_region_init_ram_from_file(&backend->mr, OBJECT(backend), name,
-> > > diff --git a/backends/hostmem-memfd.c b/backends/hostmem-memfd.c
-> > > index 3923ea9364..745ead0034 100644
-> > > --- a/backends/hostmem-memfd.c
-> > > +++ b/backends/hostmem-memfd.c
-> > > @@ -55,6 +55,7 @@ memfd_backend_memory_alloc(HostMemoryBackend *backend, Error **errp)
-> > >       name = host_memory_backend_get_name(backend);
-> > >       ram_flags = backend->share ? RAM_SHARED : 0;
-> > >       ram_flags |= backend->reserve ? 0 : RAM_NORESERVE;
-> > > +    ram_flags |= backend->guest_memfd ? RAM_GUEST_MEMFD : 0;
-> > >       return memory_region_init_ram_from_fd(&backend->mr, OBJECT(backend), name,
-> > >                                             backend->size, ram_flags, fd, 0, errp);
-> > >   }
-> > > diff --git a/backends/hostmem-ram.c b/backends/hostmem-ram.c
-> > > index d121249f0f..f7d81af783 100644
-> > > --- a/backends/hostmem-ram.c
-> > > +++ b/backends/hostmem-ram.c
-> > > @@ -30,6 +30,7 @@ ram_backend_memory_alloc(HostMemoryBackend *backend, Error **errp)
-> > >       name = host_memory_backend_get_name(backend);
-> > >       ram_flags = backend->share ? RAM_SHARED : 0;
-> > >       ram_flags |= backend->reserve ? 0 : RAM_NORESERVE;
-> > > +    ram_flags |= backend->guest_memfd ? RAM_GUEST_MEMFD : 0;
-> > >       return memory_region_init_ram_flags_nomigrate(&backend->mr, OBJECT(backend),
-> > >                                                     name, backend->size,
-> > >                                                     ram_flags, errp);
-> > 
-> > These change look a bit confusing to me, as I don't see how gmemfd can be
-> > used with either file or ram typed memory backends..
+>> This "anon" memory cannot be "shared" with other processes, but
+>> virtio-kernel etc. can just use it.
+>>
+>> To "share" the memory with other processes, we'd need memfd/file.
 > 
-> I recall that the following should work:
+> Ah OK, thanks David.  Is this the planned long term solution for
+> vhost-kernel?
+
+I think the basic idea was that the memory backend defines how the 
+"non-private" memory is backed, which is the same just like for any 
+other non-CC VM.
+
+The "private" memory always comes from guest_memfd.
+
+So for the time being using anon+guest_memfd coresponds to "just a 
+simple VM".
+
+Long-term I expect that we use guest_memfd for shared+private, and use 
+in-place conversion. Access to "private" memory using the mmap() will 
+result in a SIGBUS.
+
+ > > I wonder what happens if vhost tries to DMA to a region that is private
+> with this setup.
+ > > AFAIU, it'll try to DMA to the fake address of ramblock->host that is
+> pointing to by the memory backend (either anon, shmem, file, etc.).  The
+> ideal case IIUC is it should crash QEMU because it's trying to access an
+> illegal page which is private. But if with this model, it won't crash but
+> silently populate some page in the non-gmemfd backend.
 > 
-> "private" memory will come from guest_memfd, "shared" (as in, accessible by
-> the host) will come from anonymous memory.
-> 
-> This "anon" memory cannot be "shared" with other processes, but
-> virtio-kernel etc. can just use it.
-> 
-> To "share" the memory with other processes, we'd need memfd/file.
+> Is that expected?
 
-Ah OK, thanks David.  Is this the planned long term solution for
-vhost-kernel?
+Yes, it's all just a big mmap() which will populate memory on access -- 
+independent of using anon/file/memfd.
 
-I wonder what happens if vhost tries to DMA to a region that is private
-with this setup.
+Similar to virtio-mem, long-term we'd want a mechanism to check/enforce 
+that some memory in there will not be populated on access from QEMU 
+(well, and vhost-user processes ...).
 
-AFAIU, it'll try to DMA to the fake address of ramblock->host that is
-pointing to by the memory backend (either anon, shmem, file, etc.).  The
-ideal case IIUC is it should crash QEMU because it's trying to access an
-illegal page which is private. But if with this model, it won't crash but
-silently populate some page in the non-gmemfd backend.
-
-Is that expected?
+In memory_get_xlat_addr() we perform such checks, but it's only used for 
+iommu. vhost-kernel likely has no such checks, just like vhost-user etc 
+does not.
 
 > 
-> > 
-> > When specified gmemfd=on with those, IIUC it'll allocate both the memory
-> > (ramblock->host) and gmemfd, but without using ->host.  Meanwhile AFAIU the
-> > ramblock->host will start to conflict with gmemfd in the future when it
-> > might be able to be mapp-able (having valid ->host).
+>>
+>>>
+>>> When specified gmemfd=on with those, IIUC it'll allocate both the memory
+>>> (ramblock->host) and gmemfd, but without using ->host.  Meanwhile AFAIU the
+>>> ramblock->host will start to conflict with gmemfd in the future when it
+>>> might be able to be mapp-able (having valid ->host).
+>>
+>> These will require a new guest_memfd memory backend (I recall that was
+>> discussed a couple of times).
 > 
-> These will require a new guest_memfd memory backend (I recall that was
-> discussed a couple of times).
+> Do you know if anyone is working on this one?
 
-Do you know if anyone is working on this one?
+So far my understanding is that Google that does shared+private 
+guest_memfd kernel part won't be working on QEMU patches. I raised that 
+to our management recently, that this would be a good project for RH to 
+focus on.
+
+I am not aware of real implementations of the guest_memfd backend (yet).
 
 > 
-> > 
-> > I have a local fix for this (and actually more than below.. but starting
-> > from it), I'm not sure whether I overlooked something, but from reading the
-> > cover letter it's only using memfd backend which makes perfect sense to me
-> > so far.
+>>
+>>>
+>>> I have a local fix for this (and actually more than below.. but starting
+>>> from it), I'm not sure whether I overlooked something, but from reading the
+>>> cover letter it's only using memfd backend which makes perfect sense to me
+>>> so far.
+>>
+>> Does the anon+guest_memfd combination not work or are you speculating about
+>> the usability (which I hopefully addressed above).
 > 
-> Does the anon+guest_memfd combination not work or are you speculating about
-> the usability (which I hopefully addressed above).
+> IIUC, if with above solution and with how QEMU interacts memory convertions
+> right now, at least hugetlb pages will suffer from double allocation, as
+> kvm_convert_memory() won't free hugetlb pages even if converted to private.
 
-IIUC, if with above solution and with how QEMU interacts memory convertions
-right now, at least hugetlb pages will suffer from double allocation, as
-kvm_convert_memory() won't free hugetlb pages even if converted to private.
+Yes, that's why I'm invested in teaching guest_memfd in-place conversion 
+alongside huge page support (which fortunately Google engineers are 
+doing great work on).
 
-It sounds like also doable (and also preferrable..) that for each of the VM
-we always stich with pages in the gmemfd page cache, no matter if it's
-shared or private.  For private, we could zap all pgtables and sigbus any
-faults afterwards.  I thought that was always the plan, but I could lose
-many latest informations..
+> 
+> It sounds like also doable (and also preferrable..) that for each of the VM
+> we always stich with pages in the gmemfd page cache, no matter if it's
+> shared or private.  For private, we could zap all pgtables and sigbus any
+> faults afterwards.  I thought that was always the plan, but I could lose
+> many latest informations..
 
-Thanks,
+Yes, with the guest_memfd backend (shared+private) that's the plan: 
+SIGBUS on invalid access.
+
 
 -- 
-Peter Xu
+Cheers,
+
+David / dhildenb
 
 
