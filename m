@@ -4,89 +4,153 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1A44AC02182
-	for <qemu-devel@archiver.kernel.org>; Tue, 21 Jan 2025 09:25:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A8E2EC02182
+	for <qemu-devel@archiver.kernel.org>; Tue, 21 Jan 2025 09:27:22 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1taAV1-00049s-5G; Tue, 21 Jan 2025 04:24:43 -0500
+	id 1taAX5-0004xH-0x; Tue, 21 Jan 2025 04:26:51 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <shentey@gmail.com>) id 1taAUz-00049e-MH
- for qemu-devel@nongnu.org; Tue, 21 Jan 2025 04:24:41 -0500
-Received: from mail-wm1-x32e.google.com ([2a00:1450:4864:20::32e])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <shentey@gmail.com>) id 1taAUx-0000ju-Ts
- for qemu-devel@nongnu.org; Tue, 21 Jan 2025 04:24:41 -0500
-Received: by mail-wm1-x32e.google.com with SMTP id
- 5b1f17b1804b1-43621d27adeso36293495e9.2
- for <qemu-devel@nongnu.org>; Tue, 21 Jan 2025 01:24:39 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1737451478; x=1738056278; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:references
- :in-reply-to:subject:cc:to:from:date:from:to:cc:subject:date
- :message-id:reply-to;
- bh=jKbTvQ7GFs0VuMcggjQ4sZbkRoeENt60Wbm8shZRflk=;
- b=Ey2ffAPubI5Hos2hSY69QqnyxS4DyLmV+Q3ntXIXpbmMXLoADRN5OWIDT47ccGRaSM
- PSuE2DQ5fUFIi52iGZrfYSFQ5QGndhHFA0ZJ9l4c++60599Ve8KfIdQvcJVTRNtiNUw9
- zCuJ1sxv2wxH4wNi6slQM7jHikilO+4y3ZFGkzn03ETrj4LCU14NiZUdB0ZPYAOcuuPl
- dcZMzAR2uSJCLGRp+GSG/eiN/vzKUdu7dT4MU3etRCRrL4Nv1v9NQJsG2VqJ6Yj6uPEI
- qHVmmZ4uPIrramaM2Oz+dRMjLLwQCy6kT+8oSM8RUBqGoijQCoZB61tNTfMOgQ4hz/iZ
- GEMA==
+ (Exim 4.90_1) (envelope-from <david@redhat.com>) id 1taAX3-0004x6-9A
+ for qemu-devel@nongnu.org; Tue, 21 Jan 2025 04:26:49 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <david@redhat.com>) id 1taAWw-00013A-Hm
+ for qemu-devel@nongnu.org; Tue, 21 Jan 2025 04:26:48 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1737451599;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+ bh=Nv+vRHKxKx7LPGUXqTR2Bw4vWrO1fycMkwgZg/uT7Sc=;
+ b=GDyeM+Zy1SDO4wwv4RuCPGikVj2F6wPsGFwRxS1R0oYO1xFvafgxoLMPz6MMQ/qNiKQBuz
+ xV333uWFATjsSmQ9Y9bS4TDoPBm7PxB4y1oUJhr3jqn8u2KMjZodJLI4cLSfue3LorMXO5
+ 2WIaImF3w/8wEgj/SfbZg3hL7GyrWb0=
+Received: from mail-wr1-f69.google.com (mail-wr1-f69.google.com
+ [209.85.221.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-641-Mde2QRh8N3-86Kk58dEtLA-1; Tue, 21 Jan 2025 04:26:38 -0500
+X-MC-Unique: Mde2QRh8N3-86Kk58dEtLA-1
+X-Mimecast-MFC-AGG-ID: Mde2QRh8N3-86Kk58dEtLA
+Received: by mail-wr1-f69.google.com with SMTP id
+ ffacd0b85a97d-38bf4913659so2982952f8f.1
+ for <qemu-devel@nongnu.org>; Tue, 21 Jan 2025 01:26:37 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1737451478; x=1738056278;
- h=content-transfer-encoding:mime-version:message-id:references
- :in-reply-to:subject:cc:to:from:date:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=jKbTvQ7GFs0VuMcggjQ4sZbkRoeENt60Wbm8shZRflk=;
- b=qRErt8L6O52WvBGIITtUwPXPx6+0n+yCtWAiJzt3WQyLdOmDxvxqfLNqkHpW1WByDy
- IvoofolYisEQtvzbsTEnDYPIzEIw5vBL9gxP1sVln2UiW4mIcLFd+NIHhb0lKH3FcyYQ
- s/huAsbzHMgd/zN5Sd2LhdXJ0pOcXjsi44aHSTd4ByOapAOOTuiC9MH2e1CIXbqapwaz
- rAGHnBJZbQkks2t/0r8xf23K0bXu9ztdwMu6q1Vs9kQ84D49vOG5K0y56D+NOseHaUb6
- ssWrquQlFPC9+hik4Mv2ehoAy0bk5dI2Tho/gQ76ehc/3WT9pb8oLxzAcCov8xcVX+/M
- lyjA==
+ d=1e100.net; s=20230601; t=1737451597; x=1738056397;
+ h=content-transfer-encoding:in-reply-to:organization:autocrypt
+ :content-language:from:references:cc:to:subject:user-agent
+ :mime-version:date:message-id:x-gm-message-state:from:to:cc:subject
+ :date:message-id:reply-to;
+ bh=Nv+vRHKxKx7LPGUXqTR2Bw4vWrO1fycMkwgZg/uT7Sc=;
+ b=D6VtYgx6Mws1OYU0emqUNZdNHrXgRTbzwH+m2WhMnHGmDlO5zjSNm50HxZ0bnz7y8n
+ plh/r505C0aqQbX9BlpukqF3A7GBE1jWolYvRwKJBbIdePjY0Eq08AFZrZyvPufdCk/k
+ gj+qmF90x6INu4LV/A7kzACEvhMzHH/8RZrrqdbcR/nW5NfEBb4GVeKlpWJ56FQPEhlG
+ 5hXayVarc9QJXH8qpQ+kFoniMo6IkCMbxgyRrIoLhUq1rd880C7YjhE/9R3HqgrCh6bq
+ qIXGe81vT8iHle6NTbyTpGUwMC23gXm8z2kq1urXhhCa3Y7B1DGaXyac+udQ91oa64d0
+ PgIA==
 X-Forwarded-Encrypted: i=1;
- AJvYcCWFj5TMmQfq8CgNu4fOieaw2PvAOXZEJdkI5VVyg0Igl6I9+3Chx6DSGLdXMePmFayshdOspnbgcopu@nongnu.org
-X-Gm-Message-State: AOJu0Yy19EqcxaUOyWbxkYHeNYyzF4Sm0KQ7b9gglgCQR2rhRGjPs2GK
- OzenSgKKoM24TU0IOTaS0M4uwLEHVu2muPf/DMjVFP7tvp/Jj661
-X-Gm-Gg: ASbGncv6EfcMJPMlLxf7hb0XVBdlMkp6Z3qzdl46BGSkx7AbpFoSIvRZKKdyITyaF4x
- 2oxdD52Wpd3MgTsBxLyk1tW8l2d7iyJX2HZjAUut5vMwXeCST6lmck3rbIE03klhzr3z3SeuSzX
- s4XMWTEQJLisNvjvbZbc4UKaY8suZlBhdhjRMm+sw+jjbQTT+cb0tVXIUqT1TJbvqWkGKPCeuET
- 1Uombf2ODPTiB+R+S9p9YIj/gkEXVvrfVPYAH069yqTFj9JZv3jmv20VrWPGKVO
-X-Google-Smtp-Source: AGHT+IGkDV3ieKpGhIrpytUUgxJfKwq3e98LfMm74F8UOZpFN1pO9PijmdjYyzlKfofhd8UEpc0tjQ==
-X-Received: by 2002:adf:f402:0:b0:385:f7a3:fea6 with SMTP id
- ffacd0b85a97d-38bf56628f0mr11631027f8f.13.1737451477765; 
- Tue, 21 Jan 2025 01:24:37 -0800 (PST)
-Received: from [127.0.0.1] ([62.214.191.67]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4389041f61bsm170147995e9.17.2025.01.21.01.24.36
+ AJvYcCVzh96dI++Q3GgH3FyXfWvC/jtolXauce38haasbekY5TD3hYqToAIOJL9DK+A5bP4hpANlgcv093ZM@nongnu.org
+X-Gm-Message-State: AOJu0YwdQ2ChiAnrIbNSrHK8DI6CJe9jvhlWfSUrkpQQ9Vz2YfT678YH
+ 2YnEUy8GvF2Isxd0pQGqlxvqUgaPiXlBQt3dVgUn1q0dkNAwfKuNTN2t/0uBoabCX+TE5B1ls2G
+ gqa5bgm4EVJj6oBaarbrCQHs7WDLCj2RqdM8GSCzPxPSMSm9YIBHEEiu/TfBE
+X-Gm-Gg: ASbGncsVaiolcNlfKngRlcX5vO+TD5wV0EvmWRpIYqcCNZJwGDgJwDMDj+imAkrHpJJ
+ LIyIgiCrmvuForTU3v1MOzum58QX1UzdHviGFx5mHSzt1Y4tjpqpa81Ja9zwJU6NURpGzCADf4E
+ 1witah60VCiu3TK9hTM6xnr+q/cCRynH4VR5977iEeoY3Pjoyk52LZQm2K+wajUeOc+2SswRymA
+ sfIO4jy3hKtbz4QDuunmD8WJl4inAbC5QM3kxEADoJw+D5lkbC6jtw5gY65JmHa12SJiCvUe69C
+ SoOUVCJRjyYcxIBYRIGcsZwrFd8aanJh1scMj58oyv0RWGWWkRoT/nl13lRmjpVZlw6smw/TORS
+ e55XtqsA9xSeN9vwYGJ6OVQ==
+X-Received: by 2002:a5d:5f51:0:b0:38b:eb7b:316 with SMTP id
+ ffacd0b85a97d-38bf59eccbamr15367907f8f.47.1737451596896; 
+ Tue, 21 Jan 2025 01:26:36 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IH1YGWQ/myVTZz6NZIjxD3S9whG+HZs8L0xT3L+XauL+Rs1R39z72BwXihfmUS63EBCKHTwjw==
+X-Received: by 2002:a5d:5f51:0:b0:38b:eb7b:316 with SMTP id
+ ffacd0b85a97d-38bf59eccbamr15367880f8f.47.1737451596582; 
+ Tue, 21 Jan 2025 01:26:36 -0800 (PST)
+Received: from ?IPV6:2003:cb:c709:6200:16ba:af70:999d:6a1a?
+ (p200300cbc709620016baaf70999d6a1a.dip0.t-ipconnect.de.
+ [2003:cb:c709:6200:16ba:af70:999d:6a1a])
+ by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-38bf3278088sm12842925f8f.73.2025.01.21.01.26.34
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 21 Jan 2025 01:24:37 -0800 (PST)
-Date: Tue, 21 Jan 2025 09:24:26 +0000
-From: Bernhard Beschow <shentey@gmail.com>
-To: =?ISO-8859-1?Q?Philippe_Mathieu-Daud=E9?= <philmd@linaro.org>,
- qemu-devel@nongnu.org
-CC: Alberto Garcia <berto@igalia.com>, Fabiano Rosas <farosas@suse.de>,
- Laurent Vivier <lvivier@redhat.com>,
- =?ISO-8859-1?Q?Marc-Andr=E9_Lureau?= <marcandre.lureau@redhat.com>,
- Paolo Bonzini <pbonzini@redhat.com>
-Subject: Re: [PATCH v2 2/2] hw/ipack: Remove legacy qemu_allocate_irqs() use
-In-Reply-To: <20250121084452.81941-3-philmd@linaro.org>
-References: <20250121084452.81941-1-philmd@linaro.org>
- <20250121084452.81941-3-philmd@linaro.org>
-Message-ID: <27522A5D-63E7-45B7-8A54-A19E453AB401@gmail.com>
+ Tue, 21 Jan 2025 01:26:35 -0800 (PST)
+Message-ID: <7176db79-cd04-4968-a61a-a753e3668564@redhat.com>
+Date: Tue, 21 Jan 2025 10:26:34 +0100
 MIME-Version: 1.0
-Content-Type: text/plain;
- charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::32e;
- envelope-from=shentey@gmail.com; helo=mail-wm1-x32e.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 2/7] guest_memfd: Introduce an object to manage the
+ guest-memfd with RamDiscardManager
+To: Chenyi Qiang <chenyi.qiang@intel.com>, Peter Xu <peterx@redhat.com>
+Cc: Paolo Bonzini <pbonzini@redhat.com>,
+ =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Michael Roth <michael.roth@amd.com>, qemu-devel@nongnu.org,
+ kvm@vger.kernel.org, Williams Dan J <dan.j.williams@intel.com>,
+ Peng Chao P <chao.p.peng@intel.com>, Gao Chao <chao.gao@intel.com>,
+ Xu Yilun <yilun.xu@intel.com>
+References: <20241213070852.106092-1-chenyi.qiang@intel.com>
+ <20241213070852.106092-3-chenyi.qiang@intel.com> <Z46RT__q02nhz3dc@x1n>
+ <a55048ec-c02d-4845-8595-cc79b7a5e340@intel.com>
+From: David Hildenbrand <david@redhat.com>
+Content-Language: en-US
+Autocrypt: addr=david@redhat.com; keydata=
+ xsFNBFXLn5EBEAC+zYvAFJxCBY9Tr1xZgcESmxVNI/0ffzE/ZQOiHJl6mGkmA1R7/uUpiCjJ
+ dBrn+lhhOYjjNefFQou6478faXE6o2AhmebqT4KiQoUQFV4R7y1KMEKoSyy8hQaK1umALTdL
+ QZLQMzNE74ap+GDK0wnacPQFpcG1AE9RMq3aeErY5tujekBS32jfC/7AnH7I0v1v1TbbK3Gp
+ XNeiN4QroO+5qaSr0ID2sz5jtBLRb15RMre27E1ImpaIv2Jw8NJgW0k/D1RyKCwaTsgRdwuK
+ Kx/Y91XuSBdz0uOyU/S8kM1+ag0wvsGlpBVxRR/xw/E8M7TEwuCZQArqqTCmkG6HGcXFT0V9
+ PXFNNgV5jXMQRwU0O/ztJIQqsE5LsUomE//bLwzj9IVsaQpKDqW6TAPjcdBDPLHvriq7kGjt
+ WhVhdl0qEYB8lkBEU7V2Yb+SYhmhpDrti9Fq1EsmhiHSkxJcGREoMK/63r9WLZYI3+4W2rAc
+ UucZa4OT27U5ZISjNg3Ev0rxU5UH2/pT4wJCfxwocmqaRr6UYmrtZmND89X0KigoFD/XSeVv
+ jwBRNjPAubK9/k5NoRrYqztM9W6sJqrH8+UWZ1Idd/DdmogJh0gNC0+N42Za9yBRURfIdKSb
+ B3JfpUqcWwE7vUaYrHG1nw54pLUoPG6sAA7Mehl3nd4pZUALHwARAQABzSREYXZpZCBIaWxk
+ ZW5icmFuZCA8ZGF2aWRAcmVkaGF0LmNvbT7CwZgEEwEIAEICGwMGCwkIBwMCBhUIAgkKCwQW
+ AgMBAh4BAheAAhkBFiEEG9nKrXNcTDpGDfzKTd4Q9wD/g1oFAl8Ox4kFCRKpKXgACgkQTd4Q
+ 9wD/g1oHcA//a6Tj7SBNjFNM1iNhWUo1lxAja0lpSodSnB2g4FCZ4R61SBR4l/psBL73xktp
+ rDHrx4aSpwkRP6Epu6mLvhlfjmkRG4OynJ5HG1gfv7RJJfnUdUM1z5kdS8JBrOhMJS2c/gPf
+ wv1TGRq2XdMPnfY2o0CxRqpcLkx4vBODvJGl2mQyJF/gPepdDfcT8/PY9BJ7FL6Hrq1gnAo4
+ 3Iv9qV0JiT2wmZciNyYQhmA1V6dyTRiQ4YAc31zOo2IM+xisPzeSHgw3ONY/XhYvfZ9r7W1l
+ pNQdc2G+o4Di9NPFHQQhDw3YTRR1opJaTlRDzxYxzU6ZnUUBghxt9cwUWTpfCktkMZiPSDGd
+ KgQBjnweV2jw9UOTxjb4LXqDjmSNkjDdQUOU69jGMUXgihvo4zhYcMX8F5gWdRtMR7DzW/YE
+ BgVcyxNkMIXoY1aYj6npHYiNQesQlqjU6azjbH70/SXKM5tNRplgW8TNprMDuntdvV9wNkFs
+ 9TyM02V5aWxFfI42+aivc4KEw69SE9KXwC7FSf5wXzuTot97N9Phj/Z3+jx443jo2NR34XgF
+ 89cct7wJMjOF7bBefo0fPPZQuIma0Zym71cP61OP/i11ahNye6HGKfxGCOcs5wW9kRQEk8P9
+ M/k2wt3mt/fCQnuP/mWutNPt95w9wSsUyATLmtNrwccz63XOwU0EVcufkQEQAOfX3n0g0fZz
+ Bgm/S2zF/kxQKCEKP8ID+Vz8sy2GpDvveBq4H2Y34XWsT1zLJdvqPI4af4ZSMxuerWjXbVWb
+ T6d4odQIG0fKx4F8NccDqbgHeZRNajXeeJ3R7gAzvWvQNLz4piHrO/B4tf8svmRBL0ZB5P5A
+ 2uhdwLU3NZuK22zpNn4is87BPWF8HhY0L5fafgDMOqnf4guJVJPYNPhUFzXUbPqOKOkL8ojk
+ CXxkOFHAbjstSK5Ca3fKquY3rdX3DNo+EL7FvAiw1mUtS+5GeYE+RMnDCsVFm/C7kY8c2d0G
+ NWkB9pJM5+mnIoFNxy7YBcldYATVeOHoY4LyaUWNnAvFYWp08dHWfZo9WCiJMuTfgtH9tc75
+ 7QanMVdPt6fDK8UUXIBLQ2TWr/sQKE9xtFuEmoQGlE1l6bGaDnnMLcYu+Asp3kDT0w4zYGsx
+ 5r6XQVRH4+5N6eHZiaeYtFOujp5n+pjBaQK7wUUjDilPQ5QMzIuCL4YjVoylWiBNknvQWBXS
+ lQCWmavOT9sttGQXdPCC5ynI+1ymZC1ORZKANLnRAb0NH/UCzcsstw2TAkFnMEbo9Zu9w7Kv
+ AxBQXWeXhJI9XQssfrf4Gusdqx8nPEpfOqCtbbwJMATbHyqLt7/oz/5deGuwxgb65pWIzufa
+ N7eop7uh+6bezi+rugUI+w6DABEBAAHCwXwEGAEIACYCGwwWIQQb2cqtc1xMOkYN/MpN3hD3
+ AP+DWgUCXw7HsgUJEqkpoQAKCRBN3hD3AP+DWrrpD/4qS3dyVRxDcDHIlmguXjC1Q5tZTwNB
+ boaBTPHSy/Nksu0eY7x6HfQJ3xajVH32Ms6t1trDQmPx2iP5+7iDsb7OKAb5eOS8h+BEBDeq
+ 3ecsQDv0fFJOA9ag5O3LLNk+3x3q7e0uo06XMaY7UHS341ozXUUI7wC7iKfoUTv03iO9El5f
+ XpNMx/YrIMduZ2+nd9Di7o5+KIwlb2mAB9sTNHdMrXesX8eBL6T9b+MZJk+mZuPxKNVfEQMQ
+ a5SxUEADIPQTPNvBewdeI80yeOCrN+Zzwy/Mrx9EPeu59Y5vSJOx/z6OUImD/GhX7Xvkt3kq
+ Er5KTrJz3++B6SH9pum9PuoE/k+nntJkNMmQpR4MCBaV/J9gIOPGodDKnjdng+mXliF3Ptu6
+ 3oxc2RCyGzTlxyMwuc2U5Q7KtUNTdDe8T0uE+9b8BLMVQDDfJjqY0VVqSUwImzTDLX9S4g/8
+ kC4HRcclk8hpyhY2jKGluZO0awwTIMgVEzmTyBphDg/Gx7dZU1Xf8HFuE+UZ5UDHDTnwgv7E
+ th6RC9+WrhDNspZ9fJjKWRbveQgUFCpe1sa77LAw+XFrKmBHXp9ZVIe90RMe2tRL06BGiRZr
+ jPrnvUsUUsjRoRNJjKKA/REq+sAnhkNPPZ/NNMjaZ5b8Tovi8C0tmxiCHaQYqj7G2rgnT0kt
+ WNyWQQ==
+Organization: Red Hat
+In-Reply-To: <a55048ec-c02d-4845-8595-cc79b7a5e340@intel.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=david@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -16
+X-Spam_score: -1.7
+X-Spam_bar: -
+X-Spam_report: (-1.7 / 5.0 requ) BAYES_00=-1.9, DKIM_INVALID=0.1,
+ DKIM_SIGNED=0.1, RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001,
+ RCVD_IN_MSPIKE_WL=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -102,143 +166,47 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+On 21.01.25 10:00, Chenyi Qiang wrote:
+> Thanks Peter for your review!
+> 
+> On 1/21/2025 2:09 AM, Peter Xu wrote:
+>> Two trivial comments I spot:
+>>
+>> On Fri, Dec 13, 2024 at 03:08:44PM +0800, Chenyi Qiang wrote:
+>>> +struct GuestMemfdManager {
+>>> +    Object parent;
+>>> +
+>>> +    /* Managed memory region. */
+>>> +    MemoryRegion *mr;
+>>> +
+>>> +    /*
+>>> +     * 1-setting of the bit represents the memory is populated (shared).
+>>> +     */
+>>> +    int32_t bitmap_size;
+>>> +    unsigned long *bitmap;
+>>
+>> Might be clearer to name the bitmap directly as what it represents.  E.g.,
+>> shared_bitmap?
+> 
+> Make sense.
+> 
 
+BTW, I was wondering if this information should be stored/linked from 
+the RAMBlock, where we already store the guest_memdfd "int guest_memfd;".
 
-Am 21=2E Januar 2025 08:44:52 UTC schrieb "Philippe Mathieu-Daud=C3=A9" <p=
-hilmd@linaro=2Eorg>:
->No need to dynamically allocate IRQ when we know before hands
->how many we'll use=2E Declare the 2 of them in IPackDevice state
->and initialize them in the DeviceRealize handler=2E
->
->Signed-off-by: Philippe Mathieu-Daud=C3=A9 <philmd@linaro=2Eorg>
->---
-> include/hw/ipack/ipack=2Eh | 7 ++-----
-> hw/char/ipoctal232=2Ec     | 4 ++--
-> hw/ipack/ipack=2Ec         | 7 +++----
-> hw/ipack/tpci200=2Ec       | 6 +++---
-> 4 files changed, 10 insertions(+), 14 deletions(-)
->
->diff --git a/include/hw/ipack/ipack=2Eh b/include/hw/ipack/ipack=2Eh
->index cbcdda509d3=2E=2E00f397fd020 100644
->--- a/include/hw/ipack/ipack=2Eh
->+++ b/include/hw/ipack/ipack=2Eh
->@@ -12,6 +12,7 @@
-> #define QEMU_IPACK_H
->=20
-> #include "hw/qdev-core=2Eh"
->+#include "hw/irq=2Eh"
-> #include "qom/object=2Eh"
->=20
->=20
->@@ -19,10 +20,8 @@
-> OBJECT_DECLARE_SIMPLE_TYPE(IPackBus, IPACK_BUS)
->=20
-> struct IPackBus {
->-    /*< private >*/
->     BusState parent_obj;
->=20
->-    /* All fields are private */
->     uint8_t n_slots;
->     uint8_t free_slot;
->     qemu_irq_handler set_irq;
->@@ -58,13 +57,11 @@ struct IPackDeviceClass {
-> };
->=20
-> struct IPackDevice {
->-    /*< private >*/
->     DeviceState parent_obj;
->-    /*< public >*/
->=20
->     int32_t slot;
->     /* IRQ objects for the IndustryPack INT0# and INT1# */
->-    qemu_irq *irq;
->+    IRQState irq[2];
-> };
->=20
-> extern const VMStateDescription vmstate_ipack_device;
->diff --git a/hw/char/ipoctal232=2Ec b/hw/char/ipoctal232=2Ec
->index d1e5f6dad2e=2E=2Ea2879977fb3 100644
->--- a/hw/char/ipoctal232=2Ec
->+++ b/hw/char/ipoctal232=2Ec
->@@ -184,9 +184,9 @@ static void update_irq(IPOctalState *dev, unsigned bl=
-ock)
->     unsigned intno =3D block / 2;
->=20
->     if ((blk0->isr & blk0->imr) || (blk1->isr & blk1->imr)) {
->-        qemu_irq_raise(idev->irq[intno]);
->+        qemu_irq_raise(&idev->irq[intno]);
->     } else {
->-        qemu_irq_lower(idev->irq[intno]);
->+        qemu_irq_lower(&idev->irq[intno]);
->     }
-> }
->=20
->diff --git a/hw/ipack/ipack=2Ec b/hw/ipack/ipack=2Ec
->index ed75f791832=2E=2Eeeb48dd331c 100644
->--- a/hw/ipack/ipack=2Ec
->+++ b/hw/ipack/ipack=2Ec
->@@ -55,22 +55,21 @@ static void ipack_device_realize(DeviceState *dev, Er=
-ror **errp)
->     }
->     bus->free_slot =3D idev->slot + 1;
->=20
->-    idev->irq =3D qemu_allocate_irqs(bus->set_irq, idev, 2);
->+    for (int i =3D 0; i < ARRAY_SIZE(idev->irq); i++) {
->+        qemu_init_irq(&idev->irq[i], bus->set_irq, idev, i);
+For example, having a "struct guest_memfd_state", and either embedding 
+it in the RAMBlock or dynamically allocating and linking it.
 
-I wonder if we eventually need a qemu_init_irqs() (note the plural) as we =
-remove further uses of qemu_allocate_irqs()=2E
+Alternatively, it would be such an object that we would simply link from 
+the RAMBlock. (depending on which object will implement the manager 
+interface)
 
->+    }
->=20
->     k->realize(dev, errp);
-> }
->=20
-> static void ipack_device_unrealize(DeviceState *dev)
-> {
->-    IPackDevice *idev =3D IPACK_DEVICE(dev);
->     IPackDeviceClass *k =3D IPACK_DEVICE_GET_CLASS(dev);
->=20
->     if (k->unrealize) {
->         k->unrealize(dev);
->         return;
->     }
->-
->-    qemu_free_irqs(idev->irq, 2);
-> }
->=20
-> static const Property ipack_device_props[] =3D {
->diff --git a/hw/ipack/tpci200=2Ec b/hw/ipack/tpci200=2Ec
->index 88eef4b8308=2E=2E470a4203ae4 100644
->--- a/hw/ipack/tpci200=2Ec
->+++ b/hw/ipack/tpci200=2Ec
->@@ -275,11 +275,11 @@ static void tpci200_write_las0(void *opaque, hwaddr=
- addr, uint64_t val,
->                 if (ip !=3D NULL) {
->                     if (val & STATUS_INT(i, 0)) {
->                         DPRINTF("Clear IP %c INT0# status\n", 'A' + i);
->-                        qemu_irq_lower(ip->irq[0]);
->+                        qemu_irq_lower(&ip->irq[0]);
->                     }
->                     if (val & STATUS_INT(i, 1)) {
->                         DPRINTF("Clear IP %c INT1# status\n", 'A' + i);
->-                        qemu_irq_lower(ip->irq[1]);
->+                        qemu_irq_lower(&ip->irq[1]);
->                     }
->                 }
->=20
->@@ -344,7 +344,7 @@ static uint64_t tpci200_read_las1(void *opaque, hwadd=
-r addr, unsigned size)
->                 bool int_set =3D s->status & STATUS_INT(ip_n, intno);
->                 bool int_edge_sensitive =3D s->ctrl[ip_n] & CTRL_INT_EDG=
-E(intno);
->                 if (int_set && !int_edge_sensitive) {
->-                    qemu_irq_lower(ip->irq[intno]);
->+                    qemu_irq_lower(&ip->irq[intno]);
->                 }
->             }
->=20
+In any case, having all guest_memfd state that belongs to a RAMBlock at 
+a single location might be cleanest.
 
-With the above addressed:
-Reviewed-by: Bernhard Beschow <shentey@gmail=2Ecom>
+-- 
+Cheers,
+
+David / dhildenb
+
 
