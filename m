@@ -4,90 +4,144 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 98A08C02182
-	for <qemu-devel@archiver.kernel.org>; Tue, 21 Jan 2025 04:46:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 06633C02182
+	for <qemu-devel@archiver.kernel.org>; Tue, 21 Jan 2025 05:14:25 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ta69F-0006Fg-BS; Mon, 20 Jan 2025 23:45:57 -0500
+	id 1ta6Zu-0001Od-LU; Tue, 21 Jan 2025 00:13:30 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <npiggin@gmail.com>) id 1ta69D-0006FY-Id
- for qemu-devel@nongnu.org; Mon, 20 Jan 2025 23:45:55 -0500
-Received: from mail-pl1-x62d.google.com ([2607:f8b0:4864:20::62d])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <npiggin@gmail.com>) id 1ta69C-0002sY-4G
- for qemu-devel@nongnu.org; Mon, 20 Jan 2025 23:45:55 -0500
-Received: by mail-pl1-x62d.google.com with SMTP id
- d9443c01a7336-2166651f752so119552155ad.3
- for <qemu-devel@nongnu.org>; Mon, 20 Jan 2025 20:45:52 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1737434751; x=1738039551; darn=nongnu.org;
- h=in-reply-to:references:to:from:subject:cc:message-id:date
- :content-transfer-encoding:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=a5UrDsofvNdKLkIEL5dqor1YT0QkeEsdgm1riDI9EX8=;
- b=TBjONqJb3a4P9jvqKwIbgQ0BJWqnQLek1U/LxADEug/p2DL8pTuWiGHUpDMOmWfRP6
- LijPWbidInP8nimaS9uFbw4DSlezIdyxKc863QFc/vRY2ezGxxfJi6SHnk12hjVSe/vS
- A2zunQMyNTiuGiV+QV5BZfb2mJ+aWHYeEISS4ZYygGyEkd1RHEXPu+potFCGXipyYESx
- r2Fct4G5VHtPGXnnKy/Pq7BcWAaK2Hs155JdFzgoNzD4X8K9/QszdPzV4/I8BMG41B91
- GYECvI6SVrNx3bcj2Dzz8TtUy8296DVKfD6rWdarWFf+EAnSuDO6ZpBs5TZNtMNC+hvX
- K9Ow==
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1ta6Zj-0001Ms-5Y
+ for qemu-devel@nongnu.org; Tue, 21 Jan 2025 00:13:20 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1ta6Zg-0006j1-6n
+ for qemu-devel@nongnu.org; Tue, 21 Jan 2025 00:13:18 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1737436393;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+ bh=tKC+SeEpf7IiVik/xx0QVRCDFJzXzDGXbp/OCRGsgnc=;
+ b=JXDU977tD7bGQbyn1NLhUg9eNLqsf35tOgs0I70BrXyAKzddLfOH4Rtcq0i/8e0HsnVlO1
+ Fi4A1gTagOkn2q8VqVaD4irSZqORPQbjsnsQAAuthTrBu5YEEZXRIVEGWPhTQpp9NKwaCn
+ GuyohYOko/gtuc+lDVJDNxG+AwbDOrA=
+Received: from mail-wr1-f70.google.com (mail-wr1-f70.google.com
+ [209.85.221.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-632-j6QvYWtPOT2HtZbmxoeaKA-1; Tue, 21 Jan 2025 00:13:12 -0500
+X-MC-Unique: j6QvYWtPOT2HtZbmxoeaKA-1
+X-Mimecast-MFC-AGG-ID: j6QvYWtPOT2HtZbmxoeaKA
+Received: by mail-wr1-f70.google.com with SMTP id
+ ffacd0b85a97d-385d80576abso3629809f8f.3
+ for <qemu-devel@nongnu.org>; Mon, 20 Jan 2025 21:13:11 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1737434751; x=1738039551;
- h=in-reply-to:references:to:from:subject:cc:message-id:date
- :content-transfer-encoding:mime-version:x-gm-message-state:from:to
- :cc:subject:date:message-id:reply-to;
- bh=a5UrDsofvNdKLkIEL5dqor1YT0QkeEsdgm1riDI9EX8=;
- b=p2Mv/x4PGQgwItqkUZdCfKJQ55IIE2R7G+8dF5rvGsIn9ba3Y/WXdMuth0F4fIVjHZ
- agazjGqcq9d7YT2BU+HXjrbps4koLe0m/yJ+WMNuENt1DueV3Rm/q6MdyVWxpWO8WXrp
- ZLUfNNHDRTtoX1Ku1jgjRqGHGvGXZlBXzNtjwMByCX56Fcn/BfahjcrZEzDDGKBp/qAj
- UQANgHHWUPB+U+drGYWW9G5g4th8StfqoeQofYK2VuyJ3uYQ3REV1E7EfT7Yh2lcKpv+
- tb2Yh6Yh+VzR74PTFNGWiYvbwO/KSTD0hFeGB3fG6BAODCwOO0aNDH8sqfwdlGIjcv6n
- m2Bw==
-X-Gm-Message-State: AOJu0YzU8vkaz6mW2BXKfQqW9Wwe1Hz3fiyElXoYUzp3u7MObedecgUp
- cJ7blsnUnxTGMJc3lJFMoHJ2pVNN1xx8WnKtE0yJQLeKCCY9J99s
-X-Gm-Gg: ASbGnculM6srqqUazuIAhsDaGSikzBV7QhgFVSRn678YmDXxNZclOQ3ujyBpIevW3qP
- 7WpdIDj9UQeQaqDk3VfigS60MgVpJZXp/f/HOQ6FBnWei/A9Wn47qO8ObMSf101xbH3pbmqTCu1
- dOqKoSfjo+p12mqGbgcJOCfJvO5NZSKycuod1grFqQh+K781zdDHuLm74kz6b884pDuW0bt71au
- Z5QKLCLCGMNfekCyMUHNAXbversLoEVbCZ77RPiWpnc9ANDgLNbmkLa6tkO3PLL
-X-Google-Smtp-Source: AGHT+IFhTdPegaLi1bDHe7EiajeY4GYnrl6Tx+4Sfn8KEggh5QEAy9k/Mb97/VQBF5fuqWqElsBoWQ==
-X-Received: by 2002:a17:902:e88f:b0:216:48f4:4f20 with SMTP id
- d9443c01a7336-21c3551437emr225347605ad.16.1737434750976; 
- Mon, 20 Jan 2025 20:45:50 -0800 (PST)
-Received: from localhost ([138.44.251.158]) by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-21c2d3a9000sm68479655ad.118.2025.01.20.20.45.33
+ d=1e100.net; s=20230601; t=1737436391; x=1738041191;
+ h=content-transfer-encoding:in-reply-to:autocrypt:from
+ :content-language:references:cc:to:subject:user-agent:mime-version
+ :date:message-id:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=tKC+SeEpf7IiVik/xx0QVRCDFJzXzDGXbp/OCRGsgnc=;
+ b=whNsS8czI7+vz2WSonIk3wn3ti0/dCa/bRq+K/3jl1CAThRFk7Qtu/AFTmKciusEyx
+ bzI220k1YyBl2M7NB10rTGDIv5pZxdQ84AlKire8oVgD3GXaDQjaRVAvcUI6/me+iUvx
+ RvFVSkZ24BYUgdbT/dcLY8UdLntlCSZDATjqwtdvfQx9dOgmX8AQmVCettUSE3V1GJWj
+ yffwsID4wnMPs8olyvd8WDPuG6nDBVe1/iCyX9f2vb0mPrD/AIIqoEsXxZX5L56YJpio
+ LSrbF5zSzUT7jFDRUnxjYPs1CBvXW19C9jLyvykdsbS+DCnvtwjKypz/XuDnEnwp5nNx
+ SmVw==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCUw4fJTs+Wpr2F9p23f+TSRuLGMbKObSa0FhVNWMkft3zN53LLTwYn7sKseM6aFUg6PzyGdeuOXo0X4@nongnu.org
+X-Gm-Message-State: AOJu0YylLC9BHcZFVsKFCvelaUn/n0Fq6XH52Ym2/MYyRy+/jeQxSLaX
+ P7oJqHvHRZbeFTXeGRgvTP3fxjh2PjZCB1yyjfrdyDBA0BCruMpSDekUw/qqD43D5svO/nMBV9R
+ vF0/OSC0Shxq8SVaCQh7iHEnxoqeamsn4eNpUNJY5XtgX+/lMaZmh
+X-Gm-Gg: ASbGnctSAP2R21J2uajtVqC5YYYZK3fUi4QdeMdZlDR33ibTAYYfp+o4RLltXX6GsaO
+ yudsIcckoQtLwZRlsa+Jz4rmds/GhrYrZXzgLdHHDO5NbfNbKzYM2kHGYEETYZ0PbQmwJ0biSDV
+ Hfv8fsVJlYdYsyJ+I3ZpVRm/B1aPBBYdy9ii1F9fT+ZKdOXc0AAbxK+5LkVcJQitm4LUPEoiH43
+ wkJ96K+mRaK3ZzIPF9nbc8bJTEzgLgVy9dA50WPJze2Et/ze0Bj81kJQjiEsuW2QxpM8OjI85D9
+ xL8urxsZ4T/XQoYDL6qQWXDbHQ==
+X-Received: by 2002:a5d:59a3:0:b0:382:4b9a:f51f with SMTP id
+ ffacd0b85a97d-38bf57bd650mr14251312f8f.47.1737436390774; 
+ Mon, 20 Jan 2025 21:13:10 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IHyxSuetByLQp3uVx3NAC6S7ZdTDOk+q7nNcRbK88B9wD85NnAGq3YW0tNUMQ4vrLLHkiOl7w==
+X-Received: by 2002:a5d:59a3:0:b0:382:4b9a:f51f with SMTP id
+ ffacd0b85a97d-38bf57bd650mr14251301f8f.47.1737436390458; 
+ Mon, 20 Jan 2025 21:13:10 -0800 (PST)
+Received: from [192.168.0.7] (ip-109-42-48-103.web.vodafone.de.
+ [109.42.48.103]) by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-38bf3275562sm12520214f8f.66.2025.01.20.21.13.08
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 20 Jan 2025 20:45:50 -0800 (PST)
-Mime-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-Content-Type: text/plain; charset=UTF-8
-Date: Tue, 21 Jan 2025 14:45:27 +1000
-Message-Id: <D77H7J5KX2NC.1A25FAUCNO1BV@gmail.com>
-Cc: <qemu-devel@nongnu.org>, "Dmitry Fleytman" <dmitry.fleytman@gmail.com>,
- "Akihiko Odaki" <akihiko.odaki@daynix.com>, "Jason Wang"
- <jasowang@redhat.com>, "Sriram Yagnaraman"
- <sriram.yagnaraman@ericsson.com>, "Fabiano Rosas" <farosas@suse.de>,
- "Laurent Vivier" <lvivier@redhat.com>, "Paolo Bonzini"
- <pbonzini@redhat.com>
-Subject: Re: [PATCH 3/9] qtest/e1000e|igb: assert irqs are clear before
- triggering an irq
-From: "Nicholas Piggin" <npiggin@gmail.com>
-To: "Yan Vugenfirer" <yvugenfi@redhat.com>
-X-Mailer: aerc 0.19.0
-References: <20250117170306.403075-1-npiggin@gmail.com>
- <20250117170306.403075-4-npiggin@gmail.com>
- <CAGoVJZxkm_zj7RPBs9Lk3tpgYfzNi9UdsVOKsDibGZ98i+Ddew@mail.gmail.com>
-In-Reply-To: <CAGoVJZxkm_zj7RPBs9Lk3tpgYfzNi9UdsVOKsDibGZ98i+Ddew@mail.gmail.com>
-Received-SPF: pass client-ip=2607:f8b0:4864:20::62d;
- envelope-from=npiggin@gmail.com; helo=mail-pl1-x62d.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ Mon, 20 Jan 2025 21:13:10 -0800 (PST)
+Message-ID: <e7769309-6339-435b-ad30-e56c18679892@redhat.com>
+Date: Tue, 21 Jan 2025 06:13:07 +0100
+MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 2/7] tests/qtest: don't attempt to clock_step while
+ waiting for virtio ISR
+To: =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ qemu-devel@nongnu.org
+Cc: qemu-s390x@nongnu.org, qemu-arm@nongnu.org,
+ Peter Maydell <peter.maydell@linaro.org>, Fabiano Rosas <farosas@suse.de>,
+ Laurent Vivier <lvivier@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>
+References: <20250120210212.3890255-1-alex.bennee@linaro.org>
+ <20250120210212.3890255-3-alex.bennee@linaro.org>
+Content-Language: en-US
+From: Thomas Huth <thuth@redhat.com>
+Autocrypt: addr=thuth@redhat.com; keydata=
+ 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
+In-Reply-To: <20250120210212.3890255-3-alex.bennee@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=thuth@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -50
+X-Spam_score: -5.1
+X-Spam_bar: -----
+X-Spam_report: (-5.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-3,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.036,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -103,67 +157,38 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Sun Jan 19, 2025 at 7:22 PM AEST, Yan Vugenfirer wrote:
-> On Fri, Jan 17, 2025 at 7:05=E2=80=AFPM Nicholas Piggin <npiggin@gmail.co=
-m> wrote:
->
->> Assert there is no existing irq raised that would lead to a false
->> positive interrupt test.
->>
->> e1000e has to disable interrupt throttling for this test, because
->> it can cause delayed superfluous interrupts which trip the assertions.
->>
->> Signed-off-by: Nicholas Piggin <npiggin@gmail.com>
->> ---
->>  tests/qtest/libqos/e1000e.h |  1 +
->>  tests/qtest/e1000e-test.c   | 10 ++++++++++
->>  tests/qtest/igb-test.c      |  6 ++++++
->>  tests/qtest/libqos/e1000e.c |  9 ++++++++-
->>  4 files changed, 25 insertions(+), 1 deletion(-)
->>
->> diff --git a/tests/qtest/libqos/e1000e.h b/tests/qtest/libqos/e1000e.h
->> index 30643c80949..7154aec0339 100644
->> --- a/tests/qtest/libqos/e1000e.h
->> +++ b/tests/qtest/libqos/e1000e.h
->> @@ -54,6 +54,7 @@ static inline uint32_t e1000e_macreg_read(QE1000E *d,
->> uint32_t reg)
->>      return qpci_io_readl(&d_pci->pci_dev, d_pci->mac_regs, reg);
->>  }
->>
->> +bool e1000e_seen_isr(QE1000E *d, uint16_t msg_id);
->>  void e1000e_wait_isr(QE1000E *d, uint16_t msg_id);
->>  void e1000e_tx_ring_push(QE1000E *d, void *descr);
->>  void e1000e_rx_ring_push(QE1000E *d, void *descr);
->> diff --git a/tests/qtest/e1000e-test.c b/tests/qtest/e1000e-test.c
->> index 746d26cfb67..9ab81ecff5b 100644
->> --- a/tests/qtest/e1000e-test.c
->> +++ b/tests/qtest/e1000e-test.c
->> @@ -61,6 +61,9 @@ static void e1000e_send_verify(QE1000E *d, int
->> *test_sockets, QGuestAllocator *a
->>                                     E1000_TXD_DTYP_D   |
->>                                     sizeof(buffer));
->>
->> +    /* Ensure the interrupt has not been taken already */
->> +    g_assert(!e1000e_seen_isr(d, E1000E_TX0_MSG_ID));
->> +
->>      /* Put descriptor to the ring */
->>      e1000e_tx_ring_push(d, &descr);
->>
->> @@ -105,6 +108,9 @@ static void e1000e_receive_verify(QE1000E *d, int
->> *test_sockets, QGuestAllocator
->>      char buffer[64];
->>      int ret;
->>
->> +    /* Ensure the interrupt has not been taken already */
->> +    g_assert(!e1000e_seen_isr(d, E1000E_RX0_MSG_ID));
->> +
->>
-> I don't think potentially crashing the guest is the right solution.
-> I suggest maybe substituting with logging.
+On 20/01/2025 22.02, Alex Bennée wrote:
+> This replicates the changes from 92cb8f8bf6 (tests/qtest: remove
+> clock_steps from virtio tests) as there are no timers in the virtio
+> code. We still busy wait and timeout though.
+> 
+> Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
+> ---
+>   tests/qtest/libqos/virtio-pci-modern.c | 6 ++----
+>   tests/qtest/libqos/virtio-pci.c        | 6 ++----
+>   2 files changed, 4 insertions(+), 8 deletions(-)
+> 
+> diff --git a/tests/qtest/libqos/virtio-pci-modern.c b/tests/qtest/libqos/virtio-pci-modern.c
+> index 18d118866f..f6e3e32891 100644
+> --- a/tests/qtest/libqos/virtio-pci-modern.c
+> +++ b/tests/qtest/libqos/virtio-pci-modern.c
+> @@ -173,13 +173,11 @@ static bool get_config_isr_status(QVirtioDevice *d)
+>   
+>   static void wait_config_isr_status(QVirtioDevice *d, gint64 timeout_us)
+>   {
+> -    QVirtioPCIDevice *dev = container_of(d, QVirtioPCIDevice, vdev);
+>       gint64 start_time = g_get_monotonic_time();
+>   
+> -    do {
+> +    while (!get_config_isr_status(d)) {
+>           g_assert(g_get_monotonic_time() - start_time <= timeout_us);
+> -        qtest_clock_step(dev->pdev->bus->qts, 100);
+> -    } while (!get_config_isr_status(d));
+> +    } 
 
-This is just for qtest where assertions are used to indicate
-failure.
+Trailing white space in above line?
 
-Thanks,
-Nick
+Apart from that nit:
+Reviewed-by: Thomas Huth <thuth@redhat.com>
+
 
