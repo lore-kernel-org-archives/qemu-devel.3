@@ -4,93 +4,89 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 522D5C02182
-	for <qemu-devel@archiver.kernel.org>; Tue, 21 Jan 2025 23:15:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 955D2C02182
+	for <qemu-devel@archiver.kernel.org>; Tue, 21 Jan 2025 23:15:21 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1taNS3-0007oc-Bj; Tue, 21 Jan 2025 18:14:31 -0500
+	id 1taNSd-0000Qq-OF; Tue, 21 Jan 2025 18:15:07 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1taNS1-0007hc-AF
- for qemu-devel@nongnu.org; Tue, 21 Jan 2025 18:14:29 -0500
-Received: from mail-pl1-x62e.google.com ([2607:f8b0:4864:20::62e])
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1taNSb-0000Jg-67
+ for qemu-devel@nongnu.org; Tue, 21 Jan 2025 18:15:05 -0500
+Received: from mail-pl1-x636.google.com ([2607:f8b0:4864:20::636])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1taNRs-0005Xh-PJ
- for qemu-devel@nongnu.org; Tue, 21 Jan 2025 18:14:29 -0500
-Received: by mail-pl1-x62e.google.com with SMTP id
- d9443c01a7336-2162c0f6a39so5355155ad.0
- for <qemu-devel@nongnu.org>; Tue, 21 Jan 2025 15:14:17 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1taNSW-0005du-DX
+ for qemu-devel@nongnu.org; Tue, 21 Jan 2025 18:15:02 -0500
+Received: by mail-pl1-x636.google.com with SMTP id
+ d9443c01a7336-2165448243fso136084765ad.1
+ for <qemu-devel@nongnu.org>; Tue, 21 Jan 2025 15:14:59 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1737501255; x=1738106055; darn=nongnu.org;
+ d=linaro.org; s=google; t=1737501297; x=1738106097; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=Pggkzq/I6hlfkHvbyBOLiGLvuu/Vh/e97zkNr0codNQ=;
- b=bLsEA69TM/v62LdGJKLbMuT9ah4Ju9FHmnzDpKLnt5cZgM7WW0XOVGXa8cRtSNQuWw
- Pe/drg6wLtos9Q+BzbiW7FJoRO6+K/rT4OUWkR+a3jxGoI9FHEhsFUhfCtm4p0rqguV4
- 5HjsyrVKv16dVIDNlEW5C9HEbzObgKK8yq0dTSsSDM4rv8t6yCUCoXkzXXgSLeXBtIRE
- M1SswxmLgXe56gSFBma6uK80y4tYj8hCBCiPNXIQ3uO39yE/TWvaJoHOohI4J+2THmKJ
- gTWzIMV19rcJDo/ZN9r/MVjtcNCnPkHQO8EERTVgmdBqAAb/AK2EIniTW279qyeeuGHy
- J60w==
+ :references:to:subject:user-agent:mime-version:date:message-id:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=liWwEXX9lDKU9ZoErYY++lz9UK9hH/+L730wJDQab/k=;
+ b=F9rGJ71FAR4Qxwb2Vh8nZt11+ndKdVtW1mgdbPxRFNw82VayiSnu1YWwdLNAW2gZuQ
+ GNNEwJLDzUR04f3faC+PRx2L65JfJ9amKksVQX/4OivGtjTNbNurp6FwTmowNcRUZNtO
+ HN/aG0pbRY/EbMEvY6DZcCZ44M+lS764z6dAa9klbCl/1m5aT1ik9fVcCvfxIr7RY/qY
+ f00TgnrvHSQHQ3+h7FQtYL2fj5kq7TIZVF8Rl4RmL+B4904qbDHpQfvXBxRaisZkSHDt
+ f+tXflJHavlDr90MeYYecDJvTzKS4qCzmce/7e4Vh7RXqWR/PPgmdZLUHjpLiadeA58P
+ UGaQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1737501255; x=1738106055;
+ d=1e100.net; s=20230601; t=1737501297; x=1738106097;
  h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :references:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=Pggkzq/I6hlfkHvbyBOLiGLvuu/Vh/e97zkNr0codNQ=;
- b=O35Y9Xd8UKHC8IbfzLR5KOi9YA1HQCfdQe88Da0uSqNdVL3O+3+pwCi8c6GAYovvpH
- J8PVTgXc2Hc9FY/LLR3hqSeNcNdU7FVvZz3P5eEX3iCdqTaCWxqdyXtbBgZzmZ1/Dge3
- TaTVWrDt8kLbpU6hKHEIMAuVW0scEV2cFnVYGoE2raaB1VcYIBg/wnHHqkd67Pv1BCCG
- U4P9P0wCatr7GBcnUGbRgECRwumx1lb8jWeQMThzHeQ7Rz132FmrTa7kn44c47oEEXKh
- h7sHvIUGZlyLOKC5tQgTaMmtYsPUOLWdedxmg24CST5QjYSSLcAc8XZtBnKqTnxb114O
- R16Q==
-X-Forwarded-Encrypted: i=1;
- AJvYcCUvWH6BYIbSxFR6x2cfX47Zhf1Evk4SDF68mNKAQY/JEUe9K9S10Cx0S6XnDMOOv+qgOQJj6XVxDmXW@nongnu.org
-X-Gm-Message-State: AOJu0YyvnMbavP0JOCjQ9LCFhHCzl67IhprKXSzNe/mjucLSK5SCkqd8
- xoFYNN63VJXQJsPizs16KxDS/98wpRG+g1QzVDGPgioG27uEEt6fVGOglAZwBLnD4qnlXpqr071
- shYyeew==
-X-Gm-Gg: ASbGncunUcGJ7NvysGW4uQpZAy8+LAWnhSMm/TfGopqkCQV0JEF+l8l28V9AEHzxJ2b
- WNV4dUMfgw1LIK3kmVxuR05B71I+1MYtuRdkbhkZarz+k+pAQKB9saLQaPv3GN5y4vRkys7SDMB
- E9dvjGcIZsoYgDTWs963nLM2qH02nTeQXR6LROXxjEg88oLyHzYRKvi0OchyfU6Iud+UUxsiMdB
- EO0vjQqzSEZnnFl0BfpEhcRs9QkF93fGPDent3pyMk/Iik1RRPtKOpqWP3r/5l2VzFHbGMysZr/
- Nry8qOw=
-X-Google-Smtp-Source: AGHT+IH3H02F1Py/fpN70ksmrn+RXMuFDDrmn/MML63OB6hErqedTyf5obc8p9crplwH4AepF3/7gg==
-X-Received: by 2002:a05:6a21:338e:b0:1e0:d0b9:9a90 with SMTP id
- adf61e73a8af0-1eb025ad921mr39583870637.13.1737501255317; 
- Tue, 21 Jan 2025 15:14:15 -0800 (PST)
-Received: from [192.168.1.67] ([38.39.164.180])
+ bh=liWwEXX9lDKU9ZoErYY++lz9UK9hH/+L730wJDQab/k=;
+ b=B7MWDZ1foczbH7NXxXnzvfS46ni8KU3teI84xDYIQxDBaJ2iP9g7Tflu2TPKsjwAVh
+ SVrQGQt/AkHZMgf6KAk6NE+a1FshFLVF4s7gyUL/RlAm5zm67smb5UMmTmFXzh6FRLgd
+ f88sXkmaTWgw8HntWZElurro3zfjWZLScF1guz6pdEFyYDWEZSt4at8otzW+ytCMVlVP
+ u/fBVwUYj5JP0hbuUeRgMPYarKcZOA0r0YoX8bgCgT1lWq3++JxxjmjrPfs0S+wAwphO
+ PC4N2KEgW6xneETXsbaQ2z5JcTtgTmjoCzjv2ZZr4aPkDnO8wQitvKFdYuQ53ZhcqiN5
+ uk/Q==
+X-Gm-Message-State: AOJu0YyQF9c/NAFIdT9qdgqrfpvlo953qPr+cZF8GYUmUeXz/Zb9zqRz
+ 80aOmSmLJiWU/0A2097mIc1n35kRPOLZFbGTSixJOg0BQMTMYcuBelvWgacdR6bMMEU+MZXIZvW
+ g
+X-Gm-Gg: ASbGncuM9m48igmedUrnMN0E0IZTsnJGQ2KpBkl/i3k8/Cntg2OHs4ZrNcPDsTPyKZV
+ BlTJNgQfwqRyjcYTEfVaOmNYkuwf5wckYew0Te5Xx3QpzrrGr+zuNUoQdfAkDkBspwKYhFL8sFI
+ aG5T0avreHPPnCWABFZE6eXH7264KRi2ADE6PrgSwEMloPddQ6SiexHV7DGFALz5X5sJC+wNehQ
+ GAINCu8yZRx9inK93C1BS8ScXXWMX86mrL0lTwKV+RxvbKN6TYqTRlkFeIPo32M9YF2sNdcwqOW
+ liWcypHBgjLeXg6sDyjfMXki7a28eEpWoOxFCM4a4XTPov0=
+X-Google-Smtp-Source: AGHT+IEsjI14cos6TZE3CkEcyKAFZZonkoJ904nSXmEfuMlZggoPsPVjEpHpLVmEps2qOIJGAtGNCA==
+X-Received: by 2002:a17:902:ccc8:b0:216:45b9:439b with SMTP id
+ d9443c01a7336-21c3563c530mr277216495ad.50.1737501297647; 
+ Tue, 21 Jan 2025 15:14:57 -0800 (PST)
+Received: from [192.168.0.4] (174-21-71-127.tukw.qwest.net. [174.21.71.127])
  by smtp.gmail.com with ESMTPSA id
- 41be03b00d2f7-a9bdd30b690sm8097956a12.49.2025.01.21.15.14.14
+ d9443c01a7336-21c2ceba906sm83504005ad.91.2025.01.21.15.14.57
+ for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 21 Jan 2025 15:14:14 -0800 (PST)
-Message-ID: <54df1904-0e2c-4c4f-b242-1c8865ad0af1@linaro.org>
-Date: Tue, 21 Jan 2025 15:14:14 -0800
+ Tue, 21 Jan 2025 15:14:57 -0800 (PST)
+Message-ID: <ca9d93b9-cdb9-4ac2-90a2-a8e4bba16152@linaro.org>
+Date: Tue, 21 Jan 2025 15:14:55 -0800
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] vvfat: fix out of bounds array write
-To: Michael Tokarev <mjt@tls.msk.ru>, =?UTF-8?Q?Volker_R=C3=BCmelin?=
- <vr_qemu@t-online.de>, Kevin Wolf <kwolf@redhat.com>,
- Hanna Reitz <hreitz@redhat.com>
-Cc: qemu-block@nongnu.org, qemu-devel@nongnu.org
-References: <20250105135929.6286-1-vr_qemu@t-online.de>
- <f616a4b4-2161-42c8-9f92-e3a939ba173a@tls.msk.ru>
+Subject: Re: [PATCH] hw/char/pci-multi: Convert legacy qemu_allocate_irqs to
+ qemu_init_irq
+To: qemu-devel@nongnu.org
+References: <20250121182828.45088-1-philmd@linaro.org>
 Content-Language: en-US
-From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-In-Reply-To: <f616a4b4-2161-42c8-9f92-e3a939ba173a@tls.msk.ru>
+From: Richard Henderson <richard.henderson@linaro.org>
+In-Reply-To: <20250121182828.45088-1-philmd@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: base64
-Received-SPF: pass client-ip=2607:f8b0:4864:20::62e;
- envelope-from=pierrick.bouvier@linaro.org; helo=mail-pl1-x62e.google.com
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::636;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x636.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- T_SPF_TEMPERROR=0.01 autolearn=unavailable autolearn_force=no
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -106,102 +102,21 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-T24gMS8xOC8yNSAwOToxMCwgTWljaGFlbCBUb2thcmV2IHdyb3RlOg0KPiAwNS4wMS4yMDI1
-IDE2OjU5LCBWb2xrZXIgUsO8bWVsaW4gd3JvdGU6DQo+PiBJbiBmdW5jdGlvbiBjcmVhdGVf
-bG9uZ19maWxuYW1lKCksIHRoZSBhcnJheSBuYW1lWzggKyAzXSBpbg0KPj4gc3RydWN0IGRp
-cmVudHJ5X3QgaXMgdXNlZCBhcyBpZiBpdCB3ZXJlIGRlZmluZWQgYXMgbmFtZVszMl0uDQo+
-PiBUaGlzIGlzIGludGVudGlvbmFsIGFuZCB3b3Jrcy4gSXQncyBuZXZlcnRoZWxlc3MgYW4g
-b3V0IG9mDQo+PiBib3VuZHMgYXJyYXkgYWNjZXNzLiBUbyBhdm9pZCB0aGlzIHByb2JsZW0s
-IHRoaXMgcGF0Y2ggYWRkcyBhDQo+PiBzdHJ1Y3QgbGZuX2RpcmVudHJ5X3Qgd2l0aCBtdWx0
-aXBsZSBuYW1lIGFycmF5cy4gQSBkaXJlY3RvcnkNCj4+IGVudHJ5IGZvciBhIGxvbmcgRkFU
-IGZpbGUgbmFtZSBpcyBzaWduaWZpY2FudGx5IGRpZmZlcmVudCBmcm9tDQo+PiBhIGRpcmVj
-dG9yeSBlbnRyeSBmb3IgYSByZWd1bGFyIEZBVCBmaWxlIG5hbWUuDQo+Pg0KPj4gU2lnbmVk
-LW9mZi1ieTogVm9sa2VyIFLDvG1lbGluIDx2cl9xZW11QHQtb25saW5lLmRlPg0KPiANCj4g
-DQo+PiArc3RhdGljIHZvaWQgd3JpdGVfbG9uZ19maWxlbmFtZShsZm5fZGlyZW50cnlfdCAq
-ZW50cnksIGludCBpbmRleCwgdWludDhfdCBjKQ0KPj4gK3sNCj4+ICsgICAgaWYgKGluZGV4
-IDwgQVJSQVlfU0laRShlbnRyeS0+bmFtZTAxKSkgew0KPj4gKyAgICAgICAgZW50cnktPm5h
-bWUwMVtpbmRleF0gPSBjOw0KPj4gKyAgICAgICAgcmV0dXJuOw0KPj4gKyAgICB9DQo+PiAr
-ICAgIGluZGV4IC09IEFSUkFZX1NJWkUoZW50cnktPm5hbWUwMSk7DQo+PiArICAgIGlmIChp
-bmRleCA8IEFSUkFZX1NJWkUoZW50cnktPm5hbWUwZSkpIHsNCj4+ICsgICAgICAgIGVudHJ5
-LT5uYW1lMGVbaW5kZXhdID0gYzsNCj4+ICsgICAgICAgIHJldHVybjsNCj4+ICsgICAgfQ0K
-Pj4gKyAgICBpbmRleCAtPSBBUlJBWV9TSVpFKGVudHJ5LT5uYW1lMGUpOw0KPj4gKyAgICBp
-ZiAoaW5kZXggPCBBUlJBWV9TSVpFKGVudHJ5LT5uYW1lMWMpKSB7DQo+PiArICAgICAgICBl
-bnRyeS0+bmFtZTFjW2luZGV4XSA9IGM7DQo+PiArICAgIH0NCj4+ICt9DQo+Pg0KPiANCj4g
-DQo+PiArICAgICAgICBlbnRyeSA9IGFycmF5X2dldCgmcy0+ZGlyZWN0b3J5LCBzLT5kaXJl
-Y3RvcnkubmV4dCAtIGkgLyAyNiAtIDEpOw0KPj4gICAgICAgICAgICBpZiAoaSA+PSAyICog
-bGVuZ3RoICsgMikgew0KPj4gLSAgICAgICAgICAgIGVudHJ5LT5uYW1lW29mZnNldF0gPSAw
-eGZmOw0KPj4gKyAgICAgICAgICAgIGMgPSAweGZmOw0KPj4gICAgICAgICAgICB9IGVsc2Ug
-aWYgKGkgJSAyID09IDApIHsNCj4+IC0gICAgICAgICAgICBlbnRyeS0+bmFtZVtvZmZzZXRd
-ID0gbG9uZ25hbWVbaSAvIDJdICYgMHhmZjsNCj4+ICsgICAgICAgICAgICBjID0gbG9uZ25h
-bWVbaSAvIDJdICYgMHhmZjsNCj4+ICAgICAgICAgICAgfSBlbHNlIHsNCj4+IC0gICAgICAg
-ICAgICBlbnRyeS0+bmFtZVtvZmZzZXRdID0gbG9uZ25hbWVbaSAvIDJdID4+IDg7DQo+PiAr
-ICAgICAgICAgICAgYyA9IGxvbmduYW1lW2kgLyAyXSA+PiA4Ow0KPj4gICAgICAgICAgICB9
-DQo+PiArICAgICAgICB3cml0ZV9sb25nX2ZpbGVuYW1lKGVudHJ5LCBpICUgMjYsIGMpOw0K
-PiANCj4gR2hybS4gIFRoaXMgZG91YmxlcyB0aGUgdHdpc3R5ICJpZiIgc3RhdGVtZW50Li4u
-ICA6KA0KPiANCj4gSG93IGFib3V0IHRoaXMgaW5zdGVhZCAodW50ZXN0ZWQpPw0KPiANCj4g
-VGhlIGlkZWEgaXMgdG8gaXRlcmF0ZSBvdmVyIGFsbCBkZW50cmllcyBvbmNlLCBhbmQgZmls
-bCBlYWNoIHBhcnQgaW5zaWRlIHRoZQ0KPiBkZW50cnkgc3RydWN0dXJlIGluIHR1cm4sIGdv
-aW5nIG9uIGJ5IHV0ZjE2IGNoYXIsIGluc3RlYWQgYnkgYnl0ZXMvb2Zmc2V0Lg0KPiANCj4g
-SSB0aGluayBpdCBpcyBhIGJpdCBjbGVhcmVyLi4uDQo+IA0KPiBAQCAtMzk5LDExICs0MTAs
-MjEgQEAgc3RhdGljIHZvaWQgaW5pdF9tYnIoQkRSVlZWRkFUU3RhdGUgKnMsIGludCBjeWxz
-LCBpbnQgaGVhZHMsIGludCBzZWNzKQ0KPiANCj4gICAgLyogZGlyZW50cnkgZnVuY3Rpb25z
-ICovDQo+IA0KPiArc3RhdGljIHVuc2lnbmVkIHdyaXRlX2xvbmdfZmlsZW5hbWVfcGFydCh1
-aW50OF90ICpkZXN0LCB1bnNpZ25lZCBkc2l6ZSwNCj4gKyAgICAgICAgICAgICAgICAgICAg
-ICAgICAgICAgICAgICAgICAgICAgY29uc3QgZ3VuaWNoYXIyICpuYW1lLCB1bnNpZ25lZCBu
-bGVuKQ0KPiArew0KPiArICAgIHVuc2lnbmVkIGk7DQo+ICsgICAgZm9yKGkgPSAwOyBpIDwg
-ZHNpemUgLyAyICYmIGkgPCBubGVuOyArK2kpIHsNCj4gKyAgICAgICAgZGVzdFtpIC8gMiAr
-IDBdID0gbmFtZVtpXSAmIDB4ZmY7DQo+ICsgICAgICAgIGRlc3RbaSAvIDIgKyAxXSA9IG5h
-bWVbaV0gPj4gODsNCj4gKyAgICB9DQo+ICsgICAgcmV0dXJuIGk7DQo+ICt9DQo+ICsNCj4g
-ICAgc3RhdGljIGRpcmVudHJ5X3QgKmNyZWF0ZV9sb25nX2ZpbGVuYW1lKEJEUlZWVkZBVFN0
-YXRlICpzLCBjb25zdCBjaGFyICpmaWxlbmFtZSkNCj4gICAgew0KPiAtICAgIGludCBudW1i
-ZXJfb2ZfZW50cmllcywgaTsNCj4gKyAgICB1bnNpZ25lZCBudW1iZXJfb2ZfZW50cmllcywg
-ZWksIGNpOw0KPiAgICAgICAgZ2xvbmcgbGVuZ3RoOw0KPiAtICAgIGRpcmVudHJ5X3QgKmVu
-dHJ5Ow0KPiANCj4gICAgICAgIGd1bmljaGFyMiAqbG9uZ25hbWUgPSBnX3V0ZjhfdG9fdXRm
-MTYoZmlsZW5hbWUsIC0xLCBOVUxMLCAmbGVuZ3RoLCBOVUxMKTsNCj4gICAgICAgIGlmICgh
-bG9uZ25hbWUpIHsNCj4gQEAgLTQxMSwyOCArNDMyLDIxIEBAIHN0YXRpYyBkaXJlbnRyeV90
-ICpjcmVhdGVfbG9uZ19maWxlbmFtZShCRFJWVlZGQVRTdGF0ZSAqcywgY29uc3QgY2hhciAq
-ZmlsZW5hbWUpDQo+ICAgICAgICAgICAgcmV0dXJuIE5VTEw7DQo+ICAgICAgICB9DQo+IA0K
-PiAtICAgIG51bWJlcl9vZl9lbnRyaWVzID0gRElWX1JPVU5EX1VQKGxlbmd0aCAqIDIsIDI2
-KTsNCj4gKyAgICAvKiBlYWNoIGxmbl9kaXJlbnRyeSBob2xkcyAxMyB1dGYxNiBjaGFycyAo
-MjYgYnl0ZXMpICovDQo+ICsgICAgbnVtYmVyX29mX2VudHJpZXMgPSBESVZfUk9VTkRfVVAo
-bGVuZ3RoLCAxMyk7DQo+IA0KPiAtICAgIGZvcihpPTA7aTxudW1iZXJfb2ZfZW50cmllcztp
-KyspIHsNCj4gLSAgICAgICAgZW50cnk9YXJyYXlfZ2V0X25leHQoJihzLT5kaXJlY3Rvcnkp
-KTsNCj4gLSAgICAgICAgZW50cnktPmF0dHJpYnV0ZXM9MHhmOw0KPiAtICAgICAgICBlbnRy
-eS0+cmVzZXJ2ZWRbMF09MDsNCj4gLSAgICAgICAgZW50cnktPmJlZ2luPTA7DQo+IC0gICAg
-ICAgIGVudHJ5LT5uYW1lWzBdPShudW1iZXJfb2ZfZW50cmllcy1pKXwoaT09MD8weDQwOjAp
-Ow0KPiAtICAgIH0NCj4gLSAgICBmb3IoaT0wO2k8MjYqbnVtYmVyX29mX2VudHJpZXM7aSsr
-KSB7DQo+IC0gICAgICAgIGludCBvZmZzZXQ9KGklMjYpOw0KPiAtICAgICAgICBpZihvZmZz
-ZXQ8MTApIG9mZnNldD0xK29mZnNldDsNCj4gLSAgICAgICAgZWxzZSBpZihvZmZzZXQ8MjIp
-IG9mZnNldD0xNCtvZmZzZXQtMTA7DQo+IC0gICAgICAgIGVsc2Ugb2Zmc2V0PTI4K29mZnNl
-dC0yMjsNCj4gLSAgICAgICAgZW50cnk9YXJyYXlfZ2V0KCYocy0+ZGlyZWN0b3J5KSxzLT5k
-aXJlY3RvcnkubmV4dC0xLShpLzI2KSk7DQo+IC0gICAgICAgIGlmIChpID49IDIgKiBsZW5n
-dGggKyAyKSB7DQo+IC0gICAgICAgICAgICBlbnRyeS0+bmFtZVtvZmZzZXRdID0gMHhmZjsN
-Cj4gLSAgICAgICAgfSBlbHNlIGlmIChpICUgMiA9PSAwKSB7DQo+IC0gICAgICAgICAgICBl
-bnRyeS0+bmFtZVtvZmZzZXRdID0gbG9uZ25hbWVbaSAvIDJdICYgMHhmZjsNCj4gLSAgICAg
-ICAgfSBlbHNlIHsNCj4gLSAgICAgICAgICAgIGVudHJ5LT5uYW1lW29mZnNldF0gPSBsb25n
-bmFtZVtpIC8gMl0gPj4gODsNCj4gLSAgICAgICAgfQ0KPiArICAgIGZvcihlaSA9IDAsIGNp
-ID0gMDsgaSA8IG51bWJlcl9vZl9lbnRyaWVzOyBlaSsrKSB7DQo+ICsgICAgICAgIGxmbl9k
-aXJlbnRyeV90ICplbnRyeSA9IGFycmF5X2dldF9uZXh0KCYocy0+ZGlyZWN0b3J5KSk7DQo+
-ICsgICAgICAgIGVudHJ5LT5zZXF1ZW5jZSA9IChudW1iZXJfb2ZfZW50cmllcyAtIGVpKSB8
-IChlaSA9PSAwID8gMHg0MCA6IDApOw0KPiArICAgICAgICBlbnRyeS0+YXR0cmlidXRlcyA9
-IDB4ZjsNCj4gKyAgICAgICAgZW50cnktPmRpcmVudHJ5X3R5cGUgPSAwOw0KPiArICAgICAg
-ICBlbnRyeS0+YmVnaW4gPSAwOw0KPiArICAgICAgICBjaSArPSB3cml0ZV9sb25nX2ZpbGVu
-YW1lX3BhcnQoZW50cnktPm5hbWUwMSwgc2l6ZW9mKGVudHJ5LT5uYW1lMDEpLA0KPiArICAg
-ICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgbG9uZ25hbWUgKyBjaSwgbGVu
-Z3RoIC0gY2kpOw0KPiArICAgICAgICBjaSArPSB3cml0ZV9sb25nX2ZpbGVuYW1lX3BhcnQo
-ZW50cnktPm5hbWUwZSwgc2l6ZW9mKGVudHJ5LT5uYW1lMGUpLA0KPiArICAgICAgICAgICAg
-ICAgICAgICAgICAgICAgICAgICAgICAgICAgbG9uZ25hbWUgKyBjaSwgbGVuZ3RoIC0gY2kp
-Ow0KPiArICAgICAgICBjaSArPSB3cml0ZV9sb25nX2ZpbGVuYW1lX3BhcnQoZW50cnktPm5h
-bWUxYywgc2l6ZW9mKGVudHJ5LT5uYW1lMWMpLA0KPiArICAgICAgICAgICAgICAgICAgICAg
-ICAgICAgICAgICAgICAgICAgbG9uZ25hbWUgKyBjaSwgbGVuZ3RoIC0gY2kpOw0KPiAgICAg
-ICAgfQ0KPiAgICAgICAgZ19mcmVlKGxvbmduYW1lKTsNCj4gICAgICAgIHJldHVybiBhcnJh
-eV9nZXQoJihzLT5kaXJlY3RvcnkpLHMtPmRpcmVjdG9yeS5uZXh0LW51bWJlcl9vZl9lbnRy
-aWVzKTsNCj4gDQoNCkkgYWdyZWUgdGhlIGV4aXN0aW5nIGNvZGUgKGFuZCB0aGlzIHBhdGNo
-KSBpcyBwcmV0dHkgY3J5cHRpYyBmb3IgYW55b25lIA0Kbm90IGZhbWlsaWFyIHdpdGggRkFU
-IGZvcm1hdC4NCkhvd2V2ZXIsIEkgdGhpbmsgaXQgY291bGQgYmUgYSBnb29kIHRoaW5nIHRv
-IGZpcnN0IG1lcmdlIHRoaXMgb25lICh3aGljaCANCmlzIGNvcnJlY3QsIGFuZCB3b3Jrcyks
-IGFuZCByZWZhY3RvciB0aGlzIGluIGEgc2Vjb25kIHRpbWUsIHNvIHRoZSANCmN1cnJlbnQg
-dWJzYW4gaXNzdWUgaXMgZml4ZWQgdXBzdHJlYW0gYXMgc29vbiBhcyBwb3NzaWJsZS4NCk5v
-dGU6IHRoZSB0ZXN0IHRyaWdnZXJpbmcgaXQgaGFzIGFscmVhZHkgYmVlbiBtZXJnZWQuDQoN
-ClJlZ2FyZHMsDQpQaWVycmljaw0K
+On 1/21/25 10:28, Philippe Mathieu-Daudé wrote:
+> There are a fixed number of PCI IRQs, known beforehand.
+> Allocate them within PCIMultiSerialState, and initialize
+> using qemu_init_irq(), allowing to remove the legacy
+> qemu_allocate_irqs() and qemu_free_irqs() calls.
+> 
+> Signed-off-by: Philippe Mathieu-Daudé<philmd@linaro.org>
+> ---
+> Based-on:<20250121155526.29982-2-philmd@linaro.org>
+>            "hw/irq: Introduce qemu_init_irqs() helper"
+> ---
+>   hw/char/serial-pci-multi.c | 7 +++----
+>   1 file changed, 3 insertions(+), 4 deletions(-)
+
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+
+r~
 
