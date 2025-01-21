@@ -4,64 +4,62 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DA850C0218B
-	for <qemu-devel@archiver.kernel.org>; Tue, 21 Jan 2025 12:16:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 82E4BC02182
+	for <qemu-devel@archiver.kernel.org>; Tue, 21 Jan 2025 12:22:18 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1taDB0-0005Fk-2Y; Tue, 21 Jan 2025 07:16:14 -0500
+	id 1taDFx-0007FA-Ge; Tue, 21 Jan 2025 07:21:21 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1taDAy-0005Fc-QO
- for qemu-devel@nongnu.org; Tue, 21 Jan 2025 07:16:12 -0500
-Received: from mgamail.intel.com ([198.175.65.15])
+ id 1taDFt-0007Ek-PU
+ for qemu-devel@nongnu.org; Tue, 21 Jan 2025 07:21:19 -0500
+Received: from mgamail.intel.com ([192.198.163.16])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1taDAs-0008Je-NS
- for qemu-devel@nongnu.org; Tue, 21 Jan 2025 07:16:11 -0500
+ id 1taDFo-0000fk-Ah
+ for qemu-devel@nongnu.org; Tue, 21 Jan 2025 07:21:16 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1737461767; x=1768997767;
+ t=1737462073; x=1768998073;
  h=date:from:to:cc:subject:message-id:references:
- mime-version:content-transfer-encoding:in-reply-to;
- bh=8T0ApBoSpf7fgy9dbX/ULBhXvOu1k5vONfu4kFvxwO8=;
- b=C+h6eXVSBym89XOGIPD5/OkFq1f4b5mYwzyFGRX2l69bYchzFwMqzy8M
- ta+SApr0njX2dJyd/Xy76wshfucvqBrt75BNcYp8s7AIZzF7V81j1MuUL
- S36ET57kB1RY0HJknL8bKovnNFTHPfodHkMmj++7CVgI/hbnpaMFLLaJW
- p3i2j0UsasqW/loxHtHb3Wy36JVWV3E0anS8L1CTQVc0YYMP2CsoQjCUr
- WLJ8gw8YtHVfqyv7n5bGG+rKzmQGlBVRSx1UytvY0FbONtruJCHKOSM0k
- /CHuBLBLrJ075yhpnu2f39wdEwZTIIXGJMpGEJKz/7qjDC5z3CHQ5zML4 Q==;
-X-CSE-ConnectionGUID: zGOBGolER7mfueLQMDUjtA==
-X-CSE-MsgGUID: YqXPunm+S460sbmVM5fbiw==
-X-IronPort-AV: E=McAfee;i="6700,10204,11321"; a="41546559"
-X-IronPort-AV: E=Sophos;i="6.13,222,1732608000"; d="scan'208";a="41546559"
-Received: from orviesa001.jf.intel.com ([10.64.159.141])
- by orvoesa107.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 21 Jan 2025 04:16:03 -0800
-X-CSE-ConnectionGUID: Uu6z39KSSx2lutsdHEvkww==
-X-CSE-MsgGUID: KhZNsEf2Tjau7GgcSMsfXw==
+ mime-version:in-reply-to;
+ bh=fzP2k6GMlja+qySGoa4iYhs0uQUl+tM4pvRMasjKeRo=;
+ b=eYjn/ETrKhYvF/TqUixGEMwTj9Iu81hECmixBG+nYiFqAuN6eCraiBll
+ kYIp45Tw5Wo/GNPxQ59PeNBdWKz3Dp4VBvoAyjmPZ090sw819qrA/xAGv
+ eifQdTidRVp4YfAOE9uXw/UBHoUSc2D23/SqitJQMwgqQ6y65OEGdz86g
+ i3NDdHQrbvJ0u6kr48xpCXUVwB22ezucHQNFGhJCAOFb/kJwf+7PStHTj
+ Dp+/BxazoPBLbmAFOEi7ta3AwnpDjiIObMFDZ0wcnn99BaBWHG6+12q26
+ /uha4opqjQbFWVBd+NQp/z0ugMwvQ1cYopn5S+HePlyom0UtDcrRdCty+ Q==;
+X-CSE-ConnectionGUID: xNAtjbi+THKKKIgFMCNvTA==
+X-CSE-MsgGUID: 1lBxkZWJSS62rgux2KR9oA==
+X-IronPort-AV: E=McAfee;i="6700,10204,11321"; a="25470506"
+X-IronPort-AV: E=Sophos;i="6.13,222,1732608000"; d="scan'208";a="25470506"
+Received: from fmviesa001.fm.intel.com ([10.60.135.141])
+ by fmvoesa110.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 21 Jan 2025 04:21:09 -0800
+X-CSE-ConnectionGUID: RMQpioqgS/Oq3QboV0XSfw==
+X-CSE-MsgGUID: WH3mJRCBQh2tPMKdkcrnlA==
 X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.12,224,1728975600"; d="scan'208";a="144046327"
+X-IronPort-AV: E=Sophos;i="6.12,224,1728975600"; d="scan'208";a="137663949"
 Received: from liuzhao-optiplex-7080.sh.intel.com (HELO localhost)
  ([10.239.160.39])
- by orviesa001.jf.intel.com with ESMTP; 21 Jan 2025 04:16:02 -0800
-Date: Tue, 21 Jan 2025 20:35:24 +0800
+ by fmviesa001.fm.intel.com with ESMTP; 21 Jan 2025 04:21:07 -0800
+Date: Tue, 21 Jan 2025 20:40:29 +0800
 From: Zhao Liu <zhao1.liu@intel.com>
-To: Philippe =?iso-8859-1?Q?Mathieu-Daud=E9?= <philmd@linaro.org>
-Cc: qemu-devel@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>,
- Eduardo Habkost <eduardo@habkost.net>,
- Richard Henderson <richard.henderson@linaro.org>
-Subject: Re: [PATCH] target/i386: Pass const CPUX86State to
- x86_cpu_pending_interrupt()
-Message-ID: <Z4+UjBXLog7To++7@intel.com>
-References: <20250120061544.81623-1-philmd@linaro.org>
+To: Tao Su <tao1.su@linux.intel.com>
+Cc: qemu-devel@nongnu.org, pbonzini@redhat.com, imammedo@redhat.com,
+ xiaoyao.li@intel.com, zhao1.liu@linux.intel.com, xuelian.guo@intel.com
+Subject: Re: [PATCH 1/4] target/i386: Introduce SierraForest-v2 model
+Message-ID: <Z4+VvdP/rsd3f5gR@intel.com>
+References: <20250121020650.1899618-1-tao1.su@linux.intel.com>
+ <20250121020650.1899618-2-tao1.su@linux.intel.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20250120061544.81623-1-philmd@linaro.org>
-Received-SPF: pass client-ip=198.175.65.15; envelope-from=zhao1.liu@intel.com;
+In-Reply-To: <20250121020650.1899618-2-tao1.su@linux.intel.com>
+Received-SPF: pass client-ip=192.198.163.16; envelope-from=zhao1.liu@intel.com;
  helo=mgamail.intel.com
 X-Spam_score_int: -73
 X-Spam_score: -7.4
@@ -86,24 +84,26 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, Jan 20, 2025 at 07:15:44AM +0100, Philippe Mathieu-Daudé wrote:
-> Date: Mon, 20 Jan 2025 07:15:44 +0100
-> From: Philippe Mathieu-Daudé <philmd@linaro.org>
-> Subject: [PATCH] target/i386: Pass const CPUX86State to
->  x86_cpu_pending_interrupt()
-> X-Mailer: git-send-email 2.47.1
+On Tue, Jan 21, 2025 at 10:06:47AM +0800, Tao Su wrote:
+> Date: Tue, 21 Jan 2025 10:06:47 +0800
+> From: Tao Su <tao1.su@linux.intel.com>
+> Subject: [PATCH 1/4] target/i386: Introduce SierraForest-v2 model
+> X-Mailer: git-send-email 2.34.1
 > 
-> Directly pass CPUX86State to x86_cpu_pending_interrupt().
-> Since it doesn't modify the dereferenced fields, make the
-> argument const.
+> Update SierraForest CPU model to add LAM, 4 bits indicating certain bits
+> of IA32_SPEC_CTR are supported(intel-psfd, ipred-ctrl, rrsba-ctrl,
+> bhi-ctrl) and the missing features(ss, tsc-adjust, cldemote, movdiri,
+> movdir64b)
 > 
-> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+> Also add GDS-NO and RFDS-NO to indicate the related vulnerabilities are
+> mitigated in stepping 3.
+> 
+> Tested-by: Xuelian Guo <xuelian.guo@intel.com>
+> Signed-off-by: Tao Su <tao1.su@linux.intel.com>
 > ---
->  target/i386/cpu.h                   | 2 +-
->  target/i386/cpu.c                   | 8 +++-----
->  target/i386/tcg/system/seg_helper.c | 2 +-
->  3 files changed, 5 insertions(+), 7 deletions(-)
-> 
+>  target/i386/cpu.c | 19 +++++++++++++++++++
+>  1 file changed, 19 insertions(+)
+>
 
 Reviewed-by: Zhao Liu <zhao1.liu@intel.com>
 
