@@ -4,55 +4,54 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8E9DEC0218B
-	for <qemu-devel@archiver.kernel.org>; Tue, 21 Jan 2025 10:58:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 96AB2C02182
+	for <qemu-devel@archiver.kernel.org>; Tue, 21 Jan 2025 10:59:07 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1taBw7-0006gt-Vu; Tue, 21 Jan 2025 05:56:48 -0500
+	id 1taBw8-0006hP-Fj; Tue, 21 Jan 2025 05:56:48 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1taBvz-0006ek-MX
- for qemu-devel@nongnu.org; Tue, 21 Jan 2025 05:56:41 -0500
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1taBw1-0006f2-KJ
+ for qemu-devel@nongnu.org; Tue, 21 Jan 2025 05:56:44 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1taBvx-00056s-7r
- for qemu-devel@nongnu.org; Tue, 21 Jan 2025 05:56:38 -0500
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1taBvy-00057A-Qw
+ for qemu-devel@nongnu.org; Tue, 21 Jan 2025 05:56:40 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1737456996;
+ s=mimecast20190719; t=1737456998;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=91Ph9kNYeXsoVFO6NxOH/K8Dbo3YcWqv4IxMaz5wxg8=;
- b=NJSWUZRLMOJQcDutDw3n1nMKr6nXx6pCyLfN6kW3gjaBIk7K9FVP53TAVnNp6cvZlBbg39
- LQLlN85NYLTYnNdLwt3tv9CfM+2PUubObyBvCN5I87Wpveh8fyZAC6ErGRQSqROuWrLsTb
- Pvz9wgKFDXvwZe6+6RdnHuC4jfzD9KE=
+ bh=QumFOQPyo7577nPrd0rZ1W5G24K4ox1cj5lWb7BKm3g=;
+ b=AFWTq8SPpSXLdE7fnYibU2KxfEvCoQIxMO/AORdkDK8SC4fZJ5MyL7BJC9vkFDzfyHF5pF
+ 6r/eevVLF4pgzYhz6MaR1a1qggmK/8FtM+2by25N8ZGtkAP0x+QqObNR2tgFAngQBspkxv
+ VA+VCBpC02d0b4ucHYQxvgQqYwpiwn4=
 Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-180-txlZHH0pOYSyvuusR7v7tA-1; Tue,
- 21 Jan 2025 05:56:30 -0500
-X-MC-Unique: txlZHH0pOYSyvuusR7v7tA-1
-X-Mimecast-MFC-AGG-ID: txlZHH0pOYSyvuusR7v7tA
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-318-tWl_ybAxMrWFnrzx4pfhPQ-1; Tue,
+ 21 Jan 2025 05:56:33 -0500
+X-MC-Unique: tWl_ybAxMrWFnrzx4pfhPQ-1
+X-Mimecast-MFC-AGG-ID: tWl_ybAxMrWFnrzx4pfhPQ
 Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
  by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 8713C195604F; Tue, 21 Jan 2025 10:56:29 +0000 (UTC)
+ id D8DA819560B1; Tue, 21 Jan 2025 10:56:31 +0000 (UTC)
 Received: from thuth-p1g4.redhat.com (unknown [10.39.192.56])
  by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 047C519560A7; Tue, 21 Jan 2025 10:56:27 +0000 (UTC)
+ id 10D5419560A7; Tue, 21 Jan 2025 10:56:29 +0000 (UTC)
 From: Thomas Huth <thuth@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Stefan Hajnoczi <stefanha@redhat.com>, Jared Rossi <jrossi@linux.ibm.com>,
  Eric Farman <farman@linux.ibm.com>
-Subject: [PULL 5/9] pc-bios/s390-ccw/virtio: Add a function to reset a virtio
- device
-Date: Tue, 21 Jan 2025 11:56:07 +0100
-Message-ID: <20250121105613.1286672-6-thuth@redhat.com>
+Subject: [PULL 6/9] pc-bios/s390-ccw: Fix boot problem with virtio-net devices
+Date: Tue, 21 Jan 2025 11:56:08 +0100
+Message-ID: <20250121105613.1286672-7-thuth@redhat.com>
 In-Reply-To: <20250121105613.1286672-1-thuth@redhat.com>
 References: <20250121105613.1286672-1-thuth@redhat.com>
 MIME-Version: 1.0
@@ -83,56 +82,145 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-To be able to properly silence a virtio device after using it,
-we need a global function to reset the device.
+When we are trying to boot from virtio-net devices, the
+s390-ccw bios currently leaves the virtio-net device enabled
+after using it. That means that the receiving virt queues will
+continue to happily write incoming network packets into memory.
+This can corrupt data of the following boot process. For example,
+if you set up a second guest on a virtual network and create a
+lot of broadcast traffic there, e.g. with:
+
+ ping -i 0.02 -s 1400  -b 192.168.1.255
+
+and then you try to boot a guest with two boot devices, a network
+device first (which should not be bootable) and e.g. a bootable SCSI
+CD second, then this guest will fail to load the kernel from the CD
+image:
+
+ $ qemu-system-s390x -m 2G -nographic -device virtio-scsi-ccw \
+    -netdev tap,id=net0 -device virtio-net-ccw,netdev=net0,bootindex=1 \
+    -drive if=none,file=test.iso,format=raw,id=cd1 \
+    -device scsi-cd,drive=cd1,bootindex=2
+ LOADPARM=[        ]
+
+ Network boot device detected
+ Network boot starting...
+   Using MAC address: 52:54:00:12:34:56
+   Requesting information via DHCP: done
+   Using IPv4 address: 192.168.1.76
+   Using TFTP server: 192.168.1.1
+ Trying pxelinux.cfg files...
+   TFTP error: ICMP ERROR "port unreachable"
+   Receiving data:  0 KBytes
+ Repeating TFTP read request...
+   TFTP error: ICMP ERROR "port unreachable"
+ Failed to load OS from network.
+ Failed to IPL from this network!
+ LOADPARM=[        ]
+
+ Using virtio-scsi.
+
+ ! virtio-scsi:setup:inquiry: response VS RESP=ff !
+ ERROR: No suitable device for IPL. Halting...
+
+We really have to shut up the virtio-net devices after we're not
+using it anymore. The easiest way to do this is to simply reset
+the device, so let's do that now.
 
 Reviewed-by: Jared Rossi <jrossi@linux.ibm.com>
 Reviewed-by: Eric Farman <farman@linux.ibm.com>
 Tested-by: Jared Rossi <jrossi@linux.ibm.com>
-Message-ID: <20250116115826.192047-2-thuth@redhat.com>
+Message-ID: <20250116115826.192047-3-thuth@redhat.com>
 Signed-off-by: Thomas Huth <thuth@redhat.com>
 ---
- pc-bios/s390-ccw/virtio.h | 1 +
- pc-bios/s390-ccw/virtio.c | 7 ++++++-
- 2 files changed, 7 insertions(+), 1 deletion(-)
+ pc-bios/s390-ccw/virtio.h     |  1 +
+ pc-bios/s390-ccw/netmain.c    | 33 +++++++++++++++++++++++----------
+ pc-bios/s390-ccw/virtio-net.c |  5 +++++
+ 3 files changed, 29 insertions(+), 10 deletions(-)
 
 diff --git a/pc-bios/s390-ccw/virtio.h b/pc-bios/s390-ccw/virtio.h
-index 9faf3986b1..f13fa6f5fe 100644
+index f13fa6f5fe..5c5e808a50 100644
 --- a/pc-bios/s390-ccw/virtio.h
 +++ b/pc-bios/s390-ccw/virtio.h
-@@ -274,6 +274,7 @@ void vring_send_buf(VRing *vr, void *p, int len, int flags);
- int vr_poll(VRing *vr);
- int vring_wait_reply(void);
- int virtio_run(VDev *vdev, int vqid, VirtioCmd *cmd);
-+int virtio_reset(VDev *vdev);
+@@ -278,5 +278,6 @@ int virtio_reset(VDev *vdev);
  int virtio_setup_ccw(VDev *vdev);
  
  int virtio_net_init(void *mac_addr);
-diff --git a/pc-bios/s390-ccw/virtio.c b/pc-bios/s390-ccw/virtio.c
-index 8b5a370bb3..cd6c99c7e3 100644
---- a/pc-bios/s390-ccw/virtio.c
-+++ b/pc-bios/s390-ccw/virtio.c
-@@ -217,6 +217,11 @@ int virtio_run(VDev *vdev, int vqid, VirtioCmd *cmd)
-     return 0;
++void virtio_net_deinit(void);
+ 
+ #endif /* VIRTIO_H */
+diff --git a/pc-bios/s390-ccw/netmain.c b/pc-bios/s390-ccw/netmain.c
+index e46e470db4..335ea9b63e 100644
+--- a/pc-bios/s390-ccw/netmain.c
++++ b/pc-bios/s390-ccw/netmain.c
+@@ -153,19 +153,10 @@ static int tftp_load(filename_ip_t *fnip, void *buffer, int len)
+     return rc;
  }
  
-+int virtio_reset(VDev *vdev)
+-static int net_init(filename_ip_t *fn_ip)
++static int net_init_ip(filename_ip_t *fn_ip)
+ {
+     int rc;
+ 
+-    memset(fn_ip, 0, sizeof(filename_ip_t));
+-
+-    rc = virtio_net_init(mac);
+-    if (rc < 0) {
+-        puts("Could not initialize network device");
+-        return -101;
+-    }
+-    fn_ip->fd = rc;
+-
+     printf("  Using MAC address: %02x:%02x:%02x:%02x:%02x:%02x\n",
+            mac[0], mac[1], mac[2], mac[3], mac[4], mac[5]);
+ 
+@@ -221,11 +212,33 @@ static int net_init(filename_ip_t *fn_ip)
+     return rc;
+ }
+ 
++static int net_init(filename_ip_t *fn_ip)
 +{
-+    return run_ccw(vdev, CCW_CMD_VDEV_RESET, NULL, 0, false);
++    int rc;
++
++    memset(fn_ip, 0, sizeof(filename_ip_t));
++
++    rc = virtio_net_init(mac);
++    if (rc < 0) {
++        puts("Could not initialize network device");
++        return -101;
++    }
++    fn_ip->fd = rc;
++
++    rc = net_init_ip(fn_ip);
++    if (rc < 0) {
++        virtio_net_deinit();
++    }
++
++    return rc;
 +}
 +
- int virtio_setup_ccw(VDev *vdev)
+ static void net_release(filename_ip_t *fn_ip)
  {
-     int i, cfg_size = 0;
-@@ -235,7 +240,7 @@ int virtio_setup_ccw(VDev *vdev)
-     vdev->config.blk.blk_size = 0; /* mark "illegal" - setup started... */
-     vdev->guessed_disk_nature = VIRTIO_GDN_NONE;
+     if (fn_ip->ip_version == 4) {
+         dhcp_send_release(fn_ip->fd);
+     }
++    virtio_net_deinit();
+ }
  
--    run_ccw(vdev, CCW_CMD_VDEV_RESET, NULL, 0, false);
-+    virtio_reset(vdev);
+ /**
+diff --git a/pc-bios/s390-ccw/virtio-net.c b/pc-bios/s390-ccw/virtio-net.c
+index 578c89d0c5..301445bf97 100644
+--- a/pc-bios/s390-ccw/virtio-net.c
++++ b/pc-bios/s390-ccw/virtio-net.c
+@@ -140,3 +140,8 @@ int recv(int fd, void *buf, int maxlen, int flags)
  
-     status = VIRTIO_CONFIG_S_ACKNOWLEDGE;
-     if (run_ccw(vdev, CCW_CMD_WRITE_STATUS, &status, sizeof(status), false)) {
+     return len;
+ }
++
++void virtio_net_deinit(void)
++{
++    virtio_reset(virtio_get_device());
++}
 -- 
 2.48.1
 
