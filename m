@@ -4,81 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7D3FCC0218C
-	for <qemu-devel@archiver.kernel.org>; Tue, 21 Jan 2025 11:43:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3ECE9C02182
+	for <qemu-devel@archiver.kernel.org>; Tue, 21 Jan 2025 11:43:26 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1taCd8-0004xA-Nr; Tue, 21 Jan 2025 06:41:14 -0500
+	id 1taCdV-0005NW-Ki; Tue, 21 Jan 2025 06:41:37 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1taCd6-0004vp-GZ
- for qemu-devel@nongnu.org; Tue, 21 Jan 2025 06:41:12 -0500
-Received: from mail-wm1-x32b.google.com ([2a00:1450:4864:20::32b])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1taCdT-0005MS-5s
+ for qemu-devel@nongnu.org; Tue, 21 Jan 2025 06:41:35 -0500
+Received: from mail-wm1-x32a.google.com ([2a00:1450:4864:20::32a])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1taCd0-0003KH-AW
- for qemu-devel@nongnu.org; Tue, 21 Jan 2025 06:41:12 -0500
-Received: by mail-wm1-x32b.google.com with SMTP id
- 5b1f17b1804b1-4362f61757fso56490985e9.2
- for <qemu-devel@nongnu.org>; Tue, 21 Jan 2025 03:41:04 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1taCdQ-0003PU-DK
+ for qemu-devel@nongnu.org; Tue, 21 Jan 2025 06:41:34 -0500
+Received: by mail-wm1-x32a.google.com with SMTP id
+ 5b1f17b1804b1-4363ae65100so60364995e9.0
+ for <qemu-devel@nongnu.org>; Tue, 21 Jan 2025 03:41:31 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1737459663; x=1738064463; darn=nongnu.org;
+ d=linaro.org; s=google; t=1737459690; x=1738064490; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=FMaF6+Wa5WYYaGZJTTHWyD0ctSisYPOSoq9ZRxR4GzI=;
- b=ThHmGR80lbQgQQ081h5rrGm1TLSh8wKDufGenbg3tXEC9+g84uRTm4kweJco/NxQ8e
- hnPp12BKT3MkZ9TJr+CJFgOgaXLVYioDblj0R8ty5+jm+Fr2qmfFtg++vGd3WxyHNwX9
- 1Wqk7onitcDsMNz3kkwcQSA3L6KAEPZklGPCZ5qizZMYSSKQW+jC32VTWu9x8Gi9lNOF
- 2sUMUmZg0GWs4C9TLjgDuYeRn4YdXlEZl3Ck2xu85LgEoT90LUSPYOiSbiamzMV6nHfF
- lt2dmj4xcBFC21pnfOYhWwKCY8wfaVna6ox5lQ5K3QElSXAMM3YJUMHKg9jUglRX7OSL
- GfWg==
+ bh=DeYTxKfeYGnuCZs4uhCLhCH6gP528hwEuAlYwVcOULg=;
+ b=W3GP7sLeHtet/KBti2TeVQYKTq+uKCeFPGzKZo0EVnE5A9L+MdrCWkU6jEjYR4WJfy
+ nkLVVxGhkLnKGSIJiuyMgHofvMajBw3Mndls4wkbNJwQM/WuALUdV8g+nw/Jcgzn3TOy
+ dA7DFzPHXHPfSIJ1/LKU/dZXpTiuoSu+5A4J/bcjF53Je3ot5dr37xpwdVJmnY6bFtdL
+ OmgK2l44RmdkV2faN9mOPFqCkJJ68uerM5xFt39FaW1l8CZqK6ZQeO7n5mlTRwBGPfyF
+ cxglLsKloocSRv7dPvrgbVWcKKVIzf/BfCpOVuAKA8TitiXoMT2iW+V9AHRGuiO5oRUC
+ hMjQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1737459663; x=1738064463;
+ d=1e100.net; s=20230601; t=1737459690; x=1738064490;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=FMaF6+Wa5WYYaGZJTTHWyD0ctSisYPOSoq9ZRxR4GzI=;
- b=LrVnFMcSV10GUflNVX5q9XpsqGUBCQC08cWoYe4FoUi5CvRjoTUXEnoFLY4QTF918f
- SI5rkdOMugiZ44v16DP9llGkZzSKTGa6CZ/Urfm6TFjVx/ui1eo7lXQ681HGGRwD6RyT
- GIIOtCYa4Up+VStbkURsSV9+cK3D9voBFT2tL5od+PG39xBM6Jk3ifBvZ+lLqzFK3kty
- Cltx3DKehWNgRrDJ8LrQ9rb0b60Sn2o0CzlnWh0DLz6nCEIAj63tV3h8mr588Hg+hASL
- f0YrZUK80W3p4erl3i14rB9zGSPGcXCSqy5g+r6Gle2wZkGb8M1705Jx4D+yxzTJ6Vsn
- dLIg==
-X-Gm-Message-State: AOJu0Yz8nNJn5mnVDy4DkIRF85ZYWj7Vga/SRHMng5Jajji7N8/mFhUH
- HuPiEA5PrBpFxVeJIuWelwGpWzkAUK8/C1ZuaWeVvy3h+TpZ6LZqdDwA1KlrWZXSywT7uA0Fd8D
- UU4E=
-X-Gm-Gg: ASbGncuRWAKRxV5/VeFhG0RDGGRoYLmgHgfZHHZPuLLQnbLmugdIKMmQw8UqpLTyruq
- ll1cmQBFsIBlFk0GXilRnXzkNVlt2a+QqNq2whje2jKUvtJZxHRQRVunbexL9qqOEetH+gHmOkh
- T5SrEATfc0YiL5439alAZlpHPSwCZ7XG2UqsKoviyjR+1Jwr/aZM8FIWg4x0Yn46urqrLqkCev4
- aDZUzgExiLknWziCR0hcuHXG8U70GVR2x1l2t+Dmy/LNtab6yLIdL/FxrkraLwPaJCECGW5o13i
- FcYRVVO4UDLFjMOBNgHk9nCDzgImhvqFsJQbG3RTmiIH
-X-Google-Smtp-Source: AGHT+IFxIGaP83HpPmv6NXZkFq2jfmtvkIsdcXSRb5Ou3rbnTeLi0+ZTeJpHOJpXjMv4wJPlutsUQA==
-X-Received: by 2002:a05:600c:b8c:b0:435:330d:de86 with SMTP id
- 5b1f17b1804b1-438912d2c48mr162947445e9.0.1737459662693; 
- Tue, 21 Jan 2025 03:41:02 -0800 (PST)
+ bh=DeYTxKfeYGnuCZs4uhCLhCH6gP528hwEuAlYwVcOULg=;
+ b=LbXZcQRHaIBIbnkoXrQHyHTRWKAIqY7GYfQ0R7jCC4Ywdt7zKjugkP+pbZj3CxPPNQ
+ ZULrq+yDyGl/Qy/mdbQgIvVtja8IezfdgYm6qRy9rTccfLSDehGmI1PIN2TOjrSllNOS
+ aiFVFfPYQbCsA4iQBiYaU+PL9WwZPSjKNVp78EZOofffA9vfj6kIDlXWKaKm1+SKGi0d
+ vyJ/VMWhm7FkBUkmNW4xI1/16Pzeyr/Vd0PIt1ufse/HkwJBJzzp2s3W3LsxfKUhKyyy
+ VgbLXksAtrv8j2pT/Y1vr/Kl43bVq0CLLkZxRpnK22eS1rKZVQUv97uenXZATbumFstT
+ C/zA==
+X-Gm-Message-State: AOJu0YxfHW7/moh53HoFPiPuux4S8Bk6iLL3AS9cph5lWS9+Nepd9HOy
+ 8Uoc8tasoMIxC3rDl1qKc2CuOiFuLi8j93KwBKHTpYnQPbfdYEMtLRaZiNmZCaLRDymvss+aITK
+ gWP8=
+X-Gm-Gg: ASbGnctAvLuZV2ZJ5z2mmMwCCgBurJAWGX1AFYPoI/26h0gTvCxTaVF+WE0cCJ2fiz1
+ 8YdVNAzbzel2zCCRDCqE725ppyWdy76p2cDphMBa+iYIeB/q6er06SzJ0abRo8VBJzsTPtdOsv8
+ lNYmBe8/Z9pWg0Bfs4rRMdsS3Ta9+XYVh2kdGtjCLc+EtMKxmAPYrYsasAjTh6/YSXHbKc8BwbI
+ hlzDfqWeNhaFMCFKg9vPzhV5bpe8AJu1ctgvqGKr/RSJHRVYM9pcN5zBAcw8+jMVSpSBYBYhNVI
+ f5YA37kWYZyBBlKUQ7ZK551FZmvA0EvSgnzuuVT2TLci
+X-Google-Smtp-Source: AGHT+IFYePQ7W9qEBZjkBoTzSbXA4iRi/jfN3vePvpN5KZLxmU/7I4ErTsDfpMpd1xt0kQIOxaZvCg==
+X-Received: by 2002:a05:600c:6c95:b0:438:a1f5:3e41 with SMTP id
+ 5b1f17b1804b1-438a1f53fa6mr113851535e9.12.1737459690343; 
+ Tue, 21 Jan 2025 03:41:30 -0800 (PST)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-438904625f5sm179480395e9.28.2025.01.21.03.41.01
+ 5b1f17b1804b1-437c75290a2sm238291245e9.29.2025.01.21.03.41.29
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Tue, 21 Jan 2025 03:41:02 -0800 (PST)
+ Tue, 21 Jan 2025 03:41:29 -0800 (PST)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Richard Henderson <richard.henderson@linaro.org>,
  =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
  qemu-arm@nongnu.org,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PATCH 01/11] cpus: Cache CPUClass early in instance_init() handler
-Date: Tue, 21 Jan 2025 12:40:46 +0100
-Message-ID: <20250121114056.53949-2-philmd@linaro.org>
+Subject: [PATCH 07/11] hw/acpi: Prefer cached CpuClass over CPU_GET_CLASS()
+ macro
+Date: Tue, 21 Jan 2025 12:40:52 +0100
+Message-ID: <20250121114056.53949-8-philmd@linaro.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20250121114056.53949-1-philmd@linaro.org>
 References: <20250121114056.53949-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32b;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x32b.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::32a;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x32a.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -101,43 +102,47 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Cache CPUClass as early as possible, when the instance
-is initialized.
+CpuState caches its CPUClass since commit 6fbdff87062
+("cpu: cache CPUClass in CPUState for hot code paths"),
+use it.
 
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 ---
- cpu-target.c         | 3 ---
- hw/core/cpu-common.c | 3 +++
- 2 files changed, 3 insertions(+), 3 deletions(-)
+ hw/acpi/cpu.c         | 4 ++--
+ hw/acpi/cpu_hotplug.c | 3 +--
+ 2 files changed, 3 insertions(+), 4 deletions(-)
 
-diff --git a/cpu-target.c b/cpu-target.c
-index 667688332c9..89874496a41 100644
---- a/cpu-target.c
-+++ b/cpu-target.c
-@@ -134,9 +134,6 @@ const VMStateDescription vmstate_cpu_common = {
+diff --git a/hw/acpi/cpu.c b/hw/acpi/cpu.c
+index f70a2c045e1..6f1ae79edbf 100644
+--- a/hw/acpi/cpu.c
++++ b/hw/acpi/cpu.c
+@@ -235,8 +235,8 @@ void cpu_hotplug_hw_init(MemoryRegion *as, Object *owner,
  
- bool cpu_exec_realizefn(CPUState *cpu, Error **errp)
+ static AcpiCpuStatus *get_cpu_status(CPUHotplugState *cpu_st, DeviceState *dev)
  {
--    /* cache the cpu class for the hotpath */
--    cpu->cc = CPU_GET_CLASS(cpu);
--
-     if (!accel_cpu_common_realize(cpu, errp)) {
-         return false;
-     }
-diff --git a/hw/core/cpu-common.c b/hw/core/cpu-common.c
-index cb79566cc51..ff605059c15 100644
---- a/hw/core/cpu-common.c
-+++ b/hw/core/cpu-common.c
-@@ -238,6 +238,9 @@ static void cpu_common_initfn(Object *obj)
- {
-     CPUState *cpu = CPU(obj);
+-    CPUClass *k = CPU_GET_CLASS(dev);
+-    uint64_t cpu_arch_id = k->get_arch_id(CPU(dev));
++    CPUState *cpu = CPU(dev);
++    uint64_t cpu_arch_id = cpu->cc->get_arch_id(cpu);
+     int i;
  
-+    /* cache the cpu class for the hotpath */
-+    cpu->cc = CPU_GET_CLASS(cpu);
-+
-     gdb_init_cpu(cpu);
-     cpu->cpu_index = UNASSIGNED_CPU_INDEX;
-     cpu->cluster_index = UNASSIGNED_CLUSTER_INDEX;
+     for (i = 0; i < cpu_st->dev_count; i++) {
+diff --git a/hw/acpi/cpu_hotplug.c b/hw/acpi/cpu_hotplug.c
+index 83b8bc5deb8..aa0e1e3efa5 100644
+--- a/hw/acpi/cpu_hotplug.c
++++ b/hw/acpi/cpu_hotplug.c
+@@ -62,10 +62,9 @@ static const MemoryRegionOps AcpiCpuHotplug_ops = {
+ static void acpi_set_cpu_present_bit(AcpiCpuHotplug *g, CPUState *cpu,
+                                      bool *swtchd_to_modern)
+ {
+-    CPUClass *k = CPU_GET_CLASS(cpu);
+     int64_t cpu_id;
+ 
+-    cpu_id = k->get_arch_id(cpu);
++    cpu_id = cpu->cc->get_arch_id(cpu);
+     if ((cpu_id / 8) >= ACPI_GPE_PROC_LEN) {
+         object_property_set_bool(g->device, "cpu-hotplug-legacy", false,
+                                  &error_abort);
 -- 
 2.47.1
 
