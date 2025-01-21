@@ -4,57 +4,57 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 96AB2C02182
-	for <qemu-devel@archiver.kernel.org>; Tue, 21 Jan 2025 10:59:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 28FA0C02182
+	for <qemu-devel@archiver.kernel.org>; Tue, 21 Jan 2025 10:59:14 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1taBw8-0006hP-Fj; Tue, 21 Jan 2025 05:56:48 -0500
+	id 1taBw5-0006fV-Lq; Tue, 21 Jan 2025 05:56:45 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1taBw1-0006f2-KJ
- for qemu-devel@nongnu.org; Tue, 21 Jan 2025 05:56:44 -0500
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1taBvn-0006dg-5u
+ for qemu-devel@nongnu.org; Tue, 21 Jan 2025 05:56:27 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1taBvy-00057A-Qw
- for qemu-devel@nongnu.org; Tue, 21 Jan 2025 05:56:40 -0500
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1taBvl-00055h-1S
+ for qemu-devel@nongnu.org; Tue, 21 Jan 2025 05:56:26 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1737456998;
+ s=mimecast20190719; t=1737456984;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=QumFOQPyo7577nPrd0rZ1W5G24K4ox1cj5lWb7BKm3g=;
- b=AFWTq8SPpSXLdE7fnYibU2KxfEvCoQIxMO/AORdkDK8SC4fZJ5MyL7BJC9vkFDzfyHF5pF
- 6r/eevVLF4pgzYhz6MaR1a1qggmK/8FtM+2by25N8ZGtkAP0x+QqObNR2tgFAngQBspkxv
- VA+VCBpC02d0b4ucHYQxvgQqYwpiwn4=
-Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
+ bh=Zt8UrK/m7+A+YGdWTpaIY4AS9igFV/9A6BVTmTNIKTg=;
+ b=IzeyJGsRA2IA9O/cIZ+v8zeLn0CU4oz2D+4AEd/oGskL/4aiQFQC9QGOBCq4x7z93k7mQH
+ SdaFtXAiFZA+Kq4kSIXuNLqcuNCr0/ANENHni99KdLUYFVuYT2rIkwIZRS5e4Nc8QF9JMA
+ wPa+lPjIOiSLZAtPFkhMfs3mwBsHIk8=
+Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-318-tWl_ybAxMrWFnrzx4pfhPQ-1; Tue,
- 21 Jan 2025 05:56:33 -0500
-X-MC-Unique: tWl_ybAxMrWFnrzx4pfhPQ-1
-X-Mimecast-MFC-AGG-ID: tWl_ybAxMrWFnrzx4pfhPQ
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-282-1niOJ4rXM8CCsxRA2g604A-1; Tue,
+ 21 Jan 2025 05:56:21 -0500
+X-MC-Unique: 1niOJ4rXM8CCsxRA2g604A-1
+X-Mimecast-MFC-AGG-ID: 1niOJ4rXM8CCsxRA2g604A
 Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id D8DA819560B1; Tue, 21 Jan 2025 10:56:31 +0000 (UTC)
+ by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 569CB1956053; Tue, 21 Jan 2025 10:56:19 +0000 (UTC)
 Received: from thuth-p1g4.redhat.com (unknown [10.39.192.56])
  by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 10D5419560A7; Tue, 21 Jan 2025 10:56:29 +0000 (UTC)
+ id 7E1B319560A7; Tue, 21 Jan 2025 10:56:17 +0000 (UTC)
 From: Thomas Huth <thuth@redhat.com>
 To: qemu-devel@nongnu.org
-Cc: Stefan Hajnoczi <stefanha@redhat.com>, Jared Rossi <jrossi@linux.ibm.com>,
- Eric Farman <farman@linux.ibm.com>
-Subject: [PULL 6/9] pc-bios/s390-ccw: Fix boot problem with virtio-net devices
-Date: Tue, 21 Jan 2025 11:56:08 +0100
-Message-ID: <20250121105613.1286672-7-thuth@redhat.com>
+Cc: Stefan Hajnoczi <stefanha@redhat.com>, David Woodhouse <dwmw@amazon.co.uk>
+Subject: [PULL 1/9] tests/functional: Convert the kvm_xen_guest avocado test
+Date: Tue, 21 Jan 2025 11:56:03 +0100
+Message-ID: <20250121105613.1286672-2-thuth@redhat.com>
 In-Reply-To: <20250121105613.1286672-1-thuth@redhat.com>
 References: <20250121105613.1286672-1-thuth@redhat.com>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
 Received-SPF: pass client-ip=170.10.133.124; envelope-from=thuth@redhat.com;
@@ -82,145 +82,227 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-When we are trying to boot from virtio-net devices, the
-s390-ccw bios currently leaves the virtio-net device enabled
-after using it. That means that the receiving virt queues will
-continue to happily write incoming network packets into memory.
-This can corrupt data of the following boot process. For example,
-if you set up a second guest on a virtual network and create a
-lot of broadcast traffic there, e.g. with:
+Use the serial console to execute the commands in the guest instead
+of using ssh since we don't have ssh support in the functional
+framework yet.
 
- ping -i 0.02 -s 1400  -b 192.168.1.255
-
-and then you try to boot a guest with two boot devices, a network
-device first (which should not be bootable) and e.g. a bootable SCSI
-CD second, then this guest will fail to load the kernel from the CD
-image:
-
- $ qemu-system-s390x -m 2G -nographic -device virtio-scsi-ccw \
-    -netdev tap,id=net0 -device virtio-net-ccw,netdev=net0,bootindex=1 \
-    -drive if=none,file=test.iso,format=raw,id=cd1 \
-    -device scsi-cd,drive=cd1,bootindex=2
- LOADPARM=[        ]
-
- Network boot device detected
- Network boot starting...
-   Using MAC address: 52:54:00:12:34:56
-   Requesting information via DHCP: done
-   Using IPv4 address: 192.168.1.76
-   Using TFTP server: 192.168.1.1
- Trying pxelinux.cfg files...
-   TFTP error: ICMP ERROR "port unreachable"
-   Receiving data:  0 KBytes
- Repeating TFTP read request...
-   TFTP error: ICMP ERROR "port unreachable"
- Failed to load OS from network.
- Failed to IPL from this network!
- LOADPARM=[        ]
-
- Using virtio-scsi.
-
- ! virtio-scsi:setup:inquiry: response VS RESP=ff !
- ERROR: No suitable device for IPL. Halting...
-
-We really have to shut up the virtio-net devices after we're not
-using it anymore. The easiest way to do this is to simply reset
-the device, so let's do that now.
-
-Reviewed-by: Jared Rossi <jrossi@linux.ibm.com>
-Reviewed-by: Eric Farman <farman@linux.ibm.com>
-Tested-by: Jared Rossi <jrossi@linux.ibm.com>
-Message-ID: <20250116115826.192047-3-thuth@redhat.com>
+Acked-by: David Woodhouse <dwmw@amazon.co.uk>
+Message-ID: <20250113082516.57894-1-thuth@redhat.com>
 Signed-off-by: Thomas Huth <thuth@redhat.com>
 ---
- pc-bios/s390-ccw/virtio.h     |  1 +
- pc-bios/s390-ccw/netmain.c    | 33 +++++++++++++++++++++++----------
- pc-bios/s390-ccw/virtio-net.c |  5 +++++
- 3 files changed, 29 insertions(+), 10 deletions(-)
+ MAINTAINERS                                   |  2 +-
+ tests/functional/meson.build                  |  2 +
+ .../test_x86_64_kvm_xen.py}                   | 83 +++++++++++--------
+ 3 files changed, 52 insertions(+), 35 deletions(-)
+ rename tests/{avocado/kvm_xen_guest.py => functional/test_x86_64_kvm_xen.py} (64%)
+ mode change 100644 => 100755
 
-diff --git a/pc-bios/s390-ccw/virtio.h b/pc-bios/s390-ccw/virtio.h
-index f13fa6f5fe..5c5e808a50 100644
---- a/pc-bios/s390-ccw/virtio.h
-+++ b/pc-bios/s390-ccw/virtio.h
-@@ -278,5 +278,6 @@ int virtio_reset(VDev *vdev);
- int virtio_setup_ccw(VDev *vdev);
+diff --git a/MAINTAINERS b/MAINTAINERS
+index 846b81e3ec..94834b7876 100644
+--- a/MAINTAINERS
++++ b/MAINTAINERS
+@@ -489,7 +489,7 @@ S: Supported
+ F: include/system/kvm_xen.h
+ F: target/i386/kvm/xen*
+ F: hw/i386/kvm/xen*
+-F: tests/avocado/kvm_xen_guest.py
++F: tests/functional/test_x86_64_kvm_xen.py
  
- int virtio_net_init(void *mac_addr);
-+void virtio_net_deinit(void);
- 
- #endif /* VIRTIO_H */
-diff --git a/pc-bios/s390-ccw/netmain.c b/pc-bios/s390-ccw/netmain.c
-index e46e470db4..335ea9b63e 100644
---- a/pc-bios/s390-ccw/netmain.c
-+++ b/pc-bios/s390-ccw/netmain.c
-@@ -153,19 +153,10 @@ static int tftp_load(filename_ip_t *fnip, void *buffer, int len)
-     return rc;
+ Guest CPU Cores (other accelerators)
+ ------------------------------------
+diff --git a/tests/functional/meson.build b/tests/functional/meson.build
+index cf80924ddc..b7719ab85f 100644
+--- a/tests/functional/meson.build
++++ b/tests/functional/meson.build
+@@ -44,6 +44,7 @@ test_timeouts = {
+   'riscv64_tuxrun' : 120,
+   's390x_ccw_virtio' : 420,
+   'sh4_tuxrun' : 240,
++  'x86_64_kvm_xen' : 180,
  }
  
--static int net_init(filename_ip_t *fn_ip)
-+static int net_init_ip(filename_ip_t *fn_ip)
- {
-     int rc;
+ tests_generic_system = [
+@@ -244,6 +245,7 @@ tests_x86_64_system_thorough = [
+   'netdev_ethtool',
+   'virtio_gpu',
+   'x86_64_hotplug_cpu',
++  'x86_64_kvm_xen',
+   'x86_64_tuxrun',
+ ]
  
--    memset(fn_ip, 0, sizeof(filename_ip_t));
--
--    rc = virtio_net_init(mac);
--    if (rc < 0) {
--        puts("Could not initialize network device");
--        return -101;
--    }
--    fn_ip->fd = rc;
--
-     printf("  Using MAC address: %02x:%02x:%02x:%02x:%02x:%02x\n",
-            mac[0], mac[1], mac[2], mac[3], mac[4], mac[5]);
+diff --git a/tests/avocado/kvm_xen_guest.py b/tests/functional/test_x86_64_kvm_xen.py
+old mode 100644
+new mode 100755
+similarity index 64%
+rename from tests/avocado/kvm_xen_guest.py
+rename to tests/functional/test_x86_64_kvm_xen.py
+index f8cb458d5d..273c1e69fb
+--- a/tests/avocado/kvm_xen_guest.py
++++ b/tests/functional/test_x86_64_kvm_xen.py
+@@ -1,3 +1,5 @@
++#!/usr/bin/env python3
++#
+ # KVM Xen guest functional tests
+ #
+ # Copyright © 2021 Red Hat, Inc.
+@@ -13,19 +15,12 @@
  
-@@ -221,11 +212,33 @@ static int net_init(filename_ip_t *fn_ip)
-     return rc;
- }
+ from qemu.machine import machine
  
-+static int net_init(filename_ip_t *fn_ip)
-+{
-+    int rc;
-+
-+    memset(fn_ip, 0, sizeof(filename_ip_t));
-+
-+    rc = virtio_net_init(mac);
-+    if (rc < 0) {
-+        puts("Could not initialize network device");
-+        return -101;
-+    }
-+    fn_ip->fd = rc;
-+
-+    rc = net_init_ip(fn_ip);
-+    if (rc < 0) {
-+        virtio_net_deinit();
-+    }
-+
-+    return rc;
-+}
-+
- static void net_release(filename_ip_t *fn_ip)
- {
-     if (fn_ip->ip_version == 4) {
-         dhcp_send_release(fn_ip->fd);
-     }
-+    virtio_net_deinit();
- }
+-from avocado_qemu import LinuxSSHMixIn
+-from avocado_qemu import QemuSystemTest
+-from avocado_qemu import wait_for_console_pattern
++from qemu_test import QemuSystemTest, Asset, exec_command_and_wait_for_pattern
++from qemu_test import wait_for_console_pattern
  
- /**
-diff --git a/pc-bios/s390-ccw/virtio-net.c b/pc-bios/s390-ccw/virtio-net.c
-index 578c89d0c5..301445bf97 100644
---- a/pc-bios/s390-ccw/virtio-net.c
-+++ b/pc-bios/s390-ccw/virtio-net.c
-@@ -140,3 +140,8 @@ int recv(int fd, void *buf, int maxlen, int flags)
+-class KVMXenGuest(QemuSystemTest, LinuxSSHMixIn):
+-    """
+-    :avocado: tags=arch:x86_64
+-    :avocado: tags=machine:q35
+-    :avocado: tags=accel:kvm
+-    :avocado: tags=kvm_xen_guest
+-    """
++class KVMXenGuest(QemuSystemTest):
  
-     return len;
- }
+-    KERNEL_DEFAULT = 'printk.time=0 root=/dev/xvda console=ttyS0'
++    KERNEL_DEFAULT = 'printk.time=0 root=/dev/xvda console=ttyS0 quiet'
+ 
+     kernel_path = None
+     kernel_params = None
+@@ -33,14 +28,15 @@ class KVMXenGuest(QemuSystemTest, LinuxSSHMixIn):
+     # Fetch assets from the kvm-xen-guest subdir of my shared test
+     # images directory on fileserver.linaro.org where you can find
+     # build instructions for how they where assembled.
+-    def get_asset(self, name, sha1):
+-        base_url = ('https://fileserver.linaro.org/s/'
+-                    'kE4nCFLdQcoBF9t/download?'
+-                    'path=%2Fkvm-xen-guest&files=' )
+-        url = base_url + name
+-        # use explicit name rather than failing to neatly parse the
+-        # URL into a unique one
+-        return self.fetch_asset(name=name, locations=(url), asset_hash=sha1)
++    ASSET_KERNEL = Asset(
++        ('https://fileserver.linaro.org/s/kE4nCFLdQcoBF9t/download?'
++         'path=%2Fkvm-xen-guest&files=bzImage'),
++        'ec0ad7bb8c33c5982baee0a75505fe7dbf29d3ff5d44258204d6307c6fe0132a')
 +
-+void virtio_net_deinit(void)
-+{
-+    virtio_reset(virtio_get_device());
-+}
++    ASSET_ROOTFS = Asset(
++        ('https://fileserver.linaro.org/s/kE4nCFLdQcoBF9t/download?'
++         'path=%2Fkvm-xen-guest&files=rootfs.ext4'),
++        'b11045d649006c649c184e93339aaa41a8fe20a1a86620af70323252eb29e40b')
+ 
+     def common_vm_setup(self):
+         # We also catch lack of KVM_XEN support if we fail to launch
+@@ -51,10 +47,8 @@ def common_vm_setup(self):
+         self.vm.add_args("-accel", "kvm,xen-version=0x4000a,kernel-irqchip=split")
+         self.vm.add_args("-smp", "2")
+ 
+-        self.kernel_path = self.get_asset("bzImage",
+-                                          "367962983d0d32109998a70b45dcee4672d0b045")
+-        self.rootfs = self.get_asset("rootfs.ext4",
+-                                     "f1478401ea4b3fa2ea196396be44315bab2bb5e4")
++        self.kernel_path = self.ASSET_KERNEL.fetch()
++        self.rootfs = self.ASSET_ROOTFS.fetch()
+ 
+     def run_and_check(self):
+         self.vm.add_args('-kernel', self.kernel_path,
+@@ -79,10 +73,11 @@ def run_and_check(self):
+         console_pattern = 'Starting dropbear sshd: OK'
+         wait_for_console_pattern(self, console_pattern, 'Oops')
+         self.log.info('sshd ready')
+-        self.ssh_connect('root', '', False)
+ 
+-        self.ssh_command('cat /proc/cmdline')
+-        self.ssh_command('dmesg | grep -e "Grant table initialized"')
++        exec_command_and_wait_for_pattern(self, 'cat /proc/cmdline', 'xen')
++        exec_command_and_wait_for_pattern(self, 'dmesg | grep "Grant table"',
++                                          'Grant table initialized')
++        wait_for_console_pattern(self, '#', 'Oops')
+ 
+     def test_kvm_xen_guest(self):
+         """
+@@ -94,7 +89,9 @@ def test_kvm_xen_guest(self):
+         self.kernel_params = (self.KERNEL_DEFAULT +
+                               ' xen_emul_unplug=ide-disks')
+         self.run_and_check()
+-        self.ssh_command('grep xen-pirq.*msi /proc/interrupts')
++        exec_command_and_wait_for_pattern(self,
++                                'grep xen-pirq.*msi /proc/interrupts',
++                                'virtio0-output')
+ 
+     def test_kvm_xen_guest_nomsi(self):
+         """
+@@ -106,7 +103,9 @@ def test_kvm_xen_guest_nomsi(self):
+         self.kernel_params = (self.KERNEL_DEFAULT +
+                               ' xen_emul_unplug=ide-disks pci=nomsi')
+         self.run_and_check()
+-        self.ssh_command('grep xen-pirq.* /proc/interrupts')
++        exec_command_and_wait_for_pattern(self,
++                                'grep xen-pirq.* /proc/interrupts',
++                                'virtio0')
+ 
+     def test_kvm_xen_guest_noapic_nomsi(self):
+         """
+@@ -118,7 +117,9 @@ def test_kvm_xen_guest_noapic_nomsi(self):
+         self.kernel_params = (self.KERNEL_DEFAULT +
+                               ' xen_emul_unplug=ide-disks noapic pci=nomsi')
+         self.run_and_check()
+-        self.ssh_command('grep xen-pirq /proc/interrupts')
++        exec_command_and_wait_for_pattern(self,
++                                'grep xen-pirq /proc/interrupts',
++                                'virtio0')
+ 
+     def test_kvm_xen_guest_vapic(self):
+         """
+@@ -130,8 +131,13 @@ def test_kvm_xen_guest_vapic(self):
+         self.kernel_params = (self.KERNEL_DEFAULT +
+                               ' xen_emul_unplug=ide-disks')
+         self.run_and_check()
+-        self.ssh_command('grep xen-pirq /proc/interrupts')
+-        self.ssh_command('grep PCI-MSI /proc/interrupts')
++        exec_command_and_wait_for_pattern(self,
++                                'grep xen-pirq /proc/interrupts',
++                                'acpi')
++        wait_for_console_pattern(self, '#')
++        exec_command_and_wait_for_pattern(self,
++                                'grep PCI-MSI /proc/interrupts',
++                                'virtio0-output')
+ 
+     def test_kvm_xen_guest_novector(self):
+         """
+@@ -143,7 +149,9 @@ def test_kvm_xen_guest_novector(self):
+                               ' xen_emul_unplug=ide-disks' +
+                               ' xen_no_vector_callback')
+         self.run_and_check()
+-        self.ssh_command('grep xen-platform-pci /proc/interrupts')
++        exec_command_and_wait_for_pattern(self,
++                                'grep xen-platform-pci /proc/interrupts',
++                                'fasteoi')
+ 
+     def test_kvm_xen_guest_novector_nomsi(self):
+         """
+@@ -156,7 +164,9 @@ def test_kvm_xen_guest_novector_nomsi(self):
+                               ' xen_emul_unplug=ide-disks pci=nomsi' +
+                               ' xen_no_vector_callback')
+         self.run_and_check()
+-        self.ssh_command('grep xen-platform-pci /proc/interrupts')
++        exec_command_and_wait_for_pattern(self,
++                                'grep xen-platform-pci /proc/interrupts',
++                                'IO-APIC')
+ 
+     def test_kvm_xen_guest_novector_noapic(self):
+         """
+@@ -168,4 +178,9 @@ def test_kvm_xen_guest_novector_noapic(self):
+                               ' xen_emul_unplug=ide-disks' +
+                               ' xen_no_vector_callback noapic')
+         self.run_and_check()
+-        self.ssh_command('grep xen-platform-pci /proc/interrupts')
++        exec_command_and_wait_for_pattern(self,
++                                'grep xen-platform-pci /proc/interrupts',
++                                'XT-PIC')
++
++if __name__ == '__main__':
++    QemuSystemTest.main()
 -- 
 2.48.1
 
