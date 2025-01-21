@@ -4,80 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 31FBBC02182
-	for <qemu-devel@archiver.kernel.org>; Tue, 21 Jan 2025 04:42:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 98A08C02182
+	for <qemu-devel@archiver.kernel.org>; Tue, 21 Jan 2025 04:46:40 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ta65Z-0005NK-Kc; Mon, 20 Jan 2025 23:42:09 -0500
+	id 1ta69F-0006Fg-BS; Mon, 20 Jan 2025 23:45:57 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <npiggin@gmail.com>) id 1ta65Y-0005NB-Ir
- for qemu-devel@nongnu.org; Mon, 20 Jan 2025 23:42:08 -0500
-Received: from mail-pj1-x1035.google.com ([2607:f8b0:4864:20::1035])
+ (Exim 4.90_1) (envelope-from <npiggin@gmail.com>) id 1ta69D-0006FY-Id
+ for qemu-devel@nongnu.org; Mon, 20 Jan 2025 23:45:55 -0500
+Received: from mail-pl1-x62d.google.com ([2607:f8b0:4864:20::62d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <npiggin@gmail.com>) id 1ta65W-0002ML-Fm
- for qemu-devel@nongnu.org; Mon, 20 Jan 2025 23:42:08 -0500
-Received: by mail-pj1-x1035.google.com with SMTP id
- 98e67ed59e1d1-2f441904a42so9289041a91.1
- for <qemu-devel@nongnu.org>; Mon, 20 Jan 2025 20:42:06 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <npiggin@gmail.com>) id 1ta69C-0002sY-4G
+ for qemu-devel@nongnu.org; Mon, 20 Jan 2025 23:45:55 -0500
+Received: by mail-pl1-x62d.google.com with SMTP id
+ d9443c01a7336-2166651f752so119552155ad.3
+ for <qemu-devel@nongnu.org>; Mon, 20 Jan 2025 20:45:52 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1737434524; x=1738039324; darn=nongnu.org;
- h=in-reply-to:references:from:subject:cc:to:message-id:date
+ d=gmail.com; s=20230601; t=1737434751; x=1738039551; darn=nongnu.org;
+ h=in-reply-to:references:to:from:subject:cc:message-id:date
  :content-transfer-encoding:mime-version:from:to:cc:subject:date
  :message-id:reply-to;
- bh=8glFbR6c2NMBAqcRrLJz3z8ifrbgIlQ6nKk3F8oLF94=;
- b=hEJZ2sfwSAjqLVe2HxtfnmAQWXcGZUhv7z0hPgQW1FspXFGzAOScHDAQDn75RYqcDz
- wM914b2a2rz2Drqn9E18uyQaFpzQZWGZr3+Ai3UI5H4jwu5/mXBE4JLq2aZ75dnc10Xz
- Rh7jViHiQo0TXhLnhv9TphZYbKdhnZ7l0m+HeofSXNwO9l+38HGp/6QrkYJO29oL0vo9
- pKKvf7HEOnC2saS9CS/68Ah+iQ0Xqmzk98CVdr/Mebiv+4OxjOSAvxsx/VbHxwIB5f0U
- rlPuo0clt7oi3B5ppy4owjO/k9jQM104aVzCmRAZ2Hj3VRfttXX8J0laMSlSsKFtSt9m
- nlGw==
+ bh=a5UrDsofvNdKLkIEL5dqor1YT0QkeEsdgm1riDI9EX8=;
+ b=TBjONqJb3a4P9jvqKwIbgQ0BJWqnQLek1U/LxADEug/p2DL8pTuWiGHUpDMOmWfRP6
+ LijPWbidInP8nimaS9uFbw4DSlezIdyxKc863QFc/vRY2ezGxxfJi6SHnk12hjVSe/vS
+ A2zunQMyNTiuGiV+QV5BZfb2mJ+aWHYeEISS4ZYygGyEkd1RHEXPu+potFCGXipyYESx
+ r2Fct4G5VHtPGXnnKy/Pq7BcWAaK2Hs155JdFzgoNzD4X8K9/QszdPzV4/I8BMG41B91
+ GYECvI6SVrNx3bcj2Dzz8TtUy8296DVKfD6rWdarWFf+EAnSuDO6ZpBs5TZNtMNC+hvX
+ K9Ow==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1737434524; x=1738039324;
- h=in-reply-to:references:from:subject:cc:to:message-id:date
+ d=1e100.net; s=20230601; t=1737434751; x=1738039551;
+ h=in-reply-to:references:to:from:subject:cc:message-id:date
  :content-transfer-encoding:mime-version:x-gm-message-state:from:to
  :cc:subject:date:message-id:reply-to;
- bh=8glFbR6c2NMBAqcRrLJz3z8ifrbgIlQ6nKk3F8oLF94=;
- b=wjP0/iNhN5UtltSfVivSylbVMh8jxFmT/16S9/+mOj39ghXeGnkVNsZvQ4MlbjAobN
- n7lpIqIFD/CzrgUIEp2awNmmstfI3wigF8O6F/S8dqKK2fyeupAOW1pEmvXyt7nZRaQN
- KeXARrWi0mdpKzTl/XTRzwaPqtf1m/cFjZepVf/XAkV42HQo9DuyVTkdLGgoJ3gOHzfG
- PcyWE4usf5a9uc2G00Vpb8bZmWpXu0ONPCxrrRtE1ySvK0AwmCdliE+hTC5TEmcPghlU
- 7ayuNDC2EYNIVumLoOZcRoHESvxipNEky8KhvcjdvZO6h6xHq4ZV87XrLuBOvCCumbnF
- ECOw==
-X-Forwarded-Encrypted: i=1;
- AJvYcCWGbGM3roHUCbj3eaH8QnrJJ0lGGx3YK58KWqzMtxEBldfXVapVxSey33fVlReoNXsZtGwu7SVxF0bp@nongnu.org
-X-Gm-Message-State: AOJu0YwoTYLddt5C2yzEENlaRPfSQ5ZT7pu+iJ5qmFUY6bDUYhnFnp6f
- 5R3Y24ePDi/kKWBPReTjXDGStLF+89LxzQf0xYOCI6VBt7Fsd77s
-X-Gm-Gg: ASbGncs21yz7j3CM5atKNGBEz2AJjqVqx5kitmxOVLMP3gPlw6cUjVc6gkT3yH61aIi
- X6/aSwAcwGmmsJVrrrlBXNUDCZofRnwl0FzM9lGUBtQkY7aj0ntsjYv7nu9Q18BwEuIXcj/zn/R
- H/m7SkQvu1HwyrJCDU0LfxRTvj2TXGQEIAPFBoo7CfcUlJ9SwmQi5MJ51IZGJzitpBST96PSPMw
- W9wND5fyVewR/XYFJg68Ga6F8caqXNdjQtEtnYUhcVT6L2wsAger/Hyt4ZaFAay
-X-Google-Smtp-Source: AGHT+IEKKo9pl9qr7gU0Q+OYtdAjVuVxKF48KYXt4h552YOXqnLUD81k45za2C10xHKLgc8IQxVFiw==
-X-Received: by 2002:a17:90b:2c83:b0:2f2:a664:df20 with SMTP id
- 98e67ed59e1d1-2f782c6750cmr25846772a91.7.1737434523882; 
- Mon, 20 Jan 2025 20:42:03 -0800 (PST)
+ bh=a5UrDsofvNdKLkIEL5dqor1YT0QkeEsdgm1riDI9EX8=;
+ b=p2Mv/x4PGQgwItqkUZdCfKJQ55IIE2R7G+8dF5rvGsIn9ba3Y/WXdMuth0F4fIVjHZ
+ agazjGqcq9d7YT2BU+HXjrbps4koLe0m/yJ+WMNuENt1DueV3Rm/q6MdyVWxpWO8WXrp
+ ZLUfNNHDRTtoX1Ku1jgjRqGHGvGXZlBXzNtjwMByCX56Fcn/BfahjcrZEzDDGKBp/qAj
+ UQANgHHWUPB+U+drGYWW9G5g4th8StfqoeQofYK2VuyJ3uYQ3REV1E7EfT7Yh2lcKpv+
+ tb2Yh6Yh+VzR74PTFNGWiYvbwO/KSTD0hFeGB3fG6BAODCwOO0aNDH8sqfwdlGIjcv6n
+ m2Bw==
+X-Gm-Message-State: AOJu0YzU8vkaz6mW2BXKfQqW9Wwe1Hz3fiyElXoYUzp3u7MObedecgUp
+ cJ7blsnUnxTGMJc3lJFMoHJ2pVNN1xx8WnKtE0yJQLeKCCY9J99s
+X-Gm-Gg: ASbGnculM6srqqUazuIAhsDaGSikzBV7QhgFVSRn678YmDXxNZclOQ3ujyBpIevW3qP
+ 7WpdIDj9UQeQaqDk3VfigS60MgVpJZXp/f/HOQ6FBnWei/A9Wn47qO8ObMSf101xbH3pbmqTCu1
+ dOqKoSfjo+p12mqGbgcJOCfJvO5NZSKycuod1grFqQh+K781zdDHuLm74kz6b884pDuW0bt71au
+ Z5QKLCLCGMNfekCyMUHNAXbversLoEVbCZ77RPiWpnc9ANDgLNbmkLa6tkO3PLL
+X-Google-Smtp-Source: AGHT+IFhTdPegaLi1bDHe7EiajeY4GYnrl6Tx+4Sfn8KEggh5QEAy9k/Mb97/VQBF5fuqWqElsBoWQ==
+X-Received: by 2002:a17:902:e88f:b0:216:48f4:4f20 with SMTP id
+ d9443c01a7336-21c3551437emr225347605ad.16.1737434750976; 
+ Mon, 20 Jan 2025 20:45:50 -0800 (PST)
 Received: from localhost ([138.44.251.158]) by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-2f72c2f31d6sm11739747a91.40.2025.01.20.20.41.49
+ d9443c01a7336-21c2d3a9000sm68479655ad.118.2025.01.20.20.45.33
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 20 Jan 2025 20:42:03 -0800 (PST)
+ Mon, 20 Jan 2025 20:45:50 -0800 (PST)
 Mime-Version: 1.0
 Content-Transfer-Encoding: quoted-printable
 Content-Type: text/plain; charset=UTF-8
-Date: Tue, 21 Jan 2025 14:41:45 +1000
-Message-Id: <D77H4P297PKY.25UZ63LQ3915T@gmail.com>
-To: "Phil Dennis-Jordan" <lists@philjordan.eu>
-Cc: "Michael S . Tsirkin" <mst@redhat.com>, "Marcel Apfelbaum"
- <marcel.apfelbaum@gmail.com>, <qemu-devel@nongnu.org>
-Subject: Re: [PATCH 2/2] hw/pci: Assert a bar is not registered multiple times
+Date: Tue, 21 Jan 2025 14:45:27 +1000
+Message-Id: <D77H7J5KX2NC.1A25FAUCNO1BV@gmail.com>
+Cc: <qemu-devel@nongnu.org>, "Dmitry Fleytman" <dmitry.fleytman@gmail.com>,
+ "Akihiko Odaki" <akihiko.odaki@daynix.com>, "Jason Wang"
+ <jasowang@redhat.com>, "Sriram Yagnaraman"
+ <sriram.yagnaraman@ericsson.com>, "Fabiano Rosas" <farosas@suse.de>,
+ "Laurent Vivier" <lvivier@redhat.com>, "Paolo Bonzini"
+ <pbonzini@redhat.com>
+Subject: Re: [PATCH 3/9] qtest/e1000e|igb: assert irqs are clear before
+ triggering an irq
 From: "Nicholas Piggin" <npiggin@gmail.com>
+To: "Yan Vugenfirer" <yvugenfi@redhat.com>
 X-Mailer: aerc 0.19.0
-References: <20250117172842.406338-1-npiggin@gmail.com>
- <20250117172842.406338-3-npiggin@gmail.com>
- <CAGCz3vtDjaVnWbnZdKQSEReoWdtrMpyJGVkzXu4Q8XaVPYciFw@mail.gmail.com>
-In-Reply-To: <CAGCz3vtDjaVnWbnZdKQSEReoWdtrMpyJGVkzXu4Q8XaVPYciFw@mail.gmail.com>
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1035;
- envelope-from=npiggin@gmail.com; helo=mail-pj1-x1035.google.com
+References: <20250117170306.403075-1-npiggin@gmail.com>
+ <20250117170306.403075-4-npiggin@gmail.com>
+ <CAGoVJZxkm_zj7RPBs9Lk3tpgYfzNi9UdsVOKsDibGZ98i+Ddew@mail.gmail.com>
+In-Reply-To: <CAGoVJZxkm_zj7RPBs9Lk3tpgYfzNi9UdsVOKsDibGZ98i+Ddew@mail.gmail.com>
+Received-SPF: pass client-ip=2607:f8b0:4864:20::62d;
+ envelope-from=npiggin@gmail.com; helo=mail-pl1-x62d.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -100,55 +103,67 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Sun Jan 19, 2025 at 8:38 PM AEST, Phil Dennis-Jordan wrote:
-> Looks good to me. There is a risk here that the assertion will fail on
-> existing code. (Unless you've rigorously audited all callers, which would
-> be quite the task.) However, I agree that this would constitute a bug in
-> the calling code, not an issue with this change. Since we've still got a
-> few months left in the 10.0 release cycle, I say go for it - hopefully su=
-ch
-> bugs, if there are any, will be shaken out over the next few weeks.
+On Sun Jan 19, 2025 at 7:22 PM AEST, Yan Vugenfirer wrote:
+> On Fri, Jan 17, 2025 at 7:05=E2=80=AFPM Nicholas Piggin <npiggin@gmail.co=
+m> wrote:
+>
+>> Assert there is no existing irq raised that would lead to a false
+>> positive interrupt test.
+>>
+>> e1000e has to disable interrupt throttling for this test, because
+>> it can cause delayed superfluous interrupts which trip the assertions.
+>>
+>> Signed-off-by: Nicholas Piggin <npiggin@gmail.com>
+>> ---
+>>  tests/qtest/libqos/e1000e.h |  1 +
+>>  tests/qtest/e1000e-test.c   | 10 ++++++++++
+>>  tests/qtest/igb-test.c      |  6 ++++++
+>>  tests/qtest/libqos/e1000e.c |  9 ++++++++-
+>>  4 files changed, 25 insertions(+), 1 deletion(-)
+>>
+>> diff --git a/tests/qtest/libqos/e1000e.h b/tests/qtest/libqos/e1000e.h
+>> index 30643c80949..7154aec0339 100644
+>> --- a/tests/qtest/libqos/e1000e.h
+>> +++ b/tests/qtest/libqos/e1000e.h
+>> @@ -54,6 +54,7 @@ static inline uint32_t e1000e_macreg_read(QE1000E *d,
+>> uint32_t reg)
+>>      return qpci_io_readl(&d_pci->pci_dev, d_pci->mac_regs, reg);
+>>  }
+>>
+>> +bool e1000e_seen_isr(QE1000E *d, uint16_t msg_id);
+>>  void e1000e_wait_isr(QE1000E *d, uint16_t msg_id);
+>>  void e1000e_tx_ring_push(QE1000E *d, void *descr);
+>>  void e1000e_rx_ring_push(QE1000E *d, void *descr);
+>> diff --git a/tests/qtest/e1000e-test.c b/tests/qtest/e1000e-test.c
+>> index 746d26cfb67..9ab81ecff5b 100644
+>> --- a/tests/qtest/e1000e-test.c
+>> +++ b/tests/qtest/e1000e-test.c
+>> @@ -61,6 +61,9 @@ static void e1000e_send_verify(QE1000E *d, int
+>> *test_sockets, QGuestAllocator *a
+>>                                     E1000_TXD_DTYP_D   |
+>>                                     sizeof(buffer));
+>>
+>> +    /* Ensure the interrupt has not been taken already */
+>> +    g_assert(!e1000e_seen_isr(d, E1000E_TX0_MSG_ID));
+>> +
+>>      /* Put descriptor to the ring */
+>>      e1000e_tx_ring_push(d, &descr);
+>>
+>> @@ -105,6 +108,9 @@ static void e1000e_receive_verify(QE1000E *d, int
+>> *test_sockets, QGuestAllocator
+>>      char buffer[64];
+>>      int ret;
+>>
+>> +    /* Ensure the interrupt has not been taken already */
+>> +    g_assert(!e1000e_seen_isr(d, E1000E_RX0_MSG_ID));
+>> +
+>>
+> I don't think potentially crashing the guest is the right solution.
+> I suggest maybe substituting with logging.
 
-You're right I didn't do an exhaustive audit or test beyond CI and some
-browsing. I think it would be quite buggy already if this happens so we
-should just catch and fix it quickly, but happy to change to a warning
-first if anybody is concerned.
+This is just for qtest where assertions are used to indicate
+failure.
 
 Thanks,
 Nick
-
->
-> On Fri, 17 Jan 2025 at 18:29, Nicholas Piggin <npiggin@gmail.com> wrote:
->
->> Nothing should be doing this, but it doesn't get caught by
->> pci_register_bar(). Add an assertion to prevent misuse.
->>
->> Signed-off-by: Nicholas Piggin <npiggin@gmail.com>
->>
-> Reviewed-by: Phil Dennis-Jordan <phil@philjordan.eu>
->
->
->> ---
->>  hw/pci/pci.c | 1 +
->>  1 file changed, 1 insertion(+)
->>
->> diff --git a/hw/pci/pci.c b/hw/pci/pci.c
->> index 2afa423925c..b067a55c5bc 100644
->> --- a/hw/pci/pci.c
->> +++ b/hw/pci/pci.c
->> @@ -1391,6 +1391,7 @@ void pci_register_bar(PCIDevice *pci_dev, int
->> region_num,
->>      assert(hdr_type !=3D PCI_HEADER_TYPE_BRIDGE || region_num < 2);
->>
->>      r =3D &pci_dev->io_regions[region_num];
->> +    assert(!r->size);
->>      r->addr =3D PCI_BAR_UNMAPPED;
->>      r->size =3D size;
->>      r->type =3D type;
->> --
->> 2.45.2
->>
->>
->>
-
 
