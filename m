@@ -4,85 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BA1CFC0218B
-	for <qemu-devel@archiver.kernel.org>; Tue, 21 Jan 2025 16:19:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BDBD6C0218B
+	for <qemu-devel@archiver.kernel.org>; Tue, 21 Jan 2025 16:21:03 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1taGxZ-0000QU-6s; Tue, 21 Jan 2025 11:18:37 -0500
+	id 1taGzp-0004Xx-Vf; Tue, 21 Jan 2025 11:20:57 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1taGxU-0000Nd-K1
- for qemu-devel@nongnu.org; Tue, 21 Jan 2025 11:18:32 -0500
-Received: from mail-wm1-x333.google.com ([2a00:1450:4864:20::333])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1taGzo-0004Xo-LH
+ for qemu-devel@nongnu.org; Tue, 21 Jan 2025 11:20:56 -0500
+Received: from mail-wr1-x42e.google.com ([2a00:1450:4864:20::42e])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1taGxS-000609-Kl
- for qemu-devel@nongnu.org; Tue, 21 Jan 2025 11:18:31 -0500
-Received: by mail-wm1-x333.google.com with SMTP id
- 5b1f17b1804b1-43621d27adeso40350745e9.2
- for <qemu-devel@nongnu.org>; Tue, 21 Jan 2025 08:18:30 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1taGzl-0006Ur-6W
+ for qemu-devel@nongnu.org; Tue, 21 Jan 2025 11:20:56 -0500
+Received: by mail-wr1-x42e.google.com with SMTP id
+ ffacd0b85a97d-388cae9eb9fso3359420f8f.3
+ for <qemu-devel@nongnu.org>; Tue, 21 Jan 2025 08:20:52 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1737476309; x=1738081109; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=4AQT8m8tl5nDLX+ETLTSG96DbyWQcasjgSWfLcAwrhg=;
- b=bQ+0j9EPkOxrwWI0iG8ILlSOQOO6MEezvOWBdCTEvDx2MfCk3nhFgbPH/blP7D2XUn
- HjI43qUl6VlIM8zY0opQDdPVSlAYjbVfeDp4ge7DUW2JBiXwjNN4RJxLxh52eJZIAGuA
- ULeLO44SrMl8q035e7y2+KYLLL06RDfUy7d/3xQXwZ7ltK/3fkGWOw2u1X3BTLyEdb6M
- kg7NVwlGImNF0TWUhmSre5D1dq5Y+9lp8ll5DOvmALb4iS5/SQX/2ZXVOi0yvrjcmUmY
- O0m/+SXtfu4MUncvDAHJzz5om2hpJ1DCv2C19GSZ+IAjiMSQSQlQ1shCY0ejN0JaI2Bm
- ssHQ==
+ d=linaro.org; s=google; t=1737476450; x=1738081250; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=pgwdjm2nJReyF3nS0TDyR7sO7kIF8PaKpe296SJ6F1Q=;
+ b=IZzm7kRxRh+yVUOG+UfVkDaNaa9AXdk7BjFUZHStw0ctm++LHDuC6W1VhyRQI0giEO
+ US4HKIYjCC6gQAxgeA/M6AdXsLZSC5gEZgBAzHQMvpWS/UN+E3YpAo90zBa77ghccGDY
+ N6ACLpE+OMWVA6lF3D/HijSfTqQoMjt4LFJ8JMa8jc+K1J++ugJAaH8d2PmNbjabLD/U
+ CfJDnOi/q+m8Vo4iDGkWHDIy3vwX0pCmAJqmRDG1r2yEEXdgs2mLAFPTrD3vs13QXzQ8
+ aAnGSd0br1wlYhfldVtHhlLV/Fana8ZKhqk1kcxKabv1JE/aEjWlMLrsBrNlU2qOUvBp
+ bg/w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1737476309; x=1738081109;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=4AQT8m8tl5nDLX+ETLTSG96DbyWQcasjgSWfLcAwrhg=;
- b=ntnwGaAgsVDdL2HC6kJvh7IsIIVGetgMMmyJjIrBXisMBhr/BHSaVW4MJMbVzj874f
- r4unWkXbvwvIquSA0PSTGnF6ws5JGhd+YdCq03LpGBPLVeVrqshgGzIIk4r5DjPhV/PA
- fxN5VCVzQgiXRk+TIrjqvMiHb+SU5xLtcjuali1Je+Zn3QZyfmc7NS9+pgomvg5wXxTw
- m7znswO7bIHLjsGQ2cIanJ0FfsPPsQWlpqd83ivS04i4pcfQTDhRxlDp4Biqz1906BHR
- WyOwwO3M7NTKd/ex+jY6LurqBd0UYwsb03c922nbuhogj8Ez77q9eXwC61CGntkfmFD3
- OjRg==
-X-Gm-Message-State: AOJu0YwrGnpYeUyffDRgXH8HOxACoFVBwx8A3JsgeBjjdXDOVAUp1Ibc
- XGil54YTQFMI6Wvfx5foAkk17ql7lpVKmzOmxu4Rh+3T6Nt9mALy8X6jZq2T+HlP8e+AHPSMlt8
- Cl+4=
-X-Gm-Gg: ASbGnctsb1cLzx3iZEzzmqG/OPS59saXkiqLnZkVc09f+qyxpBOKrnkp6jKCybMzeZY
- n3XRNGIMAhVfdMNs4xxvRKV8ku5wvvxfW8hCDjmF4OUGc0SEkCBRgqLpXsfjI6CxhEr8GFjJDxW
- qGVhwAiau0y6oT3sJWWR1u5xf//DyZoAG1R3GGTA8/rKmDd3IVyVETWSIYCY2ZfJYmQLMB9/7i/
- nA0ZAAmU1/lKi/yDmUGjrmVw08d3B8C7e2brLl0EsBe6Ogv2kMAaXpn1LnPnA2TGDH3QV4tYJBn
- w9PfDvmMDPdhQpU1A5rQLiXqUrL03PUclNCAEaVDoqUB
-X-Google-Smtp-Source: AGHT+IGxC/Y3dOIvCvZZz1/tVy6LDHduH8KEbQ/91AQXvuWOks2izhVM+gNaeze66ac0fs1klldjWg==
-X-Received: by 2002:a05:6000:1a8c:b0:38a:888c:6786 with SMTP id
- ffacd0b85a97d-38bf57c063fmr16833268f8f.52.1737476308711; 
- Tue, 21 Jan 2025 08:18:28 -0800 (PST)
-Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
+ d=1e100.net; s=20230601; t=1737476450; x=1738081250;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=pgwdjm2nJReyF3nS0TDyR7sO7kIF8PaKpe296SJ6F1Q=;
+ b=Vo/9tqnUHFQiXAulBX9NgY/5A93KxdzPAVdMAahy4/gTYkF+8bvhVQ+FnI0jC2Q1tt
+ 1u46rD48+qxPPcGja3lt/zo+nTwFlsraZAV3Qf5v9fEmLUDrWWT/xBtQ6awQSujpLRxp
+ Dnn/oPBjmgsapoWPtl+GNRBIT31Fm4WCTI2dEQlnRGh1RTduTtatPnZdTgaX+3xL3Na+
+ TlWTlfJpmuhYeBlCZlFnqOHXtzuZyTfY/z2gqDHb3/AuKmu+XiW72Icr86fH9sgViNbN
+ ibkKbU4w/dPVcF9zwL91YX/mpz+ZxdR/LhKrnBy4hRxFIDAZcASVtBZEu9Z+I7ntu29v
+ KgeQ==
+X-Gm-Message-State: AOJu0YznRkACjOeo632ULl0XaU/7ERFt+u1ISndVgeSgA7e7QaUPG7VK
+ uNov1ilyrlR2FsbOQ2SCtReam0KOQ7oIj4EqulY8M5b49KypZ8+tW27NXc7NWbB1CdeBoD7+Tkw
+ jiJc=
+X-Gm-Gg: ASbGnctntDBVkwY3HgtRgX4vqJtbXcbsKyB8nIY2GmlkhQMd78JknuauBlekMUh6nha
+ JggBZzH7+af/YCPmsP79vSRJtmC5VXPp4VWVUQ/A0X4O1jqaLV3W28F65ITEv5AiwWKHuuuZn56
+ LqJGTw7nHJrIRmnzTwqW2mT+Ai9v5Nh/LNJ4sIJf5h64AtMiZa/YTpz/3crFW42guRfobVDXVVm
+ jBku0liV8urulgUf0zH+n5PuGpBtsWMQPLQbMbJI8fAACutEIy/ehStYRahIPcyWsClBoI4NtXv
+ yuffQElRasNWyQBT0/sgGVPuOiNwNy2mbkh/Ew==
+X-Google-Smtp-Source: AGHT+IEa02otuzbntMQsXRNrG0hR05yb/ys5LPuTVO4Lf5kEngwWiEE9uUFC7VoFrUmSg61FgZxW0Q==
+X-Received: by 2002:a05:6000:4026:b0:385:e8b0:df13 with SMTP id
+ ffacd0b85a97d-38bf57a9569mr19274894f8f.40.1737476450527; 
+ Tue, 21 Jan 2025 08:20:50 -0800 (PST)
+Received: from [192.168.69.181] (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-38bf322aa0asm14022691f8f.50.2025.01.21.08.18.27
- (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Tue, 21 Jan 2025 08:18:28 -0800 (PST)
-From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-To: qemu-devel@nongnu.org
-Cc: =?UTF-8?q?Herv=C3=A9=20Poussineau?= <hpoussin@reactos.org>,
- Aleksandar Rikalo <arikalo@gmail.com>,
- Jiaxun Yang <jiaxun.yang@flygoat.com>,
- Bernhard Beschow <shentey@gmail.com>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Huacai Chen <chenhuacai@kernel.org>, Aurelien Jarno <aurelien@aurel32.net>,
- Richard Henderson <richard.henderson@linaro.org>
-Subject: [PATCH 2/6] target/mips: Create clock *after* accelerator vCPU is
- realized
-Date: Tue, 21 Jan 2025 17:18:13 +0100
-Message-ID: <20250121161817.33654-3-philmd@linaro.org>
-X-Mailer: git-send-email 2.47.1
-In-Reply-To: <20250121161817.33654-1-philmd@linaro.org>
-References: <20250121161817.33654-1-philmd@linaro.org>
+ ffacd0b85a97d-38bf3214d62sm13587734f8f.1.2025.01.21.08.20.49
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Tue, 21 Jan 2025 08:20:50 -0800 (PST)
+Message-ID: <7ad57755-90e7-41cf-a9b4-48827e096f60@linaro.org>
+Date: Tue, 21 Jan 2025 17:20:49 +0100
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 6/6] target/mips: Allocate CPU IRQs within CPUMIPSState
+To: qemu-devel@nongnu.org
+Cc: =?UTF-8?Q?Herv=C3=A9_Poussineau?= <hpoussin@reactos.org>,
+ Aleksandar Rikalo <arikalo@gmail.com>, Jiaxun Yang
+ <jiaxun.yang@flygoat.com>, Bernhard Beschow <shentey@gmail.com>,
+ Huacai Chen <chenhuacai@kernel.org>, Aurelien Jarno <aurelien@aurel32.net>
+References: <20250121161817.33654-1-philmd@linaro.org>
+ <20250121161817.33654-7-philmd@linaro.org>
+Content-Language: en-US
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <20250121161817.33654-7-philmd@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::333;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x333.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::42e;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x42e.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -105,63 +103,61 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Architecture specific hardware doesn't have a particular dependency
-on the accelerator vCPU (created with cpu_exec_realizefn), and can
-be initialized *after* the vCPU is realized.
+On 21/1/25 17:18, Philippe Mathieu-Daudé wrote:
+> There are always 8 IRQs created with a MIPS CPU.
+> Allocate their state once in CPUMIPSState, initialize
+> them in place in cpu_mips_irq_init_cpu(). Update hw/ uses.
+> 
+> Move cpu_mips_irq_init_cpu() declaration from "cpu.h"
+> to "internal.h", as it shouldn't be accessible from hw/.
+> 
+> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+> ---
+>   target/mips/cpu.h               |  4 ++--
+>   target/mips/internal.h          |  2 ++
+>   hw/intc/mips_gic.c              |  4 ++--
+>   hw/mips/fuloong2e.c             |  4 ++--
+>   hw/mips/jazz.c                  |  6 +++---
+>   hw/mips/loongson3_virt.c        |  4 ++--
+>   hw/mips/malta.c                 |  4 ++--
+>   hw/mips/mipssim.c               |  4 ++--
+>   target/mips/system/cp0_timer.c  |  4 ++--
+>   target/mips/system/interrupts.c | 11 +++--------
+>   10 files changed, 22 insertions(+), 25 deletions(-)
+> 
+> diff --git a/target/mips/cpu.h b/target/mips/cpu.h
+> index e5767ea9cf3..25a19b61913 100644
+> --- a/target/mips/cpu.h
+> +++ b/target/mips/cpu.h
+> @@ -8,6 +8,7 @@
+>   #endif
+>   #include "fpu/softfloat-types.h"
+>   #include "hw/clock.h"
+> +#include "hw/irq.h"
+>   #include "mips-defs.h"
+>   
+>   typedef struct CPUMIPSTLBContext CPUMIPSTLBContext;
+> @@ -1177,7 +1178,7 @@ typedef struct CPUArchState {
+>       CPUMIPSMVPContext *mvp;
+>   #if !defined(CONFIG_USER_ONLY)
+>       CPUMIPSTLBContext *tlb;
+> -    qemu_irq irq[8];
+> +    IRQState irq[8];
+>       MemoryRegion *itc_tag; /* ITC Configuration Tags */
 
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
----
- target/mips/cpu.c | 28 ++++++++++++++--------------
- 1 file changed, 14 insertions(+), 14 deletions(-)
 
-diff --git a/target/mips/cpu.c b/target/mips/cpu.c
-index 0b3ac4e60a3..028a3c91afb 100644
---- a/target/mips/cpu.c
-+++ b/target/mips/cpu.c
-@@ -462,20 +462,6 @@ static void mips_cpu_realizefn(DeviceState *dev, Error **errp)
-     MIPSCPUClass *mcc = MIPS_CPU_GET_CLASS(dev);
-     Error *local_err = NULL;
- 
--    if (!clock_get(cpu->clock)) {
--#ifndef CONFIG_USER_ONLY
--        if (!qtest_enabled()) {
--            g_autofree char *cpu_freq_str = freq_to_str(CPU_FREQ_HZ_DEFAULT);
--
--            warn_report("CPU input clock is not connected to any output clock, "
--                        "using default frequency of %s.", cpu_freq_str);
--        }
--#endif
--        /* Initialize the frequency in case the clock remains unconnected. */
--        clock_set_hz(cpu->clock, CPU_FREQ_HZ_DEFAULT);
--    }
--    mips_cp0_period_set(cpu);
--
-     cpu_exec_realizefn(cs, &local_err);
-     if (local_err != NULL) {
-         error_propagate(errp, local_err);
-@@ -490,6 +476,20 @@ static void mips_cpu_realizefn(DeviceState *dev, Error **errp)
-     fpu_init(env, env->cpu_model);
-     mvp_init(env);
- 
-+    if (!clock_get(cpu->clock)) {
-+#ifndef CONFIG_USER_ONLY
-+        if (!qtest_enabled()) {
-+            g_autofree char *cpu_freq_str = freq_to_str(CPU_FREQ_HZ_DEFAULT);
-+
-+            warn_report("CPU input clock is not connected to any output clock, "
-+                        "using default frequency of %s.", cpu_freq_str);
-+        }
-+#endif
-+        /* Initialize the frequency in case the clock remains unconnected. */
-+        clock_set_hz(cpu->clock, CPU_FREQ_HZ_DEFAULT);
-+    }
-+    mips_cp0_period_set(cpu);
-+
-     cpu_reset(cs);
-     qemu_init_vcpu(cs);
- 
--- 
-2.47.1
+> diff --git a/hw/mips/fuloong2e.c b/hw/mips/fuloong2e.c
+> index 9a638f596bd..ccebc56adec 100644
+> --- a/hw/mips/fuloong2e.c
+> +++ b/hw/mips/fuloong2e.c
+> @@ -278,7 +278,7 @@ static void mips_fuloong2e_init(MachineState *machine)
+>       }
+>   
+>       /* North bridge, Bonito --> IP2 */
+> -    pci_bus = bonito_init(env->irq[2]);
+> +    pci_bus = bonito_init(&env->irq[2]);
+
+Orthogonal, but thinking of heterogeneous emulation, at some point
+we'll need to expose vCPU IRQs as QDev GPIO.
 
 
