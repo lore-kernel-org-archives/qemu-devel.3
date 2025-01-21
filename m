@@ -4,92 +4,94 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 76C0CC0218C
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 624ECC0218B
 	for <qemu-devel@archiver.kernel.org>; Tue, 21 Jan 2025 15:48:03 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1taGTP-0007FD-Js; Tue, 21 Jan 2025 10:47:27 -0500
+	id 1taGTU-0007GK-N0; Tue, 21 Jan 2025 10:47:32 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1taGTF-0007EQ-SI
- for qemu-devel@nongnu.org; Tue, 21 Jan 2025 10:47:22 -0500
-Received: from mail-pl1-x62e.google.com ([2607:f8b0:4864:20::62e])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1taGTD-0000Xj-R6
- for qemu-devel@nongnu.org; Tue, 21 Jan 2025 10:47:17 -0500
-Received: by mail-pl1-x62e.google.com with SMTP id
- d9443c01a7336-21a7ed0155cso93486355ad.3
- for <qemu-devel@nongnu.org>; Tue, 21 Jan 2025 07:47:15 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1737474434; x=1738079234; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=PsRphco2/yF7/RPpBLBla6FWBK7HFRFdg3GEMcsicCo=;
- b=pD0Kk7IzS00jpvYT1SiT8A35on3O76Et/oz4K9A5zIyJWDwko2+Y3JPMdQySl/gTSM
- c39gEiJxksz54PrFKa5iVGeq2hyKkL+OOrgK3IKI+gsHFTfhcvGZlQOaP1T8cQyf/Ibq
- pxWlFuxJw9hYeFkA3VZkBOGJ1AfHONUR7k7gO0qE4mVMgr6/GWiv8tBmLD8MsB71UJZL
- SM+BjrewBaud8nA3Hob7yZ6LRPlao0ivpqd6+E5VDQpN8RJKVEsYa3H7EZl9kfIl1G5X
- JmBC0sckRKYP3EMXZF+6ejaaUKLVUpPHIlfjI2gYT+CZc+BgeQ8UzqR8Eoj7uV8dLgVn
- X26A==
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1taGTS-0007Fd-Cr
+ for qemu-devel@nongnu.org; Tue, 21 Jan 2025 10:47:31 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1taGTQ-0000Yl-J4
+ for qemu-devel@nongnu.org; Tue, 21 Jan 2025 10:47:30 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1737474446;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=Pua/xHaxlZNyBjM1rG1Z4O+pGX8GF2uIul3GOSxD72s=;
+ b=D5CgMvGkHdOzIjsLrJXdA30x+QI+xnSeeA8HyVNPMTR18NaxShCbWtjHUzYYhfhnh+6jLt
+ CI8FYpGpXlbWZLeNBTXpc0fT91t6vVcyAxTSTP+q8ntAxhPzgHLan5CRJgkdT9t0IoI5nc
+ T7eNSoiu11CFcyngodQX+j0cM5vYgJk=
+Received: from mail-qk1-f197.google.com (mail-qk1-f197.google.com
+ [209.85.222.197]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-677-pIYdQT5IMsmHosgk9GLGjg-1; Tue, 21 Jan 2025 10:47:23 -0500
+X-MC-Unique: pIYdQT5IMsmHosgk9GLGjg-1
+X-Mimecast-MFC-AGG-ID: pIYdQT5IMsmHosgk9GLGjg
+Received: by mail-qk1-f197.google.com with SMTP id
+ af79cd13be357-7b6e9fb0436so1739917285a.0
+ for <qemu-devel@nongnu.org>; Tue, 21 Jan 2025 07:47:23 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1737474434; x=1738079234;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=PsRphco2/yF7/RPpBLBla6FWBK7HFRFdg3GEMcsicCo=;
- b=Ozy/feKr7xLC2Ljst9ilZGnUWb8GuNTWPZrX31M9mseKgkgdRrUe6rTkQnSilYzkCK
- WZ7+htWgy1WfEAyTTgoUIwlwY5sBc3aimBaLMc6IIHYL9b9Qh0QUh8TDea4C0JUYtYBl
- rvXlc0cI4BhuT0mbuJor/nC220Khe8WFgjNEsx6kA7vEdr4dDVe+np+ecCYFH3jv6wqY
- 6bzfwhABpAIpNEjMw+Ine3PH4FRJsASHYFL5sFvLqOR9POInGJv9lWcTPCwMaa0q9uYd
- 1+NPBAeCX3RGFPKZXAvD30oR0Ftn75ud8qbVdUedUijuzaSdp2Bzb5qLXZyiBdNZb/VX
- fo6A==
-X-Forwarded-Encrypted: i=1;
- AJvYcCXtHdHaPUrI1d5ORa7AfTK1tSCW3uwPG/6q4vwnbhZMva3Hq73fI/FgetWaKxgLPw6FbrWlfJQvNWwL@nongnu.org
-X-Gm-Message-State: AOJu0YxUieXYuMH9JBigLPgjo6zFaTQSfwdh9pk/pWFBCiy+ltma9A3i
- q9BFRWNUfnMO02SsFOdE2vx1MSx8NeMN7zXO/NvpBt19uZTjN1VBFa9UHgtckog=
-X-Gm-Gg: ASbGnctsViTx//0ACNKRfHzWAQHsJ3lHp/Lg8EjkB+xnO1eufWlqksZmLqvnZXHUv4s
- yANw0T1M+LSb5nhD8GLyRQEss9A52GKGF3pChArhKXNZ83WSiW76b1tJc2kDZpbXCekQGvfr/1j
- 4lkLUHck9/35byDN4Rezcb22knrq8X+njkQBwh5/vMnc8emyFagybjGa07UUgBdtvP9AcVPIrzk
- jc+Gl1TQyAMQ6kOsCG6NmUFsbjBGOSx0Fl4ovavnHjht2ls0jRo6BFEgNrWdKBB1rjPf0PbvyNa
- 6I2nvcVlJFtPtkRPT/mVLfGjnT9Q8AlkNdan
-X-Google-Smtp-Source: AGHT+IFYB4xOIxG3I05AMrzGjS7l3XFq8FXmeUPffboOphdJ/Kts2W/YWI6N2YF5vDpkCYQ7Selghg==
-X-Received: by 2002:a05:6a20:9185:b0:1ea:e93d:7574 with SMTP id
- adf61e73a8af0-1eb214c97a5mr29779720637.18.1737474434127; 
- Tue, 21 Jan 2025 07:47:14 -0800 (PST)
-Received: from [192.168.0.4] (174-21-71-127.tukw.qwest.net. [174.21.71.127])
- by smtp.gmail.com with ESMTPSA id
- 41be03b00d2f7-aab358fc6d8sm5788145a12.51.2025.01.21.07.47.13
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 21 Jan 2025 07:47:13 -0800 (PST)
-Message-ID: <a2154af7-906c-4fbc-acca-75cac0b5c951@linaro.org>
-Date: Tue, 21 Jan 2025 07:47:10 -0800
+ d=1e100.net; s=20230601; t=1737474442; x=1738079242;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=Pua/xHaxlZNyBjM1rG1Z4O+pGX8GF2uIul3GOSxD72s=;
+ b=Ecjq00SxsseDpxf8F4RiiobDJX8lsv8c3LcJ50xHXlBOfRTHAseuM2OatM54bMoayY
+ 35WCq0Y0biEiV9UWfwaQcS+WPkRju1ZjUfU5sBjkmAHwGWEDx5y7GwiU4/tIU0baUaLp
+ V8DNt3SZNvEzk9PkpkXSdqXihtCC4Gsrrco0RxienzJXCQbJhIjZt5DtTstzuWwkfAMa
+ PkksrCBVKDoyve5TrS25GloOvrmqpgrhUJInBPaw7ujha9WAhNk0QLsJIR6HGfAOfCCi
+ ZKPNI2RAB7SPdYRmRivYL/WHcwfFOigyDZiv808oyrOWMcosH0TydL8fuRKP0f84EiSy
+ i7sA==
+X-Gm-Message-State: AOJu0YwJ1Ql/6Na5sWFMyq/6CTisxDuaV3UCuH+QK+GnAJXGjt7BQDmq
+ +yMLivJR/nP1z9VpPND4T5/LfC3iMv9qt6BqV/yYCzvf/wBTSPn0g3Qok/1cgtf9V0G6mak7Xll
+ t53kmcZuveGlLi18f7WyZksNqGzbBBZ8kklB0xJ9izZp1Z7bT8IY+
+X-Gm-Gg: ASbGncs31Bs/mDwL5HvC4y4B9cnI0xG9GM8h+RjZa2+BfDXiQCdTvgDfNV46Vk7YPI2
+ dyOmZXd+PbzWf1mtQAedvkhfqeq1AM37n3VQNeCcyE5r37X2PicmtjXuqjJLpSBG2QZP3s3HRLh
+ eZogG41aVzRPYA83iSNOTYye6D+fwELo6wH73yVmOr+nHUPdGhuNM5tyv3yYt1NFcpPK+lLOSdc
+ NUef0pWUiVx7+pROmsZjUAZ9stCrVT2MURVU9RYN3awb6axgB8Qs1rcszTG+0id80WdCGP1fzOZ
+ zAWEIHggxutYVWIlXuUZFmraaEGHuhk=
+X-Received: by 2002:a05:620a:24c8:b0:7b6:eab3:cdd1 with SMTP id
+ af79cd13be357-7be6325dc77mr3291818585a.49.1737474442678; 
+ Tue, 21 Jan 2025 07:47:22 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IHN/uHodmUD9eeR+l2N4GC3CN0LIfUJWK8f7cfNze6QZYHDJHQ283N2jI6Ek1fc0atfzVtmWQ==
+X-Received: by 2002:a05:620a:24c8:b0:7b6:eab3:cdd1 with SMTP id
+ af79cd13be357-7be6325dc77mr3291816285a.49.1737474442415; 
+ Tue, 21 Jan 2025 07:47:22 -0800 (PST)
+Received: from x1n (pool-99-254-114-190.cpe.net.cable.rogers.com.
+ [99.254.114.190]) by smtp.gmail.com with ESMTPSA id
+ af79cd13be357-7be6148055bsm567396985a.43.2025.01.21.07.47.21
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Tue, 21 Jan 2025 07:47:21 -0800 (PST)
+Date: Tue, 21 Jan 2025 10:47:19 -0500
+From: Peter Xu <peterx@redhat.com>
+To: Prasad Pandit <ppandit@redhat.com>
+Cc: qemu-devel@nongnu.org, farosas@suse.de, berrange@redhat.com,
+ Prasad Pandit <pjp@fedoraproject.org>
+Subject: Re: [PATCH v3 4/4] tests/qtest/migration: add postcopy test with
+ multifd
+Message-ID: <Z4_Bh3ytv9REBero@x1n>
+References: <20250121131032.1611245-1-ppandit@redhat.com>
+ <20250121131032.1611245-5-ppandit@redhat.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 2/2] target/riscv: throw debug exception before page
- fault
-To: Daniel Henrique Barboza <dbarboza@ventanamicro.com>, qemu-devel@nongnu.org
-Cc: qemu-riscv@nongnu.org, alistair.francis@wdc.com, bmeng@tinylab.org,
- liwei1518@gmail.com, zhiwei_liu@linux.alibaba.com, palmer@rivosinc.com
-References: <20250120204910.1317013-1-dbarboza@ventanamicro.com>
- <20250120204910.1317013-3-dbarboza@ventanamicro.com>
-Content-Language: en-US
-From: Richard Henderson <richard.henderson@linaro.org>
-In-Reply-To: <20250120204910.1317013-3-dbarboza@ventanamicro.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::62e;
- envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x62e.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20250121131032.1611245-5-ppandit@redhat.com>
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=peterx@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -50
+X-Spam_score: -5.1
+X-Spam_bar: -----
+X-Spam_report: (-5.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-2.996,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -105,74 +107,95 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 1/20/25 12:49, Daniel Henrique Barboza wrote:
-> In the RISC-V privileged ISA section 3.1.15 table 15, it is determined
-> that a debug exception that is triggered from a load/store has a higher
-> priority than a possible fault that this access might trigger.
+On Tue, Jan 21, 2025 at 06:40:32PM +0530, Prasad Pandit wrote:
+> From: Prasad Pandit <pjp@fedoraproject.org>
 > 
-> This is not the case ATM as shown in [1]. Adding a breakpoint in an
-> address that deliberately will fault is causing a load page fault
-> instead of a debug exception. The reason is that we're throwing in the
-> page fault as soon as the fault occurs (end of riscv_cpu_tlb_fill(),
-> raise_mmu_exception()), not allowing the installed watchpoints to
-> trigger.
+> Add a new postcopy test 'migration/postcopy/multifd'
+> to run postcopy migration with multifd channels enabled.
+> Add a boolean field 'multifd' to the MigrateCommon struct.
+> It helps to enable multifd channels.
 > 
-> Call cpu_check_watchpoint() in the page fault path to search and execute
-> any watchpoints that might exist for the address, never returning back
-> to the fault path. If no watchpoints are found cpu_check_watchpoint()
-> will return and we'll fall-through the regular path to
-> raise_mmu_exception().
-> 
-> [1] https://gitlab.com/qemu-project/qemu/-/issues/2627
-> 
-> Resolves: https://gitlab.com/qemu-project/qemu/-/issues/2627
-> Signed-off-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
+> Signed-off-by: Prasad Pandit <pjp@fedoraproject.org>
 > ---
->   target/riscv/cpu_helper.c | 19 +++++++++++++++++++
->   1 file changed, 19 insertions(+)
+>  tests/qtest/migration/framework.c      |  8 ++++++++
+>  tests/qtest/migration/framework.h      |  3 +++
+>  tests/qtest/migration/postcopy-tests.c | 10 ++++++++++
+>  3 files changed, 21 insertions(+)
 > 
-> diff --git a/target/riscv/cpu_helper.c b/target/riscv/cpu_helper.c
-> index e1dfc4ecbf..ae0a659ec7 100644
-> --- a/target/riscv/cpu_helper.c
-> +++ b/target/riscv/cpu_helper.c
-> @@ -27,6 +27,7 @@
->   #include "exec/page-protection.h"
->   #include "instmap.h"
->   #include "tcg/tcg-op.h"
-> +#include "hw/core/tcg-cpu-ops.h"
->   #include "trace.h"
->   #include "semihosting/common-semi.h"
->   #include "system/cpu-timers.h"
-> @@ -1708,6 +1709,24 @@ bool riscv_cpu_tlb_fill(CPUState *cs, vaddr address, int size,
->       } else if (probe) {
->           return false;
->       } else {
-> +        int wp_len = riscv_cpu_mxl(env) == MXL_RV64 ? 8 : 4;
-
-Surely 'size' may be relevant?
-
-
-r~
-
-> +        int wp_access = 0;
+> diff --git a/tests/qtest/migration/framework.c b/tests/qtest/migration/framework.c
+> index 4550cda129..7f5abd760e 100644
+> --- a/tests/qtest/migration/framework.c
+> +++ b/tests/qtest/migration/framework.c
+> @@ -427,6 +427,14 @@ static int migrate_postcopy_prepare(QTestState **from_ptr,
+>          migrate_set_capability(to, "postcopy-preempt", true);
+>      }
+>  
+> +    if (args->multifd) {
+> +        migrate_set_capability(from, "multifd", true);
+> +        migrate_set_capability(to, "multifd", true);
 > +
-> +        if (access_type == MMU_DATA_LOAD) {
-> +            wp_access |= BP_MEM_READ;
-> +        } else if (access_type == MMU_DATA_STORE) {
-> +            wp_access |= BP_MEM_WRITE;
-> +        }
+> +        migrate_set_parameter_int(from, "multifd-channels", 8);
+> +        migrate_set_parameter_int(to, "multifd-channels", 8);
+> +    }
 > +
-> +        /*
-> +         * If a watchpoint isn't found for 'addr' this will
-> +         * be a no-op and we'll resume the mmu_exception path.
-> +         * Otherwise we'll throw a debug exception and execution
-> +         * will continue elsewhere.
-> +         */
-> +        cpu_check_watchpoint(cs, address, wp_len, MEMTXATTRS_UNSPECIFIED,
-> +                             wp_access, retaddr);
+>      migrate_ensure_non_converge(from);
+>  
+>      migrate_prepare_for_dirty_mem(from);
+> diff --git a/tests/qtest/migration/framework.h b/tests/qtest/migration/framework.h
+> index 7991ee56b6..1b2320ebef 100644
+> --- a/tests/qtest/migration/framework.h
+> +++ b/tests/qtest/migration/framework.h
+> @@ -193,6 +193,9 @@ typedef struct {
+>       */
+>      bool live;
+>  
+> +    /* set multifd on */
+> +    bool multifd;
 > +
->           raise_mmu_exception(env, address, access_type, pmp_violation,
->                               first_stage_error, two_stage_lookup,
->                               two_stage_indirect_error);
+>      /* Postcopy specific fields */
+>      void *postcopy_data;
+>      bool postcopy_preempt;
+> diff --git a/tests/qtest/migration/postcopy-tests.c b/tests/qtest/migration/postcopy-tests.c
+> index daf7449f2c..6eada6ccbc 100644
+> --- a/tests/qtest/migration/postcopy-tests.c
+> +++ b/tests/qtest/migration/postcopy-tests.c
+> @@ -27,6 +27,15 @@ static void test_postcopy(void)
+>      test_postcopy_common(&args);
+>  }
+>  
+> +static void test_postcopy_multifd(void)
+> +{
+> +    MigrateCommon args = {
+> +        .multifd = true,
+> +    };
+> +
+> +    test_postcopy_common(&args);
+> +}
+> +
+>  static void test_postcopy_suspend(void)
+>  {
+>      MigrateCommon args = {
+> @@ -83,6 +92,7 @@ void migration_test_add_postcopy(MigrationTestEnv *env)
+>  {
+>      if (env->has_uffd) {
+>          migration_test_add("/migration/postcopy/plain", test_postcopy);
+> +        migration_test_add("/migration/postcopy/multifd", test_postcopy_multifd);
+>          migration_test_add("/migration/postcopy/recovery/plain",
+>                             test_postcopy_recovery);
+>          migration_test_add("/migration/postcopy/preempt/plain",
+> --
+> 2.48.1
+> 
+
+This is only one test out of many I listed in the previous email:
+
+https://lore.kernel.org/qemu-devel/ZykJBq7ME5jgSzCA@x1n/
+
+Would you please add all the tests mentioned there?
+
+Thanks,
+
+-- 
+Peter Xu
 
 
