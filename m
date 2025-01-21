@@ -4,60 +4,91 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0D541C0218B
-	for <qemu-devel@archiver.kernel.org>; Tue, 21 Jan 2025 15:57:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 80230C0218B
+	for <qemu-devel@archiver.kernel.org>; Tue, 21 Jan 2025 15:58:12 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1taGdO-0000Oh-KK; Tue, 21 Jan 2025 10:57:46 -0500
+	id 1taGdZ-000155-QP; Tue, 21 Jan 2025 10:57:58 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jonathan.cameron@huawei.com>)
- id 1taGdK-00005V-Um
- for qemu-devel@nongnu.org; Tue, 21 Jan 2025 10:57:43 -0500
-Received: from frasgout.his.huawei.com ([185.176.79.56])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jonathan.cameron@huawei.com>)
- id 1taGdI-0002Ey-Ua
- for qemu-devel@nongnu.org; Tue, 21 Jan 2025 10:57:42 -0500
-Received: from mail.maildlp.com (unknown [172.18.186.231])
- by frasgout.his.huawei.com (SkyGuard) with ESMTP id 4YcsKc1NJ5z6HJgC;
- Tue, 21 Jan 2025 23:57:24 +0800 (CST)
-Received: from frapeml500008.china.huawei.com (unknown [7.182.85.71])
- by mail.maildlp.com (Postfix) with ESMTPS id 8A7A4140D1D;
- Tue, 21 Jan 2025 23:57:37 +0800 (CST)
-Received: from localhost (10.203.177.66) by frapeml500008.china.huawei.com
- (7.182.85.71) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.1.2507.39; Tue, 21 Jan
- 2025 16:57:36 +0100
-Date: Tue, 21 Jan 2025 15:57:35 +0000
-To: Zhi Wang <zhiw@nvidia.com>
-CC: <qemu-devel@nongnu.org>, <dan.j.williams@intel.com>,
- <dave.jiang@intel.com>, <ira.weiny@intel.com>, <fan.ni@samsung.com>,
- <alex.williamson@redhat.com>, <alucerop@amd.com>, <clg@redhat.com>,
- <acurrid@nvidia.com>, <cjia@nvidia.com>, <smitra@nvidia.com>,
- <ankita@nvidia.com>, <aniketa@nvidia.com>, <kwankhede@nvidia.com>,
- <targupta@nvidia.com>, <zhiwang@kernel.org>
-Subject: Re: [PATCH 2/3] hw/cxl: introduce cxl_component_update_dvsec()
-Message-ID: <20250121155735.00001776@huawei.com>
-In-Reply-To: <20241212130422.69380-3-zhiw@nvidia.com>
-References: <20241212130422.69380-1-zhiw@nvidia.com>
- <20241212130422.69380-3-zhiw@nvidia.com>
-X-Mailer: Claws Mail 4.3.0 (GTK 3.24.42; x86_64-w64-mingw32)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1taGdX-00010K-8e
+ for qemu-devel@nongnu.org; Tue, 21 Jan 2025 10:57:55 -0500
+Received: from mail-pl1-x631.google.com ([2607:f8b0:4864:20::631])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1taGdV-0002Hm-I5
+ for qemu-devel@nongnu.org; Tue, 21 Jan 2025 10:57:54 -0500
+Received: by mail-pl1-x631.google.com with SMTP id
+ d9443c01a7336-21bc1512a63so107824935ad.1
+ for <qemu-devel@nongnu.org>; Tue, 21 Jan 2025 07:57:53 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1737475072; x=1738079872; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=WldscwekoNWxOz+Ci2TkEmSI7wCEr+VrRrK2jDxnITc=;
+ b=iqnHd5PnK1jPqWpYPBW86GavTqaZZQQ4/3q5JjJZGaKYZwVEw3ug2dhbSjIY5q4XcP
+ 6u/4xBqI3DR1Mo8ouyQtbe/vgBRfRW1jbE9Li3GJTpjOCg57qwQxMcYnysjKKaZyJJgM
+ 6qD0F18bi3+uNlIXUXGF1JQY9Bew19iVUBQYMKh8OxgUgeeJWFKoRCt89QB5Qv3NnLJ0
+ tvhky+QB/jIQ7Bww5rBcDD+DceGzE/krZcBN0RLEtjkaY2sgaK1FgYEhRww21Ydw5nX2
+ WKfXLwCbSc12QSmNr4D40zO4+8lZmjdSUTnbtID0A8ast4iNje67knM+vkHJBLnmph0c
+ tiRw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1737475072; x=1738079872;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=WldscwekoNWxOz+Ci2TkEmSI7wCEr+VrRrK2jDxnITc=;
+ b=J80ec5nS01/F3jyyzn5jlMqXXVqbU5Ev5YiZdvjEgwI4Cxywt5RvJH2RWNA1MtOE6n
+ H/hCX6Zzw+ktSx4Y+AN0wfumh4VN0/6h5k9JlekuoetzD1vYii5VXp/7winXvgwl3oou
+ HQHciiC2ACtYBNFvazV4S03eTFMreUz9YfK6jAX9abn7KxF/XwEHJ7vN62eslC3LcYke
+ 1o5cwABP+17omtRPItWsW6ETwy7GAeJpYCtQjZErLEAkifAkS4163yUtuk+MIqDPsqBB
+ 1tc/K1ZB/cyLj0mkOkBr994k5R71q1OhkCATcvTa5SMvacpNvuJd/XZFFQ3sIKFpiHXu
+ hEaw==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCVNeonm/Ub3/pxwlvKboK5tHtAe6gXlFbumVYyJm+jKKZcZoqNhPvvfEkWcMag/k4sJqCyiq7h7AB2h@nongnu.org
+X-Gm-Message-State: AOJu0YzIej9rgZnLwvJ1MXOBqGgF59PGYlU2kTdEJZ9jS9/j00PoDdxt
+ zdIE74YPlA00aa5tBgsTqQlKJinzBe9pSFlUCAbdE9jt5IOAE8alxPS4l4tNg5I=
+X-Gm-Gg: ASbGncu0Q8Fra/FZ/7Lx9kQU7zsa57Ojxl4zL2oVDmu88v8QHZms87uxl2hIZDyJ/nC
+ /tNpvD8Q91TKPqAA6iz5eUiMQV/bfsXYumH5m4ij+5EhRF2pLBHhjj7MKhoO8kTqvQseYwqiyC7
+ kw1VAqHI1yuoQctlphbdxPH2BRsh441XN39a4wWP8wNGHiNwQ+/90Kt+qnLGviTFC3D/aylkDxY
+ dj1leV8ODdpp04D8S/a1sYePue19Y7ZzulZsSE8Z/e0M8J9nj/g4slG48kk3WSpu2odDiseyh8g
+ ykYp20JfPGJWAxGgzifouvfUwbr9HgrR5i4m
+X-Google-Smtp-Source: AGHT+IFBCJLFK+bOHOjHUs+sjPb0IX4J/S7OhQ4KmrCOhYA9YLJAWVTHdLhDUH2NTN38lrohxe1Q9g==
+X-Received: by 2002:a17:902:d2cb:b0:215:b74c:d7ad with SMTP id
+ d9443c01a7336-21c356307e6mr274617235ad.36.1737475072059; 
+ Tue, 21 Jan 2025 07:57:52 -0800 (PST)
+Received: from [192.168.0.4] (174-21-71-127.tukw.qwest.net. [174.21.71.127])
+ by smtp.gmail.com with ESMTPSA id
+ d9443c01a7336-21c2ceba9afsm79813075ad.74.2025.01.21.07.57.51
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Tue, 21 Jan 2025 07:57:51 -0800 (PST)
+Message-ID: <4b25151e-8c0e-4d36-9bfb-41e144aacd2d@linaro.org>
+Date: Tue, 21 Jan 2025 07:57:50 -0800
 MIME-Version: 1.0
-Content-Type: text/plain; charset="US-ASCII"
-Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.203.177.66]
-X-ClientProxiedBy: lhrpeml100004.china.huawei.com (7.191.162.219) To
- frapeml500008.china.huawei.com (7.182.85.71)
-Received-SPF: pass client-ip=185.176.79.56;
- envelope-from=jonathan.cameron@huawei.com; helo=frasgout.his.huawei.com
-X-Spam_score_int: -42
-X-Spam_score: -4.3
-X-Spam_bar: ----
-X-Spam_report: (-4.3 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_MED=-2.3,
- RCVD_IN_MSPIKE_H2=-0.086, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 05/11] disas: Prefer cached CpuClass over CPU_GET_CLASS()
+ macro
+To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ qemu-devel@nongnu.org
+Cc: =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>, qemu-arm@nongnu.org
+References: <20250121114056.53949-1-philmd@linaro.org>
+ <20250121114056.53949-6-philmd@linaro.org>
+Content-Language: en-US
+From: Richard Henderson <richard.henderson@linaro.org>
+In-Reply-To: <20250121114056.53949-6-philmd@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::631;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x631.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -71,140 +102,37 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-to:  Jonathan Cameron <Jonathan.Cameron@huawei.com>
-From:  Jonathan Cameron via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, 12 Dec 2024 05:04:21 -0800
-Zhi Wang <zhiw@nvidia.com> wrote:
-
-> There are many DVSEC registers in the PCI configuration space that are
-> configurable. E.g. DVS control. They are configured and initalized in
-> cxl_component_create_dvsec(). When the virtual machine reboots, the
-> reset callback in the emulation of the emulated CXL device resets the
-> device states back to default states.
+On 1/21/25 03:40, Philippe Mathieu-Daudé wrote:
+> CpuState caches its CPUClass since commit 6fbdff87062
+> ("cpu: cache CPUClass in CPUState for hot code paths"),
+> use it.
 > 
-> So far, there is no decent approach to reset the values of CXL DVSEC
-> registers in the PCI configuation space one for all. Without reseting
-> the values of CXL DVSEC registers, the CXL type-2 driver failing to
-> claim the endpoint:
-> 
-> - DVS_CONTROL.MEM_ENABLE is left to be 1 across the system reboot.
-> - Type-2 driver loads.
-> - In the endpoint probe, the kernel CXL core sees the
->   DVS_CONTROL.MEM_ENABLE is set.
-> - The kernel CXL core wrongly thinks the HDM decoder is pre-configured
->   by BIOS/UEFI.
-> - The kernel CXL core uses the garbage in the HDM decoder registers and
->   fails:
-> 
-> [   74.586911] cxl_accel_vfio_pci 0000:0d:00.0: Range register decodes
-> outside platform defined CXL ranges.
-> [   74.588585] cxl_mem mem0: endpoint2 failed probe
-> [   74.589478] cxl_accel_vfio_pci 0000:0d:00.0: Fail to acquire CXL
-> endpoint
-> [   74.591944] pcieport 0000:0c:00.0: unlocked secondary bus reset via:
-> pciehp_reset_slot+0xa8/0x150
-> 
-> Introduce cxl_component_update_dvsec() for the emulation of CXL devices
-> to reset the CXL DVSEC registers in the PCI configuration space.
-
-We know there are issues with this reset path for the type 3 devices.
-I'd be keen to see that fixed up using a mechanism like this then we can
-build on top of it for type2 support.  I'm not convinced that a generic
-solution like this makes sense rather than a specific reset of registers
-as appropriate which allows us to carefully preserve the sticky bits.
-Reset for the type 3 has proved a little tricky to fix in the past and
-wasn't really a priority.  Given we have to do it for type 2 I'd like
-to fix it up for both.
-
-Jonathan
-
-> 
-> Signed-off-by: Zhi Wang <zhiw@nvidia.com>
+> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 > ---
->  hw/cxl/cxl-component-utils.c   | 36 ++++++++++++++++++++++++++++------
->  include/hw/cxl/cxl_component.h |  3 +++
->  2 files changed, 33 insertions(+), 6 deletions(-)
+>   disas/disas-common.c | 5 ++---
+>   1 file changed, 2 insertions(+), 3 deletions(-)
 > 
-> diff --git a/hw/cxl/cxl-component-utils.c b/hw/cxl/cxl-component-utils.c
-> index aa5fb20d25..355103d165 100644
-> --- a/hw/cxl/cxl-component-utils.c
-> +++ b/hw/cxl/cxl-component-utils.c
-> @@ -365,9 +365,13 @@ void cxl_component_register_init_common(uint32_t *reg_state,
->   * Helper to creates a DVSEC header for a CXL entity. The caller is responsible
->   * for tracking the valid offset.
->   *
-> - * This function will build the DVSEC header on behalf of the caller and then
-> - * copy in the remaining data for the vendor specific bits.
-> - * It will also set up appropriate write masks.
-> + * This function will build the DVSEC header on behalf of the caller. It will
-> + * also set up appropriate write masks.
-> + *
-> + * If required, it will copy in the remaining data for the vendor specific bits.
-> + * Or the caller can also fill the remaining data later after the DVSEC header
-> + * is built via cxl_component_update_dvsec().
-> + *
+> diff --git a/disas/disas-common.c b/disas/disas-common.c
+> index de61f6d8a12..57505823cb7 100644
+> --- a/disas/disas-common.c
+> +++ b/disas/disas-common.c
+> @@ -67,9 +67,8 @@ void disas_initialize_debug_target(CPUDebug *s, CPUState *cpu)
+>           s->info.endian =  BFD_ENDIAN_LITTLE;
+>       }
+>   
+> -    CPUClass *cc = CPU_GET_CLASS(cpu);
+> -    if (cc->disas_set_info) {
+> -        cc->disas_set_info(cpu, &s->info);
+> +    if (cpu->cc->disas_set_info) {
+> +        cpu->cc->disas_set_info(cpu, &s->info);
+>       }
+>   }
+>   
 
-Pet hate.  This blank line adds nothing so drop it.
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 
->   */
->  void cxl_component_create_dvsec(CXLComponentState *cxl,
->                                  enum reg_type cxl_dev_type, uint16_t length,
-> @@ -387,9 +391,12 @@ void cxl_component_create_dvsec(CXLComponentState *cxl,
->      pci_set_long(pdev->config + offset + PCIE_DVSEC_HEADER1_OFFSET,
->                   (length << 20) | (rev << 16) | CXL_VENDOR_ID);
->      pci_set_word(pdev->config + offset + PCIE_DVSEC_ID_OFFSET, type);
-> -    memcpy(pdev->config + offset + sizeof(DVSECHeader),
-> -           body + sizeof(DVSECHeader),
-> -           length - sizeof(DVSECHeader));
-> +
-> +    if (body) {
-> +        memcpy(pdev->config + offset + sizeof(DVSECHeader),
-> +                body + sizeof(DVSECHeader),
-> +                length - sizeof(DVSECHeader));
-> +    }
->  
->      /* Configure write masks */
->      switch (type) {
-> @@ -481,6 +488,23 @@ void cxl_component_create_dvsec(CXLComponentState *cxl,
->      cxl->dvsec_offset += length;
->  }
->  
-> +void cxl_component_update_dvsec(CXLComponentState *cxl, uint16_t length,
-> +                                uint16_t type, uint8_t *body)
-> +{
-> +    PCIDevice *pdev = cxl->pdev;
-> +    struct Range *r;
-> +
-> +    assert(type < CXL20_MAX_DVSEC);
-> +
-> +    r = &cxl->dvsecs[type];
-> +
-> +    assert(range_size(r) == length);
-> +
-> +    memcpy(pdev->config + r->lob + sizeof(DVSECHeader),
-> +           body + sizeof(DVSECHeader),
-> +           length - sizeof(DVSECHeader));
-> +}
-> +
->  /* CXL r3.1 Section 8.2.4.20.7 CXL HDM Decoder n Control Register */
->  uint8_t cxl_interleave_ways_enc(int iw, Error **errp)
->  {
-> diff --git a/include/hw/cxl/cxl_component.h b/include/hw/cxl/cxl_component.h
-> index abb2e874b2..30fe4bfa24 100644
-> --- a/include/hw/cxl/cxl_component.h
-> +++ b/include/hw/cxl/cxl_component.h
-> @@ -261,6 +261,9 @@ void cxl_component_create_dvsec(CXLComponentState *cxl_cstate,
->                                  enum reg_type cxl_dev_type, uint16_t length,
->                                  uint16_t type, uint8_t rev, uint8_t *body);
->  
-> +void cxl_component_update_dvsec(CXLComponentState *cxl, uint16_t length,
-> +                                uint16_t type, uint8_t *body);
-> +
->  int cxl_decoder_count_enc(int count);
->  int cxl_decoder_count_dec(int enc_cnt);
->  
-
+r~
 
