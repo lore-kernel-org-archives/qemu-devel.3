@@ -4,76 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BB5A8C0218B
-	for <qemu-devel@archiver.kernel.org>; Tue, 21 Jan 2025 15:55:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DB38EC02182
+	for <qemu-devel@archiver.kernel.org>; Tue, 21 Jan 2025 15:55:55 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1taGbL-0003ja-97; Tue, 21 Jan 2025 10:55:39 -0500
+	id 1taGbS-0003tp-GF; Tue, 21 Jan 2025 10:55:47 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1taGbE-0003f5-Kf
- for qemu-devel@nongnu.org; Tue, 21 Jan 2025 10:55:37 -0500
-Received: from mail-wm1-x32f.google.com ([2a00:1450:4864:20::32f])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1taGbM-0003n8-DZ
+ for qemu-devel@nongnu.org; Tue, 21 Jan 2025 10:55:42 -0500
+Received: from mail-wm1-x333.google.com ([2a00:1450:4864:20::333])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1taGbC-0001vd-41
- for qemu-devel@nongnu.org; Tue, 21 Jan 2025 10:55:32 -0500
-Received: by mail-wm1-x32f.google.com with SMTP id
- 5b1f17b1804b1-4361e89b6daso40737035e9.3
- for <qemu-devel@nongnu.org>; Tue, 21 Jan 2025 07:55:29 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1taGbH-0001w8-Je
+ for qemu-devel@nongnu.org; Tue, 21 Jan 2025 10:55:40 -0500
+Received: by mail-wm1-x333.google.com with SMTP id
+ 5b1f17b1804b1-43626213fffso42696205e9.1
+ for <qemu-devel@nongnu.org>; Tue, 21 Jan 2025 07:55:34 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1737474928; x=1738079728; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=UuwNIpKwklYn+V6xxtkFTRVjA4+AvUAZhHjmaGkwoOM=;
- b=gSG/d537p2FVWS0a2pnRitIBmlYv6CwdR2tqIizZMpMv6ZMTjQbT06fv8EZRkb7zKT
- nuAQEHLB6ykllSfhvc3p7yl+WxH7DGvcK5fehxRHZJ6kGh7eibSehpS3dTz1XdUhU9+A
- VjkC5QSZ8ApsycsbdoWOAAVTGF6niTAjDGsXiD1HEDF9QPwDTVl2tGO2dydvkeCsgUMv
- 1iuC73JNz1n07TRHPxayKTzyVg/x56bG6yR6zSDXhIgJu3ZU4c1kPlZOIIM/ZPG2ZdYr
- RXnqB5f9k2c1GHV1M/RhWe44KzcvlrHyN8I8q2g2CPmhZ0HQEddUxfIimQL6S9tU0XH1
- 8dvA==
+ d=linaro.org; s=google; t=1737474933; x=1738079733; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=h7fX1pHLOdoQX1u1iC7jxTdcN+u9AigZsBxvTYyjuig=;
+ b=L11HTGcnKtJIMr8rPxNiiozYUppvarUrm1suTswWy6CieDtEzULf3iIG2Ojv20oJ5M
+ EPDvAwWAV66pAG0GjyclLwpN6Z0qXisuVeqTYpTdqn9fbsVPP8+kSBz2xpexfQt9DIwt
+ iyD/f+VZH2PTU3RZJVqRhktBip1zfn1YfoLPqwjgow+OqVUUnp/dSAiynEYN/sfjainQ
+ Zw8BHsN21nmVHJfIw9VL+/I1RHl8lNIYDTgg5s7S36mjhbYH5sahnTqbxQ2Pu4P8ldzw
+ Ysb5/5LJk47d4h8Zz3dSNfOlnSaDHRBm10/88LrS0+jpGHOBre+0luk2VzK66U+UGioh
+ 4++Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1737474928; x=1738079728;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=UuwNIpKwklYn+V6xxtkFTRVjA4+AvUAZhHjmaGkwoOM=;
- b=CeSQgWtwpaCTTYtQEz3aHMUH5XH2uOw0JHR2e7fIeDxJxJm5aUBePG4dGeJkmp3NFu
- NbqCieHGAKJq+BMT3w1umde/nAiUJN+fmWIrdl3b+0kfJc5LwcswCyIMAjGkVmw2b2Te
- Tjjpgkxvt1lmRmSY4cqMravfi122ZIOlOmEch2hkr52af1Hv6AslNfsie6Vr79VS/Fuq
- VrELTKZ6bVNkFlXLO2/+hZI8C5HyFdZjMcnzSA+sFaYTfGc1FuDqcv/Obm1hSaqHeEj6
- U+GkmGBFhAZ3M3FEyS9gCrgNfWOXwfeA7XXMwzKiU0YK0iXF60RapWRXi9lTwrFMrHjX
- rKug==
-X-Gm-Message-State: AOJu0Ywb8GG6fyvYmcwUtQn0B1iV584yBY44Q4kWFaLn6OasDVsPc75r
- 0v8EeXMhLraYRikmhk3UMn42PXQLRVq2RsShCwRbxdMefrCaJYkzl0liL9iTVmxPImsFF9YjYVd
- 8JoU=
-X-Gm-Gg: ASbGncswPqRe0AkFu06N8sraq10Bf+mZgs/xImjF/n3pefXfGLTjvhu57rya7qTaKaG
- RtwW/IN5x2MfKcxukSG5HS6T0xIZWfc3GVS5dx99QfVXcgj9mztkgtjoiq5NOw7c27NVoWbxKd+
- AxEMYByzrKNCusUEClxsrx78GMSLjvNtghb0rIE1rXkhdjNifTxv0u2Kk5+LEb5Nk73PyYxazcp
- ahHjdp2K+zfNVt9km+r3D/PGyEVGeR4lGw9ODlJe6u4QVdHO3WgF5AJ2VUioZbwK7tETv6G48yz
- JvtSz2ubrFnZt2LbcK645pD37uqyWsZBGoIxMoWoZTcK
-X-Google-Smtp-Source: AGHT+IEq5laFeJueoqSWUDLntPADYW71SWwzuNcXBTNFyssQG9QxSzyYrSezjvoz4I3D0ATqbJEIGQ==
-X-Received: by 2002:a05:600c:3844:b0:434:ff08:202b with SMTP id
- 5b1f17b1804b1-438913dbc09mr169673425e9.12.1737474928057; 
- Tue, 21 Jan 2025 07:55:28 -0800 (PST)
+ d=1e100.net; s=20230601; t=1737474933; x=1738079733;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=h7fX1pHLOdoQX1u1iC7jxTdcN+u9AigZsBxvTYyjuig=;
+ b=v28SorcAN9gpwEyBsZuDux+xJy6T2xcndukN9OC/UCHc7gN65rag0s1xRvT8Lycl+Q
+ hVTYI6GIFUYa4SXKO/5UOu4R9TQxTseCSb2l5+RbuceW0nySZO6nZ0lVxLTIoBBbndP7
+ Jm5wzJ07vjdlXCkb2o4/XuYDYzErBRvFV0SfmjL1iNyZoULeOfref7u8M9PcHCRgsSUk
+ YAXaUsGBrdws/+gU+TAUrYwZeXZ7MdS+N9alzxFWeZZV9ylK7jRZVVjPfFucZzDRUWCH
+ cB3lHpdvzZE3rLITEOQiYlbDg98RVuyDl1C0jmDiqbdiUKNcYF/BzgBnphrmBCrt1cw8
+ R65w==
+X-Gm-Message-State: AOJu0Yz4FDiWucE3FZb8B4yOcMMszQuwrg+nj2b9ueIn7i1GrK+TU0bM
+ hLll53Aqvr1T0ERx7a144NzOujog82g6+ER6iK9gDU0CelMmn5hSoFvmqkn1mOSrpBakXiKsTut
+ ixFo=
+X-Gm-Gg: ASbGnctiC60TtGX5PF5+7HTr8NjaRIE4VSRrPpG3guLqlFBzhYdFUxCGRTotA13ckX9
+ xqncDtF4K0bfjdNztSbfZkDStMj4Y+g2FtB4Ra8xcxrg0DH0aJTAwxXXZjiWok7iIyzZB5oeo48
+ xFGhbFVS46BEvp7ZBdNZSWSLfulylv26iprWQtXiUOpbdTSBjndF1ieQTZwFjrydoJtej/DIczb
+ WHb9ttEpnWglHp18p6aoYcijRE2/yf3yuUAO/m+gL2dBHH4LTDz/U4f6Kdrmq2aAs9rhwZWo32n
+ DY79XFOzYxzLRIgiByAGWx98O3Jj/ikDsrWM+2qzjpB1
+X-Google-Smtp-Source: AGHT+IEhtYhnc9mq8r6kBZyWT6ZDmAUTw04hfLhqW4O6uQ9MyR99pKL58IxS2XkVIw/X5SzHZ/v+kw==
+X-Received: by 2002:adf:9dce:0:b0:38a:88bc:aea6 with SMTP id
+ ffacd0b85a97d-38bec4f592amr15248853f8f.6.1737474932698; 
+ Tue, 21 Jan 2025 07:55:32 -0800 (PST)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4389041f610sm182231005e9.20.2025.01.21.07.55.27
+ ffacd0b85a97d-38bf322ac88sm14052137f8f.54.2025.01.21.07.55.31
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Tue, 21 Jan 2025 07:55:27 -0800 (PST)
+ Tue, 21 Jan 2025 07:55:32 -0800 (PST)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Alberto Garcia <berto@igalia.com>, Bernhard Beschow <shentey@gmail.com>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PATCH v3 0/3] hw/ipack: Minor dust removal
-Date: Tue, 21 Jan 2025 16:55:23 +0100
-Message-ID: <20250121155526.29982-1-philmd@linaro.org>
+Subject: [PATCH v3 1/3] hw/irq: Introduce qemu_init_irqs() helper
+Date: Tue, 21 Jan 2025 16:55:24 +0100
+Message-ID: <20250121155526.29982-2-philmd@linaro.org>
 X-Mailer: git-send-email 2.47.1
+In-Reply-To: <20250121155526.29982-1-philmd@linaro.org>
+References: <20250121155526.29982-1-philmd@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32f;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x32f.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::333;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x333.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -96,34 +99,57 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Clarify what is what in Kconfig,
-replace qemu_allocate_irqs() by qemu_init_irq().
+While qemu_init_irq() initialize a single IRQ,
+qemu_init_irqs() initialize an array of them.
 
-Since v2:
-- Introduce qemu_init_irqs (Bernhard)
+Suggested-by: Bernhard Beschow <shentey@gmail.com>
+Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+---
+ include/hw/irq.h | 11 +++++++++++
+ hw/core/irq.c    |  8 ++++++++
+ 2 files changed, 19 insertions(+)
 
-Since v1:
-- s/qemu_irq/IRQState/ in IPackDevice state
-
-Philippe Mathieu-Daudé (3):
-  hw/irq: Introduce qemu_init_irqs() helper
-  hw/ipack: Clarify KConfig symbols
-  hw/ipack: Remove legacy qemu_allocate_irqs() use
-
- include/hw/ipack/ipack.h       |  7 ++-----
- include/hw/irq.h               | 11 +++++++++++
- hw/char/ipoctal232.c           |  4 ++--
- hw/core/irq.c                  |  8 ++++++++
- hw/ipack/ipack.c               |  5 +----
- hw/ipack/tpci200.c             |  6 +++---
- hw/char/Kconfig                |  5 +++++
- hw/char/meson.build            |  2 +-
- hw/ipack/Kconfig               |  4 ++++
- hw/ipack/meson.build           |  3 ++-
- tests/qtest/libqos/meson.build |  4 +++-
- tests/qtest/meson.build        |  4 +++-
- 12 files changed, 45 insertions(+), 18 deletions(-)
-
+diff --git a/include/hw/irq.h b/include/hw/irq.h
+index c861c1debda..b3012237acd 100644
+--- a/include/hw/irq.h
++++ b/include/hw/irq.h
+@@ -41,6 +41,17 @@ static inline void qemu_irq_pulse(qemu_irq irq)
+ void qemu_init_irq(IRQState *irq, qemu_irq_handler handler, void *opaque,
+                    int n);
+ 
++/**
++ * qemu_init_irqs: Initialize an array of IRQs.
++ *
++ * @irq: Array of IRQs to initialize
++ * @count: number of IRQs to initialize
++ * @handler: handler to assign to each IRQ
++ * @opaque: opaque data to pass to @handler
++ */
++void qemu_init_irqs(IRQState irq[], size_t count,
++                    qemu_irq_handler handler, void *opaque);
++
+ /* Returns an array of N IRQs. Each IRQ is assigned the argument handler and
+  * opaque data.
+  */
+diff --git a/hw/core/irq.c b/hw/core/irq.c
+index 7d5b0038c12..6dd8d47bd6e 100644
+--- a/hw/core/irq.c
++++ b/hw/core/irq.c
+@@ -49,6 +49,14 @@ void qemu_init_irq(IRQState *irq, qemu_irq_handler handler, void *opaque,
+     init_irq_fields(irq, handler, opaque, n);
+ }
+ 
++void qemu_init_irqs(IRQState irq[], size_t count,
++                    qemu_irq_handler handler, void *opaque)
++{
++    for (size_t i = 0; i < count; i++) {
++        qemu_init_irq(&irq[i], handler, opaque, i);
++    }
++}
++
+ qemu_irq *qemu_extend_irqs(qemu_irq *old, int n_old, qemu_irq_handler handler,
+                            void *opaque, int n)
+ {
 -- 
 2.47.1
 
