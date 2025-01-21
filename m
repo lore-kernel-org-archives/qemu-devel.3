@@ -4,132 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C1917C02182
-	for <qemu-devel@archiver.kernel.org>; Tue, 21 Jan 2025 15:55:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BB5A8C0218B
+	for <qemu-devel@archiver.kernel.org>; Tue, 21 Jan 2025 15:55:50 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1taGay-0003X1-83; Tue, 21 Jan 2025 10:55:18 -0500
+	id 1taGbL-0003ja-97; Tue, 21 Jan 2025 10:55:39 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1taGak-0003K1-FU
- for qemu-devel@nongnu.org; Tue, 21 Jan 2025 10:55:07 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1taGai-0001i5-KC
- for qemu-devel@nongnu.org; Tue, 21 Jan 2025 10:55:02 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1737474899;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=rCtFm/ew0i1YQbv+SgRMsVRj9a3nGFlwy4gWWr3PWzo=;
- b=bqWIa0feY9pokvKgjPEZfJFjwLChPi7PQGF2cOt/MoPaHArVTF/FQ4ZsdO6CIdaq9ZOOcu
- XhS2et0vA9uIlr+CsRFhJguvt59qxapHW3APLcWXN7MGS74mPFs1Mhgqrrxdkzll1Uc87q
- ShTcvgTUZQUI14dLU0MQ2ig8MiyclDA=
-Received: from mail-ej1-f72.google.com (mail-ej1-f72.google.com
- [209.85.218.72]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-460-j2Ar_-t7Ng6pcaI4N60p0Q-1; Tue, 21 Jan 2025 10:54:57 -0500
-X-MC-Unique: j2Ar_-t7Ng6pcaI4N60p0Q-1
-X-Mimecast-MFC-AGG-ID: j2Ar_-t7Ng6pcaI4N60p0Q
-Received: by mail-ej1-f72.google.com with SMTP id
- a640c23a62f3a-aafba50f3a6so459841666b.2
- for <qemu-devel@nongnu.org>; Tue, 21 Jan 2025 07:54:57 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1taGbE-0003f5-Kf
+ for qemu-devel@nongnu.org; Tue, 21 Jan 2025 10:55:37 -0500
+Received: from mail-wm1-x32f.google.com ([2a00:1450:4864:20::32f])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1taGbC-0001vd-41
+ for qemu-devel@nongnu.org; Tue, 21 Jan 2025 10:55:32 -0500
+Received: by mail-wm1-x32f.google.com with SMTP id
+ 5b1f17b1804b1-4361e89b6daso40737035e9.3
+ for <qemu-devel@nongnu.org>; Tue, 21 Jan 2025 07:55:29 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1737474928; x=1738079728; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=UuwNIpKwklYn+V6xxtkFTRVjA4+AvUAZhHjmaGkwoOM=;
+ b=gSG/d537p2FVWS0a2pnRitIBmlYv6CwdR2tqIizZMpMv6ZMTjQbT06fv8EZRkb7zKT
+ nuAQEHLB6ykllSfhvc3p7yl+WxH7DGvcK5fehxRHZJ6kGh7eibSehpS3dTz1XdUhU9+A
+ VjkC5QSZ8ApsycsbdoWOAAVTGF6niTAjDGsXiD1HEDF9QPwDTVl2tGO2dydvkeCsgUMv
+ 1iuC73JNz1n07TRHPxayKTzyVg/x56bG6yR6zSDXhIgJu3ZU4c1kPlZOIIM/ZPG2ZdYr
+ RXnqB5f9k2c1GHV1M/RhWe44KzcvlrHyN8I8q2g2CPmhZ0HQEddUxfIimQL6S9tU0XH1
+ 8dvA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1737474896; x=1738079696;
- h=content-transfer-encoding:in-reply-to:autocrypt:content-language
- :from:references:cc:to:subject:user-agent:mime-version:date
- :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+ d=1e100.net; s=20230601; t=1737474928; x=1738079728;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=rCtFm/ew0i1YQbv+SgRMsVRj9a3nGFlwy4gWWr3PWzo=;
- b=DPzEsbxuawWzpdzgtWgYlUo+VoBk2oARmaNaZtLFpTG7sQISV/o7PAjOTxxI/v5ihg
- WKFO50hXv7luoAe2K8FvyjigU9SsJDqIxCV/xpjyFobOSD2ZpzkvJ3TSc2sxCV/duqqH
- 9rhNCLf506DZRuK6/E6OMSxSCgd10sCuRUa65rSZi/phw+xVVG0TyGQALew7UGsk1yVO
- 0RPFbf1FV2JlADdHEsrj9P/opdSokEh5d2xNpHblvbSsECYAl4AfgIYPdDfH4/18AxD/
- yRLBDs+u0BvCi11X9fTlm+3QkNSzzt+xYFz8SAHoPfJeDmQX0XE/C9DUyQoEIu1M7H7I
- QWyg==
-X-Gm-Message-State: AOJu0YyGTBv0ixUSoxjg0CO4XbFNTJS52k/DRpf9PaTH8RG38fzZvhB6
- QgzpcLyz8dsY3F1aLNb8NZ4ejm/ZyTEZkh0p5nAqfNFErFb2ZAwB1RAjehW5iSMlNebQ6AVcf0v
- nfOwvgisXo5+9sb6zQTdrDTsEYe4Gd91viqMqAnBYy1FT7B4AAKre
-X-Gm-Gg: ASbGncuDRcFSpJXD4JH5KJQCHgzpLSCrX85T5enMOYyAd3EMxWXu/AaecpRBRfcLU+D
- aZDqy1Dwpr0P4b/qhqoaDd1bgfr5uQFDV6uIgH8OJKS4balJtJNf1kOWLBA1rl9QnH7O5Wkb5kT
- uAtapnx+DiIbZyx3oaKa20p8Rbyi2McqUF+foWhAeRNDakt1uRCj66U+Y60D1Wa1dMDU2LZG3ok
- Oodq+2POuINnMaac89YBK6r2oLGqUnr8BKYYNUygwV1v8B/yLKERGxXTpSCQSmdNsZPlq5WMA==
-X-Received: by 2002:a17:907:6ea9:b0:aae:ebfe:cedb with SMTP id
- a640c23a62f3a-ab38b3db509mr1783508066b.51.1737474896468; 
- Tue, 21 Jan 2025 07:54:56 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IFlS2ZN9Qf2r5ZXbsgGbYR4GGElmqq9C1u2I/VJE8t2QjHIZBRR6J80qz4YVuJpeFmQ7WzUUw==
-X-Received: by 2002:a17:907:6ea9:b0:aae:ebfe:cedb with SMTP id
- a640c23a62f3a-ab38b3db509mr1783505066b.51.1737474895971; 
- Tue, 21 Jan 2025 07:54:55 -0800 (PST)
-Received: from [192.168.10.3] ([176.206.124.70])
- by smtp.googlemail.com with ESMTPSA id
- a640c23a62f3a-ab384ce21d7sm773455166b.69.2025.01.21.07.54.53
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 21 Jan 2025 07:54:55 -0800 (PST)
-Message-ID: <525436d7-e857-4ed7-9d53-462c7f28a893@redhat.com>
-Date: Tue, 21 Jan 2025 16:54:51 +0100
+ bh=UuwNIpKwklYn+V6xxtkFTRVjA4+AvUAZhHjmaGkwoOM=;
+ b=CeSQgWtwpaCTTYtQEz3aHMUH5XH2uOw0JHR2e7fIeDxJxJm5aUBePG4dGeJkmp3NFu
+ NbqCieHGAKJq+BMT3w1umde/nAiUJN+fmWIrdl3b+0kfJc5LwcswCyIMAjGkVmw2b2Te
+ Tjjpgkxvt1lmRmSY4cqMravfi122ZIOlOmEch2hkr52af1Hv6AslNfsie6Vr79VS/Fuq
+ VrELTKZ6bVNkFlXLO2/+hZI8C5HyFdZjMcnzSA+sFaYTfGc1FuDqcv/Obm1hSaqHeEj6
+ U+GkmGBFhAZ3M3FEyS9gCrgNfWOXwfeA7XXMwzKiU0YK0iXF60RapWRXi9lTwrFMrHjX
+ rKug==
+X-Gm-Message-State: AOJu0Ywb8GG6fyvYmcwUtQn0B1iV584yBY44Q4kWFaLn6OasDVsPc75r
+ 0v8EeXMhLraYRikmhk3UMn42PXQLRVq2RsShCwRbxdMefrCaJYkzl0liL9iTVmxPImsFF9YjYVd
+ 8JoU=
+X-Gm-Gg: ASbGncswPqRe0AkFu06N8sraq10Bf+mZgs/xImjF/n3pefXfGLTjvhu57rya7qTaKaG
+ RtwW/IN5x2MfKcxukSG5HS6T0xIZWfc3GVS5dx99QfVXcgj9mztkgtjoiq5NOw7c27NVoWbxKd+
+ AxEMYByzrKNCusUEClxsrx78GMSLjvNtghb0rIE1rXkhdjNifTxv0u2Kk5+LEb5Nk73PyYxazcp
+ ahHjdp2K+zfNVt9km+r3D/PGyEVGeR4lGw9ODlJe6u4QVdHO3WgF5AJ2VUioZbwK7tETv6G48yz
+ JvtSz2ubrFnZt2LbcK645pD37uqyWsZBGoIxMoWoZTcK
+X-Google-Smtp-Source: AGHT+IEq5laFeJueoqSWUDLntPADYW71SWwzuNcXBTNFyssQG9QxSzyYrSezjvoz4I3D0ATqbJEIGQ==
+X-Received: by 2002:a05:600c:3844:b0:434:ff08:202b with SMTP id
+ 5b1f17b1804b1-438913dbc09mr169673425e9.12.1737474928057; 
+ Tue, 21 Jan 2025 07:55:28 -0800 (PST)
+Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
+ [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-4389041f610sm182231005e9.20.2025.01.21.07.55.27
+ (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
+ Tue, 21 Jan 2025 07:55:27 -0800 (PST)
+From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+To: qemu-devel@nongnu.org
+Cc: Alberto Garcia <berto@igalia.com>, Bernhard Beschow <shentey@gmail.com>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Subject: [PATCH v3 0/3] hw/ipack: Minor dust removal
+Date: Tue, 21 Jan 2025 16:55:23 +0100
+Message-ID: <20250121155526.29982-1-philmd@linaro.org>
+X-Mailer: git-send-email 2.47.1
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] stub: Fix build failure with --enable-user
- --disable-system --enable-tools
-To: Zhao Liu <zhao1.liu@intel.com>
-Cc: qemu-devel@nongnu.org, qemu-stable@nongnu.org
-References: <20250121154318.214680-1-zhao1.liu@intel.com>
-From: Paolo Bonzini <pbonzini@redhat.com>
-Content-Language: en-US
-Autocrypt: addr=pbonzini@redhat.com; keydata=
- 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
-In-Reply-To: <20250121154318.214680-1-zhao1.liu@intel.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -51
-X-Spam_score: -5.2
-X-Spam_bar: -----
-X-Spam_report: (-5.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-2.996,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.086,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::32f;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x32f.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -145,60 +96,35 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 1/21/25 16:43, Zhao Liu wrote:
-> Configuring "--enable-user --disable-system --enable-tools" causes the
-> build failure with the following information:
-> 
-> /usr/bin/ld: libhwcore.a.p/hw_core_qdev.c.o: in function `device_finalize':
-> /qemu/build/../hw/core/qdev.c:688: undefined reference to `qapi_event_send_device_deleted'
-> collect2: error: ld returned 1 exit status
-> 
-> To fix the above issue, add qdev.c stub when build with `have_tools`.
-> 
-> With this fix, QEMU could be successfully built in the following cases:
->   --enable-user --disable-system --enable-tools
->   --enable-user --disable-system --disable-tools
->   --enable-user --disable-system
-> 
-> Cc: qemu-stable@nongnu.org
-> Fixes: 388b849fb6c3 ("stubs: avoid duplicate symbols in libqemuutil.a")
-> Resolves: https://gitlab.com/qemu-project/qemu/-/issues/2766
-> Signed-off-by: Zhao Liu <zhao1.liu@intel.com>
-> ---
->   stubs/meson.build | 4 ++--
->   1 file changed, 2 insertions(+), 2 deletions(-)
-> 
-> diff --git a/stubs/meson.build b/stubs/meson.build
-> index e91614a874dc..a8b3aeb56450 100644
-> --- a/stubs/meson.build
-> +++ b/stubs/meson.build
-> @@ -57,8 +57,8 @@ if have_user
->     stub_ss.add(files('cpu-synchronize-state.c'))
->   
->     # Stubs for QAPI events.  Those can always be included in the build, but
-> -  # they are not built at all for --disable-system --disable-tools builds.
-> -  if not (have_system or have_tools)
-> +  # they are not built at all for --disable-system builds.
-> +  if not have_system
->       stub_ss.add(files('qdev.c'))
->     endif
+Clarify what is what in Kconfig,
+replace qemu_allocate_irqs() by qemu_init_irq().
 
-Matches
+Since v2:
+- Introduce qemu_init_irqs (Bernhard)
 
-if have_system
-   qapi_all_modules += [
-     'acpi',
-     'audio',
-     'cryptodev',
-     'qdev',
-     'pci',
-     'rocker',
-     'tpm',
-   ]
-endif
+Since v1:
+- s/qemu_irq/IRQState/ in IPackDevice state
 
-Queued, thanks.
+Philippe Mathieu-Daudé (3):
+  hw/irq: Introduce qemu_init_irqs() helper
+  hw/ipack: Clarify KConfig symbols
+  hw/ipack: Remove legacy qemu_allocate_irqs() use
 
-Paolo
+ include/hw/ipack/ipack.h       |  7 ++-----
+ include/hw/irq.h               | 11 +++++++++++
+ hw/char/ipoctal232.c           |  4 ++--
+ hw/core/irq.c                  |  8 ++++++++
+ hw/ipack/ipack.c               |  5 +----
+ hw/ipack/tpci200.c             |  6 +++---
+ hw/char/Kconfig                |  5 +++++
+ hw/char/meson.build            |  2 +-
+ hw/ipack/Kconfig               |  4 ++++
+ hw/ipack/meson.build           |  3 ++-
+ tests/qtest/libqos/meson.build |  4 +++-
+ tests/qtest/meson.build        |  4 +++-
+ 12 files changed, 45 insertions(+), 18 deletions(-)
+
+-- 
+2.47.1
 
 
