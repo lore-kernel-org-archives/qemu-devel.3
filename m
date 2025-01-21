@@ -4,100 +4,115 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 49700C02182
-	for <qemu-devel@archiver.kernel.org>; Tue, 21 Jan 2025 17:40:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1547CC0218B
+	for <qemu-devel@archiver.kernel.org>; Tue, 21 Jan 2025 17:41:08 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1taIEJ-0005KP-NK; Tue, 21 Jan 2025 12:40:03 -0500
+	id 1taIEV-0005Pl-EV; Tue, 21 Jan 2025 12:40:11 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1taIEA-0005H1-MW
- for qemu-devel@nongnu.org; Tue, 21 Jan 2025 12:39:51 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <brian.cain@oss.qualcomm.com>)
+ id 1taIEB-0005Ix-Qu
+ for qemu-devel@nongnu.org; Tue, 21 Jan 2025 12:39:53 -0500
+Received: from mx0a-0031df01.pphosted.com ([205.220.168.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1taIE8-0002yo-MG
- for qemu-devel@nongnu.org; Tue, 21 Jan 2025 12:39:50 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1737481186;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=SJpAcBBlL0DkF/rqvAnTAxWXBbsgTzsvUrzs6vqSQas=;
- b=CHPfyteA96vHwkYh1zAWfjRwHAJ6xsZIKqmbpuznZuAUMxUaeUSuBM+zZPlurR5/VIRNFO
- 56v+YwLOCeoMqO0PB+v9mPq4Ky/sEaN//sjzu9f8tcYFKPtsZoiVP0LHy0B0YxUYwgrsLH
- 3nPDl+mmQOCFlQo9JlOKmBSFTd0IS0s=
-Received: from mail-qt1-f197.google.com (mail-qt1-f197.google.com
- [209.85.160.197]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-449-trF_7XHAO_-7S2SRketxlw-1; Tue, 21 Jan 2025 12:39:45 -0500
-X-MC-Unique: trF_7XHAO_-7S2SRketxlw-1
-X-Mimecast-MFC-AGG-ID: trF_7XHAO_-7S2SRketxlw
-Received: by mail-qt1-f197.google.com with SMTP id
- d75a77b69052e-468f80df8caso108565721cf.2
- for <qemu-devel@nongnu.org>; Tue, 21 Jan 2025 09:39:45 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <brian.cain@oss.qualcomm.com>)
+ id 1taIE9-0002zE-Tp
+ for qemu-devel@nongnu.org; Tue, 21 Jan 2025 12:39:51 -0500
+Received: from pps.filterd (m0279862.ppops.net [127.0.0.1])
+ by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 50LA40eZ017865
+ for <qemu-devel@nongnu.org>; Tue, 21 Jan 2025 17:39:48 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+ cc:content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+ urqt7a22dhLPtw1A6TPrAusY6/mCkSDM1vs/YAPMn5w=; b=PoQbsQ6jOqqsoXpJ
+ EHszinBtOI5uluh9wNOzNzKRCujZUe5TC/1o1gl4dlrb4IBArMTWsrBtqEFdWKOy
+ MdcXhcgVaC2KqUAKuYh7vt2dnd3rOl7A2inrsvsILQL4REfdj5crJllzrlJ/j5Jy
+ 9sEN7Qrz2i07nU0h2eOvM1IGHdA0ULQiWzw22tdzUArej5zzfyPNMsJFF/jF5vYQ
+ Zn7q2vfdOdyHh4UqTniGAczRtmAEChO1P7Jc9gy0UUQhDpMLSC4k+xDvka76zLXa
+ YTsigGqmGYkDra+TZsFgk2jkbU2/tgKLV/K3Fh6AQyZZodE1DwK/sanmfa19it1b
+ qKAqCw==
+Received: from mail-qv1-f72.google.com (mail-qv1-f72.google.com
+ [209.85.219.72])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 44a9gcs97a-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
+ for <qemu-devel@nongnu.org>; Tue, 21 Jan 2025 17:39:47 +0000 (GMT)
+Received: by mail-qv1-f72.google.com with SMTP id
+ 6a1803df08f44-6e19e09cc20so106219816d6.2
+ for <qemu-devel@nongnu.org>; Tue, 21 Jan 2025 09:39:47 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1737481184; x=1738085984;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=SJpAcBBlL0DkF/rqvAnTAxWXBbsgTzsvUrzs6vqSQas=;
- b=wjsJ+dkN8Mdb8QPOj1x9MWsMdybz5gUc8DmdIgeOKsNjnL2zLd8SHTJK18zVluLpgc
- K10USWfP9KFaAcWOCQuXdwB/7Fv0NgHrKKmKEOjTVEEzJa++0srWpUf7E3hpSseew3Qm
- 2ap2mcCnpnWzOIz3+1SaXdTLModIB44vxYuBxFm8OxwDi6gooZyrzfoOhBbdCifDlRtN
- XIs5nkcgMXDegUDp3yorPOxKTx5Bwc7O+k1fvEfKn+YaUuC41g0ns4CoNDrAdMOWVpS4
- 1MgWt82wjwKdDP/vQTLGxT7XqXWQmTgHfgd4wRQRpmNlL/M5CBAbexXjpuBf7/KEmirP
- cXmA==
-X-Gm-Message-State: AOJu0YyMezNCefx9wD4g4rRN8xbKJFshmGUKueJMKnBsfbgPC68ryCfl
- O84QWIk2pO9KVoYUEMTlMPGtVlcbEtSDpG79IeepAT7QtUWhGG+1sM17a+tqNqu3g7tLRxORxv5
- /ra62/FYJyX14qC5+sBtp1qgFmXehEX3dgI4dnYl6Q2Z3MEiWMlS0
-X-Gm-Gg: ASbGncuf0Kvesxxfc6aNBqAcrC2FAfvz1L91/poIGAgQarbQKujL/TCsHI+r3SCkPEE
- Jl9y5Hx6NOHFtVM4DCpVtOcTKJs2NeHp7dYOYCZMKvYt5668cVJcieW/6q5hBIoRxTJqPMhAgZS
- QHP81f7B1/mRN9S0jEgrst6XjVPMw3rlXUjKZwLsHwZShmazTZwAG8iIx1IE4IAjw13XA78h22C
- jJBQtSxmIbZlnro623CZCV5rhSZG3cYXUsBZ6E65nQKq3N9LXkK6Mme3iAK6cwR1jeSbe1yilO6
- CP+i6ri5F6Jxnnu4wJOUiM59fQMVz5Q=
-X-Received: by 2002:a05:622a:593:b0:46c:716f:d76 with SMTP id
- d75a77b69052e-46e12a54b3cmr222521761cf.12.1737481184516; 
- Tue, 21 Jan 2025 09:39:44 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IGSOzWJGHqmg9LOa5rr5rY8CrqVpDRBLBM3pf64QCL1gsb574jLKWMD64nEaccRrEDcspqvnQ==
-X-Received: by 2002:a05:622a:593:b0:46c:716f:d76 with SMTP id
- d75a77b69052e-46e12a54b3cmr222521401cf.12.1737481184132; 
- Tue, 21 Jan 2025 09:39:44 -0800 (PST)
-Received: from x1n (pool-99-254-114-190.cpe.net.cable.rogers.com.
- [99.254.114.190]) by smtp.gmail.com with ESMTPSA id
- d75a77b69052e-46e1030e4ddsm56320121cf.40.2025.01.21.09.39.42
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 21 Jan 2025 09:39:43 -0800 (PST)
-Date: Tue, 21 Jan 2025 12:39:40 -0500
-From: Peter Xu <peterx@redhat.com>
-To: Michael Roth <michael.roth@amd.com>
-Cc: qemu-devel@nongnu.org, kvm@vger.kernel.org,
- Tom Lendacky <thomas.lendacky@amd.com>,
- Paolo Bonzini <pbonzini@redhat.com>,
- Daniel P =?utf-8?B?LiBCZXJyYW5nw6k=?= <berrange@redhat.com>,
- Markus Armbruster <armbru@redhat.com>, Pankaj Gupta <pankaj.gupta@amd.com>,
- Xiaoyao Li <xiaoyao.li@intel.com>,
- Isaku Yamahata <isaku.yamahata@linux.intel.com>,
- David Hildenbrand <david@redhat.com>
-Subject: Re: [PATCH v3 07/49] HostMem: Add mechanism to opt in kvm guest
- memfd via MachineState
-Message-ID: <Z4_b3Lrpbnyzyros@x1n>
-References: <20240320083945.991426-1-michael.roth@amd.com>
- <20240320083945.991426-8-michael.roth@amd.com>
+ d=1e100.net; s=20230601; t=1737481186; x=1738085986;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=urqt7a22dhLPtw1A6TPrAusY6/mCkSDM1vs/YAPMn5w=;
+ b=ewx2JXw5FLHC2+IExTrpwzPYDdumissCJ0wAVD7w0Q9Nwqxq/0bqQe9h7sb7nFuOm8
+ vabxjQLUSZaIS+qVnRAWlDdW1N7/moy+Q9emZflvvH/eO+tbury+rKoygmGL3piBDapq
+ yHDyPmKKRFDTAxJWeu6lzwXYUjBxytJSqIU2H3/oeLN7oE2Ea2xIZaU9Vpk9KL+I2Ipk
+ KCPU8zfSjJzlZsafpQu5U3L5kSIzjLxB7uxPQDbdylKT3rvyHLBqbGwkVIwS0GzvqZ33
+ tgVNfwyDA+2F1tb6s2S8AKHkR5y3JDEuubAlSvPS4J7V4pa9V1KxmhJrlc2rLhqwpkq9
+ f5Sw==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCXrsaRUF2ToyS+8PTOyEbsYPilxx+AfiBxjLivsAS0WqYnznSBTR2gZeokHf7VQt0RQ9usyljWnDRuj@nongnu.org
+X-Gm-Message-State: AOJu0YxMpvmIU9P8cRF2d74SF8UzWothkphe4fDeaeW6JkKtUapybbbn
+ RPcV2OCuI2bRBGzmO9JxQawrS4rCsxLrxfi7w9yaN8R7gGbFrQDMWZJjzaQpseTrNRg4cgibdFG
+ mbsg8qP5OkBavWtZolL+dBNVZY63G53wnCeKD6LmaGxLGgy8CFYFQXw==
+X-Gm-Gg: ASbGncusP56zOBZgIyi8CZ9yKtAQ4or5pMSkzKTapf4T68GVal4W1AOJpRo3Szg04dp
+ 6NmVHtUa6DfqHvWfb0YWafPcMMbJngRBEVrRHhg+ZLJR2Zo7XGo3qxI9Bd+spqdphKF6ASP9ufV
+ KGNWAv9cwy62ZvMCrr2V/FpG1thXZgrp8bTicOfGrFh3/bWxplp3e/VLCS96WwEW9r2r29330JF
+ d1kgVxRHrdaZVp3LbyfriCZDJc0Fzt9LZo3EuftCnwuqtKNG54cPgJlLtgHQTGpaaYQHz7xamWc
+ erGZlzSjEjzzQDKp5p8yLsQk4nUgIKkROqj2sm2EPoVqQ/oFCZEwyVgciMe64N7EJUTJzIQ=
+X-Received: by 2002:ad4:596c:0:b0:6d8:aa52:74a3 with SMTP id
+ 6a1803df08f44-6e1b2213f57mr284730396d6.28.1737481186252; 
+ Tue, 21 Jan 2025 09:39:46 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IG+5QDXGtbd1P6vJg1qxSMUJ5SCfZlVLCyU4FnnJfYtdUe/GN/qfPZGUsVZ+mVbZrhHWhrWHA==
+X-Received: by 2002:ad4:596c:0:b0:6d8:aa52:74a3 with SMTP id
+ 6a1803df08f44-6e1b2213f57mr284729986d6.28.1737481185835; 
+ Tue, 21 Jan 2025 09:39:45 -0800 (PST)
+Received: from [192.168.1.157] (104-54-226-75.lightspeed.austtx.sbcglobal.net.
+ [104.54.226.75]) by smtp.gmail.com with ESMTPSA id
+ d75a77b69052e-46e104027afsm54879231cf.50.2025.01.21.09.39.45
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Tue, 21 Jan 2025 09:39:45 -0800 (PST)
+Message-ID: <8df0bb65-9482-4b04-81ae-a8b7c5292142@oss.qualcomm.com>
+Date: Tue, 21 Jan 2025 11:39:44 -0600
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20240320083945.991426-8-michael.roth@amd.com>
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=peterx@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -50
-X-Spam_score: -5.1
-X-Spam_bar: -----
-X-Spam_report: (-5.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-2.996,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 01/28] target/hexagon: Ensure not being build on system
+ emulation
+To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ qemu-devel@nongnu.org
+Cc: qemu-arm@nongnu.org, qemu-s390x@nongnu.org, qemu-riscv@nongnu.org,
+ qemu-ppc@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>,
+ Richard Henderson <richard.henderson@linaro.org>
+References: <20250121142341.17001-1-philmd@linaro.org>
+ <20250121142341.17001-2-philmd@linaro.org>
+Content-Language: en-US
+From: Brian Cain <brian.cain@oss.qualcomm.com>
+In-Reply-To: <20250121142341.17001-2-philmd@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+X-Proofpoint-GUID: vXLrcrtHEXNfwfwcFKHpM2QADtuW75bL
+X-Proofpoint-ORIG-GUID: vXLrcrtHEXNfwfwcFKHpM2QADtuW75bL
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1057,Hydra:6.0.680,FMLib:17.12.68.34
+ definitions=2025-01-21_07,2025-01-21_03,2024-11-22_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ impostorscore=0
+ malwarescore=0 lowpriorityscore=0 suspectscore=0 phishscore=0 spamscore=0
+ mlxscore=0 bulkscore=0 clxscore=1015 adultscore=0 priorityscore=1501
+ mlxlogscore=726 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2411120000 definitions=main-2501210141
+Received-SPF: pass client-ip=205.220.168.131;
+ envelope-from=brian.cain@oss.qualcomm.com; helo=mx0a-0031df01.pphosted.com
+X-Spam_score_int: -26
+X-Spam_score: -2.7
+X-Spam_bar: --
+X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -113,175 +128,38 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, Mar 20, 2024 at 03:39:03AM -0500, Michael Roth wrote:
-> From: Xiaoyao Li <xiaoyao.li@intel.com>
-> 
-> Add a new member "guest_memfd" to memory backends. When it's set
-> to true, it enables RAM_GUEST_MEMFD in ram_flags, thus private kvm
-> guest_memfd will be allocated during RAMBlock allocation.
-> 
-> Memory backend's @guest_memfd is wired with @require_guest_memfd
-> field of MachineState. It avoid looking up the machine in phymem.c.
-> 
-> MachineState::require_guest_memfd is supposed to be set by any VMs
-> that requires KVM guest memfd as private memory, e.g., TDX VM.
-> 
-> Signed-off-by: Xiaoyao Li <xiaoyao.li@intel.com>
-> Reviewed-by: David Hildenbrand <david@redhat.com>
+
+On 1/21/2025 8:23 AM, Philippe Mathieu-Daudé wrote:
+> Currently only user emulation is supported.
+> Assert no target code is built for system emulation.
+>
+> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 > ---
-> Changes in v4:
->  - rename "require_guest_memfd" to "guest_memfd" in struct
->    HostMemoryBackend;	(David Hildenbrand)
-> Signed-off-by: Michael Roth <michael.roth@amd.com>
-> ---
->  backends/hostmem-file.c  | 1 +
->  backends/hostmem-memfd.c | 1 +
->  backends/hostmem-ram.c   | 1 +
->  backends/hostmem.c       | 1 +
->  hw/core/machine.c        | 5 +++++
->  include/hw/boards.h      | 2 ++
->  include/sysemu/hostmem.h | 1 +
->  7 files changed, 12 insertions(+)
-> 
-> diff --git a/backends/hostmem-file.c b/backends/hostmem-file.c
-> index ac3e433cbd..3c69db7946 100644
-> --- a/backends/hostmem-file.c
-> +++ b/backends/hostmem-file.c
-> @@ -85,6 +85,7 @@ file_backend_memory_alloc(HostMemoryBackend *backend, Error **errp)
->      ram_flags |= fb->readonly ? RAM_READONLY_FD : 0;
->      ram_flags |= fb->rom == ON_OFF_AUTO_ON ? RAM_READONLY : 0;
->      ram_flags |= backend->reserve ? 0 : RAM_NORESERVE;
-> +    ram_flags |= backend->guest_memfd ? RAM_GUEST_MEMFD : 0;
->      ram_flags |= fb->is_pmem ? RAM_PMEM : 0;
->      ram_flags |= RAM_NAMED_FILE;
->      return memory_region_init_ram_from_file(&backend->mr, OBJECT(backend), name,
-> diff --git a/backends/hostmem-memfd.c b/backends/hostmem-memfd.c
-> index 3923ea9364..745ead0034 100644
-> --- a/backends/hostmem-memfd.c
-> +++ b/backends/hostmem-memfd.c
-> @@ -55,6 +55,7 @@ memfd_backend_memory_alloc(HostMemoryBackend *backend, Error **errp)
->      name = host_memory_backend_get_name(backend);
->      ram_flags = backend->share ? RAM_SHARED : 0;
->      ram_flags |= backend->reserve ? 0 : RAM_NORESERVE;
-> +    ram_flags |= backend->guest_memfd ? RAM_GUEST_MEMFD : 0;
->      return memory_region_init_ram_from_fd(&backend->mr, OBJECT(backend), name,
->                                            backend->size, ram_flags, fd, 0, errp);
->  }
-> diff --git a/backends/hostmem-ram.c b/backends/hostmem-ram.c
-> index d121249f0f..f7d81af783 100644
-> --- a/backends/hostmem-ram.c
-> +++ b/backends/hostmem-ram.c
-> @@ -30,6 +30,7 @@ ram_backend_memory_alloc(HostMemoryBackend *backend, Error **errp)
->      name = host_memory_backend_get_name(backend);
->      ram_flags = backend->share ? RAM_SHARED : 0;
->      ram_flags |= backend->reserve ? 0 : RAM_NORESERVE;
-> +    ram_flags |= backend->guest_memfd ? RAM_GUEST_MEMFD : 0;
->      return memory_region_init_ram_flags_nomigrate(&backend->mr, OBJECT(backend),
->                                                    name, backend->size,
->                                                    ram_flags, errp);
+>   target/hexagon/cpu.h | 4 ++++
+>   1 file changed, 4 insertions(+)
+>
+> diff --git a/target/hexagon/cpu.h b/target/hexagon/cpu.h
+> index 79e60d4bfa1..f78c8f9c2a0 100644
+> --- a/target/hexagon/cpu.h
+> +++ b/target/hexagon/cpu.h
+> @@ -26,6 +26,10 @@
+>   #include "mmvec/mmvec.h"
+>   #include "hw/registerfields.h"
+>   
+> +#ifndef CONFIG_USER_ONLY
+> +#error "Hexagon does not support system emulation"
+> +#endif
+> +
+>   #define NUM_PREGS 4
+>   #define TOTAL_PER_THREAD_REGS 64
+>   
 
-These change look a bit confusing to me, as I don't see how gmemfd can be
-used with either file or ram typed memory backends..
+We hope to mitigate this one in the not-too-distant future. Staged 
+commits on my tree implement system emulation, undergoing some 
+review/revision now. ;)
 
-When specified gmemfd=on with those, IIUC it'll allocate both the memory
-(ramblock->host) and gmemfd, but without using ->host.  Meanwhile AFAIU the
-ramblock->host will start to conflict with gmemfd in the future when it
-might be able to be mapp-able (having valid ->host).
+But of course this change makes sense for the time being.
 
-I have a local fix for this (and actually more than below.. but starting
-from it), I'm not sure whether I overlooked something, but from reading the
-cover letter it's only using memfd backend which makes perfect sense to me
-so far.  I also don't know the planning of coco patches merging so I don't
-think even if valid this is urgent - I don't want to mess up on merging
-plans..  but still want to collect some comments on whether it's valid:
-
-===8<===
-
-From edfdf019ab01e99fb4ff417e30bb3692b4e3b922 Mon Sep 17 00:00:00 2001
-From: Peter Xu <peterx@redhat.com>
-Date: Tue, 21 Jan 2025 12:31:19 -0500
-Subject: [PATCH] hostmem: Disallow guest memfd for FILE or RAM typed backends
-
-Guest memfd has very special semantics, which by default doesn't have a
-path at all, meanwhile it won't proactively allocate anonymous memory.
-
-Currently:
-
-  - memory-backend-file: it is about creating a memory object based on a
-  path in the file system.  It doesn't apply to gmemfd.
-
-  - memory-backend-ram: it is about (mostly) trying to allocate anonymous
-  memories from the system (private or shared).  It also doesn't apply to
-  gmemfd.
-
-Forbid the two types of memory backends to gmemfd, but only allow
-memory-backend-memfd for it as of now.
-
-Signed-off-by: Peter Xu <peterx@redhat.com>
----
- backends/hostmem-file.c | 8 +++++++-
- backends/hostmem-ram.c  | 7 ++++++-
- 2 files changed, 13 insertions(+), 2 deletions(-)
-
-diff --git a/backends/hostmem-file.c b/backends/hostmem-file.c
-index 46321fda84..c94cf8441b 100644
---- a/backends/hostmem-file.c
-+++ b/backends/hostmem-file.c
-@@ -52,11 +52,18 @@ file_backend_memory_alloc(HostMemoryBackend *backend, Error **errp)
-         error_setg(errp, "can't create backend with size 0");
-         return false;
-     }
-+
-     if (!fb->mem_path) {
-         error_setg(errp, "mem-path property not set");
-         return false;
-     }
- 
-+    if (backend->guest_memfd) {
-+        error_setg(errp, "File backends do not support guest memfd. "
-+                   "Please use memfd backend");
-+        return false;
-+    }
-+
-     switch (fb->rom) {
-     case ON_OFF_AUTO_AUTO:
-         /* Traditionally, opening the file readonly always resulted in ROM. */
-@@ -86,7 +93,6 @@ file_backend_memory_alloc(HostMemoryBackend *backend, Error **errp)
-     ram_flags |= fb->readonly ? RAM_READONLY_FD : 0;
-     ram_flags |= fb->rom == ON_OFF_AUTO_ON ? RAM_READONLY : 0;
-     ram_flags |= backend->reserve ? 0 : RAM_NORESERVE;
--    ram_flags |= backend->guest_memfd ? RAM_GUEST_MEMFD : 0;
-     ram_flags |= fb->is_pmem ? RAM_PMEM : 0;
-     ram_flags |= RAM_NAMED_FILE;
-     return memory_region_init_ram_from_file(&backend->mr, OBJECT(backend), name,
-diff --git a/backends/hostmem-ram.c b/backends/hostmem-ram.c
-index 39aac6bf35..8125be217c 100644
---- a/backends/hostmem-ram.c
-+++ b/backends/hostmem-ram.c
-@@ -27,10 +27,15 @@ ram_backend_memory_alloc(HostMemoryBackend *backend, Error **errp)
-         return false;
-     }
- 
-+    if (backend->guest_memfd) {
-+        error_setg(errp, "File backends do not support guest memfd. "
-+                   "Please use memfd backend");
-+        return false;
-+    }
-+
-     name = host_memory_backend_get_name(backend);
-     ram_flags = backend->share ? RAM_SHARED : 0;
-     ram_flags |= backend->reserve ? 0 : RAM_NORESERVE;
--    ram_flags |= backend->guest_memfd ? RAM_GUEST_MEMFD : 0;
-     return memory_region_init_ram_flags_nomigrate(&backend->mr, OBJECT(backend),
-                                                   name, backend->size,
-                                                   ram_flags, errp);
--- 
-2.47.0
-===8<===
-
-Thanks,
-
--- 
-Peter Xu
+Reviewed-by: Brian Cain <brian.cain@oss.qualcomm.com>
 
 
