@@ -4,95 +4,58 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5E149C02181
-	for <qemu-devel@archiver.kernel.org>; Wed, 22 Jan 2025 08:38:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7379DC02181
+	for <qemu-devel@archiver.kernel.org>; Wed, 22 Jan 2025 08:39:01 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1taWFr-0006yi-LQ; Wed, 22 Jan 2025 03:38:31 -0500
+	id 1taWF1-0006Hx-HU; Wed, 22 Jan 2025 03:37:39 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1taWFm-0006uY-Gj
- for qemu-devel@nongnu.org; Wed, 22 Jan 2025 03:38:26 -0500
-Received: from mail-wm1-x329.google.com ([2a00:1450:4864:20::329])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1taWFj-0000k2-Su
- for qemu-devel@nongnu.org; Wed, 22 Jan 2025 03:38:26 -0500
-Received: by mail-wm1-x329.google.com with SMTP id
- 5b1f17b1804b1-43675b1155bso75615175e9.2
- for <qemu-devel@nongnu.org>; Wed, 22 Jan 2025 00:38:23 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1737535102; x=1738139902; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:content-language:references
- :cc:to:from:subject:user-agent:mime-version:date:message-id:from:to
- :cc:subject:date:message-id:reply-to;
- bh=CfYJLQU1nbRa4fINMBMM9iwWTJQ+3oWHm92lV+T+K50=;
- b=bB8+MOiuA20sL5TEDDBDt+pMHvVO/+dzVCKIHe5qGc5/335RLRJzG+qsVWHUk1CNlC
- 4bFLJBLww3e8LD5Nb+OIi8VsCz6XynbSbrzV7bpmSrHq5iKn40LppK5vcvrLkVGNNJl0
- NYoZJv/X6bOXL+g1ZeoZ60tazepytP4gXK/emGKpYxD+qFZK8W4y/3p2MosvJ/U3Xk3B
- X0G0cSJn4G2QZz71lzQ76O6sKVwdj15W+OvWB/BgIjj7fzEKSx7rWgE0fcCq505GDPv+
- eFqqqFklF0BQxDPuMfLQlX9mFqNg7zYy0MLzyqEZuyAr113opU0mTM0M0ilgrc4x4rlI
- 2Wow==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1737535102; x=1738139902;
- h=content-transfer-encoding:in-reply-to:content-language:references
- :cc:to:from:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=CfYJLQU1nbRa4fINMBMM9iwWTJQ+3oWHm92lV+T+K50=;
- b=qGVHxIUjjDYNVlXgJkhSobpoOwtxwOgeNtSZyLyDa9MjC/ddT2Hjdi3qnCdGTqp3DJ
- MeaziGMMwVg4RefQSXutOrvVUvrltljFH9gdEukgJ772ggfE3oXxzpqjGT9upGMTLNmD
- +g2Do0U2QvuAE49/gUEVwJs77uM+zJ/ei76Y/5zGcT+nA0EJaq7rxrI/icZDghVgWK1r
- 5cxjcTMN8ovER10rBE/yA+kNMKZwaogRtcu/m0wLggHMTdwKft7eH8eetAwtcZ+VHE0+
- lgTXKyaCBKHH3w3q6OGhPJmzDN7XuRDv7R9yTQFYPE7axHxgUt6muDvU2RC8e8xWXTuG
- 0V4g==
-X-Forwarded-Encrypted: i=1;
- AJvYcCVZjItoLaYYaRkjRgIkJnkCQhy1F5fGsoWNjrohHixXkTH3HeFl1el9arhSWtPcH9e7bID1B3bHxAGl@nongnu.org
-X-Gm-Message-State: AOJu0YzO+w/mW7OiT1IW6xNbnKXZxD9JU2570FLs58HvDfFPfF8x1QlZ
- 3ui7IaLCGyH8WUsduFRHrB3omF58A74ryzuyQmC+i9a5oGudasOIE6e3OHu4T0w=
-X-Gm-Gg: ASbGncv89ENXoaRPmXs7Opu4L9sC4utbL333sLqg/ohbft94E0/4OYGSGfjfQVmxKOK
- m14PjD8M495cGvkzPKGYK5dKdqz+I3PJYs6Ls6EkQqCGOVb9JEGC/lAy3j5k7lWaXzuEDzXzFsZ
- DMe2BJ9IGuEWUOxRDobfO8wFXO3mSqTL1BaytkEGTnIIAftjHHATEP39IRksFBeuZpCsyuOftYN
- 13987fuoIaAaaljCCvqQJqbEX0VjBRVN9CL3z0GWywSTGd/kNjiovZ8cdQ3HSTbA4Eh6oYa22kS
- AYBd3cPUZWazHP9m/YWVYhpZcXtNW3hd5lsDjA==
-X-Google-Smtp-Source: AGHT+IEanfFpshCO+ip8R0ZZ0uHY/MUCUVbwa6WLVFzq8Of/TCiHetYVstVZTa24KM9eD8PK/aMYkQ==
-X-Received: by 2002:a05:600c:4e93:b0:436:1b81:b65c with SMTP id
- 5b1f17b1804b1-438913df89fmr192119805e9.15.1737535102048; 
- Wed, 22 Jan 2025 00:38:22 -0800 (PST)
-Received: from [192.168.69.181] (88-187-86-199.subs.proxad.net.
- [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-438b31ae97dsm15876475e9.22.2025.01.22.00.38.20
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 22 Jan 2025 00:38:21 -0800 (PST)
-Message-ID: <9bb8aa7b-a464-4dfc-9c76-7ab50d195b2f@linaro.org>
-Date: Wed, 22 Jan 2025 09:38:20 +0100
+ (Exim 4.90_1) (envelope-from <ethan84@andestech.com>)
+ id 1taWEd-0006Dy-Gd; Wed, 22 Jan 2025 03:37:17 -0500
+Received: from 60-248-80-70.hinet-ip.hinet.net ([60.248.80.70]
+ helo=Atcsqr.andestech.com)
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <ethan84@andestech.com>)
+ id 1taWEZ-0000c4-3q; Wed, 22 Jan 2025 03:37:15 -0500
+Received: from mail.andestech.com (ATCPCS31.andestech.com [10.0.1.89])
+ by Atcsqr.andestech.com with ESMTPS id 50M8aYUR018565
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Wed, 22 Jan 2025 16:36:34 +0800 (+08)
+ (envelope-from ethan84@andestech.com)
+Received: from atcpcw16.andestech.com (10.0.1.106) by ATCPCS31.andestech.com
+ (10.0.1.89) with Microsoft SMTP Server (TLS) id 14.3.498.0; Wed, 22 Jan 2025
+ 16:36:34 +0800
+To: <qemu-devel@nongnu.org>
+CC: <richard.henderson@linaro.org>, <pbonzini@redhat.com>,
+ <palmer@dabbelt.com>, <alistair.francis@wdc.com>, <bmeng.cn@gmail.com>,
+ <liwei1518@gmail.com>, <dbarboza@ventanamicro.com>,
+ <zhiwei_liu@linux.alibaba.com>, <peterx@redhat.com>,
+ <david@redhat.com>, <philmd@linaro.org>, <qemu-riscv@nongnu.org>,
+ Ethan Chen <ethan84@andestech.com>
+Subject: [PATCH v10 2/8] memory: Introduce memory region fetch operation
+Date: Wed, 22 Jan 2025 16:36:11 +0800
+Message-ID: <20250122083617.3940240-3-ethan84@andestech.com>
+X-Mailer: git-send-email 2.42.0.345.gaab89be2eb.dirty
+In-Reply-To: <20250122083617.3940240-1-ethan84@andestech.com>
+References: <20250122083617.3940240-1-ethan84@andestech.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 1/4] Add support for emulation of CRC32 instructions
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-To: Aleksandar Rakic <rakicaleksandar1999@gmail.com>, qemu-devel@nongnu.org
-Cc: aleksandar.rakic@htecgroup.com, djordje.todorovic@htecgroup.com,
- cfu@mips.com, arikalo@gmail.com, peter.maydell@linaro.org,
- aurelien@aurel32.net, jiaxun.yang@flygoat.com, kwolf@redhat.com,
- hreitz@redhat.com, pbonzini@redhat.com, alex.bennee@linaro.org,
- pierrick.bouvier@linaro.org, berrange@redhat.com,
- Yongbok Kim <yongbok.kim@mips.com>,
- Aleksandar Markovic <amarkovic@wavecomp.com>
-References: <20241112164130.2396737-1-aleksandar.rakic@htecgroup.com>
- <20241112164130.2396737-3-aleksandar.rakic@htecgroup.com>
- <d136993d-48bc-4283-9de0-c956b5cac302@linaro.org>
-Content-Language: en-US
-In-Reply-To: <d136993d-48bc-4283-9de0-c956b5cac302@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::329;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x329.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Type: text/plain
+X-Originating-IP: [10.0.1.106]
+X-DKIM-Results: atcpcs31.andestech.com; dkim=none;
+X-DNSRBL: 
+X-MAIL: Atcsqr.andestech.com 50M8aYUR018565
+Received-SPF: pass client-ip=60.248.80.70; envelope-from=ethan84@andestech.com;
+ helo=Atcsqr.andestech.com
+X-Spam_score_int: -8
+X-Spam_score: -0.9
+X-Spam_bar: /
+X-Spam_report: (-0.9 / 5.0 requ) BAYES_00=-1.9,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ RDNS_DYNAMIC=0.982, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ TVD_RCVD_IP=0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -105,50 +68,238 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-to:  Ethan Chen <ethan84@andestech.com>
+From:  Ethan Chen via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 22/1/25 08:27, Philippe Mathieu-Daudé wrote:
-> On 12/11/24 17:41, Aleksandar Rakic wrote:
->> Add emulation of MIPS' CRC32 (Cyclic Redundancy Check) instructions.
->> Reuse zlib crc32() and Linux crc32c().
->>
->> Cherry-picked 4cc974938aee1588f852590509004e340c072940
->> from https://github.com/MIPS/gnutools-qemu
->>
->> Signed-off-by: Yongbok Kim <yongbok.kim@mips.com>
->> Signed-off-by: Aleksandar Markovic <amarkovic@wavecomp.com>
->> Signed-off-by: Aleksandar Rakic <aleksandar.rakic@htecgroup.com>
->> Reviewed-by: Aleksandar Rikalo <arikalo@gmail.com>
->> ---
->>   target/mips/helper.h             |  2 ++
->>   target/mips/meson.build          |  1 +
->>   target/mips/tcg/op_helper.c      | 26 ++++++++++++++++++++++++++
->>   target/mips/tcg/rel6.decode      |  5 +++++
->>   target/mips/tcg/rel6_translate.c | 14 ++++++++++++++
->>   target/mips/tcg/translate.c      | 25 +++++++++++++++++++++++++
->>   target/mips/tcg/translate.h      |  3 +++
->>   7 files changed, 76 insertions(+)
-> 
-> 
->> diff --git a/target/mips/tcg/rel6.decode b/target/mips/tcg/rel6.decode
->> index d6989cf56e..5074338aa5 100644
->> --- a/target/mips/tcg/rel6.decode
->> +++ b/target/mips/tcg/rel6.decode
->> @@ -16,11 +16,16 @@
->>   &r                  rs rt rd sa
->> +&special3_crc       rs rt c sz
->> +
->>   @lsa                ...... rs:5 rt:5 rd:5 ... sa:2 ......   &r
->> +@crc32              ...... rs:5 rt:5 ..... c:3 sz:2 ......   
->> &special3_crc
->>   LSA                 000000 ..... ..... ..... 000 .. 000101  @lsa
->>   DLSA                000000 ..... ..... ..... 000 .. 010101  @lsa
->> +CRC32               011111 ..... ..... 00000 ... .. 001111  @crc32
+Allow memory regions to have different behaviors for read and fetch
+operations.
 
-Are these really available on MIPS64? (Looking at MD00087 Revision 6.05)
+For example, the RISC-V IOPMP could raise an interrupt when the CPU
+tries to fetch from a non-executable region.
 
-> Interestingly the disassembly for that is in tree, hidden in commit
-> 99029be1c28 ("target/mips: Add implementation of GINVT instruction")...
+If the fetch operation for a memory region is not implemented, the read
+operation will still be used for fetch operations.
+
+Signed-off-by: Ethan Chen <ethan84@andestech.com>
+---
+ accel/tcg/cputlb.c    |   9 +++-
+ include/exec/memory.h |  27 +++++++++++
+ system/memory.c       | 104 ++++++++++++++++++++++++++++++++++++++++++
+ system/trace-events   |   2 +
+ 4 files changed, 140 insertions(+), 2 deletions(-)
+
+diff --git a/accel/tcg/cputlb.c b/accel/tcg/cputlb.c
+index b4ccf0cdcb..71c16a1ac1 100644
+--- a/accel/tcg/cputlb.c
++++ b/accel/tcg/cputlb.c
+@@ -1947,8 +1947,13 @@ static uint64_t int_ld_mmio_beN(CPUState *cpu, CPUTLBEntryFull *full,
+         this_size = 1 << this_mop;
+         this_mop |= MO_BE;
+ 
+-        r = memory_region_dispatch_read(mr, mr_offset, &val,
+-                                        this_mop, full->attrs);
++        if (type == MMU_INST_FETCH) {
++            r = memory_region_dispatch_fetch(mr, mr_offset, &val,
++                                             this_mop, full->attrs);
++        } else {
++            r = memory_region_dispatch_read(mr, mr_offset, &val,
++                                            this_mop, full->attrs);
++        }
+         if (unlikely(r != MEMTX_OK)) {
+             io_failed(cpu, full, addr, this_size, type, mmu_idx, r, ra);
+         }
+diff --git a/include/exec/memory.h b/include/exec/memory.h
+index 3ee1901b52..6166d697d9 100644
+--- a/include/exec/memory.h
++++ b/include/exec/memory.h
+@@ -273,6 +273,11 @@ struct MemoryRegionOps {
+                   hwaddr addr,
+                   uint64_t data,
+                   unsigned size);
++    /* Fetch from the memory region. @addr is relative to @mr; @size is
++     * in bytes. */
++    uint64_t (*fetch)(void *opaque,
++                      hwaddr addr,
++                      unsigned size);
+ 
+     MemTxResult (*read_with_attrs)(void *opaque,
+                                    hwaddr addr,
+@@ -284,6 +289,11 @@ struct MemoryRegionOps {
+                                     uint64_t data,
+                                     unsigned size,
+                                     MemTxAttrs attrs);
++    MemTxResult (*fetch_with_attrs)(void *opaque,
++                                    hwaddr addr,
++                                    uint64_t *data,
++                                    unsigned size,
++                                    MemTxAttrs attrs);
+ 
+     enum device_endian endianness;
+     /* Guest-visible constraints: */
+@@ -2604,6 +2614,23 @@ MemTxResult memory_region_dispatch_write(MemoryRegion *mr,
+                                          MemOp op,
+                                          MemTxAttrs attrs);
+ 
++
++/**
++ * memory_region_dispatch_fetch: perform a fetch directly to the specified
++ * MemoryRegion.
++ *
++ * @mr: #MemoryRegion to access
++ * @addr: address within that region
++ * @pval: pointer to uint64_t which the data is written to
++ * @op: size, sign, and endianness of the memory operation
++ * @attrs: memory transaction attributes to use for the access
++ */
++MemTxResult memory_region_dispatch_fetch(MemoryRegion *mr,
++                                         hwaddr addr,
++                                         uint64_t *pval,
++                                         MemOp op,
++                                         MemTxAttrs attrs);
++
+ /**
+  * address_space_init: initializes an address space
+  *
+diff --git a/system/memory.c b/system/memory.c
+index b17b5538ff..7f26f681f9 100644
+--- a/system/memory.c
++++ b/system/memory.c
+@@ -477,6 +477,51 @@ static MemTxResult memory_region_read_with_attrs_accessor(MemoryRegion *mr,
+     return r;
+ }
+ 
++static MemTxResult memory_region_fetch_accessor(MemoryRegion *mr,
++                                                hwaddr addr,
++                                                uint64_t *value,
++                                                unsigned size,
++                                                signed shift,
++                                                uint64_t mask,
++                                                MemTxAttrs attrs)
++{
++    uint64_t tmp;
++
++    tmp = mr->ops->fetch(mr->opaque, addr, size);
++    if (mr->subpage) {
++        trace_memory_region_subpage_fetch(get_cpu_index(), mr, addr, tmp, size);
++    } else if (trace_event_get_state_backends(TRACE_MEMORY_REGION_OPS_FETCH)) {
++        hwaddr abs_addr = memory_region_to_absolute_addr(mr, addr);
++        trace_memory_region_ops_fetch(get_cpu_index(), mr, abs_addr, tmp, size,
++                                     memory_region_name(mr));
++    }
++    memory_region_shift_read_access(value, shift, mask, tmp);
++    return MEMTX_OK;
++}
++
++static MemTxResult memory_region_fetch_with_attrs_accessor(MemoryRegion *mr,
++                                                          hwaddr addr,
++                                                          uint64_t *value,
++                                                          unsigned size,
++                                                          signed shift,
++                                                          uint64_t mask,
++                                                          MemTxAttrs attrs)
++{
++    uint64_t tmp = 0;
++    MemTxResult r;
++
++    r = mr->ops->fetch_with_attrs(mr->opaque, addr, &tmp, size, attrs);
++    if (mr->subpage) {
++        trace_memory_region_subpage_fetch(get_cpu_index(), mr, addr, tmp, size);
++    } else if (trace_event_get_state_backends(TRACE_MEMORY_REGION_OPS_FETCH)) {
++        hwaddr abs_addr = memory_region_to_absolute_addr(mr, addr);
++        trace_memory_region_ops_fetch(get_cpu_index(), mr, abs_addr, tmp, size,
++                                      memory_region_name(mr));
++    }
++    memory_region_shift_read_access(value, shift, mask, tmp);
++    return r;
++}
++
+ static MemTxResult memory_region_write_accessor(MemoryRegion *mr,
+                                                 hwaddr addr,
+                                                 uint64_t *value,
+@@ -1493,6 +1538,65 @@ MemTxResult memory_region_dispatch_read(MemoryRegion *mr,
+     return r;
+ }
+ 
++static MemTxResult memory_region_dispatch_fetch1(MemoryRegion *mr,
++                                                hwaddr addr,
++                                                uint64_t *pval,
++                                                unsigned size,
++                                                MemTxAttrs attrs)
++{
++    *pval = 0;
++
++    if (mr->ops->fetch) {
++        return access_with_adjusted_size(addr, pval, size,
++                                         mr->ops->impl.min_access_size,
++                                         mr->ops->impl.max_access_size,
++                                         memory_region_fetch_accessor,
++                                         mr, attrs);
++    } else if (mr->ops->fetch_with_attrs) {
++        return access_with_adjusted_size(addr, pval, size,
++            mr->ops->impl.min_access_size,
++            mr->ops->impl.max_access_size,
++            memory_region_fetch_with_attrs_accessor,
++            mr, attrs);
++    } else if (mr->ops->read) {
++        return access_with_adjusted_size(addr, pval, size,
++                                         mr->ops->impl.min_access_size,
++                                         mr->ops->impl.max_access_size,
++                                         memory_region_read_accessor,
++                                         mr, attrs);
++    } else {
++        return access_with_adjusted_size(addr, pval, size,
++                                         mr->ops->impl.min_access_size,
++                                         mr->ops->impl.max_access_size,
++                                         memory_region_read_with_attrs_accessor,
++                                         mr, attrs);
++    }
++}
++
++MemTxResult memory_region_dispatch_fetch(MemoryRegion *mr,
++                                        hwaddr addr,
++                                        uint64_t *pval,
++                                        MemOp op,
++                                        MemTxAttrs attrs)
++{
++    unsigned size = memop_size(op);
++    MemTxResult r;
++
++    if (mr->alias) {
++        return memory_region_dispatch_fetch(mr->alias,
++                                           mr->alias_offset + addr,
++                                           pval, op, attrs);
++    }
++    if (!memory_region_access_valid(mr, addr, size, false, attrs)) {
++        *pval = unassigned_mem_read(mr, addr, size);
++        return MEMTX_DECODE_ERROR;
++    }
++
++    r = memory_region_dispatch_fetch1(mr, addr, pval, size, attrs);
++    adjust_endianness(mr, pval, op);
++    return r;
++}
++
+ /* Return true if an eventfd was signalled */
+ static bool memory_region_dispatch_write_eventfds(MemoryRegion *mr,
+                                                     hwaddr addr,
+diff --git a/system/trace-events b/system/trace-events
+index 5bbc3fbffa..4e78bb515b 100644
+--- a/system/trace-events
++++ b/system/trace-events
+@@ -18,8 +18,10 @@ cpu_out(unsigned int addr, char size, unsigned int val) "addr 0x%x(%c) value %u"
+ # memory.c
+ memory_region_ops_read(int cpu_index, void *mr, uint64_t addr, uint64_t value, unsigned size, const char *name) "cpu %d mr %p addr 0x%"PRIx64" value 0x%"PRIx64" size %u name '%s'"
+ memory_region_ops_write(int cpu_index, void *mr, uint64_t addr, uint64_t value, unsigned size, const char *name) "cpu %d mr %p addr 0x%"PRIx64" value 0x%"PRIx64" size %u name '%s'"
++memory_region_ops_fetch(int cpu_index, void *mr, uint64_t addr, uint64_t value, unsigned size, const char *name) "cpu %d mr %p addr 0x%"PRIx64" value 0x%"PRIx64" size %u name '%s'"
+ memory_region_subpage_read(int cpu_index, void *mr, uint64_t offset, uint64_t value, unsigned size) "cpu %d mr %p offset 0x%"PRIx64" value 0x%"PRIx64" size %u"
+ memory_region_subpage_write(int cpu_index, void *mr, uint64_t offset, uint64_t value, unsigned size) "cpu %d mr %p offset 0x%"PRIx64" value 0x%"PRIx64" size %u"
++memory_region_subpage_fetch(int cpu_index, void *mr, uint64_t offset, uint64_t value, unsigned size) "cpu %d mr %p offset 0x%"PRIx64" value 0x%"PRIx64" size %u"
+ memory_region_ram_device_read(int cpu_index, void *mr, uint64_t addr, uint64_t value, unsigned size) "cpu %d mr %p addr 0x%"PRIx64" value 0x%"PRIx64" size %u"
+ memory_region_ram_device_write(int cpu_index, void *mr, uint64_t addr, uint64_t value, unsigned size) "cpu %d mr %p addr 0x%"PRIx64" value 0x%"PRIx64" size %u"
+ memory_region_sync_dirty(const char *mr, const char *listener, int global) "mr '%s' listener '%s' synced (global=%d)"
+-- 
+2.34.1
 
 
