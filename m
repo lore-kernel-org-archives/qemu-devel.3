@@ -4,63 +4,86 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B07AFC02182
-	for <qemu-devel@archiver.kernel.org>; Wed, 22 Jan 2025 13:51:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9C729C02181
+	for <qemu-devel@archiver.kernel.org>; Wed, 22 Jan 2025 14:00:09 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tab8E-0000aG-64; Wed, 22 Jan 2025 08:50:58 -0500
+	id 1tabGo-0003YT-CS; Wed, 22 Jan 2025 08:59:50 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1tab8C-0000a4-Cf
- for qemu-devel@nongnu.org; Wed, 22 Jan 2025 08:50:56 -0500
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1tabGc-0003Vp-VG
+ for qemu-devel@nongnu.org; Wed, 22 Jan 2025 08:59:43 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1tab89-00013Z-HF
- for qemu-devel@nongnu.org; Wed, 22 Jan 2025 08:50:56 -0500
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1tabGY-0004QW-1E
+ for qemu-devel@nongnu.org; Wed, 22 Jan 2025 08:59:36 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1737553852;
+ s=mimecast20190719; t=1737554369;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=sN68ytzOJ93ZMYaQFdqBzQDOZRpQuxu+ISWNSGQZwV0=;
- b=jKW9H/tjyCSSxqVtF65VigavXrTYzfZIdsIWW33ElwWsM/OGZtnbA0nzzhumnln1C93PGq
- OUfJNFGbgzJsfi19aCxt9WdQPDFhFL2vchQ6hFniko9LXfO20aUR7L7qS1WcDsBSawHYZI
- 79kl7L2yhfKroUisG269UMWU5wxqdrM=
-Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-58--GjRMh9AOKOPTNgP0JY9BQ-1; Wed,
- 22 Jan 2025 08:50:49 -0500
-X-MC-Unique: -GjRMh9AOKOPTNgP0JY9BQ-1
-X-Mimecast-MFC-AGG-ID: -GjRMh9AOKOPTNgP0JY9BQ
-Received: from mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.40])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 3141D19560B8; Wed, 22 Jan 2025 13:50:48 +0000 (UTC)
-Received: from redhat.com (unknown [10.39.193.195])
- by mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id B39EC19560AA; Wed, 22 Jan 2025 13:50:45 +0000 (UTC)
-Date: Wed, 22 Jan 2025 14:50:43 +0100
-From: Kevin Wolf <kwolf@redhat.com>
-To: Peter Xu <peterx@redhat.com>
-Cc: qemu-devel@nongnu.org, Stefan Hajnoczi <stefanha@redhat.com>,
- Fabiano Rosas <farosas@suse.de>, Paolo Bonzini <pbonzini@redhat.com>,
- Peter Maydell <peter.maydell@linaro.org>, s_sourceforge@nedprod.com,
- Maxim Levitsky <mlevitsk@redhat.com>
-Subject: Re: [PATCH v2 0/3] scripts/qemu-gdb: Make coroutine dumps to work
- with coredumps
-Message-ID: <Z5D3s1WwzV0MKi6Q@redhat.com>
-References: <20241212204801.1420528-1-peterx@redhat.com>
+ bh=FIz6DHsHZHdFwPH//tfGVzWId4nWxzbmFy4X7m4czkg=;
+ b=UwE+AdM6pWYJ9DtJcKWCY1K4BktRdNWx1iasat0QBKkNIjp4dqocwM2eGrYX2hJnh5mAmI
+ q6yhW8/99QlUi1AhcaX7YY1D+4+Mi+4wWvhOp1wt0t6Ly5K1doP2QPQ50utQkIDCKhB314
+ v/hfyVr6P0Es+s95U82jOJzmDphky5s=
+Received: from mail-wr1-f70.google.com (mail-wr1-f70.google.com
+ [209.85.221.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-688-3-JDJIO9P02Yni8tsy-J_g-1; Wed, 22 Jan 2025 08:59:27 -0500
+X-MC-Unique: 3-JDJIO9P02Yni8tsy-J_g-1
+X-Mimecast-MFC-AGG-ID: 3-JDJIO9P02Yni8tsy-J_g
+Received: by mail-wr1-f70.google.com with SMTP id
+ ffacd0b85a97d-38bf5ef17b2so4321502f8f.0
+ for <qemu-devel@nongnu.org>; Wed, 22 Jan 2025 05:59:27 -0800 (PST)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1737554366; x=1738159166;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=FIz6DHsHZHdFwPH//tfGVzWId4nWxzbmFy4X7m4czkg=;
+ b=bhCx6HXrlqOXZ0IYEuePPcAfO5WFgulkFZtipoAV7ojn/oTHH3mpebcxjAIdcdq9J8
+ 1OsnimIc2x5YYL/cyoxbAn2xjAl1pb0GBmcV9ypMqyzPvmlIEeMaonGmeWiOVKyX0dDW
+ 4HdGEKjvBv2m5Ac35N7NCYJlTfnxJoq7jbK6u7t8ZR+NhcZzsJaemHXd99C0zdXsNG3o
+ qzlPRjtDCUWlKaOwAizgTzbmRvGu3SrAQd64jOpMFjo7bZn455QybDDcx7YN0xtN2K2k
+ FOezttOJOSz519cr27B23y6ek+dySKJhWY77q1y7PikMuK1GgpbWCAIRdZB6bwIGjui3
+ N9Pw==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCVMbsrud80i6GN08a0NlNSc0zOmShtg4LM98x09GPNbDKTy59loD9RLTceQOqBxtHa3Ed0gRHnJbbem@nongnu.org
+X-Gm-Message-State: AOJu0YyfM3tMM/G072vz+YotG5qxd7LUXgeD/AnRiwVckUGRbymlFl6V
+ FbkjGn0JbZQWLhT2YuPYqFkUKiyELEiLjohDlK9cF3/OOE9iQ96dfpU9eagcwiw4lL8x+NLLk+2
+ yBixI1qG01SlH0Z1mhgG+i415he0NJIL6Y7Ux4sXK20iQBcob4vqA
+X-Gm-Gg: ASbGncvEl8hQ5et6CT/a7oHj1C6eCW1WKUcPaiFlf7s0WxeAUtAwJm2Eb7/JCd3l/nT
+ yup+rMnisnrPLMH0EGC5CZ3KQ1yk96gLdAJL0UBkYqB/l2KKMnWBalToeUm+YYJdWlrJzqFAals
+ 3Szhm3WJSJG+Wsi/MZ+DtfaNX1NYAZpBjdlBgJKt/Kmw32n6fklUT2Yoeqi+GzkVJ9An67BiXor
+ Yz1EVy0i3iEZ1SiQa/6hSAnOCGuSIwLlVfGasHjFcE5gCACg7wvEDBkJw8zVOp+
+X-Received: by 2002:a5d:5f8c:0:b0:38a:873f:e31f with SMTP id
+ ffacd0b85a97d-38bf5677ca4mr18019947f8f.1.1737554366639; 
+ Wed, 22 Jan 2025 05:59:26 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IEQQo+T3D9WzEIEwmapOJ3MAZ9wejMedZkIpSHpQSkd524EOwdjCDTIqJ9F7GW00rxMLn+KzQ==
+X-Received: by 2002:a5d:5f8c:0:b0:38a:873f:e31f with SMTP id
+ ffacd0b85a97d-38bf5677ca4mr18019924f8f.1.1737554366317; 
+ Wed, 22 Jan 2025 05:59:26 -0800 (PST)
+Received: from redhat.com ([2a02:14f:1ee:98b0:e487:57f1:2425:c846])
+ by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-38bf322a73bsm16125576f8f.46.2025.01.22.05.59.24
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Wed, 22 Jan 2025 05:59:25 -0800 (PST)
+Date: Wed, 22 Jan 2025 08:59:22 -0500
+From: "Michael S. Tsirkin" <mst@redhat.com>
+To: Stefano Garzarella <sgarzare@redhat.com>
+Cc: Laurent Vivier <lvivier@redhat.com>, qemu-devel@nongnu.org,
+ Jason Wang <jasowang@redhat.com>
+Subject: Re: [PATCH] vhost-user: Silence unsupported
+ VHOST_USER_PROTOCOL_F_RARP error
+Message-ID: <20250122085828-mutt-send-email-mst@kernel.org>
+References: <20250121100029.1106973-1-lvivier@redhat.com>
+ <3mcx7u456pawkgz4dgf6tvk7izczuy55guipqacqkl66jhtltq@fofd5u3el4nj>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20241212204801.1420528-1-peterx@redhat.com>
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.40
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=kwolf@redhat.com;
+In-Reply-To: <3mcx7u456pawkgz4dgf6tvk7izczuy55guipqacqkl66jhtltq@fofd5u3el4nj>
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=mst@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -50
 X-Spam_score: -5.1
@@ -85,62 +108,77 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Am 12.12.2024 um 21:47 hat Peter Xu geschrieben:
-> v1: https://lore.kernel.org/r/20241211201739.1380222-1-peterx@redhat.com
+On Wed, Jan 22, 2025 at 02:42:14PM +0100, Stefano Garzarella wrote:
+> On Tue, Jan 21, 2025 at 11:00:29AM +0100, Laurent Vivier wrote:
+> > In vhost_user_receive() if vhost_net_notify_migration_done() reports
+> > an error we display on the console:
+> > 
+> >  Vhost user backend fails to broadcast fake RARP
+> > 
+> > This message can be useful if there is a problem to execute
+> > VHOST_USER_SEND_RARP but it is useless if the backend doesn't
+> > support VHOST_USER_PROTOCOL_F_RARP.
+> > 
+> > Don't report the error if vhost_net_notify_migration_done()
+> > returns -ENOTSUP (from vhost_user_migration_done())
+> > 
+> > Update vhost_net-stub.c to return -ENOTSUP too.
+> > 
+> > Signed-off-by: Laurent Vivier <lvivier@redhat.com>
+> > ---
+> > hw/net/vhost_net-stub.c | 2 +-
+> > net/vhost-user.c        | 2 +-
+> > 2 files changed, 2 insertions(+), 2 deletions(-)
+> > 
+> > diff --git a/hw/net/vhost_net-stub.c b/hw/net/vhost_net-stub.c
+> > index 72df6d757e4d..875cd6c2b9c8 100644
+> > --- a/hw/net/vhost_net-stub.c
+> > +++ b/hw/net/vhost_net-stub.c
+> > @@ -93,7 +93,7 @@ void vhost_net_config_mask(VHostNetState *net, VirtIODevice *dev, bool mask)
+> > 
+> > int vhost_net_notify_migration_done(struct vhost_net *net, char* mac_addr)
+> > {
+> > -    return -1;
+> > +    return -ENOTSUP;
+> > }
+> > 
+> > VHostNetState *get_vhost_net(NetClientState *nc)
+> > diff --git a/net/vhost-user.c b/net/vhost-user.c
+> > index 12555518e838..636fff8a84a2 100644
+> > --- a/net/vhost-user.c
+> > +++ b/net/vhost-user.c
+> > @@ -146,7 +146,7 @@ static ssize_t vhost_user_receive(NetClientState *nc, const uint8_t *buf,
+> > 
+> >         r = vhost_net_notify_migration_done(s->vhost_net, mac_addr);
+> > 
+> > -        if ((r != 0) && (display_rarp_failure)) {
+> > +        if ((r != 0) && (r != -ENOTSUP) && (display_rarp_failure)) {
+> >             fprintf(stderr,
+> >                     "Vhost user backend fails to broadcast fake RARP\n");
+> >             fflush(stderr);
+> > -- 
+> > 2.47.1
+> > 
 > 
-> Changelog: in previous v1, I got a wrong cut-off accident in commit
-> message, which is now fixed (along with some small touchup elsewhere).
-> When at it, I also tried to make it look even better to be as close as gdb
-> bt, so it looks like this now:
+> IIUC the message was there since the introduction about 10 years ago
+> from commit 3e866365e1 ("vhost user: add rarp sending after live
+> migration for legacy guest"). IIUC -ENOTSUP is returned when both F_RARP
+> and F_GUEST_ANNOUNCE are not negotiated.
 > 
->   Coroutine at 0x7f9f4c57c748:
->   #0  0x55ae6c0dc9a8 in qemu_coroutine_switch<+120> () at ../util/coroutine-ucontext.c:321
->   #1  0x55ae6c0da2f8 in qemu_aio_coroutine_enter<+356> () at ../util/qemu-coroutine.c:293
->   #2  0x55ae6c0da3f1 in qemu_coroutine_enter<+34> () at ../util/qemu-coroutine.c:316
->   #3  0x55ae6baf775e in migration_incoming_process<+43> () at ../migration/migration.c:876
->   #4  0x55ae6baf7ab4 in migration_ioc_process_incoming<+490> () at ../migration/migration.c:1008
->   #5  0x55ae6bae9ae7 in migration_channel_process_incoming<+145> () at ../migration/channel.c:45
->   #6  0x55ae6bb18e35 in socket_accept_incoming_migration<+118> () at ../migration/socket.c:132
->   #7  0x55ae6be939ef in qio_net_listener_channel_func<+131> () at ../io/net-listener.c:54
->   #8  0x55ae6be8ce1a in qio_channel_fd_source_dispatch<+78> () at ../io/channel-watch.c:84
->   #9  0x7f9f5b26728c in g_main_context_dispatch_unlocked.lto_priv<+315> ()
->   #10  0x7f9f5b267555 in g_main_context_dispatch<+36> ()
->   #11  0x55ae6c0d91a7 in glib_pollfds_poll<+90> () at ../util/main-loop.c:287
->   #12  0x55ae6c0d9235 in os_host_main_loop_wait<+128> () at ../util/main-loop.c:310
->   #13  0x55ae6c0d9364 in main_loop_wait<+203> () at ../util/main-loop.c:589
->   #14  0x55ae6bac212a in qemu_main_loop<+41> () at ../system/runstate.c:835
->   #15  0x55ae6bfdf522 in qemu_default_main<+19> () at ../system/main.c:37
->   #16  0x55ae6bfdf55f in main<+40> () at ../system/main.c:48
->   #17  0x7f9f59d42248 in __libc_start_call_main<+119> ()
->   #18  0x7f9f59d4230b in __libc_start_main_impl<+138> ()
+> That said, I honestly don't know what F_RARP or F_GUEST_ANNOUNCE is for,
+
+rarp is to have destination host broadcast a message with VM address
+to update the network. Guest announce is when it will instead
+ask the guest to do this.
+
+
+> but my understanding is that the message was to notify that the
+> migration was finished (reading that commit).
 > 
-> Coroutines are used in many cases in block layers. It's also used in live
-> migration when on destination side, and it'll be handy to diagnose crashes
-> within a coroutine when we want to also know what other coroutines are
-> doing.
-> 
-> This series adds initial support for that, not pretty but it should start
-> working.  Since we can't use the trick to modify registers on the fly in
-> non-live gdb sessions, we do manual unwinds.
-> 
-> One thing to mention is there's a similar but more generic solution
-> mentioned on the list from Niall:
-> 
-> https://lore.kernel.org/r/f0ebccca-7a17-4da8-ac4a-71cf6d69abc3@mtasv.net
-> 
-> That adds more dependency on both gdb and qemu in the future, however more
-> generic.  So this series is an intermediate quick solution as for now,
-> which should work for most older qemu/gdb binaries too.
+> If neither feature is supported, could this be a problem for the user
+> and that's why we were printing the message?
 > 
 > Thanks,
-> 
-> Peter Xu (3):
->   scripts/qemu-gdb: Always do full stack dump for python errors
->   scripts/qemu-gdb: Simplify fs_base fetching for coroutines
->   scripts/qemu-gdb: Support coroutine dumps in coredumps
-
-Thanks, applied to the block branch.
-
-Kevin
+> Stefano
 
 
