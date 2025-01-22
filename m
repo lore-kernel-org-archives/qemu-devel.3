@@ -4,123 +4,75 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E7DE2C0218C
-	for <qemu-devel@archiver.kernel.org>; Wed, 22 Jan 2025 17:29:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 326B3C02181
+	for <qemu-devel@archiver.kernel.org>; Wed, 22 Jan 2025 17:31:24 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1taeX0-0000mf-1Z; Wed, 22 Jan 2025 12:28:46 -0500
+	id 1taeYw-0001qX-JJ; Wed, 22 Jan 2025 12:30:46 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1taeWy-0000m6-96
- for qemu-devel@nongnu.org; Wed, 22 Jan 2025 12:28:44 -0500
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1taeYu-0001p1-EW
+ for qemu-devel@nongnu.org; Wed, 22 Jan 2025 12:30:44 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1taeWo-0003gO-Dh
- for qemu-devel@nongnu.org; Wed, 22 Jan 2025 12:28:44 -0500
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1taeYr-0004G8-VQ
+ for qemu-devel@nongnu.org; Wed, 22 Jan 2025 12:30:43 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1737566913;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ s=mimecast20190719; t=1737567039;
+ h=from:from:reply-to:reply-to:subject:subject:date:date:
+ message-id:message-id:to:to:cc:cc:mime-version:mime-version:
+ content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=INZM1f1/nzdZchas4RooMRok0z3xAteaBOVK50milpQ=;
- b=FAovOStV2ZkP2YWePj2PEpi1UViSC5fKVn1FTd9DhZgU7y7OdqNRyJeyLp+wKWKNFAK78x
- KDK02m8UNNgkxDvbRnMlggNfYhxrHkZXi6jxsF2Vfyn23a6wLabfSn9S/jktaw3zf52+5H
- aUgyiA/f2Vww7PYowssfSAKSeVt/rBc=
-Received: from mail-ed1-f72.google.com (mail-ed1-f72.google.com
- [209.85.208.72]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-656-6oqWvj1gMpSnhpkNw-z_JA-1; Wed, 22 Jan 2025 12:28:31 -0500
-X-MC-Unique: 6oqWvj1gMpSnhpkNw-z_JA-1
-X-Mimecast-MFC-AGG-ID: 6oqWvj1gMpSnhpkNw-z_JA
-Received: by mail-ed1-f72.google.com with SMTP id
- 4fb4d7f45d1cf-5d9f21e17cfso36248a12.0
- for <qemu-devel@nongnu.org>; Wed, 22 Jan 2025 09:28:31 -0800 (PST)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1737566910; x=1738171710;
- h=content-transfer-encoding:in-reply-to:autocrypt:content-language
- :from:references:cc:to:subject:user-agent:mime-version:date
- :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=INZM1f1/nzdZchas4RooMRok0z3xAteaBOVK50milpQ=;
- b=haKd2phImRXCjNy5+xB3QXxuaJUIKdfFwTDwj5OnH43rp8XYtQJ5Rvw6a9VUngW92O
- I6uEASnMYU+CZ6ERHL8GCw2uAaYxI5hSYsWZgXO7QUEelsrRDaDSxa+VVifYxXAGDJjt
- jAsMcRDxBtYdKBF0caATfUSHBU6Av9E9phU/CqbRXuyzQBkSlEQOtOVqnyHgmESySWpz
- d4hbRKAo7gG0Rvy5ARQHaZ7io6FbEnT+k4dikCYkGWks/49lc1h3n9ZFGE6i7RzaVwCu
- N5kvi29sizn6Ylv19dNImRD6uclmFWKgNlespD2U6+rhT0EeIzPAPk5wTKXoLnYAgG9N
- x8mg==
-X-Gm-Message-State: AOJu0YwSudVap+vkidOfHdAK0Ee5MoTfJ1T9TA5fo0Mq5F46fDFxq+1A
- lyUflxwMHamgN4TtlDh3wTIHw/v0nDbE2melBgtpF86QNmmNc5rmqGGqdnO1y5JZQ1To9T523PB
- 8UVApoVk1NrXlEtNYZTRMFhyRDS5DPgUIwCsqYu1oe1rk837ItjaTmC37bVMf5cs=
-X-Gm-Gg: ASbGnctdcWz0qFUtcfKmRLn9vDIMGyb+F+KW2hExfJVUF6gLd7g/FuSmVnJImTuwvXi
- hkyU26gY9ln4jd5WjIobaJaLCzc6bdChGKU6Q++RV1DGmmC6+6Ey6mjEq43LnuoSRfRCbsNPCTP
- b71G6Coedyu4OsQNKlxulqg1ObOlgoymY2eBLv6lDIa5375bkb6liF2N2JIPNTi7ASbIqwr9tPL
- 3sWZpsyY1wLTZSieRGWSMcEDRukdXKiaUw7gYnXslH4+zySuJDquJokdaA89N2QYJgf9WkGWWI=
-X-Received: by 2002:a05:6402:42d6:b0:5d9:f9b8:e7e5 with SMTP id
- 4fb4d7f45d1cf-5db7d300368mr22894400a12.15.1737566909475; 
- Wed, 22 Jan 2025 09:28:29 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IHm17iHgsEOMiNm8qTq3y6IjMGjRta+JkCdmC6XfzKLAEXaKPTJfmKwocUDiVbQH/5jcyT9nw==
-X-Received: by 2002:a05:6402:42d6:b0:5d9:f9b8:e7e5 with SMTP id
- 4fb4d7f45d1cf-5db7d300368mr22894288a12.15.1737566907626; 
- Wed, 22 Jan 2025 09:28:27 -0800 (PST)
-Received: from [192.168.10.47] ([176.206.124.70])
- by smtp.googlemail.com with ESMTPSA id
- 4fb4d7f45d1cf-5db73670ddesm8999744a12.21.2025.01.22.09.28.26
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 22 Jan 2025 09:28:27 -0800 (PST)
-Message-ID: <6b30a54a-c196-48d5-9003-ad9cb69a830a@redhat.com>
-Date: Wed, 22 Jan 2025 18:28:24 +0100
+ in-reply-to:in-reply-to:references:references;
+ bh=NX+HOJh1PRf+A69qAh06HIHe68iq6l+1RcyLVLKYfXk=;
+ b=IJlm/dp6ItWgjQrCfCCz4im4DmSznpUPCzl1ULSlzLZ8QSE4MA85kZ0+mm6yWpdJinYPCn
+ Ya/kEkLRI+8JBZT1aREN8wSx244eZFqokNLMAdTXQqzvYV5WsiHcOdnezmNKlVYCjjKXua
+ M2yk+nBnR8OrQR0kzXtMiH9MbJFUcjY=
+Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-562-GrtO3XiUNZGpEclz_wZ69Q-1; Wed,
+ 22 Jan 2025 12:30:34 -0500
+X-MC-Unique: GrtO3XiUNZGpEclz_wZ69Q-1
+X-Mimecast-MFC-AGG-ID: GrtO3XiUNZGpEclz_wZ69Q
+Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id D12A619560BD
+ for <qemu-devel@nongnu.org>; Wed, 22 Jan 2025 17:30:33 +0000 (UTC)
+Received: from redhat.com (unknown [10.42.28.43])
+ by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id EEBA03003E7F; Wed, 22 Jan 2025 17:30:31 +0000 (UTC)
+Date: Wed, 22 Jan 2025 17:30:28 +0000
+From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
+To: Laurent Vivier <lvivier@redhat.com>
+Cc: Stefano Garzarella <sgarzare@redhat.com>,
+ "Michael S. Tsirkin" <mst@redhat.com>, qemu-devel@nongnu.org,
+ Jason Wang <jasowang@redhat.com>
+Subject: Re: [PATCH] vhost-user: Silence unsupported
+ VHOST_USER_PROTOCOL_F_RARP error
+Message-ID: <Z5ErNNWhIC4HkidT@redhat.com>
+References: <20250121100029.1106973-1-lvivier@redhat.com>
+ <3mcx7u456pawkgz4dgf6tvk7izczuy55guipqacqkl66jhtltq@fofd5u3el4nj>
+ <20250122085828-mutt-send-email-mst@kernel.org>
+ <bfc3rstsxuapkjlea4lia3bn44rt7hhsf6kagtkltfssqynx6z@4dodvso73pel>
+ <044af96f-791b-471f-ae90-c17597445fd3@redhat.com>
+ <kt2sdfv3wg3raylqfmphrdbc2isex2q3jtmgw7oems5xysex4f@lnp3ulutpt6f>
+ <28e3e395-0eaa-4eeb-bd61-1cb031d8da7f@redhat.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 05/10] rust: vmstate: implement VMState for scalar types
-To: Zhao Liu <zhao1.liu@intel.com>
-Cc: qemu-devel@nongnu.org, qemu-rust@nongnu.org
-References: <20250117090046.1045010-1-pbonzini@redhat.com>
- <20250117090046.1045010-6-pbonzini@redhat.com> <Z5DlngFjERVqmxca@intel.com>
-From: Paolo Bonzini <pbonzini@redhat.com>
-Content-Language: en-US
-Autocrypt: addr=pbonzini@redhat.com; keydata=
- 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
-In-Reply-To: <Z5DlngFjERVqmxca@intel.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <28e3e395-0eaa-4eeb-bd61-1cb031d8da7f@redhat.com>
+User-Agent: Mutt/2.2.13 (2024-03-09)
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=berrange@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -50
 X-Spam_score: -5.1
@@ -129,7 +81,7 @@ X-Spam_report: (-5.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-2.996,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.043,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -142,84 +94,129 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 1/22/25 13:33, Zhao Liu wrote:
-> On Fri, Jan 17, 2025 at 10:00:41AM +0100, Paolo Bonzini wrote:
->> Date: Fri, 17 Jan 2025 10:00:41 +0100
->> From: Paolo Bonzini <pbonzini@redhat.com>
->> Subject: [PATCH 05/10] rust: vmstate: implement VMState for scalar types
->> X-Mailer: git-send-email 2.47.1
->>
->> Scalar types are those that have their own VMStateInfo.  This poses
->> a problem in that references to VMStateInfo can only be included in
->> associated consts starting with Rust 1.83.0, when the const_refs_static
->> was stabilized.  Removing the requirement is done by placing a limited
->> list of VMStateInfos in an enum, and going from enum to &VMStateInfo
->> only when building the VMStateField.
->>
->> The same thing cannot be done with VMS_STRUCT because the set of
->> VMStateDescriptions extends to structs defined by the devices.
->> Therefore, structs and cells cannot yet use vmstate_of!.
->>
->> Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
->> ---
->>   rust/qemu-api/src/vmstate.rs | 128 ++++++++++++++++++++++++++++++++++-
->>   1 file changed, 126 insertions(+), 2 deletions(-)
+On Wed, Jan 22, 2025 at 06:22:06PM +0100, Laurent Vivier wrote:
+> On 22/01/2025 17:51, Stefano Garzarella wrote:
+> > On Wed, Jan 22, 2025 at 05:41:15PM +0100, Laurent Vivier wrote:
+> > > On 22/01/2025 17:20, Stefano Garzarella wrote:
+> > > > On Wed, Jan 22, 2025 at 08:59:22AM -0500, Michael S. Tsirkin wrote:
+> > > > > On Wed, Jan 22, 2025 at 02:42:14PM +0100, Stefano Garzarella wrote:
+> > > > > > On Tue, Jan 21, 2025 at 11:00:29AM +0100, Laurent Vivier wrote:
+> > > > > > > In vhost_user_receive() if vhost_net_notify_migration_done() reports
+> > > > > > > an error we display on the console:
+> > > > > > > 
+> > > > > > >   Vhost user backend fails to broadcast fake RARP
+> > > > > > > 
+> > > > > > > This message can be useful if there is a problem to execute
+> > > > > > > VHOST_USER_SEND_RARP but it is useless if the backend doesn't
+> > > > > > > support VHOST_USER_PROTOCOL_F_RARP.
+> > > > > > > 
+> > > > > > > Don't report the error if vhost_net_notify_migration_done()
+> > > > > > > returns -ENOTSUP (from vhost_user_migration_done())
+> > > > > > > 
+> > > > > > > Update vhost_net-stub.c to return -ENOTSUP too.
+> > > > > > > 
+> > > > > > > Signed-off-by: Laurent Vivier <lvivier@redhat.com>
+> > > > > > > ---
+> > > > > > > hw/net/vhost_net-stub.c | 2 +-
+> > > > > > > net/vhost-user.c        | 2 +-
+> > > > > > > 2 files changed, 2 insertions(+), 2 deletions(-)
+> > > > > > > 
+> > > > > > > diff --git a/hw/net/vhost_net-stub.c b/hw/net/vhost_net-stub.c
+> > > > > > > index 72df6d757e4d..875cd6c2b9c8 100644
+> > > > > > > --- a/hw/net/vhost_net-stub.c
+> > > > > > > +++ b/hw/net/vhost_net-stub.c
+> > > > > > > @@ -93,7 +93,7 @@ void
+> > > > > > > vhost_net_config_mask(VHostNetState
+> > > > > > *net, VirtIODevice *dev, bool mask)
+> > > > > > > 
+> > > > > > > int vhost_net_notify_migration_done(struct vhost_net *net, char* mac_addr)
+> > > > > > > {
+> > > > > > > -    return -1;
+> > > > > > > +    return -ENOTSUP;
+> > > > > > > }
+> > > > > > > 
+> > > > > > > VHostNetState *get_vhost_net(NetClientState *nc)
+> > > > > > > diff --git a/net/vhost-user.c b/net/vhost-user.c
+> > > > > > > index 12555518e838..636fff8a84a2 100644
+> > > > > > > --- a/net/vhost-user.c
+> > > > > > > +++ b/net/vhost-user.c
+> > > > > > > @@ -146,7 +146,7 @@ static ssize_t
+> > > > > > vhost_user_receive(NetClientState *nc, const uint8_t *buf,
+> > > > > > > 
+> > > > > > >          r = vhost_net_notify_migration_done(s->vhost_net, mac_addr);
+> > > > > > > 
+> > > > > > > -        if ((r != 0) && (display_rarp_failure)) {
+> > > > > > > +        if ((r != 0) && (r != -ENOTSUP) && (display_rarp_failure)) {
+> > > > > > >              fprintf(stderr,
+> > > > > > >                      "Vhost user backend fails to broadcast fake RARP\n");
+> > > > > > >              fflush(stderr);
+> > > > > > > -- 
+> > > > > > > 2.47.1
+> > > > > > > 
+> > > > > > 
+> > > > > > IIUC the message was there since the introduction about 10 years ago
+> > > > > > from commit 3e866365e1 ("vhost user: add rarp sending after live
+> > > > > > migration for legacy guest"). IIUC -ENOTSUP is returned when both F_RARP
+> > > > > > and F_GUEST_ANNOUNCE are not negotiated.
+> > > > > > 
+> > > > > > That said, I honestly don't know what F_RARP or F_GUEST_ANNOUNCE is for,
+> > > > > 
+> > > > > rarp is to have destination host broadcast a message with VM address
+> > > > > to update the network. Guest announce is when it will instead
+> > > > > ask the guest to do this.
+> > > > 
+> > > > Okay, thanks for explaining to me.
+> > > > So if both features are not negotiated, no one is going to broadcast
+> > > > the message, right?
+> > > > 
+> > > > Could that be a valid reason to print an error message in QEMU?
+> > > > 
+> > > > To me it might be reasonable because the user might experience some
+> > > > network problems, but I'm not a network guy :-)
+> > > 
+> > > I'm working on adding vhost-user to passt[1], and in this case we
+> > > don't need to broadcast any message.
+> > 
+> > Okay, so please can you add that to the commit description and also
+> > explaining why you don't need that?
+> > 
+> > > 
+> > > So I don't implement VHOST_USER_SEND_RARP and I don't want the error
+> > > message to spoil my console.
+> > 
+> > Fair enough, but at that point, if it's valid to have both feature not
+> > negotiated, IMHO is better to return 0 in vhost_user_migration_done().
+> > Maybe adding also a comment to explain that in your scenario you don't
+> > need to do nothing (like if guest supports GUEST_ANNOUNCE).
 > 
+> I agree.
 > 
->>   /// Internal utility function to retrieve a type's `VMStateField`;
->>   /// used by [`vmstate_of!`](crate::vmstate_of).
->>   pub const fn vmstate_base<T: VMState>(_: PhantomData<T>) -> VMStateField {
->> @@ -99,6 +178,15 @@ pub const fn vmstate_varray_flag<T: VMState>(_: PhantomData<T>) -> VMStateField
->>   /// Return the `VMStateField` for a field of a struct.  The field must be
->>   /// visible in the current scope.
->>   ///
->> +/// Only a limited set of types is supported out of the box:
->> +/// * scalar types (integer and `bool`)
->> +/// * the C struct `QEMUTimer`
->> +/// * a transparent wrapper for any of the above (`Cell`, `UnsafeCell`,
->> +///   [`BqlCell`](crate::cell::BqlCell), [`BqlRefCell`](crate::cell::BqlRefCell)
->> +/// * a raw pointer to any of the above
->> +/// * a `NonNull` pointer to any of the above, possibly wrapped with `Option`
+> > 
+> > > 
+> > > -ENOTSUP is an error message for developer not for user.
+> > 
+> > I was referring to the "Vhost user backend fails to broadcast fake RARP"
+> > error message we are skipping here.
 > 
-> I just found your rust-next has already updated and removed `Option` :-)
+> So in the end my real question at this point is:
 > 
->> +/// * an array of any of the above
->> +///
->>   /// In order to support other types, the trait `VMState` must be implemented
->>   /// for them.
->>   #[macro_export]
->> @@ -109,8 +197,14 @@ macro_rules! vmstate_of {
->>                   .as_bytes()
->>                   .as_ptr() as *const ::std::os::raw::c_char,
->>               offset: $crate::offset_of!($struct_name, $field_name),
->> -            // Compute most of the VMStateField from the type of the field.
-> 
-> Rebase mistake? This comment seems no need to be deleted.
+> is it better to suppress the error message in QEMU (1) or implement an empty
+> VHOST_USER_SEND_RARP in Passt (2)?
 
-It's moved below because there's now more than one call_func_with_field 
-call.  I can make it so that the phrasing and placement remains the same 
-throughout the series.
+If it is valid to interpret "VHOST_USER_SEND_RARP" to mean the service
+is "capable of sending a RARP where appropriate" rather than "will always
+unconditionally send an RARP", then it would be reasonable for Passt to
+have an empty VHOST_USER_SEND_RARP impl.
 
-Paolo
-
->>               $(.num_offset: $crate::offset_of!($struct_name, $num),)?
->> +            // The calls to `call_func_with_field!` are the magic that
->> +            // computes most of the VMStateField from the type of the field.
->> +            info: $crate::info_enum_to_ref!($crate::call_func_with_field!(
->> +                $crate::vmstate::vmstate_scalar_type,
->> +                $struct_name,
->> +                $field_name
->> +            )),
->>
-> 
-> Only a nit above,
-> 
-> Reviewed-by: Zhao Liu <zhao1.liu@intel.com>
-> 
-> 
-> 
+With regards,
+Daniel
+-- 
+|: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
+|: https://libvirt.org         -o-            https://fstop138.berrange.com :|
+|: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
 
 
