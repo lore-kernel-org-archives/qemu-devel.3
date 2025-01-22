@@ -4,69 +4,98 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 79613C02181
-	for <qemu-devel@archiver.kernel.org>; Wed, 22 Jan 2025 16:32:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0EF14C02181
+	for <qemu-devel@archiver.kernel.org>; Wed, 22 Jan 2025 16:41:25 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tadeB-0005di-HH; Wed, 22 Jan 2025 11:32:08 -0500
+	id 1tadmG-0007aT-75; Wed, 22 Jan 2025 11:40:28 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1taddz-0005ZM-0t; Wed, 22 Jan 2025 11:31:59 -0500
-Received: from mgamail.intel.com ([192.198.163.11])
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1tadmA-0007Zr-NT
+ for qemu-devel@nongnu.org; Wed, 22 Jan 2025 11:40:23 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1taddt-0006Zz-4n; Wed, 22 Jan 2025 11:31:53 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
- d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1737563509; x=1769099509;
- h=date:from:to:cc:subject:message-id:references:
- mime-version:in-reply-to;
- bh=W0CEBDItbQycNDfZ7B7OcSu3dB5zqUDBtqxse3ndIY0=;
- b=RME/J/SDft4wlCbbou3lMO5md6HEx8YiK+aLlPXU6jlYtS9zdwphnSxp
- UfjffPnTMks6IuyvH2oV7zo6yRvcY5++UJ9Vd3PmsSeiNkfBTUDE29bz7
- RbvEoTK2rt4DqILqxST4HlFUtnfG3NF1/kpuzi14iIWx2CoCaVl1EogfM
- rFGbMINWRjz06CbMTuHh6KboXCzLxn0mFzJnTz8ZgV7TV9+On/i93YjdZ
- ebB2p8m3DeGhqWlf9AAF+SJJeD9dyks5nVg3CP+QZXytxs8G4xO00HduB
- iQ5yeyJ1DGfoz6yaqPnIDCIvHiFJFppo7bGfHo6yIy9LM/0Z/OZ5J5g+M A==;
-X-CSE-ConnectionGUID: uKznSBkCQv+v2aD1YU0iGg==
-X-CSE-MsgGUID: 8Kc+VPjKS4+Y5h8kbdn3VQ==
-X-IronPort-AV: E=McAfee;i="6700,10204,11323"; a="48624788"
-X-IronPort-AV: E=Sophos;i="6.13,225,1732608000"; d="scan'208";a="48624788"
-Received: from orviesa007.jf.intel.com ([10.64.159.147])
- by fmvoesa105.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 22 Jan 2025 08:31:20 -0800
-X-CSE-ConnectionGUID: sPifOw+7RUiC8+5H83MOoQ==
-X-CSE-MsgGUID: ykdb5zhISSWtqndLz07VzA==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.12,224,1728975600"; d="scan'208";a="107631399"
-Received: from liuzhao-optiplex-7080.sh.intel.com (HELO localhost)
- ([10.239.160.39])
- by orviesa007.jf.intel.com with ESMTP; 22 Jan 2025 08:31:19 -0800
-Date: Thu, 23 Jan 2025 00:50:41 +0800
-From: Zhao Liu <zhao1.liu@intel.com>
-To: Paolo Bonzini <pbonzini@redhat.com>
-Cc: qemu-devel@nongnu.org, qemu-rust@nongnu.org
-Subject: Re: [PATCH 05/10] rust: pl011: pull interrupt updates out of
- read/write ops
-Message-ID: <Z5Eh4Yj2Mp+xQV5Z@intel.com>
-References: <20250117092657.1051233-1-pbonzini@redhat.com>
- <20250117092657.1051233-6-pbonzini@redhat.com>
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1tadm6-0003MZ-J7
+ for qemu-devel@nongnu.org; Wed, 22 Jan 2025 11:40:21 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1737564016;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=s7FXfjhNE42rwKWKgzXOoZyoZvfkqN5Prnao7VTqtss=;
+ b=ZebYiKDjJniqXRPa8u26LpByHzkTHNqp1zkElV1F5xNhN2X6dA2K4NO6IJ8yJttLbP+Lax
+ AyMI/C7tdHZ1mP2LQGNAdTLJlApnvPQc7JcY8YNtYnPH4DVl/Qh4VmKhyJq8TEc0pScdQO
+ xvZuwauLSCyZ3CSQ6YKTmd7YQyXsrg4=
+Received: from mail-qk1-f200.google.com (mail-qk1-f200.google.com
+ [209.85.222.200]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-650-K7q6ByglPGWPLJoOZLLwcg-1; Wed, 22 Jan 2025 11:40:14 -0500
+X-MC-Unique: K7q6ByglPGWPLJoOZLLwcg-1
+X-Mimecast-MFC-AGG-ID: K7q6ByglPGWPLJoOZLLwcg
+Received: by mail-qk1-f200.google.com with SMTP id
+ af79cd13be357-7b6c6429421so1156906785a.0
+ for <qemu-devel@nongnu.org>; Wed, 22 Jan 2025 08:40:14 -0800 (PST)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1737564013; x=1738168813;
+ h=in-reply-to:content-transfer-encoding:content-disposition
+ :mime-version:references:message-id:subject:cc:to:from:date
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=s7FXfjhNE42rwKWKgzXOoZyoZvfkqN5Prnao7VTqtss=;
+ b=Q/O9g9c4OxeAi2V+YzejuxxBVSY5b81F/eQ8xbOsks3AgPXKOxPgvsgnjiUrRdu8/y
+ EVybi/qUPTEpX+gHSoFnAnuA4noKaKAIn+bwEJy7ZdCEeNadT2IBTmktBv0feqWIUOO0
+ 4FnlkbpYrnmghezE1kKeiA98aaIh1SAR2k54+SAsriVWTnn5P3Q0VSnp0nxhYrWMop56
+ bbv1Ply32jRdhIr2FIpsV5SQO0zqmP08r+vktHE8DM0U1EpdIRrKgYJqId9rC0X5S/wQ
+ xsKP1VjUCBNB32ISyNrduEl2gECL1Ynt00em5z9dg9eSYacQaXtTjhoWLuuLzjk6ftgI
+ GiGQ==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCXBTxIHXyFwuQwst6EMF12zblAlHNnPUwHySlvQT2C78B9GUBLHp4rIIDFoD8J5xxuGBipPTG0y2U0Y@nongnu.org
+X-Gm-Message-State: AOJu0YyizN9RnLg1h9NLKzhQ2roak3+DCSqP70z5Rph+tikDDziJu0tM
+ XA3I0WyfvvgPJCC5Hgj4I2Qg0NwBbxgSFaAG8IB+LxyUeHwoeXAY7hHmAXKUjn07el9Yo9vIEhn
+ 4NRxHzgZc4r/iWTeiKxe19hhGFa/EPSPnijBjHFPyUbY/QUvq458SJFP0BIyc
+X-Gm-Gg: ASbGncvxH+YlbhB3vfmTbpBeSKimqLudx08FUiY9WSmhKQ6pBy0AEuGKJbz6TUZa3di
+ pR8DqJL/I9U1A72Fts7ZJFvZkrJ4f4byrMRgcEql1Mfzsrm6CgWeKuDV8yXp3EqNj2tySmg5xOP
+ 4WormYfSsI7z1ZncHi36KQXzycl8p0ylhw6F4LYkUgUF9FWeZmo6JrPEmOrJkp38MdRlxpTJeJ7
+ 5gvS+/L0GgUEtNJfDRQN5HjH7c2MMf4dUXpSDLX7tOc6WexsrPYK0ckalGhV+R2sopF9xVO3c6T
+ TCIHohywc71zWR3ES3Q3IAv9Q2uEY2I=
+X-Received: by 2002:a05:620a:288a:b0:7b6:6d99:ecfc with SMTP id
+ af79cd13be357-7be6318ac7amr3300920485a.0.1737564013660; 
+ Wed, 22 Jan 2025 08:40:13 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IHTto66wpN4Xl4z+TFxOWYxjbdcDmFpIP7PSZD/qwEtr1lDNq0JtCcluPWoNHv+um/PFpnfpA==
+X-Received: by 2002:a05:620a:288a:b0:7b6:6d99:ecfc with SMTP id
+ af79cd13be357-7be6318ac7amr3300917485a.0.1737564013357; 
+ Wed, 22 Jan 2025 08:40:13 -0800 (PST)
+Received: from x1n (pool-99-254-114-190.cpe.net.cable.rogers.com.
+ [99.254.114.190]) by smtp.gmail.com with ESMTPSA id
+ af79cd13be357-7be614eee4bsm676589285a.91.2025.01.22.08.40.12
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Wed, 22 Jan 2025 08:40:12 -0800 (PST)
+Date: Wed, 22 Jan 2025 11:40:10 -0500
+From: Peter Xu <peterx@redhat.com>
+To: Shivam Kumar <shivam.kumar1@nutanix.com>
+Cc: Fabiano Rosas <farosas@suse.de>,
+ "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>
+Subject: Re: [RFC PATCH] Fix race in live migration failure path
+Message-ID: <Z5EfapuXuV7oFL7A@x1n>
+References: <20250110100707.4805-1-shivam.kumar1@nutanix.com>
+ <87frlqerxp.fsf@suse.de> <Z4U_emPVDfTb1VmF@x1n>
+ <0C92F4E5-56EE-4036-927C-2F06F9F29252@nutanix.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20250117092657.1051233-6-pbonzini@redhat.com>
-Received-SPF: pass client-ip=192.198.163.11; envelope-from=zhao1.liu@intel.com;
- helo=mgamail.intel.com
-X-Spam_score_int: -73
-X-Spam_score: -7.4
-X-Spam_bar: -------
-X-Spam_report: (-7.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-2.996,
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <0C92F4E5-56EE-4036-927C-2F06F9F29252@nutanix.com>
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=peterx@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -50
+X-Spam_score: -5.1
+X-Spam_bar: -----
+X-Spam_report: (-5.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-2.996,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.043,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -82,43 +111,97 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, Jan 17, 2025 at 10:26:52AM +0100, Paolo Bonzini wrote:
-> Date: Fri, 17 Jan 2025 10:26:52 +0100
-> From: Paolo Bonzini <pbonzini@redhat.com>
-> Subject: [PATCH 05/10] rust: pl011: pull interrupt updates out of
->  read/write ops
-> X-Mailer: git-send-email 2.47.1
+Hi, Shivam,
+
+On Wed, Jan 22, 2025 at 10:54:17AM +0000, Shivam Kumar wrote:
+> There is one place where we set the migration status to FAILED but we don’t set
+> s->error, i.e. in save_snapshot workflow, please check qemu_savevm_state but
+> not sure setting s->error in this case is possible (or required), as it seems a
+> different workflow to me.
+
+Yes it's very different indeed.  I may not yet fully get the challenge on
+how switching to s->error (implies FAILING) would affect this one, though.
+I mean, in qemu_savevm_state() it tries to fetch qemufile errors with:
+
+    ret = qemu_file_get_error(f);
+
+IIUC we could also try to fetch s->error just like what migration thread
+does, and if it sets means it's failing?
+
 > 
-> qemu_irqs are not part of the vmstate, therefore they will remain in
-> PL011State.  Update them if needed after regs_read()/regs_write().
-> 
-> Apply #[must_use] to functions that return whether the interrupt state
-> could have changed, so that it's harder to forget the call to update().
-> 
-> Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
-> ---
->  rust/hw/char/pl011/src/device.rs | 68 ++++++++++++++++++--------------
->  1 file changed, 38 insertions(+), 30 deletions(-)
-> 
+> In addition, one potentially real problem that I see is this comment in
+> migration_detect_error:
+> /*
+>  * For postcopy, we allow the network to be down for a
+>  * while. After that, it can be continued by a
+>  * recovery phase.
+>  */
+> Let's say if we set s->error at some place and there was a file error on either
+> source or destination (qemu_file_get_error_obj_any returns a positive value
 
-[snip]
+This is trivial, but I suppose you meant s/positive/negative/ here.. as
+qemufile's last_error should always be negative, iiuc.
 
->  
->      pub fn event(&mut self, event: QEMUChrEvent) {
->          if event == bindings::QEMUChrEvent::CHR_EVENT_BREAK && !self.loopback_enabled() {
-> -            self.put_fifo(registers::Data::BREAK.into());
-> +            let update = self.put_fifo(registers::Data::BREAK.into());
+> when called by migration_detect_error). We expect migration to fail in this
+> case but migration will continue to run since post-copy migration is tolerant
+> to file errors?
 
-We can omit this `update` variable.
+Yes it can halt at postcopy_pause().  I'm not yet understand why it's an
+issue to using s->error, though.
 
-> +            if update {
-> +                self.update();
-> +            }
->          }
->      }
+In general, I'm thinking whether we could also check s->error in detect
+error path like this:
 
-Nice refactoring!
+===8<===
+diff --git a/migration/migration.c b/migration/migration.c
+index 2d1da917c7..fbd97395e0 100644
+--- a/migration/migration.c
++++ b/migration/migration.c
+@@ -3015,17 +3015,17 @@ static MigThrError migration_detect_error(MigrationState *s)
+     ret = qemu_file_get_error_obj_any(s->to_dst_file,
+                                       s->postcopy_qemufile_src,
+                                       &local_error);
+-    if (!ret) {
+-        /* Everything is fine */
+-        assert(!local_error);
+-        return MIG_THR_ERR_NONE;
+-    }
+-
+-    if (local_error) {
++    if (ret) {
++        /* Passover qemufile errors to s->error */
++        assert(local_error);
+         migrate_set_error(s, local_error);
+         error_free(local_error);
+     }
+ 
++    if (!migrate_has_error(s)) {
++        return MIG_THR_ERR_NONE;
++    }
++
+     if (state == MIGRATION_STATUS_POSTCOPY_ACTIVE && ret) {
+         /*
+          * For postcopy, we allow the network to be down for a
+@@ -3037,6 +3037,8 @@ static MigThrError migration_detect_error(MigrationState *s)
+         /*
+          * For precopy (or postcopy with error outside IO), we fail
+          * with no time.
++         *
++         * TODO: update FAILED only until the end of migration in BH.
+          */
+         migrate_set_state(&s->state, state, MIGRATION_STATUS_FAILED);
+         trace_migration_thread_file_err();
+===8<===
 
-Reviewed-by: Zhao Liu <zhao.liu@intel.com>
+I kept a TODO above, I would hope if you reworked everything to route
+errors to s->error, then we can move this to the cleanup BH to avoid the
+race.
+
+Do you think that could work?
+
+Thanks,
+
+-- 
+Peter Xu
 
 
