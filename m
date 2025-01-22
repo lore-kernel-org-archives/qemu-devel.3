@@ -4,83 +4,71 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CB4B9C02181
-	for <qemu-devel@archiver.kernel.org>; Wed, 22 Jan 2025 08:11:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B7283C02181
+	for <qemu-devel@archiver.kernel.org>; Wed, 22 Jan 2025 08:12:04 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1taVov-0001Mm-3b; Wed, 22 Jan 2025 03:10:41 -0500
+	id 1taVpw-0001ms-Nb; Wed, 22 Jan 2025 03:11:44 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jason.chien@sifive.com>)
- id 1taVoq-0001M1-Ew
- for qemu-devel@nongnu.org; Wed, 22 Jan 2025 03:10:36 -0500
-Received: from mail-ej1-x633.google.com ([2a00:1450:4864:20::633])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <jason.chien@sifive.com>)
- id 1taVoo-0001XU-9o
- for qemu-devel@nongnu.org; Wed, 22 Jan 2025 03:10:36 -0500
-Received: by mail-ej1-x633.google.com with SMTP id
- a640c23a62f3a-aa684b6d9c7so1127781466b.2
- for <qemu-devel@nongnu.org>; Wed, 22 Jan 2025 00:10:33 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=sifive.com; s=google; t=1737533431; x=1738138231; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=kk35EJvfrz3TasglmjDLnunQlqZKSdzsS6Rjn3Y85ug=;
- b=V1sJV9Rd3b5/B/olVs/mh6+6sB3MPMxrmYn2eqbVItTnj8VYVS0j8jL3OGc7TuvMKr
- DGZxNZJOF38QyvCfbObMrUKNeqaICEFfrQECLI7asGXtuJVIJnZAeH4m39OMGEEzwhsJ
- x4R8oCuSJiLoW/DPDWfLfphKWc62T4hZjW3vLF57fdBPAh8wae+UzYW0laWznitFTDpl
- 00+HG38SlizhEIbERppVgidMxo3Ge3RM5US1aa0MIPdMFhaZD/WhMKJ6RocXFxAg1Rdy
- jMLUjiqtftXSWIS3vLKJrf3rghY4gZE5cMFWZ4XoKrXwEacg/LdHulWCcBEV6jXuMi5C
- efNg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1737533431; x=1738138231;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=kk35EJvfrz3TasglmjDLnunQlqZKSdzsS6Rjn3Y85ug=;
- b=tNT2AKLZlEndYnGZ66GfbKcaxQav6lDtIPtOQzpJ+puKjCKUCbk/FD2s33wa/YcRpx
- xrpg6izdVbuxg2jbkptrBnIUdM3vkpwG8TC4Y6TwNJW0NzziNnP6D4I2j86XhWuxxhIw
- IsoksswgWhE0Xul3ckbK5KRRW/6gZQLH/h023s8d609W0MWV1du8yPsyuW46ZlfiTr04
- 2EVdPXUbUODqeoNepqu/PSNrYJ4uKNzHQ3ljHmPaEf4ZMiIRY8Zr9inVy1bymyB7QPgE
- fj5PE7iEH0Aj1xxT8psUVoXJDg9AOaSpVR4Xi10ROSzQ91pQLhQq7F5TR/1QLbdgBENs
- DYBA==
-X-Gm-Message-State: AOJu0Yyg/1lnNV3lxs6/aASCDfOEDNjxHkSeQKdPMoXPwEM1idfsgmhn
- +Fh/RHzlka61SQApD38OP5lWE01uaZ+F/9ESNXYMB1pf2OpyCbyfGUEWgKX1PVtY72BdTEPI3VX
- JZxXcIST4l0UPD0hIHPhxcEl3SHObtt8I/26ypAF8HswVJc10if8Fnw==
-X-Gm-Gg: ASbGnct5RUs9m1UqbILcxEGmGQJmKPCpdpNihwKCZEqrZHqVODwdMFDMAfszc527vN3
- tIJq/thKoD4tvTACQVbLCH39ACjO8YF2eGyofcJoNfYISuo7k6zqJCw==
-X-Google-Smtp-Source: AGHT+IFRrbgi+SR5Yx6lC/dvLFdP6IDVoMSOXG1ydL8S2L3NIE4WgysjEyBWFLaZ0zazyK2t+XMbBNdXLub5V1nW0C0=
-X-Received: by 2002:a17:906:dc8f:b0:ab3:ed0:8d7 with SMTP id
- a640c23a62f3a-ab38b15cd26mr2074999866b.23.1737533431250; Wed, 22 Jan 2025
- 00:10:31 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1taVpu-0001mL-5r
+ for qemu-devel@nongnu.org; Wed, 22 Jan 2025 03:11:42 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1taVpr-0001dW-Sh
+ for qemu-devel@nongnu.org; Wed, 22 Jan 2025 03:11:41 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1737533497;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=w/QYQIb4aknzNTLMQruMyBGVHqyMgKb3Go2q7r3+eWY=;
+ b=J+5GrmQbIv2ar1Ao3RdiNVHVYbyPgAsOEiIhMSwYsmKuAbl2pi9Cfo4q9madWcLdUA53qa
+ dLprDG1hy7Z2jFde2p8PC61BvslxQbjHOwPxbduu61rhPbolSQrAoQg4axUQaMt6kX+Uuf
+ Pbu9rwwZmUHu6WnQ16TtBqIkApliYps=
+Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-168-qPEBeY0kNTa2REy6yGqG9w-1; Wed,
+ 22 Jan 2025 03:11:33 -0500
+X-MC-Unique: qPEBeY0kNTa2REy6yGqG9w-1
+X-Mimecast-MFC-AGG-ID: qPEBeY0kNTa2REy6yGqG9w
+Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id CF5001956083; Wed, 22 Jan 2025 08:11:31 +0000 (UTC)
+Received: from blackfin.pond.sub.org (unknown [10.39.192.48])
+ by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 80C84195608E; Wed, 22 Jan 2025 08:11:31 +0000 (UTC)
+Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
+ id ABEED21E6A28; Wed, 22 Jan 2025 09:11:28 +0100 (CET)
+From: Markus Armbruster <armbru@redhat.com>
+To: Gustavo Romero <gustavo.romero@linaro.org>
+Cc: qemu-devel@nongnu.org,  philmd@linaro.org,  alex.bennee@linaro.org
+Subject: Re: [PATCH] MAINTAINERS: Add me as the maintainer for ivshmem-pci
+In-Reply-To: <20250122065201.629601-1-gustavo.romero@linaro.org> (Gustavo
+ Romero's message of "Wed, 22 Jan 2025 06:52:01 +0000")
+References: <20250122065201.629601-1-gustavo.romero@linaro.org>
+Date: Wed, 22 Jan 2025 09:11:28 +0100
+Message-ID: <87msfj6zf3.fsf@pond.sub.org>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 MIME-Version: 1.0
-References: <20250115141730.30858-1-jason.chien@sifive.com>
-In-Reply-To: <20250115141730.30858-1-jason.chien@sifive.com>
-From: Jason Chien <jason.chien@sifive.com>
-Date: Wed, 22 Jan 2025 16:10:20 +0800
-X-Gm-Features: AbW1kvaGHYZu872nuXWkZLv4_qxcgFrZgxpuFOIKVfNTEMkYXv0cwmO2O0sNkOs
-Message-ID: <CADr__8onD=_FYyp03y+-fB5wq_8kiOrfydWx9_3BWwpWntpKfA@mail.gmail.com>
-Subject: Re: [PATCH v3 1/2] hw/riscv/riscv-iommu: Remove redundant struct
- members
-To: qemu-devel@nongnu.org, qemu-riscv@nongnu.org
-Cc: Palmer Dabbelt <palmer@dabbelt.com>,
- Alistair Francis <alistair.francis@wdc.com>, 
- Bin Meng <bmeng.cn@gmail.com>, Weiwei Li <liwei1518@gmail.com>, 
- Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
- Liu Zhiwei <zhiwei_liu@linux.alibaba.com>, 
- Andrew Jones <ajones@ventanamicro.com>
-Content-Type: multipart/alternative; boundary="000000000000f49cef062c470607"
-Received-SPF: pass client-ip=2a00:1450:4864:20::633;
- envelope-from=jason.chien@sifive.com; helo=mail-ej1-x633.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, HTML_MESSAGE=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+Content-Type: text/plain
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=armbru@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -51
+X-Spam_score: -5.2
+X-Spam_bar: -----
+X-Spam_report: (-5.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-2.996,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.086,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -96,101 +84,44 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
---000000000000f49cef062c470607
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Gustavo Romero <gustavo.romero@linaro.org> writes:
 
-Ping
-
-Jason Chien <jason.chien@sifive.com> =E6=96=BC 2025=E5=B9=B41=E6=9C=8815=E6=
-=97=A5 =E9=80=B1=E4=B8=89 =E4=B8=8B=E5=8D=8810:17=E5=AF=AB=E9=81=93=EF=BC=
-=9A
-
-> Initially, the IOMMU would create a thread, but this thread was removed i=
-n
-> the merged version. The struct members for thread control should have bee=
-n
-> removed as well, but they were not removed in commit 0c54acb8243
-> ("hw/riscv: add RISC-V IOMMU base emulation").
+> Add me as the maintainer for the ivshmem-pci device.
 >
-> Signed-off-by: Jason Chien <jason.chien@sifive.com>
-> Reviewed-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
-> Reviewed-by: Andrew Jones <ajones@ventanamicro.com>
+> Signed-off-by: Gustavo Romero <gustavo.romero@linaro.org>
 > ---
->  hw/riscv/riscv-iommu.h | 5 -----
->  1 file changed, 5 deletions(-)
+>  MAINTAINERS | 5 ++++-
+>  1 file changed, 4 insertions(+), 1 deletion(-)
 >
-> diff --git a/hw/riscv/riscv-iommu.h b/hw/riscv/riscv-iommu.h
-> index 9424989df4..fa8a50fa24 100644
-> --- a/hw/riscv/riscv-iommu.h
-> +++ b/hw/riscv/riscv-iommu.h
-> @@ -58,11 +58,6 @@ struct RISCVIOMMUState {
->      /* interrupt notifier */
->      void (*notify)(RISCVIOMMUState *iommu, unsigned vector);
->
-> -    /* IOMMU State Machine */
-> -    QemuThread core_proc; /* Background processing thread */
-> -    QemuCond core_cond;   /* Background processing wake up signal */
-> -    unsigned core_exec;   /* Processing thread execution actions */
-> -
->      /* IOMMU target address space */
->      AddressSpace *target_as;
->      MemoryRegion *target_mr;
-> --
-> 2.43.2
->
->
+> diff --git a/MAINTAINERS b/MAINTAINERS
+> index 846b81e3ec..c3e69ef3e4 100644
+> --- a/MAINTAINERS
+> +++ b/MAINTAINERS
+> @@ -2789,11 +2789,14 @@ F: hw/hyperv/hv-balloon*.h
+>  F: include/hw/hyperv/dynmem-proto.h
+>  F: include/hw/hyperv/hv-balloon.h
+>  
+> -ivshmem-flat
+> +ivshmem
+>  M: Gustavo Romero <gustavo.romero@linaro.org>
+>  S: Maintained
+> +F: hw/misc/ivshmem-pci.c
+>  F: hw/misc/ivshmem-flat.c
+> +F: include/hw/misc/ivshmem.h
+>  F: include/hw/misc/ivshmem-flat.h
+> +F: docs/system/devices/ivshmem.rst
+>  F: docs/system/devices/ivshmem-flat.rst
+>  
+>  Subsystems
 
---000000000000f49cef062c470607
-Content-Type: text/html; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Please add
 
-<div dir=3D"ltr">Ping</div><br><div class=3D"gmail_quote gmail_quote_contai=
-ner"><div dir=3D"ltr" class=3D"gmail_attr">Jason Chien &lt;<a href=3D"mailt=
-o:jason.chien@sifive.com">jason.chien@sifive.com</a>&gt; =E6=96=BC 2025=E5=
-=B9=B41=E6=9C=8815=E6=97=A5 =E9=80=B1=E4=B8=89 =E4=B8=8B=E5=8D=8810:17=E5=
-=AF=AB=E9=81=93=EF=BC=9A<br></div><blockquote class=3D"gmail_quote" style=
-=3D"margin:0px 0px 0px 0.8ex;border-left:1px solid rgb(204,204,204);padding=
--left:1ex">Initially, the IOMMU would create a thread, but this thread was =
-removed in<br>
-the merged version. The struct members for thread control should have been<=
-br>
-removed as well, but they were not removed in commit 0c54acb8243<br>
-(&quot;hw/riscv: add RISC-V IOMMU base emulation&quot;).<br>
-<br>
-Signed-off-by: Jason Chien &lt;<a href=3D"mailto:jason.chien@sifive.com" ta=
-rget=3D"_blank">jason.chien@sifive.com</a>&gt;<br>
-Reviewed-by: Daniel Henrique Barboza &lt;<a href=3D"mailto:dbarboza@ventana=
-micro.com" target=3D"_blank">dbarboza@ventanamicro.com</a>&gt;<br>
-Reviewed-by: Andrew Jones &lt;<a href=3D"mailto:ajones@ventanamicro.com" ta=
-rget=3D"_blank">ajones@ventanamicro.com</a>&gt;<br>
----<br>
-=C2=A0hw/riscv/riscv-iommu.h | 5 -----<br>
-=C2=A01 file changed, 5 deletions(-)<br>
-<br>
-diff --git a/hw/riscv/riscv-iommu.h b/hw/riscv/riscv-iommu.h<br>
-index 9424989df4..fa8a50fa24 100644<br>
---- a/hw/riscv/riscv-iommu.h<br>
-+++ b/hw/riscv/riscv-iommu.h<br>
-@@ -58,11 +58,6 @@ struct RISCVIOMMUState {<br>
-=C2=A0 =C2=A0 =C2=A0/* interrupt notifier */<br>
-=C2=A0 =C2=A0 =C2=A0void (*notify)(RISCVIOMMUState *iommu, unsigned vector)=
-;<br>
-<br>
--=C2=A0 =C2=A0 /* IOMMU State Machine */<br>
--=C2=A0 =C2=A0 QemuThread core_proc; /* Background processing thread */<br>
--=C2=A0 =C2=A0 QemuCond core_cond;=C2=A0 =C2=A0/* Background processing wak=
-e up signal */<br>
--=C2=A0 =C2=A0 unsigned core_exec;=C2=A0 =C2=A0/* Processing thread executi=
-on actions */<br>
--<br>
-=C2=A0 =C2=A0 =C2=A0/* IOMMU target address space */<br>
-=C2=A0 =C2=A0 =C2=A0AddressSpace *target_as;<br>
-=C2=A0 =C2=A0 =C2=A0MemoryRegion *target_mr;<br>
--- <br>
-2.43.2<br>
-<br>
-</blockquote></div>
+    docs/specs/ivshmem-spec.rst
+    tests/qtest/ivshmem-test.c
 
---000000000000f49cef062c470607--
+and ideally also
+
+    contrib/ivshmem-client/
+    contrib/ivshmem-server/
+
 
