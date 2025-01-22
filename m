@@ -4,74 +4,73 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id AC7E4C02182
-	for <qemu-devel@archiver.kernel.org>; Wed, 22 Jan 2025 06:57:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 83007C02182
+	for <qemu-devel@archiver.kernel.org>; Wed, 22 Jan 2025 06:57:15 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1taUfE-0006VF-BR; Wed, 22 Jan 2025 01:56:36 -0500
+	id 1taUfL-0006Vk-H3; Wed, 22 Jan 2025 01:56:45 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1taUfC-0006V4-OG
- for qemu-devel@nongnu.org; Wed, 22 Jan 2025 01:56:34 -0500
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1taUfI-0006VZ-FM
+ for qemu-devel@nongnu.org; Wed, 22 Jan 2025 01:56:40 -0500
 Received: from mail-wm1-x329.google.com ([2a00:1450:4864:20::329])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1taUfB-0004qh-Bi
- for qemu-devel@nongnu.org; Wed, 22 Jan 2025 01:56:34 -0500
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1taUfG-0004r4-Ml
+ for qemu-devel@nongnu.org; Wed, 22 Jan 2025 01:56:40 -0500
 Received: by mail-wm1-x329.google.com with SMTP id
- 5b1f17b1804b1-436326dcb1cso45305225e9.0
- for <qemu-devel@nongnu.org>; Tue, 21 Jan 2025 22:56:32 -0800 (PST)
+ 5b1f17b1804b1-437a92d7b96so64296715e9.2
+ for <qemu-devel@nongnu.org>; Tue, 21 Jan 2025 22:56:38 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1737528991; x=1738133791; darn=nongnu.org;
+ d=linaro.org; s=google; t=1737528997; x=1738133797; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=JhkcSpkbNbYstwLK+TiU/Bm2tD0SpN+f7v0biaDhmNE=;
- b=guVkWcuqYr5F7cZ/cXNo/bUddijd2zEoQltMpIho/5lIPLtLObUlSYI7F28wNb3Aqo
- ZlExEzDLfH1yGb4wMcGLNW014YctihBSvjyqBTAIGwDIB3EpY614c1ND2qWYqOd7zOrx
- 8qZXkJ8XAsFhUEsE89iarp8T6hKTjyIQAoVOLvncVsSTK8pskMO+r0ecZBD4Bv7FqhMf
- /z8RdUZVP08XVNHrypfpe532wkoUmHnCfRc5NwuD6EKA/XtaLxU1osRzeW2I5SY21czj
- uQ2b9qI84OAaWw/OsQllumU5Qrnw6h9gIC9vkFF90WH/Gth47QAsH8B0zvxPGG4eTEpK
- OSzQ==
+ bh=tjh5IVOBSPsoqIOCCYuc+Rv5XXY/OFaWEQyojhKRV8s=;
+ b=YukDnHI0g0NWcRdEPUo7fg+Iuu792CjZ3weP+Umc0kp4Vudt0WVCbaLGThW83Mw2LF
+ k0Wg8dMgVOd6tevUqF/pT41cyNBYtE1sOMbRChSKtNfdsYLYADquhBzL/0kSIlEa2r4O
+ lcS01hPVnW5A40XOVKNmSwj1Sq/i/XMvQ2JvGXuc7VqhxvNPn/1svAaE2eLiVpFkFfos
+ 3bij9ynL5C67euqkIW4kUsnp84DUZO2HcHUzo8QD9EY7OxDg5J6mAm2DdsKlBpxhvHgP
+ 9WHN5Vz/monMwAPqjiNUwV3MOkQgDcfIKvrJRJcr1OsoMzrS+PX7xHq+RoCkebhQAcXC
+ /MVw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1737528991; x=1738133791;
+ d=1e100.net; s=20230601; t=1737528997; x=1738133797;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=JhkcSpkbNbYstwLK+TiU/Bm2tD0SpN+f7v0biaDhmNE=;
- b=AXENNwI7F12M/INKHymeR8q9N0b9FGPMPZQfTRo2qQY+RE2Rw516O+q8A5Ab1VLYck
- M6tQIZZtL/F3cS6AAILhaWCvBWBE6meSpa8lb/jFjBEaaOeffsMowkXLp9EeORVwtCC8
- +toPo2OA5dtA7WXVvtXLV/IxOfMt09LQIkfdgU7TrzHOYj3iLMGIvkwKWY2MGjTaI07H
- AIEAKzG1XWO+yRe4KyUqOgi15ad2JhQN3WMFcV9s5shiUkuPKxy/KMAia7frQ+gedYF2
- C10RqNAnxvp841GE1i1L5N12kQ9URTByFbBqhXmiIcYVQFdD0gxKt4nnzT/LYfT65Vse
- 9Prg==
-X-Gm-Message-State: AOJu0Yy8nd5GYp+qbvrL7ZlXd2+G3aqWv2zYi/W12d/M6WotvZWFnPpa
- sTP6zcb2DmBwerPRobqg/0ptDkNBhCJM5OVx6OIL7eIGYiifvFbozkC0Q/y0LQ6Rid3rHPk05BY
- OM5Y=
-X-Gm-Gg: ASbGncslHYTWr+QrxyD1yNsylB3MrBdkIu8wEH4VkDvmoHzDGaTmHFGrOMaAfNP5Vy8
- C1BMe9ZwLu4iFXhSwKq2OfiB8kqSFHXXhW6XceVdFSzsOemOAT+dlcVd0em+NundFMCT+VqGyfV
- 1PT7wSOXwujKWGQ62aWTOoFOgJZLzKguYpaaVoR/JKxpuuPk+22BT3YEMjD5oTt5iN8qBp+7BGG
- dVPI+dbpC64IT9Yv2ywIeLKtEYZVltdPM3AyBYf51LFNOhVGocJr104A4iMmk1RHUuKm53UyoLV
- 9uTyiqt5TfO79q/bCPReknjo/qsMuu3VL1HDy1HQ+2z7
-X-Google-Smtp-Source: AGHT+IGk+AzCzbLFNo3X3cmkkkiX7tCwzcWPzjy+oQAFAVs3yXTJKV1aUguqtWlTyEe0Sn0Ym7+XTA==
-X-Received: by 2002:a05:600c:450e:b0:436:1ac2:1ad2 with SMTP id
- 5b1f17b1804b1-43891427485mr161877285e9.19.1737528991492; 
- Tue, 21 Jan 2025 22:56:31 -0800 (PST)
+ bh=tjh5IVOBSPsoqIOCCYuc+Rv5XXY/OFaWEQyojhKRV8s=;
+ b=t2DUtZPrIZ/UCpbY9eyERK7g3xAZbr9FGq6ujMmVx6JSFTaqp1OgMxtAY492p7sgVu
+ gDNyUq4ce9C5USxC62hr+tDei5RBVDOG+8LYM3u22iyeL4jU0DZVJF13v/a45MnM24/x
+ LjJVC9gn+5WgLugjKzNB6peobzso+GZpWQtJqz5QokNBZmo77w8TpRpILa7XcDkR2psE
+ D4tLgjGAvzukR/06KTnDMxWOmPK28316COS5NQmjhbZ3jRRtmbqtyPgf5DYAXTEQHT94
+ ufc00mveGNtQ3rLprCK6LBhO7G+a+EAkitzwvifiOCGa3vwac9rYdv7tQzUOnfP2bGw8
+ OMtQ==
+X-Gm-Message-State: AOJu0Ywt/nfXlXUhh1j1EI0+5q0Gj/GAiJMwOjpDowhA5u2a5U5j0fax
+ 3RKIKC+fXWc7wK4l+W2KWGj/kX6IgEurOBfbidXXRv1SzEVX2RE3PL0e87zCAtVMJnplGo75rWo
+ /7M8=
+X-Gm-Gg: ASbGncs/lXBgESKHXT6OIyrXzO2/69JVoKzNv1IeUFsb13xGIIG+5EiIUG+azbs1zuY
+ FrhWn/7B7hbsfz3xdRgsBMFAiGXfyPVZ2h/7YuJVrRgNaEoTcqNMxS6RZ5d9b5XDffo/6AumjB1
+ oJsQvjh3K2pHHXeYFqm930x+92oa9nNUDe42hBf0H3l+oeEYqlEmxuYzqYK9Oa23o0U+jy2lEY8
+ 0HwUZP/u9RP0floYiK+2dSMOUgcYER01x0o7AqfHAAHmz65tNbaNpgM5e2Y/DNYC5yaymUC9UL0
+ vid1z2HniVKn3MPOp1lOGaOhzTP3KtP2m5epUdX4aaK8
+X-Google-Smtp-Source: AGHT+IFVWgmVFsOL6GSlruA72nMhcqS3yCU5ne4VUvUTPlcz6gs5wigi/PYUgrlfuZvsAyRkkGQYQg==
+X-Received: by 2002:a05:600c:9a3:b0:434:fa73:a907 with SMTP id
+ 5b1f17b1804b1-4389191b819mr182618535e9.13.1737528996711; 
+ Tue, 21 Jan 2025 22:56:36 -0800 (PST)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-438b31af70dsm12479435e9.18.2025.01.21.22.56.30
+ ffacd0b85a97d-38bf32845e8sm15666718f8f.97.2025.01.21.22.56.35
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Tue, 21 Jan 2025 22:56:31 -0800 (PST)
+ Tue, 21 Jan 2025 22:56:35 -0800 (PST)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Fan Ni <fan.ni@samsung.com>,
  Jonathan Cameron <jonathan.cameron@huawei.com>,
  Paolo Bonzini <pbonzini@redhat.com>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PATCH 1/2] hw/cxl: Remove unused component_registers::io_registers[]
- array
-Date: Wed, 22 Jan 2025 07:56:23 +0100
-Message-ID: <20250122065624.34203-2-philmd@linaro.org>
+Subject: [PATCH 2/2] hw/cxl: Allow tracing component I/O accesses
+Date: Wed, 22 Jan 2025 07:56:24 +0100
+Message-ID: <20250122065624.34203-3-philmd@linaro.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20250122065624.34203-1-philmd@linaro.org>
 References: <20250122065624.34203-1-philmd@linaro.org>
@@ -102,25 +101,79 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Avoid wasting 4K for each component, remove unused io_registers[].
+Map the component I/O region as UnimplementedDevice
+to be able to trace guest I/O accesses with '-d unimp'.
 
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 ---
- include/hw/cxl/cxl_component.h | 1 -
- 1 file changed, 1 deletion(-)
+ include/hw/cxl/cxl_component.h |  3 ++-
+ hw/cxl/cxl-component-utils.c   | 14 +++++++++++---
+ hw/cxl/Kconfig                 |  1 +
+ 3 files changed, 14 insertions(+), 4 deletions(-)
 
 diff --git a/include/hw/cxl/cxl_component.h b/include/hw/cxl/cxl_component.h
-index 945ee6ffd04..ac61c3f33a5 100644
+index ac61c3f33a5..54fd369a838 100644
 --- a/include/hw/cxl/cxl_component.h
 +++ b/include/hw/cxl/cxl_component.h
-@@ -218,7 +218,6 @@ typedef struct component_registers {
+@@ -18,6 +18,7 @@
+ #include "qemu/range.h"
+ #include "hw/cxl/cxl_cdat.h"
+ #include "hw/register.h"
++#include "hw/misc/unimp.h"
+ #include "qapi/error.h"
+ 
+ enum reg_type {
+@@ -218,7 +219,7 @@ typedef struct component_registers {
       *   0xe000 - 0xe3ff CXL ARB/MUX registers
       *   0xe400 - 0xffff RSVD
       */
--    uint32_t io_registers[CXL2_COMPONENT_IO_REGION_SIZE >> 2];
-     MemoryRegion io;
+-    MemoryRegion io;
++    UnimplementedDeviceState io;
  
      uint32_t cache_mem_registers[CXL2_COMPONENT_CM_REGION_SIZE >> 2];
+     uint32_t cache_mem_regs_write_mask[CXL2_COMPONENT_CM_REGION_SIZE >> 2];
+diff --git a/hw/cxl/cxl-component-utils.c b/hw/cxl/cxl-component-utils.c
+index cd116c04012..6d593475d00 100644
+--- a/hw/cxl/cxl-component-utils.c
++++ b/hw/cxl/cxl-component-utils.c
+@@ -192,17 +192,25 @@ void cxl_component_register_block_init(Object *obj,
+                                        const char *type)
+ {
+     ComponentRegisters *cregs = &cxl_cstate->crb;
++    DeviceState *io_dev;
++    SysBusDevice *io_sbd;
+ 
+     memory_region_init(&cregs->component_registers, obj, type,
+                        CXL2_COMPONENT_BLOCK_SIZE);
+ 
+     /* io registers controls link which we don't care about in QEMU */
+-    memory_region_init_io(&cregs->io, obj, NULL, NULL, ".io",
+-                          CXL2_COMPONENT_IO_REGION_SIZE);
++    object_initialize_child(obj, "io", &cregs->io, TYPE_UNIMPLEMENTED_DEVICE);
++    io_dev = DEVICE(&cregs->io);
++    io_sbd = SYS_BUS_DEVICE(&cregs->io);
++    qdev_prop_set_string(io_dev, "name", ".io");
++    qdev_prop_set_uint64(io_dev, "size", CXL2_COMPONENT_IO_REGION_SIZE);
++    sysbus_realize(io_sbd, &error_fatal);
++
+     memory_region_init_io(&cregs->cache_mem, obj, &cache_mem_ops, cxl_cstate,
+                           ".cache_mem", CXL2_COMPONENT_CM_REGION_SIZE);
+ 
+-    memory_region_add_subregion(&cregs->component_registers, 0, &cregs->io);
++    memory_region_add_subregion(&cregs->component_registers, 0,
++                                sysbus_mmio_get_region(io_sbd, 0));
+     memory_region_add_subregion(&cregs->component_registers,
+                                 CXL2_COMPONENT_IO_REGION_SIZE,
+                                 &cregs->cache_mem);
+diff --git a/hw/cxl/Kconfig b/hw/cxl/Kconfig
+index 8e67519b161..d6c7536001e 100644
+--- a/hw/cxl/Kconfig
++++ b/hw/cxl/Kconfig
+@@ -1,3 +1,4 @@
+ config CXL
+     bool
+     default y if PCI_EXPRESS
++    select UNIMP
 -- 
 2.47.1
 
