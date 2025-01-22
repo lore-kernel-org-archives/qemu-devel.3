@@ -4,58 +4,72 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7379DC02181
-	for <qemu-devel@archiver.kernel.org>; Wed, 22 Jan 2025 08:39:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3CE20C02182
+	for <qemu-devel@archiver.kernel.org>; Wed, 22 Jan 2025 08:47:41 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1taWF1-0006Hx-HU; Wed, 22 Jan 2025 03:37:39 -0500
+	id 1taWNS-0002rr-Ea; Wed, 22 Jan 2025 03:46:22 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <ethan84@andestech.com>)
- id 1taWEd-0006Dy-Gd; Wed, 22 Jan 2025 03:37:17 -0500
-Received: from 60-248-80-70.hinet-ip.hinet.net ([60.248.80.70]
- helo=Atcsqr.andestech.com)
+ (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
+ id 1taWNP-0002pI-5V; Wed, 22 Jan 2025 03:46:19 -0500
+Received: from mgamail.intel.com ([198.175.65.9])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <ethan84@andestech.com>)
- id 1taWEZ-0000c4-3q; Wed, 22 Jan 2025 03:37:15 -0500
-Received: from mail.andestech.com (ATCPCS31.andestech.com [10.0.1.89])
- by Atcsqr.andestech.com with ESMTPS id 50M8aYUR018565
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Wed, 22 Jan 2025 16:36:34 +0800 (+08)
- (envelope-from ethan84@andestech.com)
-Received: from atcpcw16.andestech.com (10.0.1.106) by ATCPCS31.andestech.com
- (10.0.1.89) with Microsoft SMTP Server (TLS) id 14.3.498.0; Wed, 22 Jan 2025
- 16:36:34 +0800
-To: <qemu-devel@nongnu.org>
-CC: <richard.henderson@linaro.org>, <pbonzini@redhat.com>,
- <palmer@dabbelt.com>, <alistair.francis@wdc.com>, <bmeng.cn@gmail.com>,
- <liwei1518@gmail.com>, <dbarboza@ventanamicro.com>,
- <zhiwei_liu@linux.alibaba.com>, <peterx@redhat.com>,
- <david@redhat.com>, <philmd@linaro.org>, <qemu-riscv@nongnu.org>,
- Ethan Chen <ethan84@andestech.com>
-Subject: [PATCH v10 2/8] memory: Introduce memory region fetch operation
-Date: Wed, 22 Jan 2025 16:36:11 +0800
-Message-ID: <20250122083617.3940240-3-ethan84@andestech.com>
-X-Mailer: git-send-email 2.42.0.345.gaab89be2eb.dirty
-In-Reply-To: <20250122083617.3940240-1-ethan84@andestech.com>
-References: <20250122083617.3940240-1-ethan84@andestech.com>
+ (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
+ id 1taWNH-0002xI-Nf; Wed, 22 Jan 2025 03:46:18 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+ d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+ t=1737535572; x=1769071572;
+ h=from:to:cc:subject:date:message-id:mime-version:
+ content-transfer-encoding;
+ bh=/qineeskdRgbE6vyAA/6OrXfiv6ADTg5jvwZfxbwbN8=;
+ b=G1wENBvoDmAMy2uvldHdgGQCKwHhHw3/YuQYzo0kofUE5l7tJxMZCvII
+ 2VQTfaiISRrWZqOfIpLYZQbIA8VIm1GzNdNO8yRTLI+SQpk+uOCF/a97s
+ Q6bmqT5bwgSqo5cDqfLC3l2DE3Y2llT/3MLkk6UqNYTKdeAADqLP2W3CD
+ MmLX4YSYT0krA1Fflkmqp/Xz+JphNE3K2FzsIQYd6TC/lnSvjCY18s8Ph
+ sIGi3Ba6KHE9guSHVFzw4pxoULzRwwYH89QjelOALG5jf5fTBNUnA1t4t
+ wxK2/+3ZD7h4X4T+F5fpu+9lzupffMDd03/sZpj20lz+26kLiIVdH2TvQ Q==;
+X-CSE-ConnectionGUID: 0ge5V8toTmO62OJQizLaKQ==
+X-CSE-MsgGUID: TbLMGnZ+S42zR/PY9jVF2Q==
+X-IronPort-AV: E=McAfee;i="6700,10204,11322"; a="60451538"
+X-IronPort-AV: E=Sophos;i="6.13,224,1732608000"; d="scan'208";a="60451538"
+Received: from orviesa003.jf.intel.com ([10.64.159.143])
+ by orvoesa101.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 22 Jan 2025 00:46:07 -0800
+X-CSE-ConnectionGUID: jZTTLQ1qSGSsEYjLO0x7Lw==
+X-CSE-MsgGUID: S3odIcLiQFWXMDZ8Y+AHMA==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.11,199,1725346800"; d="scan'208";a="112049608"
+Received: from liuzhao-optiplex-7080.sh.intel.com ([10.239.160.39])
+ by orviesa003.jf.intel.com with ESMTP; 22 Jan 2025 00:46:03 -0800
+From: Zhao Liu <zhao1.liu@intel.com>
+To: Paolo Bonzini <pbonzini@redhat.com>, Eric Blake <eblake@redhat.com>,
+ Markus Armbruster <armbru@redhat.com>, Michael Roth <michael.roth@amd.com>,
+ =?UTF-8?q?Daniel=20P=20=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
+ Eduardo Habkost <eduardo@habkost.net>,
+ Marcelo Tosatti <mtosatti@redhat.com>, Shaoqin Huang <shahuang@redhat.com>,
+ Eric Auger <eauger@redhat.com>, Peter Maydell <peter.maydell@linaro.org>,
+ Laurent Vivier <lvivier@redhat.com>, Thomas Huth <thuth@redhat.com>,
+ Sebastian Ott <sebott@redhat.com>, Gavin Shan <gshan@redhat.com>
+Cc: qemu-devel@nongnu.org, kvm@vger.kernel.org, qemu-arm@nongnu.org,
+ Dapeng Mi <dapeng1.mi@intel.com>, Yi Lai <yi1.lai@intel.com>,
+ Zhao Liu <zhao1.liu@intel.com>
+Subject: [RFC v2 0/5] accel/kvm: Support KVM PMU filter
+Date: Wed, 22 Jan 2025 17:05:12 +0800
+Message-Id: <20250122090517.294083-1-zhao1.liu@intel.com>
+X-Mailer: git-send-email 2.34.1
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Content-Type: text/plain
-X-Originating-IP: [10.0.1.106]
-X-DKIM-Results: atcpcs31.andestech.com; dkim=none;
-X-DNSRBL: 
-X-MAIL: Atcsqr.andestech.com 50M8aYUR018565
-Received-SPF: pass client-ip=60.248.80.70; envelope-from=ethan84@andestech.com;
- helo=Atcsqr.andestech.com
-X-Spam_score_int: -8
-X-Spam_score: -0.9
-X-Spam_bar: /
-X-Spam_report: (-0.9 / 5.0 requ) BAYES_00=-1.9,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- RDNS_DYNAMIC=0.982, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- TVD_RCVD_IP=0.001 autolearn=no autolearn_force=no
+Received-SPF: pass client-ip=198.175.65.9; envelope-from=zhao1.liu@intel.com;
+ helo=mgamail.intel.com
+X-Spam_score_int: -39
+X-Spam_score: -4.0
+X-Spam_bar: ----
+X-Spam_report: (-4.0 / 5.0 requ) BAYES_00=-1.9, DKIM_INVALID=0.1,
+ DKIM_SIGNED=0.1, RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -68,237 +82,159 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-to:  Ethan Chen <ethan84@andestech.com>
-From:  Ethan Chen via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Allow memory regions to have different behaviors for read and fetch
-operations.
+Hi folks,
 
-For example, the RISC-V IOPMP could raise an interrupt when the CPU
-tries to fetch from a non-executable region.
+Sorry for the long wait, but RFC v2 is here at last.
 
-If the fetch operation for a memory region is not implemented, the read
-operation will still be used for fetch operations.
+Compared with v1 [1], v2 mianly makes `action` as a global parameter,
+and all events (and fixed counters) are based on a unified action.
 
-Signed-off-by: Ethan Chen <ethan84@andestech.com>
+Learned from the discussion with Shaoqin in v1, current pmu-filter QOM
+design could meet the requirements from the ARM KVM side.
+
+
+Background
+==========
+
+I picked up Shaoqing's previous work [2] on the KVM PMU filter for arm,
+and now is trying to support this feature for x86 with a JSON-compatible
+API.
+
+While arm and x86 use different KVM ioctls to configure the PMU filter,
+considering they all have similar inputs (PMU event + action), it is
+still possible to abstract a generic, cross-architecture kvm-pmu-filter
+object and provide users with a sufficiently generic or near-consistent
+QAPI interface.
+
+That's what I did in this series, a new kvm-pmu-filter object, with the
+API like:
+
+-object '{"qom-type":"kvm-pmu-filter","id":"f0","action":"allow","events":[{"format":"raw","code":"0xc4"}]}'
+
+For i386, this object is inserted into kvm accelerator and is extended
+to support fixed-counter and more formats ("x86-default" and
+"x86-masked-entry"):
+
+-accel kvm,pmu-filter=f0 \
+-object pmu='{"qom-type":"kvm-pmu-filter","id":"f0","action":"allow","x86-fixed-counter":{"bitmap":"0x0"},"events":[{"format":"x86-masked-entry","select":"0xc4","mask":"0xff","match":"0","exclude":true},{"format":"x86-masked-entry","select":"0xc5","mask":"0xff","match":"0","exclude":true}]}'
+
+This object can still be added as the property to the arch CPU if it is
+desired as a per CPU feature (as Shaoqin did for arm before).
+
+
+Introduction
+============
+
+
+Formats supported in kvm-pmu-filter
+-----------------------------------
+
+This series supports 3 formats:
+
+* raw format (general format).
+
+  This format indicates the code that has been encoded to be able to
+  index the PMU events, and which can be delivered directly to the KVM
+  ioctl. For arm, this means the event code, and for i386, this means
+  the raw event with the layout like:
+
+      select high bit | umask | select low bits
+
+* x86-default format (i386 specific)
+
+  x86 commonly uses select&umask to identify PMU events, and this format
+  is used to support the select&umask. Then QEMU will encode select and
+  umask into a raw format code.
+
+* x86-masked-entry (i386 specific)
+
+  This is a special format that x86's KVM_SET_PMU_EVENT_FILTER supports.
+
+
+Hexadecimal value string
+------------------------
+
+In practice, the values associated with PMU events (code for arm, select&
+umask for x86) are often expressed in hexadecimal. Further, from linux
+perf related information (tools/perf/pmu-events/arch/*/*/*.json), x86/
+arm64/riscv/nds32/powerpc all prefer the hexadecimal numbers and only
+s390 uses decimal value.
+
+Therefore, it is necessary to support hexadecimal in order to honor PMU
+conventions.
+
+However, unfortunately, standard JSON (RFC 8259) does not support
+hexadecimal numbers. So I can only consider using the numeric string in
+the QAPI and then parsing it to a number.
+
+To achieve this, I defined two versions of PMU-related structures in
+kvm.json:
+ * a native version that accepts numeric values, which is used for
+   QEMU's internal code processing,
+
+ * and a variant version that accepts numeric string, which is used to
+   receive user input.
+
+kvm-pmu-filter object will take care of converting the string version
+of the event/counter information into the numeric version.
+
+The related implementation can be found in patch 1.
+
+
+CPU property v.s. KVM property
+------------------------------
+
+In Shaoqin's previous implementation [2], KVM PMU filter is made as a
+arm CPU property. This is because arm uses a per CPU ioctl
+(KVM_SET_DEVICE_ATTR) to configure KVM PMU filter.
+
+However, for x86, the dependent ioctl (KVM_SET_PMU_EVENT_FILTER) is per
+VM. In the meantime, considering that for hybrid architecture, maybe in
+the future there will be a new per vCPU ioctl, or there will be
+practices to support filter fixed counter by configuring CPUIDs.
+
+Based on the above thoughts, for x86, it is not appropriate to make the
+current per-VM ioctl-based PMU filter a CPU property. Instead, I make it
+a kvm property and configure it via "-accel kvm,pmu-filter=obj_id".
+
+So in summary, it is feasible to use the KVM PMU filter as either a CPU
+or a KVM property, depending on whether it is used as a CPU feature or a
+VM feature.
+
+The kvm-pmu-filter object, as an abstraction, is general enough to
+support filter configurations for different scopes (per-CPU or per-VM).
+
+[1]: https://lore.kernel.org/qemu-devel/20240710045117.3164577-1-zhao1.liu@intel.com/
+[2]: https://lore.kernel.org/qemu-devel/20240409024940.180107-1-shahuang@redhat.com/
+
+Thanks and Best Regards,
+Zhao
 ---
- accel/tcg/cputlb.c    |   9 +++-
- include/exec/memory.h |  27 +++++++++++
- system/memory.c       | 104 ++++++++++++++++++++++++++++++++++++++++++
- system/trace-events   |   2 +
- 4 files changed, 140 insertions(+), 2 deletions(-)
+Zhao Liu (5):
+  qapi/qom: Introduce kvm-pmu-filter object
+  i386/kvm: Support basic KVM PMU filter
+  i386/kvm: Support event with select & umask format in KVM PMU filter
+  i386/kvm: Support event with masked entry format in KVM PMU filter
+  i386/kvm: Support fixed counter in KVM PMU filter
 
-diff --git a/accel/tcg/cputlb.c b/accel/tcg/cputlb.c
-index b4ccf0cdcb..71c16a1ac1 100644
---- a/accel/tcg/cputlb.c
-+++ b/accel/tcg/cputlb.c
-@@ -1947,8 +1947,13 @@ static uint64_t int_ld_mmio_beN(CPUState *cpu, CPUTLBEntryFull *full,
-         this_size = 1 << this_mop;
-         this_mop |= MO_BE;
- 
--        r = memory_region_dispatch_read(mr, mr_offset, &val,
--                                        this_mop, full->attrs);
-+        if (type == MMU_INST_FETCH) {
-+            r = memory_region_dispatch_fetch(mr, mr_offset, &val,
-+                                             this_mop, full->attrs);
-+        } else {
-+            r = memory_region_dispatch_read(mr, mr_offset, &val,
-+                                            this_mop, full->attrs);
-+        }
-         if (unlikely(r != MEMTX_OK)) {
-             io_failed(cpu, full, addr, this_size, type, mmu_idx, r, ra);
-         }
-diff --git a/include/exec/memory.h b/include/exec/memory.h
-index 3ee1901b52..6166d697d9 100644
---- a/include/exec/memory.h
-+++ b/include/exec/memory.h
-@@ -273,6 +273,11 @@ struct MemoryRegionOps {
-                   hwaddr addr,
-                   uint64_t data,
-                   unsigned size);
-+    /* Fetch from the memory region. @addr is relative to @mr; @size is
-+     * in bytes. */
-+    uint64_t (*fetch)(void *opaque,
-+                      hwaddr addr,
-+                      unsigned size);
- 
-     MemTxResult (*read_with_attrs)(void *opaque,
-                                    hwaddr addr,
-@@ -284,6 +289,11 @@ struct MemoryRegionOps {
-                                     uint64_t data,
-                                     unsigned size,
-                                     MemTxAttrs attrs);
-+    MemTxResult (*fetch_with_attrs)(void *opaque,
-+                                    hwaddr addr,
-+                                    uint64_t *data,
-+                                    unsigned size,
-+                                    MemTxAttrs attrs);
- 
-     enum device_endian endianness;
-     /* Guest-visible constraints: */
-@@ -2604,6 +2614,23 @@ MemTxResult memory_region_dispatch_write(MemoryRegion *mr,
-                                          MemOp op,
-                                          MemTxAttrs attrs);
- 
-+
-+/**
-+ * memory_region_dispatch_fetch: perform a fetch directly to the specified
-+ * MemoryRegion.
-+ *
-+ * @mr: #MemoryRegion to access
-+ * @addr: address within that region
-+ * @pval: pointer to uint64_t which the data is written to
-+ * @op: size, sign, and endianness of the memory operation
-+ * @attrs: memory transaction attributes to use for the access
-+ */
-+MemTxResult memory_region_dispatch_fetch(MemoryRegion *mr,
-+                                         hwaddr addr,
-+                                         uint64_t *pval,
-+                                         MemOp op,
-+                                         MemTxAttrs attrs);
-+
- /**
-  * address_space_init: initializes an address space
-  *
-diff --git a/system/memory.c b/system/memory.c
-index b17b5538ff..7f26f681f9 100644
---- a/system/memory.c
-+++ b/system/memory.c
-@@ -477,6 +477,51 @@ static MemTxResult memory_region_read_with_attrs_accessor(MemoryRegion *mr,
-     return r;
- }
- 
-+static MemTxResult memory_region_fetch_accessor(MemoryRegion *mr,
-+                                                hwaddr addr,
-+                                                uint64_t *value,
-+                                                unsigned size,
-+                                                signed shift,
-+                                                uint64_t mask,
-+                                                MemTxAttrs attrs)
-+{
-+    uint64_t tmp;
-+
-+    tmp = mr->ops->fetch(mr->opaque, addr, size);
-+    if (mr->subpage) {
-+        trace_memory_region_subpage_fetch(get_cpu_index(), mr, addr, tmp, size);
-+    } else if (trace_event_get_state_backends(TRACE_MEMORY_REGION_OPS_FETCH)) {
-+        hwaddr abs_addr = memory_region_to_absolute_addr(mr, addr);
-+        trace_memory_region_ops_fetch(get_cpu_index(), mr, abs_addr, tmp, size,
-+                                     memory_region_name(mr));
-+    }
-+    memory_region_shift_read_access(value, shift, mask, tmp);
-+    return MEMTX_OK;
-+}
-+
-+static MemTxResult memory_region_fetch_with_attrs_accessor(MemoryRegion *mr,
-+                                                          hwaddr addr,
-+                                                          uint64_t *value,
-+                                                          unsigned size,
-+                                                          signed shift,
-+                                                          uint64_t mask,
-+                                                          MemTxAttrs attrs)
-+{
-+    uint64_t tmp = 0;
-+    MemTxResult r;
-+
-+    r = mr->ops->fetch_with_attrs(mr->opaque, addr, &tmp, size, attrs);
-+    if (mr->subpage) {
-+        trace_memory_region_subpage_fetch(get_cpu_index(), mr, addr, tmp, size);
-+    } else if (trace_event_get_state_backends(TRACE_MEMORY_REGION_OPS_FETCH)) {
-+        hwaddr abs_addr = memory_region_to_absolute_addr(mr, addr);
-+        trace_memory_region_ops_fetch(get_cpu_index(), mr, abs_addr, tmp, size,
-+                                      memory_region_name(mr));
-+    }
-+    memory_region_shift_read_access(value, shift, mask, tmp);
-+    return r;
-+}
-+
- static MemTxResult memory_region_write_accessor(MemoryRegion *mr,
-                                                 hwaddr addr,
-                                                 uint64_t *value,
-@@ -1493,6 +1538,65 @@ MemTxResult memory_region_dispatch_read(MemoryRegion *mr,
-     return r;
- }
- 
-+static MemTxResult memory_region_dispatch_fetch1(MemoryRegion *mr,
-+                                                hwaddr addr,
-+                                                uint64_t *pval,
-+                                                unsigned size,
-+                                                MemTxAttrs attrs)
-+{
-+    *pval = 0;
-+
-+    if (mr->ops->fetch) {
-+        return access_with_adjusted_size(addr, pval, size,
-+                                         mr->ops->impl.min_access_size,
-+                                         mr->ops->impl.max_access_size,
-+                                         memory_region_fetch_accessor,
-+                                         mr, attrs);
-+    } else if (mr->ops->fetch_with_attrs) {
-+        return access_with_adjusted_size(addr, pval, size,
-+            mr->ops->impl.min_access_size,
-+            mr->ops->impl.max_access_size,
-+            memory_region_fetch_with_attrs_accessor,
-+            mr, attrs);
-+    } else if (mr->ops->read) {
-+        return access_with_adjusted_size(addr, pval, size,
-+                                         mr->ops->impl.min_access_size,
-+                                         mr->ops->impl.max_access_size,
-+                                         memory_region_read_accessor,
-+                                         mr, attrs);
-+    } else {
-+        return access_with_adjusted_size(addr, pval, size,
-+                                         mr->ops->impl.min_access_size,
-+                                         mr->ops->impl.max_access_size,
-+                                         memory_region_read_with_attrs_accessor,
-+                                         mr, attrs);
-+    }
-+}
-+
-+MemTxResult memory_region_dispatch_fetch(MemoryRegion *mr,
-+                                        hwaddr addr,
-+                                        uint64_t *pval,
-+                                        MemOp op,
-+                                        MemTxAttrs attrs)
-+{
-+    unsigned size = memop_size(op);
-+    MemTxResult r;
-+
-+    if (mr->alias) {
-+        return memory_region_dispatch_fetch(mr->alias,
-+                                           mr->alias_offset + addr,
-+                                           pval, op, attrs);
-+    }
-+    if (!memory_region_access_valid(mr, addr, size, false, attrs)) {
-+        *pval = unassigned_mem_read(mr, addr, size);
-+        return MEMTX_DECODE_ERROR;
-+    }
-+
-+    r = memory_region_dispatch_fetch1(mr, addr, pval, size, attrs);
-+    adjust_endianness(mr, pval, op);
-+    return r;
-+}
-+
- /* Return true if an eventfd was signalled */
- static bool memory_region_dispatch_write_eventfds(MemoryRegion *mr,
-                                                     hwaddr addr,
-diff --git a/system/trace-events b/system/trace-events
-index 5bbc3fbffa..4e78bb515b 100644
---- a/system/trace-events
-+++ b/system/trace-events
-@@ -18,8 +18,10 @@ cpu_out(unsigned int addr, char size, unsigned int val) "addr 0x%x(%c) value %u"
- # memory.c
- memory_region_ops_read(int cpu_index, void *mr, uint64_t addr, uint64_t value, unsigned size, const char *name) "cpu %d mr %p addr 0x%"PRIx64" value 0x%"PRIx64" size %u name '%s'"
- memory_region_ops_write(int cpu_index, void *mr, uint64_t addr, uint64_t value, unsigned size, const char *name) "cpu %d mr %p addr 0x%"PRIx64" value 0x%"PRIx64" size %u name '%s'"
-+memory_region_ops_fetch(int cpu_index, void *mr, uint64_t addr, uint64_t value, unsigned size, const char *name) "cpu %d mr %p addr 0x%"PRIx64" value 0x%"PRIx64" size %u name '%s'"
- memory_region_subpage_read(int cpu_index, void *mr, uint64_t offset, uint64_t value, unsigned size) "cpu %d mr %p offset 0x%"PRIx64" value 0x%"PRIx64" size %u"
- memory_region_subpage_write(int cpu_index, void *mr, uint64_t offset, uint64_t value, unsigned size) "cpu %d mr %p offset 0x%"PRIx64" value 0x%"PRIx64" size %u"
-+memory_region_subpage_fetch(int cpu_index, void *mr, uint64_t offset, uint64_t value, unsigned size) "cpu %d mr %p offset 0x%"PRIx64" value 0x%"PRIx64" size %u"
- memory_region_ram_device_read(int cpu_index, void *mr, uint64_t addr, uint64_t value, unsigned size) "cpu %d mr %p addr 0x%"PRIx64" value 0x%"PRIx64" size %u"
- memory_region_ram_device_write(int cpu_index, void *mr, uint64_t addr, uint64_t value, unsigned size) "cpu %d mr %p addr 0x%"PRIx64" value 0x%"PRIx64" size %u"
- memory_region_sync_dirty(const char *mr, const char *listener, int global) "mr '%s' listener '%s' synced (global=%d)"
+ MAINTAINERS              |   1 +
+ accel/kvm/kvm-pmu.c      | 386 +++++++++++++++++++++++++++++++++++++++
+ accel/kvm/meson.build    |   1 +
+ include/system/kvm-pmu.h |  44 +++++
+ include/system/kvm_int.h |   2 +
+ qapi/kvm.json            | 246 +++++++++++++++++++++++++
+ qapi/meson.build         |   1 +
+ qapi/qapi-schema.json    |   1 +
+ qapi/qom.json            |   3 +
+ target/i386/kvm/kvm.c    | 176 ++++++++++++++++++
+ 10 files changed, 861 insertions(+)
+ create mode 100644 accel/kvm/kvm-pmu.c
+ create mode 100644 include/system/kvm-pmu.h
+ create mode 100644 qapi/kvm.json
+
 -- 
 2.34.1
 
