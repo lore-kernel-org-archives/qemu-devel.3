@@ -4,93 +4,71 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5BF3BC02181
-	for <qemu-devel@archiver.kernel.org>; Wed, 22 Jan 2025 09:07:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 464A0C02181
+	for <qemu-devel@archiver.kernel.org>; Wed, 22 Jan 2025 09:16:44 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1taWgK-0004rR-MO; Wed, 22 Jan 2025 04:05:52 -0500
+	id 1taWq4-0007ei-P2; Wed, 22 Jan 2025 04:15:57 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1taWgI-0004qm-Le
- for qemu-devel@nongnu.org; Wed, 22 Jan 2025 04:05:50 -0500
-Received: from mail-wm1-x331.google.com ([2a00:1450:4864:20::331])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1taWgH-0000oS-3H
- for qemu-devel@nongnu.org; Wed, 22 Jan 2025 04:05:50 -0500
-Received: by mail-wm1-x331.google.com with SMTP id
- 5b1f17b1804b1-4361b6f9faeso3846415e9.1
- for <qemu-devel@nongnu.org>; Wed, 22 Jan 2025 01:05:48 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1737536747; x=1738141547; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=77/1Bz7P9AdJWLHOi9IRZtlPTzWr+Gq8S8Ogq1MdxEo=;
- b=maMOZtEp9Nr5HKpKErRbiST0BCsJcKEW0pjFZKwAlCzONxftmUXxOuz50MBIMCGBqZ
- yaTm0LPZwI5qBvYwK3VmFEYQmBQvJHKuHvjRDVzOCH0jFmOA+v4QaVu5J+oWLW6Lk6/m
- GFC8XNsvKXgbckVyaoTyJfIDy0x43XGLDZ8pZCcuYp98UraND3RaRFFwztX8Wu7Iwyal
- eyrX0RZhDpoZRVGqRTZUtsH4B5S7KyMayobRhc12CoiqHfIoJ06SRg1RuC3afglIZ5ej
- Ubbnprp2PuWJKDfZXPcKBNAoetYA6OZ73g0QbasZBgHKYzuzeOOizmObCE0V2wrPwP8K
- OcxA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1737536747; x=1738141547;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=77/1Bz7P9AdJWLHOi9IRZtlPTzWr+Gq8S8Ogq1MdxEo=;
- b=pn4U/UC2Aho0JXegxN2jI9FbbhulaSbOfV9fEx4q0sEpOWd7UmC0vfygRDD/Qi8DqY
- Imm49XVpsQuP9VBwg2HUqZ/CdJX+rciotHAkoyeHzbumtTdOhAch3VNdTlQ2tx5Co4MF
- kafpHUiuBbFDblqCfZrwIyEHdICoLLffRGOxoZu6eopPlLMS5nzTRGOPa7NAxQ3p7Xoq
- Ls+f2iNKDLICUrCk/lftaZz0SLSJ467bW75qFP/wQooRePjMR2jlRTkfpcuIgf34vG6y
- xkOqGWeQdfYzcvB4IukjhWvXfjtiE9lM8A2cI+AS1q6OByRS8GICGqNcgF7C6c/lnBM+
- wfYA==
-X-Forwarded-Encrypted: i=1;
- AJvYcCXaDqt28LN9OlZGf3/gf2PLlOP8uNKrnbxJMtp9gYWyHyb+dg84BbkAou9OyI3nApbyVAaNmC+0lfOy@nongnu.org
-X-Gm-Message-State: AOJu0YzbwucjacHSKMoJsNSecyX+wqMq142syLBfB0gu8ossnwmnCdZ0
- BHrwPDpz4uVR5xTMDfwInNSt+s/2sAYZ8zjFBHRArHCeK900w/hgmQWO4iuwjrw=
-X-Gm-Gg: ASbGncti4PnY4oeJrfjUhYNbjNvYYFs5GU6zngVQfYfrSHkE/fCvCycC309HQqry0uC
- myASQc438wBIIYcR0V9do2Fv6R7j0tdDYpizJXofPUX55+N+jERkEODK7eS8FuqK6LAK/Gp6XPS
- A10/p0Z0mOhoc+JRHx9Ueku2J2X3OuBZJhIzgqXUxe+U3EPx+9I+0/BXBPJ01TCPEVjTr6VHZJ3
- M5G2hNdxwq1OSa0+d9ctJ8de2txh8wUjg0ic5qQzevcE3W8524fMiyMAwTJ8UHoRjx0YiLXt/eO
- ChDOvZG490x+BfiQeUwKYHv0wk5akg//cVtpgQ==
-X-Google-Smtp-Source: AGHT+IFXFt2cC14JEHtA4BXBbh3B1z+FcmtgDaUhUBX0VAdxCWCbzQwSwquv1YOQRT/b5jzXLNr1zQ==
-X-Received: by 2002:a05:600c:4e0c:b0:436:e69a:7341 with SMTP id
- 5b1f17b1804b1-438918b966emr181292175e9.3.1737536747305; 
- Wed, 22 Jan 2025 01:05:47 -0800 (PST)
-Received: from [192.168.69.181] (88-187-86-199.subs.proxad.net.
- [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-438b31b7655sm16204585e9.30.2025.01.22.01.05.46
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 22 Jan 2025 01:05:46 -0800 (PST)
-Message-ID: <012e9d08-883e-490d-b591-feea8ade9d86@linaro.org>
-Date: Wed, 22 Jan 2025 10:05:45 +0100
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1taWpp-0007cQ-9U
+ for qemu-devel@nongnu.org; Wed, 22 Jan 2025 04:15:42 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1taWpn-0004x5-Dt
+ for qemu-devel@nongnu.org; Wed, 22 Jan 2025 04:15:41 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1737537337;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:
+ content-transfer-encoding:content-transfer-encoding;
+ bh=LBm4xsqcyi0CTkYq7bhZmD9hUKCAAfGetIKqX1St/f8=;
+ b=MbWc17k0txCBRqSkfQ8ddVvi1tTVFWEVDZF5LNbiZ/3eZuucdueJRHluYjtlUO6yy8beMD
+ pze+zAcJv6Cy6caNj4tKDXzNeDV4RwFJI8DYJDRDIEscdt1f0d9AnKuC3DZHBFtEkoYnL1
+ hoXvXZOSMY3FOLE4i4qJHlHZHBnBWWQ=
+Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-259-ubrmFrhAN56xbb5Wh4TdvQ-1; Wed,
+ 22 Jan 2025 04:15:31 -0500
+X-MC-Unique: ubrmFrhAN56xbb5Wh4TdvQ-1
+X-Mimecast-MFC-AGG-ID: ubrmFrhAN56xbb5Wh4TdvQ
+Received: from mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.15])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 0EB851955F69; Wed, 22 Jan 2025 09:15:29 +0000 (UTC)
+Received: from thuth-p1g4.redhat.com (unknown [10.39.192.246])
+ by mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id DB257195608A; Wed, 22 Jan 2025 09:15:23 +0000 (UTC)
+From: Thomas Huth <thuth@redhat.com>
+To: qemu-devel@nongnu.org,
+ =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
+ =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
+Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Alexandre Iooss <erdnaxe@crans.org>,
+ Mahmoud Mandour <ma.mandourr@gmail.com>,
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>,
+ Thomas Huth <thuth@redhat.com>
+Subject: [PATCH] tests/functional: Fix the aarch64_tcg_plugins test
+Date: Wed, 22 Jan 2025 10:15:17 +0100
+Message-ID: <20250122091517.1429734-1-thuth@redhat.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 9/9] aspeed: Create sd devices only when defaults are
- enabled
-To: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>, qemu-arm@nongnu.org,
- qemu-devel@nongnu.org
-Cc: Joel Stanley <joel@jms.id.au>,
- Andrew Jeffery <andrew@codeconstruct.com.au>,
- Troy Lee <troy_lee@aspeedtech.com>, Jamin Lin <jamin_lin@aspeedtech.com>,
- Steven Lee <steven_lee@aspeedtech.com>
-References: <20250122070909.1138598-1-clg@redhat.com>
- <20250122070909.1138598-10-clg@redhat.com>
-Content-Language: en-US
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20250122070909.1138598-10-clg@redhat.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::331;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x331.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.15
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=thuth@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -50
+X-Spam_score: -5.1
+X-Spam_bar: -----
+X-Spam_report: (-5.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-2.996,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -106,25 +84,72 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 22/1/25 08:09, Cédric Le Goater wrote:
-> When the -nodefaults option is set, sd devices should not be
-> automatically created by the machine. Instead they should be defined
-> on the command line.
-> 
-> Note that it is not currently possible to define which bus an
-> "sd-card" device is attached to:
-> 
->    -blockdev node-name=drive0,driver=file,filename=/path/to/file.img \
->    -device sd-card,drive=drive0,id=sd0
-> 
-> and the first bus named "sd-bus" will be used.
-> 
-> Signed-off-by: Cédric Le Goater <clg@redhat.com>
-> ---
->   hw/arm/aspeed.c | 4 ++--
->   1 file changed, 2 insertions(+), 2 deletions(-)
+Unfortunately, this test had not been added to meson.build, so we did
+not notice a regression: Looking for 'Kernel panic - not syncing: VFS:'
+as the indication for the final boot state of the kernel was a bad
+idea since 'Kernel panic - not syncing' is the default failure
+message of the LinuxKernelTest class, and since we're now reading
+the console input byte by byte instead of linewise (see commit
+cdad03b74f75), the failure now triggers before we fully read the
+success string. Let's fix this by simply looking for the previous
+line in the console output instead.
 
-For SDHCI:
-Acked-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Also, replace the call to cancel() - this was only available in the
+Avocado framework. In the functional framework, we must use skipTest()
+instead.
+
+Fixes: 3abc545e66 ("tests/functional: Convert the tcg_plugins test")
+Fixes: cdad03b74f ("tests/functional: rewrite console handling to be bytewise")
+Signed-off-by: Thomas Huth <thuth@redhat.com>
+---
+ tests/functional/meson.build                 | 1 +
+ tests/functional/test_aarch64_tcg_plugins.py | 6 +++---
+ 2 files changed, 4 insertions(+), 3 deletions(-)
+
+diff --git a/tests/functional/meson.build b/tests/functional/meson.build
+index 5457331643..e0a276f349 100644
+--- a/tests/functional/meson.build
++++ b/tests/functional/meson.build
+@@ -72,6 +72,7 @@ tests_aarch64_system_thorough = [
+   'aarch64_sbsaref',
+   'aarch64_sbsaref_alpine',
+   'aarch64_sbsaref_freebsd',
++  'aarch64_tcg_plugins',
+   'aarch64_tuxrun',
+   'aarch64_virt',
+   'aarch64_xlnx_versal',
+diff --git a/tests/functional/test_aarch64_tcg_plugins.py b/tests/functional/test_aarch64_tcg_plugins.py
+index 01660eb090..357eb48477 100755
+--- a/tests/functional/test_aarch64_tcg_plugins.py
++++ b/tests/functional/test_aarch64_tcg_plugins.py
+@@ -46,7 +46,7 @@ def run_vm(self, kernel_path, kernel_command_line,
+         except:
+             # TODO: probably fails because plugins not enabled but we
+             # can't currently probe for the feature.
+-            self.cancel("TCG Plugins not enabled?")
++            self.skipTest("TCG Plugins not enabled?")
+ 
+         self.wait_for_console_pattern(console_pattern, vm)
+         # ensure logs are flushed
+@@ -65,7 +65,7 @@ def test_aarch64_virt_insn(self):
+         kernel_path = self.ASSET_KERNEL.fetch()
+         kernel_command_line = (self.KERNEL_COMMON_COMMAND_LINE +
+                                'console=ttyAMA0')
+-        console_pattern = 'Kernel panic - not syncing: VFS:'
++        console_pattern = 'Please append a correct "root=" boot option'
+ 
+         plugin_log = tempfile.NamedTemporaryFile(mode="r+t", prefix="plugin",
+                                                  suffix=".log")
+@@ -91,7 +91,7 @@ def test_aarch64_virt_insn_icount(self):
+         kernel_path = self.ASSET_KERNEL.fetch()
+         kernel_command_line = (self.KERNEL_COMMON_COMMAND_LINE +
+                                'console=ttyAMA0')
+-        console_pattern = 'Kernel panic - not syncing: VFS:'
++        console_pattern = 'Please append a correct "root=" boot option'
+ 
+         plugin_log = tempfile.NamedTemporaryFile(mode="r+t", prefix="plugin",
+                                                  suffix=".log")
+-- 
+2.48.1
 
 
