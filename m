@@ -4,131 +4,67 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8BE30C02181
-	for <qemu-devel@archiver.kernel.org>; Wed, 22 Jan 2025 15:06:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5FDA4C02182
+	for <qemu-devel@archiver.kernel.org>; Wed, 22 Jan 2025 15:18:57 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tacI5-0001yc-MI; Wed, 22 Jan 2025 10:05:13 -0500
+	id 1tacUJ-0004cN-E3; Wed, 22 Jan 2025 10:17:51 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1tacHx-0001rS-IN
- for qemu-devel@nongnu.org; Wed, 22 Jan 2025 10:05:06 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1tacUG-0004bO-4s
+ for qemu-devel@nongnu.org; Wed, 22 Jan 2025 10:17:48 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1tacHv-0001ZF-Qo
- for qemu-devel@nongnu.org; Wed, 22 Jan 2025 10:05:05 -0500
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1tacUE-0004YN-DK
+ for qemu-devel@nongnu.org; Wed, 22 Jan 2025 10:17:47 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1737558302;
+ s=mimecast20190719; t=1737559065;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=hBSer5RHte3DiPfBuHNWLnhAhecs5oss4gYGurWr2Rc=;
- b=PdHu0JdhBVbf8wEHoChR3MwLcaFUZeX4N1GXhSlI3/C5C8pmTgLHeGf4uIO1AfBVjSsXYR
- MAUIoGV43P76Il3sG5kNcUfdE0Ilq0juW6JGsZ0AciO0+LCJhdPQyIwKXosn+IjxFc0RRu
- lNfb//gTB7nqT56XeUEDLxW22yjk8p4=
-Received: from mail-ej1-f69.google.com (mail-ej1-f69.google.com
- [209.85.218.69]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-518-U7eDthrONpmZP0Epp8I6tw-1; Wed, 22 Jan 2025 10:05:00 -0500
-X-MC-Unique: U7eDthrONpmZP0Epp8I6tw-1
-X-Mimecast-MFC-AGG-ID: U7eDthrONpmZP0Epp8I6tw
-Received: by mail-ej1-f69.google.com with SMTP id
- a640c23a62f3a-ab2e529dc35so688389366b.3
- for <qemu-devel@nongnu.org>; Wed, 22 Jan 2025 07:05:00 -0800 (PST)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1737558299; x=1738163099;
- h=content-transfer-encoding:in-reply-to:autocrypt:content-language
- :from:references:cc:to:subject:user-agent:mime-version:date
- :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=hBSer5RHte3DiPfBuHNWLnhAhecs5oss4gYGurWr2Rc=;
- b=oMlNuH7snCMNtyobrfKlUKNF3LEAKpMGntYNfZ8t7EcJFxQdGl2Ov+tFx+7MwTBAvl
- 7+eG7XxyserBxfFxSrghRuEDMY5ivAjd3x/C+3/Hld4au70+7VBN8GgK/E4ComFQQRZw
- hJWX88ZsS8FRExIMtJ66NqHW7thGBze1laYy48qlUDrl+qv85zdZVT7T75BhKp2gzod3
- mPZaSaQD8UCNYQPSsrVFxoqZNlAbd8dDKSp7RPszzxSkJbcttQ+D9qmJhs6HWbadWwUf
- 4LyHfRHfHDPt7CKosLOfQ/HAL+C5hPskdsPIQca/2lW7KLs60NWtFb1S0bJNXHTBNgH0
- CNvg==
-X-Gm-Message-State: AOJu0YxPooG7J9DyFPD1BX6xh9XyEvbPvduNwdOJUWDFvYvigx+42rjJ
- fNz/GMm/q+axagDdad+VR8hS6sKCHU1CeYtCcIHbc7QVTe+KB+dW1kbqAUJpPjyKcJGST7u4IZm
- kc0PPZZFX+E+sJUtwtn4e/+oDnY268817uo8MAPBWEkbMSrEttk6N
-X-Gm-Gg: ASbGncuemX32MjcQLR5fAdy5CjBG6M+DyWWZ9zkMpbkyGEZbCzd646kTQXlAZbaL2Yd
- ft8Ae5lKvpZvHrws9IzQ/fE9aETlDkwnLKwsMCDcZQmJ+W4h5O+zSmoaPqkfbefnNC0bReKCycW
- fZdsWbu/XZsN5+ME3tfuePneKeFpoK65Hfw7rGqQLdOs0RooGJkqxRiEaMQ3nzeosNbdXwDV8Ay
- 37BsX7o+ESNXbjpgEE3SK7qmuPEAXCgx4A/Z062VWkqREHDTgJamwjb/R5ENTyrHvNaGv4T0n4=
-X-Received: by 2002:a17:907:930b:b0:aa6:a9fe:46e5 with SMTP id
- a640c23a62f3a-ab38b3dae38mr2251359766b.53.1737558299615; 
- Wed, 22 Jan 2025 07:04:59 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IHFfMJeYJxCZardkse5PMD2GWir/3u16u3koAtpOEvxHnjU7PSyLVQ/mrUWEw52kIdaHVuuRA==
-X-Received: by 2002:a17:907:930b:b0:aa6:a9fe:46e5 with SMTP id
- a640c23a62f3a-ab38b3dae38mr2251351866b.53.1737558298951; 
- Wed, 22 Jan 2025 07:04:58 -0800 (PST)
-Received: from [192.168.10.47] ([176.206.124.70])
- by smtp.googlemail.com with ESMTPSA id
- a640c23a62f3a-ab384d2d3dcsm912532166b.81.2025.01.22.07.04.57
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 22 Jan 2025 07:04:57 -0800 (PST)
-Message-ID: <5ace2ad3-3633-4c79-81c1-aac9d10a16ca@redhat.com>
-Date: Wed, 22 Jan 2025 16:04:55 +0100
+ content-transfer-encoding:content-transfer-encoding;
+ bh=Y/eO5sN9XODmFhAtqnqXOxPh53iLVvN0mSXJCxe3m3Q=;
+ b=Lt1ilsBUrizT3SV5so/OfOahLL6i5Gb2Ir6YFvZBWGOOrdUAO9z9XZ4wdxdXmeBt3FFT+k
+ 9wVxmZH4wanYNA+wMbvULBEZn/KA6MZ8eHPIel6rFW0vHOFCm67uhKwuD6ssBCC9RZt2Hh
+ Ip4pb+Yoruvypg6v6yD4WPeyU6tRWwg=
+Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-283-GueLhFboN_icPaOn4sdQVg-1; Wed,
+ 22 Jan 2025 10:17:38 -0500
+X-MC-Unique: GueLhFboN_icPaOn4sdQVg-1
+X-Mimecast-MFC-AGG-ID: GueLhFboN_icPaOn4sdQVg
+Received: from mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.40])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id B565819560B0
+ for <qemu-devel@nongnu.org>; Wed, 22 Jan 2025 15:17:37 +0000 (UTC)
+Received: from corto.redhat.com (unknown [10.39.192.154])
+ by mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 11BAC19560AD; Wed, 22 Jan 2025 15:17:35 +0000 (UTC)
+From: =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>
+To: qemu-devel@nongnu.org
+Cc: Alex Williamson <alex.williamson@redhat.com>,
+ =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>
+Subject: [PATCH 0/5] vfio: Improve error reporting when MMIO region mapping
+ fails
+Date: Wed, 22 Jan 2025 16:17:27 +0100
+Message-ID: <20250122151732.1351821-1-clg@redhat.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 04/10] rust: pl011: extract CharBackend receive logic into
- a separate function
-To: Zhao Liu <zhao1.liu@intel.com>
-Cc: qemu-devel@nongnu.org, qemu-rust@nongnu.org
-References: <20250117092657.1051233-1-pbonzini@redhat.com>
- <20250117092657.1051233-5-pbonzini@redhat.com> <Z5EHu/7nEbS51IlH@intel.com>
-From: Paolo Bonzini <pbonzini@redhat.com>
-Content-Language: en-US
-Autocrypt: addr=pbonzini@redhat.com; keydata=
- xsEhBFRCcBIBDqDGsz4K0zZun3jh+U6Z9wNGLKQ0kSFyjN38gMqU1SfP+TUNQepFHb/Gc0E2
- CxXPkIBTvYY+ZPkoTh5xF9oS1jqI8iRLzouzF8yXs3QjQIZ2SfuCxSVwlV65jotcjD2FTN04
- hVopm9llFijNZpVIOGUTqzM4U55sdsCcZUluWM6x4HSOdw5F5Utxfp1wOjD/v92Lrax0hjiX
- DResHSt48q+8FrZzY+AUbkUS+Jm34qjswdrgsC5uxeVcLkBgWLmov2kMaMROT0YmFY6A3m1S
- P/kXmHDXxhe23gKb3dgwxUTpENDBGcfEzrzilWueOeUWiOcWuFOed/C3SyijBx3Av/lbCsHU
- Vx6pMycNTdzU1BuAroB+Y3mNEuW56Yd44jlInzG2UOwt9XjjdKkJZ1g0P9dwptwLEgTEd3Fo
- UdhAQyRXGYO8oROiuh+RZ1lXp6AQ4ZjoyH8WLfTLf5g1EKCTc4C1sy1vQSdzIRu3rBIjAvnC
- tGZADei1IExLqB3uzXKzZ1BZ+Z8hnt2og9hb7H0y8diYfEk2w3R7wEr+Ehk5NQsT2MPI2QBd
- wEv1/Aj1DgUHZAHzG1QN9S8wNWQ6K9DqHZTBnI1hUlkp22zCSHK/6FwUCuYp1zcAEQEAAc0j
- UGFvbG8gQm9uemluaSA8cGJvbnppbmlAcmVkaGF0LmNvbT7CwU0EEwECACMFAlRCcBICGwMH
- CwkIBwMCAQYVCAIJCgsEFgIDAQIeAQIXgAAKCRB+FRAMzTZpsbceDp9IIN6BIA0Ol7MoB15E
- 11kRz/ewzryFY54tQlMnd4xxfH8MTQ/mm9I482YoSwPMdcWFAKnUX6Yo30tbLiNB8hzaHeRj
- jx12K+ptqYbg+cevgOtbLAlL9kNgLLcsGqC2829jBCUTVeMSZDrzS97ole/YEez2qFpPnTV0
- VrRWClWVfYh+JfzpXmgyhbkuwUxNFk421s4Ajp3d8nPPFUGgBG5HOxzkAm7xb1cjAuJ+oi/K
- CHfkuN+fLZl/u3E/fw7vvOESApLU5o0icVXeakfSz0LsygEnekDbxPnE5af/9FEkXJD5EoYG
- SEahaEtgNrR4qsyxyAGYgZlS70vkSSYJ+iT2rrwEiDlo31MzRo6Ba2FfHBSJ7lcYdPT7bbk9
- AO3hlNMhNdUhoQv7M5HsnqZ6unvSHOKmReNaS9egAGdRN0/GPDWr9wroyJ65ZNQsHl9nXBqE
- AukZNr5oJO5vxrYiAuuTSd6UI/xFkjtkzltG3mw5ao2bBpk/V/YuePrJsnPFHG7NhizrxttB
- nTuOSCMo45pfHQ+XYd5K1+Cv/NzZFNWscm5htJ0HznY+oOsZvHTyGz3v91pn51dkRYN0otqr
- bQ4tlFFuVjArBZcapSIe6NV8C4cEiSTOwE0EVEJx7gEIAMeHcVzuv2bp9HlWDp6+RkZe+vtl
- KwAHplb/WH59j2wyG8V6i33+6MlSSJMOFnYUCCL77bucx9uImI5nX24PIlqT+zasVEEVGSRF
- m8dgkcJDB7Tps0IkNrUi4yof3B3shR+vMY3i3Ip0e41zKx0CvlAhMOo6otaHmcxr35sWq1Jk
- tLkbn3wG+fPQCVudJJECvVQ//UAthSSEklA50QtD2sBkmQ14ZryEyTHQ+E42K3j2IUmOLriF
- dNr9NvE1QGmGyIcbw2NIVEBOK/GWxkS5+dmxM2iD4Jdaf2nSn3jlHjEXoPwpMs0KZsgdU0pP
- JQzMUMwmB1wM8JxovFlPYrhNT9MAEQEAAcLBMwQYAQIACQUCVEJx7gIbDAAKCRB+FRAMzTZp
- sadRDqCctLmYICZu4GSnie4lKXl+HqlLanpVMOoFNnWs9oRP47MbE2wv8OaYh5pNR9VVgyhD
- OG0AU7oidG36OeUlrFDTfnPYYSF/mPCxHttosyt8O5kabxnIPv2URuAxDByz+iVbL+RjKaGM
- GDph56ZTswlx75nZVtIukqzLAQ5fa8OALSGum0cFi4ptZUOhDNz1onz61klD6z3MODi0sBZN
- Aj6guB2L/+2ZwElZEeRBERRd/uommlYuToAXfNRdUwrwl9gRMiA0WSyTb190zneRRDfpSK5d
- usXnM/O+kr3Dm+Ui+UioPf6wgbn3T0o6I5BhVhs4h4hWmIW7iNhPjX1iybXfmb1gAFfjtHfL
- xRUr64svXpyfJMScIQtBAm0ihWPltXkyITA92ngCmPdHa6M1hMh4RDX+Jf1fiWubzp1voAg0
- JBrdmNZSQDz0iKmSrx8xkoXYfA3bgtFN8WJH2xgFL28XnqY4M6dLhJwV3z08tPSRqYFm4NMP
- dRsn0/7oymhneL8RthIvjDDQ5ktUjMe8LtHr70OZE/TT88qvEdhiIVUogHdo4qBrk41+gGQh
- b906Dudw5YhTJFU3nC6bbF2nrLlB4C/XSiH76ZvqzV0Z/cAMBo5NF/w=
-In-Reply-To: <Z5EHu/7nEbS51IlH@intel.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.40
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=clg@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -50
 X-Spam_score: -5.1
 X-Spam_bar: -----
 X-Spam_report: (-5.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-2.996,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.043,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -146,16 +82,41 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 1/22/25 15:59, Zhao Liu wrote:
->>           if size > 0 {
->>               debug_assert!(!buf.is_null());
->> -            state.as_mut().put_fifo(c_uint::from(buf.read_volatile()))
-> 
-> An extra question...here I'm not sure, do we really need read_volatile?
+Hello,
 
-No, the buffer is not guest visible.  It will certainly go away together 
-with chardev bindings.
+Under certain circumstances, a MMIO region of a device fails to map
+because the region is outside the supported IOVA ranges of the VM. In
+this case, PCI peer-to-peer transactions on BARs are not supported.
+This typically occurs when the IOMMU address space width is less than
+the physical address width, as can be the case on consumer processors
+or when using a vIOMMU device with default settings.
 
-Paolo
+This series tries to clarify the error message reported to the user
+and provide advice on how to possibly resolve this issue.
+
+Thanks,
+
+C.
+
+Cédric Le Goater (5):
+  vfio/pci: Replace "iommu_device" by "vIOMMU"
+  vfio: Modify vfio_viommu_preset() parameter
+  vfio: Improve error reporting when MMIO region mapping fails
+  cpu: Introduce cpu_get_phys_bits()
+  vfio: Check compatibility of CPU and IOMMU address space width
+
+ include/hw/core/cpu.h            |  9 ++++++
+ include/hw/core/sysemu-cpu-ops.h |  6 ++++
+ include/hw/vfio/vfio-common.h    |  2 +-
+ cpu-target.c                     |  5 ++++
+ hw/core/cpu-system.c             | 11 ++++++++
+ hw/vfio/common.c                 | 47 +++++++++++++++++++++++++++++---
+ hw/vfio/migration.c              |  2 +-
+ hw/vfio/pci.c                    |  2 +-
+ target/i386/cpu.c                |  6 ++++
+ 9 files changed, 83 insertions(+), 7 deletions(-)
+
+-- 
+2.48.1
 
 
