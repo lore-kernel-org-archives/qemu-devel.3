@@ -4,161 +4,93 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id AE378C02181
-	for <qemu-devel@archiver.kernel.org>; Wed, 22 Jan 2025 11:03:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6FE26C02181
+	for <qemu-devel@archiver.kernel.org>; Wed, 22 Jan 2025 11:22:29 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1taYV7-0001En-34; Wed, 22 Jan 2025 06:02:25 -0500
+	id 1taYn1-0004Bx-Dv; Wed, 22 Jan 2025 06:20:55 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <david@redhat.com>) id 1taYV5-0001EN-7V
- for qemu-devel@nongnu.org; Wed, 22 Jan 2025 06:02:23 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <david@redhat.com>) id 1taYUy-0005qR-PG
- for qemu-devel@nongnu.org; Wed, 22 Jan 2025 06:02:22 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1737543732;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=GzfhwiIFvj4mbwKUl/wuYEctWTSa1vkTb2lIxlbSv/w=;
- b=W93EnevLym2bZ2/M7OSN1MgsGV+D+3QooejRX+EwsJfWmH6D6FAChKf7utTHciQAjQxAwO
- e9X/Zz3gybYh2YWB8VBupqqN6E7XA0kpQVrrT0rvhyN69JhMOJ1qmt6XJxSAPowrQiKcX9
- w1xF3r/p73eo4hVG/l6njdL/QA5kFaQ=
-Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com
- [209.85.128.71]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-345-xkqisjCIN9WQ4vpAh4ONrg-1; Wed, 22 Jan 2025 06:02:11 -0500
-X-MC-Unique: xkqisjCIN9WQ4vpAh4ONrg-1
-X-Mimecast-MFC-AGG-ID: xkqisjCIN9WQ4vpAh4ONrg
-Received: by mail-wm1-f71.google.com with SMTP id
- 5b1f17b1804b1-43619b135bcso34899615e9.1
- for <qemu-devel@nongnu.org>; Wed, 22 Jan 2025 03:02:10 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1taYn0-0004Bf-1W
+ for qemu-devel@nongnu.org; Wed, 22 Jan 2025 06:20:54 -0500
+Received: from mail-wm1-x32b.google.com ([2a00:1450:4864:20::32b])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1taYmp-0006Nb-J7
+ for qemu-devel@nongnu.org; Wed, 22 Jan 2025 06:20:53 -0500
+Received: by mail-wm1-x32b.google.com with SMTP id
+ 5b1f17b1804b1-438a39e659cso27248475e9.2
+ for <qemu-devel@nongnu.org>; Wed, 22 Jan 2025 03:20:41 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1737544839; x=1738149639; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:user-agent
+ :references:in-reply-to:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=QocBT1S8occoxAmaOg1GsN/khxZxiUL4njVzKD1pHKI=;
+ b=ZRFdAeC3fBNiKXBLe6VGLOU+SqFfz9Pl5ZSKWPhAP1NHX/18PUh4K7YmH8muZ2BagA
+ abNI4EUDEJNFhQjeQUoaGJxKTNxz6hCabyUdLZ2h1FHW+yMyWJpWgFMyifr5suvh7sQc
+ XRAKZApc2t+8UE9ny6aby2PeY2Qxd1jt0GpSBGkh3GiI2L3APhcDeRgfoJwGK1Tt7kPL
+ TU4lJlpAbybqDCxnp2zM3NLjCCwyjH2RLw68W3hTz1so1yLJJW7lCgqglvgTXDpvtaKu
+ 4hAyjzqAsBrMD+6ReKQk18Dw8i/ggUNZwKtrVeFsSfTkcsXIwSbCZG52t7SeJeYFUnKq
+ sSaQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1737543730; x=1738148530;
- h=content-transfer-encoding:in-reply-to:organization:autocrypt
- :content-language:references:cc:to:from:subject:user-agent
- :mime-version:date:message-id:x-gm-message-state:from:to:cc:subject
- :date:message-id:reply-to;
- bh=GzfhwiIFvj4mbwKUl/wuYEctWTSa1vkTb2lIxlbSv/w=;
- b=ldQgZHGxS2w7zg7f0FZz7K1nrMm99focwA7e7Dw66qil+xnr8/64WGe/F/6EDR3u8d
- EOfpy60XRR2kxo/mH7bAdUhLYr85XnbSeC/buBRFZKhUzPxYRmPnT8yhxAHXrPNDjECU
- nOgNMNeAxpjp6j/JJSm+5uuo0KiijcEmqNIFAql+augdwxMCeu12Za9Q2JIpq2pOS3Ah
- iBIKCG1dMavMPW4hdjqyuUP+gSTjDjsHkWCwA6C6jK3ovSC/04mvdZ5Zv8LYAZuHTyCF
- /d001yodPdGcGvYggQbWC6AoQy611jRZvvupQWgJyLYMbA/NjaoD/p+SxgR6e0kY5ugv
- 35Jw==
-X-Forwarded-Encrypted: i=1;
- AJvYcCWVCeYJ2+tR3Gll36uPczGJ0z2wum+yEoNcH+ScrZzdtilVnLjoKKd7MtIEckfDx++JeM35m/yyQLl5@nongnu.org
-X-Gm-Message-State: AOJu0YxXgehbcYr1qItyaBkShXNhQM68cSEPMIpXyuFSQOTKaybrCSvy
- w3rBAYwflrrijpxoxB7NOL5uEJW/tg2fOexpKTcBoD8aBz2uc+/ZFzDhXISGBW2rk4uK8X1t+hk
- uWNrvrjc3Iu/dx2sha+WoCWQirbjIa73UBfL7J3NYtczMrcfgcPgH
-X-Gm-Gg: ASbGncuJ6A6Tzc9ybjhFpWHl7voJon3y1M1XWtBwtmrUA+ff4zJn4NftcySFLvVMlkL
- K7YM/RTNtRYvX5wOuOREcowHCnS3wVoWcVoDK3agjxBb2TO//q9CBcoMTPY66P848Cjsqd7UW8O
- 0FQZ59yvQYy6B1QIpwUmdzbFndwfX2ymeLgnVF/hNlCm0/Dk/djeb//7QbSxI9kDnu/PAxflHZW
- 7uQ8G0WRlNoJeeyi0uW25MKSY2QPfmpw9qNzygHZM0CSJffhE8Z0QrEQgW0nS6XyddqqBpikwIh
- avPaizz/K6DJNt/cd1QcI97dQzLvqG2JjPfmvqO8I7vj80edh8X2y6N4OlfY3f1cupN+MQopcDD
- CZ7iXgoe2FY6G66OJHXD+lw==
-X-Received: by 2002:a7b:cb13:0:b0:438:a5fe:3885 with SMTP id
- 5b1f17b1804b1-438a5fe39c3mr133606335e9.23.1737543729775; 
- Wed, 22 Jan 2025 03:02:09 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IEtMoWj276XUbmRmMxOuBf2Y3tQIeYtILBgOgolhCy4Z88JoNo7PB+RgEsOvvZUTpkYM2EBIw==
-X-Received: by 2002:a7b:cb13:0:b0:438:a5fe:3885 with SMTP id
- 5b1f17b1804b1-438a5fe39c3mr133604475e9.23.1737543727826; 
- Wed, 22 Jan 2025 03:02:07 -0800 (PST)
-Received: from ?IPV6:2003:cb:c70b:db00:724d:8b0c:110e:3713?
- (p200300cbc70bdb00724d8b0c110e3713.dip0.t-ipconnect.de.
- [2003:cb:c70b:db00:724d:8b0c:110e:3713])
- by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-438b31adcc3sm20687355e9.18.2025.01.22.03.02.05
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 22 Jan 2025 03:02:07 -0800 (PST)
-Message-ID: <54f53a7d-5ea5-436c-ab2c-e8f8b792bb45@redhat.com>
-Date: Wed, 22 Jan 2025 12:02:05 +0100
+ d=1e100.net; s=20230601; t=1737544839; x=1738149639;
+ h=content-transfer-encoding:mime-version:message-id:date:user-agent
+ :references:in-reply-to:subject:cc:to:from:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=QocBT1S8occoxAmaOg1GsN/khxZxiUL4njVzKD1pHKI=;
+ b=rNEns4HCiWqbcjtJyTREY/hRwb3MentiwLNQaRaxITwWShQd72iXgqNSutZFLSc7rT
+ 6PwvRjVWnVjC7gcVitiDi1+wH0V+2m7HWPZXDU8kjRLIbj9u6UIxRilGxqjy5XzcJ0IM
+ eAX05WPPiSLum3UJuevlbQSnK566139FIyDY4JVA1WLuW9qPFJoO4vPl3g19+azsdL9N
+ 4lVRai+9EET6WOzyv4T+rDz8F1r7m21DW/b6jd1MFtRs2plcPtIMlfJE9ejCDFU7o+/D
+ fZ4FARa72wI/rdLXo3CFtmmpt7FgzEr7w9Z7xjtpH67iis9wy+mW1bvVXyJOTU7kNF3a
+ Uxeg==
+X-Gm-Message-State: AOJu0Yz6gaene+4+TCD8OsYvX7dnal8fMP5idA3CpRLoF0van1JTmwiN
+ hwi6LSQx19tkIz09P3XJJzuqZVWXIWB6cr+MeFc0dI5JMreeNROk5FbDr56pVzw=
+X-Gm-Gg: ASbGncvYh9yJMyKb6kDucLoYlOAKblMEaRtqX0F8s9zL1V2krJ7nzmZBzdcoo9YSdi4
+ GlxJuzJW/lvhJ8Y1tWx0DkigDlMhpAcMvmDX2fXT0j8M4IjIf86/por3Ui+n7GZBY83ZbuZpDGE
+ 1jGM5UX6UFJYLQf1eIhtsDJ5C+OdOj4A+plApI8Z/yKboyU8DlE4xsimqPoS2D7W79ZZCk7lowo
+ RSNwCgM4gAtDE+P0TQTxCLay8sSGlYs/vyEz1J/8saL3m/ESGcGMWEwORDUvj3V9Mf5
+X-Google-Smtp-Source: AGHT+IGbQ3IDO64pan9vd0dNrUtAMchD1UtI7yDOZoTsv0c7R6ZY6xN9vW2tBGTVEqUvfn8mX9dnfg==
+X-Received: by 2002:a05:600c:1908:b0:434:9c1b:b36a with SMTP id
+ 5b1f17b1804b1-438913dbf63mr189318905e9.13.1737544839305; 
+ Wed, 22 Jan 2025 03:20:39 -0800 (PST)
+Received: from draig.lan ([85.9.250.243]) by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-438b31a21adsm20673715e9.12.2025.01.22.03.20.38
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Wed, 22 Jan 2025 03:20:38 -0800 (PST)
+Received: from draig (localhost [IPv6:::1])
+ by draig.lan (Postfix) with ESMTP id 55BE05F9F8;
+ Wed, 22 Jan 2025 11:20:37 +0000 (GMT)
+From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
+To: Peter Maydell <peter.maydell@linaro.org>
+Cc: qemu-devel@nongnu.org,  Leif Lindholm <quic_llindhol@quicinc.com>,  Leif
+ Lindholm <leif.lindholm@oss.qualcomm.com>,  Marcin Juszkiewicz
+ <marcin.juszkiewicz@linaro.org>,  Radoslaw Biernacki <rad@semihalf.com>,
+ qemu-arm@nongnu.org,  qemu-stable@nongnu.org
+Subject: Re: [PATCH v2 4/5] hw/arm: enable secure EL2 timers for virt machine
+In-Reply-To: <CAFEAcA_yqw2DJ_iPpwYXjsR_h1gAZdOs29b-2ar0QOg4k4D0hQ@mail.gmail.com>
+ (Peter Maydell's message of "Fri, 10 Jan 2025 12:53:18 +0000")
+References: <20241218181511.3575613-1-alex.bennee@linaro.org>
+ <20241218181511.3575613-5-alex.bennee@linaro.org>
+ <CAFEAcA_yqw2DJ_iPpwYXjsR_h1gAZdOs29b-2ar0QOg4k4D0hQ@mail.gmail.com>
+User-Agent: mu4e 1.12.8; emacs 29.4
+Date: Wed, 22 Jan 2025 11:20:37 +0000
+Message-ID: <87frlbnlh6.fsf@draig.linaro.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v1 1/4] physmem: disallow direct access to RAM DEVICE in
- address_space_write_rom()
-From: David Hildenbrand <david@redhat.com>
-To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- qemu-devel@nongnu.org
-Cc: Paolo Bonzini <pbonzini@redhat.com>, Peter Xu <peterx@redhat.com>,
- Peter Maydell <peter.maydell@linaro.org>,
- =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Alex Williamson <alex.williamson@redhat.com>,
- Eduardo Habkost <eduardo@habkost.net>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- Elena Ufimtseva <elena.ufimtseva@oracle.com>,
- Jagannathan Raman <jag.raman@oracle.com>,
- "Dr. David Alan Gilbert" <dave@treblig.org>, Stefan Zabka <git@zabka.it>
-References: <20250120111503.244994-1-david@redhat.com>
- <20250120111503.244994-2-david@redhat.com>
- <5267cc69-18ec-48b1-be60-90c972922806@linaro.org>
- <de04d28c-c729-4c84-b241-1eb312586c52@redhat.com>
- <f93b6689-678e-4fbc-8091-7c99e114152a@redhat.com>
- <4df5272b-b1f6-4aec-a0ee-c3de324d8000@linaro.org>
- <ec89b3da-49e3-4b57-892b-8a15a786c6c2@redhat.com>
-Content-Language: en-US
-Autocrypt: addr=david@redhat.com; keydata=
- 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
- WNyWQQ==
-Organization: Red Hat
-In-Reply-To: <ec89b3da-49e3-4b57-892b-8a15a786c6c2@redhat.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=david@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -50
-X-Spam_score: -5.1
-X-Spam_bar: -----
-X-Spam_report: (-5.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-2.996,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:20::32b;
+ envelope-from=alex.bennee@linaro.org; helo=mail-wm1-x32b.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -174,306 +106,46 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 22.01.25 11:18, David Hildenbrand wrote:
-> On 22.01.25 11:17, Philippe Mathieu-Daudé wrote:
->> On 22/1/25 11:13, David Hildenbrand wrote:
->>> On 22.01.25 11:10, David Hildenbrand wrote:
->>>> On 22.01.25 11:07, Philippe Mathieu-Daudé wrote:
->>>>> Hi David,
->>>>>
->>>>> On 20/1/25 12:14, David Hildenbrand wrote:
->>>>>> As documented in commit 4a2e242bbb306 ("memory: Don't use memcpy for
->>>>>> ram_device regions"), we disallow direct access to RAM DEVICE regions.
->>>>>>
->>>>>> Let's factor out the "supports direct access" check from
->>>>>> memory_access_is_direct() so we can reuse it, and make it a bit
->>>>>> easier to
->>>>>> read.
->>>>>>
->>>>>> This change implies that address_space_write_rom() and
->>>>>> cpu_memory_rw_debug() won't be able to write to RAM DEVICE regions. It
->>>>>> will also affect cpu_flush_icache_range(), but it's only used by
->>>>>> hw/core/loader.c after writing to ROM, so it is expected to not apply
->>>>>> here with RAM DEVICE.
->>>>>>
->>>>>> This fixes direct access to these regions where we don't want direct
->>>>>> access. We'll extend cpu_memory_rw_debug() next to also be able to
->>>>>> write to
->>>>>> these (and IO) regions.
->>>>>>
->>>>>> This is a preparation for further changes.
->>>>>>
->>>>>> Cc: Alex Williamson <alex.williamson@redhat.com>
->>>>>> Signed-off-by: David Hildenbrand <david@redhat.com>
->>>>>> ---
->>>>>>       include/exec/memory.h | 30 ++++++++++++++++++++++++------
->>>>>>       system/physmem.c      |  3 +--
->>>>>>       2 files changed, 25 insertions(+), 8 deletions(-)
->>>>>>
->>>>>> diff --git a/include/exec/memory.h b/include/exec/memory.h
->>>>>> index 3ee1901b52..bd0ddb9cdf 100644
->>>>>> --- a/include/exec/memory.h
->>>>>> +++ b/include/exec/memory.h
->>>>>> @@ -2985,15 +2985,33 @@ MemTxResult
->>>>>> address_space_write_cached_slow(MemoryRegionCache *cache,
->>>>>>       int memory_access_size(MemoryRegion *mr, unsigned l, hwaddr addr);
->>>>>>       bool prepare_mmio_access(MemoryRegion *mr);
->>>>>> +static inline bool
->>>>>> memory_region_supports_direct_access(MemoryRegion *mr)
->>>>>> +{
->>>>>> +    /* ROM DEVICE regions only allow direct access if in ROMD mode. */
->>>>>> +    if (memory_region_is_romd(mr)) {
->>>>>> +        return true;
->>>>>> +    }
->>>>>> +    if (!memory_region_is_ram(mr)) {
->>>>>> +        return false;
->>>>>> +    }
->>>>>> +    /*
->>>>>> +     * RAM DEVICE regions can be accessed directly using memcpy,
->>>>>> but it might
->>>>>> +     * be MMIO and access using mempy can be wrong (e.g., using
->>>>>> instructions not
->>>>>> +     * intended for MMIO access). So we treat this as IO.
->>>>>> +     */
->>>>>> +    return !memory_region_is_ram_device(mr);
->>>>>> +
->>>>>> +}
->>>>>> +
->>>>>>       static inline bool memory_access_is_direct(MemoryRegion *mr,
->>>>>> bool is_write)
->>>>>>       {
->>>>>> -    if (is_write) {
->>>>>> -        return memory_region_is_ram(mr) && !mr->readonly &&
->>>>>> -               !mr->rom_device && !memory_region_is_ram_device(mr);
->>>>>> -    } else {
->>>>>> -        return (memory_region_is_ram(mr) && !
->>>>>> memory_region_is_ram_device(mr)) ||
->>>>>
->>>>> This patch is doing multiple things at once, and I'm having hard time
->>>>> reviewing it.
->>>>
->>>> I appreciate the review, but ... really?! :)
->>>>
->>>> 25 insertions(+), 8 deletions(-)
->>>
->>> FWIW, I'll try to split it up ... I thought the comments added to
->>> memory_region_supports_direct_access() and friends are pretty clear.
+Peter Maydell <peter.maydell@linaro.org> writes:
+
+> On Wed, 18 Dec 2024 at 18:15, Alex Benn=C3=A9e <alex.bennee@linaro.org> w=
+rote:
 >>
->> No worry, I'll give it another try. (split still welcomed, but not
->> blocking).
-> 
-> I think unmangling the existing unreadable conditions in
-> memory_access_is_direct() can be done separately; let me see what I can do.
+>> Signed-off-by: Alex Benn=C3=A9e <alex.bennee@linaro.org>
+>> Cc: qemu-stable@nongnu.org
+>> ---
+>>  hw/arm/virt.c | 2 ++
+>>  1 file changed, 2 insertions(+)
+>>
+>> diff --git a/hw/arm/virt.c b/hw/arm/virt.c
+>> index 333eaf67ea..5e3589dc6a 100644
+>> --- a/hw/arm/virt.c
+>> +++ b/hw/arm/virt.c
+>> @@ -873,6 +873,8 @@ static void create_gic(VirtMachineState *vms, Memory=
+Region *mem)
+>>              [GTIMER_HYP]  =3D ARCH_TIMER_NS_EL2_IRQ,
+>>              [GTIMER_SEC]  =3D ARCH_TIMER_S_EL1_IRQ,
+>>              [GTIMER_HYPVIRT] =3D ARCH_TIMER_NS_EL2_VIRT_IRQ,
+>> +            [GTIMER_SEC_PEL2] =3D ARCH_TIMER_S_EL2_IRQ,
+>> +            [GTIMER_SEC_VEL2] =3D ARCH_TIMER_S_EL2_VIRT_IRQ,
+>>          };
+>>
+>>          for (unsigned irq =3D 0; irq < ARRAY_SIZE(timer_irq); irq++) {
+>
+> Do these timer interrupts have a defined devicetree binding that
+> we need to set up in fdt_add_timer_nodes()? How about ACPI?
 
-The following should hopefully be easier to follow:
+The DT in the kernel doesn't care (why would it, it never sees the SEL2
+timers). The hafnium test case works without it.
 
+I'm not sure where there is a DT specification that describes what
+should be there for SEL2.
 
- From 89519beec0de96d9c9c243a844ccb698db759893 Mon Sep 17 00:00:00 2001
-From: David Hildenbrand <david@redhat.com>
-Date: Wed, 22 Jan 2025 11:23:00 +0100
-Subject: [PATCH 1/4] physmem: factor out memory_region_is_ram_device() check
-  in memory_access_is_direct()
+>
+> thanks
+> -- PMM
 
-As documented in commit 4a2e242bbb306 ("memory: Don't use memcpy for
-ram_device regions"), we disallow direct access to RAM DEVICE regions.
-
-Let's make this clearer to prepare for further changes. Note that ROMD
-regions will never be RAM DEVICE at the same time.
-
-Signed-off-by: David Hildenbrand <david@redhat.com>
----
-  include/exec/memory.h | 13 ++++++++++---
-  1 file changed, 10 insertions(+), 3 deletions(-)
-
-diff --git a/include/exec/memory.h b/include/exec/memory.h
-index 3ee1901b52..7931aba2ea 100644
---- a/include/exec/memory.h
-+++ b/include/exec/memory.h
-@@ -2987,12 +2987,19 @@ bool prepare_mmio_access(MemoryRegion *mr);
-  
-  static inline bool memory_access_is_direct(MemoryRegion *mr, bool is_write)
-  {
-+    /*
-+     * RAM DEVICE regions can be accessed directly using memcpy, but it might
-+     * be MMIO and access using mempy can be wrong (e.g., using instructions not
-+     * intended for MMIO access). So we treat this as IO.
-+     */
-+    if (memory_region_is_ram_device(mr)) {
-+        return false;
-+    }
-      if (is_write) {
-          return memory_region_is_ram(mr) && !mr->readonly &&
--               !mr->rom_device && !memory_region_is_ram_device(mr);
-+               !mr->rom_device;
-      } else {
--        return (memory_region_is_ram(mr) && !memory_region_is_ram_device(mr)) ||
--               memory_region_is_romd(mr);
-+        return memory_region_is_ram(mr) || memory_region_is_romd(mr);
-      }
-  }
-  
--- 
-2.47.1
-
-
- From ba793917cf3e35bc3b39898524ea96a85cef768d Mon Sep 17 00:00:00 2001
-From: David Hildenbrand <david@redhat.com>
-Date: Wed, 22 Jan 2025 11:28:19 +0100
-Subject: [PATCH 2/4] physmem: factor out RAM/ROMD check in
-  memory_access_is_direct()
-
-Let's factor more of the generic "is this directly accessible" check,
-independent of the "write" condition out.
-
-Note that the "!mr->rom_device" check in the write case essentially
-disallows the memory_region_is_romd() condition again. Further note that
-RAM DEVICE regions are also RAM regions, so we can check for RAM+ROMD
-first.
-
-This is a preparation for further changes.
-
-Signed-off-by: David Hildenbrand <david@redhat.com>
----
-  include/exec/memory.h | 10 ++++++----
-  1 file changed, 6 insertions(+), 4 deletions(-)
-
-diff --git a/include/exec/memory.h b/include/exec/memory.h
-index 7931aba2ea..086dec5086 100644
---- a/include/exec/memory.h
-+++ b/include/exec/memory.h
-@@ -2987,6 +2987,10 @@ bool prepare_mmio_access(MemoryRegion *mr);
-  
-  static inline bool memory_access_is_direct(MemoryRegion *mr, bool is_write)
-  {
-+    /* ROM DEVICE regions only allow direct access if in ROMD mode. */
-+    if (!memory_region_is_ram(mr) && !memory_region_is_romd(mr)) {
-+        return false;
-+    }
-      /*
-       * RAM DEVICE regions can be accessed directly using memcpy, but it might
-       * be MMIO and access using mempy can be wrong (e.g., using instructions not
-@@ -2996,11 +3000,9 @@ static inline bool memory_access_is_direct(MemoryRegion *mr, bool is_write)
-          return false;
-      }
-      if (is_write) {
--        return memory_region_is_ram(mr) && !mr->readonly &&
--               !mr->rom_device;
--    } else {
--        return memory_region_is_ram(mr) || memory_region_is_romd(mr);
-+        return !mr->readonly && !mr->rom_device;
-      }
-+    return true;
-  }
-  
-  /**
--- 
-2.47.1
-
-
- From 2ccd2af17bb9e1fd4922e1bd2dcc202de4bf8942 Mon Sep 17 00:00:00 2001
-From: David Hildenbrand <david@redhat.com>
-Date: Wed, 22 Jan 2025 11:34:00 +0100
-Subject: [PATCH 3/4] physmem: factor out direct access check into
-  memory_region_supports_direct_access()
-
-Let's factor the complete "directly accessible" check independent of
-the "write" condition out so we can reuse it next.
-
-We can now split up the checks RAM and ROMD check, so we really only check
-for RAM DEVICE in case of RAM -- ROM DEVICE is neither RAM not RAM DEVICE.
-
-Signed-off-by: David Hildenbrand <david@redhat.com>
----
-  include/exec/memory.h | 14 +++++++++++---
-  1 file changed, 11 insertions(+), 3 deletions(-)
-
-diff --git a/include/exec/memory.h b/include/exec/memory.h
-index 086dec5086..3b4449e847 100644
---- a/include/exec/memory.h
-+++ b/include/exec/memory.h
-@@ -2985,10 +2985,13 @@ MemTxResult address_space_write_cached_slow(MemoryRegionCache *cache,
-  int memory_access_size(MemoryRegion *mr, unsigned l, hwaddr addr);
-  bool prepare_mmio_access(MemoryRegion *mr);
-  
--static inline bool memory_access_is_direct(MemoryRegion *mr, bool is_write)
-+static inline bool memory_region_supports_direct_access(MemoryRegion *mr)
-  {
-      /* ROM DEVICE regions only allow direct access if in ROMD mode. */
--    if (!memory_region_is_ram(mr) && !memory_region_is_romd(mr)) {
-+    if (memory_region_is_romd(mr)) {
-+        return true;
-+    }
-+    if (!memory_region_is_ram(mr)) {
-          return false;
-      }
-      /*
-@@ -2996,7 +2999,12 @@ static inline bool memory_access_is_direct(MemoryRegion *mr, bool is_write)
-       * be MMIO and access using mempy can be wrong (e.g., using instructions not
-       * intended for MMIO access). So we treat this as IO.
-       */
--    if (memory_region_is_ram_device(mr)) {
-+    return !memory_region_is_ram_device(mr);
-+}
-+
-+static inline bool memory_access_is_direct(MemoryRegion *mr, bool is_write)
-+{
-+    if (!memory_region_supports_direct_access(mr)) {
-          return false;
-      }
-      if (is_write) {
--- 
-2.47.1
-
-
- From b9deb2c212f8edbe526152529072b89d73e2258f Mon Sep 17 00:00:00 2001
-From: David Hildenbrand <david@redhat.com>
-Date: Wed, 22 Jan 2025 11:35:29 +0100
-Subject: [PATCH 4/4] physmem: disallow direct access to RAM DEVICE in
-  address_space_write_rom()
-
-As documented in commit 4a2e242bbb306 ("memory: Don't use memcpy for
-ram_device regions"), we disallow direct access to RAM DEVICE regions.
-
-This change implies that address_space_write_rom() and
-cpu_memory_rw_debug() won't be able to write to RAM DEVICE regions. It
-will also affect cpu_flush_icache_range(), but it's only used by
-hw/core/loader.c after writing to ROM, so it is expected to not apply
-here with RAM DEVICE.
-
-This fixes direct access to these regions where we don't want direct
-access. We'll extend cpu_memory_rw_debug() next to also be able to write to
-these (and IO) regions.
-
-This is a preparation for further changes.
-
-Cc: Alex Williamson <alex.williamson@redhat.com>
-Signed-off-by: David Hildenbrand <david@redhat.com>
----
-  system/physmem.c | 3 +--
-  1 file changed, 1 insertion(+), 2 deletions(-)
-
-diff --git a/system/physmem.c b/system/physmem.c
-index c76503aea8..2d4f8110e8 100644
---- a/system/physmem.c
-+++ b/system/physmem.c
-@@ -3029,8 +3029,7 @@ static inline MemTxResult address_space_write_rom_internal(AddressSpace *as,
-          l = len;
-          mr = address_space_translate(as, addr, &addr1, &l, true, attrs);
-  
--        if (!(memory_region_is_ram(mr) ||
--              memory_region_is_romd(mr))) {
-+        if (!memory_region_supports_direct_access(mr)) {
-              l = memory_access_size(mr, l, addr1);
-          } else {
-              /* ROM/RAM case */
--- 
-2.47.1
-
-
-
--- 
-Cheers,
-
-David / dhildenb
-
+--=20
+Alex Benn=C3=A9e
+Virtualisation Tech Lead @ Linaro
 
