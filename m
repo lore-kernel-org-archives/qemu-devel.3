@@ -4,81 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 85483C02181
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id EEF89C0218C
 	for <qemu-devel@archiver.kernel.org>; Wed, 22 Jan 2025 09:33:19 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1taX4v-0001wl-9D; Wed, 22 Jan 2025 04:31:17 -0500
+	id 1taX4d-0001PS-Ej; Wed, 22 Jan 2025 04:30:59 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1taX4t-0001vy-Ix
- for qemu-devel@nongnu.org; Wed, 22 Jan 2025 04:31:15 -0500
-Received: from mail-wr1-x42d.google.com ([2a00:1450:4864:20::42d])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1taX4b-0001NW-Ld
+ for qemu-devel@nongnu.org; Wed, 22 Jan 2025 04:30:57 -0500
+Received: from mail-wr1-x435.google.com ([2a00:1450:4864:20::435])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1taX4r-0003K3-SQ
- for qemu-devel@nongnu.org; Wed, 22 Jan 2025 04:31:15 -0500
-Received: by mail-wr1-x42d.google.com with SMTP id
- ffacd0b85a97d-38a8b35e168so409887f8f.1
- for <qemu-devel@nongnu.org>; Wed, 22 Jan 2025 01:31:13 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1taX4Z-0003Fy-W2
+ for qemu-devel@nongnu.org; Wed, 22 Jan 2025 04:30:57 -0500
+Received: by mail-wr1-x435.google.com with SMTP id
+ ffacd0b85a97d-385de59c1a0so3791347f8f.2
+ for <qemu-devel@nongnu.org>; Wed, 22 Jan 2025 01:30:55 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1737538272; x=1738143072; darn=nongnu.org;
+ d=linaro.org; s=google; t=1737538253; x=1738143053; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=XAK8+ZcQI8PZXdkgjSlPlEy1wFV5KzZpV4Si9c0ft5M=;
- b=VXAjRfjE8OylNIyuOsBkgXwpcq94dayKhJgrI1QhZitsYBaSz7jvIi1OjIHZ8hg6aH
- 0HapH6CoLoXR1YVkvOu/+FfZX+abTU1UuIcx/Ziiqpd4eEXpzgWORCqGeO9rnn2Qi388
- PSmQisliiPSz37rcNI8q5JaUiuLvuJjQzA5HWCItW+GW7BvNkSh9YYcgkP51o1f0gg4H
- K8VfRudtaxQqTXBD+dZUVNAA7cWlY7WGWHF2c9LC2R0xDMI45axgpKXz6rLX5u+IuhoN
- zPw9E6/ulbeQFsxE1pwOItw5lvOJqDn3LzyakVszCqkHNeheDehXxGU5Ca6heDeXzPUj
- 6pHQ==
+ bh=3ds9Wj0QZU42GLHBsVwmUFq56bCDGO06IGIH+Sdiodc=;
+ b=PmjUjP9CKILYn+fBhV8S2ICj/3uSCLw237P+IYX0BTiPjRX8ugYkpGIFh0J5P9hza8
+ miDLGx0xAXEOtJHSzN1xWi3vDq3W2lBj7tq6x7At+f5wmrVJgv4ken15WR7zZRxla1zu
+ c57wSXDRP/srDP6P3bbhwLwa1sx8ScPRU6iQ/5UbMvRI4BJwve+LKcQLkIrS2Usa843c
+ 24VX6FTT7ciO8DS4Uu+mi4haxv982CCjBRX+4NY4jyktVwC8pqYYTn0uFb/6/2stJMAE
+ skchOP/DHjMkrogdJ35rcyIuD2BmWCQTfVcCAuQ6Jc3kDuSF6evaX/YSvkuVDW5AHKga
+ XEpA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1737538272; x=1738143072;
+ d=1e100.net; s=20230601; t=1737538253; x=1738143053;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=XAK8+ZcQI8PZXdkgjSlPlEy1wFV5KzZpV4Si9c0ft5M=;
- b=dj8O3ZHCG0GPQMWZZOxVo68q2mF+WEah1AfCB1+1zZfIdfYBuQvk30yh26XI/gTll1
- nVSQ1mkxhwG/nZcsnFlMhf7PumhjOdKK4gDZGnXrdheEcqEAs5bNu8S71I0ikQzvJaVG
- fkrqhmx0zN4Ou5gdExpef3Zd74y+VBO7nAd4m8VXKtAAcXkSmzhavwYvrA7/ZFBUxWxV
- 0g50d8NEUYShbmO8JUWpfniQtgT7ZYxjpI/VfiCQid1D5eWDSLNFRpF3RHleBsSehoDI
- qG6h2Uv81OB6KEySfNv9AEwc49vai4jMBi0a/Z6ihg21HLzE3M9m4Fe8H63VEyZFO93n
- 8v7Q==
-X-Gm-Message-State: AOJu0Yyr2GmF1Z6bi5tJENq64pVXxSQeF5yZ7EpdOKxNvUmGrWqKq7KU
- DhEwzCHZ7Tm12TiIttrypuLblY/SWQcHeGKzU3umAUJ946eI889UTrqICqagiV/kOr9TugSpwci
- DGcs=
-X-Gm-Gg: ASbGncuNhmTHMxy7qNSruaQJrGpbhs/bKu8BP3jykiCOKu5y0x5Q99NHPlo+V9WPfVD
- g1Kiev7Qedo0hzKnRSKMahFWBEM++dToqMHbVlJl1PdNCXtZ6yoSXtMG2zJULjdtcQyirZZIUdS
- hOpzZSfcf7ql5G3MYT87OhHk6pSUC8NbXaSKfU3cjg/bwsLucXIecGoKI7GyPNlI/Aw4i89daVX
- Er0kSCS+3QYzuwqzteWlyC+KdfPfxzNXN3vYYv1yb/m4pOAGW4OI+/rA4AZsZGB/Uzbrmjw8En+
- rSj3BR/wUePP3GnUSXdLCF3XRl2xEE5IOGyFtbihlum+
-X-Google-Smtp-Source: AGHT+IFai9mD8GltFAw7gxPrREpzrvJjo+UMSvD2ijZjgbzRv5dMrin2AUgKp4k7hnSrJKSzVAnRdw==
-X-Received: by 2002:a5d:64e6:0:b0:381:ed32:d604 with SMTP id
- ffacd0b85a97d-38bf5ad3a71mr16765849f8f.10.1737538271919; 
- Wed, 22 Jan 2025 01:31:11 -0800 (PST)
+ bh=3ds9Wj0QZU42GLHBsVwmUFq56bCDGO06IGIH+Sdiodc=;
+ b=d6XepkMFcK5ZbZbe4PfLD8cP3cwZAKJGHKQwM0S0u5tCkv3POV5J70vQ0HSUEn+Sr5
+ FJ2W+7Oa6FTPzM0HF1CBQ3T813gSIymfyajKpOz8iZtFRju/9nE7gSy8svJNtovFBG1V
+ 1ll8SKKFX0R9/7JkUcGuJphJM/s/Ns4qSjrnd7wilFz6omckjHuMEvEoBAmuCcYY79LH
+ vsBfMUj9SWGdbzQCJOdEsdWNfPY8quAIdX/HaMFL6csZyQw/YAnuCB4TEzHtARbJ9h3m
+ 8ee8N9LdZ92N1WFusrZifcKcDSMpP6Mo+LWD/CSYouWyQdPN9uRFa76TK3QXT4m/LHzP
+ ZT6w==
+X-Gm-Message-State: AOJu0YyQbnxecDEO1+Fdc8qGR9RTUoVYLkMs2k4M6O67vmL8hGEyNfKg
+ dK+itmpcPQxRwT009c2nEWL71FHsEOAexhBP86nCgeFBUFtSrYlko03N2vM+uBv2y8XlFUQXjfN
+ hAcY=
+X-Gm-Gg: ASbGncsmvw421JehaOyq5jyjTyopjJ08ND6zegCH4bHPgdbGUDHvXX8VBeGDEPrwFS7
+ BEg8YFO1OWA69ifTs4INeSSEIgRP2j6tA0WWKL3LacId/y7Ny6MBYKc7paP76a0ZJ7I+6v8ws6y
+ SXbvTvIJGYYnKCzBMY1lGe0UVg68TGR4VLbRS2f+ZYYfXPmlkEmm+5md7utrjC/e13O14mMT51E
+ hKBoDIFiO7AJjZPGW7NNqAmhvj5QaFGon5ov4buoyjutKTmAhAMUl8qz09x8sEgw9LNp2NZUzzP
+ lzMnTTy9qxpwFzshl3SLugLLdP5ylN7YI9ENdLnRgD7q
+X-Google-Smtp-Source: AGHT+IGpVW92Redmqgr+HmUbpNm8hsX+p2uNrDpzZR1xgMtAGnI2STvmEVxhrXqPqFc+p4wVYOA0OQ==
+X-Received: by 2002:a05:6000:1f81:b0:386:3213:5b9b with SMTP id
+ ffacd0b85a97d-38bf57a9477mr21266255f8f.43.1737538253473; 
+ Wed, 22 Jan 2025 01:30:53 -0800 (PST)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-38bf322a414sm15660432f8f.47.2025.01.22.01.31.11
+ ffacd0b85a97d-38bf322acdcsm16022223f8f.55.2025.01.22.01.30.52
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Wed, 22 Jan 2025 01:31:11 -0800 (PST)
+ Wed, 22 Jan 2025 01:30:53 -0800 (PST)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: qemu-arm@nongnu.org, Richard Henderson <richard.henderson@linaro.org>,
  =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PATCH v2 09/10] hw/acpi: Prefer cached CpuClass over CPU_GET_CLASS()
+Subject: [PATCH v2 05/10] accel: Prefer cached CpuClass over CPU_GET_CLASS()
  macro
-Date: Wed, 22 Jan 2025 10:30:27 +0100
-Message-ID: <20250122093028.52416-10-philmd@linaro.org>
+Date: Wed, 22 Jan 2025 10:30:23 +0100
+Message-ID: <20250122093028.52416-6-philmd@linaro.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20250122093028.52416-1-philmd@linaro.org>
 References: <20250122093028.52416-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::42d;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x42d.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::435;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x435.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -108,41 +108,108 @@ use it.
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 ---
- hw/acpi/cpu.c         | 4 ++--
- hw/acpi/cpu_hotplug.c | 3 +--
- 2 files changed, 3 insertions(+), 4 deletions(-)
+ accel/accel-target.c      | 12 +++++-------
+ accel/tcg/tcg-accel-ops.c |  3 +--
+ accel/tcg/translate-all.c |  2 +-
+ accel/tcg/watchpoint.c    |  9 ++++-----
+ 4 files changed, 11 insertions(+), 15 deletions(-)
 
-diff --git a/hw/acpi/cpu.c b/hw/acpi/cpu.c
-index f70a2c045e1..6f1ae79edbf 100644
---- a/hw/acpi/cpu.c
-+++ b/hw/acpi/cpu.c
-@@ -235,8 +235,8 @@ void cpu_hotplug_hw_init(MemoryRegion *as, Object *owner,
+diff --git a/accel/accel-target.c b/accel/accel-target.c
+index 08626c00c2d..8a16c0c3ae0 100644
+--- a/accel/accel-target.c
++++ b/accel/accel-target.c
+@@ -112,22 +112,20 @@ void accel_init_interfaces(AccelClass *ac)
  
- static AcpiCpuStatus *get_cpu_status(CPUHotplugState *cpu_st, DeviceState *dev)
+ void accel_cpu_instance_init(CPUState *cpu)
  {
--    CPUClass *k = CPU_GET_CLASS(dev);
--    uint64_t cpu_arch_id = k->get_arch_id(CPU(dev));
-+    CPUState *cpu = CPU(dev);
-+    uint64_t cpu_arch_id = cpu->cc->get_arch_id(cpu);
-     int i;
+-    CPUClass *cc = CPU_GET_CLASS(cpu);
+-
+-    if (cc->accel_cpu && cc->accel_cpu->cpu_instance_init) {
+-        cc->accel_cpu->cpu_instance_init(cpu);
++    if (cpu->cc->accel_cpu && cpu->cc->accel_cpu->cpu_instance_init) {
++        cpu->cc->accel_cpu->cpu_instance_init(cpu);
+     }
+ }
  
-     for (i = 0; i < cpu_st->dev_count; i++) {
-diff --git a/hw/acpi/cpu_hotplug.c b/hw/acpi/cpu_hotplug.c
-index 83b8bc5deb8..aa0e1e3efa5 100644
---- a/hw/acpi/cpu_hotplug.c
-+++ b/hw/acpi/cpu_hotplug.c
-@@ -62,10 +62,9 @@ static const MemoryRegionOps AcpiCpuHotplug_ops = {
- static void acpi_set_cpu_present_bit(AcpiCpuHotplug *g, CPUState *cpu,
-                                      bool *swtchd_to_modern)
+ bool accel_cpu_common_realize(CPUState *cpu, Error **errp)
  {
--    CPUClass *k = CPU_GET_CLASS(cpu);
-     int64_t cpu_id;
+-    CPUClass *cc = CPU_GET_CLASS(cpu);
+     AccelState *accel = current_accel();
+     AccelClass *acc = ACCEL_GET_CLASS(accel);
  
--    cpu_id = k->get_arch_id(cpu);
-+    cpu_id = cpu->cc->get_arch_id(cpu);
-     if ((cpu_id / 8) >= ACPI_GPE_PROC_LEN) {
-         object_property_set_bool(g->device, "cpu-hotplug-legacy", false,
-                                  &error_abort);
+     /* target specific realization */
+-    if (cc->accel_cpu && cc->accel_cpu->cpu_target_realize
+-        && !cc->accel_cpu->cpu_target_realize(cpu, errp)) {
++    if (cpu->cc->accel_cpu
++        && cpu->cc->accel_cpu->cpu_target_realize
++        && !cpu->cc->accel_cpu->cpu_target_realize(cpu, errp)) {
+         return false;
+     }
+ 
+diff --git a/accel/tcg/tcg-accel-ops.c b/accel/tcg/tcg-accel-ops.c
+index 6e3f1fa92b2..299d6176cfb 100644
+--- a/accel/tcg/tcg-accel-ops.c
++++ b/accel/tcg/tcg-accel-ops.c
+@@ -120,10 +120,9 @@ static inline int xlat_gdb_type(CPUState *cpu, int gdbtype)
+         [GDB_WATCHPOINT_ACCESS] = BP_GDB | BP_MEM_ACCESS,
+     };
+ 
+-    CPUClass *cc = CPU_GET_CLASS(cpu);
+     int cputype = xlat[gdbtype];
+ 
+-    if (cc->gdb_stop_before_watchpoint) {
++    if (cpu->cc->gdb_stop_before_watchpoint) {
+         cputype |= BP_STOP_BEFORE_ACCESS;
+     }
+     return cputype;
+diff --git a/accel/tcg/translate-all.c b/accel/tcg/translate-all.c
+index d56ca13cddf..5a378cb0281 100644
+--- a/accel/tcg/translate-all.c
++++ b/accel/tcg/translate-all.c
+@@ -622,7 +622,7 @@ void cpu_io_recompile(CPUState *cpu, uintptr_t retaddr)
+      * to account for the re-execution of the branch.
+      */
+     n = 1;
+-    cc = CPU_GET_CLASS(cpu);
++    cc = cpu->cc;
+     if (cc->tcg_ops->io_recompile_replay_branch &&
+         cc->tcg_ops->io_recompile_replay_branch(cpu, tb)) {
+         cpu->neg.icount_decr.u16.low++;
+diff --git a/accel/tcg/watchpoint.c b/accel/tcg/watchpoint.c
+index af57d182d5b..52e550dec6b 100644
+--- a/accel/tcg/watchpoint.c
++++ b/accel/tcg/watchpoint.c
+@@ -69,7 +69,6 @@ int cpu_watchpoint_address_matches(CPUState *cpu, vaddr addr, vaddr len)
+ void cpu_check_watchpoint(CPUState *cpu, vaddr addr, vaddr len,
+                           MemTxAttrs attrs, int flags, uintptr_t ra)
+ {
+-    CPUClass *cc = CPU_GET_CLASS(cpu);
+     CPUWatchpoint *wp;
+ 
+     assert(tcg_enabled());
+@@ -85,9 +84,9 @@ void cpu_check_watchpoint(CPUState *cpu, vaddr addr, vaddr len,
+         return;
+     }
+ 
+-    if (cc->tcg_ops->adjust_watchpoint_address) {
++    if (cpu->cc->tcg_ops->adjust_watchpoint_address) {
+         /* this is currently used only by ARM BE32 */
+-        addr = cc->tcg_ops->adjust_watchpoint_address(cpu, addr, len);
++        addr = cpu->cc->tcg_ops->adjust_watchpoint_address(cpu, addr, len);
+     }
+ 
+     assert((flags & ~BP_MEM_ACCESS) == 0);
+@@ -119,8 +118,8 @@ void cpu_check_watchpoint(CPUState *cpu, vaddr addr, vaddr len,
+             wp->hitattrs = attrs;
+ 
+             if (wp->flags & BP_CPU
+-                && cc->tcg_ops->debug_check_watchpoint
+-                && !cc->tcg_ops->debug_check_watchpoint(cpu, wp)) {
++                && cpu->cc->tcg_ops->debug_check_watchpoint
++                && !cpu->cc->tcg_ops->debug_check_watchpoint(cpu, wp)) {
+                 wp->flags &= ~BP_WATCHPOINT_HIT;
+                 continue;
+             }
 -- 
 2.47.1
 
