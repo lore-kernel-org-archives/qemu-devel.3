@@ -4,82 +4,207 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8788EC02181
-	for <qemu-devel@archiver.kernel.org>; Wed, 22 Jan 2025 06:39:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 19D27C02181
+	for <qemu-devel@archiver.kernel.org>; Wed, 22 Jan 2025 06:45:00 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1taUO1-0003eK-F8; Wed, 22 Jan 2025 01:38:49 -0500
+	id 1taUTU-0004gA-Jg; Wed, 22 Jan 2025 01:44:28 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <wuhaotsh@google.com>)
- id 1taUNu-0003df-O1
- for qemu-devel@nongnu.org; Wed, 22 Jan 2025 01:38:45 -0500
-Received: from mail-lf1-x12d.google.com ([2a00:1450:4864:20::12d])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <wuhaotsh@google.com>)
- id 1taUNm-0007fl-EY
- for qemu-devel@nongnu.org; Wed, 22 Jan 2025 01:38:36 -0500
-Received: by mail-lf1-x12d.google.com with SMTP id
- 2adb3069b0e04-53e64f3c7d0so5299e87.0
- for <qemu-devel@nongnu.org>; Tue, 21 Jan 2025 22:38:33 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=google.com; s=20230601; t=1737527912; x=1738132712; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=j8EXQvgURo8X1Ye9BX0shzlGgH6JOTfdK1fhtnuqqHw=;
- b=Cc1988+LCxONVx2+FgsxawhwY4bW0hrn5SklNVOnP52+iJxiKZzCyUVCVs5AbIeymy
- hbWWj7PcUN3gi2QcFZv8gjLlbCE+w/Bb1DasPWUcmH+IHojZxb4vljcM2fOBXCsP/dwE
- ryDEYfG87+7lOhtrnRTLttwV7AKy24fpPPfsnCAAYafqzuJlshFv1sEpiIndAXK2tpet
- 0wo9A3ciGJ8BWhwv7/dQ/GGXgjqT7qdleZttFB1FjA44wzZVE87vH1J8EHH1yS051cB7
- CSffspRLV4BUk//wF8riYuq5JWAmfILQS0oBP9ajnUvZ0IpdypU3dEIjkMltkqNvA1Ks
- TqFw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1737527912; x=1738132712;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=j8EXQvgURo8X1Ye9BX0shzlGgH6JOTfdK1fhtnuqqHw=;
- b=rrK95P4Z7QJvRyAaABXLr3Cnjv95lDJriJuyVJzSpgUOnA+acnvdBDWmp2Jf8hVyTO
- FrNKquAJNjXMsAgh0zac8/p9ixEhWD1f5i6+3mdrrnMeMt806L/RE56hASk4bFtkZmHx
- qc0lr+rz+NbWvYW6AwyRN8bD0R5nzCK4V44D0MAxZBj2eCQj52crxZZ3RAfvC6Gk2wD8
- jFQkG3kMJYf5yadzcNfxfGkKChm+LNLzYNA1GzN+q2ppybBf45IhoPA5Y9rvOiN3CWIo
- H86iFUDZTmurdkm1ZODnbBVU3EYXrtbVc8YTLO9FkK9oqW3eiYl8rRp3kb3gYZCXsqWp
- koEw==
-X-Forwarded-Encrypted: i=1;
- AJvYcCUFWYR320ypewB3Q+2RAAn7cH1iGzBiD8ty5dBOszhQaf5bXuklvQOb3+GCmTdWZKs58wSMVreg5Mys@nongnu.org
-X-Gm-Message-State: AOJu0YxkwekGqjLeJu5d4gOApup9Ioh21t8jKOpjXZYwktTlTRu5guBn
- ZQeQkUP1lc8tu633CGRVtgfZJo+6Z7SWoMOn5Ye7Fy3qLXSFcfWwGb15Xgf6e6AR8DE3IBinLue
- V6uJlsP8BcJn+hvVODEFGjif6qfdJt8JYrUbl
-X-Gm-Gg: ASbGncs/c50CNbLm5etn3d69J6mZZEYMUCYC8eCQ9dV3Sdo6pIf71aFQurXpmGEX8t3
- ZDYgXd4ELmDQtkU7RvniOO/OLVJXxQGHR5vvvSWB9D7uNu/UITdj22vh9nSuokvRbSzjKHWWTmX
- sfRoo=
-X-Google-Smtp-Source: AGHT+IEyoOl5r/1KjV+o4k2uQCegvEdNzK1NAgofNtusBp47TTYYk5sQY26K6gNwhcff1RPmB8pX5aK2r83gZAzM5+k=
-X-Received: by 2002:a05:6512:38c6:b0:542:92ee:25ec with SMTP id
- 2adb3069b0e04-543bcc812f5mr103740e87.1.1737527911692; Tue, 21 Jan 2025
- 22:38:31 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <chenyi.qiang@intel.com>)
+ id 1taUTR-0004fz-NG
+ for qemu-devel@nongnu.org; Wed, 22 Jan 2025 01:44:26 -0500
+Received: from mgamail.intel.com ([198.175.65.20])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <chenyi.qiang@intel.com>)
+ id 1taUTL-0008Qm-KU
+ for qemu-devel@nongnu.org; Wed, 22 Jan 2025 01:44:24 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+ d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+ t=1737528260; x=1769064260;
+ h=message-id:date:subject:to:cc:references:from:
+ in-reply-to:content-transfer-encoding:mime-version;
+ bh=GG3X4w9WrATSI3twij37Gb3JcsQU1iNDFZNDiQUmtEU=;
+ b=PJdjeTdQKBh91pFnng0Q154/FGcSFvx265lEOryKyyUWpJ+4TpsNvsmY
+ M+mCEe1IHuXOa8YkV1whKeZQTKgthPm0aI91A0rUxOBzMF9IXbxikAXj7
+ ++PxzxE+insQBahbOkv8GlojmychXVrp7QzhM1hC8/j2sOjb1LDrVf2yI
+ opEKo42Yfg62Sbc5vHFi4ludCOZTVSWHurxwGMiXxhLTZTvy+pwP6d30G
+ 4QEd7nedc/Klo7JirHcAGOd1jlriYO8eMNZrexoOuvE9LdQ3tcLWNhit6
+ vYHuAWjGmn85l6D3wfX8OXLBvY0j97DX/deb5fVcStTXfzIUvJeHMvfGo A==;
+X-CSE-ConnectionGUID: hEA85ZVZSZODiOBcIIfovQ==
+X-CSE-MsgGUID: zWKRS1nIROuShI5eXCP+dA==
+X-IronPort-AV: E=McAfee;i="6700,10204,11322"; a="37668144"
+X-IronPort-AV: E=Sophos;i="6.13,224,1732608000"; d="scan'208";a="37668144"
+Received: from fmviesa006.fm.intel.com ([10.60.135.146])
+ by orvoesa112.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 21 Jan 2025 22:44:05 -0800
+X-CSE-ConnectionGUID: NjvqCUDEQ2iudNvy1TMqFg==
+X-CSE-MsgGUID: N4nW/CY1SZ6g0VecBPADlQ==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.13,224,1732608000"; d="scan'208";a="106861752"
+Received: from orsmsx603.amr.corp.intel.com ([10.22.229.16])
+ by fmviesa006.fm.intel.com with ESMTP/TLS/AES256-GCM-SHA384;
+ 21 Jan 2025 22:44:03 -0800
+Received: from orsmsx603.amr.corp.intel.com (10.22.229.16) by
+ ORSMSX603.amr.corp.intel.com (10.22.229.16) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
+ 15.1.2507.44; Tue, 21 Jan 2025 22:43:53 -0800
+Received: from orsedg603.ED.cps.intel.com (10.7.248.4) by
+ orsmsx603.amr.corp.intel.com (10.22.229.16) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
+ 15.1.2507.44 via Frontend Transport; Tue, 21 Jan 2025 22:43:53 -0800
+Received: from NAM10-BN7-obe.outbound.protection.outlook.com (104.47.70.43) by
+ edgegateway.intel.com (134.134.137.100) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.1.2507.44; Tue, 21 Jan 2025 22:43:53 -0800
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=uD21twmKiMaYrd3KQcU1NmTZJlL6aZNr6Xah4x8GnzqWHJdPN9x8UnQQQnGZcz1xXr57gNbR99Hj2ojl6vxCLUeN6KfcOwt2nRYopHoQiSiB6yWg8YMjSIdQCx0ErVNWfF+0T+sFfSaJjDEp6UjaOtQilyHw0xH8RtO8QxpQWEoNs/NBni23T3HqsoSqAywdNxLMfW4y2yvmWJbfoXBxwaD5dwtcyiTeq1LmrL+rpwr09QD+X79hJJDZsmnvTlgqUoF3+vCg6XGSU1t017Ty9ageXYfipVR31N6yGRZcIjt+NWtqMF7dlNZcSL+fpD3NyKRz2P2Dd4gECOnE1ykzDA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=/fa+gQ9sz5O1iDs3pqhQblcFbVqStf9yLCy2zJKxpDU=;
+ b=lhbV1fRNSxqqVKPIOS0G21ed1Mnw7zBYXX9lS+rjZho50/JXa8QS04GdL40+JaavJDJt1isrNq8lR4ACEriuC4FRpgGrYhFEU/6GAKwCRPH8K3kPrnYku5p+W8PQpsk+tdq3VgojpfwtwB5Z6kh9stpyEOXtgPjgt31NG5Y8KihEMsVEWDdgHrh3i092ocVu8aywCpk1WBVtpsYGeTYQrvIqTP3o5JIFaeSOVvdDtZo3AJuKg2J16skQoFlzFp69jjb1XgVPWkY+OuYdps01OB4V+OWcJjyjCw4HQ5JEyu0Yf1tB8uLpIdKvbYH39clu76Ati3rbkIuE0yBLKc9nyg==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=intel.com; dmarc=pass action=none header.from=intel.com;
+ dkim=pass header.d=intel.com; arc=none
+Authentication-Results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=intel.com;
+Received: from DM3PR11MB8735.namprd11.prod.outlook.com (2603:10b6:0:4b::20) by
+ CH2PR11MB8867.namprd11.prod.outlook.com (2603:10b6:610:285::9) with
+ Microsoft
+ SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.20.8377.16; Wed, 22 Jan 2025 06:43:46 +0000
+Received: from DM3PR11MB8735.namprd11.prod.outlook.com
+ ([fe80::3225:d39b:ca64:ab95]) by DM3PR11MB8735.namprd11.prod.outlook.com
+ ([fe80::3225:d39b:ca64:ab95%5]) with mapi id 15.20.8356.020; Wed, 22 Jan 2025
+ 06:43:46 +0000
+Message-ID: <f1b4c00a-0e8a-4579-9951-d2d31c0214e1@intel.com>
+Date: Wed, 22 Jan 2025 14:43:37 +0800
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 2/7] guest_memfd: Introduce an object to manage the
+ guest-memfd with RamDiscardManager
+To: David Hildenbrand <david@redhat.com>, Peter Xu <peterx@redhat.com>
+CC: Paolo Bonzini <pbonzini@redhat.com>,
+ =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>, Michael Roth
+ <michael.roth@amd.com>, <qemu-devel@nongnu.org>, <kvm@vger.kernel.org>,
+ Williams Dan J <dan.j.williams@intel.com>, Peng Chao P
+ <chao.p.peng@intel.com>, Gao Chao <chao.gao@intel.com>, Xu Yilun
+ <yilun.xu@intel.com>
+References: <20241213070852.106092-1-chenyi.qiang@intel.com>
+ <20241213070852.106092-3-chenyi.qiang@intel.com> <Z46RT__q02nhz3dc@x1n>
+ <a55048ec-c02d-4845-8595-cc79b7a5e340@intel.com>
+ <7176db79-cd04-4968-a61a-a753e3668564@redhat.com>
+ <5515f87d-63a5-4c70-b421-616e706324a5@intel.com>
+ <065250d4-84f1-4dfa-a938-98a61082a666@redhat.com>
+From: Chenyi Qiang <chenyi.qiang@intel.com>
+Content-Language: en-US
+In-Reply-To: <065250d4-84f1-4dfa-a938-98a61082a666@redhat.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 8bit
+X-ClientProxiedBy: SI2PR06CA0005.apcprd06.prod.outlook.com
+ (2603:1096:4:186::12) To DM3PR11MB8735.namprd11.prod.outlook.com
+ (2603:10b6:0:4b::20)
 MIME-Version: 1.0
-References: <20250121105935.3069035-1-titusr@google.com>
-In-Reply-To: <20250121105935.3069035-1-titusr@google.com>
-From: Hao Wu <wuhaotsh@google.com>
-Date: Wed, 22 Jan 2025 14:38:19 +0800
-X-Gm-Features: AbW1kvbTlLIkmXv4WUusPWHjh8BoLCwAM2ZL_pAekvWHFpRRnsYh6J6LdeJS5dQ
-Message-ID: <CAGcCb11V5oP3VBXK+L_MFBYPtj2FQuG-CM+zmCb3cyqbNke5=g@mail.gmail.com>
-Subject: Re: [PATCH v2] hw/misc: i2c-echo: add tracing
-To: Titus Rwantare <titusr@google.com>
-Cc: philmd@linaro.org, minyard@acm.org, its@irrelevant.dk, qemu-arm@nongnu.org,
- qemu-devel@nongnu.org, clg@kaod.org
-Content-Type: multipart/alternative; boundary="000000000000f76770062c45bd0a"
-Received-SPF: pass client-ip=2a00:1450:4864:20::12d;
- envelope-from=wuhaotsh@google.com; helo=mail-lf1-x12d.google.com
-X-Spam_score_int: -175
-X-Spam_score: -17.6
-X-Spam_bar: -----------------
-X-Spam_report: (-17.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_MED=-0.001,
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: DM3PR11MB8735:EE_|CH2PR11MB8867:EE_
+X-MS-Office365-Filtering-Correlation-Id: c7922d13-a3b7-4236-65e4-08dd3ab01e96
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;ARA:13230040|376014|1800799024|366016;
+X-Microsoft-Antispam-Message-Info: =?utf-8?B?S1Z6eWlMUENURHF1VWd3VjVKRm9zM2tNVVRnZHozZnNMelZWWjNmZnM4UVN6?=
+ =?utf-8?B?YzR5a2I1b09RbzY4SnoydmFVQlVMbGNIOGlBMUxMOXR5YXFqVjFqVlUzd1Jo?=
+ =?utf-8?B?M2NaRlMzaWlKMXBsLzFSNnBXN1lqdGlaSjRWRStCRHRZclp2SE9wMjQvKzBn?=
+ =?utf-8?B?VkJPTGo5N25xMU1ZdXBzSjZyRWNpcHk1TnMyRVpGdEhGb3FaMEgyQWg4RnJN?=
+ =?utf-8?B?SVR0V25ER2lZVGtILzBGQWVoUURNbmQxSktTcFFqb0NXbnlySEdwMEhubXN1?=
+ =?utf-8?B?MDZaSHNGZXZ2WTB1N1lXZDFwd3UwWFQ2b0pvY2M4VVI4empSYU8rTm5mREJ1?=
+ =?utf-8?B?OEdHejRsSzd1QTQ0L1RhNUhPUXNDdlU2Tm5kSE1QUnhCQ2h2UGJKbFR1RUxK?=
+ =?utf-8?B?VFZaZnBxK2pmMkJzSTZFQWZDODJyUTVZaHZqMFREdTNqY1UwTGVBK3c0RjBj?=
+ =?utf-8?B?cGQyODZTTDVYckNTeUZ3d2xXdGhRNzVaamN0U0hiaUdlNTQwWmxkWEw0OXJx?=
+ =?utf-8?B?ek8vMmlVQmQ1ZGxWOWlmd0tJU0RoTU4wb3lRS2ZRSkVGTFpaUzFoREhZNE9a?=
+ =?utf-8?B?NTZXVk9YWkdjWmR0RG41eVlWeW9TeDl4M0hscTJYejdDdjJ2L1hFTlEvL1Nk?=
+ =?utf-8?B?U1NZRjBwczR2MElSaVE5ZExZZmtKSDBZcXp5aElhdjk1cDhUV1JtV2h4VWIx?=
+ =?utf-8?B?UHZYNE1ZM1VzNWFnejZETXRjZThHYkdvcjltUEh1YnlZWEJCRkJqRmZXd2R5?=
+ =?utf-8?B?L1cvdkEvTU00UkRGTzI5YURydFJQME01UERhWFFYWUdjdHFSMlBqUlpJS0hw?=
+ =?utf-8?B?ZXZkVVV5YjBya2Vxam9aM3lmdUdSZmhRSS9od0czNTdjUWxCMUpmT3E2RDU2?=
+ =?utf-8?B?Q3dlMEJNWUxnaUVMcC9FYS9OeFM5dEt3MmRDSHd2dThqaDIzN2tqVDBiUVFq?=
+ =?utf-8?B?WXMvQ01zVjRUWFp6LzVpSm9WanU3Vms3QytQMUxwVUlPN0xwRmZuUkgyTWtL?=
+ =?utf-8?B?WlNMdHBhOXhCUHRPTDY0RmpnYmVCbmZSVVAxcnY5OVovMGM3cThXWVBqUmpv?=
+ =?utf-8?B?Y09NRUI1ck9FTHNwV2RudzRkV3VwT0VjMnZpYzlXTVdONm4rUHFoaGdYdjJW?=
+ =?utf-8?B?RHZZcHlvL1lkYjZBc0RIYmRtTVhBenR6WlNUaTZreEpxS0JaMGVxb0Y2T0I5?=
+ =?utf-8?B?UkgrYXpObFdKSHlNZXVSUnhreTVzb0tIZktoWndmN1R0OGNzSWNQWTNnU2tL?=
+ =?utf-8?B?R2lEYnhhNWp2K21tUml3ZmFzMGRtUS9ZRUU0blhyUUZOUk5idDQxSFBONlln?=
+ =?utf-8?B?YUhtNnI0K0VlZTBmVXltVXFNTTZwcllLSGtYZnRNVUtNSGIvdWw2Mmdncmpy?=
+ =?utf-8?B?TGFxakpVQ0xxcTRBR2FpbVQxSGZhTG9hN0FyaDhmZXl5U2RlUWZCZ0paREpT?=
+ =?utf-8?B?ZDk5SXViK0JDQUlGbUVwN2Q3T1ZPQnZMcXhxS25ibmRyOTlIN3ZLc1hKQ2F6?=
+ =?utf-8?B?K014ZXAwTmJldm9MNGNpNWl3ZFdGRURVU2ZhK2x3aXFMaVI3dEg0cEZVOTRM?=
+ =?utf-8?B?eWdsbjh2NFlFUkdUSUxYQXRmelJLZjFIT2FmQmNhQmNoK1gyOHA5akkrMjVm?=
+ =?utf-8?B?TTZHNys5MVlzdko4U0ZyT3VmeHhFRkNGMEhRcndCVjRQSWc4TGY0eE43L2hx?=
+ =?utf-8?B?N1A2OWtNNi9vbWNnVVpMSHlkQVFnVmxiV0YwTnRzUGlpcHdZa2c0cnZKNVJn?=
+ =?utf-8?B?MzdOL25NdC9EdW5JN3BOVXZjRWxkSldRRnlCa3ZrZjFJUUZKL1FaSUM4R3g2?=
+ =?utf-8?B?RlRsWU1NZEpueWFCcGtONTdGM2FxNlBWZ3A1aEhPREZMT1IwbTNTaklPU0E2?=
+ =?utf-8?Q?ZtDb9Zn9IhrK8?=
+X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:DM3PR11MB8735.namprd11.prod.outlook.com; PTR:; CAT:NONE;
+ SFS:(13230040)(376014)(1800799024)(366016); DIR:OUT; SFP:1101; 
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?dkFLZ2txdXV2anh2UHNvRVNBUVVaTmoveGNidlF4ZkljYW90c2hpaUQ5VVlI?=
+ =?utf-8?B?MTJGeTdadGk1UjZFZXkybnEveXlEYzRwQmtjRUxBeDcvSFZhM1U2b1N2ZTNZ?=
+ =?utf-8?B?QVlYa2dRL2p2ZWZvMHhUTFlyaEdvY3dRSFczQ3FLdU8zQ2R2Rm9LYzJIUTFa?=
+ =?utf-8?B?NGtHajN0WDZSSHhkRnJDRXpQK1FDZDJzZTNsRnlCSTBGWXJrclNUZEFKR0Zw?=
+ =?utf-8?B?VjZQdlp3NUR2NEkvT2RhMFB2QU94bys0c2N3NEVIZlVaR0xZdm83UGNUM09I?=
+ =?utf-8?B?RXR1U1ByZmZEMU1hNnhZbVliV2FrU2VlNDVERi80Vm1qalU2NS9PaVFVanFE?=
+ =?utf-8?B?dGlLZVcwVjZqbDlOZG02N0s2eS9TVEkzRGlZQkYyNWVaN0dkMmxKdnR2UG9R?=
+ =?utf-8?B?czVmengxY2UycGdZaVRqdEVqK1pTcUc1TEozcEg5WG1Pd3lkUzNIWXh4bk12?=
+ =?utf-8?B?UkVweHRJQUd4L1NhQjBjdVJJUjUxT1RKanVISzlleFJJWHFoMnBYdFlPMFhw?=
+ =?utf-8?B?aDVCR3VlRGlGVms1T0dlc0tsclZQdE8xWmpEbVllMDZtQ0h4TlhSWXJob1FF?=
+ =?utf-8?B?ZjZIMmZNbGdsbHZjalBVQnkySWlyc2pMM0VPV1lZbklCVmttMXN5d0RQNDlJ?=
+ =?utf-8?B?Z0YzWFRIUFdORTBpU1U2VHRJbTdxVzRETityT2p5K2x0WW0xUTdmWTQrYnhp?=
+ =?utf-8?B?SUR2VkFQc0dUOHdpKzNsWHcyeVppZXB0aHFXam13a3NIOXFLeERWaXh2Yjh6?=
+ =?utf-8?B?eGdjcDIwYnEya25sWlZ3ZUZmVjJDUEtZRjdMTlZBaGx0ODFBUElqRzhyUDVt?=
+ =?utf-8?B?VG1vUDh0VnltdnVBdlN4MURHV3lEMFpodDdFaHZzNHJZTzJoMDU4YzFKQnNz?=
+ =?utf-8?B?ckM0NHlhMk5IVTNVZ0hDK3k5czJ0MmhVVy81WWd0QWxnVk1IQWEyNWNHSmpO?=
+ =?utf-8?B?Sk9vWkVwM0dKRDJmTmhOMDQ5RWN5SWR2VXpBdDBxbHBKa3g3V280ZDFLK3U0?=
+ =?utf-8?B?S0hLdmJGR2RqQzQ2N1hhNTdVZ284NE9yNG5DMFdCU2w1M21xVDZoYW5jZkJJ?=
+ =?utf-8?B?LzRXL3JoRjFMK3h4c3dFS0JQTzBSTFlSb3FYR2g4WmFjOUhta3YydmwzQlFj?=
+ =?utf-8?B?TkkvY2s1MCsveEJYZjJoQi85amFUYktEN1dYU3lFTGNNa0RONUFZVUM0eXdB?=
+ =?utf-8?B?K1lFYTRjQjJ5Q1RtcUYyaW5laUZtbjBuWHhNYWhVakhpQnF3L0JKZmFmc1Yw?=
+ =?utf-8?B?N2hDRlA2YjM1VFhHRU5pYXpLeTZRSUgwbWpaSC9nNEdoM2QyN3drK0NEV1di?=
+ =?utf-8?B?OUNNS0tBRVBmeDhkc0htaytlU05qbThrS1dscEx1T0tnUDVXbDFsWDdBVEdD?=
+ =?utf-8?B?ZjdpUkc4bGNCd29tZXppUDNLSy9wV2w1REIyUzZvNVBrNHFWcUY4R2V6ZlFz?=
+ =?utf-8?B?TjR6TzEvbkFFd3NkVVFtcUl3d1g4Undlb1JHY3ZqQkZmbjVDcVkvR01DTXlJ?=
+ =?utf-8?B?RzAxYXgrQmgrbU84ODQ5ZGJxZ3JHdGdtZUQzelVnaUlIZnZHRWlMU1krTnNV?=
+ =?utf-8?B?b3BMQUFycVo0TXVpa0krQ3U3Mm5tK0JpZHRCYzZEV2J5VnlDeEFicnQwSWdz?=
+ =?utf-8?B?UjlTUGJxRlU5aVp3VldMRkhFWDk1cXdkK3ZZMmhBSUh4eWpzN3o0U0Jyb0Fa?=
+ =?utf-8?B?c0szUjJ3VjVrY2hucjdLQzNUNUo2UHRGendKaFlZYkkxMUZmc1FkSW13NXBh?=
+ =?utf-8?B?Mm1HMklYK2kwL2JBYXNBS01lSmF3NWZta0p5bHFUZ3RnQWo1QWJtMEYzMG9G?=
+ =?utf-8?B?YUJqazlzQzNIdW91RnJQMkdHSFU1WGV3ejNOdzVpeFl2MExDZ2xhZ3lHVkM1?=
+ =?utf-8?B?bkRWei9oNTRRWElYZStNNUhaOW4xSVN5VDBQSjR4ZEt2aFVXczYwOGhkWFFK?=
+ =?utf-8?B?WFpIVi95cnA0NzMwbTFKUU9ZL2VRa0Vpc25ZWGdJTFFMZ2ZlaS93MC8vZkUz?=
+ =?utf-8?B?cG5jelVQNDNvM3orbkxvY3NLcCtrOXBDUWRKS1FtRC9tUmFOcSthTEhlZzJL?=
+ =?utf-8?B?YUczdnRVVjhDM0F5b0RMVEV3S0dWS0dHSVhxciticW1yRmM2WHgvNTJiUXVt?=
+ =?utf-8?B?d0lLcGh4ZUpEenFNTjFpSmJiRVNtV0UrUW41ZFpMWkZ4VkJkZDBlTWRnejkr?=
+ =?utf-8?B?YWc9PQ==?=
+X-MS-Exchange-CrossTenant-Network-Message-Id: c7922d13-a3b7-4236-65e4-08dd3ab01e96
+X-MS-Exchange-CrossTenant-AuthSource: DM3PR11MB8735.namprd11.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 22 Jan 2025 06:43:46.1686 (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 46c98d88-e344-4ed4-8496-4ed7712e255d
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: C/P5AM+McPCxN4N3/ywHa5suocBjevzgdQ2tMahI4xRuPppjkgZhzwTaJh6oPmrG7I+7LLPKsZr1JzW5EpWayg==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: CH2PR11MB8867
+X-OriginatorOrg: intel.com
+Received-SPF: pass client-ip=198.175.65.20;
+ envelope-from=chenyi.qiang@intel.com; helo=mgamail.intel.com
+X-Spam_score_int: -73
+X-Spam_score: -7.4
+X-Spam_bar: -------
+X-Spam_report: (-7.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-2.996,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- ENV_AND_HDR_SPF_MATCH=-0.5, HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001, USER_IN_DEF_DKIM_WL=-7.5,
- USER_IN_DEF_SPF_WL=-7.5 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -95,226 +220,67 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
---000000000000f76770062c45bd0a
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
 
-On Tue, Jan 21, 2025 at 7:00=E2=80=AFPM Titus Rwantare <titusr@google.com> =
-wrote:
 
-> This has been useful when debugging and unsure if the guest is
-> generating i2c traffic.
->
-> Signed-off-by: Titus Rwantare <titusr@google.com>
->
-Reviewed-by: Hao Wu <wuhaotsh@google.com>
+On 1/21/2025 6:26 PM, David Hildenbrand wrote:
+> On 21.01.25 11:16, Chenyi Qiang wrote:
+>>
+>>
+>> On 1/21/2025 5:26 PM, David Hildenbrand wrote:
+>>> On 21.01.25 10:00, Chenyi Qiang wrote:
+>>>> Thanks Peter for your review!
+>>>>
+>>>> On 1/21/2025 2:09 AM, Peter Xu wrote:
+>>>>> Two trivial comments I spot:
+>>>>>
+>>>>> On Fri, Dec 13, 2024 at 03:08:44PM +0800, Chenyi Qiang wrote:
+>>>>>> +struct GuestMemfdManager {
+>>>>>> +    Object parent;
+>>>>>> +
+>>>>>> +    /* Managed memory region. */
+>>>>>> +    MemoryRegion *mr;
+>>>>>> +
+>>>>>> +    /*
+>>>>>> +     * 1-setting of the bit represents the memory is populated
+>>>>>> (shared).
+>>>>>> +     */
+>>>>>> +    int32_t bitmap_size;
+>>>>>> +    unsigned long *bitmap;
+>>>>>
+>>>>> Might be clearer to name the bitmap directly as what it represents.
+>>>>> E.g.,
+>>>>> shared_bitmap?
+>>>>
+>>>> Make sense.
+>>>>
+>>>
+>>> BTW, I was wondering if this information should be stored/linked from
+>>> the RAMBlock, where we already store the guest_memdfd "int
+>>> guest_memfd;".
+>>>
+>>> For example, having a "struct guest_memfd_state", and either embedding
+>>> it in the RAMBlock or dynamically allocating and linking it.
+>>>
+>>> Alternatively, it would be such an object that we would simply link from
+>>> the RAMBlock. (depending on which object will implement the manager
+>>> interface)
+>>>
+>>> In any case, having all guest_memfd state that belongs to a RAMBlock at
+>>> a single location might be cleanest.
+>>
+>> Good suggestion. Follow the design of this series, we can add link to
+>> the guest_memfd_manager object in RAMBlock.
+> 
+> Or we'll move / link that to the RAM memory region, because that's what
+> the object actually controls.
+> 
+> It starts getting a bit blury what should be part of the RAMBlock and
+> what should be part of the "owning" RAM memory region :(
 
-> ---
->  hw/misc/i2c-echo.c   | 8 ++++++++
->  hw/misc/trace-events | 5 +++++
->  2 files changed, 13 insertions(+)
->
-> diff --git a/hw/misc/i2c-echo.c b/hw/misc/i2c-echo.c
-> index 5ae3d0817e..65d10029dc 100644
-> --- a/hw/misc/i2c-echo.c
-> +++ b/hw/misc/i2c-echo.c
-> @@ -13,6 +13,7 @@
->  #include "qemu/main-loop.h"
->  #include "block/aio.h"
->  #include "hw/i2c/i2c.h"
-> +#include "trace.h"
->
->  #define TYPE_I2C_ECHO "i2c-echo"
->  OBJECT_DECLARE_SIMPLE_TYPE(I2CEchoState, I2C_ECHO)
-> @@ -80,11 +81,13 @@ static int i2c_echo_event(I2CSlave *s, enum i2c_event
-> event)
->      case I2C_START_RECV:
->          state->pos =3D 0;
->
-> +        trace_i2c_echo_event(DEVICE(s)->canonical_path, "I2C_START_RECV"=
-);
->          break;
->
->      case I2C_START_SEND:
->          state->pos =3D 0;
->
-> +        trace_i2c_echo_event(DEVICE(s)->canonical_path, "I2C_START_SEND"=
-);
->          break;
->
->      case I2C_FINISH:
-> @@ -92,12 +95,15 @@ static int i2c_echo_event(I2CSlave *s, enum i2c_event
-> event)
->          state->state =3D I2C_ECHO_STATE_START_SEND;
->          i2c_bus_master(state->bus, state->bh);
->
-> +        trace_i2c_echo_event(DEVICE(s)->canonical_path, "I2C_FINISH");
->          break;
->
->      case I2C_NACK:
-> +        trace_i2c_echo_event(DEVICE(s)->canonical_path, "I2C_NACK");
->          break;
->
->      default:
-> +        trace_i2c_echo_event(DEVICE(s)->canonical_path, "UNHANDLED");
->          return -1;
->      }
->
-> @@ -112,6 +118,7 @@ static uint8_t i2c_echo_recv(I2CSlave *s)
->          return 0xff;
->      }
->
-> +    trace_i2c_echo_recv(DEVICE(s)->canonical_path,
-> state->data[state->pos]);
->      return state->data[state->pos++];
->  }
->
-> @@ -119,6 +126,7 @@ static int i2c_echo_send(I2CSlave *s, uint8_t data)
->  {
->      I2CEchoState *state =3D I2C_ECHO(s);
->
-> +    trace_i2c_echo_send(DEVICE(s)->canonical_path, data);
->      if (state->pos > 2) {
->          return -1;
->      }
-> diff --git a/hw/misc/trace-events b/hw/misc/trace-events
-> index cf1abe6928..d58dca2389 100644
-> --- a/hw/misc/trace-events
-> +++ b/hw/misc/trace-events
-> @@ -390,3 +390,8 @@ ivshmem_flat_read_write_mmr_invalid(uint64_t
-> addr_offset) "No ivshmem register m
->  ivshmem_flat_interrupt_invalid_peer(uint16_t peer_id) "Can't interrupt
-> non-existing peer %u"
->  ivshmem_flat_write_mmr(uint64_t addr_offset) "Write access at offset
-> %"PRIu64
->  ivshmem_flat_interrupt_peer(uint16_t peer_id, uint16_t vector_id)
-> "Interrupting peer ID %u, vector %u..."
-> +
-> +#i2c-echo.c
-> +i2c_echo_event(const char *id, const char *event) "%s: %s"
-> +i2c_echo_recv(const char *id, uint8_t data) "%s: recv 0x%" PRIx8
-> +i2c_echo_send(const char *id, uint8_t data) "%s: send 0x%" PRIx8
-> --
-> 2.48.0.rc2.279.g1de40edade-goog
->
->
->
+Maybe still part of RAMBlock. I think guest_memfd state should go along
+with "int guest_memfd" as it is only valid when guest_memfd > 0; And
+guest_memfd is only valid for ram MemoryRegion.
 
---000000000000f76770062c45bd0a
-Content-Type: text/html; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+> 
 
-<div dir=3D"ltr"><div dir=3D"ltr"><br></div><br><div class=3D"gmail_quote g=
-mail_quote_container"><div dir=3D"ltr" class=3D"gmail_attr">On Tue, Jan 21,=
- 2025 at 7:00=E2=80=AFPM Titus Rwantare &lt;<a href=3D"mailto:titusr@google=
-.com">titusr@google.com</a>&gt; wrote:<br></div><blockquote class=3D"gmail_=
-quote" style=3D"margin:0px 0px 0px 0.8ex;border-left:1px solid rgb(204,204,=
-204);padding-left:1ex">This has been useful when debugging and unsure if th=
-e guest is<br>
-generating i2c traffic.<br>
-<br>
-Signed-off-by: Titus Rwantare &lt;<a href=3D"mailto:titusr@google.com" targ=
-et=3D"_blank">titusr@google.com</a>&gt;<br></blockquote><div>Reviewed-by: H=
-ao Wu &lt;<a href=3D"mailto:wuhaotsh@google.com">wuhaotsh@google.com</a>&gt=
-;=C2=A0</div><blockquote class=3D"gmail_quote" style=3D"margin:0px 0px 0px =
-0.8ex;border-left:1px solid rgb(204,204,204);padding-left:1ex">
----<br>
-=C2=A0hw/misc/i2c-echo.c=C2=A0 =C2=A0| 8 ++++++++<br>
-=C2=A0hw/misc/trace-events | 5 +++++<br>
-=C2=A02 files changed, 13 insertions(+)<br>
-<br>
-diff --git a/hw/misc/i2c-echo.c b/hw/misc/i2c-echo.c<br>
-index 5ae3d0817e..65d10029dc 100644<br>
---- a/hw/misc/i2c-echo.c<br>
-+++ b/hw/misc/i2c-echo.c<br>
-@@ -13,6 +13,7 @@<br>
-=C2=A0#include &quot;qemu/main-loop.h&quot;<br>
-=C2=A0#include &quot;block/aio.h&quot;<br>
-=C2=A0#include &quot;hw/i2c/i2c.h&quot;<br>
-+#include &quot;trace.h&quot;<br>
-<br>
-=C2=A0#define TYPE_I2C_ECHO &quot;i2c-echo&quot;<br>
-=C2=A0OBJECT_DECLARE_SIMPLE_TYPE(I2CEchoState, I2C_ECHO)<br>
-@@ -80,11 +81,13 @@ static int i2c_echo_event(I2CSlave *s, enum i2c_event e=
-vent)<br>
-=C2=A0 =C2=A0 =C2=A0case I2C_START_RECV:<br>
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0state-&gt;pos =3D 0;<br>
-<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 trace_i2c_echo_event(DEVICE(s)-&gt;canonical_p=
-ath, &quot;I2C_START_RECV&quot;);<br>
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0break;<br>
-<br>
-=C2=A0 =C2=A0 =C2=A0case I2C_START_SEND:<br>
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0state-&gt;pos =3D 0;<br>
-<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 trace_i2c_echo_event(DEVICE(s)-&gt;canonical_p=
-ath, &quot;I2C_START_SEND&quot;);<br>
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0break;<br>
-<br>
-=C2=A0 =C2=A0 =C2=A0case I2C_FINISH:<br>
-@@ -92,12 +95,15 @@ static int i2c_echo_event(I2CSlave *s, enum i2c_event e=
-vent)<br>
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0state-&gt;state =3D I2C_ECHO_STATE_START_=
-SEND;<br>
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0i2c_bus_master(state-&gt;bus, state-&gt;b=
-h);<br>
-<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 trace_i2c_echo_event(DEVICE(s)-&gt;canonical_p=
-ath, &quot;I2C_FINISH&quot;);<br>
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0break;<br>
-<br>
-=C2=A0 =C2=A0 =C2=A0case I2C_NACK:<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 trace_i2c_echo_event(DEVICE(s)-&gt;canonical_p=
-ath, &quot;I2C_NACK&quot;);<br>
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0break;<br>
-<br>
-=C2=A0 =C2=A0 =C2=A0default:<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 trace_i2c_echo_event(DEVICE(s)-&gt;canonical_p=
-ath, &quot;UNHANDLED&quot;);<br>
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0return -1;<br>
-=C2=A0 =C2=A0 =C2=A0}<br>
-<br>
-@@ -112,6 +118,7 @@ static uint8_t i2c_echo_recv(I2CSlave *s)<br>
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0return 0xff;<br>
-=C2=A0 =C2=A0 =C2=A0}<br>
-<br>
-+=C2=A0 =C2=A0 trace_i2c_echo_recv(DEVICE(s)-&gt;canonical_path, state-&gt;=
-data[state-&gt;pos]);<br>
-=C2=A0 =C2=A0 =C2=A0return state-&gt;data[state-&gt;pos++];<br>
-=C2=A0}<br>
-<br>
-@@ -119,6 +126,7 @@ static int i2c_echo_send(I2CSlave *s, uint8_t data)<br>
-=C2=A0{<br>
-=C2=A0 =C2=A0 =C2=A0I2CEchoState *state =3D I2C_ECHO(s);<br>
-<br>
-+=C2=A0 =C2=A0 trace_i2c_echo_send(DEVICE(s)-&gt;canonical_path, data);<br>
-=C2=A0 =C2=A0 =C2=A0if (state-&gt;pos &gt; 2) {<br>
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0return -1;<br>
-=C2=A0 =C2=A0 =C2=A0}<br>
-diff --git a/hw/misc/trace-events b/hw/misc/trace-events<br>
-index cf1abe6928..d58dca2389 100644<br>
---- a/hw/misc/trace-events<br>
-+++ b/hw/misc/trace-events<br>
-@@ -390,3 +390,8 @@ ivshmem_flat_read_write_mmr_invalid(uint64_t addr_offse=
-t) &quot;No ivshmem register m<br>
-=C2=A0ivshmem_flat_interrupt_invalid_peer(uint16_t peer_id) &quot;Can&#39;t=
- interrupt non-existing peer %u&quot;<br>
-=C2=A0ivshmem_flat_write_mmr(uint64_t addr_offset) &quot;Write access at of=
-fset %&quot;PRIu64<br>
-=C2=A0ivshmem_flat_interrupt_peer(uint16_t peer_id, uint16_t vector_id) &qu=
-ot;Interrupting peer ID %u, vector %u...&quot;<br>
-+<br>
-+#i2c-echo.c<br>
-+i2c_echo_event(const char *id, const char *event) &quot;%s: %s&quot;<br>
-+i2c_echo_recv(const char *id, uint8_t data) &quot;%s: recv 0x%&quot; PRIx8=
-<br>
-+i2c_echo_send(const char *id, uint8_t data) &quot;%s: send 0x%&quot; PRIx8=
-<br>
--- <br>
-2.48.0.rc2.279.g1de40edade-goog<br>
-<br>
-<br>
-</blockquote></div></div>
-
---000000000000f76770062c45bd0a--
 
