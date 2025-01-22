@@ -4,81 +4,95 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C89EFC02181
-	for <qemu-devel@archiver.kernel.org>; Wed, 22 Jan 2025 12:26:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 65E34C02181
+	for <qemu-devel@archiver.kernel.org>; Wed, 22 Jan 2025 12:35:11 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1taZnb-00011j-5i; Wed, 22 Jan 2025 07:25:35 -0500
+	id 1taZvp-0002kF-PT; Wed, 22 Jan 2025 07:34:05 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <dmitry.osipenko@collabora.com>)
- id 1taZnZ-00011R-6G
- for qemu-devel@nongnu.org; Wed, 22 Jan 2025 07:25:33 -0500
-Received: from sender4-pp-f112.zoho.com ([136.143.188.112])
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
+ id 1taZvn-0002jB-N1; Wed, 22 Jan 2025 07:34:03 -0500
+Received: from isrv.corpit.ru ([86.62.121.231])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <dmitry.osipenko@collabora.com>)
- id 1taZnX-00059U-8K
- for qemu-devel@nongnu.org; Wed, 22 Jan 2025 07:25:32 -0500
-ARC-Seal: i=1; a=rsa-sha256; t=1737548716; cv=none; 
- d=zohomail.com; s=zohoarc; 
- b=gco2NJ+ppndj3eyrfTDU1X5X5wpIFeR/OES1JdNxbY7cNaHMPwKhNv6eAXDprOpkrJG/+Q/p8mJFg7/RlpC53AB1UD5R4HGBmqt+cQxPUthBkJjxibcdtkwH+yUgH60CrG9Y5gC1J4UuT778PGemp0vZnDvwUUQ9rYYC5aVWThw=
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=zohomail.com;
- s=zohoarc; t=1737548716;
- h=Content-Type:Content-Transfer-Encoding:Cc:Cc:Date:Date:From:From:In-Reply-To:MIME-Version:Message-ID:References:Subject:Subject:To:To:Message-Id:Reply-To;
- bh=aeL3pKVgxdVJAHyAkM4qtzvjecypl5g5T84vRGLboQI=; 
- b=dz5wbdclK1pHI6PpRT5CT8i0hYFGD2Z0W9cBIvP85HYrvITEqCtUFzoQ3MzEaCaznOwGknAFxi+DLylYoa5m9u/xcyAEmH0xDHrhmzKPjjHr4uJ6acOFLlqOP5EIpWAM244uZ3Cf60vqG2EOB817znOZqBTDH70VsnYSOFDxejA=
-ARC-Authentication-Results: i=1; mx.zohomail.com;
- dkim=pass  header.i=collabora.com;
- spf=pass  smtp.mailfrom=dmitry.osipenko@collabora.com;
- dmarc=pass header.from=<dmitry.osipenko@collabora.com>
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; t=1737548716; 
- s=zohomail; d=collabora.com; i=dmitry.osipenko@collabora.com; 
- h=Message-ID:Date:Date:MIME-Version:Subject:Subject:To:To:Cc:Cc:References:From:From:In-Reply-To:Content-Type:Content-Transfer-Encoding:Message-Id:Reply-To;
- bh=aeL3pKVgxdVJAHyAkM4qtzvjecypl5g5T84vRGLboQI=;
- b=F1l8qvF3dJOcGr4FbRSwj75XXjRPWFjfyiVn23Em/1hRSU1j/2w2iocTyCrqlaUc
- r5eF/0YgFJmU5OlfuiG2nX9lHJVI1zre087Zyb+cg96b75vAr2UxLxunVSECKgU/8jS
- FzGqQ0D3oVkPOQ5H44UCg2yzT1FlUay5pxS3b2tQ=
-Received: by mx.zohomail.com with SMTPS id 1737548714913397.03862598191154;
- Wed, 22 Jan 2025 04:25:14 -0800 (PST)
-Message-ID: <f0f5efe3-6cc6-49fa-8d15-c16725380e89@collabora.com>
-Date: Wed, 22 Jan 2025 15:25:08 +0300
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
+ id 1taZvk-0007X7-Ng; Wed, 22 Jan 2025 07:34:03 -0500
+Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
+ by isrv.corpit.ru (Postfix) with ESMTP id 27CF7DD3AF;
+ Wed, 22 Jan 2025 15:33:40 +0300 (MSK)
+Received: from [192.168.177.130] (mjt.wg.tls.msk.ru [192.168.177.130])
+ by tsrv.corpit.ru (Postfix) with ESMTP id 4DA6C1A1DBF;
+ Wed, 22 Jan 2025 15:33:56 +0300 (MSK)
+Message-ID: <4a6a4432-f4b7-4c2e-8889-581c1cc983ca@tls.msk.ru>
+Date: Wed, 22 Jan 2025 15:33:56 +0300
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v5 0/8] Support virtio-gpu DRM native context
-To: =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
-Cc: Akihiko Odaki <akihiko.odaki@daynix.com>, Huang Rui <ray.huang@amd.com>,
- =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
- =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Gerd Hoffmann <kraxel@redhat.com>, "Michael S . Tsirkin" <mst@redhat.com>,
- Paolo Bonzini <pbonzini@redhat.com>, Gert Wollny
- <gert.wollny@collabora.com>, qemu-devel@nongnu.org,
- Gurchetan Singh <gurchetansingh@chromium.org>, Alyssa Ross <hi@alyssa.is>,
- =?UTF-8?Q?Roger_Pau_Monn=C3=A9?= <roger.pau@citrix.com>,
- Alex Deucher <alexander.deucher@amd.com>,
- Stefano Stabellini <stefano.stabellini@amd.com>,
- =?UTF-8?Q?Christian_K=C3=B6nig?= <christian.koenig@amd.com>,
- Xenia Ragiadakou <xenia.ragiadakou@amd.com>,
- Pierre-Eric Pelloux-Prayer <pierre-eric.pelloux-prayer@amd.com>,
- Honglei Huang <honglei1.huang@amd.com>, Julia Zhang <julia.zhang@amd.com>,
- Chen Jiqian <Jiqian.Chen@amd.com>, Rob Clark <robdclark@gmail.com>,
- Yiwei Zhang <zzyiwei@chromium.org>, Sergio Lopez Pascual <slp@redhat.com>
-References: <20250119220050.15167-1-dmitry.osipenko@collabora.com>
- <871pwxqyr3.fsf@draig.linaro.org>
-From: Dmitry Osipenko <dmitry.osipenko@collabora.com>
-Content-Language: en-US
-In-Reply-To: <871pwxqyr3.fsf@draig.linaro.org>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-X-ZohoMailClient: External
-Received-SPF: pass client-ip=136.143.188.112;
- envelope-from=dmitry.osipenko@collabora.com; helo=sender4-pp-f112.zoho.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.043,
+Subject: Re: [PATCH] vvfat: fix out of bounds array write
+To: BALATON Zoltan <balaton@eik.bme.hu>
+Cc: Pierrick Bouvier <pierrick.bouvier@linaro.org>,
+ =?UTF-8?Q?Volker_R=C3=BCmelin?= <vr_qemu@t-online.de>,
+ Kevin Wolf <kwolf@redhat.com>, Hanna Reitz <hreitz@redhat.com>,
+ qemu-block@nongnu.org, qemu-devel@nongnu.org
+References: <20250105135929.6286-1-vr_qemu@t-online.de>
+ <f616a4b4-2161-42c8-9f92-e3a939ba173a@tls.msk.ru>
+ <54df1904-0e2c-4c4f-b242-1c8865ad0af1@linaro.org>
+ <1e2389b1-07c5-49dd-96c6-8bac84d7c95e@tls.msk.ru>
+ <05a22f99-65c2-299f-a180-ba02289dff67@eik.bme.hu>
+Content-Language: en-US, ru-RU
+From: Michael Tokarev <mjt@tls.msk.ru>
+Autocrypt: addr=mjt@tls.msk.ru; keydata=
+ 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
+In-Reply-To: <05a22f99-65c2-299f-a180-ba02289dff67@eik.bme.hu>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=86.62.121.231; envelope-from=mjt@tls.msk.ru;
+ helo=isrv.corpit.ru
+X-Spam_score_int: -68
+X-Spam_score: -6.9
+X-Spam_bar: ------
+X-Spam_report: (-6.9 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_HI=-5,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -96,53 +110,31 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 1/20/25 18:41, Alex Bennée wrote:
-> Dmitry Osipenko <dmitry.osipenko@collabora.com> writes:
-> 
->> This patchset adds DRM native context support to VirtIO-GPU on Qemu.
+22.01.2025 15:19, BALATON Zoltan wrote:
+> On Wed, 22 Jan 2025, Michael Tokarev wrote:
+>> 22.01.2025 02:14, Pierrick Bouvier wrote:
+>> ..
+>>> I agree the existing code (and this patch) is pretty cryptic for anyone not familiar with FAT format.
+>>> However, I think it could be a good thing to first merge this one (which is correct, and works), and refactor this in a second time, so the current 
+>>> ubsan issue is fixed upstream as soon as possible.
 >>
->> Contarary to Virgl and Venus contexts that mediates high level GFX APIs,
->> DRM native context [1] mediates lower level kernel driver UAPI, which
->> reflects in a less CPU overhead and less/simpler code needed to support it.
->> DRM context consists of a host and guest parts that have to be implemented
->> for each GPU driver. On a guest side, DRM context presents a virtual GPU as
->> a real/native host GPU device for GL/VK applications.
+>> For an actual *fix*, please take a look at
+>> https://lore.kernel.org/qemu-devel/20250119093233.9E4C450B6D@localhost.tls.msk.ru/
 >>
->> [1] https://www.youtube.com/watch?v=9sFP_yddLLQ
->>
->> Today there are four known DRM native context drivers existing in a wild:
->>
->>   - Freedreno (Qualcomm SoC GPUs), completely upstreamed
->>   - AMDGPU, mostly merged into upstreams
->>   - Intel (i915), merge requests are opened
+>> which is minimal, understandable, verified and works.
 > 
-> With the patch for the build failure:
-> 
-> Tested-by: Alex Bennée <alex.bennee@linaro.org>
-> 
-> Host:
-> 
->   x86
->   Trixie
->   virglrenderer @ digitx/native-context-iris/a0b1872d252430a2b7f007db9fdbb0526385cfc0 
->   -display sdl,gl=on
-> 
-> KVM Guest
-> 
->   x86
->   Trixie
->   mesa @ digitx/native-context-iris/78b1508c3f06
-> 
-> With gtk,gl=on I'm still seeing a lot of screen corruption which mirrors
-> the terminal an leaves a destructive trail under the mouse cursor.
-> show-cursor on or off makes no difference.
+> Just noticed in that patch you have several &(s->directory) where () is not needed, -> is higher priority than & (address_of).
 
-Thank you for the review and testing! I'm looking into that issue. Only
-some people are hitting it and Pierre-Eric said he had that mirroring
-issue without using nctx. Still interesting that the bug affects only
-certain setups and is triggered by nctx.
+Yes.  I especially mentioned that I kept the original style,
+to minimize the changes.  It is not needed to fix the issue
+at hand, the fix is maximally targeted (or minimally).
 
--- 
-Best regards,
-Dmitry
+The subsequent patch - which is optional, unrelated to the issue
+at hand - changes all that stuff to adhere to qemu coding style
+(and yes, this is a style thing, for some, these parens makes it
+more readable).
+
+Thanks,
+
+/mjt
 
