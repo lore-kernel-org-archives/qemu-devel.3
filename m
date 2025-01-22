@@ -4,40 +4,40 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0233BC0218C
-	for <qemu-devel@archiver.kernel.org>; Wed, 22 Jan 2025 07:49:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 43D03C0218E
+	for <qemu-devel@archiver.kernel.org>; Wed, 22 Jan 2025 07:50:00 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1taVUM-0007wN-Bl; Wed, 22 Jan 2025 02:49:28 -0500
+	id 1taVUO-0007wZ-HJ; Wed, 22 Jan 2025 02:49:29 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <maobibo@loongson.cn>)
- id 1taVUJ-0007u4-Bl
+ id 1taVUJ-0007ue-Lf
  for qemu-devel@nongnu.org; Wed, 22 Jan 2025 02:49:23 -0500
 Received: from mail.loongson.cn ([114.242.206.163])
  by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <maobibo@loongson.cn>) id 1taVUF-0002bd-Rv
+ (envelope-from <maobibo@loongson.cn>) id 1taVUH-0002c8-Kt
  for qemu-devel@nongnu.org; Wed, 22 Jan 2025 02:49:23 -0500
 Received: from loongson.cn (unknown [10.2.5.213])
- by gateway (Coremail) with SMTP id _____8BxuuD7opBnLRxnAA--.6832S3;
- Wed, 22 Jan 2025 15:49:15 +0800 (CST)
+ by gateway (Coremail) with SMTP id _____8BxTKz6opBnKhxnAA--.16258S3;
+ Wed, 22 Jan 2025 15:49:14 +0800 (CST)
 Received: from localhost.localdomain (unknown [10.2.5.213])
- by front1 (Coremail) with SMTP id qMiowMCxYMb5opBneEIqAA--.26608S6;
- Wed, 22 Jan 2025 15:49:15 +0800 (CST)
+ by front1 (Coremail) with SMTP id qMiowMCxYMb5opBneEIqAA--.26608S3;
+ Wed, 22 Jan 2025 15:49:14 +0800 (CST)
 From: Bibo Mao <maobibo@loongson.cn>
 To: Song Gao <gaosong@loongson.cn>
 Cc: qemu-devel@nongnu.org
-Subject: [PATCH v3 4/7] target/loongarch: Add common header file for CSR
- registers
-Date: Wed, 22 Jan 2025 15:49:10 +0800
-Message-Id: <20250122074913.534050-5-maobibo@loongson.cn>
+Subject: [PATCH v3 1/7] target/loongarch: Add dynamic function access with CSR
+ register
+Date: Wed, 22 Jan 2025 15:49:07 +0800
+Message-Id: <20250122074913.534050-2-maobibo@loongson.cn>
 X-Mailer: git-send-email 2.39.3
 In-Reply-To: <20250122074913.534050-1-maobibo@loongson.cn>
 References: <20250122074913.534050-1-maobibo@loongson.cn>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-CM-TRANSID: qMiowMCxYMb5opBneEIqAA--.26608S6
+X-CM-TRANSID: qMiowMCxYMb5opBneEIqAA--.26608S3
 X-CM-SenderInfo: xpdruxter6z05rqj20fqof0/
 X-Coremail-Antispam: 1Uk129KBjDUn29KB7ZKAUJUUUUU529EdanIXcx71UUUUU7KY7
  ZEXasCq-sGcSsGvfJ3UbIjqfuFe4nvWSU5nxnvy29KBjDU0xBIdaVrnUUvcSsGvfC2Kfnx
@@ -65,81 +65,119 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Common header file csr.h is added here, it can be used by both
-TCG mode and kvm mode.
+With CSR register, dynamic function access is used for CSR register
+access in TCG mode, so that csr info can be used by other modules.
 
 Signed-off-by: Bibo Mao <maobibo@loongson.cn>
 ---
- target/loongarch/csr.h                        | 25 +++++++++++++++++++
- .../tcg/insn_trans/trans_privileged.c.inc     | 16 +-----------
- 2 files changed, 26 insertions(+), 15 deletions(-)
- create mode 100644 target/loongarch/csr.h
+ .../tcg/insn_trans/trans_privileged.c.inc     | 37 +++++++++++++++++--
+ target/loongarch/tcg/tcg_loongarch.h          | 12 ++++++
+ target/loongarch/tcg/translate.c              |  5 +++
+ 3 files changed, 51 insertions(+), 3 deletions(-)
+ create mode 100644 target/loongarch/tcg/tcg_loongarch.h
 
-diff --git a/target/loongarch/csr.h b/target/loongarch/csr.h
-new file mode 100644
-index 0000000000..20d4bf5dc7
---- /dev/null
-+++ b/target/loongarch/csr.h
-@@ -0,0 +1,25 @@
-+/* SPDX-License-Identifier: GPL-2.0-or-later */
-+/*
-+ * Copyright (c) 2025 Loongson Technology Corporation Limited
-+ */
-+
-+#ifndef TARGET_LOONGARCH_CSR_H
-+#define TARGET_LOONGARCH_CSR_H
-+
-+#include "cpu-csr.h"
-+
-+typedef void (*GenCSRFunc)(void);
-+enum {
-+    CSRFL_READONLY = (1 << 0),
-+    CSRFL_EXITTB   = (1 << 1),
-+    CSRFL_IO       = (1 << 2),
-+};
-+
-+typedef struct {
-+    int offset;
-+    int flags;
-+    GenCSRFunc readfn;
-+    GenCSRFunc writefn;
-+} CSRInfo;
-+
-+#endif /* TARGET_LOONGARCH_CSR_H */
 diff --git a/target/loongarch/tcg/insn_trans/trans_privileged.c.inc b/target/loongarch/tcg/insn_trans/trans_privileged.c.inc
-index 0513cac577..87506ec0dc 100644
+index 30f9b83fb2..96958bd6c1 100644
 --- a/target/loongarch/tcg/insn_trans/trans_privileged.c.inc
 +++ b/target/loongarch/tcg/insn_trans/trans_privileged.c.inc
-@@ -5,7 +5,7 @@
-  * LoongArch translation routines for the privileged instructions.
-  */
+@@ -76,7 +76,7 @@ enum {
+ #define CSR_OFF(NAME) \
+     CSR_OFF_FLAGS(NAME, 0)
  
--#include "cpu-csr.h"
-+#include "csr.h"
+-static const CSRInfo csr_info[] = {
++static CSRInfo csr_info[] = {
+     CSR_OFF_FLAGS(CRMD, CSRFL_EXITTB),
+     CSR_OFF(PRMD),
+     CSR_OFF_FLAGS(EUEN, CSRFL_EXITTB),
+@@ -160,9 +160,9 @@ static bool check_plv(DisasContext *ctx)
+     return false;
+ }
  
- #ifdef CONFIG_USER_ONLY
+-static const CSRInfo *get_csr(unsigned csr_num)
++static CSRInfo *get_csr(unsigned csr_num)
+ {
+-    const CSRInfo *csr;
++    CSRInfo *csr;
  
-@@ -44,20 +44,6 @@ GEN_FALSE_TRANS(idle)
+     if (csr_num >= ARRAY_SIZE(csr_info)) {
+         return NULL;
+@@ -174,6 +174,37 @@ static const CSRInfo *get_csr(unsigned csr_num)
+     return csr;
+ }
  
- typedef void (*GenCSRRead)(TCGv dest, TCGv_ptr env);
- typedef void (*GenCSRWrite)(TCGv dest, TCGv_ptr env, TCGv src);
--typedef void (*GenCSRFunc)(void);
--
--typedef struct {
--    int offset;
--    int flags;
--    GenCSRFunc readfn;
--    GenCSRFunc writefn;
--} CSRInfo;
--
--enum {
--    CSRFL_READONLY = (1 << 0),
--    CSRFL_EXITTB   = (1 << 1),
--    CSRFL_IO       = (1 << 2),
--};
- 
- #define CSR_OFF_FUNCS(NAME, FL, RD, WR)                    \
-     [LOONGARCH_CSR_##NAME] = {                             \
++static bool set_csr_trans_func(unsigned int csr_num, GenCSRRead readfn,
++                               GenCSRWrite writefn)
++{
++    CSRInfo *csr;
++
++    csr = get_csr(csr_num);
++    if (!csr) {
++        return false;
++    }
++
++    csr->readfn = readfn;
++    csr->writefn = writefn;
++    return true;
++}
++
++#define SET_CSR_FUNC(NAME, read, write)                 \
++        set_csr_trans_func(LOONGARCH_CSR_##NAME, read, write)
++
++void loongarch_csr_translate_init(void)
++{
++    SET_CSR_FUNC(ESTAT, NULL, gen_helper_csrwr_estat);
++    SET_CSR_FUNC(ASID,  NULL, gen_helper_csrwr_asid);
++    SET_CSR_FUNC(PGD,   gen_helper_csrrd_pgd, NULL);
++    SET_CSR_FUNC(PWCL,  NULL, gen_helper_csrwr_pwcl);
++    SET_CSR_FUNC(CPUID, gen_helper_csrrd_cpuid, NULL);
++    SET_CSR_FUNC(TCFG,  NULL, gen_helper_csrwr_tcfg);
++    SET_CSR_FUNC(TVAL,  gen_helper_csrrd_tval, NULL);
++    SET_CSR_FUNC(TICLR, NULL, gen_helper_csrwr_ticlr);
++}
++#undef SET_CSR_FUNC
++
+ static bool check_csr_flags(DisasContext *ctx, const CSRInfo *csr, bool write)
+ {
+     if ((csr->flags & CSRFL_READONLY) && write) {
+diff --git a/target/loongarch/tcg/tcg_loongarch.h b/target/loongarch/tcg/tcg_loongarch.h
+new file mode 100644
+index 0000000000..da2539e995
+--- /dev/null
++++ b/target/loongarch/tcg/tcg_loongarch.h
+@@ -0,0 +1,12 @@
++/* SPDX-License-Identifier: GPL-2.0-or-later */
++/*
++ * QEMU LoongArch TCG interface
++ *
++ * Copyright (c) 2025 Loongson Technology Corporation Limited
++ */
++#ifndef TARGET_LOONGARCH_TCG_LOONGARCH_H
++#define TARGET_LOONGARCH_TCG_LOONGARCH_H
++
++void loongarch_csr_translate_init(void);
++
++#endif  /* TARGET_LOONGARCH_TCG_LOONGARCH_H */
+diff --git a/target/loongarch/tcg/translate.c b/target/loongarch/tcg/translate.c
+index 68be999410..3480f54c71 100644
+--- a/target/loongarch/tcg/translate.c
++++ b/target/loongarch/tcg/translate.c
+@@ -16,6 +16,7 @@
+ #include "exec/log.h"
+ #include "qemu/qemu-print.h"
+ #include "fpu/softfloat.h"
++#include "tcg_loongarch.h"
+ #include "translate.h"
+ #include "internals.h"
+ #include "vec.h"
+@@ -358,4 +359,8 @@ void loongarch_translate_init(void)
+                     offsetof(CPULoongArchState, lladdr), "lladdr");
+     cpu_llval = tcg_global_mem_new(tcg_env,
+                     offsetof(CPULoongArchState, llval), "llval");
++
++#ifndef CONFIG_USER_ONLY
++    loongarch_csr_translate_init();
++#endif
+ }
 -- 
 2.39.3
 
