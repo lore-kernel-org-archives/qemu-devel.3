@@ -4,98 +4,142 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6B4EAC02181
-	for <qemu-devel@archiver.kernel.org>; Wed, 22 Jan 2025 17:44:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 49745C02181
+	for <qemu-devel@archiver.kernel.org>; Wed, 22 Jan 2025 17:49:19 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1taelY-00055a-0g; Wed, 22 Jan 2025 12:43:48 -0500
+	id 1taeqE-0006kv-LS; Wed, 22 Jan 2025 12:48:38 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1taelU-000553-Gb
- for qemu-devel@nongnu.org; Wed, 22 Jan 2025 12:43:45 -0500
-Received: from mail-wr1-x431.google.com ([2a00:1450:4864:20::431])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1taelS-0000Gt-0L
- for qemu-devel@nongnu.org; Wed, 22 Jan 2025 12:43:44 -0500
-Received: by mail-wr1-x431.google.com with SMTP id
- ffacd0b85a97d-3862d16b4f5so54638f8f.0
- for <qemu-devel@nongnu.org>; Wed, 22 Jan 2025 09:43:41 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1737567820; x=1738172620; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:user-agent
- :references:in-reply-to:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=wd51pzWtRV+EeMkSD57mO/frIIz9bSGQ/xloZzu58Xk=;
- b=z8r2FSwAfLu9mUD6xX7QJcsK4llTQyqBxxCOAqZT7uL4cwl6Nf2zpCDRl1NVXFWZdF
- Bc64kXUdzQ4Y/9ePb146hXqRrDRWvslWfVvgm39Dsww7gfiAM9k1SCqxmCBmgX9Am1eV
- jh28jUyooaI+4isGpMeGERxMNfVQZ8oYSozGkR6AbeM/6w/nu34YxBMp3Yfxf7h6Y5iz
- e9W0xZ9YLzEIwWzX43u3W+PUUrbCR7XI2eSedMvq6KP1Ltit9g9Zy8/2oeq5OUJTHLDE
- UVy49t89dhwqqj9k1irLMuWkmNHl6Sm5wAyM1SqJmQohk0UHGcwBk4Dvve1ZsYKh7YTH
- GXOA==
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1taeqC-0006kg-CC
+ for qemu-devel@nongnu.org; Wed, 22 Jan 2025 12:48:36 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1taeqA-0001ms-73
+ for qemu-devel@nongnu.org; Wed, 22 Jan 2025 12:48:36 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1737568111;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+ bh=iRtLiIc7bLfHYJDA11nu7kSwdSV9ePmhSdTJCmL4OuU=;
+ b=DqGoSXfx5tym59Q1pvXr4Bie6KTskrmUFWNIOOGFpXAC3H7QH12Qbx9F6BxW7lyt/PiSy3
+ R7WyUvM8rGqAGgQby2DEisOxdL5SsMDFhtnEun7W9uVUxPUJMb9shquxaSop5dtQpFRyGZ
+ i2eiOyTnjCJHj4+3Syy1HnQU85MY9FA=
+Received: from mail-qv1-f71.google.com (mail-qv1-f71.google.com
+ [209.85.219.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-655-Fi_edix0M5WwbtdIx78nag-1; Wed, 22 Jan 2025 12:48:29 -0500
+X-MC-Unique: Fi_edix0M5WwbtdIx78nag-1
+X-Mimecast-MFC-AGG-ID: Fi_edix0M5WwbtdIx78nag
+Received: by mail-qv1-f71.google.com with SMTP id
+ 6a1803df08f44-6d899291908so2260676d6.0
+ for <qemu-devel@nongnu.org>; Wed, 22 Jan 2025 09:48:29 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1737567820; x=1738172620;
- h=content-transfer-encoding:mime-version:message-id:date:user-agent
- :references:in-reply-to:subject:cc:to:from:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=wd51pzWtRV+EeMkSD57mO/frIIz9bSGQ/xloZzu58Xk=;
- b=J83oyeRziRXmKYBttsVA6TGGKetIRM8HLhXdB0LFctZNVPWrN7ICq93cy7R8UxGSXo
- /90bwzLhvEsWVvyLJ9l0u2nYlYIKMCdwD/4TToUrEid7Wxf6gpSb2EV7prT2okHTTe9W
- LitYDPT6hznjEC2Tb3fu1KfPrB+PH8YZ0+NJrmopOVnsqWamcG/nPbNoahgxeLyh1qzR
- Et63fjRVIKhMJMrtL5Ej/YLWhBKjVZlSKtAQtz+reLuE5v4fBZSHkHFmfLhvWkkcfNoZ
- 0KBY3Eq5kahoKzZVGCrnkn7y1TeS5uK3R8+EYriJOUi8dZxK2nPB+syYkYHcITmc9yh4
- sXBQ==
-X-Gm-Message-State: AOJu0Yx/u6cp47KAnI6p7uQVR7lKDm7SOR2Nl9XByHgVMZdz0Kl+LugO
- DidiWdU7ALC1ikplFJ7i2GWHq5skhBsAsUmZKHATWQndRoovyZyjZQ0VWAYh5KE=
-X-Gm-Gg: ASbGncuxCuz95Q2GgZpdp3h465rgSCvm36+Q1ASUjOodKnvxfaBnYO6/mmpl1UT6enc
- prWaW+ERGpUjrA/iViY55nauqZpQlPpuzlE8SkSo2UUn/OOl9PDT960pnTSNhsoz+qGa/MDOEGO
- Zf/B92sxpb7wE3juXFY1iEhZQdr2LX+gT+Fi9b8/CvjES/D2+vAeVoTutoHC8mdE/tFTITgH3zB
- EpSrT/IQkM/r2LRFWo/x/Xd77GUcSEqEtXMPCFHbSDhuQhdRye8WnlRVmdqwfGEFX5x
-X-Google-Smtp-Source: AGHT+IGNgdJHPj5ABl2vfeLqdtBlIRRbCBd0V9TkR6yn3+D3OV0278HU27YgdjyBuctRIjVbWEf3ZQ==
-X-Received: by 2002:a05:6000:2ce:b0:38a:4df5:a08 with SMTP id
- ffacd0b85a97d-38c2227f5bcmr170910f8f.22.1737567820470; 
- Wed, 22 Jan 2025 09:43:40 -0800 (PST)
-Received: from draig.lan ([85.9.250.243]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-438b31c7c6asm31802305e9.35.2025.01.22.09.43.39
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 22 Jan 2025 09:43:39 -0800 (PST)
-Received: from draig (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id 63FD55FA4B;
- Wed, 22 Jan 2025 17:43:38 +0000 (GMT)
-From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
-To: Paolo Savini <paolo.savini@embecosm.com>
-Cc: qemu-devel@nongnu.org,  qemu-riscv@nongnu.org,  Richard Handerson
- <richard.henderson@linaro.org>,  Palmer Dabbelt <palmer@dabbelt.com>,
- Alistair Francis <alistair.francis@wdc.com>,  Bin Meng
- <bmeng.cn@gmail.com>,  Weiwei Li <liwei1518@gmail.com>,  Daniel Henrique
- Barboza <dbarboza@ventanamicro.com>,  Liu Zhiwei
- <zhiwei_liu@linux.alibaba.com>,  Helene Chelin
- <helene.chelin@embecosm.com>,  Nathan Egge <negge@google.com>,  Max Chou
- <max.chou@sifive.com>,  Jeremy Bennett <jeremy.bennett@embecosm.com>,
- Craig Blackmore <craig.blackmore@embecosm.com>
-Subject: Re: [RFC 1/1 v3] target/riscv: use tcg ops generation to emulate
- whole reg rvv loads/stores.
-In-Reply-To: <20250122164905.13615-2-paolo.savini@embecosm.com> (Paolo
- Savini's message of "Wed, 22 Jan 2025 16:49:05 +0000")
-References: <20250122164905.13615-1-paolo.savini@embecosm.com>
- <20250122164905.13615-2-paolo.savini@embecosm.com>
-User-Agent: mu4e 1.12.8; emacs 29.4
-Date: Wed, 22 Jan 2025 17:43:38 +0000
-Message-ID: <878qr2n3qt.fsf@draig.linaro.org>
+ d=1e100.net; s=20230601; t=1737568109; x=1738172909;
+ h=content-transfer-encoding:in-reply-to:autocrypt:from
+ :content-language:references:cc:to:subject:user-agent:mime-version
+ :date:message-id:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=iRtLiIc7bLfHYJDA11nu7kSwdSV9ePmhSdTJCmL4OuU=;
+ b=JRY0+3lw2dI6Uya1Wx6JrWOx+WpXR9cRwa2dkAxLillurHvG9YAEKrLuuVJGf8dXvs
+ Hp0GgMGWEep6MkQseWg2MvWh9v+fv/mykL9jRkbNueDUI+YmN9p91PJdcJbn/z8vaVPC
+ Upmx/2UPOHe9a+I+VRrTA7nd0ox3IdjhRCMzBZ/i8i0CiCtChAGoJx+ymz1xG1p4g41E
+ RUaZzWWLg6ZDhoGGyNi3nRu3aBdsIC1YOAUKILTZx9D76KN2GdyB5/a5rec/8H9vnOqX
+ f5QGtSWqKOiaMFgFuhuzJnSllX2+N4cyQoarMpZKbzqlK/LXUMa3Ee60/+egihcIeOvf
+ xGig==
+X-Gm-Message-State: AOJu0YxirxTPkJn5tC0sGg5CAKfvzZ0ApGwqzdaWsHD31hNuVGF3oDkZ
+ XPUYKnqvn/rWCPz4XxJsTw+BJAKUmGWjYMnFd+E5Y3ad8Kl0+e642QFcZxmyCDuS89MuK+ZIFvK
+ 0dTVSnUxuplW8kOUxRcEwDD+VED3EPI91ZQCkjXeZtPqRjH5Y3Yqk
+X-Gm-Gg: ASbGnctHOYPiscZhq1YXDa5cyF+TT56FQNvOR/QLQdAeYbHhh/lzrWs0TXdxpTCckFj
+ ZxBFZqg6Qer/vACuWrZ5tuawXujgTMwjDY77Nz6RRACA+mf+VambLGlFp3HRWADhbHaSgNPPEvO
+ 8RVdTwf6/d88w8MXca8bMBCnDWSTgpgGDVu40cs3YLG3E4U2d59Lqw214z/+KW9XaBTIyz57DNw
+ AHqG2fFltw+QgZsuDLbO0GJ2R/Ed062YARgskvezjbZ4WeNvzOA1CzkJXmM7SK8p0Zxn9FRkgzU
+ wFP9sD2qMQ3vyu94s4F01gPkBg==
+X-Received: by 2002:a05:6214:5292:b0:6d8:9960:b063 with SMTP id
+ 6a1803df08f44-6e1b21793acmr375271286d6.14.1737568109422; 
+ Wed, 22 Jan 2025 09:48:29 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IEy5D9voaiY+o1BbQ+UAcFo7tR0ofOx4ONXFSzJp63w8UC25hdZt2t6u4kosFTrzwmIVmWSfg==
+X-Received: by 2002:a05:6214:5292:b0:6d8:9960:b063 with SMTP id
+ 6a1803df08f44-6e1b21793acmr375270996d6.14.1737568109130; 
+ Wed, 22 Jan 2025 09:48:29 -0800 (PST)
+Received: from [192.168.0.7] (ip-109-42-48-103.web.vodafone.de.
+ [109.42.48.103]) by smtp.gmail.com with ESMTPSA id
+ 6a1803df08f44-6e1afbf2dd7sm62908726d6.3.2025.01.22.09.48.27
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Wed, 22 Jan 2025 09:48:28 -0800 (PST)
+Message-ID: <158bcde5-0be1-486b-b066-e7b25c4747f1@redhat.com>
+Date: Wed, 22 Jan 2025 18:48:25 +0100
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::431;
- envelope-from=alex.bennee@linaro.org; helo=mail-wr1-x431.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] tests/functional: Fix the aarch64_tcg_plugins test
+To: =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
+Cc: qemu-devel@nongnu.org, =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?=
+ <berrange@redhat.com>, =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?=
+ <philmd@linaro.org>, Alexandre Iooss <erdnaxe@crans.org>,
+ Mahmoud Mandour <ma.mandourr@gmail.com>,
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>
+References: <20250122091517.1429734-1-thuth@redhat.com>
+ <87ed0un47k.fsf@draig.linaro.org>
+Content-Language: en-US
+From: Thomas Huth <thuth@redhat.com>
+Autocrypt: addr=thuth@redhat.com; keydata=
+ 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
+In-Reply-To: <87ed0un47k.fsf@draig.linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=thuth@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -50
+X-Spam_score: -5.1
+X-Spam_bar: -----
+X-Spam_report: (-5.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-2.996,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -111,272 +155,73 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Paolo Savini <paolo.savini@embecosm.com> writes:
+On 22/01/2025 18.33, Alex Bennée wrote:
+> Thomas Huth <thuth@redhat.com> writes:
+> 
+>> Unfortunately, this test had not been added to meson.build, so we did
+>> not notice a regression: Looking for 'Kernel panic - not syncing: VFS:'
+>> as the indication for the final boot state of the kernel was a bad
+>> idea since 'Kernel panic - not syncing' is the default failure
+>> message of the LinuxKernelTest class, and since we're now reading
+>> the console input byte by byte instead of linewise (see commit
+>> cdad03b74f75), the failure now triggers before we fully read the
+>> success string. Let's fix this by simply looking for the previous
+>> line in the console output instead.
+>>
+>> Also, replace the call to cancel() - this was only available in the
+>> Avocado framework. In the functional framework, we must use skipTest()
+>> instead.
+>>
+>> Fixes: 3abc545e66 ("tests/functional: Convert the tcg_plugins test")
+>> Fixes: cdad03b74f ("tests/functional: rewrite console handling to be bytewise")
+>> Signed-off-by: Thomas Huth <thuth@redhat.com>
+>> ---
+>>   tests/functional/meson.build                 | 1 +
+>>   tests/functional/test_aarch64_tcg_plugins.py | 6 +++---
+>>   2 files changed, 4 insertions(+), 3 deletions(-)
+>>
+>> diff --git a/tests/functional/meson.build b/tests/functional/meson.build
+>> index 5457331643..e0a276f349 100644
+>> --- a/tests/functional/meson.build
+>> +++ b/tests/functional/meson.build
+>> @@ -72,6 +72,7 @@ tests_aarch64_system_thorough = [
+>>     'aarch64_sbsaref',
+>>     'aarch64_sbsaref_alpine',
+>>     'aarch64_sbsaref_freebsd',
+>> +  'aarch64_tcg_plugins',
+> 
+> The test only takes a few seconds to run so maybe it can go in the basic tests?
 
-> This patch replaces the use of a helper function with direct tcg ops gene=
-ration
-> in order to emulate whole register loads and stores. This is done in orde=
-r to
-> improve the performance of QEMU.
+Unfortunately no, the quick category is reserved for the tests that don't 
+need to download any assets, and this one here is downloading some stuff.
 
-Generally having the frontend second guess what the backend will do is
-not recommended.
+>>     'aarch64_tuxrun',
+>>     'aarch64_virt',
+>>     'aarch64_xlnx_versal',
+>> diff --git a/tests/functional/test_aarch64_tcg_plugins.py b/tests/functional/test_aarch64_tcg_plugins.py
+>> index 01660eb090..357eb48477 100755
+>> --- a/tests/functional/test_aarch64_tcg_plugins.py
+>> +++ b/tests/functional/test_aarch64_tcg_plugins.py
+>> @@ -46,7 +46,7 @@ def run_vm(self, kernel_path, kernel_command_line,
+>>           except:
+>>               # TODO: probably fails because plugins not enabled but we
+>>               # can't currently probe for the feature.
+>> -            self.cancel("TCG Plugins not enabled?")
+>> +            self.skipTest("TCG Plugins not enabled?")
+> 
+> We can be more explicit now, something like:
+> 
+>          try:
+>              vm.launch()
+>          except VMLaunchFailure as excp:
+>              if "plugin interface not enabled in this build" in excp.output:
+>                  self.skipTest("TCG plugins not enabled")
+>              else:
+>                  self.log.info(f"unhandled launch failure: {excp.output}")
+>                  raise excp
 
-> We still use the helper function when vstart is not 0 at the beginning of=
- the
-> emulation of the whole register load or store or when we would end up gen=
-erating
-> partial loads or stores of vector elements (e.g. emulating 64 bits elemen=
-t loads
-> with pairs of 32 bits loads on hosts with 32 bits registers).
-> The latter condition ensures that we are not surprised by a trap in mid-e=
-lement
-> and consecutively that we can update vstart correctly.
+Ok, good idea, I can respin a v2 with that included.
 
-This is what probe functions are for, so you can verify you won't fault
-and then fully unroll the loop.
+  Thomas
 
-> We also use the helper function when it performs better than tcg for spec=
-ific
-> combinations of vector length, number of fields and element size.
->
-> Signed-off-by: Paolo Savini <paolo.savini@embecosm.com>
-> ---
->  target/riscv/insn_trans/trans_rvv.c.inc | 164 +++++++++++++++++-------
->  1 file changed, 119 insertions(+), 45 deletions(-)
->
-> diff --git a/target/riscv/insn_trans/trans_rvv.c.inc b/target/riscv/insn_=
-trans/trans_rvv.c.inc
-> index b9883a5d32..85935276de 100644
-> --- a/target/riscv/insn_trans/trans_rvv.c.inc
-> +++ b/target/riscv/insn_trans/trans_rvv.c.inc
-> @@ -1100,25 +1100,99 @@ GEN_VEXT_TRANS(vle64ff_v, MO_64, r2nfvm, ldff_op,=
- ld_us_check)
->  typedef void gen_helper_ldst_whole(TCGv_ptr, TCGv, TCGv_env, TCGv_i32);
->=20=20
->  static bool ldst_whole_trans(uint32_t vd, uint32_t rs1, uint32_t nf,
-> -                             gen_helper_ldst_whole *fn,
-> -                             DisasContext *s)
-> +                             uint32_t log2_esz, gen_helper_ldst_whole *f=
-n,
-> +                             DisasContext *s, bool is_load)
->  {
-> -    TCGv_ptr dest;
-> -    TCGv base;
-> -    TCGv_i32 desc;
-> +    mark_vs_dirty(s);
->=20=20
-> -    uint32_t data =3D FIELD_DP32(0, VDATA, NF, nf);
-> -    data =3D FIELD_DP32(data, VDATA, VM, 1);
-> -    dest =3D tcg_temp_new_ptr();
-> -    desc =3D tcg_constant_i32(simd_desc(s->cfg_ptr->vlenb,
-> -                                      s->cfg_ptr->vlenb, data));
-> +    uint32_t vlen =3D s->cfg_ptr->vlenb << 3;
->=20=20
-> -    base =3D get_gpr(s, rs1, EXT_NONE);
-> -    tcg_gen_addi_ptr(dest, tcg_env, vreg_ofs(s, vd));
-> +    /*
-> +     * Load/store multiple bytes per iteration.
-> +     * When possible do this atomically.
-> +     * Update vstart with the number of processed elements.
-> +     * Use the helper function if either:
-> +     * - vstart is not 0.
-> +     * - the target has 32 bit registers and we are loading/storing 64 b=
-it long
-> +     *   elements. This is to ensure that we process every element with =
-a single
-> +     *   memory instruction.
-> +     * - whether the helper function performs better:
-> +     *   on x86 the helper function performs better with few combination=
-s of NF,
-> +     *   ESZ and VLEN.
-> +     *   Other architectures may have other combinations or conditions a=
-nd they
-> +     *   can be added here if necessary.
-> +     */
->=20=20
-> -    mark_vs_dirty(s);
-> +    bool use_helper_fn =3D !s->vstart_eq_zero || (TCG_TARGET_REG_BITS =
-=3D=3D 32 && log2_esz =3D=3D 3);
-> +
-> +#if defined(HOST_X86_64)
-> +    use_helper_fn |=3D ((nf =3D=3D 4) && (log2_esz =3D=3D 0) && (vlen =
-=3D=3D 1024)) ||
-> +                     ((nf =3D=3D 8) && (log2_esz =3D=3D 0) && (vlen =3D=
-=3D 512))  ||
-> +                     ((nf =3D=3D 8) && (log2_esz =3D=3D 0) && (vlen =3D=
-=3D 1024)) ||
-> +                     ((nf =3D=3D 8) && (log2_esz =3D=3D 3) && (vlen =3D=
-=3D 1024));
-> +#endif
-
-Using host architecture ifdefs is generally discouraged except in a few pla=
-ces.
-
->=20=20
-> -    fn(dest, base, tcg_env, desc);
-> +     if (!use_helper_fn) {
-> +        TCGv addr =3D tcg_temp_new();
-> +        uint32_t size =3D s->cfg_ptr->vlenb * nf;
-> +        TCGv_i64 t8 =3D tcg_temp_new_i64();
-> +        TCGv_i32 t4 =3D tcg_temp_new_i32();
-> +        MemOp atomicity =3D MO_ATOM_NONE;
-> +        if (log2_esz =3D=3D 0) {
-> +            atomicity =3D MO_ATOM_NONE;
-> +        } else {
-> +            atomicity =3D MO_ATOM_IFALIGN_PAIR;
-> +        }
-> +        if (TCG_TARGET_REG_BITS =3D=3D 64) {
-> +            for (int i =3D 0; i < size; i +=3D 8) {
-> +                addr =3D get_address(s, rs1, i);
-> +                if (is_load) {
-> +                    tcg_gen_qemu_ld_i64(t8, addr, s->mem_idx,
-> +                            MO_LE | MO_64 | atomicity);
-> +                    tcg_gen_st_i64(t8, tcg_env, vreg_ofs(s, vd) + i);
-> +                } else {
-> +                    tcg_gen_ld_i64(t8, tcg_env, vreg_ofs(s, vd) + i);
-> +                    tcg_gen_qemu_st_i64(t8, addr, s->mem_idx,
-> +                            MO_LE | MO_64 | atomicity);
-> +                }
-> +                if (i =3D=3D size - 8) {
-> +                    tcg_gen_movi_tl(cpu_vstart, 0);
-> +                } else {
-> +                    tcg_gen_addi_tl(cpu_vstart, cpu_vstart, 8 >> log2_es=
-z);
-> +                }
-> +            }
-> +        } else {
-> +            for (int i =3D 0; i < size; i +=3D 4) {
-> +                addr =3D get_address(s, rs1, i);
-> +                if (is_load) {
-> +                    tcg_gen_qemu_ld_i32(t4, addr, s->mem_idx,
-> +                            MO_LE | MO_32 | atomicity);
-> +                    tcg_gen_st_i32(t4, tcg_env, vreg_ofs(s, vd) + i);
-> +                } else {
-> +                    tcg_gen_ld_i32(t4, tcg_env, vreg_ofs(s, vd) + i);
-> +                    tcg_gen_qemu_st_i32(t4, addr, s->mem_idx,
-> +                            MO_LE | MO_32 | atomicity);
-> +                }
-> +                if (i =3D=3D size - 4) {
-> +                    tcg_gen_movi_tl(cpu_vstart, 0);
-> +                } else {
-> +                    tcg_gen_addi_tl(cpu_vstart, cpu_vstart, 4 >> log2_es=
-z);
-> +                }
-> +            }
-> +        }
-> +    } else {
-> +        TCGv_ptr dest;
-> +        TCGv base;
-> +        TCGv_i32 desc;
-> +        uint32_t data =3D FIELD_DP32(0, VDATA, NF, nf);
-> +        data =3D FIELD_DP32(data, VDATA, VM, 1);
-> +        dest =3D tcg_temp_new_ptr();
-> +        desc =3D tcg_constant_i32(simd_desc(s->cfg_ptr->vlenb,
-> +                        s->cfg_ptr->vlenb, data));
-> +        base =3D get_gpr(s, rs1, EXT_NONE);
-> +        tcg_gen_addi_ptr(dest, tcg_env, vreg_ofs(s, vd));
-> +        fn(dest, base, tcg_env, desc);
-> +    }
->=20=20
->      finalize_rvv_inst(s);
->      return true;
-> @@ -1128,42 +1202,42 @@ static bool ldst_whole_trans(uint32_t vd, uint32_=
-t rs1, uint32_t nf,
->   * load and store whole register instructions ignore vtype and vl settin=
-g.
->   * Thus, we don't need to check vill bit. (Section 7.9)
->   */
-> -#define GEN_LDST_WHOLE_TRANS(NAME, ARG_NF)                              =
-  \
-> -static bool trans_##NAME(DisasContext *s, arg_##NAME * a)               =
-  \
-> -{                                                                       =
-  \
-> -    if (require_rvv(s) &&                                               =
-  \
-> -        QEMU_IS_ALIGNED(a->rd, ARG_NF)) {                               =
-  \
-> -        return ldst_whole_trans(a->rd, a->rs1, ARG_NF,                  =
-  \
-> -                                gen_helper_##NAME, s);                  =
-  \
-> -    }                                                                   =
-  \
-> -    return false;                                                       =
-  \
-> -}
-> -
-> -GEN_LDST_WHOLE_TRANS(vl1re8_v,  1)
-> -GEN_LDST_WHOLE_TRANS(vl1re16_v, 1)
-> -GEN_LDST_WHOLE_TRANS(vl1re32_v, 1)
-> -GEN_LDST_WHOLE_TRANS(vl1re64_v, 1)
-> -GEN_LDST_WHOLE_TRANS(vl2re8_v,  2)
-> -GEN_LDST_WHOLE_TRANS(vl2re16_v, 2)
-> -GEN_LDST_WHOLE_TRANS(vl2re32_v, 2)
-> -GEN_LDST_WHOLE_TRANS(vl2re64_v, 2)
-> -GEN_LDST_WHOLE_TRANS(vl4re8_v,  4)
-> -GEN_LDST_WHOLE_TRANS(vl4re16_v, 4)
-> -GEN_LDST_WHOLE_TRANS(vl4re32_v, 4)
-> -GEN_LDST_WHOLE_TRANS(vl4re64_v, 4)
-> -GEN_LDST_WHOLE_TRANS(vl8re8_v,  8)
-> -GEN_LDST_WHOLE_TRANS(vl8re16_v, 8)
-> -GEN_LDST_WHOLE_TRANS(vl8re32_v, 8)
-> -GEN_LDST_WHOLE_TRANS(vl8re64_v, 8)
-> +#define GEN_LDST_WHOLE_TRANS(NAME, ETYPE, ARG_NF, IS_LOAD)              =
-    \
-> +static bool trans_##NAME(DisasContext *s, arg_##NAME * a)               =
-    \
-> +{                                                                       =
-    \
-> +    if (require_rvv(s) &&                                               =
-    \
-> +        QEMU_IS_ALIGNED(a->rd, ARG_NF)) {                               =
-    \
-> +        return ldst_whole_trans(a->rd, a->rs1, ARG_NF, ctzl(sizeof(ETYPE=
-)), \
-> +                                gen_helper_##NAME, s, IS_LOAD);         =
-    \
-> +    }                                                                   =
-    \
-> +    return false;                                                       =
-    \
-> +}
-> +
-> +GEN_LDST_WHOLE_TRANS(vl1re8_v,  int8_t,  1, true)
-> +GEN_LDST_WHOLE_TRANS(vl1re16_v, int16_t, 1, true)
-> +GEN_LDST_WHOLE_TRANS(vl1re32_v, int32_t, 1, true)
-> +GEN_LDST_WHOLE_TRANS(vl1re64_v, int64_t, 1, true)
-> +GEN_LDST_WHOLE_TRANS(vl2re8_v,  int8_t,  2, true)
-> +GEN_LDST_WHOLE_TRANS(vl2re16_v, int16_t, 2, true)
-> +GEN_LDST_WHOLE_TRANS(vl2re32_v, int32_t, 2, true)
-> +GEN_LDST_WHOLE_TRANS(vl2re64_v, int64_t, 2, true)
-> +GEN_LDST_WHOLE_TRANS(vl4re8_v,  int8_t,  4, true)
-> +GEN_LDST_WHOLE_TRANS(vl4re16_v, int16_t, 4, true)
-> +GEN_LDST_WHOLE_TRANS(vl4re32_v, int32_t, 4, true)
-> +GEN_LDST_WHOLE_TRANS(vl4re64_v, int64_t, 4, true)
-> +GEN_LDST_WHOLE_TRANS(vl8re8_v,  int8_t,  8, true)
-> +GEN_LDST_WHOLE_TRANS(vl8re16_v, int16_t, 8, true)
-> +GEN_LDST_WHOLE_TRANS(vl8re32_v, int32_t, 8, true)
-> +GEN_LDST_WHOLE_TRANS(vl8re64_v, int64_t, 8, true)
->=20=20
->  /*
->   * The vector whole register store instructions are encoded similar to
->   * unmasked unit-stride store of elements with EEW=3D8.
->   */
-> -GEN_LDST_WHOLE_TRANS(vs1r_v, 1)
-> -GEN_LDST_WHOLE_TRANS(vs2r_v, 2)
-> -GEN_LDST_WHOLE_TRANS(vs4r_v, 4)
-> -GEN_LDST_WHOLE_TRANS(vs8r_v, 8)
-> +GEN_LDST_WHOLE_TRANS(vs1r_v, int8_t, 1, false)
-> +GEN_LDST_WHOLE_TRANS(vs2r_v, int8_t, 2, false)
-> +GEN_LDST_WHOLE_TRANS(vs4r_v, int8_t, 4, false)
-> +GEN_LDST_WHOLE_TRANS(vs8r_v, int8_t, 8, false)
->=20=20
->  /*
->   *** Vector Integer Arithmetic Instructions
-
---=20
-Alex Benn=C3=A9e
-Virtualisation Tech Lead @ Linaro
 
