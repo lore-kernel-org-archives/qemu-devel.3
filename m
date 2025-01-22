@@ -4,49 +4,50 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8E9D5C0218D
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8B8EEC0218C
 	for <qemu-devel@archiver.kernel.org>; Wed, 22 Jan 2025 18:10:17 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tafAO-0001Ek-B3; Wed, 22 Jan 2025 13:09:28 -0500
+	id 1tafAR-0001FS-2P; Wed, 22 Jan 2025 13:09:31 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <deller@kernel.org>) id 1tafAI-0001E0-9W
- for qemu-devel@nongnu.org; Wed, 22 Jan 2025 13:09:23 -0500
-Received: from nyc.source.kernel.org ([2604:1380:45d1:ec00::3])
+ (Exim 4.90_1) (envelope-from <deller@kernel.org>) id 1tafAN-0001ET-2D
+ for qemu-devel@nongnu.org; Wed, 22 Jan 2025 13:09:27 -0500
+Received: from dfw.source.kernel.org ([2604:1380:4641:c500::1])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <deller@kernel.org>) id 1tafAG-0001Hf-Jw
- for qemu-devel@nongnu.org; Wed, 22 Jan 2025 13:09:21 -0500
+ (Exim 4.90_1) (envelope-from <deller@kernel.org>) id 1tafAG-0001Hz-PS
+ for qemu-devel@nongnu.org; Wed, 22 Jan 2025 13:09:26 -0500
 Received: from smtp.kernel.org (transwarp.subspace.kernel.org [100.75.92.58])
- by nyc.source.kernel.org (Postfix) with ESMTP id 9DF05A42889;
- Wed, 22 Jan 2025 18:07:30 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E421EC4CED3;
- Wed, 22 Jan 2025 18:09:16 +0000 (UTC)
+ by dfw.source.kernel.org (Postfix) with ESMTP id EB3D15C5807;
+ Wed, 22 Jan 2025 18:08:38 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 34068C4CED2;
+ Wed, 22 Jan 2025 18:09:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
- s=k20201202; t=1737569357;
- bh=nyrSvwvP3M/xDkbHeJbnzvTRT3BD49s5rUgSjhsGlPQ=;
+ s=k20201202; t=1737569359;
+ bh=MzWUDml3Pamg2cGR5MkDCjpAy+lkVpxOz1kL+37m3LM=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
- b=gTXOCYu5JFGsJfgx9sW8jI1jFC7rZwBL1w3Z5KqdVSAcN4Ou/jNpnvJ5zAZKNUKT8
- g0bqIndqXWPQcWdCKe8q/kwFv9Y1A2KiC0VKbEGln4aSQCUZJBq0zG9SsepCyNfBG8
- JcgLd1AJVSTisc2zyDNMVIFnJ5sb+Q0QJcQFnZg3a51WYA5Zda3yIbHrzLQkbgezAL
- 1T3xxi6C/jTfVXEQxsqv92gxCoV09K8mUdcuSQ3QYgzAaYjhr3QGEcKPJqlA3TDmr+
- sWRa23b+p6+AiL9v1sKgdLK+WwpHq1cyB5e5swcRib0ixFCfGBjQUVe1LZB0+fmwuv
- Jj144tJ0lR8iw==
+ b=sj1Uq4THQcQYv76UGD07d+7BrYo0fFmNKK9I1AQwIZXer7Dt9ZqTSXkm2qtKalKY7
+ CiJZHZB8HDWUa3tUvEVpbOALrItoUlDcrWbuJIMxDES6T1AueGTuBttiDPkMBmIr9F
+ ndXOjZCI4puX8/pn55MoTuWUMmqvcT6KPK0xK6cKoJULp0ApSOgle6QeGilAy8Bu8i
+ a22gEJAXhFOcb7os/V2Z+DgUHDeiClNplBv1NrUPtglP/mNpPQJcfrwAIClrdwqJXk
+ uEZqSU2rHr8g9CfiwtvdWOfX4+OcStE6ATDGQCE6TtJNyqAtNNjhTqWaC0gxpTfH9u
+ gJSu70SKsB5LQ==
 From: deller@kernel.org
 To: qemu-devel@nongnu.org
 Cc: Helge Deller <deller@gmx.de>,
  Richard Henderson <richard.henderson@linaro.org>
-Subject: [PATCH 1/2] hw/hppa: Support up to 256 GiB RAM on 64-bit machines
-Date: Wed, 22 Jan 2025 19:09:12 +0100
-Message-ID: <20250122180913.18667-2-deller@kernel.org>
+Subject: [PATCH 2/2] hw/hppa: Fix booting Linux kernel with initrd
+Date: Wed, 22 Jan 2025 19:09:13 +0100
+Message-ID: <20250122180913.18667-3-deller@kernel.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20250122180913.18667-1-deller@kernel.org>
 References: <20250122180913.18667-1-deller@kernel.org>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2604:1380:45d1:ec00::3;
- envelope-from=deller@kernel.org; helo=nyc.source.kernel.org
+Received-SPF: pass client-ip=2604:1380:4641:c500::1;
+ envelope-from=deller@kernel.org; helo=dfw.source.kernel.org
 X-Spam_score_int: -73
 X-Spam_score: -7.4
 X-Spam_bar: -------
@@ -71,74 +72,130 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Helge Deller <deller@gmx.de>
 
-Allow up to 256 GB RAM, which is the maximum a rp8440 machine (the very
-last 64-bit PA-RISC machine) physically supports.
+Commit 20f7b890173b ("hw/hppa: Reset vCPUs calling resettable_reset()")
+broke booting the Linux kernel with initrd which may have been provided
+on the command line. The problem is, that the mentioned commit zeroes
+out initial registers which were preset with addresses for the Linux
+kernel and initrd.
+
+Fix it by adding proper variables which are set shortly before starting
+the firmware.
 
 Signed-off-by: Helge Deller <deller@gmx.de>
+Fixes: 20f7b890173b ("hw/hppa: Reset vCPUs calling resettable_reset()")
+Cc: Philippe Mathieu-Daudé <philmd@linaro.org>
 ---
- hw/hppa/hppa_hardware.h |  2 ++
- hw/hppa/machine.c       | 26 +++++++++++++++++++-------
- 2 files changed, 21 insertions(+), 7 deletions(-)
+ hw/hppa/machine.c | 48 +++++++++++++++++++----------------------------
+ target/hppa/cpu.h |  4 ++++
+ 2 files changed, 23 insertions(+), 29 deletions(-)
 
-diff --git a/hw/hppa/hppa_hardware.h b/hw/hppa/hppa_hardware.h
-index a9be7bb851..a276240967 100644
---- a/hw/hppa/hppa_hardware.h
-+++ b/hw/hppa/hppa_hardware.h
-@@ -49,4 +49,6 @@
- #define CPU_HPA_CR_REG  7       /* store CPU HPA in cr7 (SeaBIOS internal) */
- #define PIM_STORAGE_SIZE 600	/* storage size of pdc_pim_toc_struct (64bit) */
- 
-+#define RAM_MAP_HIGH  0x0100000000  /* memory above 3.75 GB is mapped here */
-+
- #endif
 diff --git a/hw/hppa/machine.c b/hw/hppa/machine.c
-index 8230f43e41..4bcc66cd6f 100644
+index 4bcc66cd6f..0dd1908214 100644
 --- a/hw/hppa/machine.c
 +++ b/hw/hppa/machine.c
-@@ -283,16 +283,13 @@ static TranslateFn *machine_HP_common_init_cpus(MachineState *machine)
-         cpu[i] = HPPA_CPU(cpu_create(machine->cpu_type));
+@@ -356,7 +356,6 @@ static void machine_HP_common_init_tail(MachineState *machine, PCIBus *pci_bus,
+     uint64_t kernel_entry = 0, kernel_low, kernel_high;
+     MemoryRegion *addr_space = get_system_memory();
+     MemoryRegion *rom_region;
+-    unsigned int smp_cpus = machine->smp.cpus;
+     SysBusDevice *s;
+ 
+     /* SCSI disk setup. */
+@@ -482,8 +481,8 @@ static void machine_HP_common_init_tail(MachineState *machine, PCIBus *pci_bus,
+                       kernel_low, kernel_high, kernel_entry, size / KiB);
+ 
+         if (kernel_cmdline) {
+-            cpu[0]->env.gr[24] = 0x4000;
+-            pstrcpy_targphys("cmdline", cpu[0]->env.gr[24],
++            cpu[0]->env.cmdline_or_bootorder = 0x4000;
++            pstrcpy_targphys("cmdline", cpu[0]->env.cmdline_or_bootorder,
+                              TARGET_PAGE_SIZE, kernel_cmdline);
+         }
+ 
+@@ -513,32 +512,22 @@ static void machine_HP_common_init_tail(MachineState *machine, PCIBus *pci_bus,
+             }
+ 
+             load_image_targphys(initrd_filename, initrd_base, initrd_size);
+-            cpu[0]->env.gr[23] = initrd_base;
+-            cpu[0]->env.gr[22] = initrd_base + initrd_size;
++            cpu[0]->env.initrd_base = initrd_base;
++            cpu[0]->env.initrd_end  = initrd_base + initrd_size;
+         }
      }
  
--    /*
--     * For now, treat address layout as if PSW_W is clear.
--     * TODO: create a proper hppa64 board model and load elf64 firmware.
+     if (!kernel_entry) {
+         /* When booting via firmware, tell firmware if we want interactive
+-         * mode (kernel_entry=1), and to boot from CD (gr[24]='d')
+-         * or hard disc * (gr[24]='c').
++         * mode (kernel_entry=1), and to boot from CD (cmdline_or_bootorder='d')
++         * or hard disc (cmdline_or_bootorder='c').
+          */
+         kernel_entry = machine->boot_config.has_menu ? machine->boot_config.menu : 0;
+-        cpu[0]->env.gr[24] = machine->boot_config.order[0];
++        cpu[0]->env.cmdline_or_bootorder = machine->boot_config.order[0];
+     }
+ 
+-    /* We jump to the firmware entry routine and pass the
+-     * various parameters in registers. After firmware initialization,
+-     * firmware will start the Linux kernel with ramdisk and cmdline.
 -     */
-+    /* Initialize memory */
-     if (hppa_is_pa20(&cpu[0]->env)) {
-         translate = translate_pa20;
--        ram_max = 0xf0000000;      /* 3.75 GB (limited by 32-bit firmware) */
-+        ram_max = 256 * GiB;       /* like HP rp8440 */
-     } else {
-         translate = translate_pa10;
--        ram_max = 0xf0000000;      /* 3.75 GB (32-bit CPU) */
-+        ram_max = FIRMWARE_START;  /* 3.75 GB (32-bit CPU) */
-     }
- 
-     soft_power_reg = translate(NULL, HPA_POWER_BUTTON);
-@@ -320,7 +317,22 @@ static TranslateFn *machine_HP_common_init_cpus(MachineState *machine)
-         info_report("Max RAM size limited to %" PRIu64 " MB", ram_max / MiB);
-         machine->ram_size = ram_max;
-     }
--    memory_region_add_subregion_overlap(addr_space, 0, machine->ram, -1);
-+    if (machine->ram_size <= FIRMWARE_START) {
-+        /* contiguous memory up to 3.75 GB RAM */
-+        memory_region_add_subregion_overlap(addr_space, 0, machine->ram, -1);
-+    } else {
-+        /* non-contiguous: Memory above 3.75 GB is mapped at RAM_MAP_HIGH */
-+        MemoryRegion *mem_region;
-+        mem_region = g_new(MemoryRegion, 2);
-+        memory_region_init_alias(&mem_region[0], &addr_space->parent_obj,
-+                              "LowMem", machine->ram, 0, FIRMWARE_START);
-+        memory_region_init_alias(&mem_region[1], &addr_space->parent_obj,
-+                              "HighMem", machine->ram, FIRMWARE_START,
-+                              machine->ram_size - FIRMWARE_START);
-+        memory_region_add_subregion_overlap(addr_space, 0, &mem_region[0], -1);
-+        memory_region_add_subregion_overlap(addr_space, RAM_MAP_HIGH,
-+                                            &mem_region[1], -1);
-+    }
- 
-     return translate;
+-    cpu[0]->env.gr[26] = machine->ram_size;
+-    cpu[0]->env.gr[25] = kernel_entry;
+-
+-    /* tell firmware how many SMP CPUs to present in inventory table */
+-    cpu[0]->env.gr[21] = smp_cpus;
+-
+-    /* tell firmware fw_cfg port */
+-    cpu[0]->env.gr[19] = FW_CFG_IO_BASE;
++    /* Keep initial kernel_entry for first boot */
++    cpu[0]->env.kernel_entry = kernel_entry;
  }
+ 
+ /*
+@@ -675,18 +664,19 @@ static void hppa_machine_reset(MachineState *ms, ResetType type)
+         cpu[i]->env.gr[5] = CPU_HPA + i * 0x1000;
+     }
+ 
+-    /* already initialized by machine_hppa_init()? */
+-    if (cpu[0]->env.gr[26] == ms->ram_size) {
+-        return;
+-    }
+-
+     cpu[0]->env.gr[26] = ms->ram_size;
+-    cpu[0]->env.gr[25] = 0; /* no firmware boot menu */
+-    cpu[0]->env.gr[24] = 'c';
+-    /* gr22/gr23 unused, no initrd while reboot. */
++    cpu[0]->env.gr[25] = cpu[0]->env.kernel_entry;
++    cpu[0]->env.gr[24] = cpu[0]->env.cmdline_or_bootorder;
++    cpu[0]->env.gr[23] = cpu[0]->env.initrd_base;
++    cpu[0]->env.gr[22] = cpu[0]->env.initrd_end;
+     cpu[0]->env.gr[21] = smp_cpus;
+-    /* tell firmware fw_cfg port */
+     cpu[0]->env.gr[19] = FW_CFG_IO_BASE;
++
++    /* reset static fields to avoid starting Linux kernel & initrd on reboot */
++    cpu[0]->env.kernel_entry = 0;
++    cpu[0]->env.initrd_base = 0;
++    cpu[0]->env.initrd_end = 0;
++    cpu[0]->env.cmdline_or_bootorder = 'c';
+ }
+ 
+ static void hppa_nmi(NMIState *n, int cpu_index, Error **errp)
+diff --git a/target/hppa/cpu.h b/target/hppa/cpu.h
+index 083d4f5a56..beea42d105 100644
+--- a/target/hppa/cpu.h
++++ b/target/hppa/cpu.h
+@@ -268,6 +268,10 @@ typedef struct CPUArchState {
+     struct {} end_reset_fields;
+ 
+     bool is_pa20;
++
++    target_ulong kernel_entry; /* Linux kernel was loaded here */
++    target_ulong cmdline_or_bootorder;
++    target_ulong initrd_base, initrd_end;
+ } CPUHPPAState;
+ 
+ /**
 -- 
 2.47.0
 
