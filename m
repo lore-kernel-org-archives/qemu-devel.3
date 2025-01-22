@@ -4,78 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A8A93C02181
-	for <qemu-devel@archiver.kernel.org>; Wed, 22 Jan 2025 06:56:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id AC7E4C02182
+	for <qemu-devel@archiver.kernel.org>; Wed, 22 Jan 2025 06:57:09 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1taUfA-0006Uh-Hh; Wed, 22 Jan 2025 01:56:32 -0500
+	id 1taUfE-0006VF-BR; Wed, 22 Jan 2025 01:56:36 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1taUf9-0006UY-EV
- for qemu-devel@nongnu.org; Wed, 22 Jan 2025 01:56:31 -0500
-Received: from mail-wr1-x429.google.com ([2a00:1450:4864:20::429])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1taUfC-0006V4-OG
+ for qemu-devel@nongnu.org; Wed, 22 Jan 2025 01:56:34 -0500
+Received: from mail-wm1-x329.google.com ([2a00:1450:4864:20::329])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1taUf8-0004qA-3E
- for qemu-devel@nongnu.org; Wed, 22 Jan 2025 01:56:31 -0500
-Received: by mail-wr1-x429.google.com with SMTP id
- ffacd0b85a97d-3863494591bso3518549f8f.1
- for <qemu-devel@nongnu.org>; Tue, 21 Jan 2025 22:56:29 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1taUfB-0004qh-Bi
+ for qemu-devel@nongnu.org; Wed, 22 Jan 2025 01:56:34 -0500
+Received: by mail-wm1-x329.google.com with SMTP id
+ 5b1f17b1804b1-436326dcb1cso45305225e9.0
+ for <qemu-devel@nongnu.org>; Tue, 21 Jan 2025 22:56:32 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1737528987; x=1738133787; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=zXmb8IR/aSdk7HjYL9Mo6XsRDrHneoBc8L/q8OEpb2o=;
- b=uzjlosoSIOIofMK7lGFdcx6+FHhRmvzVchEEKgJ9klbCX/Urc7bfu0fWFsDLJYbUFz
- Hz1rijkBSucXaXHBZhpfer1DP/n+nfDhxqaC/g9yztdkbTN6BDDnA9NWnfiws8uvvIqg
- wvSxzIRBEeYHegJB1MyR7nIRvXaEpKC+cQ3OoKLlLXgVeL6tA1j/0SSFXQ+D22ZDuJhz
- XYiIsXU+y8NTN7p/rYTW8iL2BG9D9jEubQHXuTmoDAk9MZjjZSiPKaQaU2IyZlHLTwSB
- 2IOG4Hct4WG6pG4Ior/wXfyBDOH80ye76pgu7/E+dDQud/xwIJ2qDpismEmvibzapYSH
- qU0A==
+ d=linaro.org; s=google; t=1737528991; x=1738133791; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=JhkcSpkbNbYstwLK+TiU/Bm2tD0SpN+f7v0biaDhmNE=;
+ b=guVkWcuqYr5F7cZ/cXNo/bUddijd2zEoQltMpIho/5lIPLtLObUlSYI7F28wNb3Aqo
+ ZlExEzDLfH1yGb4wMcGLNW014YctihBSvjyqBTAIGwDIB3EpY614c1ND2qWYqOd7zOrx
+ 8qZXkJ8XAsFhUEsE89iarp8T6hKTjyIQAoVOLvncVsSTK8pskMO+r0ecZBD4Bv7FqhMf
+ /z8RdUZVP08XVNHrypfpe532wkoUmHnCfRc5NwuD6EKA/XtaLxU1osRzeW2I5SY21czj
+ uQ2b9qI84OAaWw/OsQllumU5Qrnw6h9gIC9vkFF90WH/Gth47QAsH8B0zvxPGG4eTEpK
+ OSzQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1737528987; x=1738133787;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=zXmb8IR/aSdk7HjYL9Mo6XsRDrHneoBc8L/q8OEpb2o=;
- b=shC9UOaud3+waQL2WvFYocCeHHb85uUr0UHtHUAOHZR1skFy9E+Nxmt+UJGxAsrZyV
- 4zzQLJQw6nS9Rz075gQ4lQjkh/TZSahQNmD7oIcD355+or4gVPh0SS6IO2jlS1VH0ulT
- 9Y52tnhUtvNdXezhn6z/ttRJkWquwhbekMbGqBeRgbWELyqaVEC/FKheh/2RtPD4ObOS
- 7pFU5QFORF2bA8S+dfvkJO8GvYvbBzB98sknXwl8lfH2Wa/T3UOqW/WY4j+IEhLaqNIS
- cPMV2wHLKpodyXQAENl6SsBloe56b/dHoS7wkfWCRqRb98CiiGOj6MgqHkyetqDw3YjY
- L/aA==
-X-Gm-Message-State: AOJu0YzWJeN30ZcNp7Fh1OGj1tXVQc2QL/3d9s2fTpanK+ZQIxs1/F01
- punEf8nEfd4D6JdlYeOKcmbJ9KmPW/931Vt5Eq7pW9P3Ir7q+TJIy1wp9JSLhkN+3oHGsTA24se
- +ik0=
-X-Gm-Gg: ASbGncuOQutfbR2mtd5INGoODQPGTzfLiq4KM08OEMshnCTpZeIaNcbUvErhGdUSOyU
- sBXZyPxNzHsm2gUmOvRQ0SZuXmXQhzotzZZFO+sQpYWRr1gm20BQydUnvT7PShpth25iGgsMGUV
- VNo4FlNVY9BD6THghIb5iH3zFmyWZWxQtYRQUAyeH6Lmh4ZFCzYFZUXU40/+D3XqNtOPy3Ch1Nt
- f1SX4243Vem5KGYxFJrjbMgLWxGsRzAyOqqybnKyYEkC/0phQ3qX9YH+5ywlzzqMN21enhf6fNT
- P36SYNYE51icQLMZ3kyZd5dfhmGxVHsCHF62IASVrIBp
-X-Google-Smtp-Source: AGHT+IHklGeODAwhvLpX7LM9OkCr7lDKWpMtK3LW9mKjTDIBwj8dbZsu3g96IpkOTtaIQv9Yl7Iyqg==
-X-Received: by 2002:adf:e283:0:b0:386:1cf9:b993 with SMTP id
- ffacd0b85a97d-38bf57896ccmr12861435f8f.26.1737528986847; 
- Tue, 21 Jan 2025 22:56:26 -0800 (PST)
+ d=1e100.net; s=20230601; t=1737528991; x=1738133791;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=JhkcSpkbNbYstwLK+TiU/Bm2tD0SpN+f7v0biaDhmNE=;
+ b=AXENNwI7F12M/INKHymeR8q9N0b9FGPMPZQfTRo2qQY+RE2Rw516O+q8A5Ab1VLYck
+ M6tQIZZtL/F3cS6AAILhaWCvBWBE6meSpa8lb/jFjBEaaOeffsMowkXLp9EeORVwtCC8
+ +toPo2OA5dtA7WXVvtXLV/IxOfMt09LQIkfdgU7TrzHOYj3iLMGIvkwKWY2MGjTaI07H
+ AIEAKzG1XWO+yRe4KyUqOgi15ad2JhQN3WMFcV9s5shiUkuPKxy/KMAia7frQ+gedYF2
+ C10RqNAnxvp841GE1i1L5N12kQ9URTByFbBqhXmiIcYVQFdD0gxKt4nnzT/LYfT65Vse
+ 9Prg==
+X-Gm-Message-State: AOJu0Yy8nd5GYp+qbvrL7ZlXd2+G3aqWv2zYi/W12d/M6WotvZWFnPpa
+ sTP6zcb2DmBwerPRobqg/0ptDkNBhCJM5OVx6OIL7eIGYiifvFbozkC0Q/y0LQ6Rid3rHPk05BY
+ OM5Y=
+X-Gm-Gg: ASbGncslHYTWr+QrxyD1yNsylB3MrBdkIu8wEH4VkDvmoHzDGaTmHFGrOMaAfNP5Vy8
+ C1BMe9ZwLu4iFXhSwKq2OfiB8kqSFHXXhW6XceVdFSzsOemOAT+dlcVd0em+NundFMCT+VqGyfV
+ 1PT7wSOXwujKWGQ62aWTOoFOgJZLzKguYpaaVoR/JKxpuuPk+22BT3YEMjD5oTt5iN8qBp+7BGG
+ dVPI+dbpC64IT9Yv2ywIeLKtEYZVltdPM3AyBYf51LFNOhVGocJr104A4iMmk1RHUuKm53UyoLV
+ 9uTyiqt5TfO79q/bCPReknjo/qsMuu3VL1HDy1HQ+2z7
+X-Google-Smtp-Source: AGHT+IGk+AzCzbLFNo3X3cmkkkiX7tCwzcWPzjy+oQAFAVs3yXTJKV1aUguqtWlTyEe0Sn0Ym7+XTA==
+X-Received: by 2002:a05:600c:450e:b0:436:1ac2:1ad2 with SMTP id
+ 5b1f17b1804b1-43891427485mr161877285e9.19.1737528991492; 
+ Tue, 21 Jan 2025 22:56:31 -0800 (PST)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-38bf3214fbdsm15745722f8f.19.2025.01.21.22.56.25
+ 5b1f17b1804b1-438b31af70dsm12479435e9.18.2025.01.21.22.56.30
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Tue, 21 Jan 2025 22:56:26 -0800 (PST)
+ Tue, 21 Jan 2025 22:56:31 -0800 (PST)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Fan Ni <fan.ni@samsung.com>,
  Jonathan Cameron <jonathan.cameron@huawei.com>,
  Paolo Bonzini <pbonzini@redhat.com>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PATCH 0/2] hw/cxl: Add tracing for component I/O region
-Date: Wed, 22 Jan 2025 07:56:22 +0100
-Message-ID: <20250122065624.34203-1-philmd@linaro.org>
+Subject: [PATCH 1/2] hw/cxl: Remove unused component_registers::io_registers[]
+ array
+Date: Wed, 22 Jan 2025 07:56:23 +0100
+Message-ID: <20250122065624.34203-2-philmd@linaro.org>
 X-Mailer: git-send-email 2.47.1
+In-Reply-To: <20250122065624.34203-1-philmd@linaro.org>
+References: <20250122065624.34203-1-philmd@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::429;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x429.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::329;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x329.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -98,18 +102,25 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Allow tracing component I/O accesses,
-remove unused io_registers[] array.
+Avoid wasting 4K for each component, remove unused io_registers[].
 
-Philippe Mathieu-Daudé (2):
-  hw/cxl: Remove unused component_registers::io_registers[] array
-  hw/cxl: Allow tracing component I/O accesses
+Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+---
+ include/hw/cxl/cxl_component.h | 1 -
+ 1 file changed, 1 deletion(-)
 
- include/hw/cxl/cxl_component.h |  4 ++--
- hw/cxl/cxl-component-utils.c   | 14 +++++++++++---
- hw/cxl/Kconfig                 |  1 +
- 3 files changed, 14 insertions(+), 5 deletions(-)
-
+diff --git a/include/hw/cxl/cxl_component.h b/include/hw/cxl/cxl_component.h
+index 945ee6ffd04..ac61c3f33a5 100644
+--- a/include/hw/cxl/cxl_component.h
++++ b/include/hw/cxl/cxl_component.h
+@@ -218,7 +218,6 @@ typedef struct component_registers {
+      *   0xe000 - 0xe3ff CXL ARB/MUX registers
+      *   0xe400 - 0xffff RSVD
+      */
+-    uint32_t io_registers[CXL2_COMPONENT_IO_REGION_SIZE >> 2];
+     MemoryRegion io;
+ 
+     uint32_t cache_mem_registers[CXL2_COMPONENT_CM_REGION_SIZE >> 2];
 -- 
 2.47.1
 
