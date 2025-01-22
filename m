@@ -4,98 +4,146 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0EF14C02181
-	for <qemu-devel@archiver.kernel.org>; Wed, 22 Jan 2025 16:41:25 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B81A6C02181
+	for <qemu-devel@archiver.kernel.org>; Wed, 22 Jan 2025 16:41:40 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tadmG-0007aT-75; Wed, 22 Jan 2025 11:40:28 -0500
+	id 1tadnA-0007zP-Uy; Wed, 22 Jan 2025 11:41:24 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1tadmA-0007Zr-NT
- for qemu-devel@nongnu.org; Wed, 22 Jan 2025 11:40:23 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <lvivier@redhat.com>)
+ id 1tadn9-0007up-Lu
+ for qemu-devel@nongnu.org; Wed, 22 Jan 2025 11:41:23 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1tadm6-0003MZ-J7
- for qemu-devel@nongnu.org; Wed, 22 Jan 2025 11:40:21 -0500
+ (Exim 4.90_1) (envelope-from <lvivier@redhat.com>)
+ id 1tadn7-0003u8-LX
+ for qemu-devel@nongnu.org; Wed, 22 Jan 2025 11:41:23 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1737564016;
+ s=mimecast20190719; t=1737564079;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=s7FXfjhNE42rwKWKgzXOoZyoZvfkqN5Prnao7VTqtss=;
- b=ZebYiKDjJniqXRPa8u26LpByHzkTHNqp1zkElV1F5xNhN2X6dA2K4NO6IJ8yJttLbP+Lax
- AyMI/C7tdHZ1mP2LQGNAdTLJlApnvPQc7JcY8YNtYnPH4DVl/Qh4VmKhyJq8TEc0pScdQO
- xvZuwauLSCyZ3CSQ6YKTmd7YQyXsrg4=
-Received: from mail-qk1-f200.google.com (mail-qk1-f200.google.com
- [209.85.222.200]) by relay.mimecast.com with ESMTP with STARTTLS
+ in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+ bh=JkWyNTIkap4TrPbaXOEeu1OUYYpcllGw8Q1rkM+h0w0=;
+ b=GZja03vc2/5cHkVbG+vvqBjx7ejLzinW+KUII+3ifO1NZ0pUqyNlQOfzsuomQtOGiCCmSI
+ QKmrFSAnORSyn76V7+wFioaxNRI1sFEu66GYdO6dtgWcDeA387ylUmJ1MA/lqMk7d+//JT
+ 42ByKWwbzSuRGNuuBN7SbniFuNeL+kI=
+Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com
+ [209.85.128.71]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-650-K7q6ByglPGWPLJoOZLLwcg-1; Wed, 22 Jan 2025 11:40:14 -0500
-X-MC-Unique: K7q6ByglPGWPLJoOZLLwcg-1
-X-Mimecast-MFC-AGG-ID: K7q6ByglPGWPLJoOZLLwcg
-Received: by mail-qk1-f200.google.com with SMTP id
- af79cd13be357-7b6c6429421so1156906785a.0
- for <qemu-devel@nongnu.org>; Wed, 22 Jan 2025 08:40:14 -0800 (PST)
+ us-mta-295-kBvWsNfxN7aiQJhGsh7fLw-1; Wed, 22 Jan 2025 11:41:18 -0500
+X-MC-Unique: kBvWsNfxN7aiQJhGsh7fLw-1
+X-Mimecast-MFC-AGG-ID: kBvWsNfxN7aiQJhGsh7fLw
+Received: by mail-wm1-f71.google.com with SMTP id
+ 5b1f17b1804b1-4361d4e8359so54174615e9.3
+ for <qemu-devel@nongnu.org>; Wed, 22 Jan 2025 08:41:17 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1737564013; x=1738168813;
- h=in-reply-to:content-transfer-encoding:content-disposition
- :mime-version:references:message-id:subject:cc:to:from:date
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=s7FXfjhNE42rwKWKgzXOoZyoZvfkqN5Prnao7VTqtss=;
- b=Q/O9g9c4OxeAi2V+YzejuxxBVSY5b81F/eQ8xbOsks3AgPXKOxPgvsgnjiUrRdu8/y
- EVybi/qUPTEpX+gHSoFnAnuA4noKaKAIn+bwEJy7ZdCEeNadT2IBTmktBv0feqWIUOO0
- 4FnlkbpYrnmghezE1kKeiA98aaIh1SAR2k54+SAsriVWTnn5P3Q0VSnp0nxhYrWMop56
- bbv1Ply32jRdhIr2FIpsV5SQO0zqmP08r+vktHE8DM0U1EpdIRrKgYJqId9rC0X5S/wQ
- xsKP1VjUCBNB32ISyNrduEl2gECL1Ynt00em5z9dg9eSYacQaXtTjhoWLuuLzjk6ftgI
- GiGQ==
-X-Forwarded-Encrypted: i=1;
- AJvYcCXBTxIHXyFwuQwst6EMF12zblAlHNnPUwHySlvQT2C78B9GUBLHp4rIIDFoD8J5xxuGBipPTG0y2U0Y@nongnu.org
-X-Gm-Message-State: AOJu0YyizN9RnLg1h9NLKzhQ2roak3+DCSqP70z5Rph+tikDDziJu0tM
- XA3I0WyfvvgPJCC5Hgj4I2Qg0NwBbxgSFaAG8IB+LxyUeHwoeXAY7hHmAXKUjn07el9Yo9vIEhn
- 4NRxHzgZc4r/iWTeiKxe19hhGFa/EPSPnijBjHFPyUbY/QUvq458SJFP0BIyc
-X-Gm-Gg: ASbGncvxH+YlbhB3vfmTbpBeSKimqLudx08FUiY9WSmhKQ6pBy0AEuGKJbz6TUZa3di
- pR8DqJL/I9U1A72Fts7ZJFvZkrJ4f4byrMRgcEql1Mfzsrm6CgWeKuDV8yXp3EqNj2tySmg5xOP
- 4WormYfSsI7z1ZncHi36KQXzycl8p0ylhw6F4LYkUgUF9FWeZmo6JrPEmOrJkp38MdRlxpTJeJ7
- 5gvS+/L0GgUEtNJfDRQN5HjH7c2MMf4dUXpSDLX7tOc6WexsrPYK0ckalGhV+R2sopF9xVO3c6T
- TCIHohywc71zWR3ES3Q3IAv9Q2uEY2I=
-X-Received: by 2002:a05:620a:288a:b0:7b6:6d99:ecfc with SMTP id
- af79cd13be357-7be6318ac7amr3300920485a.0.1737564013660; 
- Wed, 22 Jan 2025 08:40:13 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IHTto66wpN4Xl4z+TFxOWYxjbdcDmFpIP7PSZD/qwEtr1lDNq0JtCcluPWoNHv+um/PFpnfpA==
-X-Received: by 2002:a05:620a:288a:b0:7b6:6d99:ecfc with SMTP id
- af79cd13be357-7be6318ac7amr3300917485a.0.1737564013357; 
- Wed, 22 Jan 2025 08:40:13 -0800 (PST)
-Received: from x1n (pool-99-254-114-190.cpe.net.cable.rogers.com.
- [99.254.114.190]) by smtp.gmail.com with ESMTPSA id
- af79cd13be357-7be614eee4bsm676589285a.91.2025.01.22.08.40.12
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 22 Jan 2025 08:40:12 -0800 (PST)
-Date: Wed, 22 Jan 2025 11:40:10 -0500
-From: Peter Xu <peterx@redhat.com>
-To: Shivam Kumar <shivam.kumar1@nutanix.com>
-Cc: Fabiano Rosas <farosas@suse.de>,
- "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>
-Subject: Re: [RFC PATCH] Fix race in live migration failure path
-Message-ID: <Z5EfapuXuV7oFL7A@x1n>
-References: <20250110100707.4805-1-shivam.kumar1@nutanix.com>
- <87frlqerxp.fsf@suse.de> <Z4U_emPVDfTb1VmF@x1n>
- <0C92F4E5-56EE-4036-927C-2F06F9F29252@nutanix.com>
+ d=1e100.net; s=20230601; t=1737564077; x=1738168877;
+ h=content-transfer-encoding:in-reply-to:autocrypt:from
+ :content-language:references:cc:to:subject:user-agent:mime-version
+ :date:message-id:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=JkWyNTIkap4TrPbaXOEeu1OUYYpcllGw8Q1rkM+h0w0=;
+ b=X+Juf4edEC+XQheXNYewM9RfHA9RMvtbWuGBsBHZd91jph1p0z7aV8E/8mKEQqN6sO
+ RpVXc9sCRgBG37R+lhbMhtWuLgAY02T2HNtJLuwADfCMfO3D3uoDGKIVBJW+kD88WFWD
+ abQX2tCC2QC5UmaVQIceZT+CdVti9ba93cRm33DFHoH5BJIgGOwYnPkRFWzw6bkRrNV+
+ 4+rbTICfpqQkTCE9HPpJN0Id7N38PM8UyzEYkmKDXE7h1XwW6KiOabQo1uG37Xi6bCKj
+ lvSk5ZrNgFfD/vk1oxhCS1jZfpIy+NXZLnQh6xTyh4Bk5YoItqQaQd1DLRPv5CIzfqV0
+ kXqQ==
+X-Gm-Message-State: AOJu0Yx6jMrWuMTc1cQfmdW5E29ZcHw4R9yPZtYLcMnqXr1LR0ji/Dtd
+ DIrwj/E7dS/BRF1znkgMxDDE+EIAzNFHJC8Vn29IXBaNO4RQaz8tM8LpZHvliiluv04yZ7Vq9sN
+ OCftgtpCx81oXbTNrDRC8YiO6EbylM1sCIobkG+kSql7ZKAYSvGA0
+X-Gm-Gg: ASbGncvvBRAZKqqk2CBDfNaqWeUZswIBdfiLGbWYhxauka/R50/cifeHmtsHMiAlwG+
+ LHJX5uwXkr5asvfCci1Pt3a9bCU9VUD1K0MV7zhob9kmniuwqDvKp1gm/vki8vHWu2HrmiBuhaR
+ mvix1AX12Uc820ms/fQyHgpU3CHkdStPMz54UrcBI7GWO9lE3e/V31ahktkeGrIopg7L17DuF/Q
+ ztFWueTXXc47rSEUoLd7XM/DmMm93wTzWDjWgxgCUQcGSOY0IZoit1vi5HtPN33DMdpqCx6VrML
+ wjoIGcZL5UyRgifejSBmRyYHSn03uv5t
+X-Received: by 2002:a05:600c:4f84:b0:434:a90b:94fe with SMTP id
+ 5b1f17b1804b1-438913ca9bamr222956265e9.10.1737564076674; 
+ Wed, 22 Jan 2025 08:41:16 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IF7zLZ/N/tRbcjLiIR2P6ouU4SXCWmlOYKvwtQH/pIAwhh3Zobc1ZFe/vVzVSPrY6kN1Ae6fw==
+X-Received: by 2002:a05:600c:4f84:b0:434:a90b:94fe with SMTP id
+ 5b1f17b1804b1-438913ca9bamr222955975e9.10.1737564076250; 
+ Wed, 22 Jan 2025 08:41:16 -0800 (PST)
+Received: from ?IPV6:2a01:e0a:e10:ef90:343a:68f:2e91:95c?
+ ([2a01:e0a:e10:ef90:343a:68f:2e91:95c])
+ by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-438b31c8ac5sm31668205e9.39.2025.01.22.08.41.15
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Wed, 22 Jan 2025 08:41:15 -0800 (PST)
+Message-ID: <044af96f-791b-471f-ae90-c17597445fd3@redhat.com>
+Date: Wed, 22 Jan 2025 17:41:15 +0100
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] vhost-user: Silence unsupported
+ VHOST_USER_PROTOCOL_F_RARP error
+To: Stefano Garzarella <sgarzare@redhat.com>,
+ "Michael S. Tsirkin" <mst@redhat.com>
+Cc: qemu-devel@nongnu.org, Jason Wang <jasowang@redhat.com>
+References: <20250121100029.1106973-1-lvivier@redhat.com>
+ <3mcx7u456pawkgz4dgf6tvk7izczuy55guipqacqkl66jhtltq@fofd5u3el4nj>
+ <20250122085828-mutt-send-email-mst@kernel.org>
+ <bfc3rstsxuapkjlea4lia3bn44rt7hhsf6kagtkltfssqynx6z@4dodvso73pel>
+Content-Language: en-US
+From: Laurent Vivier <lvivier@redhat.com>
+Autocrypt: addr=lvivier@redhat.com; keydata=
+ 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
+In-Reply-To: <bfc3rstsxuapkjlea4lia3bn44rt7hhsf6kagtkltfssqynx6z@4dodvso73pel>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <0C92F4E5-56EE-4036-927C-2F06F9F29252@nutanix.com>
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=peterx@redhat.com;
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=lvivier@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -50
-X-Spam_score: -5.1
-X-Spam_bar: -----
-X-Spam_report: (-5.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-2.996,
+X-Spam_score_int: -42
+X-Spam_score: -4.3
+X-Spam_bar: ----
+X-Spam_report: (-4.3 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-2.996,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.043,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ PDS_OTHER_BAD_TLD=0.756, RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001,
+ RCVD_IN_MSPIKE_WL=0.001, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -111,97 +159,92 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi, Shivam,
-
-On Wed, Jan 22, 2025 at 10:54:17AM +0000, Shivam Kumar wrote:
-> There is one place where we set the migration status to FAILED but we don’t set
-> s->error, i.e. in save_snapshot workflow, please check qemu_savevm_state but
-> not sure setting s->error in this case is possible (or required), as it seems a
-> different workflow to me.
-
-Yes it's very different indeed.  I may not yet fully get the challenge on
-how switching to s->error (implies FAILING) would affect this one, though.
-I mean, in qemu_savevm_state() it tries to fetch qemufile errors with:
-
-    ret = qemu_file_get_error(f);
-
-IIUC we could also try to fetch s->error just like what migration thread
-does, and if it sets means it's failing?
-
+On 22/01/2025 17:20, Stefano Garzarella wrote:
+> On Wed, Jan 22, 2025 at 08:59:22AM -0500, Michael S. Tsirkin wrote:
+>> On Wed, Jan 22, 2025 at 02:42:14PM +0100, Stefano Garzarella wrote:
+>>> On Tue, Jan 21, 2025 at 11:00:29AM +0100, Laurent Vivier wrote:
+>>> > In vhost_user_receive() if vhost_net_notify_migration_done() reports
+>>> > an error we display on the console:
+>>> >
+>>> >  Vhost user backend fails to broadcast fake RARP
+>>> >
+>>> > This message can be useful if there is a problem to execute
+>>> > VHOST_USER_SEND_RARP but it is useless if the backend doesn't
+>>> > support VHOST_USER_PROTOCOL_F_RARP.
+>>> >
+>>> > Don't report the error if vhost_net_notify_migration_done()
+>>> > returns -ENOTSUP (from vhost_user_migration_done())
+>>> >
+>>> > Update vhost_net-stub.c to return -ENOTSUP too.
+>>> >
+>>> > Signed-off-by: Laurent Vivier <lvivier@redhat.com>
+>>> > ---
+>>> > hw/net/vhost_net-stub.c | 2 +-
+>>> > net/vhost-user.c        | 2 +-
+>>> > 2 files changed, 2 insertions(+), 2 deletions(-)
+>>> >
+>>> > diff --git a/hw/net/vhost_net-stub.c b/hw/net/vhost_net-stub.c
+>>> > index 72df6d757e4d..875cd6c2b9c8 100644
+>>> > --- a/hw/net/vhost_net-stub.c
+>>> > +++ b/hw/net/vhost_net-stub.c
+>>> > @@ -93,7 +93,7 @@ void vhost_net_config_mask(VHostNetState *net, VirtIODevice *dev, 
+>>> bool mask)
+>>> >
+>>> > int vhost_net_notify_migration_done(struct vhost_net *net, char* mac_addr)
+>>> > {
+>>> > -    return -1;
+>>> > +    return -ENOTSUP;
+>>> > }
+>>> >
+>>> > VHostNetState *get_vhost_net(NetClientState *nc)
+>>> > diff --git a/net/vhost-user.c b/net/vhost-user.c
+>>> > index 12555518e838..636fff8a84a2 100644
+>>> > --- a/net/vhost-user.c
+>>> > +++ b/net/vhost-user.c
+>>> > @@ -146,7 +146,7 @@ static ssize_t vhost_user_receive(NetClientState *nc, const 
+>>> uint8_t *buf,
+>>> >
+>>> >         r = vhost_net_notify_migration_done(s->vhost_net, mac_addr);
+>>> >
+>>> > -        if ((r != 0) && (display_rarp_failure)) {
+>>> > +        if ((r != 0) && (r != -ENOTSUP) && (display_rarp_failure)) {
+>>> >             fprintf(stderr,
+>>> >                     "Vhost user backend fails to broadcast fake RARP\n");
+>>> >             fflush(stderr);
+>>> > --
+>>> > 2.47.1
+>>> >
+>>>
+>>> IIUC the message was there since the introduction about 10 years ago
+>>> from commit 3e866365e1 ("vhost user: add rarp sending after live
+>>> migration for legacy guest"). IIUC -ENOTSUP is returned when both F_RARP
+>>> and F_GUEST_ANNOUNCE are not negotiated.
+>>>
+>>> That said, I honestly don't know what F_RARP or F_GUEST_ANNOUNCE is for,
+>>
+>> rarp is to have destination host broadcast a message with VM address
+>> to update the network. Guest announce is when it will instead
+>> ask the guest to do this.
 > 
-> In addition, one potentially real problem that I see is this comment in
-> migration_detect_error:
-> /*
->  * For postcopy, we allow the network to be down for a
->  * while. After that, it can be continued by a
->  * recovery phase.
->  */
-> Let's say if we set s->error at some place and there was a file error on either
-> source or destination (qemu_file_get_error_obj_any returns a positive value
+> Okay, thanks for explaining to me.
+> So if both features are not negotiated, no one is going to broadcast
+> the message, right?
+> 
+> Could that be a valid reason to print an error message in QEMU?
+> 
+> To me it might be reasonable because the user might experience some
+> network problems, but I'm not a network guy :-)
 
-This is trivial, but I suppose you meant s/positive/negative/ here.. as
-qemufile's last_error should always be negative, iiuc.
+I'm working on adding vhost-user to passt[1], and in this case we don't need to broadcast 
+any message.
 
-> when called by migration_detect_error). We expect migration to fail in this
-> case but migration will continue to run since post-copy migration is tolerant
-> to file errors?
+So I don't implement VHOST_USER_SEND_RARP and I don't want the error message to spoil my 
+console.
 
-Yes it can halt at postcopy_pause().  I'm not yet understand why it's an
-issue to using s->error, though.
-
-In general, I'm thinking whether we could also check s->error in detect
-error path like this:
-
-===8<===
-diff --git a/migration/migration.c b/migration/migration.c
-index 2d1da917c7..fbd97395e0 100644
---- a/migration/migration.c
-+++ b/migration/migration.c
-@@ -3015,17 +3015,17 @@ static MigThrError migration_detect_error(MigrationState *s)
-     ret = qemu_file_get_error_obj_any(s->to_dst_file,
-                                       s->postcopy_qemufile_src,
-                                       &local_error);
--    if (!ret) {
--        /* Everything is fine */
--        assert(!local_error);
--        return MIG_THR_ERR_NONE;
--    }
--
--    if (local_error) {
-+    if (ret) {
-+        /* Passover qemufile errors to s->error */
-+        assert(local_error);
-         migrate_set_error(s, local_error);
-         error_free(local_error);
-     }
- 
-+    if (!migrate_has_error(s)) {
-+        return MIG_THR_ERR_NONE;
-+    }
-+
-     if (state == MIGRATION_STATUS_POSTCOPY_ACTIVE && ret) {
-         /*
-          * For postcopy, we allow the network to be down for a
-@@ -3037,6 +3037,8 @@ static MigThrError migration_detect_error(MigrationState *s)
-         /*
-          * For precopy (or postcopy with error outside IO), we fail
-          * with no time.
-+         *
-+         * TODO: update FAILED only until the end of migration in BH.
-          */
-         migrate_set_state(&s->state, state, MIGRATION_STATUS_FAILED);
-         trace_migration_thread_file_err();
-===8<===
-
-I kept a TODO above, I would hope if you reworked everything to route
-errors to s->error, then we can move this to the cleanup BH to avoid the
-race.
-
-Do you think that could work?
+-ENOTSUP is an error message for developer not for user.
 
 Thanks,
-
--- 
-Peter Xu
+Laurent
+[1] https://passt.top/passt/
 
 
