@@ -4,88 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 64D58C0218C
-	for <qemu-devel@archiver.kernel.org>; Wed, 22 Jan 2025 09:33:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B9917C02182
+	for <qemu-devel@archiver.kernel.org>; Wed, 22 Jan 2025 09:42:37 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1taX50-00026s-Vz; Wed, 22 Jan 2025 04:31:23 -0500
+	id 1taXFB-0002H5-Jd; Wed, 22 Jan 2025 04:41:53 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1taX4y-00025D-2r
- for qemu-devel@nongnu.org; Wed, 22 Jan 2025 04:31:20 -0500
-Received: from mail-wm1-x334.google.com ([2a00:1450:4864:20::334])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1taX4w-0003Kd-Hh
- for qemu-devel@nongnu.org; Wed, 22 Jan 2025 04:31:19 -0500
-Received: by mail-wm1-x334.google.com with SMTP id
- 5b1f17b1804b1-43622267b2eso65858095e9.0
- for <qemu-devel@nongnu.org>; Wed, 22 Jan 2025 01:31:17 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1737538276; x=1738143076; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=zX6wKmzI06nCmXct1pzxbuNtoEp265I9BJm+57rS6fc=;
- b=E0XnPb6KePl8gWoAp6nEc4OJu6MMWT+oFyLVvHN5GMFpBmDMP6fovKeMmqEHzQa4F4
- pWVtyg+agUupVTtV1W+IF57IJ8Tf5Oee4gJvbRCGs3hJThvR0PrYD+ZqkC5iXML26j2B
- qnGvxKFmE5cL9zwHdiLQlGwjSis9CnSAOPS/6RL5bR2rF5AB44y4O5uwtgxOhhhvL+Yz
- GLsOOUuqzRUC4iBBBY6KIFReLvPtjaovuUnfx7VRQe5kf8BPAV3R6y7uktz8RBtrCO/5
- /n5WViq8sHxtJzEXpSQIze5PwVfRp8cKinxTryuxlik1Lh3Y3/yAn51y74C7RS1nHQSE
- sIow==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1737538276; x=1738143076;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=zX6wKmzI06nCmXct1pzxbuNtoEp265I9BJm+57rS6fc=;
- b=dZLC7YuaQkHCp1bHTMtExVWK3qy/5m7Y7103HWk4/U6d9IWeEAIuIZL4nlwmyKB6Z1
- c4TQ8RRuekvSPDyb2mSBr+us9orO6xjwvQnH+/2P1BrW/JjsP/vOKIM7Ym0/GDgzUMKw
- eVGfD8rS2glp1qcSOfCcl69orgc4lamBT/LzlCU18Ft1+B14bG1mmNMSpR1ZcHVdl0Ds
- ObxK8n6vqWR+AJ6FTDtufPtyzQHC7fIHedUYMDSX9BvMjvzPUvG8BYycZjEnCTNtOnhs
- 9yfdpCqrxiTlWcUBXA3MAKtibuV12h4natnJ/Vqe0ETnrft+TO7yI/CwwFmDjFzCvBC2
- q8Kw==
-X-Gm-Message-State: AOJu0YwOjgFjGiE0WslXOHEr6Y2Rj3zIukdkESpQ4s4lMNPGTkiSfn+G
- d4YmhzOr37Ojw6HeIjBO6qURsjaEZqICZzW6Eq2bpJyaH+cvYQ67aDWBlRVKc9m6o/HxvGBpzWX
- nGFQ=
-X-Gm-Gg: ASbGncvpc2V5HbFioNFTD8pZ3cB1PSCtNdkwZeorDx4Q1ScV6IlzRURpZb/PF3SJ2OT
- 6DZj+3BoFT8Mrxxrhiepg2/Atm5ArN6XpJR3K2eedrpdep/9EqlLXLmOPkZog8jDnt4PjDQjOmw
- pBUVl7AMy4N0WjPvhbbu03i5fYFwpjifL+oAlEOIYveaNbAwLRxcDqLkySAmWbn5R8yBFSXdSPD
- iPT6Ri8/nFaIU+q45XaR6W+uL8PhsaSlW6jxn9FXgInegIrc3NlX8wgCCs77su2YNSPdrqsRpmd
- yjCMzGvfUw9D0KPWiesaazs22AljF4mYKFG0RQhy4VpB
-X-Google-Smtp-Source: AGHT+IG6O9YAZndqYHtLAOIJrxfLy8HdpLW0g3XjNE4dMucyHCtbEMrzySz5+yEgU7OfImhUVkvOdw==
-X-Received: by 2002:a05:600c:83ce:b0:436:ed33:1535 with SMTP id
- 5b1f17b1804b1-438913e0384mr202379415e9.12.1737538276486; 
- Wed, 22 Jan 2025 01:31:16 -0800 (PST)
-Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
- [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-438b318aae1sm17628795e9.1.2025.01.22.01.31.15
- (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Wed, 22 Jan 2025 01:31:16 -0800 (PST)
-From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-To: qemu-devel@nongnu.org
-Cc: qemu-arm@nongnu.org, Richard Henderson <richard.henderson@linaro.org>,
- =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PATCH v2 10/10] target/arm: Prefer cached CpuClass over
- CPU_GET_CLASS() macro
-Date: Wed, 22 Jan 2025 10:30:28 +0100
-Message-ID: <20250122093028.52416-11-philmd@linaro.org>
-X-Mailer: git-send-email 2.47.1
-In-Reply-To: <20250122093028.52416-1-philmd@linaro.org>
-References: <20250122093028.52416-1-philmd@linaro.org>
+ (Exim 4.90_1) (envelope-from <yilun.xu@linux.intel.com>)
+ id 1taXF9-0002Gx-HA
+ for qemu-devel@nongnu.org; Wed, 22 Jan 2025 04:41:51 -0500
+Received: from mgamail.intel.com ([192.198.163.8])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <yilun.xu@linux.intel.com>)
+ id 1taXF7-0004yG-4N
+ for qemu-devel@nongnu.org; Wed, 22 Jan 2025 04:41:51 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+ d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+ t=1737538909; x=1769074909;
+ h=date:from:to:cc:subject:message-id:references:
+ mime-version:in-reply-to;
+ bh=owsEZA7axqN2tzMnFMwmr8Y1RsBH0gepw5uM/bZOsI0=;
+ b=Z6d3VrgaEK3UEvavOWxrR9P8nseE6PKZy00mNMadeuoAy+cWaGpvvsCc
+ mzotzDtZ0CvJymnSajT1KBjF9J31sxtVuNfJHEPLiNpWuGffKCPt1crXj
+ J75KodFo8gsDO1gMvWKp3P5uUDdhzMs7TPWQ9Q/mjJUpiXL7If54AGu2d
+ LuNETOd1LBKlI8kwIS23wRjsy/8jqB66gnrZn6SvJooxjAigaqWCfcr+k
+ 1le6ZSYUAVXfAUwftn7DcBVTJw+48anKgRG0Wo9AqeMPnXCVlPtzRahWW
+ wv1j49pw5yLxQnOWReWCcQhYFtAWfgyE+HvF957tpN78XJu+S7kg3UXv9 A==;
+X-CSE-ConnectionGUID: 02p4JeGjS9eahUNbvxR/bA==
+X-CSE-MsgGUID: J8fHoRFKSbWF0V3zysFjkA==
+X-IronPort-AV: E=McAfee;i="6700,10204,11322"; a="55537245"
+X-IronPort-AV: E=Sophos;i="6.13,224,1732608000"; d="scan'208";a="55537245"
+Received: from fmviesa004.fm.intel.com ([10.60.135.144])
+ by fmvoesa102.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 22 Jan 2025 01:41:44 -0800
+X-CSE-ConnectionGUID: pwElfivTTTaVwZNRiKbgxw==
+X-CSE-MsgGUID: KLNJcEWXTJe9+yRx0qnWng==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.13,224,1732608000"; d="scan'208";a="112099494"
+Received: from yilunxu-optiplex-7050.sh.intel.com (HELO localhost)
+ ([10.239.159.165])
+ by fmviesa004.fm.intel.com with ESMTP; 22 Jan 2025 01:41:41 -0800
+Date: Wed, 22 Jan 2025 17:41:31 +0800
+From: Xu Yilun <yilun.xu@linux.intel.com>
+To: Alexey Kardashevskiy <aik@amd.com>
+Cc: Peter Xu <peterx@redhat.com>, Chenyi Qiang <chenyi.qiang@intel.com>,
+ David Hildenbrand <david@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
+ Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Michael Roth <michael.roth@amd.com>, qemu-devel@nongnu.org,
+ kvm@vger.kernel.org, Williams Dan J <dan.j.williams@intel.com>,
+ Peng Chao P <chao.p.peng@intel.com>, Gao Chao <chao.gao@intel.com>,
+ Xu Yilun <yilun.xu@intel.com>
+Subject: Re: [PATCH 2/7] guest_memfd: Introduce an object to manage the
+ guest-memfd with RamDiscardManager
+Message-ID: <Z5C9SzXxX7M1DBE3@yilunxu-OptiPlex-7050>
+References: <ca9bc239-d59b-4c53-9f14-aa212d543db9@intel.com>
+ <4d22d3ce-a5a1-49f2-a578-8e0fe7d26893@amd.com>
+ <2b799426-deaa-4644-aa17-6ef31899113b@intel.com>
+ <2400268e-d26a-4933-80df-cfe44b38ae40@amd.com>
+ <590432e1-4a26-4ae8-822f-ccfbac352e6b@intel.com>
+ <2b2730f3-6e1a-4def-b126-078cf6249759@amd.com>
+ <Z462F1Dwm6cUdCcy@x1n> <ZnmfUelBs3Cm0ZHd@yilunxu-OptiPlex-7050>
+ <Z4-6u5_9NChu_KZq@x1n>
+ <95a14f7d-4782-40b3-a55d-7cf67b911bbe@amd.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::334;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x334.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <95a14f7d-4782-40b3-a55d-7cf67b911bbe@amd.com>
+Received-SPF: none client-ip=192.198.163.8;
+ envelope-from=yilun.xu@linux.intel.com; helo=mgamail.intel.com
+X-Spam_score_int: -72
+X-Spam_score: -7.3
+X-Spam_bar: -------
+X-Spam_report: (-7.3 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-2.996,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_MED=-2.3,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_NONE=0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -101,60 +96,58 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-CpuState caches its CPUClass since commit 6fbdff87062
-("cpu: cache CPUClass in CPUState for hot code paths"),
-use it.
+On Wed, Jan 22, 2025 at 03:30:05PM +1100, Alexey Kardashevskiy wrote:
+> 
+> 
+> On 22/1/25 02:18, Peter Xu wrote:
+> > On Tue, Jun 25, 2024 at 12:31:13AM +0800, Xu Yilun wrote:
+> > > On Mon, Jan 20, 2025 at 03:46:15PM -0500, Peter Xu wrote:
+> > > > On Mon, Jan 20, 2025 at 09:22:50PM +1100, Alexey Kardashevskiy wrote:
+> > > > > > It is still uncertain how to implement the private MMIO. Our assumption
+> > > > > > is the private MMIO would also create a memory region with
+> > > > > > guest_memfd-like backend. Its mr->ram is true and should be managed by
+> > > > > > RamdDiscardManager which can skip doing DMA_MAP in VFIO's region_add
+> > > > > > listener.
+> > > > > 
+> > > > > My current working approach is to leave it as is in QEMU and VFIO.
+> > > > 
+> > > > Agreed.  Setting ram=true to even private MMIO sounds hackish, at least
+> > > 
+> > > The private MMIO refers to assigned MMIO, not emulated MMIO. IIUC,
+> > > normal assigned MMIO is always set ram=true,
+> > > 
+> > > void memory_region_init_ram_device_ptr(MemoryRegion *mr,
+> > >                                         Object *owner,
+> > >                                         const char *name,
+> > >                                         uint64_t size,
+> > >                                         void *ptr)
+> > > {
+> > >      memory_region_init(mr, owner, name, size);
+> > >      mr->ram = true;
+> > > 
+> > > 
+> > > So I don't think ram=true is a problem here.
+> > 
+> > I see.  If there's always a host pointer then it looks valid.  So it means
+> > the device private MMIOs are always mappable since the start?
+> 
+> Yes. VFIO owns the mapping and does not treat shared/private MMIO any
+> different at the moment. Thanks,
 
-Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
----
- target/arm/cpu.c         | 3 +--
- target/arm/tcg/cpu-v7m.c | 3 +--
- 2 files changed, 2 insertions(+), 4 deletions(-)
+mm.. I'm actually expecting private MMIO not have a host pointer, just
+as private memory do.
 
-diff --git a/target/arm/cpu.c b/target/arm/cpu.c
-index dc0231233a6..048b825a006 100644
---- a/target/arm/cpu.c
-+++ b/target/arm/cpu.c
-@@ -846,7 +846,6 @@ static inline bool arm_excp_unmasked(CPUState *cs, unsigned int excp_idx,
- 
- static bool arm_cpu_exec_interrupt(CPUState *cs, int interrupt_request)
- {
--    CPUClass *cc = CPU_GET_CLASS(cs);
-     CPUARMState *env = cpu_env(cs);
-     uint32_t cur_el = arm_current_el(env);
-     bool secure = arm_is_secure(env);
-@@ -946,7 +945,7 @@ static bool arm_cpu_exec_interrupt(CPUState *cs, int interrupt_request)
-  found:
-     cs->exception_index = excp_idx;
-     env->exception.target_el = target_el;
--    cc->tcg_ops->do_interrupt(cs);
-+    cs->cc->tcg_ops->do_interrupt(cs);
-     return true;
- }
- 
-diff --git a/target/arm/tcg/cpu-v7m.c b/target/arm/tcg/cpu-v7m.c
-index 03acdf83e00..d2d0b94b630 100644
---- a/target/arm/tcg/cpu-v7m.c
-+++ b/target/arm/tcg/cpu-v7m.c
-@@ -19,7 +19,6 @@
- 
- static bool arm_v7m_cpu_exec_interrupt(CPUState *cs, int interrupt_request)
- {
--    CPUClass *cc = CPU_GET_CLASS(cs);
-     ARMCPU *cpu = ARM_CPU(cs);
-     CPUARMState *env = &cpu->env;
-     bool ret = false;
-@@ -35,7 +34,7 @@ static bool arm_v7m_cpu_exec_interrupt(CPUState *cs, int interrupt_request)
-     if (interrupt_request & CPU_INTERRUPT_HARD
-         && (armv7m_nvic_can_take_pending_exception(env->nvic))) {
-         cs->exception_index = EXCP_IRQ;
--        cc->tcg_ops->do_interrupt(cs);
-+        cs->cc->tcg_ops->do_interrupt(cs);
-         ret = true;
-     }
-     return ret;
--- 
-2.47.1
+But I'm not sure why having host pointer correlates mr->ram == true.
 
+Thanks,
+Yilun
+
+> 
+> > 
+> > Thanks,
+> > 
+> 
+> -- 
+> Alexey
+> 
 
