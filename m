@@ -4,93 +4,68 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6FE26C02181
-	for <qemu-devel@archiver.kernel.org>; Wed, 22 Jan 2025 11:22:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B5DDDC02182
+	for <qemu-devel@archiver.kernel.org>; Wed, 22 Jan 2025 11:25:55 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1taYn1-0004Bx-Dv; Wed, 22 Jan 2025 06:20:55 -0500
+	id 1taYrM-0005KM-7U; Wed, 22 Jan 2025 06:25:24 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1taYn0-0004Bf-1W
- for qemu-devel@nongnu.org; Wed, 22 Jan 2025 06:20:54 -0500
-Received: from mail-wm1-x32b.google.com ([2a00:1450:4864:20::32b])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1taYmp-0006Nb-J7
- for qemu-devel@nongnu.org; Wed, 22 Jan 2025 06:20:53 -0500
-Received: by mail-wm1-x32b.google.com with SMTP id
- 5b1f17b1804b1-438a39e659cso27248475e9.2
- for <qemu-devel@nongnu.org>; Wed, 22 Jan 2025 03:20:41 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1737544839; x=1738149639; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:user-agent
- :references:in-reply-to:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=QocBT1S8occoxAmaOg1GsN/khxZxiUL4njVzKD1pHKI=;
- b=ZRFdAeC3fBNiKXBLe6VGLOU+SqFfz9Pl5ZSKWPhAP1NHX/18PUh4K7YmH8muZ2BagA
- abNI4EUDEJNFhQjeQUoaGJxKTNxz6hCabyUdLZ2h1FHW+yMyWJpWgFMyifr5suvh7sQc
- XRAKZApc2t+8UE9ny6aby2PeY2Qxd1jt0GpSBGkh3GiI2L3APhcDeRgfoJwGK1Tt7kPL
- TU4lJlpAbybqDCxnp2zM3NLjCCwyjH2RLw68W3hTz1so1yLJJW7lCgqglvgTXDpvtaKu
- 4hAyjzqAsBrMD+6ReKQk18Dw8i/ggUNZwKtrVeFsSfTkcsXIwSbCZG52t7SeJeYFUnKq
- sSaQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1737544839; x=1738149639;
- h=content-transfer-encoding:mime-version:message-id:date:user-agent
- :references:in-reply-to:subject:cc:to:from:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=QocBT1S8occoxAmaOg1GsN/khxZxiUL4njVzKD1pHKI=;
- b=rNEns4HCiWqbcjtJyTREY/hRwb3MentiwLNQaRaxITwWShQd72iXgqNSutZFLSc7rT
- 6PwvRjVWnVjC7gcVitiDi1+wH0V+2m7HWPZXDU8kjRLIbj9u6UIxRilGxqjy5XzcJ0IM
- eAX05WPPiSLum3UJuevlbQSnK566139FIyDY4JVA1WLuW9qPFJoO4vPl3g19+azsdL9N
- 4lVRai+9EET6WOzyv4T+rDz8F1r7m21DW/b6jd1MFtRs2plcPtIMlfJE9ejCDFU7o+/D
- fZ4FARa72wI/rdLXo3CFtmmpt7FgzEr7w9Z7xjtpH67iis9wy+mW1bvVXyJOTU7kNF3a
- Uxeg==
-X-Gm-Message-State: AOJu0Yz6gaene+4+TCD8OsYvX7dnal8fMP5idA3CpRLoF0van1JTmwiN
- hwi6LSQx19tkIz09P3XJJzuqZVWXIWB6cr+MeFc0dI5JMreeNROk5FbDr56pVzw=
-X-Gm-Gg: ASbGncvYh9yJMyKb6kDucLoYlOAKblMEaRtqX0F8s9zL1V2krJ7nzmZBzdcoo9YSdi4
- GlxJuzJW/lvhJ8Y1tWx0DkigDlMhpAcMvmDX2fXT0j8M4IjIf86/por3Ui+n7GZBY83ZbuZpDGE
- 1jGM5UX6UFJYLQf1eIhtsDJ5C+OdOj4A+plApI8Z/yKboyU8DlE4xsimqPoS2D7W79ZZCk7lowo
- RSNwCgM4gAtDE+P0TQTxCLay8sSGlYs/vyEz1J/8saL3m/ESGcGMWEwORDUvj3V9Mf5
-X-Google-Smtp-Source: AGHT+IGbQ3IDO64pan9vd0dNrUtAMchD1UtI7yDOZoTsv0c7R6ZY6xN9vW2tBGTVEqUvfn8mX9dnfg==
-X-Received: by 2002:a05:600c:1908:b0:434:9c1b:b36a with SMTP id
- 5b1f17b1804b1-438913dbf63mr189318905e9.13.1737544839305; 
- Wed, 22 Jan 2025 03:20:39 -0800 (PST)
-Received: from draig.lan ([85.9.250.243]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-438b31a21adsm20673715e9.12.2025.01.22.03.20.38
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 22 Jan 2025 03:20:38 -0800 (PST)
-Received: from draig (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id 55BE05F9F8;
- Wed, 22 Jan 2025 11:20:37 +0000 (GMT)
-From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
-To: Peter Maydell <peter.maydell@linaro.org>
-Cc: qemu-devel@nongnu.org,  Leif Lindholm <quic_llindhol@quicinc.com>,  Leif
- Lindholm <leif.lindholm@oss.qualcomm.com>,  Marcin Juszkiewicz
- <marcin.juszkiewicz@linaro.org>,  Radoslaw Biernacki <rad@semihalf.com>,
- qemu-arm@nongnu.org,  qemu-stable@nongnu.org
-Subject: Re: [PATCH v2 4/5] hw/arm: enable secure EL2 timers for virt machine
-In-Reply-To: <CAFEAcA_yqw2DJ_iPpwYXjsR_h1gAZdOs29b-2ar0QOg4k4D0hQ@mail.gmail.com>
- (Peter Maydell's message of "Fri, 10 Jan 2025 12:53:18 +0000")
-References: <20241218181511.3575613-1-alex.bennee@linaro.org>
- <20241218181511.3575613-5-alex.bennee@linaro.org>
- <CAFEAcA_yqw2DJ_iPpwYXjsR_h1gAZdOs29b-2ar0QOg4k4D0hQ@mail.gmail.com>
-User-Agent: mu4e 1.12.8; emacs 29.4
-Date: Wed, 22 Jan 2025 11:20:37 +0000
-Message-ID: <87frlbnlh6.fsf@draig.linaro.org>
+ (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
+ id 1taYrI-0005Jb-CV; Wed, 22 Jan 2025 06:25:20 -0500
+Received: from mgamail.intel.com ([192.198.163.19])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
+ id 1taYrB-00070L-B7; Wed, 22 Jan 2025 06:25:16 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+ d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+ t=1737545113; x=1769081113;
+ h=date:from:to:cc:subject:message-id:references:
+ mime-version:in-reply-to;
+ bh=c9VGuQ/HJ+I/lboBeD5qmVCyEqHLF7KJIcnFyr56VRw=;
+ b=CvxOYPfUyJ1sJfh2pyO443hF1JGrUtoLPczUaYAjqd/YPz5lIrQHXPBf
+ bbq3FQuFTqkAlDzBXZRrGQmXhmHSJOawApkfzGdYNomfm09J5WYrJLvJX
+ FrQW11yYk098lYiNqa1+STkrJRyFmwM1MLWmLLexwlcHn5cgJ4M1SO5IM
+ dZMsHtVz+8igogoZV8P0+LjYJ+pF2xZV/pZcQiI0yYSdelXT1gVxnpBQ1
+ hFqWrxFvnaAA7BBAsUJq7YqUM296N7aE7MlUC6BXRDqb2H5cFSnh573sL
+ LZk0DHY4etKZ8VLip0ZF+oBnxS1iFwKrVU5Q5W555fP4Een3OOuJ0HFas A==;
+X-CSE-ConnectionGUID: HeVqy595RrucDcILgL5gMg==
+X-CSE-MsgGUID: cVA4BUqtTyegmM1li6LWeQ==
+X-IronPort-AV: E=McAfee;i="6700,10204,11322"; a="37207807"
+X-IronPort-AV: E=Sophos;i="6.13,225,1732608000"; d="scan'208";a="37207807"
+Received: from fmviesa002.fm.intel.com ([10.60.135.142])
+ by fmvoesa113.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 22 Jan 2025 03:25:09 -0800
+X-CSE-ConnectionGUID: 2sn2VvzuTOCRtWNIwgOxPQ==
+X-CSE-MsgGUID: kZi4t8AOS6e4K88hwMNQ1g==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.12,224,1728975600"; d="scan'208";a="130417410"
+Received: from liuzhao-optiplex-7080.sh.intel.com (HELO localhost)
+ ([10.239.160.39])
+ by fmviesa002.fm.intel.com with ESMTP; 22 Jan 2025 03:25:08 -0800
+Date: Wed, 22 Jan 2025 19:44:30 +0800
+From: Zhao Liu <zhao1.liu@intel.com>
+To: Paolo Bonzini <pbonzini@redhat.com>
+Cc: qemu-devel@nongnu.org, qemu-rust@nongnu.org
+Subject: Re: [PATCH 03/10] rust: vmstate: add varray support to vmstate_of!
+Message-ID: <Z5DaHvM2LARwXxbz@intel.com>
+References: <20250117090046.1045010-1-pbonzini@redhat.com>
+ <20250117090046.1045010-4-pbonzini@redhat.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::32b;
- envelope-from=alex.bennee@linaro.org; helo=mail-wm1-x32b.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20250117090046.1045010-4-pbonzini@redhat.com>
+Received-SPF: pass client-ip=192.198.163.19; envelope-from=zhao1.liu@intel.com;
+ helo=mgamail.intel.com
+X-Spam_score_int: -73
+X-Spam_score: -7.4
+X-Spam_bar: -------
+X-Spam_report: (-7.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-2.996,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -106,46 +81,30 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Peter Maydell <peter.maydell@linaro.org> writes:
+On Fri, Jan 17, 2025 at 10:00:39AM +0100, Paolo Bonzini wrote:
+> Date: Fri, 17 Jan 2025 10:00:39 +0100
+> From: Paolo Bonzini <pbonzini@redhat.com>
+> Subject: [PATCH 03/10] rust: vmstate: add varray support to vmstate_of!
+> X-Mailer: git-send-email 2.47.1
+> 
+> Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
+> ---
+>  rust/qemu-api/src/vmstate.rs | 42 ++++++++++++++++++++++++++++++++++--
+>  1 file changed, 40 insertions(+), 2 deletions(-)
 
-> On Wed, 18 Dec 2024 at 18:15, Alex Benn=C3=A9e <alex.bennee@linaro.org> w=
-rote:
->>
->> Signed-off-by: Alex Benn=C3=A9e <alex.bennee@linaro.org>
->> Cc: qemu-stable@nongnu.org
->> ---
->>  hw/arm/virt.c | 2 ++
->>  1 file changed, 2 insertions(+)
->>
->> diff --git a/hw/arm/virt.c b/hw/arm/virt.c
->> index 333eaf67ea..5e3589dc6a 100644
->> --- a/hw/arm/virt.c
->> +++ b/hw/arm/virt.c
->> @@ -873,6 +873,8 @@ static void create_gic(VirtMachineState *vms, Memory=
-Region *mem)
->>              [GTIMER_HYP]  =3D ARCH_TIMER_NS_EL2_IRQ,
->>              [GTIMER_SEC]  =3D ARCH_TIMER_S_EL1_IRQ,
->>              [GTIMER_HYPVIRT] =3D ARCH_TIMER_NS_EL2_VIRT_IRQ,
->> +            [GTIMER_SEC_PEL2] =3D ARCH_TIMER_S_EL2_IRQ,
->> +            [GTIMER_SEC_VEL2] =3D ARCH_TIMER_S_EL2_VIRT_IRQ,
->>          };
->>
->>          for (unsigned irq =3D 0; irq < ARRAY_SIZE(timer_irq); irq++) {
->
-> Do these timer interrupts have a defined devicetree binding that
-> we need to set up in fdt_add_timer_nodes()? How about ACPI?
+...
 
-The DT in the kernel doesn't care (why would it, it never sees the SEL2
-timers). The hafnium test case works without it.
+> +/// Internal utility function to retrieve a type's `VMStateFlags` when it
+> +/// is used as the element count of a `VMSTATE_VARRAY`; used by
+> +/// [`vmstate_of!`](crate::vmstate_of).
+> +pub const fn vmstate_varray_flag<T: VMState>(_: PhantomData<T>) -> VMStateField {
 
-I'm not sure where there is a DT specification that describes what
-should be there for SEL2.
+A typo? It should return VMStateFlags type.
 
->
-> thanks
-> -- PMM
+> +    T::VARRAY_FLAG
+> +}
+> +
 
---=20
-Alex Benn=C3=A9e
-Virtualisation Tech Lead @ Linaro
+Reviewed-by: Zhao Liu <zhao1.liu@intel.com>
+
 
