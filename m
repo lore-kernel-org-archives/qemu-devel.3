@@ -4,108 +4,98 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5F860C02181
-	for <qemu-devel@archiver.kernel.org>; Wed, 22 Jan 2025 16:43:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 02F5EC02181
+	for <qemu-devel@archiver.kernel.org>; Wed, 22 Jan 2025 16:50:23 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tadou-0000xi-MY; Wed, 22 Jan 2025 11:43:12 -0500
+	id 1tadur-0002QB-4X; Wed, 22 Jan 2025 11:49:21 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1tador-0000xO-36
- for qemu-devel@nongnu.org; Wed, 22 Jan 2025 11:43:10 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1tadop-00048z-D8
- for qemu-devel@nongnu.org; Wed, 22 Jan 2025 11:43:08 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1737564186;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=3y0fMZSE7a+ty4qcm/cQWGtpuEjSKpLOhWLAcuXU2f0=;
- b=LYVa0uMOeruWKGr4VIHW0uEvmLut/1P554HlzZCAHeyAuXN1C7lF+o62ABTf+atih1XTT3
- CE9VHuou5FXdV6Z74UoaDeVIna55cEWtUw6MXom9KeuBEtgF42fwQTJFAy16xehKWD4Zsq
- BGrygCuNPkJ4/BA+BkEVqY17HF/yHzc=
-Received: from mail-qt1-f200.google.com (mail-qt1-f200.google.com
- [209.85.160.200]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-494-h19pdPFsPnaz1vA7fR5m1w-1; Wed, 22 Jan 2025 11:43:05 -0500
-X-MC-Unique: h19pdPFsPnaz1vA7fR5m1w-1
-X-Mimecast-MFC-AGG-ID: h19pdPFsPnaz1vA7fR5m1w
-Received: by mail-qt1-f200.google.com with SMTP id
- d75a77b69052e-468f80df8caso129070801cf.2
- for <qemu-devel@nongnu.org>; Wed, 22 Jan 2025 08:43:04 -0800 (PST)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1737564184; x=1738168984;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+ (Exim 4.90_1) (envelope-from <paolo.savini@embecosm.com>)
+ id 1tadul-0002MC-4U
+ for qemu-devel@nongnu.org; Wed, 22 Jan 2025 11:49:15 -0500
+Received: from mail-wm1-x334.google.com ([2a00:1450:4864:20::334])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <paolo.savini@embecosm.com>)
+ id 1tadui-00059A-UR
+ for qemu-devel@nongnu.org; Wed, 22 Jan 2025 11:49:14 -0500
+Received: by mail-wm1-x334.google.com with SMTP id
+ 5b1f17b1804b1-437a92d7b96so70941955e9.2
+ for <qemu-devel@nongnu.org>; Wed, 22 Jan 2025 08:49:11 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=embecosm.com; s=google; t=1737564550; x=1738169350; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=3y0fMZSE7a+ty4qcm/cQWGtpuEjSKpLOhWLAcuXU2f0=;
- b=k1l09bQmaXH6+RCInnbsl8Ts/49D3l+dbotDXA6SxHET63vdPT05mHJBvB7rBIsz9f
- Ow0W+wQGREfaS+PTPNxviFYxbETGi9/QSkMjspf27H49UgvQZA6/kzIU8cIK95JhVcFF
- DImj29eBwG2jq2/xojVNSzaDPXPrLAsinyy25Uo4u/YYhQ53bGBWhaDraKPg8J3fwuoA
- ch2dxpdsk4t4D1xGApKTDYCh3OBAZPAWY+xrT0KEvUT8n2lDtPPcP5IdXy6raWY+EQ+f
- 0W4406wrDAceu1/L0xHK92puGsNfscpELKZ0jge66xwrZoL41w3ldC8z4UAiKQdW/H+4
- YvJQ==
-X-Forwarded-Encrypted: i=1;
- AJvYcCVDOSKAgjD65AzbMEUPJEAyk/aIFD0TtR496vFCfHhgnUuA7EGD5Tsk9965Y/twhDmmLAPyKSLRFHXB@nongnu.org
-X-Gm-Message-State: AOJu0YyQ/Qa4bFw57qsOD7dPc4VA+SdhlD9MEj6IT+rFqaIt1I3J6UeQ
- SMEdizboJQjz0Nur/kVT2HFEhUbsoqY0zDAoKtMEce9KY7bnYATtQ56+/+MjzRMduXACyG2L3Lo
- s4tJ101L6wa0uoDx/c6NZv+g6WdRBd/JoBncKAtfjUJXJbDEjAjKR
-X-Gm-Gg: ASbGncs4lqamhDippWS5h+FG4R73HD4viLetEf3O6TgpmmObODdQJJRqI2U9yRnxbHe
- SIvowdQbXRNIXH0lnOs1JhmzGs0ClRdWSTyEIcC6oX/HDYLSV0Esgs4nOKSWapxo0+HXfEZkfvD
- kHpD6Vm2o0vGEL2vLqgHEQI1RH9r6jt7myQCtfRzn1q0H+45PxnixIJ66qIAJRZ1kWeokIhVZBI
- kHmGt8frG3HSIRfg+NvlEf5Csifrpb3x+245ME7tz8knZoX8nqOsggRGm5sBzfSuQPqLhlx65CB
- YOktxBqN2nl+OcLk4Q76NCsjEsoJWRQ=
-X-Received: by 2002:ac8:7f83:0:b0:467:681c:425f with SMTP id
- d75a77b69052e-46e12a1e89amr335229471cf.4.1737564184261; 
- Wed, 22 Jan 2025 08:43:04 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IETxltspJm2hV7oT91UaMx+gaN/Hy/EpGHdI43Wk+riEdrbGMvExnVUyAvjtxygRe6Mo7vWDQ==
-X-Received: by 2002:ac8:7f83:0:b0:467:681c:425f with SMTP id
- d75a77b69052e-46e12a1e89amr335229041cf.4.1737564183924; 
- Wed, 22 Jan 2025 08:43:03 -0800 (PST)
-Received: from x1n (pool-99-254-114-190.cpe.net.cable.rogers.com.
- [99.254.114.190]) by smtp.gmail.com with ESMTPSA id
- d75a77b69052e-46e102ec205sm65385351cf.11.2025.01.22.08.43.02
+ bh=RFJJKfgkBEGM7sJusVELCJJSwbQK6DNE8A418I+aIT0=;
+ b=gBkU+qpqmYAnh2YGf4xSeHJVUXj77RwQyuLfgzRtqamkAM7P+8ZOysX7bY53UOmmm8
+ 8LMgVF+bLOhXqT9XOtRoYsd4lK8onmIa8rurmtdthYos6agAogOXN8zcQ91JXPh7D/U+
+ GaeBElaRxIDegzhkHzaprIjOEYTV0E/Otaf+VRP2rODv0Chqiw8cvGmYxewVI1NULO/F
+ UNQCpsmb3XBb/StshKNels7q5/xajlXTE63iCeA+ANrQjPHm3ARVEL96lcTc7Fv3fjg3
+ km0hku8xrTV/lMaFf3E43MxvU8775tDLu2K4hUcHNSNOipu6RCZJRklkczqLWo8+Uy7c
+ /q/A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1737564550; x=1738169350;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=RFJJKfgkBEGM7sJusVELCJJSwbQK6DNE8A418I+aIT0=;
+ b=Bj5tzyrco1KTCxbIH/Xx8v/Kp+sxn/LI5kcOWz3IEAiOV60CTgKwxwvPvwjxQm7mXV
+ uNXmOs0pIhh9l2IHXjQGX9KVyjHluEFGNqQ8WHkHf+T9iQtJACSyVzNcyUOjc7WIsHgn
+ l034ME8zREPsAjhj72w+w0xSR7CXPPZ0MjSdvZFlqjCAMUfEuOv6F7ZYrv1G1M32sXe5
+ 087putbw0bEuOyflzqWtYN+mR3qcNMXU9OVSUgCYWQeKZWhyuxynPWAs1yGCpzz8hObl
+ mkLXypPCjjZ/cKA0gMvaWw4DXsMoU1nlo78Cb7ATJrKuZ1+7NlRb67mvi2FE92+mu5Az
+ dG9A==
+X-Gm-Message-State: AOJu0YxLBhg7fSPc+x2XgrqekUGl/fUDDJsYdaGiqkmemW4QiEDQgW19
+ nZGA9htemsi6s2Cp+k1sjsuy/+LiDOG5hddroFddLxjySyvpK5G+wgfcuy0+NGHSqvuHyf1ZcCx
+ BTFk=
+X-Gm-Gg: ASbGnctMxpIiIEPBnNnOgsGH/5vOU+3i7l/69J74SjpEhNoizdiPdw/so3i8UDHq1H5
+ eRCMiIzf6qspiU8WvVsjcfNcZ6p6EQErHOttHqp+etnATLY20yKqXaCSzwr1jkt1+/RJzjrPlTH
+ yY1EQ9xFOS2SiVD/t7JJ5EG6jIe0LyivXiK/AxsgyWevzSI1UHieGyhcgs7MOKsMeWHwWCtiI15
+ v0rA4pp3KD/T+g5e5S/e7QK/EDSOIXumYSS5LWoFpx8p3H40jy29qDvugyQsERUCBwlSOElcC84
+ 6bdnCvO9HkbDH9tzu/96PiYTGYk88iD5Rn0=
+X-Google-Smtp-Source: AGHT+IElisiAtz7vDytLa2ac3g+k5tcdi6Kk7J6YQrFsU0Dm2TVBn5/7M42jyODk0rDS/8zXQRgv6w==
+X-Received: by 2002:a05:600c:3d05:b0:436:469f:2210 with SMTP id
+ 5b1f17b1804b1-438af40851bmr59092435e9.1.1737564549726; 
+ Wed, 22 Jan 2025 08:49:09 -0800 (PST)
+Received: from paolo-laptop-amd.sou.embecosm-corp.com ([212.69.42.53])
+ by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-438b318c059sm32095105e9.8.2025.01.22.08.49.09
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 22 Jan 2025 08:43:03 -0800 (PST)
-Date: Wed, 22 Jan 2025 11:43:01 -0500
-From: Peter Xu <peterx@redhat.com>
-To: Xu Yilun <yilun.xu@linux.intel.com>
-Cc: Alexey Kardashevskiy <aik@amd.com>, Chenyi Qiang <chenyi.qiang@intel.com>,
- David Hildenbrand <david@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
- Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Michael Roth <michael.roth@amd.com>, qemu-devel@nongnu.org,
- kvm@vger.kernel.org, Williams Dan J <dan.j.williams@intel.com>,
- Peng Chao P <chao.p.peng@intel.com>, Gao Chao <chao.gao@intel.com>,
- Xu Yilun <yilun.xu@intel.com>
-Subject: Re: [PATCH 2/7] guest_memfd: Introduce an object to manage the
- guest-memfd with RamDiscardManager
-Message-ID: <Z5EgFaWIyjIiOZnv@x1n>
-References: <4d22d3ce-a5a1-49f2-a578-8e0fe7d26893@amd.com>
- <2b799426-deaa-4644-aa17-6ef31899113b@intel.com>
- <2400268e-d26a-4933-80df-cfe44b38ae40@amd.com>
- <590432e1-4a26-4ae8-822f-ccfbac352e6b@intel.com>
- <2b2730f3-6e1a-4def-b126-078cf6249759@amd.com>
- <Z462F1Dwm6cUdCcy@x1n> <ZnmfUelBs3Cm0ZHd@yilunxu-OptiPlex-7050>
- <Z4-6u5_9NChu_KZq@x1n>
- <95a14f7d-4782-40b3-a55d-7cf67b911bbe@amd.com>
- <Z5C9SzXxX7M1DBE3@yilunxu-OptiPlex-7050>
+ Wed, 22 Jan 2025 08:49:09 -0800 (PST)
+From: Paolo Savini <paolo.savini@embecosm.com>
+To: qemu-devel@nongnu.org,
+	qemu-riscv@nongnu.org
+Cc: Paolo Savini <paolo.savini@embecosm.com>,
+ Richard Handerson <richard.henderson@linaro.org>,
+ Palmer Dabbelt <palmer@dabbelt.com>,
+ Alistair Francis <alistair.francis@wdc.com>, Bin Meng <bmeng.cn@gmail.com>,
+ Weiwei Li <liwei1518@gmail.com>,
+ Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
+ Liu Zhiwei <zhiwei_liu@linux.alibaba.com>,
+ Helene Chelin <helene.chelin@embecosm.com>, Nathan Egge <negge@google.com>,
+ Max Chou <max.chou@sifive.com>,
+ Jeremy Bennett <jeremy.bennett@embecosm.com>,
+ Craig Blackmore <craig.blackmore@embecosm.com>
+Subject: [RFC 1/1 v3] target/riscv: use tcg ops generation to emulate whole
+ reg rvv loads/stores.
+Date: Wed, 22 Jan 2025 16:49:05 +0000
+Message-ID: <20250122164905.13615-2-paolo.savini@embecosm.com>
+X-Mailer: git-send-email 2.43.0
+In-Reply-To: <20250122164905.13615-1-paolo.savini@embecosm.com>
+References: <20250122164905.13615-1-paolo.savini@embecosm.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <Z5C9SzXxX7M1DBE3@yilunxu-OptiPlex-7050>
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=peterx@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -50
-X-Spam_score: -5.1
-X-Spam_bar: -----
-X-Spam_report: (-5.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-2.996,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.043,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::334;
+ envelope-from=paolo.savini@embecosm.com; helo=mail-wm1-x334.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -121,63 +111,216 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, Jan 22, 2025 at 05:41:31PM +0800, Xu Yilun wrote:
-> On Wed, Jan 22, 2025 at 03:30:05PM +1100, Alexey Kardashevskiy wrote:
-> > 
-> > 
-> > On 22/1/25 02:18, Peter Xu wrote:
-> > > On Tue, Jun 25, 2024 at 12:31:13AM +0800, Xu Yilun wrote:
-> > > > On Mon, Jan 20, 2025 at 03:46:15PM -0500, Peter Xu wrote:
-> > > > > On Mon, Jan 20, 2025 at 09:22:50PM +1100, Alexey Kardashevskiy wrote:
-> > > > > > > It is still uncertain how to implement the private MMIO. Our assumption
-> > > > > > > is the private MMIO would also create a memory region with
-> > > > > > > guest_memfd-like backend. Its mr->ram is true and should be managed by
-> > > > > > > RamdDiscardManager which can skip doing DMA_MAP in VFIO's region_add
-> > > > > > > listener.
-> > > > > > 
-> > > > > > My current working approach is to leave it as is in QEMU and VFIO.
-> > > > > 
-> > > > > Agreed.  Setting ram=true to even private MMIO sounds hackish, at least
-> > > > 
-> > > > The private MMIO refers to assigned MMIO, not emulated MMIO. IIUC,
-> > > > normal assigned MMIO is always set ram=true,
-> > > > 
-> > > > void memory_region_init_ram_device_ptr(MemoryRegion *mr,
-> > > >                                         Object *owner,
-> > > >                                         const char *name,
-> > > >                                         uint64_t size,
-> > > >                                         void *ptr)
+This patch replaces the use of a helper function with direct tcg ops generation
+in order to emulate whole register loads and stores. This is done in order to
+improve the performance of QEMU.
+We still use the helper function when vstart is not 0 at the beginning of the
+emulation of the whole register load or store or when we would end up generating
+partial loads or stores of vector elements (e.g. emulating 64 bits element loads
+with pairs of 32 bits loads on hosts with 32 bits registers).
+The latter condition ensures that we are not surprised by a trap in mid-element
+and consecutively that we can update vstart correctly.
+We also use the helper function when it performs better than tcg for specific
+combinations of vector length, number of fields and element size.
 
-[1]
+Signed-off-by: Paolo Savini <paolo.savini@embecosm.com>
+---
+ target/riscv/insn_trans/trans_rvv.c.inc | 164 +++++++++++++++++-------
+ 1 file changed, 119 insertions(+), 45 deletions(-)
 
-> > > > {
-> > > >      memory_region_init(mr, owner, name, size);
-> > > >      mr->ram = true;
-> > > > 
-> > > > 
-> > > > So I don't think ram=true is a problem here.
-> > > 
-> > > I see.  If there's always a host pointer then it looks valid.  So it means
-> > > the device private MMIOs are always mappable since the start?
-> > 
-> > Yes. VFIO owns the mapping and does not treat shared/private MMIO any
-> > different at the moment. Thanks,
-> 
-> mm.. I'm actually expecting private MMIO not have a host pointer, just
-> as private memory do.
-> 
-> But I'm not sure why having host pointer correlates mr->ram == true.
-
-If there is no host pointer, what would you pass into "ptr" as referenced
-at [1] above when creating the private MMIO memory region?
-
-OTOH, IIUC guest private memory finally can also have a host pointer (aka,
-mmap()-able), it's just that even if it exists, accessing it may crash QEMU
-if it's private.
-
-Thanks,
-
+diff --git a/target/riscv/insn_trans/trans_rvv.c.inc b/target/riscv/insn_trans/trans_rvv.c.inc
+index b9883a5d32..85935276de 100644
+--- a/target/riscv/insn_trans/trans_rvv.c.inc
++++ b/target/riscv/insn_trans/trans_rvv.c.inc
+@@ -1100,25 +1100,99 @@ GEN_VEXT_TRANS(vle64ff_v, MO_64, r2nfvm, ldff_op, ld_us_check)
+ typedef void gen_helper_ldst_whole(TCGv_ptr, TCGv, TCGv_env, TCGv_i32);
+ 
+ static bool ldst_whole_trans(uint32_t vd, uint32_t rs1, uint32_t nf,
+-                             gen_helper_ldst_whole *fn,
+-                             DisasContext *s)
++                             uint32_t log2_esz, gen_helper_ldst_whole *fn,
++                             DisasContext *s, bool is_load)
+ {
+-    TCGv_ptr dest;
+-    TCGv base;
+-    TCGv_i32 desc;
++    mark_vs_dirty(s);
+ 
+-    uint32_t data = FIELD_DP32(0, VDATA, NF, nf);
+-    data = FIELD_DP32(data, VDATA, VM, 1);
+-    dest = tcg_temp_new_ptr();
+-    desc = tcg_constant_i32(simd_desc(s->cfg_ptr->vlenb,
+-                                      s->cfg_ptr->vlenb, data));
++    uint32_t vlen = s->cfg_ptr->vlenb << 3;
+ 
+-    base = get_gpr(s, rs1, EXT_NONE);
+-    tcg_gen_addi_ptr(dest, tcg_env, vreg_ofs(s, vd));
++    /*
++     * Load/store multiple bytes per iteration.
++     * When possible do this atomically.
++     * Update vstart with the number of processed elements.
++     * Use the helper function if either:
++     * - vstart is not 0.
++     * - the target has 32 bit registers and we are loading/storing 64 bit long
++     *   elements. This is to ensure that we process every element with a single
++     *   memory instruction.
++     * - whether the helper function performs better:
++     *   on x86 the helper function performs better with few combinations of NF,
++     *   ESZ and VLEN.
++     *   Other architectures may have other combinations or conditions and they
++     *   can be added here if necessary.
++     */
+ 
+-    mark_vs_dirty(s);
++    bool use_helper_fn = !s->vstart_eq_zero || (TCG_TARGET_REG_BITS == 32 && log2_esz == 3);
++
++#if defined(HOST_X86_64)
++    use_helper_fn |= ((nf == 4) && (log2_esz == 0) && (vlen == 1024)) ||
++                     ((nf == 8) && (log2_esz == 0) && (vlen == 512))  ||
++                     ((nf == 8) && (log2_esz == 0) && (vlen == 1024)) ||
++                     ((nf == 8) && (log2_esz == 3) && (vlen == 1024));
++#endif
+ 
+-    fn(dest, base, tcg_env, desc);
++     if (!use_helper_fn) {
++        TCGv addr = tcg_temp_new();
++        uint32_t size = s->cfg_ptr->vlenb * nf;
++        TCGv_i64 t8 = tcg_temp_new_i64();
++        TCGv_i32 t4 = tcg_temp_new_i32();
++        MemOp atomicity = MO_ATOM_NONE;
++        if (log2_esz == 0) {
++            atomicity = MO_ATOM_NONE;
++        } else {
++            atomicity = MO_ATOM_IFALIGN_PAIR;
++        }
++        if (TCG_TARGET_REG_BITS == 64) {
++            for (int i = 0; i < size; i += 8) {
++                addr = get_address(s, rs1, i);
++                if (is_load) {
++                    tcg_gen_qemu_ld_i64(t8, addr, s->mem_idx,
++                            MO_LE | MO_64 | atomicity);
++                    tcg_gen_st_i64(t8, tcg_env, vreg_ofs(s, vd) + i);
++                } else {
++                    tcg_gen_ld_i64(t8, tcg_env, vreg_ofs(s, vd) + i);
++                    tcg_gen_qemu_st_i64(t8, addr, s->mem_idx,
++                            MO_LE | MO_64 | atomicity);
++                }
++                if (i == size - 8) {
++                    tcg_gen_movi_tl(cpu_vstart, 0);
++                } else {
++                    tcg_gen_addi_tl(cpu_vstart, cpu_vstart, 8 >> log2_esz);
++                }
++            }
++        } else {
++            for (int i = 0; i < size; i += 4) {
++                addr = get_address(s, rs1, i);
++                if (is_load) {
++                    tcg_gen_qemu_ld_i32(t4, addr, s->mem_idx,
++                            MO_LE | MO_32 | atomicity);
++                    tcg_gen_st_i32(t4, tcg_env, vreg_ofs(s, vd) + i);
++                } else {
++                    tcg_gen_ld_i32(t4, tcg_env, vreg_ofs(s, vd) + i);
++                    tcg_gen_qemu_st_i32(t4, addr, s->mem_idx,
++                            MO_LE | MO_32 | atomicity);
++                }
++                if (i == size - 4) {
++                    tcg_gen_movi_tl(cpu_vstart, 0);
++                } else {
++                    tcg_gen_addi_tl(cpu_vstart, cpu_vstart, 4 >> log2_esz);
++                }
++            }
++        }
++    } else {
++        TCGv_ptr dest;
++        TCGv base;
++        TCGv_i32 desc;
++        uint32_t data = FIELD_DP32(0, VDATA, NF, nf);
++        data = FIELD_DP32(data, VDATA, VM, 1);
++        dest = tcg_temp_new_ptr();
++        desc = tcg_constant_i32(simd_desc(s->cfg_ptr->vlenb,
++                        s->cfg_ptr->vlenb, data));
++        base = get_gpr(s, rs1, EXT_NONE);
++        tcg_gen_addi_ptr(dest, tcg_env, vreg_ofs(s, vd));
++        fn(dest, base, tcg_env, desc);
++    }
+ 
+     finalize_rvv_inst(s);
+     return true;
+@@ -1128,42 +1202,42 @@ static bool ldst_whole_trans(uint32_t vd, uint32_t rs1, uint32_t nf,
+  * load and store whole register instructions ignore vtype and vl setting.
+  * Thus, we don't need to check vill bit. (Section 7.9)
+  */
+-#define GEN_LDST_WHOLE_TRANS(NAME, ARG_NF)                                \
+-static bool trans_##NAME(DisasContext *s, arg_##NAME * a)                 \
+-{                                                                         \
+-    if (require_rvv(s) &&                                                 \
+-        QEMU_IS_ALIGNED(a->rd, ARG_NF)) {                                 \
+-        return ldst_whole_trans(a->rd, a->rs1, ARG_NF,                    \
+-                                gen_helper_##NAME, s);                    \
+-    }                                                                     \
+-    return false;                                                         \
+-}
+-
+-GEN_LDST_WHOLE_TRANS(vl1re8_v,  1)
+-GEN_LDST_WHOLE_TRANS(vl1re16_v, 1)
+-GEN_LDST_WHOLE_TRANS(vl1re32_v, 1)
+-GEN_LDST_WHOLE_TRANS(vl1re64_v, 1)
+-GEN_LDST_WHOLE_TRANS(vl2re8_v,  2)
+-GEN_LDST_WHOLE_TRANS(vl2re16_v, 2)
+-GEN_LDST_WHOLE_TRANS(vl2re32_v, 2)
+-GEN_LDST_WHOLE_TRANS(vl2re64_v, 2)
+-GEN_LDST_WHOLE_TRANS(vl4re8_v,  4)
+-GEN_LDST_WHOLE_TRANS(vl4re16_v, 4)
+-GEN_LDST_WHOLE_TRANS(vl4re32_v, 4)
+-GEN_LDST_WHOLE_TRANS(vl4re64_v, 4)
+-GEN_LDST_WHOLE_TRANS(vl8re8_v,  8)
+-GEN_LDST_WHOLE_TRANS(vl8re16_v, 8)
+-GEN_LDST_WHOLE_TRANS(vl8re32_v, 8)
+-GEN_LDST_WHOLE_TRANS(vl8re64_v, 8)
++#define GEN_LDST_WHOLE_TRANS(NAME, ETYPE, ARG_NF, IS_LOAD)                  \
++static bool trans_##NAME(DisasContext *s, arg_##NAME * a)                   \
++{                                                                           \
++    if (require_rvv(s) &&                                                   \
++        QEMU_IS_ALIGNED(a->rd, ARG_NF)) {                                   \
++        return ldst_whole_trans(a->rd, a->rs1, ARG_NF, ctzl(sizeof(ETYPE)), \
++                                gen_helper_##NAME, s, IS_LOAD);             \
++    }                                                                       \
++    return false;                                                           \
++}
++
++GEN_LDST_WHOLE_TRANS(vl1re8_v,  int8_t,  1, true)
++GEN_LDST_WHOLE_TRANS(vl1re16_v, int16_t, 1, true)
++GEN_LDST_WHOLE_TRANS(vl1re32_v, int32_t, 1, true)
++GEN_LDST_WHOLE_TRANS(vl1re64_v, int64_t, 1, true)
++GEN_LDST_WHOLE_TRANS(vl2re8_v,  int8_t,  2, true)
++GEN_LDST_WHOLE_TRANS(vl2re16_v, int16_t, 2, true)
++GEN_LDST_WHOLE_TRANS(vl2re32_v, int32_t, 2, true)
++GEN_LDST_WHOLE_TRANS(vl2re64_v, int64_t, 2, true)
++GEN_LDST_WHOLE_TRANS(vl4re8_v,  int8_t,  4, true)
++GEN_LDST_WHOLE_TRANS(vl4re16_v, int16_t, 4, true)
++GEN_LDST_WHOLE_TRANS(vl4re32_v, int32_t, 4, true)
++GEN_LDST_WHOLE_TRANS(vl4re64_v, int64_t, 4, true)
++GEN_LDST_WHOLE_TRANS(vl8re8_v,  int8_t,  8, true)
++GEN_LDST_WHOLE_TRANS(vl8re16_v, int16_t, 8, true)
++GEN_LDST_WHOLE_TRANS(vl8re32_v, int32_t, 8, true)
++GEN_LDST_WHOLE_TRANS(vl8re64_v, int64_t, 8, true)
+ 
+ /*
+  * The vector whole register store instructions are encoded similar to
+  * unmasked unit-stride store of elements with EEW=8.
+  */
+-GEN_LDST_WHOLE_TRANS(vs1r_v, 1)
+-GEN_LDST_WHOLE_TRANS(vs2r_v, 2)
+-GEN_LDST_WHOLE_TRANS(vs4r_v, 4)
+-GEN_LDST_WHOLE_TRANS(vs8r_v, 8)
++GEN_LDST_WHOLE_TRANS(vs1r_v, int8_t, 1, false)
++GEN_LDST_WHOLE_TRANS(vs2r_v, int8_t, 2, false)
++GEN_LDST_WHOLE_TRANS(vs4r_v, int8_t, 4, false)
++GEN_LDST_WHOLE_TRANS(vs8r_v, int8_t, 8, false)
+ 
+ /*
+  *** Vector Integer Arithmetic Instructions
 -- 
-Peter Xu
+2.34.1
 
 
