@@ -4,104 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id EFDECC02181
-	for <qemu-devel@archiver.kernel.org>; Wed, 22 Jan 2025 17:00:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 990CEC02181
+	for <qemu-devel@archiver.kernel.org>; Wed, 22 Jan 2025 17:18:33 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tae5i-00086o-Nd; Wed, 22 Jan 2025 12:00:36 -0500
+	id 1taeMS-0004PK-TD; Wed, 22 Jan 2025 12:17:52 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1tae5L-0007wn-1y
- for qemu-devel@nongnu.org; Wed, 22 Jan 2025 12:00:14 -0500
-Received: from mail-wm1-x330.google.com ([2a00:1450:4864:20::330])
+ (Exim 4.90_1) (envelope-from <tomitamoeko@gmail.com>)
+ id 1taeMQ-0004Ou-N9
+ for qemu-devel@nongnu.org; Wed, 22 Jan 2025 12:17:50 -0500
+Received: from mail-pj1-x1041.google.com ([2607:f8b0:4864:20::1041])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1tae5F-0000c4-Nv
- for qemu-devel@nongnu.org; Wed, 22 Jan 2025 12:00:10 -0500
-Received: by mail-wm1-x330.google.com with SMTP id
- 5b1f17b1804b1-436ce2ab251so50167055e9.1
- for <qemu-devel@nongnu.org>; Wed, 22 Jan 2025 09:00:05 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <tomitamoeko@gmail.com>)
+ id 1taeMO-0008Fd-Az
+ for qemu-devel@nongnu.org; Wed, 22 Jan 2025 12:17:50 -0500
+Received: by mail-pj1-x1041.google.com with SMTP id
+ 98e67ed59e1d1-2ee709715d9so59384a91.3
+ for <qemu-devel@nongnu.org>; Wed, 22 Jan 2025 09:17:47 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1737565203; x=1738170003; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:user-agent
- :references:in-reply-to:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=yIrBZ+7+jhmh9C1WL+7alT0Ya9pKzT/iF9eErs9R8LQ=;
- b=QNM8wXvHvsgp1szPCmAglc3UaQKDoEyqICmVx23ALtAcwYjhAajFogayEksi7DollP
- ShnARBRS52x3lFR/2OT+dNBowXaDpzpF+sLERyWj2sV6oyVT7aX/oTC8WAozwqYNObY2
- SddFHX2osZ1XLcK9vhaM97oPTk7tpUnR37X/o8uYBqEV09J+1DmG5Qd8U83ukTuYohdp
- 9deIQLKGvFT8h7wBh3R/btwBnBJUE0Z17SblB3anYu06x1vv38Xt7bkS9hEfld+RztvX
- /sntlEBsR9qK3jdCKfeD/9iDU+FdF7rINadiadz7+W0oJe8FuUNMRh+V5tSvIkf2u2PV
- fZDQ==
+ d=gmail.com; s=20230601; t=1737566266; x=1738171066; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=pnm78OmIoiRc787KxiboMnktr/wiFCUIARbhgAzi2T8=;
+ b=gVX1wrCsWHyrsdIXX8NjNAJCyWC0nDwR3+32iMtxPay7+dU5+IbpZbbH8YkQNiFd8h
+ d7eRSXOT9YkKkHhGEZqgHYTvQqz+Fa5bMYwKVjkgmReRH1j6RalsZqyWmdWhtw/3dffw
+ Mzob/mYl2DzY6Ul9R/k0RxIknirUfwudPIhemg3bhL//5Uh6ZfELtcp1cLB8ydIt2u3f
+ w2AgZMdnjF68q3/qgmwsEJSRfRosCLWcyXkopnikLDPAGcAH8Y6b0Tn6FWFHGWs10kKL
+ PibvuZZ8bo4A+0rQN8otbKxIGC0eOKQbjK1+ibO+McxQv9ScVDk6myJTeUfNVrMLtIU0
+ FWdQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1737565203; x=1738170003;
- h=content-transfer-encoding:mime-version:message-id:date:user-agent
- :references:in-reply-to:subject:cc:to:from:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=yIrBZ+7+jhmh9C1WL+7alT0Ya9pKzT/iF9eErs9R8LQ=;
- b=p1d1YPTcs4iTsLasHHjZCsba47xBbQhKZwBEY7ZXFIgEdrDIw6EX4lUnhu9SfUh7PD
- W7IHbuld5GpK1F/hoiuhxJ0AURnUQCbDE7NNBWZirvE/cTuAsNSZdND003Xm2kCEsnGr
- n127N6Izl+OVMecNMSV2ofYX1FBOcARFY9sFBINsDf8o3uGgN7TKwMjJwQyCt2qJh4hs
- LK6RJjbSL5Srm5F4QJPh+QWwSIdcoIN4RiHOgO52HxMUs4A2jU2FD0/bsbihk/uxklsl
- zCQyZbD9A4mnFQ48Fn5tk0oUEqH4O77E72XFYock0NVODyCGnWsMWqoEbqXAF+RAmFnQ
- Tq0A==
-X-Forwarded-Encrypted: i=1;
- AJvYcCUcUBUgGfqMb8M1YW7B3miTtYsg8JkaVd5VPR3Qu5P7SLpMBjtYzzkie/iNy8ujP2JN3TuqrldcgC/u@nongnu.org
-X-Gm-Message-State: AOJu0YwO0KBfZXRXPV/j3t9U4iMzp7IJKcIwoLh6CXYW3JL6HZbis1Ja
- Xb+Ki5lEomuSnEOI9yJwfd2BERH9MYxg+QVdXGcO/4wWyKCMCDOhzy6MNrt1fDk=
-X-Gm-Gg: ASbGncvlv2Qw8UNaihQs9eKy709SwUuYR7l1ovAtUUTVtLkBBhP7nauOdVZiFSyhU5R
- D+1G9A/Mp4PRbcQ9Rk9CLxD2qRoZJmbazJDGLcC2p09h8vlKaXaP74Xlyqp5VhAlgL0r/auYR5s
- kDqqpCtZO6Ikfg0k/UEDJymkl3wCt9BFymKPtZwDkKIjobQ2dXWnQdy6VPP0coDS8HJkIGVvutl
- UCCFjK5xiWT9t9ktASJZuEHGgz7wQv3ipZgig/50jVuST9IsoSmbRXqSLzPcAVOBFmw
-X-Google-Smtp-Source: AGHT+IFJgkUbjw+Rmmb6MX2l3vnstPSrIGAuwUDnq7sBH5hz9EnODPyOwlzqh6BJ43/PrCk3IqLESQ==
-X-Received: by 2002:a7b:c00f:0:b0:434:f5c0:32b1 with SMTP id
- 5b1f17b1804b1-4389eecb1f5mr192920315e9.15.1737565203302; 
- Wed, 22 Jan 2025 09:00:03 -0800 (PST)
-Received: from draig.lan ([85.9.250.243]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-438b31adbd7sm32042305e9.17.2025.01.22.09.00.01
+ d=1e100.net; s=20230601; t=1737566266; x=1738171066;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=pnm78OmIoiRc787KxiboMnktr/wiFCUIARbhgAzi2T8=;
+ b=r4wXEhP3tDibjhPhY3BfNFcehiEXXRyIruua9GfQOik4xT2ubHSaNYj5OTORqy7v6P
+ /WiKyxPKFG+NmQgQj2GYmWnEfVMT3+r8/mLOYEtFHQ7gXRSva7tfMKDvtK4+fOvbEY84
+ Z28+EGgsV7sKfgIGm4tDdufr/TFy8wryUVIFLoCy1RXW5sV/VIIrWJnY5qx1Mn5aquQf
+ WeAonFYk6AB0IT/0i9Ukd6bVnsQWY7idSN2E0doFTFgimB/xStH5TmWbiO+MXtnfFpzf
+ aeuo41Bxvxu+zm001YsASPcMw8sTKFYjGGOagv9stCMXXkYXjP8BWIasbCnDf2vOPLic
+ kLNw==
+X-Gm-Message-State: AOJu0YzF0JSjD6LgarBgRjo6nImlV763zRU8oILnT11Xt/3Q31kgfR4a
+ pcV3zf4kRJs0Ttoi+E+a8gGXDV9cO/LxCuB7kecIyB8yS2gXDyY=
+X-Gm-Gg: ASbGncsrKY2RGg+uMXJv2DOb6+Qc6FnmnZQp7aOc6bS8xpe5fcYTzieCmOdfA73m0TB
+ ib0lUAklm/1Qh3mLC2k6hQ2XO38+FDecLnyd2kUK1mf6E3JZNWLvbjuYTobco3vnB4SvRX8hykV
+ 4qrs+hwLUeX7LaD24xS5N7T0F8MF//KHMaMXHcsQ+zNlzk2B8TUM8IMRSA5VZTim+8zAfHvmqaW
+ CL8cCFRZJ9C26OJ/5MevAPJXVEXrV1lFLshr/CQOFPHrMkBEopTc2Iwh2jko0FMVUlnPWcUkotc
+ ZEJQdnk=
+X-Google-Smtp-Source: AGHT+IET1sTNJYwbEBmWVmgijx7+pZnr2zPJ76W8x26FQ6QscyUCiJEHAcppYBYtRwUfzKb/ao8GXQ==
+X-Received: by 2002:a05:6a00:4085:b0:72d:8d98:c256 with SMTP id
+ d2e1a72fcca58-72daf945d6dmr31100024b3a.6.1737566265908; 
+ Wed, 22 Jan 2025 09:17:45 -0800 (PST)
+Received: from localhost.localdomain ([58.38.120.217])
+ by smtp.gmail.com with ESMTPSA id
+ d2e1a72fcca58-72daba48eb8sm11597818b3a.136.2025.01.22.09.17.43
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 22 Jan 2025 09:00:02 -0800 (PST)
-Received: from draig (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id 2C4A35FA4B;
- Wed, 22 Jan 2025 17:00:01 +0000 (GMT)
-From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
-To: Dmitry Osipenko <dmitry.osipenko@collabora.com>
-Cc: Akihiko Odaki <akihiko.odaki@daynix.com>,  Huang Rui
- <ray.huang@amd.com>,  =?utf-8?Q?Marc-Andr=C3=A9?= Lureau
- <marcandre.lureau@redhat.com>,
- Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>,  Gerd Hoffmann
- <kraxel@redhat.com>,  "Michael S . Tsirkin" <mst@redhat.com>,  Paolo
- Bonzini <pbonzini@redhat.com>,  Gert Wollny <gert.wollny@collabora.com>,
- qemu-devel@nongnu.org,  Gurchetan Singh <gurchetansingh@chromium.org>,
- Alyssa Ross <hi@alyssa.is>,  Roger Pau =?utf-8?Q?Monn=C3=A9?=
- <roger.pau@citrix.com>,
- Alex Deucher <alexander.deucher@amd.com>,  Stefano Stabellini
- <stefano.stabellini@amd.com>,  Christian =?utf-8?Q?K=C3=B6nig?=
- <christian.koenig@amd.com>,
- Xenia Ragiadakou <xenia.ragiadakou@amd.com>,  Pierre-Eric Pelloux-Prayer
- <pierre-eric.pelloux-prayer@amd.com>,  Honglei Huang
- <honglei1.huang@amd.com>,  Julia Zhang <julia.zhang@amd.com>,  Chen Jiqian
- <Jiqian.Chen@amd.com>,  Rob Clark <robdclark@gmail.com>,  Yiwei Zhang
- <zzyiwei@chromium.org>,  Sergio Lopez Pascual <slp@redhat.com>
-Subject: Re: [PATCH v5 0/8] Support virtio-gpu DRM native context
-In-Reply-To: <20250119220050.15167-1-dmitry.osipenko@collabora.com> (Dmitry
- Osipenko's message of "Mon, 20 Jan 2025 01:00:42 +0300")
-References: <20250119220050.15167-1-dmitry.osipenko@collabora.com>
-User-Agent: mu4e 1.12.8; emacs 29.4
-Date: Wed, 22 Jan 2025 17:00:01 +0000
-Message-ID: <87jzamn5ri.fsf@draig.linaro.org>
+ Wed, 22 Jan 2025 09:17:45 -0800 (PST)
+From: Tomita Moeko <tomitamoeko@gmail.com>
+To: Alex Williamson <alex.williamson@redhat.com>,
+ =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>
+Cc: qemu-devel@nongnu.org,
+	Tomita Moeko <tomitamoeko@gmail.com>
+Subject: [PATCH 0/4] vfio/igd: remove incorrect IO BAR4 quirk
+Date: Thu, 23 Jan 2025 01:17:27 +0800
+Message-ID: <20250122171731.40444-1-tomitamoeko@gmail.com>
+X-Mailer: git-send-email 2.45.2
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::330;
- envelope-from=alex.bennee@linaro.org; helo=mail-wm1-x330.google.com
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1041;
+ envelope-from=tomitamoeko@gmail.com; helo=mail-pj1-x1041.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -119,71 +97,95 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Dmitry Osipenko <dmitry.osipenko@collabora.com> writes:
+Based on experiments and reverse engineering about the mysterious IO
+BAR4, it appears that the current quirk implementation is incorrect.
+As discussed in a previous mail thread [1], current implementation
+believes VBIOS is writing HPA of Data Stolen Memory (DSM) in GTT
+entries, so it intercepts and writes (addr - Host BDSM + Guest BDSM)
+instead, probably believes the addresses are hardcoded in VBIOS.
 
-> This patchset adds DRM native context support to VirtIO-GPU on Qemu.
->
-> Contarary to Virgl and Venus contexts that mediates high level GFX APIs,
-> DRM native context [1] mediates lower level kernel driver UAPI, which
-> reflects in a less CPU overhead and less/simpler code needed to support i=
-t.
-> DRM context consists of a host and guest parts that have to be implemented
-> for each GPU driver. On a guest side, DRM context presents a virtual GPU =
-as
-> a real/native host GPU device for GL/VK applications.
->
-> [1] https://www.youtube.com/watch?v=3D9sFP_yddLLQ
->
-> Today there are four known DRM native context drivers existing in a wild:
->
->   - Freedreno (Qualcomm SoC GPUs), completely upstreamed
->   - AMDGPU, mostly merged into upstreams
+With disassembling a VBIOS of Intel Sandy/Ivy Bridge and Haswell [2]
+(thankfully there is only a few 32-bit out instructions), VBIOS read
+BDSM from pci config space, which is programmed by SeaBIOS [3] in
+guest. That is to say, VBIOS actually writes GPA when programming GTT
+initial entries, the current quirk is incorrect.
 
-I tried my AMD system today with:
+The change was tested on a Kaby Lake HD620 (Gen 9) by comparing GTT
+entries read from MMIO BAR0 and IO BAR4.
 
-Host:
-  Aarch64 AVA system
-  Trixie
-  virglrenderer @ v1.1.0/99557f5aa130930d11f04ffeb07f3a9aa5963182
-  -display sdl,gl=3Don (gtk,gl=3Don also came up but handled window resizing
-  poorly)
-=20=20
-KVM Guest
+This patchset also creates a new function vfio_config_quirk_setup()
+for the config space quirk previously in vfio_probe_igd_bar4_quirk().
+The OpRegion quirk in vfio_realize() will also be moved to it in a
+later change, so that all the IGD-related quirks can be put in igd.c.
 
-  Aarch64
-  Trixie
-  mesa @ main/d27748a76f7dd9236bfcf9ef172dc13b8c0e170f
-  -Dvulkan-drivers=3Dvirtio,amd -Dgallium-drivers=3Dvirgl,radeonsi -Damdgpu=
--virtio=3Dtrue
+[1] https://lore.kernel.org/qemu-devel/b373a030-5ccf-418c-9213-865ddc6748fd@gmail.com/
+[2] https://winraid.level1techs.com/t/offer-intel-sandy-ivy-bridge-and-haswell-vbios-modules/30272
+[3] https://gitlab.com/qemu-project/seabios/-/blob/1.12-stable/src/fw/pciinit.c#L319-332
 
-However when I ran vulkan-info --summary KVM faulted with:
+Related VBIOS disassembly:
 
-  debian-trixie login: error: kvm run failed Bad address
-   PC=3D0000ffffb9aa1eb0 X00=3D0000ffffba0450a4 X01=3D0000aaaaf7f32400
-  X02=3D000000000000013c X03=3D0000ffffba045098 X04=3D0000aaaaf7f3253c
-  X05=3D0000ffffba0451d4 X06=3D00000000c0016900 X07=3D000000000000000e
-  X08=3D0000000000000014 X09=3D00000000000000ff X10=3D0000aaaaf7f32500
-  X11=3D0000aaaaf7e4d028 X12=3D0000aaaaf7edbcb0 X13=3D0000000000000001
-  X14=3D000000000000000c X15=3D0000000000007718 X16=3D0000ffffb93601f0
-  X17=3D0000ffffb9aa1dc0 X18=3D00000000000076f0 X19=3D0000aaaaf7f31330
-  X20=3D0000aaaaf7f323f0 X21=3D0000aaaaf7f235e0 X22=3D000000000000004c
-  X23=3D0000aaaaf7f2b5e0 X24=3D0000aaaaf7ee0cb0 X25=3D00000000000000ff
-  X26=3D0000000000000076 X27=3D0000ffffcd2b18a8 X28=3D0000aaaaf7ee0cb0
-  X29=3D0000ffffcd2b0bd0 X30=3D0000ffffb86c8b98  SP=3D0000ffffcd2b0bd0
-  PSTATE=3D20001000 --C- EL0t
-  QEMU 9.2.50 monitor - type 'help' for more information
-  (qemu) quit
+# read BDSM
+6498:	66 53                	push   %ebx
+649a:	66 2e 83 3e 94 64 00 	cmpl   $0x0,%cs:0x6494  # BDSM already read?
+64a1:	74 07                	je     0x64aa
+64a3:	66 2e a1 94 64       	mov    %cs:0x6494,%eax 
+64a8:	eb 0f                	jmp    0x64b9
+64aa:	b8 5e 10             	mov    $0x105e,%ax      # 5e == 5c + 2, that's why shl 16 later?
+                                                    # ((2 << 11) + 0x5e)
+64ad:	e8 55 05             	call   0x6a05           # read config space via port cf8/cfc
+64b0:	66 c1 e0 10          	shl    $0x10,%eax       # eax << 16
+64b4:	66 2e a3 94 64       	mov    %eax,%cs:0x6494  # save BDSM
+64b9:	66 5b                	pop    %ebx
+64bb:	c3                   	ret
+# program single GTT entry, esi: addr, eax: data
+6d16:	66 50                	push   %eax
+6d18:	52                   	push   %dx
+6d19:	2e 8b 16 4a e4       	mov    %cs:-0x1bb6,%dx  # saved MMIO_Index port
+6d1e:	66 96                	xchg   %eax,%esi
+6d20:	66 ef                	out    %eax,(%dx)       # write MMIO_Index
+6d22:	2e 8b 16 4c e4       	mov    %cs:-0x1bb4,%dx  # saved MMIO_Data port
+6d27:	66 96                	xchg   %eax,%esi
+6d29:	66 83 c8 01          	or     $0x1,%eax        # set valid bit
+6d2d:	66 ef                	out    %eax,(%dx)       # write MMIO_Data
+6d2f:	5a                   	pop    %dx
+6d30:	66 58                	pop    %eax
+6d32:	c3                   	ret
+# program GTT entries, esi: entry addr, eax: page addr
+e929:	51                   	push   %cx
+e92a:	e8 6b 7b             	call   0x6498       # read BDSM
+e92d:	25 00 e0             	and    $0xe000,%ax
+e930:	66 83 c8 01          	or     $0x1,%eax    # valid bit
+e934:	66 be 01 00 00 00    	mov    $0x1,%esi    # gtt access bit in addr
+e93a:	e8 d9 83             	call   0x6d16       # single entry routine
+e93d:	66 83 c6 04          	add    $0x4,%esi    # next entry
+e941:	66 05 00 10 00 00    	add    $0x1000,%eax # next page
+e947:	e2 f1                	loop   0xe93a
+e949:	59                   	pop    %cx
+e94a:	c3                   	ret
 
-Which looks very much like the PFN locking failure. However booting up
-with venus=3Don instead works. Could there be any differences in the way
-device memory is mapped in the two cases?
+Observed layout of the undocumented MMIO_Index register:
+ 31                                                   2   1      0
++-------------------------------------------------------------------+
+|                        Offset                        | Rsvd | Sel |
++-------------------------------------------------------------------+
+- Offset: Byte offset in specified region, 4-byte aligned.
+- Sel: Region selector
+       0: MMIO register region (first half of MMIO BAR0)
+       1: GTT region (second half of MMIO BAR0). Pre Gen11 only.
 
->   - Intel (i915), merge requests are opened
->   - Asahi (Apple SoC GPUs), WIP status
->
-<snip>
+Tomita Moeko (4):
+  vfio/igd: remove GTT write quirk in IO BAR 4
+  vfio/pci: add placeholder for device-specific config space quirks
+  vfio/igd: refactor vfio_probe_igd_bar4_quirk() into pci config quirk
+  vfio/igd: do not include GTT stolen size in etc/igd-bdsm-size
 
---=20
-Alex Benn=C3=A9e
-Virtualisation Tech Lead @ Linaro
+ hw/vfio/igd.c        | 247 ++++---------------------------------------
+ hw/vfio/pci-quirks.c |  11 +-
+ hw/vfio/pci.c        |   4 +
+ hw/vfio/pci.h        |   3 +-
+ 4 files changed, 35 insertions(+), 230 deletions(-)
+
+-- 
+2.45.2
+
 
