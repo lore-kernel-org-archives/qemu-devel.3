@@ -4,104 +4,88 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A472DC02182
-	for <qemu-devel@archiver.kernel.org>; Wed, 22 Jan 2025 07:56:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0787CC02182
+	for <qemu-devel@archiver.kernel.org>; Wed, 22 Jan 2025 07:57:03 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1taVaN-0004jN-Lq; Wed, 22 Jan 2025 02:55:39 -0500
+	id 1taVbT-0005G7-Op; Wed, 22 Jan 2025 02:56:47 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
- id 1taVaL-0004in-EE
- for qemu-devel@nongnu.org; Wed, 22 Jan 2025 02:55:37 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <ppandit@redhat.com>)
+ id 1taVbQ-0005FX-5B
+ for qemu-devel@nongnu.org; Wed, 22 Jan 2025 02:56:44 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
- id 1taVaJ-0003h8-DC
- for qemu-devel@nongnu.org; Wed, 22 Jan 2025 02:55:37 -0500
+ (Exim 4.90_1) (envelope-from <ppandit@redhat.com>)
+ id 1taVbO-000426-LB
+ for qemu-devel@nongnu.org; Wed, 22 Jan 2025 02:56:43 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1737532533;
- h=from:from:reply-to:reply-to:subject:subject:date:date:
- message-id:message-id:to:to:cc:cc:mime-version:mime-version:
- content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
+ s=mimecast20190719; t=1737532601;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=/9QbCcnhOCwDqHTDGr12UlNscT4Hiusjc6Xs3cgat5k=;
- b=h6D82rocC67Xbhd8bFiOV66+YUSuQAJVhD3YTnhzjErsSWjXNMCJKTUkZDekxmwVpF+qvq
- ZTFcaLV+lqoZHF/OmfoyFciF6VrODb9CI0OLgqnxGErcS5DYM8nXAYar9qpGvk/eT+7+Wc
- F6cMgtWo/86Mt36wG0UGGPs92S3WAZA=
-Received: from mail-qt1-f200.google.com (mail-qt1-f200.google.com
- [209.85.160.200]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=TsPA3DoT3bJlQ+hoGpgvHGAOWJBptocA7k6CB39oCp4=;
+ b=C1Bzs/8bI9F4x4gVUXqExtx3L+mNX1p2Ue0FEsMoAJAiiE6Uw1j//iKOVe11lGVaa9Nbh/
+ KYCEs2wRgsfcqhL9naXF/aY1CJJSvcN5ZyIm349MlRUjScu4cFaQennhFT8FUjSyM+DIGA
+ wzq5dHlIgS8ePu7ICE6c3KeXPhJ7Lkg=
+Received: from mail-wm1-f69.google.com (mail-wm1-f69.google.com
+ [209.85.128.69]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-554-mzCxpXiWMw2gngrheHQkcg-1; Wed, 22 Jan 2025 02:55:30 -0500
-X-MC-Unique: mzCxpXiWMw2gngrheHQkcg-1
-X-Mimecast-MFC-AGG-ID: mzCxpXiWMw2gngrheHQkcg
-Received: by mail-qt1-f200.google.com with SMTP id
- d75a77b69052e-4679aeb21e6so112121091cf.0
- for <qemu-devel@nongnu.org>; Tue, 21 Jan 2025 23:55:30 -0800 (PST)
+ us-mta-687-ghy4z4o0Opei2iJmS4gO1Q-1; Wed, 22 Jan 2025 02:56:40 -0500
+X-MC-Unique: ghy4z4o0Opei2iJmS4gO1Q-1
+X-Mimecast-MFC-AGG-ID: ghy4z4o0Opei2iJmS4gO1Q
+Received: by mail-wm1-f69.google.com with SMTP id
+ 5b1f17b1804b1-4359206e1e4so51455405e9.2
+ for <qemu-devel@nongnu.org>; Tue, 21 Jan 2025 23:56:39 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1737532529; x=1738137329;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:reply-to:user-agent:mime-version:date
- :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+ d=1e100.net; s=20230601; t=1737532599; x=1738137399;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=/9QbCcnhOCwDqHTDGr12UlNscT4Hiusjc6Xs3cgat5k=;
- b=woPvEetEWtONfNSOEbxR0IDoJ5d8Vs3nsp16t+8bu/FLPe7vtUG+Q6J3L5mBcYdRwb
- m6XpjfzoV4wzCD2GXYfTR+MP/T9rPP6fwBOwr70+O35DRMqlsACHvJx+w3TBwvv0inAr
- gX5G19yIERbu+ki6t6Vq79Z/HTk+2fUK7mmgjJ30deXqDwadF4bdJhuz7E3/3K1zFg4C
- N2MlNwSNoOmHiT2Sa1mnunaxzquIoIjX0jWvrrtR0WUTZtnOsaHOTHPldUcZkxGfZ0AD
- RXlwEhqTmOEV14jTtGUSHTAZqDZyAfO4H72b0IGVnIX5IDKGO8gySPKl6RQTmN4Tk2ul
- nIUA==
-X-Forwarded-Encrypted: i=1;
- AJvYcCWEKY3UQ9Y0niNjUNP8jRzGrLlOPUnqsTzIr2zxWN9JPJrAaJ7yeBX0kEKUD5fsE8fhSyaaxThQJ5Yv@nongnu.org
-X-Gm-Message-State: AOJu0YzIDVDdzlpDxLHudShRawWI7uPUaOkf9I3gCajHGovchVAJcmdz
- l0ZvKvGBHVw+HE7wxjsv6nIYVzrMXAD/DPLMJy5O7pI1ImQOW0HV4WD3+stNuUYw5NSYSbFo41C
- 9JwURcl5eiv+xMK/N/ZpruO0em4gzeWe2nGKRYqMeo1P6hzwmupBw
-X-Gm-Gg: ASbGncv1j+yy9vBM1jIIuQQxuQF6S41bfUrE7KqVw37GQDvCSqsZFq41+HTtl71znGr
- 4uBjsVyvfQQuoriNMVy+XnU5KL2fyz6YYZtSx01UWcyLhODne/ze9+K+o8p/6+KpqsUBRz7oZB+
- mQYhDl1CGrZ6ABozS4Hf3pGSxuoyNb915SXz3CXrgEw402ujrm3mGpaJjL/Pt3Rc+KExawZJ9Wa
- mkZQK+uIgrBjUOJdiYwLnVcAkjoOClzkWyB7Knkskm93neEUP8/L8rQ0injqXjGnmK+yEo3xOWM
- oJg9zruznm5bHk/pAGJPoTbE7UhxkZCIzCIH8REjSg==
-X-Received: by 2002:a05:622a:292:b0:460:a82a:39a8 with SMTP id
- d75a77b69052e-46e12a56a1fmr365500881cf.13.1737532529498; 
- Tue, 21 Jan 2025 23:55:29 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IG6hbVvXQb8RLxC3q7aPhq94MvtQ3KhfLN5BPElv7OJOEwty9aCRw33fFjmhJ4wd4TaYfCpPQ==
-X-Received: by 2002:a05:622a:292:b0:460:a82a:39a8 with SMTP id
- d75a77b69052e-46e12a56a1fmr365500741cf.13.1737532529186; 
- Tue, 21 Jan 2025 23:55:29 -0800 (PST)
-Received: from ?IPV6:2a01:e0a:59e:9d80:527b:9dff:feef:3874?
- ([2a01:e0a:59e:9d80:527b:9dff:feef:3874])
- by smtp.gmail.com with ESMTPSA id
- d75a77b69052e-46e102ec283sm61431671cf.2.2025.01.21.23.55.26
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 21 Jan 2025 23:55:28 -0800 (PST)
-Message-ID: <678babb6-f64a-4db5-ad60-494214a4e673@redhat.com>
-Date: Wed, 22 Jan 2025 08:55:24 +0100
+ bh=TsPA3DoT3bJlQ+hoGpgvHGAOWJBptocA7k6CB39oCp4=;
+ b=tXZIRxaarWeSFpGLB8rFKrHMNHC6gvwqeBWsD+oa4tPOUHjlDhqEDw8nQTkiPNjFgQ
+ lGlgFtaMuBA2KQAP7PC73ko6QIca5WVSU3WmJ6TurWPGpJhj4gJ0Q/LNyEJ9+Rae9D6O
+ 8cXTIsW5Qoneix30MCuIIQON3dOK1acHrNoFNIsxhMdrjHxsDjVVkbu7/fsYedpRl04q
+ P6vGMtht0A5OsiGNo/Kby+TU7F8Z6CDYeXB+fk1Acnj1txnPJexTjMsvQmvR5fYkXwNt
+ o12JUP1bR+H+5PkyHS6lD2SUy+RJYagYM0lBFWxWTQi2jbY0swfUkvR2DIaSOe7VREzX
+ L9rQ==
+X-Gm-Message-State: AOJu0YwjLeMNPpFNiTbxc53Ebxqm92pBTCd8GcrF+espOm5rN0l1d1Iy
+ JUZ/kyODEuP0SaX5ocgn70Kg1/vA5WF/32YcQNLhhARQZYfiQY+IZXMS8pmt9OCLGnpZFJOs/ZP
+ dnvVy75dOs/XiR6V34XwnqLqt3T708k+MuKU7816oi6nwhTLH53SHEPX3FEcLdyP1AeU7heIrwY
+ dLFdcBXTLKyFgu2kBmyTsXO99ReFg=
+X-Gm-Gg: ASbGncsjeDKsiceKQ6N7EWGVDINt97guEfWbtRw5z0FcOyHTo9NpT/28xpA8nd0cbPv
+ m2RLqIsJWab8ScK2OqNLaxA3cyK0ef87CK94Zn9YWDKyqPHXUXEecEQ==
+X-Received: by 2002:a05:600c:4e06:b0:434:fddf:5c0c with SMTP id
+ 5b1f17b1804b1-438913c60e1mr191012025e9.4.1737532598801; 
+ Tue, 21 Jan 2025 23:56:38 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IEflFffCnmVB1xlEG6/ZbbLh/CRKzelZf5KENtBOaSTfkvmw4qjON/h6Y2SFB4Npx8Tv1EvZbM2Eao7BPOgWp4=
+X-Received: by 2002:a05:600c:4e06:b0:434:fddf:5c0c with SMTP id
+ 5b1f17b1804b1-438913c60e1mr191011875e9.4.1737532598444; Tue, 21 Jan 2025
+ 23:56:38 -0800 (PST)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] hw/virtio/vhost: Disable IOTLB callbacks when IOMMU gets
- disabled
-Content-Language: en-US
-To: Jason Wang <jasowang@redhat.com>
-Cc: eric.auger.pro@gmail.com, qemu-devel@nongnu.org, mst@redhat.com,
- sgarzare@redhat.com, lvivier@redhat.com, zhenzhong.duan@intel.com
-References: <20250120173339.865681-1-eric.auger@redhat.com>
- <CACGkMEu4oMa8Sf9QXtszeoSMj_67Csr0s7kHdYfbNnJWibu2dA@mail.gmail.com>
- <5a55011a-af8f-483a-99fa-5cb2cdf3841f@redhat.com>
- <CACGkMEv6ec3JLZg6ZedSHdNS5_McX7_xoV4d2MG05x_Y5t=uEA@mail.gmail.com>
-From: Eric Auger <eric.auger@redhat.com>
-In-Reply-To: <CACGkMEv6ec3JLZg6ZedSHdNS5_McX7_xoV4d2MG05x_Y5t=uEA@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.133.124;
- envelope-from=eric.auger@redhat.com; helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -51
-X-Spam_score: -5.2
+References: <20250121131032.1611245-1-ppandit@redhat.com>
+ <20250121131032.1611245-5-ppandit@redhat.com>
+ <Z4_Bh3ytv9REBero@x1n>
+In-Reply-To: <Z4_Bh3ytv9REBero@x1n>
+From: Prasad Pandit <ppandit@redhat.com>
+Date: Wed, 22 Jan 2025 13:26:21 +0530
+X-Gm-Features: AbW1kvbisZurnGBy0hJEazIfjYIYI4LvLJU1UGJrQMZyktlamKbwNynrsUia9vE
+Message-ID: <CAE8KmOw-4_DSoQEVUtJQnAuGdazmLqhL-dpUi3J1y8BN7zjLLw@mail.gmail.com>
+Subject: Re: [PATCH v3 4/4] tests/qtest/migration: add postcopy test with
+ multifd
+To: Peter Xu <peterx@redhat.com>
+Cc: qemu-devel@nongnu.org, farosas@suse.de, berrange@redhat.com, 
+ Prasad Pandit <pjp@fedoraproject.org>
+Content-Type: text/plain; charset="UTF-8"
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=ppandit@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -50
+X-Spam_score: -5.1
 X-Spam_bar: -----
-X-Spam_report: (-5.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-2.996,
+X-Spam_report: (-5.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-2.996,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.086,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -116,121 +100,29 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: eric.auger@redhat.com
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Jason,
+Hi,
+On Tue, 21 Jan 2025 at 21:17, Peter Xu <peterx@redhat.com> wrote:
+> https://lore.kernel.org/qemu-devel/ZykJBq7ME5jgSzCA@x1n/
+> Would you please add all the tests mentioned there?
 
+    /x86_64/migration/multifd/file/mapped-ram/
+    /x86_64/migration/multifd/tcp/uri/plain/none
+    /x86_64/migration/multifd/tcp/plain/cancel
 
-On 1/22/25 8:17 AM, Jason Wang wrote:
-> On Wed, Jan 22, 2025 at 12:25 AM Eric Auger <eric.auger@redhat.com> wrote:
->>
->> Hi Jason,
->>
->> On 1/21/25 4:27 AM, Jason Wang wrote:
->>> On Tue, Jan 21, 2025 at 1:33 AM Eric Auger <eric.auger@redhat.com> wrote:
->>>> When a guest exposed with a vhost device and protected by an
->>>> intel IOMMU gets rebooted, we sometimes observe a spurious warning:
->>>>
->>>> Fail to lookup the translated address ffffe000
->>>>
->>>> We observe that the IOMMU gets disabled through a write to the global
->>>> command register (CMAR_GCMD.TE) before the vhost device gets stopped.
->>>> When this warning happens it can be observed an inflight IOTLB
->>>> miss occurs after the IOMMU disable and before the vhost stop. In
->>>> that case a flat translation occurs and the check in
->>>> vhost_memory_region_lookup() fails.
->>>>
->>>> Let's disable the IOTLB callbacks when all IOMMU MRs have been
->>>> unregistered.
->>>>
->>>> Signed-off-by: Eric Auger <eric.auger@redhat.com>
->>>> ---
->>>>  hw/virtio/vhost.c | 4 ++++
->>>>  1 file changed, 4 insertions(+)
->>>>
->>>> diff --git a/hw/virtio/vhost.c b/hw/virtio/vhost.c
->>>> index 6aa72fd434..128c2ab094 100644
->>>> --- a/hw/virtio/vhost.c
->>>> +++ b/hw/virtio/vhost.c
->>>> @@ -931,6 +931,10 @@ static void vhost_iommu_region_del(MemoryListener *listener,
->>>>              break;
->>>>          }
->>>>      }
->>>> +    if (QLIST_EMPTY(&dev->iommu_list) &&
->>>> +        dev->vhost_ops->vhost_set_iotlb_callback) {
->>>> +        dev->vhost_ops->vhost_set_iotlb_callback(dev, false);
->>>> +    }
->>> So the current code assumes:
->>>
->>> 1) IOMMU is enabled before vhost starts
->>> 2) IOMMU is disabled after vhost stops
->>>
->>> This patch seems to fix 2) but not 1). Do we need to deal with the
->>> IOMMU enabled after vhost starts?
->> sorry I initially misunderstood the above comment. Indeed in the reboot
->> case assumption 2) happens to be wrong. However what I currently do is:
->> stop listening to iotlb miss requests from the kernel because my
->> understanding is those requests are just spurious ones, generate
->> warnings and we do not care since we are rebooting the system.
->>
->> However I do not claim this could handle the case where the IOMMU MR
->> would be turned off and then turned on. I think in that case we should
->> also flush the kernel IOTLB and this is not taken care of in this patch.
->> Is it a relevant use case?
-> Not sure.
->
->> wrt removing assumption 1) and allow IOMMU enabled after vhost start. Is
->> that a valid use case as the virtio driver is using the dma api?
-> It should not be but we can't assume the behaviour of the guest. It
-> could be buggy or even malicious.
+    /x86_64/migration/postcopy/plain
+    /x86_64/migration/postcopy/recovery/
+    /x86_64/migration/postcopy/preempt/
 
-agreed
->
-> Btw, we had the following codes while handling te:
->
-> /* Handle Translation Enable/Disable */
-> static void vtd_handle_gcmd_te(IntelIOMMUState *s, bool en)
-> {
->     if (s->dmar_enabled == en) {
->         return;
->     }
->
->     trace_vtd_dmar_enable(en);
->
-> ...
->
->     vtd_reset_caches(s);
->     vtd_address_space_refresh_all(s);
-> }
->
-> vtd_address_space_refresh_all() will basically disable the iommu
-> memory region. It looks not sufficient to trigger the region_del
-> callback, maybe we should delete the region or introduce listener
-> callback?
+* Of the tests you suggested above, I'll try to enable multifd
+channels for 'postcopy/recovery' and 'postcopy/preempt' tests. For the
+'multifd' tests above, how do we want to modify them? Enable
+'postcopy' mode for them?
 
-This is exactly the code path which is entered in my use case.
-
-vtd_address_space_refresh_all(s) induces the vhost_iommu_region_del. But given the current implement of this latter the IOTLB callback is not unset and the kernel IOTLB is not refreshed. Also as I pointed out the  hdev->mem->regions are not updated? shouldn't they. Can you explain what they correspond to?
-
-Thanks
-
-Eric
-
->
-> Thanks
->
->> Eric
->>
->>
->>> Thanks
->>>
->>>>  }
->>>>
->>>>  void vhost_toggle_device_iotlb(VirtIODevice *vdev)
->>>> --
->>>> 2.47.1
->>>>
+Thank you.
+---
+  - Prasad
 
 
