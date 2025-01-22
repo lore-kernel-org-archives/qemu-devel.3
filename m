@@ -4,71 +4,74 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9FD4FC02182
-	for <qemu-devel@archiver.kernel.org>; Wed, 22 Jan 2025 01:27:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 12994C02182
+	for <qemu-devel@archiver.kernel.org>; Wed, 22 Jan 2025 01:45:07 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1taPWF-0007Qt-RW; Tue, 21 Jan 2025 20:27:00 -0500
+	id 1taPn2-0002x8-PK; Tue, 21 Jan 2025 20:44:22 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <tao1.su@linux.intel.com>)
- id 1taPWC-0007M6-R9
- for qemu-devel@nongnu.org; Tue, 21 Jan 2025 20:26:56 -0500
-Received: from mgamail.intel.com ([198.175.65.21])
+ (Exim 4.90_1) (envelope-from <xiaoyao.li@intel.com>)
+ id 1taPmz-0002wt-La
+ for qemu-devel@nongnu.org; Tue, 21 Jan 2025 20:44:17 -0500
+Received: from mgamail.intel.com ([192.198.163.14])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <tao1.su@linux.intel.com>)
- id 1taPWB-0000Je-CN
- for qemu-devel@nongnu.org; Tue, 21 Jan 2025 20:26:56 -0500
+ (Exim 4.90_1) (envelope-from <xiaoyao.li@intel.com>)
+ id 1taPmx-0005JY-Ox
+ for qemu-devel@nongnu.org; Tue, 21 Jan 2025 20:44:17 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1737509215; x=1769045215;
- h=date:from:to:cc:subject:message-id:references:
- mime-version:in-reply-to;
- bh=g29BVfRw90+61pCIUikzTiukbJSf5iTT4Tn4wk9u0No=;
- b=UK+52UcdrJ0IkqCmj7x24e2VlEJiDIIyNMCqRbYyJqHrp+duSvyld8m+
- B3t/wgbd5sKU0joOeK3nW0t5jbDjG/+zZ3hG0oO9o4ZFiPvt7XynH9j2M
- PSl6bEWVtbkM3N5syWz0A+yrzBlemuS3BTDNw11hoGZC9mj3BrjmMCat2
- 80X3hGDmrNCkx4/Mt91afgakLBN+Z8/vGNi4qDA/K8gLjfW2LjNXHMWZ2
- TUSXA0VOZ8iq49DCYVL7jRMLdDItk/3ZT1Zvj6z9s/Drgfyt7WhEhlqkY
- h0MwI37vcpUhI3OhrTrQuA5uU5yJETrxnYaJtQ+ck5ptDq/FBsbFcD0Mw Q==;
-X-CSE-ConnectionGUID: 5SnLbJeMT/SIDK4Q9ZTLfQ==
-X-CSE-MsgGUID: C4t5r/B+QW6vQGShZFep+Q==
-X-IronPort-AV: E=McAfee;i="6700,10204,11322"; a="37836916"
-X-IronPort-AV: E=Sophos;i="6.13,223,1732608000"; d="scan'208";a="37836916"
+ t=1737510256; x=1769046256;
+ h=message-id:date:mime-version:subject:to:cc:references:
+ from:in-reply-to:content-transfer-encoding;
+ bh=0B1jo/nuu9obrXXfNYQ7NtKVwrBLumjP4MCm7eZdql0=;
+ b=gIfujk1pwRf/N+irt9DK/oQvSkGQXBIYJSFrSaSO/EsFVdUYKd3mmRq1
+ qJksMwLykz+Sydvef3bKqFiDQmqfPz41AZ04QFgeePILKwohcL9e0ApBx
+ j6SiILoHnLOC/ulJHrjRrdfcQsZJi/Lf6xsVFcrKKJ+Rgo2EvAmXBPbwW
+ PeR9GagVKLZuR/nBo8yE/+xTNouL2DGvWwVcozEk3Ue6tUM/AU+R3ev2k
+ kSfj8ASjyH8yFvCRzEhiSG5Gy9urcQlBtEIP6UC7Xqmr21f3rp4ngJcsZ
+ o12GW2PUCHblRMw4HXksYwK+a3FljkkUKCUlA7wRYkM9nFKrbu4+hXcZ1 w==;
+X-CSE-ConnectionGUID: X7oRLnxeSEy8MVtRm/X2jw==
+X-CSE-MsgGUID: jeGvtXjtQwigTlu4v/qzcQ==
+X-IronPort-AV: E=McAfee;i="6700,10204,11322"; a="38203925"
+X-IronPort-AV: E=Sophos;i="6.13,223,1732608000"; d="scan'208";a="38203925"
 Received: from fmviesa009.fm.intel.com ([10.60.135.149])
- by orvoesa113.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 21 Jan 2025 17:26:52 -0800
-X-CSE-ConnectionGUID: 19SI4TTsTLeDCfe6/CozCA==
-X-CSE-MsgGUID: bK47U0NWQ3WhErYWDDgt2A==
+ by fmvoesa108.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 21 Jan 2025 17:44:12 -0800
+X-CSE-ConnectionGUID: s1BcAjG+TN+z2GsJnBsN3g==
+X-CSE-MsgGUID: DfIsWDbVQkWRD+PbjKmTeQ==
 X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.13,223,1732608000"; d="scan'208";a="107587994"
-Received: from linux.bj.intel.com ([10.238.157.71])
+X-IronPort-AV: E=Sophos;i="6.13,223,1732608000"; d="scan'208";a="107590215"
+Received: from xiaoyaol-hp-g830.ccr.corp.intel.com (HELO [10.124.247.1])
+ ([10.124.247.1])
  by fmviesa009-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 21 Jan 2025 17:26:50 -0800
-Date: Wed, 22 Jan 2025 09:21:56 +0800
-From: Tao Su <tao1.su@linux.intel.com>
-To: Paolo Bonzini <pbonzini@redhat.com>
-Cc: qemu-devel@nongnu.org, imammedo@redhat.com, xiaoyao.li@intel.com,
- zhao1.liu@linux.intel.com, xuelian.guo@intel.com
-Subject: Re: [PATCH 0/4] Introduce SierraForest-v2 and ClearwaterForest CPU
- model
-Message-ID: <Z5BINMvNUAb8hMDI@linux.bj.intel.com>
-References: <20250121020650.1899618-1-tao1.su@linux.intel.com>
- <20250121133843.2112669-2-pbonzini@redhat.com>
+ 21 Jan 2025 17:44:09 -0800
+Message-ID: <c507cc1d-a858-4a2d-a45a-bd860a961b8f@intel.com>
+Date: Wed, 22 Jan 2025 09:44:06 +0800
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20250121133843.2112669-2-pbonzini@redhat.com>
-Received-SPF: none client-ip=198.175.65.21;
- envelope-from=tao1.su@linux.intel.com; helo=mgamail.intel.com
-X-Spam_score_int: -72
-X-Spam_score: -7.3
-X-Spam_bar: -------
-X-Spam_report: (-7.3 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-2.996,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_MED=-2.3,
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 1/4] target/i386: Introduce SierraForest-v2 model
+To: Tao Su <tao1.su@linux.intel.com>, qemu-devel@nongnu.org
+Cc: pbonzini@redhat.com, imammedo@redhat.com, zhao1.liu@linux.intel.com,
+ xuelian.guo@intel.com
+References: <20250121020650.1899618-1-tao1.su@linux.intel.com>
+ <20250121020650.1899618-2-tao1.su@linux.intel.com>
+Content-Language: en-US
+From: Xiaoyao Li <xiaoyao.li@intel.com>
+In-Reply-To: <20250121020650.1899618-2-tao1.su@linux.intel.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=192.198.163.14; envelope-from=xiaoyao.li@intel.com;
+ helo=mgamail.intel.com
+X-Spam_score_int: -63
+X-Spam_score: -6.4
+X-Spam_bar: ------
+X-Spam_report: (-6.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-2.996,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ HK_RANDOM_ENVFROM=0.001, HK_RANDOM_FROM=0.999, RCVD_IN_DNSWL_MED=-2.3,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_NONE=0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -84,8 +87,53 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, Jan 21, 2025 at 02:38:44PM +0100, Paolo Bonzini wrote:
-> Queued with the tweaks suggested by Zoltan and Zhao; thanks!
+On 1/21/2025 10:06 AM, Tao Su wrote:
+> Update SierraForest CPU model to add LAM, 4 bits indicating certain bits
+> of IA32_SPEC_CTR are supported(intel-psfd, ipred-ctrl, rrsba-ctrl,
+> bhi-ctrl) and the missing features(ss, tsc-adjust, cldemote, movdiri,
+> movdir64b)
+> 
+> Also add GDS-NO and RFDS-NO to indicate the related vulnerabilities are
+> mitigated in stepping 3.
+> 
+> Tested-by: Xuelian Guo <xuelian.guo@intel.com>
+> Signed-off-by: Tao Su <tao1.su@linux.intel.com>
 
-Thank you Paolo :-)
+Reviewed-by: Xiaoyao Li <xiaoyao.li@intel.com>
+
+> ---
+>   target/i386/cpu.c | 19 +++++++++++++++++++
+>   1 file changed, 19 insertions(+)
+> 
+> diff --git a/target/i386/cpu.c b/target/i386/cpu.c
+> index 1b9c11022c..6db8d6c9ba 100644
+> --- a/target/i386/cpu.c
+> +++ b/target/i386/cpu.c
+> @@ -4549,6 +4549,25 @@ static const X86CPUDefinition builtin_x86_defs[] = {
+>           .model_id = "Intel Xeon Processor (SierraForest)",
+>           .versions = (X86CPUVersionDefinition[]) {
+>               { .version = 1 },
+> +            {
+> +                .version = 2,
+> +                .props = (PropValue[]) {
+> +                    { "ss", "on" },
+> +                    { "tsc-adjust", "on" },
+> +                    { "cldemote", "on" },
+> +                    { "movdiri", "on" },
+> +                    { "movdir64b", "on" },
+> +                    { "gds-no", "on" },
+> +                    { "rfds-no", "on" },
+> +                    { "lam", "on" },
+> +                    { "intel-psfd", "on"},
+> +                    { "ipred-ctrl", "on"},
+> +                    { "rrsba-ctrl", "on"},
+> +                    { "bhi-ctrl", "on"},
+> +                    { "stepping", "3" },
+> +                    { /* end of list */ }
+> +                }
+> +            },
+>               { /* end of list */ },
+>           },
+>       },
+
 
