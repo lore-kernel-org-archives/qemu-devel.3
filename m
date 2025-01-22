@@ -4,80 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id AD71DC0218C
-	for <qemu-devel@archiver.kernel.org>; Wed, 22 Jan 2025 07:03:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CB4C9C02181
+	for <qemu-devel@archiver.kernel.org>; Wed, 22 Jan 2025 07:04:58 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1taUlV-0001cp-KP; Wed, 22 Jan 2025 02:03:05 -0500
+	id 1taUn4-0002Ne-HF; Wed, 22 Jan 2025 02:04:42 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1taUlQ-0001cN-UC
- for qemu-devel@nongnu.org; Wed, 22 Jan 2025 02:03:01 -0500
-Received: from mail-wm1-x32f.google.com ([2a00:1450:4864:20::32f])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1taUn2-0002MK-Og
+ for qemu-devel@nongnu.org; Wed, 22 Jan 2025 02:04:40 -0500
+Received: from mail-wr1-x431.google.com ([2a00:1450:4864:20::431])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1taUlO-0005Xj-Fm
- for qemu-devel@nongnu.org; Wed, 22 Jan 2025 02:03:00 -0500
-Received: by mail-wm1-x32f.google.com with SMTP id
- 5b1f17b1804b1-4361f65ca01so66940365e9.1
- for <qemu-devel@nongnu.org>; Tue, 21 Jan 2025 23:02:53 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1taUn1-0007Xz-76
+ for qemu-devel@nongnu.org; Wed, 22 Jan 2025 02:04:40 -0500
+Received: by mail-wr1-x431.google.com with SMTP id
+ ffacd0b85a97d-386329da1d9so3581848f8f.1
+ for <qemu-devel@nongnu.org>; Tue, 21 Jan 2025 23:04:38 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1737529372; x=1738134172; darn=nongnu.org;
+ d=linaro.org; s=google; t=1737529477; x=1738134277; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=xHrZ66LepaFE0FBEbBTQvX0yn2KYf68GYDha8yIrFLY=;
- b=qKPDdjZxxxNqCLpS+is7ha9pEAIN1+92RIRk0Lpj8zttiUts20iZPKGMQQLY0p6asd
- 6jSq8D08cVzvrvtSPWXJcMeEwaoJhnwsmOs3v/qSgzj9Flrj1MifV3jO2ljfTJrBayrZ
- Y1zMMofxJKjfG+C0KAJIQDMi5jmtzUwAxm6VtMhPpztaOOxUBuOZj6qiI67cusVHVl/c
- BA6f2jFWxI9caezTSEvHIsxUPfc6X/6dTaPOirxNCbKnMM1sE79GMjyzEMmnb1SaMKD7
- vTF7F4JRJUn73PZLdA1Grsje0w19ryi7j6vMKuSq+FtQNFl6Xs8XQlSOB4Hn0zGyXC+A
- 80TA==
+ bh=7pj/ihPJuBcNz0/5dD2cGL0y/yLv0+ZqAdXx5Ookdpg=;
+ b=ax8+aY5O4Jhh6DTn2o4Vim3o4dteQUw5Dny4qLveVjshxWnsxPAFVGrp67vuWj+SjA
+ Or6xoWvGZnCwifdZFwgB97zC5f85SWE3Z3Nq7Sjrc91e1GUyAmDQi7quAWZSW9VUKCTQ
+ uss1Yn8jz5uYXtBswAEC5TFg/cZAfi/+gN2Dh6JIpT68k06mTBhpuyuVs61qKjNZSrYj
+ jw2yRNvXP0WArVWOm8KHrvNT7I9bhVEXXPpgQ1UQatQcBiM7hZWqdaKn9d6Gybba5Ig9
+ 4yDnw0HCNqYTqiXIeMTR3z+uPepGhDFxl0mNkXACou4zxM6HiBz5Qd79jRk4+DwPURFl
+ m2mw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1737529372; x=1738134172;
+ d=1e100.net; s=20230601; t=1737529477; x=1738134277;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=xHrZ66LepaFE0FBEbBTQvX0yn2KYf68GYDha8yIrFLY=;
- b=VDTyJwDvRzLyLQ1Wvzy7/3JYNLx+XCxUj7xgpSILirEfjDfsNbmVRkYXabR8xZi5Wg
- 7K52okFX5xYxNb2Z2bBtYBPiul8UslEpnZGDHGnEU/62Q76NkehNzmkrYiRlUKbGblxv
- WGShGKoyLFBqXyhsphViUZwrjZeHPEGnjW9jHntfmmFsqzizXVaO+u+1OVaGs/HHyKTi
- pUve8VJKcvP2sYZVS0Xr1ZvF0gF9IExddR1ZRR39RfUvoXu7EbRkCQ3kkqtVQ5UddVA/
- FAwIrguEB/1oELFFhikvV0mDFJV97MwOkKJvp8/XDH1yrQZS+31kT4AwFHa8r/7IH8qN
- Pc6w==
-X-Gm-Message-State: AOJu0YwRxGVSugKHKT0Nm2TuXBb+8L1jyYGQy/d8+2dZjLws8cm2k7lS
- yEf1XrrBMCrnVL/jgNRLa2RMlPSv0V5p9AXrFDNpOrx0b7gMKVw10CK/Bx+uppD0Vz2BiL3glTt
- Grac=
-X-Gm-Gg: ASbGnct2Et8w2wV6e05GXFiVsknJbxQRZ7/oS3ZA5R5E8y9RGzmLiE7+A+4KWsaJtbk
- F+iE3NhWzyFkW1NmqNy9k4kfrq02wnFWftMGlfE7828sTcTgMvGJdvmmBxPyXVAzteipsGSo0l2
- 8yCxjmxFC0iCfwL53sNEELnA+jIfqCtB/r4KZAyAShTtnCXMvMowLkShYWqNv1w2sCR49O8hJ3V
- 8iqWnamb5HU+tJYYvc/NkFzBslvmZsJ9eYPMWH3RW+328Gq3/9GPEBKJCtSfRp/9zZfh2cBPq3k
- RTjwpO4d2G9lQPjB+612maKszOeZPLOITzfZsg==
-X-Google-Smtp-Source: AGHT+IH4YQX6qBdLA6G6Cj7eFlm14eJ1Rouyrp3nU6SJRlBwsGFhiIRKfwCzh2yzf6+4dkuEy1drcw==
-X-Received: by 2002:a05:600c:3b0a:b0:434:9c60:95a3 with SMTP id
- 5b1f17b1804b1-438913ca93cmr202971415e9.11.1737529371668; 
- Tue, 21 Jan 2025 23:02:51 -0800 (PST)
+ bh=7pj/ihPJuBcNz0/5dD2cGL0y/yLv0+ZqAdXx5Ookdpg=;
+ b=XTTvTR+n0lUThEbKaWcucxWZ8xryc+GOEYItuSKpNGzuQmTViL14uexLdRIykPrC/Q
+ ZP5GIQDJm3iFOdOuPFx7hpV3aszvDZbFNdfAIuJutHsOjz9hp6UelLxU7EzVQ6OHgqK2
+ DgWBW25b1zskvrhQ3Uh1bA9sCEu8SXRv2ot344Xq7enBvbVb12qxmMYQDNenfca9oPL/
+ k3gyaY+Sqi4DFX5APWtyIlLcdYqLmFfcDfPMW+UCQzRyZOfSvADN9wrkWtxtZMdrhxqf
+ 950x5ZABqw2kUmzLM5LgiW8KvH4K+W5+2ZNAENWsQAaX3nziqrgAPM9LIVceTKJnw+9j
+ Pcpg==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCWuNfVgKidmvoaLf6AA3+12Uk1sd+D6zY8C8D5fhhovtv5hkqzmLyrqZfnh5t1OcJA8fFWN7iKstnGW@nongnu.org
+X-Gm-Message-State: AOJu0YzM778/bSU+67xUcvQ90+sK/iX8m1M7VCNah+4UcIsHsbPkyzfO
+ Z8HfDqydGQaE07PXEVk9xg2XV/fUN/4qNNeGmCfEbxQ/kLnYo96DzIV3fcVwYgc=
+X-Gm-Gg: ASbGncsk6PV2r5ONiBa6EYsP55HM1K5r2+hZ+vDQ1v1XLo9LznZYbAoBdW8iIo9CCvV
+ T9jrbVAZDaVN84Zyckz5UP6rpfHGpSfz7dXxmhVCgxWS4tYIrCA9YJ9QSnZzwrFjGR6GzdJYWlw
+ 3kdrQcP8jHr+NoVB7FUd5OtMT+VEuSTbZzRYQ/K6xixbozJ2YTbxxgjwdEXFYSy99uCOejEimRm
+ OGXFFRwhbPaA0n1nDOrekpwINPQEkwSRL5AdE8Sp/IZmtP2NxnARmK+xIlVPqiEpBuHxgbbgTEO
+ C48jvLwmiLKubUFTafVeoGnK9xSqG9oiGcNlDQ==
+X-Google-Smtp-Source: AGHT+IGKVV2UsBDcnt02eUyI/tAWIADMUfjQHqcXRufNhGJOK6j+O6MGPyMCEFuaxK8CLWhyP6PUXw==
+X-Received: by 2002:a5d:6d02:0:b0:38b:ece5:5fe3 with SMTP id
+ ffacd0b85a97d-38bf565560amr17011979f8f.1.1737529476547; 
+ Tue, 21 Jan 2025 23:04:36 -0800 (PST)
 Received: from [192.168.69.181] (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-438b31b6cacsm12594855e9.26.2025.01.21.23.02.50
+ ffacd0b85a97d-38bf3221b65sm15733214f8f.33.2025.01.21.23.04.34
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 21 Jan 2025 23:02:51 -0800 (PST)
-Message-ID: <a6b184bb-bfc8-4cc5-80b3-5675dc4dd16d@linaro.org>
-Date: Wed, 22 Jan 2025 08:02:49 +0100
+ Tue, 21 Jan 2025 23:04:36 -0800 (PST)
+Message-ID: <062091f5-627b-4369-a962-2c661f290549@linaro.org>
+Date: Wed, 22 Jan 2025 08:04:34 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 2/3] hw/ipack: Clarify KConfig symbols
-To: qemu-devel@nongnu.org
-Cc: Alberto Garcia <berto@igalia.com>, Bernhard Beschow <shentey@gmail.com>
-References: <20250121155526.29982-1-philmd@linaro.org>
- <20250121155526.29982-3-philmd@linaro.org>
+Subject: Re: [PATCH 1/2] hw/pci/msix: Warn on PBA writes
+To: Nicholas Piggin <npiggin@gmail.com>, "Michael S . Tsirkin" <mst@redhat.com>
+Cc: Marcel Apfelbaum <marcel.apfelbaum@gmail.com>, qemu-devel@nongnu.org,
+ Dmitry Fleytman <dmitry.fleytman@gmail.com>,
+ Akihiko Odaki <akihiko.odaki@daynix.com>,
+ Sriram Yagnaraman <sriram.yagnaraman@ericsson.com>
+References: <20250117172842.406338-1-npiggin@gmail.com>
+ <20250117172842.406338-2-npiggin@gmail.com>
 Content-Language: en-US
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20250121155526.29982-3-philmd@linaro.org>
+In-Reply-To: <20250117172842.406338-2-npiggin@gmail.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32f;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x32f.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::431;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x431.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -100,24 +104,25 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 21/1/25 16:55, Philippe Mathieu-Daudé wrote:
-> Split IPACK Kconfig key as {IPACK, TPCI200, IP_OCTAL_232}
+On 17/1/25 18:28, Nicholas Piggin wrote:
+> Of the MSI-X PBA pending bits, the PCI Local Bus Specification says:
 > 
->    - IPack is a bus
->    - TPCI200 is a PCI device providing an IPack bus
->    - IP-Octal232 is an IPack device plugged on an IPack bus
+>    Software should never write, and should only read
+>    Pending Bits. If software writes to Pending Bits, the
+>    result is undefined.
 > 
-> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+> Log a GUEST_ERROR message if the PBA is written to by software.
+> 
+> Cc: Michael S. Tsirkin <mst@redhat.com>
+> Cc: Marcel Apfelbaum <marcel.apfelbaum@gmail.com>
+> Cc: Dmitry Fleytman <dmitry.fleytman@gmail.com>
+> Cc: Akihiko Odaki <akihiko.odaki@daynix.com>
+> Cc: Sriram Yagnaraman <sriram.yagnaraman@ericsson.com>
+> Signed-off-by: Nicholas Piggin <npiggin@gmail.com>
 > ---
->   hw/char/Kconfig                | 5 +++++
->   hw/char/meson.build            | 2 +-
->   hw/ipack/Kconfig               | 4 ++++
->   hw/ipack/meson.build           | 3 ++-
->   tests/qtest/libqos/meson.build | 4 +++-
->   tests/qtest/meson.build        | 4 +++-
->   6 files changed, 18 insertions(+), 4 deletions(-)
+>   hw/pci/msix.c | 9 +++++++++
+>   1 file changed, 9 insertions(+)
 
-Missed from v1:
-Acked-by: Fabiano Rosas <farosas@suse.de>
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 
 
