@@ -4,58 +4,95 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CAB32C02181
-	for <qemu-devel@archiver.kernel.org>; Wed, 22 Jan 2025 08:38:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5E149C02181
+	for <qemu-devel@archiver.kernel.org>; Wed, 22 Jan 2025 08:38:46 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1taWF1-0006HU-1D; Wed, 22 Jan 2025 03:37:39 -0500
+	id 1taWFr-0006yi-LQ; Wed, 22 Jan 2025 03:38:31 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <ethan84@andestech.com>)
- id 1taWEn-0006FU-IH; Wed, 22 Jan 2025 03:37:27 -0500
-Received: from 60-248-80-70.hinet-ip.hinet.net ([60.248.80.70]
- helo=Atcsqr.andestech.com)
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <ethan84@andestech.com>)
- id 1taWEl-0000eH-LJ; Wed, 22 Jan 2025 03:37:25 -0500
-Received: from mail.andestech.com (ATCPCS31.andestech.com [10.0.1.89])
- by Atcsqr.andestech.com with ESMTPS id 50M8aZ4c018567
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Wed, 22 Jan 2025 16:36:35 +0800 (+08)
- (envelope-from ethan84@andestech.com)
-Received: from atcpcw16.andestech.com (10.0.1.106) by ATCPCS31.andestech.com
- (10.0.1.89) with Microsoft SMTP Server (TLS) id 14.3.498.0; Wed, 22 Jan 2025
- 16:36:34 +0800
-To: <qemu-devel@nongnu.org>
-CC: <richard.henderson@linaro.org>, <pbonzini@redhat.com>,
- <palmer@dabbelt.com>, <alistair.francis@wdc.com>, <bmeng.cn@gmail.com>,
- <liwei1518@gmail.com>, <dbarboza@ventanamicro.com>,
- <zhiwei_liu@linux.alibaba.com>, <peterx@redhat.com>,
- <david@redhat.com>, <philmd@linaro.org>, <qemu-riscv@nongnu.org>,
- Ethan Chen <ethan84@andestech.com>
-Subject: [PATCH v10 4/8] target/riscv: Add support for IOPMP
-Date: Wed, 22 Jan 2025 16:36:13 +0800
-Message-ID: <20250122083617.3940240-5-ethan84@andestech.com>
-X-Mailer: git-send-email 2.42.0.345.gaab89be2eb.dirty
-In-Reply-To: <20250122083617.3940240-1-ethan84@andestech.com>
-References: <20250122083617.3940240-1-ethan84@andestech.com>
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1taWFm-0006uY-Gj
+ for qemu-devel@nongnu.org; Wed, 22 Jan 2025 03:38:26 -0500
+Received: from mail-wm1-x329.google.com ([2a00:1450:4864:20::329])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1taWFj-0000k2-Su
+ for qemu-devel@nongnu.org; Wed, 22 Jan 2025 03:38:26 -0500
+Received: by mail-wm1-x329.google.com with SMTP id
+ 5b1f17b1804b1-43675b1155bso75615175e9.2
+ for <qemu-devel@nongnu.org>; Wed, 22 Jan 2025 00:38:23 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1737535102; x=1738139902; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:content-language:references
+ :cc:to:from:subject:user-agent:mime-version:date:message-id:from:to
+ :cc:subject:date:message-id:reply-to;
+ bh=CfYJLQU1nbRa4fINMBMM9iwWTJQ+3oWHm92lV+T+K50=;
+ b=bB8+MOiuA20sL5TEDDBDt+pMHvVO/+dzVCKIHe5qGc5/335RLRJzG+qsVWHUk1CNlC
+ 4bFLJBLww3e8LD5Nb+OIi8VsCz6XynbSbrzV7bpmSrHq5iKn40LppK5vcvrLkVGNNJl0
+ NYoZJv/X6bOXL+g1ZeoZ60tazepytP4gXK/emGKpYxD+qFZK8W4y/3p2MosvJ/U3Xk3B
+ X0G0cSJn4G2QZz71lzQ76O6sKVwdj15W+OvWB/BgIjj7fzEKSx7rWgE0fcCq505GDPv+
+ eFqqqFklF0BQxDPuMfLQlX9mFqNg7zYy0MLzyqEZuyAr113opU0mTM0M0ilgrc4x4rlI
+ 2Wow==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1737535102; x=1738139902;
+ h=content-transfer-encoding:in-reply-to:content-language:references
+ :cc:to:from:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=CfYJLQU1nbRa4fINMBMM9iwWTJQ+3oWHm92lV+T+K50=;
+ b=qGVHxIUjjDYNVlXgJkhSobpoOwtxwOgeNtSZyLyDa9MjC/ddT2Hjdi3qnCdGTqp3DJ
+ MeaziGMMwVg4RefQSXutOrvVUvrltljFH9gdEukgJ772ggfE3oXxzpqjGT9upGMTLNmD
+ +g2Do0U2QvuAE49/gUEVwJs77uM+zJ/ei76Y/5zGcT+nA0EJaq7rxrI/icZDghVgWK1r
+ 5cxjcTMN8ovER10rBE/yA+kNMKZwaogRtcu/m0wLggHMTdwKft7eH8eetAwtcZ+VHE0+
+ lgTXKyaCBKHH3w3q6OGhPJmzDN7XuRDv7R9yTQFYPE7axHxgUt6muDvU2RC8e8xWXTuG
+ 0V4g==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCVZjItoLaYYaRkjRgIkJnkCQhy1F5fGsoWNjrohHixXkTH3HeFl1el9arhSWtPcH9e7bID1B3bHxAGl@nongnu.org
+X-Gm-Message-State: AOJu0YzO+w/mW7OiT1IW6xNbnKXZxD9JU2570FLs58HvDfFPfF8x1QlZ
+ 3ui7IaLCGyH8WUsduFRHrB3omF58A74ryzuyQmC+i9a5oGudasOIE6e3OHu4T0w=
+X-Gm-Gg: ASbGncv89ENXoaRPmXs7Opu4L9sC4utbL333sLqg/ohbft94E0/4OYGSGfjfQVmxKOK
+ m14PjD8M495cGvkzPKGYK5dKdqz+I3PJYs6Ls6EkQqCGOVb9JEGC/lAy3j5k7lWaXzuEDzXzFsZ
+ DMe2BJ9IGuEWUOxRDobfO8wFXO3mSqTL1BaytkEGTnIIAftjHHATEP39IRksFBeuZpCsyuOftYN
+ 13987fuoIaAaaljCCvqQJqbEX0VjBRVN9CL3z0GWywSTGd/kNjiovZ8cdQ3HSTbA4Eh6oYa22kS
+ AYBd3cPUZWazHP9m/YWVYhpZcXtNW3hd5lsDjA==
+X-Google-Smtp-Source: AGHT+IEanfFpshCO+ip8R0ZZ0uHY/MUCUVbwa6WLVFzq8Of/TCiHetYVstVZTa24KM9eD8PK/aMYkQ==
+X-Received: by 2002:a05:600c:4e93:b0:436:1b81:b65c with SMTP id
+ 5b1f17b1804b1-438913df89fmr192119805e9.15.1737535102048; 
+ Wed, 22 Jan 2025 00:38:22 -0800 (PST)
+Received: from [192.168.69.181] (88-187-86-199.subs.proxad.net.
+ [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-438b31ae97dsm15876475e9.22.2025.01.22.00.38.20
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Wed, 22 Jan 2025 00:38:21 -0800 (PST)
+Message-ID: <9bb8aa7b-a464-4dfc-9c76-7ab50d195b2f@linaro.org>
+Date: Wed, 22 Jan 2025 09:38:20 +0100
 MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v3 1/4] Add support for emulation of CRC32 instructions
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+To: Aleksandar Rakic <rakicaleksandar1999@gmail.com>, qemu-devel@nongnu.org
+Cc: aleksandar.rakic@htecgroup.com, djordje.todorovic@htecgroup.com,
+ cfu@mips.com, arikalo@gmail.com, peter.maydell@linaro.org,
+ aurelien@aurel32.net, jiaxun.yang@flygoat.com, kwolf@redhat.com,
+ hreitz@redhat.com, pbonzini@redhat.com, alex.bennee@linaro.org,
+ pierrick.bouvier@linaro.org, berrange@redhat.com,
+ Yongbok Kim <yongbok.kim@mips.com>,
+ Aleksandar Markovic <amarkovic@wavecomp.com>
+References: <20241112164130.2396737-1-aleksandar.rakic@htecgroup.com>
+ <20241112164130.2396737-3-aleksandar.rakic@htecgroup.com>
+ <d136993d-48bc-4283-9de0-c956b5cac302@linaro.org>
+Content-Language: en-US
+In-Reply-To: <d136993d-48bc-4283-9de0-c956b5cac302@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Content-Type: text/plain
-X-Originating-IP: [10.0.1.106]
-X-DKIM-Results: atcpcs31.andestech.com; dkim=none;
-X-DNSRBL: 
-X-MAIL: Atcsqr.andestech.com 50M8aZ4c018567
-Received-SPF: pass client-ip=60.248.80.70; envelope-from=ethan84@andestech.com;
- helo=Atcsqr.andestech.com
-X-Spam_score_int: -8
-X-Spam_score: -0.9
-X-Spam_bar: /
-X-Spam_report: (-0.9 / 5.0 requ) BAYES_00=-1.9,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- RDNS_DYNAMIC=0.982, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- TVD_RCVD_IP=0.001 autolearn=no autolearn_force=no
+Received-SPF: pass client-ip=2a00:1450:4864:20::329;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x329.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -68,76 +105,50 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-to:  Ethan Chen <ethan84@andestech.com>
-From:  Ethan Chen via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Signed-off-by: Ethan Chen <ethan84@andestech.com>
-Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
----
- target/riscv/cpu.c        |  3 +++
- target/riscv/cpu_cfg.h    |  2 ++
- target/riscv/cpu_helper.c | 18 +++++++++++++++---
- 3 files changed, 20 insertions(+), 3 deletions(-)
+On 22/1/25 08:27, Philippe Mathieu-Daudé wrote:
+> On 12/11/24 17:41, Aleksandar Rakic wrote:
+>> Add emulation of MIPS' CRC32 (Cyclic Redundancy Check) instructions.
+>> Reuse zlib crc32() and Linux crc32c().
+>>
+>> Cherry-picked 4cc974938aee1588f852590509004e340c072940
+>> from https://github.com/MIPS/gnutools-qemu
+>>
+>> Signed-off-by: Yongbok Kim <yongbok.kim@mips.com>
+>> Signed-off-by: Aleksandar Markovic <amarkovic@wavecomp.com>
+>> Signed-off-by: Aleksandar Rakic <aleksandar.rakic@htecgroup.com>
+>> Reviewed-by: Aleksandar Rikalo <arikalo@gmail.com>
+>> ---
+>>   target/mips/helper.h             |  2 ++
+>>   target/mips/meson.build          |  1 +
+>>   target/mips/tcg/op_helper.c      | 26 ++++++++++++++++++++++++++
+>>   target/mips/tcg/rel6.decode      |  5 +++++
+>>   target/mips/tcg/rel6_translate.c | 14 ++++++++++++++
+>>   target/mips/tcg/translate.c      | 25 +++++++++++++++++++++++++
+>>   target/mips/tcg/translate.h      |  3 +++
+>>   7 files changed, 76 insertions(+)
+> 
+> 
+>> diff --git a/target/mips/tcg/rel6.decode b/target/mips/tcg/rel6.decode
+>> index d6989cf56e..5074338aa5 100644
+>> --- a/target/mips/tcg/rel6.decode
+>> +++ b/target/mips/tcg/rel6.decode
+>> @@ -16,11 +16,16 @@
+>>   &r                  rs rt rd sa
+>> +&special3_crc       rs rt c sz
+>> +
+>>   @lsa                ...... rs:5 rt:5 rd:5 ... sa:2 ......   &r
+>> +@crc32              ...... rs:5 rt:5 ..... c:3 sz:2 ......   
+>> &special3_crc
+>>   LSA                 000000 ..... ..... ..... 000 .. 000101  @lsa
+>>   DLSA                000000 ..... ..... ..... 000 .. 010101  @lsa
+>> +CRC32               011111 ..... ..... 00000 ... .. 001111  @crc32
 
-diff --git a/target/riscv/cpu.c b/target/riscv/cpu.c
-index 3d4bd157d2..0788511cf4 100644
---- a/target/riscv/cpu.c
-+++ b/target/riscv/cpu.c
-@@ -2867,6 +2867,9 @@ static const Property riscv_cpu_properties[] = {
-      * it with -x and default to 'false'.
-      */
-     DEFINE_PROP_BOOL("x-misa-w", RISCVCPU, cfg.misa_w, false),
-+
-+    DEFINE_PROP_BOOL("iopmp", RISCVCPU, cfg.iopmp, false),
-+    DEFINE_PROP_UINT32("iopmp_rrid", RISCVCPU, cfg.iopmp_rrid, 0),
- };
- 
- #if defined(TARGET_RISCV64)
-diff --git a/target/riscv/cpu_cfg.h b/target/riscv/cpu_cfg.h
-index b410b1e603..09644b8252 100644
---- a/target/riscv/cpu_cfg.h
-+++ b/target/riscv/cpu_cfg.h
-@@ -188,6 +188,8 @@ struct RISCVCPUConfig {
-     bool pmp;
-     bool debug;
-     bool misa_w;
-+    bool iopmp;
-+    uint32_t iopmp_rrid;
- 
-     bool short_isa_string;
- 
-diff --git a/target/riscv/cpu_helper.c b/target/riscv/cpu_helper.c
-index e1dfc4ecbf..3940e612af 100644
---- a/target/riscv/cpu_helper.c
-+++ b/target/riscv/cpu_helper.c
-@@ -1702,9 +1702,21 @@ bool riscv_cpu_tlb_fill(CPUState *cs, vaddr address, int size,
-     }
- 
-     if (ret == TRANSLATE_SUCCESS) {
--        tlb_set_page(cs, address & ~(tlb_size - 1), pa & ~(tlb_size - 1),
--                     prot, mmu_idx, tlb_size);
--        return true;
-+        if (cpu->cfg.iopmp) {
-+            /*
-+             * Do not align address on early stage because IOPMP needs origin
-+             * address for permission check.
-+             */
-+            tlb_set_page_with_attrs(cs, address, pa,
-+                                    (MemTxAttrs)
-+                                        {
-+                                          .requester_id = cpu->cfg.iopmp_rrid,
-+                                        },
-+                                    prot, mmu_idx, tlb_size);
-+        } else {
-+            tlb_set_page(cs, address & ~(tlb_size - 1), pa & ~(tlb_size - 1),
-+                         prot, mmu_idx, tlb_size);
-+        }
-     } else if (probe) {
-         return false;
-     } else {
--- 
-2.34.1
+Are these really available on MIPS64? (Looking at MD00087 Revision 6.05)
+
+> Interestingly the disassembly for that is in tree, hidden in commit
+> 99029be1c28 ("target/mips: Add implementation of GINVT instruction")...
 
 
