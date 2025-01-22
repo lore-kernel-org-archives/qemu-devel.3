@@ -4,160 +4,68 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 66BBAC02181
-	for <qemu-devel@archiver.kernel.org>; Wed, 22 Jan 2025 10:18:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5337EC02181
+	for <qemu-devel@archiver.kernel.org>; Wed, 22 Jan 2025 10:30:59 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1taXok-0007Ze-3s; Wed, 22 Jan 2025 05:18:38 -0500
+	id 1taXzt-0001WK-BQ; Wed, 22 Jan 2025 05:30:09 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <david@redhat.com>) id 1taXoi-0007ZV-Tu
- for qemu-devel@nongnu.org; Wed, 22 Jan 2025 05:18:36 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
+ id 1taXzm-0001Ri-6P; Wed, 22 Jan 2025 05:30:05 -0500
+Received: from mgamail.intel.com ([198.175.65.18])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <david@redhat.com>) id 1taXoh-0002Fi-80
- for qemu-devel@nongnu.org; Wed, 22 Jan 2025 05:18:36 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1737541113;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=Xb/EK2O/G2mEvPE2BUltpijaTciFDVCG0WIAUPiX/TM=;
- b=WB31bXOuGxskEj3ZDhA+I7d6A3wWj0ypGrS7OmJdMQaqUTx7TsHGmmVWf0n0mnowD69KnP
- VmwjDNNVK0ddkEOOFLq1jmV9By66YYSXc4X3qH7Jg+IDixWNm6aHSQyYzwEm666lxze7nA
- gCcSdbMY9EjfyO/3EmKQk0HmbAnOwCk=
-Received: from mail-wm1-f69.google.com (mail-wm1-f69.google.com
- [209.85.128.69]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-206-8s5lpDXnNoeTLhvGXn60zQ-1; Wed, 22 Jan 2025 05:18:32 -0500
-X-MC-Unique: 8s5lpDXnNoeTLhvGXn60zQ-1
-X-Mimecast-MFC-AGG-ID: 8s5lpDXnNoeTLhvGXn60zQ
-Received: by mail-wm1-f69.google.com with SMTP id
- 5b1f17b1804b1-43631d8d9c7so3706805e9.1
- for <qemu-devel@nongnu.org>; Wed, 22 Jan 2025 02:18:32 -0800 (PST)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1737541111; x=1738145911;
- h=content-transfer-encoding:in-reply-to:organization:autocrypt
- :content-language:from:references:cc:to:subject:user-agent
- :mime-version:date:message-id:x-gm-message-state:from:to:cc:subject
- :date:message-id:reply-to;
- bh=Xb/EK2O/G2mEvPE2BUltpijaTciFDVCG0WIAUPiX/TM=;
- b=Wr8EXyVpXUz3asrvxA8xUg9bXEOo+bHLLp1amk1zZ7GMUDf/WnsMoy4LVvti4SLc6h
- vFqlBe7pAonoE3UZhqu/K1Gm1IApszxdIz2nITSk3MITU5x3OytktOpBbjbXge7kLVWu
- iZ5MkHp0WwhlXuP+9Wqk43mhk3No7U8/w2Z/CnB02ciLuDguoPCT1m++3hvRKA5zgDMx
- G7jhCUpoQwsq9V/j8tJija7AdUxjQwuCY0qD4dItyPBdRYjbbD+flpAHwW3YKwwko0DQ
- deu2Tm6troR2lVyFvYaCe+RMuJp6HynvfR/Xdf5C2Y03dvwCV9cN2BU5NJsrIT5VJjKo
- uxiw==
-X-Forwarded-Encrypted: i=1;
- AJvYcCW1BQxnFWiCitisgPxapoZ7wTUZ/6rtkVbtGAbTcByiNAaXM00igJPu62ax+BsWgg/c+NvS8Pq23r+9@nongnu.org
-X-Gm-Message-State: AOJu0YzD1Ypaf7OXXAK6iJIqHTUvt6EQux9yEPrH1G3BCOPAd4ze7LxC
- ZcECG8nBprRlZc9gcJBO0tKRD0Ejh6mLveNcpyrhk9VdlxsJD7U67XW5XYqbuUPsDz4sOVhkvc5
- 7kWmnUSboVYdbkCkFg+CAH4rrWhA7th01JroETv4S0QVlUAsQlYAC
-X-Gm-Gg: ASbGncs5+m6CkfN9PoiIa0WdLJQ1lcafxaSGXec1oHEdRowo2DhdBKu8RqkZ7WTQ3kx
- QdMJWLWPGqTD7GmZpUP+0n6cGgNbytdVMZlibLfpZhpxKirKYhlGwzARJKIYX4Gbzu3HH6eye3f
- 8rzGfXhUZqOFC7mTTeIrMMNTiSy19mcO6d6sTtEYlVbk1i0Md0TxBycriaTHpIalclQhsM5uov7
- 8HFthi1L8A7RYSWuZDHPjCcFjGR5wG/a7gS9gbxd3U6J4o9iY6oeR+Yvf4z+oDTbAJbLCFFaffM
- +lmEKIJS24rGggB/MbhTMNmuYMiKQidyk3WUaOlSROljoszeNYyphOCjubyOST6rUxO0D2d37l2
- lvs+SVBpSGabdkgbKFlTQIQ==
-X-Received: by 2002:a05:600c:cc8:b0:434:fe3c:c662 with SMTP id
- 5b1f17b1804b1-438918f6027mr162909225e9.12.1737541110951; 
- Wed, 22 Jan 2025 02:18:30 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IHMIJkouFwIpoPLgifBKc3WUp+iy/fb58ecVbyzngM6Doyjb6Kmqy3QFHohJECZ6LMSPrxxaA==
-X-Received: by 2002:a05:600c:cc8:b0:434:fe3c:c662 with SMTP id
- 5b1f17b1804b1-438918f6027mr162908965e9.12.1737541110580; 
- Wed, 22 Jan 2025 02:18:30 -0800 (PST)
-Received: from ?IPV6:2003:cb:c70b:db00:724d:8b0c:110e:3713?
- (p200300cbc70bdb00724d8b0c110e3713.dip0.t-ipconnect.de.
- [2003:cb:c70b:db00:724d:8b0c:110e:3713])
- by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-438b31d99ffsm18427065e9.29.2025.01.22.02.18.29
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 22 Jan 2025 02:18:30 -0800 (PST)
-Message-ID: <ec89b3da-49e3-4b57-892b-8a15a786c6c2@redhat.com>
-Date: Wed, 22 Jan 2025 11:18:29 +0100
+ (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
+ id 1taXzj-0004oO-UD; Wed, 22 Jan 2025 05:30:01 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+ d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+ t=1737541800; x=1769077800;
+ h=date:from:to:cc:subject:message-id:references:
+ mime-version:in-reply-to;
+ bh=1RrwgssKEK25K5PKpW3gE7SUjcQRKfYVJLxYPvUtzXs=;
+ b=lr2YXheGk35ggB8PqkuBxd2DfP87ZbjYK5V9uB6+6EJ8AN5WJe6JGZYj
+ 63vUV3MYc4ow6IWJkhgl5QQnJSsYtotTDMp8G/8gLk5PiamcX/LYQ2cH/
+ PtPvw8MD7b7K52LvKwZWw9L/41KX2oN5KjQ3BkSVtKNoA/AZcxymvNyoV
+ N5Ib34xYDEaFN2iCwIQUCXum7Z1m8Hv9c1bgEKPJcHGLh++XUHSSkMFXW
+ PzUnfrioHuCq2TUqVjjg5Jhe1ejI21IOp35yhnE7hP8DBS53WmzrBx0Zk
+ wOfZrxoJv2jTOVcxQNK0jNv4gzaHCBxQw3UiJIl6pvbbWY58HPb72shay g==;
+X-CSE-ConnectionGUID: iPJpMT1rSHCI5ZCusGHX3Q==
+X-CSE-MsgGUID: ewDfMeX9R4u+WPGMVoV63w==
+X-IronPort-AV: E=McAfee;i="6700,10204,11314"; a="38094458"
+X-IronPort-AV: E=Sophos;i="6.12,310,1728975600"; d="scan'208";a="38094458"
+Received: from orviesa004.jf.intel.com ([10.64.159.144])
+ by orvoesa110.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 22 Jan 2025 02:29:56 -0800
+X-CSE-ConnectionGUID: kU6RKQHITXmGjFJ5tuFb2w==
+X-CSE-MsgGUID: 8kHla6krQGmHLigG0NV5TQ==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.13,224,1732608000"; d="scan'208";a="112128098"
+Received: from liuzhao-optiplex-7080.sh.intel.com (HELO localhost)
+ ([10.239.160.39])
+ by orviesa004.jf.intel.com with ESMTP; 22 Jan 2025 02:29:55 -0800
+Date: Wed, 22 Jan 2025 18:49:17 +0800
+From: Zhao Liu <zhao1.liu@intel.com>
+To: Paolo Bonzini <pbonzini@redhat.com>
+Cc: qemu-devel@nongnu.org, qemu-rust@nongnu.org
+Subject: Re: [PATCH 02/10] rust: vmstate: implement VMState for non-leaf types
+Message-ID: <Z5DNLaEkklbInqh9@intel.com>
+References: <20250117090046.1045010-1-pbonzini@redhat.com>
+ <20250117090046.1045010-3-pbonzini@redhat.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v1 1/4] physmem: disallow direct access to RAM DEVICE in
- address_space_write_rom()
-To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- qemu-devel@nongnu.org
-Cc: Paolo Bonzini <pbonzini@redhat.com>, Peter Xu <peterx@redhat.com>,
- Peter Maydell <peter.maydell@linaro.org>,
- =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Alex Williamson <alex.williamson@redhat.com>,
- Eduardo Habkost <eduardo@habkost.net>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- Elena Ufimtseva <elena.ufimtseva@oracle.com>,
- Jagannathan Raman <jag.raman@oracle.com>,
- "Dr. David Alan Gilbert" <dave@treblig.org>, Stefan Zabka <git@zabka.it>
-References: <20250120111503.244994-1-david@redhat.com>
- <20250120111503.244994-2-david@redhat.com>
- <5267cc69-18ec-48b1-be60-90c972922806@linaro.org>
- <de04d28c-c729-4c84-b241-1eb312586c52@redhat.com>
- <f93b6689-678e-4fbc-8091-7c99e114152a@redhat.com>
- <4df5272b-b1f6-4aec-a0ee-c3de324d8000@linaro.org>
-From: David Hildenbrand <david@redhat.com>
-Content-Language: en-US
-Autocrypt: addr=david@redhat.com; keydata=
- xsFNBFXLn5EBEAC+zYvAFJxCBY9Tr1xZgcESmxVNI/0ffzE/ZQOiHJl6mGkmA1R7/uUpiCjJ
- dBrn+lhhOYjjNefFQou6478faXE6o2AhmebqT4KiQoUQFV4R7y1KMEKoSyy8hQaK1umALTdL
- QZLQMzNE74ap+GDK0wnacPQFpcG1AE9RMq3aeErY5tujekBS32jfC/7AnH7I0v1v1TbbK3Gp
- XNeiN4QroO+5qaSr0ID2sz5jtBLRb15RMre27E1ImpaIv2Jw8NJgW0k/D1RyKCwaTsgRdwuK
- Kx/Y91XuSBdz0uOyU/S8kM1+ag0wvsGlpBVxRR/xw/E8M7TEwuCZQArqqTCmkG6HGcXFT0V9
- PXFNNgV5jXMQRwU0O/ztJIQqsE5LsUomE//bLwzj9IVsaQpKDqW6TAPjcdBDPLHvriq7kGjt
- WhVhdl0qEYB8lkBEU7V2Yb+SYhmhpDrti9Fq1EsmhiHSkxJcGREoMK/63r9WLZYI3+4W2rAc
- UucZa4OT27U5ZISjNg3Ev0rxU5UH2/pT4wJCfxwocmqaRr6UYmrtZmND89X0KigoFD/XSeVv
- jwBRNjPAubK9/k5NoRrYqztM9W6sJqrH8+UWZ1Idd/DdmogJh0gNC0+N42Za9yBRURfIdKSb
- B3JfpUqcWwE7vUaYrHG1nw54pLUoPG6sAA7Mehl3nd4pZUALHwARAQABzSREYXZpZCBIaWxk
- ZW5icmFuZCA8ZGF2aWRAcmVkaGF0LmNvbT7CwZgEEwEIAEICGwMGCwkIBwMCBhUIAgkKCwQW
- AgMBAh4BAheAAhkBFiEEG9nKrXNcTDpGDfzKTd4Q9wD/g1oFAl8Ox4kFCRKpKXgACgkQTd4Q
- 9wD/g1oHcA//a6Tj7SBNjFNM1iNhWUo1lxAja0lpSodSnB2g4FCZ4R61SBR4l/psBL73xktp
- rDHrx4aSpwkRP6Epu6mLvhlfjmkRG4OynJ5HG1gfv7RJJfnUdUM1z5kdS8JBrOhMJS2c/gPf
- wv1TGRq2XdMPnfY2o0CxRqpcLkx4vBODvJGl2mQyJF/gPepdDfcT8/PY9BJ7FL6Hrq1gnAo4
- 3Iv9qV0JiT2wmZciNyYQhmA1V6dyTRiQ4YAc31zOo2IM+xisPzeSHgw3ONY/XhYvfZ9r7W1l
- pNQdc2G+o4Di9NPFHQQhDw3YTRR1opJaTlRDzxYxzU6ZnUUBghxt9cwUWTpfCktkMZiPSDGd
- KgQBjnweV2jw9UOTxjb4LXqDjmSNkjDdQUOU69jGMUXgihvo4zhYcMX8F5gWdRtMR7DzW/YE
- BgVcyxNkMIXoY1aYj6npHYiNQesQlqjU6azjbH70/SXKM5tNRplgW8TNprMDuntdvV9wNkFs
- 9TyM02V5aWxFfI42+aivc4KEw69SE9KXwC7FSf5wXzuTot97N9Phj/Z3+jx443jo2NR34XgF
- 89cct7wJMjOF7bBefo0fPPZQuIma0Zym71cP61OP/i11ahNye6HGKfxGCOcs5wW9kRQEk8P9
- M/k2wt3mt/fCQnuP/mWutNPt95w9wSsUyATLmtNrwccz63XOwU0EVcufkQEQAOfX3n0g0fZz
- Bgm/S2zF/kxQKCEKP8ID+Vz8sy2GpDvveBq4H2Y34XWsT1zLJdvqPI4af4ZSMxuerWjXbVWb
- T6d4odQIG0fKx4F8NccDqbgHeZRNajXeeJ3R7gAzvWvQNLz4piHrO/B4tf8svmRBL0ZB5P5A
- 2uhdwLU3NZuK22zpNn4is87BPWF8HhY0L5fafgDMOqnf4guJVJPYNPhUFzXUbPqOKOkL8ojk
- CXxkOFHAbjstSK5Ca3fKquY3rdX3DNo+EL7FvAiw1mUtS+5GeYE+RMnDCsVFm/C7kY8c2d0G
- NWkB9pJM5+mnIoFNxy7YBcldYATVeOHoY4LyaUWNnAvFYWp08dHWfZo9WCiJMuTfgtH9tc75
- 7QanMVdPt6fDK8UUXIBLQ2TWr/sQKE9xtFuEmoQGlE1l6bGaDnnMLcYu+Asp3kDT0w4zYGsx
- 5r6XQVRH4+5N6eHZiaeYtFOujp5n+pjBaQK7wUUjDilPQ5QMzIuCL4YjVoylWiBNknvQWBXS
- lQCWmavOT9sttGQXdPCC5ynI+1ymZC1ORZKANLnRAb0NH/UCzcsstw2TAkFnMEbo9Zu9w7Kv
- AxBQXWeXhJI9XQssfrf4Gusdqx8nPEpfOqCtbbwJMATbHyqLt7/oz/5deGuwxgb65pWIzufa
- N7eop7uh+6bezi+rugUI+w6DABEBAAHCwXwEGAEIACYCGwwWIQQb2cqtc1xMOkYN/MpN3hD3
- AP+DWgUCXw7HsgUJEqkpoQAKCRBN3hD3AP+DWrrpD/4qS3dyVRxDcDHIlmguXjC1Q5tZTwNB
- boaBTPHSy/Nksu0eY7x6HfQJ3xajVH32Ms6t1trDQmPx2iP5+7iDsb7OKAb5eOS8h+BEBDeq
- 3ecsQDv0fFJOA9ag5O3LLNk+3x3q7e0uo06XMaY7UHS341ozXUUI7wC7iKfoUTv03iO9El5f
- XpNMx/YrIMduZ2+nd9Di7o5+KIwlb2mAB9sTNHdMrXesX8eBL6T9b+MZJk+mZuPxKNVfEQMQ
- a5SxUEADIPQTPNvBewdeI80yeOCrN+Zzwy/Mrx9EPeu59Y5vSJOx/z6OUImD/GhX7Xvkt3kq
- Er5KTrJz3++B6SH9pum9PuoE/k+nntJkNMmQpR4MCBaV/J9gIOPGodDKnjdng+mXliF3Ptu6
- 3oxc2RCyGzTlxyMwuc2U5Q7KtUNTdDe8T0uE+9b8BLMVQDDfJjqY0VVqSUwImzTDLX9S4g/8
- kC4HRcclk8hpyhY2jKGluZO0awwTIMgVEzmTyBphDg/Gx7dZU1Xf8HFuE+UZ5UDHDTnwgv7E
- th6RC9+WrhDNspZ9fJjKWRbveQgUFCpe1sa77LAw+XFrKmBHXp9ZVIe90RMe2tRL06BGiRZr
- jPrnvUsUUsjRoRNJjKKA/REq+sAnhkNPPZ/NNMjaZ5b8Tovi8C0tmxiCHaQYqj7G2rgnT0kt
- WNyWQQ==
-Organization: Red Hat
-In-Reply-To: <4df5272b-b1f6-4aec-a0ee-c3de324d8000@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=david@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -51
-X-Spam_score: -5.2
-X-Spam_bar: -----
-X-Spam_report: (-5.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-2.996,
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20250117090046.1045010-3-pbonzini@redhat.com>
+Received-SPF: pass client-ip=198.175.65.18; envelope-from=zhao1.liu@intel.com;
+ helo=mgamail.intel.com
+X-Spam_score_int: -73
+X-Spam_score: -7.4
+X-Spam_bar: -------
+X-Spam_report: (-7.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-2.996,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.086,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -173,99 +81,22 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 22.01.25 11:17, Philippe Mathieu-Daudé wrote:
-> On 22/1/25 11:13, David Hildenbrand wrote:
->> On 22.01.25 11:10, David Hildenbrand wrote:
->>> On 22.01.25 11:07, Philippe Mathieu-Daudé wrote:
->>>> Hi David,
->>>>
->>>> On 20/1/25 12:14, David Hildenbrand wrote:
->>>>> As documented in commit 4a2e242bbb306 ("memory: Don't use memcpy for
->>>>> ram_device regions"), we disallow direct access to RAM DEVICE regions.
->>>>>
->>>>> Let's factor out the "supports direct access" check from
->>>>> memory_access_is_direct() so we can reuse it, and make it a bit
->>>>> easier to
->>>>> read.
->>>>>
->>>>> This change implies that address_space_write_rom() and
->>>>> cpu_memory_rw_debug() won't be able to write to RAM DEVICE regions. It
->>>>> will also affect cpu_flush_icache_range(), but it's only used by
->>>>> hw/core/loader.c after writing to ROM, so it is expected to not apply
->>>>> here with RAM DEVICE.
->>>>>
->>>>> This fixes direct access to these regions where we don't want direct
->>>>> access. We'll extend cpu_memory_rw_debug() next to also be able to
->>>>> write to
->>>>> these (and IO) regions.
->>>>>
->>>>> This is a preparation for further changes.
->>>>>
->>>>> Cc: Alex Williamson <alex.williamson@redhat.com>
->>>>> Signed-off-by: David Hildenbrand <david@redhat.com>
->>>>> ---
->>>>>      include/exec/memory.h | 30 ++++++++++++++++++++++++------
->>>>>      system/physmem.c      |  3 +--
->>>>>      2 files changed, 25 insertions(+), 8 deletions(-)
->>>>>
->>>>> diff --git a/include/exec/memory.h b/include/exec/memory.h
->>>>> index 3ee1901b52..bd0ddb9cdf 100644
->>>>> --- a/include/exec/memory.h
->>>>> +++ b/include/exec/memory.h
->>>>> @@ -2985,15 +2985,33 @@ MemTxResult
->>>>> address_space_write_cached_slow(MemoryRegionCache *cache,
->>>>>      int memory_access_size(MemoryRegion *mr, unsigned l, hwaddr addr);
->>>>>      bool prepare_mmio_access(MemoryRegion *mr);
->>>>> +static inline bool
->>>>> memory_region_supports_direct_access(MemoryRegion *mr)
->>>>> +{
->>>>> +    /* ROM DEVICE regions only allow direct access if in ROMD mode. */
->>>>> +    if (memory_region_is_romd(mr)) {
->>>>> +        return true;
->>>>> +    }
->>>>> +    if (!memory_region_is_ram(mr)) {
->>>>> +        return false;
->>>>> +    }
->>>>> +    /*
->>>>> +     * RAM DEVICE regions can be accessed directly using memcpy,
->>>>> but it might
->>>>> +     * be MMIO and access using mempy can be wrong (e.g., using
->>>>> instructions not
->>>>> +     * intended for MMIO access). So we treat this as IO.
->>>>> +     */
->>>>> +    return !memory_region_is_ram_device(mr);
->>>>> +
->>>>> +}
->>>>> +
->>>>>      static inline bool memory_access_is_direct(MemoryRegion *mr,
->>>>> bool is_write)
->>>>>      {
->>>>> -    if (is_write) {
->>>>> -        return memory_region_is_ram(mr) && !mr->readonly &&
->>>>> -               !mr->rom_device && !memory_region_is_ram_device(mr);
->>>>> -    } else {
->>>>> -        return (memory_region_is_ram(mr) && !
->>>>> memory_region_is_ram_device(mr)) ||
->>>>
->>>> This patch is doing multiple things at once, and I'm having hard time
->>>> reviewing it.
->>>
->>> I appreciate the review, but ... really?! :)
->>>
->>> 25 insertions(+), 8 deletions(-)
->>
->> FWIW, I'll try to split it up ... I thought the comments added to
->> memory_region_supports_direct_access() and friends are pretty clear.
+On Fri, Jan 17, 2025 at 10:00:38AM +0100, Paolo Bonzini wrote:
+> Date: Fri, 17 Jan 2025 10:00:38 +0100
+> From: Paolo Bonzini <pbonzini@redhat.com>
+> Subject: [PATCH 02/10] rust: vmstate: implement VMState for non-leaf types
+> X-Mailer: git-send-email 2.47.1
 > 
-> No worry, I'll give it another try. (split still welcomed, but not
-> blocking).
+> Arrays, pointers and cells use a VMStateField that is based on that
+> for the inner type.  The implementation therefore delegates to the
+> VMState implementation of the inner type.
+> 
+> Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
+> ---
+>  rust/qemu-api/src/vmstate.rs | 79 +++++++++++++++++++++++++++++++++++-
+>  1 file changed, 78 insertions(+), 1 deletion(-)
+> 
 
-I think unmangling the existing unreadable conditions in 
-memory_access_is_direct() can be done separately; let me see what I can do.
-
--- 
-Cheers,
-
-David / dhildenb
+Reviewed-by: Zhao Liu <zhao1.liu@intel.com>
 
 
