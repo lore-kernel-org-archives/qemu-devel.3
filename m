@@ -4,76 +4,59 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D8CF1C02181
-	for <qemu-devel@archiver.kernel.org>; Wed, 22 Jan 2025 08:48:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 42DF2C02181
+	for <qemu-devel@archiver.kernel.org>; Wed, 22 Jan 2025 08:48:52 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1taWNd-0002w1-2F; Wed, 22 Jan 2025 03:46:33 -0500
+	id 1taWPd-0005WB-Tu; Wed, 22 Jan 2025 03:48:37 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1taWNb-0002vQ-2S; Wed, 22 Jan 2025 03:46:31 -0500
-Received: from mgamail.intel.com ([198.175.65.9])
+ (Exim 4.90_1) (envelope-from <ethan84@andestech.com>)
+ id 1taWPB-0005Lj-CE; Wed, 22 Jan 2025 03:48:10 -0500
+Received: from 60-248-80-70.hinet-ip.hinet.net ([60.248.80.70]
+ helo=Atcsqr.andestech.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1taWNY-0002y5-Uz; Wed, 22 Jan 2025 03:46:30 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
- d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1737535589; x=1769071589;
- h=from:to:cc:subject:date:message-id:in-reply-to:
- references:mime-version:content-transfer-encoding;
- bh=0Zj1pK2FHXf1BvAq4W768QzuPxnMz2DRuJqlcMCtTe0=;
- b=Z2z5fDBwbzDLPiFVpyWBtWaCijETEsFp4KYguP3Ywj4Y1SsSIOqnfcsA
- MYbigi9wIC6ra4eWGMaG/xJ79YTgRUMhOa2nIARa1iLZy8Q99fjXIrVPd
- /JSvNf72yaKm+ZEVQk1IHDlEmiDwSX1CBtk07c2bSBHHbqhYKyKRm7V5R
- mYA1p+8FeCGBG5X6rB7/Vr188zkHxGFGImzhleXZL3rhrlp0EW96yMRiq
- wOGk54L6gQnv86Cwjt848alAMaiPgUuu7GQRWeHBsDyU9wxFW38pfUp4e
- sqmcsVlrqyH8d086imRl+TedI/kWZFnGT+btDd3KfiBPck6rkJ6tVRo1J Q==;
-X-CSE-ConnectionGUID: IFr8fyUSSYC9iptTIrqAxA==
-X-CSE-MsgGUID: tsOPEmBVSlm1rshOZ53Ffw==
-X-IronPort-AV: E=McAfee;i="6700,10204,11322"; a="60451591"
-X-IronPort-AV: E=Sophos;i="6.13,224,1732608000"; d="scan'208";a="60451591"
-Received: from orviesa003.jf.intel.com ([10.64.159.143])
- by orvoesa101.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 22 Jan 2025 00:46:28 -0800
-X-CSE-ConnectionGUID: 9iOaAaR8SoSnqJLZfdS3gg==
-X-CSE-MsgGUID: WRTm5araTDWKtHiVkDMGcA==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.11,199,1725346800"; d="scan'208";a="112049932"
-Received: from liuzhao-optiplex-7080.sh.intel.com ([10.239.160.39])
- by orviesa003.jf.intel.com with ESMTP; 22 Jan 2025 00:46:23 -0800
-From: Zhao Liu <zhao1.liu@intel.com>
-To: Paolo Bonzini <pbonzini@redhat.com>, Eric Blake <eblake@redhat.com>,
- Markus Armbruster <armbru@redhat.com>, Michael Roth <michael.roth@amd.com>,
- =?UTF-8?q?Daniel=20P=20=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
- Eduardo Habkost <eduardo@habkost.net>,
- Marcelo Tosatti <mtosatti@redhat.com>, Shaoqin Huang <shahuang@redhat.com>,
- Eric Auger <eauger@redhat.com>, Peter Maydell <peter.maydell@linaro.org>,
- Laurent Vivier <lvivier@redhat.com>, Thomas Huth <thuth@redhat.com>,
- Sebastian Ott <sebott@redhat.com>, Gavin Shan <gshan@redhat.com>
-Cc: qemu-devel@nongnu.org, kvm@vger.kernel.org, qemu-arm@nongnu.org,
- Dapeng Mi <dapeng1.mi@intel.com>, Yi Lai <yi1.lai@intel.com>,
- Zhao Liu <zhao1.liu@intel.com>
-Subject: [RFC v2 4/5] i386/kvm: Support event with masked entry format in KVM
- PMU filter
-Date: Wed, 22 Jan 2025 17:05:16 +0800
-Message-Id: <20250122090517.294083-5-zhao1.liu@intel.com>
-X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20250122090517.294083-1-zhao1.liu@intel.com>
-References: <20250122090517.294083-1-zhao1.liu@intel.com>
+ (Exim 4.90_1) (envelope-from <ethan84@andestech.com>)
+ id 1taWP8-0004LO-J6; Wed, 22 Jan 2025 03:48:09 -0500
+Received: from mail.andestech.com (ATCPCS31.andestech.com [10.0.1.89])
+ by Atcsqr.andestech.com with ESMTPS id 50M8leE6025437
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Wed, 22 Jan 2025 16:47:40 +0800 (+08)
+ (envelope-from ethan84@andestech.com)
+Received: from atcpcw16.andestech.com (10.0.1.106) by ATCPCS31.andestech.com
+ (10.0.1.89) with Microsoft SMTP Server (TLS) id 14.3.498.0; Wed, 22 Jan 2025
+ 16:47:40 +0800
+To: <qemu-devel@nongnu.org>
+CC: <richard.henderson@linaro.org>, <pbonzini@redhat.com>,
+ <palmer@dabbelt.com>, <alistair.francis@wdc.com>, <bmeng.cn@gmail.com>,
+ <liwei1518@gmail.com>, <dbarboza@ventanamicro.com>,
+ <zhiwei_liu@linux.alibaba.com>, <peterx@redhat.com>,
+ <david@redhat.com>, <philmd@linaro.org>, <qemu-riscv@nongnu.org>,
+ Ethan Chen <ethan84@andestech.com>
+Subject: [PATCH v10 7/8] hw/misc/riscv_iopmp_dispatcher: Device for redirect
+ IOPMP transaction infomation
+Date: Wed, 22 Jan 2025 16:47:25 +0800
+Message-ID: <20250122084725.3971111-1-ethan84@andestech.com>
+X-Mailer: git-send-email 2.42.0.345.gaab89be2eb.dirty
+In-Reply-To: <20250122083617.3940240-1-ethan84@andestech.com>
+References: <20250122083617.3940240-1-ethan84@andestech.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=198.175.65.9; envelope-from=zhao1.liu@intel.com;
- helo=mgamail.intel.com
-X-Spam_score_int: -73
-X-Spam_score: -7.4
-X-Spam_bar: -------
-X-Spam_report: (-7.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-2.996,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Type: text/plain
+X-Originating-IP: [10.0.1.106]
+X-DKIM-Results: atcpcs31.andestech.com; dkim=none;
+X-DNSRBL: 
+X-MAIL: Atcsqr.andestech.com 50M8leE6025437
+Received-SPF: pass client-ip=60.248.80.70; envelope-from=ethan84@andestech.com;
+ helo=Atcsqr.andestech.com
+X-Spam_score_int: -8
+X-Spam_score: -0.9
+X-Spam_bar: /
+X-Spam_report: (-0.9 / 5.0 requ) BAYES_00=-1.9,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ RDNS_DYNAMIC=0.982, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ TVD_RCVD_IP=0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -86,330 +69,246 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-to:  Ethan Chen <ethan84@andestech.com>
+From:  Ethan Chen via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-KVM_SET_PMU_EVENT_FILTER of x86 KVM supports masked events mode, which
-accepts masked entry format event to flexibly represent a group of PMU
-events.
+This device determines the target IOPMP device for forwarding information
+based on:
+* Address: For parallel IOPMP devices
+* Stage: For cascading IOPMP devices
 
-Support masked entry format in kvm-pmu-filter object and handle this in
-i386 kvm codes.
-
-Signed-off-by: Zhao Liu <zhao1.liu@intel.com>
+Signed-off-by: Ethan Chen <ethan84@andestech.com>
 ---
-Changes since RFC v1:
- * Bump up the supported QAPI version to 10.0.
----
- accel/kvm/kvm-pmu.c   | 91 +++++++++++++++++++++++++++++++++++++++++++
- qapi/kvm.json         | 68 ++++++++++++++++++++++++++++++--
- target/i386/kvm/kvm.c | 39 +++++++++++++++++++
- 3 files changed, 195 insertions(+), 3 deletions(-)
+ hw/misc/meson.build                      |   1 +
+ hw/misc/riscv_iopmp_dispatcher.c         | 136 +++++++++++++++++++++++
+ include/hw/misc/riscv_iopmp_dispatcher.h |  61 ++++++++++
+ 3 files changed, 198 insertions(+)
+ create mode 100644 hw/misc/riscv_iopmp_dispatcher.c
+ create mode 100644 include/hw/misc/riscv_iopmp_dispatcher.h
 
-diff --git a/accel/kvm/kvm-pmu.c b/accel/kvm/kvm-pmu.c
-index cbd32e8e21f8..9d68cd15e477 100644
---- a/accel/kvm/kvm-pmu.c
-+++ b/accel/kvm/kvm-pmu.c
-@@ -62,6 +62,16 @@ static void kvm_pmu_filter_get_event(Object *obj, Visitor *v, const char *name,
-             str_event->u.x86_default.umask =
-                 g_strdup_printf("0x%x", event->u.x86_default.umask);
-             break;
-+        case KVM_PMU_EVENT_FMT_X86_MASKED_ENTRY:
-+            str_event->u.x86_masked_entry.select =
-+                g_strdup_printf("0x%x", event->u.x86_masked_entry.select);
-+            str_event->u.x86_masked_entry.match =
-+                g_strdup_printf("0x%x", event->u.x86_masked_entry.match);
-+            str_event->u.x86_masked_entry.mask =
-+                g_strdup_printf("0x%x", event->u.x86_masked_entry.mask);
-+            str_event->u.x86_masked_entry.exclude =
-+                event->u.x86_masked_entry.exclude;
-+            break;
-         default:
-             g_assert_not_reached();
-         }
-@@ -160,6 +170,87 @@ static void kvm_pmu_filter_set_event(Object *obj, Visitor *v, const char *name,
-             event->u.x86_default.umask = umask;
-             break;
-         }
-+        case KVM_PMU_EVENT_FMT_X86_MASKED_ENTRY: {
-+            uint64_t select, match, mask;
-+
-+            ret = qemu_strtou64(str_event->u.x86_masked_entry.select,
-+                                NULL, 0, &select);
-+            if (ret < 0) {
-+                error_setg(errp,
-+                           "Invalid %s PMU event (select: %s): %s. "
-+                           "The select must be a "
-+                           "12-bit unsigned number string.",
-+                           KVMPMUEventEncodeFmt_str(str_event->format),
-+                           str_event->u.x86_masked_entry.select,
-+                           strerror(-ret));
-+                g_free(event);
-+                goto fail;
-+            }
-+            if (select > UINT12_MAX) {
-+                error_setg(errp,
-+                           "Invalid %s PMU event (select: %s): "
-+                           "Numerical result out of range. "
-+                           "The select must be a "
-+                           "12-bit unsigned number string.",
-+                           KVMPMUEventEncodeFmt_str(str_event->format),
-+                           str_event->u.x86_masked_entry.select);
-+                g_free(event);
-+                goto fail;
-+            }
-+            event->u.x86_masked_entry.select = select;
-+
-+            ret = qemu_strtou64(str_event->u.x86_masked_entry.match,
-+                                NULL, 0, &match);
-+            if (ret < 0) {
-+                error_setg(errp,
-+                           "Invalid %s PMU event (match: %s): %s. "
-+                           "The match must be a uint8 string.",
-+                           KVMPMUEventEncodeFmt_str(str_event->format),
-+                           str_event->u.x86_masked_entry.match,
-+                           strerror(-ret));
-+                g_free(event);
-+                goto fail;
-+            }
-+            if (match > UINT8_MAX) {
-+                error_setg(errp,
-+                           "Invalid %s PMU event (match: %s): "
-+                           "Numerical result out of range. "
-+                           "The match must be a uint8 string.",
-+                           KVMPMUEventEncodeFmt_str(str_event->format),
-+                           str_event->u.x86_masked_entry.match);
-+                g_free(event);
-+                goto fail;
-+            }
-+            event->u.x86_masked_entry.match = match;
-+
-+            ret = qemu_strtou64(str_event->u.x86_masked_entry.mask,
-+                                NULL, 0, &mask);
-+            if (ret < 0) {
-+                error_setg(errp,
-+                           "Invalid %s PMU event (mask: %s): %s. "
-+                           "The mask must be a uint8 string.",
-+                           KVMPMUEventEncodeFmt_str(str_event->format),
-+                           str_event->u.x86_masked_entry.mask,
-+                           strerror(-ret));
-+                g_free(event);
-+                goto fail;
-+            }
-+            if (mask > UINT8_MAX) {
-+                error_setg(errp,
-+                           "Invalid %s PMU event (mask: %s): "
-+                           "Numerical result out of range. "
-+                           "The mask must be a uint8 string.",
-+                           KVMPMUEventEncodeFmt_str(str_event->format),
-+                           str_event->u.x86_masked_entry.mask);
-+                g_free(event);
-+                goto fail;
-+            }
-+            event->u.x86_masked_entry.mask = mask;
-+
-+            event->u.x86_masked_entry.exclude =
-+                str_event->u.x86_masked_entry.exclude;
-+            break;
-+        }
-         default:
-             g_assert_not_reached();
-         }
-diff --git a/qapi/kvm.json b/qapi/kvm.json
-index 93b869e3f90c..a673e499e7ea 100644
---- a/qapi/kvm.json
-+++ b/qapi/kvm.json
-@@ -29,11 +29,14 @@
- #
- # @x86-default: standard x86 encoding format with select and umask.
- #
-+# @x86-masked-entry: KVM's masked entry format for x86, which could
-+#                    mask bunch of events.
-+#
- # Since 10.0
- ##
- { 'enum': 'KVMPMUEventEncodeFmt',
-   'prefix': 'KVM_PMU_EVENT_FMT',
--  'data': ['raw', 'x86-default'] }
-+  'data': ['raw', 'x86-default', 'x86-masked-entry'] }
+diff --git a/hw/misc/meson.build b/hw/misc/meson.build
+index 88f2bb6b88..497f83637f 100644
+--- a/hw/misc/meson.build
++++ b/hw/misc/meson.build
+@@ -35,6 +35,7 @@ system_ss.add(when: 'CONFIG_SIFIVE_E_AON', if_true: files('sifive_e_aon.c'))
+ system_ss.add(when: 'CONFIG_SIFIVE_U_OTP', if_true: files('sifive_u_otp.c'))
+ system_ss.add(when: 'CONFIG_SIFIVE_U_PRCI', if_true: files('sifive_u_prci.c'))
+ specific_ss.add(when: 'CONFIG_RISCV_IOPMP', if_true: files('riscv_iopmp.c'))
++specific_ss.add(when: 'CONFIG_RISCV_IOPMP', if_true: files('riscv_iopmp_dispatcher.c'))
  
- ##
- # @KVMPMURawEvent:
-@@ -67,6 +70,40 @@
-   'data': { 'select': 'uint16',
-             'umask': 'uint8' } }
+ subdir('macio')
  
-+##
-+# @KVMPMUX86MaskedEntry:
-+#
-+# x86 PMU events encoding in KVM masked entry format.
-+#
-+# Encoding layout:
-+# Bits   Description
-+# ----   -----------
-+# 7:0    event select (low bits)
-+# 15:8   (umask) match
-+# 31:16  unused
-+# 35:32  event select (high bits)
-+# 36:54  unused
-+# 55     exclude bit
-+# 63:56  (umask) mask
-+#
-+# Events are selected by (umask & mask == match)
-+#
-+# @select: x86 PMU event select, which is a 12-bit unsigned number.
-+#
-+# @match: umask match.
-+#
-+# @mask: umask mask.
-+#
-+# @exclude: Whether the matched events are excluded.
-+#
-+# Since 10.0
-+##
-+{ 'struct': 'KVMPMUX86MaskedEntry',
-+  'data': { 'select': 'uint16',
-+            'match': 'uint8',
-+            'mask': 'uint8',
-+            'exclude': 'bool' } }
+diff --git a/hw/misc/riscv_iopmp_dispatcher.c b/hw/misc/riscv_iopmp_dispatcher.c
+new file mode 100644
+index 0000000000..4086e9c82b
+--- /dev/null
++++ b/hw/misc/riscv_iopmp_dispatcher.c
+@@ -0,0 +1,136 @@
++/*
++ * QEMU RISC-V IOPMP dispatcher
++ *
++ * Receives transaction information from the requestor and forwards it to the
++ * corresponding IOPMP device.
++ *
++ * Copyright (c) 2023-2025 Andes Tech. Corp.
++ *
++ * SPDX-License-Identifier: GPL-2.0-or-later
++ *
++ * This program is free software; you can redistribute it and/or modify it
++ * under the terms and conditions of the GNU General Public License,
++ * version 2 or later, as published by the Free Software Foundation.
++ *
++ * This program is distributed in the hope it will be useful, but WITHOUT
++ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
++ * FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License for
++ * more details.
++ *
++ * You should have received a copy of the GNU General Public License along with
++ * this program.  If not, see <http://www.gnu.org/licenses/>.
++ */
 +
- ##
- # @KVMPMUFilterEvent:
- #
-@@ -80,7 +117,8 @@
-   'base': { 'format': 'KVMPMUEventEncodeFmt' },
-   'discriminator': 'format',
-   'data': { 'raw': 'KVMPMURawEvent',
--            'x86-default': 'KVMPMUX86DefalutEvent' } }
-+            'x86-default': 'KVMPMUX86DefalutEvent',
-+            'x86-masked-entry': 'KVMPMUX86MaskedEntry' } }
- 
- ##
- # @KVMPMUFilterProperty:
-@@ -125,6 +163,29 @@
-   'data': { 'select': 'str',
-             'umask': 'str' } }
- 
-+##
-+# @KVMPMUX86MaskedEntryVariant:
-+#
-+# The variant of KVMPMUX86MaskedEntry with the string, rather than
-+# the numeric value.
-+#
-+# @select: x86 PMU event select.  This field is a 12-bit unsigned
-+#     number string.
-+#
-+# @match: umask match.  This field is a uint8 string.
-+#
-+# @mask: umask mask.  This field is a uint8 string.
-+#
-+# @exclude: Whether the matched events are excluded.
-+#
-+# Since 10.0
-+##
-+{ 'struct': 'KVMPMUX86MaskedEntryVariant',
-+  'data': { 'select': 'str',
-+            'match': 'str',
-+            'mask': 'str',
-+            'exclude': 'bool' } }
++#include "qemu/osdep.h"
++#include "qemu/log.h"
++#include "qapi/error.h"
++#include "trace.h"
++#include "exec/exec-all.h"
++#include "exec/address-spaces.h"
++#include "hw/qdev-properties.h"
++#include "hw/sysbus.h"
++#include "hw/misc/riscv_iopmp_dispatcher.h"
++#include "memory.h"
++#include "hw/irq.h"
++#include "hw/misc/riscv_iopmp_txn_info.h"
 +
- ##
- # @KVMPMUFilterEventVariant:
- #
-@@ -138,7 +199,8 @@
-   'base': { 'format': 'KVMPMUEventEncodeFmt' },
-   'discriminator': 'format',
-   'data': { 'raw': 'KVMPMURawEventVariant',
--            'x86-default': 'KVMPMUX86DefalutEventVariant' } }
-+            'x86-default': 'KVMPMUX86DefalutEventVariant',
-+            'x86-masked-entry': 'KVMPMUX86MaskedEntryVariant' } }
- 
- ##
- # @KVMPMUFilterPropertyVariant:
-diff --git a/target/i386/kvm/kvm.c b/target/i386/kvm/kvm.c
-index bab58761417a..97b94c331271 100644
---- a/target/i386/kvm/kvm.c
-+++ b/target/i386/kvm/kvm.c
-@@ -5974,6 +5974,13 @@ static bool kvm_config_pmu_event(KVMPMUFilter *filter,
-             code = X86_PMU_RAW_EVENT(event->u.x86_default.select,
-                                      event->u.x86_default.umask);
-             break;
-+        case KVM_PMU_EVENT_FMT_X86_MASKED_ENTRY:
-+            code = KVM_PMU_ENCODE_MASKED_ENTRY(
-+                       event->u.x86_masked_entry.select,
-+                       event->u.x86_masked_entry.mask,
-+                       event->u.x86_masked_entry.match,
-+                       event->u.x86_masked_entry.exclude ? 1 : 0);
-+            break;
-         default:
-             g_assert_not_reached();
-         }
-@@ -6005,6 +6012,21 @@ static int kvm_install_pmu_event_filter(KVMState *s)
-         g_assert_not_reached();
-     }
- 
-+    /*
-+     * The check in kvm_arch_check_pmu_filter() ensures masked entry
-+     * format won't be mixed with other formats.
-+     */
-+    kvm_filter->flags = filter->events->value->format ==
-+                        KVM_PMU_EVENT_FMT_X86_MASKED_ENTRY ?
-+                        KVM_PMU_EVENT_FLAG_MASKED_EVENTS : 0;
++static void riscv_iopmp_dispatcher_realize(DeviceState *dev, Error **errp)
++{
++    int i;
++    RISCVIOPMPDispState *s = RISCV_IOPMP_DISP(dev);
 +
-+    if (kvm_filter->flags == KVM_PMU_EVENT_FLAG_MASKED_EVENTS &&
-+        !kvm_vm_check_extension(s, KVM_CAP_PMU_EVENT_MASKED_EVENTS)) {
-+        error_report("Masked entry format of PMU event "
-+                     "is not supported by Host.");
-+        goto fail;
++    s->SinkMemMap = g_new(SinkMemMapEntry *, s->stage_num);
++    for (i = 0; i < s->stage_num; i++) {
++        s->SinkMemMap[i] = g_new(SinkMemMapEntry, s->target_num);
 +    }
 +
-     if (!kvm_config_pmu_event(filter, kvm_filter)) {
-         goto fail;
-     }
-@@ -6632,6 +6654,7 @@ static void kvm_arch_check_pmu_filter(const Object *obj, const char *name,
- {
-     KVMPMUFilter *filter = KVM_PMU_FILTER(child);
-     KVMPMUFilterEventList *events = filter->events;
-+    uint32_t base_flag;
- 
-     if (!filter->nevents) {
-         error_setg(errp,
-@@ -6639,12 +6662,21 @@ static void kvm_arch_check_pmu_filter(const Object *obj, const char *name,
-         return;
-     }
- 
-+    /* Pick the first event's flag as the base one. */
-+    base_flag = events->value->format ==
-+                KVM_PMU_EVENT_FMT_X86_MASKED_ENTRY ?
-+                KVM_PMU_EVENT_FLAG_MASKED_EVENTS : 0;
-     while (events) {
-         KVMPMUFilterEvent *event = events->value;
-+        uint32_t flag;
- 
-         switch (event->format) {
-         case KVM_PMU_EVENT_FMT_RAW:
-         case KVM_PMU_EVENT_FMT_X86_DEFAULT:
-+            flag = 0;
-+            break;
-+        case KVM_PMU_EVENT_FMT_X86_MASKED_ENTRY:
-+            flag = KVM_PMU_EVENT_FLAG_MASKED_EVENTS;
-             break;
-         default:
-             error_setg(errp,
-@@ -6653,6 +6685,13 @@ static void kvm_arch_check_pmu_filter(const Object *obj, const char *name,
-             return;
-         }
- 
-+        if (flag != base_flag) {
-+            error_setg(errp,
-+                       "Masked entry format cannot be mixed with "
-+                       "other formats.");
-+            return;
-+        }
++    object_initialize_child(OBJECT(s), "iopmp_dispatcher_txn_info",
++                            &s->txn_info_sink,
++                            TYPE_RISCV_IOPMP_DISP_SS);
++}
 +
-         events = events->next;
-     }
- }
++static const Property iopmp_dispatcher_properties[] = {
++    DEFINE_PROP_UINT32("stage-num", RISCVIOPMPDispState, stage_num, 2),
++    DEFINE_PROP_UINT32("target-num", RISCVIOPMPDispState, target_num, 10),
++};
++
++static void riscv_iopmp_dispatcher_class_init(ObjectClass *klass, void *data)
++{
++    DeviceClass *dc = DEVICE_CLASS(klass);
++    device_class_set_props(dc, iopmp_dispatcher_properties);
++    dc->realize = riscv_iopmp_dispatcher_realize;
++}
++
++static const TypeInfo riscv_iopmp_dispatcher_info = {
++    .name = TYPE_RISCV_IOPMP_DISP,
++    .parent = TYPE_DEVICE,
++    .instance_size = sizeof(RISCVIOPMPDispState),
++    .class_init = riscv_iopmp_dispatcher_class_init,
++};
++
++static size_t dispatcher_txn_info_push(StreamSink *txn_info_sink,
++                                       unsigned char *buf,
++                                       size_t len, bool eop)
++{
++    uint64_t addr;
++    uint32_t stage;
++    int i, j;
++    riscv_iopmp_disp_ss *ss =
++        RISCV_IOPMP_DISP_SS(txn_info_sink);
++    RISCVIOPMPDispState *s = RISCV_IOPMP_DISP(container_of(ss,
++        RISCVIOPMPDispState, txn_info_sink));
++    riscv_iopmp_txn_info signal;
++    memcpy(&signal, buf, len);
++    addr = signal.start_addr;
++    stage = signal.stage;
++    for (i = stage; i < s->stage_num; i++) {
++        for (j = 0; j < s->target_num; j++) {
++            if (s->SinkMemMap[i][j].map.base <= addr &&
++                addr < s->SinkMemMap[i][j].map.base
++                + s->SinkMemMap[i][j].map.size) {
++                    return stream_push(s->SinkMemMap[i][j].sink, buf, len, eop);
++            }
++        }
++    }
++    /* Always pass if target is not protected by IOPMP*/
++    return 1;
++}
++
++static void riscv_iopmp_disp_ss_class_init(
++    ObjectClass *klass, void *data)
++{
++    StreamSinkClass *ssc = STREAM_SINK_CLASS(klass);
++    ssc->push = dispatcher_txn_info_push;
++}
++
++static const TypeInfo riscv_iopmp_disp_ss_info = {
++    .name = TYPE_RISCV_IOPMP_DISP_SS,
++    .parent = TYPE_OBJECT,
++    .instance_size = sizeof(riscv_iopmp_disp_ss),
++    .class_init = riscv_iopmp_disp_ss_class_init,
++    .interfaces = (InterfaceInfo[]) {
++        { TYPE_STREAM_SINK },
++        { }
++    },
++};
++
++void iopmp_dispatcher_add_target(DeviceState *dev, StreamSink *sink,
++    uint64_t base, uint64_t size, uint32_t stage, uint32_t id)
++{
++    RISCVIOPMPDispState *s = RISCV_IOPMP_DISP(dev);
++    if (stage < s->stage_num && id < s->target_num) {
++        s->SinkMemMap[stage][id].map.base = base;
++        s->SinkMemMap[stage][id].map.size = size;
++        s->SinkMemMap[stage][id].sink = sink;
++    }
++}
++
++static void
++iopmp_dispatcher_register_types(void)
++{
++    type_register_static(&riscv_iopmp_dispatcher_info);
++    type_register_static(&riscv_iopmp_disp_ss_info);
++}
++
++type_init(iopmp_dispatcher_register_types);
++
+diff --git a/include/hw/misc/riscv_iopmp_dispatcher.h b/include/hw/misc/riscv_iopmp_dispatcher.h
+new file mode 100644
+index 0000000000..bbaa76507b
+--- /dev/null
++++ b/include/hw/misc/riscv_iopmp_dispatcher.h
+@@ -0,0 +1,61 @@
++/*
++ * QEMU RISC-V IOPMP dispatcher
++ *
++ * Receives transaction information from the requestor and forwards it to the
++ * corresponding IOPMP device.
++ *
++ * Copyright (c) 2023-2024 Andes Tech. Corp.
++ *
++ * SPDX-License-Identifier: GPL-2.0-or-later
++ *
++ * This program is free software; you can redistribute it and/or modify it
++ * under the terms and conditions of the GNU General Public License,
++ * version 2 or later, as published by the Free Software Foundation.
++ *
++ * This program is distributed in the hope it will be useful, but WITHOUT
++ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
++ * FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License for
++ * more details.
++ *
++ * You should have received a copy of the GNU General Public License along with
++ * this program.  If not, see <http://www.gnu.org/licenses/>.
++ */
++
++#ifndef RISCV_IOPMP_DISPATCHER_H
++#define RISCV_IOPMP_DISPATCHER_H
++
++#include "hw/sysbus.h"
++#include "qemu/typedefs.h"
++#include "memory.h"
++#include "hw/stream.h"
++#include "hw/misc/riscv_iopmp_txn_info.h"
++#include "exec/hwaddr.h"
++
++#define TYPE_RISCV_IOPMP_DISP "riscv-iopmp-dispatcher"
++OBJECT_DECLARE_SIMPLE_TYPE(RISCVIOPMPDispState, RISCV_IOPMP_DISP)
++
++#define TYPE_RISCV_IOPMP_DISP_SS "riscv-iopmp-dispatcher-streamsink"
++OBJECT_DECLARE_SIMPLE_TYPE(riscv_iopmp_disp_ss, RISCV_IOPMP_DISP_SS)
++
++typedef struct riscv_iopmp_disp_ss {
++    Object parent;
++} riscv_iopmp_disp_ss;
++
++typedef struct SinkMemMapEntry {
++    StreamSink *sink;
++    MemMapEntry map;
++} SinkMemMapEntry;
++
++typedef struct RISCVIOPMPDispState {
++    SysBusDevice parent_obj;
++    riscv_iopmp_disp_ss txn_info_sink;
++    SinkMemMapEntry **SinkMemMap;
++    /* The maximum number of cascading stages of IOPMP */
++    uint32_t stage_num;
++    /* The maximum number of parallel IOPMP devices within a single stage. */
++    uint32_t target_num;
++} RISCVIOPMPDispState;
++
++void iopmp_dispatcher_add_target(DeviceState *dev, StreamSink *sink,
++    uint64_t base, uint64_t size, uint32_t stage, uint32_t id);
++#endif
 -- 
 2.34.1
 
