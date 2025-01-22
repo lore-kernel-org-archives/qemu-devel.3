@@ -4,79 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6306BC0218C
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id AEAC7C02182
 	for <qemu-devel@archiver.kernel.org>; Wed, 22 Jan 2025 09:51:21 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1taXNY-0004SS-Je; Wed, 22 Jan 2025 04:50:32 -0500
+	id 1taXNZ-0004Se-NY; Wed, 22 Jan 2025 04:50:34 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1taXNW-0004Rq-D7
- for qemu-devel@nongnu.org; Wed, 22 Jan 2025 04:50:30 -0500
+ id 1taXNX-0004S5-Fu
+ for qemu-devel@nongnu.org; Wed, 22 Jan 2025 04:50:31 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1taXNU-0008NT-Tf
- for qemu-devel@nongnu.org; Wed, 22 Jan 2025 04:50:30 -0500
+ id 1taXNV-0008NZ-1j
+ for qemu-devel@nongnu.org; Wed, 22 Jan 2025 04:50:31 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
  s=mimecast20190719; t=1737539426;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
- content-transfer-encoding:content-transfer-encoding;
- bh=Zex2ldgIzvw4izBjigvsHNUrg0z9NxD1+oJuN6ssmbU=;
- b=c5L+O4F8/qAYXkmOvtA1u/8X7+dwpobwMQxVOE6a7zSe3fzfNP5qpZgxpty/BogLlihZ1Z
- tAkTTUPcs3K7t1O6CzEj1JZZWqY1yNrO7+SRU9wCZBdlf9C5sflSNBjepkcVXFuUQCc4Iu
- 6h7HSjxZymviVmvqOjio4guqAGeim3U=
-Received: from mail-ed1-f69.google.com (mail-ed1-f69.google.com
- [209.85.208.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=Dtc3Ox/ontWjg0HYJ+gaI1jw6anh4D7muIdCb554eMQ=;
+ b=X/2BlPg6Yyo/0TPFXIA6whqiQqEA9c4nkBvupp0YnzomHzr9JpQaujY6aHY2SzZnJ3ao46
+ m6DU8uM6M0BMSfjMrgRn9dVS15SJ7R9MIIxCaUQQkVBimLKxbj1CXeB1peUSFfwLtTX1iC
+ koqUmB1aejteiXuV0QSRn2dL6sQh8d8=
+Received: from mail-ej1-f72.google.com (mail-ej1-f72.google.com
+ [209.85.218.72]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-645-XvqD8hoKMom1ww15kF_OSg-1; Wed, 22 Jan 2025 04:50:22 -0500
-X-MC-Unique: XvqD8hoKMom1ww15kF_OSg-1
-X-Mimecast-MFC-AGG-ID: XvqD8hoKMom1ww15kF_OSg
-Received: by mail-ed1-f69.google.com with SMTP id
- 4fb4d7f45d1cf-5d3f55f8f3aso8214546a12.2
- for <qemu-devel@nongnu.org>; Wed, 22 Jan 2025 01:50:22 -0800 (PST)
+ us-mta-639-mCyT0tvdNiaBSgfRkY7oJg-1; Wed, 22 Jan 2025 04:50:24 -0500
+X-MC-Unique: mCyT0tvdNiaBSgfRkY7oJg-1
+X-Mimecast-MFC-AGG-ID: mCyT0tvdNiaBSgfRkY7oJg
+Received: by mail-ej1-f72.google.com with SMTP id
+ a640c23a62f3a-ab2e44dc9b8so75023466b.1
+ for <qemu-devel@nongnu.org>; Wed, 22 Jan 2025 01:50:24 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1737539421; x=1738144221;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=Zex2ldgIzvw4izBjigvsHNUrg0z9NxD1+oJuN6ssmbU=;
- b=rt8BbkF4YfnokUhSsmS6dMkWYSl2VsCtj5rGk0h+NGEZKRcbQWS3rK0/M1y3YYwx9/
- GjUB+zc+pIDtirumYd5JA2XFl+kZYFFJ+nmTARFm+rZtteqDAH4a+XNaiaWYo0BZmqog
- +bePGMBB3Mf36cFzpSQ2INWmRZQxzC5hZIwRZxEXYyGUUibd7u2iIS/RMAX8WUjnrs+F
- 6jv9KySgXuXl2D4KKFU1/lqngINezs1M34fgfc8CtteIfn1TwlksgY2/EBMC/7yibmxx
- vua5ncR/MokSKmaDmGqjvuM1n1f8Kuplu+bHcWdsCxz6iSwZWELiqU+h6XVCzmiPlFcP
- vJ1Q==
-X-Gm-Message-State: AOJu0Ywofn3eaWVLlC7TeJ1wvvutvFDcSFgTO8XXJEdTqqXczd5YFfNe
- i/LDi0rg/4hE7s2CYf6hOfj8mzs6Dhtc2rW2WTJ9a4LF1E9dFGgp82qweFrLRsvU1MAq6t4jDbl
- LBGwDKAgBWkUGWX+gtTINvwd8/Z5XV6LxJzp7J+R28f9njw9EKAQberNG22ka3fU8lKyo7NKZQt
- kyC1Tj9vvQAjuYyQqB2ONs5WgqeSuvKXBM412izqw=
-X-Gm-Gg: ASbGncuEXV4jO9wnqBrRroBvNfTaiqM6a0sQYacv8tFVmlE9emJe6rCvBaeFehdRXNF
- /VKJZ4AYZsZu77axZteqsKS6K6zHU6Qk4I/rUY/fCDEH9jykyUEkDP36NJvkNVqptZ9uORritzK
- zuHzqIbf1zBgoObXbeoljP+az6c4jryt9ZqIpZ6tAEzQJlLu3XzhTfdtCCif94OhMo+3CD0Wyv3
- /uAFCR9VW1MnbEDUcnUYD7wIdL3mWoe84PDv07aFlVlA936W0jUmXv9bXhTrZjjR6e+F1w+078=
-X-Received: by 2002:a05:6402:42cf:b0:5d9:a55:810c with SMTP id
- 4fb4d7f45d1cf-5db7d2dc320mr20461949a12.5.1737539420815; 
- Wed, 22 Jan 2025 01:50:20 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IHtQb4ljOy7WXai1d4L3IYEdgJrey9+dYnyubWfQ6S7ucZ08MgtMhDvE1+jBFfb6dZT5Cl/dg==
-X-Received: by 2002:a05:6402:42cf:b0:5d9:a55:810c with SMTP id
- 4fb4d7f45d1cf-5db7d2dc320mr20461930a12.5.1737539420384; 
- Wed, 22 Jan 2025 01:50:20 -0800 (PST)
+ d=1e100.net; s=20230601; t=1737539423; x=1738144223;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=Dtc3Ox/ontWjg0HYJ+gaI1jw6anh4D7muIdCb554eMQ=;
+ b=SpGJ7H+xNLd8oSCIIqu4GutpRhqx6rzo+Gm1m4fcxMlcVI/GI2QzHGIYRVhUcfuNbT
+ 4nTnZBnZ8Z8dnqmcDqKdRWTps5or38bcQWOhWq6YuvjMXgIKyCFEvTVjZWgo6hcCO1Bd
+ LN77vmTTDHRNlvlk9bWVcmnG31yGYqdSbYvAkXXL2XUJ8K+vvCRa4aQRIfzVP+xX+GPk
+ NRlZ18sfr/MOtYdSzvCJoRGavXuVRtzm9DvQa5I6RgyYwpGmz9GBHPL5rsp5favkuxG3
+ oO3/n9HB29CcO+H5AhWL6rLW92QZTfvweifm6ujF/n6zDKStj5iS/MUT0i7VbBdIF9I/
+ PCEw==
+X-Gm-Message-State: AOJu0YyegbuPwDRC2J0vt/0Yxl8gD50jCnU9G31lSsnb+enSf2QRsqQl
+ oHwH+V8E0C8iIjislBkaWiVEMoHf6rabx7vsR1lwTKz4ez/r/r1ejdQZicbOF0HcXsu3wUBYk3r
+ C/q8mAXSb8xLu50Oq/MKArzUGr761BF5dqpC9Tt1KhQhQIfvjNy2yLKac8IDgfSUS8tyS0gT8cM
+ kIGioBEpq1w3hC7A0fqyOC8UhqH3CETSzaC1Nx8Qo=
+X-Gm-Gg: ASbGncuNudUB0k50l6N4+gbqBhXybUmwJEf3U1y3OJVmx+T3S2qT2mNJt6vvJ7sro99
+ wQOqpGdx4iHVqPQQZ8KB0NIGpTOLym6RaGdebyEKEDPooI12fb4tacje+MV5TCJ7S8L6X6ElZry
+ 7j+cA0oHdGo6wzPKQ9XRdN0utQGpaPbOtfR+brrhA0suFX21I8iASCvqerRPHhM0bFz0tQA1cju
+ no2Vic7/Vt209zhatYOKyE8PhyAY05IIgKFuC6KlVf3uDfahaQ/cYREcNbXiupz42NpyFIJVTI=
+X-Received: by 2002:a17:907:971b:b0:aab:ef03:6d46 with SMTP id
+ a640c23a62f3a-ab38cbabdc5mr1600860466b.4.1737539422962; 
+ Wed, 22 Jan 2025 01:50:22 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IGiM4T89Nreh2V8mPKDjAjrD7uKSFb6ueocQOZCoEmrwKq4/H/ptKmQVcOl4aCNsnNcN9m4xg==
+X-Received: by 2002:a17:907:971b:b0:aab:ef03:6d46 with SMTP id
+ a640c23a62f3a-ab38cbabdc5mr1600859466b.4.1737539422534; 
+ Wed, 22 Jan 2025 01:50:22 -0800 (PST)
 Received: from [192.168.10.47] ([176.206.124.70])
  by smtp.gmail.com with ESMTPSA id
- 4fb4d7f45d1cf-5dbf31c3e7csm906208a12.3.2025.01.22.01.50.19
+ a640c23a62f3a-ab384f223fesm890107466b.105.2025.01.22.01.50.21
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 22 Jan 2025 01:50:19 -0800 (PST)
+ Wed, 22 Jan 2025 01:50:21 -0800 (PST)
 From: Paolo Bonzini <pbonzini@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Richard Henderson <richard.henderson@linaro.org>
 Subject: [PATCH] target/i386: extract common bits of gen_repz/gen_repz_nz
-Date: Wed, 22 Jan 2025 10:50:17 +0100
-Message-ID: <20250122095018.2471009-1-pbonzini@redhat.com>
+Date: Wed, 22 Jan 2025 10:50:18 +0100
+Message-ID: <20250122095018.2471009-2-pbonzini@redhat.com>
 X-Mailer: git-send-email 2.47.1
+In-Reply-To: <20250122095018.2471009-1-pbonzini@redhat.com>
+References: <20250122095018.2471009-1-pbonzini@redhat.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=170.10.129.124; envelope-from=pbonzini@redhat.com;
@@ -107,20 +110,16 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Now that everything has been cleaned up, look at DF and prefixes
 in a single function, and call that one from gen_repz and gen_repz_nz.
 
-Based-on: <20241215090613.89588-1-pbonzini@redhat.com>
-Suggested-by: Richard Henderson <richard.henderson@linaro.org>
 Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 ---
-	This was requested in the review of "target/i386: optimize string operations"
-
  target/i386/tcg/translate.c | 34 ++++++++++++++--------------------
  1 file changed, 14 insertions(+), 20 deletions(-)
 
 diff --git a/target/i386/tcg/translate.c b/target/i386/tcg/translate.c
-index 9f4d3ebbd95..9b2fde5eb28 100644
+index 3d8a0a8071f..a8935f487aa 100644
 --- a/target/i386/tcg/translate.c
 +++ b/target/i386/tcg/translate.c
-@@ -688,14 +688,6 @@ static inline void gen_string_movl_A0_EDI(DisasContext *s)
+@@ -695,14 +695,6 @@ static inline void gen_string_movl_A0_EDI(DisasContext *s)
      gen_lea_v_seg(s, cpu_regs[R_EDI], R_ES, -1);
  }
  
@@ -135,7 +134,7 @@ index 9f4d3ebbd95..9b2fde5eb28 100644
  static TCGv gen_ext_tl(TCGv dst, TCGv src, MemOp size, bool sign)
  {
      if (size == MO_TL) {
-@@ -1446,29 +1438,31 @@ static void do_gen_rep(DisasContext *s, MemOp ot, TCGv dshift,
+@@ -1453,29 +1445,31 @@ static void do_gen_rep(DisasContext *s, MemOp ot, TCGv dshift,
      gen_jmp_rel_csize(s, 0, 1);
  }
  
