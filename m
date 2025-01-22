@@ -4,72 +4,69 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1A8C4C02181
-	for <qemu-devel@archiver.kernel.org>; Wed, 22 Jan 2025 16:30:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 79613C02181
+	for <qemu-devel@archiver.kernel.org>; Wed, 22 Jan 2025 16:32:14 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tadcJ-0004Ee-Cq; Wed, 22 Jan 2025 11:30:11 -0500
+	id 1tadeB-0005di-HH; Wed, 22 Jan 2025 11:32:08 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
- id 1tadcG-0004Dk-QH
- for qemu-devel@nongnu.org; Wed, 22 Jan 2025 11:30:08 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
+ id 1taddz-0005ZM-0t; Wed, 22 Jan 2025 11:31:59 -0500
+Received: from mgamail.intel.com ([192.198.163.11])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
- id 1tadcE-00061U-Ff
- for qemu-devel@nongnu.org; Wed, 22 Jan 2025 11:30:08 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1737563405;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=btR3MJM2DEWzFjmowVl6zkGGsSnQRStWFAvTog0Uj2w=;
- b=NpKhA+vN9+TR5P44jCqFRFcQ7g7o6c4qsjxIOWmcW/8pj3pY2a282kWQdzdsHm8JInrzMU
- ksCxmwRdGShgQWtSd2b7aX+EmIjuvnJE0nrvr+pV3lFwBS53ipY+vTiDADJ9VuVOHAxdfO
- JOYcXj/OXgLN/S9ahr+ygdizC611o9M=
-Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-433-n1a0zezvOEaGdD2C1455aQ-1; Wed,
- 22 Jan 2025 11:30:03 -0500
-X-MC-Unique: n1a0zezvOEaGdD2C1455aQ-1
-X-Mimecast-MFC-AGG-ID: n1a0zezvOEaGdD2C1455aQ
-Received: from mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.15])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 5417B1953944
- for <qemu-devel@nongnu.org>; Wed, 22 Jan 2025 16:30:02 +0000 (UTC)
-Received: from localhost (unknown [10.2.16.37])
- by mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id AC28A195E3DE; Wed, 22 Jan 2025 16:30:01 +0000 (UTC)
-Date: Wed, 22 Jan 2025 11:30:00 -0500
-From: Stefan Hajnoczi <stefanha@redhat.com>
-To: Thomas Huth <thuth@redhat.com>
-Cc: qemu-devel@nongnu.org, Stefan Hajnoczi <stefanha@redhat.com>
-Subject: Re: [PULL v2 0/9] s390x and test patches 2025-01-21
-Message-ID: <20250122163000.GA183250@fedora>
-References: <20250122080151.1400422-1-thuth@redhat.com>
+ (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
+ id 1taddt-0006Zz-4n; Wed, 22 Jan 2025 11:31:53 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+ d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+ t=1737563509; x=1769099509;
+ h=date:from:to:cc:subject:message-id:references:
+ mime-version:in-reply-to;
+ bh=W0CEBDItbQycNDfZ7B7OcSu3dB5zqUDBtqxse3ndIY0=;
+ b=RME/J/SDft4wlCbbou3lMO5md6HEx8YiK+aLlPXU6jlYtS9zdwphnSxp
+ UfjffPnTMks6IuyvH2oV7zo6yRvcY5++UJ9Vd3PmsSeiNkfBTUDE29bz7
+ RbvEoTK2rt4DqILqxST4HlFUtnfG3NF1/kpuzi14iIWx2CoCaVl1EogfM
+ rFGbMINWRjz06CbMTuHh6KboXCzLxn0mFzJnTz8ZgV7TV9+On/i93YjdZ
+ ebB2p8m3DeGhqWlf9AAF+SJJeD9dyks5nVg3CP+QZXytxs8G4xO00HduB
+ iQ5yeyJ1DGfoz6yaqPnIDCIvHiFJFppo7bGfHo6yIy9LM/0Z/OZ5J5g+M A==;
+X-CSE-ConnectionGUID: uKznSBkCQv+v2aD1YU0iGg==
+X-CSE-MsgGUID: 8Kc+VPjKS4+Y5h8kbdn3VQ==
+X-IronPort-AV: E=McAfee;i="6700,10204,11323"; a="48624788"
+X-IronPort-AV: E=Sophos;i="6.13,225,1732608000"; d="scan'208";a="48624788"
+Received: from orviesa007.jf.intel.com ([10.64.159.147])
+ by fmvoesa105.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 22 Jan 2025 08:31:20 -0800
+X-CSE-ConnectionGUID: sPifOw+7RUiC8+5H83MOoQ==
+X-CSE-MsgGUID: ykdb5zhISSWtqndLz07VzA==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.12,224,1728975600"; d="scan'208";a="107631399"
+Received: from liuzhao-optiplex-7080.sh.intel.com (HELO localhost)
+ ([10.239.160.39])
+ by orviesa007.jf.intel.com with ESMTP; 22 Jan 2025 08:31:19 -0800
+Date: Thu, 23 Jan 2025 00:50:41 +0800
+From: Zhao Liu <zhao1.liu@intel.com>
+To: Paolo Bonzini <pbonzini@redhat.com>
+Cc: qemu-devel@nongnu.org, qemu-rust@nongnu.org
+Subject: Re: [PATCH 05/10] rust: pl011: pull interrupt updates out of
+ read/write ops
+Message-ID: <Z5Eh4Yj2Mp+xQV5Z@intel.com>
+References: <20250117092657.1051233-1-pbonzini@redhat.com>
+ <20250117092657.1051233-6-pbonzini@redhat.com>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha256;
- protocol="application/pgp-signature"; boundary="TuJjUFoARTHL+Amn"
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20250122080151.1400422-1-thuth@redhat.com>
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.15
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=stefanha@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -50
-X-Spam_score: -5.1
-X-Spam_bar: -----
-X-Spam_report: (-5.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-2.996,
+In-Reply-To: <20250117092657.1051233-6-pbonzini@redhat.com>
+Received-SPF: pass client-ip=192.198.163.11; envelope-from=zhao1.liu@intel.com;
+ helo=mgamail.intel.com
+X-Spam_score_int: -73
+X-Spam_score: -7.4
+X-Spam_bar: -------
+X-Spam_report: (-7.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-2.996,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -85,30 +82,43 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+On Fri, Jan 17, 2025 at 10:26:52AM +0100, Paolo Bonzini wrote:
+> Date: Fri, 17 Jan 2025 10:26:52 +0100
+> From: Paolo Bonzini <pbonzini@redhat.com>
+> Subject: [PATCH 05/10] rust: pl011: pull interrupt updates out of
+>  read/write ops
+> X-Mailer: git-send-email 2.47.1
+> 
+> qemu_irqs are not part of the vmstate, therefore they will remain in
+> PL011State.  Update them if needed after regs_read()/regs_write().
+> 
+> Apply #[must_use] to functions that return whether the interrupt state
+> could have changed, so that it's harder to forget the call to update().
+> 
+> Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
+> ---
+>  rust/hw/char/pl011/src/device.rs | 68 ++++++++++++++++++--------------
+>  1 file changed, 38 insertions(+), 30 deletions(-)
+> 
 
---TuJjUFoARTHL+Amn
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
+[snip]
 
-Applied, thanks.
+>  
+>      pub fn event(&mut self, event: QEMUChrEvent) {
+>          if event == bindings::QEMUChrEvent::CHR_EVENT_BREAK && !self.loopback_enabled() {
+> -            self.put_fifo(registers::Data::BREAK.into());
+> +            let update = self.put_fifo(registers::Data::BREAK.into());
 
-Please update the changelog at https://wiki.qemu.org/ChangeLog/10.0 for any user-visible changes.
+We can omit this `update` variable.
 
---TuJjUFoARTHL+Amn
-Content-Type: application/pgp-signature; name="signature.asc"
+> +            if update {
+> +                self.update();
+> +            }
+>          }
+>      }
 
------BEGIN PGP SIGNATURE-----
+Nice refactoring!
 
-iQEzBAEBCAAdFiEEhpWov9P5fNqsNXdanKSrs4Grc8gFAmeRHQgACgkQnKSrs4Gr
-c8gTeggAg0cFN3G7Dm8fsTUKbnGAvxyv2O+TqtMLp20L9LeOFUgtpk1AaZVa6MkL
-pqojV8zN6unspKdJ883MtcuvvmS+v9XlzV+5kwvxvnGorPzJIKVanKXcwL85o2Pf
-9k9r6GQuEwpnpZOvDM2gKwJweeG2X4KzIfjm8e9J5/eA3ngfDmx7fLbHv0BCuBKM
-buMZGPwsNgYbM/nmlfUAvb96Z0c/xzQxKQoBTBqrSLnUNml3veYeIVr7tqJixTlY
-kIRYQFfs+1C1MmQcJREWmFlARfArBx/rkmX8OIvYyRilSeA1Wa8XBsXnitjONgPY
-sYOw8txTHqHkV7QqhaNXdAOfJ190jg==
-=tmPK
------END PGP SIGNATURE-----
-
---TuJjUFoARTHL+Amn--
+Reviewed-by: Zhao Liu <zhao.liu@intel.com>
 
 
