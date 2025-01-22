@@ -4,59 +4,75 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 42DF2C02181
-	for <qemu-devel@archiver.kernel.org>; Wed, 22 Jan 2025 08:48:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A3181C02181
+	for <qemu-devel@archiver.kernel.org>; Wed, 22 Jan 2025 08:49:20 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1taWPd-0005WB-Tu; Wed, 22 Jan 2025 03:48:37 -0500
+	id 1taWNW-0002u8-LF; Wed, 22 Jan 2025 03:46:26 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <ethan84@andestech.com>)
- id 1taWPB-0005Lj-CE; Wed, 22 Jan 2025 03:48:10 -0500
-Received: from 60-248-80-70.hinet-ip.hinet.net ([60.248.80.70]
- helo=Atcsqr.andestech.com)
+ (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
+ id 1taWNS-0002sT-Tg; Wed, 22 Jan 2025 03:46:22 -0500
+Received: from mgamail.intel.com ([198.175.65.9])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <ethan84@andestech.com>)
- id 1taWP8-0004LO-J6; Wed, 22 Jan 2025 03:48:09 -0500
-Received: from mail.andestech.com (ATCPCS31.andestech.com [10.0.1.89])
- by Atcsqr.andestech.com with ESMTPS id 50M8leE6025437
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Wed, 22 Jan 2025 16:47:40 +0800 (+08)
- (envelope-from ethan84@andestech.com)
-Received: from atcpcw16.andestech.com (10.0.1.106) by ATCPCS31.andestech.com
- (10.0.1.89) with Microsoft SMTP Server (TLS) id 14.3.498.0; Wed, 22 Jan 2025
- 16:47:40 +0800
-To: <qemu-devel@nongnu.org>
-CC: <richard.henderson@linaro.org>, <pbonzini@redhat.com>,
- <palmer@dabbelt.com>, <alistair.francis@wdc.com>, <bmeng.cn@gmail.com>,
- <liwei1518@gmail.com>, <dbarboza@ventanamicro.com>,
- <zhiwei_liu@linux.alibaba.com>, <peterx@redhat.com>,
- <david@redhat.com>, <philmd@linaro.org>, <qemu-riscv@nongnu.org>,
- Ethan Chen <ethan84@andestech.com>
-Subject: [PATCH v10 7/8] hw/misc/riscv_iopmp_dispatcher: Device for redirect
- IOPMP transaction infomation
-Date: Wed, 22 Jan 2025 16:47:25 +0800
-Message-ID: <20250122084725.3971111-1-ethan84@andestech.com>
-X-Mailer: git-send-email 2.42.0.345.gaab89be2eb.dirty
-In-Reply-To: <20250122083617.3940240-1-ethan84@andestech.com>
-References: <20250122083617.3940240-1-ethan84@andestech.com>
+ (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
+ id 1taWNP-0002y5-IF; Wed, 22 Jan 2025 03:46:22 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+ d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+ t=1737535579; x=1769071579;
+ h=from:to:cc:subject:date:message-id:in-reply-to:
+ references:mime-version:content-transfer-encoding;
+ bh=VMFyzU7rJ0ERY+XN36rgAcSEcfJLdF/jbMtrra/GTKA=;
+ b=QNQsjGDijegatLLY46/MZMbH6MeFf3kYNjVizZuOJXC5IMjmUxqVfF9z
+ +og0QgyM5FT6G4WBc9FPJcRSZ9v9Gqhqx8IBN1nj6JBrLq2LA7xOMwHdp
+ DX1jZd8QhwQyklss+eRkX82tqyU3dr+Mf8PDpOJR1OnaBDw3DUJtWzLK2
+ FV8Fzt38R9wvL6HXVhJv0UOFgJoRV6gZ7IbCPT/MkobHhljBg4CMbba2H
+ ESUW0JArJ8Oyy0W9UdsNkYOXfPlHwB9Dy3cXQ0zdTK2Cwy2CGyM5MtpZB
+ eaq+trml6V9V4q1GQUuKXeifvntIr7mQpGOdPVjzfnM/DkhLijxFqpY2j A==;
+X-CSE-ConnectionGUID: Tlai2ovITheoaExyZsUnBA==
+X-CSE-MsgGUID: NkhN/9+hQ+2mkI8X3orfRA==
+X-IronPort-AV: E=McAfee;i="6700,10204,11322"; a="60451561"
+X-IronPort-AV: E=Sophos;i="6.13,224,1732608000"; d="scan'208";a="60451561"
+Received: from orviesa003.jf.intel.com ([10.64.159.143])
+ by orvoesa101.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 22 Jan 2025 00:46:17 -0800
+X-CSE-ConnectionGUID: fA1qO0UsTNWEBq4maCd8bQ==
+X-CSE-MsgGUID: bO2kWi3pSM6t8TGjTKIFOw==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.11,199,1725346800"; d="scan'208";a="112049753"
+Received: from liuzhao-optiplex-7080.sh.intel.com ([10.239.160.39])
+ by orviesa003.jf.intel.com with ESMTP; 22 Jan 2025 00:46:13 -0800
+From: Zhao Liu <zhao1.liu@intel.com>
+To: Paolo Bonzini <pbonzini@redhat.com>, Eric Blake <eblake@redhat.com>,
+ Markus Armbruster <armbru@redhat.com>, Michael Roth <michael.roth@amd.com>,
+ =?UTF-8?q?Daniel=20P=20=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
+ Eduardo Habkost <eduardo@habkost.net>,
+ Marcelo Tosatti <mtosatti@redhat.com>, Shaoqin Huang <shahuang@redhat.com>,
+ Eric Auger <eauger@redhat.com>, Peter Maydell <peter.maydell@linaro.org>,
+ Laurent Vivier <lvivier@redhat.com>, Thomas Huth <thuth@redhat.com>,
+ Sebastian Ott <sebott@redhat.com>, Gavin Shan <gshan@redhat.com>
+Cc: qemu-devel@nongnu.org, kvm@vger.kernel.org, qemu-arm@nongnu.org,
+ Dapeng Mi <dapeng1.mi@intel.com>, Yi Lai <yi1.lai@intel.com>,
+ Zhao Liu <zhao1.liu@intel.com>
+Subject: [RFC v2 2/5] i386/kvm: Support basic KVM PMU filter
+Date: Wed, 22 Jan 2025 17:05:14 +0800
+Message-Id: <20250122090517.294083-3-zhao1.liu@intel.com>
+X-Mailer: git-send-email 2.34.1
+In-Reply-To: <20250122090517.294083-1-zhao1.liu@intel.com>
+References: <20250122090517.294083-1-zhao1.liu@intel.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Content-Type: text/plain
-X-Originating-IP: [10.0.1.106]
-X-DKIM-Results: atcpcs31.andestech.com; dkim=none;
-X-DNSRBL: 
-X-MAIL: Atcsqr.andestech.com 50M8leE6025437
-Received-SPF: pass client-ip=60.248.80.70; envelope-from=ethan84@andestech.com;
- helo=Atcsqr.andestech.com
-X-Spam_score_int: -8
-X-Spam_score: -0.9
-X-Spam_bar: /
-X-Spam_report: (-0.9 / 5.0 requ) BAYES_00=-1.9,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- RDNS_DYNAMIC=0.982, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- TVD_RCVD_IP=0.001 autolearn=no autolearn_force=no
+Received-SPF: pass client-ip=198.175.65.9; envelope-from=zhao1.liu@intel.com;
+ helo=mgamail.intel.com
+X-Spam_score_int: -73
+X-Spam_score: -7.4
+X-Spam_bar: -------
+X-Spam_report: (-7.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-2.996,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -69,246 +85,216 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-to:  Ethan Chen <ethan84@andestech.com>
-From:  Ethan Chen via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This device determines the target IOPMP device for forwarding information
-based on:
-* Address: For parallel IOPMP devices
-* Stage: For cascading IOPMP devices
+Filter PMU events with raw format in i386 code.
 
-Signed-off-by: Ethan Chen <ethan84@andestech.com>
+For i386, raw format indicates that the PMU event code is already
+encoded according to the KVM ioctl requirements, and can be delivered
+directly to KVM without additional encoding work.
+
+Signed-off-by: Zhao Liu <zhao1.liu@intel.com>
 ---
- hw/misc/meson.build                      |   1 +
- hw/misc/riscv_iopmp_dispatcher.c         | 136 +++++++++++++++++++++++
- include/hw/misc/riscv_iopmp_dispatcher.h |  61 ++++++++++
- 3 files changed, 198 insertions(+)
- create mode 100644 hw/misc/riscv_iopmp_dispatcher.c
- create mode 100644 include/hw/misc/riscv_iopmp_dispatcher.h
+Changes since v1:
+ * Stop check whether per-event actions are the same, as "action" has
+   been a global parameter. (Dapeng)
+ * Make pmu filter related functions return int in
+   target/i386/kvm/kvm.c.
+---
+ include/system/kvm_int.h |   2 +
+ target/i386/kvm/kvm.c    | 123 +++++++++++++++++++++++++++++++++++++++
+ 2 files changed, 125 insertions(+)
 
-diff --git a/hw/misc/meson.build b/hw/misc/meson.build
-index 88f2bb6b88..497f83637f 100644
---- a/hw/misc/meson.build
-+++ b/hw/misc/meson.build
-@@ -35,6 +35,7 @@ system_ss.add(when: 'CONFIG_SIFIVE_E_AON', if_true: files('sifive_e_aon.c'))
- system_ss.add(when: 'CONFIG_SIFIVE_U_OTP', if_true: files('sifive_u_otp.c'))
- system_ss.add(when: 'CONFIG_SIFIVE_U_PRCI', if_true: files('sifive_u_prci.c'))
- specific_ss.add(when: 'CONFIG_RISCV_IOPMP', if_true: files('riscv_iopmp.c'))
-+specific_ss.add(when: 'CONFIG_RISCV_IOPMP', if_true: files('riscv_iopmp_dispatcher.c'))
+diff --git a/include/system/kvm_int.h b/include/system/kvm_int.h
+index 4de6106869b0..743fed29b17b 100644
+--- a/include/system/kvm_int.h
++++ b/include/system/kvm_int.h
+@@ -17,6 +17,7 @@
+ #include "hw/boards.h"
+ #include "hw/i386/topology.h"
+ #include "io/channel-socket.h"
++#include "system/kvm-pmu.h"
  
- subdir('macio')
+ typedef struct KVMSlot
+ {
+@@ -166,6 +167,7 @@ struct KVMState
+     uint16_t xen_gnttab_max_frames;
+     uint16_t xen_evtchn_max_pirq;
+     char *device;
++    KVMPMUFilter *pmu_filter;
+ };
  
-diff --git a/hw/misc/riscv_iopmp_dispatcher.c b/hw/misc/riscv_iopmp_dispatcher.c
-new file mode 100644
-index 0000000000..4086e9c82b
---- /dev/null
-+++ b/hw/misc/riscv_iopmp_dispatcher.c
-@@ -0,0 +1,136 @@
-+/*
-+ * QEMU RISC-V IOPMP dispatcher
-+ *
-+ * Receives transaction information from the requestor and forwards it to the
-+ * corresponding IOPMP device.
-+ *
-+ * Copyright (c) 2023-2025 Andes Tech. Corp.
-+ *
-+ * SPDX-License-Identifier: GPL-2.0-or-later
-+ *
-+ * This program is free software; you can redistribute it and/or modify it
-+ * under the terms and conditions of the GNU General Public License,
-+ * version 2 or later, as published by the Free Software Foundation.
-+ *
-+ * This program is distributed in the hope it will be useful, but WITHOUT
-+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
-+ * FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License for
-+ * more details.
-+ *
-+ * You should have received a copy of the GNU General Public License along with
-+ * this program.  If not, see <http://www.gnu.org/licenses/>.
-+ */
-+
-+#include "qemu/osdep.h"
-+#include "qemu/log.h"
-+#include "qapi/error.h"
-+#include "trace.h"
-+#include "exec/exec-all.h"
-+#include "exec/address-spaces.h"
-+#include "hw/qdev-properties.h"
-+#include "hw/sysbus.h"
-+#include "hw/misc/riscv_iopmp_dispatcher.h"
-+#include "memory.h"
-+#include "hw/irq.h"
-+#include "hw/misc/riscv_iopmp_txn_info.h"
-+
-+static void riscv_iopmp_dispatcher_realize(DeviceState *dev, Error **errp)
-+{
-+    int i;
-+    RISCVIOPMPDispState *s = RISCV_IOPMP_DISP(dev);
-+
-+    s->SinkMemMap = g_new(SinkMemMapEntry *, s->stage_num);
-+    for (i = 0; i < s->stage_num; i++) {
-+        s->SinkMemMap[i] = g_new(SinkMemMapEntry, s->target_num);
-+    }
-+
-+    object_initialize_child(OBJECT(s), "iopmp_dispatcher_txn_info",
-+                            &s->txn_info_sink,
-+                            TYPE_RISCV_IOPMP_DISP_SS);
-+}
-+
-+static const Property iopmp_dispatcher_properties[] = {
-+    DEFINE_PROP_UINT32("stage-num", RISCVIOPMPDispState, stage_num, 2),
-+    DEFINE_PROP_UINT32("target-num", RISCVIOPMPDispState, target_num, 10),
-+};
-+
-+static void riscv_iopmp_dispatcher_class_init(ObjectClass *klass, void *data)
-+{
-+    DeviceClass *dc = DEVICE_CLASS(klass);
-+    device_class_set_props(dc, iopmp_dispatcher_properties);
-+    dc->realize = riscv_iopmp_dispatcher_realize;
-+}
-+
-+static const TypeInfo riscv_iopmp_dispatcher_info = {
-+    .name = TYPE_RISCV_IOPMP_DISP,
-+    .parent = TYPE_DEVICE,
-+    .instance_size = sizeof(RISCVIOPMPDispState),
-+    .class_init = riscv_iopmp_dispatcher_class_init,
-+};
-+
-+static size_t dispatcher_txn_info_push(StreamSink *txn_info_sink,
-+                                       unsigned char *buf,
-+                                       size_t len, bool eop)
-+{
-+    uint64_t addr;
-+    uint32_t stage;
-+    int i, j;
-+    riscv_iopmp_disp_ss *ss =
-+        RISCV_IOPMP_DISP_SS(txn_info_sink);
-+    RISCVIOPMPDispState *s = RISCV_IOPMP_DISP(container_of(ss,
-+        RISCVIOPMPDispState, txn_info_sink));
-+    riscv_iopmp_txn_info signal;
-+    memcpy(&signal, buf, len);
-+    addr = signal.start_addr;
-+    stage = signal.stage;
-+    for (i = stage; i < s->stage_num; i++) {
-+        for (j = 0; j < s->target_num; j++) {
-+            if (s->SinkMemMap[i][j].map.base <= addr &&
-+                addr < s->SinkMemMap[i][j].map.base
-+                + s->SinkMemMap[i][j].map.size) {
-+                    return stream_push(s->SinkMemMap[i][j].sink, buf, len, eop);
-+            }
+ void kvm_memory_listener_register(KVMState *s, KVMMemoryListener *kml,
+diff --git a/target/i386/kvm/kvm.c b/target/i386/kvm/kvm.c
+index 6c749d4ee812..b82adbed50f4 100644
+--- a/target/i386/kvm/kvm.c
++++ b/target/i386/kvm/kvm.c
+@@ -34,6 +34,7 @@
+ #include "system/system.h"
+ #include "system/hw_accel.h"
+ #include "system/kvm_int.h"
++#include "system/kvm-pmu.h"
+ #include "system/runstate.h"
+ #include "kvm_i386.h"
+ #include "../confidential-guest.h"
+@@ -110,6 +111,7 @@ typedef struct {
+ static void kvm_init_msrs(X86CPU *cpu);
+ static int kvm_filter_msr(KVMState *s, uint32_t msr, QEMURDMSRHandler *rdmsr,
+                           QEMUWRMSRHandler *wrmsr);
++static int kvm_filter_pmu_event(KVMState *s);
+ 
+ const KVMCapabilityInfo kvm_arch_required_capabilities[] = {
+     KVM_CAP_INFO(SET_TSS_ADDR),
+@@ -3346,6 +3348,14 @@ int kvm_arch_init(MachineState *ms, KVMState *s)
+         }
+     }
+ 
++    if (s->pmu_filter) {
++        ret = kvm_filter_pmu_event(s);
++        if (ret < 0) {
++            error_report("Could not set KVM PMU filter");
++            return ret;
 +        }
 +    }
-+    /* Always pass if target is not protected by IOPMP*/
-+    return 1;
++
+     return 0;
+ }
+ 
+@@ -5942,6 +5952,82 @@ static int kvm_handle_wrmsr(X86CPU *cpu, struct kvm_run *run)
+     g_assert_not_reached();
+ }
+ 
++static bool kvm_config_pmu_event(KVMPMUFilter *filter,
++                                 struct kvm_pmu_event_filter *kvm_filter)
++{
++    KVMPMUFilterEventList *events;
++    KVMPMUFilterEvent *event;
++    uint64_t code;
++    int idx = 0;
++
++    kvm_filter->nevents = filter->nevents;
++    events = filter->events;
++    while (events) {
++        assert(idx < kvm_filter->nevents);
++
++        event = events->value;
++        switch (event->format) {
++        case KVM_PMU_EVENT_FMT_RAW:
++            code = event->u.raw.code;
++            break;
++        default:
++            g_assert_not_reached();
++        }
++
++        kvm_filter->events[idx++] = code;
++        events = events->next;
++    }
++
++    return true;
 +}
 +
-+static void riscv_iopmp_disp_ss_class_init(
-+    ObjectClass *klass, void *data)
++static int kvm_install_pmu_event_filter(KVMState *s)
 +{
-+    StreamSinkClass *ssc = STREAM_SINK_CLASS(klass);
-+    ssc->push = dispatcher_txn_info_push;
++    struct kvm_pmu_event_filter *kvm_filter;
++    KVMPMUFilter *filter = s->pmu_filter;
++    int ret;
++
++    kvm_filter = g_malloc0(sizeof(struct kvm_pmu_event_filter) +
++                           filter->nevents * sizeof(uint64_t));
++
++    switch (filter->action) {
++    case KVM_PMU_FILTER_ACTION_ALLOW:
++        kvm_filter->action = KVM_PMU_EVENT_ALLOW;
++        break;
++    case KVM_PMU_FILTER_ACTION_DENY:
++        kvm_filter->action = KVM_PMU_EVENT_DENY;
++        break;
++    default:
++        g_assert_not_reached();
++    }
++
++    if (!kvm_config_pmu_event(filter, kvm_filter)) {
++        goto fail;
++    }
++
++    ret = kvm_vm_ioctl(s, KVM_SET_PMU_EVENT_FILTER, kvm_filter);
++    if (ret) {
++        error_report("KVM_SET_PMU_EVENT_FILTER fails (%s)", strerror(-ret));
++        goto fail;
++    }
++
++    g_free(kvm_filter);
++    return 0;
++fail:
++    g_free(kvm_filter);
++    return -EINVAL;
 +}
 +
-+static const TypeInfo riscv_iopmp_disp_ss_info = {
-+    .name = TYPE_RISCV_IOPMP_DISP_SS,
-+    .parent = TYPE_OBJECT,
-+    .instance_size = sizeof(riscv_iopmp_disp_ss),
-+    .class_init = riscv_iopmp_disp_ss_class_init,
-+    .interfaces = (InterfaceInfo[]) {
-+        { TYPE_STREAM_SINK },
-+        { }
-+    },
-+};
-+
-+void iopmp_dispatcher_add_target(DeviceState *dev, StreamSink *sink,
-+    uint64_t base, uint64_t size, uint32_t stage, uint32_t id)
++static int kvm_filter_pmu_event(KVMState *s)
 +{
-+    RISCVIOPMPDispState *s = RISCV_IOPMP_DISP(dev);
-+    if (stage < s->stage_num && id < s->target_num) {
-+        s->SinkMemMap[stage][id].map.base = base;
-+        s->SinkMemMap[stage][id].map.size = size;
-+        s->SinkMemMap[stage][id].sink = sink;
++    if (!kvm_vm_check_extension(s, KVM_CAP_PMU_EVENT_FILTER)) {
++        error_report("KVM PMU filter is not supported by Host.");
++        return -1;
++    }
++
++    return kvm_install_pmu_event_filter(s);
++}
++
+ static bool has_sgx_provisioning;
+ 
+ static bool __kvm_enable_sgx_provisioning(KVMState *s)
+@@ -6537,6 +6623,35 @@ static void kvm_arch_set_xen_evtchn_max_pirq(Object *obj, Visitor *v,
+     s->xen_evtchn_max_pirq = value;
+ }
+ 
++static void kvm_arch_check_pmu_filter(const Object *obj, const char *name,
++                                      Object *child, Error **errp)
++{
++    KVMPMUFilter *filter = KVM_PMU_FILTER(child);
++    KVMPMUFilterEventList *events = filter->events;
++
++    if (!filter->nevents) {
++        error_setg(errp,
++                   "Empty KVM PMU filter.");
++        return;
++    }
++
++    while (events) {
++        KVMPMUFilterEvent *event = events->value;
++
++        switch (event->format) {
++        case KVM_PMU_EVENT_FMT_RAW:
++            break;
++        default:
++            error_setg(errp,
++                       "Unsupported PMU event format %s.",
++                       KVMPMUEventEncodeFmt_str(events->value->format));
++            return;
++        }
++
++        events = events->next;
 +    }
 +}
 +
-+static void
-+iopmp_dispatcher_register_types(void)
-+{
-+    type_register_static(&riscv_iopmp_dispatcher_info);
-+    type_register_static(&riscv_iopmp_disp_ss_info);
-+}
+ void kvm_arch_accel_class_init(ObjectClass *oc)
+ {
+     object_class_property_add_enum(oc, "notify-vmexit", "NotifyVMexitOption",
+@@ -6576,6 +6691,14 @@ void kvm_arch_accel_class_init(ObjectClass *oc)
+                               NULL, NULL);
+     object_class_property_set_description(oc, "xen-evtchn-max-pirq",
+                                           "Maximum number of Xen PIRQs");
 +
-+type_init(iopmp_dispatcher_register_types);
-+
-diff --git a/include/hw/misc/riscv_iopmp_dispatcher.h b/include/hw/misc/riscv_iopmp_dispatcher.h
-new file mode 100644
-index 0000000000..bbaa76507b
---- /dev/null
-+++ b/include/hw/misc/riscv_iopmp_dispatcher.h
-@@ -0,0 +1,61 @@
-+/*
-+ * QEMU RISC-V IOPMP dispatcher
-+ *
-+ * Receives transaction information from the requestor and forwards it to the
-+ * corresponding IOPMP device.
-+ *
-+ * Copyright (c) 2023-2024 Andes Tech. Corp.
-+ *
-+ * SPDX-License-Identifier: GPL-2.0-or-later
-+ *
-+ * This program is free software; you can redistribute it and/or modify it
-+ * under the terms and conditions of the GNU General Public License,
-+ * version 2 or later, as published by the Free Software Foundation.
-+ *
-+ * This program is distributed in the hope it will be useful, but WITHOUT
-+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
-+ * FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License for
-+ * more details.
-+ *
-+ * You should have received a copy of the GNU General Public License along with
-+ * this program.  If not, see <http://www.gnu.org/licenses/>.
-+ */
-+
-+#ifndef RISCV_IOPMP_DISPATCHER_H
-+#define RISCV_IOPMP_DISPATCHER_H
-+
-+#include "hw/sysbus.h"
-+#include "qemu/typedefs.h"
-+#include "memory.h"
-+#include "hw/stream.h"
-+#include "hw/misc/riscv_iopmp_txn_info.h"
-+#include "exec/hwaddr.h"
-+
-+#define TYPE_RISCV_IOPMP_DISP "riscv-iopmp-dispatcher"
-+OBJECT_DECLARE_SIMPLE_TYPE(RISCVIOPMPDispState, RISCV_IOPMP_DISP)
-+
-+#define TYPE_RISCV_IOPMP_DISP_SS "riscv-iopmp-dispatcher-streamsink"
-+OBJECT_DECLARE_SIMPLE_TYPE(riscv_iopmp_disp_ss, RISCV_IOPMP_DISP_SS)
-+
-+typedef struct riscv_iopmp_disp_ss {
-+    Object parent;
-+} riscv_iopmp_disp_ss;
-+
-+typedef struct SinkMemMapEntry {
-+    StreamSink *sink;
-+    MemMapEntry map;
-+} SinkMemMapEntry;
-+
-+typedef struct RISCVIOPMPDispState {
-+    SysBusDevice parent_obj;
-+    riscv_iopmp_disp_ss txn_info_sink;
-+    SinkMemMapEntry **SinkMemMap;
-+    /* The maximum number of cascading stages of IOPMP */
-+    uint32_t stage_num;
-+    /* The maximum number of parallel IOPMP devices within a single stage. */
-+    uint32_t target_num;
-+} RISCVIOPMPDispState;
-+
-+void iopmp_dispatcher_add_target(DeviceState *dev, StreamSink *sink,
-+    uint64_t base, uint64_t size, uint32_t stage, uint32_t id);
-+#endif
++    object_class_property_add_link(oc, "pmu-filter",
++                                   TYPE_KVM_PMU_FILTER,
++                                   offsetof(KVMState, pmu_filter),
++                                   kvm_arch_check_pmu_filter,
++                                   OBJ_PROP_LINK_STRONG);
++    object_class_property_set_description(oc, "pmu-filter",
++                                          "Set the KVM PMU filter");
+ }
+ 
+ void kvm_set_max_apic_id(uint32_t max_apic_id)
 -- 
 2.34.1
 
