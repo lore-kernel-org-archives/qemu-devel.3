@@ -4,78 +4,69 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7047AC02181
-	for <qemu-devel@archiver.kernel.org>; Wed, 22 Jan 2025 13:20:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1B1F0C02181
+	for <qemu-devel@archiver.kernel.org>; Wed, 22 Jan 2025 13:20:06 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1taadT-0007rU-QS; Wed, 22 Jan 2025 08:19:11 -0500
+	id 1taae9-0008Eu-OZ; Wed, 22 Jan 2025 08:19:53 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kchamart@redhat.com>)
- id 1taadO-0007r9-6D
- for qemu-devel@nongnu.org; Wed, 22 Jan 2025 08:19:06 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
+ id 1taae3-0008BA-LU; Wed, 22 Jan 2025 08:19:47 -0500
+Received: from mgamail.intel.com ([192.198.163.14])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kchamart@redhat.com>)
- id 1taadK-0006hW-HV
- for qemu-devel@nongnu.org; Wed, 22 Jan 2025 08:19:05 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1737551940;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- resent-to:resent-from:resent-message-id:in-reply-to:in-reply-to:
- references:references; bh=ETvbZ1y0GnXnCEHw9vHGB65cA/LrS2sr6MMnCAtgtMo=;
- b=Y4PWXSuv16dJsrLc+A7Xb4JLvoIxiUv4tVjLbLpNGGq1bMTWbHGwpEA0MmR44+l7S0PjWO
- mHOxMzM4tNXqatCDttVrZQIgTSV2uvhcwLkR14TTooennqwWE2UiWJ8NkeWycVP1yXDABU
- zymMONSgTWmChUW0+Ptc5+8R2MBkMcE=
-Received: from mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-280-kUwP-R5IORSIxoozOS5WWw-1; Wed,
- 22 Jan 2025 08:18:56 -0500
-X-MC-Unique: kUwP-R5IORSIxoozOS5WWw-1
-X-Mimecast-MFC-AGG-ID: kUwP-R5IORSIxoozOS5WWw
-Received: from mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.40])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 1A2E81955DD4; Wed, 22 Jan 2025 13:18:54 +0000 (UTC)
-Received: from gezellig (unknown [10.39.192.136])
- by mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 1B6DF19560AA; Wed, 22 Jan 2025 13:18:52 +0000 (UTC)
-Resent-From: Kashyap Chamarthy <kchamart@redhat.com>
-Resent-Date: Wed, 22 Jan 2025 14:18:49 +0100
-Resent-Message-ID: <Z5DwOQ64Mftg8o4v@gezellig>
-Resent-To: qemu-devel@nongnu.org, qemu-arm@nongnu.org
-Date: Mon, 20 Jan 2025 10:06:07 +0100
-From: Kashyap Chamarthy <kchamart@redhat.com>
-To: Marc Zyngier <maz@kernel.org>
-Cc: qemu-devel@nongnu.org, qemu-arm@nongnu.org, sebott@redhat.com,
- Peter Maydell <peter.maydell@linaro.org>
-Subject: Re: [PATCH 2/2] docs/cpu-features: Update "PAuth" (Pointer
- Authentication) details
-Message-ID: <Z44R-cUz9CWMp5Gi@gezellig>
-References: <20250117191106.322363-1-kchamart@redhat.com>
- <20250117191106.322363-3-kchamart@redhat.com>
- <87sepgtp3e.wl-maz@kernel.org>
+ (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
+ id 1taae1-0006ks-LC; Wed, 22 Jan 2025 08:19:47 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+ d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+ t=1737551986; x=1769087986;
+ h=date:from:to:cc:subject:message-id:references:
+ mime-version:in-reply-to;
+ bh=Ojv5QrTK/it8nf4qOPUO8BNwhuSJcBS9bLeRkI2TH/Y=;
+ b=fGUR72A7dMFD/CyncOYzsXaw7qkyDqsclfGnugvIXStMKYgDF5Yp50u1
+ wMspdGdvYn9nZKzwLX/M9FBPHvhKPg4DoAx/+QCJZdzBnvyFzWbUbf7Ly
+ lktlNqTQ0TJbntuqMCpQJC8NLCh6ZrTgffl9qGL0mRWxqI305wiVUsrTl
+ 8EuXFt0+IARXFlrK0cL0FhFNogVnNCC3sdZxeOLOUUa65MZqlof9AKYf6
+ vkTLoAlBmf8R6CxgHQiPuhqV3VMcuNbnymktX2JqH0RFbwrRMztxe4FNH
+ lEHlbb+Edwqpna0VwfO4xmnnTZ/HnLXmOLxtd+RtOTBtXwKCjfHFL/582 w==;
+X-CSE-ConnectionGUID: 7lMYbcsnQI2vRGfbdQEiLA==
+X-CSE-MsgGUID: V9WHgYtsQ9WFmOFM3EWEjQ==
+X-IronPort-AV: E=McAfee;i="6700,10204,11323"; a="38256643"
+X-IronPort-AV: E=Sophos;i="6.13,225,1732608000"; d="scan'208";a="38256643"
+Received: from fmviesa004.fm.intel.com ([10.60.135.144])
+ by fmvoesa108.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 22 Jan 2025 05:19:43 -0800
+X-CSE-ConnectionGUID: qJO4BTwQQsanwUgyqp1jTQ==
+X-CSE-MsgGUID: moYdAgTeTzOTJMJysvWH6A==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.13,225,1732608000"; d="scan'208";a="112152707"
+Received: from liuzhao-optiplex-7080.sh.intel.com (HELO localhost)
+ ([10.239.160.39])
+ by fmviesa004.fm.intel.com with ESMTP; 22 Jan 2025 05:19:41 -0800
+Date: Wed, 22 Jan 2025 21:39:03 +0800
+From: Zhao Liu <zhao1.liu@intel.com>
+To: Paolo Bonzini <pbonzini@redhat.com>
+Cc: qemu-devel@nongnu.org, qemu-rust@nongnu.org
+Subject: Re: [PATCH 02/10] rust: pl011: hide unnecessarily "pub" items from
+ outside pl011::device
+Message-ID: <Z5D097/Eqen1BZhE@intel.com>
+References: <20250117092657.1051233-1-pbonzini@redhat.com>
+ <20250117092657.1051233-3-pbonzini@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <87sepgtp3e.wl-maz@kernel.org>
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.40
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=kchamart@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -50
-X-Spam_score: -5.1
-X-Spam_bar: -----
-X-Spam_report: (-5.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-2.996,
+In-Reply-To: <20250117092657.1051233-3-pbonzini@redhat.com>
+Received-SPF: pass client-ip=192.198.163.14; envelope-from=zhao1.liu@intel.com;
+ helo=mgamail.intel.com
+X-Spam_score_int: -73
+X-Spam_score: -7.4
+X-Spam_bar: -------
+X-Spam_report: (-7.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-2.996,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.043,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -91,76 +82,26 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Sat, Jan 18, 2025 at 10:04:37AM +0000, Marc Zyngier wrote:
-> On Fri, 17 Jan 2025 19:11:06 +0000,
-> Kashyap Chamarthy <kchamart@redhat.com> wrote:
-> > 
-> > PAuth (Pointer Authentication), a security feature in software, is
-> > relevant for both KVM and QEMU.  Relect this fact into the docs:
-> > 
-> >   - For KVM, `pauth` is a binary, "on" vs "off" option.  The host CPU
-> >     will choose the cryptographic algorithm.
-> > 
-> >   - For TCG, however, along with `pauth`, a couple of properties can be
-> >     controlled -- they're are related to cryptographic algorithm choice.
-> > 
-> > Thanks to Peter Maydell and Marc Zyngier for explaining more about PAuth
-> > on IRC (#qemu, OFTC).
-> > 
-> > Signed-off-by: Kashyap Chamarthy <kchamart@redhat.com>
-> > ---
-
-[...]
-
-> > -TCG vCPU Features
-> > -=================
-> > +"PAuth" (Pointer Authentication)
-> > +================================
-> > +
-> > +PAuth (Pointer Authentication) is a security feature in software that
-> > +was introduced in Armv8.3-A and Armv9.0-A.  It aims to protect against
+On Fri, Jan 17, 2025 at 10:26:49AM +0100, Paolo Bonzini wrote:
+> Date: Fri, 17 Jan 2025 10:26:49 +0100
+> From: Paolo Bonzini <pbonzini@redhat.com>
+> Subject: [PATCH 02/10] rust: pl011: hide unnecessarily "pub" items from
+>  outside pl011::device
+> X-Mailer: git-send-email 2.47.1
 > 
-> nit: given that ARMv9.0 is congruent to ARMv8.5 and therefore has all
-> the ARMv8.5 features, mentioning ARMv8.3 should be enough (but I don't
-> feel strongly about this). I feel much strongly about the use of
-> capital letters, but I live in a distant past... ;-)
-
-Sure, I can keep it to just v8.3.
-
-On capitalization, I don't feel strongly about it, I just followed this
-commit[1], which explained that the rebranding changed "ARM" to "Arm":
-
-    6fe6d6c9a95 (docs: Be consistent about capitalization of 'Arm',
-    2020-03-09)
-
-That's why I went with it.  I see you know this by your "distant past"
-remark :)  To match the above, I'll keep the capitalization to "Arm".
-
-> > +ROP (return-oriented programming) attacks.
-> > +
-> > +KVM
-> > +---
-> > +
-> > +``pauth``
-> > +
-> > +  Enable or disable ``FEAT_Pauth``.  The host silicon will choose the
-> > +  cryptographic algorithm.  No other properties can be controlled.
+> The only public interfaces for pl011 are TYPE_PL011 and pl011_create.
+> Remove pub from everything else.
 > 
-> nit: "choose" is a an odd choice of word. The host implementation
-> defines, or even imposes the signature algorithm, as well as the level
-> of PAuth support (PAuth, EPAC, PAuth2, FPAC, FPACCOMBINE, ...), some
-> of which are mutually exclusive (EPAC and PAuth2 are incompatible).
+> Note: the "allow(dead_code)" is removed later.
 > 
-> Maybe it would be worth capturing some of these details, as this has a
-> direct influence on the ability to migrate a VM.
+> Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
+> ---
+>  rust/hw/char/pl011/src/device.rs       |  2 +-
+>  rust/hw/char/pl011/src/device_class.rs |  2 +-
+>  rust/hw/char/pl011/src/lib.rs          | 13 ++++++++-----
+>  3 files changed, 10 insertions(+), 7 deletions(-)
+> 
 
-Yeah, I thought about it but I was not sure if it's the right place.  As
-you point out, there's a live-migration impact depending on the level of
-PAuth support, so mentioning these details will be useful.
-
-I'll come up with something for v2.  Thanks for looking!
-
--- 
-/kashyap
+Reviewed-by: Zhao Liu <zhao1.liu@intel.com>
 
 
