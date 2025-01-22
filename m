@@ -4,83 +4,91 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B9917C02182
-	for <qemu-devel@archiver.kernel.org>; Wed, 22 Jan 2025 09:42:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6306BC0218C
+	for <qemu-devel@archiver.kernel.org>; Wed, 22 Jan 2025 09:51:21 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1taXFB-0002H5-Jd; Wed, 22 Jan 2025 04:41:53 -0500
+	id 1taXNY-0004SS-Je; Wed, 22 Jan 2025 04:50:32 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <yilun.xu@linux.intel.com>)
- id 1taXF9-0002Gx-HA
- for qemu-devel@nongnu.org; Wed, 22 Jan 2025 04:41:51 -0500
-Received: from mgamail.intel.com ([192.198.163.8])
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1taXNW-0004Rq-D7
+ for qemu-devel@nongnu.org; Wed, 22 Jan 2025 04:50:30 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <yilun.xu@linux.intel.com>)
- id 1taXF7-0004yG-4N
- for qemu-devel@nongnu.org; Wed, 22 Jan 2025 04:41:51 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
- d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1737538909; x=1769074909;
- h=date:from:to:cc:subject:message-id:references:
- mime-version:in-reply-to;
- bh=owsEZA7axqN2tzMnFMwmr8Y1RsBH0gepw5uM/bZOsI0=;
- b=Z6d3VrgaEK3UEvavOWxrR9P8nseE6PKZy00mNMadeuoAy+cWaGpvvsCc
- mzotzDtZ0CvJymnSajT1KBjF9J31sxtVuNfJHEPLiNpWuGffKCPt1crXj
- J75KodFo8gsDO1gMvWKp3P5uUDdhzMs7TPWQ9Q/mjJUpiXL7If54AGu2d
- LuNETOd1LBKlI8kwIS23wRjsy/8jqB66gnrZn6SvJooxjAigaqWCfcr+k
- 1le6ZSYUAVXfAUwftn7DcBVTJw+48anKgRG0Wo9AqeMPnXCVlPtzRahWW
- wv1j49pw5yLxQnOWReWCcQhYFtAWfgyE+HvF957tpN78XJu+S7kg3UXv9 A==;
-X-CSE-ConnectionGUID: 02p4JeGjS9eahUNbvxR/bA==
-X-CSE-MsgGUID: J8fHoRFKSbWF0V3zysFjkA==
-X-IronPort-AV: E=McAfee;i="6700,10204,11322"; a="55537245"
-X-IronPort-AV: E=Sophos;i="6.13,224,1732608000"; d="scan'208";a="55537245"
-Received: from fmviesa004.fm.intel.com ([10.60.135.144])
- by fmvoesa102.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 22 Jan 2025 01:41:44 -0800
-X-CSE-ConnectionGUID: pwElfivTTTaVwZNRiKbgxw==
-X-CSE-MsgGUID: KLNJcEWXTJe9+yRx0qnWng==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.13,224,1732608000"; d="scan'208";a="112099494"
-Received: from yilunxu-optiplex-7050.sh.intel.com (HELO localhost)
- ([10.239.159.165])
- by fmviesa004.fm.intel.com with ESMTP; 22 Jan 2025 01:41:41 -0800
-Date: Wed, 22 Jan 2025 17:41:31 +0800
-From: Xu Yilun <yilun.xu@linux.intel.com>
-To: Alexey Kardashevskiy <aik@amd.com>
-Cc: Peter Xu <peterx@redhat.com>, Chenyi Qiang <chenyi.qiang@intel.com>,
- David Hildenbrand <david@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
- Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Michael Roth <michael.roth@amd.com>, qemu-devel@nongnu.org,
- kvm@vger.kernel.org, Williams Dan J <dan.j.williams@intel.com>,
- Peng Chao P <chao.p.peng@intel.com>, Gao Chao <chao.gao@intel.com>,
- Xu Yilun <yilun.xu@intel.com>
-Subject: Re: [PATCH 2/7] guest_memfd: Introduce an object to manage the
- guest-memfd with RamDiscardManager
-Message-ID: <Z5C9SzXxX7M1DBE3@yilunxu-OptiPlex-7050>
-References: <ca9bc239-d59b-4c53-9f14-aa212d543db9@intel.com>
- <4d22d3ce-a5a1-49f2-a578-8e0fe7d26893@amd.com>
- <2b799426-deaa-4644-aa17-6ef31899113b@intel.com>
- <2400268e-d26a-4933-80df-cfe44b38ae40@amd.com>
- <590432e1-4a26-4ae8-822f-ccfbac352e6b@intel.com>
- <2b2730f3-6e1a-4def-b126-078cf6249759@amd.com>
- <Z462F1Dwm6cUdCcy@x1n> <ZnmfUelBs3Cm0ZHd@yilunxu-OptiPlex-7050>
- <Z4-6u5_9NChu_KZq@x1n>
- <95a14f7d-4782-40b3-a55d-7cf67b911bbe@amd.com>
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1taXNU-0008NT-Tf
+ for qemu-devel@nongnu.org; Wed, 22 Jan 2025 04:50:30 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1737539426;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:
+ content-transfer-encoding:content-transfer-encoding;
+ bh=Zex2ldgIzvw4izBjigvsHNUrg0z9NxD1+oJuN6ssmbU=;
+ b=c5L+O4F8/qAYXkmOvtA1u/8X7+dwpobwMQxVOE6a7zSe3fzfNP5qpZgxpty/BogLlihZ1Z
+ tAkTTUPcs3K7t1O6CzEj1JZZWqY1yNrO7+SRU9wCZBdlf9C5sflSNBjepkcVXFuUQCc4Iu
+ 6h7HSjxZymviVmvqOjio4guqAGeim3U=
+Received: from mail-ed1-f69.google.com (mail-ed1-f69.google.com
+ [209.85.208.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-645-XvqD8hoKMom1ww15kF_OSg-1; Wed, 22 Jan 2025 04:50:22 -0500
+X-MC-Unique: XvqD8hoKMom1ww15kF_OSg-1
+X-Mimecast-MFC-AGG-ID: XvqD8hoKMom1ww15kF_OSg
+Received: by mail-ed1-f69.google.com with SMTP id
+ 4fb4d7f45d1cf-5d3f55f8f3aso8214546a12.2
+ for <qemu-devel@nongnu.org>; Wed, 22 Jan 2025 01:50:22 -0800 (PST)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1737539421; x=1738144221;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=Zex2ldgIzvw4izBjigvsHNUrg0z9NxD1+oJuN6ssmbU=;
+ b=rt8BbkF4YfnokUhSsmS6dMkWYSl2VsCtj5rGk0h+NGEZKRcbQWS3rK0/M1y3YYwx9/
+ GjUB+zc+pIDtirumYd5JA2XFl+kZYFFJ+nmTARFm+rZtteqDAH4a+XNaiaWYo0BZmqog
+ +bePGMBB3Mf36cFzpSQ2INWmRZQxzC5hZIwRZxEXYyGUUibd7u2iIS/RMAX8WUjnrs+F
+ 6jv9KySgXuXl2D4KKFU1/lqngINezs1M34fgfc8CtteIfn1TwlksgY2/EBMC/7yibmxx
+ vua5ncR/MokSKmaDmGqjvuM1n1f8Kuplu+bHcWdsCxz6iSwZWELiqU+h6XVCzmiPlFcP
+ vJ1Q==
+X-Gm-Message-State: AOJu0Ywofn3eaWVLlC7TeJ1wvvutvFDcSFgTO8XXJEdTqqXczd5YFfNe
+ i/LDi0rg/4hE7s2CYf6hOfj8mzs6Dhtc2rW2WTJ9a4LF1E9dFGgp82qweFrLRsvU1MAq6t4jDbl
+ LBGwDKAgBWkUGWX+gtTINvwd8/Z5XV6LxJzp7J+R28f9njw9EKAQberNG22ka3fU8lKyo7NKZQt
+ kyC1Tj9vvQAjuYyQqB2ONs5WgqeSuvKXBM412izqw=
+X-Gm-Gg: ASbGncuEXV4jO9wnqBrRroBvNfTaiqM6a0sQYacv8tFVmlE9emJe6rCvBaeFehdRXNF
+ /VKJZ4AYZsZu77axZteqsKS6K6zHU6Qk4I/rUY/fCDEH9jykyUEkDP36NJvkNVqptZ9uORritzK
+ zuHzqIbf1zBgoObXbeoljP+az6c4jryt9ZqIpZ6tAEzQJlLu3XzhTfdtCCif94OhMo+3CD0Wyv3
+ /uAFCR9VW1MnbEDUcnUYD7wIdL3mWoe84PDv07aFlVlA936W0jUmXv9bXhTrZjjR6e+F1w+078=
+X-Received: by 2002:a05:6402:42cf:b0:5d9:a55:810c with SMTP id
+ 4fb4d7f45d1cf-5db7d2dc320mr20461949a12.5.1737539420815; 
+ Wed, 22 Jan 2025 01:50:20 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IHtQb4ljOy7WXai1d4L3IYEdgJrey9+dYnyubWfQ6S7ucZ08MgtMhDvE1+jBFfb6dZT5Cl/dg==
+X-Received: by 2002:a05:6402:42cf:b0:5d9:a55:810c with SMTP id
+ 4fb4d7f45d1cf-5db7d2dc320mr20461930a12.5.1737539420384; 
+ Wed, 22 Jan 2025 01:50:20 -0800 (PST)
+Received: from [192.168.10.47] ([176.206.124.70])
+ by smtp.gmail.com with ESMTPSA id
+ 4fb4d7f45d1cf-5dbf31c3e7csm906208a12.3.2025.01.22.01.50.19
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Wed, 22 Jan 2025 01:50:19 -0800 (PST)
+From: Paolo Bonzini <pbonzini@redhat.com>
+To: qemu-devel@nongnu.org
+Cc: Richard Henderson <richard.henderson@linaro.org>
+Subject: [PATCH] target/i386: extract common bits of gen_repz/gen_repz_nz
+Date: Wed, 22 Jan 2025 10:50:17 +0100
+Message-ID: <20250122095018.2471009-1-pbonzini@redhat.com>
+X-Mailer: git-send-email 2.47.1
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <95a14f7d-4782-40b3-a55d-7cf67b911bbe@amd.com>
-Received-SPF: none client-ip=192.198.163.8;
- envelope-from=yilun.xu@linux.intel.com; helo=mgamail.intel.com
-X-Spam_score_int: -72
-X-Spam_score: -7.3
-X-Spam_bar: -------
-X-Spam_report: (-7.3 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-2.996,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_MED=-2.3,
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=pbonzini@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -50
+X-Spam_score: -5.1
+X-Spam_bar: -----
+X-Spam_report: (-5.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-2.996,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_NONE=0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -96,58 +104,82 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, Jan 22, 2025 at 03:30:05PM +1100, Alexey Kardashevskiy wrote:
-> 
-> 
-> On 22/1/25 02:18, Peter Xu wrote:
-> > On Tue, Jun 25, 2024 at 12:31:13AM +0800, Xu Yilun wrote:
-> > > On Mon, Jan 20, 2025 at 03:46:15PM -0500, Peter Xu wrote:
-> > > > On Mon, Jan 20, 2025 at 09:22:50PM +1100, Alexey Kardashevskiy wrote:
-> > > > > > It is still uncertain how to implement the private MMIO. Our assumption
-> > > > > > is the private MMIO would also create a memory region with
-> > > > > > guest_memfd-like backend. Its mr->ram is true and should be managed by
-> > > > > > RamdDiscardManager which can skip doing DMA_MAP in VFIO's region_add
-> > > > > > listener.
-> > > > > 
-> > > > > My current working approach is to leave it as is in QEMU and VFIO.
-> > > > 
-> > > > Agreed.  Setting ram=true to even private MMIO sounds hackish, at least
-> > > 
-> > > The private MMIO refers to assigned MMIO, not emulated MMIO. IIUC,
-> > > normal assigned MMIO is always set ram=true,
-> > > 
-> > > void memory_region_init_ram_device_ptr(MemoryRegion *mr,
-> > >                                         Object *owner,
-> > >                                         const char *name,
-> > >                                         uint64_t size,
-> > >                                         void *ptr)
-> > > {
-> > >      memory_region_init(mr, owner, name, size);
-> > >      mr->ram = true;
-> > > 
-> > > 
-> > > So I don't think ram=true is a problem here.
-> > 
-> > I see.  If there's always a host pointer then it looks valid.  So it means
-> > the device private MMIOs are always mappable since the start?
-> 
-> Yes. VFIO owns the mapping and does not treat shared/private MMIO any
-> different at the moment. Thanks,
+Now that everything has been cleaned up, look at DF and prefixes
+in a single function, and call that one from gen_repz and gen_repz_nz.
 
-mm.. I'm actually expecting private MMIO not have a host pointer, just
-as private memory do.
+Based-on: <20241215090613.89588-1-pbonzini@redhat.com>
+Suggested-by: Richard Henderson <richard.henderson@linaro.org>
+Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
+---
+	This was requested in the review of "target/i386: optimize string operations"
 
-But I'm not sure why having host pointer correlates mr->ram == true.
+ target/i386/tcg/translate.c | 34 ++++++++++++++--------------------
+ 1 file changed, 14 insertions(+), 20 deletions(-)
 
-Thanks,
-Yilun
+diff --git a/target/i386/tcg/translate.c b/target/i386/tcg/translate.c
+index 9f4d3ebbd95..9b2fde5eb28 100644
+--- a/target/i386/tcg/translate.c
++++ b/target/i386/tcg/translate.c
+@@ -688,14 +688,6 @@ static inline void gen_string_movl_A0_EDI(DisasContext *s)
+     gen_lea_v_seg(s, cpu_regs[R_EDI], R_ES, -1);
+ }
+ 
+-static inline TCGv gen_compute_Dshift(DisasContext *s, MemOp ot)
+-{
+-    TCGv dshift = tcg_temp_new();
+-    tcg_gen_ld32s_tl(dshift, tcg_env, offsetof(CPUX86State, df));
+-    tcg_gen_shli_tl(dshift, dshift, ot);
+-    return dshift;
+-};
+-
+ static TCGv gen_ext_tl(TCGv dst, TCGv src, MemOp size, bool sign)
+ {
+     if (size == MO_TL) {
+@@ -1446,29 +1438,31 @@ static void do_gen_rep(DisasContext *s, MemOp ot, TCGv dshift,
+     gen_jmp_rel_csize(s, 0, 1);
+ }
+ 
+-static void gen_repz(DisasContext *s, MemOp ot,
+-                     void (*fn)(DisasContext *s, MemOp ot, TCGv dshift))
+-
++static void do_gen_string(DisasContext *s, MemOp ot,
++                          void (*fn)(DisasContext *s, MemOp ot, TCGv dshift),
++                          bool is_repz_nz)
+ {
+-    TCGv dshift = gen_compute_Dshift(s, ot);
++    TCGv dshift = tcg_temp_new();
++    tcg_gen_ld32s_tl(dshift, tcg_env, offsetof(CPUX86State, df));
++    tcg_gen_shli_tl(dshift, dshift, ot);
+ 
+     if (s->prefix & (PREFIX_REPZ | PREFIX_REPNZ)) {
+-        do_gen_rep(s, ot, dshift, fn, false);
++        do_gen_rep(s, ot, dshift, fn, is_repz_nz);
+     } else {
+         fn(s, ot, dshift);
+     }
+ }
+ 
++static void gen_repz(DisasContext *s, MemOp ot,
++                     void (*fn)(DisasContext *s, MemOp ot, TCGv dshift))
++{
++    do_gen_string(s, ot, fn, false);
++}
++
+ static void gen_repz_nz(DisasContext *s, MemOp ot,
+                         void (*fn)(DisasContext *s, MemOp ot, TCGv dshift))
+ {
+-    TCGv dshift = gen_compute_Dshift(s, ot);
+-
+-    if (s->prefix & (PREFIX_REPZ | PREFIX_REPNZ)) {
+-        do_gen_rep(s, ot, dshift, fn, true);
+-    } else {
+-        fn(s, ot, dshift);
+-    }
++    do_gen_string(s, ot, fn, true);
+ }
+ 
+ static void gen_helper_fp_arith_ST0_FT0(int op)
+-- 
+2.47.1
 
-> 
-> > 
-> > Thanks,
-> > 
-> 
-> -- 
-> Alexey
-> 
 
