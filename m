@@ -4,90 +4,132 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E9346C02181
-	for <qemu-devel@archiver.kernel.org>; Wed, 22 Jan 2025 14:56:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CC5C0C02181
+	for <qemu-devel@archiver.kernel.org>; Wed, 22 Jan 2025 15:00:59 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tac9C-0007si-DG; Wed, 22 Jan 2025 09:56:02 -0500
+	id 1tacDY-0000WL-CI; Wed, 22 Jan 2025 10:00:32 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jean-philippe@linaro.org>)
- id 1tac99-0007sF-SR
- for qemu-devel@nongnu.org; Wed, 22 Jan 2025 09:55:59 -0500
-Received: from mail-wm1-x32d.google.com ([2a00:1450:4864:20::32d])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <jean-philippe@linaro.org>)
- id 1tac96-0007kh-Fp
- for qemu-devel@nongnu.org; Wed, 22 Jan 2025 09:55:58 -0500
-Received: by mail-wm1-x32d.google.com with SMTP id
- 5b1f17b1804b1-43634b570c1so51658545e9.0
- for <qemu-devel@nongnu.org>; Wed, 22 Jan 2025 06:55:55 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1737557754; x=1738162554; darn=nongnu.org;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
- bh=egJj4a82EYatey7PDURldUikhwUZAVn4jZM8rkct+9Y=;
- b=fZr8BmDFp4Nj7WFyTGEZvAJFEpdi4YL2q6INZsikaX7iw5YBLjZrpIQWpfxG1csks2
- 2ntYc0IzIDFd7wski0fzQqRxSlkBhCyf1qqqwxY8CcGSIFu3D7AvO1/sFsqrCGFChLRI
- 9xwqCdGUxwKMl0Whp0bgV6qeaZb9lJvBwPzOjVgKcP03zcnBDwJWOY7N9aIjnmdHZD1N
- YtxLXAVSdMyjPP71QGNHyyAfSh+MCPGtY16BzuMfW4XJ2V62Ai9Frqf4xXFcqtKEKyIs
- vBfiv/ICioo8T0TKfBl3RAJNfRrNI/xmFf5KF5wmPMdfvMU2S7LoyxWKubAGA5OVC8lb
- y41A==
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1tacDU-0000V0-T2
+ for qemu-devel@nongnu.org; Wed, 22 Jan 2025 10:00:29 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1tacDO-0008Fx-Lb
+ for qemu-devel@nongnu.org; Wed, 22 Jan 2025 10:00:28 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1737558021;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+ bh=POlz4POCIL9jNnb+niuB0G+X/RMlLL8vO4VLJU7O3JY=;
+ b=MgTTmF+cg60kcCaBFU6vLu0SpqSHngI58plH7wG5O4d9JEZFOs6TS6foTNXPRwgGz0OWhj
+ r2fZpTHyd7BFRna4JkoVMV8QZb345s3eh47bzx7rvmrzhmNgn5SszBvCq4LpjdHzHqSr6o
+ UG9urZrmSLtydwR6O1jC4srQXCdySTM=
+Received: from mail-ej1-f71.google.com (mail-ej1-f71.google.com
+ [209.85.218.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-635-WmRayQBaPrKcuTRartYh4Q-1; Wed, 22 Jan 2025 10:00:19 -0500
+X-MC-Unique: WmRayQBaPrKcuTRartYh4Q-1
+X-Mimecast-MFC-AGG-ID: WmRayQBaPrKcuTRartYh4Q
+Received: by mail-ej1-f71.google.com with SMTP id
+ a640c23a62f3a-aa689b88293so730160866b.3
+ for <qemu-devel@nongnu.org>; Wed, 22 Jan 2025 07:00:19 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1737557754; x=1738162554;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=egJj4a82EYatey7PDURldUikhwUZAVn4jZM8rkct+9Y=;
- b=GvmS3AKE/slyaRbB8Px95lHYqX8V09pgSbelHr9B5fdDDRRPPGjuboPB6bjZlY/d/1
- U9o6Woc8+XfpBA7nnlPEexEKX4bQscywChAt8tvKLmce+mt+q3AC7o9TEQYraltaj2au
- KcHafVQUut6o1ecF/DHD3SIcuuCt/2562gRFC0TFF3gHiEPn5nsIFbfdNEduNtpXQd90
- nMiBnkB5o+MvTvTKidMoYujXZ8b887XQSzqcWBEotslLc5bXcHhBuxhV1cLWXrtEi16M
- qRk6BvK2+eB3/co04TIYcHxJ1AEOCvJ2fuojLoAjwLfjY9u2YtkOAbJHHwKAC45k+zx4
- WuLw==
-X-Forwarded-Encrypted: i=1;
- AJvYcCVa9gqp2HhkKzGfFnVO7E83AJ5RXQI6Z+I8Ue2QH2BC1WUVMHkHhpgDgzjTMBbSG/QhHU6hRnNrM/FH@nongnu.org
-X-Gm-Message-State: AOJu0YwNnzfs5BM2nhrKGYp5GocbzQfSo0KC4gLLJUGy04P24x9qweJB
- zXuXY3RWhPfpzuB+zhHnxyMuSqezj6fjTPlvrrad5Qo5pFNPDMf8zIBjAxNzQBs=
-X-Gm-Gg: ASbGncvSvwcDK9EWkKkz+/IImnLLT797asNWTBMaY0HwGJbjp9U2rr+JIHL/72kSEbt
- KnFgzL0+GXSlpku3vIknhFX+6y6xO/c41YrEeFwC/qXjxVVPV34G4BedzELpQG5g3J73uRr9UnQ
- u7OAisrPyPeFMn1P8TI0MBOLVWyL0BdHMYs58PlDHNegfb5cr9fzm0f2FJ8aqbsA5numDz3Vyka
- 0N61VxtzyrukVr/liUFkS8U0U8XzmOda26vSyV5Z+TRgVeBOkwO09Ug4dYH4FTisA8d9YogoOhK
- 230=
-X-Google-Smtp-Source: AGHT+IHrtFPSJQYW32HgWP5LXT22fBp6dNWGOwlKmAUk/RjmVooB/TxsHOjkwGdTNu7gnbS5fesuPQ==
-X-Received: by 2002:a05:600c:3c94:b0:435:192:63ca with SMTP id
- 5b1f17b1804b1-43891439f04mr172758555e9.21.1737557754172; 
- Wed, 22 Jan 2025 06:55:54 -0800 (PST)
-Received: from myrica ([2.221.137.100]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-438b31c7c6asm26795495e9.35.2025.01.22.06.55.53
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 22 Jan 2025 06:55:53 -0800 (PST)
-Date: Wed, 22 Jan 2025 14:56:18 +0000
-From: Jean-Philippe Brucker <jean-philippe@linaro.org>
-To: Gavin Shan <gshan@redhat.com>
-Cc: peter.maydell@linaro.org, richard.henderson@linaro.org,
- philmd@linaro.org, qemu-arm@nongnu.org, qemu-devel@nongnu.org,
- alex.bennee@linaro.org
-Subject: Re: [PATCH v3 17/26] hw/arm/virt: Reserve one bit of guest-physical
- address for RME
-Message-ID: <20250122145618.GA873449@myrica>
-References: <20241125195626.856992-2-jean-philippe@linaro.org>
- <20241125195626.856992-19-jean-philippe@linaro.org>
- <bed63115-017a-4e80-9581-680fd6f29f4c@redhat.com>
+ d=1e100.net; s=20230601; t=1737558018; x=1738162818;
+ h=content-transfer-encoding:in-reply-to:autocrypt:content-language
+ :from:references:cc:to:subject:user-agent:mime-version:date
+ :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=POlz4POCIL9jNnb+niuB0G+X/RMlLL8vO4VLJU7O3JY=;
+ b=T3OgNj/jvdT0vRLsl7drXIVoG5XxKcj3OfCKJk5N7q8siAV6Za2dnCyzIqrCMnUSTD
+ MMOihVTxIJ/rmQnLd3l3KWrmhW88qxyv5vDYt7z8r6O5rzxukiFshOdXtrncDWs2SSJY
+ PuRpsR/8LGUHX/iKRwW2RoJ8HmQ1jqWtqwZyh5i3KxJOAo2lHKjugTxWlLzjOdsazkSr
+ 91ZVmhuW7Wy5HA4QGFIguW0OG0m0iQCuaPhVqsaAFcFnokJ0jdccfh0wroYkj8nyBgn6
+ 3woVtY3S9Dsdwp9bqXR506wvlst5SXhBqJGk/1WBxKeNcGPLr1nRrMtHUeeoClK/47Jt
+ FJuQ==
+X-Gm-Message-State: AOJu0YxG7rBvpkLP3qXwxnC4nxkcxwEMU31lT61Z1hKlGBR8Uj60sh16
+ rZSlYF2tDx6zXCFitVesil//reWicNmx9CIzB8+amVp26r6i+Ra+NhcPcbNqkw7uMAbDq7xh0QD
+ DFZULYyBDKUJUgBi3nqxVX5S6pP/joLuCMemHaCeodwlxcpwd2hup
+X-Gm-Gg: ASbGncujLSul17N/saysfI4tjfM+d5KKE1S74vKi4BVR1zsHmV6eeP41kZ7jiimtlqt
+ kWvGFps66Fy26LO2sqPRM86hLzL6xcwAuUCzHC2bPpQu5jfYTLUmk27ln2KruM34NQT+RGVj/DP
+ gh97kddcfiBZwGCFeZTx5tu0LzvMEDQ6zdgGPrKx7aRahQZlbPBIoyV201ZTZS9dATqZCdlhU+y
+ hIW18SC5Fu3aeUYmdV+ujfTzBpjgCuJcWU8qdNn63fXJnOsIvNKRNHF0FOH4e1JGDjWWzMzcAU=
+X-Received: by 2002:a17:907:6d09:b0:aa6:8935:ae71 with SMTP id
+ a640c23a62f3a-ab38b0b7f21mr2005327166b.12.1737558018019; 
+ Wed, 22 Jan 2025 07:00:18 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IFN1t+NlFl7VeBM57UE85R9UjvwoSv7A2Q+GbNoK+wbwwUtjlEh37HaE0sPoxQ5GMW97o+PZg==
+X-Received: by 2002:a17:907:6d09:b0:aa6:8935:ae71 with SMTP id
+ a640c23a62f3a-ab38b0b7f21mr2005315566b.12.1737558016617; 
+ Wed, 22 Jan 2025 07:00:16 -0800 (PST)
+Received: from [192.168.10.47] ([176.206.124.70])
+ by smtp.googlemail.com with ESMTPSA id
+ a640c23a62f3a-ab384c607aesm914089266b.23.2025.01.22.07.00.13
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Wed, 22 Jan 2025 07:00:13 -0800 (PST)
+Message-ID: <6d7ad183-6685-4ba6-a8ef-d899162879ea@redhat.com>
+Date: Wed, 22 Jan 2025 16:00:12 +0100
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <bed63115-017a-4e80-9581-680fd6f29f4c@redhat.com>
-Received-SPF: pass client-ip=2a00:1450:4864:20::32d;
- envelope-from=jean-philippe@linaro.org; helo=mail-wm1-x32d.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 03/10] rust: pl011: extract conversion to RegisterOffset
+To: Zhao Liu <zhao1.liu@intel.com>
+Cc: qemu-devel@nongnu.org, qemu-rust@nongnu.org
+References: <20250117092657.1051233-1-pbonzini@redhat.com>
+ <20250117092657.1051233-4-pbonzini@redhat.com> <Z5EB3b0VqvqxUaWm@intel.com>
+From: Paolo Bonzini <pbonzini@redhat.com>
+Content-Language: en-US
+Autocrypt: addr=pbonzini@redhat.com; keydata=
+ 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
+In-Reply-To: <Z5EB3b0VqvqxUaWm@intel.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=pbonzini@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -50
+X-Spam_score: -5.1
+X-Spam_bar: -----
+X-Spam_report: (-5.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-2.996,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -103,80 +145,60 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Gavin,
+On 1/22/25 15:34, Zhao Liu wrote:
+> On Fri, Jan 17, 2025 at 10:26:50AM +0100, Paolo Bonzini wrote:
+>> Date: Fri, 17 Jan 2025 10:26:50 +0100
+>> From: Paolo Bonzini <pbonzini@redhat.com>
+>> Subject: [PATCH 03/10] rust: pl011: extract conversion to RegisterOffset
+>> X-Mailer: git-send-email 2.47.1
+>>
+>> As an added bonus, this also makes the new function return u32 instead
+>> of u64, thus factoring some casts into a single place.
+>>
+>> Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
+>> ---
+>>   rust/hw/char/pl011/src/device.rs | 114 +++++++++++++++++--------------
+>>   1 file changed, 63 insertions(+), 51 deletions(-)
+> 
+> [snip]
+> 
+>> -    pub fn read(&mut self, offset: hwaddr, _size: c_uint) -> std::ops::ControlFlow<u64, u64> {
+>> +    fn regs_read(&mut self, offset: RegisterOffset) -> ControlFlow<u32, u32> {
+>>           use RegisterOffset::*;
+> 
+> Can we move this "use" to the start of the file?
 
-On Fri, Dec 13, 2024 at 10:03:08PM +1000, Gavin Shan wrote:
-> Hi Jean,
-> 
-> On 11/26/24 5:56 AM, Jean-Philippe Brucker wrote:
-> > When RME is enabled, the upper GPA bit is used to distinguish protected
-> > from unprotected addresses. Reserve it when setting up the guest memory
-> > map.
-> > 
-> > Signed-off-by: Jean-Philippe Brucker <jean-philippe@linaro.org>
-> > ---
-> >   hw/arm/virt.c | 14 ++++++++++++--
-> >   1 file changed, 12 insertions(+), 2 deletions(-)
-> > 
-> > diff --git a/hw/arm/virt.c b/hw/arm/virt.c
-> > index 9836dfbdfb..eb94997914 100644
-> > --- a/hw/arm/virt.c
-> > +++ b/hw/arm/virt.c
-> > @@ -3035,14 +3035,24 @@ static int virt_kvm_type(MachineState *ms, const char *type_str)
-> >       VirtMachineState *vms = VIRT_MACHINE(ms);
-> >       int rme_vm_type = kvm_arm_rme_vm_type(ms);
-> >       int max_vm_pa_size, requested_pa_size;
-> > +    int rme_reserve_bit = 0;
-> >       bool fixed_ipa;
-> > -    max_vm_pa_size = kvm_arm_get_max_vm_ipa_size(ms, &fixed_ipa);
-> > +    if (rme_vm_type) {
-> > +        /*
-> > +         * With RME, the upper GPA bit differentiates Realm from NS memory.
-> > +         * Reserve the upper bit to ensure that highmem devices will fit.
-> > +         */
-> > +        rme_reserve_bit = 1;
-> > +    }
-> > +
-> > +    max_vm_pa_size = kvm_arm_get_max_vm_ipa_size(ms, &fixed_ipa) -
-> > +                     rme_reserve_bit;
-> 
-> For realm, @max_vm_pa_size is decreased by 1 ...
-> 
-> >       /* we freeze the memory map to compute the highest gpa */
-> >       virt_set_memmap(vms, max_vm_pa_size);
-> > -    requested_pa_size = 64 - clz64(vms->highest_gpa);
-> > +    requested_pa_size = 64 - clz64(vms->highest_gpa) + rme_reserve_bit;
-> 
-> ... For realm, @requested_pa_size is increased by 1, meaning there are two bits in
-> the gap.
+I don't think it's a good idea to make the register names visible 
+globally...  "use Enum::*" before a match statement is relatively 
+common.  For example: https://doc.rust-lang.org/src/std/io/error.rs.html#436
 
-I think it's a 1-bit gap: max_vm_pa_size is decreased by 1 for the purpose
-of memory map calculation, and here we increase by 1 what comes out of
-that calculation, for the KVM IPA size setting
-
+>> +        std::ops::ControlFlow::Break(match offset {
 > 
-> >       /*
-> >        * KVM requires the IPA size to be at least 32 bits.
-> 
-> One bit instead of two bits seems the correct gap for the followup check?
+> std::ops can be omitted now.
 
-Yes this check seems wrong for realm, since (requested_pa_size ==
-max_vm_pa_size + 1) should be valid in this case. I'll fix this.
+Done, add added a patch to get rid of ControlFlow completely.
 
-Thanks,
-Jean
+>> -            Ok(RSR) => {
+>> -                self.receive_status_error_clear.reset();
+>> +            RSR => {
+>> +                self.receive_status_error_clear = 0.into();
+> 
+> Emm, why do we use 0.into() instead of reset() here? It looks they're
+> same.
 
+Fixed.
 
+>> +    pub fn read(&mut self, offset: hwaddr, _size: u32) -> ControlFlow<u64, u64> {
 > 
->     if (requested_pa_size > max_vm_pa_size) {
->         error_report("-m and ,maxmem option values "
->                      "require an IPA range (%d bits) larger than "
->                      "the one supported by the host (%d bits)",
->                      requested_pa_size, max_vm_pa_size);
->         return -1;
->     }
-> 
-> Thanks,
-> Gavin
-> 
+> Maybe pub(crate)? But both are fine for me :-)
+
+The struct is not public outside the crate, so it doesn't make a 
+difference, does it?
+
+> Reviewed-by: Zhao Liu <zhao1.liu@intel.com>
+
+Thanks, I'll post a quick v2 anyway once you've finished reviewing.
+
+Paolo
+
 
