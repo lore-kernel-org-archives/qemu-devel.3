@@ -4,75 +4,58 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A3181C02181
-	for <qemu-devel@archiver.kernel.org>; Wed, 22 Jan 2025 08:49:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 928E0C02181
+	for <qemu-devel@archiver.kernel.org>; Wed, 22 Jan 2025 08:49:40 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1taWNW-0002u8-LF; Wed, 22 Jan 2025 03:46:26 -0500
+	id 1taWPm-0006I7-Rj; Wed, 22 Jan 2025 03:48:46 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1taWNS-0002sT-Tg; Wed, 22 Jan 2025 03:46:22 -0500
-Received: from mgamail.intel.com ([198.175.65.9])
+ (Exim 4.90_1) (envelope-from <ethan84@andestech.com>)
+ id 1taWPa-0005fA-3v; Wed, 22 Jan 2025 03:48:37 -0500
+Received: from 60-248-80-70.hinet-ip.hinet.net ([60.248.80.70]
+ helo=Atcsqr.andestech.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1taWNP-0002y5-IF; Wed, 22 Jan 2025 03:46:22 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
- d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1737535579; x=1769071579;
- h=from:to:cc:subject:date:message-id:in-reply-to:
- references:mime-version:content-transfer-encoding;
- bh=VMFyzU7rJ0ERY+XN36rgAcSEcfJLdF/jbMtrra/GTKA=;
- b=QNQsjGDijegatLLY46/MZMbH6MeFf3kYNjVizZuOJXC5IMjmUxqVfF9z
- +og0QgyM5FT6G4WBc9FPJcRSZ9v9Gqhqx8IBN1nj6JBrLq2LA7xOMwHdp
- DX1jZd8QhwQyklss+eRkX82tqyU3dr+Mf8PDpOJR1OnaBDw3DUJtWzLK2
- FV8Fzt38R9wvL6HXVhJv0UOFgJoRV6gZ7IbCPT/MkobHhljBg4CMbba2H
- ESUW0JArJ8Oyy0W9UdsNkYOXfPlHwB9Dy3cXQ0zdTK2Cwy2CGyM5MtpZB
- eaq+trml6V9V4q1GQUuKXeifvntIr7mQpGOdPVjzfnM/DkhLijxFqpY2j A==;
-X-CSE-ConnectionGUID: Tlai2ovITheoaExyZsUnBA==
-X-CSE-MsgGUID: NkhN/9+hQ+2mkI8X3orfRA==
-X-IronPort-AV: E=McAfee;i="6700,10204,11322"; a="60451561"
-X-IronPort-AV: E=Sophos;i="6.13,224,1732608000"; d="scan'208";a="60451561"
-Received: from orviesa003.jf.intel.com ([10.64.159.143])
- by orvoesa101.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 22 Jan 2025 00:46:17 -0800
-X-CSE-ConnectionGUID: fA1qO0UsTNWEBq4maCd8bQ==
-X-CSE-MsgGUID: bO2kWi3pSM6t8TGjTKIFOw==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.11,199,1725346800"; d="scan'208";a="112049753"
-Received: from liuzhao-optiplex-7080.sh.intel.com ([10.239.160.39])
- by orviesa003.jf.intel.com with ESMTP; 22 Jan 2025 00:46:13 -0800
-From: Zhao Liu <zhao1.liu@intel.com>
-To: Paolo Bonzini <pbonzini@redhat.com>, Eric Blake <eblake@redhat.com>,
- Markus Armbruster <armbru@redhat.com>, Michael Roth <michael.roth@amd.com>,
- =?UTF-8?q?Daniel=20P=20=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
- Eduardo Habkost <eduardo@habkost.net>,
- Marcelo Tosatti <mtosatti@redhat.com>, Shaoqin Huang <shahuang@redhat.com>,
- Eric Auger <eauger@redhat.com>, Peter Maydell <peter.maydell@linaro.org>,
- Laurent Vivier <lvivier@redhat.com>, Thomas Huth <thuth@redhat.com>,
- Sebastian Ott <sebott@redhat.com>, Gavin Shan <gshan@redhat.com>
-Cc: qemu-devel@nongnu.org, kvm@vger.kernel.org, qemu-arm@nongnu.org,
- Dapeng Mi <dapeng1.mi@intel.com>, Yi Lai <yi1.lai@intel.com>,
- Zhao Liu <zhao1.liu@intel.com>
-Subject: [RFC v2 2/5] i386/kvm: Support basic KVM PMU filter
-Date: Wed, 22 Jan 2025 17:05:14 +0800
-Message-Id: <20250122090517.294083-3-zhao1.liu@intel.com>
-X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20250122090517.294083-1-zhao1.liu@intel.com>
-References: <20250122090517.294083-1-zhao1.liu@intel.com>
+ (Exim 4.90_1) (envelope-from <ethan84@andestech.com>)
+ id 1taWPW-0004OD-EH; Wed, 22 Jan 2025 03:48:33 -0500
+Received: from mail.andestech.com (ATCPCS31.andestech.com [10.0.1.89])
+ by Atcsqr.andestech.com with ESMTPS id 50M8m4FF025899
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Wed, 22 Jan 2025 16:48:04 +0800 (+08)
+ (envelope-from ethan84@andestech.com)
+Received: from atcpcw16.andestech.com (10.0.1.106) by ATCPCS31.andestech.com
+ (10.0.1.89) with Microsoft SMTP Server (TLS) id 14.3.498.0; Wed, 22 Jan 2025
+ 16:48:04 +0800
+To: <qemu-devel@nongnu.org>
+CC: <richard.henderson@linaro.org>, <pbonzini@redhat.com>,
+ <palmer@dabbelt.com>, <alistair.francis@wdc.com>, <bmeng.cn@gmail.com>,
+ <liwei1518@gmail.com>, <dbarboza@ventanamicro.com>,
+ <zhiwei_liu@linux.alibaba.com>, <peterx@redhat.com>,
+ <david@redhat.com>, <philmd@linaro.org>, <qemu-riscv@nongnu.org>,
+ Ethan Chen <ethan84@andestech.com>
+Subject: [PATCH v10 8/8] hw/riscv/virt: Add IOPMP support
+Date: Wed, 22 Jan 2025 16:47:47 +0800
+Message-ID: <20250122084747.3971444-1-ethan84@andestech.com>
+X-Mailer: git-send-email 2.42.0.345.gaab89be2eb.dirty
+In-Reply-To: <20250122083617.3940240-1-ethan84@andestech.com>
+References: <20250122083617.3940240-1-ethan84@andestech.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=198.175.65.9; envelope-from=zhao1.liu@intel.com;
- helo=mgamail.intel.com
-X-Spam_score_int: -73
-X-Spam_score: -7.4
-X-Spam_bar: -------
-X-Spam_report: (-7.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-2.996,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Type: text/plain
+X-Originating-IP: [10.0.1.106]
+X-DKIM-Results: atcpcs31.andestech.com; dkim=none;
+X-DNSRBL: 
+X-MAIL: Atcsqr.andestech.com 50M8m4FF025899
+Received-SPF: pass client-ip=60.248.80.70; envelope-from=ethan84@andestech.com;
+ helo=Atcsqr.andestech.com
+X-Spam_score_int: -8
+X-Spam_score: -0.9
+X-Spam_bar: /
+X-Spam_report: (-0.9 / 5.0 requ) BAYES_00=-1.9,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ RDNS_DYNAMIC=0.982, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ TVD_RCVD_IP=0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -85,216 +68,221 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-to:  Ethan Chen <ethan84@andestech.com>
+From:  Ethan Chen via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Filter PMU events with raw format in i386 code.
+- Add 'iopmp=on' option to enable IOPMP. It adds iopmp devices virt machine
+  to protect all regions of system memory.
 
-For i386, raw format indicates that the PMU event code is already
-encoded according to the KVM ioctl requirements, and can be delivered
-directly to KVM without additional encoding work.
-
-Signed-off-by: Zhao Liu <zhao1.liu@intel.com>
+Signed-off-by: Ethan Chen <ethan84@andestech.com>
 ---
-Changes since v1:
- * Stop check whether per-event actions are the same, as "action" has
-   been a global parameter. (Dapeng)
- * Make pmu filter related functions return int in
-   target/i386/kvm/kvm.c.
----
- include/system/kvm_int.h |   2 +
- target/i386/kvm/kvm.c    | 123 +++++++++++++++++++++++++++++++++++++++
- 2 files changed, 125 insertions(+)
+ docs/system/riscv/virt.rst |  7 ++++
+ hw/riscv/Kconfig           |  1 +
+ hw/riscv/virt.c            | 75 ++++++++++++++++++++++++++++++++++++++
+ include/hw/riscv/virt.h    |  4 ++
+ 4 files changed, 87 insertions(+)
 
-diff --git a/include/system/kvm_int.h b/include/system/kvm_int.h
-index 4de6106869b0..743fed29b17b 100644
---- a/include/system/kvm_int.h
-+++ b/include/system/kvm_int.h
-@@ -17,6 +17,7 @@
- #include "hw/boards.h"
- #include "hw/i386/topology.h"
- #include "io/channel-socket.h"
-+#include "system/kvm-pmu.h"
+diff --git a/docs/system/riscv/virt.rst b/docs/system/riscv/virt.rst
+index 60850970ce..6b5fc1d37d 100644
+--- a/docs/system/riscv/virt.rst
++++ b/docs/system/riscv/virt.rst
+@@ -146,6 +146,13 @@ The following machine-specific options are supported:
  
- typedef struct KVMSlot
- {
-@@ -166,6 +167,7 @@ struct KVMState
-     uint16_t xen_gnttab_max_frames;
-     uint16_t xen_evtchn_max_pirq;
-     char *device;
-+    KVMPMUFilter *pmu_filter;
+   Enables the riscv-iommu-sys platform device. Defaults to 'off'.
+ 
++- iopmp=[on|off]
++
++  When this option is "on", IOPMP devices are added to machine. IOPMP checks
++  memory transcations in system memory. This option is assumed to be "off". To
++  enable the CPU to perform transactions with a specified RRID, use the CPU
++  option "-cpu <cpu>,iopmp=true,iopmp_rrid=<rrid>"
++
+ Running Linux kernel
+ --------------------
+ 
+diff --git a/hw/riscv/Kconfig b/hw/riscv/Kconfig
+index e6a0ac1fa1..637438af2c 100644
+--- a/hw/riscv/Kconfig
++++ b/hw/riscv/Kconfig
+@@ -68,6 +68,7 @@ config RISCV_VIRT
+     select PLATFORM_BUS
+     select ACPI
+     select ACPI_PCI
++    select RISCV_IOPMP
+ 
+ config SHAKTI_C
+     bool
+diff --git a/hw/riscv/virt.c b/hw/riscv/virt.c
+index 241389d72f..c5a8f7173e 100644
+--- a/hw/riscv/virt.c
++++ b/hw/riscv/virt.c
+@@ -57,6 +57,8 @@
+ #include "hw/acpi/aml-build.h"
+ #include "qapi/qapi-visit-common.h"
+ #include "hw/virtio/virtio-iommu.h"
++#include "hw/misc/riscv_iopmp.h"
++#include "hw/misc/riscv_iopmp_dispatcher.h"
+ 
+ /* KVM AIA only supports APLIC MSI. APLIC Wired is always emulated by QEMU. */
+ static bool virt_use_kvm_aia_aplic_imsic(RISCVVirtAIAType aia_type)
+@@ -94,6 +96,7 @@ static const MemMapEntry virt_memmap[] = {
+     [VIRT_UART0] =        { 0x10000000,         0x100 },
+     [VIRT_VIRTIO] =       { 0x10001000,        0x1000 },
+     [VIRT_FW_CFG] =       { 0x10100000,          0x18 },
++    [VIRT_IOPMP] =        { 0x10200000,      0x100000 },
+     [VIRT_FLASH] =        { 0x20000000,     0x4000000 },
+     [VIRT_IMSIC_M] =      { 0x24000000, VIRT_IMSIC_MAX_SIZE },
+     [VIRT_IMSIC_S] =      { 0x28000000, VIRT_IMSIC_MAX_SIZE },
+@@ -102,6 +105,11 @@ static const MemMapEntry virt_memmap[] = {
+     [VIRT_DRAM] =         { 0x80000000,           0x0 },
  };
  
- void kvm_memory_listener_register(KVMState *s, KVMMemoryListener *kml,
-diff --git a/target/i386/kvm/kvm.c b/target/i386/kvm/kvm.c
-index 6c749d4ee812..b82adbed50f4 100644
---- a/target/i386/kvm/kvm.c
-+++ b/target/i386/kvm/kvm.c
-@@ -34,6 +34,7 @@
- #include "system/system.h"
- #include "system/hw_accel.h"
- #include "system/kvm_int.h"
-+#include "system/kvm-pmu.h"
- #include "system/runstate.h"
- #include "kvm_i386.h"
- #include "../confidential-guest.h"
-@@ -110,6 +111,7 @@ typedef struct {
- static void kvm_init_msrs(X86CPU *cpu);
- static int kvm_filter_msr(KVMState *s, uint32_t msr, QEMURDMSRHandler *rdmsr,
-                           QEMUWRMSRHandler *wrmsr);
-+static int kvm_filter_pmu_event(KVMState *s);
- 
- const KVMCapabilityInfo kvm_arch_required_capabilities[] = {
-     KVM_CAP_INFO(SET_TSS_ADDR),
-@@ -3346,6 +3348,14 @@ int kvm_arch_init(MachineState *ms, KVMState *s)
-         }
-     }
- 
-+    if (s->pmu_filter) {
-+        ret = kvm_filter_pmu_event(s);
-+        if (ret < 0) {
-+            error_report("Could not set KVM PMU filter");
-+            return ret;
-+        }
-+    }
++static const MemMapEntry iopmp_protect_memmap[] = {
++    /* IOPMP protect all regions by default */
++    {0x0, 0xFFFFFFFF},
++};
 +
-     return 0;
+ /* PCIe high mmio is fixed for RV32 */
+ #define VIRT32_HIGH_PCIE_MMIO_BASE  0x300000000ULL
+ #define VIRT32_HIGH_PCIE_MMIO_SIZE  (4 * GiB)
+@@ -1117,6 +1125,24 @@ static void create_fdt_iommu(RISCVVirtState *s, uint16_t bdf)
+                            bdf + 1, iommu_phandle, bdf + 1, 0xffff - bdf);
  }
  
-@@ -5942,6 +5952,82 @@ static int kvm_handle_wrmsr(X86CPU *cpu, struct kvm_run *run)
-     g_assert_not_reached();
- }
- 
-+static bool kvm_config_pmu_event(KVMPMUFilter *filter,
-+                                 struct kvm_pmu_event_filter *kvm_filter)
-+{
-+    KVMPMUFilterEventList *events;
-+    KVMPMUFilterEvent *event;
-+    uint64_t code;
-+    int idx = 0;
++static void create_fdt_iopmp(RISCVVirtState *s, const MemMapEntry *memmap,
++                             uint32_t irq_mmio_phandle) {
++    g_autofree char *name = NULL;
++    MachineState *ms = MACHINE(s);
 +
-+    kvm_filter->nevents = filter->nevents;
-+    events = filter->events;
-+    while (events) {
-+        assert(idx < kvm_filter->nevents);
-+
-+        event = events->value;
-+        switch (event->format) {
-+        case KVM_PMU_EVENT_FMT_RAW:
-+            code = event->u.raw.code;
-+            break;
-+        default:
-+            g_assert_not_reached();
-+        }
-+
-+        kvm_filter->events[idx++] = code;
-+        events = events->next;
-+    }
-+
-+    return true;
-+}
-+
-+static int kvm_install_pmu_event_filter(KVMState *s)
-+{
-+    struct kvm_pmu_event_filter *kvm_filter;
-+    KVMPMUFilter *filter = s->pmu_filter;
-+    int ret;
-+
-+    kvm_filter = g_malloc0(sizeof(struct kvm_pmu_event_filter) +
-+                           filter->nevents * sizeof(uint64_t));
-+
-+    switch (filter->action) {
-+    case KVM_PMU_FILTER_ACTION_ALLOW:
-+        kvm_filter->action = KVM_PMU_EVENT_ALLOW;
-+        break;
-+    case KVM_PMU_FILTER_ACTION_DENY:
-+        kvm_filter->action = KVM_PMU_EVENT_DENY;
-+        break;
-+    default:
-+        g_assert_not_reached();
-+    }
-+
-+    if (!kvm_config_pmu_event(filter, kvm_filter)) {
-+        goto fail;
-+    }
-+
-+    ret = kvm_vm_ioctl(s, KVM_SET_PMU_EVENT_FILTER, kvm_filter);
-+    if (ret) {
-+        error_report("KVM_SET_PMU_EVENT_FILTER fails (%s)", strerror(-ret));
-+        goto fail;
-+    }
-+
-+    g_free(kvm_filter);
-+    return 0;
-+fail:
-+    g_free(kvm_filter);
-+    return -EINVAL;
-+}
-+
-+static int kvm_filter_pmu_event(KVMState *s)
-+{
-+    if (!kvm_vm_check_extension(s, KVM_CAP_PMU_EVENT_FILTER)) {
-+        error_report("KVM PMU filter is not supported by Host.");
-+        return -1;
-+    }
-+
-+    return kvm_install_pmu_event_filter(s);
-+}
-+
- static bool has_sgx_provisioning;
- 
- static bool __kvm_enable_sgx_provisioning(KVMState *s)
-@@ -6537,6 +6623,35 @@ static void kvm_arch_set_xen_evtchn_max_pirq(Object *obj, Visitor *v,
-     s->xen_evtchn_max_pirq = value;
- }
- 
-+static void kvm_arch_check_pmu_filter(const Object *obj, const char *name,
-+                                      Object *child, Error **errp)
-+{
-+    KVMPMUFilter *filter = KVM_PMU_FILTER(child);
-+    KVMPMUFilterEventList *events = filter->events;
-+
-+    if (!filter->nevents) {
-+        error_setg(errp,
-+                   "Empty KVM PMU filter.");
-+        return;
-+    }
-+
-+    while (events) {
-+        KVMPMUFilterEvent *event = events->value;
-+
-+        switch (event->format) {
-+        case KVM_PMU_EVENT_FMT_RAW:
-+            break;
-+        default:
-+            error_setg(errp,
-+                       "Unsupported PMU event format %s.",
-+                       KVMPMUEventEncodeFmt_str(events->value->format));
-+            return;
-+        }
-+
-+        events = events->next;
++    name = g_strdup_printf("/soc/iopmp@%lx", (long)memmap[VIRT_IOPMP].base);
++    qemu_fdt_add_subnode(ms->fdt, name);
++    qemu_fdt_setprop_string(ms->fdt, name, "compatible", "riscv_iopmp");
++    qemu_fdt_setprop_cells(ms->fdt, name, "reg", 0x0, memmap[VIRT_IOPMP].base,
++        0x0, memmap[VIRT_IOPMP].size);
++    qemu_fdt_setprop_cell(ms->fdt, name, "interrupt-parent", irq_mmio_phandle);
++    if (s->aia_type == VIRT_AIA_TYPE_NONE) {
++        qemu_fdt_setprop_cell(ms->fdt, name, "interrupts", IOPMP_IRQ);
++    } else {
++        qemu_fdt_setprop_cells(ms->fdt, name, "interrupts", IOPMP_IRQ, 0x4);
 +    }
 +}
 +
- void kvm_arch_accel_class_init(ObjectClass *oc)
+ static void finalize_fdt(RISCVVirtState *s)
  {
-     object_class_property_add_enum(oc, "notify-vmexit", "NotifyVMexitOption",
-@@ -6576,6 +6691,14 @@ void kvm_arch_accel_class_init(ObjectClass *oc)
-                               NULL, NULL);
-     object_class_property_set_description(oc, "xen-evtchn-max-pirq",
-                                           "Maximum number of Xen PIRQs");
+     uint32_t phandle = 1, irq_mmio_phandle = 1, msi_pcie_phandle = 1;
+@@ -1141,6 +1167,10 @@ static void finalize_fdt(RISCVVirtState *s)
+     create_fdt_uart(s, virt_memmap, irq_mmio_phandle);
+ 
+     create_fdt_rtc(s, virt_memmap, irq_mmio_phandle);
 +
-+    object_class_property_add_link(oc, "pmu-filter",
-+                                   TYPE_KVM_PMU_FILTER,
-+                                   offsetof(KVMState, pmu_filter),
-+                                   kvm_arch_check_pmu_filter,
-+                                   OBJ_PROP_LINK_STRONG);
-+    object_class_property_set_description(oc, "pmu-filter",
-+                                          "Set the KVM PMU filter");
++    if (s->have_iopmp) {
++        create_fdt_iopmp(s, virt_memmap, irq_mmio_phandle);
++    }
  }
  
- void kvm_set_max_apic_id(uint32_t max_apic_id)
+ static void create_fdt(RISCVVirtState *s, const MemMapEntry *memmap)
+@@ -1529,6 +1559,8 @@ static void virt_machine_init(MachineState *machine)
+     DeviceState *mmio_irqchip, *virtio_irqchip, *pcie_irqchip;
+     int i, base_hartid, hart_count;
+     int socket_count = riscv_socket_count(machine);
++    DeviceState *iopmp_dev, *iopmp_disp_dev;
++    StreamSink *iopmp_ss, *iopmp_disp_ss;
+ 
+     /* Check socket count limit */
+     if (VIRT_SOCKETS_MAX < socket_count) {
+@@ -1710,6 +1742,29 @@ static void virt_machine_init(MachineState *machine)
+     }
+     virt_flash_map(s, system_memory);
+ 
++    if (s->have_iopmp) {
++        iopmp_dev = iopmp_create(memmap[VIRT_IOPMP].base,
++            qdev_get_gpio_in(DEVICE(mmio_irqchip), IOPMP_IRQ));
++
++        iopmp_setup_system_memory(iopmp_dev, &iopmp_protect_memmap[0], 1, 0);
++
++        iopmp_disp_dev = qdev_new(TYPE_RISCV_IOPMP_DISP);
++        qdev_prop_set_uint32(DEVICE(iopmp_disp_dev), "target-num", 1);
++        qdev_prop_set_uint32(DEVICE(iopmp_disp_dev), "stage-num", 1);
++        qdev_realize(DEVICE(iopmp_disp_dev), NULL, &error_fatal);
++
++        /* Add memmap inforamtion to dispatcher */
++        iopmp_ss = (StreamSink *)&(RISCV_IOPMP(iopmp_dev)->txn_info_sink);
++        iopmp_dispatcher_add_target(DEVICE(iopmp_disp_dev), iopmp_ss,
++                                    iopmp_protect_memmap[0].base,
++                                    iopmp_protect_memmap[0].size,
++                                    0, 0);
++
++        iopmp_disp_ss =
++            (StreamSink *)&(RISCV_IOPMP_DISP(iopmp_disp_dev)->txn_info_sink);
++        iopmp_setup_sink(iopmp_dev, iopmp_disp_ss);
++    }
++
+     /* load/create device tree */
+     if (machine->dtb) {
+         machine->fdt = load_device_tree(machine->dtb, &s->fdt_size);
+@@ -1845,6 +1900,20 @@ static void virt_set_iommu_sys(Object *obj, Visitor *v, const char *name,
+     visit_type_OnOffAuto(v, name, &s->iommu_sys, errp);
+ }
+ 
++static bool virt_get_iopmp(Object *obj, Error **errp)
++{
++    RISCVVirtState *s = RISCV_VIRT_MACHINE(obj);
++
++    return s->have_iopmp;
++}
++
++static void virt_set_iopmp(Object *obj, bool value, Error **errp)
++{
++    RISCVVirtState *s = RISCV_VIRT_MACHINE(obj);
++
++    s->have_iopmp = value;
++}
++
+ bool virt_is_acpi_enabled(RISCVVirtState *s)
+ {
+     return s->acpi != ON_OFF_AUTO_OFF;
+@@ -1972,6 +2041,12 @@ static void virt_machine_class_init(ObjectClass *oc, void *data)
+                               NULL, NULL);
+     object_class_property_set_description(oc, "iommu-sys",
+                                           "Enable IOMMU platform device");
++
++    object_class_property_add_bool(oc, "iopmp", virt_get_iopmp,
++                                   virt_set_iopmp);
++    object_class_property_set_description(oc, "iopmp",
++                                          "Set on/off to enable/disable "
++                                          "iopmp device");
+ }
+ 
+ static const TypeInfo virt_machine_typeinfo = {
+diff --git a/include/hw/riscv/virt.h b/include/hw/riscv/virt.h
+index 48a14bea2e..77dcbd5450 100644
+--- a/include/hw/riscv/virt.h
++++ b/include/hw/riscv/virt.h
+@@ -55,6 +55,7 @@ struct RISCVVirtState {
+ 
+     int fdt_size;
+     bool have_aclint;
++    bool have_iopmp;
+     RISCVVirtAIAType aia_type;
+     int aia_guests;
+     char *oem_id;
+@@ -87,11 +88,14 @@ enum {
+     VIRT_PLATFORM_BUS,
+     VIRT_PCIE_ECAM,
+     VIRT_IOMMU_SYS,
++    VIRT_IOPMP,
+ };
+ 
+ enum {
+     UART0_IRQ = 10,
+     RTC_IRQ = 11,
++    IOPMP_IRQ = 12,
++    DMA_IRQ = 13,
+     VIRTIO_IRQ = 1, /* 1 to 8 */
+     VIRTIO_COUNT = 8,
+     PCIE_IRQ = 0x20, /* 32 to 35 */
 -- 
 2.34.1
 
