@@ -4,94 +4,97 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id AEAC7C02182
-	for <qemu-devel@archiver.kernel.org>; Wed, 22 Jan 2025 09:51:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DE0A7C02181
+	for <qemu-devel@archiver.kernel.org>; Wed, 22 Jan 2025 10:09:06 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1taXNZ-0004Se-NY; Wed, 22 Jan 2025 04:50:34 -0500
+	id 1taXeY-0001P3-LC; Wed, 22 Jan 2025 05:08:06 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1taXNX-0004S5-Fu
- for qemu-devel@nongnu.org; Wed, 22 Jan 2025 04:50:31 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1taXNV-0008NZ-1j
- for qemu-devel@nongnu.org; Wed, 22 Jan 2025 04:50:31 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1737539426;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=Dtc3Ox/ontWjg0HYJ+gaI1jw6anh4D7muIdCb554eMQ=;
- b=X/2BlPg6Yyo/0TPFXIA6whqiQqEA9c4nkBvupp0YnzomHzr9JpQaujY6aHY2SzZnJ3ao46
- m6DU8uM6M0BMSfjMrgRn9dVS15SJ7R9MIIxCaUQQkVBimLKxbj1CXeB1peUSFfwLtTX1iC
- koqUmB1aejteiXuV0QSRn2dL6sQh8d8=
-Received: from mail-ej1-f72.google.com (mail-ej1-f72.google.com
- [209.85.218.72]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-639-mCyT0tvdNiaBSgfRkY7oJg-1; Wed, 22 Jan 2025 04:50:24 -0500
-X-MC-Unique: mCyT0tvdNiaBSgfRkY7oJg-1
-X-Mimecast-MFC-AGG-ID: mCyT0tvdNiaBSgfRkY7oJg
-Received: by mail-ej1-f72.google.com with SMTP id
- a640c23a62f3a-ab2e44dc9b8so75023466b.1
- for <qemu-devel@nongnu.org>; Wed, 22 Jan 2025 01:50:24 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1taXdw-0000SH-Tu
+ for qemu-devel@nongnu.org; Wed, 22 Jan 2025 05:07:29 -0500
+Received: from mail-wr1-x432.google.com ([2a00:1450:4864:20::432])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1taXdu-0004v9-Rk
+ for qemu-devel@nongnu.org; Wed, 22 Jan 2025 05:07:28 -0500
+Received: by mail-wr1-x432.google.com with SMTP id
+ ffacd0b85a97d-385e06af753so3309861f8f.2
+ for <qemu-devel@nongnu.org>; Wed, 22 Jan 2025 02:07:26 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1737540445; x=1738145245; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=ExaM5IojEhR5ebxmbt+JrEhI38FIHz3XEQYGQ8hBC5Y=;
+ b=SuZFB8WVd843hq+dQmAQ7eGgUuPMsowzvnv2jZQd+Pcp1aAES6Lrq1As7JTU6vTL7B
+ jsYEZcm3ng2ZD6nwfjJvRMt5QIOfBOT4vAy8wRDeFwcIHYUODDHV22KUFpVfehEgWaGp
+ YMglhR4AoonIQbdXlFtDCPF2wsFejRnIODz2JgVMHJ9yoAddkIsud7kh9i0clm3w+dWA
+ apgaSNY75ru6V0VNihGNv737kJBcTKkI7lE3Hrst7Q4v+BQ7UdIcnTtLVaPUkor34+KT
+ IDnljInIvq68yQ6dC/5TWpWssiQO5FYt3k2dfaiV4sxFBUgWHD1LRtSvOKcI85yx1lkT
+ ioMQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1737539423; x=1738144223;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=Dtc3Ox/ontWjg0HYJ+gaI1jw6anh4D7muIdCb554eMQ=;
- b=SpGJ7H+xNLd8oSCIIqu4GutpRhqx6rzo+Gm1m4fcxMlcVI/GI2QzHGIYRVhUcfuNbT
- 4nTnZBnZ8Z8dnqmcDqKdRWTps5or38bcQWOhWq6YuvjMXgIKyCFEvTVjZWgo6hcCO1Bd
- LN77vmTTDHRNlvlk9bWVcmnG31yGYqdSbYvAkXXL2XUJ8K+vvCRa4aQRIfzVP+xX+GPk
- NRlZ18sfr/MOtYdSzvCJoRGavXuVRtzm9DvQa5I6RgyYwpGmz9GBHPL5rsp5favkuxG3
- oO3/n9HB29CcO+H5AhWL6rLW92QZTfvweifm6ujF/n6zDKStj5iS/MUT0i7VbBdIF9I/
- PCEw==
-X-Gm-Message-State: AOJu0YyegbuPwDRC2J0vt/0Yxl8gD50jCnU9G31lSsnb+enSf2QRsqQl
- oHwH+V8E0C8iIjislBkaWiVEMoHf6rabx7vsR1lwTKz4ez/r/r1ejdQZicbOF0HcXsu3wUBYk3r
- C/q8mAXSb8xLu50Oq/MKArzUGr761BF5dqpC9Tt1KhQhQIfvjNy2yLKac8IDgfSUS8tyS0gT8cM
- kIGioBEpq1w3hC7A0fqyOC8UhqH3CETSzaC1Nx8Qo=
-X-Gm-Gg: ASbGncuNudUB0k50l6N4+gbqBhXybUmwJEf3U1y3OJVmx+T3S2qT2mNJt6vvJ7sro99
- wQOqpGdx4iHVqPQQZ8KB0NIGpTOLym6RaGdebyEKEDPooI12fb4tacje+MV5TCJ7S8L6X6ElZry
- 7j+cA0oHdGo6wzPKQ9XRdN0utQGpaPbOtfR+brrhA0suFX21I8iASCvqerRPHhM0bFz0tQA1cju
- no2Vic7/Vt209zhatYOKyE8PhyAY05IIgKFuC6KlVf3uDfahaQ/cYREcNbXiupz42NpyFIJVTI=
-X-Received: by 2002:a17:907:971b:b0:aab:ef03:6d46 with SMTP id
- a640c23a62f3a-ab38cbabdc5mr1600860466b.4.1737539422962; 
- Wed, 22 Jan 2025 01:50:22 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IGiM4T89Nreh2V8mPKDjAjrD7uKSFb6ueocQOZCoEmrwKq4/H/ptKmQVcOl4aCNsnNcN9m4xg==
-X-Received: by 2002:a17:907:971b:b0:aab:ef03:6d46 with SMTP id
- a640c23a62f3a-ab38cbabdc5mr1600859466b.4.1737539422534; 
- Wed, 22 Jan 2025 01:50:22 -0800 (PST)
-Received: from [192.168.10.47] ([176.206.124.70])
- by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-ab384f223fesm890107466b.105.2025.01.22.01.50.21
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 22 Jan 2025 01:50:21 -0800 (PST)
-From: Paolo Bonzini <pbonzini@redhat.com>
-To: qemu-devel@nongnu.org
-Cc: Richard Henderson <richard.henderson@linaro.org>
-Subject: [PATCH] target/i386: extract common bits of gen_repz/gen_repz_nz
-Date: Wed, 22 Jan 2025 10:50:18 +0100
-Message-ID: <20250122095018.2471009-2-pbonzini@redhat.com>
-X-Mailer: git-send-email 2.47.1
-In-Reply-To: <20250122095018.2471009-1-pbonzini@redhat.com>
-References: <20250122095018.2471009-1-pbonzini@redhat.com>
+ d=1e100.net; s=20230601; t=1737540445; x=1738145245;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=ExaM5IojEhR5ebxmbt+JrEhI38FIHz3XEQYGQ8hBC5Y=;
+ b=AVtq214HWVyl7qH5YyjgwbAO6nJie2f5enRD2FurXJJe4f06WMUNzEDl2sWnv4iZfg
+ yhgaFn7Cvd9fbV8Axo4Fq/WnOvEXF4ftLmsUnOxvQojfbxt7j9MeW2Ukmr9S6O50qnyt
+ PKTAZ5GH4bWShOsGDwNYw+7ErzcFzkP0G3LHaL9lqMsJHcwDgTGidx4CMpN4YiJUtE+v
+ 9O6aMUy1aGHl8trhpVo+tgCl31brwD3TC9fRIedq/KcFFhLOt6tKzFniJWsEUsRUmbP/
+ KhO3QgunP5e8wGC5oUpVMDYbwNKSMLVXAcgqvepmT1PrhYKaqh06YijBh5bsgW0c5jfb
+ sRRg==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCU16YF62cHMLHZe3p6cC5dOs6fcYOhj8a6QH56+vSmwfEJiehQtz38UL92vAnQFTasE5JXQ48VGfiHe@nongnu.org
+X-Gm-Message-State: AOJu0Yy+rynfAuunm9PuY/iQTTa/QaXinkRdx/D+nRmEHKw94j56V7Yr
+ LGPhzWAFAH07JErF/wXwLWA+Eivb0DX1SVM6GshDf7gQiVxu60grJ355LCttHeQ=
+X-Gm-Gg: ASbGncv06kRdaJ4v5UJncffadKJFOkr1f5yu15DrrTPNVPHISnIlkT/hh6/35IMc1Tu
+ bRgbZpMNNsZcJZpzLlOam6yPE5NPtT56rEV0IS3IHLL0yozPmc/mTPN+Og5gRGh9YkVN3EJvLdO
+ 0Rx7D0YSN1W3XH3/zLjHxChk6YwCzTeEAqpnCtZ5GomWLdBj0ar4w7AMI+rMGA3rBbu579WxT/I
+ dgI6sBA3wDBSret2wjfhtvKBaDA9VP5vBhrPqFIK8MjAV4JE+8gVMY19p/BqId4wkbgXTvT8znD
+ 5VVdijBBh6tGwPiRA+85Cx+3vAj0ssvgTvJ3Pw==
+X-Google-Smtp-Source: AGHT+IEAY3Xv531vygIXN2LLeYLhz7VuzEbG0NO5ianBha6mo0loe6VLYvrFFAk6B7HP+OQXRQQlzw==
+X-Received: by 2002:adf:f788:0:b0:38a:41c9:8544 with SMTP id
+ ffacd0b85a97d-38bf57a2838mr13365382f8f.37.1737540444968; 
+ Wed, 22 Jan 2025 02:07:24 -0800 (PST)
+Received: from [192.168.69.181] (88-187-86-199.subs.proxad.net.
+ [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-38bf322ad74sm16029958f8f.56.2025.01.22.02.07.23
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Wed, 22 Jan 2025 02:07:24 -0800 (PST)
+Message-ID: <5267cc69-18ec-48b1-be60-90c972922806@linaro.org>
+Date: Wed, 22 Jan 2025 11:07:23 +0100
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=pbonzini@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -50
-X-Spam_score: -5.1
-X-Spam_bar: -----
-X-Spam_report: (-5.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-2.996,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v1 1/4] physmem: disallow direct access to RAM DEVICE in
+ address_space_write_rom()
+To: David Hildenbrand <david@redhat.com>, qemu-devel@nongnu.org
+Cc: Paolo Bonzini <pbonzini@redhat.com>, Peter Xu <peterx@redhat.com>,
+ Peter Maydell <peter.maydell@linaro.org>,
+ =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Alex Williamson <alex.williamson@redhat.com>,
+ Eduardo Habkost <eduardo@habkost.net>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ Elena Ufimtseva <elena.ufimtseva@oracle.com>,
+ Jagannathan Raman <jag.raman@oracle.com>,
+ "Dr. David Alan Gilbert" <dave@treblig.org>, Stefan Zabka <git@zabka.it>
+References: <20250120111503.244994-1-david@redhat.com>
+ <20250120111503.244994-2-david@redhat.com>
+Content-Language: en-US
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <20250120111503.244994-2-david@redhat.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::432;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x432.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -107,78 +110,188 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Now that everything has been cleaned up, look at DF and prefixes
-in a single function, and call that one from gen_repz and gen_repz_nz.
+Hi David,
 
-Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
----
- target/i386/tcg/translate.c | 34 ++++++++++++++--------------------
- 1 file changed, 14 insertions(+), 20 deletions(-)
+On 20/1/25 12:14, David Hildenbrand wrote:
+> As documented in commit 4a2e242bbb306 ("memory: Don't use memcpy for
+> ram_device regions"), we disallow direct access to RAM DEVICE regions.
+> 
+> Let's factor out the "supports direct access" check from
+> memory_access_is_direct() so we can reuse it, and make it a bit easier to
+> read.
+> 
+> This change implies that address_space_write_rom() and
+> cpu_memory_rw_debug() won't be able to write to RAM DEVICE regions. It
+> will also affect cpu_flush_icache_range(), but it's only used by
+> hw/core/loader.c after writing to ROM, so it is expected to not apply
+> here with RAM DEVICE.
+> 
+> This fixes direct access to these regions where we don't want direct
+> access. We'll extend cpu_memory_rw_debug() next to also be able to write to
+> these (and IO) regions.
+> 
+> This is a preparation for further changes.
+> 
+> Cc: Alex Williamson <alex.williamson@redhat.com>
+> Signed-off-by: David Hildenbrand <david@redhat.com>
+> ---
+>   include/exec/memory.h | 30 ++++++++++++++++++++++++------
+>   system/physmem.c      |  3 +--
+>   2 files changed, 25 insertions(+), 8 deletions(-)
+> 
+> diff --git a/include/exec/memory.h b/include/exec/memory.h
+> index 3ee1901b52..bd0ddb9cdf 100644
+> --- a/include/exec/memory.h
+> +++ b/include/exec/memory.h
+> @@ -2985,15 +2985,33 @@ MemTxResult address_space_write_cached_slow(MemoryRegionCache *cache,
+>   int memory_access_size(MemoryRegion *mr, unsigned l, hwaddr addr);
+>   bool prepare_mmio_access(MemoryRegion *mr);
+>   
+> +static inline bool memory_region_supports_direct_access(MemoryRegion *mr)
+> +{
+> +    /* ROM DEVICE regions only allow direct access if in ROMD mode. */
+> +    if (memory_region_is_romd(mr)) {
+> +        return true;
+> +    }
+> +    if (!memory_region_is_ram(mr)) {
+> +        return false;
+> +    }
+> +    /*
+> +     * RAM DEVICE regions can be accessed directly using memcpy, but it might
+> +     * be MMIO and access using mempy can be wrong (e.g., using instructions not
+> +     * intended for MMIO access). So we treat this as IO.
+> +     */
+> +    return !memory_region_is_ram_device(mr);
+> +
+> +}
+> +
+>   static inline bool memory_access_is_direct(MemoryRegion *mr, bool is_write)
+>   {
+> -    if (is_write) {
+> -        return memory_region_is_ram(mr) && !mr->readonly &&
+> -               !mr->rom_device && !memory_region_is_ram_device(mr);
+> -    } else {
+> -        return (memory_region_is_ram(mr) && !memory_region_is_ram_device(mr)) ||
 
-diff --git a/target/i386/tcg/translate.c b/target/i386/tcg/translate.c
-index 3d8a0a8071f..a8935f487aa 100644
---- a/target/i386/tcg/translate.c
-+++ b/target/i386/tcg/translate.c
-@@ -695,14 +695,6 @@ static inline void gen_string_movl_A0_EDI(DisasContext *s)
-     gen_lea_v_seg(s, cpu_regs[R_EDI], R_ES, -1);
- }
- 
--static inline TCGv gen_compute_Dshift(DisasContext *s, MemOp ot)
--{
--    TCGv dshift = tcg_temp_new();
--    tcg_gen_ld32s_tl(dshift, tcg_env, offsetof(CPUX86State, df));
--    tcg_gen_shli_tl(dshift, dshift, ot);
--    return dshift;
--};
--
- static TCGv gen_ext_tl(TCGv dst, TCGv src, MemOp size, bool sign)
- {
-     if (size == MO_TL) {
-@@ -1453,29 +1445,31 @@ static void do_gen_rep(DisasContext *s, MemOp ot, TCGv dshift,
-     gen_jmp_rel_csize(s, 0, 1);
- }
- 
--static void gen_repz(DisasContext *s, MemOp ot,
--                     void (*fn)(DisasContext *s, MemOp ot, TCGv dshift))
--
-+static void do_gen_string(DisasContext *s, MemOp ot,
-+                          void (*fn)(DisasContext *s, MemOp ot, TCGv dshift),
-+                          bool is_repz_nz)
- {
--    TCGv dshift = gen_compute_Dshift(s, ot);
-+    TCGv dshift = tcg_temp_new();
-+    tcg_gen_ld32s_tl(dshift, tcg_env, offsetof(CPUX86State, df));
-+    tcg_gen_shli_tl(dshift, dshift, ot);
- 
-     if (s->prefix & (PREFIX_REPZ | PREFIX_REPNZ)) {
--        do_gen_rep(s, ot, dshift, fn, false);
-+        do_gen_rep(s, ot, dshift, fn, is_repz_nz);
-     } else {
-         fn(s, ot, dshift);
-     }
- }
- 
-+static void gen_repz(DisasContext *s, MemOp ot,
-+                     void (*fn)(DisasContext *s, MemOp ot, TCGv dshift))
+This patch is doing multiple things at once, and I'm having hard time
+reviewing it.
+
+> -               memory_region_is_romd(mr);
+> +    if (!memory_region_supports_direct_access(mr)) {
+> +        return false;
+> +    }
+> +    if (!is_write) {
+> +        return true;
+>       }
+> +    return !mr->readonly && !mr->rom_device;
+>   }
+
+Trying to split.
+
+1/ Extract starting with ram[_device]:
+-- >8 --
+diff --git a/include/exec/memory.h b/include/exec/memory.h
+index 3ee1901b52c..5834a208618 100644
+--- a/include/exec/memory.h
++++ b/include/exec/memory.h
+@@ -2987,2 +2987,15 @@ bool prepare_mmio_access(MemoryRegion *mr);
+
++static inline bool memory_region_supports_direct_access(MemoryRegion *mr)
 +{
-+    do_gen_string(s, ot, fn, false);
++    if (!memory_region_is_ram(mr)) {
++        return false;
++    }
++    /*
++     * RAM DEVICE regions can be accessed directly using memcpy, but it 
+might
++     * be MMIO and access using mempy can be wrong (e.g., using 
+instructions not
++     * intended for MMIO access). So we treat this as IO.
++     */
++    return !memory_region_is_ram_device(mr);
 +}
 +
- static void gen_repz_nz(DisasContext *s, MemOp ot,
-                         void (*fn)(DisasContext *s, MemOp ot, TCGv dshift))
- {
--    TCGv dshift = gen_compute_Dshift(s, ot);
--
--    if (s->prefix & (PREFIX_REPZ | PREFIX_REPNZ)) {
--        do_gen_rep(s, ot, dshift, fn, true);
--    } else {
--        fn(s, ot, dshift);
--    }
-+    do_gen_string(s, ot, fn, true);
- }
- 
- static void gen_helper_fp_arith_ST0_FT0(int op)
--- 
-2.47.1
+  static inline bool memory_access_is_direct(MemoryRegion *mr, bool 
+is_write)
+@@ -2990,6 +3003,6 @@ static inline bool 
+memory_access_is_direct(MemoryRegion *mr, bool is_write)
+      if (is_write) {
+-        return memory_region_is_ram(mr) && !mr->readonly &&
+-               !mr->rom_device && !memory_region_is_ram_device(mr);
++        return !mr->readonly && !mr->rom_device &&
++               !memory_region_supports_direct_access(mr);
+      } else {
+-        return (memory_region_is_ram(mr) && 
+!memory_region_is_ram_device(mr)) ||
++        return memory_region_supports_direct_access(mr) ||
+                 memory_region_is_romd(mr);
+---
 
+2/ Call memory_region_supports_direct_access() once [dubious]
+-- >8 --
+diff --git a/include/exec/memory.h b/include/exec/memory.h
+index 5834a208618..4c5c84059b7 100644
+--- a/include/exec/memory.h
++++ b/include/exec/memory.h
+@@ -3002,8 +3002,10 @@ static inline bool 
+memory_access_is_direct(MemoryRegion *mr, bool is_write)
+  {
++    if (!memory_region_supports_direct_access(mr)) {
++        return false;
++    }
++
+      if (is_write) {
+-        return !mr->readonly && !mr->rom_device &&
+-               !memory_region_supports_direct_access(mr);
++        return !mr->readonly && !mr->rom_device;
+      } else {
+-        return memory_region_supports_direct_access(mr) ||
+-               memory_region_is_romd(mr);
++        return memory_region_is_romd(mr);
+      }
+---
+
+3/ Invert if ladders:
+-- >8 --
+diff --git a/include/exec/memory.h b/include/exec/memory.h
+index 4c5c84059b7..e89cd2f10f0 100644
+--- a/include/exec/memory.h
++++ b/include/exec/memory.h
+@@ -3006,7 +3006,7 @@ static inline bool 
+memory_access_is_direct(MemoryRegion *mr, bool is_write)
+
+-    if (is_write) {
+-        return !mr->readonly && !mr->rom_device;
+-    } else {
++    if (!is_write) {
+          return memory_region_is_romd(mr);
+      }
++
++    return !mr->readonly && !mr->rom_device;
+  }
+---
+
+4/ Check memory_region_is_romd() [dubious]
+-- >8 --
+diff --git a/include/exec/memory.h b/include/exec/memory.h
+index e89cd2f10f0..2cdbf4b43d7 100644
+--- a/include/exec/memory.h
++++ b/include/exec/memory.h
+@@ -2989,2 +2989,6 @@ static inline bool 
+memory_region_supports_direct_access(MemoryRegion *mr)
+  {
++    /* ROM DEVICE regions only allow direct access if in ROMD mode. */
++    if (memory_region_is_romd(mr)) {
++        return true;
++    }
+      if (!memory_region_is_ram(mr)) {
+@@ -3007,3 +3011,3 @@ static inline bool 
+memory_access_is_direct(MemoryRegion *mr, bool is_write)
+      if (!is_write) {
+-        return memory_region_is_romd(mr);
++        return true;
+      }
+---
+
+Hmm maybe this isn't a change that can be easily split in logical steps?
 
