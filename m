@@ -4,55 +4,55 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6DDCCC0218C
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7FADFC0218D
 	for <qemu-devel@archiver.kernel.org>; Wed, 22 Jan 2025 15:19:37 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tacUG-0004bc-Sr; Wed, 22 Jan 2025 10:17:48 -0500
+	id 1tacUG-0004bW-N6; Wed, 22 Jan 2025 10:17:48 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1tacUF-0004bH-Pd
- for qemu-devel@nongnu.org; Wed, 22 Jan 2025 10:17:47 -0500
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1tacUE-0004b5-Iz
+ for qemu-devel@nongnu.org; Wed, 22 Jan 2025 10:17:46 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1tacUE-0004YT-Ag
- for qemu-devel@nongnu.org; Wed, 22 Jan 2025 10:17:47 -0500
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1tacUC-0004Y7-Cl
+ for qemu-devel@nongnu.org; Wed, 22 Jan 2025 10:17:46 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1737559065;
+ s=mimecast20190719; t=1737559062;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=uCH6PrnlcUl+bRd4c5qQ28sEk/fKhW973tgX711Eulk=;
- b=G0CbGUu/bPCjUqmFgvJsOkvI0Tgk2PlvAlbGaeB3gRxKe7K37KFkjofQtPNuT0ukbAagNb
- NQYMMS36an9Va+EbDqMRrhfJ+XqRThMyt7/MmmJ2Ru2AsUL46EQgivjepeHNCKtPW+eFum
- clpGRFFqmfbRnxuiGNbBQusCmZCgYf0=
-Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
+ bh=bPCmnBBmQ21SuuJg+NeSSYHdwCKST5iZyoGTs4BTCfs=;
+ b=CTRAzlLZlU4OJYjDQJsPbOqAYWH8sKNIS/4svl+To99+WmW5BowdofG/UphzDtQeT3mN9d
+ DWcPlAiZcO3nVri7LSjuueXDaOi8RR9z0JqWDlKaIeKghLVaIj+Lu9s3p5ukyn8PYBptdU
+ SYpy+/2mOk5LL/oXxKLyUA+qMiaM6Pw=
+Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-157-uNqx4XTTOJeTRPK0ulYp2g-1; Wed,
- 22 Jan 2025 10:17:42 -0500
-X-MC-Unique: uNqx4XTTOJeTRPK0ulYp2g-1
-X-Mimecast-MFC-AGG-ID: uNqx4XTTOJeTRPK0ulYp2g
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-287-PpEqxVkoOaikbenfHIt6TA-1; Wed,
+ 22 Jan 2025 10:17:40 -0500
+X-MC-Unique: PpEqxVkoOaikbenfHIt6TA-1
+X-Mimecast-MFC-AGG-ID: PpEqxVkoOaikbenfHIt6TA
 Received: from mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.40])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id B473E19560B3
- for <qemu-devel@nongnu.org>; Wed, 22 Jan 2025 15:17:40 +0000 (UTC)
+ by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 3AEC01956058
+ for <qemu-devel@nongnu.org>; Wed, 22 Jan 2025 15:17:39 +0000 (UTC)
 Received: from corto.redhat.com (unknown [10.39.192.154])
  by mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 9A22119560AA; Wed, 22 Jan 2025 15:17:39 +0000 (UTC)
+ id 21C7419560AA; Wed, 22 Jan 2025 15:17:37 +0000 (UTC)
 From: =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Alex Williamson <alex.williamson@redhat.com>,
  =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>
-Subject: [PATCH 2/5] vfio: Modify vfio_viommu_preset() parameter
-Date: Wed, 22 Jan 2025 16:17:29 +0100
-Message-ID: <20250122151732.1351821-3-clg@redhat.com>
+Subject: [PATCH 1/5] vfio/pci: Replace "iommu_device" by "vIOMMU"
+Date: Wed, 22 Jan 2025 16:17:28 +0100
+Message-ID: <20250122151732.1351821-2-clg@redhat.com>
 In-Reply-To: <20250122151732.1351821-1-clg@redhat.com>
 References: <20250122151732.1351821-1-clg@redhat.com>
 MIME-Version: 1.0
@@ -84,59 +84,27 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-We plan to use vfio_viommu_preset() in MemoryListener handlers which
-operate at the container level. Change the parameter to VFIOContainerBase
-to ease future changes.
+This is to be consistent with other reported errors related to vIOMMU
+devices.
 
 Signed-off-by: Cédric Le Goater <clg@redhat.com>
 ---
- include/hw/vfio/vfio-common.h | 2 +-
- hw/vfio/common.c              | 4 ++--
- hw/vfio/migration.c           | 2 +-
- 3 files changed, 4 insertions(+), 4 deletions(-)
+ hw/vfio/pci.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/include/hw/vfio/vfio-common.h b/include/hw/vfio/vfio-common.h
-index 48018dc751e51066769b23bc6e4675a7167b099e..fcfe0b4b8cbe907877e366117e7bb7f74311d4f6 100644
---- a/include/hw/vfio/vfio-common.h
-+++ b/include/hw/vfio/vfio-common.h
-@@ -274,7 +274,7 @@ extern int vfio_kvm_device_fd;
- bool vfio_mig_active(void);
- int vfio_block_multiple_devices_migration(VFIODevice *vbasedev, Error **errp);
- void vfio_unblock_multiple_devices_migration(void);
--bool vfio_viommu_preset(VFIODevice *vbasedev);
-+bool vfio_viommu_preset(VFIOContainerBase *bcontainer);
- int64_t vfio_mig_bytes_transferred(void);
- void vfio_reset_bytes_transferred(void);
- bool vfio_device_state_is_running(VFIODevice *vbasedev);
-diff --git a/hw/vfio/common.c b/hw/vfio/common.c
-index 2660a42f9edc9346f2e62652efb0c78a8b48b52b..3ca5dbf883ed2262e36952fcc47e717ff4154f12 100644
---- a/hw/vfio/common.c
-+++ b/hw/vfio/common.c
-@@ -142,9 +142,9 @@ void vfio_unblock_multiple_devices_migration(void)
-     migrate_del_blocker(&multiple_devices_migration_blocker);
- }
+diff --git a/hw/vfio/pci.c b/hw/vfio/pci.c
+index cf14987e42bd9188d5040b51a2f84cfa959f632d..ad326839db49cf3a50524d5443ceedac66e1df3d 100644
+--- a/hw/vfio/pci.c
++++ b/hw/vfio/pci.c
+@@ -3131,7 +3131,7 @@ static void vfio_realize(PCIDevice *pdev, Error **errp)
  
--bool vfio_viommu_preset(VFIODevice *vbasedev)
-+bool vfio_viommu_preset(VFIOContainerBase *bcontainer)
- {
--    return vbasedev->bcontainer->space->as != &address_space_memory;
-+    return bcontainer->space->as != &address_space_memory;
- }
- 
- static void vfio_set_migration_error(int ret)
-diff --git a/hw/vfio/migration.c b/hw/vfio/migration.c
-index adfa752db5272e37d73fc0a435a0834e74e3f2fe..347390adb27bc3cd123f3eec1de6dc6986d8d952 100644
---- a/hw/vfio/migration.c
-+++ b/hw/vfio/migration.c
-@@ -1069,7 +1069,7 @@ bool vfio_migration_realize(VFIODevice *vbasedev, Error **errp)
-         goto out_deinit;
+     if (!vbasedev->mdev &&
+         !pci_device_set_iommu_device(pdev, vbasedev->hiod, errp)) {
+-        error_prepend(errp, "Failed to set iommu_device: ");
++        error_prepend(errp, "Failed to set vIOMMU: ");
+         goto out_teardown;
      }
  
--    if (vfio_viommu_preset(vbasedev)) {
-+    if (vfio_viommu_preset(vbasedev->bcontainer)) {
-         error_setg(&err, "%s: Migration is currently not supported "
-                    "with vIOMMU enabled", vbasedev->name);
-         goto add_blocker;
 -- 
 2.48.1
 
