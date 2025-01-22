@@ -4,35 +4,35 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8F0B7C02181
-	for <qemu-devel@archiver.kernel.org>; Wed, 22 Jan 2025 16:54:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 06064C02181
+	for <qemu-devel@archiver.kernel.org>; Wed, 22 Jan 2025 16:56:10 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tadzH-0005Of-44; Wed, 22 Jan 2025 11:53:55 -0500
+	id 1tae0p-000631-1m; Wed, 22 Jan 2025 11:55:31 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <laurent@vivier.eu>) id 1tadzG-0005OW-2B
- for qemu-devel@nongnu.org; Wed, 22 Jan 2025 11:53:54 -0500
-Received: from mout.kundenserver.de ([212.227.17.13])
+ (Exim 4.90_1) (envelope-from <laurent@vivier.eu>) id 1tae0l-000612-Am
+ for qemu-devel@nongnu.org; Wed, 22 Jan 2025 11:55:27 -0500
+Received: from mout.kundenserver.de ([212.227.17.10])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <laurent@vivier.eu>) id 1tadzE-00082S-5a
- for qemu-devel@nongnu.org; Wed, 22 Jan 2025 11:53:53 -0500
+ (Exim 4.90_1) (envelope-from <laurent@vivier.eu>) id 1tae0i-0008PV-84
+ for qemu-devel@nongnu.org; Wed, 22 Jan 2025 11:55:26 -0500
 Received: from [192.168.100.1] ([82.64.211.94]) by mrelayeu.kundenserver.de
- (mreue106 [213.165.67.119]) with ESMTPSA (Nemesis) id
- 1Mcp3E-1t28B62WXK-00djja; Wed, 22 Jan 2025 17:53:38 +0100
-Message-ID: <fa016fb1-1f24-4e03-876e-58b4a0296962@vivier.eu>
-Date: Wed, 22 Jan 2025 17:53:38 +0100
+ (mreue109 [213.165.67.119]) with ESMTPSA (Nemesis) id
+ 1MIxBc-1tv4Gw441S-00Szh6; Wed, 22 Jan 2025 17:55:21 +0100
+Message-ID: <1e095753-6d29-4ac9-a74b-53a1f9b7c87c@vivier.eu>
+Date: Wed, 22 Jan 2025 17:55:20 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v4 1/7] linux-user: netlink: Add missing IFA_PROTO to
- host_to_target_data_addr_rtattr()
+Subject: Re: [PATCH v4 7/7] linux-user: netlink: Use QEMU_IFA_XXX values
+ instead of IFA_XXX
 To: deller@kernel.org, =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?=
  <philmd@linaro.org>, Richard Henderson <richard.henderson@linaro.org>,
  qemu-devel@nongnu.org, Stefan Hajnoczi <stefanha@gmail.com>
 Cc: deller@gmx.de
 References: <20250120213340.359195-1-deller@kernel.org>
- <20250120213340.359195-2-deller@kernel.org>
+ <20250120213340.359195-8-deller@kernel.org>
 Content-Language: fr
 From: Laurent Vivier <laurent@vivier.eu>
 Autocrypt: addr=laurent@vivier.eu; keydata=
@@ -77,40 +77,40 @@ Autocrypt: addr=laurent@vivier.eu; keydata=
  OpKgu3nD0ahBDqANU/ZmNNarBJEwvM2vfusmNnWm3QMIwxNuJghRyuFfx694Im1js0ZY3LEU
  JGSHFG4ZynA+ZFUPA6Xf0wHeJOxGKCGIyeKORsteIqgnkINW9fnKJw2pgk8qHkwVc3Vu+wGS
  ZiJK0xFusPQehjWTHn9WjMG1zvQ5TQQHxau/2FkP45+nRPco6vVFQe8JmgtRF8WFJA==
-In-Reply-To: <20250120213340.359195-2-deller@kernel.org>
+In-Reply-To: <20250120213340.359195-8-deller@kernel.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-X-Provags-ID: V03:K1:QjXluLbBg+dzi5atChnSkiyG5NAOT+d3zVVJjHVLIzpTa8+Es4O
- 3LH/71c+URMZQMul3XYdJo2WRgGYERZgZX5ZBNTqWegvZKbgya3W5QoQmOvwlAULcIm1MgP
- h3UxwJ1tVaOgL8WtnCP6e133a1h50YqxFAQI9grjOtbopIv8MuiQpiZW7WY/bEdnYmx4lUf
- Ah8AQt0W/sX7NpgVnCWag==
-UI-OutboundReport: notjunk:1;M01:P0:LkFTDH6lfzA=;+f9i3oifD8pi3xc9OD9i82hwjLW
- f8vY8gAdcF0QhWjeBmGZ5O0Jgcqh+j7t0+NfXN8dVrxX6EFrNKtSruy3nxcEYNb2oYqcCMALx
- fvKMAP1N0H43E80JlMud5m4Hmq+nF4sU7pf3pVmZAShBHNH4W0uNxEa4hZw/vMZKtU30aTh6P
- SoZ3EehpB7CfZ0kMaC6c7rxZjMvuu+j/WzCxH/VZWugnoI6WFV1iqpKdbqT0xL+PgxbRzeagR
- hvd211y5VPKXXxtpqHUstxLQnh6ev13nBUO/MtgLgulBDGqSNonzDzxKY7x6NWbqJj7x+UoC/
- /SAzK+zfZU6/W8QMrKLQzTU02DR/Xy69OT85NlhZrTZCKAjN0O/oIuBbHzyE261rUuFppgOI5
- 7cZc0zCLGOsBDFHgKer6Jg5Y30AygAaskdBki8k4uKYPtEy6T97j9bM6yLDmfAu19j+3JDXu1
- iPcArk6FutLkTMJG5bI4By/nkGGPndZVtI/BJkY3IufBdsoGEJSsEWhzpsP3PzBKCK2eXf6mH
- dsjVKzxLYPrwiHwBagvjEguV3o7YegB00bkspZuxe0asZYJnh0+aAE1z0E9bK/gcjYy5lDClo
- OBd0oRfk5FSSjCVc1T4oUP/u6TnfNMQVAGclQxPaGA06xpPe4WQM2drz1xG/DksJEez0vGCUt
- 1u6+Lx2S6+EouZlE860IJQa79F4y4tLIr4p3caVNw+BBZt8B2AFGYSIw+381Bqgv82s4ms5t/
- qK2rnExxMQx6RfcfgYLln+JxL5+rkG10ukcad/DDOKycllqfUDx2hnT6AjbmdZOGjcGmUwGr8
- wniSMxgUg3Y/bKFrz58PaPsR3dDbqolbwpCFq98voLYF50lrN9P9QuMejhMaadJh8PxMtV1UL
- rqxg5D6IVck8CHi+C+dDsunlqz9Fpvb6Ei0rkBQcm1THZTJDBn8nFL1hrVwqfOSOqgh5ZAc/g
- SIfBIncdQkr+j8k45Jk7NwWbmJd4pZzpXpPAXwaqG89uyDdNSn8udhBbqhIhblJLD3p2pAWJJ
- aUSi2KpppR/Z5EJVVR/tBPVSlhkO9Tx8wIISXLlf0TqUBlN23dJ02VZ1YVz47S9eJUvqYaWLU
- HxGS+K+XefdwH6V0ggnwR5pPK37eMK2a0ezS5EMziYKd52cIhvGd//qhpjKlQuNIhjRBdmfxc
+X-Provags-ID: V03:K1:1ASTIyqFQRUK+YATBnUVPb8RdMw8oHJNddkJZgrJMAtdbSzD1Ie
+ 23pQN/Uzx6DxKLX4lfupQnRejOt6xnCLyC4X44u2X9gIJChCyBkhzjsuXLdJdEH1djgX0b7
+ Ml97GmGCWKEYTrEM32h1f+llp18d3IlV4nS+cmD3ESoSpZnMJn1xNjv+9WIH1io4MKK+RUP
+ G7bumnltjV9sg0MGKyXbA==
+UI-OutboundReport: notjunk:1;M01:P0:earVsYS8Pj8=;+SK4GY0ffgHgURylQn64l0GR672
+ 00FBLBRstFR5P+9lW+VKPQcXQ33Bpsiw7S5LjEKQmFBM5CZUBI3cgt+dnXTO5hThVy5UTm72t
+ INUvqauPJ32QtKvajotV2b0xG5OnPX2JpsVtS+eoFDxRv1GnFhJ3HojZ3AMuDKmXGuONc5q7b
+ iGwu4N3dlJszezH6OfS89/VCT+zjE7Yh8J+BjzqB24xC8kfvzYNC9dmnvmAuAQoubl8rcz/fn
+ LUjtM+UzLWyynhkXIe5nG3jWER2UhUEtwRj5gt+N0aBsWa908bFofTELWi1eT9686MCjQu4qD
+ BDxqsgtfUH+oEhe6Vn9UhfluFZVFBPoRYy6kT35dDFeTIKTNwH8te3HOsJTTNlI/iuGP3euHy
+ Pm9XMMxoliLyakHzaczWztzmx+DUZn0Nu62cyECHAYN8lyZZCnOlLIl3K5ugUkrjSUUGOQRHo
+ MHyzjEddncvjktYp3ohFVIvuRlFkKTliZRWyc4yBtNC1FXwWG2xUuTjHsVLbpZCI0sWiS2fIX
+ hp1InY7Kg3LKO+dFV8yTGYmJJUMvU0sv20hJJ8lGLVpVxfOoZAHmrP41vkBzxREUpj7ZSWCjS
+ noI3vgxWumstEfEKus80sn6ECDf/djI4R4p+c33EinVfJ1U8RhryHmeO2cX1nS7wkjtehXW4u
+ nk7wdU/5eTat1u81Iriuhbllh4XZS0orB6VEgVGIvgwgZg7W+Qds8WY1WgB3Eavv2yOpudA8E
+ 74UDpXf0bhbFn/PadVXgsQc0OufQBPeGdOyo8cUrZbm0jizkUtm9ipRDbnkAf/Ez48nVsyGvp
+ Vx+nBlHnQ25zaj5KtUWPN9G3UHNj4mFUKttgIOVJs2gbpvl0ZgXtQVn/jzV4JXUOB23irVOmF
+ 2zazTo8e4lqITebI/1EN5vRCXh/Xy8mU+PJD1aSke5beH5JibDUyCxhMlOEdrSVkjE8rVrt+q
+ OUaCcvrg/mYM9u0h9r80Q21w0VolPrfl1NdsPDm18uARCmjyN9J3ec/4aK4Lct39BJFabRLI7
+ yBa9XNpSG7zDr07gCcoOSH3AvLLKI98LFoPOcnsmOeL0rVt/j+t2DIRRyg6wk4PtuAB3Mh8mv
+ 83gDp0l+JNdxH+e3+m7h751FuTEsbIalmY4qD+nOSoVoXslviDNZsu2RNX6W6BxQFEUHO1YYc
  =
-Received-SPF: pass client-ip=212.227.17.13; envelope-from=laurent@vivier.eu;
+Received-SPF: pass client-ip=212.227.17.10; envelope-from=laurent@vivier.eu;
  helo=mout.kundenserver.de
 X-Spam_score_int: -18
 X-Spam_score: -1.9
 X-Spam_bar: -
 X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_NONE=-0.0001,
- RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_MSPIKE_H2=-0.043, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -129,58 +129,60 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Le 20/01/2025 à 22:33, deller@kernel.org a écrit :
 > From: Helge Deller <deller@gmx.de>
 > 
-> Fixes this warning:
->   Unknown host IFA type: 11
-> 
-> IFA_PROTO has been introduced in kernel v5.18, and as such using it
-> unconditionally breaks build on Ubuntu 22.04.  Instead convert the IFA_XXX
-> values to QEMU_IDA_XXX values and use those instead.
-> Already existing IFA_XXX usages are converted to QEMU_IFA_XXX in a
-> followup-patch.
+> Convert existing places to use QEMU_IFA_XXX values.
 > 
 > Signed-off-by: Helge Deller <deller@gmx.de>
-> Reviewed-by: Laurent Vivier <laurent@vivier.eu>
 > ---
->   linux-user/fd-trans.c | 17 +++++++++++++++++
->   1 file changed, 17 insertions(+)
+>   linux-user/fd-trans.c | 16 ++++++++--------
+>   1 file changed, 8 insertions(+), 8 deletions(-)
 > 
 > diff --git a/linux-user/fd-trans.c b/linux-user/fd-trans.c
-> index c04a97c73a..05a944b32e 100644
+> index 105b1f0713..f83d1f79d5 100644
 > --- a/linux-user/fd-trans.c
 > +++ b/linux-user/fd-trans.c
-> @@ -31,6 +31,22 @@
->   #include "fd-trans.h"
->   #include "signal-common.h"
+> @@ -1192,21 +1192,21 @@ static abi_long host_to_target_data_addr_rtattr(struct rtattr *rtattr)
 >   
-> +enum {
-> +    QEMU_IFA_UNSPEC,
-> +    QEMU_IFA_ADDRESS,
-> +    QEMU_IFA_LOCAL,
-> +    QEMU_IFA_LABEL,
-> +    QEMU_IFA_BROADCAST,
-> +    QEMU_IFA_ANYCAST,
-> +    QEMU_IFA_CACHEINFO,
-> +    QEMU_IFA_MULTICAST,
-> +    QEMU_IFA_FLAGS,
-> +    QEMU_IFA_RT_PRIORITY,
-> +    QEMU_IFA_TARGET_NETNSID,
-> +    QEMU_IFA_PROTO,
-> +    QEMU__IFA__MAX,
-> +};
-> +
->   enum {
->       QEMU_IFLA_BR_UNSPEC,
->       QEMU_IFLA_BR_FORWARD_DELAY,
-> @@ -1140,6 +1156,7 @@ static abi_long host_to_target_data_addr_rtattr(struct rtattr *rtattr)
+>       switch (rtattr->rta_type) {
 >       /* binary: depends on family type */
->       case IFA_ADDRESS:
->       case IFA_LOCAL:
-> +    case QEMU_IFA_PROTO:
+> -    case IFA_ADDRESS:
+> -    case IFA_LOCAL:
+> +    case QEMU_IFA_ADDRESS:
+> +    case QEMU_IFA_LOCAL:
+>       case QEMU_IFA_PROTO:
 >           break;
 >       /* string */
->       case IFA_LABEL:
+> -    case IFA_LABEL:
+> +    case QEMU_IFA_LABEL:
+>           break;
+>       /* u32 */
+> -    case IFA_FLAGS:
+> -    case IFA_BROADCAST:
+> +    case QEMU_IFA_FLAGS:
+> +    case QEMU_IFA_BROADCAST:
+>           u32 = RTA_DATA(rtattr);
+>           *u32 = tswap32(*u32);
+>           break;
+>       /* struct ifa_cacheinfo */
+> -    case IFA_CACHEINFO:
+> +    case QEMU_IFA_CACHEINFO:
+>           ci = RTA_DATA(rtattr);
+>           ci->ifa_prefered = tswap32(ci->ifa_prefered);
+>           ci->ifa_valid = tswap32(ci->ifa_valid);
+> @@ -1501,8 +1501,8 @@ static abi_long target_to_host_data_addr_rtattr(struct rtattr *rtattr)
+>   {
+>       switch (rtattr->rta_type) {
+>       /* binary: depends on family type */
+> -    case IFA_LOCAL:
+> -    case IFA_ADDRESS:
+> +    case QEMU_IFA_LOCAL:
+> +    case QEMU_IFA_ADDRESS:
+>           break;
+>       default:
+>           qemu_log_mask(LOG_UNIMP, "Unknown target IFA type: %d\n",
 
-It would be cleaner to replace all the IFA_XXX by their QEMU_IFA_XXX.
+I would put this as patch one and adding the QEMU_IFA_XXX enum in this one.
+
+Otherwise both patches (1 and 7) look good.
 
 Thanks,
 Laurent
