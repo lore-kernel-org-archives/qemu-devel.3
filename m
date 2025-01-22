@@ -4,71 +4,58 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B7283C02181
-	for <qemu-devel@archiver.kernel.org>; Wed, 22 Jan 2025 08:12:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E941EC02181
+	for <qemu-devel@archiver.kernel.org>; Wed, 22 Jan 2025 08:38:05 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1taVpw-0001ms-Nb; Wed, 22 Jan 2025 03:11:44 -0500
+	id 1taWEi-0006E2-74; Wed, 22 Jan 2025 03:37:24 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1taVpu-0001mL-5r
- for qemu-devel@nongnu.org; Wed, 22 Jan 2025 03:11:42 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <ethan84@andestech.com>)
+ id 1taWEb-0006DO-RZ; Wed, 22 Jan 2025 03:37:13 -0500
+Received: from 60-248-80-70.hinet-ip.hinet.net ([60.248.80.70]
+ helo=Atcsqr.andestech.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1taVpr-0001dW-Sh
- for qemu-devel@nongnu.org; Wed, 22 Jan 2025 03:11:41 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1737533497;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=w/QYQIb4aknzNTLMQruMyBGVHqyMgKb3Go2q7r3+eWY=;
- b=J+5GrmQbIv2ar1Ao3RdiNVHVYbyPgAsOEiIhMSwYsmKuAbl2pi9Cfo4q9madWcLdUA53qa
- dLprDG1hy7Z2jFde2p8PC61BvslxQbjHOwPxbduu61rhPbolSQrAoQg4axUQaMt6kX+Uuf
- Pbu9rwwZmUHu6WnQ16TtBqIkApliYps=
-Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-168-qPEBeY0kNTa2REy6yGqG9w-1; Wed,
- 22 Jan 2025 03:11:33 -0500
-X-MC-Unique: qPEBeY0kNTa2REy6yGqG9w-1
-X-Mimecast-MFC-AGG-ID: qPEBeY0kNTa2REy6yGqG9w
-Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id CF5001956083; Wed, 22 Jan 2025 08:11:31 +0000 (UTC)
-Received: from blackfin.pond.sub.org (unknown [10.39.192.48])
- by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 80C84195608E; Wed, 22 Jan 2025 08:11:31 +0000 (UTC)
-Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
- id ABEED21E6A28; Wed, 22 Jan 2025 09:11:28 +0100 (CET)
-From: Markus Armbruster <armbru@redhat.com>
-To: Gustavo Romero <gustavo.romero@linaro.org>
-Cc: qemu-devel@nongnu.org,  philmd@linaro.org,  alex.bennee@linaro.org
-Subject: Re: [PATCH] MAINTAINERS: Add me as the maintainer for ivshmem-pci
-In-Reply-To: <20250122065201.629601-1-gustavo.romero@linaro.org> (Gustavo
- Romero's message of "Wed, 22 Jan 2025 06:52:01 +0000")
-References: <20250122065201.629601-1-gustavo.romero@linaro.org>
-Date: Wed, 22 Jan 2025 09:11:28 +0100
-Message-ID: <87msfj6zf3.fsf@pond.sub.org>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+ (Exim 4.90_1) (envelope-from <ethan84@andestech.com>)
+ id 1taWEY-0000bd-QB; Wed, 22 Jan 2025 03:37:13 -0500
+Received: from mail.andestech.com (ATCPCS31.andestech.com [10.0.1.89])
+ by Atcsqr.andestech.com with ESMTPS id 50M8aY3G018564
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Wed, 22 Jan 2025 16:36:34 +0800 (+08)
+ (envelope-from ethan84@andestech.com)
+Received: from atcpcw16.andestech.com (10.0.1.106) by ATCPCS31.andestech.com
+ (10.0.1.89) with Microsoft SMTP Server (TLS) id 14.3.498.0; Wed, 22 Jan 2025
+ 16:36:33 +0800
+To: <qemu-devel@nongnu.org>
+CC: <richard.henderson@linaro.org>, <pbonzini@redhat.com>,
+ <palmer@dabbelt.com>, <alistair.francis@wdc.com>, <bmeng.cn@gmail.com>,
+ <liwei1518@gmail.com>, <dbarboza@ventanamicro.com>,
+ <zhiwei_liu@linux.alibaba.com>, <peterx@redhat.com>,
+ <david@redhat.com>, <philmd@linaro.org>, <qemu-riscv@nongnu.org>,
+ Ethan Chen <ethan84@andestech.com>
+Subject: [PATCH v10 1/8] hw/core: Add config stream
+Date: Wed, 22 Jan 2025 16:36:10 +0800
+Message-ID: <20250122083617.3940240-2-ethan84@andestech.com>
+X-Mailer: git-send-email 2.42.0.345.gaab89be2eb.dirty
+In-Reply-To: <20250122083617.3940240-1-ethan84@andestech.com>
+References: <20250122083617.3940240-1-ethan84@andestech.com>
 MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
 Content-Type: text/plain
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=armbru@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -51
-X-Spam_score: -5.2
-X-Spam_bar: -----
-X-Spam_report: (-5.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-2.996,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.086,
+X-Originating-IP: [10.0.1.106]
+X-DKIM-Results: atcpcs31.andestech.com; dkim=none;
+X-DNSRBL: 
+X-MAIL: Atcsqr.andestech.com 50M8aY3G018564
+Received-SPF: pass client-ip=60.248.80.70; envelope-from=ethan84@andestech.com;
+ helo=Atcsqr.andestech.com
+X-Spam_score_int: -8
+X-Spam_score: -0.9
+X-Spam_bar: /
+X-Spam_report: (-0.9 / 5.0 requ) BAYES_00=-1.9,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RDNS_DYNAMIC=0.982, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ TVD_RCVD_IP=0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -81,47 +68,58 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-to:  Ethan Chen <ethan84@andestech.com>
+From:  Ethan Chen via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Gustavo Romero <gustavo.romero@linaro.org> writes:
+Make other device can use /hw/core/stream.c by select this config.
 
-> Add me as the maintainer for the ivshmem-pci device.
->
-> Signed-off-by: Gustavo Romero <gustavo.romero@linaro.org>
-> ---
->  MAINTAINERS | 5 ++++-
->  1 file changed, 4 insertions(+), 1 deletion(-)
->
-> diff --git a/MAINTAINERS b/MAINTAINERS
-> index 846b81e3ec..c3e69ef3e4 100644
-> --- a/MAINTAINERS
-> +++ b/MAINTAINERS
-> @@ -2789,11 +2789,14 @@ F: hw/hyperv/hv-balloon*.h
->  F: include/hw/hyperv/dynmem-proto.h
->  F: include/hw/hyperv/hv-balloon.h
->  
-> -ivshmem-flat
-> +ivshmem
->  M: Gustavo Romero <gustavo.romero@linaro.org>
->  S: Maintained
-> +F: hw/misc/ivshmem-pci.c
->  F: hw/misc/ivshmem-flat.c
-> +F: include/hw/misc/ivshmem.h
->  F: include/hw/misc/ivshmem-flat.h
-> +F: docs/system/devices/ivshmem.rst
->  F: docs/system/devices/ivshmem-flat.rst
->  
->  Subsystems
+Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
+Signed-off-by: Ethan Chen <ethan84@andestech.com>
+---
+ hw/Kconfig          | 1 +
+ hw/core/Kconfig     | 3 +++
+ hw/core/meson.build | 2 +-
+ 3 files changed, 5 insertions(+), 1 deletion(-)
 
-Please add
-
-    docs/specs/ivshmem-spec.rst
-    tests/qtest/ivshmem-test.c
-
-and ideally also
-
-    contrib/ivshmem-client/
-    contrib/ivshmem-server/
+diff --git a/hw/Kconfig b/hw/Kconfig
+index 1b4e9bb07f..cb12b8c11b 100644
+--- a/hw/Kconfig
++++ b/hw/Kconfig
+@@ -77,6 +77,7 @@ config XILINX
+ config XILINX_AXI
+     bool
+     select PTIMER # for hw/dma/xilinx_axidma.c
++    select STREAM
+ 
+ config XLNX_ZYNQMP
+     bool
+diff --git a/hw/core/Kconfig b/hw/core/Kconfig
+index d1bdf765ee..dffa9a1b01 100644
+--- a/hw/core/Kconfig
++++ b/hw/core/Kconfig
+@@ -38,3 +38,6 @@ config SPLIT_IRQ
+ config EIF
+     bool
+     depends on LIBCBOR && GNUTLS
++
++config STREAM
++    bool
+diff --git a/hw/core/meson.build b/hw/core/meson.build
+index 65a1698ed1..10ae8b1c0b 100644
+--- a/hw/core/meson.build
++++ b/hw/core/meson.build
+@@ -22,7 +22,7 @@ system_ss.add(when: 'CONFIG_PLATFORM_BUS', if_true: files('platform-bus.c'))
+ system_ss.add(when: 'CONFIG_PTIMER', if_true: files('ptimer.c'))
+ system_ss.add(when: 'CONFIG_REGISTER', if_true: files('register.c'))
+ system_ss.add(when: 'CONFIG_SPLIT_IRQ', if_true: files('split-irq.c'))
+-system_ss.add(when: 'CONFIG_XILINX_AXI', if_true: files('stream.c'))
++system_ss.add(when: 'CONFIG_STREAM', if_true: files('stream.c'))
+ system_ss.add(when: 'CONFIG_PLATFORM_BUS', if_true: files('sysbus-fdt.c'))
+ system_ss.add(when: 'CONFIG_EIF', if_true: [files('eif.c'), zlib, libcbor, gnutls])
+ 
+-- 
+2.34.1
 
 
