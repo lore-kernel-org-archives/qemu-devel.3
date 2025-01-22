@@ -4,81 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id F0262C02181
-	for <qemu-devel@archiver.kernel.org>; Wed, 22 Jan 2025 09:33:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 64D58C0218C
+	for <qemu-devel@archiver.kernel.org>; Wed, 22 Jan 2025 09:33:45 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1taX4q-0001uZ-LR; Wed, 22 Jan 2025 04:31:12 -0500
+	id 1taX50-00026s-Vz; Wed, 22 Jan 2025 04:31:23 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1taX4p-0001no-0s
- for qemu-devel@nongnu.org; Wed, 22 Jan 2025 04:31:11 -0500
-Received: from mail-wm1-x329.google.com ([2a00:1450:4864:20::329])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1taX4y-00025D-2r
+ for qemu-devel@nongnu.org; Wed, 22 Jan 2025 04:31:20 -0500
+Received: from mail-wm1-x334.google.com ([2a00:1450:4864:20::334])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1taX4n-0003JN-37
- for qemu-devel@nongnu.org; Wed, 22 Jan 2025 04:31:10 -0500
-Received: by mail-wm1-x329.google.com with SMTP id
- 5b1f17b1804b1-43618283dedso68312065e9.3
- for <qemu-devel@nongnu.org>; Wed, 22 Jan 2025 01:31:08 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1taX4w-0003Kd-Hh
+ for qemu-devel@nongnu.org; Wed, 22 Jan 2025 04:31:19 -0500
+Received: by mail-wm1-x334.google.com with SMTP id
+ 5b1f17b1804b1-43622267b2eso65858095e9.0
+ for <qemu-devel@nongnu.org>; Wed, 22 Jan 2025 01:31:17 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1737538267; x=1738143067; darn=nongnu.org;
+ d=linaro.org; s=google; t=1737538276; x=1738143076; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=oNGgwti16N0RaYgdrpqIsRq0rprgvC+KnfZZxJFop+c=;
- b=kuPihQ+jR1gPK2UJ5o4uSVFxKd8szyWW6+hgzm/NbfV8EjIXgQZzsy7NUt0TSIsoNq
- AnCdhNgfQODnQTax462AxdH6Fzv5lOXFB0ry5RP7IhbB7UI3qVeGAdaJnHoBwTlML/zx
- kdEVoCywx3SurXSinoFbPPu7qf/y1cEpdLdX0QGgYCQotp52OTyZ1RiHsTnxmu1nzcYQ
- wxknbMQezYYG13BbyBxkJ00fatrXHch7ppOErsAWPsrH9vwaA+npVWdXxm2dmukMeqoz
- +sKfHdD+sgWUETi3Kvc9Do1pui9O88UTQn2g68+rQwhfq/62ptleNVjJwSnCQ2rVz1Cu
- fFFA==
+ bh=zX6wKmzI06nCmXct1pzxbuNtoEp265I9BJm+57rS6fc=;
+ b=E0XnPb6KePl8gWoAp6nEc4OJu6MMWT+oFyLVvHN5GMFpBmDMP6fovKeMmqEHzQa4F4
+ pWVtyg+agUupVTtV1W+IF57IJ8Tf5Oee4gJvbRCGs3hJThvR0PrYD+ZqkC5iXML26j2B
+ qnGvxKFmE5cL9zwHdiLQlGwjSis9CnSAOPS/6RL5bR2rF5AB44y4O5uwtgxOhhhvL+Yz
+ GLsOOUuqzRUC4iBBBY6KIFReLvPtjaovuUnfx7VRQe5kf8BPAV3R6y7uktz8RBtrCO/5
+ /n5WViq8sHxtJzEXpSQIze5PwVfRp8cKinxTryuxlik1Lh3Y3/yAn51y74C7RS1nHQSE
+ sIow==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1737538267; x=1738143067;
+ d=1e100.net; s=20230601; t=1737538276; x=1738143076;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=oNGgwti16N0RaYgdrpqIsRq0rprgvC+KnfZZxJFop+c=;
- b=SQTB/ZINvU2nYhUGSwZGysBKUQab9N/NfbXKIzpc8IuzpY9HhHzDCMKumRZYdDsjTk
- x8onswo36BwZSd1yVTDmAva18drysD4mZ5N0wnINA1ZGISyk3iGbSEqYJcrBkn57LbdK
- 7p5KrgsnQTTDe+IQlThtYsJxw4D1dZqD/DGAruxi78CdCbRugOWh4Vps0CVKf4Xc+OUj
- 49f6E3tUjXnFn8zP85X3Wiq1ePIIon/82jAzI8dkNjjIbpVylOAeO6jX7PY5VNtpsCCI
- IfJZh1re7GZrwpPYUnP8z4+L//mHkA1H8jvvIkC/KM3SY90Dgi9V+NTMEJ3eWU2i9/fJ
- 1BcA==
-X-Gm-Message-State: AOJu0YyJnWzWIJlLjuHfS6bDOL44lPJByzFNwc6eH5t09IFwYMKeKNfb
- clDuUdATELh3Lg3l6upOjg0GlLud4UGURMQjVpekSi990+hB4F+iJgV4YOY6vTPFzyokY7famI4
- UIeY=
-X-Gm-Gg: ASbGnctZDpHeSdVvBeMxUFEF00siQEIjoLPqMrb6y2wbDi7TklTtZ9pBf6Zl6NVVto5
- zo80r2nDbMVh1T/+Ff6SqyVmCUtNwI2pEOnZUwbG6ay/2jns9FnPdiiwI1R7xYkjCOIJv4xi/kN
- aT6bagreDAoicKw1qfOloZZeMV/7mz9UjIevWDtFwyIxsElAr12A3WR3gVtFMMMufa59CjHmVic
- K3U8R3uRuAv6ZaR1BjpIt1uD33CuTo9M/y/JGsZo58oCTjkcxflupfvD58gYby5i1hc53tLjoVF
- GpNQ4bTmnSAjfo+VXPyP6KxZYf+UqAkrBW2719pq3sd5
-X-Google-Smtp-Source: AGHT+IGuXAL20mHd9R2/lClWS7l1W26KPDxoiKT0W+da+K9wiLYkg9YH5EALMh5dy9yk4m8BTc+Cyw==
-X-Received: by 2002:a05:600c:468d:b0:434:a75b:5f59 with SMTP id
- 5b1f17b1804b1-438913bdb19mr175725585e9.3.1737538267345; 
- Wed, 22 Jan 2025 01:31:07 -0800 (PST)
+ bh=zX6wKmzI06nCmXct1pzxbuNtoEp265I9BJm+57rS6fc=;
+ b=dZLC7YuaQkHCp1bHTMtExVWK3qy/5m7Y7103HWk4/U6d9IWeEAIuIZL4nlwmyKB6Z1
+ c4TQ8RRuekvSPDyb2mSBr+us9orO6xjwvQnH+/2P1BrW/JjsP/vOKIM7Ym0/GDgzUMKw
+ eVGfD8rS2glp1qcSOfCcl69orgc4lamBT/LzlCU18Ft1+B14bG1mmNMSpR1ZcHVdl0Ds
+ ObxK8n6vqWR+AJ6FTDtufPtyzQHC7fIHedUYMDSX9BvMjvzPUvG8BYycZjEnCTNtOnhs
+ 9yfdpCqrxiTlWcUBXA3MAKtibuV12h4natnJ/Vqe0ETnrft+TO7yI/CwwFmDjFzCvBC2
+ q8Kw==
+X-Gm-Message-State: AOJu0YwOjgFjGiE0WslXOHEr6Y2Rj3zIukdkESpQ4s4lMNPGTkiSfn+G
+ d4YmhzOr37Ojw6HeIjBO6qURsjaEZqICZzW6Eq2bpJyaH+cvYQ67aDWBlRVKc9m6o/HxvGBpzWX
+ nGFQ=
+X-Gm-Gg: ASbGncvpc2V5HbFioNFTD8pZ3cB1PSCtNdkwZeorDx4Q1ScV6IlzRURpZb/PF3SJ2OT
+ 6DZj+3BoFT8Mrxxrhiepg2/Atm5ArN6XpJR3K2eedrpdep/9EqlLXLmOPkZog8jDnt4PjDQjOmw
+ pBUVl7AMy4N0WjPvhbbu03i5fYFwpjifL+oAlEOIYveaNbAwLRxcDqLkySAmWbn5R8yBFSXdSPD
+ iPT6Ri8/nFaIU+q45XaR6W+uL8PhsaSlW6jxn9FXgInegIrc3NlX8wgCCs77su2YNSPdrqsRpmd
+ yjCMzGvfUw9D0KPWiesaazs22AljF4mYKFG0RQhy4VpB
+X-Google-Smtp-Source: AGHT+IG6O9YAZndqYHtLAOIJrxfLy8HdpLW0g3XjNE4dMucyHCtbEMrzySz5+yEgU7OfImhUVkvOdw==
+X-Received: by 2002:a05:600c:83ce:b0:436:ed33:1535 with SMTP id
+ 5b1f17b1804b1-438913e0384mr202379415e9.12.1737538276486; 
+ Wed, 22 Jan 2025 01:31:16 -0800 (PST)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-438b31afaf8sm17294715e9.21.2025.01.22.01.31.06
+ 5b1f17b1804b1-438b318aae1sm17628795e9.1.2025.01.22.01.31.15
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Wed, 22 Jan 2025 01:31:06 -0800 (PST)
+ Wed, 22 Jan 2025 01:31:16 -0800 (PST)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: qemu-arm@nongnu.org, Richard Henderson <richard.henderson@linaro.org>,
  =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PATCH v2 08/10] gdbstub: Prefer cached CpuClass over CPU_GET_CLASS()
- macro
-Date: Wed, 22 Jan 2025 10:30:26 +0100
-Message-ID: <20250122093028.52416-9-philmd@linaro.org>
+Subject: [PATCH v2 10/10] target/arm: Prefer cached CpuClass over
+ CPU_GET_CLASS() macro
+Date: Wed, 22 Jan 2025 10:30:28 +0100
+Message-ID: <20250122093028.52416-11-philmd@linaro.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20250122093028.52416-1-philmd@linaro.org>
 References: <20250122093028.52416-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::329;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x329.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::334;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x334.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -108,166 +108,52 @@ use it.
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 ---
- gdbstub/gdbstub.c     | 26 +++++++++-----------------
- gdbstub/system.c      |  7 ++-----
- gdbstub/user-target.c |  6 ++----
- gdbstub/user.c        |  7 ++-----
- 4 files changed, 15 insertions(+), 31 deletions(-)
+ target/arm/cpu.c         | 3 +--
+ target/arm/tcg/cpu-v7m.c | 3 +--
+ 2 files changed, 2 insertions(+), 4 deletions(-)
 
-diff --git a/gdbstub/gdbstub.c b/gdbstub/gdbstub.c
-index e366df12d4a..282e13e163f 100644
---- a/gdbstub/gdbstub.c
-+++ b/gdbstub/gdbstub.c
-@@ -354,7 +354,6 @@ static const char *get_feature_xml(const char *p, const char **newp,
-                                    GDBProcess *process)
+diff --git a/target/arm/cpu.c b/target/arm/cpu.c
+index dc0231233a6..048b825a006 100644
+--- a/target/arm/cpu.c
++++ b/target/arm/cpu.c
+@@ -846,7 +846,6 @@ static inline bool arm_excp_unmasked(CPUState *cs, unsigned int excp_idx,
+ 
+ static bool arm_cpu_exec_interrupt(CPUState *cs, int interrupt_request)
  {
-     CPUState *cpu = gdb_get_first_cpu_in_process(process);
--    CPUClass *cc = CPU_GET_CLASS(cpu);
-     GDBRegisterState *r;
-     size_t len;
- 
-@@ -377,11 +376,11 @@ static const char *get_feature_xml(const char *p, const char **newp,
-                          "<!DOCTYPE target SYSTEM \"gdb-target.dtd\">"
-                          "<target>"));
- 
--            if (cc->gdb_arch_name) {
-+            if (cpu->cc->gdb_arch_name) {
-                 g_ptr_array_add(
-                     xml,
-                     g_markup_printf_escaped("<architecture>%s</architecture>",
--                                            cc->gdb_arch_name(cpu)));
-+                                            cpu->cc->gdb_arch_name(cpu)));
-             }
-             for (guint i = 0; i < cpu->gdb_regs->len; i++) {
-                 r = &g_array_index(cpu->gdb_regs, GDBRegisterState, i);
-@@ -520,11 +519,10 @@ GArray *gdb_get_register_list(CPUState *cpu)
- 
- int gdb_read_register(CPUState *cpu, GByteArray *buf, int reg)
- {
--    CPUClass *cc = CPU_GET_CLASS(cpu);
-     GDBRegisterState *r;
- 
--    if (reg < cc->gdb_num_core_regs) {
--        return cc->gdb_read_register(cpu, buf, reg);
-+    if (reg < cpu->cc->gdb_num_core_regs) {
-+        return cpu->cc->gdb_read_register(cpu, buf, reg);
-     }
- 
-     for (guint i = 0; i < cpu->gdb_regs->len; i++) {
-@@ -538,11 +536,10 @@ int gdb_read_register(CPUState *cpu, GByteArray *buf, int reg)
- 
- static int gdb_write_register(CPUState *cpu, uint8_t *mem_buf, int reg)
- {
--    CPUClass *cc = CPU_GET_CLASS(cpu);
-     GDBRegisterState *r;
- 
--    if (reg < cc->gdb_num_core_regs) {
--        return cc->gdb_write_register(cpu, mem_buf, reg);
-+    if (reg < cpu->cc->gdb_num_core_regs) {
-+        return cpu->cc->gdb_write_register(cpu, mem_buf, reg);
-     }
- 
-     for (guint i = 0; i < cpu->gdb_regs->len; i++) {
-@@ -570,7 +567,7 @@ static void gdb_register_feature(CPUState *cpu, int base_reg,
- 
- void gdb_init_cpu(CPUState *cpu)
- {
--    CPUClass *cc = CPU_GET_CLASS(cpu);
-+    CPUClass *cc = cpu->cc;
-     const GDBFeature *feature;
- 
-     cpu->gdb_regs = g_array_new(false, false, sizeof(GDBRegisterState));
-@@ -1646,11 +1643,8 @@ void gdb_extend_qsupported_features(char *qflags)
- 
- static void handle_query_supported(GArray *params, void *user_ctx)
- {
--    CPUClass *cc;
--
-     g_string_printf(gdbserver_state.str_buf, "PacketSize=%x", MAX_PACKET_LENGTH);
--    cc = CPU_GET_CLASS(first_cpu);
--    if (cc->gdb_core_xml_file) {
-+    if (first_cpu->cc->gdb_core_xml_file) {
-         g_string_append(gdbserver_state.str_buf, ";qXfer:features:read+");
-     }
- 
-@@ -1697,7 +1691,6 @@ static void handle_query_supported(GArray *params, void *user_ctx)
- static void handle_query_xfer_features(GArray *params, void *user_ctx)
- {
-     GDBProcess *process;
--    CPUClass *cc;
-     unsigned long len, total_len, addr;
-     const char *xml;
-     const char *p;
-@@ -1708,8 +1701,7 @@ static void handle_query_xfer_features(GArray *params, void *user_ctx)
-     }
- 
-     process = gdb_get_cpu_process(gdbserver_state.g_cpu);
--    cc = CPU_GET_CLASS(gdbserver_state.g_cpu);
--    if (!cc->gdb_core_xml_file) {
-+    if (!gdbserver_state.g_cpu->cc->gdb_core_xml_file) {
-         gdb_put_packet("");
-         return;
-     }
-diff --git a/gdbstub/system.c b/gdbstub/system.c
-index 8ce79fa88cf..215a2c5dcad 100644
---- a/gdbstub/system.c
-+++ b/gdbstub/system.c
-@@ -452,8 +452,6 @@ static int phy_memory_mode;
- int gdb_target_memory_rw_debug(CPUState *cpu, hwaddr addr,
-                                uint8_t *buf, int len, bool is_write)
- {
--    CPUClass *cc;
--
-     if (phy_memory_mode) {
-         if (is_write) {
-             cpu_physical_memory_write(addr, buf, len);
-@@ -463,9 +461,8 @@ int gdb_target_memory_rw_debug(CPUState *cpu, hwaddr addr,
-         return 0;
-     }
- 
--    cc = CPU_GET_CLASS(cpu);
--    if (cc->memory_rw_debug) {
--        return cc->memory_rw_debug(cpu, addr, buf, len, is_write);
-+    if (cpu->cc->memory_rw_debug) {
-+        return cpu->cc->memory_rw_debug(cpu, addr, buf, len, is_write);
-     }
- 
-     return cpu_memory_rw_debug(cpu, addr, buf, len, is_write);
-diff --git a/gdbstub/user-target.c b/gdbstub/user-target.c
-index 22bf4008c0f..355b1901b4f 100644
---- a/gdbstub/user-target.c
-+++ b/gdbstub/user-target.c
-@@ -233,10 +233,8 @@ void gdb_handle_query_offsets(GArray *params, void *user_ctx)
- static inline int target_memory_rw_debug(CPUState *cpu, target_ulong addr,
-                                          uint8_t *buf, int len, bool is_write)
- {
--    CPUClass *cc;
--    cc = CPU_GET_CLASS(cpu);
--    if (cc->memory_rw_debug) {
--        return cc->memory_rw_debug(cpu, addr, buf, len, is_write);
-+    if (cpu->cc->memory_rw_debug) {
-+        return cpu->cc->memory_rw_debug(cpu, addr, buf, len, is_write);
-     }
-     return cpu_memory_rw_debug(cpu, addr, buf, len, is_write);
+-    CPUClass *cc = CPU_GET_CLASS(cs);
+     CPUARMState *env = cpu_env(cs);
+     uint32_t cur_el = arm_current_el(env);
+     bool secure = arm_is_secure(env);
+@@ -946,7 +945,7 @@ static bool arm_cpu_exec_interrupt(CPUState *cs, int interrupt_request)
+  found:
+     cs->exception_index = excp_idx;
+     env->exception.target_el = target_el;
+-    cc->tcg_ops->do_interrupt(cs);
++    cs->cc->tcg_ops->do_interrupt(cs);
+     return true;
  }
-diff --git a/gdbstub/user.c b/gdbstub/user.c
-index c2bdfc3d491..375f7f80653 100644
---- a/gdbstub/user.c
-+++ b/gdbstub/user.c
-@@ -665,11 +665,8 @@ int gdb_continue_partial(char *newstates)
- int gdb_target_memory_rw_debug(CPUState *cpu, hwaddr addr,
-                                uint8_t *buf, int len, bool is_write)
+ 
+diff --git a/target/arm/tcg/cpu-v7m.c b/target/arm/tcg/cpu-v7m.c
+index 03acdf83e00..d2d0b94b630 100644
+--- a/target/arm/tcg/cpu-v7m.c
++++ b/target/arm/tcg/cpu-v7m.c
+@@ -19,7 +19,6 @@
+ 
+ static bool arm_v7m_cpu_exec_interrupt(CPUState *cs, int interrupt_request)
  {
--    CPUClass *cc;
--
--    cc = CPU_GET_CLASS(cpu);
--    if (cc->memory_rw_debug) {
--        return cc->memory_rw_debug(cpu, addr, buf, len, is_write);
-+    if (cpu->cc->memory_rw_debug) {
-+        return cpu->cc->memory_rw_debug(cpu, addr, buf, len, is_write);
+-    CPUClass *cc = CPU_GET_CLASS(cs);
+     ARMCPU *cpu = ARM_CPU(cs);
+     CPUARMState *env = &cpu->env;
+     bool ret = false;
+@@ -35,7 +34,7 @@ static bool arm_v7m_cpu_exec_interrupt(CPUState *cs, int interrupt_request)
+     if (interrupt_request & CPU_INTERRUPT_HARD
+         && (armv7m_nvic_can_take_pending_exception(env->nvic))) {
+         cs->exception_index = EXCP_IRQ;
+-        cc->tcg_ops->do_interrupt(cs);
++        cs->cc->tcg_ops->do_interrupt(cs);
+         ret = true;
      }
-     return cpu_memory_rw_debug(cpu, addr, buf, len, is_write);
- }
+     return ret;
 -- 
 2.47.1
 
