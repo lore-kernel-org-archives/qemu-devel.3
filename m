@@ -4,101 +4,97 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id F1737C0218B
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id EEC9CC02182
 	for <qemu-devel@archiver.kernel.org>; Thu, 23 Jan 2025 11:57:08 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tavoe-0002EW-BX; Thu, 23 Jan 2025 06:56:08 -0500
+	id 1tavpN-0002Sq-3K; Thu, 23 Jan 2025 06:56:53 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <vaibhav@linux.ibm.com>)
- id 1tavoY-0002E6-Ir; Thu, 23 Jan 2025 06:56:02 -0500
-Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
+ (Exim 4.90_1) (envelope-from <anisinha@redhat.com>)
+ id 1tavpI-0002SL-Vu
+ for qemu-devel@nongnu.org; Thu, 23 Jan 2025 06:56:49 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <vaibhav@linux.ibm.com>)
- id 1tavoU-0000L2-Io; Thu, 23 Jan 2025 06:56:02 -0500
-Received: from pps.filterd (m0353729.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 50N5OTit026990;
- Thu, 23 Jan 2025 11:55:54 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-transfer-encoding:date:from:message-id:mime-version
- :subject:to; s=pp1; bh=QSasE6uMcVJWZc6jLuNmWokxnH9xNhwa454V2UMAv
- Qg=; b=aK1QaI/HFUAaEpdeQ4szW5vo+1hu1ZICm/Mb26OekL14VF+PkMM80TQe3
- PqubgigLmN0Dsz9vFFS4EJWotgtAz20mBE8GmDKf0hJG4QZ5tP2IoQ1a3Bolr25C
- qM3bC++Qgym2eNfYgPi0+Fi/OK0V6g7K/wMIZYHAJ7AGM6s3hrseeP4qHaqe5Dmy
- 6VoIT09ERaiC+A1DMtThn8nWIbnPt3n7K6zKdb1Bp5I3aruaTfjHl6TWhybzO75l
- UGF9DT6uraTAT1uwCY6BQXv5gTA/oKUfrudW4N1TS0e3p/oWcZOEDjK6wJUfG1yJ
- Yx9TOz9krsla37U9PVEZFMc4Qc4Sw==
-Received: from pps.reinject (localhost [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 44bfk7sras-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Thu, 23 Jan 2025 11:55:54 +0000 (GMT)
-Received: from m0353729.ppops.net (m0353729.ppops.net [127.0.0.1])
- by pps.reinject (8.18.0.8/8.18.0.8) with ESMTP id 50NBlfkQ008689;
- Thu, 23 Jan 2025 11:55:54 GMT
-Received: from ppma21.wdc07v.mail.ibm.com
- (5b.69.3da9.ip4.static.sl-reverse.com [169.61.105.91])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 44bfk7sraq-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Thu, 23 Jan 2025 11:55:53 +0000 (GMT)
-Received: from pps.filterd (ppma21.wdc07v.mail.ibm.com [127.0.0.1])
- by ppma21.wdc07v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 50NAosr4029610;
- Thu, 23 Jan 2025 11:55:52 GMT
-Received: from smtprelay07.fra02v.mail.ibm.com ([9.218.2.229])
- by ppma21.wdc07v.mail.ibm.com (PPS) with ESMTPS id 448qmnnceh-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Thu, 23 Jan 2025 11:55:52 +0000
-Received: from smtpav04.fra02v.mail.ibm.com (smtpav04.fra02v.mail.ibm.com
- [10.20.54.103])
- by smtprelay07.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 50NBtn5K64946650
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Thu, 23 Jan 2025 11:55:49 GMT
-Received: from smtpav04.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 172E120040;
- Thu, 23 Jan 2025 11:55:49 +0000 (GMT)
-Received: from smtpav04.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 6E7E82004B;
- Thu, 23 Jan 2025 11:55:46 +0000 (GMT)
-Received: from vaibhav?linux.ibm.com (unknown [9.124.210.34])
- by smtpav04.fra02v.mail.ibm.com (Postfix) with SMTP;
- Thu, 23 Jan 2025 11:55:46 +0000 (GMT)
-Received: by vaibhav@linux.ibm.com (sSMTP sendmail emulation);
- Thu, 23 Jan 2025 17:25:45 +0530
-From: Vaibhav Jain <vaibhav@linux.ibm.com>
-To: qemu-devel@nongnu.org, kvm-ppc@vger.kernel.org, qemu-ppc@nongnu.org
-Cc: Vaibhav Jain <vaibhav@linux.ibm.com>, npiggin@gmail.com,
- harshpb@linux.ibm.com, shivaprasadbhat@gmail.com
-Subject: [PATCH v2] spapr: nested: Add support for reporting Hostwide state
- counter
-Date: Thu, 23 Jan 2025 17:25:37 +0530
-Message-ID: <20250123115538.86821-1-vaibhav@linux.ibm.com>
-X-Mailer: git-send-email 2.48.1
+ (Exim 4.90_1) (envelope-from <anisinha@redhat.com>)
+ id 1tavpF-0000O5-Dt
+ for qemu-devel@nongnu.org; Thu, 23 Jan 2025 06:56:48 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1737633402;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:
+ content-transfer-encoding:content-transfer-encoding;
+ bh=n2Zv1KpY1DdZAFhYGlD3BBI3BAleTAcfsYat480ckb8=;
+ b=MDRZUO3yaEZ43xuFWyddNrwsOsyNvZTlGaspxLp3+GKmrinCWq09+OSfhDhooQN/fu5t7+
+ DaikHH1zAYxn7pudnU4LRSiuu/uaZIn5VyNit1Dg9O9z+qlJ17ec0mHGpOIjTcFhIMdjhh
+ kIZZG154am2i/aKY0BAal+Dn18THeJc=
+Received: from mail-pj1-f70.google.com (mail-pj1-f70.google.com
+ [209.85.216.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-417-N3y_ESr8NGafAb-812sH6g-1; Thu, 23 Jan 2025 06:56:39 -0500
+X-MC-Unique: N3y_ESr8NGafAb-812sH6g-1
+X-Mimecast-MFC-AGG-ID: N3y_ESr8NGafAb-812sH6g
+Received: by mail-pj1-f70.google.com with SMTP id
+ 98e67ed59e1d1-2ef79d9c692so2795627a91.0
+ for <qemu-devel@nongnu.org>; Thu, 23 Jan 2025 03:56:39 -0800 (PST)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1737633398; x=1738238198;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=n2Zv1KpY1DdZAFhYGlD3BBI3BAleTAcfsYat480ckb8=;
+ b=T74lLOBSWT5APYo9zXSW0lWOdIKId64/Q8QJF6k1T8PLumvJ7tW02aoRwmw7Ua7BrS
+ ia2eEhJPawpqq6kJ6k55z3NAxsaeSno5RG9o86ShQiNVrFMfxKXAZ4d9aGFcS0rRFM+O
+ bbMb10z5l8ovQofg87paVdVwizgQH1Ee4eelRHpgj89fa2fmk3Qg2uJi6O5XqQH3tO25
+ vdJjbtVChKaSIircrtUarKGcqqgXEeaeMwE6V65t0FA8jCoR4eUe7xgpfhbH8uI0nmpS
+ 1lcYqOSxIiiPSU5dqLF3o01v7kY80xyZBJyEfz/7dLz34f5prL5XP5ys+CLSvESjwJu+
+ zLSw==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCXklgaWaIsFV3IfXWIVcaf48hFkL/aMwNRiLh+nmfRA/Tg0Tq08vy14zn3sjfkqN2keu/xF7syRTVyf@nongnu.org
+X-Gm-Message-State: AOJu0YwwqWpeLBoHnnx203dolNcmjYgK1lFRZPgvpbls6uifoqPQc+n7
+ QikBnNH+CtyR5I/vgtXtMOXF/5xG7LMknfsIZbJQCKI1VMwtiqbjUfsnJlGhLKQo+mK9ZsqejL5
+ /qkE8bwoTYy70l80njnqmC8Pw322JHLxqFr7P+NqNDQLQpw/qRvXm
+X-Gm-Gg: ASbGncsZg2s1X0vg1Dfj8IT4cz06/+JwrumAIqA6JAALheGOYYsg7MJpk9ByTKWZfxE
+ TVtGiG1XFLQ8dtkd7Ow5UZqA/iImrB8xKVVGZKc5owuR6zljmElC6jaCj0elfg7eVyVp+RvOjkV
+ qAd+/O/eE/pjX460hFEvIPiTvntOYX02pq9FDFXeojvk7Pnj2fbR4Bs6AWuR/Qo8H4I9eW0rmae
+ +I4qkF+g3hrRX5yOPjfMHHO7HYU42LnDVPfAsb1Vl5JgKlGt6Whvz7HXWRjGxg+d1Jv66+sUiJg
+ hv3xHGpmpSpzCrSDUg==
+X-Received: by 2002:a05:6a00:10d4:b0:72d:8fa2:9999 with SMTP id
+ d2e1a72fcca58-72dafa03124mr36234294b3a.11.1737633398426; 
+ Thu, 23 Jan 2025 03:56:38 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IEfvDlIBW40yahM2L9fHUeLNqo6EOsHyC4bjVU21QwMdR0rlF8a7oupbej6buxG9V8Odi7yOg==
+X-Received: by 2002:a05:6a00:10d4:b0:72d:8fa2:9999 with SMTP id
+ d2e1a72fcca58-72dafa03124mr36234263b3a.11.1737633397922; 
+ Thu, 23 Jan 2025 03:56:37 -0800 (PST)
+Received: from localhost.localdomain ([115.96.114.234])
+ by smtp.googlemail.com with ESMTPSA id
+ d2e1a72fcca58-72dab814955sm12781603b3a.48.2025.01.23.03.56.34
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Thu, 23 Jan 2025 03:56:37 -0800 (PST)
+From: Ani Sinha <anisinha@redhat.com>
+To: Sergio Lopez <slp@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
+ "Michael S. Tsirkin" <mst@redhat.com>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Eduardo Habkost <eduardo@habkost.net>, Zhao Liu <zhao1.liu@intel.com>
+Cc: Ani Sinha <anisinha@redhat.com>, imammedo@redhat.com, qemu-devel@nongnu.org
+Subject: [PATCH v5] hw/i386/cpu: remove default_cpu_version and simplify
+Date: Thu, 23 Jan 2025 17:26:12 +0530
+Message-ID: <20250123115613.1537173-1-anisinha@redhat.com>
+X-Mailer: git-send-email 2.45.2
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-TM-AS-GCONF: 00
-X-Proofpoint-GUID: JCVfv5_MfLi8Kv1vHH2uUcdz6iazI0Es
-X-Proofpoint-ORIG-GUID: Opj3IBuxjWAr7YvUkXETJOViVYfH6c_g
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1057,Hydra:6.0.680,FMLib:17.12.68.34
- definitions=2025-01-23_05,2025-01-22_02,2024-11-22_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- phishscore=0 mlxlogscore=999
- adultscore=0 lowpriorityscore=0 priorityscore=1501 impostorscore=0
- spamscore=0 malwarescore=0 suspectscore=0 bulkscore=0 clxscore=1015
- mlxscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2411120000 definitions=main-2501230087
-Received-SPF: pass client-ip=148.163.156.1; envelope-from=vaibhav@linux.ibm.com;
- helo=mx0a-001b2d01.pphosted.com
-X-Spam_score_int: -26
-X-Spam_score: -2.7
-X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H2=-0.043, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=anisinha@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -50
+X-Spam_score: -5.1
+X-Spam_bar: -----
+X-Spam_report: (-5.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-2.996,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -114,295 +110,426 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Add support for reporting Hostwide state counters for nested KVM pseries
-guests running with 'cap-nested-papr' on Qemu-TCG acting as
-L0-hypervisor. sPAPR supports reporting various stats counters for
-Guest-Management-Area(GMA) thats owned by L0-Hypervisor and are documented
-at [1]. These stats counters are exposed via a new bit-flag named
-'getHostWideState' for the H_GUEST_GET_STATE hcall. Once this flag is set
-the hcall should populate the Guest-State-Elements in the requested GSB
-with the stat counter values. Currently following five counters are
-supported:
+commit 0788a56bd1ae3 ("i386: Make unversioned CPU models be aliases")
+introduced 'default_cpu_version' for PCMachineClass. This created three
+categories of CPU models:
+ - Most unversioned CPU models would use version 1 by default.
+ - For machines 4.0.1 and older that do not support cpu model aliases, a
+   special default_cpu_version value of CPU_VERSION_LEGACY is used.
+ - It was thought that future machines would use the latest value of cpu
+   versions corresponding to default_cpu_version value of
+   CPU_VERSION_LATEST [1].
 
-* host_heap		: The currently used bytes in the
-			  Hypervisor's Guest Management Space
-			  associated with the Host Partition.
-* host_heap_max		: The maximum bytes available in the
-			  Hypervisor's Guest Management Space
-			  associated with the Host Partition.
-* host_pagetable	: The currently used bytes in the
-			  Hypervisor's Guest Page Table Management
-			  Space associated with the Host Partition.
-* host_pagetable_max	: The maximum bytes available in the
-			  Hypervisor's Guest Page Table Management
-			  Space associated with the Host Partition.
-* host_pagetable_reclaim: The amount of space in bytes that has
-			  been reclaimed due to overcommit in the
-			  Hypervisor's Guest Page Table Management
-			  Space associated with the Host Partition.
+All pc machines still use the default cpu version of 1 for
+unversioned cpu models. CPU_VERSION_LATEST is a moving target and
+changes with time. Therefore, if machines use CPU_VERSION_LATEST, it would
+mean that over a period of time, for the same machine type, the cpu version
+would be different depending on what is latest at that time. This would
+break guests even when they use a constant machine type. Therefore, for
+pc machines, use of CPU_VERSION_LATEST is not possible. Currently, only
+microvms use CPU_VERSION_LATEST.
 
-At the moment '0' is being reported for all these counters as these
-counters doesnt align with how L0-Qemu manages Guest memory.
+This change cleans up the complicated logic around default_cpu_version
+including getting rid of default_cpu_version property itself. A couple of new
+flags are introduced, one for the legacy model for machines 4.0.1 and older
+and other for microvms. For older machines, a new pc machine property is
+introduced that separates pc machine versions 4.0.1 and older from the newer
+machines. 4.0.1 and older machines are scheduled to be deleted towards
+end of 2025 since they would be 6 years old by then. At that time, we can
+remove all logic around legacy cpus. Microvms are the only machines that
+continue to use the latest cpu version. If this changes later, we can
+remove all logic around x86_cpu_model_last_version(). Default cpu version
+for unversioned cpu models is hardcoded to the value 1 and applies
+unconditionally for all pc machine types of version 4.1 and above.
 
-The patch implements support for these counters by adding new members to
-the 'struct SpaprMachineStateNested'. These new members are then plugged
-into the existing 'guest_state_element_types[]' with the help of a new
-macro 'GSBE_NESTED_MACHINE_DW' together with a new helper
-'get_machine_ptr()'. guest_state_request_check() is updated to ensure
-correctness of the requested GSB and finally h_guest_getset_state() is
-updated to handle the newly introduced flag
-'GUEST_STATE_REQUEST_HOST_WIDE'.
+This change also removes all complications around CPU_VERSION_AUTO
+including removal of the value itself.
 
-This patch is tested with the proposed linux-kernel implementation to
-expose these stat-counter as perf-events at [2].
+1) See commit dcafd1ef0af227 ("i386: Register versioned CPU models")
 
-[1]
-https://lore.kernel.org/all/20241222140247.174998-2-vaibhav@linux.ibm.com
-
-[2]
-https://lore.kernel.org/all/20241222140247.174998-1-vaibhav@linux.ibm.com
-
-Signed-off-by: Vaibhav Jain <vaibhav@linux.ibm.com>
+CC: imammedo@redhat.com
+Signed-off-by: Ani Sinha <anisinha@redhat.com>
 ---
-Changelog:
+ hw/i386/microvm.c     |  3 +-
+ hw/i386/pc.c          | 14 +++++++++
+ hw/i386/pc_piix.c     |  6 ++--
+ hw/i386/pc_q35.c      |  6 ++--
+ hw/i386/x86-common.c  |  4 +--
+ include/hw/i386/pc.h  |  7 +++--
+ include/hw/i386/x86.h |  2 +-
+ target/i386/cpu.c     | 69 ++++++++++++++++++++++---------------------
+ target/i386/cpu.h     | 21 +++----------
+ 9 files changed, 67 insertions(+), 65 deletions(-)
 
-v1->v2:
-* Introduced new flags to correctly compare hcall flags
-  for H_GUEST_{GET,SET}_STATE [Harsh]
-* Fixed ordering of new GSB elements in spapr_nested.h [Harsh]
-* s/GSBE_MACHINE_NESTED_DW/GSBE_NESTED_MACHINE_DW/
-* Minor tweaks to patch description
-* Updated recipients list
----
- hw/ppc/spapr_nested.c         | 82 ++++++++++++++++++++++++++---------
- include/hw/ppc/spapr_nested.h | 39 ++++++++++++++---
- 2 files changed, 96 insertions(+), 25 deletions(-)
+changelog:
+v2: explain in commit log why use of CPU_VERSION_LATEST for machines
+is problematic.
+v3: fix a bug that broke the pipeline
+https://gitlab.com/mstredhat/qemu/-/pipelines/1626171267
+when cpu versions are explicitly specified in the command line,
+respect that and do not enforce legacy (unversioned) cpu logic.
+The pipeline is green now with the fix:
+https://gitlab.com/anisinha/qemu/-/pipelines/1626783632
+v4: made changes as per Zhao's suggestions.
+Pipeline passes https://gitlab.com/anisinha/qemu/-/pipelines/1635829877
+v5: adjustment of pc_init_cpus() declaration as per Zhao's suggestion. This
+simplifies things and also passes compilation.
+CI still passes https://gitlab.com/anisinha/qemu/-/pipelines/1637657451
 
-diff --git a/hw/ppc/spapr_nested.c b/hw/ppc/spapr_nested.c
-index 7def8eb73b..7f484bb3e7 100644
---- a/hw/ppc/spapr_nested.c
-+++ b/hw/ppc/spapr_nested.c
-@@ -64,10 +64,9 @@ static
- SpaprMachineStateNestedGuest *spapr_get_nested_guest(SpaprMachineState *spapr,
-                                                      target_ulong guestid)
- {
--    SpaprMachineStateNestedGuest *guest;
--
--    guest = g_hash_table_lookup(spapr->nested.guests, GINT_TO_POINTER(guestid));
--    return guest;
-+    return spapr->nested.guests ?
-+        g_hash_table_lookup(spapr->nested.guests,
-+                            GINT_TO_POINTER(guestid)) : NULL;
+diff --git a/hw/i386/microvm.c b/hw/i386/microvm.c
+index a8d354aabe..ffb1b37fe5 100644
+--- a/hw/i386/microvm.c
++++ b/hw/i386/microvm.c
+@@ -458,7 +458,8 @@ static void microvm_machine_state_init(MachineState *machine)
+ 
+     microvm_memory_init(mms);
+ 
+-    x86_cpus_init(x86ms, CPU_VERSION_LATEST);
++    x86_cpu_uses_lastest_version();
++    x86_cpus_init(x86ms);
+ 
+     microvm_devices_init(mms);
+ }
+diff --git a/hw/i386/pc.c b/hw/i386/pc.c
+index b46975c8a4..f97a519573 100644
+--- a/hw/i386/pc.c
++++ b/hw/i386/pc.c
+@@ -30,6 +30,7 @@
+ #include "hw/hyperv/hv-balloon.h"
+ #include "hw/i386/fw_cfg.h"
+ #include "hw/i386/vmport.h"
++#include "target/i386/cpu.h"
+ #include "system/cpus.h"
+ #include "hw/ide/ide-bus.h"
+ #include "hw/timer/hpet.h"
+@@ -615,6 +616,19 @@ void pc_acpi_smi_interrupt(void *opaque, int irq, int level)
+     }
  }
  
- bool spapr_get_pate_nested_papr(SpaprMachineState *spapr, PowerPCCPU *cpu,
-@@ -613,6 +612,13 @@ static void *get_guest_ptr(SpaprMachineStateNestedGuest *guest,
-     return guest; /* for GSBE_NESTED */
- }
- 
-+static void *get_machine_ptr(SpaprMachineStateNestedGuest *guest,
-+                             target_ulong vcpuid)
++void pc_init_cpus(MachineState *ms)
 +{
-+    SpaprMachineState *spapr = SPAPR_MACHINE(qdev_get_machine());
-+    return &spapr->nested;
++    X86MachineState *x86ms = X86_MACHINE(ms);
++    PCMachineState *pcms = PC_MACHINE(ms);
++    PCMachineClass *pcmc = PC_MACHINE_GET_CLASS(pcms);
++
++    if (pcmc->no_versioned_cpu_model) {
++        /* use legacy cpu as it does not support versions */
++        x86_cpu_set_legacy_version();
++    }
++    x86_cpus_init(x86ms);
 +}
 +
- /*
-  * set=1 means the L1 is trying to set some state
-  * set=0 means the L1 is trying to get some state
-@@ -1012,7 +1018,12 @@ struct guest_state_element_type guest_state_element_types[] = {
-     GSBE_NESTED_VCPU(GSB_VCPU_OUT_BUFFER, 0x10, runbufout,   copy_state_runbuf),
-     GSBE_NESTED_VCPU(GSB_VCPU_OUT_BUF_MIN_SZ, 0x8, runbufout, out_buf_min_size),
-     GSBE_NESTED_VCPU(GSB_VCPU_HDEC_EXPIRY_TB, 0x8, hdecr_expiry_tb,
--                     copy_state_hdecr)
-+                     copy_state_hdecr),
-+    GSBE_NESTED_MACHINE_DW(GSB_GUEST_HEAP, current_guest_heap),
-+    GSBE_NESTED_MACHINE_DW(GSB_GUEST_HEAP_MAX, max_guest_heap),
-+    GSBE_NESTED_MACHINE_DW(GSB_GUEST_PGTABLE_SIZE, current_pgtable_size),
-+    GSBE_NESTED_MACHINE_DW(GSB_GUEST_PGTABLE_SIZE_MAX, max_pgtable_size),
-+    GSBE_NESTED_MACHINE_DW(GSB_GUEST_PGTABLE_RECLAIM, pgtable_reclaim_size),
+ static
+ void pc_machine_done(Notifier *notifier, void *data)
+ {
+diff --git a/hw/i386/pc_piix.c b/hw/i386/pc_piix.c
+index 04d2957adc..dc684cb011 100644
+--- a/hw/i386/pc_piix.c
++++ b/hw/i386/pc_piix.c
+@@ -181,7 +181,8 @@ static void pc_init1(MachineState *machine, const char *pci_type)
+     }
+ 
+     pc_machine_init_sgx_epc(pcms);
+-    x86_cpus_init(x86ms, pcmc->default_cpu_version);
++
++    pc_init_cpus(machine);
+ 
+     if (kvm_enabled()) {
+         kvmclock_create(pcmc->kvmclock_create_always);
+@@ -457,7 +458,6 @@ static void pc_i440fx_machine_options(MachineClass *m)
+     ObjectClass *oc = OBJECT_CLASS(m);
+     pcmc->default_south_bridge = TYPE_PIIX3_DEVICE;
+     pcmc->pci_root_uid = 0;
+-    pcmc->default_cpu_version = 1;
+ 
+     m->family = "pc_piix";
+     m->desc = "Standard PC (i440FX + PIIX, 1996)";
+@@ -669,7 +669,7 @@ static void pc_i440fx_machine_4_0_options(MachineClass *m)
+ {
+     PCMachineClass *pcmc = PC_MACHINE_CLASS(m);
+     pc_i440fx_machine_4_1_options(m);
+-    pcmc->default_cpu_version = CPU_VERSION_LEGACY;
++    pcmc->no_versioned_cpu_model = true;
+     compat_props_add(m->compat_props, hw_compat_4_0, hw_compat_4_0_len);
+     compat_props_add(m->compat_props, pc_compat_4_0, pc_compat_4_0_len);
+ }
+diff --git a/hw/i386/pc_q35.c b/hw/i386/pc_q35.c
+index 77536dd697..045b05da64 100644
+--- a/hw/i386/pc_q35.c
++++ b/hw/i386/pc_q35.c
+@@ -187,7 +187,8 @@ static void pc_q35_init(MachineState *machine)
+     }
+ 
+     pc_machine_init_sgx_epc(pcms);
+-    x86_cpus_init(x86ms, pcmc->default_cpu_version);
++
++    pc_init_cpus(machine);
+ 
+     if (kvm_enabled()) {
+         kvmclock_create(pcmc->kvmclock_create_always);
+@@ -339,7 +340,6 @@ static void pc_q35_machine_options(MachineClass *m)
+ {
+     PCMachineClass *pcmc = PC_MACHINE_CLASS(m);
+     pcmc->pci_root_uid = 0;
+-    pcmc->default_cpu_version = 1;
+ 
+     m->family = "pc_q35";
+     m->desc = "Standard PC (Q35 + ICH9, 2009)";
+@@ -547,7 +547,7 @@ static void pc_q35_machine_4_0_1_options(MachineClass *m)
+ {
+     PCMachineClass *pcmc = PC_MACHINE_CLASS(m);
+     pc_q35_machine_4_1_options(m);
+-    pcmc->default_cpu_version = CPU_VERSION_LEGACY;
++    pcmc->no_versioned_cpu_model = true;
+     /*
+      * This is the default machine for the 4.0-stable branch. It is basically
+      * a 4.0 that doesn't use split irqchip by default. It MUST hence apply the
+diff --git a/hw/i386/x86-common.c b/hw/i386/x86-common.c
+index 008496b5b8..1ed5bc6010 100644
+--- a/hw/i386/x86-common.c
++++ b/hw/i386/x86-common.c
+@@ -66,15 +66,13 @@ out:
+     object_unref(cpu);
+ }
+ 
+-void x86_cpus_init(X86MachineState *x86ms, int default_cpu_version)
++void x86_cpus_init(X86MachineState *x86ms)
+ {
+     int i;
+     const CPUArchIdList *possible_cpus;
+     MachineState *ms = MACHINE(x86ms);
+     MachineClass *mc = MACHINE_GET_CLASS(x86ms);
+ 
+-    x86_cpu_set_default_version(default_cpu_version);
+-
+     /*
+      * Calculates the limit to CPU APIC ID values
+      *
+diff --git a/include/hw/i386/pc.h b/include/hw/i386/pc.h
+index a558705cb9..563f765d7f 100644
+--- a/include/hw/i386/pc.h
++++ b/include/hw/i386/pc.h
+@@ -92,9 +92,6 @@ struct PCMachineClass {
+ 
+     /* Compat options: */
+ 
+-    /* Default CPU model version.  See x86_cpu_set_default_version(). */
+-    int default_cpu_version;
+-
+     /* ACPI compat: */
+     bool has_acpi_build;
+     int pci_root_uid;
+@@ -125,6 +122,9 @@ struct PCMachineClass {
+      * check for memory.
+      */
+     bool broken_32bit_mem_addr_check;
++
++    /* whether the machine supports versioned cpu models */
++    bool no_versioned_cpu_model;
  };
  
- void spapr_nested_gsb_init(void)
-@@ -1030,8 +1041,12 @@ void spapr_nested_gsb_init(void)
-         else if (type->id >= GSB_VCPU_IN_BUFFER)
-             /* 0x0c00 - 0xf000 Thread + RW */
-             type->flags = 0;
-+        else if (type->id >= GSB_GUEST_HEAP)
-+            /*0x0800 - 0x0804 Hostwide Counters + RO */
-+            type->flags = GUEST_STATE_ELEMENT_TYPE_FLAG_HOST_WIDE |
-+                          GUEST_STATE_ELEMENT_TYPE_FLAG_READ_ONLY;
-         else if (type->id >= GSB_VCPU_LPVR)
--            /* 0x0003 - 0x0bff Guest + RW */
-+            /* 0x0003 - 0x07ff Guest + RW */
-             type->flags = GUEST_STATE_ELEMENT_TYPE_FLAG_GUEST_WIDE;
-         else if (type->id >= GSB_HV_VCPU_STATE_SIZE)
-             /* 0x0001 - 0x0002 Guest + RO */
-@@ -1138,18 +1153,26 @@ static bool guest_state_request_check(struct guest_state_request *gsr)
-             return false;
-         }
+ #define TYPE_PC_MACHINE "generic-pc-machine"
+@@ -136,6 +136,7 @@ GSIState *pc_gsi_create(qemu_irq **irqs, bool pci_enabled);
  
--        if (type->flags & GUEST_STATE_ELEMENT_TYPE_FLAG_GUEST_WIDE) {
-+        if (type->flags & GUEST_STATE_ELEMENT_TYPE_FLAG_HOST_WIDE) {
-+            /* Hostwide elements cant be clubbed with other types */
-+            if (!(gsr->flags & GUEST_STATE_REQUEST_HOST_WIDE)) {
-+                qemu_log_mask(LOG_GUEST_ERROR, "trying to get/set a host wide "
-+                              "Element ID:%04x.\n", id);
-+                return false;
-+            }
-+        } else  if (type->flags & GUEST_STATE_ELEMENT_TYPE_FLAG_GUEST_WIDE) {
-             /* guest wide element type */
-             if (!(gsr->flags & GUEST_STATE_REQUEST_GUEST_WIDE)) {
--                qemu_log_mask(LOG_GUEST_ERROR, "trying to set a guest wide "
-+                qemu_log_mask(LOG_GUEST_ERROR, "trying to get/set a guest wide "
-                               "Element ID:%04x.\n", id);
-                 return false;
-             }
-         } else {
-             /* thread wide element type */
--            if (gsr->flags & GUEST_STATE_REQUEST_GUEST_WIDE) {
--                qemu_log_mask(LOG_GUEST_ERROR, "trying to set a thread wide "
--                              "Element ID:%04x.\n", id);
-+            if (gsr->flags & (GUEST_STATE_REQUEST_GUEST_WIDE |
-+                              GUEST_STATE_ELEMENT_TYPE_FLAG_HOST_WIDE)) {
-+                qemu_log_mask(LOG_GUEST_ERROR, "trying to get/set a thread wide"
-+                            " Element ID:%04x.\n", id);
-                 return false;
-             }
-         }
-@@ -1509,25 +1532,44 @@ static target_ulong h_guest_getset_state(PowerPCCPU *cpu,
-     target_ulong buf = args[3];
-     target_ulong buflen = args[4];
-     struct guest_state_request gsr;
--    SpaprMachineStateNestedGuest *guest;
-+    SpaprMachineStateNestedGuest *guest = NULL;
+ /* pc.c */
  
--    guest = spapr_get_nested_guest(spapr, lpid);
--    if (!guest) {
--        return H_P2;
--    }
-     gsr.buf = buf;
-     assert(buflen <= GSB_MAX_BUF_SIZE);
-     gsr.len = buflen;
-     gsr.flags = 0;
--    if (flags & H_GUEST_GETSET_STATE_FLAG_GUEST_WIDE) {
-+
-+    /* Works for both get/set state */
-+    if ((flags & H_GUEST_GET_STATE_FLAGS_GUEST_WIDE) ||
-+        (flags & H_GUEST_SET_STATE_FLAGS_GUEST_WIDE)) {
-         gsr.flags |= GUEST_STATE_REQUEST_GUEST_WIDE;
-     }
--    if (flags & ~H_GUEST_GETSET_STATE_FLAG_GUEST_WIDE) {
--        return H_PARAMETER; /* flag not supported yet */
--    }
++void pc_init_cpus(MachineState *ms);
+ void pc_acpi_smi_interrupt(void *opaque, int irq, int level);
  
-     if (set) {
-+        if (flags & ~H_GUEST_SET_STATE_FLAGS_MASK) {
-+            return H_PARAMETER;
-+        }
-         gsr.flags |= GUEST_STATE_REQUEST_SET;
-+    } else {
-+        /*
-+         * No reserved fields to be set in flags nor both
-+         * GUEST/HOST wide bits
-+         */
-+        if ((flags == H_GUEST_GET_STATE_FLAGS_MASK) ||
-+            (flags & ~H_GUEST_GET_STATE_FLAGS_MASK)) {
-+            return H_PARAMETER;
-+        }
+ #define PCI_HOST_PROP_RAM_MEM          "ram-mem"
+diff --git a/include/hw/i386/x86.h b/include/hw/i386/x86.h
+index d43cb3908e..2d2b987fa1 100644
+--- a/include/hw/i386/x86.h
++++ b/include/hw/i386/x86.h
+@@ -114,7 +114,7 @@ void init_topo_info(X86CPUTopoInfo *topo_info, const X86MachineState *x86ms);
+ uint32_t x86_cpu_apic_id_from_index(X86MachineState *x86ms,
+                                     unsigned int cpu_index);
+ 
+-void x86_cpus_init(X86MachineState *pcms, int default_cpu_version);
++void x86_cpus_init(X86MachineState *pcms);
+ void x86_rtc_set_cpus_count(ISADevice *rtc, uint16_t cpus_count);
+ void x86_cpu_pre_plug(HotplugHandler *hotplug_dev,
+                       DeviceState *dev, Error **errp);
+diff --git a/target/i386/cpu.c b/target/i386/cpu.c
+index 1b9c11022c..c1f868c4dd 100644
+--- a/target/i386/cpu.c
++++ b/target/i386/cpu.c
+@@ -192,6 +192,9 @@ struct CPUID2CacheDescriptorInfo cpuid2_cache_descriptors[] = {
+  */
+ #define CACHE_DESCRIPTOR_UNAVAILABLE 0xFF
+ 
++/* default cpu version to use */
++#define DEFAULT_CPU_VERSION 1
 +
-+        if (flags & H_GUEST_GET_STATE_FLAGS_HOST_WIDE) {
-+            gsr.flags |= GUEST_STATE_REQUEST_HOST_WIDE;
-+        }
-+    }
-+
-+    if (!(gsr.flags & GUEST_STATE_REQUEST_HOST_WIDE)) {
-+        guest = spapr_get_nested_guest(spapr, lpid);
-+        if (!guest) {
-+            return H_P2;
-+        }
-     }
-     return map_and_getset_state(cpu, guest, vcpuid, &gsr);
+ /*
+  * Return a CPUID 2 cache descriptor for a given cache.
+  * If no known descriptor is found, return CACHE_DESCRIPTOR_UNAVAILABLE
+@@ -5343,20 +5346,16 @@ static const X86CPUDefinition builtin_x86_defs[] = {
+     },
+ };
+ 
+-/*
+- * We resolve CPU model aliases using -v1 when using "-machine
+- * none", but this is just for compatibility while libvirt isn't
+- * adapted to resolve CPU model versions before creating VMs.
+- * See "Runnability guarantee of CPU models" at
+- * docs/about/deprecated.rst.
+- */
+-X86CPUVersion default_cpu_version = 1;
++static bool use_legacy_cpu;
++void x86_cpu_set_legacy_version(void)
++{
++    use_legacy_cpu = true;
++}
+ 
+-void x86_cpu_set_default_version(X86CPUVersion version)
++static bool use_latest_cpu;
++void x86_cpu_uses_lastest_version(void)
+ {
+-    /* Translating CPU_VERSION_AUTO to CPU_VERSION_AUTO doesn't make sense */
+-    assert(version != CPU_VERSION_AUTO);
+-    default_cpu_version = version;
++    use_latest_cpu = true;
  }
-diff --git a/include/hw/ppc/spapr_nested.h b/include/hw/ppc/spapr_nested.h
-index e420220484..a6d10a1fba 100644
---- a/include/hw/ppc/spapr_nested.h
-+++ b/include/hw/ppc/spapr_nested.h
-@@ -11,7 +11,13 @@
- #define GSB_TB_OFFSET           0x0004 /* Timebase Offset */
- #define GSB_PART_SCOPED_PAGETBL 0x0005 /* Partition Scoped Page Table */
- #define GSB_PROCESS_TBL         0x0006 /* Process Table */
--                    /* RESERVED 0x0007 - 0x0BFF */
-+                   /* RESERVED 0x0007 - 0x07FF */
-+#define GSB_GUEST_HEAP          0x0800 /* Guest Management Heap Size */
-+#define GSB_GUEST_HEAP_MAX      0x0801 /* Guest Management Heap Max Size */
-+#define GSB_GUEST_PGTABLE_SIZE  0x0802 /* Guest Pagetable Size */
-+#define GSB_GUEST_PGTABLE_SIZE_MAX   0x0803 /* Guest Pagetable Max Size */
-+#define GSB_GUEST_PGTABLE_RECLAIM    0x0804 /* Pagetable Reclaim in bytes */
-+                  /* RESERVED 0x0805 - 0xBFF */
- #define GSB_VCPU_IN_BUFFER      0x0C00 /* Run VCPU Input Buffer */
- #define GSB_VCPU_OUT_BUFFER     0x0C01 /* Run VCPU Out Buffer */
- #define GSB_VCPU_VPA            0x0C02 /* HRA to Guest VCPU VPA */
-@@ -196,6 +202,13 @@ typedef struct SpaprMachineStateNested {
- #define NESTED_API_PAPR    2
-     bool capabilities_set;
-     uint32_t pvr_base;
-+    /* Hostwide counters */
-+    uint64_t current_guest_heap;
-+    uint64_t max_guest_heap;
-+    uint64_t current_pgtable_size;
-+    uint64_t max_pgtable_size;
-+    uint64_t pgtable_reclaim_size;
-+
-     GHashTable *guests;
- } SpaprMachineStateNested;
  
-@@ -229,9 +242,15 @@ typedef struct SpaprMachineStateNestedGuest {
- #define HVMASK_HDEXCR                 0x00000000FFFFFFFF
- #define HVMASK_TB_OFFSET              0x000000FFFFFFFFFF
- #define GSB_MAX_BUF_SIZE              (1024 * 1024)
--#define H_GUEST_GETSET_STATE_FLAG_GUEST_WIDE 0x8000000000000000
--#define GUEST_STATE_REQUEST_GUEST_WIDE       0x1
--#define GUEST_STATE_REQUEST_SET              0x2
-+#define H_GUEST_GET_STATE_FLAGS_MASK   0xC000000000000000ULL
-+#define H_GUEST_SET_STATE_FLAGS_MASK   0x8000000000000000ULL
-+#define H_GUEST_SET_STATE_FLAGS_GUEST_WIDE 0x8000000000000000ULL
-+#define H_GUEST_GET_STATE_FLAGS_GUEST_WIDE 0x8000000000000000ULL
-+#define H_GUEST_GET_STATE_FLAGS_HOST_WIDE  0x4000000000000000ULL
+ static X86CPUVersion x86_cpu_model_last_version(const X86CPUModel *model)
+@@ -5374,14 +5373,11 @@ static X86CPUVersion x86_cpu_model_last_version(const X86CPUModel *model)
+ /* Return the actual version being used for a specific CPU model */
+ static X86CPUVersion x86_cpu_model_resolve_version(const X86CPUModel *model)
+ {
+-    X86CPUVersion v = model->version;
+-    if (v == CPU_VERSION_AUTO) {
+-        v = default_cpu_version;
+-    }
+-    if (v == CPU_VERSION_LATEST) {
++    if (use_latest_cpu) {
+         return x86_cpu_model_last_version(model);
+     }
+-    return v;
 +
-+#define GUEST_STATE_REQUEST_GUEST_WIDE     0x1
-+#define GUEST_STATE_REQUEST_HOST_WIDE      0x2
-+#define GUEST_STATE_REQUEST_SET            0x4
++    return model->version;
+ }
+ 
+ static const Property max_x86_cpu_properties[] = {
+@@ -5985,10 +5981,15 @@ static char *x86_cpu_class_get_alias_of(X86CPUClass *cc)
+     if (!cc->model || !cc->model->is_alias) {
+         return NULL;
+     }
+-    version = x86_cpu_model_resolve_version(cc->model);
+-    if (version <= 0) {
++
++    if (use_legacy_cpu) {
++        /* legacy cpu models do not support cpu aliases */
+         return NULL;
+     }
++
++    version = x86_cpu_model_resolve_version(cc->model);
++    assert(version);
++
+     return x86_cpu_versioned_model_name(cc->model->cpudef, version);
+ }
+ 
+@@ -6002,11 +6003,7 @@ static void x86_cpu_list_entry(gpointer data, gpointer user_data)
+     g_autofree char *model_id = x86_cpu_class_get_model_id(cc);
+ 
+     if (!desc && alias_of) {
+-        if (cc->model && cc->model->version == CPU_VERSION_AUTO) {
+-            desc = g_strdup("(alias configured by machine type)");
+-        } else {
+             desc = g_strdup_printf("(alias of %s)", alias_of);
+-        }
+     }
+     if (!desc && cc->model && cc->model->note) {
+         desc = g_strdup_printf("%s [%s]", model_id, cc->model->note);
+@@ -6109,13 +6106,8 @@ static void x86_cpu_definition_entry(gpointer data, gpointer user_data)
+     } else {
+         info->deprecated = false;
+     }
+-    /*
+-     * Old machine types won't report aliases, so that alias translation
+-     * doesn't break compatibility with previous QEMU versions.
+-     */
+-    if (default_cpu_version != CPU_VERSION_LEGACY) {
+-        info->alias_of = x86_cpu_class_get_alias_of(cc);
+-    }
++
++    info->alias_of = x86_cpu_class_get_alias_of(cc);
+ 
+     QAPI_LIST_PREPEND(*cpu_list, info);
+ }
+@@ -6287,7 +6279,12 @@ static void x86_cpu_apply_version_props(X86CPU *cpu, X86CPUModel *model)
+     const X86CPUVersionDefinition *vdef;
+     X86CPUVersion version = x86_cpu_model_resolve_version(model);
+ 
+-    if (version == CPU_VERSION_LEGACY) {
++    /*
++     * if the machine uses legacy cpus, use legacy cpus with no versions
++     * when no explict CPU versions are specified in the CPU definition
++     * passed from the command line.
++     */
++    if (version == DEFAULT_CPU_VERSION && use_legacy_cpu) {
+         return;
+     }
+ 
+@@ -6317,7 +6314,11 @@ static const CPUCaches *x86_cpu_get_versioned_cache_info(X86CPU *cpu,
+     X86CPUVersion version = x86_cpu_model_resolve_version(model);
+     const CPUCaches *cache_info = model->cpudef->cache_info;
+ 
+-    if (version == CPU_VERSION_LEGACY) {
++    /*
++     * If machine supports legacy cpus and no explicit cpu versions are
++     * specified, use the cache from the unversioned cpu definition.
++     */
++    if (version == DEFAULT_CPU_VERSION && use_legacy_cpu) {
+         return cache_info;
+     }
+ 
+@@ -6452,7 +6453,7 @@ static void x86_register_cpudef_types(const X86CPUDefinition *def)
+     /* Unversioned model: */
+     m = g_new0(X86CPUModel, 1);
+     m->cpudef = def;
+-    m->version = CPU_VERSION_AUTO;
++    m->version = DEFAULT_CPU_VERSION;
+     m->is_alias = true;
+     x86_register_cpu_model_type(def->name, m);
+ 
+diff --git a/target/i386/cpu.h b/target/i386/cpu.h
+index b26e25ba15..bdbe54b26f 100644
+--- a/target/i386/cpu.h
++++ b/target/i386/cpu.h
+@@ -2679,27 +2679,14 @@ void cpu_report_tpr_access(CPUX86State *env, TPRAccess access);
+ void apic_handle_tpr_access_report(DeviceState *d, target_ulong ip,
+                                    TPRAccess access);
+ 
+-/* Special values for X86CPUVersion: */
+-
+-/* Resolve to latest CPU version */
+-#define CPU_VERSION_LATEST -1
+-
+-/*
+- * Resolve to version defined by current machine type.
+- * See x86_cpu_set_default_version()
+- */
+-#define CPU_VERSION_AUTO   -2
+-
+-/* Don't resolve to any versioned CPU models, like old QEMU versions */
+-#define CPU_VERSION_LEGACY  0
+-
+ typedef int X86CPUVersion;
  
  /*
-  * As per ISA v3.1B, following bits are reserved:
-@@ -251,6 +270,15 @@ typedef struct SpaprMachineStateNestedGuest {
-     .copy = (c)                                    \
- }
+- * Set default CPU model version for CPU models having
+- * version == CPU_VERSION_AUTO.
++ * Set CPU model version to the lastest version.
++ * Currently, this is only used by microvm.
+  */
+-void x86_cpu_set_default_version(X86CPUVersion version);
++void x86_cpu_uses_lastest_version(void);
++void x86_cpu_set_legacy_version(void);
  
-+#define GSBE_NESTED_MACHINE_DW(i, f)  {                             \
-+        .id = (i),                                                  \
-+        .size = 8,                                                  \
-+        .location = get_machine_ptr,                                \
-+        .offset = offsetof(struct SpaprMachineStateNested, f),     \
-+        .copy = copy_state_8to8,                                    \
-+        .mask = HVMASK_DEFAULT                                      \
-+}
-+
- #define GSBE_NESTED(i, sz, f, c) {                             \
-     .id = (i),                                                 \
-     .size = (sz),                                              \
-@@ -509,7 +537,8 @@ struct guest_state_element_type {
-     uint16_t id;
-     int size;
- #define GUEST_STATE_ELEMENT_TYPE_FLAG_GUEST_WIDE 0x1
--#define GUEST_STATE_ELEMENT_TYPE_FLAG_READ_ONLY  0x2
-+#define GUEST_STATE_ELEMENT_TYPE_FLAG_HOST_WIDE 0x2
-+#define GUEST_STATE_ELEMENT_TYPE_FLAG_READ_ONLY 0x4
-    uint16_t flags;
-     void *(*location)(SpaprMachineStateNestedGuest *, target_ulong);
-     size_t offset;
+ #ifndef CONFIG_USER_ONLY
+ 
 -- 
-2.48.1
+2.45.2
 
 
