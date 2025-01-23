@@ -4,20 +4,20 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E3D1AC0218C
-	for <qemu-devel@archiver.kernel.org>; Thu, 23 Jan 2025 08:19:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8C806C02182
+	for <qemu-devel@archiver.kernel.org>; Thu, 23 Jan 2025 08:20:12 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tasQp-0005He-0S; Thu, 23 Jan 2025 03:19:19 -0500
+	id 1tasQq-0005Ie-RF; Thu, 23 Jan 2025 03:19:21 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jamin_lin@aspeedtech.com>)
- id 1tasQm-0005Gj-3Q; Thu, 23 Jan 2025 03:19:16 -0500
+ id 1tasQo-0005Hi-Kb; Thu, 23 Jan 2025 03:19:18 -0500
 Received: from mail.aspeedtech.com ([211.20.114.72] helo=TWMBX01.aspeed.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jamin_lin@aspeedtech.com>)
- id 1tasQk-0002Qj-1q; Thu, 23 Jan 2025 03:19:15 -0500
+ id 1tasQm-0002Qj-VB; Thu, 23 Jan 2025 03:19:18 -0500
 Received: from TWMBX01.aspeed.com (192.168.0.62) by TWMBX01.aspeed.com
  (192.168.0.62) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1258.12; Thu, 23 Jan
@@ -32,10 +32,12 @@ To: =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@kaod.org>, Peter Maydell
  "open list:All patches CC here" <qemu-devel@nongnu.org>
 CC: <jamin_lin@aspeedtech.com>, <troy_lee@aspeedtech.com>,
  <yunlin.tang@aspeedtech.com>
-Subject: [PATCH v1 0/2] wdt/aspeed: Support software reset mode for AST2600
-Date: Thu, 23 Jan 2025 16:18:59 +0800
-Message-ID: <20250123081901.2688471-1-jamin_lin@aspeedtech.com>
+Subject: [PATCH v1 1/2] aspeed/wdt: Fix coding style
+Date: Thu, 23 Jan 2025 16:19:00 +0800
+Message-ID: <20250123081901.2688471-2-jamin_lin@aspeedtech.com>
 X-Mailer: git-send-email 2.25.1
+In-Reply-To: <20250123081901.2688471-1-jamin_lin@aspeedtech.com>
+References: <20250123081901.2688471-1-jamin_lin@aspeedtech.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Content-Type: text/plain
@@ -64,16 +66,27 @@ From:  Jamin Lin via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-v1:
-  Support software reset mode for AST2600 
+Fix coding style issues from checkpatch.pl.
 
-Jamin Lin (2):
-  aspeed/wdt: Fix coding style
-  aspeed/wdt: Support software reset mode for AST2600
+Signed-off-by: Jamin Lin <jamin_lin@aspeedtech.com>
+---
+ hw/watchdog/wdt_aspeed.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
- hw/watchdog/wdt_aspeed.c | 19 +++++++++++++++++--
- 1 file changed, 17 insertions(+), 2 deletions(-)
-
+diff --git a/hw/watchdog/wdt_aspeed.c b/hw/watchdog/wdt_aspeed.c
+index 81f5c5189a..22e94e7b9c 100644
+--- a/hw/watchdog/wdt_aspeed.c
++++ b/hw/watchdog/wdt_aspeed.c
+@@ -278,7 +278,8 @@ static void aspeed_wdt_realize(DeviceState *dev, Error **errp)
+ 
+     s->timer = timer_new_ns(QEMU_CLOCK_VIRTUAL, aspeed_wdt_timer_expired, dev);
+ 
+-    /* FIXME: This setting should be derived from the SCU hw strapping
++    /*
++     * FIXME: This setting should be derived from the SCU hw strapping
+      * register SCU70
+      */
+     s->pclk_freq = PCLK_HZ;
 -- 
 2.34.1
 
