@@ -4,34 +4,34 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 75F78C02182
-	for <qemu-devel@archiver.kernel.org>; Thu, 23 Jan 2025 18:38:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2D198C02182
+	for <qemu-devel@archiver.kernel.org>; Thu, 23 Jan 2025 18:46:40 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tb24p-0000MW-J6; Thu, 23 Jan 2025 13:37:15 -0500
+	id 1tb2D1-0002OW-Oy; Thu, 23 Jan 2025 13:45:43 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <SRS0=bnYe=UP=kaod.org=clg@ozlabs.org>)
- id 1tb24d-0000Fb-Nx; Thu, 23 Jan 2025 13:37:06 -0500
+ id 1tb2Cr-0002Nw-B1; Thu, 23 Jan 2025 13:45:33 -0500
 Received: from gandalf.ozlabs.org ([150.107.74.76] helo=mail.ozlabs.org)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <SRS0=bnYe=UP=kaod.org=clg@ozlabs.org>)
- id 1tb24X-0004F5-So; Thu, 23 Jan 2025 13:37:01 -0500
+ id 1tb2Co-0006OZ-NY; Thu, 23 Jan 2025 13:45:32 -0500
 Received: from mail.ozlabs.org (mail.ozlabs.org [IPv6:2404:9400:2221:ea00::3])
- by gandalf.ozlabs.org (Postfix) with ESMTP id 4Yf8mR0JMvz4wvb;
- Fri, 24 Jan 2025 05:36:39 +1100 (AEDT)
+ by gandalf.ozlabs.org (Postfix) with ESMTP id 4Yf8yM5tfYz4wvb;
+ Fri, 24 Jan 2025 05:45:15 +1100 (AEDT)
 Received: from authenticated.ozlabs.org (localhost [127.0.0.1])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits))
  (Client did not present a certificate)
- by mail.ozlabs.org (Postfix) with ESMTPSA id 4Yf8mJ5FRKz4wcw;
- Fri, 24 Jan 2025 05:36:32 +1100 (AEDT)
-Message-ID: <5c628fac-e1ec-4866-a24d-ee7c104789bd@kaod.org>
-Date: Thu, 23 Jan 2025 19:36:36 +0100
+ by mail.ozlabs.org (Postfix) with ESMTPSA id 4Yf8yJ1fJdz4wnx;
+ Fri, 24 Jan 2025 05:45:11 +1100 (AEDT)
+Message-ID: <335251f9-fea8-4eb6-ba97-6d8d3a68a98b@kaod.org>
+Date: Thu, 23 Jan 2025 19:45:18 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v1 1/2] aspeed/wdt: Fix coding style
+Subject: Re: [PATCH v1 2/2] aspeed/wdt: Support software reset mode for AST2600
 To: Jamin Lin <jamin_lin@aspeedtech.com>,
  Peter Maydell <peter.maydell@linaro.org>,
  Steven Lee <steven_lee@aspeedtech.com>, Troy Lee <leetroy@gmail.com>,
@@ -40,7 +40,7 @@ To: Jamin Lin <jamin_lin@aspeedtech.com>,
  "open list:All patches CC here" <qemu-devel@nongnu.org>
 Cc: troy_lee@aspeedtech.com, yunlin.tang@aspeedtech.com
 References: <20250123081901.2688471-1-jamin_lin@aspeedtech.com>
- <20250123081901.2688471-2-jamin_lin@aspeedtech.com>
+ <20250123081901.2688471-3-jamin_lin@aspeedtech.com>
 Content-Language: en-US, fr
 From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>
 Autocrypt: addr=clg@kaod.org; keydata=
@@ -85,7 +85,7 @@ Autocrypt: addr=clg@kaod.org; keydata=
  3GlqivBNkmYsHYSlFsbxc37E1HpTEaSWsGfAHQoPn9qrDJgsgcbBVc1gkUT6hnxShKPp4Pls
  ZVMNjvPAnr5TEBgHkk54HQRhhwcYv1T2QumQizDiU6iOrUzBThaMhZO3i927SG2DwWDVzZlt
  KrCMD1aMPvb3NU8FOYRhNmIFR3fcalYr+9gDuVKe8BVz4atMOoktmt0GWTOC8P4=
-In-Reply-To: <20250123081901.2688471-2-jamin_lin@aspeedtech.com>
+In-Reply-To: <20250123081901.2688471-3-jamin_lin@aspeedtech.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=150.107.74.76;
@@ -113,10 +113,48 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 1/23/25 09:19, Jamin Lin wrote:
-> Fix coding style issues from checkpatch.pl.
+> On the AST2400 and AST2500 platforms, the system can only be reset by enabling
+> the WDT (Watchdog Timer) and waiting for the WDT timeout. However, starting
+> from the AST2600 platform, the reset event can be triggered directly and
+> intentionally by software, without relying on the WDT timeout.
+> 
+> This mechanism, referred to as "software restart", is implemented in hardware.
+> When using the software restart mechanism, the WDT counter is not enabled.
+> 
+> To trigger a reset generation in software mode, write 0xAEEDF123 to register
+> 0x24 and software mode reset only support SOC reset mode.
+> 
+> A new function, "aspeed_wdt_is_soc_reset_mode", is introduced to determine
+> whether the SoC reset mode is active.
 > 
 > Signed-off-by: Jamin Lin <jamin_lin@aspeedtech.com>
+> ---
+>   hw/watchdog/wdt_aspeed.c | 16 +++++++++++++++-
+>   1 file changed, 15 insertions(+), 1 deletion(-)
+> 
+> diff --git a/hw/watchdog/wdt_aspeed.c b/hw/watchdog/wdt_aspeed.c
+> index 22e94e7b9c..94fb643395 100644
+> --- a/hw/watchdog/wdt_aspeed.c
+> +++ b/hw/watchdog/wdt_aspeed.c
+> @@ -51,11 +51,20 @@
+>   #define WDT_TIMEOUT_CLEAR               (0x14 / 4)
+>   
+>   #define WDT_RESTART_MAGIC               0x4755
+> +#define WDT_SW_RESET_ENABLE             0xAEEDF123
+>   
+>   #define AST2600_SCU_RESET_CONTROL1      (0x40 / 4)
+>   #define SCU_RESET_CONTROL1              (0x04 / 4)
+>   #define    SCU_RESET_SDRAM              BIT(0)
+>   
+> +static bool aspeed_wdt_is_soc_reset_mode(const AspeedWDTState *s)
+> +{
+> +    uint32_t mode;
+> +
+> +    mode = extract32(s->regs[WDT_CTRL], 5, 2);
 
+Could we test the extracted field against WDT_CTRL_RESET_MODE_SOC ?
+
+With that,
 
 Reviewed-by: Cédric Le Goater <clg@redhat.com>
 
@@ -125,23 +163,35 @@ Thanks,
 C.
 
 
-> ---
->   hw/watchdog/wdt_aspeed.c | 3 ++-
->   1 file changed, 2 insertions(+), 1 deletion(-)
-> 
-> diff --git a/hw/watchdog/wdt_aspeed.c b/hw/watchdog/wdt_aspeed.c
-> index 81f5c5189a..22e94e7b9c 100644
-> --- a/hw/watchdog/wdt_aspeed.c
-> +++ b/hw/watchdog/wdt_aspeed.c
-> @@ -278,7 +278,8 @@ static void aspeed_wdt_realize(DeviceState *dev, Error **errp)
->   
->       s->timer = timer_new_ns(QEMU_CLOCK_VIRTUAL, aspeed_wdt_timer_expired, dev);
->   
-> -    /* FIXME: This setting should be derived from the SCU hw strapping
-> +    /*
-> +     * FIXME: This setting should be derived from the SCU hw strapping
->        * register SCU70
->        */
->       s->pclk_freq = PCLK_HZ;
+
+
+
+
+> +    return (mode == 0);
+> +}
+> +
+>   static bool aspeed_wdt_is_enabled(const AspeedWDTState *s)
+>   {
+>       return s->regs[WDT_CTRL] & WDT_CTRL_ENABLE;
+> @@ -199,13 +208,18 @@ static void aspeed_wdt_write(void *opaque, hwaddr offset, uint64_t data,
+>       case WDT_TIMEOUT_STATUS:
+>       case WDT_TIMEOUT_CLEAR:
+>       case WDT_RESET_MASK2:
+> -    case WDT_SW_RESET_CTRL:
+>       case WDT_SW_RESET_MASK1:
+>       case WDT_SW_RESET_MASK2:
+>           qemu_log_mask(LOG_UNIMP,
+>                         "%s: uninmplemented write at offset 0x%" HWADDR_PRIx "\n",
+>                         __func__, offset);
+>           break;
+> +    case WDT_SW_RESET_CTRL:
+> +        if (aspeed_wdt_is_soc_reset_mode(s) &&
+> +            (data == WDT_SW_RESET_ENABLE)) {
+> +            watchdog_perform_action();
+> +        }
+> +        break;
+>       default:
+>           qemu_log_mask(LOG_GUEST_ERROR,
+>                         "%s: Out-of-bounds write at offset 0x%" HWADDR_PRIx "\n",
 
 
