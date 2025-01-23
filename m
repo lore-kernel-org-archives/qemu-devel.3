@@ -4,64 +4,64 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C8477C0218B
-	for <qemu-devel@archiver.kernel.org>; Thu, 23 Jan 2025 21:58:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 51DA0C0218D
+	for <qemu-devel@archiver.kernel.org>; Thu, 23 Jan 2025 21:58:09 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tb5Bf-0004rp-GK; Thu, 23 Jan 2025 16:56:31 -0500
+	id 1tb5C2-00050r-KR; Thu, 23 Jan 2025 16:56:54 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tb5Bd-0004r7-RM
- for qemu-devel@nongnu.org; Thu, 23 Jan 2025 16:56:29 -0500
-Received: from mail-wr1-x42b.google.com ([2a00:1450:4864:20::42b])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tb5Bz-00050R-S0
+ for qemu-devel@nongnu.org; Thu, 23 Jan 2025 16:56:52 -0500
+Received: from mail-wm1-x32f.google.com ([2a00:1450:4864:20::32f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tb5Bc-0002kB-A1
- for qemu-devel@nongnu.org; Thu, 23 Jan 2025 16:56:29 -0500
-Received: by mail-wr1-x42b.google.com with SMTP id
- ffacd0b85a97d-388cae9eb9fso791473f8f.3
- for <qemu-devel@nongnu.org>; Thu, 23 Jan 2025 13:56:27 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tb5Bx-0002nV-3a
+ for qemu-devel@nongnu.org; Thu, 23 Jan 2025 16:56:51 -0500
+Received: by mail-wm1-x32f.google.com with SMTP id
+ 5b1f17b1804b1-4363dc916ceso16944995e9.0
+ for <qemu-devel@nongnu.org>; Thu, 23 Jan 2025 13:56:48 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1737669386; x=1738274186; darn=nongnu.org;
+ d=linaro.org; s=google; t=1737669407; x=1738274207; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=axO9L9zvQNnbH3QdpMtYTEFgm/4DySr8I7ccuAMR/ZA=;
- b=FKOEFDr1EFefZD0yugHOrspdszTIlAuZtREP6Dj+0cTxXrYe0j6fvtUYiPcZUQt1wa
- DiAbHY+niOr1OGHSl8CAtTygVdObsHjWjtPbStRz7xOrIxIra+wZwO4p+x54cXU3C0o2
- IFlnDjD4DtZP3PBBWGT8cw1CaU2R0lkqwmcET+QWdXekbwuLIZ8SL4/UdJeY7ESkmrT8
- XPNXvV508rN9xpxoDHIvcBI5T8rvPkbr+RTDW634EcgF7LY5KQPTD79/cISgeQT+q+fy
- H6kIDMqFkdk4MT3ou0ZGzYUOA+rn6YieUE5QH5ihf/tjDlpBQYpOi30DNdWqVmxqXys/
- WT+w==
+ bh=RvU1L8TmR0niaHN7D1u6sbhbe7T6PjXXRojbsrJxUGY=;
+ b=KkrJfLjsxVHZL9c9A6c9GdtH6AWbOoHC2eSiIYS2MDMbtmT+DNqO3AdK5kZhaKNwnm
+ +kbwK9q4M+0+tTlZRi1vbPiu5zm9qhRAlrMWFN4uWKkvE13YAMvKCmfNh36IXYlCe3Jq
+ Ri/cDLjm+RI64fxSTPCI7PujAf9jHI5MbrdM8bLuJWsNbmXwf6ysvAjSYhn5XGXVH824
+ 0GKQEOBGq44NTBocZ3L+sSRUhwecq+c8+ldm7fJz6kVe0iLrQWZaayULTyb0ICpu13+i
+ zn3FzO829wjmGJSoESjGpSeI3lAh1f8xS5DD02EsYZa47mpCdCm0wBnEQAZUwqjkTlVR
+ +ivQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1737669386; x=1738274186;
+ d=1e100.net; s=20230601; t=1737669407; x=1738274207;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=axO9L9zvQNnbH3QdpMtYTEFgm/4DySr8I7ccuAMR/ZA=;
- b=eGlKVUNFdn7VzxS/4VH7I4FCuNEp9pTzJd3SngCuXN4DeBNjKE5WjODYk7vdCwp/SX
- /TnEF7ffvkjKenTHH3YtxnxRdAj0FHDRSvuBFaH8zjVxEY1+o3KRZUe1wFcX6h9YSu9w
- 2JzTlCYBmMWOrnsR39+64Xhx/oCPPpjVYZiiNl032qSVquG0aMA7tigQbl8G66pMHqqx
- bxPWnEkk/XAwjihYf9nYO6v9cjSKU1Sx5GEpjJUWQ5kg3ZlrR0ZiUDf+3vfzKa51PmTN
- K5a2xE7hoDvsdwwUZoUzEOOrLBKvjdZkPsi3dC8PtAa+4JoQQCn4pBW0Og6Qfplgd2I4
- tKkA==
-X-Gm-Message-State: AOJu0Yy//k5327GSPy/NpjAWuAxArZFPmSm0oSYMRE0PVowCbOZ65gbc
- MVQrZIlr0Lgl9lTdaoC0pfGQWVjqFa/L06kogGMt2Tg29kksUOq5Qb7LPlYwuiGthCruO4FkCm7
- kxVw=
-X-Gm-Gg: ASbGncv1ra2vTPNp5TB7fAvM8ndYYWaeYikak6mUdsLJa3IjzwPatGUINux2qJupiaR
- Ny9ILO2CfCFBAPbf0w2hJ7S0WrdNKC3UP5DYaH8PLlvhiC5CXnQpWD4EDjMGOTN+RzxQnURz730
- up9ZymyWCpdghGNqw/eb2yZPahsAPaVQoauBX6QLeDGctb5B2xRnKh6QeQEgjmQTbUtGgOKIjWE
- k/hn3++KZmIyf7nx841CulLrI1d1KU4MUh5yHevvM2AT5mDRG9OR7pFQxkZrocG2R8Ko7jlYrBK
- 4Em7oog2SrgGi+9yGc8Ippn5noLB61X7OtmDWBTT4g6ZR+GeNeo+mA4=
-X-Google-Smtp-Source: AGHT+IECQx1WS+jZlHk1MY0GOX2cHrUpakdad4wpWux5HYvgkNbIovppXdBG5zTPm1hh9m6qIpbLHQ==
-X-Received: by 2002:a05:6000:b04:b0:388:caf4:e909 with SMTP id
- ffacd0b85a97d-38bf566f3camr22750985f8f.25.1737669386348; 
- Thu, 23 Jan 2025 13:56:26 -0800 (PST)
+ bh=RvU1L8TmR0niaHN7D1u6sbhbe7T6PjXXRojbsrJxUGY=;
+ b=lQRTFt+YXBJqUz7YKS8zJwW3r13cq4EgBuAEUMSeE7n9vgIohJT37ZCB+5Uj24KbgI
+ Tu6nzTJ6NKn3ay5tzcSVGJ7iQO2OpIlOPLrIxvx0Vt3Yu2RMMNDuM1Lcll3Z/guDuHJe
+ sVNqermIPcL5bjEY2nIlIkRZVAe4Slmxf/8U1GZIy3bDI9CpAu0/Vgf7iWTa9GIjAe3Z
+ akQAsYK4PsZD8TkHt7Yvg5nrulc3TO7p167zkc9qM0Ens+Quq736s4S9XaaANsLkueDI
+ oVtG8vj9LPdIdo83XV7LZSVnCsfXSFeBPIDRIzHCJLmEudZJosStdfHKrH7Mi6iNHOyx
+ gK6w==
+X-Gm-Message-State: AOJu0YwHP2dzxnxmY2bqpirXgMXZ+hLkmHSOCXBQOyP6hkjaTRFzyQ0K
+ THatcz9slzN6bIhJmiiKu9FWcKFrjeEss83/+rzeGSwjuKmeVSfHmcoeWgWJMSj60C7YLoDKPOl
+ DL2Y=
+X-Gm-Gg: ASbGncuvBV8NYhULjz1kCMXRe1aeEI8hIks3oI5wasuiZ0QEg5G2zz82z9Te0kSoYxl
+ dkYCciplofVRWE4+u3iK8DzbGroO3ZIGGsuLLIH8GmcJTtzn+psXmpM6DIAA23Wq6+VQN+eYHG9
+ 6s9ZLj+xcEJ/34V/2YBA6f4DFcMBRzFjvgH1XdSetGJXx7w064QPMBZSiQmdR6HEFaRK/9qms+k
+ AG7D5lY5mLTTCHwJskDeaOmKJLiYMPFDZI6OoDQJP9OUUqlfWpWFqBGbOWjwSj0hLdMBZargPHs
+ Xv5GHarLccO8ZxVf036FjxtSdACVp+D+WkXARsTLgK3/aCk5Q0MRU7Q=
+X-Google-Smtp-Source: AGHT+IGbzPxJjvXP/fCRle4WjnAxFBAfgBADckTSTYV23PC+KGaIgqHmd5WqM1x5xWkAtwp1tSZjpQ==
+X-Received: by 2002:adf:e50d:0:b0:38a:8d32:272d with SMTP id
+ ffacd0b85a97d-38c2227d072mr4559041f8f.28.1737669407245; 
+ Thu, 23 Jan 2025 13:56:47 -0800 (PST)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-38c2a17d759sm789025f8f.24.2025.01.23.13.56.24
+ ffacd0b85a97d-38c2a1764desm805629f8f.9.2025.01.23.13.56.46
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Thu, 23 Jan 2025 13:56:25 -0800 (PST)
+ Thu, 23 Jan 2025 13:56:46 -0800 (PST)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Daniel Henrique Barboza <danielhb413@gmail.com>,
@@ -69,17 +69,17 @@ Cc: Daniel Henrique Barboza <danielhb413@gmail.com>,
  Richard Henderson <richard.henderson@linaro.org>, qemu-ppc@nongnu.org,
  Nicholas Piggin <npiggin@gmail.com>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PATCH 03/15] target/ppc: Make ppc_ldl_code() declaration public
-Date: Thu, 23 Jan 2025 22:55:57 +0100
-Message-ID: <20250123215609.30432-4-philmd@linaro.org>
+Subject: [PATCH 07/15] target/ppc: Restrict powerpc_checkstop() to TCG
+Date: Thu, 23 Jan 2025 22:56:01 +0100
+Message-ID: <20250123215609.30432-8-philmd@linaro.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20250123215609.30432-1-philmd@linaro.org>
 References: <20250123215609.30432-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::42b;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x42b.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::32f;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x32f.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -102,43 +102,113 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-We are going to move code calling ppc_ldl_code() out of
-excp_helper.c where it is defined. Expose its declaration
-for few commits, until eventually making it static again
-once everything is moved.
+Expose powerpc_checkstop() prototype, and move it to
+tcg-excp_helper.c, only built when TCG is available.
 
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 ---
- target/ppc/internal.h    | 2 ++
- target/ppc/excp_helper.c | 2 +-
- 2 files changed, 3 insertions(+), 1 deletion(-)
+ target/ppc/internal.h        |  2 ++
+ target/ppc/excp_helper.c     | 26 --------------------------
+ target/ppc/tcg-excp_helper.c | 28 ++++++++++++++++++++++++++++
+ 3 files changed, 30 insertions(+), 26 deletions(-)
 
 diff --git a/target/ppc/internal.h b/target/ppc/internal.h
-index 20fb2ec593c..46db6adfcf6 100644
+index 46db6adfcf6..42e33be496f 100644
 --- a/target/ppc/internal.h
 +++ b/target/ppc/internal.h
-@@ -268,6 +268,8 @@ static inline void pte_invalidate(target_ulong *pte0)
- #define PTE_PTEM_MASK 0x7FFFFFBF
- #define PTE_CHECK_MASK (TARGET_PAGE_MASK | 0x7B)
- 
-+uint32_t ppc_ldl_code(CPUArchState *env, target_ulong addr);
+@@ -289,6 +289,8 @@ void ppc_cpu_do_transaction_failed(CPUState *cs, hwaddr physaddr,
+ void ppc_cpu_debug_excp_handler(CPUState *cs);
+ bool ppc_cpu_debug_check_breakpoint(CPUState *cs);
+ bool ppc_cpu_debug_check_watchpoint(CPUState *cs, CPUWatchpoint *wp);
 +
- #ifdef CONFIG_USER_ONLY
- void ppc_cpu_record_sigsegv(CPUState *cs, vaddr addr,
-                             MMUAccessType access_type,
++G_NORETURN void powerpc_checkstop(CPUPPCState *env, const char *reason);
+ #endif
+ 
+ FIELD(GER_MSK, XMSK, 0, 4)
 diff --git a/target/ppc/excp_helper.c b/target/ppc/excp_helper.c
-index fde9912230e..7ed4bbec035 100644
+index b08cd53688c..236e5078f56 100644
 --- a/target/ppc/excp_helper.c
 +++ b/target/ppc/excp_helper.c
-@@ -144,7 +144,7 @@ static inline bool insn_need_byteswap(CPUArchState *env)
-     return !!(env->msr & ((target_ulong)1 << MSR_LE));
+@@ -400,32 +400,6 @@ static void powerpc_set_excp_state(PowerPCCPU *cpu, target_ulong vector,
  }
  
--static uint32_t ppc_ldl_code(CPUArchState *env, target_ulong addr)
-+uint32_t ppc_ldl_code(CPUArchState *env, target_ulong addr)
+ #ifdef CONFIG_TCG
+-/*
+- * This stops the machine and logs CPU state without killing QEMU (like
+- * cpu_abort()) because it is often a guest error as opposed to a QEMU error,
+- * so the machine can still be debugged.
+- */
+-static G_NORETURN void powerpc_checkstop(CPUPPCState *env, const char *reason)
+-{
+-    CPUState *cs = env_cpu(env);
+-    FILE *f;
+-
+-    f = qemu_log_trylock();
+-    if (f) {
+-        fprintf(f, "Entering checkstop state: %s\n", reason);
+-        cpu_dump_state(cs, f, CPU_DUMP_FPU | CPU_DUMP_CCOP);
+-        qemu_log_unlock(f);
+-    }
+-
+-    /*
+-     * This stops the machine and logs CPU state without killing QEMU
+-     * (like cpu_abort()) so the machine can still be debugged (because
+-     * it is often a guest error).
+-     */
+-    qemu_system_guest_panicked(NULL);
+-    cpu_loop_exit_noexc(cs);
+-}
+-
+ #if defined(TARGET_PPC64) && !defined(CONFIG_USER_ONLY)
+ void helper_attn(CPUPPCState *env)
  {
-     uint32_t insn = cpu_ldl_code(env, addr);
+diff --git a/target/ppc/tcg-excp_helper.c b/target/ppc/tcg-excp_helper.c
+index 6950b78774d..93c2d6b5a03 100644
+--- a/target/ppc/tcg-excp_helper.c
++++ b/target/ppc/tcg-excp_helper.c
+@@ -17,7 +17,9 @@
+  * License along with this library; if not, see <http://www.gnu.org/licenses/>.
+  */
+ #include "qemu/osdep.h"
++#include "qemu/log.h"
+ #include "exec/cpu_ldst.h"
++#include "system/runstate.h"
  
+ #include "hw/ppc/ppc.h"
+ #include "internal.h"
+@@ -199,6 +201,32 @@ bool ppc_cpu_debug_check_watchpoint(CPUState *cs, CPUWatchpoint *wp)
+     return false;
+ }
+ 
++/*
++ * This stops the machine and logs CPU state without killing QEMU (like
++ * cpu_abort()) because it is often a guest error as opposed to a QEMU error,
++ * so the machine can still be debugged.
++ */
++G_NORETURN void powerpc_checkstop(CPUPPCState *env, const char *reason)
++{
++    CPUState *cs = env_cpu(env);
++    FILE *f;
++
++    f = qemu_log_trylock();
++    if (f) {
++        fprintf(f, "Entering checkstop state: %s\n", reason);
++        cpu_dump_state(cs, f, CPU_DUMP_FPU | CPU_DUMP_CCOP);
++        qemu_log_unlock(f);
++    }
++
++    /*
++     * This stops the machine and logs CPU state without killing QEMU
++     * (like cpu_abort()) so the machine can still be debugged (because
++     * it is often a guest error).
++     */
++    qemu_system_guest_panicked(NULL);
++    cpu_loop_exit_noexc(cs);
++}
++
+ /* Return true iff byteswap is needed to load instruction */
+ static inline bool insn_need_byteswap(CPUArchState *env)
+ {
 -- 
 2.47.1
 
