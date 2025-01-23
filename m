@@ -4,92 +4,149 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 01825C02182
-	for <qemu-devel@archiver.kernel.org>; Thu, 23 Jan 2025 15:24:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 34996C02182
+	for <qemu-devel@archiver.kernel.org>; Thu, 23 Jan 2025 15:35:09 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1taz3R-0000ku-Nr; Thu, 23 Jan 2025 10:23:37 -0500
+	id 1tazDZ-0003Rn-O8; Thu, 23 Jan 2025 10:34:05 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <gourry@gourry.net>) id 1taz3P-0000kk-L8
- for qemu-devel@nongnu.org; Thu, 23 Jan 2025 10:23:35 -0500
-Received: from mail-qt1-x830.google.com ([2607:f8b0:4864:20::830])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <gourry@gourry.net>) id 1taz3N-0000RR-UP
- for qemu-devel@nongnu.org; Thu, 23 Jan 2025 10:23:35 -0500
-Received: by mail-qt1-x830.google.com with SMTP id
- d75a77b69052e-46901d01355so10184751cf.0
- for <qemu-devel@nongnu.org>; Thu, 23 Jan 2025 07:23:33 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gourry.net; s=google; t=1737645812; x=1738250612; darn=nongnu.org;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
- bh=OjEaypsuz30K7ptqs1a56KzoE/dpYJ3kzMwZ+SzZO90=;
- b=o7RalN/6LgEbzVDTr5fSqgZjfkFlmbafMdOteSzynGtAzaMt2x1c0JjDiedmThbmh5
- 9E+F9gJPvILhGDlFsqOidthfwJtKsF2ctuR1Z6FuDh0z2lEDawk3OmSyLSyEUOtJlJPW
- g54Q2/OqtHVfZAnASowmwgHEJVN5P9OYxSefe2r4WSzl3Sit7H/jv9j01I3Qv+U7inVG
- F9WA1KuA+iJelBArxfboaDeb85fJBJhrC023SY+SLJCGmzEuTMDCHmcGge/yRm/sRVlJ
- r18JHrzCkcrDC6F1VS3tYm4pcIFWQBsOElSEQfdnHwM5scN3jJVzf9w76DWafxZP2Upc
- joeA==
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1tazDR-0003Ls-CB
+ for qemu-devel@nongnu.org; Thu, 23 Jan 2025 10:33:59 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1tazDH-0002Mv-Sv
+ for qemu-devel@nongnu.org; Thu, 23 Jan 2025 10:33:50 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1737646425;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+ bh=3+cyrcuOIwl+NyJWj6oDQo1ooJ1FM5G4u6uSe0Fo3A8=;
+ b=jK0/sLLtVajxBcpXEyCk0YLiK9WaWkRaTGwSr61yGuemIWntSPu30K3nfoWuBlCEzraf6/
+ GJFGXHuNDNfIO7mVpTaIV+uDfosxl3mVPbsupLZebQIFb5jO18B4FUOhWBP4qmUYdxq57R
+ 84j6PIBhT3lYb+SomFXpDCuhRKB3gVc=
+Received: from mail-wm1-f69.google.com (mail-wm1-f69.google.com
+ [209.85.128.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-596-d6XKVTAKN2Cr-PDIXQjJ6w-1; Thu, 23 Jan 2025 10:33:43 -0500
+X-MC-Unique: d6XKVTAKN2Cr-PDIXQjJ6w-1
+X-Mimecast-MFC-AGG-ID: d6XKVTAKN2Cr-PDIXQjJ6w
+Received: by mail-wm1-f69.google.com with SMTP id
+ 5b1f17b1804b1-4361eb83f46so8541585e9.3
+ for <qemu-devel@nongnu.org>; Thu, 23 Jan 2025 07:33:43 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1737645812; x=1738250612;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=OjEaypsuz30K7ptqs1a56KzoE/dpYJ3kzMwZ+SzZO90=;
- b=rHWrOJXuinwj2A1HiCmrWzMOZmQyO6ainPa8D9ZX1UD4ecug4HbFqNb36F6MBJmRA8
- wYMVHBwm2bSzOpBI7JBVZEiUJJqno1Ukqo8+dnUiKpBXDAAtDZl1bXdIKb79w8BzoEej
- pP0ruJodcJS9rRYhJc5JF+dUZYXLgdU/Jy4U+xDBnEilPUC51wwFyThksLo9PKfZIqTA
- 1QI4xFpOZYlxkgREmgdK0M89zADYnkgOVX+WI67nSxi5iPvVFyO9uOC53ssSDxa8rvlX
- CtPhrvZqN0yBBUzxXc4JhNYwrC2NDOVQ6J0SR9XfbFqqpadyUSaj4D4giA90vActHqJd
- wqrA==
+ d=1e100.net; s=20230601; t=1737646422; x=1738251222;
+ h=content-transfer-encoding:in-reply-to:autocrypt:content-language
+ :from:references:cc:to:subject:user-agent:mime-version:date
+ :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=3+cyrcuOIwl+NyJWj6oDQo1ooJ1FM5G4u6uSe0Fo3A8=;
+ b=hxeebaRy+rbjgyPrQRaooKmuWPoTC5xZ+ylhdAmy6Xl/8jDuDzGciu6tO20E6mpWG+
+ i/dfkyPk0Ch3tYbv0/glRCJSwrhS/K9eiYgA95CUDNzfDeW5y8RW3zOdvSyeVLa1f7Zr
+ aj2CLboVehANi48uUkAOFLupehmPgNbaHe5hbxlTzh8pVSmh8TTD+ERlNhczNvZPIwzP
+ PVL2O1EgohPOcyvbrgxNBmJipFCDCWxBUZYPqNkLK/XYi/ZJTtBdnBe68C0iZJwsHj64
+ DuTSbBShWl6+mkAerTi4Yt5nwTPuQsQO6fEsQS1eGCnI8l/oZHs4w/Bi+y7DSmUhzzjO
+ 23lg==
 X-Forwarded-Encrypted: i=1;
- AJvYcCXoF4Yqf5rEbXOug3uoqe008s+HtvvrGGIrbkg7Ugh0aqFxhQKlrFzgEtKtQIuAdiPZ5ZQdWflmF6Zq@nongnu.org
-X-Gm-Message-State: AOJu0YxxWfJXvJYb+2rH5R+vuhDGjl5hut9UONiXfFHh8q2ySI8aDdQ6
- yfi74AHG2QMkpmArlioG/iTbTLToWtBDjjYAunaZKYmI62flsJrUBt3/BsN09DA=
-X-Gm-Gg: ASbGncv9T57QwNjFzBZaYTg0bEtA0pVTybwkFqmNrSw8fURDx0UwJ9nuBa65EA08YVh
- uNyVWKuAYw8TQp7A4egeOXwxbHVCC33lcnQz7aNQvafIAkKaKApYa1qI3kjV8dIlSb9qY2QF9qQ
- F9bsxFm5+Z0mO/vnvlaRkBx06QspGROW8BITL3CrzlQPiQSemp2aaG6hkfCu2C3mbr9+YqHivwV
- dOfYxTWsGwqjD+RTT7VTHlXogJMU1JKRjOYVhbPlhfVP7qnjPXGMUN8wmY6Oifrz9HF7XEjl/f8
- NlqhpBo/6+FfjAezpPa8N0q+0ckk9YCPu9/uonijLY5hzCDFaXtaoexXhG9heJg=
-X-Google-Smtp-Source: AGHT+IH0KcoGKqmDsUgTF05dHZJcCCc30ZfWfCukf4fZycbhyLEokFwxuPHzWPHV33Tlg8kQ38x5Sw==
-X-Received: by 2002:a05:622a:292:b0:467:b7de:da8a with SMTP id
- d75a77b69052e-46e12a2c4e7mr401054231cf.6.1737645812180; 
- Thu, 23 Jan 2025 07:23:32 -0800 (PST)
-Received: from gourry-fedora-PF4VCD3F
- (pool-173-79-56-208.washdc.fios.verizon.net. [173.79.56.208])
- by smtp.gmail.com with ESMTPSA id
- d75a77b69052e-46e2f67ea89sm49249971cf.10.2025.01.23.07.23.31
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 23 Jan 2025 07:23:31 -0800 (PST)
-Date: Thu, 23 Jan 2025 10:23:30 -0500
-From: Gregory Price <gourry@gourry.net>
-To: Jonathan Cameron <Jonathan.Cameron@huawei.com>
-Cc: Hongjian Fan <hongjian.fan@seagate.com>,
- "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>,
- "linux-cxl@vger.kernel.org" <linux-cxl@vger.kernel.org>,
- "fan.ni@samsung.com" <fan.ni@samsung.com>
-Subject: Re: [PATCH] hw/mem: support zero memory size CXL device
-Message-ID: <Z5Je8gZb_7pTQ1RW@gourry-fedora-PF4VCD3F>
-References: <20241202230310.1531219-1-hongjian.fan@seagate.com>
- <20241203172328.00001a00@huawei.com>
- <CH0PR20MB42505D4F82D534A85EEA4C2A90362@CH0PR20MB4250.namprd20.prod.outlook.com>
- <Z1iS2SeYSOQqdLVU@PC2K9PVX.TheFacebook.com>
- <20241224151315.0000068e@huawei.com>
+ AJvYcCWUsKYECLkLmDQCtAdYjlerFtOhjqWcrs3MmyR3p9s8dNbMBzixBh7Ur1LriE/UzlxRZE3Dj17c/8Qd@nongnu.org
+X-Gm-Message-State: AOJu0YzgIAHGhp7SU4jPamiQM8byc51BRInf2G6ygT5ZvVCZL9nX64eb
+ XhVAChBHnqUS8aAIliB04QPZ73+SVEgIkV+J/Hyym62IpybeNLd+lAlwl9cHsf4bq4K9VUXI7WI
+ DEKGfRjmdKwUK2YSfjBpgK96oa3PGg/E0roGtDTcjREsulDOLCJMG
+X-Gm-Gg: ASbGncs07sBwg7nPYncnhBW3JsYBG5zneJRR7IsinztgNXvs1F9Hjh5oKEq4yOpujj9
+ lzepVjTn0I67M7P6JVAZOV7cFmXae9vZJz08lpPkfWkHcqUB4hAiWf/oFU4fPVOgqRGf871tCjb
+ 2HO+bXWVfcMnd7YhLtE4IKqeerVqD8kq4oiaXOYgOoGebGWnK1AIh2YBJ22JFkLL3/pYyNIpGBf
+ xq5N12GBSjshwbn7u7shrn87ShdnMaEt5nsJX6WVdgvAGk02nWQFPSXW3kepNgZ0WENatehqA==
+X-Received: by 2002:a05:600c:3149:b0:434:e9ee:c2d with SMTP id
+ 5b1f17b1804b1-4389144eee4mr215208135e9.26.1737646422467; 
+ Thu, 23 Jan 2025 07:33:42 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IH3jYWFYyjcyo/8YRYcqQFvsC5xwopDikQgSgwFD5L1YusdbZTHF4r8sBiLeLxz07zTK0THZQ==
+X-Received: by 2002:a05:600c:3149:b0:434:e9ee:c2d with SMTP id
+ 5b1f17b1804b1-4389144eee4mr215207915e9.26.1737646422068; 
+ Thu, 23 Jan 2025 07:33:42 -0800 (PST)
+Received: from [192.168.10.48] ([151.95.59.125])
+ by smtp.googlemail.com with ESMTPSA id
+ ffacd0b85a97d-38c2a188fd0sm3230f8f.58.2025.01.23.07.33.40
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Thu, 23 Jan 2025 07:33:41 -0800 (PST)
+Message-ID: <5e293daa-474c-4af2-98bf-9b995805b454@redhat.com>
+Date: Thu, 23 Jan 2025 16:33:40 +0100
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20241224151315.0000068e@huawei.com>
-Received-SPF: pass client-ip=2607:f8b0:4864:20::830;
- envelope-from=gourry@gourry.net; helo=mail-qt1-x830.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+User-Agent: Mozilla Thunderbird
+Subject: Re: [RFC 06/13] rust: add bindings for memattrs
+To: Zhao Liu <zhao1.liu@intel.com>
+Cc: Peter Maydell <peter.maydell@linaro.org>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ "Michael S . Tsirkin" <mst@redhat.com>,
+ Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,
+ Junjie Mao <junjie.mao@hotmail.com>, =?UTF-8?Q?Alex_Benn=C3=A9e?=
+ <alex.bennee@linaro.org>, =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?=
+ <philmd@linaro.org>, qemu-devel <qemu-devel@nongnu.org>, qemu-rust@nongnu.org
+References: <20241205060714.256270-1-zhao1.liu@intel.com>
+ <20241205060714.256270-7-zhao1.liu@intel.com>
+ <b34733f3-1525-4e35-8c07-f84ad56b01e0@linaro.org>
+ <1f008c2a-aaf6-497d-becd-f36f5d9aea17@redhat.com>
+ <CAFEAcA9SCfMcrhpd_x0LmgwtD-5XwT4TY+QXBJMOjWbdtBPCUg@mail.gmail.com>
+ <CABgObfZSR2s5AYEAcJfsdF0jKQGf_AVcDafKQq47qzLmBuX0RQ@mail.gmail.com>
+ <CAFEAcA_dVnpN2Vn+VAf1XZSAdj183wJhQZ3pVNtb=NHeMOF2Jg@mail.gmail.com>
+ <CABgObfaAdDtrLF4tWL17Lmw9UKiLRNVvuiDZsQxc-9Wd8W61Dw@mail.gmail.com>
+ <Z45/MNYY5jD5fNET@intel.com>
+ <e2920049-01c8-4ea2-8f52-b99ed0a559af@redhat.com>
+ <Z5Jb7k3LLcYY5ZG6@intel.com>
+From: Paolo Bonzini <pbonzini@redhat.com>
+Content-Language: en-US
+Autocrypt: addr=pbonzini@redhat.com; keydata=
+ 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
+In-Reply-To: <Z5Jb7k3LLcYY5ZG6@intel.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -50
+X-Spam_score: -5.1
+X-Spam_bar: -----
+X-Spam_report: (-5.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-2.996,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.043,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -105,51 +162,32 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, Dec 24, 2024 at 03:13:15PM +0000, Jonathan Cameron wrote:
-> On Tue, 10 Dec 2024 14:13:29 -0500
-> Gregory Price <gourry@gourry.net> wrote:
+On 1/23/25 16:10, Zhao Liu wrote:
+>> Another solution would be to implement Zeroable for __BindgenBitfieldUnit in
+>> bindings.rs, but this is much nicer!  It works even with old Rust versions
+>> and, even though it needs manual implementation of the trait each type, it
+>> doesn't require enumerating the fields one by one.  So it's better than the
+>> current version of Zeroable and, if you wish, you can also replace existing
+>> implementations of Zeroable with const_zero.
 > 
-> > On Tue, Dec 03, 2024 at 09:15:51PM +0000, Hongjian Fan wrote:
-> > > Hi Jonathan,
-> > > 
-> > > I'm trying to emulate our memory appliance which is similar to a MH-SLD. The memory device is connected to the host server while the size of the memory could be changed by the out-of-band fabric manager. If there is no memory assigned to the host, the CXL device will be booted as zero memory size.  
-> > 
-> > This should not be how this is done.
-> Agreed, but...
+> I'm working on this, and it's just a simple patch.
 > 
-> It sounds like a pre DCD boot time only pooling solution?
-> 
-> What is the path to adding memory?
->
-> > 
-> > The ACPI tables should report the maximum possible size, and the DCD
-> > infrastructure should enable physical regions that have been added to the host.
-> > 
-> This isn't the ACPI bit, it's just the device reporting.  Can have a huge
-> CFMWS and tiny devices.
-> 
+> But I'm not sure why Zeroable needs a Default constraint. I think Sized
+> seems to be enough, doesn't it?
 
-If the device is booted as a 0-memory device, how is the CFMWS populated
-with the capacity needed to back it? It's all coming from the same
-tables.
+It's not needed but I think it makes sense semantically:
 
-You poked the right spot in their post - we need more information about
-how the memory is added.
+1) the idea was that Default::default() would always return the same 
+value as Zeroable::ZERO, apart possibly from padding.  That is, for 
+something that's Zeroable it should always make sense to use an all-zero 
+value for Default::default().  And since there are standard library 
+methods that use Default, the bound makes it possible to use them and 
+know that they fill-with-zeroes.
 
-If the intent is to just increase/decrease the capacity of the device
-on the surface, then the only method I can see here is "tear the device
-device down and re-initialize it". At least then - I think? - the driver
-will go off and create the appropriate resources.  I've played with this
-in QEMU previously in the past, so I *think* that works?
+2) I wasn't sure in which cases bindgen doesn't generate Default, if 
+any; and with Default as a supertrait we'd have to double-check the 
+first occurrence of a non-Default but zeroable struct.
 
-If it doesn't do that, then they'll need to go off and basically
-re-invent DCD for their device in the driver (or via fwctl? yikes).
+Paolo
 
-
-
-Side note, after thinking about it: a 0-memory device at least lets you
-poke all the control bits without having to care about the actual memory
-piece, so maybe that's useful regardless.
-
-~Gregory
 
