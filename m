@@ -4,54 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 55082C02182
-	for <qemu-devel@archiver.kernel.org>; Thu, 23 Jan 2025 12:29:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 480ADC0218C
+	for <qemu-devel@archiver.kernel.org>; Thu, 23 Jan 2025 12:38:57 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tawJu-0005BO-R6; Thu, 23 Jan 2025 07:28:27 -0500
+	id 1tawTU-0008EH-AX; Thu, 23 Jan 2025 07:38:20 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
- id 1tawJm-0005B2-DA
- for qemu-devel@nongnu.org; Thu, 23 Jan 2025 07:28:19 -0500
-Received: from zero.eik.bme.hu ([152.66.115.2])
+ (Exim 4.90_1) (envelope-from <dmitry.osipenko@collabora.com>)
+ id 1tawTL-0008Dd-1Z
+ for qemu-devel@nongnu.org; Thu, 23 Jan 2025 07:38:11 -0500
+Received: from sender4-pp-f112.zoho.com ([136.143.188.112])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
- id 1tawJg-0007Kg-HJ
- for qemu-devel@nongnu.org; Thu, 23 Jan 2025 07:28:18 -0500
-Received: from zero.eik.bme.hu (localhost [127.0.0.1])
- by zero.eik.bme.hu (Postfix) with ESMTP id 1D5954E6014;
- Thu, 23 Jan 2025 13:28:10 +0100 (CET)
-X-Virus-Scanned: amavisd-new at eik.bme.hu
-Received: from zero.eik.bme.hu ([127.0.0.1])
- by zero.eik.bme.hu (zero.eik.bme.hu [127.0.0.1]) (amavisd-new, port 10028)
- with ESMTP id bbTjp5JJLRRT; Thu, 23 Jan 2025 13:28:08 +0100 (CET)
-Received: by zero.eik.bme.hu (Postfix, from userid 432)
- id 185214E6000; Thu, 23 Jan 2025 13:28:08 +0100 (CET)
-Received: from localhost (localhost [127.0.0.1])
- by zero.eik.bme.hu (Postfix) with ESMTP id 15C8F74577C;
- Thu, 23 Jan 2025 13:28:08 +0100 (CET)
-Date: Thu, 23 Jan 2025 13:28:08 +0100 (CET)
-From: BALATON Zoltan <balaton@eik.bme.hu>
-To: Akihiko Odaki <akihiko.odaki@daynix.com>
-cc: Gerd Hoffmann <kraxel@redhat.com>, 
- =?ISO-8859-15?Q?Philippe_Mathieu-Daud=E9?= <philmd@linaro.org>, 
- Christian Schoenebeck <qemu_oss@crudebyte.com>, qemu-devel@nongnu.org, 
- devel@daynix.com
-Subject: Re: [PATCH v5 1/4] coreaudio: Improve naming
-In-Reply-To: <20250123-coreaudio-v5-1-6873df4215a0@daynix.com>
-Message-ID: <906b0b94-b8ad-a035-bc80-75c4f79ad318@eik.bme.hu>
-References: <20250123-coreaudio-v5-0-6873df4215a0@daynix.com>
- <20250123-coreaudio-v5-1-6873df4215a0@daynix.com>
+ (Exim 4.90_1) (envelope-from <dmitry.osipenko@collabora.com>)
+ id 1tawTI-0001RP-Im
+ for qemu-devel@nongnu.org; Thu, 23 Jan 2025 07:38:10 -0500
+ARC-Seal: i=1; a=rsa-sha256; t=1737635877; cv=none; 
+ d=zohomail.com; s=zohoarc; 
+ b=cO7qtnEoEzE5aTRwE6Ee8YoB2rs6sRRv5Wtw7hkQzl1AELgT9ykwNCYGAwjg1AdS0mNqzZI+vuo9XV/fYLBcch1F4q9O9dwIx7KdKoHDbWJ2WV7kF8HyLsLbbfLGrgsUi8G5GMh9Ne2MGTHOzrrtTHaQ0mOkYq2zcqfBKBnH+yM=
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=zohomail.com;
+ s=zohoarc; t=1737635877;
+ h=Content-Type:Content-Transfer-Encoding:Cc:Cc:Date:Date:From:From:In-Reply-To:MIME-Version:Message-ID:References:Subject:Subject:To:To:Message-Id:Reply-To;
+ bh=AHvNq0fmtnh7xaNhpvbde81L63jope+Dbg3QCDdQYJk=; 
+ b=mGAUcbftHofq1cwCNj70wsAXoWE5bBoP33Tfe2oGzGdYXzs3hNeLAkMi8BqbE0/kKe0as2Sm6kVw3U43MwWSULItTXiuwn/MzEduNetlNI/sYGfzik7ECikS5TjWRFPknEFKonWUui1e77M/e6N/MiRLTb05X3oj8v5HKGGbq+Y=
+ARC-Authentication-Results: i=1; mx.zohomail.com;
+ dkim=pass  header.i=collabora.com;
+ spf=pass  smtp.mailfrom=dmitry.osipenko@collabora.com;
+ dmarc=pass header.from=<dmitry.osipenko@collabora.com>
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; t=1737635877; 
+ s=zohomail; d=collabora.com; i=dmitry.osipenko@collabora.com; 
+ h=Message-ID:Date:Date:MIME-Version:Subject:Subject:To:To:Cc:Cc:References:From:From:In-Reply-To:Content-Type:Content-Transfer-Encoding:Message-Id:Reply-To;
+ bh=AHvNq0fmtnh7xaNhpvbde81L63jope+Dbg3QCDdQYJk=;
+ b=k5JaOU7+HK6EasMdh16W1rhZQVw+KYf0T8zqxqI50EsDR3bWdjT5wLpzQoS3TbAC
+ nXXieumLjd29HLfOuhlCXD9Ri2PMNWqAUP/ljjISC4y8duxTRlqSRtmyx8UA8nC2Uti
+ dUECIiO2P8+3hpLCB3WdZCN7WK/f6BFCWtlhNPik=
+Received: by mx.zohomail.com with SMTPS id 1737635868950506.2244023251635;
+ Thu, 23 Jan 2025 04:37:48 -0800 (PST)
+Message-ID: <48195564-a5e4-45f1-906b-68c6ba7d7f81@collabora.com>
+Date: Thu, 23 Jan 2025 15:37:41 +0300
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII; format=flowed
-Received-SPF: pass client-ip=152.66.115.2; envelope-from=balaton@eik.bme.hu;
- helo=zero.eik.bme.hu
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9,
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v5 0/8] Support virtio-gpu DRM native context
+To: =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
+Cc: Akihiko Odaki <akihiko.odaki@daynix.com>, Huang Rui <ray.huang@amd.com>,
+ =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
+ =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Gerd Hoffmann <kraxel@redhat.com>, "Michael S . Tsirkin" <mst@redhat.com>,
+ Paolo Bonzini <pbonzini@redhat.com>, Gert Wollny
+ <gert.wollny@collabora.com>, qemu-devel@nongnu.org,
+ Gurchetan Singh <gurchetansingh@chromium.org>, Alyssa Ross <hi@alyssa.is>,
+ =?UTF-8?Q?Roger_Pau_Monn=C3=A9?= <roger.pau@citrix.com>,
+ Alex Deucher <alexander.deucher@amd.com>,
+ Stefano Stabellini <stefano.stabellini@amd.com>,
+ =?UTF-8?Q?Christian_K=C3=B6nig?= <christian.koenig@amd.com>,
+ Xenia Ragiadakou <xenia.ragiadakou@amd.com>,
+ Pierre-Eric Pelloux-Prayer <pierre-eric.pelloux-prayer@amd.com>,
+ Honglei Huang <honglei1.huang@amd.com>, Julia Zhang <julia.zhang@amd.com>,
+ Chen Jiqian <Jiqian.Chen@amd.com>, Rob Clark <robdclark@gmail.com>,
+ Yiwei Zhang <zzyiwei@chromium.org>, Sergio Lopez Pascual <slp@redhat.com>
+References: <20250119220050.15167-1-dmitry.osipenko@collabora.com>
+ <87jzamn5ri.fsf@draig.linaro.org>
+ <f5c8e901-5d36-47b0-91d3-40699c51c259@collabora.com>
+ <874j1plp27.fsf@draig.linaro.org>
+From: Dmitry Osipenko <dmitry.osipenko@collabora.com>
+Content-Language: en-US
+In-Reply-To: <874j1plp27.fsf@draig.linaro.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+X-ZohoMailClient: External
+Received-SPF: pass client-ip=136.143.188.112;
+ envelope-from=dmitry.osipenko@collabora.com; helo=sender4-pp-f112.zoho.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.043,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -69,530 +98,90 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, 23 Jan 2025, Akihiko Odaki wrote:
-> coreaudio had names that are not conforming to QEMU codding style.
-> coreaudioVoiceOut also had some members that are prefixed with redundant
-> words like "output" or "audio".
-> Global names included "out" to tell they are specific to output devices,
-> but this rule was not completely enforced.
-> The frame size had three different names "frameSize", "bufferFrameSize",
-> and "frameCount".
->
-> Replace identifiers to fix these problems.
->
-> Signed-off-by: Akihiko Odaki <akihiko.odaki@daynix.com>
-> ---
-> audio/coreaudio.m | 191 +++++++++++++++++++++++++++---------------------------
-> 1 file changed, 97 insertions(+), 94 deletions(-)
->
-> diff --git a/audio/coreaudio.m b/audio/coreaudio.m
-> index cadd729d50537850d81718b9284efed5877d9185..d6469b77cbde3d84a40017aed64279ab4fce6b29 100644
-> --- a/audio/coreaudio.m
-> +++ b/audio/coreaudio.m
-> @@ -33,37 +33,37 @@
-> #define AUDIO_CAP "coreaudio"
-> #include "audio_int.h"
->
-> -typedef struct coreaudioVoiceOut {
-> +typedef struct CoreaudioVoiceOut {
->     HWVoiceOut hw;
->     pthread_mutex_t buf_mutex;
-> -    AudioDeviceID outputDeviceID;
-> -    int frameSizeSetting;
-> -    uint32_t bufferCount;
-> -    UInt32 audioDevicePropertyBufferFrameSize;
-> +    AudioDeviceID device_id;
-> +    int frame_size_setting;
-> +    uint32_t buffer_count;
-> +    UInt32 device_frame_size;
->     AudioDeviceIOProcID ioprocid;
->     bool enabled;
-> -} coreaudioVoiceOut;
-> +} CoreaudioVoiceOut;
->
-> -static const AudioObjectPropertyAddress voice_addr = {
-> +static const AudioObjectPropertyAddress voice_out_addr = {
->     kAudioHardwarePropertyDefaultOutputDevice,
->     kAudioObjectPropertyScopeGlobal,
->     kAudioObjectPropertyElementMain
-> };
->
-> -static OSStatus coreaudio_get_voice(AudioDeviceID *id)
-> +static OSStatus coreaudio_get_voice_out(AudioDeviceID *id)
-> {
->     UInt32 size = sizeof(*id);
->
->     return AudioObjectGetPropertyData(kAudioObjectSystemObject,
-> -                                      &voice_addr,
-> +                                      &voice_out_addr,
->                                       0,
->                                       NULL,
->                                       &size,
->                                       id);
-> }
->
-> -static OSStatus coreaudio_get_framesizerange(AudioDeviceID id,
-> -                                             AudioValueRange *framerange)
-> +static OSStatus coreaudio_get_out_framesizerange(AudioDeviceID id,
-> +                                                 AudioValueRange *framerange)
-> {
->     UInt32 size = sizeof(*framerange);
->     AudioObjectPropertyAddress addr = {
-> @@ -80,7 +80,7 @@ static OSStatus coreaudio_get_framesizerange(AudioDeviceID id,
->                                       framerange);
-> }
->
-> -static OSStatus coreaudio_get_framesize(AudioDeviceID id, UInt32 *framesize)
-> +static OSStatus coreaudio_get_out_framesize(AudioDeviceID id, UInt32 *framesize)
-> {
->     UInt32 size = sizeof(*framesize);
->     AudioObjectPropertyAddress addr = {
-> @@ -97,7 +97,7 @@ static OSStatus coreaudio_get_framesize(AudioDeviceID id, UInt32 *framesize)
->                                       framesize);
-> }
->
-> -static OSStatus coreaudio_set_framesize(AudioDeviceID id, UInt32 *framesize)
-> +static OSStatus coreaudio_set_out_framesize(AudioDeviceID id, UInt32 *framesize)
-> {
->     UInt32 size = sizeof(*framesize);
->     AudioObjectPropertyAddress addr = {
-> @@ -114,8 +114,8 @@ static OSStatus coreaudio_set_framesize(AudioDeviceID id, UInt32 *framesize)
->                                       framesize);
-> }
->
-> -static OSStatus coreaudio_set_streamformat(AudioDeviceID id,
-> -                                           AudioStreamBasicDescription *d)
-> +static OSStatus coreaudio_set_out_streamformat(AudioDeviceID id,
-> +                                               AudioStreamBasicDescription *d)
-> {
->     UInt32 size = sizeof(*d);
->     AudioObjectPropertyAddress addr = {
-> @@ -132,7 +132,7 @@ static OSStatus coreaudio_set_streamformat(AudioDeviceID id,
->                                       d);
-> }
->
-> -static OSStatus coreaudio_get_isrunning(AudioDeviceID id, UInt32 *result)
-> +static OSStatus coreaudio_get_out_isrunning(AudioDeviceID id, UInt32 *result)
-> {
->     UInt32 size = sizeof(*result);
->     AudioObjectPropertyAddress addr = {
-> @@ -242,7 +242,8 @@ static void G_GNUC_PRINTF (3, 4) coreaudio_logerr2 (
-> #define coreaudio_playback_logerr(status, ...) \
->     coreaudio_logerr2(status, "playback", __VA_ARGS__)
->
-> -static int coreaudio_buf_lock (coreaudioVoiceOut *core, const char *fn_name)
-> +static int coreaudio_voice_out_buf_lock(CoreaudioVoiceOut *core,
-> +                                        const char *fn_name)
-> {
->     int err;
->
-> @@ -255,7 +256,8 @@ static int coreaudio_buf_lock (coreaudioVoiceOut *core, const char *fn_name)
->     return 0;
-> }
->
-> -static int coreaudio_buf_unlock (coreaudioVoiceOut *core, const char *fn_name)
-> +static int coreaudio_voice_out_buf_unlock(CoreaudioVoiceOut *core,
-> +                                          const char *fn_name)
-> {
->     int err;
->
-> @@ -268,20 +270,20 @@ static int coreaudio_buf_unlock (coreaudioVoiceOut *core, const char *fn_name)
->     return 0;
-> }
->
-> -#define COREAUDIO_WRAPPER_FUNC(name, ret_type, args_decl, args) \
-> -    static ret_type glue(coreaudio_, name)args_decl             \
-> -    {                                                           \
-> -        coreaudioVoiceOut *core = (coreaudioVoiceOut *) hw;     \
-> -        ret_type ret;                                           \
-> -                                                                \
-> -        if (coreaudio_buf_lock(core, "coreaudio_" #name)) {         \
-> -            return 0;                                           \
-> -        }                                                       \
-> -                                                                \
-> -        ret = glue(audio_generic_, name)args;                   \
-> -                                                                \
-> -        coreaudio_buf_unlock(core, "coreaudio_" #name);             \
-> -        return ret;                                             \
-> +#define COREAUDIO_WRAPPER_FUNC(name, ret_type, args_decl, args)       \
-> +    static ret_type glue(coreaudio_, name)args_decl                   \
-> +    {                                                                 \
-> +        CoreaudioVoiceOut *core = (CoreaudioVoiceOut *) hw;           \
-> +        ret_type ret;                                                 \
-> +                                                                      \
-> +        if (coreaudio_voice_out_buf_lock(core, "coreaudio_" #name)) { \
-> +            return 0;                                                 \
-> +        }                                                             \
-> +                                                                      \
-> +        ret = glue(audio_generic_, name)args;                         \
-> +                                                                      \
-> +        coreaudio_voice_out_buf_unlock(core, "coreaudio_" #name);     \
-> +        return ret;                                                   \
->     }
-> COREAUDIO_WRAPPER_FUNC(buffer_get_free, size_t, (HWVoiceOut *hw), (hw))
-> COREAUDIO_WRAPPER_FUNC(get_buffer_out, void *, (HWVoiceOut *hw, size_t *size),
-> @@ -297,7 +299,7 @@ static ret_type glue(coreaudio_, name)args_decl             \
->  * callback to feed audiooutput buffer. called without BQL.
->  * allowed to lock "buf_mutex", but disallowed to have any other locks.
->  */
-> -static OSStatus audioDeviceIOProc(
-> +static OSStatus out_device_ioproc(
->     AudioDeviceID inDevice,
->     const AudioTimeStamp *inNow,
->     const AudioBufferList *inInputData,
-> @@ -306,33 +308,33 @@ static OSStatus audioDeviceIOProc(
->     const AudioTimeStamp *inOutputTime,
->     void *hwptr)
-> {
-> -    UInt32 frameCount, pending_frames;
-> +    UInt32 frame_size, pending_frames;
->     void *out = outOutputData->mBuffers[0].mData;
->     HWVoiceOut *hw = hwptr;
-> -    coreaudioVoiceOut *core = (coreaudioVoiceOut *) hwptr;
-> +    CoreaudioVoiceOut *core = (CoreaudioVoiceOut *) hwptr;
+On 1/23/25 14:58, Alex Bennée wrote:
+> Dmitry Osipenko <dmitry.osipenko@collabora.com> writes:
+> 
+>> On 1/22/25 20:00, Alex Bennée wrote:
+>>> Dmitry Osipenko <dmitry.osipenko@collabora.com> writes:
+>>>
+>>>> This patchset adds DRM native context support to VirtIO-GPU on Qemu.
+>>>>
+>>>> Contarary to Virgl and Venus contexts that mediates high level GFX APIs,
+>>>> DRM native context [1] mediates lower level kernel driver UAPI, which
+>>>> reflects in a less CPU overhead and less/simpler code needed to support it.
+>>>> DRM context consists of a host and guest parts that have to be implemented
+>>>> for each GPU driver. On a guest side, DRM context presents a virtual GPU as
+>>>> a real/native host GPU device for GL/VK applications.
+>>>>
+>>>> [1] https://www.youtube.com/watch?v=9sFP_yddLLQ
+>>>>
+>>>> Today there are four known DRM native context drivers existing in a wild:
+>>>>
+>>>>   - Freedreno (Qualcomm SoC GPUs), completely upstreamed
+>>>>   - AMDGPU, mostly merged into upstreams
+>>>
+>>> I tried my AMD system today with:
+>>>
+>>> Host:
+>>>   Aarch64 AVA system
+>>>   Trixie
+>>>   virglrenderer @ v1.1.0/99557f5aa130930d11f04ffeb07f3a9aa5963182
+>>>   -display sdl,gl=on (gtk,gl=on also came up but handled window resizing
+>>>   poorly)
+>>>   
+>>> KVM Guest
+>>>
+>>>   Aarch64
+>>>   Trixie
+>>>   mesa @ main/d27748a76f7dd9236bfcf9ef172dc13b8c0e170f
+>>>   -Dvulkan-drivers=virtio,amd -Dgallium-drivers=virgl,radeonsi -Damdgpu-virtio=true
+>>>
+>>> However when I ran vulkan-info --summary KVM faulted with:
+>>>
+>>>   debian-trixie login: error: kvm run failed Bad address
+>>>    PC=0000ffffb9aa1eb0 X00=0000ffffba0450a4 X01=0000aaaaf7f32400
+>>>   X02=000000000000013c X03=0000ffffba045098 X04=0000aaaaf7f3253c
+>>>   X05=0000ffffba0451d4 X06=00000000c0016900 X07=000000000000000e
+>>>   X08=0000000000000014 X09=00000000000000ff X10=0000aaaaf7f32500
+>>>   X11=0000aaaaf7e4d028 X12=0000aaaaf7edbcb0 X13=0000000000000001
+>>>   X14=000000000000000c X15=0000000000007718 X16=0000ffffb93601f0
+>>>   X17=0000ffffb9aa1dc0 X18=00000000000076f0 X19=0000aaaaf7f31330
+>>>   X20=0000aaaaf7f323f0 X21=0000aaaaf7f235e0 X22=000000000000004c
+>>>   X23=0000aaaaf7f2b5e0 X24=0000aaaaf7ee0cb0 X25=00000000000000ff
+>>>   X26=0000000000000076 X27=0000ffffcd2b18a8 X28=0000aaaaf7ee0cb0
+>>>   X29=0000ffffcd2b0bd0 X30=0000ffffb86c8b98  SP=0000ffffcd2b0bd0
+>>>   PSTATE=20001000 --C- EL0t
+>>>   QEMU 9.2.50 monitor - type 'help' for more information
+>>>   (qemu) quit
+>>>
+>>> Which looks very much like the PFN locking failure. However booting up
+>>> with venus=on instead works. Could there be any differences in the way
+>>> device memory is mapped in the two cases?
+>>
+>> Memory mapping works exactly the same for nctx and venus. Are you on
+>> 6.13 host kernel?
+> 
+> Yes - with the Altra PCI workaround patches on both host and guest
+> kernel.
+> 
+> Is there anyway to trace the sharing of device memory on the host so I
+> can verify its an attempt at device access? The PC looks like its in
+> user-space but once this fails the guest is suspended so I can't poke
+> around in its environment.
 
-Also there are some unneeded spaces above and also below in function 
-calls. The checkpatch.pl script should catch these but maybe it does not 
-check that in .m files (or the patch to also check .m files is not merged 
-yet).
+I'm adding printk's to kernel in a such cases. Likely there is no other
+better way to find why it fails.
 
-Regards,
-BALATON Zoltan
+Does your ARM VM and host both use 4k page size?
 
->     size_t len;
->
-> -    if (coreaudio_buf_lock (core, "audioDeviceIOProc")) {
-> +    if (coreaudio_voice_out_buf_lock (core, "out_device_ioproc")) {
->         inInputTime = 0;
->         return 0;
->     }
->
-> -    if (inDevice != core->outputDeviceID) {
-> -        coreaudio_buf_unlock (core, "audioDeviceIOProc(old device)");
-> +    if (inDevice != core->device_id) {
-> +        coreaudio_voice_out_buf_unlock (core, "out_device_ioproc(old device)");
->         return 0;
->     }
->
-> -    frameCount = core->audioDevicePropertyBufferFrameSize;
-> +    frame_size = core->device_frame_size;
->     pending_frames = hw->pending_emul / hw->info.bytes_per_frame;
->
->     /* if there are not enough samples, set signal and return */
-> -    if (pending_frames < frameCount) {
-> +    if (pending_frames < frame_size) {
->         inInputTime = 0;
-> -        coreaudio_buf_unlock (core, "audioDeviceIOProc(empty)");
-> +        coreaudio_voice_out_buf_unlock (core, "out_device_ioproc(empty)");
->         return 0;
->     }
->
-> -    len = frameCount * hw->info.bytes_per_frame;
-> +    len = frame_size * hw->info.bytes_per_frame;
->     while (len) {
->         size_t write_len, start;
->
-> @@ -348,16 +350,16 @@ static OSStatus audioDeviceIOProc(
->         out += write_len;
->     }
->
-> -    coreaudio_buf_unlock (core, "audioDeviceIOProc");
-> +    coreaudio_voice_out_buf_unlock (core, "out_device_ioproc");
->     return 0;
-> }
->
-> -static OSStatus init_out_device(coreaudioVoiceOut *core)
-> +static OSStatus init_out_device(CoreaudioVoiceOut *core)
-> {
->     OSStatus status;
-> -    AudioValueRange frameRange;
-> +    AudioValueRange framerange;
->
-> -    AudioStreamBasicDescription streamBasicDescription = {
-> +    AudioStreamBasicDescription stream_basic_description = {
->         .mBitsPerChannel = core->hw.info.bits,
->         .mBytesPerFrame = core->hw.info.bytes_per_frame,
->         .mBytesPerPacket = core->hw.info.bytes_per_frame,
-> @@ -368,20 +370,20 @@ static OSStatus init_out_device(coreaudioVoiceOut *core)
->         .mSampleRate = core->hw.info.freq
->     };
->
-> -    status = coreaudio_get_voice(&core->outputDeviceID);
-> +    status = coreaudio_get_voice_out(&core->device_id);
->     if (status != kAudioHardwareNoError) {
->         coreaudio_playback_logerr (status,
->                                    "Could not get default output Device\n");
->         return status;
->     }
-> -    if (core->outputDeviceID == kAudioDeviceUnknown) {
-> +    if (core->device_id == kAudioDeviceUnknown) {
->         dolog ("Could not initialize playback - Unknown Audiodevice\n");
->         return status;
->     }
->
->     /* get minimum and maximum buffer frame sizes */
-> -    status = coreaudio_get_framesizerange(core->outputDeviceID,
-> -                                          &frameRange);
-> +    status = coreaudio_get_out_framesizerange(core->device_id,
-> +                                              &framerange);
->     if (status == kAudioHardwareBadObjectError) {
->         return 0;
->     }
-> @@ -391,32 +393,32 @@ static OSStatus init_out_device(coreaudioVoiceOut *core)
->         return status;
->     }
->
-> -    if (frameRange.mMinimum > core->frameSizeSetting) {
-> -        core->audioDevicePropertyBufferFrameSize = (UInt32) frameRange.mMinimum;
-> -        dolog ("warning: Upsizing Buffer Frames to %f\n", frameRange.mMinimum);
-> -    } else if (frameRange.mMaximum < core->frameSizeSetting) {
-> -        core->audioDevicePropertyBufferFrameSize = (UInt32) frameRange.mMaximum;
-> -        dolog ("warning: Downsizing Buffer Frames to %f\n", frameRange.mMaximum);
-> +    if (framerange.mMinimum > core->frame_size_setting) {
-> +        core->device_frame_size = (UInt32) framerange.mMinimum;
-> +        dolog ("warning: Upsizing Buffer Frames to %f\n", framerange.mMinimum);
-> +    } else if (framerange.mMaximum < core->frame_size_setting) {
-> +        core->device_frame_size = (UInt32) framerange.mMaximum;
-> +        dolog ("warning: Downsizing Buffer Frames to %f\n", framerange.mMaximum);
->     } else {
-> -        core->audioDevicePropertyBufferFrameSize = core->frameSizeSetting;
-> +        core->device_frame_size = core->frame_size_setting;
->     }
->
->     /* set Buffer Frame Size */
-> -    status = coreaudio_set_framesize(core->outputDeviceID,
-> -                                     &core->audioDevicePropertyBufferFrameSize);
-> +    status = coreaudio_set_out_framesize(core->device_id,
-> +                                         &core->device_frame_size);
->     if (status == kAudioHardwareBadObjectError) {
->         return 0;
->     }
->     if (status != kAudioHardwareNoError) {
->         coreaudio_playback_logerr (status,
->                                     "Could not set device buffer frame size %" PRIu32 "\n",
-> -                                    (uint32_t)core->audioDevicePropertyBufferFrameSize);
-> +                                    (uint32_t)core->device_frame_size);
->         return status;
->     }
->
->     /* get Buffer Frame Size */
-> -    status = coreaudio_get_framesize(core->outputDeviceID,
-> -                                     &core->audioDevicePropertyBufferFrameSize);
-> +    status = coreaudio_get_out_framesize(core->device_id,
-> +                                         &core->device_frame_size);
->     if (status == kAudioHardwareBadObjectError) {
->         return 0;
->     }
-> @@ -425,19 +427,19 @@ static OSStatus init_out_device(coreaudioVoiceOut *core)
->                                     "Could not get device buffer frame size\n");
->         return status;
->     }
-> -    core->hw.samples = core->bufferCount * core->audioDevicePropertyBufferFrameSize;
-> +    core->hw.samples = core->buffer_count * core->device_frame_size;
->
->     /* set Samplerate */
-> -    status = coreaudio_set_streamformat(core->outputDeviceID,
-> -                                        &streamBasicDescription);
-> +    status = coreaudio_set_out_streamformat(core->device_id,
-> +                                            &stream_basic_description);
->     if (status == kAudioHardwareBadObjectError) {
->         return 0;
->     }
->     if (status != kAudioHardwareNoError) {
->         coreaudio_playback_logerr (status,
->                                    "Could not set samplerate %lf\n",
-> -                                   streamBasicDescription.mSampleRate);
-> -        core->outputDeviceID = kAudioDeviceUnknown;
-> +                                   stream_basic_description.mSampleRate);
-> +        core->device_id = kAudioDeviceUnknown;
->         return status;
->     }
->
-> @@ -452,8 +454,8 @@ static OSStatus init_out_device(coreaudioVoiceOut *core)
->      * with the callers of AudioObjectGetPropertyData.
->      */
->     core->ioprocid = NULL;
-> -    status = AudioDeviceCreateIOProcID(core->outputDeviceID,
-> -                                       audioDeviceIOProc,
-> +    status = AudioDeviceCreateIOProcID(core->device_id,
-> +                                       out_device_ioproc,
->                                        &core->hw,
->                                        &core->ioprocid);
->     if (status == kAudioHardwareBadDeviceError) {
-> @@ -461,20 +463,20 @@ static OSStatus init_out_device(coreaudioVoiceOut *core)
->     }
->     if (status != kAudioHardwareNoError || core->ioprocid == NULL) {
->         coreaudio_playback_logerr (status, "Could not set IOProc\n");
-> -        core->outputDeviceID = kAudioDeviceUnknown;
-> +        core->device_id = kAudioDeviceUnknown;
->         return status;
->     }
->
->     return 0;
-> }
->
-> -static void fini_out_device(coreaudioVoiceOut *core)
-> +static void fini_out_device(CoreaudioVoiceOut *core)
-> {
->     OSStatus status;
->     UInt32 isrunning;
->
->     /* stop playback */
-> -    status = coreaudio_get_isrunning(core->outputDeviceID, &isrunning);
-> +    status = coreaudio_get_out_isrunning(core->device_id, &isrunning);
->     if (status != kAudioHardwareBadObjectError) {
->         if (status != kAudioHardwareNoError) {
->             coreaudio_logerr(status,
-> @@ -482,7 +484,7 @@ static void fini_out_device(coreaudioVoiceOut *core)
->         }
->
->         if (isrunning) {
-> -            status = AudioDeviceStop(core->outputDeviceID, core->ioprocid);
-> +            status = AudioDeviceStop(core->device_id, core->ioprocid);
->             if (status != kAudioHardwareBadDeviceError && status != kAudioHardwareNoError) {
->                 coreaudio_logerr(status, "Could not stop playback\n");
->             }
-> @@ -490,20 +492,20 @@ static void fini_out_device(coreaudioVoiceOut *core)
->     }
->
->     /* remove callback */
-> -    status = AudioDeviceDestroyIOProcID(core->outputDeviceID,
-> +    status = AudioDeviceDestroyIOProcID(core->device_id,
->                                         core->ioprocid);
->     if (status != kAudioHardwareBadDeviceError && status != kAudioHardwareNoError) {
->         coreaudio_logerr(status, "Could not remove IOProc\n");
->     }
-> -    core->outputDeviceID = kAudioDeviceUnknown;
-> +    core->device_id = kAudioDeviceUnknown;
-> }
->
-> -static void update_device_playback_state(coreaudioVoiceOut *core)
-> +static void update_out_device_playback_state(CoreaudioVoiceOut *core)
-> {
->     OSStatus status;
->     UInt32 isrunning;
->
-> -    status = coreaudio_get_isrunning(core->outputDeviceID, &isrunning);
-> +    status = coreaudio_get_out_isrunning(core->device_id, &isrunning);
->     if (status != kAudioHardwareNoError) {
->         if (status != kAudioHardwareBadObjectError) {
->             coreaudio_logerr(status,
-> @@ -516,7 +518,7 @@ static void update_device_playback_state(coreaudioVoiceOut *core)
->     if (core->enabled) {
->         /* start playback */
->         if (!isrunning) {
-> -            status = AudioDeviceStart(core->outputDeviceID, core->ioprocid);
-> +            status = AudioDeviceStart(core->device_id, core->ioprocid);
->             if (status != kAudioHardwareBadDeviceError && status != kAudioHardwareNoError) {
->                 coreaudio_logerr (status, "Could not resume playback\n");
->             }
-> @@ -524,7 +526,7 @@ static void update_device_playback_state(coreaudioVoiceOut *core)
->     } else {
->         /* stop playback */
->         if (isrunning) {
-> -            status = AudioDeviceStop(core->outputDeviceID,
-> +            status = AudioDeviceStop(core->device_id,
->                                      core->ioprocid);
->             if (status != kAudioHardwareBadDeviceError && status != kAudioHardwareNoError) {
->                 coreaudio_logerr(status, "Could not pause playback\n");
-> @@ -534,22 +536,22 @@ static void update_device_playback_state(coreaudioVoiceOut *core)
-> }
->
-> /* called without BQL. */
-> -static OSStatus handle_voice_change(
-> +static OSStatus handle_voice_out_change(
->     AudioObjectID in_object_id,
->     UInt32 in_number_addresses,
->     const AudioObjectPropertyAddress *in_addresses,
->     void *in_client_data)
-> {
-> -    coreaudioVoiceOut *core = in_client_data;
-> +    CoreaudioVoiceOut *core = in_client_data;
->
->     bql_lock();
->
-> -    if (core->outputDeviceID) {
-> +    if (core->device_id) {
->         fini_out_device(core);
->     }
->
->     if (!init_out_device(core)) {
-> -        update_device_playback_state(core);
-> +        update_out_device_playback_state(core);
->     }
->
->     bql_unlock();
-> @@ -560,7 +562,7 @@ static int coreaudio_init_out(HWVoiceOut *hw, struct audsettings *as,
->                               void *drv_opaque)
-> {
->     OSStatus status;
-> -    coreaudioVoiceOut *core = (coreaudioVoiceOut *) hw;
-> +    CoreaudioVoiceOut *core = (CoreaudioVoiceOut *) hw;
->     int err;
->     Audiodev *dev = drv_opaque;
->     AudiodevCoreaudioPerDirectionOptions *cpdo = dev->u.coreaudio.out;
-> @@ -578,13 +580,14 @@ static int coreaudio_init_out(HWVoiceOut *hw, struct audsettings *as,
->     as->fmt = AUDIO_FORMAT_F32;
->     audio_pcm_init_info (&hw->info, as);
->
-> -    core->frameSizeSetting = audio_buffer_frames(
-> +    core->frame_size_setting = audio_buffer_frames(
->         qapi_AudiodevCoreaudioPerDirectionOptions_base(cpdo), as, 11610);
->
-> -    core->bufferCount = cpdo->has_buffer_count ? cpdo->buffer_count : 4;
-> +    core->buffer_count = cpdo->has_buffer_count ? cpdo->buffer_count : 4;
->
->     status = AudioObjectAddPropertyListener(kAudioObjectSystemObject,
-> -                                            &voice_addr, handle_voice_change,
-> +                                            &voice_out_addr,
-> +                                            handle_voice_out_change,
->                                             core);
->     if (status != kAudioHardwareNoError) {
->         coreaudio_playback_logerr (status,
-> @@ -594,8 +597,8 @@ static int coreaudio_init_out(HWVoiceOut *hw, struct audsettings *as,
->
->     if (init_out_device(core)) {
->         status = AudioObjectRemovePropertyListener(kAudioObjectSystemObject,
-> -                                                   &voice_addr,
-> -                                                   handle_voice_change,
-> +                                                   &voice_out_addr,
-> +                                                   handle_voice_out_change,
->                                                    core);
->         if (status != kAudioHardwareNoError) {
->             coreaudio_playback_logerr(status,
-> @@ -612,11 +615,11 @@ static void coreaudio_fini_out (HWVoiceOut *hw)
-> {
->     OSStatus status;
->     int err;
-> -    coreaudioVoiceOut *core = (coreaudioVoiceOut *) hw;
-> +    CoreaudioVoiceOut *core = (CoreaudioVoiceOut *) hw;
->
->     status = AudioObjectRemovePropertyListener(kAudioObjectSystemObject,
-> -                                               &voice_addr,
-> -                                               handle_voice_change,
-> +                                               &voice_out_addr,
-> +                                               handle_voice_out_change,
->                                                core);
->     if (status != kAudioHardwareNoError) {
->         coreaudio_logerr(status, "Could not remove voice property change listener\n");
-> @@ -633,7 +636,7 @@ static void coreaudio_fini_out (HWVoiceOut *hw)
->
-> static void coreaudio_enable_out(HWVoiceOut *hw, bool enable)
-> {
-> -    coreaudioVoiceOut *core = (coreaudioVoiceOut *) hw;
-> +    CoreaudioVoiceOut *core = (CoreaudioVoiceOut *) hw;
->
->     core->enabled = enable;
->     update_device_playback_state(core);
-> @@ -670,7 +673,7 @@ static void coreaudio_audio_fini (void *opaque)
->     .pcm_ops        = &coreaudio_pcm_ops,
->     .max_voices_out = 1,
->     .max_voices_in  = 0,
-> -    .voice_size_out = sizeof (coreaudioVoiceOut),
-> +    .voice_size_out = sizeof (CoreaudioVoiceOut),
->     .voice_size_in  = 0
-> };
->
->
->
+Well, if it's a page refcounting bug on ARM/KMV, then applying [1] to
+the host driver will make it work and we will know where the problem is.
+Please try.
+
+[1]
+https://patchwork.kernel.org/project/kvm/patch/20220815095423.11131-1-dmitry.osipenko@collabora.com/
+
+-- 
+Best regards,
+Dmitry
 
