@@ -4,35 +4,35 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 42C0CC02182
-	for <qemu-devel@archiver.kernel.org>; Thu, 23 Jan 2025 12:25:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 55082C02182
+	for <qemu-devel@archiver.kernel.org>; Thu, 23 Jan 2025 12:29:10 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tawG2-0002ir-5b; Thu, 23 Jan 2025 07:24:26 -0500
+	id 1tawJu-0005BO-R6; Thu, 23 Jan 2025 07:28:27 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
- id 1tawG0-0002iS-Ah
- for qemu-devel@nongnu.org; Thu, 23 Jan 2025 07:24:24 -0500
+ id 1tawJm-0005B2-DA
+ for qemu-devel@nongnu.org; Thu, 23 Jan 2025 07:28:19 -0500
 Received: from zero.eik.bme.hu ([152.66.115.2])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
- id 1tawFw-0006A5-Ri
- for qemu-devel@nongnu.org; Thu, 23 Jan 2025 07:24:24 -0500
+ id 1tawJg-0007Kg-HJ
+ for qemu-devel@nongnu.org; Thu, 23 Jan 2025 07:28:18 -0500
 Received: from zero.eik.bme.hu (localhost [127.0.0.1])
- by zero.eik.bme.hu (Postfix) with ESMTP id ED7F74E6019;
- Thu, 23 Jan 2025 13:24:14 +0100 (CET)
+ by zero.eik.bme.hu (Postfix) with ESMTP id 1D5954E6014;
+ Thu, 23 Jan 2025 13:28:10 +0100 (CET)
 X-Virus-Scanned: amavisd-new at eik.bme.hu
 Received: from zero.eik.bme.hu ([127.0.0.1])
  by zero.eik.bme.hu (zero.eik.bme.hu [127.0.0.1]) (amavisd-new, port 10028)
- with ESMTP id fQG6G9ku15DW; Thu, 23 Jan 2025 13:24:13 +0100 (CET)
+ with ESMTP id bbTjp5JJLRRT; Thu, 23 Jan 2025 13:28:08 +0100 (CET)
 Received: by zero.eik.bme.hu (Postfix, from userid 432)
- id F3CA44E6000; Thu, 23 Jan 2025 13:24:12 +0100 (CET)
+ id 185214E6000; Thu, 23 Jan 2025 13:28:08 +0100 (CET)
 Received: from localhost (localhost [127.0.0.1])
- by zero.eik.bme.hu (Postfix) with ESMTP id F1CD574577C;
- Thu, 23 Jan 2025 13:24:12 +0100 (CET)
-Date: Thu, 23 Jan 2025 13:24:12 +0100 (CET)
+ by zero.eik.bme.hu (Postfix) with ESMTP id 15C8F74577C;
+ Thu, 23 Jan 2025 13:28:08 +0100 (CET)
+Date: Thu, 23 Jan 2025 13:28:08 +0100 (CET)
 From: BALATON Zoltan <balaton@eik.bme.hu>
 To: Akihiko Odaki <akihiko.odaki@daynix.com>
 cc: Gerd Hoffmann <kraxel@redhat.com>, 
@@ -41,7 +41,7 @@ cc: Gerd Hoffmann <kraxel@redhat.com>,
  devel@daynix.com
 Subject: Re: [PATCH v5 1/4] coreaudio: Improve naming
 In-Reply-To: <20250123-coreaudio-v5-1-6873df4215a0@daynix.com>
-Message-ID: <d2074b4d-788f-b757-536d-b5044da20c7c@eik.bme.hu>
+Message-ID: <906b0b94-b8ad-a035-bc80-75c4f79ad318@eik.bme.hu>
 References: <20250123-coreaudio-v5-0-6873df4215a0@daynix.com>
  <20250123-coreaudio-v5-1-6873df4215a0@daynix.com>
 MIME-Version: 1.0
@@ -95,13 +95,6 @@ On Thu, 23 Jan 2025, Akihiko Odaki wrote:
 >
 > -typedef struct coreaudioVoiceOut {
 > +typedef struct CoreaudioVoiceOut {
-
-You don't even need a name here if you never use struct CoreaudioVoiceOut 
-afterwards and just refer to the struct by the CoreaudioVoiceOut typedef.
-
-Regards,
-BALATON Zoltan
-
 >     HWVoiceOut hw;
 >     pthread_mutex_t buf_mutex;
 > -    AudioDeviceID outputDeviceID;
@@ -257,6 +250,15 @@ BALATON Zoltan
 >     HWVoiceOut *hw = hwptr;
 > -    coreaudioVoiceOut *core = (coreaudioVoiceOut *) hwptr;
 > +    CoreaudioVoiceOut *core = (CoreaudioVoiceOut *) hwptr;
+
+Also there are some unneeded spaces above and also below in function 
+calls. The checkpatch.pl script should catch these but maybe it does not 
+check that in .m files (or the patch to also check .m files is not merged 
+yet).
+
+Regards,
+BALATON Zoltan
+
 >     size_t len;
 >
 > -    if (coreaudio_buf_lock (core, "audioDeviceIOProc")) {
