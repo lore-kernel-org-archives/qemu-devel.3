@@ -4,64 +4,64 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 39B0CC0218C
-	for <qemu-devel@archiver.kernel.org>; Thu, 23 Jan 2025 23:49:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 83D1FC0218D
+	for <qemu-devel@archiver.kernel.org>; Thu, 23 Jan 2025 23:49:07 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tb6uH-0002B2-Lh; Thu, 23 Jan 2025 18:46:42 -0500
+	id 1tb6uT-0003eg-Sv; Thu, 23 Jan 2025 18:46:53 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tb6td-0008V7-Bf
- for qemu-devel@nongnu.org; Thu, 23 Jan 2025 18:46:05 -0500
-Received: from mail-wm1-x32b.google.com ([2a00:1450:4864:20::32b])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tb6ts-0000hh-JF
+ for qemu-devel@nongnu.org; Thu, 23 Jan 2025 18:46:16 -0500
+Received: from mail-wr1-x433.google.com ([2a00:1450:4864:20::433])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tb6tX-0004Sx-Nx
- for qemu-devel@nongnu.org; Thu, 23 Jan 2025 18:45:58 -0500
-Received: by mail-wm1-x32b.google.com with SMTP id
- 5b1f17b1804b1-436341f575fso16147105e9.1
- for <qemu-devel@nongnu.org>; Thu, 23 Jan 2025 15:45:54 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tb6tj-0004Wh-Au
+ for qemu-devel@nongnu.org; Thu, 23 Jan 2025 18:46:15 -0500
+Received: by mail-wr1-x433.google.com with SMTP id
+ ffacd0b85a97d-3863703258fso1723454f8f.1
+ for <qemu-devel@nongnu.org>; Thu, 23 Jan 2025 15:46:06 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1737675953; x=1738280753; darn=nongnu.org;
+ d=linaro.org; s=google; t=1737675965; x=1738280765; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=MvtCakZyrGCXwv1NUluQigNUDDDoRJgD07DKcxozaAI=;
- b=YvKHHn5ZfVZi29RpK+uoYhF6jLID0zTCtwKGiGKjjeuMNTtCCATYrICRiEbjMD4Jea
- vikOePFYSrwXmYPlb6VhkIboq0NEwnopfaIC84G+s3ReY1Wbo9m65Tvlt6ECEziPIs7o
- KBtkRTJbFP6VDFBI+EtwJgfD2raK6F4bikwVHsDqPS5v9HLJx31oLBDkW+ywQLiEaxzz
- TjN9Unkng8pavhpSeBTWyRtsh6hDnGRGl66WHU1EDUvY6z8Hdw1JBzMoLIE3GdS04uVE
- dN9cGj7A7d4bo7rvXIIYP7IVytYQ6jiMPri/1//4xG1B39d3HKu/usgMzFXWsvlV+ArI
- YY9Q==
+ bh=sQ+5PubFZrrCYmUor7z2ohXZLQOj0+FDz6CQ50FZwrM=;
+ b=FoioRx3PL/AeeneJUvRu40Bny2NuyZT2KKG3kq8XnX9xK/X11rL/4+Spw6+0UUJpt3
+ P2Uip/6zPQKajgwrtLF4OGWovHSmxgRMLtiEAWl7rGQQ3383vEfNQjIqUTFnR778f32R
+ PBAjyOG3FqPu6puYIrTlhnzTvGA8pkr1j5Ndi4M5WxS1ruenUHXBWtz/C+Yi42f32CTK
+ AhHQwqA5eJ0ZRHstQuCrq7fp+xFNTDcj8+6S4cG922fjvlJKVZmZHzKDVDjBndTx8eQJ
+ L8wLRMpDY54t2qoyfcio9DQA4vq02SAhC0FD3EWRUk4jKuaCml/Su3tM2ijx/ah5ZFkS
+ 7VLA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1737675953; x=1738280753;
+ d=1e100.net; s=20230601; t=1737675965; x=1738280765;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=MvtCakZyrGCXwv1NUluQigNUDDDoRJgD07DKcxozaAI=;
- b=P+koqzUU5MYRFHAZPk3vNAtrXJ5J14/0SPVSeVr915zqmjGy9zi+O4ZpAUUJ2DeF6u
- SNOoNe/0p2r7XI4r1SfiAbQCJKdmO6IGlguf79jTb0HRxwRranwR2d8Iqutq08izzUFX
- lr0XKN5u6LsO3Wcm1+/CwmAlqwTBJWpRAgcu/c/+ULtvgbjb6nVw0o1ispOV7QDuC5Ms
- B+sXWQ5Z0RDV81JOV0jHYrX/tg61VZWE2rIUtrVo27r+8e4gEDaON2bsX2mlaK8hYJ1k
- PTv+Nir2puWReNEplo/ePiFmq6l4Wy0yFEi1M34nkppehxzXmhfYmiuVIUD3zm16L9yq
- inXw==
-X-Gm-Message-State: AOJu0YwxQs8fQIK72fT3G7pTHXV+x0n4X3omTFJn6wUQP6E9Gi5AMDDK
- PWcW0Ey29odt/oBKJ4P/ZovF1iDTmXGZ4mWNwkb4r2Pc++yEe0EzcnD5WapaHsO6TALiIm8ox0B
- mc8w=
-X-Gm-Gg: ASbGncsMTp3nWy45Ou8FI9SMsrbr3SvLKbdn2Jvfl8klAdpXDeVW4s/LQmQqIGFD4Su
- ZZCV9rMh5pgV8THfIJdx4n46NLHB1zZMb4kc3WXwngXZfUcj6OG7mfOU9odIGwPkPjd+CdsPa13
- 3p4t+qnhQR8hLHUBEq3/CcEm93vP1QjmqZ36SehZpyu43+xYDzetZLLm5RFLTGaJ9q9Rx937WxZ
- dArB09aUL8GJslcwEJoooxRdT15f0mlv4UVtNi8kBBPkRveMgkR9oqM69loTygPOYHIDKJXApJk
- m39XfO3b8h2cZvxzdFqPHRYUVhr1LPDuvLPxru+BgUNbxDSKgjFZzos=
-X-Google-Smtp-Source: AGHT+IESHbhLNhi6WI+MIsv7kwcNIGaQJ9dXLlWxoyCR3XibduHPGVHiP0CzOiY9OItw0/7PMnFvyA==
-X-Received: by 2002:a05:600c:1987:b0:434:f753:6012 with SMTP id
- 5b1f17b1804b1-438913f2f4emr282730315e9.17.1737675953608; 
- Thu, 23 Jan 2025 15:45:53 -0800 (PST)
+ bh=sQ+5PubFZrrCYmUor7z2ohXZLQOj0+FDz6CQ50FZwrM=;
+ b=Cfy6Xo3qxtvzKIC+ndbbXOIGwdAZQCgOPQvl2Cc6806oO7xty8KJdCn+7El5p0DD6l
+ kvOhYAul3elSofzs/QPkTM9uJtMIVDH8v0Pky4KYjqf7J4ieE2r2u2s6IQDll1AZO9IN
+ WQTht82GiADUdRyaLbFs+SFxXk+zAgPC/yu4GVtvTISbNRDmuMY/W3Rs3w/JouMgo28W
+ uatsZvNtxqa9icosRvxH3wRTI63oCgzOtUGxtp4L/BtFWKiwCugpD77RB0Jj1R3VwJRP
+ OYxToi0+ej637XEessdiXyE3zGfyhsM5pb39wQqYO1DPbpJV8g9NxtjNFuZEru4OWW0b
+ kroA==
+X-Gm-Message-State: AOJu0YwooFbbq0XB0Kn0dK6WNoBf1FqcxAUnKK69/bieKXX9O8ePPMb2
+ zz4AGd8KtjcFdY3DwvQ/bQRIKD3YenZL+O5k3TiwVgBd9NvxwN90nCJzXrhJDipZMvnTKqY8BFc
+ FeWQ=
+X-Gm-Gg: ASbGncs9KPwaV9JRSSnGPIe83xi1rs0a6/hC/QjAwBmTOYxfB9N5GjvNbsyExZLZA2T
+ 0h/7tl5Qhv06ibgBUm/4OYKt71a1Hw+iZfJsfoLG62+io14TaHNzJzQdREjcXpf5ypcDBUshVAD
+ lUB4VOAPEVq+zGJiPpVyWM0YXbacvUWx5sCkAZjOKTyYudNykDaky1gum9pLcCoHPT4w5F8ig9a
+ OjbWd+rG9qqsMKkMBXAemvhNi7zwqZIMYEXVq0A+uUwydWCL+nLsg7j1hWt5Fu3axRyb5xhIGTo
+ MuXOWb/e5eo8LUOWp1WKdkJUzTDniAoVgeg5PPPQVakDWRHFextqoao=
+X-Google-Smtp-Source: AGHT+IGsiKZVvuhBn67VKbvp7ZCKdJegwhgfqv/IiEk5xyysRNRbKSY3tyJ6LqHq9Om3O3Zv9Xfmsw==
+X-Received: by 2002:adf:f250:0:b0:38a:5dc4:6dcd with SMTP id
+ ffacd0b85a97d-38c22279dafmr4343550f8f.22.1737675965020; 
+ Thu, 23 Jan 2025 15:46:05 -0800 (PST)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-438bd43cdbbsm7488805e9.0.2025.01.23.15.45.51
+ ffacd0b85a97d-38c2a1c403asm989733f8f.93.2025.01.23.15.46.03
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Thu, 23 Jan 2025 15:45:52 -0800 (PST)
+ Thu, 23 Jan 2025 15:46:03 -0800 (PST)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Peter Maydell <peter.maydell@linaro.org>,
@@ -73,18 +73,17 @@ Cc: Peter Maydell <peter.maydell@linaro.org>,
  xen-devel@lists.xenproject.org,
  Richard Henderson <richard.henderson@linaro.org>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PATCH 17/20] cpus: Have cpu_class_init_props() per user / system
- emulation
-Date: Fri, 24 Jan 2025 00:44:11 +0100
-Message-ID: <20250123234415.59850-18-philmd@linaro.org>
+Subject: [PATCH 19/20] cpus: Register VMState per user / system emulation
+Date: Fri, 24 Jan 2025 00:44:13 +0100
+Message-ID: <20250123234415.59850-20-philmd@linaro.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20250123234415.59850-1-philmd@linaro.org>
 References: <20250123234415.59850-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32b;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x32b.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::433;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x433.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -107,203 +106,360 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Rather than maintaining a mix of system / user code for CPU
-class properties, move system properties to cpu-system.c
-and user ones to the new cpu-user.c unit.
+Simplify cpu-target.c by extracting mixed vmstate code
+into the cpu_vmstate_register() / cpu_vmstate_unregister()
+helpers, implemented in cpu-user.c and cpu-system.c.
 
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 ---
- cpu-target.c         | 58 --------------------------------------------
- hw/core/cpu-system.c | 40 ++++++++++++++++++++++++++++++
- hw/core/cpu-user.c   | 27 +++++++++++++++++++++
- hw/core/meson.build  |  5 +++-
- 4 files changed, 71 insertions(+), 59 deletions(-)
- create mode 100644 hw/core/cpu-user.c
+XXX: tlb_flush() temporary declared manually.
 
+Only 2 more CONFIG_USER_ONLY to go.
+---
+ include/hw/core/cpu.h |   2 +
+ cpu-target.c          | 122 +----------------------------------------
+ hw/core/cpu-system.c  | 123 ++++++++++++++++++++++++++++++++++++++++++
+ hw/core/cpu-user.c    |  12 +++++
+ 4 files changed, 139 insertions(+), 120 deletions(-)
+
+diff --git a/include/hw/core/cpu.h b/include/hw/core/cpu.h
+index fb397cdfc53..aadbd2e1122 100644
+--- a/include/hw/core/cpu.h
++++ b/include/hw/core/cpu.h
+@@ -1163,6 +1163,8 @@ G_NORETURN void cpu_abort(CPUState *cpu, const char *fmt, ...)
+ /* $(top_srcdir)/cpu.c */
+ void cpu_class_init_props(DeviceClass *dc);
+ void cpu_exec_initfn(CPUState *cpu);
++void cpu_vmstate_register(CPUState *cpu);
++void cpu_vmstate_unregister(CPUState *cpu);
+ bool cpu_exec_realizefn(CPUState *cpu, Error **errp);
+ void cpu_exec_unrealizefn(CPUState *cpu);
+ void cpu_exec_reset_hold(CPUState *cpu);
 diff --git a/cpu-target.c b/cpu-target.c
-index c05ef1ff096..dff8c0747f9 100644
+index 3d33d20b8c8..bfcd48f9ae2 100644
 --- a/cpu-target.c
 +++ b/cpu-target.c
-@@ -19,15 +19,12 @@
- 
- #include "qemu/osdep.h"
+@@ -21,115 +21,16 @@
  #include "qapi/error.h"
--#include "hw/qdev-core.h"
--#include "hw/qdev-properties.h"
  #include "qemu/error-report.h"
  #include "qemu/qemu-print.h"
- #include "migration/vmstate.h"
- #ifndef CONFIG_USER_ONLY
- #include "hw/core/sysemu-cpu-ops.h"
- #include "exec/address-spaces.h"
--#include "exec/memory.h"
- #endif
+-#include "migration/vmstate.h"
+-#ifndef CONFIG_USER_ONLY
+-#include "hw/core/sysemu-cpu-ops.h"
+-#endif
  #include "system/accel-ops.h"
  #include "system/cpus.h"
-@@ -179,61 +176,6 @@ void cpu_exec_unrealizefn(CPUState *cpu)
-     accel_cpu_common_unrealize(cpu);
- }
+-#include "system/tcg.h"
+ #include "exec/replay-core.h"
+ #include "exec/cpu-common.h"
+-#include "exec/exec-all.h"
+-#include "exec/tb-flush.h"
+ #include "exec/log.h"
+ #include "accel/accel-cpu-target.h"
+ #include "trace/trace-root.h"
+ #include "qemu/accel.h"
+ #include "hw/core/cpu.h"
  
--/*
-- * This can't go in hw/core/cpu.c because that file is compiled only
-- * once for both user-mode and system builds.
-- */
--static const Property cpu_common_props[] = {
--#ifdef CONFIG_USER_ONLY
--    /*
--     * Create a property for the user-only object, so users can
--     * adjust prctl(PR_SET_UNALIGN) from the command-line.
--     * Has no effect if the target does not support the feature.
--     */
--    DEFINE_PROP_BOOL("prctl-unalign-sigbus", CPUState,
--                     prctl_unalign_sigbus, false),
--#else
--    /*
--     * Create a memory property for system CPU object, so users can
--     * wire up its memory.  The default if no link is set up is to use
--     * the system address space.
--     */
--    DEFINE_PROP_LINK("memory", CPUState, memory, TYPE_MEMORY_REGION,
--                     MemoryRegion *),
+-#ifndef CONFIG_USER_ONLY
+-static int cpu_common_post_load(void *opaque, int version_id)
+-{
+-#ifdef CONFIG_TCG
+-    if (tcg_enabled()) {
+-        CPUState *cpu = opaque;
+-
+-        /*
+-         * 0x01 was CPU_INTERRUPT_EXIT. This line can be removed when the
+-         * version_id is increased.
+-         */
+-        cpu->interrupt_request &= ~0x01;
+-
+-        tlb_flush(cpu);
+-
+-        /*
+-         * loadvm has just updated the content of RAM, bypassing the
+-         * usual mechanisms that ensure we flush TBs for writes to
+-         * memory we've translated code from. So we must flush all TBs,
+-         * which will now be stale.
+-         */
+-        tb_flush(cpu);
+-    }
 -#endif
+-
+-    return 0;
+-}
+-
+-static int cpu_common_pre_load(void *opaque)
+-{
+-    CPUState *cpu = opaque;
+-
+-    cpu->exception_index = -1;
+-
+-    return 0;
+-}
+-
+-static bool cpu_common_exception_index_needed(void *opaque)
+-{
+-    CPUState *cpu = opaque;
+-
+-    return tcg_enabled() && cpu->exception_index != -1;
+-}
+-
+-static const VMStateDescription vmstate_cpu_common_exception_index = {
+-    .name = "cpu_common/exception_index",
+-    .version_id = 1,
+-    .minimum_version_id = 1,
+-    .needed = cpu_common_exception_index_needed,
+-    .fields = (const VMStateField[]) {
+-        VMSTATE_INT32(exception_index, CPUState),
+-        VMSTATE_END_OF_LIST()
+-    }
 -};
 -
--#ifndef CONFIG_USER_ONLY
--static bool cpu_get_start_powered_off(Object *obj, Error **errp)
+-static bool cpu_common_crash_occurred_needed(void *opaque)
 -{
--    CPUState *cpu = CPU(obj);
--    return cpu->start_powered_off;
+-    CPUState *cpu = opaque;
+-
+-    return cpu->crash_occurred;
 -}
 -
--static void cpu_set_start_powered_off(Object *obj, bool value, Error **errp)
--{
--    CPUState *cpu = CPU(obj);
--    cpu->start_powered_off = value;
--}
+-static const VMStateDescription vmstate_cpu_common_crash_occurred = {
+-    .name = "cpu_common/crash_occurred",
+-    .version_id = 1,
+-    .minimum_version_id = 1,
+-    .needed = cpu_common_crash_occurred_needed,
+-    .fields = (const VMStateField[]) {
+-        VMSTATE_BOOL(crash_occurred, CPUState),
+-        VMSTATE_END_OF_LIST()
+-    }
+-};
+-
+-const VMStateDescription vmstate_cpu_common = {
+-    .name = "cpu_common",
+-    .version_id = 1,
+-    .minimum_version_id = 1,
+-    .pre_load = cpu_common_pre_load,
+-    .post_load = cpu_common_post_load,
+-    .fields = (const VMStateField[]) {
+-        VMSTATE_UINT32(halted, CPUState),
+-        VMSTATE_UINT32(interrupt_request, CPUState),
+-        VMSTATE_END_OF_LIST()
+-    },
+-    .subsections = (const VMStateDescription * const []) {
+-        &vmstate_cpu_common_exception_index,
+-        &vmstate_cpu_common_crash_occurred,
+-        NULL
+-    }
+-};
 -#endif
 -
--void cpu_class_init_props(DeviceClass *dc)
--{
--#ifndef CONFIG_USER_ONLY
--    ObjectClass *oc = OBJECT_CLASS(dc);
--
--    /*
--     * We can't use DEFINE_PROP_BOOL in the Property array for this
--     * property, because we want this to be settable after realize.
--     */
--    object_class_property_add_bool(oc, "start-powered-off",
--                                   cpu_get_start_powered_off,
--                                   cpu_set_start_powered_off);
--#endif
--
--    device_class_set_props(dc, cpu_common_props);
--}
--
- void cpu_exec_initfn(CPUState *cpu)
+ bool cpu_exec_realizefn(CPUState *cpu, Error **errp)
  {
- #ifndef CONFIG_USER_ONLY
+     if (!accel_cpu_common_realize(cpu, errp)) {
+@@ -139,33 +40,14 @@ bool cpu_exec_realizefn(CPUState *cpu, Error **errp)
+     /* Wait until cpu initialization complete before exposing cpu. */
+     cpu_list_add(cpu);
+ 
+-#ifdef CONFIG_USER_ONLY
+-    assert(qdev_get_vmsd(DEVICE(cpu)) == NULL ||
+-           qdev_get_vmsd(DEVICE(cpu))->unmigratable);
+-#else
+-    if (qdev_get_vmsd(DEVICE(cpu)) == NULL) {
+-        vmstate_register(NULL, cpu->cpu_index, &vmstate_cpu_common, cpu);
+-    }
+-    if (cpu->cc->sysemu_ops->legacy_vmsd != NULL) {
+-        vmstate_register(NULL, cpu->cpu_index, cpu->cc->sysemu_ops->legacy_vmsd, cpu);
+-    }
+-#endif /* CONFIG_USER_ONLY */
++    cpu_vmstate_register(cpu);
+ 
+     return true;
+ }
+ 
+ void cpu_exec_unrealizefn(CPUState *cpu)
+ {
+-#ifndef CONFIG_USER_ONLY
+-    CPUClass *cc = CPU_GET_CLASS(cpu);
+-
+-    if (cc->sysemu_ops->legacy_vmsd != NULL) {
+-        vmstate_unregister(NULL, cc->sysemu_ops->legacy_vmsd, cpu);
+-    }
+-    if (qdev_get_vmsd(DEVICE(cpu)) == NULL) {
+-        vmstate_unregister(NULL, &vmstate_cpu_common, cpu);
+-    }
+-#endif
++    cpu_vmstate_unregister(cpu);
+ 
+     cpu_list_remove(cpu);
+     /*
 diff --git a/hw/core/cpu-system.c b/hw/core/cpu-system.c
-index 6aae28a349a..c63c984a803 100644
+index 0520c362db4..3e1f60f23df 100644
 --- a/hw/core/cpu-system.c
 +++ b/hw/core/cpu-system.c
-@@ -20,7 +20,10 @@
- 
- #include "qemu/osdep.h"
+@@ -22,10 +22,21 @@
  #include "qapi/error.h"
-+#include "exec/memory.h"
+ #include "exec/address-spaces.h"
+ #include "exec/memory.h"
++#include "exec/tb-flush.h"
  #include "exec/tswap.h"
-+#include "hw/qdev-core.h"
-+#include "hw/qdev-properties.h"
+ #include "hw/qdev-core.h"
+ #include "hw/qdev-properties.h"
  #include "hw/core/sysemu-cpu-ops.h"
++#include "migration/vmstate.h"
++#include "system/tcg.h"
++
++/*
++ * XXX this series plan is to be applied on top on my exec/cputlb rework series,
++ * then tlb_flush() won't be declared target-specific in exec-all.h.
++ * Meanwhile, declare locally.
++ * XXX
++ */
++void tlb_flush(CPUState *cs);
  
  bool cpu_paging_enabled(const CPUState *cpu)
-@@ -142,3 +145,40 @@ GuestPanicInformation *cpu_get_crash_info(CPUState *cpu)
-     }
-     return res;
+ {
+@@ -189,3 +200,115 @@ void cpu_exec_initfn(CPUState *cpu)
+     cpu->memory = get_system_memory();
+     object_ref(OBJECT(cpu->memory));
  }
 +
-+static const Property cpu_system_props[] = {
-+    /*
-+     * Create a memory property for system CPU object, so users can
-+     * wire up its memory.  The default if no link is set up is to use
-+     * the system address space.
-+     */
-+    DEFINE_PROP_LINK("memory", CPUState, memory, TYPE_MEMORY_REGION,
-+                     MemoryRegion *),
++static int cpu_common_post_load(void *opaque, int version_id)
++{
++#ifdef CONFIG_TCG
++    if (tcg_enabled()) {
++        CPUState *cpu = opaque;
++
++        /*
++         * 0x01 was CPU_INTERRUPT_EXIT. This line can be removed when the
++         * version_id is increased.
++         */
++        cpu->interrupt_request &= ~0x01;
++
++        tlb_flush(cpu);
++
++        /*
++         * loadvm has just updated the content of RAM, bypassing the
++         * usual mechanisms that ensure we flush TBs for writes to
++         * memory we've translated code from. So we must flush all TBs,
++         * which will now be stale.
++         */
++        tb_flush(cpu);
++    }
++#endif
++
++    return 0;
++}
++
++static int cpu_common_pre_load(void *opaque)
++{
++    CPUState *cpu = opaque;
++
++    cpu->exception_index = -1;
++
++    return 0;
++}
++
++static bool cpu_common_exception_index_needed(void *opaque)
++{
++    CPUState *cpu = opaque;
++
++    return tcg_enabled() && cpu->exception_index != -1;
++}
++
++static const VMStateDescription vmstate_cpu_common_exception_index = {
++    .name = "cpu_common/exception_index",
++    .version_id = 1,
++    .minimum_version_id = 1,
++    .needed = cpu_common_exception_index_needed,
++    .fields = (const VMStateField[]) {
++        VMSTATE_INT32(exception_index, CPUState),
++        VMSTATE_END_OF_LIST()
++    }
 +};
 +
-+static bool cpu_get_start_powered_off(Object *obj, Error **errp)
++static bool cpu_common_crash_occurred_needed(void *opaque)
 +{
-+    CPUState *cpu = CPU(obj);
-+    return cpu->start_powered_off;
++    CPUState *cpu = opaque;
++
++    return cpu->crash_occurred;
 +}
 +
-+static void cpu_set_start_powered_off(Object *obj, bool value, Error **errp)
++static const VMStateDescription vmstate_cpu_common_crash_occurred = {
++    .name = "cpu_common/crash_occurred",
++    .version_id = 1,
++    .minimum_version_id = 1,
++    .needed = cpu_common_crash_occurred_needed,
++    .fields = (const VMStateField[]) {
++        VMSTATE_BOOL(crash_occurred, CPUState),
++        VMSTATE_END_OF_LIST()
++    }
++};
++
++const VMStateDescription vmstate_cpu_common = {
++    .name = "cpu_common",
++    .version_id = 1,
++    .minimum_version_id = 1,
++    .pre_load = cpu_common_pre_load,
++    .post_load = cpu_common_post_load,
++    .fields = (const VMStateField[]) {
++        VMSTATE_UINT32(halted, CPUState),
++        VMSTATE_UINT32(interrupt_request, CPUState),
++        VMSTATE_END_OF_LIST()
++    },
++    .subsections = (const VMStateDescription * const []) {
++        &vmstate_cpu_common_exception_index,
++        &vmstate_cpu_common_crash_occurred,
++        NULL
++    }
++};
++
++void cpu_vmstate_register(CPUState *cpu)
 +{
-+    CPUState *cpu = CPU(obj);
-+    cpu->start_powered_off = value;
++    if (qdev_get_vmsd(DEVICE(cpu)) == NULL) {
++        vmstate_register(NULL, cpu->cpu_index, &vmstate_cpu_common, cpu);
++    }
++    if (cpu->cc->sysemu_ops->legacy_vmsd != NULL) {
++        vmstate_register(NULL, cpu->cpu_index, cpu->cc->sysemu_ops->legacy_vmsd, cpu);
++    }
 +}
 +
-+void cpu_class_init_props(DeviceClass *dc)
++void cpu_vmstate_unregister(CPUState *cpu)
 +{
-+    ObjectClass *oc = OBJECT_CLASS(dc);
++    CPUClass *cc = CPU_GET_CLASS(cpu);
 +
-+    /*
-+     * We can't use DEFINE_PROP_BOOL in the Property array for this
-+     * property, because we want this to be settable after realize.
-+     */
-+    object_class_property_add_bool(oc, "start-powered-off",
-+                                   cpu_get_start_powered_off,
-+                                   cpu_set_start_powered_off);
-+
-+    device_class_set_props(dc, cpu_system_props);
++    if (cc->sysemu_ops->legacy_vmsd != NULL) {
++        vmstate_unregister(NULL, cc->sysemu_ops->legacy_vmsd, cpu);
++    }
++    if (qdev_get_vmsd(DEVICE(cpu)) == NULL) {
++        vmstate_unregister(NULL, &vmstate_cpu_common, cpu);
++    }
 +}
 diff --git a/hw/core/cpu-user.c b/hw/core/cpu-user.c
-new file mode 100644
-index 00000000000..e5ccf6bf13a
---- /dev/null
+index cdd8de2fefa..1892acdee0f 100644
+--- a/hw/core/cpu-user.c
 +++ b/hw/core/cpu-user.c
-@@ -0,0 +1,27 @@
-+/*
-+ * QEMU CPU model (user specific)
-+ *
-+ * Copyright (c) Linaro, Ltd.
-+ *
-+ * SPDX-License-Identifier: GPL-2.0-or-later
-+ */
+@@ -10,6 +10,7 @@
+ #include "hw/qdev-core.h"
+ #include "hw/qdev-properties.h"
+ #include "hw/core/cpu.h"
++#include "migration/vmstate.h"
+ 
+ static const Property cpu_user_props[] = {
+     /*
+@@ -30,3 +31,14 @@ void cpu_exec_initfn(CPUState *cpu)
+ {
+     /* nothing to do */
+ }
 +
-+#include "qemu/osdep.h"
-+#include "hw/qdev-core.h"
-+#include "hw/qdev-properties.h"
-+#include "hw/core/cpu.h"
-+
-+static const Property cpu_user_props[] = {
-+    /*
-+     * Create a property for the user-only object, so users can
-+     * adjust prctl(PR_SET_UNALIGN) from the command-line.
-+     * Has no effect if the target does not support the feature.
-+     */
-+    DEFINE_PROP_BOOL("prctl-unalign-sigbus", CPUState,
-+                     prctl_unalign_sigbus, false),
-+};
-+
-+void cpu_class_init_props(DeviceClass *dc)
++void cpu_vmstate_register(CPUState *cpu)
 +{
-+    device_class_set_props(dc, cpu_user_props);
++    assert(qdev_get_vmsd(DEVICE(cpu)) == NULL ||
++           qdev_get_vmsd(DEVICE(cpu))->unmigratable);
 +}
-diff --git a/hw/core/meson.build b/hw/core/meson.build
-index 65a1698ed1f..b5a545a0edd 100644
---- a/hw/core/meson.build
-+++ b/hw/core/meson.build
-@@ -46,4 +46,7 @@ system_ss.add(files(
-   'vm-change-state-handler.c',
-   'clock-vmstate.c',
- ))
--user_ss.add(files('qdev-user.c'))
-+user_ss.add(files(
-+  'cpu-user.c',
-+  'qdev-user.c',
-+))
++
++void cpu_vmstate_unregister(CPUState *cpu)
++{
++    /* nothing to do */
++}
 -- 
 2.47.1
 
