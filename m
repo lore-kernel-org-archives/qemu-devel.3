@@ -4,108 +4,102 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 03690C02182
-	for <qemu-devel@archiver.kernel.org>; Thu, 23 Jan 2025 11:58:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A58FEC02182
+	for <qemu-devel@archiver.kernel.org>; Thu, 23 Jan 2025 11:59:27 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tavr0-00041C-U2; Thu, 23 Jan 2025 06:58:34 -0500
+	id 1tavrj-0004ad-1J; Thu, 23 Jan 2025 06:59:19 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1tavqv-00040v-G9
- for qemu-devel@nongnu.org; Thu, 23 Jan 2025 06:58:29 -0500
-Received: from mail-ej1-x631.google.com ([2a00:1450:4864:20::631])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1tavqt-0000Wx-Fz
- for qemu-devel@nongnu.org; Thu, 23 Jan 2025 06:58:29 -0500
-Received: by mail-ej1-x631.google.com with SMTP id
- a640c23a62f3a-aa6b4cc7270so139889766b.0
- for <qemu-devel@nongnu.org>; Thu, 23 Jan 2025 03:58:26 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1737633505; x=1738238305; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:user-agent
- :references:in-reply-to:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=LJpcF5/d5YI/Ij4GEgP4kTEECceDK3+UOyRdXMkw838=;
- b=zNOhv/sEU/bwjC3fnlPt/MpZejqOOsq8vDLU7y6BDd0U5ez0WcHL52OBv4jz4TQxrI
- ToLuR0LPxN/LH+uvRDGCRnLx27CreAsLYxQUTFr/hfP1ETmOCf7UtAba6V+dHN7uHC22
- XGrLRpxjh3EJRnmgFySjHdlctTWeida8ts1MW1NxMdKck92UzTtsBU2Z3YB5WBfuWjzC
- 0Y3zUtjLtGh+JXbpRKjuM7fyhjzh8mOL49sqpD6vAZXRNow0b245mDK/AYtqQUkCpP6C
- jLRh+z32f4hCvox/nGLK04CErYnXGXYCU3PReqs0qbG4HiLxYoeuszu+EZxRVH6po7S+
- UTeg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1737633505; x=1738238305;
- h=content-transfer-encoding:mime-version:message-id:date:user-agent
- :references:in-reply-to:subject:cc:to:from:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=LJpcF5/d5YI/Ij4GEgP4kTEECceDK3+UOyRdXMkw838=;
- b=d5sWv5UYnMnTCGXxi74LIk70GsYDupD9FFhebUvf4tdWejfxRN2Ms5pPjsM2S7eKYL
- MW8FM7cH+OgY9/Ycqg+WVTjVmJiPjztDnbA8fRv3H3OUNFQUohfmd3HfGiYbj3RFhlrG
- 2WuEp3IzoaRDh7KGPTqsAXRYPY6jzOCioqi62vWcj1MBwKPpQsfbD9zROCeRjaV/g6XX
- e403VM9CQcaN39mBvSWWxck9CXJDzL/5llyMfuqxc8CCsSiZVHlFER0OCa2AwLRLWRMb
- nd0zwMbPmoahrH6QcS6HMXQ81jY9xtkBdrrr4gdZ+yuP3FkpA50kqSQhjFb/lICKVdCI
- ht9A==
-X-Forwarded-Encrypted: i=1;
- AJvYcCUzvII6Q5NoB8wECyz3Ebi8eIrjJeRErgh3twWah8Zp1jWsZskW/MWoDDSAh+utK6N19XKnO+AHMwdn@nongnu.org
-X-Gm-Message-State: AOJu0YzPuYn15/vUduTgBQietz+v2gf8Gaa7YkVGzUeJZUBXyOc5jK9U
- aBqvCrjJoFZFGhqw6uVmd5AmAhoV9ENN0JdlOY55NZqJGkGfhUrZ5t+PMkRe1GE=
-X-Gm-Gg: ASbGncs5QH/xBjLo/8nAbBmCsDLB7nU8Jm2h68a/n0DdmZjMIyZP2CfWdeWiou9OF60
- zC5qrA5vZZjdY1luqbWaCa8tnxEc8Qpa39Quf7bYjQ3S/mV6Kg4ui6ySZ+uh4nS0N+LLDErrDAU
- +4e0J3fFhj4xnwWxWaFVjVLTX9QvS/EBIAfVInvyqbUDuVzmiBFXmkyNJLp0Ar3ocRhlPb/yRgp
- UkVji7MY5qCBuQYQIDRpNEhPiOXw22Q1XoK6wmf9BeT4qq4npNT9uzmJAHZkf1t9IY0nMPWDSGc
- 4Ck=
-X-Google-Smtp-Source: AGHT+IHZSn/hkJLrEg5PYSWkpxTzY07xlPA/GbBPVS8/DFkrsgJVBOgWSZldEuXCqTAmRcOYK8+SXg==
-X-Received: by 2002:a05:6402:2105:b0:5db:f52c:8074 with SMTP id
- 4fb4d7f45d1cf-5dbf52c8de5mr14669434a12.28.1737633505471; 
- Thu, 23 Jan 2025 03:58:25 -0800 (PST)
-Received: from draig.lan ([85.9.250.243]) by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-ab384f8628asm1059904766b.138.2025.01.23.03.58.24
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 23 Jan 2025 03:58:24 -0800 (PST)
-Received: from draig (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id 0F0985FAA0;
- Thu, 23 Jan 2025 11:58:24 +0000 (GMT)
-From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
-To: Dmitry Osipenko <dmitry.osipenko@collabora.com>
-Cc: Akihiko Odaki <akihiko.odaki@daynix.com>,  Huang Rui
- <ray.huang@amd.com>,  =?utf-8?Q?Marc-Andr=C3=A9?= Lureau
- <marcandre.lureau@redhat.com>,
- Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>,  Gerd Hoffmann
- <kraxel@redhat.com>,  "Michael S . Tsirkin" <mst@redhat.com>,  Paolo
- Bonzini <pbonzini@redhat.com>,  Gert Wollny <gert.wollny@collabora.com>,
- qemu-devel@nongnu.org,  Gurchetan Singh <gurchetansingh@chromium.org>,
- Alyssa Ross <hi@alyssa.is>,  Roger Pau =?utf-8?Q?Monn=C3=A9?=
- <roger.pau@citrix.com>,
- Alex Deucher <alexander.deucher@amd.com>,  Stefano Stabellini
- <stefano.stabellini@amd.com>,  Christian =?utf-8?Q?K=C3=B6nig?=
- <christian.koenig@amd.com>,
- Xenia Ragiadakou <xenia.ragiadakou@amd.com>,  Pierre-Eric Pelloux-Prayer
- <pierre-eric.pelloux-prayer@amd.com>,  Honglei Huang
- <honglei1.huang@amd.com>,  Julia Zhang <julia.zhang@amd.com>,  Chen Jiqian
- <Jiqian.Chen@amd.com>,  Rob Clark <robdclark@gmail.com>,  Yiwei Zhang
- <zzyiwei@chromium.org>,  Sergio Lopez Pascual <slp@redhat.com>
-Subject: Re: [PATCH v5 0/8] Support virtio-gpu DRM native context
-In-Reply-To: <f5c8e901-5d36-47b0-91d3-40699c51c259@collabora.com> (Dmitry
- Osipenko's message of "Thu, 23 Jan 2025 14:23:48 +0300")
-References: <20250119220050.15167-1-dmitry.osipenko@collabora.com>
- <87jzamn5ri.fsf@draig.linaro.org>
- <f5c8e901-5d36-47b0-91d3-40699c51c259@collabora.com>
-User-Agent: mu4e 1.12.8; emacs 29.4
-Date: Thu, 23 Jan 2025 11:58:24 +0000
-Message-ID: <874j1plp27.fsf@draig.linaro.org>
+ (Exim 4.90_1) (envelope-from <vaibhav@linux.ibm.com>)
+ id 1tavrh-0004a3-IC; Thu, 23 Jan 2025 06:59:17 -0500
+Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <vaibhav@linux.ibm.com>)
+ id 1tavrf-0000cN-9a; Thu, 23 Jan 2025 06:59:17 -0500
+Received: from pps.filterd (m0353725.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 50NBU9c4014261;
+ Thu, 23 Jan 2025 11:59:12 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+ :content-type:date:from:in-reply-to:message-id:mime-version
+ :references:subject:to; s=pp1; bh=nZjymtTpL/kiemODZo4OlXaGzQ8W1e
+ A8uYTb0wOcBzQ=; b=C3zIJmIWPo9EcDfxGMQ2tk53LhoMqsFPoB1U2g7vFQxIgz
+ 82P0Bp20eBZMNKmOgo2agbpU4RMw//tDredd99vlnI5NKPKqv2zKaQzVSFhRT2qG
+ 8VOkhvdy3leaWf8E0q8A6grOL608EK6kyqKCf+cCb0Xtnv+HzR8ieeVGO2NN3kcD
+ JKHnNPzeZKMgLyOJIaHy9V9gu0IiEufoDwB4oklXqaHmRI0X1i3Ift8FhLgocS9R
+ D8TBkZS+O3mLXFhJw9Q8SSRXsM36Dy3O/+oPXXvLKopB+zoOc5tvYUtgGkgiyctL
+ Uls8AhOKJGr973n83c67YjcmVurCv7c+fNObPNpQ==
+Received: from pps.reinject (localhost [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 44bckytcm6-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Thu, 23 Jan 2025 11:59:12 +0000 (GMT)
+Received: from m0353725.ppops.net (m0353725.ppops.net [127.0.0.1])
+ by pps.reinject (8.18.0.8/8.18.0.8) with ESMTP id 50NBh7JK006406;
+ Thu, 23 Jan 2025 11:59:11 GMT
+Received: from ppma21.wdc07v.mail.ibm.com
+ (5b.69.3da9.ip4.static.sl-reverse.com [169.61.105.91])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 44bckytckb-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Thu, 23 Jan 2025 11:59:11 +0000 (GMT)
+Received: from pps.filterd (ppma21.wdc07v.mail.ibm.com [127.0.0.1])
+ by ppma21.wdc07v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 50NAWC66029553;
+ Thu, 23 Jan 2025 11:58:46 GMT
+Received: from smtprelay03.fra02v.mail.ibm.com ([9.218.2.224])
+ by ppma21.wdc07v.mail.ibm.com (PPS) with ESMTPS id 448qmnncq9-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Thu, 23 Jan 2025 11:58:45 +0000
+Received: from smtpav01.fra02v.mail.ibm.com (smtpav01.fra02v.mail.ibm.com
+ [10.20.54.100])
+ by smtprelay03.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 50NBwh2a48955778
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Thu, 23 Jan 2025 11:58:44 GMT
+Received: from smtpav01.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id DDA7B20043;
+ Thu, 23 Jan 2025 11:58:43 +0000 (GMT)
+Received: from smtpav01.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id A2F8D20040;
+ Thu, 23 Jan 2025 11:58:41 +0000 (GMT)
+Received: from vaibhav?linux.ibm.com (unknown [9.124.210.34])
+ by smtpav01.fra02v.mail.ibm.com (Postfix) with SMTP;
+ Thu, 23 Jan 2025 11:58:41 +0000 (GMT)
+Received: by vaibhav@linux.ibm.com (sSMTP sendmail emulation);
+ Thu, 23 Jan 2025 17:28:40 +0530
+From: Vaibhav Jain <vaibhav@linux.ibm.com>
+To: Harsh Prateek Bora <harshpb@linux.ibm.com>, qemu-devel@nongnu.org,
+ kvm-ppc@vger.kernel.org, qemu-ppc@nongnu.org
+Cc: npiggin@gmail.com
+Subject: Re: [PATCH] spapr: nested: Add support for reporting Hostwide state
+ counter
+In-Reply-To: <efb4585f-27ca-4135-b065-8fd16e9c1648@linux.ibm.com>
+References: <20250115070741.297944-1-vaibhav@linux.ibm.com>
+ <efb4585f-27ca-4135-b065-8fd16e9c1648@linux.ibm.com>
+Date: Thu, 23 Jan 2025 17:28:40 +0530
+Message-ID: <87ikq5hhcf.fsf@vajain21.in.ibm.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::631;
- envelope-from=alex.bennee@linaro.org; helo=mail-ej1-x631.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Content-Type: text/plain
+X-TM-AS-GCONF: 00
+X-Proofpoint-GUID: F6x_KbM4h1piWeGkbVtLT6FP8FIb3zOQ
+X-Proofpoint-ORIG-GUID: Be5OsYhaV-j3aYtjqEAh2PAx6JzgGE0v
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1057,Hydra:6.0.680,FMLib:17.12.68.34
+ definitions=2025-01-23_05,2025-01-22_02,2024-11-22_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ spamscore=0 bulkscore=0
+ clxscore=1015 mlxscore=0 impostorscore=0 lowpriorityscore=0 adultscore=0
+ suspectscore=0 mlxlogscore=999 malwarescore=0 phishscore=0
+ priorityscore=1501 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2411120000 definitions=main-2501230091
+Received-SPF: pass client-ip=148.163.158.5; envelope-from=vaibhav@linux.ibm.com;
+ helo=mx0b-001b2d01.pphosted.com
+X-Spam_score_int: -26
+X-Spam_score: -2.7
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
+ RCVD_IN_MSPIKE_H2=-0.043, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -122,83 +116,328 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Dmitry Osipenko <dmitry.osipenko@collabora.com> writes:
+Updated the recipients list.
 
-> On 1/22/25 20:00, Alex Benn=C3=A9e wrote:
->> Dmitry Osipenko <dmitry.osipenko@collabora.com> writes:
->>=20
->>> This patchset adds DRM native context support to VirtIO-GPU on Qemu.
->>>
->>> Contarary to Virgl and Venus contexts that mediates high level GFX APIs,
->>> DRM native context [1] mediates lower level kernel driver UAPI, which
->>> reflects in a less CPU overhead and less/simpler code needed to support=
- it.
->>> DRM context consists of a host and guest parts that have to be implemen=
-ted
->>> for each GPU driver. On a guest side, DRM context presents a virtual GP=
-U as
->>> a real/native host GPU device for GL/VK applications.
->>>
->>> [1] https://www.youtube.com/watch?v=3D9sFP_yddLLQ
->>>
->>> Today there are four known DRM native context drivers existing in a wil=
-d:
->>>
->>>   - Freedreno (Qualcomm SoC GPUs), completely upstreamed
->>>   - AMDGPU, mostly merged into upstreams
->>=20
->> I tried my AMD system today with:
->>=20
->> Host:
->>   Aarch64 AVA system
->>   Trixie
->>   virglrenderer @ v1.1.0/99557f5aa130930d11f04ffeb07f3a9aa5963182
->>   -display sdl,gl=3Don (gtk,gl=3Don also came up but handled window resi=
-zing
->>   poorly)
->>=20=20=20
->> KVM Guest
->>=20
->>   Aarch64
->>   Trixie
->>   mesa @ main/d27748a76f7dd9236bfcf9ef172dc13b8c0e170f
->>   -Dvulkan-drivers=3Dvirtio,amd -Dgallium-drivers=3Dvirgl,radeonsi -Damd=
-gpu-virtio=3Dtrue
->>=20
->> However when I ran vulkan-info --summary KVM faulted with:
->>=20
->>   debian-trixie login: error: kvm run failed Bad address
->>    PC=3D0000ffffb9aa1eb0 X00=3D0000ffffba0450a4 X01=3D0000aaaaf7f32400
->>   X02=3D000000000000013c X03=3D0000ffffba045098 X04=3D0000aaaaf7f3253c
->>   X05=3D0000ffffba0451d4 X06=3D00000000c0016900 X07=3D000000000000000e
->>   X08=3D0000000000000014 X09=3D00000000000000ff X10=3D0000aaaaf7f32500
->>   X11=3D0000aaaaf7e4d028 X12=3D0000aaaaf7edbcb0 X13=3D0000000000000001
->>   X14=3D000000000000000c X15=3D0000000000007718 X16=3D0000ffffb93601f0
->>   X17=3D0000ffffb9aa1dc0 X18=3D00000000000076f0 X19=3D0000aaaaf7f31330
->>   X20=3D0000aaaaf7f323f0 X21=3D0000aaaaf7f235e0 X22=3D000000000000004c
->>   X23=3D0000aaaaf7f2b5e0 X24=3D0000aaaaf7ee0cb0 X25=3D00000000000000ff
->>   X26=3D0000000000000076 X27=3D0000ffffcd2b18a8 X28=3D0000aaaaf7ee0cb0
->>   X29=3D0000ffffcd2b0bd0 X30=3D0000ffffb86c8b98  SP=3D0000ffffcd2b0bd0
->>   PSTATE=3D20001000 --C- EL0t
->>   QEMU 9.2.50 monitor - type 'help' for more information
->>   (qemu) quit
->>=20
->> Which looks very much like the PFN locking failure. However booting up
->> with venus=3Don instead works. Could there be any differences in the way
->> device memory is mapped in the two cases?
+
+Thanks Harsh for reviewing the patch. I have addressed your review
+comments in the v2 of the patch located at [1].
+
+[1]
+https://lore.kernel.org/all/20250123115538.86821-1-vaibhav@linux.ibm.com
+
+
+Harsh Prateek Bora <harshpb@linux.ibm.com> writes:
+
+> Hi Vaibhav,
 >
-> Memory mapping works exactly the same for nctx and venus. Are you on
-> 6.13 host kernel?
+> On 1/15/25 12:37, Vaibhav Jain wrote:
+>> Add support for reporting Hostwide state counters for nested KVM pseries
+>> guests running with 'cap-nested-hv' with Qemu-TCG acting as
+>
+> I hope you meant cap-nested-papr for APIv2 (cap-nested-hv is APIv1).
+>
+>> L0-hypervisor. sPAPR supports reporting various stats counters for
+>> Guest-Management-Area(GMA) thats owned by L0-Hypervisor and are documented
+>> at [1]. These stats counters are exposed via a new bit-flag named
+>> 'getHostWideState' for the H_GUEST_GET_STATE hcall. Once this flag is set
+>> the hcall should populate the Guest-State-Elements in the requested GSB
+>> with the stat counter values. Currently following five counters are
+>> supported:
+>> 
+>> * host_heap		: The currently used bytes in the
+>> 			  Hypervisor's Guest Management Space
+>> 			  associated with the Host Partition.
+>> * host_heap_max		: The maximum bytes available in the
+>> 			  Hypervisor's Guest Management Space
+>> 			  associated with the Host Partition.
+>> * host_pagetable	: The currently used bytes in the
+>> 			  Hypervisor's Guest Page Table Management
+>> 			  Space associated with the Host Partition.
+>> * host_pagetable_max	: The maximum bytes available in the
+>> 			  Hypervisor's Guest Page Table Management
+>> 			  Space associated with the Host Partition.
+>> * host_pagetable_reclaim: The amount of space in bytes that has
+>> 			  been reclaimed due to overcommit in the
+>> 			  Hypervisor's Guest Page Table Management
+>> 			  Space associated with the Host Partition.
+>> 
+>> At the moment '0' is being reported for all these counters as these
+>> counters doesnt align with how L0-Qemu manages Guest memory.
+>> 
+>> The patch implements support for these counters by adding new members to
+>> the 'struct SpaprMachineStateNested'. These new members are then plugged
+>> into the existing 'guest_state_element_types[]' with the help of a new
+>> macro 'GSBE_MACHINE_NESTED_DW' together with a new helper
+>> 'get_machine_ptr()'. guest_state_request_check() is updated to ensure
+>> correctness of the requested GSB and finally h_guest_getset_state() is
+>> updated to handle the newly introduced flag
+>> 'GUEST_STATE_REQUEST_HOST_WIDE'.
+>> 
+>> This patch is tested with the proposed linux-kernel implementation to
+>> expose these stat-counter as perf-events at [2].
+>> 
+>> [2]
+>> https://lore.kernel.org/all/20241222140247.174998-1-vaibhav@linux.ibm.com
+>> 
+>> [1]
+>> https://lore.kernel.org/all/20241222140247.174998-2-vaibhav@linux.ibm.com
+>> 
+>> Signed-off-by: Vaibhav Jain <vaibhav@linux.ibm.com>
+>> ---
+>>   hw/ppc/spapr_nested.c         | 82 ++++++++++++++++++++++++++---------
+>>   include/hw/ppc/spapr_nested.h | 36 ++++++++++++---
+>>   2 files changed, 93 insertions(+), 25 deletions(-)
+>> 
+>> diff --git a/hw/ppc/spapr_nested.c b/hw/ppc/spapr_nested.c
+>> index 7def8eb73b..d912b99e92 100644
+>> --- a/hw/ppc/spapr_nested.c
+>> +++ b/hw/ppc/spapr_nested.c
+>> @@ -64,10 +64,9 @@ static
+>>   SpaprMachineStateNestedGuest *spapr_get_nested_guest(SpaprMachineState *spapr,
+>>                                                        target_ulong guestid)
+>>   {
+>> -    SpaprMachineStateNestedGuest *guest;
+>> -
+>> -    guest = g_hash_table_lookup(spapr->nested.guests, GINT_TO_POINTER(guestid));
+>> -    return guest;
+>> +    return spapr->nested.guests ?
+>> +        g_hash_table_lookup(spapr->nested.guests,
+>> +                            GINT_TO_POINTER(guestid)) : NULL;
+>>   }
+>>   
+>>   bool spapr_get_pate_nested_papr(SpaprMachineState *spapr, PowerPCCPU *cpu,
+>> @@ -613,6 +612,13 @@ static void *get_guest_ptr(SpaprMachineStateNestedGuest *guest,
+>>       return guest; /* for GSBE_NESTED */
+>>   }
+>>   
+>> +static void *get_machine_ptr(SpaprMachineStateNestedGuest *guest,
+>> +                             target_ulong vcpuid)
+>> +{
+>> +    SpaprMachineState *spapr = SPAPR_MACHINE(qdev_get_machine());
+>> +    return &spapr->nested;
+>> +}
+>> +
+>>   /*
+>>    * set=1 means the L1 is trying to set some state
+>>    * set=0 means the L1 is trying to get some state
+>> @@ -1012,7 +1018,12 @@ struct guest_state_element_type guest_state_element_types[] = {
+>>       GSBE_NESTED_VCPU(GSB_VCPU_OUT_BUFFER, 0x10, runbufout,   copy_state_runbuf),
+>>       GSBE_NESTED_VCPU(GSB_VCPU_OUT_BUF_MIN_SZ, 0x8, runbufout, out_buf_min_size),
+>>       GSBE_NESTED_VCPU(GSB_VCPU_HDEC_EXPIRY_TB, 0x8, hdecr_expiry_tb,
+>> -                     copy_state_hdecr)
+>> +                     copy_state_hdecr),
+>> +    GSBE_MACHINE_NESTED_DW(GSB_GUEST_HEAP, current_guest_heap),
+>> +    GSBE_MACHINE_NESTED_DW(GSB_GUEST_HEAP_MAX, max_guest_heap),
+>> +    GSBE_MACHINE_NESTED_DW(GSB_GUEST_PGTABLE_SIZE, current_pgtable_size),
+>> +    GSBE_MACHINE_NESTED_DW(GSB_GUEST_PGTABLE_SIZE_MAX, max_pgtable_size),
+>> +    GSBE_MACHINE_NESTED_DW(GSB_GUEST_PGTABLE_RECLAIM, pgtable_reclaim_size),
+>>   };
+>>   
+>>   void spapr_nested_gsb_init(void)
+>> @@ -1030,6 +1041,10 @@ void spapr_nested_gsb_init(void)
+>>           else if (type->id >= GSB_VCPU_IN_BUFFER)
+>>               /* 0x0c00 - 0xf000 Thread + RW */
+>>               type->flags = 0;
+>> +        else if (type->id >= GSB_GUEST_HEAP)
+>> +            /*0x0800 - 0x0804 Hostwide Counters*/
+>> +            type->flags = GUEST_STATE_ELEMENT_TYPE_FLAG_HOST_WIDE |
+>> +                          GUEST_STATE_ELEMENT_TYPE_FLAG_READ_ONLY;
+>>           else if (type->id >= GSB_VCPU_LPVR)
+>>               /* 0x0003 - 0x0bff Guest + RW */
+>
+> Now above comment can be updated for range until 0x07ff.
+>
+>>               type->flags = GUEST_STATE_ELEMENT_TYPE_FLAG_GUEST_WIDE;
+>> @@ -1138,22 +1153,30 @@ static bool guest_state_request_check(struct guest_state_request *gsr)
+>>               return false;
+>>           }
+>>   
+>> -        if (type->flags & GUEST_STATE_ELEMENT_TYPE_FLAG_GUEST_WIDE) {
+>> +        if (type->flags & GUEST_STATE_ELEMENT_TYPE_FLAG_HOST_WIDE) {
+>> +            /* Hostwide elements cant be clubbed with other types */
+>> +            if (!(gsr->flags & GUEST_STATE_REQUEST_HOST_WIDE)) {
+>> +                qemu_log_mask(LOG_GUEST_ERROR, "trying to get/set a host wide "
+>> +                              "Element ID:%04x.\n", id);
+>> +                return false;
+>> +            }
+>> +        } else  if (type->flags & GUEST_STATE_ELEMENT_TYPE_FLAG_GUEST_WIDE) {
+>>               /* guest wide element type */
+>>               if (!(gsr->flags & GUEST_STATE_REQUEST_GUEST_WIDE)) {
+>> -                qemu_log_mask(LOG_GUEST_ERROR, "trying to set a guest wide "
+>> +                qemu_log_mask(LOG_GUEST_ERROR, "trying to get/set a guest wide "
+>>                                 "Element ID:%04x.\n", id);
+>>                   return false;
+>>               }
+>>           } else {
+>>               /* thread wide element type */
+>> -            if (gsr->flags & GUEST_STATE_REQUEST_GUEST_WIDE) {
+>> -                qemu_log_mask(LOG_GUEST_ERROR, "trying to set a thread wide "
+>> -                              "Element ID:%04x.\n", id);
+>> +            if (gsr->flags & (GUEST_STATE_REQUEST_GUEST_WIDE |
+>> +                              GUEST_STATE_ELEMENT_TYPE_FLAG_HOST_WIDE)) {
+>> +                qemu_log_mask(LOG_GUEST_ERROR, "trying to get/set a thread wide"
+>> +                            " Element ID:%04x.\n", id);
+>>                   return false;
+>>               }
+>>           }
+>> -next_element:
+>> +    next_element:
+>>           element = guest_state_element_next(element, &len, &num_elements);
+>>   
+>>       }
+>> @@ -1509,26 +1532,45 @@ static target_ulong h_guest_getset_state(PowerPCCPU *cpu,
+>>       target_ulong buf = args[3];
+>>       target_ulong buflen = args[4];
+>>       struct guest_state_request gsr;
+>> -    SpaprMachineStateNestedGuest *guest;
+>> +    SpaprMachineStateNestedGuest *guest = NULL;
+>>   
+>> -    guest = spapr_get_nested_guest(spapr, lpid);
+>> -    if (!guest) {
+>> -        return H_P2;
+>> -    }
+>>       gsr.buf = buf;
+>>       assert(buflen <= GSB_MAX_BUF_SIZE);
+>>       gsr.len = buflen;
+>>       gsr.flags = 0;
+>> -    if (flags & H_GUEST_GETSET_STATE_FLAG_GUEST_WIDE) {
+>> +
+>> +    /* Works for both get/set state */
+>> +    if (cpu_to_be64(flags) & GUEST_STATE_REQUEST_GUEST_WIDE) {
+>>           gsr.flags |= GUEST_STATE_REQUEST_GUEST_WIDE;
+>>       }
+>> -    if (flags & ~H_GUEST_GETSET_STATE_FLAG_GUEST_WIDE) {
+>> -        return H_PARAMETER; /* flag not supported yet */
+>> -    }
+>>   
+>>       if (set) {
+>> +        if (flags & ~H_GUEST_SET_STATE_FLAGS_MASK) {
+>> +            return H_PARAMETER;
+>> +        }
+>>           gsr.flags |= GUEST_STATE_REQUEST_SET;
+>> +    } else {
+>> +        /*
+>> +         * No reserved fields to be set in flags nor both
+>> +         * GUEST/HOST wide bits
+>> +         */
+>> +        if ((flags == H_GUEST_GET_STATE_FLAGS_MASK) ||
+>> +            (flags & ~H_GUEST_GET_STATE_FLAGS_MASK)) {
+>> +            return H_PARAMETER;
+>> +        }
+>> +
+>> +        if (cpu_to_be64(flags) & GUEST_STATE_REQUEST_HOST_WIDE) {
+>
+> This conversion can be avoided with the macro in BE format.
+>
+>> +            gsr.flags |= GUEST_STATE_REQUEST_HOST_WIDE;
+>> +        }
+>>       }
+>> +
+>> +    if (!(gsr.flags & GUEST_STATE_REQUEST_HOST_WIDE)) {
+>> +        guest = spapr_get_nested_guest(spapr, lpid);
+>> +        if (!guest) {
+>> +            return H_P2;
+>> +        }
+>> +    }
+>> +
+>>       return map_and_getset_state(cpu, guest, vcpuid, &gsr);
+>>   }
+>>   
+>> diff --git a/include/hw/ppc/spapr_nested.h b/include/hw/ppc/spapr_nested.h
+>> index e420220484..c0ffd0a696 100644
+>> --- a/include/hw/ppc/spapr_nested.h
+>> +++ b/include/hw/ppc/spapr_nested.h
+>> @@ -11,11 +11,18 @@
+>>   #define GSB_TB_OFFSET           0x0004 /* Timebase Offset */
+>>   #define GSB_PART_SCOPED_PAGETBL 0x0005 /* Partition Scoped Page Table */
+>>   #define GSB_PROCESS_TBL         0x0006 /* Process Table */
+>> -                    /* RESERVED 0x0007 - 0x0BFF */
+>> +                   /* RESERVED 0x0007 - 0x07FF */
+>> +#define GSB_PROCESS_TBL         0x0006 /* Process Table */
+>
+> This duplication of macro seems to be copy paste error.
+>
+>>   #define GSB_VCPU_IN_BUFFER      0x0C00 /* Run VCPU Input Buffer */
+>>   #define GSB_VCPU_OUT_BUFFER     0x0C01 /* Run VCPU Out Buffer */
+>>   #define GSB_VCPU_VPA            0x0C02 /* HRA to Guest VCPU VPA */
+>>                       /* RESERVED 0x0C03 - 0x0FFF */
+>> +#define GSB_GUEST_HEAP          0x0800 /* Guest Management Heap Size */
+>> +#define GSB_GUEST_HEAP_MAX      0x0801 /* Guest Management Heap Max Size */
+>> +#define GSB_GUEST_PGTABLE_SIZE  0x0802 /* Guest Pagetable Size */
+>> +#define GSB_GUEST_PGTABLE_SIZE_MAX   0x0803 /* Guest Pagetable Max Size */
+>> +#define GSB_GUEST_PGTABLE_RECLAIM    0x0804 /* Pagetable Reclaim in bytes */
+>> +                  /* RESERVED 0x0805 - 0x0FFF */
+>
+> Above additions should be moved before GSB_VCPU_IN_BUFFER for sequence.
+> Also, RESERVED range from 0x0805 ends at 0x0BFF.
+>
+>>   #define GSB_VCPU_GPR0           0x1000
+>>   #define GSB_VCPU_GPR1           0x1001
+>>   #define GSB_VCPU_GPR2           0x1002
+>> @@ -196,6 +203,13 @@ typedef struct SpaprMachineStateNested {
+>>   #define NESTED_API_PAPR    2
+>>       bool capabilities_set;
+>>       uint32_t pvr_base;
+>> +    /* Hostwide counters */
+>> +    uint64_t current_guest_heap;
+>> +    uint64_t max_guest_heap;
+>> +    uint64_t current_pgtable_size;
+>> +    uint64_t max_pgtable_size;
+>> +    uint64_t pgtable_reclaim_size;
+>> +
+>>       GHashTable *guests;
+>>   } SpaprMachineStateNested;
+>>   
+>> @@ -229,9 +243,11 @@ typedef struct SpaprMachineStateNestedGuest {
+>>   #define HVMASK_HDEXCR                 0x00000000FFFFFFFF
+>>   #define HVMASK_TB_OFFSET              0x000000FFFFFFFFFF
+>>   #define GSB_MAX_BUF_SIZE              (1024 * 1024)
+>> -#define H_GUEST_GETSET_STATE_FLAG_GUEST_WIDE 0x8000000000000000
+>> -#define GUEST_STATE_REQUEST_GUEST_WIDE       0x1
+>> -#define GUEST_STATE_REQUEST_SET              0x2
+>> +#define H_GUEST_GET_STATE_FLAGS_MASK   0xC000000000000000ULL
+>> +#define H_GUEST_SET_STATE_FLAGS_MASK   0x8000000000000000ULL
+>> +#define GUEST_STATE_REQUEST_GUEST_WIDE 0x0000000000000080ULL
+>
+> Let us keep the PPC bit masks in BE format as per convention and use
+> endian-ness conversion helpers in code if needed.
+>
+> regards,
+> Harsh
+>
+>> +#define GUEST_STATE_REQUEST_HOST_WIDE  0x0000000000000040ULL
+>> +#define GUEST_STATE_REQUEST_SET        0x0000000000000008ULL
+>>   
+>>   /*
+>>    * As per ISA v3.1B, following bits are reserved:
+>> @@ -251,6 +267,15 @@ typedef struct SpaprMachineStateNestedGuest {
+>>       .copy = (c)                                    \
+>>   }
+>>   
+>> +#define GSBE_MACHINE_NESTED_DW(i, f)  {                             \
+>> +        .id = (i),                                                  \
+>> +        .size = 8,                                                  \
+>> +        .location = get_machine_ptr,                                \
+>> +        .offset = offsetof(struct SpaprMachineStateNested, f),     \
+>> +        .copy = copy_state_8to8,                                    \
+>> +        .mask = HVMASK_DEFAULT                                      \
+>> +}
+>> +
+>>   #define GSBE_NESTED(i, sz, f, c) {                             \
+>>       .id = (i),                                                 \
+>>       .size = (sz),                                              \
+>> @@ -509,7 +534,8 @@ struct guest_state_element_type {
+>>       uint16_t id;
+>>       int size;
+>>   #define GUEST_STATE_ELEMENT_TYPE_FLAG_GUEST_WIDE 0x1
+>> -#define GUEST_STATE_ELEMENT_TYPE_FLAG_READ_ONLY  0x2
+>> +#define GUEST_STATE_ELEMENT_TYPE_FLAG_HOST_WIDE 0x2
+>> +#define GUEST_STATE_ELEMENT_TYPE_FLAG_READ_ONLY 0x4
+>>      uint16_t flags;
+>>       void *(*location)(SpaprMachineStateNestedGuest *, target_ulong);
+>>       size_t offset;
 
-Yes - with the Altra PCI workaround patches on both host and guest
-kernel.
-
-Is there anyway to trace the sharing of device memory on the host so I
-can verify its an attempt at device access? The PC looks like its in
-user-space but once this fails the guest is suspended so I can't poke
-around in its environment.
-
---=20
-Alex Benn=C3=A9e
-Virtualisation Tech Lead @ Linaro
+-- 
+Cheers
+~ Vaibhav
 
