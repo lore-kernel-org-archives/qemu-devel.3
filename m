@@ -4,82 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 96F12C0218C
-	for <qemu-devel@archiver.kernel.org>; Thu, 23 Jan 2025 01:24:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A40E9C02182
+	for <qemu-devel@archiver.kernel.org>; Thu, 23 Jan 2025 01:24:50 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1talwj-0001ne-QA; Wed, 22 Jan 2025 20:23:50 -0500
+	id 1talwl-0001oG-9F; Wed, 22 Jan 2025 20:23:51 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <gustavo.romero@linaro.org>)
- id 1talwi-0001nV-BB
- for qemu-devel@nongnu.org; Wed, 22 Jan 2025 20:23:48 -0500
-Received: from mail-pj1-x1033.google.com ([2607:f8b0:4864:20::1033])
+ id 1talwj-0001ng-Vw
+ for qemu-devel@nongnu.org; Wed, 22 Jan 2025 20:23:50 -0500
+Received: from mail-pj1-x102a.google.com ([2607:f8b0:4864:20::102a])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <gustavo.romero@linaro.org>)
- id 1talwg-0005Dd-En
- for qemu-devel@nongnu.org; Wed, 22 Jan 2025 20:23:48 -0500
-Received: by mail-pj1-x1033.google.com with SMTP id
- 98e67ed59e1d1-2ee786b3277so563180a91.1
- for <qemu-devel@nongnu.org>; Wed, 22 Jan 2025 17:23:45 -0800 (PST)
+ id 1talwi-0005Di-EN
+ for qemu-devel@nongnu.org; Wed, 22 Jan 2025 20:23:49 -0500
+Received: by mail-pj1-x102a.google.com with SMTP id
+ 98e67ed59e1d1-2ef714374c0so677405a91.0
+ for <qemu-devel@nongnu.org>; Wed, 22 Jan 2025 17:23:48 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1737595424; x=1738200224; darn=nongnu.org;
+ d=linaro.org; s=google; t=1737595427; x=1738200227; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=fB0l760Z+HTTNLq/bpM+BYuFk5FnmF0utBf+aW4qcPg=;
- b=d8ZO5nA0s/1oLqpHmiSEMQbz5g4iADCVyQC76BhIYbv5V1+14xudsCEoTOkhNRn13w
- SMtNJx39SS5HPWwBOgT6yiBosluZs31Xoo4p0PetZYV9h/Ldg6BPaHNofQETGt3L1+O/
- Nmdl3QGL5yT664RsVvwJxPVMy+6rwEotPtKBDoeduwOEpz0icSfTF9qFCIdujaHU3+se
- S6xEtpC7v7I5E+Kr1IXTo+LGDHp20hvwfSEptzHUjnVicyIIOhq7q20SPv0Pn2XeYF8y
- 9J7GXFc0AqobzVWyh7vJZdSQSWyTyUSHKN2LPZjYstUTOTjTjf3tJiPm1UuJYz2QifZT
- ojqQ==
+ bh=1ckxcijDWQdo6hhk1+UnBUuMPGA0VrKDFuMLAdkxewA=;
+ b=cORJUw7OjnWGu9RdCBRvLfnrcTChmaAtCyML1YnfyJh0owRIA9JIlpWk0RILcusr9Z
+ Fts1n5otTNAuyk7pU9KBETPMXmq+ZjEThRrq8OZfiOLWNcfgTmyNOgwa/STXYdWFCynJ
+ jnyRyS0ytV3g1hcRVVgsCq7Vh5PA415Q8bnMF+kC9067jU+4fvgLpT9Krlicyl+qd+76
+ keRctkpszHR3VcUIOieyP0njW2lcTrnduYbNXLM6xcsZatsEG+xJsVY1Qlqa5yhuPnb8
+ ODnrpI1j/I+VydXXTq8QQ9K7vT+n6JnLvmB+WHQX53VHbYhlJ9RkUWEhMi06LCMdK74i
+ 3j/g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1737595424; x=1738200224;
+ d=1e100.net; s=20230601; t=1737595427; x=1738200227;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=fB0l760Z+HTTNLq/bpM+BYuFk5FnmF0utBf+aW4qcPg=;
- b=tRr9xrV3M9p2ws2qtdu1QeyQ+ehBibjJTB6FYu6cEWSt9Xu223n2UXGeDLV/7d5o7Q
- VUAuHnGcgstmD+I8qqId6MFL+bJFT8akP9Rm+6va8G5IwbjJr17JT6P3BBFJoMHarDks
- f2Oo9LF87R58m3HXOjMUnhg6XZ5Ln0KGp3oP8S5W/QKzs9P8qtSVj7dLyMP8XbnDsbCl
- DFrYbZEATZBK+OtUqifPgh/DKcR3HVLYZqKoT1klSmeQXsU29utDLv39ywlGA3ZoKQx9
- 1p9GbwjJvyPvlb9z9aVXnTWsFLe3gZw11UVvcUieS5x7i2BOkXr0nbWm6sdegvgrDVkt
- 3dyQ==
-X-Gm-Message-State: AOJu0YzKffa5pOxMK1X34hYz585CJsf1s68GqpdLbDsIQwkwuWOFRBCs
- esAvHOYF+yfJyKGEvK65qaxwDCTcpPqO3n79Uy0Kj4nY0/4FGmrcalNu+oSyY37dZ0M48dI9M8C
- n
-X-Gm-Gg: ASbGncv0S7zbkJe3cyyMPNc9KtY7sY4sjG2w73U+fJy4KjiVh4gcDk/qT331d94cqvX
- YmmelqepxdsOsza/26Bb/fvoUBedtOBqeNO/BGTiW3X3jEe9y4lckWLTQLEjdoWyRq8YwZb54ac
- 1OAoEXtEwXfvotx6dbn+DdWmR560TSak5itMKz58OwgFE0bH+w8Odp0VKwU2Kr52jjJ7OoHMz88
- 3zYYCaWondTDZG8FdDA3SJ+xWP1Hg1jZrgQkxzVE6BBGVhQmpea3hnf6Z1u0/ki9LSYdW+Sqnho
- bni3U1BS6Js=
-X-Google-Smtp-Source: AGHT+IHhM5UjPENGvUuNl1WjMT4YiP8llP5Sk1WHqQot0XOOoWeK7kBK58ZBPaB2jYOtJLJUmkjcsw==
-X-Received: by 2002:a17:90b:2dc6:b0:2ee:d63f:d8f with SMTP id
- 98e67ed59e1d1-2f782c787f3mr34649811a91.13.1737595424474; 
- Wed, 22 Jan 2025 17:23:44 -0800 (PST)
+ bh=1ckxcijDWQdo6hhk1+UnBUuMPGA0VrKDFuMLAdkxewA=;
+ b=lH9wquV3MSzkqbkNYjZZbYQJSBj+oWlshYfAUiiXDcLGzrf3acpgz0hKu0BMQRhb9S
+ NzPZ8wDaujeEuHdrLYGWF+G6/CpqRQYTOHq5uHTscY1nQl/1LEs9VlLYRrOZ0S9/OuUS
+ 6uf0FPYAPdWNHcPUuRN7P6ysbXHIv633WTkVQ6okk62pd+lFklNbeHeI8Y1Z8c5OsUfR
+ CuT0XarZ10c3Bjq/+HEvR3Yctd21dA1sITne/aID0TxE/OWmt+F8986bQVQ6c3gwIGb2
+ Ga1/OUncj5DHnKLahLCS28vOTytSFDczMVWq0lIrsFQgMCAFp5rtiXZc08ZWN1qQ5YyI
+ xahw==
+X-Gm-Message-State: AOJu0Yxpqvd7FAkUKudT+iRjSPMODqUL6qhFbOd9A7HgSwkMwJA4+1Bv
+ PmZ0Jj2e7YkQ8cfXkN6q9/rfdhxIv7KHLomUB59fRKp2qLlSTRqaex/OhgBkvpnwLPYmrhUWxMy
+ k
+X-Gm-Gg: ASbGnctZ+FKaHZZPfa7c4iGuxJgK32TTG24fLOqBhyplZodtbyGumfMf83HwogC6Rsj
+ QWD+e3iONAHNYsp5xIkbhEbO78Xz/yQBx/PfFLfkBlXe+GWS/sYXGHrHbslh3r7tSS6o5lOJ4xJ
+ iiCj11l27gQjrH8iFRLAmb5kqUb+6mio1Mu2/Ifn3rxVGeA32cN9KncLNASvA7tJVCxUd7LR9Xz
+ WnPkQVU+8dfku0xt6Dey3QFstRenIYgubnLyw6bq1w/fHgG39i2iKhPNrES90Um3RyZU6bmUB1O
+ S9mdkOpi0cM=
+X-Google-Smtp-Source: AGHT+IEGYIhRBjtfQUh9QzAErpvDSdHFC0wzxIdPHI/SEUQGGnH6bTB2FI9vM3oUENz3MS/tele/Aw==
+X-Received: by 2002:a17:90a:f947:b0:2ee:8cbb:de28 with SMTP id
+ 98e67ed59e1d1-2f7f176b184mr2461471a91.8.1737595426808; 
+ Wed, 22 Jan 2025 17:23:46 -0800 (PST)
 Received: from gromero0.. ([191.205.214.27]) by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-2f7e6a5e389sm2498793a91.4.2025.01.22.17.23.42
+ 98e67ed59e1d1-2f7e6a5e389sm2498793a91.4.2025.01.22.17.23.44
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 22 Jan 2025 17:23:43 -0800 (PST)
+ Wed, 22 Jan 2025 17:23:46 -0800 (PST)
 From: Gustavo Romero <gustavo.romero@linaro.org>
 To: qemu-devel@nongnu.org,
 	philmd@linaro.org,
 	armbru@redhat.com
 Cc: alex.bennee@linaro.org,
 	gustavo.romero@linaro.org
-Subject: [PATCH v2 1/2] hw/misc/ivshmem-pci: Rename remaining parts for
- consistency
-Date: Thu, 23 Jan 2025 01:22:11 +0000
-Message-Id: <20250123012212.716499-2-gustavo.romero@linaro.org>
+Subject: [PATCH v2 2/2] MAINTAINERS: Add me as the maintainer for ivshmem-pci
+Date: Thu, 23 Jan 2025 01:22:12 +0000
+Message-Id: <20250123012212.716499-3-gustavo.romero@linaro.org>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20250123012212.716499-1-gustavo.romero@linaro.org>
 References: <20250123012212.716499-1-gustavo.romero@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1033;
- envelope-from=gustavo.romero@linaro.org; helo=mail-pj1-x1033.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::102a;
+ envelope-from=gustavo.romero@linaro.org; helo=mail-pj1-x102a.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -102,172 +101,39 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-For consistency, rename the remaining parts of ivshmem PCI device after
-it was renamed from ivshmem to ivshmem-pci.
+Add me as the maintainer for the ivshmem-pci device and for the ivshmem
+server and client tool.
 
 Signed-off-by: Gustavo Romero <gustavo.romero@linaro.org>
 ---
- contrib/ivshmem-client/ivshmem-client.h              | 2 +-
- contrib/ivshmem-server/ivshmem-server.h              | 2 +-
- docs/system/device-emulation.rst                     | 2 +-
- docs/system/devices/ivshmem-flat.rst                 | 2 +-
- docs/system/devices/{ivshmem.rst => ivshmem-pci.rst} | 4 ++--
- hw/misc/Kconfig                                      | 4 ++--
- hw/misc/ivshmem-pci.c                                | 2 +-
- hw/misc/meson.build                                  | 4 ++--
- include/hw/misc/{ivshmem.h => ivshmem-pci.h}         | 6 +++---
- tests/qtest/meson.build                              | 2 +-
- 10 files changed, 15 insertions(+), 15 deletions(-)
- rename docs/system/devices/{ivshmem.rst => ivshmem-pci.rst} (96%)
- rename include/hw/misc/{ivshmem.h => ivshmem-pci.h} (88%)
+ MAINTAINERS | 9 ++++++++-
+ 1 file changed, 8 insertions(+), 1 deletion(-)
 
-diff --git a/contrib/ivshmem-client/ivshmem-client.h b/contrib/ivshmem-client/ivshmem-client.h
-index fc45a38060..9b0b24ce69 100644
---- a/contrib/ivshmem-client/ivshmem-client.h
-+++ b/contrib/ivshmem-client/ivshmem-client.h
-@@ -22,7 +22,7 @@
- #include <sys/select.h>
+diff --git a/MAINTAINERS b/MAINTAINERS
+index 846b81e3ec..8327ce9c79 100644
+--- a/MAINTAINERS
++++ b/MAINTAINERS
+@@ -2789,12 +2789,19 @@ F: hw/hyperv/hv-balloon*.h
+ F: include/hw/hyperv/dynmem-proto.h
+ F: include/hw/hyperv/hv-balloon.h
  
- #include "qemu/queue.h"
--#include "hw/misc/ivshmem.h"
-+#include "hw/misc/ivshmem-pci.h"
+-ivshmem-flat
++ivshmem
+ M: Gustavo Romero <gustavo.romero@linaro.org>
+ S: Maintained
++F: hw/misc/ivshmem-pci.c
+ F: hw/misc/ivshmem-flat.c
++F: include/hw/misc/ivshmem-pci.h
+ F: include/hw/misc/ivshmem-flat.h
++F: docs/system/devices/ivshmem-pci.rst
+ F: docs/system/devices/ivshmem-flat.rst
++F: docs/specs/ivshmem-spec.rst
++F: tests/qtest/ivshmem-test.c
++F: contrib/ivshmem-client/
++F: contrib/ivshmem-server/
  
- /**
-  * Maximum number of notification vectors supported by the client
-diff --git a/contrib/ivshmem-server/ivshmem-server.h b/contrib/ivshmem-server/ivshmem-server.h
-index d870adb6a0..a8c1a6d5fb 100644
---- a/contrib/ivshmem-server/ivshmem-server.h
-+++ b/contrib/ivshmem-server/ivshmem-server.h
-@@ -30,7 +30,7 @@
- 
- #include "qemu/event_notifier.h"
- #include "qemu/queue.h"
--#include "hw/misc/ivshmem.h"
-+#include "hw/misc/ivshmem-pci.h"
- 
- /**
-  * Maximum number of notification vectors supported by the server
-diff --git a/docs/system/device-emulation.rst b/docs/system/device-emulation.rst
-index a1b0d7997e..137371eaf7 100644
---- a/docs/system/device-emulation.rst
-+++ b/docs/system/device-emulation.rst
-@@ -85,7 +85,7 @@ Emulated Devices
-    devices/can.rst
-    devices/ccid.rst
-    devices/cxl.rst
--   devices/ivshmem.rst
-+   devices/ivshmem-pci.rst
-    devices/ivshmem-flat.rst
-    devices/keyboard.rst
-    devices/net.rst
-diff --git a/docs/system/devices/ivshmem-flat.rst b/docs/system/devices/ivshmem-flat.rst
-index 1f97052804..ccdceef171 100644
---- a/docs/system/devices/ivshmem-flat.rst
-+++ b/docs/system/devices/ivshmem-flat.rst
-@@ -17,7 +17,7 @@ running Linux), and an arm VM (using the ivshmem-flat device and running Zephyr
- instead).
- 
- The ivshmem-flat device does not support the use of a ``memdev`` option (see
--ivshmem.rst for more details). It relies on the ivshmem server to create and
-+ivshmem-pci.rst for more details). It relies on the ivshmem server to create and
- distribute the proper shared memory file descriptor and the eventfd(s) to notify
- (interrupt) the peers. Therefore, to use this device, it is always necessary to
- have an ivshmem server up and running for proper device creation.
-diff --git a/docs/system/devices/ivshmem.rst b/docs/system/devices/ivshmem-pci.rst
-similarity index 96%
-rename from docs/system/devices/ivshmem.rst
-rename to docs/system/devices/ivshmem-pci.rst
-index ce71e25663..4cd434e2db 100644
---- a/docs/system/devices/ivshmem.rst
-+++ b/docs/system/devices/ivshmem-pci.rst
-@@ -1,5 +1,5 @@
--Inter-VM Shared Memory device
-------------------------------
-+Inter-VM Shared Memory PCI device
-+---------------------------------
- 
- On Linux hosts, a shared memory device is available. The basic syntax
- is:
-diff --git a/hw/misc/Kconfig b/hw/misc/Kconfig
-index 8f9ce2f68c..366c7e295f 100644
---- a/hw/misc/Kconfig
-+++ b/hw/misc/Kconfig
-@@ -67,12 +67,12 @@ config MACIO
-     select MAC_NVRAM
-     select MOS6522
- 
--config IVSHMEM_DEVICE
-+config IVSHMEM_PCI
-     bool
-     default y if PCI_DEVICES
-     depends on PCI && LINUX && IVSHMEM && MSI_NONBROKEN
- 
--config IVSHMEM_FLAT_DEVICE
-+config IVSHMEM_FLAT
-     bool
-     default y
-     depends on LINUX && IVSHMEM
-diff --git a/hw/misc/ivshmem-pci.c b/hw/misc/ivshmem-pci.c
-index 900d523334..8f9cd94f42 100644
---- a/hw/misc/ivshmem-pci.c
-+++ b/hw/misc/ivshmem-pci.c
-@@ -37,7 +37,7 @@
- #include "system/hostmem.h"
- #include "qapi/visitor.h"
- 
--#include "hw/misc/ivshmem.h"
-+#include "hw/misc/ivshmem-pci.h"
- #include "qom/object.h"
- 
- #define PCI_VENDOR_ID_IVSHMEM   PCI_VENDOR_ID_REDHAT_QUMRANET
-diff --git a/hw/misc/meson.build b/hw/misc/meson.build
-index 55f493521b..0459820332 100644
---- a/hw/misc/meson.build
-+++ b/hw/misc/meson.build
-@@ -38,8 +38,8 @@ system_ss.add(when: 'CONFIG_SIFIVE_U_PRCI', if_true: files('sifive_u_prci.c'))
- subdir('macio')
- 
- # ivshmem devices
--system_ss.add(when: 'CONFIG_IVSHMEM_DEVICE', if_true: files('ivshmem-pci.c'))
--system_ss.add(when: 'CONFIG_IVSHMEM_FLAT_DEVICE', if_true: files('ivshmem-flat.c'))
-+system_ss.add(when: 'CONFIG_IVSHMEM_PCI', if_true: files('ivshmem-pci.c'))
-+system_ss.add(when: 'CONFIG_IVSHMEM_FLAT', if_true: files('ivshmem-flat.c'))
- 
- system_ss.add(when: 'CONFIG_ALLWINNER_SRAMC', if_true: files('allwinner-sramc.c'))
- system_ss.add(when: 'CONFIG_ALLWINNER_A10_CCM', if_true: files('allwinner-a10-ccm.c'))
-diff --git a/include/hw/misc/ivshmem.h b/include/hw/misc/ivshmem-pci.h
-similarity index 88%
-rename from include/hw/misc/ivshmem.h
-rename to include/hw/misc/ivshmem-pci.h
-index 433ef53d79..c00b39c0cd 100644
---- a/include/hw/misc/ivshmem.h
-+++ b/include/hw/misc/ivshmem-pci.h
-@@ -17,9 +17,9 @@
-  * Contributions after 2012-01-13 are licensed under the terms of the
-  * GNU GPL, version 2 or (at your option) any later version.
-  */
--#ifndef IVSHMEM_H
--#define IVSHMEM_H
-+#ifndef IVSHMEM_PCI_H
-+#define IVSHMEM_PCI_H
- 
- #define IVSHMEM_PROTOCOL_VERSION 0
- 
--#endif /* IVSHMEM_H */
-+#endif /* IVSHMEM_PCI_H */
-diff --git a/tests/qtest/meson.build b/tests/qtest/meson.build
-index 94b28e5a53..80f15185ca 100644
---- a/tests/qtest/meson.build
-+++ b/tests/qtest/meson.build
-@@ -37,7 +37,7 @@ endif
- 
- qtests_pci = \
-   (config_all_devices.has_key('CONFIG_VGA') ? ['display-vga-test'] : []) +                  \
--  (config_all_devices.has_key('CONFIG_IVSHMEM_DEVICE') ? ['ivshmem-test'] : [])
-+  (config_all_devices.has_key('CONFIG_IVSHMEM_PCI') ? ['ivshmem-test'] : [])
- 
- qtests_cxl = \
-   (config_all_devices.has_key('CONFIG_CXL') ? ['cxl-test'] : [])
+ Subsystems
+ ----------
 -- 
 2.34.1
 
