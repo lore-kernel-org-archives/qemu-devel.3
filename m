@@ -4,42 +4,41 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 90EE8C02182
-	for <qemu-devel@archiver.kernel.org>; Thu, 23 Jan 2025 09:50:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0C97EC02182
+	for <qemu-devel@archiver.kernel.org>; Thu, 23 Jan 2025 09:52:14 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tatqd-0003gG-VQ; Thu, 23 Jan 2025 04:50:04 -0500
+	id 1tatsV-0004Wz-Tn; Thu, 23 Jan 2025 04:51:59 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jonathan.cameron@huawei.com>)
- id 1tatqV-0003eZ-Kw
- for qemu-devel@nongnu.org; Thu, 23 Jan 2025 04:49:58 -0500
+ id 1tatsS-0004Wn-Sj
+ for qemu-devel@nongnu.org; Thu, 23 Jan 2025 04:51:56 -0500
 Received: from frasgout.his.huawei.com ([185.176.79.56])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jonathan.cameron@huawei.com>)
- id 1tatqT-0002Id-AV
- for qemu-devel@nongnu.org; Thu, 23 Jan 2025 04:49:55 -0500
-Received: from mail.maildlp.com (unknown [172.18.186.31])
- by frasgout.his.huawei.com (SkyGuard) with ESMTP id 4Ydx243yFxz6M4MH;
- Thu, 23 Jan 2025 17:47:40 +0800 (CST)
+ id 1tatsR-0002hE-5Y
+ for qemu-devel@nongnu.org; Thu, 23 Jan 2025 04:51:56 -0500
+Received: from mail.maildlp.com (unknown [172.18.186.216])
+ by frasgout.his.huawei.com (SkyGuard) with ESMTP id 4Ydx4j6qW8z6L55w;
+ Thu, 23 Jan 2025 17:49:57 +0800 (CST)
 Received: from frapeml500008.china.huawei.com (unknown [7.182.85.71])
- by mail.maildlp.com (Postfix) with ESMTPS id 76A53140393;
- Thu, 23 Jan 2025 17:49:37 +0800 (CST)
+ by mail.maildlp.com (Postfix) with ESMTPS id 56D55140A70;
+ Thu, 23 Jan 2025 17:51:53 +0800 (CST)
 Received: from localhost (10.203.177.66) by frapeml500008.china.huawei.com
  (7.182.85.71) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.1.2507.39; Thu, 23 Jan
- 2025 10:49:37 +0100
-Date: Thu, 23 Jan 2025 09:49:35 +0000
+ 2025 10:51:52 +0100
+Date: Thu, 23 Jan 2025 09:51:51 +0000
 To: Philippe =?ISO-8859-1?Q?Mathieu-Daud=E9?= <philmd@linaro.org>
 CC: <qemu-devel@nongnu.org>, Fan Ni <fan.ni@samsung.com>, Paolo Bonzini
  <pbonzini@redhat.com>, <mst@redhat.com>
-Subject: Re: [PATCH 1/2] hw/cxl: Remove unused
- component_registers::io_registers[] array
-Message-ID: <20250123094935.00003937@huawei.com>
-In-Reply-To: <20250122065624.34203-2-philmd@linaro.org>
+Subject: Re: [PATCH 2/2] hw/cxl: Allow tracing component I/O accesses
+Message-ID: <20250123095151.000041a0@huawei.com>
+In-Reply-To: <20250122065624.34203-3-philmd@linaro.org>
 References: <20250122065624.34203-1-philmd@linaro.org>
- <20250122065624.34203-2-philmd@linaro.org>
+ <20250122065624.34203-3-philmd@linaro.org>
 X-Mailer: Claws Mail 4.3.0 (GTK 3.24.42; x86_64-w64-mingw32)
 MIME-Version: 1.0
 Content-Type: text/plain; charset="ISO-8859-1"
@@ -73,38 +72,93 @@ From:  Jonathan Cameron via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, 22 Jan 2025 07:56:23 +0100
+On Wed, 22 Jan 2025 07:56:24 +0100
 Philippe Mathieu-Daud=E9 <philmd@linaro.org> wrote:
 
-> Avoid wasting 4K for each component, remove unused io_registers[].
+> Map the component I/O region as UnimplementedDevice
+> to be able to trace guest I/O accesses with '-d unimp'.
 >=20
 > Signed-off-by: Philippe Mathieu-Daud=E9 <philmd@linaro.org>
+I'm not that familiar with this infrastructure but seems
+fine to me.
 
-These may need to come back for correctness if anyone starts
-actually accessing them in the OS, but for now this is fine.
-We'd have to deal with filling them with plausible values anyway
-if that becomes an issue.
+I'd definitely be curious if anything is touching this space so
+tracing may be helpful for that!
 
 Reviewed-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
-
-I can pick these up and send on in a set to mst, or mst pick up
-directly, or got through another tree. Don't mind!
 > ---
->  include/hw/cxl/cxl_component.h | 1 -
->  1 file changed, 1 deletion(-)
+>  include/hw/cxl/cxl_component.h |  3 ++-
+>  hw/cxl/cxl-component-utils.c   | 14 +++++++++++---
+>  hw/cxl/Kconfig                 |  1 +
+>  3 files changed, 14 insertions(+), 4 deletions(-)
 >=20
 > diff --git a/include/hw/cxl/cxl_component.h b/include/hw/cxl/cxl_componen=
 t.h
-> index 945ee6ffd04..ac61c3f33a5 100644
+> index ac61c3f33a5..54fd369a838 100644
 > --- a/include/hw/cxl/cxl_component.h
 > +++ b/include/hw/cxl/cxl_component.h
-> @@ -218,7 +218,6 @@ typedef struct component_registers {
+> @@ -18,6 +18,7 @@
+>  #include "qemu/range.h"
+>  #include "hw/cxl/cxl_cdat.h"
+>  #include "hw/register.h"
+> +#include "hw/misc/unimp.h"
+>  #include "qapi/error.h"
+> =20
+>  enum reg_type {
+> @@ -218,7 +219,7 @@ typedef struct component_registers {
 >       *   0xe000 - 0xe3ff CXL ARB/MUX registers
 >       *   0xe400 - 0xffff RSVD
 >       */
-> -    uint32_t io_registers[CXL2_COMPONENT_IO_REGION_SIZE >> 2];
->      MemoryRegion io;
+> -    MemoryRegion io;
+> +    UnimplementedDeviceState io;
 > =20
 >      uint32_t cache_mem_registers[CXL2_COMPONENT_CM_REGION_SIZE >> 2];
+>      uint32_t cache_mem_regs_write_mask[CXL2_COMPONENT_CM_REGION_SIZE >> =
+2];
+> diff --git a/hw/cxl/cxl-component-utils.c b/hw/cxl/cxl-component-utils.c
+> index cd116c04012..6d593475d00 100644
+> --- a/hw/cxl/cxl-component-utils.c
+> +++ b/hw/cxl/cxl-component-utils.c
+> @@ -192,17 +192,25 @@ void cxl_component_register_block_init(Object *obj,
+>                                         const char *type)
+>  {
+>      ComponentRegisters *cregs =3D &cxl_cstate->crb;
+> +    DeviceState *io_dev;
+> +    SysBusDevice *io_sbd;
+> =20
+>      memory_region_init(&cregs->component_registers, obj, type,
+>                         CXL2_COMPONENT_BLOCK_SIZE);
+> =20
+>      /* io registers controls link which we don't care about in QEMU */
+> -    memory_region_init_io(&cregs->io, obj, NULL, NULL, ".io",
+> -                          CXL2_COMPONENT_IO_REGION_SIZE);
+> +    object_initialize_child(obj, "io", &cregs->io, TYPE_UNIMPLEMENTED_DE=
+VICE);
+> +    io_dev =3D DEVICE(&cregs->io);
+> +    io_sbd =3D SYS_BUS_DEVICE(&cregs->io);
+> +    qdev_prop_set_string(io_dev, "name", ".io");
+> +    qdev_prop_set_uint64(io_dev, "size", CXL2_COMPONENT_IO_REGION_SIZE);
+> +    sysbus_realize(io_sbd, &error_fatal);
+> +
+>      memory_region_init_io(&cregs->cache_mem, obj, &cache_mem_ops, cxl_cs=
+tate,
+>                            ".cache_mem", CXL2_COMPONENT_CM_REGION_SIZE);
+> =20
+> -    memory_region_add_subregion(&cregs->component_registers, 0, &cregs->=
+io);
+> +    memory_region_add_subregion(&cregs->component_registers, 0,
+> +                                sysbus_mmio_get_region(io_sbd, 0));
+>      memory_region_add_subregion(&cregs->component_registers,
+>                                  CXL2_COMPONENT_IO_REGION_SIZE,
+>                                  &cregs->cache_mem);
+> diff --git a/hw/cxl/Kconfig b/hw/cxl/Kconfig
+> index 8e67519b161..d6c7536001e 100644
+> --- a/hw/cxl/Kconfig
+> +++ b/hw/cxl/Kconfig
+> @@ -1,3 +1,4 @@
+>  config CXL
+>      bool
+>      default y if PCI_EXPRESS
+> +    select UNIMP
 
 
