@@ -4,94 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7B801C0218B
-	for <qemu-devel@archiver.kernel.org>; Thu, 23 Jan 2025 16:32:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2C9F3C02182
+	for <qemu-devel@archiver.kernel.org>; Thu, 23 Jan 2025 16:46:55 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tb078-0005br-BX; Thu, 23 Jan 2025 11:31:30 -0500
+	id 1tb0LP-0008Jv-DT; Thu, 23 Jan 2025 11:46:15 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1tb074-0005aw-0e
- for qemu-devel@nongnu.org; Thu, 23 Jan 2025 11:31:26 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <xiaoyao.li@intel.com>)
+ id 1tb0LN-0008JV-Jf
+ for qemu-devel@nongnu.org; Thu, 23 Jan 2025 11:46:14 -0500
+Received: from mgamail.intel.com ([198.175.65.20])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1tb071-0003rX-Ee
- for qemu-devel@nongnu.org; Thu, 23 Jan 2025 11:31:24 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1737649881;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=B1DYv4w8zQZT6U8R0Bhl214YCyVWA/VEvMoYZ/665Mc=;
- b=Ds9vNA1ScuVM/QNLSmVurzeqZjvPc5inwzu1Jd1e7ELJHfYKa/T5dmGxPBnMl23tlSh14Q
- ryiuZB/TNCf2VEjFmBAZAoEavY/gnlulmBXSSGybS7T6jTkjjSyZ2B6b7mMxYJTOF6fOqF
- FCo24MqUGuKq+8fs5BC0biUOPoREKBE=
-Received: from mail-qk1-f197.google.com (mail-qk1-f197.google.com
- [209.85.222.197]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-68-jEuoRb0uMUC8Nf867CDbOA-1; Thu, 23 Jan 2025 11:31:18 -0500
-X-MC-Unique: jEuoRb0uMUC8Nf867CDbOA-1
-X-Mimecast-MFC-AGG-ID: jEuoRb0uMUC8Nf867CDbOA
-Received: by mail-qk1-f197.google.com with SMTP id
- af79cd13be357-7b7477f005eso243206985a.0
- for <qemu-devel@nongnu.org>; Thu, 23 Jan 2025 08:31:18 -0800 (PST)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1737649878; x=1738254678;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=B1DYv4w8zQZT6U8R0Bhl214YCyVWA/VEvMoYZ/665Mc=;
- b=csF67ni+qOrna1bADrNPSnN1GjNbCoppL2WSeLswLOwu+IrfjCsaMmDIdmXmPoUwRo
- xnbLydQxSwIWNaQeeJAkt1a9kDTcNxy+LVJ53cUnPmqaES9BD+n1/9za44+JNCQdr03s
- XEf1eVzUMOPR2nV+1L50wlehWRcBddkmlJo61aa2E+s8TfMgIBjlHF/BeQOgWIWgRX4Y
- B83eMjo+EzZ6kbIFNI5lOWko7IG2opKfp8mEmW+UsagIyvbDo/r6Iaa5G+74Rkd/txvb
- ugPFYJwwJmjMgDYWTHiOrUz4Lp5RIgQafhvHwc5waIX7vloDYgTjykX8MZXiFSGslRiQ
- r9Gw==
-X-Forwarded-Encrypted: i=1;
- AJvYcCUmCAGVdWM51LwF7fPCIK+wXdkH9mFqAYq3PMt3ERqAH8Adeerbk9FH2w4mATbclqVvBaanihK3P0q5@nongnu.org
-X-Gm-Message-State: AOJu0YyA8bJwE5sBQIdOyNWOPqkwzC3nnSdCXIs67rqZCEmjy8YM6XBF
- iS9uDIQFkUehx+49VKvhYhXjyBDFEi+ATQzAJR+lUWh1EDG3j00s6p/R0bCybYLA+5s/5zxAV4K
- 4jhdpBil/9qBeTENHHqg0yoxArssJtrfrlHvFIiieqGQNYFKrF6sV
-X-Gm-Gg: ASbGncuaNF0yb/Edqc2RiGPSw6QegenHMn4lOHbSqbdL6P3wN87gEaKcYw2YzT2KCZJ
- drmm39llEbfguijuqa2OoLw7XJJGN5ogC3emb6YapshM8/Fjf4jYYnNwnFhNH+t84f+Mau8M/gK
- D0qdG8hxvjf6UFJ57gW/7DGFVTDBDYrG5RJ1dXGwO7sPTbITAXxc1T4jM7nAU6uckocBOqHzJwj
- E4/8WSepHkZyY1ziudPlAsCx3OCzfXqKztPv9OvzhrTCxJ0XX7pjJH5QIzRPpRAf1i1qbr/8Xgc
- VSoU4pWVzGxkzxIq82T37ZnIKHnIn70=
-X-Received: by 2002:a05:620a:601a:b0:7b6:f1be:4f7e with SMTP id
- af79cd13be357-7be6320bd00mr4045797585a.26.1737649877966; 
- Thu, 23 Jan 2025 08:31:17 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IFccdTl99KrmqxOf5Xs+ndxLWK8PuavQNR09viJ6etdhXhytQkGNDQA/eDGTiJf/ukHvr7CfQ==
-X-Received: by 2002:a05:620a:601a:b0:7b6:f1be:4f7e with SMTP id
- af79cd13be357-7be6320bd00mr4045793185a.26.1737649877652; 
- Thu, 23 Jan 2025 08:31:17 -0800 (PST)
-Received: from x1n (pool-99-254-114-190.cpe.net.cable.rogers.com.
- [99.254.114.190]) by smtp.gmail.com with ESMTPSA id
- af79cd13be357-7be9ae8aa1bsm1187985a.35.2025.01.23.08.31.15
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 23 Jan 2025 08:31:16 -0800 (PST)
-Date: Thu, 23 Jan 2025 11:31:13 -0500
-From: Peter Xu <peterx@redhat.com>
-To: Daniil Tatianin <d-tatianin@yandex-team.ru>
-Cc: Paolo Bonzini <pbonzini@redhat.com>, Stefan Weil <sw@weilnetz.de>,
- Fabiano Rosas <farosas@suse.de>,
- Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Peter Maydell <peter.maydell@linaro.org>, qemu-devel@nongnu.org
-Subject: Re: [PATCH v4 0/4] overcommit: introduce mem-lock-onfault
-Message-ID: <Z5Ju0ZnR6KEEF-Bu@x1n>
-References: <20250123131944.391886-1-d-tatianin@yandex-team.ru>
+ (Exim 4.90_1) (envelope-from <xiaoyao.li@intel.com>)
+ id 1tb0LK-0007FK-TA
+ for qemu-devel@nongnu.org; Thu, 23 Jan 2025 11:46:13 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+ d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+ t=1737650771; x=1769186771;
+ h=message-id:date:mime-version:subject:to:cc:references:
+ from:in-reply-to:content-transfer-encoding;
+ bh=vVySh/TZLF+wwReAUP5Aq1bccSywQEunCA8CYjonaeM=;
+ b=gd9GOGihVXICa/Ys1tZFk73AL/QY8pQ24GIlGXiCozAPRal7fAjJ6JUk
+ ZJJVP3KZRn+hZpzfgK/90ZKZoSiG+V/g7s6WU93cR8XV9odJDCJ5+SuF+
+ I/ssSz77AlV1d8SwelF7AVwrpsZ23eoyf4WFsV2aJa6tpSGhhyKV9RRF8
+ dfGbTpvcQxBOZbJ8/8NvpL6d3szYnCKiUsdrie891aV/rBqsIcc+A82xs
+ 0fn/BFB6R28OzC8cpeNAi3qL8soAgJZi6SUe5Fqfw29nYqIBGoMl2dCKY
+ ARfytRmYPe0jmodD2+70PDRCkUkCcgJWtLRXN9qiK1WxH7xfokdv2gBrZ Q==;
+X-CSE-ConnectionGUID: vqMwEqdXRgiSOG+Dh+GBXQ==
+X-CSE-MsgGUID: h7mqfw0tTNy6aszCk4JXNA==
+X-IronPort-AV: E=McAfee;i="6700,10204,11324"; a="37858842"
+X-IronPort-AV: E=Sophos;i="6.13,228,1732608000"; d="scan'208";a="37858842"
+Received: from orviesa010.jf.intel.com ([10.64.159.150])
+ by orvoesa112.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 23 Jan 2025 08:46:00 -0800
+X-CSE-ConnectionGUID: nBRhB7V2SR2ZKsPwWWRXIw==
+X-CSE-MsgGUID: /WGZTQrXTXOSzzv+4SXBTg==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.12,224,1728975600"; d="scan'208";a="107350612"
+Received: from xiaoyaol-hp-g830.ccr.corp.intel.com (HELO [10.124.247.1])
+ ([10.124.247.1])
+ by orviesa010-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 23 Jan 2025 08:45:54 -0800
+Message-ID: <00ecb103-2f0b-479d-bae8-cb3f7bace3be@intel.com>
+Date: Fri, 24 Jan 2025 00:45:50 +0800
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20250123131944.391886-1-d-tatianin@yandex-team.ru>
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=peterx@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -50
-X-Spam_score: -5.1
-X-Spam_bar: -----
-X-Spam_report: (-5.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-2.996,
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v6 40/60] hw/i386: add eoi_intercept_unsupported member to
+ X86MachineState
+To: Igor Mammedov <imammedo@redhat.com>
+Cc: Paolo Bonzini <pbonzini@redhat.com>, Riku Voipio <riku.voipio@iki.fi>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Zhao Liu <zhao1.liu@intel.com>, "Michael S. Tsirkin" <mst@redhat.com>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ Ani Sinha <anisinha@redhat.com>, =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?=
+ <philmd@linaro.org>, Yanan Wang <wangyanan55@huawei.com>,
+ Cornelia Huck <cohuck@redhat.com>, =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?=
+ <berrange@redhat.com>, Eric Blake <eblake@redhat.com>,
+ Markus Armbruster <armbru@redhat.com>, Marcelo Tosatti
+ <mtosatti@redhat.com>, rick.p.edgecombe@intel.com, kvm@vger.kernel.org,
+ qemu-devel@nongnu.org
+References: <20241105062408.3533704-1-xiaoyao.li@intel.com>
+ <20241105062408.3533704-41-xiaoyao.li@intel.com>
+ <20250123134148.036d52b0@imammedo.users.ipa.redhat.com>
+Content-Language: en-US
+From: Xiaoyao Li <xiaoyao.li@intel.com>
+In-Reply-To: <20250123134148.036d52b0@imammedo.users.ipa.redhat.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=198.175.65.20; envelope-from=xiaoyao.li@intel.com;
+ helo=mgamail.intel.com
+X-Spam_score_int: -63
+X-Spam_score: -6.4
+X-Spam_bar: ------
+X-Spam_report: (-6.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-2.996,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.043,
+ HK_RANDOM_ENVFROM=0.001, HK_RANDOM_FROM=0.998, RCVD_IN_DNSWL_MED=-2.3,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -109,94 +98,81 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, Jan 23, 2025 at 04:19:40PM +0300, Daniil Tatianin wrote:
-> Currently, passing mem-lock=on to QEMU causes memory usage to grow by
-> huge amounts:
+On 1/23/2025 8:41 PM, Igor Mammedov wrote:
+> On Tue,  5 Nov 2024 01:23:48 -0500
+> Xiaoyao Li <xiaoyao.li@intel.com> wrote:
 > 
-> no memlock:
->     $ ./qemu-system-x86_64 -overcommit mem-lock=off
->     $ ps -p $(pidof ./qemu-system-x86_64) -o rss=
->     45652
+>> Add a new bool member, eoi_intercept_unsupported, to X86MachineState
+>> with default value false. Set true for TDX VM.
 > 
->     $ ./qemu-system-x86_64 -overcommit mem-lock=off -enable-kvm
->     $ ps -p $(pidof ./qemu-system-x86_64) -o rss=
->     39756
+> I'd rename it to enable_eoi_intercept, by default set to true for evrything
+> and make TDX override this to false.
+>>
+>> Inability to intercept eoi causes impossibility to emulate level
+>> triggered interrupt to be re-injected when level is still kept active.
+>> which affects interrupt controller emulation.
+>>
+>> Signed-off-by: Xiaoyao Li <xiaoyao.li@intel.com>
+>> Acked-by: Gerd Hoffmann <kraxel@redhat.com>
+>> ---
+>>   hw/i386/x86.c         | 1 +
+>>   include/hw/i386/x86.h | 1 +
+>>   target/i386/kvm/tdx.c | 2 ++
+>>   3 files changed, 4 insertions(+)
+>>
+>> diff --git a/hw/i386/x86.c b/hw/i386/x86.c
+>> index 01fc5e656272..82faeed24ff9 100644
+>> --- a/hw/i386/x86.c
+>> +++ b/hw/i386/x86.c
+>> @@ -370,6 +370,7 @@ static void x86_machine_initfn(Object *obj)
+>>       x86ms->oem_table_id = g_strndup(ACPI_BUILD_APPNAME8, 8);
+>>       x86ms->bus_lock_ratelimit = 0;
+>>       x86ms->above_4g_mem_start = 4 * GiB;
+>> +    x86ms->eoi_intercept_unsupported = false;
+>>   }
+>>   
+>>   static void x86_machine_class_init(ObjectClass *oc, void *data)
+>> diff --git a/include/hw/i386/x86.h b/include/hw/i386/x86.h
+>> index d43cb3908e65..fd9a30391755 100644
+>> --- a/include/hw/i386/x86.h
+>> +++ b/include/hw/i386/x86.h
+>> @@ -73,6 +73,7 @@ struct X86MachineState {
+>>       uint64_t above_4g_mem_start;
+>>   
+>>       /* CPU and apic information: */
+>> +    bool eoi_intercept_unsupported;
+>>       unsigned pci_irq_mask;
+>>       unsigned apic_id_limit;
+>>       uint16_t boot_cpus;
+>> diff --git a/target/i386/kvm/tdx.c b/target/i386/kvm/tdx.c
+>> index 9ab4e911f78a..9dcb77e011bd 100644
+>> --- a/target/i386/kvm/tdx.c
+>> +++ b/target/i386/kvm/tdx.c
+>> @@ -388,6 +388,8 @@ static int tdx_kvm_init(ConfidentialGuestSupport *cgs, Error **errp)
+>>           return -EOPNOTSUPP;
+>>       }
+>>   
+>> +    x86ms->eoi_intercept_unsupported = true;
 > 
-> memlock:
->     $ ./qemu-system-x86_64 -overcommit mem-lock=on
->     $ ps -p $(pidof ./qemu-system-x86_64) -o rss=
->     1309876
-> 
->     $ ./qemu-system-x86_64 -overcommit mem-lock=on -enable-kvm
->     $ ps -p $(pidof ./qemu-system-x86_64) -o rss=
->     259956
-> 
-> This is caused by the fact that mlockall(2) automatically
-> write-faults every existing and future anonymous mappings in the
-> process right away.
-> 
-> One of the reasons to enable mem-lock is to protect a QEMU process'
-> pages from being compacted and migrated by kcompactd (which does so
-> by messing with a live process page tables causing thousands of TLB
-> flush IPIs per second) basically stealing all guest time while it's
-> active.
-> 
-> mem-lock=on helps against this (given compact_unevictable_allowed is 0),
-> but the memory overhead it introduces is an undesirable side effect,
-> which we can completely avoid by passing MCL_ONFAULT to mlockall, which
-> is what this series allows to do with a new option for mem-lock called
-> on-fault.
-> 
-> memlock-onfault:
->     $ ./qemu-system-x86_64 -overcommit mem-lock=on-fault
->     $ ps -p $(pidof ./qemu-system-x86_64) -o rss=
->     54004
-> 
->     $ ./qemu-system-x86_64 -overcommit mem-lock=on-fault -enable-kvm
->     $ ps -p $(pidof ./qemu-system-x86_64) -o rss=
->     47772
-> 
-> You may notice the memory usage is still slightly higher, in this case
-> by a few megabytes over the mem-lock=off case. I was able to trace this
-> down to a bug in the linux kernel with MCL_ONFAULT not being honored for
-> the early process heap (with brk(2) etc.) so it is still write-faulted in
-> this case, but it's still way less than it was with just the mem-lock=on.
-> 
-> Changes since v1:
->     - Don't make a separate mem-lock-onfault, add an on-fault option to mem-lock instead
-> 
-> Changes since v2:
->     - Move overcommit option parsing out of line
->     - Make enable_mlock an enum instead
-> 
-> Changes since v3:
->     - Rebase to latest master due to the recent sysemu -> system renames
-> 
-> Daniil Tatianin (4):
->   os: add an ability to lock memory on_fault
->   system/vl: extract overcommit option parsing into a helper
->   system: introduce a new MlockState enum
->   overcommit: introduce mem-lock=on-fault
-> 
->  hw/virtio/virtio-mem.c    |  2 +-
->  include/system/os-posix.h |  2 +-
->  include/system/os-win32.h |  3 ++-
->  include/system/system.h   | 12 ++++++++-
->  migration/postcopy-ram.c  |  4 +--
->  os-posix.c                | 10 ++++++--
->  qemu-options.hx           | 14 +++++++----
->  system/globals.c          | 12 ++++++++-
->  system/vl.c               | 52 +++++++++++++++++++++++++++++++--------
->  9 files changed, 87 insertions(+), 24 deletions(-)
+> I don't particulary like accel go to its parent (machine) object and override things there
+> and that being buried deep inside.
 
-Considering it's very mem relevant change and looks pretty benign.. I can
-pick this if nobody disagrees (or beats me to it, which I'd appreciate).
+I would suggest don't see TDX as accel but see it as a special type of 
+x86 machine.
 
-I'll also provide at least one week for people to stop me.
+> How do you start TDX guest?
+> Is there a machine property or something like it to enable TDX?
 
-Thanks,
+via the "confidential-guest-support" property.
+This series introduces tdx-guest object and we start a TDX guest by:
 
--- 
-Peter Xu
+$qemu-system-x86_64 -object tdx-guest,id=tdx0 \
+     -machine ...,confidential-guest-support=tdx0
+
+>> +
+>>       /*
+>>        * Set kvm_readonly_mem_allowed to false, because TDX only supports readonly
+>>        * memory for shared memory but not for private memory. Besides, whether a
+> 
 
 
