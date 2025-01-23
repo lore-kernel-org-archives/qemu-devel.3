@@ -4,66 +4,99 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DD82AC02182
-	for <qemu-devel@archiver.kernel.org>; Thu, 23 Jan 2025 13:21:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D57B4C02182
+	for <qemu-devel@archiver.kernel.org>; Thu, 23 Jan 2025 13:40:02 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tax88-00081K-Vh; Thu, 23 Jan 2025 08:20:21 -0500
+	id 1taxQI-0004ZQ-2z; Thu, 23 Jan 2025 08:39:06 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <d-tatianin@yandex-team.ru>)
- id 1tax80-000804-FL
- for qemu-devel@nongnu.org; Thu, 23 Jan 2025 08:20:13 -0500
-Received: from forwardcorp1a.mail.yandex.net
- ([2a02:6b8:c0e:500:1:45:d181:df01])
+ (Exim 4.90_1) (envelope-from <imammedo@redhat.com>)
+ id 1taxQ9-0004Z0-6J
+ for qemu-devel@nongnu.org; Thu, 23 Jan 2025 08:39:00 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <d-tatianin@yandex-team.ru>)
- id 1tax7w-0002FP-IW
- for qemu-devel@nongnu.org; Thu, 23 Jan 2025 08:20:12 -0500
-Received: from mail-nwsmtp-smtp-corp-main-26.myt.yp-c.yandex.net
- (mail-nwsmtp-smtp-corp-main-26.myt.yp-c.yandex.net
- [IPv6:2a02:6b8:c00:2790:0:640:fde4:0])
- by forwardcorp1a.mail.yandex.net (Yandex) with ESMTPS id 31E5760A83;
- Thu, 23 Jan 2025 16:20:04 +0300 (MSK)
-Received: from d-tatianin-lin.yandex-team.ru (unknown
- [2a02:6b8:b081:b702::1:22])
- by mail-nwsmtp-smtp-corp-main-26.myt.yp-c.yandex.net (smtpcorp/Yandex) with
- ESMTPSA id sJYg2w0IhCg0-f1NmPt78; Thu, 23 Jan 2025 16:20:03 +0300
-X-Yandex-Fwd: 1
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yandex-team.ru;
- s=default; t=1737638403;
- bh=QfMtm/MhWM9YOUXPMVNoZ2WLXKEtwEkqfrHVAanxjXk=;
- h=Message-Id:Date:In-Reply-To:Cc:Subject:References:To:From;
- b=THBd0w1ZUZe8T0YCI8jf+NInTRHKo41PSHxzBhwNGX0G8H6C8G91ogvKUMorufIHf
- x6qU3REwS2wZqIlidHshKnLQMB+ZZUhl7rLAxyre1dyanEHs93Za03rrOExrqSmcpx
- 2/ADiXXaAHzpqstzQeJmrZCbUqwWup3u1Omnvnjc=
-Authentication-Results: mail-nwsmtp-smtp-corp-main-26.myt.yp-c.yandex.net;
- dkim=pass header.i=@yandex-team.ru
-From: Daniil Tatianin <d-tatianin@yandex-team.ru>
-To: Paolo Bonzini <pbonzini@redhat.com>
-Cc: Daniil Tatianin <d-tatianin@yandex-team.ru>, Stefan Weil <sw@weilnetz.de>,
- Peter Xu <peterx@redhat.com>, Fabiano Rosas <farosas@suse.de>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Peter Maydell <peter.maydell@linaro.org>, qemu-devel@nongnu.org,
- Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
-Subject: [PATCH v4 3/4] system: introduce a new MlockState enum
-Date: Thu, 23 Jan 2025 16:19:43 +0300
-Message-Id: <20250123131944.391886-4-d-tatianin@yandex-team.ru>
-X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20250123131944.391886-1-d-tatianin@yandex-team.ru>
-References: <20250123131944.391886-1-d-tatianin@yandex-team.ru>
+ (Exim 4.90_1) (envelope-from <imammedo@redhat.com>)
+ id 1taxQ6-0005Cn-T4
+ for qemu-devel@nongnu.org; Thu, 23 Jan 2025 08:38:56 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1737639532;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=P3SajAGLzvDDtmQYjw+dFkhq+DN+r71DFRzCsoNH+D8=;
+ b=BD+P5MagzH2/0rSdZiTtEuv2JLGmyrM95okkxMBuJXDz5Q7GIbqtV4MXkuwTcbs4T/rnEy
+ uPjsdO+wsV3YrjOUbRarM6C47U/IK5bmdyQH+ZEY2bPBWFTB7b0J9pOOTGRETviOMLVWty
+ vWBhm7hdXpQbQh2w2mDjpmXIsH34Mj4=
+Received: from mail-wm1-f69.google.com (mail-wm1-f69.google.com
+ [209.85.128.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-612-8AmmbHDnPx2j0g8uIUZ3sg-1; Thu, 23 Jan 2025 08:38:50 -0500
+X-MC-Unique: 8AmmbHDnPx2j0g8uIUZ3sg-1
+X-Mimecast-MFC-AGG-ID: 8AmmbHDnPx2j0g8uIUZ3sg
+Received: by mail-wm1-f69.google.com with SMTP id
+ 5b1f17b1804b1-4362552ce62so4652755e9.0
+ for <qemu-devel@nongnu.org>; Thu, 23 Jan 2025 05:38:50 -0800 (PST)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1737639528; x=1738244328;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:subject:cc:to:from:date:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=P3SajAGLzvDDtmQYjw+dFkhq+DN+r71DFRzCsoNH+D8=;
+ b=XO2RysTXcN2jX+iEmfwT9RVFA8gj3YWXFAHYZPp9NNd4CTNu52e4l4u1kFueEmOb0M
+ VTSGo8XNPbtSAN4uP2O5Y1SMjMjSOd/p7WKLTNfJ5r77+H27sAuGWo+gMt4WeKlwvHq5
+ XkAqFs9aLDw/8IwjWaqEZWKctXzHQs71x/txNJ4MYWihs9mjYSnTa2Cw5Dk9lTnQU+Cb
+ hWhtVye2fK7DHPAZ5583YsZB/dG4lHi+XQSalsj1wz/2h2AtMt2gu923fArVZdgQYvy3
+ SaMWNob7A79cmN8EyxvTDVtTL72up4dn7a7djylh4FDxDLiThcNQX2DHfLJh+c+7BK6w
+ Ff3w==
+X-Gm-Message-State: AOJu0YzvwC7Bvxk+61Zv0OMvJkePCjk5GUkMnHGgvTybMafXvbyvwPqE
+ Hw0YB8KljMZGTBcCp0EP1WdzA5oydzrveOi3KlO3tTpUWhbgobPNHKEU+7WGWavgiHmBuhvZZmR
+ RdYLs5sN2rg3cTLYhylbNZsDinR3bIz6a217t5m0f9iKTn7xRtALU0gx09CR+
+X-Gm-Gg: ASbGnctPYqvjeQVBHgpCHhtpnXOvQvV4a9EH61TjsoVl/CLQQ1cVBdH+gUZN4teK+aa
+ bOTeCty44xVKAASYbZ6k/tKL6arm6CthBWwoSUlCiBTq5c1UhlFi3acVN6aL8VXRayp2fLzxp4A
+ tOF19szuRB7npK0ws3ldfbcox7yKzzhIxVDiSU2614uWlx6mW/ZfQ0m1M/RqYW0cAy4vMdVSd9r
+ iVGbD0CKMh8q+vPC0rfe5li/2Pq5IqTrZkYxhrNM0Js3JW+WztB7iGigpskdAWLUoRPMKNMTEdy
+ P4YeexozZWUDz811tbN+PS3bl12uGRXGj1Va9Zj1cw==
+X-Received: by 2002:a05:600c:1e1c:b0:434:f0df:9f6 with SMTP id
+ 5b1f17b1804b1-438913bf655mr253875465e9.3.1737639528003; 
+ Thu, 23 Jan 2025 05:38:48 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IFC/Fh3Bqz3pOpHFvIXEefCLUNxxir9ctJSFZPtxK8QdPRYUg5BEfXaiheCGtmlQB82XfqGLA==
+X-Received: by 2002:a05:600c:1e1c:b0:434:f0df:9f6 with SMTP id
+ 5b1f17b1804b1-438913bf655mr253875235e9.3.1737639527612; 
+ Thu, 23 Jan 2025 05:38:47 -0800 (PST)
+Received: from imammedo.users.ipa.redhat.com (nat-pool-brq-t.redhat.com.
+ [213.175.37.10]) by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-438b3189ba8sm64438255e9.5.2025.01.23.05.38.46
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Thu, 23 Jan 2025 05:38:47 -0800 (PST)
+Date: Thu, 23 Jan 2025 14:38:46 +0100
+From: Igor Mammedov <imammedo@redhat.com>
+To: Alex =?UTF-8?B?QmVubsOpZQ==?= <alex.bennee@linaro.org>
+Cc: qemu-devel@nongnu.org, richard.henderson@linaro.org, pbonzini@redhat.com
+Subject: Re: [PATCH] tcg: drop qemu_cpu_is_self() in
+ tlb_flush_by_mmuidx[_async_work]
+Message-ID: <20250123143846.586282b2@imammedo.users.ipa.redhat.com>
+In-Reply-To: <87y0z1k9yg.fsf@draig.linaro.org>
+References: <20250123094511.156324-1-imammedo@redhat.com>
+ <87frl9ls4g.fsf@draig.linaro.org>
+ <20250123122343.6af8a6e1@imammedo.users.ipa.redhat.com>
+ <87y0z1k9yg.fsf@draig.linaro.org>
+X-Mailer: Claws Mail 4.3.0 (GTK 3.24.43; x86_64-redhat-linux-gnu)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a02:6b8:c0e:500:1:45:d181:df01;
- envelope-from=d-tatianin@yandex-team.ru; helo=forwardcorp1a.mail.yandex.net
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=imammedo@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -50
+X-Spam_score: -5.1
+X-Spam_bar: -----
+X-Spam_report: (-5.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-2.996,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.043,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -79,128 +112,110 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Replace the boolean value enable_mlock with an enum and add a helper to
-decide whether we should be calling os_mlock.
+On Thu, 23 Jan 2025 12:09:59 +0000
+Alex Benn=C3=A9e <alex.bennee@linaro.org> wrote:
 
-This is a stepping stone towards introducing a new mlock mode, which
-will be the third possible state of this enum.
+> Igor Mammedov <imammedo@redhat.com> writes:
+>=20
+> > On Thu, 23 Jan 2025 10:52:15 +0000
+> > Alex Benn=C3=A9e <alex.bennee@linaro.org> wrote:
+> > =20
+> >> Igor Mammedov <imammedo@redhat.com> writes:
+> >>  =20
+> >> > QEMU will crash with following debug enabled
+> >> >   # define DEBUG_TLB_GATE 1
+> >> >   # define DEBUG_TLB_LOG_GATE 1
+> >> > due to [1] introduced assert and as it happenstlb_flush_by_mmuidx[_a=
+sync_work]
+> >> > functions are called not only from vcpu thread but also from reset h=
+andler
+> >> > that is called from main thread at cpu realize time when vcpu is alr=
+eady
+> >> > created
+> >> >   x86_cpu_new -> ... ->
+> >> >       x86_cpu_realizefn -> cpu_reset -> ... ->
+> >> >           tcg_cpu_reset_hold
+> >> >
+> >> > drop assert to fix crash.   =20
+> >>=20
+> >> Hmm the assert is there for a good reason because we do not want to be
+> >> flushing another CPUs state. However the assert itself:
+> >>=20
+> >>   g_assert(!(cpu)->created || qemu_cpu_is_self(cpu));
+> >>=20
+> >> was trying to account for pre-initialised vCPUs. What has changed?
+> >>=20
+> >> cpu_thread_signal_created(cpu) is called just before we start running
+> >> the main loop in mttcg_cpu_thread_fn. So any other thread messing with
+> >> the CPUs TLB can potentially mess things up. =20
+> >
+> > it reproduces on current master, so yes it likely has changed over time.
+> > I've just stumbled on it when attempting to get rid of cpu->created
+> > usage. =20
+>=20
+> Why the drive to get rid of cpu->created?
 
-Reviewed-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
-Reviewed-by: Peter Xu <peterx@redhat.com>
-Signed-off-by: Daniil Tatianin <d-tatianin@yandex-team.ru>
----
- hw/virtio/virtio-mem.c   |  2 +-
- include/system/system.h  | 10 +++++++++-
- migration/postcopy-ram.c |  2 +-
- system/globals.c         |  7 ++++++-
- system/vl.c              |  9 +++++++--
- 5 files changed, 24 insertions(+), 6 deletions(-)
+During review of Philippe's cpu cleanups,
+I've noticed that  cpu->created is mostly used for signaling
+main loop thread we've started vcpu thread with a couple of
+odd cases in tcg and kvm.
+  - 1st silently bit-rotted being behind ifdefs
+  - 2nd is work around CPU being prematurely visible to others
 
-diff --git a/hw/virtio/virtio-mem.c b/hw/virtio/virtio-mem.c
-index b1a003736b..7b140add76 100644
---- a/hw/virtio/virtio-mem.c
-+++ b/hw/virtio/virtio-mem.c
-@@ -991,7 +991,7 @@ static void virtio_mem_device_realize(DeviceState *dev, Error **errp)
-         return;
-     }
- 
--    if (enable_mlock) {
-+    if (should_mlock(mlock_state)) {
-         error_setg(errp, "Incompatible with mlock");
-         return;
-     }
-diff --git a/include/system/system.h b/include/system/system.h
-index 0cbb43ec30..dc7628357a 100644
---- a/include/system/system.h
-+++ b/include/system/system.h
-@@ -44,10 +44,18 @@ extern int display_opengl;
- extern const char *keyboard_layout;
- extern int old_param;
- extern uint8_t *boot_splash_filedata;
--extern bool enable_mlock;
- extern bool enable_cpu_pm;
- extern QEMUClockType rtc_clock;
- 
-+typedef enum {
-+    MLOCK_OFF = 0,
-+    MLOCK_ON,
-+} MlockState;
-+
-+bool should_mlock(MlockState);
-+
-+extern MlockState mlock_state;
-+
- #define MAX_OPTION_ROMS 16
- typedef struct QEMUOptionRom {
-     const char *name;
-diff --git a/migration/postcopy-ram.c b/migration/postcopy-ram.c
-index fc4d8a10df..04068ee039 100644
---- a/migration/postcopy-ram.c
-+++ b/migration/postcopy-ram.c
-@@ -651,7 +651,7 @@ int postcopy_ram_incoming_cleanup(MigrationIncomingState *mis)
-         mis->have_fault_thread = false;
-     }
- 
--    if (enable_mlock) {
-+    if (should_mlock(mlock_state)) {
-         if (os_mlock(false) < 0) {
-             error_report("mlock: %s", strerror(errno));
-             /*
-diff --git a/system/globals.c b/system/globals.c
-index 4867c93ca6..adeff38348 100644
---- a/system/globals.c
-+++ b/system/globals.c
-@@ -31,10 +31,15 @@
- #include "system/cpus.h"
- #include "system/system.h"
- 
-+bool should_mlock(MlockState state)
-+{
-+    return state == MLOCK_ON;
-+}
-+
- enum vga_retrace_method vga_retrace_method = VGA_RETRACE_DUMB;
- int display_opengl;
- const char* keyboard_layout;
--bool enable_mlock;
-+MlockState mlock_state;
- bool enable_cpu_pm;
- int autostart = 1;
- int vga_interface_type = VGA_NONE;
-diff --git a/system/vl.c b/system/vl.c
-index faa50c39df..c26d728e22 100644
---- a/system/vl.c
-+++ b/system/vl.c
-@@ -792,7 +792,7 @@ static QemuOptsList qemu_run_with_opts = {
- 
- static void realtime_init(void)
- {
--    if (enable_mlock) {
-+    if (should_mlock(mlock_state)) {
-         if (os_mlock(false) < 0) {
-             error_report("locking memory failed");
-             exit(1);
-@@ -1850,13 +1850,18 @@ static void object_option_parse(const char *str)
- static void overcommit_parse(const char *str)
- {
-     QemuOpts *opts;
-+    bool enable_mlock;
- 
-     opts = qemu_opts_parse_noisily(qemu_find_opts("overcommit"),
-                                    str, false);
-     if (!opts) {
-         exit(1);
-     }
--    enable_mlock = qemu_opt_get_bool(opts, "mem-lock", enable_mlock);
-+
-+    enable_mlock = qemu_opt_get_bool(opts, "mem-lock",
-+                                     should_mlock(mlock_state));
-+    mlock_state = enable_mlock ? MLOCK_ON : MLOCK_OFF;
-+
-     enable_cpu_pm = qemu_opt_get_bool(opts, "cpu-pm", enable_cpu_pm);
- }
- 
--- 
-2.34.1
+> I guess we could assert:
+>=20
+>   g_assert(!current_cpu || qemu_cpu_is_self(cpu);
+>=20
+> as current_cpu should only be set as we go into the main thread. However
+> there is a sketchy setting of current_cpu in cpu_exec() that I'm not
+> sure should be there. Also do_run_on_cpu() messes with current_cpu in a
+> way I don't fully understand either.
+
+I'd rather not rely on that, even if it works it would be subject to
+to the same kind of breakage.
+
+How about instead of workaround check we would have 2 variants
+of tlb_flush_by_mmuidx[_async_work], one that have self check
+and other for usage externally (i.e. from reset handler).
+That won't have to rely on sketchy globals (which becomes more
+sketchy in context of Philippes's multi accel work),
+and it would clearly document what can be used externally. =20
+
+>=20
+> >
+> > =20
+> >> > 1)
+> >> > Fixes: f0aff0f124028 ("cputlb: add assert_cpu_is_self checks")
+> >> > Signed-off-by: Igor Mammedov <imammedo@redhat.com>
+> >> > ---
+> >> >  accel/tcg/cputlb.c | 4 ----
+> >> >  1 file changed, 4 deletions(-)
+> >> >
+> >> > diff --git a/accel/tcg/cputlb.c b/accel/tcg/cputlb.c
+> >> > index b26c0e088f..2da803103c 100644
+> >> > --- a/accel/tcg/cputlb.c
+> >> > +++ b/accel/tcg/cputlb.c
+> >> > @@ -381,8 +381,6 @@ static void tlb_flush_by_mmuidx_async_work(CPUSt=
+ate *cpu, run_on_cpu_data data)
+> >> >      uint16_t all_dirty, work, to_clean;
+> >> >      int64_t now =3D get_clock_realtime();
+> >> > =20
+> >> > -    assert_cpu_is_self(cpu);
+> >> > -
+> >> >      tlb_debug("mmu_idx:0x%04" PRIx16 "\n", asked);
+> >> > =20
+> >> >      qemu_spin_lock(&cpu->neg.tlb.c.lock);
+> >> > @@ -419,8 +417,6 @@ void tlb_flush_by_mmuidx(CPUState *cpu, uint16_t=
+ idxmap)
+> >> >  {
+> >> >      tlb_debug("mmu_idx: 0x%" PRIx16 "\n", idxmap);
+> >> > =20
+> >> > -    assert_cpu_is_self(cpu);
+> >> > -
+> >> >      tlb_flush_by_mmuidx_async_work(cpu, RUN_ON_CPU_HOST_INT(idxmap)=
+);
+> >> >  }   =20
+> >>  =20
+>=20
 
 
