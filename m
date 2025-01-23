@@ -4,63 +4,64 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 318D1C0218C
-	for <qemu-devel@archiver.kernel.org>; Thu, 23 Jan 2025 23:48:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5F67DC02182
+	for <qemu-devel@archiver.kernel.org>; Thu, 23 Jan 2025 23:48:43 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tb6s4-00061T-81; Thu, 23 Jan 2025 18:44:24 -0500
+	id 1tb6sw-0006bH-4y; Thu, 23 Jan 2025 18:45:19 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tb6s2-00060d-NW
- for qemu-devel@nongnu.org; Thu, 23 Jan 2025 18:44:22 -0500
-Received: from mail-wm1-x332.google.com ([2a00:1450:4864:20::332])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tb6sq-0006Zq-EA
+ for qemu-devel@nongnu.org; Thu, 23 Jan 2025 18:45:12 -0500
+Received: from mail-wr1-x432.google.com ([2a00:1450:4864:20::432])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tb6rz-0003ou-54
- for qemu-devel@nongnu.org; Thu, 23 Jan 2025 18:44:22 -0500
-Received: by mail-wm1-x332.google.com with SMTP id
- 5b1f17b1804b1-43690d4605dso10331415e9.0
- for <qemu-devel@nongnu.org>; Thu, 23 Jan 2025 15:44:18 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tb6sn-0004Df-Rv
+ for qemu-devel@nongnu.org; Thu, 23 Jan 2025 18:45:11 -0500
+Received: by mail-wr1-x432.google.com with SMTP id
+ ffacd0b85a97d-385ddcfc97bso1317002f8f.1
+ for <qemu-devel@nongnu.org>; Thu, 23 Jan 2025 15:45:09 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1737675857; x=1738280657; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=SrJqTercMM7Oiv7TI6NgScSjNQ/Q43/m4EWNljCwQJg=;
- b=t3MYesDsGnrH3gGJe0ZQ0os3VY5n05M8xIFoC1B7D4X3sfM8GhhhlP+f9rkzeSu2Im
- KssfjgynuCCE/nv7kG4fh3O/1gWg9gWK4okSRALRza0CyFN+1nSHPxDhJYcvHQJ5uVzz
- fXipSF+E3GsheWtgKdvUSfFpVCGlIpgcDSQhWEmqITDvBePhgxHTrqNJuJmJ/q9K3YwF
- //ayKAd93hkN+1dGreq6mXqswgrN81e4oz45Qqn5ZeFVcUPrJ6CMUnvOcyhxXBatOGY4
- Zfu63QXbviaG4qE5ASTeWMxx327WwRKD1uYdZBLXafPR89rXSal38gc4hZtjAHhod9OQ
- zVBQ==
+ d=linaro.org; s=google; t=1737675908; x=1738280708; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=yDFP15LbfYjBwdgoNtB1SUTPS+QYiGObjjbLDQKpiPc=;
+ b=JaYcnurg7Wc1NwUPixsucQNIRXRWSC7zgF3HVlaKoIglWMt+rPZfdnhXNVtV3jZGg3
+ zPlLu9msph1F+zZJEkchUwhy8CuDQf9azL8r3NhYOnSKoxuQ/gTfRGkQb27JwK3hW/mv
+ yvI36NjDuQfigkln3Y1fCDNWhgEa4v30Lx7W9juBDJzshr6BzT3h6enXKVzV23XHmwdA
+ iA9A9bsQDzYfbAlaXEfd2OiXS5HXWP6n070H1kvmPOGhsN05L8t7G8VZ4cDWU+B0kWqE
+ IkcKGRS0ATKKhaVmRaIckqPQRhYZMwTLPlL5NELqmojz6qHdKSh6oDu3yaDVANm4lnGB
+ hboA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1737675857; x=1738280657;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=SrJqTercMM7Oiv7TI6NgScSjNQ/Q43/m4EWNljCwQJg=;
- b=auCBNAMhDMTqaPGk/KX0LGDsPLanb+gn7Wf2Q1XV5TGBwwIEm0ImHYKhg+QIAlQ6Fw
- aOSIcTbRFMHkeTFYiQ6m/DwtzO8LWrI5IuET8sPGhNYKAHA8/BDiZhvxTJN/EzAwEM3x
- lMdxxmSxY4GEaDdmVIxVfd3eT7zCUJxbKR7uKTF4EJkBxZHNoW/bsQVOnvl1Efj2MgBQ
- 2Il/bNzTBOWofOQbLaXhVEbmMULCa79CJ1m/W6x7s3NQ2vkJfvjjOBz2GyqmymqmFtb8
- dhGN56EfAfCZtyogULki+TZJSWcVAwdTECZjui+zhq7loyp0AJkiq582e9RDDmkArv3h
- uNJA==
-X-Gm-Message-State: AOJu0YxI8ur1jbliJskn8CUFzHBW9t2H+n0pDRcgHShZ59y+qW/bR3cK
- hcv8G9mXbYeM2M+whx3HwI1/fEbd9OvrApSE05aunObpG2FANdYBHskxjWkhDFUQ1OLqTQtrcLf
- SO24=
-X-Gm-Gg: ASbGncvVzazp9CKDQh9JQ832NwcX47GA0jwIQImEUPoSWEgY0UKxYuH3Edv3axDx245
- VS5PieDE25XCg7PRYZWOujqzRzJ9q4aZqn+yAZVL/BIvIWR4FA26G5o3r1bmjPqKgIe0o5eUaZ9
- CL0TiIg9kgdLokpQ4eM6SoitxAF+PdvKQcD2uvGdE2tjwFoS2SfjrKUbSkG5NDYjPFtrsSgJqFU
- ZsLW52viVCgVhQEiWRrwU3VyTzCszTQfeChLUvVjL85r/NED1jIcsWRw85Cc5xaGC+we+tesN6X
- n4Shz/v9kWmOLQUcPD18egL3nim8fUJq1ABC0e5niaTgh/0ev9U8bKQISkVjiYTIlA==
-X-Google-Smtp-Source: AGHT+IGBiB8E0eTSoI28+V9cp1gWnvQIF0NcnM5MrTMqS5rNZ7M1PFDJt5j8Or2lR2bn/A8RFfyqaQ==
-X-Received: by 2002:a05:600c:a09:b0:435:9ed3:5688 with SMTP id
- 5b1f17b1804b1-438913f86dcmr267594425e9.18.1737675857123; 
- Thu, 23 Jan 2025 15:44:17 -0800 (PST)
+ d=1e100.net; s=20230601; t=1737675908; x=1738280708;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=yDFP15LbfYjBwdgoNtB1SUTPS+QYiGObjjbLDQKpiPc=;
+ b=KhjuWir67OlEl9mmqpKRw4DHJXyrKv4EVthejJTiEE88xVML89Jc0aQY4+/vwuqsae
+ +Q2c/wWxy/PbMJMvTwPMr6DlrNAt4kCAFtPumVm1TxQ5exdMulHZBM/izxfwCHioM5N4
+ 5F8nEeWU1UppvOax7HekGntl8+p1QdbkyJPSPwuiBOYT3/b/iecAoSi20ASgTVtGYlak
+ ib1uzP7o4cDlL4PJqvTH3LIAmn3iUMoflcYOcfhXPenj+EANODj8oXHUlbtZJ14LoXeb
+ De6mQ4t9sg8QczbRCBmCygA7zIOvIC2Np0xxKxha8n63wS66jcX4+TMdz6mcthExWTTt
+ Ut0A==
+X-Gm-Message-State: AOJu0Yx9SiS8PW/q0kbjNGBLKX5ZeuF7DbfZYONgZpV5SUuebRCZ55vw
+ afR5OrrdvYtsAxDqJ1/aetWk1J1VF+hKGrsDtAU3ibX88c3jaBzBkMlva8fThY21wdhgRd6lJK/
+ Oryk=
+X-Gm-Gg: ASbGncsIovLamNsvsLxqNYJU4AYz0l9IUnob9IOpaRVQcoxMpvvEcyIQkHXXOiKOdau
+ RKYBjNfaKv9PECTM3+AYgzZ/3y722LQVlZJWYip+jKqrKyPi6Fqu7bh88SWvnLnnUg1CHv/ilSy
+ 98K3c6wb55ubJal+pHS0TAvJbn7wEaIMwxGUrRFpFGwwxyLc7xNGd2Iip3OU0esCuJh2NgW5QRA
+ EkWhzpFmb6v9rpGdcpZYd37vXIgmMZE4m9j5FIlL2E99tdFba/WmJroEb3bP+xedbFEWWmVsF2U
+ HbUIwOWjMh/m3MhliOO5teaIkxg2B/XWSuRbwf0KCRWQYBq8uRZ2OF4=
+X-Google-Smtp-Source: AGHT+IF/y2rn8++eRXtfGXVV9eCNnufdJ4OAKshcVAU/XMr+be4nBaPjnThGR5Wf47h3eLbBgCoQsA==
+X-Received: by 2002:a05:6000:401f:b0:38c:2677:9bee with SMTP id
+ ffacd0b85a97d-38c26779db8mr3711264f8f.15.1737675907708; 
+ Thu, 23 Jan 2025 15:45:07 -0800 (PST)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-438bd54c098sm6544235e9.31.2025.01.23.15.44.15
+ ffacd0b85a97d-38c2a17630asm997952f8f.6.2025.01.23.15.45.05
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Thu, 23 Jan 2025 15:44:16 -0800 (PST)
+ Thu, 23 Jan 2025 15:45:06 -0800 (PST)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Peter Maydell <peter.maydell@linaro.org>,
@@ -72,15 +73,17 @@ Cc: Peter Maydell <peter.maydell@linaro.org>,
  xen-devel@lists.xenproject.org,
  Richard Henderson <richard.henderson@linaro.org>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PATCH 00/20] accel: Simplify cpu-target.c (omnibus)
-Date: Fri, 24 Jan 2025 00:43:54 +0100
-Message-ID: <20250123234415.59850-1-philmd@linaro.org>
+Subject: [PATCH 09/20] accel/tcg: Restrict 'icount_align_option' global to TCG
+Date: Fri, 24 Jan 2025 00:44:03 +0100
+Message-ID: <20250123234415.59850-10-philmd@linaro.org>
 X-Mailer: git-send-email 2.47.1
+In-Reply-To: <20250123234415.59850-1-philmd@linaro.org>
+References: <20250123234415.59850-1-philmd@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::332;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x332.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::432;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x432.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -103,134 +106,70 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Yet another cleanup series before respining the "extract TCG
-fields from CPUState" series. Before that, we try to clarify
-a bit the code around CPU creation. Target specific code is
-reduced further. Some intermixed User/System is separated,
-making maintenance simpler IMHO. Since my local branch is
-quite big, I tried to group here all the generic patches.
+Since commit 740b1759734 ("cpu-timers, icount: new modules")
+we don't need to expose icount_align_option to all the
+system code, we can restrict it to TCG. Since it is used as
+a boolean, declare it as 'bool' type.
 
-Regards,
+Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+---
+ accel/tcg/internal-common.h | 2 ++
+ include/system/cpus.h       | 2 --
+ accel/tcg/icount-common.c   | 2 ++
+ system/globals.c            | 1 -
+ 4 files changed, 4 insertions(+), 3 deletions(-)
 
-Phil.
-
-Based-on: <20250123215609.30432-1-philmd@linaro.org>
-  "target/ppc: Move TCG code from excp_helper.c to tcg-excp_helper.c"
-
-Philippe Mathieu-Daudé (20):
-  qemu/compiler: Absorb 'clang-tsa.h'
-  user: Extract common MMAP API to 'user/mmap.h'
-  gdbstub: Check for TCG before calling tb_flush()
-  cpus: Cache CPUClass early in instance_init() handler
-  cpus: Keep default fields initialization in cpu_common_initfn()
-  accel/kvm: Remove unused 'system/cpus.h' header in kvm-cpus.h
-  accel/tcg: Build tcg_flags helpers as common code
-  accel/tcg: Restrict tlb_init() / destroy() to TCG
-  accel/tcg: Restrict 'icount_align_option' global to TCG
-  accel/tcg: Rename 'hw/core/tcg-cpu-ops.h' -> 'accel/tcg/cpu-ops.h'
-  accel: Rename 'hw/core/accel-cpu.h' -> 'accel/accel-cpu-target.h'
-  accel/accel-cpu-target.h: Include missing 'cpu.h' header
-  accel: Forward-declare AccelOpsClass in 'qemu/typedefs.h'
-  accel/tcg: Move cpu_memory_rw_debug() user implementation to
-    user-exec.c
-  cpus: Fix style in cpu-target.c
-  cpus: Restrict cpu_common_post_load() code to TCG
-  cpus: Have cpu_class_init_props() per user / system emulation
-  cpus: Have cpu_exec_initfn() per user / system emulation
-  cpus: Register VMState per user / system emulation
-  cpus: Build cpu_exec_[un]realizefn() methods once
-
- MAINTAINERS                                   |   4 +-
- accel/kvm/kvm-cpus.h                          |   2 -
- accel/tcg/internal-common.h                   |  13 +
- bsd-user/qemu.h                               |  13 +-
- .../accel-cpu.h => accel/accel-cpu-target.h}  |   7 +-
- .../tcg-cpu-ops.h => accel/tcg/cpu-ops.h}     |   0
- include/block/block_int-common.h              |   1 -
- include/block/graph-lock.h                    |   2 -
- include/exec/exec-all.h                       |  16 -
- include/exec/page-protection.h                |   2 -
- include/hw/core/cpu.h                         |   2 +
- include/qemu/clang-tsa.h                      | 114 -------
- include/qemu/compiler.h                       |  87 +++++
- include/qemu/thread.h                         |   1 -
- include/qemu/typedefs.h                       |   1 +
- include/system/accel-ops.h                    |   1 -
- include/system/cpus.h                         |   4 -
- include/user/mmap.h                           |  32 ++
- linux-user/user-mmap.h                        |  19 +-
- accel/accel-system.c                          |   1 +
- accel/accel-target.c                          |   2 +-
- accel/hvf/hvf-accel-ops.c                     |   1 +
- accel/kvm/kvm-accel-ops.c                     |   1 +
- accel/qtest/qtest.c                           |   1 +
- accel/stubs/tcg-stub.c                        |   4 -
- accel/tcg/cpu-exec-common.c                   |  34 +-
- accel/tcg/cpu-exec.c                          |  37 +--
- accel/tcg/cputlb.c                            |   2 +-
- accel/tcg/icount-common.c                     |   2 +
- accel/tcg/monitor.c                           |   1 -
- accel/tcg/tcg-accel-ops.c                     |   1 +
- accel/tcg/translate-all.c                     |   3 +-
- accel/tcg/user-exec-stub.c                    |  11 +
- accel/tcg/user-exec.c                         |  94 +++++-
- accel/tcg/watchpoint.c                        |   2 +-
- accel/xen/xen-all.c                           |   1 +
- block/create.c                                |   1 -
- bsd-user/signal.c                             |   2 +-
- cpu-common.c                                  |   1 -
- cpu-target.c                                  | 314 +-----------------
- gdbstub/system.c                              |   6 +-
- hw/core/cpu-common.c                          |  31 ++
- hw/core/cpu-system.c                          | 170 ++++++++++
- hw/core/cpu-user.c                            |  44 +++
- hw/mips/jazz.c                                |   2 +-
- linux-user/signal.c                           |   2 +-
- system/cpus.c                                 |   1 +
- system/globals.c                              |   1 -
- system/physmem.c                              |   2 +-
- target/alpha/cpu.c                            |   2 +-
- target/arm/cpu.c                              |   2 +-
- target/arm/tcg/cpu-v7m.c                      |   2 +-
- target/arm/tcg/cpu32.c                        |   2 +-
- target/arm/tcg/mte_helper.c                   |   2 +-
- target/arm/tcg/sve_helper.c                   |   2 +-
- target/avr/cpu.c                              |   2 +-
- target/avr/helper.c                           |   2 +-
- target/hexagon/cpu.c                          |   2 +-
- target/hppa/cpu.c                             |   2 +-
- target/i386/hvf/hvf-cpu.c                     |   2 +-
- target/i386/kvm/kvm-cpu.c                     |   2 +-
- target/i386/nvmm/nvmm-accel-ops.c             |   1 +
- target/i386/tcg/tcg-cpu.c                     |   4 +-
- target/i386/whpx/whpx-accel-ops.c             |   1 +
- target/loongarch/cpu.c                        |   2 +-
- target/m68k/cpu.c                             |   2 +-
- target/microblaze/cpu.c                       |   2 +-
- target/mips/cpu.c                             |   2 +-
- target/openrisc/cpu.c                         |   2 +-
- target/ppc/cpu_init.c                         |   2 +-
- target/ppc/kvm.c                              |   2 +-
- target/riscv/kvm/kvm-cpu.c                    |   2 +-
- target/riscv/tcg/tcg-cpu.c                    |   4 +-
- target/rx/cpu.c                               |   2 +-
- target/s390x/cpu.c                            |   2 +-
- target/s390x/tcg/mem_helper.c                 |   2 +-
- target/sh4/cpu.c                              |   2 +-
- target/sparc/cpu.c                            |   2 +-
- target/tricore/cpu.c                          |   2 +-
- target/xtensa/cpu.c                           |   2 +-
- tests/unit/test-bdrv-drain.c                  |   1 -
- tests/unit/test-block-iothread.c              |   1 -
- util/qemu-thread-posix.c                      |   1 -
- hw/core/meson.build                           |   5 +-
- 84 files changed, 590 insertions(+), 578 deletions(-)
- rename include/{hw/core/accel-cpu.h => accel/accel-cpu-target.h} (92%)
- rename include/{hw/core/tcg-cpu-ops.h => accel/tcg/cpu-ops.h} (100%)
- delete mode 100644 include/qemu/clang-tsa.h
- create mode 100644 include/user/mmap.h
- create mode 100644 hw/core/cpu-user.c
-
+diff --git a/accel/tcg/internal-common.h b/accel/tcg/internal-common.h
+index d3186721839..7ef620d9631 100644
+--- a/accel/tcg/internal-common.h
++++ b/accel/tcg/internal-common.h
+@@ -17,6 +17,8 @@ extern int64_t max_advance;
+ 
+ extern bool one_insn_per_tb;
+ 
++extern bool icount_align_option;
++
+ /*
+  * Return true if CS is not running in parallel with other cpus, either
+  * because there are no other cpus or we are within an exclusive context.
+diff --git a/include/system/cpus.h b/include/system/cpus.h
+index 3d8fd368f32..1cffeaaf5c4 100644
+--- a/include/system/cpus.h
++++ b/include/system/cpus.h
+@@ -38,8 +38,6 @@ void resume_all_vcpus(void);
+ void pause_all_vcpus(void);
+ void cpu_stop_current(void);
+ 
+-extern int icount_align_option;
+-
+ /* Unblock cpu */
+ void qemu_cpu_kick_self(void);
+ 
+diff --git a/accel/tcg/icount-common.c b/accel/tcg/icount-common.c
+index b178dccec45..402d3e3f4e8 100644
+--- a/accel/tcg/icount-common.c
++++ b/accel/tcg/icount-common.c
+@@ -48,6 +48,8 @@ static bool icount_sleep = true;
+ /* Arbitrarily pick 1MIPS as the minimum allowable speed.  */
+ #define MAX_ICOUNT_SHIFT 10
+ 
++bool icount_align_option;
++
+ /* Do not count executed instructions */
+ ICountMode use_icount = ICOUNT_DISABLED;
+ 
+diff --git a/system/globals.c b/system/globals.c
+index 4867c93ca6b..b968e552452 100644
+--- a/system/globals.c
++++ b/system/globals.c
+@@ -48,7 +48,6 @@ unsigned int nb_prom_envs;
+ const char *prom_envs[MAX_PROM_ENVS];
+ uint8_t *boot_splash_filedata;
+ int only_migratable; /* turn it off unless user states otherwise */
+-int icount_align_option;
+ 
+ /* The bytes in qemu_uuid are in the order specified by RFC4122, _not_ in the
+  * little-endian "wire format" described in the SMBIOS 2.6 specification.
 -- 
 2.47.1
 
