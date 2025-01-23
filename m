@@ -4,42 +4,45 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D06CAC02182
-	for <qemu-devel@archiver.kernel.org>; Thu, 23 Jan 2025 10:57:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1B9A1C0218B
+	for <qemu-devel@archiver.kernel.org>; Thu, 23 Jan 2025 11:01:15 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1taut8-00052i-4o; Thu, 23 Jan 2025 05:56:42 -0500
+	id 1tauwy-0006Kx-LF; Thu, 23 Jan 2025 06:00:40 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jonathan.cameron@huawei.com>)
- id 1taut6-00052E-Jx; Thu, 23 Jan 2025 05:56:40 -0500
+ id 1tauww-0006JV-De; Thu, 23 Jan 2025 06:00:38 -0500
 Received: from frasgout.his.huawei.com ([185.176.79.56])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jonathan.cameron@huawei.com>)
- id 1taut4-0006Bj-Te; Thu, 23 Jan 2025 05:56:40 -0500
-Received: from mail.maildlp.com (unknown [172.18.186.31])
- by frasgout.his.huawei.com (SkyGuard) with ESMTP id 4YdyYC3khTz6JB7h;
- Thu, 23 Jan 2025 18:56:15 +0800 (CST)
+ id 1tauwu-0006dL-Kg; Thu, 23 Jan 2025 06:00:38 -0500
+Received: from mail.maildlp.com (unknown [172.18.186.216])
+ by frasgout.his.huawei.com (SkyGuard) with ESMTP id 4Ydybx5zzHz6M4Nk;
+ Thu, 23 Jan 2025 18:58:37 +0800 (CST)
 Received: from frapeml500008.china.huawei.com (unknown [7.182.85.71])
- by mail.maildlp.com (Postfix) with ESMTPS id 059091404C4;
- Thu, 23 Jan 2025 18:56:34 +0800 (CST)
+ by mail.maildlp.com (Postfix) with ESMTPS id C9CD3140A70;
+ Thu, 23 Jan 2025 19:00:34 +0800 (CST)
 Received: from localhost (10.203.177.66) by frapeml500008.china.huawei.com
  (7.182.85.71) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.1.2507.39; Thu, 23 Jan
- 2025 11:56:33 +0100
-Date: Thu, 23 Jan 2025 10:56:32 +0000
+ 2025 12:00:34 +0100
+Date: Thu, 23 Jan 2025 11:00:32 +0000
 To: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
 CC: Igor Mammedov <imammedo@redhat.com>, "Michael S . Tsirkin"
  <mst@redhat.com>, Shiju Jose <shiju.jose@huawei.com>, <qemu-arm@nongnu.org>,
- <qemu-devel@nongnu.org>, Ani Sinha <anisinha@redhat.com>, Peter Maydell
- <peter.maydell@linaro.org>, Shannon Zhao <shannon.zhaosl@gmail.com>,
- <linux-kernel@vger.kernel.org>
-Subject: Re: [PATCH 09/11] arm/virt: Wire up a GED error device for ACPI / GHES
-Message-ID: <20250123105632.00007d7a@huawei.com>
-In-Reply-To: <c3f4777e308492a8b5a2c27a9ffada3a01df9680.1737560101.git.mchehab+huawei@kernel.org>
+ <qemu-devel@nongnu.org>, Ani Sinha <anisinha@redhat.com>, Dongjiu Geng
+ <gengdongjiu1@gmail.com>, Eric Blake <eblake@redhat.com>, Markus Armbruster
+ <armbru@redhat.com>, Michael Roth <michael.roth@amd.com>, Paolo Bonzini
+ <pbonzini@redhat.com>, Peter Maydell <peter.maydell@linaro.org>, "Shannon
+ Zhao" <shannon.zhaosl@gmail.com>, <linux-kernel@vger.kernel.org>
+Subject: Re: [PATCH 10/11] qapi/acpi-hest: add an interface to do generic
+ CPER error injection
+Message-ID: <20250123110032.000052d4@huawei.com>
+In-Reply-To: <769b68a3192cc921fec4c0e5e925552920fdbe71.1737560101.git.mchehab+huawei@kernel.org>
 References: <cover.1737560101.git.mchehab+huawei@kernel.org>
- <c3f4777e308492a8b5a2c27a9ffada3a01df9680.1737560101.git.mchehab+huawei@kernel.org>
+ <769b68a3192cc921fec4c0e5e925552920fdbe71.1737560101.git.mchehab+huawei@kernel.org>
 X-Mailer: Claws Mail 4.3.0 (GTK 3.24.42; x86_64-w64-mingw32)
 MIME-Version: 1.0
 Content-Type: text/plain; charset="US-ASCII"
@@ -73,30 +76,127 @@ From:  Jonathan Cameron via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, 22 Jan 2025 16:46:26 +0100
+On Wed, 22 Jan 2025 16:46:27 +0100
 Mauro Carvalho Chehab <mchehab+huawei@kernel.org> wrote:
 
-> Adds support to ARM virtualization to allow handling
-> generic error ACPI Event via GED & error source device.
+> Creates a QMP command to be used for generic ACPI APEI hardware error
+> injection (HEST) via GHESv2, and add support for it for ARM guests.
 > 
-> It is aligned with Linux Kernel patch:
-> https://lore.kernel.org/lkml/1272350481-27951-8-git-send-email-ying.huang@intel.com/
+> Error injection uses ACPI_HEST_SRC_ID_QMP source ID to be platform
+> independent. This is mapped at arch virt bindings, depending on the
+> types supported by QEMU and by the BIOS. So, on ARM, this is supported
+> via ACPI_GHES_NOTIFY_GPIO notification type.
 > 
-> Co-authored-by: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
+> This patch is co-authored:
+>     - original ghes logic to inject a simple ARM record by Shiju Jose;
+>     - generic logic to handle block addresses by Jonathan Cameron;
+>     - generic GHESv2 error inject by Mauro Carvalho Chehab;
+> 
 > Co-authored-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+> Co-authored-by: Shiju Jose <shiju.jose@huawei.com>
+> Co-authored-by: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
 > Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+> Signed-off-by: Shiju Jose <shiju.jose@huawei.com>
 > Signed-off-by: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
-> Acked-by: Igor Mammedov <imammedo@redhat.com>
 > 
 > ---
 > 
-> Changes from v8:
-> 
-> - Added a call to the function that produces GHES generic
->   records, as this is now added earlier in this series.
+> Changes since v9:
+> - ARM source IDs renamed to reflect SYNC/ASYNC;
+> - command name changed to better reflect what it does;
+> - some improvements at JSON documentation;
+> - add a check for QMP source at the notification logic.
 > 
 > Signed-off-by: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
 Another bonus.
 
-LGTM otherwise.
+Few trivial formatting comments, otherwise looks fine to me.
+
+Jonathan
+
+> diff --git a/hw/acpi/ghes.c b/hw/acpi/ghes.c
+> index 5d29db3918dd..cf83c959b5ef 100644
+> --- a/hw/acpi/ghes.c
+> +++ b/hw/acpi/ghes.c
+> @@ -547,7 +547,7 @@ void ghes_record_cper_errors(const void *cper, size_t len,
+>      /* Write the generic error data entry into guest memory */
+>      cpu_physical_memory_write(cper_addr, cper, len);
+>  
+> -    notifier_list_notify(&acpi_generic_error_notifiers, NULL);
+> +    notifier_list_notify(&acpi_generic_error_notifiers, &source_id);
+>  }
+>  
+>  int acpi_ghes_memory_errors(uint16_t source_id, uint64_t physical_address)
+> diff --git a/hw/acpi/ghes_cper.c b/hw/acpi/ghes_cper.c
+> new file mode 100644
+> index 000000000000..02c47b41b990
+> --- /dev/null
+> +++ b/hw/acpi/ghes_cper.c
+> @@ -0,0 +1,32 @@
+> +/*
+> + * CPER payload parser for error injection
+> + *
+> + * Copyright(C) 2024 Huawei LTD.
+> + *
+> + * This code is licensed under the GPL version 2 or later. See the
+> + * COPYING file in the top-level directory.
+> + *
+> + */
+> +
+> +#include "qemu/osdep.h"
+> +
+> +#include "qemu/base64.h"
+> +#include "qemu/error-report.h"
+> +#include "qemu/uuid.h"
+> +#include "qapi/qapi-commands-acpi-hest.h"
+> +#include "hw/acpi/ghes.h"
+> +
+> +void qmp_inject_ghes_error(const char *qmp_cper, Error **errp)
+> +{
+> +
+Odd blank line that can go.
+
+> +    uint8_t *cper;
+> +    size_t  len;
+> +
+> +    cper = qbase64_decode(qmp_cper, -1, &len, errp);
+> +    if (!cper) {
+> +        error_setg(errp, "missing GHES CPER payload");
+> +        return;
+> +    }
+> +
+> +    ghes_record_cper_errors(cper, len, ACPI_HEST_SRC_ID_QMP, errp);
+> +}
+> diff --git a/hw/acpi/ghes_cper_stub.c b/hw/acpi/ghes_cper_stub.c
+> new file mode 100644
+> index 000000000000..8782e2c02fa8
+> --- /dev/null
+> +++ b/hw/acpi/ghes_cper_stub.c
+> @@ -0,0 +1,19 @@
+> +/*
+> + * Stub interface for CPER payload parser for error injection
+> + *
+> + * Copyright(C) 2024 Huawei LTD.
+> + *
+> + * This code is licensed under the GPL version 2 or later. See the
+> + * COPYING file in the top-level directory.
+> + *
+Trivial but I'd drop these trailing blank lines as they don't add
+anything other than making people scroll further.
+
+> + */
+> +
+> +#include "qemu/osdep.h"
+> +#include "qapi/error.h"
+> +#include "qapi/qapi-commands-acpi-hest.h"
+> +#include "hw/acpi/ghes.h"
+
+Trivial but doe we need ghes.h?
+
+> +
+> +void qmp_inject_ghes_error(const char *cper, Error **errp)
+> +{
+> +    error_setg(errp, "GHES QMP error inject is not compiled in");
+> +}
+
 
