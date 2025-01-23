@@ -4,80 +4,94 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1F24DC0218C
-	for <qemu-devel@archiver.kernel.org>; Thu, 23 Jan 2025 11:24:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id EFB6EC02182
+	for <qemu-devel@archiver.kernel.org>; Thu, 23 Jan 2025 11:24:49 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tavJt-0002vT-6e; Thu, 23 Jan 2025 06:24:22 -0500
+	id 1tavJV-0002tw-QG; Thu, 23 Jan 2025 06:23:57 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <dmitry.osipenko@collabora.com>)
- id 1tavJs-0002vA-8K
- for qemu-devel@nongnu.org; Thu, 23 Jan 2025 06:24:20 -0500
-Received: from sender4-pp-f112.zoho.com ([136.143.188.112])
+ (Exim 4.90_1) (envelope-from <imammedo@redhat.com>)
+ id 1tavJU-0002tV-6S
+ for qemu-devel@nongnu.org; Thu, 23 Jan 2025 06:23:56 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <dmitry.osipenko@collabora.com>)
- id 1tavJo-0002Ak-J4
- for qemu-devel@nongnu.org; Thu, 23 Jan 2025 06:24:20 -0500
-ARC-Seal: i=1; a=rsa-sha256; t=1737631441; cv=none; 
- d=zohomail.com; s=zohoarc; 
- b=SdXWJcpDj07pRFlPzXWy1WDiXIjW+HMPcfKoigYlE/5YLOCzoZdTVp2pKzlYBTrzjULgYVwLWWfurSFcCjIbSktm54QU1I1X6yP5RWgs0L9fMPeAGEuS7Ga/P7blaRzwI8JOOc/GO85lfG7qVZjs8++lmPtIQp+k0LHSGxUkBcg=
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=zohomail.com;
- s=zohoarc; t=1737631441;
- h=Content-Type:Content-Transfer-Encoding:Cc:Cc:Date:Date:From:From:In-Reply-To:MIME-Version:Message-ID:References:Subject:Subject:To:To:Message-Id:Reply-To;
- bh=z4kGZnJ9mOaDzGLdYHfjgS5EwIsicC6M7Qi0ox7Xafg=; 
- b=U9F5AfCrmnOVVO0YQW3Dzlvgx38iBhwibwqOILziFSzv6SFTLAOa/3xWbAHM84VRlqzz70CkEfGLOGdY17JTqnoULSrdos2MIcybb7wwwNj0RxRsdg1aFuDTj+5D7PrOqb0t7oaSpNXpoLmN9BrUzri9JLNAnOGvwQ52clP23pY=
-ARC-Authentication-Results: i=1; mx.zohomail.com;
- dkim=pass  header.i=collabora.com;
- spf=pass  smtp.mailfrom=dmitry.osipenko@collabora.com;
- dmarc=pass header.from=<dmitry.osipenko@collabora.com>
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; t=1737631441; 
- s=zohomail; d=collabora.com; i=dmitry.osipenko@collabora.com; 
- h=Message-ID:Date:Date:MIME-Version:Subject:Subject:To:To:Cc:Cc:References:From:From:In-Reply-To:Content-Type:Content-Transfer-Encoding:Message-Id:Reply-To;
- bh=z4kGZnJ9mOaDzGLdYHfjgS5EwIsicC6M7Qi0ox7Xafg=;
- b=Qn7zNyj+NBn1+/ppoFvun+U9DPjkVucxxPu7a0hjWTH0B0VLApWpMoU6Y/j26B1R
- oxletUMWkVS4j3hs57rm72VgTLHrUCO4IvJYJXXiUEGCHltjp2ic80TXahcTN/m0Gp6
- QgHrpHQR2gOGrZTEmvc5SRkpdDms6WG/1KDfPdwI=
-Received: by mx.zohomail.com with SMTPS id 1737631435080590.2073650241499;
- Thu, 23 Jan 2025 03:23:55 -0800 (PST)
-Message-ID: <f5c8e901-5d36-47b0-91d3-40699c51c259@collabora.com>
-Date: Thu, 23 Jan 2025 14:23:48 +0300
+ (Exim 4.90_1) (envelope-from <imammedo@redhat.com>)
+ id 1tavJR-00029V-Nm
+ for qemu-devel@nongnu.org; Thu, 23 Jan 2025 06:23:55 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1737631430;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=J9uURwdCCm34GKuHyTdynIgW82PlZ4ndfwFc2Wwr3TM=;
+ b=VBRm+u83FHU0f/XO9obbV9PlUjSr2g1VsbeJEJ2kHMkFjr1pwrULHO2/Jy7r5jbOKLOObS
+ Rotoqhj3GHNGsUWMtG0XI4rcVumRNv0DZwVEq851M4nofVHsxqaXW5ZRlkLQ6wA+rClkDA
+ QgCA7/q6W+d7jed8w0lRp/8j66TZtpo=
+Received: from mail-qk1-f200.google.com (mail-qk1-f200.google.com
+ [209.85.222.200]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-594-x6fI6fBbOb-7b4hyH5e-Sw-1; Thu, 23 Jan 2025 06:23:49 -0500
+X-MC-Unique: x6fI6fBbOb-7b4hyH5e-Sw-1
+X-Mimecast-MFC-AGG-ID: x6fI6fBbOb-7b4hyH5e-Sw
+Received: by mail-qk1-f200.google.com with SMTP id
+ af79cd13be357-7b6f3b93f5cso379302885a.0
+ for <qemu-devel@nongnu.org>; Thu, 23 Jan 2025 03:23:49 -0800 (PST)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1737631428; x=1738236228;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:subject:cc:to:from:date:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=J9uURwdCCm34GKuHyTdynIgW82PlZ4ndfwFc2Wwr3TM=;
+ b=brp86GsCLn7gboHvMVnfox3MOcW+t1ImK0cUNDEyC1xjIrON7Tfck8WeMHMK5NG8jM
+ 2lHD3ERrIhHTcUHUu9Z8tl3XeynuyQLitWoWJgG6d9y1qssOj1I33LsiADqiqyTHJHWY
+ H6tOixSSP8Mq1kKKTO5lAMgdwFBj3qW6RXHxVRQGBOmJWab9ztSFX0TB29qTVSgJVEs7
+ TdnfU6hwOXz7lljr1ND3LVQxQK6pProZ+oAyOrKhIl2bvJJKtRwJqeY+eM4AUcQ3ACnI
+ ShIqB/fgcirTD26rQjpzjUmG6sj34lCErg1Kl0dujYufz7PEc1MKL5ywRQbNNLudYqPw
+ TTpA==
+X-Gm-Message-State: AOJu0Yw8pD5eaJc3dfbEVAHvUEj3hXhoL0Qg3lsLdoXxoJZsoHl/byyK
+ +VRj9jhmOhfS2Efcs0/wm1xApt5Cjm2J1QhJ5YDI9cdrxY58GSBcPJ1Sh6gbz3WQ4qAAi/hguMw
+ U7m4J9HStC5kXBFh7meVk15aAFMAIr/cL/fOkCusJ6ZzVimE3VNnh
+X-Gm-Gg: ASbGncup+H7m071fMo8WOR8nYq9gp4/ZsTVrjadai7xhGJ3OMJfRZoiizz6UsmYOl32
+ CLYrcmtUrueoodUKUa6zre6Xm3W7WdYfZO230BFZV4Y72twc2GPIIW4iWKDKCcnU3K+qJrgKRO0
+ QizV89TQYwapTF+2HOXOqgBmrY9uK+czPol9kXPwbL0NPYTXKZ5c30l0ByBVQ9eKrwhj3YM3D5t
+ uKFcXCWQx9rkDGdcYWpagZYqYWHp+rqNjPj9I5VA0sk15mdq+IDqiqVlETVIx1+aEdNuwKe6Sl8
+ NR6iMO2e8swJlOpptDTZYb3QyDCW8+kNiIcRBSac3w==
+X-Received: by 2002:a05:620a:2806:b0:7b6:da9d:d810 with SMTP id
+ af79cd13be357-7be93231a29mr385858685a.24.1737631428607; 
+ Thu, 23 Jan 2025 03:23:48 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IHbPnCJ3+vvQ4jM8tO5YzpLQHsIOAsKsqLoABNJHBS5XxUESh9CiVCnAdVUk8hw/1kbnuh5Mw==
+X-Received: by 2002:a05:620a:2806:b0:7b6:da9d:d810 with SMTP id
+ af79cd13be357-7be93231a29mr385856685a.24.1737631428309; 
+ Thu, 23 Jan 2025 03:23:48 -0800 (PST)
+Received: from imammedo.users.ipa.redhat.com (nat-pool-brq-u.redhat.com.
+ [213.175.37.12]) by smtp.gmail.com with ESMTPSA id
+ af79cd13be357-7be61481543sm755283485a.48.2025.01.23.03.23.45
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Thu, 23 Jan 2025 03:23:46 -0800 (PST)
+Date: Thu, 23 Jan 2025 12:23:43 +0100
+From: Igor Mammedov <imammedo@redhat.com>
+To: Alex =?UTF-8?B?QmVubsOpZQ==?= <alex.bennee@linaro.org>
+Cc: qemu-devel@nongnu.org, richard.henderson@linaro.org, pbonzini@redhat.com
+Subject: Re: [PATCH] tcg: drop qemu_cpu_is_self() in
+ tlb_flush_by_mmuidx[_async_work]
+Message-ID: <20250123122343.6af8a6e1@imammedo.users.ipa.redhat.com>
+In-Reply-To: <87frl9ls4g.fsf@draig.linaro.org>
+References: <20250123094511.156324-1-imammedo@redhat.com>
+ <87frl9ls4g.fsf@draig.linaro.org>
+X-Mailer: Claws Mail 4.3.0 (GTK 3.24.43; x86_64-redhat-linux-gnu)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v5 0/8] Support virtio-gpu DRM native context
-To: =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
-Cc: Akihiko Odaki <akihiko.odaki@daynix.com>, Huang Rui <ray.huang@amd.com>,
- =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
- =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Gerd Hoffmann <kraxel@redhat.com>, "Michael S . Tsirkin" <mst@redhat.com>,
- Paolo Bonzini <pbonzini@redhat.com>, Gert Wollny
- <gert.wollny@collabora.com>, qemu-devel@nongnu.org,
- Gurchetan Singh <gurchetansingh@chromium.org>, Alyssa Ross <hi@alyssa.is>,
- =?UTF-8?Q?Roger_Pau_Monn=C3=A9?= <roger.pau@citrix.com>,
- Alex Deucher <alexander.deucher@amd.com>,
- Stefano Stabellini <stefano.stabellini@amd.com>,
- =?UTF-8?Q?Christian_K=C3=B6nig?= <christian.koenig@amd.com>,
- Xenia Ragiadakou <xenia.ragiadakou@amd.com>,
- Pierre-Eric Pelloux-Prayer <pierre-eric.pelloux-prayer@amd.com>,
- Honglei Huang <honglei1.huang@amd.com>, Julia Zhang <julia.zhang@amd.com>,
- Chen Jiqian <Jiqian.Chen@amd.com>, Rob Clark <robdclark@gmail.com>,
- Yiwei Zhang <zzyiwei@chromium.org>, Sergio Lopez Pascual <slp@redhat.com>
-References: <20250119220050.15167-1-dmitry.osipenko@collabora.com>
- <87jzamn5ri.fsf@draig.linaro.org>
-From: Dmitry Osipenko <dmitry.osipenko@collabora.com>
-Content-Language: en-US
-In-Reply-To: <87jzamn5ri.fsf@draig.linaro.org>
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-X-ZohoMailClient: External
-Received-SPF: pass client-ip=136.143.188.112;
- envelope-from=dmitry.osipenko@collabora.com; helo=sender4-pp-f112.zoho.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=imammedo@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -50
+X-Spam_score: -5.1
+X-Spam_bar: -----
+X-Spam_report: (-5.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-2.996,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.043,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
@@ -96,67 +110,71 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 1/22/25 20:00, Alex Bennée wrote:
-> Dmitry Osipenko <dmitry.osipenko@collabora.com> writes:
-> 
->> This patchset adds DRM native context support to VirtIO-GPU on Qemu.
->>
->> Contarary to Virgl and Venus contexts that mediates high level GFX APIs,
->> DRM native context [1] mediates lower level kernel driver UAPI, which
->> reflects in a less CPU overhead and less/simpler code needed to support it.
->> DRM context consists of a host and guest parts that have to be implemented
->> for each GPU driver. On a guest side, DRM context presents a virtual GPU as
->> a real/native host GPU device for GL/VK applications.
->>
->> [1] https://www.youtube.com/watch?v=9sFP_yddLLQ
->>
->> Today there are four known DRM native context drivers existing in a wild:
->>
->>   - Freedreno (Qualcomm SoC GPUs), completely upstreamed
->>   - AMDGPU, mostly merged into upstreams
-> 
-> I tried my AMD system today with:
-> 
-> Host:
->   Aarch64 AVA system
->   Trixie
->   virglrenderer @ v1.1.0/99557f5aa130930d11f04ffeb07f3a9aa5963182
->   -display sdl,gl=on (gtk,gl=on also came up but handled window resizing
->   poorly)
->   
-> KVM Guest
-> 
->   Aarch64
->   Trixie
->   mesa @ main/d27748a76f7dd9236bfcf9ef172dc13b8c0e170f
->   -Dvulkan-drivers=virtio,amd -Dgallium-drivers=virgl,radeonsi -Damdgpu-virtio=true
-> 
-> However when I ran vulkan-info --summary KVM faulted with:
-> 
->   debian-trixie login: error: kvm run failed Bad address
->    PC=0000ffffb9aa1eb0 X00=0000ffffba0450a4 X01=0000aaaaf7f32400
->   X02=000000000000013c X03=0000ffffba045098 X04=0000aaaaf7f3253c
->   X05=0000ffffba0451d4 X06=00000000c0016900 X07=000000000000000e
->   X08=0000000000000014 X09=00000000000000ff X10=0000aaaaf7f32500
->   X11=0000aaaaf7e4d028 X12=0000aaaaf7edbcb0 X13=0000000000000001
->   X14=000000000000000c X15=0000000000007718 X16=0000ffffb93601f0
->   X17=0000ffffb9aa1dc0 X18=00000000000076f0 X19=0000aaaaf7f31330
->   X20=0000aaaaf7f323f0 X21=0000aaaaf7f235e0 X22=000000000000004c
->   X23=0000aaaaf7f2b5e0 X24=0000aaaaf7ee0cb0 X25=00000000000000ff
->   X26=0000000000000076 X27=0000ffffcd2b18a8 X28=0000aaaaf7ee0cb0
->   X29=0000ffffcd2b0bd0 X30=0000ffffb86c8b98  SP=0000ffffcd2b0bd0
->   PSTATE=20001000 --C- EL0t
->   QEMU 9.2.50 monitor - type 'help' for more information
->   (qemu) quit
-> 
-> Which looks very much like the PFN locking failure. However booting up
-> with venus=on instead works. Could there be any differences in the way
-> device memory is mapped in the two cases?
+On Thu, 23 Jan 2025 10:52:15 +0000
+Alex Benn=C3=A9e <alex.bennee@linaro.org> wrote:
 
-Memory mapping works exactly the same for nctx and venus. Are you on
-6.13 host kernel?
+> Igor Mammedov <imammedo@redhat.com> writes:
+>=20
+> > QEMU will crash with following debug enabled
+> >   # define DEBUG_TLB_GATE 1
+> >   # define DEBUG_TLB_LOG_GATE 1
+> > due to [1] introduced assert and as it happenstlb_flush_by_mmuidx[_asyn=
+c_work]
+> > functions are called not only from vcpu thread but also from reset hand=
+ler
+> > that is called from main thread at cpu realize time when vcpu is already
+> > created
+> >   x86_cpu_new -> ... ->
+> >       x86_cpu_realizefn -> cpu_reset -> ... ->
+> >           tcg_cpu_reset_hold
+> >
+> > drop assert to fix crash. =20
+>=20
+> Hmm the assert is there for a good reason because we do not want to be
+> flushing another CPUs state. However the assert itself:
+>=20
+>   g_assert(!(cpu)->created || qemu_cpu_is_self(cpu));
+>=20
+> was trying to account for pre-initialised vCPUs. What has changed?
+>=20
+> cpu_thread_signal_created(cpu) is called just before we start running
+> the main loop in mttcg_cpu_thread_fn. So any other thread messing with
+> the CPUs TLB can potentially mess things up.
 
--- 
-Best regards,
-Dmitry
+it reproduces on current master, so yes it likely has changed over time.
+I've just stumbled on it when attempting to get rid of cpu->created usage.
+
+
+> > 1)
+> > Fixes: f0aff0f124028 ("cputlb: add assert_cpu_is_self checks")
+> > Signed-off-by: Igor Mammedov <imammedo@redhat.com>
+> > ---
+> >  accel/tcg/cputlb.c | 4 ----
+> >  1 file changed, 4 deletions(-)
+> >
+> > diff --git a/accel/tcg/cputlb.c b/accel/tcg/cputlb.c
+> > index b26c0e088f..2da803103c 100644
+> > --- a/accel/tcg/cputlb.c
+> > +++ b/accel/tcg/cputlb.c
+> > @@ -381,8 +381,6 @@ static void tlb_flush_by_mmuidx_async_work(CPUState=
+ *cpu, run_on_cpu_data data)
+> >      uint16_t all_dirty, work, to_clean;
+> >      int64_t now =3D get_clock_realtime();
+> > =20
+> > -    assert_cpu_is_self(cpu);
+> > -
+> >      tlb_debug("mmu_idx:0x%04" PRIx16 "\n", asked);
+> > =20
+> >      qemu_spin_lock(&cpu->neg.tlb.c.lock);
+> > @@ -419,8 +417,6 @@ void tlb_flush_by_mmuidx(CPUState *cpu, uint16_t id=
+xmap)
+> >  {
+> >      tlb_debug("mmu_idx: 0x%" PRIx16 "\n", idxmap);
+> > =20
+> > -    assert_cpu_is_self(cpu);
+> > -
+> >      tlb_flush_by_mmuidx_async_work(cpu, RUN_ON_CPU_HOST_INT(idxmap));
+> >  } =20
+>=20
+
 
