@@ -4,72 +4,74 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A1EB7C02182
-	for <qemu-devel@archiver.kernel.org>; Thu, 23 Jan 2025 08:27:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 52CD2C02182
+	for <qemu-devel@archiver.kernel.org>; Thu, 23 Jan 2025 08:29:22 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tasXz-0000NG-Qy; Thu, 23 Jan 2025 03:26:43 -0500
+	id 1tasa8-00014S-WF; Thu, 23 Jan 2025 03:28:57 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1tasXx-0000N3-QD
- for qemu-devel@nongnu.org; Thu, 23 Jan 2025 03:26:41 -0500
-Received: from mgamail.intel.com ([198.175.65.12])
+ (Exim 4.90_1) (envelope-from <shameerali.kolothum.thodi@huawei.com>)
+ id 1tasa7-00014G-1x; Thu, 23 Jan 2025 03:28:55 -0500
+Received: from frasgout.his.huawei.com ([185.176.79.56])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1tasXv-0003Zd-5J
- for qemu-devel@nongnu.org; Thu, 23 Jan 2025 03:26:41 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
- d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1737620799; x=1769156799;
- h=date:from:to:cc:subject:message-id:references:
- mime-version:in-reply-to;
- bh=KiibzZJk5o48F2wdBGveXrH//P5lpwlf0zP4EZGT5pU=;
- b=f9KqRu/SxCkPEAMMwfUmjy9/fQVwRjbEwb7qrgKJ30AvaZFToL0m4Mty
- vnHOm1I8m3Js8YYvP+b7Q+CcmhpvHhup3+PED9yp7rnu9idMzIthlRpz8
- u15/mBGHqKl6fLhGVQ9L7LkHM2qZVLJ3G0z7l8FNksCSW+wXiamV18Id+
- p3LfuwpY5GpCsg483d/fotH7B6Otfgq0RAnDbXYCiVIDMXuc5YWF5qR0c
- gvDj07oOCcyQdAKAoenQM2TcXWwEoNptVMyMbdTgjpH0MJTC0HX8gjebU
- t2yeM5Y6QGHqC1yTBl4/OrIvPI7UQVTbc9ogbbBlURuhLknDJK6ErTEYU g==;
-X-CSE-ConnectionGUID: cWUCtZS1RCWrQmxAoN5D/g==
-X-CSE-MsgGUID: cDU9QbhKSYGHDO5tnBVU7w==
-X-IronPort-AV: E=McAfee;i="6700,10204,11323"; a="49502930"
-X-IronPort-AV: E=Sophos;i="6.13,227,1732608000"; d="scan'208";a="49502930"
-Received: from fmviesa006.fm.intel.com ([10.60.135.146])
- by orvoesa104.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 23 Jan 2025 00:26:36 -0800
-X-CSE-ConnectionGUID: gYVSLXFLTKerNBihMF37BA==
-X-CSE-MsgGUID: ovWOK4jhRw+CNIIo2XZdfg==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.13,227,1732608000"; d="scan'208";a="107208314"
-Received: from liuzhao-optiplex-7080.sh.intel.com (HELO localhost)
- ([10.239.160.39])
- by fmviesa006.fm.intel.com with ESMTP; 23 Jan 2025 00:26:33 -0800
-Date: Thu, 23 Jan 2025 16:45:56 +0800
-From: Zhao Liu <zhao1.liu@intel.com>
-To: Ani Sinha <anisinha@redhat.com>
-Cc: Sergio Lopez <slp@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
- "Michael S. Tsirkin" <mst@redhat.com>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- Eduardo Habkost <eduardo@habkost.net>, imammedo@redhat.com,
- qemu-devel@nongnu.org
-Subject: Re: [PATCH v4] hw/i386/cpu: remove default_cpu_version and simplify
-Message-ID: <Z5IBxLeIBPvnJpaQ@intel.com>
-References: <20250122120117.1154596-1-anisinha@redhat.com>
+ (Exim 4.90_1) (envelope-from <shameerali.kolothum.thodi@huawei.com>)
+ id 1tasa0-0003m3-LL; Thu, 23 Jan 2025 03:28:54 -0500
+Received: from mail.maildlp.com (unknown [172.18.186.31])
+ by frasgout.his.huawei.com (SkyGuard) with ESMTP id 4YdvGS72Sbz6HJbD;
+ Thu, 23 Jan 2025 16:28:16 +0800 (CST)
+Received: from frapeml500006.china.huawei.com (unknown [7.182.85.219])
+ by mail.maildlp.com (Postfix) with ESMTPS id 2F2C2140498;
+ Thu, 23 Jan 2025 16:28:35 +0800 (CST)
+Received: from frapeml500008.china.huawei.com (7.182.85.71) by
+ frapeml500006.china.huawei.com (7.182.85.219) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.1.2507.39; Thu, 23 Jan 2025 09:28:34 +0100
+Received: from frapeml500008.china.huawei.com ([7.182.85.71]) by
+ frapeml500008.china.huawei.com ([7.182.85.71]) with mapi id 15.01.2507.039;
+ Thu, 23 Jan 2025 09:28:34 +0100
+To: Nicolin Chen <nicolinc@nvidia.com>, Donald Dutile <ddutile@redhat.com>
+CC: "eric.auger@redhat.com" <eric.auger@redhat.com>, Peter Maydell
+ <peter.maydell@linaro.org>, Jason Gunthorpe <jgg@nvidia.com>,
+ =?iso-8859-1?Q?Daniel_P=2E_Berrang=E9?= <berrange@redhat.com>,
+ "qemu-arm@nongnu.org" <qemu-arm@nongnu.org>, "qemu-devel@nongnu.org"
+ <qemu-devel@nongnu.org>, Linuxarm <linuxarm@huawei.com>, "Wangzhou (B)"
+ <wangzhou1@hisilicon.com>, jiangkunkun <jiangkunkun@huawei.com>, "Jonathan
+ Cameron" <jonathan.cameron@huawei.com>, "zhangfei.gao@linaro.org"
+ <zhangfei.gao@linaro.org>, "zhenzhong.duan@intel.com"
+ <zhenzhong.duan@intel.com>
+Subject: RE: [RFC PATCH 0/5] hw/arm/virt: Add support for user-creatable
+ nested SMMUv3
+Thread-Topic: [RFC PATCH 0/5] hw/arm/virt: Add support for user-creatable
+ nested SMMUv3
+Thread-Index: AQHbMeB0+Q5BEZc9JkeH/U6Jz+dF4rLkOMCAgAAM2QCAAAz2gIAEhqeggCVVAYCAAxlYAIAS3VEAgABWAvA=
+Date: Thu, 23 Jan 2025 08:28:34 +0000
+Message-ID: <8fe09b60e6f04cc6aec99b72b46b2fb3@huawei.com>
+References: <20241108125242.60136-1-shameerali.kolothum.thodi@huawei.com>
+ <Z1wh69_gZ9izr1iU@redhat.com> <Z1wsslDnwlth3A8+@nvidia.com>
+ <CAFEAcA8TW2RKyFnh-TZRpfaKfZipHD5TZy_hymUr41GJ4rs4xA@mail.gmail.com>
+ <329445b2f68a47269292aefb34584375@huawei.com>
+ <Z39Ugx2M+FRFVVpB@Asurada-Nvidia>
+ <568014f5-25fd-439b-b70c-9cf50f31255b@redhat.com>
+ <Z5HBJOgO4tUJApY+@nvidia.com>
+In-Reply-To: <Z5HBJOgO4tUJApY+@nvidia.com>
+Accept-Language: en-GB, en-US
+Content-Language: en-US
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+x-originating-ip: [10.203.177.241]
+Content-Type: text/plain; charset="iso-8859-1"
+Content-Transfer-Encoding: quoted-printable
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20250122120117.1154596-1-anisinha@redhat.com>
-Received-SPF: pass client-ip=198.175.65.12; envelope-from=zhao1.liu@intel.com;
- helo=mgamail.intel.com
-X-Spam_score_int: -73
-X-Spam_score: -7.4
-X-Spam_bar: -------
-X-Spam_report: (-7.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-2.996,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
+Received-SPF: pass client-ip=185.176.79.56;
+ envelope-from=shameerali.kolothum.thodi@huawei.com;
+ helo=frasgout.his.huawei.com
+X-Spam_score_int: -41
+X-Spam_score: -4.2
+X-Spam_bar: ----
+X-Spam_report: (-4.2 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_MED=-2.3,
+ RCVD_IN_MSPIKE_H2=-0.043, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -84,155 +86,86 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-to:  Shameerali Kolothum Thodi <shameerali.kolothum.thodi@huawei.com>
+From:  Shameerali Kolothum Thodi via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Ani,
 
-[snip]
 
-> --- a/include/hw/i386/x86.h
-> +++ b/include/hw/i386/x86.h
-> @@ -114,7 +114,10 @@ void init_topo_info(X86CPUTopoInfo *topo_info, const X86MachineState *x86ms);
->  uint32_t x86_cpu_apic_id_from_index(X86MachineState *x86ms,
->                                      unsigned int cpu_index);
->  
-> -void x86_cpus_init(X86MachineState *pcms, int default_cpu_version);
-> +void x86_cpus_init(X86MachineState *pcms);
-> +#ifndef I386_CPU_H
-> +void x86_cpu_set_legacy_version(void);
-> +#endif
->  void x86_rtc_set_cpus_count(ISADevice *rtc, uint16_t cpus_count);
->  void x86_cpu_pre_plug(HotplugHandler *hotplug_dev,
->                        DeviceState *dev, Error **errp);
+> -----Original Message-----
+> From: Nicolin Chen <nicolinc@nvidia.com>
+> Sent: Thursday, January 23, 2025 4:10 AM
+> To: Donald Dutile <ddutile@redhat.com>
+> Cc: Shameerali Kolothum Thodi
+> <shameerali.kolothum.thodi@huawei.com>; eric.auger@redhat.com; Peter
+> Maydell <peter.maydell@linaro.org>; Jason Gunthorpe <jgg@nvidia.com>;
+> Daniel P. Berrang=E9 <berrange@redhat.com>; qemu-arm@nongnu.org;
+> qemu-devel@nongnu.org; Linuxarm <linuxarm@huawei.com>; Wangzhou
+> (B) <wangzhou1@hisilicon.com>; jiangkunkun <jiangkunkun@huawei.com>;
+> Jonathan Cameron <jonathan.cameron@huawei.com>;
+> zhangfei.gao@linaro.org
+> Subject: Re: [RFC PATCH 0/5] hw/arm/virt: Add support for user-creatable
+> nested SMMUv3
+>=20
+> Hi Don,
+>=20
+> On Fri, Jan 10, 2025 at 11:05:24PM -0500, Donald Dutile wrote:
+> > On 1/8/25 11:45 PM, Nicolin Chen wrote:
+> > > On Mon, Dec 16, 2024 at 10:01:29AM +0000, Shameerali Kolothum Thodi
+> wrote:
+> > > > And patches prior to this commit adds that support:
+> > > > 4ccdbe3: ("cover-letter: Add HW accelerated nesting support for arm
+> > > > SMMUv3")
+> > > >
+> > > > Nicolin is soon going to send out those for review. Or I can includ=
+e
+> > > > those in this series so that it gives a complete picture. Nicolin?
+> > >
+> > > Just found that I forgot to reply this one...sorry
+> > >
+> > > I asked Don/Eric to take over that vSMMU series:
+> > > https://lore.kernel.org/qemu-devel/Zy0jiPItu8A3wNTL@Asurada-Nvidia/
+> > > (The majority of my effort has been still on the kernel side:
+> > >   previously vIOMMU/vDEVICE, and now vEVENTQ/MSI/vCMDQ..)
+> > >
+> > > Don/Eric, is there any update from your side?
+> > >
+> > Apologies for delayed response, been at customer site, and haven't been
+> keeping up w/biz email.
+> > Eric is probably waiting for me to get back and chat as well.
+> > Will look to reply early next week.
+>=20
+> I wonder if we can make some progress in Feb? If so, we can start
+> to wrap up the iommufd uAPI patches for HWPT, which was a part of
+> intel's series but never got sent since their emulated series is
+> seemingly still pending?
 
-[snip]
+I think these are the  5 patches that we require from Intel pass-through se=
+ries,
 
-> --- a/target/i386/cpu.h
-> +++ b/target/i386/cpu.h
+vfio/iommufd: Implement [at|de]tach_hwpt handlers
+vfio/iommufd: Implement HostIOMMUDeviceClass::realize_late() handler
+HostIOMMUDevice: Introduce realize_late callback
+vfio/iommufd: Add properties and handlers to TYPE_HOST_IOMMU_DEVICE_IOMMUFD
+backends/iommufd: Add helpers for invalidating user-managed HWPT
 
-...
+See the commits from here,
+https://github.com/hisilicon/qemu/commit/bbdc65af38fa5723f1bd9b026e29273090=
+1f57b5
 
-> +#ifndef HW_I386_X86_H
-> +void x86_cpu_set_legacy_version(void);
-> +#endif
->  #ifndef CONFIG_USER_ONLY
->  
->  void do_cpu_sipi(X86CPU *cpu);
+[CC  Zhenzhong]
 
-I see your problem: Due to the complex reference relationships, you have
-to check the header files and make declarations twice.
+Hi Zhenzhong,
 
-What about the following solution?
+Just wondering what your plans are for the above patches.  If it make sense=
+ and you
+are fine with it, I think it is a good idea one of us can pick up those fro=
+m that series
+and sent out separately so that it can get some review and take it forward.
 
- * Declare pc_init_cpus() in pc.h and define it in pc.c (including cpu.h
-   in pc.c).
- * Only declare x86_cpu_set_legacy_version() in cpu.h.
-
-An example would be like:
-
-diff --git a/hw/i386/pc.c b/hw/i386/pc.c
-index b46975c8a4db..9e8b5fa33596 100644
---- a/hw/i386/pc.c
-+++ b/hw/i386/pc.c
-@@ -61,6 +61,7 @@
- #include "hw/i386/kvm/xen_xenstore.h"
- #include "hw/mem/memory-device.h"
- #include "e820_memory_layout.h"
-+#include "target/i386/cpu.h"
- #include "trace.h"
- #include "sev.h"
- #include CONFIG_DEVICES
-@@ -615,6 +616,19 @@ void pc_acpi_smi_interrupt(void *opaque, int irq, int level)
-     }
- }
-
-+void pc_init_cpus(MachineState *ms)
-+{
-+    X86MachineState *x86ms = X86_MACHINE(ms);
-+    PCMachineState *pcms = PC_MACHINE(ms);
-+    PCMachineClass *pcmc = PC_MACHINE_GET_CLASS(pcms);
-+
-+    if (pcmc->no_versioned_cpu_model) {
-+        /* use legacy cpu as it does not support versions */
-+        x86_cpu_set_legacy_version();
-+    }
-+    x86_cpus_init(x86ms);
-+}
-+
- static
- void pc_machine_done(Notifier *notifier, void *data)
- {
-diff --git a/include/hw/i386/pc.h b/include/hw/i386/pc.h
-index 34106bb52db8..dc0ca5bcb2a5 100644
---- a/include/hw/i386/pc.h
-+++ b/include/hw/i386/pc.h
-@@ -130,19 +130,6 @@ struct PCMachineClass {
- #define TYPE_PC_MACHINE "generic-pc-machine"
- OBJECT_DECLARE_TYPE(PCMachineState, PCMachineClass, PC_MACHINE)
-
--static inline void pc_init_cpus(MachineState *ms)
--{
--    X86MachineState *x86ms = X86_MACHINE(ms);
--    PCMachineState *pcms = PC_MACHINE(ms);
--    PCMachineClass *pcmc = PC_MACHINE_GET_CLASS(pcms);
--
--    if (pcmc->no_versioned_cpu_model) {
--        /* use legacy cpu as it does not support versions */
--        x86_cpu_set_legacy_version();
--    }
--    x86_cpus_init(x86ms);
--}
--
- /* ioapic.c */
-
- GSIState *pc_gsi_create(qemu_irq **irqs, bool pci_enabled);
-@@ -150,6 +137,7 @@ GSIState *pc_gsi_create(qemu_irq **irqs, bool pci_enabled);
- /* pc.c */
-
- void pc_acpi_smi_interrupt(void *opaque, int irq, int level);
-+void pc_init_cpus(MachineState *ms);
-
- #define PCI_HOST_PROP_RAM_MEM          "ram-mem"
- #define PCI_HOST_PROP_PCI_MEM          "pci-mem"
-diff --git a/include/hw/i386/x86.h b/include/hw/i386/x86.h
-index 41236d2a8081..2d2b987fa135 100644
---- a/include/hw/i386/x86.h
-+++ b/include/hw/i386/x86.h
-@@ -115,9 +115,6 @@ uint32_t x86_cpu_apic_id_from_index(X86MachineState *x86ms,
-                                     unsigned int cpu_index);
-
- void x86_cpus_init(X86MachineState *pcms);
--#ifndef I386_CPU_H
--void x86_cpu_set_legacy_version(void);
--#endif
- void x86_rtc_set_cpus_count(ISADevice *rtc, uint16_t cpus_count);
- void x86_cpu_pre_plug(HotplugHandler *hotplug_dev,
-                       DeviceState *dev, Error **errp);
-diff --git a/target/i386/cpu.h b/target/i386/cpu.h
-index 9c0ce2adafe7..bdbe54b26f60 100644
---- a/target/i386/cpu.h
-+++ b/target/i386/cpu.h
-@@ -2686,10 +2686,8 @@ typedef int X86CPUVersion;
-  * Currently, this is only used by microvm.
-  */
- void x86_cpu_uses_lastest_version(void);
--
--#ifndef HW_I386_X86_H
- void x86_cpu_set_legacy_version(void);
--#endif
-+
- #ifndef CONFIG_USER_ONLY
-
- void do_cpu_sipi(X86CPU *cpu);
-
----
-
-The change can be applied on this patch I think. If you like this
-approach, you can try if the pipeline is happy with it.
-
-Regards,
-Zhao
-
+Thanks,
+Shameer
+=20
 
 
