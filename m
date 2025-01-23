@@ -4,87 +4,67 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7A1ECC02181
-	for <qemu-devel@archiver.kernel.org>; Thu, 23 Jan 2025 02:26:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id AAAA4C02182
+	for <qemu-devel@archiver.kernel.org>; Thu, 23 Jan 2025 03:26:20 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tamuW-0002ux-4g; Wed, 22 Jan 2025 21:25:36 -0500
+	id 1tanqT-0001yO-Ff; Wed, 22 Jan 2025 22:25:29 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1tamuU-0002un-28
- for qemu-devel@nongnu.org; Wed, 22 Jan 2025 21:25:34 -0500
-Received: from mail-pl1-x62a.google.com ([2607:f8b0:4864:20::62a])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1tamuS-0003GO-Ae
- for qemu-devel@nongnu.org; Wed, 22 Jan 2025 21:25:33 -0500
-Received: by mail-pl1-x62a.google.com with SMTP id
- d9443c01a7336-216634dd574so4026195ad.2
- for <qemu-devel@nongnu.org>; Wed, 22 Jan 2025 18:25:31 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1737599130; x=1738203930; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:to:subject:user-agent:mime-version:date:message-id:from
- :to:cc:subject:date:message-id:reply-to;
- bh=6vG+00OgWp3gTMT4UTYNksqwpjIvzI3+ODoAIEOxn9M=;
- b=Rm6ei9PDApU4H5C2enD91kMGPNbYGoOz1lSAaCrDEss+BzsCH2ILiJU551L+I8O/Iw
- /mfSIbZt66cuOUghUHZjLw/+VBTpnDkPDfenKayVgaTtWgd/uoUaajRhFafFtj+KDzth
- wYb86n49wDLGBDojED5FQk1C6kal8gv+BzUNkelQqRrewp3XNW3sJjGp93mxVm/pjgLg
- NuNsWgkyUyyiISRP9BOUD9BGvPNSI5V/jILw0jKqJfWvRgsSZF8V3qds6IfkoO4YUThE
- /sdWV366CfOxkI/d87Dd4x3hhK6Vf1x3VqpuzRypVLRKYBOlDos3BhZXUu7ll4nuvaUk
- mjKw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1737599130; x=1738203930;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=6vG+00OgWp3gTMT4UTYNksqwpjIvzI3+ODoAIEOxn9M=;
- b=Q5wsXtStaD7osNhCF/EegioZApbbWF4qQvNrIYp20gtQvu3tPGSGxbCd84+E+ApTd2
- u5xKYsSKQYNu/5A/RxFn3hvcAnNvQsk7IoOk3qTSeJ5UdVeuvO9sM8XDXmuvFEn8IN5l
- QnW6poA+OhB9D6yBEWWL4zOPAXM+j+aMRUXOs5H8c5ehcZTCUvzgN0paT0LNuOMLOzSM
- K2kSrhmkssAh9ynx3Hl2JXHF7xc8EpI9aX0UAPc/WpGyaMicRU30XxTtRBJFRDu4Cffi
- tFR6yxRH6Jj8F8VgeNfbqutHdiDu+uMO74zUOjFurkDUk/sd0DNZT1JhKLVi/NtAtQHG
- mLCA==
-X-Forwarded-Encrypted: i=1;
- AJvYcCVWyRFVrVo9lYvYbWQZo6WdQFik3+jhzaXsTiKWk2GtsxgDuCXg29aBtxJWVqngGZUp54xmkhtCoOyV@nongnu.org
-X-Gm-Message-State: AOJu0YyIdYcD6IHBiVbDX5IB5fKJ/V8tfWzKaszOKhEaEM/txKQl4ctU
- mQ+labpFxaKKzpIJSYnAU0FteQS8VJWXnu8NIdPAiGvxAsQSozv7ZeEjrmUh//4=
-X-Gm-Gg: ASbGnct2r0xao87119r2ZvpAEt7+STKN64M/92Og1oAN5xCjJhcL7uYLxCMu9XkMb3H
- 2NwIRwIB7jMsBwlYRGP+bTljF0T9uX8jg+SGo4ZtJI+cZ4O3WpYmvlQTQ3n+4YrvFXsEKK3edkQ
- 4tzLEuGiY3muOJa8ZdRkewbCP294QP5+NolDMEYOneMPEuQkXwP6iPXaM0UdVQgyvJcTUO7S2zz
- k0MHBZrLAzJbnrDBypY5LVSp/3V+rwbIpRat4HVyvcTN9KKnwDmgjoG0oONgdwscwqiJIKDZzr6
- a/1RT/i3BJy94ZbuYmZY0Z5Zwxm0b0tKsB8tAyaBtvysNng=
-X-Google-Smtp-Source: AGHT+IGKVpYSYsDhjDB1WY/xIs/9+8+EkTM7lXK5HlxtvaJFqFRAcfMs/TfQvqHgcPxMiXyFn89F/g==
-X-Received: by 2002:a17:902:e74b:b0:218:a4ea:a786 with SMTP id
- d9443c01a7336-21c35607c4emr378966725ad.53.1737599130331; 
- Wed, 22 Jan 2025 18:25:30 -0800 (PST)
-Received: from [192.168.0.4] (174-21-71-127.tukw.qwest.net. [174.21.71.127])
- by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-21c2cea2e94sm102210415ad.28.2025.01.22.18.25.29
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 22 Jan 2025 18:25:29 -0800 (PST)
-Message-ID: <d05ee63a-db22-4560-b0c3-457ecf6d19db@linaro.org>
-Date: Wed, 22 Jan 2025 18:25:28 -0800
+ (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
+ id 1tanqN-0001xM-Jz; Wed, 22 Jan 2025 22:25:24 -0500
+Received: from mgamail.intel.com ([192.198.163.16])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
+ id 1tanqK-0007oh-El; Wed, 22 Jan 2025 22:25:22 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+ d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+ t=1737602721; x=1769138721;
+ h=date:from:to:cc:subject:message-id:references:
+ mime-version:in-reply-to;
+ bh=hIuggwS8LttmgUG+c9Sg/8e9bPRYZ5hol/G0goAP4Ws=;
+ b=NzFul1n94+WCzDsFjGOvLAVZP4f7Y6YuHIOwILWhkL5ObgjVK6wNcIlo
+ E83zD4hO8c0/4CmsbCuiyji8aUwcNOvsfdNxEBpB0Nr7s5HgZHSeaz1A1
+ c5DZ/lAsz39Y+LtVZ6zQiOIse/dhFnm2chNoxHLrN3dNxUtf1W1vFF1VK
+ aAsQrEzypqX+y0J6T/spqAaHTeSK96xWwItaCWUOqJt29U9rV83jVjJm4
+ s/XOzZPF3kP9xKV7i3zxw+jsygsdDjoiAtuchTchVxrhsE4TeBK7HB+tX
+ XKjzquJqwyyan6IniVx50YI26NjPBCfn36s/5qVAn6CxBOnIu6bvsv+xI w==;
+X-CSE-ConnectionGUID: zojbp44CRbiy7S7pAsEMRA==
+X-CSE-MsgGUID: oBlCFFTmQFOpDfu6MeYmwg==
+X-IronPort-AV: E=McAfee;i="6700,10204,11323"; a="25687667"
+X-IronPort-AV: E=Sophos;i="6.13,227,1732608000"; d="scan'208";a="25687667"
+Received: from fmviesa003.fm.intel.com ([10.60.135.143])
+ by fmvoesa110.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 22 Jan 2025 19:25:16 -0800
+X-CSE-ConnectionGUID: 6DnP22rGR52bfR9yqUbNlA==
+X-CSE-MsgGUID: 30HWyjWeTbSbIuPFBBvgUw==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.12,224,1728975600"; d="scan'208";a="111352544"
+Received: from liuzhao-optiplex-7080.sh.intel.com (HELO localhost)
+ ([10.239.160.39])
+ by fmviesa003.fm.intel.com with ESMTP; 22 Jan 2025 19:25:06 -0800
+Date: Thu, 23 Jan 2025 11:44:28 +0800
+From: Zhao Liu <zhao1.liu@intel.com>
+To: Paolo Bonzini <pbonzini@redhat.com>
+Cc: qemu-devel@nongnu.org, qemu-rust@nongnu.org
+Subject: Re: [PATCH 06/10] rust: pl011: extract PL011Registers
+Message-ID: <Z5G7HOjOfvE9+810@intel.com>
+References: <20250117092657.1051233-1-pbonzini@redhat.com>
+ <20250117092657.1051233-7-pbonzini@redhat.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] target/i386: extract common bits of gen_repz/gen_repz_nz
-To: Paolo Bonzini <pbonzini@redhat.com>, qemu-devel@nongnu.org
-References: <20250122095018.2471009-1-pbonzini@redhat.com>
-Content-Language: en-US
-From: Richard Henderson <richard.henderson@linaro.org>
-In-Reply-To: <20250122095018.2471009-1-pbonzini@redhat.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::62a;
- envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x62a.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20250117092657.1051233-7-pbonzini@redhat.com>
+Received-SPF: pass client-ip=192.198.163.16; envelope-from=zhao1.liu@intel.com;
+ helo=mgamail.intel.com
+X-Spam_score_int: -73
+X-Spam_score: -7.4
+X-Spam_bar: -------
+X-Spam_report: (-7.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-2.996,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -101,20 +81,24 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 1/22/25 01:50, Paolo Bonzini wrote:
-> Now that everything has been cleaned up, look at DF and prefixes
-> in a single function, and call that one from gen_repz and gen_repz_nz.
-> 
-> Based-on:<20241215090613.89588-1-pbonzini@redhat.com>
-> Suggested-by: Richard Henderson<richard.henderson@linaro.org>
-> Signed-off-by: Paolo Bonzini<pbonzini@redhat.com>
-> ---
-> 	This was requested in the review of "target/i386: optimize string operations"
-> 
->   target/i386/tcg/translate.c | 34 ++++++++++++++--------------------
->   1 file changed, 14 insertions(+), 20 deletions(-)
+> --- a/rust/hw/char/pl011/src/device_class.rs
+> +++ b/rust/hw/char/pl011/src/device_class.rs
+> @@ -6,11 +6,11 @@
+>  use std::os::raw::{c_int, c_void};
+>  
+>  use qemu_api::{
+> -    bindings::*, c_str, vmstate_clock, vmstate_fields, vmstate_of, vmstate_subsections,
+> -    vmstate_unused, zeroable::Zeroable,
+> +    bindings::*, c_str, vmstate_clock, vmstate_fields, vmstate_of, vmstate_struct,
 
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Oops, I forgot to clean up this bindings::*.
 
-r~
+> +    vmstate_subsections, vmstate_unused, zeroable::Zeroable,
+>  };
+>  
+
+Very good example!
+
+Reviewed-by: Zhao Liu <zhao1.liu@intel.com>
+
 
