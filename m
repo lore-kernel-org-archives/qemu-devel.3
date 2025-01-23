@@ -4,92 +4,108 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4E03AC0218D
-	for <qemu-devel@archiver.kernel.org>; Thu, 23 Jan 2025 12:38:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9EC12C02182
+	for <qemu-devel@archiver.kernel.org>; Thu, 23 Jan 2025 12:42:28 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tawTc-0008HA-0e; Thu, 23 Jan 2025 07:38:28 -0500
+	id 1tawX5-0001aI-Il; Thu, 23 Jan 2025 07:42:03 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <iii@linux.ibm.com>)
- id 1tawTU-0008Ep-Jq; Thu, 23 Jan 2025 07:38:21 -0500
-Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
+ (Exim 4.90_1) (envelope-from <imammedo@redhat.com>)
+ id 1tawX3-0001Zk-UI
+ for qemu-devel@nongnu.org; Thu, 23 Jan 2025 07:42:02 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <iii@linux.ibm.com>)
- id 1tawTS-0001UF-El; Thu, 23 Jan 2025 07:38:20 -0500
-Received: from pps.filterd (m0360072.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 50N7X49K028522;
- Thu, 23 Jan 2025 12:38:13 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-transfer-encoding:date:from:message-id:mime-version
- :subject:to; s=pp1; bh=fLU/yztIZG1m08EZ8E0W+6kfIjVevBWEm4jtwJgqj
- 5o=; b=UFk2Nbb1bmR7tj+U1c44j2kqF1trTFhfR2tKNRCqtOgvmCd7BlWO/VZwI
- EVzND/8/EcB1yUiEPAuuUCoPY08mI4hf+VkjN+ujsKQxh6guj7ZlUQiBBJpSVRGh
- /JJkdijNPRNTheEFM3uKR4m7PhUKG7t5hxTgMSRIl+jqVdqzv1TxB4M7xjJrEFTH
- mupTHYHQLiBsMkROKOUlmB4j8dwDpGXgAPkPkrAq0pb+ysqR1ZD0aBiUR24n5CeD
- q7Ch6i63PrEUw+5E3BRdCg3byTZ4gL8HdrgdQOY9wwOUYd3CJ8q1OWNtc+eFOcG7
- ZeDkkUc+ZeXfmdFzzU5VOpgGmY9Sg==
-Received: from ppma13.dal12v.mail.ibm.com
- (dd.9e.1632.ip4.static.sl-reverse.com [50.22.158.221])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 44bhfphbtd-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Thu, 23 Jan 2025 12:38:13 +0000 (GMT)
-Received: from pps.filterd (ppma13.dal12v.mail.ibm.com [127.0.0.1])
- by ppma13.dal12v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 50N8iYxj032248;
- Thu, 23 Jan 2025 12:38:12 GMT
-Received: from smtprelay06.fra02v.mail.ibm.com ([9.218.2.230])
- by ppma13.dal12v.mail.ibm.com (PPS) with ESMTPS id 448rujw61g-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Thu, 23 Jan 2025 12:38:12 +0000
-Received: from smtpav02.fra02v.mail.ibm.com (smtpav02.fra02v.mail.ibm.com
- [10.20.54.101])
- by smtprelay06.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 50NCcBqw34210538
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Thu, 23 Jan 2025 12:38:11 GMT
-Received: from smtpav02.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 220E22004E;
- Thu, 23 Jan 2025 12:38:11 +0000 (GMT)
-Received: from smtpav02.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id B13F320043;
- Thu, 23 Jan 2025 12:38:10 +0000 (GMT)
-Received: from heavy.ibm.com (unknown [9.171.22.84])
- by smtpav02.fra02v.mail.ibm.com (Postfix) with ESMTP;
- Thu, 23 Jan 2025 12:38:10 +0000 (GMT)
-From: Ilya Leoshkevich <iii@linux.ibm.com>
-To: Richard Henderson <richard.henderson@linaro.org>,
- David Hildenbrand <david@redhat.com>, Thomas Huth <thuth@redhat.com>
-Cc: qemu-s390x@nongnu.org, qemu-devel@nongnu.org,
- Ilya Leoshkevich <iii@linux.ibm.com>
-Subject: [PATCH] target/s390x: Fix PPNO execution with icount
-Date: Thu, 23 Jan 2025 13:37:53 +0100
-Message-ID: <20250123123808.194405-1-iii@linux.ibm.com>
-X-Mailer: git-send-email 2.48.1
+ (Exim 4.90_1) (envelope-from <imammedo@redhat.com>)
+ id 1tawX1-00033M-3M
+ for qemu-devel@nongnu.org; Thu, 23 Jan 2025 07:42:01 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1737636116;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=u5FZv+8u+d2GtcDrre/mQ3Ye6vAjYVJKfIBRUFGXtx4=;
+ b=YMi5TWHmYbpreA0hUy4AqHE3Y9qRMAS2sMdGD8mVENgPNUfDd+kwjA8C34xQS27VntExps
+ 3tZb0ph/WLg0Fb8b2IJm3iiAIQI7xGFq4zTwAAuXHBf2xEjZvtv3YcJq5rKSr4DYTLXwiC
+ 29rg7vki869BxvgEM+6LPmo7X4aHNQc=
+Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com
+ [209.85.128.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-655-Jkh4gAVhOfKyJ9uE-gUVTg-1; Thu, 23 Jan 2025 07:41:52 -0500
+X-MC-Unique: Jkh4gAVhOfKyJ9uE-gUVTg-1
+X-Mimecast-MFC-AGG-ID: Jkh4gAVhOfKyJ9uE-gUVTg
+Received: by mail-wm1-f71.google.com with SMTP id
+ 5b1f17b1804b1-43621907030so6152775e9.1
+ for <qemu-devel@nongnu.org>; Thu, 23 Jan 2025 04:41:51 -0800 (PST)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1737636111; x=1738240911;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:subject:cc:to:from:date:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=u5FZv+8u+d2GtcDrre/mQ3Ye6vAjYVJKfIBRUFGXtx4=;
+ b=mOa7IJ6x07y2PDO4ZvbldZCuxXDOuner5pPayG38GrwhzfrVKo8bEel1z/i7QRUYVj
+ zyxr5e3OfI4NxfIq7ez5HgjxB70gJaBPEBnJG3ERRD1+cg2p8GLbzNY4aIsWa2paX60k
+ 8U2AJV/FHVb1qOLaGiq5I8aNSZqrFVfnKOv3HJ+/ubqnu63WNRa8hOyYkq/xnhGr1EZf
+ XaxjGJhANpc94bfItANcDx35+DLw5HK5B1wLOLqs5SS3pwOdq/eVvrTu32vN03PxAjkB
+ 9xhilDmfMqJcdY7s68EojqkHz648DnyLoSe4l/9qdiSMLHhoQL/5RninvvkkyJBtem0C
+ a0yA==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCWjQkNhjq/DNsmMa8odrEdnkOXLtXmPpoPaqWAkdQKtuPDkUr2Nao5owkWRz8q01mOh6p2kwak5WsRp@nongnu.org
+X-Gm-Message-State: AOJu0YwkZRqjW6hD5UKjtS7xu8FQlyB1P4afmCVOFs0r+CeWIgypOt3q
+ zqugdmhDUCiJWsL6b5INzfR6JNct0exeno/O3EdhDWlOaHLebpTepUeK05y6aJvlqclBROdEp09
+ Uz53kQ6L+0mknMN1VcsEqFVqxDruqBSz+53KcN7ZnH66rW5jLRppR
+X-Gm-Gg: ASbGncuA/EE5fybe5lqVQfgCoh6LWhMF0/qaU8mPejpNIoMon1esQDfuFicGuWwHlUn
+ Pz9Jsde0l70BlH8mgLHpUrZFkUmQ60hveDbFJ6Au5kKa/AGv85xTEGZ0pzj5IwAeiwqJf1XHRj5
+ sJ0LwNyxMeB9m/q1o4zQ0oPWLEwktTYjvORlgbwKibWpm0U8S4SLszsVK4O5cnAiXl0FVcANI5b
+ ZRIwDFFlzb+QEzLYhKUwvhNwu6WFlu4YN0YcXVyT0cWn4VBHE36zXYbgtc25Qw11e332ZED8J+C
+ 79T7+Ea9tY0YSW1LH2knrJqLiqMOLquxk6XyHKTimg==
+X-Received: by 2002:a05:600c:1987:b0:434:f753:6012 with SMTP id
+ 5b1f17b1804b1-438913f2f4emr259295345e9.17.1737636110988; 
+ Thu, 23 Jan 2025 04:41:50 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IFaf0J1FpGBG9DXD2cCzVrXAaT6T+N0ZijcOGKXj6jeyiABkDxsaVx5NBozYlDdObLnfmJtRw==
+X-Received: by 2002:a05:600c:1987:b0:434:f753:6012 with SMTP id
+ 5b1f17b1804b1-438913f2f4emr259294915e9.17.1737636110549; 
+ Thu, 23 Jan 2025 04:41:50 -0800 (PST)
+Received: from imammedo.users.ipa.redhat.com (nat-pool-brq-t.redhat.com.
+ [213.175.37.10]) by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-38bf32151f1sm19447922f8f.14.2025.01.23.04.41.49
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Thu, 23 Jan 2025 04:41:49 -0800 (PST)
+Date: Thu, 23 Jan 2025 13:41:48 +0100
+From: Igor Mammedov <imammedo@redhat.com>
+To: Xiaoyao Li <xiaoyao.li@intel.com>
+Cc: Paolo Bonzini <pbonzini@redhat.com>, Riku Voipio <riku.voipio@iki.fi>,
+ Richard Henderson <richard.henderson@linaro.org>, Zhao Liu
+ <zhao1.liu@intel.com>, "Michael S. Tsirkin" <mst@redhat.com>, Marcel
+ Apfelbaum <marcel.apfelbaum@gmail.com>, Ani Sinha <anisinha@redhat.com>,
+ Philippe =?UTF-8?B?TWF0aGlldS1EYXVkw6k=?= <philmd@linaro.org>, Yanan Wang
+ <wangyanan55@huawei.com>, Cornelia Huck <cohuck@redhat.com>, "Daniel P.
+ =?UTF-8?B?QmVycmFuZ8Op?=" <berrange@redhat.com>, Eric Blake
+ <eblake@redhat.com>, Markus Armbruster <armbru@redhat.com>, Marcelo Tosatti
+ <mtosatti@redhat.com>, rick.p.edgecombe@intel.com, kvm@vger.kernel.org,
+ qemu-devel@nongnu.org
+Subject: Re: [PATCH v6 40/60] hw/i386: add eoi_intercept_unsupported member
+ to X86MachineState
+Message-ID: <20250123134148.036d52b0@imammedo.users.ipa.redhat.com>
+In-Reply-To: <20241105062408.3533704-41-xiaoyao.li@intel.com>
+References: <20241105062408.3533704-1-xiaoyao.li@intel.com>
+ <20241105062408.3533704-41-xiaoyao.li@intel.com>
+X-Mailer: Claws Mail 4.3.0 (GTK 3.24.43; x86_64-redhat-linux-gnu)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-TM-AS-GCONF: 00
-X-Proofpoint-GUID: lRtJfja4LWmuN3CNgyzemW_tgq-N6PGZ
-X-Proofpoint-ORIG-GUID: lRtJfja4LWmuN3CNgyzemW_tgq-N6PGZ
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1057,Hydra:6.0.680,FMLib:17.12.68.34
- definitions=2025-01-23_05,2025-01-22_02,2024-11-22_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- suspectscore=0
- impostorscore=0 adultscore=0 malwarescore=0 bulkscore=0 priorityscore=1501
- clxscore=1011 mlxscore=0 phishscore=0 lowpriorityscore=0 mlxlogscore=999
- spamscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2411120000 definitions=main-2501230095
-Received-SPF: pass client-ip=148.163.158.5; envelope-from=iii@linux.ibm.com;
- helo=mx0b-001b2d01.pphosted.com
-X-Spam_score_int: -26
-X-Spam_score: -2.7
-X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H2=-0.043, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=imammedo@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -50
+X-Spam_score: -5.1
+X-Spam_bar: -----
+X-Spam_report: (-5.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-2.996,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -105,34 +121,70 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Executing PERFORM RANDOM NUMBER OPERATION makes QEMU exit with "Bad
-icount read" when using record/replay. This is caused by
-icount_get_raw_locked() if the current instruction is not the last one
-in the respective translation block.
+On Tue,  5 Nov 2024 01:23:48 -0500
+Xiaoyao Li <xiaoyao.li@intel.com> wrote:
 
-For the x86_64's rdrand this is resolved by calling
-translator_io_start(). On s390x one uses IF_IO in order to make this
-call happen automatically.
+> Add a new bool member, eoi_intercept_unsupported, to X86MachineState
+> with default value false. Set true for TDX VM.
 
-Signed-off-by: Ilya Leoshkevich <iii@linux.ibm.com>
----
- target/s390x/tcg/insn-data.h.inc | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+I'd rename it to enable_eoi_intercept, by default set to true for evrything
+and make TDX override this to false.
+> 
+> Inability to intercept eoi causes impossibility to emulate level
+> triggered interrupt to be re-injected when level is still kept active.
+> which affects interrupt controller emulation.
+> 
+> Signed-off-by: Xiaoyao Li <xiaoyao.li@intel.com>
+> Acked-by: Gerd Hoffmann <kraxel@redhat.com>
+> ---
+>  hw/i386/x86.c         | 1 +
+>  include/hw/i386/x86.h | 1 +
+>  target/i386/kvm/tdx.c | 2 ++
+>  3 files changed, 4 insertions(+)
+> 
+> diff --git a/hw/i386/x86.c b/hw/i386/x86.c
+> index 01fc5e656272..82faeed24ff9 100644
+> --- a/hw/i386/x86.c
+> +++ b/hw/i386/x86.c
+> @@ -370,6 +370,7 @@ static void x86_machine_initfn(Object *obj)
+>      x86ms->oem_table_id = g_strndup(ACPI_BUILD_APPNAME8, 8);
+>      x86ms->bus_lock_ratelimit = 0;
+>      x86ms->above_4g_mem_start = 4 * GiB;
+> +    x86ms->eoi_intercept_unsupported = false;
+>  }
+>  
+>  static void x86_machine_class_init(ObjectClass *oc, void *data)
+> diff --git a/include/hw/i386/x86.h b/include/hw/i386/x86.h
+> index d43cb3908e65..fd9a30391755 100644
+> --- a/include/hw/i386/x86.h
+> +++ b/include/hw/i386/x86.h
+> @@ -73,6 +73,7 @@ struct X86MachineState {
+>      uint64_t above_4g_mem_start;
+>  
+>      /* CPU and apic information: */
+> +    bool eoi_intercept_unsupported;
+>      unsigned pci_irq_mask;
+>      unsigned apic_id_limit;
+>      uint16_t boot_cpus;
+> diff --git a/target/i386/kvm/tdx.c b/target/i386/kvm/tdx.c
+> index 9ab4e911f78a..9dcb77e011bd 100644
+> --- a/target/i386/kvm/tdx.c
+> +++ b/target/i386/kvm/tdx.c
+> @@ -388,6 +388,8 @@ static int tdx_kvm_init(ConfidentialGuestSupport *cgs, Error **errp)
+>          return -EOPNOTSUPP;
+>      }
+>  
+> +    x86ms->eoi_intercept_unsupported = true;
 
-diff --git a/target/s390x/tcg/insn-data.h.inc b/target/s390x/tcg/insn-data.h.inc
-index e7d61cdec28..ec730ee0919 100644
---- a/target/s390x/tcg/insn-data.h.inc
-+++ b/target/s390x/tcg/insn-data.h.inc
-@@ -1012,7 +1012,7 @@
-     D(0xb92e, KM,      RRE,   MSA,  0, 0, 0, 0, msa, 0, S390_FEAT_TYPE_KM)
-     D(0xb92f, KMC,     RRE,   MSA,  0, 0, 0, 0, msa, 0, S390_FEAT_TYPE_KMC)
-     D(0xb929, KMA,     RRF_b, MSA8, 0, 0, 0, 0, msa, 0, S390_FEAT_TYPE_KMA)
--    D(0xb93c, PPNO,    RRE,   MSA5, 0, 0, 0, 0, msa, 0, S390_FEAT_TYPE_PPNO)
-+    E(0xb93c, PPNO,    RRE,   MSA5, 0, 0, 0, 0, msa, 0, S390_FEAT_TYPE_PPNO, IF_IO)
-     D(0xb93e, KIMD,    RRE,   MSA,  0, 0, 0, 0, msa, 0, S390_FEAT_TYPE_KIMD)
-     D(0xb93f, KLMD,    RRE,   MSA,  0, 0, 0, 0, msa, 0, S390_FEAT_TYPE_KLMD)
- 
--- 
-2.48.1
+I don't particulary like accel go to its parent (machine) object and override things there
+and that being buried deep inside.
+
+How do you start TDX guest?
+Is there a machine property or something like it to enable TDX?
+
+> +
+>      /*
+>       * Set kvm_readonly_mem_allowed to false, because TDX only supports readonly
+>       * memory for shared memory but not for private memory. Besides, whether a
 
 
