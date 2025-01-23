@@ -4,64 +4,64 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 83D1FC0218D
-	for <qemu-devel@archiver.kernel.org>; Thu, 23 Jan 2025 23:49:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id EEB2CC02182
+	for <qemu-devel@archiver.kernel.org>; Thu, 23 Jan 2025 23:49:08 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tb6uT-0003eg-Sv; Thu, 23 Jan 2025 18:46:53 -0500
+	id 1tb6t2-0006oy-Sb; Thu, 23 Jan 2025 18:45:25 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tb6ts-0000hh-JF
- for qemu-devel@nongnu.org; Thu, 23 Jan 2025 18:46:16 -0500
-Received: from mail-wr1-x433.google.com ([2a00:1450:4864:20::433])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tb6sz-0006ec-4e
+ for qemu-devel@nongnu.org; Thu, 23 Jan 2025 18:45:21 -0500
+Received: from mail-wm1-x332.google.com ([2a00:1450:4864:20::332])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tb6tj-0004Wh-Au
- for qemu-devel@nongnu.org; Thu, 23 Jan 2025 18:46:15 -0500
-Received: by mail-wr1-x433.google.com with SMTP id
- ffacd0b85a97d-3863703258fso1723454f8f.1
- for <qemu-devel@nongnu.org>; Thu, 23 Jan 2025 15:46:06 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tb6st-0004Ft-90
+ for qemu-devel@nongnu.org; Thu, 23 Jan 2025 18:45:18 -0500
+Received: by mail-wm1-x332.google.com with SMTP id
+ 5b1f17b1804b1-4362f61757fso15532965e9.2
+ for <qemu-devel@nongnu.org>; Thu, 23 Jan 2025 15:45:14 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1737675965; x=1738280765; darn=nongnu.org;
+ d=linaro.org; s=google; t=1737675913; x=1738280713; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=sQ+5PubFZrrCYmUor7z2ohXZLQOj0+FDz6CQ50FZwrM=;
- b=FoioRx3PL/AeeneJUvRu40Bny2NuyZT2KKG3kq8XnX9xK/X11rL/4+Spw6+0UUJpt3
- P2Uip/6zPQKajgwrtLF4OGWovHSmxgRMLtiEAWl7rGQQ3383vEfNQjIqUTFnR778f32R
- PBAjyOG3FqPu6puYIrTlhnzTvGA8pkr1j5Ndi4M5WxS1ruenUHXBWtz/C+Yi42f32CTK
- AhHQwqA5eJ0ZRHstQuCrq7fp+xFNTDcj8+6S4cG922fjvlJKVZmZHzKDVDjBndTx8eQJ
- L8wLRMpDY54t2qoyfcio9DQA4vq02SAhC0FD3EWRUk4jKuaCml/Su3tM2ijx/ah5ZFkS
- 7VLA==
+ bh=9nZeRXAiaA5TpZm6lq5Kgnlq642/zMUBUZPLj6lypP8=;
+ b=w5/Gh9w/zVGRUIwB+7WwKZfN/2DTWUfwDD9gppxwoshw2aiic66AZetqxVePmiQ6Zt
+ AgyHS2rt69k68bLB/L3vOZQ30mppfV5fiYY3tSgmhlHpN2WJW5tgz9WYWFmgPEkUgKI1
+ z9PcZ9zddYZNOUNgT726yGJc1SYE7H1ea+WLVPwkDCnkzbCsVTrmpQL3rxYdFro9kc5j
+ 4wn8SZSyWS+DfNTmBy+R5r0YyS4fLnYs9JB9KnKQvYyzG1f3m846wtW1BqlZNu93O9TG
+ jvlLTGVSawvn32gxpnxVBQIT0YJ7biWXYA0v+ieMa5PhtSwSqeV+r2q0cIycKsHXRrxx
+ ikNQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1737675965; x=1738280765;
+ d=1e100.net; s=20230601; t=1737675913; x=1738280713;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=sQ+5PubFZrrCYmUor7z2ohXZLQOj0+FDz6CQ50FZwrM=;
- b=Cfy6Xo3qxtvzKIC+ndbbXOIGwdAZQCgOPQvl2Cc6806oO7xty8KJdCn+7El5p0DD6l
- kvOhYAul3elSofzs/QPkTM9uJtMIVDH8v0Pky4KYjqf7J4ieE2r2u2s6IQDll1AZO9IN
- WQTht82GiADUdRyaLbFs+SFxXk+zAgPC/yu4GVtvTISbNRDmuMY/W3Rs3w/JouMgo28W
- uatsZvNtxqa9icosRvxH3wRTI63oCgzOtUGxtp4L/BtFWKiwCugpD77RB0Jj1R3VwJRP
- OYxToi0+ej637XEessdiXyE3zGfyhsM5pb39wQqYO1DPbpJV8g9NxtjNFuZEru4OWW0b
- kroA==
-X-Gm-Message-State: AOJu0YwooFbbq0XB0Kn0dK6WNoBf1FqcxAUnKK69/bieKXX9O8ePPMb2
- zz4AGd8KtjcFdY3DwvQ/bQRIKD3YenZL+O5k3TiwVgBd9NvxwN90nCJzXrhJDipZMvnTKqY8BFc
- FeWQ=
-X-Gm-Gg: ASbGncs9KPwaV9JRSSnGPIe83xi1rs0a6/hC/QjAwBmTOYxfB9N5GjvNbsyExZLZA2T
- 0h/7tl5Qhv06ibgBUm/4OYKt71a1Hw+iZfJsfoLG62+io14TaHNzJzQdREjcXpf5ypcDBUshVAD
- lUB4VOAPEVq+zGJiPpVyWM0YXbacvUWx5sCkAZjOKTyYudNykDaky1gum9pLcCoHPT4w5F8ig9a
- OjbWd+rG9qqsMKkMBXAemvhNi7zwqZIMYEXVq0A+uUwydWCL+nLsg7j1hWt5Fu3axRyb5xhIGTo
- MuXOWb/e5eo8LUOWp1WKdkJUzTDniAoVgeg5PPPQVakDWRHFextqoao=
-X-Google-Smtp-Source: AGHT+IGsiKZVvuhBn67VKbvp7ZCKdJegwhgfqv/IiEk5xyysRNRbKSY3tyJ6LqHq9Om3O3Zv9Xfmsw==
-X-Received: by 2002:adf:f250:0:b0:38a:5dc4:6dcd with SMTP id
- ffacd0b85a97d-38c22279dafmr4343550f8f.22.1737675965020; 
- Thu, 23 Jan 2025 15:46:05 -0800 (PST)
+ bh=9nZeRXAiaA5TpZm6lq5Kgnlq642/zMUBUZPLj6lypP8=;
+ b=k6O1RqXR/bluHIdlVRWcyUb9tZA73/JG6pwWXEvtEDyD2W1DAdjAtupFyUTQZgseH5
+ k5CK6D6bvzyUkC/90dqngOnP/7WAGU8Ch76Qrmi6+DzxmaX8Ve6gcGHgIGL7uDlqDjQh
+ IJ0jRKEP9zT45yauMCHVkL+W9x1/lqS/V91fR9Y3V6/VVQuC40n412BLmynNrIYmGSZk
+ p4QjnFD1L/HXtZMZgIADXA8KF8bWMyJDAOsFDqIImf9UVFLccik8PHVn9UCVHTG0vYeQ
+ nMaC4hvEH6Uxeb6Z3xxL5Jg75w21pdWKFaTgFnkOM1dPTPc6Gj6DHB61AyKvNoUYS1/2
+ kYVQ==
+X-Gm-Message-State: AOJu0YxJnIAJIbRsZHTN+mvAfm3FbMvwd+TZdq+JGwOoBVLrjzYbO4EZ
+ v3vuLmywaxNww3LZt7Or2WIT86IdPJf03VRC4Bi8K+9UkkpqUSKxuHxPbE79reVef2sbf5raLFz
+ pCsw=
+X-Gm-Gg: ASbGncv6MYBlENkL2F4Ey9GWJg8SuYuQpPck5awbFqUPAYjhh5rZImq8cIPdDVYlYDw
+ 45LXh7A12fAdaYK5V+JGIROkjmIHI8ln5VVxZ/faAY8doXtzuk+kKpGw5e2Rf9YWzl2Fkq27ZAc
+ 4KFmjNC6cGtJB2Nu6ApBLfOCLuNgyEFKL0Q/0aw2b/GRm2lFVO5GExC8vQ/nAmfwH6NDXiP2I6E
+ sqSEE0P+eCzCfCkKJx3bUJ1PhzvWdttk6mWpne4NgGar5jRR6ure6VT4bEcPdV9lwabQazkaT8U
+ fFcSDLCs4Vdw4orpWOO6u0kr9YYGNRpfpce3YPn/juljqtcPaIGSimmZgUeMfd1ljQ==
+X-Google-Smtp-Source: AGHT+IEDiDQdxrx2jB8os0igTQ7OuBNE672qZpSpts43JKLj6+qBPVdV+5rplNMJaEPLV2MbkLotbw==
+X-Received: by 2002:a05:600c:4713:b0:436:9227:915 with SMTP id
+ 5b1f17b1804b1-438913caa3cmr222825345e9.9.1737675913369; 
+ Thu, 23 Jan 2025 15:45:13 -0800 (PST)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-38c2a1c403asm989733f8f.93.2025.01.23.15.46.03
+ 5b1f17b1804b1-438bd54c04bsm6412735e9.27.2025.01.23.15.45.11
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Thu, 23 Jan 2025 15:46:03 -0800 (PST)
+ Thu, 23 Jan 2025 15:45:12 -0800 (PST)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Peter Maydell <peter.maydell@linaro.org>,
@@ -73,24 +73,25 @@ Cc: Peter Maydell <peter.maydell@linaro.org>,
  xen-devel@lists.xenproject.org,
  Richard Henderson <richard.henderson@linaro.org>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PATCH 19/20] cpus: Register VMState per user / system emulation
-Date: Fri, 24 Jan 2025 00:44:13 +0100
-Message-ID: <20250123234415.59850-20-philmd@linaro.org>
+Subject: [PATCH 10/20] accel/tcg: Rename 'hw/core/tcg-cpu-ops.h' ->
+ 'accel/tcg/cpu-ops.h'
+Date: Fri, 24 Jan 2025 00:44:04 +0100
+Message-ID: <20250123234415.59850-11-philmd@linaro.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20250123234415.59850-1-philmd@linaro.org>
 References: <20250123234415.59850-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::433;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x433.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::332;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x332.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -106,360 +107,523 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Simplify cpu-target.c by extracting mixed vmstate code
-into the cpu_vmstate_register() / cpu_vmstate_unregister()
-helpers, implemented in cpu-user.c and cpu-system.c.
+TCGCPUOps structure makes more sense in the accelerator context
+rather than hardware emulation. Move it under the accel/tcg/ scope.
+
+Mechanical change doing:
+
+ $  sed -i -e 's,hw/core/tcg-cpu-ops.h,accel/tcg/cpu-ops.h,g' \
+   $(git grep -l hw/core/tcg-cpu-ops.h)
 
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 ---
-XXX: tlb_flush() temporary declared manually.
+ MAINTAINERS                                            | 2 +-
+ include/{hw/core/tcg-cpu-ops.h => accel/tcg/cpu-ops.h} | 0
+ accel/tcg/cpu-exec.c                                   | 4 ++--
+ accel/tcg/cputlb.c                                     | 2 +-
+ accel/tcg/translate-all.c                              | 2 +-
+ accel/tcg/user-exec.c                                  | 2 +-
+ accel/tcg/watchpoint.c                                 | 2 +-
+ bsd-user/signal.c                                      | 2 +-
+ hw/mips/jazz.c                                         | 2 +-
+ linux-user/signal.c                                    | 2 +-
+ system/physmem.c                                       | 2 +-
+ target/alpha/cpu.c                                     | 2 +-
+ target/arm/cpu.c                                       | 2 +-
+ target/arm/tcg/cpu-v7m.c                               | 2 +-
+ target/arm/tcg/cpu32.c                                 | 2 +-
+ target/arm/tcg/mte_helper.c                            | 2 +-
+ target/arm/tcg/sve_helper.c                            | 2 +-
+ target/avr/cpu.c                                       | 2 +-
+ target/avr/helper.c                                    | 2 +-
+ target/hexagon/cpu.c                                   | 2 +-
+ target/hppa/cpu.c                                      | 2 +-
+ target/i386/tcg/tcg-cpu.c                              | 2 +-
+ target/loongarch/cpu.c                                 | 2 +-
+ target/m68k/cpu.c                                      | 2 +-
+ target/microblaze/cpu.c                                | 2 +-
+ target/mips/cpu.c                                      | 2 +-
+ target/openrisc/cpu.c                                  | 2 +-
+ target/ppc/cpu_init.c                                  | 2 +-
+ target/riscv/tcg/tcg-cpu.c                             | 2 +-
+ target/rx/cpu.c                                        | 2 +-
+ target/s390x/cpu.c                                     | 2 +-
+ target/s390x/tcg/mem_helper.c                          | 2 +-
+ target/sh4/cpu.c                                       | 2 +-
+ target/sparc/cpu.c                                     | 2 +-
+ target/tricore/cpu.c                                   | 2 +-
+ target/xtensa/cpu.c                                    | 2 +-
+ 36 files changed, 36 insertions(+), 36 deletions(-)
+ rename include/{hw/core/tcg-cpu-ops.h => accel/tcg/cpu-ops.h} (100%)
 
-Only 2 more CONFIG_USER_ONLY to go.
----
- include/hw/core/cpu.h |   2 +
- cpu-target.c          | 122 +----------------------------------------
- hw/core/cpu-system.c  | 123 ++++++++++++++++++++++++++++++++++++++++++
- hw/core/cpu-user.c    |  12 +++++
- 4 files changed, 139 insertions(+), 120 deletions(-)
-
-diff --git a/include/hw/core/cpu.h b/include/hw/core/cpu.h
-index fb397cdfc53..aadbd2e1122 100644
---- a/include/hw/core/cpu.h
-+++ b/include/hw/core/cpu.h
-@@ -1163,6 +1163,8 @@ G_NORETURN void cpu_abort(CPUState *cpu, const char *fmt, ...)
- /* $(top_srcdir)/cpu.c */
- void cpu_class_init_props(DeviceClass *dc);
- void cpu_exec_initfn(CPUState *cpu);
-+void cpu_vmstate_register(CPUState *cpu);
-+void cpu_vmstate_unregister(CPUState *cpu);
- bool cpu_exec_realizefn(CPUState *cpu, Error **errp);
- void cpu_exec_unrealizefn(CPUState *cpu);
- void cpu_exec_reset_hold(CPUState *cpu);
-diff --git a/cpu-target.c b/cpu-target.c
-index 3d33d20b8c8..bfcd48f9ae2 100644
---- a/cpu-target.c
-+++ b/cpu-target.c
-@@ -21,115 +21,16 @@
+diff --git a/MAINTAINERS b/MAINTAINERS
+index 7be3d8f431a..fa46d077d30 100644
+--- a/MAINTAINERS
++++ b/MAINTAINERS
+@@ -175,7 +175,7 @@ F: include/exec/helper-info.c.inc
+ F: include/exec/page-protection.h
+ F: include/system/cpus.h
+ F: include/system/tcg.h
+-F: include/hw/core/tcg-cpu-ops.h
++F: include/accel/tcg/cpu-ops.h
+ F: host/include/*/host/cpuinfo.h
+ F: util/cpuinfo-*.c
+ F: include/tcg/
+diff --git a/include/hw/core/tcg-cpu-ops.h b/include/accel/tcg/cpu-ops.h
+similarity index 100%
+rename from include/hw/core/tcg-cpu-ops.h
+rename to include/accel/tcg/cpu-ops.h
+diff --git a/accel/tcg/cpu-exec.c b/accel/tcg/cpu-exec.c
+index be2ba199d3d..8ee76e14b0d 100644
+--- a/accel/tcg/cpu-exec.c
++++ b/accel/tcg/cpu-exec.c
+@@ -22,7 +22,7 @@
  #include "qapi/error.h"
- #include "qemu/error-report.h"
- #include "qemu/qemu-print.h"
--#include "migration/vmstate.h"
--#ifndef CONFIG_USER_ONLY
--#include "hw/core/sysemu-cpu-ops.h"
--#endif
- #include "system/accel-ops.h"
- #include "system/cpus.h"
--#include "system/tcg.h"
- #include "exec/replay-core.h"
+ #include "qapi/type-helpers.h"
+ #include "hw/core/cpu.h"
+-#include "hw/core/tcg-cpu-ops.h"
++#include "accel/tcg/cpu-ops.h"
+ #include "trace.h"
+ #include "disas/disas.h"
  #include "exec/cpu-common.h"
--#include "exec/exec-all.h"
--#include "exec/tb-flush.h"
- #include "exec/log.h"
- #include "accel/accel-cpu-target.h"
- #include "trace/trace-root.h"
- #include "qemu/accel.h"
- #include "hw/core/cpu.h"
+@@ -39,7 +39,7 @@
+ #include "exec/replay-core.h"
+ #include "system/tcg.h"
+ #include "exec/helper-proto-common.h"
+-#include "tb-jmp-cache.h"
++//#include "tb-jmp-cache.h"
+ #include "tb-hash.h"
+ #include "tb-context.h"
+ #include "tb-internal.h"
+diff --git a/accel/tcg/cputlb.c b/accel/tcg/cputlb.c
+index b4ccf0cdcb7..d68401b35c3 100644
+--- a/accel/tcg/cputlb.c
++++ b/accel/tcg/cputlb.c
+@@ -19,7 +19,7 @@
  
--#ifndef CONFIG_USER_ONLY
--static int cpu_common_post_load(void *opaque, int version_id)
--{
--#ifdef CONFIG_TCG
--    if (tcg_enabled()) {
--        CPUState *cpu = opaque;
--
--        /*
--         * 0x01 was CPU_INTERRUPT_EXIT. This line can be removed when the
--         * version_id is increased.
--         */
--        cpu->interrupt_request &= ~0x01;
--
--        tlb_flush(cpu);
--
--        /*
--         * loadvm has just updated the content of RAM, bypassing the
--         * usual mechanisms that ensure we flush TBs for writes to
--         * memory we've translated code from. So we must flush all TBs,
--         * which will now be stale.
--         */
--        tb_flush(cpu);
--    }
--#endif
--
--    return 0;
--}
--
--static int cpu_common_pre_load(void *opaque)
--{
--    CPUState *cpu = opaque;
--
--    cpu->exception_index = -1;
--
--    return 0;
--}
--
--static bool cpu_common_exception_index_needed(void *opaque)
--{
--    CPUState *cpu = opaque;
--
--    return tcg_enabled() && cpu->exception_index != -1;
--}
--
--static const VMStateDescription vmstate_cpu_common_exception_index = {
--    .name = "cpu_common/exception_index",
--    .version_id = 1,
--    .minimum_version_id = 1,
--    .needed = cpu_common_exception_index_needed,
--    .fields = (const VMStateField[]) {
--        VMSTATE_INT32(exception_index, CPUState),
--        VMSTATE_END_OF_LIST()
--    }
--};
--
--static bool cpu_common_crash_occurred_needed(void *opaque)
--{
--    CPUState *cpu = opaque;
--
--    return cpu->crash_occurred;
--}
--
--static const VMStateDescription vmstate_cpu_common_crash_occurred = {
--    .name = "cpu_common/crash_occurred",
--    .version_id = 1,
--    .minimum_version_id = 1,
--    .needed = cpu_common_crash_occurred_needed,
--    .fields = (const VMStateField[]) {
--        VMSTATE_BOOL(crash_occurred, CPUState),
--        VMSTATE_END_OF_LIST()
--    }
--};
--
--const VMStateDescription vmstate_cpu_common = {
--    .name = "cpu_common",
--    .version_id = 1,
--    .minimum_version_id = 1,
--    .pre_load = cpu_common_pre_load,
--    .post_load = cpu_common_post_load,
--    .fields = (const VMStateField[]) {
--        VMSTATE_UINT32(halted, CPUState),
--        VMSTATE_UINT32(interrupt_request, CPUState),
--        VMSTATE_END_OF_LIST()
--    },
--    .subsections = (const VMStateDescription * const []) {
--        &vmstate_cpu_common_exception_index,
--        &vmstate_cpu_common_crash_occurred,
--        NULL
--    }
--};
--#endif
--
- bool cpu_exec_realizefn(CPUState *cpu, Error **errp)
- {
-     if (!accel_cpu_common_realize(cpu, errp)) {
-@@ -139,33 +40,14 @@ bool cpu_exec_realizefn(CPUState *cpu, Error **errp)
-     /* Wait until cpu initialization complete before exposing cpu. */
-     cpu_list_add(cpu);
- 
--#ifdef CONFIG_USER_ONLY
--    assert(qdev_get_vmsd(DEVICE(cpu)) == NULL ||
--           qdev_get_vmsd(DEVICE(cpu))->unmigratable);
--#else
--    if (qdev_get_vmsd(DEVICE(cpu)) == NULL) {
--        vmstate_register(NULL, cpu->cpu_index, &vmstate_cpu_common, cpu);
--    }
--    if (cpu->cc->sysemu_ops->legacy_vmsd != NULL) {
--        vmstate_register(NULL, cpu->cpu_index, cpu->cc->sysemu_ops->legacy_vmsd, cpu);
--    }
--#endif /* CONFIG_USER_ONLY */
-+    cpu_vmstate_register(cpu);
- 
-     return true;
- }
- 
- void cpu_exec_unrealizefn(CPUState *cpu)
- {
--#ifndef CONFIG_USER_ONLY
--    CPUClass *cc = CPU_GET_CLASS(cpu);
--
--    if (cc->sysemu_ops->legacy_vmsd != NULL) {
--        vmstate_unregister(NULL, cc->sysemu_ops->legacy_vmsd, cpu);
--    }
--    if (qdev_get_vmsd(DEVICE(cpu)) == NULL) {
--        vmstate_unregister(NULL, &vmstate_cpu_common, cpu);
--    }
--#endif
-+    cpu_vmstate_unregister(cpu);
- 
-     cpu_list_remove(cpu);
-     /*
-diff --git a/hw/core/cpu-system.c b/hw/core/cpu-system.c
-index 0520c362db4..3e1f60f23df 100644
---- a/hw/core/cpu-system.c
-+++ b/hw/core/cpu-system.c
-@@ -22,10 +22,21 @@
- #include "qapi/error.h"
- #include "exec/address-spaces.h"
+ #include "qemu/osdep.h"
+ #include "qemu/main-loop.h"
+-#include "hw/core/tcg-cpu-ops.h"
++#include "accel/tcg/cpu-ops.h"
+ #include "exec/exec-all.h"
+ #include "exec/page-protection.h"
  #include "exec/memory.h"
-+#include "exec/tb-flush.h"
- #include "exec/tswap.h"
- #include "hw/qdev-core.h"
- #include "hw/qdev-properties.h"
- #include "hw/core/sysemu-cpu-ops.h"
-+#include "migration/vmstate.h"
-+#include "system/tcg.h"
-+
-+/*
-+ * XXX this series plan is to be applied on top on my exec/cputlb rework series,
-+ * then tlb_flush() won't be declared target-specific in exec-all.h.
-+ * Meanwhile, declare locally.
-+ * XXX
-+ */
-+void tlb_flush(CPUState *cs);
- 
- bool cpu_paging_enabled(const CPUState *cpu)
- {
-@@ -189,3 +200,115 @@ void cpu_exec_initfn(CPUState *cpu)
-     cpu->memory = get_system_memory();
-     object_ref(OBJECT(cpu->memory));
- }
-+
-+static int cpu_common_post_load(void *opaque, int version_id)
-+{
-+#ifdef CONFIG_TCG
-+    if (tcg_enabled()) {
-+        CPUState *cpu = opaque;
-+
-+        /*
-+         * 0x01 was CPU_INTERRUPT_EXIT. This line can be removed when the
-+         * version_id is increased.
-+         */
-+        cpu->interrupt_request &= ~0x01;
-+
-+        tlb_flush(cpu);
-+
-+        /*
-+         * loadvm has just updated the content of RAM, bypassing the
-+         * usual mechanisms that ensure we flush TBs for writes to
-+         * memory we've translated code from. So we must flush all TBs,
-+         * which will now be stale.
-+         */
-+        tb_flush(cpu);
-+    }
-+#endif
-+
-+    return 0;
-+}
-+
-+static int cpu_common_pre_load(void *opaque)
-+{
-+    CPUState *cpu = opaque;
-+
-+    cpu->exception_index = -1;
-+
-+    return 0;
-+}
-+
-+static bool cpu_common_exception_index_needed(void *opaque)
-+{
-+    CPUState *cpu = opaque;
-+
-+    return tcg_enabled() && cpu->exception_index != -1;
-+}
-+
-+static const VMStateDescription vmstate_cpu_common_exception_index = {
-+    .name = "cpu_common/exception_index",
-+    .version_id = 1,
-+    .minimum_version_id = 1,
-+    .needed = cpu_common_exception_index_needed,
-+    .fields = (const VMStateField[]) {
-+        VMSTATE_INT32(exception_index, CPUState),
-+        VMSTATE_END_OF_LIST()
-+    }
-+};
-+
-+static bool cpu_common_crash_occurred_needed(void *opaque)
-+{
-+    CPUState *cpu = opaque;
-+
-+    return cpu->crash_occurred;
-+}
-+
-+static const VMStateDescription vmstate_cpu_common_crash_occurred = {
-+    .name = "cpu_common/crash_occurred",
-+    .version_id = 1,
-+    .minimum_version_id = 1,
-+    .needed = cpu_common_crash_occurred_needed,
-+    .fields = (const VMStateField[]) {
-+        VMSTATE_BOOL(crash_occurred, CPUState),
-+        VMSTATE_END_OF_LIST()
-+    }
-+};
-+
-+const VMStateDescription vmstate_cpu_common = {
-+    .name = "cpu_common",
-+    .version_id = 1,
-+    .minimum_version_id = 1,
-+    .pre_load = cpu_common_pre_load,
-+    .post_load = cpu_common_post_load,
-+    .fields = (const VMStateField[]) {
-+        VMSTATE_UINT32(halted, CPUState),
-+        VMSTATE_UINT32(interrupt_request, CPUState),
-+        VMSTATE_END_OF_LIST()
-+    },
-+    .subsections = (const VMStateDescription * const []) {
-+        &vmstate_cpu_common_exception_index,
-+        &vmstate_cpu_common_crash_occurred,
-+        NULL
-+    }
-+};
-+
-+void cpu_vmstate_register(CPUState *cpu)
-+{
-+    if (qdev_get_vmsd(DEVICE(cpu)) == NULL) {
-+        vmstate_register(NULL, cpu->cpu_index, &vmstate_cpu_common, cpu);
-+    }
-+    if (cpu->cc->sysemu_ops->legacy_vmsd != NULL) {
-+        vmstate_register(NULL, cpu->cpu_index, cpu->cc->sysemu_ops->legacy_vmsd, cpu);
-+    }
-+}
-+
-+void cpu_vmstate_unregister(CPUState *cpu)
-+{
-+    CPUClass *cc = CPU_GET_CLASS(cpu);
-+
-+    if (cc->sysemu_ops->legacy_vmsd != NULL) {
-+        vmstate_unregister(NULL, cc->sysemu_ops->legacy_vmsd, cpu);
-+    }
-+    if (qdev_get_vmsd(DEVICE(cpu)) == NULL) {
-+        vmstate_unregister(NULL, &vmstate_cpu_common, cpu);
-+    }
-+}
-diff --git a/hw/core/cpu-user.c b/hw/core/cpu-user.c
-index cdd8de2fefa..1892acdee0f 100644
---- a/hw/core/cpu-user.c
-+++ b/hw/core/cpu-user.c
-@@ -10,6 +10,7 @@
- #include "hw/qdev-core.h"
- #include "hw/qdev-properties.h"
+diff --git a/accel/tcg/translate-all.c b/accel/tcg/translate-all.c
+index d4189c73860..786e2f6f1a7 100644
+--- a/accel/tcg/translate-all.c
++++ b/accel/tcg/translate-all.c
+@@ -58,7 +58,7 @@
+ #include "system/cpu-timers.h"
+ #include "system/tcg.h"
+ #include "qapi/error.h"
+-#include "hw/core/tcg-cpu-ops.h"
++#include "accel/tcg/cpu-ops.h"
+ #include "tb-jmp-cache.h"
+ #include "tb-hash.h"
+ #include "tb-context.h"
+diff --git a/accel/tcg/user-exec.c b/accel/tcg/user-exec.c
+index 0561c4f6dc7..c4454100ad7 100644
+--- a/accel/tcg/user-exec.c
++++ b/accel/tcg/user-exec.c
+@@ -17,7 +17,7 @@
+  * License along with this library; if not, see <http://www.gnu.org/licenses/>.
+  */
+ #include "qemu/osdep.h"
+-#include "hw/core/tcg-cpu-ops.h"
++#include "accel/tcg/cpu-ops.h"
+ #include "disas/disas.h"
+ #include "exec/exec-all.h"
+ #include "tcg/tcg.h"
+diff --git a/accel/tcg/watchpoint.c b/accel/tcg/watchpoint.c
+index af57d182d5b..40112b2b2e7 100644
+--- a/accel/tcg/watchpoint.c
++++ b/accel/tcg/watchpoint.c
+@@ -26,7 +26,7 @@
+ #include "tb-internal.h"
+ #include "system/tcg.h"
+ #include "system/replay.h"
+-#include "hw/core/tcg-cpu-ops.h"
++#include "accel/tcg/cpu-ops.h"
  #include "hw/core/cpu.h"
-+#include "migration/vmstate.h"
+ #include "internal-common.h"
  
- static const Property cpu_user_props[] = {
-     /*
-@@ -30,3 +31,14 @@ void cpu_exec_initfn(CPUState *cpu)
+diff --git a/bsd-user/signal.c b/bsd-user/signal.c
+index b4e1458237a..088fe775c05 100644
+--- a/bsd-user/signal.c
++++ b/bsd-user/signal.c
+@@ -28,7 +28,7 @@
+ #include "gdbstub/user.h"
+ #include "signal-common.h"
+ #include "trace.h"
+-#include "hw/core/tcg-cpu-ops.h"
++#include "accel/tcg/cpu-ops.h"
+ #include "host-signal.h"
+ 
+ /* target_siginfo_t must fit in gdbstub's siginfo save area. */
+diff --git a/hw/mips/jazz.c b/hw/mips/jazz.c
+index c89610639a9..1700c3765de 100644
+--- a/hw/mips/jazz.c
++++ b/hw/mips/jazz.c
+@@ -50,7 +50,7 @@
+ #include "qemu/error-report.h"
+ #include "qemu/help_option.h"
+ #ifdef CONFIG_TCG
+-#include "hw/core/tcg-cpu-ops.h"
++#include "accel/tcg/cpu-ops.h"
+ #endif /* CONFIG_TCG */
+ #include "cpu.h"
+ 
+diff --git a/linux-user/signal.c b/linux-user/signal.c
+index 087c4d270e4..b9e9b0a6c03 100644
+--- a/linux-user/signal.c
++++ b/linux-user/signal.c
+@@ -21,7 +21,7 @@
+ #include "qemu/cutils.h"
+ #include "gdbstub/user.h"
+ #include "exec/page-protection.h"
+-#include "hw/core/tcg-cpu-ops.h"
++#include "accel/tcg/cpu-ops.h"
+ 
+ #include <sys/ucontext.h>
+ #include <sys/resource.h>
+diff --git a/system/physmem.c b/system/physmem.c
+index c76503aea82..8638f8817e6 100644
+--- a/system/physmem.c
++++ b/system/physmem.c
+@@ -28,7 +28,7 @@
+ #include "qemu/lockable.h"
+ 
+ #ifdef CONFIG_TCG
+-#include "hw/core/tcg-cpu-ops.h"
++#include "accel/tcg/cpu-ops.h"
+ #endif /* CONFIG_TCG */
+ 
+ #include "exec/exec-all.h"
+diff --git a/target/alpha/cpu.c b/target/alpha/cpu.c
+index e1b898e5755..da21f99a6ac 100644
+--- a/target/alpha/cpu.c
++++ b/target/alpha/cpu.c
+@@ -220,7 +220,7 @@ static const struct SysemuCPUOps alpha_sysemu_ops = {
+ };
+ #endif
+ 
+-#include "hw/core/tcg-cpu-ops.h"
++#include "accel/tcg/cpu-ops.h"
+ 
+ static const TCGCPUOps alpha_tcg_ops = {
+     .initialize = alpha_translate_init,
+diff --git a/target/arm/cpu.c b/target/arm/cpu.c
+index dc0231233a6..d59433e33fb 100644
+--- a/target/arm/cpu.c
++++ b/target/arm/cpu.c
+@@ -29,7 +29,7 @@
+ #include "cpu.h"
+ #ifdef CONFIG_TCG
+ #include "exec/translation-block.h"
+-#include "hw/core/tcg-cpu-ops.h"
++#include "accel/tcg/cpu-ops.h"
+ #endif /* CONFIG_TCG */
+ #include "internals.h"
+ #include "cpu-features.h"
+diff --git a/target/arm/tcg/cpu-v7m.c b/target/arm/tcg/cpu-v7m.c
+index 03acdf83e00..29a41fde694 100644
+--- a/target/arm/tcg/cpu-v7m.c
++++ b/target/arm/tcg/cpu-v7m.c
+@@ -10,7 +10,7 @@
+ 
+ #include "qemu/osdep.h"
+ #include "cpu.h"
+-#include "hw/core/tcg-cpu-ops.h"
++#include "accel/tcg/cpu-ops.h"
+ #include "internals.h"
+ 
+ #if !defined(CONFIG_USER_ONLY)
+diff --git a/target/arm/tcg/cpu32.c b/target/arm/tcg/cpu32.c
+index 2ad21825255..c5913665d12 100644
+--- a/target/arm/tcg/cpu32.c
++++ b/target/arm/tcg/cpu32.c
+@@ -10,7 +10,7 @@
+ 
+ #include "qemu/osdep.h"
+ #include "cpu.h"
+-#include "hw/core/tcg-cpu-ops.h"
++#include "accel/tcg/cpu-ops.h"
+ #include "internals.h"
+ #include "target/arm/idau.h"
+ #if !defined(CONFIG_USER_ONLY)
+diff --git a/target/arm/tcg/mte_helper.c b/target/arm/tcg/mte_helper.c
+index f72ce2ae0d4..5d6d8a17ae8 100644
+--- a/target/arm/tcg/mte_helper.c
++++ b/target/arm/tcg/mte_helper.c
+@@ -31,7 +31,7 @@
+ #endif
+ #include "exec/cpu_ldst.h"
+ #include "exec/helper-proto.h"
+-#include "hw/core/tcg-cpu-ops.h"
++#include "accel/tcg/cpu-ops.h"
+ #include "qapi/error.h"
+ #include "qemu/guest-random.h"
+ #include "mte_helper.h"
+diff --git a/target/arm/tcg/sve_helper.c b/target/arm/tcg/sve_helper.c
+index d0865dece35..2268fcd41b0 100644
+--- a/target/arm/tcg/sve_helper.c
++++ b/target/arm/tcg/sve_helper.c
+@@ -28,7 +28,7 @@
+ #include "tcg/tcg.h"
+ #include "vec_internal.h"
+ #include "sve_ldst_internal.h"
+-#include "hw/core/tcg-cpu-ops.h"
++#include "accel/tcg/cpu-ops.h"
+ #ifdef CONFIG_USER_ONLY
+ #include "user/page-protection.h"
+ #endif
+diff --git a/target/avr/cpu.c b/target/avr/cpu.c
+index 8a126ff3222..5a0e21465e5 100644
+--- a/target/avr/cpu.c
++++ b/target/avr/cpu.c
+@@ -203,7 +203,7 @@ static const struct SysemuCPUOps avr_sysemu_ops = {
+     .get_phys_page_debug = avr_cpu_get_phys_page_debug,
+ };
+ 
+-#include "hw/core/tcg-cpu-ops.h"
++#include "accel/tcg/cpu-ops.h"
+ 
+ static const TCGCPUOps avr_tcg_ops = {
+     .initialize = avr_cpu_tcg_init,
+diff --git a/target/avr/helper.c b/target/avr/helper.c
+index 345708a1b39..9ea6870e44d 100644
+--- a/target/avr/helper.c
++++ b/target/avr/helper.c
+@@ -22,7 +22,7 @@
+ #include "qemu/log.h"
+ #include "qemu/error-report.h"
+ #include "cpu.h"
+-#include "hw/core/tcg-cpu-ops.h"
++#include "accel/tcg/cpu-ops.h"
+ #include "exec/exec-all.h"
+ #include "exec/page-protection.h"
+ #include "exec/cpu_ldst.h"
+diff --git a/target/hexagon/cpu.c b/target/hexagon/cpu.c
+index 0b7fc98f6ce..238e63bcea4 100644
+--- a/target/hexagon/cpu.c
++++ b/target/hexagon/cpu.c
+@@ -321,7 +321,7 @@ static void hexagon_cpu_init(Object *obj)
  {
-     /* nothing to do */
  }
-+
-+void cpu_vmstate_register(CPUState *cpu)
-+{
-+    assert(qdev_get_vmsd(DEVICE(cpu)) == NULL ||
-+           qdev_get_vmsd(DEVICE(cpu))->unmigratable);
-+}
-+
-+void cpu_vmstate_unregister(CPUState *cpu)
-+{
-+    /* nothing to do */
-+}
+ 
+-#include "hw/core/tcg-cpu-ops.h"
++#include "accel/tcg/cpu-ops.h"
+ 
+ static const TCGCPUOps hexagon_tcg_ops = {
+     .initialize = hexagon_translate_init,
+diff --git a/target/hppa/cpu.c b/target/hppa/cpu.c
+index b0bc9d35e4c..f2441d4d7fb 100644
+--- a/target/hppa/cpu.c
++++ b/target/hppa/cpu.c
+@@ -235,7 +235,7 @@ static const struct SysemuCPUOps hppa_sysemu_ops = {
+ };
+ #endif
+ 
+-#include "hw/core/tcg-cpu-ops.h"
++#include "accel/tcg/cpu-ops.h"
+ 
+ static const TCGCPUOps hppa_tcg_ops = {
+     .initialize = hppa_translate_init,
+diff --git a/target/i386/tcg/tcg-cpu.c b/target/i386/tcg/tcg-cpu.c
+index 14ee038079a..f09ee813ac9 100644
+--- a/target/i386/tcg/tcg-cpu.c
++++ b/target/i386/tcg/tcg-cpu.c
+@@ -105,7 +105,7 @@ static bool x86_debug_check_breakpoint(CPUState *cs)
+ }
+ #endif
+ 
+-#include "hw/core/tcg-cpu-ops.h"
++#include "accel/tcg/cpu-ops.h"
+ 
+ static const TCGCPUOps x86_tcg_ops = {
+     .initialize = tcg_x86_init,
+diff --git a/target/loongarch/cpu.c b/target/loongarch/cpu.c
+index d611a604704..ecfd6edefbe 100644
+--- a/target/loongarch/cpu.c
++++ b/target/loongarch/cpu.c
+@@ -813,7 +813,7 @@ static void loongarch_cpu_dump_state(CPUState *cs, FILE *f, int flags)
+ }
+ 
+ #ifdef CONFIG_TCG
+-#include "hw/core/tcg-cpu-ops.h"
++#include "accel/tcg/cpu-ops.h"
+ 
+ static const TCGCPUOps loongarch_tcg_ops = {
+     .initialize = loongarch_translate_init,
+diff --git a/target/m68k/cpu.c b/target/m68k/cpu.c
+index 41dfdf58045..5eac4a38c62 100644
+--- a/target/m68k/cpu.c
++++ b/target/m68k/cpu.c
+@@ -547,7 +547,7 @@ static const struct SysemuCPUOps m68k_sysemu_ops = {
+ };
+ #endif /* !CONFIG_USER_ONLY */
+ 
+-#include "hw/core/tcg-cpu-ops.h"
++#include "accel/tcg/cpu-ops.h"
+ 
+ static const TCGCPUOps m68k_tcg_ops = {
+     .initialize = m68k_tcg_init,
+diff --git a/target/microblaze/cpu.c b/target/microblaze/cpu.c
+index f114789abd8..13d194cef88 100644
+--- a/target/microblaze/cpu.c
++++ b/target/microblaze/cpu.c
+@@ -419,7 +419,7 @@ static const struct SysemuCPUOps mb_sysemu_ops = {
+ };
+ #endif
+ 
+-#include "hw/core/tcg-cpu-ops.h"
++#include "accel/tcg/cpu-ops.h"
+ 
+ static const TCGCPUOps mb_tcg_ops = {
+     .initialize = mb_tcg_init,
+diff --git a/target/mips/cpu.c b/target/mips/cpu.c
+index 47cd7cfdcef..0b267d2e507 100644
+--- a/target/mips/cpu.c
++++ b/target/mips/cpu.c
+@@ -544,7 +544,7 @@ static const Property mips_cpu_properties[] = {
+ };
+ 
+ #ifdef CONFIG_TCG
+-#include "hw/core/tcg-cpu-ops.h"
++#include "accel/tcg/cpu-ops.h"
+ static const TCGCPUOps mips_tcg_ops = {
+     .initialize = mips_tcg_init,
+     .translate_code = mips_translate_code,
+diff --git a/target/openrisc/cpu.c b/target/openrisc/cpu.c
+index b7bab0d7abf..0669ba2fd10 100644
+--- a/target/openrisc/cpu.c
++++ b/target/openrisc/cpu.c
+@@ -232,7 +232,7 @@ static const struct SysemuCPUOps openrisc_sysemu_ops = {
+ };
+ #endif
+ 
+-#include "hw/core/tcg-cpu-ops.h"
++#include "accel/tcg/cpu-ops.h"
+ 
+ static const TCGCPUOps openrisc_tcg_ops = {
+     .initialize = openrisc_translate_init,
+diff --git a/target/ppc/cpu_init.c b/target/ppc/cpu_init.c
+index c05c2dc42dc..ed85448bc7d 100644
+--- a/target/ppc/cpu_init.c
++++ b/target/ppc/cpu_init.c
+@@ -7427,7 +7427,7 @@ static const struct SysemuCPUOps ppc_sysemu_ops = {
+ #endif
+ 
+ #ifdef CONFIG_TCG
+-#include "hw/core/tcg-cpu-ops.h"
++#include "accel/tcg/cpu-ops.h"
+ 
+ static const TCGCPUOps ppc_tcg_ops = {
+   .initialize = ppc_translate_init,
+diff --git a/target/riscv/tcg/tcg-cpu.c b/target/riscv/tcg/tcg-cpu.c
+index 0a137281de1..e40c8e85b26 100644
+--- a/target/riscv/tcg/tcg-cpu.c
++++ b/target/riscv/tcg/tcg-cpu.c
+@@ -31,7 +31,7 @@
+ #include "qemu/error-report.h"
+ #include "qemu/log.h"
+ #include "hw/core/accel-cpu.h"
+-#include "hw/core/tcg-cpu-ops.h"
++#include "accel/tcg/cpu-ops.h"
+ #include "tcg/tcg.h"
+ #ifndef CONFIG_USER_ONLY
+ #include "hw/boards.h"
+diff --git a/target/rx/cpu.c b/target/rx/cpu.c
+index 8c50c7a1bc8..d237d007023 100644
+--- a/target/rx/cpu.c
++++ b/target/rx/cpu.c
+@@ -192,7 +192,7 @@ static const struct SysemuCPUOps rx_sysemu_ops = {
+ };
+ #endif
+ 
+-#include "hw/core/tcg-cpu-ops.h"
++#include "accel/tcg/cpu-ops.h"
+ 
+ static const TCGCPUOps rx_tcg_ops = {
+     .initialize = rx_translate_init,
+diff --git a/target/s390x/cpu.c b/target/s390x/cpu.c
+index 97d41c23de7..3bea014f9ee 100644
+--- a/target/s390x/cpu.c
++++ b/target/s390x/cpu.c
+@@ -322,7 +322,7 @@ static const Property s390x_cpu_properties[] = {
+ #endif
+ 
+ #ifdef CONFIG_TCG
+-#include "hw/core/tcg-cpu-ops.h"
++#include "accel/tcg/cpu-ops.h"
+ 
+ void cpu_get_tb_cpu_state(CPUS390XState *env, vaddr *pc,
+                           uint64_t *cs_base, uint32_t *pflags)
+diff --git a/target/s390x/tcg/mem_helper.c b/target/s390x/tcg/mem_helper.c
+index 32717acb7d1..4ce7aa8127f 100644
+--- a/target/s390x/tcg/mem_helper.c
++++ b/target/s390x/tcg/mem_helper.c
+@@ -28,7 +28,7 @@
+ #include "exec/exec-all.h"
+ #include "exec/page-protection.h"
+ #include "exec/cpu_ldst.h"
+-#include "hw/core/tcg-cpu-ops.h"
++#include "accel/tcg/cpu-ops.h"
+ #include "qemu/int128.h"
+ #include "qemu/atomic128.h"
+ 
+diff --git a/target/sh4/cpu.c b/target/sh4/cpu.c
+index 24a22724c61..e3c2aea1a64 100644
+--- a/target/sh4/cpu.c
++++ b/target/sh4/cpu.c
+@@ -247,7 +247,7 @@ static const struct SysemuCPUOps sh4_sysemu_ops = {
+ };
+ #endif
+ 
+-#include "hw/core/tcg-cpu-ops.h"
++#include "accel/tcg/cpu-ops.h"
+ 
+ static const TCGCPUOps superh_tcg_ops = {
+     .initialize = sh4_translate_init,
+diff --git a/target/sparc/cpu.c b/target/sparc/cpu.c
+index fbd38ec334a..e3b46137178 100644
+--- a/target/sparc/cpu.c
++++ b/target/sparc/cpu.c
+@@ -992,7 +992,7 @@ static const struct SysemuCPUOps sparc_sysemu_ops = {
+ #endif
+ 
+ #ifdef CONFIG_TCG
+-#include "hw/core/tcg-cpu-ops.h"
++#include "accel/tcg/cpu-ops.h"
+ 
+ static const TCGCPUOps sparc_tcg_ops = {
+     .initialize = sparc_tcg_init,
+diff --git a/target/tricore/cpu.c b/target/tricore/cpu.c
+index 95202fadbfd..eb794674c8d 100644
+--- a/target/tricore/cpu.c
++++ b/target/tricore/cpu.c
+@@ -168,7 +168,7 @@ static const struct SysemuCPUOps tricore_sysemu_ops = {
+     .get_phys_page_debug = tricore_cpu_get_phys_page_debug,
+ };
+ 
+-#include "hw/core/tcg-cpu-ops.h"
++#include "accel/tcg/cpu-ops.h"
+ 
+ static const TCGCPUOps tricore_tcg_ops = {
+     .initialize = tricore_tcg_init,
+diff --git a/target/xtensa/cpu.c b/target/xtensa/cpu.c
+index 4eb699d1f45..efbfe73fcfb 100644
+--- a/target/xtensa/cpu.c
++++ b/target/xtensa/cpu.c
+@@ -228,7 +228,7 @@ static const struct SysemuCPUOps xtensa_sysemu_ops = {
+ };
+ #endif
+ 
+-#include "hw/core/tcg-cpu-ops.h"
++#include "accel/tcg/cpu-ops.h"
+ 
+ static const TCGCPUOps xtensa_tcg_ops = {
+     .initialize = xtensa_translate_init,
 -- 
 2.47.1
 
