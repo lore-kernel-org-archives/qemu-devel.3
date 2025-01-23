@@ -4,64 +4,64 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 81173C02182
-	for <qemu-devel@archiver.kernel.org>; Thu, 23 Jan 2025 21:57:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 52E8AC0218B
+	for <qemu-devel@archiver.kernel.org>; Thu, 23 Jan 2025 21:57:25 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tb5Ba-0004q5-K8; Thu, 23 Jan 2025 16:56:26 -0500
+	id 1tb5C5-000521-UF; Thu, 23 Jan 2025 16:56:57 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tb5BY-0004pq-8O
- for qemu-devel@nongnu.org; Thu, 23 Jan 2025 16:56:24 -0500
-Received: from mail-wr1-x42b.google.com ([2a00:1450:4864:20::42b])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tb5C3-00051Q-U8
+ for qemu-devel@nongnu.org; Thu, 23 Jan 2025 16:56:55 -0500
+Received: from mail-wm1-x335.google.com ([2a00:1450:4864:20::335])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tb5BW-0002jA-Pu
- for qemu-devel@nongnu.org; Thu, 23 Jan 2025 16:56:24 -0500
-Received: by mail-wr1-x42b.google.com with SMTP id
- ffacd0b85a97d-385e0e224cbso841340f8f.2
- for <qemu-devel@nongnu.org>; Thu, 23 Jan 2025 13:56:22 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tb5C2-0002ok-D1
+ for qemu-devel@nongnu.org; Thu, 23 Jan 2025 16:56:55 -0500
+Received: by mail-wm1-x335.google.com with SMTP id
+ 5b1f17b1804b1-4361f796586so15349715e9.3
+ for <qemu-devel@nongnu.org>; Thu, 23 Jan 2025 13:56:54 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1737669381; x=1738274181; darn=nongnu.org;
+ d=linaro.org; s=google; t=1737669412; x=1738274212; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=bH5J3cRQDjcVRgPq7zp3SpsLhqrv1PdlyvsdQnQjIBk=;
- b=Eh6Z+/BIeON7Np2C8AGq6cvYnbSqAAvojCEn7CYn6/UwLmDUXUP6BiXyKAVDkB13Dv
- 5gF0RQwlQcJBuImrhD9BtqPRSgxgRVCU5Q9X5g1BgHNttzkvFg9uwJjZMGNaQULDc0zK
- ixNxvVT1dI0PoljLaDnB3ppFzmFLj5X2WyDDAWF88S8m7ed9wlrSzJ2N3vdfh+vIWtSA
- tEk4FZ9Y+ZrS04IPQiYk1zkkNCS5kOfu1ugkuQXE6Lph0LLFzYSa56Y8ksrqIOEcY/dL
- 6Af7hFifuwCsyn4eANGeDRtCFAs738BwgL1g5x5Hqc6SXXCiIZV/mPsTvnnmU49CTd0S
- XVOw==
+ bh=gXRYcwTEjcVPemISiJ0oN9v7hHJA///00CaMfmTQwfo=;
+ b=mBNS1u/2bI7eV0b3dXgkY4Nl4FANMyu95Q9QDjgop91d3y0XHjnQRlesvPXqjZtszG
+ ROfRVRYZVi7gX4ZouPY8mSwfb0LqXh0QyszMxB1bZfTY1EN9MNhyhc1SoN8ASiFfltDv
+ fK3p25CxONGhmPAw7GoA2dQ4SQpgW/afelrBY/mJEh9yqLsFWYx41otlmPY3HfJHzaMb
+ pPs31oAwS2EpC4vsr9lWS6ilFAeuIAoVZrGGXafB8Ch8yQrXabNTmgKvp0wre+XG9biG
+ TWUz9PQyHW1qOJT25MfJVq7j6iwxTBbKmykyftzWcTp15bgrjgcQAXh7SjJ0I896Z5bl
+ Gg+g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1737669381; x=1738274181;
+ d=1e100.net; s=20230601; t=1737669412; x=1738274212;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=bH5J3cRQDjcVRgPq7zp3SpsLhqrv1PdlyvsdQnQjIBk=;
- b=Sbq4anpk1qH0Eq+25fNDwP/UD4ZoEmMVbHNTT8rTajYviPEGDEm//+0evYzyJTb7pH
- pwMAoqZOYslLmpYahCAGO3h6t1JtIMFYdDFF9dh8Sf8oGLLC/cy0aiEqr4CbXW0uCbvv
- eZrUNvNz/N1Z4FMg8qe+uiSQ5XaEH07TO9XArbtm8rgsFdPZbpeYaTcV6pbot2K3rY8G
- JpgGLJq2fdP4q8tS79TYGNqUwAA5G8cdCwrwHYe5JXf5AKlWwmzg7f7X7yN2TUsSQrBo
- LoDFr19sSjRnGQgqwud7IKUzSRzuHZH4u0ku+SYXsPeuxdtht5OqUqGM+0rOPzvZfUDV
- Bfqg==
-X-Gm-Message-State: AOJu0Yzwc4ylgWXccyg3dzCofXXYnJGNX4gYTparFmqFqXeAKyaP2ERB
- ysdP/m6kPwRt5wB6Cbq92CLl8J96IxcBHgMAF/z+H7Cg9E7EFMROK+Vt2mbL5sB+c+zFP4AVe7l
- wtio=
-X-Gm-Gg: ASbGncvQyXG1eMQDQdZWnJ2z4DG0AMEiqlEXjxWixvSz7wFIFYmvyS3kqsOSC2u05tm
- CFmjgG3ohe5J3Xo0VrhzHF43tOWakBKtfD7PKaD8fFfTsNxswC+aWCxcPMpTxSB0JDt8hBr/2wx
- gKapDPDKxtd5/7OlaSjrpEeRnOBDFQQbfJZLPto85dj2lVptGsUZa3GOr29rCZWFzO48x0HarBm
- Cg9l4VujEwI7Lz79huuuY8ne+k6gWCIvVT3KlWusQwjtE3SmQ01u6mbBKGE1ZOpEJW7luXL/6L3
- 83ifAsCV1iYKGCFeSZ2R/DiMiBIWnJAgK+iei0FmuCgYGq38eUmiv6k=
-X-Google-Smtp-Source: AGHT+IEMuB+bskUbKGysrMlSDbqUlZX0V4nRiLrAkQKdCjm2SlFYcl8mqJ3QAH4OTPbPkMqlN7ycdw==
-X-Received: by 2002:a05:6000:1863:b0:385:f560:7911 with SMTP id
- ffacd0b85a97d-38bf5655589mr26500138f8f.10.1737669381002; 
- Thu, 23 Jan 2025 13:56:21 -0800 (PST)
+ bh=gXRYcwTEjcVPemISiJ0oN9v7hHJA///00CaMfmTQwfo=;
+ b=YuHArhJ4HAqmRMlWIdwPKJHwJT9TM6VBzgHb9zarhzmBs+3xoG4Tg7hL1mfnyNpLFl
+ IMDYGVoM8+nGGLcdTY+o1WJzmGJmbs1YMcqKacIqchgSIgTFnZOzNapMrEr4GL39GLCU
+ JZpxidjP9cwPxENulxGvPhKJ/qYBvWQ+q4tOmor/dwUeWJ9LGj1pTkQ6bHYRcQfO8fQv
+ pOxWoxcxjUVOPtXjcGtyk/3qZnFMANAP8caB6EF5khDWk1tJTea4+A77jVxESN4+fkhf
+ EFW6W7RFzGGuQi18/k0UTzwCPR5o1WiXcnYNFOeqiLFTqTaDq3B7fu1q0EdaFIMnPpiu
+ 9s8A==
+X-Gm-Message-State: AOJu0YzjZ3JPJE84YRjUnij58UWZh3k9UxIaLvZQZv90ewhmsvpbWf7j
+ 6Wx6UfvTPIB3mjAvYh2PouDAnCo0eQM0sak9PPKa276PsXY+DuT52sBSOdz6qPFQ/XD4hXh29bV
+ 5d08=
+X-Gm-Gg: ASbGncsz5KSqLdY8KAugiIAdfkNECrhiKVfxWk5xw9ZmAnosXuatcV7+qIpI5O9XobI
+ Ywalf8zc8/X+ODMaSk0KZMDc66sQWU3W9UWjJVgNXOdcYgENoekVWJgLfF291cVQ1Qk0GkOCMNm
+ ienSQgtl2Rtjwu5z732nl5IukhG5jozggq9w6YOJ5JhOe1fWCMIRwGTtyVrr2m2mciE6sN5GH8z
+ WRcxITj/J2EuNS1ecMngeyMP9Vnep8jLtYns3+XUuf4BopxA630NVJwpMZSrOErfaAmsXsTfXv6
+ wzAyS2/AE83+HP6zTWQC13YY/MvFvoHHhmE6dyt+pdySU9Kt2zKzWqMmb/1G3++aCQ==
+X-Google-Smtp-Source: AGHT+IFY0qJxVjzg8jeg7ghhr/OhcYZFoxyx+HCMNK1al6GySRvW4X4WEaWm30H31WjRjXjRISgdTQ==
+X-Received: by 2002:adf:f48c:0:b0:385:f996:1b8e with SMTP id
+ ffacd0b85a97d-38bf5659a94mr22526857f8f.16.1737669412599; 
+ Thu, 23 Jan 2025 13:56:52 -0800 (PST)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-38c2a1ca723sm772228f8f.101.2025.01.23.13.56.20
+ ffacd0b85a97d-38c2a1c4295sm792689f8f.91.2025.01.23.13.56.51
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Thu, 23 Jan 2025 13:56:20 -0800 (PST)
+ Thu, 23 Jan 2025 13:56:51 -0800 (PST)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Daniel Henrique Barboza <danielhb413@gmail.com>,
@@ -69,25 +69,24 @@ Cc: Daniel Henrique Barboza <danielhb413@gmail.com>,
  Richard Henderson <richard.henderson@linaro.org>, qemu-ppc@nongnu.org,
  Nicholas Piggin <npiggin@gmail.com>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PATCH 02/15] hw/ppc/spapr: Restrict part of PAGE_INIT hypercall to
- TCG
-Date: Thu, 23 Jan 2025 22:55:56 +0100
-Message-ID: <20250123215609.30432-3-philmd@linaro.org>
+Subject: [PATCH 08/15] target/ppc: Remove raise_exception_ra()
+Date: Thu, 23 Jan 2025 22:56:02 +0100
+Message-ID: <20250123215609.30432-9-philmd@linaro.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20250123215609.30432-1-philmd@linaro.org>
 References: <20250123215609.30432-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::42b;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x42b.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::335;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x335.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -103,29 +102,46 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Restrict the tb_flush() call to TCG. Assert we are using KVM or TCG.
+Introduced in commit db789c6cd33 ("ppc: Provide basic
+raise_exception_* functions"), raise_exception_ra() has
+never been used. Remove as dead code.
 
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 ---
- hw/ppc/spapr_hcall.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ target/ppc/cpu.h         | 2 --
+ target/ppc/excp_helper.c | 6 ------
+ 2 files changed, 8 deletions(-)
 
-diff --git a/hw/ppc/spapr_hcall.c b/hw/ppc/spapr_hcall.c
-index dbf30358a1a..4f1933b8da6 100644
---- a/hw/ppc/spapr_hcall.c
-+++ b/hw/ppc/spapr_hcall.c
-@@ -299,8 +299,10 @@ static target_ulong h_page_init(PowerPCCPU *cpu, SpaprMachineState *spapr,
-     if (flags & (H_ICACHE_SYNCHRONIZE | H_ICACHE_INVALIDATE)) {
-         if (kvm_enabled()) {
-             kvmppc_icbi_range(cpu, pdst, len);
--        } else {
-+        } else if (tcg_enabled()) {
-             tb_flush(CPU(cpu));
-+        } else {
-+            g_assert_not_reached();
-         }
-     }
+diff --git a/target/ppc/cpu.h b/target/ppc/cpu.h
+index 0b8b4c05172..4ca27d6b389 100644
+--- a/target/ppc/cpu.h
++++ b/target/ppc/cpu.h
+@@ -2753,8 +2753,6 @@ static inline void cpu_get_tb_cpu_state(CPUPPCState *env, vaddr *pc,
+ #endif
  
+ G_NORETURN void raise_exception(CPUPPCState *env, uint32_t exception);
+-G_NORETURN void raise_exception_ra(CPUPPCState *env, uint32_t exception,
+-                                   uintptr_t raddr);
+ G_NORETURN void raise_exception_err(CPUPPCState *env, uint32_t exception,
+                                     uint32_t error_code);
+ G_NORETURN void raise_exception_err_ra(CPUPPCState *env, uint32_t exception,
+diff --git a/target/ppc/excp_helper.c b/target/ppc/excp_helper.c
+index 236e5078f56..9e1a2ecc36f 100644
+--- a/target/ppc/excp_helper.c
++++ b/target/ppc/excp_helper.c
+@@ -2528,12 +2528,6 @@ void raise_exception(CPUPPCState *env, uint32_t exception)
+     raise_exception_err_ra(env, exception, 0, 0);
+ }
+ 
+-void raise_exception_ra(CPUPPCState *env, uint32_t exception,
+-                        uintptr_t raddr)
+-{
+-    raise_exception_err_ra(env, exception, 0, raddr);
+-}
+-
+ #ifdef CONFIG_TCG
+ void helper_raise_exception_err(CPUPPCState *env, uint32_t exception,
+                                 uint32_t error_code)
 -- 
 2.47.1
 
