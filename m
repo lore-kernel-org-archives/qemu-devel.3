@@ -4,64 +4,64 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9F341C0218B
-	for <qemu-devel@archiver.kernel.org>; Thu, 23 Jan 2025 21:57:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1B480C02182
+	for <qemu-devel@archiver.kernel.org>; Thu, 23 Jan 2025 21:57:44 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tb5CB-00053A-8x; Thu, 23 Jan 2025 16:57:03 -0500
+	id 1tb5Bm-0004uk-Sy; Thu, 23 Jan 2025 16:56:38 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tb5CA-00052k-1V
- for qemu-devel@nongnu.org; Thu, 23 Jan 2025 16:57:02 -0500
-Received: from mail-wm1-x32d.google.com ([2a00:1450:4864:20::32d])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tb5Bl-0004tQ-2c
+ for qemu-devel@nongnu.org; Thu, 23 Jan 2025 16:56:37 -0500
+Received: from mail-wm1-x329.google.com ([2a00:1450:4864:20::329])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tb5C7-0002pq-SW
- for qemu-devel@nongnu.org; Thu, 23 Jan 2025 16:57:01 -0500
-Received: by mail-wm1-x32d.google.com with SMTP id
- 5b1f17b1804b1-43618283d48so10535395e9.1
- for <qemu-devel@nongnu.org>; Thu, 23 Jan 2025 13:56:59 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tb5Bi-0002l1-MQ
+ for qemu-devel@nongnu.org; Thu, 23 Jan 2025 16:56:36 -0500
+Received: by mail-wm1-x329.google.com with SMTP id
+ 5b1f17b1804b1-436202dd730so10299285e9.2
+ for <qemu-devel@nongnu.org>; Thu, 23 Jan 2025 13:56:34 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1737669418; x=1738274218; darn=nongnu.org;
+ d=linaro.org; s=google; t=1737669393; x=1738274193; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=6f/oCQzbSHImCkqqj0iWpdHWh0qIumN7VF7msGHxoiQ=;
- b=BTm3CAQ9gNi1mjL1hrGVYtOGJ303BmXw8wfU9snOgrLnYcfVXjnaq0Yh6QOR/Xcsfo
- KlpefdYKvlivcwOKrPCllTpAYiufDLNFmBbbigqMpUzRuqq+nmrJPer3YiHOCNGS5n3S
- icd5akML7bkilO6QKN+eI8TFawsrB2q7qj0uOvXR8Yqeh5ifDg3fZ7cC7db4MjSQ1omC
- co4wHky/f+RLZ3E5+O4wEKoPEcfhpMI4N78B3pL11Kygv6IeJu09GtoSfUSqMM4fcHEU
- 3E8VG7RjdE3qGecFjA0FxOMqW4rDXJ1rzfWstsWqsaXFRAk3AaNVw12kUokrmT7M8533
- XF4w==
+ bh=TTJwfGzF9H+nXAFh4oKJlHlsOewOwWpsY8vG45m99Ks=;
+ b=Q6AeO++BTcaWnHF3acIqD/DxewMLrR+16WkIy1ptAf5acpuxXKW+B9eBU615aolhii
+ gIQncUtCxXCuAOYLUY2Q7UmYrQhDIBsYKAcC+40kJYRN7SM9YQwCheCcv8TO9pYWa//P
+ o/JdSInBMn7E4txNAi/5tGmDtXiLDqaY5UUO+V1jlYulYkSq4fL5dR2YyjqeL7t5NLYB
+ U6gDhM89QejvDl56Yp8Up2V7RQLPARp3lN8vyfnEx+pIuEwKLs4MnrV8Pv1GgSQLc5ZV
+ OJRD3BumVezxf5GcG3Ub21S+W3WkRVEkJZc54D+9O5Gn2/k8CIRBWYdnWqlanqG6TOuC
+ yDTg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1737669418; x=1738274218;
+ d=1e100.net; s=20230601; t=1737669393; x=1738274193;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=6f/oCQzbSHImCkqqj0iWpdHWh0qIumN7VF7msGHxoiQ=;
- b=ZghVJKGE8u4AE4q5NsRqqLtN41jVupCv/NK3BmmYeN5a//dCc+eP/tkky4zqxdZyjh
- hSrlmJvjRWoN55FVh80y+l7DIoeLorJ+uGJbfB4kLAwO9QHfaPpv4jAXY/fP+DEDIL82
- AhPmvKBJEYW5zjt6ZKNzaaf/sN/JM8rSXV1PtzhJbVrrHFJKi9GDnFjp2IYO0qix85gh
- c7i2nVlJJxTuNWTIm1BlYrW8BldPm+qKDdOXuGF7sTGjg1MeP8ZflEPqAalRs+yi5WZV
- yrJanjBRYmjMIJeQZ2GOlQJv0cHhAmanaJuj9Y3yqGvTrD1bBUZG4AKftLu9v5dkxiZJ
- wBhw==
-X-Gm-Message-State: AOJu0YzclEvTFi1ymghqdso1x/agdkRZWzHPiZhXjY//Ybm6oOYO0PL6
- fv9fIcd6DGWr5ebkJ0VOWiBpZbEJloxC1sTBiuFUu/tzFSNFImC2GlgZj6iDjkaAtliqAcGFa6V
- GDy0=
-X-Gm-Gg: ASbGnct9covRYCLAHI+J/JVwMOPglmuf8cYf6g8qraWQpUiGVhJjLRX7e2yE9xAO+wq
- WRV5tOHSQs0Z/u42t2sOPlHUkUyfmVw/g5UrZGTUabQrcC2epmZ/3hU+sXOWs0NDEoJInAWh2EA
- 6mFrhjsCVRdwStgARnec0dwEUBQGZ9SXL7C7CD1mtvvj+SZ6ZPG794NWKaMuz5G4Z48AAVF1UMj
- yeq9k0PHC3/WhL4lg0hrYGE8CI5G0qWedMDXwCBTNDvzLdKVg81b2wLRq20/AlTI1PAavhirTE2
- fszRQhieDpE7L2kQMIh/9LDwVkGxhPKeLpSVx4rY18qhiyoc18zOtCjg+kVmeUIkGQ==
-X-Google-Smtp-Source: AGHT+IE9D9uF3hMFhk5DwbjzauucxAZ75BZP9UVMKTo5NU1iwvbbfmA9msQYyzjEQDbMrt5nkf1zXQ==
-X-Received: by 2002:a5d:6a92:0:b0:386:3403:7b63 with SMTP id
- ffacd0b85a97d-38bf57b3d42mr17860596f8f.36.1737669418137; 
- Thu, 23 Jan 2025 13:56:58 -0800 (PST)
+ bh=TTJwfGzF9H+nXAFh4oKJlHlsOewOwWpsY8vG45m99Ks=;
+ b=g3Yn3jY+0DMpZe5Y6WlVWkaSHK8C/FKG2UJur7Oyl9BClu4zL5/tR5q1/Zgox3833Z
+ 4ETwCpngT9DkaOSo3Y4FjY3vva1YsNVQxM0KloJiwMZZblXTP9tV6NfYn7uKqB96RF07
+ wIPsWzriPv55F6wWZLaHCyz1m7LcRXrN4kZebs10aBQ7J8xphjirVgAdlRAZ/U+ODbyP
+ j1Zil4bUpLhRcEUKMAEQCr1CiDkkq9OOfk8FJk8ZFTXFr0vjB8EIDXq/YrG8iwzdxTAg
+ v2r8dKOrj2Vj3HgRhAtPm6QQXuQlMhIeUve6jnOPy9qnVE0efJfABm59dA9p1YKBATw2
+ 6tTA==
+X-Gm-Message-State: AOJu0YwoYgokfOledqSFAyjVlQJP7L6WtCzcUT09qbYfljNDYqw7C570
+ 6nC2FrwrOH+T8c/CrJDEBlGALVmkFqNbLAe6nwk88iwZZBQLrATtA5WWVXhBBvN9xMP0rZJBm/r
+ 54xc=
+X-Gm-Gg: ASbGncs1Z6RMsCkzw4ZzE90tCaJc2bZeZ1oYrhlGf+lyM0HZ0N6WoAA5gyKEUEV3EwG
+ Hala9EegnA/u/SJbzCFtVoZx3jk+8c42T4sA7z2jbfdllWBmvgp2+sAAiaDq6keHosdr7CfqSgP
+ pj1Prj5KLiB3RozpbJMwu74WLh5jEr3efSZSiIGDoinAZI97eFs98aq32y6pU1ekNiIqBi5LjTE
+ TTnVYlCYicDoH/JGar5pJIUsAAgljq9W/6R7Xw4IE9gx7PeNPUw1jUdYcp4KNfkALOiWxzWSZLA
+ tR3lRofVIri50sqy3Ck47Eiwj11c7FbTIrg5ZpLLApRO3HLNiHe8Xfw=
+X-Google-Smtp-Source: AGHT+IHRk1ci3cphUxm5subnkR+MHr58uObFbzHgejoDzBCmzrCFgf09BfR3NxEzaRaop6hTCxpmWA==
+X-Received: by 2002:a05:600c:3d96:b0:434:9dfe:20e6 with SMTP id
+ 5b1f17b1804b1-43891439dfdmr252175745e9.23.1737669392560; 
+ Thu, 23 Jan 2025 13:56:32 -0800 (PST)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-38c2a1bb040sm785629f8f.67.2025.01.23.13.56.56
+ 5b1f17b1804b1-438bd47f25csm5050725e9.1.2025.01.23.13.56.30
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Thu, 23 Jan 2025 13:56:57 -0800 (PST)
+ Thu, 23 Jan 2025 13:56:31 -0800 (PST)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Daniel Henrique Barboza <danielhb413@gmail.com>,
@@ -69,17 +69,18 @@ Cc: Daniel Henrique Barboza <danielhb413@gmail.com>,
  Richard Henderson <richard.henderson@linaro.org>, qemu-ppc@nongnu.org,
  Nicholas Piggin <npiggin@gmail.com>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PATCH 09/15] target/ppc: Restrict exception helpers to TCG
-Date: Thu, 23 Jan 2025 22:56:03 +0100
-Message-ID: <20250123215609.30432-10-philmd@linaro.org>
+Subject: [PATCH 04/15] target/ppc: Move TCG specific exception handlers to
+ tcg-excp_helper.c
+Date: Thu, 23 Jan 2025 22:55:58 +0100
+Message-ID: <20250123215609.30432-5-philmd@linaro.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20250123215609.30432-1-philmd@linaro.org>
 References: <20250123215609.30432-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32d;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x32d.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::329;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x329.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -102,119 +103,433 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Move exception helpers to tcg-excp_helper.c so they are
+Move the TCGCPUOps handlers to a new unit: tcg-excp_helper.c,
 only built when TCG is selected.
+
+See in target/ppc/cpu_init.c:
+
+    #ifdef CONFIG_TCG
+    static const TCGCPUOps ppc_tcg_ops = {
+      ...
+      .do_unaligned_access = ppc_cpu_do_unaligned_access,
+      .do_transaction_failed = ppc_cpu_do_transaction_failed,
+      .debug_excp_handler = ppc_cpu_debug_excp_handler,
+      .debug_check_breakpoint = ppc_cpu_debug_check_breakpoint,
+      .debug_check_watchpoint = ppc_cpu_debug_check_watchpoint,
+    };
+    #endif /* CONFIG_TCG */
 
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 ---
- target/ppc/excp_helper.c     | 34 --------------------------------
- target/ppc/tcg-excp_helper.c | 38 ++++++++++++++++++++++++++++++++++++
- 2 files changed, 38 insertions(+), 34 deletions(-)
+ target/ppc/excp_helper.c     | 173 ------------------------------
+ target/ppc/tcg-excp_helper.c | 202 +++++++++++++++++++++++++++++++++++
+ target/ppc/meson.build       |   1 +
+ 3 files changed, 203 insertions(+), 173 deletions(-)
+ create mode 100644 target/ppc/tcg-excp_helper.c
 
 diff --git a/target/ppc/excp_helper.c b/target/ppc/excp_helper.c
-index 9e1a2ecc36f..6a12402b23a 100644
+index 7ed4bbec035..b05eb7f5aec 100644
 --- a/target/ppc/excp_helper.c
 +++ b/target/ppc/excp_helper.c
-@@ -2504,41 +2504,7 @@ bool ppc_cpu_exec_interrupt(CPUState *cs, int interrupt_request)
+@@ -3144,178 +3144,5 @@ void helper_book3s_trace(CPUPPCState *env, target_ulong prev_ip)
+     raise_exception_err(env, POWERPC_EXCP_TRACE, error_code);
+ }
  
+-void ppc_cpu_do_unaligned_access(CPUState *cs, vaddr vaddr,
+-                                 MMUAccessType access_type,
+-                                 int mmu_idx, uintptr_t retaddr)
+-{
+-    CPUPPCState *env = cpu_env(cs);
+-    uint32_t insn;
+-
+-    /* Restore state and reload the insn we executed, for filling in DSISR.  */
+-    cpu_restore_state(cs, retaddr);
+-    insn = ppc_ldl_code(env, env->nip);
+-
+-    switch (env->mmu_model) {
+-    case POWERPC_MMU_SOFT_4xx:
+-        env->spr[SPR_40x_DEAR] = vaddr;
+-        break;
+-    case POWERPC_MMU_BOOKE:
+-    case POWERPC_MMU_BOOKE206:
+-        env->spr[SPR_BOOKE_DEAR] = vaddr;
+-        break;
+-    default:
+-        env->spr[SPR_DAR] = vaddr;
+-        break;
+-    }
+-
+-    cs->exception_index = POWERPC_EXCP_ALIGN;
+-    env->error_code = insn & 0x03FF0000;
+-    cpu_loop_exit(cs);
+-}
+-
+-void ppc_cpu_do_transaction_failed(CPUState *cs, hwaddr physaddr,
+-                                   vaddr vaddr, unsigned size,
+-                                   MMUAccessType access_type,
+-                                   int mmu_idx, MemTxAttrs attrs,
+-                                   MemTxResult response, uintptr_t retaddr)
+-{
+-    CPUPPCState *env = cpu_env(cs);
+-
+-    switch (env->excp_model) {
+-#if defined(TARGET_PPC64)
+-    case POWERPC_EXCP_POWER8:
+-    case POWERPC_EXCP_POWER9:
+-    case POWERPC_EXCP_POWER10:
+-    case POWERPC_EXCP_POWER11:
+-        /*
+-         * Machine check codes can be found in processor User Manual or
+-         * Linux or skiboot source.
+-         */
+-        if (access_type == MMU_DATA_LOAD) {
+-            env->spr[SPR_DAR] = vaddr;
+-            env->spr[SPR_DSISR] = PPC_BIT(57);
+-            env->error_code = PPC_BIT(42);
+-
+-        } else if (access_type == MMU_DATA_STORE) {
+-            /*
+-             * MCE for stores in POWER is asynchronous so hardware does
+-             * not set DAR, but QEMU can do better.
+-             */
+-            env->spr[SPR_DAR] = vaddr;
+-            env->error_code = PPC_BIT(36) | PPC_BIT(43) | PPC_BIT(45);
+-            env->error_code |= PPC_BIT(42);
+-
+-        } else { /* Fetch */
+-            /*
+-             * is_prefix_insn_excp() tests !PPC_BIT(42) to avoid fetching
+-             * the instruction, so that must always be clear for fetches.
+-             */
+-            env->error_code = PPC_BIT(36) | PPC_BIT(44) | PPC_BIT(45);
+-        }
+-        break;
+-#endif
+-    default:
+-        /*
+-         * TODO: Check behaviour for other CPUs, for now do nothing.
+-         * Could add a basic MCE even if real hardware ignores.
+-         */
+-        return;
+-    }
+-
+-    cs->exception_index = POWERPC_EXCP_MCHECK;
+-    cpu_loop_exit_restore(cs, retaddr);
+-}
+-
+-void ppc_cpu_debug_excp_handler(CPUState *cs)
+-{
+-#if defined(TARGET_PPC64)
+-    CPUPPCState *env = cpu_env(cs);
+-
+-    if (env->insns_flags2 & PPC2_ISA207S) {
+-        if (cs->watchpoint_hit) {
+-            if (cs->watchpoint_hit->flags & BP_CPU) {
+-                env->spr[SPR_DAR] = cs->watchpoint_hit->hitaddr;
+-                env->spr[SPR_DSISR] = PPC_BIT(41);
+-                cs->watchpoint_hit = NULL;
+-                raise_exception(env, POWERPC_EXCP_DSI);
+-            }
+-            cs->watchpoint_hit = NULL;
+-        } else if (cpu_breakpoint_test(cs, env->nip, BP_CPU)) {
+-            raise_exception_err(env, POWERPC_EXCP_TRACE,
+-                                PPC_BIT(33) | PPC_BIT(43));
+-        }
+-    }
+-#endif
+-}
+-
+-bool ppc_cpu_debug_check_breakpoint(CPUState *cs)
+-{
+-#if defined(TARGET_PPC64)
+-    CPUPPCState *env = cpu_env(cs);
+-
+-    if (env->insns_flags2 & PPC2_ISA207S) {
+-        target_ulong priv;
+-
+-        priv = env->spr[SPR_CIABR] & PPC_BITMASK(62, 63);
+-        switch (priv) {
+-        case 0x1: /* problem */
+-            return env->msr & ((target_ulong)1 << MSR_PR);
+-        case 0x2: /* supervisor */
+-            return (!(env->msr & ((target_ulong)1 << MSR_PR)) &&
+-                    !(env->msr & ((target_ulong)1 << MSR_HV)));
+-        case 0x3: /* hypervisor */
+-            return (!(env->msr & ((target_ulong)1 << MSR_PR)) &&
+-                     (env->msr & ((target_ulong)1 << MSR_HV)));
+-        default:
+-            g_assert_not_reached();
+-        }
+-    }
+-#endif
+-
+-    return false;
+-}
+-
+-bool ppc_cpu_debug_check_watchpoint(CPUState *cs, CPUWatchpoint *wp)
+-{
+-#if defined(TARGET_PPC64)
+-    CPUPPCState *env = cpu_env(cs);
+-
+-    if (env->insns_flags2 & PPC2_ISA207S) {
+-        if (wp == env->dawr0_watchpoint) {
+-            uint32_t dawrx = env->spr[SPR_DAWRX0];
+-            bool wt = extract32(dawrx, PPC_BIT_NR(59), 1);
+-            bool wti = extract32(dawrx, PPC_BIT_NR(60), 1);
+-            bool hv = extract32(dawrx, PPC_BIT_NR(61), 1);
+-            bool sv = extract32(dawrx, PPC_BIT_NR(62), 1);
+-            bool pr = extract32(dawrx, PPC_BIT_NR(62), 1);
+-
+-            if ((env->msr & ((target_ulong)1 << MSR_PR)) && !pr) {
+-                return false;
+-            } else if ((env->msr & ((target_ulong)1 << MSR_HV)) && !hv) {
+-                return false;
+-            } else if (!sv) {
+-                return false;
+-            }
+-
+-            if (!wti) {
+-                if (env->msr & ((target_ulong)1 << MSR_DR)) {
+-                    if (!wt) {
+-                        return false;
+-                    }
+-                } else {
+-                    if (wt) {
+-                        return false;
+-                    }
+-                }
+-            }
+-
+-            return true;
+-        }
+-    }
+-#endif
+-
+-    return false;
+-}
+-
  #endif /* !CONFIG_USER_ONLY */
- 
--/*****************************************************************************/
--/* Exceptions processing helpers */
--
--void raise_exception_err_ra(CPUPPCState *env, uint32_t exception,
--                            uint32_t error_code, uintptr_t raddr)
--{
--    CPUState *cs = env_cpu(env);
--
--    cs->exception_index = exception;
--    env->error_code = error_code;
--    cpu_loop_exit_restore(cs, raddr);
--}
--
--void raise_exception_err(CPUPPCState *env, uint32_t exception,
--                         uint32_t error_code)
--{
--    raise_exception_err_ra(env, exception, error_code, 0);
--}
--
--void raise_exception(CPUPPCState *env, uint32_t exception)
--{
--    raise_exception_err_ra(env, exception, 0, 0);
--}
--
- #ifdef CONFIG_TCG
--void helper_raise_exception_err(CPUPPCState *env, uint32_t exception,
--                                uint32_t error_code)
--{
--    raise_exception_err_ra(env, exception, error_code, 0);
--}
--
--void helper_raise_exception(CPUPPCState *env, uint32_t exception)
--{
--    raise_exception_err_ra(env, exception, 0, 0);
--}
- 
- #ifndef CONFIG_USER_ONLY
- void helper_store_msr(CPUPPCState *env, target_ulong val)
+ #endif /* CONFIG_TCG */
 diff --git a/target/ppc/tcg-excp_helper.c b/target/ppc/tcg-excp_helper.c
-index 93c2d6b5a03..268a1614597 100644
---- a/target/ppc/tcg-excp_helper.c
+new file mode 100644
+index 00000000000..3402dbe05ee
+--- /dev/null
 +++ b/target/ppc/tcg-excp_helper.c
-@@ -19,15 +19,53 @@
- #include "qemu/osdep.h"
- #include "qemu/log.h"
- #include "exec/cpu_ldst.h"
-+#include "exec/exec-all.h"
-+#include "exec/helper-proto.h"
- #include "system/runstate.h"
- 
-+#include "helper_regs.h"
- #include "hw/ppc/ppc.h"
- #include "internal.h"
- #include "cpu.h"
- #include "trace.h"
- 
-+/*****************************************************************************/
-+/* Exceptions processing helpers */
+@@ -0,0 +1,202 @@
++/*
++ *  PowerPC exception emulation helpers for QEMU (TCG specific)
++ *
++ *  Copyright (c) 2003-2007 Jocelyn Mayer
++ *
++ * This library is free software; you can redistribute it and/or
++ * modify it under the terms of the GNU Lesser General Public
++ * License as published by the Free Software Foundation; either
++ * version 2.1 of the License, or (at your option) any later version.
++ *
++ * This library is distributed in the hope that it will be useful,
++ * but WITHOUT ANY WARRANTY; without even the implied warranty of
++ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
++ * Lesser General Public License for more details.
++ *
++ * You should have received a copy of the GNU Lesser General Public
++ * License along with this library; if not, see <http://www.gnu.org/licenses/>.
++ */
++#include "qemu/osdep.h"
++#include "exec/cpu_ldst.h"
 +
-+void raise_exception_err_ra(CPUPPCState *env, uint32_t exception,
-+                            uint32_t error_code, uintptr_t raddr)
++#include "hw/ppc/ppc.h"
++#include "internal.h"
++#include "cpu.h"
++#include "trace.h"
++
++#ifndef CONFIG_USER_ONLY
++
++void ppc_cpu_do_unaligned_access(CPUState *cs, vaddr vaddr,
++                                 MMUAccessType access_type,
++                                 int mmu_idx, uintptr_t retaddr)
 +{
-+    CPUState *cs = env_cpu(env);
++    CPUPPCState *env = cpu_env(cs);
++    uint32_t insn;
 +
-+    cs->exception_index = exception;
-+    env->error_code = error_code;
-+    cpu_loop_exit_restore(cs, raddr);
++    /* Restore state and reload the insn we executed, for filling in DSISR.  */
++    cpu_restore_state(cs, retaddr);
++    insn = ppc_ldl_code(env, env->nip);
++
++    switch (env->mmu_model) {
++    case POWERPC_MMU_SOFT_4xx:
++        env->spr[SPR_40x_DEAR] = vaddr;
++        break;
++    case POWERPC_MMU_BOOKE:
++    case POWERPC_MMU_BOOKE206:
++        env->spr[SPR_BOOKE_DEAR] = vaddr;
++        break;
++    default:
++        env->spr[SPR_DAR] = vaddr;
++        break;
++    }
++
++    cs->exception_index = POWERPC_EXCP_ALIGN;
++    env->error_code = insn & 0x03FF0000;
++    cpu_loop_exit(cs);
 +}
 +
-+void helper_raise_exception_err(CPUPPCState *env, uint32_t exception,
-+                                uint32_t error_code)
++void ppc_cpu_do_transaction_failed(CPUState *cs, hwaddr physaddr,
++                                   vaddr vaddr, unsigned size,
++                                   MMUAccessType access_type,
++                                   int mmu_idx, MemTxAttrs attrs,
++                                   MemTxResult response, uintptr_t retaddr)
 +{
-+    raise_exception_err_ra(env, exception, error_code, 0);
++    CPUPPCState *env = cpu_env(cs);
++
++    switch (env->excp_model) {
++#if defined(TARGET_PPC64)
++    case POWERPC_EXCP_POWER8:
++    case POWERPC_EXCP_POWER9:
++    case POWERPC_EXCP_POWER10:
++    case POWERPC_EXCP_POWER11:
++        /*
++         * Machine check codes can be found in processor User Manual or
++         * Linux or skiboot source.
++         */
++        if (access_type == MMU_DATA_LOAD) {
++            env->spr[SPR_DAR] = vaddr;
++            env->spr[SPR_DSISR] = PPC_BIT(57);
++            env->error_code = PPC_BIT(42);
++
++        } else if (access_type == MMU_DATA_STORE) {
++            /*
++             * MCE for stores in POWER is asynchronous so hardware does
++             * not set DAR, but QEMU can do better.
++             */
++            env->spr[SPR_DAR] = vaddr;
++            env->error_code = PPC_BIT(36) | PPC_BIT(43) | PPC_BIT(45);
++            env->error_code |= PPC_BIT(42);
++
++        } else { /* Fetch */
++            /*
++             * is_prefix_insn_excp() tests !PPC_BIT(42) to avoid fetching
++             * the instruction, so that must always be clear for fetches.
++             */
++            env->error_code = PPC_BIT(36) | PPC_BIT(44) | PPC_BIT(45);
++        }
++        break;
++#endif
++    default:
++        /*
++         * TODO: Check behaviour for other CPUs, for now do nothing.
++         * Could add a basic MCE even if real hardware ignores.
++         */
++        return;
++    }
++
++    cs->exception_index = POWERPC_EXCP_MCHECK;
++    cpu_loop_exit_restore(cs, retaddr);
 +}
 +
-+void helper_raise_exception(CPUPPCState *env, uint32_t exception)
++void ppc_cpu_debug_excp_handler(CPUState *cs)
 +{
-+    raise_exception_err_ra(env, exception, 0, 0);
++#if defined(TARGET_PPC64)
++    CPUPPCState *env = cpu_env(cs);
++
++    if (env->insns_flags2 & PPC2_ISA207S) {
++        if (cs->watchpoint_hit) {
++            if (cs->watchpoint_hit->flags & BP_CPU) {
++                env->spr[SPR_DAR] = cs->watchpoint_hit->hitaddr;
++                env->spr[SPR_DSISR] = PPC_BIT(41);
++                cs->watchpoint_hit = NULL;
++                raise_exception(env, POWERPC_EXCP_DSI);
++            }
++            cs->watchpoint_hit = NULL;
++        } else if (cpu_breakpoint_test(cs, env->nip, BP_CPU)) {
++            raise_exception_err(env, POWERPC_EXCP_TRACE,
++                                PPC_BIT(33) | PPC_BIT(43));
++        }
++    }
++#endif
 +}
 +
- #ifndef CONFIG_USER_ONLY
- 
-+void raise_exception_err(CPUPPCState *env, uint32_t exception,
-+                                           uint32_t error_code)
++bool ppc_cpu_debug_check_breakpoint(CPUState *cs)
 +{
-+    raise_exception_err_ra(env, exception, error_code, 0);
++#if defined(TARGET_PPC64)
++    CPUPPCState *env = cpu_env(cs);
++
++    if (env->insns_flags2 & PPC2_ISA207S) {
++        target_ulong priv;
++
++        priv = env->spr[SPR_CIABR] & PPC_BITMASK(62, 63);
++        switch (priv) {
++        case 0x1: /* problem */
++            return env->msr & ((target_ulong)1 << MSR_PR);
++        case 0x2: /* supervisor */
++            return (!(env->msr & ((target_ulong)1 << MSR_PR)) &&
++                    !(env->msr & ((target_ulong)1 << MSR_HV)));
++        case 0x3: /* hypervisor */
++            return (!(env->msr & ((target_ulong)1 << MSR_PR)) &&
++                     (env->msr & ((target_ulong)1 << MSR_HV)));
++        default:
++            g_assert_not_reached();
++        }
++    }
++#endif
++
++    return false;
 +}
 +
-+void raise_exception(CPUPPCState *env, uint32_t exception)
++bool ppc_cpu_debug_check_watchpoint(CPUState *cs, CPUWatchpoint *wp)
 +{
-+    raise_exception_err_ra(env, exception, 0, 0);
++#if defined(TARGET_PPC64)
++    CPUPPCState *env = cpu_env(cs);
++
++    if (env->insns_flags2 & PPC2_ISA207S) {
++        if (wp == env->dawr0_watchpoint) {
++            uint32_t dawrx = env->spr[SPR_DAWRX0];
++            bool wt = extract32(dawrx, PPC_BIT_NR(59), 1);
++            bool wti = extract32(dawrx, PPC_BIT_NR(60), 1);
++            bool hv = extract32(dawrx, PPC_BIT_NR(61), 1);
++            bool sv = extract32(dawrx, PPC_BIT_NR(62), 1);
++            bool pr = extract32(dawrx, PPC_BIT_NR(62), 1);
++
++            if ((env->msr & ((target_ulong)1 << MSR_PR)) && !pr) {
++                return false;
++            } else if ((env->msr & ((target_ulong)1 << MSR_HV)) && !hv) {
++                return false;
++            } else if (!sv) {
++                return false;
++            }
++
++            if (!wti) {
++                if (env->msr & ((target_ulong)1 << MSR_DR)) {
++                    if (!wt) {
++                        return false;
++                    }
++                } else {
++                    if (wt) {
++                        return false;
++                    }
++                }
++            }
++
++            return true;
++        }
++    }
++#endif
++
++    return false;
 +}
 +
- void ppc_cpu_do_unaligned_access(CPUState *cs, vaddr vaddr,
-                                  MMUAccessType access_type,
-                                  int mmu_idx, uintptr_t retaddr)
++#endif /* !CONFIG_USER_ONLY */
+diff --git a/target/ppc/meson.build b/target/ppc/meson.build
+index db3b7a0c33b..8eed1fa40ca 100644
+--- a/target/ppc/meson.build
++++ b/target/ppc/meson.build
+@@ -14,6 +14,7 @@ ppc_ss.add(when: 'CONFIG_TCG', if_true: files(
+   'int_helper.c',
+   'mem_helper.c',
+   'misc_helper.c',
++  'tcg-excp_helper.c',
+   'timebase_helper.c',
+   'translate.c',
+   'power8-pmu.c',
 -- 
 2.47.1
 
