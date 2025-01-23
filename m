@@ -4,82 +4,70 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 60C34C02182
-	for <qemu-devel@archiver.kernel.org>; Thu, 23 Jan 2025 09:35:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A0D66C02182
+	for <qemu-devel@archiver.kernel.org>; Thu, 23 Jan 2025 09:46:17 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tatbL-0000wm-Ty; Thu, 23 Jan 2025 04:34:16 -0500
+	id 1tatmA-0002HA-Ld; Thu, 23 Jan 2025 04:45:26 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <yilun.xu@linux.intel.com>)
- id 1tatbK-0000wQ-10
- for qemu-devel@nongnu.org; Thu, 23 Jan 2025 04:34:14 -0500
-Received: from mgamail.intel.com ([198.175.65.19])
+ (Exim 4.90_1) (envelope-from <imammedo@redhat.com>)
+ id 1tatm8-0002GZ-Al
+ for qemu-devel@nongnu.org; Thu, 23 Jan 2025 04:45:24 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <yilun.xu@linux.intel.com>)
- id 1tatbH-00086p-1M
- for qemu-devel@nongnu.org; Thu, 23 Jan 2025 04:34:13 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
- d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1737624851; x=1769160851;
- h=date:from:to:cc:subject:message-id:references:
- mime-version:in-reply-to;
- bh=LFoe2M4h2MR8WGWqKYSw1Zj4e0KwcSMzi45qyN7Ol4c=;
- b=GBpETM/H8+YIVmlMp6HVnAm9+mhhoEMQD2aWFP9pcfy8U3GVLUnIdRbe
- RjgmNRHgN2Kg98GJyjvzQKZ4gPUVm2sHp08K0O8Am2jdKonyWmZQ3KYHg
- Vl4EqDc+L1cP1PNfRQIvpu4I5vHpc1R0sVu6Q6GCvIoP+NDsGuHeCLw6y
- TaaosxBYGEUjFVX0NO7jEGI2UhnxIins/ZZZf9oL/R6oaHwtlF+z4CXsh
- Z6LbYO44XxKj8NFzI5xhycnpX5tCf3Nx97p3xlj56ePVAM95V1cc6W8Jt
- gQbDXXm1NCw10slhEQoP1kMUsIztgfGm5Ml9FfHosNL1i39ohIDJa586g g==;
-X-CSE-ConnectionGUID: 96PYmK/eQWaEvV5sQ7vpvQ==
-X-CSE-MsgGUID: sEShgFz8RfeXn6oAjfiNpg==
-X-IronPort-AV: E=McAfee;i="6700,10204,11323"; a="37996843"
-X-IronPort-AV: E=Sophos;i="6.13,228,1732608000"; d="scan'208";a="37996843"
-Received: from orviesa002.jf.intel.com ([10.64.159.142])
- by orvoesa111.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 23 Jan 2025 01:34:08 -0800
-X-CSE-ConnectionGUID: ZDooXmqKQd2+fDzx0x5NVw==
-X-CSE-MsgGUID: Rr12phi6QGGYF8BLwSYDbw==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.13,228,1732608000"; d="scan'208";a="138269350"
-Received: from yilunxu-optiplex-7050.sh.intel.com (HELO localhost)
- ([10.239.159.165])
- by orviesa002.jf.intel.com with ESMTP; 23 Jan 2025 01:34:05 -0800
-Date: Thu, 23 Jan 2025 17:33:53 +0800
-From: Xu Yilun <yilun.xu@linux.intel.com>
-To: Peter Xu <peterx@redhat.com>
-Cc: Alexey Kardashevskiy <aik@amd.com>, Chenyi Qiang <chenyi.qiang@intel.com>,
- David Hildenbrand <david@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
- Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Michael Roth <michael.roth@amd.com>, qemu-devel@nongnu.org,
- kvm@vger.kernel.org, Williams Dan J <dan.j.williams@intel.com>,
- Peng Chao P <chao.p.peng@intel.com>, Gao Chao <chao.gao@intel.com>,
- Xu Yilun <yilun.xu@intel.com>
-Subject: Re: [PATCH 2/7] guest_memfd: Introduce an object to manage the
- guest-memfd with RamDiscardManager
-Message-ID: <Z5INAQjxyYhwyc+1@yilunxu-OptiPlex-7050>
-References: <2b799426-deaa-4644-aa17-6ef31899113b@intel.com>
- <2400268e-d26a-4933-80df-cfe44b38ae40@amd.com>
- <590432e1-4a26-4ae8-822f-ccfbac352e6b@intel.com>
- <2b2730f3-6e1a-4def-b126-078cf6249759@amd.com>
- <Z462F1Dwm6cUdCcy@x1n> <ZnmfUelBs3Cm0ZHd@yilunxu-OptiPlex-7050>
- <Z4-6u5_9NChu_KZq@x1n>
- <95a14f7d-4782-40b3-a55d-7cf67b911bbe@amd.com>
- <Z5C9SzXxX7M1DBE3@yilunxu-OptiPlex-7050> <Z5EgFaWIyjIiOZnv@x1n>
+ (Exim 4.90_1) (envelope-from <imammedo@redhat.com>)
+ id 1tatm6-0001uJ-Fe
+ for qemu-devel@nongnu.org; Thu, 23 Jan 2025 04:45:24 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1737625520;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding;
+ bh=hGTKRlUSztr+9KC4MgLGOzIAbq2yLAadRzmAXxkQRdY=;
+ b=IB2q57ZBcZmvH9MVpc+XxgtTUcQr9y10WCxFCiV7xwjv6Dx0Pwaw+yo5sXYqoicIq27Srt
+ yVMnlLuIfhFxppvG9O/gcymXT8z7Qei/n62uFf8yx1FvrQ+rooa2mt47K7NEswBZj7XmZU
+ A934iHqLDsihIu8eZjRD76UlziBbGGg=
+Received: from mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-253-CFfr0ENHPkSGzPpgfNa_sQ-1; Thu,
+ 23 Jan 2025 04:45:18 -0500
+X-MC-Unique: CFfr0ENHPkSGzPpgfNa_sQ-1
+X-Mimecast-MFC-AGG-ID: CFfr0ENHPkSGzPpgfNa_sQ
+Received: from mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.40])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 62C251955DDE; Thu, 23 Jan 2025 09:45:16 +0000 (UTC)
+Received: from dell-r430-03.lab.eng.brq2.redhat.com
+ (dell-r430-03.lab.eng.brq2.redhat.com [10.37.153.18])
+ by mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id E7D4819560AD; Thu, 23 Jan 2025 09:45:14 +0000 (UTC)
+From: Igor Mammedov <imammedo@redhat.com>
+To: qemu-devel@nongnu.org
+Cc: alex.bennee@linaro.org, richard.henderson@linaro.org, pbonzini@redhat.com
+Subject: [PATCH] tcg: drop qemu_cpu_is_self() in
+ tlb_flush_by_mmuidx[_async_work]
+Date: Thu, 23 Jan 2025 10:45:11 +0100
+Message-ID: <20250123094511.156324-1-imammedo@redhat.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <Z5EgFaWIyjIiOZnv@x1n>
-Received-SPF: none client-ip=198.175.65.19;
- envelope-from=yilun.xu@linux.intel.com; helo=mgamail.intel.com
-X-Spam_score_int: -72
-X-Spam_score: -7.3
-X-Spam_bar: -------
-X-Spam_report: (-7.3 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-2.996,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_MED=-2.3,
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 8bit
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.40
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=imammedo@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -50
+X-Spam_score: -5.1
+X-Spam_bar: -----
+X-Spam_report: (-5.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-2.996,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_NONE=0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -95,79 +83,49 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, Jan 22, 2025 at 11:43:01AM -0500, Peter Xu wrote:
-> On Wed, Jan 22, 2025 at 05:41:31PM +0800, Xu Yilun wrote:
-> > On Wed, Jan 22, 2025 at 03:30:05PM +1100, Alexey Kardashevskiy wrote:
-> > > 
-> > > 
-> > > On 22/1/25 02:18, Peter Xu wrote:
-> > > > On Tue, Jun 25, 2024 at 12:31:13AM +0800, Xu Yilun wrote:
-> > > > > On Mon, Jan 20, 2025 at 03:46:15PM -0500, Peter Xu wrote:
-> > > > > > On Mon, Jan 20, 2025 at 09:22:50PM +1100, Alexey Kardashevskiy wrote:
-> > > > > > > > It is still uncertain how to implement the private MMIO. Our assumption
-> > > > > > > > is the private MMIO would also create a memory region with
-> > > > > > > > guest_memfd-like backend. Its mr->ram is true and should be managed by
-> > > > > > > > RamdDiscardManager which can skip doing DMA_MAP in VFIO's region_add
-> > > > > > > > listener.
-> > > > > > > 
-> > > > > > > My current working approach is to leave it as is in QEMU and VFIO.
-> > > > > > 
-> > > > > > Agreed.  Setting ram=true to even private MMIO sounds hackish, at least
-> > > > > 
-> > > > > The private MMIO refers to assigned MMIO, not emulated MMIO. IIUC,
-> > > > > normal assigned MMIO is always set ram=true,
-> > > > > 
-> > > > > void memory_region_init_ram_device_ptr(MemoryRegion *mr,
-> > > > >                                         Object *owner,
-> > > > >                                         const char *name,
-> > > > >                                         uint64_t size,
-> > > > >                                         void *ptr)
-> 
-> [1]
-> 
-> > > > > {
-> > > > >      memory_region_init(mr, owner, name, size);
-> > > > >      mr->ram = true;
-> > > > > 
-> > > > > 
-> > > > > So I don't think ram=true is a problem here.
-> > > > 
-> > > > I see.  If there's always a host pointer then it looks valid.  So it means
-> > > > the device private MMIOs are always mappable since the start?
-> > > 
-> > > Yes. VFIO owns the mapping and does not treat shared/private MMIO any
-> > > different at the moment. Thanks,
-> > 
-> > mm.. I'm actually expecting private MMIO not have a host pointer, just
-> > as private memory do.
-> > 
-> > But I'm not sure why having host pointer correlates mr->ram == true.
-> 
-> If there is no host pointer, what would you pass into "ptr" as referenced
-> at [1] above when creating the private MMIO memory region?
+QEMU will crash with following debug enabled
+  # define DEBUG_TLB_GATE 1
+  # define DEBUG_TLB_LOG_GATE 1
+due to [1] introduced assert and as it happenstlb_flush_by_mmuidx[_async_work]
+functions are called not only from vcpu thread but also from reset handler
+that is called from main thread at cpu realize time when vcpu is already
+created
+  x86_cpu_new -> ... ->
+      x86_cpu_realizefn -> cpu_reset -> ... ->
+          tcg_cpu_reset_hold
 
-Sorry for confusion. I mean existing MMIO region use set mr->ram = true,
-and unmappable region (gmem) also set mr->ram = true. So don't know why
-mr->ram = true for private MMIO is hackish.
+drop assert to fix crash.
 
-I think We could add another helper to create memory region for private
-MMIO.
+1)
+Fixes: f0aff0f124028 ("cputlb: add assert_cpu_is_self checks")
+Signed-off-by: Igor Mammedov <imammedo@redhat.com>
+---
+ accel/tcg/cputlb.c | 4 ----
+ 1 file changed, 4 deletions(-)
 
-> 
-> OTOH, IIUC guest private memory finally can also have a host pointer (aka,
-> mmap()-able), it's just that even if it exists, accessing it may crash QEMU
-> if it's private.
+diff --git a/accel/tcg/cputlb.c b/accel/tcg/cputlb.c
+index b26c0e088f..2da803103c 100644
+--- a/accel/tcg/cputlb.c
++++ b/accel/tcg/cputlb.c
+@@ -381,8 +381,6 @@ static void tlb_flush_by_mmuidx_async_work(CPUState *cpu, run_on_cpu_data data)
+     uint16_t all_dirty, work, to_clean;
+     int64_t now = get_clock_realtime();
+ 
+-    assert_cpu_is_self(cpu);
+-
+     tlb_debug("mmu_idx:0x%04" PRIx16 "\n", asked);
+ 
+     qemu_spin_lock(&cpu->neg.tlb.c.lock);
+@@ -419,8 +417,6 @@ void tlb_flush_by_mmuidx(CPUState *cpu, uint16_t idxmap)
+ {
+     tlb_debug("mmu_idx: 0x%" PRIx16 "\n", idxmap);
+ 
+-    assert_cpu_is_self(cpu);
+-
+     tlb_flush_by_mmuidx_async_work(cpu, RUN_ON_CPU_HOST_INT(idxmap));
+ }
+ 
+-- 
+2.43.0
 
-Not sure if I get it correct: when memory will be converted to private, QEMU
-should firstly unmap the host ptr, which means host ptr doesn't alway exist.
-
-Thanks,
-Yilun
-
-> 
-> Thanks,
-> 
-> -- 
-> Peter Xu
-> 
 
