@@ -4,127 +4,102 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9455DC0218B
-	for <qemu-devel@archiver.kernel.org>; Thu, 23 Jan 2025 14:09:19 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0FFE7C02182
+	for <qemu-devel@archiver.kernel.org>; Thu, 23 Jan 2025 14:23:22 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1taxsb-0001TI-Gp; Thu, 23 Jan 2025 09:08:21 -0500
+	id 1tay6H-0005E5-10; Thu, 23 Jan 2025 09:22:29 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <vinayak.kh@samsung.com>)
- id 1taqB8-0002QW-KL
- for qemu-devel@nongnu.org; Thu, 23 Jan 2025 00:54:59 -0500
-Received: from mailout2.samsung.com ([203.254.224.25])
+ (Exim 4.90_1) (envelope-from <imammedo@redhat.com>)
+ id 1tay6E-0005Dc-WF
+ for qemu-devel@nongnu.org; Thu, 23 Jan 2025 09:22:27 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <vinayak.kh@samsung.com>)
- id 1taqB5-00054s-Qg
- for qemu-devel@nongnu.org; Thu, 23 Jan 2025 00:54:58 -0500
-Received: from epcas5p3.samsung.com (unknown [182.195.41.41])
- by mailout2.samsung.com (KnoxPortal) with ESMTP id
- 20250123055452epoutp02b5d3ff0552ec005a06d487788637fcec~dPKDMalWR0338403384epoutp02q
- for <qemu-devel@nongnu.org>; Thu, 23 Jan 2025 05:54:52 +0000 (GMT)
-DKIM-Filter: OpenDKIM Filter v2.11.0 mailout2.samsung.com
- 20250123055452epoutp02b5d3ff0552ec005a06d487788637fcec~dPKDMalWR0338403384epoutp02q
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=samsung.com;
- s=mail20170921; t=1737611692;
- bh=RUXaewyFwLIJcZ4QUgVMzV1AEtjgB0IadrAPd1N60FU=;
- h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
- b=l01kKMMsqNOXxQB2rwFRABfzvwA89Nysj74FlgCjDfa6pRFgtz6/buVxkO2wLgctk
- FtDO4S2DPRmYi16NUZ2ftkn3UkmWuRqmz6HyJxygUMjVD/J7xelAqadsZoyGFjdt2e
- ShKkwxHNsT0TAlOCMgkydEnEAzGaAb12u1G3pzzg=
-Received: from epsnrtp1.localdomain (unknown [182.195.42.162]) by
- epcas5p3.samsung.com (KnoxPortal) with ESMTP id
- 20250123055452epcas5p3f49bf86d77c3339bce356ff5cba6dfc4~dPKC3JyME0460704607epcas5p3K;
- Thu, 23 Jan 2025 05:54:52 +0000 (GMT)
-Received: from epsmgec5p1-new.samsung.com (unknown [182.195.38.178]) by
- epsnrtp1.localdomain (Postfix) with ESMTP id 4YdqsQ0xwDz4x9Pp; Thu, 23 Jan
- 2025 05:54:50 +0000 (GMT)
-Received: from epcas5p1.samsung.com ( [182.195.41.39]) by
- epsmgec5p1-new.samsung.com (Symantec Messaging Gateway) with SMTP id
- 97.9A.29212.8A9D1976; Thu, 23 Jan 2025 14:54:48 +0900 (KST)
-Received: from epsmtrp1.samsung.com (unknown [182.195.40.13]) by
- epcas5p4.samsung.com (KnoxPortal) with ESMTPA id
- 20250123050913epcas5p45fb9a638e62f436076da283e86e54ea2~dOiMsc0tB2285122851epcas5p4M;
- Thu, 23 Jan 2025 05:09:13 +0000 (GMT)
-Received: from epsmgms1p1new.samsung.com (unknown [182.195.42.41]) by
- epsmtrp1.samsung.com (KnoxPortal) with ESMTP id
- 20250123050913epsmtrp1d6e95b29596f7f348f52a5e4f788504f~dOiMrxThM0313303133epsmtrp1j;
- Thu, 23 Jan 2025 05:09:13 +0000 (GMT)
-X-AuditID: b6c32a50-7ebff7000000721c-76-6791d9a87b11
-Received: from epsmtip1.samsung.com ( [182.195.34.30]) by
- epsmgms1p1new.samsung.com (Symantec Messaging Gateway) with SMTP id
- 41.7F.18729.9FEC1976; Thu, 23 Jan 2025 14:09:13 +0900 (KST)
-Received: from test-PowerEdge-R740xd.samsungds.net (unknown [107.99.41.79])
- by epsmtip1.samsung.com (KnoxPortal) with ESMTPA id
- 20250123050912epsmtip1403d70645c4cf5a6e74b72e880855673~dOiLjhr292475324753epsmtip1R;
- Thu, 23 Jan 2025 05:09:12 +0000 (GMT)
-From: Vinayak Holikatti <vinayak.kh@samsung.com>
-To: qemu-devel@nongnu.org
-Cc: krish.reddy@samsung.com, vishak.g@samsung.com, a.manzanares@samsung.com,
- alok.rathore@samsung.com, s5.kumari@samsung.com, Vinayak Holikatti
- <vinayak.kh@samsung.com>
-Subject: [PATCH 2/2] hw/cxl/cxl-mailbox-utils: Add support for Media
- operations Sanitize and Write Zeros commands (8.2.9.9.5.3)
-Date: Thu, 23 Jan 2025 10:39:03 +0530
-Message-Id: <20250123050903.92336-3-vinayak.kh@samsung.com>
-X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20250123050903.92336-1-vinayak.kh@samsung.com>
+ (Exim 4.90_1) (envelope-from <imammedo@redhat.com>)
+ id 1tay6C-00064Y-2v
+ for qemu-devel@nongnu.org; Thu, 23 Jan 2025 09:22:26 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1737642141;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=MsA3/wpKme8IYenFtW6GlX2yje+rdXwtp1lfsW4tHdg=;
+ b=YGQTZMnPij2oslK8n29qT0wYjQxOz4TtSsf2OMkoJD3/UYS0xC1k+CLBErn7V3WgAG4d0b
+ xS97r/SdH9bCc2wn83T01cyjBGvrEN9f3Ws8Y4y3UsbY+rjqocrjagNiLWbYMUewIkzISm
+ D4eAGZLuU7L9PFnPgFtSplZDyaMuWQU=
+Received: from mail-wm1-f70.google.com (mail-wm1-f70.google.com
+ [209.85.128.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-387-Ln5zSouGNReWZE8GkwX_KA-1; Thu, 23 Jan 2025 09:22:19 -0500
+X-MC-Unique: Ln5zSouGNReWZE8GkwX_KA-1
+X-Mimecast-MFC-AGG-ID: Ln5zSouGNReWZE8GkwX_KA
+Received: by mail-wm1-f70.google.com with SMTP id
+ 5b1f17b1804b1-4361fc2b2d6so5560945e9.3
+ for <qemu-devel@nongnu.org>; Thu, 23 Jan 2025 06:22:18 -0800 (PST)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1737642138; x=1738246938;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:subject:cc:to:from:date:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=MsA3/wpKme8IYenFtW6GlX2yje+rdXwtp1lfsW4tHdg=;
+ b=TYIoYC+FyIOcXxNbEVDNOo/irIASJVr6U067+w+OgAIxwT5ChR+uISabua6G0CKa79
+ tLphQ3Pj1FITBlrGWeYqZBLhG3Bwe2BWdB/8+AyCPjvKHpi8LbNRVEzXzZNiEEN/xi21
+ QXHp594LqGnAmCwbENqPXlXQP3yZqBiaVAhlQXZKMki5zgyOKoKOhi4MeKT+ZvdJBAJQ
+ NlzO8fTWoHMrLipMf7axz390ubzoRyoVecJnhj2Be5JCwiZ+eHAFg4BPx51GnvkDG3Ur
+ RWe77+j0/aSNohGeUcM32iGQ5RdrafpPh+PQgLr8iSNWFMrsQsjSYWsBUHIBH3WnthF9
+ KFiw==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCVlbv23xvxJwM5wrCDZF/kXlbe3CDFs/4MxanwsM+ouLok1V0gMY7SbBPlTtwm4PCzKmNKP/hkiaFSG@nongnu.org
+X-Gm-Message-State: AOJu0YxmTw+94/NvPvcK6TmKIcnsraVY5L9Wf4RkxqzR7fYrVElNR0YT
+ hpTdYT5G1ss5Fwfjfh6fUcLT8r9zzhKOT6WGQ1okBm9TlhZTpzhFtfboHevZKuIQpsHsB3nhgPA
+ wwRcZYv+RZI86xk+17/zQyyyVN2RxWNbndAW6swP8qjedmaPvBI5y
+X-Gm-Gg: ASbGncvyTxwoQuFqAPHFAmVMbWeKbcqiMP6+qMe0mn9fyMLGdwk/USyCaRkXant6V0y
+ SPH+w5ILl6KmtFbvfYzrLRF36GN0xzJdog6KIUWKsjzIi9sr/HCct1JY/KKOWlmmBfJMepcqgRV
+ IegECfidhXwMh1+omVaM2mStpA7x6H6NiBgM2Hq9lO2xaRqNFr3Nu0LktzuneZEt/BdTQhKg7Lo
+ rUcR35QjCMtXcP+qh6VniNVjc1NgD/qwAnUWjnmRZPRmg/6Me40vboE55QQP9avOQnFU112ykIO
+ RCtKj+lV8pfieZK/+VgoRrLUFlbULL5BBVe+cW3ekQ==
+X-Received: by 2002:a05:600c:1e0b:b0:434:ea21:e14f with SMTP id
+ 5b1f17b1804b1-438913ed04amr234319325e9.13.1737642137743; 
+ Thu, 23 Jan 2025 06:22:17 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IEqqH5iiORmu5BKiHvxGtrUJa/Iql+klUjYSWnQI0cvGkpv9ee9iSHoPR+Dv+TFgyNKM8QTeg==
+X-Received: by 2002:a05:600c:1e0b:b0:434:ea21:e14f with SMTP id
+ 5b1f17b1804b1-438913ed04amr234318925e9.13.1737642137194; 
+ Thu, 23 Jan 2025 06:22:17 -0800 (PST)
+Received: from imammedo.users.ipa.redhat.com (nat-pool-brq-t.redhat.com.
+ [213.175.37.10]) by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-438b31c8ac5sm65801155e9.39.2025.01.23.06.22.16
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Thu, 23 Jan 2025 06:22:16 -0800 (PST)
+Date: Thu, 23 Jan 2025 15:22:15 +0100
+From: Igor Mammedov <imammedo@redhat.com>
+To: Ani Sinha <anisinha@redhat.com>
+Cc: Sergio Lopez <slp@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
+ "Michael S. Tsirkin" <mst@redhat.com>, Marcel Apfelbaum
+ <marcel.apfelbaum@gmail.com>, Richard Henderson
+ <richard.henderson@linaro.org>, Eduardo Habkost <eduardo@habkost.net>, Zhao
+ Liu <zhao1.liu@intel.com>, qemu-devel@nongnu.org
+Subject: Re: [PATCH v5] hw/i386/cpu: remove default_cpu_version and simplify
+Message-ID: <20250123152215.4142d24e@imammedo.users.ipa.redhat.com>
+In-Reply-To: <20250123115613.1537173-1-anisinha@redhat.com>
+References: <20250123115613.1537173-1-anisinha@redhat.com>
+X-Mailer: Claws Mail 4.3.0 (GTK 3.24.43; x86_64-redhat-linux-gnu)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFmpkk+LIzCtJLcpLzFFi42LZdlhTXXfFzYnpBrvPC1lMP6xo8eX0HjaL
- hRuXMVkc793BYrHm3GcWixMnt7NbnJ81h92B3ePJtc1MHn1bVjEGMEVl22SkJqakFimk5iXn
- p2TmpdsqeQfHO8ebmhkY6hpaWpgrKeQl5qbaKrn4BOi6ZeYA7VVSKEvMKQUKBSQWFyvp29kU
- 5ZeWpCpk5BeX2CqlFqTkFJgU6BUn5haX5qXr5aWWWBkaGBiZAhUmZGfcmzaVpeBKcMWlTXwN
- jN1WXYycHBICJhKPLy5j7WLk4hAS2MMosWPBBWYI5xOjxId1W9ghnG+MErPnLmWFaVn8bx5U
- Yi+jxPS+E0wQTgOTxJvNU9lAqtgEDCQeNB9nB7FFBCQlfnedZgaxmQXWMEpsWyIPYgsLNDJK
- nLnJBWKzCKhKzPnczQRi8wpYS0w7vIYdYpu8xP6DZ8F6OQVsJI5tesMIUSMocXLmExaImfIS
- zVtng90tIXCJXeLG3jVQp7pIbNj4iBnCFpZ4dXwL1FApiZf9bVB2scS5i58YIewaidddK6Dq
- 7SVaT/UD2RxACzQl1u/ShwjLSkw9tY4JYi+fRO/vJ0wQcV6JHfNAbA4gW0Vi6dtMmE1fnjVD
- TfeQmLN3HTTg+hklPn+cxDSBUWEWkndmIXlnFsLmBYzMqxilUguKc9NTk00LDHXzUsvhsZyc
- n7uJEZwWtQJ2MK7e8FfvECMTB+MhRgkOZiUR3v9PJqQL8aYkVlalFuXHF5XmpBYfYjQFBvhE
- ZinR5HxgYs4riTc0sTQwMTMzM7E0NjNUEudt3tmSLiSQnliSmp2aWpBaBNPHxMEp1cDUfdM+
- yqN86SKL+Qq7b0VsuOtlkWzy/eTP6+dbZL58EOS4MFFDNWjCr8ltcnsVjZNOX9GurDRNUZO1
- Kd8yZYnenVoOoUrv2+Hmx2/vqa5fabz+WkTEoyV7739p7QvfzXeE98SPSsnH6vPq6i+vyC08
- KTmxeldDznGODSvvXHQ6MWWSeSdHfmf1mRMvAtL2y281Tlf68Gzi98p7Kvk5/uqXJzXylIXK
- PTQ67Ky6Ysoq14MX9ZselM3sP2KtcV33jEH33Poz3oX+Lm9OlB2bsfGBFEuZcVu26ulc3yUX
- rC7c6T7Lfu3QGfE/QRzn5y61z/WzcHyqxBP9WPTkeo3VyrOW3LX8XFba8WqPcWS/bOQ1JZbi
- jERDLeai4kQAKyNNDRQEAAA=
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFtrOLMWRmVeSWpSXmKPExsWy7bCSnO7PcxPTDZ4tMrKYfljR4svpPWwW
- CzcuY7I43ruDxWLNuc8sFidObme3OD9rDrsDu8eTa5uZPPq2rGIMYIrisklJzcksSy3St0vg
- yrg3bSpLwZXgikub+BoYu626GDk5JARMJBb/m8fexcjFISSwm1Hi/us+NoiElMSxnT+hbGGJ
- lf+eQxX9Y5R4cOkgK0iCTcBA4kHzcXYQW0RAUuJ312lmEJtZYBOjROs+PRBbWKBeYtLyWSwg
- NouAqsScz91MIDavgLXEtMNr2CEWyEvsP3gWrJdTwEbi2KY3jCC2EFDNz0lzWCHqBSVOznzC
- AjFfXqJ562zmCYwCs5CkZiFJLWBkWsUomVpQnJueW2xYYJiXWq5XnJhbXJqXrpecn7uJERy2
- Wpo7GLev+qB3iJGJg/EQowQHs5II7/8nE9KFeFMSK6tSi/Lji0pzUosPMUpzsCiJ84q/6E0R
- EkhPLEnNTk0tSC2CyTJxcEo1MJ0Ojsm4+PXszZ7TxQ5VfZc3/DKM+vUme9mmO14Va/4VZd9J
- PBZ6pUr2xevLimV3awVjWKrnWM3dyMuYZGJ8S8pagf372p1e7a26Bp8Vb89WW36uyvfChNnn
- 71yq/csq9el9cbYef84njR0z2pfxnVa/E/o5e+eaT5M/K14qTb5zQ37jOY7cB8JMUw4mXhbt
- mn7hS9mDzzueGAgHRbyX2Dn3Xd3fqpnMy7afiZO2kmbOPJmgrXWjTL3/5v5t4UIvo/UvqUyT
- vfX39TUrw0nHVZ8Ez9ycoGrunTF/0haF3y9zDgbvPVn7tLdtQYFLh6VI/+G/DXWyjK8kLjxk
- 2xL7tic+cu6UWwfnTORO7PAN3ZyhxFKckWioxVxUnAgAOjWKAMoCAAA=
-X-CMS-MailID: 20250123050913epcas5p45fb9a638e62f436076da283e86e54ea2
-X-Msg-Generator: CA
-Content-Type: text/plain; charset="utf-8"
-X-Sendblock-Type: REQ_APPROVE
-CMS-TYPE: 105P
-DLP-Filter: Pass
-X-CFilter-Loop: Reflected
-X-CMS-RootMailID: 20250123050913epcas5p45fb9a638e62f436076da283e86e54ea2
-References: <20250123050903.92336-1-vinayak.kh@samsung.com>
- <CGME20250123050913epcas5p45fb9a638e62f436076da283e86e54ea2@epcas5p4.samsung.com>
-Received-SPF: pass client-ip=203.254.224.25;
- envelope-from=vinayak.kh@samsung.com; helo=mailout2.samsung.com
-X-Spam_score_int: -73
-X-Spam_score: -7.4
-X-Spam_bar: -------
-X-Spam_report: (-7.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-2.996,
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=imammedo@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -50
+X-Spam_score: -5.1
+X-Spam_bar: -----
+X-Spam_report: (-5.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-2.996,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_MSPIKE_H2=-0.043,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
-X-Mailman-Approved-At: Thu, 23 Jan 2025 09:08:19 -0500
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -139,332 +114,463 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-    CXL spec 3.1 section 8.2.9.9.5.3 describes media operations commands.
-    CXL devices supports media operations Sanitize and Write zero command.
+On Thu, 23 Jan 2025 17:26:12 +0530
+Ani Sinha <anisinha@redhat.com> wrote:
 
-Signed-off-by: Vinayak Holikatti <vinayak.kh@samsung.com>
----
- hw/cxl/cxl-mailbox-utils.c  | 217 ++++++++++++++++++++++++++++++++++--
- include/hw/cxl/cxl_device.h |  11 ++
- 2 files changed, 220 insertions(+), 8 deletions(-)
+> commit 0788a56bd1ae3 ("i386: Make unversioned CPU models be aliases")
+> introduced 'default_cpu_version' for PCMachineClass. This created three
+> categories of CPU models:
+>  - Most unversioned CPU models would use version 1 by default.
+>  - For machines 4.0.1 and older that do not support cpu model aliases, a
+>    special default_cpu_version value of CPU_VERSION_LEGACY is used.
 
-diff --git a/hw/cxl/cxl-mailbox-utils.c b/hw/cxl/cxl-mailbox-utils.c
-index 2315d07fb1..89847ddd9d 100644
---- a/hw/cxl/cxl-mailbox-utils.c
-+++ b/hw/cxl/cxl-mailbox-utils.c
-@@ -1722,6 +1722,145 @@ static CXLRetCode cmd_sanitize_overwrite(const struct cxl_cmd *cmd,
-     return CXL_MBOX_BG_STARTED;
- }
- 
-+#define DPA_RANGE_GRANULARITY 64
-+struct dpa_range_list_entry {
-+    uint64_t starting_dpa;
-+    uint64_t length;
-+};
-+
-+static int validate_dpa_addr(CXLType3Dev *ct3d, uint64_t dpa_addr,
-+                             size_t length)
-+{
-+    MemoryRegion *vmr = NULL, *pmr = NULL, *dc_mr = NULL;
-+    uint64_t vmr_size = 0, pmr_size = 0, dc_size = 0;
-+    int rc = 0;
-+
-+    if ((dpa_addr % DPA_RANGE_GRANULARITY) ||
-+         (length % DPA_RANGE_GRANULARITY)) {
-+        return -EINVAL;
-+    }
-+
-+    if (ct3d->hostvmem) {
-+        vmr = host_memory_backend_get_memory(ct3d->hostvmem);
-+        vmr_size = memory_region_size(vmr);
-+    }
-+    if (ct3d->hostpmem) {
-+        pmr = host_memory_backend_get_memory(ct3d->hostpmem);
-+        pmr_size = memory_region_size(pmr);
-+    }
-+    if (ct3d->dc.host_dc) {
-+        dc_mr = host_memory_backend_get_memory(ct3d->dc.host_dc);
-+        dc_size = memory_region_size(dc_mr);
-+    }
-+
-+    if (!vmr && !pmr && !dc_mr) {
-+        return -ENODEV;
-+    }
-+
-+    if (dpa_addr >= vmr_size + pmr_size + dc_size ||
-+        (dpa_addr + length) > vmr_size + pmr_size + dc_size) {
-+        return -EINVAL;
-+    }
-+
-+    if (dpa_addr > vmr_size + pmr_size) {
-+        if (!ct3_test_region_block_backed(ct3d, dpa_addr, length)) {
-+            return -ENODEV;
-+        }
-+    }
-+
-+
-+    return rc;
-+}
-+
-+static int sanitize_range(CXLType3Dev *ct3d, uint64_t dpa_addr, size_t length,
-+                          uint8_t fill_value)
-+{
-+
-+    MemoryRegion *vmr = NULL, *pmr = NULL;
-+    uint64_t vmr_size = 0, pmr_size = 0;
-+    AddressSpace *as = NULL;
-+    MemTxAttrs mem_attrs = {0};
-+
-+    if (ct3d->hostvmem) {
-+        vmr = host_memory_backend_get_memory(ct3d->hostvmem);
-+        vmr_size = memory_region_size(vmr);
-+    }
-+    if (ct3d->hostpmem) {
-+        pmr = host_memory_backend_get_memory(ct3d->hostpmem);
-+        pmr_size = memory_region_size(pmr);
-+    }
-+
-+    if (dpa_addr < vmr_size) {
-+        as = &ct3d->hostvmem_as;
-+    } else if (dpa_addr < vmr_size + pmr_size) {
-+        as = &ct3d->hostpmem_as;
-+    } else {
-+        if (!ct3_test_region_block_backed(ct3d, dpa_addr, length)) {
-+            return -ENODEV;
-+        }
-+        as = &ct3d->dc.host_dc_as;
-+    }
-+
-+    return  address_space_set(as, dpa_addr,
-+                              fill_value, length, mem_attrs);
-+}
-+
-+/* Perform the actual device zeroing */
-+static void __do_sanitize(CXLType3Dev *ct3d)
-+{
-+    struct CXLSanitizeInfo  *san_info = ct3d->media_op_sanitize;
-+    int dpa_range_count = san_info->dpa_range_count;
-+    int rc = 0;
-+
-+    for (int i = 0; i < dpa_range_count; i++) {
-+        rc = sanitize_range(ct3d, san_info->dpa_range_list[i].starting_dpa,
-+                san_info->dpa_range_list[i].length, san_info->fill_value);
-+        if (rc) {
-+            goto exit;
-+        }
-+    }
-+    cxl_discard_all_event_records(&ct3d->cxl_dstate);
-+exit:
-+    g_free(ct3d->media_op_sanitize);
-+    ct3d->media_op_sanitize = NULL;
-+    return;
-+}
-+
-+static int get_sanitize_duration(uint64_t total_mem)
-+{
-+    int secs = 0;
-+
-+    if (total_mem <= 512) {
-+        secs = 4;
-+    } else if (total_mem <= 1024) {
-+        secs = 8;
-+    } else if (total_mem <= 2 * 1024) {
-+        secs = 15;
-+    } else if (total_mem <= 4 * 1024) {
-+        secs = 30;
-+    } else if (total_mem <= 8 * 1024) {
-+        secs = 60;
-+    } else if (total_mem <= 16 * 1024) {
-+        secs = 2 * 60;
-+    } else if (total_mem <= 32 * 1024) {
-+        secs = 4 * 60;
-+    } else if (total_mem <= 64 * 1024) {
-+        secs = 8 * 60;
-+    } else if (total_mem <= 128 * 1024) {
-+        secs = 15 * 60;
-+    } else if (total_mem <= 256 * 1024) {
-+        secs = 30 * 60;
-+    } else if (total_mem <= 512 * 1024) {
-+        secs = 60 * 60;
-+    } else if (total_mem <= 1024 * 1024) {
-+        secs = 120 * 60;
-+    } else {
-+        secs = 240 * 60; /* max 4 hrs */
-+    }
-+
-+    return secs;
-+}
-+
- enum {
-     MEDIA_OP_GENERAL  = 0x0,
-     MEDIA_OP_SANITIZE = 0x1,
-@@ -1729,10 +1868,9 @@ enum {
- } MEDIA_OPERATION_CLASS;
- 
- enum {
--    MEDIA_OP_SUB_DISCOVERY = 0x0,
--    MEDIA_OP_SUB_SANITIZE = 0x0,
--    MEDIA_OP_SUB_ZERO     = 0x1,
--    MEDIA_OP_SUB_CLASS_MAX
-+    MEDIA_OP_GEN_DISCOVERY = 0x0,
-+    MEDIA_OP_SAN_SANITIZE = 0x0,
-+    MEDIA_OP_SAN_ZERO     = 0x1,
- } MEDIA_OPERATION_SUB_CLASS;
- 
- struct media_op_supported_list_entry {
-@@ -1777,9 +1915,14 @@ static CXLRetCode cmd_media_operations(const struct cxl_cmd *cmd,
-     };
-     } QEMU_PACKED *media_op_in_pl = (void *)payload_in;
- 
-+
-+    CXLType3Dev *ct3d = CXL_TYPE3(cci->d);
-     uint8_t media_op_cl = media_op_in_pl->media_operation_class;
-     uint8_t media_op_subclass = media_op_in_pl->media_operation_subclass;
-     uint32_t dpa_range_count = media_op_in_pl->dpa_range_count;
-+    uint8_t fill_value = 0;
-+    uint64_t total_mem = 0;
-+    int secs = 0;
- 
-     if (len_in < sizeof(*media_op_in_pl)) {
-         return CXL_MBOX_INVALID_PAYLOAD_LENGTH;
-@@ -1788,7 +1931,7 @@ static CXLRetCode cmd_media_operations(const struct cxl_cmd *cmd,
-     switch (media_op_cl) {
-     case MEDIA_OP_GENERAL:
-         switch (media_op_subclass) {
--        case MEDIA_OP_SUB_DISCOVERY:
-+        case MEDIA_OP_GEN_DISCOVERY:
-             int count = 0;
-             struct media_op_discovery_out_pl *media_out_pl =
-                 (void *)payload_out;
-@@ -1806,7 +1949,7 @@ static CXLRetCode cmd_media_operations(const struct cxl_cmd *cmd,
-                 return CXL_MBOX_INVALID_INPUT;
-             }
- 
--            media_out_pl->dpa_range_granularity = CXL_CAPACITY_MULTIPLIER;
-+            media_out_pl->dpa_range_granularity = DPA_RANGE_GRANULARITY;
-             media_out_pl->total_supported_operations = MAX_SUPPORTED_OPS;
-             if (num_ops > 0) {
-                 for (int i = start_index; i < MAX_SUPPORTED_OPS; i++) {
-@@ -1824,22 +1967,73 @@ disc_out:
-             media_out_pl->num_of_supported_operations = count;
-             *len_out = sizeof(struct media_op_discovery_out_pl) +
-             (sizeof(struct media_op_supported_list_entry) * count);
--            break;
-+            goto exit;
-         default:
-             return CXL_MBOX_UNSUPPORTED;
-         }
-         break;
-     case MEDIA_OP_SANITIZE:
-+    {
-         switch (media_op_subclass) {
--
-+        case MEDIA_OP_SAN_SANITIZE:
-+            if (len_in < (sizeof(*media_op_in_pl) +
-+                   (dpa_range_count * sizeof(struct dpa_range_list_entry)))) {
-+                return CXL_MBOX_INVALID_PAYLOAD_LENGTH;
-+            }
-+            fill_value = 0xF;
-+            goto sanitize_range;
-+        case MEDIA_OP_SAN_ZERO:
-+            if (len_in < (sizeof(*media_op_in_pl) +
-+                (dpa_range_count * sizeof(struct dpa_range_list_entry)))) {
-+                return CXL_MBOX_INVALID_PAYLOAD_LENGTH;
-+            }
-+            fill_value = 0;
-+            goto sanitize_range;
-         default:
-             return CXL_MBOX_UNSUPPORTED;
-         }
-         break;
-+    }
-     default:
-         return CXL_MBOX_UNSUPPORTED;
-     }
- 
-+sanitize_range:
-+    if (dpa_range_count > 0) {
-+        for (int i = 0; i < dpa_range_count; i++) {
-+            if (validate_dpa_addr(ct3d,
-+                media_op_in_pl->dpa_range_list[i].starting_dpa,
-+                media_op_in_pl->dpa_range_list[i].length)) {
-+                return CXL_MBOX_INVALID_INPUT;
-+            }
-+            total_mem += media_op_in_pl->dpa_range_list[i].length;
-+        }
-+        ct3d->media_op_sanitize = g_malloc0(sizeof(struct CXLSanitizeInfo) +
-+                                  (dpa_range_count *
-+                                  sizeof(struct dpa_range_list_entry)));
-+
-+        if (ct3d->media_op_sanitize) {
-+            ct3d->media_op_sanitize->dpa_range_count = dpa_range_count;
-+            ct3d->media_op_sanitize->fill_value = fill_value;
-+            memcpy(ct3d->media_op_sanitize->dpa_range_list,
-+                   media_op_in_pl->dpa_range_list,
-+                   (dpa_range_count *
-+                   sizeof(struct dpa_range_list_entry)));
-+            secs = get_sanitize_duration(total_mem >> 20);
-+            goto start_bg;
-+        }
-+    } else if (dpa_range_count == 0) {
-+        goto exit;
-+    }
-+
-+start_bg:
-+    /* EBUSY other bg cmds as of now */
-+    cci->bg.runtime = secs * 1000UL;
-+    *len_out = 0;
-+    /* sanitize when done */
-+    cxl_dev_disable_media(&ct3d->cxl_dstate);
-+    return CXL_MBOX_BG_STARTED;
-+exit:
-     return CXL_MBOX_SUCCESS;
- }
- 
-@@ -3154,6 +3348,13 @@ static void bg_timercb(void *opaque)
-             cxl_dev_enable_media(&ct3d->cxl_dstate);
-         }
-         break;
-+        case 0x4402: /* Media Operations sanitize */
-+        {
-+            CXLType3Dev *ct3d = CXL_TYPE3(cci->d);
-+            __do_sanitize(ct3d);
-+            cxl_dev_enable_media(&ct3d->cxl_dstate);
-+        }
-+        break;
-         case 0x4304: /* scan media */
-         {
-             CXLType3Dev *ct3d = CXL_TYPE3(cci->d);
-diff --git a/include/hw/cxl/cxl_device.h b/include/hw/cxl/cxl_device.h
-index a64739be25..6d82eb266a 100644
---- a/include/hw/cxl/cxl_device.h
-+++ b/include/hw/cxl/cxl_device.h
-@@ -581,6 +581,15 @@ typedef struct CXLSetFeatureInfo {
-     size_t data_size;
- } CXLSetFeatureInfo;
- 
-+struct CXLSanitizeInfo {
-+    uint32_t dpa_range_count;
-+    uint8_t fill_value;
-+    struct {
-+            uint64_t starting_dpa;
-+            uint64_t length;
-+    } dpa_range_list[0];
-+};
-+
- struct CXLType3Dev {
-     /* Private */
-     PCIDevice parent_obj;
-@@ -651,6 +660,8 @@ struct CXLType3Dev {
-         uint8_t num_regions; /* 0-8 regions */
-         CXLDCRegion regions[DCD_MAX_NUM_REGION];
-     } dc;
-+
-+    struct CXLSanitizeInfo  *media_op_sanitize;
- };
- 
- #define TYPE_CXL_TYPE3 "cxl-type3"
--- 
-2.34.1
+
+Testing current master:
+ ====
+./qemu-system-x86_64 -M pc-i440fx-4.0 -cpu Haswell-v4 -monitor stdio
+...
+(qemu) info hotpluggable-cpus 
+Hotpluggable CPUs:
+  type: "Haswell-v4-x86_64-cpu"
+
+we can run versioned on old machine types. with caveat
+not being able to migrate to old qemu that doesn't have it
+
+ ====
+./qemu-system-x86_64 -M pc-i440fx-4.0 -cpu Haswell -monitor stdio
+...
+(qemu) info hotpluggable-cpus
+Hotpluggable CPUs:
+  type: "Haswell-x86_64-cpu"
+
+ ====
+./qemu-system-x86_64 -M pc-i440fx-5.0 -cpu Haswell -monitor stdio
+... 
+(qemu) info hotpluggable-cpus
+Hotpluggable CPUs:
+  type: "Haswell-x86_64-cpu"
+
+non-versioned model resolves to the same type regardless of legacy
+
+Do we really have to keep CPU_VERSION_LEGACY code around?
+
+Lets assume we drop all CPU_VERSION_LEGACY code, what would change?
+
+>  - It was thought that future machines would use the latest value of cpu
+>    versions corresponding to default_cpu_version value of
+>    CPU_VERSION_LATEST [1].
+> 
+> All pc machines still use the default cpu version of 1 for
+> unversioned cpu models. CPU_VERSION_LATEST is a moving target and
+> changes with time. Therefore, if machines use CPU_VERSION_LATEST, it would
+> mean that over a period of time, for the same machine type, the cpu version
+> would be different depending on what is latest at that time. This would
+> break guests even when they use a constant machine type. Therefore, for
+                                    ^^^^^^^^^^^^^^^^^^
+s/.../versioned .../
+
+> pc machines, use of CPU_VERSION_LATEST is not possible. Currently, only
+> microvms use CPU_VERSION_LATEST.
+>
+> This change cleans up the complicated logic around default_cpu_version
+> including getting rid of default_cpu_version property itself. A couple of new
+> flags are introduced, one for the legacy model for machines 4.0.1 and older
+> and other for microvms. For older machines, a new pc machine property is
+> introduced that separates pc machine versions 4.0.1 and older from the newer
+> machines. 4.0.1 and older machines are scheduled to be deleted towards
+> end of 2025 since they would be 6 years old by then. At that time, we can
+> remove all logic around legacy cpus. Microvms are the only machines that
+> continue to use the latest cpu version. If this changes later, we can
+> remove all logic around x86_cpu_model_last_version(). Default cpu version
+> for unversioned cpu models is hardcoded to the value 1 and applies
+> unconditionally for all pc machine types of version 4.1 and above.
+> 
+> This change also removes all complications around CPU_VERSION_AUTO
+> including removal of the value itself.
+> 
+> 1) See commit dcafd1ef0af227 ("i386: Register versioned CPU models")
+> 
+> CC: imammedo@redhat.com
+> Signed-off-by: Ani Sinha <anisinha@redhat.com>
+> ---
+>  hw/i386/microvm.c     |  3 +-
+>  hw/i386/pc.c          | 14 +++++++++
+>  hw/i386/pc_piix.c     |  6 ++--
+>  hw/i386/pc_q35.c      |  6 ++--
+>  hw/i386/x86-common.c  |  4 +--
+>  include/hw/i386/pc.h  |  7 +++--
+>  include/hw/i386/x86.h |  2 +-
+>  target/i386/cpu.c     | 69 ++++++++++++++++++++++---------------------
+>  target/i386/cpu.h     | 21 +++----------
+>  9 files changed, 67 insertions(+), 65 deletions(-)
+> 
+> changelog:
+> v2: explain in commit log why use of CPU_VERSION_LATEST for machines
+> is problematic.
+> v3: fix a bug that broke the pipeline
+> https://gitlab.com/mstredhat/qemu/-/pipelines/1626171267
+> when cpu versions are explicitly specified in the command line,
+> respect that and do not enforce legacy (unversioned) cpu logic.
+> The pipeline is green now with the fix:
+> https://gitlab.com/anisinha/qemu/-/pipelines/1626783632
+> v4: made changes as per Zhao's suggestions.
+> Pipeline passes https://gitlab.com/anisinha/qemu/-/pipelines/1635829877
+> v5: adjustment of pc_init_cpus() declaration as per Zhao's suggestion. This
+> simplifies things and also passes compilation.
+> CI still passes https://gitlab.com/anisinha/qemu/-/pipelines/1637657451
+> 
+> diff --git a/hw/i386/microvm.c b/hw/i386/microvm.c
+> index a8d354aabe..ffb1b37fe5 100644
+> --- a/hw/i386/microvm.c
+> +++ b/hw/i386/microvm.c
+> @@ -458,7 +458,8 @@ static void microvm_machine_state_init(MachineState *machine)
+>  
+>      microvm_memory_init(mms);
+>  
+> -    x86_cpus_init(x86ms, CPU_VERSION_LATEST);
+> +    x86_cpu_uses_lastest_version();
+> +    x86_cpus_init(x86ms);
+>  
+>      microvm_devices_init(mms);
+>  }
+> diff --git a/hw/i386/pc.c b/hw/i386/pc.c
+> index b46975c8a4..f97a519573 100644
+> --- a/hw/i386/pc.c
+> +++ b/hw/i386/pc.c
+> @@ -30,6 +30,7 @@
+>  #include "hw/hyperv/hv-balloon.h"
+>  #include "hw/i386/fw_cfg.h"
+>  #include "hw/i386/vmport.h"
+> +#include "target/i386/cpu.h"
+>  #include "system/cpus.h"
+>  #include "hw/ide/ide-bus.h"
+>  #include "hw/timer/hpet.h"
+> @@ -615,6 +616,19 @@ void pc_acpi_smi_interrupt(void *opaque, int irq, int level)
+>      }
+>  }
+>  
+> +void pc_init_cpus(MachineState *ms)
+> +{
+> +    X86MachineState *x86ms = X86_MACHINE(ms);
+> +    PCMachineState *pcms = PC_MACHINE(ms);
+> +    PCMachineClass *pcmc = PC_MACHINE_GET_CLASS(pcms);
+> +
+> +    if (pcmc->no_versioned_cpu_model) {
+> +        /* use legacy cpu as it does not support versions */
+> +        x86_cpu_set_legacy_version();
+> +    }
+> +    x86_cpus_init(x86ms);
+> +}
+> +
+>  static
+>  void pc_machine_done(Notifier *notifier, void *data)
+>  {
+> diff --git a/hw/i386/pc_piix.c b/hw/i386/pc_piix.c
+> index 04d2957adc..dc684cb011 100644
+> --- a/hw/i386/pc_piix.c
+> +++ b/hw/i386/pc_piix.c
+> @@ -181,7 +181,8 @@ static void pc_init1(MachineState *machine, const char *pci_type)
+>      }
+>  
+>      pc_machine_init_sgx_epc(pcms);
+> -    x86_cpus_init(x86ms, pcmc->default_cpu_version);
+> +
+> +    pc_init_cpus(machine);
+>  
+>      if (kvm_enabled()) {
+>          kvmclock_create(pcmc->kvmclock_create_always);
+> @@ -457,7 +458,6 @@ static void pc_i440fx_machine_options(MachineClass *m)
+>      ObjectClass *oc = OBJECT_CLASS(m);
+>      pcmc->default_south_bridge = TYPE_PIIX3_DEVICE;
+>      pcmc->pci_root_uid = 0;
+> -    pcmc->default_cpu_version = 1;
+>  
+>      m->family = "pc_piix";
+>      m->desc = "Standard PC (i440FX + PIIX, 1996)";
+> @@ -669,7 +669,7 @@ static void pc_i440fx_machine_4_0_options(MachineClass *m)
+>  {
+>      PCMachineClass *pcmc = PC_MACHINE_CLASS(m);
+>      pc_i440fx_machine_4_1_options(m);
+> -    pcmc->default_cpu_version = CPU_VERSION_LEGACY;
+> +    pcmc->no_versioned_cpu_model = true;
+>      compat_props_add(m->compat_props, hw_compat_4_0, hw_compat_4_0_len);
+>      compat_props_add(m->compat_props, pc_compat_4_0, pc_compat_4_0_len);
+>  }
+> diff --git a/hw/i386/pc_q35.c b/hw/i386/pc_q35.c
+> index 77536dd697..045b05da64 100644
+> --- a/hw/i386/pc_q35.c
+> +++ b/hw/i386/pc_q35.c
+> @@ -187,7 +187,8 @@ static void pc_q35_init(MachineState *machine)
+>      }
+>  
+>      pc_machine_init_sgx_epc(pcms);
+> -    x86_cpus_init(x86ms, pcmc->default_cpu_version);
+> +
+> +    pc_init_cpus(machine);
+>  
+>      if (kvm_enabled()) {
+>          kvmclock_create(pcmc->kvmclock_create_always);
+> @@ -339,7 +340,6 @@ static void pc_q35_machine_options(MachineClass *m)
+>  {
+>      PCMachineClass *pcmc = PC_MACHINE_CLASS(m);
+>      pcmc->pci_root_uid = 0;
+> -    pcmc->default_cpu_version = 1;
+>  
+>      m->family = "pc_q35";
+>      m->desc = "Standard PC (Q35 + ICH9, 2009)";
+> @@ -547,7 +547,7 @@ static void pc_q35_machine_4_0_1_options(MachineClass *m)
+>  {
+>      PCMachineClass *pcmc = PC_MACHINE_CLASS(m);
+>      pc_q35_machine_4_1_options(m);
+> -    pcmc->default_cpu_version = CPU_VERSION_LEGACY;
+> +    pcmc->no_versioned_cpu_model = true;
+>      /*
+>       * This is the default machine for the 4.0-stable branch. It is basically
+>       * a 4.0 that doesn't use split irqchip by default. It MUST hence apply the
+> diff --git a/hw/i386/x86-common.c b/hw/i386/x86-common.c
+> index 008496b5b8..1ed5bc6010 100644
+> --- a/hw/i386/x86-common.c
+> +++ b/hw/i386/x86-common.c
+> @@ -66,15 +66,13 @@ out:
+>      object_unref(cpu);
+>  }
+>  
+> -void x86_cpus_init(X86MachineState *x86ms, int default_cpu_version)
+> +void x86_cpus_init(X86MachineState *x86ms)
+>  {
+>      int i;
+>      const CPUArchIdList *possible_cpus;
+>      MachineState *ms = MACHINE(x86ms);
+>      MachineClass *mc = MACHINE_GET_CLASS(x86ms);
+>  
+> -    x86_cpu_set_default_version(default_cpu_version);
+> -
+>      /*
+>       * Calculates the limit to CPU APIC ID values
+>       *
+> diff --git a/include/hw/i386/pc.h b/include/hw/i386/pc.h
+> index a558705cb9..563f765d7f 100644
+> --- a/include/hw/i386/pc.h
+> +++ b/include/hw/i386/pc.h
+> @@ -92,9 +92,6 @@ struct PCMachineClass {
+>  
+>      /* Compat options: */
+>  
+> -    /* Default CPU model version.  See x86_cpu_set_default_version(). */
+> -    int default_cpu_version;
+> -
+>      /* ACPI compat: */
+>      bool has_acpi_build;
+>      int pci_root_uid;
+> @@ -125,6 +122,9 @@ struct PCMachineClass {
+>       * check for memory.
+>       */
+>      bool broken_32bit_mem_addr_check;
+> +
+> +    /* whether the machine supports versioned cpu models */
+> +    bool no_versioned_cpu_model;
+>  };
+>  
+>  #define TYPE_PC_MACHINE "generic-pc-machine"
+> @@ -136,6 +136,7 @@ GSIState *pc_gsi_create(qemu_irq **irqs, bool pci_enabled);
+>  
+>  /* pc.c */
+>  
+> +void pc_init_cpus(MachineState *ms);
+>  void pc_acpi_smi_interrupt(void *opaque, int irq, int level);
+>  
+>  #define PCI_HOST_PROP_RAM_MEM          "ram-mem"
+> diff --git a/include/hw/i386/x86.h b/include/hw/i386/x86.h
+> index d43cb3908e..2d2b987fa1 100644
+> --- a/include/hw/i386/x86.h
+> +++ b/include/hw/i386/x86.h
+> @@ -114,7 +114,7 @@ void init_topo_info(X86CPUTopoInfo *topo_info, const X86MachineState *x86ms);
+>  uint32_t x86_cpu_apic_id_from_index(X86MachineState *x86ms,
+>                                      unsigned int cpu_index);
+>  
+> -void x86_cpus_init(X86MachineState *pcms, int default_cpu_version);
+> +void x86_cpus_init(X86MachineState *pcms);
+>  void x86_rtc_set_cpus_count(ISADevice *rtc, uint16_t cpus_count);
+>  void x86_cpu_pre_plug(HotplugHandler *hotplug_dev,
+>                        DeviceState *dev, Error **errp);
+> diff --git a/target/i386/cpu.c b/target/i386/cpu.c
+> index 1b9c11022c..c1f868c4dd 100644
+> --- a/target/i386/cpu.c
+> +++ b/target/i386/cpu.c
+> @@ -192,6 +192,9 @@ struct CPUID2CacheDescriptorInfo cpuid2_cache_descriptors[] = {
+>   */
+>  #define CACHE_DESCRIPTOR_UNAVAILABLE 0xFF
+>  
+> +/* default cpu version to use */
+> +#define DEFAULT_CPU_VERSION 1
+> +
+>  /*
+>   * Return a CPUID 2 cache descriptor for a given cache.
+>   * If no known descriptor is found, return CACHE_DESCRIPTOR_UNAVAILABLE
+> @@ -5343,20 +5346,16 @@ static const X86CPUDefinition builtin_x86_defs[] = {
+>      },
+>  };
+>  
+> -/*
+> - * We resolve CPU model aliases using -v1 when using "-machine
+> - * none", but this is just for compatibility while libvirt isn't
+> - * adapted to resolve CPU model versions before creating VMs.
+> - * See "Runnability guarantee of CPU models" at
+> - * docs/about/deprecated.rst.
+> - */
+> -X86CPUVersion default_cpu_version = 1;
+> +static bool use_legacy_cpu;
+> +void x86_cpu_set_legacy_version(void)
+> +{
+> +    use_legacy_cpu = true;
+> +}
+>  
+> -void x86_cpu_set_default_version(X86CPUVersion version)
+> +static bool use_latest_cpu;
+> +void x86_cpu_uses_lastest_version(void)
+>  {
+> -    /* Translating CPU_VERSION_AUTO to CPU_VERSION_AUTO doesn't make sense */
+> -    assert(version != CPU_VERSION_AUTO);
+> -    default_cpu_version = version;
+> +    use_latest_cpu = true;
+>  }
+>  
+>  static X86CPUVersion x86_cpu_model_last_version(const X86CPUModel *model)
+> @@ -5374,14 +5373,11 @@ static X86CPUVersion x86_cpu_model_last_version(const X86CPUModel *model)
+>  /* Return the actual version being used for a specific CPU model */
+>  static X86CPUVersion x86_cpu_model_resolve_version(const X86CPUModel *model)
+>  {
+> -    X86CPUVersion v = model->version;
+> -    if (v == CPU_VERSION_AUTO) {
+> -        v = default_cpu_version;
+> -    }
+> -    if (v == CPU_VERSION_LATEST) {
+> +    if (use_latest_cpu) {
+>          return x86_cpu_model_last_version(model);
+>      }
+> -    return v;
+> +
+> +    return model->version;
+>  }
+>  
+>  static const Property max_x86_cpu_properties[] = {
+> @@ -5985,10 +5981,15 @@ static char *x86_cpu_class_get_alias_of(X86CPUClass *cc)
+>      if (!cc->model || !cc->model->is_alias) {
+>          return NULL;
+>      }
+> -    version = x86_cpu_model_resolve_version(cc->model);
+> -    if (version <= 0) {
+> +
+> +    if (use_legacy_cpu) {
+> +        /* legacy cpu models do not support cpu aliases */
+>          return NULL;
+>      }
+> +
+> +    version = x86_cpu_model_resolve_version(cc->model);
+> +    assert(version);
+> +
+>      return x86_cpu_versioned_model_name(cc->model->cpudef, version);
+>  }
+>  
+> @@ -6002,11 +6003,7 @@ static void x86_cpu_list_entry(gpointer data, gpointer user_data)
+>      g_autofree char *model_id = x86_cpu_class_get_model_id(cc);
+>  
+>      if (!desc && alias_of) {
+> -        if (cc->model && cc->model->version == CPU_VERSION_AUTO) {
+> -            desc = g_strdup("(alias configured by machine type)");
+> -        } else {
+>              desc = g_strdup_printf("(alias of %s)", alias_of);
+> -        }
+>      }
+>      if (!desc && cc->model && cc->model->note) {
+>          desc = g_strdup_printf("%s [%s]", model_id, cc->model->note);
+> @@ -6109,13 +6106,8 @@ static void x86_cpu_definition_entry(gpointer data, gpointer user_data)
+>      } else {
+>          info->deprecated = false;
+>      }
+> -    /*
+> -     * Old machine types won't report aliases, so that alias translation
+> -     * doesn't break compatibility with previous QEMU versions.
+> -     */
+> -    if (default_cpu_version != CPU_VERSION_LEGACY) {
+> -        info->alias_of = x86_cpu_class_get_alias_of(cc);
+> -    }
+> +
+> +    info->alias_of = x86_cpu_class_get_alias_of(cc);
+>  
+>      QAPI_LIST_PREPEND(*cpu_list, info);
+>  }
+> @@ -6287,7 +6279,12 @@ static void x86_cpu_apply_version_props(X86CPU *cpu, X86CPUModel *model)
+>      const X86CPUVersionDefinition *vdef;
+>      X86CPUVersion version = x86_cpu_model_resolve_version(model);
+>  
+> -    if (version == CPU_VERSION_LEGACY) {
+> +    /*
+> +     * if the machine uses legacy cpus, use legacy cpus with no versions
+> +     * when no explict CPU versions are specified in the CPU definition
+> +     * passed from the command line.
+> +     */
+> +    if (version == DEFAULT_CPU_VERSION && use_legacy_cpu) {
+>          return;
+>      }
+>  
+> @@ -6317,7 +6314,11 @@ static const CPUCaches *x86_cpu_get_versioned_cache_info(X86CPU *cpu,
+>      X86CPUVersion version = x86_cpu_model_resolve_version(model);
+>      const CPUCaches *cache_info = model->cpudef->cache_info;
+>  
+> -    if (version == CPU_VERSION_LEGACY) {
+> +    /*
+> +     * If machine supports legacy cpus and no explicit cpu versions are
+> +     * specified, use the cache from the unversioned cpu definition.
+> +     */
+> +    if (version == DEFAULT_CPU_VERSION && use_legacy_cpu) {
+>          return cache_info;
+>      }
+>  
+> @@ -6452,7 +6453,7 @@ static void x86_register_cpudef_types(const X86CPUDefinition *def)
+>      /* Unversioned model: */
+>      m = g_new0(X86CPUModel, 1);
+>      m->cpudef = def;
+> -    m->version = CPU_VERSION_AUTO;
+> +    m->version = DEFAULT_CPU_VERSION;
+>      m->is_alias = true;
+>      x86_register_cpu_model_type(def->name, m);
+>  
+> diff --git a/target/i386/cpu.h b/target/i386/cpu.h
+> index b26e25ba15..bdbe54b26f 100644
+> --- a/target/i386/cpu.h
+> +++ b/target/i386/cpu.h
+> @@ -2679,27 +2679,14 @@ void cpu_report_tpr_access(CPUX86State *env, TPRAccess access);
+>  void apic_handle_tpr_access_report(DeviceState *d, target_ulong ip,
+>                                     TPRAccess access);
+>  
+> -/* Special values for X86CPUVersion: */
+> -
+> -/* Resolve to latest CPU version */
+> -#define CPU_VERSION_LATEST -1
+> -
+> -/*
+> - * Resolve to version defined by current machine type.
+> - * See x86_cpu_set_default_version()
+> - */
+> -#define CPU_VERSION_AUTO   -2
+> -
+> -/* Don't resolve to any versioned CPU models, like old QEMU versions */
+> -#define CPU_VERSION_LEGACY  0
+> -
+>  typedef int X86CPUVersion;
+>  
+>  /*
+> - * Set default CPU model version for CPU models having
+> - * version == CPU_VERSION_AUTO.
+> + * Set CPU model version to the lastest version.
+> + * Currently, this is only used by microvm.
+>   */
+> -void x86_cpu_set_default_version(X86CPUVersion version);
+> +void x86_cpu_uses_lastest_version(void);
+> +void x86_cpu_set_legacy_version(void);
+>  
+>  #ifndef CONFIG_USER_ONLY
+>  
 
 
