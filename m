@@ -4,86 +4,86 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4E1DAC02181
-	for <qemu-devel@archiver.kernel.org>; Fri, 24 Jan 2025 17:12:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id F1CF1C02181
+	for <qemu-devel@archiver.kernel.org>; Fri, 24 Jan 2025 17:13:32 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tbNDn-00079A-Sv; Fri, 24 Jan 2025 12:11:55 -0500
+	id 1tbNEw-0000Qv-FL; Fri, 24 Jan 2025 12:13:06 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1tbNDl-0006zW-GB
- for qemu-devel@nongnu.org; Fri, 24 Jan 2025 12:11:53 -0500
-Received: from mail-pj1-x102b.google.com ([2607:f8b0:4864:20::102b])
+ id 1tbNEu-0000NB-BR
+ for qemu-devel@nongnu.org; Fri, 24 Jan 2025 12:13:04 -0500
+Received: from mail-pl1-x631.google.com ([2607:f8b0:4864:20::631])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1tbNDj-00067Q-7D
- for qemu-devel@nongnu.org; Fri, 24 Jan 2025 12:11:53 -0500
-Received: by mail-pj1-x102b.google.com with SMTP id
- 98e67ed59e1d1-2ef6c56032eso3300034a91.2
- for <qemu-devel@nongnu.org>; Fri, 24 Jan 2025 09:11:50 -0800 (PST)
+ id 1tbNEr-0006D8-SK
+ for qemu-devel@nongnu.org; Fri, 24 Jan 2025 12:13:04 -0500
+Received: by mail-pl1-x631.google.com with SMTP id
+ d9443c01a7336-21680814d42so40060875ad.2
+ for <qemu-devel@nongnu.org>; Fri, 24 Jan 2025 09:13:01 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1737738710; x=1738343510; darn=nongnu.org;
+ d=linaro.org; s=google; t=1737738780; x=1738343580; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=I7mkmUrHBsGCWGsb6KT+pRga/zStRaevJnxH2qkyJKE=;
- b=tcwY7ZySl5NQi+jHY1suUHFh66yYRSxviJQAFucaVKPIV4zUqlIyVXqaENNKyIdSA+
- EffxQELZh9ToPKFDsATGKnsQKNYZCnAfkgKHr24ukuKQff7QZwqvNivDzpHemrnofp9f
- Ep2OYl024XwFIugaudnqMFUFiMjtgbnVg4V9Y6L4u+/e8+zJ0iBFZlnvxkbjwxNFVHwE
- qEO2co+3rikiSX/ksMHE8aPYTgYgeNfYm5kt6jbvuDt8weSTVTjUToQVj4WqkkhzQ41f
- 7VsLKELBukZB0dolhJLE6qKyLKHCTPhEF0iehYLuCETyY1QE6x045yPcJHbZnkL83/Wi
- inaA==
+ bh=a3See8692uOXsgoD4hTZPnV+EDiPYKbGbZx4LsYaVUY=;
+ b=yjZ9JoOEME8VBFD4IZ12nbdDRROuKt682FPeJhjJw6Xh4+iincpvOGzlImQOYYPACO
+ JvfmNEkcE+6xpp7MmDi6QzLgflsrDMU4JwJx6VF5jBC5+BAt2apYsf7WaTgq1G00BiLd
+ rT/0SpxuhY+uxy3udzeuMxh9uI3rAa8e+/GhtXT1MUcUdaTUo4SeMCncJxpi9984qSv0
+ u32Y8pkWkSRxoa6LWxzoBFOwqKeZC0n3ef5BT8ZxuITehQqJq5rLQMrT7yYCo2j2hYPJ
+ rvzFOFhvNSb2Jzh1JrxQyxQbe8AW+XHOIFYdMI7eM1D1xgP6CHB8cnVYZ/lBXx9d3NMM
+ 5DWQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1737738710; x=1738343510;
+ d=1e100.net; s=20230601; t=1737738780; x=1738343580;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=I7mkmUrHBsGCWGsb6KT+pRga/zStRaevJnxH2qkyJKE=;
- b=f+U3mZaULllcDl80nbWZTR5+4fURYDZrmfQGKrHd/WyNU4zBIhwMrl60PdXj/bWCyX
- Oq0HU1bl4F22PgHEJnbwbeX1sCRP0onT7zEWA/sW95tIARFDRAHzPHzAg+CmW+WNtgly
- uqZCMnqVXJM28iyeHlfz23RX4EAqdd7JutnJwdb17plrglg4wNFlXWxY9VwrEPDnZybO
- IK5tp/buAUqQ2AWJn29xfsSS5d7Opt+hRqvQF/ybvGtks+uOEsZo/IZC4jpl0nxLU7Jd
- PzrPOtiv31goSQTtc9+eA5DYvJV1QeF4sGJNrVCgWqEJghVEATJf00ZUyIBdP9TsuMiR
- PrYw==
+ bh=a3See8692uOXsgoD4hTZPnV+EDiPYKbGbZx4LsYaVUY=;
+ b=m/g5mEakOwGNwn+Ycw4Zka0b0s0MmYDnKR/s/+FAudGEwtHSOUEuqNzGZK5ioHHXcs
+ fSb0+yIaoKFNGG2I1ZtsAvc4vjlI8LwY8Y80IeafcgiMJGOJxTK5jVpqBCxs4OC3YGQS
+ s5OPp/0pzJqHi6jo1T09SUbgpFZNAqT/G+pFFLZFsH/gKw+3GwGTDwtXPh15SOi0MHHh
+ OElbL3z07B3o+3/k9KQ4kXAVyVhhCbxKylnHYOEead1OV3g9ZvEdx/Mmog3zqt0gCnMq
+ C30f2YmKEdvQkiEPA7ReZFbHH5ypNHhfH4mjcM3PlUJtl6WP+5uEH3n3R3Z5WYjLwOKI
+ DbPQ==
 X-Forwarded-Encrypted: i=1;
- AJvYcCUVB80AZG2XuKyrpJ0wdjTngSacgSd4BeMXCrAvJW9w3EDkJeW6i0YQJCz2zczlD+Bi3CrDVpsnikBi@nongnu.org
-X-Gm-Message-State: AOJu0YzNV9zbR7J1fD5t9X/3RdRHmHLDrfpqoBB4W/O2tPlR4plszCMJ
- NkfAUTdIYoJb/aPUqR9i3AnmCPF4dQzJlt3+JwxjdKf3tPvNoohkN4A7xjjZJLA=
-X-Gm-Gg: ASbGncsowqjaGL6vXNqMERv728gk90pTxhxDGhY+KKnFBq1QbSZTQzC3vG8SmIHXG1O
- rHe1PA8xe/TN05JNq6flqXRWF4dqA4DrFqeaeaQ7m3L084KSImC9EjKGLJ1oY8VTg23tpfp/lHD
- HlhPQey69T7Kfh7FExzKiN8NG7rELw7aciiFEhyFiZYOANP5mTEc7KlgQx62+JqMctIbojyV2Q6
- HEbj4qiOzoHhfEdq7Ui7jysRNT3xz+M/A+I+L4XMJjRDmMDrZIi3em4DxIha+fg24+gNd2cgzbL
- UUKWv2jLLR+aBbcWhEANbGE3
-X-Google-Smtp-Source: AGHT+IE4TPhmPDiu4esYgCyaQPz6rfM6AmT6bGrgbkU0d7FTOyrTj9nAm9uqAaWqBJzXkdjNwvRByg==
-X-Received: by 2002:a05:6a00:1c9f:b0:728:e2cc:bfd6 with SMTP id
- d2e1a72fcca58-72dafa68bc6mr47930632b3a.18.1737738709919; 
- Fri, 24 Jan 2025 09:11:49 -0800 (PST)
+ AJvYcCWmX9E9G5jPGOsZav/h2t2UZcmPn/twdIhtLkbDI8mjbZdI5Ds2N4LDpRsPx2XFuI00ieE5XO+fgfEG@nongnu.org
+X-Gm-Message-State: AOJu0YweGK4eYBOds4jEQVhmpgkmR/CkzjqtGI3MhxFnkAcEEwF2ZL/P
+ PkETf8Ys6o/7aeHkIf/GfW1zfz3u2xLmzOMwBjx25yQjz4k+273Wrci//UCl0MM=
+X-Gm-Gg: ASbGncuzzD7LyykKGAPTV+tE4K0sWDHtyGyMx8/mxgPeZs3Y+3RlkwY7jsby76s7WCR
+ tHfFDhjjq/GE9ggv8Tzx1uD2hsWgrFtszWHroZm4zCImO5xac7nRpGBqBH3UpcS1IsAvJuBEkMw
+ zHg979qmk24hFsLUf37g2FxHWaVjYxcveHD3I9KDS03/sxoAX4OjhklzkTsOT8pb1dGPcZayA6D
+ eoW6GUMEZTsI8KWwgUah9WsX4vFqT4OnrqOY6luPPuTWVTSBVmWXWTwz0yxZtBkpIJa+oRmi1ty
+ hN4LVNB3AlF8TwtgvAQqE9j3
+X-Google-Smtp-Source: AGHT+IEOBVe7oGUQSUh1Ypt33Si5xBrKDElfvjQNcuTiXK35wObz10sd3AopNEaCcNanCleTDY8/Vg==
+X-Received: by 2002:a05:6a00:4615:b0:725:f1b1:cb9f with SMTP id
+ d2e1a72fcca58-72dafad530bmr44733377b3a.20.1737738780438; 
+ Fri, 24 Jan 2025 09:13:00 -0800 (PST)
 Received: from [192.168.163.227] ([75.147.178.105])
  by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-72f8a69fcbfsm2118061b3a.30.2025.01.24.09.11.49
+ d2e1a72fcca58-72f8a6b324bsm2194511b3a.62.2025.01.24.09.12.59
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 24 Jan 2025 09:11:49 -0800 (PST)
-Message-ID: <90e45c23-75b9-4838-876d-3a2169b41c3c@linaro.org>
-Date: Fri, 24 Jan 2025 09:11:47 -0800
+ Fri, 24 Jan 2025 09:13:00 -0800 (PST)
+Message-ID: <27a14c26-8afa-4ad2-8ce7-7696adcb4537@linaro.org>
+Date: Fri, 24 Jan 2025 09:12:58 -0800
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 16/28] target/microblaze: Move has_work() from CPUClass to
+Subject: Re: [PATCH 17/28] target/mips: Move has_work() from CPUClass to
  SysemuCPUOps
 To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  qemu-devel@nongnu.org
 Cc: qemu-arm@nongnu.org, qemu-s390x@nongnu.org, qemu-riscv@nongnu.org,
  qemu-ppc@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>
 References: <20250121142341.17001-1-philmd@linaro.org>
- <20250121142341.17001-17-philmd@linaro.org>
+ <20250121142341.17001-18-philmd@linaro.org>
 Content-Language: en-US
 From: Richard Henderson <richard.henderson@linaro.org>
-In-Reply-To: <20250121142341.17001-17-philmd@linaro.org>
+In-Reply-To: <20250121142341.17001-18-philmd@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::102b;
- envelope-from=richard.henderson@linaro.org; helo=mail-pj1-x102b.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::631;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x631.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -107,10 +107,14 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 1/21/25 06:23, Philippe Mathieu-Daudé wrote:
+> Move has_work() from CPUClass to SysemuCPUOps and
+> cpu_mips_hw_interrupts_enabled() to system.
+> 
 > Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 > ---
->   target/microblaze/cpu.c | 4 +++-
->   1 file changed, 3 insertions(+), 1 deletion(-)
+>   target/mips/internal.h | 4 ++--
+>   target/mips/cpu.c      | 4 +++-
+>   2 files changed, 5 insertions(+), 3 deletions(-)
 
 Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 
