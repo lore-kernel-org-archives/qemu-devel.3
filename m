@@ -4,86 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3F81BC02181
-	for <qemu-devel@archiver.kernel.org>; Fri, 24 Jan 2025 04:59:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0DD37C02181
+	for <qemu-devel@archiver.kernel.org>; Fri, 24 Jan 2025 05:12:50 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tbBmh-00076z-Lj; Thu, 23 Jan 2025 23:59:13 -0500
+	id 1tbBzS-0003KZ-8h; Fri, 24 Jan 2025 00:12:22 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
- id 1tbBme-00076f-5e
- for qemu-devel@nongnu.org; Thu, 23 Jan 2025 23:59:08 -0500
-Received: from mail-pl1-x62e.google.com ([2607:f8b0:4864:20::62e])
+ id 1tbBzP-0003KQ-Op
+ for qemu-devel@nongnu.org; Fri, 24 Jan 2025 00:12:19 -0500
+Received: from mail-pj1-x1030.google.com ([2607:f8b0:4864:20::1030])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
- id 1tbBmb-00065N-1i
- for qemu-devel@nongnu.org; Thu, 23 Jan 2025 23:59:06 -0500
-Received: by mail-pl1-x62e.google.com with SMTP id
- d9443c01a7336-216281bc30fso39943515ad.0
- for <qemu-devel@nongnu.org>; Thu, 23 Jan 2025 20:59:04 -0800 (PST)
+ id 1tbBzO-0000G5-1Y
+ for qemu-devel@nongnu.org; Fri, 24 Jan 2025 00:12:19 -0500
+Received: by mail-pj1-x1030.google.com with SMTP id
+ 98e67ed59e1d1-2f43da61ba9so2468866a91.2
+ for <qemu-devel@nongnu.org>; Thu, 23 Jan 2025 21:12:17 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=daynix-com.20230601.gappssmtp.com; s=20230601; t=1737694743; x=1738299543;
+ d=daynix-com.20230601.gappssmtp.com; s=20230601; t=1737695536; x=1738300336;
  darn=nongnu.org; 
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=/sKbSJbHIRm0Em0zuSISSBur10wxZnN3EvbQiCGthU8=;
- b=RLZZWQnbMTRaWOns5Xjeert/ktZ3EztyanS6f/4zxJkBJcKUJQ4I+92CMZ75sr+KG2
- hylqe2ZhOnaQHY+72ZtwEAUdsT70UPkyOrRlsfTXrV1o+CFrvXnYPxRJd3GlyREdi/TW
- bUXDgDcbGoQ7ZG6DOcbz+ss4Gz+8y1hFB1abRAhdaQDXYaH14g5khTS86R1LX7YgGBwI
- dKGXn2mBh4x/7mhcVI8GjfchJcmeOefohduzsU136GTmyLEoZb7YB+sXx7pm3cKYaH+H
- t0LPyeO9qo6v1zdDCXILC636UrF7+xUBEQq9HgfZaMxAXjPixv6qcidEqBAHpIeW0CuQ
- 58IA==
+ h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
+ :mime-version:subject:date:from:from:to:cc:subject:date:message-id
+ :reply-to; bh=fWOg7aqqH8nu4hr/5SdBWnNPemUm1VuYD9oCJuZW3aE=;
+ b=VC5srrpXmTmiRocFYx9LwhoK9ZBUM6/oC9S/Ro/eMn9+Pykl0HGJdAAcVFJkneT+im
+ 3s0im+W+yL2L2HPbldSoH3az6K1/JdNn+f8iEnzdlhDP2Rvb8wYHeVx+g1hTG9tGgTo6
+ 7DMb4fvkA1znr3i6dlMGMf5DvKZmYMefHgFdJjRUtX9Jpc2JNt6isbqyIaUaE5J5h1qh
+ 7+6DSR0mvuD97RVQcvWp6y6Gc+ZPqEkEfp22J+FkyTWINsmsJlkdFXvulFwhp2lO9Rp6
+ 3u4726u8ql5uqPhAyXk/P/0bd5zyYtS9/n6IlEms+AV8EYz724DmHojpc7AsFc+hkg/+
+ UM4w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1737694743; x=1738299543;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=/sKbSJbHIRm0Em0zuSISSBur10wxZnN3EvbQiCGthU8=;
- b=EmPvL4S56oVvutgKALTecD39fr6o9pUPpv258hjdBg6xA/lmkPn6MVc2SKwOO+AVjt
- hnrnim+sNrYeBgm07ek++kr7oF7BRnAjq15nEsOP5YicxbSwtJYKFdv73bwjHRxoWkJx
- 0w0P+duL+C3Yv7qNtj0LzqAtZhmH8POs3SbUBQNZrFlfM3TI+v/GoZHUinw0zyAWG2zZ
- GAdwnCQA0y/0nSqqcSUG6tB4TfQ65BJSvl9lkj6NCuzIPmz6ZxrYj+LXtz6bLmaP9R4g
- eHN+hDKhnRSP2IyWP/+JYW6IGhEOgkjEPNG03XintMr9uXdU4rykKWCmkQOTg1qN9MAu
- s71g==
-X-Gm-Message-State: AOJu0Yxo3PXy5m7qpaHiouoe5Fm45Jt5MrtbZkGDsJ0ONtUqfuSqj2LM
- 5FbmXIaoFikq9vulvFaYxz9oAcOpAL1sv6CjALZld/dnl+/78EQil+X/W50yqD0=
-X-Gm-Gg: ASbGncsWXuehUSuiSS+5cI6y0RrzO0E9X7w7GsUA3XdN/q2Sygw8Arb91/YTn/tn2LU
- lf4g/69aRqBzWlK8APL+on4Ad66QleYB2qt52WAo1ckCYkuTe/4JNItoyOTczYFkFwzOihDwGHp
- xcglshWesU4mAC0NnPSjfYqc9YFvKYjJshuc3WY2Q9z10900tDvCvYD1tKYmTKAxiWyOUr/S5wk
- DlhrDPxZK5Us+0RgQrLqkuWGs2FjCWlJyDMshb/ydtFn1LClbKuJw4weksxlHxPrAbC2cFaxkc3
- Hy/U5VY6agxS0GpNQg==
-X-Google-Smtp-Source: AGHT+IGKoxWKKab4FiWGrWyIZsHZg8KKrgyICJISnrnGnKQq1rRp1CU7MKvSiu8CKu+tTqY+U3wDkg==
-X-Received: by 2002:a05:6a21:7a8c:b0:1e1:bb23:dfd6 with SMTP id
- adf61e73a8af0-1eb215efe62mr43350929637.39.1737694743272; 
- Thu, 23 Jan 2025 20:59:03 -0800 (PST)
-Received: from [157.82.207.107] ([157.82.207.107])
- by smtp.gmail.com with ESMTPSA id
- 41be03b00d2f7-ac49745c0b9sm728434a12.78.2025.01.23.20.59.01
+ d=1e100.net; s=20230601; t=1737695536; x=1738300336;
+ h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
+ :mime-version:subject:date:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=fWOg7aqqH8nu4hr/5SdBWnNPemUm1VuYD9oCJuZW3aE=;
+ b=FSAuGcReOtxAO8DRXoLqcVuNt8mKlCk0lRs0ZbU7xxW3LyLTOcB9FSI3sooSWV5b6U
+ 6yAPS02GZkRZYzKLvP274R+pf1XaRvTZjG0t/IY6/s5vKp1c3BhYbiKf8ftk38r73w2j
+ 11TjCboiyyi9J5aQZwsklQIhUA5blm0eBRD1pm8e2EP3xu/err0GZoahZEXBNeNsPnmq
+ pG63dBRTHmG66/9hMytwmpgcvvWbeKRjcOcyt+Cg3aHO5Eh6B0LxVBbS+D41EVvU+ZdO
+ +F8px8VTuAlUy7UVBHP3y4YVmdpqWCtPgTNd5ok6MmPaz6TLN5On8Z3tmfSEAzFarNKs
+ TqdA==
+X-Gm-Message-State: AOJu0Yxi/2Na93ThBNK7pFGxD4yju9QL+6b5nsRZUxensNvyzBrhFLX1
+ 9y3WFOfzol50jY0LO5/eH8LdUsnF0ypyYSJ9s23+iF/lfXnvx6yl34IHhTW1ZkO2PJwfSZBnsyn
+ wKpc=
+X-Gm-Gg: ASbGnctY8BYZQlLMOV0ai6QupxiW7hIlz+WSPjbQ29+TCMysLoS4dDSWPr0ifalSgBX
+ SurLLEstjlny+Kh31sJzJINZsSBjL3zSBva+3XuNMOuMVHlHsek6NcMGCmJqBI0Bi5tlTp2ZsvG
+ b7hLHo21cLjm6QNrdVbGmpXT/vW/Gx62/p0wT9Um5cjxwNmIbcPKbhgigp1rxGbqHE1XB3WYVi3
+ QxRQY5L7gBH6/wtD2PcVKmwm5HngaGtH0JYyD43K79mv8FqHfBabgoTTX4goWimktj9iWllX1pg
+ ugeFt81M
+X-Google-Smtp-Source: AGHT+IFQR7veNA3427gt+Q1w9A+lism8AIZBq4q+JA7zi4tFaNSM/5PO93Rt1wA1bp1Tt4TDxdZ1hQ==
+X-Received: by 2002:a17:90b:2809:b0:2ea:a9ac:eee1 with SMTP id
+ 98e67ed59e1d1-2f782c92bd9mr44061452a91.10.1737695536404; 
+ Thu, 23 Jan 2025 21:12:16 -0800 (PST)
+Received: from localhost ([157.82.207.107])
+ by smtp.gmail.com with UTF8SMTPSA id
+ 98e67ed59e1d1-2f7ffa44cc3sm667189a91.10.2025.01.23.21.12.14
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 23 Jan 2025 20:59:02 -0800 (PST)
-Message-ID: <f62af9d4-36ae-45ea-8aa6-9139502da47e@daynix.com>
-Date: Fri, 24 Jan 2025 13:58:59 +0900
-MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v5 3/4] audio: Add functions to initialize buffers
-To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Gerd Hoffmann <kraxel@redhat.com>,
- Christian Schoenebeck <qemu_oss@crudebyte.com>
-Cc: qemu-devel@nongnu.org, devel@daynix.com,
- Phil Dennis-Jordan <phil@philjordan.eu>
-References: <20250123-coreaudio-v5-0-6873df4215a0@daynix.com>
- <20250123-coreaudio-v5-3-6873df4215a0@daynix.com>
- <7a020e94-841a-4a3c-bdea-12c00579ef3f@linaro.org>
-Content-Language: en-US
+ Thu, 23 Jan 2025 21:12:16 -0800 (PST)
 From: Akihiko Odaki <akihiko.odaki@daynix.com>
-In-Reply-To: <7a020e94-841a-4a3c-bdea-12c00579ef3f@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::62e;
- envelope-from=akihiko.odaki@daynix.com; helo=mail-pl1-x62e.google.com
+Date: Fri, 24 Jan 2025 14:12:04 +0900
+Subject: [PATCH v7 1/6] coreaudio: Remove unnecessary explicit casts
+MIME-Version: 1.0
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+Message-Id: <20250124-coreaudio-v7-1-9d9a4d91db37@daynix.com>
+References: <20250124-coreaudio-v7-0-9d9a4d91db37@daynix.com>
+In-Reply-To: <20250124-coreaudio-v7-0-9d9a4d91db37@daynix.com>
+To: Gerd Hoffmann <kraxel@redhat.com>, 
+ =?utf-8?q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>, 
+ Christian Schoenebeck <qemu_oss@crudebyte.com>, 
+ BALATON Zoltan <balaton@eik.bme.hu>
+Cc: qemu-devel@nongnu.org, devel@daynix.com, 
+ Akihiko Odaki <akihiko.odaki@daynix.com>
+X-Mailer: b4 0.14.2
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1030;
+ envelope-from=akihiko.odaki@daynix.com; helo=mail-pj1-x1030.google.com
 X-Spam_score_int: -18
 X-Spam_score: -1.9
 X-Spam_bar: -
@@ -105,42 +103,42 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 2025/01/23 17:43, Philippe Mathieu-Daudé wrote:
-> Hi Akihiko,
-> 
-> On 23/1/25 08:18, Akihiko Odaki wrote:
->> These functions can be used to re-initialize buffers when hardware
->> parameters change due to device hotplug, for example.
->>
->> Signed-off-by: Akihiko Odaki <akihiko.odaki@daynix.com>
->> Reviewed-by: Phil Dennis-Jordan <phil@philjordan.eu>
->> Reviewed-by: Christian Schoenebeck <qemu_oss@crudebyte.com>
->> ---
->>   audio/audio_int.h |  2 ++
->>   audio/audio.c     | 24 ++++++++++++++++++------
->>   2 files changed, 20 insertions(+), 6 deletions(-)
-> 
-> 
->> index 
->> 87b4e9b6f2f356b6e5e972eabc100cf270fcbc29..17c6bbd0ae9e6ff810c0989dbfa1710ef674ff0a 100644
->> --- a/audio/audio.c
->> +++ b/audio/audio.c
->> @@ -1407,12 +1407,18 @@ void audio_run(AudioState *s, const char *msg)
->>   #endif
->>   }
->> +void audio_generic_initialize_buffer_in(HWVoiceIn *hw)
->> +{
->> +    g_free(hw->buf_emul);
->> +    hw->size_emul = hw->samples * hw->info.bytes_per_frame;
->> +    hw->buf_emul = g_malloc(hw->size_emul);
-> 
-> What about using g_realloc()? Otherwise LGTM.
+coreaudio had unnecessary explicit casts and they had extra whitespaces
+around them so remove them.
 
-g_realloc() will copy the content, which is not necessary here.
+Signed-off-by: Akihiko Odaki <akihiko.odaki@daynix.com>
+---
+ audio/coreaudio.m | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-> 
->> +    hw->pos_emul = hw->pending_emul = 0;
->> +}
-> 
+diff --git a/audio/coreaudio.m b/audio/coreaudio.m
+index cadd729d50537850d81718b9284efed5877d9185..0b67347ad7e8c43a77af308a1a3a654dd7084083 100644
+--- a/audio/coreaudio.m
++++ b/audio/coreaudio.m
+@@ -309,7 +309,7 @@ static OSStatus audioDeviceIOProc(
+     UInt32 frameCount, pending_frames;
+     void *out = outOutputData->mBuffers[0].mData;
+     HWVoiceOut *hw = hwptr;
+-    coreaudioVoiceOut *core = (coreaudioVoiceOut *) hwptr;
++    coreaudioVoiceOut *core = hwptr;
+     size_t len;
+ 
+     if (coreaudio_buf_lock (core, "audioDeviceIOProc")) {
+@@ -392,10 +392,10 @@ static OSStatus init_out_device(coreaudioVoiceOut *core)
+     }
+ 
+     if (frameRange.mMinimum > core->frameSizeSetting) {
+-        core->audioDevicePropertyBufferFrameSize = (UInt32) frameRange.mMinimum;
++        core->audioDevicePropertyBufferFrameSize = frameRange.mMinimum;
+         dolog ("warning: Upsizing Buffer Frames to %f\n", frameRange.mMinimum);
+     } else if (frameRange.mMaximum < core->frameSizeSetting) {
+-        core->audioDevicePropertyBufferFrameSize = (UInt32) frameRange.mMaximum;
++        core->audioDevicePropertyBufferFrameSize = frameRange.mMaximum;
+         dolog ("warning: Downsizing Buffer Frames to %f\n", frameRange.mMaximum);
+     } else {
+         core->audioDevicePropertyBufferFrameSize = core->frameSizeSetting;
+
+-- 
+2.48.1
 
 
