@@ -4,92 +4,95 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B12D8C02181
-	for <qemu-devel@archiver.kernel.org>; Fri, 24 Jan 2025 10:56:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 18884C02181
+	for <qemu-devel@archiver.kernel.org>; Fri, 24 Jan 2025 11:27:21 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tbHLN-00084V-HJ; Fri, 24 Jan 2025 05:55:21 -0500
+	id 1tbHpo-0005li-1p; Fri, 24 Jan 2025 06:26:48 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <dbarboza@ventanamicro.com>)
- id 1tbHLL-00083x-Lw
- for qemu-devel@nongnu.org; Fri, 24 Jan 2025 05:55:19 -0500
-Received: from mail-pj1-x102a.google.com ([2607:f8b0:4864:20::102a])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <dbarboza@ventanamicro.com>)
- id 1tbHLJ-0005PI-GN
- for qemu-devel@nongnu.org; Fri, 24 Jan 2025 05:55:19 -0500
-Received: by mail-pj1-x102a.google.com with SMTP id
- 98e67ed59e1d1-2f44353649aso2765696a91.0
- for <qemu-devel@nongnu.org>; Fri, 24 Jan 2025 02:55:16 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=ventanamicro.com; s=google; t=1737716116; x=1738320916; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=EHYKRq3MkH9izx3qVzHbKmAcd1WZ40mZ85OxXtfACRo=;
- b=PI5n2VvT4XTCm0AaPhm6OXwV5onU5mddII24uKUcXAUFAx5mMO4scjjbGDzUfj2dWh
- IDbO9mMO0fYP4DjIfYYdKv1Oona6SO+OfN0jUyatjdYj6z5NvI2UOoi1H0fHlhpj7pKF
- VY07NTudrz0uRLDsVkaVHPokGH41OBavtLX+k37anA5FgwSQOk8yvagLvJkC+1bDnBH9
- 4EdJJu2Vl6xDp4t3eSP9ZIW6P9cIR+BUQfWdvNfiyTKXylPIpJT649i69QdvBG5h3kAo
- kb+dcRHrti9Kp3CSNZJAZbqIR4xVjb4+CNo0/9DaB3zFxFjNBVys2/Y3tnEcgg5BSHll
- O03Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1737716116; x=1738320916;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=EHYKRq3MkH9izx3qVzHbKmAcd1WZ40mZ85OxXtfACRo=;
- b=pZt7K5ECR5apB6zu4q1ImmTOJnyuVEYEpaV1tAvZwJ8rD2YhhHSWPzqxxTaLvX2AlG
- skz0OGjXgwdecwTh/8MesqI9gUj1N818HiOQNvZi/ZmypSsYINjyM3tNAyWaC417uB0o
- ag6vubx+ttQg113mhJztE892b44IjUa/DzyHTa3lmAf9aKwwgRJXrdI/0+ya6YAklzAE
- uPay0AMjQmdg75jrPe1XKmJ1K2sqOs7P4qyVPua4HkYvLG8BS8zH0ZD9UonVVeA2DV8N
- joxL5KPVMoZPssOdIAs5u4DaV2EoDiirXP58Pr1XqwaqaFK9JotioZ7pBnxJiJbmrrn4
- J2JQ==
-X-Forwarded-Encrypted: i=1;
- AJvYcCUJj7rrB/oVK8A6AnUsWd3Cx2ttb0AzEV60vdW7258PqObLw75JjFbhMhBfcMMN1D/uXaOGBbv4YbYG@nongnu.org
-X-Gm-Message-State: AOJu0Yw9aSPrOe1UDIvGOavjTAe3NObSvDySKSpZrDKOPZrD76QCHmRl
- 7zxHhQTYoil5+Cp5rtwSwmXpK/R2AMth8R5jZa2c2BnnXnGPKy/ts1QWrdPZDLY=
-X-Gm-Gg: ASbGnctf2J8PZlrjr1L0eqzkSQGrzWfEd5BSR/ZL1eTJxAknsghk2jJiVb2Mi7Mo7Kp
- BztTGCnTcledJiTgnK8xLv6QxwBrKXa3Sy3Im2iNM4GjFdq32C2RvhfB66vnb0+RN9f5mTx1oMJ
- HRYXOeGuqfApbGhwhOr4hXZRgODXUeiJjOCkQqu/H9/C6A4Px4FiI6oKFsZgA0GJOtBx4TeSS21
- vyPhUWF+mRdmjoC4ZF+yCzAP5v0A9YGEHLVKRedlMh6vDmY1EB8YDLmdibuSfe+ONLN2NbSswmj
- szo4vB5irydlg/6s
-X-Google-Smtp-Source: AGHT+IHykMozNG9oMrpEMHdJvC+ueibKU4ecxvTwz6ADk0sInvWQHr5wdWncl2sY5b17YLVPVZ4b2Q==
-X-Received: by 2002:a17:90a:c2c5:b0:2ee:8008:b583 with SMTP id
- 98e67ed59e1d1-2f782c9c88fmr47093792a91.16.1737716115765; 
- Fri, 24 Jan 2025 02:55:15 -0800 (PST)
-Received: from [192.168.68.110] ([179.93.20.76])
- by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-2f7ffa67f30sm1506991a91.22.2025.01.24.02.55.12
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 24 Jan 2025 02:55:15 -0800 (PST)
-Message-ID: <f5d24146-a6a5-4403-83f6-f87274e8e249@ventanamicro.com>
-Date: Fri, 24 Jan 2025 07:55:11 -0300
+ (Exim 4.90_1) (envelope-from <iii@linux.ibm.com>)
+ id 1tbHpk-0005lC-Hk; Fri, 24 Jan 2025 06:26:44 -0500
+Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <iii@linux.ibm.com>)
+ id 1tbHpi-0001z3-QZ; Fri, 24 Jan 2025 06:26:44 -0500
+Received: from pps.filterd (m0360083.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 50O9Vgug019083;
+ Fri, 24 Jan 2025 11:26:40 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+ :content-transfer-encoding:date:from:message-id:mime-version
+ :subject:to; s=pp1; bh=4ApwJCYWzyF0ZzbXDBSqNt5pZgFIuYs4oWuS89fr2
+ tY=; b=lxOkQbC0NbIDMFq6hFUkX9aDed0uinEGwuSlNlgxKNHrqDWQfyZQik8z6
+ fHnsR5nCxgcCFA1LGpIr011BJzG14NaVvDFMV5YmufO4sEGPgvl2y3e6JrVrS4ZU
+ aBktyoTeGWGxZapgBGB4p+V+FPbzy9KRp31BMgOCJ9ArfLzmXI1rcAZzMAKhPgCF
+ z/0D8QchKiX1tcJggFIeCShZEJZWkAWBeaYgugdgBg5I+v8cpIOZbSpIGw+1E2uO
+ gVnwLB0l6hhuEOHa86f9QU+gdvo4EvfmrtrPhWwJOsreh4uxyLn8EErq/MHufpwH
+ dW+M0trOWBXcN/HC1c65imrCqVwTA==
+Received: from ppma13.dal12v.mail.ibm.com
+ (dd.9e.1632.ip4.static.sl-reverse.com [50.22.158.221])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 44c0x93eu6-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Fri, 24 Jan 2025 11:26:39 +0000 (GMT)
+Received: from pps.filterd (ppma13.dal12v.mail.ibm.com [127.0.0.1])
+ by ppma13.dal12v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 50O9tHqS032420;
+ Fri, 24 Jan 2025 11:26:39 GMT
+Received: from smtprelay01.fra02v.mail.ibm.com ([9.218.2.227])
+ by ppma13.dal12v.mail.ibm.com (PPS) with ESMTPS id 448ruk2sqy-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Fri, 24 Jan 2025 11:26:38 +0000
+Received: from smtpav01.fra02v.mail.ibm.com (smtpav01.fra02v.mail.ibm.com
+ [10.20.54.100])
+ by smtprelay01.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 50OBQZl457540952
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Fri, 24 Jan 2025 11:26:35 GMT
+Received: from smtpav01.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 78293200C7;
+ Fri, 24 Jan 2025 11:26:35 +0000 (GMT)
+Received: from smtpav01.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id EC3AC200CF;
+ Fri, 24 Jan 2025 11:26:34 +0000 (GMT)
+Received: from heavy.ibm.com (unknown [9.179.20.50])
+ by smtpav01.fra02v.mail.ibm.com (Postfix) with ESMTP;
+ Fri, 24 Jan 2025 11:26:34 +0000 (GMT)
+From: Ilya Leoshkevich <iii@linux.ibm.com>
+To: Richard Henderson <richard.henderson@linaro.org>,
+ =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ David Hildenbrand <david@redhat.com>, Thomas Huth <thuth@redhat.com>,
+ Halil Pasic <pasic@linux.ibm.com>,
+ Christian Borntraeger <borntraeger@linux.ibm.com>,
+ Eric Farman <farman@linux.ibm.com>
+Cc: qemu-s390x@nongnu.org, qemu-devel@nongnu.org,
+ Ilya Leoshkevich <iii@linux.ibm.com>
+Subject: [PATCH] hw/s390x/s390-virtio-ccw: Fix a record/replay deadlock
+Date: Fri, 24 Jan 2025 12:25:48 +0100
+Message-ID: <20250124112625.23050-1-iii@linux.ibm.com>
+X-Mailer: git-send-email 2.48.1
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] target/riscv: rvv: Fix unexpected behavior of vector
- reduction instructions when vl is 0
-To: Max Chou <max.chou@sifive.com>, qemu-devel@nongnu.org,
- qemu-riscv@nongnu.org
-Cc: Palmer Dabbelt <palmer@dabbelt.com>,
- Alistair Francis <alistair.francis@wdc.com>, Bin Meng <bmeng.cn@gmail.com>,
- Weiwei Li <liwei1518@gmail.com>, Liu Zhiwei <zhiwei_liu@linux.alibaba.com>
-References: <20250124101452.2519171-1-max.chou@sifive.com>
-Content-Language: en-US
-From: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
-In-Reply-To: <20250124101452.2519171-1-max.chou@sifive.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::102a;
- envelope-from=dbarboza@ventanamicro.com; helo=mail-pj1-x102a.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Content-Transfer-Encoding: 8bit
+X-TM-AS-GCONF: 00
+X-Proofpoint-GUID: 1M0knaISyUEdQunm7sP_0yZCW_Ipi93P
+X-Proofpoint-ORIG-GUID: 1M0knaISyUEdQunm7sP_0yZCW_Ipi93P
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1057,Hydra:6.0.680,FMLib:17.12.68.34
+ definitions=2025-01-24_04,2025-01-23_01,2024-11-22_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ adultscore=0 phishscore=0
+ mlxlogscore=999 priorityscore=1501 impostorscore=0 bulkscore=0
+ lowpriorityscore=0 malwarescore=0 mlxscore=0 suspectscore=0 spamscore=0
+ clxscore=1015 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2411120000 definitions=main-2501240080
+Received-SPF: pass client-ip=148.163.156.1; envelope-from=iii@linux.ibm.com;
+ helo=mx0a-001b2d01.pphosted.com
+X-Spam_score_int: -26
+X-Spam_score: -2.7
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
+ RCVD_IN_MSPIKE_H2=-0.043, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -106,53 +109,76 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+Booting an s390x VM in record/replay mode hangs due to a deadlock
+between rr_cpu_thread_fn() and s390_machine_reset(). The former needs
+the record/replay mutex held by the latter, and the latter waits until
+the former completes its run_on_cpu() request.
 
+Fix by temporarily dropping the record/replay mutex, like it's done in
+pause_all_vcpus().
 
-On 1/24/25 7:14 AM, Max Chou wrote:
-> According to the Vector Reduction Operations section in the RISC-V "V"
-> Vector Extension spec,
-> "If vl=0, no operation is performed and the destination register is not
-> updated."
-> 
-> The vd should be updated when vl is larger than 0.
-> 
+Signed-off-by: Ilya Leoshkevich <iii@linux.ibm.com>
+---
+ hw/s390x/s390-virtio-ccw.c | 24 +++++++++++++++++++++++-
+ 1 file changed, 23 insertions(+), 1 deletion(-)
 
-Fixes: fe5c9ab1fc ("target/riscv: vector single-width integer reduction instructions")
-Fixes: f714361ed7 ("target/riscv: rvv-1.0: implement vstart CSR")
-
-> Signed-off-by: Max Chou <max.chou@sifive.com>
-
-Reviewed-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
-
-> ---
->   target/riscv/vector_helper.c | 8 ++++++--
->   1 file changed, 6 insertions(+), 2 deletions(-)
-> 
-> diff --git a/target/riscv/vector_helper.c b/target/riscv/vector_helper.c
-> index 5386e3b97c5..7773df6a7c7 100644
-> --- a/target/riscv/vector_helper.c
-> +++ b/target/riscv/vector_helper.c
-> @@ -4659,7 +4659,9 @@ void HELPER(NAME)(void *vd, void *v0, void *vs1,          \
->           }                                                 \
->           s1 = OP(s1, (TD)s2);                              \
->       }                                                     \
-> -    *((TD *)vd + HD(0)) = s1;                             \
-> +    if (vl > 0) {                                         \
-> +        *((TD *)vd + HD(0)) = s1;                         \
-> +    }                                                     \
->       env->vstart = 0;                                      \
->       /* set tail elements to 1s */                         \
->       vext_set_elems_1s(vd, vta, esz, vlenb);               \
-> @@ -4745,7 +4747,9 @@ void HELPER(NAME)(void *vd, void *v0, void *vs1,           \
->           }                                                  \
->           s1 = OP(s1, (TD)s2, &env->fp_status);              \
->       }                                                      \
-> -    *((TD *)vd + HD(0)) = s1;                              \
-> +    if (vl > 0) {                                          \
-> +        *((TD *)vd + HD(0)) = s1;                          \
-> +    }                                                      \
->       env->vstart = 0;                                       \
->       /* set tail elements to 1s */                          \
->       vext_set_elems_1s(vd, vta, esz, vlenb);                \
+diff --git a/hw/s390x/s390-virtio-ccw.c b/hw/s390x/s390-virtio-ccw.c
+index 38aeba14eeb..e2386910f78 100644
+--- a/hw/s390x/s390-virtio-ccw.c
++++ b/hw/s390x/s390-virtio-ccw.c
+@@ -48,6 +48,7 @@
+ #include "kvm/kvm_s390x.h"
+ #include "hw/virtio/virtio-md-pci.h"
+ #include "hw/s390x/virtio-ccw-md.h"
++#include "system/replay.h"
+ #include CONFIG_DEVICES
+ 
+ static Error *pv_mig_blocker;
+@@ -454,6 +455,18 @@ static void s390_machine_reset(MachineState *machine, ResetType type)
+     CPUState *cs, *t;
+     S390CPU *cpu;
+ 
++    /*
++     * Temporarily drop the record/replay mutex to let rr_cpu_thread_fn()
++     * process the run_on_cpu() requests below. This is safe, because at this
++     * point one of the following is true:
++     * - All CPU threads are not running, either because the machine is being
++     *   initialized, or because the guest requested a reset using diag 308.
++     *   There is no risk to desync the record/replay state.
++     * - A snapshot is about to be loaded. The record/replay state consistency
++     *   is not important.
++     */
++    replay_mutex_unlock();
++
+     /* get the reset parameters, reset them once done */
+     s390_ipl_get_reset_request(&cs, &reset_type);
+ 
+@@ -533,7 +546,7 @@ static void s390_machine_reset(MachineState *machine, ResetType type)
+              * went wrong.
+              */
+             s390_cpu_set_state(S390_CPU_STATE_OPERATING, cpu);
+-            return;
++            goto out_lock;
+         }
+ 
+         run_on_cpu(cs, s390_do_cpu_load_normal, RUN_ON_CPU_NULL);
+@@ -546,6 +559,15 @@ static void s390_machine_reset(MachineState *machine, ResetType type)
+         run_on_cpu(t, s390_do_cpu_set_diag318, RUN_ON_CPU_HOST_ULONG(0));
+     }
+     s390_ipl_clear_reset_request();
++
++out_lock:
++    /*
++     * Re-take the record/replay mutex, temporarily dropping the BQL in order
++     * to satisfy the ordering requirements.
++     */
++    bql_unlock();
++    replay_mutex_lock();
++    bql_lock();
+ }
+ 
+ static void s390_machine_device_pre_plug(HotplugHandler *hotplug_dev,
+-- 
+2.48.1
 
 
