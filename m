@@ -4,139 +4,73 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 37894C02181
-	for <qemu-devel@archiver.kernel.org>; Fri, 24 Jan 2025 13:30:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4035EC02181
+	for <qemu-devel@archiver.kernel.org>; Fri, 24 Jan 2025 13:38:05 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tbJko-0001Gp-7q; Fri, 24 Jan 2025 08:29:46 -0500
+	id 1tbJsC-0003i8-Rf; Fri, 24 Jan 2025 08:37:26 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1tbJkl-0001Fd-9N
- for qemu-devel@nongnu.org; Fri, 24 Jan 2025 08:29:43 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <xiaoyao.li@intel.com>)
+ id 1tbJrw-0003hS-VD
+ for qemu-devel@nongnu.org; Fri, 24 Jan 2025 08:37:08 -0500
+Received: from mgamail.intel.com ([198.175.65.13])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1tbJkj-0002x7-GY
- for qemu-devel@nongnu.org; Fri, 24 Jan 2025 08:29:43 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1737725379;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=qdpgGilDnUOWUiGuoKAy0VLSV2IxQwO5L8RVJiJTu1c=;
- b=VFt+aXzDgd6D1vv6YZxffBI6XG9TMwEjAlT6Odn4STY/qrs3qhK+SR+FSe+onisLxw5oxO
- tMTJCZ/9jvVQHqlovgsd57kXGQm6RumqB/6D8KZ81xKqsbbppqq2mLLSJPi72ApMBVQB77
- oVXNb9yjHqxHvIsJgX4xvLVP3Wwe9b8=
-Received: from mail-qv1-f69.google.com (mail-qv1-f69.google.com
- [209.85.219.69]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-437-_MAKcSdXMGWafrd2g7Rb5g-1; Fri, 24 Jan 2025 08:29:36 -0500
-X-MC-Unique: _MAKcSdXMGWafrd2g7Rb5g-1
-X-Mimecast-MFC-AGG-ID: _MAKcSdXMGWafrd2g7Rb5g
-Received: by mail-qv1-f69.google.com with SMTP id
- 6a1803df08f44-6d8f8b9d43aso38727486d6.0
- for <qemu-devel@nongnu.org>; Fri, 24 Jan 2025 05:29:36 -0800 (PST)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1737725376; x=1738330176;
- h=content-transfer-encoding:in-reply-to:autocrypt:content-language
- :from:references:cc:to:subject:user-agent:mime-version:date
- :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=qdpgGilDnUOWUiGuoKAy0VLSV2IxQwO5L8RVJiJTu1c=;
- b=vLMIpZ2jwoLET55OvGIAUxJWQlIHPpoWRCiQwhCaf+8Eg3onBx/yd6Jh6NraTMQef4
- xz7DyMgou7lF/iLiIfztw+82qFiDPUjC+iG3Ek2fzcUyYGOjHIyoCxd2RiSezGQea45h
- xBv9X304mwhI1+rRDy4rIG8+0ZrnBA9B1Q5A4AnUZXRBEeeofysw6116GRBIIJHvB9JA
- pjQjX9VYZgYjpShVYEorkZQOP8oT58IsJw0PesUeXTEeL6o7Nl1oT2LFqOshjl6OxCJA
- lIa499es4NHqHovDohw09cTYYH4YNc+cslzpHpFZTo5WPGQrG28MDVWQ6mi66wCWXd47
- 5y4A==
-X-Forwarded-Encrypted: i=1;
- AJvYcCXkU8xc4BYczA9MT+fpkKYT/yfJ/lhREUBglUNFGhlr6YTeBrlOx97TGPPGwpq/NN9O2yvkL9gM62kk@nongnu.org
-X-Gm-Message-State: AOJu0Yy+z0AvTDP16BOHkOA9dQayp6QUpYfIQqWbC38bIRPuXBDHPJ3N
- DN93mpeUmwn2F97DdhD/m5hXnlGbnuCH3X+59gFdundZFSRYYpNFSy5fgm3G/msnaAJ5P9n5ObT
- D/ZhLEXCstRDOLOsIzkTiBNh86xZ6Kbc7X6bovtVdZt9hwPAGjivM
-X-Gm-Gg: ASbGncsQWLuWu3klRioxA/nhOhreQptKgctxzSOSqznF1Cv6BDO10iGKFq9e7xQHrXN
- WHb5gSF4+IWmAVbIGUHVX24qBFNpVXnjMkYqazihzy8WQegiEm/EbSFCm/h9QUnQJleQd+XLAtK
- Vyuror2j1iCtS8Am6RAZoL0wSLDSSFNyezE7VJogrLggx5dDNd+AZt3gOAsmUa7NhwbqnP2HKJ0
- xXatGt7Z3LykOtSOkJz0ul8d2hPRB6VJd0sPfreX7t9loVaorOMRw5iIQTfctigcqWnhYidu071
- NZqzpDnu3bUv+oQGjwdkGp7BNQ==
-X-Received: by 2002:a05:6214:acc:b0:6dd:3c07:ae48 with SMTP id
- 6a1803df08f44-6e1b224acf6mr498425916d6.37.1737725376101; 
- Fri, 24 Jan 2025 05:29:36 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IF33nfNflRPPgLlBhtRnqnjpppODRSkFPyKxCi55RhGRh0OddiRTji+B0XQU5MOAXGP25ggLg==
-X-Received: by 2002:a05:6214:acc:b0:6dd:3c07:ae48 with SMTP id
- 6a1803df08f44-6e1b224acf6mr498425676d6.37.1737725375838; 
- Fri, 24 Jan 2025 05:29:35 -0800 (PST)
-Received: from [192.168.0.7] (ip-109-42-48-134.web.vodafone.de.
- [109.42.48.134]) by smtp.gmail.com with ESMTPSA id
- 6a1803df08f44-6e205137058sm8619436d6.22.2025.01.24.05.29.34
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 24 Jan 2025 05:29:35 -0800 (PST)
-Message-ID: <d9094d1e-10bc-4b15-9efe-ebc8bab5d158@redhat.com>
-Date: Fri, 24 Jan 2025 14:29:32 +0100
+ (Exim 4.90_1) (envelope-from <xiaoyao.li@intel.com>)
+ id 1tbJru-0003oF-6q
+ for qemu-devel@nongnu.org; Fri, 24 Jan 2025 08:37:08 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+ d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+ t=1737725827; x=1769261827;
+ h=from:to:cc:subject:date:message-id:mime-version:
+ content-transfer-encoding;
+ bh=af0DaxV6gEg0cz4KoUno4KNU4bEqf0Z7gl2SqxN9zGQ=;
+ b=Pt3CgfVaxG0c+Py7kVnET0i8ScrpDzIhvg953JQVwfPSdpixhfXUZ3zl
+ bsdIRfmlRHNLS7hFO9Wr25Ggxqfx+wLWklSrlhQ4U+StqXKYUcDfm0EsN
+ v3xWYv+zCwAjZCQI0SHeAXrqASLN4KNqyVnh1b8PDsfT2JuY2s31Z/CPa
+ DU608XpQuNLoYeSf3kSQmj8S7gqYA9dWEZ69oIUgctYdT8EU9JaLFS28N
+ 5R0X/QeRlhhdTcn+B/F/BvuMFR7WKPLCyMcxt4dGmMoGJi8E2S93VLeGs
+ demtfDNm6+q78aQm6O2z27w4PqhEAoAhOx7T6SeBI/RYDCL69966lP1WB g==;
+X-CSE-ConnectionGUID: Uk2yy5EmTq2DARUVi4y+yA==
+X-CSE-MsgGUID: JR+TFh9zQMy8Vy6RpuQNzQ==
+X-IronPort-AV: E=McAfee;i="6700,10204,11325"; a="49246168"
+X-IronPort-AV: E=Sophos;i="6.13,231,1732608000"; d="scan'208";a="49246168"
+Received: from fmviesa003.fm.intel.com ([10.60.135.143])
+ by orvoesa105.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 24 Jan 2025 05:37:02 -0800
+X-CSE-ConnectionGUID: m1YELRpEQyCroeMZVOOfMg==
+X-CSE-MsgGUID: +wRgE7xvQeC2aFaSV889oA==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.12,224,1728975600"; d="scan'208";a="111804081"
+Received: from lxy-clx-4s.sh.intel.com ([10.239.48.52])
+ by fmviesa003.fm.intel.com with ESMTP; 24 Jan 2025 05:36:58 -0800
+From: Xiaoyao Li <xiaoyao.li@intel.com>
+To: Paolo Bonzini <pbonzini@redhat.com>,
+ =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Igor Mammedov <imammedo@redhat.com>
+Cc: Zhao Liu <zhao1.liu@intel.com>, "Michael S. Tsirkin" <mst@redhat.com>,
+ Eric Blake <eblake@redhat.com>, Markus Armbruster <armbru@redhat.com>,
+ Peter Maydell <peter.maydell@linaro.org>,
+ Marcelo Tosatti <mtosatti@redhat.com>, Huacai Chen <chenhuacai@kernel.org>,
+ Rick Edgecombe <rick.p.edgecombe@intel.com>,
+ Francesco Lavra <francescolavra.fl@gmail.com>, xiaoyao.li@intel.com,
+ qemu-devel@nongnu.org, kvm@vger.kernel.org
+Subject: [PATCH v7 00/52] QEMU TDX support
+Date: Fri, 24 Jan 2025 08:19:56 -0500
+Message-Id: <20250124132048.3229049-1-xiaoyao.li@intel.com>
+X-Mailer: git-send-email 2.34.1
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PULL 15/32] tests/functional/aarch64: add tests for FEAT_RME
-To: =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
- qemu-devel@nongnu.org
-Cc: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-References: <20250110131754.2769814-1-alex.bennee@linaro.org>
- <20250110131754.2769814-16-alex.bennee@linaro.org>
-From: Thomas Huth <thuth@redhat.com>
-Content-Language: en-US
-Autocrypt: addr=thuth@redhat.com; keydata=
- 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
-In-Reply-To: <20250110131754.2769814-16-alex.bennee@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=thuth@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -50
-X-Spam_score: -5.1
-X-Spam_bar: -----
-X-Spam_report: (-5.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-2.996,
+Received-SPF: pass client-ip=198.175.65.13; envelope-from=xiaoyao.li@intel.com;
+ helo=mgamail.intel.com
+X-Spam_score_int: -63
+X-Spam_score: -6.4
+X-Spam_bar: ------
+X-Spam_report: (-6.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-2.996,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ HK_RANDOM_ENVFROM=0.001, HK_RANDOM_FROM=0.998, RCVD_IN_DNSWL_MED=-2.3,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
@@ -155,30 +89,161 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 10/01/2025 14.17, Alex Bennée wrote:
-> From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-> 
-> This boot an OP-TEE environment, and launch a nested guest VM inside it
-> using the Realms feature. We do it for virt and sbsa-ref platforms.
+This is the v7 series of TDX QEMU enabling. The series is also available
+in github:
+https://github.com/intel-staging/qemu-tdx/tree/tdx-qemu-upstream-v7
 
-  Hi,
+To boot TD guest, please always use the latest TDX module (1.5) and OVMF
+available.
 
-FWIW, I just saw this test_aarch64_rme_virt test failing once. Looking at 
-the console.log, it seems like the guest crashed somewhere at the end of the 
-firmware or very early in the kernel:
+Note, this series has a dependency on
+https://lore.kernel.org/qemu-devel/20241217123932.948789-1-xiaoyao.li@intel.com/
 
-EFI stub: Booting Linux Kernel...
-2025-01-24 13:25:28,226:
-2025-01-24 13:25:28,226:
-2025-01-24 13:25:28,227: Synchronous Exception at 0x00000000BF526498
-2025-01-24 13:25:28,227:
-2025-01-24 13:25:28,227:
-2025-01-24 13:25:28,228: Synchronous Exception at 0x00000000BF526498
+=== future work ===
+- CPU model
 
-I wasn't able to reproduce it afterwards anymore, but in case somebody runs 
-into this later again and wonders if it is a later regression: It happened 
-for me with commit cf86770c7aa31ebd.
+  It now only supports booting TD VM with "-cpu host". It is the only
+  case that not supposed to hit any warning/error.
 
-  Thomas
+  When using named CPU model, even the same model as host, it likely
+  hits warning like some feature not supported or some feature enforced
+  on. It's a future work to decide if needs to introduce TDX specific
+  named CPU models.
+
+- Attestation support
+
+  Attestation support is dropped in this version becuase KVM side remove
+  the support of the related user exit. Atttestation support will be
+  submitted separately when KVM regain the support.
+
+- gdb support
+
+  gdb support to debug a TD in off-debug mode is left as future work.
+
+=== Changes in v7 ===
+ - Remove patch 40 and 41. Need to re-think on it and will submit them
+   later.
+ - Patch 44 in v6 is replaced by patch 38 in v7;
+ - Patch 45 in v6 is replaced by patch 39 in v7;
+ - Drop patch 58 and 59 in v6, since the variant of them is merged
+   already;
+ - squash some patches into their user patch;
+ - For other, please see individual patch for change history;
+
+v6:
+https://lore.kernel.org/qemu-devel/20241105062408.3533704-1-xiaoyao.li@intel.com/
+
+Chao Peng (1):
+  i386/tdx: load TDVF for TD guest
+
+Isaku Yamahata (4):
+  i386/tdx: Make sept_ve_disable set by default
+  i386/tdvf: Introduce function to parse TDVF metadata
+  i386/tdx: Add TDVF memory via KVM_TDX_INIT_MEM_REGION
+  i386/tdx: Don't synchronize guest tsc for TDs
+
+Xiaoyao Li (47):
+  *** HACK *** linux-headers: Update headers to pull in TDX API changes
+  i386: Introduce tdx-guest object
+  i386/tdx: Implement tdx_kvm_type() for TDX
+  i386/tdx: Implement tdx_kvm_init() to initialize TDX VM context
+  i386/tdx: Get tdx_capabilities via KVM_TDX_CAPABILITIES
+  i386/tdx: Introduce is_tdx_vm() helper and cache tdx_guest object
+  kvm: Introduce kvm_arch_pre_create_vcpu()
+  i386/tdx: Initialize TDX before creating TD vcpus
+  i386/tdx: Add property sept-ve-disable for tdx-guest object
+  i386/tdx: Wire CPU features up with attributes of TD guest
+  i386/tdx: Validate TD attributes
+  i386/tdx: Set APIC bus rate to match with what TDX module enforces
+  i386/tdx: Implement user specified tsc frequency
+  i386/tdx: Parse TDVF metadata for TDX VM
+  i386/tdx: Don't initialize pc.rom for TDX VMs
+  i386/tdx: Track mem_ptr for each firmware entry of TDVF
+  i386/tdx: Track RAM entries for TDX VM
+  headers: Add definitions from UEFI spec for volumes, resources, etc...
+  i386/tdx: Setup the TD HOB list
+  i386/tdx: Call KVM_TDX_INIT_VCPU to initialize TDX vcpu
+  i386/tdx: Finalize TDX VM
+  i386/tdx: Enable user exit on KVM_HC_MAP_GPA_RANGE
+  i386/tdx: Handle KVM_SYSTEM_EVENT_TDX_FATAL
+  i386/tdx: Wire TDX_REPORT_FATAL_ERROR with GuestPanic facility
+  i386/cpu: introduce x86_confidential_guest_cpu_instance_init()
+  i386/tdx: implement tdx_cpu_instance_init()
+  i386/cpu: Introduce enable_cpuid_0x1f to force exposing CPUID 0x1f
+  i386/tdx: Force exposing CPUID 0x1f
+  i386/tdx: Set kvm_readonly_mem_enabled to false for TDX VM
+  i386/tdx: Disable SMM for TDX VMs
+  i386/tdx: Disable PIC for TDX VMs
+  i386/tdx: Only configure MSR_IA32_UCODE_REV in kvm_init_msrs() for TDs
+  i386/apic: Skip kvm_apic_put() for TDX
+  cpu: Don't set vcpu_dirty when guest_state_protected
+  i386/cgs: Rename *mask_cpuid_features() to *adjust_cpuid_features()
+  i386/tdx: Implement adjust_cpuid_features() for TDX
+  i386/tdx: Apply TDX fixed0 and fixed1 information to supported CPUIDs
+  i386/tdx: Mask off CPUID bits by unsupported TD Attributes
+  i386/cpu: Move CPUID_XSTATE_XSS_MASK to header file and introduce
+    CPUID_XSTATE_MASK
+  i386/tdx: Mask off CPUID bits by unsupported XFAM
+  i386/tdx: Mark the configurable bit not reported by KVM as unsupported
+  i386/cgs: Introduce x86_confidential_guest_check_features()
+  i386/tdx: Fetch and validate CPUID of TD guest
+  i386/tdx: Don't treat SYSCALL as unavailable
+  i386/tdx: Make invtsc default on
+  i386/tdx: Validate phys_bits against host value
+  docs: Add TDX documentation
+
+ accel/kvm/kvm-all.c                        |   17 +-
+ configs/devices/i386-softmmu/default.mak   |    1 +
+ docs/system/confidential-guest-support.rst |    1 +
+ docs/system/i386/tdx.rst                   |  156 +++
+ docs/system/target-i386.rst                |    1 +
+ hw/i386/Kconfig                            |    6 +
+ hw/i386/kvm/apic.c                         |    5 +
+ hw/i386/meson.build                        |    1 +
+ hw/i386/pc.c                               |   29 +-
+ hw/i386/pc_sysfw.c                         |    7 +
+ hw/i386/tdvf-hob.c                         |  130 +++
+ hw/i386/tdvf-hob.h                         |   26 +
+ hw/i386/tdvf.c                             |  187 +++
+ hw/i386/x86-common.c                       |    6 +-
+ include/hw/i386/tdvf.h                     |   45 +
+ include/standard-headers/uefi/uefi.h       |  187 +++
+ include/system/kvm.h                       |    1 +
+ linux-headers/asm-x86/kvm.h                |   70 ++
+ linux-headers/linux/kvm.h                  |    1 +
+ qapi/qom.json                              |   35 +
+ qapi/run-state.json                        |   31 +-
+ system/runstate.c                          |   67 ++
+ target/arm/kvm.c                           |    5 +
+ target/i386/confidential-guest.h           |   44 +-
+ target/i386/cpu.c                          |   50 +-
+ target/i386/cpu.h                          |   27 +
+ target/i386/host-cpu.c                     |    2 +-
+ target/i386/host-cpu.h                     |    1 +
+ target/i386/kvm/kvm.c                      |  114 +-
+ target/i386/kvm/kvm_i386.h                 |   15 +
+ target/i386/kvm/meson.build                |    2 +
+ target/i386/kvm/tdx-stub.c                 |   20 +
+ target/i386/kvm/tdx.c                      | 1213 ++++++++++++++++++++
+ target/i386/kvm/tdx.h                      |   65 ++
+ target/i386/sev.c                          |    9 +-
+ target/loongarch/kvm/kvm.c                 |    5 +
+ target/mips/kvm.c                          |    5 +
+ target/ppc/kvm.c                           |    5 +
+ target/riscv/kvm/kvm-cpu.c                 |    5 +
+ target/s390x/kvm/kvm.c                     |    5 +
+ 40 files changed, 2517 insertions(+), 85 deletions(-)
+ create mode 100644 docs/system/i386/tdx.rst
+ create mode 100644 hw/i386/tdvf-hob.c
+ create mode 100644 hw/i386/tdvf-hob.h
+ create mode 100644 hw/i386/tdvf.c
+ create mode 100644 include/hw/i386/tdvf.h
+ create mode 100644 include/standard-headers/uefi/uefi.h
+ create mode 100644 target/i386/kvm/tdx-stub.c
+ create mode 100644 target/i386/kvm/tdx.c
+ create mode 100644 target/i386/kvm/tdx.h
+
+-- 
+2.34.1
 
 
