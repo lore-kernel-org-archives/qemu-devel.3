@@ -4,89 +4,92 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id F30B3C02181
-	for <qemu-devel@archiver.kernel.org>; Fri, 24 Jan 2025 09:52:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CE628C0218C
+	for <qemu-devel@archiver.kernel.org>; Fri, 24 Jan 2025 09:52:45 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tbGFE-0006HP-Jp; Fri, 24 Jan 2025 04:44:56 -0500
+	id 1tbGIE-0005YV-0J; Fri, 24 Jan 2025 04:48:02 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1tbGFC-0006F8-Tm
- for qemu-devel@nongnu.org; Fri, 24 Jan 2025 04:44:54 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ id 1tbGG6-0007TO-0L
+ for qemu-devel@nongnu.org; Fri, 24 Jan 2025 04:45:53 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1tbGF8-0003dZ-K5
- for qemu-devel@nongnu.org; Fri, 24 Jan 2025 04:44:53 -0500
+ id 1tbGG4-0003wl-FB
+ for qemu-devel@nongnu.org; Fri, 24 Jan 2025 04:45:49 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1737711888;
+ s=mimecast20190719; t=1737711947;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding;
- bh=LMbthOyayBn3XGkD2O0QW0vI87UoOUTJPuUpIWH4a00=;
- b=P6rubBJd5ce6f1FisFatRGQpR9PCWXLkMXwLFS5uHiVrnlDwPml0Ln8D4llxIhB7LhXQG0
- aMzSz0G3dp2JmN/XayeG/rEG1k/nmZBKs9htN0R+/eMN9S1tRnCTeGRQM0/7d6ifrpPk0k
- M3dif0kMS/TPBN7m+VB3Lbx/GyjYyHw=
-Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com
- [209.85.128.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ to:to:cc:mime-version:mime-version:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=AeUloYUS4GjmUT75E0JIueWDFUGBROQ8X7lta1NSKvg=;
+ b=H6mx6LYIz2PWbXxl6qtrXOZj7nOHwN++2WqY4v2CaQwuDzT2m4W/UxmYm9ZKPTd7DGLB5U
+ M/EEOVh0dUIqUIa+bF66bHtFCnOKuzj2+SK0DhDJhO3yUFFPEFH29khq9AJJ3nNPpslw3d
+ +NnYf2lee5CWdL0f5NTMWJ+MGEAlCS8=
+Received: from mail-wr1-f71.google.com (mail-wr1-f71.google.com
+ [209.85.221.71]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-641-Bb_YWTbRNr6FXDHaL0fJNg-1; Fri, 24 Jan 2025 04:44:46 -0500
-X-MC-Unique: Bb_YWTbRNr6FXDHaL0fJNg-1
-X-Mimecast-MFC-AGG-ID: Bb_YWTbRNr6FXDHaL0fJNg
-Received: by mail-wm1-f71.google.com with SMTP id
- 5b1f17b1804b1-43673af80a6so13347045e9.1
- for <qemu-devel@nongnu.org>; Fri, 24 Jan 2025 01:44:46 -0800 (PST)
+ us-mta-304-O-r8OH37ONSzzYnYzWEs5w-1; Fri, 24 Jan 2025 04:45:42 -0500
+X-MC-Unique: O-r8OH37ONSzzYnYzWEs5w-1
+X-Mimecast-MFC-AGG-ID: O-r8OH37ONSzzYnYzWEs5w
+Received: by mail-wr1-f71.google.com with SMTP id
+ ffacd0b85a97d-38a35a65575so1231514f8f.1
+ for <qemu-devel@nongnu.org>; Fri, 24 Jan 2025 01:45:42 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1737711885; x=1738316685;
- h=content-transfer-encoding:mime-version:message-id:date:subject:to
- :from:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=LMbthOyayBn3XGkD2O0QW0vI87UoOUTJPuUpIWH4a00=;
- b=INHtoRLSpqcyGmhgnwkVuRRJP98ARWXIC8f781d8tw2T+MuIUP9O6ojaHrZkUBBn3t
- y1+mUXRxjj7AImyDyiPYULaqhkEjOzCJjgfrgXzcyeUIO2VPRI1I57v1E5CC+HXrIXbq
- PXTpbnsFrF9ciuba/nGFRPXwIY0Z/FdOvGRykeXYziIthuhecDxhmRsVC1DvgziBlxTX
- tFtzXrQjfuRuIS1eBDom44phdwKd73YEJH/gu39QWfhKhPYg3FMvZ+irkUBsOh5QQBYJ
- /ijLgabvJdl+0ynnWzXlyvzr7pb2cHTv66zEdKcBzZC5JSogA1jlLrl1yYsslnCZKQ4P
- VOsw==
-X-Gm-Message-State: AOJu0YxpWElpOthNtQ1+T/NggAumOm9deVQuwvj5VY5Izpn6WnP43Zsw
- jM3pYU+Jx6GASdlKYPIsuveQqPCIEv7xjO7GdxR75XYpqNr5tA/KpoCAuw+C4GioTdL6Wa4/04r
- TIssque89Ax0QBES3NuZVxfkO2qiLFl4na74KJ88CxwoCs+Q35ujuWuDNkw+bEs/DkyCByoNylC
- 5fPFgE/itFANyZGE+X+ADN5jaHzeptF9jrd0XVurc=
-X-Gm-Gg: ASbGncuCQH/Up6/T02pgiiYmWErbOByeoXHztzlWcb5n8w6y7KWJYzFGBLDUr2WK3m1
- wfYH5KIg3aW881wKo/LL98z2hep0U82AHOWuqBsMvalqwP1HBUYM7/TP5+bhYPWUJff2Ej5GSiU
- nVQIJDFaQZO1mQeuNHfV21cAk8vFwYE3XKkb1V4dA3K6WNlXhyA4xLvMnFWv6Y+NhTJW379Pd9Z
- vUjltIf1bsmSs1CA8iQ7i6J7pReESZ+jHrdeNxxz6Dt+HpRUmm8fAQAAULgBvH1bHGFIj/d1A==
-X-Received: by 2002:a05:600c:5027:b0:434:f5c0:3288 with SMTP id
- 5b1f17b1804b1-43891430ed1mr267536565e9.29.1737711884898; 
- Fri, 24 Jan 2025 01:44:44 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IFzHDlwhXx/wkak/IGLEBcnia0UFMfTNufavXwJa5l4Do3eZa/wXcEvj6Ytz2hFmkzWSEfQRQ==
-X-Received: by 2002:a05:600c:5027:b0:434:f5c0:3288 with SMTP id
- 5b1f17b1804b1-43891430ed1mr267536195e9.29.1737711884271; 
- Fri, 24 Jan 2025 01:44:44 -0800 (PST)
+ d=1e100.net; s=20230601; t=1737711941; x=1738316741;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=AeUloYUS4GjmUT75E0JIueWDFUGBROQ8X7lta1NSKvg=;
+ b=FY1vzXjJM8PjcziIa1H3ttyEwXQlQ/+Y4uC2N+CijYMYn6LeIxb5BHMWvuGI0BP15u
+ jf8utCS/mWvzWr2b406YmM7PJDTajgDu9pmG5oPvsFE2js9RmDMXRVIp4p/43+RR5rVI
+ MWfxlS8JS9dlMEh15VEbCRSFnyJKm0Hr8aQY1OV2ZnIvG3tonph/MefYcueLzz/ZXsXW
+ obqkgRkxPrm/bXEH4QGjYaDt/yaGbvMmkbns1PBPxcfhYfJhJgVZayzvwUqGHqXnX92S
+ 3UVuXpvuLBmjxoCcaHLPjOeldzTkiS9yZBQzUcRMmEhqz9C0BBCkGRdLoOPwJNxmZYg4
+ F+KA==
+X-Gm-Message-State: AOJu0Yy67XqU50Cw+9pT3q8Xcni/Xq8bNWOhB+/5trkYIPyp83LzHVkD
+ rsBBej/Ri4Ks/7RB3ahqtYkK7Bm4x70/w+6d2/JxtBCzMJNHs/bPWz3nlYSETuFZS2647egbnxB
+ I95nb8acAf11xwk544O5NpWMoIguHurSbMjJuFNZzJzx/08BvT4yI1I+eUmgpwMOz9hWHtLwkqt
+ LcQmafO6DBhkOxXR4pqr1rkRpVoYHK0ssFD0sABKw=
+X-Gm-Gg: ASbGncsPfrfqnVXHnzfF9TeXXBLX/Ixxc/vKOnrIC2Ng88Zs8Q7FnFN3VDhVxoemWFX
+ q3fmdt72E5+90vrLQUbl0mlK+n73jdkA484OqM7XD+zYHZ3YBI+oFcdASqqgidyhZE/j/d+ErxQ
+ ofg4YtOOT7BR6WXWO69uN/oqk/uvlXMW2CzEUIZ2nGa3Zym3NBeevogFdJ8pBVoiK23JcR59FFe
+ hRHHn+aoXOKwYHzhi/2d+WpAIz3G+Hi7fbYdNP4Ez2ZTKnVfj74FjzXcW90Qox90oMyQk/gKQ==
+X-Received: by 2002:a5d:6da4:0:b0:38b:e32a:10a6 with SMTP id
+ ffacd0b85a97d-38bf57a9932mr32061193f8f.41.1737711940747; 
+ Fri, 24 Jan 2025 01:45:40 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IGM/78mz3VExiNnYWsnIIdxajIW+OeoDI4UWKlixbxasFGOS+obUI6TGoIT2uOGTwVIzVecIQ==
+X-Received: by 2002:a5d:6da4:0:b0:38b:e32a:10a6 with SMTP id
+ ffacd0b85a97d-38bf57a9932mr32061145f8f.41.1737711940331; 
+ Fri, 24 Jan 2025 01:45:40 -0800 (PST)
 Received: from [192.168.10.48] ([151.95.59.125])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-438bd57325csm20112735e9.34.2025.01.24.01.44.43
+ ffacd0b85a97d-38c2a1bad92sm2161951f8f.61.2025.01.24.01.45.39
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 24 Jan 2025 01:44:43 -0800 (PST)
+ Fri, 24 Jan 2025 01:45:39 -0800 (PST)
 From: Paolo Bonzini <pbonzini@redhat.com>
 To: qemu-devel@nongnu.org
-Subject: [PULL 00/48] i386, rust changes for 2024-01-24
-Date: Fri, 24 Jan 2025 10:43:54 +0100
-Message-ID: <20250124094442.13207-1-pbonzini@redhat.com>
+Subject: [PULL 28/48] rust: vmstate: implement Zeroable for VMStateField
+Date: Fri, 24 Jan 2025 10:44:22 +0100
+Message-ID: <20250124094442.13207-29-pbonzini@redhat.com>
 X-Mailer: git-send-email 2.48.1
+In-Reply-To: <20250124094442.13207-1-pbonzini@redhat.com>
+References: <20250124094442.13207-1-pbonzini@redhat.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=pbonzini@redhat.com;
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -50
 X-Spam_score: -5.1
 X-Spam_bar: -----
 X-Spam_report: (-5.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-2.996,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.043,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -104,99 +107,95 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The following changes since commit d6430c17d7113d3c38480dc34e59d00b0504e2f7:
+This shortens a bit the constants.  Do not bother using it
+in the vmstate macros since most of them will go away soon.
 
-  Merge tag 'pull-riscv-to-apply-20250119-1' of https://github.com/alistair23/qemu into staging (2025-01-19 08:55:46 -0500)
+Reviewed-by: Zhao Liu <zhao1.liu@intel.com>
+Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
+---
+ rust/qemu-api/src/vmstate.rs  | 18 +++---------------
+ rust/qemu-api/src/zeroable.rs | 31 +++++++++++++++++++++++++++++++
+ 2 files changed, 34 insertions(+), 15 deletions(-)
 
-are available in the Git repository at:
-
-  https://gitlab.com/bonzini/qemu.git tags/for-upstream
-
-for you to fetch changes up to 9feb68638e504c91b59e745b94423e8536abfd03:
-
-  rust: qemu-api: add sub-subclass to the integration tests (2025-01-23 19:07:39 +0100)
-
-----------------------------------------------------------------
-* target/i386: optimize string instructions
-* target/i386: new Sierra Forest and Clearwater Forest models
-* rust: type-safe vmstate implementation
-* rust: use interior mutability for PL011
-* rust: clean ups
-* memtxattrs: remove usage of bitfields from MEMTXATTRS_UNSPECIFIED
-
-----------------------------------------------------------------
-Paolo Bonzini (39):
-      rust: pl011: fix repr(C) for PL011Class
-      target/i386: inline gen_jcc into sole caller
-      target/i386: remove trailing 1 from gen_{j, cmov, set}cc1
-      target/i386: unify REP and REPZ/REPNZ generation
-      target/i386: unify choice between single and repeated string instructions
-      target/i386: reorganize ops emitted by do_gen_rep, drop repz_opt
-      target/i386: tcg: move gen_set/reset_* earlier in the file
-      target/i386: fix RF handling for string instructions
-      target/i386: make cc_op handling more explicit for repeated string instructions.
-      target/i386: do not use gen_op_jz_ecx for repeated string operations
-      target/i386: optimize CX handling in repeated string operations
-      target/i386: execute multiple REP/REPZ iterations without leaving TB
-      target/i386: pull computation of string update value out of loop
-      target/i386: extract common bits of gen_repz/gen_repz_nz
-      target/i386: avoid using s->tmp0 for add to implicit registers
-      rust: vmstate: add new type safe implementation
-      rust: vmstate: implement VMState for non-leaf types
-      rust: vmstate: add varray support to vmstate_of!
-      rust: vmstate: implement Zeroable for VMStateField
-      rust: vmstate: implement VMState for scalar types
-      rust: vmstate: add public utility macros to implement VMState
-      rust: qemu_api: add vmstate_struct
-      rust: pl011: switch vmstate to new-style macros
-      rust: vmstate: remove translation of C vmstate macros
-      rust: vmstate: make order of parameters consistent in vmstate_clock
-      rust: prefer NonNull::new to assertions
-      rust: pl011: remove unnecessary "extern crate"
-      rust: pl011: hide unnecessarily "pub" items from outside pl011::device
-      rust: pl011: extract conversion to RegisterOffset
-      rust: pl011: extract CharBackend receive logic into a separate function
-      rust: pl011: pull interrupt updates out of read/write ops
-      rust: pl011: extract PL011Registers
-      rust: pl011: wrap registers with BqlRefCell
-      rust: pl011: remove duplicate definitions
-      rust: pl011: pull device-specific code out of MemoryRegionOps callbacks
-      rust: pl011: drop use of ControlFlow
-      rust: qdev: make reset take a shared reference
-      rust/zeroable: Implement Zeroable with const_zero macro
-      rust: qemu-api: add sub-subclass to the integration tests
-
-Tao Su (4):
-      target/i386: Introduce SierraForest-v2 model
-      target/i386: Export BHI_NO bit to guests
-      target/i386: Add new CPU model ClearwaterForest
-      docs: Add GNR, SRF and CWF CPU models
-
-Zhao Liu (5):
-      stub: Fix build failure with --enable-user --disable-system --enable-tools
-      rust/qdev: Make REALIZE safe
-      rust/pl011: Avoid bindings::*
-      memattrs: Convert unspecified member to bool
-      memattrs: Check the size of MemTxAttrs
-
- docs/system/cpu-models-x86.rst.inc     |  50 ++-
- include/exec/memattrs.h                |  21 +-
- target/i386/cpu.h                      |  33 +-
- target/i386/cpu.c                      | 156 +++++++-
- target/i386/tcg/translate.c            | 363 ++++++++++-------
- target/i386/tcg/emit.c.inc             |  55 +--
- rust/hw/char/pl011/src/device.rs       | 489 +++++++++++++----------
- rust/hw/char/pl011/src/device_class.rs |  73 ++--
- rust/hw/char/pl011/src/lib.rs          |  67 ++--
- rust/hw/char/pl011/src/memory_ops.rs   |  25 +-
- rust/qemu-api/src/prelude.rs           |   2 +
- rust/qemu-api/src/qdev.rs              |  16 +-
- rust/qemu-api/src/qom.rs               |  21 +-
- rust/qemu-api/src/vmstate.rs           | 700 +++++++++++++++++++++------------
- rust/qemu-api/src/zeroable.rs          | 118 +++---
- rust/qemu-api/tests/tests.rs           |  56 ++-
- stubs/meson.build                      |   4 +-
- 17 files changed, 1403 insertions(+), 846 deletions(-)
+diff --git a/rust/qemu-api/src/vmstate.rs b/rust/qemu-api/src/vmstate.rs
+index 2b14d4839df..7652930affc 100644
+--- a/rust/qemu-api/src/vmstate.rs
++++ b/rust/qemu-api/src/vmstate.rs
+@@ -21,8 +21,8 @@
+ 
+ use core::{marker::PhantomData, mem, ptr::NonNull};
+ 
+-use crate::bindings::VMStateFlags;
+ pub use crate::bindings::{VMStateDescription, VMStateField};
++use crate::bindings::VMStateFlags;
+ 
+ /// This macro is used to call a function with a generic argument bound
+ /// to the type of a field.  The function must take a
+@@ -503,20 +503,8 @@ macro_rules! vmstate_fields {
+         static _FIELDS: &[$crate::bindings::VMStateField] = &[
+             $($field),*,
+             $crate::bindings::VMStateField {
+-                name: ::core::ptr::null(),
+-                err_hint: ::core::ptr::null(),
+-                offset: 0,
+-                size: 0,
+-                start: 0,
+-                num: 0,
+-                num_offset: 0,
+-                size_offset: 0,
+-                info: ::core::ptr::null(),
+-                flags: VMStateFlags::VMS_END,
+-                vmsd: ::core::ptr::null(),
+-                version_id: 0,
+-                struct_version_id: 0,
+-                field_exists: None,
++                flags: $crate::bindings::VMStateFlags::VMS_END,
++                ..$crate::zeroable::Zeroable::ZERO
+             }
+         ];
+         _FIELDS.as_ptr()
+diff --git a/rust/qemu-api/src/zeroable.rs b/rust/qemu-api/src/zeroable.rs
+index 6125aeed8b4..57cac96de06 100644
+--- a/rust/qemu-api/src/zeroable.rs
++++ b/rust/qemu-api/src/zeroable.rs
+@@ -49,6 +49,37 @@ unsafe impl Zeroable for crate::bindings::Property {
+     };
+ }
+ 
++// bindgen does not derive Default here
++#[allow(clippy::derivable_impls)]
++impl Default for crate::bindings::VMStateFlags {
++    fn default() -> Self {
++        Self(0)
++    }
++}
++
++unsafe impl Zeroable for crate::bindings::VMStateFlags {
++    const ZERO: Self = Self(0);
++}
++
++unsafe impl Zeroable for crate::bindings::VMStateField {
++    const ZERO: Self = Self {
++        name: ptr::null(),
++        err_hint: ptr::null(),
++        offset: 0,
++        size: 0,
++        start: 0,
++        num: 0,
++        num_offset: 0,
++        size_offset: 0,
++        info: ptr::null(),
++        flags: Zeroable::ZERO,
++        vmsd: ptr::null(),
++        version_id: 0,
++        struct_version_id: 0,
++        field_exists: None,
++    };
++}
++
+ unsafe impl Zeroable for crate::bindings::VMStateDescription {
+     const ZERO: Self = Self {
+         name: ptr::null(),
 -- 
 2.48.1
 
