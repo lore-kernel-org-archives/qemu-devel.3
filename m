@@ -4,84 +4,88 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0DD37C02181
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2127CC0218B
 	for <qemu-devel@archiver.kernel.org>; Fri, 24 Jan 2025 05:12:50 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tbBzS-0003KZ-8h; Fri, 24 Jan 2025 00:12:22 -0500
+	id 1tbBzO-0003K2-Gi; Fri, 24 Jan 2025 00:12:18 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
- id 1tbBzP-0003KQ-Op
- for qemu-devel@nongnu.org; Fri, 24 Jan 2025 00:12:19 -0500
-Received: from mail-pj1-x1030.google.com ([2607:f8b0:4864:20::1030])
+ id 1tbBzM-0003JR-4K
+ for qemu-devel@nongnu.org; Fri, 24 Jan 2025 00:12:16 -0500
+Received: from mail-pj1-x1029.google.com ([2607:f8b0:4864:20::1029])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
- id 1tbBzO-0000G5-1Y
- for qemu-devel@nongnu.org; Fri, 24 Jan 2025 00:12:19 -0500
-Received: by mail-pj1-x1030.google.com with SMTP id
- 98e67ed59e1d1-2f43da61ba9so2468866a91.2
- for <qemu-devel@nongnu.org>; Thu, 23 Jan 2025 21:12:17 -0800 (PST)
+ id 1tbBzJ-0000FT-VK
+ for qemu-devel@nongnu.org; Fri, 24 Jan 2025 00:12:15 -0500
+Received: by mail-pj1-x1029.google.com with SMTP id
+ 98e67ed59e1d1-2f43da61ba9so2468824a91.2
+ for <qemu-devel@nongnu.org>; Thu, 23 Jan 2025 21:12:13 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=daynix-com.20230601.gappssmtp.com; s=20230601; t=1737695536; x=1738300336;
+ d=daynix-com.20230601.gappssmtp.com; s=20230601; t=1737695532; x=1738300332;
  darn=nongnu.org; 
- h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
- :mime-version:subject:date:from:from:to:cc:subject:date:message-id
- :reply-to; bh=fWOg7aqqH8nu4hr/5SdBWnNPemUm1VuYD9oCJuZW3aE=;
- b=VC5srrpXmTmiRocFYx9LwhoK9ZBUM6/oC9S/Ro/eMn9+Pykl0HGJdAAcVFJkneT+im
- 3s0im+W+yL2L2HPbldSoH3az6K1/JdNn+f8iEnzdlhDP2Rvb8wYHeVx+g1hTG9tGgTo6
- 7DMb4fvkA1znr3i6dlMGMf5DvKZmYMefHgFdJjRUtX9Jpc2JNt6isbqyIaUaE5J5h1qh
- 7+6DSR0mvuD97RVQcvWp6y6Gc+ZPqEkEfp22J+FkyTWINsmsJlkdFXvulFwhp2lO9Rp6
- 3u4726u8ql5uqPhAyXk/P/0bd5zyYtS9/n6IlEms+AV8EYz724DmHojpc7AsFc+hkg/+
- UM4w==
+ h=cc:to:content-transfer-encoding:mime-version:message-id:date
+ :subject:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=vKKjjIIugBtCNk8yP306BjA6akW2VMionZJS3JpFXkk=;
+ b=gJCCgOBi9ys0oXzbGMLPxzJIEmULOVVx37wGdjOUwqaplGwlRoXXfAoECeMXUanEKJ
+ fe+kHfCGCIGGtxtp6QVMPvg8UaczO3CIQMp3gMp2bYEq57xL8PT/bqG8aUoabROWNieL
+ SfQwJy5iyTVq3QGxgyn2NkEP73uUhWMVXg7OEad91bkqR1526I3bJNvY/MCvydGYtMBe
+ fAv6v6UlJBd/VR81iHagfu4KPsg400KmrWVb5KBkMb7awTP0w+RzGCqe6e6ddaL2taIq
+ lzkuUL8EFnJKAWBEXN9z9nXK46ttUBEcvOHmjPkZAUmqaKCwJ4BQbMW/YQHCMASPatSL
+ HpUw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1737695536; x=1738300336;
- h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
- :mime-version:subject:date:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=fWOg7aqqH8nu4hr/5SdBWnNPemUm1VuYD9oCJuZW3aE=;
- b=FSAuGcReOtxAO8DRXoLqcVuNt8mKlCk0lRs0ZbU7xxW3LyLTOcB9FSI3sooSWV5b6U
- 6yAPS02GZkRZYzKLvP274R+pf1XaRvTZjG0t/IY6/s5vKp1c3BhYbiKf8ftk38r73w2j
- 11TjCboiyyi9J5aQZwsklQIhUA5blm0eBRD1pm8e2EP3xu/err0GZoahZEXBNeNsPnmq
- pG63dBRTHmG66/9hMytwmpgcvvWbeKRjcOcyt+Cg3aHO5Eh6B0LxVBbS+D41EVvU+ZdO
- +F8px8VTuAlUy7UVBHP3y4YVmdpqWCtPgTNd5ok6MmPaz6TLN5On8Z3tmfSEAzFarNKs
- TqdA==
-X-Gm-Message-State: AOJu0Yxi/2Na93ThBNK7pFGxD4yju9QL+6b5nsRZUxensNvyzBrhFLX1
- 9y3WFOfzol50jY0LO5/eH8LdUsnF0ypyYSJ9s23+iF/lfXnvx6yl34IHhTW1ZkO2PJwfSZBnsyn
- wKpc=
-X-Gm-Gg: ASbGnctY8BYZQlLMOV0ai6QupxiW7hIlz+WSPjbQ29+TCMysLoS4dDSWPr0ifalSgBX
- SurLLEstjlny+Kh31sJzJINZsSBjL3zSBva+3XuNMOuMVHlHsek6NcMGCmJqBI0Bi5tlTp2ZsvG
- b7hLHo21cLjm6QNrdVbGmpXT/vW/Gx62/p0wT9Um5cjxwNmIbcPKbhgigp1rxGbqHE1XB3WYVi3
- QxRQY5L7gBH6/wtD2PcVKmwm5HngaGtH0JYyD43K79mv8FqHfBabgoTTX4goWimktj9iWllX1pg
- ugeFt81M
-X-Google-Smtp-Source: AGHT+IFQR7veNA3427gt+Q1w9A+lism8AIZBq4q+JA7zi4tFaNSM/5PO93Rt1wA1bp1Tt4TDxdZ1hQ==
-X-Received: by 2002:a17:90b:2809:b0:2ea:a9ac:eee1 with SMTP id
- 98e67ed59e1d1-2f782c92bd9mr44061452a91.10.1737695536404; 
- Thu, 23 Jan 2025 21:12:16 -0800 (PST)
+ d=1e100.net; s=20230601; t=1737695532; x=1738300332;
+ h=cc:to:content-transfer-encoding:mime-version:message-id:date
+ :subject:from:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=vKKjjIIugBtCNk8yP306BjA6akW2VMionZJS3JpFXkk=;
+ b=goJl43G1pl86Kabt6oS9XEVwHhw04UhNhbL5jcGIn4qX74aymYcJUMxDw1W5DlCJ7B
+ +D7mxpuHD8kho8Ada16TyixsjG3PDCINRp+BgplJIF03GD/ro+vYSigu8Vpe1PFh7ETM
+ gJ8El38Omon0QR9kgwu9qxd9LL5CQpksEdmNHyGR+QCN8JG08BHOY8eY5uGUPdAvy+1i
+ btXYYK+wZIGVzOk2OHhicR10RXtQeXmNo3u6xy689MYP5FpnltwBnOi/CL4lhWIwHOLC
+ HPbWMR1/nkzOHU+GIbqH8YymY3k5w/K2eRVCp3vCJb4agRGOGdevZUhy0hQZYDTKXnRM
+ u7Pg==
+X-Gm-Message-State: AOJu0YyTgR9rsJaH8c6hnC/M6Nx+R7DsNkmzNzKTXG6boXpIa9A2EB0g
+ eyunSmOdIXkrYvWqV4sSQMJhmE9zZMEaGdxoYOgXNPG8KBkiEb3oC+CBCCb6i5nntIPjzqsxyvU
+ qYUA=
+X-Gm-Gg: ASbGnctqvs40iT/+h3E5R0pel+WUmA6RNuQ9DpYtdrNgJGnB5jvv5s3To8XnT/Ka8TH
+ 5ElsVT9VBlWmAkJOShAasMAiCheAPSNT+YKKUlmAh7m2FSbwKAVA8Erdp56bJL/+7kzNYJCmCaL
+ JmyGake55tewt+5s3nluXI8fegQUFV0kWOglQV+sfTlXkYA7Hmvu3D9tFHzthbwZkxp+9SULclr
+ oPjSXY9Ndxu2Nz1F2XtBaiCKqFc6jiuNQ3CoUB/KrrOK/uzRhGlUR6QTbJ/ECD250EsgEWiOZ7d
+ +TuJqfex
+X-Google-Smtp-Source: AGHT+IGU5WZoGGKRvD+Z8u1faxjxbEQsgLZg1HqX1Eu7JFScIMAROXJWZLm85C+mCl1D3l+t0SgoEQ==
+X-Received: by 2002:a17:90a:be08:b0:2ee:d7d3:3008 with SMTP id
+ 98e67ed59e1d1-2f782c93dbemr47642159a91.12.1737695532104; 
+ Thu, 23 Jan 2025 21:12:12 -0800 (PST)
 Received: from localhost ([157.82.207.107])
  by smtp.gmail.com with UTF8SMTPSA id
- 98e67ed59e1d1-2f7ffa44cc3sm667189a91.10.2025.01.23.21.12.14
+ 98e67ed59e1d1-2f7ffa83b24sm758331a91.46.2025.01.23.21.12.09
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 23 Jan 2025 21:12:16 -0800 (PST)
+ Thu, 23 Jan 2025 21:12:11 -0800 (PST)
 From: Akihiko Odaki <akihiko.odaki@daynix.com>
-Date: Fri, 24 Jan 2025 14:12:04 +0900
-Subject: [PATCH v7 1/6] coreaudio: Remove unnecessary explicit casts
+Subject: [PATCH v7 0/6] coreaudio fixes
+Date: Fri, 24 Jan 2025 14:12:03 +0900
+Message-Id: <20250124-coreaudio-v7-0-9d9a4d91db37@daynix.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20250124-coreaudio-v7-1-9d9a4d91db37@daynix.com>
-References: <20250124-coreaudio-v7-0-9d9a4d91db37@daynix.com>
-In-Reply-To: <20250124-coreaudio-v7-0-9d9a4d91db37@daynix.com>
+X-B4-Tracking: v=1; b=H4sIACMhk2cC/2XOTQ7CIBCG4asY1mKgHaB15T2MC36VhcWANm2a3
+ t2pcYFx+RGeN7OQ4nP0hRx3C8l+jCWmAYfa74i96eHqaXS4ScMawTjrqU3Z65eLidq+A8mU566
+ zBP8/sg9x+rTOF9y3WJ4pz5/02G6v3woXVWVsKaPGGWmsESb04eT0PMTpYNOdbJkRaqpqCkhD5
+ yBoQBzgj4qKNm1NBVLZqdYFaLjQ7I/KmkJNJVLOA94rLSj7e/C6rm8d1DLAVAEAAA==
+X-Change-ID: 20250109-coreaudio-c984607e1d8c
 To: Gerd Hoffmann <kraxel@redhat.com>, 
  =?utf-8?q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>, 
  Christian Schoenebeck <qemu_oss@crudebyte.com>, 
  BALATON Zoltan <balaton@eik.bme.hu>
 Cc: qemu-devel@nongnu.org, devel@daynix.com, 
- Akihiko Odaki <akihiko.odaki@daynix.com>
+ Akihiko Odaki <akihiko.odaki@daynix.com>, 
+ Phil Dennis-Jordan <phil@philjordan.eu>
 X-Mailer: b4 0.14.2
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1030;
- envelope-from=akihiko.odaki@daynix.com; helo=mail-pj1-x1030.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1029;
+ envelope-from=akihiko.odaki@daynix.com; helo=mail-pj1-x1029.google.com
 X-Spam_score_int: -18
 X-Spam_score: -1.9
 X-Spam_bar: -
@@ -103,42 +107,50 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-coreaudio had unnecessary explicit casts and they had extra whitespaces
-around them so remove them.
+This series contains two fixes for coreaudio. See each one for details.
 
 Signed-off-by: Akihiko Odaki <akihiko.odaki@daynix.com>
 ---
- audio/coreaudio.m | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+Changes in v7:
+- Added patch "coreaudio: Remove extra whitespaces".
+- Link to v6: https://lore.kernel.org/qemu-devel/20250124-coreaudio-v6-0-11fbcb6c47cf@daynix.com
 
-diff --git a/audio/coreaudio.m b/audio/coreaudio.m
-index cadd729d50537850d81718b9284efed5877d9185..0b67347ad7e8c43a77af308a1a3a654dd7084083 100644
---- a/audio/coreaudio.m
-+++ b/audio/coreaudio.m
-@@ -309,7 +309,7 @@ static OSStatus audioDeviceIOProc(
-     UInt32 frameCount, pending_frames;
-     void *out = outOutputData->mBuffers[0].mData;
-     HWVoiceOut *hw = hwptr;
--    coreaudioVoiceOut *core = (coreaudioVoiceOut *) hwptr;
-+    coreaudioVoiceOut *core = hwptr;
-     size_t len;
- 
-     if (coreaudio_buf_lock (core, "audioDeviceIOProc")) {
-@@ -392,10 +392,10 @@ static OSStatus init_out_device(coreaudioVoiceOut *core)
-     }
- 
-     if (frameRange.mMinimum > core->frameSizeSetting) {
--        core->audioDevicePropertyBufferFrameSize = (UInt32) frameRange.mMinimum;
-+        core->audioDevicePropertyBufferFrameSize = frameRange.mMinimum;
-         dolog ("warning: Upsizing Buffer Frames to %f\n", frameRange.mMinimum);
-     } else if (frameRange.mMaximum < core->frameSizeSetting) {
--        core->audioDevicePropertyBufferFrameSize = (UInt32) frameRange.mMaximum;
-+        core->audioDevicePropertyBufferFrameSize = frameRange.mMaximum;
-         dolog ("warning: Downsizing Buffer Frames to %f\n", frameRange.mMaximum);
-     } else {
-         core->audioDevicePropertyBufferFrameSize = core->frameSizeSetting;
+Changes in v6:
+- Added patch "coreaudio: Remove unnecessary explicit casts".
+- Link to v5: https://lore.kernel.org/qemu-devel/20250123-coreaudio-v5-0-6873df4215a0@daynix.com
 
+Changes in v5:
+- Added patch "coreaudio: Improve naming", removing verbose names like
+  outputDeviceID and audioDevicePropertyBufferFrameSize altogether.
+- Link to v4: https://lore.kernel.org/r/20250117-coreaudio-v4-0-f8d4fa4cb5f4@daynix.com
+
+Changes in v4:
+- Splitted patch "audio: Add functions to initialize buffers" from
+  patch "coreaudio: Initialize the buffer for device change".
+- Changed the message of patch "coreaudio: Commit the result of init in
+  the end" to tell that early returns happen when there is a fatal error
+  or the device gets unplugged.
+- Link to v3: https://lore.kernel.org/r/20250115-coreaudio-v3-0-bdb6bcb5bf9f@daynix.com
+
+---
+Akihiko Odaki (6):
+      coreaudio: Remove unnecessary explicit casts
+      coreaudio: Remove extra whitespaces
+      coreaudio: Improve naming
+      coreaudio: Commit the result of init in the end
+      audio: Add functions to initialize buffers
+      coreaudio: Initialize the buffer for device change
+
+ audio/audio_int.h |   2 +
+ audio/audio.c     |  24 +++--
+ audio/coreaudio.m | 284 ++++++++++++++++++++++++++++--------------------------
+ 3 files changed, 166 insertions(+), 144 deletions(-)
+---
+base-commit: 7433709a147706ad7d1956b15669279933d0f82b
+change-id: 20250109-coreaudio-c984607e1d8c
+
+Best regards,
 -- 
-2.48.1
+Akihiko Odaki <akihiko.odaki@daynix.com>
 
 
