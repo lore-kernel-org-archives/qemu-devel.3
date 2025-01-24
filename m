@@ -4,47 +4,47 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0D286C0218B
-	for <qemu-devel@archiver.kernel.org>; Fri, 24 Jan 2025 13:49:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C303CC02181
+	for <qemu-devel@archiver.kernel.org>; Fri, 24 Jan 2025 13:49:32 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tbJuP-0008AI-E3; Fri, 24 Jan 2025 08:39:41 -0500
+	id 1tbJvN-0002cW-Ag; Fri, 24 Jan 2025 08:40:41 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <xiaoyao.li@intel.com>)
- id 1tbJuD-0007Cp-0p
- for qemu-devel@nongnu.org; Fri, 24 Jan 2025 08:39:33 -0500
+ id 1tbJv3-0001bh-5T
+ for qemu-devel@nongnu.org; Fri, 24 Jan 2025 08:40:25 -0500
 Received: from mgamail.intel.com ([198.175.65.13])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <xiaoyao.li@intel.com>)
- id 1tbJuB-00041c-FA
- for qemu-devel@nongnu.org; Fri, 24 Jan 2025 08:39:28 -0500
+ id 1tbJuz-00041c-Li
+ for qemu-devel@nongnu.org; Fri, 24 Jan 2025 08:40:20 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1737725968; x=1769261968;
+ t=1737726018; x=1769262018;
  h=from:to:cc:subject:date:message-id:in-reply-to:
  references:mime-version:content-transfer-encoding;
- bh=3htOvA2jbpLNtRYP7pYOxr4oRukBQDBcMamKFay85SU=;
- b=BSXXmaiZ6NuJdIZ8NHP7X3f+oduP4kekm4d57yTepth5qwPb6G4rtFlb
- 8lfO3CpfFj77sJSjCIFlila3oUzct7KFe+Jbtw6HjBrI8Cv9Aj9A1wsXU
- HCupCJBsgVItU6mv4I6napllDFwJOgGXj4HvTq56CWgyiBJmv01DP7M6m
- ivFI4IiLszSw+mQu2TawfRN+an/RCcD7dun9myy0qoPojkzxSdzkoOrUX
- QavH8EXz8REtF40lZBQjKFyw4z5GLK4yvadPtxmbDEt0txD2ALXTWA3WO
- TXdWSYT9WVbs8H57vutoy5vdW5Uzxa2gN6WhXEX5KKeFbEaoYc6WD6Vpg g==;
-X-CSE-ConnectionGUID: PvTlucndR7ShawZT4CPGJg==
-X-CSE-MsgGUID: v9k2MfykQ1m2QyXFyvyNNw==
-X-IronPort-AV: E=McAfee;i="6700,10204,11325"; a="49246502"
-X-IronPort-AV: E=Sophos;i="6.13,231,1732608000"; d="scan'208";a="49246502"
+ bh=MtLjr/vDOT3CoWD5owRZWIVQtD1iwql3z/OowZZmgx4=;
+ b=cihUpnqVAZlEZA6HdWOKnwMrKLg2XEXqHV5TIrgt+7Y8xP+4JJWrD8sC
+ pY8tSmmdFjEg1w3mNCb7sAqIw9aUR2vjN+y3jJ1QVjM6aSD8OPXikwwSG
+ yOZ3Y6NqovwDAgSfHEc1y+DyxrGqGTFK6/+cJ3RB2GafdWaSiiR7NTEOk
+ vM3ap7bwQaQZ/2XLbjpDkAq4DqdLgAaAxljuKf/FPKPs/1Oi804SK5G2R
+ oENYWNl+po4jUY4Lej7p5hPhKgRRwAgRWgbiW9XGOLg7ULxXUvJATxftl
+ zDIldmj05BtIJR4U1vyuQRf7mvkfp1mgd5qlmm5teJ1wXz0nen7553PON w==;
+X-CSE-ConnectionGUID: DY3zV5F0TUWowXAkm6g4Uw==
+X-CSE-MsgGUID: R6YtLiI2QoGljoeERvGPpA==
+X-IronPort-AV: E=McAfee;i="6700,10204,11325"; a="49246600"
+X-IronPort-AV: E=Sophos;i="6.13,231,1732608000"; d="scan'208";a="49246600"
 Received: from fmviesa003.fm.intel.com ([10.60.135.143])
  by orvoesa105.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 24 Jan 2025 05:39:11 -0800
-X-CSE-ConnectionGUID: GBAGZD3TTzGavPdm4Wq8KA==
-X-CSE-MsgGUID: GpGGeVBJSaWU8VbW4hQpRQ==
+ 24 Jan 2025 05:39:51 -0800
+X-CSE-ConnectionGUID: 2caIy9gBT8q37pJ029fZIg==
+X-CSE-MsgGUID: bGDRdGsuR5WmR5zvmRHLNA==
 X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.12,224,1728975600"; d="scan'208";a="111804403"
+X-IronPort-AV: E=Sophos;i="6.12,224,1728975600"; d="scan'208";a="111804467"
 Received: from lxy-clx-4s.sh.intel.com ([10.239.48.52])
- by fmviesa003.fm.intel.com with ESMTP; 24 Jan 2025 05:39:07 -0800
+ by fmviesa003.fm.intel.com with ESMTP; 24 Jan 2025 05:39:47 -0800
 From: Xiaoyao Li <xiaoyao.li@intel.com>
 To: Paolo Bonzini <pbonzini@redhat.com>,
  =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
@@ -57,9 +57,9 @@ Cc: Zhao Liu <zhao1.liu@intel.com>, "Michael S. Tsirkin" <mst@redhat.com>,
  Rick Edgecombe <rick.p.edgecombe@intel.com>,
  Francesco Lavra <francescolavra.fl@gmail.com>, xiaoyao.li@intel.com,
  qemu-devel@nongnu.org, kvm@vger.kernel.org
-Subject: [PATCH v7 34/52] i386/tdx: Disable SMM for TDX VMs
-Date: Fri, 24 Jan 2025 08:20:30 -0500
-Message-Id: <20250124132048.3229049-35-xiaoyao.li@intel.com>
+Subject: [PATCH v7 45/52] i386/tdx: Mask off CPUID bits by unsupported XFAM
+Date: Fri, 24 Jan 2025 08:20:41 -0500
+Message-Id: <20250124132048.3229049-46-xiaoyao.li@intel.com>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20250124132048.3229049-1-xiaoyao.li@intel.com>
 References: <20250124132048.3229049-1-xiaoyao.li@intel.com>
@@ -91,42 +91,79 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-TDX doesn't support SMM and VMM cannot emulate SMM for TDX VMs because
-VMM cannot manipulate TDX VM's memory.
-
-Disable SMM for TDX VMs and error out if user requests to enable SMM.
+Mask off the CPUID bits as unsupported if its matched XFAM bit is
+not supported. Otherwise, it might fail the check in setup_td_xfam() as
+unsupported XFAM being requested.
 
 Signed-off-by: Xiaoyao Li <xiaoyao.li@intel.com>
-Acked-by: Gerd Hoffmann <kraxel@redhat.com>
 ---
- target/i386/kvm/tdx.c | 9 +++++++++
- 1 file changed, 9 insertions(+)
+ target/i386/kvm/tdx.c | 39 +++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 39 insertions(+)
 
 diff --git a/target/i386/kvm/tdx.c b/target/i386/kvm/tdx.c
-index f4d95b0a4029..10059ec8cf92 100644
+index 3997a439f054..b46e581bb40e 100644
 --- a/target/i386/kvm/tdx.c
 +++ b/target/i386/kvm/tdx.c
-@@ -365,11 +365,20 @@ static Notifier tdx_machine_done_notify = {
+@@ -22,6 +22,8 @@
  
- static int tdx_kvm_init(ConfidentialGuestSupport *cgs, Error **errp)
- {
-+    MachineState *ms = MACHINE(qdev_get_machine());
-+    X86MachineState *x86ms = X86_MACHINE(ms);
-     TdxGuest *tdx = TDX_GUEST(cgs);
-     int r = 0;
+ #include <linux/kvm_para.h>
  
-     kvm_mark_guest_state_protected();
++#include "cpu.h"
++#include "cpu-internal.h"
+ #include "hw/i386/e820_memory_layout.h"
+ #include "hw/i386/x86.h"
+ #include "hw/i386/tdvf.h"
+@@ -579,6 +581,42 @@ static void tdx_mask_cpuid_by_attrs(uint32_t feature, uint32_t index,
+     }
+ }
  
-+    if (x86ms->smm == ON_OFF_AUTO_AUTO) {
-+        x86ms->smm = ON_OFF_AUTO_OFF;
-+    } else if (x86ms->smm == ON_OFF_AUTO_ON) {
-+        error_setg(errp, "TDX VM doesn't support SMM");
-+        return -EINVAL;
++static void tdx_mask_cpuid_by_xfam(uint32_t feature, uint32_t index,
++                                          int reg, uint32_t *value)
++{
++    const FeatureWordInfo *f;
++    const ExtSaveArea *esa;
++    uint64_t unavail = 0;
++    int i;
++
++    assert(tdx_caps);
++
++    for (i = 0; i < ARRAY_SIZE(x86_ext_save_areas); i++) {
++        if ((1ULL << i) & tdx_caps->supported_xfam) {
++            continue;
++        }
++
++        if (!((1ULL << i) & CPUID_XSTATE_MASK)) {
++            continue;
++        }
++
++        esa = &x86_ext_save_areas[i];
++        f = &feature_word_info[esa->feature];
++        assert(f->type == CPUID_FEATURE_WORD);
++        if (f->cpuid.eax != feature ||
++            (f->cpuid.needs_ecx && f->cpuid.ecx != index) ||
++            f->cpuid.reg != reg) {
++            continue;
++        }
++
++        unavail |= esa->bits;
 +    }
 +
-     if (!tdx_caps) {
-         r = get_tdx_capabilities(errp);
-         if (r) {
++    if (unavail) {
++        *value &= ~unavail;
++    }
++}
++
+ static uint32_t tdx_adjust_cpuid_features(X86ConfidentialGuest *cg,
+                                           uint32_t feature, uint32_t index,
+                                           int reg, uint32_t value)
+@@ -613,6 +651,7 @@ static uint32_t tdx_adjust_cpuid_features(X86ConfidentialGuest *cg,
+     }
+ 
+     tdx_mask_cpuid_by_attrs(feature, index, reg, &value);
++    tdx_mask_cpuid_by_xfam(feature, index, reg, &value);
+ 
+     e = cpuid_find_entry(&tdx_fixed0_bits.cpuid, feature, index);
+     if (e) {
 -- 
 2.34.1
 
