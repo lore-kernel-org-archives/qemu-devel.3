@@ -4,65 +4,180 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C17BAC02182
-	for <qemu-devel@archiver.kernel.org>; Fri, 24 Jan 2025 00:13:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8883AC02182
+	for <qemu-devel@archiver.kernel.org>; Fri, 24 Jan 2025 00:21:39 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tb7JQ-0002rm-G0; Thu, 23 Jan 2025 19:12:40 -0500
+	id 1tb7RS-0008Ja-ME; Thu, 23 Jan 2025 19:20:58 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <michael@anarch128.org>)
- id 1tb7JO-0002rJ-Ps
- for qemu-devel@nongnu.org; Thu, 23 Jan 2025 19:12:38 -0500
-Received: from anarch128.org ([2001:4801:7825:104:be76:4eff:fe10:52ae])
+ (Exim 4.90_1) (envelope-from <Alexey.Kardashevskiy@amd.com>)
+ id 1tb7RQ-0008JL-7p
+ for qemu-devel@nongnu.org; Thu, 23 Jan 2025 19:20:56 -0500
+Received: from mail-bn7nam10on2060.outbound.protection.outlook.com
+ ([40.107.92.60] helo=NAM10-BN7-obe.outbound.protection.outlook.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <michael@anarch128.org>)
- id 1tb7JM-0001Hb-KR
- for qemu-devel@nongnu.org; Thu, 23 Jan 2025 19:12:38 -0500
-Received: from localhost.localdomain (default-rdns.vocus.co.nz
- [202.150.110.104] (may be forged)) (authenticated bits=0)
- by anarch128.org (8.15.2/8.15.2/Debian-22+deb11u3) with ESMTPSA id
- 50O0CHKn2247057
- (version=TLSv1.3 cipher=TLS_AES_256_GCM_SHA384 bits=256 verify=NO);
- Fri, 24 Jan 2025 00:12:21 GMT
-Authentication-Results: anarch128.org; auth=pass;
- dkim=pass (2048-bit rsa key sha256) header.d=anarch128.org
- header.i=@anarch128.org header.b=jupymKMN header.a=rsa-sha256 header.s=100003;
- x-return-mx=pass header.domain=anarch128.org policy.is_org=yes (MX Records
- found: mail.anarch128.org); 
- x-return-mx=pass smtp.domain=anarch128.org policy.is_org=yes (MX Records
- found: mail.anarch128.org)
-DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=anarch128.org;
- s=100003; t=1737677544;
- bh=kPF4CuiNnYb+adsYW/8Zaj7ioU58YpMSxsCAIgu4aOg=;
- h=From:To:Cc:Subject:Date:From;
- b=jupymKMNP/FZxvCwxkZ3h64S8jYj4uT4pM7rg/U5vYHtFLNA5R1SrMUtkybcHFQ0W
- ohbB84Mj6pBuhTEjf35Q6uZPmtrA+PJYrBEMw1SPJhDeifW+WdHj6LaZHBxulSS9bw
- oxUsKaU1GRXPJswr/lrrF6u1t+ZycTCAX0oIw8QdFpq/8zaY0/f7bd7bthjoL0C6aL
- xlMAg72YV4u3eyuii8ygE9l/aDTVtW4SYlhT/pGBQdH3FXxTNg9aKXTvxTk+yWVKT6
- dKrZ7rBk5VA3uXVqs4ePCONycTk54OzoaiAdMhGVl05wQ5MKn1jnu15dbAhifpobEO
- cipLjZYU6OVLQ==
-From: Michael Clark <michael@anarch128.org>
-To: qemu-devel@nongnu.org, Richard Henderson <richard.henderson@linaro.org>,
- Eduardo Habkost <eduardo@habkost.net>,
- Paolo Bonzini <pbonzini@redhat.com>, Zhao Liu <zhao1.liu@intel.com>
-Cc: Michael Clark <michael@anarch128.org>
-Subject: [PATCH v1 0/4] x86-disas: port x86-mini disassembler to QEMU
-Date: Fri, 24 Jan 2025 13:10:28 +1300
-Message-ID: <20250124001032.1073926-1-michael@anarch128.org>
-X-Mailer: git-send-email 2.43.0
-MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+ (Exim 4.90_1) (envelope-from <Alexey.Kardashevskiy@amd.com>)
+ id 1tb7RN-0002uI-B7
+ for qemu-devel@nongnu.org; Thu, 23 Jan 2025 19:20:55 -0500
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=akF5+gARVJgo7WE1muLH8R0yLeH8pMtBT0r2/eSDVxFfK3ZZZDtF4si12C/m5LP2YHbvveCwG7EQJdvWhHGD+eu+fckNcwdb7VpXqkKC+KrMuoi6GR61+tp3xqTysGGpKEWvKEFyFJEfO4sLFhlhZMKOb88CWpkeXgSuN1DvfndG1ZK/IDnFUuCAglneLG9JH1of4msYadohgu2lTX1LTifXuIXAhwGT5tNK/A1DXgioB2xZkTCRRjwoBALJ5bBVFhqTFEv8M7GnUOcxB7NeyGg0FzubZ/OiADBJ4hDU/WSwEeZ4sYm9GGwp0/zRlEEUXK8INjwi8mQ43zEvOWt7nA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=yqPoBFbLx4pLSn0+etEQlNEwB0le16gPQDXJzr4ofUk=;
+ b=jAugFZNwozHM+uySNS+horjD79g2IP6YSAaJikpL4HXHU7cBwbCUZsBGTq5DhQKouTW2BkGRRRQNybDKov+3SG9a6KvwAonKxwv/UkSXc2+7Nfeg2v+mUWdvl4on5MxHOdomT426vsD9qb2gPstZolkSkcNea4ZKa1sUuQgEHVnmIeQBPd96N0cQm6lBQv/y+lITJ3lsQ6CQlcsX6F5x9VpWkiFY9svOIXAagCXUaHpqeCKndz6ig3DpN4HU2EhpojD7zujk8osGwqn77EjfDce5NrpAvMncGjFt6CQDTIcWPu5lKi+hQv0dNU58cuwgpMyVewuTST/x9zp1EDSwiQ==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=amd.com; dmarc=pass action=none header.from=amd.com; dkim=pass
+ header.d=amd.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=amd.com; s=selector1; 
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=yqPoBFbLx4pLSn0+etEQlNEwB0le16gPQDXJzr4ofUk=;
+ b=CqVNso+GdaZd7w5FdvBQHSUTKemQhIc+6ND5ZxQ+qW8gE/k8vQ8LhUMxvQGlBUAqKpHxyaNbuYyFF/Oc5+IRvwd8suLz1lf3Li6TSIvzU7M3VgrI0Syem/SNenueL6YZZb+YY53/j2AOLLatum26pAztvchiWgkhy6DuANsIfWU=
+Authentication-Results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=amd.com;
+Received: from CH3PR12MB9194.namprd12.prod.outlook.com (2603:10b6:610:19f::7)
+ by PH8PR12MB6889.namprd12.prod.outlook.com (2603:10b6:510:1c9::21)
+ with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.8377.16; Fri, 24 Jan
+ 2025 00:15:38 +0000
+Received: from CH3PR12MB9194.namprd12.prod.outlook.com
+ ([fe80::53fb:bf76:727f:d00f]) by CH3PR12MB9194.namprd12.prod.outlook.com
+ ([fe80::53fb:bf76:727f:d00f%5]) with mapi id 15.20.8356.020; Fri, 24 Jan 2025
+ 00:15:38 +0000
+Message-ID: <b11f240d-ff8c-4c83-9b33-5e556cde0bce@amd.com>
+Date: Fri, 24 Jan 2025 11:15:29 +1100
+User-Agent: Mozilla Thunderbird Beta
+Subject: Re: [PATCH 2/7] guest_memfd: Introduce an object to manage the
+ guest-memfd with RamDiscardManager
+Content-Language: en-US
+To: Xiaoyao Li <xiaoyao.li@intel.com>, Chenyi Qiang <chenyi.qiang@intel.com>, 
+ Peter Xu <peterx@redhat.com>
+Cc: David Hildenbrand <david@redhat.com>, Paolo Bonzini
+ <pbonzini@redhat.com>, =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?=
+ <philmd@linaro.org>, Michael Roth <michael.roth@amd.com>,
+ qemu-devel@nongnu.org, kvm@vger.kernel.org,
+ Williams Dan J <dan.j.williams@intel.com>,
+ Peng Chao P <chao.p.peng@intel.com>, Gao Chao <chao.gao@intel.com>,
+ Xu Yilun <yilun.xu@intel.com>
+References: <20241213070852.106092-3-chenyi.qiang@intel.com>
+ <d0b30448-5061-4e35-97ba-2d360d77f150@amd.com>
+ <80ac1338-a116-48f5-9874-72d42b5b65b4@intel.com>
+ <9dfde186-e3af-40e3-b79f-ad4c71a4b911@redhat.com>
+ <c1723a70-68d8-4211-85f1-d4538ef2d7f7@amd.com>
+ <f3aaffe7-7045-4288-8675-349115a867ce@redhat.com> <Z46GIsAcXJTPQ8yN@x1n>
+ <7e60d2d8-9ee9-4e97-8a45-bd35a3b7b2a2@redhat.com> <Z46W7Ltk-CWjmCEj@x1n>
+ <8e144c26-b1f4-4156-b959-93dc19ab2984@intel.com> <Z4_MvGSq2B4zptGB@x1n>
+ <c5148428-9ebe-4659-953c-6c9d0eea1051@intel.com>
+ <9d4df308-2dfd-4fa0-a19b-ccbbce13a2fc@intel.com>
+From: Alexey Kardashevskiy <aik@amd.com>
+In-Reply-To: <9d4df308-2dfd-4fa0-a19b-ccbbce13a2fc@intel.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2001:4801:7825:104:be76:4eff:fe10:52ae;
- envelope-from=michael@anarch128.org; helo=anarch128.org
-X-Spam_score_int: -16
-X-Spam_score: -1.7
-X-Spam_bar: -
-X-Spam_report: (-1.7 / 5.0 requ) BAYES_00=-1.9, DKIM_INVALID=0.1,
- DKIM_SIGNED=0.1, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+X-ClientProxiedBy: ME3P282CA0038.AUSP282.PROD.OUTLOOK.COM (2603:10c6:220:5::7)
+ To CH3PR12MB9194.namprd12.prod.outlook.com
+ (2603:10b6:610:19f::7)
+MIME-Version: 1.0
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: CH3PR12MB9194:EE_|PH8PR12MB6889:EE_
+X-MS-Office365-Filtering-Correlation-Id: 6524cd78-e097-4977-1aa7-08dd3c0c3ab5
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;ARA:13230040|1800799024|366016|7416014|376014;
+X-Microsoft-Antispam-Message-Info: =?utf-8?B?RDQwby8rNWtpcDhzUTlWRitaeVZXeUhBemVWd2FWaHNwbUVha21ZVjhoY1c5?=
+ =?utf-8?B?ZVN3SmQ4TmRCb1FnQ1AvR3VlSmJiZGhVdlovYTNHMjBPZUp3YTJPVi81aDVa?=
+ =?utf-8?B?NlRqcHd1OHR1SlJ5WjAzeHNxUXV6L3NFVzM4QUxyNEhyMnZINUE3a3hWT0FP?=
+ =?utf-8?B?UXZIbHVGYjRsMXIzY1ZVa3k0WWRZR2x3SG1RcjB4cXdYVkFlcE5SbUw1aWhH?=
+ =?utf-8?B?RzFCTzRud09uWUZFbmZEMmRtV01YU1cxRm5Rb0kxUjFzVjNQWE5IZnFkR2dN?=
+ =?utf-8?B?N2hzWXpseWFzMHdDbUsyaXlmYkpaRjdtWnNxNytXdlg3dFZmREYvQ3dkRHlB?=
+ =?utf-8?B?MnFIcUtFb3JxWmRFYVgwUGJEQ1ZER0ptTHNTRUQ0M0VVWFdJdU95YUxkNlph?=
+ =?utf-8?B?V3NDcmlWUTB1QjVmaVZjY25ISFkydjF5QVMrZ0EyWVJOVjFEYTFtbFBRMDZt?=
+ =?utf-8?B?S0UxeXE2NHR0SUF5c3JYZFRtNVdaQ0VVb2lYYW5lR2Nwa25GcEhhUDg4OWJr?=
+ =?utf-8?B?YkNtcklja3B0T3ZvaWpyMjdpeU9mb3FzMnBxeWNMM28raUY2VktjcUdzeGdM?=
+ =?utf-8?B?Tjk2WTNjZ3ErTG9PdzdKRTJmSDdMTXVBQWdZOUoxZXZmU2ZtdnYyN1ZFdG5y?=
+ =?utf-8?B?UzF3a1oxSlNqaXEyY3BacUpGd2taN0Q4ZTNEVFpMYzZDdGpkVmFuUm9CZHg0?=
+ =?utf-8?B?YzgvNzBMTlJVQmltdFNuajRVeFZpdEF5aUVTOVlmTkhNV2ZlVUxTVGx3NlhH?=
+ =?utf-8?B?WVBCYUUwNi9mOGJRS2lqSDN6Z2h4WmQyM2JYbnlHVGhHLzFkQUVjNzFXbjBy?=
+ =?utf-8?B?KzlVdFlLWUdHdlV0Vk9hYVhSME1KenV6WkltUWZodUFkb2I0M3FnUEh4ZHBx?=
+ =?utf-8?B?d2xrQ1dzc2s4Ykt6UHdWL1dHVjVnODYxSnVPMm52cDlyUlFId2FmWHl1cmVl?=
+ =?utf-8?B?eE84NTFmNmFVQzZZdWloUGZ4ZGxWUU5lbDRTYlk3bXdYQVlsT3lJc3E4eGhM?=
+ =?utf-8?B?T2tvYkFDREFUQUZpdDB5MTJUaTNnL3JzNDRKS1g4a1RaYVNPdElZUksyOG9j?=
+ =?utf-8?B?MkYrck8zZTNnMUgxOVpMbm5URGRqSE9EVDZBMi9HQ1g3QU1udmxGYTZXeVZX?=
+ =?utf-8?B?ZXFpVXFRWWw1b2dqRktJazFsRENzT3hoOWtvY0hSS2NRV25Dc0xXUTdJTzNL?=
+ =?utf-8?B?b2pFQmcySnR5cG1IYTBPcEFsbnZhMCthRGlPRDdIcUpNc25mVU9yOGlvQ3B6?=
+ =?utf-8?B?OEJad2hPdWo2bVpkZzExQ2E2aHVZTFhwS0pkY1pwK0lUNUsvYzUyeVRvU2Jk?=
+ =?utf-8?B?eUp2ZDVnYy92Q1JncVozSkl4S0k0WkIwaGoza3dRb2xJdzRIcVA4Z0cvUmpB?=
+ =?utf-8?B?b3RMTzVZOE1rMzYrZ2t3cExoUFUwSkpKM2ZUMFdIRmxHckNEYnpvYnhhN0R5?=
+ =?utf-8?B?WnZOUU9MWmtuQUF0Q0JJbTVnRjlFV1BxSjVQSnpYUm54ZEx4bW8yaDhzeE1y?=
+ =?utf-8?B?NGJCYWxlT1dadmdsSjVCRkQyOVBmZlpXQTlwQjdkZU9XQzlZK3BRcWMyZzBH?=
+ =?utf-8?B?VWxVVUhYMEtQNko0KzVsdGVXS3J3T2NKaUR4QXY3ZWF0OU1vT1AxQzdrNkhI?=
+ =?utf-8?B?WXc5Qmw0aDdMTzFyQTJpT1pjQkJ6ZVl3aXUyRlczM2lUcngvQnlUV3pNR0d2?=
+ =?utf-8?B?SWtzRWVONkRVVTMxcE5SajlqZi8yU3ZFQU9ib0E5ak1mT293bHByRjc1RHFI?=
+ =?utf-8?B?YlVaaXEwQXUvQW5VdExzNWtZTVlKSmd1MFBKRXZ1TE5IOC9SdGVwMUhtVXhx?=
+ =?utf-8?B?NjM2emZzcmZxWllZcUZKZUt1RDhzZTlkNzFuSk16MVg5ZjFIVm5BVUI1dVFT?=
+ =?utf-8?Q?z7V8E6YZV64pa?=
+X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:CH3PR12MB9194.namprd12.prod.outlook.com; PTR:; CAT:NONE;
+ SFS:(13230040)(1800799024)(366016)(7416014)(376014); DIR:OUT; SFP:1101; 
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?SmhCRlJyNzZFK2Jxbll1R0d1T3VML0QrTG5xZXh6ZzFXZ0VEQnplNnkrQnZ6?=
+ =?utf-8?B?cEM5Njh6ZjNaMDRRellFY0xpcVBkeG5YSWZpZTFRUlZXcDVycExNSUZTYmFN?=
+ =?utf-8?B?MXd6VUxQanhKVlRkRFAyd2FBOEc1N0NWTmpEUjh3VWZpMEVaUGkrZGtMTlc4?=
+ =?utf-8?B?QktjVVFUanY1alNoZndHUDRJT3hWWHFSd0RSMjEvTjByVFhzQ0VQRDNaVlNS?=
+ =?utf-8?B?aUJsNmJCY3ZHU3RmZWU1c01TTzRSakFENTRDRUFLSWdrQXkybXg1YnZ3NkNx?=
+ =?utf-8?B?YWlLamlIbjgzdklrY2RuejNubVkxcm5nVHlHSER4bDd4S3Vib3duNzYrVUU2?=
+ =?utf-8?B?UEVkR3hWaTdINzR1YzIrNjV5THNTR3VxWWVGKzlwQm5FbS9ZMFJaOGpVTEJQ?=
+ =?utf-8?B?eHQyd0RlZHV2UWV5MzRwb2gxOU90NXN6c1J6YmZQUlNBcW5EZE1GZHJLNDc2?=
+ =?utf-8?B?dDhnNHRZRXNnZDMxdVFsV25uNnVNMEtFajFOOUNPVTVKK3NNYlBNY3F6UlZW?=
+ =?utf-8?B?NTV3UklyZ2JtYXM3Mk9sdTVpdmgrQXFTZHZoSzA3aUNiZktubWt4Wk5BbnRQ?=
+ =?utf-8?B?QkRhMTdreGR2RTdrc3NzdUowYS84TjQxTzRteThwOSt2dU93aVpUUnBFanZN?=
+ =?utf-8?B?MmFuRUNMeUdZTGJvZFdUWDNrV2poVFFQVWhhczVoL3lmNGlEK0lPVG5LTGtS?=
+ =?utf-8?B?MEw3ZGpoMGlBZEF2aGVCSFlVRHhxNG1BQnl1L2ZpUWdOam5LZUFPczA0RFor?=
+ =?utf-8?B?V2N6WjAyU3dXWGx4N1RwT0I5alN3ZFFkd25nRG5aYUJqTGxsdE9PZVRjZXhs?=
+ =?utf-8?B?MlZlSlBxakErVmR3WmJuOStMSlpTRy9OTEtveCtiZUxuQ0JldTMzcjFBajc0?=
+ =?utf-8?B?RnIwWUVCdVdwNExJVnhlcHhPc1V4ZHA4dS9oTWx2dDZtaFFTc3RzWFNYMDkv?=
+ =?utf-8?B?Z2pjUnpuOEx5dzNiS2Rnb0dtbnYxMEhiRW9XWGxBQ0daRHdnWXB6eGpjUG4r?=
+ =?utf-8?B?M3QyalBLU3ZTSzlRQm1XS2tsNWFMM0VCTFNDTE9KcHJzajI2N2FJa3VkemhR?=
+ =?utf-8?B?Vm5vK2NJVHNIUC81UENGY1VXL1lBcWlibVQ2U2wxRnpSaUVyWlBRdTlmdTJ1?=
+ =?utf-8?B?anZvL0Jsa2lkZ2ttczROSXZydGxwM0pYQUdmK25lblJQdFRLYkJMS1lWenI2?=
+ =?utf-8?B?Y2FXY1dGbGl4TjF3UWkwQkJ2MFpUOWZBcjY4TkFDMTFXclFDYUl2MXE1S1J4?=
+ =?utf-8?B?SVdQMjRPcitaaXRlck5QV3h0Nzl5bzJFTkQzTUhmc0hIaFprOVBpV2xEMXFq?=
+ =?utf-8?B?MjM1YWVUQUVSV0JmU3hMd0FrOGpUS3Y2RG41TzdPeXpTNUsyQ2ZaeE1jN0JF?=
+ =?utf-8?B?ektTSWxzQUQzSXRldFdWeHMwMUtURFJsWm45eE1ESjdYT1lmQno4dHd0cElS?=
+ =?utf-8?B?cHBGdld3emlHSk05UTNrZXdSVCtvRjZHeldycHFwMUNwV2Q4TmVjRklhQ1R3?=
+ =?utf-8?B?aXBRRjJucnh2V2RrSlhBSTRmZm5tL254eXJjT0VGSjdVNWxPdW1odng3SGlw?=
+ =?utf-8?B?QU9ZVEN2MnlyU2tRWUp2L1hDWmF5eStpb1BhVmpnbUVOVlBiRVNTdHZsRlFr?=
+ =?utf-8?B?QmlmQVJIcTJJb1RDWmdHcVlZZnNlcmJ4Y3o2L0NudUdqQ3ozbWhMM2VkMjVv?=
+ =?utf-8?B?WlZ6OXJCcEhsZDZHRFNCL2puTEUrbEUzbmdnV2dGdmsyazFBWlNNb2gwVUZ5?=
+ =?utf-8?B?bUlYRmdQMkZSMjI5bDRrR1h4dFYrWWQvSVVEdkJFQ0QzL0VTYVh0endiMEdH?=
+ =?utf-8?B?R2EzaStORmVMaERHRmlNTXpLbnVyQ2hudjlZT1MyN1VmNjRTdXA1ZFd4YkhP?=
+ =?utf-8?B?Ty9iQzlxd0k0SmVIOHBPNEptUDNReHB5N1RqWnZmMGtveWhGTHRlelN6bzlO?=
+ =?utf-8?B?UkI5YXh6Qk5IUDlUYk9zZ3NpTlFSRm05MUpPSldFblNaMmc5cnA5dVh5Qjdi?=
+ =?utf-8?B?NEhkTVc0QUJzbkNhZ2owZ0gyd0hHTXZMZTA5dXBpVHBTTnBseWJNeFo5Y3Ni?=
+ =?utf-8?B?UkZWYjRmdHdXUlIvbnZCZGN5SXo5a085Q2pITTQ0OEVwWFFhZ3hkVFliQkxa?=
+ =?utf-8?Q?E4gt7+cGIUWKWdDMv499p/YGc?=
+X-OriginatorOrg: amd.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 6524cd78-e097-4977-1aa7-08dd3c0c3ab5
+X-MS-Exchange-CrossTenant-AuthSource: CH3PR12MB9194.namprd12.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 24 Jan 2025 00:15:38.0224 (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 3dd8961f-e488-4e60-8e11-a82d994e183d
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: rOwuKtdlhlj7Xp4C1T5pR+iLKWOp7ivXcBwYolVCQlkZahqa2pSvcUu+lxgg7iFJ3WT5VgZVSDnRVvG4eCOvWA==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: PH8PR12MB6889
+Received-SPF: permerror client-ip=40.107.92.60;
+ envelope-from=Alexey.Kardashevskiy@amd.com;
+ helo=NAM10-BN7-obe.outbound.protection.outlook.com
+X-Spam_score_int: -50
+X-Spam_score: -5.1
+X-Spam_bar: -----
+X-Spam_report: (-5.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-2.996,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_MSPIKE_H2=-0.043, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -78,253 +193,146 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-a port of an embeddable x86 disassembler to QEMU.
 
-- https://github.com/michaeljclark/qemu/tree/x86-mini
-- https://github.com/michaeljclark/x86/tree/x86-mini
 
-# x86-mini disassembler
+On 22/1/25 16:38, Xiaoyao Li wrote:
+> On 1/22/2025 11:28 AM, Chenyi Qiang wrote:
+>>
+>>
+>> On 1/22/2025 12:35 AM, Peter Xu wrote:
+>>> On Tue, Jan 21, 2025 at 09:35:26AM +0800, Chenyi Qiang wrote:
+>>>>
+>>>>
+>>>> On 1/21/2025 2:33 AM, Peter Xu wrote:
+>>>>> On Mon, Jan 20, 2025 at 06:54:14PM +0100, David Hildenbrand wrote:
+>>>>>> On 20.01.25 18:21, Peter Xu wrote:
+>>>>>>> On Mon, Jan 20, 2025 at 11:48:39AM +0100, David Hildenbrand wrote:
+>>>>>>>> Sorry, I was traveling end of last week. I wrote a mail on the 
+>>>>>>>> train and
+>>>>>>>> apparently it was swallowed somehow ...
+>>>>>>>>
+>>>>>>>>>> Not sure that's the right place. Isn't it the (cc) machine 
+>>>>>>>>>> that controls
+>>>>>>>>>> the state?
+>>>>>>>>>
+>>>>>>>>> KVM does, via MemoryRegion->RAMBlock->guest_memfd.
+>>>>>>>>
+>>>>>>>> Right; I consider KVM part of the machine.
+>>>>>>>>
+>>>>>>>>
+>>>>>>>>>
+>>>>>>>>>> It's not really the memory backend, that's just the memory 
+>>>>>>>>>> provider.
+>>>>>>>>>
+>>>>>>>>> Sorry but is not "providing memory" the purpose of "memory 
+>>>>>>>>> backend"? :)
+>>>>>>>>
+>>>>>>>> Hehe, what I wanted to say is that a memory backend is just 
+>>>>>>>> something to
+>>>>>>>> create a RAMBlock. There are different ways to create a 
+>>>>>>>> RAMBlock, even
+>>>>>>>> guest_memfd ones.
+>>>>>>>>
+>>>>>>>> guest_memfd is stored per RAMBlock. I assume the state should be 
+>>>>>>>> stored per
+>>>>>>>> RAMBlock as well, maybe as part of a "guest_memfd state" thing.
+>>>>>>>>
+>>>>>>>> Now, the question is, who is the manager?
+>>>>>>>>
+>>>>>>>> 1) The machine. KVM requests the machine to perform the 
+>>>>>>>> transition, and the
+>>>>>>>> machine takes care of updating the guest_memfd state and 
+>>>>>>>> notifying any
+>>>>>>>> listeners.
+>>>>>>>>
+>>>>>>>> 2) The RAMBlock. Then we need some other Object to trigger that. 
+>>>>>>>> Maybe
+>>>>>>>> RAMBlock would have to become an object, or we allocate separate 
+>>>>>>>> objects.
+>>>>>>>>
+>>>>>>>> I'm leaning towards 1), but I might be missing something.
+>>>>>>>
+>>>>>>> A pure question: how do we process the bios gmemfds?  I assume 
+>>>>>>> they're
+>>>>>>> shared when VM starts if QEMU needs to load the bios into it, but 
+>>>>>>> are they
+>>>>>>> always shared, or can they be converted to private later?
+>>>>>>
+>>>>>> You're probably looking for memory_region_init_ram_guest_memfd().
+>>>>>
+>>>>> Yes, but I didn't see whether such gmemfd needs conversions there.  
+>>>>> I saw
+>>>>> an answer though from Chenyi in another email:
+>>>>>
+>>>>> https://lore.kernel.org/all/fc7194ee-ed21-4f6b-bf87-147a47f5f074@intel.com/
+>>>>>
+>>>>> So I suppose the BIOS region must support private / share 
+>>>>> conversions too,
+>>>>> just like the rest part.
+>>>>
+>>>> Yes, the BIOS region can support conversion as well. I think 
+>>>> guest_memfd
+>>>> backed memory regions all follow the same sequence during setup time:
+>>>>
+>>>> guest_memfd is shared when the guest_memfd fd is created by
+>>>> kvm_create_guest_memfd() in ram_block_add(), But it will sooner be
+>>>> converted to private just after kvm_set_user_memory_region() in
+>>>> kvm_set_phys_mem(). So at the boot time of cc VM, the default attribute
+>>>> is private. During runtime, the vBIOS can also do the conversion if it
+>>>> wants.
+>>>
+>>> I see.
+>>>
+>>>>
+>>>>>
+>>>>> Though in that case, I'm not 100% sure whether that could also be 
+>>>>> done by
+>>>>> reusing the major guest memfd with some specific offset regions.
+>>>>
+>>>> Not sure if I understand you clearly. guest_memfd is per-Ramblock. It
+>>>> will have its own slot. So the vBIOS can use its own guest_memfd to get
+>>>> the specific offset regions.
+>>>
+>>> Sorry to be confusing, please feel free to ignore my previous comment.
+>>> That came from a very limited mindset that maybe one confidential VM 
+>>> should
+>>> only have one gmemfd..
+>>>
+>>> Now I see it looks like it's by design open to multiple gmemfds for each
+>>> VM, then it's definitely ok that bios has its own.
+>>>
+>>> Do you know why the bios needs to be convertable?  I wonder whether 
+>>> the VM
+>>> can copy it over to a private region and do whatever it wants, e.g.  
+>>> attest
+>>> the bios being valid.  However this is also more of a pure question.. 
+>>> and
+>>> it can be offtopic to this series, so feel free to ignore.
+>>
+>> AFAIK, the vBIOS won't do conversion after it is set as private at the
+>> beginning. But in theory, the VM can do the conversion at runtime with
+>> current implementation. As for why make the vBIOS convertable, I'm also
+>> uncertain about it. Maybe convenient for managing the private/shared
+>> status by guest_memfd as it's also converted once at the beginning.
+> 
+> The reason is just that we are too lazy to implement a variant of guest 
+> memfd for vBIOS that is disallowed to be converted from private to shared.
 
-the x86-mini library is a lightweight x86 encoder, decoder, and
-disassembler that uses extensions to the Intel instruction set
-metadata format to encode modern VEX/EVEX instructions and legacy
-instructions using a parameterized LEX (legacy extension) format.
+What is the point in disallowing such conversion in QEMU? On AMD, a 
+malicious HV can try converting at any time and if the guest did not ask 
+for it, it will continue accessing those pages as private and trigger an 
+RMP fault. But if the guest asked for conversion, then it should be no 
+problem to convert to shared. What do I miss about TDX here? Thanks,
 
-- metadata-driven disassembler with Intel format output.
-- written in C11 for compatibility with projects written in C.
-- low-level instruction encoder and decoder uses <= 32-bytes.
-- python tablegen program to generate C tables from CSV metadata.
-- metadata table tool to inspect operand encode and decode tables.
-- carefully checked machine-readable instruction set metadata.
-- support for REX/VEX/EVEX and preliminary support for REX2.
 
-the x86-mini x86 encoder and decoder library has been written from
-scratch to be modern and as simple as possible while also covering
-recent additions to the Intel and AMD 64-bit instruction sets such
-as the EVEX encodings for recent AVX-512 extensions and soon REX2/
-EVEX encodings for Intel APX, as it is written with that in mind.
-
-## interest to the QEMU community
-
-- x86-mini is fast. raw decode performance is ~100-200MiB/sec.
-- x86-mini is small. 5 files, ~5 KLOC or ~13 KLOC including tables.
-- x86-mini is complete and includes the latest AVX-512 extensions.
-- x86-mini is easy to extend and uses extended Intel format metadata.
-- x86-mini is documented with detailed info on the metadata format.
-- x86-mini has CLI tools for searching x86 instruction set metadata.
-
-it would be nice to have an x86 disassembler building out-of-the-box
-as I find QEMU's built-in tracing extremely useful and given x86 is
-a popular target, a small embedded disassembler might be practical.
-
-## techinical notes
-
-- the decoder is table-based and uses a metadata interpreter.
-- the decode table is ~66KiB with a ~150KiB acceleration trie.
-- there are currently 3658 opcode entries active on x86-64
-  which expands to 4775 table entries due to parameterization.
-
-after cherry-picking the commits, one can test host and target
-disassembly support. e.g. for an x86-64 target on an x86-64 host:
-
-$ echo aaa | qemu-x86_64 -d in_asm,out_asm /usr/bin/openssl sha256
-
-## caveats and limitations
-
-- supports 32-bit and 64-bit disassembly, and theoretically 16-bit.
-- designed to support 16-bit. base index formats are not done yet.
-- x86-64 is exhaustively fuzz-tested against the LLVM disassembler.
-- but x86-mini is new and hasn't been battle-tested in production.
-
-## summary and conclusion
-
-the metadata is based on x86-csv but has had numerous inaccuracies
-fixed plus conversion of legacy instructions to the new LEX format.
-in effect the metadata has been fuzz-tested against LLVM for x86-64
-and ISA coverage is in the order of ~99.9%. the main branch of the
-linked repo has a procedural fuzzer for metadata-based instruction
-synthesis that could be useful for generating test cases for QEMU.
-
-## changes in this version
-
-- simplification to memory operand formatting logic.
-- fixed VSIB pointer formatting for consistency with LLVM.
-- 64-bit disasembly exhaustively fuzz tested against LLVM.
-- includes x86 metadata and x86-tablegen.py python script.
-- includes x86 metadata opcode and operand documentation.
-- addressed non-whitespace related checkpatch.pl warnings.
-
-Michael Clark (4):
-  x86-disas: add x86-mini instruction set metadata
-  x86-disas: add x86-mini metadata documentation
-  x86-disas: add x86-mini metadata tablegen script
-  x86-disas: add x86-mini disassembler implementation
-
- disas/disas-host.c                        |    5 +
- disas/meson.build                         |   97 +
- disas/x86-core.c                          | 2689 +++++++++++++++++++++
- disas/x86-data/x86_adx.csv                |    5 +
- disas/x86-data/x86_aes.csv                |   13 +
- disas/x86-data/x86_aeskle.csv             |    3 +
- disas/x86-data/x86_aesklewide.csv         |    3 +
- disas/x86-data/x86_avx.csv                |  375 +++
- disas/x86-data/x86_avx2.csv               |  171 ++
- disas/x86-data/x86_avx5124fmaps.csv       |    5 +
- disas/x86-data/x86_avx5124vnniw.csv       |    3 +
- disas/x86-data/x86_avx512b.csv            |    3 +
- disas/x86-data/x86_avx512bf16.csv         |   10 +
- disas/x86-data/x86_avx512bitalg.csv       |   10 +
- disas/x86-data/x86_avx512bw.csv           |  291 +++
- disas/x86-data/x86_avx512cd.csv           |   19 +
- disas/x86-data/x86_avx512d.csv            |    2 +
- disas/x86-data/x86_avx512dq.csv           |  143 ++
- disas/x86-data/x86_avx512er.csv           |   11 +
- disas/x86-data/x86_avx512f.csv            |  901 +++++++
- disas/x86-data/x86_avx512fp16.csv         |  237 ++
- disas/x86-data/x86_avx512ifma.csv         |    7 +
- disas/x86-data/x86_avx512pf.csv           |   17 +
- disas/x86-data/x86_avx512vbmi.csv         |   13 +
- disas/x86-data/x86_avx512vbmi2.csv        |   61 +
- disas/x86-data/x86_avx512vl.csv           |    2 +
- disas/x86-data/x86_avx512vnni.csv         |   13 +
- disas/x86-data/x86_avx512vp2intersect.csv |    7 +
- disas/x86-data/x86_avx512vpopcntdq.csv    |    7 +
- disas/x86-data/x86_avxneconvert.csv       |   15 +
- disas/x86-data/x86_avxvnni.csv            |    9 +
- disas/x86-data/x86_avxvnniint8.csv        |   13 +
- disas/x86-data/x86_base.csv               |  549 +++++
- disas/x86-data/x86_bmi1.csv               |   13 +
- disas/x86-data/x86_bmi2.csv               |   17 +
- disas/x86-data/x86_cet.csv                |   15 +
- disas/x86-data/x86_cldemote.csv           |    2 +
- disas/x86-data/x86_clwb.csv               |    2 +
- disas/x86-data/x86_enqcmd.csv             |    3 +
- disas/x86-data/x86_f16c.csv               |    5 +
- disas/x86-data/x86_fma.csv                |   97 +
- disas/x86-data/x86_fsgsbase.csv           |    9 +
- disas/x86-data/x86_gfni.csv               |   19 +
- disas/x86-data/x86_hreset.csv             |    2 +
- disas/x86-data/x86_invpcid.csv            |    2 +
- disas/x86-data/x86_lzcnt.csv              |    3 +
- disas/x86-data/x86_mmx.csv                |   60 +
- disas/x86-data/x86_movdir64b.csv          |    2 +
- disas/x86-data/x86_movdiri.csv            |    3 +
- disas/x86-data/x86_mpx.csv                |    9 +
- disas/x86-data/x86_msrlist.csv            |    4 +
- disas/x86-data/x86_ospke.csv              |    3 +
- disas/x86-data/x86_pclmulqdq.csv          |    3 +
- disas/x86-data/x86_pconfig.csv            |    2 +
- disas/x86-data/x86_prefetchw.csv          |    7 +
- disas/x86-data/x86_raoint.csv             |    9 +
- disas/x86-data/x86_rdpid.csv              |    2 +
- disas/x86-data/x86_rdrand.csv             |    2 +
- disas/x86-data/x86_rdseed.csv             |    2 +
- disas/x86-data/x86_rtm.csv                |    5 +
- disas/x86-data/x86_serialize.csv          |    2 +
- disas/x86-data/x86_sha.csv                |    8 +
- disas/x86-data/x86_smap.csv               |    3 +
- disas/x86-data/x86_sse.csv                |   58 +
- disas/x86-data/x86_sse2.csv               |  148 ++
- disas/x86-data/x86_sse3.csv               |   11 +
- disas/x86-data/x86_sse4_1.csv             |   48 +
- disas/x86-data/x86_sse4_2.csv             |    7 +
- disas/x86-data/x86_sse4_3.csv             |    2 +
- disas/x86-data/x86_ssse3.csv              |   33 +
- disas/x86-data/x86_uintr.csv              |    6 +
- disas/x86-data/x86_vaes.csv               |   17 +
- disas/x86-data/x86_vmx.csv                |   14 +
- disas/x86-data/x86_waitpkg.csv            |    4 +
- disas/x86-data/x86_wbnoinvd.csv           |    2 +
- disas/x86-data/x86_x87.csv                |  145 ++
- disas/x86-data/x86_xsaveopt.csv           |    3 +
- disas/x86-disas.c                         |   94 +
- disas/x86.h                               | 1969 +++++++++++++++
- docs/x86-metadata.txt                     |  301 +++
- include/disas/dis-asm.h                   |    1 +
- scripts/x86-tablegen.py                   |  693 ++++++
- target/i386/cpu.c                         |    7 +
- 83 files changed, 9587 insertions(+)
- create mode 100644 disas/x86-core.c
- create mode 100644 disas/x86-data/x86_adx.csv
- create mode 100644 disas/x86-data/x86_aes.csv
- create mode 100644 disas/x86-data/x86_aeskle.csv
- create mode 100644 disas/x86-data/x86_aesklewide.csv
- create mode 100644 disas/x86-data/x86_avx.csv
- create mode 100644 disas/x86-data/x86_avx2.csv
- create mode 100644 disas/x86-data/x86_avx5124fmaps.csv
- create mode 100644 disas/x86-data/x86_avx5124vnniw.csv
- create mode 100644 disas/x86-data/x86_avx512b.csv
- create mode 100644 disas/x86-data/x86_avx512bf16.csv
- create mode 100644 disas/x86-data/x86_avx512bitalg.csv
- create mode 100644 disas/x86-data/x86_avx512bw.csv
- create mode 100644 disas/x86-data/x86_avx512cd.csv
- create mode 100644 disas/x86-data/x86_avx512d.csv
- create mode 100644 disas/x86-data/x86_avx512dq.csv
- create mode 100644 disas/x86-data/x86_avx512er.csv
- create mode 100644 disas/x86-data/x86_avx512f.csv
- create mode 100644 disas/x86-data/x86_avx512fp16.csv
- create mode 100644 disas/x86-data/x86_avx512ifma.csv
- create mode 100644 disas/x86-data/x86_avx512pf.csv
- create mode 100644 disas/x86-data/x86_avx512vbmi.csv
- create mode 100644 disas/x86-data/x86_avx512vbmi2.csv
- create mode 100644 disas/x86-data/x86_avx512vl.csv
- create mode 100644 disas/x86-data/x86_avx512vnni.csv
- create mode 100644 disas/x86-data/x86_avx512vp2intersect.csv
- create mode 100644 disas/x86-data/x86_avx512vpopcntdq.csv
- create mode 100644 disas/x86-data/x86_avxneconvert.csv
- create mode 100644 disas/x86-data/x86_avxvnni.csv
- create mode 100644 disas/x86-data/x86_avxvnniint8.csv
- create mode 100644 disas/x86-data/x86_base.csv
- create mode 100644 disas/x86-data/x86_bmi1.csv
- create mode 100644 disas/x86-data/x86_bmi2.csv
- create mode 100644 disas/x86-data/x86_cet.csv
- create mode 100644 disas/x86-data/x86_cldemote.csv
- create mode 100644 disas/x86-data/x86_clwb.csv
- create mode 100644 disas/x86-data/x86_enqcmd.csv
- create mode 100644 disas/x86-data/x86_f16c.csv
- create mode 100644 disas/x86-data/x86_fma.csv
- create mode 100644 disas/x86-data/x86_fsgsbase.csv
- create mode 100644 disas/x86-data/x86_gfni.csv
- create mode 100644 disas/x86-data/x86_hreset.csv
- create mode 100644 disas/x86-data/x86_invpcid.csv
- create mode 100644 disas/x86-data/x86_lzcnt.csv
- create mode 100644 disas/x86-data/x86_mmx.csv
- create mode 100644 disas/x86-data/x86_movdir64b.csv
- create mode 100644 disas/x86-data/x86_movdiri.csv
- create mode 100644 disas/x86-data/x86_mpx.csv
- create mode 100644 disas/x86-data/x86_msrlist.csv
- create mode 100644 disas/x86-data/x86_ospke.csv
- create mode 100644 disas/x86-data/x86_pclmulqdq.csv
- create mode 100644 disas/x86-data/x86_pconfig.csv
- create mode 100644 disas/x86-data/x86_prefetchw.csv
- create mode 100644 disas/x86-data/x86_raoint.csv
- create mode 100644 disas/x86-data/x86_rdpid.csv
- create mode 100644 disas/x86-data/x86_rdrand.csv
- create mode 100644 disas/x86-data/x86_rdseed.csv
- create mode 100644 disas/x86-data/x86_rtm.csv
- create mode 100644 disas/x86-data/x86_serialize.csv
- create mode 100644 disas/x86-data/x86_sha.csv
- create mode 100644 disas/x86-data/x86_smap.csv
- create mode 100644 disas/x86-data/x86_sse.csv
- create mode 100644 disas/x86-data/x86_sse2.csv
- create mode 100644 disas/x86-data/x86_sse3.csv
- create mode 100644 disas/x86-data/x86_sse4_1.csv
- create mode 100644 disas/x86-data/x86_sse4_2.csv
- create mode 100644 disas/x86-data/x86_sse4_3.csv
- create mode 100644 disas/x86-data/x86_ssse3.csv
- create mode 100644 disas/x86-data/x86_uintr.csv
- create mode 100644 disas/x86-data/x86_vaes.csv
- create mode 100644 disas/x86-data/x86_vmx.csv
- create mode 100644 disas/x86-data/x86_waitpkg.csv
- create mode 100644 disas/x86-data/x86_wbnoinvd.csv
- create mode 100644 disas/x86-data/x86_x87.csv
- create mode 100644 disas/x86-data/x86_xsaveopt.csv
- create mode 100644 disas/x86-disas.c
- create mode 100644 disas/x86.h
- create mode 100644 docs/x86-metadata.txt
- create mode 100755 scripts/x86-tablegen.py
+> 
+>>>
+>>> Thanks,
+>>>
+>>
+> 
 
 -- 
-2.43.0
+Alexey
 
 
