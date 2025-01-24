@@ -4,88 +4,91 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 57328C02181
-	for <qemu-devel@archiver.kernel.org>; Fri, 24 Jan 2025 08:44:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 70EBEC02181
+	for <qemu-devel@archiver.kernel.org>; Fri, 24 Jan 2025 08:50:29 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tbFI1-0000rD-BJ; Fri, 24 Jan 2025 03:43:45 -0500
+	id 1tbFNq-0002CF-JD; Fri, 24 Jan 2025 03:49:46 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1tbFHx-0000qO-6Z
- for qemu-devel@nongnu.org; Fri, 24 Jan 2025 03:43:41 -0500
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1tbFNm-0002Bu-5O
+ for qemu-devel@nongnu.org; Fri, 24 Jan 2025 03:49:42 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1tbFHv-0004sD-8I
- for qemu-devel@nongnu.org; Fri, 24 Jan 2025 03:43:40 -0500
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1tbFNj-0005Qw-T1
+ for qemu-devel@nongnu.org; Fri, 24 Jan 2025 03:49:41 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1737708217;
+ s=mimecast20190719; t=1737708578;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=4XLPKfjV6KfFtmJERY5VFZ8W/kvpm6/D7BF1FPv2DS0=;
- b=Q/99LtacGejvXcKBstrexxDLdivc56W6gmieJQtN2ba6wawZFxcJLK9UscwG3gojSCaFJs
- qRadUbtCqIbjzB/YMiFfRr3XLn4f4I3zm5P13Ke9vdw4XBRjdHWfwJHWpQ2+8DWttmgDYh
- EtC1Msv5rmm8zwQqmMFsFJo4taW/Cfk=
+ bh=VWKq5lt+btIUVKKKt8+LYjvKd/1E1dYR/tC8tsMUUUo=;
+ b=cC4uPXv0aLsBmYBSuvHtnuejjW5n1qd71v++/oca0lXA+Mb04MuiGT1RGfAyQ9K/KAVtjP
+ upZ3GCRJaqLfXcnrXHbJo5n6CI3F+NGccJ6HQftqFUZc0E6Y9tpHO9R7gPnxfQEtJkMDkH
+ OIbliEKx6BGUWLAwjs7X+PRueU8z/Zs=
 Received: from mail-wm1-f72.google.com (mail-wm1-f72.google.com
  [209.85.128.72]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-562-3VD2o-eNNJmgNpmAxwQWSw-1; Fri, 24 Jan 2025 03:43:35 -0500
-X-MC-Unique: 3VD2o-eNNJmgNpmAxwQWSw-1
-X-Mimecast-MFC-AGG-ID: 3VD2o-eNNJmgNpmAxwQWSw
+ us-mta-272-UzMC4ZYfOF6dpDm5P9RIgA-1; Fri, 24 Jan 2025 03:49:36 -0500
+X-MC-Unique: UzMC4ZYfOF6dpDm5P9RIgA-1
+X-Mimecast-MFC-AGG-ID: UzMC4ZYfOF6dpDm5P9RIgA
 Received: by mail-wm1-f72.google.com with SMTP id
- 5b1f17b1804b1-4362153dcd6so8768115e9.2
- for <qemu-devel@nongnu.org>; Fri, 24 Jan 2025 00:43:35 -0800 (PST)
+ 5b1f17b1804b1-436723db6c4so12585755e9.3
+ for <qemu-devel@nongnu.org>; Fri, 24 Jan 2025 00:49:36 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1737708214; x=1738313014;
+ d=1e100.net; s=20230601; t=1737708575; x=1738313375;
  h=content-transfer-encoding:in-reply-to:autocrypt:from
  :content-language:references:cc:to:subject:user-agent:mime-version
  :date:message-id:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to;
- bh=4XLPKfjV6KfFtmJERY5VFZ8W/kvpm6/D7BF1FPv2DS0=;
- b=NXnnyCeS/iEG0GJdPsw/Ay6+2ww4nHjciMBpv/heCy/LEaSAgSipD+n65pvTUjwxUi
- Z2kHCloA2gkuWUQvGjLf+i1pvcVMx+jdC1Re821qt+jo60/w72T47+r3UGoNVfKfe7/R
- RF2/h3tMJKh9kfACAUQT9noINbst4Oyq4scoFJqjGzE4OFKem9UBPb60Ra52qdJpYATg
- 4Nc6FwOjHtj335M/jeKNhTkDOQ5pnIf2RQv9bN6yvEjusoduuuSn+owFSHSqQQoL0PIV
- sVbD2lk5JgAADvP7Y3xMOMLvVKcCDzN3qGyfdnaye4yNnRg6VdsW9UWRrGW/FM1gsyt5
- wgxw==
+ bh=VWKq5lt+btIUVKKKt8+LYjvKd/1E1dYR/tC8tsMUUUo=;
+ b=LSVX7YkRBqjjyEajFRTJnL9ykZQAk+Vf5mnyQMG4crbASfO65COkvsrNCyb4iok/Zn
+ KyMNXIvyKOkQi5S8M+4mhKzZXeoarwbxMjqJBuL4H1Ooi6+jzpdartO1qVpZGpZms+CC
+ SU5oCLTKpcd7eoxLZbMmJjzyMQuxisPtVQ3jwaiLS2UV1zCylWBUUOpxwMvWNOIjQD9c
+ jooIXW6aIAGodSwXZPNnW7YSHN4gAStbEvHBCaXyH8rsHB/Ai5cWQFTFAUeqEW+6NBZw
+ 0SWjU3aGkXrDsolpQ3j5FFZjcPxkYw5NitoJOcJIxI9wAC+9N9zqpsNIEAiujSn4OLTb
+ v9HQ==
 X-Forwarded-Encrypted: i=1;
- AJvYcCUAQ76WZlbcFucKl0VuB2lt01KLK4+ehOh7EBXmN6mRgI3VPMUbEuWsg46ivAlfO5oayI0kqnvKVt+9@nongnu.org
-X-Gm-Message-State: AOJu0YyAduLGWa4KrXg+xdbUgFqcBy81LPuysqKJ82PEgge5Ma9OkrUD
- EtwB3Y9KlGXm1wLAiDCijG+IFl9B6bQLTmFEuu7zDedMJmJt8qrQwF6uWALb/EVoOgt2EDhlUGJ
- xL4M4OTLZKCUpKHGItMUv3M19E5Wyvx56R+P23Va1s3oT0DWu8KGrsQ3rrDk1
-X-Gm-Gg: ASbGncve8GBP6eSwprF9LYit8Gf4JSbrdNxYAXxsxsuLfiTkg4mxaGVJHrPxrrNQXUp
- RtUGoVoJqHm++997NC/GFhFhoruA0IOgy14aObd4u26e8mUzgGGC0PYpqUkfRB4fsmNyWItPJlZ
- Ca+vB+QQVofaf2PSyz9NyGDwNrFmap/A9h4Yj8385WirBwRDR/zN3P6X7f0jCN8cmrDfXDfA9zY
- asW/WxhaaRwVSwZJVC2bIJ0/0sVs05PGUXJAypwvJln8lAWz651LRIMi3+6fi2mlRFIaec/VoDd
- tISwZyL/8yZWiQcaCzqznm4fazD3hSrZ
-X-Received: by 2002:a05:600c:1c93:b0:42a:a6d2:3270 with SMTP id
- 5b1f17b1804b1-43891426ebcmr224343375e9.21.1737708213870; 
- Fri, 24 Jan 2025 00:43:33 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IHTzZjJXBtGLwz2g7ukKSGPu2fnZGJJlQcI2QaC2zlbx1xhbETGrA/ERbsJG+/1RF2paDfBrg==
-X-Received: by 2002:a05:600c:1c93:b0:42a:a6d2:3270 with SMTP id
- 5b1f17b1804b1-43891426ebcmr224343195e9.21.1737708213553; 
- Fri, 24 Jan 2025 00:43:33 -0800 (PST)
+ AJvYcCXm9pxQbAze5JIJ3/t2DsgNL9MU3xiGmBHJCPW0Ye3JCWpc9Foh+AxqYiMUWV+HDZZx92+Q+SvAyt5A@nongnu.org
+X-Gm-Message-State: AOJu0YxELMRGR+Vt4rA8orGH5WtsDEOm3BbDRTPTTmUJsp1kANRhELJb
+ SjGosT8i9vK6Mj39rhkeHH0xUCckOIcqOkubiEKqTQNPNVtDRgT8wTbRVyJMhHaNgF/rNv2Z77X
+ hWv5H0h/IL7O/Y1uadct33PAnS6OtJ5lT5jhsIAyqzMQcFB7faqjE
+X-Gm-Gg: ASbGncvQETrR136zpHJHi3UCV5PQmPwyP9RuDSOhDZ7xPfj4UGCl8oNpHesQ3/oDsmj
+ Et0i7Ob1EtoNhRr1ZQtUj7+Txkk7YcjB9LuJjLPPnfY4+SBWhnkv1tPkA5YiY800pBKQzgTQKqi
+ 32flExuDtDOGcGa9fTZTVyhGdnQ4VhXVBxgrOxaki6BvwyzMukGjjWsaxuC5HiDcIn02n5PBBMq
+ R12dHn74DknOlFNOrLESDo/IcIk6X6dBDba6xoFj3tG/Lm6D9eu2rOsG5rp5w5w+85u3grNVziR
+ 45Px5FcLghElG9afawrdHXx7aat9BIMF
+X-Received: by 2002:a05:600c:4684:b0:434:ff25:19a0 with SMTP id
+ 5b1f17b1804b1-4389141c420mr217048405e9.21.1737708575419; 
+ Fri, 24 Jan 2025 00:49:35 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IGVLBwdv5P/n8qaOMbrwHfI0MAOja1HPio+988JVMQfx9ti3c0+lVvcZJa65UsaHISyWqKEhA==
+X-Received: by 2002:a05:600c:4684:b0:434:ff25:19a0 with SMTP id
+ 5b1f17b1804b1-4389141c420mr217048135e9.21.1737708575094; 
+ Fri, 24 Jan 2025 00:49:35 -0800 (PST)
 Received: from ?IPV6:2a01:e0a:280:24f0:9db0:474c:ff43:9f5c?
  ([2a01:e0a:280:24f0:9db0:474c:ff43:9f5c])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-438bd48574csm19189725e9.9.2025.01.24.00.43.32
+ 5b1f17b1804b1-438bd4b9984sm18959965e9.28.2025.01.24.00.49.34
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 24 Jan 2025 00:43:33 -0800 (PST)
-Message-ID: <83e92dbd-0ff2-41cd-995d-af55c72c711b@redhat.com>
-Date: Fri, 24 Jan 2025 09:43:32 +0100
+ Fri, 24 Jan 2025 00:49:34 -0800 (PST)
+Message-ID: <f8ce74c9-e4f9-40fa-8d58-c96f68aaed84@redhat.com>
+Date: Fri, 24 Jan 2025 09:49:33 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v1 4/5] hw/vfio/ap: Storing event information for an AP
- configuration change event
-To: Rorie Reyes <rreyes@linux.ibm.com>, qemu-devel@nongnu.org,
- qemu-s390x@nongnu.org
+Subject: Re: [PATCH v1 1/5] linux-headers: NOTFORMERGE - placeholder uapi
+ updates for AP config change
+To: Eric Farman <farman@linux.ibm.com>, Rorie Reyes <rreyes@linux.ibm.com>,
+ qemu-devel@nongnu.org, qemu-s390x@nongnu.org
 Cc: pbonzini@redhat.com, cohuck@redhat.com, pasic@linux.ibm.com,
  jjherne@linux.ibm.com, borntraeger@linux.ibm.com,
  alex.williamson@redhat.com, thuth@redhat.com, akrowiak@linux.ibm.com
 References: <20250107184354.91079-1-rreyes@linux.ibm.com>
- <20250107184354.91079-5-rreyes@linux.ibm.com>
+ <20250107184354.91079-2-rreyes@linux.ibm.com>
+ <f0213486-c0f5-4415-869a-99a851c8a4cb@redhat.com>
+ <dd1b07c4-1b72-4051-acbb-d679d0a0f534@linux.ibm.com>
+ <52b7868e00271d49baddd64432332859c8314d1d.camel@linux.ibm.com>
 Content-Language: en-US, fr
 From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
 Autocrypt: addr=clg@redhat.com; keydata=
@@ -131,9 +134,9 @@ Autocrypt: addr=clg@redhat.com; keydata=
  HQoPn9qrDJgsgcbBVc1gkUT6hnxShKPp4PlsZVMNjvPAnr5TEBgHkk54HQRhhwcYv1T2QumQ
  izDiU6iOrUzBThaMhZO3i927SG2DwWDVzZltKrCMD1aMPvb3NU8FOYRhNmIFR3fcalYr+9gD
  uVKe8BVz4atMOoktmt0GWTOC8P4=
-In-Reply-To: <20250107184354.91079-5-rreyes@linux.ibm.com>
+In-Reply-To: <52b7868e00271d49baddd64432332859c8314d1d.camel@linux.ibm.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=170.10.133.124; envelope-from=clg@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -50
@@ -159,118 +162,49 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 1/7/25 19:43, Rorie Reyes wrote:
-> These functions can be invoked by the function that handles interception
-> of the CHSC SEI instruction for requests indicating the accessibility of
-> one or more adjunct processors has changed.
+On 1/14/25 20:55, Eric Farman wrote:
+> On Tue, 2025-01-14 at 13:51 -0500, Rorie Reyes wrote:
+>> On 1/8/25 2:29 AM, Cédric Le Goater wrote:
+>>> Hello Rorie,
+>>>
+>>> On 1/7/25 19:43, Rorie Reyes wrote:
+>>>> This patch adds enumeration constant VFIO_AP_CFG_CHG_IRQ_INDEX to
+>>>> specify
+>>>> an IRQ index for signaling that a change has been made to the guest's AP
+>>>> configuration. This is a placeholder for QEMU patches that use this
+>>>> value
+>>>> since it is a linux-headers update which includes changes that aren't
+>>>> merged into the kernel.
+>>>
+>>> Is there an upstream proposal for this change that we could look at ?
+>>> It is nice to mention related series in the cover letter.
+>>>
+>>> Thanks,
+>>>
+>>> C.
+>>>
+>>>
+>> Hey Cedric,
+>>
+>> There is no upstream proposal for this. It is an s390 internal line item.
 > 
-> Signed-off-by: Rorie Reyes <rreyes@linux.ibm.com>
-> ---
->   hw/vfio/ap.c                 | 37 ++++++++++++++++++++++++++++++++++++
->   include/hw/s390x/ap-bridge.h | 17 +++++++++++++++++
->   2 files changed, 54 insertions(+)
+> Rorie,
 > 
-> diff --git a/hw/vfio/ap.c b/hw/vfio/ap.c
-> index 508c6eed7a..9d1e18f100 100644
-> --- a/hw/vfio/ap.c
-> +++ b/hw/vfio/ap.c
-> @@ -94,6 +94,43 @@ static void vfio_ap_cfg_chg_notifier_handler(void *opaque)
->       css_generate_css_crws(0);
->   }
->   
-> +int ap_chsc_sei_nt0_get_event(void *res)
-> +{
-> +    APConfigChgEvent *cfg_chg_event = QTAILQ_FIRST(&cfg_chg_events);
-> +    ChscSeiNt0Res *nt0_res  = (ChscSeiNt0Res *)res;
-> +    memset(nt0_res, 0, sizeof(*nt0_res));
+> I think Cedric was looking for the matching kernel code you proposed, which this QEMU series depends
+> on:
+> 
+> https://lore.kernel.org/r/20250107183645.90082-1-rreyes@linux.ibm.com/
 
-please put the memset after the variables.
-
-> +    int rc = 1;
-
-'rc' is not very useful. Why not simply return 0 or 1 ?
-
-> +
-> +    if (cfg_chg_event) {
-
-I would reverse the logic and return early.
-
-      if (! cfg_chg_event) {
-          return 1;
-      }
-
-
-> +        QTAILQ_REMOVE(&cfg_chg_events, cfg_chg_event, next);
-> +        free(cfg_chg_event);
-
-g_free()
-
-> +
-> +        /*
-> +         * If there are any AP configuration change events in the queue,
-> +         * indicate to the caller that there is pending event info in
-> +         * the response block
-> +         */
-> +        if (!QTAILQ_EMPTY(&cfg_chg_events)) {
-> +            nt0_res->flags |= PENDING_EVENT_INFO_BITMASK;
-> +        }
-> +
-> +        nt0_res->length = sizeof(ChscSeiNt0Res);
-> +        nt0_res->code = 1;
-> +        nt0_res->nt = 0;
-> +        nt0_res->rs = 5;
-> +        nt0_res->cc = 3;
-
-The above values are cryptic. Can we have some define possibly ?
-
-> +        rc = 0;
-> +    }
-> +
-> +    return rc;
-> +}
-> +
-> +int ap_chsc_sei_nt0_have_event(void)
-> +{
-> +    return !QTAILQ_EMPTY(&cfg_chg_events);
-> +}
-
-Why not use this routine in ap_chsc_sei_nt0_get_event() too ?
-
-
+There is a v2 in the works, right? is that 6.14 material ?
 
 Thanks,
 
 C.
 
 
->   static bool vfio_ap_register_irq_notifier(VFIOAPDevice *vapdev,
->                                             unsigned int irq, Error **errp)
->   {
-> diff --git a/include/hw/s390x/ap-bridge.h b/include/hw/s390x/ap-bridge.h
-> index 470e439a98..c9beec3db4 100644
-> --- a/include/hw/s390x/ap-bridge.h
-> +++ b/include/hw/s390x/ap-bridge.h
-> @@ -16,4 +16,21 @@
->   
->   void s390_init_ap(void);
->   
-> +typedef struct ChscSeiNt0Res {
-> +    uint16_t length;
-> +    uint16_t code;
-> +    uint8_t reserved1;
-> +    uint16_t reserved2;
-> +    uint8_t nt;
-> +#define PENDING_EVENT_INFO_BITMASK 0x80;
-> +    uint8_t flags;
-> +    uint8_t reserved3;
-> +    uint8_t rs;
-> +    uint8_t cc;
-> +} QEMU_PACKED ChscSeiNt0Res;
-> +
-> +int ap_chsc_sei_nt0_get_event(void *res);
-> +
-> +int ap_chsc_sei_nt0_have_event(void);
-> +
->   #endif
+> 
+> Thanks,
+> Eric
+> 
 
 
