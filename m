@@ -4,47 +4,47 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 70FA3C02181
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9DFD0C0218C
 	for <qemu-devel@archiver.kernel.org>; Fri, 24 Jan 2025 13:48:48 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tbJuT-0000CD-MA; Fri, 24 Jan 2025 08:39:45 -0500
+	id 1tbJvK-0002KV-2w; Fri, 24 Jan 2025 08:40:38 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <xiaoyao.li@intel.com>)
- id 1tbJtc-0006Zi-Lm
- for qemu-devel@nongnu.org; Fri, 24 Jan 2025 08:38:58 -0500
+ id 1tbJua-0001E5-VH
+ for qemu-devel@nongnu.org; Fri, 24 Jan 2025 08:39:53 -0500
 Received: from mgamail.intel.com ([198.175.65.13])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <xiaoyao.li@intel.com>)
- id 1tbJta-00041c-PL
- for qemu-devel@nongnu.org; Fri, 24 Jan 2025 08:38:52 -0500
+ id 1tbJuZ-0003xi-BO
+ for qemu-devel@nongnu.org; Fri, 24 Jan 2025 08:39:52 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1737725931; x=1769261931;
+ t=1737725992; x=1769261992;
  h=from:to:cc:subject:date:message-id:in-reply-to:
  references:mime-version:content-transfer-encoding;
- bh=9LeRcYgDvW5lMsehq+j8bbe6PQs/g/hSfE4cA/e4doU=;
- b=SlivONiI8mh/8f10tDEcIIqmIDJnCeO415Bizw35hX7PocneU9+y6/bp
- OCwvLAziRFcxFLEQLmNrepPPzQI4g/l6kKDNmP/tLliDfk+PbaKj3tVwp
- AhEtLZzzbcbG0pq0VlBFl5CA/c3mVKc+L3UUwAK+FgwnjlrhcXCJiRYzr
- uhTJ18rgGFsUM+mVA8v/20jEs4PS64LPLjk+kereusjE/xNX00sJrJK3H
- 14/b6Mu87+219pbMv9vcBh2c4Yv/nehUrVGQ/laXlyuSJwGUFznaAMm/8
- 39ohb4cXMBWbHLlCgN2Hvkem/Wc9lBTdZJh3PL4rPr4y6B3J4BC19yGsh g==;
-X-CSE-ConnectionGUID: TsBYQSndS1auoHWN/gTCdA==
-X-CSE-MsgGUID: yGoK038sSumtSeVB0C8YtA==
-X-IronPort-AV: E=McAfee;i="6700,10204,11325"; a="49246429"
-X-IronPort-AV: E=Sophos;i="6.13,231,1732608000"; d="scan'208";a="49246429"
+ bh=Cg9zFgAAzu9TXNw0/8UbOMWfLRF5mK1sJR1xnM0x7yE=;
+ b=J5CkxTuhyLFZ9LhR5hgn6iY/1dA4jP42yLt8QEIfP99mG21fdO369Y1C
+ 0lICjN+6pgvwqhmQo5i167iWHOMx8Ww4jlhul5cpxhscvIeGoH/uMYCtc
+ WHxhtjtvERnWEK87DH6uPV/Hr1tRklUkrYyzXc4YY/dlkhPLIz+zefvG9
+ XP2kVruFpNckPA/y3SsyZ/HS1eUp07UhsiXi7QJ2IEfwTZfYO3setnHaI
+ dKvciwvnvauLwheTYuhCNMBYVuRbwY/8DZyzXfj3/eYufT4+67L8ub2Vj
+ 6u6fRVvHwCiBhslYk/3lCX2PWzFYrZfQbCao9q4XWK3XZGkmovQgWA/tc w==;
+X-CSE-ConnectionGUID: sSajo9KVRQWQz7CY0kgcEQ==
+X-CSE-MsgGUID: 8lP/CESKQo2nna0TSjafcg==
+X-IronPort-AV: E=McAfee;i="6700,10204,11325"; a="49246542"
+X-IronPort-AV: E=Sophos;i="6.13,231,1732608000"; d="scan'208";a="49246542"
 Received: from fmviesa003.fm.intel.com ([10.60.135.143])
  by orvoesa105.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 24 Jan 2025 05:38:36 -0800
-X-CSE-ConnectionGUID: A65DTX7TRl2FBFd2ClD4QQ==
-X-CSE-MsgGUID: 4nMhs+4ZReudkhpfCqarDQ==
+ 24 Jan 2025 05:39:29 -0800
+X-CSE-ConnectionGUID: QgXs53yKRAimdFJ5U90NLA==
+X-CSE-MsgGUID: zZ33BOzxQ56B2EFNvXjAYQ==
 X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.12,224,1728975600"; d="scan'208";a="111804321"
+X-IronPort-AV: E=Sophos;i="6.12,224,1728975600"; d="scan'208";a="111804435"
 Received: from lxy-clx-4s.sh.intel.com ([10.239.48.52])
- by fmviesa003.fm.intel.com with ESMTP; 24 Jan 2025 05:38:32 -0800
+ by fmviesa003.fm.intel.com with ESMTP; 24 Jan 2025 05:39:25 -0800
 From: Xiaoyao Li <xiaoyao.li@intel.com>
 To: Paolo Bonzini <pbonzini@redhat.com>,
  =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
@@ -57,9 +57,9 @@ Cc: Zhao Liu <zhao1.liu@intel.com>, "Michael S. Tsirkin" <mst@redhat.com>,
  Rick Edgecombe <rick.p.edgecombe@intel.com>,
  Francesco Lavra <francescolavra.fl@gmail.com>, xiaoyao.li@intel.com,
  qemu-devel@nongnu.org, kvm@vger.kernel.org
-Subject: [PATCH v7 25/52] i386/tdx: Finalize TDX VM
-Date: Fri, 24 Jan 2025 08:20:21 -0500
-Message-Id: <20250124132048.3229049-26-xiaoyao.li@intel.com>
+Subject: [PATCH v7 39/52] cpu: Don't set vcpu_dirty when guest_state_protected
+Date: Fri, 24 Jan 2025 08:20:35 -0500
+Message-Id: <20250124132048.3229049-40-xiaoyao.li@intel.com>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20250124132048.3229049-1-xiaoyao.li@intel.com>
 References: <20250124132048.3229049-1-xiaoyao.li@intel.com>
@@ -91,29 +91,37 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Invoke KVM_TDX_FINALIZE_VM to finalize the TD's measurement and make
-the TD vCPUs runnable once machine initialization is complete.
+QEMU calls kvm_arch_put_registers() when vcpu_dirty is true in
+kvm_vcpu_exec(). However, for confidential guest, like TDX, putting
+registers is disallowed due to guest state is protected.
+
+Only set vcpu_dirty to true with guest state is not protected when
+creating the vcpu.
 
 Signed-off-by: Xiaoyao Li <xiaoyao.li@intel.com>
-Acked-by: Gerd Hoffmann <kraxel@redhat.com>
 ---
- target/i386/kvm/tdx.c | 3 +++
- 1 file changed, 3 insertions(+)
+Changes in v7:
+ - new patch to replace "i386/tdx: Don't get/put guest state for TDX VMs"
+   in v6;
+---
+ accel/kvm/kvm-all.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/target/i386/kvm/tdx.c b/target/i386/kvm/tdx.c
-index 99c1664d836b..d7f7f8301ca2 100644
---- a/target/i386/kvm/tdx.c
-+++ b/target/i386/kvm/tdx.c
-@@ -351,6 +351,9 @@ static void tdx_finalize_vm(Notifier *notifier, void *unused)
-      */
-     ram_block = tdx_guest->tdvf_mr->ram_block;
-     ram_block_discard_range(ram_block, 0, ram_block->max_length);
-+
-+    tdx_vm_ioctl(KVM_TDX_FINALIZE_VM, 0, NULL, &error_fatal);
-+    CONFIDENTIAL_GUEST_SUPPORT(tdx_guest)->ready = true;
- }
+diff --git a/accel/kvm/kvm-all.c b/accel/kvm/kvm-all.c
+index e35a9fbd687e..c1fea69d582e 100644
+--- a/accel/kvm/kvm-all.c
++++ b/accel/kvm/kvm-all.c
+@@ -466,7 +466,9 @@ int kvm_create_vcpu(CPUState *cpu)
  
- static Notifier tdx_machine_done_notify = {
+     cpu->kvm_fd = kvm_fd;
+     cpu->kvm_state = s;
+-    cpu->vcpu_dirty = true;
++    if (!s->guest_state_protected) {
++        cpu->vcpu_dirty = true;
++    }
+     cpu->dirty_pages = 0;
+     cpu->throttle_us_per_full = 0;
+ 
 -- 
 2.34.1
 
