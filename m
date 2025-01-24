@@ -4,89 +4,99 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9F841C02181
-	for <qemu-devel@archiver.kernel.org>; Fri, 24 Jan 2025 16:26:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7CBE1C02181
+	for <qemu-devel@archiver.kernel.org>; Fri, 24 Jan 2025 16:27:42 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tbMVs-0001GR-D9; Fri, 24 Jan 2025 11:26:32 -0500
+	id 1tbMWm-0002NU-9v; Fri, 24 Jan 2025 11:27:28 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alex.williamson@redhat.com>)
- id 1tbMVh-0001Ex-4E
- for qemu-devel@nongnu.org; Fri, 24 Jan 2025 11:26:23 -0500
+ (Exim 4.90_1) (envelope-from <dhildenb@redhat.com>)
+ id 1tbMWk-0002N8-Fe
+ for qemu-devel@nongnu.org; Fri, 24 Jan 2025 11:27:26 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alex.williamson@redhat.com>)
- id 1tbMVQ-0005A0-9g
- for qemu-devel@nongnu.org; Fri, 24 Jan 2025 11:26:08 -0500
+ (Exim 4.90_1) (envelope-from <dhildenb@redhat.com>)
+ id 1tbMWe-0005Dy-FI
+ for qemu-devel@nongnu.org; Fri, 24 Jan 2025 11:27:26 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1737735959;
+ s=mimecast20190719; t=1737736039;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=SzClnTOVV3sLFfzs70bfLmFfGXfwemAQTtKvUxHw2mA=;
- b=BqInbPMAMmPFnomCwbFjESIhauZZ633eIWoGBXrK4WwM30RJJKpu9jtKPFf2vbRFUMkI1D
- G1RvTvSiJJLNFJox70P2B9RAR+ATjBdB9Pyh/vzjbVMIDzfNuJE3VWIPOXP3CDBBRdFmsf
- yTOqVHGnOdP27xHohixT7dJLSzjphnw=
-Received: from mail-qt1-f200.google.com (mail-qt1-f200.google.com
- [209.85.160.200]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=TcYXbuttJvyTYCdS1jYY2P3DyP6WKZ98vnviI1IyLBw=;
+ b=CDFd7npQ0ZTT/ZU3UzxctqOVphsKpWBGJMvErLbQb88HvMdHnN8AX3g6ctLLw3U5N9vzyq
+ 1ABZ+Hag5e+7+rhI+WLVSU1zAye+zuxsu09ZEIShANlam6mF5zPLOo30k5gkuVuSB+qRPR
+ IAJt3NbXwiSXqis708TkriNEQKGW3IE=
+Received: from mail-ej1-f70.google.com (mail-ej1-f70.google.com
+ [209.85.218.70]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-64-vTLtcP-3NAaP2r6qH6zmEQ-1; Fri, 24 Jan 2025 11:25:58 -0500
-X-MC-Unique: vTLtcP-3NAaP2r6qH6zmEQ-1
-X-Mimecast-MFC-AGG-ID: vTLtcP-3NAaP2r6qH6zmEQ
-Received: by mail-qt1-f200.google.com with SMTP id
- d75a77b69052e-467bb3eeb04so1963891cf.2
- for <qemu-devel@nongnu.org>; Fri, 24 Jan 2025 08:25:58 -0800 (PST)
+ us-mta-404-3z2bVknfMwmqMfSxRiMCQg-1; Fri, 24 Jan 2025 11:27:16 -0500
+X-MC-Unique: 3z2bVknfMwmqMfSxRiMCQg-1
+X-Mimecast-MFC-AGG-ID: 3z2bVknfMwmqMfSxRiMCQg
+Received: by mail-ej1-f70.google.com with SMTP id
+ a640c23a62f3a-aa6732a1af5so277529566b.3
+ for <qemu-devel@nongnu.org>; Fri, 24 Jan 2025 08:27:16 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1737735647; x=1738340447;
- h=content-transfer-encoding:mime-version:organization:references
- :in-reply-to:message-id:subject:cc:to:from:date:x-gm-message-state
- :from:to:cc:subject:date:message-id:reply-to;
- bh=SzClnTOVV3sLFfzs70bfLmFfGXfwemAQTtKvUxHw2mA=;
- b=RIR83yVQo18z7e7oQhcVS7NfPJum3Vj55HxDZQriB2Txbc+aJs6hZPOLK1NmJssmgQ
- ZrghR8Hky7r8rl/M3zNyp+gHQ6rsh9LTRxEbx+VRdzvFz/yG+9ycStt8KXRDHt6zVr/y
- Z23/9Ewt+X9H5C+zq/v0vapYtFZ8OPw6Ov6TQoE5KURYPX4J1eF9wV82X5ZxIg436Kj9
- y5OXhZToZBih2kYkxNkD2LTEo+AqJAKKUWSfd7i6I9rMRsOmYlsYxdaWiBtymbYhAmq5
- 8RDD9TBlmVLZX4SaAlkgv2A3Q8m9s40H6LUPLFtsWvEF8Z3i77GWSHTqEBFRXLKi0ulv
- i3hA==
-X-Forwarded-Encrypted: i=1;
- AJvYcCXTqmSJErglRzqZv2YIzjfQEDcKmZPYacmUbZEivTW1LAUNusrGxQPz21lNs9kUpgAe0Qbhs0wG2Q1L@nongnu.org
-X-Gm-Message-State: AOJu0YyffCnbtuVSValF+/G50bcqUTOsUC6aeTD+NRD15nMpC2J//4Kj
- 6MrPIe2HdIPUiPqH6PXkxrP+2AWekXYFhWMskmbR1JOcQ93N1tF6pndHBJbWaAu9/fMGolWaiOe
- SC9oAcw9cAESuL00nLsjrYVp+p7OuKzEtKZyLvEYaXfHwmQ7jozDd
-X-Gm-Gg: ASbGncvIgvMLaCENUBUP+PhLg8n6XNA3YijDbpCOjD1VdljsaaJKmm1AH42XHvayNRj
- 3fVnKeTy2KJXekDWAj83Op5gSqk6KcJ9CsmgVFJTsIZHyNnje/5S7t9DW8LxIshtJjIoeajZD3o
- RaW3QR9qL0ArV0Ag+adRBT2zZ9rK47SzeeV1S0WCwKsc4r7DG/AnJsy9RE42EaeVTPS7ONb490v
- QmEu/7ShHfeZ0unSMbh7nahtu0djPR8tR3rld2uJxnt3UBxGfRk+pJkA8cV7v0rHdTlVpX45g==
-X-Received: by 2002:a05:6e02:194c:b0:3cf:6c0e:bd with SMTP id
- e9e14a558f8ab-3cfb193d01cmr30970475ab.6.1737733798432; 
- Fri, 24 Jan 2025 07:49:58 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IFPGiuaf/ThLT2SirJ0H+hCoi8vnqe9x1Y90uYVYxXGcuLaIkSMKD3gd3PuYjj1QLcrAn/BjQ==
-X-Received: by 2002:a05:6e02:194c:b0:3cf:6c0e:bd with SMTP id
- e9e14a558f8ab-3cfb193d01cmr30970345ab.6.1737733797992; 
- Fri, 24 Jan 2025 07:49:57 -0800 (PST)
-Received: from redhat.com ([38.15.36.11]) by smtp.gmail.com with ESMTPSA id
- 8926c6da1cb9f-4ec1db6d8e2sm673156173.95.2025.01.24.07.49.57
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 24 Jan 2025 07:49:57 -0800 (PST)
-Date: Fri, 24 Jan 2025 08:49:54 -0700
-From: Alex Williamson <alex.williamson@redhat.com>
-To: Tomita Moeko <tomitamoeko@gmail.com>
-Cc: =?UTF-8?B?Q8OpZHJpYw==?= Le Goater <clg@redhat.com>, qemu-devel@nongnu.org
-Subject: Re: [PATCH 3/4] vfio/igd: refactor vfio_probe_igd_bar4_quirk() into
- pci config quirk
-Message-ID: <20250124084954.46cdf647.alex.williamson@redhat.com>
-In-Reply-To: <20250122171731.40444-4-tomitamoeko@gmail.com>
-References: <20250122171731.40444-1-tomitamoeko@gmail.com>
- <20250122171731.40444-4-tomitamoeko@gmail.com>
-Organization: Red Hat
+ d=1e100.net; s=20230601; t=1737735721; x=1738340521;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=TcYXbuttJvyTYCdS1jYY2P3DyP6WKZ98vnviI1IyLBw=;
+ b=H0ETnuprY9xR+mdxZcnOPL2QuYXopUzhZXmv69Cj0ehmcnylQ8elv4ukPJXRG16Fgm
+ 3fOpuXsiiVL4QORxzwo4aNKQiMYZYjYGma8rI52CqZTxNnLKpu6FeB38GGUgLYFBoQwK
+ QSJOJ88EoCyXedQ/4RBDFwhiJdw9pnBS2khuoucmKvBqV8LYCQ/2vuD4P/jVYfcR+xmo
+ wJV+Y0NMa2UdZMWegPgbhv3lZCeeOYPMZYt8mklM2HxSK47HdkV791H8hm+3/ESpXwpH
+ DaLUNpncKUrXrJJkzqyuscNqFcNJI8fOD0Q5gdwmly48AcPlzD1AMsfCuFPNPp1+h4pn
+ Kbww==
+X-Gm-Message-State: AOJu0YylD2AtRXnmIiIC8KqK0yIW2jdFnaYR54In1Dnoc/oL8BvUDjMt
+ /3heRtlF+ehk42awN+u2MbIWUkUrXyxjIsPbhvH2511Ba2vizM362acHm/dZPl+G7jeQyOs7Teo
+ KDgXloeGM+akNiHWNlczxKO3ostPnOit1KPsSwjePB7Asf04MG6z7QaSFOK2pdcahaM3IyCmh7h
+ ZdoNcfS41/qZ/3gBfM7+j5Vhsc4HnN1qHj4iMcnA==
+X-Gm-Gg: ASbGnctjJlXT7bXISiZiMuJ29xZXtWZ9HoD2c7RG5sGmc2Qbejw28LxwczuDQZPTKIS
+ f04DnrINCuc5wBuW8z1w8hBLfCFCrXW9QPnfSeOTTZCZvMV/q8xIErAPuzuRXqDoMFXauixqweD
+ d1mmejZNy2+ByboJ1gczA8c+JbBmGBkCpYWYyVveQGKQqQcYgFutXgr15l9YEoyvAehCylHiav9
+ L4ju3VlGGQxre2mrwHocUBrYJ0wKHd+V3d2EcphLIxaFF3ddL/F16LkMVbN+ahNzsu+PRFJGcsk
+ oC2S6EfFnzhomquHJ5TpGD4aySmaPDLp5li9Q8H/xcsybdevKWJabQ0=
+X-Received: by 2002:a05:600c:4f8e:b0:438:ad4d:cf01 with SMTP id
+ 5b1f17b1804b1-438ad4dd129mr200052585e9.7.1737733547704; 
+ Fri, 24 Jan 2025 07:45:47 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IGiXBr9NRQ9sJjlAXXbFZwrvB2NDC9H1nG8Bq2i09O5ZaQ+aitsafpmoJPw/XUeC/T0UwjIfQ==
+X-Received: by 2002:a05:600c:4f8e:b0:438:ad4d:cf01 with SMTP id
+ 5b1f17b1804b1-438ad4dd129mr200052125e9.7.1737733547315; 
+ Fri, 24 Jan 2025 07:45:47 -0800 (PST)
+Received: from localhost
+ (p200300cbc719e000ca2c77c5de7dce89.dip0.t-ipconnect.de.
+ [2003:cb:c719:e000:ca2c:77c5:de7d:ce89])
+ by smtp.gmail.com with UTF8SMTPSA id
+ 5b1f17b1804b1-438bd4fa46esm30544735e9.1.2025.01.24.07.45.44
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Fri, 24 Jan 2025 07:45:46 -0800 (PST)
+From: David Hildenbrand <david@redhat.com>
+To: qemu-devel@nongnu.org
+Cc: David Hildenbrand <david@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
+ Peter Xu <peterx@redhat.com>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Peter Maydell <peter.maydell@linaro.org>,
+ =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Alex Williamson <alex.williamson@redhat.com>,
+ Eduardo Habkost <eduardo@habkost.net>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ Elena Ufimtseva <elena.ufimtseva@oracle.com>,
+ Jagannathan Raman <jag.raman@oracle.com>,
+ "Dr. David Alan Gilbert" <dave@treblig.org>, Stefan Zabka <git@zabka.it>
+Subject: [PATCH v2 4/7] physmem: disallow direct access to RAM DEVICE in
+ address_space_write_rom()
+Date: Fri, 24 Jan 2025 16:45:29 +0100
+Message-ID: <20250124154533.3534250-5-david@redhat.com>
+X-Mailer: git-send-email 2.47.1
+In-Reply-To: <20250124154533.3534250-1-david@redhat.com>
+References: <20250124154533.3534250-1-david@redhat.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=170.10.133.124;
- envelope-from=alex.williamson@redhat.com;
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=dhildenb@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -50
 X-Spam_score: -5.1
@@ -112,198 +122,42 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, 23 Jan 2025 01:17:30 +0800
-Tomita Moeko <tomitamoeko@gmail.com> wrote:
+As documented in commit 4a2e242bbb306 ("memory: Don't use memcpy for
+ram_device regions"), we disallow direct access to RAM DEVICE regions.
 
-> The actual IO BAR4 write quirk in vfio_probe_igd_bar4_quirk() was
-> removed in previous change, leaving the function not matching its name,
-> so move it into the newly introduced vfio_config_quirk_setup(). There
-> is no functional change in this commit. If any failure occurs, the
-> function simply returns and proceeds.
+This change implies that address_space_write_rom() and
+cpu_memory_rw_debug() won't be able to write to RAM DEVICE regions. It
+will also affect cpu_flush_icache_range(), but it's only used by
+hw/core/loader.c after writing to ROM, so it is expected to not apply
+here with RAM DEVICE.
 
-I don't understand why vfio_config_quirk_setup() returns bool rather
-than void given that it can never fail based on this series.
-Otherwise, while I'm surprised that the GTT re-writing is unnecessary
-(seems I wouldn't have invented such a need), removing it is really the
-only way to fully validate that, and we can always revisit if we start
-getting regression reports.  Thanks,
+This fixes direct access to these regions where we don't want direct
+access. We'll extend cpu_memory_rw_debug() next to also be able to write to
+these (and IO) regions.
 
-Alex
+This is a preparation for further changes.
 
-> Signed-off-by: Tomita Moeko <tomitamoeko@gmail.com>
-> ---
->  hw/vfio/igd.c        | 30 ++++++++++++++++--------------
->  hw/vfio/pci-quirks.c |  6 +++++-
->  hw/vfio/pci.h        |  2 +-
->  3 files changed, 22 insertions(+), 16 deletions(-)
-> 
-> diff --git a/hw/vfio/igd.c b/hw/vfio/igd.c
-> index 4f9a90f36f..33e5202052 100644
-> --- a/hw/vfio/igd.c
-> +++ b/hw/vfio/igd.c
-> @@ -359,7 +359,8 @@ void vfio_probe_igd_bar0_quirk(VFIOPCIDevice *vdev, int nr)
->      QLIST_INSERT_HEAD(&vdev->bars[nr].quirks, bdsm_quirk, next);
->  }
->  
-> -void vfio_probe_igd_bar4_quirk(VFIOPCIDevice *vdev, int nr)
-> +bool vfio_probe_igd_config_quirk(VFIOPCIDevice *vdev,
-> +                                 Error **errp G_GNUC_UNUSED)
->  {
->      g_autofree struct vfio_region_info *rom = NULL;
->      g_autofree struct vfio_region_info *opregion = NULL;
-> @@ -378,10 +379,9 @@ void vfio_probe_igd_bar4_quirk(VFIOPCIDevice *vdev, int nr)
->       * PCI bus address.
->       */
->      if (!vfio_pci_is(vdev, PCI_VENDOR_ID_INTEL, PCI_ANY_ID) ||
-> -        nr != 4 ||
->          &vdev->pdev != pci_find_device(pci_device_root_bus(&vdev->pdev),
->                                         0, PCI_DEVFN(0x2, 0))) {
-> -        return;
-> +        return true;
->      }
->  
->      /*
-> @@ -395,7 +395,7 @@ void vfio_probe_igd_bar4_quirk(VFIOPCIDevice *vdev, int nr)
->                                             "vfio-pci-igd-lpc-bridge")) {
->          error_report("IGD device %s cannot support legacy mode due to existing "
->                       "devices at address 1f.0", vdev->vbasedev.name);
-> -        return;
-> +        return true;
->      }
->  
->      /*
-> @@ -407,7 +407,7 @@ void vfio_probe_igd_bar4_quirk(VFIOPCIDevice *vdev, int nr)
->      if (gen == -1) {
->          error_report("IGD device %s is unsupported in legacy mode, "
->                       "try SandyBridge or newer", vdev->vbasedev.name);
-> -        return;
-> +        return true;
->      }
->  
->      /*
-> @@ -420,7 +420,7 @@ void vfio_probe_igd_bar4_quirk(VFIOPCIDevice *vdev, int nr)
->      if ((ret || !rom->size) && !vdev->pdev.romfile) {
->          error_report("IGD device %s has no ROM, legacy mode disabled",
->                       vdev->vbasedev.name);
-> -        return;
-> +        return true;
->      }
->  
->      /*
-> @@ -431,7 +431,7 @@ void vfio_probe_igd_bar4_quirk(VFIOPCIDevice *vdev, int nr)
->          error_report("IGD device %s hotplugged, ROM disabled, "
->                       "legacy mode disabled", vdev->vbasedev.name);
->          vdev->rom_read_failed = true;
-> -        return;
-> +        return true;
->      }
->  
->      /*
-> @@ -444,7 +444,7 @@ void vfio_probe_igd_bar4_quirk(VFIOPCIDevice *vdev, int nr)
->      if (ret) {
->          error_report("IGD device %s does not support OpRegion access,"
->                       "legacy mode disabled", vdev->vbasedev.name);
-> -        return;
-> +        return true;
->      }
->  
->      ret = vfio_get_dev_region_info(&vdev->vbasedev,
-> @@ -453,7 +453,7 @@ void vfio_probe_igd_bar4_quirk(VFIOPCIDevice *vdev, int nr)
->      if (ret) {
->          error_report("IGD device %s does not support host bridge access,"
->                       "legacy mode disabled", vdev->vbasedev.name);
-> -        return;
-> +        return true;
->      }
->  
->      ret = vfio_get_dev_region_info(&vdev->vbasedev,
-> @@ -462,7 +462,7 @@ void vfio_probe_igd_bar4_quirk(VFIOPCIDevice *vdev, int nr)
->      if (ret) {
->          error_report("IGD device %s does not support LPC bridge access,"
->                       "legacy mode disabled", vdev->vbasedev.name);
-> -        return;
-> +        return true;
->      }
->  
->      gmch = vfio_pci_read_config(&vdev->pdev, IGD_GMCH, 4);
-> @@ -476,7 +476,7 @@ void vfio_probe_igd_bar4_quirk(VFIOPCIDevice *vdev, int nr)
->          error_reportf_err(err, VFIO_MSG_PREFIX, vdev->vbasedev.name);
->          error_report("IGD device %s failed to enable VGA access, "
->                       "legacy mode disabled", vdev->vbasedev.name);
-> -        return;
-> +        return true;
->      }
->  
->      /* Create our LPC/ISA bridge */
-> @@ -484,7 +484,7 @@ void vfio_probe_igd_bar4_quirk(VFIOPCIDevice *vdev, int nr)
->      if (ret) {
->          error_report("IGD device %s failed to create LPC bridge, "
->                       "legacy mode disabled", vdev->vbasedev.name);
-> -        return;
-> +        return true;
->      }
->  
->      /* Stuff some host values into the VM PCI host bridge */
-> @@ -492,14 +492,14 @@ void vfio_probe_igd_bar4_quirk(VFIOPCIDevice *vdev, int nr)
->      if (ret) {
->          error_report("IGD device %s failed to modify host bridge, "
->                       "legacy mode disabled", vdev->vbasedev.name);
-> -        return;
-> +        return true;
->      }
->  
->      /* Setup OpRegion access */
->      if (!vfio_pci_igd_opregion_init(vdev, opregion, &err)) {
->          error_append_hint(&err, "IGD legacy mode disabled\n");
->          error_reportf_err(err, VFIO_MSG_PREFIX, vdev->vbasedev.name);
-> -        return;
-> +        return true;
->      }
->  
->      /*
-> @@ -561,4 +561,6 @@ void vfio_probe_igd_bar4_quirk(VFIOPCIDevice *vdev, int nr)
->  
->      trace_vfio_pci_igd_bdsm_enabled(vdev->vbasedev.name,
->                                      (ggms_size + gms_size) / MiB);
-> +
-> +    return true;
->  }
-> diff --git a/hw/vfio/pci-quirks.c b/hw/vfio/pci-quirks.c
-> index c40e3ca88f..b8379cb512 100644
-> --- a/hw/vfio/pci-quirks.c
-> +++ b/hw/vfio/pci-quirks.c
-> @@ -1169,6 +1169,11 @@ bool vfio_pci_igd_opregion_init(VFIOPCIDevice *vdev,
->   */
->  bool vfio_config_quirk_setup(VFIOPCIDevice *vdev, Error **errp)
->  {
-> +#ifdef CONFIG_VFIO_IGD
-> +    if (!vfio_probe_igd_config_quirk(vdev, errp)) {
-> +        return false;
-> +    }
-> +#endif
->      return true;
->  }
->  
-> @@ -1220,7 +1225,6 @@ void vfio_bar_quirk_setup(VFIOPCIDevice *vdev, int nr)
->      vfio_probe_rtl8168_bar2_quirk(vdev, nr);
->  #ifdef CONFIG_VFIO_IGD
->      vfio_probe_igd_bar0_quirk(vdev, nr);
-> -    vfio_probe_igd_bar4_quirk(vdev, nr);
->  #endif
->  }
->  
-> diff --git a/hw/vfio/pci.h b/hw/vfio/pci.h
-> index 5359e94f18..5c64de0270 100644
-> --- a/hw/vfio/pci.h
-> +++ b/hw/vfio/pci.h
-> @@ -217,7 +217,7 @@ bool vfio_add_virt_caps(VFIOPCIDevice *vdev, Error **errp);
->  void vfio_quirk_reset(VFIOPCIDevice *vdev);
->  VFIOQuirk *vfio_quirk_alloc(int nr_mem);
->  void vfio_probe_igd_bar0_quirk(VFIOPCIDevice *vdev, int nr);
-> -void vfio_probe_igd_bar4_quirk(VFIOPCIDevice *vdev, int nr);
-> +bool vfio_probe_igd_config_quirk(VFIOPCIDevice *vdev, Error **errp);
->  
->  extern const PropertyInfo qdev_prop_nv_gpudirect_clique;
->  
+Cc: Alex Williamson <alex.williamson@redhat.com>
+Signed-off-by: David Hildenbrand <david@redhat.com>
+---
+ system/physmem.c | 3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
+
+diff --git a/system/physmem.c b/system/physmem.c
+index c76503aea8..2d4f8110e8 100644
+--- a/system/physmem.c
++++ b/system/physmem.c
+@@ -3029,8 +3029,7 @@ static inline MemTxResult address_space_write_rom_internal(AddressSpace *as,
+         l = len;
+         mr = address_space_translate(as, addr, &addr1, &l, true, attrs);
+ 
+-        if (!(memory_region_is_ram(mr) ||
+-              memory_region_is_romd(mr))) {
++        if (!memory_region_supports_direct_access(mr)) {
+             l = memory_access_size(mr, l, addr1);
+         } else {
+             /* ROM/RAM case */
+-- 
+2.47.1
 
 
