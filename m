@@ -4,60 +4,93 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9EA64C02181
-	for <qemu-devel@archiver.kernel.org>; Fri, 24 Jan 2025 14:57:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id EC66DC0218B
+	for <qemu-devel@archiver.kernel.org>; Fri, 24 Jan 2025 15:15:55 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tbL7H-0007Zj-1h; Fri, 24 Jan 2025 09:57:03 -0500
+	id 1tbLOp-00046O-CP; Fri, 24 Jan 2025 10:15:11 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jonathan.cameron@huawei.com>)
- id 1tbL77-0007Yw-CG
- for qemu-devel@nongnu.org; Fri, 24 Jan 2025 09:56:54 -0500
-Received: from frasgout.his.huawei.com ([185.176.79.56])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jonathan.cameron@huawei.com>)
- id 1tbL74-0007Ll-PC
- for qemu-devel@nongnu.org; Fri, 24 Jan 2025 09:56:53 -0500
-Received: from mail.maildlp.com (unknown [172.18.186.31])
- by frasgout.his.huawei.com (SkyGuard) with ESMTP id 4Yfgp04QVVz6M4MZ;
- Fri, 24 Jan 2025 22:54:48 +0800 (CST)
-Received: from frapeml500008.china.huawei.com (unknown [7.182.85.71])
- by mail.maildlp.com (Postfix) with ESMTPS id 53D3D140114;
- Fri, 24 Jan 2025 22:56:47 +0800 (CST)
-Received: from localhost (10.203.177.66) by frapeml500008.china.huawei.com
- (7.182.85.71) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.1.2507.39; Fri, 24 Jan
- 2025 15:56:46 +0100
-Date: Fri, 24 Jan 2025 14:56:45 +0000
-To: Vinayak Holikatti <vinayak.kh@samsung.com>
-CC: <qemu-devel@nongnu.org>, <krish.reddy@samsung.com>,
- <vishak.g@samsung.com>, <a.manzanares@samsung.com>,
- <alok.rathore@samsung.com>, <s5.kumari@samsung.com>,
- <linux-cxl@vger.kernel.org>
-Subject: Re: [PATCH 1/2] hw/cxl/cxl-mailbox-utils: Add support for Media
- operations discovery commands (8.2.9.9.5.3)
-Message-ID: <20250124145645.00005ba9@huawei.com>
-In-Reply-To: <20250123050903.92336-2-vinayak.kh@samsung.com>
-References: <20250123050903.92336-1-vinayak.kh@samsung.com>
- <CGME20250123050912epcas5p2965fd6efa702030802a42c225f11f65b@epcas5p2.samsung.com>
- <20250123050903.92336-2-vinayak.kh@samsung.com>
-X-Mailer: Claws Mail 4.3.0 (GTK 3.24.42; x86_64-w64-mingw32)
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1tbLOn-00044v-BT
+ for qemu-devel@nongnu.org; Fri, 24 Jan 2025 10:15:09 -0500
+Received: from mail-ed1-x52d.google.com ([2a00:1450:4864:20::52d])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1tbLOl-0001ML-AZ
+ for qemu-devel@nongnu.org; Fri, 24 Jan 2025 10:15:09 -0500
+Received: by mail-ed1-x52d.google.com with SMTP id
+ 4fb4d7f45d1cf-5d90a5581fcso3883543a12.1
+ for <qemu-devel@nongnu.org>; Fri, 24 Jan 2025 07:15:06 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1737731704; x=1738336504; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:user-agent
+ :references:in-reply-to:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=Br+dfmWkeYi1cTYXhfYxHSCHFOIQBZwP42rNnX2KAik=;
+ b=a0O0Dgp3hEmQx5XgX5AFQxFVJ4rGvELiaVtUt4EvcLhnfAO7YQHIFHNcuAhPX3uOFD
+ PenyzZWPz1BQ8OvUKSc6krF4ejaMqf6IEvqBihFolF921OofXm4FWhip+E4V91WsZfBw
+ j76/GhEsDmkPfDg0fQ3oLaLixeF97KPQSpLF9bA2IXiOBa+qP9Gtv6wt3hVyuaFh+MtD
+ 8B9bGK6AQEdcxwHEnx6LTmQvkJ4360J7rJY/JTm+YgYW1NyoRE+ljCiFin9CH3nMOmD9
+ RZip6WUF2flEw4j7qGZ5Mr4xrI/23wTGEa0dxcr3JkQLKTTP1Z7MDctWObURRTZaCImD
+ 99wg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1737731704; x=1738336504;
+ h=content-transfer-encoding:mime-version:message-id:date:user-agent
+ :references:in-reply-to:subject:cc:to:from:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=Br+dfmWkeYi1cTYXhfYxHSCHFOIQBZwP42rNnX2KAik=;
+ b=jSu4HpCRlvqNlBvQ+BctgjXpKFpFLMSAe+06iCdJ6pBCxRrsd2eiMGlbgFu7YbQlxB
+ ZHpIG5YLz4VKp3/Enxfg18hAeICUpUx3KPBZnx6nsRzMfMXEdOec/Hvq4N/6M32Zrv8E
+ h12AbcpfpvKCUimz7sDMsjgV9+/x18ceg9yjNEBBVaPPqrLGe1DwsCTfl2TGQRhT0rs8
+ wn09N6cTJfx1tumcNAH2Lk15RdTHPg4vp77lpwG4zyGE0rh+YV4uIltdAQW9Lx9LsLKI
+ R6q0evV6OBTPUq8UkiGvWEY6Gybia3ENer3vgQ853EcGpH6pi+dassRmrO/D4jLFhm5e
+ uxig==
+X-Gm-Message-State: AOJu0YyLbEzWjTdKPvnDbx5JoxnM/tIisklXDccCVsMHvyYyIWDQUPnl
+ 1yB1krTe74wcNHXZvmFJQdxLm56bmWaWk9RJVMTVIBB7nm1+D2f3QOHHp91pA+g=
+X-Gm-Gg: ASbGnctA9diMqro5YXt2elBpNcGeAAQZ37qeKuO/OE2vHrvMpNMifjhSMDi+tiflE5A
+ xzWFUzwyfsHfhrLB4EX+WvxkVbweV/winj9/q6x1zTT66XkMHG3ecuRhu3cmxsr+WgylQwKzoog
+ E3FaBMJoI055YPxoQPAY+F1uQFeMSpcv2srHM2W/Q4g8gkW+bP38ABfqYTcBkPSlII/yl9IFgCz
+ Uvc8y4I5lwx6dOzhccUVwcj/VAq0tQZGQ6ZxSzshXSHk65wimaq/o1LK4uIb7yUGKJ3nO/3eW/7
+ Cs4=
+X-Google-Smtp-Source: AGHT+IEyetAZOcII0pEGXIs+6ObpOQILQFjcTHtTPc7PPGj8V/l46+foN9YmnroJRxb7ymf2Z7ch3w==
+X-Received: by 2002:a05:6402:84c:b0:5da:a97:ad73 with SMTP id
+ 4fb4d7f45d1cf-5db7d2f8825mr23940092a12.13.1737731704631; 
+ Fri, 24 Jan 2025 07:15:04 -0800 (PST)
+Received: from draig.lan ([85.9.250.243]) by smtp.gmail.com with ESMTPSA id
+ 4fb4d7f45d1cf-5dc186d8b2csm1295407a12.76.2025.01.24.07.15.02
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Fri, 24 Jan 2025 07:15:03 -0800 (PST)
+Received: from draig (localhost [IPv6:::1])
+ by draig.lan (Postfix) with ESMTP id C41CD5F8C7;
+ Fri, 24 Jan 2025 15:15:01 +0000 (GMT)
+From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
+To: Igor Mammedov <imammedo@redhat.com>
+Cc: qemu-devel@nongnu.org,  richard.henderson@linaro.org,
+ pbonzini@redhat.com,  npiggin@gmail.com
+Subject: Re: [PATCH] tcg: drop qemu_cpu_is_self() in
+ tlb_flush_by_mmuidx[_async_work]
+In-Reply-To: <20250124152148.706e88c2@imammedo.users.ipa.redhat.com> (Igor
+ Mammedov's message of "Fri, 24 Jan 2025 15:21:48 +0100")
+References: <20250123094511.156324-1-imammedo@redhat.com>
+ <87frl9ls4g.fsf@draig.linaro.org>
+ <20250123122343.6af8a6e1@imammedo.users.ipa.redhat.com>
+ <20250124152148.706e88c2@imammedo.users.ipa.redhat.com>
+User-Agent: mu4e 1.12.8; emacs 29.4
+Date: Fri, 24 Jan 2025 15:15:01 +0000
+Message-ID: <87wmeki6q2.fsf@draig.linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="US-ASCII"
-Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.203.177.66]
-X-ClientProxiedBy: lhrpeml100011.china.huawei.com (7.191.174.247) To
- frapeml500008.china.huawei.com (7.182.85.71)
-Received-SPF: pass client-ip=185.176.79.56;
- envelope-from=jonathan.cameron@huawei.com; helo=frasgout.his.huawei.com
-X-Spam_score_int: -41
-X-Spam_score: -4.2
-X-Spam_bar: ----
-X-Spam_report: (-4.2 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_MED=-2.3,
- RCVD_IN_MSPIKE_H2=-0.001, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:20::52d;
+ envelope-from=alex.bennee@linaro.org; helo=mail-ed1-x52d.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -71,302 +104,115 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-to:  Jonathan Cameron <Jonathan.Cameron@huawei.com>
-From:  Jonathan Cameron via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, 23 Jan 2025 10:39:02 +0530
-Vinayak Holikatti <vinayak.kh@samsung.com> wrote:
+Igor Mammedov <imammedo@redhat.com> writes:
 
-Hi Vinayak,
+> On Thu, 23 Jan 2025 12:23:43 +0100
+> Igor Mammedov <imammedo@redhat.com> wrote:
+>
+>> On Thu, 23 Jan 2025 10:52:15 +0000
+>> Alex Benn=C3=A9e <alex.bennee@linaro.org> wrote:
+>>=20
+>> > Igor Mammedov <imammedo@redhat.com> writes:
+>> >=20=20=20
+>> > > QEMU will crash with following debug enabled
+>> > >   # define DEBUG_TLB_GATE 1
+>> > >   # define DEBUG_TLB_LOG_GATE 1
+>> > > due to [1] introduced assert and as it happenstlb_flush_by_mmuidx[_a=
+sync_work]
+>> > > functions are called not only from vcpu thread but also from reset h=
+andler
+>> > > that is called from main thread at cpu realize time when vcpu is alr=
+eady
+>> > > created
+>> > >   x86_cpu_new -> ... ->
+>> > >       x86_cpu_realizefn -> cpu_reset -> ... ->
+>> > >           tcg_cpu_reset_hold
+>> > >
+>> > > drop assert to fix crash.=20=20=20=20
+>> >=20
+>> > Hmm the assert is there for a good reason because we do not want to be
+>> > flushing another CPUs state. However the assert itself:
+>> >=20
+>> >   g_assert(!(cpu)->created || qemu_cpu_is_self(cpu));
+>> >=20
+>> > was trying to account for pre-initialised vCPUs. What has changed?
+>> >=20
+>> > cpu_thread_signal_created(cpu) is called just before we start running
+>> > the main loop in mttcg_cpu_thread_fn. So any other thread messing with
+>> > the CPUs TLB can potentially mess things up.=20=20
+>>=20
+>> it reproduces on current master, so yes it likely has changed over time.
+>> I've just stumbled on it when attempting to get rid of cpu->created usag=
+e.
+>>=20
+>>=20
+>> > > 1)
+>> > > Fixes: f0aff0f124028 ("cputlb: add assert_cpu_is_self checks")
+>
+> bisection points to (so above fixes was a wrong one):
+>   30933c4fb4f3d tcg/cputlb: remove other-cpu capability from TLB flushing
+> which has replaced a check with assert:
+>
+> -    if (cpu->created && !qemu_cpu_is_self(cpu)) {
+> -        async_run_on_cpu(cpu, tlb_flush_by_mmuidx_async_work,
+> -                         RUN_ON_CPU_HOST_INT(idxmap));
+> -    } else {
+> -        tlb_flush_by_mmuidx_async_work(cpu, RUN_ON_CPU_HOST_INT(idxmap));
+> -    }
+> +    assert_cpu_is_self(cpu);
+>
+> should we revert that instead?
+>
+> perhaps also drop 'cpu->created' check in  assert_cpu_is_self as it
+> obviously doesn't work.
 
-Thanks for your patch!  Good to add support for this.
+That's because the asserts only check when built with debug due to
+concerns about the hot path. I think in the case of cputlb we should
+probably use tcg_debug_assert() which at least gets enabled for
+--enable-debug builds without needing to manually patch the define for
+DEBUG_TLB.
 
-Various comments inline, but all fairly minor things.
+Converting the custom TLB log implementation to using tracepoints would
+also be nice.
 
-thanks,
+>
+>
+>> > > Signed-off-by: Igor Mammedov <imammedo@redhat.com>
+>> > > ---
+>> > >  accel/tcg/cputlb.c | 4 ----
+>> > >  1 file changed, 4 deletions(-)
+>> > >
+>> > > diff --git a/accel/tcg/cputlb.c b/accel/tcg/cputlb.c
+>> > > index b26c0e088f..2da803103c 100644
+>> > > --- a/accel/tcg/cputlb.c
+>> > > +++ b/accel/tcg/cputlb.c
+>> > > @@ -381,8 +381,6 @@ static void tlb_flush_by_mmuidx_async_work(CPUSt=
+ate *cpu, run_on_cpu_data data)
+>> > >      uint16_t all_dirty, work, to_clean;
+>> > >      int64_t now =3D get_clock_realtime();
+>> > >=20=20
+>> > > -    assert_cpu_is_self(cpu);
+>> > > -
+>> > >      tlb_debug("mmu_idx:0x%04" PRIx16 "\n", asked);
+>> > >=20=20
+>> > >      qemu_spin_lock(&cpu->neg.tlb.c.lock);
+>> > > @@ -419,8 +417,6 @@ void tlb_flush_by_mmuidx(CPUState *cpu, uint16_t=
+ idxmap)
+>> > >  {
+>> > >      tlb_debug("mmu_idx: 0x%" PRIx16 "\n", idxmap);
+>> > >=20=20
+>> > > -    assert_cpu_is_self(cpu);
+>> > > -
+>> > >      tlb_flush_by_mmuidx_async_work(cpu, RUN_ON_CPU_HOST_INT(idxmap)=
+);
+>> > >  }=20=20=20=20
+>> >=20=20=20
+>>=20
 
-Jonathan
-
-
->     CXL spec 3.1 section 8.2.9.9.5.3 describes media operations commands.
->     CXL devices supports media operations discovery command.
-
-Please don't indent the commit message. Maybe this is a side effect
-of some tooling but definitely clean it up before sending a v2.
-
-> 
-> Signed-off-by: Vinayak Holikatti <vinayak.kh@samsung.com>
-+CC linux-cxl to increase chance of review and let people know this
-exists.
-
-> ---
->  hw/cxl/cxl-mailbox-utils.c | 130 ++++++++++++++++++++++++++++++++++++-
->  1 file changed, 128 insertions(+), 2 deletions(-)
-> 
-> diff --git a/hw/cxl/cxl-mailbox-utils.c b/hw/cxl/cxl-mailbox-utils.c
-> index 9c7ea5bc35..2315d07fb1 100644
-> --- a/hw/cxl/cxl-mailbox-utils.c
-> +++ b/hw/cxl/cxl-mailbox-utils.c
-> @@ -87,8 +87,9 @@ enum {
->          #define GET_LSA       0x2
->          #define SET_LSA       0x3
->      SANITIZE    = 0x44,
-> -        #define OVERWRITE     0x0
-> -        #define SECURE_ERASE  0x1
-> +        #define OVERWRITE        0x0
-> +        #define SECURE_ERASE     0x1
-> +        #define MEDIA_OPERATIONS 0x2
-
-Trivial but I've given up trying to keep these aligned.
-It's a fools game as the names get steadily longer.
-
-As such better to just leave the existing pair alone.
-
->      PERSISTENT_MEM = 0x45,
->          #define GET_SECURITY_STATE     0x0
->      MEDIA_AND_POISON = 0x43,
-> @@ -1721,6 +1722,127 @@ static CXLRetCode cmd_sanitize_overwrite(const struct cxl_cmd *cmd,
->      return CXL_MBOX_BG_STARTED;
->  }
->  
-> +enum {
-> +    MEDIA_OP_GENERAL  = 0x0,
-I'd name them so the field id explicit.
-
-MEDIA_OP_CLASS_GENERAL
-etc
-
-> +    MEDIA_OP_SANITIZE = 0x1,
-> +    MEDIA_OP_CLASS_MAX,
-No comma on terminating entry. We don't want it to be easy to add
-stuff after it.
-
-> +} MEDIA_OPERATION_CLASS;
-The enum type is never used.  So might as well keep it anonymous
-like we do for other enums in this file.
-
-> +
-> +enum {
-> +    MEDIA_OP_SUB_DISCOVERY = 0x0,
-This set of class and subcalss is similar to the enum you add
-the MEDIA_OPERATIONS define to above.
-I'd take a similar strategy with
-
-enum {
-    MEDIA_OP_CLASS_GENERAL = 0x0,
-        #define MEDIA_OP_GEN_SUBC_DISCOVERY 0x0
-    MEDIA_OP_CLASS_SANITIZE = 0x1,
-        #define MEDIA_OP_SAN_SUBC_SANITIZE 0x0
-        #define MEDIA_OP_SAN_SUBC_ZERO 0x1
-
-or something like that.
-}
-> +    MEDIA_OP_SUB_SANITIZE = 0x0,
-> +    MEDIA_OP_SUB_ZERO     = 0x1,
-> +    MEDIA_OP_SUB_CLASS_MAX
-No need for SUB_CLASS_MAX as you don't seem to use it.
-
-> +} MEDIA_OPERATION_SUB_CLASS;
-> +
-> +struct media_op_supported_list_entry {
-> +    uint8_t media_op_class;
-> +    uint8_t media_op_subclass;
-> +};
-> +
-> +struct media_op_discovery_out_pl {
-> +    uint64_t dpa_range_granularity;
-> +    uint16_t total_supported_operations;
-> +    uint16_t num_of_supported_operations;
-> +    struct media_op_supported_list_entry entry[0];
-entry[] 
-
-which is the c spec defined way to do variable length last elements.
-The [0] was I think a weird extension that we have moved away from.
-
-> +};
-
-Not strictly necessary but I'd mark it packed as chances of future breakage
-are high with a structure starting at byte 0xC.
-
-> +
-> +#define MAX_SUPPORTED_OPS 3
-I'd avoid explicit define for this and just use ARRAY_SIZE() on the
-array of structures to find out.
-
-> +struct media_op_supported_list_entry media_op_matrix[MAX_SUPPORTED_OPS] = {
-
-Use the defines above rather than the numeric values.
-Then it's obvious what this is, also mark it static const.
-
-static const struct media_op_supported_list_entry media_op_matrix[] =
-    { MEDIA_OP_CLASS_GENERAL, MEDIA_OP_GEN_SUBC_DISCOVERY },
-    { MEDIA_OP_CLASS_SANITIZE, MEDIA_OP_SAN_SUBC_SANITIZE },
-    { MEDIA_OP_CLASS_SANITIZE, MEDIA_OP_SAN_SUBC_ZERO },
-};
-
-> +                                                            {0, 0},
-> +                                                            {1, 0},
-> +                                                            {1, 1} };
-> +
-> +static CXLRetCode cmd_media_operations(const struct cxl_cmd *cmd,
-> +                                         uint8_t *payload_in,
-> +                                         size_t len_in,
-> +                                         uint8_t *payload_out,
-> +                                         size_t *len_out,
-> +                                         CXLCCI *cci)
-> +{
-> +    struct {
-> +    uint8_t media_operation_class;
-    struct {
-        uint8_t media_operation_class;
-
-etc for alignment.
-
-> +    uint8_t media_operation_subclass;
-> +    uint8_t rsvd[2];
-> +    uint32_t dpa_range_count;
-> +    union {
-> +        struct {
-> +            uint64_t starting_dpa;
-> +            uint64_t length;
-> +        } dpa_range_list[0];
-[]
-
-> +        struct {
-> +            uint16_t start_index;
-> +            uint16_t num_supported_ops;
-> +        } discovery_osa;
-> +    };
-
-This is a little tricky as in theory you can have a variable number
-of DPA Range List elements and then the operation specific arguments.
-
-However, general always provides a range count of 0.  Also both sanitize
-and zero have no osa elemetns.  Add a comment
-about this so we don't think it looks wrong in future + do notice that
-this approach doesn't generalize if a new operation allows dpa ranges
-and operation specific parameters.
-
-
-> +    } QEMU_PACKED *media_op_in_pl = (void *)payload_in;
-> +
-> +    uint8_t media_op_cl = media_op_in_pl->media_operation_class;
-> +    uint8_t media_op_subclass = media_op_in_pl->media_operation_subclass;
-> +    uint32_t dpa_range_count = media_op_in_pl->dpa_range_count;
-> +
-> +    if (len_in < sizeof(*media_op_in_pl)) {
-> +        return CXL_MBOX_INVALID_PAYLOAD_LENGTH;
-> +    }
-
-Test this before getting values to fill in media_op_cl local variables etc.
-It's both logically correct and may constrain the compiler not to get too smart
-if it can see enough to realize what len_in is.
-
-> +
-> +    switch (media_op_cl) {
-> +    case MEDIA_OP_GENERAL:
-> +        switch (media_op_subclass) {
-> +        case MEDIA_OP_SUB_DISCOVERY:
-Given there is only one element, maybe cleaner as
-           if (media_op_subclass != MEDIA_OP_SUB_DISCOVERY) {
-                return CXL_MBOX_UNSUPPORTED;
-           }
-AS reduces indent of the following, helping readability a litle.
-
-> +            int count = 0;
-> +            struct media_op_discovery_out_pl *media_out_pl =
-> +                (void *)payload_out;
-> +            int num_ops = media_op_in_pl->discovery_osa.num_supported_ops;
-> +            int start_index = media_op_in_pl->discovery_osa.start_index;
-> +
-> +            /* As per spec CXL 3.1 8.2.9.9.5.3 dpa_range_count */
-> +            /* should be zero for discovery sub class command */
-Local style is multiline comment as
-               /*
-                * As per spec CXL 3.1...
-                * should be zero...
-                */
-
-> +            if (dpa_range_count) {
-> +                return CXL_MBOX_INVALID_INPUT;
-> +            }
-> +
-> +            if ((start_index >= MEDIA_OP_CLASS_MAX) ||
-> +                (num_ops > MAX_SUPPORTED_OPS)) {
-
-Check here should be for num_ops + start_index > MAX_SUPPORTED OPS
-Comparing start_index against MEDIA_OP_CLASS_MAX doesn't make sense to me
-as I believe it's an index into the array of Class / subclass pairs not
-the class array.
-
-
-> +                return CXL_MBOX_INVALID_INPUT;
-> +            }
-> +
-> +            media_out_pl->dpa_range_granularity = CXL_CAPACITY_MULTIPLIER;
-> +            media_out_pl->total_supported_operations = MAX_SUPPORTED_OPS;
-> +            if (num_ops > 0) {
-> +                for (int i = start_index; i < MAX_SUPPORTED_OPS; i++) {
-> +                    media_out_pl->entry[count].media_op_class =
-> +                            media_op_matrix[i].media_op_class;
-> +                    media_out_pl->entry[count].media_op_subclass =
-> +                            media_op_matrix[i].media_op_subclass;
-> +                    count++;
-> +                    if (count == num_ops) {
-> +                        goto disc_out;
-
-break should be enough and removes need for goto and label.
-
-> +                    }
-> +                }
-> +            }
-> +disc_out:
-> +            media_out_pl->num_of_supported_operations = count;
-> +            *len_out = sizeof(struct media_op_discovery_out_pl) +
-> +            (sizeof(struct media_op_supported_list_entry) * count);
-
-indent this line.
-
-> +            break;
-I'd
-        return CXL_MBOX_SUCCESS;
-
-> +        default:
-> +            return CXL_MBOX_UNSUPPORTED;
-> +        }
-> +        break;
-then this break isn't needed.
-> +    case MEDIA_OP_SANITIZE:
-> +        switch (media_op_subclass) {
-> +
-No blank line here yet.
-> +        default:
-> +            return CXL_MBOX_UNSUPPORTED;
-> +        }
-Similar. Return in all paths so no break.
-> +        break;
-> +    default:
-> +        return CXL_MBOX_UNSUPPORTED;
-> +    }
-> +
-> +    return CXL_MBOX_SUCCESS;
-> +}
-> +
->  static CXLRetCode cmd_get_security_state(const struct cxl_cmd *cmd,
->                                           uint8_t *payload_in,
->                                           size_t len_in,
-> @@ -2864,6 +2986,10 @@ static const struct cxl_cmd cxl_cmd_set[256][256] = {
->           CXL_MBOX_SECURITY_STATE_CHANGE |
->           CXL_MBOX_BACKGROUND_OPERATION |
->           CXL_MBOX_BACKGROUND_OPERATION_ABORT)},
-> +    [SANITIZE][MEDIA_OPERATIONS] = { "MEDIA_OPERATIONS", cmd_media_operations,
-> +        ~0,
-> +        (CXL_MBOX_IMMEDIATE_DATA_CHANGE |
-> +         CXL_MBOX_BACKGROUND_OPERATION)},
->      [PERSISTENT_MEM][GET_SECURITY_STATE] = { "GET_SECURITY_STATE",
->          cmd_get_security_state, 0, 0 },
->      [MEDIA_AND_POISON][GET_POISON_LIST] = { "MEDIA_AND_POISON_GET_POISON_LIST",
-
+--=20
+Alex Benn=C3=A9e
+Virtualisation Tech Lead @ Linaro
 
