@@ -4,102 +4,90 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1E376C0218B
-	for <qemu-devel@archiver.kernel.org>; Fri, 24 Jan 2025 10:09:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6C146C0218B
+	for <qemu-devel@archiver.kernel.org>; Fri, 24 Jan 2025 10:16:07 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tbGc9-0001Au-Nq; Fri, 24 Jan 2025 05:08:37 -0500
+	id 1tbGiW-0002bU-2F; Fri, 24 Jan 2025 05:15:12 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <imammedo@redhat.com>)
- id 1tbGc8-0001AC-2D
- for qemu-devel@nongnu.org; Fri, 24 Jan 2025 05:08:36 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <imammedo@redhat.com>)
- id 1tbGc5-0006vp-R5
- for qemu-devel@nongnu.org; Fri, 24 Jan 2025 05:08:35 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1737713312;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=zBjlmnyL+/0MoaysJf/6GyTT+XbsU4a0p4ksOTJUm98=;
- b=QH4wvdbbxrdS7JDkJ7fjegEAkZtX+frm+yDD/dAguID0ZnQeoI6J8aau/0e5FL4OYgFgU9
- jE9QXqnPyIH/3+50C/nF0tFncML602OH/0PLm5Bs+tv5Yh+RzeEStgwcyl4E18pdkD+BHA
- 1uVopChg0pW0guo7IeHX72tTZ9R/p3I=
-Received: from mail-wr1-f71.google.com (mail-wr1-f71.google.com
- [209.85.221.71]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-633-Rn6ZqxSFNkOq4HzYWwnAeg-1; Fri, 24 Jan 2025 05:08:31 -0500
-X-MC-Unique: Rn6ZqxSFNkOq4HzYWwnAeg-1
-X-Mimecast-MFC-AGG-ID: Rn6ZqxSFNkOq4HzYWwnAeg
-Received: by mail-wr1-f71.google.com with SMTP id
- ffacd0b85a97d-38a35a65575so1247340f8f.1
- for <qemu-devel@nongnu.org>; Fri, 24 Jan 2025 02:08:30 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <max.chou@sifive.com>)
+ id 1tbGiO-0002Wm-LF
+ for qemu-devel@nongnu.org; Fri, 24 Jan 2025 05:15:04 -0500
+Received: from mail-pl1-x635.google.com ([2607:f8b0:4864:20::635])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <max.chou@sifive.com>)
+ id 1tbGiM-0007pn-Qx
+ for qemu-devel@nongnu.org; Fri, 24 Jan 2025 05:15:04 -0500
+Received: by mail-pl1-x635.google.com with SMTP id
+ d9443c01a7336-2166022c5caso30210225ad.2
+ for <qemu-devel@nongnu.org>; Fri, 24 Jan 2025 02:15:01 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=sifive.com; s=google; t=1737713700; x=1738318500; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=726JYc2EOYPtf39xK4E0IwFh2U+9H3MDOohIfk12nUI=;
+ b=IlrePebfSX4wg2vDQWIKOIjRnk3xaXdNJux226vjF6JVWTmQOgrQQO+pb3cA05WHlS
+ BUlzWSOVn1h8YEDu2OaIQgVFs5fm7Qs7jSPh5tBeF3zMSOl9w7G9r+idQT1Wr+6lqulf
+ lOjcCJVw0sylBroHPtNEJQPUXtp4Run4hJrrc0nyb8sUb5x57qdy9CuI24ft7cDRhQ7m
+ N2Y7ZTJndWdPMNiXomQhUiwubF8ZDKdW9x4RBjCZa6FkXSRX7KIWFWkkSE43VywLyu6a
+ YDZJiaNYpzJChKScXh+t2maLlaRmBxHtrBXUMBdSzB0JzJhEpKCXRkV8agpdkFCHFW6W
+ d7lA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1737713310; x=1738318110;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:subject:cc:to:from:date:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=zBjlmnyL+/0MoaysJf/6GyTT+XbsU4a0p4ksOTJUm98=;
- b=qN1rF4dY9QxFyH7lzYxjkFPl/YeB6vMAP1dxBIHe1iTx2UStPJlw3XswpUu/DKN25o
- 7+5+vDGe+4IZCW0Migjug0rQNDPQs3Vtnp+2F+zEnBQfgyhldjg3cSLEwjD00DwIYxiu
- 7LgpTr+5LzYqoLTKUWHnAHAggZ6+5wgwnkQTTRLGuAOmnueiguJYZeOF48OmZ4/uW3nt
- Xp0VNDHKkE0duqZ9yxjUITNK8i/W/ZaJhK1+lLPhXt8M+my0XHhnpCUYF4OD17IV99I/
- ZpdOQ0SiyojAVLf1rN+OTCBXNowgIj5COAAdjKBlfPBMH5EvCxT4EAnQnnWVR/1wpj19
- 7Pkw==
-X-Forwarded-Encrypted: i=1;
- AJvYcCVAOs1ZSvQEvUdbwm5Lf4sD87ZCpsp53Y3TxS9hT5KS37cE9Gzd2ME4MVB7ZCc6xVd8tkIpD28wbnsw@nongnu.org
-X-Gm-Message-State: AOJu0YzIGjIuehRlV3MrvZojBWiz2W2TeqGcrOxc4FmTlyuv6KL0SMNX
- QK9gSNqXaTIJgKEmqOxnvnBUIkFBhz6yqIsmq2hKsF4wPE8DLi5pA6Q45kE1O4eLqna62+QD7NC
- sfiKvSjZ1TJ2E+dn45332g0sr5FxrLDXFDf/QI26trUjdi+GmGDIR
-X-Gm-Gg: ASbGncsn6fWyHxfkiOg3vXRhOG3Ef77fljU97US4GXz1ZSaYgu52tpZHm3b5BKkReZv
- J8Mmt3Z4oF0jM4kE5BzkDqtfzDWTQkmIS/WuNZXqIQuF81pqqQyFWwRLfhs5gUZxpcetCY4FnU7
- zycaXIOoHFErlQ7N3O1oZXFoktyE/HBjIWUg64g6R+YxRXtx0npBsN/vGcHbGfJKGgN+H6+qmRV
- rEzT6NluL6umfpQA88fgilq0BETnMvPrfRHpYmPdyh2lLSt3h919aBIgGTOlk6muibMwZVZrNjk
- QzC3/6tDZTOTNC6/7O/GusS5DZro5Uv2CDr2Msg+kw==
-X-Received: by 2002:a05:6000:18a7:b0:386:4312:53ec with SMTP id
- ffacd0b85a97d-38bf5663683mr28298498f8f.17.1737713309874; 
- Fri, 24 Jan 2025 02:08:29 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IERNvOfS/alHeCZWgCxIxMk72mjHqfT9IuLIqCtRqqhMBdhIt9cqgbhjZb46dH7MEAr7LJgeQ==
-X-Received: by 2002:a05:6000:18a7:b0:386:4312:53ec with SMTP id
- ffacd0b85a97d-38bf5663683mr28298453f8f.17.1737713309454; 
- Fri, 24 Jan 2025 02:08:29 -0800 (PST)
-Received: from imammedo.users.ipa.redhat.com (nat-pool-brq-t.redhat.com.
- [213.175.37.10]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-38c2a17d5d4sm2183937f8f.21.2025.01.24.02.08.28
+ d=1e100.net; s=20230601; t=1737713700; x=1738318500;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=726JYc2EOYPtf39xK4E0IwFh2U+9H3MDOohIfk12nUI=;
+ b=H5Wi8/p3v9gLXChBIi74Bt1pFyhZagcalIpr/QqxfqtCcQgdN6E2ZSzZlLUI639E5z
+ 1iGqKro0GKoOHONlEHMbxyGKLk0VFD2QXrOwW0u2qZiKxkslxykDuhxvqFXKf4w4Mj99
+ r6askjSSdWwd8Snc3y7LR0+qOrkI4FbqRmCKmA0JWNuNlNI/oA5Zo8Z7LVVSywbMlmU3
+ CLovyu5/FAecV8HgR9WeNrZslSW7KPI+hj2I5WFUAfY4ohJFW4DreV5NVnsmbHsPyqwQ
+ dp0C7rN0vOGk/KvZj3Jpspcs/U/hvVfgoNU9g3uGFGaBOPIbKpsNl4m3+0qQe1rc/Pn6
+ 9oFw==
+X-Gm-Message-State: AOJu0YxwzmQiRSkt5owa2v4cloi5ZyWSJ5zfHhz7G3WOK/nNNRXC/u3i
+ kh4UpZNgqudQ+ueU1QKvUHdPOKcCeZcFKS3IYC1kKpMd/N6yrfVHI/X+R0OkYqfS57pAzFwK/eE
+ cW2qs5zqwMfezLvG6TFkbnW44AytpkPx/xoi8WAagjl/D4LLR9NRRnDGoxIi1ouayfN1r7sO33j
+ E3og+KMmlywzUbJvbPS4K/xTbkm8pdLIb3x+MPBw==
+X-Gm-Gg: ASbGncuKOCUsy1g3Z7H74SWYvr6NCxhM89eEl/P9vWcUmB/svdHL0HRXIcrhtrLRjt2
+ FBqHHDiYwwVeO303rE3atqIKDqDGxd1bO1UfFpIvymWTIgWA5YGOp/zeqfTC+4R5q/whUouM6vI
+ MBIlPE/SI3jq8d3OrN6Mogk0WeQXT44JRJqulNaWMMmHKMN2xEH5448DVCKyDJtIZAXerbqg5Ul
+ 4ob4nUsr1fJI9BLc44ZDvVAEnENlf3uMVyPj6tlx+9j4S4qC/lirbJ/UO79Id4ZLaWLs6q820gg
+ ZO1mne0nWHsATn2WYzQwNFNLmvKnDf5p+xaZWcciCMr8Zsb7Nw==
+X-Google-Smtp-Source: AGHT+IF5/O9f0U22I7akfqHnEXp6zoaRQ2aXvubjD+5ok+uDqU/B79QZrIEddie1r59UfmcgpBitMA==
+X-Received: by 2002:a05:6a20:7f8e:b0:1e6:8f39:d635 with SMTP id
+ adf61e73a8af0-1eb2146009bmr44951682637.9.1737713699157; 
+ Fri, 24 Jan 2025 02:14:59 -0800 (PST)
+Received: from duncan.localdomain (114-35-142-126.hinet-ip.hinet.net.
+ [114.35.142.126]) by smtp.gmail.com with ESMTPSA id
+ d2e1a72fcca58-72f8a69eb75sm1521502b3a.12.2025.01.24.02.14.56
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 24 Jan 2025 02:08:28 -0800 (PST)
-Date: Fri, 24 Jan 2025 11:08:28 +0100
-From: Igor Mammedov <imammedo@redhat.com>
-To: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
-Cc: "Michael S . Tsirkin" <mst@redhat.com>, Jonathan Cameron
- <Jonathan.Cameron@huawei.com>, Shiju Jose <shiju.jose@huawei.com>,
- qemu-arm@nongnu.org, qemu-devel@nongnu.org, Ani Sinha
- <anisinha@redhat.com>, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH 04/11] acpi/generic_event_device: Update GHES migration
- to cover hest addr
-Message-ID: <20250124110828.3a2b92b9@imammedo.users.ipa.redhat.com>
-In-Reply-To: <6b79da0dbd8d735e93c15c4673bf2af61e8c34a2.1737560101.git.mchehab+huawei@kernel.org>
-References: <cover.1737560101.git.mchehab+huawei@kernel.org>
- <6b79da0dbd8d735e93c15c4673bf2af61e8c34a2.1737560101.git.mchehab+huawei@kernel.org>
-X-Mailer: Claws Mail 4.3.0 (GTK 3.24.43; x86_64-redhat-linux-gnu)
+ Fri, 24 Jan 2025 02:14:58 -0800 (PST)
+From: Max Chou <max.chou@sifive.com>
+To: qemu-devel@nongnu.org,
+	qemu-riscv@nongnu.org
+Cc: Max Chou <max.chou@sifive.com>, Palmer Dabbelt <palmer@dabbelt.com>,
+ Alistair Francis <alistair.francis@wdc.com>, Bin Meng <bmeng.cn@gmail.com>,
+ Weiwei Li <liwei1518@gmail.com>,
+ Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
+ Liu Zhiwei <zhiwei_liu@linux.alibaba.com>
+Subject: [PATCH] target/riscv: rvv: Fix unexpected behavior of vector
+ reduction instructions when vl is 0
+Date: Fri, 24 Jan 2025 18:14:47 +0800
+Message-Id: <20250124101452.2519171-1-max.chou@sifive.com>
+X-Mailer: git-send-email 2.34.1
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=imammedo@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -50
-X-Spam_score: -5.1
-X-Spam_bar: -----
-X-Spam_report: (-5.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-2.996,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::635;
+ envelope-from=max.chou@sifive.com; helo=mail-pl1-x635.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -115,66 +103,45 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, 22 Jan 2025 16:46:21 +0100
-Mauro Carvalho Chehab <mchehab+huawei@kernel.org> wrote:
+According to the Vector Reduction Operations section in the RISC-V "V"
+Vector Extension spec,
+"If vl=0, no operation is performed and the destination register is not
+updated."
 
-> The GHES migration logic at GED should now support HEST table
-> location too.
-> 
-> Signed-off-by: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
+The vd should be updated when vl is larger than 0.
 
-Reviewed-by: Igor Mammedov <imammedo@redhat.com>
+Signed-off-by: Max Chou <max.chou@sifive.com>
+---
+ target/riscv/vector_helper.c | 8 ++++++--
+ 1 file changed, 6 insertions(+), 2 deletions(-)
 
-> ---
->  hw/acpi/generic_event_device.c | 29 +++++++++++++++++++++++++++++
->  1 file changed, 29 insertions(+)
-> 
-> diff --git a/hw/acpi/generic_event_device.c b/hw/acpi/generic_event_device.c
-> index c85d97ca3776..5346cae573b7 100644
-> --- a/hw/acpi/generic_event_device.c
-> +++ b/hw/acpi/generic_event_device.c
-> @@ -386,6 +386,34 @@ static const VMStateDescription vmstate_ghes_state = {
->      }
->  };
->  
-> +static const VMStateDescription vmstate_hest = {
-> +    .name = "acpi-hest",
-> +    .version_id = 1,
-> +    .minimum_version_id = 1,
-> +    .fields = (const VMStateField[]) {
-> +        VMSTATE_UINT64(hest_addr_le, AcpiGhesState),
-> +        VMSTATE_END_OF_LIST()
-> +    },
-> +};
-> +
-> +static bool hest_needed(void *opaque)
-> +{
-> +    AcpiGedState *s = opaque;
-> +    return s->ghes_state.hest_addr_le;
-> +}
-> +
-> +static const VMStateDescription vmstate_hest_state = {
-> +    .name = "acpi-ged/hest",
-> +    .version_id = 1,
-> +    .minimum_version_id = 1,
-> +    .needed = hest_needed,
-> +    .fields = (const VMStateField[]) {
-> +        VMSTATE_STRUCT(ghes_state, AcpiGedState, 1,
-> +                       vmstate_hest, AcpiGhesState),
-> +        VMSTATE_END_OF_LIST()
-> +    }
-> +};
-> +
->  static const VMStateDescription vmstate_acpi_ged = {
->      .name = "acpi-ged",
->      .version_id = 1,
-> @@ -398,6 +426,7 @@ static const VMStateDescription vmstate_acpi_ged = {
->          &vmstate_memhp_state,
->          &vmstate_cpuhp_state,
->          &vmstate_ghes_state,
-> +        &vmstate_hest_state,
->          NULL
->      }
->  };
+diff --git a/target/riscv/vector_helper.c b/target/riscv/vector_helper.c
+index 5386e3b97c5..7773df6a7c7 100644
+--- a/target/riscv/vector_helper.c
++++ b/target/riscv/vector_helper.c
+@@ -4659,7 +4659,9 @@ void HELPER(NAME)(void *vd, void *v0, void *vs1,          \
+         }                                                 \
+         s1 = OP(s1, (TD)s2);                              \
+     }                                                     \
+-    *((TD *)vd + HD(0)) = s1;                             \
++    if (vl > 0) {                                         \
++        *((TD *)vd + HD(0)) = s1;                         \
++    }                                                     \
+     env->vstart = 0;                                      \
+     /* set tail elements to 1s */                         \
+     vext_set_elems_1s(vd, vta, esz, vlenb);               \
+@@ -4745,7 +4747,9 @@ void HELPER(NAME)(void *vd, void *v0, void *vs1,           \
+         }                                                  \
+         s1 = OP(s1, (TD)s2, &env->fp_status);              \
+     }                                                      \
+-    *((TD *)vd + HD(0)) = s1;                              \
++    if (vl > 0) {                                          \
++        *((TD *)vd + HD(0)) = s1;                          \
++    }                                                      \
+     env->vstart = 0;                                       \
+     /* set tail elements to 1s */                          \
+     vext_set_elems_1s(vd, vta, esz, vlenb);                \
+-- 
+2.34.1
 
 
