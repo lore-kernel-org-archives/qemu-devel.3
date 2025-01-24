@@ -4,106 +4,96 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 55D13C02181
-	for <qemu-devel@archiver.kernel.org>; Fri, 24 Jan 2025 16:23:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7B88FC02181
+	for <qemu-devel@archiver.kernel.org>; Fri, 24 Jan 2025 16:24:41 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tbMSS-0006x1-4T; Fri, 24 Jan 2025 11:23:00 -0500
+	id 1tbMTe-0007xM-F8; Fri, 24 Jan 2025 11:24:14 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1tbMSQ-0006vT-7U
- for qemu-devel@nongnu.org; Fri, 24 Jan 2025 11:22:58 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1tbMSO-0004m7-3n
- for qemu-devel@nongnu.org; Fri, 24 Jan 2025 11:22:57 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1737735772;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=51dnXDvsNcSCF08xduw6b/Qmzvzq46UpLQCneaoBf8Y=;
- b=PWyZ8ud32AVSRhf1ZVzEHy7Wh2DxjLAzYew1170mYmYlsWr6LkNrtS+wWvnPoI0Ji/gC9b
- P92jjTeFlUQt4qVIDwUSDHZZKWBqYhMzZv5EviREoiOp9K2sAOdzuJog8CB/ww4hgmGaEl
- FjR/p/HVzTHYFTJE6nMsW31fW+nU1j4=
-Received: from mail-oo1-f71.google.com (mail-oo1-f71.google.com
- [209.85.161.71]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-679-pHFkaJwEOl-Zfpb6PeKNRw-1; Fri, 24 Jan 2025 11:22:51 -0500
-X-MC-Unique: pHFkaJwEOl-Zfpb6PeKNRw-1
-X-Mimecast-MFC-AGG-ID: pHFkaJwEOl-Zfpb6PeKNRw
-Received: by mail-oo1-f71.google.com with SMTP id
- 006d021491bc7-5f8d5e499a5so1355615eaf.2
- for <qemu-devel@nongnu.org>; Fri, 24 Jan 2025 08:22:51 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tbMTU-0007ub-8h
+ for qemu-devel@nongnu.org; Fri, 24 Jan 2025 11:24:04 -0500
+Received: from mail-wm1-x32e.google.com ([2a00:1450:4864:20::32e])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tbMTS-0004pw-OV
+ for qemu-devel@nongnu.org; Fri, 24 Jan 2025 11:24:04 -0500
+Received: by mail-wm1-x32e.google.com with SMTP id
+ 5b1f17b1804b1-4361f65ca01so23875545e9.1
+ for <qemu-devel@nongnu.org>; Fri, 24 Jan 2025 08:24:01 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1737735840; x=1738340640; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=GUAB8KJvef72LimTXU1kyCn5E97m7qx6Tv9JQEXMfi8=;
+ b=A1MRrNN4up7lNuGLxd1/4XbuAg0KV1hC9Il3ohCM934NarQYzAwGUaJxqb2EuxFPVo
+ m9R+EIqYWBqcmcgoth3bvM4tzDM+ztNUxO5mQN1qqAePeT2joZ/5DLxAogGS4q4K3FW1
+ 9JMiorF9iDZPYK1zcz73wSJj3a2bI7vQrRmA4W+iXQIIJHl5hWxvU7AVL3KHNXajrKEk
+ Yx2lSexne8n6AKtmiZJ0PEWKKMu2ApDsmxeqQCeXmd3eKQRQ5Pb149tv1oU9heIxfeYv
+ c3Ks71KaEokx8IUQnDbdCh/yNBYML5wTyk4bTDe2mO8IDalkD/m1BBmLBJHiFGGLdY4y
+ 1suA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1737735769; x=1738340569;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=51dnXDvsNcSCF08xduw6b/Qmzvzq46UpLQCneaoBf8Y=;
- b=IAnm01c4M42YlW1HULk9E7Wy0b1EZZ3dEDpCw3oiGdeev560OK5HCHsFPAu7VG4AjJ
- lawUF0EY3VvRYl012HaOKaWgVX7BX6uV5OH8C5hupZPd+bGmW+f2dAhKeWlMeLxeJdTU
- oBwx5xdnti95Jf9fp3MY7TAlyMQ/UhRuqkIUshxHE7K3MFJ4EawNpK3DbfNcNu1b7pqw
- Qea2FeOcFmfwRg8xrmbmIOxif6dMhXR2K8xGRB/KoCMpvVKDT3HXL1NckOpY4KC8Gdea
- 01uW7sDx+T2T4AFd7G3r6MpEV0DIVdcFngMyBHCdK7JdnXEUKRnEmhXuXL9TP1EZ/SWS
- +k/g==
+ d=1e100.net; s=20230601; t=1737735840; x=1738340640;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=GUAB8KJvef72LimTXU1kyCn5E97m7qx6Tv9JQEXMfi8=;
+ b=lohoyn2PqzdvHa4h0Q/wgGLvZoehdUxoG+U8D8w/lUsBtD5XSHXKU4HD/fF+ZY/Zs5
+ Hp2u32PH+Px/iYQnwRFRHytai1lrbeI2mCDjmqqITbWEuce2g0SRR16ZFJJ9Bl7bIOYn
+ WXvETxnX/3NAvTCgUddCyzLwqcnZhFi6Ts3xW53l3XUoIhkP8xR1oIC4vk5B8vLP6sWv
+ bSJi+/GaaawptGRiYecUxWS4usG9YyWp3BBww2Va8UXFj7fRimUNnHgZrVCgPzdf5vJq
+ FnXUlzx23bMxCrHrjeIsCFuREKjekZRc5l+dSj1wjK4ExAPFeln38yC7V9Gc/cAq4FNa
+ qwJg==
 X-Forwarded-Encrypted: i=1;
- AJvYcCWRes0qoCJi7dtkf1ho3tGKXiMrTKkoy/acbODTvrwu+H/FvacsxMscxqOe293e0swRQyXj6UYVK+LO@nongnu.org
-X-Gm-Message-State: AOJu0YzGCHSQ36GIc1IpQehwo6c7tvUCjkZiDQypPrt7eB94B9bUKt1F
- KKiY7XYtKKYo6fVDCJ92IBu4NNSzxckn2UCKpSMFcCA1KxkhybaxDwOQ3fB2zrd8xhIt933WCQo
- Giehon2MFhM1XM/LeJrpk0kjDENO2BaLZSFENS7pCYg+ZhYzli87ZmDaALH6Z
-X-Gm-Gg: ASbGnct04npWvTt8VqOou99dzn3XlH754nUqG+C8CT6PiG6SCxGV9YTC6zKK4DpkaMQ
- C16ISX9M4jzYxgPLKVw7xmyXt9zVFJHcKQ2Er5NNhAsHzxLtTUksswktKgR5X4JBrtn7wEebfJ3
- m8nfJit2Kujfhwe83UxVVWiM0F8rqr/eaaZDB+v80Dwoau5kI+5B09hUTFEeq4/cO6yGCYnpkPX
- pX3Z5xknR2Q/QLJhnlLcwEDHMnelm+K9lHQ4IvYXnFGl96e92dqE4ZKrskwGr8V8QC6gcpb3Jp7
- Z9UIBWr8it0UfalJrmfo1X7a/6ROJDU=
-X-Received: by 2002:a05:6214:19c8:b0:6d8:cff9:f373 with SMTP id
- 6a1803df08f44-6e1b21c4106mr427082876d6.30.1737734153259; 
- Fri, 24 Jan 2025 07:55:53 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IGz9G2Pe5z23hXavPMrogrJhKCVJEtNpCmuOw2NH/cjb1ms5gHZUdf8IgcLgtK64ImsjBm57w==
-X-Received: by 2002:a05:6214:19c8:b0:6d8:cff9:f373 with SMTP id
- 6a1803df08f44-6e1b21c4106mr427082656d6.30.1737734152916; 
- Fri, 24 Jan 2025 07:55:52 -0800 (PST)
-Received: from x1n (pool-99-254-114-190.cpe.net.cable.rogers.com.
- [99.254.114.190]) by smtp.gmail.com with ESMTPSA id
- 6a1803df08f44-6e20525abf0sm9759386d6.54.2025.01.24.07.55.51
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 24 Jan 2025 07:55:52 -0800 (PST)
-Date: Fri, 24 Jan 2025 10:55:49 -0500
-From: Peter Xu <peterx@redhat.com>
-To: Xu Yilun <yilun.xu@linux.intel.com>
-Cc: Alexey Kardashevskiy <aik@amd.com>, Chenyi Qiang <chenyi.qiang@intel.com>,
- David Hildenbrand <david@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
- Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Michael Roth <michael.roth@amd.com>, qemu-devel@nongnu.org,
- kvm@vger.kernel.org, Williams Dan J <dan.j.williams@intel.com>,
- Peng Chao P <chao.p.peng@intel.com>, Gao Chao <chao.gao@intel.com>,
- Xu Yilun <yilun.xu@intel.com>
-Subject: Re: [PATCH 2/7] guest_memfd: Introduce an object to manage the
- guest-memfd with RamDiscardManager
-Message-ID: <Z5O4BSCjlhhu4rrw@x1n>
-References: <2b2730f3-6e1a-4def-b126-078cf6249759@amd.com>
- <Z462F1Dwm6cUdCcy@x1n> <ZnmfUelBs3Cm0ZHd@yilunxu-OptiPlex-7050>
- <Z4-6u5_9NChu_KZq@x1n>
- <95a14f7d-4782-40b3-a55d-7cf67b911bbe@amd.com>
- <Z5C9SzXxX7M1DBE3@yilunxu-OptiPlex-7050> <Z5EgFaWIyjIiOZnv@x1n>
- <Z5INAQjxyYhwyc+1@yilunxu-OptiPlex-7050> <Z5Jylb73kDJ6HTEZ@x1n>
- <Z5NhwW/IXaLfvjvb@yilunxu-OptiPlex-7050>
+ AJvYcCVwDkfRaiDDeSP/4MNfpv2klO1woKDs6+JAOyYZemP/kVG1NpToP3Bh+8cLZb3A4IJOaEm5pe9+nIIy@nongnu.org
+X-Gm-Message-State: AOJu0YwgIwbc+SLcU5a610YqxBK9lQl7kdzGfs9IXquwMBwt3RwpEYWw
+ ivF5VDkRRnNPhbn4ZHmwKy1VZoVqKEfaOXWadJDMwMaV0Bkk0tBCOs/IkoY4igY=
+X-Gm-Gg: ASbGncsiulljOvqqySyZunwOgq67O8Tp0bBhNW5Ud6BONOwH/lKlfDPJYanwNO31SdX
+ k+2pO7ff18JhiqFK9GqJzOwOHdcCXgnK/56dbTmHct9bR0yTxiMK69tG81x+yW1us1yueTwwlvS
+ j1X25mw3pPnJeVbZwCkIbyWrdIFrF0aCgvPn24INImRjdZbWhUuICE4/3TuYdsL5NKZNFIJMk4R
+ uubN3bONN2/WYQeZolG3TByoU8zxC5CERUAPNF9haf5lVb7tIU5TfRfEHEkYyPzTvSCEpfDaS11
+ zyZ+CEYzi1gRaRmCELNCCfKnUFnknFFyGXGG7/W5vjsaAWSb
+X-Google-Smtp-Source: AGHT+IH9B151Hho6P2y72c+thC/jbo2cuUqsJOABVeFDxiEwq+c1XgzAIK6IReqjXumoc4UkeKwoCQ==
+X-Received: by 2002:a05:600c:3acd:b0:438:c18c:5ad8 with SMTP id
+ 5b1f17b1804b1-438c18c5b00mr10409135e9.31.1737735840626; 
+ Fri, 24 Jan 2025 08:24:00 -0800 (PST)
+Received: from [192.168.69.181] (88-187-86-199.subs.proxad.net.
+ [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-438bd507dc9sm32111745e9.19.2025.01.24.08.23.59
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Fri, 24 Jan 2025 08:24:00 -0800 (PST)
+Message-ID: <f6504464-f9c1-4ecc-a0de-8645e42046e7@linaro.org>
+Date: Fri, 24 Jan 2025 17:23:58 +0100
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <Z5NhwW/IXaLfvjvb@yilunxu-OptiPlex-7050>
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=peterx@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -50
-X-Spam_score: -5.1
-X-Spam_bar: -----
-X-Spam_report: (-5.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-2.996,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 5/7] memory: pass MemTxAttrs to
+ memory_access_is_direct()
+To: David Hildenbrand <david@redhat.com>, qemu-devel@nongnu.org
+Cc: Paolo Bonzini <pbonzini@redhat.com>, Peter Xu <peterx@redhat.com>,
+ Peter Maydell <peter.maydell@linaro.org>,
+ =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Alex Williamson <alex.williamson@redhat.com>,
+ Eduardo Habkost <eduardo@habkost.net>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ Elena Ufimtseva <elena.ufimtseva@oracle.com>,
+ Jagannathan Raman <jag.raman@oracle.com>,
+ "Dr. David Alan Gilbert" <dave@treblig.org>, Stefan Zabka <git@zabka.it>
+References: <20250124154533.3534250-1-david@redhat.com>
+ <20250124154533.3534250-6-david@redhat.com>
+Content-Language: en-US
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <20250124154533.3534250-6-david@redhat.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::32e;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x32e.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -120,145 +110,19 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, Jan 24, 2025 at 05:47:45PM +0800, Xu Yilun wrote:
-> On Thu, Jan 23, 2025 at 11:47:17AM -0500, Peter Xu wrote:
-> > On Thu, Jan 23, 2025 at 05:33:53PM +0800, Xu Yilun wrote:
-> > > On Wed, Jan 22, 2025 at 11:43:01AM -0500, Peter Xu wrote:
-> > > > On Wed, Jan 22, 2025 at 05:41:31PM +0800, Xu Yilun wrote:
-> > > > > On Wed, Jan 22, 2025 at 03:30:05PM +1100, Alexey Kardashevskiy wrote:
-> > > > > > 
-> > > > > > 
-> > > > > > On 22/1/25 02:18, Peter Xu wrote:
-> > > > > > > On Tue, Jun 25, 2024 at 12:31:13AM +0800, Xu Yilun wrote:
-> > > > > > > > On Mon, Jan 20, 2025 at 03:46:15PM -0500, Peter Xu wrote:
-> > > > > > > > > On Mon, Jan 20, 2025 at 09:22:50PM +1100, Alexey Kardashevskiy wrote:
-> > > > > > > > > > > It is still uncertain how to implement the private MMIO. Our assumption
-> > > > > > > > > > > is the private MMIO would also create a memory region with
-> > > > > > > > > > > guest_memfd-like backend. Its mr->ram is true and should be managed by
-> > > > > > > > > > > RamdDiscardManager which can skip doing DMA_MAP in VFIO's region_add
-> > > > > > > > > > > listener.
-> > > > > > > > > > 
-> > > > > > > > > > My current working approach is to leave it as is in QEMU and VFIO.
-> > > > > > > > > 
-> > > > > > > > > Agreed.  Setting ram=true to even private MMIO sounds hackish, at least
-> > > > > > > > 
-> > > > > > > > The private MMIO refers to assigned MMIO, not emulated MMIO. IIUC,
-> > > > > > > > normal assigned MMIO is always set ram=true,
-> > > > > > > > 
-> > > > > > > > void memory_region_init_ram_device_ptr(MemoryRegion *mr,
-> > > > > > > >                                         Object *owner,
-> > > > > > > >                                         const char *name,
-> > > > > > > >                                         uint64_t size,
-> > > > > > > >                                         void *ptr)
-> > > > 
-> > > > [1]
-> > > > 
-> > > > > > > > {
-> > > > > > > >      memory_region_init(mr, owner, name, size);
-> > > > > > > >      mr->ram = true;
-> > > > > > > > 
-> > > > > > > > 
-> > > > > > > > So I don't think ram=true is a problem here.
-> > > > > > > 
-> > > > > > > I see.  If there's always a host pointer then it looks valid.  So it means
-> > > > > > > the device private MMIOs are always mappable since the start?
-> > > > > > 
-> > > > > > Yes. VFIO owns the mapping and does not treat shared/private MMIO any
-> > > > > > different at the moment. Thanks,
-> > > > > 
-> > > > > mm.. I'm actually expecting private MMIO not have a host pointer, just
-> > > > > as private memory do.
-> > > > > 
-> > > > > But I'm not sure why having host pointer correlates mr->ram == true.
-> > > > 
-> > > > If there is no host pointer, what would you pass into "ptr" as referenced
-> > > > at [1] above when creating the private MMIO memory region?
-> > > 
-> > > Sorry for confusion. I mean existing MMIO region use set mr->ram = true,
-> > > and unmappable region (gmem) also set mr->ram = true. So don't know why
-> > > mr->ram = true for private MMIO is hackish.
-> > 
-> > That's exactly what I had on the question in the previous email - please
-> > have a look at what QEMU does right now with memory_access_is_direct().
+On 24/1/25 16:45, David Hildenbrand wrote:
+> We want to pass another flag that will be stored in MemTxAttrs. So pass
+> MemTxAttrs directly.
 > 
-> I see memory_access_is_direct() should exclude mr->ram_device == true, which
-> is the case for normal assigned MMIO and for private assigned MMIO. So
-> this func is not a problem.
+> Signed-off-by: David Hildenbrand <david@redhat.com>
+> ---
+>   hw/core/loader.c          |  2 +-
+>   hw/remote/vfio-user-obj.c |  2 +-
+>   include/exec/memory.h     |  5 +++--
+>   system/memory_ldst.c.inc  | 18 +++++++++---------
+>   system/physmem.c          | 12 ++++++------
+>   5 files changed, 20 insertions(+), 19 deletions(-)
 
-I'm not sure even if so.
-
-VFIO's current use case is pretty special - it still has a host pointer,
-it's just that things like memcpy() might not be always suitable to be
-applied on MMIO mapped regions.  Alex explained the rational in commit
-4a2e242bbb3.  I mean, the host pointer is valid even if ram_device=true in
-this case.  Even if no direct access allowed (memcpy, etc.) it still
-operates on the host address using ram_device_mem_ops.
-
-> 
-> But I think flatview_access_allowed() is a problem that it doesn't filter
-> out the private memory. When memory is converted to private, the result
-> of host access can't be what you want and should be errored out. IOW,
-> the host ptr is sometimes invalid.
-> 
-> > I'm not 100% sure it'll work if the host pointer doesn't exist.
-> > 
-> > Let's take one user of it to be explicit: flatview_write_continue_step()
-> > will try to access the ram pointer if it's direct:
-> > 
-> >     if (!memory_access_is_direct(mr, true)) {
-> >         ...
-> >     } else {
-> >         /* RAM case */
-> >         uint8_t *ram_ptr = qemu_ram_ptr_length(mr->ram_block, mr_addr, l,
-> >                                                false, true);
-> > 
-> >         memmove(ram_ptr, buf, *l);
-> >         invalidate_and_set_dirty(mr, mr_addr, *l);
-> > 
-> >         return MEMTX_OK;
-> >     }
-> > 
-> > I don't see how QEMU could work yet if one MR set ram=true but without a
-> > host pointer..
-> > 
-> > As discussed previously, IMHO it's okay that the pointer is not accessible,
-> 
-> Maybe I missed something in previous discussion, I assume it is OK cause
-> no address_space_rw is happening on this host ptr when memory is
-> private, is it?
-
-Yes, and when there is a mapped host address and someone tries to access an
-address that is bound to a private page, QEMU should get a SIGBUS.  This
-code is not ready yet for gmem, but I believe it'll work like that when
-in-place gmem folio conversions will be ready.  So far QEMU's gmem works by
-providing two layers of memory backends, which is IMHO pretty tricky.
-
-> 
-> > but still I assume QEMU assumes the pointer at least existed for a ram=on
-> > MR.  I don't know whether it's suitable to set ram=on if the pointer
-> > doesn't ever exist.
-> 
-> In theory, any code logic should not depends on an invalid pointer. I
-> think a NULL pointer would be much better than a invalid pointer, at
-> least you can check whether to access. So if you think an invalid
-> pointer is OK, a NULL pointer should be also OK.
-
-Definitely not suggesting to install an invalid pointer anywhere.  The
-mapped pointer will still be valid for gmem for example, but the fault
-isn't.  We need to differenciate two things (1) virtual address mapping,
-then (2) permission and accesses on the folios / pages of the mapping.
-Here I think it's okay if the host pointer is correctly mapped.
-
-For your private MMIO use case, my question is if there's no host pointer
-to be mapped anyway, then what's the benefit to make the MR to be ram=on?
-Can we simply make it a normal IO memory region?  The only benefit of a
-ram=on MR is, IMHO, being able to be accessed as RAM-like.  If there's no
-host pointer at all, I don't yet understand how that helps private MMIO
-from working.
-
-Thanks,
-
--- 
-Peter Xu
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 
 
