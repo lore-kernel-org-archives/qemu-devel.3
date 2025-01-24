@@ -4,97 +4,105 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 50A7EC02181
-	for <qemu-devel@archiver.kernel.org>; Fri, 24 Jan 2025 15:47:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4F556C02181
+	for <qemu-devel@archiver.kernel.org>; Fri, 24 Jan 2025 15:47:45 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tbLtY-0004RX-UP; Fri, 24 Jan 2025 10:46:56 -0500
+	id 1tbLuD-0004q0-R3; Fri, 24 Jan 2025 10:47:39 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1tbLtX-0004RK-6Z
- for qemu-devel@nongnu.org; Fri, 24 Jan 2025 10:46:55 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <dhildenb@redhat.com>)
+ id 1tbLtl-0004bl-Lv
+ for qemu-devel@nongnu.org; Fri, 24 Jan 2025 10:47:16 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1tbLtV-00061M-Mi
- for qemu-devel@nongnu.org; Fri, 24 Jan 2025 10:46:54 -0500
+ (Exim 4.90_1) (envelope-from <dhildenb@redhat.com>)
+ id 1tbLtg-00061q-1n
+ for qemu-devel@nongnu.org; Fri, 24 Jan 2025 10:47:06 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1737733613;
+ s=mimecast20190719; t=1737733622;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ to:to:cc:cc:mime-version:mime-version:
+ content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=5Z8rqWgHVHOXm3tdLHuX1XKYEJ3QPuYrJlTQOr0sUMQ=;
- b=Yyg8z2r1IHZi9FHyyhduQOLEmhef9tmWIE5/oiB0G3Y/SvMC/lZwVa1btiahoJn6/NEpn0
- DPgLdUWn1twbr/zwIWvn1oiZCblx9mC4hat0Rvxb3GTES5MDs1ORnIHXVpCVFi6oFFiQYJ
- wYfggBo/67EB906j6MwCxsB+wJOWNZQ=
-Received: from mail-qk1-f198.google.com (mail-qk1-f198.google.com
- [209.85.222.198]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=tR/Bfe6dC3ViC24psGjFCtIkiPOyvc+/X6zxMElS99I=;
+ b=PSizopPbt06b8B87eTgy8A6POqVFrQ3OerQlNUrTc781fiANAMS6DImfYbVz8JRIXnwj47
+ s0ICFCo/CgMJDaAhzavxrKdY5yBMt7Sly3q9vEBCzWvGlnpVlInxWY7vlOt27q3C7TtnfR
+ RIp73Y0JrlHZOmEo5zM6oaoko8N/qgQ=
+Received: from mail-wr1-f71.google.com (mail-wr1-f71.google.com
+ [209.85.221.71]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-595-953ivmf3N82Ml0iyq-1Oig-1; Fri, 24 Jan 2025 10:46:51 -0500
-X-MC-Unique: 953ivmf3N82Ml0iyq-1Oig-1
-X-Mimecast-MFC-AGG-ID: 953ivmf3N82Ml0iyq-1Oig
-Received: by mail-qk1-f198.google.com with SMTP id
- af79cd13be357-7bcf4d3c1c1so323933785a.2
- for <qemu-devel@nongnu.org>; Fri, 24 Jan 2025 07:46:51 -0800 (PST)
+ us-mta-359-QMGgxxLyNUuvWL-_vh4SEQ-1; Fri, 24 Jan 2025 10:45:54 -0500
+X-MC-Unique: QMGgxxLyNUuvWL-_vh4SEQ-1
+X-Mimecast-MFC-AGG-ID: QMGgxxLyNUuvWL-_vh4SEQ
+Received: by mail-wr1-f71.google.com with SMTP id
+ ffacd0b85a97d-38a684a096eso1073094f8f.2
+ for <qemu-devel@nongnu.org>; Fri, 24 Jan 2025 07:45:54 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1737733610; x=1738338410;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=5Z8rqWgHVHOXm3tdLHuX1XKYEJ3QPuYrJlTQOr0sUMQ=;
- b=w882BJl4YrL5xlYtYGEYM3J8llJThfsJOF0eEUFVQgWOV9I2xRKn4wmQkSFlG8qkos
- 9CEu16kDwCCRs3NgDyfARaAZlC0oIHTqn+OD/BNvMImF3qUJiU17lrFnztBd+QvpUWun
- +1EyZHmsaXdIbb6xE2rVzEoIUhMDkvDH1L5QcTYOQThg79kSfJbA/S/z937+hZQ38ri5
- yMsE+XpxODAoCkXChPqqSyN+a536OeVFXRA1Cp8hDstLifzLCsmrusyaCnGK+mi3/vxg
- 4aN4QKykajZElplv8hjkR4ff3KKKEVQrezBoAotQ+tY85akR3jxFFzO22x/5727khIe7
- W+rg==
-X-Gm-Message-State: AOJu0Yzc/rajNBaQLEfgl+pIut7D1fbP4tjVVgO10Ra1abKgaKYXR3jH
- lRE5o0hm8DVU0gWCyijXS4ey4q6J0N5knyebf24luCOhNLAImu0jgY7npI61lraykHc11HO2D4N
- Sd197PoTgLi/HwtXIWFLeL1qWVFY3zYchFXnRlnUaGdf2tWycTIPM
-X-Gm-Gg: ASbGncuU0a58QZG2oA4mxbcax8RJPzbv6a6C4ekIBe4XP+RpcqOlWz4S+0IHn/t9Xrx
- WOLwGvp883GT7KosKCL8RQBvzuo537L7H+AXuJrA/yEDMQQkb+wKM2PhXfSI7jmKtxuvug0XDny
- PCAYV5e1/syL6hnf6gKYuuuPem/rbGApB57Kx5g31n5cv4VwlqZe7rYj+f4uul4ewSZpLhsNszT
- UnGO7YnL0MlhGRfOLcanuLC90vDpcaeudN+3KEph0qEYdBirse2DIop7C0wzCgaTIt4+kTWFcdF
- nP94OQtdFGm7SSyJXUwcAyEh4U0Uu1k=
-X-Received: by 2002:a05:620a:17aa:b0:7b6:c92e:2e6d with SMTP id
- af79cd13be357-7be63288b8dmr4126741385a.52.1737733115318; 
- Fri, 24 Jan 2025 07:38:35 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IEU63jVJlcMMd0itD6Gw+gz428lXpNOqJxgJiZx5fUxwvbISU0gfzbvS5oWz5730WrCA/6Iqw==
-X-Received: by 2002:a05:620a:17aa:b0:7b6:c92e:2e6d with SMTP id
- af79cd13be357-7be63288b8dmr4126739485a.52.1737733115030; 
- Fri, 24 Jan 2025 07:38:35 -0800 (PST)
-Received: from x1n (pool-99-254-114-190.cpe.net.cable.rogers.com.
- [99.254.114.190]) by smtp.gmail.com with ESMTPSA id
- af79cd13be357-7be9aef06a3sm104310885a.83.2025.01.24.07.38.33
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 24 Jan 2025 07:38:34 -0800 (PST)
-Date: Fri, 24 Jan 2025 10:38:32 -0500
-From: Peter Xu <peterx@redhat.com>
-To: Prasad Pandit <ppandit@redhat.com>
-Cc: qemu-devel@nongnu.org, farosas@suse.de, berrange@redhat.com,
- Prasad Pandit <pjp@fedoraproject.org>
-Subject: Re: [PATCH v3 4/4] tests/qtest/migration: add postcopy test with
- multifd
-Message-ID: <Z5Oz-Kz4rysFQ-n1@x1n>
-References: <20250121131032.1611245-1-ppandit@redhat.com>
- <20250121131032.1611245-5-ppandit@redhat.com>
- <Z4_Bh3ytv9REBero@x1n>
- <CAE8KmOw-4_DSoQEVUtJQnAuGdazmLqhL-dpUi3J1y8BN7zjLLw@mail.gmail.com>
- <Z5EYbBXkjTu98rHk@x1n>
- <CAE8KmOwvp=LJ+79t9VVsZqf4APqSYxqCQVmYSg_5QaVD4vzLWg@mail.gmail.com>
- <CAE8KmOywe888S-oCoO=4=oFsXuN=AfuuqvT27LGor-UTC78YoQ@mail.gmail.com>
+ d=1e100.net; s=20230601; t=1737733553; x=1738338353;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=tR/Bfe6dC3ViC24psGjFCtIkiPOyvc+/X6zxMElS99I=;
+ b=pUr9lVXRf7NG9nPn8DIHDRw3YRcikpnBIW2zN6e/b1u5dERdkC6V/9OpXhKJu4XL3M
+ 6MV0CGIwu4Bt4Z7pWTvdDI9GTBDqKkQ+etJ50JonfmsxAh92yJqCngTSjujqYrUzTO2x
+ pWl/IPu8biKOFmcotDBhEnzaVNiRibNxBFVIHFtd3pZq3Rxla4EUjYjzfGQ4qQ9q6hXH
+ mA2QbvdcZH+OmUly0XUSpHIssEhP1vaFLX/veWN68SJ+lwb5lrNcCxGpST8rzPyt2uB8
+ SJN1B8vx+wRffXHxISBVVKdM1oahdECVx6doGiON7j5nHqhTEhNX6UrKyRvfW9m7uIjv
+ +TFQ==
+X-Gm-Message-State: AOJu0YzlXUoTsl1JzSKHQTqaG1LPQ6qHysCd6q8zlDFrmP/mNUp0aUeT
+ LNzDp8cdenXjdvjUUZM9n8DxKeEop1UpMQj/u/65O6U6gnbSq3lJstNzLSOyyFzko/goRBdinnS
+ URlndqpOh/oLXoDq1ARJxAjmjTlYHPom0a9mZ6svk1G06C9iLojcQ7QnPPCZYCG+GOQ5HUJBeTx
+ K80ilXbLt/nR6Gaj0ua/d3COR24jhwB4vKt+0ONw==
+X-Gm-Gg: ASbGnctpBmnRihgbc97ah3djQlhijtK4Zy2GWfsJans+yyoBJpoXYkdCW73bJAbnFiz
+ vYEho5sZsQel504wfBy2kVzJRzCS6u2u8Xlh2KRCzWuGtQwnzYoKmTTNLg8AfD9Vy7AWwjodM5B
+ ESAz/DfAtEU0u8i8KiKl4CyssBoqFf/Ng+HcFSG1hqAGZOeIAMyzDrEN5OkGUiFKCOxKCdO5ypO
+ z2OcpeWYI6M8ZqJ2irPCgBjxhX7s5PbYL2My23wIBTGzzC3rqjnDnJUELvg7wNzrRhzz/A4nvmO
+ UeJukpgT9YCv7Wt1ZvA5oBKeUbzB0ntfpenG3MZgrAeXy129e9+WjnE=
+X-Received: by 2002:a5d:5512:0:b0:385:e8aa:2a4e with SMTP id
+ ffacd0b85a97d-38bf57a1eb7mr21972208f8f.31.1737733553374; 
+ Fri, 24 Jan 2025 07:45:53 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IH8r58mr0bMdSqwIKv17vEXdb4niYrG3/6M8NhgVtYGosxG2wLMLUfyNYiJ/XcogVbU6gS8Gg==
+X-Received: by 2002:a5d:5512:0:b0:385:e8aa:2a4e with SMTP id
+ ffacd0b85a97d-38bf57a1eb7mr21972182f8f.31.1737733552993; 
+ Fri, 24 Jan 2025 07:45:52 -0800 (PST)
+Received: from localhost
+ (p200300cbc719e000ca2c77c5de7dce89.dip0.t-ipconnect.de.
+ [2003:cb:c719:e000:ca2c:77c5:de7d:ce89])
+ by smtp.gmail.com with UTF8SMTPSA id
+ ffacd0b85a97d-38c2a1baf65sm3065085f8f.64.2025.01.24.07.45.51
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Fri, 24 Jan 2025 07:45:52 -0800 (PST)
+From: David Hildenbrand <david@redhat.com>
+To: qemu-devel@nongnu.org
+Cc: David Hildenbrand <david@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
+ Peter Xu <peterx@redhat.com>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Peter Maydell <peter.maydell@linaro.org>,
+ =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Alex Williamson <alex.williamson@redhat.com>,
+ Eduardo Habkost <eduardo@habkost.net>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ Elena Ufimtseva <elena.ufimtseva@oracle.com>,
+ Jagannathan Raman <jag.raman@oracle.com>,
+ "Dr. David Alan Gilbert" <dave@treblig.org>, Stefan Zabka <git@zabka.it>
+Subject: [PATCH v2 6/7] hmp: use cpu_get_phys_page_debug() in hmp_gva2gpa()
+Date: Fri, 24 Jan 2025 16:45:31 +0100
+Message-ID: <20250124154533.3534250-7-david@redhat.com>
+X-Mailer: git-send-email 2.47.1
+In-Reply-To: <20250124154533.3534250-1-david@redhat.com>
+References: <20250124154533.3534250-1-david@redhat.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <CAE8KmOywe888S-oCoO=4=oFsXuN=AfuuqvT27LGor-UTC78YoQ@mail.gmail.com>
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=peterx@redhat.com;
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=dhildenb@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -50
 X-Spam_score: -5.1
 X-Spam_bar: -----
 X-Spam_report: (-5.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-2.996,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.001,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
@@ -113,58 +121,36 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, Jan 24, 2025 at 06:15:20PM +0530, Prasad Pandit wrote:
-> Hello Peter,
-> 
-> On Thu, 23 Jan 2025 at 16:39, Prasad Pandit <ppandit@redhat.com> wrote:
-> > On Wed, 22 Jan 2025 at 21:40, Peter Xu <peterx@redhat.com> wrote:
-> > > I believe many of the tests can be avoided, but still below is a list of
-> > > minimum tests that I think might still be good to add:
-> > >         # /x86_64/migration/postcopy/plain
-> > >         # /x86_64/migration/postcopy/recovery/tls/psk
-> > >         # /x86_64/migration/postcopy/preempt/plain
-> > >         # /x86_64/migration/postcopy/preempt/recovery/tls/psk
-> ---
-> $ ../qtest/migration-test --tap -k -r
-> '/x86_64/migration/multifd+postcopy' | grep -i 'slow test'
-> # slow test /x86_64/migration/multifd+postcopy/plain executed in 1.28 secs
-> # slow test /x86_64/migration/multifd+postcopy/recovery/tls/psk
-> executed in 2.43 secs
-> # slow test /x86_64/migration/multifd+postcopy/preempt/plain executed
-> in 1.52 secs
-> # slow test /x86_64/migration/multifd+postcopy/preempt/recovery/tls/psk
-> executed in 3.32 secs
-> ---
-> * Postcopy tests are working well with setting 'multifd = true'.
+We don't need the MemTxAttrs, so let's simply use the simpler function
+variant.
 
-Great.
+Signed-off-by: David Hildenbrand <david@redhat.com>
+---
+ monitor/hmp-cmds-target.c | 3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
 
-> 
-> > >         # /x86_64/migration/multifd/tcp/tls/psk/match
-> > >         # /x86_64/migration/multifd/tcp/plain/zstd
-> > >         # /x86_64/migration/multifd/tcp/plain/cancel
-> 
-> * Above precopy tests already enable (16) multifd channels and they
-> seem to test scenarios like: resume after migrate_cancel() or precopy
-> with compression (zstd). Enabling 'postcopy' here is not the same as
-> setting 'postcopy=true'. Do we really need to redefine these tests for
-> postcopy migration? Does compression (zstd/zlib etc.) OR
-> migrate_cancle() work with 'postcopy' migration?
-
-Since multifd doesn't work with postcopy phase, compression so far cannot
-happen in postcopy phase but only in precopy phase.
-
-So the tests I suggested was trying to make sure multifd major features (in
-this case, tls, compression, and cancellation) work like before even if we
-set postcopy-ram=on in the feature list, because after your changes merged,
-people may start always set postcopy-ram=on for all cases.
-
-OTOH, these test cases do not test anything that would happen in postcopy
-phase, they should be covered by the postcopy tests you added above.
-
-Thanks,
-
+diff --git a/monitor/hmp-cmds-target.c b/monitor/hmp-cmds-target.c
+index 0300faa8a2..0d2e9dce69 100644
+--- a/monitor/hmp-cmds-target.c
++++ b/monitor/hmp-cmds-target.c
+@@ -301,7 +301,6 @@ void hmp_gpa2hva(Monitor *mon, const QDict *qdict)
+ void hmp_gva2gpa(Monitor *mon, const QDict *qdict)
+ {
+     target_ulong addr = qdict_get_int(qdict, "addr");
+-    MemTxAttrs attrs;
+     CPUState *cs = mon_get_cpu(mon);
+     hwaddr gpa;
+ 
+@@ -310,7 +309,7 @@ void hmp_gva2gpa(Monitor *mon, const QDict *qdict)
+         return;
+     }
+ 
+-    gpa  = cpu_get_phys_page_attrs_debug(cs, addr & TARGET_PAGE_MASK, &attrs);
++    gpa  = cpu_get_phys_page_debug(cs, addr & TARGET_PAGE_MASK);
+     if (gpa == -1) {
+         monitor_printf(mon, "Unmapped\n");
+     } else {
 -- 
-Peter Xu
+2.47.1
 
 
