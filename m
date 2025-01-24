@@ -4,110 +4,56 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id AE3B4C0218B
-	for <qemu-devel@archiver.kernel.org>; Fri, 24 Jan 2025 13:02:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id AD30BC02181
+	for <qemu-devel@archiver.kernel.org>; Fri, 24 Jan 2025 13:03:53 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tbJJQ-0007t1-3C; Fri, 24 Jan 2025 08:01:28 -0500
+	id 1tbJLS-0000Tp-47; Fri, 24 Jan 2025 08:03:35 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <imammedo@redhat.com>)
- id 1tbJJ5-0007qJ-0P
- for qemu-devel@nongnu.org; Fri, 24 Jan 2025 08:01:14 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <deller@kernel.org>) id 1tbJL4-0000Pt-Tb
+ for qemu-devel@nongnu.org; Fri, 24 Jan 2025 08:03:14 -0500
+Received: from dfw.source.kernel.org ([2604:1380:4641:c500::1])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <imammedo@redhat.com>)
- id 1tbJJ2-00070G-3H
- for qemu-devel@nongnu.org; Fri, 24 Jan 2025 08:01:06 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1737723662;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=qhEWVaxKeikmxtBJ5SO9zg19epngSbsvs/Gow7w7f8I=;
- b=fSnsobmy4R73lVkxQpjd1mADYxJQ7xWH/2di6LPHhpgza3dnoRIlUGzp7rGMGAMczL/P3+
- 2lndRSLjOlSEXvTtkcpTIxm2YZOLLsbhNYMGandDyalxB6tSCvyv423Bjd7m5V3VoU2i2J
- YURTDzls8zooY3hWsq+8ip8Axfod9T0=
-Received: from mail-wm1-f70.google.com (mail-wm1-f70.google.com
- [209.85.128.70]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-596-30D0MaJ_OwSwRk9_0h-NUw-1; Fri, 24 Jan 2025 08:01:00 -0500
-X-MC-Unique: 30D0MaJ_OwSwRk9_0h-NUw-1
-X-Mimecast-MFC-AGG-ID: 30D0MaJ_OwSwRk9_0h-NUw
-Received: by mail-wm1-f70.google.com with SMTP id
- 5b1f17b1804b1-4359eb032c9so14644605e9.2
- for <qemu-devel@nongnu.org>; Fri, 24 Jan 2025 05:01:00 -0800 (PST)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1737723659; x=1738328459;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:subject:cc:to:from:date:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=qhEWVaxKeikmxtBJ5SO9zg19epngSbsvs/Gow7w7f8I=;
- b=SYq2UzltPHzVd7m9aji3EsVkEP5PrKflbaXU2mzJ2Tc5uExulyC41DZkKIaP2pi6BO
- dL1KxGXvsr3Nwy6bt/YWbYLkw1ACPsFoYOfjlNxxkH+zXZ4HrO7kWL7oZMfeqEq2eQHJ
- 9LF70tsZUT2vWtVKce70bZxGFIrhhAKQuxzApKRxL7owk/h+BV/Fi+cozKyrw9koav93
- 75naxk+8+jwowT8C8q377hFna9LtYI91l2IHmX5fahghjHgYyf8i7fh/uJf3XSoFWsKo
- Bs/mxPv2dLT8Yj7MrUBgSp0fXtlVJEONKnwEhGOpIyALBo69/IX3SkC3rpcLFjRq5FFe
- gpPA==
-X-Forwarded-Encrypted: i=1;
- AJvYcCUUMZUABIlaQKn8Gc7SQaeFCDOJ31Xr46Xtu4AHHhoS5urMHL/tJOAuvbT0BiIHpTGMjnmveZqniUor@nongnu.org
-X-Gm-Message-State: AOJu0YyFeA8uSxpHxLqjDTOc56vMp3SpxbfWA36PwaiuxiPD0rF1s2B3
- X815QVgdevGJil4Le871fPVHlPH8cZw8OCu3/gwlemAEuuaFo/tUIt8PjVEWl4dhoFzVQ1kWhKB
- Z01IdtUgTFJyVikdcEj8eLTtkp1/COWHuJwouQyO0CAFbZ6pdbRwl
-X-Gm-Gg: ASbGnctw+RHrt5c1Afd5Ipp2lVhPWMTqD/kcVg/80Xj91cgcaveSrlQozxzqxNx0AMo
- 2cIc0nBay/sAYZG2r6ouakiEroKFDw7HNWfpwnaEMyoBSjaiJFDBLqIhZsy4pXQ33TRW6LhXKxM
- ALez7P8TJPKXY04G3RWjMnbN3kaXqm4ipCnnw3NEYBqECvjy4wxuNbuBhiSQ3J2K4lwyj+rdCD0
- xMSrYpHsz8JrbFhe0TOEobb7lRrtq93EsRpBSPfasAcT6XN0jnuNkpm0cNkYXuhzeorFRcBdWKt
- 5Ru6DPv8GB7Jp1Q4OpKQMiqdLeMlTQxoJ0Ntxph+vg==
-X-Received: by 2002:a05:6000:1f85:b0:385:e374:be1 with SMTP id
- ffacd0b85a97d-38bf5662b18mr28603911f8f.13.1737723659232; 
- Fri, 24 Jan 2025 05:00:59 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IHNdnSYVkLN0W7EV86sq4qrC5JldVfmcOMcj0YhiKmcOETN+KR3k8MwLJ3VyzAMUkpiTfPPDw==
-X-Received: by 2002:a05:6000:1f85:b0:385:e374:be1 with SMTP id
- ffacd0b85a97d-38bf5662b18mr28603828f8f.13.1737723658728; 
- Fri, 24 Jan 2025 05:00:58 -0800 (PST)
-Received: from imammedo.users.ipa.redhat.com (nat-pool-brq-t.redhat.com.
- [213.175.37.10]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-38c2a1c4161sm2566964f8f.88.2025.01.24.05.00.57
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 24 Jan 2025 05:00:58 -0800 (PST)
-Date: Fri, 24 Jan 2025 14:00:57 +0100
-From: Igor Mammedov <imammedo@redhat.com>
-To: Xiaoyao Li <xiaoyao.li@intel.com>
-Cc: Paolo Bonzini <pbonzini@redhat.com>, Riku Voipio <riku.voipio@iki.fi>,
- Richard Henderson <richard.henderson@linaro.org>, Zhao Liu
- <zhao1.liu@intel.com>, "Michael S. Tsirkin" <mst@redhat.com>, Marcel
- Apfelbaum <marcel.apfelbaum@gmail.com>, Ani Sinha <anisinha@redhat.com>,
- Philippe =?UTF-8?B?TWF0aGlldS1EYXVkw6k=?= <philmd@linaro.org>, Yanan Wang
- <wangyanan55@huawei.com>, Cornelia Huck <cohuck@redhat.com>, "Daniel P.
- =?UTF-8?B?QmVycmFuZ8Op?=" <berrange@redhat.com>, Eric Blake
- <eblake@redhat.com>, Markus Armbruster <armbru@redhat.com>, Marcelo Tosatti
- <mtosatti@redhat.com>, rick.p.edgecombe@intel.com, kvm@vger.kernel.org,
- qemu-devel@nongnu.org
-Subject: Re: [PATCH v6 40/60] hw/i386: add eoi_intercept_unsupported member
- to X86MachineState
-Message-ID: <20250124140057.2f2bb674@imammedo.users.ipa.redhat.com>
-In-Reply-To: <00ecb103-2f0b-479d-bae8-cb3f7bace3be@intel.com>
-References: <20241105062408.3533704-1-xiaoyao.li@intel.com>
- <20241105062408.3533704-41-xiaoyao.li@intel.com>
- <20250123134148.036d52b0@imammedo.users.ipa.redhat.com>
- <00ecb103-2f0b-479d-bae8-cb3f7bace3be@intel.com>
-X-Mailer: Claws Mail 4.3.0 (GTK 3.24.43; x86_64-redhat-linux-gnu)
+ (Exim 4.90_1) (envelope-from <deller@kernel.org>) id 1tbJL2-0007H3-Ig
+ for qemu-devel@nongnu.org; Fri, 24 Jan 2025 08:03:10 -0500
+Received: from smtp.kernel.org (transwarp.subspace.kernel.org [100.75.92.58])
+ by dfw.source.kernel.org (Postfix) with ESMTP id 1E0DC5C5A81;
+ Fri, 24 Jan 2025 13:02:27 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B1A9BC4CED2;
+ Fri, 24 Jan 2025 13:03:05 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+ s=k20201202; t=1737723787;
+ bh=+SMT1Ka5Xy6fyDrlOIaRE9P42fAh6RoCdIztHWEYvfE=;
+ h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+ b=Xl44rBIsQ4y5CJ160FYg9QT5IAPTMETvBBZX7aK8jFPSukKQWZwppOYeRfbclJIgo
+ 55NW8qHeXfeWrnGw6zV8YVf+JKp7zDNchO8AfD0EkJwE3FH3cNei4cAU6FrxaBI3es
+ uTOgLYr8plc4Xom/AMVsIwNbPZBsh5rqxjO4rlS025WCvVbEHROi0XNuSGuUg979SI
+ ltyrek+FCa/iODyqei3AOUvpa2gQjgZ0F6W6MVislxUlI7ZWrYiASK3Z31uvIwChcx
+ jVd7vyR4qGWAwCWO4jS7R5xW3mvUcNROjbLJJJlgszfgKBph6U/F6UHDWTSQGXHAFz
+ Gc6hqb3obytzQ==
+From: deller@kernel.org
+To: Laurent Vivier <laurent@vivier.eu>, Stefan Hajnoczi <stefanha@gmail.com>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
+Cc: deller@gmx.de
+Subject: [PULL v3 5/6] linux-user: netlink: add netlink neighbour emulation
+Date: Fri, 24 Jan 2025 14:02:53 +0100
+Message-ID: <20250124130254.3134-6-deller@kernel.org>
+X-Mailer: git-send-email 2.47.0
+In-Reply-To: <20250124130254.3134-1-deller@kernel.org>
+References: <20250124130254.3134-1-deller@kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=imammedo@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -50
-X-Spam_score: -5.1
-X-Spam_bar: -----
-X-Spam_report: (-5.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-2.996,
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2604:1380:4641:c500::1;
+ envelope-from=deller@kernel.org; helo=dfw.source.kernel.org
+X-Spam_score_int: -73
+X-Spam_score: -7.4
+X-Spam_bar: -------
+X-Spam_report: (-7.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-2.996,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -124,90 +70,203 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, 24 Jan 2025 00:45:50 +0800
-Xiaoyao Li <xiaoyao.li@intel.com> wrote:
+From: Helge Deller <deller@gmx.de>
 
-> On 1/23/2025 8:41 PM, Igor Mammedov wrote:
-> > On Tue,  5 Nov 2024 01:23:48 -0500
-> > Xiaoyao Li <xiaoyao.li@intel.com> wrote:
-> >   
-> >> Add a new bool member, eoi_intercept_unsupported, to X86MachineState
-> >> with default value false. Set true for TDX VM.  
-> > 
-> > I'd rename it to enable_eoi_intercept, by default set to true for evrything
-> > and make TDX override this to false.  
-> >>
-> >> Inability to intercept eoi causes impossibility to emulate level
-> >> triggered interrupt to be re-injected when level is still kept active.
-> >> which affects interrupt controller emulation.
-> >>
-> >> Signed-off-by: Xiaoyao Li <xiaoyao.li@intel.com>
-> >> Acked-by: Gerd Hoffmann <kraxel@redhat.com>
-> >> ---
-> >>   hw/i386/x86.c         | 1 +
-> >>   include/hw/i386/x86.h | 1 +
-> >>   target/i386/kvm/tdx.c | 2 ++
-> >>   3 files changed, 4 insertions(+)
-> >>
-> >> diff --git a/hw/i386/x86.c b/hw/i386/x86.c
-> >> index 01fc5e656272..82faeed24ff9 100644
-> >> --- a/hw/i386/x86.c
-> >> +++ b/hw/i386/x86.c
-> >> @@ -370,6 +370,7 @@ static void x86_machine_initfn(Object *obj)
-> >>       x86ms->oem_table_id = g_strndup(ACPI_BUILD_APPNAME8, 8);
-> >>       x86ms->bus_lock_ratelimit = 0;
-> >>       x86ms->above_4g_mem_start = 4 * GiB;
-> >> +    x86ms->eoi_intercept_unsupported = false;
-> >>   }
-> >>   
-> >>   static void x86_machine_class_init(ObjectClass *oc, void *data)
-> >> diff --git a/include/hw/i386/x86.h b/include/hw/i386/x86.h
-> >> index d43cb3908e65..fd9a30391755 100644
-> >> --- a/include/hw/i386/x86.h
-> >> +++ b/include/hw/i386/x86.h
-> >> @@ -73,6 +73,7 @@ struct X86MachineState {
-> >>       uint64_t above_4g_mem_start;
-> >>   
-> >>       /* CPU and apic information: */
-> >> +    bool eoi_intercept_unsupported;
-> >>       unsigned pci_irq_mask;
-> >>       unsigned apic_id_limit;
-> >>       uint16_t boot_cpus;
-> >> diff --git a/target/i386/kvm/tdx.c b/target/i386/kvm/tdx.c
-> >> index 9ab4e911f78a..9dcb77e011bd 100644
-> >> --- a/target/i386/kvm/tdx.c
-> >> +++ b/target/i386/kvm/tdx.c
-> >> @@ -388,6 +388,8 @@ static int tdx_kvm_init(ConfidentialGuestSupport *cgs, Error **errp)
-> >>           return -EOPNOTSUPP;
-> >>       }
-> >>   
-> >> +    x86ms->eoi_intercept_unsupported = true;  
-> > 
-> > I don't particulary like accel go to its parent (machine) object and override things there
-> > and that being buried deep inside.  
-> 
-> I would suggest don't see TDX as accel but see it as a special type of 
-> x86 machine.
-> 
-> > How do you start TDX guest?
-> > Is there a machine property or something like it to enable TDX?  
-> 
-> via the "confidential-guest-support" property.
-> This series introduces tdx-guest object and we start a TDX guest by:
-> 
-> $qemu-system-x86_64 -object tdx-guest,id=tdx0 \
->      -machine ...,confidential-guest-support=tdx0
+Fixes various warnings in the testsuite while building gupnp:
+ gssdp-net-DEBUG: Failed to send netlink message: Operation not supported
+ gupnp-context-DEBUG: Mismatch between host header and host IP (example.com, expected: 127.0.0.1)
+ gupnp-context-DEBUG: Mismatch between host header and host port (80, expected 4711)
+ gupnp-context-DEBUG: Mismatch between host header and host IP (192.168.1.2, expected: 127.0.0.1)
+ gupnp-context-DEBUG: Mismatch between host header and host IP (fe80::01, expected: 127.0.0.1)
+ gupnp-context-DEBUG: Mismatch between host header and host port (80, expected 4711)
+ gupnp-context-DEBUG: Failed to parse HOST header from request: Invalid IPv6 address ?[fe80::01%1]? in URI
+ gupnp-context-DEBUG: Failed to parse HOST header from request: Invalid IPv6 address ?[fe80::01%eth0]? in URI
+ gupnp-context-DEBUG: Failed to parse HOST header from request: Could not parse port ?:1? in URI
+ gupnp-context-DEBUG: Mismatch between host header and host IP (example.com, expected: ::1)
+ gupnp-context-DEBUG: Mismatch between host header and host port (80, expected 4711)
+ gupnp-context-DEBUG: Mismatch between host header and host IP (example.com, expected: ::1)
+ gupnp-context-DEBUG: Mismatch between host header and host port (80, expected 4711)
+ gupnp-context-DEBUG: Mismatch between host header and host IP (example.com, expected: ::1)
 
-then the property setter would be a logical place to set
- eoi_intercept_unsupported = false
-when its value is tdx0
+Signed-off-by: Helge Deller <deller@gmx.de>
+Reviewed-by: Laurent Vivier <laurent@vivier.eu>
+---
+ linux-user/fd-trans.c | 100 ++++++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 100 insertions(+)
 
-> 
-> >> +
-> >>       /*
-> >>        * Set kvm_readonly_mem_allowed to false, because TDX only supports readonly
-> >>        * memory for shared memory but not for private memory. Besides, whether a  
-> >   
-> 
+diff --git a/linux-user/fd-trans.c b/linux-user/fd-trans.c
+index 2e714c8e56..621e2248b4 100644
+--- a/linux-user/fd-trans.c
++++ b/linux-user/fd-trans.c
+@@ -25,12 +25,16 @@
+ #ifdef CONFIG_RTNETLINK
+ #include <linux/rtnetlink.h>
+ #include <linux/if_bridge.h>
++#include <linux/neighbour.h>
+ #endif
+ #include "qemu.h"
+ #include "user-internals.h"
+ #include "fd-trans.h"
+ #include "signal-common.h"
+ 
++#define NDM_RTA(r)  ((struct rtattr*)(((char*)(r)) + \
++                    NLMSG_ALIGN(sizeof(struct ndmsg))))
++
+ enum {
+     QEMU_IFA_UNSPEC,
+     QEMU_IFA_ADDRESS,
+@@ -1226,6 +1230,35 @@ static abi_long host_to_target_data_route_rtattr(struct rtattr *rtattr)
+     return 0;
+ }
+ 
++static abi_long host_to_target_data_neigh_rtattr(struct rtattr *rtattr)
++{
++    struct nda_cacheinfo *ndac;
++    uint32_t *u32;
++
++    switch (rtattr->rta_type) {
++    case NDA_UNSPEC:
++    case NDA_DST:
++    case NDA_LLADDR:
++        break;
++    case NDA_PROBES:
++        u32 = RTA_DATA(rtattr);
++        *u32 = tswap32(*u32);
++        break;
++    case NDA_CACHEINFO:
++        ndac = RTA_DATA(rtattr);
++        ndac->ndm_confirmed = tswap32(ndac->ndm_confirmed);
++        ndac->ndm_used      = tswap32(ndac->ndm_used);
++        ndac->ndm_updated   = tswap32(ndac->ndm_updated);
++        ndac->ndm_refcnt    = tswap32(ndac->ndm_refcnt);
++        break;
++    default:
++        qemu_log_mask(LOG_UNIMP, "Unknown host to target NEIGH type: %d\n",
++                      rtattr->rta_type);
++        break;
++    }
++    return 0;
++}
++
+ static abi_long host_to_target_link_rtattr(struct rtattr *rtattr,
+                                          uint32_t rtattr_len)
+ {
+@@ -1247,12 +1280,20 @@ static abi_long host_to_target_route_rtattr(struct rtattr *rtattr,
+                                           host_to_target_data_route_rtattr);
+ }
+ 
++static abi_long host_to_target_neigh_rtattr(struct rtattr *rtattr,
++                                         uint32_t rtattr_len)
++{
++    return host_to_target_for_each_rtattr(rtattr, rtattr_len,
++                                          host_to_target_data_neigh_rtattr);
++}
++
+ static abi_long host_to_target_data_route(struct nlmsghdr *nlh)
+ {
+     uint32_t nlmsg_len;
+     struct ifinfomsg *ifi;
+     struct ifaddrmsg *ifa;
+     struct rtmsg *rtm;
++    struct ndmsg *ndm;
+ 
+     nlmsg_len = nlh->nlmsg_len;
+     switch (nlh->nlmsg_type) {
+@@ -1279,6 +1320,17 @@ static abi_long host_to_target_data_route(struct nlmsghdr *nlh)
+                                        nlmsg_len - NLMSG_LENGTH(sizeof(*ifa)));
+         }
+         break;
++    case RTM_NEWNEIGH:
++    case RTM_DELNEIGH:
++    case RTM_GETNEIGH:
++        if (nlh->nlmsg_len >= NLMSG_LENGTH(sizeof(*ndm))) {
++            ndm = NLMSG_DATA(nlh);
++            ndm->ndm_ifindex = tswap32(ndm->ndm_ifindex);
++            ndm->ndm_state = tswap16(ndm->ndm_state);
++            host_to_target_neigh_rtattr(NDM_RTA(ndm),
++                                    nlmsg_len - NLMSG_LENGTH(sizeof(*ndm)));
++        }
++        break;
+     case RTM_NEWROUTE:
+     case RTM_DELROUTE:
+     case RTM_GETROUTE:
+@@ -1426,6 +1478,35 @@ static abi_long target_to_host_data_addr_rtattr(struct rtattr *rtattr)
+     return 0;
+ }
+ 
++static abi_long target_to_host_data_neigh_rtattr(struct rtattr *rtattr)
++{
++    struct nda_cacheinfo *ndac;
++    uint32_t *u32;
++
++    switch (rtattr->rta_type) {
++    case NDA_UNSPEC:
++    case NDA_DST:
++    case NDA_LLADDR:
++        break;
++    case NDA_PROBES:
++        u32 = RTA_DATA(rtattr);
++        *u32 = tswap32(*u32);
++        break;
++    case NDA_CACHEINFO:
++        ndac = RTA_DATA(rtattr);
++        ndac->ndm_confirmed = tswap32(ndac->ndm_confirmed);
++        ndac->ndm_used      = tswap32(ndac->ndm_used);
++        ndac->ndm_updated   = tswap32(ndac->ndm_updated);
++        ndac->ndm_refcnt    = tswap32(ndac->ndm_refcnt);
++        break;
++    default:
++        qemu_log_mask(LOG_UNIMP, "Unknown target NEIGH type: %d\n",
++                      rtattr->rta_type);
++        break;
++    }
++    return 0;
++}
++
+ static abi_long target_to_host_data_route_rtattr(struct rtattr *rtattr)
+ {
+     uint32_t *u32;
+@@ -1464,6 +1545,13 @@ static void target_to_host_addr_rtattr(struct rtattr *rtattr,
+                                    target_to_host_data_addr_rtattr);
+ }
+ 
++static void target_to_host_neigh_rtattr(struct rtattr *rtattr,
++                                     uint32_t rtattr_len)
++{
++    target_to_host_for_each_rtattr(rtattr, rtattr_len,
++                                   target_to_host_data_neigh_rtattr);
++}
++
+ static void target_to_host_route_rtattr(struct rtattr *rtattr,
+                                      uint32_t rtattr_len)
+ {
+@@ -1476,6 +1564,7 @@ static abi_long target_to_host_data_route(struct nlmsghdr *nlh)
+     struct ifinfomsg *ifi;
+     struct ifaddrmsg *ifa;
+     struct rtmsg *rtm;
++    struct ndmsg *ndm;
+ 
+     switch (nlh->nlmsg_type) {
+     case RTM_NEWLINK:
+@@ -1502,6 +1591,17 @@ static abi_long target_to_host_data_route(struct nlmsghdr *nlh)
+                                        NLMSG_LENGTH(sizeof(*ifa)));
+         }
+         break;
++    case RTM_NEWNEIGH:
++    case RTM_DELNEIGH:
++    case RTM_GETNEIGH:
++        if (nlh->nlmsg_len >= NLMSG_LENGTH(sizeof(*ndm))) {
++            ndm = NLMSG_DATA(nlh);
++            ndm->ndm_ifindex = tswap32(ndm->ndm_ifindex);
++            ndm->ndm_state = tswap16(ndm->ndm_state);
++            target_to_host_neigh_rtattr(NDM_RTA(ndm), nlh->nlmsg_len -
++                                       NLMSG_LENGTH(sizeof(*ndm)));
++        }
++        break;
+     case RTM_NEWROUTE:
+     case RTM_DELROUTE:
+     case RTM_GETROUTE:
+-- 
+2.47.0
 
 
