@@ -4,77 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E8171C0218C
-	for <qemu-devel@archiver.kernel.org>; Fri, 24 Jan 2025 19:14:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E4AA8C02181
+	for <qemu-devel@archiver.kernel.org>; Fri, 24 Jan 2025 19:14:36 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tbP73-0006i9-2u; Fri, 24 Jan 2025 14:13:05 -0500
+	id 1tbP7A-0006jx-Rk; Fri, 24 Jan 2025 14:13:12 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <tomitamoeko@gmail.com>)
- id 1tbP72-0006i1-DW
- for qemu-devel@nongnu.org; Fri, 24 Jan 2025 14:13:04 -0500
-Received: from mail-pj1-x1044.google.com ([2607:f8b0:4864:20::1044])
+ id 1tbP78-0006jX-Mc
+ for qemu-devel@nongnu.org; Fri, 24 Jan 2025 14:13:10 -0500
+Received: from mail-pl1-x644.google.com ([2607:f8b0:4864:20::644])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <tomitamoeko@gmail.com>)
- id 1tbP70-0007ou-HO
- for qemu-devel@nongnu.org; Fri, 24 Jan 2025 14:13:04 -0500
-Received: by mail-pj1-x1044.google.com with SMTP id
- 98e67ed59e1d1-2ee74291415so3476121a91.3
- for <qemu-devel@nongnu.org>; Fri, 24 Jan 2025 11:13:01 -0800 (PST)
+ id 1tbP76-0007pn-Ty
+ for qemu-devel@nongnu.org; Fri, 24 Jan 2025 14:13:10 -0500
+Received: by mail-pl1-x644.google.com with SMTP id
+ d9443c01a7336-21675fd60feso56260865ad.2
+ for <qemu-devel@nongnu.org>; Fri, 24 Jan 2025 11:13:08 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1737745980; x=1738350780; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=bGuBtKeysAO8wc8jjeKvdfpWkF8cN+yZwOGAcXA3kBk=;
- b=cvqQZG+eIJtBuaZpokOZ8dC4Z2NjLS5ymCcnFHKgFdc49tJj1nHTWHRvnag2DVYC4w
- OiJIjlZgNLAJL6hQY6UrZEII6XSfJZfTlxDXI9Qq+WgX2//49FXprFNLd/YWwsHxjT8t
- 1up8dtyMUZm8XMA2iYBO6MQKCw+sEB+lzoAE997OuGrp8Z0ckYRfCVWKz1MC5G1SHQMm
- 45b8D/c7O4sHEptGvL5Zx9aElWcPzXnM/QEJfnwM8nQzEpNMlKiBFJyojIvuP5miFUNN
- yXzpj60fxQ7KuJdSOY9x+qqJVmtEZsxc8Mw11V5KVfa2GpyFf25TNx3nvX+eVMYyMvyq
- MmoQ==
+ d=gmail.com; s=20230601; t=1737745987; x=1738350787; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=/rreBwOJjOLgAVavOMfVYZVMv6rRdXnJTWZ6kk51L4c=;
+ b=nOoiz80ZCELhqkDqqtSnIZO1TOMrzvIqalPhFD2g6vB/ArwQpULjvxH6n0zUiBxJSL
+ WbgpChrNrV5EscMzEqBrc6hs6vs9p+vtQpyTgIt0BIItj3adWEQtbDsfu1VFG3HBHPzc
+ fPafVXXoxbF9ztGkgh9ypRKtjUjN8s0VwyhpMGwlPMlN8sPkFTkeApVnBr8zO8UGy8RS
+ xKRIc473F3+rQGNAVrhV7t6DKx5ZUwvRoYrTVhHx8FAHQ46q2bVf1FRQHJRyvP8YBtN+
+ FZhwl4RIBI6xLnHDh8n96sQbPe/FywKMda/HFm0Lr3N4R4ufSIwwGg16o5GpUpMI5oxV
+ af6w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1737745980; x=1738350780;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=bGuBtKeysAO8wc8jjeKvdfpWkF8cN+yZwOGAcXA3kBk=;
- b=fLCx7KLNbme9EtCeN6XR90J0NAariMISfkgsL1wGUV9Idawpjl1b/idiwnLk90EDeS
- EvKY5+LwWNBKWnMDk6js9TGCBe/FBUFeH7EKmbzAa+/iGiuOjMvll5/pynlAd3j9PAZj
- GN08y6FcUTEiPI0y261FeLARPXCbkBfhvK3q0rfaQLyMaVQNQN9bUvgFSlgFOdAigUWo
- VZl3m8grRkUTj45vMp+pfgRjMgzXFKGKF5PS/QAreQc8ivrsTe4C1lJoWk/lEvRutvjM
- sC/gsHMZiRpICEI8IbtQ6LfFkrhxIDy+pKG39q7u0QiClWstEtqapOBc8Tl+sIchDmCC
- w40g==
-X-Gm-Message-State: AOJu0YwaNWn7GUOmXVoXKeelNcrfry74p6OhojjIXNgRTQNWeXSUB4+L
- YmM3Y4SmLysIidGbH7+pDG+Aqzei+QE4QCDM3GRKy1OXceQx214=
-X-Gm-Gg: ASbGnctXtP4EWr0/86+Kexz4o3axK0WWdcQVeT++pu+rsnbNvSPxnEW8GZzf+kjl6zW
- tuLCUDZ6pePpAxc2QCnbvLnovYPeN2lNEvnkqdGFDNMC2raMv65HFc5qdZd7arRt4VBZ8Wv490p
- jR0ZiWUXmonI8xeRVnMoXkW5qz8QyASz6mi1TO/mPFNuP0UvkfJCjkyyd54Zl7wCeOZWHecP1q5
- Znw9/4QZijQNFtIrzZrhuxwLyhuuLm8zWplzzvlgWQs6ORFZN6ESPhfyIz+qqnH1RLmsXWoessH
- f0oIotiviSEebpM3aA==
-X-Google-Smtp-Source: AGHT+IF5UvHeTndnwO83HvxyxB/csJLzp/OanxEzaihtGmdz/JqEGG2d7DIWDZ1FbrQSrsy8CiaxTg==
-X-Received: by 2002:a05:6a00:148d:b0:725:eb85:f802 with SMTP id
- d2e1a72fcca58-72daf930e3cmr44209856b3a.2.1737745979970; 
- Fri, 24 Jan 2025 11:12:59 -0800 (PST)
+ d=1e100.net; s=20230601; t=1737745987; x=1738350787;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=/rreBwOJjOLgAVavOMfVYZVMv6rRdXnJTWZ6kk51L4c=;
+ b=J/WeAZMzCPe6VgrHfQOjxjZZ2i3d9Cno3rIGFkS9XfsoOMKT4JfmQg7q6a9n8A5WJq
+ wdJAmzlBHFdF513KhTXRKfBd+Fns4dOjfIJh1C+XN3DWOaQbOZPWiQYQsF9HAuhNlCDY
+ YJJq8ofhMgIxCgwhISWIVmrnPWj2P4hCfITMo1Q6KFJ1/2AxvQmhPNizkJhUDY6/OGpP
+ a48WxpMvJdzu/tAmqVbjkGPTBPCr8k33F+X2nja+ELE4h/9vlnpK64JfnBkYc6tYC84M
+ OGg/q89BHp1RkCbS6NlKYzMGtjf84CbKsXT9SihSLiWH5uta9/SilNm1VeurjenPgW5x
+ aryA==
+X-Gm-Message-State: AOJu0YwmwqpwHBTjJ9fEGlQz2EYz0ZVQVPFEIet/FokI+an9Xy8lC/L0
+ q7Fn44A6aNHY95Ii5mT1HtGRpufysP2Zy36Zh1ZLZyvgjRqx3Kc=
+X-Gm-Gg: ASbGncvGtDF4AZ4Rra6kRZtE0sYkQUnRPuIgcA/R+WDNzTCZWLeraQ/Xy6LD2XBSvEG
+ NLU0qM+0BehO1A5fVh9cDLUFFkDxsNqLQuFcVboKU55KBklon0Sadrz64bfvlho4eYzwYHWDfh+
+ Zs3F+1jJNMtOa818/fhZMy2Lq8Q3XD+bSHYvRhwzQ8fI6AZP8/qgC8swu3ZhuMNpnsyyEnxuG89
+ jTz7fblXIJNcl4hX0e++6d4bKraXokumC/j9x7h3s+uYuT78DWTZh4da+PFgUmJTLthzkwMPINe
+ vp3c8zJIfhE2TFHlOQ==
+X-Google-Smtp-Source: AGHT+IG2QG0ppyJFwFtEoP7v+MeXi57vim1EtYYkMoNF3OfkKS1j8vwdbl1ECY+3odZy26AWJq7kfw==
+X-Received: by 2002:a05:6a20:8429:b0:1e1:e2d9:7f0a with SMTP id
+ adf61e73a8af0-1eb2156f917mr59811442637.34.1737745987468; 
+ Fri, 24 Jan 2025 11:13:07 -0800 (PST)
 Received: from localhost.localdomain ([58.37.175.151])
  by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-72f8a69eb75sm2318406b3a.12.2025.01.24.11.12.58
+ d2e1a72fcca58-72f8a69eb75sm2318406b3a.12.2025.01.24.11.13.05
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 24 Jan 2025 11:12:59 -0800 (PST)
+ Fri, 24 Jan 2025 11:13:07 -0800 (PST)
 From: Tomita Moeko <tomitamoeko@gmail.com>
 To: Alex Williamson <alex.williamson@redhat.com>,
  =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>
 Cc: qemu-devel@nongnu.org,
 	Tomita Moeko <tomitamoeko@gmail.com>
-Subject: [PATCH v2 0/5] vfio/igd: remove incorrect IO BAR4 quirk
-Date: Sat, 25 Jan 2025 03:12:40 +0800
-Message-ID: <20250124191245.12464-1-tomitamoeko@gmail.com>
+Subject: [PATCH v2 4/5] vfio/igd: do not include GTT stolen size in
+ etc/igd-bdsm-size
+Date: Sat, 25 Jan 2025 03:12:44 +0800
+Message-ID: <20250124191245.12464-5-tomitamoeko@gmail.com>
 X-Mailer: git-send-email 2.45.2
+In-Reply-To: <20250124191245.12464-1-tomitamoeko@gmail.com>
+References: <20250124191245.12464-1-tomitamoeko@gmail.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1044;
- envelope-from=tomitamoeko@gmail.com; helo=mail-pj1-x1044.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::644;
+ envelope-from=tomitamoeko@gmail.com; helo=mail-pl1-x644.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -97,102 +101,91 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Based on experiments and reverse engineering about the mysterious IO
-BAR4, it appears that the current quirk implementation is incorrect.
-As discussed in a previous mail thread [1], current implementation
-believes VBIOS is writing HPA of Data Stolen Memory (DSM) in GTT
-entries, so it intercepts and writes (addr - Host BDSM + Guest BDSM)
-instead, probably believes the addresses are hardcoded in VBIOS.
+Though GTT Stolen Memory (GSM) is right below Data Stolen Memory (DSM)
+in host address space, direct access to GSM is prohibited, and it is
+not mapped to guest address space. Both host and guest accesses GSM
+indirectly through the second half of MMIO BAR0 (GTTMMADR).
 
-With disassembling a VBIOS of Intel Sandy/Ivy Bridge and Haswell [2]
-(thankfully there is only a few 32-bit out instructions), VBIOS read
-BDSM from pci config space, which is programmed by SeaBIOS [3] in
-guest. That is to say, VBIOS actually writes GPA when programming GTT
-initial entries, the current quirk is incorrect.
+Guest firmware only need to reserve a memory region for DSM and program
+the BDSM register with the base address of that region, that's actually
+what both SeaBIOS[1] and OVMF does now.
 
-The change was tested on a Kaby Lake HD620 (Gen 9) by comparing GTT
-entries read from MMIO BAR0 and IO BAR4.
+[1] https://gitlab.com/qemu-project/seabios/-/blob/1.12-stable/src/fw/pciinit.c#L319-332
 
-This patchset also creates a new function vfio_config_quirk_setup()
-for the config space quirk previously in vfio_probe_igd_bar4_quirk().
-The OpRegion quirk in vfio_realize() is also merged into the config
-qurk. Finally all the igd-related codes are moved to igd.c.
+Signed-off-by: Tomita Moeko <tomitamoeko@gmail.com>
+---
+ hw/vfio/igd.c | 28 +++-------------------------
+ 1 file changed, 3 insertions(+), 25 deletions(-)
 
-[1] https://lore.kernel.org/qemu-devel/b373a030-5ccf-418c-9213-865ddc6748fd@gmail.com/
-[2] https://winraid.level1techs.com/t/offer-intel-sandy-ivy-bridge-and-haswell-vbios-modules/30272
-[3] https://gitlab.com/qemu-project/seabios/-/blob/1.12-stable/src/fw/pciinit.c#L319-332
-
-Related VBIOS disassembly:
-
-# read BDSM
-6498:	66 53                	push   %ebx
-649a:	66 2e 83 3e 94 64 00 	cmpl   $0x0,%cs:0x6494  # BDSM already read?
-64a1:	74 07                	je     0x64aa
-64a3:	66 2e a1 94 64       	mov    %cs:0x6494,%eax 
-64a8:	eb 0f                	jmp    0x64b9
-64aa:	b8 5e 10             	mov    $0x105e,%ax      # 5e == 5c + 2, that's why shl 16 later?
-                                                    # ((2 << 11) + 0x5e)
-64ad:	e8 55 05             	call   0x6a05           # read config space via port cf8/cfc
-64b0:	66 c1 e0 10          	shl    $0x10,%eax       # eax << 16
-64b4:	66 2e a3 94 64       	mov    %eax,%cs:0x6494  # save BDSM
-64b9:	66 5b                	pop    %ebx
-64bb:	c3                   	ret
-# program single GTT entry, esi: addr, eax: data
-6d16:	66 50                	push   %eax
-6d18:	52                   	push   %dx
-6d19:	2e 8b 16 4a e4       	mov    %cs:-0x1bb6,%dx  # saved MMIO_Index port
-6d1e:	66 96                	xchg   %eax,%esi
-6d20:	66 ef                	out    %eax,(%dx)       # write MMIO_Index
-6d22:	2e 8b 16 4c e4       	mov    %cs:-0x1bb4,%dx  # saved MMIO_Data port
-6d27:	66 96                	xchg   %eax,%esi
-6d29:	66 83 c8 01          	or     $0x1,%eax        # set valid bit
-6d2d:	66 ef                	out    %eax,(%dx)       # write MMIO_Data
-6d2f:	5a                   	pop    %dx
-6d30:	66 58                	pop    %eax
-6d32:	c3                   	ret
-# program GTT entries, esi: entry addr, eax: page addr
-e929:	51                   	push   %cx
-e92a:	e8 6b 7b             	call   0x6498       # read BDSM
-e92d:	25 00 e0             	and    $0xe000,%ax
-e930:	66 83 c8 01          	or     $0x1,%eax    # valid bit
-e934:	66 be 01 00 00 00    	mov    $0x1,%esi    # gtt access bit in addr
-e93a:	e8 d9 83             	call   0x6d16       # single entry routine
-e93d:	66 83 c6 04          	add    $0x4,%esi    # next entry
-e941:	66 05 00 10 00 00    	add    $0x1000,%eax # next page
-e947:	e2 f1                	loop   0xe93a
-e949:	59                   	pop    %cx
-e94a:	c3                   	ret
-
-Observed layout of the undocumented MMIO_Index register:
- 31                                                   2   1      0
-+-------------------------------------------------------------------+
-|                        Offset                        | Rsvd | Sel |
-+-------------------------------------------------------------------+
-- Offset: Byte offset in specified region, 4-byte aligned.
-- Sel: Region selector
-       0: MMIO register region (first half of MMIO BAR0)
-       1: GTT region (second half of MMIO BAR0). Pre Gen11 only.
-
-
-Changelog:
-v2:
-* Move the OpRegion quirk from vfio_realize() to vfio_probe_igd_config_
-  quirk(), as proposed in v1, making it reasonable to return bool.
-Link: https://lore.kernel.org/qemu-devel/20250122171731.40444-1-tomitamoeko@gmail.com/
-
-Tomita Moeko (5):
-  vfio/igd: remove GTT write quirk in IO BAR 4
-  vfio/pci: add placeholder for device-specific config space quirks
-  vfio/igd: refactor vfio_probe_igd_bar4_quirk() into pci config quirk
-  vfio/igd: do not include GTT stolen size in etc/igd-bdsm-size
-  vfio/igd: handle x-igd-opregion in vfio_probe_igd_config_quirk()
-
- hw/vfio/igd.c        | 381 ++++++++++++++-----------------------------
- hw/vfio/pci-quirks.c |  51 +-----
- hw/vfio/pci.c        |  29 +---
- hw/vfio/pci.h        |   7 +-
- 4 files changed, 136 insertions(+), 332 deletions(-)
-
+diff --git a/hw/vfio/igd.c b/hw/vfio/igd.c
+index 376a26fbae..6e06dd774a 100644
+--- a/hw/vfio/igd.c
++++ b/hw/vfio/igd.c
+@@ -112,28 +112,8 @@ static int igd_gen(VFIOPCIDevice *vdev)
+ 
+ #define IGD_GMCH_GEN6_GMS_SHIFT     3       /* SNB_GMCH in i915 */
+ #define IGD_GMCH_GEN6_GMS_MASK      0x1f
+-#define IGD_GMCH_GEN6_GGMS_SHIFT    8
+-#define IGD_GMCH_GEN6_GGMS_MASK     0x3
+ #define IGD_GMCH_GEN8_GMS_SHIFT     8       /* BDW_GMCH in i915 */
+ #define IGD_GMCH_GEN8_GMS_MASK      0xff
+-#define IGD_GMCH_GEN8_GGMS_SHIFT    6
+-#define IGD_GMCH_GEN8_GGMS_MASK     0x3
+-
+-static uint64_t igd_gtt_memory_size(int gen, uint16_t gmch)
+-{
+-    uint64_t ggms;
+-
+-    if (gen < 8) {
+-        ggms = (gmch >> IGD_GMCH_GEN6_GGMS_SHIFT) & IGD_GMCH_GEN6_GGMS_MASK;
+-    } else {
+-        ggms = (gmch >> IGD_GMCH_GEN8_GGMS_SHIFT) & IGD_GMCH_GEN8_GGMS_MASK;
+-        if (ggms != 0) {
+-            ggms = 1ULL << ggms;
+-        }
+-    }
+-
+-    return ggms * MiB;
+-}
+ 
+ static uint64_t igd_stolen_memory_size(int gen, uint32_t gmch)
+ {
+@@ -368,7 +348,7 @@ bool vfio_probe_igd_config_quirk(VFIOPCIDevice *vdev,
+     g_autofree struct vfio_region_info *lpc = NULL;
+     PCIDevice *lpc_bridge;
+     int ret, gen;
+-    uint64_t ggms_size, gms_size;
++    uint64_t gms_size;
+     uint64_t *bdsm_size;
+     uint32_t gmch;
+     Error *err = NULL;
+@@ -528,7 +508,6 @@ bool vfio_probe_igd_config_quirk(VFIOPCIDevice *vdev,
+         }
+     }
+ 
+-    ggms_size = igd_gtt_memory_size(gen, gmch);
+     gms_size = igd_stolen_memory_size(gen, gmch);
+ 
+     /*
+@@ -540,7 +519,7 @@ bool vfio_probe_igd_config_quirk(VFIOPCIDevice *vdev,
+      * config offset 0x5C.
+      */
+     bdsm_size = g_malloc(sizeof(*bdsm_size));
+-    *bdsm_size = cpu_to_le64(ggms_size + gms_size);
++    *bdsm_size = cpu_to_le64(gms_size);
+     fw_cfg_add_file(fw_cfg_find(), "etc/igd-bdsm-size",
+                     bdsm_size, sizeof(*bdsm_size));
+ 
+@@ -560,8 +539,7 @@ bool vfio_probe_igd_config_quirk(VFIOPCIDevice *vdev,
+         pci_set_quad(vdev->emulated_config_bits + IGD_BDSM_GEN11, ~0);
+     }
+ 
+-    trace_vfio_pci_igd_bdsm_enabled(vdev->vbasedev.name,
+-                                    (ggms_size + gms_size) / MiB);
++    trace_vfio_pci_igd_bdsm_enabled(vdev->vbasedev.name, (gms_size / MiB));
+ 
+     return true;
+ }
 -- 
 2.45.2
 
