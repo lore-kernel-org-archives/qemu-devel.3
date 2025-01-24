@@ -4,88 +4,89 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 44AD4C02181
-	for <qemu-devel@archiver.kernel.org>; Fri, 24 Jan 2025 13:53:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 449DEC0218B
+	for <qemu-devel@archiver.kernel.org>; Fri, 24 Jan 2025 13:58:56 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tbK7f-0000i2-2I; Fri, 24 Jan 2025 08:53:23 -0500
+	id 1tbKCV-0002DT-Pj; Fri, 24 Jan 2025 08:58:23 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <xiaoyao.li@intel.com>)
- id 1tbK7b-0000hY-IZ
- for qemu-devel@nongnu.org; Fri, 24 Jan 2025 08:53:19 -0500
-Received: from mgamail.intel.com ([198.175.65.16])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <xiaoyao.li@intel.com>)
- id 1tbK7Y-0006Vw-BX
- for qemu-devel@nongnu.org; Fri, 24 Jan 2025 08:53:19 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
- d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1737726797; x=1769262797;
- h=message-id:date:mime-version:subject:to:cc:references:
- from:in-reply-to:content-transfer-encoding;
- bh=67rDz6BHsGdGw5DKljt0RG9iB3nrPb4VjqyPp4LpTXY=;
- b=mezIoZN/PlP01BmlmB7jyxwbJgPcvV+8I/p3lUc2NKbanPurdP1Ougus
- rXRDYUcvdVfbUkroadROsAK2V+nuu++lyuaSqr0lHJ5p61iMoKR9058wV
- HDZgXyYAfhilgRWLUiHQuwkJxnII3ABFS/LntEuyfdjk6BD5h0PmYmkId
- njJbCn5J9sj93jZS838Bj3jakUb38S6yp+7xQM6OxT7hnGUAbXmwKm7Ze
- TZDMP4iylO6tnSQ5nwLsEegltgmsUV2zo9TWoZ/HB0ZX64pLBEFSH/HGE
- QA31k0hZFrwvTxyB2JjFRyZNJR0/aJBUGN7hyMrqa6qC1qqKyal6kEg7M Q==;
-X-CSE-ConnectionGUID: 9KYVkc7ERVuYEhL3au28oQ==
-X-CSE-MsgGUID: zjPIyE29TKyEZ+EpaC/uYA==
-X-IronPort-AV: E=McAfee;i="6700,10204,11325"; a="38404384"
-X-IronPort-AV: E=Sophos;i="6.13,231,1732608000"; d="scan'208";a="38404384"
-Received: from orviesa005.jf.intel.com ([10.64.159.145])
- by orvoesa108.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 24 Jan 2025 05:53:13 -0800
-X-CSE-ConnectionGUID: afm8EiATRAixOqj8ztxS0A==
-X-CSE-MsgGUID: sdhES3QZQRSjxaeHK3Vdbw==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.12,224,1728975600"; d="scan'208";a="112905370"
-Received: from xiaoyaol-hp-g830.ccr.corp.intel.com (HELO [10.124.247.1])
- ([10.124.247.1])
- by orviesa005-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 24 Jan 2025 05:53:08 -0800
-Message-ID: <04ac7fdc-6518-455b-b1b0-ffa713aa8136@intel.com>
-Date: Fri, 24 Jan 2025 21:53:05 +0800
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1tbKCR-0002D4-Mi
+ for qemu-devel@nongnu.org; Fri, 24 Jan 2025 08:58:19 -0500
+Received: from mail-ej1-x62c.google.com ([2a00:1450:4864:20::62c])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1tbKCP-0006x4-S6
+ for qemu-devel@nongnu.org; Fri, 24 Jan 2025 08:58:19 -0500
+Received: by mail-ej1-x62c.google.com with SMTP id
+ a640c23a62f3a-aaeef97ff02so396243166b.1
+ for <qemu-devel@nongnu.org>; Fri, 24 Jan 2025 05:58:16 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1737727095; x=1738331895; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:user-agent
+ :references:in-reply-to:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=tYRUdSolMlIsWDuVLlIudwNf6o2f2ka+Oz5ZtNvDT00=;
+ b=gbdJFGFm8acGPJbo7TK/8fEDrOkLR2upBEr1WmMbIWLYH45f/pBhDswV+EBA1hH1dK
+ xUbFRd5wLCj5e6LCcrdPxjKfnCC2d5HkGgmH2EGBZzshou6XBBUOHlG6SeHR39e+kjQm
+ fLF8bnJSb99Bf9Q26+L/GuF8fqFdmTm+67fmNRKxL+QEYqYMGb+lPl0matseesQrqQXD
+ rcry9OcF5A8cd0k40WcSN0USNrCIhCtsuH3h5N/t/lSxDrz1/d94dtWHKjruVAnawfJ3
+ k95MMLPfQHyJahrqP1plv4VBMvYIbGNie+QxLRV37xfri4ybQ0BcuPu/GWyYwb/wDQTf
+ kA6A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1737727095; x=1738331895;
+ h=content-transfer-encoding:mime-version:message-id:date:user-agent
+ :references:in-reply-to:subject:cc:to:from:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=tYRUdSolMlIsWDuVLlIudwNf6o2f2ka+Oz5ZtNvDT00=;
+ b=ibR+TDyC2RkAWKpbY65x5OdCYRTVV604Ve5twISs9ANaskElEPvnqBqiJbPZ9FlQhL
+ BkNKGuUUtSK6YTkFqK6K5cpBuq+y3QPZkvajcxv5EjBc/+KmRJxtKYhRuuedZcl9QK7c
+ J4yzt90xLdjkKCEYjL/YFPTx6Qp4+v42I1/3WK52Pv0XV46XSqjco4MYoWyY2icYmaQs
+ L+QBXGaQ+mbV8xbNavesT2/SCub/61GNNxY8JI9rTMRk5EqtLOWUy2PEOqS2045QA1SQ
+ 9mgwEhnNXwz2MTtTmJuT4ntXdaq6S5+6oXTfcQf832tEZ7tD32J19ZS7swvWGFWeveXZ
+ O80g==
+X-Gm-Message-State: AOJu0Yx2OBDmwchAlKn1jADsJTed0rrDVLr3s6kdwIzf4+1taLwM1rpW
+ bKsweq3Pxqwkf+uFqNfeHThNdWl67zygCktRT9ZIY9jXlKMVL0Z7z4SL0Ck7QPY=
+X-Gm-Gg: ASbGncswqskZzqTMUbX8ccXJLs5gzUARV6zUBPgbsxC9gvvBCbiht5D+9cyeAndLMvg
+ Bat8d04BiyEIv+0ngyzVfu6Sjj1+z/HTsCLgc5QMwEgH3LGdywuD9OXKUEGFkVj9sBY48kTpkUq
+ jmqx0b/SH21MMjUsQWzfmtJT+3hSh0iXYiGyKR4yUL6K2RR7RG5+7OVZOtIvlvs0rDr2r3jVHRP
+ pmly3t41n9HRwJlAoWBXtOal/Kx8sdZiBdd3nce+HnT/YFbscljdEMsa19SlfrL3KEcVZB1u+Ga
+ 1OA=
+X-Google-Smtp-Source: AGHT+IESFKgN6TCkRFzcX1E2fmzDvAQODujNSPatD91n8srD78gd/g3Skg2AdUOa2b7Vhc4VZF6krA==
+X-Received: by 2002:a17:907:94cb:b0:aa6:423c:850e with SMTP id
+ a640c23a62f3a-ab38b29954bmr2803378066b.27.1737727095266; 
+ Fri, 24 Jan 2025 05:58:15 -0800 (PST)
+Received: from draig.lan ([85.9.250.243]) by smtp.gmail.com with ESMTPSA id
+ a640c23a62f3a-ab6760ab0bcsm135499666b.95.2025.01.24.05.58.14
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Fri, 24 Jan 2025 05:58:14 -0800 (PST)
+Received: from draig (localhost [IPv6:::1])
+ by draig.lan (Postfix) with ESMTP id C3DC35F748;
+ Fri, 24 Jan 2025 13:58:13 +0000 (GMT)
+From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
+To: Thomas Huth <thuth@redhat.com>
+Cc: qemu-devel@nongnu.org,  qemu-arm@nongnu.org,  Joel Stanley
+ <joel@jms.id.au>,  Peter Maydell <peter.maydell@linaro.org>
+Subject: Re: [PATCH] tests/functional: Add a test for the arm microbit machine
+In-Reply-To: <20250124101709.1591761-1-thuth@redhat.com> (Thomas Huth's
+ message of "Fri, 24 Jan 2025 11:17:09 +0100")
+References: <20250124101709.1591761-1-thuth@redhat.com>
+User-Agent: mu4e 1.12.8; emacs 29.4
+Date: Fri, 24 Jan 2025 13:58:13 +0000
+Message-ID: <8734h8joui.fsf@draig.linaro.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v6 41/60] hw/i386: add option to forcibly report edge
- trigger in acpi tables
-To: Igor Mammedov <imammedo@redhat.com>
-Cc: Ira Weiny <ira.weiny@intel.com>, Paolo Bonzini <pbonzini@redhat.com>,
- Riku Voipio <riku.voipio@iki.fi>,
- Richard Henderson <richard.henderson@linaro.org>,
- Zhao Liu <zhao1.liu@intel.com>, "Michael S. Tsirkin" <mst@redhat.com>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- Ani Sinha <anisinha@redhat.com>, =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?=
- <philmd@linaro.org>, Yanan Wang <wangyanan55@huawei.com>,
- Cornelia Huck <cohuck@redhat.com>, =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?=
- <berrange@redhat.com>, Eric Blake <eblake@redhat.com>,
- Markus Armbruster <armbru@redhat.com>, Marcelo Tosatti
- <mtosatti@redhat.com>, rick.p.edgecombe@intel.com, kvm@vger.kernel.org,
- qemu-devel@nongnu.org
-References: <20241105062408.3533704-1-xiaoyao.li@intel.com>
- <20241105062408.3533704-42-xiaoyao.li@intel.com>
- <Z1tmG63P4TR0UYO8@iweiny-mobl>
- <e97102e9-9c38-46a9-912a-0ccc7753f560@intel.com>
- <20250123135349.3b58f67b@imammedo.users.ipa.redhat.com>
-Content-Language: en-US
-From: Xiaoyao Li <xiaoyao.li@intel.com>
-In-Reply-To: <20250123135349.3b58f67b@imammedo.users.ipa.redhat.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=198.175.65.16; envelope-from=xiaoyao.li@intel.com;
- helo=mgamail.intel.com
-X-Spam_score_int: -63
-X-Spam_score: -6.4
-X-Spam_bar: ------
-X-Spam_report: (-6.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-2.996,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- HK_RANDOM_ENVFROM=0.001, HK_RANDOM_FROM=0.998, RCVD_IN_DNSWL_MED=-2.3,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:20::62c;
+ envelope-from=alex.bennee@linaro.org; helo=mail-ej1-x62c.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -102,362 +103,119 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 1/23/2025 8:53 PM, Igor Mammedov wrote:
-> On Tue, 14 Jan 2025 21:01:27 +0800
-> Xiaoyao Li <xiaoyao.li@intel.com> wrote:
-> 
->> On 12/13/2024 6:39 AM, Ira Weiny wrote:
->>> On Tue, Nov 05, 2024 at 01:23:49AM -0500, Xiaoyao Li wrote:
->>>> From: Isaku Yamahata <isaku.yamahata@intel.com>
->>>>
->>>> When level trigger isn't supported on x86 platform,
-> 
-> it used to be level before this patch like for forever, so either
-> we have a bug or above statement isn't correct.
+Thomas Huth <thuth@redhat.com> writes:
 
-This patch originated from Isaku.
+> We don't have any functional tests for this machine yet, thus let's
+> add a test with a MicroPython binary that is available online
 
-As you said, almost all of the ACPI info tell Level triggere before. I'm 
-not sure just changing Level trigger to Edge trigger in ACPI would be 
-sufficient. I need to learn and think carefully on it.
+We do have a basic system test:
 
-So I will drop this patch and the one before, for next sereis 
-submission. And I will submit the new version of this one later separately.
+  test-armv6m-undef: test-armv6m-undef.S
+          $(CC) -mcpu=3Dcortex-m0 -mfloat-abi=3Dsoft \
+                  -Wl,--build-id=3Dnone -x assembler-with-cpp \
+                  $< -o $@ -nostdlib -static \
+                  -T $(ARM_SRC)/$@.ld
 
-Thanks!
+  run-test-armv6m-undef: QEMU_OPTS=3D-semihosting-config enable=3Don,target=
+=3Dnative,chardev=3Doutput -M microbit -kernel
 
->>>> forcibly report edge trigger in acpi tables.
->>>
->>> This commit message is pretty sparse.  I was thinking of suggesting to squash
->>> this with patch 40 but it occurred to me that perhaps these are split to accept
->>> TDX specifics from general functionality.  Is that the case here?  Is that true
->>> with other patches in the series?  If so what other situations would require
->>> this in the generic code beyond TDX?
->>
->> The goal is trying to avoid adding TDX specific all around QEMU. So we
->> are trying to add new general interface as a patch and TDX uses the
->> interface as another patch.
-> 
-> in other words level trigger is not supported when TDX is enable,
-> do I get it right?
+  ARM_TESTS+=3Dtest-armv6m-undef
 
-yes.
+But I guess this exercised more of the machine as micropython actually
+comes up.
 
-> If yes, then mention it in commit message and also mention
-> followup patch which would use this.
-> 
-> see my other comments below.
->   
->>
->>> Ira
->>>    
->>>>
->>>> Signed-off-by: Isaku Yamahata <isaku.yamahata@intel.com>
->>>> Signed-off-by: Xiaoyao Li <xiaoyao.li@intel.com>
->>>> Acked-by: Gerd Hoffmann <kraxel@redhat.com>
->>>> ---
->>>>    hw/i386/acpi-build.c  | 99 ++++++++++++++++++++++++++++---------------
->>>>    hw/i386/acpi-common.c | 45 +++++++++++++++-----
->>>>    2 files changed, 101 insertions(+), 43 deletions(-)
->>>>
->>>> diff --git a/hw/i386/acpi-build.c b/hw/i386/acpi-build.c
->>>> index 4967aa745902..d0a5bfc69e9a 100644
->>>> --- a/hw/i386/acpi-build.c
->>>> +++ b/hw/i386/acpi-build.c
->>>> @@ -888,7 +888,8 @@ static void build_dbg_aml(Aml *table)
->>>>        aml_append(table, scope);
->>>>    }
->>>>    
->>>> -static Aml *build_link_dev(const char *name, uint8_t uid, Aml *reg)
->>>> +static Aml *build_link_dev(const char *name, uint8_t uid, Aml *reg,
->>>> +                           bool level_trigger_unsupported)
-> 
-> do not use negative naming, or even better pass AML_EDGE || AML_LEVEL as an argument here.
-> the same applies to other places that use level_trigger_unsupported.
-> 
->>>>    {
->>>>        Aml *dev;
->>>>        Aml *crs;
->>>> @@ -900,7 +901,10 @@ static Aml *build_link_dev(const char *name, uint8_t uid, Aml *reg)
->>>>        aml_append(dev, aml_name_decl("_UID", aml_int(uid)));
->>>>    
->>>>        crs = aml_resource_template();
->>>> -    aml_append(crs, aml_interrupt(AML_CONSUMER, AML_LEVEL, AML_ACTIVE_HIGH,
->>>> +    aml_append(crs, aml_interrupt(AML_CONSUMER,
->>>> +                                  level_trigger_unsupported ?
->>>> +                                  AML_EDGE : AML_LEVEL,
->>>> +                                  AML_ACTIVE_HIGH,
->>>>                                      AML_SHARED, irqs, ARRAY_SIZE(irqs)));
->>>>        aml_append(dev, aml_name_decl("_PRS", crs));
->>>>    
->>>> @@ -924,7 +928,8 @@ static Aml *build_link_dev(const char *name, uint8_t uid, Aml *reg)
->>>>        return dev;
->>>>     }
->>>>    
->>>> -static Aml *build_gsi_link_dev(const char *name, uint8_t uid, uint8_t gsi)
->>>> +static Aml *build_gsi_link_dev(const char *name, uint8_t uid,
->>>> +                               uint8_t gsi, bool level_trigger_unsupported)
->>>>    {
->>>>        Aml *dev;
->>>>        Aml *crs;
->>>> @@ -937,7 +942,10 @@ static Aml *build_gsi_link_dev(const char *name, uint8_t uid, uint8_t gsi)
->>>>    
->>>>        crs = aml_resource_template();
->>>>        irqs = gsi;
->>>> -    aml_append(crs, aml_interrupt(AML_CONSUMER, AML_LEVEL, AML_ACTIVE_HIGH,
->>>> +    aml_append(crs, aml_interrupt(AML_CONSUMER,
->>>> +                                  level_trigger_unsupported ?
->>>> +                                  AML_EDGE : AML_LEVEL,
->>>> +                                  AML_ACTIVE_HIGH,
->>>>                                      AML_SHARED, &irqs, 1));
->>>>        aml_append(dev, aml_name_decl("_PRS", crs));
->>>>    
->>>> @@ -956,7 +964,7 @@ static Aml *build_gsi_link_dev(const char *name, uint8_t uid, uint8_t gsi)
->>>>    }
->>>>    
->>>>    /* _CRS method - get current settings */
->>>> -static Aml *build_iqcr_method(bool is_piix4)
->>>> +static Aml *build_iqcr_method(bool is_piix4, bool level_trigger_unsupported)
->>>>    {
->>>>        Aml *if_ctx;
->>>>        uint32_t irqs;
->>>> @@ -964,7 +972,9 @@ static Aml *build_iqcr_method(bool is_piix4)
->>>>        Aml *crs = aml_resource_template();
->>>>    
->>>>        irqs = 0;
->>>> -    aml_append(crs, aml_interrupt(AML_CONSUMER, AML_LEVEL,
->>>> +    aml_append(crs, aml_interrupt(AML_CONSUMER,
->>>> +                                  level_trigger_unsupported ?
->>>> +                                  AML_EDGE : AML_LEVEL,
->>>>                                      AML_ACTIVE_HIGH, AML_SHARED, &irqs, 1));
->>>>        aml_append(method, aml_name_decl("PRR0", crs));
->>>>    
->>>> @@ -998,7 +1008,7 @@ static Aml *build_irq_status_method(void)
->>>>        return method;
->>>>    }
->>>>    
->>>> -static void build_piix4_pci0_int(Aml *table)
->>>> +static void build_piix4_pci0_int(Aml *table, bool level_trigger_unsupported)
->>>>    {
->>>>        Aml *dev;
->>>>        Aml *crs;
->>>> @@ -1011,12 +1021,16 @@ static void build_piix4_pci0_int(Aml *table)
->>>>        aml_append(sb_scope, pci0_scope);
->>>>    
->>>>        aml_append(sb_scope, build_irq_status_method());
->>>> -    aml_append(sb_scope, build_iqcr_method(true));
->>>> +    aml_append(sb_scope, build_iqcr_method(true, level_trigger_unsupported));
->>>>    
->>>> -    aml_append(sb_scope, build_link_dev("LNKA", 0, aml_name("PRQ0")));
->>>> -    aml_append(sb_scope, build_link_dev("LNKB", 1, aml_name("PRQ1")));
->>>> -    aml_append(sb_scope, build_link_dev("LNKC", 2, aml_name("PRQ2")));
->>>> -    aml_append(sb_scope, build_link_dev("LNKD", 3, aml_name("PRQ3")));
->>>> +    aml_append(sb_scope, build_link_dev("LNKA", 0, aml_name("PRQ0"),
->>>> +                                        level_trigger_unsupported));
->>>> +    aml_append(sb_scope, build_link_dev("LNKB", 1, aml_name("PRQ1"),
->>>> +                                        level_trigger_unsupported));
->>>> +    aml_append(sb_scope, build_link_dev("LNKC", 2, aml_name("PRQ2"),
->>>> +                                        level_trigger_unsupported));
->>>> +    aml_append(sb_scope, build_link_dev("LNKD", 3, aml_name("PRQ3"),
->>>> +                                        level_trigger_unsupported));
->>>>    
->>>>        dev = aml_device("LNKS");
->>>>        {
->>>> @@ -1025,7 +1039,9 @@ static void build_piix4_pci0_int(Aml *table)
-> 
-> do we really need piix4 machine to work with TDX?
-> 
->>>>    
->>>>            crs = aml_resource_template();
->>>>            irqs = 9;
->>>> -        aml_append(crs, aml_interrupt(AML_CONSUMER, AML_LEVEL,
->>>> +        aml_append(crs, aml_interrupt(AML_CONSUMER,
->>>> +                                      level_trigger_unsupported ?
->>>> +                                      AML_EDGE : AML_LEVEL,
->>>>                                          AML_ACTIVE_HIGH, AML_SHARED,
->>>>                                          &irqs, 1));
->>>>            aml_append(dev, aml_name_decl("_PRS", crs));
->>>> @@ -1111,7 +1127,7 @@ static Aml *build_q35_routing_table(const char *str)
->>>>        return pkg;
->>>>    }
->>>>    
->>>> -static void build_q35_pci0_int(Aml *table)
->>>> +static void build_q35_pci0_int(Aml *table, bool level_trigger_unsupported)
->>>>    {
->>>>        Aml *method;
->>>>        Aml *sb_scope = aml_scope("_SB");
->>>> @@ -1150,25 +1166,41 @@ static void build_q35_pci0_int(Aml *table)
->>>>        aml_append(sb_scope, pci0_scope);
->>>>    
->>>>        aml_append(sb_scope, build_irq_status_method());
->>>> -    aml_append(sb_scope, build_iqcr_method(false));
->>>> +    aml_append(sb_scope, build_iqcr_method(false, level_trigger_unsupported));
->>>>    
->>>> -    aml_append(sb_scope, build_link_dev("LNKA", 0, aml_name("PRQA")));
->>>> -    aml_append(sb_scope, build_link_dev("LNKB", 1, aml_name("PRQB")));
->>>> -    aml_append(sb_scope, build_link_dev("LNKC", 2, aml_name("PRQC")));
->>>> -    aml_append(sb_scope, build_link_dev("LNKD", 3, aml_name("PRQD")));
->>>> -    aml_append(sb_scope, build_link_dev("LNKE", 4, aml_name("PRQE")));
->>>> -    aml_append(sb_scope, build_link_dev("LNKF", 5, aml_name("PRQF")));
->>>> -    aml_append(sb_scope, build_link_dev("LNKG", 6, aml_name("PRQG")));
->>>> -    aml_append(sb_scope, build_link_dev("LNKH", 7, aml_name("PRQH")));
->>>> +    aml_append(sb_scope, build_link_dev("LNKA", 0, aml_name("PRQA"),
->>>> +                                        level_trigger_unsupported));
->>>> +    aml_append(sb_scope, build_link_dev("LNKB", 1, aml_name("PRQB"),
->>>> +                                        level_trigger_unsupported));
->>>> +    aml_append(sb_scope, build_link_dev("LNKC", 2, aml_name("PRQC"),
->>>> +                                        level_trigger_unsupported));
->>>> +    aml_append(sb_scope, build_link_dev("LNKD", 3, aml_name("PRQD"),
->>>> +                                        level_trigger_unsupported));
->>>> +    aml_append(sb_scope, build_link_dev("LNKE", 4, aml_name("PRQE"),
->>>> +                                        level_trigger_unsupported));
->>>> +    aml_append(sb_scope, build_link_dev("LNKF", 5, aml_name("PRQF"),
->>>> +                                        level_trigger_unsupported));
->>>> +    aml_append(sb_scope, build_link_dev("LNKG", 6, aml_name("PRQG"),
->>>> +                                        level_trigger_unsupported));
->>>> +    aml_append(sb_scope, build_link_dev("LNKH", 7, aml_name("PRQH"),
->>>> +                                        level_trigger_unsupported));
->>>>    
->>>> -    aml_append(sb_scope, build_gsi_link_dev("GSIA", 0x10, 0x10));
->>>> -    aml_append(sb_scope, build_gsi_link_dev("GSIB", 0x11, 0x11));
->>>> -    aml_append(sb_scope, build_gsi_link_dev("GSIC", 0x12, 0x12));
->>>> -    aml_append(sb_scope, build_gsi_link_dev("GSID", 0x13, 0x13));
->>>> -    aml_append(sb_scope, build_gsi_link_dev("GSIE", 0x14, 0x14));
->>>> -    aml_append(sb_scope, build_gsi_link_dev("GSIF", 0x15, 0x15));
->>>> -    aml_append(sb_scope, build_gsi_link_dev("GSIG", 0x16, 0x16));
->>>> -    aml_append(sb_scope, build_gsi_link_dev("GSIH", 0x17, 0x17));
->>>> +    aml_append(sb_scope, build_gsi_link_dev("GSIA", 0x10, 0x10,
->>>> +                                            level_trigger_unsupported));
->>>> +    aml_append(sb_scope, build_gsi_link_dev("GSIB", 0x11, 0x11,
->>>> +                                            level_trigger_unsupported));
->>>> +    aml_append(sb_scope, build_gsi_link_dev("GSIC", 0x12, 0x12,
->>>> +                                            level_trigger_unsupported));
->>>> +    aml_append(sb_scope, build_gsi_link_dev("GSID", 0x13, 0x13,
->>>> +                                            level_trigger_unsupported));
->>>> +    aml_append(sb_scope, build_gsi_link_dev("GSIE", 0x14, 0x14,
->>>> +                                            level_trigger_unsupported));
->>>> +    aml_append(sb_scope, build_gsi_link_dev("GSIF", 0x15, 0x15,
->>>> +                                            level_trigger_unsupported));
->>>> +    aml_append(sb_scope, build_gsi_link_dev("GSIG", 0x16, 0x16,
->>>> +                                            level_trigger_unsupported));
->>>> +    aml_append(sb_scope, build_gsi_link_dev("GSIH", 0x17, 0x17,
->>>> +                                            level_trigger_unsupported));
->>>>    
->>>>        aml_append(table, sb_scope);
->>>>    }
->>>> @@ -1350,6 +1382,7 @@ build_dsdt(GArray *table_data, BIOSLinker *linker,
->>>>        PCMachineState *pcms = PC_MACHINE(machine);
->>>>        PCMachineClass *pcmc = PC_MACHINE_GET_CLASS(machine);
->>>>        X86MachineState *x86ms = X86_MACHINE(machine);
->>>> +    bool level_trigger_unsupported = x86ms->eoi_intercept_unsupported;
->>>>        AcpiMcfgInfo mcfg;
->>>>        bool mcfg_valid = !!acpi_get_mcfg(&mcfg);
->>>>        uint32_t nr_mem = machine->ram_slots;
->>>> @@ -1382,7 +1415,7 @@ build_dsdt(GArray *table_data, BIOSLinker *linker,
->>>>            if (pm->pcihp_bridge_en || pm->pcihp_root_en) {
->>>>                build_x86_acpi_pci_hotplug(dsdt, pm->pcihp_io_base);
->>>>            }
->>>> -        build_piix4_pci0_int(dsdt);
->>>> +        build_piix4_pci0_int(dsdt, level_trigger_unsupported);
->>>>        } else if (q35) {
->>>>            sb_scope = aml_scope("_SB");
->>>>            dev = aml_device("PCI0");
->>>> @@ -1426,7 +1459,7 @@ build_dsdt(GArray *table_data, BIOSLinker *linker,
->>>>            if (pm->pcihp_bridge_en) {
->>>>                build_x86_acpi_pci_hotplug(dsdt, pm->pcihp_io_base);
->>>>            }
->>>> -        build_q35_pci0_int(dsdt);
->>>> +        build_q35_pci0_int(dsdt, level_trigger_unsupported);
->>>>        }
->>>>    
->>>>        if (misc->has_hpet) {
->>>> diff --git a/hw/i386/acpi-common.c b/hw/i386/acpi-common.c
->>>> index 0cc2919bb851..ad38a6b31162 100644
->>>> --- a/hw/i386/acpi-common.c
->>>> +++ b/hw/i386/acpi-common.c
->>>> @@ -103,6 +103,7 @@ void acpi_build_madt(GArray *table_data, BIOSLinker *linker,
-> 
-> MADT change should be its own patch.
-> 
->>>>        const CPUArchIdList *apic_ids = mc->possible_cpu_arch_ids(MACHINE(x86ms));
->>>>        AcpiTable table = { .sig = "APIC", .rev = 3, .oem_id = oem_id,
->>>>                            .oem_table_id = oem_table_id };
->>>> +    bool level_trigger_unsupported = x86ms->eoi_intercept_unsupported;
->>>>    
->>>>        acpi_table_begin(&table, table_data);
->>>>        /* Local APIC Address */
->>>> @@ -124,18 +125,42 @@ void acpi_build_madt(GArray *table_data, BIOSLinker *linker,
->>>>                         IO_APIC_SECONDARY_ADDRESS, IO_APIC_SECONDARY_IRQBASE);
->>>>        }
->>>>    
->>>> -    if (x86mc->apic_xrupt_override) {
->>>> -        build_xrupt_override(table_data, 0, 2,
->>>> -            0 /* Flags: Conforms to the specifications of the bus */);
->>>> -    }
->>>> +    if (level_trigger_unsupported) {
-> 
-> maybe, try to set flags as local var first,
-> and then use it in build_xrupt_override() instead of rewriting/shifting
-> existing blocks
-> 
->>>> +        /* Force edge trigger */
->>>> +        if (x86mc->apic_xrupt_override) {
->>>> +            build_xrupt_override(table_data, 0, 2,
->>>> +                                 /* Flags: active high, edge triggered */
->>>> +                                 1 | (1 << 2));
-> pls point to spec where it comes from
-> 
-> 
->>>> +        }
->>>> +
->>>> +        for (i = x86mc->apic_xrupt_override ? 1 : 0; i < 16; i++) {
->                                                    ^^^^^^^
-> before patch it was always starting from 1,
-> so above does come from?
-> 
->>>> +            build_xrupt_override(table_data, i, i,
->>>> +                                 /* Flags: active high, edge triggered */
->>>> +                                 1 | (1 << 2));
->>>> +        }
-> 
->>>> +        if (x86ms->ioapic2) {
->>>> +            for (i = 0; i < 16; i++) {
->>>> +                build_xrupt_override(table_data, IO_APIC_SECONDARY_IRQBASE + i,
->>>> +                                     IO_APIC_SECONDARY_IRQBASE + i,
->>>> +                                     /* Flags: active high, edge triggered */
->>>> +                                     1 | (1 << 2));
->>>> +            }
->>>> +        }
-> and this is absolutely new hunk, perhaps its own patch with explanation why it's need
-> 
->>>> +    } else {
->>>> +        if (x86mc->apic_xrupt_override) {
->>>> +            build_xrupt_override(table_data, 0, 2,
->>>> +                    0 /* Flags: Conforms to the specifications of the bus */);
->>>> +        }
->>>>    
->>>> -    for (i = 1; i < 16; i++) {
->>>> -        if (!(x86ms->pci_irq_mask & (1 << i))) {
->>>> -            /* No need for a INT source override structure. */
->>>> -            continue;
->>>> +        for (i = 1; i < 16; i++) {
->>>> +            if (!(x86ms->pci_irq_mask & (1 << i))) {
->>>> +                /* No need for a INT source override structure. */
->>>> +                continue;
->>>> +            }
->>>> +            build_xrupt_override(table_data, i, i,
->>>> +                0xd /* Flags: Active high, Level Triggered */);
->>>>            }
->>>> -        build_xrupt_override(table_data, i, i,
->>>> -            0xd /* Flags: Active high, Level Triggered */);
->>>>        }
->>>>    
->>>>        if (x2apic_mode) {
->>>> -- 
->>>> 2.34.1
->>>>   
->>
-> 
-> 
+> (thanks to Joel Stanley for providing it, see:
+>  https://www.mail-archive.com/qemu-devel@nongnu.org/msg606064.html ).
+>
+> Signed-off-by: Thomas Huth <thuth@redhat.com>
+> ---
+>  MAINTAINERS                           |  1 +
+>  tests/functional/meson.build          |  1 +
+>  tests/functional/test_arm_microbit.py | 31 +++++++++++++++++++++++++++
+>  3 files changed, 33 insertions(+)
+>  create mode 100755 tests/functional/test_arm_microbit.py
+>
+> diff --git a/MAINTAINERS b/MAINTAINERS
+> index 1d9b3a0011..7b4d84bf5f 100644
+> --- a/MAINTAINERS
+> +++ b/MAINTAINERS
+> @@ -1157,6 +1157,7 @@ F: hw/*/microbit*.c
+>  F: include/hw/*/nrf51*.h
+>  F: include/hw/*/microbit*.h
+>  F: tests/qtest/microbit-test.c
+> +F: tests/functional/test_arm_microbit.py
+>  F: docs/system/arm/nrf.rst
+>=20=20
+>  ARM PL011 Rust device
+> diff --git a/tests/functional/meson.build b/tests/functional/meson.build
+> index bcfbb70b65..a301c38806 100644
+> --- a/tests/functional/meson.build
+> +++ b/tests/functional/meson.build
+> @@ -105,6 +105,7 @@ tests_arm_system_thorough =3D [
+>    'arm_cubieboard',
+>    'arm_emcraft_sf2',
+>    'arm_integratorcp',
+> +  'arm_microbit',
+>    'arm_orangepi',
+>    'arm_quanta_gsj',
+>    'arm_raspi2',
+> diff --git a/tests/functional/test_arm_microbit.py b/tests/functional/tes=
+t_arm_microbit.py
+> new file mode 100755
+> index 0000000000..68ea4e73d6
+> --- /dev/null
+> +++ b/tests/functional/test_arm_microbit.py
+> @@ -0,0 +1,31 @@
+> +#!/usr/bin/env python3
+> +#
+> +# SPDX-License-Identifier: GPL-2.0-or-later
+> +#
+> +# Copyright 2025, The QEMU Project Developers.
+> +#
+> +# A functional test that runs MicroPython on the arm microbit machine.
+> +
+> +from qemu_test import QemuSystemTest, Asset, exec_command_and_wait_for_p=
+attern
+> +from qemu_test import wait_for_console_pattern
+> +
+> +
+> +class MicrobitMachine(QemuSystemTest):
+> +
+> +    ASSET_MICRO =3D Asset('https://ozlabs.org/~joel/microbit-micropython=
+.hex',
+> +        '021641f93dfb11767d4978dbb3ca7f475d1b13c69e7f4aec3382f212636bffd=
+6')
+> +
+> +    def test_arm_microbit(self):
+> +        self.set_machine('microbit')
+> +
+> +        micropython =3D self.ASSET_MICRO.fetch()
+> +        self.vm.set_console()
+> +        self.vm.add_args('-device', f'loader,file=3D{micropython}')
+> +        self.vm.launch()
+> +        wait_for_console_pattern(self, 'Type "help()" for more informati=
+on.')
+> +        exec_command_and_wait_for_pattern(self, 'import machine as mch',=
+ '>>>')
+> +        exec_command_and_wait_for_pattern(self, 'mch.reset()', 'MicroPyt=
+hon')
+> +        wait_for_console_pattern(self, '>>>')
 
+We could do more if we wanted - all the microbit specific stuff lives in
+the microbit module:
+
+  https://microbit-micropython.readthedocs.io/en/latest/microbit_micropytho=
+n_api.html
+
+Anyway:
+
+Reviewed-by: Alex Benn=C3=A9e <alex.bennee@linaro.org>
+
+> +
+> +if __name__ =3D=3D '__main__':
+> +    QemuSystemTest.main()
+
+--=20
+Alex Benn=C3=A9e
+Virtualisation Tech Lead @ Linaro
 
