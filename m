@@ -4,96 +4,94 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id EB0FEC0218B
-	for <qemu-devel@archiver.kernel.org>; Fri, 24 Jan 2025 09:51:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id AB3C4C02181
+	for <qemu-devel@archiver.kernel.org>; Fri, 24 Jan 2025 09:51:21 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tbGH3-0008O2-Hr; Fri, 24 Jan 2025 04:46:51 -0500
+	id 1tbGJ1-0008F6-Ge; Fri, 24 Jan 2025 04:48:52 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1tbGFp-00074D-FE
- for qemu-devel@nongnu.org; Fri, 24 Jan 2025 04:45:35 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ id 1tbGGa-0007tu-4c
+ for qemu-devel@nongnu.org; Fri, 24 Jan 2025 04:46:26 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1tbGFk-0003u3-3t
- for qemu-devel@nongnu.org; Fri, 24 Jan 2025 04:45:29 -0500
+ id 1tbGGX-00040f-6j
+ for qemu-devel@nongnu.org; Fri, 24 Jan 2025 04:46:18 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1737711927;
+ s=mimecast20190719; t=1737711976;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:
+ to:to:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=2JnJ4uWdXLKH0BSsQ/cswZ3Sl3lzRSubbNSrDL/OSsc=;
- b=IJ0+zQyqP4nt7ZT/McAfOfU0+yDlRsijfdJ8TzQcUXN+uqW39DQ9dxeQoedzDGQbGpL29c
- +33FNM4ZLiUdx6wDtfBMUntx27OEpON4lhiZvLCcKhduIKhhrXaal9G7GtehTN8rgPIi8P
- Wy31fqZT+OjAuxy+DhaqADqZZBPnW9w=
-Received: from mail-wr1-f69.google.com (mail-wr1-f69.google.com
- [209.85.221.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=jllJCe45+on6RBQLoaPv4sZe3uCPs/UzG77MtZEZeWI=;
+ b=VBnlwWP4hri/atmw59ZS3v+OaKgoBJ8+pNrLVjVYRsW4BNo1G+UoHhcCpX5EWWPsdaqwpg
+ Clh8KJ26KZLIY9iGV1KTGrsPJcWgTrB3IioPvTotYW5uO6nSPgcKM9oD0YYGzPo99jcpTY
+ EFBZr4W/dnD6l8fzl2Bn7oC0YzDHfoE=
+Received: from mail-wm1-f69.google.com (mail-wm1-f69.google.com
+ [209.85.128.69]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-187-o3gp6_WuNdCDUSH75oRt1A-1; Fri, 24 Jan 2025 04:45:25 -0500
-X-MC-Unique: o3gp6_WuNdCDUSH75oRt1A-1
-X-Mimecast-MFC-AGG-ID: o3gp6_WuNdCDUSH75oRt1A
-Received: by mail-wr1-f69.google.com with SMTP id
- ffacd0b85a97d-385d7611ad3so1028618f8f.2
- for <qemu-devel@nongnu.org>; Fri, 24 Jan 2025 01:45:25 -0800 (PST)
+ us-mta-54-yGL0HQ7WNnab4xqo0HsLGg-1; Fri, 24 Jan 2025 04:46:14 -0500
+X-MC-Unique: yGL0HQ7WNnab4xqo0HsLGg-1
+X-Mimecast-MFC-AGG-ID: yGL0HQ7WNnab4xqo0HsLGg
+Received: by mail-wm1-f69.google.com with SMTP id
+ 5b1f17b1804b1-4362f893bfaso10182205e9.1
+ for <qemu-devel@nongnu.org>; Fri, 24 Jan 2025 01:46:14 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1737711923; x=1738316723;
+ d=1e100.net; s=20230601; t=1737711973; x=1738316773;
  h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=2JnJ4uWdXLKH0BSsQ/cswZ3Sl3lzRSubbNSrDL/OSsc=;
- b=fI9WaGXarkiSarFvs9AE9ExkTjE8FbuGfDg2f73KVLcb0hztVM9c1v9jh3x3tIP9Lo
- RYXlt9VMHQRitGrDyTYuD0Ab848wwjOtIzJIkGGcQz5+qQtTDWfF1c3CXyjj+tk3f5nE
- WkWogN1TsPJ/JHfM/hdSHTBdpWckxDbD5PLJq05uyA2qU+3+hTHYlluYDpOF6A18H6kX
- wlzwhJYhdc8xFs4Us/Pzu9gH+vbiLMn16MhpMb5xtz2xQbksbd1/oEzoEo6G7xlxnTQ7
- RWL+9ttsW0oHdNVx6jF9S1hG24dRvAYYWh/ZHWBr5bC0QfMcOkxDPsZN58H1z7tg1iWa
- by+w==
-X-Gm-Message-State: AOJu0Yy6PnuPa1bfCNqOoQFar2kZgULHoYwbqvGfw63t87trl3b+zBxr
- d66Um6swzJy8+ermiiiN4ktx/WgcnuZtPjTqpEZsVFb5Z8T0VaZcjwWIQryey/3MTep6qVc2Z0z
- psj+wJ0m9eahI0F6rHx6EKE390UheUMvhqBxUWXje9/VqvqvJ4HAIbiShha51ZoP1kVn3GT36RX
- 2RjTaVSdA9awY23ZJ1gY2G2stzlJ34tKrMekZtbmM=
-X-Gm-Gg: ASbGncs9Qb5tIa+Dvr7mw5cFQslpGuY2xxXJyzTyRPnVZGitGR/ymOLTwWvIMJGVHYX
- YmcTPeQDXEMfTNuHlwxhLhpeSobbc/9juODb/4TmyUSzp2ReqMklySsDgdsJIVYq47bQ69ZxTbf
- ZnifIftA0hG2qxv9e545Q/wMgb+uTj29UJq9U0fyQ84hOmIAahL/a4Pf4SW0n2Z1o4j64ysdZ/N
- 2CIaeo3VfdkJlZRygzlnTAk3u977Dz6jeVIxNFUWa4o8GqhrXRfbEuSXKnc94TmLyhQoX5g4g==
-X-Received: by 2002:a05:6000:1a8c:b0:38b:ed6f:f00f with SMTP id
- ffacd0b85a97d-38bf56635a1mr25565338f8f.17.1737711923231; 
- Fri, 24 Jan 2025 01:45:23 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IFvviF5m5Le9uIdKQug3cLYtChw3LC78akqAs4EDVOcfJv4Ook5jum8vK/EBgn/itTU+PobvA==
-X-Received: by 2002:a05:6000:1a8c:b0:38b:ed6f:f00f with SMTP id
- ffacd0b85a97d-38bf56635a1mr25565307f8f.17.1737711922794; 
- Fri, 24 Jan 2025 01:45:22 -0800 (PST)
+ bh=jllJCe45+on6RBQLoaPv4sZe3uCPs/UzG77MtZEZeWI=;
+ b=uuOgkFKSgQoC6exybUXY5c+SACe6ERp+94nnSAKuhpSUvJ5oCZBDNQc3eqkL1G4t6k
+ Ib+rpCkXtThokBbdBlY65ZAsn27XBVIWxznZEQ8eA/AKHnqJT29lminlz5sPpiIiqQxa
+ WIydm7VnXS0e4jNyIu+HHLAphCMi4wTN2Bq3uoXiKjkidnjgmIMTX8y7u3y0W3w9bl0u
+ suM9SUBzeREDUh017fTrds5110/dEQJoNzq5pIsY8XXWBGk64sGiU23VJovxypGOMAAo
+ Iryu6HYh5Wq9fTMpHrZHkXXXArIJmolLAmFaOy02gqtcKaTLWloR0qRh7JO6RATa4qUV
+ wyug==
+X-Gm-Message-State: AOJu0YwUotcvn3TdSwdD98hjKvtKTHqfTvN05pXGrFbtqXz6T7zbX+mY
+ RBYMCk4mqNkYrv6QMJSCJvrG+iAyGbJANAVtBtNjl5A0T0iTS8EdR1Sh7qrqMVW/tAhL9mhBMpV
+ VbHyxLaaQQsM9/8Xo+fEM8sVlu1z/Cg9Nt8Ft9o24TOOE+axxlPE60I/B2Xq+a8XtgcPoQVgMGU
+ EuqbBolxHoRasHRzBkHvsD+Z9WpPl19Inyj0Selms=
+X-Gm-Gg: ASbGnctF3Pwpd3AvlCSGEB5qmLpjTkNAMHgk4yeIfTAKR2RUSIV2AqpxGPIz40MvZ9N
+ q35aUnINFQpy2K9U7wfm97+MrAq0xjEbhByUHD7qVQnKpslPlhKJLIrN5V2FmUoToiWsWuZBc7v
+ I2wmqXaOuUnUNuWHWa+gQt9TUyBVkU9W5sjzDBAkHamcxXc/yZZwB+TY4aMkQVUCeZb12IlrvkG
+ Qo7Kvw/ihN+hIJ6JCRSyMbWGFFjHWeMRhK5OP+T5hFf/XKr6Dl6KnoDyeMdvLdI6/xYNMVX4Q==
+X-Received: by 2002:a05:600c:1f86:b0:436:aaf:7eb9 with SMTP id
+ 5b1f17b1804b1-43891439d5fmr243292135e9.20.1737711973212; 
+ Fri, 24 Jan 2025 01:46:13 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IEn+6TE64XAJLPxZqRdqCYfhcGLvWfGj3Qbgx41WEvAuIx6sHzQULVETYsTgAD3O+Z9BSxNDg==
+X-Received: by 2002:a05:600c:1f86:b0:436:aaf:7eb9 with SMTP id
+ 5b1f17b1804b1-43891439d5fmr243291955e9.20.1737711972713; 
+ Fri, 24 Jan 2025 01:46:12 -0800 (PST)
 Received: from [192.168.10.48] ([151.95.59.125])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-438b1da8d4asm47818215e9.3.2025.01.24.01.45.21
+ 5b1f17b1804b1-438bd48ae29sm20961865e9.22.2025.01.24.01.46.11
+ for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 24 Jan 2025 01:45:21 -0800 (PST)
+ Fri, 24 Jan 2025 01:46:11 -0800 (PST)
 From: Paolo Bonzini <pbonzini@redhat.com>
 To: qemu-devel@nongnu.org
-Cc: Zhao Liu <zhao1.liu@intel.com>,
-	qemu-stable@nongnu.org
-Subject: [PULL 20/48] stub: Fix build failure with --enable-user
- --disable-system --enable-tools
-Date: Fri, 24 Jan 2025 10:44:14 +0100
-Message-ID: <20250124094442.13207-21-pbonzini@redhat.com>
+Subject: [PULL 46/48] rust: qdev: make reset take a shared reference
+Date: Fri, 24 Jan 2025 10:44:40 +0100
+Message-ID: <20250124094442.13207-47-pbonzini@redhat.com>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250124094442.13207-1-pbonzini@redhat.com>
 References: <20250124094442.13207-1-pbonzini@redhat.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=pbonzini@redhat.com;
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -50
 X-Spam_score: -5.1
 X-Spam_bar: -----
 X-Spam_report: (-5.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-2.996,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.043,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -109,47 +107,51 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Zhao Liu <zhao1.liu@intel.com>
+Because register reset is within a borrow_mut() call, reset
+does not need anymore a mut reference to the PL011State.
 
-Configuring "--enable-user --disable-system --enable-tools" causes the
-build failure with the following information:
-
-/usr/bin/ld: libhwcore.a.p/hw_core_qdev.c.o: in function `device_finalize':
-/qemu/build/../hw/core/qdev.c:688: undefined reference to `qapi_event_send_device_deleted'
-collect2: error: ld returned 1 exit status
-
-To fix the above issue, add qdev.c stub when build with `have_tools`.
-
-With this fix, QEMU could be successfully built in the following cases:
- --enable-user --disable-system --enable-tools
- --enable-user --disable-system --disable-tools
- --enable-user --disable-system
-
-Cc: qemu-stable@nongnu.org
-Fixes: 388b849fb6c3 ("stubs: avoid duplicate symbols in libqemuutil.a")
-Resolves: https://gitlab.com/qemu-project/qemu/-/issues/2766
-Signed-off-by: Zhao Liu <zhao1.liu@intel.com>
-Link: https://lore.kernel.org/r/20250121154318.214680-1-zhao1.liu@intel.com
+Reviewed-by: Zhao Liu <zhao1.liu@intel.com>
 Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 ---
- stubs/meson.build | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ rust/hw/char/pl011/src/device.rs | 4 ++--
+ rust/qemu-api/src/qdev.rs        | 2 +-
+ 2 files changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/stubs/meson.build b/stubs/meson.build
-index e91614a874d..a8b3aeb5645 100644
---- a/stubs/meson.build
-+++ b/stubs/meson.build
-@@ -57,8 +57,8 @@ if have_user
-   stub_ss.add(files('cpu-synchronize-state.c'))
+diff --git a/rust/hw/char/pl011/src/device.rs b/rust/hw/char/pl011/src/device.rs
+index e916ea11884..fad190a9133 100644
+--- a/rust/hw/char/pl011/src/device.rs
++++ b/rust/hw/char/pl011/src/device.rs
+@@ -172,7 +172,7 @@ fn vmsd() -> Option<&'static VMStateDescription> {
+         Some(&device_class::VMSTATE_PL011)
+     }
+     const REALIZE: Option<fn(&Self)> = Some(Self::realize);
+-    const RESET: Option<fn(&mut Self)> = Some(Self::reset);
++    const RESET: Option<fn(&Self)> = Some(Self::reset);
+ }
  
-   # Stubs for QAPI events.  Those can always be included in the build, but
--  # they are not built at all for --disable-system --disable-tools builds.
--  if not (have_system or have_tools)
-+  # they are not built at all for --disable-system builds.
-+  if not have_system
-     stub_ss.add(files('qdev.c'))
-   endif
- endif
+ impl PL011Registers {
+@@ -621,7 +621,7 @@ pub fn realize(&self) {
+         }
+     }
+ 
+-    pub fn reset(&mut self) {
++    pub fn reset(&self) {
+         self.regs.borrow_mut().reset();
+     }
+ 
+diff --git a/rust/qemu-api/src/qdev.rs b/rust/qemu-api/src/qdev.rs
+index 42429903aae..f4c75c752f1 100644
+--- a/rust/qemu-api/src/qdev.rs
++++ b/rust/qemu-api/src/qdev.rs
+@@ -30,7 +30,7 @@ pub trait DeviceImpl {
+     ///
+     /// Rust does not yet support the three-phase reset protocol; this is
+     /// usually okay for leaf classes.
+-    const RESET: Option<fn(&mut Self)> = None;
++    const RESET: Option<fn(&Self)> = None;
+ 
+     /// An array providing the properties that the user can set on the
+     /// device.  Not a `const` because referencing statics in constants
 -- 
 2.48.1
 
