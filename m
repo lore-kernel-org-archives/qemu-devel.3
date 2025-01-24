@@ -4,47 +4,47 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2130CC02181
-	for <qemu-devel@archiver.kernel.org>; Fri, 24 Jan 2025 13:40:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3F913C02181
+	for <qemu-devel@archiver.kernel.org>; Fri, 24 Jan 2025 13:40:38 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tbJso-0003rB-IB; Fri, 24 Jan 2025 08:38:02 -0500
+	id 1tbJsU-0003mn-F9; Fri, 24 Jan 2025 08:37:42 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <xiaoyao.li@intel.com>)
- id 1tbJsi-0003q2-61
- for qemu-devel@nongnu.org; Fri, 24 Jan 2025 08:37:56 -0500
+ id 1tbJsS-0003mR-Mn
+ for qemu-devel@nongnu.org; Fri, 24 Jan 2025 08:37:40 -0500
 Received: from mgamail.intel.com ([198.175.65.13])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <xiaoyao.li@intel.com>)
- id 1tbJsg-0003xi-EK
- for qemu-devel@nongnu.org; Fri, 24 Jan 2025 08:37:55 -0500
+ id 1tbJsL-0003ri-BB
+ for qemu-devel@nongnu.org; Fri, 24 Jan 2025 08:37:40 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1737725875; x=1769261875;
+ t=1737725854; x=1769261854;
  h=from:to:cc:subject:date:message-id:in-reply-to:
  references:mime-version:content-transfer-encoding;
- bh=QQ+mVECDFZb0mkAaU9OtvuN3aHLirivkATTtr/jbCBI=;
- b=IvNXtskJTDpKuS48JPxRtterREJUV8qsYE6gObkyFqOZxF0/6yfTLZyg
- Od7qBwZACXav+4Jagz72Z9Vxj2mhBqc/kvvzPE3MPmfVlUd9Hrfwxla4L
- Q7cqFCHT+h5TfvBMWKR3kUNwwqyQF4YtfrwZ54UfUWQmGS2wr2v67Sk8j
- UP5CWDNF6qSYbzhKIOdjzq9mh77EIGeTZQPK0r7ZInhbmh6xRXRJ3xwX7
- 5x8nu3FLb3VOIHGiOkAQIRSiAh431WHqXA0TIo5xT6IWBQD2h0MaKT99L
- dX96gc3KA2mVHHzup5iGwwjYDWxFMBs1TgMraWD/pI/LHc1ms8dGcLtLQ w==;
-X-CSE-ConnectionGUID: LXgDt8HmTL+g10dr9D28fg==
-X-CSE-MsgGUID: LYzoxyi5RduPeO4vSGUZNA==
-X-IronPort-AV: E=McAfee;i="6700,10204,11325"; a="49246287"
-X-IronPort-AV: E=Sophos;i="6.13,231,1732608000"; d="scan'208";a="49246287"
+ bh=ZouDOCVPQiy1zqqpa+x8ITHgYXhhl2FOCHzR+xxDXno=;
+ b=ZyEHDEQGQOduF9oBo1K4tXrfuDbas/lb7wnCW5jtVyrMZ5705bsI1aek
+ ImwkcUjYFEjOVfAJ9wuhypu6pmtSYGkQ6Hv1x15IiK7Wo1JrTZ0qOOPeg
+ RJ/jkhpno/xG30MZGKeXC+cNB5dQvYnJpTgKM4Er788+Vcl+TB/KPB/KP
+ RDB/Wt4Qi2q1S4qV6eS18zwPsP0Sz+4siD+y5Zw2eJkAiEnWZZqrF/NAs
+ fp6ESqNVMhRkrQqsaxAShsIdA1cIvE+SIDwBRcp8X4v6MCsOlrdo0SlnC
+ QGpG86X5LpnOmIyGmAkkzoyTxNgRQOMJ/pogLRDTq1yQ/6yv6mz1cYkJg Q==;
+X-CSE-ConnectionGUID: Rlvm5NHjRD+mzmxyWL//IQ==
+X-CSE-MsgGUID: HfqmAqVcTA6Ke//vOyPEcQ==
+X-IronPort-AV: E=McAfee;i="6700,10204,11325"; a="49246231"
+X-IronPort-AV: E=Sophos;i="6.13,231,1732608000"; d="scan'208";a="49246231"
 Received: from fmviesa003.fm.intel.com ([10.60.135.143])
  by orvoesa105.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 24 Jan 2025 05:37:54 -0800
-X-CSE-ConnectionGUID: O6LbGE7HQISg2e//eEKBdQ==
-X-CSE-MsgGUID: appmcy6vRWqbm5xN1V/jfQ==
+ 24 Jan 2025 05:37:32 -0800
+X-CSE-ConnectionGUID: FFU8bFS3SWK/YhPSVlwFhw==
+X-CSE-MsgGUID: 1bsOIRIyS76bAXlSZKZhDQ==
 X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.12,224,1728975600"; d="scan'208";a="111804218"
+X-IronPort-AV: E=Sophos;i="6.12,224,1728975600"; d="scan'208";a="111804170"
 Received: from lxy-clx-4s.sh.intel.com ([10.239.48.52])
- by fmviesa003.fm.intel.com with ESMTP; 24 Jan 2025 05:37:50 -0800
+ by fmviesa003.fm.intel.com with ESMTP; 24 Jan 2025 05:37:27 -0800
 From: Xiaoyao Li <xiaoyao.li@intel.com>
 To: Paolo Bonzini <pbonzini@redhat.com>,
  =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
@@ -57,9 +57,9 @@ Cc: Zhao Liu <zhao1.liu@intel.com>, "Michael S. Tsirkin" <mst@redhat.com>,
  Rick Edgecombe <rick.p.edgecombe@intel.com>,
  Francesco Lavra <francescolavra.fl@gmail.com>, xiaoyao.li@intel.com,
  qemu-devel@nongnu.org, kvm@vger.kernel.org
-Subject: [PATCH v7 14/52] i386/tdx: Implement user specified tsc frequency
-Date: Fri, 24 Jan 2025 08:20:10 -0500
-Message-Id: <20250124132048.3229049-15-xiaoyao.li@intel.com>
+Subject: [PATCH v7 08/52] i386/tdx: Initialize TDX before creating TD vcpus
+Date: Fri, 24 Jan 2025 08:20:04 -0500
+Message-Id: <20250124132048.3229049-9-xiaoyao.li@intel.com>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20250124132048.3229049-1-xiaoyao.li@intel.com>
 References: <20250124132048.3229049-1-xiaoyao.li@intel.com>
@@ -91,89 +91,310 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Reuse "-cpu,tsc-frequency=" to get user wanted tsc frequency and call VM
-scope VM_SET_TSC_KHZ to set the tsc frequency of TD before KVM_TDX_INIT_VM.
+Invoke KVM_TDX_INIT in kvm_arch_pre_create_vcpu() that KVM_TDX_INIT
+configures global TD configurations, e.g. the canonical CPUID config,
+and must be executed prior to creating vCPUs.
 
-Besides, sanity check the tsc frequency to be in the legal range and
-legal granularity (required by TDX module).
+Use kvm_x86_arch_cpuid() to setup the CPUID settings for TDX VM.
+
+Note, this doesn't address the fact that QEMU may change the CPUID
+configuration when creating vCPUs, i.e. punts on refactoring QEMU to
+provide a stable CPUID config prior to kvm_arch_init().
 
 Signed-off-by: Xiaoyao Li <xiaoyao.li@intel.com>
 Acked-by: Gerd Hoffmann <kraxel@redhat.com>
+Acked-by: Markus Armbruster <armbru@redhat.com>
 ---
+Changes in v7:
+- Add comments to explain why KVM_TDX_INIT_VM should retry on -EAGAIN;
+- Add retry limit of 10000 times for -EAGAIN on KVM_TDX_INIT_VM;
+
+Changes in v6:
+- setup xfam explicitly to fit with new uapi;
+- use tdx_caps->cpuid to filter the input of cpuids because now KVM only
+  allows the leafs that reported via KVM_TDX_GET_CAPABILITIES;
+
+Changes in v4:
+- mark init_vm with g_autofree() and use QEMU_LOCK_GUARD() to eliminate
+  the goto labels; (Daniel)
 Changes in v3:
-- use @errp to report error info; (Daniel)
-
-Changes in v1:
-- Use VM scope VM_SET_TSC_KHZ to set the TSC frequency of TD since KVM
-  side drop the @tsc_khz field in struct kvm_tdx_init_vm
+- Pass @errp in tdx_pre_create_vcpu() and pass error info to it. (Daniel)
 ---
- target/i386/kvm/kvm.c |  9 +++++++++
- target/i386/kvm/tdx.c | 25 +++++++++++++++++++++++++
- 2 files changed, 34 insertions(+)
+ accel/kvm/kvm-all.c         |   8 +++
+ target/i386/kvm/kvm.c       |  16 +++---
+ target/i386/kvm/kvm_i386.h  |   5 ++
+ target/i386/kvm/meson.build |   2 +-
+ target/i386/kvm/tdx-stub.c  |  10 ++++
+ target/i386/kvm/tdx.c       | 103 ++++++++++++++++++++++++++++++++++++
+ target/i386/kvm/tdx.h       |   6 +++
+ 7 files changed, 143 insertions(+), 7 deletions(-)
+ create mode 100644 target/i386/kvm/tdx-stub.c
 
-diff --git a/target/i386/kvm/kvm.c b/target/i386/kvm/kvm.c
-index a537699bb7df..7de5014051eb 100644
---- a/target/i386/kvm/kvm.c
-+++ b/target/i386/kvm/kvm.c
-@@ -869,6 +869,15 @@ static int kvm_arch_set_tsc_khz(CPUState *cs)
-     int r, cur_freq;
-     bool set_ioctl = false;
+diff --git a/accel/kvm/kvm-all.c b/accel/kvm/kvm-all.c
+index 45867dbe0839..e35a9fbd687e 100644
+--- a/accel/kvm/kvm-all.c
++++ b/accel/kvm/kvm-all.c
+@@ -540,8 +540,15 @@ int kvm_init_vcpu(CPUState *cpu, Error **errp)
+ 
+     trace_kvm_init_vcpu(cpu->cpu_index, kvm_arch_vcpu_id(cpu));
  
 +    /*
-+     * TSC of TD vcpu is immutable, it cannot be set/changed via vcpu scope
-+     * VM_SET_TSC_KHZ, but only be initialized via VM scope VM_SET_TSC_KHZ
-+     * before ioctl KVM_TDX_INIT_VM in tdx_pre_create_vcpu()
++     * tdx_pre_create_vcpu() may call cpu_x86_cpuid(). It in turn may call
++     * kvm_vm_ioctl(). Set cpu->kvm_state in advance to avoid NULL pointer
++     * dereference.
 +     */
++    cpu->kvm_state = s;
+     ret = kvm_arch_pre_create_vcpu(cpu, errp);
+     if (ret < 0) {
++        cpu->kvm_state = NULL;
+         goto err;
+     }
+ 
+@@ -550,6 +557,7 @@ int kvm_init_vcpu(CPUState *cpu, Error **errp)
+         error_setg_errno(errp, -ret,
+                          "kvm_init_vcpu: kvm_create_vcpu failed (%lu)",
+                          kvm_arch_vcpu_id(cpu));
++        cpu->kvm_state = NULL;
+         goto err;
+     }
+ 
+diff --git a/target/i386/kvm/kvm.c b/target/i386/kvm/kvm.c
+index 1a4dd19e24ab..a537699bb7df 100644
+--- a/target/i386/kvm/kvm.c
++++ b/target/i386/kvm/kvm.c
+@@ -38,6 +38,7 @@
+ #include "kvm_i386.h"
+ #include "../confidential-guest.h"
+ #include "sev.h"
++#include "tdx.h"
+ #include "xen-emu.h"
+ #include "hyperv.h"
+ #include "hyperv-proto.h"
+@@ -414,9 +415,9 @@ static uint32_t cpuid_entry_get_reg(struct kvm_cpuid_entry2 *entry, int reg)
+ 
+ /* Find matching entry for function/index on kvm_cpuid2 struct
+  */
+-static struct kvm_cpuid_entry2 *cpuid_find_entry(struct kvm_cpuid2 *cpuid,
+-                                                 uint32_t function,
+-                                                 uint32_t index)
++struct kvm_cpuid_entry2 *cpuid_find_entry(struct kvm_cpuid2 *cpuid,
++                                          uint32_t function,
++                                          uint32_t index)
+ {
+     int i;
+     for (i = 0; i < cpuid->nent; ++i) {
+@@ -1821,9 +1822,8 @@ static void kvm_init_nested_state(CPUX86State *env)
+     }
+ }
+ 
+-static uint32_t kvm_x86_build_cpuid(CPUX86State *env,
+-                                    struct kvm_cpuid_entry2 *entries,
+-                                    uint32_t cpuid_i)
++uint32_t kvm_x86_build_cpuid(CPUX86State *env, struct kvm_cpuid_entry2 *entries,
++                             uint32_t cpuid_i)
+ {
+     uint32_t limit, i, j;
+     uint32_t unused;
+@@ -2052,6 +2052,10 @@ full:
+ 
+ int kvm_arch_pre_create_vcpu(CPUState *cpu, Error **errp)
+ {
 +    if (is_tdx_vm()) {
-+        return 0;
++        return tdx_pre_create_vcpu(cpu, errp);
 +    }
 +
-     if (!env->tsc_khz) {
-         return 0;
-     }
+     return 0;
+ }
+ 
+diff --git a/target/i386/kvm/kvm_i386.h b/target/i386/kvm/kvm_i386.h
+index ed1e61fb8ba9..dc696cb7238a 100644
+--- a/target/i386/kvm/kvm_i386.h
++++ b/target/i386/kvm/kvm_i386.h
+@@ -59,6 +59,11 @@ uint64_t kvm_swizzle_msi_ext_dest_id(uint64_t address);
+ void kvm_update_msi_routes_all(void *private, bool global,
+                                uint32_t index, uint32_t mask);
+ 
++struct kvm_cpuid_entry2 *cpuid_find_entry(struct kvm_cpuid2 *cpuid,
++                                          uint32_t function,
++                                          uint32_t index);
++uint32_t kvm_x86_build_cpuid(CPUX86State *env, struct kvm_cpuid_entry2 *entries,
++                             uint32_t cpuid_i);
+ #endif /* CONFIG_KVM */
+ 
+ void kvm_pc_setup_irq_routing(bool pci_enabled);
+diff --git a/target/i386/kvm/meson.build b/target/i386/kvm/meson.build
+index 466bccb9cb17..3f44cdedb758 100644
+--- a/target/i386/kvm/meson.build
++++ b/target/i386/kvm/meson.build
+@@ -8,7 +8,7 @@ i386_kvm_ss.add(files(
+ 
+ i386_kvm_ss.add(when: 'CONFIG_XEN_EMU', if_true: files('xen-emu.c'))
+ 
+-i386_kvm_ss.add(when: 'CONFIG_TDX', if_true: files('tdx.c'))
++i386_kvm_ss.add(when: 'CONFIG_TDX', if_true: files('tdx.c'), if_false: files('tdx-stub.c'))
+ 
+ i386_system_ss.add(when: 'CONFIG_HYPERV', if_true: files('hyperv.c'), if_false: files('hyperv-stub.c'))
+ 
+diff --git a/target/i386/kvm/tdx-stub.c b/target/i386/kvm/tdx-stub.c
+new file mode 100644
+index 000000000000..2344433594ea
+--- /dev/null
++++ b/target/i386/kvm/tdx-stub.c
+@@ -0,0 +1,10 @@
++/* SPDX-License-Identifier: GPL-2.0-or-later */
++
++#include "qemu/osdep.h"
++
++#include "tdx.h"
++
++int tdx_pre_create_vcpu(CPUState *cpu, Error **errp)
++{
++    return -EINVAL;
++}
 diff --git a/target/i386/kvm/tdx.c b/target/i386/kvm/tdx.c
-index 96138c2d2b73..2124284e1653 100644
+index 53eec6553333..b8a85f2333ad 100644
 --- a/target/i386/kvm/tdx.c
 +++ b/target/i386/kvm/tdx.c
-@@ -20,6 +20,9 @@
- #include "kvm_i386.h"
- #include "tdx.h"
+@@ -149,6 +149,107 @@ static int tdx_kvm_type(X86ConfidentialGuest *cg)
+     return KVM_X86_TDX_VM;
+ }
  
-+#define TDX_MIN_TSC_FREQUENCY_KHZ   (100 * 1000)
-+#define TDX_MAX_TSC_FREQUENCY_KHZ   (10 * 1000 * 1000)
++static int setup_td_xfam(X86CPU *x86cpu, Error **errp)
++{
++    CPUX86State *env = &x86cpu->env;
++    uint64_t xfam;
 +
- #define TDX_TD_ATTRIBUTES_DEBUG             BIT_ULL(0)
- #define TDX_TD_ATTRIBUTES_SEPT_VE_DISABLE   BIT_ULL(28)
- #define TDX_TD_ATTRIBUTES_PKS               BIT_ULL(30)
-@@ -266,6 +269,28 @@ int tdx_pre_create_vcpu(CPUState *cpu, Error **errp)
-         return r;
-     }
- 
-+    if (env->tsc_khz && (env->tsc_khz < TDX_MIN_TSC_FREQUENCY_KHZ ||
-+                         env->tsc_khz > TDX_MAX_TSC_FREQUENCY_KHZ)) {
-+        error_setg(errp, "Invalid TSC %ld KHz, must specify cpu_frequency "
-+                         "between [%d, %d] kHz", env->tsc_khz,
-+                         TDX_MIN_TSC_FREQUENCY_KHZ, TDX_MAX_TSC_FREQUENCY_KHZ);
-+       return -EINVAL;
++    xfam = env->features[FEAT_XSAVE_XCR0_LO] |
++           env->features[FEAT_XSAVE_XCR0_HI] |
++           env->features[FEAT_XSAVE_XSS_LO] |
++           env->features[FEAT_XSAVE_XSS_HI];
++
++    if (xfam & ~tdx_caps->supported_xfam) {
++        error_setg(errp, "Invalid XFAM 0x%lx for TDX VM (supported: 0x%llx))",
++                   xfam, tdx_caps->supported_xfam);
++        return -1;
 +    }
 +
-+    if (env->tsc_khz % (25 * 1000)) {
-+        error_setg(errp, "Invalid TSC %ld KHz, it must be multiple of 25MHz",
-+                   env->tsc_khz);
-+        return -EINVAL;
-+    }
++    tdx_guest->xfam = xfam;
++    return 0;
++}
 +
-+    /* it's safe even env->tsc_khz is 0. KVM uses host's tsc_khz in this case */
-+    r = kvm_vm_ioctl(kvm_state, KVM_SET_TSC_KHZ, env->tsc_khz);
-+    if (r < 0) {
-+        error_setg_errno(errp, -r, "Unable to set TSC frequency to %ld kHz",
-+                         env->tsc_khz);
++static void tdx_filter_cpuid(struct kvm_cpuid2 *cpuids)
++{
++    int i, dest_cnt = 0;
++    struct kvm_cpuid_entry2 *src, *dest, *conf;
++
++    for (i = 0; i < cpuids->nent; i++) {
++        src = cpuids->entries + i;
++        conf = cpuid_find_entry(&tdx_caps->cpuid, src->function, src->index);
++        if (!conf) {
++            continue;
++        }
++        dest = cpuids->entries + dest_cnt;
++
++        dest->function = src->function;
++        dest->index = src->index;
++        dest->flags = src->flags;
++        dest->eax = src->eax & conf->eax;
++        dest->ebx = src->ebx & conf->ebx;
++        dest->ecx = src->ecx & conf->ecx;
++        dest->edx = src->edx & conf->edx;
++
++        dest_cnt++;
++    }
++    cpuids->nent = dest_cnt++;
++}
++
++int tdx_pre_create_vcpu(CPUState *cpu, Error **errp)
++{
++    X86CPU *x86cpu = X86_CPU(cpu);
++    CPUX86State *env = &x86cpu->env;
++    g_autofree struct kvm_tdx_init_vm *init_vm = NULL;
++    Error *local_err = NULL;
++    int retry = 10000;
++    int r = 0;
++
++    QEMU_LOCK_GUARD(&tdx_guest->lock);
++    if (tdx_guest->initialized) {
 +        return r;
 +    }
 +
-     if (tdx_guest->mrconfigid) {
-         g_autofree uint8_t *data = qbase64_decode(tdx_guest->mrconfigid,
-                               strlen(tdx_guest->mrconfigid), &data_len, errp);
++    init_vm = g_malloc0(sizeof(struct kvm_tdx_init_vm) +
++                        sizeof(struct kvm_cpuid_entry2) * KVM_MAX_CPUID_ENTRIES);
++
++    r = setup_td_xfam(x86cpu, errp);
++    if (r) {
++        return r;
++    }
++
++    init_vm->cpuid.nent = kvm_x86_build_cpuid(env, init_vm->cpuid.entries, 0);
++    tdx_filter_cpuid(&init_vm->cpuid);
++
++    init_vm->attributes = tdx_guest->attributes;
++    init_vm->xfam = tdx_guest->xfam;
++
++    /*
++     * KVM_TDX_INIT_VM gets -EAGAIN when KVM side SEAMCALL(TDH_MNG_CREATE)
++     * gets TDX_RND_NO_ENTROPY due to Random number generation (e.g., RDRAND or
++     * RDSEED) is busy.
++     *
++     * Retry for the case.
++     */
++    do {
++        error_free(local_err);
++        local_err = NULL;
++        r = tdx_vm_ioctl(KVM_TDX_INIT_VM, 0, init_vm, &local_err);
++    } while (r == -EAGAIN && --retry);
++
++    if (r < 0) {
++        if (!retry) {
++            error_report("Hardware RNG (Random Number Generator) is busy occupied by someone (via RDRAND/RDSEED) maliciously, "
++                         "which leads to KVM_TDX_INIT_VM keeping failure due to lack of entropy.");
++        }
++        error_propagate(errp, local_err);
++        return r;
++    }
++
++    tdx_guest->initialized = true;
++
++    return 0;
++}
++
+ /* tdx guest */
+ OBJECT_DEFINE_TYPE_WITH_INTERFACES(TdxGuest,
+                                    tdx_guest,
+@@ -162,6 +263,8 @@ static void tdx_guest_init(Object *obj)
+     ConfidentialGuestSupport *cgs = CONFIDENTIAL_GUEST_SUPPORT(obj);
+     TdxGuest *tdx = TDX_GUEST(obj);
+ 
++    qemu_mutex_init(&tdx->lock);
++
+     cgs->require_guest_memfd = true;
+     tdx->attributes = 0;
+ 
+diff --git a/target/i386/kvm/tdx.h b/target/i386/kvm/tdx.h
+index de8ae9196163..4e2b5c61ff5b 100644
+--- a/target/i386/kvm/tdx.h
++++ b/target/i386/kvm/tdx.h
+@@ -19,7 +19,11 @@ typedef struct TdxGuestClass {
+ typedef struct TdxGuest {
+     X86ConfidentialGuest parent_obj;
+ 
++    QemuMutex lock;
++
++    bool initialized;
+     uint64_t attributes;    /* TD attributes */
++    uint64_t xfam;
+ } TdxGuest;
+ 
+ #ifdef CONFIG_TDX
+@@ -28,4 +32,6 @@ bool is_tdx_vm(void);
+ #define is_tdx_vm() 0
+ #endif /* CONFIG_TDX */
+ 
++int tdx_pre_create_vcpu(CPUState *cpu, Error **errp);
++
+ #endif /* QEMU_I386_TDX_H */
 -- 
 2.34.1
 
