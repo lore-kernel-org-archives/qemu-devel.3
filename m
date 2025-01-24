@@ -4,85 +4,88 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C4A04C02181
-	for <qemu-devel@archiver.kernel.org>; Fri, 24 Jan 2025 20:22:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0C2CCC0218B
+	for <qemu-devel@archiver.kernel.org>; Fri, 24 Jan 2025 20:22:17 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tbQBB-0005yA-Ri; Fri, 24 Jan 2025 15:21:25 -0500
+	id 1tbQBG-0005zh-Qi; Fri, 24 Jan 2025 15:21:30 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjrosato@linux.ibm.com>)
- id 1tbQB9-0005xq-Tt; Fri, 24 Jan 2025 15:21:23 -0500
-Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
+ id 1tbQBC-0005z6-UJ; Fri, 24 Jan 2025 15:21:27 -0500
+Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjrosato@linux.ibm.com>)
- id 1tbQB8-0007VE-16; Fri, 24 Jan 2025 15:21:23 -0500
-Received: from pps.filterd (m0360072.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 50OGVH5G021311;
- Fri, 24 Jan 2025 20:21:18 GMT
+ id 1tbQBB-0007VQ-9P; Fri, 24 Jan 2025 15:21:26 -0500
+Received: from pps.filterd (m0353729.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 50OE7SrV013657;
+ Fri, 24 Jan 2025 20:21:20 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-transfer-encoding:date:from:message-id:mime-version
- :subject:to; s=pp1; bh=TouP20aMj1pSLfzBLhwhbtGMqfUr55jEByDOeR2nV
- o4=; b=p3j+3jqyJl1J8vpcjoOZNdc0WzXYnr2N0ke99CprHFmGx8dK4PtMOTG8o
- vdrjIM6qH4akNJAAKsqKW7P+oNP7TL+6O8+bKdYvePF1DWaXq4ji4IzZHTXrigym
- ti+ki7ZB/y+wjbryv8mp0GXE15URh3egOxjomWB+us6Gevhg7XjtNoCM10m9bsjK
- tkXcZ6crDOzt2rGw61H0j1PeVFl8htCa8wNgcNFRFmDIOw9ODsVCGj+Wg9iYhIaL
- 3nhSYqXMS7EK18PK0eLcrfUJSu1FD/QvW9hv3Rx+5hLBAVuKNNGrTqOjLx72/eiH
- OseZXy/UQNQ4Tmks57OiuZolObRVQ==
-Received: from ppma22.wdc07v.mail.ibm.com
- (5c.69.3da9.ip4.static.sl-reverse.com [169.61.105.92])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 44c6jnkf9r-1
+ :content-transfer-encoding:date:from:in-reply-to:message-id
+ :mime-version:references:subject:to; s=pp1; bh=NII/m0+w8LENNtgiu
+ Tvt8egbTvpDrOvix91BexPidR8=; b=Xj0oe5EoNXqqQtFWqh7pbdDzNjGiB/fn+
+ DRIGkYwFyDrxZhMrzaHxx+TVPL6ZOLvCU9cDBWnU3/L8BNt6MvXLeQz+KcZUa1iN
+ PL1zLDLGl4npJz87+O3xJFebQcl/2ZVJPmHPEV0Xk5RK7pRkwN4Gh0lAKH5YEeqi
+ jHcleGmlToIPJsVqCze1e9mpoDUTjWGoA9H0H818zxhyYRnZiFwJRYQP3HZ6f5SX
+ dYG+hcBlGJAasAEZ/rVsEs24ZjdiHDqnu+6s+aSehqN/pANJy+KJMQv/XxvGQS+B
+ o5KGSCshU9be52+z05JZJojVqfMRKzsf8zQTCCrMVz+UVX3GhcFvA==
+Received: from ppma12.dal12v.mail.ibm.com
+ (dc.9e.1632.ip4.static.sl-reverse.com [50.22.158.220])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 44c4p7vpcc-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Fri, 24 Jan 2025 20:21:18 +0000 (GMT)
-Received: from pps.filterd (ppma22.wdc07v.mail.ibm.com [127.0.0.1])
- by ppma22.wdc07v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 50OIfuXA024241;
- Fri, 24 Jan 2025 20:21:17 GMT
-Received: from smtprelay02.dal12v.mail.ibm.com ([172.16.1.4])
- by ppma22.wdc07v.mail.ibm.com (PPS) with ESMTPS id 448q0yne3h-1
+ Fri, 24 Jan 2025 20:21:19 +0000 (GMT)
+Received: from pps.filterd (ppma12.dal12v.mail.ibm.com [127.0.0.1])
+ by ppma12.dal12v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 50OIMHfb019287;
+ Fri, 24 Jan 2025 20:21:19 GMT
+Received: from smtprelay06.dal12v.mail.ibm.com ([172.16.1.8])
+ by ppma12.dal12v.mail.ibm.com (PPS) with ESMTPS id 448pmswfc3-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Fri, 24 Jan 2025 20:21:17 +0000
+ Fri, 24 Jan 2025 20:21:19 +0000
 Received: from smtpav05.dal12v.mail.ibm.com (smtpav05.dal12v.mail.ibm.com
  [10.241.53.104])
- by smtprelay02.dal12v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 50OKLGrD12386894
+ by smtprelay06.dal12v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 50OKLIbH27394770
  (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Fri, 24 Jan 2025 20:21:16 GMT
+ Fri, 24 Jan 2025 20:21:18 GMT
 Received: from smtpav05.dal12v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 45C3B58065;
- Fri, 24 Jan 2025 20:21:16 +0000 (GMT)
+ by IMSVA (Postfix) with ESMTP id 20A1458065;
+ Fri, 24 Jan 2025 20:21:18 +0000 (GMT)
 Received: from smtpav05.dal12v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 7217458052;
- Fri, 24 Jan 2025 20:21:15 +0000 (GMT)
+ by IMSVA (Postfix) with ESMTP id 512E358056;
+ Fri, 24 Jan 2025 20:21:17 +0000 (GMT)
 Received: from li-2311da4c-2e09-11b2-a85c-c003041e9174.ibm.com.com (unknown
  [9.61.77.196]) by smtpav05.dal12v.mail.ibm.com (Postfix) with ESMTP;
- Fri, 24 Jan 2025 20:21:15 +0000 (GMT)
+ Fri, 24 Jan 2025 20:21:17 +0000 (GMT)
 From: Matthew Rosato <mjrosato@linux.ibm.com>
 To: qemu-s390x@nongnu.org
 Cc: farman@linux.ibm.com, schnelle@linux.ibm.com, thuth@redhat.com,
  pasic@linux.ibm.com, borntraeger@linux.ibm.com,
  richard.henderson@linaro.org, david@redhat.com, iii@linux.ibm.com,
  clegoate@redhat.com, qemu-devel@nongnu.org
-Subject: [PATCH v3 0/2] s390x/pci: relax I/O address translation requirement
-Date: Fri, 24 Jan 2025 15:21:13 -0500
-Message-ID: <20250124202115.349386-1-mjrosato@linux.ibm.com>
+Subject: [PATCH v3 2/2] s390x/pci: indicate QEMU supports relaxed translation
+ for passthrough
+Date: Fri, 24 Jan 2025 15:21:15 -0500
+Message-ID: <20250124202115.349386-3-mjrosato@linux.ibm.com>
 X-Mailer: git-send-email 2.48.1
+In-Reply-To: <20250124202115.349386-1-mjrosato@linux.ibm.com>
+References: <20250124202115.349386-1-mjrosato@linux.ibm.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-TM-AS-GCONF: 00
-X-Proofpoint-GUID: gJNoFh9Rx2mTEKj_1VeedGN3UYCBnjKs
-X-Proofpoint-ORIG-GUID: gJNoFh9Rx2mTEKj_1VeedGN3UYCBnjKs
+X-Proofpoint-GUID: 9wv69QzFosyTPxyEE41v6TARujfum3AY
+X-Proofpoint-ORIG-GUID: 9wv69QzFosyTPxyEE41v6TARujfum3AY
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1057,Hydra:6.0.680,FMLib:17.12.68.34
  definitions=2025-01-24_08,2025-01-23_01,2024-11-22_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- phishscore=0
- lowpriorityscore=0 suspectscore=0 adultscore=0 clxscore=1015 spamscore=0
- bulkscore=0 malwarescore=0 mlxlogscore=892 mlxscore=0 priorityscore=1501
- impostorscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ impostorscore=0 mlxscore=0
+ priorityscore=1501 adultscore=0 phishscore=0 clxscore=1015
+ lowpriorityscore=0 mlxlogscore=982 bulkscore=0 malwarescore=0
+ suspectscore=0 spamscore=0 classifier=spam adjust=0 reason=mlx scancount=1
  engine=8.19.0-2411120000 definitions=main-2501240137
-Received-SPF: pass client-ip=148.163.158.5;
- envelope-from=mjrosato@linux.ibm.com; helo=mx0b-001b2d01.pphosted.com
+Received-SPF: pass client-ip=148.163.156.1;
+ envelope-from=mjrosato@linux.ibm.com; helo=mx0a-001b2d01.pphosted.com
 X-Spam_score_int: -26
 X-Spam_score: -2.7
 X-Spam_bar: --
@@ -106,48 +109,45 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This series introduces the concept of the relaxed translation requirement
-for s390x guests in order to allow bypass of the guest IOMMU for more
-efficient PCI passthrough.
+Specifying this bit in the guest CLP response indicates that the guest
+can optionally choose to skip translation and instead use
+identity-mapped operations.
 
-With this series, QEMU can indicate to the guest that an IOMMU is not
-strictly required for a zPCI device.  This would subsequently allow a
-guest linux to use iommu.passthrough=1 and bypass their guest IOMMU for
-PCI devices.
+Signed-off-by: Matthew Rosato <mjrosato@linux.ibm.com>
+---
+ hw/s390x/s390-pci-vfio.c        | 5 ++++-
+ include/hw/s390x/s390-pci-clp.h | 1 +
+ 2 files changed, 5 insertions(+), 1 deletion(-)
 
-When this occurs, QEMU will note the behavior via an intercepted MPCIFC
-instruction and will fill the host iommu with mappings of the entire
-guest address space in response.
-
-There is a kernel series that adds the relevant behavior needed to
-exploit this new feature from within a s390x linux guest.  Most
-recent version of that is at [1].
-
-[1]: https://lore.kernel.org/linux-s390/20250124201717.348736-1-mjrosato@linux.ibm.com/
-
-Changes for v3:
-- use s390_get_memory_limit
-- advertise full aperture for relaxed-translation-capable devices
-
-Changes for v2:
-- Add relax-translation property, fence for older machines
-- Add a new MPCIFC failure case when direct-mapping requested but
-  the relax-translation property is set to off.
-- For direct mapping, use a memory alias to handle the SMDA offset and
-  then just let vfio handle the pinning of memory.
-
-Matthew Rosato (2):
-  s390x/pci: add support for guests that request direct mapping
-  s390x/pci: indicate QEMU supports relaxed translation for passthrough
-
- hw/s390x/s390-pci-bus.c         | 36 +++++++++++++++++++++++++++++++--
- hw/s390x/s390-pci-inst.c        | 13 ++++++++++--
- hw/s390x/s390-pci-vfio.c        | 20 +++++++++++++-----
- hw/s390x/s390-virtio-ccw.c      |  5 +++++
- include/hw/s390x/s390-pci-bus.h |  4 ++++
- include/hw/s390x/s390-pci-clp.h |  1 +
- 6 files changed, 70 insertions(+), 9 deletions(-)
-
+diff --git a/hw/s390x/s390-pci-vfio.c b/hw/s390x/s390-pci-vfio.c
+index dad525c81c..69543d1ca8 100644
+--- a/hw/s390x/s390-pci-vfio.c
++++ b/hw/s390x/s390-pci-vfio.c
+@@ -230,8 +230,11 @@ static void s390_pci_read_group(S390PCIBusDevice *pbdev,
+         pbdev->pci_group = s390_group_create(pbdev->zpci_fn.pfgid, start_gid);
+ 
+         resgrp = &pbdev->pci_group->zpci_group;
++        if (pbdev->rtr_allowed) {
++            resgrp->fr |= CLP_RSP_QPCIG_MASK_RTR;
++        }
+         if (cap->flags & VFIO_DEVICE_INFO_ZPCI_FLAG_REFRESH) {
+-            resgrp->fr = 1;
++            resgrp->fr |= CLP_RSP_QPCIG_MASK_REFRESH;
+         }
+         resgrp->dasm = cap->dasm;
+         resgrp->msia = cap->msi_addr;
+diff --git a/include/hw/s390x/s390-pci-clp.h b/include/hw/s390x/s390-pci-clp.h
+index 03b7f9ba5f..6a635d693b 100644
+--- a/include/hw/s390x/s390-pci-clp.h
++++ b/include/hw/s390x/s390-pci-clp.h
+@@ -158,6 +158,7 @@ typedef struct ClpRspQueryPciGrp {
+ #define CLP_RSP_QPCIG_MASK_NOI 0xfff
+     uint16_t i;
+     uint8_t version;
++#define CLP_RSP_QPCIG_MASK_RTR     0x20
+ #define CLP_RSP_QPCIG_MASK_FRAME   0x2
+ #define CLP_RSP_QPCIG_MASK_REFRESH 0x1
+     uint8_t fr;
 -- 
 2.48.1
 
