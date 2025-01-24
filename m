@@ -4,80 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2FFCDC0218C
-	for <qemu-devel@archiver.kernel.org>; Fri, 24 Jan 2025 16:34:25 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8164CC02181
+	for <qemu-devel@archiver.kernel.org>; Fri, 24 Jan 2025 16:34:58 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tbMYc-0004DW-Pl; Fri, 24 Jan 2025 11:29:23 -0500
+	id 1tbMcO-0005r8-TH; Fri, 24 Jan 2025 11:33:20 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1tbMYH-0003nX-2Q
- for qemu-devel@nongnu.org; Fri, 24 Jan 2025 11:29:01 -0500
-Received: from mail-wm1-x331.google.com ([2a00:1450:4864:20::331])
+ id 1tbMYl-0004od-RU
+ for qemu-devel@nongnu.org; Fri, 24 Jan 2025 11:29:32 -0500
+Received: from mail-wm1-x32d.google.com ([2a00:1450:4864:20::32d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1tbMYC-0005Oz-PH
- for qemu-devel@nongnu.org; Fri, 24 Jan 2025 11:29:00 -0500
-Received: by mail-wm1-x331.google.com with SMTP id
- 5b1f17b1804b1-43635796b48so15503435e9.0
- for <qemu-devel@nongnu.org>; Fri, 24 Jan 2025 08:28:51 -0800 (PST)
+ id 1tbMYk-0005eI-8Z
+ for qemu-devel@nongnu.org; Fri, 24 Jan 2025 11:29:31 -0500
+Received: by mail-wm1-x32d.google.com with SMTP id
+ 5b1f17b1804b1-4364a37a1d7so23483655e9.3
+ for <qemu-devel@nongnu.org>; Fri, 24 Jan 2025 08:29:29 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1737736130; x=1738340930; darn=nongnu.org;
+ d=linaro.org; s=google; t=1737736169; x=1738340969; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=QIlQY0ATcG2mPnShBCA6UPBVn+UDLQMzHJbHdp60Tp8=;
- b=Y+rJorE19Ea/GHXwuCpsOoPfPuYdC5qQ8MxVSKf39kwK+Kryf2ZAFXul4m2IPfxS/m
- /ldf2ZfQIx8tcwXJxbnPUbag3ZlWbHI/FpE8cTntJIWsZLlJmI1+vkfCNwNHqqxgjXxh
- oFixjWQ6gkdlSFBPQBriIKeWhUXeE0nDYfdEO5iws4M6vZYNSY/nrl3w/21MFjyyoIHH
- O+RlNaDx4Lbzk/M5AqFBS/mrUozCDXvWi3nvcBEgQwo1XcAPv5VF8L7Lc/slZyEqxok2
- ICczKE/QK1eP4S0KbNRHW6QGluIx8oB6fjodYv+b43AWxEQI06PDVgsSJqJfLFQkwyKC
- PLiQ==
+ :reply-to; bh=e+vM7eVw9FNDbWBcJu93gLE5yRUZL1XievyTDuJkQaA=;
+ b=pRNDCYwzUnEXJz/7dt5sl1nSNYD+bZh6w6ajXX9FeeDZ5W2mVzdKaxZWkXZ8AFCb5M
+ KapDNIlTC+s1ukg01WMFgx1JLa01Izj1GY9SZ5BRYK+spJOImSNBYWdaAA134u+x5o6Z
+ V7DiKvLjjmZPkmyJuZdutRgsVnx4bDUJRUOdLBsnkFflwU/F3pCxFJcIp0GO35PqEusx
+ QvCzwq0JRZv0G8A+reA4n5HkMAqiPRDEL5WD1Np6SXzrV65mV8oxyDLlYvhmxeaq+OlO
+ wAun5dAwlR+cS7O1ClXhJpjfoRMgSsNZPoda0xYF2HFrOa1wJbI3LMOzDdJm63gEnc1H
+ 5A5A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1737736130; x=1738340930;
+ d=1e100.net; s=20230601; t=1737736169; x=1738340969;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=QIlQY0ATcG2mPnShBCA6UPBVn+UDLQMzHJbHdp60Tp8=;
- b=X9kqUjX5UYlLHRzscXzpBsnSaTviouqCdZeMhu6DL+2BK0ww4kLHrwStpse6mumxUP
- viLp8c9xlplJwh4EZBKPVZWIL3UWbZMdjoTf7eVIz15xPM/Mk6OqdTvSQaZiZkkJQwU3
- rYv/Qe2ljgYLZjz7cy6Kw6vAnkGuH8mVO2E7T8uNaFXUUKzDQ1/w+wJNNKzGlrSh2z/T
- U3qdYKsMpazC2nFjj0dmmu/koZ2ivg+gVAG2wb9sQrbMC+Pnr0pxRzAhomCnLsSFKUA4
- ULDVxqBH+I9OIf+i4PXm9Wr8YEvUCEUwIBiYu3G2A1wR2c7GUax1satPqA8ThN+u1s8k
- UQyg==
+ bh=e+vM7eVw9FNDbWBcJu93gLE5yRUZL1XievyTDuJkQaA=;
+ b=bC5s8bO4x1FsGpd3pDEtbAGu4XOIS832OFdomZtQUC/eB3u+4oUOiVlj4aIIIWqVok
+ eKmmwSKAX5IdxUR4mEnB340SSWs5qMOWvnudHHD4OUGSYS/z1/h7/v4UIyZoxFF9Z88P
+ TAVeX5kS17m0Lf7eACOv0aW3WKFPJaCQdvn9Z68Gy22fqS7Oz9MHl/YJTdmP8hwGVrp3
+ anMOwFPCllpL3eaIjgLf6ZKwt7MVbAPmv4ufEFmBNnUZn2truMVTrZJftAJMk4P6zUDE
+ 4KZZZr51XV4IA+UT0KOalKtFvv0Yix/+gmd5ztyE9raSg+SBi9rR3RFa0KXFD8Ckie3k
+ G5rA==
 X-Forwarded-Encrypted: i=1;
- AJvYcCXQmMj9DIobP6s6yViBz0zcNZacB1+2+pSoBH7+RpbaXFoE7NJQ1Ja//7G00WPyp5j3zI37keZJA3DB@nongnu.org
-X-Gm-Message-State: AOJu0Yx4Kf/3d0wnzzb9uVtvhDgsYu8qPkF+MgQOHEkUA+iEoqiV7ubr
- 9zMnNKIidplndtgQsVZO0CW2vSQuVbOGz/x9+y/M+cLVhsVOoNN1NL3yZv+7tLhQE2K2MzSS1cl
- T
-X-Gm-Gg: ASbGncs6ul4l18tnpHmiHkE5hhE5aPX3WrRdKUzqBaARzddaLq7ybvNpg/oDKV7c2kK
- hHqfYOQMAUzOquXAaHGNc92GE+dxPj7DrfMOn15WaTcVfERwVa6x8ORuLmPZXrSeE/D0MjKngMo
- zYOONcWD8WK+ePVBMoMfJZTdRGHf+rX/n7IRcHKcEOEd0AbCxAp1ouW7xIT2sInkF759BZyotfB
- ajcfXNCm0mVFZK9JnlRshyXWACAvIYT85pdiMlT6IDZ9QlaRQna/LA4yboybur+7eVF18Hjd4Dw
- 01xNZuLjmCg=
-X-Google-Smtp-Source: AGHT+IHz3jTI18IfaYNnJT9kpUsM2M/dFZJxBlByFHNH5BURB6SVa0lr9rPuORmx4OuqI+4xX2gXaw==
-X-Received: by 2002:a05:600c:1e8e:b0:434:e65e:457b with SMTP id
- 5b1f17b1804b1-438bd67f134mr35054145e9.3.1737736130314; 
- Fri, 24 Jan 2025 08:28:50 -0800 (PST)
+ AJvYcCV141WyNHxal9KgyB3zMn2RreFftHnPOv9mH561v632gxpCDsBZ/hFOAEmF7YsPqRxni6M2EnhyteGC@nongnu.org
+X-Gm-Message-State: AOJu0Ywj3MX6HfeDGi1ta2lYXIanKRgvr+HvydouUej23yi4Yo9BPX6O
+ UJMrEcXmmJNJm1Mr7IvCNMA0ke96qbh03vikI57xTB7TS8Kib4Pj6A+aPqP2rrP00gdCCVGTPLj
+ f
+X-Gm-Gg: ASbGncumLVw7FBaNr8S1As+CU1eQrPKxGBV1hJLJISZRRlVMoocPYdlMKVcYriN2E44
+ 6NR5QkZdimnHCukzwYwTJxToARlKFMZOpDN3VRKD9EYYVzGx9Fk6vwsYMaGNGh/b5lsiOQzw4HC
+ 2/jVe86yJYsPlcU4h7X5xj1Tg5gYs0NZLP0F9FLRBqgug8eH7FaB2czuBd7D2ZKblcXwwD+8Vl2
+ T8Pd1DLiGJA8jBFNQwYaUgYouur8My79/nSfioQ+RT/IEUsGecCK/1e6Zq3tP+Gt184b1RwWdnu
+ 6Sm1U7jnaB8=
+X-Google-Smtp-Source: AGHT+IFyVnT0BgF7+jp5aUkVCdHG3hzarzWmRQ8+n35ar0RgaMdkAa6xH1R1JFPmQOFAE2hKOiHAxg==
+X-Received: by 2002:a05:600c:83ce:b0:436:ed33:1535 with SMTP id
+ 5b1f17b1804b1-438913e0384mr307041865e9.12.1737736168902; 
+ Fri, 24 Jan 2025 08:29:28 -0800 (PST)
 Received: from orth.archaic.org.uk (orth.archaic.org.uk. [2001:8b0:1d0::2])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-438bd47eecasm31683025e9.6.2025.01.24.08.28.49
+ 5b1f17b1804b1-438bd47eecasm31683025e9.6.2025.01.24.08.29.27
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 24 Jan 2025 08:28:49 -0800 (PST)
+ Fri, 24 Jan 2025 08:29:27 -0800 (PST)
 From: Peter Maydell <peter.maydell@linaro.org>
 To: qemu-arm@nongnu.org,
 	qemu-devel@nongnu.org
-Subject: [PATCH 10/76] target/arm: Use FPST_FPCR_A32 in A32 decoder
-Date: Fri, 24 Jan 2025 16:27:30 +0000
-Message-Id: <20250124162836.2332150-11-peter.maydell@linaro.org>
+Subject: [PATCH 41/76] target/arm: Handle FPCR.NEP in do_cvtf_scalar()
+Date: Fri, 24 Jan 2025 16:28:01 +0000
+Message-Id: <20250124162836.2332150-42-peter.maydell@linaro.org>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20250124162836.2332150-1-peter.maydell@linaro.org>
 References: <20250124162836.2332150-1-peter.maydell@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::331;
- envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x331.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::32d;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x32d.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -100,263 +100,44 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-In the A32 decoder, use FPST_FPCR_A32 rather than FPST_FPCR.  By
-doing an automated conversion of the whole file we avoid possibly
-using more than one fpst value in a set_rmode/op/restore_rmode
-sequence.
-
-Patch created with
-  perl -p -i -e 's/FPST_FPCR(?!_)/FPST_FPCR_A32/g' target/arm/tcg/translate-vfp.c
+Handle FPCR.NEP in the operations handled by do_cvtf_scalar().
 
 Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
 ---
- target/arm/tcg/translate-vfp.c | 54 +++++++++++++++++-----------------
- 1 file changed, 27 insertions(+), 27 deletions(-)
+ target/arm/tcg/translate-a64.c | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/target/arm/tcg/translate-vfp.c b/target/arm/tcg/translate-vfp.c
-index 3cbe9a7418d..e1b8243c5d9 100644
---- a/target/arm/tcg/translate-vfp.c
-+++ b/target/arm/tcg/translate-vfp.c
-@@ -462,7 +462,7 @@ static bool trans_VRINT(DisasContext *s, arg_VRINT *a)
-     if (sz == 1) {
-         fpst = fpstatus_ptr(FPST_FPCR_F16);
-     } else {
--        fpst = fpstatus_ptr(FPST_FPCR);
-+        fpst = fpstatus_ptr(FPST_FPCR_A32);
-     }
+diff --git a/target/arm/tcg/translate-a64.c b/target/arm/tcg/translate-a64.c
+index 64994d3212f..6c20293961a 100644
+--- a/target/arm/tcg/translate-a64.c
++++ b/target/arm/tcg/translate-a64.c
+@@ -8744,7 +8744,7 @@ static bool do_cvtf_scalar(DisasContext *s, MemOp esz, int rd, int shift,
+         } else {
+             gen_helper_vfp_uqtod(tcg_double, tcg_int, tcg_shift, tcg_fpstatus);
+         }
+-        write_fp_dreg(s, rd, tcg_double);
++        write_fp_dreg_merging(s, rd, rd, tcg_double);
+         break;
  
-     tcg_rmode = gen_set_rmode(rounding, fpst);
-@@ -529,7 +529,7 @@ static bool trans_VCVT(DisasContext *s, arg_VCVT *a)
-     if (sz == 1) {
-         fpst = fpstatus_ptr(FPST_FPCR_F16);
-     } else {
--        fpst = fpstatus_ptr(FPST_FPCR);
-+        fpst = fpstatus_ptr(FPST_FPCR_A32);
-     }
+     case MO_32:
+@@ -8754,7 +8754,7 @@ static bool do_cvtf_scalar(DisasContext *s, MemOp esz, int rd, int shift,
+         } else {
+             gen_helper_vfp_uqtos(tcg_single, tcg_int, tcg_shift, tcg_fpstatus);
+         }
+-        write_fp_sreg(s, rd, tcg_single);
++        write_fp_sreg_merging(s, rd, rd, tcg_single);
+         break;
  
-     tcg_shift = tcg_constant_i32(0);
-@@ -1398,7 +1398,7 @@ static bool do_vfp_3op_sp(DisasContext *s, VFPGen3OpSPFn *fn,
-     f0 = tcg_temp_new_i32();
-     f1 = tcg_temp_new_i32();
-     fd = tcg_temp_new_i32();
--    fpst = fpstatus_ptr(FPST_FPCR);
-+    fpst = fpstatus_ptr(FPST_FPCR_A32);
+     case MO_16:
+@@ -8764,7 +8764,7 @@ static bool do_cvtf_scalar(DisasContext *s, MemOp esz, int rd, int shift,
+         } else {
+             gen_helper_vfp_uqtoh(tcg_single, tcg_int, tcg_shift, tcg_fpstatus);
+         }
+-        write_fp_sreg(s, rd, tcg_single);
++        write_fp_hreg_merging(s, rd, rd, tcg_single);
+         break;
  
-     vfp_load_reg32(f0, vn);
-     vfp_load_reg32(f1, vm);
-@@ -1517,7 +1517,7 @@ static bool do_vfp_3op_dp(DisasContext *s, VFPGen3OpDPFn *fn,
-     f0 = tcg_temp_new_i64();
-     f1 = tcg_temp_new_i64();
-     fd = tcg_temp_new_i64();
--    fpst = fpstatus_ptr(FPST_FPCR);
-+    fpst = fpstatus_ptr(FPST_FPCR_A32);
- 
-     vfp_load_reg64(f0, vn);
-     vfp_load_reg64(f1, vm);
-@@ -2181,7 +2181,7 @@ static bool do_vfm_sp(DisasContext *s, arg_VFMA_sp *a, bool neg_n, bool neg_d)
-         /* VFNMA, VFNMS */
-         gen_vfp_negs(vd, vd);
-     }
--    fpst = fpstatus_ptr(FPST_FPCR);
-+    fpst = fpstatus_ptr(FPST_FPCR_A32);
-     gen_helper_vfp_muladds(vd, vn, vm, vd, fpst);
-     vfp_store_reg32(vd, a->vd);
-     return true;
-@@ -2246,7 +2246,7 @@ static bool do_vfm_dp(DisasContext *s, arg_VFMA_dp *a, bool neg_n, bool neg_d)
-         /* VFNMA, VFNMS */
-         gen_vfp_negd(vd, vd);
-     }
--    fpst = fpstatus_ptr(FPST_FPCR);
-+    fpst = fpstatus_ptr(FPST_FPCR_A32);
-     gen_helper_vfp_muladdd(vd, vn, vm, vd, fpst);
-     vfp_store_reg64(vd, a->vd);
-     return true;
-@@ -2429,12 +2429,12 @@ static void gen_VSQRT_hp(TCGv_i32 vd, TCGv_i32 vm)
- 
- static void gen_VSQRT_sp(TCGv_i32 vd, TCGv_i32 vm)
- {
--    gen_helper_vfp_sqrts(vd, vm, fpstatus_ptr(FPST_FPCR));
-+    gen_helper_vfp_sqrts(vd, vm, fpstatus_ptr(FPST_FPCR_A32));
- }
- 
- static void gen_VSQRT_dp(TCGv_i64 vd, TCGv_i64 vm)
- {
--    gen_helper_vfp_sqrtd(vd, vm, fpstatus_ptr(FPST_FPCR));
-+    gen_helper_vfp_sqrtd(vd, vm, fpstatus_ptr(FPST_FPCR_A32));
- }
- 
- DO_VFP_2OP(VSQRT, hp, gen_VSQRT_hp, aa32_fp16_arith)
-@@ -2565,7 +2565,7 @@ static bool trans_VCVT_f32_f16(DisasContext *s, arg_VCVT_f32_f16 *a)
-         return true;
-     }
- 
--    fpst = fpstatus_ptr(FPST_FPCR);
-+    fpst = fpstatus_ptr(FPST_FPCR_A32);
-     ahp_mode = get_ahp_flag();
-     tmp = tcg_temp_new_i32();
-     /* The T bit tells us if we want the low or high 16 bits of Vm */
-@@ -2599,7 +2599,7 @@ static bool trans_VCVT_f64_f16(DisasContext *s, arg_VCVT_f64_f16 *a)
-         return true;
-     }
- 
--    fpst = fpstatus_ptr(FPST_FPCR);
-+    fpst = fpstatus_ptr(FPST_FPCR_A32);
-     ahp_mode = get_ahp_flag();
-     tmp = tcg_temp_new_i32();
-     /* The T bit tells us if we want the low or high 16 bits of Vm */
-@@ -2623,7 +2623,7 @@ static bool trans_VCVT_b16_f32(DisasContext *s, arg_VCVT_b16_f32 *a)
-         return true;
-     }
- 
--    fpst = fpstatus_ptr(FPST_FPCR);
-+    fpst = fpstatus_ptr(FPST_FPCR_A32);
-     tmp = tcg_temp_new_i32();
- 
-     vfp_load_reg32(tmp, a->vm);
-@@ -2646,7 +2646,7 @@ static bool trans_VCVT_f16_f32(DisasContext *s, arg_VCVT_f16_f32 *a)
-         return true;
-     }
- 
--    fpst = fpstatus_ptr(FPST_FPCR);
-+    fpst = fpstatus_ptr(FPST_FPCR_A32);
-     ahp_mode = get_ahp_flag();
-     tmp = tcg_temp_new_i32();
- 
-@@ -2680,7 +2680,7 @@ static bool trans_VCVT_f16_f64(DisasContext *s, arg_VCVT_f16_f64 *a)
-         return true;
-     }
- 
--    fpst = fpstatus_ptr(FPST_FPCR);
-+    fpst = fpstatus_ptr(FPST_FPCR_A32);
-     ahp_mode = get_ahp_flag();
-     tmp = tcg_temp_new_i32();
-     vm = tcg_temp_new_i64();
-@@ -2727,7 +2727,7 @@ static bool trans_VRINTR_sp(DisasContext *s, arg_VRINTR_sp *a)
- 
-     tmp = tcg_temp_new_i32();
-     vfp_load_reg32(tmp, a->vm);
--    fpst = fpstatus_ptr(FPST_FPCR);
-+    fpst = fpstatus_ptr(FPST_FPCR_A32);
-     gen_helper_rints(tmp, tmp, fpst);
-     vfp_store_reg32(tmp, a->vd);
-     return true;
-@@ -2757,7 +2757,7 @@ static bool trans_VRINTR_dp(DisasContext *s, arg_VRINTR_dp *a)
- 
-     tmp = tcg_temp_new_i64();
-     vfp_load_reg64(tmp, a->vm);
--    fpst = fpstatus_ptr(FPST_FPCR);
-+    fpst = fpstatus_ptr(FPST_FPCR_A32);
-     gen_helper_rintd(tmp, tmp, fpst);
-     vfp_store_reg64(tmp, a->vd);
-     return true;
-@@ -2803,7 +2803,7 @@ static bool trans_VRINTZ_sp(DisasContext *s, arg_VRINTZ_sp *a)
- 
-     tmp = tcg_temp_new_i32();
-     vfp_load_reg32(tmp, a->vm);
--    fpst = fpstatus_ptr(FPST_FPCR);
-+    fpst = fpstatus_ptr(FPST_FPCR_A32);
-     tcg_rmode = gen_set_rmode(FPROUNDING_ZERO, fpst);
-     gen_helper_rints(tmp, tmp, fpst);
-     gen_restore_rmode(tcg_rmode, fpst);
-@@ -2836,7 +2836,7 @@ static bool trans_VRINTZ_dp(DisasContext *s, arg_VRINTZ_dp *a)
- 
-     tmp = tcg_temp_new_i64();
-     vfp_load_reg64(tmp, a->vm);
--    fpst = fpstatus_ptr(FPST_FPCR);
-+    fpst = fpstatus_ptr(FPST_FPCR_A32);
-     tcg_rmode = gen_set_rmode(FPROUNDING_ZERO, fpst);
-     gen_helper_rintd(tmp, tmp, fpst);
-     gen_restore_rmode(tcg_rmode, fpst);
-@@ -2880,7 +2880,7 @@ static bool trans_VRINTX_sp(DisasContext *s, arg_VRINTX_sp *a)
- 
-     tmp = tcg_temp_new_i32();
-     vfp_load_reg32(tmp, a->vm);
--    fpst = fpstatus_ptr(FPST_FPCR);
-+    fpst = fpstatus_ptr(FPST_FPCR_A32);
-     gen_helper_rints_exact(tmp, tmp, fpst);
-     vfp_store_reg32(tmp, a->vd);
-     return true;
-@@ -2910,7 +2910,7 @@ static bool trans_VRINTX_dp(DisasContext *s, arg_VRINTX_dp *a)
- 
-     tmp = tcg_temp_new_i64();
-     vfp_load_reg64(tmp, a->vm);
--    fpst = fpstatus_ptr(FPST_FPCR);
-+    fpst = fpstatus_ptr(FPST_FPCR_A32);
-     gen_helper_rintd_exact(tmp, tmp, fpst);
-     vfp_store_reg64(tmp, a->vd);
-     return true;
-@@ -2937,7 +2937,7 @@ static bool trans_VCVT_sp(DisasContext *s, arg_VCVT_sp *a)
-     vm = tcg_temp_new_i32();
-     vd = tcg_temp_new_i64();
-     vfp_load_reg32(vm, a->vm);
--    gen_helper_vfp_fcvtds(vd, vm, fpstatus_ptr(FPST_FPCR));
-+    gen_helper_vfp_fcvtds(vd, vm, fpstatus_ptr(FPST_FPCR_A32));
-     vfp_store_reg64(vd, a->vd);
-     return true;
- }
-@@ -2963,7 +2963,7 @@ static bool trans_VCVT_dp(DisasContext *s, arg_VCVT_dp *a)
-     vd = tcg_temp_new_i32();
-     vm = tcg_temp_new_i64();
-     vfp_load_reg64(vm, a->vm);
--    gen_helper_vfp_fcvtsd(vd, vm, fpstatus_ptr(FPST_FPCR));
-+    gen_helper_vfp_fcvtsd(vd, vm, fpstatus_ptr(FPST_FPCR_A32));
-     vfp_store_reg32(vd, a->vd);
-     return true;
- }
-@@ -3010,7 +3010,7 @@ static bool trans_VCVT_int_sp(DisasContext *s, arg_VCVT_int_sp *a)
- 
-     vm = tcg_temp_new_i32();
-     vfp_load_reg32(vm, a->vm);
--    fpst = fpstatus_ptr(FPST_FPCR);
-+    fpst = fpstatus_ptr(FPST_FPCR_A32);
-     if (a->s) {
-         /* i32 -> f32 */
-         gen_helper_vfp_sitos(vm, vm, fpst);
-@@ -3044,7 +3044,7 @@ static bool trans_VCVT_int_dp(DisasContext *s, arg_VCVT_int_dp *a)
-     vm = tcg_temp_new_i32();
-     vd = tcg_temp_new_i64();
-     vfp_load_reg32(vm, a->vm);
--    fpst = fpstatus_ptr(FPST_FPCR);
-+    fpst = fpstatus_ptr(FPST_FPCR_A32);
-     if (a->s) {
-         /* i32 -> f64 */
-         gen_helper_vfp_sitod(vd, vm, fpst);
-@@ -3161,7 +3161,7 @@ static bool trans_VCVT_fix_sp(DisasContext *s, arg_VCVT_fix_sp *a)
-     vd = tcg_temp_new_i32();
-     vfp_load_reg32(vd, a->vd);
- 
--    fpst = fpstatus_ptr(FPST_FPCR);
-+    fpst = fpstatus_ptr(FPST_FPCR_A32);
-     shift = tcg_constant_i32(frac_bits);
- 
-     /* Switch on op:U:sx bits */
-@@ -3223,7 +3223,7 @@ static bool trans_VCVT_fix_dp(DisasContext *s, arg_VCVT_fix_dp *a)
-     vd = tcg_temp_new_i64();
-     vfp_load_reg64(vd, a->vd);
- 
--    fpst = fpstatus_ptr(FPST_FPCR);
-+    fpst = fpstatus_ptr(FPST_FPCR_A32);
-     shift = tcg_constant_i32(frac_bits);
- 
-     /* Switch on op:U:sx bits */
-@@ -3307,7 +3307,7 @@ static bool trans_VCVT_sp_int(DisasContext *s, arg_VCVT_sp_int *a)
-         return true;
-     }
- 
--    fpst = fpstatus_ptr(FPST_FPCR);
-+    fpst = fpstatus_ptr(FPST_FPCR_A32);
-     vm = tcg_temp_new_i32();
-     vfp_load_reg32(vm, a->vm);
- 
-@@ -3347,7 +3347,7 @@ static bool trans_VCVT_dp_int(DisasContext *s, arg_VCVT_dp_int *a)
-         return true;
-     }
- 
--    fpst = fpstatus_ptr(FPST_FPCR);
-+    fpst = fpstatus_ptr(FPST_FPCR_A32);
-     vm = tcg_temp_new_i64();
-     vd = tcg_temp_new_i32();
-     vfp_load_reg64(vm, a->vm);
+     default:
 -- 
 2.34.1
 
