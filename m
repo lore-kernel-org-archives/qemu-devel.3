@@ -4,175 +4,102 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 79117C02181
-	for <qemu-devel@archiver.kernel.org>; Fri, 24 Jan 2025 03:28:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3C63BC02181
+	for <qemu-devel@archiver.kernel.org>; Fri, 24 Jan 2025 03:31:35 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tbAMR-000751-P3; Thu, 23 Jan 2025 22:27:59 -0500
+	id 1tbAPj-0008TW-Bw; Thu, 23 Jan 2025 22:31:24 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <Alexey.Kardashevskiy@amd.com>)
- id 1tbAMQ-00074r-8s
- for qemu-devel@nongnu.org; Thu, 23 Jan 2025 22:27:58 -0500
-Received: from mail-dm6nam11on2061d.outbound.protection.outlook.com
- ([2a01:111:f403:2415::61d]
- helo=NAM11-DM6-obe.outbound.protection.outlook.com)
+ (Exim 4.90_1) (envelope-from <jasowang@redhat.com>)
+ id 1tbAPe-0008Sw-IW
+ for qemu-devel@nongnu.org; Thu, 23 Jan 2025 22:31:21 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <Alexey.Kardashevskiy@amd.com>)
- id 1tbAMN-00030Z-0K
- for qemu-devel@nongnu.org; Thu, 23 Jan 2025 22:27:58 -0500
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=sKwBCCahxZ4BbQt6gmE9pV9E3uPuNGLw5IrWcVdStF1LAbgRHKs4Sk4L0EGZAL2knbOYIBcVbIr0eAGwtVGBD9+24xJukiBHA7aNphjtZs2dhGSsXQbX7igzy86rhZVZZmci1aZ9YJGXSZNF4u1JbaY7dmdlgBz4u5Ydheu8ZdWg5Lt7uWx+lXo+sdcac6pg+Iw2Dh+hbLTjWV8a1qBovZsZbIa0KQzU4Baiq+4Co20w/siFHWTOPthy8WGbbod/mrvbEkPkncYb3l17+TJK6RxmntyEw3f1Wlx32jBgcid7VbZBFVdMC+FVJRq5gVIJRUi3J1Rn0zJYrnQ54DOkMQ==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=UCccYjr+H0dFc+LaQPmsBxGBpv22HuN5cd8rVFb80aI=;
- b=nBzoVi5vg7ib6zOuQ1ncSsNyA9zc789r5XQygvKkk5d4oPp6mtLDvkANtONy1FoT68+Lz6BNqatNiq+1q3K7Cgqgz/7TdoGILNiAm/j6Jy1on9qxe1EZTV2zqpgSAfcV9nSKaCXTMRWiYLtQ/En9kGAaTEEGv7NRFI05J6vR4Sjh4FPZtxGNsswfZzCRYXyGqSJVs0g1ZBNT7saYR011x9KdPyskTJ9VvdjZNhRjSoVBpG/BuTJsaRLucxaeGnyMwfmOEKJJxaNmCTL9Z1PdSnI9lCFfbzD0sCCU9+4o9Xl8jnth+8GXHVVjna8xBL4PS952bbTvxlq8/L+1ZUXpjg==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=amd.com; dmarc=pass action=none header.from=amd.com; dkim=pass
- header.d=amd.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=amd.com; s=selector1; 
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=UCccYjr+H0dFc+LaQPmsBxGBpv22HuN5cd8rVFb80aI=;
- b=Rnx3XfdRpTFoM3bq9/OlWXXYRJerRtbaPrlWIuuF1OSDov7s9nLRpv4N8U/i0I6WHmFdgucjCS+bu+J9Ml54q+nnD7bAS2NIVRKU/qzIkBk/1pxLW7XBxMZTNv01m/psPBFM44V06dFh4bp52t39r+cSXfmeEFRdrdi93jkh9O4=
-Authentication-Results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=amd.com;
-Received: from CH3PR12MB9194.namprd12.prod.outlook.com (2603:10b6:610:19f::7)
- by DM3PR12MB9391.namprd12.prod.outlook.com (2603:10b6:0:3d::16) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.8377.18; Fri, 24 Jan
- 2025 03:27:47 +0000
-Received: from CH3PR12MB9194.namprd12.prod.outlook.com
- ([fe80::53fb:bf76:727f:d00f]) by CH3PR12MB9194.namprd12.prod.outlook.com
- ([fe80::53fb:bf76:727f:d00f%5]) with mapi id 15.20.8356.020; Fri, 24 Jan 2025
- 03:27:47 +0000
-Message-ID: <5746187a-331a-4e8f-a7ab-9273fcc64e9b@amd.com>
-Date: Fri, 24 Jan 2025 14:27:40 +1100
-User-Agent: Mozilla Thunderbird Beta
-Subject: Re: [PATCH 5/7] memory: Register the RamDiscardManager instance upon
- guest_memfd creation
-Content-Language: en-US
-To: David Hildenbrand <david@redhat.com>,
- Chenyi Qiang <chenyi.qiang@intel.com>, Paolo Bonzini <pbonzini@redhat.com>,
- Peter Xu <peterx@redhat.com>, =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?=
- <philmd@linaro.org>, Michael Roth <michael.roth@amd.com>
-Cc: qemu-devel@nongnu.org, kvm@vger.kernel.org,
- Williams Dan J <dan.j.williams@intel.com>,
- Peng Chao P <chao.p.peng@intel.com>, Gao Chao <chao.gao@intel.com>,
- Xu Yilun <yilun.xu@intel.com>
-References: <20241213070852.106092-1-chenyi.qiang@intel.com>
- <20241213070852.106092-6-chenyi.qiang@intel.com>
- <2582a187-fa16-427b-a925-2ac564848a69@amd.com>
- <5c999e10-772b-4ece-9eed-4d082712b570@intel.com>
- <09b82b7f-7dec-4dd9-bfc0-707f4af23161@amd.com>
- <13b85368-46e8-4b82-b517-01ecc87af00e@intel.com>
- <59bd0e82-f269-4567-8f75-a32c9c997ca9@redhat.com>
-From: Alexey Kardashevskiy <aik@amd.com>
-In-Reply-To: <59bd0e82-f269-4567-8f75-a32c9c997ca9@redhat.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-X-ClientProxiedBy: MEWPR01CA0132.ausprd01.prod.outlook.com
- (2603:10c6:220:1d3::18) To CH3PR12MB9194.namprd12.prod.outlook.com
- (2603:10b6:610:19f::7)
+ (Exim 4.90_1) (envelope-from <jasowang@redhat.com>)
+ id 1tbAPc-0003Qq-2O
+ for qemu-devel@nongnu.org; Thu, 23 Jan 2025 22:31:18 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1737689473;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=J17h++/Fqn3buhimynx1h8Z8eMPFEHi3/WtoJOmOpm8=;
+ b=MFUS+1Abp7dszKIImxJYnI1XakMA6fGHMxEhURt9gVFIFAyX9IzszFcC2k+WhXPQ8gAur7
+ VMWRPP1P6rFMN3984IYCxXLWgg2ECdKDWI7Dk7ZXAnc9FVtFGAnu2ZgLZZDNfIVgmyNbhB
+ SWHev/ttTfBrdIe9W5o+7b/lpLHbfT4=
+Received: from mail-pj1-f71.google.com (mail-pj1-f71.google.com
+ [209.85.216.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-609-xYTPEBDWPzW0JLvqjSYPTg-1; Thu, 23 Jan 2025 22:31:10 -0500
+X-MC-Unique: xYTPEBDWPzW0JLvqjSYPTg-1
+X-Mimecast-MFC-AGG-ID: xYTPEBDWPzW0JLvqjSYPTg
+Received: by mail-pj1-f71.google.com with SMTP id
+ 98e67ed59e1d1-2ef114d8346so3427722a91.0
+ for <qemu-devel@nongnu.org>; Thu, 23 Jan 2025 19:31:10 -0800 (PST)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1737689469; x=1738294269;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=J17h++/Fqn3buhimynx1h8Z8eMPFEHi3/WtoJOmOpm8=;
+ b=lfFbT2CfNtTry5FH6cNzHRvihdpKbG/7Zc7ouyjOdviGaGPYsh8XgmR4+uxtXGyokf
+ TH8f78ankFrMe+1Yq1u3tr0Qcmmxsrw2c4GJdkwSrF/l+YkuZ3wlyRmLQUp4fj6ACDkE
+ wxMv9g8Adzmr2TnP1g3G/86UZOn6Uf2tS+coJzTstPqMdDxu8lekWk/rlPLesKAKamb1
+ Le8NRzgpvpJ9oNYUr11OHRw2wdOFVoYj48a9cTE1ck3XNYtHBDoKZxCnphacsJwtjl85
+ AF+Hrlri9Y8D8VQdgcRZXIxvKppendRdSMewUaLyTaGSbpIgNTLPb+2fCZbQK2o1EkJ+
+ Hl7A==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCWugk58FRt2tp5U5Q09xqsMUJYt2OjPzMHd3ULiuypauzm+sc5fFfNew0KGra6hMCpjGeFq4IBLalsl@nongnu.org
+X-Gm-Message-State: AOJu0Yzu4hrKiFK0XOGBA8fcwN+5Qy04jY2VkniJgSyhgec8aIrmxdUa
+ AEMqz6AnEckhEOTMAlFYAviyohXVMddjVa3TNzXZXE8j5RIJWAtr/M9C2TnnKiPQYgzgs74R1ZT
+ ykjdLGleSrNq5MTKI5gahFJYyqm8KD8vLGUoOvfoB3vbItlQU1bydbFkpnSLnII5KC9xQkGiZUJ
+ rhdypbsqQBq7wbW4cciWDd5zKkQGk=
+X-Gm-Gg: ASbGncvXYF+NK2+1dYgMTbBKrs9YyOV5/2EW7eUFM1cwBBUvkoKr2KBZcjpr0XqPioz
+ 9vNjIcovZgYMEC0iBUnMNpXcQdWMTjNT2+EmhFg7RU8oNMRymYv0f
+X-Received: by 2002:a05:6a20:734a:b0:1e1:6ec8:fc63 with SMTP id
+ adf61e73a8af0-1eb21481ce7mr40621657637.11.1737689469347; 
+ Thu, 23 Jan 2025 19:31:09 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IEKcWCygRpuBfBOzaVBtIvHIOF2ee6ukNXAhNVzEhUNz6M+6WPFQWsae7s2kT6PxaKaT3fi0NWBCRaQxK577LU=
+X-Received: by 2002:a05:6a20:734a:b0:1e1:6ec8:fc63 with SMTP id
+ adf61e73a8af0-1eb21481ce7mr40621620637.11.1737689468914; Thu, 23 Jan 2025
+ 19:31:08 -0800 (PST)
 MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: CH3PR12MB9194:EE_|DM3PR12MB9391:EE_
-X-MS-Office365-Filtering-Correlation-Id: 643396b5-ed10-4d8d-99ba-08dd3c2712c9
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;ARA:13230040|366016|1800799024|376014|7416014;
-X-Microsoft-Antispam-Message-Info: =?utf-8?B?ZVNGY0RLVVF1QmxZSVlEWVhya01aSnluQnZRVTBPZldZWFljZGsvMmJMSzVO?=
- =?utf-8?B?enRRVG5ESnc4Q1pjU1h5Q0lmT2N5SDRvWEN5L2V6VUJOcUJkaWdTeGRMdERs?=
- =?utf-8?B?OG4wOFpwS3k0VVhmbzFINjVtdFpXWXJZNnd4c3MvZ2VQV0hYSDJhcHVNcEdU?=
- =?utf-8?B?NWFISFEwNm9UeVRTbEM2U3VCakljaThSVk1QZElwY3dOYlJSd0FTSXQ4YmhR?=
- =?utf-8?B?cHk2WkR2Vml3VC92Q3k4OW9QRDd4WFN6MGlmeGZQeFM2YVlLRnhxYjEyRW04?=
- =?utf-8?B?ZFlYRWVRQ1lKdDE5WWVvT2dzbU1SN3pnUS9pYWZpREZXeDk5SUR5NEtDWTIy?=
- =?utf-8?B?V2dTQnFHOEFJZEZiRFNRUmZpSEZGcVY1S0JrTlVTRlp3WnJ3ekNmYzZqdklB?=
- =?utf-8?B?YVB5UzlXMzFsNmhwN0VqS2duQ2RQMTVDS3ZON0FWak5BVVhtWm14MndxcmlM?=
- =?utf-8?B?bER1c3ZBUmMwOXIrbmRYQzJjMEhhQnUzc09rK3J6UFg4WTVyWGZvU2R5c1NO?=
- =?utf-8?B?bVpDeGF1VDlIaWxkMms4VFpXY3ZXaldZRitGaHlEdU1qZUxXVFVKT2ZaZ21H?=
- =?utf-8?B?dWQ3cGNUcVZFWndtNGJ1VHdiNGlsTTlWNStTTzBLVTJjSmJFN201RE4zUmY2?=
- =?utf-8?B?TlhiSHA4MDNwZXI0cmhkeGFpWEdXTkRwbFY3dHNndFp4ZnhLcXZHNWdPQ1Fm?=
- =?utf-8?B?WWZhMDJScnc3SHpWVEpPaWFQMEs0bWJCTVQ2dlhURGpoRUR3clFyaW0wSWhQ?=
- =?utf-8?B?cnpoUHhPdUI4L252QWhJd0c1ZzBic1dwWUdOOXh0MnFQTTlCNkdjUmFPL1FG?=
- =?utf-8?B?eHhDWFJiVEdZWmMvbE5lVmVTZ1RkSzB0eklKcHltZndabzM5bnNtMlRzOWFX?=
- =?utf-8?B?TjRkNXBOMlVRdVFkT2ZxVjZmWDZqWnFQTkYrZWNnZG9Pc3pKVWtTNU9MWUdC?=
- =?utf-8?B?RUlna3B6Nmdabk53TDBPVzhpbkMvYTlxeXU1Y285bm5ab3VJWE5JeVNqdVdk?=
- =?utf-8?B?UjRBZ09wcVVJeWNOYkh0MkpVZ1NjS2xaL04zL3d4MHNTbm8xUmZ4aVRVN1g0?=
- =?utf-8?B?d0l4UjBhN3YyaFR4RDRma3dQTFJQZ2JxbWtyRGdqUUNJcC9jUTlaLytQS0Jz?=
- =?utf-8?B?V2pDK0krcTlsb3krQ3BIakpCRDJjR29iaFc5UytiUHg3SWhZMkdQZjhJQ0ta?=
- =?utf-8?B?MDRkamx0aUllU2loWmhMdkNnRE5WdExNclFDSlpBb1k3bXIrR3dVSytiK0tY?=
- =?utf-8?B?dGltSTEwK24zMzN4cG5yOWFoVXBPVGVQV0VKNWZ1aE5ad2doZ2NPMmtMTXVJ?=
- =?utf-8?B?QTFEcUZFa05RcUVxWEJBbFYxYWkvZ0VQRDlxdXc0c28vL2xneitaUHFDbW8w?=
- =?utf-8?B?MXlTbXByb2p6djl3WTRjTkt6dFBTMXBpMzFqK0JwWlFNQ29YV1B1THZRc2xl?=
- =?utf-8?B?dU5keXJ2U1VHRG43bm1rRFFiYThnNFg3bVZEcjlXMGVDUG1OQ01qUnBjeWxt?=
- =?utf-8?B?RE5vNk5USW1ZVEVrQ210eGZSNzArMDU1OWFuLzhUWENNaG9zbmZxM0Zzbmlh?=
- =?utf-8?B?ZmgxMW1mWEh3RG9UZFdlYTBWWUsraDlaTWpDd1RMb3ZhZEw5U05qd1V3QlZh?=
- =?utf-8?B?Uk0wNUx6ZU14aHA1ck43d1gxMDNNLzhoOHIrb3lndWYxQ3VtTkgrcThTbFdB?=
- =?utf-8?B?K2NRQ0VUem5FMXBYNGFYK0gyVURrTjdJR1RhK3NBQmxEaTAzd0x6NUNwQit5?=
- =?utf-8?B?WUN2Uy9Tb0ZWaUlnZThDOU9ZT3B0ZGpORnFHY0h2MmF3WHJiNTY3ZzBZYTRB?=
- =?utf-8?B?UFlpc1VNKzgrV1pJNFdxcHM1L24wOU5xVHNKV1BMMUVqT0tMcWlWM1FiQzRi?=
- =?utf-8?Q?Up5QFIFvk+Nbc?=
-X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:CH3PR12MB9194.namprd12.prod.outlook.com; PTR:; CAT:NONE;
- SFS:(13230040)(366016)(1800799024)(376014)(7416014); DIR:OUT; SFP:1101; 
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?RWpud3cxVDJNS1F4VVdRZlFNZVZBTFFDV2h0VGZuUjdjMFV5dlNjSUFUdXJn?=
- =?utf-8?B?M2M5UEdpd0s4M1JNUWRkR052ZE10S09uaHJDMFdVTyszcCtWbW1HWHN6VFU1?=
- =?utf-8?B?TFR6S2VGaXllZjdoY3U2ajA4cVBGdDJKbHVqZFpVY3p0cTlpWFM2RDlCbys1?=
- =?utf-8?B?MnJFazZXSFNjTXYzdkdXWmQvY0lYcW5xZ3BXQ2toRktGQUtlOHFDcUFVZXVi?=
- =?utf-8?B?R0pyVU1hbFpTQ0RmcEE1NjNSMnNMVzUrd0R4RUN0T2dvYnEralhoTUhRN3Y3?=
- =?utf-8?B?NWdudVQxZ0VUNFRaVkNOZWtSN25xbks5Q1lOdmxibW5Ccm9kVVl5dlNJYyt4?=
- =?utf-8?B?RHUyL3BHTUdvbkprQm5XUkxLUWlzWlZzcEFWaDMxZHBTWWxJeVRheDNxelFk?=
- =?utf-8?B?eVNrdm1Lb0s1eEh4WkpYSE9ta3AwYWthMTNTOWE0TDA4aXFVemZJTFlibFJt?=
- =?utf-8?B?MjR1TU45VkEyUWtaeXE4RzQ5U0IydE9sV2xoVWlpYi9XWHhYMnJlb25kMzdO?=
- =?utf-8?B?WEl4YUV0K1Y3QTJDSlVwV3ozV1pic0NvQmxVVWFKWTFmUzZoNGlYQWtlV2x2?=
- =?utf-8?B?VlNvWlNBRGhGRFVxMUVNYzYySzFvWVFYRmMvdTNqQURkWnhzRG9oaEZXdnEz?=
- =?utf-8?B?WlA1dUxTbU5OaHFBTk9mVE1yWW80WE1EV0JRbzdPSmxsSjRKRUdIVWNQMEFm?=
- =?utf-8?B?cGRjSzJUSmQ2MjFSd3UxTUIvSUJPM3NsYXpkMjlSU1ZLcWRGU3ppU1RNZGZO?=
- =?utf-8?B?dkMzcldGZVh5Yy9mZmk2NDB2eXFTb3lwTSthUEM5aENMcUFDNW1zT25sWE54?=
- =?utf-8?B?cjRwMzhRd29UWkVFT1RKVUNIS0tKY2x6ZkhYc1A2YTNLSDZOSVJVbEFBZ0Zi?=
- =?utf-8?B?amdCNloxeVdreFJDaFFOTGlubnpLREtHd09WekswVXB4ZDdFY2hTbERlbkZp?=
- =?utf-8?B?RWpobkxoVS9UdDVNTTU3MkhFb1dmcWJsTTV2U0V2UmVzeVEybTBqZEpDSHI5?=
- =?utf-8?B?b0JYODhPUEhQRlhiS0xHZjZOOHZ5c2c1TWxZUzc3QmQrRHF0Y1lCWm1HQzdC?=
- =?utf-8?B?YkI5N25lWnFmRWw1bzN3N3R3OUlNM21VSWg1cDcxaldYaDJRZHgwNkFTaVU5?=
- =?utf-8?B?bDJZVnNBWnoybmVpTXFsdy9aVFZDZEZqb3VxZVBWb0RyNUhVM3NQSm8zUWdh?=
- =?utf-8?B?ZDhkTkErQzFPc09zaGorVVdNeVlYYW96VXZyN1I3NGp4U1kzS3VYa04ycCtX?=
- =?utf-8?B?eUpPZzhoQ2tRNXYvbEljVUZCYit3L0IrdDR2c1JoSVpaNjZkbmxidVBRQzI4?=
- =?utf-8?B?dVNZcTd5UjR2dVhyUlZ4ZEhncTlXRytWNzdSam1uSTQrYW1KNlR0WDdBS083?=
- =?utf-8?B?Rk1SNTlNbEVlTGZ5dmJ4QWVhUFFmT2Y0SDhPSEp4eWhZa2dvNHF3cUtEZy9r?=
- =?utf-8?B?VHFNVDQrU2ppK09jem5oL1QrSFg5U2RBaDFrTXhyWEoyckQxV0dvNnJFTlMv?=
- =?utf-8?B?YTRESm02Yjd4NmcyNFlPQ2ZIMHF1c2RkYzRPQmhST1llYklGMXp0NXhNT1dS?=
- =?utf-8?B?eGpzWUYzamhDQWxLSURPbFRHZnpvTHcwR09LNnJGM1dJc1djTGN3azFnYlRv?=
- =?utf-8?B?YkdQbUNJSndNcGRzajllM1R2TXFzdjVoSHVVYVV4TmV0S2FaQnUrSE16WGFz?=
- =?utf-8?B?MnV1OGZmMDBtQ1NnT0g4bk9mcHdQa2h4MFlNcEZJYXFvazhjaTd1MkFPeFNS?=
- =?utf-8?B?VzZWK2NyL2FVVFZUWm9mNDhmTVMyMy9IRXJVMjdtQS9lc1ZOTzlrd3JVMko0?=
- =?utf-8?B?WnRtNjVXVmFiOEpXbHhRMzI3Yk11ZVNpMW96VXpOK1NFYTN0R0MyT2FkQ1B1?=
- =?utf-8?B?UXcyMEcySDR2Q3dlVUxjV0pNUXZjTHVWSkZhT1E2M21ya2dSdmV3SjNBOEps?=
- =?utf-8?B?RDA0aHJFRE9sdTdFNHBrRS9QdG14ODZOV2R4Smk3VWhCYS9WcFlYY3pNNkc1?=
- =?utf-8?B?VE4va0ROQjNJa2tZOXB6WWh4UStDZDQzQkszMGtJaWlPTnl5MnlpT0tqUTNj?=
- =?utf-8?B?WEpmaUhUaVFkWS96dW92WXJ5UitQc3VDdkt0TG8yQW1RdXlqWUdnNHBWR0x0?=
- =?utf-8?Q?DOF2GhkydNnnyT93lutiezvMa?=
-X-OriginatorOrg: amd.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 643396b5-ed10-4d8d-99ba-08dd3c2712c9
-X-MS-Exchange-CrossTenant-AuthSource: CH3PR12MB9194.namprd12.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 24 Jan 2025 03:27:47.4425 (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 3dd8961f-e488-4e60-8e11-a82d994e183d
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: uilkKFQmeCV2XgvcH8J7QssZZPR1WDYimuzXJY+t8Lou1kVGPTSXqPP6urkDG7J+xH7N02eQGSTLflSoIQnXmw==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: DM3PR12MB9391
-Received-SPF: permerror client-ip=2a01:111:f403:2415::61d;
- envelope-from=Alexey.Kardashevskiy@amd.com;
- helo=NAM11-DM6-obe.outbound.protection.outlook.com
+References: <20250120173339.865681-1-eric.auger@redhat.com>
+ <CACGkMEu4oMa8Sf9QXtszeoSMj_67Csr0s7kHdYfbNnJWibu2dA@mail.gmail.com>
+ <5a55011a-af8f-483a-99fa-5cb2cdf3841f@redhat.com>
+ <CACGkMEv6ec3JLZg6ZedSHdNS5_McX7_xoV4d2MG05x_Y5t=uEA@mail.gmail.com>
+ <678babb6-f64a-4db5-ad60-494214a4e673@redhat.com>
+ <CACGkMEvyYT7-PTOwO-Jg9a8AHA0AJHoV2BY2RBrJTGKEFYL6QA@mail.gmail.com>
+ <25b5bb73-abd8-4008-905d-6c2e9e1330e2@redhat.com>
+ <SJ0PR11MB6744EBC0BB7C8CD5F33D0A4E92E32@SJ0PR11MB6744.namprd11.prod.outlook.com>
+In-Reply-To: <SJ0PR11MB6744EBC0BB7C8CD5F33D0A4E92E32@SJ0PR11MB6744.namprd11.prod.outlook.com>
+From: Jason Wang <jasowang@redhat.com>
+Date: Fri, 24 Jan 2025 11:30:56 +0800
+X-Gm-Features: AWEUYZkk-Jls46t6NJsMnG5G5VWHVjQoTC0F1d7ZM1TEv--S8iKp-5tmyQx_qyY
+Message-ID: <CACGkMEtQT2yZf93+a3LxSCyfBEXbEDu5S2cFXuAhprDYd2-vhw@mail.gmail.com>
+Subject: Re: [PATCH] hw/virtio/vhost: Disable IOTLB callbacks when IOMMU gets
+ disabled
+To: "Duan, Zhenzhong" <zhenzhong.duan@intel.com>
+Cc: "eric.auger@redhat.com" <eric.auger@redhat.com>, 
+ "eric.auger.pro@gmail.com" <eric.auger.pro@gmail.com>,
+ "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>, 
+ "mst@redhat.com" <mst@redhat.com>, "sgarzare@redhat.com" <sgarzare@redhat.com>,
+ "lvivier@redhat.com" <lvivier@redhat.com>, Peter Xu <peterx@redhat.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=jasowang@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -50
 X-Spam_score: -5.1
 X-Spam_bar: -----
 X-Spam_report: (-5.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-2.996,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -188,261 +115,189 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+On Fri, Jan 24, 2025 at 10:44=E2=80=AFAM Duan, Zhenzhong
+<zhenzhong.duan@intel.com> wrote:
+>
+>
+>
+> >-----Original Message-----
+> >From: Eric Auger <eric.auger@redhat.com>
+> >Subject: Re: [PATCH] hw/virtio/vhost: Disable IOTLB callbacks when IOMMU=
+ gets
+> >disabled
+> >
+> >Hi Jason,
+> >
+> >
+> >On 1/23/25 2:34 AM, Jason Wang wrote:
+> >> On Wed, Jan 22, 2025 at 3:55=E2=80=AFPM Eric Auger <eric.auger@redhat.=
+com> wrote:
+> >>> Hi Jason,
+> >>>
+> >>>
+> >>> On 1/22/25 8:17 AM, Jason Wang wrote:
+> >>>> On Wed, Jan 22, 2025 at 12:25=E2=80=AFAM Eric Auger <eric.auger@redh=
+at.com>
+> >wrote:
+> >>>>> Hi Jason,
+> >>>>>
+> >>>>> On 1/21/25 4:27 AM, Jason Wang wrote:
+> >>>>>> On Tue, Jan 21, 2025 at 1:33=E2=80=AFAM Eric Auger <eric.auger@red=
+hat.com>
+> >wrote:
+> >>>>>>> When a guest exposed with a vhost device and protected by an
+> >>>>>>> intel IOMMU gets rebooted, we sometimes observe a spurious warnin=
+g:
+> >>>>>>>
+> >>>>>>> Fail to lookup the translated address ffffe000
+> >>>>>>>
+> >>>>>>> We observe that the IOMMU gets disabled through a write to the gl=
+obal
+> >>>>>>> command register (CMAR_GCMD.TE) before the vhost device gets
+> >stopped.
+> >>>>>>> When this warning happens it can be observed an inflight IOTLB
+> >>>>>>> miss occurs after the IOMMU disable and before the vhost stop. In
+> >>>>>>> that case a flat translation occurs and the check in
+> >>>>>>> vhost_memory_region_lookup() fails.
+> >>>>>>>
+> >>>>>>> Let's disable the IOTLB callbacks when all IOMMU MRs have been
+> >>>>>>> unregistered.
+> >>>>>>>
+> >>>>>>> Signed-off-by: Eric Auger <eric.auger@redhat.com>
+> >>>>>>> ---
+> >>>>>>>  hw/virtio/vhost.c | 4 ++++
+> >>>>>>>  1 file changed, 4 insertions(+)
+> >>>>>>>
+> >>>>>>> diff --git a/hw/virtio/vhost.c b/hw/virtio/vhost.c
+> >>>>>>> index 6aa72fd434..128c2ab094 100644
+> >>>>>>> --- a/hw/virtio/vhost.c
+> >>>>>>> +++ b/hw/virtio/vhost.c
+> >>>>>>> @@ -931,6 +931,10 @@ static void
+> >vhost_iommu_region_del(MemoryListener *listener,
+> >>>>>>>              break;
+> >>>>>>>          }
+> >>>>>>>      }
+> >>>>>>> +    if (QLIST_EMPTY(&dev->iommu_list) &&
+> >>>>>>> +        dev->vhost_ops->vhost_set_iotlb_callback) {
+> >>>>>>> +        dev->vhost_ops->vhost_set_iotlb_callback(dev, false);
+> >>>>>>> +    }
+> >>>>>> So the current code assumes:
+> >>>>>>
+> >>>>>> 1) IOMMU is enabled before vhost starts
+> >>>>>> 2) IOMMU is disabled after vhost stops
+> >>>>>>
+> >>>>>> This patch seems to fix 2) but not 1). Do we need to deal with the
+> >>>>>> IOMMU enabled after vhost starts?
+> >>>>> sorry I initially misunderstood the above comment. Indeed in the re=
+boot
+> >>>>> case assumption 2) happens to be wrong. However what I currently do=
+ is:
+> >>>>> stop listening to iotlb miss requests from the kernel because my
+> >>>>> understanding is those requests are just spurious ones, generate
+> >>>>> warnings and we do not care since we are rebooting the system.
+> >>>>>
+> >>>>> However I do not claim this could handle the case where the IOMMU M=
+R
+> >>>>> would be turned off and then turned on. I think in that case we sho=
+uld
+> >>>>> also flush the kernel IOTLB and this is not taken care of in this p=
+atch.
+> >>>>> Is it a relevant use case?
+> >>>> Not sure.
+> >>>>
+> >>>>> wrt removing assumption 1) and allow IOMMU enabled after vhost star=
+t. Is
+> >>>>> that a valid use case as the virtio driver is using the dma api?
+> >>>> It should not be but we can't assume the behaviour of the guest. It
+> >>>> could be buggy or even malicious.
+> >>> agreed
+> >>>> Btw, we had the following codes while handling te:
+> >>>>
+> >>>> /* Handle Translation Enable/Disable */
+> >>>> static void vtd_handle_gcmd_te(IntelIOMMUState *s, bool en)
+> >>>> {
+> >>>>     if (s->dmar_enabled =3D=3D en) {
+> >>>>         return;
+> >>>>     }
+> >>>>
+> >>>>     trace_vtd_dmar_enable(en);
+> >>>>
+> >>>> ...
+> >>>>
+> >>>>     vtd_reset_caches(s);
+> >>>>     vtd_address_space_refresh_all(s);
+> >>>> }
+> >>>>
+> >>>> vtd_address_space_refresh_all() will basically disable the iommu
+> >>>> memory region. It looks not sufficient to trigger the region_del
+> >>>> callback, maybe we should delete the region or introduce listener
+> >>>> callback?
+> >>> This is exactly the code path which is entered in my use case.
+> >>>
+> >>> vtd_address_space_refresh_all(s) induces the vhost_iommu_region_del. =
+But
+> >given the current implement of this latter the IOTLB callback is not uns=
+et and the
+> >kernel IOTLB is not refreshed. Also as I pointed out the  hdev->mem->reg=
+ions are
+> >not updated? shouldn't they. Can you explain what they correspond to?
+> >> Adding Peter for more ideas.
+> >>
+> >> I think it's better to find a way to trigger the listener here, probab=
+ly:
+> >>
+> >> 1) add/delete the memory regions instead of enable/disable
+> >sorry I don't understand what you mean. The vhost_iommu_region_del call
+> >stack is provided below [1]. Write to the intel iommu GCMD TE bit
+> >induces a call to vhost_iommu_region_del. This happens before the
+> >vhost_dev_stop whose call stack is provided below [2] and originates
+> >from a bus reset.
+> >
+> >We may have inflight IOTLB miss requests happening between both.
+> >
+> >If this happens, vhost_device_iotlb_miss() fails because the IOVA is not
+> >translated anymore by the IOMMU and the iotlb.translated_addr returned
+> >by address_space_get_iotlb_entry() is not within the registered
+> >vhost_memory_regions looked up in vhost_memory_region_lookup(), hence
+> >the "Fail to lookup the translated address" message.
+> >
+> >It sounds wrong that vhost keeps on using IOVAs that are not translated
+> >anymore. It looks we have a reset ordering issue and this patch is just
+> >removing the sympton and not the cause.
+> >
+> >At the moment I don't really get what is initiating the intel iommu TE
+> >bit write. This is a guest action but is it initiated from a misordered
+> >qemu event?
+>
+> During reboot, native_machine_shutdown() calls x86_platform.iommu_shutdow=
+n()
+> to disable iommu before reset. So Peter's patch will not address your iss=
+ue.
+>
+> Before iommu shutdown, device_shutdown() is called to shutdown all device=
+s.
+> Not clear why vhost is still active.
 
+It might be because neither virtio bus nor virtio-net provides a
+shutdown method.
 
-On 21/1/25 00:06, David Hildenbrand wrote:
-> On 10.01.25 06:13, Chenyi Qiang wrote:
->>
->>
->> On 1/9/2025 5:32 PM, Alexey Kardashevskiy wrote:
->>>
->>>
->>> On 9/1/25 16:34, Chenyi Qiang wrote:
->>>>
->>>>
->>>> On 1/8/2025 12:47 PM, Alexey Kardashevskiy wrote:
->>>>> On 13/12/24 18:08, Chenyi Qiang wrote:
->>>>>> Introduce the realize()/unrealize() callbacks to initialize/
->>>>>> uninitialize
->>>>>> the new guest_memfd_manager object and register/unregister it in the
->>>>>> target MemoryRegion.
->>>>>>
->>>>>> Guest_memfd was initially set to shared until the commit bd3bcf6962
->>>>>> ("kvm/memory: Make memory type private by default if it has guest 
->>>>>> memfd
->>>>>> backend"). To align with this change, the default state in
->>>>>> guest_memfd_manager is set to private. (The bitmap is cleared to 0).
->>>>>> Additionally, setting the default to private can also reduce the
->>>>>> overhead of mapping shared pages into IOMMU by VFIO during the bootup
->>>>>> stage.
->>>>>>
->>>>>> Signed-off-by: Chenyi Qiang <chenyi.qiang@intel.com>
->>>>>> ---
->>>>>>     include/sysemu/guest-memfd-manager.h | 27 +++++++++++++++++++++++
->>>>>> ++++
->>>>>>     system/guest-memfd-manager.c         | 28 +++++++++++++++++++++++
->>>>>> ++++-
->>>>>>     system/physmem.c                     |  7 +++++++
->>>>>>     3 files changed, 61 insertions(+), 1 deletion(-)
->>>>>>
->>>>>> diff --git a/include/sysemu/guest-memfd-manager.h b/include/sysemu/
->>>>>> guest-memfd-manager.h
->>>>>> index 9dc4e0346d..d1e7f698e8 100644
->>>>>> --- a/include/sysemu/guest-memfd-manager.h
->>>>>> +++ b/include/sysemu/guest-memfd-manager.h
->>>>>> @@ -42,6 +42,8 @@ struct GuestMemfdManager {
->>>>>>     struct GuestMemfdManagerClass {
->>>>>>         ObjectClass parent_class;
->>>>>>     +    void (*realize)(GuestMemfdManager *gmm, MemoryRegion *mr,
->>>>>> uint64_t region_size);
->>>>>> +    void (*unrealize)(GuestMemfdManager *gmm);
->>>>>>         int (*state_change)(GuestMemfdManager *gmm, uint64_t offset,
->>>>>> uint64_t size,
->>>>>>                             bool shared_to_private);
->>>>>>     };
->>>>>> @@ -61,4 +63,29 @@ static inline int
->>>>>> guest_memfd_manager_state_change(GuestMemfdManager *gmm, uint6
->>>>>>         return 0;
->>>>>>     }
->>>>>>     +static inline void guest_memfd_manager_realize(GuestMemfdManager
->>>>>> *gmm,
->>>>>> +                                              MemoryRegion *mr,
->>>>>> uint64_t region_size)
->>>>>> +{
->>>>>> +    GuestMemfdManagerClass *klass;
->>>>>> +
->>>>>> +    g_assert(gmm);
->>>>>> +    klass = GUEST_MEMFD_MANAGER_GET_CLASS(gmm);
->>>>>> +
->>>>>> +    if (klass->realize) {
->>>>>> +        klass->realize(gmm, mr, region_size);
->>>>>
->>>>> Ditch realize() hook and call guest_memfd_manager_realizefn() 
->>>>> directly?
->>>>> Not clear why these new hooks are needed.
->>>>
->>>>>
->>>>>> +    }
->>>>>> +}
->>>>>> +
->>>>>> +static inline void guest_memfd_manager_unrealize(GuestMemfdManager
->>>>>> *gmm)
->>>>>> +{
->>>>>> +    GuestMemfdManagerClass *klass;
->>>>>> +
->>>>>> +    g_assert(gmm);
->>>>>> +    klass = GUEST_MEMFD_MANAGER_GET_CLASS(gmm);
->>>>>> +
->>>>>> +    if (klass->unrealize) {
->>>>>> +        klass->unrealize(gmm);
->>>>>> +    }
->>>>>> +}
->>>>>
->>>>> guest_memfd_manager_unrealizefn()?
->>>>
->>>> Agree. Adding these wrappers seem unnecessary.
->>>>
->>>>>
->>>>>
->>>>>> +
->>>>>>     #endif
->>>>>> diff --git a/system/guest-memfd-manager.c b/system/guest-memfd-
->>>>>> manager.c
->>>>>> index 6601df5f3f..b6a32f0bfb 100644
->>>>>> --- a/system/guest-memfd-manager.c
->>>>>> +++ b/system/guest-memfd-manager.c
->>>>>> @@ -366,6 +366,31 @@ static int
->>>>>> guest_memfd_state_change(GuestMemfdManager *gmm, uint64_t offset,
->>>>>>         return ret;
->>>>>>     }
->>>>>>     +static void guest_memfd_manager_realizefn(GuestMemfdManager 
->>>>>> *gmm,
->>>>>> MemoryRegion *mr,
->>>>>> +                                          uint64_t region_size)
->>>>>> +{
->>>>>> +    uint64_t bitmap_size;
->>>>>> +
->>>>>> +    gmm->block_size = qemu_real_host_page_size();
->>>>>> +    bitmap_size = ROUND_UP(region_size, gmm->block_size) / gmm-
->>>>>>> block_size;
->>>>>
->>>>> imho unaligned region_size should be an assert.
->>>>
->>>> There's no guarantee the region_size of the MemoryRegion is PAGE_SIZE
->>>> aligned. So the ROUND_UP() is more appropriate.
->>>
->>> It is all about DMA so the smallest you can map is PAGE_SIZE so even if
->>> you round up here, it is likely going to fail to DMA-map later anyway
->>> (or not?).
->>
->> Checked the handling of VFIO, if the size is less than PAGE_SIZE, it
->> will just return and won't do DMA-map.
->>
->> Here is a different thing. It tries to calculate the bitmap_size. The
->> bitmap is used to track the private/shared status of the page. So if the
->> size is less than PAGE_SIZE, we still use the one bit to track this
->> small-size range.
->>
->>>
->>>
->>>>>> +
->>>>>> +    gmm->mr = mr;
->>>>>> +    gmm->bitmap_size = bitmap_size;
->>>>>> +    gmm->bitmap = bitmap_new(bitmap_size);
->>>>>> +
->>>>>> +    memory_region_set_ram_discard_manager(gmm->mr,
->>>>>> RAM_DISCARD_MANAGER(gmm));
->>>>>> +}
->>>>>
->>>>> This belongs to 2/7.
->>>>>
->>>>>> +
->>>>>> +static void guest_memfd_manager_unrealizefn(GuestMemfdManager *gmm)
->>>>>> +{
->>>>>> +    memory_region_set_ram_discard_manager(gmm->mr, NULL);
->>>>>> +
->>>>>> +    g_free(gmm->bitmap);
->>>>>> +    gmm->bitmap = NULL;
->>>>>> +    gmm->bitmap_size = 0;
->>>>>> +    gmm->mr = NULL;
->>>>>
->>>>> @gmm is being destroyed here, why bother zeroing?
->>>>
->>>> OK, will remove it.
->>>>
->>>>>
->>>>>> +}
->>>>>> +
->>>>>
->>>>> This function belongs to 2/7.
->>>>
->>>> Will move both realizefn() and unrealizefn().
->>>
->>> Yes.
->>>
->>>
->>>>>
->>>>>>     static void guest_memfd_manager_init(Object *obj)
->>>>>>     {
->>>>>>         GuestMemfdManager *gmm = GUEST_MEMFD_MANAGER(obj);
->>>>>> @@ -375,7 +400,6 @@ static void guest_memfd_manager_init(Object *obj)
->>>>>>       static void guest_memfd_manager_finalize(Object *obj)
->>>>>>     {
->>>>>> -    g_free(GUEST_MEMFD_MANAGER(obj)->bitmap);
->>>>>>     }
->>>>>>       static void guest_memfd_manager_class_init(ObjectClass *oc, 
->>>>>> void
->>>>>> *data)
->>>>>> @@ -384,6 +408,8 @@ static void
->>>>>> guest_memfd_manager_class_init(ObjectClass *oc, void *data)
->>>>>>         RamDiscardManagerClass *rdmc = RAM_DISCARD_MANAGER_CLASS(oc);
->>>>>>           gmmc->state_change = guest_memfd_state_change;
->>>>>> +    gmmc->realize = guest_memfd_manager_realizefn;
->>>>>> +    gmmc->unrealize = guest_memfd_manager_unrealizefn;
->>>>>>           rdmc->get_min_granularity =
->>>>>> guest_memfd_rdm_get_min_granularity;
->>>>>>         rdmc->register_listener = guest_memfd_rdm_register_listener;
->>>>>> diff --git a/system/physmem.c b/system/physmem.c
->>>>>> index dc1db3a384..532182a6dd 100644
->>>>>> --- a/system/physmem.c
->>>>>> +++ b/system/physmem.c
->>>>>> @@ -53,6 +53,7 @@
->>>>>>     #include "sysemu/hostmem.h"
->>>>>>     #include "sysemu/hw_accel.h"
->>>>>>     #include "sysemu/xen-mapcache.h"
->>>>>> +#include "sysemu/guest-memfd-manager.h"
->>>>>>     #include "trace.h"
->>>>>>       #ifdef CONFIG_FALLOCATE_PUNCH_HOLE
->>>>>> @@ -1885,6 +1886,9 @@ static void ram_block_add(RAMBlock *new_block,
->>>>>> Error **errp)
->>>>>>                 qemu_mutex_unlock_ramlist();
->>>>>>                 goto out_free;
->>>>>>             }
->>>>>> +
->>>>>> +        GuestMemfdManager *gmm =
->>>>>> GUEST_MEMFD_MANAGER(object_new(TYPE_GUEST_MEMFD_MANAGER));
->>>>>> +        guest_memfd_manager_realize(gmm, new_block->mr, new_block-
->>>>>>> mr->size);
->>>>>
->>>>> Wow. Quite invasive.
->>>>
->>>> Yeah... It creates a manager object no matter whether the user wants to
->>>> us    e shared passthru or not. We assume some fields like 
->>>> private/shared
->>>> bitmap may also be helpful in other scenario for future usage, and 
->>>> if no
->>>> passthru device, the listener would just return, so it is acceptable.
->>>
->>> Explain these other scenarios in the commit log please as otherwise
->>> making this an interface of HostMemoryBackendMemfd looks way cleaner.
->>> Thanks,
->>
->> Thanks for the suggestion. Until now, I think making this an interface
->> of HostMemoryBackend is cleaner. The potential future usage for
->> non-HostMemoryBackend guest_memfd-backed memory region I can think of is
->> the the TEE I/O for iommufd P2P support? when it tries to initialize RAM
->> device memory region with the attribute of shared/private. But I think
->> it would be a long term story and we are not sure what it will be like
->> in future.
-> 
-> As raised in #2, I'm don't think this belongs into HostMemoryBackend. It 
-> kind-of belongs to the RAMBlock, but we could have another object 
-> (similar to virtio-mem currently managing a single 
-> HostMemoryBackend->RAMBlock) that takes care of that for multiple memory 
-> backends.
+There used to be requests to provide those to unbreak the kexec.
 
-The vBIOS thingy confused me and then I confused others :) There are 2 
-things:
-1) an interface or new subclass of HostMemoryBackendClass which we need 
-to advertise and implement ability to discard pages;
-2) RamDiscardManagerClass which is MR/Ramblock and does not really 
-belong to HostMemoryBackend (as it is in what was posted ages ago).
+A quick try might be to provide a .driver.shutdown to
+virtio_net_driver structure and reset the device there as a start.
 
-I suggest Chenyi post a new version using the current approach with the 
-comments and commitlogs fixed. Makes sense? Thanks,
+Thanks
 
-
--- 
-Alexey
+>
+> Thanks
+> Zhenzhong
+>
+> >
+> >It could also relate to
+> >[PATCH 0/4] intel_iommu: Reset vIOMMU after all the rest of devices
+> >https://lore.kernel.org/all/?q=3Ds%3Aintel_iommu%3A+Reset+vIOMMU+after+a=
+ll+
+> >the+rest+of+devices
+>
 
 
