@@ -4,81 +4,77 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D76A6C0218B
-	for <qemu-devel@archiver.kernel.org>; Fri, 24 Jan 2025 19:14:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E8171C0218C
+	for <qemu-devel@archiver.kernel.org>; Fri, 24 Jan 2025 19:14:16 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tbP77-0006jU-Jx; Fri, 24 Jan 2025 14:13:09 -0500
+	id 1tbP73-0006i9-2u; Fri, 24 Jan 2025 14:13:05 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <tomitamoeko@gmail.com>)
- id 1tbP75-0006ia-G2
- for qemu-devel@nongnu.org; Fri, 24 Jan 2025 14:13:07 -0500
-Received: from mail-pl1-x641.google.com ([2607:f8b0:4864:20::641])
+ id 1tbP72-0006i1-DW
+ for qemu-devel@nongnu.org; Fri, 24 Jan 2025 14:13:04 -0500
+Received: from mail-pj1-x1044.google.com ([2607:f8b0:4864:20::1044])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <tomitamoeko@gmail.com>)
- id 1tbP73-0007pH-QB
- for qemu-devel@nongnu.org; Fri, 24 Jan 2025 14:13:07 -0500
-Received: by mail-pl1-x641.google.com with SMTP id
- d9443c01a7336-21661be2c2dso43900675ad.1
- for <qemu-devel@nongnu.org>; Fri, 24 Jan 2025 11:13:05 -0800 (PST)
+ id 1tbP70-0007ou-HO
+ for qemu-devel@nongnu.org; Fri, 24 Jan 2025 14:13:04 -0500
+Received: by mail-pj1-x1044.google.com with SMTP id
+ 98e67ed59e1d1-2ee74291415so3476121a91.3
+ for <qemu-devel@nongnu.org>; Fri, 24 Jan 2025 11:13:01 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1737745984; x=1738350784; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=hpBzjRP7lcZnfFl2TlBZJg+t978qeJXz0xSVkKJdZmw=;
- b=HEfL3R8LAE6CS1BL56yr8xDUOAXf4o+f2JitDfHkZ5ih9XeVlMLKFNVx4EXgL1ZDyE
- ZyLpnvwyN7XkQ4jfkSLCfNScrXfAvidAAOET3v3qU5e0UF0Z28xOUALFTfUAIJpmRjni
- rKoVNSgi8wpdTr6//K3EkLp1Oz8BKeGUa3vpTwPUtNCtO82yHoZncAC1jjKy+TwSKWev
- 6yMBmIPjXomLmr6ZBJPbh9+Epf4Ch6ny2WE3G89Q4h75W91vPLv0O0SlgD6qDmM314RJ
- rJkqH2BEzVTGbgia7rrAcVsqAV9rjU3NZ223oC/7dhzpla3PLCOcs7LqK3yrC7YeFV3r
- Eoww==
+ d=gmail.com; s=20230601; t=1737745980; x=1738350780; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=bGuBtKeysAO8wc8jjeKvdfpWkF8cN+yZwOGAcXA3kBk=;
+ b=cvqQZG+eIJtBuaZpokOZ8dC4Z2NjLS5ymCcnFHKgFdc49tJj1nHTWHRvnag2DVYC4w
+ OiJIjlZgNLAJL6hQY6UrZEII6XSfJZfTlxDXI9Qq+WgX2//49FXprFNLd/YWwsHxjT8t
+ 1up8dtyMUZm8XMA2iYBO6MQKCw+sEB+lzoAE997OuGrp8Z0ckYRfCVWKz1MC5G1SHQMm
+ 45b8D/c7O4sHEptGvL5Zx9aElWcPzXnM/QEJfnwM8nQzEpNMlKiBFJyojIvuP5miFUNN
+ yXzpj60fxQ7KuJdSOY9x+qqJVmtEZsxc8Mw11V5KVfa2GpyFf25TNx3nvX+eVMYyMvyq
+ MmoQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1737745984; x=1738350784;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=hpBzjRP7lcZnfFl2TlBZJg+t978qeJXz0xSVkKJdZmw=;
- b=NDAgKbah1tXh5w4ZxhoLtY3R/vWbgGv9Jc2U3srj3H/bYGc5Arm+s8mHVlUcEEsBSu
- ZMxrrYz9byOycIj68giyBtLiOqC3+amdeWPJEJATokehUL9O+mEgKei+To/m9mdohJ0o
- gvtrCeWz+1V7Sya+YT4kGGz73fPyftWTlGPvESny5jsG+V+Lfj46xhPSCFYH33IS6lh6
- kxWvj/5j3fJOgJsgBl6HBnt/9bvon5nkBgEAmHEQeOLsXpPUzKFSWsGHej5BTRxFEKmM
- 1BjMensjUyQdLLTHRhCqwOhXergQwDnmXDPiwJi9OpqneUJb/48AZZsrUhCgfnHznlFa
- ukTg==
-X-Gm-Message-State: AOJu0Yz35SryPVbl+hDqJjIRUAe9HsZisPuN5tJqERxBU2veUE1F5w6F
- wmtOOpSD0cYEMGBWKC8frQMELmZ3TWeQqTrRVg0MrjW19SDiR0w=
-X-Gm-Gg: ASbGncshCo8+K9cbWQLO/aVnf/ysGZfT7Q0zD8blFduZWaK7Vr5DXRRHb5WyPI/pgsn
- N9+TrmGWhKyDhWsNpqy/rwc3Bi0YX3nyrwYQafoI35VBWXihWLq6WrWYwaZyo9msqVRRpPvM33E
- 3ST1fVh0h4ClbiEGVj4rpH3BI8lWGyCK4omnLNUYtvf+ZY4gAqH9P8yoTnXWD0dbU3OqvZPDeVp
- C8c+bQj6os3rqExGYilMPUIK+PABorCS0PXzLyxQTnimmWlHpqBlGUlNRtfB2DY5kZ2rO9R4zyX
- VOjeRhpfAoBY7s38eA==
-X-Google-Smtp-Source: AGHT+IH9tCPG4/AODJdqi55ni/jqXRdVVJgh/9jddTcXmaB1iqj+nXihcTUshRATrhyLWNcDRr57tA==
-X-Received: by 2002:a05:6a21:9986:b0:1dc:7907:6d67 with SMTP id
- adf61e73a8af0-1eb215f52b2mr57746580637.40.1737745983747; 
- Fri, 24 Jan 2025 11:13:03 -0800 (PST)
+ d=1e100.net; s=20230601; t=1737745980; x=1738350780;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=bGuBtKeysAO8wc8jjeKvdfpWkF8cN+yZwOGAcXA3kBk=;
+ b=fLCx7KLNbme9EtCeN6XR90J0NAariMISfkgsL1wGUV9Idawpjl1b/idiwnLk90EDeS
+ EvKY5+LwWNBKWnMDk6js9TGCBe/FBUFeH7EKmbzAa+/iGiuOjMvll5/pynlAd3j9PAZj
+ GN08y6FcUTEiPI0y261FeLARPXCbkBfhvK3q0rfaQLyMaVQNQN9bUvgFSlgFOdAigUWo
+ VZl3m8grRkUTj45vMp+pfgRjMgzXFKGKF5PS/QAreQc8ivrsTe4C1lJoWk/lEvRutvjM
+ sC/gsHMZiRpICEI8IbtQ6LfFkrhxIDy+pKG39q7u0QiClWstEtqapOBc8Tl+sIchDmCC
+ w40g==
+X-Gm-Message-State: AOJu0YwaNWn7GUOmXVoXKeelNcrfry74p6OhojjIXNgRTQNWeXSUB4+L
+ YmM3Y4SmLysIidGbH7+pDG+Aqzei+QE4QCDM3GRKy1OXceQx214=
+X-Gm-Gg: ASbGnctXtP4EWr0/86+Kexz4o3axK0WWdcQVeT++pu+rsnbNvSPxnEW8GZzf+kjl6zW
+ tuLCUDZ6pePpAxc2QCnbvLnovYPeN2lNEvnkqdGFDNMC2raMv65HFc5qdZd7arRt4VBZ8Wv490p
+ jR0ZiWUXmonI8xeRVnMoXkW5qz8QyASz6mi1TO/mPFNuP0UvkfJCjkyyd54Zl7wCeOZWHecP1q5
+ Znw9/4QZijQNFtIrzZrhuxwLyhuuLm8zWplzzvlgWQs6ORFZN6ESPhfyIz+qqnH1RLmsXWoessH
+ f0oIotiviSEebpM3aA==
+X-Google-Smtp-Source: AGHT+IF5UvHeTndnwO83HvxyxB/csJLzp/OanxEzaihtGmdz/JqEGG2d7DIWDZ1FbrQSrsy8CiaxTg==
+X-Received: by 2002:a05:6a00:148d:b0:725:eb85:f802 with SMTP id
+ d2e1a72fcca58-72daf930e3cmr44209856b3a.2.1737745979970; 
+ Fri, 24 Jan 2025 11:12:59 -0800 (PST)
 Received: from localhost.localdomain ([58.37.175.151])
  by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-72f8a69eb75sm2318406b3a.12.2025.01.24.11.13.02
+ d2e1a72fcca58-72f8a69eb75sm2318406b3a.12.2025.01.24.11.12.58
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 24 Jan 2025 11:13:03 -0800 (PST)
+ Fri, 24 Jan 2025 11:12:59 -0800 (PST)
 From: Tomita Moeko <tomitamoeko@gmail.com>
 To: Alex Williamson <alex.williamson@redhat.com>,
  =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>
 Cc: qemu-devel@nongnu.org,
 	Tomita Moeko <tomitamoeko@gmail.com>
-Subject: [PATCH v2 2/5] vfio/pci: add placeholder for device-specific config
- space quirks
-Date: Sat, 25 Jan 2025 03:12:42 +0800
-Message-ID: <20250124191245.12464-3-tomitamoeko@gmail.com>
+Subject: [PATCH v2 0/5] vfio/igd: remove incorrect IO BAR4 quirk
+Date: Sat, 25 Jan 2025 03:12:40 +0800
+Message-ID: <20250124191245.12464-1-tomitamoeko@gmail.com>
 X-Mailer: git-send-email 2.45.2
-In-Reply-To: <20250124191245.12464-1-tomitamoeko@gmail.com>
-References: <20250124191245.12464-1-tomitamoeko@gmail.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::641;
- envelope-from=tomitamoeko@gmail.com; helo=mail-pl1-x641.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1044;
+ envelope-from=tomitamoeko@gmail.com; helo=mail-pj1-x1044.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -101,61 +97,102 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Some devices, such as IGD, require device-specific quirks to be applied
-to their pci config spaces. Currently, these quirks are either part of
-BAR quirk, or being a part of vfio_realize(). Add a placeholder for pci
-config quirks for moving the quirks to one place later.
+Based on experiments and reverse engineering about the mysterious IO
+BAR4, it appears that the current quirk implementation is incorrect.
+As discussed in a previous mail thread [1], current implementation
+believes VBIOS is writing HPA of Data Stolen Memory (DSM) in GTT
+entries, so it intercepts and writes (addr - Host BDSM + Guest BDSM)
+instead, probably believes the addresses are hardcoded in VBIOS.
 
-Signed-off-by: Tomita Moeko <tomitamoeko@gmail.com>
----
- hw/vfio/pci-quirks.c | 5 +++++
- hw/vfio/pci.c        | 4 ++++
- hw/vfio/pci.h        | 1 +
- 3 files changed, 10 insertions(+)
+With disassembling a VBIOS of Intel Sandy/Ivy Bridge and Haswell [2]
+(thankfully there is only a few 32-bit out instructions), VBIOS read
+BDSM from pci config space, which is programmed by SeaBIOS [3] in
+guest. That is to say, VBIOS actually writes GPA when programming GTT
+initial entries, the current quirk is incorrect.
 
-diff --git a/hw/vfio/pci-quirks.c b/hw/vfio/pci-quirks.c
-index fbe43b0a79..c40e3ca88f 100644
---- a/hw/vfio/pci-quirks.c
-+++ b/hw/vfio/pci-quirks.c
-@@ -1167,6 +1167,11 @@ bool vfio_pci_igd_opregion_init(VFIOPCIDevice *vdev,
- /*
-  * Common quirk probe entry points.
-  */
-+bool vfio_config_quirk_setup(VFIOPCIDevice *vdev, Error **errp)
-+{
-+    return true;
-+}
-+
- void vfio_vga_quirk_setup(VFIOPCIDevice *vdev)
- {
-     vfio_vga_probe_ati_3c3_quirk(vdev);
-diff --git a/hw/vfio/pci.c b/hw/vfio/pci.c
-index ab17a98ee5..e624ae56c4 100644
---- a/hw/vfio/pci.c
-+++ b/hw/vfio/pci.c
-@@ -3124,6 +3124,10 @@ static void vfio_realize(PCIDevice *pdev, Error **errp)
-         goto out_unset_idev;
-     }
- 
-+    if (!vfio_config_quirk_setup(vdev, errp)) {
-+        goto out_unset_idev;
-+    }
-+
-     if (vdev->vga) {
-         vfio_vga_quirk_setup(vdev);
-     }
-diff --git a/hw/vfio/pci.h b/hw/vfio/pci.h
-index 43c166680a..5359e94f18 100644
---- a/hw/vfio/pci.h
-+++ b/hw/vfio/pci.h
-@@ -205,6 +205,7 @@ uint64_t vfio_vga_read(void *opaque, hwaddr addr, unsigned size);
- void vfio_vga_write(void *opaque, hwaddr addr, uint64_t data, unsigned size);
- 
- bool vfio_opt_rom_in_denylist(VFIOPCIDevice *vdev);
-+bool vfio_config_quirk_setup(VFIOPCIDevice *vdev, Error **errp);
- void vfio_vga_quirk_setup(VFIOPCIDevice *vdev);
- void vfio_vga_quirk_exit(VFIOPCIDevice *vdev);
- void vfio_vga_quirk_finalize(VFIOPCIDevice *vdev);
+The change was tested on a Kaby Lake HD620 (Gen 9) by comparing GTT
+entries read from MMIO BAR0 and IO BAR4.
+
+This patchset also creates a new function vfio_config_quirk_setup()
+for the config space quirk previously in vfio_probe_igd_bar4_quirk().
+The OpRegion quirk in vfio_realize() is also merged into the config
+qurk. Finally all the igd-related codes are moved to igd.c.
+
+[1] https://lore.kernel.org/qemu-devel/b373a030-5ccf-418c-9213-865ddc6748fd@gmail.com/
+[2] https://winraid.level1techs.com/t/offer-intel-sandy-ivy-bridge-and-haswell-vbios-modules/30272
+[3] https://gitlab.com/qemu-project/seabios/-/blob/1.12-stable/src/fw/pciinit.c#L319-332
+
+Related VBIOS disassembly:
+
+# read BDSM
+6498:	66 53                	push   %ebx
+649a:	66 2e 83 3e 94 64 00 	cmpl   $0x0,%cs:0x6494  # BDSM already read?
+64a1:	74 07                	je     0x64aa
+64a3:	66 2e a1 94 64       	mov    %cs:0x6494,%eax 
+64a8:	eb 0f                	jmp    0x64b9
+64aa:	b8 5e 10             	mov    $0x105e,%ax      # 5e == 5c + 2, that's why shl 16 later?
+                                                    # ((2 << 11) + 0x5e)
+64ad:	e8 55 05             	call   0x6a05           # read config space via port cf8/cfc
+64b0:	66 c1 e0 10          	shl    $0x10,%eax       # eax << 16
+64b4:	66 2e a3 94 64       	mov    %eax,%cs:0x6494  # save BDSM
+64b9:	66 5b                	pop    %ebx
+64bb:	c3                   	ret
+# program single GTT entry, esi: addr, eax: data
+6d16:	66 50                	push   %eax
+6d18:	52                   	push   %dx
+6d19:	2e 8b 16 4a e4       	mov    %cs:-0x1bb6,%dx  # saved MMIO_Index port
+6d1e:	66 96                	xchg   %eax,%esi
+6d20:	66 ef                	out    %eax,(%dx)       # write MMIO_Index
+6d22:	2e 8b 16 4c e4       	mov    %cs:-0x1bb4,%dx  # saved MMIO_Data port
+6d27:	66 96                	xchg   %eax,%esi
+6d29:	66 83 c8 01          	or     $0x1,%eax        # set valid bit
+6d2d:	66 ef                	out    %eax,(%dx)       # write MMIO_Data
+6d2f:	5a                   	pop    %dx
+6d30:	66 58                	pop    %eax
+6d32:	c3                   	ret
+# program GTT entries, esi: entry addr, eax: page addr
+e929:	51                   	push   %cx
+e92a:	e8 6b 7b             	call   0x6498       # read BDSM
+e92d:	25 00 e0             	and    $0xe000,%ax
+e930:	66 83 c8 01          	or     $0x1,%eax    # valid bit
+e934:	66 be 01 00 00 00    	mov    $0x1,%esi    # gtt access bit in addr
+e93a:	e8 d9 83             	call   0x6d16       # single entry routine
+e93d:	66 83 c6 04          	add    $0x4,%esi    # next entry
+e941:	66 05 00 10 00 00    	add    $0x1000,%eax # next page
+e947:	e2 f1                	loop   0xe93a
+e949:	59                   	pop    %cx
+e94a:	c3                   	ret
+
+Observed layout of the undocumented MMIO_Index register:
+ 31                                                   2   1      0
++-------------------------------------------------------------------+
+|                        Offset                        | Rsvd | Sel |
++-------------------------------------------------------------------+
+- Offset: Byte offset in specified region, 4-byte aligned.
+- Sel: Region selector
+       0: MMIO register region (first half of MMIO BAR0)
+       1: GTT region (second half of MMIO BAR0). Pre Gen11 only.
+
+
+Changelog:
+v2:
+* Move the OpRegion quirk from vfio_realize() to vfio_probe_igd_config_
+  quirk(), as proposed in v1, making it reasonable to return bool.
+Link: https://lore.kernel.org/qemu-devel/20250122171731.40444-1-tomitamoeko@gmail.com/
+
+Tomita Moeko (5):
+  vfio/igd: remove GTT write quirk in IO BAR 4
+  vfio/pci: add placeholder for device-specific config space quirks
+  vfio/igd: refactor vfio_probe_igd_bar4_quirk() into pci config quirk
+  vfio/igd: do not include GTT stolen size in etc/igd-bdsm-size
+  vfio/igd: handle x-igd-opregion in vfio_probe_igd_config_quirk()
+
+ hw/vfio/igd.c        | 381 ++++++++++++++-----------------------------
+ hw/vfio/pci-quirks.c |  51 +-----
+ hw/vfio/pci.c        |  29 +---
+ hw/vfio/pci.h        |   7 +-
+ 4 files changed, 136 insertions(+), 332 deletions(-)
+
 -- 
 2.45.2
 
