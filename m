@@ -4,89 +4,96 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 79963C0218B
-	for <qemu-devel@archiver.kernel.org>; Fri, 24 Jan 2025 18:08:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C7041C02181
+	for <qemu-devel@archiver.kernel.org>; Fri, 24 Jan 2025 18:09:51 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tbO64-0000ob-Tl; Fri, 24 Jan 2025 13:08:00 -0500
+	id 1tbO7S-0001Mo-Vw; Fri, 24 Jan 2025 13:09:27 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tbO63-0000oE-3Q
- for qemu-devel@nongnu.org; Fri, 24 Jan 2025 13:07:59 -0500
-Received: from mail-wr1-x435.google.com ([2a00:1450:4864:20::435])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tbO61-0006gN-CN
- for qemu-devel@nongnu.org; Fri, 24 Jan 2025 13:07:58 -0500
-Received: by mail-wr1-x435.google.com with SMTP id
- ffacd0b85a97d-38633b5dbcfso2760693f8f.2
- for <qemu-devel@nongnu.org>; Fri, 24 Jan 2025 10:07:56 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1737742074; x=1738346874; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=WNERd4jKTwPNcA84P3Bwla00gQ/OilA9Jp70Zf8lLsY=;
- b=ggTZdJ/oYsLW4rzC0fujn8KuegnSfV6FXfLik3nsXF7FivxszQDqTnh4VbE9bnAe87
- EB98X6PqND0C79AXT64bP6fLF2pLCkgg3TsiWJr1rFdrDVR0jmlyTjkauXWKC3pBPLrk
- j2p6R6DCEUM7jmCSyiukngkXampLZfTv61PJsxTzK5kD++H0ih/p8ItKYWZk9in+NrMO
- G883fk4fJr16OJBaZ8glsJzI/2mrcfUvzPn4caJY1nPc4+UfUfA1Js2nu7XNa/FA3pqy
- xHvx57yhJG+ddECzasApspB5y70B54eQEVsKQZKTH5j+VBj5C6FCYYHRo4Ms44GGv9B/
- TW/g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1737742074; x=1738346874;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=WNERd4jKTwPNcA84P3Bwla00gQ/OilA9Jp70Zf8lLsY=;
- b=SJsntEEOoAglQoLiMsFWY76NIgcIBknwlo/NTlR9/7CdXSAtr5RJVBdNNjabDVbsaF
- fSm7lLwXNOhbr15Z6A60CKWupJKvG9Q0EUYTaQjPs5E891Lnj+5Ww1ABj2VTZM/K2VDr
- Zp26l/2VYfntMmUvl1E34PVtgna99Qz/RbvcPtfWlfpxY1DVToal4iPzedrQIAIvmUpq
- oxBPzCTBDS590Z3DxUw/iRV1PsCzSOduwAy1Gu7899GdKOEsIICnK182rV5JEhmMGWlY
- h+miFElikwDYPP/nMLdebiTd4NtQ69xhjzJjrSFZ0ZCwoKskHRbMcemXmTx7uULGziSY
- QLYg==
-X-Gm-Message-State: AOJu0YzFzKtW3DpA3RunFUgh6tWB3z9WgiW+L15rKG//9kOHuEUNZWJK
- xeicPgQDreRAlWvaACUTAE0A7K9FRvNsfgm365StrmvrxC4wHZSiabiN3aCi6Mgw7SLwat1hsxG
- Y4Zc=
-X-Gm-Gg: ASbGnctVHw35rsbgCV35gMGz31mXMKA8ylMsCj1BO+y32lN3HeLQOPd0YZvPf4tnQyZ
- 7qdZ3naZ95x2zr9ggT/Ma79X8MLrmThxcpy+N19u556EwOiKU/QsLuPpxw5n3Gpc4WCYWshowjt
- lWtNVG+Gslhh0S5eeX6qh+35IyqlezYz2VKACYU0poZs9EX5YVcjBOUK2LZ8vMv3A3fTRgYpWZ9
- AzNv4k/jswYbX8VurnIVuw4a85b1SkjyVoakRnmB+4Vua5ghMJer4L695JjRkoJnRlAjHM2kO2y
- IXU4L4SygjjWfM9T9rhjZbQxyejJul2wB7ylz1YLB3/uHivx
-X-Google-Smtp-Source: AGHT+IHDteRmkvPbJoQ8jiCugxCjDDZ+q5YSr2filV7UJJNXbgcKWM0E7ZsTlaq5r3QVBsJ0b4yhIA==
-X-Received: by 2002:a5d:59a3:0:b0:382:4b9a:f51f with SMTP id
- ffacd0b85a97d-38bf57bd650mr31133158f8f.47.1737742074226; 
- Fri, 24 Jan 2025 10:07:54 -0800 (PST)
-Received: from [192.168.69.181] (88-187-86-199.subs.proxad.net.
- [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-38c2a17650esm3402763f8f.12.2025.01.24.10.07.53
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 24 Jan 2025 10:07:53 -0800 (PST)
-Message-ID: <3f15447a-4dec-4855-8bbb-3beb14e4c97f@linaro.org>
-Date: Fri, 24 Jan 2025 19:07:52 +0100
+ (Exim 4.90_1) (envelope-from <nsg@linux.ibm.com>)
+ id 1tbO7Q-0001M5-Kt; Fri, 24 Jan 2025 13:09:24 -0500
+Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <nsg@linux.ibm.com>)
+ id 1tbO7O-0006o3-P8; Fri, 24 Jan 2025 13:09:24 -0500
+Received: from pps.filterd (m0356516.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 50OFdQGN013311;
+ Fri, 24 Jan 2025 18:09:20 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+ :content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=pp1; bh=EzcNeS
+ yIQOajauRsfCA1OntBEzUEWOaHbUCmiEkdZc0=; b=m58oYkuQPHmRzj89FGQw8H
+ WdiIR6FFaRRpxFF+ThYOwScyw6NSvB1hompuBNxKZY1XQ3cVbrFO80+VvB+iyeZh
+ vJ0YwN4ZxFQf4l4ACfQ7DmdzBDtNHK9ZTLNGrBqcsyuTJshePHMs0qIt0fB7QMnD
+ GyONDtgw+Dc2p6jdo8mntqCjO6pF3pGU2Zl1z7UGKAHg4Nve1AUY3bdrTKVjnwsJ
+ BNWKCDxsr3dIWLMGzz8STytyN7HhTtVKId9vDROGt+CNeqUbPMK4YF/xB8XqsvXw
+ 9NScuhQL+zxhwmpi8rXF+q62kYXSj9TKnGE+LD9vmSlNTg2Ga62ENGyhTq75k1zg
+ ==
+Received: from ppma13.dal12v.mail.ibm.com
+ (dd.9e.1632.ip4.static.sl-reverse.com [50.22.158.221])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 44cdptrr80-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Fri, 24 Jan 2025 18:09:20 +0000 (GMT)
+Received: from pps.filterd (ppma13.dal12v.mail.ibm.com [127.0.0.1])
+ by ppma13.dal12v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 50OHZ3XO032274;
+ Fri, 24 Jan 2025 18:09:19 GMT
+Received: from smtprelay03.fra02v.mail.ibm.com ([9.218.2.224])
+ by ppma13.dal12v.mail.ibm.com (PPS) with ESMTPS id 448ruk4c25-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Fri, 24 Jan 2025 18:09:19 +0000
+Received: from smtpav02.fra02v.mail.ibm.com (smtpav02.fra02v.mail.ibm.com
+ [10.20.54.101])
+ by smtprelay03.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 50OI9GF457278790
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Fri, 24 Jan 2025 18:09:16 GMT
+Received: from smtpav02.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 6EFDE2007F;
+ Fri, 24 Jan 2025 18:09:16 +0000 (GMT)
+Received: from smtpav02.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 2C6662007D;
+ Fri, 24 Jan 2025 18:09:16 +0000 (GMT)
+Received: from li-978a334c-2cba-11b2-a85c-a0743a31b510.ibm.com (unknown
+ [9.179.27.114]) by smtpav02.fra02v.mail.ibm.com (Postfix) with ESMTP;
+ Fri, 24 Jan 2025 18:09:16 +0000 (GMT)
+Message-ID: <1c844d5fefcbcfa5c969c4b6d5ad1ebf121861b2.camel@linux.ibm.com>
+Subject: Re: [PATCH v1 3/3] hw/s390x: support migration of CPI values
+From: Nina Schoetterl-Glausch <nsg@linux.ibm.com>
+To: Shalini Chellathurai Saroja <shalini@linux.ibm.com>, qemu-s390x
+ mailing list <qemu-s390x@nongnu.org>
+Cc: qemu-devel mailing list <qemu-devel@nongnu.org>, Hendrik Brueckner
+ <brueckner@linux.ibm.com>
+Date: Fri, 24 Jan 2025 19:09:15 +0100
+In-Reply-To: <20250115133106.3034445-3-shalini@linux.ibm.com>
+References: <20250115133106.3034445-1-shalini@linux.ibm.com>
+ <20250115133106.3034445-3-shalini@linux.ibm.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+User-Agent: Evolution 3.52.4 (3.52.4-2.fc40) 
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 2/2] hw/char/sh_serial: Convert to TypeInfo
-To: qemu-devel@nongnu.org
-Cc: =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
- Paolo Bonzini <pbonzini@redhat.com>, Bernhard Beschow <shentey@gmail.com>,
- Magnus Damm <magnus.damm@gmail.com>,
- Yoshinori Sato <ysato@users.sourceforge.jp>
-References: <20250124175053.74461-1-philmd@linaro.org>
- <20250124175053.74461-3-philmd@linaro.org>
-Content-Language: en-US
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20250124175053.74461-3-philmd@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::435;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x435.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+X-TM-AS-GCONF: 00
+X-Proofpoint-ORIG-GUID: 37j9R1mqlBfKP-JyMqqsMP-Hxjy8Y-Is
+X-Proofpoint-GUID: 37j9R1mqlBfKP-JyMqqsMP-Hxjy8Y-Is
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1057,Hydra:6.0.680,FMLib:17.12.68.34
+ definitions=2025-01-24_07,2025-01-23_01,2024-11-22_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ phishscore=0
+ priorityscore=1501 impostorscore=0 clxscore=1015 lowpriorityscore=0
+ bulkscore=0 mlxlogscore=999 mlxscore=0 malwarescore=0 spamscore=0
+ suspectscore=0 adultscore=0 classifier=spam adjust=0 reason=mlx
+ scancount=1 engine=8.19.0-2411120000 definitions=main-2501240125
+Received-SPF: pass client-ip=148.163.158.5; envelope-from=nsg@linux.ibm.com;
+ helo=mx0b-001b2d01.pphosted.com
+X-Spam_score_int: -26
+X-Spam_score: -2.7
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
+ RCVD_IN_MSPIKE_H2=-0.001, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -103,68 +110,52 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 24/1/25 18:50, Philippe Mathieu-Daudé wrote:
-> QOM types are now registered using as TypeInfo via DEFINE_TYPES()
-> or type_init(). Update TYPE_SH_SERIAL, removing the empty QOM
-> instance_init/finalize handlers.
-> 
-> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+On Wed, 2025-01-15 at 14:31 +0100, Shalini Chellathurai Saroja wrote:
+> This commit saves the state of CPI values in the guest and
+> transfers this state during live migration of the guest.
+
+IMO, using active voice and directly stating what is done is preferable.
+
+Something like:
+Register Control-Program Identifier data with the migration infrastructure.
+
+"This commit" doesn't really add anything.
+(Applies to other commits also)
+I also prefer verbosity when it comes to abbreviations.
+
+>=20
+> Signed-off-by: Shalini Chellathurai Saroja <shalini@linux.ibm.com>
 > ---
->   hw/char/sh_serial.c | 23 +++++++++++------------
->   1 file changed, 11 insertions(+), 12 deletions(-)
-> 
-> diff --git a/hw/char/sh_serial.c b/hw/char/sh_serial.c
-> index 29ac9f9e5e7..b1db91656fe 100644
-> --- a/hw/char/sh_serial.c
-> +++ b/hw/char/sh_serial.c
-> @@ -78,10 +78,6 @@ struct SHSerialState {
->       qemu_irq bri;
->   };
->   
-> -typedef struct {} SHSerialStateClass;
+>  hw/s390x/s390-virtio-ccw.c | 17 +++++++++++++++++
+>  1 file changed, 17 insertions(+)
+>=20
+> diff --git a/hw/s390x/s390-virtio-ccw.c b/hw/s390x/s390-virtio-ccw.c
+> index 35fb523af9..8fe0c5c1cb 100644
+> --- a/hw/s390x/s390-virtio-ccw.c
+> +++ b/hw/s390x/s390-virtio-ccw.c
+> @@ -259,6 +259,20 @@ static void s390_create_sclpconsole(SCLPDevice *sclp=
+,
+>      qdev_realize_and_unref(dev, ev_fac_bus, &error_fatal);
+>  }
+> =20
+> +static const VMStateDescription vmstate_cpi =3D {
+> +    .name =3D "s390_cpi",
+> +    .version_id =3D 0,
+> +    .minimum_version_id =3D 0,
+> +    .fields =3D (const VMStateField[]) {
+> +        VMSTATE_UINT8_ARRAY(system_type, Cpi, 8),
+> +        VMSTATE_UINT8_ARRAY(system_name, Cpi, 8),
+> +        VMSTATE_UINT64(system_level, Cpi),
+> +        VMSTATE_UINT8_ARRAY(sysplex_name, Cpi, 8),
+> +        VMSTATE_UINT64(timestamp, Cpi),
+> +        VMSTATE_END_OF_LIST()
 
-Note this structure was buggy, as it should have embedded its parent...
+I see, you need the Cpi type here.
+How about naming it ControlProgramId and renaming CPI
+to ControlProgramIdMsg or similar?
 
-   struct SHSerialStateClass {
-     SysBusDeviceClass parent_class;
-     ...
-   };
+With that sorted out:
 
-> -
-> -OBJECT_DEFINE_TYPE(SHSerialState, sh_serial, SH_SERIAL, SYS_BUS_DEVICE)
-> -
->   static void sh_serial_clear_fifo(SHSerialState *s)
->   {
->       memset(s->rx_fifo, 0, SH_RX_FIFO_LENGTH);
-> @@ -443,14 +439,6 @@ static void sh_serial_unrealize(DeviceState *dev)
->       timer_del(&s->fifo_timeout_timer);
->   }
->   
-> -static void sh_serial_init(Object *obj)
-> -{
-> -}
-> -
-> -static void sh_serial_finalize(Object *obj)
-> -{
-> -}
-> -
->   static const Property sh_serial_properties[] = {
->       DEFINE_PROP_CHR("chardev", SHSerialState, chr),
->       DEFINE_PROP_UINT8("features", SHSerialState, feat, 0),
-> @@ -467,3 +455,14 @@ static void sh_serial_class_init(ObjectClass *oc, void *data)
->       /* Reason: part of SuperH CPU/SoC, needs to be wired up */
->       dc->user_creatable = false;
->   }
-> +
-> +static const TypeInfo sh_serial_types[] = {
-> +    {
-> +        .name           = TYPE_SH_SERIAL,
-> +        .parent         = TYPE_SYS_BUS_DEVICE,
-> +        .instance_size  = sizeof(SHSerialState),
-> +        .class_init     = sh_serial_class_init,
-> +    },
-> +};
-> +
-> +DEFINE_TYPES(sh_serial_types)
+Reviewed-by: Nina Schoetterl-Glausch <nsg@linux.ibm.com>
 
 
