@@ -4,47 +4,47 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1BF53C02181
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E532EC0218D
 	for <qemu-devel@archiver.kernel.org>; Fri, 24 Jan 2025 13:44:29 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tbJuL-0007Pp-4A; Fri, 24 Jan 2025 08:39:37 -0500
+	id 1tbJuQ-0008HC-OC; Fri, 24 Jan 2025 08:39:42 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <xiaoyao.li@intel.com>)
- id 1tbJtg-0006cs-HF
- for qemu-devel@nongnu.org; Fri, 24 Jan 2025 08:39:00 -0500
+ id 1tbJto-0006rt-RP
+ for qemu-devel@nongnu.org; Fri, 24 Jan 2025 08:39:07 -0500
 Received: from mgamail.intel.com ([198.175.65.13])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <xiaoyao.li@intel.com>)
- id 1tbJte-00042W-ES
- for qemu-devel@nongnu.org; Fri, 24 Jan 2025 08:38:55 -0500
+ id 1tbJtl-0003xi-8C
+ for qemu-devel@nongnu.org; Fri, 24 Jan 2025 08:39:03 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1737725935; x=1769261935;
+ t=1737725942; x=1769261942;
  h=from:to:cc:subject:date:message-id:in-reply-to:
  references:mime-version:content-transfer-encoding;
- bh=yjeFsx3DLSpiqpqVn548Wr6nyNm4xYxJhSEfr1UJ2Ho=;
- b=JLUqyW/Dd/9jr49v3gWGiDw/joZFpxBimX+gXAtBJyfBiBvfGjkJF30Y
- Elojaam8k+x0SVk9c2Pa/+zvRSAS5NhphFYXlOCzY3PoA91HlJVv76eHY
- un+5pAny+wrd2bEvkEsZagQeVgDRDnNkQDDU14YQtcGvXFuDClzMHtGrt
- hkEqnT805AEd1/Ob5UvQtWkfafqQJf57DctbkRIiwggGhuBmrgGhCJoE2
- BbAxv499A/nTxoyqVxS8ipAHWrdyaU5XNtdztTVFZSpbHmrCeMV1/XyvN
- wc57NarsVHl1wqZSO1DYiJRxXYeHmK8/PoTH8Rt5IwrF0cpEgUg5F1ipp g==;
-X-CSE-ConnectionGUID: MXoKRpwYQEqlOklFKZoDbg==
-X-CSE-MsgGUID: kJUwVudCRVeWpI0xMVB0AA==
-X-IronPort-AV: E=McAfee;i="6700,10204,11325"; a="49246436"
-X-IronPort-AV: E=Sophos;i="6.13,231,1732608000"; d="scan'208";a="49246436"
+ bh=PnMivpqsKENYPJ5DahWXLvF1ZEiK4OeXxRfzVf2Js5A=;
+ b=eODL+CXFMhyK7aZpGO03u0fzpVPtFgzN91WRmrLHPBbH1jBgjpVeSxgU
+ maT6lEkS8HwJDz4bYpF2ggHmeGb+BjhH/MccdG9nzO6zzweC/JYksSRmw
+ UnM+s3hOR2dpZU/7FRVMDdA3grGmnVOqoprIdWDluX0VuRCAxVlQxSLhZ
+ Jr7gP6Qd0BZxzsvbcVF4X39cH+jTmvzWyqD3cE7QFL8fQKRVQpM3FH7bg
+ VTUslFPxPLCqd4tJ0mxmmvOXdpIQfBciQS80NH5WR3IJlOcXWXbkpjwcn
+ ykzmBehBQU56WToooEPtmSnIomMZ4rlYMqc1NsHDfaLFW4kw8veq+/kDX g==;
+X-CSE-ConnectionGUID: tx4+7eNvSY6zXSak0B+sAQ==
+X-CSE-MsgGUID: pcyK3i8WQR+XaHmrjjEWqQ==
+X-IronPort-AV: E=McAfee;i="6700,10204,11325"; a="49246451"
+X-IronPort-AV: E=Sophos;i="6.13,231,1732608000"; d="scan'208";a="49246451"
 Received: from fmviesa003.fm.intel.com ([10.60.135.143])
  by orvoesa105.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 24 Jan 2025 05:38:40 -0800
-X-CSE-ConnectionGUID: s85VyDiiTO6zeiWrug6ntg==
-X-CSE-MsgGUID: BGIFg/2wSx62RdhW/FXsjQ==
+ 24 Jan 2025 05:38:44 -0800
+X-CSE-ConnectionGUID: iD2telCRSlykT7C4RRvX3Q==
+X-CSE-MsgGUID: Q+yP9ClSSDGhPcs6vcezJA==
 X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.12,224,1728975600"; d="scan'208";a="111804331"
+X-IronPort-AV: E=Sophos;i="6.12,224,1728975600"; d="scan'208";a="111804345"
 Received: from lxy-clx-4s.sh.intel.com ([10.239.48.52])
- by fmviesa003.fm.intel.com with ESMTP; 24 Jan 2025 05:38:36 -0800
+ by fmviesa003.fm.intel.com with ESMTP; 24 Jan 2025 05:38:40 -0800
 From: Xiaoyao Li <xiaoyao.li@intel.com>
 To: Paolo Bonzini <pbonzini@redhat.com>,
  =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
@@ -57,9 +57,9 @@ Cc: Zhao Liu <zhao1.liu@intel.com>, "Michael S. Tsirkin" <mst@redhat.com>,
  Rick Edgecombe <rick.p.edgecombe@intel.com>,
  Francesco Lavra <francescolavra.fl@gmail.com>, xiaoyao.li@intel.com,
  qemu-devel@nongnu.org, kvm@vger.kernel.org
-Subject: [PATCH v7 26/52] i386/tdx: Enable user exit on KVM_HC_MAP_GPA_RANGE
-Date: Fri, 24 Jan 2025 08:20:22 -0500
-Message-Id: <20250124132048.3229049-27-xiaoyao.li@intel.com>
+Subject: [PATCH v7 27/52] i386/tdx: Handle KVM_SYSTEM_EVENT_TDX_FATAL
+Date: Fri, 24 Jan 2025 08:20:23 -0500
+Message-Id: <20250124132048.3229049-28-xiaoyao.li@intel.com>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20250124132048.3229049-1-xiaoyao.li@intel.com>
 References: <20250124132048.3229049-1-xiaoyao.li@intel.com>
@@ -91,43 +91,113 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-KVM translates TDG.VP.VMCALL<MapGPA> to KVM_HC_MAP_GPA_RANGE, and QEMU
-needs to enable user exit on KVM_HC_MAP_GPA_RANGE in order to handle the
-memory conversion requested by TD guest.
+TD guest can use TDG.VP.VMCALL<REPORT_FATAL_ERROR> to request
+termination. KVM translates such request into KVM_EXIT_SYSTEM_EVENT with
+type of KVM_SYSTEM_EVENT_TDX_FATAL.
+
+Add hanlder for such exit. Parse and print the error message, and
+terminate the TD guest in the handler.
 
 Signed-off-by: Xiaoyao Li <xiaoyao.li@intel.com>
 ---
-changes in v6:
- - new patch;
+Changes in v6:
+ - replace the patch " i386/tdx: Handle TDG.VP.VMCALL<REPORT_FATAL_ERROR>"
+   in v5;
 ---
- target/i386/kvm/tdx.c | 7 +++++++
- 1 file changed, 7 insertions(+)
+ target/i386/kvm/kvm.c      | 10 ++++++++++
+ target/i386/kvm/tdx-stub.c |  5 +++++
+ target/i386/kvm/tdx.c      | 24 ++++++++++++++++++++++++
+ target/i386/kvm/tdx.h      |  2 ++
+ 4 files changed, 41 insertions(+)
 
+diff --git a/target/i386/kvm/kvm.c b/target/i386/kvm/kvm.c
+index 7de5014051eb..a76f34537908 100644
+--- a/target/i386/kvm/kvm.c
++++ b/target/i386/kvm/kvm.c
+@@ -6128,6 +6128,16 @@ int kvm_arch_handle_exit(CPUState *cs, struct kvm_run *run)
+     case KVM_EXIT_HYPERCALL:
+         ret = kvm_handle_hypercall(run);
+         break;
++    case KVM_EXIT_SYSTEM_EVENT:
++        switch (run->system_event.type) {
++        case KVM_SYSTEM_EVENT_TDX_FATAL:
++            ret = tdx_handle_report_fatal_error(cpu, run);
++            break;
++        default:
++            ret = -1;
++            break;
++        }
++        break;
+     default:
+         fprintf(stderr, "KVM: unknown exit reason %d\n", run->exit_reason);
+         ret = -1;
+diff --git a/target/i386/kvm/tdx-stub.c b/target/i386/kvm/tdx-stub.c
+index 7748b6d0a446..720a4ff046ee 100644
+--- a/target/i386/kvm/tdx-stub.c
++++ b/target/i386/kvm/tdx-stub.c
+@@ -13,3 +13,8 @@ int tdx_parse_tdvf(void *flash_ptr, int size)
+ {
+     return -EINVAL;
+ }
++
++int tdx_handle_report_fatal_error(X86CPU *cpu, struct kvm_run *run)
++{
++    return -EINVAL;
++}
 diff --git a/target/i386/kvm/tdx.c b/target/i386/kvm/tdx.c
-index d7f7f8301ca2..1d0cf29c39f9 100644
+index 1d0cf29c39f9..f857fddd839b 100644
 --- a/target/i386/kvm/tdx.c
 +++ b/target/i386/kvm/tdx.c
-@@ -19,6 +19,8 @@
- #include "system/system.h"
- #include "exec/ramblock.h"
+@@ -601,6 +601,30 @@ int tdx_parse_tdvf(void *flash_ptr, int size)
+     return tdvf_parse_metadata(&tdx_guest->tdvf, flash_ptr, size);
+ }
  
-+#include <linux/kvm_para.h>
++int tdx_handle_report_fatal_error(X86CPU *cpu, struct kvm_run *run)
++{
++    uint64_t error_code = run->system_event.data[0];
++    char *message = NULL;
 +
- #include "hw/i386/e820_memory_layout.h"
- #include "hw/i386/x86.h"
- #include "hw/i386/tdvf.h"
-@@ -374,6 +376,11 @@ static int tdx_kvm_init(ConfidentialGuestSupport *cgs, Error **errp)
-         }
-     }
- 
-+    /* TDX relies on KVM_HC_MAP_GPA_RANGE to handle TDG.VP.VMCALL<MapGPA> */
-+    if (!kvm_enable_hypercall(BIT_ULL(KVM_HC_MAP_GPA_RANGE))) {
-+        return -EOPNOTSUPP;
++    if (error_code & 0xffff) {
++        error_report("TDX: REPORT_FATAL_ERROR: invalid error code: 0x%lx",
++                     error_code);
++        return -1;
 +    }
 +
-     qemu_add_machine_init_done_notifier(&tdx_machine_done_notify);
++    /* It has optional message */
++    if (run->system_event.data[2]) {
++#define TDX_FATAL_MESSAGE_MAX        64
++        message = g_malloc0(TDX_FATAL_MESSAGE_MAX + 1);
++
++        memcpy(message, &run->system_event.data[2], TDX_FATAL_MESSAGE_MAX);
++        message[TDX_FATAL_MESSAGE_MAX] = '\0';
++    }
++
++    error_report("TD guest reports fatal error. %s", message ? : "");
++    return -1;
++}
++
+ static bool tdx_guest_get_sept_ve_disable(Object *obj, Error **errp)
+ {
+     TdxGuest *tdx = TDX_GUEST(obj);
+diff --git a/target/i386/kvm/tdx.h b/target/i386/kvm/tdx.h
+index 36a7400e7480..04b5afe199f9 100644
+--- a/target/i386/kvm/tdx.h
++++ b/target/i386/kvm/tdx.h
+@@ -8,6 +8,7 @@
+ #endif
  
-     tdx_guest = tdx;
+ #include "confidential-guest.h"
++#include "cpu.h"
+ #include "hw/i386/tdvf.h"
+ 
+ #define TYPE_TDX_GUEST "tdx-guest"
+@@ -59,5 +60,6 @@ bool is_tdx_vm(void);
+ int tdx_pre_create_vcpu(CPUState *cpu, Error **errp);
+ void tdx_set_tdvf_region(MemoryRegion *tdvf_mr);
+ int tdx_parse_tdvf(void *flash_ptr, int size);
++int tdx_handle_report_fatal_error(X86CPU *cpu, struct kvm_run *run);
+ 
+ #endif /* QEMU_I386_TDX_H */
 -- 
 2.34.1
 
