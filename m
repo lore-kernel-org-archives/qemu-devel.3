@@ -4,83 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8866BC02181
-	for <qemu-devel@archiver.kernel.org>; Fri, 24 Jan 2025 09:52:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id F30B3C02181
+	for <qemu-devel@archiver.kernel.org>; Fri, 24 Jan 2025 09:52:39 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tbGIi-0007Qc-Mm; Fri, 24 Jan 2025 04:48:33 -0500
+	id 1tbGFE-0006HP-Jp; Fri, 24 Jan 2025 04:44:56 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1tbGG2-0007Nn-5T
- for qemu-devel@nongnu.org; Fri, 24 Jan 2025 04:45:48 -0500
+ id 1tbGFC-0006F8-Tm
+ for qemu-devel@nongnu.org; Fri, 24 Jan 2025 04:44:54 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1tbGG0-0003wS-Je
- for qemu-devel@nongnu.org; Fri, 24 Jan 2025 04:45:45 -0500
+ id 1tbGF8-0003dZ-K5
+ for qemu-devel@nongnu.org; Fri, 24 Jan 2025 04:44:53 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1737711943;
+ s=mimecast20190719; t=1737711888;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:mime-version:mime-version:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=iUzMFIurVFZDuf9mlbfI79G6/XfuTB6fCKo65mN+6bA=;
- b=eGDi1ZDYPYDDOMXoVb+fK6Nchki1EBCla7YlV22dsN6+tU8ilgPen/A+4vFj6APLf24g5a
- jr5fMcIcf8Vn3K3MXOyONLuyJs6z4IwsOggqu7ApA9rKc8S0hEXQ5s5XarbLkJwE0CZExW
- ZGO5URvwqvY6l+pqZ7T0R+I52XNFcw8=
-Received: from mail-wr1-f70.google.com (mail-wr1-f70.google.com
- [209.85.221.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ to:to:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding;
+ bh=LMbthOyayBn3XGkD2O0QW0vI87UoOUTJPuUpIWH4a00=;
+ b=P6rubBJd5ce6f1FisFatRGQpR9PCWXLkMXwLFS5uHiVrnlDwPml0Ln8D4llxIhB7LhXQG0
+ aMzSz0G3dp2JmN/XayeG/rEG1k/nmZBKs9htN0R+/eMN9S1tRnCTeGRQM0/7d6ifrpPk0k
+ M3dif0kMS/TPBN7m+VB3Lbx/GyjYyHw=
+Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com
+ [209.85.128.71]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-517-BKGuiY_jN3uqEcFp2Ab2-g-1; Fri, 24 Jan 2025 04:45:42 -0500
-X-MC-Unique: BKGuiY_jN3uqEcFp2Ab2-g-1
-X-Mimecast-MFC-AGG-ID: BKGuiY_jN3uqEcFp2Ab2-g
-Received: by mail-wr1-f70.google.com with SMTP id
- ffacd0b85a97d-388d1f6f3b2so848841f8f.0
- for <qemu-devel@nongnu.org>; Fri, 24 Jan 2025 01:45:41 -0800 (PST)
+ us-mta-641-Bb_YWTbRNr6FXDHaL0fJNg-1; Fri, 24 Jan 2025 04:44:46 -0500
+X-MC-Unique: Bb_YWTbRNr6FXDHaL0fJNg-1
+X-Mimecast-MFC-AGG-ID: Bb_YWTbRNr6FXDHaL0fJNg
+Received: by mail-wm1-f71.google.com with SMTP id
+ 5b1f17b1804b1-43673af80a6so13347045e9.1
+ for <qemu-devel@nongnu.org>; Fri, 24 Jan 2025 01:44:46 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1737711940; x=1738316740;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=iUzMFIurVFZDuf9mlbfI79G6/XfuTB6fCKo65mN+6bA=;
- b=cSPr9DO9cLObT00lhPKSqmvGEoQFKUhCp5U7y7EOQ4VprloUdlbTuOHxFcmsquv6Ov
- G1h5Dc8RazQDAooSEoybdlMbTQH1z5sWP+P9APUCyYLCOURIMQ/7sHbaSQfFxlRT1iTO
- H+G5ZcclvoheBQzHhHsqR9KDlo08hSn+or/NfBF1XbKUlFM01m7uRWScM2+825NCRS0F
- wFXedWSdYdNPVkuVmQUYQjmM5Oj1teOylJr27AqIqcxvhyVI6U3gXtopFhfFqVhdmIuI
- lU8oDEyLZM1nhdjXfDHqIlELzY9+I92BVHW7CXHVQl8sRS6ACElMHVWgHjMSxJKkMQAD
- VOUA==
-X-Gm-Message-State: AOJu0YwcLTgKdbcdq7BHcgCl2j8G4MF5FHquAFj+1GGhSJ8MWQhfo76l
- ynsNhv6euxyLb0+u/u4m/u2Y/nQxEHTAnuCEehybZst7A9hnbu3oEdVR6E0EfcS9lIuurr7ckj5
- cSYGeTkgifZwfDVhRFRdizbywxvDfYSlO6HGcYZqUnrEO5IvEr85RDSnuwJJlUUoNWfOT6OkFoJ
- YsSYLe1folTKezvDPRuCPY4k7dNsSBN8SVLWBEmFQ=
-X-Gm-Gg: ASbGncteUkwdHy9pjrveU17bGc8H7pazjWHbtZxCtWWCcMSrO7pMGdYctFgOko483a7
- ZeInhbRGW7JvwzlZG6ZQjvrk0cI2tS544ygGqJlxHzbNBD9KToa0QkbC4JTPuQi1P8J17YuYSk2
- DR/DD6uVNhgCh+9t90SqZRnb4JzCWe38GGN35fIfhre8EeEbJQ6W4D14YdBY0SYShZEs5dfI3B0
- NBNuyszSKFSeQ1Z26eMfrSbPvokoq8dDwUzZyRQeA07JjIntRwAqivuU4x7TYFdRdV+Ky9UHA==
-X-Received: by 2002:a5d:4207:0:b0:38b:ebcd:305c with SMTP id
- ffacd0b85a97d-38bf5675826mr21816588f8f.29.1737711939630; 
- Fri, 24 Jan 2025 01:45:39 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IEVv96LqD7sfaqk8mv6sYQsgNUHWv3HMbkMyQOw0qVEXsAHBPEQQd5mihfPaWGDzMS1uIVEMw==
-X-Received: by 2002:a5d:4207:0:b0:38b:ebcd:305c with SMTP id
- ffacd0b85a97d-38bf5675826mr21816558f8f.29.1737711939057; 
- Fri, 24 Jan 2025 01:45:39 -0800 (PST)
+ d=1e100.net; s=20230601; t=1737711885; x=1738316685;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:to
+ :from:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=LMbthOyayBn3XGkD2O0QW0vI87UoOUTJPuUpIWH4a00=;
+ b=INHtoRLSpqcyGmhgnwkVuRRJP98ARWXIC8f781d8tw2T+MuIUP9O6ojaHrZkUBBn3t
+ y1+mUXRxjj7AImyDyiPYULaqhkEjOzCJjgfrgXzcyeUIO2VPRI1I57v1E5CC+HXrIXbq
+ PXTpbnsFrF9ciuba/nGFRPXwIY0Z/FdOvGRykeXYziIthuhecDxhmRsVC1DvgziBlxTX
+ tFtzXrQjfuRuIS1eBDom44phdwKd73YEJH/gu39QWfhKhPYg3FMvZ+irkUBsOh5QQBYJ
+ /ijLgabvJdl+0ynnWzXlyvzr7pb2cHTv66zEdKcBzZC5JSogA1jlLrl1yYsslnCZKQ4P
+ VOsw==
+X-Gm-Message-State: AOJu0YxpWElpOthNtQ1+T/NggAumOm9deVQuwvj5VY5Izpn6WnP43Zsw
+ jM3pYU+Jx6GASdlKYPIsuveQqPCIEv7xjO7GdxR75XYpqNr5tA/KpoCAuw+C4GioTdL6Wa4/04r
+ TIssque89Ax0QBES3NuZVxfkO2qiLFl4na74KJ88CxwoCs+Q35ujuWuDNkw+bEs/DkyCByoNylC
+ 5fPFgE/itFANyZGE+X+ADN5jaHzeptF9jrd0XVurc=
+X-Gm-Gg: ASbGncuCQH/Up6/T02pgiiYmWErbOByeoXHztzlWcb5n8w6y7KWJYzFGBLDUr2WK3m1
+ wfYH5KIg3aW881wKo/LL98z2hep0U82AHOWuqBsMvalqwP1HBUYM7/TP5+bhYPWUJff2Ej5GSiU
+ nVQIJDFaQZO1mQeuNHfV21cAk8vFwYE3XKkb1V4dA3K6WNlXhyA4xLvMnFWv6Y+NhTJW379Pd9Z
+ vUjltIf1bsmSs1CA8iQ7i6J7pReESZ+jHrdeNxxz6Dt+HpRUmm8fAQAAULgBvH1bHGFIj/d1A==
+X-Received: by 2002:a05:600c:5027:b0:434:f5c0:3288 with SMTP id
+ 5b1f17b1804b1-43891430ed1mr267536565e9.29.1737711884898; 
+ Fri, 24 Jan 2025 01:44:44 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IFzHDlwhXx/wkak/IGLEBcnia0UFMfTNufavXwJa5l4Do3eZa/wXcEvj6Ytz2hFmkzWSEfQRQ==
+X-Received: by 2002:a05:600c:5027:b0:434:f5c0:3288 with SMTP id
+ 5b1f17b1804b1-43891430ed1mr267536195e9.29.1737711884271; 
+ Fri, 24 Jan 2025 01:44:44 -0800 (PST)
 Received: from [192.168.10.48] ([151.95.59.125])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-38c2a18859asm2145107f8f.42.2025.01.24.01.45.38
+ 5b1f17b1804b1-438bd57325csm20112735e9.34.2025.01.24.01.44.43
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 24 Jan 2025 01:45:38 -0800 (PST)
+ Fri, 24 Jan 2025 01:44:43 -0800 (PST)
 From: Paolo Bonzini <pbonzini@redhat.com>
 To: qemu-devel@nongnu.org
-Subject: [PULL 27/48] rust: vmstate: add varray support to vmstate_of!
-Date: Fri, 24 Jan 2025 10:44:21 +0100
-Message-ID: <20250124094442.13207-28-pbonzini@redhat.com>
+Subject: [PULL 00/48] i386, rust changes for 2024-01-24
+Date: Fri, 24 Jan 2025 10:43:54 +0100
+Message-ID: <20250124094442.13207-1-pbonzini@redhat.com>
 X-Mailer: git-send-email 2.48.1
-In-Reply-To: <20250124094442.13207-1-pbonzini@redhat.com>
-References: <20250124094442.13207-1-pbonzini@redhat.com>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=170.10.129.124; envelope-from=pbonzini@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
@@ -107,102 +104,99 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
----
- rust/qemu-api/src/vmstate.rs | 42 ++++++++++++++++++++++++++++++++++--
- 1 file changed, 40 insertions(+), 2 deletions(-)
+The following changes since commit d6430c17d7113d3c38480dc34e59d00b0504e2f7:
 
-diff --git a/rust/qemu-api/src/vmstate.rs b/rust/qemu-api/src/vmstate.rs
-index 211c3d096b7..2b14d4839df 100644
---- a/rust/qemu-api/src/vmstate.rs
-+++ b/rust/qemu-api/src/vmstate.rs
-@@ -72,6 +72,15 @@ pub unsafe trait VMState {
-     /// The base contents of a `VMStateField` (minus the name and offset) for
-     /// the type that is implementing the trait.
-     const BASE: VMStateField;
-+
-+    /// A flag that is added to another field's `VMStateField` to specify the
-+    /// length's type in a variable-sized array.  If this is not a supported
-+    /// type for the length (i.e. if it is not `u8`, `u16`, `u32`), using it
-+    /// in a call to [`vmstate_of!`](crate::vmstate_of) will cause a
-+    /// compile-time error.
-+    const VARRAY_FLAG: VMStateFlags = {
-+        panic!("invalid type for variable-sized array");
-+    };
- }
- 
- /// Internal utility function to retrieve a type's `VMStateField`;
-@@ -80,6 +89,13 @@ pub const fn vmstate_base<T: VMState>(_: PhantomData<T>) -> VMStateField {
-     T::BASE
- }
- 
-+/// Internal utility function to retrieve a type's `VMStateFlags` when it
-+/// is used as the element count of a `VMSTATE_VARRAY`; used by
-+/// [`vmstate_of!`](crate::vmstate_of).
-+pub const fn vmstate_varray_flag<T: VMState>(_: PhantomData<T>) -> VMStateFlags {
-+    T::VARRAY_FLAG
-+}
-+
- /// Return the `VMStateField` for a field of a struct.  The field must be
- /// visible in the current scope.
- ///
-@@ -87,18 +103,23 @@ pub const fn vmstate_base<T: VMState>(_: PhantomData<T>) -> VMStateField {
- /// for them.
- #[macro_export]
- macro_rules! vmstate_of {
--    ($struct_name:ty, $field_name:ident $(,)?) => {
-+    ($struct_name:ty, $field_name:ident $([0 .. $num:ident $(* $factor:expr)?])? $(,)?) => {
-         $crate::bindings::VMStateField {
-             name: ::core::concat!(::core::stringify!($field_name), "\0")
-                 .as_bytes()
-                 .as_ptr() as *const ::std::os::raw::c_char,
-             offset: $crate::offset_of!($struct_name, $field_name),
-             // Compute most of the VMStateField from the type of the field.
-+            $(.num_offset: $crate::offset_of!($struct_name, $num),)?
-             ..$crate::call_func_with_field!(
-                 $crate::vmstate::vmstate_base,
-                 $struct_name,
-                 $field_name
--            )
-+            )$(.with_varray_flag($crate::call_func_with_field!(
-+                    $crate::vmstate::vmstate_varray_flag,
-+                    $struct_name,
-+                    $num))
-+               $(.with_varray_multiply($factor))?)?
-         }
-     };
- }
-@@ -143,6 +164,22 @@ pub const fn with_pointer_flag(mut self) -> Self {
-         self.flags = VMStateFlags(self.flags.0 | VMStateFlags::VMS_POINTER.0);
-         self
-     }
-+
-+    #[must_use]
-+    pub const fn with_varray_flag<T: VMState>(mut self, flag: VMStateFlags) -> VMStateField {
-+        assert!((self.flags.0 & VMStateFlags::VMS_ARRAY.0) != 0);
-+        self.flags = VMStateFlags(self.flags.0 & !VMStateFlags::VMS_ARRAY.0);
-+        self.flags = VMStateFlags(self.flags.0 | flag.0);
-+        self
-+    }
-+
-+    #[must_use]
-+    pub const fn with_varray_multiply(mut self, num: u32) -> VMStateField {
-+        assert!(num <= 0x7FFF_FFFFu32);
-+        self.flags = VMStateFlags(self.flags.0 | VMStateFlags::VMS_MULTIPLY_ELEMENTS.0);
-+        self.num = num as i32;
-+        self
-+    }
- }
- 
- // Transparent wrappers: just use the internal type
-@@ -154,6 +191,7 @@ unsafe impl<$base> VMState for $type where $base: VMState $($where)* {
-                 size: mem::size_of::<$type>(),
-                 ..<$base as VMState>::BASE
-             };
-+            const VARRAY_FLAG: VMStateFlags = <$base as VMState>::VARRAY_FLAG;
-         }
-     };
- }
+  Merge tag 'pull-riscv-to-apply-20250119-1' of https://github.com/alistair23/qemu into staging (2025-01-19 08:55:46 -0500)
+
+are available in the Git repository at:
+
+  https://gitlab.com/bonzini/qemu.git tags/for-upstream
+
+for you to fetch changes up to 9feb68638e504c91b59e745b94423e8536abfd03:
+
+  rust: qemu-api: add sub-subclass to the integration tests (2025-01-23 19:07:39 +0100)
+
+----------------------------------------------------------------
+* target/i386: optimize string instructions
+* target/i386: new Sierra Forest and Clearwater Forest models
+* rust: type-safe vmstate implementation
+* rust: use interior mutability for PL011
+* rust: clean ups
+* memtxattrs: remove usage of bitfields from MEMTXATTRS_UNSPECIFIED
+
+----------------------------------------------------------------
+Paolo Bonzini (39):
+      rust: pl011: fix repr(C) for PL011Class
+      target/i386: inline gen_jcc into sole caller
+      target/i386: remove trailing 1 from gen_{j, cmov, set}cc1
+      target/i386: unify REP and REPZ/REPNZ generation
+      target/i386: unify choice between single and repeated string instructions
+      target/i386: reorganize ops emitted by do_gen_rep, drop repz_opt
+      target/i386: tcg: move gen_set/reset_* earlier in the file
+      target/i386: fix RF handling for string instructions
+      target/i386: make cc_op handling more explicit for repeated string instructions.
+      target/i386: do not use gen_op_jz_ecx for repeated string operations
+      target/i386: optimize CX handling in repeated string operations
+      target/i386: execute multiple REP/REPZ iterations without leaving TB
+      target/i386: pull computation of string update value out of loop
+      target/i386: extract common bits of gen_repz/gen_repz_nz
+      target/i386: avoid using s->tmp0 for add to implicit registers
+      rust: vmstate: add new type safe implementation
+      rust: vmstate: implement VMState for non-leaf types
+      rust: vmstate: add varray support to vmstate_of!
+      rust: vmstate: implement Zeroable for VMStateField
+      rust: vmstate: implement VMState for scalar types
+      rust: vmstate: add public utility macros to implement VMState
+      rust: qemu_api: add vmstate_struct
+      rust: pl011: switch vmstate to new-style macros
+      rust: vmstate: remove translation of C vmstate macros
+      rust: vmstate: make order of parameters consistent in vmstate_clock
+      rust: prefer NonNull::new to assertions
+      rust: pl011: remove unnecessary "extern crate"
+      rust: pl011: hide unnecessarily "pub" items from outside pl011::device
+      rust: pl011: extract conversion to RegisterOffset
+      rust: pl011: extract CharBackend receive logic into a separate function
+      rust: pl011: pull interrupt updates out of read/write ops
+      rust: pl011: extract PL011Registers
+      rust: pl011: wrap registers with BqlRefCell
+      rust: pl011: remove duplicate definitions
+      rust: pl011: pull device-specific code out of MemoryRegionOps callbacks
+      rust: pl011: drop use of ControlFlow
+      rust: qdev: make reset take a shared reference
+      rust/zeroable: Implement Zeroable with const_zero macro
+      rust: qemu-api: add sub-subclass to the integration tests
+
+Tao Su (4):
+      target/i386: Introduce SierraForest-v2 model
+      target/i386: Export BHI_NO bit to guests
+      target/i386: Add new CPU model ClearwaterForest
+      docs: Add GNR, SRF and CWF CPU models
+
+Zhao Liu (5):
+      stub: Fix build failure with --enable-user --disable-system --enable-tools
+      rust/qdev: Make REALIZE safe
+      rust/pl011: Avoid bindings::*
+      memattrs: Convert unspecified member to bool
+      memattrs: Check the size of MemTxAttrs
+
+ docs/system/cpu-models-x86.rst.inc     |  50 ++-
+ include/exec/memattrs.h                |  21 +-
+ target/i386/cpu.h                      |  33 +-
+ target/i386/cpu.c                      | 156 +++++++-
+ target/i386/tcg/translate.c            | 363 ++++++++++-------
+ target/i386/tcg/emit.c.inc             |  55 +--
+ rust/hw/char/pl011/src/device.rs       | 489 +++++++++++++----------
+ rust/hw/char/pl011/src/device_class.rs |  73 ++--
+ rust/hw/char/pl011/src/lib.rs          |  67 ++--
+ rust/hw/char/pl011/src/memory_ops.rs   |  25 +-
+ rust/qemu-api/src/prelude.rs           |   2 +
+ rust/qemu-api/src/qdev.rs              |  16 +-
+ rust/qemu-api/src/qom.rs               |  21 +-
+ rust/qemu-api/src/vmstate.rs           | 700 +++++++++++++++++++++------------
+ rust/qemu-api/src/zeroable.rs          | 118 +++---
+ rust/qemu-api/tests/tests.rs           |  56 ++-
+ stubs/meson.build                      |   4 +-
+ 17 files changed, 1403 insertions(+), 846 deletions(-)
 -- 
 2.48.1
 
