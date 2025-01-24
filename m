@@ -4,79 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C5181C0218B
-	for <qemu-devel@archiver.kernel.org>; Fri, 24 Jan 2025 09:52:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 51F9BC02181
+	for <qemu-devel@archiver.kernel.org>; Fri, 24 Jan 2025 09:52:49 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tbGIH-0005qn-4b; Fri, 24 Jan 2025 04:48:06 -0500
+	id 1tbGI7-0004vX-DA; Fri, 24 Jan 2025 04:47:55 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1tbGGH-0007c9-1F
- for qemu-devel@nongnu.org; Fri, 24 Jan 2025 04:46:01 -0500
+ id 1tbGFq-00077V-Vm
+ for qemu-devel@nongnu.org; Fri, 24 Jan 2025 04:45:37 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1tbGGD-0003xN-Hs
- for qemu-devel@nongnu.org; Fri, 24 Jan 2025 04:46:00 -0500
+ id 1tbGFo-0003uV-3r
+ for qemu-devel@nongnu.org; Fri, 24 Jan 2025 04:45:34 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1737711953;
+ s=mimecast20190719; t=1737711929;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:mime-version:mime-version:
+ to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=N2oD6fS2wUWrP/tzWspSWPbZz4DpoC2JTpmignvtp7I=;
- b=VY/11RigmTD4vgzqK13ASpKwY38TMo7e8gBxSdEoeJwskVnNWCDWOFCLMxAZAAPqxzYUru
- ti+MfreU8xoKwifkzIX8VhFgRfTMU1p4wVEugmucc1COS/ABC+TOSGSEBbjgNx/rtKPwEC
- Bs84hLV/C+TJWA2cUSze6PH9SJhyhx8=
-Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com
- [209.85.128.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=Iz+0oRL8E0Alsm18eGzwPgcS9Df+LzoBBQHD3AQeNAQ=;
+ b=ASczHboJXu+CgBtNq0LGYmT7We/reUwHzZLrBFtVl5YD1a8HQC3HgUaMGuSaxmqWgx9UW6
+ So80eW3lxJPuIJgjgs9BuAGw874A388cx4c+cF4D+k6uyOj0fsYUbzoZfQ+fP8U9kQRSxQ
+ vOI+BdSOu9OwtUqgATHG7GStOQXEWXE=
+Received: from mail-wm1-f69.google.com (mail-wm1-f69.google.com
+ [209.85.128.69]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-222-8NOYgB5BPsOYl8YNg2VaNw-1; Fri, 24 Jan 2025 04:45:51 -0500
-X-MC-Unique: 8NOYgB5BPsOYl8YNg2VaNw-1
-X-Mimecast-MFC-AGG-ID: 8NOYgB5BPsOYl8YNg2VaNw
-Received: by mail-wm1-f71.google.com with SMTP id
- 5b1f17b1804b1-4361efc9dc6so10144415e9.3
- for <qemu-devel@nongnu.org>; Fri, 24 Jan 2025 01:45:51 -0800 (PST)
+ us-mta-620-ZszoNrUbMyK3FqjLb10pYQ-1; Fri, 24 Jan 2025 04:45:27 -0500
+X-MC-Unique: ZszoNrUbMyK3FqjLb10pYQ-1
+X-Mimecast-MFC-AGG-ID: ZszoNrUbMyK3FqjLb10pYQ
+Received: by mail-wm1-f69.google.com with SMTP id
+ 5b1f17b1804b1-436248d1240so8883855e9.0
+ for <qemu-devel@nongnu.org>; Fri, 24 Jan 2025 01:45:27 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1737711949; x=1738316749;
+ d=1e100.net; s=20230601; t=1737711926; x=1738316726;
  h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=N2oD6fS2wUWrP/tzWspSWPbZz4DpoC2JTpmignvtp7I=;
- b=oCa+aU+Uf3DbexRHdCzYOwlCx4ggSXGPbCdg1akZMsrCLMmSFuKQI/H6qaxiKrMU0q
- 8+fFqylHiyfvFCojH0qNQgyqWyh3ZcTCZ5Nb5ALhfxEtIuVBBFkl4fEFZXN6KObEHXvU
- 27QhUU/ab0MUs3dLr2U6/pMOcumhYTTB2hXCIlzBWwFFot55ZsuB101AI5xg6wCYEC14
- 6yLCArD6J8UMyHFdDMBrpqSJP+t2iuW/6KiNdOkhf4kR1qpDTs2om6YKsDmFBFsEl+ui
- hBUskjeQXiDQ5R3yxTIwnVzZBUBotK2698BzZMnrdhvBhz/TPmbosGGKM0OU5lEOkLar
- WI8Q==
-X-Gm-Message-State: AOJu0Yy3QF8gkOkQOH7BoAM7jWCCScp++DVhv/Hn1tCYxRhZdT9OotCw
- ZOl8ZmnkX3eGIdbfBI+6ODY1lWi6cHztMClLVRYThPvPRnmvEmOmROk0Y69JEIABoim6mmo6XKP
- RudJTm8khzTHRDGpOTPkRAJkgKAbngJjYY/JIPoe/ISjtJj4/1f/hOrBq9dXzRH4cVQosj4Jhld
- 1yQ48YxXj5G8KnyaLVk7/ODpE0vWIcf8PojfJGwMc=
-X-Gm-Gg: ASbGnct6B5iVGqfzbHRsyCdbdl0ftNq92NbwK7nYE3rFzKDIK8bVGlFD9J9+fO9P/N4
- b3aHtplBIEXruYpnCBfXecQIcZK4wOEMbkDMVF6PaxzQt8dV1VLuxqKvfwNEaPfa02OoEaLeh3W
- auBPSh5QDU0M5kkBafnquwdRj/tQn/p9RAZvWizNnp5dMv1LUo4qhHHsgwFClaLTrfWtov2whFD
- 5eXvSHce30E/VEw05ZxRK7ZoLtV1bbtqA5tY2swN2dUDjuBB85+wmw0lz+JP7pgNG9mQQwYSg==
-X-Received: by 2002:a05:600c:1f86:b0:436:aaf:7eb9 with SMTP id
- 5b1f17b1804b1-43891439d5fmr243279845e9.20.1737711949312; 
- Fri, 24 Jan 2025 01:45:49 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IGV4vSi1Wy0Y7v32Q2fKMYDf1L3K8Ry4dXnvYP1JLOBHmN49SVX/mLbHiu4qbhqsFP8IPSxPA==
-X-Received: by 2002:a05:600c:1f86:b0:436:aaf:7eb9 with SMTP id
- 5b1f17b1804b1-43891439d5fmr243279655e9.20.1737711948874; 
- Fri, 24 Jan 2025 01:45:48 -0800 (PST)
+ bh=Iz+0oRL8E0Alsm18eGzwPgcS9Df+LzoBBQHD3AQeNAQ=;
+ b=K5EiCTLQox/BlZ01qK34+3T9XP99TkG9/PVnKtholS6+4qdlWDIOvgbbzYHfLFwbKm
+ z90dT/BKcc3dSomkOzeR7DYJPNCebAttxApFaAl+EnykjPfmOX1I1cylEJBGuLspR+4A
+ HYb2DSOxb0+oyiZ0e2SPrQ725CLsaD36oOYazIwuR06d+PY+KT/CejUM8P9y3eRNv+EA
+ OBpsOPDknIX4DTs77MntTvbcYagpqUJSoYuzUbJ78lOwHvNHQCxOdRtH08nmSS9EHcn1
+ PDDxcf31VzrHu+0jq0GbEQHlvJ5NcxDTy1jMgxfMlLq6rYuw/joGMFTj56VnR9qj49VD
+ zv7w==
+X-Gm-Message-State: AOJu0Ywqv3cN+I8p4wc3BeSwUdpQBiFp/eC4H/USFbqFuTsZz9cs3EVi
+ G4W6JrCvUTzZQGkx1/ighSmTgp85+91caDNGOI1q7c4wsGzC2oGlJQceXDfRK6zmd48xdoLRd9t
+ Aa0dUqhFPFDJKbZlDMVIitIT+mbu2l5ANtlypXkPK+EI0I6mvdUdaqS8CTzHGf25dbvQmdLTv2r
+ g0oalJg1xkqUAhs+ElCgP1qnztEJzfwYVnL339QuU=
+X-Gm-Gg: ASbGncunFNpHuVicyIl6lHLpmIzq9U4hnGfzq3MgDEaJ0yoxdMjHCmmTYCzt2l4WQgi
+ 8IfSw25QSp8IURko2gsrwyjjsPKoZPOgfzJaErSAQUuLF63M0j2+5XDcdOIU6Ixst15hRMihWwz
+ RBGlIjczCJt2dkRL8S+WMx2htAsnF+Ftd3O+c8ydafHfhiR0M7dcrL9nD9PllsNMKGnqTxIdzVU
+ mZoUM2bxEZYb9+ShMznXQGl8m//SbsjpriCS15b3Cd0AVu1XV+dZIB515tgb3/UbFY1o2ygkg==
+X-Received: by 2002:a05:600c:870a:b0:436:e8b4:3cde with SMTP id
+ 5b1f17b1804b1-438913ded64mr303096405e9.14.1737711925891; 
+ Fri, 24 Jan 2025 01:45:25 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IEXSpC+4KZA/BzRCnAv813raC+gdiYw1Sf975YdvHjOWehdfDkA3Vx3ttAodIR60iz3neIHug==
+X-Received: by 2002:a05:600c:870a:b0:436:e8b4:3cde with SMTP id
+ 5b1f17b1804b1-438913ded64mr303096165e9.14.1737711925520; 
+ Fri, 24 Jan 2025 01:45:25 -0800 (PST)
 Received: from [192.168.10.48] ([151.95.59.125])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-438bd57545dsm20148715e9.40.2025.01.24.01.45.48
- for <qemu-devel@nongnu.org>
+ 5b1f17b1804b1-438bd47f120sm21133505e9.2.2025.01.24.01.45.23
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 24 Jan 2025 01:45:48 -0800 (PST)
+ Fri, 24 Jan 2025 01:45:24 -0800 (PST)
 From: Paolo Bonzini <pbonzini@redhat.com>
 To: qemu-devel@nongnu.org
-Subject: [PULL 32/48] rust: pl011: switch vmstate to new-style macros
-Date: Fri, 24 Jan 2025 10:44:26 +0100
-Message-ID: <20250124094442.13207-33-pbonzini@redhat.com>
+Cc: Zhao Liu <zhao1.liu@intel.com>
+Subject: [PULL 21/48] rust/qdev: Make REALIZE safe
+Date: Fri, 24 Jan 2025 10:44:15 +0100
+Message-ID: <20250124094442.13207-22-pbonzini@redhat.com>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250124094442.13207-1-pbonzini@redhat.com>
 References: <20250124094442.13207-1-pbonzini@redhat.com>
@@ -107,143 +107,81 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Reviewed-by: Zhao Liu <zhao1.liu@intel.com>
+From: Zhao Liu <zhao1.liu@intel.com>
+
+A safe REALIZE accepts immutable reference.
+
+Since current PL011's realize() only calls a char binding function (
+qemu_chr_fe_set_handlers), it is possible to convert mutable reference
+(&mut self) to immutable reference (&self), which only needs to convert
+the pointers passed to C to mutable pointers.
+
+Thus, make REALIZE accept immutable reference.
+
+Signed-off-by: Zhao Liu <zhao1.liu@intel.com>
+Link: https://lore.kernel.org/r/20250121140457.84631-2-zhao1.liu@intel.com
 Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 ---
- rust/hw/char/pl011/src/device.rs       |  3 ++-
- rust/hw/char/pl011/src/device_class.rs | 36 +++++++++++++-------------
- rust/hw/char/pl011/src/lib.rs          |  6 +++++
- 3 files changed, 26 insertions(+), 19 deletions(-)
+ rust/hw/char/pl011/src/device.rs | 10 +++++-----
+ rust/qemu-api/src/qdev.rs        |  2 +-
+ 2 files changed, 6 insertions(+), 6 deletions(-)
 
 diff --git a/rust/hw/char/pl011/src/device.rs b/rust/hw/char/pl011/src/device.rs
-index 4f1080ff19f..a1a522fdcdb 100644
+index 65a1234b9ff..a0e0fbdd9dd 100644
 --- a/rust/hw/char/pl011/src/device.rs
 +++ b/rust/hw/char/pl011/src/device.rs
-@@ -15,7 +15,7 @@
-         qemu_irq, sysbus_connect_irq, sysbus_mmio_map, sysbus_realize_and_unref, CharBackend,
-         Chardev, Clock, ClockEvent, MemoryRegion, QEMUChrEvent, CHR_IOCTL_SERIAL_SET_BREAK,
-     },
--    c_str,
-+    c_str, impl_vmstate_forward,
-     irq::InterruptSource,
-     prelude::*,
-     qdev::{DeviceImpl, DeviceState, Property},
-@@ -61,6 +61,7 @@ impl DeviceId {
- #[repr(transparent)]
- #[derive(Debug, Default)]
- pub struct Fifo([registers::Data; PL011_FIFO_DEPTH as usize]);
-+impl_vmstate_forward!(Fifo);
+@@ -2,7 +2,7 @@
+ // Author(s): Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
+ // SPDX-License-Identifier: GPL-2.0-or-later
  
- impl Fifo {
-     const fn len(&self) -> u32 {
-diff --git a/rust/hw/char/pl011/src/device_class.rs b/rust/hw/char/pl011/src/device_class.rs
-index 7f3ca895071..e0d3532e956 100644
---- a/rust/hw/char/pl011/src/device_class.rs
-+++ b/rust/hw/char/pl011/src/device_class.rs
-@@ -6,11 +6,11 @@
- use std::os::raw::{c_int, c_void};
+-use core::ptr::{addr_of_mut, NonNull};
++use core::ptr::{addr_of, addr_of_mut, NonNull};
+ use std::{
+     ffi::CStr,
+     os::raw::{c_int, c_uint, c_void},
+@@ -156,7 +156,7 @@ fn properties() -> &'static [Property] {
+     fn vmsd() -> Option<&'static VMStateDescription> {
+         Some(&device_class::VMSTATE_PL011)
+     }
+-    const REALIZE: Option<fn(&mut Self)> = Some(Self::realize);
++    const REALIZE: Option<fn(&Self)> = Some(Self::realize);
+     const RESET: Option<fn(&mut Self)> = Some(Self::reset);
+ }
  
- use qemu_api::{
--    bindings::*, c_str, vmstate_clock, vmstate_fields, vmstate_subsections, vmstate_uint32,
--    vmstate_uint32_array, vmstate_unused, zeroable::Zeroable,
-+    bindings::*, c_str, vmstate_clock, vmstate_fields, vmstate_of, vmstate_subsections,
-+    vmstate_unused, zeroable::Zeroable,
- };
+@@ -439,17 +439,17 @@ fn set_read_trigger(&mut self) {
+         self.read_trigger = 1;
+     }
  
--use crate::device::{PL011State, PL011_FIFO_DEPTH};
-+use crate::device::PL011State;
- 
- extern "C" fn pl011_clock_needed(opaque: *mut c_void) -> bool {
-     unsafe {
-@@ -52,21 +52,21 @@ extern "C" fn pl011_post_load(opaque: *mut c_void, version_id: c_int) -> c_int {
-     post_load: Some(pl011_post_load),
-     fields: vmstate_fields! {
-         vmstate_unused!(core::mem::size_of::<u32>()),
--        vmstate_uint32!(flags, PL011State),
--        vmstate_uint32!(line_control, PL011State),
--        vmstate_uint32!(receive_status_error_clear, PL011State),
--        vmstate_uint32!(control, PL011State),
--        vmstate_uint32!(dmacr, PL011State),
--        vmstate_uint32!(int_enabled, PL011State),
--        vmstate_uint32!(int_level, PL011State),
--        vmstate_uint32_array!(read_fifo, PL011State, PL011_FIFO_DEPTH),
--        vmstate_uint32!(ilpr, PL011State),
--        vmstate_uint32!(ibrd, PL011State),
--        vmstate_uint32!(fbrd, PL011State),
--        vmstate_uint32!(ifl, PL011State),
--        vmstate_uint32!(read_pos, PL011State),
--        vmstate_uint32!(read_count, PL011State),
--        vmstate_uint32!(read_trigger, PL011State),
-+        vmstate_of!(PL011State, flags),
-+        vmstate_of!(PL011State, line_control),
-+        vmstate_of!(PL011State, receive_status_error_clear),
-+        vmstate_of!(PL011State, control),
-+        vmstate_of!(PL011State, dmacr),
-+        vmstate_of!(PL011State, int_enabled),
-+        vmstate_of!(PL011State, int_level),
-+        vmstate_of!(PL011State, read_fifo),
-+        vmstate_of!(PL011State, ilpr),
-+        vmstate_of!(PL011State, ibrd),
-+        vmstate_of!(PL011State, fbrd),
-+        vmstate_of!(PL011State, ifl),
-+        vmstate_of!(PL011State, read_pos),
-+        vmstate_of!(PL011State, read_count),
-+        vmstate_of!(PL011State, read_trigger),
-     },
-     subsections: vmstate_subsections! {
-         VMSTATE_PL011_CLOCK
-diff --git a/rust/hw/char/pl011/src/lib.rs b/rust/hw/char/pl011/src/lib.rs
-index 0a89d393e0f..f30f9850ad4 100644
---- a/rust/hw/char/pl011/src/lib.rs
-+++ b/rust/hw/char/pl011/src/lib.rs
-@@ -106,6 +106,7 @@ pub mod registers {
-     //! Device registers exposed as typed structs which are backed by arbitrary
-     //! integer bitmaps. [`Data`], [`Control`], [`LineControl`], etc.
-     use bilge::prelude::*;
-+    use qemu_api::impl_vmstate_bitsized;
- 
-     /// Receive Status Register / Data Register common error bits
+-    pub fn realize(&mut self) {
++    pub fn realize(&self) {
+         // SAFETY: self.char_backend has the correct size and alignment for a
+         // CharBackend object, and its callbacks are of the correct types.
+         unsafe {
+             qemu_chr_fe_set_handlers(
+-                addr_of_mut!(self.char_backend),
++                addr_of!(self.char_backend) as *mut CharBackend,
+                 Some(pl011_can_receive),
+                 Some(pl011_receive),
+                 Some(pl011_event),
+                 None,
+-                addr_of_mut!(*self).cast::<c_void>(),
++                addr_of!(*self).cast::<c_void>() as *mut c_void,
+                 core::ptr::null_mut(),
+                 true,
+             );
+diff --git a/rust/qemu-api/src/qdev.rs b/rust/qemu-api/src/qdev.rs
+index 686054e737a..a5121e31a37 100644
+--- a/rust/qemu-api/src/qdev.rs
++++ b/rust/qemu-api/src/qdev.rs
+@@ -23,7 +23,7 @@ pub trait DeviceImpl {
      ///
-@@ -172,6 +173,7 @@ pub struct Data {
-         pub errors: Errors,
-         _reserved: u16,
-     }
-+    impl_vmstate_bitsized!(Data);
+     /// If not `None`, the parent class's `realize` method is overridden
+     /// with the function pointed to by `REALIZE`.
+-    const REALIZE: Option<fn(&mut Self)> = None;
++    const REALIZE: Option<fn(&Self)> = None;
  
-     impl Data {
-         // bilge is not very const-friendly, unfortunately
-@@ -208,6 +210,7 @@ pub struct ReceiveStatusErrorClear {
-         pub errors: Errors,
-         _reserved_unpredictable: u24,
-     }
-+    impl_vmstate_bitsized!(ReceiveStatusErrorClear);
- 
-     impl ReceiveStatusErrorClear {
-         pub fn set_from_data(&mut self, data: Data) {
-@@ -280,6 +283,7 @@ pub struct Flags {
-         pub ring_indicator: bool,
-         _reserved_zero_no_modify: u23,
-     }
-+    impl_vmstate_bitsized!(Flags);
- 
-     impl Flags {
-         pub fn reset(&mut self) {
-@@ -354,6 +358,7 @@ pub struct LineControl {
-         /// 31:8 - Reserved, do not modify, read as zero.
-         _reserved_zero_no_modify: u24,
-     }
-+    impl_vmstate_bitsized!(LineControl);
- 
-     impl LineControl {
-         pub fn reset(&mut self) {
-@@ -498,6 +503,7 @@ pub struct Control {
-         /// 31:16 - Reserved, do not modify, read as zero.
-         _reserved_zero_no_modify2: u16,
-     }
-+    impl_vmstate_bitsized!(Control);
- 
-     impl Control {
-         pub fn reset(&mut self) {
+     /// If not `None`, the parent class's `reset` method is overridden
+     /// with the function pointed to by `RESET`.
 -- 
 2.48.1
 
