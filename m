@@ -4,180 +4,101 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8883AC02182
-	for <qemu-devel@archiver.kernel.org>; Fri, 24 Jan 2025 00:21:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 44021C02182
+	for <qemu-devel@archiver.kernel.org>; Fri, 24 Jan 2025 01:49:35 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tb7RS-0008Ja-ME; Thu, 23 Jan 2025 19:20:58 -0500
+	id 1tb8oM-0004p7-IL; Thu, 23 Jan 2025 20:48:42 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <Alexey.Kardashevskiy@amd.com>)
- id 1tb7RQ-0008JL-7p
- for qemu-devel@nongnu.org; Thu, 23 Jan 2025 19:20:56 -0500
-Received: from mail-bn7nam10on2060.outbound.protection.outlook.com
- ([40.107.92.60] helo=NAM10-BN7-obe.outbound.protection.outlook.com)
+ (Exim 4.90_1) (envelope-from <jasowang@redhat.com>)
+ id 1tb8oJ-0004oa-Lv
+ for qemu-devel@nongnu.org; Thu, 23 Jan 2025 20:48:40 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <Alexey.Kardashevskiy@amd.com>)
- id 1tb7RN-0002uI-B7
- for qemu-devel@nongnu.org; Thu, 23 Jan 2025 19:20:55 -0500
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=akF5+gARVJgo7WE1muLH8R0yLeH8pMtBT0r2/eSDVxFfK3ZZZDtF4si12C/m5LP2YHbvveCwG7EQJdvWhHGD+eu+fckNcwdb7VpXqkKC+KrMuoi6GR61+tp3xqTysGGpKEWvKEFyFJEfO4sLFhlhZMKOb88CWpkeXgSuN1DvfndG1ZK/IDnFUuCAglneLG9JH1of4msYadohgu2lTX1LTifXuIXAhwGT5tNK/A1DXgioB2xZkTCRRjwoBALJ5bBVFhqTFEv8M7GnUOcxB7NeyGg0FzubZ/OiADBJ4hDU/WSwEeZ4sYm9GGwp0/zRlEEUXK8INjwi8mQ43zEvOWt7nA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=yqPoBFbLx4pLSn0+etEQlNEwB0le16gPQDXJzr4ofUk=;
- b=jAugFZNwozHM+uySNS+horjD79g2IP6YSAaJikpL4HXHU7cBwbCUZsBGTq5DhQKouTW2BkGRRRQNybDKov+3SG9a6KvwAonKxwv/UkSXc2+7Nfeg2v+mUWdvl4on5MxHOdomT426vsD9qb2gPstZolkSkcNea4ZKa1sUuQgEHVnmIeQBPd96N0cQm6lBQv/y+lITJ3lsQ6CQlcsX6F5x9VpWkiFY9svOIXAagCXUaHpqeCKndz6ig3DpN4HU2EhpojD7zujk8osGwqn77EjfDce5NrpAvMncGjFt6CQDTIcWPu5lKi+hQv0dNU58cuwgpMyVewuTST/x9zp1EDSwiQ==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=amd.com; dmarc=pass action=none header.from=amd.com; dkim=pass
- header.d=amd.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=amd.com; s=selector1; 
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=yqPoBFbLx4pLSn0+etEQlNEwB0le16gPQDXJzr4ofUk=;
- b=CqVNso+GdaZd7w5FdvBQHSUTKemQhIc+6ND5ZxQ+qW8gE/k8vQ8LhUMxvQGlBUAqKpHxyaNbuYyFF/Oc5+IRvwd8suLz1lf3Li6TSIvzU7M3VgrI0Syem/SNenueL6YZZb+YY53/j2AOLLatum26pAztvchiWgkhy6DuANsIfWU=
-Authentication-Results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=amd.com;
-Received: from CH3PR12MB9194.namprd12.prod.outlook.com (2603:10b6:610:19f::7)
- by PH8PR12MB6889.namprd12.prod.outlook.com (2603:10b6:510:1c9::21)
- with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.8377.16; Fri, 24 Jan
- 2025 00:15:38 +0000
-Received: from CH3PR12MB9194.namprd12.prod.outlook.com
- ([fe80::53fb:bf76:727f:d00f]) by CH3PR12MB9194.namprd12.prod.outlook.com
- ([fe80::53fb:bf76:727f:d00f%5]) with mapi id 15.20.8356.020; Fri, 24 Jan 2025
- 00:15:38 +0000
-Message-ID: <b11f240d-ff8c-4c83-9b33-5e556cde0bce@amd.com>
-Date: Fri, 24 Jan 2025 11:15:29 +1100
-User-Agent: Mozilla Thunderbird Beta
-Subject: Re: [PATCH 2/7] guest_memfd: Introduce an object to manage the
- guest-memfd with RamDiscardManager
-Content-Language: en-US
-To: Xiaoyao Li <xiaoyao.li@intel.com>, Chenyi Qiang <chenyi.qiang@intel.com>, 
- Peter Xu <peterx@redhat.com>
-Cc: David Hildenbrand <david@redhat.com>, Paolo Bonzini
- <pbonzini@redhat.com>, =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?=
- <philmd@linaro.org>, Michael Roth <michael.roth@amd.com>,
- qemu-devel@nongnu.org, kvm@vger.kernel.org,
- Williams Dan J <dan.j.williams@intel.com>,
- Peng Chao P <chao.p.peng@intel.com>, Gao Chao <chao.gao@intel.com>,
- Xu Yilun <yilun.xu@intel.com>
-References: <20241213070852.106092-3-chenyi.qiang@intel.com>
- <d0b30448-5061-4e35-97ba-2d360d77f150@amd.com>
- <80ac1338-a116-48f5-9874-72d42b5b65b4@intel.com>
- <9dfde186-e3af-40e3-b79f-ad4c71a4b911@redhat.com>
- <c1723a70-68d8-4211-85f1-d4538ef2d7f7@amd.com>
- <f3aaffe7-7045-4288-8675-349115a867ce@redhat.com> <Z46GIsAcXJTPQ8yN@x1n>
- <7e60d2d8-9ee9-4e97-8a45-bd35a3b7b2a2@redhat.com> <Z46W7Ltk-CWjmCEj@x1n>
- <8e144c26-b1f4-4156-b959-93dc19ab2984@intel.com> <Z4_MvGSq2B4zptGB@x1n>
- <c5148428-9ebe-4659-953c-6c9d0eea1051@intel.com>
- <9d4df308-2dfd-4fa0-a19b-ccbbce13a2fc@intel.com>
-From: Alexey Kardashevskiy <aik@amd.com>
-In-Reply-To: <9d4df308-2dfd-4fa0-a19b-ccbbce13a2fc@intel.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-X-ClientProxiedBy: ME3P282CA0038.AUSP282.PROD.OUTLOOK.COM (2603:10c6:220:5::7)
- To CH3PR12MB9194.namprd12.prod.outlook.com
- (2603:10b6:610:19f::7)
+ (Exim 4.90_1) (envelope-from <jasowang@redhat.com>)
+ id 1tb8oF-0002tQ-HS
+ for qemu-devel@nongnu.org; Thu, 23 Jan 2025 20:48:38 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1737683312;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=zYC6sxlsFcj1jEawCNGvobs5FPofsMPEiiVm0itlwrE=;
+ b=K4mgsImJI9x9nxBTBLYIA8npEAwG2f0QbdVBUX+3Lm/u8aqlcyXGfOfD2V2C77f9tX/4Kq
+ k7lzfLY50dWKgKUy5ww6IlKVnTgaIPLT2QJn8sLWDDBbv1tsanlUS3prGOUhTN+tEr9Bct
+ j9jdEQRTgELZ34b62kbM1y+REeUJcIM=
+Received: from mail-pj1-f69.google.com (mail-pj1-f69.google.com
+ [209.85.216.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-679-SwD01RTJP2G2TFlaouEseQ-1; Thu, 23 Jan 2025 20:48:30 -0500
+X-MC-Unique: SwD01RTJP2G2TFlaouEseQ-1
+X-Mimecast-MFC-AGG-ID: SwD01RTJP2G2TFlaouEseQ
+Received: by mail-pj1-f69.google.com with SMTP id
+ 98e67ed59e1d1-2ef9864e006so4550301a91.2
+ for <qemu-devel@nongnu.org>; Thu, 23 Jan 2025 17:48:30 -0800 (PST)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1737683309; x=1738288109;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=zYC6sxlsFcj1jEawCNGvobs5FPofsMPEiiVm0itlwrE=;
+ b=DlH6mgyBYsHzAmlgYTucB5AtbxJP7rbazV2mwvZ0dCVK88XgpDOGhPPg+DFQG+b+/2
+ X0FIntXRHivo8zRijkfffBMm7uLERDQeUk3GEbo5PaupJ9APPBrxp3fpSCAB5dLMpfUG
+ 9ODUfTSuryuozoUkRAhfjX4loWnfvAO8g0E9eGtgowbeGi6jsh6/GrFD7oN1ca3nE/iT
+ elrZJU3Ja5oOovadFlMusXUyr7rRK4IlvtUvYBkfTb/ylmmSavliEmrMivBLne4PlopK
+ pc/6CMb8EDFVjkmZb7J3nWI5jORrbYLRkVuDIcr0dDPX9AD1kINDx4srhQ/0Yuq6x/HS
+ 0VsQ==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCWI5w+85NeIQcMee8Fqfy2wO/de8MxGdTVMcKdgHkN6BbxicnKGybvOz9V2suRuIoiT+ntMAG5xQNnQ@nongnu.org
+X-Gm-Message-State: AOJu0YwSrATaRZ2cWZ7wWR2fvvUEX1J61YJSIBx9M0eQ6jUA7t9sKha6
+ M6T74ZSx4W/oaeE/gmTXmy2vJJtXgdeJDCZUJfZJyVTSxEFQgMOeyS0FBzBMMZDjZoC7xyBd8FI
+ 27MaoWYyo8Wi45QMYid9AsVNBp5ElxKTP35Ew23pupCAn7TiQzIrywTV7y1z5EBWDVIv6yA5PUT
+ kWT/9KaGpKXGon33Rh8021vY0cEG0=
+X-Gm-Gg: ASbGnctOueBIptlGHXBL5GKkeXNK139jCymLuywUW4p5NfmUj8TPlqGkcwlVz+3kRrz
+ Zr2gUiDQi2INS/icIz7AGeqs2gHDAHdz+c+d8spzgQ6HgnWEYoQ==
+X-Received: by 2002:a05:6a00:21c8:b0:725:9dc7:4f8b with SMTP id
+ d2e1a72fcca58-72dafb6fcafmr36660306b3a.15.1737683309514; 
+ Thu, 23 Jan 2025 17:48:29 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IH9O9+DItPo1GK52p5DQ5kisTLntO7tPgm0v+ddwvzhDvLJVlfNk8fIryfmnmZfQ2gOmf7IelPLtH345s/mbjU=
+X-Received: by 2002:a05:6a00:21c8:b0:725:9dc7:4f8b with SMTP id
+ d2e1a72fcca58-72dafb6fcafmr36660270b3a.15.1737683308947; Thu, 23 Jan 2025
+ 17:48:28 -0800 (PST)
 MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: CH3PR12MB9194:EE_|PH8PR12MB6889:EE_
-X-MS-Office365-Filtering-Correlation-Id: 6524cd78-e097-4977-1aa7-08dd3c0c3ab5
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;ARA:13230040|1800799024|366016|7416014|376014;
-X-Microsoft-Antispam-Message-Info: =?utf-8?B?RDQwby8rNWtpcDhzUTlWRitaeVZXeUhBemVWd2FWaHNwbUVha21ZVjhoY1c5?=
- =?utf-8?B?ZVN3SmQ4TmRCb1FnQ1AvR3VlSmJiZGhVdlovYTNHMjBPZUp3YTJPVi81aDVa?=
- =?utf-8?B?NlRqcHd1OHR1SlJ5WjAzeHNxUXV6L3NFVzM4QUxyNEhyMnZINUE3a3hWT0FP?=
- =?utf-8?B?UXZIbHVGYjRsMXIzY1ZVa3k0WWRZR2x3SG1RcjB4cXdYVkFlcE5SbUw1aWhH?=
- =?utf-8?B?RzFCTzRud09uWUZFbmZEMmRtV01YU1cxRm5Rb0kxUjFzVjNQWE5IZnFkR2dN?=
- =?utf-8?B?N2hzWXpseWFzMHdDbUsyaXlmYkpaRjdtWnNxNytXdlg3dFZmREYvQ3dkRHlB?=
- =?utf-8?B?MnFIcUtFb3JxWmRFYVgwUGJEQ1ZER0ptTHNTRUQ0M0VVWFdJdU95YUxkNlph?=
- =?utf-8?B?V3NDcmlWUTB1QjVmaVZjY25ISFkydjF5QVMrZ0EyWVJOVjFEYTFtbFBRMDZt?=
- =?utf-8?B?S0UxeXE2NHR0SUF5c3JYZFRtNVdaQ0VVb2lYYW5lR2Nwa25GcEhhUDg4OWJr?=
- =?utf-8?B?YkNtcklja3B0T3ZvaWpyMjdpeU9mb3FzMnBxeWNMM28raUY2VktjcUdzeGdM?=
- =?utf-8?B?Tjk2WTNjZ3ErTG9PdzdKRTJmSDdMTXVBQWdZOUoxZXZmU2ZtdnYyN1ZFdG5y?=
- =?utf-8?B?UzF3a1oxSlNqaXEyY3BacUpGd2taN0Q4ZTNEVFpMYzZDdGpkVmFuUm9CZHg0?=
- =?utf-8?B?YzgvNzBMTlJVQmltdFNuajRVeFZpdEF5aUVTOVlmTkhNV2ZlVUxTVGx3NlhH?=
- =?utf-8?B?WVBCYUUwNi9mOGJRS2lqSDN6Z2h4WmQyM2JYbnlHVGhHLzFkQUVjNzFXbjBy?=
- =?utf-8?B?KzlVdFlLWUdHdlV0Vk9hYVhSME1KenV6WkltUWZodUFkb2I0M3FnUEh4ZHBx?=
- =?utf-8?B?d2xrQ1dzc2s4Ykt6UHdWL1dHVjVnODYxSnVPMm52cDlyUlFId2FmWHl1cmVl?=
- =?utf-8?B?eE84NTFmNmFVQzZZdWloUGZ4ZGxWUU5lbDRTYlk3bXdYQVlsT3lJc3E4eGhM?=
- =?utf-8?B?T2tvYkFDREFUQUZpdDB5MTJUaTNnL3JzNDRKS1g4a1RaYVNPdElZUksyOG9j?=
- =?utf-8?B?MkYrck8zZTNnMUgxOVpMbm5URGRqSE9EVDZBMi9HQ1g3QU1udmxGYTZXeVZX?=
- =?utf-8?B?ZXFpVXFRWWw1b2dqRktJazFsRENzT3hoOWtvY0hSS2NRV25Dc0xXUTdJTzNL?=
- =?utf-8?B?b2pFQmcySnR5cG1IYTBPcEFsbnZhMCthRGlPRDdIcUpNc25mVU9yOGlvQ3B6?=
- =?utf-8?B?OEJad2hPdWo2bVpkZzExQ2E2aHVZTFhwS0pkY1pwK0lUNUsvYzUyeVRvU2Jk?=
- =?utf-8?B?eUp2ZDVnYy92Q1JncVozSkl4S0k0WkIwaGoza3dRb2xJdzRIcVA4Z0cvUmpB?=
- =?utf-8?B?b3RMTzVZOE1rMzYrZ2t3cExoUFUwSkpKM2ZUMFdIRmxHckNEYnpvYnhhN0R5?=
- =?utf-8?B?WnZOUU9MWmtuQUF0Q0JJbTVnRjlFV1BxSjVQSnpYUm54ZEx4bW8yaDhzeE1y?=
- =?utf-8?B?NGJCYWxlT1dadmdsSjVCRkQyOVBmZlpXQTlwQjdkZU9XQzlZK3BRcWMyZzBH?=
- =?utf-8?B?VWxVVUhYMEtQNko0KzVsdGVXS3J3T2NKaUR4QXY3ZWF0OU1vT1AxQzdrNkhI?=
- =?utf-8?B?WXc5Qmw0aDdMTzFyQTJpT1pjQkJ6ZVl3aXUyRlczM2lUcngvQnlUV3pNR0d2?=
- =?utf-8?B?SWtzRWVONkRVVTMxcE5SajlqZi8yU3ZFQU9ib0E5ak1mT293bHByRjc1RHFI?=
- =?utf-8?B?YlVaaXEwQXUvQW5VdExzNWtZTVlKSmd1MFBKRXZ1TE5IOC9SdGVwMUhtVXhx?=
- =?utf-8?B?NjM2emZzcmZxWllZcUZKZUt1RDhzZTlkNzFuSk16MVg5ZjFIVm5BVUI1dVFT?=
- =?utf-8?Q?z7V8E6YZV64pa?=
-X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:CH3PR12MB9194.namprd12.prod.outlook.com; PTR:; CAT:NONE;
- SFS:(13230040)(1800799024)(366016)(7416014)(376014); DIR:OUT; SFP:1101; 
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?SmhCRlJyNzZFK2Jxbll1R0d1T3VML0QrTG5xZXh6ZzFXZ0VEQnplNnkrQnZ6?=
- =?utf-8?B?cEM5Njh6ZjNaMDRRellFY0xpcVBkeG5YSWZpZTFRUlZXcDVycExNSUZTYmFN?=
- =?utf-8?B?MXd6VUxQanhKVlRkRFAyd2FBOEc1N0NWTmpEUjh3VWZpMEVaUGkrZGtMTlc4?=
- =?utf-8?B?QktjVVFUanY1alNoZndHUDRJT3hWWHFSd0RSMjEvTjByVFhzQ0VQRDNaVlNS?=
- =?utf-8?B?aUJsNmJCY3ZHU3RmZWU1c01TTzRSakFENTRDRUFLSWdrQXkybXg1YnZ3NkNx?=
- =?utf-8?B?YWlLamlIbjgzdklrY2RuejNubVkxcm5nVHlHSER4bDd4S3Vib3duNzYrVUU2?=
- =?utf-8?B?UEVkR3hWaTdINzR1YzIrNjV5THNTR3VxWWVGKzlwQm5FbS9ZMFJaOGpVTEJQ?=
- =?utf-8?B?eHQyd0RlZHV2UWV5MzRwb2gxOU90NXN6c1J6YmZQUlNBcW5EZE1GZHJLNDc2?=
- =?utf-8?B?dDhnNHRZRXNnZDMxdVFsV25uNnVNMEtFajFOOUNPVTVKK3NNYlBNY3F6UlZW?=
- =?utf-8?B?NTV3UklyZ2JtYXM3Mk9sdTVpdmgrQXFTZHZoSzA3aUNiZktubWt4Wk5BbnRQ?=
- =?utf-8?B?QkRhMTdreGR2RTdrc3NzdUowYS84TjQxTzRteThwOSt2dU93aVpUUnBFanZN?=
- =?utf-8?B?MmFuRUNMeUdZTGJvZFdUWDNrV2poVFFQVWhhczVoL3lmNGlEK0lPVG5LTGtS?=
- =?utf-8?B?MEw3ZGpoMGlBZEF2aGVCSFlVRHhxNG1BQnl1L2ZpUWdOam5LZUFPczA0RFor?=
- =?utf-8?B?V2N6WjAyU3dXWGx4N1RwT0I5alN3ZFFkd25nRG5aYUJqTGxsdE9PZVRjZXhs?=
- =?utf-8?B?MlZlSlBxakErVmR3WmJuOStMSlpTRy9OTEtveCtiZUxuQ0JldTMzcjFBajc0?=
- =?utf-8?B?RnIwWUVCdVdwNExJVnhlcHhPc1V4ZHA4dS9oTWx2dDZtaFFTc3RzWFNYMDkv?=
- =?utf-8?B?Z2pjUnpuOEx5dzNiS2Rnb0dtbnYxMEhiRW9XWGxBQ0daRHdnWXB6eGpjUG4r?=
- =?utf-8?B?M3QyalBLU3ZTSzlRQm1XS2tsNWFMM0VCTFNDTE9KcHJzajI2N2FJa3VkemhR?=
- =?utf-8?B?Vm5vK2NJVHNIUC81UENGY1VXL1lBcWlibVQ2U2wxRnpSaUVyWlBRdTlmdTJ1?=
- =?utf-8?B?anZvL0Jsa2lkZ2ttczROSXZydGxwM0pYQUdmK25lblJQdFRLYkJMS1lWenI2?=
- =?utf-8?B?Y2FXY1dGbGl4TjF3UWkwQkJ2MFpUOWZBcjY4TkFDMTFXclFDYUl2MXE1S1J4?=
- =?utf-8?B?SVdQMjRPcitaaXRlck5QV3h0Nzl5bzJFTkQzTUhmc0hIaFprOVBpV2xEMXFq?=
- =?utf-8?B?MjM1YWVUQUVSV0JmU3hMd0FrOGpUS3Y2RG41TzdPeXpTNUsyQ2ZaeE1jN0JF?=
- =?utf-8?B?ektTSWxzQUQzSXRldFdWeHMwMUtURFJsWm45eE1ESjdYT1lmQno4dHd0cElS?=
- =?utf-8?B?cHBGdld3emlHSk05UTNrZXdSVCtvRjZHeldycHFwMUNwV2Q4TmVjRklhQ1R3?=
- =?utf-8?B?aXBRRjJucnh2V2RrSlhBSTRmZm5tL254eXJjT0VGSjdVNWxPdW1odng3SGlw?=
- =?utf-8?B?QU9ZVEN2MnlyU2tRWUp2L1hDWmF5eStpb1BhVmpnbUVOVlBiRVNTdHZsRlFr?=
- =?utf-8?B?QmlmQVJIcTJJb1RDWmdHcVlZZnNlcmJ4Y3o2L0NudUdqQ3ozbWhMM2VkMjVv?=
- =?utf-8?B?WlZ6OXJCcEhsZDZHRFNCL2puTEUrbEUzbmdnV2dGdmsyazFBWlNNb2gwVUZ5?=
- =?utf-8?B?bUlYRmdQMkZSMjI5bDRrR1h4dFYrWWQvSVVEdkJFQ0QzL0VTYVh0endiMEdH?=
- =?utf-8?B?R2EzaStORmVMaERHRmlNTXpLbnVyQ2hudjlZT1MyN1VmNjRTdXA1ZFd4YkhP?=
- =?utf-8?B?Ty9iQzlxd0k0SmVIOHBPNEptUDNReHB5N1RqWnZmMGtveWhGTHRlelN6bzlO?=
- =?utf-8?B?UkI5YXh6Qk5IUDlUYk9zZ3NpTlFSRm05MUpPSldFblNaMmc5cnA5dVh5Qjdi?=
- =?utf-8?B?NEhkTVc0QUJzbkNhZ2owZ0gyd0hHTXZMZTA5dXBpVHBTTnBseWJNeFo5Y3Ni?=
- =?utf-8?B?UkZWYjRmdHdXUlIvbnZCZGN5SXo5a085Q2pITTQ0OEVwWFFhZ3hkVFliQkxa?=
- =?utf-8?Q?E4gt7+cGIUWKWdDMv499p/YGc?=
-X-OriginatorOrg: amd.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 6524cd78-e097-4977-1aa7-08dd3c0c3ab5
-X-MS-Exchange-CrossTenant-AuthSource: CH3PR12MB9194.namprd12.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 24 Jan 2025 00:15:38.0224 (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 3dd8961f-e488-4e60-8e11-a82d994e183d
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: rOwuKtdlhlj7Xp4C1T5pR+iLKWOp7ivXcBwYolVCQlkZahqa2pSvcUu+lxgg7iFJ3WT5VgZVSDnRVvG4eCOvWA==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: PH8PR12MB6889
-Received-SPF: permerror client-ip=40.107.92.60;
- envelope-from=Alexey.Kardashevskiy@amd.com;
- helo=NAM10-BN7-obe.outbound.protection.outlook.com
+References: <20250120173339.865681-1-eric.auger@redhat.com>
+ <CACGkMEu4oMa8Sf9QXtszeoSMj_67Csr0s7kHdYfbNnJWibu2dA@mail.gmail.com>
+ <5a55011a-af8f-483a-99fa-5cb2cdf3841f@redhat.com>
+ <CACGkMEv6ec3JLZg6ZedSHdNS5_McX7_xoV4d2MG05x_Y5t=uEA@mail.gmail.com>
+ <678babb6-f64a-4db5-ad60-494214a4e673@redhat.com>
+ <CACGkMEvyYT7-PTOwO-Jg9a8AHA0AJHoV2BY2RBrJTGKEFYL6QA@mail.gmail.com>
+ <25b5bb73-abd8-4008-905d-6c2e9e1330e2@redhat.com>
+In-Reply-To: <25b5bb73-abd8-4008-905d-6c2e9e1330e2@redhat.com>
+From: Jason Wang <jasowang@redhat.com>
+Date: Fri, 24 Jan 2025 09:48:04 +0800
+X-Gm-Features: AWEUYZn59YwCS6hQDdl4P6q4u-xr4-rBJzS9PK7iVpxTr4WD6zdMlUdfzbgoPx0
+Message-ID: <CACGkMEu=Cwa2wQEZQyE6FZ26KVZD4uMbFvg0uLOb3=23e1MZSw@mail.gmail.com>
+Subject: Re: [PATCH] hw/virtio/vhost: Disable IOTLB callbacks when IOMMU gets
+ disabled
+To: eric.auger@redhat.com
+Cc: eric.auger.pro@gmail.com, qemu-devel@nongnu.org, mst@redhat.com, 
+ sgarzare@redhat.com, lvivier@redhat.com, zhenzhong.duan@intel.com, 
+ Peter Xu <peterx@redhat.com>, 
+ CLEMENT MATHIEU--DRIF <clement.mathieu--drif@eviden.com>, "Liu,
+ Yi L" <yi.l.liu@intel.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=jasowang@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -50
 X-Spam_score: -5.1
 X-Spam_bar: -----
 X-Spam_report: (-5.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-2.996,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_MSPIKE_H2=-0.043, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -193,146 +114,356 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+On Thu, Jan 23, 2025 at 4:31=E2=80=AFPM Eric Auger <eric.auger@redhat.com> =
+wrote:
+>
+> Hi Jason,
+>
+>
+> On 1/23/25 2:34 AM, Jason Wang wrote:
+> > On Wed, Jan 22, 2025 at 3:55=E2=80=AFPM Eric Auger <eric.auger@redhat.c=
+om> wrote:
+> >> Hi Jason,
+> >>
+> >>
+> >> On 1/22/25 8:17 AM, Jason Wang wrote:
+> >>> On Wed, Jan 22, 2025 at 12:25=E2=80=AFAM Eric Auger <eric.auger@redha=
+t.com> wrote:
+> >>>> Hi Jason,
+> >>>>
+> >>>> On 1/21/25 4:27 AM, Jason Wang wrote:
+> >>>>> On Tue, Jan 21, 2025 at 1:33=E2=80=AFAM Eric Auger <eric.auger@redh=
+at.com> wrote:
+> >>>>>> When a guest exposed with a vhost device and protected by an
+> >>>>>> intel IOMMU gets rebooted, we sometimes observe a spurious warning=
+:
+> >>>>>>
+> >>>>>> Fail to lookup the translated address ffffe000
+> >>>>>>
+> >>>>>> We observe that the IOMMU gets disabled through a write to the glo=
+bal
+> >>>>>> command register (CMAR_GCMD.TE) before the vhost device gets stopp=
+ed.
+> >>>>>> When this warning happens it can be observed an inflight IOTLB
+> >>>>>> miss occurs after the IOMMU disable and before the vhost stop. In
+> >>>>>> that case a flat translation occurs and the check in
+> >>>>>> vhost_memory_region_lookup() fails.
+> >>>>>>
+> >>>>>> Let's disable the IOTLB callbacks when all IOMMU MRs have been
+> >>>>>> unregistered.
+> >>>>>>
+> >>>>>> Signed-off-by: Eric Auger <eric.auger@redhat.com>
+> >>>>>> ---
+> >>>>>>  hw/virtio/vhost.c | 4 ++++
+> >>>>>>  1 file changed, 4 insertions(+)
+> >>>>>>
+> >>>>>> diff --git a/hw/virtio/vhost.c b/hw/virtio/vhost.c
+> >>>>>> index 6aa72fd434..128c2ab094 100644
+> >>>>>> --- a/hw/virtio/vhost.c
+> >>>>>> +++ b/hw/virtio/vhost.c
+> >>>>>> @@ -931,6 +931,10 @@ static void vhost_iommu_region_del(MemoryList=
+ener *listener,
+> >>>>>>              break;
+> >>>>>>          }
+> >>>>>>      }
+> >>>>>> +    if (QLIST_EMPTY(&dev->iommu_list) &&
+> >>>>>> +        dev->vhost_ops->vhost_set_iotlb_callback) {
+> >>>>>> +        dev->vhost_ops->vhost_set_iotlb_callback(dev, false);
+> >>>>>> +    }
+> >>>>> So the current code assumes:
+> >>>>>
+> >>>>> 1) IOMMU is enabled before vhost starts
+> >>>>> 2) IOMMU is disabled after vhost stops
+> >>>>>
+> >>>>> This patch seems to fix 2) but not 1). Do we need to deal with the
+> >>>>> IOMMU enabled after vhost starts?
+> >>>> sorry I initially misunderstood the above comment. Indeed in the reb=
+oot
+> >>>> case assumption 2) happens to be wrong. However what I currently do =
+is:
+> >>>> stop listening to iotlb miss requests from the kernel because my
+> >>>> understanding is those requests are just spurious ones, generate
+> >>>> warnings and we do not care since we are rebooting the system.
+> >>>>
+> >>>> However I do not claim this could handle the case where the IOMMU MR
+> >>>> would be turned off and then turned on. I think in that case we shou=
+ld
+> >>>> also flush the kernel IOTLB and this is not taken care of in this pa=
+tch.
+> >>>> Is it a relevant use case?
+> >>> Not sure.
+> >>>
+> >>>> wrt removing assumption 1) and allow IOMMU enabled after vhost start=
+. Is
+> >>>> that a valid use case as the virtio driver is using the dma api?
+> >>> It should not be but we can't assume the behaviour of the guest. It
+> >>> could be buggy or even malicious.
+> >> agreed
+> >>> Btw, we had the following codes while handling te:
+> >>>
+> >>> /* Handle Translation Enable/Disable */
+> >>> static void vtd_handle_gcmd_te(IntelIOMMUState *s, bool en)
+> >>> {
+> >>>     if (s->dmar_enabled =3D=3D en) {
+> >>>         return;
+> >>>     }
+> >>>
+> >>>     trace_vtd_dmar_enable(en);
+> >>>
+> >>> ...
+> >>>
+> >>>     vtd_reset_caches(s);
+> >>>     vtd_address_space_refresh_all(s);
+> >>> }
+> >>>
+> >>> vtd_address_space_refresh_all() will basically disable the iommu
+> >>> memory region. It looks not sufficient to trigger the region_del
+> >>> callback, maybe we should delete the region or introduce listener
+> >>> callback?
+> >> This is exactly the code path which is entered in my use case.
+> >>
+> >> vtd_address_space_refresh_all(s) induces the vhost_iommu_region_del. B=
+ut given the current implement of this latter the IOTLB callback is not uns=
+et and the kernel IOTLB is not refreshed. Also as I pointed out the  hdev->=
+mem->regions are not updated? shouldn't they. Can you explain what they cor=
+respond to?
+> > Adding Peter for more ideas.
+> >
+> > I think it's better to find a way to trigger the listener here, probabl=
+y:
+> >
+> > 1) add/delete the memory regions instead of enable/disable
+> sorry I don't understand what you mean. The vhost_iommu_region_del call
+> stack is provided below [1]. Write to the intel iommu GCMD TE bit
+> induces a call to vhost_iommu_region_del. This happens before the
+> vhost_dev_stop whose call stack is provided below [2] and originates
+> from a bus reset.
 
+Right, I see.
 
-On 22/1/25 16:38, Xiaoyao Li wrote:
-> On 1/22/2025 11:28 AM, Chenyi Qiang wrote:
->>
->>
->> On 1/22/2025 12:35 AM, Peter Xu wrote:
->>> On Tue, Jan 21, 2025 at 09:35:26AM +0800, Chenyi Qiang wrote:
->>>>
->>>>
->>>> On 1/21/2025 2:33 AM, Peter Xu wrote:
->>>>> On Mon, Jan 20, 2025 at 06:54:14PM +0100, David Hildenbrand wrote:
->>>>>> On 20.01.25 18:21, Peter Xu wrote:
->>>>>>> On Mon, Jan 20, 2025 at 11:48:39AM +0100, David Hildenbrand wrote:
->>>>>>>> Sorry, I was traveling end of last week. I wrote a mail on the 
->>>>>>>> train and
->>>>>>>> apparently it was swallowed somehow ...
->>>>>>>>
->>>>>>>>>> Not sure that's the right place. Isn't it the (cc) machine 
->>>>>>>>>> that controls
->>>>>>>>>> the state?
->>>>>>>>>
->>>>>>>>> KVM does, via MemoryRegion->RAMBlock->guest_memfd.
->>>>>>>>
->>>>>>>> Right; I consider KVM part of the machine.
->>>>>>>>
->>>>>>>>
->>>>>>>>>
->>>>>>>>>> It's not really the memory backend, that's just the memory 
->>>>>>>>>> provider.
->>>>>>>>>
->>>>>>>>> Sorry but is not "providing memory" the purpose of "memory 
->>>>>>>>> backend"? :)
->>>>>>>>
->>>>>>>> Hehe, what I wanted to say is that a memory backend is just 
->>>>>>>> something to
->>>>>>>> create a RAMBlock. There are different ways to create a 
->>>>>>>> RAMBlock, even
->>>>>>>> guest_memfd ones.
->>>>>>>>
->>>>>>>> guest_memfd is stored per RAMBlock. I assume the state should be 
->>>>>>>> stored per
->>>>>>>> RAMBlock as well, maybe as part of a "guest_memfd state" thing.
->>>>>>>>
->>>>>>>> Now, the question is, who is the manager?
->>>>>>>>
->>>>>>>> 1) The machine. KVM requests the machine to perform the 
->>>>>>>> transition, and the
->>>>>>>> machine takes care of updating the guest_memfd state and 
->>>>>>>> notifying any
->>>>>>>> listeners.
->>>>>>>>
->>>>>>>> 2) The RAMBlock. Then we need some other Object to trigger that. 
->>>>>>>> Maybe
->>>>>>>> RAMBlock would have to become an object, or we allocate separate 
->>>>>>>> objects.
->>>>>>>>
->>>>>>>> I'm leaning towards 1), but I might be missing something.
->>>>>>>
->>>>>>> A pure question: how do we process the bios gmemfds?  I assume 
->>>>>>> they're
->>>>>>> shared when VM starts if QEMU needs to load the bios into it, but 
->>>>>>> are they
->>>>>>> always shared, or can they be converted to private later?
->>>>>>
->>>>>> You're probably looking for memory_region_init_ram_guest_memfd().
->>>>>
->>>>> Yes, but I didn't see whether such gmemfd needs conversions there.  
->>>>> I saw
->>>>> an answer though from Chenyi in another email:
->>>>>
->>>>> https://lore.kernel.org/all/fc7194ee-ed21-4f6b-bf87-147a47f5f074@intel.com/
->>>>>
->>>>> So I suppose the BIOS region must support private / share 
->>>>> conversions too,
->>>>> just like the rest part.
->>>>
->>>> Yes, the BIOS region can support conversion as well. I think 
->>>> guest_memfd
->>>> backed memory regions all follow the same sequence during setup time:
->>>>
->>>> guest_memfd is shared when the guest_memfd fd is created by
->>>> kvm_create_guest_memfd() in ram_block_add(), But it will sooner be
->>>> converted to private just after kvm_set_user_memory_region() in
->>>> kvm_set_phys_mem(). So at the boot time of cc VM, the default attribute
->>>> is private. During runtime, the vBIOS can also do the conversion if it
->>>> wants.
->>>
->>> I see.
->>>
->>>>
->>>>>
->>>>> Though in that case, I'm not 100% sure whether that could also be 
->>>>> done by
->>>>> reusing the major guest memfd with some specific offset regions.
->>>>
->>>> Not sure if I understand you clearly. guest_memfd is per-Ramblock. It
->>>> will have its own slot. So the vBIOS can use its own guest_memfd to get
->>>> the specific offset regions.
->>>
->>> Sorry to be confusing, please feel free to ignore my previous comment.
->>> That came from a very limited mindset that maybe one confidential VM 
->>> should
->>> only have one gmemfd..
->>>
->>> Now I see it looks like it's by design open to multiple gmemfds for each
->>> VM, then it's definitely ok that bios has its own.
->>>
->>> Do you know why the bios needs to be convertable?  I wonder whether 
->>> the VM
->>> can copy it over to a private region and do whatever it wants, e.g.  
->>> attest
->>> the bios being valid.  However this is also more of a pure question.. 
->>> and
->>> it can be offtopic to this series, so feel free to ignore.
->>
->> AFAIK, the vBIOS won't do conversion after it is set as private at the
->> beginning. But in theory, the VM can do the conversion at runtime with
->> current implementation. As for why make the vBIOS convertable, I'm also
->> uncertain about it. Maybe convenient for managing the private/shared
->> status by guest_memfd as it's also converted once at the beginning.
-> 
-> The reason is just that we are too lazy to implement a variant of guest 
-> memfd for vBIOS that is disallowed to be converted from private to shared.
+>
+> We may have inflight IOTLB miss requests happening between both.
+>
+> If this happens, vhost_device_iotlb_miss() fails because the IOVA is not
+> translated anymore by the IOMMU and the iotlb.translated_addr returned
+> by address_space_get_iotlb_entry() is not within the registered
+> vhost_memory_regions looked up in vhost_memory_region_lookup(), hence
+> the "Fail to lookup the translated address" message.
+>
+> It sounds wrong that vhost keeps on using IOVAs that are not translated
+> anymore. It looks we have a reset ordering issue and this patch is just
+> removing the sympton and not the cause.
 
-What is the point in disallowing such conversion in QEMU? On AMD, a 
-malicious HV can try converting at any time and if the guest did not ask 
-for it, it will continue accessing those pages as private and trigger an 
-RMP fault. But if the guest asked for conversion, then it should be no 
-problem to convert to shared. What do I miss about TDX here? Thanks,
+Exactly.
 
+>
+> At the moment I don't really get what is initiating the intel iommu TE
+> bit write. This is a guest action but is it initiated from a misordered
+> qemu event?
 
-> 
->>>
->>> Thanks,
->>>
->>
-> 
+It could also be a guest bug which reset the vIOMMU before the device.
+Do we have a calltrace in the guest?
 
--- 
-Alexey
+Adding more vtd maintiners for more thoughts.
+
+Thanks
+
+>
+> It could also relate to
+> [PATCH 0/4] intel_iommu: Reset vIOMMU after all the rest of devices
+> https://lore.kernel.org/all/?q=3Ds%3Aintel_iommu%3A+Reset+vIOMMU+after+al=
+l+the+rest+of+devices
+>
+> Thanks
+>
+> Eric
+>
+>
+>
+>
+> [1]
+> #0  vhost_iommu_region_del (listener=3D0x55555708a388,
+> section=3D0x7ffff62bf030) at ../hw/virtio/vhost.c:927
+> #1  0x0000555555c851b4 in address_space_update_topology_pass
+> (as=3D0x55555822e4f0, old_view=3D0x7fffe8e81850, new_view=3D0x55555723dfa=
+0,
+> adding=3Dfalse) at ../system/memory.c:977
+> #2  0x0000555555c857a0 in address_space_set_flatview (as=3D0x55555822e4f0=
+)
+> at ../system/memory.c:1079
+> #3  0x0000555555c85986 in memory_region_transaction_commit () at
+> ../system/memory.c:1132
+> #4  0x0000555555c89f25 in memory_region_set_enabled (mr=3D0x555557dc0d30,
+> enabled=3Dfalse) at ../system/memory.c:2686
+> #5  0x0000555555b5edb1 in vtd_switch_address_space (as=3D0x555557dc0c60)
+> at ../hw/i386/intel_iommu.c:1735
+> #6  0x0000555555b5ee6f in vtd_switch_address_space_all
+> (s=3D0x555557db1500) at ../hw/i386/intel_iommu.c:1779
+> #7  0x0000555555b64533 in vtd_address_space_refresh_all
+> (s=3D0x555557db1500) at ../hw/i386/intel_iommu.c:4006
+> #8  0x0000555555b60770 in vtd_handle_gcmd_te (s=3D0x555557db1500,
+> en=3Dfalse) at ../hw/i386/intel_iommu.c:2419
+> #9  0x0000555555b60885 in vtd_handle_gcmd_write (s=3D0x555557db1500) at
+> ../hw/i386/intel_iommu.c:2449
+> #10 0x0000555555b61db2 in vtd_mem_write (opaque=3D0x555557db1500, addr=3D=
+24,
+> val=3D100663296, size=3D4) at ../hw/i386/intel_iommu.c:2991
+> #11 0x0000555555c833e0 in memory_region_write_accessor
+> (mr=3D0x555557db1840, addr=3D24, value=3D0x7ffff62bf3d8, size=3D4, shift=
+=3D0,
+> mask=3D4294967295, attrs=3D...) at ../system/memory.c:497
+> #12 0x0000555555c83711 in access_with_adjusted_size
+>     (addr=3D24, value=3D0x7ffff62bf3d8, size=3D4, access_size_min=3D4,
+> access_size_max=3D8, access_fn=3D0x555555c832ea
+> <memory_region_write_accessor>, mr=3D0x555557db1840, attrs=3D...)
+>     at ../system/memory.c:573
+> #13 0x0000555555c8698b in memory_region_dispatch_write
+> (mr=3D0x555557db1840, addr=3D24, data=3D100663296, op=3DMO_32, attrs=3D..=
+.) at
+> ../system/memory.c:1521
+> #14 0x0000555555c95619 in flatview_write_continue_step (attrs=3D...,
+> buf=3D0x7ffff7fbb028 "", len=3D4, mr_addr=3D24, l=3D0x7ffff62bf4c0,
+> mr=3D0x555557db1840) at ../system/physmem.c:2803
+> #15 0x0000555555c956eb in flatview_write_continue (fv=3D0x7fffe852d370,
+> addr=3D4275634200, attrs=3D..., ptr=3D0x7ffff7fbb028, len=3D4, mr_addr=3D=
+24, l=3D4,
+> mr=3D0x555557db1840) at ../system/physmem.c:2833
+> #16 0x0000555555c957f9 in flatview_write (fv=3D0x7fffe852d370,
+> addr=3D4275634200, attrs=3D..., buf=3D0x7ffff7fbb028, len=3D4) at
+> ../system/physmem.c:2864
+> #17 0x0000555555c95c39 in address_space_write (as=3D0x555556ff1720
+> <address_space_memory>, addr=3D4275634200, attrs=3D..., buf=3D0x7ffff7fbb=
+028,
+> len=3D4) at ../system/physmem.c:2984
+> #18 0x0000555555c95cb1 in address_space_rw (as=3D0x555556ff1720
+> <address_space_memory>, addr=3D4275634200, attrs=3D..., buf=3D0x7ffff7fbb=
+028,
+> len=3D4, is_write=3Dtrue) at ../system/physmem.c:2994
+> #19 0x0000555555ceeb56 in kvm_cpu_exec (cpu=3D0x55555727e950) at
+> ../accel/kvm/kvm-all.c:3188
+> #20 0x0000555555cf1ea6 in kvm_vcpu_thread_fn (arg=3D0x55555727e950) at
+> ../accel/kvm/kvm-accel-ops.c:50
+> #21 0x0000555555f6de20 in qemu_thread_start (args=3D0x555557288960) at
+> ../util/qemu-thread-posix.c:541
+> #22 0x00007ffff7289e92 in start_thread () at /lib64/libc.so.6
+>
+> [2]
+> #0  vhost_dev_stop (hdev=3D0x55555708a2c0, vdev=3D0x555558234cb0,
+> vrings=3Dfalse) at ../hw/virtio/vhost.c:2222
+> #1  0x0000555555990266 in vhost_net_stop_one (net=3D0x55555708a2c0,
+> dev=3D0x555558234cb0) at ../hw/net/vhost_net.c:350
+> #2  0x00005555559906ea in vhost_net_stop (dev=3D0x555558234cb0,
+> ncs=3D0x55555826f968, data_queue_pairs=3D1, cvq=3D0) at ../hw/net/vhost_n=
+et.c:462
+> #3  0x0000555555c1ad0a in virtio_net_vhost_status (n=3D0x555558234cb0,
+> status=3D0 '\000') at ../hw/net/virtio-net.c:318
+> #4  0x0000555555c1afaf in virtio_net_set_status (vdev=3D0x555558234cb0,
+> status=3D0 '\000') at ../hw/net/virtio-net.c:393
+> #5  0x0000555555c591bd in virtio_set_status (vdev=3D0x555558234cb0, val=
+=3D0
+> '\000') at ../hw/virtio/virtio.c:2242
+> #6  0x0000555555c595eb in virtio_reset (opaque=3D0x555558234cb0) at
+> ../hw/virtio/virtio.c:2325
+> #7  0x0000555555a0d1e1 in virtio_bus_reset (bus=3D0x555558234c30) at
+> ../hw/virtio/virtio-bus.c:109
+> #8  0x0000555555a13d51 in virtio_pci_reset (qdev=3D0x55555822c830) at
+> ../hw/virtio/virtio-pci.c:2282
+> #9  0x0000555555a14016 in virtio_pci_bus_reset_hold (obj=3D0x55555822c830=
+,
+> type=3DRESET_TYPE_COLD) at ../hw/virtio/virtio-pci.c:2322
+> #10 0x0000555555d08831 in resettable_phase_hold (obj=3D0x55555822c830,
+> opaque=3D0x0, type=3DRESET_TYPE_COLD) at ../hw/core/resettable.c:180
+> #11 0x0000555555d00fc5 in bus_reset_child_foreach (obj=3D0x555557ffa3c0,
+> cb=3D0x555555d086d5 <resettable_phase_hold>, opaque=3D0x0,
+> type=3DRESET_TYPE_COLD) at ../hw/core/bus.c:97
+> #12 0x0000555555d084d8 in resettable_child_foreach (rc=3D0x555557146f20,
+> obj=3D0x555557ffa3c0, cb=3D0x555555d086d5 <resettable_phase_hold>,
+> opaque=3D0x0, type=3DRESET_TYPE_COLD) at ../hw/core/resettable.c:92
+> #13 0x0000555555d08792 in resettable_phase_hold (obj=3D0x555557ffa3c0,
+> opaque=3D0x0, type=3DRESET_TYPE_COLD) at ../hw/core/resettable.c:169
+> #14 0x0000555555d0543b in device_reset_child_foreach
+> (obj=3D0x555557ff98e0, cb=3D0x555555d086d5 <resettable_phase_hold>,
+> opaque=3D0x0, type=3DRESET_TYPE_COLD) at ../hw/core/qdev.c:275
+> #15 0x0000555555d084d8 in resettable_child_foreach (rc=3D0x55555715a090,
+> obj=3D0x555557ff98e0, cb=3D0x555555d086d5 <resettable_phase_hold>,
+> opaque=3D0x0, type=3DRESET_TYPE_COLD) at ../hw/core/resettable.c:92
+> #16 0x0000555555d08792 in resettable_phase_hold (obj=3D0x555557ff98e0,
+> opaque=3D0x0, type=3DRESET_TYPE_COLD) at ../hw/core/resettable.c:169
+> #17 0x0000555555d00fc5 in bus_reset_child_foreach (obj=3D0x555557445120,
+> cb=3D0x555555d086d5 <resettable_phase_hold>, opaque=3D0x0,
+> type=3DRESET_TYPE_COLD) at ../hw/core/bus.c:97
+> #18 0x0000555555d084d8 in resettable_child_foreach (rc=3D0x555557146f20,
+> obj=3D0x555557445120, cb=3D0x555555d086d5 <resettable_phase_hold>,
+> opaque=3D0x0, type=3DRESET_TYPE_COLD) at ../hw/core/resettable.c:92
+> #19 0x0000555555d08792 in resettable_phase_hold (obj=3D0x555557445120,
+> opaque=3D0x0, type=3DRESET_TYPE_COLD) at ../hw/core/resettable.c:169
+> #20 0x0000555555d0543b in device_reset_child_foreach
+> (obj=3D0x5555572d0a00, cb=3D0x555555d086d5 <resettable_phase_hold>,
+> opaque=3D0x0, type=3DRESET_TYPE_COLD) at ../hw/core/qdev.c:275
+> #21 0x0000555555d084d8 in resettable_child_foreach (rc=3D0x5555570cf410,
+> obj=3D0x5555572d0a00, cb=3D0x555555d086d5 <resettable_phase_hold>,
+> opaque=3D0x0, type=3DRESET_TYPE_COLD) at ../hw/core/resettable.c:92
+> #22 0x0000555555d08792 in resettable_phase_hold (obj=3D0x5555572d0a00,
+> opaque=3D0x0, type=3DRESET_TYPE_COLD) at ../hw/core/resettable.c:169
+> #23 0x0000555555d00fc5 in bus_reset_child_foreach (obj=3D0x55555723d270,
+> cb=3D0x555555d086d5 <resettable_phase_hold>, opaque=3D0x0,
+> type=3DRESET_TYPE_COLD) at ../hw/core/bus.c:97
+> #24 0x0000555555d084d8 in resettable_child_foreach (rc=3D0x5555571bfde0,
+> obj=3D0x55555723d270, cb=3D0x555555d086d5 <resettable_phase_hold>,
+> opaque=3D0x0, type=3DRESET_TYPE_COLD) at ../hw/core/resettable.c:92
+> #25 0x0000555555d08792 in resettable_phase_hold (obj=3D0x55555723d270,
+> opaque=3D0x0, type=3DRESET_TYPE_COLD) at ../hw/core/resettable.c:169
+> #26 0x0000555555d06d6d in resettable_container_child_foreach
+> (obj=3D0x55555724a8a0, cb=3D0x555555d086d5 <resettable_phase_hold>,
+> opaque=3D0x0, type=3DRESET_TYPE_COLD) at ../hw/core/resetcontainer.c:54
+> #27 0x0000555555d084d8 in resettable_child_foreach (rc=3D0x5555572180f0,
+> obj=3D0x55555724a8a0, cb=3D0x555555d086d5 <resettable_phase_hold>,
+> opaque=3D0x0, type=3DRESET_TYPE_COLD) at ../hw/core/resettable.c:92
+> #28 0x0000555555d08792 in resettable_phase_hold (obj=3D0x55555724a8a0,
+> opaque=3D0x0, type=3DRESET_TYPE_COLD) at ../hw/core/resettable.c:169
+> #29 0x0000555555d0838d in resettable_assert_reset (obj=3D0x55555724a8a0,
+> type=3DRESET_TYPE_COLD) at ../hw/core/resettable.c:58
+> #30 0x0000555555d082e5 in resettable_reset (obj=3D0x55555724a8a0,
+> type=3DRESET_TYPE_COLD) at ../hw/core/resettable.c:45
+> #31 0x00005555558db5c8 in qemu_devices_reset
+> (reason=3DSHUTDOWN_CAUSE_GUEST_RESET) at ../hw/core/reset.c:179
+> #32 0x0000555555b6f5b2 in pc_machine_reset (machine=3D0x555557234490,
+> reason=3DSHUTDOWN_CAUSE_GUEST_RESET) at ../hw/i386/pc.c:1877
+> #33 0x0000555555a5a0a2 in qemu_system_reset
+> (reason=3DSHUTDOWN_CAUSE_GUEST_RESET) at ../system/runstate.c:516
+> #34 0x0000555555a5a891 in main_loop_should_exit (status=3D0x7fffffffd574)
+> at ../system/runstate.c:792
+> #35 0x0000555555a5a992 in qemu_main_loop () at ../system/runstate.c:825
+> #36 0x0000555555e9cced in qemu_default_main () at ../system/main.c:37
+> #37 0x0000555555e9cd2a in main (argc=3D58, argv=3D0x7fffffffd6d8) at
+> ../system/main.c:48
+>
+>
+> >
+> > or
+> >
+> > 2) introduce new listener ops that can be triggered when a region is
+> > enabled or disabled
+> >
+> > Thanks
+> >
+> >> Thanks
+> >>
+> >> Eric
+> >>
+> >>> Thanks
+> >>>
+> >>>> Eric
+> >>>>
+> >>>>
+> >>>>> Thanks
+> >>>>>
+> >>>>>>  }
+> >>>>>>
+> >>>>>>  void vhost_toggle_device_iotlb(VirtIODevice *vdev)
+> >>>>>> --
+> >>>>>> 2.47.1
+> >>>>>>
+>
 
 
