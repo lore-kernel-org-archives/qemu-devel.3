@@ -4,78 +4,75 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2127CC0218B
-	for <qemu-devel@archiver.kernel.org>; Fri, 24 Jan 2025 05:12:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4CE26C0218C
+	for <qemu-devel@archiver.kernel.org>; Fri, 24 Jan 2025 05:12:51 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tbBzO-0003K2-Gi; Fri, 24 Jan 2025 00:12:18 -0500
+	id 1tbBzm-0003ND-T4; Fri, 24 Jan 2025 00:12:43 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
- id 1tbBzM-0003JR-4K
- for qemu-devel@nongnu.org; Fri, 24 Jan 2025 00:12:16 -0500
+ id 1tbBzj-0003N1-1O
+ for qemu-devel@nongnu.org; Fri, 24 Jan 2025 00:12:39 -0500
 Received: from mail-pj1-x1029.google.com ([2607:f8b0:4864:20::1029])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
- id 1tbBzJ-0000FT-VK
- for qemu-devel@nongnu.org; Fri, 24 Jan 2025 00:12:15 -0500
+ id 1tbBzh-0000IL-87
+ for qemu-devel@nongnu.org; Fri, 24 Jan 2025 00:12:38 -0500
 Received: by mail-pj1-x1029.google.com with SMTP id
- 98e67ed59e1d1-2f43da61ba9so2468824a91.2
- for <qemu-devel@nongnu.org>; Thu, 23 Jan 2025 21:12:13 -0800 (PST)
+ 98e67ed59e1d1-2ee74291415so2430207a91.3
+ for <qemu-devel@nongnu.org>; Thu, 23 Jan 2025 21:12:36 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=daynix-com.20230601.gappssmtp.com; s=20230601; t=1737695532; x=1738300332;
+ d=daynix-com.20230601.gappssmtp.com; s=20230601; t=1737695556; x=1738300356;
  darn=nongnu.org; 
- h=cc:to:content-transfer-encoding:mime-version:message-id:date
- :subject:from:from:to:cc:subject:date:message-id:reply-to;
- bh=vKKjjIIugBtCNk8yP306BjA6akW2VMionZJS3JpFXkk=;
- b=gJCCgOBi9ys0oXzbGMLPxzJIEmULOVVx37wGdjOUwqaplGwlRoXXfAoECeMXUanEKJ
- fe+kHfCGCIGGtxtp6QVMPvg8UaczO3CIQMp3gMp2bYEq57xL8PT/bqG8aUoabROWNieL
- SfQwJy5iyTVq3QGxgyn2NkEP73uUhWMVXg7OEad91bkqR1526I3bJNvY/MCvydGYtMBe
- fAv6v6UlJBd/VR81iHagfu4KPsg400KmrWVb5KBkMb7awTP0w+RzGCqe6e6ddaL2taIq
- lzkuUL8EFnJKAWBEXN9z9nXK46ttUBEcvOHmjPkZAUmqaKCwJ4BQbMW/YQHCMASPatSL
- HpUw==
+ h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
+ :mime-version:subject:date:from:from:to:cc:subject:date:message-id
+ :reply-to; bh=cE+X4PDl66cqVXABqWkosmyuaKRyDx9YI4ApMGsc4ZM=;
+ b=HRBsxvighgfrv8xRWoA8s9jARR/nsISmueJJT9zFahZIodtMnLwBL5oHSBeKtNsRr4
+ /ZVHs37JCWbnE2iCOkFZx++4Xz4Odxb0x93ZmV2EXMRWDbTl0Ig/S9WVCjIrSFfpIVKE
+ XzPOOwJoauAJ2UZESJF932UejDPaOKkVgc8WqxgtLDDlEycepnB0Asl3dDw+h4cpQ5So
+ kKi+3Mxl0dJgNUI4xv+CiPC9W8Bqs/ZT31ioweVO7o4Cd2aXqgNkdtyDk3/VONcviulO
+ ruWNqn9CDLg2Qy7kkAY6xh66alzNHIFcqeuQ0IgkiOzG6ilSKqmkWVMeTexG2t+ZfxyB
+ voPw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1737695532; x=1738300332;
- h=cc:to:content-transfer-encoding:mime-version:message-id:date
- :subject:from:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=vKKjjIIugBtCNk8yP306BjA6akW2VMionZJS3JpFXkk=;
- b=goJl43G1pl86Kabt6oS9XEVwHhw04UhNhbL5jcGIn4qX74aymYcJUMxDw1W5DlCJ7B
- +D7mxpuHD8kho8Ada16TyixsjG3PDCINRp+BgplJIF03GD/ro+vYSigu8Vpe1PFh7ETM
- gJ8El38Omon0QR9kgwu9qxd9LL5CQpksEdmNHyGR+QCN8JG08BHOY8eY5uGUPdAvy+1i
- btXYYK+wZIGVzOk2OHhicR10RXtQeXmNo3u6xy689MYP5FpnltwBnOi/CL4lhWIwHOLC
- HPbWMR1/nkzOHU+GIbqH8YymY3k5w/K2eRVCp3vCJb4agRGOGdevZUhy0hQZYDTKXnRM
- u7Pg==
-X-Gm-Message-State: AOJu0YyTgR9rsJaH8c6hnC/M6Nx+R7DsNkmzNzKTXG6boXpIa9A2EB0g
- eyunSmOdIXkrYvWqV4sSQMJhmE9zZMEaGdxoYOgXNPG8KBkiEb3oC+CBCCb6i5nntIPjzqsxyvU
- qYUA=
-X-Gm-Gg: ASbGnctqvs40iT/+h3E5R0pel+WUmA6RNuQ9DpYtdrNgJGnB5jvv5s3To8XnT/Ka8TH
- 5ElsVT9VBlWmAkJOShAasMAiCheAPSNT+YKKUlmAh7m2FSbwKAVA8Erdp56bJL/+7kzNYJCmCaL
- JmyGake55tewt+5s3nluXI8fegQUFV0kWOglQV+sfTlXkYA7Hmvu3D9tFHzthbwZkxp+9SULclr
- oPjSXY9Ndxu2Nz1F2XtBaiCKqFc6jiuNQ3CoUB/KrrOK/uzRhGlUR6QTbJ/ECD250EsgEWiOZ7d
- +TuJqfex
-X-Google-Smtp-Source: AGHT+IGU5WZoGGKRvD+Z8u1faxjxbEQsgLZg1HqX1Eu7JFScIMAROXJWZLm85C+mCl1D3l+t0SgoEQ==
-X-Received: by 2002:a17:90a:be08:b0:2ee:d7d3:3008 with SMTP id
- 98e67ed59e1d1-2f782c93dbemr47642159a91.12.1737695532104; 
- Thu, 23 Jan 2025 21:12:12 -0800 (PST)
+ d=1e100.net; s=20230601; t=1737695556; x=1738300356;
+ h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
+ :mime-version:subject:date:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=cE+X4PDl66cqVXABqWkosmyuaKRyDx9YI4ApMGsc4ZM=;
+ b=Ne9hrroUOXriloHHzXotJFH/jHS8GYTrMn2SeWXljA/0NEj6ED1bdDDHLt4D9u9BqQ
+ ffpM73b4AxL7n66GbUfjqBVdZu6jxbqfCi5f4aKgOfwJbTHgS/DUpwYIVJKYxXtzkj06
+ EezTLlzw6+mB93EfPgNeYgR8ZfAzTlDa7HHqo7C2YgMlOhFlgVMwOU/RimpJgG0g2Zx2
+ kFoPkQB7qm5SYvC/O8u8AQOWFcsxlxwwBH1bXmcSvE1ikr9Ojalb2B4y+VCjw6btInUe
+ inoCMWijF6CbcJV8tQnAG+ALNAffOoFg1i2Q5XFLP8Jm+nW7OpJNZ/EV9QTqK2M4k/cN
+ 7ZPA==
+X-Gm-Message-State: AOJu0YzIJXL23vitqdlpcygZzKhF0zxzhznYMraDRO5yN5DYggy4jRNv
+ 4vBc2DNgCIgMWfD1AmkSizZZYHpo0lzyLMXYBNeCN46zdgbh8alNksCGpG1Awe20QsRSSpTidty
+ jOMc=
+X-Gm-Gg: ASbGnctTQ70zozKXZFWp/4RvHtop3uQiAkCkFOEIrkZTGRlBxPwL5QG3B+WaAa4Xkux
+ Eyv+d2AgdpDIM7etbMFcJCWWcBlac/UnIB8GH3qEO4bH4qoE4lUP8g5Lv1mNwny+KkEeJr05LrT
+ n6AHsCDXI1dSaAsuL7jV3Yb7U3SxD4+4WiRkPMj3UhkntRFoukyJF0SFcTwI8CjLY74JBi2K/0k
+ E0E/v/aFqEy4ZWF0pcjB9uPtYO7m1hZSeL+VHCQ/u34xprD9vmQHIr1mQv9SK1ln6jLkpbPfs2a
+ SIV3eAAw
+X-Google-Smtp-Source: AGHT+IHHKJJMgySAVNEEeRdAsWcztyEON7u7Z76JcUbbL/CUGS8JPM68FiNCzwJiBQHKymGDWkOEyw==
+X-Received: by 2002:a17:90a:c2c5:b0:2ee:8008:b583 with SMTP id
+ 98e67ed59e1d1-2f782c9c88fmr45584761a91.16.1737695555692; 
+ Thu, 23 Jan 2025 21:12:35 -0800 (PST)
 Received: from localhost ([157.82.207.107])
  by smtp.gmail.com with UTF8SMTPSA id
- 98e67ed59e1d1-2f7ffa83b24sm758331a91.46.2025.01.23.21.12.09
+ 98e67ed59e1d1-2f7ffa6b315sm667766a91.26.2025.01.23.21.12.33
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 23 Jan 2025 21:12:11 -0800 (PST)
+ Thu, 23 Jan 2025 21:12:35 -0800 (PST)
 From: Akihiko Odaki <akihiko.odaki@daynix.com>
-Subject: [PATCH v7 0/6] coreaudio fixes
-Date: Fri, 24 Jan 2025 14:12:03 +0900
-Message-Id: <20250124-coreaudio-v7-0-9d9a4d91db37@daynix.com>
+Date: Fri, 24 Jan 2025 14:12:08 +0900
+Subject: [PATCH v7 5/6] audio: Add functions to initialize buffers
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-X-B4-Tracking: v=1; b=H4sIACMhk2cC/2XOTQ7CIBCG4asY1mKgHaB15T2MC36VhcWANm2a3
- t2pcYFx+RGeN7OQ4nP0hRx3C8l+jCWmAYfa74i96eHqaXS4ScMawTjrqU3Z65eLidq+A8mU566
- zBP8/sg9x+rTOF9y3WJ4pz5/02G6v3woXVWVsKaPGGWmsESb04eT0PMTpYNOdbJkRaqpqCkhD5
- yBoQBzgj4qKNm1NBVLZqdYFaLjQ7I/KmkJNJVLOA94rLSj7e/C6rm8d1DLAVAEAAA==
-X-Change-ID: 20250109-coreaudio-c984607e1d8c
+Message-Id: <20250124-coreaudio-v7-5-9d9a4d91db37@daynix.com>
+References: <20250124-coreaudio-v7-0-9d9a4d91db37@daynix.com>
+In-Reply-To: <20250124-coreaudio-v7-0-9d9a4d91db37@daynix.com>
 To: Gerd Hoffmann <kraxel@redhat.com>, 
  =?utf-8?q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>, 
  Christian Schoenebeck <qemu_oss@crudebyte.com>, 
@@ -107,50 +104,87 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This series contains two fixes for coreaudio. See each one for details.
+These functions can be used to re-initialize buffers when hardware
+parameters change due to device hotplug, for example.
 
 Signed-off-by: Akihiko Odaki <akihiko.odaki@daynix.com>
+Reviewed-by: Phil Dennis-Jordan <phil@philjordan.eu>
+Reviewed-by: Christian Schoenebeck <qemu_oss@crudebyte.com>
 ---
-Changes in v7:
-- Added patch "coreaudio: Remove extra whitespaces".
-- Link to v6: https://lore.kernel.org/qemu-devel/20250124-coreaudio-v6-0-11fbcb6c47cf@daynix.com
+ audio/audio_int.h |  2 ++
+ audio/audio.c     | 24 ++++++++++++++++++------
+ 2 files changed, 20 insertions(+), 6 deletions(-)
 
-Changes in v6:
-- Added patch "coreaudio: Remove unnecessary explicit casts".
-- Link to v5: https://lore.kernel.org/qemu-devel/20250123-coreaudio-v5-0-6873df4215a0@daynix.com
+diff --git a/audio/audio_int.h b/audio/audio_int.h
+index 2d079d00a2596e6bce20e1f52abf01a88c4e0012..9ba4a144d571659ad2d32a4d6b2919ad0db89e25 100644
+--- a/audio/audio_int.h
++++ b/audio/audio_int.h
+@@ -187,9 +187,11 @@ struct audio_pcm_ops {
+     void   (*volume_in)(HWVoiceIn *hw, Volume *vol);
+ };
+ 
++void audio_generic_initialize_buffer_in(HWVoiceIn *hw);
+ void audio_generic_run_buffer_in(HWVoiceIn *hw);
+ void *audio_generic_get_buffer_in(HWVoiceIn *hw, size_t *size);
+ void audio_generic_put_buffer_in(HWVoiceIn *hw, void *buf, size_t size);
++void audio_generic_initialize_buffer_out(HWVoiceOut *hw);
+ void audio_generic_run_buffer_out(HWVoiceOut *hw);
+ size_t audio_generic_buffer_get_free(HWVoiceOut *hw);
+ void *audio_generic_get_buffer_out(HWVoiceOut *hw, size_t *size);
+diff --git a/audio/audio.c b/audio/audio.c
+index 87b4e9b6f2f356b6e5e972eabc100cf270fcbc29..17c6bbd0ae9e6ff810c0989dbfa1710ef674ff0a 100644
+--- a/audio/audio.c
++++ b/audio/audio.c
+@@ -1407,12 +1407,18 @@ void audio_run(AudioState *s, const char *msg)
+ #endif
+ }
+ 
++void audio_generic_initialize_buffer_in(HWVoiceIn *hw)
++{
++    g_free(hw->buf_emul);
++    hw->size_emul = hw->samples * hw->info.bytes_per_frame;
++    hw->buf_emul = g_malloc(hw->size_emul);
++    hw->pos_emul = hw->pending_emul = 0;
++}
++
+ void audio_generic_run_buffer_in(HWVoiceIn *hw)
+ {
+     if (unlikely(!hw->buf_emul)) {
+-        hw->size_emul = hw->samples * hw->info.bytes_per_frame;
+-        hw->buf_emul = g_malloc(hw->size_emul);
+-        hw->pos_emul = hw->pending_emul = 0;
++        audio_generic_initialize_buffer_in(hw);
+     }
+ 
+     while (hw->pending_emul < hw->size_emul) {
+@@ -1446,6 +1452,14 @@ void audio_generic_put_buffer_in(HWVoiceIn *hw, void *buf, size_t size)
+     hw->pending_emul -= size;
+ }
+ 
++void audio_generic_initialize_buffer_out(HWVoiceOut *hw)
++{
++    g_free(hw->buf_emul);
++    hw->size_emul = hw->samples * hw->info.bytes_per_frame;
++    hw->buf_emul = g_malloc(hw->size_emul);
++    hw->pos_emul = hw->pending_emul = 0;
++}
++
+ size_t audio_generic_buffer_get_free(HWVoiceOut *hw)
+ {
+     if (hw->buf_emul) {
+@@ -1477,9 +1491,7 @@ void audio_generic_run_buffer_out(HWVoiceOut *hw)
+ void *audio_generic_get_buffer_out(HWVoiceOut *hw, size_t *size)
+ {
+     if (unlikely(!hw->buf_emul)) {
+-        hw->size_emul = hw->samples * hw->info.bytes_per_frame;
+-        hw->buf_emul = g_malloc(hw->size_emul);
+-        hw->pos_emul = hw->pending_emul = 0;
++        audio_generic_initialize_buffer_out(hw);
+     }
+ 
+     *size = MIN(hw->size_emul - hw->pending_emul,
 
-Changes in v5:
-- Added patch "coreaudio: Improve naming", removing verbose names like
-  outputDeviceID and audioDevicePropertyBufferFrameSize altogether.
-- Link to v4: https://lore.kernel.org/r/20250117-coreaudio-v4-0-f8d4fa4cb5f4@daynix.com
-
-Changes in v4:
-- Splitted patch "audio: Add functions to initialize buffers" from
-  patch "coreaudio: Initialize the buffer for device change".
-- Changed the message of patch "coreaudio: Commit the result of init in
-  the end" to tell that early returns happen when there is a fatal error
-  or the device gets unplugged.
-- Link to v3: https://lore.kernel.org/r/20250115-coreaudio-v3-0-bdb6bcb5bf9f@daynix.com
-
----
-Akihiko Odaki (6):
-      coreaudio: Remove unnecessary explicit casts
-      coreaudio: Remove extra whitespaces
-      coreaudio: Improve naming
-      coreaudio: Commit the result of init in the end
-      audio: Add functions to initialize buffers
-      coreaudio: Initialize the buffer for device change
-
- audio/audio_int.h |   2 +
- audio/audio.c     |  24 +++--
- audio/coreaudio.m | 284 ++++++++++++++++++++++++++++--------------------------
- 3 files changed, 166 insertions(+), 144 deletions(-)
----
-base-commit: 7433709a147706ad7d1956b15669279933d0f82b
-change-id: 20250109-coreaudio-c984607e1d8c
-
-Best regards,
 -- 
-Akihiko Odaki <akihiko.odaki@daynix.com>
+2.48.1
 
 
