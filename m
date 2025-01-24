@@ -4,80 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 01FA3C0218B
-	for <qemu-devel@archiver.kernel.org>; Fri, 24 Jan 2025 16:41:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C86B4C0218C
+	for <qemu-devel@archiver.kernel.org>; Fri, 24 Jan 2025 16:41:57 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tbMe0-0001TW-Kz; Fri, 24 Jan 2025 11:34:56 -0500
+	id 1tbMfu-0005bA-59; Fri, 24 Jan 2025 11:36:54 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1tbMZE-0005sJ-SJ
+ id 1tbMZM-0005vg-8e
  for qemu-devel@nongnu.org; Fri, 24 Jan 2025 11:30:16 -0500
-Received: from mail-wm1-x32d.google.com ([2a00:1450:4864:20::32d])
+Received: from mail-wr1-x429.google.com ([2a00:1450:4864:20::429])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1tbMZB-0005nE-8z
+ id 1tbMZC-0005nn-VE
  for qemu-devel@nongnu.org; Fri, 24 Jan 2025 11:30:00 -0500
-Received: by mail-wm1-x32d.google.com with SMTP id
- 5b1f17b1804b1-4362f61757fso23850535e9.2
- for <qemu-devel@nongnu.org>; Fri, 24 Jan 2025 08:29:56 -0800 (PST)
+Received: by mail-wr1-x429.google.com with SMTP id
+ ffacd0b85a97d-3862d161947so1271291f8f.3
+ for <qemu-devel@nongnu.org>; Fri, 24 Jan 2025 08:29:57 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1737736195; x=1738340995; darn=nongnu.org;
+ d=linaro.org; s=google; t=1737736196; x=1738340996; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=5fO4yVTzlDdDstDxzaIvCaMWSZoc0FFpHe7FAcMg52A=;
- b=oEveJLecqsRmkLLdHfBS3JjNMYfkxL19rdvZI47ZbIHz/2cXGqEiUZ0vIGp0e8ToJB
- qu5Z+X2rCf+Wr6+LTLbHKHMv6R5BmFqklqNFVOQEWDoX/RM9JfH8yOl1HVt6ajqexNgK
- PwoIqQSTuJuy9Ex42oQJx5lY/ZDed0VGsgjFol+svxknDeYiPpHLagRnQPF3z3KVtkQd
- Eba7FOFEftH3Yzxrz1a8HaTV4ztyUOfqUd18tWKTLdW0LheJZDrhrkdgU+xpQ8Kn/Xs0
- 2Caieio8mxpTw0WaRY9W5fBu53eTXXXK4HBXmnId6FJTCKTcK4R/KJBjSRTrZRLvlJ+3
- tUig==
+ :reply-to; bh=90zJmscshgzp9ZgdoGcA5ll/KJlD0eY0cc5R60hdHPs=;
+ b=RuWYvr1S3NUOPhXC8O10QG/OeR9E3Orxn84gacT8jyeexzIId6ks5Sua7nXwV5Y4vh
+ 2sn3N4NRSMSWkYQQuqQStnGZ0FRDXmIsTk1VWBN2W5my7nzWrxdPuLpfgBacQPXBVctY
+ yzcqeUT8WrYaLJ+26VCitMHmxB6rsYT8TuII66pWxG0IIAaSSdQDMpC1an9Ys19hK3dQ
+ 8jehjPGM6WyKltCnaULzcEZ5Lbva0oXryk+HS8iaaG6BTF+/+g9OLqKFSuqR38EZmw/b
+ fO5PnkRzSLf+DK40Kf64dE2ZtWXwLJKU47C0NZszFSMQBAe4G5F8zO0XExIQPo4w0Oac
+ tXMw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1737736195; x=1738340995;
+ d=1e100.net; s=20230601; t=1737736196; x=1738340996;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=5fO4yVTzlDdDstDxzaIvCaMWSZoc0FFpHe7FAcMg52A=;
- b=S1jnb7C9KrnMF0cxiA60FMHMR0tQk3hxi9McuToeNpb2q2O8pOo53nuBxCnsn2/gup
- 85osf5BABiN30FHIC5uWnmHR1dhr6m9Fq3L+qDBkfuzKxKyjMqOYabv9QAkQGc3GHpRc
- VbXQwN+jiqPiTnXUx4imHW6PN/uW/7K6pe4mNUJlyq4vFnFbyvPusl5fGlAPnE8FvInk
- dQxCNGXvKGwohVIgtGN9RTOq97ROsDOtO3b267ix0Lb2l6CG9zYMukEgl4alkoUBKVyd
- Z61zLyXTt/O6bUbQjphSud9JHWKjEns7HY5KfB8oGUFTDP0db74cX01IJqNWSOeMvrGY
- FHGg==
+ bh=90zJmscshgzp9ZgdoGcA5ll/KJlD0eY0cc5R60hdHPs=;
+ b=NM4TY5tMxmmNgrgjM6Kq3fMMrAgVfmBMTEAtPo8Cbfafese+u83EPf+vReZH5IHK1n
+ +f4nyGiFgx1RNlv+lx/gZnYZMlspQmJBeJh+tzDTQixTH+AJ54+O0TKBgUklpDBpIZJ+
+ o8OO00jj5yfJu6+wuSG9FKHajvUPWjsrQWwrt133yYTcZjQrwZ8uw+VQClckpCmBGnhJ
+ uPOlx4M8JjHDr5nZsj+A2A8LQXxYN8tijVvNpiusmvAq8sIQPdNPcHSjIZFxRopqbHmp
+ hcoaiKi4yGuE/biQJ07HAgIxfJrxMzffrw6WD4c+lotM0fQ8ZjcPHoecNwmCp6IPKR5L
+ vtEg==
 X-Forwarded-Encrypted: i=1;
- AJvYcCXJKYksnucj8hPcQ8qBJs5m9JDSkYmqMEzBT9X3cwGabrGF7AcxNx1iidUxECsSwuDuuBKqS8bKOHae@nongnu.org
-X-Gm-Message-State: AOJu0Yz56zcTIGV0uQ+uwPEgaw49YjzM3ApSsgwidYMA6tNsnx2Akwqc
- DQ1IOnB4nS0D980lvLE/jZOy1Xtb9zZr1In4xHNVSaohq9MMAYLwPJ1rbn0xALM=
-X-Gm-Gg: ASbGnctne9sKjF2NGwb6/ziLorWt1TFI79GBDakEDV6uvJO6knei2WdXjemsC3nY77F
- jZM+P5rR/or6HF4yzsdZyHU0GscXaCfGx7Rrl/Ivr4g2G2C4EEqG7qmP/PJ6pp8Am5Aoxo5lCGP
- aI/UW5tPnnB9Scnq+FqcUe5JhUjbGOgiCklwd9C4JheoQGOtVRaDeCUhQwjwmeKzfRvfytuqenQ
- AVnOWlGSynLqa64w1DkUO1UkbyALJ2XQYM183RJhSRAjwVw71wsIaYhANBQ0mSoyownguqW23EE
- 4OM+fXmWqo4=
-X-Google-Smtp-Source: AGHT+IF2Q+sHIjfD3sZ/mV9DGL2nUoXQLM4LGO9sMfZmMv7qyvYY8kfNQeb4UkSCggYI7MjuWrU3QQ==
-X-Received: by 2002:a05:600c:3d06:b0:435:1b:65ee with SMTP id
- 5b1f17b1804b1-43891419e16mr246860185e9.24.1737736195184; 
- Fri, 24 Jan 2025 08:29:55 -0800 (PST)
+ AJvYcCVL3kWcxMtj7sa7Dz7tnY0p73FU82JCOPkGK5iP1frz0HXkWBANohEcxq4vVwjXkdcjipJyD8KeK8L+@nongnu.org
+X-Gm-Message-State: AOJu0Yzmm0c2vaUDCM6SMi17mr0YHliogzPGu7KqpgSczjsuev66mhj/
+ slbrHTsf57veC1awAZ8k3h3HoAmerMCFg5Twx8v4eUzEBr6hetOVBsGqBHkA8p0=
+X-Gm-Gg: ASbGncu3puwdHkfVJpfGl95Ynu5xTf0FSl3RljAvDqeck1aIRtOmw5xdd8r613AFptY
+ L0AuTYY5bvbBcaq5eF5gEsk3Ti/uiY2wPyttpBV4xl15Vo7Ub1XM+D8M0S8lkhCjltLH281qe5J
+ 7hVjITXscoNvnOPmrfBZX4t4C8Hzbx59AawBWHGJ2zNGhgh6a+yk8mwkE6KtEajyUlTtwXBHgPh
+ MC3p9THYtZjEtvTzWZBhXTWVKAHg3XyeUyUQYyc57ZULWirnVc+DYubu5iT4TGwRHUyqh/vd3j0
+ XZpEWrfOE4E=
+X-Google-Smtp-Source: AGHT+IFZ3zBd3jB1JeMqB35NpYLhp3Arsr1yG+rC4NYNJYmIWvKNxG7P47pnV/5Pk3JtiPwdNaFhUg==
+X-Received: by 2002:a5d:47c7:0:b0:388:da10:ff13 with SMTP id
+ ffacd0b85a97d-38c11e4af44mr20629251f8f.21.1737736196287; 
+ Fri, 24 Jan 2025 08:29:56 -0800 (PST)
 Received: from orth.archaic.org.uk (orth.archaic.org.uk. [2001:8b0:1d0::2])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-438bd47eecasm31683025e9.6.2025.01.24.08.29.53
+ 5b1f17b1804b1-438bd47eecasm31683025e9.6.2025.01.24.08.29.55
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 24 Jan 2025 08:29:53 -0800 (PST)
+ Fri, 24 Jan 2025 08:29:55 -0800 (PST)
 From: Peter Maydell <peter.maydell@linaro.org>
 To: qemu-arm@nongnu.org,
 	qemu-devel@nongnu.org
-Subject: [PATCH 61/76] target/arm: Handle FPCR.AH in FRECPS and FRSQRTS scalar
+Subject: [PATCH 62/76] target/arm: Handle FPCR.AH in FRECPS and FRSQRTS vector
  insns
-Date: Fri, 24 Jan 2025 16:28:21 +0000
-Message-Id: <20250124162836.2332150-62-peter.maydell@linaro.org>
+Date: Fri, 24 Jan 2025 16:28:22 +0000
+Message-Id: <20250124162836.2332150-63-peter.maydell@linaro.org>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20250124162836.2332150-1-peter.maydell@linaro.org>
 References: <20250124162836.2332150-1-peter.maydell@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32d;
- envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x32d.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::429;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wr1-x429.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -100,238 +100,126 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Handle the FPCR.AH semantics that we do not change the sign of an
-input NaN in the FRECPS and FRSQRTS scalar insns, by providing
-new helper functions that do the CHS part of the operation
-differently.
-
-Since the extra helper functions would be very repetitive if written
-out longhand, we condense them and the existing non-AH helpers into
-being emitted via macros.
+Handle the FPCR.AH "don't negate the sign of a NaN" semantics
+in the vector versions of FRECPS and FRSQRTS, by implementing
+new vector wrappers that call the _ah_ scalar helpers.
 
 Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
 ---
- target/arm/tcg/helper-a64.h    |   6 ++
- target/arm/tcg/helper-a64.c    | 128 ++++++++++++++-------------------
- target/arm/tcg/translate-a64.c |  25 +++++--
- 3 files changed, 78 insertions(+), 81 deletions(-)
+ target/arm/tcg/helper-sve.h    | 14 ++++++++++++++
+ target/arm/tcg/translate-a64.c | 21 ++++++++++++++++-----
+ target/arm/tcg/translate-sve.c |  7 ++++++-
+ target/arm/tcg/vec_helper.c    |  8 ++++++++
+ 4 files changed, 44 insertions(+), 6 deletions(-)
 
-diff --git a/target/arm/tcg/helper-a64.h b/target/arm/tcg/helper-a64.h
-index ae0424f6de9..85023465b76 100644
---- a/target/arm/tcg/helper-a64.h
-+++ b/target/arm/tcg/helper-a64.h
-@@ -38,9 +38,15 @@ DEF_HELPER_FLAGS_3(neon_cgt_f64, TCG_CALL_NO_RWG, i64, i64, i64, fpst)
- DEF_HELPER_FLAGS_3(recpsf_f16, TCG_CALL_NO_RWG, f16, f16, f16, fpst)
- DEF_HELPER_FLAGS_3(recpsf_f32, TCG_CALL_NO_RWG, f32, f32, f32, fpst)
- DEF_HELPER_FLAGS_3(recpsf_f64, TCG_CALL_NO_RWG, f64, f64, f64, fpst)
-+DEF_HELPER_FLAGS_3(recpsf_ah_f16, TCG_CALL_NO_RWG, f16, f16, f16, fpst)
-+DEF_HELPER_FLAGS_3(recpsf_ah_f32, TCG_CALL_NO_RWG, f32, f32, f32, fpst)
-+DEF_HELPER_FLAGS_3(recpsf_ah_f64, TCG_CALL_NO_RWG, f64, f64, f64, fpst)
- DEF_HELPER_FLAGS_3(rsqrtsf_f16, TCG_CALL_NO_RWG, f16, f16, f16, fpst)
- DEF_HELPER_FLAGS_3(rsqrtsf_f32, TCG_CALL_NO_RWG, f32, f32, f32, fpst)
- DEF_HELPER_FLAGS_3(rsqrtsf_f64, TCG_CALL_NO_RWG, f64, f64, f64, fpst)
-+DEF_HELPER_FLAGS_3(rsqrtsf_ah_f16, TCG_CALL_NO_RWG, f16, f16, f16, fpst)
-+DEF_HELPER_FLAGS_3(rsqrtsf_ah_f32, TCG_CALL_NO_RWG, f32, f32, f32, fpst)
-+DEF_HELPER_FLAGS_3(rsqrtsf_ah_f64, TCG_CALL_NO_RWG, f64, f64, f64, fpst)
- DEF_HELPER_FLAGS_2(frecpx_f64, TCG_CALL_NO_RWG, f64, f64, fpst)
- DEF_HELPER_FLAGS_2(frecpx_f32, TCG_CALL_NO_RWG, f32, f32, fpst)
- DEF_HELPER_FLAGS_2(frecpx_f16, TCG_CALL_NO_RWG, f16, f16, fpst)
-diff --git a/target/arm/tcg/helper-a64.c b/target/arm/tcg/helper-a64.c
-index 406d76e1129..ba21efd0bb0 100644
---- a/target/arm/tcg/helper-a64.c
-+++ b/target/arm/tcg/helper-a64.c
-@@ -208,88 +208,66 @@ uint64_t HELPER(neon_cgt_f64)(float64 a, float64 b, float_status *fpst)
-     return -float64_lt(b, a, fpst);
- }
+diff --git a/target/arm/tcg/helper-sve.h b/target/arm/tcg/helper-sve.h
+index 29c70f054af..a2e96a498dd 100644
+--- a/target/arm/tcg/helper-sve.h
++++ b/target/arm/tcg/helper-sve.h
+@@ -980,6 +980,20 @@ DEF_HELPER_FLAGS_5(gvec_rsqrts_s, TCG_CALL_NO_RWG,
+ DEF_HELPER_FLAGS_5(gvec_rsqrts_d, TCG_CALL_NO_RWG,
+                    void, ptr, ptr, ptr, fpst, i32)
  
--/* Reciprocal step and sqrt step. Note that unlike the A32/T32
-+static float16 float16_ah_chs(float16 a)
-+{
-+    return float16_is_any_nan(a) ? a : float16_chs(a);
-+}
++DEF_HELPER_FLAGS_5(gvec_ah_recps_h, TCG_CALL_NO_RWG,
++                   void, ptr, ptr, ptr, fpst, i32)
++DEF_HELPER_FLAGS_5(gvec_ah_recps_s, TCG_CALL_NO_RWG,
++                   void, ptr, ptr, ptr, fpst, i32)
++DEF_HELPER_FLAGS_5(gvec_ah_recps_d, TCG_CALL_NO_RWG,
++                   void, ptr, ptr, ptr, fpst, i32)
 +
-+static float32 float32_ah_chs(float32 a)
-+{
-+    return float32_is_any_nan(a) ? a : float32_chs(a);
-+}
++DEF_HELPER_FLAGS_5(gvec_ah_rsqrts_h, TCG_CALL_NO_RWG,
++                   void, ptr, ptr, ptr, fpst, i32)
++DEF_HELPER_FLAGS_5(gvec_ah_rsqrts_s, TCG_CALL_NO_RWG,
++                   void, ptr, ptr, ptr, fpst, i32)
++DEF_HELPER_FLAGS_5(gvec_ah_rsqrts_d, TCG_CALL_NO_RWG,
++                   void, ptr, ptr, ptr, fpst, i32)
 +
-+static float64 float64_ah_chs(float64 a)
-+{
-+    return float64_is_any_nan(a) ? a : float64_chs(a);
-+}
-+/*
-+ * Reciprocal step and sqrt step. Note that unlike the A32/T32
-  * versions, these do a fully fused multiply-add or
-  * multiply-add-and-halve.
-+ * The FPCR.AH == 1 versions need to avoid flipping the sign of NaN.
-  */
--
--uint32_t HELPER(recpsf_f16)(uint32_t a, uint32_t b, float_status *fpst)
--{
--    a = float16_squash_input_denormal(a, fpst);
--    b = float16_squash_input_denormal(b, fpst);
--
--    a = float16_chs(a);
--    if ((float16_is_infinity(a) && float16_is_zero(b)) ||
--        (float16_is_infinity(b) && float16_is_zero(a))) {
--        return float16_two;
-+#define DO_RECPS(NAME, CTYPE, FLOATTYPE, CHSFN)                         \
-+    CTYPE HELPER(NAME)(CTYPE a, CTYPE b, float_status *fpst)            \
-+    {                                                                   \
-+        a = FLOATTYPE ## _squash_input_denormal(a, fpst);               \
-+        b = FLOATTYPE ## _squash_input_denormal(b, fpst);               \
-+        a = FLOATTYPE ## _ ## CHSFN(a);                                 \
-+        if ((FLOATTYPE ## _is_infinity(a) && FLOATTYPE ## _is_zero(b)) || \
-+            (FLOATTYPE ## _is_infinity(b) && FLOATTYPE ## _is_zero(a))) { \
-+            return FLOATTYPE ## _two;                                   \
-+        }                                                               \
-+        return FLOATTYPE ## _muladd(a, b, FLOATTYPE ## _two, 0, fpst);  \
-     }
--    return float16_muladd(a, b, float16_two, 0, fpst);
--}
- 
--float32 HELPER(recpsf_f32)(float32 a, float32 b, float_status *fpst)
--{
--    a = float32_squash_input_denormal(a, fpst);
--    b = float32_squash_input_denormal(b, fpst);
-+DO_RECPS(recpsf_f16, uint32_t, float16, chs)
-+DO_RECPS(recpsf_f32, float32, float32, chs)
-+DO_RECPS(recpsf_f64, float64, float64, chs)
-+DO_RECPS(recpsf_ah_f16, uint32_t, float16, ah_chs)
-+DO_RECPS(recpsf_ah_f32, float32, float32, ah_chs)
-+DO_RECPS(recpsf_ah_f64, float64, float64, ah_chs)
- 
--    a = float32_chs(a);
--    if ((float32_is_infinity(a) && float32_is_zero(b)) ||
--        (float32_is_infinity(b) && float32_is_zero(a))) {
--        return float32_two;
--    }
--    return float32_muladd(a, b, float32_two, 0, fpst);
--}
-+#define DO_RSQRTSF(NAME, CTYPE, FLOATTYPE, CHSFN)                       \
-+    CTYPE HELPER(NAME)(CTYPE a, CTYPE b, float_status *fpst)            \
-+    {                                                                   \
-+        a = FLOATTYPE ## _squash_input_denormal(a, fpst);               \
-+        b = FLOATTYPE ## _squash_input_denormal(b, fpst);               \
-+        a = FLOATTYPE ## _ ## CHSFN(a);                                 \
-+        if ((FLOATTYPE ## _is_infinity(a) && FLOATTYPE ## _is_zero(b)) || \
-+            (FLOATTYPE ## _is_infinity(b) && FLOATTYPE ## _is_zero(a))) { \
-+            return FLOATTYPE ## _one_point_five;                        \
-+        }                                                               \
-+        return FLOATTYPE ## _muladd_scalbn(a, b, FLOATTYPE ## _three,   \
-+                                           -1, 0, fpst);                \
-+    }                                                                   \
- 
--float64 HELPER(recpsf_f64)(float64 a, float64 b, float_status *fpst)
--{
--    a = float64_squash_input_denormal(a, fpst);
--    b = float64_squash_input_denormal(b, fpst);
--
--    a = float64_chs(a);
--    if ((float64_is_infinity(a) && float64_is_zero(b)) ||
--        (float64_is_infinity(b) && float64_is_zero(a))) {
--        return float64_two;
--    }
--    return float64_muladd(a, b, float64_two, 0, fpst);
--}
--
--uint32_t HELPER(rsqrtsf_f16)(uint32_t a, uint32_t b, float_status *fpst)
--{
--    a = float16_squash_input_denormal(a, fpst);
--    b = float16_squash_input_denormal(b, fpst);
--
--    a = float16_chs(a);
--    if ((float16_is_infinity(a) && float16_is_zero(b)) ||
--        (float16_is_infinity(b) && float16_is_zero(a))) {
--        return float16_one_point_five;
--    }
--    return float16_muladd_scalbn(a, b, float16_three, -1, 0, fpst);
--}
--
--float32 HELPER(rsqrtsf_f32)(float32 a, float32 b, float_status *fpst)
--{
--    a = float32_squash_input_denormal(a, fpst);
--    b = float32_squash_input_denormal(b, fpst);
--
--    a = float32_chs(a);
--    if ((float32_is_infinity(a) && float32_is_zero(b)) ||
--        (float32_is_infinity(b) && float32_is_zero(a))) {
--        return float32_one_point_five;
--    }
--    return float32_muladd_scalbn(a, b, float32_three, -1, 0, fpst);
--}
--
--float64 HELPER(rsqrtsf_f64)(float64 a, float64 b, float_status *fpst)
--{
--    a = float64_squash_input_denormal(a, fpst);
--    b = float64_squash_input_denormal(b, fpst);
--
--    a = float64_chs(a);
--    if ((float64_is_infinity(a) && float64_is_zero(b)) ||
--        (float64_is_infinity(b) && float64_is_zero(a))) {
--        return float64_one_point_five;
--    }
--    return float64_muladd_scalbn(a, b, float64_three, -1, 0, fpst);
--}
-+DO_RSQRTSF(rsqrtsf_f16, uint32_t, float16, chs)
-+DO_RSQRTSF(rsqrtsf_f32, float32, float32, chs)
-+DO_RSQRTSF(rsqrtsf_f64, float64, float64, chs)
-+DO_RSQRTSF(rsqrtsf_ah_f16, uint32_t, float16, ah_chs)
-+DO_RSQRTSF(rsqrtsf_ah_f32, float32, float32, ah_chs)
-+DO_RSQRTSF(rsqrtsf_ah_f64, float64, float64, ah_chs)
- 
- /* Floating-point reciprocal exponent - see FPRecpX in ARM ARM */
- uint32_t HELPER(frecpx_f16)(uint32_t a, float_status *fpst)
+ DEF_HELPER_FLAGS_5(gvec_ah_fmax_h, TCG_CALL_NO_RWG,
+                    void, ptr, ptr, ptr, fpst, i32)
+ DEF_HELPER_FLAGS_5(gvec_ah_fmax_s, TCG_CALL_NO_RWG,
 diff --git a/target/arm/tcg/translate-a64.c b/target/arm/tcg/translate-a64.c
-index e22c2a148ab..977a1589e53 100644
+index 977a1589e53..3fe8e041093 100644
 --- a/target/arm/tcg/translate-a64.c
 +++ b/target/arm/tcg/translate-a64.c
-@@ -5250,11 +5250,12 @@ static bool do_fp3_scalar(DisasContext *s, arg_rrr_e *a, const FPScalar *f,
-                                        FPST_FPCR_F16_A64 : FPST_FPCR_A64);
+@@ -5778,10 +5778,11 @@ static bool do_fp3_vector_2fn(DisasContext *s, arg_qrrr_e *a, int data,
+     return do_fp3_vector(s, a, data, s->fpcr_ah ? fah : fnormal);
  }
  
--static bool do_fp3_scalar_ah(DisasContext *s, arg_rrr_e *a, const FPScalar *f,
--                             int mergereg)
-+static bool do_fp3_scalar_ah_2fn(DisasContext *s, arg_rrr_e *a,
-+                                 const FPScalar *fnormal, const FPScalar *fah,
-+                                 int mergereg)
+-static bool do_fp3_vector_ah(DisasContext *s, arg_qrrr_e *a, int data,
+-                             gen_helper_gvec_3_ptr * const f[3])
++static bool do_fp3_vector_ah_2fn(DisasContext *s, arg_qrrr_e *a, int data,
++                                 gen_helper_gvec_3_ptr * const fnormal[3],
++                                 gen_helper_gvec_3_ptr * const fah[3])
  {
--    return do_fp3_scalar_with_fpsttype(s, a, f, mergereg,
--                                       select_fpst(s, a->esz));
-+    return do_fp3_scalar_with_fpsttype(s, a, s->fpcr_ah ? fah : fnormal,
-+                                       mergereg, select_fpst(s, a->esz));
+-    return do_fp3_vector_with_fpsttype(s, a, data, f,
++    return do_fp3_vector_with_fpsttype(s, a, data, s->fpcr_ah ? fah : fnormal,
+                                        select_fpst(s, a->esz));
  }
  
- /* Some insns need to call different helpers when FPCR.AH == 1 */
-@@ -5475,14 +5476,26 @@ static const FPScalar f_scalar_frecps = {
-     gen_helper_recpsf_f32,
-     gen_helper_recpsf_f64,
+@@ -5924,14 +5925,24 @@ static gen_helper_gvec_3_ptr * const f_vector_frecps[3] = {
+     gen_helper_gvec_recps_s,
+     gen_helper_gvec_recps_d,
  };
--TRANS(FRECPS_s, do_fp3_scalar_ah, a, &f_scalar_frecps, a->rn)
-+static const FPScalar f_scalar_ah_frecps = {
-+    gen_helper_recpsf_ah_f16,
-+    gen_helper_recpsf_ah_f32,
-+    gen_helper_recpsf_ah_f64,
+-TRANS(FRECPS_v, do_fp3_vector_ah, a, 0, f_vector_frecps)
++static gen_helper_gvec_3_ptr * const f_vector_ah_frecps[3] = {
++    gen_helper_gvec_ah_recps_h,
++    gen_helper_gvec_ah_recps_s,
++    gen_helper_gvec_ah_recps_d,
 +};
-+TRANS(FRECPS_s, do_fp3_scalar_ah_2fn, a,
-+      &f_scalar_frecps, &f_scalar_ah_frecps, a->rn)
++TRANS(FRECPS_v, do_fp3_vector_ah_2fn, a, 0, f_vector_frecps, f_vector_ah_frecps)
  
- static const FPScalar f_scalar_frsqrts = {
-     gen_helper_rsqrtsf_f16,
-     gen_helper_rsqrtsf_f32,
-     gen_helper_rsqrtsf_f64,
+ static gen_helper_gvec_3_ptr * const f_vector_frsqrts[3] = {
+     gen_helper_gvec_rsqrts_h,
+     gen_helper_gvec_rsqrts_s,
+     gen_helper_gvec_rsqrts_d,
  };
--TRANS(FRSQRTS_s, do_fp3_scalar_ah, a, &f_scalar_frsqrts, a->rn)
-+static const FPScalar f_scalar_ah_frsqrts = {
-+    gen_helper_rsqrtsf_ah_f16,
-+    gen_helper_rsqrtsf_ah_f32,
-+    gen_helper_rsqrtsf_ah_f64,
+-TRANS(FRSQRTS_v, do_fp3_vector_ah, a, 0, f_vector_frsqrts)
++static gen_helper_gvec_3_ptr * const f_vector_ah_frsqrts[3] = {
++    gen_helper_gvec_ah_rsqrts_h,
++    gen_helper_gvec_ah_rsqrts_s,
++    gen_helper_gvec_ah_rsqrts_d,
 +};
-+TRANS(FRSQRTS_s, do_fp3_scalar_ah_2fn, a,
-+      &f_scalar_frsqrts, &f_scalar_ah_frsqrts, a->rn)
++TRANS(FRSQRTS_v, do_fp3_vector_ah_2fn, a, 0, f_vector_frsqrts, f_vector_ah_frsqrts)
  
- static bool do_fcmp0_s(DisasContext *s, arg_rr_e *a,
-                        const FPScalar *f, bool swap)
+ static gen_helper_gvec_3_ptr * const f_vector_faddp[3] = {
+     gen_helper_gvec_faddp_h,
+diff --git a/target/arm/tcg/translate-sve.c b/target/arm/tcg/translate-sve.c
+index 0696192148c..eef3623fd3a 100644
+--- a/target/arm/tcg/translate-sve.c
++++ b/target/arm/tcg/translate-sve.c
+@@ -3741,7 +3741,12 @@ static bool trans_FADDA(DisasContext *s, arg_rprr_esz *a)
+         NULL, gen_helper_gvec_##name##_h,                           \
+         gen_helper_gvec_##name##_s, gen_helper_gvec_##name##_d      \
+     };                                                              \
+-    TRANS_FEAT(NAME, aa64_sve, gen_gvec_fpst_ah_arg_zzz, name##_fns[a->esz], a, 0)
++    static gen_helper_gvec_3_ptr * const name##_ah_fns[4] = {       \
++        NULL, gen_helper_gvec_ah_##name##_h,                        \
++        gen_helper_gvec_ah_##name##_s, gen_helper_gvec_ah_##name##_d    \
++    };                                                              \
++    TRANS_FEAT(NAME, aa64_sve, gen_gvec_fpst_ah_arg_zzz,            \
++               s->fpcr_ah ? name##_ah_fns[a->esz] : name##_fns[a->esz], a, 0)
+ 
+ DO_FP3(FADD_zzz, fadd)
+ DO_FP3(FSUB_zzz, fsub)
+diff --git a/target/arm/tcg/vec_helper.c b/target/arm/tcg/vec_helper.c
+index aa42c50f9fe..bf6f6a97636 100644
+--- a/target/arm/tcg/vec_helper.c
++++ b/target/arm/tcg/vec_helper.c
+@@ -1498,6 +1498,14 @@ DO_3OP(gvec_rsqrts_h, helper_rsqrtsf_f16, float16)
+ DO_3OP(gvec_rsqrts_s, helper_rsqrtsf_f32, float32)
+ DO_3OP(gvec_rsqrts_d, helper_rsqrtsf_f64, float64)
+ 
++DO_3OP(gvec_ah_recps_h, helper_recpsf_ah_f16, float16)
++DO_3OP(gvec_ah_recps_s, helper_recpsf_ah_f32, float32)
++DO_3OP(gvec_ah_recps_d, helper_recpsf_ah_f64, float64)
++
++DO_3OP(gvec_ah_rsqrts_h, helper_rsqrtsf_ah_f16, float16)
++DO_3OP(gvec_ah_rsqrts_s, helper_rsqrtsf_ah_f32, float32)
++DO_3OP(gvec_ah_rsqrts_d, helper_rsqrtsf_ah_f64, float64)
++
+ DO_3OP(gvec_ah_fmax_h, helper_vfp_ah_maxh, float16)
+ DO_3OP(gvec_ah_fmax_s, helper_vfp_ah_maxs, float32)
+ DO_3OP(gvec_ah_fmax_d, helper_vfp_ah_maxd, float64)
 -- 
 2.34.1
 
