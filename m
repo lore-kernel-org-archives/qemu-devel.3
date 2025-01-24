@@ -4,86 +4,90 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E4AA8C02181
-	for <qemu-devel@archiver.kernel.org>; Fri, 24 Jan 2025 19:14:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7C6D5C0218C
+	for <qemu-devel@archiver.kernel.org>; Fri, 24 Jan 2025 19:26:29 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tbP7A-0006jx-Rk; Fri, 24 Jan 2025 14:13:12 -0500
+	id 1tbPJF-0006dP-89; Fri, 24 Jan 2025 14:25:41 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <tomitamoeko@gmail.com>)
- id 1tbP78-0006jX-Mc
- for qemu-devel@nongnu.org; Fri, 24 Jan 2025 14:13:10 -0500
-Received: from mail-pl1-x644.google.com ([2607:f8b0:4864:20::644])
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1tbPJA-0006cp-Py
+ for qemu-devel@nongnu.org; Fri, 24 Jan 2025 14:25:36 -0500
+Received: from mail-pl1-x62c.google.com ([2607:f8b0:4864:20::62c])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <tomitamoeko@gmail.com>)
- id 1tbP76-0007pn-Ty
- for qemu-devel@nongnu.org; Fri, 24 Jan 2025 14:13:10 -0500
-Received: by mail-pl1-x644.google.com with SMTP id
- d9443c01a7336-21675fd60feso56260865ad.2
- for <qemu-devel@nongnu.org>; Fri, 24 Jan 2025 11:13:08 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1tbPJ9-0000oi-1E
+ for qemu-devel@nongnu.org; Fri, 24 Jan 2025 14:25:36 -0500
+Received: by mail-pl1-x62c.google.com with SMTP id
+ d9443c01a7336-216401de828so45246975ad.3
+ for <qemu-devel@nongnu.org>; Fri, 24 Jan 2025 11:25:33 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1737745987; x=1738350787; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=/rreBwOJjOLgAVavOMfVYZVMv6rRdXnJTWZ6kk51L4c=;
- b=nOoiz80ZCELhqkDqqtSnIZO1TOMrzvIqalPhFD2g6vB/ArwQpULjvxH6n0zUiBxJSL
- WbgpChrNrV5EscMzEqBrc6hs6vs9p+vtQpyTgIt0BIItj3adWEQtbDsfu1VFG3HBHPzc
- fPafVXXoxbF9ztGkgh9ypRKtjUjN8s0VwyhpMGwlPMlN8sPkFTkeApVnBr8zO8UGy8RS
- xKRIc473F3+rQGNAVrhV7t6DKx5ZUwvRoYrTVhHx8FAHQ46q2bVf1FRQHJRyvP8YBtN+
- FZhwl4RIBI6xLnHDh8n96sQbPe/FywKMda/HFm0Lr3N4R4ufSIwwGg16o5GpUpMI5oxV
- af6w==
+ d=linaro.org; s=google; t=1737746732; x=1738351532; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=Efp/hPVSZRE0vEoa10cngIHoSiF6tGCC3iy86fCUHm8=;
+ b=DR6lBBcQy5y5twHFF7/qsgkuPzbj3iFGo4pwI9wwV+E+gPLCpfdR2OeQvCq67LVpSM
+ 2uYIPogs+X3OKhAat0X++8Qe7MTXzFNaSXYn3SrjBuesXg4fFIkGkW/FIk0/wP2TIdx7
+ M8/+HBizviTh0LMvf3AVNTDt+zVMKL475lih6KJSYW1wCPCoLWWDHpyClxhHsgKBdiwC
+ hDYDLb3VlILpcU2xTG5rV26eOML/j+kAPo3spIvrgTQyl+q19IArpfxD0czoqjY3cTsK
+ eImiENg4Zjn7aCAR8XWTQMLqqodyDx9IRlZyuCN8ddhGH3MEHIIs6wxNBbIe+9b/ubBg
+ gLgw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1737745987; x=1738350787;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=/rreBwOJjOLgAVavOMfVYZVMv6rRdXnJTWZ6kk51L4c=;
- b=J/WeAZMzCPe6VgrHfQOjxjZZ2i3d9Cno3rIGFkS9XfsoOMKT4JfmQg7q6a9n8A5WJq
- wdJAmzlBHFdF513KhTXRKfBd+Fns4dOjfIJh1C+XN3DWOaQbOZPWiQYQsF9HAuhNlCDY
- YJJq8ofhMgIxCgwhISWIVmrnPWj2P4hCfITMo1Q6KFJ1/2AxvQmhPNizkJhUDY6/OGpP
- a48WxpMvJdzu/tAmqVbjkGPTBPCr8k33F+X2nja+ELE4h/9vlnpK64JfnBkYc6tYC84M
- OGg/q89BHp1RkCbS6NlKYzMGtjf84CbKsXT9SihSLiWH5uta9/SilNm1VeurjenPgW5x
- aryA==
-X-Gm-Message-State: AOJu0YwmwqpwHBTjJ9fEGlQz2EYz0ZVQVPFEIet/FokI+an9Xy8lC/L0
- q7Fn44A6aNHY95Ii5mT1HtGRpufysP2Zy36Zh1ZLZyvgjRqx3Kc=
-X-Gm-Gg: ASbGncvGtDF4AZ4Rra6kRZtE0sYkQUnRPuIgcA/R+WDNzTCZWLeraQ/Xy6LD2XBSvEG
- NLU0qM+0BehO1A5fVh9cDLUFFkDxsNqLQuFcVboKU55KBklon0Sadrz64bfvlho4eYzwYHWDfh+
- Zs3F+1jJNMtOa818/fhZMy2Lq8Q3XD+bSHYvRhwzQ8fI6AZP8/qgC8swu3ZhuMNpnsyyEnxuG89
- jTz7fblXIJNcl4hX0e++6d4bKraXokumC/j9x7h3s+uYuT78DWTZh4da+PFgUmJTLthzkwMPINe
- vp3c8zJIfhE2TFHlOQ==
-X-Google-Smtp-Source: AGHT+IG2QG0ppyJFwFtEoP7v+MeXi57vim1EtYYkMoNF3OfkKS1j8vwdbl1ECY+3odZy26AWJq7kfw==
-X-Received: by 2002:a05:6a20:8429:b0:1e1:e2d9:7f0a with SMTP id
- adf61e73a8af0-1eb2156f917mr59811442637.34.1737745987468; 
- Fri, 24 Jan 2025 11:13:07 -0800 (PST)
-Received: from localhost.localdomain ([58.37.175.151])
+ d=1e100.net; s=20230601; t=1737746732; x=1738351532;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=Efp/hPVSZRE0vEoa10cngIHoSiF6tGCC3iy86fCUHm8=;
+ b=K/U+IDjsZ4xdFqvtnXuGs6eiBlFFgq4EdQ8NyyHLuDRY3aLgdxSBcftf1v9ileO830
+ rVgcNXRDRb3O0Jbgwht8x6yqejfwG0tB6uPOsQG55cw1Ww6fiRh6akkRaU01MgCG+4Pd
+ yryY+wcIlAuyr5S2CLRX2zEVTraxgcTNligZjJPv55YGTamQuoJEnAScA/PiG1sXMvmm
+ Y1mRkI5KeyksPa/VwswBFeS9OGbnwVc8ehO+BsawpakZxsC4ci9wsuGovenleRvJbBFB
+ Nnq+2DKjpTQjHN8B5pJIMY0wT9B4j9CIV5jvL5p29bqvuNh870sL4yThhf5q0XwNFr81
+ CcaQ==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCUGx6EOPSX858eRKxxfuFL/I9Vi25lariWUVMerksOoRTRVdOaudf2q98a9FzGv4wa6FmqugBA74xGt@nongnu.org
+X-Gm-Message-State: AOJu0Yxr8RbTmEW76UdA+r4fD+/9wRzFFqrdY2CQiBHHw4EC4zsNTzeL
+ 7uyz41sEWbovAffaHkgwasZP7fj5PLcQtFKbj2aYdPMQ27BHBlN0+jcWo1Ta7/Q=
+X-Gm-Gg: ASbGncuJO6KvP2caGxiCos4bp5Fb6wF4Z7W4jLq4GK9u4FtgevQeSJZgqAMdlNM6Usi
+ 6Tf3LelLaLupzJRb9Yhef5U3ZoIJPdkKpUdlKfZ8ZKu1Jk2zLOTHJavrJDlB0JCv1u2pAstmGDb
+ 5hVEVDZrLprd8HYqPz376j9W/iM6qX7/2bFJLV9c3B0dGK6fHbeWFYdUZXG+X6JFU8A4eviQPkT
+ jUNfMyfFmI5xL8nWWSnWcLBtvILevGqyYeS0NvLd5Mx2hkcJhvPv3LQcswqtuX0CLdLo9AQxcQE
+ T3Ek/MbzwPLnsGOUyEBEia9a
+X-Google-Smtp-Source: AGHT+IHhfy3WqRkecYQHj7p5NldQGRlOnTtbYjD1R5ZbFJSIDt8K2ohO4QyumQAuDceW6pX3jPENeQ==
+X-Received: by 2002:a17:902:ec81:b0:216:5448:22a4 with SMTP id
+ d9443c01a7336-21c351bcc64mr512873895ad.10.1737746732119; 
+ Fri, 24 Jan 2025 11:25:32 -0800 (PST)
+Received: from [192.168.163.227] ([75.147.178.105])
  by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-72f8a69eb75sm2318406b3a.12.2025.01.24.11.13.05
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 24 Jan 2025 11:13:07 -0800 (PST)
-From: Tomita Moeko <tomitamoeko@gmail.com>
-To: Alex Williamson <alex.williamson@redhat.com>,
- =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>
-Cc: qemu-devel@nongnu.org,
-	Tomita Moeko <tomitamoeko@gmail.com>
-Subject: [PATCH v2 4/5] vfio/igd: do not include GTT stolen size in
- etc/igd-bdsm-size
-Date: Sat, 25 Jan 2025 03:12:44 +0800
-Message-ID: <20250124191245.12464-5-tomitamoeko@gmail.com>
-X-Mailer: git-send-email 2.45.2
-In-Reply-To: <20250124191245.12464-1-tomitamoeko@gmail.com>
-References: <20250124191245.12464-1-tomitamoeko@gmail.com>
+ d9443c01a7336-21da414e022sm19708205ad.198.2025.01.24.11.25.31
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Fri, 24 Jan 2025 11:25:31 -0800 (PST)
+Message-ID: <b985ddf4-cc3e-4b89-8e69-7b71dad73d28@linaro.org>
+Date: Fri, 24 Jan 2025 11:25:29 -0800
 MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 01/10] hw/core/generic-loader: Do not open-code
+ cpu_set_pc()
+To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ qemu-devel@nongnu.org
+Cc: qemu-arm@nongnu.org, =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
+References: <20250122093028.52416-1-philmd@linaro.org>
+ <20250122093028.52416-2-philmd@linaro.org>
+Content-Language: en-US
+From: Richard Henderson <richard.henderson@linaro.org>
+In-Reply-To: <20250122093028.52416-2-philmd@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::644;
- envelope-from=tomitamoeko@gmail.com; helo=mail-pl1-x644.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::62c;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x62c.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -101,92 +105,33 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Though GTT Stolen Memory (GSM) is right below Data Stolen Memory (DSM)
-in host address space, direct access to GSM is prohibited, and it is
-not mapped to guest address space. Both host and guest accesses GSM
-indirectly through the second half of MMIO BAR0 (GTTMMADR).
+On 1/22/25 01:30, Philippe Mathieu-Daudé wrote:
+> Directly call cpu_set_pc() instead of open-coding it.
+> 
+> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+> ---
+>   hw/core/generic-loader.c | 5 +----
+>   1 file changed, 1 insertion(+), 4 deletions(-)
+> 
+> diff --git a/hw/core/generic-loader.c b/hw/core/generic-loader.c
+> index fb354693aff..1b9ab600c9c 100644
+> --- a/hw/core/generic-loader.c
+> +++ b/hw/core/generic-loader.c
+> @@ -48,11 +48,8 @@ static void generic_loader_reset(void *opaque)
+>       GenericLoaderState *s = GENERIC_LOADER(opaque);
+>   
+>       if (s->set_pc) {
+> -        CPUClass *cc = CPU_GET_CLASS(s->cpu);
+>           cpu_reset(s->cpu);
+> -        if (cc) {
+> -            cc->set_pc(s->cpu, s->addr);
+> -        }
+> +        cpu_set_pc(s->cpu, s->addr);
+>       }
+>   
+>       if (s->data_len) {
 
-Guest firmware only need to reserve a memory region for DSM and program
-the BDSM register with the base address of that region, that's actually
-what both SeaBIOS[1] and OVMF does now.
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 
-[1] https://gitlab.com/qemu-project/seabios/-/blob/1.12-stable/src/fw/pciinit.c#L319-332
-
-Signed-off-by: Tomita Moeko <tomitamoeko@gmail.com>
----
- hw/vfio/igd.c | 28 +++-------------------------
- 1 file changed, 3 insertions(+), 25 deletions(-)
-
-diff --git a/hw/vfio/igd.c b/hw/vfio/igd.c
-index 376a26fbae..6e06dd774a 100644
---- a/hw/vfio/igd.c
-+++ b/hw/vfio/igd.c
-@@ -112,28 +112,8 @@ static int igd_gen(VFIOPCIDevice *vdev)
- 
- #define IGD_GMCH_GEN6_GMS_SHIFT     3       /* SNB_GMCH in i915 */
- #define IGD_GMCH_GEN6_GMS_MASK      0x1f
--#define IGD_GMCH_GEN6_GGMS_SHIFT    8
--#define IGD_GMCH_GEN6_GGMS_MASK     0x3
- #define IGD_GMCH_GEN8_GMS_SHIFT     8       /* BDW_GMCH in i915 */
- #define IGD_GMCH_GEN8_GMS_MASK      0xff
--#define IGD_GMCH_GEN8_GGMS_SHIFT    6
--#define IGD_GMCH_GEN8_GGMS_MASK     0x3
--
--static uint64_t igd_gtt_memory_size(int gen, uint16_t gmch)
--{
--    uint64_t ggms;
--
--    if (gen < 8) {
--        ggms = (gmch >> IGD_GMCH_GEN6_GGMS_SHIFT) & IGD_GMCH_GEN6_GGMS_MASK;
--    } else {
--        ggms = (gmch >> IGD_GMCH_GEN8_GGMS_SHIFT) & IGD_GMCH_GEN8_GGMS_MASK;
--        if (ggms != 0) {
--            ggms = 1ULL << ggms;
--        }
--    }
--
--    return ggms * MiB;
--}
- 
- static uint64_t igd_stolen_memory_size(int gen, uint32_t gmch)
- {
-@@ -368,7 +348,7 @@ bool vfio_probe_igd_config_quirk(VFIOPCIDevice *vdev,
-     g_autofree struct vfio_region_info *lpc = NULL;
-     PCIDevice *lpc_bridge;
-     int ret, gen;
--    uint64_t ggms_size, gms_size;
-+    uint64_t gms_size;
-     uint64_t *bdsm_size;
-     uint32_t gmch;
-     Error *err = NULL;
-@@ -528,7 +508,6 @@ bool vfio_probe_igd_config_quirk(VFIOPCIDevice *vdev,
-         }
-     }
- 
--    ggms_size = igd_gtt_memory_size(gen, gmch);
-     gms_size = igd_stolen_memory_size(gen, gmch);
- 
-     /*
-@@ -540,7 +519,7 @@ bool vfio_probe_igd_config_quirk(VFIOPCIDevice *vdev,
-      * config offset 0x5C.
-      */
-     bdsm_size = g_malloc(sizeof(*bdsm_size));
--    *bdsm_size = cpu_to_le64(ggms_size + gms_size);
-+    *bdsm_size = cpu_to_le64(gms_size);
-     fw_cfg_add_file(fw_cfg_find(), "etc/igd-bdsm-size",
-                     bdsm_size, sizeof(*bdsm_size));
- 
-@@ -560,8 +539,7 @@ bool vfio_probe_igd_config_quirk(VFIOPCIDevice *vdev,
-         pci_set_quad(vdev->emulated_config_bits + IGD_BDSM_GEN11, ~0);
-     }
- 
--    trace_vfio_pci_igd_bdsm_enabled(vdev->vbasedev.name,
--                                    (ggms_size + gms_size) / MiB);
-+    trace_vfio_pci_igd_bdsm_enabled(vdev->vbasedev.name, (gms_size / MiB));
- 
-     return true;
- }
--- 
-2.45.2
-
+r~
 
