@@ -4,57 +4,77 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 682ECC02181
-	for <qemu-devel@archiver.kernel.org>; Fri, 24 Jan 2025 12:36:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id EED3DC02181
+	for <qemu-devel@archiver.kernel.org>; Fri, 24 Jan 2025 12:37:14 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tbIul-0005B2-Tq; Fri, 24 Jan 2025 07:35:59 -0500
+	id 1tbIvs-0005pW-1d; Fri, 24 Jan 2025 07:37:08 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
- id 1tbIuk-0005At-PX
- for qemu-devel@nongnu.org; Fri, 24 Jan 2025 07:35:58 -0500
-Received: from zero.eik.bme.hu ([152.66.115.2])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
- id 1tbIuj-0003OL-7x
- for qemu-devel@nongnu.org; Fri, 24 Jan 2025 07:35:58 -0500
-Received: from zero.eik.bme.hu (localhost [127.0.0.1])
- by zero.eik.bme.hu (Postfix) with ESMTP id 07EC74E6030;
- Fri, 24 Jan 2025 13:35:56 +0100 (CET)
-X-Virus-Scanned: amavisd-new at eik.bme.hu
-Received: from zero.eik.bme.hu ([127.0.0.1])
- by zero.eik.bme.hu (zero.eik.bme.hu [127.0.0.1]) (amavisd-new, port 10028)
- with ESMTP id ITOOEStN-kSh; Fri, 24 Jan 2025 13:35:54 +0100 (CET)
-Received: by zero.eik.bme.hu (Postfix, from userid 432)
- id 143474E601A; Fri, 24 Jan 2025 13:35:54 +0100 (CET)
-Received: from localhost (localhost [127.0.0.1])
- by zero.eik.bme.hu (Postfix) with ESMTP id 1221D74577C;
- Fri, 24 Jan 2025 13:35:54 +0100 (CET)
-Date: Fri, 24 Jan 2025 13:35:54 +0100 (CET)
-From: BALATON Zoltan <balaton@eik.bme.hu>
-To: Akihiko Odaki <akihiko.odaki@daynix.com>
-cc: Gerd Hoffmann <kraxel@redhat.com>, 
- =?ISO-8859-15?Q?Philippe_Mathieu-Daud=E9?= <philmd@linaro.org>, 
- Christian Schoenebeck <qemu_oss@crudebyte.com>, qemu-devel@nongnu.org, 
- devel@daynix.com
-Subject: Re: [PATCH v6 3/5] coreaudio: Commit the result of init in the end
-In-Reply-To: <278cfade-f073-3428-b340-ae888b92da65@eik.bme.hu>
-Message-ID: <e5837d31-bd1e-1450-bdf2-0a1ff1773ff0@eik.bme.hu>
-References: <20250124-coreaudio-v6-0-11fbcb6c47cf@daynix.com>
- <20250124-coreaudio-v6-3-11fbcb6c47cf@daynix.com>
- <278cfade-f073-3428-b340-ae888b92da65@eik.bme.hu>
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1tbIvo-0005ov-2G
+ for qemu-devel@nongnu.org; Fri, 24 Jan 2025 07:37:06 -0500
+Received: from mail-yb1-xb2f.google.com ([2607:f8b0:4864:20::b2f])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1tbIvf-0003Vh-8p
+ for qemu-devel@nongnu.org; Fri, 24 Jan 2025 07:36:57 -0500
+Received: by mail-yb1-xb2f.google.com with SMTP id
+ 3f1490d57ef6-e53537d8feeso3083716276.0
+ for <qemu-devel@nongnu.org>; Fri, 24 Jan 2025 04:36:51 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1737722211; x=1738327011; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=i9IyTuvfWV6nrzn0/6hPPMStLrQF7NVwMI61LXskvJo=;
+ b=KB+n6o+wqWzVMgK59Le2xZBdAJXtkEp/EtFDhFx9V0P4PObhanqdhtpuPBXiC3lYbG
+ MVG2TwFYju7qEzy6DTzrkbb6goIafjHDGJfS5ZbzDlYaxpjLMm1AU0fwC/f3ng3jblKc
+ L+Ug9ExmecdoLERebQhOYbUqPZgmhPIPZg73lHeN51yVyL6F0utgSuWTR9G6SxS71/G8
+ gaE16IBzGajpDBRbO2AzwmbrGaFgBqesnjUHSZ4x2sOK54VOjGsnWLbzbq/dswGHYkjE
+ O/EipehgWJdCnR+h7kw3O2nO/EtCMubMq3GWXKo7okaRPvGvbyQNVToJ6D/QbCLRafvc
+ f0Jw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1737722211; x=1738327011;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=i9IyTuvfWV6nrzn0/6hPPMStLrQF7NVwMI61LXskvJo=;
+ b=UkPcnZiJhmXRjnAyPvWbbJ4u6GW1FwDdQzLhpL5kn6ug+iZuUhxMiK5IJ/ntEAkHeV
+ /fxlb9D9jJwPbXVICi6M51/8ieFzoGBOK3jTrsJd7Lc+jhJQtVGP55mYUlX9dRlhMYzs
+ /1nlCCXwWLTYusfjC8lePbpVvbWRok/Awrwfm4PHEVbdZyE5qIV5nISihgHPuGcddyoe
+ e99Q9rfi6t/X8sI1xE74F5MI+WyuJCxV1vI1J9zdIDzpVDwi16ocH68ob73fLbBDfVpp
+ TAZiW0UujnsG0AGkVVOb9GuP/8pniRBfB2VkE2sXYotnfprQduTOcHs9jYvk5txc9rv7
+ jGzg==
+X-Gm-Message-State: AOJu0Yx95Jcxk0dBDORFYzhmBxAvPMyEt9nzYnpzLvOVJQNTppZW1rUA
+ MJipSV6V8X3x6qIQKxhHJ0Wld/LixBfTo1t/oniontt7zRM6igDoz3LFF3hSstMgwYHEog0lCLm
+ vzrx7N6uERvmrGAyP5v/VpQQhhLUsmUy71J4MMw==
+X-Gm-Gg: ASbGncvpGqwEHf1csag32HZka37ch6NHErq6gdnFMxi//uJTFC/X9IrdQqnexA05TaW
+ BjWPEGTqpkHkUYiKeS5dYeVli2+ej6PrdKkvVQz0QfvkSEVmB8NHSch4Q7uz88go=
+X-Google-Smtp-Source: AGHT+IHgqTJCnVtWXRMfG6DbnLahWECSZwmxQ0G7p7sKK+jPgwgCv1zqPh9mXpwXFKY8Xiu0PKAhIVgs4Vq+Ps+P+Vg=
+X-Received: by 2002:a05:6902:a01:b0:e48:7efe:57b0 with SMTP id
+ 3f1490d57ef6-e57b13516f4mr22191149276.47.1737722210665; Fri, 24 Jan 2025
+ 04:36:50 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII; format=flowed
-Received-SPF: pass client-ip=152.66.115.2; envelope-from=balaton@eik.bme.hu;
- helo=zero.eik.bme.hu
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+References: <20250124122707.54264-1-gerben@altlinux.org>
+In-Reply-To: <20250124122707.54264-1-gerben@altlinux.org>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Fri, 24 Jan 2025 12:36:39 +0000
+X-Gm-Features: AWEUYZkFaA_YZEG2mBqIFULNQe8TjEpJOi7MZKhiQVdcQMgtJKfMQEYLWYX3cTc
+Message-ID: <CAFEAcA_M5e1YWwygwM=w=EN4qP8TneiWHhDYz19SOrFCxqsP2A@mail.gmail.com>
+Subject: Re: [PATCH] target/mips: fix possible int overflow
+To: gerben@altlinux.org
+Cc: qemu-devel@nongnu.org, sdl.qemu@linuxtesting.org, philmd@linaro.org, 
+ richard.henderson@linaro.org, Dmitriy Fedin <d.fedin@fobos-nt.ru>
+Content-Type: text/plain; charset="UTF-8"
+Received-SPF: pass client-ip=2607:f8b0:4864:20::b2f;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yb1-xb2f.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -71,55 +91,20 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, 24 Jan 2025, BALATON Zoltan wrote:
-> On Fri, 24 Jan 2025, Akihiko Odaki wrote:
->> init_out_device may only commit some part of the result and leave the
->> state inconsistent when it encounters a fatal error or the device gets
->> unplugged during the operation, which is expressed by
->> kAudioHardwareBadObjectError or kAudioHardwareBadDeviceError. Commit the
->> result in the end of the function so that it commits the result iff it
->> sees no fatal error and the device remains plugged.
->> 
->> With this change, handle_voice_change can rely on core->outputDeviceID
->> to know whether the output device is initialized after calling
->> init_out_device.
->> 
->> Signed-off-by: Akihiko Odaki <akihiko.odaki@daynix.com>
->> ---
->> audio/coreaudio.m | 46 +++++++++++++++++++++++++---------------------
->> 1 file changed, 25 insertions(+), 21 deletions(-)
->> 
->> diff --git a/audio/coreaudio.m b/audio/coreaudio.m
->> index 
->> c3ede586bbee1711d6a798175995b8db7dc89398..aff2b37b12aca723849645297c04f30ed365b8f8 
->> 100644
->> --- a/audio/coreaudio.m
->> +++ b/audio/coreaudio.m
->> @@ -357,7 +357,10 @@ static OSStatus out_device_ioproc(
->> static OSStatus init_out_device(CoreaudioVoiceOut *core)
->> {
->>     OSStatus status;
->> +    AudioDeviceID device_id;
->>     AudioValueRange framerange;
->> +    UInt32 device_frame_size;
->> +    AudioDeviceIOProcID ioprocid;
->>
->>     AudioStreamBasicDescription stream_basic_description = {
->>         .mBitsPerChannel = core->hw.info.bits,
->> @@ -370,20 +373,19 @@ static OSStatus init_out_device(CoreaudioVoiceOut 
->> *core)
->>         .mSampleRate = core->hw.info.freq
->>     };
->> 
->> -    status = coreaudio_get_voice_out(&core->device_id);
->> +    status = coreaudio_get_voice_out(&device_id);
->>     if (status != kAudioHardwareNoError) {
->>         coreaudio_playback_logerr (status,
+On Fri, 24 Jan 2025 at 12:27, <gerben@altlinux.org> wrote:
 >
-> Still spaces in function calls here and in dolog() calls below.
+> From: Denis Rastyogin <gerben@altlinux.org>
+>
+> Fix possible overflow in 1 << (DF_BITS(df) - 2) when DF_BITS(df)
+> is 64 by using a 64-bit integer for the shift operation.
+>
+> Found by Linux Verification Center (linuxtesting.org) with SVACE.
+>
+> Reported-by: Dmitriy Fedin <d.fedin@fobos-nt.ru>
+> Signed-off-by: Denis Rastyogin <gerben@altlinux.org>
 
-Already fixed in next version, sorry for the noise.
+Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
 
-Regards,
-BALATON Zoltan
+thanks
+-- PMM
 
