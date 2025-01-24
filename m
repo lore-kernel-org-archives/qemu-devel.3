@@ -4,90 +4,108 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 051BBC02181
-	for <qemu-devel@archiver.kernel.org>; Fri, 24 Jan 2025 16:28:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8DDFEC0218B
+	for <qemu-devel@archiver.kernel.org>; Fri, 24 Jan 2025 16:28:36 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tbMXV-0002vh-3o; Fri, 24 Jan 2025 11:28:13 -0500
+	id 1tbMXo-00032H-Jx; Fri, 24 Jan 2025 11:28:32 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tbMXS-0002vS-9E
- for qemu-devel@nongnu.org; Fri, 24 Jan 2025 11:28:11 -0500
-Received: from mail-wm1-x333.google.com ([2a00:1450:4864:20::333])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tbMXN-0005HF-Go
- for qemu-devel@nongnu.org; Fri, 24 Jan 2025 11:28:10 -0500
-Received: by mail-wm1-x333.google.com with SMTP id
- 5b1f17b1804b1-4361815b96cso15911545e9.1
- for <qemu-devel@nongnu.org>; Fri, 24 Jan 2025 08:28:05 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1737736084; x=1738340884; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=eQuYG7upoxbpOPXjG+3hYlhADqAHOSeKyfZmWngrDto=;
- b=gBXVsLjtsn6mKYE8zqK24jYI3dZbG2PB3vuhrxstsc0y1qtcHv0Ff3dsWXdscnidZz
- 2Npz6iMi/e+3FX8JO7F7fUVV39LOo0rmnLILiBolwQZm+eqp3Sotwxs73vAP9QFXSIub
- IaNXs2RvlJnQBZhejwMoDK6zx9BnCMWndpHJ5cdwklgEC/OQAsQin+vXEdH4sfGlFpSS
- +/mgaJjKbt3kjYBMUGFtMJTE8gmpEmjD5KNQcCc1PE9G++2z7hMOVVpYCoooy44XmVoP
- dVhwxT9DeVohR1XbGQn/PDHr1Tviwi7Xg0lbpbLk1aGBMivZflmpjcIxXURVijQeGe5D
- bICw==
+ (Exim 4.90_1) (envelope-from <dhildenb@redhat.com>)
+ id 1tbMXi-00031H-IP
+ for qemu-devel@nongnu.org; Fri, 24 Jan 2025 11:28:27 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <dhildenb@redhat.com>)
+ id 1tbMXf-0005Ib-4x
+ for qemu-devel@nongnu.org; Fri, 24 Jan 2025 11:28:25 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1737736101;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=Exu5epeTQjUXGqc6EvI9Ro49B7EhhPUJNuPMkX7VzoI=;
+ b=gp4q76eYK7EchlRqqB3UG+TJyfWaTbnsLgMXbTXAJHUdl0mxCjZfmcysmaqhRwn+Q3Vu+3
+ +KIGe9UqoeVju57d+XGK2+TXohrQsgApoJKOJzZ9XSW75ydFvACHnF/ZJtPh25iEFYD1mf
+ Sr8JCSX5zVnHQ5s69ldDeTShvQ4dNMI=
+Received: from mail-ed1-f71.google.com (mail-ed1-f71.google.com
+ [209.85.208.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-160-Nyg78LUIP3CSKpp-2B1yig-1; Fri, 24 Jan 2025 11:28:18 -0500
+X-MC-Unique: Nyg78LUIP3CSKpp-2B1yig-1
+X-Mimecast-MFC-AGG-ID: Nyg78LUIP3CSKpp-2B1yig
+Received: by mail-ed1-f71.google.com with SMTP id
+ 4fb4d7f45d1cf-5dbaaed8aeeso2664244a12.1
+ for <qemu-devel@nongnu.org>; Fri, 24 Jan 2025 08:28:18 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1737736084; x=1738340884;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=eQuYG7upoxbpOPXjG+3hYlhADqAHOSeKyfZmWngrDto=;
- b=i0K7C22XTfvckGP+cmqK07oxzU/bkyZejs3PpmNS+lS+YdesFqjwQ2Eyww+27wIJqG
- l4e73BOa2UsjJoqVc0LsUI5sN/JdEOdM80HBVrt+30GNj0jZUv2tweuzgEMlC2h1myPN
- zVlPR2lCuR1Ry0jtJRFAnlw0PKpUvSP4dc4X8UsdilR8GPwixl2GoEV1ZCZkc44ozXdP
- azkQ3YwQo6lfdk3ke3PSalasEYDeB/J5zMZc0lqGOZuYxibU8DKnbk+mJXO3vOY0HER2
- kG4HmwsOz5LgMfc+YgHWff/dgd6pAx0GMLCF8Uq39x1G4uEmECoY6HmiqJKBcCKcb4/u
- 2ekw==
-X-Forwarded-Encrypted: i=1;
- AJvYcCWK8lvZKwadDKpVaUkbbaEGBWNUXBJqyyuuf/Esh9muEX1SxeHLFGq0kxBmIbGzUeyF3OUVsL1P5LJU@nongnu.org
-X-Gm-Message-State: AOJu0Ywq7dM868kFfW0mX1WY4wyKoE/qWbzi6D+WVrR8k7jHxxFe8S/S
- 6X8Jg4b65Ch8lHIa5HIYZMPt6tlcHtI1Z/7S6Ez5jSg+MyqTEBSp1gnHQZ1VVtE=
-X-Gm-Gg: ASbGnctZHOH5iNpV5v3RtqUoYTSxDQ+XsLPjH3vzTEg6Vh5g/U6Endyz/KbOu89NLBw
- EBdondGkEq9GHLHPDiBtB0vuRPJEfp3C9tLWzfMOg4oGHXO14mdaomYD1RWafzbpHL5DlaRo2F0
- jhPmYYxY3AYkMq+obs1VGoh2x0d7xJs9j6l5UHuEPcBeMd192/psUCJTTAEOC//zoHjkYRYVVSZ
- CtvZxHbQS71q/8R/pOeWCDPvQizq4BPL1yEaVtQIqNIuLCgGELmqZcsLn1eoKKe7fjC+lOP0mmp
- sHsKKzYX1BBL0ntza+/Z8PqnEaDE+zRXLXL4qAf5G0tOM79A
-X-Google-Smtp-Source: AGHT+IG3fmCKw+a3pBlf1FnYOYJRCJUC5s8+rT9MvnA/uEYAXeBwBEQNZ4XYHFtjFYFtk9LZLsHE0A==
-X-Received: by 2002:a05:600c:450e:b0:436:1ac2:1ad2 with SMTP id
- 5b1f17b1804b1-43891427485mr255507925e9.19.1737736083712; 
- Fri, 24 Jan 2025 08:28:03 -0800 (PST)
-Received: from [192.168.69.181] (88-187-86-199.subs.proxad.net.
- [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-438b1d904cbsm54934015e9.1.2025.01.24.08.28.02
+ d=1e100.net; s=20230601; t=1737736094; x=1738340894;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=Exu5epeTQjUXGqc6EvI9Ro49B7EhhPUJNuPMkX7VzoI=;
+ b=a4PqyscTw6+eo8JBmr/17rKHB4KY6+uhRvE89RDApD70sbcULqOdaqi0LOM2lcxFiY
+ uDkoLsLcZvWE3ehb2prbt8VigisSoN2/J7F85yRgY/yWHfGSlRkueqe+ypVEBJgIgXfV
+ FHpERYxNA/6ITsANcZt3Vf7RM9mBQ1xUBcYG3RsVDc8eaEe3g6Ge6O7gqyGSs1kVoE7L
+ SuYHCq5STKw7e4hGWtfzKG7iaLeIWTIVtjI7uSaGV+umeCw5SzxB4vKePSCDf/Cm8y3C
+ 4N0DmOrroViVcG8q3eXvkaMmjt6URE/yjADVqaSU1GWqDR1zGQ3BKz8pp8009o8PImmQ
+ TgHg==
+X-Gm-Message-State: AOJu0Yx/TH1LDzKLbi4lIAGdq8iD2+j9k6WZBv2P0GgpgyIylEa4JK0I
+ PaBysBXlDybQA90l0/zjP2fKuANQetnZxmVkr45ZkiW8IL/DZ12KUx2G64rNUIjC8zH3gPzRNK0
+ vCctrtOOFCmIyJ62icdjBSPUIQX1JbPGoCYQHqZ8ixMMRr4KRf23Ci/+6sC6+oT2dO2hkzgAX25
+ QUj8SMt4CDDoND25Cd9HoSTrhqkw5YTeXz1Hk2xg==
+X-Gm-Gg: ASbGncsyGYxPTvocMrHZmtThk9vmYdewSG5caoSkbR/w4/hKPcE8R5XzqiNXRWb6pnQ
+ cmLkvGfpU3iSh48xoCF3IltiWMSUW0NU+oH3pIYfosX9pTxHEKZr4+iZrL+EQZ7AJvvN26KbZj4
+ HolOcyrNwsW+CL2AKAzrXRflJI4ISWiPp3FMMnln9GL31r+f0OPHJoPvWZJC08oiVbw+G5cFko0
+ M/LDRjxS3hbZQjf3hu4WSW+QUvK30OaVpSdvVkJxAVS+G0NwVhK7fuzyJZKKfNnN/0yJA47QeTA
+ taTokrbYDDik/t95thN7AmYQKaMUzVomuf0GeIgg+5ZhXdsxoqom57A=
+X-Received: by 2002:a05:600c:a03:b0:434:f7e3:bfbd with SMTP id
+ 5b1f17b1804b1-4389142e8b5mr278514765e9.23.1737733555850; 
+ Fri, 24 Jan 2025 07:45:55 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IHHYcoJ39rm7gawbJbNWFUQOBEGFPj86Ylt2BpokstkF84V5QmwjWichPRMD70s0emuvSL/sA==
+X-Received: by 2002:a05:600c:a03:b0:434:f7e3:bfbd with SMTP id
+ 5b1f17b1804b1-4389142e8b5mr278514425e9.23.1737733555431; 
+ Fri, 24 Jan 2025 07:45:55 -0800 (PST)
+Received: from localhost
+ (p200300cbc719e000ca2c77c5de7dce89.dip0.t-ipconnect.de.
+ [2003:cb:c719:e000:ca2c:77c5:de7d:ce89])
+ by smtp.gmail.com with UTF8SMTPSA id
+ 5b1f17b1804b1-438bd4fa57csm32121725e9.4.2025.01.24.07.45.53
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 24 Jan 2025 08:28:03 -0800 (PST)
-Message-ID: <d5749a49-a12f-4485-b2f1-189b3d9cc89e@linaro.org>
-Date: Fri, 24 Jan 2025 17:28:02 +0100
+ Fri, 24 Jan 2025 07:45:54 -0800 (PST)
+From: David Hildenbrand <david@redhat.com>
+To: qemu-devel@nongnu.org
+Cc: David Hildenbrand <david@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
+ Peter Xu <peterx@redhat.com>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Peter Maydell <peter.maydell@linaro.org>,
+ =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Alex Williamson <alex.williamson@redhat.com>,
+ Eduardo Habkost <eduardo@habkost.net>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ Elena Ufimtseva <elena.ufimtseva@oracle.com>,
+ Jagannathan Raman <jag.raman@oracle.com>,
+ "Dr. David Alan Gilbert" <dave@treblig.org>, Stefan Zabka <git@zabka.it>
+Subject: [PATCH v2 7/7] physmem: teach cpu_memory_rw_debug() to write to more
+ memory regions
+Date: Fri, 24 Jan 2025 16:45:32 +0100
+Message-ID: <20250124154533.3534250-8-david@redhat.com>
+X-Mailer: git-send-email 2.47.1
+In-Reply-To: <20250124154533.3534250-1-david@redhat.com>
+References: <20250124154533.3534250-1-david@redhat.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 2/2] hw/cxl: Allow tracing component I/O accesses
-To: Jonathan Cameron <Jonathan.Cameron@huawei.com>,
- Jonathan Cameron via <qemu-devel@nongnu.org>
-Cc: Fan Ni <fan.ni@samsung.com>, Paolo Bonzini <pbonzini@redhat.com>,
- mst@redhat.com
-References: <20250122065624.34203-1-philmd@linaro.org>
- <20250122065624.34203-3-philmd@linaro.org>
- <20250123095151.000041a0@huawei.com> <20250124162028.0000464b@huawei.com>
-Content-Language: en-US
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20250124162028.0000464b@huawei.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::333;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x333.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=dhildenb@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -50
+X-Spam_score: -5.1
+X-Spam_bar: -----
+X-Spam_report: (-5.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-2.996,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.001,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -104,41 +122,125 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 24/1/25 17:20, Jonathan Cameron wrote:
-> On Thu, 23 Jan 2025 09:51:51 +0000
-> Jonathan Cameron via <qemu-devel@nongnu.org> wrote:
-> 
->> On Wed, 22 Jan 2025 07:56:24 +0100
->> Philippe Mathieu-Daudé <philmd@linaro.org> wrote:
->>
->>> Map the component I/O region as UnimplementedDevice
->>> to be able to trace guest I/O accesses with '-d unimp'.
->>>
->>> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
->> I'm not that familiar with this infrastructure but seems
->> fine to me.
->>
->> I'd definitely be curious if anything is touching this space so
->> tracing may be helpful for that!
-> Hi Philippe
-> 
->>
->> Reviewed-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
-> Retract that.
-> 
-> Can't instantiate a CXL device with this patch because:
-> 
-> Device unimplemented-device can not be dynamically instantiated.
+Right now, we only allow for writing to memory regions that allow direct
+access using memcpy etc; all other writes are simply ignored. This
+implies that debugging guests will not work as expected when writing
+to MMIO device regions.
 
-Hmm the qtests using CXL devices pass, how do you trigger that?
+Let's extend cpu_memory_rw_debug() to write to more memory regions,
+including MMIO device regions. Reshuffle the condition in
+memory_access_is_direct() to make it easier to read and add a comment.
 
-> 
-> Reverting this patch on my tree fixes that.
-> 
->>> ---
->>>   include/hw/cxl/cxl_component.h |  3 ++-
->>>   hw/cxl/cxl-component-utils.c   | 14 +++++++++++---
->>>   hw/cxl/Kconfig                 |  1 +
->>>   3 files changed, 14 insertions(+), 4 deletions(-)
+While this change implies that debug access can now also write to MMIO
+devices, we now are also permit ELF image loads and similar users of
+cpu_memory_rw_debug() to write to MMIO devices; currently we ignore
+these writes.
+
+Peter assumes [1] that there's probably a class of guest images, which
+will start writing junk (likely zeroes) into device model registers; we
+previously would silently ignore any such bogus ELF sections. Likely
+these images are of questionable correctness and this can be ignored. If
+ever a problem, we could make these cases use address_space_write_rom()
+instead, which is left unchanged for now.
+
+This patch is based on previous work by Stefan Zabka.
+
+[1] https://lore.kernel.org/all/CAFEAcA_2CEJKFyjvbwmpt=on=GgMVamQ5hiiVt+zUr6AY3X=Xg@mail.gmail.com/
+
+Resolves: https://gitlab.com/qemu-project/qemu/-/issues/213
+Signed-off-by: David Hildenbrand <david@redhat.com>
+---
+ hw/core/cpu-system.c    | 13 +++++++++----
+ include/exec/memattrs.h |  5 ++++-
+ include/exec/memory.h   |  3 ++-
+ system/physmem.c        |  9 ++-------
+ 4 files changed, 17 insertions(+), 13 deletions(-)
+
+diff --git a/hw/core/cpu-system.c b/hw/core/cpu-system.c
+index 6aae28a349..6e307c8959 100644
+--- a/hw/core/cpu-system.c
++++ b/hw/core/cpu-system.c
+@@ -51,13 +51,18 @@ hwaddr cpu_get_phys_page_attrs_debug(CPUState *cpu, vaddr addr,
+                                      MemTxAttrs *attrs)
+ {
+     CPUClass *cc = CPU_GET_CLASS(cpu);
++    hwaddr paddr;
+ 
+     if (cc->sysemu_ops->get_phys_page_attrs_debug) {
+-        return cc->sysemu_ops->get_phys_page_attrs_debug(cpu, addr, attrs);
++        paddr = cc->sysemu_ops->get_phys_page_attrs_debug(cpu, addr, attrs);
++    } else {
++        /* Fallback for CPUs which don't implement the _attrs_ hook */
++        *attrs = MEMTXATTRS_UNSPECIFIED;
++        paddr = cc->sysemu_ops->get_phys_page_debug(cpu, addr);
+     }
+-    /* Fallback for CPUs which don't implement the _attrs_ hook */
+-    *attrs = MEMTXATTRS_UNSPECIFIED;
+-    return cc->sysemu_ops->get_phys_page_debug(cpu, addr);
++    /* Indicate that this is a debug access. */
++    attrs->debug = 1;
++    return paddr;
+ }
+ 
+ hwaddr cpu_get_phys_page_debug(CPUState *cpu, vaddr addr)
+diff --git a/include/exec/memattrs.h b/include/exec/memattrs.h
+index e27c18f3dc..14e0edaa58 100644
+--- a/include/exec/memattrs.h
++++ b/include/exec/memattrs.h
+@@ -26,7 +26,8 @@ typedef struct MemTxAttrs {
+     /* Bus masters which don't specify any attributes will get this
+      * (via the MEMTXATTRS_UNSPECIFIED constant), so that we can
+      * distinguish "all attributes deliberately clear" from
+-     * "didn't specify" if necessary.
++     * "didn't specify" if necessary. "debug" can be set alongside
++     * "unspecified".
+      */
+     unsigned int unspecified:1;
+     /*
+@@ -50,6 +51,8 @@ typedef struct MemTxAttrs {
+      * (see MEMTX_ACCESS_ERROR).
+      */
+     unsigned int memory:1;
++    /* Debug access that can even write to ROM. */
++    unsigned int debug:1;
+     /* Requester ID (for MSI for example) */
+     unsigned int requester_id:16;
+ 
+diff --git a/include/exec/memory.h b/include/exec/memory.h
+index b3287518f0..2b9447ec8f 100644
+--- a/include/exec/memory.h
++++ b/include/exec/memory.h
+@@ -3008,7 +3008,8 @@ static inline bool memory_access_is_direct(MemoryRegion *mr, bool is_write,
+     if (!memory_region_supports_direct_access(mr)) {
+         return false;
+     }
+-    if (is_write) {
++    /* Debug access can write to ROM. */
++    if (is_write && !attrs.debug) {
+         return !mr->readonly && !mr->rom_device;
+     }
+     return true;
+diff --git a/system/physmem.c b/system/physmem.c
+index 52b20b8ae5..f153f57666 100644
+--- a/system/physmem.c
++++ b/system/physmem.c
+@@ -3572,13 +3572,8 @@ int cpu_memory_rw_debug(CPUState *cpu, vaddr addr,
+         if (l > len)
+             l = len;
+         phys_addr += (addr & ~TARGET_PAGE_MASK);
+-        if (is_write) {
+-            res = address_space_write_rom(cpu->cpu_ases[asidx].as, phys_addr,
+-                                          attrs, buf, l);
+-        } else {
+-            res = address_space_read(cpu->cpu_ases[asidx].as, phys_addr,
+-                                     attrs, buf, l);
+-        }
++        res = address_space_rw(cpu->cpu_ases[asidx].as, phys_addr, attrs, buf,
++                               l, is_write);
+         if (res != MEMTX_OK) {
+             return -1;
+         }
+-- 
+2.47.1
 
 
