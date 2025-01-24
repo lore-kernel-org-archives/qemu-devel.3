@@ -4,47 +4,47 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7F7ECC02181
-	for <qemu-devel@archiver.kernel.org>; Fri, 24 Jan 2025 13:42:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 38638C02181
+	for <qemu-devel@archiver.kernel.org>; Fri, 24 Jan 2025 13:42:07 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tbJvS-0003MR-EV; Fri, 24 Jan 2025 08:40:46 -0500
+	id 1tbJta-0006Th-3J; Fri, 24 Jan 2025 08:38:50 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <xiaoyao.li@intel.com>)
- id 1tbJub-0001Fz-H5
- for qemu-devel@nongnu.org; Fri, 24 Jan 2025 08:39:53 -0500
+ id 1tbJtT-00062I-OB
+ for qemu-devel@nongnu.org; Fri, 24 Jan 2025 08:38:44 -0500
 Received: from mgamail.intel.com ([198.175.65.13])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <xiaoyao.li@intel.com>)
- id 1tbJuZ-00041c-LP
- for qemu-devel@nongnu.org; Fri, 24 Jan 2025 08:39:53 -0500
+ id 1tbJtR-00042W-Vg
+ for qemu-devel@nongnu.org; Fri, 24 Jan 2025 08:38:43 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1737725992; x=1769261992;
+ t=1737725922; x=1769261922;
  h=from:to:cc:subject:date:message-id:in-reply-to:
  references:mime-version:content-transfer-encoding;
- bh=XEwqmQoSvwYMfkPqc6TzR0UgP5NnIAttqomtt/9PTFQ=;
- b=Mvz+r297dm4ioDoRtJ2af6PALwG30k5mWcqxK5ViBCwMLUjnXb7DORYa
- gZ4FzkWaFOZ2IFBK2p8uIafFjGgSD9SJbszldGcjB06wOiWQadCffaDRr
- U80Yp3Y9KXqrIu1injWZAbyERE9HUaMMYKdlvYBi50YzuOhsuWxyVQb9o
- GaqMV7XN0/zVjNRwI2i9cdjjP09K4EJiIHzNcUAUNTs3D02vsxpaP5hZZ
- RbU72fdrsBSP7L9X3po9PiNYenKUdl8ZBBBI0c2IuHaRp8NKx95VnAKMM
- cW2ABDUZQTvgbc5ndbnt9cqWun/EEGxY6K7zPFRnwJ9VK2dSQJlEMOhPg Q==;
-X-CSE-ConnectionGUID: r/HL7G7cTeawKjpoJ0vHgA==
-X-CSE-MsgGUID: Gv7UPa3gR1OEmRmZPDvpEQ==
-X-IronPort-AV: E=McAfee;i="6700,10204,11325"; a="49246552"
-X-IronPort-AV: E=Sophos;i="6.13,231,1732608000"; d="scan'208";a="49246552"
+ bh=yKX2C5oNRGllaV58Edxdk4KBInFvfS6cENAd6j8GQ0U=;
+ b=XYYwbZwYMaNGDGTgmF/RWAC+SpnOptg86kpElYvEYI36uEDh8uoT1xZZ
+ 7wn+ze4Up+AdAXPG8YBXVp/mpVBWgpEsL52S1PTS1Ohs6NYnsAumkT9Cp
+ yvU/TNFQmmO4zHYjlIdNrvrHKZ3/cvjlQ2TcKjs3NIEr/kG4MulNk7slT
+ svvNDWcXqCTiE9mSms+YSdnfp2W7/+YtiH0RJrrhI9dSLHkG6rBOfvGLQ
+ b9rZcYRU36ViIPTPlb8N1wegzR87dmjXF8P/zFUBn2NthmVzhWQhODmFC
+ Ov1algIj8/JXrKTE/AmVmXhKMWbjJLs/XeoyIVUCUAvN3hAIIrhztHDSB w==;
+X-CSE-ConnectionGUID: zWaU4wsJS/CkMT1cVtVvJA==
+X-CSE-MsgGUID: DuExvDzLTouBTYnhdXhNng==
+X-IronPort-AV: E=McAfee;i="6700,10204,11325"; a="49246413"
+X-IronPort-AV: E=Sophos;i="6.13,231,1732608000"; d="scan'208";a="49246413"
 Received: from fmviesa003.fm.intel.com ([10.60.135.143])
  by orvoesa105.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 24 Jan 2025 05:39:33 -0800
-X-CSE-ConnectionGUID: e6jGRyZ/TK+fefS8MicOpQ==
-X-CSE-MsgGUID: gNS9RrQUStOtIANF8dwOFg==
+ 24 Jan 2025 05:38:30 -0800
+X-CSE-ConnectionGUID: 1T8BMRnETISh+Xx12Ivtcg==
+X-CSE-MsgGUID: 2xy4yLmjQpeP+jrArL8pZA==
 X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.12,224,1728975600"; d="scan'208";a="111804442"
+X-IronPort-AV: E=Sophos;i="6.12,224,1728975600"; d="scan'208";a="111804310"
 Received: from lxy-clx-4s.sh.intel.com ([10.239.48.52])
- by fmviesa003.fm.intel.com with ESMTP; 24 Jan 2025 05:39:29 -0800
+ by fmviesa003.fm.intel.com with ESMTP; 24 Jan 2025 05:38:25 -0800
 From: Xiaoyao Li <xiaoyao.li@intel.com>
 To: Paolo Bonzini <pbonzini@redhat.com>,
  =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
@@ -57,10 +57,9 @@ Cc: Zhao Liu <zhao1.liu@intel.com>, "Michael S. Tsirkin" <mst@redhat.com>,
  Rick Edgecombe <rick.p.edgecombe@intel.com>,
  Francesco Lavra <francescolavra.fl@gmail.com>, xiaoyao.li@intel.com,
  qemu-devel@nongnu.org, kvm@vger.kernel.org
-Subject: [PATCH v7 40/52] i386/cgs: Rename *mask_cpuid_features() to
- *adjust_cpuid_features()
-Date: Fri, 24 Jan 2025 08:20:36 -0500
-Message-Id: <20250124132048.3229049-41-xiaoyao.li@intel.com>
+Subject: [PATCH v7 23/52] i386/tdx: Add TDVF memory via KVM_TDX_INIT_MEM_REGION
+Date: Fri, 24 Jan 2025 08:20:19 -0500
+Message-Id: <20250124132048.3229049-24-xiaoyao.li@intel.com>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20250124132048.3229049-1-xiaoyao.li@intel.com>
 References: <20250124132048.3229049-1-xiaoyao.li@intel.com>
@@ -92,96 +91,94 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Because for TDX case, there are also fixed-1 bits that enfored by TDX
-module.
+From: Isaku Yamahata <isaku.yamahata@intel.com>
 
+TDVF firmware (CODE and VARS) needs to be copied to TD's private
+memory via KVM_TDX_INIT_MEM_REGION, as well as TD HOB and TEMP memory.
+
+If the TDVF section has TDVF_SECTION_ATTRIBUTES_MR_EXTEND set in the
+flag, calling KVM_TDX_EXTEND_MEMORY to extend the measurement.
+
+After populating the TDVF memory, the original image located in shared
+ramblock can be discarded.
+
+Signed-off-by: Isaku Yamahata <isaku.yamahata@intel.com>
 Signed-off-by: Xiaoyao Li <xiaoyao.li@intel.com>
+Acked-by: Gerd Hoffmann <kraxel@redhat.com>
 ---
- target/i386/confidential-guest.h | 20 ++++++++++----------
- target/i386/kvm/kvm.c            |  2 +-
- target/i386/sev.c                |  4 ++--
- 3 files changed, 13 insertions(+), 13 deletions(-)
+Changes in v6:
+ - switch back to use KVM_TDX_INIT_MEM_REGION according to KVM's change;
+---
+ target/i386/kvm/tdx.c | 42 ++++++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 42 insertions(+)
 
-diff --git a/target/i386/confidential-guest.h b/target/i386/confidential-guest.h
-index a86c42a47558..777d43cc9688 100644
---- a/target/i386/confidential-guest.h
-+++ b/target/i386/confidential-guest.h
-@@ -40,8 +40,8 @@ struct X86ConfidentialGuestClass {
-     /* <public> */
-     int (*kvm_type)(X86ConfidentialGuest *cg);
-     void (*cpu_instance_init)(X86ConfidentialGuest *cg, CPUState *cpu);
--    uint32_t (*mask_cpuid_features)(X86ConfidentialGuest *cg, uint32_t feature, uint32_t index,
--                                    int reg, uint32_t value);
-+    uint32_t (*adjust_cpuid_features)(X86ConfidentialGuest *cg, uint32_t feature,
-+                                      uint32_t index, int reg, uint32_t value);
- };
+diff --git a/target/i386/kvm/tdx.c b/target/i386/kvm/tdx.c
+index cac073a6d291..08320b59b62a 100644
+--- a/target/i386/kvm/tdx.c
++++ b/target/i386/kvm/tdx.c
+@@ -17,6 +17,7 @@
+ #include "qom/object_interfaces.h"
+ #include "crypto/hash.h"
+ #include "system/system.h"
++#include "exec/ramblock.h"
  
- /**
-@@ -71,21 +71,21 @@ static inline void x86_confidential_guest_cpu_instance_init(X86ConfidentialGuest
+ #include "hw/i386/e820_memory_layout.h"
+ #include "hw/i386/x86.h"
+@@ -270,6 +271,9 @@ static void tdx_finalize_vm(Notifier *notifier, void *unused)
+ {
+     TdxFirmware *tdvf = &tdx_guest->tdvf;
+     TdxFirmwareEntry *entry;
++    RAMBlock *ram_block;
++    Error *local_err = NULL;
++    int r;
+ 
+     tdx_init_ram_entries();
+ 
+@@ -295,6 +299,44 @@ static void tdx_finalize_vm(Notifier *notifier, void *unused)
+           sizeof(TdxRamEntry), &tdx_ram_entry_compare);
+ 
+     tdvf_hob_create(tdx_guest, tdx_get_hob_entry(tdx_guest));
++
++    for_each_tdx_fw_entry(tdvf, entry) {
++        struct kvm_tdx_init_mem_region region;
++        uint32_t flags;
++
++        region = (struct kvm_tdx_init_mem_region) {
++            .source_addr = (uint64_t)entry->mem_ptr,
++            .gpa = entry->address,
++            .nr_pages = entry->size >> 12,
++        };
++
++        flags = entry->attributes & TDVF_SECTION_ATTRIBUTES_MR_EXTEND ?
++                KVM_TDX_MEASURE_MEMORY_REGION : 0;
++
++        do {
++            error_free(local_err);
++            local_err = NULL;
++            r = tdx_vcpu_ioctl(first_cpu, KVM_TDX_INIT_MEM_REGION, flags,
++                               &region, &local_err);
++        } while (r == -EAGAIN || r == -EINTR);
++        if (r < 0) {
++            error_report_err(local_err);
++            exit(1);
++        }
++
++        if (entry->type == TDVF_SECTION_TYPE_TD_HOB ||
++            entry->type == TDVF_SECTION_TYPE_TEMP_MEM) {
++            qemu_ram_munmap(-1, entry->mem_ptr, entry->size);
++            entry->mem_ptr = NULL;
++        }
++    }
++
++    /*
++     * TDVF image has been copied into private region above via
++     * KVM_MEMORY_MAPPING. It becomes useless.
++     */
++    ram_block = tdx_guest->tdvf_mr->ram_block;
++    ram_block_discard_range(ram_block, 0, ram_block->max_length);
  }
  
- /**
-- * x86_confidential_guest_mask_cpuid_features:
-+ * x86_confidential_guest_adjust_cpuid_features:
-  *
-- * Removes unsupported features from a confidential guest's CPUID values, returns
-- * the value with the bits removed.  The bits removed should be those that KVM
-- * provides independent of host-supported CPUID features, but are not supported by
-- * the confidential computing firmware.
-+ * Adjust the supported features from a confidential guest's CPUID values,
-+ * returns the adjusted value.  There are bits being removed that are not
-+ * supported by the confidential computing firmware or bits being added that
-+ * are forcibly exposed to guest by the confidential computing firmware.
-  */
--static inline int x86_confidential_guest_mask_cpuid_features(X86ConfidentialGuest *cg,
-+static inline int x86_confidential_guest_adjust_cpuid_features(X86ConfidentialGuest *cg,
-                                                              uint32_t feature, uint32_t index,
-                                                              int reg, uint32_t value)
- {
-     X86ConfidentialGuestClass *klass = X86_CONFIDENTIAL_GUEST_GET_CLASS(cg);
- 
--    if (klass->mask_cpuid_features) {
--        return klass->mask_cpuid_features(cg, feature, index, reg, value);
-+    if (klass->adjust_cpuid_features) {
-+        return klass->adjust_cpuid_features(cg, feature, index, reg, value);
-     } else {
-         return value;
-     }
-diff --git a/target/i386/kvm/kvm.c b/target/i386/kvm/kvm.c
-index 4078ba40473e..fa46edaeac8d 100644
---- a/target/i386/kvm/kvm.c
-+++ b/target/i386/kvm/kvm.c
-@@ -573,7 +573,7 @@ uint32_t kvm_arch_get_supported_cpuid(KVMState *s, uint32_t function,
-     }
- 
-     if (current_machine->cgs) {
--        ret = x86_confidential_guest_mask_cpuid_features(
-+        ret = x86_confidential_guest_adjust_cpuid_features(
-             X86_CONFIDENTIAL_GUEST(current_machine->cgs),
-             function, index, reg, ret);
-     }
-diff --git a/target/i386/sev.c b/target/i386/sev.c
-index 0e1dbb6959ec..a6c0a697250b 100644
---- a/target/i386/sev.c
-+++ b/target/i386/sev.c
-@@ -946,7 +946,7 @@ out:
- }
- 
- static uint32_t
--sev_snp_mask_cpuid_features(X86ConfidentialGuest *cg, uint32_t feature, uint32_t index,
-+sev_snp_adjust_cpuid_features(X86ConfidentialGuest *cg, uint32_t feature, uint32_t index,
-                             int reg, uint32_t value)
- {
-     switch (feature) {
-@@ -2404,7 +2404,7 @@ sev_snp_guest_class_init(ObjectClass *oc, void *data)
-     klass->launch_finish = sev_snp_launch_finish;
-     klass->launch_update_data = sev_snp_launch_update_data;
-     klass->kvm_init = sev_snp_kvm_init;
--    x86_klass->mask_cpuid_features = sev_snp_mask_cpuid_features;
-+    x86_klass->adjust_cpuid_features = sev_snp_adjust_cpuid_features;
-     x86_klass->kvm_type = sev_snp_kvm_type;
- 
-     object_class_property_add(oc, "policy", "uint64",
+ static Notifier tdx_machine_done_notify = {
 -- 
 2.34.1
 
