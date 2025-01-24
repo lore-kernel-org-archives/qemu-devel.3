@@ -4,70 +4,97 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B11ECC02181
-	for <qemu-devel@archiver.kernel.org>; Fri, 24 Jan 2025 14:18:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 61848C02181
+	for <qemu-devel@archiver.kernel.org>; Fri, 24 Jan 2025 14:22:45 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tbKV8-0003wT-Pv; Fri, 24 Jan 2025 09:17:43 -0500
+	id 1tbKZM-0007hK-I2; Fri, 24 Jan 2025 09:22:00 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1tbKTy-0003E2-IR
- for qemu-devel@nongnu.org; Fri, 24 Jan 2025 09:16:27 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <imammedo@redhat.com>)
+ id 1tbKZI-0007go-Fh
+ for qemu-devel@nongnu.org; Fri, 24 Jan 2025 09:21:56 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1tbKTw-0001K2-Jm
- for qemu-devel@nongnu.org; Fri, 24 Jan 2025 09:16:26 -0500
+ (Exim 4.90_1) (envelope-from <imammedo@redhat.com>)
+ id 1tbKZG-0001yM-HG
+ for qemu-devel@nongnu.org; Fri, 24 Jan 2025 09:21:55 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1737728183;
+ s=mimecast20190719; t=1737728513;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=3MQUC8M+UPWyZ0gLq5774sk5T198A7r6k+54Ow2oEro=;
- b=VcgTMur7pdRxvRXbDopbdbSdfT8vpCA3lG4yV2XQO7VJt8GIgJZkPXx1UiqDm0pO53XmSr
- jEsrXHaMkW3u40jcC8nSG9FTyHhpEs4FbyYZk64xxlTe8lw9eb7Z3g3eawsZQ+gnrbpNQc
- End+QyvG19MjfA98oY96WP3lqgYP4O8=
-Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-124-6dKKzFwiP0SVuXmuSbv2BA-1; Fri,
- 24 Jan 2025 09:16:02 -0500
-X-MC-Unique: 6dKKzFwiP0SVuXmuSbv2BA-1
-X-Mimecast-MFC-AGG-ID: 6dKKzFwiP0SVuXmuSbv2BA
-Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id AD2FF1801F18; Fri, 24 Jan 2025 14:15:57 +0000 (UTC)
-Received: from thuth-p1g4.redhat.com (unknown [10.39.193.187])
- by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id E84E619560A7; Fri, 24 Jan 2025 14:15:54 +0000 (UTC)
-From: Thomas Huth <thuth@redhat.com>
-To: Pavel Dovgalyuk <pavel.dovgaluk@ispras.ru>,
- Paolo Bonzini <pbonzini@redhat.com>, Aurelien Jarno <aurelien@aurel32.net>,
- Jiaxun Yang <jiaxun.yang@flygoat.com>, qemu-devel@nongnu.org
-Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
-Subject: [PATCH 5/5] tests/functional/test_mips_malta: Convert the mips big
- endian replay tests
-Date: Fri, 24 Jan 2025 15:15:29 +0100
-Message-ID: <20250124141529.1626877-6-thuth@redhat.com>
-In-Reply-To: <20250124141529.1626877-1-thuth@redhat.com>
-References: <20250124141529.1626877-1-thuth@redhat.com>
+ bh=7m0mWf53NZj1YKSMelNoYrb1Nc3g4uHIAELjqyrC0+g=;
+ b=Jpt0UD1q6fG8lwQHTsoSw/ifmj646l/vtSnuKP961T/BZ6YXVeEgwXhn0eMpbKSVuWKK5j
+ UFRS1doCBKKMFjcNrL0K29sXc0pgMf7s3Fv0Zr+DsDeyL9n0EjGeMXSGXM2al1/i0SUc9Z
+ G2E5HNtHRcV9qoYw9Uu9kkdKUdYbTh8=
+Received: from mail-wr1-f70.google.com (mail-wr1-f70.google.com
+ [209.85.221.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-167-Aj-Qgk6wN5OElYEVUpLrgw-1; Fri, 24 Jan 2025 09:21:51 -0500
+X-MC-Unique: Aj-Qgk6wN5OElYEVUpLrgw-1
+X-Mimecast-MFC-AGG-ID: Aj-Qgk6wN5OElYEVUpLrgw
+Received: by mail-wr1-f70.google.com with SMTP id
+ ffacd0b85a97d-3862be3bfc9so1177081f8f.3
+ for <qemu-devel@nongnu.org>; Fri, 24 Jan 2025 06:21:51 -0800 (PST)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1737728510; x=1738333310;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:subject:cc:to:from:date:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=7m0mWf53NZj1YKSMelNoYrb1Nc3g4uHIAELjqyrC0+g=;
+ b=VCqI84yQdzw8u60FHJrcEe30sFX7uQbgJRlHMvWMoZY36oGjPhUwybUiBXPTWmYw9z
+ PXG+7E09ErQh09Z2KyxTB8k5GM666TKWga6p4qBlIQU3HQDR2zk7l9sWFljm5owjukRX
+ 2j0WRWAPieaIsdwuJTl2suAUN3vTQLJ45M2JFVpmasia8PCxJCLpQCTkpNdgmOuMLbD8
+ Njb9FgiieX6yHfd9YD093L9++CFzL/wXHW4BpzGIS9BxyK5eWm0mKaAFyqDLwS/NW2Px
+ 2UYVEkZd7T2oeCOxmLHedAAQ2v/JzFDT7jpn9Lihm0R5QfbvUltb/hWNUMIv7rDTNK0D
+ tNjw==
+X-Gm-Message-State: AOJu0Yyw41UAsffREymFNnMoDhET2TvvcaeMXLZ2UHXKnU0zLWPWqoUd
+ /UWy6U81tT1X9Mu3QIoQkMFJR+isOrByzrTMDywkpmcFtjNukDwzFK8lPmLyMceDf7httivBjF3
+ h5XhdlFpTwoxf9gPyiFY9scUd/z13Zq9hmhOdO1tHGn3oeTrW6luP
+X-Gm-Gg: ASbGncs5IuNGAGR4eow4uTXwylPzDkVOzkAeZ/JSKluZIHYtkxzkdg83llNYCGcAPBw
+ F/HsLIqudP6Xxuv6cN2fmOVcAnq1j9VkF752qpf5o1YgBNsKd1NfOLRFa3FMxzxYX59IzwtiJMe
+ FQLDPsc7z9SH3QW8ur/qu4Jcte3KxrcbBd/rNIkL6vSz9J8QR7I+UozQ8w1NxmemMyvA+aQFUi4
+ 3JPbdsGj93YtluFvAJRlEHUAB6S4VzIHqlxk5l7h1gYBQ8u9bBec1sY4OUHT5I5Rmn5eF1i+b6y
+ B1CzKlWlT/GT69zpWdPBH+CcOaH+Cit3E/Qz1P85zQ==
+X-Received: by 2002:a5d:64ed:0:b0:385:e30a:394e with SMTP id
+ ffacd0b85a97d-38bf56555ffmr28754072f8f.3.1737728510098; 
+ Fri, 24 Jan 2025 06:21:50 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IEWI3VUthPbWIeD90fv9QqC+NjxTupnrJ7u3ho9coXSZcPvDTr6TbJuK7l9pJGQMCm2eMALZQ==
+X-Received: by 2002:a5d:64ed:0:b0:385:e30a:394e with SMTP id
+ ffacd0b85a97d-38bf56555ffmr28754045f8f.3.1737728509711; 
+ Fri, 24 Jan 2025 06:21:49 -0800 (PST)
+Received: from imammedo.users.ipa.redhat.com (nat-pool-brq-t.redhat.com.
+ [213.175.37.10]) by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-38c2a17640csm2942360f8f.18.2025.01.24.06.21.49
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Fri, 24 Jan 2025 06:21:49 -0800 (PST)
+Date: Fri, 24 Jan 2025 15:21:48 +0100
+From: Igor Mammedov <imammedo@redhat.com>
+To: Alex =?UTF-8?B?QmVubsOpZQ==?= <alex.bennee@linaro.org>
+Cc: qemu-devel@nongnu.org, richard.henderson@linaro.org,
+ pbonzini@redhat.com, npiggin@gmail.com
+Subject: Re: [PATCH] tcg: drop qemu_cpu_is_self() in
+ tlb_flush_by_mmuidx[_async_work]
+Message-ID: <20250124152148.706e88c2@imammedo.users.ipa.redhat.com>
+In-Reply-To: <20250123122343.6af8a6e1@imammedo.users.ipa.redhat.com>
+References: <20250123094511.156324-1-imammedo@redhat.com>
+ <87frl9ls4g.fsf@draig.linaro.org>
+ <20250123122343.6af8a6e1@imammedo.users.ipa.redhat.com>
+X-Mailer: Claws Mail 4.3.0 (GTK 3.24.43; x86_64-redhat-linux-gnu)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=thuth@redhat.com;
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=imammedo@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -50
 X-Spam_score: -5.1
 X-Spam_bar: -----
 X-Spam_report: (-5.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-2.996,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
@@ -86,143 +113,95 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Move the mips big endian replay tests from tests/avocado/replay_kernel.py
-to the functional framework. Since the functional tests should be run per
-target, we cannot stick all replay tests in one file. Thus let's add
-these tests to the file where we already use the same asset already.
+On Thu, 23 Jan 2025 12:23:43 +0100
+Igor Mammedov <imammedo@redhat.com> wrote:
 
-Signed-off-by: Thomas Huth <thuth@redhat.com>
----
- tests/avocado/replay_kernel.py      | 54 -----------------------------
- tests/functional/test_mips_malta.py | 29 ++++++++++++++--
- 2 files changed, 26 insertions(+), 57 deletions(-)
+> On Thu, 23 Jan 2025 10:52:15 +0000
+> Alex Benn=C3=A9e <alex.bennee@linaro.org> wrote:
+>=20
+> > Igor Mammedov <imammedo@redhat.com> writes:
+> >  =20
+> > > QEMU will crash with following debug enabled
+> > >   # define DEBUG_TLB_GATE 1
+> > >   # define DEBUG_TLB_LOG_GATE 1
+> > > due to [1] introduced assert and as it happenstlb_flush_by_mmuidx[_as=
+ync_work]
+> > > functions are called not only from vcpu thread but also from reset ha=
+ndler
+> > > that is called from main thread at cpu realize time when vcpu is alre=
+ady
+> > > created
+> > >   x86_cpu_new -> ... ->
+> > >       x86_cpu_realizefn -> cpu_reset -> ... ->
+> > >           tcg_cpu_reset_hold
+> > >
+> > > drop assert to fix crash.   =20
+> >=20
+> > Hmm the assert is there for a good reason because we do not want to be
+> > flushing another CPUs state. However the assert itself:
+> >=20
+> >   g_assert(!(cpu)->created || qemu_cpu_is_self(cpu));
+> >=20
+> > was trying to account for pre-initialised vCPUs. What has changed?
+> >=20
+> > cpu_thread_signal_created(cpu) is called just before we start running
+> > the main loop in mttcg_cpu_thread_fn. So any other thread messing with
+> > the CPUs TLB can potentially mess things up. =20
+>=20
+> it reproduces on current master, so yes it likely has changed over time.
+> I've just stumbled on it when attempting to get rid of cpu->created usage.
+>=20
+>=20
+> > > 1)
+> > > Fixes: f0aff0f124028 ("cputlb: add assert_cpu_is_self checks")
 
-diff --git a/tests/avocado/replay_kernel.py b/tests/avocado/replay_kernel.py
-index a45881b9a6..b9b54a8793 100644
---- a/tests/avocado/replay_kernel.py
-+++ b/tests/avocado/replay_kernel.py
-@@ -144,24 +144,6 @@ def test_x86_64_q35(self):
- 
-         self.run_rr(kernel_path, kernel_command_line, console_pattern, shift=5)
- 
--    def test_mips_malta(self):
--        """
--        :avocado: tags=arch:mips
--        :avocado: tags=machine:malta
--        :avocado: tags=endian:big
--        """
--        deb_url = ('http://snapshot.debian.org/archive/debian/'
--                   '20130217T032700Z/pool/main/l/linux-2.6/'
--                   'linux-image-2.6.32-5-4kc-malta_2.6.32-48_mips.deb')
--        deb_hash = 'a8cfc28ad8f45f54811fc6cf74fc43ffcfe0ba04'
--        deb_path = self.fetch_asset(deb_url, asset_hash=deb_hash)
--        kernel_path = self.extract_from_deb(deb_path,
--                                            '/boot/vmlinux-2.6.32-5-4kc-malta')
--        kernel_command_line = self.KERNEL_COMMON_COMMAND_LINE + 'console=ttyS0'
--        console_pattern = 'Kernel command line: %s' % kernel_command_line
--
--        self.run_rr(kernel_path, kernel_command_line, console_pattern, shift=5)
--
-     def test_aarch64_virt(self):
-         """
-         :avocado: tags=arch:aarch64
-@@ -428,39 +410,3 @@ def test_xtensa_lx60(self):
-                    '/qac-best-of-multiarch/download/day02.tar.xz')
-         file_path = self.fetch_asset(tar_url, asset_hash=tar_hash)
-         self.do_test_advcal_2018(file_path, 'santas-sleigh-ride.elf')
--
--@skipUnless(os.getenv('AVOCADO_TIMEOUT_EXPECTED'), 'Test might timeout')
--class ReplayKernelSlow(ReplayKernelBase):
--    # Override the timeout, because this kernel includes an inner
--    # loop which is executed with TB recompilings during replay,
--    # making it very slow.
--    timeout = 180
--
--    def test_mips_malta_cpio(self):
--        """
--        :avocado: tags=arch:mips
--        :avocado: tags=machine:malta
--        :avocado: tags=endian:big
--        :avocado: tags=slowness:high
--        """
--        deb_url = ('http://snapshot.debian.org/archive/debian/'
--                   '20160601T041800Z/pool/main/l/linux/'
--                   'linux-image-4.5.0-2-4kc-malta_4.5.5-1_mips.deb')
--        deb_hash = 'a3c84f3e88b54e06107d65a410d1d1e8e0f340f8'
--        deb_path = self.fetch_asset(deb_url, asset_hash=deb_hash)
--        kernel_path = self.extract_from_deb(deb_path,
--                                            '/boot/vmlinux-4.5.0-2-4kc-malta')
--        initrd_url = ('https://github.com/groeck/linux-build-test/raw/'
--                      '8584a59ed9e5eb5ee7ca91f6d74bbb06619205b8/rootfs/'
--                      'mips/rootfs.cpio.gz')
--        initrd_hash = 'bf806e17009360a866bf537f6de66590de349a99'
--        initrd_path_gz = self.fetch_asset(initrd_url, asset_hash=initrd_hash)
--        initrd_path = self.workdir + "rootfs.cpio"
--        archive.gzip_uncompress(initrd_path_gz, initrd_path)
--
--        kernel_command_line = (self.KERNEL_COMMON_COMMAND_LINE +
--                               'console=ttyS0 console=tty '
--                               'rdinit=/sbin/init noreboot')
--        console_pattern = 'Boot successful.'
--        self.run_rr(kernel_path, kernel_command_line, console_pattern, shift=5,
--                    args=('-initrd', initrd_path))
-diff --git a/tests/functional/test_mips_malta.py b/tests/functional/test_mips_malta.py
-index 3b15038d89..a745f21dd2 100755
---- a/tests/functional/test_mips_malta.py
-+++ b/tests/functional/test_mips_malta.py
-@@ -6,11 +6,12 @@
- #
- # SPDX-License-Identifier: GPL-2.0-or-later
- 
--from qemu_test import LinuxKernelTest, Asset
-+from qemu_test import Asset, skipLongRuntime
- from qemu_test import exec_command_and_wait_for_pattern
-+from replay_kernel import ReplayKernelBase
- 
- 
--class MaltaMachineConsole(LinuxKernelTest):
-+class MaltaMachineConsole(ReplayKernelBase):
- 
-     ASSET_KERNEL_2_63_2 = Asset(
-         ('http://snapshot.debian.org/archive/debian/'
-@@ -32,6 +33,14 @@ def test_mips_malta(self):
-         console_pattern = 'Kernel command line: %s' % kernel_command_line
-         self.wait_for_console_pattern(console_pattern)
- 
-+    def test_replay_mips_malta(self):
-+        self.set_machine('malta')
-+        kernel_path = self.archive_extract(self.ASSET_KERNEL_2_63_2,
-+                                     member='boot/vmlinux-2.6.32-5-4kc-malta')
-+        kernel_command_line = self.KERNEL_COMMON_COMMAND_LINE + 'console=ttyS0'
-+        console_pattern = 'Kernel command line: %s' % kernel_command_line
-+        self.run_rr(kernel_path, kernel_command_line, console_pattern, shift=5)
-+
-     ASSET_KERNEL_4_5_0 = Asset(
-         ('http://snapshot.debian.org/archive/debian/'
-          '20160601T041800Z/pool/main/l/linux/'
-@@ -71,6 +80,20 @@ def test_mips_malta_cpio(self):
-         # Wait for VM to shut down gracefully
-         self.vm.wait()
- 
-+    @skipLongRuntime()
-+    def test_replay_mips_malta_cpio(self):
-+        self.set_machine('malta')
-+        kernel_path = self.archive_extract(self.ASSET_KERNEL_4_5_0,
-+                                      member='boot/vmlinux-4.5.0-2-4kc-malta')
-+        initrd_path = self.uncompress(self.ASSET_INITRD)
-+
-+        kernel_command_line = (self.KERNEL_COMMON_COMMAND_LINE +
-+                               'console=ttyS0 console=tty '
-+                               'rdinit=/sbin/init noreboot')
-+        console_pattern = 'Boot successful.'
-+        self.run_rr(kernel_path, kernel_command_line, console_pattern, shift=5,
-+                    args=('-initrd', initrd_path))
-+
- 
- if __name__ == '__main__':
--    LinuxKernelTest.main()
-+    ReplayKernelBase.main()
--- 
-2.48.1
+bisection points to (so above fixes was a wrong one):
+  30933c4fb4f3d tcg/cputlb: remove other-cpu capability from TLB flushing
+which has replaced a check with assert:
+
+-    if (cpu->created && !qemu_cpu_is_self(cpu)) {
+-        async_run_on_cpu(cpu, tlb_flush_by_mmuidx_async_work,
+-                         RUN_ON_CPU_HOST_INT(idxmap));
+-    } else {
+-        tlb_flush_by_mmuidx_async_work(cpu, RUN_ON_CPU_HOST_INT(idxmap));
+-    }
++    assert_cpu_is_self(cpu);
+
+should we revert that instead?
+
+perhaps also drop 'cpu->created' check in  assert_cpu_is_self as it
+obviously doesn't work.
+
+
+> > > Signed-off-by: Igor Mammedov <imammedo@redhat.com>
+> > > ---
+> > >  accel/tcg/cputlb.c | 4 ----
+> > >  1 file changed, 4 deletions(-)
+> > >
+> > > diff --git a/accel/tcg/cputlb.c b/accel/tcg/cputlb.c
+> > > index b26c0e088f..2da803103c 100644
+> > > --- a/accel/tcg/cputlb.c
+> > > +++ b/accel/tcg/cputlb.c
+> > > @@ -381,8 +381,6 @@ static void tlb_flush_by_mmuidx_async_work(CPUSta=
+te *cpu, run_on_cpu_data data)
+> > >      uint16_t all_dirty, work, to_clean;
+> > >      int64_t now =3D get_clock_realtime();
+> > > =20
+> > > -    assert_cpu_is_self(cpu);
+> > > -
+> > >      tlb_debug("mmu_idx:0x%04" PRIx16 "\n", asked);
+> > > =20
+> > >      qemu_spin_lock(&cpu->neg.tlb.c.lock);
+> > > @@ -419,8 +417,6 @@ void tlb_flush_by_mmuidx(CPUState *cpu, uint16_t =
+idxmap)
+> > >  {
+> > >      tlb_debug("mmu_idx: 0x%" PRIx16 "\n", idxmap);
+> > > =20
+> > > -    assert_cpu_is_self(cpu);
+> > > -
+> > >      tlb_flush_by_mmuidx_async_work(cpu, RUN_ON_CPU_HOST_INT(idxmap));
+> > >  }   =20
+> >  =20
+>=20
 
 
