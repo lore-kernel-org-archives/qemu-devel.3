@@ -4,47 +4,47 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1E842C0218B
-	for <qemu-devel@archiver.kernel.org>; Fri, 24 Jan 2025 13:45:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A0A7EC02181
+	for <qemu-devel@archiver.kernel.org>; Fri, 24 Jan 2025 13:46:45 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tbJvO-0002hg-A7; Fri, 24 Jan 2025 08:40:42 -0500
+	id 1tbJvO-0002m4-LQ; Fri, 24 Jan 2025 08:40:42 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <xiaoyao.li@intel.com>)
- id 1tbJvH-00025Q-FQ
- for qemu-devel@nongnu.org; Fri, 24 Jan 2025 08:40:35 -0500
+ id 1tbJuh-0001QI-Qn
+ for qemu-devel@nongnu.org; Fri, 24 Jan 2025 08:40:08 -0500
 Received: from mgamail.intel.com ([198.175.65.13])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <xiaoyao.li@intel.com>)
- id 1tbJvF-00041c-DK
- for qemu-devel@nongnu.org; Fri, 24 Jan 2025 08:40:35 -0500
+ id 1tbJuf-00042W-Jh
+ for qemu-devel@nongnu.org; Fri, 24 Jan 2025 08:39:58 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1737726034; x=1769262034;
+ t=1737725998; x=1769261998;
  h=from:to:cc:subject:date:message-id:in-reply-to:
  references:mime-version:content-transfer-encoding;
- bh=lKKhpINOwRUM2TXEgJwHkGVj1DZ5JDaSkIZbWTMQSdU=;
- b=av+VtuL01aRtLbnuommCZUMzk3BqUyTf5rasDtHA2CF0yJJtrqapLY0Z
- mFanoizJaEO+OuuysGG7KpuIAWJ6O0bI11o3GLdegiPaMV+TA3uMMqCZd
- mvb+WA4D1EzzBzhhURBWpNiMqOZzXX410Az69zhSLBZe/JYRqQbvRvTNy
- 4TrtqGHwBccy386vjeadaxztUV+vXBc3ASMGUyaRAsXELEoM/vmuzrjpZ
- lcpsuG2DlpiVjCbjbYeuJrd30oB9B8XcPtfKLncjERmV+24mVcCa2oKD1
- k9omYrt2FjpO2f7IQS7w4oXuvkGjVV7g7uChidstD3emKClKpARVuGER/ Q==;
-X-CSE-ConnectionGUID: cw/PSYPgTVWij064qhMEqg==
-X-CSE-MsgGUID: xmQVc5PARXKjvjIqaLAaDQ==
-X-IronPort-AV: E=McAfee;i="6700,10204,11325"; a="49246640"
-X-IronPort-AV: E=Sophos;i="6.13,231,1732608000"; d="scan'208";a="49246640"
+ bh=nEl4TCuOb3xMvomAtSQmQ5FpTfT7WK6HIdgq9DzAG/A=;
+ b=QbGI6y46yyOt4Yv/KXLUMTZJ5KBkvStOw4pg96Moj9Igtb49hBt/HcEi
+ YRIktESq4oiBIAbHBekdw7XzdZWmyXahocddRZdJc+EYwhQWJKIuEeCWe
+ 8o6RfqzH4FXQ1HeR/2Xaz5k+w0egbXdIPFwyJMJiK1FuWB/TGimlQKwvp
+ ycnpyY3Dk/XbL+9yviPO5YV2Ee4G7toolyJsJRkjRZEb2D2rcqbURviLo
+ n7XwFFVuEW4dLy9IINzd2GVfuoSGhCVY3cQJDLWkqFhn7ayT7414xZpUx
+ ln7H4SrAuTbLODF5KAXwJmMihcDWBB5/If0ShgHq+W85HR9Pp/l1M8YaP g==;
+X-CSE-ConnectionGUID: KSFeNjR7S7mX7tC3ne4x1w==
+X-CSE-MsgGUID: xFKeNH5aTYWPWkckHRiODA==
+X-IronPort-AV: E=McAfee;i="6700,10204,11325"; a="49246562"
+X-IronPort-AV: E=Sophos;i="6.13,231,1732608000"; d="scan'208";a="49246562"
 Received: from fmviesa003.fm.intel.com ([10.60.135.143])
  by orvoesa105.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 24 Jan 2025 05:40:06 -0800
-X-CSE-ConnectionGUID: sPnsZByDRfuPsoXWvSIhMg==
-X-CSE-MsgGUID: oe9IJOeQTK2UOcoe9Kz6MQ==
+ 24 Jan 2025 05:39:37 -0800
+X-CSE-ConnectionGUID: ifW55XqjSmCxoKv9I1zumQ==
+X-CSE-MsgGUID: fZJtod0oTJ+gDSX001OnKQ==
 X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.12,224,1728975600"; d="scan'208";a="111804485"
+X-IronPort-AV: E=Sophos;i="6.12,224,1728975600"; d="scan'208";a="111804448"
 Received: from lxy-clx-4s.sh.intel.com ([10.239.48.52])
- by fmviesa003.fm.intel.com with ESMTP; 24 Jan 2025 05:40:02 -0800
+ by fmviesa003.fm.intel.com with ESMTP; 24 Jan 2025 05:39:32 -0800
 From: Xiaoyao Li <xiaoyao.li@intel.com>
 To: Paolo Bonzini <pbonzini@redhat.com>,
  =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
@@ -57,9 +57,9 @@ Cc: Zhao Liu <zhao1.liu@intel.com>, "Michael S. Tsirkin" <mst@redhat.com>,
  Rick Edgecombe <rick.p.edgecombe@intel.com>,
  Francesco Lavra <francescolavra.fl@gmail.com>, xiaoyao.li@intel.com,
  qemu-devel@nongnu.org, kvm@vger.kernel.org
-Subject: [PATCH v7 49/52] i386/tdx: Don't treat SYSCALL as unavailable
-Date: Fri, 24 Jan 2025 08:20:45 -0500
-Message-Id: <20250124132048.3229049-50-xiaoyao.li@intel.com>
+Subject: [PATCH v7 41/52] i386/tdx: Implement adjust_cpuid_features() for TDX
+Date: Fri, 24 Jan 2025 08:20:37 -0500
+Message-Id: <20250124132048.3229049-42-xiaoyao.li@intel.com>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20250124132048.3229049-1-xiaoyao.li@intel.com>
 References: <20250124132048.3229049-1-xiaoyao.li@intel.com>
@@ -91,38 +91,92 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+1. QEMU's support for Intel PT is borken in general, thus doesn't
+   support for TDX.
+
+2. Only limited KVM PV features are supported for TD guest.
+
+3. Drop the AMD specific bits that are reserved on Intel platform.
+
 Signed-off-by: Xiaoyao Li <xiaoyao.li@intel.com>
 ---
-Changes in v7:
- - fix CPUID_EXT2_SYSCALL by adding it to actual;
----
- target/i386/kvm/tdx.c | 13 +++++++++++++
- 1 file changed, 13 insertions(+)
+ target/i386/kvm/tdx.c | 44 +++++++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 44 insertions(+)
 
 diff --git a/target/i386/kvm/tdx.c b/target/i386/kvm/tdx.c
-index f6a4f3322e61..58ea6a4d3156 100644
+index dcbbe350ec91..9bdb9d795952 100644
 --- a/target/i386/kvm/tdx.c
 +++ b/target/i386/kvm/tdx.c
-@@ -804,6 +804,19 @@ static int tdx_check_features(X86ConfidentialGuest *cg, CPUState *cs)
-             continue;
-         }
+@@ -30,6 +30,8 @@
+ #include "kvm_i386.h"
+ #include "tdx.h"
  
-+        /* Fixup for special cases */
-+        switch (w) {
-+        case FEAT_8000_0001_EDX:
-+            /*
-+             * Intel enumerates SYSCALL bit as 1 only when processor in 64-bit
-+             * mode and before vcpu running it's not in 64-bit mode.
-+             */
-+            actual |= CPUID_EXT2_SYSCALL;
-+            break;
-+        default:
-+            break;
-+        }
++#include "standard-headers/asm-x86/kvm_para.h"
 +
-         requested = env->features[w];
-         unavailable = requested & ~actual;
-         mark_unavailable_features(cpu, w, unavailable, unav_prefix);
+ #define TDX_MIN_TSC_FREQUENCY_KHZ   (100 * 1000)
+ #define TDX_MAX_TSC_FREQUENCY_KHZ   (10 * 1000 * 1000)
+ 
+@@ -42,6 +44,14 @@
+                                  TDX_TD_ATTRIBUTES_PKS | \
+                                  TDX_TD_ATTRIBUTES_PERFMON)
+ 
++#define TDX_SUPPORTED_KVM_FEATURES  ((1U << KVM_FEATURE_NOP_IO_DELAY) | \
++                                     (1U << KVM_FEATURE_PV_UNHALT) | \
++                                     (1U << KVM_FEATURE_PV_TLB_FLUSH) | \
++                                     (1U << KVM_FEATURE_PV_SEND_IPI) | \
++                                     (1U << KVM_FEATURE_POLL_CONTROL) | \
++                                     (1U << KVM_FEATURE_PV_SCHED_YIELD) | \
++                                     (1U << KVM_FEATURE_MSI_EXT_DEST_ID))
++
+ static TdxGuest *tdx_guest;
+ 
+ static struct kvm_tdx_capabilities *tdx_caps;
+@@ -430,6 +440,39 @@ static void tdx_cpu_instance_init(X86ConfidentialGuest *cg, CPUState *cpu)
+     x86cpu->enable_cpuid_0x1f = true;
+ }
+ 
++static uint32_t tdx_adjust_cpuid_features(X86ConfidentialGuest *cg,
++                                          uint32_t feature, uint32_t index,
++                                          int reg, uint32_t value)
++{
++    switch (feature) {
++    case 0x7:
++        if (index == 0 && reg == R_EBX) {
++            /* QEMU Intel PT support is broken */
++            value &= ~CPUID_7_0_EBX_INTEL_PT;
++        }
++        break;
++    case 0x40000001:
++        if (reg == R_EAX) {
++            value &= TDX_SUPPORTED_KVM_FEATURES;
++        }
++        break;
++    case 0x80000001:
++        if (reg == R_EDX) {
++            value &= ~CPUID_EXT2_AMD_ALIASES;
++        }
++        break;
++    case 0x80000008:
++        if (reg == R_EBX) {
++            value &= CPUID_8000_0008_EBX_WBNOINVD;
++        }
++        break;
++    default:
++        break;
++    }
++
++    return value;
++}
++
+ static int tdx_validate_attributes(TdxGuest *tdx, Error **errp)
+ {
+     if ((tdx->attributes & ~tdx_caps->supported_attrs)) {
+@@ -789,4 +832,5 @@ static void tdx_guest_class_init(ObjectClass *oc, void *data)
+     klass->kvm_init = tdx_kvm_init;
+     x86_klass->kvm_type = tdx_kvm_type;
+     x86_klass->cpu_instance_init = tdx_cpu_instance_init;
++    x86_klass->adjust_cpuid_features = tdx_adjust_cpuid_features;
+ }
 -- 
 2.34.1
 
