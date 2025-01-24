@@ -4,92 +4,92 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7B334C0218B
-	for <qemu-devel@archiver.kernel.org>; Fri, 24 Jan 2025 09:49:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4C255C02181
+	for <qemu-devel@archiver.kernel.org>; Fri, 24 Jan 2025 09:49:47 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tbGFi-0006tK-72; Fri, 24 Jan 2025 04:45:26 -0500
+	id 1tbGFe-0006pV-V9; Fri, 24 Jan 2025 04:45:23 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1tbGFc-0006nX-Ts
- for qemu-devel@nongnu.org; Fri, 24 Jan 2025 04:45:20 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ id 1tbGFb-0006l8-Hs
+ for qemu-devel@nongnu.org; Fri, 24 Jan 2025 04:45:19 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1tbGFb-0003sl-0y
- for qemu-devel@nongnu.org; Fri, 24 Jan 2025 04:45:20 -0500
+ id 1tbGFa-0003sT-0b
+ for qemu-devel@nongnu.org; Fri, 24 Jan 2025 04:45:19 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1737711918;
+ s=mimecast20190719; t=1737711914;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:
+ to:to:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=uraIJgwBFUvUKFYLefg6yvOaMymHtIAJOis/mI8DgJQ=;
- b=Pjf0QlAfjLeY9UhU0/7/WRixQXzaRQnsuxbMm7ODqagAaNJRNfGheO8Ns0RdG6+55L58uX
- yw8W53p7sTF+1O8QIgL1+AsWuC4cHUt7+li8CXlVxXBiMpQP+WqQSnRMyrDilUGR4kBUUB
- 0lrapI6y5q5GagOEekDLsnMrtIngpxM=
-Received: from mail-wm1-f72.google.com (mail-wm1-f72.google.com
- [209.85.128.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=xatIXaIYlV/CgS4ESCp0zEwFccHB44d7QBdN1/soCUc=;
+ b=f375Fa+d+/j6pLnTQPJFjd1ljys2kTE221lhLdPpcVjjKCNQIjphF0FxqEoHWPvJz6/J36
+ 6NY2nJcWZy+rr4VAZw1w7+JPDl6ozaJv21QMZv013Lgu69SW/OuRx0abuVC0/e3A2XRY73
+ +47q29FbqeEcVYdwQjmSyUu0Y0OoaXA=
+Received: from mail-wm1-f70.google.com (mail-wm1-f70.google.com
+ [209.85.128.70]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-56-_7Spe-3zNHSpwCd5V8VdrA-1; Fri, 24 Jan 2025 04:45:16 -0500
-X-MC-Unique: _7Spe-3zNHSpwCd5V8VdrA-1
-X-Mimecast-MFC-AGG-ID: _7Spe-3zNHSpwCd5V8VdrA
-Received: by mail-wm1-f72.google.com with SMTP id
- 5b1f17b1804b1-4361d4e8359so13275605e9.3
- for <qemu-devel@nongnu.org>; Fri, 24 Jan 2025 01:45:16 -0800 (PST)
+ us-mta-517-oDdY2WblPZeHzolOYJm5Iw-1; Fri, 24 Jan 2025 04:45:13 -0500
+X-MC-Unique: oDdY2WblPZeHzolOYJm5Iw-1
+X-Mimecast-MFC-AGG-ID: oDdY2WblPZeHzolOYJm5Iw
+Received: by mail-wm1-f70.google.com with SMTP id
+ 5b1f17b1804b1-436723db6c4so12960295e9.3
+ for <qemu-devel@nongnu.org>; Fri, 24 Jan 2025 01:45:12 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1737711915; x=1738316715;
+ d=1e100.net; s=20230601; t=1737711911; x=1738316711;
  h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=uraIJgwBFUvUKFYLefg6yvOaMymHtIAJOis/mI8DgJQ=;
- b=J/gbxTcJKtBwXZNzcc01sDIlKUrewZIG16NMsMq2rKn98BvlQj+x5dUgaa6xdqEwyE
- vYYpg4oPcQZh59wMu9V78fmz4lA7IbcXf0N1mmFDk/ih54zD0E9oGx2G+xBEKvV/0Unb
- 4TSX3dfkzLZnd995N5PJ8ux5/IELHoq4fcA3zS/XjNnSEc1ajVxiodKRCU18QRimNeXQ
- U8xyT6ucCXIkDwG8rZWFGV5I81m6u5v0ORYaFk3i4M8TY++vANSjg77gbrQYHkzWoI13
- Ib0YtlGkrpXfesmgs1Y5WjWq6TJir6OIXc6QhiXb4wCQgS6rrwPn9Qo47IINLcHBNxbh
- 4Nvw==
-X-Gm-Message-State: AOJu0Yx8Ihg9IVg9kn0KsMABMQ0LUFr+B3QTSrtVT+Hs4JD8BvtOVnVV
- hauu46bE/qmaEVUK80dpn78/nD0sXQibLhZlNRJYYmGQVhEdWxVxMEDijJTWZdGPVK1Q4wEJAY7
- uUaVenObnMmXt+mW9AK5r/PEoQSoxYxvt0LvomPC7l1Uj0w6JKw8KogLnmJcPrudgCW1J6BKRPq
- 3c0JBVUz9BroiQcBbB96FagVewJ3hpU/MN89Z3n+0=
-X-Gm-Gg: ASbGncu4dH3e3CJkWL5cHZuIuq5SrUndDQpM1WjasOaZ6ppciocbQXptR3MDSYaUPTG
- LKAGABnqpe6i1/Si1uan5IOkoQgXfopPIGvPRqGw+5AbaCHTlvq5JZL6YYgU/C4abRnmazV33j5
- a9+a6R9bleaNJvSmpZAMJxbq5rY8Uxe3wcNJ1QpA44r7rD6JwJgCnyAcFx6U2wA705iyWTw8vfM
- IE4PZn3s7eEwcr6VspiAZRSbWfMcdBB3JzcAxwXN/QV43ONUlaYGs4WqS9AUZPd4P88mXueVw==
-X-Received: by 2002:a05:600c:601a:b0:42c:bb10:7292 with SMTP id
- 5b1f17b1804b1-438a2114bc9mr173905545e9.1.1737711914875; 
- Fri, 24 Jan 2025 01:45:14 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IGku2OYAFByGb551sRZ8gr87JWPufRNulZJt45pE6CAwNbhWGtiZU8/NyrCAG+vCt3ywoc4Yw==
-X-Received: by 2002:a05:600c:601a:b0:42c:bb10:7292 with SMTP id
- 5b1f17b1804b1-438a2114bc9mr173905265e9.1.1737711914361; 
- Fri, 24 Jan 2025 01:45:14 -0800 (PST)
+ bh=xatIXaIYlV/CgS4ESCp0zEwFccHB44d7QBdN1/soCUc=;
+ b=RqGWxkyrZK0a9FE+8UjC4oOlC4FUvC+dfMRWEaxtHitMT3VQXUAm2tVrRtXx3jKiH5
+ ZAyz24lOp9lNsCNIWYeEJgifbVLVLvRfNoMYLq+MrmyV9quTCEG50H+VG/4fyXyUrNOT
+ peVZjXxKh6VZ3NkpdGuil48/EGTzD1xHLwZgAIdtFDHgfoKXZ2AwWKqqKTfupU8uRlKs
+ 6RGaDooxpIF/EhnT8ak5cB3a9vqjlhADD/ywkVUkO53QfKqzSDfuGT/2OBQvXtED9OzM
+ e5Kr+mnuSvxY9zR8CD6NWHyLenVwfnN5iUVo+Hzh1+FUXdFEDD9+xX66zYZByQBeaDqR
+ oV3w==
+X-Gm-Message-State: AOJu0YxBSJinTtR09Xwooys49E2mcmbaywikmndmczNiX/WPheNlj9zK
+ pJ2dQb2wKfOFCCRNhS3PYPNLTKBPsihfKiBuhxmGL3BXh5iph85JHn5Eq9j/Kd42mJfJc+uOGGo
+ S2130Z+j6D+N/X1DYDeiRoL94fL5xEz11t6kItHQbeU0KhEg8GbVP94iMWZ7xa0KIlxiTJmQcpc
+ l4RALuLY2Kjixp0FTj1ecrxQXCwuPmWZgKzw3kybE=
+X-Gm-Gg: ASbGncuvcSbEvJ3Qg5JYfFkkHHdXWzVrIYJxNSZvq1TnsNaLwQvhCgpunqlixGFy0kJ
+ GeucJMLjobCrTEpPCULolDzMo5D4uVypbsdDY2qsXbBtT/lk0qsQAAhFfePeKMO2T1Dqe9W1Mw0
+ IGAtb72QytbPMHMX/e8ChvNb7zgkF+osTsKapQaDLVFKdN1Hpfs47RhGEaGqM8wrmwvdgDkIDuc
+ VHg1X2KmwaoH5jJVjNCnXSmj9W1nL3Ef3h5qEHsXXmqTtykHMiadNRfPZaL/ITWgV1PncSLKg==
+X-Received: by 2002:a05:600c:1c16:b0:435:192:63fb with SMTP id
+ 5b1f17b1804b1-438913bed1bmr256504785e9.3.1737711911521; 
+ Fri, 24 Jan 2025 01:45:11 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IHsIm+Ym8NnzGGf6nf7UgSf5CGAEqY2xPvvmdHJFC1/4vDfx8svnz11aFZB96lXs2oWZYQkBw==
+X-Received: by 2002:a05:600c:1c16:b0:435:192:63fb with SMTP id
+ 5b1f17b1804b1-438913bed1bmr256504435e9.3.1737711911044; 
+ Fri, 24 Jan 2025 01:45:11 -0800 (PST)
 Received: from [192.168.10.48] ([151.95.59.125])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-438bd57517fsm19616805e9.38.2025.01.24.01.45.13
+ 5b1f17b1804b1-438bd4fa479sm20684205e9.5.2025.01.24.01.45.10
+ for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 24 Jan 2025 01:45:13 -0800 (PST)
+ Fri, 24 Jan 2025 01:45:10 -0800 (PST)
 From: Paolo Bonzini <pbonzini@redhat.com>
 To: qemu-devel@nongnu.org
-Cc: Tao Su <tao1.su@linux.intel.com>
-Subject: [PULL 16/48] target/i386: Introduce SierraForest-v2 model
-Date: Fri, 24 Jan 2025 10:44:10 +0100
-Message-ID: <20250124094442.13207-17-pbonzini@redhat.com>
+Subject: [PULL 14/48] target/i386: extract common bits of gen_repz/gen_repz_nz
+Date: Fri, 24 Jan 2025 10:44:08 +0100
+Message-ID: <20250124094442.13207-15-pbonzini@redhat.com>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250124094442.13207-1-pbonzini@redhat.com>
 References: <20250124094442.13207-1-pbonzini@redhat.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=pbonzini@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -50
 X-Spam_score: -5.1
 X-Spam_bar: -----
 X-Spam_report: (-5.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-2.996,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.043,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -107,55 +107,79 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Tao Su <tao1.su@linux.intel.com>
+Now that everything has been cleaned up, look at DF and prefixes
+in a single function, and call that one from gen_repz and gen_repz_nz.
 
-Update SierraForest CPU model to add LAM, 4 bits indicating certain bits
-of IA32_SPEC_CTR are supported(intel-psfd, ipred-ctrl, rrsba-ctrl,
-bhi-ctrl) and the missing features(ss, tsc-adjust, cldemote, movdiri,
-movdir64b)
-
-Also add GDS-NO and RFDS-NO to indicate the related vulnerabilities are
-mitigated in stepping 3.
-
-Tested-by: Xuelian Guo <xuelian.guo@intel.com>
-Signed-off-by: Tao Su <tao1.su@linux.intel.com>
-Reviewed-by: Zhao Liu <zhao1.liu@intel.com>
-Link: https://lore.kernel.org/r/20250121020650.1899618-2-tao1.su@linux.intel.com
+Suggested-by: Richard Henderson <richard.henderson@linaro.org>
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 ---
- target/i386/cpu.c | 19 +++++++++++++++++++
- 1 file changed, 19 insertions(+)
+ target/i386/tcg/translate.c | 34 ++++++++++++++--------------------
+ 1 file changed, 14 insertions(+), 20 deletions(-)
 
-diff --git a/target/i386/cpu.c b/target/i386/cpu.c
-index 1b9c11022c4..6db8d6c9bab 100644
---- a/target/i386/cpu.c
-+++ b/target/i386/cpu.c
-@@ -4549,6 +4549,25 @@ static const X86CPUDefinition builtin_x86_defs[] = {
-         .model_id = "Intel Xeon Processor (SierraForest)",
-         .versions = (X86CPUVersionDefinition[]) {
-             { .version = 1 },
-+            {
-+                .version = 2,
-+                .props = (PropValue[]) {
-+                    { "ss", "on" },
-+                    { "tsc-adjust", "on" },
-+                    { "cldemote", "on" },
-+                    { "movdiri", "on" },
-+                    { "movdir64b", "on" },
-+                    { "gds-no", "on" },
-+                    { "rfds-no", "on" },
-+                    { "lam", "on" },
-+                    { "intel-psfd", "on"},
-+                    { "ipred-ctrl", "on"},
-+                    { "rrsba-ctrl", "on"},
-+                    { "bhi-ctrl", "on"},
-+                    { "stepping", "3" },
-+                    { /* end of list */ }
-+                }
-+            },
-             { /* end of list */ },
-         },
-     },
+diff --git a/target/i386/tcg/translate.c b/target/i386/tcg/translate.c
+index 9f4d3ebbd95..9b2fde5eb28 100644
+--- a/target/i386/tcg/translate.c
++++ b/target/i386/tcg/translate.c
+@@ -688,14 +688,6 @@ static inline void gen_string_movl_A0_EDI(DisasContext *s)
+     gen_lea_v_seg(s, cpu_regs[R_EDI], R_ES, -1);
+ }
+ 
+-static inline TCGv gen_compute_Dshift(DisasContext *s, MemOp ot)
+-{
+-    TCGv dshift = tcg_temp_new();
+-    tcg_gen_ld32s_tl(dshift, tcg_env, offsetof(CPUX86State, df));
+-    tcg_gen_shli_tl(dshift, dshift, ot);
+-    return dshift;
+-};
+-
+ static TCGv gen_ext_tl(TCGv dst, TCGv src, MemOp size, bool sign)
+ {
+     if (size == MO_TL) {
+@@ -1446,29 +1438,31 @@ static void do_gen_rep(DisasContext *s, MemOp ot, TCGv dshift,
+     gen_jmp_rel_csize(s, 0, 1);
+ }
+ 
+-static void gen_repz(DisasContext *s, MemOp ot,
+-                     void (*fn)(DisasContext *s, MemOp ot, TCGv dshift))
+-
++static void do_gen_string(DisasContext *s, MemOp ot,
++                          void (*fn)(DisasContext *s, MemOp ot, TCGv dshift),
++                          bool is_repz_nz)
+ {
+-    TCGv dshift = gen_compute_Dshift(s, ot);
++    TCGv dshift = tcg_temp_new();
++    tcg_gen_ld32s_tl(dshift, tcg_env, offsetof(CPUX86State, df));
++    tcg_gen_shli_tl(dshift, dshift, ot);
+ 
+     if (s->prefix & (PREFIX_REPZ | PREFIX_REPNZ)) {
+-        do_gen_rep(s, ot, dshift, fn, false);
++        do_gen_rep(s, ot, dshift, fn, is_repz_nz);
+     } else {
+         fn(s, ot, dshift);
+     }
+ }
+ 
++static void gen_repz(DisasContext *s, MemOp ot,
++                     void (*fn)(DisasContext *s, MemOp ot, TCGv dshift))
++{
++    do_gen_string(s, ot, fn, false);
++}
++
+ static void gen_repz_nz(DisasContext *s, MemOp ot,
+                         void (*fn)(DisasContext *s, MemOp ot, TCGv dshift))
+ {
+-    TCGv dshift = gen_compute_Dshift(s, ot);
+-
+-    if (s->prefix & (PREFIX_REPZ | PREFIX_REPNZ)) {
+-        do_gen_rep(s, ot, dshift, fn, true);
+-    } else {
+-        fn(s, ot, dshift);
+-    }
++    do_gen_string(s, ot, fn, true);
+ }
+ 
+ static void gen_helper_fp_arith_ST0_FT0(int op)
 -- 
 2.48.1
 
