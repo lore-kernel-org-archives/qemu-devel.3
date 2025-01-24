@@ -4,79 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 269F0C0218B
-	for <qemu-devel@archiver.kernel.org>; Fri, 24 Jan 2025 16:35:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8B8FEC02181
+	for <qemu-devel@archiver.kernel.org>; Fri, 24 Jan 2025 16:35:19 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tbMah-00089L-Ut; Fri, 24 Jan 2025 11:31:34 -0500
+	id 1tbMcA-00055v-Jv; Fri, 24 Jan 2025 11:33:03 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1tbMYX-00040E-Rq
- for qemu-devel@nongnu.org; Fri, 24 Jan 2025 11:29:19 -0500
-Received: from mail-wm1-x331.google.com ([2a00:1450:4864:20::331])
+ id 1tbMYj-0004cN-HH
+ for qemu-devel@nongnu.org; Fri, 24 Jan 2025 11:29:29 -0500
+Received: from mail-wm1-x332.google.com ([2a00:1450:4864:20::332])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1tbMYV-0005ZF-V7
- for qemu-devel@nongnu.org; Fri, 24 Jan 2025 11:29:17 -0500
-Received: by mail-wm1-x331.google.com with SMTP id
- 5b1f17b1804b1-4363ae65100so24852005e9.0
- for <qemu-devel@nongnu.org>; Fri, 24 Jan 2025 08:29:15 -0800 (PST)
+ id 1tbMYh-0005dO-Vm
+ for qemu-devel@nongnu.org; Fri, 24 Jan 2025 11:29:29 -0500
+Received: by mail-wm1-x332.google.com with SMTP id
+ 5b1f17b1804b1-43626213fffso22181515e9.1
+ for <qemu-devel@nongnu.org>; Fri, 24 Jan 2025 08:29:27 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1737736154; x=1738340954; darn=nongnu.org;
+ d=linaro.org; s=google; t=1737736166; x=1738340966; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=jN3mFnktaZqVK11S456/SP/OoMEiasYt5k58IjHmWbU=;
- b=eryf4QoeJnKBtq5craoip97NvTILEp5Dqy3hbwhgSDDs73DRxGHxVyWquh+oBHQACx
- dnJDki1ZsxsXfUIvXaGPmibO/KlSC12i/t/QZF570ihWUUIjjCOjQv9Tmhtf15UvGDAj
- quWogAvqqubs/jOqRzP6u2zQSV0oEuslu+/fs0Ou7OlIYMmxspe/flkFsU1IqfuW55hU
- 1/R9YpjT1WnmSXLbP2Ni4RhwIIpfeIRA8thqCrMAEMAgL+ddYew8aUWM1evsfAcdBzYf
- Rn5ncMa1y5nOqR/yJPzUUmwbnfl76ubdvbVMuNLlwr7DzwxYMsm2cGasD3bJK+IEyppL
- lYxg==
+ :reply-to; bh=nKR8uPNYLhAGe3FarqfGbfg+8VB5fh6HLYBVmEiiDLE=;
+ b=W48Sto+0FSdiavBnRQW+/ZwOx+g8Xrm+itB2+ym76WWu11GI6awFBCohIpdLiBIHKZ
+ E9EOZeTcXr0BKqmRNe51yntg/3QAUPyDljIbODaqwDILGM97Z+3N3YudIfJyTHADKWCz
+ bZZJIZUHhpAwL/+kqm0BM35ht+C+G01tiDl3V9iaPMlhVJlvmT9L/HsR96GbYsR4T9ww
+ bt29/uN1x5T8W+mtDlYOUaxfHHr9xvRXF1l5QAAqsRQTkrcJePpS08YDa+0AF12XsKTO
+ jYeQLqSnfl6Eq3DvKMt3kAr9OK04D7i3b0YRZzJYx1HrOHa0BCchD7Uetg983ZC0SVWw
+ yEEQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1737736154; x=1738340954;
+ d=1e100.net; s=20230601; t=1737736166; x=1738340966;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=jN3mFnktaZqVK11S456/SP/OoMEiasYt5k58IjHmWbU=;
- b=tdbkUF0HGQbglN329XqJ35T/F/XEfsT6CkkZojwC+6xXUqlc0iFKbQfnrhya7y1Lk9
- Pq2TF92hIDXZiIfrAogeSwS/qyOaYocdBLtj8a0m74iffVaG5c6+2bylI+aEy5NQOA+S
- xjSclAXCYR5h61DUWov1wuDOw0JGEy1v6nqI4Kjl7NZXvb9ksLlb1QvKYWN8Nl4hn2nM
- 8NdGFX5R7u8Wb6mkP9IiodNRhMb4lpRXbkketYIBvsx4ClX4fLs7JQLWbs6EwRpDCV2/
- 8WUnzt4Si7bUxDtLbEZPUCZjfsqqHjEEHMSTlqf5Qo85WPNH+XqHvxqXo1znXcw+5MYD
- W6Tw==
+ bh=nKR8uPNYLhAGe3FarqfGbfg+8VB5fh6HLYBVmEiiDLE=;
+ b=blCRcMqUHu6WWj9n5cbH8Rq11eSacaBkyq56JKrL/uxFF+1gVPaiVGgoAG9mQqjTaE
+ LJxSJa8uEjLnPQlsDazSqYbt0JZqI+UM0IzNhh58lsf/SLYdd2kYRXv5f+UiSnOJy3oA
+ DKcwWaW/JJ5t89CAmTI91oRPoe2mmqcMnTQhemRRwlrNfXE6zu10XB8gu659aDU3oF8E
+ YIxvhA1a8Lc/qMEwzYHrLRw7OU7NiXl//BMCRnIBZ/vbbW+tQBcl89ZOl+YTgWb+oYkW
+ Hw3Kr3xWa35iFustVXHZwO+58JBSEfq1NlKUW0BXcdYMudlyCWWLvYy8CpV7i62SwvWM
+ baNw==
 X-Forwarded-Encrypted: i=1;
- AJvYcCUBC+zyVs18KBMkieZFiadrXBUlQlEqd8czV6vCWqtty3qeBUQfixZCNZq+txpjjw7YPuSMRAApRNz+@nongnu.org
-X-Gm-Message-State: AOJu0YyXTxZrAeZZIJE7sNqIbJdKtJCbRMV5kHo/+jetM80fxsUIygGu
- SlH5W99yy08oK/pB1N4NTWQ0/Y9QI93wKWCgUjh3GTLrC9hBkJ8FSvvCzmhe/DM=
-X-Gm-Gg: ASbGnctAvPX2AnBLyTj3uwUg9w9BtRHTj7jcyJgQn13lnN/+zcuj/054QgllbPQcIbj
- QU7v1ZrHLcBcfs7D7iR1gMNDNEKNMUqOr4R3kBVLa2nXWqMgXSuTIqv8G0a/Rs8/Eb7BosObepC
- Jy69uuKZc4lmsFJXhoYt+uO9EZX6hLmKfNaSKb42NtOmmW1NT7XNmbf5TFhPQdQAlEWJiw7ugQ0
- ZtG1fICI9hFimHSpTz68T3QGbrTvsC+zbHcTN4WmkzZJ7CcmOAq/roetjr+opwjHEvQge9zypV5
- QrtdvrmcAoA=
-X-Google-Smtp-Source: AGHT+IFTaKlHVCwBeoUj4YP2e0U6QEJOsGn9/GcaotTgu9S/cZTLGw0tPkXt1cxN3qTrNq9GPdEhnQ==
-X-Received: by 2002:a05:600c:1c1e:b0:436:6460:e67a with SMTP id
- 5b1f17b1804b1-43891452899mr251172675e9.25.1737736154514; 
- Fri, 24 Jan 2025 08:29:14 -0800 (PST)
+ AJvYcCUMtx3tVjgXL/yBd78PCG8fIx0VXW6H+0IH0AIL51RDKjqq1hk7+T57uk/tTsOlW98oXtyKf7sd4Avu@nongnu.org
+X-Gm-Message-State: AOJu0Yw5cB8qSYKK2YV600GaB9TLnCjbWfmC8KqnVQzvQQIXwO9umwKC
+ 6XdVtB7Ns0Tlq4EwXVqRrTXtfjHwbrhV/FOK1DnMIzoj8ViIBWGjxwE9qwex2xkJCKJYUFaLyPf
+ K
+X-Gm-Gg: ASbGnctchbk55B9YGaY88H6YISEsK/Jadx/TiM6Psni6IodeGrbgz9GHpm+J4+lMjzf
+ 7GbVaLZjGaE3FuX4Q7hUbcAgyl2/7xwZeFt9TXU5KeGE+On2EmpRlUO3RDIr7Dy0dO8D82osf57
+ vyum2SlXXCDnXFQBdNneZahMP34SFH0Uq1q4fMIvrc4+sJV//6pThrvMk8zgCv3miagf+4kButn
+ keox39maHesjNUXXd5Hdh6V/+GjITs0rnS5TGdkC3T3g4p4D0LgsWXzmIx+oZjKv7Yb6ydCQIVJ
+ +gifZP5Oq9g=
+X-Google-Smtp-Source: AGHT+IG6Mttva2ZJdU/FCypjf3E6xFnEn7bAD3qOtpX+tYHcl2/SoZ1fzRwbZZobC/Fs1LYYidHusg==
+X-Received: by 2002:a05:600c:5110:b0:42c:b8c9:16c8 with SMTP id
+ 5b1f17b1804b1-438b885b8c1mr76525055e9.10.1737736166524; 
+ Fri, 24 Jan 2025 08:29:26 -0800 (PST)
 Received: from orth.archaic.org.uk (orth.archaic.org.uk. [2001:8b0:1d0::2])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-438bd47eecasm31683025e9.6.2025.01.24.08.29.13
+ 5b1f17b1804b1-438bd47eecasm31683025e9.6.2025.01.24.08.29.25
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 24 Jan 2025 08:29:13 -0800 (PST)
+ Fri, 24 Jan 2025 08:29:25 -0800 (PST)
 From: Peter Maydell <peter.maydell@linaro.org>
 To: qemu-arm@nongnu.org,
 	qemu-devel@nongnu.org
-Subject: [PATCH 29/76] target/arm: Adjust FP behaviour for FPCR.AH = 1
-Date: Fri, 24 Jan 2025 16:27:49 +0000
-Message-Id: <20250124162836.2332150-30-peter.maydell@linaro.org>
+Subject: [PATCH 39/76] target/arm: Handle FPCR.NEP for BFCVT scalar
+Date: Fri, 24 Jan 2025 16:27:59 +0000
+Message-Id: <20250124162836.2332150-40-peter.maydell@linaro.org>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20250124162836.2332150-1-peter.maydell@linaro.org>
 References: <20250124162836.2332150-1-peter.maydell@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::331;
- envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x331.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::332;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x332.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -99,150 +100,55 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-When FPCR.AH is set, various behaviours of AArch64 floating point
-operations which are controlled by softfloat config settings change:
- * tininess and ftz detection before/after rounding
- * NaN propagation order
- * result of 0 * Inf + NaN
- * default NaN value
-
-When the guest changes the value of the AH bit, switch these config
-settings on the fp_status_a64 and fp_status_f16_a64 float_status
-fields.
-
-This requires us to make the arm_set_default_fp_behaviours() function
-global, since we now need to call it from cpu.c and vfp_helper.c; we
-move it to vfp_helper.c so it can be next to the new
-arm_set_ah_fp_behaviours().
+Currently we implement BFCVT scalar via do_fp1_scalar().  This works
+even though BFCVT is a narrowing operation from 32 to 16 bits,
+because we can use write_fp_sreg() for float16. However, FPCR.NEP
+support requires that we use write_fp_hreg_merging() for float16
+outputs, so we can't continue to borrow the non-narrowing
+do_fp1_scalar() function for this. Split out trans_BFCVT_s()
+into its own implementation that honours FPCR.NEP.
 
 Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
 ---
- target/arm/internals.h  |  4 +++
- target/arm/cpu.c        | 23 -----------------
- target/arm/vfp_helper.c | 56 +++++++++++++++++++++++++++++++++++++++++
- 3 files changed, 60 insertions(+), 23 deletions(-)
+ target/arm/tcg/translate-a64.c | 25 +++++++++++++++++++++----
+ 1 file changed, 21 insertions(+), 4 deletions(-)
 
-diff --git a/target/arm/internals.h b/target/arm/internals.h
-index 863a84edf81..98073acc276 100644
---- a/target/arm/internals.h
-+++ b/target/arm/internals.h
-@@ -1828,4 +1828,8 @@ uint64_t gt_virt_cnt_offset(CPUARMState *env);
-  * all EL1" scope; this covers stage 1 and stage 2.
-  */
- int alle1_tlbmask(CPUARMState *env);
-+
-+/* Set the float_status behaviour to match the Arm defaults */
-+void arm_set_default_fp_behaviours(float_status *s);
-+
- #endif
-diff --git a/target/arm/cpu.c b/target/arm/cpu.c
-index 0b4cd872d27..1ba22c4c7aa 100644
---- a/target/arm/cpu.c
-+++ b/target/arm/cpu.c
-@@ -169,29 +169,6 @@ void arm_register_el_change_hook(ARMCPU *cpu, ARMELChangeHookFn *hook,
-     QLIST_INSERT_HEAD(&cpu->el_change_hooks, entry, node);
- }
+diff --git a/target/arm/tcg/translate-a64.c b/target/arm/tcg/translate-a64.c
+index 66c214ed278..944bdf8cafe 100644
+--- a/target/arm/tcg/translate-a64.c
++++ b/target/arm/tcg/translate-a64.c
+@@ -8582,10 +8582,27 @@ static const FPScalar1 f_scalar_frintx = {
+ };
+ TRANS(FRINTX_s, do_fp1_scalar, a, &f_scalar_frintx, -1)
  
--/*
-- * Set the float_status behaviour to match the Arm defaults:
-- *  * tininess-before-rounding
-- *  * 2-input NaN propagation prefers SNaN over QNaN, and then
-- *    operand A over operand B (see FPProcessNaNs() pseudocode)
-- *  * 3-input NaN propagation prefers SNaN over QNaN, and then
-- *    operand C over A over B (see FPProcessNaNs3() pseudocode,
-- *    but note that for QEMU muladd is a * b + c, whereas for
-- *    the pseudocode function the arguments are in the order c, a, b.
-- *  * 0 * Inf + NaN returns the default NaN if the input NaN is quiet,
-- *    and the input NaN if it is signalling
-- *  * Default NaN has sign bit clear, msb frac bit set
-- */
--static void arm_set_default_fp_behaviours(float_status *s)
--{
--    set_float_detect_tininess(float_tininess_before_rounding, s);
--    set_float_detect_ftz(detect_ftz_before_rounding, s);
--    set_float_2nan_prop_rule(float_2nan_prop_s_ab, s);
--    set_float_3nan_prop_rule(float_3nan_prop_s_cab, s);
--    set_float_infzeronan_rule(float_infzeronan_dnan_if_qnan, s);
--    set_float_default_nan_pattern(0b01000000, s);
--}
--
- static void cp_reg_reset(gpointer key, gpointer value, gpointer opaque)
- {
-     /* Reset a single ARMCPRegInfo register */
-diff --git a/target/arm/vfp_helper.c b/target/arm/vfp_helper.c
-index 5a0b389f7a3..7507ff24bc0 100644
---- a/target/arm/vfp_helper.c
-+++ b/target/arm/vfp_helper.c
-@@ -31,6 +31,50 @@
-    Single precision routines have a "s" suffix, double precision a
-    "d" suffix.  */
- 
-+/*
-+ * Set the float_status behaviour to match the Arm defaults:
-+ *  * tininess-before-rounding
-+ *  * 2-input NaN propagation prefers SNaN over QNaN, and then
-+ *    operand A over operand B (see FPProcessNaNs() pseudocode)
-+ *  * 3-input NaN propagation prefers SNaN over QNaN, and then
-+ *    operand C over A over B (see FPProcessNaNs3() pseudocode,
-+ *    but note that for QEMU muladd is a * b + c, whereas for
-+ *    the pseudocode function the arguments are in the order c, a, b.
-+ *  * 0 * Inf + NaN returns the default NaN if the input NaN is quiet,
-+ *    and the input NaN if it is signalling
-+ *  * Default NaN has sign bit clear, msb frac bit set
-+ */
-+void arm_set_default_fp_behaviours(float_status *s)
+-static const FPScalar1 f_scalar_bfcvt = {
+-    .gen_s = gen_helper_bfcvt,
+-};
+-TRANS_FEAT(BFCVT_s, aa64_bf16, do_fp1_scalar_ah, a, &f_scalar_bfcvt, -1)
++static bool trans_BFCVT_s(DisasContext *s, arg_rr_e *a)
 +{
-+    set_float_detect_tininess(float_tininess_before_rounding, s);
-+    set_float_detect_ftz(detect_ftz_before_rounding, s);
-+    set_float_2nan_prop_rule(float_2nan_prop_s_ab, s);
-+    set_float_3nan_prop_rule(float_3nan_prop_s_cab, s);
-+    set_float_infzeronan_rule(float_infzeronan_dnan_if_qnan, s);
-+    set_float_default_nan_pattern(0b01000000, s);
-+}
++    ARMFPStatusFlavour fpsttype = s->fpcr_ah ? FPST_FPCR_AH : FPST_FPCR_A64;
++    TCGv_i32 t32;
++    int check;
 +
-+/*
-+ * Set the float_status behaviour to match the FEAT_AFP
-+ * FPCR.AH=1 requirements:
-+ *  * tininess-after-rounding
-+ *  * 2-input NaN propagation prefers the first NaN
-+ *  * 3-input NaN propagation prefers a over b over c
-+ *  * 0 * Inf + NaN always returns the input NaN and doesn't
-+ *    set Invalid for a QNaN
-+ *  * default NaN has sign bit set, msb frac bit set
-+ */
-+static void arm_set_ah_fp_behaviours(float_status *s)
-+{
-+    set_float_detect_tininess(float_tininess_after_rounding, s);
-+    set_float_detect_ftz(detect_ftz_after_rounding, s);
-+    set_float_2nan_prop_rule(float_2nan_prop_ab, s);
-+    set_float_3nan_prop_rule(float_3nan_prop_abc, s);
-+    set_float_infzeronan_rule(float_infzeronan_dnan_never |
-+                              float_infzeronan_suppress_invalid, s);
-+    set_float_default_nan_pattern(0b11000000, s);
-+}
-+
- #ifdef CONFIG_TCG
- 
- /* Convert host exception flags to vfp form.  */
-@@ -171,6 +215,18 @@ static void vfp_set_fpcr_to_host(CPUARMState *env, uint32_t val, uint32_t mask)
-         set_default_nan_mode(dnan_enabled, &env->vfp.fp_status_f16_a32);
-         set_default_nan_mode(dnan_enabled, &env->vfp.fp_status_f16_a64);
-     }
-+    if (changed & FPCR_AH) {
-+        bool ah_enabled = val & FPCR_AH;
-+
-+        if (ah_enabled) {
-+            /* Change behaviours for A64 FP operations */
-+            arm_set_ah_fp_behaviours(&env->vfp.fp_status_a64);
-+            arm_set_ah_fp_behaviours(&env->vfp.fp_status_f16_a64);
-+        } else {
-+            arm_set_default_fp_behaviours(&env->vfp.fp_status_a64);
-+            arm_set_default_fp_behaviours(&env->vfp.fp_status_f16_a64);
-+        }
++    if (!dc_isar_feature(aa64_bf16, s)) {
++        return false;
 +    }
-     /*
-      * If any bits changed that we look at in vfp_get_fpsr_from_host(),
-      * we must sync the float_status flags into vfp.fpsr now (under the
++
++    check = fp_access_check_scalar_hsd(s, a->esz);
++
++    if (check <= 0) {
++        return check == 0;
++    }
++
++    t32 = read_fp_sreg(s, a->rn);
++    gen_helper_bfcvt(t32, t32, fpstatus_ptr(fpsttype));
++    write_fp_hreg_merging(s, a->rd, a->rd, t32);
++    return true;
++}
+ 
+ static const FPScalar1 f_scalar_frint32 = {
+     NULL,
 -- 
 2.34.1
 
