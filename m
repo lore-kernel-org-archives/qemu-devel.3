@@ -4,86 +4,110 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 077A3C02181
-	for <qemu-devel@archiver.kernel.org>; Fri, 24 Jan 2025 16:51:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 82BB6C0218B
+	for <qemu-devel@archiver.kernel.org>; Fri, 24 Jan 2025 16:52:07 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tbMgl-0006ss-5b; Fri, 24 Jan 2025 11:37:47 -0500
+	id 1tbMnR-0003VJ-Kb; Fri, 24 Jan 2025 11:44:41 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1tbMZa-00065Y-3O
- for qemu-devel@nongnu.org; Fri, 24 Jan 2025 11:30:28 -0500
-Received: from mail-wm1-x333.google.com ([2a00:1450:4864:20::333])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1tbMZR-0005pi-KC
- for qemu-devel@nongnu.org; Fri, 24 Jan 2025 11:30:21 -0500
-Received: by mail-wm1-x333.google.com with SMTP id
- 5b1f17b1804b1-436ce2ab251so15095615e9.1
- for <qemu-devel@nongnu.org>; Fri, 24 Jan 2025 08:30:04 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1737736204; x=1738341004; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=ol6wjs2XXi3PGGKevFQFr1g6AWQeoCb1SFBUJSxPQd4=;
- b=MUsfNPJSrZyJxcIonXbUjb0dIzlMxExGBMzarZ9q0XS+IL+rnBcgs8gHzjFlq8x9Wk
- hVH/BE3ecc0xAJRnX2UNxu+OUtCUUrTFwGjz0rZBSHnGHIjzeWMnDbOj6llzT2UZ5jeT
- UTLaFwXHR8w/1/x2vTXYMIDBqI/DBFhgOkNYq4kx8NSVdiMDWpCR7YjwsOhWR3+W6n4J
- HGDxapOwzFEX29IZ0cF2Cb+Uz9dClEtOr8i/zhrKE5LEMoRj95ETmFDMG7btIhv3HIjL
- 8Kp/BS+yAJ0sKvvsn2jUTDY6Vq8JoR711Mg1U32+EQ+8yJyMBRhSqvzUu/KPLutGHx9u
- n2lw==
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1tbMmm-0003Kb-BI
+ for qemu-devel@nongnu.org; Fri, 24 Jan 2025 11:44:03 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1tbMmk-0000ze-Hn
+ for qemu-devel@nongnu.org; Fri, 24 Jan 2025 11:43:59 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1737737037;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=IDKUVYKOGSDfpP03QEl3KwwK9q8MuQxs4/UuoRKH5lI=;
+ b=FsXtsscp6c0/EvI0BHRLc3mdfhVa5VryoQFhxJiavge5yFHotByeMa9UyEwbwQVJpflLHk
+ WmCZC4RMEA5tZF6tUAWkqxuKukGv5FVya0JHApdVpEvv4lt5Kr/xMU/E6MyIIqq0HdO58F
+ 24eZ7IODRyxiZVj+Ad2uBm3rfhg0yRA=
+Received: from mail-ot1-f69.google.com (mail-ot1-f69.google.com
+ [209.85.210.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-36-JXF_cFceO8WVcUVRuJ0f_g-1; Fri, 24 Jan 2025 11:43:54 -0500
+X-MC-Unique: JXF_cFceO8WVcUVRuJ0f_g-1
+X-Mimecast-MFC-AGG-ID: JXF_cFceO8WVcUVRuJ0f_g
+Received: by mail-ot1-f69.google.com with SMTP id
+ 46e09a7af769-71e13d7e9f2so1583567a34.3
+ for <qemu-devel@nongnu.org>; Fri, 24 Jan 2025 08:43:54 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1737736204; x=1738341004;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=ol6wjs2XXi3PGGKevFQFr1g6AWQeoCb1SFBUJSxPQd4=;
- b=nh+ZXKA9Pv6+tlIzxuSq0J6h61VGjn52qW5Ie7dzwUc8anyhhhSmzwxKG6DsRyIPOn
- PfRYMb7BDGLL1wJl6kQVyj2NbQM9XShpK2ASHODL2irrBbEocCmSru/mfF/m9rTgPwaP
- vXPX4LrqT996hoHC6vLkCbkJOwo1MgHdolT9wkayyrQO+0MLMpL/TO2aF2N6TmW/h4+T
- w4xYDw9/HTBgF3LS/7mv2vzxXuoHAA51fjrbaM6iYmIIGqSu9azCo34vvqrGwumGYgxQ
- tl/RD061FfPYxskx+0E/rMb/HBNldnBwRtutsn++z7zQvuJiOQMik+Q7z/a3xauR46du
- 8Oow==
+ d=1e100.net; s=20230601; t=1737737033; x=1738341833;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=IDKUVYKOGSDfpP03QEl3KwwK9q8MuQxs4/UuoRKH5lI=;
+ b=PcdTD6HV4kTO9dkC9KxcP7nU/C944nmEgemiJTh1SagutTE0+yVzthOoGOXrSE274c
+ eAelxbB7EiB3GJYxa/LAvrR+8gXrXJwDeUydUDSFG54hU4qhJK2yvQcTfb9koeoXTzCH
+ nSnAY5Xr8y5DrGlH/XUDwG0YpS28U/kFSxkyXzgG2JRwd8GpmaDQ4QhEubUVNOJixNmx
+ lp3P4F8J2ZKLKO4acsePZxGjrPy3yRhQQLK4mQ8+953OROKXZF1rXBsZHQMTUA8jRhdK
+ cCEDyFyTq7VODj7MgJ8FOjRGRg4vylDP9ytwTOgK+cUEm5nrsd6Nxh2iKTjn0Dg+2O0e
+ 1OXg==
 X-Forwarded-Encrypted: i=1;
- AJvYcCV7+F3+TzVuYpZKnx85nrSdck1bqi/TPCATRKHuJx/QeWb4DR9eaxj8Pi2FVExedbu/8x7B6bGO4I4L@nongnu.org
-X-Gm-Message-State: AOJu0YwUftB9xp4a24ctav7OnLc4vNLDYEJKQOyitNSkjiTH98FLNMSS
- CJMkXSLotDMzrdY3H90kKGmvOuL3Beev2e9BZzLva2rbVBi0f1FUOYmbHTDQwyc=
-X-Gm-Gg: ASbGncvaMiE5QjoG9T6IHIG+ALdLAnzZdq+EngbPjvEtyCQ46Yri7SlSSyWyVkfLWXN
- qS+Q+s9cj0bPVeZZymgulAn2gVdcnLT4B4KQNhrCA7Blc+bumZ3y9P80/R3OjxLnSKkRx4meKjw
- dF5d070h0UQ6iYqtC4oRcADP1TIJW4TbqpdZ76aBhppCto45vcbf4cl8iW9vCi5bya60s1R9rl+
- YhGrvm93qKmhhJj8K6BnQzKXtDINFr2f8AJk3I7+wERhi5Sgb52A2lJQ8nLAcAGsrc4LQXvef3I
- 66WKCTMN5Iw=
-X-Google-Smtp-Source: AGHT+IF5hA9n2rJMvLf6grf5UwAAQPLeQT8uiOk9QNzLK7gsHkQPTf8akXbaiMRaAdskRRjl3PlcAQ==
-X-Received: by 2002:a05:600c:4e89:b0:434:f739:7ce3 with SMTP id
- 5b1f17b1804b1-438913cb518mr283514855e9.8.1737736203723; 
- Fri, 24 Jan 2025 08:30:03 -0800 (PST)
-Received: from orth.archaic.org.uk (orth.archaic.org.uk. [2001:8b0:1d0::2])
- by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-438bd47eecasm31683025e9.6.2025.01.24.08.30.02
+ AJvYcCW7pCP/TdEOSaBf2KQNFDWdMGLevGhtZEoBNCGPCaXjY9/PlinVrGPsz/fq7Api1OoImpnETQaYtnLf@nongnu.org
+X-Gm-Message-State: AOJu0YzieGNglQTT6yImJtLCM3ZjqG2ueRidIW5m+4DIjrrAkIzpSygb
+ 96vmOuiIvJ9KPk9nDqK24qGRJuoBRKep6zjbyb4rroUG/BULvYGQbR80cxJ4qosFNXGFUq47PBa
+ 1l5PHcQCBHQFsJamc8abTpsX9QJmpXssXdodGKVIpceyvXxroDwAu
+X-Gm-Gg: ASbGncs34lqI38sFvDBtr1EQPpK5qOKcnxiRrUBoS/hkqf34imDT23AwgRBUFLTM126
+ Xv8yDae30K2/u+wd8+dgDVktf0MVfAVZEcIW+7gg9f8GxSU1hh74ymiI12G+Ug4yakdEb813C91
+ MxdEkdkMc/m5RxTTthce8pzDNXuaY78xW1g9PpBG1AFnSn3ATgrVLLB4V8JrcXhjeSMVa+B9U/N
+ vC+5vAMjfodXnCECOiiNP6+1u/fjzUZMui56zQTC+bEGeHaFJELljLS+M5sNm3AazVi2U1Fd+Sc
+ 4eooJZlTu+GctSx7n65cXQ2UP2USnjg=
+X-Received: by 2002:a05:6214:d63:b0:6dd:be26:50ba with SMTP id
+ 6a1803df08f44-6e1b21d4775mr472168246d6.21.1737735158714; 
+ Fri, 24 Jan 2025 08:12:38 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IEkedu4M4bSFyiRgJDvmyb6kS6QCNU3PVd61/eGKd58HzLgZACf+QknYf4i4z86MzQZZnxlEg==
+X-Received: by 2002:a05:6214:d63:b0:6dd:be26:50ba with SMTP id
+ 6a1803df08f44-6e1b21d4775mr472167866d6.21.1737735158385; 
+ Fri, 24 Jan 2025 08:12:38 -0800 (PST)
+Received: from x1n (pool-99-254-114-190.cpe.net.cable.rogers.com.
+ [99.254.114.190]) by smtp.gmail.com with ESMTPSA id
+ 6a1803df08f44-6e2058c236csm9808906d6.104.2025.01.24.08.12.36
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 24 Jan 2025 08:30:03 -0800 (PST)
-From: Peter Maydell <peter.maydell@linaro.org>
-To: qemu-arm@nongnu.org,
-	qemu-devel@nongnu.org
-Subject: [PATCH 68/76] target/arm: Enable FEAT_AFP for '-cpu max'
-Date: Fri, 24 Jan 2025 16:28:28 +0000
-Message-Id: <20250124162836.2332150-69-peter.maydell@linaro.org>
-X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20250124162836.2332150-1-peter.maydell@linaro.org>
-References: <20250124162836.2332150-1-peter.maydell@linaro.org>
+ Fri, 24 Jan 2025 08:12:37 -0800 (PST)
+Date: Fri, 24 Jan 2025 11:12:35 -0500
+From: Peter Xu <peterx@redhat.com>
+To: Alexey Kardashevskiy <aik@amd.com>
+Cc: Chenyi Qiang <chenyi.qiang@intel.com>, Xiaoyao Li <xiaoyao.li@intel.com>,
+ David Hildenbrand <david@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
+ Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Michael Roth <michael.roth@amd.com>, qemu-devel@nongnu.org,
+ kvm@vger.kernel.org, Williams Dan J <dan.j.williams@intel.com>,
+ Peng Chao P <chao.p.peng@intel.com>, Gao Chao <chao.gao@intel.com>,
+ Xu Yilun <yilun.xu@intel.com>
+Subject: Re: [PATCH 2/7] guest_memfd: Introduce an object to manage the
+ guest-memfd with RamDiscardManager
+Message-ID: <Z5O784_wnrBMrV6X@x1n>
+References: <Z46GIsAcXJTPQ8yN@x1n>
+ <7e60d2d8-9ee9-4e97-8a45-bd35a3b7b2a2@redhat.com>
+ <Z46W7Ltk-CWjmCEj@x1n>
+ <8e144c26-b1f4-4156-b959-93dc19ab2984@intel.com>
+ <Z4_MvGSq2B4zptGB@x1n>
+ <c5148428-9ebe-4659-953c-6c9d0eea1051@intel.com>
+ <9d4df308-2dfd-4fa0-a19b-ccbbce13a2fc@intel.com>
+ <b11f240d-ff8c-4c83-9b33-5e556cde0bce@amd.com>
+ <d54f6f53-3d11-477e-8849-cc3d28a201db@intel.com>
+ <2115c769-144c-4254-94b0-6b38b7afc6fc@amd.com>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::333;
- envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x333.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=unavailable autolearn_force=no
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <2115c769-144c-4254-94b0-6b38b7afc6fc@amd.com>
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=peterx@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -50
+X-Spam_score: -5.1
+X-Spam_bar: -----
+X-Spam_report: (-5.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-2.996,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.001,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -99,40 +123,68 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Now that we have completed the handling for FPCR.{AH,FIZ,NEP}, we
-can enable FEAT_AFP for '-cpu max', and document that we support it.
+On Fri, Jan 24, 2025 at 04:56:50PM +1100, Alexey Kardashevskiy wrote:
+> > Now, I assume Peter's real question is, if we can copy the vBIOS to a
+> > private region and no need to create a specific guest_memfd-backed
+> > memory region for it?
 
-Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
----
- docs/system/arm/emulation.rst | 1 +
- target/arm/tcg/cpu64.c        | 1 +
- 2 files changed, 2 insertions(+)
+Yes.
 
-diff --git a/docs/system/arm/emulation.rst b/docs/system/arm/emulation.rst
-index 60176d08597..63b4cdf5fb1 100644
---- a/docs/system/arm/emulation.rst
-+++ b/docs/system/arm/emulation.rst
-@@ -20,6 +20,7 @@ the following architecture extensions:
- - FEAT_AA64EL3 (Support for AArch64 at EL3)
- - FEAT_AdvSIMD (Advanced SIMD Extension)
- - FEAT_AES (AESD and AESE instructions)
-+- FEAT_AFP (Alternate floating-point behavior)
- - FEAT_Armv9_Crypto (Armv9 Cryptographic Extension)
- - FEAT_ASID16 (16 bit ASID)
- - FEAT_BBM at level 2 (Translation table break-before-make levels)
-diff --git a/target/arm/tcg/cpu64.c b/target/arm/tcg/cpu64.c
-index 93573ceeb1a..0bc68aac177 100644
---- a/target/arm/tcg/cpu64.c
-+++ b/target/arm/tcg/cpu64.c
-@@ -1218,6 +1218,7 @@ void aarch64_max_tcg_initfn(Object *obj)
-     t = FIELD_DP64(t, ID_AA64MMFR1, XNX, 1);      /* FEAT_XNX */
-     t = FIELD_DP64(t, ID_AA64MMFR1, ETS, 2);      /* FEAT_ETS2 */
-     t = FIELD_DP64(t, ID_AA64MMFR1, HCX, 1);      /* FEAT_HCX */
-+    t = FIELD_DP64(t, ID_AA64MMFR1, AFP, 1);      /* FEAT_AFP */
-     t = FIELD_DP64(t, ID_AA64MMFR1, TIDCP1, 1);   /* FEAT_TIDCP1 */
-     t = FIELD_DP64(t, ID_AA64MMFR1, CMOW, 1);     /* FEAT_CMOW */
-     cpu->isar.id_aa64mmfr1 = t;
+> 
+> I guess we can copy it but we have pc.bios and pc.rom in own memory regions
+> for some reason even for legacy non-secure VMs, for ages, so it has little
+> or nothing to do with whether vBIOS is in private or shared memory. Thanks,
+
+My previous question is whether they are required to be converted to be
+guest-memfd backed memory regions, irrelevant of whether they're separate
+or not.
+
+I think I found some answers in the commit logs here (it isn't hiding too
+deep; I could have tried when asking):
+
+===8<===
+commit fc7a69e177e4ba26d11fcf47b853f85115b35a11
+Author: Michael Roth <michael.roth@amd.com>
+Date:   Thu May 30 06:16:40 2024 -0500
+
+    hw/i386: Add support for loading BIOS using guest_memfd
+    
+    When guest_memfd is enabled, the BIOS is generally part of the initial
+    encrypted guest image and will be accessed as private guest memory. Add
+    the necessary changes to set up the associated RAM region with a
+    guest_memfd backend to allow for this.
+    
+    Current support centers around using -bios to load the BIOS data.
+    Support for loading the BIOS via pflash requires additional enablement
+    since those interfaces rely on the use of ROM memory regions which make
+    use of the KVM_MEM_READONLY memslot flag, which is not supported for
+    guest_memfd-backed memslots.
+
+commit 413a67450750e0459efeffc3db3ba9759c3e381c
+Author: Michael Roth <michael.roth@amd.com>
+Date:   Thu May 30 06:16:39 2024 -0500
+
+    hw/i386/sev: Use guest_memfd for legacy ROMs
+    
+    Current SNP guest kernels will attempt to access these regions with
+    with C-bit set, so guest_memfd is needed to handle that. Otherwise,
+    kvm_convert_memory() will fail when the guest kernel tries to access it
+    and QEMU attempts to call KVM_SET_MEMORY_ATTRIBUTES to set these ranges
+    to private.
+    
+    Whether guests should actually try to access ROM regions in this way (or
+    need to deal with legacy ROM regions at all), is a separate issue to be
+    addressed on kernel side, but current SNP guest kernels will exhibit
+    this behavior and so this handling is needed to allow QEMU to continue
+    running existing SNP guest kernels.
+===8<===
+
+So IIUC the CoCo VMs will assume they're somehow convertable memories or
+they'll stop working I assume, at least on some existing hardwares.
+
+Thanks,
+
 -- 
-2.34.1
+Peter Xu
 
 
