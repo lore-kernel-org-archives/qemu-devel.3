@@ -4,79 +4,70 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B29E2C02181
-	for <qemu-devel@archiver.kernel.org>; Fri, 24 Jan 2025 16:37:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4FA37C02181
+	for <qemu-devel@archiver.kernel.org>; Fri, 24 Jan 2025 16:38:38 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tbMYd-0004El-6x; Fri, 24 Jan 2025 11:29:23 -0500
+	id 1tbMh6-0007a5-6T; Fri, 24 Jan 2025 11:38:13 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1tbMYE-0003hD-Oz
- for qemu-devel@nongnu.org; Fri, 24 Jan 2025 11:28:59 -0500
-Received: from mail-wm1-x32f.google.com ([2a00:1450:4864:20::32f])
+ id 1tbMeb-0002r7-3C
+ for qemu-devel@nongnu.org; Fri, 24 Jan 2025 11:35:35 -0500
+Received: from mail-yb1-xb2d.google.com ([2607:f8b0:4864:20::b2d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1tbMY7-0005OV-Fs
- for qemu-devel@nongnu.org; Fri, 24 Jan 2025 11:28:56 -0500
-Received: by mail-wm1-x32f.google.com with SMTP id
- 5b1f17b1804b1-43635796b48so15503355e9.0
- for <qemu-devel@nongnu.org>; Fri, 24 Jan 2025 08:28:50 -0800 (PST)
+ id 1tbMeZ-0006qA-Ii
+ for qemu-devel@nongnu.org; Fri, 24 Jan 2025 11:35:32 -0500
+Received: by mail-yb1-xb2d.google.com with SMTP id
+ 3f1490d57ef6-e53a91756e5so4112597276.1
+ for <qemu-devel@nongnu.org>; Fri, 24 Jan 2025 08:35:30 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1737736129; x=1738340929; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=VV3/bjL+L2GYg3BGKCSiBTft5KK2gRABV/uDNOnPfr0=;
- b=r+ltMcYYV7BisqC7NqaVa+pBAejxm0grKgQghnBWOxH6V/SeIw73NVAY4JXgcJbT7j
- Nrh5354ZQ6IF4kPZ7dzz52jHyecbXNtvwJpb3BsQ9TfGNNSVZ72Ax8rCxqf1w82kDj/l
- LkeThlijJdol3XEoZQy1Zwx408GoTCuzN9b5SIeyXJIYljymmsjZswkdrJPk6LYtFEMz
- n27HAQEPRDVzrmbczu/ZicTyD8yMVHYvx1tTJGUV2NmwTunYbQT/8oDdtLUXfWcYQy0Q
- CfST1LJoybr9jSMo6TOQ5CZAvF/vvv9Jv/uNTcNmADHNi3+3Rt51SjH/9lRW1DZNMHgd
- np4Q==
+ d=linaro.org; s=google; t=1737736529; x=1738341329; darn=nongnu.org;
+ h=to:subject:message-id:date:from:in-reply-to:references:mime-version
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=TxUN8Fd2eU9DUvV9yTSFQlBGvgml4AE9HSaNzAgXGr4=;
+ b=smjrkdqB6qI147hdB4ff7ULiDCXvp0gIgOXKDiwKOGB45iCrAvyPgScBoqj1XgStJI
+ zp+Fv/vuO9A4AefGcu2vpG/dVtTKTbpb3R+G+1+TOHyPdmtSa5Z0cjSidt2Tez+U2jSB
+ +hI17751y0YluKfEmowmY/8CatNorS4lJdTqMuoce5PHkUjBnVSQiw0w3vEMrdRHr71Y
+ H18b2xVRpOWPp0Gads6e83ny11lXxQIvSSdPypW4QBeCw1ikmAsMEgrLQvkoPm8EUtOW
+ bmAtAnhInz68EhYFXYtkU72NaG+gELnYo9KzbUhdq1rbkk+V7yUhXwhHSNxq+1Vkbm4P
+ 5Luw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1737736129; x=1738340929;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=VV3/bjL+L2GYg3BGKCSiBTft5KK2gRABV/uDNOnPfr0=;
- b=SjNsb4lMjM5OwZUK6A0+Agsrnbo8wRQCgWmh32/XqZ0Lfy9shnDZxUr1XSzrlFYtn1
- w3Q5Pcc7B9bhiJuG5HRhwcveIDVDh89KqQ0G74peab5TQccgD7U+i6jwf87P9MR60sLX
- ydpRaVLcYvDxWJ8yLhjtrMosj8diHXoZjBnc6VhqB7QynhwRxbs3JUMiqyGqtXs5bav7
- wkLHHDayg7KdHgAz2/TU/szrZVVvATzs5jpsmxMWrzS5A5UnNmzvb8o79xjcYUjiQAKD
- XU5P14eG8XrnjgLU8VU9TjsAgs2HHEaRZK8FBVbw45aX4q4+YrrvkSDRjITqCFOThLW3
- SGRQ==
+ d=1e100.net; s=20230601; t=1737736529; x=1738341329;
+ h=to:subject:message-id:date:from:in-reply-to:references:mime-version
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=TxUN8Fd2eU9DUvV9yTSFQlBGvgml4AE9HSaNzAgXGr4=;
+ b=CNtqKU/8r+WWChtP7dsbA59UWEORAL7qgMWLDYpVSCyx52b8w5R+PtZ2beARa/IPwB
+ sm6vm8p5OA/GcKEQDmS6+y6h3+soJ+lvEAMugzy0vSVT+v1R4QH+uQyBFMz2pv1Vk3hJ
+ O/hoj+A8gKmVVRstJ4cavnnY89oI4nD2olD40I3J6t8sXZEZXFQcHjZBXHN638Y0LiJC
+ B9khrfIQB4mNQRp8/1Tfhn1zXLoBFkwZ6fiyW7szQIDiZhRS7s7/Ha9DLDDJ0YH4sYXO
+ +ggundRhFxV/tamRi+TRL4mL5Hfw+s7eg0RuwQe6emmh6sSLcUvljM/m1avmCHAfAdyR
+ QlsA==
 X-Forwarded-Encrypted: i=1;
- AJvYcCXS1zaDWs4jX+z3d9fY5TOQVxeDywKS0NtFZjXuwri4LGDukXs0Iojrqoe2FPpvzz5fE7Lk2GHiFkVy@nongnu.org
-X-Gm-Message-State: AOJu0Yzpjb8szJpKeeUeRZ1JMkhNJLgHxI0BYaWMSHMQu5jsGjoUNlVE
- cHZBAAVWxVnrxI0rHxDsS3mjydAj8ComNe4d6TUX/xFI/s68UKVPiU5j15PUojw=
-X-Gm-Gg: ASbGnctMK2djNG7xY23djmRW/a3GNvHyV+GRKE2jOXn1pPrQ7QU1jL6awQgQ+NhWWVm
- Xs+UkL/ktKDBvDGYFCSXSa4NoeH5489J0kBH1vt6xwaSl+DuWo4HIDPv1Fce8S2xw50H1q0BnfJ
- 9UoV94mhOYlbK6YgvErCPOb1g6WqNCyKodSfce52OwAMHOe0HzWHsHF97GB/BR4kLxuQ8qS/3vl
- HJ25OW1719vGAIcPF6ner0D8bNVqOgmcK7UgPaEYcetAbJELeF39wfs4Cr3D490cNBfVikDdCM6
- e5VTEGVrhLc=
-X-Google-Smtp-Source: AGHT+IFoeMyckCrxiOWwwShM978drFl2M17PVpytmthFnhi6xGEjjHz3Wd9mHJ4CExPD1DMNh3BpXw==
-X-Received: by 2002:a05:600c:1c14:b0:434:fddf:5c06 with SMTP id
- 5b1f17b1804b1-438b8841d5amr75426785e9.1.1737736129298; 
- Fri, 24 Jan 2025 08:28:49 -0800 (PST)
-Received: from orth.archaic.org.uk (orth.archaic.org.uk. [2001:8b0:1d0::2])
- by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-438bd47eecasm31683025e9.6.2025.01.24.08.28.48
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 24 Jan 2025 08:28:48 -0800 (PST)
-From: Peter Maydell <peter.maydell@linaro.org>
-To: qemu-arm@nongnu.org,
-	qemu-devel@nongnu.org
-Subject: [PATCH 09/76] target/arm: Use fp_status_a32 in vfp_cmp helpers
-Date: Fri, 24 Jan 2025 16:27:29 +0000
-Message-Id: <20250124162836.2332150-10-peter.maydell@linaro.org>
-X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20250124162836.2332150-1-peter.maydell@linaro.org>
-References: <20250124162836.2332150-1-peter.maydell@linaro.org>
+ AJvYcCU/5w/nnE5eqVzQkbJOjIxuDt9RQZiui8jT4zAFo+A1wFojACr8FZGHE7EJZHWfRTIW20bR41ve23rg@nongnu.org
+X-Gm-Message-State: AOJu0YzyJNgfh/n5Or4eW+8RzWGiGvtjz1XBW0Tw8ckr82jBcnCOeb5b
+ F3ypZSOWLHR6fDGqZYMfJcA4gtHp5BWbmxgXWrObhVxCAuPKcgUQQ7GQffWZf1sjjhyx50QiSbD
+ cNyyifNQrkLzXa5S6qyC5J7FqjG8YF3y4IpSiP+b9NytkslUq
+X-Gm-Gg: ASbGnctLssZ9u0DU7tCh0JrzdfkpT4OexACgFWutbhTu/Nv9dsaIi2s4BdGHPS8gzS+
+ vvJgiwDIQqSPP6x/LNMp4awrWhywkEyBFvkzNtna1WzuNKt/+Pz/g2ydGJ8/z+AU=
+X-Google-Smtp-Source: AGHT+IGolMqCjmD+Qh5sN49kfK1UGcRBR9TVgj5rWOYN+Q9XAjJb9LRmizDnr5gHtY/DBZ4HAMICe+zfXeVlcBZm4Sg=
+X-Received: by 2002:a05:6902:144c:b0:e58:3990:3f77 with SMTP id
+ 3f1490d57ef6-e58399041e4mr4279979276.22.1737736529607; Fri, 24 Jan 2025
+ 08:35:29 -0800 (PST)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32f;
- envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x32f.google.com
+References: <20250124162836.2332150-1-peter.maydell@linaro.org>
+In-Reply-To: <20250124162836.2332150-1-peter.maydell@linaro.org>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Fri, 24 Jan 2025 16:35:17 +0000
+X-Gm-Features: AWEUYZm1HnEMlkcuXd3WrwzLYmOcYihRTgLRdgThh_c2AwdH0FwNrx5NVH8jaQQ
+Message-ID: <CAFEAcA98LTxpbiXj2YdQvRmUfufzqxDkOcPF0iUfF1rKMY3v=g@mail.gmail.com>
+Subject: Re: [PATCH 00/76] target/arm: Implement FEAT_AFP and FEAT_RPRES
+To: qemu-arm@nongnu.org, qemu-devel@nongnu.org
+Content-Type: text/plain; charset="UTF-8"
+Received-SPF: pass client-ip=2607:f8b0:4864:20::b2d;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yb1-xb2d.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -99,37 +90,34 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The helpers vfp_cmps, vfp_cmpes, vfp_cmpd, vfp_cmped are used only from
-the A32 decoder; the A64 decoder uses separate vfp_cmps_a64 etc helpers
-(because for A64 we update the main NZCV flags and for A32 we update
-the FPSCR NZCV flags). So we can make these helpers use the fp_status_a32
-field instead of fp_status.
+On Fri, 24 Jan 2025 at 16:28, Peter Maydell <peter.maydell@linaro.org> wrote:
+>
+> This patchset implements emulation of the Arm FEAT_AFP and FEAT_RPRES
+> extensions, which are floating-point related. It's based on the
+> small i386 bugfix series I sent out a while back:
+>
+> Based-on: 20250116112536.4117889-1-peter.maydell@linaro.org
+> ("target/i386: Fix 0 * Inf + QNaN regression")
 
-Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
----
-We could in theory make A32 use the a64 helpers and do the setting
-of vfp.fpsr NZCV in the generated code from the helper return value,
-but it doesn't seem worthwhile to me.
----
- target/arm/vfp_helper.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/target/arm/vfp_helper.c b/target/arm/vfp_helper.c
-index 0671ba3a88b..034f26e5daa 100644
---- a/target/arm/vfp_helper.c
-+++ b/target/arm/vfp_helper.c
-@@ -373,8 +373,8 @@ void VFP_HELPER(cmpe, P)(ARGTYPE a, ARGTYPE b, CPUARMState *env) \
-         FLOATTYPE ## _compare(a, b, &env->vfp.FPST)); \
- }
- DO_VFP_cmp(h, float16, dh_ctype_f16, fp_status_f16)
--DO_VFP_cmp(s, float32, float32, fp_status)
--DO_VFP_cmp(d, float64, float64, fp_status)
-+DO_VFP_cmp(s, float32, float32, fp_status_a32)
-+DO_VFP_cmp(d, float64, float64, fp_status_a32)
- #undef DO_VFP_cmp
- 
- /* Integer to float and float to integer conversions */
--- 
-2.34.1
+> I have also some patchs which make target/i386 use the "detect
+> flush to zero after rounding" and "report when input denormal is
+> consumed" softfloat features added here; I don't include them in
+> this patchset (though you can find them in that git branch I
+> mentioned earlier) becaus I haven't done as much testing on the
+> i386 side and in any case this patchset is already pretty long.
+> I expect I'll send them out when this series has been merged.
 
+...having said which, I was so eager to get the series out
+once I'd finished the last test run that I forgot that I
+didn't intend to send out the first two or the last four
+patches in this series; whoops. Feel free to ignore them.
+
+(The patch numbering in the explanation of the series structure
+in the cover letter is all going to be off by 2 as a result,
+as well. This doesn't seem worth resending a monster patchset
+just to fix, though.)
+
+thanks
+-- PMM
 
