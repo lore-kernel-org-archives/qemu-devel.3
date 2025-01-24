@@ -4,93 +4,67 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0ED3BC02182
-	for <qemu-devel@archiver.kernel.org>; Thu, 23 Jan 2025 23:50:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D4BA0C0218B
+	for <qemu-devel@archiver.kernel.org>; Fri, 24 Jan 2025 00:13:33 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tb6u7-0001J5-Ky; Thu, 23 Jan 2025 18:46:31 -0500
+	id 1tb7Ja-0002ti-Bw; Thu, 23 Jan 2025 19:12:50 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tb6td-0008V4-Ac
- for qemu-devel@nongnu.org; Thu, 23 Jan 2025 18:46:05 -0500
-Received: from mail-wm1-x330.google.com ([2a00:1450:4864:20::330])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tb6tZ-0004TU-MC
- for qemu-devel@nongnu.org; Thu, 23 Jan 2025 18:45:59 -0500
-Received: by mail-wm1-x330.google.com with SMTP id
- 5b1f17b1804b1-4361f796586so16014745e9.3
- for <qemu-devel@nongnu.org>; Thu, 23 Jan 2025 15:45:56 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1737675955; x=1738280755; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=sIImxUuZ28chVlLL+vN1mb6UQluYe71i/J3SLXui4EM=;
- b=itmCbki7ffk3xHBpIPIN06jc0HTUKug806avCZySxk0qYjz/NCfbbNVZxGLQVf85t0
- iI07rBujE8aBcF+Gid2P5HVzPz4b3z3e8Qqi/bSbxAFnjzLGcOzc4y5l7abqmGCSLppb
- mV6NFoIgmLn+jeSw9Rs4yMF1H2Bhl/and5yGEEB5F88VWmGTFhMz5+UMEdk3dCH7vOGq
- 4aoeoNemb+WUEpEenDgvgczDC60iqbT0YCuLljwij29W3V3F5AgoYIyDaageq9ZSE86+
- eNxXclJ/7Sp+jthuDkhbpm1ZvFvzJP5wH3Zky87QAr7rGS3syT7MoHTrSFPTzgudKg1A
- Oorw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1737675955; x=1738280755;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=sIImxUuZ28chVlLL+vN1mb6UQluYe71i/J3SLXui4EM=;
- b=Pl6K2VLHS1XmknN4Pu4eXxgblo3y3C10EnbPP/CBDVxmPOPp3fiG58ky1tNSHfsGYm
- mvnKRt+LKAU1lWS6s1NCDAt2GOJbnJa2B+l1rox3a5JMgh/gIVxHQrsn3KtFe4Xdw1g3
- 7tH4RwjlGePWTA+9pgOUv090jaHSy7AvFqF3MMicRVpA5yySgCE5SdRONS1/E29+nmD5
- 0pK8whymMJPoFSUg8cmt3V4NHsb4qC4KJwpXB10CTCMdZKfVViu2cRFdnddhND3hW+TP
- K0ZjniKJoowdQ4KFw1737cBg0nLLDGoWIgRdszbCSs8EzL421HYNT0/oJhmUBWh+R+ym
- sVag==
-X-Gm-Message-State: AOJu0YzaLHgIbSRdooy2yD5bSbk9ryTxfQAEanlKRSCHJ4mhzlBcNF7O
- zS5W4BCNIWjiJMM61arhyKQGoTdkG4dE1z/xR+Ha24nncUpePu5NVuqk8TbCVBi5/056XU9ckSw
- H57I=
-X-Gm-Gg: ASbGncuHT5ZhO8+4tLTzZVsfzjMFCqIoQY/Np/FFNy+XxgOhPDcx+c04gJDFwptAmw0
- NyB19izpaKMYm6P0jhqmxsgyamHH6PcuO/3bzHKHn+BegXpvPRGj1eV0cw3gW8ECyGviWf6K65H
- GaY1yeFS7r/o1BKGe75QJ14W1PJAj4+OgX3ixypzZyMmqHJnQu5TMdruMpjvqlq/kFOJogLxEhA
- j5zPEQW+Yt0wkx3sExJ8HMck8treEP9lpj86Hs9ak5a/k+Sn18SGbfZY/6CKlo+X5F5vlUPCAPG
- uub3ok/pSknjUZ1tMrFIbDc1vHiRl+y7OGLNHnF1C73bdQiRT3ig1y8QCz0=
-X-Google-Smtp-Source: AGHT+IGfBJfULhniARVxaeHND22dVQGvVM8jm6sNf2yido1MC4lasaduEx+qwJvir1julFx+bnHZjg==
-X-Received: by 2002:a05:600c:35c3:b0:434:f131:1e71 with SMTP id
- 5b1f17b1804b1-438913cf2e0mr264387845e9.8.1737675955349; 
- Thu, 23 Jan 2025 15:45:55 -0800 (PST)
-Received: from [192.168.69.181] (88-187-86-199.subs.proxad.net.
- [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-438bd47f355sm7140915e9.4.2025.01.23.15.45.53
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 23 Jan 2025 15:45:53 -0800 (PST)
-Message-ID: <3ef3ad0c-0f53-4588-aaf2-f6fd712ebd41@linaro.org>
-Date: Fri, 24 Jan 2025 00:45:52 +0100
+ (Exim 4.90_1) (envelope-from <michael@anarch128.org>)
+ id 1tb7JX-0002sp-36
+ for qemu-devel@nongnu.org; Thu, 23 Jan 2025 19:12:47 -0500
+Received: from anarch128.org ([2001:4801:7825:104:be76:4eff:fe10:52ae])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <michael@anarch128.org>)
+ id 1tb7JS-0001JC-2T
+ for qemu-devel@nongnu.org; Thu, 23 Jan 2025 19:12:46 -0500
+Received: from localhost.localdomain (default-rdns.vocus.co.nz
+ [202.150.110.104] (may be forged)) (authenticated bits=0)
+ by anarch128.org (8.15.2/8.15.2/Debian-22+deb11u3) with ESMTPSA id
+ 50O0CHKp2247057
+ (version=TLSv1.3 cipher=TLS_AES_256_GCM_SHA384 bits=256 verify=NO);
+ Fri, 24 Jan 2025 00:12:27 GMT
+Authentication-Results: anarch128.org; auth=pass;
+ dkim=pass (2048-bit rsa key sha256) header.d=anarch128.org
+ header.i=@anarch128.org header.b=ZPpesUFQ header.a=rsa-sha256 header.s=100003;
+ x-return-mx=pass header.domain=anarch128.org policy.is_org=yes (MX Records
+ found: mail.anarch128.org); 
+ x-return-mx=pass smtp.domain=anarch128.org policy.is_org=yes (MX Records
+ found: mail.anarch128.org)
+DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=anarch128.org;
+ s=100003; t=1737677550;
+ bh=tz9f/13fOkjpsPPzzOrlrjDrof3elwb/EdndyVEDpXo=;
+ h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+ b=ZPpesUFQb1XArZNm3S443LaiwYldcFTpYZIqDYwCsaSowIPPHrOjcTV+xj2XpqVXv
+ cfyhD6nuHlMwDjRlSCkpz8GhxZyiMfPMYFCngrgSwH9aRkKvsgiYh3AewaZf+JNimU
+ mbSbm1oQtLkHbk3JxnOZ7lC5JeE9aIGw/pv12J1oQ6OSDL+NS45T2SkxU9taYI+HKy
+ 0bD0wam9DEIcyRVJikWa+gkAPBJqS8PUO/gA5t8di7gGbffLc5KC8KUzVK4dkWT4ff
+ GdcezbWftB3/ZVdwvp+pwmMKPk00NdubU3aOYBYK4RMLwoKtWL8FH+RurmXgQBMc94
+ qZeiPWJBFsp9g==
+From: Michael Clark <michael@anarch128.org>
+To: qemu-devel@nongnu.org, Richard Henderson <richard.henderson@linaro.org>,
+ Eduardo Habkost <eduardo@habkost.net>,
+ Paolo Bonzini <pbonzini@redhat.com>, Zhao Liu <zhao1.liu@intel.com>
+Cc: Michael Clark <michael@anarch128.org>
+Subject: [PATCH v1 2/4] x86-disas: add x86-mini metadata documentation
+Date: Fri, 24 Jan 2025 13:10:30 +1300
+Message-ID: <20250124001032.1073926-3-michael@anarch128.org>
+X-Mailer: git-send-email 2.43.0
+In-Reply-To: <20250124001032.1073926-1-michael@anarch128.org>
+References: <20250124001032.1073926-1-michael@anarch128.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 02/20] user: Extract common MMAP API to 'user/mmap.h'
-To: qemu-devel@nongnu.org
-Cc: Peter Maydell <peter.maydell@linaro.org>,
- Paolo Bonzini <pbonzini@redhat.com>, qemu-arm@nongnu.org,
- Igor Mammedov <imammedo@redhat.com>, =?UTF-8?Q?Alex_Benn=C3=A9e?=
- <alex.bennee@linaro.org>, kvm@vger.kernel.org, qemu-ppc@nongnu.org,
- qemu-riscv@nongnu.org, David Hildenbrand <david@redhat.com>,
- qemu-s390x@nongnu.org, xen-devel@lists.xenproject.org,
- Richard Henderson <richard.henderson@linaro.org>
-References: <20250123234415.59850-1-philmd@linaro.org>
- <20250123234415.59850-3-philmd@linaro.org>
-Content-Language: en-US
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20250123234415.59850-3-philmd@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::330;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x330.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+Received-SPF: pass client-ip=2001:4801:7825:104:be76:4eff:fe10:52ae;
+ envelope-from=michael@anarch128.org; helo=anarch128.org
+X-Spam_score_int: -16
+X-Spam_score: -1.7
+X-Spam_bar: -
+X-Spam_report: (-1.7 / 5.0 requ) BAYES_00=-1.9, DKIM_INVALID=0.1,
+ DKIM_SIGNED=0.1, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -106,23 +80,325 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 24/1/25 00:43, Philippe Mathieu-Daudé wrote:
-> Keep common MMAP-related declarations in a single place.
-> 
-> Note, this disable ThreadSafetyAnalysis on Linux for:
-> - mmap_fork_start()
-> - mmap_fork_end().
-> 
-> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+add detailed information on the instruction opcode encoding
+format for LEX/VEX/EVEX prefix, map and opcode encoding, the
+operand encoding format, the field order encoding format and
+notes on instruction synthesis for parameterized opcodes.
 
-I forgot to include:
-Reviewed-by: Warner Losh <imp@bsdimp.com>
+Signed-off-by: Michael Clark <michael@anarch128.org>
+---
+ docs/x86-metadata.txt | 301 ++++++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 301 insertions(+)
+ create mode 100644 docs/x86-metadata.txt
 
-> ---
->   bsd-user/qemu.h        | 12 +-----------
->   include/user/mmap.h    | 32 ++++++++++++++++++++++++++++++++
->   linux-user/user-mmap.h | 19 ++-----------------
->   3 files changed, 35 insertions(+), 28 deletions(-)
->   create mode 100644 include/user/mmap.h
+diff --git a/docs/x86-metadata.txt b/docs/x86-metadata.txt
+new file mode 100644
+index 000000000000..1e4756069d9d
+--- /dev/null
++++ b/docs/x86-metadata.txt
+@@ -0,0 +1,301 @@
++x86 Instruction Set Metadata
++============================
++
++Legacy x86 instructions have been parameterized in the instruction set
++metadata using a new LEX prefix for instruction encoding with abstract width
++suffix codes that synthesize multiple instruction widths using combinations
++of operand size prefixes and `REX.W` bits. This new LEX format makes legacy
++instruction encodings consistent with VEX and EVEX encodings as well as
++eliminating some redundancy in the metadata.
++
++There are a small number of special cases for legacy instructions which need
++mode-dependent overrides for cases such as, a different opcode is used for
++different modes, or the instruction has a quirk where the operand size does
++not follow the default rules for instruction word and address sizes:
++
++- `.wx` is used to specify 64-bit instructions that default to 32-bit
++  operands in 64-bit mode.
++- `.ww` is used to specify 64-bit instructions that default to 64-bit
++  operands in 64-bit mode.
++- `.o16` is used to specify an instruction override specific to 16-bit mode.
++- `.o32` is used to specify an instruction override specific to 32-bit mode.
++- `.o64` is used to specify an instruction override specific to 64-bit mode.
++
++CSV File Format
++===============
++
++The instruction set metadata in the `data` directory has the following fields
++which map to instruction encoding tables in the Intel Architecture Software
++Developer's Manual:
++
++- _Instruction_: opcode and operands from Opcode/Instruction column.
++- _Opcode_: instruction encoding from Opcode/Instruction column.
++- _Valid 64-bit_: 64-bit valid field from 64/32 bit Mode Support column.
++- _Valid 32-bit_: 32-bit valid field from 64/32 bit Mode Support column.
++- _Valid 16-bit_: 16-bit valid field from Compat/Legacy Mode column.
++- _Feature Flags_: extension name from CPUID Feature Flag column.
++- _Operand 1_: Operand 1 column from Instruction Operand Encoding table.
++- _Operand 2_: Operand 2 column from Instruction Operand Encoding table.
++- _Operand 3_: Operand 3 column from Instruction Operand Encoding table.
++- _Operand 4_: Operand 4 column from Instruction Operand Encoding table.
++- _Tuple Type_: Tuple Type column from Instruction Operand Encoding table.
++
++The instruction set metadata in the `data` directory is derived from
++[x86-csv](https://github.com/GregoryComer/x86-csv), although it has had
++extensive modifications to fix transcription errors, to revise legacy
++instruction encodings to conform to the new LEX format, as well as add
++missing details such as missing operands or recently added AVX-512
++instruction encodings and various other instruction set extensions.
++
++Table Generation
++================
++
++The appendices outline the printable form of the mnemonics used in the
++generated tables to describe operands, instruction encodings and field order.
++The mnemonics are referenced in the instruction set metadata files which are
++translated to enums and arrays by `scripts/x86-tablegen.py` which then map to
++the enum type and set definitions in `disas/x86.h`:
++
++- _enum x86_opr_ - operand encoding enum type and set attributes.
++- _enum x86_enc_ - instruction encoding enum type and set attributes.
++- _enum x86_ord_ - operand to instruction encoding field map set attributes.
++
++The enum values are combined together with _logical or_ combinations to
++form the primary metadata tables used by the encoder and decoder library:
++
++- _struct x86_opc_data_ - table type for instruction opcode encodings.
++- _struct x86_opr_data_ - table type for unique sets of instruction operands.
++- _struct x86_ord_data_ - table type for unique sets of instruction field orders.
++
++***Note***: There are some differences between the mnemonics used in the
++CSV metadata and the C enums. Exceptions are described in `operand_map` and
++`opcode_map` within `scripts/x86_tablegen.py`. The primary differences are
++in the names used in the operand columns to indicate operand field order,
++otherwise a type prefix is added, dots and brackets are omitted, and forward
++slashes are translated to underscores.
++
++Appendices
++==========
++
++This section describes the mnemonics used in the primary data structures:
++
++- _Appendix A - Operand Encoding_ - describes instruction operands.
++- _Appendix B - Operand Order_ - describes instruction field ordering.
++- _Appendix C - Instruction Encoding Prefixes_ - describes encoding prefixes.
++- _Appendix D - Instruction Encoding Suffixes_ - describes encoding suffixes.
++- _Appendix E - Instruction Synthesis Notes_ - notes on prefix synthesis.
++
++Appendix A - Operand Encoding
++=============================
++
++This table outlines the operand mnemonics used in instruction operands
++_(enum x86_opr)_.
++
++| operand            | description                                           |
++|:-------------------|:------------------------------------------------------|
++| `r`                | integer register                                      |
++| `v`                | vector register                                       |
++| `k`                | mask register                                         |
++| `seg`              | segment register                                      |
++| `creg`             | control register                                      |
++| `dreg`             | debug register                                        |
++| `bnd`              | bound register                                        |
++| `mem`              | memory reference                                      |
++| `rw`               | integer register word-sized (16/32/64 bit)            |
++| `ra`               | integer register addr-sized (16/32/64 bit)            |
++| `mw`               | memory reference word-sized (16/32/64 bit)            |
++| `mm`               | vector register 64-bit                                |
++| `xmm`              | vector register 128-bit                               |
++| `ymm`              | vector register 256-bit                               |
++| `zmm`              | vector register 512-bit                               |
++| `r8`               | register 8-bit                                        |
++| `r16`              | register 16-bit                                       |
++| `r32`              | register 32-bit                                       |
++| `r64`              | register 64-bit                                       |
++| `m8`               | memory reference 8-bit byte                           |
++| `m16`              | memory reference 16-bit word                          |
++| `m32`              | memory reference 32-bit dword                         |
++| `m64`              | memory reference 64-bit qword                         |
++| `m128`             | memory reference 128-bit oword/xmmword                |
++| `m256`             | memory reference 256-bit ymmword                      |
++| `m512`             | memory reference 512-bit zmmword                      |
++| `m80`              | memory reference 80-bit tword/tbyte                   |
++| `m384`             | memory reference 384-bit key locker handle            |
++| `mib`              | memory reference bound                                |
++| `m16bcst`          | memory reference 16-bit word broadcast                |
++| `m32bcst`          | memory reference 32-bit word broadcast                |
++| `m64bcst`          | memory reference 64-bit word broadcast                |
++| `vm32`             | vector memory 32-bit                                  |
++| `vm64`             | vector memory 64-bit                                  |
++| `{er}`             | operand suffix - embedded rounding control            |
++| `{k}`              | operand suffix - apply mask register                  |
++| `{sae}`            | operand suffix - suppress all execptions              |
++| `{z}`              | operand suffix - zero instead of merge                |
++| `{rs2}`            | operand suffix - register stride 2                    |
++| `{rs4}`            | operand suffix - register stride 4                    |
++| `r/m8`             | register unsized memory 8-bit                         |
++| `r/m16`            | register unsized memory 16-bit                        |
++| `r/m32`            | register unsized memory 32-bit                        |
++| `r/m64`            | register unsized memory 64-bit                        |
++| `k/m8`             | mask register memory 8-bit                            |
++| `k/m16`            | mask register memory 16-bit                           |
++| `k/m32`            | mask register memory 32-bit                           |
++| `k/m64`            | mask register memory 64-bit                           |
++| `bnd/m64`          | bound register memory 64-bit                          |
++| `bnd/m128`         | bound register memory 128-bit                         |
++| `rw/mw`            | register or memory 16/32/64-bit (word size)           |
++| `r8/m8`            | 8-bit register 8-bit memory                           |
++| `r?/m?`            | N-bit register N-bit memory                           |
++| `mm/m?`            | 64-bit vector N-bit memory                            |
++| `xmm/m?`           | 128-bit vector N-bit memory                           |
++| `ymm/m?`           | 256-bit vector N-bit memory                           |
++| `zmm/m?`           | 512-bit vector N-bit memory                           |
++| `xmm/m?/m?bcst`    | 128-bit vector N-bit memory N-bit broadcast           |
++| `ymm/m?/m?bcst`    | 256-bit vector N-bit memory N-bit broadcast           |
++| `zmm/m?/m?bcst`    | 512-bit vector N-bit memory N-bit broadcast           |
++| `vm32x`            | 32-bit vector memory in xmm                           |
++| `vm32y`            | 32-bit vector memory in ymm                           |
++| `vm32z`            | 32-bit vector memory in zmm                           |
++| `vm64x`            | 64-bit vector memory in xmm                           |
++| `vm64y`            | 64-bit vector memory in ymm                           |
++| `vm64z`            | 64-bit vector memory in zmm                           |
++| `st0`              | implicit register st0                                 |
++| `st1`              | implicit register st1                                 |
++| `es`               | implicit segment es                                   |
++| `cs`               | implicit segment cs                                   |
++| `ss`               | implicit segment ss                                   |
++| `ds`               | implicit segment ds                                   |
++| `fs`               | implicit segment fs                                   |
++| `gs`               | implicit segment gs                                   |
++| `aw`               | implicit register (ax/eax/rax)                        |
++| `cw`               | implicit register (cx/ecx/rcx)                        |
++| `dw`               | implicit register (dx/edx/rdx)                        |
++| `bw`               | implicit register (bx/ebx/rbx)                        |
++| `pa`               | implicit indirect register (ax/eax/rax)               |
++| `pc`               | implicit indirect register (cx/ecx/rcx)               |
++| `pd`               | implicit indirect register (dx/edx/rdx)               |
++| `pb`               | implicit indirect register (bx/ebx/rbx)               |
++| `psi`              | implicit indirect register (si/esi/rsi)               |
++| `pdi`              | implicit indirect register (di/edi/rdi)               |
++| `xmm0`             | implicit register xmm0                                |
++| `xmm0_7`           | implicit registers xmm0-xmm7                          |
++| `1`                | constant 1                                            |
++| `ib`               | 8-bit immediate                                       |
++| `iw`               | 16-bit or 32-bit immediate (mode + operand size)      |
++| `id`               | 32-bit immediate                                      |
++| `iq`               | 64-bit immediate                                      |
++| `rel8`             | 8-bit displacement                                    |
++| `relw`             | 6-bit or 32-bit displacement (mode + operand size)    |
++| `moffs`            | indirect memory offset                                |
++| `far16/16`         | 16-bit seg 16-bit far displacement                    |
++| `far16/32`         | 16-bit seg 32-bit far displacement                    |
++| `memfar16/16`      | indirect 16-bit seg 16-bit far displacement           |
++| `memfar16/32`      | indirect 16-bit seg 32-bit far displacement           |
++| `memfar16/64`      | indirect 16-bit seg 64-bit far displacement           |
++
++Appendix B - Operand Order
++==========================
++
++This table outlines the mnemonics used to map operand field order
++_(enum x86_ord)_.
++
++| mnemonic | description                                                     |
++|:---------|:----------------------------------------------------------------|
++| `imm`    | ib, iw, i16, i32, i64                                           |
++| `reg`    | modrm.reg                                                       |
++| `mrm`    | modrm.r/m                                                       |
++| `sib`    | modrm.r/m sib                                                   |
++| `is4`    | register from ib                                                |
++| `ime`    | i8, i16 (special case for CALLF/JMPF/ENTER)                     |
++| `vec`    | VEX.vvvv                                                        |
++| `opr`    | opcode +r                                                       |
++| `one`    | constant 1                                                      |
++| `rax`    | constant al/ax/eax/rax                                          |
++| `rcx`    | constant cl/cx/ecx/rcx                                          |
++| `rdx`    | constant dl/dx/edx/rdx                                          |
++| `rbx`    | constant bl/bx/ebx/rbx                                          |
++| `rsp`    | constant sp/esp/rsp                                             |
++| `rbp`    | constant bp/ebp/rbp                                             |
++| `rsi`    | constant si/esi/rsi                                             |
++| `rdi`    | constant di/edi/rdi                                             |
++| `st0`    | constant st(0)                                                  |
++| `stx`    | constant st(i)                                                  |
++| `seg`    | constant segment                                                |
++| `xmm0`   | constant xmm0                                                   |
++| `xmm0_7` | constant xmm0-xmm7                                              |
++| `mxcsr`  | constant mxcsr                                                  |
++| `rflags` | constant rflags                                                 |
++
++Appendix C - Instruction Encoding Prefixes
++==========================================
++
++This table outlines the mnemonic prefixes used in instruction encodings
++_(enum x86_enc)_.
++
++| mnemonic | description                                                     |
++|:---------|:----------------------------------------------------------------|
++| `lex`    | legacy instruction                                              |
++| `vex`    | VEX encoded instruction                                         |
++| `evex`   | EVEX encoded instruction                                        |
++| `.lz`    | VEX encoding L=0 and L=1 is unassigned                          |
++| `.l0`    | VEX encoding L=0                                                |
++| `.l1`    | VEX encoding L=1                                                |
++| `.lig`   | VEX/EVEX encoding ignores length L=any                          |
++| `.128`   | VEX/EVEX encoding uses 128-bit vector L=0                       |
++| `.256`   | VEX/EVEX encoding uses 256-bit vector L=1                       |
++| `.512`   | EVEX encoding uses 512-bit vector L=2                           |
++| `.66`    | prefix byte 66 is used for opcode mapping                       |
++| `.f2`    | prefix byte f2 is used for opcode mapping                       |
++| `.f3`    | prefix byte f3 is used for opcode mapping                       |
++| `.9b`    | prefix byte 9b is used for opcode mapping (x87 only)            |
++| `.0f`    | map 0f is used in opcode                                        |
++| `.0f38`  | map 0f38 is used in opcode                                      |
++| `.0f3a`  | map 0f3a is used in opcode                                      |
++| `.wn`    | no register extension, fixed operand size                       |
++| `.wb`    | register extension, fixed operand size                          |
++| `.wx`    | REX and/or operand size extension, optional 66 or REX.W0/W1     |
++| `.ww`    | REX and/or operand size extension, optional 66 and REX.WIG      |
++| `.w0`    | LEX/VEX/EVEX optional REX W0 with operand size used in opcode   |
++| `.w1`    | LEX/VEX/EVEX mandatory REX W1 with operand size used in opcode  |
++| `.wig`   | VEX/EVEX encoding width ignored                                 |
++
++Appendix D - Instruction Encoding Suffixes
++==========================================
++
++This table outlines the mnemonic suffixes used in instruction encodings
++_(enum x86_enc)_.
++
++| mnemonic | description                                                     |
++|:---------|:----------------------------------------------------------------|
++| `/r`     | ModRM byte                                                      |
++| `/0../9` | ModRM byte with 'r' field used for functions 0 to 7             |
++| `XX+r`   | opcode byte with 3-bit register added to the opcode             |
++| `XX`     | opcode byte                                                     |
++| `ib`     | 8-bit immediate                                                 |
++| `iw`     | 16-bit or 32-bit immediate (real mode XOR operand size)         |
++| `i16`    | 16-bit immediate                                                |
++| `i32`    | 32-bit immediate                                                |
++| `i64`    | 64-bit immediate                                                |
++| `o16`    | encoding uses prefix 66 in 32-bit and 64-bit modes              |
++| `o32`    | encoding uses prefix 66 in 16-bit mode                          |
++| `o64`    | encoding is used exclusively in 64-bit mode with REX.W=1        |
++| `a16`    | encoding uses prefix 67 in 32-bit and 64-bit modes              |
++| `a32`    | encoding uses prefix 67 in 16-bit mode                          |
++| `a64`    | encoding is used exclusively in 64-bit mode                     |
++| `lock`   | memory operand encodings can be used with the LOCK prefix       |
++
++Appendix E - Instruction Synthesis Notes
++========================================
++
++The `.wx` and `.ww` mnemonics are used to synthesize prefix combinations:
++
++- `.wx` labels opcodes with _default 32-bit operand size in 64-bit mode_
++  to synthesize 16/32/64-bit versions using REX and operand size prefix,
++  or in 16/32-bit modes synthesizes 16/32-bit versions using only the
++  operand size prefix. REX is used for register extension on opcodes
++  with `rw` or `rw/mw` operands or fixed register operands like `aw`.
++- `.ww` labels opcodes with _default 64-bit operand size in 64-bit mode_
++  to synthesize 16/64-bit versions using only the operand size prefix,
++  or in 16/32-bit modes. synthesizes 16/32-bit versions using only the
++  operand size prefix. REX is used for register extension on opcodes
++  with `rw` or `rw/mw` operands or fixed register operands like `aw`.
+-- 
+2.43.0
 
 
