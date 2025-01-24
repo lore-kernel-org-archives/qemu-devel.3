@@ -4,79 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CE628C0218C
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C5181C0218B
 	for <qemu-devel@archiver.kernel.org>; Fri, 24 Jan 2025 09:52:45 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tbGIE-0005YV-0J; Fri, 24 Jan 2025 04:48:02 -0500
+	id 1tbGIH-0005qn-4b; Fri, 24 Jan 2025 04:48:06 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1tbGG6-0007TO-0L
- for qemu-devel@nongnu.org; Fri, 24 Jan 2025 04:45:53 -0500
+ id 1tbGGH-0007c9-1F
+ for qemu-devel@nongnu.org; Fri, 24 Jan 2025 04:46:01 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1tbGG4-0003wl-FB
- for qemu-devel@nongnu.org; Fri, 24 Jan 2025 04:45:49 -0500
+ id 1tbGGD-0003xN-Hs
+ for qemu-devel@nongnu.org; Fri, 24 Jan 2025 04:46:00 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1737711947;
+ s=mimecast20190719; t=1737711953;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=AeUloYUS4GjmUT75E0JIueWDFUGBROQ8X7lta1NSKvg=;
- b=H6mx6LYIz2PWbXxl6qtrXOZj7nOHwN++2WqY4v2CaQwuDzT2m4W/UxmYm9ZKPTd7DGLB5U
- M/EEOVh0dUIqUIa+bF66bHtFCnOKuzj2+SK0DhDJhO3yUFFPEFH29khq9AJJ3nNPpslw3d
- +NnYf2lee5CWdL0f5NTMWJ+MGEAlCS8=
-Received: from mail-wr1-f71.google.com (mail-wr1-f71.google.com
- [209.85.221.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=N2oD6fS2wUWrP/tzWspSWPbZz4DpoC2JTpmignvtp7I=;
+ b=VY/11RigmTD4vgzqK13ASpKwY38TMo7e8gBxSdEoeJwskVnNWCDWOFCLMxAZAAPqxzYUru
+ ti+MfreU8xoKwifkzIX8VhFgRfTMU1p4wVEugmucc1COS/ABC+TOSGSEBbjgNx/rtKPwEC
+ Bs84hLV/C+TJWA2cUSze6PH9SJhyhx8=
+Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com
+ [209.85.128.71]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-304-O-r8OH37ONSzzYnYzWEs5w-1; Fri, 24 Jan 2025 04:45:42 -0500
-X-MC-Unique: O-r8OH37ONSzzYnYzWEs5w-1
-X-Mimecast-MFC-AGG-ID: O-r8OH37ONSzzYnYzWEs5w
-Received: by mail-wr1-f71.google.com with SMTP id
- ffacd0b85a97d-38a35a65575so1231514f8f.1
- for <qemu-devel@nongnu.org>; Fri, 24 Jan 2025 01:45:42 -0800 (PST)
+ us-mta-222-8NOYgB5BPsOYl8YNg2VaNw-1; Fri, 24 Jan 2025 04:45:51 -0500
+X-MC-Unique: 8NOYgB5BPsOYl8YNg2VaNw-1
+X-Mimecast-MFC-AGG-ID: 8NOYgB5BPsOYl8YNg2VaNw
+Received: by mail-wm1-f71.google.com with SMTP id
+ 5b1f17b1804b1-4361efc9dc6so10144415e9.3
+ for <qemu-devel@nongnu.org>; Fri, 24 Jan 2025 01:45:51 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1737711941; x=1738316741;
+ d=1e100.net; s=20230601; t=1737711949; x=1738316749;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=AeUloYUS4GjmUT75E0JIueWDFUGBROQ8X7lta1NSKvg=;
- b=FY1vzXjJM8PjcziIa1H3ttyEwXQlQ/+Y4uC2N+CijYMYn6LeIxb5BHMWvuGI0BP15u
- jf8utCS/mWvzWr2b406YmM7PJDTajgDu9pmG5oPvsFE2js9RmDMXRVIp4p/43+RR5rVI
- MWfxlS8JS9dlMEh15VEbCRSFnyJKm0Hr8aQY1OV2ZnIvG3tonph/MefYcueLzz/ZXsXW
- obqkgRkxPrm/bXEH4QGjYaDt/yaGbvMmkbns1PBPxcfhYfJhJgVZayzvwUqGHqXnX92S
- 3UVuXpvuLBmjxoCcaHLPjOeldzTkiS9yZBQzUcRMmEhqz9C0BBCkGRdLoOPwJNxmZYg4
- F+KA==
-X-Gm-Message-State: AOJu0Yy67XqU50Cw+9pT3q8Xcni/Xq8bNWOhB+/5trkYIPyp83LzHVkD
- rsBBej/Ri4Ks/7RB3ahqtYkK7Bm4x70/w+6d2/JxtBCzMJNHs/bPWz3nlYSETuFZS2647egbnxB
- I95nb8acAf11xwk544O5NpWMoIguHurSbMjJuFNZzJzx/08BvT4yI1I+eUmgpwMOz9hWHtLwkqt
- LcQmafO6DBhkOxXR4pqr1rkRpVoYHK0ssFD0sABKw=
-X-Gm-Gg: ASbGncsPfrfqnVXHnzfF9TeXXBLX/Ixxc/vKOnrIC2Ng88Zs8Q7FnFN3VDhVxoemWFX
- q3fmdt72E5+90vrLQUbl0mlK+n73jdkA484OqM7XD+zYHZ3YBI+oFcdASqqgidyhZE/j/d+ErxQ
- ofg4YtOOT7BR6WXWO69uN/oqk/uvlXMW2CzEUIZ2nGa3Zym3NBeevogFdJ8pBVoiK23JcR59FFe
- hRHHn+aoXOKwYHzhi/2d+WpAIz3G+Hi7fbYdNP4Ez2ZTKnVfj74FjzXcW90Qox90oMyQk/gKQ==
-X-Received: by 2002:a5d:6da4:0:b0:38b:e32a:10a6 with SMTP id
- ffacd0b85a97d-38bf57a9932mr32061193f8f.41.1737711940747; 
- Fri, 24 Jan 2025 01:45:40 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IGM/78mz3VExiNnYWsnIIdxajIW+OeoDI4UWKlixbxasFGOS+obUI6TGoIT2uOGTwVIzVecIQ==
-X-Received: by 2002:a5d:6da4:0:b0:38b:e32a:10a6 with SMTP id
- ffacd0b85a97d-38bf57a9932mr32061145f8f.41.1737711940331; 
- Fri, 24 Jan 2025 01:45:40 -0800 (PST)
+ bh=N2oD6fS2wUWrP/tzWspSWPbZz4DpoC2JTpmignvtp7I=;
+ b=oCa+aU+Uf3DbexRHdCzYOwlCx4ggSXGPbCdg1akZMsrCLMmSFuKQI/H6qaxiKrMU0q
+ 8+fFqylHiyfvFCojH0qNQgyqWyh3ZcTCZ5Nb5ALhfxEtIuVBBFkl4fEFZXN6KObEHXvU
+ 27QhUU/ab0MUs3dLr2U6/pMOcumhYTTB2hXCIlzBWwFFot55ZsuB101AI5xg6wCYEC14
+ 6yLCArD6J8UMyHFdDMBrpqSJP+t2iuW/6KiNdOkhf4kR1qpDTs2om6YKsDmFBFsEl+ui
+ hBUskjeQXiDQ5R3yxTIwnVzZBUBotK2698BzZMnrdhvBhz/TPmbosGGKM0OU5lEOkLar
+ WI8Q==
+X-Gm-Message-State: AOJu0Yy3QF8gkOkQOH7BoAM7jWCCScp++DVhv/Hn1tCYxRhZdT9OotCw
+ ZOl8ZmnkX3eGIdbfBI+6ODY1lWi6cHztMClLVRYThPvPRnmvEmOmROk0Y69JEIABoim6mmo6XKP
+ RudJTm8khzTHRDGpOTPkRAJkgKAbngJjYY/JIPoe/ISjtJj4/1f/hOrBq9dXzRH4cVQosj4Jhld
+ 1yQ48YxXj5G8KnyaLVk7/ODpE0vWIcf8PojfJGwMc=
+X-Gm-Gg: ASbGnct6B5iVGqfzbHRsyCdbdl0ftNq92NbwK7nYE3rFzKDIK8bVGlFD9J9+fO9P/N4
+ b3aHtplBIEXruYpnCBfXecQIcZK4wOEMbkDMVF6PaxzQt8dV1VLuxqKvfwNEaPfa02OoEaLeh3W
+ auBPSh5QDU0M5kkBafnquwdRj/tQn/p9RAZvWizNnp5dMv1LUo4qhHHsgwFClaLTrfWtov2whFD
+ 5eXvSHce30E/VEw05ZxRK7ZoLtV1bbtqA5tY2swN2dUDjuBB85+wmw0lz+JP7pgNG9mQQwYSg==
+X-Received: by 2002:a05:600c:1f86:b0:436:aaf:7eb9 with SMTP id
+ 5b1f17b1804b1-43891439d5fmr243279845e9.20.1737711949312; 
+ Fri, 24 Jan 2025 01:45:49 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IGV4vSi1Wy0Y7v32Q2fKMYDf1L3K8Ry4dXnvYP1JLOBHmN49SVX/mLbHiu4qbhqsFP8IPSxPA==
+X-Received: by 2002:a05:600c:1f86:b0:436:aaf:7eb9 with SMTP id
+ 5b1f17b1804b1-43891439d5fmr243279655e9.20.1737711948874; 
+ Fri, 24 Jan 2025 01:45:48 -0800 (PST)
 Received: from [192.168.10.48] ([151.95.59.125])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-38c2a1bad92sm2161951f8f.61.2025.01.24.01.45.39
+ 5b1f17b1804b1-438bd57545dsm20148715e9.40.2025.01.24.01.45.48
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 24 Jan 2025 01:45:39 -0800 (PST)
+ Fri, 24 Jan 2025 01:45:48 -0800 (PST)
 From: Paolo Bonzini <pbonzini@redhat.com>
 To: qemu-devel@nongnu.org
-Subject: [PULL 28/48] rust: vmstate: implement Zeroable for VMStateField
-Date: Fri, 24 Jan 2025 10:44:22 +0100
-Message-ID: <20250124094442.13207-29-pbonzini@redhat.com>
+Subject: [PULL 32/48] rust: pl011: switch vmstate to new-style macros
+Date: Fri, 24 Jan 2025 10:44:26 +0100
+Message-ID: <20250124094442.13207-33-pbonzini@redhat.com>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250124094442.13207-1-pbonzini@redhat.com>
 References: <20250124094442.13207-1-pbonzini@redhat.com>
@@ -107,95 +107,143 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This shortens a bit the constants.  Do not bother using it
-in the vmstate macros since most of them will go away soon.
-
 Reviewed-by: Zhao Liu <zhao1.liu@intel.com>
 Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 ---
- rust/qemu-api/src/vmstate.rs  | 18 +++---------------
- rust/qemu-api/src/zeroable.rs | 31 +++++++++++++++++++++++++++++++
- 2 files changed, 34 insertions(+), 15 deletions(-)
+ rust/hw/char/pl011/src/device.rs       |  3 ++-
+ rust/hw/char/pl011/src/device_class.rs | 36 +++++++++++++-------------
+ rust/hw/char/pl011/src/lib.rs          |  6 +++++
+ 3 files changed, 26 insertions(+), 19 deletions(-)
 
-diff --git a/rust/qemu-api/src/vmstate.rs b/rust/qemu-api/src/vmstate.rs
-index 2b14d4839df..7652930affc 100644
---- a/rust/qemu-api/src/vmstate.rs
-+++ b/rust/qemu-api/src/vmstate.rs
-@@ -21,8 +21,8 @@
+diff --git a/rust/hw/char/pl011/src/device.rs b/rust/hw/char/pl011/src/device.rs
+index 4f1080ff19f..a1a522fdcdb 100644
+--- a/rust/hw/char/pl011/src/device.rs
++++ b/rust/hw/char/pl011/src/device.rs
+@@ -15,7 +15,7 @@
+         qemu_irq, sysbus_connect_irq, sysbus_mmio_map, sysbus_realize_and_unref, CharBackend,
+         Chardev, Clock, ClockEvent, MemoryRegion, QEMUChrEvent, CHR_IOCTL_SERIAL_SET_BREAK,
+     },
+-    c_str,
++    c_str, impl_vmstate_forward,
+     irq::InterruptSource,
+     prelude::*,
+     qdev::{DeviceImpl, DeviceState, Property},
+@@ -61,6 +61,7 @@ impl DeviceId {
+ #[repr(transparent)]
+ #[derive(Debug, Default)]
+ pub struct Fifo([registers::Data; PL011_FIFO_DEPTH as usize]);
++impl_vmstate_forward!(Fifo);
  
- use core::{marker::PhantomData, mem, ptr::NonNull};
+ impl Fifo {
+     const fn len(&self) -> u32 {
+diff --git a/rust/hw/char/pl011/src/device_class.rs b/rust/hw/char/pl011/src/device_class.rs
+index 7f3ca895071..e0d3532e956 100644
+--- a/rust/hw/char/pl011/src/device_class.rs
++++ b/rust/hw/char/pl011/src/device_class.rs
+@@ -6,11 +6,11 @@
+ use std::os::raw::{c_int, c_void};
  
--use crate::bindings::VMStateFlags;
- pub use crate::bindings::{VMStateDescription, VMStateField};
-+use crate::bindings::VMStateFlags;
+ use qemu_api::{
+-    bindings::*, c_str, vmstate_clock, vmstate_fields, vmstate_subsections, vmstate_uint32,
+-    vmstate_uint32_array, vmstate_unused, zeroable::Zeroable,
++    bindings::*, c_str, vmstate_clock, vmstate_fields, vmstate_of, vmstate_subsections,
++    vmstate_unused, zeroable::Zeroable,
+ };
  
- /// This macro is used to call a function with a generic argument bound
- /// to the type of a field.  The function must take a
-@@ -503,20 +503,8 @@ macro_rules! vmstate_fields {
-         static _FIELDS: &[$crate::bindings::VMStateField] = &[
-             $($field),*,
-             $crate::bindings::VMStateField {
--                name: ::core::ptr::null(),
--                err_hint: ::core::ptr::null(),
--                offset: 0,
--                size: 0,
--                start: 0,
--                num: 0,
--                num_offset: 0,
--                size_offset: 0,
--                info: ::core::ptr::null(),
--                flags: VMStateFlags::VMS_END,
--                vmsd: ::core::ptr::null(),
--                version_id: 0,
--                struct_version_id: 0,
--                field_exists: None,
-+                flags: $crate::bindings::VMStateFlags::VMS_END,
-+                ..$crate::zeroable::Zeroable::ZERO
-             }
-         ];
-         _FIELDS.as_ptr()
-diff --git a/rust/qemu-api/src/zeroable.rs b/rust/qemu-api/src/zeroable.rs
-index 6125aeed8b4..57cac96de06 100644
---- a/rust/qemu-api/src/zeroable.rs
-+++ b/rust/qemu-api/src/zeroable.rs
-@@ -49,6 +49,37 @@ unsafe impl Zeroable for crate::bindings::Property {
-     };
- }
+-use crate::device::{PL011State, PL011_FIFO_DEPTH};
++use crate::device::PL011State;
  
-+// bindgen does not derive Default here
-+#[allow(clippy::derivable_impls)]
-+impl Default for crate::bindings::VMStateFlags {
-+    fn default() -> Self {
-+        Self(0)
-+    }
-+}
-+
-+unsafe impl Zeroable for crate::bindings::VMStateFlags {
-+    const ZERO: Self = Self(0);
-+}
-+
-+unsafe impl Zeroable for crate::bindings::VMStateField {
-+    const ZERO: Self = Self {
-+        name: ptr::null(),
-+        err_hint: ptr::null(),
-+        offset: 0,
-+        size: 0,
-+        start: 0,
-+        num: 0,
-+        num_offset: 0,
-+        size_offset: 0,
-+        info: ptr::null(),
-+        flags: Zeroable::ZERO,
-+        vmsd: ptr::null(),
-+        version_id: 0,
-+        struct_version_id: 0,
-+        field_exists: None,
-+    };
-+}
-+
- unsafe impl Zeroable for crate::bindings::VMStateDescription {
-     const ZERO: Self = Self {
-         name: ptr::null(),
+ extern "C" fn pl011_clock_needed(opaque: *mut c_void) -> bool {
+     unsafe {
+@@ -52,21 +52,21 @@ extern "C" fn pl011_post_load(opaque: *mut c_void, version_id: c_int) -> c_int {
+     post_load: Some(pl011_post_load),
+     fields: vmstate_fields! {
+         vmstate_unused!(core::mem::size_of::<u32>()),
+-        vmstate_uint32!(flags, PL011State),
+-        vmstate_uint32!(line_control, PL011State),
+-        vmstate_uint32!(receive_status_error_clear, PL011State),
+-        vmstate_uint32!(control, PL011State),
+-        vmstate_uint32!(dmacr, PL011State),
+-        vmstate_uint32!(int_enabled, PL011State),
+-        vmstate_uint32!(int_level, PL011State),
+-        vmstate_uint32_array!(read_fifo, PL011State, PL011_FIFO_DEPTH),
+-        vmstate_uint32!(ilpr, PL011State),
+-        vmstate_uint32!(ibrd, PL011State),
+-        vmstate_uint32!(fbrd, PL011State),
+-        vmstate_uint32!(ifl, PL011State),
+-        vmstate_uint32!(read_pos, PL011State),
+-        vmstate_uint32!(read_count, PL011State),
+-        vmstate_uint32!(read_trigger, PL011State),
++        vmstate_of!(PL011State, flags),
++        vmstate_of!(PL011State, line_control),
++        vmstate_of!(PL011State, receive_status_error_clear),
++        vmstate_of!(PL011State, control),
++        vmstate_of!(PL011State, dmacr),
++        vmstate_of!(PL011State, int_enabled),
++        vmstate_of!(PL011State, int_level),
++        vmstate_of!(PL011State, read_fifo),
++        vmstate_of!(PL011State, ilpr),
++        vmstate_of!(PL011State, ibrd),
++        vmstate_of!(PL011State, fbrd),
++        vmstate_of!(PL011State, ifl),
++        vmstate_of!(PL011State, read_pos),
++        vmstate_of!(PL011State, read_count),
++        vmstate_of!(PL011State, read_trigger),
+     },
+     subsections: vmstate_subsections! {
+         VMSTATE_PL011_CLOCK
+diff --git a/rust/hw/char/pl011/src/lib.rs b/rust/hw/char/pl011/src/lib.rs
+index 0a89d393e0f..f30f9850ad4 100644
+--- a/rust/hw/char/pl011/src/lib.rs
++++ b/rust/hw/char/pl011/src/lib.rs
+@@ -106,6 +106,7 @@ pub mod registers {
+     //! Device registers exposed as typed structs which are backed by arbitrary
+     //! integer bitmaps. [`Data`], [`Control`], [`LineControl`], etc.
+     use bilge::prelude::*;
++    use qemu_api::impl_vmstate_bitsized;
+ 
+     /// Receive Status Register / Data Register common error bits
+     ///
+@@ -172,6 +173,7 @@ pub struct Data {
+         pub errors: Errors,
+         _reserved: u16,
+     }
++    impl_vmstate_bitsized!(Data);
+ 
+     impl Data {
+         // bilge is not very const-friendly, unfortunately
+@@ -208,6 +210,7 @@ pub struct ReceiveStatusErrorClear {
+         pub errors: Errors,
+         _reserved_unpredictable: u24,
+     }
++    impl_vmstate_bitsized!(ReceiveStatusErrorClear);
+ 
+     impl ReceiveStatusErrorClear {
+         pub fn set_from_data(&mut self, data: Data) {
+@@ -280,6 +283,7 @@ pub struct Flags {
+         pub ring_indicator: bool,
+         _reserved_zero_no_modify: u23,
+     }
++    impl_vmstate_bitsized!(Flags);
+ 
+     impl Flags {
+         pub fn reset(&mut self) {
+@@ -354,6 +358,7 @@ pub struct LineControl {
+         /// 31:8 - Reserved, do not modify, read as zero.
+         _reserved_zero_no_modify: u24,
+     }
++    impl_vmstate_bitsized!(LineControl);
+ 
+     impl LineControl {
+         pub fn reset(&mut self) {
+@@ -498,6 +503,7 @@ pub struct Control {
+         /// 31:16 - Reserved, do not modify, read as zero.
+         _reserved_zero_no_modify2: u16,
+     }
++    impl_vmstate_bitsized!(Control);
+ 
+     impl Control {
+         pub fn reset(&mut self) {
 -- 
 2.48.1
 
