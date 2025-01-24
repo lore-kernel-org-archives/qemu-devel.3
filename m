@@ -4,56 +4,56 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id AD30BC02181
-	for <qemu-devel@archiver.kernel.org>; Fri, 24 Jan 2025 13:03:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3E861C0218B
+	for <qemu-devel@archiver.kernel.org>; Fri, 24 Jan 2025 13:04:04 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tbJLS-0000Tp-47; Fri, 24 Jan 2025 08:03:35 -0500
+	id 1tbJLG-0000QL-Lt; Fri, 24 Jan 2025 08:03:24 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <deller@kernel.org>) id 1tbJL4-0000Pt-Tb
- for qemu-devel@nongnu.org; Fri, 24 Jan 2025 08:03:14 -0500
-Received: from dfw.source.kernel.org ([2604:1380:4641:c500::1])
+ (Exim 4.90_1) (envelope-from <deller@kernel.org>) id 1tbJKy-0000OV-GC
+ for qemu-devel@nongnu.org; Fri, 24 Jan 2025 08:03:05 -0500
+Received: from dfw.source.kernel.org ([139.178.84.217])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <deller@kernel.org>) id 1tbJL2-0007H3-Ig
- for qemu-devel@nongnu.org; Fri, 24 Jan 2025 08:03:10 -0500
+ (Exim 4.90_1) (envelope-from <deller@kernel.org>) id 1tbJKw-0007G8-Og
+ for qemu-devel@nongnu.org; Fri, 24 Jan 2025 08:03:04 -0500
 Received: from smtp.kernel.org (transwarp.subspace.kernel.org [100.75.92.58])
- by dfw.source.kernel.org (Postfix) with ESMTP id 1E0DC5C5A81;
- Fri, 24 Jan 2025 13:02:27 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B1A9BC4CED2;
- Fri, 24 Jan 2025 13:03:05 +0000 (UTC)
+ by dfw.source.kernel.org (Postfix) with ESMTP id 2A2BE5C5A81;
+ Fri, 24 Jan 2025 13:02:18 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BCDB4C4CED2;
+ Fri, 24 Jan 2025 13:02:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
- s=k20201202; t=1737723787;
- bh=+SMT1Ka5Xy6fyDrlOIaRE9P42fAh6RoCdIztHWEYvfE=;
- h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
- b=Xl44rBIsQ4y5CJ160FYg9QT5IAPTMETvBBZX7aK8jFPSukKQWZwppOYeRfbclJIgo
- 55NW8qHeXfeWrnGw6zV8YVf+JKp7zDNchO8AfD0EkJwE3FH3cNei4cAU6FrxaBI3es
- uTOgLYr8plc4Xom/AMVsIwNbPZBsh5rqxjO4rlS025WCvVbEHROi0XNuSGuUg979SI
- ltyrek+FCa/iODyqei3AOUvpa2gQjgZ0F6W6MVislxUlI7ZWrYiASK3Z31uvIwChcx
- jVd7vyR4qGWAwCWO4jS7R5xW3mvUcNROjbLJJJlgszfgKBph6U/F6UHDWTSQGXHAFz
- Gc6hqb3obytzQ==
+ s=k20201202; t=1737723778;
+ bh=wOfvPimm++bcR+fr8JPr4UgbbfbJtbzGWJ0HL1R9UT0=;
+ h=From:To:Cc:Subject:Date:From;
+ b=cRdbw2RBsqpLLSJ8dI8YTzcZjLo0Kx7nxGZbjR1+MmtS5ucZKxIr4/h/X46+BmGmw
+ bHNgpZOa25jcVv/cXeJ9PREuvagxTBX2CeXRSwDOphV8ls+tUnOARFEfrcTv+7b9U4
+ OvdbbZyU6guTw0qqAluXPxBc1T7dvQFAPamFFn0U9yH4XiNM+HMGPuhNNM0m2498/J
+ SxzRNcU8r3xGm4ddfCKnQd0/ziUsLMBIlx7g6fk2yi190pAmV+ne9rQ4s/IygrHAQ3
+ S+4spKdCGe93rmjz6bkJG1WLeOTT6GJ0y1EjtDeWl5ANUnHkrjhhDv6/S8tPldwLVy
+ f0/CnUeQI5Ueg==
 From: deller@kernel.org
 To: Laurent Vivier <laurent@vivier.eu>, Stefan Hajnoczi <stefanha@gmail.com>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
 Cc: deller@gmx.de
-Subject: [PULL v3 5/6] linux-user: netlink: add netlink neighbour emulation
-Date: Fri, 24 Jan 2025 14:02:53 +0100
-Message-ID: <20250124130254.3134-6-deller@kernel.org>
+Subject: [PULL v3 0/6] Linux user fix gupnp patches
+Date: Fri, 24 Jan 2025 14:02:48 +0100
+Message-ID: <20250124130254.3134-1-deller@kernel.org>
 X-Mailer: git-send-email 2.47.0
-In-Reply-To: <20250124130254.3134-1-deller@kernel.org>
-References: <20250124130254.3134-1-deller@kernel.org>
 MIME-Version: 1.0
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2604:1380:4641:c500::1;
- envelope-from=deller@kernel.org; helo=dfw.source.kernel.org
-X-Spam_score_int: -73
-X-Spam_score: -7.4
-X-Spam_bar: -------
-X-Spam_report: (-7.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-2.996,
+Received-SPF: pass client-ip=139.178.84.217; envelope-from=deller@kernel.org;
+ helo=dfw.source.kernel.org
+X-Spam_score_int: -100
+X-Spam_score: -10.1
+X-Spam_bar: ----------
+X-Spam_report: (-10.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-2.996,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ RCVD_IN_DNSWL_HI=-5, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -72,200 +72,44 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Helge Deller <deller@gmx.de>
 
-Fixes various warnings in the testsuite while building gupnp:
- gssdp-net-DEBUG: Failed to send netlink message: Operation not supported
- gupnp-context-DEBUG: Mismatch between host header and host IP (example.com, expected: 127.0.0.1)
- gupnp-context-DEBUG: Mismatch between host header and host port (80, expected 4711)
- gupnp-context-DEBUG: Mismatch between host header and host IP (192.168.1.2, expected: 127.0.0.1)
- gupnp-context-DEBUG: Mismatch between host header and host IP (fe80::01, expected: 127.0.0.1)
- gupnp-context-DEBUG: Mismatch between host header and host port (80, expected 4711)
- gupnp-context-DEBUG: Failed to parse HOST header from request: Invalid IPv6 address ?[fe80::01%1]? in URI
- gupnp-context-DEBUG: Failed to parse HOST header from request: Invalid IPv6 address ?[fe80::01%eth0]? in URI
- gupnp-context-DEBUG: Failed to parse HOST header from request: Could not parse port ?:1? in URI
- gupnp-context-DEBUG: Mismatch between host header and host IP (example.com, expected: ::1)
- gupnp-context-DEBUG: Mismatch between host header and host port (80, expected 4711)
- gupnp-context-DEBUG: Mismatch between host header and host IP (example.com, expected: ::1)
- gupnp-context-DEBUG: Mismatch between host header and host port (80, expected 4711)
- gupnp-context-DEBUG: Mismatch between host header and host IP (example.com, expected: ::1)
+The following changes since commit 0e3aff9ec34059512d597eacfcf4d1b5d4570c50:
+
+  Merge tag 'pull-10.0-gdb-plugins-doc-updates-170125-1' of https://gitlab.com/stsquad/qemu into staging (2025-01-17 10:13:07 -0500)
+
+are available in the Git repository at:
+
+  https://github.com/hdeller/qemu-hppa.git tags/linux-user-fix-gupnp-pull-request
+
+for you to fetch changes up to 3719acc273865744b885ad9bcb141b4496c31887:
+
+  linux-user: netlink: Add missing QEMU_IFLA entries (2025-01-24 13:58:40 +0100)
+
+----------------------------------------------------------------
+linux-user: Add support for various missing netlink sockopt entries
+
+Add missing sockopt calls and thus fix building the debian gupnp package in a chroot.
+
+This fixes debian bug report:
+https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=1044651
 
 Signed-off-by: Helge Deller <deller@gmx.de>
-Reviewed-by: Laurent Vivier <laurent@vivier.eu>
----
- linux-user/fd-trans.c | 100 ++++++++++++++++++++++++++++++++++++++++++
- 1 file changed, 100 insertions(+)
 
-diff --git a/linux-user/fd-trans.c b/linux-user/fd-trans.c
-index 2e714c8e56..621e2248b4 100644
---- a/linux-user/fd-trans.c
-+++ b/linux-user/fd-trans.c
-@@ -25,12 +25,16 @@
- #ifdef CONFIG_RTNETLINK
- #include <linux/rtnetlink.h>
- #include <linux/if_bridge.h>
-+#include <linux/neighbour.h>
- #endif
- #include "qemu.h"
- #include "user-internals.h"
- #include "fd-trans.h"
- #include "signal-common.h"
- 
-+#define NDM_RTA(r)  ((struct rtattr*)(((char*)(r)) + \
-+                    NLMSG_ALIGN(sizeof(struct ndmsg))))
-+
- enum {
-     QEMU_IFA_UNSPEC,
-     QEMU_IFA_ADDRESS,
-@@ -1226,6 +1230,35 @@ static abi_long host_to_target_data_route_rtattr(struct rtattr *rtattr)
-     return 0;
- }
- 
-+static abi_long host_to_target_data_neigh_rtattr(struct rtattr *rtattr)
-+{
-+    struct nda_cacheinfo *ndac;
-+    uint32_t *u32;
-+
-+    switch (rtattr->rta_type) {
-+    case NDA_UNSPEC:
-+    case NDA_DST:
-+    case NDA_LLADDR:
-+        break;
-+    case NDA_PROBES:
-+        u32 = RTA_DATA(rtattr);
-+        *u32 = tswap32(*u32);
-+        break;
-+    case NDA_CACHEINFO:
-+        ndac = RTA_DATA(rtattr);
-+        ndac->ndm_confirmed = tswap32(ndac->ndm_confirmed);
-+        ndac->ndm_used      = tswap32(ndac->ndm_used);
-+        ndac->ndm_updated   = tswap32(ndac->ndm_updated);
-+        ndac->ndm_refcnt    = tswap32(ndac->ndm_refcnt);
-+        break;
-+    default:
-+        qemu_log_mask(LOG_UNIMP, "Unknown host to target NEIGH type: %d\n",
-+                      rtattr->rta_type);
-+        break;
-+    }
-+    return 0;
-+}
-+
- static abi_long host_to_target_link_rtattr(struct rtattr *rtattr,
-                                          uint32_t rtattr_len)
- {
-@@ -1247,12 +1280,20 @@ static abi_long host_to_target_route_rtattr(struct rtattr *rtattr,
-                                           host_to_target_data_route_rtattr);
- }
- 
-+static abi_long host_to_target_neigh_rtattr(struct rtattr *rtattr,
-+                                         uint32_t rtattr_len)
-+{
-+    return host_to_target_for_each_rtattr(rtattr, rtattr_len,
-+                                          host_to_target_data_neigh_rtattr);
-+}
-+
- static abi_long host_to_target_data_route(struct nlmsghdr *nlh)
- {
-     uint32_t nlmsg_len;
-     struct ifinfomsg *ifi;
-     struct ifaddrmsg *ifa;
-     struct rtmsg *rtm;
-+    struct ndmsg *ndm;
- 
-     nlmsg_len = nlh->nlmsg_len;
-     switch (nlh->nlmsg_type) {
-@@ -1279,6 +1320,17 @@ static abi_long host_to_target_data_route(struct nlmsghdr *nlh)
-                                        nlmsg_len - NLMSG_LENGTH(sizeof(*ifa)));
-         }
-         break;
-+    case RTM_NEWNEIGH:
-+    case RTM_DELNEIGH:
-+    case RTM_GETNEIGH:
-+        if (nlh->nlmsg_len >= NLMSG_LENGTH(sizeof(*ndm))) {
-+            ndm = NLMSG_DATA(nlh);
-+            ndm->ndm_ifindex = tswap32(ndm->ndm_ifindex);
-+            ndm->ndm_state = tswap16(ndm->ndm_state);
-+            host_to_target_neigh_rtattr(NDM_RTA(ndm),
-+                                    nlmsg_len - NLMSG_LENGTH(sizeof(*ndm)));
-+        }
-+        break;
-     case RTM_NEWROUTE:
-     case RTM_DELROUTE:
-     case RTM_GETROUTE:
-@@ -1426,6 +1478,35 @@ static abi_long target_to_host_data_addr_rtattr(struct rtattr *rtattr)
-     return 0;
- }
- 
-+static abi_long target_to_host_data_neigh_rtattr(struct rtattr *rtattr)
-+{
-+    struct nda_cacheinfo *ndac;
-+    uint32_t *u32;
-+
-+    switch (rtattr->rta_type) {
-+    case NDA_UNSPEC:
-+    case NDA_DST:
-+    case NDA_LLADDR:
-+        break;
-+    case NDA_PROBES:
-+        u32 = RTA_DATA(rtattr);
-+        *u32 = tswap32(*u32);
-+        break;
-+    case NDA_CACHEINFO:
-+        ndac = RTA_DATA(rtattr);
-+        ndac->ndm_confirmed = tswap32(ndac->ndm_confirmed);
-+        ndac->ndm_used      = tswap32(ndac->ndm_used);
-+        ndac->ndm_updated   = tswap32(ndac->ndm_updated);
-+        ndac->ndm_refcnt    = tswap32(ndac->ndm_refcnt);
-+        break;
-+    default:
-+        qemu_log_mask(LOG_UNIMP, "Unknown target NEIGH type: %d\n",
-+                      rtattr->rta_type);
-+        break;
-+    }
-+    return 0;
-+}
-+
- static abi_long target_to_host_data_route_rtattr(struct rtattr *rtattr)
- {
-     uint32_t *u32;
-@@ -1464,6 +1545,13 @@ static void target_to_host_addr_rtattr(struct rtattr *rtattr,
-                                    target_to_host_data_addr_rtattr);
- }
- 
-+static void target_to_host_neigh_rtattr(struct rtattr *rtattr,
-+                                     uint32_t rtattr_len)
-+{
-+    target_to_host_for_each_rtattr(rtattr, rtattr_len,
-+                                   target_to_host_data_neigh_rtattr);
-+}
-+
- static void target_to_host_route_rtattr(struct rtattr *rtattr,
-                                      uint32_t rtattr_len)
- {
-@@ -1476,6 +1564,7 @@ static abi_long target_to_host_data_route(struct nlmsghdr *nlh)
-     struct ifinfomsg *ifi;
-     struct ifaddrmsg *ifa;
-     struct rtmsg *rtm;
-+    struct ndmsg *ndm;
- 
-     switch (nlh->nlmsg_type) {
-     case RTM_NEWLINK:
-@@ -1502,6 +1591,17 @@ static abi_long target_to_host_data_route(struct nlmsghdr *nlh)
-                                        NLMSG_LENGTH(sizeof(*ifa)));
-         }
-         break;
-+    case RTM_NEWNEIGH:
-+    case RTM_DELNEIGH:
-+    case RTM_GETNEIGH:
-+        if (nlh->nlmsg_len >= NLMSG_LENGTH(sizeof(*ndm))) {
-+            ndm = NLMSG_DATA(nlh);
-+            ndm->ndm_ifindex = tswap32(ndm->ndm_ifindex);
-+            ndm->ndm_state = tswap16(ndm->ndm_state);
-+            target_to_host_neigh_rtattr(NDM_RTA(ndm), nlh->nlmsg_len -
-+                                       NLMSG_LENGTH(sizeof(*ndm)));
-+        }
-+        break;
-     case RTM_NEWROUTE:
-     case RTM_DELROUTE:
-     case RTM_GETROUTE:
+----------------------------------------------------------------
+
+Helge Deller (6):
+  linux-user: netlink: Add missing IFA_PROTO to
+    host_to_target_data_addr_rtattr()
+  linux-user: Use unique error messages for cmsg parsing
+  linux-user: netlink: Add IP_PKTINFO cmsg parsing
+  linux-user: netlink: Add emulation of IP_MULTICAST_IF
+  linux-user: netlink: add netlink neighbour emulation
+  linux-user: netlink: Add missing QEMU_IFLA entries
+
+ linux-user/fd-trans.c     | 169 ++++++++++++++++++++++++++++++++++++--
+ linux-user/syscall.c      |  34 ++++++--
+ linux-user/syscall_defs.h |   6 ++
+ 3 files changed, 192 insertions(+), 17 deletions(-)
+
 -- 
 2.47.0
 
