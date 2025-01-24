@@ -4,108 +4,90 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7CBE1C02181
-	for <qemu-devel@archiver.kernel.org>; Fri, 24 Jan 2025 16:27:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 051BBC02181
+	for <qemu-devel@archiver.kernel.org>; Fri, 24 Jan 2025 16:28:23 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tbMWm-0002NU-9v; Fri, 24 Jan 2025 11:27:28 -0500
+	id 1tbMXV-0002vh-3o; Fri, 24 Jan 2025 11:28:13 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <dhildenb@redhat.com>)
- id 1tbMWk-0002N8-Fe
- for qemu-devel@nongnu.org; Fri, 24 Jan 2025 11:27:26 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <dhildenb@redhat.com>)
- id 1tbMWe-0005Dy-FI
- for qemu-devel@nongnu.org; Fri, 24 Jan 2025 11:27:26 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1737736039;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=TcYXbuttJvyTYCdS1jYY2P3DyP6WKZ98vnviI1IyLBw=;
- b=CDFd7npQ0ZTT/ZU3UzxctqOVphsKpWBGJMvErLbQb88HvMdHnN8AX3g6ctLLw3U5N9vzyq
- 1ABZ+Hag5e+7+rhI+WLVSU1zAye+zuxsu09ZEIShANlam6mF5zPLOo30k5gkuVuSB+qRPR
- IAJt3NbXwiSXqis708TkriNEQKGW3IE=
-Received: from mail-ej1-f70.google.com (mail-ej1-f70.google.com
- [209.85.218.70]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-404-3z2bVknfMwmqMfSxRiMCQg-1; Fri, 24 Jan 2025 11:27:16 -0500
-X-MC-Unique: 3z2bVknfMwmqMfSxRiMCQg-1
-X-Mimecast-MFC-AGG-ID: 3z2bVknfMwmqMfSxRiMCQg
-Received: by mail-ej1-f70.google.com with SMTP id
- a640c23a62f3a-aa6732a1af5so277529566b.3
- for <qemu-devel@nongnu.org>; Fri, 24 Jan 2025 08:27:16 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tbMXS-0002vS-9E
+ for qemu-devel@nongnu.org; Fri, 24 Jan 2025 11:28:11 -0500
+Received: from mail-wm1-x333.google.com ([2a00:1450:4864:20::333])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tbMXN-0005HF-Go
+ for qemu-devel@nongnu.org; Fri, 24 Jan 2025 11:28:10 -0500
+Received: by mail-wm1-x333.google.com with SMTP id
+ 5b1f17b1804b1-4361815b96cso15911545e9.1
+ for <qemu-devel@nongnu.org>; Fri, 24 Jan 2025 08:28:05 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1737736084; x=1738340884; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=eQuYG7upoxbpOPXjG+3hYlhADqAHOSeKyfZmWngrDto=;
+ b=gBXVsLjtsn6mKYE8zqK24jYI3dZbG2PB3vuhrxstsc0y1qtcHv0Ff3dsWXdscnidZz
+ 2Npz6iMi/e+3FX8JO7F7fUVV39LOo0rmnLILiBolwQZm+eqp3Sotwxs73vAP9QFXSIub
+ IaNXs2RvlJnQBZhejwMoDK6zx9BnCMWndpHJ5cdwklgEC/OQAsQin+vXEdH4sfGlFpSS
+ +/mgaJjKbt3kjYBMUGFtMJTE8gmpEmjD5KNQcCc1PE9G++2z7hMOVVpYCoooy44XmVoP
+ dVhwxT9DeVohR1XbGQn/PDHr1Tviwi7Xg0lbpbLk1aGBMivZflmpjcIxXURVijQeGe5D
+ bICw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1737735721; x=1738340521;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=TcYXbuttJvyTYCdS1jYY2P3DyP6WKZ98vnviI1IyLBw=;
- b=H0ETnuprY9xR+mdxZcnOPL2QuYXopUzhZXmv69Cj0ehmcnylQ8elv4ukPJXRG16Fgm
- 3fOpuXsiiVL4QORxzwo4aNKQiMYZYjYGma8rI52CqZTxNnLKpu6FeB38GGUgLYFBoQwK
- QSJOJ88EoCyXedQ/4RBDFwhiJdw9pnBS2khuoucmKvBqV8LYCQ/2vuD4P/jVYfcR+xmo
- wJV+Y0NMa2UdZMWegPgbhv3lZCeeOYPMZYt8mklM2HxSK47HdkV791H8hm+3/ESpXwpH
- DaLUNpncKUrXrJJkzqyuscNqFcNJI8fOD0Q5gdwmly48AcPlzD1AMsfCuFPNPp1+h4pn
- Kbww==
-X-Gm-Message-State: AOJu0YylD2AtRXnmIiIC8KqK0yIW2jdFnaYR54In1Dnoc/oL8BvUDjMt
- /3heRtlF+ehk42awN+u2MbIWUkUrXyxjIsPbhvH2511Ba2vizM362acHm/dZPl+G7jeQyOs7Teo
- KDgXloeGM+akNiHWNlczxKO3ostPnOit1KPsSwjePB7Asf04MG6z7QaSFOK2pdcahaM3IyCmh7h
- ZdoNcfS41/qZ/3gBfM7+j5Vhsc4HnN1qHj4iMcnA==
-X-Gm-Gg: ASbGnctjJlXT7bXISiZiMuJ29xZXtWZ9HoD2c7RG5sGmc2Qbejw28LxwczuDQZPTKIS
- f04DnrINCuc5wBuW8z1w8hBLfCFCrXW9QPnfSeOTTZCZvMV/q8xIErAPuzuRXqDoMFXauixqweD
- d1mmejZNy2+ByboJ1gczA8c+JbBmGBkCpYWYyVveQGKQqQcYgFutXgr15l9YEoyvAehCylHiav9
- L4ju3VlGGQxre2mrwHocUBrYJ0wKHd+V3d2EcphLIxaFF3ddL/F16LkMVbN+ahNzsu+PRFJGcsk
- oC2S6EfFnzhomquHJ5TpGD4aySmaPDLp5li9Q8H/xcsybdevKWJabQ0=
-X-Received: by 2002:a05:600c:4f8e:b0:438:ad4d:cf01 with SMTP id
- 5b1f17b1804b1-438ad4dd129mr200052585e9.7.1737733547704; 
- Fri, 24 Jan 2025 07:45:47 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IGiXBr9NRQ9sJjlAXXbFZwrvB2NDC9H1nG8Bq2i09O5ZaQ+aitsafpmoJPw/XUeC/T0UwjIfQ==
-X-Received: by 2002:a05:600c:4f8e:b0:438:ad4d:cf01 with SMTP id
- 5b1f17b1804b1-438ad4dd129mr200052125e9.7.1737733547315; 
- Fri, 24 Jan 2025 07:45:47 -0800 (PST)
-Received: from localhost
- (p200300cbc719e000ca2c77c5de7dce89.dip0.t-ipconnect.de.
- [2003:cb:c719:e000:ca2c:77c5:de7d:ce89])
- by smtp.gmail.com with UTF8SMTPSA id
- 5b1f17b1804b1-438bd4fa46esm30544735e9.1.2025.01.24.07.45.44
+ d=1e100.net; s=20230601; t=1737736084; x=1738340884;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=eQuYG7upoxbpOPXjG+3hYlhADqAHOSeKyfZmWngrDto=;
+ b=i0K7C22XTfvckGP+cmqK07oxzU/bkyZejs3PpmNS+lS+YdesFqjwQ2Eyww+27wIJqG
+ l4e73BOa2UsjJoqVc0LsUI5sN/JdEOdM80HBVrt+30GNj0jZUv2tweuzgEMlC2h1myPN
+ zVlPR2lCuR1Ry0jtJRFAnlw0PKpUvSP4dc4X8UsdilR8GPwixl2GoEV1ZCZkc44ozXdP
+ azkQ3YwQo6lfdk3ke3PSalasEYDeB/J5zMZc0lqGOZuYxibU8DKnbk+mJXO3vOY0HER2
+ kG4HmwsOz5LgMfc+YgHWff/dgd6pAx0GMLCF8Uq39x1G4uEmECoY6HmiqJKBcCKcb4/u
+ 2ekw==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCWK8lvZKwadDKpVaUkbbaEGBWNUXBJqyyuuf/Esh9muEX1SxeHLFGq0kxBmIbGzUeyF3OUVsL1P5LJU@nongnu.org
+X-Gm-Message-State: AOJu0Ywq7dM868kFfW0mX1WY4wyKoE/qWbzi6D+WVrR8k7jHxxFe8S/S
+ 6X8Jg4b65Ch8lHIa5HIYZMPt6tlcHtI1Z/7S6Ez5jSg+MyqTEBSp1gnHQZ1VVtE=
+X-Gm-Gg: ASbGnctZHOH5iNpV5v3RtqUoYTSxDQ+XsLPjH3vzTEg6Vh5g/U6Endyz/KbOu89NLBw
+ EBdondGkEq9GHLHPDiBtB0vuRPJEfp3C9tLWzfMOg4oGHXO14mdaomYD1RWafzbpHL5DlaRo2F0
+ jhPmYYxY3AYkMq+obs1VGoh2x0d7xJs9j6l5UHuEPcBeMd192/psUCJTTAEOC//zoHjkYRYVVSZ
+ CtvZxHbQS71q/8R/pOeWCDPvQizq4BPL1yEaVtQIqNIuLCgGELmqZcsLn1eoKKe7fjC+lOP0mmp
+ sHsKKzYX1BBL0ntza+/Z8PqnEaDE+zRXLXL4qAf5G0tOM79A
+X-Google-Smtp-Source: AGHT+IG3fmCKw+a3pBlf1FnYOYJRCJUC5s8+rT9MvnA/uEYAXeBwBEQNZ4XYHFtjFYFtk9LZLsHE0A==
+X-Received: by 2002:a05:600c:450e:b0:436:1ac2:1ad2 with SMTP id
+ 5b1f17b1804b1-43891427485mr255507925e9.19.1737736083712; 
+ Fri, 24 Jan 2025 08:28:03 -0800 (PST)
+Received: from [192.168.69.181] (88-187-86-199.subs.proxad.net.
+ [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-438b1d904cbsm54934015e9.1.2025.01.24.08.28.02
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 24 Jan 2025 07:45:46 -0800 (PST)
-From: David Hildenbrand <david@redhat.com>
-To: qemu-devel@nongnu.org
-Cc: David Hildenbrand <david@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
- Peter Xu <peterx@redhat.com>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Peter Maydell <peter.maydell@linaro.org>,
- =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Alex Williamson <alex.williamson@redhat.com>,
- Eduardo Habkost <eduardo@habkost.net>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- Elena Ufimtseva <elena.ufimtseva@oracle.com>,
- Jagannathan Raman <jag.raman@oracle.com>,
- "Dr. David Alan Gilbert" <dave@treblig.org>, Stefan Zabka <git@zabka.it>
-Subject: [PATCH v2 4/7] physmem: disallow direct access to RAM DEVICE in
- address_space_write_rom()
-Date: Fri, 24 Jan 2025 16:45:29 +0100
-Message-ID: <20250124154533.3534250-5-david@redhat.com>
-X-Mailer: git-send-email 2.47.1
-In-Reply-To: <20250124154533.3534250-1-david@redhat.com>
-References: <20250124154533.3534250-1-david@redhat.com>
+ Fri, 24 Jan 2025 08:28:03 -0800 (PST)
+Message-ID: <d5749a49-a12f-4485-b2f1-189b3d9cc89e@linaro.org>
+Date: Fri, 24 Jan 2025 17:28:02 +0100
 MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 2/2] hw/cxl: Allow tracing component I/O accesses
+To: Jonathan Cameron <Jonathan.Cameron@huawei.com>,
+ Jonathan Cameron via <qemu-devel@nongnu.org>
+Cc: Fan Ni <fan.ni@samsung.com>, Paolo Bonzini <pbonzini@redhat.com>,
+ mst@redhat.com
+References: <20250122065624.34203-1-philmd@linaro.org>
+ <20250122065624.34203-3-philmd@linaro.org>
+ <20250123095151.000041a0@huawei.com> <20250124162028.0000464b@huawei.com>
+Content-Language: en-US
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <20250124162028.0000464b@huawei.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=dhildenb@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -50
-X-Spam_score: -5.1
-X-Spam_bar: -----
-X-Spam_report: (-5.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-2.996,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+Received-SPF: pass client-ip=2a00:1450:4864:20::333;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x333.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -122,42 +104,41 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-As documented in commit 4a2e242bbb306 ("memory: Don't use memcpy for
-ram_device regions"), we disallow direct access to RAM DEVICE regions.
+On 24/1/25 17:20, Jonathan Cameron wrote:
+> On Thu, 23 Jan 2025 09:51:51 +0000
+> Jonathan Cameron via <qemu-devel@nongnu.org> wrote:
+> 
+>> On Wed, 22 Jan 2025 07:56:24 +0100
+>> Philippe Mathieu-Daudé <philmd@linaro.org> wrote:
+>>
+>>> Map the component I/O region as UnimplementedDevice
+>>> to be able to trace guest I/O accesses with '-d unimp'.
+>>>
+>>> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+>> I'm not that familiar with this infrastructure but seems
+>> fine to me.
+>>
+>> I'd definitely be curious if anything is touching this space so
+>> tracing may be helpful for that!
+> Hi Philippe
+> 
+>>
+>> Reviewed-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+> Retract that.
+> 
+> Can't instantiate a CXL device with this patch because:
+> 
+> Device unimplemented-device can not be dynamically instantiated.
 
-This change implies that address_space_write_rom() and
-cpu_memory_rw_debug() won't be able to write to RAM DEVICE regions. It
-will also affect cpu_flush_icache_range(), but it's only used by
-hw/core/loader.c after writing to ROM, so it is expected to not apply
-here with RAM DEVICE.
+Hmm the qtests using CXL devices pass, how do you trigger that?
 
-This fixes direct access to these regions where we don't want direct
-access. We'll extend cpu_memory_rw_debug() next to also be able to write to
-these (and IO) regions.
-
-This is a preparation for further changes.
-
-Cc: Alex Williamson <alex.williamson@redhat.com>
-Signed-off-by: David Hildenbrand <david@redhat.com>
----
- system/physmem.c | 3 +--
- 1 file changed, 1 insertion(+), 2 deletions(-)
-
-diff --git a/system/physmem.c b/system/physmem.c
-index c76503aea8..2d4f8110e8 100644
---- a/system/physmem.c
-+++ b/system/physmem.c
-@@ -3029,8 +3029,7 @@ static inline MemTxResult address_space_write_rom_internal(AddressSpace *as,
-         l = len;
-         mr = address_space_translate(as, addr, &addr1, &l, true, attrs);
- 
--        if (!(memory_region_is_ram(mr) ||
--              memory_region_is_romd(mr))) {
-+        if (!memory_region_supports_direct_access(mr)) {
-             l = memory_access_size(mr, l, addr1);
-         } else {
-             /* ROM/RAM case */
--- 
-2.47.1
+> 
+> Reverting this patch on my tree fixes that.
+> 
+>>> ---
+>>>   include/hw/cxl/cxl_component.h |  3 ++-
+>>>   hw/cxl/cxl-component-utils.c   | 14 +++++++++++---
+>>>   hw/cxl/Kconfig                 |  1 +
+>>>   3 files changed, 14 insertions(+), 4 deletions(-)
 
 
