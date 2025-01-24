@@ -4,81 +4,94 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5067DC02181
-	for <qemu-devel@archiver.kernel.org>; Fri, 24 Jan 2025 09:51:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2AF55C02181
+	for <qemu-devel@archiver.kernel.org>; Fri, 24 Jan 2025 09:51:34 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tbGIQ-0006eH-7x; Fri, 24 Jan 2025 04:48:15 -0500
+	id 1tbGIN-0006M0-1Q; Fri, 24 Jan 2025 04:48:11 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <yilun.xu@linux.intel.com>)
- id 1tbGIM-0006M8-8T
- for qemu-devel@nongnu.org; Fri, 24 Jan 2025 04:48:10 -0500
-Received: from mgamail.intel.com ([198.175.65.16])
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1tbGGT-0007rN-Fg
+ for qemu-devel@nongnu.org; Fri, 24 Jan 2025 04:46:22 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <yilun.xu@linux.intel.com>)
- id 1tbGIJ-0004Jt-7U
- for qemu-devel@nongnu.org; Fri, 24 Jan 2025 04:48:09 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
- d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1737712087; x=1769248087;
- h=date:from:to:cc:subject:message-id:references:
- mime-version:in-reply-to;
- bh=ZCO/MfX8NlwMysTySYqInSrG/aVh4QrZSiFlw8U2DTU=;
- b=lbNpEBWDFInCsG+znNzKnNhNQ+sGuG34BDe60qsyUpcErhWiJDE3vzSx
- Zjx4qPrxMgGcq6EUqAA4ryt3GkzZUXMfaFilESEO2yGlZRUVW3+K3rA5g
- W1HyhOjI+6NXX/u+1oZyDeiAiZLsC7/lRi34IfxQ+aZAybpnYes9x/1OM
- AfQ6CFVyG+Nx/1khwixfoqIZ3idzR3LqeJxIhmBRKIVjY2CYEdHej0zKS
- HvOn3vG+YANOSuuFHO1yKj9HrKEiZ54/tp9kh/P48wAHpU7+gwalpDOdi
- lfSuycyPd+fnv8EDmkw3k9ZTiA2H5gVAv10PuGKPpDgu85RsLBMMDTiKG Q==;
-X-CSE-ConnectionGUID: VAWGa73aSZS/cnQ15ckY/A==
-X-CSE-MsgGUID: NBv7TbcdQ56/zmjnnGqa1Q==
-X-IronPort-AV: E=McAfee;i="6700,10204,11324"; a="38384681"
-X-IronPort-AV: E=Sophos;i="6.13,230,1732608000"; d="scan'208";a="38384681"
-Received: from orviesa002.jf.intel.com ([10.64.159.142])
- by orvoesa108.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 24 Jan 2025 01:48:04 -0800
-X-CSE-ConnectionGUID: 9Ia2M76ySwGjhE/uJ2a80A==
-X-CSE-MsgGUID: tdwLn7+uRXqx0YvAArLPNg==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.13,230,1732608000"; d="scan'208";a="138593034"
-Received: from yilunxu-optiplex-7050.sh.intel.com (HELO localhost)
- ([10.239.159.165])
- by orviesa002.jf.intel.com with ESMTP; 24 Jan 2025 01:48:01 -0800
-Date: Fri, 24 Jan 2025 17:47:45 +0800
-From: Xu Yilun <yilun.xu@linux.intel.com>
-To: Peter Xu <peterx@redhat.com>
-Cc: Alexey Kardashevskiy <aik@amd.com>, Chenyi Qiang <chenyi.qiang@intel.com>,
- David Hildenbrand <david@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
- Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Michael Roth <michael.roth@amd.com>, qemu-devel@nongnu.org,
- kvm@vger.kernel.org, Williams Dan J <dan.j.williams@intel.com>,
- Peng Chao P <chao.p.peng@intel.com>, Gao Chao <chao.gao@intel.com>,
- Xu Yilun <yilun.xu@intel.com>
-Subject: Re: [PATCH 2/7] guest_memfd: Introduce an object to manage the
- guest-memfd with RamDiscardManager
-Message-ID: <Z5NhwW/IXaLfvjvb@yilunxu-OptiPlex-7050>
-References: <590432e1-4a26-4ae8-822f-ccfbac352e6b@intel.com>
- <2b2730f3-6e1a-4def-b126-078cf6249759@amd.com>
- <Z462F1Dwm6cUdCcy@x1n> <ZnmfUelBs3Cm0ZHd@yilunxu-OptiPlex-7050>
- <Z4-6u5_9NChu_KZq@x1n>
- <95a14f7d-4782-40b3-a55d-7cf67b911bbe@amd.com>
- <Z5C9SzXxX7M1DBE3@yilunxu-OptiPlex-7050> <Z5EgFaWIyjIiOZnv@x1n>
- <Z5INAQjxyYhwyc+1@yilunxu-OptiPlex-7050> <Z5Jylb73kDJ6HTEZ@x1n>
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1tbGGQ-0003zU-FV
+ for qemu-devel@nongnu.org; Fri, 24 Jan 2025 04:46:12 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1737711969;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:mime-version:mime-version:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=pYotlgAkj0BTi86HRyNenC71lJ7jbC7FINWW+MntPOg=;
+ b=C4mrhwk6jfnZjSlx0nmzKGL1hETa1j8MRQPBlmVCjvx6e2rSB4QuBlJ8PH8/UVyQ9RBe30
+ H/JA1eY3NQK7tMoHAFw2re0gaSq8VuPD7PwpzNe29WrSi5YDWYIVFf/uBan3huMR3yxpRV
+ 6HbqiJO+c6KZ06M0vmQTg6CZNv1z9i8=
+Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com
+ [209.85.128.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-583-0z3mT4ZuMxWwYqLQ2p7Xzg-1; Fri, 24 Jan 2025 04:46:07 -0500
+X-MC-Unique: 0z3mT4ZuMxWwYqLQ2p7Xzg-1
+X-Mimecast-MFC-AGG-ID: 0z3mT4ZuMxWwYqLQ2p7Xzg
+Received: by mail-wm1-f71.google.com with SMTP id
+ 5b1f17b1804b1-43625ceae52so10232015e9.0
+ for <qemu-devel@nongnu.org>; Fri, 24 Jan 2025 01:46:07 -0800 (PST)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1737711965; x=1738316765;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=pYotlgAkj0BTi86HRyNenC71lJ7jbC7FINWW+MntPOg=;
+ b=E9fPCJWo+U6cdxGy1DCBi6BjTHJ1TdGB8y3sWdCpCoRhgnBxoPRznc0j9saAYbEwIL
+ soatiFIsBOfTq9DIeKQInqKtJwHORrQVW1lyzKIC66Kcf1gNmAhxddKcIXM0EE6UEMnC
+ iBfnw7dfv9/pmSY0rxCnvGtkjr1XrZsiVYrlrBpfOUH/YswPptMwRucFXNngdbvKkaP/
+ wDYUNIC5tNgP9Mgd0ldLbiWg78MSTxtq+doXc7O/hSYDasctUa6JgXM9NbiFBCqMDJey
+ eNCAnk/lSRngBVrnv/HoV/fNWJEFe5r6WMK97UnrzQlCpbiK4DQA7Ei0a/fXkzSFBfax
+ jbgg==
+X-Gm-Message-State: AOJu0YzLGTnxzxLOcYge0vtaEZ1lqlJARXU9xz5/GFF5Dq9JChginyRB
+ oC8fRgCn3OeJm+6DHc55Diz7I03hAihYmxWiJlREP1nb6jig94PgtKcRVcaJukiSC9w1wnzTpbC
+ 0sJyKHhM7XursJE9IgxJYI81pxwKyuX5yywV9cGRhK5h69YDBWIQVTG42xpe8TiqBwQ1LFNZInb
+ pVZc1TOYptbT7HWHi+NX/D02jKoczr9qs9Wo/lbFA=
+X-Gm-Gg: ASbGncuaWiLXJzo3yG3XziIXdeFDY9xFKPqA1iL5aFty/ENxiB0eDc9SJ42YnusNiXa
+ cD3iKTrLQCo8DKlCxX5B4aem/UGa599PBEjIm9mFpjNDgQL1dwOW9P8d7Pa7WQzsxWe7aKMR+Gl
+ A4Yu9Jv3ZkPZn8TuVRKJyWxdogXDtXeVEpPZie2hGYDJ76h2mQfLDos7V+ktwxPrSwA0f1A14C8
+ hqDy4L/giHqvZHYf9zL4d9xBqtS92rMullGBfKnl4Fh7sHuof9/3rsZpFSitOgFCkStVh8Zzw==
+X-Received: by 2002:a5d:4845:0:b0:385:f573:1f78 with SMTP id
+ ffacd0b85a97d-38bf566e2b2mr21737166f8f.24.1737711965160; 
+ Fri, 24 Jan 2025 01:46:05 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IGDG0GGTjZLED+Fv+D/Cn1YWr7dft/Kj99t5Lq1gN8swteMPsVQfTkrB1oXaes3Ox13k6Wz0g==
+X-Received: by 2002:a5d:4845:0:b0:385:f573:1f78 with SMTP id
+ ffacd0b85a97d-38bf566e2b2mr21737126f8f.24.1737711964493; 
+ Fri, 24 Jan 2025 01:46:04 -0800 (PST)
+Received: from [192.168.10.48] ([151.95.59.125])
+ by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-38c2a1bbd93sm2151296f8f.76.2025.01.24.01.46.03
+ for <qemu-devel@nongnu.org>
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Fri, 24 Jan 2025 01:46:04 -0800 (PST)
+From: Paolo Bonzini <pbonzini@redhat.com>
+To: qemu-devel@nongnu.org
+Subject: [PULL 41/48] rust: pl011: extract PL011Registers
+Date: Fri, 24 Jan 2025 10:44:35 +0100
+Message-ID: <20250124094442.13207-42-pbonzini@redhat.com>
+X-Mailer: git-send-email 2.48.1
+In-Reply-To: <20250124094442.13207-1-pbonzini@redhat.com>
+References: <20250124094442.13207-1-pbonzini@redhat.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <Z5Jylb73kDJ6HTEZ@x1n>
-Received-SPF: none client-ip=198.175.65.16;
- envelope-from=yilun.xu@linux.intel.com; helo=mgamail.intel.com
-X-Spam_score_int: -72
-X-Spam_score: -7.3
-X-Spam_bar: -------
-X-Spam_report: (-7.3 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-2.996,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_MED=-2.3,
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=pbonzini@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -50
+X-Spam_score: -5.1
+X-Spam_bar: -----
+X-Spam_report: (-5.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-2.996,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_NONE=0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -94,141 +107,439 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, Jan 23, 2025 at 11:47:17AM -0500, Peter Xu wrote:
-> On Thu, Jan 23, 2025 at 05:33:53PM +0800, Xu Yilun wrote:
-> > On Wed, Jan 22, 2025 at 11:43:01AM -0500, Peter Xu wrote:
-> > > On Wed, Jan 22, 2025 at 05:41:31PM +0800, Xu Yilun wrote:
-> > > > On Wed, Jan 22, 2025 at 03:30:05PM +1100, Alexey Kardashevskiy wrote:
-> > > > > 
-> > > > > 
-> > > > > On 22/1/25 02:18, Peter Xu wrote:
-> > > > > > On Tue, Jun 25, 2024 at 12:31:13AM +0800, Xu Yilun wrote:
-> > > > > > > On Mon, Jan 20, 2025 at 03:46:15PM -0500, Peter Xu wrote:
-> > > > > > > > On Mon, Jan 20, 2025 at 09:22:50PM +1100, Alexey Kardashevskiy wrote:
-> > > > > > > > > > It is still uncertain how to implement the private MMIO. Our assumption
-> > > > > > > > > > is the private MMIO would also create a memory region with
-> > > > > > > > > > guest_memfd-like backend. Its mr->ram is true and should be managed by
-> > > > > > > > > > RamdDiscardManager which can skip doing DMA_MAP in VFIO's region_add
-> > > > > > > > > > listener.
-> > > > > > > > > 
-> > > > > > > > > My current working approach is to leave it as is in QEMU and VFIO.
-> > > > > > > > 
-> > > > > > > > Agreed.  Setting ram=true to even private MMIO sounds hackish, at least
-> > > > > > > 
-> > > > > > > The private MMIO refers to assigned MMIO, not emulated MMIO. IIUC,
-> > > > > > > normal assigned MMIO is always set ram=true,
-> > > > > > > 
-> > > > > > > void memory_region_init_ram_device_ptr(MemoryRegion *mr,
-> > > > > > >                                         Object *owner,
-> > > > > > >                                         const char *name,
-> > > > > > >                                         uint64_t size,
-> > > > > > >                                         void *ptr)
-> > > 
-> > > [1]
-> > > 
-> > > > > > > {
-> > > > > > >      memory_region_init(mr, owner, name, size);
-> > > > > > >      mr->ram = true;
-> > > > > > > 
-> > > > > > > 
-> > > > > > > So I don't think ram=true is a problem here.
-> > > > > > 
-> > > > > > I see.  If there's always a host pointer then it looks valid.  So it means
-> > > > > > the device private MMIOs are always mappable since the start?
-> > > > > 
-> > > > > Yes. VFIO owns the mapping and does not treat shared/private MMIO any
-> > > > > different at the moment. Thanks,
-> > > > 
-> > > > mm.. I'm actually expecting private MMIO not have a host pointer, just
-> > > > as private memory do.
-> > > > 
-> > > > But I'm not sure why having host pointer correlates mr->ram == true.
-> > > 
-> > > If there is no host pointer, what would you pass into "ptr" as referenced
-> > > at [1] above when creating the private MMIO memory region?
-> > 
-> > Sorry for confusion. I mean existing MMIO region use set mr->ram = true,
-> > and unmappable region (gmem) also set mr->ram = true. So don't know why
-> > mr->ram = true for private MMIO is hackish.
-> 
-> That's exactly what I had on the question in the previous email - please
-> have a look at what QEMU does right now with memory_access_is_direct().
+Pull all the mutable fields of PL011State into a separate struct.
 
-I see memory_access_is_direct() should exclude mr->ram_device == true, which
-is the case for normal assigned MMIO and for private assigned MMIO. So
-this func is not a problem.
+Reviewed-by: Zhao Liu <zhao1.liu@intel.com>
+Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
+---
+ rust/hw/char/pl011/src/device.rs       | 251 ++++++++++++++-----------
+ rust/hw/char/pl011/src/device_class.rs |  46 +++--
+ 2 files changed, 168 insertions(+), 129 deletions(-)
 
-But I think flatview_access_allowed() is a problem that it doesn't filter
-out the private memory. When memory is converted to private, the result
-of host access can't be what you want and should be errored out. IOW,
-the host ptr is sometimes invalid.
+diff --git a/rust/hw/char/pl011/src/device.rs b/rust/hw/char/pl011/src/device.rs
+index 9cac9d352a2..f1319d1a8bd 100644
+--- a/rust/hw/char/pl011/src/device.rs
++++ b/rust/hw/char/pl011/src/device.rs
+@@ -85,11 +85,8 @@ fn index(&self, idx: u32) -> &Self::Output {
+ }
+ 
+ #[repr(C)]
+-#[derive(Debug, qemu_api_macros::Object, qemu_api_macros::offsets)]
+-/// PL011 Device Model in QEMU
+-pub struct PL011State {
+-    pub parent_obj: ParentField<SysBusDevice>,
+-    pub iomem: MemoryRegion,
++#[derive(Debug, Default, qemu_api_macros::offsets)]
++pub struct PL011Registers {
+     #[doc(alias = "fr")]
+     pub flags: registers::Flags,
+     #[doc(alias = "lcr")]
+@@ -109,8 +106,17 @@ pub struct PL011State {
+     pub read_pos: u32,
+     pub read_count: u32,
+     pub read_trigger: u32,
++}
++
++#[repr(C)]
++#[derive(Debug, qemu_api_macros::Object, qemu_api_macros::offsets)]
++/// PL011 Device Model in QEMU
++pub struct PL011State {
++    pub parent_obj: ParentField<SysBusDevice>,
++    pub iomem: MemoryRegion,
+     #[doc(alias = "chr")]
+     pub char_backend: CharBackend,
++    pub regs: PL011Registers,
+     /// QEMU interrupts
+     ///
+     /// ```text
+@@ -169,61 +175,8 @@ fn vmsd() -> Option<&'static VMStateDescription> {
+     const RESET: Option<fn(&mut Self)> = Some(Self::reset);
+ }
+ 
+-impl PL011State {
+-    /// Initializes a pre-allocated, unitialized instance of `PL011State`.
+-    ///
+-    /// # Safety
+-    ///
+-    /// `self` must point to a correctly sized and aligned location for the
+-    /// `PL011State` type. It must not be called more than once on the same
+-    /// location/instance. All its fields are expected to hold unitialized
+-    /// values with the sole exception of `parent_obj`.
+-    unsafe fn init(&mut self) {
+-        const CLK_NAME: &CStr = c_str!("clk");
+-
+-        // SAFETY:
+-        //
+-        // self and self.iomem are guaranteed to be valid at this point since callers
+-        // must make sure the `self` reference is valid.
+-        unsafe {
+-            memory_region_init_io(
+-                addr_of_mut!(self.iomem),
+-                addr_of_mut!(*self).cast::<Object>(),
+-                &PL011_OPS,
+-                addr_of_mut!(*self).cast::<c_void>(),
+-                Self::TYPE_NAME.as_ptr(),
+-                0x1000,
+-            );
+-        }
+-
+-        // SAFETY:
+-        //
+-        // self.clock is not initialized at this point; but since `NonNull<_>` is Copy,
+-        // we can overwrite the undefined value without side effects. This is
+-        // safe since all PL011State instances are created by QOM code which
+-        // calls this function to initialize the fields; therefore no code is
+-        // able to access an invalid self.clock value.
+-        unsafe {
+-            let dev: &mut DeviceState = self.upcast_mut();
+-            self.clock = NonNull::new(qdev_init_clock_in(
+-                dev,
+-                CLK_NAME.as_ptr(),
+-                None, /* pl011_clock_update */
+-                addr_of_mut!(*self).cast::<c_void>(),
+-                ClockEvent::ClockUpdate.0,
+-            ))
+-            .unwrap();
+-        }
+-    }
+-
+-    fn post_init(&self) {
+-        self.init_mmio(&self.iomem);
+-        for irq in self.interrupts.iter() {
+-            self.init_irq(irq);
+-        }
+-    }
+-
+-    fn regs_read(&mut self, offset: RegisterOffset) -> ControlFlow<u32, u32> {
++impl PL011Registers {
++    pub(self) fn read(&mut self, offset: RegisterOffset) -> ControlFlow<u32, u32> {
+         use RegisterOffset::*;
+ 
+         ControlFlow::Break(match offset {
+@@ -265,7 +218,12 @@ fn regs_read(&mut self, offset: RegisterOffset) -> ControlFlow<u32, u32> {
+         })
+     }
+ 
+-    fn regs_write(&mut self, offset: RegisterOffset, value: u32) -> bool {
++    pub(self) fn write(
++        &mut self,
++        offset: RegisterOffset,
++        value: u32,
++        char_backend: *mut CharBackend,
++    ) -> bool {
+         // eprintln!("write offset {offset} value {value}");
+         use RegisterOffset::*;
+         match offset {
+@@ -275,10 +233,10 @@ fn regs_write(&mut self, offset: RegisterOffset, value: u32) -> bool {
+                 // XXX this blocks entire thread. Rewrite to use
+                 // qemu_chr_fe_write and background I/O callbacks
+ 
+-                // SAFETY: self.char_backend is a valid CharBackend instance after it's been
++                // SAFETY: char_backend is a valid CharBackend instance after it's been
+                 // initialized in realize().
+                 unsafe {
+-                    qemu_chr_fe_write_all(addr_of_mut!(self.char_backend), &ch, 1);
++                    qemu_chr_fe_write_all(char_backend, &ch, 1);
+                 }
+                 // interrupts always checked
+                 let _ = self.loopback_tx(value);
+@@ -313,7 +271,7 @@ fn regs_write(&mut self, offset: RegisterOffset, value: u32) -> bool {
+                     // initialized in realize().
+                     unsafe {
+                         qemu_chr_fe_ioctl(
+-                            addr_of_mut!(self.char_backend),
++                            char_backend,
+                             CHR_IOCTL_SERIAL_SET_BREAK as i32,
+                             addr_of_mut!(break_enable).cast::<c_void>(),
+                         );
+@@ -432,23 +390,6 @@ fn set_read_trigger(&mut self) {
+         self.read_trigger = 1;
+     }
+ 
+-    pub fn realize(&self) {
+-        // SAFETY: self.char_backend has the correct size and alignment for a
+-        // CharBackend object, and its callbacks are of the correct types.
+-        unsafe {
+-            qemu_chr_fe_set_handlers(
+-                addr_of!(self.char_backend) as *mut CharBackend,
+-                Some(pl011_can_receive),
+-                Some(pl011_receive),
+-                Some(pl011_event),
+-                None,
+-                addr_of!(*self).cast::<c_void>() as *mut c_void,
+-                core::ptr::null_mut(),
+-                true,
+-            );
+-        }
+-    }
+-
+     pub fn reset(&mut self) {
+         self.line_control.reset();
+         self.receive_status_error_clear.reset();
+@@ -481,26 +422,6 @@ pub fn reset_tx_fifo(&mut self) {
+         self.flags.set_transmit_fifo_empty(true);
+     }
+ 
+-    pub fn can_receive(&self) -> bool {
+-        // trace_pl011_can_receive(s->lcr, s->read_count, r);
+-        self.read_count < self.fifo_depth()
+-    }
+-
+-    pub fn receive(&mut self, ch: u32) {
+-        if !self.loopback_enabled() && self.put_fifo(ch) {
+-            self.update();
+-        }
+-    }
+-
+-    pub fn event(&mut self, event: QEMUChrEvent) {
+-        if event == QEMUChrEvent::CHR_EVENT_BREAK && !self.loopback_enabled() {
+-            let update = self.put_fifo(registers::Data::BREAK.into());
+-            if update {
+-                self.update();
+-            }
+-        }
+-    }
+-
+     #[inline]
+     pub fn fifo_enabled(&self) -> bool {
+         self.line_control.fifos_enabled() == registers::Mode::FIFO
+@@ -539,14 +460,7 @@ pub fn put_fifo(&mut self, value: u32) -> bool {
+         false
+     }
+ 
+-    pub fn update(&self) {
+-        let flags = self.int_level & self.int_enabled;
+-        for (irq, i) in self.interrupts.iter().zip(IRQMASK) {
+-            irq.set(flags & i != 0);
+-        }
+-    }
+-
+-    pub fn post_load(&mut self, _version_id: u32) -> Result<(), ()> {
++    pub fn post_load(&mut self) -> Result<(), ()> {
+         /* Sanity-check input state */
+         if self.read_pos >= self.read_fifo.len() || self.read_count > self.read_fifo.len() {
+             return Err(());
+@@ -566,6 +480,63 @@ pub fn post_load(&mut self, _version_id: u32) -> Result<(), ()> {
+ 
+         Ok(())
+     }
++}
++
++impl PL011State {
++    /// Initializes a pre-allocated, unitialized instance of `PL011State`.
++    ///
++    /// # Safety
++    ///
++    /// `self` must point to a correctly sized and aligned location for the
++    /// `PL011State` type. It must not be called more than once on the same
++    /// location/instance. All its fields are expected to hold unitialized
++    /// values with the sole exception of `parent_obj`.
++    unsafe fn init(&mut self) {
++        const CLK_NAME: &CStr = c_str!("clk");
++
++        // SAFETY:
++        //
++        // self and self.iomem are guaranteed to be valid at this point since callers
++        // must make sure the `self` reference is valid.
++        unsafe {
++            memory_region_init_io(
++                addr_of_mut!(self.iomem),
++                addr_of_mut!(*self).cast::<Object>(),
++                &PL011_OPS,
++                addr_of_mut!(*self).cast::<c_void>(),
++                Self::TYPE_NAME.as_ptr(),
++                0x1000,
++            );
++        }
++
++        self.regs = Default::default();
++
++        // SAFETY:
++        //
++        // self.clock is not initialized at this point; but since `NonNull<_>` is Copy,
++        // we can overwrite the undefined value without side effects. This is
++        // safe since all PL011State instances are created by QOM code which
++        // calls this function to initialize the fields; therefore no code is
++        // able to access an invalid self.clock value.
++        unsafe {
++            let dev: &mut DeviceState = self.upcast_mut();
++            self.clock = NonNull::new(qdev_init_clock_in(
++                dev,
++                CLK_NAME.as_ptr(),
++                None, /* pl011_clock_update */
++                addr_of_mut!(*self).cast::<c_void>(),
++                ClockEvent::ClockUpdate.0,
++            ))
++            .unwrap();
++        }
++    }
++
++    fn post_init(&self) {
++        self.init_mmio(&self.iomem);
++        for irq in self.interrupts.iter() {
++            self.init_irq(irq);
++        }
++    }
+ 
+     pub fn read(&mut self, offset: hwaddr, _size: u32) -> ControlFlow<u64, u64> {
+         let mut update_irq = false;
+@@ -578,7 +549,7 @@ pub fn read(&mut self, offset: hwaddr, _size: u32) -> ControlFlow<u64, u64> {
+                 // qemu_log_mask(LOG_GUEST_ERROR, "pl011_read: Bad offset 0x%x\n", (int)offset);
+                 ControlFlow::Break(0)
+             }
+-            Ok(field) => match self.regs_read(field) {
++            Ok(field) => match self.regs.read(field) {
+                 ControlFlow::Break(value) => ControlFlow::Break(value.into()),
+                 ControlFlow::Continue(value) => {
+                     update_irq = true;
+@@ -595,7 +566,7 @@ pub fn read(&mut self, offset: hwaddr, _size: u32) -> ControlFlow<u64, u64> {
+     pub fn write(&mut self, offset: hwaddr, value: u64) {
+         let mut update_irq = false;
+         if let Ok(field) = RegisterOffset::try_from(offset) {
+-            update_irq = self.regs_write(field, value as u32);
++            update_irq = self.regs.write(field, value as u32, &mut self.char_backend);
+         } else {
+             eprintln!("write bad offset {offset} value {value}");
+         }
+@@ -603,6 +574,64 @@ pub fn write(&mut self, offset: hwaddr, value: u64) {
+             self.update();
+         }
+     }
++
++    pub fn can_receive(&self) -> bool {
++        // trace_pl011_can_receive(s->lcr, s->read_count, r);
++        let regs = &self.regs;
++        regs.read_count < regs.fifo_depth()
++    }
++
++    pub fn receive(&mut self, ch: u32) {
++        let regs = &mut self.regs;
++        let update_irq = !regs.loopback_enabled() && regs.put_fifo(ch);
++        if update_irq {
++            self.update();
++        }
++    }
++
++    pub fn event(&mut self, event: QEMUChrEvent) {
++        let mut update_irq = false;
++        let regs = &mut self.regs;
++        if event == QEMUChrEvent::CHR_EVENT_BREAK && !regs.loopback_enabled() {
++            update_irq = regs.put_fifo(registers::Data::BREAK.into());
++        }
++        if update_irq {
++            self.update()
++        }
++    }
++
++    pub fn realize(&self) {
++        // SAFETY: self.char_backend has the correct size and alignment for a
++        // CharBackend object, and its callbacks are of the correct types.
++        unsafe {
++            qemu_chr_fe_set_handlers(
++                addr_of!(self.char_backend) as *mut CharBackend,
++                Some(pl011_can_receive),
++                Some(pl011_receive),
++                Some(pl011_event),
++                None,
++                addr_of!(*self).cast::<c_void>() as *mut c_void,
++                core::ptr::null_mut(),
++                true,
++            );
++        }
++    }
++
++    pub fn reset(&mut self) {
++        self.regs.reset();
++    }
++
++    pub fn update(&self) {
++        let regs = &self.regs;
++        let flags = regs.int_level & regs.int_enabled;
++        for (irq, i) in self.interrupts.iter().zip(IRQMASK) {
++            irq.set(flags & i != 0);
++        }
++    }
++
++    pub fn post_load(&mut self, _version_id: u32) -> Result<(), ()> {
++        self.regs.post_load()
++    }
+ }
+ 
+ /// Which bits in the interrupt status matter for each outbound IRQ line ?
+diff --git a/rust/hw/char/pl011/src/device_class.rs b/rust/hw/char/pl011/src/device_class.rs
+index 2336a768729..d94b98de7bb 100644
+--- a/rust/hw/char/pl011/src/device_class.rs
++++ b/rust/hw/char/pl011/src/device_class.rs
+@@ -6,11 +6,11 @@
+ use std::os::raw::{c_int, c_void};
+ 
+ use qemu_api::{
+-    bindings::*, c_str, vmstate_clock, vmstate_fields, vmstate_of, vmstate_subsections,
+-    vmstate_unused, zeroable::Zeroable,
++    bindings::*, c_str, vmstate_clock, vmstate_fields, vmstate_of, vmstate_struct,
++    vmstate_subsections, vmstate_unused, zeroable::Zeroable,
+ };
+ 
+-use crate::device::PL011State;
++use crate::device::{PL011Registers, PL011State};
+ 
+ #[allow(clippy::missing_const_for_fn)]
+ extern "C" fn pl011_clock_needed(opaque: *mut c_void) -> bool {
+@@ -40,6 +40,30 @@ extern "C" fn pl011_post_load(opaque: *mut c_void, version_id: c_int) -> c_int {
+     }
+ }
+ 
++static VMSTATE_PL011_REGS: VMStateDescription = VMStateDescription {
++    name: c_str!("pl011/regs").as_ptr(),
++    version_id: 2,
++    minimum_version_id: 2,
++    fields: vmstate_fields! {
++        vmstate_of!(PL011Registers, flags),
++        vmstate_of!(PL011Registers, line_control),
++        vmstate_of!(PL011Registers, receive_status_error_clear),
++        vmstate_of!(PL011Registers, control),
++        vmstate_of!(PL011Registers, dmacr),
++        vmstate_of!(PL011Registers, int_enabled),
++        vmstate_of!(PL011Registers, int_level),
++        vmstate_of!(PL011Registers, read_fifo),
++        vmstate_of!(PL011Registers, ilpr),
++        vmstate_of!(PL011Registers, ibrd),
++        vmstate_of!(PL011Registers, fbrd),
++        vmstate_of!(PL011Registers, ifl),
++        vmstate_of!(PL011Registers, read_pos),
++        vmstate_of!(PL011Registers, read_count),
++        vmstate_of!(PL011Registers, read_trigger),
++    },
++    ..Zeroable::ZERO
++};
++
+ pub static VMSTATE_PL011: VMStateDescription = VMStateDescription {
+     name: c_str!("pl011").as_ptr(),
+     version_id: 2,
+@@ -47,21 +71,7 @@ extern "C" fn pl011_post_load(opaque: *mut c_void, version_id: c_int) -> c_int {
+     post_load: Some(pl011_post_load),
+     fields: vmstate_fields! {
+         vmstate_unused!(core::mem::size_of::<u32>()),
+-        vmstate_of!(PL011State, flags),
+-        vmstate_of!(PL011State, line_control),
+-        vmstate_of!(PL011State, receive_status_error_clear),
+-        vmstate_of!(PL011State, control),
+-        vmstate_of!(PL011State, dmacr),
+-        vmstate_of!(PL011State, int_enabled),
+-        vmstate_of!(PL011State, int_level),
+-        vmstate_of!(PL011State, read_fifo),
+-        vmstate_of!(PL011State, ilpr),
+-        vmstate_of!(PL011State, ibrd),
+-        vmstate_of!(PL011State, fbrd),
+-        vmstate_of!(PL011State, ifl),
+-        vmstate_of!(PL011State, read_pos),
+-        vmstate_of!(PL011State, read_count),
+-        vmstate_of!(PL011State, read_trigger),
++        vmstate_struct!(PL011State, regs, &VMSTATE_PL011_REGS, PL011Registers),
+     },
+     subsections: vmstate_subsections! {
+         VMSTATE_PL011_CLOCK
+-- 
+2.48.1
 
-> I'm not 100% sure it'll work if the host pointer doesn't exist.
-> 
-> Let's take one user of it to be explicit: flatview_write_continue_step()
-> will try to access the ram pointer if it's direct:
-> 
->     if (!memory_access_is_direct(mr, true)) {
->         ...
->     } else {
->         /* RAM case */
->         uint8_t *ram_ptr = qemu_ram_ptr_length(mr->ram_block, mr_addr, l,
->                                                false, true);
-> 
->         memmove(ram_ptr, buf, *l);
->         invalidate_and_set_dirty(mr, mr_addr, *l);
-> 
->         return MEMTX_OK;
->     }
-> 
-> I don't see how QEMU could work yet if one MR set ram=true but without a
-> host pointer..
-> 
-> As discussed previously, IMHO it's okay that the pointer is not accessible,
-
-Maybe I missed something in previous discussion, I assume it is OK cause
-no address_space_rw is happening on this host ptr when memory is
-private, is it?
-
-> but still I assume QEMU assumes the pointer at least existed for a ram=on
-> MR.  I don't know whether it's suitable to set ram=on if the pointer
-> doesn't ever exist.
-
-In theory, any code logic should not depends on an invalid pointer. I
-think a NULL pointer would be much better than a invalid pointer, at
-least you can check whether to access. So if you think an invalid
-pointer is OK, a NULL pointer should be also OK.
-
-Thanks,
-Yilun
-
-> 
-> > 
-> > I think We could add another helper to create memory region for private
-> > MMIO.
-> > 
-> > > 
-> > > OTOH, IIUC guest private memory finally can also have a host pointer (aka,
-> > > mmap()-able), it's just that even if it exists, accessing it may crash QEMU
-> > > if it's private.
-> > 
-> > Not sure if I get it correct: when memory will be converted to private, QEMU
-> > should firstly unmap the host ptr, which means host ptr doesn't alway exist.
-> 
-> At least current QEMU doesn't unmap it? 
-> 
-> kvm_convert_memory() does ram_block_discard_range() indeed, but that's hole
-> punches, not unmap.  So the host pointer can always be there.
-> 
-> Even if we could have in-place gmemfd conversions in the future for guest
-> mem, we should also need the host pointer to be around, in which case (per
-> my current understand) it will even avoid hole punching but instead make
-> the page accessible (by being able to be faulted in).
-> 
-> Thanks,
-> 
-> -- 
-> Peter Xu
-> 
-> 
 
