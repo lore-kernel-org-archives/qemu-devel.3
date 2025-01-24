@@ -4,108 +4,60 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1E70BC0218B
-	for <qemu-devel@archiver.kernel.org>; Fri, 24 Jan 2025 15:19:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6CFC8C02181
+	for <qemu-devel@archiver.kernel.org>; Fri, 24 Jan 2025 15:20:19 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tbLSd-0005Cq-CO; Fri, 24 Jan 2025 10:19:07 -0500
+	id 1tbLTR-0005o3-Pb; Fri, 24 Jan 2025 10:19:58 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1tbLSb-0005CZ-9z
- for qemu-devel@nongnu.org; Fri, 24 Jan 2025 10:19:05 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <jonathan.cameron@huawei.com>)
+ id 1tbLTP-0005nA-FA
+ for qemu-devel@nongnu.org; Fri, 24 Jan 2025 10:19:55 -0500
+Received: from frasgout.his.huawei.com ([185.176.79.56])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1tbLSY-0001le-AN
- for qemu-devel@nongnu.org; Fri, 24 Jan 2025 10:19:05 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1737731939;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=OsMQPL/gWkWPciz0VlEFqI7jRtb8Lvnrd2rOeY9ldYs=;
- b=ghBRo30Ss+RhB3WfLid5+sGeSX2/9+xeEbj4JcCrS1if+LT3h1gWoPg9Xjl4+b/6O8HhxY
- TetWsYW6oy3cpQXDeAynwSjgugJft61rGKVJS6UzMdP3TPVsF8UHzeabS8Xv9AOX7AUtK1
- 7+dr78rKF7EogwR+c1k0+LKzTBbidF0=
-Received: from mail-qk1-f197.google.com (mail-qk1-f197.google.com
- [209.85.222.197]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-641-sCiAa79hNpaRSmn30ERrVA-1; Fri, 24 Jan 2025 10:18:58 -0500
-X-MC-Unique: sCiAa79hNpaRSmn30ERrVA-1
-X-Mimecast-MFC-AGG-ID: sCiAa79hNpaRSmn30ERrVA
-Received: by mail-qk1-f197.google.com with SMTP id
- af79cd13be357-7b6eabd51cfso335546085a.0
- for <qemu-devel@nongnu.org>; Fri, 24 Jan 2025 07:18:58 -0800 (PST)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1737731937; x=1738336737;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=OsMQPL/gWkWPciz0VlEFqI7jRtb8Lvnrd2rOeY9ldYs=;
- b=tAhc00ZvJ+2H8AGuJ9U4f/URO1FPNATgpBHY1hEm3bWPsGYSBCWgSVFVlaupF2q1sp
- a08irUanF2M9i8YCHRMuTOqCw2sn+tNS6WV9JUc/Rmi24BdErXIuVmkMqZJuB+Y5/DK+
- U1gUnV/v68Q0mU4cpUKgS35O8FX1nqQNBG8s7xMZ1zX8yBJM7DvAJ+6cJEFacBX28hd8
- 6yANvtwdnHhPwJp6fuBX2+jgNjLbaW6kdJQDRQf8F6mz7MYrBQMg5q+blc4BVyschG4m
- ZPHnjrFBW4RaVbYRfOJCWAq2ULie/7fXcF4CXipwCApFdRM2yrcEvesUdPocLMBuEMas
- ZXGA==
-X-Forwarded-Encrypted: i=1;
- AJvYcCWGo2vqHhbMefN8wfkRa8HhJucsaNvRZxkQSCnHvtndCbyjeBMp0VKanaaF0jgEjwR0S+uyqt0UoEBp@nongnu.org
-X-Gm-Message-State: AOJu0YzE/L2xv8YOm4QXp6MiEWKWmu8jR1qyqvcdtNcd/ldPMHWI+ZpJ
- +KdcSwQyz4lxWcmswlRSXjHDjGCRJT7znQXsJ3jeZnckDbGoTd1F4jPZDI5xcnZuuV9Fwgw0GUZ
- 6Cs1nBvd+icukl1EoiyCZ5qr4ZcvZ/1oIcD+hcnJQMOHMRiJ5Ts7l
-X-Gm-Gg: ASbGncv0LaJuNFjs3L+qhF98J1EE3C9A1oZNcPdr1Wl97rG56SbGl8JGgNJG47tQm5M
- QfdWKRM//ZdI0llriqSW2i+ALghrZELQzvDdB1LXfSJAy5gewhTw20Whzw5Y1kMaQjONMIu/QCA
- edASkIPG06jM+2ljWCX3V1XrnDlZkh5r5st8Lf0i2TsARwJ7sZsIW3E/N83SzMrrz7Alr9LlWT5
- QEteMe9ECL0qM+opt7q+9lFlzz6elobEHmXCkbP0j4tDgq0baOxKrSI2IF/Akuys8FCRXj4Bsgt
- r/pEdbo3O/O7PrRGjkEANAz8jQUJ8y8=
-X-Received: by 2002:a05:6214:19cb:b0:6d4:211c:dff0 with SMTP id
- 6a1803df08f44-6e1b220c97fmr419119856d6.29.1737731937509; 
- Fri, 24 Jan 2025 07:18:57 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IGmdodP9saJvQdN4XJbukcfBpsYckUx/xNNr4XSDEY4Nv9TvyMQ6F6ncaYoMjiqwLaqpGM4SA==
-X-Received: by 2002:a05:6214:19cb:b0:6d4:211c:dff0 with SMTP id
- 6a1803df08f44-6e1b220c97fmr419119596d6.29.1737731937112; 
- Fri, 24 Jan 2025 07:18:57 -0800 (PST)
-Received: from x1n (pool-99-254-114-190.cpe.net.cable.rogers.com.
- [99.254.114.190]) by smtp.gmail.com with ESMTPSA id
- 6a1803df08f44-6e2057a94dcsm9380206d6.86.2025.01.24.07.18.55
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 24 Jan 2025 07:18:56 -0800 (PST)
-Date: Fri, 24 Jan 2025 10:18:53 -0500
-From: Peter Xu <peterx@redhat.com>
-To: Jason Wang <jasowang@redhat.com>, Eric Auger <eric.auger@redhat.com>
-Cc: "Duan, Zhenzhong" <zhenzhong.duan@intel.com>,
- "eric.auger@redhat.com" <eric.auger@redhat.com>,
- "eric.auger.pro@gmail.com" <eric.auger.pro@gmail.com>,
- "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>,
- "mst@redhat.com" <mst@redhat.com>,
- "sgarzare@redhat.com" <sgarzare@redhat.com>,
- "lvivier@redhat.com" <lvivier@redhat.com>
-Subject: Re: [PATCH] hw/virtio/vhost: Disable IOTLB callbacks when IOMMU gets
- disabled
-Message-ID: <Z5OvXaUF6sdEQLgW@x1n>
-References: <20250120173339.865681-1-eric.auger@redhat.com>
- <CACGkMEu4oMa8Sf9QXtszeoSMj_67Csr0s7kHdYfbNnJWibu2dA@mail.gmail.com>
- <5a55011a-af8f-483a-99fa-5cb2cdf3841f@redhat.com>
- <CACGkMEv6ec3JLZg6ZedSHdNS5_McX7_xoV4d2MG05x_Y5t=uEA@mail.gmail.com>
- <678babb6-f64a-4db5-ad60-494214a4e673@redhat.com>
- <CACGkMEvyYT7-PTOwO-Jg9a8AHA0AJHoV2BY2RBrJTGKEFYL6QA@mail.gmail.com>
- <25b5bb73-abd8-4008-905d-6c2e9e1330e2@redhat.com>
- <SJ0PR11MB6744EBC0BB7C8CD5F33D0A4E92E32@SJ0PR11MB6744.namprd11.prod.outlook.com>
- <CACGkMEtQT2yZf93+a3LxSCyfBEXbEDu5S2cFXuAhprDYd2-vhw@mail.gmail.com>
+ (Exim 4.90_1) (envelope-from <jonathan.cameron@huawei.com>)
+ id 1tbLTM-0001nM-Aq
+ for qemu-devel@nongnu.org; Fri, 24 Jan 2025 10:19:55 -0500
+Received: from mail.maildlp.com (unknown [172.18.186.231])
+ by frasgout.his.huawei.com (SkyGuard) with ESMTP id 4YfhJZ0LSnz6M4Kb;
+ Fri, 24 Jan 2025 23:17:50 +0800 (CST)
+Received: from frapeml500008.china.huawei.com (unknown [7.182.85.71])
+ by mail.maildlp.com (Postfix) with ESMTPS id BDB7F140736;
+ Fri, 24 Jan 2025 23:19:48 +0800 (CST)
+Received: from localhost (10.203.177.66) by frapeml500008.china.huawei.com
+ (7.182.85.71) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.1.2507.39; Fri, 24 Jan
+ 2025 16:19:48 +0100
+Date: Fri, 24 Jan 2025 15:19:46 +0000
+To: Vinayak Holikatti <vinayak.kh@samsung.com>
+CC: <qemu-devel@nongnu.org>, <krish.reddy@samsung.com>,
+ <vishak.g@samsung.com>, <a.manzanares@samsung.com>,
+ <alok.rathore@samsung.com>, <s5.kumari@samsung.com>,
+ <linux-cxl@vger.kernel.org>
+Subject: Re: [PATCH 2/2] hw/cxl/cxl-mailbox-utils: Add support for Media
+ operations Sanitize and Write Zeros commands (8.2.9.9.5.3)
+Message-ID: <20250124151946.0000134f@huawei.com>
+In-Reply-To: <20250123050903.92336-3-vinayak.kh@samsung.com>
+References: <20250123050903.92336-1-vinayak.kh@samsung.com>
+ <CGME20250123050913epcas5p45fb9a638e62f436076da283e86e54ea2@epcas5p4.samsung.com>
+ <20250123050903.92336-3-vinayak.kh@samsung.com>
+X-Mailer: Claws Mail 4.3.0 (GTK 3.24.42; x86_64-w64-mingw32)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <CACGkMEtQT2yZf93+a3LxSCyfBEXbEDu5S2cFXuAhprDYd2-vhw@mail.gmail.com>
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=peterx@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -50
-X-Spam_score: -5.1
-X-Spam_bar: -----
-X-Spam_report: (-5.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-2.996,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+Content-Type: text/plain; charset="US-ASCII"
+Content-Transfer-Encoding: quoted-printable
+X-Originating-IP: [10.203.177.66]
+X-ClientProxiedBy: lhrpeml500009.china.huawei.com (7.191.174.84) To
+ frapeml500008.china.huawei.com (7.182.85.71)
+Received-SPF: pass client-ip=185.176.79.56;
+ envelope-from=jonathan.cameron@huawei.com; helo=frasgout.his.huawei.com
+X-Spam_score_int: -41
+X-Spam_score: -4.2
+X-Spam_bar: ----
+X-Spam_report: (-4.2 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_MED=-2.3,
+ RCVD_IN_MSPIKE_H2=-0.001, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -119,88 +71,437 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-to:  Jonathan Cameron <Jonathan.Cameron@huawei.com>
+From:  Jonathan Cameron via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hello, Jason, Eric,
+On Thu, 23 Jan 2025 10:39:03 +0530
+Vinayak Holikatti <vinayak.kh@samsung.com> wrote:
 
-On Fri, Jan 24, 2025 at 11:30:56AM +0800, Jason Wang wrote:
-> It might be because neither virtio bus nor virtio-net provides a
-> shutdown method.
-> 
-> There used to be requests to provide those to unbreak the kexec.
-> 
-> A quick try might be to provide a .driver.shutdown to
-> virtio_net_driver structure and reset the device there as a start.
+>     CXL spec 3.1 section 8.2.9.9.5.3 describes media operations commands.
+>     CXL devices supports media operations Sanitize and Write zero command.
 
-I didn't check virtio driver path, but if that's missing it's reasonable to
-support it indeed.
+As before, don't indent this.
 
-OTOH, even with that, vhost can still hit such DMA issue if it's a
-hard-reset, am I right?  IOW, when using QMP command "system-reset".  If my
-memory is correct, that's the problem I was working on the VFIO series,
-rather than a clean reboot.  And that won't give guest driver chance to run
-anything, IIUC.
+>=20
+> Signed-off-by: Vinayak Holikatti <vinayak.kh@samsung.com>
+> ---
+>  hw/cxl/cxl-mailbox-utils.c  | 217 ++++++++++++++++++++++++++++++++++--
+>  include/hw/cxl/cxl_device.h |  11 ++
+>  2 files changed, 220 insertions(+), 8 deletions(-)
+>=20
+> diff --git a/hw/cxl/cxl-mailbox-utils.c b/hw/cxl/cxl-mailbox-utils.c
+> index 2315d07fb1..89847ddd9d 100644
+> --- a/hw/cxl/cxl-mailbox-utils.c
+> +++ b/hw/cxl/cxl-mailbox-utils.c
+> @@ -1722,6 +1722,145 @@ static CXLRetCode cmd_sanitize_overwrite(const st=
+ruct cxl_cmd *cmd,
+>      return CXL_MBOX_BG_STARTED;
+>  }
+> =20
+> +#define DPA_RANGE_GRANULARITY 64
 
-I am wildly suspecting a VT-d write to GCMD to disable it can also appear
-if there's a hard reset, then when bootloading the VM the bios (or whatever
-firmware at early stage) may want to make sure the VT-d device is
-completely off by writting to GCMD. But that's a pure guess.. and that may
-or may not matter much on how we fix this problem.
+Could use existing CXL_CACHELINE_SIZE definition for this, though I guess
+strictly speaking it could be unrelated.
 
-IOW, I suspect we need to fix both of them,
+> +struct dpa_range_list_entry {
+> +    uint64_t starting_dpa;
+> +    uint64_t length;
+> +};
+> +
+> +static int validate_dpa_addr(CXLType3Dev *ct3d, uint64_t dpa_addr,
+> +                             size_t length)
+> +{
+> +    MemoryRegion *vmr =3D NULL, *pmr =3D NULL, *dc_mr =3D NULL;
+> +    uint64_t vmr_size =3D 0, pmr_size =3D 0, dc_size =3D 0;
+> +    int rc =3D 0;
+> +
+> +    if ((dpa_addr % DPA_RANGE_GRANULARITY) ||
+> +         (length % DPA_RANGE_GRANULARITY)) {
+Probably makes sense to also check for length 0 here as that would
+be very odd if sent.
+> +        return -EINVAL;
+> +    }
+> +
+> +    if (ct3d->hostvmem) {
+> +        vmr =3D host_memory_backend_get_memory(ct3d->hostvmem);
+> +        vmr_size =3D memory_region_size(vmr);
+> +    }
+> +    if (ct3d->hostpmem) {
+> +        pmr =3D host_memory_backend_get_memory(ct3d->hostpmem);
+> +        pmr_size =3D memory_region_size(pmr);
+> +    }
+> +    if (ct3d->dc.host_dc) {
+> +        dc_mr =3D host_memory_backend_get_memory(ct3d->dc.host_dc);
+> +        dc_size =3D memory_region_size(dc_mr);
+> +    }
+> +
+> +    if (!vmr && !pmr && !dc_mr) {
+> +        return -ENODEV;
+> +    }
+> +
+> +    if (dpa_addr >=3D vmr_size + pmr_size + dc_size ||
+> +        (dpa_addr + length) > vmr_size + pmr_size + dc_size) {
 
-  (a) for soft-reset, by making sure drivers properly quiesce DMAs
-  proactively when VM gracefully shuts down.
+If length is checked as non zero above, only the second test is needed.
 
-  (b) for hard-reset, by making sure QEMU reset in proper order.
+> +        return -EINVAL;
+> +    }
+> +
+> +    if (dpa_addr > vmr_size + pmr_size) {
+> +        if (!ct3_test_region_block_backed(ct3d, dpa_addr, length)) {
+> +            return -ENODEV;
+> +        }
+> +    }
+> +
+> +
+> +    return rc;
 
-One thing to mention is for problem (b) VFIO used to have an extra
-challenge on !FLR devices, I discussed it in patch 4's comment there.
-Quotting from patch 4 of series:
+return 0. rc is never set to anything else.
 
-https://lore.kernel.org/all/20240117091559.144730-1-peterx@redhat.com
+> +}
+> +
+> +static int sanitize_range(CXLType3Dev *ct3d, uint64_t dpa_addr, size_t l=
+ength,
+> +                          uint8_t fill_value)
+> +{
+> +
+> +    MemoryRegion *vmr =3D NULL, *pmr =3D NULL;
+> +    uint64_t vmr_size =3D 0, pmr_size =3D 0;
+> +    AddressSpace *as =3D NULL;
+> +    MemTxAttrs mem_attrs =3D {0};
+> +
+> +    if (ct3d->hostvmem) {
+> +        vmr =3D host_memory_backend_get_memory(ct3d->hostvmem);
+> +        vmr_size =3D memory_region_size(vmr);
+> +    }
+> +    if (ct3d->hostpmem) {
+> +        pmr =3D host_memory_backend_get_memory(ct3d->hostpmem);
+> +        pmr_size =3D memory_region_size(pmr);
+> +    }
+> +
+> +    if (dpa_addr < vmr_size) {
+> +        as =3D &ct3d->hostvmem_as;
+> +    } else if (dpa_addr < vmr_size + pmr_size) {
+> +        as =3D &ct3d->hostpmem_as;
+> +    } else {
+> +        if (!ct3_test_region_block_backed(ct3d, dpa_addr, length)) {
+> +            return -ENODEV;
+> +        }
+> +        as =3D &ct3d->dc.host_dc_as;
+> +    }
 
-     * (1) Device depth-first reset hierachy doesn't yet work for vIOMMUs
-     *     (reference: resettable_cold_reset_fn())
-     *
-     *     Currently, vIOMMU devices are created as normal '-device'
-     *     cmdlines.  It means in many ways it has the same attributes with
-     *     most of the rest devices, even if the rest devices should
-     *     logically be under control of the vIOMMU unit.
-     *
-     *     One side effect of it is vIOMMU devices will be currently put
-     *     randomly under qdev tree hierarchy, which is the source of
-     *     device reset ordering in current QEMU (depth-first traversal).
-     *     It means vIOMMU now can be reset before some devices.  For fully
-     *     emulated devices that's not a problem, because the traversal
-     *     holds BQL for the whole process.  However it is a problem if DMA
-     *     can happen without BQL, like VFIO, vDPA or remote device process.
-     *
-     *     TODO: one ideal solution can be that we make vIOMMU the parent
-     *     of the whole pci host bridge.  Hence vIOMMU can be reset after
-     *     all the devices are reset and quiesced.
-     *
-     * (2) Some devices register its own reset functions
-     *
-     *     Even if above issue solved, if devices register its own reset
-     *     functions for some reason via QEMU reset hooks, vIOMMU can still
-     *     be reset before the device. One example is vfio_reset_handler()
-     *     where FLR is not supported on the device.
-     *
-     *     TODO: merge relevant reset functions into the device tree reset
-     *     framework.
+You could factor out everything down to here and then use that
+for the validate_dpa_addr() as finding an address space means
+we also checked the address is valid. Otherwise it does not match.
 
-So maybe vhost doesn't have problem (2) listed above, and maybe it means
-it's still worthwhile thinking more about problem (1), which is to change
-the QOM tree to provide a correct topology representation when vIOMMU is
-present: so far it should be still a pretty much orphaned object there.. if
-QEMU relies on QOM tree topology for reset order, we may need to move it to
-the right place sooner or later.
+> +
+> +    return  address_space_set(as, dpa_addr,
+
+odd spacing after return. Should just be one space.
+
+> +                              fill_value, length, mem_attrs);
+> +}
+> +
+> +/* Perform the actual device zeroing */
+> +static void __do_sanitize(CXLType3Dev *ct3d)
+> +{
+> +    struct CXLSanitizeInfo  *san_info =3D ct3d->media_op_sanitize;
+
+Single space only before *san_info
+
+> +    int dpa_range_count =3D san_info->dpa_range_count;
+> +    int rc =3D 0;
+> +
+> +    for (int i =3D 0; i < dpa_range_count; i++) {
+> +        rc =3D sanitize_range(ct3d, san_info->dpa_range_list[i].starting=
+_dpa,
+> +                san_info->dpa_range_list[i].length, san_info->fill_value=
+);
+> +        if (rc) {
+> +            goto exit;
+> +        }
+> +    }
+> +    cxl_discard_all_event_records(&ct3d->cxl_dstate);
+
+Add a comment on why we are deleting event records when sanitizing a small
+part of memory?
+
+> +exit:
+> +    g_free(ct3d->media_op_sanitize);
+> +    ct3d->media_op_sanitize =3D NULL;
+> +    return;
+> +}
+> +
+> +static int get_sanitize_duration(uint64_t total_mem)
+
+Where did this come from?  Factor out the existing code
+in cmd_santize_overwrite() instead of duplicating this stack
+of if/else if
+
+Ideally do that as a precursor patch as it's just code movement.
+
+
+> +{
+> +    int secs =3D 0;
+> +
+> +    if (total_mem <=3D 512) {
+> +        secs =3D 4;
+> +    } else if (total_mem <=3D 1024) {
+> +        secs =3D 8;
+> +    } else if (total_mem <=3D 2 * 1024) {
+> +        secs =3D 15;
+> +    } else if (total_mem <=3D 4 * 1024) {
+> +        secs =3D 30;
+> +    } else if (total_mem <=3D 8 * 1024) {
+> +        secs =3D 60;
+> +    } else if (total_mem <=3D 16 * 1024) {
+> +        secs =3D 2 * 60;
+> +    } else if (total_mem <=3D 32 * 1024) {
+> +        secs =3D 4 * 60;
+> +    } else if (total_mem <=3D 64 * 1024) {
+> +        secs =3D 8 * 60;
+> +    } else if (total_mem <=3D 128 * 1024) {
+> +        secs =3D 15 * 60;
+> +    } else if (total_mem <=3D 256 * 1024) {
+> +        secs =3D 30 * 60;
+> +    } else if (total_mem <=3D 512 * 1024) {
+> +        secs =3D 60 * 60;
+> +    } else if (total_mem <=3D 1024 * 1024) {
+> +        secs =3D 120 * 60;
+> +    } else {
+> +        secs =3D 240 * 60; /* max 4 hrs */
+> +    }
+> +
+> +    return secs;
+> +}
+> +
+>  enum {
+>      MEDIA_OP_GENERAL  =3D 0x0,
+>      MEDIA_OP_SANITIZE =3D 0x1,
+> @@ -1729,10 +1868,9 @@ enum {
+>  } MEDIA_OPERATION_CLASS;
+> =20
+>  enum {
+> -    MEDIA_OP_SUB_DISCOVERY =3D 0x0,
+> -    MEDIA_OP_SUB_SANITIZE =3D 0x0,
+> -    MEDIA_OP_SUB_ZERO     =3D 0x1,
+> -    MEDIA_OP_SUB_CLASS_MAX
+> +    MEDIA_OP_GEN_DISCOVERY =3D 0x0,
+> +    MEDIA_OP_SAN_SANITIZE =3D 0x0,
+> +    MEDIA_OP_SAN_ZERO     =3D 0x1,
+
+See naming suggestions in first patch. Make sure to tidy up so you don't in=
+troduce
+them there then change them here!
+
+>  } MEDIA_OPERATION_SUB_CLASS;
+> =20
+>  struct media_op_supported_list_entry {
+> @@ -1777,9 +1915,14 @@ static CXLRetCode cmd_media_operations(const struc=
+t cxl_cmd *cmd,
+>      };
+>      } QEMU_PACKED *media_op_in_pl =3D (void *)payload_in;
+> =20
+> +
+
+Blank line here doesn't add anything.
+
+> +    CXLType3Dev *ct3d =3D CXL_TYPE3(cci->d);
+>      uint8_t media_op_cl =3D media_op_in_pl->media_operation_class;
+>      uint8_t media_op_subclass =3D media_op_in_pl->media_operation_subcla=
+ss;
+>      uint32_t dpa_range_count =3D media_op_in_pl->dpa_range_count;
+> +    uint8_t fill_value =3D 0;
+> +    uint64_t total_mem =3D 0;
+> +    int secs =3D 0;
+> =20
+>      if (len_in < sizeof(*media_op_in_pl)) {
+>          return CXL_MBOX_INVALID_PAYLOAD_LENGTH;
+> @@ -1788,7 +1931,7 @@ static CXLRetCode cmd_media_operations(const struct=
+ cxl_cmd *cmd,
+>      switch (media_op_cl) {
+>      case MEDIA_OP_GENERAL:
+>          switch (media_op_subclass) {
+> -        case MEDIA_OP_SUB_DISCOVERY:
+> +        case MEDIA_OP_GEN_DISCOVERY:
+>              int count =3D 0;
+>              struct media_op_discovery_out_pl *media_out_pl =3D
+>                  (void *)payload_out;
+> @@ -1806,7 +1949,7 @@ static CXLRetCode cmd_media_operations(const struct=
+ cxl_cmd *cmd,
+>                  return CXL_MBOX_INVALID_INPUT;
+>              }
+> =20
+> -            media_out_pl->dpa_range_granularity =3D CXL_CAPACITY_MULTIPL=
+IER;
+> +            media_out_pl->dpa_range_granularity =3D DPA_RANGE_GRANULARIT=
+Y;
+>              media_out_pl->total_supported_operations =3D MAX_SUPPORTED_O=
+PS;
+>              if (num_ops > 0) {
+>                  for (int i =3D start_index; i < MAX_SUPPORTED_OPS; i++) {
+> @@ -1824,22 +1967,73 @@ disc_out:
+>              media_out_pl->num_of_supported_operations =3D count;
+>              *len_out =3D sizeof(struct media_op_discovery_out_pl) +
+>              (sizeof(struct media_op_supported_list_entry) * count);
+> -            break;
+> +            goto exit;
+return CXL_MBOX_SUCCESS;  No purpose in having the exit label as nothing
+to be done.
+
+
+>          default:
+>              return CXL_MBOX_UNSUPPORTED;
+>          }
+>          break;
+>      case MEDIA_OP_SANITIZE:
+> +    {
+
+=46rom code here not obvious why scoping {} needed.
+
+>          switch (media_op_subclass) {
+> -
+> +        case MEDIA_OP_SAN_SANITIZE:
+> +            if (len_in < (sizeof(*media_op_in_pl) +
+> +                   (dpa_range_count * sizeof(struct dpa_range_list_entry=
+)))) {
+> +                return CXL_MBOX_INVALID_PAYLOAD_LENGTH;
+> +            }
+The check applies to all current cases. So move it outside this switch stat=
+ement
+to remove duplication.  Here all you should do is set the fill_value;
+
+> +            fill_value =3D 0xF;
+> +            goto sanitize_range;
+> +        case MEDIA_OP_SAN_ZERO:
+> +            if (len_in < (sizeof(*media_op_in_pl) +
+> +                (dpa_range_count * sizeof(struct dpa_range_list_entry)))=
+) {
+> +                return CXL_MBOX_INVALID_PAYLOAD_LENGTH;
+> +            }
+> +            fill_value =3D 0;
+> +            goto sanitize_range;
+Why goto. Just break...
+>          default:
+>              return CXL_MBOX_UNSUPPORTED;
+>          }
+and have the stuff below under the sanitize_range label here.
+
+>          break;
+> +    }
+>      default:
+>          return CXL_MBOX_UNSUPPORTED;
+>      }
+> =20
+> +sanitize_range:
+> +    if (dpa_range_count > 0) {
+> +        for (int i =3D 0; i < dpa_range_count; i++) {
+> +            if (validate_dpa_addr(ct3d,
+> +                media_op_in_pl->dpa_range_list[i].starting_dpa,
+> +                media_op_in_pl->dpa_range_list[i].length)) {
+> +                return CXL_MBOX_INVALID_INPUT;
+> +            }
+> +            total_mem +=3D media_op_in_pl->dpa_range_list[i].length;
+> +        }
+> +        ct3d->media_op_sanitize =3D g_malloc0(sizeof(struct CXLSanitizeI=
+nfo) +
+> +                                  (dpa_range_count *
+> +                                  sizeof(struct dpa_range_list_entry)));
+> +
+> +        if (ct3d->media_op_sanitize) {
+> +            ct3d->media_op_sanitize->dpa_range_count =3D dpa_range_count;
+> +            ct3d->media_op_sanitize->fill_value =3D fill_value;
+> +            memcpy(ct3d->media_op_sanitize->dpa_range_list,
+> +                   media_op_in_pl->dpa_range_list,
+> +                   (dpa_range_count *
+> +                   sizeof(struct dpa_range_list_entry)));
+> +            secs =3D get_sanitize_duration(total_mem >> 20);
+> +            goto start_bg;
+> +        }
+> +    } else if (dpa_range_count =3D=3D 0) {
+> +        goto exit;
+    if (dpa_range_count =3D=3D 0) {
+       return CXL_MBOX_SUCCESS;
+    }
+    for (i =3D 0; i < dpa_range_count; i++)
+
+//that is return early in the simple case the no need for else
+and the extra level of indent on these long lines.
+
+
+> +    }
+> +
+> +start_bg:
+> +    /* EBUSY other bg cmds as of now */
+> +    cci->bg.runtime =3D secs * 1000UL;
+> +    *len_out =3D 0;
+> +    /* sanitize when done */
+> +    cxl_dev_disable_media(&ct3d->cxl_dstate);
+Why?  This is santizing part of the device. As I undestand it the
+main aim is to offload cleanup when the device is in use. Definitely
+don't want to disable media.  If I'm missing a reason please give
+a spec reference.
+
+> +    return CXL_MBOX_BG_STARTED;
+> +exit:
+>      return CXL_MBOX_SUCCESS;
+>  }
+> =20
+> @@ -3154,6 +3348,13 @@ static void bg_timercb(void *opaque)
+>              cxl_dev_enable_media(&ct3d->cxl_dstate);
+>          }
+>          break;
+> +        case 0x4402: /* Media Operations sanitize */
+> +        {
+> +            CXLType3Dev *ct3d =3D CXL_TYPE3(cci->d);
+> +            __do_sanitize(ct3d);
+> +            cxl_dev_enable_media(&ct3d->cxl_dstate);
+Ah. You turn it back on here.   Specification reference needed.
+> +        }
+> +        break;
+>          case 0x4304: /* scan media */
+>          {
+>              CXLType3Dev *ct3d =3D CXL_TYPE3(cci->d);
+> diff --git a/include/hw/cxl/cxl_device.h b/include/hw/cxl/cxl_device.h
+> index a64739be25..6d82eb266a 100644
+> --- a/include/hw/cxl/cxl_device.h
+> +++ b/include/hw/cxl/cxl_device.h
+> @@ -581,6 +581,15 @@ typedef struct CXLSetFeatureInfo {
+>      size_t data_size;
+>  } CXLSetFeatureInfo;
+> =20
+> +struct CXLSanitizeInfo {
+> +    uint32_t dpa_range_count;
+> +    uint8_t fill_value;
+> +    struct {
+> +            uint64_t starting_dpa;
+> +            uint64_t length;
+> +    } dpa_range_list[0];
+[]
+> +};
+> +
+>  struct CXLType3Dev {
+>      /* Private */
+>      PCIDevice parent_obj;
+> @@ -651,6 +660,8 @@ struct CXLType3Dev {
+>          uint8_t num_regions; /* 0-8 regions */
+>          CXLDCRegion regions[DCD_MAX_NUM_REGION];
+>      } dc;
+> +
+> +    struct CXLSanitizeInfo  *media_op_sanitize;
+Here we just need to know there is a definition of struct
+CXLSantizeInfo not what form it takes.  So use a forwards
+defintion and push the definition of struct CXLSanitizeInfo
+down to where it is needed only (in the c file).
 
 Thanks,
 
--- 
-Peter Xu
+Jonathan
+
+>  };
+> =20
+>  #define TYPE_CXL_TYPE3 "cxl-type3"
 
 
