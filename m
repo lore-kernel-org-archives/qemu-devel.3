@@ -4,90 +4,98 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 01DDAC02181
-	for <qemu-devel@archiver.kernel.org>; Fri, 24 Jan 2025 17:50:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CE9BBC02181
+	for <qemu-devel@archiver.kernel.org>; Fri, 24 Jan 2025 17:51:10 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tbNoh-0000N1-3K; Fri, 24 Jan 2025 12:50:03 -0500
+	id 1tbNpT-0001yY-IT; Fri, 24 Jan 2025 12:50:51 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1tbNoa-0000Fk-DE
- for qemu-devel@nongnu.org; Fri, 24 Jan 2025 12:49:58 -0500
-Received: from mail-pl1-x62a.google.com ([2607:f8b0:4864:20::62a])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1tbNoY-000481-WA
- for qemu-devel@nongnu.org; Fri, 24 Jan 2025 12:49:56 -0500
-Received: by mail-pl1-x62a.google.com with SMTP id
- d9443c01a7336-21636268e43so52088685ad.2
- for <qemu-devel@nongnu.org>; Fri, 24 Jan 2025 09:49:54 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1737740994; x=1738345794; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=lprcsEJqJA0BXBRgOLBnGo/4d0TSDe5lsDDbo6MJfjY=;
- b=n3q5rLXcnXRNfc4EzOaAzDv/gfJcjHCP7VL/L//5wTXZZd6+4eCNqOAWF43ZIU61Cp
- 4j1cv5onWzuhXqQC/Rnme4mIH8YySh3RFp+pqZqzKNQ5fqjcaqwfdoieeGpdRg2fDJ7s
- U6nDxXC91UKpfqRZESXFaufqQ24/RmY6yE9G4PAZRe1wohHFYyu9mxZ8ZnOH8e0t/baA
- vdoP/ggNG6B4vtyokSolFIxE+zppGEh5hcAUHFUck3aVtVHMVxYjZx0l8P52b+jtdOnF
- YSqPLvePEggvFL6PY7H0Bm2zv0PU7cMEnyiNWD5ZLnwef1/SwGvANM5vdtZLsvo81J+q
- jqAw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1737740994; x=1738345794;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=lprcsEJqJA0BXBRgOLBnGo/4d0TSDe5lsDDbo6MJfjY=;
- b=SxKS9UGwGsJOIzKsDVrFhXCEVQoVfSV2KgtgLVFK+DSPgUk+LQR09RWxnjwla3NiT+
- CTb75BPD8gn/RIxBCaf6/TR2ofxiQRd1lH2D2SDZHoeuuTbLXR3t4TRsAUe3+gzwuK8w
- vGi5bzKoHAVXjOTG1zg76K5buBvP0Pd+9PFkmyrIWSJc7svOld2tmDbxCHHHcoSuF9xY
- TwvGpoErADObjmkTnTXdjPKTilSEcqgDh3KkM2XwTkm+vmBLpz/vkXun979p/cj3q52Y
- K1Tg7YuuI2t7Cq4r1L06f3/Grla1mUvK5DCZ7kTQ9d3uXPOXQbRmIunPT/GjHIg+Mb6U
- x47w==
-X-Forwarded-Encrypted: i=1;
- AJvYcCW1JOeGkdWrJ6CYULOlc4kQtnKDnq8rw6o/EgIMcBWhLqf0Q5rc4hqaCWQKHhYyphm8WosVEYxPjvnK@nongnu.org
-X-Gm-Message-State: AOJu0YykluADcaLG1z6BVQlvIRPym4bHv5z7wdOI+CbjLzQfMot/Dd/f
- WPe3l5XXYvECQpSKJY+vkFROjRaGwZZOesNLhnwYs+LHFipU0jbIKmMboSjdNtA=
-X-Gm-Gg: ASbGncsrDWQ8tHEW8lz9Ysltwhc5pgAnoJ7Q6WaNcMK6sh5vNV1Y2e3wEPh8h82uLP/
- wiTtf+K4js6ho12M3IBh6YTamaBR1lu+9I9eU9puHsQQJ18CyrJFNezaB8Zu+y5BNSbFV1s26Z2
- 4iCAZtGxbz+A1O5MfiVn0ZfC8JYgTcpn3gsryJW7bog33WbXBEKaUL7YJ4fUDewUcv4sKaP/RxB
- iFn1K1cA5TT/2c+pjkRPH9yxTJZYlugRKW86y9fnaVdxE0UaFwnq6sTNE2olA2uLeJM0p/yaW/Q
- VcHKlg8aLDDEvQPlYYalCcpAvKh+XyZqooQo3dejJqKWUX4JbcWrif+7pQrutpDbtw==
-X-Google-Smtp-Source: AGHT+IHNnOk1zfZWM/6f3gH4mUbHpY6w8pktKT2uxF9mFZ+o4N7JimLKAlUMYLv5Pi8Rqfg0UhKdvw==
-X-Received: by 2002:a17:902:c946:b0:215:8f2e:eeda with SMTP id
- d9443c01a7336-21c35609304mr426878185ad.52.1737740993836; 
- Fri, 24 Jan 2025 09:49:53 -0800 (PST)
-Received: from ?IPV6:2607:fb90:c9e1:9829:9eed:533c:6788:9f4a?
- ([2607:fb90:c9e1:9829:9eed:533c:6788:9f4a])
- by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-21da3d9c9fdsm19325595ad.4.2025.01.24.09.49.53
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 24 Jan 2025 09:49:53 -0800 (PST)
-Message-ID: <c6850a53-8f19-4fb1-8117-a9a3589d3806@linaro.org>
-Date: Fri, 24 Jan 2025 09:49:50 -0800
+ (Exim 4.90_1) (envelope-from <SRS0=CijV=UQ=kaod.org=clg@ozlabs.org>)
+ id 1tbNpQ-0001tf-U0; Fri, 24 Jan 2025 12:50:49 -0500
+Received: from mail.ozlabs.org ([2404:9400:2221:ea00::3])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <SRS0=CijV=UQ=kaod.org=clg@ozlabs.org>)
+ id 1tbNpP-0004Pc-1T; Fri, 24 Jan 2025 12:50:48 -0500
+Received: from mail.ozlabs.org (mail.ozlabs.org [IPv6:2404:9400:2221:ea00::3])
+ by gandalf.ozlabs.org (Postfix) with ESMTP id 4Yflhm46r5z4wvd;
+ Sat, 25 Jan 2025 04:50:32 +1100 (AEDT)
+Received: from authenticated.ozlabs.org (localhost [127.0.0.1])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (Client did not present a certificate)
+ by mail.ozlabs.org (Postfix) with ESMTPSA id 4Yflhd5wyGz4wcj;
+ Sat, 25 Jan 2025 04:50:25 +1100 (AEDT)
+Message-ID: <712eadb9-e09c-4f01-b4ee-f2b5340e302c@kaod.org>
+Date: Fri, 24 Jan 2025 18:50:30 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 1/2] hw/hppa: Support up to 256 GiB RAM on 64-bit machines
-To: deller@kernel.org, qemu-devel@nongnu.org
-Cc: Helge Deller <deller@gmx.de>
-References: <20250122180913.18667-1-deller@kernel.org>
- <20250122180913.18667-2-deller@kernel.org>
-Content-Language: en-US
-From: Richard Henderson <richard.henderson@linaro.org>
-In-Reply-To: <20250122180913.18667-2-deller@kernel.org>
+Subject: Re: [PATCH] docs/system/arm/aspeed: Remove tacoma-bmc from the
+ documentation
+To: Thomas Huth <thuth@redhat.com>, Peter Maydell <peter.maydell@linaro.org>, 
+ Steven Lee <steven_lee@aspeedtech.com>, Troy Lee <leetroy@gmail.com>,
+ Jamin Lin <jamin_lin@aspeedtech.com>,
+ Andrew Jeffery <andrew@codeconstruct.com.au>, Joel Stanley <joel@jms.id.au>,
+ qemu-devel@nongnu.org
+Cc: qemu-arm@nongnu.org, =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?=
+ <philmd@linaro.org>, qemu-trivial@nongnu.org
+References: <20250124174507.27348-1-thuth@redhat.com>
+Content-Language: en-US, fr
+From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>
+Autocrypt: addr=clg@kaod.org; keydata=
+ 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
+In-Reply-To: <20250124174507.27348-1-thuth@redhat.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::62a;
- envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x62a.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2404:9400:2221:ea00::3;
+ envelope-from=SRS0=CijV=UQ=kaod.org=clg@ozlabs.org; helo=mail.ozlabs.org
+X-Spam_score_int: -41
+X-Spam_score: -4.2
+X-Spam_bar: ----
+X-Spam_report: (-4.2 / 5.0 requ) BAYES_00=-1.9,
+ HEADER_FROM_DIFFERENT_DOMAINS=0.001, RCVD_IN_DNSWL_MED=-2.3,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -104,19 +112,36 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 1/22/25 10:09, deller@kernel.org wrote:
-> From: Helge Deller <deller@gmx.de>
+On 1/24/25 18:45, Thomas Huth wrote:
+> The tacoma-bmc machine has recently been removed, so let's remove
+> it from the documentation now, too.
 > 
-> Allow up to 256 GB RAM, which is the maximum a rp8440 machine (the very
-> last 64-bit PA-RISC machine) physically supports.
-> 
-> Signed-off-by: Helge Deller <deller@gmx.de>
+> Fixes: 2b1b66e01f ("arm: Remove tacoma-bmc machine")
+> Signed-off-by: Thomas Huth <thuth@redhat.com>
+
+
+Reviewed-by: Cédric Le Goater <clg@redhat.com>
+
+Thanks,
+
+C.
+
+
 > ---
->   hw/hppa/hppa_hardware.h |  2 ++
->   hw/hppa/machine.c       | 26 +++++++++++++++++++-------
->   2 files changed, 21 insertions(+), 7 deletions(-)
+>   docs/system/arm/aspeed.rst | 4 ++--
+>   1 file changed, 2 insertions(+), 2 deletions(-)
+> 
+> diff --git a/docs/system/arm/aspeed.rst b/docs/system/arm/aspeed.rst
+> index fa4aa28eef..97fd6a0e7f 100644
+> --- a/docs/system/arm/aspeed.rst
+> +++ b/docs/system/arm/aspeed.rst
+> @@ -1,5 +1,5 @@
+> -Aspeed family boards (``ast2500-evb``, ``ast2600-evb``, ``ast2700-evb``, ``bletchley-bmc``, ``fuji-bmc``, ``fby35-bmc``, ``fp5280g2-bmc``, ``g220a-bmc``, ``palmetto-bmc``, ``qcom-dc-scm-v1-bmc``, ``qcom-firework-bmc``, ``quanta-q71l-bmc``, ``rainier-bmc``, ``romulus-bmc``, ``sonorapass-bmc``, ``supermicrox11-bmc``, ``supermicrox11spi-bmc``, ``tiogapass-bmc``, ``tacoma-bmc``, ``witherspoon-bmc``, ``yosemitev2-bmc``)
+> -==================================================================================================================================================================================================================================================================================================================================================================================================================================
+> +Aspeed family boards (``ast2500-evb``, ``ast2600-evb``, ``ast2700-evb``, ``bletchley-bmc``, ``fuji-bmc``, ``fby35-bmc``, ``fp5280g2-bmc``, ``g220a-bmc``, ``palmetto-bmc``, ``qcom-dc-scm-v1-bmc``, ``qcom-firework-bmc``, ``quanta-q71l-bmc``, ``rainier-bmc``, ``romulus-bmc``, ``sonorapass-bmc``, ``supermicrox11-bmc``, ``supermicrox11spi-bmc``, ``tiogapass-bmc``, ``witherspoon-bmc``, ``yosemitev2-bmc``)
+> +==================================================================================================================================================================================================================================================================================================================================================================================================================
+>   
+>   The QEMU Aspeed machines model BMCs of various OpenPOWER systems and
+>   Aspeed evaluation boards. They are based on different releases of the
 
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-
-r~
 
