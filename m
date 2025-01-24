@@ -4,79 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D7117C02181
-	for <qemu-devel@archiver.kernel.org>; Fri, 24 Jan 2025 09:52:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4DBD0C0218C
+	for <qemu-devel@archiver.kernel.org>; Fri, 24 Jan 2025 09:52:31 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tbGFi-0006tM-8J; Fri, 24 Jan 2025 04:45:26 -0500
+	id 1tbGHv-0003ii-GS; Fri, 24 Jan 2025 04:47:43 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1tbGFe-0006pE-79
- for qemu-devel@nongnu.org; Fri, 24 Jan 2025 04:45:22 -0500
+ id 1tbGGT-0007rL-6G
+ for qemu-devel@nongnu.org; Fri, 24 Jan 2025 04:46:22 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1tbGFc-0003t6-MK
- for qemu-devel@nongnu.org; Fri, 24 Jan 2025 04:45:21 -0500
+ id 1tbGGQ-0003zZ-Fs
+ for qemu-devel@nongnu.org; Fri, 24 Jan 2025 04:46:12 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1737711920;
+ s=mimecast20190719; t=1737711969;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:
+ to:to:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=RD+mEfAdDUkodwsyNQ6ua+15ZST6/FVUt+cz1H6YqK8=;
- b=I4pek+epbOPb/JPCQ19AYus3pBUs3Xw1HMVUDIkcplJBng5ZkSHl9OEJdzwy1XpeXaFH7N
- IHYNgfmnhgp6I4l3YMDpPNevUbqeCK/BwIvycdQxvvvk9TmFqolNHduU2j/+wiOY1PprgA
- zNWCBEmudygNRR9HlehuPTMJsdSu4QQ=
-Received: from mail-wr1-f71.google.com (mail-wr1-f71.google.com
- [209.85.221.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=LnYPmmzbHtO9VYxLsF7WeRrLBt7TIDcweZucQbIAULs=;
+ b=bcpQ9EBOhXBq7pT0Nn4/Di/gdwxx/QAZmUGOvDRxBpHL0QEUxTgoUVgDL0n1+17r8dIpik
+ e84PubB7gxwxMQbWKIXjOkibVxnroFUNFlIiBum6z+iLxSo5JuvVyIlFeXZvBMMT+AU4z6
+ OcQZmPoypXIMY8z1WqzcR9779PMmhG4=
+Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com
+ [209.85.128.71]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-1-_23GfbwJN1eoTBd-JrSn5g-1; Fri, 24 Jan 2025 04:45:18 -0500
-X-MC-Unique: _23GfbwJN1eoTBd-JrSn5g-1
-X-Mimecast-MFC-AGG-ID: _23GfbwJN1eoTBd-JrSn5g
-Received: by mail-wr1-f71.google.com with SMTP id
- ffacd0b85a97d-385d80576abso1182532f8f.3
- for <qemu-devel@nongnu.org>; Fri, 24 Jan 2025 01:45:18 -0800 (PST)
+ us-mta-593-aQMRFyNBPOWxMDhjRNLCnA-1; Fri, 24 Jan 2025 04:46:08 -0500
+X-MC-Unique: aQMRFyNBPOWxMDhjRNLCnA-1
+X-Mimecast-MFC-AGG-ID: aQMRFyNBPOWxMDhjRNLCnA
+Received: by mail-wm1-f71.google.com with SMTP id
+ 5b1f17b1804b1-436225d4389so14625265e9.1
+ for <qemu-devel@nongnu.org>; Fri, 24 Jan 2025 01:46:07 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1737711916; x=1738316716;
+ d=1e100.net; s=20230601; t=1737711966; x=1738316766;
  h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=RD+mEfAdDUkodwsyNQ6ua+15ZST6/FVUt+cz1H6YqK8=;
- b=ob09QV00Dx5kEcU81s4lfHduH7v5LTNWbPzqxzRMO4sNiAE/lStQFTRGDBNwB7i1Kl
- f5aqPLBQQ3rhN46CEnr1Ly9ozK72/hyR0s+dg0jU3xW2SeGrErX1PHUTuX6u656QP5Dz
- 6w6TslAh4KVuQRLIobCIfKYp0/uTRzvl1tA+ZVwY4AtdKWCGoD/ChAiBSln7oan0DtHD
- ZMrk3xWZfq1bjjsatvTzzv2K2kDYLRHYJlQOKf9Os0H8LeBZCxG0rnayRIH6aYaX0IaH
- xTyoTXMlt0M6KuYvnXLmpN3ChQ2g+xANoCgRlnULnJRfhnMtNZVpcLoKkZQ+WU5MPPYf
- U+Aw==
-X-Gm-Message-State: AOJu0YxrCKI0bVVkM5EM6v9zFovpamKe8EyFYDhzaxNT4e36Aq6E7bVh
- GflYS5viZbmHZTdLvOXjjbxa5zf5lKrvX4JwzzBlrgpiy8B0EdBXxU+88MKRUU1tnXrQzrzzMBX
- 4j1EZHCU/5bdyxClaBCX+J55gW8vbMVabI1FcWN2rw5hLfQz9xvQEDZT5wp1mrsr/xJL8N0RjUM
- kI/gZXSWfRcZaR1JpV+xEl06EY3twRTGGWVH4bPpg=
-X-Gm-Gg: ASbGncsurzybJ/Hrc9E7X6O3YkgwqAnmH5RxZWx6lf6fkbbnw309xL7P4Y7NyFZa1Fe
- meblVOwnfOsqxA0ezt7Cun0UNLHi3y7sVSl1MLxnwnV9PQMOD1SWXUOT+mCRzsI3AhYzZZ2iOHy
- YT2esD3lMFFoIlrIUXTYEfsKMyduWX7GQl+gNXZWQGXROcWSnirQG7AL64CshdQD2ivR450NYZ4
- OTutFx0TGJW/ydJXZKeBML4cz0mivtT4clXb2B4vgXbindWtICQxv84KohNcdblbIMapqcVyQ==
-X-Received: by 2002:adf:f48c:0:b0:385:f996:1b8e with SMTP id
- ffacd0b85a97d-38bf5659a94mr23984758f8f.16.1737711916528; 
- Fri, 24 Jan 2025 01:45:16 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IEdQpy974WgGHbEVD5uPHNT71/Z2lx0UkA0QVHLx9JQ7VIITD7kh44vZLFUj5DR0Zb4ZprZCQ==
-X-Received: by 2002:adf:f48c:0:b0:385:f996:1b8e with SMTP id
- ffacd0b85a97d-38bf5659a94mr23984729f8f.16.1737711916116; 
- Fri, 24 Jan 2025 01:45:16 -0800 (PST)
+ bh=LnYPmmzbHtO9VYxLsF7WeRrLBt7TIDcweZucQbIAULs=;
+ b=Xy83KKrg2K+fvQh+swHWx6lyVtOMsBzFd4LgPE1dYvebFSoY8r23bjlxLnLeP5kPd9
+ RJM0xDcSAKyHoKwxMF/f9heumD2USeuXCoiz/gpd2XBl6rSoxNunhJX/HXnKL4x2Gwq2
+ X+CHrnqXGd8w4A/ze4LimJQ4hkq8z3c0DHCgCHQj3b5AMCQnnTkqbm8vcSOSzCPDG0UZ
+ POgEscQIq1DyzmsRZHLmjxnmjpDOHKEsPJkGWElRXDl2SGDsGyQbtm6jj9w83RqFp5vR
+ M2Ej1HpQch8fZC4ci+/evmBRjHYpJQZPFbMUjnvkfW0oj+pf8Bv0ZCqF3sMGHJvFUJFv
+ qEpw==
+X-Gm-Message-State: AOJu0Yw7IYz1CyghzM0y2H+ZJeEy14bNOW9u7jy4DQ4WNUy4UZZlBInq
+ jYP5GGMOwRNBcAiQjzpfxAPzYalLC4odMQ3FGHZr+aEZJUPk76LUtoiseH/bSgg59QX34IM79rs
+ 70a/cB1g0uW03F7ZMWdiUo8VoJtD6BQ60fXtfeQNRJDkHvWHUSNYrIA8mFl8Rd1nIX/cmE2l9zB
+ BqOkGEpYaLnWorzV5+k+y0nYBlkCZEgcMde+Wd4x4=
+X-Gm-Gg: ASbGncs8f9EoRWpil+uX4iVVsNq5IhWkklt0gjQA/V5oWMB/aWb4jeB+HEUwacf2Ugk
+ YrXQI+kgIV47NaIxyClVsAfjNSpSSlu3d57vDXG/XEwx6E1O4Ns5t2GrE95EsV5RA2pH3RBOT+Q
+ 6kDB7lPU6ZK2tEkXgpRm89/vACg36gluQgUq8nUtceg0WsnUZjPjFhu19V8rPGIlcNi9imeugLE
+ XKS2ezqtrcGy9pwC9cao9MUa4rBW6TL0Uhm5au7hsn/7fw+MileL26m0FaD4Sy5uGOH8EOXyg==
+X-Received: by 2002:a05:600c:58c9:b0:436:e3ea:64dd with SMTP id
+ 5b1f17b1804b1-438bd0a88dbmr22948015e9.11.1737711966482; 
+ Fri, 24 Jan 2025 01:46:06 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IHXene5jhJddv0rJmibbIevqjM3Q7qVX6fnc4nuI5ZR4uq6NX3kd8xFBwOws2RK1dhn7pKf5Q==
+X-Received: by 2002:a05:600c:58c9:b0:436:e3ea:64dd with SMTP id
+ 5b1f17b1804b1-438bd0a88dbmr22947645e9.11.1737711965962; 
+ Fri, 24 Jan 2025 01:46:05 -0800 (PST)
 Received: from [192.168.10.48] ([151.95.59.125])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-38c2a1bb0d4sm2213554f8f.69.2025.01.24.01.45.15
+ 5b1f17b1804b1-438bd4b9990sm20855065e9.29.2025.01.24.01.46.05
+ for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 24 Jan 2025 01:45:15 -0800 (PST)
+ Fri, 24 Jan 2025 01:46:05 -0800 (PST)
 From: Paolo Bonzini <pbonzini@redhat.com>
 To: qemu-devel@nongnu.org
-Cc: Tao Su <tao1.su@linux.intel.com>
-Subject: [PULL 17/48] target/i386: Export BHI_NO bit to guests
-Date: Fri, 24 Jan 2025 10:44:11 +0100
-Message-ID: <20250124094442.13207-18-pbonzini@redhat.com>
+Subject: [PULL 42/48] rust: pl011: wrap registers with BqlRefCell
+Date: Fri, 24 Jan 2025 10:44:36 +0100
+Message-ID: <20250124094442.13207-43-pbonzini@redhat.com>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250124094442.13207-1-pbonzini@redhat.com>
 References: <20250124094442.13207-1-pbonzini@redhat.com>
@@ -107,38 +107,185 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Tao Su <tao1.su@linux.intel.com>
+This is a step towards making memory ops use a shared reference to the
+device type; it's not yet possible due to the calls to character device
+functions.
 
-Branch History Injection (BHI) is a CPU side-channel vulnerability, where
-an attacker may manipulate branch history before transitioning from user
-to supervisor mode or from VMX non-root/guest to root mode. CPUs that set
-BHI_NO bit in MSR IA32_ARCH_CAPABILITIES to indicate no additional
-mitigation is required to prevent BHI.
-
-Make BHI_NO bit available to guests.
-
-Tested-by: Xuelian Guo <xuelian.guo@intel.com>
-Signed-off-by: Tao Su <tao1.su@linux.intel.com>
 Reviewed-by: Zhao Liu <zhao1.liu@intel.com>
-Link: https://lore.kernel.org/r/20250121020650.1899618-3-tao1.su@linux.intel.com
 Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 ---
- target/i386/cpu.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ rust/hw/char/pl011/src/device.rs       | 40 ++++++++++++++------------
+ rust/hw/char/pl011/src/device_class.rs |  8 +++---
+ 2 files changed, 26 insertions(+), 22 deletions(-)
 
-diff --git a/target/i386/cpu.c b/target/i386/cpu.c
-index 6db8d6c9bab..33fb27a6119 100644
---- a/target/i386/cpu.c
-+++ b/target/i386/cpu.c
-@@ -1364,7 +1364,7 @@ FeatureWordInfo feature_word_info[FEATURE_WORDS] = {
-             "taa-no", NULL, NULL, NULL,
-             NULL, "sbdr-ssdp-no", "fbsdp-no", "psdp-no",
-             NULL, "fb-clear", NULL, NULL,
--            NULL, NULL, NULL, NULL,
-+            "bhi-no", NULL, NULL, NULL,
-             "pbrsb-no", NULL, "gds-no", "rfds-no",
-             "rfds-clear", NULL, NULL, NULL,
-         },
+diff --git a/rust/hw/char/pl011/src/device.rs b/rust/hw/char/pl011/src/device.rs
+index f1319d1a8bd..4fd9bdc8584 100644
+--- a/rust/hw/char/pl011/src/device.rs
++++ b/rust/hw/char/pl011/src/device.rs
+@@ -109,14 +109,14 @@ pub struct PL011Registers {
+ }
+ 
+ #[repr(C)]
+-#[derive(Debug, qemu_api_macros::Object, qemu_api_macros::offsets)]
++#[derive(qemu_api_macros::Object, qemu_api_macros::offsets)]
+ /// PL011 Device Model in QEMU
+ pub struct PL011State {
+     pub parent_obj: ParentField<SysBusDevice>,
+     pub iomem: MemoryRegion,
+     #[doc(alias = "chr")]
+     pub char_backend: CharBackend,
+-    pub regs: PL011Registers,
++    pub regs: BqlRefCell<PL011Registers>,
+     /// QEMU interrupts
+     ///
+     /// ```text
+@@ -538,6 +538,7 @@ fn post_init(&self) {
+         }
+     }
+ 
++    #[allow(clippy::needless_pass_by_ref_mut)]
+     pub fn read(&mut self, offset: hwaddr, _size: u32) -> ControlFlow<u64, u64> {
+         let mut update_irq = false;
+         let result = match RegisterOffset::try_from(offset) {
+@@ -549,7 +550,7 @@ pub fn read(&mut self, offset: hwaddr, _size: u32) -> ControlFlow<u64, u64> {
+                 // qemu_log_mask(LOG_GUEST_ERROR, "pl011_read: Bad offset 0x%x\n", (int)offset);
+                 ControlFlow::Break(0)
+             }
+-            Ok(field) => match self.regs.read(field) {
++            Ok(field) => match self.regs.borrow_mut().read(field) {
+                 ControlFlow::Break(value) => ControlFlow::Break(value.into()),
+                 ControlFlow::Continue(value) => {
+                     update_irq = true;
+@@ -566,7 +567,10 @@ pub fn read(&mut self, offset: hwaddr, _size: u32) -> ControlFlow<u64, u64> {
+     pub fn write(&mut self, offset: hwaddr, value: u64) {
+         let mut update_irq = false;
+         if let Ok(field) = RegisterOffset::try_from(offset) {
+-            update_irq = self.regs.write(field, value as u32, &mut self.char_backend);
++            update_irq = self
++                .regs
++                .borrow_mut()
++                .write(field, value as u32, &mut self.char_backend);
+         } else {
+             eprintln!("write bad offset {offset} value {value}");
+         }
+@@ -577,21 +581,21 @@ pub fn write(&mut self, offset: hwaddr, value: u64) {
+ 
+     pub fn can_receive(&self) -> bool {
+         // trace_pl011_can_receive(s->lcr, s->read_count, r);
+-        let regs = &self.regs;
++        let regs = self.regs.borrow();
+         regs.read_count < regs.fifo_depth()
+     }
+ 
+-    pub fn receive(&mut self, ch: u32) {
+-        let regs = &mut self.regs;
++    pub fn receive(&self, ch: u32) {
++        let mut regs = self.regs.borrow_mut();
+         let update_irq = !regs.loopback_enabled() && regs.put_fifo(ch);
+         if update_irq {
+             self.update();
+         }
+     }
+ 
+-    pub fn event(&mut self, event: QEMUChrEvent) {
++    pub fn event(&self, event: QEMUChrEvent) {
+         let mut update_irq = false;
+-        let regs = &mut self.regs;
++        let mut regs = self.regs.borrow_mut();
+         if event == QEMUChrEvent::CHR_EVENT_BREAK && !regs.loopback_enabled() {
+             update_irq = regs.put_fifo(registers::Data::BREAK.into());
+         }
+@@ -618,19 +622,19 @@ pub fn realize(&self) {
+     }
+ 
+     pub fn reset(&mut self) {
+-        self.regs.reset();
++        self.regs.borrow_mut().reset();
+     }
+ 
+     pub fn update(&self) {
+-        let regs = &self.regs;
++        let regs = self.regs.borrow();
+         let flags = regs.int_level & regs.int_enabled;
+         for (irq, i) in self.interrupts.iter().zip(IRQMASK) {
+             irq.set(flags & i != 0);
+         }
+     }
+ 
+-    pub fn post_load(&mut self, _version_id: u32) -> Result<(), ()> {
+-        self.regs.post_load()
++    pub fn post_load(&self, _version_id: u32) -> Result<(), ()> {
++        self.regs.borrow_mut().post_load()
+     }
+ }
+ 
+@@ -667,11 +671,11 @@ pub fn post_load(&mut self, _version_id: u32) -> Result<(), ()> {
+ ///
+ /// The buffer and size arguments must also be valid.
+ pub unsafe extern "C" fn pl011_receive(opaque: *mut c_void, buf: *const u8, size: c_int) {
+-    let mut state = NonNull::new(opaque).unwrap().cast::<PL011State>();
++    let state = NonNull::new(opaque).unwrap().cast::<PL011State>();
+     unsafe {
+         if size > 0 {
+             debug_assert!(!buf.is_null());
+-            state.as_mut().receive(u32::from(buf.read_volatile()));
++            state.as_ref().receive(u32::from(buf.read_volatile()));
+         }
+     }
+ }
+@@ -682,8 +686,8 @@ pub fn post_load(&mut self, _version_id: u32) -> Result<(), ()> {
+ /// the same size as [`PL011State`]. We also expect the device is
+ /// readable/writeable from one thread at any time.
+ pub unsafe extern "C" fn pl011_event(opaque: *mut c_void, event: QEMUChrEvent) {
+-    let mut state = NonNull::new(opaque).unwrap().cast::<PL011State>();
+-    unsafe { state.as_mut().event(event) }
++    let state = NonNull::new(opaque).unwrap().cast::<PL011State>();
++    unsafe { state.as_ref().event(event) }
+ }
+ 
+ /// # Safety
+@@ -708,7 +712,7 @@ pub fn post_load(&mut self, _version_id: u32) -> Result<(), ()> {
+ }
+ 
+ #[repr(C)]
+-#[derive(Debug, qemu_api_macros::Object)]
++#[derive(qemu_api_macros::Object)]
+ /// PL011 Luminary device model.
+ pub struct PL011Luminary {
+     parent_obj: ParentField<PL011State>,
+diff --git a/rust/hw/char/pl011/src/device_class.rs b/rust/hw/char/pl011/src/device_class.rs
+index d94b98de7bb..8a157a663fb 100644
+--- a/rust/hw/char/pl011/src/device_class.rs
++++ b/rust/hw/char/pl011/src/device_class.rs
+@@ -6,7 +6,7 @@
+ use std::os::raw::{c_int, c_void};
+ 
+ use qemu_api::{
+-    bindings::*, c_str, vmstate_clock, vmstate_fields, vmstate_of, vmstate_struct,
++    bindings::*, c_str, prelude::*, vmstate_clock, vmstate_fields, vmstate_of, vmstate_struct,
+     vmstate_subsections, vmstate_unused, zeroable::Zeroable,
+ };
+ 
+@@ -31,8 +31,8 @@ extern "C" fn pl011_clock_needed(opaque: *mut c_void) -> bool {
+ };
+ 
+ extern "C" fn pl011_post_load(opaque: *mut c_void, version_id: c_int) -> c_int {
+-    let mut state = NonNull::new(opaque).unwrap().cast::<PL011State>();
+-    let result = unsafe { state.as_mut().post_load(version_id as u32) };
++    let state = NonNull::new(opaque).unwrap().cast::<PL011State>();
++    let result = unsafe { state.as_ref().post_load(version_id as u32) };
+     if result.is_err() {
+         -1
+     } else {
+@@ -71,7 +71,7 @@ extern "C" fn pl011_post_load(opaque: *mut c_void, version_id: c_int) -> c_int {
+     post_load: Some(pl011_post_load),
+     fields: vmstate_fields! {
+         vmstate_unused!(core::mem::size_of::<u32>()),
+-        vmstate_struct!(PL011State, regs, &VMSTATE_PL011_REGS, PL011Registers),
++        vmstate_struct!(PL011State, regs, &VMSTATE_PL011_REGS, BqlRefCell<PL011Registers>),
+     },
+     subsections: vmstate_subsections! {
+         VMSTATE_PL011_CLOCK
 -- 
 2.48.1
 
