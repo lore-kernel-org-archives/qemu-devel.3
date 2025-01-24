@@ -4,93 +4,92 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8AFDCC02181
-	for <qemu-devel@archiver.kernel.org>; Fri, 24 Jan 2025 09:47:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B9861C0218C
+	for <qemu-devel@archiver.kernel.org>; Fri, 24 Jan 2025 09:47:18 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tbGFT-0006cR-3R; Fri, 24 Jan 2025 04:45:11 -0500
+	id 1tbGFS-0006c3-QS; Fri, 24 Jan 2025 04:45:11 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1tbGFR-0006aJ-Pt
- for qemu-devel@nongnu.org; Fri, 24 Jan 2025 04:45:09 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ id 1tbGFP-0006W5-M9
+ for qemu-devel@nongnu.org; Fri, 24 Jan 2025 04:45:07 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1tbGFQ-0003rL-4H
- for qemu-devel@nongnu.org; Fri, 24 Jan 2025 04:45:09 -0500
+ id 1tbGFN-0003qo-ST
+ for qemu-devel@nongnu.org; Fri, 24 Jan 2025 04:45:07 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1737711907;
+ s=mimecast20190719; t=1737711905;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=2/THGezMiwi4jd00Cw/rtHI0MwkPkicDfVIV0NnRNVM=;
- b=cKrHQxTjOxS7l5IMq43RpzyXixoXbgOyarYyjQM4L/KMkJOpi7kmun/YFWo3E2hb9J0DdW
- S0QYed/N7d+iRFgc6CwMHSoU8/k3zFq3e87fjkLjwj+cyxYhIUzS3BpaovfK5aUVgmGB+2
- LADI+Rw5ncZ5vGS7sUvtCT8RzdQlUOQ=
-Received: from mail-wr1-f70.google.com (mail-wr1-f70.google.com
- [209.85.221.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=+SghbM/NNoU3iHbE0G8WtufvFOtxEQ/VfpTeyiNEP0U=;
+ b=YCKCam1bOJTVJtd+V7uULcla1FWgqF4FxWYqcMoy1QKdKqNu1OJHbo3q7lrAsQnbbIkPWE
+ EqYZdzVgmVmN2kHDgJv9GIcb0ZOo+mgwi9VauPuFIFFrf+TDnizqYT2W/jbbRM7u1oElKC
+ Bp2tBmXa6ZqAwtr8/4aTs2wDYIrUfkE=
+Received: from mail-wr1-f72.google.com (mail-wr1-f72.google.com
+ [209.85.221.72]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-596-0bgactGPOPG3-1s6oVbPTA-1; Fri, 24 Jan 2025 04:45:05 -0500
-X-MC-Unique: 0bgactGPOPG3-1s6oVbPTA-1
-X-Mimecast-MFC-AGG-ID: 0bgactGPOPG3-1s6oVbPTA
-Received: by mail-wr1-f70.google.com with SMTP id
- ffacd0b85a97d-38639b4f19cso1281641f8f.0
- for <qemu-devel@nongnu.org>; Fri, 24 Jan 2025 01:45:05 -0800 (PST)
+ us-mta-651-I2KN4JB9P4SJNTP2ePNPRw-1; Fri, 24 Jan 2025 04:45:03 -0500
+X-MC-Unique: I2KN4JB9P4SJNTP2ePNPRw-1
+X-Mimecast-MFC-AGG-ID: I2KN4JB9P4SJNTP2ePNPRw
+Received: by mail-wr1-f72.google.com with SMTP id
+ ffacd0b85a97d-385fdff9db5so703000f8f.0
+ for <qemu-devel@nongnu.org>; Fri, 24 Jan 2025 01:45:03 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1737711903; x=1738316703;
+ d=1e100.net; s=20230601; t=1737711901; x=1738316701;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=2/THGezMiwi4jd00Cw/rtHI0MwkPkicDfVIV0NnRNVM=;
- b=wBmc834/Y4GkNcIKgt+bct6a+BZXDf8bRn+RIRjwtHKQ0RThVbCrhOgowcK805EUbJ
- KaRU1l55fDi1/vT12O67xzr6LYVhs33wpgfiTRF9wYmGGswXwwJM5gDGCCGGz6tyDY0Z
- VWFr7IWWBTjbBfmhrujIjbsZD0iT7uxUZJaCsHj04e0/SF2GMJZcAu1WegTzNuCH5Zq+
- dCe4ay8zSxqsush055aTTbPK0B8qKUpUHeKvu2UqyT7hfG9IsDbVp8i+IdfuL9QHavSQ
- rKc/DT3ozUpdFMVZWzWKVaH47ALfnusL+kRkTc59+ey+9UNui52IdzmCx+SPsBtIDsK2
- j+iA==
-X-Gm-Message-State: AOJu0YzjzMbcOkstouzE6vkQTRPizBMCc55Ld7ksuqsc22Pl2i2G4Y/J
- 8zoICwTAamyyFrCmDlVWMdBfQ1yckYjPYQVAw7fvTl89QEYxVBrErn7W9i+KOMN0DA2tFwVcfzT
- 20hZ840l5oM0QcC2NSmr3T/gnWUkSJ+TgIY3sJylZuyfAaiJxgIyozGTOGHuU0qr1ZHX/1EK+LI
- YAed08BAOuoAskyBgWeZ5Ryk7rqxaJ5v2itIZ4LVM=
-X-Gm-Gg: ASbGncsCGC9ke7vZyyxT/4hn/QTafmI6S6fGVL2MZBSkuSfEV5BmlGHiCrwoyJK1SY0
- GMCukV5oj2nJgUKxL+DFyNDogrDxmEk+c8z6IwLd6Rm+9d/8wO97wOeMRUKd7hELQR3zlOpr62p
- 4jGLTGR/I1SXvUbVrE4AhNJGgQ6IViou0lHdE9/qAs5LuNABxzRBHwQSHSlolnwtYylJetjgT5q
- gSeZNqJEVg4kIlyl2FnLsO2Y4T9/RwsT6izRbMMIzywr0SPS2gZ6r1eCGbf7yKqfn4jn6ytWg==
-X-Received: by 2002:a05:6000:1786:b0:385:d7f9:f16c with SMTP id
- ffacd0b85a97d-38bf57be11bmr30979858f8f.46.1737711903508; 
- Fri, 24 Jan 2025 01:45:03 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IGlSx1i36sHZuvyoOUw6cTHUCqalxbDDbcjrkFrQhixhiZ62bBgiLTe61yCM/3mfh/fzk0AbQ==
-X-Received: by 2002:a05:6000:1786:b0:385:d7f9:f16c with SMTP id
- ffacd0b85a97d-38bf57be11bmr30979819f8f.46.1737711903057; 
- Fri, 24 Jan 2025 01:45:03 -0800 (PST)
+ bh=+SghbM/NNoU3iHbE0G8WtufvFOtxEQ/VfpTeyiNEP0U=;
+ b=JJCC+TAie0/kY9w6zloZb7JGzXJHxSAsY9TYoYBPpMCuGth5gMT4b2m62d3MXB3Sh5
+ FPA7RuEh9tMyI+LGLaaiG0w0hFXNlaSaDNG1XDygGQWzdhBU3feXrqtkBJqPI53tf1YJ
+ BBEqcbT2+6A4IaXXG/S0ULoBWFAJXabJpNYArrvbg+rLq+0ktr9FlEmggsPQ+DDogosj
+ YLaRz/Ngc0FggwAcJj7AUWaTCHxJgI+dwpk3WxDAzx2vrOc+3KNUq7ZKgF7LwdfOrpSn
+ MZzNhujHNyqzFa/gvCHgIgRAEX3eaGLr0l43kWJXfMoLyMopjvzoeNyage/yNrSAzaAO
+ R8Qg==
+X-Gm-Message-State: AOJu0Yw8MFNiyNVbxh/NMY6cnxwqGRMX7HzaemozDZ1yEIapbGS3o+nR
+ J3UiBXiq27MtfeoxNZN/QUpUdnXChFzNI5dQRvA8XlqLfbRC/Q4ctJIsdQqfNYLonYYEZpSIN79
+ 2YEoxTO/senh51TPQ4/iVOgYgU84A18N0vnUtu7kpJMlXFdtcgM8sswffGqyiXwNaSVBk+GtEK3
+ pgLeWEj1alOq847WSykfRkzRmif2fx77atuWc2Dl4=
+X-Gm-Gg: ASbGncthFJlRiklDTPMflh9dq6iS93SL3kmf3xKvRDfrGe9pAdnYd24zgM2OeUwI5NZ
+ uyPIID975dACLt6PFzDWe7tVLsbiRpVxAbu2mkfjGX51JwZbl1Au6EbFRYX8ku1Hd++xpCt3vhp
+ X3CVCM8eIUqlPJfDndAHUItVw9w1kZXygVR9ZopXCrG3fqrsruy8py699ofPC2/2Nc4hpC44DZq
+ j/n8NK+JqT0TO6fb3TsY4LE21+BOmk6WatqUqSh4rQZFRhh63P5JfkFIqF2F96DNcJrREkS4w==
+X-Received: by 2002:a05:6000:4008:b0:38b:ed1c:a70d with SMTP id
+ ffacd0b85a97d-38bf55c53c8mr25158537f8f.0.1737711901511; 
+ Fri, 24 Jan 2025 01:45:01 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IGP6mTzQ9P75WlOcIRQYeRnExACSQStsulxTNCTTwCfHzLFazt6TftK2eCUAYqFBjkjpCLG8g==
+X-Received: by 2002:a05:6000:4008:b0:38b:ed1c:a70d with SMTP id
+ ffacd0b85a97d-38bf55c53c8mr25158511f8f.0.1737711901074; 
+ Fri, 24 Jan 2025 01:45:01 -0800 (PST)
 Received: from [192.168.10.48] ([151.95.59.125])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-38c2a18867esm2130345f8f.43.2025.01.24.01.45.01
+ ffacd0b85a97d-38c2a188fd0sm2207866f8f.58.2025.01.24.01.44.59
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 24 Jan 2025 01:45:01 -0800 (PST)
+ Fri, 24 Jan 2025 01:45:00 -0800 (PST)
 From: Paolo Bonzini <pbonzini@redhat.com>
 To: qemu-devel@nongnu.org
-Subject: [PULL 09/48] target/i386: make cc_op handling more explicit for
- repeated string instructions.
-Date: Fri, 24 Jan 2025 10:44:03 +0100
-Message-ID: <20250124094442.13207-10-pbonzini@redhat.com>
+Subject: [PULL 08/48] target/i386: fix RF handling for string instructions
+Date: Fri, 24 Jan 2025 10:44:02 +0100
+Message-ID: <20250124094442.13207-9-pbonzini@redhat.com>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250124094442.13207-1-pbonzini@redhat.com>
 References: <20250124094442.13207-1-pbonzini@redhat.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=pbonzini@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -50
 X-Spam_score: -5.1
 X-Spam_bar: -----
 X-Spam_report: (-5.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-2.996,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.043,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -108,74 +107,71 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Since the cost of gen_update_cc_op() must be paid anyway, it's easier
-to place them manually and not rely on spilling that is buried under
-multiple levels of function calls.  While at it, clarify the circumstances
-in which the gen_update_cc_op() is needed, and why it is not for REPxx
-SCAS and REPxx CMPS.
-
-And since cc_op will have been spilled at the point of a fault, just
-make the whole insn CC_OP_DYNAMIC.  Once repz_opt is reintroduced,
-a fault could happen either before or after the first execution of
-CMPS/SCAS, and CC_OP_DYNAMIC sidesteps the complicated matter of what
-x86_restore_state_to_opc would do.
+RF must be set on traps and interrupts from a string instruction,
+except if they occur after the last iteration.  Ensure it is set
+before giving the main loop a chance to execute.
 
 Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
-Link: https://lore.kernel.org/r/20241215090613.89588-9-pbonzini@redhat.com
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Link: https://lore.kernel.org/r/20241215090613.89588-8-pbonzini@redhat.com
 Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 ---
- target/i386/tcg/translate.c | 24 +++++++++++++++++++++---
- 1 file changed, 21 insertions(+), 3 deletions(-)
+ target/i386/tcg/translate.c | 22 +++++++++++++++++++++-
+ 1 file changed, 21 insertions(+), 1 deletion(-)
 
 diff --git a/target/i386/tcg/translate.c b/target/i386/tcg/translate.c
-index 141295742ae..8bc91c3de31 100644
+index 6347de446a4..141295742ae 100644
 --- a/target/i386/tcg/translate.c
 +++ b/target/i386/tcg/translate.c
-@@ -1234,8 +1234,9 @@ static inline void gen_jcc(DisasContext *s, int b, TCGLabel *l1)
-     CCPrepare cc = gen_prepare_cc(s, b, NULL);
- 
-     /*
--     * Note that this must be _after_ gen_prepare_cc, because it
--     * can change the cc_op from CC_OP_DYNAMIC to CC_OP_EFLAGS!
-+     * Note that this must be _after_ gen_prepare_cc, because it can change
-+     * the cc_op to CC_OP_EFLAGS (because it's CC_OP_DYNAMIC or because
-+     * it's cheaper to just compute the flags)!
-      */
-     gen_update_cc_op(s);
-     if (cc.use_reg2) {
-@@ -1346,14 +1347,31 @@ static void do_gen_rep(DisasContext *s, MemOp ot,
-      */
-     s->flags &= ~HF_RF_MASK;
- 
+@@ -1337,6 +1337,14 @@ static void do_gen_rep(DisasContext *s, MemOp ot,
+                        bool is_repz_nz)
+ {
+     TCGLabel *done = gen_new_label();
++    bool had_rf = s->flags & HF_RF_MASK;
++
 +    /*
-+     * For CMPS/SCAS, the CC_OP after a memory fault could come from either
-+     * the previous instruction or the string instruction; but because we
-+     * arrange to keep CC_OP up to date all the time, just mark the whole
-+     * insn as CC_OP_DYNAMIC.
-+     *
-+     * It's not a problem to do this even for instructions that do not
-+     * modify the flags, so do it unconditionally.
++     * Even if EFLAGS.RF was set on entry (such as if we're on the second or
++     * later iteration and an exception or interrupt happened), force gen_eob()
++     * not to clear the flag.  We do that ourselves after the last iteration.
 +     */
-     gen_update_cc_op(s);
-+    tcg_set_insn_start_param(s->base.insn_start, 1, CC_OP_DYNAMIC);
-+
-+    /* Any iteration at all?  */
-     gen_op_jz_ecx(s, done);
++    s->flags &= ~HF_RF_MASK;
  
-     fn(s, ot);
-     gen_op_add_reg_im(s, s->aflag, R_ECX, -1);
-+    gen_update_cc_op(s);
-+
-+    /* Leave if REP condition fails.  */
-     if (is_repz_nz) {
-         int nz = (s->prefix & PREFIX_REPNZ) ? 1 : 0;
--        gen_jcc(s, (JCC_Z << 1) | (nz ^ 1), done);
-+        gen_jcc_noeob(s, (JCC_Z << 1) | (nz ^ 1), done);
-+        /* gen_prepare_eflags_z never changes cc_op.  */
-+	assert(!s->cc_op_dirty);
+     gen_update_cc_op(s);
+     gen_op_jz_ecx(s, done);
+@@ -1348,12 +1356,24 @@ static void do_gen_rep(DisasContext *s, MemOp ot,
+         gen_jcc(s, (JCC_Z << 1) | (nz ^ 1), done);
      }
  
-     /*
++    /*
++     * Traps or interrupts set RF_MASK if they happen after any iteration
++     * but the last.  Set it here before giving the main loop a chance to
++     * execute.  (For faults, seg_helper.c sets the flag as usual).
++     */
++    if (!had_rf) {
++        gen_set_eflags(s, RF_MASK);
++    }
++
+     /* Go to the main loop but reenter the same instruction.  */
+     gen_jmp_rel_csize(s, -cur_insn_len(s), 0);
+ 
+     /* CX/ECX/RCX is zero, or REPZ/REPNZ broke the repetition.  */
+     gen_set_label(done);
+     set_cc_op(s, CC_OP_DYNAMIC);
++    if (had_rf) {
++        gen_reset_eflags(s, RF_MASK);
++    }
+     gen_jmp_rel_csize(s, 0, 1);
+ }
+ 
+@@ -2158,7 +2178,7 @@ gen_eob(DisasContext *s, int mode)
+         gen_set_hflag(s, HF_INHIBIT_IRQ_MASK);
+     }
+ 
+-    if (s->base.tb->flags & HF_RF_MASK) {
++    if (s->flags & HF_RF_MASK) {
+         gen_reset_eflags(s, RF_MASK);
+     }
+     if (mode == DISAS_EOB_RECHECK_TF) {
 -- 
 2.48.1
 
