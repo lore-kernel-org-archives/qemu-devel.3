@@ -4,47 +4,47 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 71A64C0218B
-	for <qemu-devel@archiver.kernel.org>; Fri, 24 Jan 2025 13:47:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 70FA3C02181
+	for <qemu-devel@archiver.kernel.org>; Fri, 24 Jan 2025 13:48:48 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tbJvR-0003CT-Iw; Fri, 24 Jan 2025 08:40:45 -0500
+	id 1tbJuT-0000CD-MA; Fri, 24 Jan 2025 08:39:45 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <xiaoyao.li@intel.com>)
- id 1tbJuv-0001Xa-1x
- for qemu-devel@nongnu.org; Fri, 24 Jan 2025 08:40:16 -0500
+ id 1tbJtc-0006Zi-Lm
+ for qemu-devel@nongnu.org; Fri, 24 Jan 2025 08:38:58 -0500
 Received: from mgamail.intel.com ([198.175.65.13])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <xiaoyao.li@intel.com>)
- id 1tbJus-00042W-4Z
- for qemu-devel@nongnu.org; Fri, 24 Jan 2025 08:40:11 -0500
+ id 1tbJta-00041c-PL
+ for qemu-devel@nongnu.org; Fri, 24 Jan 2025 08:38:52 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1737726011; x=1769262011;
+ t=1737725931; x=1769261931;
  h=from:to:cc:subject:date:message-id:in-reply-to:
  references:mime-version:content-transfer-encoding;
- bh=R7oHs5ceEXGmP8urc22iTrcnB1GDDwG0Hw6Vg6gX3CI=;
- b=gBqg/6/UWy+lz0GDW5Ndzb+69l489t4SA5+0K3qlkbuC1+prj1iAAh9r
- vqR7rkFIRfvgOGcB1av9FJI+SehHLz69Ri6LJASYzN0Yu2gh7foyZg5K9
- 6EJQ8Xf/RjmALSTCboe2hQjIBQGBByQICb/BbBnCvD4KAmSfP74vST14v
- fSqM7+GfCRrp00YTyQbVd4q2D6Ka4DPdJbUWGot/kIp8U6dwmDaDhWrpz
- F9U3GoyfUf3PFqAYIx3rqtou1Ck84RHNN+iR4iJzxCidFrTrLZkuJqU/b
- vYePBC+5PISpH8Au5bdnrao4MQz97Ch7qacvdBl6oGYGmp12Qf+Abvrxg Q==;
-X-CSE-ConnectionGUID: NFhqUiS3QdetSELa485LZA==
-X-CSE-MsgGUID: HzgAtFfZRyqsFP5b0ogmJQ==
-X-IronPort-AV: E=McAfee;i="6700,10204,11325"; a="49246589"
-X-IronPort-AV: E=Sophos;i="6.13,231,1732608000"; d="scan'208";a="49246589"
+ bh=9LeRcYgDvW5lMsehq+j8bbe6PQs/g/hSfE4cA/e4doU=;
+ b=SlivONiI8mh/8f10tDEcIIqmIDJnCeO415Bizw35hX7PocneU9+y6/bp
+ OCwvLAziRFcxFLEQLmNrepPPzQI4g/l6kKDNmP/tLliDfk+PbaKj3tVwp
+ AhEtLZzzbcbG0pq0VlBFl5CA/c3mVKc+L3UUwAK+FgwnjlrhcXCJiRYzr
+ uhTJ18rgGFsUM+mVA8v/20jEs4PS64LPLjk+kereusjE/xNX00sJrJK3H
+ 14/b6Mu87+219pbMv9vcBh2c4Yv/nehUrVGQ/laXlyuSJwGUFznaAMm/8
+ 39ohb4cXMBWbHLlCgN2Hvkem/Wc9lBTdZJh3PL4rPr4y6B3J4BC19yGsh g==;
+X-CSE-ConnectionGUID: TsBYQSndS1auoHWN/gTCdA==
+X-CSE-MsgGUID: yGoK038sSumtSeVB0C8YtA==
+X-IronPort-AV: E=McAfee;i="6700,10204,11325"; a="49246429"
+X-IronPort-AV: E=Sophos;i="6.13,231,1732608000"; d="scan'208";a="49246429"
 Received: from fmviesa003.fm.intel.com ([10.60.135.143])
  by orvoesa105.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 24 Jan 2025 05:39:48 -0800
-X-CSE-ConnectionGUID: s00mDXelRF6zUi7uycCu8A==
-X-CSE-MsgGUID: C0Ay4mYCR+eHJGN2vje7rQ==
+ 24 Jan 2025 05:38:36 -0800
+X-CSE-ConnectionGUID: A65DTX7TRl2FBFd2ClD4QQ==
+X-CSE-MsgGUID: 4nMhs+4ZReudkhpfCqarDQ==
 X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.12,224,1728975600"; d="scan'208";a="111804462"
+X-IronPort-AV: E=Sophos;i="6.12,224,1728975600"; d="scan'208";a="111804321"
 Received: from lxy-clx-4s.sh.intel.com ([10.239.48.52])
- by fmviesa003.fm.intel.com with ESMTP; 24 Jan 2025 05:39:44 -0800
+ by fmviesa003.fm.intel.com with ESMTP; 24 Jan 2025 05:38:32 -0800
 From: Xiaoyao Li <xiaoyao.li@intel.com>
 To: Paolo Bonzini <pbonzini@redhat.com>,
  =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
@@ -57,10 +57,9 @@ Cc: Zhao Liu <zhao1.liu@intel.com>, "Michael S. Tsirkin" <mst@redhat.com>,
  Rick Edgecombe <rick.p.edgecombe@intel.com>,
  Francesco Lavra <francescolavra.fl@gmail.com>, xiaoyao.li@intel.com,
  qemu-devel@nongnu.org, kvm@vger.kernel.org
-Subject: [PATCH v7 44/52] i386/cpu: Move CPUID_XSTATE_XSS_MASK to header file
- and introduce CPUID_XSTATE_MASK
-Date: Fri, 24 Jan 2025 08:20:40 -0500
-Message-Id: <20250124132048.3229049-45-xiaoyao.li@intel.com>
+Subject: [PATCH v7 25/52] i386/tdx: Finalize TDX VM
+Date: Fri, 24 Jan 2025 08:20:21 -0500
+Message-Id: <20250124132048.3229049-26-xiaoyao.li@intel.com>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20250124132048.3229049-1-xiaoyao.li@intel.com>
 References: <20250124132048.3229049-1-xiaoyao.li@intel.com>
@@ -92,44 +91,29 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-They will be used by TDX.
+Invoke KVM_TDX_FINALIZE_VM to finalize the TD's measurement and make
+the TD vCPUs runnable once machine initialization is complete.
 
 Signed-off-by: Xiaoyao Li <xiaoyao.li@intel.com>
+Acked-by: Gerd Hoffmann <kraxel@redhat.com>
 ---
- target/i386/cpu.c | 3 ---
- target/i386/cpu.h | 5 +++++
- 2 files changed, 5 insertions(+), 3 deletions(-)
+ target/i386/kvm/tdx.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/target/i386/cpu.c b/target/i386/cpu.c
-index 4088bf63c48f..f1330627adbb 100644
---- a/target/i386/cpu.c
-+++ b/target/i386/cpu.c
-@@ -1829,9 +1829,6 @@ static const X86RegisterInfo32 x86_reg_info_32[CPU_NB_REGS32] = {
- };
- #undef REGISTER
- 
--/* CPUID feature bits available in XSS */
--#define CPUID_XSTATE_XSS_MASK    (XSTATE_ARCH_LBR_MASK)
--
- ExtSaveArea x86_ext_save_areas[XSAVE_STATE_AREA_COUNT] = {
-     [XSTATE_FP_BIT] = {
-         /* x87 FP state component is always enabled if XSAVE is supported */
-diff --git a/target/i386/cpu.h b/target/i386/cpu.h
-index 4890424c3a9e..a4c0531262ce 100644
---- a/target/i386/cpu.h
-+++ b/target/i386/cpu.h
-@@ -623,6 +623,11 @@ typedef enum X86Seg {
-                                  XSTATE_Hi16_ZMM_MASK | XSTATE_PKRU_MASK | \
-                                  XSTATE_XTILE_CFG_MASK | XSTATE_XTILE_DATA_MASK)
- 
-+/* CPUID feature bits available in XSS */
-+#define CPUID_XSTATE_XSS_MASK    (XSTATE_ARCH_LBR_MASK)
+diff --git a/target/i386/kvm/tdx.c b/target/i386/kvm/tdx.c
+index 99c1664d836b..d7f7f8301ca2 100644
+--- a/target/i386/kvm/tdx.c
++++ b/target/i386/kvm/tdx.c
+@@ -351,6 +351,9 @@ static void tdx_finalize_vm(Notifier *notifier, void *unused)
+      */
+     ram_block = tdx_guest->tdvf_mr->ram_block;
+     ram_block_discard_range(ram_block, 0, ram_block->max_length);
 +
-+#define CPUID_XSTATE_MASK       (CPUID_XSTATE_XCR0_MASK | CPUID_XSTATE_XSS_MASK)
-+
- /* CPUID feature words */
- typedef enum FeatureWord {
-     FEAT_1_EDX,         /* CPUID[1].EDX */
++    tdx_vm_ioctl(KVM_TDX_FINALIZE_VM, 0, NULL, &error_fatal);
++    CONFIDENTIAL_GUEST_SUPPORT(tdx_guest)->ready = true;
+ }
+ 
+ static Notifier tdx_machine_done_notify = {
 -- 
 2.34.1
 
