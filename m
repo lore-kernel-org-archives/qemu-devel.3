@@ -4,88 +4,88 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D9FD7C02181
-	for <qemu-devel@archiver.kernel.org>; Fri, 24 Jan 2025 08:32:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 01AEEC02181
+	for <qemu-devel@archiver.kernel.org>; Fri, 24 Jan 2025 08:38:03 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tbF64-0005L5-59; Fri, 24 Jan 2025 03:31:24 -0500
+	id 1tbFBn-0007nv-Le; Fri, 24 Jan 2025 03:37:19 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1tbF61-0005JG-25
- for qemu-devel@nongnu.org; Fri, 24 Jan 2025 03:31:21 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1tbFBm-0007nC-6O
+ for qemu-devel@nongnu.org; Fri, 24 Jan 2025 03:37:18 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1tbF5y-0003CS-8M
- for qemu-devel@nongnu.org; Fri, 24 Jan 2025 03:31:20 -0500
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1tbFBk-00044W-31
+ for qemu-devel@nongnu.org; Fri, 24 Jan 2025 03:37:17 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1737707475;
+ s=mimecast20190719; t=1737707834;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=Ja2YEtYfegNBfk+N5lKXoAbuJe9KVtuC1iQhOhtaiCI=;
- b=Ip9I4bqwavJUlrno33u9lUYwHOgDaGhlQ7zwZCFuyAU9GCRLGm0ipeu5uaNifYOrS5VrIj
- qFYHxkMhELmp4+3gXQDp4AiSlyb1N2z466kdBEIu0RgsVHsNumjA9P5PctSfLYvrUf9xkK
- AxkpJjIeBaGT4AZGE/WuUn7jnEB0UGQ=
+ bh=DYKSjl956xdlwTAokpbefqJ/LiVAddWW87QGsX7x6QI=;
+ b=M/BZbuGujXK7VL89sNU9CKUr7EZUqM2yF6h02Dg3Thnljb6E95MJXjzeffQ+EfHaDLYWDM
+ jMfSj5C822I3n4AHIw9rmRi9DArHdW2/s8S7D1dIlLr6+RelCWUfFWOZAOaz4PjkCCCHPl
+ /Sv7H/KM+EqqePTht/H7iKIMthogzu8=
 Received: from mail-wm1-f72.google.com (mail-wm1-f72.google.com
  [209.85.128.72]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-578-4tBCT36QOpOFz1lGnxNw2g-1; Fri, 24 Jan 2025 03:31:13 -0500
-X-MC-Unique: 4tBCT36QOpOFz1lGnxNw2g-1
-X-Mimecast-MFC-AGG-ID: 4tBCT36QOpOFz1lGnxNw2g
+ us-mta-31-UfF1zHJxPWK1d7PpWVcVvw-1; Fri, 24 Jan 2025 03:37:12 -0500
+X-MC-Unique: UfF1zHJxPWK1d7PpWVcVvw-1
+X-Mimecast-MFC-AGG-ID: UfF1zHJxPWK1d7PpWVcVvw
 Received: by mail-wm1-f72.google.com with SMTP id
- 5b1f17b1804b1-4359206e1e4so12851245e9.2
- for <qemu-devel@nongnu.org>; Fri, 24 Jan 2025 00:31:13 -0800 (PST)
+ 5b1f17b1804b1-4362552ce62so8513185e9.0
+ for <qemu-devel@nongnu.org>; Fri, 24 Jan 2025 00:37:12 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1737707472; x=1738312272;
+ d=1e100.net; s=20230601; t=1737707831; x=1738312631;
  h=content-transfer-encoding:in-reply-to:autocrypt:from
  :content-language:references:cc:to:subject:user-agent:mime-version
  :date:message-id:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to;
- bh=Ja2YEtYfegNBfk+N5lKXoAbuJe9KVtuC1iQhOhtaiCI=;
- b=GtSfVHGGxg+ArABDo4CCOxAGxB6+J63roYFhiFR2tJzowzXSCQIiGZya4TRXpBk2nV
- 9c0nYYsqkDzU1vjUUInzNQa2c6gy04zqf92t78dR6+GEscDWwsfUq8rBnjzrUY4vMecX
- e7dz3oxH4+zXrDEdjFFra7FAv4H35DMN/B7ogEEW1oGOzB8T6QrONWenOKrE7AYTNUlo
- di4nEXgu8zAzCAOXlP9UDj1xq4H7il8DPLOb+s2UVw+YTolFFLp7vLafS64AYA2vgFfA
- G9ClETb9etnn8WUrZyObAyqTvUcec4IsChoeIZNF+5W+mPPxaPlFldSwmmuIaXyEdkCE
- Xz8g==
+ bh=DYKSjl956xdlwTAokpbefqJ/LiVAddWW87QGsX7x6QI=;
+ b=bABQSa1bCqQ/QfObIE7xip5WY7EqafXtOYghrzixSrXSB6TvVgppkeJX1uRsvY/KCk
+ TmALdQsCyDGTm0F0E9A1fHi1eTK9NkV8TNYA/YuSqmOAiWPugmfiP/BRzPjFKaH34q5P
+ zdV+Yn3d8TfYR4Xzrz7lI9CF6tTKeW83pnKX3ss+GvKcT/Nmd7U1NpYIa9cw49t7CO4P
+ ZVck9rIUWo2cLMpYq5ZTfcK7lGkyj8IqrWG8LewkiygidGsjxHH8LXpb91EoHV24t2UW
+ gDB3IUQrwnEVBns6+mUQ+hwtMF+X4QKGUUrb7JovmvDjqe0KnJmfCbfabU2zCoiJwRhs
+ zMDQ==
 X-Forwarded-Encrypted: i=1;
- AJvYcCURdzKaWXEoBPxU7MVwu2g2WNoGBAZhEJLg2z1qu1fe2Y2jNlbBkVKKS0d40E9KCcG0PHjK6LCYP/7+@nongnu.org
-X-Gm-Message-State: AOJu0YyOKWQGLqbJUoeC/IQqdV+is1vllVa0NM69JVPP60qLkIcY1iHO
- SwUPPBrK3guMiX6wHPOhKeasgTkq6a9gumWn+fT9Ha5fUbzuB10qVO+3K/u8oye2zljuukUOx6s
- MqrT4N6nEv3CQUMEr+bgCvoOR1ygGN7m4i+irEq2kKvftP2c1tuxp
-X-Gm-Gg: ASbGncuMvksQs7tK9LaWv38a9gh8EtbO5XOvdBVVguEqf441Q3w7YbFS7TwbsC4SzUF
- vtAKlWqClBMFAT8KMgIUzKPx6Q1MkXk9VnBqbJKxn3XhHg/l28jBm/leOnR3m5nrIWTGUaIO6cp
- pX8k2kYFEu2q+CB8ImYXQccLD2vAtVr8Fq5FDzYWqkZ67ge61QvcdPYfz/dIG62Nzjxiqr1oiSG
- fyKygIfJdHVXkBi/3iD7kel2xShZpmcIADsBMYjwVLfTCBM3uJXW69ewBC9GqIX6DznZzLupvKn
- c3swxIEcZzWvggtwOWYWtQzcLst7Lzhh
-X-Received: by 2002:a05:600c:3d96:b0:434:a26c:8291 with SMTP id
- 5b1f17b1804b1-4389143b5dbmr254362935e9.24.1737707471964; 
- Fri, 24 Jan 2025 00:31:11 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IG5VW3dfhM+LNeKHKzItLwuol1tFBZ1byVfw+JsQdNzMdVYNx5/Irmcymc8vsezRj49Xc4Hqg==
-X-Received: by 2002:a05:600c:3d96:b0:434:a26c:8291 with SMTP id
- 5b1f17b1804b1-4389143b5dbmr254362615e9.24.1737707471615; 
- Fri, 24 Jan 2025 00:31:11 -0800 (PST)
+ AJvYcCVnsD0Qua/weORtMAHeWxVzWz6oNJx8n2bUBL19wHmS5K3108Xaty9hHUYF1Z0EgRDmDZ7jJI/VmsJf@nongnu.org
+X-Gm-Message-State: AOJu0Yyu17ZFm+c75GSDau+lz8UJwAoFdfsx6AyG/XAmoeepS7f5P23i
+ pMZ1AXnx7fg1effemOPwTF0gwqvIed/VFT8bEwY8j0ul9mr+dFeLgXghSs/X9EBTj5Hm3ui1Ifv
+ fL+i/ubZqykreO+Q+M6zal3Pfg79xaR5e47eyeOVttrrzdgyhtZfK
+X-Gm-Gg: ASbGncs7dUVEd+BcN2ZiWi6dRZAAEPA4Lz6rNHJCupbV9z/xUUz6WaVtFABysmXrEjk
+ 9nipWDWn9FcY98c6Fa2AfBWed1SkVPkfRsjLatUtBez/DBRMAgOVfdo6WaSMatQBlDEREcwDbCb
+ l0a1JxMSrhFgpHUtL5t90lGow7MmBivhDXOG9DsYAD/GXFDMaZUpLiQfzCKbc/Td4ArlX6W1oJl
+ ZYrBl3DtLT5B1oNDOJDMHzxCvuF28DS23e5aeMYgs4Fgo5R3+r088RjDFj0SLUpZEO268jm6aKr
+ 5MuOkOQzMcoiA4ihnD5gf1sWOB1bmOAT
+X-Received: by 2002:a05:600c:4e08:b0:435:136:75f6 with SMTP id
+ 5b1f17b1804b1-438912d5426mr317545345e9.0.1737707831617; 
+ Fri, 24 Jan 2025 00:37:11 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IGnvSNNmkrQg9mktXUpOQYjfvL0t7E4RxW1pgSH4ekJFaDZtqX3NWfKHXACbPLG0wKRU3yIyQ==
+X-Received: by 2002:a05:600c:4e08:b0:435:136:75f6 with SMTP id
+ 5b1f17b1804b1-438912d5426mr317545085e9.0.1737707831246; 
+ Fri, 24 Jan 2025 00:37:11 -0800 (PST)
 Received: from ?IPV6:2a01:e0a:280:24f0:9db0:474c:ff43:9f5c?
  ([2a01:e0a:280:24f0:9db0:474c:ff43:9f5c])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-438bd57325csm18168385e9.34.2025.01.24.00.31.09
+ 5b1f17b1804b1-438bd48a145sm19029625e9.16.2025.01.24.00.37.10
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 24 Jan 2025 00:31:10 -0800 (PST)
-Message-ID: <2308a2a6-e2b0-4e16-a3fe-089ce7824239@redhat.com>
-Date: Fri, 24 Jan 2025 09:31:09 +0100
+ Fri, 24 Jan 2025 00:37:10 -0800 (PST)
+Message-ID: <25ef744b-16f4-4a07-a8a0-cba3fc537cea@redhat.com>
+Date: Fri, 24 Jan 2025 09:37:10 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v1 2/5] hw/vfio/ap: notification handler for AP config
- changed event
+Subject: Re: [PATCH v1 3/5] hw/vfio/ap: store object indicating AP config
+ changed in a queue
 To: Rorie Reyes <rreyes@linux.ibm.com>, qemu-devel@nongnu.org,
  qemu-s390x@nongnu.org
 Cc: pbonzini@redhat.com, cohuck@redhat.com, pasic@linux.ibm.com,
  jjherne@linux.ibm.com, borntraeger@linux.ibm.com,
  alex.williamson@redhat.com, thuth@redhat.com, akrowiak@linux.ibm.com
 References: <20250107184354.91079-1-rreyes@linux.ibm.com>
- <20250107184354.91079-3-rreyes@linux.ibm.com>
+ <20250107184354.91079-4-rreyes@linux.ibm.com>
 Content-Language: en-US, fr
 From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
 Autocrypt: addr=clg@redhat.com; keydata=
@@ -131,19 +131,19 @@ Autocrypt: addr=clg@redhat.com; keydata=
  HQoPn9qrDJgsgcbBVc1gkUT6hnxShKPp4PlsZVMNjvPAnr5TEBgHkk54HQRhhwcYv1T2QumQ
  izDiU6iOrUzBThaMhZO3i927SG2DwWDVzZltKrCMD1aMPvb3NU8FOYRhNmIFR3fcalYr+9gD
  uVKe8BVz4atMOoktmt0GWTOC8P4=
-In-Reply-To: <20250107184354.91079-3-rreyes@linux.ibm.com>
+In-Reply-To: <20250107184354.91079-4-rreyes@linux.ibm.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=clg@redhat.com;
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=clg@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -50
 X-Spam_score: -5.1
 X-Spam_bar: -----
 X-Spam_report: (-5.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-2.996,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.043,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -160,97 +160,60 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 1/7/25 19:43, Rorie Reyes wrote:
-> Register an event notifier handler to process AP configuration
-> change events by queuing the event and generating a CRW to let
-> the guest know its AP configuration has changed
+> Creates an object indicating that an AP configuration change event
+> has been received and stores it in a queue. These objects will later
+> be used to store event information for an AP configuration change
+> when the CHSC instruction is intercepted.
 > 
 > Signed-off-by: Rorie Reyes <rreyes@linux.ibm.com>
 > Reviewed-by: Anthony Krowiak <akrowiak@linux.ibm.com>
 > Tested-by: Anthony Krowiak <akrowiak@linux.ibm.com>
 > ---
->   hw/vfio/ap.c | 27 +++++++++++++++++++++++++++
->   1 file changed, 27 insertions(+)
+>   hw/vfio/ap.c | 10 ++++++++++
+>   1 file changed, 10 insertions(+)
 > 
 > diff --git a/hw/vfio/ap.c b/hw/vfio/ap.c
-> index 30b08ad375..533cadb2dd 100644
+> index 533cadb2dd..508c6eed7a 100644
 > --- a/hw/vfio/ap.c
 > +++ b/hw/vfio/ap.c
-> @@ -18,6 +18,7 @@
->   #include "hw/vfio/vfio-common.h"
->   #include "system/iommufd.h"
->   #include "hw/s390x/ap-device.h"
-> +#include "hw/s390x/css.h"
->   #include "qemu/error-report.h"
->   #include "qemu/event_notifier.h"
->   #include "qemu/main-loop.h"
-> @@ -37,6 +38,7 @@ struct VFIOAPDevice {
->       APDevice apdev;
->       VFIODevice vdev;
->       EventNotifier req_notifier;
-> +    EventNotifier cfg_notifier;
+> @@ -41,6 +41,13 @@ struct VFIOAPDevice {
+>       EventNotifier cfg_notifier;
 >   };
 >   
->   OBJECT_DECLARE_SIMPLE_TYPE(VFIOAPDevice, VFIO_AP_DEVICE)
-> @@ -70,6 +72,18 @@ static void vfio_ap_req_notifier_handler(void *opaque)
->       }
->   }
->   
-> +static void vfio_ap_cfg_chg_notifier_handler(void *opaque)
-> +{
-> +    VFIOAPDevice *vapdev = opaque;
+> +typedef struct APConfigChgEvent {
+> +    QTAILQ_ENTRY(APConfigChgEvent) next;
+> +} APConfigChgEvent;
 > +
-> +    if (!event_notifier_test_and_clear(&vapdev->cfg_notifier)) {
-> +        warn_report("Event notifier not initialized");
+> +QTAILQ_HEAD(, APConfigChgEvent) cfg_chg_events =
+> +    QTAILQ_HEAD_INITIALIZER(cfg_chg_events);
+> +
+>   OBJECT_DECLARE_SIMPLE_TYPE(VFIOAPDevice, VFIO_AP_DEVICE)
+>   
+>   static void vfio_ap_compute_needs_reset(VFIODevice *vdev)
+> @@ -76,6 +83,9 @@ static void vfio_ap_cfg_chg_notifier_handler(void *opaque)
+>   {
+>       VFIOAPDevice *vapdev = opaque;
+> 
 
-I don't think this warning is needed. May be reverse the logic :
+Extra white line ^
 
-     if (event_notifier_test_and_clear(&vapdev->cfg_notifier)) {
-         css_generate_css_crws(0);
-     }
+> +    APConfigChgEvent *new_event = g_new0(APConfigChgEvent, 1);
 
+minor comment :
+
+I would use the same variable name for APConfigChgEvent in this patch
+and following. Easier to read. So, rename 'new_event' to 'cfg_chg_event'
+or 'event'.
 
 Thanks,
 
 C.
 
 
-
-> +        return;
-> +    }
 > +
-> +    css_generate_css_crws(0);
-> +}
-> +
->   static bool vfio_ap_register_irq_notifier(VFIOAPDevice *vapdev,
->                                             unsigned int irq, Error **errp)
->   {
-> @@ -85,6 +99,10 @@ static bool vfio_ap_register_irq_notifier(VFIOAPDevice *vapdev,
->           notifier = &vapdev->req_notifier;
->           fd_read = vfio_ap_req_notifier_handler;
->           break;
-> +    case VFIO_AP_CFG_CHG_IRQ_INDEX:
-> +        notifier = &vapdev->cfg_notifier;
-> +        fd_read = vfio_ap_cfg_chg_notifier_handler;
-> +        break;
->       default:
->           error_setg(errp, "vfio: Unsupported device irq(%d)", irq);
->           return false;
->
-> @@ -175,6 +193,15 @@ static void vfio_ap_realize(DeviceState *dev, Error **errp)
->           warn_report_err(err);
->       }
->   
-> +    if (!vfio_ap_register_irq_notifier(vapdev, VFIO_AP_CFG_CHG_IRQ_INDEX, &err))
-> +    {
-> +        /*
-> +         * Report this error, but do not make it a failing condition.
-> +         * Lack of this IRQ in the host does not prevent normal operation.
-> +         */
-> +        warn_report_err(err);
-> +    }
-> +
->       return;
->   
->   error:
+> +    QTAILQ_INSERT_TAIL(&cfg_chg_events, new_event, next);
+>       if (!event_notifier_test_and_clear(&vapdev->cfg_notifier)) {
+>           warn_report("Event notifier not initialized");
+>           return;
 
 
