@@ -4,20 +4,20 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3154AC0218B
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1832BC02182
 	for <qemu-devel@archiver.kernel.org>; Fri, 24 Jan 2025 03:04:09 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tb9yI-0000ut-Ei; Thu, 23 Jan 2025 22:03:02 -0500
+	id 1tb9yL-0000vk-AX; Thu, 23 Jan 2025 22:03:05 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jamin_lin@aspeedtech.com>)
- id 1tb9yE-0000to-Vk; Thu, 23 Jan 2025 22:02:59 -0500
+ id 1tb9yJ-0000uw-53; Thu, 23 Jan 2025 22:03:03 -0500
 Received: from mail.aspeedtech.com ([211.20.114.72] helo=TWMBX01.aspeed.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jamin_lin@aspeedtech.com>)
- id 1tb9yC-0007tm-Tw; Thu, 23 Jan 2025 22:02:58 -0500
+ id 1tb9yH-0007tm-PN; Thu, 23 Jan 2025 22:03:02 -0500
 Received: from TWMBX01.aspeed.com (192.168.0.62) by TWMBX01.aspeed.com
  (192.168.0.62) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1258.12; Fri, 24 Jan
@@ -31,11 +31,14 @@ To: =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@kaod.org>, Peter Maydell
  Stanley" <joel@jms.id.au>, "open list:ASPEED BMCs" <qemu-arm@nongnu.org>,
  "open list:All patches CC here" <qemu-devel@nongnu.org>
 CC: <jamin_lin@aspeedtech.com>, <troy_lee@aspeedtech.com>,
- <yunlin.tang@aspeedtech.com>
-Subject: [PATCH v2 0/2] wdt/aspeed: Support software reset mode for AST2600
-Date: Fri, 24 Jan 2025 11:02:47 +0800
-Message-ID: <20250124030249.1706996-1-jamin_lin@aspeedtech.com>
+ <yunlin.tang@aspeedtech.com>, =?UTF-8?q?C=C3=A9dric=20Le=20Goater?=
+ <clg@redhat.com>
+Subject: [PATCH v2 2/2] aspeed/wdt: Support software reset mode for AST2600
+Date: Fri, 24 Jan 2025 11:02:49 +0800
+Message-ID: <20250124030249.1706996-3-jamin_lin@aspeedtech.com>
 X-Mailer: git-send-email 2.25.1
+In-Reply-To: <20250124030249.1706996-1-jamin_lin@aspeedtech.com>
+References: <20250124030249.1706996-1-jamin_lin@aspeedtech.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: 8bit
@@ -64,18 +67,71 @@ From:  Jamin Lin via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-v1:
-  Support software reset mode for AST2600
-v2:
-  Change to validate WDT_CTRL_RESET_MODE_SOC
+On the AST2400 and AST2500 platforms, the system can only be reset by enabling
+the WDT (Watchdog Timer) and waiting for the WDT timeout. However, starting
+from the AST2600 platform, the reset event can be triggered directly and
+intentionally by software, without relying on the WDT timeout.
 
-Jamin Lin (2):
-  aspeed/wdt: Fix coding style
-  aspeed/wdt: Support software reset mode for AST2600
+This mechanism, referred to as "software restart", is implemented in hardware.
+When using the software restart mechanism, the WDT counter is not enabled.
 
- hw/watchdog/wdt_aspeed.c | 19 +++++++++++++++++--
- 1 file changed, 17 insertions(+), 2 deletions(-)
+To trigger a reset generation in software mode, write 0xAEEDF123 to register
+0x24 and software mode reset only support SOC reset mode.
 
+A new function, "aspeed_wdt_is_soc_reset_mode", is introduced to determine
+whether the SoC reset mode is active.
+
+Signed-off-by: Jamin Lin <jamin_lin@aspeedtech.com>
+Reviewed-by: Cédric Le Goater <clg@redhat.com>
+---
+ hw/watchdog/wdt_aspeed.c | 16 +++++++++++++++-
+ 1 file changed, 15 insertions(+), 1 deletion(-)
+
+diff --git a/hw/watchdog/wdt_aspeed.c b/hw/watchdog/wdt_aspeed.c
+index 22e94e7b9c..d94b83c109 100644
+--- a/hw/watchdog/wdt_aspeed.c
++++ b/hw/watchdog/wdt_aspeed.c
+@@ -51,11 +51,20 @@
+ #define WDT_TIMEOUT_CLEAR               (0x14 / 4)
+ 
+ #define WDT_RESTART_MAGIC               0x4755
++#define WDT_SW_RESET_ENABLE             0xAEEDF123
+ 
+ #define AST2600_SCU_RESET_CONTROL1      (0x40 / 4)
+ #define SCU_RESET_CONTROL1              (0x04 / 4)
+ #define    SCU_RESET_SDRAM              BIT(0)
+ 
++static bool aspeed_wdt_is_soc_reset_mode(const AspeedWDTState *s)
++{
++    uint32_t mode;
++
++    mode = extract32(s->regs[WDT_CTRL], 5, 2);
++    return (mode == WDT_CTRL_RESET_MODE_SOC);
++}
++
+ static bool aspeed_wdt_is_enabled(const AspeedWDTState *s)
+ {
+     return s->regs[WDT_CTRL] & WDT_CTRL_ENABLE;
+@@ -199,13 +208,18 @@ static void aspeed_wdt_write(void *opaque, hwaddr offset, uint64_t data,
+     case WDT_TIMEOUT_STATUS:
+     case WDT_TIMEOUT_CLEAR:
+     case WDT_RESET_MASK2:
+-    case WDT_SW_RESET_CTRL:
+     case WDT_SW_RESET_MASK1:
+     case WDT_SW_RESET_MASK2:
+         qemu_log_mask(LOG_UNIMP,
+                       "%s: uninmplemented write at offset 0x%" HWADDR_PRIx "\n",
+                       __func__, offset);
+         break;
++    case WDT_SW_RESET_CTRL:
++        if (aspeed_wdt_is_soc_reset_mode(s) &&
++            (data == WDT_SW_RESET_ENABLE)) {
++            watchdog_perform_action();
++        }
++        break;
+     default:
+         qemu_log_mask(LOG_GUEST_ERROR,
+                       "%s: Out-of-bounds write at offset 0x%" HWADDR_PRIx "\n",
 -- 
 2.34.1
 
