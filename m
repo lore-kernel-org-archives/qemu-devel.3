@@ -4,92 +4,92 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E09EDC02181
-	for <qemu-devel@archiver.kernel.org>; Fri, 24 Jan 2025 09:52:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D7117C02181
+	for <qemu-devel@archiver.kernel.org>; Fri, 24 Jan 2025 09:52:30 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tbGIH-0005q3-4V; Fri, 24 Jan 2025 04:48:06 -0500
+	id 1tbGFi-0006tM-8J; Fri, 24 Jan 2025 04:45:26 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1tbGGH-0007cP-ME
- for qemu-devel@nongnu.org; Fri, 24 Jan 2025 04:46:02 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ id 1tbGFe-0006pE-79
+ for qemu-devel@nongnu.org; Fri, 24 Jan 2025 04:45:22 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1tbGGE-0003xU-Fs
- for qemu-devel@nongnu.org; Fri, 24 Jan 2025 04:46:01 -0500
+ id 1tbGFc-0003t6-MK
+ for qemu-devel@nongnu.org; Fri, 24 Jan 2025 04:45:21 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1737711956;
+ s=mimecast20190719; t=1737711920;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:mime-version:mime-version:
+ to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=cNWd0azXgUd9sSMT4kGbMLXTGKtKYehwsaTDvX4Hyhc=;
- b=IyruKMr3g2g1OHc8Q/z/VK9iWbdJuZ0ijjB5yzfYqdSdw1XIDhvUh0DVuWKKC71BmWSl9j
- l1hIDwHYqUAYONgI/OybYhytSKPyUroDUCbEiq2kJfQ7flPu2kz1WJS6FjutODhCCqpEZu
- NH5lbVzjskag6Dz7K/oHN53dvQRuk4E=
-Received: from mail-wr1-f70.google.com (mail-wr1-f70.google.com
- [209.85.221.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=RD+mEfAdDUkodwsyNQ6ua+15ZST6/FVUt+cz1H6YqK8=;
+ b=I4pek+epbOPb/JPCQ19AYus3pBUs3Xw1HMVUDIkcplJBng5ZkSHl9OEJdzwy1XpeXaFH7N
+ IHYNgfmnhgp6I4l3YMDpPNevUbqeCK/BwIvycdQxvvvk9TmFqolNHduU2j/+wiOY1PprgA
+ zNWCBEmudygNRR9HlehuPTMJsdSu4QQ=
+Received: from mail-wr1-f71.google.com (mail-wr1-f71.google.com
+ [209.85.221.71]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-278-B_XD4nRSOWGQw8ScdCxHGQ-1; Fri, 24 Jan 2025 04:45:54 -0500
-X-MC-Unique: B_XD4nRSOWGQw8ScdCxHGQ-1
-X-Mimecast-MFC-AGG-ID: B_XD4nRSOWGQw8ScdCxHGQ
-Received: by mail-wr1-f70.google.com with SMTP id
- ffacd0b85a97d-38bf4913659so1541615f8f.1
- for <qemu-devel@nongnu.org>; Fri, 24 Jan 2025 01:45:54 -0800 (PST)
+ us-mta-1-_23GfbwJN1eoTBd-JrSn5g-1; Fri, 24 Jan 2025 04:45:18 -0500
+X-MC-Unique: _23GfbwJN1eoTBd-JrSn5g-1
+X-Mimecast-MFC-AGG-ID: _23GfbwJN1eoTBd-JrSn5g
+Received: by mail-wr1-f71.google.com with SMTP id
+ ffacd0b85a97d-385d80576abso1182532f8f.3
+ for <qemu-devel@nongnu.org>; Fri, 24 Jan 2025 01:45:18 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1737711952; x=1738316752;
+ d=1e100.net; s=20230601; t=1737711916; x=1738316716;
  h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=cNWd0azXgUd9sSMT4kGbMLXTGKtKYehwsaTDvX4Hyhc=;
- b=QZ9M4vin/s/wG+KixS3VEZDBe5IF7NzVFrayq0y0QO2daOsXdL/f0yLRImWwimY/NR
- kK8L0RrjW5uZmTPqj4RfR+LAxsA53qDbtNS408koo3QHo1zb7ha/zUN3auiZFvYi6l/W
- +b8W8VsRSXNc40lc991pqyUSVJcSqNub5dIzq7GA3vLoLwEUqOBWrdaNiEZxtRfqiqpY
- VqMSQNwl/CMqMCHqbIbqD7GQNLOJJtDsJWTbB29CY3u9+8Ik80BV8WhYeN300fD1gnyA
- h1bsPDDwO/LPgACqbXfHzeB0G53YoOJoCI9/BCxYPic3HXa3nKJIDGn+UWKdSOr5AffE
- 0f+Q==
-X-Gm-Message-State: AOJu0YyAA4acY/2iuaxHhY/Y5h4OD+zxG+2US3eDfk4M2wVF3z2Sytan
- mqJdWKJ72a04tNevdIJiv2XokrpbHwEGbL4TEi1lv4L4OoBnIjnNFnCqtr8z0KQfrRhUZ11hM+8
- 9E5sQJGlc54EBOUnq1x9YPYZC7LSzQj/lZ/tlftzFP8D84Gu641udG5U+R6mJNauu68iYNV4N07
- NkKVXbPSKJpKrsVvcenpL9/PneBqLNifuSGkEh3aY=
-X-Gm-Gg: ASbGnctb2HiIa3PRmfGGNY27Srqji4qJS2o2d2zvu5PYI0epJ93DUTBGqKTcDrPSNla
- xiCZmKdYkcpKVYRI9j8uKpQqRU04ZraDpjYHP0kOS2VsIWXkt+GMp4x1yqj8aY+Dr0NgcaKzMNq
- +C7PHukyvW+ZY5VJIRDSAUsfhbd9bcBKu9DAACDQ6ftxzEvTPWKJducyWmfFFVpj9N9WyZew/qc
- HuJIgcSgCvIWZHNimJy6DZvLOWJjb4OPk20SwPH42Ue9p0WwIELfzIq0+puZ5OL4mfVqMQaFw==
-X-Received: by 2002:a5d:64eb:0:b0:385:df4e:3645 with SMTP id
- ffacd0b85a97d-38bf59ecb69mr29263172f8f.50.1737711952285; 
- Fri, 24 Jan 2025 01:45:52 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IHug1mOEp4gPWlIm6m1dTVjvGq2gbv8pGjETnDCeokDkOefOv1bCruhmO9I4PHzf4Hy1nyZCQ==
-X-Received: by 2002:a5d:64eb:0:b0:385:df4e:3645 with SMTP id
- ffacd0b85a97d-38bf59ecb69mr29263126f8f.50.1737711951656; 
- Fri, 24 Jan 2025 01:45:51 -0800 (PST)
+ bh=RD+mEfAdDUkodwsyNQ6ua+15ZST6/FVUt+cz1H6YqK8=;
+ b=ob09QV00Dx5kEcU81s4lfHduH7v5LTNWbPzqxzRMO4sNiAE/lStQFTRGDBNwB7i1Kl
+ f5aqPLBQQ3rhN46CEnr1Ly9ozK72/hyR0s+dg0jU3xW2SeGrErX1PHUTuX6u656QP5Dz
+ 6w6TslAh4KVuQRLIobCIfKYp0/uTRzvl1tA+ZVwY4AtdKWCGoD/ChAiBSln7oan0DtHD
+ ZMrk3xWZfq1bjjsatvTzzv2K2kDYLRHYJlQOKf9Os0H8LeBZCxG0rnayRIH6aYaX0IaH
+ xTyoTXMlt0M6KuYvnXLmpN3ChQ2g+xANoCgRlnULnJRfhnMtNZVpcLoKkZQ+WU5MPPYf
+ U+Aw==
+X-Gm-Message-State: AOJu0YxrCKI0bVVkM5EM6v9zFovpamKe8EyFYDhzaxNT4e36Aq6E7bVh
+ GflYS5viZbmHZTdLvOXjjbxa5zf5lKrvX4JwzzBlrgpiy8B0EdBXxU+88MKRUU1tnXrQzrzzMBX
+ 4j1EZHCU/5bdyxClaBCX+J55gW8vbMVabI1FcWN2rw5hLfQz9xvQEDZT5wp1mrsr/xJL8N0RjUM
+ kI/gZXSWfRcZaR1JpV+xEl06EY3twRTGGWVH4bPpg=
+X-Gm-Gg: ASbGncsurzybJ/Hrc9E7X6O3YkgwqAnmH5RxZWx6lf6fkbbnw309xL7P4Y7NyFZa1Fe
+ meblVOwnfOsqxA0ezt7Cun0UNLHi3y7sVSl1MLxnwnV9PQMOD1SWXUOT+mCRzsI3AhYzZZ2iOHy
+ YT2esD3lMFFoIlrIUXTYEfsKMyduWX7GQl+gNXZWQGXROcWSnirQG7AL64CshdQD2ivR450NYZ4
+ OTutFx0TGJW/ydJXZKeBML4cz0mivtT4clXb2B4vgXbindWtICQxv84KohNcdblbIMapqcVyQ==
+X-Received: by 2002:adf:f48c:0:b0:385:f996:1b8e with SMTP id
+ ffacd0b85a97d-38bf5659a94mr23984758f8f.16.1737711916528; 
+ Fri, 24 Jan 2025 01:45:16 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IEdQpy974WgGHbEVD5uPHNT71/Z2lx0UkA0QVHLx9JQ7VIITD7kh44vZLFUj5DR0Zb4ZprZCQ==
+X-Received: by 2002:adf:f48c:0:b0:385:f996:1b8e with SMTP id
+ ffacd0b85a97d-38bf5659a94mr23984729f8f.16.1737711916116; 
+ Fri, 24 Jan 2025 01:45:16 -0800 (PST)
 Received: from [192.168.10.48] ([151.95.59.125])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-38c2a1885besm2138844f8f.49.2025.01.24.01.45.50
- for <qemu-devel@nongnu.org>
+ ffacd0b85a97d-38c2a1bb0d4sm2213554f8f.69.2025.01.24.01.45.15
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 24 Jan 2025 01:45:50 -0800 (PST)
+ Fri, 24 Jan 2025 01:45:15 -0800 (PST)
 From: Paolo Bonzini <pbonzini@redhat.com>
 To: qemu-devel@nongnu.org
-Subject: [PULL 33/48] rust: vmstate: remove translation of C vmstate macros
-Date: Fri, 24 Jan 2025 10:44:27 +0100
-Message-ID: <20250124094442.13207-34-pbonzini@redhat.com>
+Cc: Tao Su <tao1.su@linux.intel.com>
+Subject: [PULL 17/48] target/i386: Export BHI_NO bit to guests
+Date: Fri, 24 Jan 2025 10:44:11 +0100
+Message-ID: <20250124094442.13207-18-pbonzini@redhat.com>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250124094442.13207-1-pbonzini@redhat.com>
 References: <20250124094442.13207-1-pbonzini@redhat.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=pbonzini@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -50
 X-Spam_score: -5.1
 X-Spam_bar: -----
 X-Spam_report: (-5.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-2.996,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.043,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -107,325 +107,38 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Keep vmstate_clock!; because it uses a field of type VMStateDescription,
-it cannot be converted to the VMState trait without access to the
-const_refs_static feature.
+From: Tao Su <tao1.su@linux.intel.com>
 
+Branch History Injection (BHI) is a CPU side-channel vulnerability, where
+an attacker may manipulate branch history before transitioning from user
+to supervisor mode or from VMX non-root/guest to root mode. CPUs that set
+BHI_NO bit in MSR IA32_ARCH_CAPABILITIES to indicate no additional
+mitigation is required to prevent BHI.
+
+Make BHI_NO bit available to guests.
+
+Tested-by: Xuelian Guo <xuelian.guo@intel.com>
+Signed-off-by: Tao Su <tao1.su@linux.intel.com>
 Reviewed-by: Zhao Liu <zhao1.liu@intel.com>
+Link: https://lore.kernel.org/r/20250121020650.1899618-3-tao1.su@linux.intel.com
 Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 ---
- rust/qemu-api/src/vmstate.rs | 274 +++--------------------------------
- 1 file changed, 23 insertions(+), 251 deletions(-)
+ target/i386/cpu.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/rust/qemu-api/src/vmstate.rs b/rust/qemu-api/src/vmstate.rs
-index d3a9cffdf3f..120933e60da 100644
---- a/rust/qemu-api/src/vmstate.rs
-+++ b/rust/qemu-api/src/vmstate.rs
-@@ -21,8 +21,8 @@
- //!   [`vmstate_fields`](crate::vmstate_fields).
- //!
- //! * direct equivalents to the C macros declared in
--//!   `include/migration/vmstate.h`. These are not type-safe and should not be
--//!   used if the equivalent functionality is available with `vmstate_of!`.
-+//!   `include/migration/vmstate.h`. These are not type-safe and only provide
-+//!   functionality that is missing from `vmstate_of!`.
- 
- use core::{marker::PhantomData, mem, ptr::NonNull};
- 
-@@ -407,223 +407,16 @@ unsafe impl<$base> VMState for $type where $base: VMState $($where)* {
-     const BASE: VMStateField = <T as VMState>::BASE.with_array_flag(N);
- }
- 
--#[doc(alias = "VMSTATE_UNUSED_BUFFER")]
--#[macro_export]
--macro_rules! vmstate_unused_buffer {
--    ($field_exists_fn:expr, $version_id:expr, $size:expr) => {{
--        $crate::bindings::VMStateField {
--            name: c_str!("unused").as_ptr(),
--            err_hint: ::core::ptr::null(),
--            offset: 0,
--            size: $size,
--            start: 0,
--            num: 0,
--            num_offset: 0,
--            size_offset: 0,
--            info: unsafe { ::core::ptr::addr_of!($crate::bindings::vmstate_info_unused_buffer) },
--            flags: VMStateFlags::VMS_BUFFER,
--            vmsd: ::core::ptr::null(),
--            version_id: $version_id,
--            struct_version_id: 0,
--            field_exists: $field_exists_fn,
--        }
--    }};
--}
--
--#[doc(alias = "VMSTATE_UNUSED_V")]
--#[macro_export]
--macro_rules! vmstate_unused_v {
--    ($version_id:expr, $size:expr) => {{
--        $crate::vmstate_unused_buffer!(None, $version_id, $size)
--    }};
--}
--
- #[doc(alias = "VMSTATE_UNUSED")]
- #[macro_export]
- macro_rules! vmstate_unused {
-     ($size:expr) => {{
--        $crate::vmstate_unused_v!(0, $size)
--    }};
--}
--
--#[doc(alias = "VMSTATE_SINGLE_TEST")]
--#[macro_export]
--macro_rules! vmstate_single_test {
--    ($field_name:ident, $struct_name:ty, $field_exists_fn:expr, $version_id:expr, $info:expr, $size:expr) => {{
-         $crate::bindings::VMStateField {
--            name: ::core::concat!(::core::stringify!($field_name), 0)
--                .as_bytes()
--                .as_ptr() as *const ::std::os::raw::c_char,
--            err_hint: ::core::ptr::null(),
--            offset: $crate::offset_of!($struct_name, $field_name),
-+            name: $crate::c_str!("unused").as_ptr(),
-             size: $size,
--            start: 0,
--            num: 0,
--            num_offset: 0,
--            size_offset: 0,
--            info: unsafe { $info },
--            flags: VMStateFlags::VMS_SINGLE,
--            vmsd: ::core::ptr::null(),
--            version_id: $version_id,
--            struct_version_id: 0,
--            field_exists: $field_exists_fn,
--        }
--    }};
--}
--
--#[doc(alias = "VMSTATE_SINGLE")]
--#[macro_export]
--macro_rules! vmstate_single {
--    ($field_name:ident, $struct_name:ty, $version_id:expr, $info:expr, $size:expr) => {{
--        $crate::vmstate_single_test!($field_name, $struct_name, None, $version_id, $info, $size)
--    }};
--}
--
--#[doc(alias = "VMSTATE_UINT32_V")]
--#[macro_export]
--macro_rules! vmstate_uint32_v {
--    ($field_name:ident, $struct_name:ty, $version_id:expr) => {{
--        $crate::vmstate_single!(
--            $field_name,
--            $struct_name,
--            $version_id,
--            ::core::ptr::addr_of!($crate::bindings::vmstate_info_uint32),
--            ::core::mem::size_of::<u32>()
--        )
--    }};
--}
--
--#[doc(alias = "VMSTATE_UINT32")]
--#[macro_export]
--macro_rules! vmstate_uint32 {
--    ($field_name:ident, $struct_name:ty) => {{
--        $crate::vmstate_uint32_v!($field_name, $struct_name, 0)
--    }};
--}
--
--#[doc(alias = "VMSTATE_ARRAY")]
--#[macro_export]
--macro_rules! vmstate_array {
--    ($field_name:ident, $struct_name:ty, $length:expr, $version_id:expr, $info:expr, $size:expr) => {{
--        $crate::bindings::VMStateField {
--            name: ::core::concat!(::core::stringify!($field_name), 0)
--                .as_bytes()
--                .as_ptr() as *const ::std::os::raw::c_char,
--            err_hint: ::core::ptr::null(),
--            offset: $crate::offset_of!($struct_name, $field_name),
--            size: $size,
--            start: 0,
--            num: $length as _,
--            num_offset: 0,
--            size_offset: 0,
--            info: unsafe { $info },
--            flags: VMStateFlags::VMS_ARRAY,
--            vmsd: ::core::ptr::null(),
--            version_id: $version_id,
--            struct_version_id: 0,
--            field_exists: None,
--        }
--    }};
--}
--
--#[doc(alias = "VMSTATE_UINT32_ARRAY_V")]
--#[macro_export]
--macro_rules! vmstate_uint32_array_v {
--    ($field_name:ident, $struct_name:ty, $length:expr, $version_id:expr) => {{
--        $crate::vmstate_array!(
--            $field_name,
--            $struct_name,
--            $length,
--            $version_id,
--            ::core::ptr::addr_of!($crate::bindings::vmstate_info_uint32),
--            ::core::mem::size_of::<u32>()
--        )
--    }};
--}
--
--#[doc(alias = "VMSTATE_UINT32_ARRAY")]
--#[macro_export]
--macro_rules! vmstate_uint32_array {
--    ($field_name:ident, $struct_name:ty, $length:expr) => {{
--        $crate::vmstate_uint32_array_v!($field_name, $struct_name, $length, 0)
--    }};
--}
--
--#[doc(alias = "VMSTATE_STRUCT_POINTER_V")]
--#[macro_export]
--macro_rules! vmstate_struct_pointer_v {
--    ($field_name:ident, $struct_name:ty, $version_id:expr, $vmsd:expr, $type:ty) => {{
--        $crate::bindings::VMStateField {
--            name: ::core::concat!(::core::stringify!($field_name), 0)
--                .as_bytes()
--                .as_ptr() as *const ::std::os::raw::c_char,
--            err_hint: ::core::ptr::null(),
--            offset: $crate::offset_of!($struct_name, $field_name),
--            size: ::core::mem::size_of::<*const $type>(),
--            start: 0,
--            num: 0,
--            num_offset: 0,
--            size_offset: 0,
--            info: ::core::ptr::null(),
--            flags: VMStateFlags(VMStateFlags::VMS_STRUCT.0 | VMStateFlags::VMS_POINTER.0),
--            vmsd: unsafe { $vmsd },
--            version_id: $version_id,
--            struct_version_id: 0,
--            field_exists: None,
--        }
--    }};
--}
--
--#[doc(alias = "VMSTATE_ARRAY_OF_POINTER")]
--#[macro_export]
--macro_rules! vmstate_array_of_pointer {
--    ($field_name:ident, $struct_name:ty, $num:expr, $version_id:expr, $info:expr, $type:ty) => {{
--        $crate::bindings::VMStateField {
--            name: ::core::concat!(::core::stringify!($field_name), 0)
--                .as_bytes()
--                .as_ptr() as *const ::std::os::raw::c_char,
--            version_id: $version_id,
--            num: $num as _,
--            info: unsafe { $info },
--            size: ::core::mem::size_of::<*const $type>(),
--            flags: VMStateFlags(VMStateFlags::VMS_ARRAY.0 | VMStateFlags::VMS_ARRAY_OF_POINTER.0),
--            offset: $crate::offset_of!($struct_name, $field_name),
--            err_hint: ::core::ptr::null(),
--            start: 0,
--            num_offset: 0,
--            size_offset: 0,
--            vmsd: ::core::ptr::null(),
--            struct_version_id: 0,
--            field_exists: None,
--        }
--    }};
--}
--
--#[doc(alias = "VMSTATE_ARRAY_OF_POINTER_TO_STRUCT")]
--#[macro_export]
--macro_rules! vmstate_array_of_pointer_to_struct {
--    ($field_name:ident, $struct_name:ty, $num:expr, $version_id:expr, $vmsd:expr, $type:ty) => {{
--        $crate::bindings::VMStateField {
--            name: ::core::concat!(::core::stringify!($field_name), 0)
--                .as_bytes()
--                .as_ptr() as *const ::std::os::raw::c_char,
--            version_id: $version_id,
--            num: $num as _,
--            vmsd: unsafe { $vmsd },
--            size: ::core::mem::size_of::<*const $type>(),
--            flags: VMStateFlags(
--                VMStateFlags::VMS_ARRAY.0
--                    | VMStateFlags::VMS_STRUCT.0
--                    | VMStateFlags::VMS_ARRAY_OF_POINTER.0,
--            ),
--            offset: $crate::offset_of!($struct_name, $field_name),
--            err_hint: ::core::ptr::null(),
--            start: 0,
--            num_offset: 0,
--            size_offset: 0,
--            vmsd: ::core::ptr::null(),
--            struct_version_id: 0,
--            field_exists: None,
-+            info: unsafe { ::core::ptr::addr_of!($crate::bindings::vmstate_info_unused_buffer) },
-+            flags: $crate::bindings::VMStateFlags::VMS_BUFFER,
-+            ..$crate::zeroable::Zeroable::ZERO
-         }
-     }};
- }
-@@ -661,48 +454,27 @@ macro_rules! vmstate_struct {
-     };
- }
- 
--#[doc(alias = "VMSTATE_CLOCK_V")]
--#[macro_export]
--macro_rules! vmstate_clock_v {
--    ($field_name:ident, $struct_name:ty, $version_id:expr) => {{
--        $crate::vmstate_struct_pointer_v!(
--            $field_name,
--            $struct_name,
--            $version_id,
--            ::core::ptr::addr_of!($crate::bindings::vmstate_clock),
--            $crate::bindings::Clock
--        )
--    }};
--}
--
- #[doc(alias = "VMSTATE_CLOCK")]
- #[macro_export]
- macro_rules! vmstate_clock {
-     ($field_name:ident, $struct_name:ty) => {{
--        $crate::vmstate_clock_v!($field_name, $struct_name, 0)
--    }};
--}
--
--#[doc(alias = "VMSTATE_ARRAY_CLOCK_V")]
--#[macro_export]
--macro_rules! vmstate_array_clock_v {
--    ($field_name:ident, $struct_name:ty, $num:expr, $version_id:expr) => {{
--        $crate::vmstate_array_of_pointer_to_struct!(
--            $field_name,
--            $struct_name,
--            $num,
--            $version_id,
--            ::core::ptr::addr_of!($crate::bindings::vmstate_clock),
--            $crate::bindings::Clock
--        )
--    }};
--}
--
--#[doc(alias = "VMSTATE_ARRAY_CLOCK")]
--#[macro_export]
--macro_rules! vmstate_array_clock {
--    ($field_name:ident, $struct_name:ty, $num:expr) => {{
--        $crate::vmstate_array_clock_v!($field_name, $struct_name, $name, 0)
-+        $crate::bindings::VMStateField {
-+            name: ::core::concat!(::core::stringify!($field_name), "\0")
-+                .as_bytes()
-+                .as_ptr() as *const ::std::os::raw::c_char,
-+            offset: {
-+                $crate::assert_field_type!(
-+                    $struct_name,
-+                    $field_name,
-+                    core::ptr::NonNull<$crate::bindings::Clock>
-+                );
-+                $crate::offset_of!($struct_name, $field_name)
-+            },
-+            size: ::core::mem::size_of::<*const $crate::bindings::Clock>(),
-+            flags: VMStateFlags(VMStateFlags::VMS_STRUCT.0 | VMStateFlags::VMS_POINTER.0),
-+            vmsd: unsafe { ::core::ptr::addr_of!($crate::bindings::vmstate_clock) },
-+            ..$crate::zeroable::Zeroable::ZERO
-+        }
-     }};
- }
- 
+diff --git a/target/i386/cpu.c b/target/i386/cpu.c
+index 6db8d6c9bab..33fb27a6119 100644
+--- a/target/i386/cpu.c
++++ b/target/i386/cpu.c
+@@ -1364,7 +1364,7 @@ FeatureWordInfo feature_word_info[FEATURE_WORDS] = {
+             "taa-no", NULL, NULL, NULL,
+             NULL, "sbdr-ssdp-no", "fbsdp-no", "psdp-no",
+             NULL, "fb-clear", NULL, NULL,
+-            NULL, NULL, NULL, NULL,
++            "bhi-no", NULL, NULL, NULL,
+             "pbrsb-no", NULL, "gds-no", "rfds-no",
+             "rfds-clear", NULL, NULL, NULL,
+         },
 -- 
 2.48.1
 
