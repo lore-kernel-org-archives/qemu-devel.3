@@ -4,47 +4,47 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D4ECDC02181
-	for <qemu-devel@archiver.kernel.org>; Fri, 24 Jan 2025 13:43:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BB3E6C0218B
+	for <qemu-devel@archiver.kernel.org>; Fri, 24 Jan 2025 13:43:25 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tbJvf-0004mG-61; Fri, 24 Jan 2025 08:40:59 -0500
+	id 1tbJv6-0001X9-OO; Fri, 24 Jan 2025 08:40:27 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <xiaoyao.li@intel.com>)
- id 1tbJvN-0002gi-B9
- for qemu-devel@nongnu.org; Fri, 24 Jan 2025 08:40:41 -0500
+ id 1tbJuP-0008Bu-7f
+ for qemu-devel@nongnu.org; Fri, 24 Jan 2025 08:39:41 -0500
 Received: from mgamail.intel.com ([198.175.65.13])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <xiaoyao.li@intel.com>)
- id 1tbJvL-00042W-Me
- for qemu-devel@nongnu.org; Fri, 24 Jan 2025 08:40:41 -0500
+ id 1tbJuN-00041c-Bl
+ for qemu-devel@nongnu.org; Fri, 24 Jan 2025 08:39:40 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1737726040; x=1769262040;
+ t=1737725980; x=1769261980;
  h=from:to:cc:subject:date:message-id:in-reply-to:
  references:mime-version:content-transfer-encoding;
- bh=JEfor+KFxyDwdyWlWCn598DxuZ06/MpImTaZ99/kE0M=;
- b=jIUMEhoflSzXwmCGIs+txrWvFqpXElcE9cFnnSA+E+hOh2v6jgSy4g7x
- +LrGVW9cTtbE0/4cIZynSQBsyo10tDykpfOQMOicABVkAYRxGJ3B3Xf+K
- SxaVw7Nj76/aoyUz9CIBl7LRqd/XcDB2taYOHPl42y722Dz+7K7C33GH8
- nz6Y30vwGGvUweI/sE4ZCD79YZghL6x8vqxzWgUHxtbNFwuT4ubEwsfL5
- S4E+IjKd7bQgr7/5PKBPF+jjlcA7PxG32ohccbogJQCIdwtLY2Ee+Gxss
- XKK5Jd7rjEoCBKSfotFjLylL9WC+DJbW+oYUNkeHh8EjqvzuOoaFZ8G7W g==;
-X-CSE-ConnectionGUID: RTWVl1H4TgiLUD7ARaPxiA==
-X-CSE-MsgGUID: 4+d457veQUGanjVTpqh0FQ==
-X-IronPort-AV: E=McAfee;i="6700,10204,11325"; a="49246647"
-X-IronPort-AV: E=Sophos;i="6.13,231,1732608000"; d="scan'208";a="49246647"
+ bh=1ZBokcORlkGr+ynt1gqXnRjHyyHWXe5wnMVgE1+YOYs=;
+ b=bJZIQpPEJEMi60towMA1mXXTpqv8vG1k8XjJCaCO3YVIUEgz7KmlWhm0
+ wpFvUgg2mbQBb1GZs3oygqf3mUKwN0RAFAU1QYzpnSnRB7Ga3fA2RsDgD
+ 34DQw0bWMTUmX5JWUNLaJAGFlV7ZBD16y/qUC90uLjpRIM7tmfDKd75rr
+ Kz0Vfaw40lYy/LsAxMkzmdRWlr5Wz3ParhjtgWjKjynM155yDQYaAyiAT
+ Mns2nqz591gm0DLFRpYK5piYsP1WHRuuP88j2eUDpSXRQV8rEkVBjySQj
+ SIAEmkK2Swr4y3vehvy6p4Zu0TISHABGzUMy22VAKOG60Ili6mCuIQeyB Q==;
+X-CSE-ConnectionGUID: 27ZJFGcQRm25o0DLQuG11g==
+X-CSE-MsgGUID: 0jrkmOe8RVy+Y3AP/bUCVg==
+X-IronPort-AV: E=McAfee;i="6700,10204,11325"; a="49246523"
+X-IronPort-AV: E=Sophos;i="6.13,231,1732608000"; d="scan'208";a="49246523"
 Received: from fmviesa003.fm.intel.com ([10.60.135.143])
  by orvoesa105.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 24 Jan 2025 05:40:10 -0800
-X-CSE-ConnectionGUID: EOPIaBMERm+SQz+cyBhuXg==
-X-CSE-MsgGUID: iOiNQdTETdqBQ0Emci0mmw==
+ 24 Jan 2025 05:39:22 -0800
+X-CSE-ConnectionGUID: L2y8dTvzTU2ddyE9ud9+fA==
+X-CSE-MsgGUID: 5GNqz6pFR1uKwKz6iRg36Q==
 X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.12,224,1728975600"; d="scan'208";a="111804490"
+X-IronPort-AV: E=Sophos;i="6.12,224,1728975600"; d="scan'208";a="111804419"
 Received: from lxy-clx-4s.sh.intel.com ([10.239.48.52])
- by fmviesa003.fm.intel.com with ESMTP; 24 Jan 2025 05:40:06 -0800
+ by fmviesa003.fm.intel.com with ESMTP; 24 Jan 2025 05:39:18 -0800
 From: Xiaoyao Li <xiaoyao.li@intel.com>
 To: Paolo Bonzini <pbonzini@redhat.com>,
  =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
@@ -57,9 +57,10 @@ Cc: Zhao Liu <zhao1.liu@intel.com>, "Michael S. Tsirkin" <mst@redhat.com>,
  Rick Edgecombe <rick.p.edgecombe@intel.com>,
  Francesco Lavra <francescolavra.fl@gmail.com>, xiaoyao.li@intel.com,
  qemu-devel@nongnu.org, kvm@vger.kernel.org
-Subject: [PATCH v7 50/52] i386/tdx: Make invtsc default on
-Date: Fri, 24 Jan 2025 08:20:46 -0500
-Message-Id: <20250124132048.3229049-51-xiaoyao.li@intel.com>
+Subject: [PATCH v7 37/52] i386/tdx: Only configure MSR_IA32_UCODE_REV in
+ kvm_init_msrs() for TDs
+Date: Fri, 24 Jan 2025 08:20:33 -0500
+Message-Id: <20250124132048.3229049-38-xiaoyao.li@intel.com>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20250124132048.3229049-1-xiaoyao.li@intel.com>
 References: <20250124132048.3229049-1-xiaoyao.li@intel.com>
@@ -91,25 +92,76 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Because it's fixed1 bit that enforced by TDX module.
+For TDs, only MSR_IA32_UCODE_REV in kvm_init_msrs() can be configured
+by VMM, while the features enumerated/controlled by other MSRs except
+MSR_IA32_UCODE_REV in kvm_init_msrs() are not under control of VMM.
+
+Only configure MSR_IA32_UCODE_REV for TDs.
 
 Signed-off-by: Xiaoyao Li <xiaoyao.li@intel.com>
+Acked-by: Gerd Hoffmann <kraxel@redhat.com>
 ---
- target/i386/kvm/tdx.c | 3 +++
- 1 file changed, 3 insertions(+)
+ target/i386/kvm/kvm.c | 44 ++++++++++++++++++++++---------------------
+ 1 file changed, 23 insertions(+), 21 deletions(-)
 
-diff --git a/target/i386/kvm/tdx.c b/target/i386/kvm/tdx.c
-index 58ea6a4d3156..bb75eb06dad9 100644
---- a/target/i386/kvm/tdx.c
-+++ b/target/i386/kvm/tdx.c
-@@ -439,6 +439,9 @@ static void tdx_cpu_instance_init(X86ConfidentialGuest *cg, CPUState *cpu)
+diff --git a/target/i386/kvm/kvm.c b/target/i386/kvm/kvm.c
+index ead1d0263385..4078ba40473e 100644
+--- a/target/i386/kvm/kvm.c
++++ b/target/i386/kvm/kvm.c
+@@ -3863,32 +3863,34 @@ static void kvm_init_msrs(X86CPU *cpu)
+     CPUX86State *env = &cpu->env;
  
-     object_property_set_bool(OBJECT(cpu), "pmu", false, &error_abort);
- 
-+    /* invtsc is fixed1 for TD guest */
-+    object_property_set_bool(OBJECT(cpu), "invtsc", true, &error_abort);
+     kvm_msr_buf_reset(cpu);
+-    if (has_msr_arch_capabs) {
+-        kvm_msr_entry_add(cpu, MSR_IA32_ARCH_CAPABILITIES,
+-                          env->features[FEAT_ARCH_CAPABILITIES]);
+-    }
+-
+-    if (has_msr_core_capabs) {
+-        kvm_msr_entry_add(cpu, MSR_IA32_CORE_CAPABILITY,
+-                          env->features[FEAT_CORE_CAPABILITY]);
+-    }
+-
+-    if (has_msr_perf_capabs && cpu->enable_pmu) {
+-        kvm_msr_entry_add_perf(cpu, env->features);
 +
-     x86cpu->enable_cpuid_0x1f = true;
++    if (!is_tdx_vm()) {
++        if (has_msr_arch_capabs) {
++            kvm_msr_entry_add(cpu, MSR_IA32_ARCH_CAPABILITIES,
++                                env->features[FEAT_ARCH_CAPABILITIES]);
++        }
++
++        if (has_msr_core_capabs) {
++            kvm_msr_entry_add(cpu, MSR_IA32_CORE_CAPABILITY,
++                                env->features[FEAT_CORE_CAPABILITY]);
++        }
++
++        if (has_msr_perf_capabs && cpu->enable_pmu) {
++            kvm_msr_entry_add_perf(cpu, env->features);
++        }
++
++        /*
++         * Older kernels do not include VMX MSRs in KVM_GET_MSR_INDEX_LIST, but
++         * all kernels with MSR features should have them.
++         */
++        if (kvm_feature_msrs && cpu_has_vmx(env)) {
++            kvm_msr_entry_add_vmx(cpu, env->features);
++        }
+     }
+ 
+     if (has_msr_ucode_rev) {
+         kvm_msr_entry_add(cpu, MSR_IA32_UCODE_REV, cpu->ucode_rev);
+     }
+-
+-    /*
+-     * Older kernels do not include VMX MSRs in KVM_GET_MSR_INDEX_LIST, but
+-     * all kernels with MSR features should have them.
+-     */
+-    if (kvm_feature_msrs && cpu_has_vmx(env)) {
+-        kvm_msr_entry_add_vmx(cpu, env->features);
+-    }
+-
+     assert(kvm_buf_set_msrs(cpu) == 0);
  }
  
 -- 
