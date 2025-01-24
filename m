@@ -4,79 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4DBD0C0218C
-	for <qemu-devel@archiver.kernel.org>; Fri, 24 Jan 2025 09:52:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8866BC02181
+	for <qemu-devel@archiver.kernel.org>; Fri, 24 Jan 2025 09:52:33 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tbGHv-0003ii-GS; Fri, 24 Jan 2025 04:47:43 -0500
+	id 1tbGIi-0007Qc-Mm; Fri, 24 Jan 2025 04:48:33 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1tbGGT-0007rL-6G
- for qemu-devel@nongnu.org; Fri, 24 Jan 2025 04:46:22 -0500
+ id 1tbGG2-0007Nn-5T
+ for qemu-devel@nongnu.org; Fri, 24 Jan 2025 04:45:48 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1tbGGQ-0003zZ-Fs
- for qemu-devel@nongnu.org; Fri, 24 Jan 2025 04:46:12 -0500
+ id 1tbGG0-0003wS-Je
+ for qemu-devel@nongnu.org; Fri, 24 Jan 2025 04:45:45 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1737711969;
+ s=mimecast20190719; t=1737711943;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=LnYPmmzbHtO9VYxLsF7WeRrLBt7TIDcweZucQbIAULs=;
- b=bcpQ9EBOhXBq7pT0Nn4/Di/gdwxx/QAZmUGOvDRxBpHL0QEUxTgoUVgDL0n1+17r8dIpik
- e84PubB7gxwxMQbWKIXjOkibVxnroFUNFlIiBum6z+iLxSo5JuvVyIlFeXZvBMMT+AU4z6
- OcQZmPoypXIMY8z1WqzcR9779PMmhG4=
-Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com
- [209.85.128.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=iUzMFIurVFZDuf9mlbfI79G6/XfuTB6fCKo65mN+6bA=;
+ b=eGDi1ZDYPYDDOMXoVb+fK6Nchki1EBCla7YlV22dsN6+tU8ilgPen/A+4vFj6APLf24g5a
+ jr5fMcIcf8Vn3K3MXOyONLuyJs6z4IwsOggqu7ApA9rKc8S0hEXQ5s5XarbLkJwE0CZExW
+ ZGO5URvwqvY6l+pqZ7T0R+I52XNFcw8=
+Received: from mail-wr1-f70.google.com (mail-wr1-f70.google.com
+ [209.85.221.70]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-593-aQMRFyNBPOWxMDhjRNLCnA-1; Fri, 24 Jan 2025 04:46:08 -0500
-X-MC-Unique: aQMRFyNBPOWxMDhjRNLCnA-1
-X-Mimecast-MFC-AGG-ID: aQMRFyNBPOWxMDhjRNLCnA
-Received: by mail-wm1-f71.google.com with SMTP id
- 5b1f17b1804b1-436225d4389so14625265e9.1
- for <qemu-devel@nongnu.org>; Fri, 24 Jan 2025 01:46:07 -0800 (PST)
+ us-mta-517-BKGuiY_jN3uqEcFp2Ab2-g-1; Fri, 24 Jan 2025 04:45:42 -0500
+X-MC-Unique: BKGuiY_jN3uqEcFp2Ab2-g-1
+X-Mimecast-MFC-AGG-ID: BKGuiY_jN3uqEcFp2Ab2-g
+Received: by mail-wr1-f70.google.com with SMTP id
+ ffacd0b85a97d-388d1f6f3b2so848841f8f.0
+ for <qemu-devel@nongnu.org>; Fri, 24 Jan 2025 01:45:41 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1737711966; x=1738316766;
+ d=1e100.net; s=20230601; t=1737711940; x=1738316740;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=LnYPmmzbHtO9VYxLsF7WeRrLBt7TIDcweZucQbIAULs=;
- b=Xy83KKrg2K+fvQh+swHWx6lyVtOMsBzFd4LgPE1dYvebFSoY8r23bjlxLnLeP5kPd9
- RJM0xDcSAKyHoKwxMF/f9heumD2USeuXCoiz/gpd2XBl6rSoxNunhJX/HXnKL4x2Gwq2
- X+CHrnqXGd8w4A/ze4LimJQ4hkq8z3c0DHCgCHQj3b5AMCQnnTkqbm8vcSOSzCPDG0UZ
- POgEscQIq1DyzmsRZHLmjxnmjpDOHKEsPJkGWElRXDl2SGDsGyQbtm6jj9w83RqFp5vR
- M2Ej1HpQch8fZC4ci+/evmBRjHYpJQZPFbMUjnvkfW0oj+pf8Bv0ZCqF3sMGHJvFUJFv
- qEpw==
-X-Gm-Message-State: AOJu0Yw7IYz1CyghzM0y2H+ZJeEy14bNOW9u7jy4DQ4WNUy4UZZlBInq
- jYP5GGMOwRNBcAiQjzpfxAPzYalLC4odMQ3FGHZr+aEZJUPk76LUtoiseH/bSgg59QX34IM79rs
- 70a/cB1g0uW03F7ZMWdiUo8VoJtD6BQ60fXtfeQNRJDkHvWHUSNYrIA8mFl8Rd1nIX/cmE2l9zB
- BqOkGEpYaLnWorzV5+k+y0nYBlkCZEgcMde+Wd4x4=
-X-Gm-Gg: ASbGncs8f9EoRWpil+uX4iVVsNq5IhWkklt0gjQA/V5oWMB/aWb4jeB+HEUwacf2Ugk
- YrXQI+kgIV47NaIxyClVsAfjNSpSSlu3d57vDXG/XEwx6E1O4Ns5t2GrE95EsV5RA2pH3RBOT+Q
- 6kDB7lPU6ZK2tEkXgpRm89/vACg36gluQgUq8nUtceg0WsnUZjPjFhu19V8rPGIlcNi9imeugLE
- XKS2ezqtrcGy9pwC9cao9MUa4rBW6TL0Uhm5au7hsn/7fw+MileL26m0FaD4Sy5uGOH8EOXyg==
-X-Received: by 2002:a05:600c:58c9:b0:436:e3ea:64dd with SMTP id
- 5b1f17b1804b1-438bd0a88dbmr22948015e9.11.1737711966482; 
- Fri, 24 Jan 2025 01:46:06 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IHXene5jhJddv0rJmibbIevqjM3Q7qVX6fnc4nuI5ZR4uq6NX3kd8xFBwOws2RK1dhn7pKf5Q==
-X-Received: by 2002:a05:600c:58c9:b0:436:e3ea:64dd with SMTP id
- 5b1f17b1804b1-438bd0a88dbmr22947645e9.11.1737711965962; 
- Fri, 24 Jan 2025 01:46:05 -0800 (PST)
+ bh=iUzMFIurVFZDuf9mlbfI79G6/XfuTB6fCKo65mN+6bA=;
+ b=cSPr9DO9cLObT00lhPKSqmvGEoQFKUhCp5U7y7EOQ4VprloUdlbTuOHxFcmsquv6Ov
+ G1h5Dc8RazQDAooSEoybdlMbTQH1z5sWP+P9APUCyYLCOURIMQ/7sHbaSQfFxlRT1iTO
+ H+G5ZcclvoheBQzHhHsqR9KDlo08hSn+or/NfBF1XbKUlFM01m7uRWScM2+825NCRS0F
+ wFXedWSdYdNPVkuVmQUYQjmM5Oj1teOylJr27AqIqcxvhyVI6U3gXtopFhfFqVhdmIuI
+ lU8oDEyLZM1nhdjXfDHqIlELzY9+I92BVHW7CXHVQl8sRS6ACElMHVWgHjMSxJKkMQAD
+ VOUA==
+X-Gm-Message-State: AOJu0YwcLTgKdbcdq7BHcgCl2j8G4MF5FHquAFj+1GGhSJ8MWQhfo76l
+ ynsNhv6euxyLb0+u/u4m/u2Y/nQxEHTAnuCEehybZst7A9hnbu3oEdVR6E0EfcS9lIuurr7ckj5
+ cSYGeTkgifZwfDVhRFRdizbywxvDfYSlO6HGcYZqUnrEO5IvEr85RDSnuwJJlUUoNWfOT6OkFoJ
+ YsSYLe1folTKezvDPRuCPY4k7dNsSBN8SVLWBEmFQ=
+X-Gm-Gg: ASbGncteUkwdHy9pjrveU17bGc8H7pazjWHbtZxCtWWCcMSrO7pMGdYctFgOko483a7
+ ZeInhbRGW7JvwzlZG6ZQjvrk0cI2tS544ygGqJlxHzbNBD9KToa0QkbC4JTPuQi1P8J17YuYSk2
+ DR/DD6uVNhgCh+9t90SqZRnb4JzCWe38GGN35fIfhre8EeEbJQ6W4D14YdBY0SYShZEs5dfI3B0
+ NBNuyszSKFSeQ1Z26eMfrSbPvokoq8dDwUzZyRQeA07JjIntRwAqivuU4x7TYFdRdV+Ky9UHA==
+X-Received: by 2002:a5d:4207:0:b0:38b:ebcd:305c with SMTP id
+ ffacd0b85a97d-38bf5675826mr21816588f8f.29.1737711939630; 
+ Fri, 24 Jan 2025 01:45:39 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IEVv96LqD7sfaqk8mv6sYQsgNUHWv3HMbkMyQOw0qVEXsAHBPEQQd5mihfPaWGDzMS1uIVEMw==
+X-Received: by 2002:a5d:4207:0:b0:38b:ebcd:305c with SMTP id
+ ffacd0b85a97d-38bf5675826mr21816558f8f.29.1737711939057; 
+ Fri, 24 Jan 2025 01:45:39 -0800 (PST)
 Received: from [192.168.10.48] ([151.95.59.125])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-438bd4b9990sm20855065e9.29.2025.01.24.01.46.05
+ ffacd0b85a97d-38c2a18859asm2145107f8f.42.2025.01.24.01.45.38
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 24 Jan 2025 01:46:05 -0800 (PST)
+ Fri, 24 Jan 2025 01:45:38 -0800 (PST)
 From: Paolo Bonzini <pbonzini@redhat.com>
 To: qemu-devel@nongnu.org
-Subject: [PULL 42/48] rust: pl011: wrap registers with BqlRefCell
-Date: Fri, 24 Jan 2025 10:44:36 +0100
-Message-ID: <20250124094442.13207-43-pbonzini@redhat.com>
+Subject: [PULL 27/48] rust: vmstate: add varray support to vmstate_of!
+Date: Fri, 24 Jan 2025 10:44:21 +0100
+Message-ID: <20250124094442.13207-28-pbonzini@redhat.com>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250124094442.13207-1-pbonzini@redhat.com>
 References: <20250124094442.13207-1-pbonzini@redhat.com>
@@ -107,185 +107,102 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This is a step towards making memory ops use a shared reference to the
-device type; it's not yet possible due to the calls to character device
-functions.
-
-Reviewed-by: Zhao Liu <zhao1.liu@intel.com>
 Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 ---
- rust/hw/char/pl011/src/device.rs       | 40 ++++++++++++++------------
- rust/hw/char/pl011/src/device_class.rs |  8 +++---
- 2 files changed, 26 insertions(+), 22 deletions(-)
+ rust/qemu-api/src/vmstate.rs | 42 ++++++++++++++++++++++++++++++++++--
+ 1 file changed, 40 insertions(+), 2 deletions(-)
 
-diff --git a/rust/hw/char/pl011/src/device.rs b/rust/hw/char/pl011/src/device.rs
-index f1319d1a8bd..4fd9bdc8584 100644
---- a/rust/hw/char/pl011/src/device.rs
-+++ b/rust/hw/char/pl011/src/device.rs
-@@ -109,14 +109,14 @@ pub struct PL011Registers {
+diff --git a/rust/qemu-api/src/vmstate.rs b/rust/qemu-api/src/vmstate.rs
+index 211c3d096b7..2b14d4839df 100644
+--- a/rust/qemu-api/src/vmstate.rs
++++ b/rust/qemu-api/src/vmstate.rs
+@@ -72,6 +72,15 @@ pub unsafe trait VMState {
+     /// The base contents of a `VMStateField` (minus the name and offset) for
+     /// the type that is implementing the trait.
+     const BASE: VMStateField;
++
++    /// A flag that is added to another field's `VMStateField` to specify the
++    /// length's type in a variable-sized array.  If this is not a supported
++    /// type for the length (i.e. if it is not `u8`, `u16`, `u32`), using it
++    /// in a call to [`vmstate_of!`](crate::vmstate_of) will cause a
++    /// compile-time error.
++    const VARRAY_FLAG: VMStateFlags = {
++        panic!("invalid type for variable-sized array");
++    };
  }
  
- #[repr(C)]
--#[derive(Debug, qemu_api_macros::Object, qemu_api_macros::offsets)]
-+#[derive(qemu_api_macros::Object, qemu_api_macros::offsets)]
- /// PL011 Device Model in QEMU
- pub struct PL011State {
-     pub parent_obj: ParentField<SysBusDevice>,
-     pub iomem: MemoryRegion,
-     #[doc(alias = "chr")]
-     pub char_backend: CharBackend,
--    pub regs: PL011Registers,
-+    pub regs: BqlRefCell<PL011Registers>,
-     /// QEMU interrupts
-     ///
-     /// ```text
-@@ -538,6 +538,7 @@ fn post_init(&self) {
-         }
-     }
- 
-+    #[allow(clippy::needless_pass_by_ref_mut)]
-     pub fn read(&mut self, offset: hwaddr, _size: u32) -> ControlFlow<u64, u64> {
-         let mut update_irq = false;
-         let result = match RegisterOffset::try_from(offset) {
-@@ -549,7 +550,7 @@ pub fn read(&mut self, offset: hwaddr, _size: u32) -> ControlFlow<u64, u64> {
-                 // qemu_log_mask(LOG_GUEST_ERROR, "pl011_read: Bad offset 0x%x\n", (int)offset);
-                 ControlFlow::Break(0)
-             }
--            Ok(field) => match self.regs.read(field) {
-+            Ok(field) => match self.regs.borrow_mut().read(field) {
-                 ControlFlow::Break(value) => ControlFlow::Break(value.into()),
-                 ControlFlow::Continue(value) => {
-                     update_irq = true;
-@@ -566,7 +567,10 @@ pub fn read(&mut self, offset: hwaddr, _size: u32) -> ControlFlow<u64, u64> {
-     pub fn write(&mut self, offset: hwaddr, value: u64) {
-         let mut update_irq = false;
-         if let Ok(field) = RegisterOffset::try_from(offset) {
--            update_irq = self.regs.write(field, value as u32, &mut self.char_backend);
-+            update_irq = self
-+                .regs
-+                .borrow_mut()
-+                .write(field, value as u32, &mut self.char_backend);
-         } else {
-             eprintln!("write bad offset {offset} value {value}");
-         }
-@@ -577,21 +581,21 @@ pub fn write(&mut self, offset: hwaddr, value: u64) {
- 
-     pub fn can_receive(&self) -> bool {
-         // trace_pl011_can_receive(s->lcr, s->read_count, r);
--        let regs = &self.regs;
-+        let regs = self.regs.borrow();
-         regs.read_count < regs.fifo_depth()
-     }
- 
--    pub fn receive(&mut self, ch: u32) {
--        let regs = &mut self.regs;
-+    pub fn receive(&self, ch: u32) {
-+        let mut regs = self.regs.borrow_mut();
-         let update_irq = !regs.loopback_enabled() && regs.put_fifo(ch);
-         if update_irq {
-             self.update();
-         }
-     }
- 
--    pub fn event(&mut self, event: QEMUChrEvent) {
-+    pub fn event(&self, event: QEMUChrEvent) {
-         let mut update_irq = false;
--        let regs = &mut self.regs;
-+        let mut regs = self.regs.borrow_mut();
-         if event == QEMUChrEvent::CHR_EVENT_BREAK && !regs.loopback_enabled() {
-             update_irq = regs.put_fifo(registers::Data::BREAK.into());
-         }
-@@ -618,19 +622,19 @@ pub fn realize(&self) {
-     }
- 
-     pub fn reset(&mut self) {
--        self.regs.reset();
-+        self.regs.borrow_mut().reset();
-     }
- 
-     pub fn update(&self) {
--        let regs = &self.regs;
-+        let regs = self.regs.borrow();
-         let flags = regs.int_level & regs.int_enabled;
-         for (irq, i) in self.interrupts.iter().zip(IRQMASK) {
-             irq.set(flags & i != 0);
-         }
-     }
- 
--    pub fn post_load(&mut self, _version_id: u32) -> Result<(), ()> {
--        self.regs.post_load()
-+    pub fn post_load(&self, _version_id: u32) -> Result<(), ()> {
-+        self.regs.borrow_mut().post_load()
-     }
+ /// Internal utility function to retrieve a type's `VMStateField`;
+@@ -80,6 +89,13 @@ pub const fn vmstate_base<T: VMState>(_: PhantomData<T>) -> VMStateField {
+     T::BASE
  }
  
-@@ -667,11 +671,11 @@ pub fn post_load(&mut self, _version_id: u32) -> Result<(), ()> {
++/// Internal utility function to retrieve a type's `VMStateFlags` when it
++/// is used as the element count of a `VMSTATE_VARRAY`; used by
++/// [`vmstate_of!`](crate::vmstate_of).
++pub const fn vmstate_varray_flag<T: VMState>(_: PhantomData<T>) -> VMStateFlags {
++    T::VARRAY_FLAG
++}
++
+ /// Return the `VMStateField` for a field of a struct.  The field must be
+ /// visible in the current scope.
  ///
- /// The buffer and size arguments must also be valid.
- pub unsafe extern "C" fn pl011_receive(opaque: *mut c_void, buf: *const u8, size: c_int) {
--    let mut state = NonNull::new(opaque).unwrap().cast::<PL011State>();
-+    let state = NonNull::new(opaque).unwrap().cast::<PL011State>();
-     unsafe {
-         if size > 0 {
-             debug_assert!(!buf.is_null());
--            state.as_mut().receive(u32::from(buf.read_volatile()));
-+            state.as_ref().receive(u32::from(buf.read_volatile()));
+@@ -87,18 +103,23 @@ pub const fn vmstate_base<T: VMState>(_: PhantomData<T>) -> VMStateField {
+ /// for them.
+ #[macro_export]
+ macro_rules! vmstate_of {
+-    ($struct_name:ty, $field_name:ident $(,)?) => {
++    ($struct_name:ty, $field_name:ident $([0 .. $num:ident $(* $factor:expr)?])? $(,)?) => {
+         $crate::bindings::VMStateField {
+             name: ::core::concat!(::core::stringify!($field_name), "\0")
+                 .as_bytes()
+                 .as_ptr() as *const ::std::os::raw::c_char,
+             offset: $crate::offset_of!($struct_name, $field_name),
+             // Compute most of the VMStateField from the type of the field.
++            $(.num_offset: $crate::offset_of!($struct_name, $num),)?
+             ..$crate::call_func_with_field!(
+                 $crate::vmstate::vmstate_base,
+                 $struct_name,
+                 $field_name
+-            )
++            )$(.with_varray_flag($crate::call_func_with_field!(
++                    $crate::vmstate::vmstate_varray_flag,
++                    $struct_name,
++                    $num))
++               $(.with_varray_multiply($factor))?)?
          }
+     };
+ }
+@@ -143,6 +164,22 @@ pub const fn with_pointer_flag(mut self) -> Self {
+         self.flags = VMStateFlags(self.flags.0 | VMStateFlags::VMS_POINTER.0);
+         self
      }
++
++    #[must_use]
++    pub const fn with_varray_flag<T: VMState>(mut self, flag: VMStateFlags) -> VMStateField {
++        assert!((self.flags.0 & VMStateFlags::VMS_ARRAY.0) != 0);
++        self.flags = VMStateFlags(self.flags.0 & !VMStateFlags::VMS_ARRAY.0);
++        self.flags = VMStateFlags(self.flags.0 | flag.0);
++        self
++    }
++
++    #[must_use]
++    pub const fn with_varray_multiply(mut self, num: u32) -> VMStateField {
++        assert!(num <= 0x7FFF_FFFFu32);
++        self.flags = VMStateFlags(self.flags.0 | VMStateFlags::VMS_MULTIPLY_ELEMENTS.0);
++        self.num = num as i32;
++        self
++    }
  }
-@@ -682,8 +686,8 @@ pub fn post_load(&mut self, _version_id: u32) -> Result<(), ()> {
- /// the same size as [`PL011State`]. We also expect the device is
- /// readable/writeable from one thread at any time.
- pub unsafe extern "C" fn pl011_event(opaque: *mut c_void, event: QEMUChrEvent) {
--    let mut state = NonNull::new(opaque).unwrap().cast::<PL011State>();
--    unsafe { state.as_mut().event(event) }
-+    let state = NonNull::new(opaque).unwrap().cast::<PL011State>();
-+    unsafe { state.as_ref().event(event) }
+ 
+ // Transparent wrappers: just use the internal type
+@@ -154,6 +191,7 @@ unsafe impl<$base> VMState for $type where $base: VMState $($where)* {
+                 size: mem::size_of::<$type>(),
+                 ..<$base as VMState>::BASE
+             };
++            const VARRAY_FLAG: VMStateFlags = <$base as VMState>::VARRAY_FLAG;
+         }
+     };
  }
- 
- /// # Safety
-@@ -708,7 +712,7 @@ pub fn post_load(&mut self, _version_id: u32) -> Result<(), ()> {
- }
- 
- #[repr(C)]
--#[derive(Debug, qemu_api_macros::Object)]
-+#[derive(qemu_api_macros::Object)]
- /// PL011 Luminary device model.
- pub struct PL011Luminary {
-     parent_obj: ParentField<PL011State>,
-diff --git a/rust/hw/char/pl011/src/device_class.rs b/rust/hw/char/pl011/src/device_class.rs
-index d94b98de7bb..8a157a663fb 100644
---- a/rust/hw/char/pl011/src/device_class.rs
-+++ b/rust/hw/char/pl011/src/device_class.rs
-@@ -6,7 +6,7 @@
- use std::os::raw::{c_int, c_void};
- 
- use qemu_api::{
--    bindings::*, c_str, vmstate_clock, vmstate_fields, vmstate_of, vmstate_struct,
-+    bindings::*, c_str, prelude::*, vmstate_clock, vmstate_fields, vmstate_of, vmstate_struct,
-     vmstate_subsections, vmstate_unused, zeroable::Zeroable,
- };
- 
-@@ -31,8 +31,8 @@ extern "C" fn pl011_clock_needed(opaque: *mut c_void) -> bool {
- };
- 
- extern "C" fn pl011_post_load(opaque: *mut c_void, version_id: c_int) -> c_int {
--    let mut state = NonNull::new(opaque).unwrap().cast::<PL011State>();
--    let result = unsafe { state.as_mut().post_load(version_id as u32) };
-+    let state = NonNull::new(opaque).unwrap().cast::<PL011State>();
-+    let result = unsafe { state.as_ref().post_load(version_id as u32) };
-     if result.is_err() {
-         -1
-     } else {
-@@ -71,7 +71,7 @@ extern "C" fn pl011_post_load(opaque: *mut c_void, version_id: c_int) -> c_int {
-     post_load: Some(pl011_post_load),
-     fields: vmstate_fields! {
-         vmstate_unused!(core::mem::size_of::<u32>()),
--        vmstate_struct!(PL011State, regs, &VMSTATE_PL011_REGS, PL011Registers),
-+        vmstate_struct!(PL011State, regs, &VMSTATE_PL011_REGS, BqlRefCell<PL011Registers>),
-     },
-     subsections: vmstate_subsections! {
-         VMSTATE_PL011_CLOCK
 -- 
 2.48.1
 
