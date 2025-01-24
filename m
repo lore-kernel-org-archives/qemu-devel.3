@@ -4,108 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8DDFEC0218B
-	for <qemu-devel@archiver.kernel.org>; Fri, 24 Jan 2025 16:28:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D12C3C0218B
+	for <qemu-devel@archiver.kernel.org>; Fri, 24 Jan 2025 16:29:01 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tbMXo-00032H-Jx; Fri, 24 Jan 2025 11:28:32 -0500
+	id 1tbMYG-0003jD-5p; Fri, 24 Jan 2025 11:29:00 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <dhildenb@redhat.com>)
- id 1tbMXi-00031H-IP
- for qemu-devel@nongnu.org; Fri, 24 Jan 2025 11:28:27 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <dhildenb@redhat.com>)
- id 1tbMXf-0005Ib-4x
- for qemu-devel@nongnu.org; Fri, 24 Jan 2025 11:28:25 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1737736101;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=Exu5epeTQjUXGqc6EvI9Ro49B7EhhPUJNuPMkX7VzoI=;
- b=gp4q76eYK7EchlRqqB3UG+TJyfWaTbnsLgMXbTXAJHUdl0mxCjZfmcysmaqhRwn+Q3Vu+3
- +KIGe9UqoeVju57d+XGK2+TXohrQsgApoJKOJzZ9XSW75ydFvACHnF/ZJtPh25iEFYD1mf
- Sr8JCSX5zVnHQ5s69ldDeTShvQ4dNMI=
-Received: from mail-ed1-f71.google.com (mail-ed1-f71.google.com
- [209.85.208.71]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-160-Nyg78LUIP3CSKpp-2B1yig-1; Fri, 24 Jan 2025 11:28:18 -0500
-X-MC-Unique: Nyg78LUIP3CSKpp-2B1yig-1
-X-Mimecast-MFC-AGG-ID: Nyg78LUIP3CSKpp-2B1yig
-Received: by mail-ed1-f71.google.com with SMTP id
- 4fb4d7f45d1cf-5dbaaed8aeeso2664244a12.1
- for <qemu-devel@nongnu.org>; Fri, 24 Jan 2025 08:28:18 -0800 (PST)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1737736094; x=1738340894;
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1tbMY6-0003Vo-Rk
+ for qemu-devel@nongnu.org; Fri, 24 Jan 2025 11:28:52 -0500
+Received: from mail-wm1-x333.google.com ([2a00:1450:4864:20::333])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1tbMXy-0005LJ-HY
+ for qemu-devel@nongnu.org; Fri, 24 Jan 2025 11:28:45 -0500
+Received: by mail-wm1-x333.google.com with SMTP id
+ 5b1f17b1804b1-43634b570c1so16737145e9.0
+ for <qemu-devel@nongnu.org>; Fri, 24 Jan 2025 08:28:41 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1737736120; x=1738340920; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
+ :reply-to; bh=aZAtVcMAZKjHRvt52hIevKlBELo2Ys5/XXx3UpdxpVg=;
+ b=KKDa7+LROzcessQPiB6IqGJhJMGxrlkhFDa83Iobu+rOPy2vqNu+6fwEW6nPuIUhoS
+ EQCTqjuNetmlryARHaDbFv7ZoyvCtgoZ7cdfWeD6J3tUEtuwFrYe/JaI6SqsNObarZDz
+ xVwRIXecz6UxOssb1QBRK6E2qbgEbBIFxpVQSwXRV5rFdo738NGjyEPs/s0gpqXwicQn
+ iopuWzdXp7kivGwS3onsOwyyY+c6BO11FWnWrCafCIRBFUteGRokPn8shm0StY6tgBGX
+ 7sa5DagaSBHm+0ZuO/8+tkOrDKtNwlyUbqr+z695tJVhI0jJh2rVV6v07PwN8y/5R67s
+ R4Hw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1737736120; x=1738340920;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=Exu5epeTQjUXGqc6EvI9Ro49B7EhhPUJNuPMkX7VzoI=;
- b=a4PqyscTw6+eo8JBmr/17rKHB4KY6+uhRvE89RDApD70sbcULqOdaqi0LOM2lcxFiY
- uDkoLsLcZvWE3ehb2prbt8VigisSoN2/J7F85yRgY/yWHfGSlRkueqe+ypVEBJgIgXfV
- FHpERYxNA/6ITsANcZt3Vf7RM9mBQ1xUBcYG3RsVDc8eaEe3g6Ge6O7gqyGSs1kVoE7L
- SuYHCq5STKw7e4hGWtfzKG7iaLeIWTIVtjI7uSaGV+umeCw5SzxB4vKePSCDf/Cm8y3C
- 4N0DmOrroViVcG8q3eXvkaMmjt6URE/yjADVqaSU1GWqDR1zGQ3BKz8pp8009o8PImmQ
- TgHg==
-X-Gm-Message-State: AOJu0Yx/TH1LDzKLbi4lIAGdq8iD2+j9k6WZBv2P0GgpgyIylEa4JK0I
- PaBysBXlDybQA90l0/zjP2fKuANQetnZxmVkr45ZkiW8IL/DZ12KUx2G64rNUIjC8zH3gPzRNK0
- vCctrtOOFCmIyJ62icdjBSPUIQX1JbPGoCYQHqZ8ixMMRr4KRf23Ci/+6sC6+oT2dO2hkzgAX25
- QUj8SMt4CDDoND25Cd9HoSTrhqkw5YTeXz1Hk2xg==
-X-Gm-Gg: ASbGncsyGYxPTvocMrHZmtThk9vmYdewSG5caoSkbR/w4/hKPcE8R5XzqiNXRWb6pnQ
- cmLkvGfpU3iSh48xoCF3IltiWMSUW0NU+oH3pIYfosX9pTxHEKZr4+iZrL+EQZ7AJvvN26KbZj4
- HolOcyrNwsW+CL2AKAzrXRflJI4ISWiPp3FMMnln9GL31r+f0OPHJoPvWZJC08oiVbw+G5cFko0
- M/LDRjxS3hbZQjf3hu4WSW+QUvK30OaVpSdvVkJxAVS+G0NwVhK7fuzyJZKKfNnN/0yJA47QeTA
- taTokrbYDDik/t95thN7AmYQKaMUzVomuf0GeIgg+5ZhXdsxoqom57A=
-X-Received: by 2002:a05:600c:a03:b0:434:f7e3:bfbd with SMTP id
- 5b1f17b1804b1-4389142e8b5mr278514765e9.23.1737733555850; 
- Fri, 24 Jan 2025 07:45:55 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IHHYcoJ39rm7gawbJbNWFUQOBEGFPj86Ylt2BpokstkF84V5QmwjWichPRMD70s0emuvSL/sA==
-X-Received: by 2002:a05:600c:a03:b0:434:f7e3:bfbd with SMTP id
- 5b1f17b1804b1-4389142e8b5mr278514425e9.23.1737733555431; 
- Fri, 24 Jan 2025 07:45:55 -0800 (PST)
-Received: from localhost
- (p200300cbc719e000ca2c77c5de7dce89.dip0.t-ipconnect.de.
- [2003:cb:c719:e000:ca2c:77c5:de7d:ce89])
- by smtp.gmail.com with UTF8SMTPSA id
- 5b1f17b1804b1-438bd4fa57csm32121725e9.4.2025.01.24.07.45.53
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 24 Jan 2025 07:45:54 -0800 (PST)
-From: David Hildenbrand <david@redhat.com>
-To: qemu-devel@nongnu.org
-Cc: David Hildenbrand <david@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
- Peter Xu <peterx@redhat.com>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Peter Maydell <peter.maydell@linaro.org>,
- =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Alex Williamson <alex.williamson@redhat.com>,
- Eduardo Habkost <eduardo@habkost.net>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- Elena Ufimtseva <elena.ufimtseva@oracle.com>,
- Jagannathan Raman <jag.raman@oracle.com>,
- "Dr. David Alan Gilbert" <dave@treblig.org>, Stefan Zabka <git@zabka.it>
-Subject: [PATCH v2 7/7] physmem: teach cpu_memory_rw_debug() to write to more
- memory regions
-Date: Fri, 24 Jan 2025 16:45:32 +0100
-Message-ID: <20250124154533.3534250-8-david@redhat.com>
-X-Mailer: git-send-email 2.47.1
-In-Reply-To: <20250124154533.3534250-1-david@redhat.com>
-References: <20250124154533.3534250-1-david@redhat.com>
+ bh=aZAtVcMAZKjHRvt52hIevKlBELo2Ys5/XXx3UpdxpVg=;
+ b=V5nPs5SwgWGczV5U6Rv6XalKMa8bLc+Z3SQ4HJ4+yjI9o8EC5kuQRggdCdc+X+Dexj
+ gHrNOmIo5cvWBMu7YsGovSHmBVq+eQ4GFzZGi+sNb4S5YZ7sVhF3xNo4SVvW/IXel7Wy
+ NnX7a43Lk7XsxI/puGUKXmWDQRL2qSEGnqHC+InAj2PSuZyjYafRa3QisYQRW9Er2CpK
+ XPUa5V5aubyclxZEE7gVY8icvGaboy5gIeuIl3lpYModwuiP2pPM3wuD7HgcoM9jkzSN
+ 9AMvsUvN/9JNd0En4ubsSuCSYfAFMIIWjN03ae18G7sdTKCHLJvS0L2QR9e0G9rk4bTr
+ rq0A==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCUNGY1FOWc6EG4Mq+a0VWfVWMt0TLgmKj2ceTQA8X8HFv9raK5GJ2WdrmoHUerq6Qak0ALyLqTsD1zn@nongnu.org
+X-Gm-Message-State: AOJu0YxMbZGEor3pYYbQkm4RkqFuc/6cuw215ElRGIvAaDWZ4vI8YgRe
+ lIaANU71Psmz0xnBWukiGs0dkkJIGRTAGyiw8qcMmZUXF3N91oU07vkfw68iLvk=
+X-Gm-Gg: ASbGncusKH/wLdqIB5bQKu+4UI/T2xiouBIpqczDfSqbgvmgXm+ExrrDz7F4JGI2w4n
+ JTqhzrjBGuUciL5KFF9nl8bsTtXgf1u3xFe13eXNgadGJZWqB89u9vEOqfpPidVsYf2onhsZUN5
+ gKNkgSlPxaHX3OOW5Hh6pzg35gk0mVz7DnvR9NAYvCn4BxLSiUO/vZs7qjGMmfq/9LOluXGizLT
+ uwjZXZ2KWgPb6+8PzzcOGKBEFypIE7a+m3zN9nhoUwVujjh8ynNB4QY6AdhtWg4GvVftMtJCy9k
+ nGDUPtpbDY4=
+X-Google-Smtp-Source: AGHT+IGOUZjXYEuNBjIYqkBLzOOpKGr8pLMeXLweYoHO20oLo58xfpwgqJrYKA+05weulzWov6tu6w==
+X-Received: by 2002:a05:600c:1d1d:b0:434:faa9:5266 with SMTP id
+ 5b1f17b1804b1-438913e79e2mr281251225e9.13.1737736120003; 
+ Fri, 24 Jan 2025 08:28:40 -0800 (PST)
+Received: from orth.archaic.org.uk (orth.archaic.org.uk. [2001:8b0:1d0::2])
+ by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-438bd47eecasm31683025e9.6.2025.01.24.08.28.39
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Fri, 24 Jan 2025 08:28:39 -0800 (PST)
+From: Peter Maydell <peter.maydell@linaro.org>
+To: qemu-arm@nongnu.org,
+	qemu-devel@nongnu.org
+Subject: [PATCH 01/76] target/i386: Do not raise Invalid for 0 * Inf + QNaN
+Date: Fri, 24 Jan 2025 16:27:21 +0000
+Message-Id: <20250124162836.2332150-2-peter.maydell@linaro.org>
+X-Mailer: git-send-email 2.34.1
+In-Reply-To: <20250124162836.2332150-1-peter.maydell@linaro.org>
+References: <20250124162836.2332150-1-peter.maydell@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=dhildenb@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -50
-X-Spam_score: -5.1
-X-Spam_bar: -----
-X-Spam_report: (-5.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-2.996,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+Received-SPF: pass client-ip=2a00:1450:4864:20::333;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x333.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -122,125 +99,106 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Right now, we only allow for writing to memory regions that allow direct
-access using memcpy etc; all other writes are simply ignored. This
-implies that debugging guests will not work as expected when writing
-to MMIO device regions.
+In commit 8adcff4ae7 ("fpu: handle raising Invalid for infzero in
+pick_nan_muladd") we changed the handling of 0 * Inf + QNaN to always
+raise the Invalid exception regardless of target architecture.  (This
+was a change affecting hppa, i386, sh4 and tricore.) However, this
+was incorrect for i386, which documents in the SDM section 14.5.2
+that for the 0 * Inf + NaN case that it will only raise the Invalid
+exception when the input is an SNaN.  (This is permitted by the IEEE
+754-2008 specification, which documents that whether we raise Invalid
+for 0 * Inf + QNaN is implementation defined.)
 
-Let's extend cpu_memory_rw_debug() to write to more memory regions,
-including MMIO device regions. Reshuffle the condition in
-memory_access_is_direct() to make it easier to read and add a comment.
+Adjust the softfloat pick_nan_muladd code to allow the target to
+suppress the raising of Invalid for the inf * zero + NaN case (as an
+extra flag orthogonal to its choice for when to use the default NaN),
+and enable that for x86.
 
-While this change implies that debug access can now also write to MMIO
-devices, we now are also permit ELF image loads and similar users of
-cpu_memory_rw_debug() to write to MMIO devices; currently we ignore
-these writes.
+We do not revert here the behaviour change for hppa, sh4 or tricore:
+ * The sh4 manual is clear that it should signal Invalid
+ * The tricore manual is a bit vague but doesn't say it shouldn't
+ * The hppa manual doesn't talk about fused multiply-add corner
+   cases at all
 
-Peter assumes [1] that there's probably a class of guest images, which
-will start writing junk (likely zeroes) into device model registers; we
-previously would silently ignore any such bogus ELF sections. Likely
-these images are of questionable correctness and this can be ignored. If
-ever a problem, we could make these cases use address_space_write_rom()
-instead, which is left unchanged for now.
-
-This patch is based on previous work by Stefan Zabka.
-
-[1] https://lore.kernel.org/all/CAFEAcA_2CEJKFyjvbwmpt=on=GgMVamQ5hiiVt+zUr6AY3X=Xg@mail.gmail.com/
-
-Resolves: https://gitlab.com/qemu-project/qemu/-/issues/213
-Signed-off-by: David Hildenbrand <david@redhat.com>
+Cc: qemu-stable@nongnu.org
+Fixes: 8adcff4ae7 (""fpu: handle raising Invalid for infzero in pick_nan_muladd")
+Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
 ---
- hw/core/cpu-system.c    | 13 +++++++++----
- include/exec/memattrs.h |  5 ++++-
- include/exec/memory.h   |  3 ++-
- system/physmem.c        |  9 ++-------
- 4 files changed, 17 insertions(+), 13 deletions(-)
+ include/fpu/softfloat-types.h | 16 +++++++++++++---
+ target/i386/tcg/fpu_helper.c  |  5 ++++-
+ fpu/softfloat-parts.c.inc     |  5 +++--
+ 3 files changed, 20 insertions(+), 6 deletions(-)
 
-diff --git a/hw/core/cpu-system.c b/hw/core/cpu-system.c
-index 6aae28a349..6e307c8959 100644
---- a/hw/core/cpu-system.c
-+++ b/hw/core/cpu-system.c
-@@ -51,13 +51,18 @@ hwaddr cpu_get_phys_page_attrs_debug(CPUState *cpu, vaddr addr,
-                                      MemTxAttrs *attrs)
- {
-     CPUClass *cc = CPU_GET_CLASS(cpu);
-+    hwaddr paddr;
+diff --git a/include/fpu/softfloat-types.h b/include/fpu/softfloat-types.h
+index 9d37cdfaa8e..d8f831c331d 100644
+--- a/include/fpu/softfloat-types.h
++++ b/include/fpu/softfloat-types.h
+@@ -278,11 +278,21 @@ typedef enum __attribute__((__packed__)) {
+     /* No propagation rule specified */
+     float_infzeronan_none = 0,
+     /* Result is never the default NaN (so always the input NaN) */
+-    float_infzeronan_dnan_never,
++    float_infzeronan_dnan_never = 1,
+     /* Result is always the default NaN */
+-    float_infzeronan_dnan_always,
++    float_infzeronan_dnan_always = 2,
+     /* Result is the default NaN if the input NaN is quiet */
+-    float_infzeronan_dnan_if_qnan,
++    float_infzeronan_dnan_if_qnan = 3,
++    /*
++     * Don't raise Invalid for 0 * Inf + NaN. Default is to raise.
++     * IEEE 754-2008 section 7.2 makes it implementation defined whether
++     * 0 * Inf + QNaN raises Invalid or not. Note that 0 * Inf + SNaN will
++     * raise the Invalid flag for the SNaN anyway.
++     *
++     * This is a flag which can be ORed in with any of the above
++     * DNaN behaviour options.
++     */
++    float_infzeronan_suppress_invalid = (1 << 2),
+ } FloatInfZeroNaNRule;
  
-     if (cc->sysemu_ops->get_phys_page_attrs_debug) {
--        return cc->sysemu_ops->get_phys_page_attrs_debug(cpu, addr, attrs);
-+        paddr = cc->sysemu_ops->get_phys_page_attrs_debug(cpu, addr, attrs);
-+    } else {
-+        /* Fallback for CPUs which don't implement the _attrs_ hook */
-+        *attrs = MEMTXATTRS_UNSPECIFIED;
-+        paddr = cc->sysemu_ops->get_phys_page_debug(cpu, addr);
-     }
--    /* Fallback for CPUs which don't implement the _attrs_ hook */
--    *attrs = MEMTXATTRS_UNSPECIFIED;
--    return cc->sysemu_ops->get_phys_page_debug(cpu, addr);
-+    /* Indicate that this is a debug access. */
-+    attrs->debug = 1;
-+    return paddr;
- }
- 
- hwaddr cpu_get_phys_page_debug(CPUState *cpu, vaddr addr)
-diff --git a/include/exec/memattrs.h b/include/exec/memattrs.h
-index e27c18f3dc..14e0edaa58 100644
---- a/include/exec/memattrs.h
-+++ b/include/exec/memattrs.h
-@@ -26,7 +26,8 @@ typedef struct MemTxAttrs {
-     /* Bus masters which don't specify any attributes will get this
-      * (via the MEMTXATTRS_UNSPECIFIED constant), so that we can
-      * distinguish "all attributes deliberately clear" from
--     * "didn't specify" if necessary.
-+     * "didn't specify" if necessary. "debug" can be set alongside
-+     * "unspecified".
+ /*
+diff --git a/target/i386/tcg/fpu_helper.c b/target/i386/tcg/fpu_helper.c
+index d0a1e2f3c8a..e0a072b4ebc 100644
+--- a/target/i386/tcg/fpu_helper.c
++++ b/target/i386/tcg/fpu_helper.c
+@@ -178,8 +178,11 @@ void cpu_init_fp_statuses(CPUX86State *env)
+      * "Fused-Multiply-ADD (FMA) Numeric Behavior" the NaN handling is
+      * specified -- for 0 * inf + NaN the input NaN is selected, and if
+      * there are multiple input NaNs they are selected in the order a, b, c.
++     * We also do not raise Invalid for the 0 * inf + (Q)NaN case.
       */
-     unsigned int unspecified:1;
-     /*
-@@ -50,6 +51,8 @@ typedef struct MemTxAttrs {
-      * (see MEMTX_ACCESS_ERROR).
-      */
-     unsigned int memory:1;
-+    /* Debug access that can even write to ROM. */
-+    unsigned int debug:1;
-     /* Requester ID (for MSI for example) */
-     unsigned int requester_id:16;
+-    set_float_infzeronan_rule(float_infzeronan_dnan_never, &env->sse_status);
++    set_float_infzeronan_rule(float_infzeronan_dnan_never |
++                              float_infzeronan_suppress_invalid,
++                              &env->sse_status);
+     set_float_3nan_prop_rule(float_3nan_prop_abc, &env->sse_status);
+     /* Default NaN: sign bit set, most significant frac bit set */
+     set_float_default_nan_pattern(0b11000000, &env->fp_status);
+diff --git a/fpu/softfloat-parts.c.inc b/fpu/softfloat-parts.c.inc
+index ebde42992fc..4bb341b2f94 100644
+--- a/fpu/softfloat-parts.c.inc
++++ b/fpu/softfloat-parts.c.inc
+@@ -126,7 +126,8 @@ static FloatPartsN *partsN(pick_nan_muladd)(FloatPartsN *a, FloatPartsN *b,
+         float_raise(float_flag_invalid | float_flag_invalid_snan, s);
+     }
  
-diff --git a/include/exec/memory.h b/include/exec/memory.h
-index b3287518f0..2b9447ec8f 100644
---- a/include/exec/memory.h
-+++ b/include/exec/memory.h
-@@ -3008,7 +3008,8 @@ static inline bool memory_access_is_direct(MemoryRegion *mr, bool is_write,
-     if (!memory_region_supports_direct_access(mr)) {
-         return false;
+-    if (infzero) {
++    if (infzero &&
++        !(s->float_infzeronan_rule & float_infzeronan_suppress_invalid)) {
+         /* This is (0 * inf) + NaN or (inf * 0) + NaN */
+         float_raise(float_flag_invalid | float_flag_invalid_imz, s);
      }
--    if (is_write) {
-+    /* Debug access can write to ROM. */
-+    if (is_write && !attrs.debug) {
-         return !mr->readonly && !mr->rom_device;
-     }
-     return true;
-diff --git a/system/physmem.c b/system/physmem.c
-index 52b20b8ae5..f153f57666 100644
---- a/system/physmem.c
-+++ b/system/physmem.c
-@@ -3572,13 +3572,8 @@ int cpu_memory_rw_debug(CPUState *cpu, vaddr addr,
-         if (l > len)
-             l = len;
-         phys_addr += (addr & ~TARGET_PAGE_MASK);
--        if (is_write) {
--            res = address_space_write_rom(cpu->cpu_ases[asidx].as, phys_addr,
--                                          attrs, buf, l);
--        } else {
--            res = address_space_read(cpu->cpu_ases[asidx].as, phys_addr,
--                                     attrs, buf, l);
--        }
-+        res = address_space_rw(cpu->cpu_ases[asidx].as, phys_addr, attrs, buf,
-+                               l, is_write);
-         if (res != MEMTX_OK) {
-             return -1;
-         }
+@@ -144,7 +145,7 @@ static FloatPartsN *partsN(pick_nan_muladd)(FloatPartsN *a, FloatPartsN *b,
+          * Inf * 0 + NaN -- some implementations return the
+          * default NaN here, and some return the input NaN.
+          */
+-        switch (s->float_infzeronan_rule) {
++        switch (s->float_infzeronan_rule & ~float_infzeronan_suppress_invalid) {
+         case float_infzeronan_dnan_never:
+             break;
+         case float_infzeronan_dnan_always:
 -- 
-2.47.1
+2.34.1
 
 
