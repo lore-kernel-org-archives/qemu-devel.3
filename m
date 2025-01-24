@@ -4,86 +4,86 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1A975C0218C
-	for <qemu-devel@archiver.kernel.org>; Fri, 24 Jan 2025 16:36:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B29E2C02181
+	for <qemu-devel@archiver.kernel.org>; Fri, 24 Jan 2025 16:37:39 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tbMe6-00026r-RY; Fri, 24 Jan 2025 11:35:04 -0500
+	id 1tbMYd-0004El-6x; Fri, 24 Jan 2025 11:29:23 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1tbMZh-0006B9-Mc
- for qemu-devel@nongnu.org; Fri, 24 Jan 2025 11:30:32 -0500
-Received: from mail-wm1-x32a.google.com ([2a00:1450:4864:20::32a])
+ id 1tbMYE-0003hD-Oz
+ for qemu-devel@nongnu.org; Fri, 24 Jan 2025 11:28:59 -0500
+Received: from mail-wm1-x32f.google.com ([2a00:1450:4864:20::32f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1tbMZY-0005pO-IB
- for qemu-devel@nongnu.org; Fri, 24 Jan 2025 11:30:26 -0500
-Received: by mail-wm1-x32a.google.com with SMTP id
- 5b1f17b1804b1-436202dd730so16573815e9.2
- for <qemu-devel@nongnu.org>; Fri, 24 Jan 2025 08:30:02 -0800 (PST)
+ id 1tbMY7-0005OV-Fs
+ for qemu-devel@nongnu.org; Fri, 24 Jan 2025 11:28:56 -0500
+Received: by mail-wm1-x32f.google.com with SMTP id
+ 5b1f17b1804b1-43635796b48so15503355e9.0
+ for <qemu-devel@nongnu.org>; Fri, 24 Jan 2025 08:28:50 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1737736202; x=1738341002; darn=nongnu.org;
+ d=linaro.org; s=google; t=1737736129; x=1738340929; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=8AGs31o3QVkBdFVRa9k1zWhHeCcvoSGGZNisnAwsyfU=;
- b=z1OSb0dple0v4WE5ZeuN071rjzwF5/aXCec82pyAzyH5A5WNDdXfyl264E664u8FkE
- L52Dh88kHERzZMBFTAExDpbcaD+U/MGRdW+0AU9TN0z70Ms1G3cSkXcf3EIMoDg+kxBr
- O9QVBGW/3rMKCvr4kSZxrG28dNY0s0sadXcKPiAfjlMogU28+Cq1OC0L5lEZI3BqSDNW
- 09bir7mr6q5Q4B8Xlx5XXzDwkOUHyHteu7NsBCbFzZjzSn9qiP9hgTmFd0Fst9NWd/tS
- wsjR1zExgccGsV0qGL6A5BNnqZY1anBJ8x+91y4Cn/YfZsDp8cxbWSDP9Y6SweYoXWVs
- FXGw==
+ :reply-to; bh=VV3/bjL+L2GYg3BGKCSiBTft5KK2gRABV/uDNOnPfr0=;
+ b=r+ltMcYYV7BisqC7NqaVa+pBAejxm0grKgQghnBWOxH6V/SeIw73NVAY4JXgcJbT7j
+ Nrh5354ZQ6IF4kPZ7dzz52jHyecbXNtvwJpb3BsQ9TfGNNSVZ72Ax8rCxqf1w82kDj/l
+ LkeThlijJdol3XEoZQy1Zwx408GoTCuzN9b5SIeyXJIYljymmsjZswkdrJPk6LYtFEMz
+ n27HAQEPRDVzrmbczu/ZicTyD8yMVHYvx1tTJGUV2NmwTunYbQT/8oDdtLUXfWcYQy0Q
+ CfST1LJoybr9jSMo6TOQ5CZAvF/vvv9Jv/uNTcNmADHNi3+3Rt51SjH/9lRW1DZNMHgd
+ np4Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1737736202; x=1738341002;
+ d=1e100.net; s=20230601; t=1737736129; x=1738340929;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=8AGs31o3QVkBdFVRa9k1zWhHeCcvoSGGZNisnAwsyfU=;
- b=CkQYNXMee5kSp7BwKM30pkHEHhAOh0OPL91TnV9lPTiS9jmtCDlBOywPfdwrOCjzLU
- By+aioS3PrU+MLpnnBLZun2maiiIw2a2/z0/ikVyStfguDAovewoICyQuITXzNmQIn0m
- VQ5+T1GyC9ZSGM5LO95MitqGWfSES5zk5nJl4vCKLOcWUE7PP+dOMOo/iqgmR7qU4esp
- nEbXKl+B9wwTBZEC/tZsyRWXzwxAlT841Lvvh4uunHlPCAU+OnMCj4C3oE1p8AO49gkb
- zdLVkSeN0ZtxJ9+3LClFl7+93sOI9nVg8z8zO7ESqpCUoILdCfxPmhlmJhiLhPAFFNo+
- 9Icw==
+ bh=VV3/bjL+L2GYg3BGKCSiBTft5KK2gRABV/uDNOnPfr0=;
+ b=SjNsb4lMjM5OwZUK6A0+Agsrnbo8wRQCgWmh32/XqZ0Lfy9shnDZxUr1XSzrlFYtn1
+ w3Q5Pcc7B9bhiJuG5HRhwcveIDVDh89KqQ0G74peab5TQccgD7U+i6jwf87P9MR60sLX
+ ydpRaVLcYvDxWJ8yLhjtrMosj8diHXoZjBnc6VhqB7QynhwRxbs3JUMiqyGqtXs5bav7
+ wkLHHDayg7KdHgAz2/TU/szrZVVvATzs5jpsmxMWrzS5A5UnNmzvb8o79xjcYUjiQAKD
+ XU5P14eG8XrnjgLU8VU9TjsAgs2HHEaRZK8FBVbw45aX4q4+YrrvkSDRjITqCFOThLW3
+ SGRQ==
 X-Forwarded-Encrypted: i=1;
- AJvYcCV+NyI99Tumj78idXfx9oNC92JQrVyfAkXJ77Wilz0j9nYVswVYR/JrQ8rXbphVHFH4KUgm7bcRHNqy@nongnu.org
-X-Gm-Message-State: AOJu0Yxfvj+eWs7GMJuQ8Ddb5KlxximL/Nx5FqQAiAkEvU4vcPCUxjl3
- vYHDA9ctInL85dopkTKhz/k1bih8fBg5X25qwz/m2v0NLntzAo6Z4gn36ZXCDC0=
-X-Gm-Gg: ASbGnctO8TpGF0BZ8SSARsr7ESujVxRGp8qG3XRgu3LULPGzkDqzIhvX7KUFbvDtGcq
- QUU8qu92qIkLAq3nSl3dqfoktGee++U5mxQYCeTAQtGhFKbZ3oCO6OoBNuimUZNLX9yUwgvxN5V
- lbBKlIOzZWjk0HQz6LKYiyFC82qpo9U8A1AhmFSx4/gcJnfmpCSwEwzXg//33GovVGG4lA9qDpp
- LEoyGjgh6UcywIYpFJp5HjN9t4Au3pu98ISs+eNRJzA94xeEeHKj8Cs78WSYb8hmPDK/2l7H+Zp
- N/z2NvNqnOI=
-X-Google-Smtp-Source: AGHT+IFPkFWOdrpMy6pmk7bip4i9Rgu1TDMewcqrfAGSLoLqHgZGVDgbKQy/5NGeDjGRsHNmBnfgEA==
-X-Received: by 2002:a05:600c:3484:b0:434:f8e5:1bb with SMTP id
- 5b1f17b1804b1-438913e48fdmr301349545e9.12.1737736201795; 
- Fri, 24 Jan 2025 08:30:01 -0800 (PST)
+ AJvYcCXS1zaDWs4jX+z3d9fY5TOQVxeDywKS0NtFZjXuwri4LGDukXs0Iojrqoe2FPpvzz5fE7Lk2GHiFkVy@nongnu.org
+X-Gm-Message-State: AOJu0Yzpjb8szJpKeeUeRZ1JMkhNJLgHxI0BYaWMSHMQu5jsGjoUNlVE
+ cHZBAAVWxVnrxI0rHxDsS3mjydAj8ComNe4d6TUX/xFI/s68UKVPiU5j15PUojw=
+X-Gm-Gg: ASbGnctMK2djNG7xY23djmRW/a3GNvHyV+GRKE2jOXn1pPrQ7QU1jL6awQgQ+NhWWVm
+ Xs+UkL/ktKDBvDGYFCSXSa4NoeH5489J0kBH1vt6xwaSl+DuWo4HIDPv1Fce8S2xw50H1q0BnfJ
+ 9UoV94mhOYlbK6YgvErCPOb1g6WqNCyKodSfce52OwAMHOe0HzWHsHF97GB/BR4kLxuQ8qS/3vl
+ HJ25OW1719vGAIcPF6ner0D8bNVqOgmcK7UgPaEYcetAbJELeF39wfs4Cr3D490cNBfVikDdCM6
+ e5VTEGVrhLc=
+X-Google-Smtp-Source: AGHT+IFoeMyckCrxiOWwwShM978drFl2M17PVpytmthFnhi6xGEjjHz3Wd9mHJ4CExPD1DMNh3BpXw==
+X-Received: by 2002:a05:600c:1c14:b0:434:fddf:5c06 with SMTP id
+ 5b1f17b1804b1-438b8841d5amr75426785e9.1.1737736129298; 
+ Fri, 24 Jan 2025 08:28:49 -0800 (PST)
 Received: from orth.archaic.org.uk (orth.archaic.org.uk. [2001:8b0:1d0::2])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-438bd47eecasm31683025e9.6.2025.01.24.08.30.00
+ 5b1f17b1804b1-438bd47eecasm31683025e9.6.2025.01.24.08.28.48
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 24 Jan 2025 08:30:00 -0800 (PST)
+ Fri, 24 Jan 2025 08:28:48 -0800 (PST)
 From: Peter Maydell <peter.maydell@linaro.org>
 To: qemu-arm@nongnu.org,
 	qemu-devel@nongnu.org
-Subject: [PATCH 66/76] target/arm: Handle FPCR.AH in SVE FTSSEL
-Date: Fri, 24 Jan 2025 16:28:26 +0000
-Message-Id: <20250124162836.2332150-67-peter.maydell@linaro.org>
+Subject: [PATCH 09/76] target/arm: Use fp_status_a32 in vfp_cmp helpers
+Date: Fri, 24 Jan 2025 16:27:29 +0000
+Message-Id: <20250124162836.2332150-10-peter.maydell@linaro.org>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20250124162836.2332150-1-peter.maydell@linaro.org>
 References: <20250124162836.2332150-1-peter.maydell@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32a;
- envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x32a.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::32f;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x32f.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=unavailable autolearn_force=no
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -99,99 +99,36 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The negation step in the SVE FTSSEL insn mustn't negate a NaN when
-FPCR.AH is set.  Pass FPCR.AH to the helper via the SIMD data field
-and use that to determine whether to do the negation.
+The helpers vfp_cmps, vfp_cmpes, vfp_cmpd, vfp_cmped are used only from
+the A32 decoder; the A64 decoder uses separate vfp_cmps_a64 etc helpers
+(because for A64 we update the main NZCV flags and for A32 we update
+the FPSCR NZCV flags). So we can make these helpers use the fp_status_a32
+field instead of fp_status.
 
 Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
 ---
- target/arm/tcg/sve_helper.c    | 18 +++++++++++++++---
- target/arm/tcg/translate-sve.c |  4 ++--
- 2 files changed, 17 insertions(+), 5 deletions(-)
+We could in theory make A32 use the a64 helpers and do the setting
+of vfp.fpsr NZCV in the generated code from the helper return value,
+but it doesn't seem worthwhile to me.
+---
+ target/arm/vfp_helper.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/target/arm/tcg/sve_helper.c b/target/arm/tcg/sve_helper.c
-index 90bcf680fa4..a39a3ed0cf9 100644
---- a/target/arm/tcg/sve_helper.c
-+++ b/target/arm/tcg/sve_helper.c
-@@ -2555,6 +2555,7 @@ void HELPER(sve_fexpa_d)(void *vd, void *vn, uint32_t desc)
- void HELPER(sve_ftssel_h)(void *vd, void *vn, void *vm, uint32_t desc)
- {
-     intptr_t i, opr_sz = simd_oprsz(desc) / 2;
-+    bool fpcr_ah = extract32(desc, SIMD_DATA_SHIFT, 1);
-     uint16_t *d = vd, *n = vn, *m = vm;
-     for (i = 0; i < opr_sz; i += 1) {
-         uint16_t nn = n[i];
-@@ -2562,13 +2563,17 @@ void HELPER(sve_ftssel_h)(void *vd, void *vn, void *vm, uint32_t desc)
-         if (mm & 1) {
-             nn = float16_one;
-         }
--        d[i] = nn ^ (mm & 2) << 14;
-+        if ((mm & 2) && !(fpcr_ah && float16_is_any_nan(nn))) {
-+            nn ^= (1 << 15);
-+        }
-+        d[i] = nn;
-     }
+diff --git a/target/arm/vfp_helper.c b/target/arm/vfp_helper.c
+index 0671ba3a88b..034f26e5daa 100644
+--- a/target/arm/vfp_helper.c
++++ b/target/arm/vfp_helper.c
+@@ -373,8 +373,8 @@ void VFP_HELPER(cmpe, P)(ARGTYPE a, ARGTYPE b, CPUARMState *env) \
+         FLOATTYPE ## _compare(a, b, &env->vfp.FPST)); \
  }
+ DO_VFP_cmp(h, float16, dh_ctype_f16, fp_status_f16)
+-DO_VFP_cmp(s, float32, float32, fp_status)
+-DO_VFP_cmp(d, float64, float64, fp_status)
++DO_VFP_cmp(s, float32, float32, fp_status_a32)
++DO_VFP_cmp(d, float64, float64, fp_status_a32)
+ #undef DO_VFP_cmp
  
- void HELPER(sve_ftssel_s)(void *vd, void *vn, void *vm, uint32_t desc)
- {
-     intptr_t i, opr_sz = simd_oprsz(desc) / 4;
-+    bool fpcr_ah = extract32(desc, SIMD_DATA_SHIFT, 1);
-     uint32_t *d = vd, *n = vn, *m = vm;
-     for (i = 0; i < opr_sz; i += 1) {
-         uint32_t nn = n[i];
-@@ -2576,13 +2581,17 @@ void HELPER(sve_ftssel_s)(void *vd, void *vn, void *vm, uint32_t desc)
-         if (mm & 1) {
-             nn = float32_one;
-         }
--        d[i] = nn ^ (mm & 2) << 30;
-+        if ((mm & 2) && !(fpcr_ah && float32_is_any_nan(nn))) {
-+            nn ^= (1U << 31);
-+        }
-+        d[i] = nn;
-     }
- }
- 
- void HELPER(sve_ftssel_d)(void *vd, void *vn, void *vm, uint32_t desc)
- {
-     intptr_t i, opr_sz = simd_oprsz(desc) / 8;
-+    bool fpcr_ah = extract32(desc, SIMD_DATA_SHIFT, 1);
-     uint64_t *d = vd, *n = vn, *m = vm;
-     for (i = 0; i < opr_sz; i += 1) {
-         uint64_t nn = n[i];
-@@ -2590,7 +2599,10 @@ void HELPER(sve_ftssel_d)(void *vd, void *vn, void *vm, uint32_t desc)
-         if (mm & 1) {
-             nn = float64_one;
-         }
--        d[i] = nn ^ (mm & 2) << 62;
-+        if ((mm & 2) && !(fpcr_ah && float64_is_any_nan(nn))) {
-+            nn ^= (1ULL << 63);
-+        }
-+        d[i] = nn;
-     }
- }
- 
-diff --git a/target/arm/tcg/translate-sve.c b/target/arm/tcg/translate-sve.c
-index 663634e3a39..2d70b0faad2 100644
---- a/target/arm/tcg/translate-sve.c
-+++ b/target/arm/tcg/translate-sve.c
-@@ -1238,14 +1238,14 @@ static gen_helper_gvec_2 * const fexpa_fns[4] = {
-     gen_helper_sve_fexpa_s, gen_helper_sve_fexpa_d,
- };
- TRANS_FEAT_NONSTREAMING(FEXPA, aa64_sve, gen_gvec_ool_zz,
--                        fexpa_fns[a->esz], a->rd, a->rn, 0)
-+                        fexpa_fns[a->esz], a->rd, a->rn, s->fpcr_ah)
- 
- static gen_helper_gvec_3 * const ftssel_fns[4] = {
-     NULL,                    gen_helper_sve_ftssel_h,
-     gen_helper_sve_ftssel_s, gen_helper_sve_ftssel_d,
- };
- TRANS_FEAT_NONSTREAMING(FTSSEL, aa64_sve, gen_gvec_ool_arg_zzz,
--                        ftssel_fns[a->esz], a, 0)
-+                        ftssel_fns[a->esz], a, s->fpcr_ah)
- 
- /*
-  *** SVE Predicate Logical Operations Group
+ /* Integer to float and float to integer conversions */
 -- 
 2.34.1
 
