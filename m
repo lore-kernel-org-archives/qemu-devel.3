@@ -4,47 +4,47 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A0AB4C0218B
-	for <qemu-devel@archiver.kernel.org>; Fri, 24 Jan 2025 13:46:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4C635C0218B
+	for <qemu-devel@archiver.kernel.org>; Fri, 24 Jan 2025 13:46:49 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tbJve-0004da-Hk; Fri, 24 Jan 2025 08:40:58 -0500
+	id 1tbJvW-0003l4-U7; Fri, 24 Jan 2025 08:40:51 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <xiaoyao.li@intel.com>)
- id 1tbJvV-0003jl-0d
- for qemu-devel@nongnu.org; Fri, 24 Jan 2025 08:40:49 -0500
+ id 1tbJvB-0001ja-B0
+ for qemu-devel@nongnu.org; Fri, 24 Jan 2025 08:40:32 -0500
 Received: from mgamail.intel.com ([198.175.65.13])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <xiaoyao.li@intel.com>)
- id 1tbJvS-0003xi-O3
- for qemu-devel@nongnu.org; Fri, 24 Jan 2025 08:40:48 -0500
+ id 1tbJv5-00042W-F4
+ for qemu-devel@nongnu.org; Fri, 24 Jan 2025 08:40:29 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1737726047; x=1769262047;
+ t=1737726024; x=1769262024;
  h=from:to:cc:subject:date:message-id:in-reply-to:
  references:mime-version:content-transfer-encoding;
- bh=EUwHVgF5vEEMvJW0RWlFhvQxAskobUwBHDJmxFXAZbY=;
- b=ivHu7fnI5EZIHtfO3WRCMbottlHzmcdyCTw06B5bq6U0UaTkZpHWoumH
- wU6eyz89eHB5z9DYOt9SeRUUO6cw1pNqr7LmJtgF/o5HOu0H1PpuRQaYv
- Z8FS2qMqJBf3Mxukq5nYqcIC97TZQgX1qHAgDAMrRh0KPaUrxd9+9vkVn
- ps70FTTD0IIot086dmHdylkyEC8ZJqMy0sgHrfyt1m8O3wfRDb4UT4c+V
- JSsx6NIL7SvSQJZjMC3N14NyLfIDikBIwzJqZkE1JCyoNIJN8gCGDsHLr
- DSc3P1K8B5X02t5o4s+mxX2Tk9RfP3jGI186b1lhQtrvUuTFNXqWFjE3j A==;
-X-CSE-ConnectionGUID: Cf8F2tBeTfeR/E8NWksBfw==
-X-CSE-MsgGUID: QS3yzxkuSIW3F4w4QLvDQA==
-X-IronPort-AV: E=McAfee;i="6700,10204,11325"; a="49246676"
-X-IronPort-AV: E=Sophos;i="6.13,231,1732608000"; d="scan'208";a="49246676"
+ bh=JKMlucssmDcGsanH6kb+uP0DlL1BGA8NocL5uyi4aSQ=;
+ b=eTp70tKdpAv0t7Tb0Yih1ui6Pk2s96E1QKfkkxcrXvWcEdD+7uSdSIKN
+ UGWT+siS1Od+7iNV3kSSBiGRqo4G/seyYmRB7aUuzq+E2WeiyqOl3ygrz
+ bGCbc6WEPHM5R35p/YOQfKcoW3QC2lSuDknudxxQufwFYJrJifKgLID7U
+ P2uChoefxakr3m0ZIqS+hBzkTSdI5JXw9wrs9nRIHDal5xsp+CX2ij5Rv
+ raraWJfsSpgJ6CV6SRP+nBT4+CHNw4jc3f41AL05WnmaMUsWvGy7f/oxP
+ BvneAKZGOYHp6PasPwMk3xtSAF3Smh0Rd64zEtbuB9t+JRet6IYNF0m1C w==;
+X-CSE-ConnectionGUID: wiZgsbWVQim+dSL5ss83ww==
+X-CSE-MsgGUID: sNvXmOeDR6O8IiXadwku1Q==
+X-IronPort-AV: E=McAfee;i="6700,10204,11325"; a="49246618"
+X-IronPort-AV: E=Sophos;i="6.13,231,1732608000"; d="scan'208";a="49246618"
 Received: from fmviesa003.fm.intel.com ([10.60.135.143])
  by orvoesa105.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 24 Jan 2025 05:40:17 -0800
-X-CSE-ConnectionGUID: w195bjlmQeiieJmUoh3uZw==
-X-CSE-MsgGUID: 24wpkVZCSQaDlIoTepYyDw==
+ 24 Jan 2025 05:39:59 -0800
+X-CSE-ConnectionGUID: MhmOIQIkSiiYhKyyfDZaXg==
+X-CSE-MsgGUID: F+sYU9DxSfK/Y6tdvLojTQ==
 X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.12,224,1728975600"; d="scan'208";a="111804499"
+X-IronPort-AV: E=Sophos;i="6.12,224,1728975600"; d="scan'208";a="111804477"
 Received: from lxy-clx-4s.sh.intel.com ([10.239.48.52])
- by fmviesa003.fm.intel.com with ESMTP; 24 Jan 2025 05:40:13 -0800
+ by fmviesa003.fm.intel.com with ESMTP; 24 Jan 2025 05:39:55 -0800
 From: Xiaoyao Li <xiaoyao.li@intel.com>
 To: Paolo Bonzini <pbonzini@redhat.com>,
  =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
@@ -57,9 +57,10 @@ Cc: Zhao Liu <zhao1.liu@intel.com>, "Michael S. Tsirkin" <mst@redhat.com>,
  Rick Edgecombe <rick.p.edgecombe@intel.com>,
  Francesco Lavra <francescolavra.fl@gmail.com>, xiaoyao.li@intel.com,
  qemu-devel@nongnu.org, kvm@vger.kernel.org
-Subject: [PATCH v7 52/52] docs: Add TDX documentation
-Date: Fri, 24 Jan 2025 08:20:48 -0500
-Message-Id: <20250124132048.3229049-53-xiaoyao.li@intel.com>
+Subject: [PATCH v7 47/52] i386/cgs: Introduce
+ x86_confidential_guest_check_features()
+Date: Fri, 24 Jan 2025 08:20:43 -0500
+Message-Id: <20250124132048.3229049-48-xiaoyao.li@intel.com>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20250124132048.3229049-1-xiaoyao.li@intel.com>
 References: <20250124132048.3229049-1-xiaoyao.li@intel.com>
@@ -91,218 +92,64 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Add docs/system/i386/tdx.rst for TDX support, and add tdx in
-confidential-guest-support.rst
+To do cgs specific feature checking. Note the feature checking in
+x86_cpu_filter_features() is valid for non-cgs VMs. For cgs VMs like
+TDX, what features can be supported has more restrictions.
 
 Signed-off-by: Xiaoyao Li <xiaoyao.li@intel.com>
 ---
-Changes in v6:
- - Add more information of "Feature configuration"
- - Mark TD Attestation as future work because KVM now drops the support
-   of it.
+ target/i386/confidential-guest.h | 13 +++++++++++++
+ target/i386/kvm/kvm.c            |  8 ++++++++
+ 2 files changed, 21 insertions(+)
 
-Changes in v5:
- - Add TD attestation section and update the QEMU parameter;
-
-Changes since v1:
- - Add prerequisite of private gmem;
- - update example command to launch TD;
-
-Changes since RFC v4:
- - add the restriction that kernel-irqchip must be split
----
- docs/system/confidential-guest-support.rst |   1 +
- docs/system/i386/tdx.rst                   | 156 +++++++++++++++++++++
- docs/system/target-i386.rst                |   1 +
- 3 files changed, 158 insertions(+)
- create mode 100644 docs/system/i386/tdx.rst
-
-diff --git a/docs/system/confidential-guest-support.rst b/docs/system/confidential-guest-support.rst
-index 0c490dbda2b7..66129fbab64c 100644
---- a/docs/system/confidential-guest-support.rst
-+++ b/docs/system/confidential-guest-support.rst
-@@ -38,6 +38,7 @@ Supported mechanisms
- Currently supported confidential guest mechanisms are:
+diff --git a/target/i386/confidential-guest.h b/target/i386/confidential-guest.h
+index 777d43cc9688..48b88dbd3130 100644
+--- a/target/i386/confidential-guest.h
++++ b/target/i386/confidential-guest.h
+@@ -42,6 +42,7 @@ struct X86ConfidentialGuestClass {
+     void (*cpu_instance_init)(X86ConfidentialGuest *cg, CPUState *cpu);
+     uint32_t (*adjust_cpuid_features)(X86ConfidentialGuest *cg, uint32_t feature,
+                                       uint32_t index, int reg, uint32_t value);
++    int (*check_features)(X86ConfidentialGuest *cg, CPUState *cs);
+ };
  
- * AMD Secure Encrypted Virtualization (SEV) (see :doc:`i386/amd-memory-encryption`)
-+* Intel Trust Domain Extension (TDX) (see :doc:`i386/tdx`)
- * POWER Protected Execution Facility (PEF) (see :ref:`power-papr-protected-execution-facility-pef`)
- * s390x Protected Virtualization (PV) (see :doc:`s390x/protvirt`)
+ /**
+@@ -91,4 +92,16 @@ static inline int x86_confidential_guest_adjust_cpuid_features(X86ConfidentialGu
+     }
+ }
  
-diff --git a/docs/system/i386/tdx.rst b/docs/system/i386/tdx.rst
-new file mode 100644
-index 000000000000..ea2e601dde9a
---- /dev/null
-+++ b/docs/system/i386/tdx.rst
-@@ -0,0 +1,156 @@
-+Intel Trusted Domain eXtension (TDX)
-+====================================
++static inline int x86_confidential_guest_check_features(X86ConfidentialGuest *cg,
++                                                        CPUState *cs)
++{
++    X86ConfidentialGuestClass *klass = X86_CONFIDENTIAL_GUEST_GET_CLASS(cg);
 +
-+Intel Trusted Domain eXtensions (TDX) refers to an Intel technology that extends
-+Virtual Machine Extensions (VMX) and Multi-Key Total Memory Encryption (MKTME)
-+with a new kind of virtual machine guest called a Trust Domain (TD). A TD runs
-+in a CPU mode that is designed to protect the confidentiality of its memory
-+contents and its CPU state from any other software, including the hosting
-+Virtual Machine Monitor (VMM), unless explicitly shared by the TD itself.
++    if (klass->check_features) {
++        return klass->check_features(cg, cs);
++    }
 +
-+Prerequisites
-+-------------
++    return 0;
++}
 +
-+To run TD, the physical machine needs to have TDX module loaded and initialized
-+while KVM hypervisor has TDX support and has TDX enabled. If those requirements
-+are met, the ``KVM_CAP_VM_TYPES`` will report the support of ``KVM_X86_TDX_VM``.
-+
-+Trust Domain Virtual Firmware (TDVF)
-+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-+
-+Trust Domain Virtual Firmware (TDVF) is required to provide TD services to boot
-+TD Guest OS. TDVF needs to be copied to guest private memory and measured before
-+the TD boots.
-+
-+KVM vcpu ioctl ``KVM_TDX_INIT_MEM_REGION`` can be used to populate the TDVF
-+content into its private memory.
-+
-+Since TDX doesn't support readonly memslot, TDVF cannot be mapped as pflash
-+device and it actually works as RAM. "-bios" option is chosen to load TDVF.
-+
-+OVMF is the opensource firmware that implements the TDVF support. Thus the
-+command line to specify and load TDVF is ``-bios OVMF.fd``
-+
-+Feature Configuration
-+---------------------
-+
-+Unlike non-TDX VM, the CPU features (enumerated by CPU or MSR) of a TD are not
-+under full control of VMM. VMM can only configure part of features of a TD on
-+``KVM_TDX_INIT_VM`` command of VM scope ``MEMORY_ENCRYPT_OP`` ioctl.
-+
-+The configurable features have three types:
-+
-+- Attributes:
-+  - PKS (bit 30) controls whether Supervisor Protection Keys is exposed to TD,
-+  which determines related CPUID bit and CR4 bit;
-+  - PERFMON (bit 63) controls whether PMU is exposed to TD.
-+
-+- XSAVE related features (XFAM):
-+  XFAM is a 64b mask, which has the same format as XCR0 or IA32_XSS MSR. It
-+  determines the set of extended features available for use by the guest TD.
-+
-+- CPUID features:
-+  Only some bits of some CPUID leaves are directly configurable by VMM.
-+
-+What features can be configured is reported via TDX capabilities.
-+
-+TDX capabilities
-+~~~~~~~~~~~~~~~~
-+
-+The VM scope ``MEMORY_ENCRYPT_OP`` ioctl provides command ``KVM_TDX_CAPABILITIES``
-+to get the TDX capabilities from KVM. It returns a data structure of
-+``struct kvm_tdx_capabilities``, which tells the supported configuration of
-+attributes, XFAM and CPUIDs.
-+
-+TD attributes
-+~~~~~~~~~~~~~
-+
-+QEMU supports configuring raw 64-bit TD attributes directly via "attributes"
-+property of "tdx-guest" object. Note, it's users' responsibility to provide a
-+valid value because some bits may not supported by current QEMU or KVM yet.
-+
-+QEMU also supports the configuration of individual attribute bits that are
-+supported by it, via properties of "tdx-guest" object.
-+E.g., "sept-ve-disable" (bit 28).
-+
-+MSR based features
-+~~~~~~~~~~~~~~~~~~
-+
-+Current KVM doesn't support MSR based feature (e.g., MSR_IA32_ARCH_CAPABILITIES)
-+configuration for TDX, and it's a future work to enable it in QEMU when KVM adds
-+support of it.
-+
-+Feature check
-+~~~~~~~~~~~~~
-+
-+QEMU checks if the final (CPU) features, determined by given cpu model and
-+explicit feature adjustment of "+featureA/-featureB", can be supported or not.
-+It can produce feature not supported warning like
-+
-+  "warning: host doesn't support requested feature: CPUID.07H:EBX.intel-pt [bit 25]"
-+
-+It can also produce warning like
-+
-+  "warning: TDX forcibly sets the feature: CPUID.80000007H:EDX.invtsc [bit 8]"
-+
-+if the fixed-1 feature is requested to be disabled explicitly. This is newly
-+added to QEMU for TDX because TDX has fixed-1 features that are forcibly enabled
-+by TDX module and VMM cannot disable them.
-+
-+Launching a TD (TDX VM)
-+-----------------------
-+
-+To launch a TD, the necessary command line options are tdx-guest object and
-+split kernel-irqchip, as below:
-+
-+.. parsed-literal::
-+
-+    |qemu_system_x86| \\
-+        -object tdx-guest,id=tdx0 \\
-+        -machine ...,kernel-irqchip=split,confidential-guest-support=tdx0 \\
-+        -bios OVMF.fd \\
-+
-+Restrictions
-+------------
-+
-+ - kernel-irqchip must be split;
-+
-+ - No readonly support for private memory;
-+
-+ - No SMM support: SMM support requires manipulating the guest register states
-+   which is not allowed;
-+
-+Debugging
-+---------
-+
-+Bit 0 of TD attributes, is DEBUG bit, which decides if the TD runs in off-TD
-+debug mode. When in off-TD debug mode, TD's VCPU state and private memory are
-+accessible via given SEAMCALLs. This requires KVM to expose APIs to invoke those
-+SEAMCALLs and corresonponding QEMU change.
-+
-+It's targeted as future work.
-+
-+TD attestation
-+--------------
-+
-+In TD guest, the attestation process is used to verify the TDX guest
-+trustworthiness to other entities before provisioning secrets to the guest.
-+
-+TD attestation is initiated first by calling TDG.MR.REPORT inside TD to get the
-+REPORT. Then the REPORT data needs to be converted into a remotely verifiable
-+Quote by SGX Quoting Enclave (QE).
-+
-+It's a future work in QEMU to add support of TD attestation since it lacks
-+support in current KVM.
-+
-+Live Migration
-+--------------
-+
-+Future work.
-+
-+References
-+----------
-+
-+- `TDX Homepage <https://www.intel.com/content/www/us/en/developer/articles/technical/intel-trust-domain-extensions.html>`__
-+
-+- `SGX QE <https://github.com/intel/SGXDataCenterAttestationPrimitives/tree/master/QuoteGeneration>`__
-diff --git a/docs/system/target-i386.rst b/docs/system/target-i386.rst
-index ab7af1a75d6e..43b09c79d6be 100644
---- a/docs/system/target-i386.rst
-+++ b/docs/system/target-i386.rst
-@@ -31,6 +31,7 @@ Architectural features
-    i386/kvm-pv
-    i386/sgx
-    i386/amd-memory-encryption
-+   i386/tdx
+ #endif
+diff --git a/target/i386/kvm/kvm.c b/target/i386/kvm/kvm.c
+index 17d7bf6ae9aa..27b4a069d194 100644
+--- a/target/i386/kvm/kvm.c
++++ b/target/i386/kvm/kvm.c
+@@ -2092,6 +2092,14 @@ int kvm_arch_init_vcpu(CPUState *cs)
+     int r;
+     Error *local_err = NULL;
  
- OS requirements
- ~~~~~~~~~~~~~~~
++    if (current_machine->cgs) {
++        r = x86_confidential_guest_check_features(
++                X86_CONFIDENTIAL_GUEST(current_machine->cgs), cs);
++        if (r < 0) {
++            return r;
++        }
++    }
++
+     memset(&cpuid_data, 0, sizeof(cpuid_data));
+ 
+     cpuid_i = 0;
 -- 
 2.34.1
 
