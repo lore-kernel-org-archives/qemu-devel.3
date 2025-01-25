@@ -4,45 +4,45 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5ED8CC0218C
-	for <qemu-devel@archiver.kernel.org>; Sat, 25 Jan 2025 12:33:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2B5B4C0218C
+	for <qemu-devel@archiver.kernel.org>; Sat, 25 Jan 2025 12:33:42 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tbfLA-0008Dq-UF; Sat, 25 Jan 2025 07:32:44 -0500
+	id 1tbfLC-0008FC-1F; Sat, 25 Jan 2025 07:32:46 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1tbfL0-0008BP-AM; Sat, 25 Jan 2025 07:32:35 -0500
+ id 1tbfL2-0008DB-F2; Sat, 25 Jan 2025 07:32:37 -0500
 Received: from mgamail.intel.com ([198.175.65.18])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1tbfKy-0005TJ-1X; Sat, 25 Jan 2025 07:32:33 -0500
+ id 1tbfKz-0005Tn-Tn; Sat, 25 Jan 2025 07:32:35 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1737808352; x=1769344352;
+ t=1737808354; x=1769344354;
  h=from:to:cc:subject:date:message-id:in-reply-to:
  references:mime-version:content-transfer-encoding;
- bh=Y5lOC7itXdhtdQbuxxpKxG5odZWwd5vj2vFriJDCYUw=;
- b=dSYKUEThJQldZ+OXg15zJgiNoxZbiFOAV+qqPAdrzLWPlvDE6zFT6Q2Y
- /CmUnIROxsPbcVQnN+Gd9dZMEeFe1MSTvvuUIxwaJlUqrYpsFoPqWnql5
- rpjeUD4t6mYBNyV3KlRU9XunmNVBj7RAKRmpFlvRqwa9cbAdIzwju5Qgn
- z7B1ECiYygc70KOE9qyEz7i0QnZKCh5AY6+SGf8tURowHQl0mb482PGTm
- N9ugDPpyNm9evNa1HqLRb5/T4CzRPCJvi4lkVfg964Wpy+TUdAPGmpGO3
- iqYBV2RkLXU7P0jUbE2+JdhXwlt+dd4d1lL/8vo3ne1lu2YWDQsRaUNLq A==;
-X-CSE-ConnectionGUID: uAM7Wb+CRIy8nj7C4kk+fQ==
-X-CSE-MsgGUID: gjEYxZQVSsiaQ6j0q3eWmA==
-X-IronPort-AV: E=McAfee;i="6700,10204,11314"; a="38434702"
-X-IronPort-AV: E=Sophos;i="6.12,310,1728975600"; d="scan'208";a="38434702"
+ bh=g2Nb+4+IFvjo/YNhUOjtEgb72fVfBiMk6M52lBhjmVA=;
+ b=iNzXPL/UHa2WH/USw/k54QGSlMVmp/0Y1kHNDkX6cAUNe9GGRe8JvqIR
+ jdnNsGTz6qvt5gCTr4nOoXa31ipAu+0CG+QCKAjyLcxrH28ACdSy+kRpV
+ hg0v4KIjtHZLlTsepLENol5IzNy4ubnDyZLI5JAPtlF9axgv5qXym/k/A
+ SqxyCK+FSzgjUe6Iz864s1C+2pRioGMu4oqzq8Ac2uJyqWej7YkYNLxMW
+ JxJK+vbU15LvSW98Kr65YoFkawY+tySZf24d8D6BAZcki8Qx04OxCeILe
+ XjCo+u0WQq88dVtd/1X+55TLARMo28UHry6qMsgnPEd4w1v2LPYW0yyxc Q==;
+X-CSE-ConnectionGUID: 18ODjvVRRsat0x5mdvkdbw==
+X-CSE-MsgGUID: KENYnHVGRMSd943nIIh1oA==
+X-IronPort-AV: E=McAfee;i="6700,10204,11314"; a="38434706"
+X-IronPort-AV: E=Sophos;i="6.12,310,1728975600"; d="scan'208";a="38434706"
 Received: from fmviesa007.fm.intel.com ([10.60.135.147])
  by orvoesa110.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 25 Jan 2025 04:32:30 -0800
-X-CSE-ConnectionGUID: oBuYJ4s6SJKukxDGJdDOuQ==
-X-CSE-MsgGUID: KqpmlBRwSWOvjDiIhqv8MQ==
+ 25 Jan 2025 04:32:32 -0800
+X-CSE-ConnectionGUID: 1jKWWoHKQPu2yQGtfejnPw==
+X-CSE-MsgGUID: SfP/7m22RgWE/3NXrvmXUQ==
 X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.13,234,1732608000"; d="scan'208";a="107897654"
+X-IronPort-AV: E=Sophos;i="6.13,234,1732608000"; d="scan'208";a="107897660"
 Received: from liuzhao-optiplex-7080.sh.intel.com ([10.239.160.39])
- by fmviesa007.fm.intel.com with ESMTP; 25 Jan 2025 04:32:27 -0800
+ by fmviesa007.fm.intel.com with ESMTP; 25 Jan 2025 04:32:30 -0800
 From: Zhao Liu <zhao1.liu@intel.com>
 To: Paolo Bonzini <pbonzini@redhat.com>,
  Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,
@@ -53,9 +53,10 @@ To: Paolo Bonzini <pbonzini@redhat.com>,
  Peter Maydell <peter.maydell@linaro.org>,
  =?UTF-8?q?Daniel=20P=20=2E=20Berrang=C3=A9?= <berrange@redhat.com>
 Cc: qemu-devel@nongnu.org, qemu-rust@nongnu.org, Zhao Liu <zhao1.liu@intel.com>
-Subject: [PATCH 02/10] rust/qdev: add the macro to define bit property
-Date: Sat, 25 Jan 2025 20:51:29 +0800
-Message-Id: <20250125125137.1223277-3-zhao1.liu@intel.com>
+Subject: [PATCH 03/10] rust/irq: Add a helper to convert [InterruptSource] to
+ [*mut IRQState]
+Date: Sat, 25 Jan 2025 20:51:30 +0800
+Message-Id: <20250125125137.1223277-4-zhao1.liu@intel.com>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20250125125137.1223277-1-zhao1.liu@intel.com>
 References: <20250125125137.1223277-1-zhao1.liu@intel.com>
@@ -86,38 +87,55 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-HPET device (Rust device) needs to define the bit type property.
+This is useful to hanlde InterruptSource slice and pass it to C
+bindings.
 
-Add a variant of define_property macro to define bit type property.
-
+Suggested-by: Paolo Bonzini <pbonzini@redhat.com>
 Signed-off-by: Zhao Liu <zhao1.liu@intel.com>
 ---
- rust/qemu-api/src/qdev.rs | 12 ++++++++++++
- 1 file changed, 12 insertions(+)
+Changes since RFC:
+ * New commit.
+---
+ rust/qemu-api/src/irq.rs | 18 +++++++++++++-----
+ 1 file changed, 13 insertions(+), 5 deletions(-)
 
-diff --git a/rust/qemu-api/src/qdev.rs b/rust/qemu-api/src/qdev.rs
-index b348f2f4ce71..32740c873604 100644
---- a/rust/qemu-api/src/qdev.rs
-+++ b/rust/qemu-api/src/qdev.rs
-@@ -166,6 +166,18 @@ fn class_init(dc: &mut DeviceClass) {
+diff --git a/rust/qemu-api/src/irq.rs b/rust/qemu-api/src/irq.rs
+index 638545c3a649..7dca3b9ee5a8 100644
+--- a/rust/qemu-api/src/irq.rs
++++ b/rust/qemu-api/src/irq.rs
+@@ -5,12 +5,10 @@
+ //! Bindings for interrupt sources
  
- #[macro_export]
- macro_rules! define_property {
-+    ($name:expr, $state:ty, $field:ident, $prop:expr, $type:ty, bit = $bitnr:expr, default = $defval:expr$(,)*) => {
-+        $crate::bindings::Property {
-+            // use associated function syntax for type checking
-+            name: ::std::ffi::CStr::as_ptr($name),
-+            info: $prop,
-+            offset: $crate::offset_of!($state, $field) as isize,
-+            bitnr: $bitnr,
-+            set_default: true,
-+            defval: $crate::bindings::Property__bindgen_ty_1 { u: $defval as u64 },
-+            ..$crate::zeroable::Zeroable::ZERO
+ use core::ptr;
+-use std::{marker::PhantomData, os::raw::c_int};
++use std::{marker::PhantomData, os::raw::c_int, slice};
+ 
+-use crate::{
+-    bindings::{qemu_set_irq, IRQState},
+-    prelude::*,
+-};
++pub(crate) use crate::bindings::IRQState;
++use crate::{bindings::qemu_set_irq, prelude::*};
+ 
+ /// Interrupt sources are used by devices to pass changes to a value (typically
+ /// a boolean).  The interrupt sink is usually an interrupt controller or
+@@ -81,6 +79,16 @@ pub fn set(&self, level: T) {
+     pub(crate) const fn as_ptr(&self) -> *mut *mut IRQState {
+         self.cell.as_ptr()
+     }
++
++    #[allow(dead_code)]
++    pub(crate) fn as_slice_of_qemu_irq(slice: &[Self]) -> &[*mut IRQState] {
++        unsafe {
++            // SAFETY: InterruptSource has the same memory layout as *mut IRQState.
++            // Additionally, the slice parameter itself, as a reference to a slice type,
++            // can be converted into a valid pointer and has a valid length.
++            slice::from_raw_parts(slice.as_ptr().cast::<*mut IRQState>(), slice.len())
 +        }
-+    };
-     ($name:expr, $state:ty, $field:ident, $prop:expr, $type:ty, default = $defval:expr$(,)*) => {
-         $crate::bindings::Property {
-             // use associated function syntax for type checking
++    }
+ }
+ 
+ impl Default for InterruptSource {
 -- 
 2.34.1
 
