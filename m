@@ -4,82 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8B023C0218C
-	for <qemu-devel@archiver.kernel.org>; Sat, 25 Jan 2025 17:28:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D2C9AC0218C
+	for <qemu-devel@archiver.kernel.org>; Sat, 25 Jan 2025 17:29:47 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tbjx1-0005Dn-Nh; Sat, 25 Jan 2025 12:28:07 -0500
+	id 1tbjyU-0005zQ-Pu; Sat, 25 Jan 2025 12:29:38 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1tbjwv-0005Ch-D9
- for qemu-devel@nongnu.org; Sat, 25 Jan 2025 12:28:02 -0500
-Received: from mail-pl1-x633.google.com ([2607:f8b0:4864:20::633])
+ id 1tbjyR-0005yl-SE
+ for qemu-devel@nongnu.org; Sat, 25 Jan 2025 12:29:36 -0500
+Received: from mail-pl1-x630.google.com ([2607:f8b0:4864:20::630])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1tbjwt-0005Az-Qa
- for qemu-devel@nongnu.org; Sat, 25 Jan 2025 12:28:01 -0500
-Received: by mail-pl1-x633.google.com with SMTP id
- d9443c01a7336-2164b1f05caso53618855ad.3
- for <qemu-devel@nongnu.org>; Sat, 25 Jan 2025 09:27:59 -0800 (PST)
+ id 1tbjyP-0005Xg-Oh
+ for qemu-devel@nongnu.org; Sat, 25 Jan 2025 12:29:34 -0500
+Received: by mail-pl1-x630.google.com with SMTP id
+ d9443c01a7336-216634dd574so37788335ad.2
+ for <qemu-devel@nongnu.org>; Sat, 25 Jan 2025 09:29:33 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1737826078; x=1738430878; darn=nongnu.org;
+ d=linaro.org; s=google; t=1737826172; x=1738430972; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:to:subject:user-agent:mime-version:date:message-id:from
  :to:cc:subject:date:message-id:reply-to;
- bh=NEIieqnnFpofjmIpZsTs4Ek//vNvzJmCPf7dativf/8=;
- b=o85BqWLAIXgGHweDIeoA2V3w8M8YeVaGWC83NadRCjUZUN0xn3+JNg5T82W0RR8Hzj
- HD92eXwVQsDR1SQaEjGaNB9cL4+zU2iAcYwPuj5yzidIHZzpR38am62y1mQ2v81cePUU
- 4hmd5M0xZxT7EJ4fVbDl2ljGRMLeVF4Fs2lf/eULNn2X4+gLYXBmW5PqBreuJDmfbqUy
- SOKyyOGPm+xFbu3lDbVey1atypZlro/SLMVHQLWJ7rXdDy3l7fwOQKpew87goQar7mnc
- H0Frcg5pIMkh1CNIZmfyldG+BqBXc+M46BjLiit7fSdxQSmavA/TYYHVJibY9QzXX/yy
- fzag==
+ bh=4SN+sfWnK2MT9AjVs+6GboebcgnFQGpnmol7mYWF9A8=;
+ b=CTTXg4vloCLz2sZtmot2eo6/7ZCzwA4n2pi8Aaxa9sm5jE5K6Z+cC7JhRGy7OC2uBa
+ /9vkaQt9m2ABFQUpmjXK3QVOqpzzod7/TassAbCk1yq0JGCTD0Xyk5HkgFrFYauvBSkM
+ 1XLY1cIXDQacg7mVcTHjKcrcb0yHz+2WKiVlMRAGdGPzl96r0wy4VHHwzbm8kKKaYdK7
+ c5M1eoPc7yyCSAh42cv3ADY9TZuUZEy9BMQnVRTRd6Zpd7htXwsjX9D7DsiYNYK/9ZPt
+ 5Dft01C/vV16DbzkABGxEH6Cg5vKajiURDxcyRqH9n6m8oXS3hvnaiJen4hcDkx/4K2a
+ vJpA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1737826078; x=1738430878;
+ d=1e100.net; s=20230601; t=1737826172; x=1738430972;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=NEIieqnnFpofjmIpZsTs4Ek//vNvzJmCPf7dativf/8=;
- b=NkM2hM4DpKpfqFf35oGKgK2WGFEzIpb4Kg+5UmOGmwCet8oR3rqscAKK19m5r0GcAU
- fNPgwhGG0pyJ861skv9fb9EIB+qFZwSFnRyCzcjp8+bumzrDCaqh1Yn1gpKQBVMFoFu7
- sSXgcxFEuPRH8LIRu7OzgQ9B9WWb7S3iYQoyhIh2HdRc5ad+r3o+rt/+ajdPtNnILeMP
- Y24tB7ZM1h30QrxN5rBnPgp67di8IqDvGNVcNy0upwVh1DfnZp8cjsuyHveIOupLUSjQ
- ce7s8wqT2MWU0qtXpwIy0XV3jU1PsD95uugDYyQbmpp8XoLG56zgiTX40fNZ5t8WNJBU
- 25FA==
-X-Gm-Message-State: AOJu0YwuxOR+WTT0xZV7VWb8BVv/UYcjHX5vsBnYmTohYktcfnG3F4j4
- J8Y94vXLhpnyQkQ5tsXhqxAkL1UKFoe/9RZdW3OH3Vkb2EVpnKDJ495ibrN7tHVNRSN0QnUYUBO
- m
-X-Gm-Gg: ASbGncs/hZjxQImXk/meLQJaM+lUt4l1aXuQfvbgYW9yKYH1X/h5afyxQoq/RnJlSEz
- V6ZWD7fb8QhE+p5pCDKgvgyWbnnSighLXI2NVCB93+X0Zc/WDVzbIeD1oF9II7qCBX+JbYiHqNN
- 00TAA9s5OqNcN83pNEsF/1uG/7cVDfAsb+vefZEvILbkpai9VlA2tBOQ0fGxDKSz9/d/24BNomI
- tvMfnQPXLoP2RrTYasupkO2fgU+TMhZqhIaPT8+YeJDJOsJJMoJn4l8OF1XvmqLVjnrj2D8Od8I
- w6hDdhE1f5imvpfEYnSctQ==
-X-Google-Smtp-Source: AGHT+IFTygMNZB4pVgoyPcIHjFx52QJOswurSyQcYrtlqxkWlC4ofJKuDGGxcvZS6EhgJyzetL+2BA==
-X-Received: by 2002:a05:6a00:4c18:b0:725:c8ea:b320 with SMTP id
- d2e1a72fcca58-72daf99ec6dmr48209596b3a.14.1737826078351; 
- Sat, 25 Jan 2025 09:27:58 -0800 (PST)
+ bh=4SN+sfWnK2MT9AjVs+6GboebcgnFQGpnmol7mYWF9A8=;
+ b=ohFms1KRRlOahJhPO6+QUEr0W/nK+HcmHDhlsZAoOSk1e3PUcIAPR9NFtGZbO4vmes
+ pJBZ//FE4ogbpUrFeMHObpUwdvJEe95AQ0cvJPiHPNKyg9K2cBwWnli0fZVAPHi+52Y9
+ oZPZw8E8kvBrSU+kA0nXk9q3ub1TB7WT2THGmU/BYskuPXvyOqzFbplg7t97t52RyI5j
+ E7vgGfXe1E38zl8W11AdmIYVtfxnpZ+EBkiJXuPWp45sNR/ZUkSMvwlZsnyE3aCvt0HT
+ kcpTjQTyzWfDhqGKDpGZ16c6jKlNLNX1Z1oc3n5Nd4IoN3OyOoMBeooe8f9I0NvQ3Qrv
+ eCoA==
+X-Gm-Message-State: AOJu0YzUYL1p9s01PfIuVT3mth43gw+gOzj8sIylODoDLT+W4f8gW9IJ
+ NzYAO3oRNkHWSVmRASOXDUWP8XkX31fhQjBBrAK3et79A/yoFpuW3/ojug2L++oKVCMLUHhw90G
+ 5
+X-Gm-Gg: ASbGnctFnD/TVJwExTMNWRcck9SNarp45eDgtO84uYWwn0wsvpnLzAGWODKHBtfiuBf
+ yM3GduGIFlztr4WgZSP93Ka84Sa3w3vEmxkIyr8iNp47zb6k2TgycZmaTzR8fOsKziJAX3nuHf2
+ vA6wqJUlNnp9fZNFRJLpImLbjjxwwwU9cH2JRz9mGkzsuxR7q7+GMQ9V97no2kEx4QX4WznsYuJ
+ QJ9LNt4SyyNO+RmmwvyYRZ3pcRpWZKXZ9TWfAMl1S+xLwq+HYuuTBF3XZUi98cems/MC/gGXGTl
+ x1UfIi9P8me/EQvxw6sYpw==
+X-Google-Smtp-Source: AGHT+IEx7vz4/qiIPvI88VDe+fCHuDlKwsM3dS2DHZtIPTFQZcoSesDmFoF1upWyQ+zyvJTXEfEPTQ==
+X-Received: by 2002:a17:902:f68e:b0:21c:17b2:d345 with SMTP id
+ d9443c01a7336-21c351bd47amr421319165ad.3.1737826172309; 
+ Sat, 25 Jan 2025 09:29:32 -0800 (PST)
 Received: from [192.168.74.94] ([50.200.230.211])
  by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-72f8a77c846sm3998694b3a.148.2025.01.25.09.27.57
+ d9443c01a7336-21da414cc20sm34890705ad.165.2025.01.25.09.29.31
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Sat, 25 Jan 2025 09:27:58 -0800 (PST)
-Message-ID: <068c3ad3-04d6-4f16-bae8-57d09a0debaf@linaro.org>
-Date: Sat, 25 Jan 2025 09:27:56 -0800
+ Sat, 25 Jan 2025 09:29:31 -0800 (PST)
+Message-ID: <63ad1ebf-03c0-4bca-b0a9-b70234bea00c@linaro.org>
+Date: Sat, 25 Jan 2025 09:29:29 -0800
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 29/76] target/arm: Adjust FP behaviour for FPCR.AH = 1
+Subject: Re: [PATCH 30/76] target/arm: Adjust exception flag handling for AH =
+ 1
 To: qemu-devel@nongnu.org
 References: <20250124162836.2332150-1-peter.maydell@linaro.org>
- <20250124162836.2332150-30-peter.maydell@linaro.org>
+ <20250124162836.2332150-31-peter.maydell@linaro.org>
 Content-Language: en-US
 From: Richard Henderson <richard.henderson@linaro.org>
-In-Reply-To: <20250124162836.2332150-30-peter.maydell@linaro.org>
+In-Reply-To: <20250124162836.2332150-31-peter.maydell@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::633;
- envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x633.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::630;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x630.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -103,28 +104,21 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 1/24/25 08:27, Peter Maydell wrote:
-> When FPCR.AH is set, various behaviours of AArch64 floating point
-> operations which are controlled by softfloat config settings change:
->   * tininess and ftz detection before/after rounding
->   * NaN propagation order
->   * result of 0 * Inf + NaN
->   * default NaN value
+> When FPCR.AH = 1, some of the cumulative exception flags in the FPSR
+> behave slightly differently for A64 operations:
+>   * IDC is set when a denormal input is used without flushing
+>   * IXC (Inexact) is set when an output denormal is flushed to zero
 > 
-> When the guest changes the value of the AH bit, switch these config
-> settings on the fp_status_a64 and fp_status_f16_a64 float_status
-> fields.
+> Update vfp_get_fpsr_from_host() to do this.
 > 
-> This requires us to make the arm_set_default_fp_behaviours() function
-> global, since we now need to call it from cpu.c and vfp_helper.c; we
-> move it to vfp_helper.c so it can be next to the new
-> arm_set_ah_fp_behaviours().
+> Note that because half-precision operations never set IDC, we now
+> need to add float_flag_input_denormal_used to the set we mask out of
+> fp_status_f16_a64.
 > 
 > Signed-off-by: Peter Maydell<peter.maydell@linaro.org>
 > ---
->   target/arm/internals.h  |  4 +++
->   target/arm/cpu.c        | 23 -----------------
->   target/arm/vfp_helper.c | 56 +++++++++++++++++++++++++++++++++++++++++
->   3 files changed, 60 insertions(+), 23 deletions(-)
+>   target/arm/vfp_helper.c | 17 ++++++++++++++---
+>   1 file changed, 14 insertions(+), 3 deletions(-)
 
 Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 
