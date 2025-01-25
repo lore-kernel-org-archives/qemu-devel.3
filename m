@@ -4,77 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DD99CC0218C
-	for <qemu-devel@archiver.kernel.org>; Sat, 25 Jan 2025 17:02:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B69D4C0218C
+	for <qemu-devel@archiver.kernel.org>; Sat, 25 Jan 2025 17:02:24 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tbjXj-0006nm-I6; Sat, 25 Jan 2025 12:01:59 -0500
+	id 1tbjXl-00070i-L8; Sat, 25 Jan 2025 12:02:02 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tbjXH-0006Rc-1K
- for qemu-devel@nongnu.org; Sat, 25 Jan 2025 12:01:38 -0500
-Received: from mail-wm1-x32d.google.com ([2a00:1450:4864:20::32d])
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1tbjX4-0006L2-3P
+ for qemu-devel@nongnu.org; Sat, 25 Jan 2025 12:01:24 -0500
+Received: from mail-pl1-x62e.google.com ([2607:f8b0:4864:20::62e])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tbjXF-0000NS-HL
- for qemu-devel@nongnu.org; Sat, 25 Jan 2025 12:01:30 -0500
-Received: by mail-wm1-x32d.google.com with SMTP id
- 5b1f17b1804b1-435f8f29f8aso21806595e9.2
- for <qemu-devel@nongnu.org>; Sat, 25 Jan 2025 09:01:29 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1tbjX2-0000MN-CQ
+ for qemu-devel@nongnu.org; Sat, 25 Jan 2025 12:01:17 -0500
+Received: by mail-pl1-x62e.google.com with SMTP id
+ d9443c01a7336-21669fd5c7cso54706935ad.3
+ for <qemu-devel@nongnu.org>; Sat, 25 Jan 2025 09:01:15 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1737824487; x=1738429287; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=3hYPVAzpnJ23ZkjHGBfSkrx4kDLIP1Cp884q0U/4z1c=;
- b=qOxRVnLINdBw4ByoWSHXLXcL17oKMxrPbkFjKTytu4Gh6BJ/aGeBPdo7ds+WkeIRE/
- ZCojnU2Em+4nHr9QS1hxDwlcqvYM62LPhlV2ykCp0BEsoFXGkHF8KcIK8o28ZFFX0ANL
- gbDFrS6K26mmrTTBFQNJI+pUX/sZZCbTpFGFMqTT4XKDtrSipfYyFADZDg7pK5/8l5xk
- WfO375/rJG5n/m1SaoVC11cRWeRDTDTBadE/dAlyQGib/TVcUO8lXrnFoY8grkSyJSYy
- xrGQZI7Nx8pmwERGEufwWN8c9r5RPiQ+lCWPgPhBdmMHVj9xMDlDVOLUqacacCk4pQIr
- AT8Q==
+ d=linaro.org; s=google; t=1737824475; x=1738429275; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:to:subject:user-agent:mime-version:date:message-id:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=kcOPA6Q2QvRKaH5kJijY1WM9qcLftyp6JJQkKS9scFo=;
+ b=wK29Tf/AAAmUkuO1GXlb3apwVUDmN6CPBxFCOmSUPMUBARbqW4mIjVMitk4wR3MjV2
+ HQlJXDJaBcfUMQ2Jx2mE9DK8n6ZSIwRO/uSV8uKpoy79bq+Gy4NDLDT/hd3s3lWX5eQ8
+ xIJ1ci1SWPxAygTBXg5hOQigOHCKqIbvPQcGg8JBuQ9/WFVYBBsaCQmSZz98QvxirPdV
+ bSvIje1bKz9zt9PMvvyxGTzzL4sneKQsTfR/Ys/hgTTeiXdiIx1DzjFrVsDr55dpJUT5
+ eq5kvthcAeggLV2MCCl13gIxyyI+sqvLhGlzLk41uHVQV2074RMONcA/G9dveXxpKQqY
+ HW9Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1737824487; x=1738429287;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=3hYPVAzpnJ23ZkjHGBfSkrx4kDLIP1Cp884q0U/4z1c=;
- b=A5+tuD3U14q+MGlGgyyi+OpqAgh1j7aM+XZImyxGex4VwBR4wRm1E/9WeBo4R4eJpC
- GvugvlvVRFKTgCKHQakSUIAPhFKGGgKcpeSTKt2XFjH23TONl+ts6p/667yY3JXjiyRk
- TPkaHUHIpx1EnPFhx70f3Z72fBOimaaZnnQhtYf+YYcvTXUDCcm0ztLXHOcSt6vPIwxv
- aQrITIBLiCx1YNVYpw7KsDdZQfVs2iiUUbT3PXDRo6XSNIO+gx6eBxmFKx57NkH2qj5C
- NQmu5+2Qd5Qiv1e/7JP84t5otw6lwePyDZ9gw9MUl9dWvF9sL6hVxpwcYl530qjXSf6v
- dGBA==
-X-Gm-Message-State: AOJu0Yx4v5VESNJkxOu3yeq4xvNSyoUX9KysdJlPfhEbQze2+xn7U5cI
- 6tdBpXR3VL0Zi+Pnc4ptq2BCK77ZrcqP3k3ZBO3JdbZMEanCaYUqSshS7cSMnMHHzBUeQcXc7gN
- s694=
-X-Gm-Gg: ASbGnctvMYhvgxJAQC4255ShVBq7lV9Ma0xa7D9bV60MoXLYAqggyt307FR3mM4QnB0
- nCzWBgGjhyChGwRBV8rxzmW6V0HtGDQPgBbb0t34/A18MEEI+tKcnk4EDeQ7+dpfEURnMtGeP8k
- E4PPkfNFhXmMpaDD0krQyn5iR4Mh6CNGoKtVZIJM+WxDrXX7aANSHUE5pv62rWGmqYgvX1feLAF
- 8V8iyQaZBYd/DzlPxWvk5v0W8UKyaFZtYa1OCMnV3P+2jMYMPEX7Vm0wifHifoP7/hIfrl7bFLN
- WHcW3Y9ssYLNuNnCf2iOySr/LXCxslJdppgHH0Eikf+27Y7wlOYH/5M=
-X-Google-Smtp-Source: AGHT+IEoy6yXoECX+NuuVn7nIpfOgcwdzkCF8JNluAVk3TpkSaCDMEPhYYWsuFG0daBnM6mi0QLCgA==
-X-Received: by 2002:a05:600c:4f8e:b0:438:ad4d:cf01 with SMTP id
- 5b1f17b1804b1-438ad4dd129mr239994775e9.7.1737824487478; 
- Sat, 25 Jan 2025 09:01:27 -0800 (PST)
-Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
- [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-438bd501f1esm66511965e9.12.2025.01.25.09.01.26
- (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Sat, 25 Jan 2025 09:01:26 -0800 (PST)
-From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-To: qemu-devel@nongnu.org
-Cc: Richard Henderson <richard.henderson@linaro.org>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PATCH v3 00/24] cpus: Restrict CPU has_work() handlers to system
- emulation
-Date: Sat, 25 Jan 2025 18:01:01 +0100
-Message-ID: <20250125170125.32855-1-philmd@linaro.org>
-X-Mailer: git-send-email 2.47.1
+ d=1e100.net; s=20230601; t=1737824475; x=1738429275;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=kcOPA6Q2QvRKaH5kJijY1WM9qcLftyp6JJQkKS9scFo=;
+ b=GSLAO0fzAdLczKNixRtnkmiOGDqqoKxV25S+zSWMioyP+cvqn0vbvrtN8DrMo82AXp
+ RVw6QPgtmDpl8n+cOzEPr2hOwywu5Z77YN6d0rHhQF+7ocYDprN6EvJP8WSh5H6H3Bvz
+ /LRW69fLFppz816RSNp2vcUUS5fOyvHI6txgBVsfBjmMvnfRM98ThixH0Car36+O9nPY
+ fVgdxVmEWbC/igL683uR4iZ0XpVNuCeoHubgd0gp3fhwFi4xJz5Rs+t/Euj3UN1AC/ur
+ WHQmZODcWuJ+gSB0+flmLW0yVprGLay7QmCOp1cUd1FtUBihDifByH+bPkpV1h3Ntisf
+ xxsQ==
+X-Gm-Message-State: AOJu0YwCDCFo/YUtN/fvWv3xWkNo4XR96ApYOH6i7JO97B5eUm1ITRPR
+ LfOGM/ZrEfs+uERG5OqAPdipzRqS4UwDs7MTnKcc66IoAp6vc7lUqcC3Jx4EdBjBFomIYBGE3Zg
+ /
+X-Gm-Gg: ASbGnctp1ABa8W+7PLj8tcwIxxK/PYk7mRnY/I8Ii5dhyOkt8zs8acGvMacZonseaN6
+ h42YTgFUyjEOkoJCuLZ8AmMPPKKi4Zqfykip9rN6r519Xu6TTLN547f/Dpj2d6WzsbhfuJ4z6n3
+ 9KEuTLc7k8oVKDGvWUK3/Vthibi9bjhxCnyL7hEsqEbZFQojAtoGoynDNr9Q4LZyJ1zQ22rQHQd
+ PqySw7UtrrvwrHgw+yXAoX/E6dlv5prRyNrlIuHUT6z0klgkrWXsaNQ//DYdqiD6ml4mlBMQ4Pj
+ VS9GEEpf3StTXHDif0EUhQ==
+X-Google-Smtp-Source: AGHT+IHpCcK7HXz0egktvN57ZevMY0z1wAUomrj+/H5MtjwYUKLV41T3kx+a/Dywo8vO6WiPqPHp2A==
+X-Received: by 2002:a05:6a00:8e09:b0:725:ef4b:de30 with SMTP id
+ d2e1a72fcca58-72dafa6b436mr55028584b3a.14.1737824474495; 
+ Sat, 25 Jan 2025 09:01:14 -0800 (PST)
+Received: from [192.168.74.94] ([50.200.230.211])
+ by smtp.gmail.com with ESMTPSA id
+ d2e1a72fcca58-72f8a77c560sm4033651b3a.142.2025.01.25.09.01.13
+ for <qemu-devel@nongnu.org>
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Sat, 25 Jan 2025 09:01:14 -0800 (PST)
+Message-ID: <cf98fa32-9507-414a-95e2-83e682db349a@linaro.org>
+Date: Sat, 25 Jan 2025 09:01:12 -0800
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32d;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x32d.google.com
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 26/76] target/arm: Use FPST_FPCR_F16_A64 for
+ halfprec-to-other conversions
+To: qemu-devel@nongnu.org
+References: <20250124162836.2332150-1-peter.maydell@linaro.org>
+ <20250124162836.2332150-27-peter.maydell@linaro.org>
+Content-Language: en-US
+From: Richard Henderson <richard.henderson@linaro.org>
+In-Reply-To: <20250124162836.2332150-27-peter.maydell@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::62e;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x62e.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -97,85 +103,30 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Missing review: 16
+On 1/24/25 08:27, Peter Maydell wrote:
+> We should be using the F16-specific float_status for conversions from
+> half-precision, because halfprec inputs never set Input Denormal.
+> 
+> Without FEAT_AHP, using the wrong fpst here had no effect, because
+> the only difference between the F16_A64 and A64 fpst is its handling
+> of flush-to-zero on input and output, and the helper functions
+> vfp_fcvt_f16_to_* and vfp_fcvt_*_to_f16 all explicitly squash the
+> relevant flushing flags, and flush_inputs_to_zero was the only way
+> that IDC could be set.
+> 
+> With FEAT_AHP, the FPCR.AH=1 behaviour sets IDC for
+> input_denormal_used, which we will only ignore in
+> vfp_get_fpsr_from_host() for the F16_A64 fpst; so it matters that we
+> use that one for f16 inputs (and the normal one for single/double to
+> f16 conversions).
+> 
+> Signed-off-by: Peter Maydell<peter.maydell@linaro.org>
+> ---
+>   target/arm/tcg/translate-a64.c | 9 ++++++---
+>   target/arm/tcg/translate-sve.c | 4 ++--
+>   2 files changed, 8 insertions(+), 5 deletions(-)
 
-(I plan to merge this myself once reviewed)
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 
-Since v2:
-- Check mandatory SysemuCPUOps handlers in class_post_init()
-
-v1 cover:
-
-On user emulation, threads always have work to do, and
-CPUClass::has_work() is never called. Restrict it to system
-emulation, allowing to simplify a bit and reduce code built
-on user emulation.
-
-Based-on: <20250125165855.32168-1-philmd@linaro.org>
- "qom: Introduce class_post_init() handler"
-Based-on: <20250121114056.53949-1-philmd@linaro.org>
- "cpus: Prefer cached CpuClass over CPU_GET_CLASS() macro"
-
-Philippe Mathieu-Daudé (24):
-  cpus: Restrict cpu_has_work() to system emulation
-  cpus: Un-inline cpu_has_work()
-  cpus: Introduce SysemuCPUOps::has_work() handler
-  target/alpha: Move has_work() from CPUClass to SysemuCPUOps
-  target/arm: Move has_work() from CPUClass to SysemuCPUOps
-  target/avr: Move has_work() from CPUClass to SysemuCPUOps
-  target/hexagon: Remove CPUClass:has_work() handler
-  target/hppa: Move has_work() from CPUClass to SysemuCPUOps
-  target/i386: Move has_work() from CPUClass to SysemuCPUOps
-  target/loongarch: Move has_work() from CPUClass to SysemuCPUOps
-  target/m68k: Move has_work() from CPUClass to SysemuCPUOps
-  target/microblaze: Move has_work() from CPUClass to SysemuCPUOps
-  target/mips: Move has_work() from CPUClass to SysemuCPUOps
-  target/openrisc: Move has_work() from CPUClass to SysemuCPUOps
-  target/ppc: Move has_work() from CPUClass to SysemuCPUOps
-  target/riscv: Move has_work() from CPUClass to SysemuCPUOps
-  target/rx: Move has_work() from CPUClass to SysemuCPUOps
-  target/s390x: Restrict I/O handler installers to system emulation
-  target/s390x: Move has_work() from CPUClass to SysemuCPUOps
-  target/sh4: Move has_work() from CPUClass to SysemuCPUOps
-  target/sparc: Move has_work() from CPUClass to SysemuCPUOps
-  target/tricore: Move has_work() from CPUClass to SysemuCPUOps
-  target/xtensa: Move has_work() from CPUClass to SysemuCPUOps
-  cpus: Remove CPUClass::has_work() handler
-
- include/hw/core/cpu.h            | 27 +++++++++++----------------
- include/hw/core/sysemu-cpu-ops.h |  4 ++++
- include/hw/core/tcg-cpu-ops.h    |  2 +-
- target/i386/cpu.h                |  4 ++--
- target/mips/internal.h           |  4 ++--
- target/riscv/internals.h         |  4 +++-
- target/s390x/s390x-internal.h    |  5 +++++
- cpu-target.c                     |  8 ++++++++
- hw/core/cpu-common.c             | 12 ++++++------
- hw/core/cpu-system.c             |  5 +++++
- target/alpha/cpu.c               |  4 +++-
- target/arm/cpu.c                 |  4 +++-
- target/avr/cpu.c                 |  2 +-
- target/hexagon/cpu.c             |  6 ------
- target/hppa/cpu.c                |  4 +++-
- target/i386/cpu.c                |  8 +++-----
- target/loongarch/cpu.c           |  8 +++-----
- target/m68k/cpu.c                |  4 +++-
- target/microblaze/cpu.c          |  4 +++-
- target/mips/cpu.c                |  4 +++-
- target/openrisc/cpu.c            |  4 +++-
- target/ppc/cpu_init.c            |  4 +++-
- target/riscv/cpu.c               |  8 +++-----
- target/rx/cpu.c                  |  2 +-
- target/s390x/cpu-system.c        | 18 ++++++++++++++++++
- target/s390x/cpu.c               | 18 ------------------
- target/s390x/interrupt.c         |  8 ++------
- target/sh4/cpu.c                 |  4 ++--
- target/sparc/cpu.c               |  4 +++-
- target/tricore/cpu.c             |  2 +-
- target/xtensa/cpu.c              | 12 +++++-------
- 31 files changed, 113 insertions(+), 94 deletions(-)
-
--- 
-2.47.1
-
+r~
 
