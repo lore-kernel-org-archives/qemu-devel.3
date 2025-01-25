@@ -4,83 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D7E40C0218C
-	for <qemu-devel@archiver.kernel.org>; Sat, 25 Jan 2025 15:16:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 72D6AC0218C
+	for <qemu-devel@archiver.kernel.org>; Sat, 25 Jan 2025 15:17:03 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tbhtB-0002Kl-Nh; Sat, 25 Jan 2025 10:16:03 -0500
+	id 1tbhtt-0002aj-SJ; Sat, 25 Jan 2025 10:16:45 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1tbht9-0002KS-Ih
- for qemu-devel@nongnu.org; Sat, 25 Jan 2025 10:15:59 -0500
-Received: from mail-pl1-x631.google.com ([2607:f8b0:4864:20::631])
+ id 1tbhtr-0002aN-Vj
+ for qemu-devel@nongnu.org; Sat, 25 Jan 2025 10:16:44 -0500
+Received: from mail-pl1-x62c.google.com ([2607:f8b0:4864:20::62c])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1tbht7-0002WC-Ch
- for qemu-devel@nongnu.org; Sat, 25 Jan 2025 10:15:58 -0500
-Received: by mail-pl1-x631.google.com with SMTP id
- d9443c01a7336-21680814d42so50544515ad.2
- for <qemu-devel@nongnu.org>; Sat, 25 Jan 2025 07:15:56 -0800 (PST)
+ id 1tbhtq-0002dC-Bg
+ for qemu-devel@nongnu.org; Sat, 25 Jan 2025 10:16:43 -0500
+Received: by mail-pl1-x62c.google.com with SMTP id
+ d9443c01a7336-216728b1836so49229245ad.0
+ for <qemu-devel@nongnu.org>; Sat, 25 Jan 2025 07:16:41 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1737818156; x=1738422956; darn=nongnu.org;
+ d=linaro.org; s=google; t=1737818201; x=1738423001; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:to:subject:user-agent:mime-version:date:message-id:from
  :to:cc:subject:date:message-id:reply-to;
- bh=bFzmCZmoFVK0LaM46uQpwauQ8B9Cuucm4bw6K+131GM=;
- b=iwkeWmUli+Rgmlt/A1BG1+ZTrfNHpGc6PnMBoVqjtMdZmSZOkg5PR8fb+mmbRtdMer
- rh+bWEPT1EFCpFLrCNfxLcV4vvC3i31Cq9rxeZWelv/tUEmBAqeSjWixl4yuIcX2ZHNh
- qnLV5XiaMj9RLqVqRT7b+L04dOSago3xE5otLmsZtwYQ9z30Ymzf4mw6lxkXSILLJfQv
- bY3ESsulgloZAiocTsAqz0Ons13YB8QSTH8AF1ulKEW51AnR4O/DwAxsApCJT5tKd12k
- cFmSdMZsgXdNahRFdEipLwo9WXN56uJ5E/JP7qDH8elEqrM/tOOp/ewEbeEkMNFe1ij2
- s49Q==
+ bh=An+sE9DBoYYw7anO33hCPsD9R9Njhppr8J8h2EWtSJY=;
+ b=F44Q0Sw4lNXuq6qvQsNyFZIg+AcaXiS/V5yqcDchX2/u6DAhZn8r7wd9UCvuIbUb8W
+ HwNeoZbsZQiKaAmb99VrJFOy543d31OJJJB3mGfWZ/C1IuqtV7ZWLX1Ow8OoJOVfxb+F
+ UesPi3NzZ77ix3cI0TIpDYQ68H0SwbBFec53jxQ7wcyyKSVCbH8ftGJJfoJtlhutSgKw
+ RNYglDl/TogxmN8kgN4RynUgQ5cPhLfqpkM51BaL7T3elELnJmVoDjRN9k+VJuMLIih/
+ 0LNYzZ3zfsiCj308SEVjeSqyeDMiy9sLZj9vJflIlXs7gQV36xWViTGFyhlBiIjL7Rr4
+ 6+hg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1737818156; x=1738422956;
+ d=1e100.net; s=20230601; t=1737818201; x=1738423001;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=bFzmCZmoFVK0LaM46uQpwauQ8B9Cuucm4bw6K+131GM=;
- b=wfLpJKnbWqRh/GwuOF9YYQoRJkdKXEiMU0t2EecJR79H2bZxQlgriMmCGSPbZPHip6
- NNx7JoOWgfgMpXM8eN8vPKvkOOo8akJsUJ87E9QNo2L3x+Shdba1rDBYzoseGKlhz1Sj
- vA6f6htBG3W1MVYMYooZT/PCRwpjT2aZB2wZ5C0GwQOa54Mu5F+aYB4IJvig1Xt+epBX
- UT59galQEwEQrY2GEDEBYKwRVicMLGtC0akYb3Xk/KzSpJ1+dVVmM8yDxlc4C8qbVcnh
- h5b7gd0zz//XSCFEqlxJ/X6Os/MPQ92K3nvwha4kyt3GJDBdir7YDetm3iqNm3HywrIg
- UNsQ==
-X-Gm-Message-State: AOJu0YwmpIc/YLZ/rgbdMe+674WL2q1DNWYw6r7/s80NB9YPlhhHtV2l
- 6XepVjL+lXt9+t1+oBn2Hg2iKQayVFIUOoyHppUEUQzI9N60rOYOow61qfkyGMmP80I9+xHXcZl
- 3
-X-Gm-Gg: ASbGncsvZxqgBsfnUWfNR09e+jz6hsImoZ3QPJhbg2F2ra8l0UWNP9hNau2v0UUKfaA
- /WdXcwJpDo9EwZxT4c5aBKzZtve5mqKTG+e9CjQ0vv4g8wmD0GCGO9QIqjiIuSApAhNCq5o4TUf
- 82WInqEaB2MubI0B5hosJ7tLy0RAZbEQicCfniERCLeEKn7SUNGDkQlokTiTlg/Y59ISj+Qcsdq
- IQkzxRNLzA+1hiuf7nUxdrOs0MWsUjk32i6Wm4/T9rMGV3gQb3tv/8qVkCSXA4t8xQ90bsk6kge
- Yt8Yw4sWlGjqLHIuuStCGQ==
-X-Google-Smtp-Source: AGHT+IFP/JI3S10GaY0pc69IdqCH//XwT2lXyB35dkuxWj4QkHUC8glfkE5ZoygZ61X+yWMRzwlVrg==
-X-Received: by 2002:a17:902:f706:b0:216:282d:c67b with SMTP id
- d9443c01a7336-21c355c4287mr579775735ad.35.1737818155778; 
- Sat, 25 Jan 2025 07:15:55 -0800 (PST)
+ bh=An+sE9DBoYYw7anO33hCPsD9R9Njhppr8J8h2EWtSJY=;
+ b=hMpJrvbJxhWxR+3aM/QxMC6vctxD35cCp2hi4HiNIsULA1ca02VMuAfTQ9jCQpNgBc
+ IlGDz906SQ1aKGpybchN0B8w0RkLvt6aYqjmJlVzriQguKxgTIC2ryfqo5Exyk5RoM8P
+ ngq71e22cP2RLPct6gCsW3MXYU8IHWhcTk7E7GvitOjSqjFJ36XhiOLAIomq92R373DI
+ YHoZppL21g6qmV4tRMcYCc4qJM3SgL8mGsPMJTvN1RizhqfhN/PtWPC58t9frHqIdWmJ
+ j5CFvAQ9UbGBGXrAWPdFcyhKfrjMn9eev4epVLmG6zjb8xi8UPJtO9922XjQzckEf5Wn
+ Y71g==
+X-Gm-Message-State: AOJu0Ywz81EoGop+uvUmhbVdogwlvB1nTGbQxU+9pApIIBExZLxcfuyJ
+ rWB8Jgo1MI47E/LhSloRqtUI47fI6DU5Bk71Hi3y7Xp8nhxI2wiufjrRP7BRZob9Cgy+IBpP2Ef
+ W
+X-Gm-Gg: ASbGnct0wxIM1a2XrL/qPmh+hTWL5nkDMuiLLS3Yn+7XVtyZa1xTmLAsBCAzOOyDGR/
+ JQ1fKlttEVcMAkZWdGeVF5KEW/0Eh83SH9/JiiLRWq3qaZ6BpVLGlkBkYunT63pV3aikcYO4Nk8
+ R6D9HgZpo/OOfzQgcKle4fPKz9CKqhMXK8eojorPukzVroV+y/UWb9ngxQrtuBLYbuLUMAFO1mW
+ uKqrwcZXPKr39CReilaqFGPm4TKEmoP6l0pc5ZG6mM/ZpRlHROUYz+aVFNaODvnWg+zQCuDZn8y
+ iN8Y3PWqn3O3sgmHiE3l6A==
+X-Google-Smtp-Source: AGHT+IEwBUcVB3vXwIitt0Y5m+nr6KWCqFGUOYHMJ6JStlhYyCJZ5Fj8j1etHRXcph/iQJftOZSzQQ==
+X-Received: by 2002:a05:6a00:13a0:b0:72d:9ec5:922 with SMTP id
+ d2e1a72fcca58-72dafbf04f5mr51510000b3a.24.1737818200796; 
+ Sat, 25 Jan 2025 07:16:40 -0800 (PST)
 Received: from [192.168.74.94] ([50.200.230.211])
  by smtp.gmail.com with ESMTPSA id
- 41be03b00d2f7-ac495d565aasm3346458a12.49.2025.01.25.07.15.55
+ d2e1a72fcca58-72f8a77c779sm3899063b3a.145.2025.01.25.07.16.40
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Sat, 25 Jan 2025 07:15:55 -0800 (PST)
-Message-ID: <05ed4583-704a-492c-896a-71bbd4a63a12@linaro.org>
-Date: Sat, 25 Jan 2025 07:15:53 -0800
+ Sat, 25 Jan 2025 07:16:40 -0800 (PST)
+Message-ID: <49a63d8f-e263-49a9-9da1-5edb9f526637@linaro.org>
+Date: Sat, 25 Jan 2025 07:16:38 -0800
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 07/76] target/arm: Use vfp.fp_status_a64 in A64-only
- helper functions
+Subject: Re: [PATCH 08/76] target/arm: Use fp_status_a32 in vjvct helper
 To: qemu-devel@nongnu.org
 References: <20250124162836.2332150-1-peter.maydell@linaro.org>
- <20250124162836.2332150-8-peter.maydell@linaro.org>
+ <20250124162836.2332150-9-peter.maydell@linaro.org>
 Content-Language: en-US
 From: Richard Henderson <richard.henderson@linaro.org>
-In-Reply-To: <20250124162836.2332150-8-peter.maydell@linaro.org>
+In-Reply-To: <20250124162836.2332150-9-peter.maydell@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::631;
- envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x631.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::62c;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x62c.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -104,18 +103,30 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 1/24/25 08:27, Peter Maydell wrote:
-> @@ -2808,7 +2808,7 @@ bool is_ebf(CPUARMState *env, float_status *statusp, float_status *oddstatusp)
->        */
->       bool ebf = is_a64(env) && env->vfp.fpcr & FPCR_EBF;
+> Use fp_status_a32 in the vjcvt helper function; this is called only
+> from the A32/T32 decoder and is not used inside a
+> set_rmode/restore_rmode sequence.
+> 
+> Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+> ---
+>   target/arm/vfp_helper.c | 2 +-
+>   1 file changed, 1 insertion(+), 1 deletion(-)
+> 
+> diff --git a/target/arm/vfp_helper.c b/target/arm/vfp_helper.c
+> index 7475f97e0ce..0671ba3a88b 100644
+> --- a/target/arm/vfp_helper.c
+> +++ b/target/arm/vfp_helper.c
+> @@ -1144,7 +1144,7 @@ uint64_t HELPER(fjcvtzs)(float64 value, float_status *status)
 >   
-> -    *statusp = env->vfp.fp_status;
-> +    *statusp = env->vfp.fp_status_a64;
->       set_default_nan_mode(true, statusp);
+>   uint32_t HELPER(vjcvt)(float64 value, CPUARMState *env)
+>   {
+> -    uint64_t pair = HELPER(fjcvtzs)(value, &env->vfp.fp_status);
+> +    uint64_t pair = HELPER(fjcvtzs)(value, &env->vfp.fp_status_a32);
+>       uint32_t result = pair;
+>       uint32_t z = (pair >> 32) == 0;
 >   
->       if (ebf) {
 
-Is this really correct?  !ebf includes aa32.
-
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 
 r~
 
