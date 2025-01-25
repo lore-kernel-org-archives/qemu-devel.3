@@ -4,79 +4,78 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0D1E6C0218C
-	for <qemu-devel@archiver.kernel.org>; Sat, 25 Jan 2025 17:41:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 959DBC0218C
+	for <qemu-devel@archiver.kernel.org>; Sat, 25 Jan 2025 17:43:31 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tbk9B-0001os-C3; Sat, 25 Jan 2025 12:40:41 -0500
+	id 1tbkBN-0002kb-31; Sat, 25 Jan 2025 12:42:57 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1tbk9A-0001oS-FF
- for qemu-devel@nongnu.org; Sat, 25 Jan 2025 12:40:40 -0500
+ id 1tbkBL-0002kO-8v
+ for qemu-devel@nongnu.org; Sat, 25 Jan 2025 12:42:55 -0500
 Received: from mail-pl1-x636.google.com ([2607:f8b0:4864:20::636])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1tbk98-0007aX-R5
- for qemu-devel@nongnu.org; Sat, 25 Jan 2025 12:40:40 -0500
+ id 1tbkBJ-0007na-Ou
+ for qemu-devel@nongnu.org; Sat, 25 Jan 2025 12:42:55 -0500
 Received: by mail-pl1-x636.google.com with SMTP id
- d9443c01a7336-2156e078563so44330895ad.2
- for <qemu-devel@nongnu.org>; Sat, 25 Jan 2025 09:40:38 -0800 (PST)
+ d9443c01a7336-216401de828so55492605ad.3
+ for <qemu-devel@nongnu.org>; Sat, 25 Jan 2025 09:42:53 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1737826837; x=1738431637; darn=nongnu.org;
+ d=linaro.org; s=google; t=1737826972; x=1738431772; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:to:subject:user-agent:mime-version:date:message-id:from
  :to:cc:subject:date:message-id:reply-to;
- bh=zjcIffbyiZu2LNP/z0YXUsZZA15p/pO47tOL62BmJsM=;
- b=vUao0cl/g3SbnM0+bNbQzOjIez9RQ6xrEfYhuCR4oVg95WrutcWryWkYyqsbTAwV4v
- IuvX8ntaxMx02Eo6Il3xIhEAHiRnuQkYiSRhTH78+znQbuy2MJSo/bReZj4kOlfBPaiH
- Bu3N711pVnt6S/4lTbFYGZr09MQKJxBssY06kDhFzWntL6ED88HPyJBkzVIUuijMNS1W
- wq7qqdULUn8NxBC0fEGfuB4keuUrw9kwfV7a8F/4QGoKuMIOPU6vZB+QPDifU+D/0sr9
- eEff6zqpsZkrz2ePseSUGFtQ0pdtm/XjrRqFYyuC9DZiU3ARHLnOqkZGjwRoSH/V+YgJ
- Pc4g==
+ bh=88NPPgic9JgQJPqlM1y1Wu4MDGEBB6Zjx8EtTIj7fh8=;
+ b=dxJCc8IHL3tegWnnftZtvRKhyb6ITG3pEGhg0yyhU8yQ/LxMkHG5D8H7EBnm1CEiDJ
+ n0Enfwov9YvCeY8TCqUV7r37mhSYi+qdV6p3AJIwMoOlcJesxnNwJi7FINUVDoplpHjd
+ oLIgLA1WLHvblmgB2xbwd9UkiG584mlcNrUX1KDmkwtvDoARn24UlRW3dTYJE8IAZOYb
+ BY917DGlwZn+c5q/fnykTD6hYdjTOtYg6khtqG2f2Gkt1VvGOWReBKWsJOFqKQcGiwlU
+ V1T7xYvug7V7RwGZTq90slRShe71PrOhWrqlMlDEUEKhZ0FFhMWrigljcIRwa/wm7dT9
+ +t+g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1737826837; x=1738431637;
+ d=1e100.net; s=20230601; t=1737826972; x=1738431772;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=zjcIffbyiZu2LNP/z0YXUsZZA15p/pO47tOL62BmJsM=;
- b=Hha1YCVjcjGf4JMsNu7QA15ZY5fkNaiH+MWsxsT2OJfcZ/6UfdGZAm0NgukBjfBgL8
- k10Z999gREMd2ZOr5J/2/IGz/95SWwlQWEyQO7M+zeeU69kvfy5E5/IwgfaFNFbJKK8T
- 8mX67rQriIhaG6T9k2ra4W3EYrzXxyDZ3EjyTHpE7Y1K0VKIRoZnlZ6zx7TusXQdjYOX
- 9R8rGcYxjC5CBltAcuRQkJC5dEj8a47v1/xRXtrniCqdtDofLySIqADn32wpng2cBvU3
- hDwFFeaLpC/VmdpTFX1L7/NetfOqcbetnO3Y3ixuahhj7kD8tKkqG0nMxNd0dv46s0Jx
- Z9gg==
-X-Gm-Message-State: AOJu0YzioJhejIwCtv+eqlqvXtzwieU2eb15W7Knm4/9IHE5FhlStsfd
- SGwzqkgDSoWzRd7szZJAdRTCKGl0gCIFhTBMlJF/qVd29/3ycQSLASiNvh0sQtRjlNeJ0IeFCqz
- w
-X-Gm-Gg: ASbGncvXmYpsc6Ym4MRSByn+7HIWnYfQlclA7p1YejYw+WLlJtz8pNktv8QyLPyoRNy
- SU4zDgf6IusuUEF8j+p7EC03x5JO75a7g6aR5n3EJpjDdWtxZhqG5BL30QCh+16FxvTQPgJftEe
- Hmuc86QvAs8T9N9acfTiSeZrwnp83wv8Git5v66Oi1zFZ2pkPURqHdAG1C7DcztnoIyiH62eoil
- U7BW+hnYVGzxVGbOc0gILN2ak8Mf4hSNDd2swrgWODD4pDEGrAxGG/SnOx1migZ5wGhXmjvuqQC
- WW5Hitw7qmcahob2wAdZJw==
-X-Google-Smtp-Source: AGHT+IGif6e11G8q/eUzgbwWqVJCNk9AEnboVJ9Mj4XtOl3dW7QlXSj4fUqxnccXKJBOUsL1ghi2eQ==
-X-Received: by 2002:a17:902:cecd:b0:216:6f1a:1c77 with SMTP id
- d9443c01a7336-21c355e8942mr573770025ad.43.1737826837263; 
- Sat, 25 Jan 2025 09:40:37 -0800 (PST)
+ bh=88NPPgic9JgQJPqlM1y1Wu4MDGEBB6Zjx8EtTIj7fh8=;
+ b=IWYpEe5VoED2YlDfu0VFhHN4OH8WJ5gJtdnOv5u5aPgjl5ve1otvHm6nrUTEJBDJVj
+ xCLULm6t7MWywHU/Pr8sgNi5xakh+GiOqF/kGr3S8blju6J1mwWTAnSJwT+h7SJprP8J
+ RQd8OKXNLR2LoMR9l8oDJD4cN85cL7j5vcVLrDo54lAHSgqP93i2VYSfpUixBvcz2neZ
+ nE+PaxOBLojwvnMW3JrIbFZ53W2bBXgKmoZluwpWDjaZqp6Ks1K571qeuicIMc7k76/1
+ vtLVIXD3ye252bs2YWxX65L8NEYfV2DIo8kjTJL0qHsvkNEU0Tfnlop5R4K+Ti1paan7
+ Iwyg==
+X-Gm-Message-State: AOJu0YwQAHnsHqfafGn+MypG5PYMyofI+dqXor8cSSVNjsTAb2D8gnDG
+ eEMy8TxISuP2iuzYu8+1VakaWvXpbL591oy2yUUuGL1aCb58ukLr6HY6cVKPb60TlpRUOstuO6u
+ 4
+X-Gm-Gg: ASbGncvERh+bMlJf3n26/IhmFWzHwwoIy8uoK6N0KVf7vM0fUASBl0D2t9zit/zpltM
+ jeHJAwaASk5OnwwHZfN67nxCoCJ6JwycReQenDaUUgb3GVr5G8MqCedon2VK/3b6P7BAIem7eXi
+ vuXQkfLjLNovjXWnTCPKSlubmCKeL6G/1UhXAwzr5Xd40N6n3WwTclssdFXJ0W6Oa6sF8GYrb9X
+ fW3ufY422dU0sTFwTY1vVI4lVyko4wYbtAa+8rxCkdBZcXZC7epIrHUibj61nYEevkp4Hu/cbE7
+ ZBEZBP+L/jKA7T7kYH0PfQ==
+X-Google-Smtp-Source: AGHT+IFyW43eQwCMMONBLIqFi6Tfjv0YO/OYCMgm0pNosG/LP/D41ku0BEx+RnjuxadGn1fPfgxxGw==
+X-Received: by 2002:a05:6a20:7f8e:b0:1ea:ddd1:2fcf with SMTP id
+ adf61e73a8af0-1eb2145ea9bmr53036806637.4.1737826972316; 
+ Sat, 25 Jan 2025 09:42:52 -0800 (PST)
 Received: from [192.168.74.94] ([50.200.230.211])
  by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-21da414d9e9sm34619715ad.171.2025.01.25.09.40.36
+ d2e1a72fcca58-72f8a69fcb2sm3956435b3a.33.2025.01.25.09.42.51
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Sat, 25 Jan 2025 09:40:36 -0800 (PST)
-Message-ID: <600d07d3-500a-451c-80e4-5f98bd46c117@linaro.org>
-Date: Sat, 25 Jan 2025 09:40:35 -0800
+ Sat, 25 Jan 2025 09:42:51 -0800 (PST)
+Message-ID: <ee32133b-a3d5-4cc8-872a-174c38af32f2@linaro.org>
+Date: Sat, 25 Jan 2025 09:42:50 -0800
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 33/76] target/arm: Use FPST_FPCR_AH for FRECPE, FRECPS,
- FRECPX, FRSQRTE, FRSQRTS
+Subject: Re: [PATCH 34/76] target/arm: Use FPST_FPCR_AH for BFCVT* insns
 To: qemu-devel@nongnu.org
 References: <20250124162836.2332150-1-peter.maydell@linaro.org>
- <20250124162836.2332150-34-peter.maydell@linaro.org>
+ <20250124162836.2332150-35-peter.maydell@linaro.org>
 Content-Language: en-US
 From: Richard Henderson <richard.henderson@linaro.org>
-In-Reply-To: <20250124162836.2332150-34-peter.maydell@linaro.org>
+In-Reply-To: <20250124162836.2332150-35-peter.maydell@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 Received-SPF: pass client-ip=2607:f8b0:4864:20::636;
@@ -104,49 +103,19 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 1/24/25 08:27, Peter Maydell wrote:
-> For the instructions FRECPE, FRECPS, FRECPX, FRSQRTE, FRSQRTS, use
-> FPST_FPCR_AH or FPST_FPCR_AH_F16 when FPCR.AH is 1, so that they get
-> the required behaviour changes.
+> When FPCR.AH is 1, use FPST_FPCR_AH for:
+>   * AdvSIMD BFCVT, BFCVTN, BFCVTN2
+>   * SVE BFCVT, BFCVTNT
 > 
-> Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
-> ---
-> select_fpst() is another function I'm not super happy wit hthe
-> naming of, because again it should only be used for the subset
-> of insns which have this particular behaviour, but the current
-> name kind of implies more generality than that. Suggestions welcome.
-> ---
->   target/arm/tcg/translate.h     |  13 ++++
->   target/arm/tcg/translate-a64.c | 119 +++++++++++++++++++++++++--------
->   target/arm/tcg/translate-sve.c |  30 ++++++---
->   3 files changed, 127 insertions(+), 35 deletions(-)
+> so that they get the required behaviour changes.
 > 
-> diff --git a/target/arm/tcg/translate.h b/target/arm/tcg/translate.h
-> index d6edd8db76b..680ca52a181 100644
-> --- a/target/arm/tcg/translate.h
-> +++ b/target/arm/tcg/translate.h
-> @@ -746,6 +746,19 @@ static inline TCGv_ptr fpstatus_ptr(ARMFPStatusFlavour flavour)
->       return statusptr;
->   }
->   
-> +/*
-> + * Return the ARMFPStatusFlavour to use based on element size and
-> + * whether FPCR.AH is set.
-> + */
-> +static inline ARMFPStatusFlavour select_fpst(DisasContext *s, MemOp esz)
-> +{
-> +    if (s->fpcr_ah) {
-> +        return esz == MO_16 ? FPST_FPCR_AH_F16 : FPST_FPCR_AH;
-> +    } else {
-> +        return esz == MO_16 ? FPST_FPCR_F16_A64 : FPST_FPCR_A64;
-> +    }
-> +}
-> +
+> Signed-off-by: Peter Maydell<peter.maydell@linaro.org>
+> ---
+>   target/arm/tcg/translate-a64.c | 27 +++++++++++++++++++++------
+>   target/arm/tcg/translate-sve.c |  6 ++++--
+>   2 files changed, 25 insertions(+), 8 deletions(-)
 
-translate-a64.h, I think.
-
-Otherwise.
 Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-
 
 r~
 
