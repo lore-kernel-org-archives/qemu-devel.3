@@ -4,74 +4,78 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0FC76C0218C
-	for <qemu-devel@archiver.kernel.org>; Sat, 25 Jan 2025 12:35:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id EE48CC0218C
+	for <qemu-devel@archiver.kernel.org>; Sat, 25 Jan 2025 13:42:28 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tbfLD-0008G0-4J; Sat, 25 Jan 2025 07:32:47 -0500
+	id 1tbgPt-0003h7-Se; Sat, 25 Jan 2025 08:41:42 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1tbfL7-0008Dm-3h; Sat, 25 Jan 2025 07:32:42 -0500
-Received: from mgamail.intel.com ([198.175.65.18])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1tbfL5-0005Tn-ES; Sat, 25 Jan 2025 07:32:40 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
- d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1737808359; x=1769344359;
- h=from:to:cc:subject:date:message-id:in-reply-to:
- references:mime-version:content-transfer-encoding;
- bh=Bv9++MIdsioOarcOj78lH/SZyI4MnsCAuILQhxiMHgE=;
- b=l/nE541tlCJwtNiTvWhu5yD7VsQuQqEgbMsbB6h/fIaaExsvoayxy3yV
- kAGFFeCHE4NAqhVh7aQkcY7kdUzzEEBr1PzyCrdQRovhoAy11T1cfucZW
- xh/4Bqs73m6NCQf8y6Lvb+g0ytb3ArGEdA6MsW2LdnhZzzlI2qJbjDicD
- fJNzGRZ5OTtgryZJVmP3ZeBHif2VqxsqnIMIHoGYydFSpmTTjFfoe8OGP
- 4qLXKCgnzZIIQyIpuAOF7yNXObyfqqP+USqa7mi4krCxvN/w6a6A3ogW+
- aAqsXP3kt2Y/vLtayjW7TaahE5KH1fp/1JbNFASqUNgAq7rFHGX9RV0Qm Q==;
-X-CSE-ConnectionGUID: Em5MPB/aTfaYzrVqlkJ29w==
-X-CSE-MsgGUID: CGZEneUzSwyUscbmTIYfqg==
-X-IronPort-AV: E=McAfee;i="6700,10204,11314"; a="38434716"
-X-IronPort-AV: E=Sophos;i="6.12,310,1728975600"; d="scan'208";a="38434716"
-Received: from fmviesa007.fm.intel.com ([10.60.135.147])
- by orvoesa110.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 25 Jan 2025 04:32:38 -0800
-X-CSE-ConnectionGUID: NbjuRh2QQ8GuGU+/G6HELw==
-X-CSE-MsgGUID: VaWIrpoPR5CiKHCDoDyUFQ==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.13,234,1732608000"; d="scan'208";a="107897684"
-Received: from liuzhao-optiplex-7080.sh.intel.com ([10.239.160.39])
- by fmviesa007.fm.intel.com with ESMTP; 25 Jan 2025 04:32:35 -0800
-From: Zhao Liu <zhao1.liu@intel.com>
-To: Paolo Bonzini <pbonzini@redhat.com>,
- Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,
- Junjie Mao <junjie.mao@hotmail.com>,
- =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Richard Henderson <richard.henderson@linaro.org>,
- Peter Maydell <peter.maydell@linaro.org>,
- =?UTF-8?q?Daniel=20P=20=2E=20Berrang=C3=A9?= <berrange@redhat.com>
-Cc: qemu-devel@nongnu.org, qemu-rust@nongnu.org, Zhao Liu <zhao1.liu@intel.com>
-Subject: [PATCH 05/10] rust: add bindings for memattrs
-Date: Sat, 25 Jan 2025 20:51:32 +0800
-Message-Id: <20250125125137.1223277-6-zhao1.liu@intel.com>
-X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20250125125137.1223277-1-zhao1.liu@intel.com>
-References: <20250125125137.1223277-1-zhao1.liu@intel.com>
+ (Exim 4.90_1) (envelope-from <john.phone1122@gmail.com>)
+ id 1tbbN4-0005Wg-GB
+ for qemu-devel@nongnu.org; Sat, 25 Jan 2025 03:18:26 -0500
+Received: from mail-pl1-x62f.google.com ([2607:f8b0:4864:20::62f])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <john.phone1122@gmail.com>)
+ id 1tbbN3-000789-1c
+ for qemu-devel@nongnu.org; Sat, 25 Jan 2025 03:18:26 -0500
+Received: by mail-pl1-x62f.google.com with SMTP id
+ d9443c01a7336-216634dd574so35245455ad.2
+ for <qemu-devel@nongnu.org>; Sat, 25 Jan 2025 00:18:24 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20230601; t=1737793102; x=1738397902; darn=nongnu.org;
+ h=to:subject:message-id:date:from:mime-version:from:to:cc:subject
+ :date:message-id:reply-to;
+ bh=DDEiopxlqyugb+kGNF+VwgWDeHHvy7eMNlkZRhRFcyY=;
+ b=kQZygDpG+KF4tZXygpDvCHIBFqR0gTbsVJSUynwG3JGE6GsP+LsX9pYW/BEmvVb+pw
+ Gy1osjTlfjvaNF2tXf1+C4KNj8U7Go4RAa0lnY2ZGnWI6temzKFayHXrAtrK83YJxL/j
+ WX3mswR0t+YImYuX1ETLOtlXicKZZCj791+7lE50FidFxXyJYvzpzqJy8B6EjWmaUQf9
+ TUyplPXSXtn8cdXVzW+jQJUgFXmROlq79GMDIA7WBIZzmSHNeWDnqq2TGYf2gZTr9Ghw
+ z3Ne9m0ylhLi3eIQAOxmMkjXKOl5qAKr1Nmg+ydCtQltz86lKidvZ8LhcRhKGRUD5ENa
+ Cj3Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1737793102; x=1738397902;
+ h=to:subject:message-id:date:from:mime-version:x-gm-message-state
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=DDEiopxlqyugb+kGNF+VwgWDeHHvy7eMNlkZRhRFcyY=;
+ b=okdrcbNjga175KqSNAM66DJMdAA9Kvx6TafVXv2YxcWURavURwm6jW8/F8FBKuz72c
+ gPBHQAWN37P0DZ1FhicPO1uwAIGPiotfBUCMcaMKAG3i5KzuiFbJVpvhD6BljuYCRgnm
+ 5dP1rfEaqFgySsIDlmXBQMQmzh+A4T+axcoslskRg+VIDZArXW5ZMUHSp1715TXnErF4
+ OBeR8XDYtHY4eGjTNhdWUrWzqMTElQaSip/SYNsbrBpI/QWylTOtwLn41llFhTPlyadg
+ lKDRJdFZPHcJisddI9NWTTEA3CVo1F937IWNyyVA5lIucoDqivVxKb1eMSzfdhCRShnv
+ 2GLw==
+X-Gm-Message-State: AOJu0Yz2bjTHJzOVhJTkwYyqQDt5Kix0XAaO2VNKLZjHl2ZPxbzr5OgN
+ sMz8kzrd+8fAavg+YfrLzG31S7yNDCqAva7GDqGnKa2MKG03pUsvtmSlpuMzQcSwOf+0+Ch0tQd
+ 8KrgZBtv682Il6XgTzIPSI3x6fWUxOlQm
+X-Gm-Gg: ASbGncvjC4awLjvFUmvKDn5RmR6Eu47T6Q1F2pXjhdhfbHgmeSK7pSZOUqvWrgu4arT
+ p8Hhf9TAgOhmjkzNQQ9giRKpzONj4RftrWxJCunfMCFKHmwZ+Yj+SLMq9a9R6uKbuP0KTfeehMF
+ uNqC6McpAaiY9J6s/aAw==
+X-Google-Smtp-Source: AGHT+IFQgNcGcXcrKDAzEODPvQuZ37BkmMTC+cGtlsvXGWgrC581j/IlVBeeVrUIcH7SF91kSnEwqL4z/YmcXvWTyVM=
+X-Received: by 2002:a17:902:dacb:b0:215:5ea2:6543 with SMTP id
+ d9443c01a7336-21c35546dcbmr533679965ad.28.1737793102426; Sat, 25 Jan 2025
+ 00:18:22 -0800 (PST)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=198.175.65.18; envelope-from=zhao1.liu@intel.com;
- helo=mgamail.intel.com
-X-Spam_score_int: -73
-X-Spam_score: -7.4
-X-Spam_bar: -------
-X-Spam_report: (-7.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-2.996,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+From: John Phone <john.phone1122@gmail.com>
+Date: Sat, 25 Jan 2025 03:18:11 -0500
+X-Gm-Features: AWEUYZmB9pKqPbXmR_Jj0dHGe6ZxtfVQtkOuY54_DDpqz0nLlVekUppFccbh6BY
+Message-ID: <CAOOLYF=e+u_+h=dAWz3ZRXdxJM-093C-JRCp596RdNm6L4n=7Q@mail.gmail.com>
+Subject: Problem booting windows 11: "tpm_passthrough: Could not guess TPM
+ cancel path"
+To: qemu-devel@nongnu.org
+Content-Type: multipart/alternative; boundary="00000000000090383c062c837c5d"
+Received-SPF: pass client-ip=2607:f8b0:4864:20::62f;
+ envelope-from=john.phone1122@gmail.com; helo=mail-pl1-x62f.google.com
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001, HTML_MESSAGE=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
+X-Mailman-Approved-At: Sat, 25 Jan 2025 08:41:39 -0500
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -86,81 +90,45 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The MemTxAttrs structure contains bitfield members, and bindgen is
-unable to generate an equivalent macro definition for
-MEMTXATTRS_UNSPECIFIED.
+--00000000000090383c062c837c5d
+Content-Type: text/plain; charset="UTF-8"
 
-Therefore, manually define a global constant variable
-MEMTXATTRS_UNSPECIFIED to support calls from Rust code.
+Hi I have a problem trying to boot Windows 11 using Qemu.
 
-Signed-off-by: Zhao Liu <zhao1.liu@intel.com>
----
-Changes since RFC:
- * With a boolean type unspecified field, no need to add once_cell.
- * Merge memattrs binding to memory.rs.
----
- rust/qemu-api/src/memory.rs   | 16 ++++++++++++++--
- rust/qemu-api/src/zeroable.rs |  1 +
- rust/wrapper.h                |  1 +
- 3 files changed, 16 insertions(+), 2 deletions(-)
+When I try to start qemu booting Windows 11 I get the error,
+"tpm_passthrough: Could not guess TPM cancel path"
 
-diff --git a/rust/qemu-api/src/memory.rs b/rust/qemu-api/src/memory.rs
-index 963d689c27d4..fff92508c68f 100644
---- a/rust/qemu-api/src/memory.rs
-+++ b/rust/qemu-api/src/memory.rs
-@@ -2,7 +2,7 @@
- // Author(s): Paolo Bonzini <pbonzini@redhat.com>
- // SPDX-License-Identifier: GPL-2.0-or-later
- 
--//! Bindings for `MemoryRegion` and `MemoryRegionOps`
-+//! Bindings for `MemoryRegion`, `MemoryRegionOps` and `MemTxAttrs`
- 
- use std::{
-     ffi::{CStr, CString},
-@@ -11,7 +11,7 @@
-     ptr::addr_of,
- };
- 
--pub use bindings::hwaddr;
-+pub use bindings::{hwaddr, MemTxAttrs};
- 
- use crate::{
-     bindings::{self, device_endian, memory_region_init_io},
-@@ -189,3 +189,15 @@ unsafe impl ObjectType for MemoryRegion {
-         unsafe { CStr::from_bytes_with_nul_unchecked(bindings::TYPE_MEMORY_REGION) };
- }
- qom_isa!(MemoryRegion: Object);
-+
-+/// A special `MemTxAttrs` constant, used to indicate that no memary
-+/// attributes are specified.
-+///
-+/// Bus masters which don't specify any attributes will get this,
-+/// which has all attribute bits clear except the topmost one
-+/// (so that we can distinguish "all attributes deliberately clear"
-+/// from "didn't specify" if necessary).
-+pub const MEMTXATTRS_UNSPECIFIED: MemTxAttrs = MemTxAttrs {
-+    unspecified: true,
-+    ..Zeroable::ZERO
-+};
-diff --git a/rust/qemu-api/src/zeroable.rs b/rust/qemu-api/src/zeroable.rs
-index 75742b50d4e3..9f009606b1ab 100644
---- a/rust/qemu-api/src/zeroable.rs
-+++ b/rust/qemu-api/src/zeroable.rs
-@@ -101,3 +101,4 @@ fn default() -> Self {
- impl_zeroable!(crate::bindings::MemoryRegionOps__bindgen_ty_1);
- impl_zeroable!(crate::bindings::MemoryRegionOps__bindgen_ty_2);
- impl_zeroable!(crate::bindings::MemoryRegionOps);
-+impl_zeroable!(crate::bindings::MemTxAttrs);
-diff --git a/rust/wrapper.h b/rust/wrapper.h
-index a9bc67af0d5f..54839ce0f510 100644
---- a/rust/wrapper.h
-+++ b/rust/wrapper.h
-@@ -62,3 +62,4 @@ typedef enum memory_order {
- #include "qapi/error.h"
- #include "migration/vmstate.h"
- #include "chardev/char-serial.h"
-+#include "exec/memattrs.h"
--- 
-2.34.1
+qemu-system-x86_64 -enable-kvm -boot d -cdrom
+/home/mydrive/Downloads/Win11_24H2_EnglishInternational_x64.iso \
+-tpmdev passthrough,id=tpm0,path=/dev/tpm0 -device
+tpm-tis,tpmdev=tpm0,cancel-path=/dev/null=on \
+-m 4G -smp 4 -hda windows11_100G_jan242025.qcow2
 
+I also tried "cancel-path=/tmp/foo-cancel"
+Also changed permissions in /dev/tpm0 to 777.
+
+
+qemu-system-x86_64 --version
+QEMU emulator version 8.2.2 (Debian 1:8.2.2+ds-0ubuntu1.4)
+Using Xubuntu 24 Lts.
+
+Thanks
+
+--00000000000090383c062c837c5d
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+
+<div dir=3D"ltr"><br>Hi I have a problem trying to boot Windows 11 using Qe=
+mu.<br><br>When I try to start qemu booting Windows 11 I get the error, &qu=
+ot;tpm_passthrough: Could not guess TPM cancel path&quot;<br><br>qemu-syste=
+m-x86_64 -enable-kvm -boot d -cdrom /home/mydrive/Downloads/Win11_24H2_Engl=
+ishInternational_x64.iso \<br>-tpmdev passthrough,id=3Dtpm0,path=3D/dev/tpm=
+0 -device tpm-tis,tpmdev=3Dtpm0,cancel-path=3D/dev/null=3Don \<br>-m 4G -sm=
+p 4 -hda windows11_100G_jan242025.qcow2 <br><br>I also tried &quot;cancel-p=
+ath=3D/tmp/foo-cancel&quot;<br>Also changed permissions in /dev/tpm0 to 777=
+.<br><br><br>qemu-system-x86_64 --version<br>QEMU emulator version 8.2.2 (D=
+ebian 1:8.2.2+ds-0ubuntu1.4)<br>Using Xubuntu 24 Lts.<br><div><br></div><di=
+v>Thanks</div></div>
+
+--00000000000090383c062c837c5d--
 
