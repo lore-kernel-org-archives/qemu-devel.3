@@ -4,95 +4,72 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 75625C0218C
-	for <qemu-devel@archiver.kernel.org>; Sat, 25 Jan 2025 12:16:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5ED8CC0218C
+	for <qemu-devel@archiver.kernel.org>; Sat, 25 Jan 2025 12:33:33 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tbf54-00058C-Fn; Sat, 25 Jan 2025 07:16:06 -0500
+	id 1tbfLA-0008Dq-UF; Sat, 25 Jan 2025 07:32:44 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <ppandit@redhat.com>)
- id 1tbf52-00057k-9m
- for qemu-devel@nongnu.org; Sat, 25 Jan 2025 07:16:04 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
+ id 1tbfL0-0008BP-AM; Sat, 25 Jan 2025 07:32:35 -0500
+Received: from mgamail.intel.com ([198.175.65.18])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <ppandit@redhat.com>)
- id 1tbf4z-0003PI-GV
- for qemu-devel@nongnu.org; Sat, 25 Jan 2025 07:16:04 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1737807360;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=x1CzXpG9tJ879PK52y/ATtdD7ABBIJpIP5NSa4UrGxk=;
- b=PB8AushzJq7tqDkOgLS1qYjO/B9GIXzum18w/78LdGTS078bIfecguZZ6ReJn8HQ7OrUY8
- Wu6FCayLkT5nTNKjzYVtcuQfZFINdTXSFVM6dYeAUyNWhnO8GsRgQBuDcPoEMjtYFVJjDP
- fmE6tUysndDg9IWGCcNXKAZpSWcgHUg=
-Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com
- [209.85.128.71]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-681--B0qYAUeN2K5-esUNFQ0dA-1; Sat, 25 Jan 2025 07:15:57 -0500
-X-MC-Unique: -B0qYAUeN2K5-esUNFQ0dA-1
-X-Mimecast-MFC-AGG-ID: -B0qYAUeN2K5-esUNFQ0dA
-Received: by mail-wm1-f71.google.com with SMTP id
- 5b1f17b1804b1-4361ecebc5bso14613995e9.1
- for <qemu-devel@nongnu.org>; Sat, 25 Jan 2025 04:15:57 -0800 (PST)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1737807356; x=1738412156;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=x1CzXpG9tJ879PK52y/ATtdD7ABBIJpIP5NSa4UrGxk=;
- b=xDP+vdnWEyb5SRg0/RKR71Kbs9lknoL0J8JrgqCh+oTR7doII61ShC7wsIhm12pGg7
- U4UedKgINALqmsfxa/ZZDBRQZyhTJqKBnE435awfHG5ytisXgcQbfatmUAqFJ/+8zN8F
- DXbq5InsZT/qO/GB7mgWsRkQEKNEnXNr7XQuv4qAK4XZKNlpHnXBfTJgH1NCjkrVTW1n
- SPrzWRX2R1TtJxTX4fDZL1MLgJlthYj4VRJCOO0a1bMX6zGkm/qG+qsmrx9gIkKtr3kf
- 4WMBNHWqUPt6yb4snSfXM5ELiqpJKzZJMZjDWKnyPi5SMXhsBKz0yPOLLqkmK3XvCeS2
- VLsg==
-X-Gm-Message-State: AOJu0YxXpAKP40CK3Nobr7P7enn7cdHtnvHXHRsNWDwP2hPezNLI+aiB
- G0UnFzr99ti2gu+Axff0QxuA6mzL4XIJug/QGYpboxzEsxeQMiKMyjWiDAqjjyqKPwAD+NiK83z
- 0WGJUHKTlICqTzq/Fx/19H+kMQTmbR4lZ8Uzq2xtWeRitODk5LdmrbxL8s6Y82rfjxaEhzuLk8g
- +W/JTkQbTtZPvOXPxdfcGq/1HDBIY=
-X-Gm-Gg: ASbGncugxZaoh3G8mCWgNN/BFLROHIHXaItpRAZGDUtlkjezssvzJw0XAu/4CMp1BEL
- olhCC2nUCKGTejIhJdiOEKZGT1ATDcMx5pYhwCaAK9cY17Mop5vnreeHHZoPZ/78=
-X-Received: by 2002:a05:600c:310a:b0:434:e9ee:c1e with SMTP id
- 5b1f17b1804b1-4389144ee14mr338196595e9.31.1737807356456; 
- Sat, 25 Jan 2025 04:15:56 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IEk+nxJwbpBO1g0W+Qn857b4b2tnhLs2MpFNln2W9PNq+Yuw0tmPISxbTpTRzeSJ3Ia40YPTqnorQqo/9OiEzo=
-X-Received: by 2002:a05:600c:310a:b0:434:e9ee:c1e with SMTP id
- 5b1f17b1804b1-4389144ee14mr338196385e9.31.1737807356197; Sat, 25 Jan 2025
- 04:15:56 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
+ id 1tbfKy-0005TJ-1X; Sat, 25 Jan 2025 07:32:33 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+ d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+ t=1737808352; x=1769344352;
+ h=from:to:cc:subject:date:message-id:in-reply-to:
+ references:mime-version:content-transfer-encoding;
+ bh=Y5lOC7itXdhtdQbuxxpKxG5odZWwd5vj2vFriJDCYUw=;
+ b=dSYKUEThJQldZ+OXg15zJgiNoxZbiFOAV+qqPAdrzLWPlvDE6zFT6Q2Y
+ /CmUnIROxsPbcVQnN+Gd9dZMEeFe1MSTvvuUIxwaJlUqrYpsFoPqWnql5
+ rpjeUD4t6mYBNyV3KlRU9XunmNVBj7RAKRmpFlvRqwa9cbAdIzwju5Qgn
+ z7B1ECiYygc70KOE9qyEz7i0QnZKCh5AY6+SGf8tURowHQl0mb482PGTm
+ N9ugDPpyNm9evNa1HqLRb5/T4CzRPCJvi4lkVfg964Wpy+TUdAPGmpGO3
+ iqYBV2RkLXU7P0jUbE2+JdhXwlt+dd4d1lL/8vo3ne1lu2YWDQsRaUNLq A==;
+X-CSE-ConnectionGUID: uAM7Wb+CRIy8nj7C4kk+fQ==
+X-CSE-MsgGUID: gjEYxZQVSsiaQ6j0q3eWmA==
+X-IronPort-AV: E=McAfee;i="6700,10204,11314"; a="38434702"
+X-IronPort-AV: E=Sophos;i="6.12,310,1728975600"; d="scan'208";a="38434702"
+Received: from fmviesa007.fm.intel.com ([10.60.135.147])
+ by orvoesa110.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 25 Jan 2025 04:32:30 -0800
+X-CSE-ConnectionGUID: oBuYJ4s6SJKukxDGJdDOuQ==
+X-CSE-MsgGUID: KqpmlBRwSWOvjDiIhqv8MQ==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.13,234,1732608000"; d="scan'208";a="107897654"
+Received: from liuzhao-optiplex-7080.sh.intel.com ([10.239.160.39])
+ by fmviesa007.fm.intel.com with ESMTP; 25 Jan 2025 04:32:27 -0800
+From: Zhao Liu <zhao1.liu@intel.com>
+To: Paolo Bonzini <pbonzini@redhat.com>,
+ Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,
+ Junjie Mao <junjie.mao@hotmail.com>,
+ =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Peter Maydell <peter.maydell@linaro.org>,
+ =?UTF-8?q?Daniel=20P=20=2E=20Berrang=C3=A9?= <berrange@redhat.com>
+Cc: qemu-devel@nongnu.org, qemu-rust@nongnu.org, Zhao Liu <zhao1.liu@intel.com>
+Subject: [PATCH 02/10] rust/qdev: add the macro to define bit property
+Date: Sat, 25 Jan 2025 20:51:29 +0800
+Message-Id: <20250125125137.1223277-3-zhao1.liu@intel.com>
+X-Mailer: git-send-email 2.34.1
+In-Reply-To: <20250125125137.1223277-1-zhao1.liu@intel.com>
+References: <20250125125137.1223277-1-zhao1.liu@intel.com>
 MIME-Version: 1.0
-References: <20250121131032.1611245-1-ppandit@redhat.com>
- <20250121131032.1611245-5-ppandit@redhat.com>
- <Z4_Bh3ytv9REBero@x1n>
- <CAE8KmOw-4_DSoQEVUtJQnAuGdazmLqhL-dpUi3J1y8BN7zjLLw@mail.gmail.com>
- <Z5EYbBXkjTu98rHk@x1n>
- <CAE8KmOwvp=LJ+79t9VVsZqf4APqSYxqCQVmYSg_5QaVD4vzLWg@mail.gmail.com>
- <CAE8KmOywe888S-oCoO=4=oFsXuN=AfuuqvT27LGor-UTC78YoQ@mail.gmail.com>
- <Z5Oz-Kz4rysFQ-n1@x1n>
-In-Reply-To: <Z5Oz-Kz4rysFQ-n1@x1n>
-From: Prasad Pandit <ppandit@redhat.com>
-Date: Sat, 25 Jan 2025 17:45:39 +0530
-X-Gm-Features: AWEUYZnxkNQ2nY398nvdvTHuslapV0Lvp2MAF85Y7x_TTbu6uSaC4uBb8b2lcMI
-Message-ID: <CAE8KmOw_k3Jxf_AyZ6W8nfOcgsF4mkbUL0-tigX8-iEdN_oApA@mail.gmail.com>
-Subject: Re: [PATCH v3 4/4] tests/qtest/migration: add postcopy test with
- multifd
-To: Peter Xu <peterx@redhat.com>
-Cc: qemu-devel@nongnu.org, farosas@suse.de, berrange@redhat.com, 
- Prasad Pandit <pjp@fedoraproject.org>
-Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=ppandit@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -50
-X-Spam_score: -5.1
-X-Spam_bar: -----
-X-Spam_report: (-5.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-2.996,
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=198.175.65.18; envelope-from=zhao1.liu@intel.com;
+ helo=mgamail.intel.com
+X-Spam_score_int: -73
+X-Spam_score: -7.4
+X-Spam_bar: -------
+X-Spam_report: (-7.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-2.996,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -109,24 +86,39 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, 24 Jan 2025 at 22:39, Peter Xu <peterx@redhat.com> wrote:
-> > >         # /x86_64/migration/multifd/tcp/tls/psk/match
-> > >         # /x86_64/migration/multifd/tcp/plain/zstd
-> > >         # /x86_64/migration/multifd/tcp/plain/cancel
-> Since multifd doesn't work with postcopy phase, compression so far cannot
-> happen in postcopy phase but only in precopy phase.
+HPET device (Rust device) needs to define the bit type property.
 
-* Right.
+Add a variant of define_property macro to define bit type property.
 
-> So the tests I suggested was trying to make sure multifd major features (in
-> this case, tls, compression, and cancellation) work like before even if we
-> set postcopy-ram=on in the feature list, because after your changes merged,
-> people may start always set postcopy-ram=on for all cases.
-
-* Ie. we set 'postcopy-ram=true' for above precopy tests?
-
-Thank you.
+Signed-off-by: Zhao Liu <zhao1.liu@intel.com>
 ---
-  - Prasad
+ rust/qemu-api/src/qdev.rs | 12 ++++++++++++
+ 1 file changed, 12 insertions(+)
+
+diff --git a/rust/qemu-api/src/qdev.rs b/rust/qemu-api/src/qdev.rs
+index b348f2f4ce71..32740c873604 100644
+--- a/rust/qemu-api/src/qdev.rs
++++ b/rust/qemu-api/src/qdev.rs
+@@ -166,6 +166,18 @@ fn class_init(dc: &mut DeviceClass) {
+ 
+ #[macro_export]
+ macro_rules! define_property {
++    ($name:expr, $state:ty, $field:ident, $prop:expr, $type:ty, bit = $bitnr:expr, default = $defval:expr$(,)*) => {
++        $crate::bindings::Property {
++            // use associated function syntax for type checking
++            name: ::std::ffi::CStr::as_ptr($name),
++            info: $prop,
++            offset: $crate::offset_of!($state, $field) as isize,
++            bitnr: $bitnr,
++            set_default: true,
++            defval: $crate::bindings::Property__bindgen_ty_1 { u: $defval as u64 },
++            ..$crate::zeroable::Zeroable::ZERO
++        }
++    };
+     ($name:expr, $state:ty, $field:ident, $prop:expr, $type:ty, default = $defval:expr$(,)*) => {
+         $crate::bindings::Property {
+             // use associated function syntax for type checking
+-- 
+2.34.1
 
 
