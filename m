@@ -4,73 +4,93 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3FC7EC02181
-	for <qemu-devel@archiver.kernel.org>; Sat, 25 Jan 2025 03:29:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D14A4C02182
+	for <qemu-devel@archiver.kernel.org>; Sat, 25 Jan 2025 05:59:27 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tbWqw-0006Rb-Aq; Fri, 24 Jan 2025 22:28:58 -0500
+	id 1tbZBt-0003aD-5j; Sat, 25 Jan 2025 00:58:45 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
- id 1tbWqu-0006R7-BI
- for qemu-devel@nongnu.org; Fri, 24 Jan 2025 22:28:56 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
- id 1tbWqs-0000yb-Ru
- for qemu-devel@nongnu.org; Fri, 24 Jan 2025 22:28:56 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1737775733;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=qDSh7T+Lrnt+9Tx3bkT+uHEftan7XHP10kgx6hmbupU=;
- b=GjG2VZKWwEOH8y+ik++HE5PM4e3QbX/smOnpb8yw5Dr5VoHycIUVukl7qauY0EW+3jifJ7
- LkvUg+8+STAu/+pkr21bsHXonm5Yl6qt0CL0FUsA77dh/0H+PyKF0TqHGG3oDs64VNBtYG
- r3EtucLi9HAUe2qV16eb1Jvd/h/QYv8=
-Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-213-XgsicirvP_e5AtTMRUneVA-1; Fri,
- 24 Jan 2025 22:28:48 -0500
-X-MC-Unique: XgsicirvP_e5AtTMRUneVA-1
-X-Mimecast-MFC-AGG-ID: XgsicirvP_e5AtTMRUneVA
-Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 89A36180035E; Sat, 25 Jan 2025 03:28:46 +0000 (UTC)
-Received: from localhost (unknown [10.2.16.3])
- by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 111341800365; Sat, 25 Jan 2025 03:28:43 +0000 (UTC)
-Date: Fri, 24 Jan 2025 22:28:42 -0500
-From: Stefan Hajnoczi <stefanha@redhat.com>
-To: Bibo Mao <maobibo@loongson.cn>
-Cc: Stefan Hajnoczi <stefanha@gmail.com>, qemu-devel@nongnu.org,
- Song Gao <gaosong@loongson.cn>
-Subject: Re: [PULL 0/7] loongarch-to-apply queue
-Message-ID: <20250125032842.GA287570@fedora>
-References: <20250124070021.800907-1-maobibo@loongson.cn>
+ (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
+ id 1tbZBm-0003Zy-Mt
+ for qemu-devel@nongnu.org; Sat, 25 Jan 2025 00:58:40 -0500
+Received: from mail-pl1-x632.google.com ([2607:f8b0:4864:20::632])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
+ id 1tbZBk-0006hZ-No
+ for qemu-devel@nongnu.org; Sat, 25 Jan 2025 00:58:38 -0500
+Received: by mail-pl1-x632.google.com with SMTP id
+ d9443c01a7336-21669fd5c7cso49962895ad.3
+ for <qemu-devel@nongnu.org>; Fri, 24 Jan 2025 21:58:36 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=daynix-com.20230601.gappssmtp.com; s=20230601; t=1737784715; x=1738389515;
+ darn=nongnu.org; 
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=tiOy2Up1OghNNIIm7ZnI85sggsA6RBi30pZJ+3V1Txk=;
+ b=b0qZ3o0pgTZsGXjXHoGKUvb6UwawbtkybwHfOGAg+Tr/RkGa/5MQqvCw/nil4h8Z1n
+ R3HKx988/w7d52ZMSWpmxdFpmYMySmLISzVNAa6SWLGN3XrR8dOFuDjzWQjbizc5Be2s
+ CsoZKRyyD3e3TX+BdUj6fURG0DeFQre/T4irt6WznCwDMsTzormBM1iekXtVqdBirykn
+ Fjyjb02GgzL573RBFmfv1Mpsoqx47n7pUZocGpZdYxNxopEZUUGCnUCWoieGRpjJI7kY
+ M1Hkf563JZlRfh8U339+SgDvmzmz8Ky/n04d7S6g3dYWHk/ojbw4OiB/lnKIzdYAvhuq
+ s8uA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1737784715; x=1738389515;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=tiOy2Up1OghNNIIm7ZnI85sggsA6RBi30pZJ+3V1Txk=;
+ b=e9InlTaIkiFeCahOIV1ZDZ0VswUBaDCRDOPWmSKxxeNPePJbRooVj42cUE5fQDyP1v
+ mOd3GrpDDsqknNmwBT9WrheWa8tBSc8ZWYYgADFCHmKDoze0t+jxex1h9qgblQ90e0i0
+ kdCEzBkSyIYEk9H+rXxWQt7y8uGF1I3FoUUQy9CxYOq1cLNeP/21nKYXUdOa0ey2tZpQ
+ wt8LoAjB9ECbb1cENnrvkzuV2Of1REwQ/f2UBD2J9eVPJYVxk7w9TJ3PXOaYQttc02qo
+ x48L/+xBY/4KkO1+LGHOfkHFYLshl/ycqvxc0gIp3/YveDPfcOiZnYJBmqkMLcgirW6N
+ YGSw==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCWnDmRcdDlrpJCRmnWC/CGGRduY/3ojNJ+AqpPBXAoyFGcYJ6cwFI3OSsGBmLphr+ndFtafeQfuTH+k@nongnu.org
+X-Gm-Message-State: AOJu0Yz8/XRhJcsz6YjwGCHOHdHTd5bz68sqCzhe2KcSOpsvOl4GL4W4
+ eRuBGD2N0VxYhz/nrTqG5GQGdYRnIU6iywn7eicu1yTK+5q5cUsrgYuIEz2ng20=
+X-Gm-Gg: ASbGncsXb26lcULbD5OllaDlMVYfl3ZFloGfPUPK0KKw4JRh9ht54GcLkHendWGBjyx
+ ReWLrTw1LdrFGebACBn7cFgx21oHCAnbynEQslMLbKQWKjppVWQWVekRE5/PboXa59YBMQaTu6a
+ 5/ASr1UDbkferWBcrjvn4J/lhWncoyvnEzLsl5pi6ja9aPCMjVmP2fbmfQY13KVZY2XeTzQQYJL
+ au93UIZdfBYsrGgW4uXqObwzXyEhyOM5B0CG56COcIc3TAkE7rqIbz8nqfwOftkGRXC1wWJgr0w
+ aaXX5PJmbMdjMScYZA==
+X-Google-Smtp-Source: AGHT+IGPWbV/t4lfsviAH5R+bZQTnbcK+RMetUU3QkgvxItedxlS2LwvHKXlJyZP4zbSFPqwtKSzrw==
+X-Received: by 2002:a17:902:f544:b0:21a:5501:9d5 with SMTP id
+ d9443c01a7336-21c355db07fmr564549485ad.44.1737784714604; 
+ Fri, 24 Jan 2025 21:58:34 -0800 (PST)
+Received: from [157.82.207.107] ([157.82.207.107])
+ by smtp.gmail.com with ESMTPSA id
+ d9443c01a7336-21da3d9c5bfsm25929075ad.37.2025.01.24.21.58.32
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Fri, 24 Jan 2025 21:58:34 -0800 (PST)
+Message-ID: <b9116fa5-aafd-4dc8-8b31-86b079f1ad9c@daynix.com>
+Date: Sat, 25 Jan 2025 14:58:30 +0900
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha256;
- protocol="application/pgp-signature"; boundary="5VfpGfWcCAMygJB8"
-Content-Disposition: inline
-In-Reply-To: <20250124070021.800907-1-maobibo@loongson.cn>
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=stefanha@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -50
-X-Spam_score: -5.1
-X-Spam_bar: -----
-X-Spam_report: (-5.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-2.996,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v7 1/6] coreaudio: Remove unnecessary explicit casts
+To: Christian Schoenebeck <qemu_oss@crudebyte.com>,
+ Gerd Hoffmann <kraxel@redhat.com>, =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?=
+ <philmd@linaro.org>, BALATON Zoltan <balaton@eik.bme.hu>,
+ qemu-devel@nongnu.org
+Cc: devel@daynix.com
+References: <20250124-coreaudio-v7-0-9d9a4d91db37@daynix.com>
+ <20250124-coreaudio-v7-1-9d9a4d91db37@daynix.com> <4562400.zP1BOZzIia@silver>
+Content-Language: en-US
+From: Akihiko Odaki <akihiko.odaki@daynix.com>
+In-Reply-To: <4562400.zP1BOZzIia@silver>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::632;
+ envelope-from=akihiko.odaki@daynix.com; helo=mail-pl1-x632.google.com
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001, T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -86,30 +106,54 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+On 2025/01/24 18:39, Christian Schoenebeck wrote:
+> On Friday, January 24, 2025 6:12:04 AM CET Akihiko Odaki wrote:
+>> coreaudio had unnecessary explicit casts and they had extra whitespaces
+>> around them so remove them.
+>>
+>> Signed-off-by: Akihiko Odaki <akihiko.odaki@daynix.com>
+>> ---
+>>   audio/coreaudio.m | 6 +++---
+>>   1 file changed, 3 insertions(+), 3 deletions(-)
+>>
+>> diff --git a/audio/coreaudio.m b/audio/coreaudio.m
+>> index cadd729d50537850d81718b9284efed5877d9185..0b67347ad7e8c43a77af308a1a3a654dd7084083 100644
+>> --- a/audio/coreaudio.m
+>> +++ b/audio/coreaudio.m
+>> @@ -309,7 +309,7 @@ static OSStatus audioDeviceIOProc(
+>>       UInt32 frameCount, pending_frames;
+>>       void *out = outOutputData->mBuffers[0].mData;
+>>       HWVoiceOut *hw = hwptr;
+>> -    coreaudioVoiceOut *core = (coreaudioVoiceOut *) hwptr;
+>> +    coreaudioVoiceOut *core = hwptr;
+> 
+> Well, hwptr is void*, so both versions are fine.
+> 
+> struct name 'coreaudioVoiceOut' should start with upper case BTW.
+> 
+>>       size_t len;
+>>   
+>>       if (coreaudio_buf_lock (core, "audioDeviceIOProc")) {
+>> @@ -392,10 +392,10 @@ static OSStatus init_out_device(coreaudioVoiceOut *core)
+>>       }
+>>   
+>>       if (frameRange.mMinimum > core->frameSizeSetting) {
+>> -        core->audioDevicePropertyBufferFrameSize = (UInt32) frameRange.mMinimum;
+>> +        core->audioDevicePropertyBufferFrameSize = frameRange.mMinimum;
+>>           dolog ("warning: Upsizing Buffer Frames to %f\n", frameRange.mMinimum);
+>>       } else if (frameRange.mMaximum < core->frameSizeSetting) {
+>> -        core->audioDevicePropertyBufferFrameSize = (UInt32) frameRange.mMaximum;
+>> +        core->audioDevicePropertyBufferFrameSize = frameRange.mMaximum;
+>>           dolog ("warning: Downsizing Buffer Frames to %f\n", frameRange.mMaximum);
+>>       } else {
+>>           core->audioDevicePropertyBufferFrameSize = core->frameSizeSetting;
+> 
+> Those casts are actually necessary, as AudioValueRange's members are Float64
+> (a.k.a. double) types.
 
---5VfpGfWcCAMygJB8
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
+Explicit casts are unnecessary. Implicit casts still happen at every 
+line changed with this patch.
 
-Applied, thanks.
-
-Please update the changelog at https://wiki.qemu.org/ChangeLog/10.0 for any user-visible changes.
-
---5VfpGfWcCAMygJB8
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iQEzBAEBCAAdFiEEhpWov9P5fNqsNXdanKSrs4Grc8gFAmeUWmoACgkQnKSrs4Gr
-c8j82wf/XDn7GobmXmKFanBHldSFNg+rWRYCfANVJnNzwR0c/GZ5QCyr9TWgkXNC
-EfBaAI6ABqwJfdyr8HcpsRt6gdPgf/ed+bgkHIS9yVcaDDrgTuoo01WZUCCL0pPQ
-k80TjrByQGRjZNDTXuZnhibcPfrudR2dX8hnzl18/3/PDh4hQw7AOu0G0phfL10y
-XlIA+/7TkxPwUHvzeCHgU7OUX9pgV4qE+Vu56WK13yRqKj6EvQsjm4evqOEccUf6
-z0td7wRG9LtSxQMipKMzVYp6FPpet0R95aae7ygl99sPa17SFm60NIX91l9yZSm2
-1jKAQjzIWLWKjIgYtcHn1+BD26+g3Q==
-=ut83
------END PGP SIGNATURE-----
-
---5VfpGfWcCAMygJB8--
-
+Regards,
+Akihiko Odaki
 
