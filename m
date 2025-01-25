@@ -4,60 +4,95 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B8FFDC0218C
-	for <qemu-devel@archiver.kernel.org>; Sat, 25 Jan 2025 10:42:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 75625C0218C
+	for <qemu-devel@archiver.kernel.org>; Sat, 25 Jan 2025 12:16:56 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tbdbG-000819-SB; Sat, 25 Jan 2025 05:41:15 -0500
+	id 1tbf54-00058C-Fn; Sat, 25 Jan 2025 07:16:06 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <qemu_oss@crudebyte.com>)
- id 1tbdbD-00080t-Uv
- for qemu-devel@nongnu.org; Sat, 25 Jan 2025 05:41:12 -0500
-Received: from kylie.crudebyte.com ([5.189.157.229])
+ (Exim 4.90_1) (envelope-from <ppandit@redhat.com>)
+ id 1tbf52-00057k-9m
+ for qemu-devel@nongnu.org; Sat, 25 Jan 2025 07:16:04 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <qemu_oss@crudebyte.com>)
- id 1tbdbC-0000mc-1B
- for qemu-devel@nongnu.org; Sat, 25 Jan 2025 05:41:11 -0500
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
- d=crudebyte.com; s=kylie; h=Content-Type:Content-Transfer-Encoding:
- MIME-Version:References:In-Reply-To:Message-ID:Date:Subject:Cc:To:From:
- Content-ID:Content-Description;
- bh=MgB5KtFtlG64H6cZgJVdZsuaoUEIJKjAIaeCX1fJ6j0=; b=RRMDF22gb927p/mKs91NWZLZN7
- UNoUbIn51xWtFw9oDlb/4bUpgeiuz49aUGB7X5M+GfNn17Sty7rRA9iNSE+qIEMNijCD6uHd7B6Qh
- oGLQVxMyYYfef2kLCKI+4TgyJPIcU6FfnButnmCuODbRToG0gu6Ef1LNIEeMFoGGC1QZolJASCFbS
- b4hsrV5HgKyvAWrkZ+V70HPUVo3ON4460KW/oynCgAS2/SLbtM/QWT801n7NmICeXC8mByiv3vzOg
- W5Rp4RyOnPsAoOgsOj6qnfhDis3wXcRGGdv4pwOLBMrjzTjlOHXcRin7O9BJh7aF39IjsMFeqrZTF
- sTgYi0JZCqk7HCAQDW7BEJDTujRtibLh6cptqLEFTBgi4L0+fNdlmrCNdXvPaVvENpeJxvveVqp5F
- FSiRQMbffJ9nJgQ5rQiEcC23CaRoqh9UkBWkIXLc4x8KgVMPdwAs+mR1lbjvemfGC3E4GeqJFPz+q
- g4TIyfhEOT214pVDT97BGC6jV2chGuPZ2VDea2Ydj4zfemFDOHmi/Bpg4zpB0DcVL35/HLe0RgXXN
- 2j0V/+YwmdlkUwZHGhSDO+l0RgjuMsubiIFLXqGO+YXGWmkoLsncHpiwd5DNcvEqKKJ+GOQFlRM3D
- 72zjxNN8RbTTu6+/OwH7Lbaa9XWMtDGW7MjVjtJDk=;
-From: Christian Schoenebeck <qemu_oss@crudebyte.com>
-To: Gerd Hoffmann <kraxel@redhat.com>,
- Philippe =?ISO-8859-1?Q?Mathieu=2DDaud=E9?= <philmd@linaro.org>,
- BALATON Zoltan <balaton@eik.bme.hu>, qemu-devel@nongnu.org
-Cc: devel@daynix.com, Akihiko Odaki <akihiko.odaki@daynix.com>
-Subject: Re: [PATCH v7 1/6] coreaudio: Remove unnecessary explicit casts
-Date: Sat, 25 Jan 2025 11:41:00 +0100
-Message-ID: <2917255.Mg30ljiku8@silver>
-In-Reply-To: <b9116fa5-aafd-4dc8-8b31-86b079f1ad9c@daynix.com>
-References: <20250124-coreaudio-v7-0-9d9a4d91db37@daynix.com>
- <4562400.zP1BOZzIia@silver>
- <b9116fa5-aafd-4dc8-8b31-86b079f1ad9c@daynix.com>
+ (Exim 4.90_1) (envelope-from <ppandit@redhat.com>)
+ id 1tbf4z-0003PI-GV
+ for qemu-devel@nongnu.org; Sat, 25 Jan 2025 07:16:04 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1737807360;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=x1CzXpG9tJ879PK52y/ATtdD7ABBIJpIP5NSa4UrGxk=;
+ b=PB8AushzJq7tqDkOgLS1qYjO/B9GIXzum18w/78LdGTS078bIfecguZZ6ReJn8HQ7OrUY8
+ Wu6FCayLkT5nTNKjzYVtcuQfZFINdTXSFVM6dYeAUyNWhnO8GsRgQBuDcPoEMjtYFVJjDP
+ fmE6tUysndDg9IWGCcNXKAZpSWcgHUg=
+Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com
+ [209.85.128.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-681--B0qYAUeN2K5-esUNFQ0dA-1; Sat, 25 Jan 2025 07:15:57 -0500
+X-MC-Unique: -B0qYAUeN2K5-esUNFQ0dA-1
+X-Mimecast-MFC-AGG-ID: -B0qYAUeN2K5-esUNFQ0dA
+Received: by mail-wm1-f71.google.com with SMTP id
+ 5b1f17b1804b1-4361ecebc5bso14613995e9.1
+ for <qemu-devel@nongnu.org>; Sat, 25 Jan 2025 04:15:57 -0800 (PST)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1737807356; x=1738412156;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=x1CzXpG9tJ879PK52y/ATtdD7ABBIJpIP5NSa4UrGxk=;
+ b=xDP+vdnWEyb5SRg0/RKR71Kbs9lknoL0J8JrgqCh+oTR7doII61ShC7wsIhm12pGg7
+ U4UedKgINALqmsfxa/ZZDBRQZyhTJqKBnE435awfHG5ytisXgcQbfatmUAqFJ/+8zN8F
+ DXbq5InsZT/qO/GB7mgWsRkQEKNEnXNr7XQuv4qAK4XZKNlpHnXBfTJgH1NCjkrVTW1n
+ SPrzWRX2R1TtJxTX4fDZL1MLgJlthYj4VRJCOO0a1bMX6zGkm/qG+qsmrx9gIkKtr3kf
+ 4WMBNHWqUPt6yb4snSfXM5ELiqpJKzZJMZjDWKnyPi5SMXhsBKz0yPOLLqkmK3XvCeS2
+ VLsg==
+X-Gm-Message-State: AOJu0YxXpAKP40CK3Nobr7P7enn7cdHtnvHXHRsNWDwP2hPezNLI+aiB
+ G0UnFzr99ti2gu+Axff0QxuA6mzL4XIJug/QGYpboxzEsxeQMiKMyjWiDAqjjyqKPwAD+NiK83z
+ 0WGJUHKTlICqTzq/Fx/19H+kMQTmbR4lZ8Uzq2xtWeRitODk5LdmrbxL8s6Y82rfjxaEhzuLk8g
+ +W/JTkQbTtZPvOXPxdfcGq/1HDBIY=
+X-Gm-Gg: ASbGncugxZaoh3G8mCWgNN/BFLROHIHXaItpRAZGDUtlkjezssvzJw0XAu/4CMp1BEL
+ olhCC2nUCKGTejIhJdiOEKZGT1ATDcMx5pYhwCaAK9cY17Mop5vnreeHHZoPZ/78=
+X-Received: by 2002:a05:600c:310a:b0:434:e9ee:c1e with SMTP id
+ 5b1f17b1804b1-4389144ee14mr338196595e9.31.1737807356456; 
+ Sat, 25 Jan 2025 04:15:56 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IEk+nxJwbpBO1g0W+Qn857b4b2tnhLs2MpFNln2W9PNq+Yuw0tmPISxbTpTRzeSJ3Ia40YPTqnorQqo/9OiEzo=
+X-Received: by 2002:a05:600c:310a:b0:434:e9ee:c1e with SMTP id
+ 5b1f17b1804b1-4389144ee14mr338196385e9.31.1737807356197; Sat, 25 Jan 2025
+ 04:15:56 -0800 (PST)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 7Bit
-Content-Type: text/plain; charset="us-ascii"
-Received-SPF: pass client-ip=5.189.157.229;
- envelope-from=qemu_oss@crudebyte.com; helo=kylie.crudebyte.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+References: <20250121131032.1611245-1-ppandit@redhat.com>
+ <20250121131032.1611245-5-ppandit@redhat.com>
+ <Z4_Bh3ytv9REBero@x1n>
+ <CAE8KmOw-4_DSoQEVUtJQnAuGdazmLqhL-dpUi3J1y8BN7zjLLw@mail.gmail.com>
+ <Z5EYbBXkjTu98rHk@x1n>
+ <CAE8KmOwvp=LJ+79t9VVsZqf4APqSYxqCQVmYSg_5QaVD4vzLWg@mail.gmail.com>
+ <CAE8KmOywe888S-oCoO=4=oFsXuN=AfuuqvT27LGor-UTC78YoQ@mail.gmail.com>
+ <Z5Oz-Kz4rysFQ-n1@x1n>
+In-Reply-To: <Z5Oz-Kz4rysFQ-n1@x1n>
+From: Prasad Pandit <ppandit@redhat.com>
+Date: Sat, 25 Jan 2025 17:45:39 +0530
+X-Gm-Features: AWEUYZnxkNQ2nY398nvdvTHuslapV0Lvp2MAF85Y7x_TTbu6uSaC4uBb8b2lcMI
+Message-ID: <CAE8KmOw_k3Jxf_AyZ6W8nfOcgsF4mkbUL0-tigX8-iEdN_oApA@mail.gmail.com>
+Subject: Re: [PATCH v3 4/4] tests/qtest/migration: add postcopy test with
+ multifd
+To: Peter Xu <peterx@redhat.com>
+Cc: qemu-devel@nongnu.org, farosas@suse.de, berrange@redhat.com, 
+ Prasad Pandit <pjp@fedoraproject.org>
+Content-Type: text/plain; charset="UTF-8"
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=ppandit@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -50
+X-Spam_score: -5.1
+X-Spam_bar: -----
+X-Spam_report: (-5.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-2.996,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -74,60 +109,24 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Saturday, January 25, 2025 6:58:30 AM CET Akihiko Odaki wrote:
-> On 2025/01/24 18:39, Christian Schoenebeck wrote:
-> > On Friday, January 24, 2025 6:12:04 AM CET Akihiko Odaki wrote:
-> >> coreaudio had unnecessary explicit casts and they had extra whitespaces
-> >> around them so remove them.
-> >>
-> >> Signed-off-by: Akihiko Odaki <akihiko.odaki@daynix.com>
-> >> ---
-> >>   audio/coreaudio.m | 6 +++---
-> >>   1 file changed, 3 insertions(+), 3 deletions(-)
-> >>
-> >> diff --git a/audio/coreaudio.m b/audio/coreaudio.m
-> >> index cadd729d50537850d81718b9284efed5877d9185..0b67347ad7e8c43a77af308a1a3a654dd7084083 100644
-> >> --- a/audio/coreaudio.m
-> >> +++ b/audio/coreaudio.m
-> >> @@ -309,7 +309,7 @@ static OSStatus audioDeviceIOProc(
-> >>       UInt32 frameCount, pending_frames;
-> >>       void *out = outOutputData->mBuffers[0].mData;
-> >>       HWVoiceOut *hw = hwptr;
-> >> -    coreaudioVoiceOut *core = (coreaudioVoiceOut *) hwptr;
-> >> +    coreaudioVoiceOut *core = hwptr;
-> > 
-> > Well, hwptr is void*, so both versions are fine.
-> > 
-> > struct name 'coreaudioVoiceOut' should start with upper case BTW.
-> > 
-> >>       size_t len;
-> >>   
-> >>       if (coreaudio_buf_lock (core, "audioDeviceIOProc")) {
-> >> @@ -392,10 +392,10 @@ static OSStatus init_out_device(coreaudioVoiceOut *core)
-> >>       }
-> >>   
-> >>       if (frameRange.mMinimum > core->frameSizeSetting) {
-> >> -        core->audioDevicePropertyBufferFrameSize = (UInt32) frameRange.mMinimum;
-> >> +        core->audioDevicePropertyBufferFrameSize = frameRange.mMinimum;
-> >>           dolog ("warning: Upsizing Buffer Frames to %f\n", frameRange.mMinimum);
-> >>       } else if (frameRange.mMaximum < core->frameSizeSetting) {
-> >> -        core->audioDevicePropertyBufferFrameSize = (UInt32) frameRange.mMaximum;
-> >> +        core->audioDevicePropertyBufferFrameSize = frameRange.mMaximum;
-> >>           dolog ("warning: Downsizing Buffer Frames to %f\n", frameRange.mMaximum);
-> >>       } else {
-> >>           core->audioDevicePropertyBufferFrameSize = core->frameSizeSetting;
-> > 
-> > Those casts are actually necessary, as AudioValueRange's members are Float64
-> > (a.k.a. double) types.
-> 
-> Explicit casts are unnecessary. Implicit casts still happen at every 
-> line changed with this patch.
+On Fri, 24 Jan 2025 at 22:39, Peter Xu <peterx@redhat.com> wrote:
+> > >         # /x86_64/migration/multifd/tcp/tls/psk/match
+> > >         # /x86_64/migration/multifd/tcp/plain/zstd
+> > >         # /x86_64/migration/multifd/tcp/plain/cancel
+> Since multifd doesn't work with postcopy phase, compression so far cannot
+> happen in postcopy phase but only in precopy phase.
 
-Wooo, I wasn't aware that QEMU doesn't use -Wconversion. I am not used to 
-that. To me it makes sense to warn especially for things like implicit casts
-from floating point to integer, as it would be the case here.
+* Right.
 
-/Christian
+> So the tests I suggested was trying to make sure multifd major features (in
+> this case, tls, compression, and cancellation) work like before even if we
+> set postcopy-ram=on in the feature list, because after your changes merged,
+> people may start always set postcopy-ram=on for all cases.
 
+* Ie. we set 'postcopy-ram=true' for above precopy tests?
+
+Thank you.
+---
+  - Prasad
 
 
