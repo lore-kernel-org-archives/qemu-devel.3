@@ -4,77 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0B786C0218C
-	for <qemu-devel@archiver.kernel.org>; Sat, 25 Jan 2025 18:25:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3B59DC0218E
+	for <qemu-devel@archiver.kernel.org>; Sat, 25 Jan 2025 18:25:04 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tbkpe-0007az-SC; Sat, 25 Jan 2025 13:24:35 -0500
+	id 1tbkpm-0007ec-P1; Sat, 25 Jan 2025 13:24:42 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tbkpb-0007YL-SA
- for qemu-devel@nongnu.org; Sat, 25 Jan 2025 13:24:31 -0500
-Received: from mail-wm1-x333.google.com ([2a00:1450:4864:20::333])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tbkpl-0007eB-Ao
+ for qemu-devel@nongnu.org; Sat, 25 Jan 2025 13:24:41 -0500
+Received: from mail-wr1-x436.google.com ([2a00:1450:4864:20::436])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tbkpa-0005lU-9i
- for qemu-devel@nongnu.org; Sat, 25 Jan 2025 13:24:31 -0500
-Received: by mail-wm1-x333.google.com with SMTP id
- 5b1f17b1804b1-4361f65ca01so32838185e9.1
- for <qemu-devel@nongnu.org>; Sat, 25 Jan 2025 10:24:29 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tbkpj-0005nt-ON
+ for qemu-devel@nongnu.org; Sat, 25 Jan 2025 13:24:41 -0500
+Received: by mail-wr1-x436.google.com with SMTP id
+ ffacd0b85a97d-3862b40a6e0so2264930f8f.0
+ for <qemu-devel@nongnu.org>; Sat, 25 Jan 2025 10:24:39 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1737829467; x=1738434267; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=pH3VkzWRrKZh00NIZob72P+uiwg9X9nJj4i2oUk43n8=;
- b=OzA7OUmcQJ5iNzM+n+76RzQu9y3dSElehfvJH1UqWTRdXGHtWmmCQqz66Z6FoXW9bz
- WAtGjrgkpwiNFX0ez9Seafbmig081G3h6Wqpy/vbFQEu1qFbzwZVmoeRAIkho4ShlkTr
- pIowzt7ql77XQyr7Fdpd+Xk60T3Us+8pR6yU7qebAiFLmYnHb7XOuEdSllpSbo6k/W3K
- oSNq7YD2/m+LsVK56ECH3YrE7K0v+cgrqMAKta6SM+PDBb3k+Zi4yd072ncJ9S1NL4Ip
- Iq4a/GDpNoUmeDJdRIyTfSoHAfqc+0c0I7+z0wghpOcO6CVm8QtXCXY+VmiqKe9lrr9Q
- HXbA==
+ d=linaro.org; s=google; t=1737829478; x=1738434278; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=BvRb+A+szaUASQC+0C2N8r34T+ZA8fbAScI9edWRsk8=;
+ b=qjm+tDBc2XTg9I30LGfqkkRYUXX9OnzjfJ/xtOfVr2rFfM/RE7P9b19Iuh/NKzsp/t
+ cekXKQRRftcpVX6/j13VygfQvN1GuOVp3n4jevFVDk4eD2kw/R4llI7dcYFwDyk7EuYM
+ x+jvUpZXPShBJ58llzKbPm25SRFRWwNKNdNjoMk15v0Ooz6FXEtOX2DimV72go3eOpwI
+ lndpjkEKRlgTJYmshwhlD0NQlq1b2IRICHPcaw2dnfDqs81bnyrek5Zyee/DR9axb5f7
+ 7VYHMbY3hqaG61JScDXpTHT8M/Q4KokUAg5/tlKtTDME90ZREKuEseUk+TKuXhGQpQnW
+ /OBQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1737829467; x=1738434267;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=pH3VkzWRrKZh00NIZob72P+uiwg9X9nJj4i2oUk43n8=;
- b=EnlGvjU07avSIQuRs6wwEddDrxpJEPA3vF4p46sWjYgWrgkJOHslWSzB/gQYd0GHgm
- UqU1GHuM6sRDq55uYQYg4s+rn5VK7e4b1Lu8oe1QRBvYWeL8IJR1cv5V+FCRCR5dorNy
- ITrz4eHWQexRcRuqqEtFO0yXF+TWTXV6F5+WU+2t4/AWM2PY3H4cy/Go9//WoHLS//d+
- Rhxq6RWToIKQDusZqfA9A7WXmCGcP2vZvAJ+r1i2mTOXKOZXXufe7/UDRO20npWBhKcD
- A3PArcvZr0O1rrhVl3o9iyoCHdl4T2Fw6uuJH6whh0wRt2hvdUycc1ayNPLy5vs2Sq8R
- 3zgg==
-X-Gm-Message-State: AOJu0YyJR5SHWJWfGVW1hwRaHHZ3DBmys9PZ1mQzCpNkD1N3pspaHkKj
- e+YkPD619MWOWybzoG1t7SUxKlRwKA4k0Zxag/21rRHMlJitH2aKPe7jNqdDdQe49GqL6imb5RB
- JLsg=
-X-Gm-Gg: ASbGncub49oqYhCJJ69k95xTi6yrNzvhDAj7t9FWnNvzJRJvozUhAQNMonMn5HNV6EF
- wPMQsj3mkTTuk71tsacR0GGDiYiUjBaLAnlXp0GWHY5+Ksvv48Ym4Eo/Rh8cAHzAAlgNm5tmAho
- 28m4B9Q9uyiWOlpuHGhrx5YxQhUpM+iaYX4JbFFw23T8n8FvgvsNlZcSdZwQhe2lJijpSdIBkAm
- Fzy5nZP0hhZ6PAALDZNyc7ms7kqBmBWyLJ5V1jdBL69hay+Szr3wsUcoB1Y68NyNuDIK+Y0bs+E
- /Ke8LjxUlevE7SoZl3NEU1Y0qz3jw1LM6KyuIuLepzz86Qm+e8nB9AvDVucV
-X-Google-Smtp-Source: AGHT+IHB5Fsi7Lh6m6f08iKGCCTXgfwFX8GZ07kqZVQQkfWrLQoj29fPMPLVsRikNmK1GyhB8/tHug==
-X-Received: by 2002:a05:6000:18ab:b0:386:42a6:21f2 with SMTP id
- ffacd0b85a97d-38bf5655f8dmr33689314f8f.10.1737829467675; 
- Sat, 25 Jan 2025 10:24:27 -0800 (PST)
+ d=1e100.net; s=20230601; t=1737829478; x=1738434278;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=BvRb+A+szaUASQC+0C2N8r34T+ZA8fbAScI9edWRsk8=;
+ b=n6mqg5blLQ3wzz/iSYu8avcI50aYVeQESMwAc5giosBfPbkKzO2gTkSPDjTfpNWJ1j
+ MT7MZ8vMx91ykZbqqyncCtt2E4jgYQeKS07jPQfk5OBB8nnrbZnRdDJKEtDZMrhA6Xmi
+ RsWXAzhDrNRtllUT6iWDOlpZ28ra65b6ZPKltv41x/e9/05ectoXCLELIKUVKupi3XUS
+ 5m5/dvgoV+mcivZc/d1GrfAy7y2CFB8A3R9XAcxrx1RJUgL1T6JC8o+uN4a8Aft3MDUs
+ iG027K11sL6UM47zO2lRzlYM/KXXjMarSbGVmmitF1hdWcoTUzp3AGVrzKXTGmbholI/
+ gTHg==
+X-Gm-Message-State: AOJu0YwftMhG0EfZXknJp4vFnxhz0qV1xHVTO7Xl2L0f6s9EAJ+XtELz
+ /evUe+Vc/P5S3U9WdLRlOPnsAZTTtK5XIjIaIz65T9QYHsjzRrNKXgMVXAXgVWBddDkJVmdVyKk
+ YI/I=
+X-Gm-Gg: ASbGncsgSyIQh5g4e0tDl2yR47RPFbheM7BcBB+E4S1Gviuuu09ZuzdmPA9S/QUFR1K
+ QhyZ8Jz+8fXvge08QRq9zr/4UImQeypXG3LZ38+E00lSGC+7TmMIvslSszlqg69jBZ5QqFyvi7L
+ RXqRuuyPgoTeGSArXelGb6zGWjXXZHq9pGgK2OKvz7/f0Gl1Vq826nd757xmmRbiQmLqwsH2PhA
+ LNXl4+bVBTJJ7wD3gTYWEfjW6rlVA5sPHRr1ha6NUaCc/4Cl1hq38M0hQzjBUyWUp13ykTSaSRi
+ e0Kdt+rhng/sptQrdwiuzpsXlGsiaJ/Pfnr4ljZllOK5EUbIXFvnW/6S8HWB
+X-Google-Smtp-Source: AGHT+IEG/e5B52a79+jtYsln2JUwLvWGeOYA0IM+FAgXXkx733f0iHdltm87kfPpIMKN5DYLkxxjiQ==
+X-Received: by 2002:a05:6000:156c:b0:386:1cd3:8a05 with SMTP id
+ ffacd0b85a97d-38bf57ce963mr35716064f8f.54.1737829477843; 
+ Sat, 25 Jan 2025 10:24:37 -0800 (PST)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-38c2a176538sm6045863f8f.8.2025.01.25.10.24.26
+ ffacd0b85a97d-38c2a1c42b4sm6223869f8f.99.2025.01.25.10.24.36
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Sat, 25 Jan 2025 10:24:26 -0800 (PST)
+ Sat, 25 Jan 2025 10:24:37 -0800 (PST)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Paolo Bonzini <pbonzini@redhat.com>,
  Peter Maydell <peter.maydell@linaro.org>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PATCH 0/2] qemu/timer: Clarify QEMUTimer new/free API
-Date: Sat, 25 Jan 2025 19:24:23 +0100
-Message-ID: <20250125182425.59708-1-philmd@linaro.org>
+Subject: [PATCH 2/2] qemu/timer: Sanity check timer_list in timer_init_full()
+Date: Sat, 25 Jan 2025 19:24:25 +0100
+Message-ID: <20250125182425.59708-3-philmd@linaro.org>
 X-Mailer: git-send-email 2.47.1
+In-Reply-To: <20250125182425.59708-1-philmd@linaro.org>
+References: <20250125182425.59708-1-philmd@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::333;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x333.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::436;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x436.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -97,20 +100,42 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Update few QEMUTimer docstring and add a
-sanity check during timer initialization.
+Ensure we are not re-initializing a QEMUTimer already added
+to an active list. timer_init*() functions expect either
+a recently created and zeroed QEMUTimer, or one previously
+free'd with timer_free().
 
-Noticed trying to understand leaks in QDev
-Realize -> Unrealize -> Realize transition.
+Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+---
+ include/qemu/timer.h | 2 +-
+ util/qemu-timer.c    | 1 +
+ 2 files changed, 2 insertions(+), 1 deletion(-)
 
-Philippe Mathieu-Daudé (2):
-  qemu/timer: Clarify timer_new*() must be freed with timer_free()
-  qemu/timer: Sanity check timer_list in timer_init_full()
-
- include/qemu/timer.h | 12 +++++++++++-
- util/qemu-timer.c    |  1 +
- 2 files changed, 12 insertions(+), 1 deletion(-)
-
+diff --git a/include/qemu/timer.h b/include/qemu/timer.h
+index abd2204f3be..4717693f950 100644
+--- a/include/qemu/timer.h
++++ b/include/qemu/timer.h
+@@ -407,7 +407,7 @@ int64_t timerlistgroup_deadline_ns(QEMUTimerListGroup *tlg);
+  * (or default timer list group, if NULL).
+  * The caller is responsible for allocating the memory.
+  *
+- * You need not call an explicit deinit call. Simply make
++ * You need not call an explicit timer_deinit() call. Simply make
+  * sure it is not on a list with timer_del.
+  */
+ void timer_init_full(QEMUTimer *ts,
+diff --git a/util/qemu-timer.c b/util/qemu-timer.c
+index 0e8a453eaa1..058cae6e487 100644
+--- a/util/qemu-timer.c
++++ b/util/qemu-timer.c
+@@ -354,6 +354,7 @@ void timer_init_full(QEMUTimer *ts,
+     if (!timer_list_group) {
+         timer_list_group = &main_loop_tlg;
+     }
++    assert(ts->timer_list == NULL);
+     ts->timer_list = timer_list_group->tl[type];
+     ts->cb = cb;
+     ts->opaque = opaque;
 -- 
 2.47.1
 
