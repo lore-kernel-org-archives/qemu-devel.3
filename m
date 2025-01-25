@@ -4,93 +4,92 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2E147C02182
-	for <qemu-devel@archiver.kernel.org>; Sat, 25 Jan 2025 06:06:19 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 70989C02182
+	for <qemu-devel@archiver.kernel.org>; Sat, 25 Jan 2025 07:44:09 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tbZIc-0005eR-96; Sat, 25 Jan 2025 01:05:42 -0500
+	id 1tbaov-0008RT-FJ; Sat, 25 Jan 2025 02:43:09 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
- id 1tbZIb-0005dM-CX
- for qemu-devel@nongnu.org; Sat, 25 Jan 2025 01:05:41 -0500
-Received: from mail-pl1-x630.google.com ([2607:f8b0:4864:20::630])
+ (Exim 4.90_1) (envelope-from <tomitamoeko@gmail.com>)
+ id 1tbaot-0008RK-Ss
+ for qemu-devel@nongnu.org; Sat, 25 Jan 2025 02:43:07 -0500
+Received: from mail-pl1-x641.google.com ([2607:f8b0:4864:20::641])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
- id 1tbZIY-0007Zg-6o
- for qemu-devel@nongnu.org; Sat, 25 Jan 2025 01:05:41 -0500
-Received: by mail-pl1-x630.google.com with SMTP id
- d9443c01a7336-2165cb60719so49939975ad.0
- for <qemu-devel@nongnu.org>; Fri, 24 Jan 2025 22:05:37 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <tomitamoeko@gmail.com>)
+ id 1tbaor-0002R0-AS
+ for qemu-devel@nongnu.org; Sat, 25 Jan 2025 02:43:07 -0500
+Received: by mail-pl1-x641.google.com with SMTP id
+ d9443c01a7336-2166f1e589cso73084655ad.3
+ for <qemu-devel@nongnu.org>; Fri, 24 Jan 2025 23:43:04 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=daynix-com.20230601.gappssmtp.com; s=20230601; t=1737785136; x=1738389936;
- darn=nongnu.org; 
+ d=gmail.com; s=20230601; t=1737790984; x=1738395784; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=n9D76mSGgYz5eLaoxRU2G+Pxl7+gKyYGi6i2F0pe1Uw=;
- b=cxXqQMBTKlHX6tGHl1WZ2z1327jXt1mtJt0vKj9+U2/1A2L5vcQH7k2FuL0c6/vpHa
- /qB5nI11h1hBPk8uULHxRrU8chegWEq6MqzqpeC/ISaeBQ57Z9+xRIDemgqzKEdJghaH
- Yrqc49kAzRlOPXCIY/039EFbbcGIviFhOCIo5+K8i49vT89+dphXWcAkim6QYCcFADCB
- C01t1ub0q9Vdp9lljKOBuTqwyrWrOxI222f4BpVUcPkY1rY3jlNWWnUlXWxKzKyd0Js2
- CgVuJlFUfppRlPg1VimB+F1gfSVPzlKaEP4NnFTlF2Pgv7ug2j2lmn2NcpgKiuBF4Gjf
- +eGA==
+ bh=Bam5ztrg2rI7D22Q3DRZwz0DnRVr7XXkMSpXKvFFM9c=;
+ b=c1pyE+RrxVeemgAo+h3fVSYmBvR8an8vdPF7DtpR3U2wW0PfQvULMLY+If+TWfZ63H
+ BHRorLkd8Az9s1hqo1Hr3EvlwykwcbY9j3FpQ2Ap4DX7Y6grN6DO7LvWdseEosKVBNC+
+ SY/skGd7K0sZrF5p6fPoIM4erzb0qqM5Q2D6P7UNg4rdLKwF7N/6eesPDQR82rzIAgTX
+ LUkbokEtqGZIJBqybHP+aMp6kCv46FZoCBmwAcywmp9+hMYACsjP6LvYdslCTQgU3UW/
+ 72mzTm1ig/lP+H5efjXACxq5C0v/aLZxxX41noPbOtcBD3R//u78gKRky0yYwFMozlwh
+ nkzg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1737785136; x=1738389936;
+ d=1e100.net; s=20230601; t=1737790984; x=1738395784;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=n9D76mSGgYz5eLaoxRU2G+Pxl7+gKyYGi6i2F0pe1Uw=;
- b=DeAivgyXIHtxdQOXngPJd5uc9wd3OTfSoZEO5IzWzOtbgNyAp+qfXmvCPdszj9y/xm
- 1szhCMlhpMmGTXjqCgkKoI4yyA56nhwl7MwBM+J5dn3qaNHv7w2waxz2D8wlqbn+iGk9
- sSQjU35OAUJYu2Y7UACPPFDFDBmmJaMNd+wDjh1eVo38FMt77lXEO6F5TOc40+dLxq+6
- XCsWjWkkwXWR8Tou0hhCXfzjqb88KQJjIa82GPOvnxeXfHbCVHUEZL+3qT7r9UvGw4bv
- WcKr6XRTkix1eIcKWOku0a6UL4WcxevnW9K+Kv0Gu8XuBdUAz38zSl7y+ADvRuN86Cc3
- B6Ag==
+ bh=Bam5ztrg2rI7D22Q3DRZwz0DnRVr7XXkMSpXKvFFM9c=;
+ b=LncnIUyl8Qs2KzugEyCvhn4WUeHW7FUwX6gSYYb/Sps4jedFDofZTYFBpOs9tneZ0C
+ uKiH0ZfKYvhGlcokLeIqm1WM6D8DMvWtDtOw0ZL6VYI9k6muVouQqRwGYsKvwOXahsh+
+ qCglSq6MhN3F1qWUMwTIJb7FqYDJw9YoLyu/yUzYyN7rXvYmgTmHZZQtE8Nlh8zlIaFH
+ SGQZwjit1baZY8lnPrf/khtuWZ3ltBJ3W5kSgMrWteW0m4Xyf9HB3g1LDTp+S/xHYuUg
+ 5JGMI68vkrbjgX2b9gLtpVgayjAzUdDn5q/aB84S9YrlC3osfdncDcsN5ayLulJuB9/8
+ 3wxg==
 X-Forwarded-Encrypted: i=1;
- AJvYcCVP91OnLGHYYSQ0g1VmfT3aZZzir7WrUJAgQ8NmTHbLuCo6RDpB28p5lZxuD9spnEKTiGlminsbgBOn@nongnu.org
-X-Gm-Message-State: AOJu0Yzj5940Q+qcXyXj2iM7e8taMcHJQf9qte4ys+UkbE33vxWa8ytB
- BgUS8rOW2xZKRwzlIx0hB9aivg27VcYTqiBL8IMfZQ4717MThupzju/Cm9yWnOY=
-X-Gm-Gg: ASbGncvsSUzcU5WzFVB9CCuWH4xo8GIjXnHoSh8SUf4xvVmjcZqK4miT9kSyZaXCg0M
- H5NO2KRg2pLl7biA5uH19jVg15sNHAsvRQQi1AoD6rUKvqW8TFGJOUQTeG5K1RZ8VINTvsLCkDp
- 68rQqlCrTpd2tJ/GLEWDOb71DfJfTB75Bw0G5JEn8wY0yoKca3kL+5H+Es0xsbag1veBJY3nAvG
- Gvp+VvDiITrqgpC+PzhaKDjoQyt1Yxe/oe3B0lTK8Z/H3eV2R7SPVBP3dD3lWQPVkt6HY8YgoqN
- ZF5IIaWHTyVM6IglhQ==
-X-Google-Smtp-Source: AGHT+IFoPwC+kVJsHY3JqTdc7A5QB+fZ8UnqrVI0ajChzf+Dar0x9GRVWe7tjEC/Jh/DcVS7wc0roA==
-X-Received: by 2002:a05:6a21:32a1:b0:1e0:cf9a:87b1 with SMTP id
- adf61e73a8af0-1eb21470299mr44752405637.6.1737785136207; 
- Fri, 24 Jan 2025 22:05:36 -0800 (PST)
-Received: from [157.82.207.107] ([157.82.207.107])
+ AJvYcCXcCRwnzqldsRtZ/fmSmPJFv9zXKjwG1k+4vAUsD0dr6uGEvr71YJ5Y376HPWzmY4SmNMRqSrsEe0nv@nongnu.org
+X-Gm-Message-State: AOJu0YwF0+NGoJ2xEV/Y8ICLq1x6BMsJg42JNHLa6lFqYLKHmz88RL7r
+ vYFYJ9/0CDfCZImpRYGHj81uDVoeP01brZwJI2yNeXhChLo1v6w=
+X-Gm-Gg: ASbGncveCwcpDqgq6MC2pPCLr6HOEVznzcTIhBY7Ch11ABIuX8lT8ZIitoUltn2nGz/
+ Hac0w2MCHkd4iKeX/YmWdILZc7UHZtwMnZZVtKRqvBr5/U7sIWDk5nxipwao1EP5UsT39iV/P3y
+ zMqaIzTjh2k97jU16i+xIC9MsXb8YT0tw3fteFv0NIlKFgTcf88Qe4Vo6YH38kg0A2apmRC19FN
+ mMicWn3AShrBNSbAk3NnsAkNmAyETaDy5aiYPrRwlvsr7fYraVwOkK8XYrd/PuAgRO2GJk/FnKT
+ T++bCgHcYg==
+X-Google-Smtp-Source: AGHT+IHtyuPD8wiV29g3G9gjHfsa8ekS4jtctVmHwhLnlonZrnTpzTkxvoUaDDXMh/JDjbTbii6Www==
+X-Received: by 2002:a17:902:ccc2:b0:216:3e86:1cb9 with SMTP id
+ d9443c01a7336-21c357a608dmr476243295ad.50.1737790983502; 
+ Fri, 24 Jan 2025 23:43:03 -0800 (PST)
+Received: from [192.168.0.163] ([58.37.175.151])
  by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-72f8a6b323esm3035944b3a.60.2025.01.24.22.05.33
+ d9443c01a7336-21da3ea31cdsm27208495ad.67.2025.01.24.23.43.00
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 24 Jan 2025 22:05:35 -0800 (PST)
-Message-ID: <bf7a6349-62ee-4736-b04c-57c5ce49bb2f@daynix.com>
-Date: Sat, 25 Jan 2025 15:05:32 +0900
+ Fri, 24 Jan 2025 23:43:03 -0800 (PST)
+Message-ID: <7cd85e39-88e6-497d-b0b0-41a0a0ece0fb@gmail.com>
+Date: Sat, 25 Jan 2025 15:42:58 +0800
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v7 3/6] coreaudio: Improve naming
-To: Christian Schoenebeck <qemu_oss@crudebyte.com>,
- Gerd Hoffmann <kraxel@redhat.com>, =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?=
- <philmd@linaro.org>, BALATON Zoltan <balaton@eik.bme.hu>,
- qemu-devel@nongnu.org
-Cc: devel@daynix.com
-References: <20250124-coreaudio-v7-0-9d9a4d91db37@daynix.com>
- <20250124-coreaudio-v7-3-9d9a4d91db37@daynix.com> <5972999.ShRvV13zmH@silver>
+Subject: Re: [PATCH v2 5/5] vfio/igd: handle x-igd-opregion in
+ vfio_probe_igd_config_quirk()
+To: Alex Williamson <alex.williamson@redhat.com>
+Cc: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>, qemu-devel@nongnu.org
+References: <20250124191245.12464-1-tomitamoeko@gmail.com>
+ <20250124191245.12464-6-tomitamoeko@gmail.com>
+ <20250124141342.255a79d3.alex.williamson@redhat.com>
 Content-Language: en-US
-From: Akihiko Odaki <akihiko.odaki@daynix.com>
-In-Reply-To: <5972999.ShRvV13zmH@silver>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::630;
- envelope-from=akihiko.odaki@daynix.com; helo=mail-pl1-x630.google.com
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001, T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+From: Tomita Moeko <tomitamoeko@gmail.com>
+In-Reply-To: <20250124141342.255a79d3.alex.williamson@redhat.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::641;
+ envelope-from=tomitamoeko@gmail.com; helo=mail-pl1-x641.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -106,569 +105,388 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 2025/01/24 19:01, Christian Schoenebeck wrote:
-> On Friday, January 24, 2025 6:12:06 AM CET Akihiko Odaki wrote:
->> coreaudio had names that are not conforming to QEMU codding style.
->> coreaudioVoiceOut also had some members that are prefixed with redundant
->> words like "output" or "audio".
->> Global names included "out" to tell they are specific to output devices,
->> but this rule was not completely enforced.
->> The frame size had three different names "frameSize", "bufferFrameSize",
->> and "frameCount".
+On 1/25/25 05:13, Alex Williamson wrote:
+> On Sat, 25 Jan 2025 03:12:45 +0800
+> Tomita Moeko <tomitamoeko@gmail.com> wrote:
+> 
+>> Both enable opregion option (x-igd-opregion) and legacy mode require
+>> setting up OpRegion copy for IGD devices. Move x-igd-opregion handler
+>> in vfio_realize() to vfio_probe_igd_config_quirk() to elimate duplicate
+>> code. Finally we moved all the IGD-related code into igd.c.
 >>
->> Replace identifiers to fix these problems.
->>
->> Signed-off-by: Akihiko Odaki <akihiko.odaki@daynix.com>
->> Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+>> Signed-off-by: Tomita Moeko <tomitamoeko@gmail.com>
 >> ---
->>   audio/coreaudio.m | 193 +++++++++++++++++++++++++++---------------------------
->>   1 file changed, 98 insertions(+), 95 deletions(-)
+>>  hw/vfio/igd.c        | 143 +++++++++++++++++++++++++++++++++----------
+>>  hw/vfio/pci-quirks.c |  50 ---------------
+>>  hw/vfio/pci.c        |  25 --------
+>>  hw/vfio/pci.h        |   4 --
+>>  4 files changed, 110 insertions(+), 112 deletions(-)
 >>
->> diff --git a/audio/coreaudio.m b/audio/coreaudio.m
->> index 04e8ac59f4572c1e5fb7dc4f04f5e21520507ab5..6f170a909983b2a5c6abd6fc04c6c3f32828c10c 100644
->> --- a/audio/coreaudio.m
->> +++ b/audio/coreaudio.m
->> @@ -33,37 +33,37 @@
->>   #define AUDIO_CAP "coreaudio"
->>   #include "audio_int.h"
->>   
->> -typedef struct coreaudioVoiceOut {
->> +typedef struct CoreaudioVoiceOut {
->>       HWVoiceOut hw;
->>       pthread_mutex_t buf_mutex;
->> -    AudioDeviceID outputDeviceID;
->> -    int frameSizeSetting;
->> -    uint32_t bufferCount;
->> -    UInt32 audioDevicePropertyBufferFrameSize;
->> +    AudioDeviceID device_id;
->> +    int frame_size_setting;
->> +    uint32_t buffer_count;
->> +    UInt32 device_frame_size;
+>> diff --git a/hw/vfio/igd.c b/hw/vfio/igd.c
+>> index 6e06dd774a..015beacf5f 100644
+>> --- a/hw/vfio/igd.c
+>> +++ b/hw/vfio/igd.c
+>> @@ -106,6 +106,7 @@ static int igd_gen(VFIOPCIDevice *vdev)
+>>      return -1;
+>>  }
+>>  
+>> +#define IGD_ASLS 0xfc /* ASL Storage Register */
+>>  #define IGD_GMCH 0x50 /* Graphics Control Register */
+>>  #define IGD_BDSM 0x5c /* Base Data of Stolen Memory */
+>>  #define IGD_BDSM_GEN11 0xc0 /* Base Data of Stolen Memory of gen 11 and later */
+>> @@ -138,6 +139,55 @@ static uint64_t igd_stolen_memory_size(int gen, uint32_t gmch)
+>>      return 0;
+>>  }
+>>  
+>> +/*
+>> + * The OpRegion includes the Video BIOS Table, which seems important for
+>> + * telling the driver what sort of outputs it has.  Without this, the device
+>> + * may work in the guest, but we may not get output.  This also requires BIOS
+>> + * support to reserve and populate a section of guest memory sufficient for
+>> + * the table and to write the base address of that memory to the ASLS register
+>> + * of the IGD device.
+>> + */
+>> +static bool vfio_pci_igd_opregion_init(VFIOPCIDevice *vdev,
+>> +                                       struct vfio_region_info *info,
+>> +                                       Error **errp)
+>> +{
+>> +    int ret;
+>> +
+>> +    vdev->igd_opregion = g_malloc0(info->size);
+>> +    ret = pread(vdev->vbasedev.fd, vdev->igd_opregion,
+>> +                info->size, info->offset);
+>> +    if (ret != info->size) {
+>> +        error_setg(errp, "failed to read IGD OpRegion");
+>> +        g_free(vdev->igd_opregion);
+>> +        vdev->igd_opregion = NULL;
+>> +        return false;
+>> +    }
+>> +
+>> +    /*
+>> +     * Provide fw_cfg with a copy of the OpRegion which the VM firmware is to
+>> +     * allocate 32bit reserved memory for, copy these contents into, and write
+>> +     * the reserved memory base address to the device ASLS register at 0xFC.
+>> +     * Alignment of this reserved region seems flexible, but using a 4k page
+>> +     * alignment seems to work well.  This interface assumes a single IGD
+>> +     * device, which may be at VM address 00:02.0 in legacy mode or another
+>> +     * address in UPT mode.
+>> +     *
+>> +     * NB, there may be future use cases discovered where the VM should have
+>> +     * direct interaction with the host OpRegion, in which case the write to
+>> +     * the ASLS register would trigger MemoryRegion setup to enable that.
+>> +     */
+>> +    fw_cfg_add_file(fw_cfg_find(), "etc/igd-opregion",
+>> +                    vdev->igd_opregion, info->size);
+>> +
+>> +    trace_vfio_pci_igd_opregion_enabled(vdev->vbasedev.name);
+>> +
+>> +    pci_set_long(vdev->pdev.config + IGD_ASLS, 0);
+>> +    pci_set_long(vdev->pdev.wmask + IGD_ASLS, ~0);
+>> +    pci_set_long(vdev->emulated_config_bits + IGD_ASLS, ~0);
+>> +
+>> +    return true;
+>> +}
+>> +
+>>  /*
+>>   * The rather short list of registers that we copy from the host devices.
+>>   * The LPC/ISA bridge values are definitely needed to support the vBIOS, the
+>> @@ -339,29 +389,83 @@ void vfio_probe_igd_bar0_quirk(VFIOPCIDevice *vdev, int nr)
+>>      QLIST_INSERT_HEAD(&vdev->bars[nr].quirks, bdsm_quirk, next);
+>>  }
+>>  
+>> +static bool vfio_igd_try_enable_opregion(VFIOPCIDevice *vdev, Error **errp)
+>> +{
+>> +    g_autofree struct vfio_region_info *opregion = NULL;
+>> +    int ret;
+>> +
+>> +    /*
+>> +     * Hotplugging is not supprted for both opregion access and legacy mode.
+>> +     * For legacy mode, we also need to mark the ROM failed.
+>> +     */
 > 
-> Actually weird that there are two frame size variables here. AFAICS the
-> device_frame_size member could be dropped and turned into a local variable.
+> The explanation was a little better in the removed comment.
+> 
+>> +    if (vdev->pdev.qdev.hotplugged) {
+>> +        vdev->rom_read_failed = true;
+>> +        error_setg(errp,
+>> +                   "IGD OpRegion is not supported on hotplugged device");
+> 
+> As was the error log.
+> 
+>> +        return false;
+>> +    }
+>> +
+>> +    ret = vfio_get_dev_region_info(&vdev->vbasedev,
+>> +                    VFIO_REGION_TYPE_PCI_VENDOR_TYPE | PCI_VENDOR_ID_INTEL,
+>> +                    VFIO_REGION_SUBTYPE_INTEL_IGD_OPREGION, &opregion);
+>> +    if (ret) {
+>> +        error_setg_errno(errp, -ret,
+>> +                         "device does not supports IGD OpRegion feature");
+>> +        return false;
+>> +    }
+>> +
+>> +    if (!vfio_pci_igd_opregion_init(vdev, opregion, errp)) {
+>> +        return false;
+>> +    }
+>> +
+>> +    return true;
+>> +}
+>> +
+>>  bool vfio_probe_igd_config_quirk(VFIOPCIDevice *vdev,
+>> -                                 Error **errp G_GNUC_UNUSED)
+>> +                                 Error **errp)
+>>  {
+>>      g_autofree struct vfio_region_info *rom = NULL;
+>> -    g_autofree struct vfio_region_info *opregion = NULL;
+>>      g_autofree struct vfio_region_info *host = NULL;
+>>      g_autofree struct vfio_region_info *lpc = NULL;
+>> +    PCIBus *bus;
+>>      PCIDevice *lpc_bridge;
+>>      int ret, gen;
+>> +    bool legacy_mode, enable_opregion;
+>>      uint64_t gms_size;
+>>      uint64_t *bdsm_size;
+>>      uint32_t gmch;
+>>      Error *err = NULL;
+>>  
+>> +    if (!vfio_pci_is(vdev, PCI_VENDOR_ID_INTEL, PCI_ANY_ID) ||
+>> +        !vfio_is_vga(vdev)) {
+>> +        return true;
+>> +    }
+>> +
+>>      /*
+>>       * This must be an Intel VGA device at address 00:02.0 for us to even
+>>       * consider enabling legacy mode.  The vBIOS has dependencies on the
+>>       * PCI bus address.
+>>       */
+>> -    if (!vfio_pci_is(vdev, PCI_VENDOR_ID_INTEL, PCI_ANY_ID) ||
+>> -        !vfio_is_vga(vdev) ||
+>> -        &vdev->pdev != pci_find_device(pci_device_root_bus(&vdev->pdev),
+>> -                                       0, PCI_DEVFN(0x2, 0))) {
+>> +    bus = pci_device_root_bus(&vdev->pdev);
+>> +    legacy_mode = (&vdev->pdev == pci_find_device(bus, 0, PCI_DEVFN(0x2, 0)));
+>> +    enable_opregion = (vdev->features & VFIO_FEATURE_ENABLE_IGD_OPREGION);
+>> +
+>> +    if (!enable_opregion && !legacy_mode) {
+>> +        return true;
+>> +    }
+>> +
+>> +    if (!vfio_igd_try_enable_opregion(vdev, &err)) {
+>> +        if (enable_opregion) {
+>> +            error_propagate(errp, err);
+>> +            return false;
+>> +        } else if (legacy_mode) {
+>> +            error_append_hint(&err, "IGD legacy mode disabled\n");
+>> +            error_report_err(err);
+>> +            return true;
+>> +        }
+>> +    }
+>> +
+>> +    if (!legacy_mode) {
+>>          return true;
+>>      }
+>>  
+>> @@ -404,30 +508,10 @@ bool vfio_probe_igd_config_quirk(VFIOPCIDevice *vdev,
+>>          return true;
+>>      }
+>>  
+>> -    /*
+>> -     * Ignore the hotplug corner case, mark the ROM failed, we can't
+>> -     * create the devices we need for legacy mode in the hotplug scenario.
+>> -     */
+>> -    if (vdev->pdev.qdev.hotplugged) {
+>> -        error_report("IGD device %s hotplugged, ROM disabled, "
+>> -                     "legacy mode disabled", vdev->vbasedev.name);
+>> -        vdev->rom_read_failed = true;
+>> -        return true;
+>> -    }
+>> -
+>>      /*
+>>       * Check whether we have all the vfio device specific regions to
+>>       * support legacy mode (added in Linux v4.6).  If not, bail.
+>>       */
+> > And we're disassociating opregion setup from this useful comment.
+> 
+> What are we actually accomplishing here?  What specific code
+> duplication is eliminated?
 
-They can have different values. frame_size_setting is the value the user 
-configured. device_frame_size is the value that is the value supported 
-by the device and closest to frame_size_setting.
+This patch is designed for moving the opregion quirk in vfio_realize()
+to igd.c, for better isolation of the igd-specific code. Legacy mode
+also need to initialize opregion as x-igd-opregion=on option. These
+code are almost the same, except legacy mode continues on error, while
+x-igd-opregion fails.
 
-device_frame_size cannot be turned into a local variable as it is 
-referred by two functions, out_device_ioproc() and init_out_device().
+I am going to clearify that in the commit message of v3.
 
+> Why is it important to move all this code to igd.c?
 > 
-> Not really an issue for this patch, just saying.
+> It's really difficult to untangle this refactor, I think it could be
+> done more iteratively, if it's really even beneficial.  Thanks,
 > 
->>       AudioDeviceIOProcID ioprocid;
->>       bool enabled;
->> -} coreaudioVoiceOut;
->> +} CoreaudioVoiceOut;
-> 
-> Ah, there's the upper case change. :)
-> 
->> -static const AudioObjectPropertyAddress voice_addr = {
->> +static const AudioObjectPropertyAddress voice_out_addr = {
->>       kAudioHardwarePropertyDefaultOutputDevice,
->>       kAudioObjectPropertyScopeGlobal,
->>       kAudioObjectPropertyElementMain
->>   };
->>   
->> -static OSStatus coreaudio_get_voice(AudioDeviceID *id)
->> +static OSStatus coreaudio_get_voice_out(AudioDeviceID *id)
->>   {
->>       UInt32 size = sizeof(*id);
->>   
->>       return AudioObjectGetPropertyData(kAudioObjectSystemObject,
->> -                                      &voice_addr,
->> +                                      &voice_out_addr,
->>                                         0,
->>                                         NULL,
->>                                         &size,
->>                                         id);
->>   }
->>   
->> -static OSStatus coreaudio_get_framesizerange(AudioDeviceID id,
->> -                                             AudioValueRange *framerange)
->> +static OSStatus coreaudio_get_out_framesizerange(AudioDeviceID id,
->> +                                                 AudioValueRange *framerange)
->>   {
->>       UInt32 size = sizeof(*framerange);
->>       AudioObjectPropertyAddress addr = {
->> @@ -80,7 +80,7 @@ static OSStatus coreaudio_get_framesizerange(AudioDeviceID id,
->>                                         framerange);
->>   }
->>   
->> -static OSStatus coreaudio_get_framesize(AudioDeviceID id, UInt32 *framesize)
->> +static OSStatus coreaudio_get_out_framesize(AudioDeviceID id, UInt32 *framesize)
->>   {
->>       UInt32 size = sizeof(*framesize);
->>       AudioObjectPropertyAddress addr = {
->> @@ -97,7 +97,7 @@ static OSStatus coreaudio_get_framesize(AudioDeviceID id, UInt32 *framesize)
->>                                         framesize);
->>   }
->>   
->> -static OSStatus coreaudio_set_framesize(AudioDeviceID id, UInt32 *framesize)
->> +static OSStatus coreaudio_set_out_framesize(AudioDeviceID id, UInt32 *framesize)
->>   {
->>       UInt32 size = sizeof(*framesize);
->>       AudioObjectPropertyAddress addr = {
->> @@ -114,8 +114,8 @@ static OSStatus coreaudio_set_framesize(AudioDeviceID id, UInt32 *framesize)
->>                                         framesize);
->>   }
->>   
->> -static OSStatus coreaudio_set_streamformat(AudioDeviceID id,
->> -                                           AudioStreamBasicDescription *d)
->> +static OSStatus coreaudio_set_out_streamformat(AudioDeviceID id,
->> +                                               AudioStreamBasicDescription *d)
->>   {
->>       UInt32 size = sizeof(*d);
->>       AudioObjectPropertyAddress addr = {
->> @@ -132,7 +132,7 @@ static OSStatus coreaudio_set_streamformat(AudioDeviceID id,
->>                                         d);
->>   }
->>   
->> -static OSStatus coreaudio_get_isrunning(AudioDeviceID id, UInt32 *result)
->> +static OSStatus coreaudio_get_out_isrunning(AudioDeviceID id, UInt32 *result)
->>   {
->>       UInt32 size = sizeof(*result);
->>       AudioObjectPropertyAddress addr = {
->> @@ -242,7 +242,8 @@ static void G_GNUC_PRINTF(3, 4) coreaudio_logerr2(
->>   #define coreaudio_playback_logerr(status, ...) \
->>       coreaudio_logerr2(status, "playback", __VA_ARGS__)
->>   
->> -static int coreaudio_buf_lock(coreaudioVoiceOut *core, const char *fn_name)
->> +static int coreaudio_voice_out_buf_lock(CoreaudioVoiceOut *core,
->> +                                        const char *fn_name)
->>   {
->>       int err;
->>   
->> @@ -255,7 +256,8 @@ static int coreaudio_buf_lock(coreaudioVoiceOut *core, const char *fn_name)
->>       return 0;
->>   }
->>   
->> -static int coreaudio_buf_unlock(coreaudioVoiceOut *core, const char *fn_name)
->> +static int coreaudio_voice_out_buf_unlock(CoreaudioVoiceOut *core,
->> +                                          const char *fn_name)
->>   {
->>       int err;
->>   
->> @@ -268,20 +270,20 @@ static int coreaudio_buf_unlock(coreaudioVoiceOut *core, const char *fn_name)
->>       return 0;
->>   }
->>   
->> -#define COREAUDIO_WRAPPER_FUNC(name, ret_type, args_decl, args) \
->> -    static ret_type glue(coreaudio_, name)args_decl             \
->> -    {                                                           \
->> -        coreaudioVoiceOut *core = (coreaudioVoiceOut *)hw;      \
->> -        ret_type ret;                                           \
->> -                                                                \
->> -        if (coreaudio_buf_lock(core, "coreaudio_" #name)) {         \
->> -            return 0;                                           \
->> -        }                                                       \
->> -                                                                \
->> -        ret = glue(audio_generic_, name)args;                   \
->> -                                                                \
->> -        coreaudio_buf_unlock(core, "coreaudio_" #name);             \
->> -        return ret;                                             \
->> +#define COREAUDIO_WRAPPER_FUNC(name, ret_type, args_decl, args)       \
->> +    static ret_type glue(coreaudio_, name)args_decl                   \
->> +    {                                                                 \
->> +        CoreaudioVoiceOut *core = (CoreaudioVoiceOut *)hw;            \
->> +        ret_type ret;                                                 \
->> +                                                                      \
->> +        if (coreaudio_voice_out_buf_lock(core, "coreaudio_" #name)) { \
->> +            return 0;                                                 \
->> +        }                                                             \
->> +                                                                      \
->> +        ret = glue(audio_generic_, name)args;                         \
->> +                                                                      \
->> +        coreaudio_voice_out_buf_unlock(core, "coreaudio_" #name);     \
->> +        return ret;                                                   \
-> 
-> That doesn't really belong into this patch, but OK.
-> 
->>       }
->>   COREAUDIO_WRAPPER_FUNC(buffer_get_free, size_t, (HWVoiceOut *hw), (hw))
->>   COREAUDIO_WRAPPER_FUNC(get_buffer_out, void *, (HWVoiceOut *hw, size_t *size),
->> @@ -297,7 +299,7 @@ static ret_type glue(coreaudio_, name)args_decl             \
->>    * callback to feed audiooutput buffer. called without BQL.
->>    * allowed to lock "buf_mutex", but disallowed to have any other locks.
->>    */
->> -static OSStatus audioDeviceIOProc(
->> +static OSStatus out_device_ioproc(
->>       AudioDeviceID inDevice,
->>       const AudioTimeStamp *inNow,
->>       const AudioBufferList *inInputData,
->> @@ -306,33 +308,33 @@ static OSStatus audioDeviceIOProc(
->>       const AudioTimeStamp *inOutputTime,
->>       void *hwptr)
->>   {
->> -    UInt32 frameCount, pending_frames;
->> +    UInt32 frame_size, pending_frames;
->>       void *out = outOutputData->mBuffers[0].mData;
->>       HWVoiceOut *hw = hwptr;
->> -    coreaudioVoiceOut *core = hwptr;
->> +    CoreaudioVoiceOut *core = hwptr;
->>       size_t len;
->>   
->> -    if (coreaudio_buf_lock(core, "audioDeviceIOProc")) {
->> +    if (coreaudio_voice_out_buf_lock(core, "out_device_ioproc")) {
->>           inInputTime = 0;
->>           return 0;
->>       }
->>   
->> -    if (inDevice != core->outputDeviceID) {
->> -        coreaudio_buf_unlock(core, "audioDeviceIOProc(old device)");
->> +    if (inDevice != core->device_id) {
->> +        coreaudio_voice_out_buf_unlock(core, "out_device_ioproc(old device)");
->>           return 0;
->>       }
->>   
->> -    frameCount = core->audioDevicePropertyBufferFrameSize;
->> +    frame_size = core->device_frame_size;
->>       pending_frames = hw->pending_emul / hw->info.bytes_per_frame;
->>   
->>       /* if there are not enough samples, set signal and return */
->> -    if (pending_frames < frameCount) {
->> +    if (pending_frames < frame_size) {
->>           inInputTime = 0;
->> -        coreaudio_buf_unlock(core, "audioDeviceIOProc(empty)");
->> +        coreaudio_voice_out_buf_unlock(core, "out_device_ioproc(empty)");
->>           return 0;
->>       }
->>   
->> -    len = frameCount * hw->info.bytes_per_frame;
->> +    len = frame_size * hw->info.bytes_per_frame;
->>       while (len) {
->>           size_t write_len, start;
->>   
->> @@ -348,16 +350,16 @@ static OSStatus audioDeviceIOProc(
->>           out += write_len;
->>       }
->>   
->> -    coreaudio_buf_unlock(core, "audioDeviceIOProc");
->> +    coreaudio_voice_out_buf_unlock(core, "out_device_ioproc");
->>       return 0;
->>   }
->>   
->> -static OSStatus init_out_device(coreaudioVoiceOut *core)
->> +static OSStatus init_out_device(CoreaudioVoiceOut *core)
->>   {
->>       OSStatus status;
->> -    AudioValueRange frameRange;
->> +    AudioValueRange framerange;
->>   
->> -    AudioStreamBasicDescription streamBasicDescription = {
->> +    AudioStreamBasicDescription stream_basic_description = {
->>           .mBitsPerChannel = core->hw.info.bits,
->>           .mBytesPerFrame = core->hw.info.bytes_per_frame,
->>           .mBytesPerPacket = core->hw.info.bytes_per_frame,
->> @@ -368,20 +370,20 @@ static OSStatus init_out_device(coreaudioVoiceOut *core)
->>           .mSampleRate = core->hw.info.freq
->>       };
->>   
->> -    status = coreaudio_get_voice(&core->outputDeviceID);
->> +    status = coreaudio_get_voice_out(&core->device_id);
-> 
-> As can be seen here, I still think "*out*_device_id" is useful for review
-> purposes. Except of that:
-> 
-> Reviewed-by: Christian Schoenebeck <qemu_oss@crudebyte.com>
+> Alex
 
-If we want to clarify it is for the output, "core" should be renamed to 
-"core_out" or something like that so that we can see all members that 
-belongs to that struct is for the output.
+Agreed. Actually I'd like to totally remove the "legacy mode" and "UPT
+mode" concept in future, my proposal is:
+* Emulate and initialize ASLS and BDSM register unconditionally. These
+  registers holds HPA, keeping the old value to guest is not a good
+  idea
+* Make the host bridge and LPC bridge ID quirks optional like OpRegion.
+  Recent Linux kernel and Windows driver seems not relying on it. This
+  enables IGD passthrough on Q35 machines, but probably without UEFI
+  GOP or VBIOS support, as it is observed they require specific LPC
+  bridge DID to work.
+* Remove the requirement of IGD device class being VGA controller, this
+  was previous discussed in my kernel change [1]
+* Update the document
 
-But I also like that the current name is concise. It is like the "this" 
-in C++; so I think keeping such a frequently-used local variable short 
-makes sense.
+It would time consuming to implement all them, coding is not difficult,
+but I have to verify my change on diffrent platforms. And they are out
+of this patchset's scope I think. I personally perfers doing it in a
+future patchset.
 
-Regards,
-Akihiko Odaki
+[1] https://lore.kernel.org/all/20250123163416.7653-1-tomitamoeko@gmail.com/
 
-> 
-> /Christian
-> 
->>       if (status != kAudioHardwareNoError) {
->>           coreaudio_playback_logerr(status,
->>                                     "Could not get default output Device\n");
->>           return status;
->>       }
->> -    if (core->outputDeviceID == kAudioDeviceUnknown) {
->> +    if (core->device_id == kAudioDeviceUnknown) {
->>           dolog("Could not initialize playback - Unknown Audiodevice\n");
->>           return status;
->>       }
->>   
->>       /* get minimum and maximum buffer frame sizes */
->> -    status = coreaudio_get_framesizerange(core->outputDeviceID,
->> -                                          &frameRange);
->> +    status = coreaudio_get_out_framesizerange(core->device_id,
->> +                                              &framerange);
->>       if (status == kAudioHardwareBadObjectError) {
->>           return 0;
->>       }
->> @@ -391,32 +393,32 @@ static OSStatus init_out_device(coreaudioVoiceOut *core)
->>           return status;
->>       }
->>   
->> -    if (frameRange.mMinimum > core->frameSizeSetting) {
->> -        core->audioDevicePropertyBufferFrameSize = frameRange.mMinimum;
->> -        dolog("warning: Upsizing Buffer Frames to %f\n", frameRange.mMinimum);
->> -    } else if (frameRange.mMaximum < core->frameSizeSetting) {
->> -        core->audioDevicePropertyBufferFrameSize = frameRange.mMaximum;
->> -        dolog("warning: Downsizing Buffer Frames to %f\n", frameRange.mMaximum);
->> +    if (framerange.mMinimum > core->frame_size_setting) {
->> +        core->device_frame_size = framerange.mMinimum;
->> +        dolog("warning: Upsizing Buffer Frames to %f\n", framerange.mMinimum);
->> +    } else if (framerange.mMaximum < core->frame_size_setting) {
->> +        core->device_frame_size = framerange.mMaximum;
->> +        dolog("warning: Downsizing Buffer Frames to %f\n", framerange.mMaximum);
->>       } else {
->> -        core->audioDevicePropertyBufferFrameSize = core->frameSizeSetting;
->> +        core->device_frame_size = core->frame_size_setting;
->>       }
->>   
->>       /* set Buffer Frame Size */
->> -    status = coreaudio_set_framesize(core->outputDeviceID,
->> -                                     &core->audioDevicePropertyBufferFrameSize);
->> +    status = coreaudio_set_out_framesize(core->device_id,
->> +                                         &core->device_frame_size);
->>       if (status == kAudioHardwareBadObjectError) {
->>           return 0;
->>       }
->>       if (status != kAudioHardwareNoError) {
->>           coreaudio_playback_logerr(status,
->>                                     "Could not set device buffer frame size %" PRIu32 "\n",
->> -                                  (uint32_t)core->audioDevicePropertyBufferFrameSize);
->> +                                  (uint32_t)core->device_frame_size);
->>           return status;
->>       }
->>   
->>       /* get Buffer Frame Size */
->> -    status = coreaudio_get_framesize(core->outputDeviceID,
->> -                                     &core->audioDevicePropertyBufferFrameSize);
->> +    status = coreaudio_get_out_framesize(core->device_id,
->> +                                         &core->device_frame_size);
->>       if (status == kAudioHardwareBadObjectError) {
->>           return 0;
->>       }
->> @@ -425,19 +427,19 @@ static OSStatus init_out_device(coreaudioVoiceOut *core)
->>                                     "Could not get device buffer frame size\n");
->>           return status;
->>       }
->> -    core->hw.samples = core->bufferCount * core->audioDevicePropertyBufferFrameSize;
->> +    core->hw.samples = core->buffer_count * core->device_frame_size;
->>   
->>       /* set Samplerate */
->> -    status = coreaudio_set_streamformat(core->outputDeviceID,
->> -                                        &streamBasicDescription);
->> +    status = coreaudio_set_out_streamformat(core->device_id,
->> +                                            &stream_basic_description);
->>       if (status == kAudioHardwareBadObjectError) {
->>           return 0;
->>       }
->>       if (status != kAudioHardwareNoError) {
->>           coreaudio_playback_logerr(status,
->>                                     "Could not set samplerate %lf\n",
->> -                                  streamBasicDescription.mSampleRate);
->> -        core->outputDeviceID = kAudioDeviceUnknown;
->> +                                  stream_basic_description.mSampleRate);
->> +        core->device_id = kAudioDeviceUnknown;
->>           return status;
->>       }
->>   
->> @@ -452,8 +454,8 @@ static OSStatus init_out_device(coreaudioVoiceOut *core)
->>        * with the callers of AudioObjectGetPropertyData.
->>        */
->>       core->ioprocid = NULL;
->> -    status = AudioDeviceCreateIOProcID(core->outputDeviceID,
->> -                                       audioDeviceIOProc,
->> +    status = AudioDeviceCreateIOProcID(core->device_id,
->> +                                       out_device_ioproc,
->>                                          &core->hw,
->>                                          &core->ioprocid);
->>       if (status == kAudioHardwareBadDeviceError) {
->> @@ -461,20 +463,20 @@ static OSStatus init_out_device(coreaudioVoiceOut *core)
->>       }
->>       if (status != kAudioHardwareNoError || core->ioprocid == NULL) {
->>           coreaudio_playback_logerr(status, "Could not set IOProc\n");
->> -        core->outputDeviceID = kAudioDeviceUnknown;
->> +        core->device_id = kAudioDeviceUnknown;
->>           return status;
->>       }
->>   
->>       return 0;
->>   }
->>   
->> -static void fini_out_device(coreaudioVoiceOut *core)
->> +static void fini_out_device(CoreaudioVoiceOut *core)
->>   {
->>       OSStatus status;
->>       UInt32 isrunning;
->>   
->>       /* stop playback */
->> -    status = coreaudio_get_isrunning(core->outputDeviceID, &isrunning);
->> +    status = coreaudio_get_out_isrunning(core->device_id, &isrunning);
->>       if (status != kAudioHardwareBadObjectError) {
->>           if (status != kAudioHardwareNoError) {
->>               coreaudio_logerr(status,
->> @@ -482,7 +484,7 @@ static void fini_out_device(coreaudioVoiceOut *core)
->>           }
->>   
->>           if (isrunning) {
->> -            status = AudioDeviceStop(core->outputDeviceID, core->ioprocid);
->> +            status = AudioDeviceStop(core->device_id, core->ioprocid);
->>               if (status != kAudioHardwareBadDeviceError && status != kAudioHardwareNoError) {
->>                   coreaudio_logerr(status, "Could not stop playback\n");
->>               }
->> @@ -490,20 +492,20 @@ static void fini_out_device(coreaudioVoiceOut *core)
->>       }
->>   
->>       /* remove callback */
->> -    status = AudioDeviceDestroyIOProcID(core->outputDeviceID,
->> +    status = AudioDeviceDestroyIOProcID(core->device_id,
->>                                           core->ioprocid);
->>       if (status != kAudioHardwareBadDeviceError && status != kAudioHardwareNoError) {
->>           coreaudio_logerr(status, "Could not remove IOProc\n");
->>       }
->> -    core->outputDeviceID = kAudioDeviceUnknown;
->> +    core->device_id = kAudioDeviceUnknown;
->>   }
->>   
->> -static void update_device_playback_state(coreaudioVoiceOut *core)
->> +static void update_out_device_playback_state(CoreaudioVoiceOut *core)
->>   {
->>       OSStatus status;
->>       UInt32 isrunning;
->>   
->> -    status = coreaudio_get_isrunning(core->outputDeviceID, &isrunning);
->> +    status = coreaudio_get_out_isrunning(core->device_id, &isrunning);
->>       if (status != kAudioHardwareNoError) {
->>           if (status != kAudioHardwareBadObjectError) {
->>               coreaudio_logerr(status,
->> @@ -516,7 +518,7 @@ static void update_device_playback_state(coreaudioVoiceOut *core)
->>       if (core->enabled) {
->>           /* start playback */
->>           if (!isrunning) {
->> -            status = AudioDeviceStart(core->outputDeviceID, core->ioprocid);
->> +            status = AudioDeviceStart(core->device_id, core->ioprocid);
->>               if (status != kAudioHardwareBadDeviceError && status != kAudioHardwareNoError) {
->>                   coreaudio_logerr(status, "Could not resume playback\n");
->>               }
->> @@ -524,7 +526,7 @@ static void update_device_playback_state(coreaudioVoiceOut *core)
->>       } else {
->>           /* stop playback */
->>           if (isrunning) {
->> -            status = AudioDeviceStop(core->outputDeviceID,
->> +            status = AudioDeviceStop(core->device_id,
->>                                        core->ioprocid);
->>               if (status != kAudioHardwareBadDeviceError && status != kAudioHardwareNoError) {
->>                   coreaudio_logerr(status, "Could not pause playback\n");
->> @@ -534,22 +536,22 @@ static void update_device_playback_state(coreaudioVoiceOut *core)
->>   }
->>   
->>   /* called without BQL. */
->> -static OSStatus handle_voice_change(
->> +static OSStatus handle_voice_out_change(
->>       AudioObjectID in_object_id,
->>       UInt32 in_number_addresses,
->>       const AudioObjectPropertyAddress *in_addresses,
->>       void *in_client_data)
->>   {
->> -    coreaudioVoiceOut *core = in_client_data;
->> +    CoreaudioVoiceOut *core = in_client_data;
->>   
->>       bql_lock();
->>   
->> -    if (core->outputDeviceID) {
->> +    if (core->device_id) {
->>           fini_out_device(core);
->>       }
->>   
->>       if (!init_out_device(core)) {
->> -        update_device_playback_state(core);
->> +        update_out_device_playback_state(core);
->>       }
->>   
->>       bql_unlock();
->> @@ -560,7 +562,7 @@ static int coreaudio_init_out(HWVoiceOut *hw, struct audsettings *as,
->>                                 void *drv_opaque)
->>   {
->>       OSStatus status;
->> -    coreaudioVoiceOut *core = (coreaudioVoiceOut *)hw;
->> +    CoreaudioVoiceOut *core = (CoreaudioVoiceOut *)hw;
->>       int err;
->>       Audiodev *dev = drv_opaque;
->>       AudiodevCoreaudioPerDirectionOptions *cpdo = dev->u.coreaudio.out;
->> @@ -578,13 +580,14 @@ static int coreaudio_init_out(HWVoiceOut *hw, struct audsettings *as,
->>       as->fmt = AUDIO_FORMAT_F32;
->>       audio_pcm_init_info(&hw->info, as);
->>   
->> -    core->frameSizeSetting = audio_buffer_frames(
->> +    core->frame_size_setting = audio_buffer_frames(
->>           qapi_AudiodevCoreaudioPerDirectionOptions_base(cpdo), as, 11610);
->>   
->> -    core->bufferCount = cpdo->has_buffer_count ? cpdo->buffer_count : 4;
->> +    core->buffer_count = cpdo->has_buffer_count ? cpdo->buffer_count : 4;
->>   
->>       status = AudioObjectAddPropertyListener(kAudioObjectSystemObject,
->> -                                            &voice_addr, handle_voice_change,
->> +                                            &voice_out_addr,
->> +                                            handle_voice_out_change,
->>                                               core);
->>       if (status != kAudioHardwareNoError) {
->>           coreaudio_playback_logerr(status,
->> @@ -594,8 +597,8 @@ static int coreaudio_init_out(HWVoiceOut *hw, struct audsettings *as,
->>   
->>       if (init_out_device(core)) {
->>           status = AudioObjectRemovePropertyListener(kAudioObjectSystemObject,
->> -                                                   &voice_addr,
->> -                                                   handle_voice_change,
->> +                                                   &voice_out_addr,
->> +                                                   handle_voice_out_change,
->>                                                      core);
->>           if (status != kAudioHardwareNoError) {
->>               coreaudio_playback_logerr(status,
->> @@ -612,11 +615,11 @@ static void coreaudio_fini_out (HWVoiceOut *hw)
->>   {
->>       OSStatus status;
->>       int err;
->> -    coreaudioVoiceOut *core = (coreaudioVoiceOut *)hw;
->> +    CoreaudioVoiceOut *core = (CoreaudioVoiceOut *)hw;
->>   
->>       status = AudioObjectRemovePropertyListener(kAudioObjectSystemObject,
->> -                                               &voice_addr,
->> -                                               handle_voice_change,
->> +                                               &voice_out_addr,
->> +                                               handle_voice_out_change,
->>                                                  core);
->>       if (status != kAudioHardwareNoError) {
->>           coreaudio_logerr(status, "Could not remove voice property change listener\n");
->> @@ -633,10 +636,10 @@ static void coreaudio_fini_out (HWVoiceOut *hw)
->>   
->>   static void coreaudio_enable_out(HWVoiceOut *hw, bool enable)
->>   {
->> -    coreaudioVoiceOut *core = (coreaudioVoiceOut *)hw;
->> +    CoreaudioVoiceOut *core = (CoreaudioVoiceOut *)hw;
->>   
->>       core->enabled = enable;
->> -    update_device_playback_state(core);
->> +    update_out_device_playback_state(core);
->>   }
->>   
->>   static void *coreaudio_audio_init(Audiodev *dev, Error **errp)
->> @@ -670,7 +673,7 @@ static void coreaudio_audio_fini(void *opaque)
->>       .pcm_ops        = &coreaudio_pcm_ops,
->>       .max_voices_out = 1,
->>       .max_voices_in  = 0,
->> -    .voice_size_out = sizeof(coreaudioVoiceOut),
->> +    .voice_size_out = sizeof(CoreaudioVoiceOut),
->>       .voice_size_in  = 0
->>   };
->>   
->>
->>
-> 
+Thanks,
+Moeko
+
+>> -    ret = vfio_get_dev_region_info(&vdev->vbasedev,
+>> -                        VFIO_REGION_TYPE_PCI_VENDOR_TYPE | PCI_VENDOR_ID_INTEL,
+>> -                        VFIO_REGION_SUBTYPE_INTEL_IGD_OPREGION, &opregion);
+>> -    if (ret) {
+>> -        error_report("IGD device %s does not support OpRegion access,"
+>> -                     "legacy mode disabled", vdev->vbasedev.name);
+>> -        return true;
+>> -    }
+>> -
+>>      ret = vfio_get_dev_region_info(&vdev->vbasedev,
+>>                          VFIO_REGION_TYPE_PCI_VENDOR_TYPE | PCI_VENDOR_ID_INTEL,
+>>                          VFIO_REGION_SUBTYPE_INTEL_IGD_HOST_CFG, &host);
+>> @@ -476,13 +560,6 @@ bool vfio_probe_igd_config_quirk(VFIOPCIDevice *vdev,
+>>          return true;
+>>      }
+>>  
+>> -    /* Setup OpRegion access */
+>> -    if (!vfio_pci_igd_opregion_init(vdev, opregion, &err)) {
+>> -        error_append_hint(&err, "IGD legacy mode disabled\n");
+>> -        error_reportf_err(err, VFIO_MSG_PREFIX, vdev->vbasedev.name);
+>> -        return true;
+>> -    }
+>> -
+>>      /*
+>>       * Allow user to override dsm size using x-igd-gms option, in multiples of
+>>       * 32MiB. This option should only be used when the desired size cannot be
+>> diff --git a/hw/vfio/pci-quirks.c b/hw/vfio/pci-quirks.c
+>> index b8379cb512..f2b37910f0 100644
+>> --- a/hw/vfio/pci-quirks.c
+>> +++ b/hw/vfio/pci-quirks.c
+>> @@ -1114,56 +1114,6 @@ static void vfio_probe_rtl8168_bar2_quirk(VFIOPCIDevice *vdev, int nr)
+>>      trace_vfio_quirk_rtl8168_probe(vdev->vbasedev.name);
+>>  }
+>>  
+>> -#define IGD_ASLS 0xfc /* ASL Storage Register */
+>> -
+>> -/*
+>> - * The OpRegion includes the Video BIOS Table, which seems important for
+>> - * telling the driver what sort of outputs it has.  Without this, the device
+>> - * may work in the guest, but we may not get output.  This also requires BIOS
+>> - * support to reserve and populate a section of guest memory sufficient for
+>> - * the table and to write the base address of that memory to the ASLS register
+>> - * of the IGD device.
+>> - */
+>> -bool vfio_pci_igd_opregion_init(VFIOPCIDevice *vdev,
+>> -                                struct vfio_region_info *info, Error **errp)
+>> -{
+>> -    int ret;
+>> -
+>> -    vdev->igd_opregion = g_malloc0(info->size);
+>> -    ret = pread(vdev->vbasedev.fd, vdev->igd_opregion,
+>> -                info->size, info->offset);
+>> -    if (ret != info->size) {
+>> -        error_setg(errp, "failed to read IGD OpRegion");
+>> -        g_free(vdev->igd_opregion);
+>> -        vdev->igd_opregion = NULL;
+>> -        return false;
+>> -    }
+>> -
+>> -    /*
+>> -     * Provide fw_cfg with a copy of the OpRegion which the VM firmware is to
+>> -     * allocate 32bit reserved memory for, copy these contents into, and write
+>> -     * the reserved memory base address to the device ASLS register at 0xFC.
+>> -     * Alignment of this reserved region seems flexible, but using a 4k page
+>> -     * alignment seems to work well.  This interface assumes a single IGD
+>> -     * device, which may be at VM address 00:02.0 in legacy mode or another
+>> -     * address in UPT mode.
+>> -     *
+>> -     * NB, there may be future use cases discovered where the VM should have
+>> -     * direct interaction with the host OpRegion, in which case the write to
+>> -     * the ASLS register would trigger MemoryRegion setup to enable that.
+>> -     */
+>> -    fw_cfg_add_file(fw_cfg_find(), "etc/igd-opregion",
+>> -                    vdev->igd_opregion, info->size);
+>> -
+>> -    trace_vfio_pci_igd_opregion_enabled(vdev->vbasedev.name);
+>> -
+>> -    pci_set_long(vdev->pdev.config + IGD_ASLS, 0);
+>> -    pci_set_long(vdev->pdev.wmask + IGD_ASLS, ~0);
+>> -    pci_set_long(vdev->emulated_config_bits + IGD_ASLS, ~0);
+>> -
+>> -    return true;
+>> -}
+>> -
+>>  /*
+>>   * Common quirk probe entry points.
+>>   */
+>> diff --git a/hw/vfio/pci.c b/hw/vfio/pci.c
+>> index e624ae56c4..1b90c78c5a 100644
+>> --- a/hw/vfio/pci.c
+>> +++ b/hw/vfio/pci.c
+>> @@ -3136,31 +3136,6 @@ static void vfio_realize(PCIDevice *pdev, Error **errp)
+>>          vfio_bar_quirk_setup(vdev, i);
+>>      }
+>>  
+>> -    if (!vdev->igd_opregion &&
+>> -        vdev->features & VFIO_FEATURE_ENABLE_IGD_OPREGION) {
+>> -        g_autofree struct vfio_region_info *opregion = NULL;
+>> -
+>> -        if (vdev->pdev.qdev.hotplugged) {
+>> -            error_setg(errp,
+>> -                       "cannot support IGD OpRegion feature on hotplugged "
+>> -                       "device");
+>> -            goto out_unset_idev;
+>> -        }
+>> -
+>> -        ret = vfio_get_dev_region_info(vbasedev,
+>> -                        VFIO_REGION_TYPE_PCI_VENDOR_TYPE | PCI_VENDOR_ID_INTEL,
+>> -                        VFIO_REGION_SUBTYPE_INTEL_IGD_OPREGION, &opregion);
+>> -        if (ret) {
+>> -            error_setg_errno(errp, -ret,
+>> -                             "does not support requested IGD OpRegion feature");
+>> -            goto out_unset_idev;
+>> -        }
+>> -
+>> -        if (!vfio_pci_igd_opregion_init(vdev, opregion, errp)) {
+>> -            goto out_unset_idev;
+>> -        }
+>> -    }
+>> -
+>>      /* QEMU emulates all of MSI & MSIX */
+>>      if (pdev->cap_present & QEMU_PCI_CAP_MSIX) {
+>>          memset(vdev->emulated_config_bits + pdev->msix_cap, 0xff,
+>> diff --git a/hw/vfio/pci.h b/hw/vfio/pci.h
+>> index 5c64de0270..b9e920a6b4 100644
+>> --- a/hw/vfio/pci.h
+>> +++ b/hw/vfio/pci.h
+>> @@ -229,10 +229,6 @@ int vfio_pci_get_pci_hot_reset_info(VFIOPCIDevice *vdev,
+>>  
+>>  bool vfio_populate_vga(VFIOPCIDevice *vdev, Error **errp);
+>>  
+>> -bool vfio_pci_igd_opregion_init(VFIOPCIDevice *vdev,
+>> -                                struct vfio_region_info *info,
+>> -                                Error **errp);
+>> -
+>>  void vfio_display_reset(VFIOPCIDevice *vdev);
+>>  bool vfio_display_probe(VFIOPCIDevice *vdev, Error **errp);
+>>  void vfio_display_finalize(VFIOPCIDevice *vdev);
 > 
 
 
