@@ -4,89 +4,86 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 72D57C0218D
-	for <qemu-devel@archiver.kernel.org>; Sat, 25 Jan 2025 16:59:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B2C3FC0218E
+	for <qemu-devel@archiver.kernel.org>; Sat, 25 Jan 2025 16:59:53 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tbjVQ-00042Q-Hx; Sat, 25 Jan 2025 11:59:36 -0500
+	id 1tbjUu-0003wn-16; Sat, 25 Jan 2025 11:59:04 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1tbjVM-00041s-6I
- for qemu-devel@nongnu.org; Sat, 25 Jan 2025 11:59:32 -0500
-Received: from mail-pj1-x102a.google.com ([2607:f8b0:4864:20::102a])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tbjUr-0003wC-LD
+ for qemu-devel@nongnu.org; Sat, 25 Jan 2025 11:59:02 -0500
+Received: from mail-wm1-x32f.google.com ([2a00:1450:4864:20::32f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1tbjVK-0008RV-Nw
- for qemu-devel@nongnu.org; Sat, 25 Jan 2025 11:59:31 -0500
-Received: by mail-pj1-x102a.google.com with SMTP id
- 98e67ed59e1d1-2ef6c56032eso4224409a91.2
- for <qemu-devel@nongnu.org>; Sat, 25 Jan 2025 08:59:28 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tbjUq-0008No-74
+ for qemu-devel@nongnu.org; Sat, 25 Jan 2025 11:59:01 -0500
+Received: by mail-wm1-x32f.google.com with SMTP id
+ 5b1f17b1804b1-43626213fffso26480605e9.1
+ for <qemu-devel@nongnu.org>; Sat, 25 Jan 2025 08:58:59 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1737824368; x=1738429168; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:to:subject:user-agent:mime-version:date:message-id:from
- :to:cc:subject:date:message-id:reply-to;
- bh=IJt+Ix/xlxl3gMVBEvF2fZ2IPm5nbtgWC1gpwRCvIwM=;
- b=P294oYf4MqXExGghiHTSeHc45uuzWgZWWvLqJt7VwcXrV7W9htLhIv2CYwtxkCfsjz
- qCxtunGm0BvX2koK97tHHUfmI4sZ9gJPVpvZdlG31G3xABat0WI22hqLjZ//SaqNyXsg
- KPI95H0Afx64oKbK1dkQpZR7Dxv1xFukvHKmJ3Q0LRmG8gTDA5A7ZHSYMR06zaO/SKnz
- ydY6BOtgVk6sSGj2Y8VzIkjFvbnV1ginyH7BCZBC0qSgF2uo76WX0UzCJXklDQ7Ced0r
- HSA/fWSyI3D2bhh6A3yI3tCXWnwcvJsJg16lf4zRwk3p4fcVd0eljF8/XYmGfL1623Ki
- GEow==
+ d=linaro.org; s=google; t=1737824337; x=1738429137; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=vl8eHc07qy9w4iSjn1hsKOzQrxEbvrS/cmwezgpPirA=;
+ b=HENe/ZT4HhAQ2JqJnAxYKmTyzHItT2iBPjsuTdPzp6OYGyBueJGISM/RBSZcEDNioP
+ /pGanoVQrdvqJ8DW3cAEOfjfqSXnWc1bCSEAX5iPWd/bQdOB1dirB7ppSc+HUtjUGOJ7
+ SR3AMg6V90z9QpKUrLCgYy1wD132hURh3QxpkE8JtnS11aOi/vGpJlxIadYgvB2w+L0P
+ bkoiRadog4rT14ScyrD+83pOzGbHPOeIZs1dLwcFJZwge8wRkiKpACyMQpUpbiUn7lQ5
+ uL31B8f5htXuvxJuuSDLcfNEquduh4xt3zq2yjW71cBKc3qIfiX3GWCul789u4wDHSdo
+ XNZQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1737824368; x=1738429168;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=IJt+Ix/xlxl3gMVBEvF2fZ2IPm5nbtgWC1gpwRCvIwM=;
- b=j5+iDFgMB3a0Tx6oFHfdhDnytgoMGcqopQQLRDbug+jiAySmaizuTuRPvk9yMx8Bf0
- qPiPbwrexLztffARJKwi6lRLbCaLv1INbvEJF9Qv3BbkNKN0jC6TYL3gWBHLLxjEkGBK
- pmOYWuRTwV5tibZR9/o8E2hLxZ3Nl0kxK4vT0HKwYD6lUycSFv0hFb1NghTxj/fmfezb
- IhE28EsRh1WnfMxYHVtUDd+VMEw0lhYGz0HyxeGUUd7SOFReMF1NEmJO5bjpDKVFMSt4
- FmDL7i37C/kGXTcHnNsMajCvh7Ngg4fxaucz9wvwXwwfOjcJSIKBDMRPbcc0QfUlMERG
- qNeg==
-X-Gm-Message-State: AOJu0Yx7C603BpjsrxKEw6U1X5Q/zMUUPky8juj0XCj79xLqPMbuCLJ8
- Rk9JGXZE+fmmlxQFmBkQkObtfvKe/vwVLNZp/RhAFXuqNBAHJaD4kt3UbOjcnjX4FJgucLatzcT
- g
-X-Gm-Gg: ASbGncu9VPqx22y79mM8V7qIT4J6IqrB2iVMpCOEmKdLviDC8/0jyQM/0lGFn/HO62T
- xWkkpisC2vP7ae2/U+h9wU8MK9xGdgKQqyiO5UqPSSPAnIPFAGtJcwth+GuKxtvFi4vCltsiNC5
- DRMdJjh8b38pfwvd2s6pLdW7/lBG0Zv29TNL4NRbKcU/+H46D0E8ToR/b5txi5XlMhQT2gHsOgh
- XsdI1rAfdj2TvXZdULpcTU/JvdXP3LYQRbn5xXkZAlQ1fFvhyC7tAOI1J2WaHJuro1fvWsApIaU
- AkQfSe2BtwMcfmX5wue7YA==
-X-Google-Smtp-Source: AGHT+IFxciqihGdi40UnPdblKzE6CCp+mkXRBwmlfF7z/admFHVjevPAnIVCWeX0kRMQUmp/zNFUOQ==
-X-Received: by 2002:a17:90b:51c6:b0:2ee:fdf3:38dd with SMTP id
- 98e67ed59e1d1-2f782d38454mr42708053a91.23.1737824367937; 
- Sat, 25 Jan 2025 08:59:27 -0800 (PST)
-Received: from [192.168.74.94] ([50.200.230.211])
- by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-2f7ffaf80dfsm3793929a91.33.2025.01.25.08.59.27
- for <qemu-devel@nongnu.org>
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Sat, 25 Jan 2025 08:59:27 -0800 (PST)
-Message-ID: <bcdc54c9-2842-4974-891f-1f2fe69081f5@linaro.org>
-Date: Sat, 25 Jan 2025 08:59:25 -0800
-MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 25/76] target/arm: Remove redundant advsimd float16 helpers
+ d=1e100.net; s=20230601; t=1737824337; x=1738429137;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=vl8eHc07qy9w4iSjn1hsKOzQrxEbvrS/cmwezgpPirA=;
+ b=KnKbCa4fZprLYWLDWdinspLgFZXlVyh3fTGhd6ZYNc6YRmW9CoUswwJcyIKgg3UWdb
+ /6roVusPzRVlGp029xN3jT7V0MEwXkgbx6IHcE7Gr/16UQ2MuVnkmaCaXaexhirJmW2M
+ XWgko05KKmq6pjmmtycA82I+MjO9fd+bYlzzFH0IexTXWt4HhOhl9W3+wF40OZGeINGx
+ TcxSRebSypFhKkJI7T1GEPz36g5tnYr5vJKooOvOtYlZTFfELtq1GewFAggrLSZV1QPB
+ bPF2RQ+75mNgfaHMrMxUkqFnK/Xft9a1WaqyGb3DVf5dfuzrwevWTNkjYEh036THsO9I
+ FLjw==
+X-Gm-Message-State: AOJu0YxmzYC8/KxP82+HXud9WFRpKdR2vWyrkqli59ibHDkdkcSQ5g+8
+ CYES80/K+XKazbuOXUOBFo3WFAfLpmkz2uR3wIpSMlZIb9YryPPnLgpFgBAPxUc3hN1be6jT6UC
+ B01s=
+X-Gm-Gg: ASbGncuPlbIZAWYl0TMevMNcX1N7Nv7Ime+Kmb5CM1lCwQSX7DzaPVgIC2f7M/9kuSA
+ 1pzIGSGdSIX7reKjCCAD0ij0ZlslA45fW7fqdmuCzAp1ZautduNnCHgajwnPyOghfD5731l43K2
+ GV1HyYDyQ2GDx/Rm27CwW+SIIAj8O+ik/vY9e9IiN8ixya8aLqu+OF8Li/DOfJYUrf3rzaNE3UL
+ iHOV/dtIavH+PE+K3qdTIUZwBwZyj3jc0BASpE/eSnfF+KFpOUhztR9EVNwG7k9evbs+uB9kSM6
+ PKbxM5QgEaIXk9Zyw6RgV7f37+T385F9vscdxDdALrl93b+cqL3/ciA=
+X-Google-Smtp-Source: AGHT+IEBRaAZ7+mLdhJjgm9AhOLIgHolcvpDeFIuooGkwxYtBzTJdzM0JjjqkiDmmbyjryWkAxysVg==
+X-Received: by 2002:a05:600c:21d8:b0:434:ea1a:e30c with SMTP id
+ 5b1f17b1804b1-438bd0bca9amr74777855e9.13.1737824337360; 
+ Sat, 25 Jan 2025 08:58:57 -0800 (PST)
+Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
+ [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-38c2a188a77sm6148916f8f.51.2025.01.25.08.58.56
+ (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
+ Sat, 25 Jan 2025 08:58:56 -0800 (PST)
+From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
-References: <20250124162836.2332150-1-peter.maydell@linaro.org>
- <20250124162836.2332150-26-peter.maydell@linaro.org>
-Content-Language: en-US
-From: Richard Henderson <richard.henderson@linaro.org>
-In-Reply-To: <20250124162836.2332150-26-peter.maydell@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::102a;
- envelope-from=richard.henderson@linaro.org; helo=mail-pj1-x102a.google.com
+Cc: =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
+ qemu-rust@nongnu.org, Eduardo Habkost <eduardo@habkost.net>,
+ Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,
+ Paolo Bonzini <pbonzini@redhat.com>, Markus Armbruster <armbru@redhat.com>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Subject: [PATCH 0/2] qom: Introduce class_post_init() handler
+Date: Sat, 25 Jan 2025 17:58:53 +0100
+Message-ID: <20250125165855.32168-1-philmd@linaro.org>
+X-Mailer: git-send-email 2.47.1
+MIME-Version: 1.0
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::32f;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x32f.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -102,34 +99,21 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 1/24/25 08:27, Peter Maydell wrote:
-> The advsimd_addh etc helpers defined in helper-a64.c are identical to
-> the vfp_addh etc helpers defined in helper-vfp.c: both take two
-> float16 inputs (in a uint32_t type) plus a float_status* and are
-> simple wrappers around the softfloat float16_* functions.
-> 
-> (The duplication seems to be a historical accident: we added the
-> advsimd helpers in 2018 as part of the A64 implementation, and at
-> that time there was no f16 emulation in A32.  Then later we added the
-> A32 f16 handling by extending the existing VFP helper macros to
-> generate f16 versions as well as f32 and f64, and didn't realise we
-> could clean things up.)
-> 
-> Remove the now-unnecessary advsimd helpers and make the places that
-> generated calls to them use the vfp helpers instead. Many of the
-> helper functions were already unused.
-> 
-> (The remaining advsimd_ helpers are those which don't have vfp
-> versions.)
-> 
-> Signed-off-by: Peter Maydell<peter.maydell@linaro.org>
-> ---
->   target/arm/tcg/helper-a64.h    |  8 --------
->   target/arm/tcg/helper-a64.c    |  9 ---------
->   target/arm/tcg/translate-a64.c | 16 ++++++++--------
->   3 files changed, 8 insertions(+), 25 deletions(-)
+Add a class_post_init() handler to be called by parents
+*after* child class_init() handler is called. This is
+necessary to have parent class check children properly
+set some values or mandatory handlers.
 
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Philippe Mathieu-Daudé (2):
+  qom: Declare class_base_init() before class_init()
+  qom: Introduce class_post_init() handler
 
-r~
+ include/qom/object.h     | 17 ++++++++++-------
+ qom/object.c             | 14 ++++++++++++--
+ rust/qemu-api/src/qom.rs |  8 +++++++-
+ 3 files changed, 29 insertions(+), 10 deletions(-)
+
+-- 
+2.47.1
+
 
