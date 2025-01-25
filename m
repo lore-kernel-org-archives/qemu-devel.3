@@ -4,99 +4,166 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C1474C0218B
-	for <qemu-devel@archiver.kernel.org>; Fri, 24 Jan 2025 21:14:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1C09FC02181
+	for <qemu-devel@archiver.kernel.org>; Sat, 25 Jan 2025 02:44:57 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tbR04-00041e-DN; Fri, 24 Jan 2025 16:14:00 -0500
+	id 1tbW9R-0007h5-N3; Fri, 24 Jan 2025 21:44:01 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alex.williamson@redhat.com>)
- id 1tbR01-00041T-RZ
- for qemu-devel@nongnu.org; Fri, 24 Jan 2025 16:13:58 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <nathanc@nvidia.com>)
+ id 1tbW9P-0007gJ-FF; Fri, 24 Jan 2025 21:43:59 -0500
+Received: from mail-dm6nam12on20619.outbound.protection.outlook.com
+ ([2a01:111:f403:2417::619]
+ helo=NAM12-DM6-obe.outbound.protection.outlook.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alex.williamson@redhat.com>)
- id 1tbQzv-0004Y5-35
- for qemu-devel@nongnu.org; Fri, 24 Jan 2025 16:13:57 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1737753229;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=8NO4hWdolbIpf2qF8osr0eGD5kMbSOqb1UpAADZLCcA=;
- b=X0sZrUHuBWpdxJxe13U12Pro246EYpb45DWuJvCRJbXCEY1dsLdzOf1QBDyN0HBbjh7ZvF
- fybqR6LwaBpbbL6TFn2EY23tfM77IMz5y90uUR/Ytv5ASKGgNLyqJ4WNh19Cq6k2la2tSI
- kjoz9we2RM8hgvBvrqpCayFh3heMaYE=
-Received: from mail-io1-f70.google.com (mail-io1-f70.google.com
- [209.85.166.70]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-194-121Cfx2hM5aVvKShzdV--A-1; Fri, 24 Jan 2025 16:13:47 -0500
-X-MC-Unique: 121Cfx2hM5aVvKShzdV--A-1
-X-Mimecast-MFC-AGG-ID: 121Cfx2hM5aVvKShzdV--A
-Received: by mail-io1-f70.google.com with SMTP id
- ca18e2360f4ac-844e255c111so15865539f.0
- for <qemu-devel@nongnu.org>; Fri, 24 Jan 2025 13:13:47 -0800 (PST)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1737753226; x=1738358026;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:subject:cc:to:from:date:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=8NO4hWdolbIpf2qF8osr0eGD5kMbSOqb1UpAADZLCcA=;
- b=I5NYZsLdfEBbf+/3vbZBsbR7z1M4lz2xbMokWOhCQTyKnzzMYqlwA5TaBB1H15A9fH
- YlAd2zZTht4Ifiq5snHfCirTAFav7yaEZRyM7eC5eh7aNwD9rrnp4/PuppPGZNooaYAo
- 6pElUtoSj0ve5c3GsrNJImydbXFnJ+NLJoayZGgpiEOB7fADLQIesO1DHiBpbJr8ZuyM
- Px/aUfvKDjR4skJzUEZ1zufJcczUoS94G7bHVqujTjxT0PSPBVH/FX4dOg8Y7ggQ+IjF
- m2IzqBL7r0zti932ZA6Ke73JW6tSIKN4bzZWKYNfpwKVE6X9KxG9wNmQsN2DkeO07eUD
- kApQ==
-X-Forwarded-Encrypted: i=1;
- AJvYcCU2lk7CnIWNIu56t9rgh5lsiSKNLLJMXfF+PlhUWEDbjLc3O7Bj47rZJzlK+IOVwoBspi+ltQN+dW+n@nongnu.org
-X-Gm-Message-State: AOJu0YxmO2GhC0kCZbwwJa33ZL/PlIf+f5I89W6p3NLRnJ0WQhMvRSkQ
- K29oJ0JZqmm0h4MwQVvJobSFV3LAZz7gJCZeNT2ZxgWJC6GGUVmhNknCKbzenn5C+cEkzhXtIkd
- 5mIbuqgZ9KFz4dV7DXLOkTKLhx60m759Z4UjsS7x2dM8P5D7PBp9b0RfRujc4
-X-Gm-Gg: ASbGncs57ao/1E9IRj85uDwPH4zHH+zhaOS9gp9be7otY8G2ecoMdaiV0I2wrzic7M+
- 8z/uVZrjd8ECI3gtEb6w5WgbqKXsVAl/HvODiQskNx6+QlRIFIRUx0GILEGVEj3yJEhYdYisfP2
- g5TuA6O7rztb2tX22Ht17IyHlje+5Hpng1pBP5wgkxypvg9t7MuwxZMTt+gnyAjLgdJn2f2UyHB
- 3b0lpfxs/nClc7tqTfIn+IwkinQmnfEr3hMxAHP3KYnWuf6HAp+KPro4Ec9LITsNNB+hnu51ORD
- 42S/w4/A
-X-Received: by 2002:a05:6e02:1a8e:b0:3cb:f2e6:55ab with SMTP id
- e9e14a558f8ab-3cf742812d9mr80699555ab.0.1737753225907; 
- Fri, 24 Jan 2025 13:13:45 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IFOvM34DFPgIhu3SbidvA4OcJ6KvCRI1BL50qCg9rgyp9JFZFKETgp2vfEKNI4b1ywbbrw9qg==
-X-Received: by 2002:a05:6e02:1a8e:b0:3cb:f2e6:55ab with SMTP id
- e9e14a558f8ab-3cf742812d9mr80699505ab.0.1737753225419; 
- Fri, 24 Jan 2025 13:13:45 -0800 (PST)
-Received: from redhat.com ([38.15.36.11]) by smtp.gmail.com with ESMTPSA id
- e9e14a558f8ab-3cfc744bd99sm9122575ab.42.2025.01.24.13.13.44
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 24 Jan 2025 13:13:44 -0800 (PST)
-Date: Fri, 24 Jan 2025 14:13:42 -0700
-From: Alex Williamson <alex.williamson@redhat.com>
-To: Tomita Moeko <tomitamoeko@gmail.com>
-Cc: =?UTF-8?B?Q8OpZHJpYw==?= Le Goater <clg@redhat.com>, qemu-devel@nongnu.org
-Subject: Re: [PATCH v2 5/5] vfio/igd: handle x-igd-opregion in
- vfio_probe_igd_config_quirk()
-Message-ID: <20250124141342.255a79d3.alex.williamson@redhat.com>
-In-Reply-To: <20250124191245.12464-6-tomitamoeko@gmail.com>
-References: <20250124191245.12464-1-tomitamoeko@gmail.com>
- <20250124191245.12464-6-tomitamoeko@gmail.com>
-X-Mailer: Claws Mail 4.3.0 (GTK 3.24.43; x86_64-redhat-linux-gnu)
+ (Exim 4.90_1) (envelope-from <nathanc@nvidia.com>)
+ id 1tbW9N-0004fB-8E; Fri, 24 Jan 2025 21:43:59 -0500
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=pXVgNwMXmC+rPEIwvN/Hw9DfNXjzl/l5JHx5RC+JYjKviCT+fxHI3EhGfer+cNksOvEjp8DXiopAooB6Kp7TAmyZrIlcoa0QdvpiLzx66JTk76/FjSCj5LCrpX9kjsswDpkMPBxX+g2r6gWK3h1LGPc9E8WBq8vBATdI/ZWhysvawaHzZ8cGScxXJ8Jh2056MnZAqEZ0jR2xxrrf9G6IOsMvZd96lx8qfTUeTWU7Ign+4RBepbdakQeK8zFKS4MYRWB7U8iC/C619fjLYcmRndUVkmmQtRS/vFbQETMOGRZm4Hwi63E3mWAofNzE6z0+gnd/WXFOSIecNs9TESIH/g==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=ogekTvyag8dflDiJ8W+ed43wIFySl/FnVNKcRBHufA8=;
+ b=hogmAaJLQVaFPYtg4H2/1I5k7sA8wbQQcAj1HXtQrXbzRCPxQvSGjJCVJqhM2Cz+INwHPS5pxygLag4McjzLxmAFQMA/NCa66h4FM7SR1CD4Thmh89s/xR/24/AjK8s/WfITIFWGnJ0X4M214bngEaGRSJ9DsdDnp1aAHBWG87kP4GLiBXeLmDbjxoZhZi/KgT3e+7h1vcyTzyn95qfQLgZqH8Q4w3gLcv9hGRfbFqgTuD0I6W3l7yhiB/70v05YhHVAUklhtGL9FkYyr3/F1u1lWDhPBaAUGQLllXqLrd7KgOLlajUaQBRF+g0ctxhvDfgiNJIK5A+5Ds7pQy+bUw==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=nvidia.com; dmarc=pass action=none header.from=nvidia.com;
+ dkim=pass header.d=nvidia.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
+ s=selector2;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=ogekTvyag8dflDiJ8W+ed43wIFySl/FnVNKcRBHufA8=;
+ b=eXi3DiTE6GwZIpRQicbWQ19ImF18SpzQwfopcPoObJv5ITO1DpHv70W7CIrxbPuPI7UOSQg82aqfMplke6ikTJpwn3yl13A45Rxlw+mkXS+d7EntkLAu8TXlz6n3qSJoVvWJP3899/dB0jMWDz0yg+DSQLKOPPyutsjg0OrPxLErrz7rbMB+zY7hkSur4nKa2e7h7e5JTOWwfYgwsBDus1U5zHFyOUtyxHsgVNlDcYOhrAE7TTajPjKhUtRhY/XFDxRW9Jp4GGflDSblSqtAFX4jk3lcZe9IjfJa8VDbedVgSbVK9dGHAMFJc9BAYZgIlEsjxc4qkKIOs5oaE2DYFw==
+Authentication-Results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=nvidia.com;
+Received: from SN7PR12MB6838.namprd12.prod.outlook.com (2603:10b6:806:266::18)
+ by PH0PR12MB7012.namprd12.prod.outlook.com (2603:10b6:510:21c::20)
+ with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.8377.16; Sat, 25 Jan
+ 2025 02:43:50 +0000
+Received: from SN7PR12MB6838.namprd12.prod.outlook.com
+ ([fe80::529d:478:bc5d:b400]) by SN7PR12MB6838.namprd12.prod.outlook.com
+ ([fe80::529d:478:bc5d:b400%6]) with mapi id 15.20.8356.020; Sat, 25 Jan 2025
+ 02:43:50 +0000
+Message-ID: <a80c78fd-6203-4aca-a3d3-d67a68b8e595@nvidia.com>
+Date: Fri, 24 Jan 2025 18:43:48 -0800
+User-Agent: Mozilla Thunderbird
+To: Shameer Kolothum <shameerali.kolothum.thodi@huawei.com>
+Cc: ddutile@redhat.com, eric.auger@redhat.com, jgg@nvidia.com,
+ jiangkunkun@huawei.com, jonathan.cameron@huawei.com, linuxarm@huawei.com,
+ nathanc@nvidia.com, nicolinc@nvidia.com, peter.maydell@linaro.org,
+ qemu-arm@nongnu.org, wangzhou1@hisilicon.com, zhangfei.gao@linaro.org,
+ "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>
+References: <31db1f75110e46ccaffffb801e894605@huawei.com>
+Subject: RE: [RFC PATCH 0/5] hw/arm/virt: Add support for user-creatable
+ nested SMMUv3
+Content-Language: en-US
+From: Nathan Chen <nathanc@nvidia.com>
+In-Reply-To: <31db1f75110e46ccaffffb801e894605@huawei.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+X-ClientProxiedBy: BYAPR05CA0011.namprd05.prod.outlook.com
+ (2603:10b6:a03:c0::24) To SN7PR12MB6838.namprd12.prod.outlook.com
+ (2603:10b6:806:266::18)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=170.10.133.124;
- envelope-from=alex.williamson@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: SN7PR12MB6838:EE_|PH0PR12MB7012:EE_
+X-MS-Office365-Filtering-Correlation-Id: 3fb27978-354d-4dca-c460-08dd3cea1979
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;ARA:13230040|7416014|376014|1800799024|366016;
+X-Microsoft-Antispam-Message-Info: =?utf-8?B?MnVEeCs3QjBRRUhTek9UNklkWjZ0YXZsU3NrUnZkTzdxaWFwaUpSSmIyVDJi?=
+ =?utf-8?B?OFFBRGg0aEVqUmlwSjkvWERMb1lYVjh3bWkwZWNXOC93Nm5GOG5mb3FNTlJV?=
+ =?utf-8?B?Q0lndVd0OEZ4OHIydjduWE9RVXRvT21Kb0JqcnBGVFhuOHhpd0N6LzF0Y0k5?=
+ =?utf-8?B?UFdhT3VqYzVhS1hTVHVtRGxOQjIxU0VXdGJScHl2NmE2MVlMWllhQlBKWlVh?=
+ =?utf-8?B?WnVJU2JNN1BTMHE2Y2h0cHRnRFoyL3lvVndGUjd0V3JiU1ZsR2F6ZVBpYjZw?=
+ =?utf-8?B?WklQT0JBSTRVdVVDckVPajJqbVlGMTdCNUdUY09qYW9aRVpGYjZTMGdDS28x?=
+ =?utf-8?B?b3Z6NGdPS0dEOG9aTHJ5NSswNmR3UEpnQjdTdFNad3NKd0cwQWJET3VSRk9P?=
+ =?utf-8?B?Wldzc3BxOGl2QW5tTlp1emdrV1BXS1JTV095L2tCMnI4Uk1leDFJWnFFcFVl?=
+ =?utf-8?B?NXRKdTZvT3IzenZJRkwzeGNmdnZqNmpucnRiMncybnFQSm1FZFp1ZGVvK2pC?=
+ =?utf-8?B?UFdRUnFGNUNNK09CalBpaFpMUjdkbjgwbTJIZk11WGVTMlJPWVB6eUlZR0My?=
+ =?utf-8?B?eStrL0pIYzlxdTByemNkMW1ZY2EzK2lGbHBzcjNpK1A5V2V4NDU3cFJkRjh6?=
+ =?utf-8?B?Y0Y4aUtTK0J2Si9NaEc5Y1J6bERWY3MwRVhzV2V2V2R2OTEyS2dxM2hSRGRF?=
+ =?utf-8?B?emhiaW9BNU9SWEJPTHV3dUF2WUl3RDRmZklaMjZHVkJDbnluQjZ0SzZvVFR5?=
+ =?utf-8?B?MWd3Ymxma3duTUJhUHZ3R08zUGovbHRlSjNDcVBsQWVTTm9YaThiUjhoZVlk?=
+ =?utf-8?B?ank5aXJTcmVxaUNjUTZjTy9YcnRKT2UzWFdndWpEbTd5MHZuMU1tZ1NuVm56?=
+ =?utf-8?B?M2kxbjZBVnQ2MU1RY0xtSjdlMTlzakY3aUJHRXRIZVFrWWNkQVRpTVRUd1FY?=
+ =?utf-8?B?ZFZDUkVXTys1YTFoanNMb21IbFMyYjV2WWVPU3NRckJ6SlU5K09CV2RFVlRI?=
+ =?utf-8?B?RlFHU0NJZXFkMHRxeDVRbUhHZ01zZHhhYysxUHhnVG1DcDlSaDVBMXpqZTFk?=
+ =?utf-8?B?SitsU21HcTBOd2VBb2xwTWZRdGRPN29BYjBianVpRkJQcXU4L1h2aWdLK0tZ?=
+ =?utf-8?B?OU1Ya21QdFMrLy9hTjBhUjB3QTJPa0ZZSGVaYkpWcWFpY0RNbE40TTJwQ0dM?=
+ =?utf-8?B?aU92M3JGTEZRVDkwelpaYVZXaTRYdnhCaDhRSkRWOUFQdGxEK3k4YkxZMWli?=
+ =?utf-8?B?KzRheS9DVEdPOVZLNzlralJXaWt1SEwwYjJHYTdzQzI1Yk1SRzJkMDViT1dT?=
+ =?utf-8?B?OGtEeUNFZHJRelFNNi9jMXN3SHhBdlJnNGlXdUgwd1NvVHdTTXRtZTRwajd3?=
+ =?utf-8?B?Tkw0NFA2N0RzYnoveGppMDBScUFPNXZYcGpoQzVVZ0hMMXV0RE9xdFpISERl?=
+ =?utf-8?B?bHNmREd5WnFHTDlPY1FMQ1JiZXU1SDcxa3FKQTVxMnBYS3BETkt1ejg0OGhp?=
+ =?utf-8?B?b0NBcDluTWVrYzFmcTlVVW5OekNDMWs3aDJGWW00NW5JTnFYVWEyY0xQQzdS?=
+ =?utf-8?B?WFJsN2ZEeWErNEtncTJBa1pReDE3SDVBZGR2UjhDcE0wN25yTDFxRCs5NEhs?=
+ =?utf-8?B?bzZITVQreDJubXlqUko5OG5FbWwwMkVDK2FpTlVZak40TEhhZThZSmhjV2lp?=
+ =?utf-8?B?a1JHekZVVytCeWxzUVE1bkZqMVVCWndsVDMrT0pZNUV0MGVSWTQzRi92cEFq?=
+ =?utf-8?B?QklyZjQ0aHYzejladlNKMVZYczF5NmJBNkNjYnM3a3d0TFFGN3IwSDgvbXl1?=
+ =?utf-8?B?em1BdGRQK2VPdjNIYjZ2T3pqYnB0Rk4yaTRPaUMyL29HR0ZMVEIwT2pkWnVt?=
+ =?utf-8?Q?Dbo37vpBNDgHX?=
+X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:SN7PR12MB6838.namprd12.prod.outlook.com; PTR:; CAT:NONE;
+ SFS:(13230040)(7416014)(376014)(1800799024)(366016); DIR:OUT; SFP:1101; 
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?WHBKcVpLU2Q3YzdNZzBNZCt4U1VLYVFQNWl5OGY0ck9vS0VsNUxRZGRtSzBZ?=
+ =?utf-8?B?R2VtQktZbnowWUQwN05MMUs5TlE0VTV2WVVXbjY3V2ljTC9aWjFVQnp6UmFj?=
+ =?utf-8?B?YUFxcnIwMDBpMzNnTHN0emFpTlBqcnoxVlhTa1pFVzJiUEpGQWdzZkVKWTZa?=
+ =?utf-8?B?U2YxcCtxKzFWa3l0eURpZlBTZ2xycnA5czA5VC8zUzc2OVkzR2x1dmZnejI0?=
+ =?utf-8?B?ZVNrWEd1QWNsdGs1WmxPM2lxOGpXdkgycGF6MVRpWTdnSVdhQjBPa2hBN01s?=
+ =?utf-8?B?N3Rrb0ZVYUI1RkNWdy9NQjlqMUZSU0NuTityRC9wZ1ZTR0VhMnovR3I5b3lI?=
+ =?utf-8?B?MTNIaWgyUDVmWUpWK0NnN0tDcEpGaC9oL0p6YkFuMzVSSTBOQTRkQitkYkdv?=
+ =?utf-8?B?SnBna2JNTDBVa20xaHR1NnhPRVpXamlSZ2pKRng3NzhUcGhZay8vM2NNbE1M?=
+ =?utf-8?B?UHV5ZyswM1h2QTNld1dYZWpGaUtLYW1RRWNLVmoyNzg5UkNNVEQzRzZ0SVVH?=
+ =?utf-8?B?alg3YVRkc0pmcW9HT0pBdEYwSEF4c2hENm5OSlI2YUVxMm9GZUJoMzVoYjRo?=
+ =?utf-8?B?dmhzWlc5dE1OZmgra0g3Sy9Ca29IVWRmQlUyUVgrWWFLcFc3TFZaaHRSM2NL?=
+ =?utf-8?B?bktsRlB2OGExSjk4U3BhUUtrSldPSnRtUCtxaGQrWWZtRnNWZytueDMrcHVu?=
+ =?utf-8?B?QWpZeU91dzhrMVdSc1dBbm1leUlWUTMxMFZRaEh3QlltTjYvajIrcUhYc1JE?=
+ =?utf-8?B?YmJoRXBISzZEYWJVYXB3ZW5EUzZGWWQrV3RuVXRhY1VmMnUvTXdkMkIwTFcx?=
+ =?utf-8?B?SVRQN2dBWTJBc1RxNDFUU2h3eWpZYlBoOTZMVDhqWWs3VDIwanltbGZNbGZ5?=
+ =?utf-8?B?VVkwOSs5azkvTXBxQ1hETHkxTUVSNXpvVjQzcCs0OTd4Tms5OVo1TG92Q0Mr?=
+ =?utf-8?B?a1llU0Nma2xzQTBkUXZGZ2lrbW5qa2pEenVxR05YbzZsM0tsbjc4UzdKYlh4?=
+ =?utf-8?B?MHlacFY2RG1jRUFlbmZTZWtQOGtxZnNyTzgwQ1VBcHhhbTdHNGlHM2ZHV1gz?=
+ =?utf-8?B?OFJBUUllbVRlek52ck4yT2R4RlRlbUxNUTJxcmNmSW14S0NtYlFRZy9DZ2VW?=
+ =?utf-8?B?MUhDRW1aUW54VExmazFDWjVYbkw4akw5Zmk2dzNKajlZcE1OSXU3TytsTlFH?=
+ =?utf-8?B?Z0tKMDgydkJYeThLYy9POXRaV1h3bFdvbmUzUjhOM1hrbTdCM3hhWGFFN2VO?=
+ =?utf-8?B?YzQxbkhSRVpTVE0wWld0eUlwOHVHcXNrak9MRUFZcWREVGc3YVJ2YTY0cEJQ?=
+ =?utf-8?B?UEsyZGdTUVB6T1B4cnNPQitlb25uNmdzZXI0RUt6c015aWVOdmdoZVVjaUQ3?=
+ =?utf-8?B?YzhEUmk4QkZYT2RPNUtZaFZEckxSMGp3U2VKNkdkTHZHa1JCYTFzVWpwbjlj?=
+ =?utf-8?B?S3J1bmFsSnJlYTBpYTBPSmV3Vm5laW9ldzhxRnpMSlRLb2NxdEN2elNvWUYx?=
+ =?utf-8?B?WEhFQVVvSVFMVGdDYjJOVzZ2b2g3eThTY2l3NzA5N0k4aDBxUUZFTTJSU3hX?=
+ =?utf-8?B?eXo5S0Jka2pDdkorbzY1dVdXRTZ1QTJVNXpzb2NIK1M5MU9RWHh4MzhNYVVI?=
+ =?utf-8?B?NThGb01TS1NoVXo1YUp2Q2htdmNNZSs5bWEwK2lYNlkrODVVYXlHM2t6c2JO?=
+ =?utf-8?B?MUc0VE5xMWh2aEVQeW1pNUQrNXF6Sm5lR2ZhMDRUR2EraHppM3lrSWNLMENn?=
+ =?utf-8?B?M1lKS0VpY2h5U29uQjY3YTFZaXp2QUZ1UDhJeHBOYXFLUXV4NFdtU0RmeWs2?=
+ =?utf-8?B?V29pQmgvSktjcHJ1ak5PQ0hsaW5zSW84K1ZwN1c3M0xnVDNnekpBVHZJYytU?=
+ =?utf-8?B?N3B5UnR6UzBlODJEYk5kVXA3ZG80engxM05sTHhPWHc5MWIvY0Y5OFgxMnd2?=
+ =?utf-8?B?V1FCcndRTXFmY2JVRUI1WG5wemRoUFNwMGE1eTFDbTB0dHB6cENFbnVEd3Fh?=
+ =?utf-8?B?NTN3ZXpHVWZ1R25YQS9uSVBualNRSGFtOU1KMEtJc3ZPeHJQR21tWXRiaXdj?=
+ =?utf-8?B?dGFTanIwU29XODZNeXh5UXYwUVdzV3dXL2RHMktHSHZZRXVtK3Z5UE1zc1pu?=
+ =?utf-8?Q?/En/FEaPHrqftVfQqVeJFRaW5?=
+X-OriginatorOrg: Nvidia.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 3fb27978-354d-4dca-c460-08dd3cea1979
+X-MS-Exchange-CrossTenant-AuthSource: SN7PR12MB6838.namprd12.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 25 Jan 2025 02:43:50.5401 (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: MHdXA1/3U60kiYMu9zPpkvhEzgaL/ish9AdwV9smtwx7h7TAvDkcAJSrW3YsoDT1wpfYNCvB7/Pt095o5PsZEA==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: PH0PR12MB7012
+Received-SPF: softfail client-ip=2a01:111:f403:2417::619;
+ envelope-from=nathanc@nvidia.com;
+ helo=NAM12-DM6-obe.outbound.protection.outlook.com
 X-Spam_score_int: -50
 X-Spam_score: -5.1
 X-Spam_bar: -----
 X-Spam_report: (-5.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-2.996,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -113,355 +180,39 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Sat, 25 Jan 2025 03:12:45 +0800
-Tomita Moeko <tomitamoeko@gmail.com> wrote:
-
-> Both enable opregion option (x-igd-opregion) and legacy mode require
-> setting up OpRegion copy for IGD devices. Move x-igd-opregion handler
-> in vfio_realize() to vfio_probe_igd_config_quirk() to elimate duplicate
-> code. Finally we moved all the IGD-related code into igd.c.
+>>  >with an error message indicating DMA mapping failed for the
+>> passthrough >devices.
+>> 
+>> A correction - the message indicates UEFI failed to find a mapping for
+>> the boot partition ("map: no mapping found"), not that DMA mapping
+>> failed. But earlier EDK debug logs still show PCI host bridge resource
+>> conflicts for the passthrough devices that seem related to the VM boot
+>> failure.
 > 
-> Signed-off-by: Tomita Moeko <tomitamoeko@gmail.com>
-> ---
->  hw/vfio/igd.c        | 143 +++++++++++++++++++++++++++++++++----------
->  hw/vfio/pci-quirks.c |  50 ---------------
->  hw/vfio/pci.c        |  25 --------
->  hw/vfio/pci.h        |   4 --
->  4 files changed, 110 insertions(+), 112 deletions(-)
+> I have tried a 2023 version EFI which works. And for more recent tests I am
+> using a one built directly from,
+> https://github.com/tianocore/edk2.git master
 > 
-> diff --git a/hw/vfio/igd.c b/hw/vfio/igd.c
-> index 6e06dd774a..015beacf5f 100644
-> --- a/hw/vfio/igd.c
-> +++ b/hw/vfio/igd.c
-> @@ -106,6 +106,7 @@ static int igd_gen(VFIOPCIDevice *vdev)
->      return -1;
->  }
->  
-> +#define IGD_ASLS 0xfc /* ASL Storage Register */
->  #define IGD_GMCH 0x50 /* Graphics Control Register */
->  #define IGD_BDSM 0x5c /* Base Data of Stolen Memory */
->  #define IGD_BDSM_GEN11 0xc0 /* Base Data of Stolen Memory of gen 11 and later */
-> @@ -138,6 +139,55 @@ static uint64_t igd_stolen_memory_size(int gen, uint32_t gmch)
->      return 0;
->  }
->  
-> +/*
-> + * The OpRegion includes the Video BIOS Table, which seems important for
-> + * telling the driver what sort of outputs it has.  Without this, the device
-> + * may work in the guest, but we may not get output.  This also requires BIOS
-> + * support to reserve and populate a section of guest memory sufficient for
-> + * the table and to write the base address of that memory to the ASLS register
-> + * of the IGD device.
-> + */
-> +static bool vfio_pci_igd_opregion_init(VFIOPCIDevice *vdev,
-> +                                       struct vfio_region_info *info,
-> +                                       Error **errp)
-> +{
-> +    int ret;
-> +
-> +    vdev->igd_opregion = g_malloc0(info->size);
-> +    ret = pread(vdev->vbasedev.fd, vdev->igd_opregion,
-> +                info->size, info->offset);
-> +    if (ret != info->size) {
-> +        error_setg(errp, "failed to read IGD OpRegion");
-> +        g_free(vdev->igd_opregion);
-> +        vdev->igd_opregion = NULL;
-> +        return false;
-> +    }
-> +
-> +    /*
-> +     * Provide fw_cfg with a copy of the OpRegion which the VM firmware is to
-> +     * allocate 32bit reserved memory for, copy these contents into, and write
-> +     * the reserved memory base address to the device ASLS register at 0xFC.
-> +     * Alignment of this reserved region seems flexible, but using a 4k page
-> +     * alignment seems to work well.  This interface assumes a single IGD
-> +     * device, which may be at VM address 00:02.0 in legacy mode or another
-> +     * address in UPT mode.
-> +     *
-> +     * NB, there may be future use cases discovered where the VM should have
-> +     * direct interaction with the host OpRegion, in which case the write to
-> +     * the ASLS register would trigger MemoryRegion setup to enable that.
-> +     */
-> +    fw_cfg_add_file(fw_cfg_find(), "etc/igd-opregion",
-> +                    vdev->igd_opregion, info->size);
-> +
-> +    trace_vfio_pci_igd_opregion_enabled(vdev->vbasedev.name);
-> +
-> +    pci_set_long(vdev->pdev.config + IGD_ASLS, 0);
-> +    pci_set_long(vdev->pdev.wmask + IGD_ASLS, ~0);
-> +    pci_set_long(vdev->emulated_config_bits + IGD_ASLS, ~0);
-> +
-> +    return true;
-> +}
-> +
->  /*
->   * The rather short list of registers that we copy from the host devices.
->   * The LPC/ISA bridge values are definitely needed to support the vBIOS, the
-> @@ -339,29 +389,83 @@ void vfio_probe_igd_bar0_quirk(VFIOPCIDevice *vdev, int nr)
->      QLIST_INSERT_HEAD(&vdev->bars[nr].quirks, bdsm_quirk, next);
->  }
->  
-> +static bool vfio_igd_try_enable_opregion(VFIOPCIDevice *vdev, Error **errp)
-> +{
-> +    g_autofree struct vfio_region_info *opregion = NULL;
-> +    int ret;
-> +
-> +    /*
-> +     * Hotplugging is not supprted for both opregion access and legacy mode.
-> +     * For legacy mode, we also need to mark the ROM failed.
-> +     */
+> Commit: 0f3867fa6ef0("UefiPayloadPkg/UefiPayloadEntry: Fix PT protection
+> in 5 level paging"
+> 
+> With both, I don’t remember seeing any boot failure and the above UEFI
+> related "map: no mapping found" error. But the Guest kernel at times
+> complaints about pci bridge window memory assignment failures.
+> ...
+> pci 0000:10:01.0: bridge window [mem size 0x00200000 64bit pref]: can't assign; no space
+> pci 0000:10:01.0: bridge window [mem size 0x00200000 64bit pref]: failed to assign
+> pci 0000:10:00.0: bridge window [io  size 0x1000]:can't assign; no space
+> ...
+> 
+> But Guest still boots and worked fine so far.
 
-The explanation was a little better in the removed comment.
+Hi Shameer,
 
-> +    if (vdev->pdev.qdev.hotplugged) {
-> +        vdev->rom_read_failed = true;
-> +        error_setg(errp,
-> +                   "IGD OpRegion is not supported on hotplugged device");
+Just letting you know I resolved this by increasing the MMIO region size 
+in hw/arm/virt.c to support passing through GPUs with large BAR regions 
+(VIRT_HIGH_PCIE_MMIO). Thanks for taking a look.
 
-As was the error log.
-
-> +        return false;
-> +    }
-> +
-> +    ret = vfio_get_dev_region_info(&vdev->vbasedev,
-> +                    VFIO_REGION_TYPE_PCI_VENDOR_TYPE | PCI_VENDOR_ID_INTEL,
-> +                    VFIO_REGION_SUBTYPE_INTEL_IGD_OPREGION, &opregion);
-> +    if (ret) {
-> +        error_setg_errno(errp, -ret,
-> +                         "device does not supports IGD OpRegion feature");
-> +        return false;
-> +    }
-> +
-> +    if (!vfio_pci_igd_opregion_init(vdev, opregion, errp)) {
-> +        return false;
-> +    }
-> +
-> +    return true;
-> +}
-> +
->  bool vfio_probe_igd_config_quirk(VFIOPCIDevice *vdev,
-> -                                 Error **errp G_GNUC_UNUSED)
-> +                                 Error **errp)
->  {
->      g_autofree struct vfio_region_info *rom = NULL;
-> -    g_autofree struct vfio_region_info *opregion = NULL;
->      g_autofree struct vfio_region_info *host = NULL;
->      g_autofree struct vfio_region_info *lpc = NULL;
-> +    PCIBus *bus;
->      PCIDevice *lpc_bridge;
->      int ret, gen;
-> +    bool legacy_mode, enable_opregion;
->      uint64_t gms_size;
->      uint64_t *bdsm_size;
->      uint32_t gmch;
->      Error *err = NULL;
->  
-> +    if (!vfio_pci_is(vdev, PCI_VENDOR_ID_INTEL, PCI_ANY_ID) ||
-> +        !vfio_is_vga(vdev)) {
-> +        return true;
-> +    }
-> +
->      /*
->       * This must be an Intel VGA device at address 00:02.0 for us to even
->       * consider enabling legacy mode.  The vBIOS has dependencies on the
->       * PCI bus address.
->       */
-> -    if (!vfio_pci_is(vdev, PCI_VENDOR_ID_INTEL, PCI_ANY_ID) ||
-> -        !vfio_is_vga(vdev) ||
-> -        &vdev->pdev != pci_find_device(pci_device_root_bus(&vdev->pdev),
-> -                                       0, PCI_DEVFN(0x2, 0))) {
-> +    bus = pci_device_root_bus(&vdev->pdev);
-> +    legacy_mode = (&vdev->pdev == pci_find_device(bus, 0, PCI_DEVFN(0x2, 0)));
-> +    enable_opregion = (vdev->features & VFIO_FEATURE_ENABLE_IGD_OPREGION);
-> +
-> +    if (!enable_opregion && !legacy_mode) {
-> +        return true;
-> +    }
-> +
-> +    if (!vfio_igd_try_enable_opregion(vdev, &err)) {
-> +        if (enable_opregion) {
-> +            error_propagate(errp, err);
-> +            return false;
-> +        } else if (legacy_mode) {
-> +            error_append_hint(&err, "IGD legacy mode disabled\n");
-> +            error_report_err(err);
-> +            return true;
-> +        }
-> +    }
-> +
-> +    if (!legacy_mode) {
->          return true;
->      }
->  
-> @@ -404,30 +508,10 @@ bool vfio_probe_igd_config_quirk(VFIOPCIDevice *vdev,
->          return true;
->      }
->  
-> -    /*
-> -     * Ignore the hotplug corner case, mark the ROM failed, we can't
-> -     * create the devices we need for legacy mode in the hotplug scenario.
-> -     */
-> -    if (vdev->pdev.qdev.hotplugged) {
-> -        error_report("IGD device %s hotplugged, ROM disabled, "
-> -                     "legacy mode disabled", vdev->vbasedev.name);
-> -        vdev->rom_read_failed = true;
-> -        return true;
-> -    }
-> -
->      /*
->       * Check whether we have all the vfio device specific regions to
->       * support legacy mode (added in Linux v4.6).  If not, bail.
->       */
-
-And we're disassociating opregion setup from this useful comment.
-
-What are we actually accomplishing here?  What specific code
-duplication is eliminated?
-
-Why is it important to move all this code to igd.c?
-
-It's really difficult to untangle this refactor, I think it could be
-done more iteratively, if it's really even beneficial.  Thanks,
-
-Alex
-
-> -    ret = vfio_get_dev_region_info(&vdev->vbasedev,
-> -                        VFIO_REGION_TYPE_PCI_VENDOR_TYPE | PCI_VENDOR_ID_INTEL,
-> -                        VFIO_REGION_SUBTYPE_INTEL_IGD_OPREGION, &opregion);
-> -    if (ret) {
-> -        error_report("IGD device %s does not support OpRegion access,"
-> -                     "legacy mode disabled", vdev->vbasedev.name);
-> -        return true;
-> -    }
-> -
->      ret = vfio_get_dev_region_info(&vdev->vbasedev,
->                          VFIO_REGION_TYPE_PCI_VENDOR_TYPE | PCI_VENDOR_ID_INTEL,
->                          VFIO_REGION_SUBTYPE_INTEL_IGD_HOST_CFG, &host);
-> @@ -476,13 +560,6 @@ bool vfio_probe_igd_config_quirk(VFIOPCIDevice *vdev,
->          return true;
->      }
->  
-> -    /* Setup OpRegion access */
-> -    if (!vfio_pci_igd_opregion_init(vdev, opregion, &err)) {
-> -        error_append_hint(&err, "IGD legacy mode disabled\n");
-> -        error_reportf_err(err, VFIO_MSG_PREFIX, vdev->vbasedev.name);
-> -        return true;
-> -    }
-> -
->      /*
->       * Allow user to override dsm size using x-igd-gms option, in multiples of
->       * 32MiB. This option should only be used when the desired size cannot be
-> diff --git a/hw/vfio/pci-quirks.c b/hw/vfio/pci-quirks.c
-> index b8379cb512..f2b37910f0 100644
-> --- a/hw/vfio/pci-quirks.c
-> +++ b/hw/vfio/pci-quirks.c
-> @@ -1114,56 +1114,6 @@ static void vfio_probe_rtl8168_bar2_quirk(VFIOPCIDevice *vdev, int nr)
->      trace_vfio_quirk_rtl8168_probe(vdev->vbasedev.name);
->  }
->  
-> -#define IGD_ASLS 0xfc /* ASL Storage Register */
-> -
-> -/*
-> - * The OpRegion includes the Video BIOS Table, which seems important for
-> - * telling the driver what sort of outputs it has.  Without this, the device
-> - * may work in the guest, but we may not get output.  This also requires BIOS
-> - * support to reserve and populate a section of guest memory sufficient for
-> - * the table and to write the base address of that memory to the ASLS register
-> - * of the IGD device.
-> - */
-> -bool vfio_pci_igd_opregion_init(VFIOPCIDevice *vdev,
-> -                                struct vfio_region_info *info, Error **errp)
-> -{
-> -    int ret;
-> -
-> -    vdev->igd_opregion = g_malloc0(info->size);
-> -    ret = pread(vdev->vbasedev.fd, vdev->igd_opregion,
-> -                info->size, info->offset);
-> -    if (ret != info->size) {
-> -        error_setg(errp, "failed to read IGD OpRegion");
-> -        g_free(vdev->igd_opregion);
-> -        vdev->igd_opregion = NULL;
-> -        return false;
-> -    }
-> -
-> -    /*
-> -     * Provide fw_cfg with a copy of the OpRegion which the VM firmware is to
-> -     * allocate 32bit reserved memory for, copy these contents into, and write
-> -     * the reserved memory base address to the device ASLS register at 0xFC.
-> -     * Alignment of this reserved region seems flexible, but using a 4k page
-> -     * alignment seems to work well.  This interface assumes a single IGD
-> -     * device, which may be at VM address 00:02.0 in legacy mode or another
-> -     * address in UPT mode.
-> -     *
-> -     * NB, there may be future use cases discovered where the VM should have
-> -     * direct interaction with the host OpRegion, in which case the write to
-> -     * the ASLS register would trigger MemoryRegion setup to enable that.
-> -     */
-> -    fw_cfg_add_file(fw_cfg_find(), "etc/igd-opregion",
-> -                    vdev->igd_opregion, info->size);
-> -
-> -    trace_vfio_pci_igd_opregion_enabled(vdev->vbasedev.name);
-> -
-> -    pci_set_long(vdev->pdev.config + IGD_ASLS, 0);
-> -    pci_set_long(vdev->pdev.wmask + IGD_ASLS, ~0);
-> -    pci_set_long(vdev->emulated_config_bits + IGD_ASLS, ~0);
-> -
-> -    return true;
-> -}
-> -
->  /*
->   * Common quirk probe entry points.
->   */
-> diff --git a/hw/vfio/pci.c b/hw/vfio/pci.c
-> index e624ae56c4..1b90c78c5a 100644
-> --- a/hw/vfio/pci.c
-> +++ b/hw/vfio/pci.c
-> @@ -3136,31 +3136,6 @@ static void vfio_realize(PCIDevice *pdev, Error **errp)
->          vfio_bar_quirk_setup(vdev, i);
->      }
->  
-> -    if (!vdev->igd_opregion &&
-> -        vdev->features & VFIO_FEATURE_ENABLE_IGD_OPREGION) {
-> -        g_autofree struct vfio_region_info *opregion = NULL;
-> -
-> -        if (vdev->pdev.qdev.hotplugged) {
-> -            error_setg(errp,
-> -                       "cannot support IGD OpRegion feature on hotplugged "
-> -                       "device");
-> -            goto out_unset_idev;
-> -        }
-> -
-> -        ret = vfio_get_dev_region_info(vbasedev,
-> -                        VFIO_REGION_TYPE_PCI_VENDOR_TYPE | PCI_VENDOR_ID_INTEL,
-> -                        VFIO_REGION_SUBTYPE_INTEL_IGD_OPREGION, &opregion);
-> -        if (ret) {
-> -            error_setg_errno(errp, -ret,
-> -                             "does not support requested IGD OpRegion feature");
-> -            goto out_unset_idev;
-> -        }
-> -
-> -        if (!vfio_pci_igd_opregion_init(vdev, opregion, errp)) {
-> -            goto out_unset_idev;
-> -        }
-> -    }
-> -
->      /* QEMU emulates all of MSI & MSIX */
->      if (pdev->cap_present & QEMU_PCI_CAP_MSIX) {
->          memset(vdev->emulated_config_bits + pdev->msix_cap, 0xff,
-> diff --git a/hw/vfio/pci.h b/hw/vfio/pci.h
-> index 5c64de0270..b9e920a6b4 100644
-> --- a/hw/vfio/pci.h
-> +++ b/hw/vfio/pci.h
-> @@ -229,10 +229,6 @@ int vfio_pci_get_pci_hot_reset_info(VFIOPCIDevice *vdev,
->  
->  bool vfio_populate_vga(VFIOPCIDevice *vdev, Error **errp);
->  
-> -bool vfio_pci_igd_opregion_init(VFIOPCIDevice *vdev,
-> -                                struct vfio_region_info *info,
-> -                                Error **errp);
-> -
->  void vfio_display_reset(VFIOPCIDevice *vdev);
->  bool vfio_display_probe(VFIOPCIDevice *vdev, Error **errp);
->  void vfio_display_finalize(VFIOPCIDevice *vdev);
-
+Thanks,
+Nathan
 
