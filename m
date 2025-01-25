@@ -4,64 +4,64 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E9536C0218D
-	for <qemu-devel@archiver.kernel.org>; Sat, 25 Jan 2025 18:16:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1FF90C0218E
+	for <qemu-devel@archiver.kernel.org>; Sat, 25 Jan 2025 18:16:21 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tbkfj-0008E2-99; Sat, 25 Jan 2025 13:14:19 -0500
+	id 1tbkfu-0008KU-KZ; Sat, 25 Jan 2025 13:14:30 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tbkfa-0008C0-75
- for qemu-devel@nongnu.org; Sat, 25 Jan 2025 13:14:13 -0500
-Received: from mail-wr1-x42d.google.com ([2a00:1450:4864:20::42d])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tbkff-0008DA-K1
+ for qemu-devel@nongnu.org; Sat, 25 Jan 2025 13:14:16 -0500
+Received: from mail-wm1-x332.google.com ([2a00:1450:4864:20::332])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tbkfT-0004EF-JH
- for qemu-devel@nongnu.org; Sat, 25 Jan 2025 13:14:05 -0500
-Received: by mail-wr1-x42d.google.com with SMTP id
- ffacd0b85a97d-385de9f789cso2506565f8f.2
- for <qemu-devel@nongnu.org>; Sat, 25 Jan 2025 10:14:03 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tbkfe-0004G1-1X
+ for qemu-devel@nongnu.org; Sat, 25 Jan 2025 13:14:15 -0500
+Received: by mail-wm1-x332.google.com with SMTP id
+ 5b1f17b1804b1-4361c705434so22040945e9.3
+ for <qemu-devel@nongnu.org>; Sat, 25 Jan 2025 10:14:13 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1737828842; x=1738433642; darn=nongnu.org;
+ d=linaro.org; s=google; t=1737828852; x=1738433652; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=60AuA1WDx9vhZn9WTP7sL5YOcyHTmPSWNTPXV1fPX/g=;
- b=NOzNXYXMvUQ4z6MSZv8v0orQ4FQb/kv2Kc9CbBejaFKVNbD5GDarkQdePQTGQZmwA2
- ssAwj9pilZthsmAmScon3CTvuh4JYgPdc23nidlKmzTzuE0MSY8CgDPDZIh8yRL6SkfT
- GO/RxnaA4EwR4xSnuJcfeMv72GEJ9cHnCO0c7UqmWt46WIdqQicZFwoa/APSG/JHdF6E
- 1T5LRbjuTrz+jfBWImRPtXHycqulcDqeBnxt7NWfYmO/DGO1J3mDKdDtVX3XrZhGQJd3
- X/u1lZhEhZNdrp7xuHucMNM922jWI/zYXdwFVCVldlzmPsU5We1gF2VAtUGrDilKNoiV
- 4isA==
+ bh=oekQdNljsXmvRCfjRcF/YH736cTnRtLa3bqMS7/4HKc=;
+ b=bR1OGlpggt6HX8m3z2x7MOCllw3RVk5BDUY4TGdhp8kCz+DUqDqF2hxqUyW1oVkfon
+ wbpSH0FlL6ksGziFt9R0FLwimj2uO0MtrmUEoFIc1jRUMYDi2QzGO5pNjW4+tYmid5w+
+ wfE3/QLzLMjikmNm5sFiZ80lWYPZOmhjRSAuTYz7hjgK0NaRsPOykXLB2Rqwzk0UDqLk
+ 7SLo35bUoripsOX35VozZLzJKGqr3xXsYVpQvaIOQfsW5HWleZEk8wQ7aHCa4nM8Nr4q
+ r9eCKx59fG7UvEsCgfbseTcBoFhpBArUv9eNAh0SLlWKMDxb8WGYJz8/yALW1NY1uqGP
+ CaDw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1737828842; x=1738433642;
+ d=1e100.net; s=20230601; t=1737828852; x=1738433652;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=60AuA1WDx9vhZn9WTP7sL5YOcyHTmPSWNTPXV1fPX/g=;
- b=dkk/WwD4QYDc53IBhQcjYEzAc+1a3pfKWUNgx8zNmBOB9lRGnDFOfPXVHRzpTNNaZE
- WQnUBmix+tYuQh6wOQRMq2MqTzOUtufkhWfvytGQjpZ6LnqVjzdxrU0IESKVcR2bNAWi
- S0qz3Xbi2/tmMrpGkpw+ZHs0UAa8tt1xlgUUoDhEsU01GbeygKO2Omkr4xzzYnZ/rZoc
- 2N+GnY/HWLSVUTWy0uQ5bdmizWqMwpO1JQBGv/ZZAto63eTDZyfqnITtR7PH1LBJD0of
- 4+MjtyM7GSiZOA8mJ2f7MO+p+miqp4+ELWiQIWGXCBf5c2m5X42YAhh9tQZcZPsYE/bl
- JmHA==
-X-Gm-Message-State: AOJu0YzQVJrhqKmtZzyRq48vRWSYRUrFoYOAs+EiD2YqegfHNToDo/Ko
- bOHSRFJRMAui+UeYimwUNwxhVGqawKB2nky1+Ps+vFEgcm8iiboV2Ph34UwITxWJs+eK92ZLwTA
- sTUA=
-X-Gm-Gg: ASbGncvASX6FqmsJJ2JkElzpfJTGHiWIMIfnibZ+Xh46o6c5jKADK2S5QlWO5WWfHYz
- 9s2SWsbrLCSyLjBoMV5UETbo2w45UK9pNOdu0LwH01At0cYtwv0sx24O/5WCQPydjDO1ayFX3yX
- g0DQXbrpPPcDkbMSRdzD+AittdLpXhFebtqqMU2DbeXM1NnJraLRsNN0Qs7IkRg1lNc0k7jSW3o
- JyT6nk422u2VtUzg/3LkxGqEecxqrfUGeUZFj/Fleq8yt6ph0LAtd80+6KS1/JpnkOxZOJ8yHEg
- Fc9qFgmviV+Sd7BjbTO6qNmlMMB0nhCXYUwgmllwggcMYFvYrnkpR2Q3DT9/
-X-Google-Smtp-Source: AGHT+IFmsyFMtRiyUoQTMlDTj6UgcQ0Wyp8q7Re0IHss6ougDQh97Nwe8Gj2HZEyku0oDKVtn8rFyg==
-X-Received: by 2002:a05:6000:2c5:b0:37d:4647:154e with SMTP id
- ffacd0b85a97d-38bf5655bd3mr29759427f8f.9.1737828841654; 
- Sat, 25 Jan 2025 10:14:01 -0800 (PST)
+ bh=oekQdNljsXmvRCfjRcF/YH736cTnRtLa3bqMS7/4HKc=;
+ b=ph1yTrGsvrGfjd1S3TR69oEoDDmElU93brJ6JAKdlo/FFiKm/oYRqUUrE4FbVQhs1J
+ BRRgITAcqRiE9g6m8Uxs/QQV1K6HPkSPbdizZwzIz9gDnd1pV9M7WEFBx1pwfKOI7o5N
+ tuTJKjya3tlArMe5OptybQcJMFGtQ2EvnZhp2imsFpmBIY5Rr9zwMc1YeiOjdNJTJzGr
+ QH88k9UJRaseQJT/GXQkYHedHUzR5EF33+JK177/U4nnxrPxlg/PwwUKZGHGeLn+l+rD
+ WJEwkydmrKIdHzpLMIqKF9Nh3Ni6hYKlhuT3EBC2WJ+jJDV1woOvWNYOg5Xg0EAKKCtW
+ j1WA==
+X-Gm-Message-State: AOJu0YzNTRz0mGiwMdvJKyvHzeggvGBW4THHns/KdxCKyRbd1hSS3M4K
+ ic304yEABR8Rkg2hqIpD+FUTXzhZ+/oRVB+wwYpjeaHxyet8M6Woi+Bq2STFdKuRZHYUD+4WKGK
+ 2B4I=
+X-Gm-Gg: ASbGncvPQDXL+7ra3qIG2sdGKKhUVCCiT6en2KEsWmaWq/y24MPIHF2okHfjcUc+SoK
+ ImTpgrwmvisOMk/1WfKFY70Uge7iS1DO0alSL6EVUsw87x/NpsmHl0OgUPPCLE6dyMrsqGTMouj
+ CYaz+wODEA7+L7K8TdjYg0b/WjgWuaChdy1fBL0dfBApWdTpFf6+PEOinIM4DM8Py/fQUAuvYXL
+ nvxUraqspAtWo5yqj/CnEVJ2ub8RPa53YyhJjS3NYepQr1AqirY+mO+A3BaCkbr9/4eVdNKoWRJ
+ fKHIBDkABUJdlCh79G1QDHKetZhEZjN9A+BcCxoPnz8D2MVyaw1mPjo5YW8X
+X-Google-Smtp-Source: AGHT+IFcf5NC5w3OdMEeSdE+fJzRv8eMmKrsAaFn1q2W0Qs4+hxyDFiFEoLFYJSBxaKkISXGUJ3R0Q==
+X-Received: by 2002:a05:600c:1f19:b0:434:a1d3:a30f with SMTP id
+ 5b1f17b1804b1-438b9cc072emr109914115e9.6.1737828852191; 
+ Sat, 25 Jan 2025 10:14:12 -0800 (PST)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-38c2a17d865sm6249213f8f.38.2025.01.25.10.14.00
+ 5b1f17b1804b1-438bd4900e2sm68626685e9.24.2025.01.25.10.14.10
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Sat, 25 Jan 2025 10:14:01 -0800 (PST)
+ Sat, 25 Jan 2025 10:14:11 -0800 (PST)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Yi Liu <yi.l.liu@intel.com>, Markus Armbruster <armbru@redhat.com>,
@@ -84,17 +84,18 @@ Cc: Yi Liu <yi.l.liu@intel.com>, Markus Armbruster <armbru@redhat.com>,
  =?UTF-8?q?Cl=C3=A9ment=20Mathieu--Drif?= <clement.mathieu--drif@eviden.com>,
  =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PATCH 3/9] hw/sysbus: Introduce TYPE_DYNAMIC_SYS_BUS_DEVICE
-Date: Sat, 25 Jan 2025 19:13:37 +0100
-Message-ID: <20250125181343.59151-4-philmd@linaro.org>
+Subject: [PATCH 5/9] hw/display: Have RAMFB device inherit from
+ DYNAMIC_SYS_BUS_DEVICE
+Date: Sat, 25 Jan 2025 19:13:39 +0100
+Message-ID: <20250125181343.59151-6-philmd@linaro.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20250125181343.59151-1-philmd@linaro.org>
 References: <20250125181343.59151-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::42d;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x42d.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::332;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x332.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -117,64 +118,33 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Some TYPE_SYS_BUS_DEVICEs can be optionally dynamically
-plugged on the TYPE_PLATFORM_BUS_DEVICE.
-Rather than sometimes noting that with comment around
-the 'user_creatable = true' line in each DeviceRealize
-handler, introduce an abstract TYPE_DYNAMIC_SYS_BUS_DEVICE
-class.
+Because the RAM FB device can be optionally plugged on the
+TYPE_PLATFORM_BUS_DEVICE, have it inherit TYPE_DYNAMIC_SYS_BUS_DEVICE.
 
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 ---
- include/hw/sysbus.h |  2 ++
- hw/core/sysbus.c    | 14 ++++++++++++++
- 2 files changed, 16 insertions(+)
+ hw/display/ramfb-standalone.c | 3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
 
-diff --git a/include/hw/sysbus.h b/include/hw/sysbus.h
-index c9b1e0e90e3..81bbda10d37 100644
---- a/include/hw/sysbus.h
-+++ b/include/hw/sysbus.h
-@@ -19,6 +19,8 @@ DECLARE_INSTANCE_CHECKER(BusState, SYSTEM_BUS,
- OBJECT_DECLARE_TYPE(SysBusDevice, SysBusDeviceClass,
-                     SYS_BUS_DEVICE)
- 
-+#define TYPE_DYNAMIC_SYS_BUS_DEVICE "dynamic-sysbus-device"
-+
- /**
-  * SysBusDeviceClass:
-  *
-diff --git a/hw/core/sysbus.c b/hw/core/sysbus.c
-index 306f98406c0..e8d03fd28d9 100644
---- a/hw/core/sysbus.c
-+++ b/hw/core/sysbus.c
-@@ -321,6 +321,14 @@ BusState *sysbus_get_default(void)
-     return main_system_bus;
+diff --git a/hw/display/ramfb-standalone.c b/hw/display/ramfb-standalone.c
+index 6c35028965d..1be106b57f2 100644
+--- a/hw/display/ramfb-standalone.c
++++ b/hw/display/ramfb-standalone.c
+@@ -72,13 +72,12 @@ static void ramfb_class_initfn(ObjectClass *klass, void *data)
+     dc->vmsd = &ramfb_dev_vmstate;
+     dc->realize = ramfb_realizefn;
+     dc->desc = "ram framebuffer standalone device";
+-    dc->user_creatable = true;
+     device_class_set_props(dc, ramfb_properties);
  }
  
-+static void dynamic_sysbus_device_class_init(ObjectClass *klass, void *data)
-+{
-+    DeviceClass *k = DEVICE_CLASS(klass);
-+
-+    k->user_creatable = true;
-+    k->hotpluggable = false;
-+}
-+
- static const TypeInfo sysbus_types[] = {
-     {
-         .name           = TYPE_SYSTEM_BUS,
-@@ -336,6 +344,12 @@ static const TypeInfo sysbus_types[] = {
-         .class_size     = sizeof(SysBusDeviceClass),
-         .class_init     = sysbus_device_class_init,
-     },
-+    {
-+        .name           = TYPE_DYNAMIC_SYS_BUS_DEVICE,
-+        .parent         = TYPE_SYS_BUS_DEVICE,
-+        .class_init     = dynamic_sysbus_device_class_init,
-+        .abstract       = true,
-+    }
+ static const TypeInfo ramfb_info = {
+     .name          = TYPE_RAMFB_DEVICE,
+-    .parent        = TYPE_SYS_BUS_DEVICE,
++    .parent        = TYPE_DYNAMIC_SYS_BUS_DEVICE,
+     .instance_size = sizeof(RAMFBStandaloneState),
+     .class_init    = ramfb_class_initfn,
  };
- 
- DEFINE_TYPES(sysbus_types)
 -- 
 2.47.1
 
