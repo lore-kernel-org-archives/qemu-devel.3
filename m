@@ -4,82 +4,97 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id F3242C0218C
-	for <qemu-devel@archiver.kernel.org>; Sat, 25 Jan 2025 17:56:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 892EDC0218D
+	for <qemu-devel@archiver.kernel.org>; Sat, 25 Jan 2025 18:14:28 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tbkO4-0001O7-Ed; Sat, 25 Jan 2025 12:56:04 -0500
+	id 1tbkfa-0008Au-1G; Sat, 25 Jan 2025 13:14:12 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1tbkO1-0001Ng-OI
- for qemu-devel@nongnu.org; Sat, 25 Jan 2025 12:56:01 -0500
-Received: from mail-pl1-x62f.google.com ([2607:f8b0:4864:20::62f])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tbkfR-0008AA-KT
+ for qemu-devel@nongnu.org; Sat, 25 Jan 2025 13:14:01 -0500
+Received: from mail-wm1-x332.google.com ([2a00:1450:4864:20::332])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1tbkO0-0001ZD-9I
- for qemu-devel@nongnu.org; Sat, 25 Jan 2025 12:56:01 -0500
-Received: by mail-pl1-x62f.google.com with SMTP id
- d9443c01a7336-218c8aca5f1so74675905ad.0
- for <qemu-devel@nongnu.org>; Sat, 25 Jan 2025 09:55:59 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tbkfP-0004DF-G7
+ for qemu-devel@nongnu.org; Sat, 25 Jan 2025 13:14:01 -0500
+Received: by mail-wm1-x332.google.com with SMTP id
+ 5b1f17b1804b1-435f8f29f8aso22053825e9.2
+ for <qemu-devel@nongnu.org>; Sat, 25 Jan 2025 10:13:57 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1737827758; x=1738432558; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:to:subject:user-agent:mime-version:date:message-id:from
- :to:cc:subject:date:message-id:reply-to;
- bh=2Wm4E91HwVfdcP5HjbFE/OCbHsqxHFYJpSIpK5ULfc4=;
- b=Giat6f598laNYx+H8mNozUlM4J1+VCep021EMVq5meGe3h3PL1484tkkG3Q+aO/z+u
- AK/B5pT2Og0dNCjcMqZEj6WzU8gCO0QLuSHzV/d+n+Kf1O+2OU4K+uCBOpshYGLPxKXY
- DF/HyyVkHh91zaZc7roIE3lC1O1wf19prMn8G52DN3zDfoD/n72jdmYENHnJS380nuDC
- UnvyINkrXAa1J5G+z+Vke2izz39a3uz0vq7p+mgJJSwsReXc/AW7fIOOXjVmO0FQ14lf
- U/LvOBvCW5ysV8mWp11RNikLpEHnTJB43U5Zwj+hRscZFcho5G+CllWmoDAJT7qVCTuv
- Ex3g==
+ d=linaro.org; s=google; t=1737828836; x=1738433636; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=+D9ecSNssEoyInsTWPhPYbcbkHeV5ELbKuxuFIHXnAU=;
+ b=rU78N+B3vpdOV7osTi+XpxaA6bjXEzDEr/je2nB74xXl3TnF5P2XtlZQ4TBO8QFtfA
+ 31YpqYzjmnGqCCOUhgA61ZoBcx3gX+7lyJ8UptDJx619CySHHOu11bOn3u1HZQkrpJJd
+ B0UzOrjJpjVZ3Q+mq5MKJoX7GdTTATLhob5SghfVersmcPGtf+bhmTWGoqWH3U7y7hVh
+ sNWcEa2IahFd9HYckNqPt17Peb92NMfvQrLo4NjczElYJwjjJ7EGzX/ZK8RImgyvN/28
+ BUs3XsE/f9I4fbQZGcrIxECUj/cc+TAdzkHDNTjtGxQA6Q5uBBmiXFg+aN0BHuJKqcPH
+ 80hQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1737827758; x=1738432558;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=2Wm4E91HwVfdcP5HjbFE/OCbHsqxHFYJpSIpK5ULfc4=;
- b=u0EAdMz3+FaJmbzOUutsTnk/HH0bFvp0NseZW3ClLk1oKC19iXKFlMLmkyVmxuZ+N6
- cyixgiFpd8rccjssD8LxrSNShSq+4RJSWHRK4vpK2z2gKQzI+5JxKC6N/Yg5lhXC2tqr
- pvgU4fzcj/KI83Fl8DkHHVJ+S6VJIgX7j+nLyrJWtvoOVh5+NG46frVR1ZFUHJcVwSEM
- 1mjAAF53ITIGFTULIXvN/UWriZAl2xxW3rRAJMX6rBbNBdnQ8Hx5zISwRaPxecGcxciX
- c7+Rwamo4JZFCQvHiaXmjnvBntmnu/tJXY+PTSUrM6FLODNYSGr2SdHXGkydk1EUzAri
- fesQ==
-X-Gm-Message-State: AOJu0Yx5jOL18tpsMCLlpnLUa9DRsAqJLA1yfZZho6IzubZtISsX2NRF
- dUr0z1FZs+YHBxuA7NBrVij2zZGOnhw7HF25KLy2Oiz2cy/xIwcgxfmYaYOHNd1+lwnL6qCAqey
- i
-X-Gm-Gg: ASbGncuWvKOiQ1J5PPQxdMR66Zi8xZ/lHvlabU9TCohMG/2UUdOF6bbRdm79pA8Gcw2
- vIT+1CUIcnB2zuOakcccaB/eMkitLfAWU8vzZm9XbA/WZZ4wOnfWxJIeVviqKul40uK4vyMVWQG
- 2bbIkrw8CJ5wXHCFtA41oi6m9GBZOZFNs4W6sci59I4JD3pthjjlVfgoZLHQGU+W7kTsmUP6RTW
- 10SQKL1OP4DEItBlAfx8Os9yNJrB70UwwJcEx/74jY/0Ueo835zpwwb0AE8ku/Vta7RbjOhqTeZ
- YdwNkhYdY0V2jZo1kclojg==
-X-Google-Smtp-Source: AGHT+IGJMqhsP/J4wFbfx+9Pt7HocD4CeP1zr7QH+q3wNPOkLRabx40E6dBvnm5aOWhUsujh6oWlpg==
-X-Received: by 2002:a05:6a20:a105:b0:1e1:b153:4dc9 with SMTP id
- adf61e73a8af0-1eb214983b7mr52966169637.19.1737827758697; 
- Sat, 25 Jan 2025 09:55:58 -0800 (PST)
-Received: from [192.168.74.94] ([50.200.230.211])
- by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-72f8a6d22e4sm3986772b3a.83.2025.01.25.09.55.58
- for <qemu-devel@nongnu.org>
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Sat, 25 Jan 2025 09:55:58 -0800 (PST)
-Message-ID: <12b52f8b-f7a5-4bd4-b735-395a3f33b88c@linaro.org>
-Date: Sat, 25 Jan 2025 09:55:56 -0800
-MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 39/76] target/arm: Handle FPCR.NEP for BFCVT scalar
+ d=1e100.net; s=20230601; t=1737828836; x=1738433636;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=+D9ecSNssEoyInsTWPhPYbcbkHeV5ELbKuxuFIHXnAU=;
+ b=Y1mR4txbkgbOmJK8NBcfU96JAoB7d9evHLucEPWzWm+hyYnzAiMVujbzqLRpCHO4cX
+ DYli3U5dTpRdbIdNga12PnJK+TSixQul3mt75FjAH6f0pxDfxorShzrQO4zQ2xD/Dmoj
+ KzUKj8N7k8V6ejn9FdePa5KanEmGwyGzOscrlo5Vp9pr621Nl0a9//ofUjCboEkrvUQz
+ 6YGiITRy1oite8LEeNXnste1xI5L4JHGVr29DYaHC4xMxWP4vsPnGuUbXqNwrJa07+eF
+ LKOu6vWYim8lMDD1sa+HHFz1wyzJ9bX5bcS0tpvsQENA1i+hJSA3BTzW3bXFYvaF8Bm6
+ wfUw==
+X-Gm-Message-State: AOJu0Ywl7WhmbX9tW3Y14SkmhWzruhTYuOc/Omx8BNj/LDr/sBW0aw+0
+ tRMjqLDJmrOPFTqQvtwjPhjs3VQi/8yULOngE42S6dNRNBjX4ykRmWBrELtvTsAcaxtNIcmoMsA
+ Adjo=
+X-Gm-Gg: ASbGncs1rGCfL5zi8zIrs/ZFzitnw8TuxFGk8xNL4/03VuTMau4JCFR+sp7/LFDUbvu
+ ppNmBEWZkw8tNext834lpdMMGCk74RKsw8fDSbOLQTZXCkZrQDPpoBvP2ATbrIFGgBxXst3KV96
+ cMTdJ9td6/fbCiqDLda2UxPqcG1m5jArf3c2IF3Xh4eKWuKHgqW1hp4P0+Rf3E2H2QU1ryMAmrX
+ AaJlns2pJwApD8Rg09sNsWXdZjERZ0CNECk/ezx4ve8s4bJg6nngtYcV3XlcUmoF6aNYeDFRd23
+ R6ddtw3HkuzrOIRTn0BkaYADHa8TBkAyAhk/U9NmDgzBrt7bWYpckRLltH5U
+X-Google-Smtp-Source: AGHT+IH3gG9oDbH+Yt++6e9axdywvxazaykwi7sr/Zo0cY2/uHyHOw51lxlnycmePra8xEH0EQ/Sbw==
+X-Received: by 2002:a05:600c:3b94:b0:434:9934:575 with SMTP id
+ 5b1f17b1804b1-438913e02f8mr395787785e9.16.1737828836350; 
+ Sat, 25 Jan 2025 10:13:56 -0800 (PST)
+Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
+ [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-438bd4c75c0sm68201815e9.31.2025.01.25.10.13.54
+ (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
+ Sat, 25 Jan 2025 10:13:55 -0800 (PST)
+From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
-References: <20250124162836.2332150-1-peter.maydell@linaro.org>
- <20250124162836.2332150-40-peter.maydell@linaro.org>
-Content-Language: en-US
-From: Richard Henderson <richard.henderson@linaro.org>
-In-Reply-To: <20250124162836.2332150-40-peter.maydell@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::62f;
- envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x62f.google.com
+Cc: Yi Liu <yi.l.liu@intel.com>, Markus Armbruster <armbru@redhat.com>,
+ Eduardo Habkost <eduardo@habkost.net>,
+ Anthony PERARD <anthony@xenproject.org>,
+ Gustavo Romero <gustavo.romero@linaro.org>,
+ Jason Wang <jasowang@redhat.com>, qemu-ppc@nongnu.org,
+ "Michael S. Tsirkin" <mst@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
+ Alexander Graf <graf@amazon.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Stefan Berger <stefanb@linux.vnet.ibm.com>,
+ Bernhard Beschow <shentey@gmail.com>,
+ Stefano Stabellini <sstabellini@kernel.org>,
+ Gerd Hoffmann <kraxel@redhat.com>,
+ =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
+ "Edgar E. Iglesias" <edgar.iglesias@gmail.com>,
+ xen-devel@lists.xenproject.org,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ Alex Williamson <alex.williamson@redhat.com>, Paul Durrant <paul@xen.org>,
+ =?UTF-8?q?Cl=C3=A9ment=20Mathieu--Drif?= <clement.mathieu--drif@eviden.com>,
+ =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Subject: [PATCH 2/9] hw/sysbus: Declare QOM types using DEFINE_TYPES() macro
+Date: Sat, 25 Jan 2025 19:13:36 +0100
+Message-ID: <20250125181343.59151-3-philmd@linaro.org>
+X-Mailer: git-send-email 2.47.1
+In-Reply-To: <20250125181343.59151-1-philmd@linaro.org>
+References: <20250125181343.59151-1-philmd@linaro.org>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::332;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x332.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -102,21 +117,79 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 1/24/25 08:27, Peter Maydell wrote:
-> Currently we implement BFCVT scalar via do_fp1_scalar().  This works
-> even though BFCVT is a narrowing operation from 32 to 16 bits,
-> because we can use write_fp_sreg() for float16. However, FPCR.NEP
-> support requires that we use write_fp_hreg_merging() for float16
-> outputs, so we can't continue to borrow the non-narrowing
-> do_fp1_scalar() function for this. Split out trans_BFCVT_s()
-> into its own implementation that honours FPCR.NEP.
-> 
-> Signed-off-by: Peter Maydell<peter.maydell@linaro.org>
-> ---
->   target/arm/tcg/translate-a64.c | 25 +++++++++++++++++++++----
->   1 file changed, 21 insertions(+), 4 deletions(-)
+When multiple QOM types are registered in the same file,
+it is simpler to use the the DEFINE_TYPES() macro. In
+particular because type array declared with such macro
+are easier to review.
 
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+---
+ hw/core/sysbus.c | 39 +++++++++++++++++----------------------
+ 1 file changed, 17 insertions(+), 22 deletions(-)
 
-r~
+diff --git a/hw/core/sysbus.c b/hw/core/sysbus.c
+index f713bbfe04f..306f98406c0 100644
+--- a/hw/core/sysbus.c
++++ b/hw/core/sysbus.c
+@@ -80,13 +80,6 @@ static void system_bus_class_init(ObjectClass *klass, void *data)
+     k->get_fw_dev_path = sysbus_get_fw_dev_path;
+ }
+ 
+-static const TypeInfo system_bus_info = {
+-    .name = TYPE_SYSTEM_BUS,
+-    .parent = TYPE_BUS,
+-    .instance_size = sizeof(BusState),
+-    .class_init = system_bus_class_init,
+-};
+-
+ /* Check whether an IRQ source exists */
+ bool sysbus_has_irq(SysBusDevice *dev, int n)
+ {
+@@ -306,15 +299,6 @@ static void sysbus_device_class_init(ObjectClass *klass, void *data)
+     k->user_creatable = false;
+ }
+ 
+-static const TypeInfo sysbus_device_type_info = {
+-    .name = TYPE_SYS_BUS_DEVICE,
+-    .parent = TYPE_DEVICE,
+-    .instance_size = sizeof(SysBusDevice),
+-    .abstract = true,
+-    .class_size = sizeof(SysBusDeviceClass),
+-    .class_init = sysbus_device_class_init,
+-};
+-
+ static BusState *main_system_bus;
+ 
+ static void main_system_bus_create(void)
+@@ -337,10 +321,21 @@ BusState *sysbus_get_default(void)
+     return main_system_bus;
+ }
+ 
+-static void sysbus_register_types(void)
+-{
+-    type_register_static(&system_bus_info);
+-    type_register_static(&sysbus_device_type_info);
+-}
++static const TypeInfo sysbus_types[] = {
++    {
++        .name           = TYPE_SYSTEM_BUS,
++        .parent         = TYPE_BUS,
++        .instance_size  = sizeof(BusState),
++        .class_init     = system_bus_class_init,
++    },
++    {
++        .name           = TYPE_SYS_BUS_DEVICE,
++        .parent         = TYPE_DEVICE,
++        .instance_size  = sizeof(SysBusDevice),
++        .abstract       = true,
++        .class_size     = sizeof(SysBusDeviceClass),
++        .class_init     = sysbus_device_class_init,
++    },
++};
+ 
+-type_init(sysbus_register_types)
++DEFINE_TYPES(sysbus_types)
+-- 
+2.47.1
+
 
