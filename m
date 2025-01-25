@@ -4,80 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9F661C0218C
-	for <qemu-devel@archiver.kernel.org>; Sat, 25 Jan 2025 17:05:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DBD53C0218D
+	for <qemu-devel@archiver.kernel.org>; Sat, 25 Jan 2025 17:05:57 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tbjZb-0001e0-FJ; Sat, 25 Jan 2025 12:03:59 -0500
+	id 1tbjXn-00078O-Q9; Sat, 25 Jan 2025 12:02:04 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tbjYn-0000ft-Ep
- for qemu-devel@nongnu.org; Sat, 25 Jan 2025 12:03:12 -0500
-Received: from mail-wr1-x434.google.com ([2a00:1450:4864:20::434])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tbjXU-0006Xn-Fn
+ for qemu-devel@nongnu.org; Sat, 25 Jan 2025 12:01:50 -0500
+Received: from mail-wr1-x431.google.com ([2a00:1450:4864:20::431])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tbjYl-0000b5-QA
- for qemu-devel@nongnu.org; Sat, 25 Jan 2025 12:03:05 -0500
-Received: by mail-wr1-x434.google.com with SMTP id
- ffacd0b85a97d-385ef8b64b3so2665965f8f.0
- for <qemu-devel@nongnu.org>; Sat, 25 Jan 2025 09:03:02 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tbjXS-0000P0-Sb
+ for qemu-devel@nongnu.org; Sat, 25 Jan 2025 12:01:44 -0500
+Received: by mail-wr1-x431.google.com with SMTP id
+ ffacd0b85a97d-38a25d4b9d4so1671438f8f.0
+ for <qemu-devel@nongnu.org>; Sat, 25 Jan 2025 09:01:42 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1737824581; x=1738429381; darn=nongnu.org;
+ d=linaro.org; s=google; t=1737824501; x=1738429301; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=uvyBSQXbzbGPZHAiCl001qEBhi2s4blv2wiDqu84MNg=;
- b=HOm2qYCiAxmpTOwVpfwkws28aLajeLESxXpkP/xqbG3BXEl13EZy5KPncH+onofTUC
- 0LROrj9mZc88yj0I/tDGLoQf/sFuENaiMeoKtcbcclzfGYFDzz7pH56VAU11VY6IiH+B
- VwX7QraChTqSt2/x27eC/BF3XfLr4oiZcjuzG7pQZYr6UFRsjkKpHGQRHNvSb0AS0Dqc
- 1e42A8QNiWeOD/iqIZW2ZG2YyzTM0ZdZEQoSsd10wWnxfb5kmPSGK6JXAgYucvxlKaXa
- ReXPLerK83TtXpG0SvwMjWBUOaxXwyrs3KYcYypbDWc6AN9Dv1bqD0NOkTKmCMx6Xv9g
- z72Q==
+ bh=1YoTq/Kw8BFNJbd5udCtM6rehNhaZvqVSckhQj9fm84=;
+ b=wZy8Owq52mP0TKE0CQlGHjgpraJ2htcoHyJPzXOfMa0W0zyRRN4pxX/NAVDsdeMJ56
+ 0JIH5aMiRyNjH9EU1CsjwdFuEcQuQ4w17wSM49S3IcbLkhd8jxKuv7t0yDDLJB3PCpmP
+ 2EEaU8TXlpfMm/DKbRat7tXra2HWpWZjeiWgW6mt2kFZexBAiBh7F6JjO9kz+rEykTX8
+ 6sNjs0y7ECLV/Ak9paw9FFpvq6iC2g0otCszUVNIav/6pMCiMyLyCCaBOzRgnPF3G6al
+ M5JR3Xv0Hwtn5JrGOBLL+cltH0keQnyh9t936gWbL68KJb8yDBsv9xdzrvDCMLQGz8sM
+ 8VkQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1737824581; x=1738429381;
+ d=1e100.net; s=20230601; t=1737824501; x=1738429301;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=uvyBSQXbzbGPZHAiCl001qEBhi2s4blv2wiDqu84MNg=;
- b=h3eL21V7uXJvGMIx9D3Mb+NIyKIq0x3T2DK/lscvmsvKvHB7/D6DwCbt2d2HOJYsKM
- 1yxavG1UUVUirPWyPIEQNhsYDIrbIBIXdgTPXM2rvDqcVbZHNu1OEyfpz1dWxuJwVn9C
- M/oJnHfV8c/GZmDiXbMWfIXi4x7JSpGGe2CYdEsNdmzUDthslaUQe8aJmE0Ho5OX9Ifc
- TmJ4FoAmyooS+pC7B5jqLnBN5AKwvZhFtI73eI8fcZe4ajHX0bXgr3JmAyuoP5+iYQaa
- dERXV5cWK6Bu6HF2AdtR0sQDRRhmQlPEIwgfY/Te3HwJAp1l60oKQNBSvqooVlFxVeD0
- 7/eg==
-X-Gm-Message-State: AOJu0Yy7LLbGtymeELA4dJbDGnTqMH5huL6T/gaIoS8mrpaiEMEgK/AU
- nPj0g/zR5uXw82Eccnar8sYQSvpzkbMaDP0NEnY1QsC5uJPrNSWwglL+N1/ikhm1+xKCVmG6g8H
- NAhI=
-X-Gm-Gg: ASbGncvJHwg4OByCwqsLZ2zuYLg/wLR1KC6lAnzu3XRlgCCltnVAJbW8gi5/HdsfM76
- 6q9hcce4Mqazy3ZJmZXIvztVz4rHLxVnwvGyAtK585nhkiynecabQdmQQhz16budzgJUuIFuS73
- 54Gc7a3m46J74iVyPDO+xZcfj+f9n2Ja9P5RR4NlLS1pnQfEaSz9GfzqeTT8H1uWEWzf5CCogG8
- bE4V+cUYPmSGHqVgs4FhJGE4qKWSZB88PLoNVTejd1m4b9A0/7WmnztndJHDDckbWi9Xtj4XUvt
- ubEozWC3mfL6z4ESs600oTjd+8XjEFNe6o6bcrU9J26DlQVOXYgRgUY=
-X-Google-Smtp-Source: AGHT+IERcn3a2w2VcHtqbWpaueeYYBpRN2wC2JxtowLbxUdYbHpWrwHilojTmjoFNKVopT2UJL8jzA==
-X-Received: by 2002:a05:6000:1548:b0:38a:624b:e7fe with SMTP id
- ffacd0b85a97d-38bf5655d9fmr28413797f8f.7.1737824581494; 
- Sat, 25 Jan 2025 09:03:01 -0800 (PST)
+ bh=1YoTq/Kw8BFNJbd5udCtM6rehNhaZvqVSckhQj9fm84=;
+ b=mpfTJ/rNl21/V5rU1ZPvPfoaVrHcK2JEScIKJwWYbkwWQk6S60fJSq7T/vA2vpKF8u
+ DXf0pygaV9HNcJ+fJfEcgI9LTkrUV1OLUdZZ/fBG+9xLqQKh7Scba7dxz+Zg6Afma3eV
+ 1wf7D/IF9WWWeFfuZ/BwHi09T7dDmN3cm2DyhXocr/Xvjf3Vzo4DPQhMZoIJdVq6QF9t
+ dSVToCOkGEhPJZSxv70hkIa3JPTmx7iBGebJMysit9TKtvk/ZJ1pCkR3HvvzqJJ539+q
+ 7pTK8T6fsKpdVxFnhHHclGL3kXTqnhlHFVU8wisElX74gTF/a7E4NitAYjRdkDFP2V0R
+ Z1zg==
+X-Gm-Message-State: AOJu0YxHCCmd79L4KylI6xDDSY/Jmuunim/Ty22rIyGw/Of6y03Uk9dk
+ kYrp+UkluKVVhfd9rLL8G/ZvtIl1r8iN5rXCVN8hHQWxCHrU5AlwdKVoHZcxUdgk38iPBRn9zXg
+ URug=
+X-Gm-Gg: ASbGncslgkijGVYcEb2AedeSLqx30a/fvRLG4fZQvw7HHmoxxvPtCufRBLv1b6/05CX
+ uCPwmefqQ612QHf39r83R3hFNf2wi8b0QWeU1x5imIiW6LScWJDYnzuQDVSRRzyw8LzE2OfnslT
+ YBZUHVJbyfe6D0Ys+QI7fRfA7ZHH7NNsElx4XVSOcLsaecCS8iYIpI7MNz7M26HBSsJyrCXCWmG
+ gJy9JIML298eUYFxfO78J/1pPozZl2e1ty0VrNPnJsGJhYNfTmWNvsgmeOW/SnnwfH0Tf09Tzwt
+ k+Rh73vJm5R2Lzl8bX10jsBhtkDxIiHq+8tXuZxy8HTvZZxDT0IOiac=
+X-Google-Smtp-Source: AGHT+IEWxtSw0zE9JkzzSMQx9HpaTSX6TtJa/alKuGXiX88iK3wWmB/adB9VTe3FozpMVzw4g+eGKw==
+X-Received: by 2002:a05:6000:1faa:b0:386:1cd3:8a0e with SMTP id
+ ffacd0b85a97d-38bf57c034emr37672164f8f.48.1737824500973; 
+ Sat, 25 Jan 2025 09:01:40 -0800 (PST)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-38c2a188c33sm6106598f8f.53.2025.01.25.09.03.00
+ ffacd0b85a97d-38c2a1bad92sm5991266f8f.61.2025.01.25.09.01.40
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Sat, 25 Jan 2025 09:03:00 -0800 (PST)
+ Sat, 25 Jan 2025 09:01:40 -0800 (PST)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Richard Henderson <richard.henderson@linaro.org>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PATCH v3 19/24] target/s390x: Move has_work() from CPUClass to
- SysemuCPUOps
-Date: Sat, 25 Jan 2025 18:01:20 +0100
-Message-ID: <20250125170125.32855-20-philmd@linaro.org>
+Subject: [PATCH v3 03/24] cpus: Introduce SysemuCPUOps::has_work() handler
+Date: Sat, 25 Jan 2025 18:01:04 +0100
+Message-ID: <20250125170125.32855-4-philmd@linaro.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20250125170125.32855-1-philmd@linaro.org>
 References: <20250125170125.32855-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::434;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x434.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::431;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x431.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -100,161 +99,60 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Move has_work() from CPUClass to SysemuCPUOps, move
-s390_cpu_has_work() to cpu-system.c so it is only build
-for system emulation binaries, restrict functions not
-used anymore on user emulation in interrupt.c.
+SysemuCPUOps::has_work() is similar to CPUClass::has_work(),
+but only exposed on system emulation.
 
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 ---
- target/s390x/s390x-internal.h |  3 +++
- target/s390x/cpu-system.c     | 18 ++++++++++++++++++
- target/s390x/cpu.c            | 18 ------------------
- target/s390x/interrupt.c      |  8 ++------
- 4 files changed, 23 insertions(+), 24 deletions(-)
+ include/hw/core/sysemu-cpu-ops.h | 4 ++++
+ include/hw/core/tcg-cpu-ops.h    | 2 +-
+ hw/core/cpu-system.c             | 4 ++++
+ 3 files changed, 9 insertions(+), 1 deletion(-)
 
-diff --git a/target/s390x/s390x-internal.h b/target/s390x/s390x-internal.h
-index 6e2c98de97a..a4ba6227ab4 100644
---- a/target/s390x/s390x-internal.h
-+++ b/target/s390x/s390x-internal.h
-@@ -245,6 +245,7 @@ bool s390_cpu_system_realize(DeviceState *dev, Error **errp);
- void s390_cpu_finalize(Object *obj);
- void s390_cpu_system_class_init(CPUClass *cc);
- void s390_cpu_machine_reset_cb(void *opaque);
-+bool s390_cpu_has_work(CPUState *cs);
+diff --git a/include/hw/core/sysemu-cpu-ops.h b/include/hw/core/sysemu-cpu-ops.h
+index 0df5b058f50..dee8a62ca98 100644
+--- a/include/hw/core/sysemu-cpu-ops.h
++++ b/include/hw/core/sysemu-cpu-ops.h
+@@ -16,6 +16,10 @@
+  * struct SysemuCPUOps: System operations specific to a CPU class
+  */
+ typedef struct SysemuCPUOps {
++    /**
++     * @has_work: Callback for checking if there is work to do.
++     */
++    bool (*has_work)(CPUState *cpu);
+     /**
+      * @get_memory_mapping: Callback for obtaining the memory mappings.
+      */
+diff --git a/include/hw/core/tcg-cpu-ops.h b/include/hw/core/tcg-cpu-ops.h
+index 2e3f1690f12..f60e5303f21 100644
+--- a/include/hw/core/tcg-cpu-ops.h
++++ b/include/hw/core/tcg-cpu-ops.h
+@@ -141,7 +141,7 @@ struct TCGCPUOps {
+      *
+      * This method must be provided. If the target does not need to
+      * do anything special for halt, the same function used for its
+-     * CPUClass::has_work method can be used here, as they have the
++     * SysemuCPUOps::has_work method can be used here, as they have the
+      * same function signature.
+      */
+     bool (*cpu_exec_halt)(CPUState *cpu);
+diff --git a/hw/core/cpu-system.c b/hw/core/cpu-system.c
+index 16d5efee12d..7b16bda2250 100644
+--- a/hw/core/cpu-system.c
++++ b/hw/core/cpu-system.c
+@@ -25,6 +25,10 @@
  
- #else
- static inline unsigned int s390_cpu_halt(S390CPU *cpu)
-@@ -341,6 +342,7 @@ void cpu_unmap_lowcore(LowCore *lowcore);
- 
- /* interrupt.c */
- void trigger_pgm_exception(CPUS390XState *env, uint32_t code);
-+#ifndef CONFIG_USER_ONLY
- void cpu_inject_clock_comparator(S390CPU *cpu);
- void cpu_inject_cpu_timer(S390CPU *cpu);
- void cpu_inject_emergency_signal(S390CPU *cpu, uint16_t src_cpu_addr);
-@@ -353,6 +355,7 @@ bool s390_cpu_has_restart_int(S390CPU *cpu);
- bool s390_cpu_has_stop_int(S390CPU *cpu);
- void cpu_inject_restart(S390CPU *cpu);
- void cpu_inject_stop(S390CPU *cpu);
-+#endif /* CONFIG_USER_ONLY */
- 
- 
- /* ioinst.c */
-diff --git a/target/s390x/cpu-system.c b/target/s390x/cpu-system.c
-index e9f8e7cc72f..9b380e343c2 100644
---- a/target/s390x/cpu-system.c
-+++ b/target/s390x/cpu-system.c
-@@ -39,6 +39,23 @@
- #include "system/tcg.h"
- #include "hw/core/sysemu-cpu-ops.h"
- 
-+bool s390_cpu_has_work(CPUState *cs)
-+{
-+    S390CPU *cpu = S390_CPU(cs);
-+
-+    /* STOPPED cpus can never wake up */
-+    if (s390_cpu_get_state(cpu) != S390_CPU_STATE_LOAD &&
-+        s390_cpu_get_state(cpu) != S390_CPU_STATE_OPERATING) {
-+        return false;
+ bool cpu_has_work(CPUState *cpu)
+ {
++    if (cpu->cc->sysemu_ops->has_work) {
++        return cpu->cc->sysemu_ops->has_work(cpu);
 +    }
 +
-+    if (!(cs->interrupt_request & CPU_INTERRUPT_HARD)) {
-+        return false;
-+    }
-+
-+    return s390_cpu_has_int(cpu);
-+}
-+
- /* S390CPUClass::load_normal() */
- static void s390_cpu_load_normal(CPUState *s)
- {
-@@ -158,6 +175,7 @@ void s390_cpu_finalize(Object *obj)
+     g_assert(cpu->cc->has_work);
+     return cpu->cc->has_work(cpu);
  }
- 
- static const struct SysemuCPUOps s390_sysemu_ops = {
-+    .has_work = s390_cpu_has_work,
-     .get_phys_page_debug = s390_cpu_get_phys_page_debug,
-     .get_crash_info = s390_cpu_get_crash_info,
-     .write_elf64_note = s390_cpu_write_elf64_note,
-diff --git a/target/s390x/cpu.c b/target/s390x/cpu.c
-index 97d41c23de7..eb2c6650989 100644
---- a/target/s390x/cpu.c
-+++ b/target/s390x/cpu.c
-@@ -126,23 +126,6 @@ static vaddr s390_cpu_get_pc(CPUState *cs)
-     return cpu->env.psw.addr;
- }
- 
--static bool s390_cpu_has_work(CPUState *cs)
--{
--    S390CPU *cpu = S390_CPU(cs);
--
--    /* STOPPED cpus can never wake up */
--    if (s390_cpu_get_state(cpu) != S390_CPU_STATE_LOAD &&
--        s390_cpu_get_state(cpu) != S390_CPU_STATE_OPERATING) {
--        return false;
--    }
--
--    if (!(cs->interrupt_request & CPU_INTERRUPT_HARD)) {
--        return false;
--    }
--
--    return s390_cpu_has_int(cpu);
--}
--
- static int s390x_cpu_mmu_index(CPUState *cs, bool ifetch)
- {
-     return s390x_env_mmu_index(cpu_env(cs), ifetch);
-@@ -394,7 +377,6 @@ static void s390_cpu_class_init(ObjectClass *oc, void *data)
-                                        &scc->parent_phases);
- 
-     cc->class_by_name = s390_cpu_class_by_name,
--    cc->has_work = s390_cpu_has_work;
-     cc->mmu_index = s390x_cpu_mmu_index;
-     cc->dump_state = s390_cpu_dump_state;
-     cc->query_cpu_fast = s390_query_cpu_fast;
-diff --git a/target/s390x/interrupt.c b/target/s390x/interrupt.c
-index d68d8955b1a..4ae6e2ddeaa 100644
---- a/target/s390x/interrupt.c
-+++ b/target/s390x/interrupt.c
-@@ -30,6 +30,7 @@ void trigger_pgm_exception(CPUS390XState *env, uint32_t code)
-     /* env->int_pgm_ilen is already set, or will be set during unwinding */
- }
- 
-+#if !defined(CONFIG_USER_ONLY)
- void s390_program_interrupt(CPUS390XState *env, uint32_t code, uintptr_t ra)
- {
-     if (kvm_enabled()) {
-@@ -41,7 +42,6 @@ void s390_program_interrupt(CPUS390XState *env, uint32_t code, uintptr_t ra)
-     }
- }
- 
--#if !defined(CONFIG_USER_ONLY)
- void cpu_inject_clock_comparator(S390CPU *cpu)
- {
-     CPUS390XState *env = &cpu->env;
-@@ -225,11 +225,9 @@ bool s390_cpu_has_stop_int(S390CPU *cpu)
- 
-     return env->pending_int & INTERRUPT_STOP;
- }
--#endif
- 
- bool s390_cpu_has_int(S390CPU *cpu)
- {
--#ifndef CONFIG_USER_ONLY
-     if (!tcg_enabled()) {
-         return false;
-     }
-@@ -238,7 +236,5 @@ bool s390_cpu_has_int(S390CPU *cpu)
-            s390_cpu_has_io_int(cpu) ||
-            s390_cpu_has_restart_int(cpu) ||
-            s390_cpu_has_stop_int(cpu);
--#else
--    return false;
--#endif
- }
-+#endif /* !CONFIG_USER_ONLY */
 -- 
 2.47.1
 
