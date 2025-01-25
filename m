@@ -4,89 +4,89 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7496DC3DA4A
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 72D57C0218D
 	for <qemu-devel@archiver.kernel.org>; Sat, 25 Jan 2025 16:59:52 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tbjV5-0003zr-Nm; Sat, 25 Jan 2025 11:59:15 -0500
+	id 1tbjVQ-00042Q-Hx; Sat, 25 Jan 2025 11:59:36 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tbjV2-0003yq-07
- for qemu-devel@nongnu.org; Sat, 25 Jan 2025 11:59:12 -0500
-Received: from mail-wm1-x32d.google.com ([2a00:1450:4864:20::32d])
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1tbjVM-00041s-6I
+ for qemu-devel@nongnu.org; Sat, 25 Jan 2025 11:59:32 -0500
+Received: from mail-pj1-x102a.google.com ([2607:f8b0:4864:20::102a])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tbjV0-0008PV-GF
- for qemu-devel@nongnu.org; Sat, 25 Jan 2025 11:59:11 -0500
-Received: by mail-wm1-x32d.google.com with SMTP id
- 5b1f17b1804b1-436326dcb1cso20720895e9.0
- for <qemu-devel@nongnu.org>; Sat, 25 Jan 2025 08:59:10 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1tbjVK-0008RV-Nw
+ for qemu-devel@nongnu.org; Sat, 25 Jan 2025 11:59:31 -0500
+Received: by mail-pj1-x102a.google.com with SMTP id
+ 98e67ed59e1d1-2ef6c56032eso4224409a91.2
+ for <qemu-devel@nongnu.org>; Sat, 25 Jan 2025 08:59:28 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1737824348; x=1738429148; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=jM1PDPP54X96ITEZl+g5K5x7jxsI9/uafvBKFxpKGD8=;
- b=q+06aIkCssHxL4rnWOj0GbETYXxCOi95h8R1Qtma/PBgtfOy7CzkWkpIs3Whbnu44B
- DwA+P4cX7XD8bEqECcPXrSnYgeihLJstk/sPKX2VcSNkoCwREr6C7cyRIJ1RKLH0bJQA
- Z+xlJOVqZuPZ/azEQ70F55mUDidIBiW/RQbl7bsPXhkhMYKTpkTrAsM71IQPSePrjvht
- QzosT5ut67ceHxy45fQFVTsqdgV3iJYlElK4UwY/WxtHY7aBTo44BleESzG8PQFNpIyy
- pZaf5WnnOiUz1zutNLkEUPdFwfibQE1VTVhQU+IC5Kl9tS0IDCJEGKE+5TtkqTSXNE08
- BjoQ==
+ d=linaro.org; s=google; t=1737824368; x=1738429168; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:to:subject:user-agent:mime-version:date:message-id:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=IJt+Ix/xlxl3gMVBEvF2fZ2IPm5nbtgWC1gpwRCvIwM=;
+ b=P294oYf4MqXExGghiHTSeHc45uuzWgZWWvLqJt7VwcXrV7W9htLhIv2CYwtxkCfsjz
+ qCxtunGm0BvX2koK97tHHUfmI4sZ9gJPVpvZdlG31G3xABat0WI22hqLjZ//SaqNyXsg
+ KPI95H0Afx64oKbK1dkQpZR7Dxv1xFukvHKmJ3Q0LRmG8gTDA5A7ZHSYMR06zaO/SKnz
+ ydY6BOtgVk6sSGj2Y8VzIkjFvbnV1ginyH7BCZBC0qSgF2uo76WX0UzCJXklDQ7Ced0r
+ HSA/fWSyI3D2bhh6A3yI3tCXWnwcvJsJg16lf4zRwk3p4fcVd0eljF8/XYmGfL1623Ki
+ GEow==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1737824348; x=1738429148;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=jM1PDPP54X96ITEZl+g5K5x7jxsI9/uafvBKFxpKGD8=;
- b=OJ4/nvz+7llVL1h3kakHa+kdoYGzgVMto+bzLP0MFatS2iguLU25egpgetusycDWYc
- 7E+Z+Z7S1QOxo2Y8O46LytPgkx5PWPVs4mtz6zt7Ec3ET49oeDzGk02nHHsdmDDQZhuk
- hga/LkhAenZd3VTtp2t441+mg7nwkddgnjQd0riSHEyp3MUju4/B3CFsA+gxlVEg+YFH
- FjMZU3yAM7PgHh5Gf74hOGaGOrvQMivHwYuIaIhaXeUvEP28ZjsEIN8pgmAywFg445gC
- VZXN1h11zYotBKgusnaTP3s7GR2K/nokQIkXD449Rw5G3cc1J4ME/oJd/EGt4V0xAvJf
- qvFQ==
-X-Gm-Message-State: AOJu0Yx5vU3fm7fXkn5lm9bfvM8s9JhO06a84wSTbD+sxvUgvHuc9DFE
- fMP0AyxwhhnEXRKz1O9nWF5VfmwjDY776FDn97QIm4ZqivGoAZJycR3iqj/ZVEg1AM0+g+nB0Mh
- UyVA=
-X-Gm-Gg: ASbGncsELMBS1qW0CadnXehGQXDg7v7Kw/e8La0BV+WbWn5Sjpl5iBgxzust6fBrn+J
- B1BCKt46xl1fUeJM+RM7VJCvURjmOmmzF1ms6QL3Mgvu96G7zo69JbLrEngIdx2vlY4UBHlXqfW
- vCdQhsisv44C27FH65+n1HkdG8kGWEjEAUDBUig308YTFdg0fLVih5+x+x7nKb+9ziJYVrWN9Gf
- 2UZI7Rc4UT4ipbzwBoCUD1qvromUnQcQ1wTYA3qaaU99UcGAU8M8Es3fIPeTBs5ijqqXayKV5Uy
- r1Wgu5eSuwyfTrR9E6TFlueB7qDsMKM4fAK0TKiCzxS9Keulkd60W8k=
-X-Google-Smtp-Source: AGHT+IEstb4RZCs9m6dWIM/YMoKVchpKZu+hmMSvyEt3TEhmfaGBpswIi44gipDf2veJAgKr/x79kQ==
-X-Received: by 2002:a05:600c:1f10:b0:434:ff9d:a370 with SMTP id
- 5b1f17b1804b1-438912d1d49mr340960205e9.0.1737824348113; 
- Sat, 25 Jan 2025 08:59:08 -0800 (PST)
-Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
- [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-438bd507c59sm66304325e9.17.2025.01.25.08.59.06
- (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Sat, 25 Jan 2025 08:59:06 -0800 (PST)
-From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-To: qemu-devel@nongnu.org
-Cc: =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
- qemu-rust@nongnu.org, Eduardo Habkost <eduardo@habkost.net>,
- Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,
- Paolo Bonzini <pbonzini@redhat.com>, Markus Armbruster <armbru@redhat.com>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PATCH 2/2] qom: Introduce class_post_init() handler
-Date: Sat, 25 Jan 2025 17:58:55 +0100
-Message-ID: <20250125165855.32168-3-philmd@linaro.org>
-X-Mailer: git-send-email 2.47.1
-In-Reply-To: <20250125165855.32168-1-philmd@linaro.org>
-References: <20250125165855.32168-1-philmd@linaro.org>
+ d=1e100.net; s=20230601; t=1737824368; x=1738429168;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=IJt+Ix/xlxl3gMVBEvF2fZ2IPm5nbtgWC1gpwRCvIwM=;
+ b=j5+iDFgMB3a0Tx6oFHfdhDnytgoMGcqopQQLRDbug+jiAySmaizuTuRPvk9yMx8Bf0
+ qPiPbwrexLztffARJKwi6lRLbCaLv1INbvEJF9Qv3BbkNKN0jC6TYL3gWBHLLxjEkGBK
+ pmOYWuRTwV5tibZR9/o8E2hLxZ3Nl0kxK4vT0HKwYD6lUycSFv0hFb1NghTxj/fmfezb
+ IhE28EsRh1WnfMxYHVtUDd+VMEw0lhYGz0HyxeGUUd7SOFReMF1NEmJO5bjpDKVFMSt4
+ FmDL7i37C/kGXTcHnNsMajCvh7Ngg4fxaucz9wvwXwwfOjcJSIKBDMRPbcc0QfUlMERG
+ qNeg==
+X-Gm-Message-State: AOJu0Yx7C603BpjsrxKEw6U1X5Q/zMUUPky8juj0XCj79xLqPMbuCLJ8
+ Rk9JGXZE+fmmlxQFmBkQkObtfvKe/vwVLNZp/RhAFXuqNBAHJaD4kt3UbOjcnjX4FJgucLatzcT
+ g
+X-Gm-Gg: ASbGncu9VPqx22y79mM8V7qIT4J6IqrB2iVMpCOEmKdLviDC8/0jyQM/0lGFn/HO62T
+ xWkkpisC2vP7ae2/U+h9wU8MK9xGdgKQqyiO5UqPSSPAnIPFAGtJcwth+GuKxtvFi4vCltsiNC5
+ DRMdJjh8b38pfwvd2s6pLdW7/lBG0Zv29TNL4NRbKcU/+H46D0E8ToR/b5txi5XlMhQT2gHsOgh
+ XsdI1rAfdj2TvXZdULpcTU/JvdXP3LYQRbn5xXkZAlQ1fFvhyC7tAOI1J2WaHJuro1fvWsApIaU
+ AkQfSe2BtwMcfmX5wue7YA==
+X-Google-Smtp-Source: AGHT+IFxciqihGdi40UnPdblKzE6CCp+mkXRBwmlfF7z/admFHVjevPAnIVCWeX0kRMQUmp/zNFUOQ==
+X-Received: by 2002:a17:90b:51c6:b0:2ee:fdf3:38dd with SMTP id
+ 98e67ed59e1d1-2f782d38454mr42708053a91.23.1737824367937; 
+ Sat, 25 Jan 2025 08:59:27 -0800 (PST)
+Received: from [192.168.74.94] ([50.200.230.211])
+ by smtp.gmail.com with ESMTPSA id
+ 98e67ed59e1d1-2f7ffaf80dfsm3793929a91.33.2025.01.25.08.59.27
+ for <qemu-devel@nongnu.org>
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Sat, 25 Jan 2025 08:59:27 -0800 (PST)
+Message-ID: <bcdc54c9-2842-4974-891f-1f2fe69081f5@linaro.org>
+Date: Sat, 25 Jan 2025 08:59:25 -0800
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32d;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x32d.google.com
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 25/76] target/arm: Remove redundant advsimd float16 helpers
+To: qemu-devel@nongnu.org
+References: <20250124162836.2332150-1-peter.maydell@linaro.org>
+ <20250124162836.2332150-26-peter.maydell@linaro.org>
+Content-Language: en-US
+From: Richard Henderson <richard.henderson@linaro.org>
+In-Reply-To: <20250124162836.2332150-26-peter.maydell@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::102a;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pj1-x102a.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=unavailable autolearn_force=no
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -102,103 +102,34 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Add a class_post_init() handler to be called by parents
-*after* child class_init() handler is called. This is
-necessary to have parent class check children properly
-set some values or mandatory handlers.
+On 1/24/25 08:27, Peter Maydell wrote:
+> The advsimd_addh etc helpers defined in helper-a64.c are identical to
+> the vfp_addh etc helpers defined in helper-vfp.c: both take two
+> float16 inputs (in a uint32_t type) plus a float_status* and are
+> simple wrappers around the softfloat float16_* functions.
+> 
+> (The duplication seems to be a historical accident: we added the
+> advsimd helpers in 2018 as part of the A64 implementation, and at
+> that time there was no f16 emulation in A32.  Then later we added the
+> A32 f16 handling by extending the existing VFP helper macros to
+> generate f16 versions as well as f32 and f64, and didn't realise we
+> could clean things up.)
+> 
+> Remove the now-unnecessary advsimd helpers and make the places that
+> generated calls to them use the vfp helpers instead. Many of the
+> helper functions were already unused.
+> 
+> (The remaining advsimd_ helpers are those which don't have vfp
+> versions.)
+> 
+> Signed-off-by: Peter Maydell<peter.maydell@linaro.org>
+> ---
+>   target/arm/tcg/helper-a64.h    |  8 --------
+>   target/arm/tcg/helper-a64.c    |  9 ---------
+>   target/arm/tcg/translate-a64.c | 16 ++++++++--------
+>   3 files changed, 8 insertions(+), 25 deletions(-)
 
-Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
----
- include/qom/object.h     |  7 +++++--
- qom/object.c             | 10 ++++++++++
- rust/qemu-api/src/qom.rs |  6 ++++++
- 3 files changed, 21 insertions(+), 2 deletions(-)
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 
-diff --git a/include/qom/object.h b/include/qom/object.h
-index 3776267e903..d1e437a81be 100644
---- a/include/qom/object.h
-+++ b/include/qom/object.h
-@@ -465,8 +465,10 @@ struct Object
-  *   has occurred to allow a class to set its default virtual method pointers.
-  *   This is also the function to use to override virtual methods from a parent
-  *   class.
-- * @class_data: Data to pass to the @class_init,
-- *   @class_base_init. This can be useful when building dynamic
-+ * @class_post_init: This function is called to finish initialization of
-+ *   a class, after all @class_init functions were called.
-+ * @class_data: Data to pass to the @class_base_init, @class_init, and
-+ *   @class_post_init. This can be useful when building dynamic
-  *   classes.
-  * @interfaces: The list of interfaces associated with this type.  This
-  *   should point to a static array that's terminated with a zero filled
-@@ -488,6 +490,7 @@ struct TypeInfo
- 
-     void (*class_base_init)(ObjectClass *klass, void *data);
-     void (*class_init)(ObjectClass *klass, void *data);
-+    void (*class_post_init)(ObjectClass *klass, void *data);
-     void *class_data;
- 
-     InterfaceInfo *interfaces;
-diff --git a/qom/object.c b/qom/object.c
-index 1a686dff5a0..694009f0c94 100644
---- a/qom/object.c
-+++ b/qom/object.c
-@@ -56,6 +56,7 @@ struct TypeImpl
- 
-     void (*class_base_init)(ObjectClass *klass, void *data);
-     void (*class_init)(ObjectClass *klass, void *data);
-+    void (*class_post_init)(ObjectClass *klass, void *data);
- 
-     void *class_data;
- 
-@@ -121,6 +122,7 @@ static TypeImpl *type_new(const TypeInfo *info)
- 
-     ti->class_base_init = info->class_base_init;
-     ti->class_init = info->class_init;
-+    ti->class_post_init = info->class_post_init;
-     ti->class_data = info->class_data;
- 
-     ti->instance_init = info->instance_init;
-@@ -416,6 +418,14 @@ static void type_initialize(TypeImpl *ti)
-     if (ti->class_init) {
-         ti->class_init(ti->class, ti->class_data);
-     }
-+
-+    parent = type_get_parent(ti);
-+    while (parent) {
-+        if (parent->class_post_init) {
-+            parent->class_post_init(ti->class, ti->class_data);
-+        }
-+        parent = type_get_parent(parent);
-+    }
- }
- 
- static void object_init_with_type(Object *obj, TypeImpl *ti)
-diff --git a/rust/qemu-api/src/qom.rs b/rust/qemu-api/src/qom.rs
-index 6033228e338..d95e90153a9 100644
---- a/rust/qemu-api/src/qom.rs
-+++ b/rust/qemu-api/src/qom.rs
-@@ -470,6 +470,11 @@ pub trait ObjectImpl: ObjectType + ClassInitImpl<Self::Class> {
-         unsafe extern "C" fn(klass: *mut ObjectClass, data: *mut c_void),
-     > = None;
- 
-+    /// Called to finish initialization of a class.
-+    const CLASS_POST_INIT: Option<
-+        unsafe extern "C" fn(klass: *mut ObjectClass, data: *mut c_void),
-+    > = None;
-+
-     const TYPE_INFO: TypeInfo = TypeInfo {
-         name: Self::TYPE_NAME.as_ptr(),
-         parent: Self::ParentType::TYPE_NAME.as_ptr(),
-@@ -488,6 +493,7 @@ pub trait ObjectImpl: ObjectType + ClassInitImpl<Self::Class> {
-         class_size: core::mem::size_of::<Self::Class>(),
-         class_base_init: Self::CLASS_BASE_INIT,
-         class_init: Some(rust_class_init::<Self>),
-+        class_post_init: Self::CLASS_POST_INIT,
-         class_data: core::ptr::null_mut(),
-         interfaces: core::ptr::null_mut(),
-     };
--- 
-2.47.1
-
+r~
 
