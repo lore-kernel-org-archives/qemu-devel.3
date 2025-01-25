@@ -4,83 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A27F5C0218D
-	for <qemu-devel@archiver.kernel.org>; Sat, 25 Jan 2025 15:08:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 14058C0218C
+	for <qemu-devel@archiver.kernel.org>; Sat, 25 Jan 2025 15:08:12 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tbhks-0006NZ-1D; Sat, 25 Jan 2025 10:07:27 -0500
+	id 1tbhlD-0006QD-7z; Sat, 25 Jan 2025 10:07:47 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1tbhkh-0006N9-N1
- for qemu-devel@nongnu.org; Sat, 25 Jan 2025 10:07:16 -0500
-Received: from mail-pl1-x636.google.com ([2607:f8b0:4864:20::636])
+ id 1tbhlB-0006Pb-88
+ for qemu-devel@nongnu.org; Sat, 25 Jan 2025 10:07:45 -0500
+Received: from mail-pl1-x62a.google.com ([2607:f8b0:4864:20::62a])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1tbhkf-0001YR-Ji
- for qemu-devel@nongnu.org; Sat, 25 Jan 2025 10:07:15 -0500
-Received: by mail-pl1-x636.google.com with SMTP id
- d9443c01a7336-21a7ed0155cso51607865ad.3
- for <qemu-devel@nongnu.org>; Sat, 25 Jan 2025 07:07:12 -0800 (PST)
+ id 1tbhl9-0001am-Sc
+ for qemu-devel@nongnu.org; Sat, 25 Jan 2025 10:07:45 -0500
+Received: by mail-pl1-x62a.google.com with SMTP id
+ d9443c01a7336-2164b662090so59510835ad.1
+ for <qemu-devel@nongnu.org>; Sat, 25 Jan 2025 07:07:43 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1737817632; x=1738422432; darn=nongnu.org;
+ d=linaro.org; s=google; t=1737817662; x=1738422462; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:to:subject:user-agent:mime-version:date:message-id:from
  :to:cc:subject:date:message-id:reply-to;
- bh=m1XQh8170hyGOxRLW1IngBQRIPG1Wrk38VXtpTKl63s=;
- b=J+d4yUOpujM1kJoHlUKpq2nN1A5ByjzlASGAQEnqT7uw9sJBOiBEJspzj1SlqyxKVH
- TCmW6R5+c15tpcCpEcT/FUBVpdDGkjjcJRR24ABui9hNShzO29sZ76pwjM1tMzzje9g3
- 43AUbZd4sl67kpwrFqRE6v1mR21zEyS4hipG0wAf8W8j+jniJlBGXYd6BmI48Ljo1qsC
- fOZ3qdscVGwHyhx50PwIpk98VueehYwBRx0AzfAC44H+NPSDE9MBUsjS35vaxL3tDSsA
- iAD/k1N5gQZ5DQR0jO2vCBRBVjF5aw/G++0pgtc40LJfrCl4JU67H08hZDm8pL/zjMqM
- /JrA==
+ bh=BySP3pfz9snQ6m2bJOR/ctgIuJR5xXCPvv9R4jg6Yy0=;
+ b=dUGEQV3sxC60C80v8mbVN9l0KYmOW/B23KVz5hrPqRikiT5K7LmiXer24b0jRlKLBz
+ byaxcVE/UsXS9zBmuDANYhe92o2vEloxGVo8c063VEc+th6xUKj9YqD2I3X1xr1JGtEh
+ VE+JFP983svHdefWiZcWS/Bj33v70D3XqifhOYzFQyy0tfxdYxtYxwIMmjo2/WgZ9do0
+ q3GUt5lAELAUBf+JgAzrFOPeIo3KfWIVCc9/s7lqndi8H1oqvfuFUpoGX6WOQq1oK+jY
+ XGJuxlO4fMS8P4uHnclbhM1vtzHImCi+Vg0ARMD5qrtcrPLhdIs9F2iaKK/E9Js0ASq5
+ f7Yw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1737817632; x=1738422432;
+ d=1e100.net; s=20230601; t=1737817662; x=1738422462;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=m1XQh8170hyGOxRLW1IngBQRIPG1Wrk38VXtpTKl63s=;
- b=jqilddfHTWJHobKhnBImCbsEgUZMqXPNPTgPay1ob5ix03icuZSlDfsOiXCbgEpxyP
- lcDM4pCeBK043u/pOoVkWyUlNyKWFq1X0rIvVX09RaIUsPATPAFRa6OUsC+fRtjBzSOL
- tsyWWlWGH+9JtWSNRmjKYJSFqElJqto8jMdLr0vMzqpl87L9eW6vKzT50qP4NfJMEyRp
- IbiLv+X+NKjlMF4WwQTFxjb4EE0GfuGqPsT7RTTku32zCAqeSJ7VnjeU5s+YOhJW+Qhy
- 4S/blcy0TivEc4rvZyGH00wPl90mUU7qMEgvMTK+GXKwstKoXWHl9CCHxWr6KI29rGhs
- iBfg==
-X-Gm-Message-State: AOJu0YzaEqnH4HQnc5ADT+//hswJM2FbwJHcXUFGmi1WmhjYTozTXgDL
- U7QeEhKD5FEMaW6cDYxC0uOJ6bdw+LsU74qc/9bmYbVEHLSf2cYZ4e1ywTSlMxuF9IC9J95n1B3
- w
-X-Gm-Gg: ASbGncskzBRhnxzXaskBhCB82H8tHy6tVyueHnkG3cwyaRQgg1B0p9U+LWJYBRtC+By
- 7UPoAQkX+EhBHEsK+3INVregxx+IsLS6C/HBDilSY+tTRL0Tw/xgWjugzVa0zR9IiGCE+g223fi
- CQTSTDKwIh97uZ8WS1qm7QwaoZBXszt0MqfJwYTBoHXQ1+gupYR764ffh9drD0VQX15iqbLn+ZV
- 3yWmAHv0OiMt7qEouuM0hX5mXaXwxlweplEieSyWE4b1HRPvML/XOcSEJjYHRQCfZ11RSug9t8e
- WEaRO8yT4Gl9iu4HCaESOg==
-X-Google-Smtp-Source: AGHT+IERdSJ+QWyZVc3MoT087+CUAVfqWZUOpKfVguzx4tKY/MunKQ3wxd7r7xIcTawkBiGbIL3Q5Q==
-X-Received: by 2002:a05:6a00:ad8d:b0:72a:ae66:3050 with SMTP id
- d2e1a72fcca58-72daf931cd0mr45220550b3a.1.1737817631848; 
- Sat, 25 Jan 2025 07:07:11 -0800 (PST)
+ bh=BySP3pfz9snQ6m2bJOR/ctgIuJR5xXCPvv9R4jg6Yy0=;
+ b=MhhtvGvHrK7eAI3WDnOkH6+Qlm0HGY/pa9fmcYGCs6yPIZh2i+1jSKXVqIKA9a+yoV
+ GNCsIIUAVFh5iWIkE8FgfMsqgiWT4fbFRQh9gIC7p41gca3WxmYybO0ncHpuEa4fd2ke
+ +9++mqjUq3GcFE+tdSsvdH3Xvd6UszmZdwteJBCF1AFN0UGRWk4ANvzjK2RoUGi7gGKq
+ EpZ89PlFUDkDBPVL8AOLv+XCUxTMKoigKaH2PzDx0I7qeagkPTsdgQZwvHHTN7R7TsBN
+ PtC63mOtpKTMI6JUOR1KYd+oaFKSCBzYQdN1mqdYYURofxUWShL8OXwEdyyeELbo7uSJ
+ /JFQ==
+X-Gm-Message-State: AOJu0Yy+cjo3TevikZvqKyWNWz/rSZOXhXMMJxHtz7uoWsi00lgOI7Dk
+ L9JUmNhLXhPFmvduke/AYJLRw82VwtqiBDeKSgD8oxn7IVFK4kpnDHOoV9DyGXs7Inc53l7srmi
+ W
+X-Gm-Gg: ASbGncukLj6azYt6DSz5Xjv0c7TMVZTvTBXLl3QLnZnM3HCnjpxonfHUGXBtds1qmQJ
+ qLXvAOi02XEa6Rwajku4H5dZQHi8G/x5pOX7IBmb2y9t22WJvegik7NQgjIYimHri827YQnLC41
+ wU7C9X4ELSRCBVTti7Eh2a4VCa3QUSkZ+kdyRCdTmGlxEeobuJRQmSJDNgZ8en7+x2Iz1t5Qonf
+ WgT3PDAp7v5fMj1Be4cDqxqUGeZnGzfYJ1CBCTV2WU8vHg02csKd1cUazkkZkjE/FOJpD1CN8Yz
+ ar8UniUtB/adnrWtrzIMaw==
+X-Google-Smtp-Source: AGHT+IHAcdumVhLG9wa2SYwhlI8V1eblMxx891rT/xVoZnAuRqgd55vnXmnYa7ZBZgPGyaHrkIV+6g==
+X-Received: by 2002:a17:902:ced2:b0:215:9894:5670 with SMTP id
+ d9443c01a7336-21c35503ad0mr574823075ad.16.1737817662578; 
+ Sat, 25 Jan 2025 07:07:42 -0800 (PST)
 Received: from [192.168.74.94] ([50.200.230.211])
  by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-72f8a6b3073sm3946847b3a.52.2025.01.25.07.07.11
+ d9443c01a7336-21da414d87fsm33254815ad.172.2025.01.25.07.07.42
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Sat, 25 Jan 2025 07:07:11 -0800 (PST)
-Message-ID: <e4194fd5-1af8-4f79-8b88-58d30b094937@linaro.org>
-Date: Sat, 25 Jan 2025 07:07:09 -0800
+ Sat, 25 Jan 2025 07:07:42 -0800 (PST)
+Message-ID: <8837a9d5-3acf-455e-9d57-bd5ef95cf6db@linaro.org>
+Date: Sat, 25 Jan 2025 07:07:39 -0800
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 03/76] target/arm: arm_reset_sve_state() should set FPSR, 
- not FPCR
+Subject: Re: [PATCH 04/76] target/arm: Use FPSR_ constants in
+ vfp_exceptbits_from_host()
 To: qemu-devel@nongnu.org
 References: <20250124162836.2332150-1-peter.maydell@linaro.org>
- <20250124162836.2332150-4-peter.maydell@linaro.org>
+ <20250124162836.2332150-5-peter.maydell@linaro.org>
 Content-Language: en-US
 From: Richard Henderson <richard.henderson@linaro.org>
-In-Reply-To: <20250124162836.2332150-4-peter.maydell@linaro.org>
+In-Reply-To: <20250124162836.2332150-5-peter.maydell@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::636;
- envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x636.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::62a;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x62a.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -104,44 +104,13 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 1/24/25 08:27, Peter Maydell wrote:
-> The pseudocode ResetSVEState() does:
->      FPSR = ZeroExtend(0x0800009f<31:0>, 64);
-> but QEMU's arm_reset_sve_state() called vfp_set_fpcr() by accident.
+> Use the FPSR_ named constants in vfp_exceptbits_from_host(),
+> rather than hardcoded magic numbers.
 > 
-> Before the advent of FEAT_AFP, this was only setting a collection of
-> RES0 bits, which vfp_set_fpsr() would then ignore, so the only effect
-> was that we didn't actually set the FPSR the way we are supposed to
-> do.  Once FEAT_AFP is implemented, setting the bottom bits of FPSR
-> will change the floating point behaviour.
-> 
-> Call vfp_set_fpsr(), as we ought to.
-> 
-> (Note for stable backports: commit 7f2a01e7368f9 moved this function
-> from sme_helper.c to helper.c, but it had the same bug before the
-> move too.)
-> 
-> Cc: qemu-stable@nongnu.org
-> Fixes: f84734b87461 ("target/arm: Implement SMSTART, SMSTOP")
-> Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+> Signed-off-by: Peter Maydell<peter.maydell@linaro.org>
 > ---
->   target/arm/helper.c | 2 +-
->   1 file changed, 1 insertion(+), 1 deletion(-)
-> 
-> diff --git a/target/arm/helper.c b/target/arm/helper.c
-> index 63997678513..40bdfc851a5 100644
-> --- a/target/arm/helper.c
-> +++ b/target/arm/helper.c
-> @@ -6413,7 +6413,7 @@ static void arm_reset_sve_state(CPUARMState *env)
->       memset(env->vfp.zregs, 0, sizeof(env->vfp.zregs));
->       /* Recall that FFR is stored as pregs[16]. */
->       memset(env->vfp.pregs, 0, sizeof(env->vfp.pregs));
-> -    vfp_set_fpcr(env, 0x0800009f);
-> +    vfp_set_fpsr(env, 0x0800009f);
->   }
->   
->   void aarch64_set_svcr(CPUARMState *env, uint64_t new, uint64_t mask)
-
-Oops.
+>   target/arm/vfp_helper.c | 12 ++++++------
+>   1 file changed, 6 insertions(+), 6 deletions(-)
 
 Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 
