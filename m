@@ -4,82 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7BE2DC0218C
-	for <qemu-devel@archiver.kernel.org>; Sat, 25 Jan 2025 15:18:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2449EC0218C
+	for <qemu-devel@archiver.kernel.org>; Sat, 25 Jan 2025 15:19:05 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tbhvD-0003cn-AN; Sat, 25 Jan 2025 10:18:07 -0500
+	id 1tbhvy-0004E4-SN; Sat, 25 Jan 2025 10:18:54 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1tbhvB-0003cZ-FN
- for qemu-devel@nongnu.org; Sat, 25 Jan 2025 10:18:05 -0500
-Received: from mail-pl1-x631.google.com ([2607:f8b0:4864:20::631])
+ id 1tbhvx-0004Du-C2
+ for qemu-devel@nongnu.org; Sat, 25 Jan 2025 10:18:53 -0500
+Received: from mail-pl1-x633.google.com ([2607:f8b0:4864:20::633])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1tbhv9-0002tu-Nn
- for qemu-devel@nongnu.org; Sat, 25 Jan 2025 10:18:05 -0500
-Received: by mail-pl1-x631.google.com with SMTP id
- d9443c01a7336-21669fd5c7cso53922545ad.3
- for <qemu-devel@nongnu.org>; Sat, 25 Jan 2025 07:18:03 -0800 (PST)
+ id 1tbhvv-0002y6-P3
+ for qemu-devel@nongnu.org; Sat, 25 Jan 2025 10:18:52 -0500
+Received: by mail-pl1-x633.google.com with SMTP id
+ d9443c01a7336-216728b1836so49240155ad.0
+ for <qemu-devel@nongnu.org>; Sat, 25 Jan 2025 07:18:50 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1737818282; x=1738423082; darn=nongnu.org;
+ d=linaro.org; s=google; t=1737818329; x=1738423129; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:to:subject:user-agent:mime-version:date:message-id:from
  :to:cc:subject:date:message-id:reply-to;
- bh=nGmr/qwYf+E4m3O5TYe7djPD7f7ZT3QSVUqf2Qic+4w=;
- b=hwdoO1tgVIgqeYBrw0BFCvYBz7WcLxhgTpdZAmP3U8bDQqYTStSL4TQkT0DJrpm13M
- QJ86KCV6HeNvHtKMNUePEVLdl9DLQ+C5b/oyVceaQeZF/FVIyjoqnwkYVCU3iV8L/4Pt
- 0ZoJyQXuAnlytV5VQTffx/d16RrZ4atfRHYlskiphaMz5BAXGYUUbLK3Zn8ta8BWY76g
- DDkiBK8UaYVQ1uHfRvF83dMb6P5g94eLGsBWSJvKU0VyH32sTq7w9ig/OJbJPPTJNzYC
- bW4TwJgd5PbgVMT/Uc7ceJGbkrtkxtOw72C+TGcRmrgi2kwvVzZD6H3lOGikATWRgblA
- 35eA==
+ bh=Ib3uNi5ZsSFFHuu5nsJqRbOl73cX4E8trcjhm0eJBT8=;
+ b=oapnR8pfJJCX/GakE6qOtjU4gYQD6w/Ew4EJ2ykmYBEuXYlh+pOb5b/B+8eFrUuHFp
+ hWxO4c+JE6OnIuJSYjyu1iNvjHs5Cvu72lCmvvtf+C20fWx/WcoEzWnH6pXWhIUyjDKv
+ rUECPgvCSvlfBCEgo/cFW9VyKpRpNn2ek+fKKiuVKXmQW984530hGSjLtUIbkDUvhe3p
+ UjccGHxEHYW2tOshjbaL4ugRK5YXGYPWoNHuv/TfttsYZVmQCIMIpf1Zis01UtLPvDQ3
+ LsCNuRsJTBv/JeD2h2RVjh8ylbkiWyv7ss1gmrtajkDKNSsHyOEchy5Uq9yKVk/aXN2z
+ Sp5w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1737818282; x=1738423082;
+ d=1e100.net; s=20230601; t=1737818329; x=1738423129;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=nGmr/qwYf+E4m3O5TYe7djPD7f7ZT3QSVUqf2Qic+4w=;
- b=fPS5+KAk0NiLpO7v7WePpMXj2+PHxPbZYANcuZhUuo7x06tqTw/W2TzQdYEInsyf5d
- uBGz8aTFqXvHlowTz3VmP7+K0yKuo4Rz8out4AGT7fIk8SIvOhJbCl1oxbI50bxIMDYL
- DvkgDHzCWIqpFrZskzMTBddF6Tz40YwTtpBuKcJTOtGHsqUFT1938jJuM6o1WsSE/bej
- xheQtSiwzwD1LDytiYQ7EqVB7HI/z4J+ODpqhlLv+a7I1RdxBcoixUCMMk2u9PshsaKC
- 8URUetT4Bo9tjUW7AmYySCQR2HbSqFvQ2nSPTRu7ftqwiEEHfeIwTw6CqdfzNP4ceLkc
- pUAA==
-X-Gm-Message-State: AOJu0YzBTLb1i2lM59Nf/mg+HKJ2WeGqi9cN0l39kDXgbGteehC9wA/p
- TqlIeMWEoeOYpFJWKrHukbW60sBIbw2cvM12/ao6jLjZrMC0egZKkTrYVBqNqqVtXTT8VWe3muI
- Y
-X-Gm-Gg: ASbGncvYzr4AS1V7FVDi3gTXrFNvpdHXLHY5GF55nD+7XqeD+2kv6GbG1Go+sDDpRya
- nCrvbxH8YvlD0aKjDZaHD7Xyt9KsOhAgF/AI5AwwKFctED+gUdbIB6XXK4mJUoBBnZDDIpPhikr
- SCDe+2b9qy0oEebW1mSkMT8H1+4PLfxBmX40ZXeqy1T6voBdC7Pl4EHz7aHwb4p2gZ0NtinT2kN
- o/8+z8A41YhuCfb/K6mYC63NUEvekr4YXsj/yq1XBz0JPtOWbOQ3n7Q3bwpvhdm9JHShzeH6PAf
- +TWpd5IMbVFIYZjuyYuBgw==
-X-Google-Smtp-Source: AGHT+IGO9/rh58Q9xHPPaYwGm+ay1bppOh+WaIwtGnzZ630mwHJ459v9xJvuziumaHYD2g9DZARruQ==
-X-Received: by 2002:a05:6a00:4c90:b0:728:ac38:4bee with SMTP id
- d2e1a72fcca58-72daf9ac957mr48069739b3a.2.1737818282358; 
- Sat, 25 Jan 2025 07:18:02 -0800 (PST)
+ bh=Ib3uNi5ZsSFFHuu5nsJqRbOl73cX4E8trcjhm0eJBT8=;
+ b=IlRMVJvYkqMRFHCokMb6Bnff4W/O4+7Kp0pYkRE1c3vP39xrhWm4BlREJATdHPjoVH
+ vU/v5nC8vYCPx+VRVQk5QLzgHJ59Ev4k38f4sPQjOVuwo3FKlJskiG8sSVSTwiZkGI8p
+ 57DAXOmlHxS/SixrjXrhRtAVum5hHFcOeivo3nK/9E2ag8G+zT/SjSAGmd4yVj/BP9Y2
+ OHRMjrnxcrQSd+o5u4OExB2ZFezAdl0D3gS58Lbrl2hEE3f8Qx3AppB2zYYkcMh+03Li
+ MJg52CLFKhbjZePildLR7lrpt0ngejvlBIzltPKtcpBLIrMrGOtXyYACFMR5LtI+YHhO
+ lJBg==
+X-Gm-Message-State: AOJu0YwOeDaFf74ew4xvgfmhAI9+EtPKJGN7/99q0HeVS15YGgoTyb8r
+ hREn+HhCg2dUNhpYjnf67ryORF1dSEOjVcG2W9LP66slmoAwkCTEKQJ0kfWNCC5q02z5DEeHfUV
+ B
+X-Gm-Gg: ASbGncvQDf0j4k+okUQbO8snPhini8O33AeD8lPfQK+B1KDZCibwOlRNrhPp+uuzgS4
+ 5JlzQs8Arj/usxLdrRSfsBMBhyln6qZ3LUajIFaWpGqaW3sCARkF6edtFym2alHCFlj/qIPq381
+ xiE3i0rbyEovGxEeJasekdimTEpO28FQ0WW+9mKGsM1LEcCoLTLQQVi3GQ9+7FvSVVwc84edYhT
+ rcHOsTD2FHyBoyhCh9RguVUQ/sX8uC4R9zGPhB4OmMpEQMrJ2sz98RupwNDyCJqIc9ririLEeBF
+ dsctTJwk8jUPfWGSzyqfsQ==
+X-Google-Smtp-Source: AGHT+IEctn+wNeWotU52lfrzMYSIjJ29S+zGxihWX+IT6+fhLv5SxCSrPl/UgxSyrjvTOau0LBzJ0Q==
+X-Received: by 2002:a05:6a20:3d89:b0:1e0:c6c0:1e1f with SMTP id
+ adf61e73a8af0-1eb215e1995mr59195881637.36.1737818329373; 
+ Sat, 25 Jan 2025 07:18:49 -0800 (PST)
 Received: from [192.168.74.94] ([50.200.230.211])
  by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-72f8a77c75asm3915979b3a.136.2025.01.25.07.18.01
+ d2e1a72fcca58-72f8a77c585sm3900131b3a.130.2025.01.25.07.18.48
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Sat, 25 Jan 2025 07:18:02 -0800 (PST)
-Message-ID: <91f8dab7-181a-4621-8266-502c8a5d2b7c@linaro.org>
-Date: Sat, 25 Jan 2025 07:18:00 -0800
+ Sat, 25 Jan 2025 07:18:49 -0800 (PST)
+Message-ID: <c36cb2e9-9eee-4b0f-98a8-6f2595ab7fbc@linaro.org>
+Date: Sat, 25 Jan 2025 07:18:47 -0800
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 09/76] target/arm: Use fp_status_a32 in vfp_cmp helpers
+Subject: Re: [PATCH 10/76] target/arm: Use FPST_FPCR_A32 in A32 decoder
 To: qemu-devel@nongnu.org
 References: <20250124162836.2332150-1-peter.maydell@linaro.org>
- <20250124162836.2332150-10-peter.maydell@linaro.org>
+ <20250124162836.2332150-11-peter.maydell@linaro.org>
 Content-Language: en-US
 From: Richard Henderson <richard.henderson@linaro.org>
-In-Reply-To: <20250124162836.2332150-10-peter.maydell@linaro.org>
+In-Reply-To: <20250124162836.2332150-11-peter.maydell@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::631;
- envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x631.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::633;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x633.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -103,36 +103,18 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 1/24/25 08:27, Peter Maydell wrote:
-> The helpers vfp_cmps, vfp_cmpes, vfp_cmpd, vfp_cmped are used only from
-> the A32 decoder; the A64 decoder uses separate vfp_cmps_a64 etc helpers
-> (because for A64 we update the main NZCV flags and for A32 we update
-> the FPSCR NZCV flags). So we can make these helpers use the fp_status_a32
-> field instead of fp_status.
+> In the A32 decoder, use FPST_FPCR_A32 rather than FPST_FPCR.  By
+> doing an automated conversion of the whole file we avoid possibly
+> using more than one fpst value in a set_rmode/op/restore_rmode
+> sequence.
 > 
-> Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
-> ---
-> We could in theory make A32 use the a64 helpers and do the setting
-> of vfp.fpsr NZCV in the generated code from the helper return value,
-> but it doesn't seem worthwhile to me.
-> ---
->   target/arm/vfp_helper.c | 4 ++--
->   1 file changed, 2 insertions(+), 2 deletions(-)
+> Patch created with
+>    perl -p -i -e 's/FPST_FPCR(?!_)/FPST_FPCR_A32/g' target/arm/tcg/translate-vfp.c
 > 
-> diff --git a/target/arm/vfp_helper.c b/target/arm/vfp_helper.c
-> index 0671ba3a88b..034f26e5daa 100644
-> --- a/target/arm/vfp_helper.c
-> +++ b/target/arm/vfp_helper.c
-> @@ -373,8 +373,8 @@ void VFP_HELPER(cmpe, P)(ARGTYPE a, ARGTYPE b, CPUARMState *env) \
->           FLOATTYPE ## _compare(a, b, &env->vfp.FPST)); \
->   }
->   DO_VFP_cmp(h, float16, dh_ctype_f16, fp_status_f16)
-> -DO_VFP_cmp(s, float32, float32, fp_status)
-> -DO_VFP_cmp(d, float64, float64, fp_status)
-> +DO_VFP_cmp(s, float32, float32, fp_status_a32)
-> +DO_VFP_cmp(d, float64, float64, fp_status_a32)
->   #undef DO_VFP_cmp
->   
->   /* Integer to float and float to integer conversions */
+> Signed-off-by: Peter Maydell<peter.maydell@linaro.org>
+> ---
+>   target/arm/tcg/translate-vfp.c | 54 +++++++++++++++++-----------------
+>   1 file changed, 27 insertions(+), 27 deletions(-)
 
 Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 
