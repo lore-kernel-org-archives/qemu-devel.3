@@ -4,85 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E4171C0218D
-	for <qemu-devel@archiver.kernel.org>; Sun, 26 Jan 2025 21:54:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 74983C0218D
+	for <qemu-devel@archiver.kernel.org>; Sun, 26 Jan 2025 21:55:07 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tcAaU-0007gH-QG; Sun, 26 Jan 2025 16:54:38 -0500
+	id 1tcAao-0007pj-Ld; Sun, 26 Jan 2025 16:54:58 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1tcAaO-0007WH-4a
- for qemu-devel@nongnu.org; Sun, 26 Jan 2025 16:54:35 -0500
-Received: from mail-pl1-x631.google.com ([2607:f8b0:4864:20::631])
+ id 1tcAal-0007om-FO
+ for qemu-devel@nongnu.org; Sun, 26 Jan 2025 16:54:56 -0500
+Received: from mail-pl1-x62c.google.com ([2607:f8b0:4864:20::62c])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1tcAaK-000690-HR
- for qemu-devel@nongnu.org; Sun, 26 Jan 2025 16:54:30 -0500
-Received: by mail-pl1-x631.google.com with SMTP id
- d9443c01a7336-21654fdd5daso63420895ad.1
- for <qemu-devel@nongnu.org>; Sun, 26 Jan 2025 13:54:28 -0800 (PST)
+ id 1tcAak-0006CF-4F
+ for qemu-devel@nongnu.org; Sun, 26 Jan 2025 16:54:55 -0500
+Received: by mail-pl1-x62c.google.com with SMTP id
+ d9443c01a7336-21654fdd5daso63423715ad.1
+ for <qemu-devel@nongnu.org>; Sun, 26 Jan 2025 13:54:52 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1737928467; x=1738533267; darn=nongnu.org;
+ d=linaro.org; s=google; t=1737928491; x=1738533291; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:to:subject:user-agent:mime-version:date:message-id:from
  :to:cc:subject:date:message-id:reply-to;
- bh=ABiMwPoBWKSO5FIltdFSYs6UuGLMiDwfONbqOYocom4=;
- b=H3wPZf4qVt1CdoMD5+6kQbosCaf0tNkd2eXPEJ1fFZFssddGaIUVn8H1XRuMuAbrhi
- FrNufrwdcua+q1mIvwmuCdxU4G3Qrtd7iJjRAoBOCjqm/Q9Un2r/pbFuBBvaehZ9bfj9
- eVIpYrA4tHB2V/5Lg5tcxMmlNkJQIDNOq6Z92spFeEjiq9X5oXsG4T/7J5xqhOXCXj/I
- FyHXyvEJgdlr7absv83Xa6XHLLMk+EiQB8gMwzB9RVQ5H1URd3mVNmPw7yxxHSciSDwk
- x17sQ6oZ8HDN7lLIni0z6oYUuwNEPzhhgfVzEoijGpNHZb0mYkSbudnL3lhCk9XtL4rt
- hLvA==
+ bh=ffEZpz3v0M/irEE8yth40wZ74SwfVWMRm1d3CYWuQSE=;
+ b=Y9vq40WXv0ledCjVUvgQR07zvFyi3pHg77OQae7/l6AikPG5fVlFnmtrvfQwJWN8tu
+ 9J1uaDCkUOxhghgVBBEyjkiShNzy3hfa4tyMZ6d+VEdboD9metuFe+VY05EfqvrcKfR1
+ o2kEstFo92vkvKISUrbcwmt+ZYxoqToZCeE4ReoT+3JfBG+vNL663oGWOVeVmuXe82B7
+ 9F+c571EdV+bU12kCcDVze5NrOyLEiu0xtc0jpyUSnFu19t67UqhboASA4J9FjyQTLw1
+ PRrL4sgWWZBX+3Hg8abSc6Gr3F9AHSyKiWnlZTrUam9p0J0SqrUurAeXhd2gk2mGkz+R
+ 5XAg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1737928467; x=1738533267;
+ d=1e100.net; s=20230601; t=1737928491; x=1738533291;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=ABiMwPoBWKSO5FIltdFSYs6UuGLMiDwfONbqOYocom4=;
- b=KCWoXcej4ZZmGSabh5pUgyBy7yXpqMGa/oN8toB1bG/JmFM6v7nygEyU1pCUNd8yu+
- cXmdSbi1J8L0AuTjSzoyZmolI/YFH+mlHV3o+u2ucGH0ZIl9Ez+x+beGtCbR/0qOg89M
- PrYP+8CXeztQgxA1WaVHqpLtotFWR5i+RzRQN4risVjQ+URcfZivi++1uO1BkOXM7SgS
- OL2VSHvPNLp/8RbVGKCkuMVjwy20Zw1lawVQfchiqk4UL6hKwyRAaw8qk3b2ytv2wqz4
- mPSmbIaFUrNSL8BhNMIJzrGbSq/YQ85raCT+ArfPzSSPkgLy9Y2q1kjGj4DwLDfEcnbx
- NwEA==
+ bh=ffEZpz3v0M/irEE8yth40wZ74SwfVWMRm1d3CYWuQSE=;
+ b=JKJ+LZ8IUZf5tmF0mLmB4NrppCebvPuK6q3Bop5K6UseqI85dYaIfgaUr18aIWD1M0
+ NTcmgj9i7213wYAGiEQWtxjCdZ6sOcTEkuSiAVQD5Hh78AHcpMWK01u5NlxLhN9mgVFj
+ zvwbsQpNy1dyF2RrotIyni6HZpzPd2sLk8eM9xPldKL5JAEpEMi2pQuzLElpvEktmUa5
+ XR/q/65IBTz1LiGMKO6yRnP/cWKK8eF1+A0PzkCvQzmmwC1WqDpW4AaC9I5bFnuGjDKC
+ hUPtqOdeWN+NEFAxhM3jG9jae9hRQWRfwC50kglc4QBusTgOIbAZUx812sLk5P4kPsRI
+ GFQQ==
 X-Forwarded-Encrypted: i=1;
- AJvYcCX2P1hb1aUjtRtCjqKyLDNuAJEWNFt9V4+Cc6W9uc+ZoH4h9kqUXb5IP1JywJW13mbt/2HgydH4pNVC@nongnu.org
-X-Gm-Message-State: AOJu0Yx+uflcdxAQMTni+zrjbxIUxVqJFquI7VhwTL7QM6Iu6wEAt1dr
- P0wgmohBta75S6T4TEteB1tVSeaYjVg4JUcLI0kCU1RTvAmnWdpOj+JBQMrmttOnq3zFRwvDaFo
- J
-X-Gm-Gg: ASbGncu3W6otkw8nWgoYBgcg9ldnfg5Gwhhsh3UTr/X2gCbTA1J2L+O2qrB0aFIY06D
- cVIJBKowleXK/pVZUm23h4rBQL55n6y3leoejp2DNIocrGbabfql9vIT96DHJtk/8eye4pxQsaT
- LSs4nYllJsxGehJ9LT7aLH7g6ak8dg/LMRTWyhKjr1HSX2M/W8gstNrOJCV96YroR7F88/fVi6Z
- XAZAIYc+x4YNjUCaCmC+q3NOdlV4KAsLZRB4ojgH2Bx1VfC+gCdEGya+tvtCB5gTcTvxCY8rQvC
- HNwpe4nE9UFN/NdsZpZsp6cGEb5JHlb2p5ulfIdSJZkWqIs=
-X-Google-Smtp-Source: AGHT+IHGXG/TKyPDWfq7WcMnGKiNhxdgXoxHNg1D1+qFskDHBbjK1Haho7c4AbNtrnkhwSPA2bf0xg==
-X-Received: by 2002:a17:902:ccd1:b0:21c:17b2:d346 with SMTP id
- d9443c01a7336-21c35593de0mr606114955ad.32.1737928467056; 
- Sun, 26 Jan 2025 13:54:27 -0800 (PST)
+ AJvYcCUmFDYGmyYoOIwyVVX+w/gwqsWVNpBHQ6Go7hxjYC9OqPY9e7Sg54CbVVtc8liysvz0z/1yBktupyv0@nongnu.org
+X-Gm-Message-State: AOJu0YwMkaYGsdueD/QFpwxvMere0UaeV0JGURRLk0tlt0l4QUSsu9aU
+ KKXMndVJfbrUKUjqVAiAYy0b/ufM2xMWIQSIcONyKMT3FpyYXt0YR6MMwqF+xds=
+X-Gm-Gg: ASbGncvXJaM1rLLKV17OKALDH6BWHM0rGTqTJuXcizODvpy/UtUO0Xoqw20ylWnXqBH
+ pe7oA1uBWWfFJLdiMBY0pfV3AAuT+y0eTcuzmIkP3gPEUGwtrigIUSzg2eWkCYWIf6enLymQDmL
+ P9lBimASijWRvP0S7BZi+P18FY/D4KNybcAm9jeDScyMi6bHSmhE+sEyyXXX+h5f2VFZE2kXy8Q
+ sLHGzPFWAgf0/NP7nOIcRn2iyuJjp75ZG7qHlg7VYpyFtXH6MmuK9Q+z7mx2WvZ/tUcfM4xicXd
+ A63EdPbUR5LCXzgGixnBLFS9mQd6GwahQsvnsyUzzwdKtDs=
+X-Google-Smtp-Source: AGHT+IFIWJCj7Khb7BxA7AUT+6bLoqxKXiEUIeJc6aixgxHk7LI1FnnihQltAjGu4WhUtNoHh+aA2g==
+X-Received: by 2002:a05:6a00:bd7:b0:72d:b2ed:8788 with SMTP id
+ d2e1a72fcca58-72db2ed89dbmr37433047b3a.10.1737928491319; 
+ Sun, 26 Jan 2025 13:54:51 -0800 (PST)
 Received: from [192.168.0.4] (174-21-71-127.tukw.qwest.net. [174.21.71.127])
  by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-21da3d9dedcsm50546455ad.46.2025.01.26.13.54.26
+ d2e1a72fcca58-72f8a69f401sm5679767b3a.29.2025.01.26.13.54.50
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Sun, 26 Jan 2025 13:54:26 -0800 (PST)
-Message-ID: <87bb71a4-8ff3-4ae9-90be-f40034de415c@linaro.org>
-Date: Sun, 26 Jan 2025 13:54:25 -0800
+ Sun, 26 Jan 2025 13:54:51 -0800 (PST)
+Message-ID: <cf54c2fc-f22c-4704-9a70-e0955d75d0b6@linaro.org>
+Date: Sun, 26 Jan 2025 13:54:49 -0800
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 6/9] hw/i386: Have X86_IOMMU devices inherit from
+Subject: Re: [PATCH 7/9] hw/net: Have eTSEC device inherit from
  DYNAMIC_SYS_BUS_DEVICE
 To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  qemu-devel@nongnu.org
 References: <20250125181343.59151-1-philmd@linaro.org>
- <20250125181343.59151-7-philmd@linaro.org>
+ <20250125181343.59151-8-philmd@linaro.org>
 Content-Language: en-US
 From: Richard Henderson <richard.henderson@linaro.org>
-In-Reply-To: <20250125181343.59151-7-philmd@linaro.org>
+In-Reply-To: <20250125181343.59151-8-philmd@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::631;
- envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x631.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::62c;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x62c.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -106,16 +105,13 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 1/25/25 10:13, Philippe Mathieu-Daudé wrote:
-> Do not explain why _X86_IOMMU devices are user_creatable,
-> have them inherit TYPE_DYNAMIC_SYS_BUS_DEVICE, to explicit
-> they can optionally be plugged on TYPE_PLATFORM_BUS_DEVICE.
+> Because the network eTSEC device can be optionally plugged on the
+> TYPE_PLATFORM_BUS_DEVICE, have it inherit TYPE_DYNAMIC_SYS_BUS_DEVICE.
 > 
-> Signed-off-by: Philippe Mathieu-Daudé<philmd@linaro.org>
+> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 > ---
->   hw/i386/amd_iommu.c   | 2 --
->   hw/i386/intel_iommu.c | 2 --
->   hw/i386/x86-iommu.c   | 2 +-
->   3 files changed, 1 insertion(+), 5 deletions(-)
+>   hw/net/fsl_etsec/etsec.c | 4 +---
+>   1 file changed, 1 insertion(+), 3 deletions(-)
 
 Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 
