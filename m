@@ -4,67 +4,87 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7D28DC02181
-	for <qemu-devel@archiver.kernel.org>; Sun, 26 Jan 2025 14:57:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C5B95C02181
+	for <qemu-devel@archiver.kernel.org>; Sun, 26 Jan 2025 18:08:27 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tc43m-0007HL-PY; Sun, 26 Jan 2025 09:56:26 -0500
+	id 1tc72e-0000gD-JQ; Sun, 26 Jan 2025 13:07:28 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1tc43k-0007Gl-Ot; Sun, 26 Jan 2025 09:56:25 -0500
-Received: from mgamail.intel.com ([192.198.163.15])
+ (Exim 4.90_1) (envelope-from <dmitry.osipenko@collabora.com>)
+ id 1tc72c-0000fp-RK
+ for qemu-devel@nongnu.org; Sun, 26 Jan 2025 13:07:26 -0500
+Received: from sender4-pp-f112.zoho.com ([136.143.188.112])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1tc43i-0007gS-Sd; Sun, 26 Jan 2025 09:56:24 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
- d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1737903383; x=1769439383;
- h=date:from:to:cc:subject:message-id:references:
- mime-version:in-reply-to;
- bh=EOfQD7wJs/heqaF+kayW8lEZfAd8tm/HXf2yRjISUGQ=;
- b=K9n2pmwKvocriTgYZIAhMvbvtVDrEkLQQWnyU0plDEqDaHXKV5uXKerY
- 22O57OsQu/dB5iWiGwEOxQ+QrgkeJpm1uZQv55fj8u68cx1RL45Ac4fyr
- +ldQz/whQh+hwcXvuswq0p8b+6U1uDEF5frR+c4IQR7ablfy5rj1Tzr6e
- QawRpmHEZR8NJtQE7PcmfPQRWX4XVLBssKTku3luXZOZuo4ul3+Ghw9XF
- eyh6r+29E8OEIgjJiazTi5yaxlSHeULQxV1fNtGyBTT9yZiAzeGBh0Y3v
- Lmf8iWiu92LwVBmJwa9ybwuxn2+et/sRid2/69I6+i/3/aAeCuhAcdQpg A==;
-X-CSE-ConnectionGUID: LERZRKl0TC+vERTlfODZqA==
-X-CSE-MsgGUID: /rl33qU8Qpm2twvDzd4dKA==
-X-IronPort-AV: E=McAfee;i="6700,10204,11327"; a="38543974"
-X-IronPort-AV: E=Sophos;i="6.13,236,1732608000"; d="scan'208";a="38543974"
-Received: from fmviesa003.fm.intel.com ([10.60.135.143])
- by fmvoesa109.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 26 Jan 2025 06:56:18 -0800
-X-CSE-ConnectionGUID: Hty65QKfRR+5TFQbFn+wiw==
-X-CSE-MsgGUID: qgm0VFW0RtKHT7rZopBC/w==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.12,224,1728975600"; d="scan'208";a="112237615"
-Received: from liuzhao-optiplex-7080.sh.intel.com (HELO localhost)
- ([10.239.160.39])
- by fmviesa003.fm.intel.com with ESMTP; 26 Jan 2025 06:56:17 -0800
-Date: Sun, 26 Jan 2025 23:15:41 +0800
-From: Zhao Liu <zhao1.liu@intel.com>
-To: Paolo Bonzini <pbonzini@redhat.com>
-Cc: qemu-devel@nongnu.org, qemu-rust@nongnu.org
-Subject: Re: [PATCH 02/10] rust: qom: add reference counting functionality
-Message-ID: <Z5ZRnYDZdZcgyCsR@intel.com>
-References: <20250117194003.1173231-1-pbonzini@redhat.com>
- <20250117194003.1173231-3-pbonzini@redhat.com>
+ (Exim 4.90_1) (envelope-from <dmitry.osipenko@collabora.com>)
+ id 1tc72a-0002Nb-Ue
+ for qemu-devel@nongnu.org; Sun, 26 Jan 2025 13:07:26 -0500
+ARC-Seal: i=1; a=rsa-sha256; t=1737914827; cv=none; 
+ d=zohomail.com; s=zohoarc; 
+ b=R9WEOClMPtoIpHGQBSvRrpeKIl3nd14try/8D0dnrrGqyPgBmFy0P/uYItM0OtZI5ZEQX40IAAHUKiu/qEuRXttWs3o1/QHshD5ZGTERrHlcjLZecEZtbdTcs9b2iPpF0KJrd2z3gUvdKDPjmcYSVu2RM1hy+84gkBp8fZPtpNU=
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=zohomail.com;
+ s=zohoarc; t=1737914827;
+ h=Content-Type:Content-Transfer-Encoding:Cc:Cc:Date:Date:From:From:In-Reply-To:MIME-Version:Message-ID:References:Subject:Subject:To:To:Message-Id:Reply-To;
+ bh=su8rSglxTIz3gB+hOFD2DaIesMGL4EHAM0y4k1cURio=; 
+ b=SqdEvP5m0OTaOJA+2uWr54jb3SMjOfXJl+bjfWr1N5lhxhi450+rEB4kUS/jbj8GYH3jYf7i7LTJTnbTplFpQ7p/KrIFsQzAw0qAWjcnULhYI7JZDGdytudMlkH804a59rH7RO/JyYU386DwuAjg2f6taeSgRFD9/G0JeOaIGYg=
+ARC-Authentication-Results: i=1; mx.zohomail.com;
+ dkim=pass  header.i=collabora.com;
+ spf=pass  smtp.mailfrom=dmitry.osipenko@collabora.com;
+ dmarc=pass header.from=<dmitry.osipenko@collabora.com>
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; t=1737914827; 
+ s=zohomail; d=collabora.com; i=dmitry.osipenko@collabora.com; 
+ h=Message-ID:Date:Date:MIME-Version:Subject:Subject:To:To:Cc:Cc:References:From:From:In-Reply-To:Content-Type:Content-Transfer-Encoding:Message-Id:Reply-To;
+ bh=su8rSglxTIz3gB+hOFD2DaIesMGL4EHAM0y4k1cURio=;
+ b=N8GTU8UER8BJ1gGMw7YFjvIEvG23RQ53DmZzqSCOciaCs/0cdyswUScGu3r2CPcc
+ 5jiWB1kjz7KD56U1+1adePuhtJDqOeP0gC8AS9l2ySOcrzP5kkdoPFO3eaHy+O1Nj8E
+ mVHRtsTxY4gplSjsSpV07XwqmZMG0zXGUuodH2A4=
+Received: by mx.zohomail.com with SMTPS id 1737914821167963.8096463258325;
+ Sun, 26 Jan 2025 10:07:01 -0800 (PST)
+Message-ID: <ea866d19-90f6-4bb9-a3f6-f84b2ea2c457@collabora.com>
+Date: Sun, 26 Jan 2025 21:06:54 +0300
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20250117194003.1173231-3-pbonzini@redhat.com>
-Received-SPF: pass client-ip=192.198.163.15; envelope-from=zhao1.liu@intel.com;
- helo=mgamail.intel.com
-X-Spam_score_int: -56
-X-Spam_score: -5.7
-X-Spam_bar: -----
-X-Spam_report: (-5.7 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.299,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v5 8/8] docs/system: Expand the virtio-gpu documentation
+To: Akihiko Odaki <akihiko.odaki@daynix.com>,
+ =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
+Cc: Huang Rui <ray.huang@amd.com>,
+ =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
+ =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Gerd Hoffmann <kraxel@redhat.com>, "Michael S . Tsirkin" <mst@redhat.com>,
+ Paolo Bonzini <pbonzini@redhat.com>, Gert Wollny
+ <gert.wollny@collabora.com>, qemu-devel@nongnu.org,
+ Gurchetan Singh <gurchetansingh@chromium.org>, Alyssa Ross <hi@alyssa.is>,
+ =?UTF-8?Q?Roger_Pau_Monn=C3=A9?= <roger.pau@citrix.com>,
+ Alex Deucher <alexander.deucher@amd.com>,
+ Stefano Stabellini <stefano.stabellini@amd.com>,
+ =?UTF-8?Q?Christian_K=C3=B6nig?= <christian.koenig@amd.com>,
+ Xenia Ragiadakou <xenia.ragiadakou@amd.com>,
+ Pierre-Eric Pelloux-Prayer <pierre-eric.pelloux-prayer@amd.com>,
+ Honglei Huang <honglei1.huang@amd.com>, Julia Zhang <julia.zhang@amd.com>,
+ Chen Jiqian <Jiqian.Chen@amd.com>, Rob Clark <robdclark@gmail.com>,
+ Yiwei Zhang <zzyiwei@chromium.org>, Sergio Lopez Pascual <slp@redhat.com>
+References: <20250119220050.15167-1-dmitry.osipenko@collabora.com>
+ <20250119220050.15167-9-dmitry.osipenko@collabora.com>
+ <c2e1c362-5d02-488e-b849-d0b14781a60f@daynix.com>
+ <87ikq9r7wj.fsf@draig.linaro.org>
+ <171b1cd3-1077-438c-a27c-3b9b3ce25f0f@daynix.com>
+Content-Language: en-US
+From: Dmitry Osipenko <dmitry.osipenko@collabora.com>
+In-Reply-To: <171b1cd3-1077-438c-a27c-3b9b3ce25f0f@daynix.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-ZohoMailClient: External
+Received-SPF: pass client-ip=136.143.188.112;
+ envelope-from=dmitry.osipenko@collabora.com; helo=sender4-pp-f112.zoho.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.01,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -81,68 +101,35 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Paolo,
-
-On Fri, Jan 17, 2025 at 08:39:55PM +0100, Paolo Bonzini wrote:
-> Date: Fri, 17 Jan 2025 20:39:55 +0100
-> From: Paolo Bonzini <pbonzini@redhat.com>
-> Subject: [PATCH 02/10] rust: qom: add reference counting functionality
-> X-Mailer: git-send-email 2.47.1
+On 1/21/25 07:26, Akihiko Odaki wrote:
+...
+>>> I feel the dependency information for virglrenderer and Mesa are more
+>>> suited for the Mesa documentation as they are not specific to QEMU and
+>>> potentially useful also for e.g., libkrun and crosvm.
+>>
+>> I think while everything is in so much flux it doesn't hurt to include
+>> in our docs. I don't know if mesa currently has a dedicated page for GPU
+>> virtualisation.
 > 
-> Add a smart pointer that allows to add and remove references from
-> QOM objects.  It's important to note that while all QOM objects have a
-> reference count, in practice not all of them have their lifetime guarded
-> by it.
+> Mesa has pages for VirGL and Venus, which can be linked from the
+> respective parts of this documentation. gfxstream is not documented but
+> I think most people will use it only for Android anyway. A documentation
+> for DRM native context will be a nice addition for Mesa. I will not
+> object if you put this information to QEMU documentation though.
 
-About the background, I have a maybe common question...why Rust needs
-extra reference count guarding?
+Adding native context doc to Mesa indeed will be a good move, as well as
+adding links to the Mesa virgl/venus pages in QEMU.
 
-For C side, I notice for child objects, which may be totally embedded in
-parent object, or may be pointed to by a pointer member in parent object
-(like pl011's clock), they usually become the Child<> property of their
-parents by object_initialize_child() (for embedded child) or
-object_property_add_child() (for child pointer).
+RE requirements documentation, it's also a valid point that stuff like
+build flags should belong to the relevant projects. On the other hand,
+it's a common headache for a newcoming people to figure everything out
+from scratch and having more centralized documentation helps. The build
+requirements aren't cleanly documented anywhere AFAICT, and the
+requirements also differ based on VMM. I'll update and keep this patch
+in v6, the requirements info should stay actual for a next couple years
+IMO. Let's discuss it further in v6 if more objections will arise.
 
-And both these 2 interfaces will increase the ref count in
-object_property_try_add_child(). With ref count increasing, it seems
-that the Child<> property also express the meaning like "the child
-object is 'owned' by its parent".
-
-So, what are the benefits of `Owned` when we also creates Child<>
-relationship?
-
-Additionally, I felt that the ref count may be a bit confusing. After
-creating Child<> property, the child object's ref count is sometimes 1,
-and other times it's 2:
-
- * With object_initialize_child(), child's ref count is 1.
-
- * With object_property_add_child() (usually after a object_new() to
-   create child first):
-
-   - sometimes user will call object_unref(), and then the ref count is 1.
-     E.g., x86_cpu_apic_create() in target/i386/cpu-apic.c.
-
-   - sometimes no object_unref(), then ref count is 2.
-     E.g., exynos4210_realize() in hw/arm/exynos4210.c, creats "cortex-a9".
-
-> Embedded objects, specifically, are confined to the lifetime of
-> the owner.
-> 
-> When writing Rust bindings this is important, because embedded objects are
-> *never* used through the "Owned<>" smart pointer that is introduced here.
-
-From this description, I understand your goal is:
-
- * For embedded child object, its lifetimer is managed by its parent
-   object, through Child<> for the most cases.
-
- * For non-embedded child - a pointer/reference in parent object, its
-   lifetimer is managed by `Owned<>` (and with Child<>).
-
-Am I right?
-
-Thanks,
-Zhao
-
+-- 
+Best regards,
+Dmitry
 
