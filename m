@@ -4,73 +4,72 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D9793C0218D
-	for <qemu-devel@archiver.kernel.org>; Sun, 26 Jan 2025 21:15:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 62B91C0218F
+	for <qemu-devel@archiver.kernel.org>; Sun, 26 Jan 2025 21:15:13 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tc9x7-0000JN-Pk; Sun, 26 Jan 2025 16:13:57 -0500
+	id 1tc9xx-0000Z9-Mo; Sun, 26 Jan 2025 16:14:49 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1tc9x5-0000HL-CF
- for qemu-devel@nongnu.org; Sun, 26 Jan 2025 16:13:55 -0500
-Received: from mail-pl1-x631.google.com ([2607:f8b0:4864:20::631])
+ id 1tc9xw-0000Xn-Gq
+ for qemu-devel@nongnu.org; Sun, 26 Jan 2025 16:14:48 -0500
+Received: from mail-pj1-x102c.google.com ([2607:f8b0:4864:20::102c])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1tc9x3-0007cz-H6
- for qemu-devel@nongnu.org; Sun, 26 Jan 2025 16:13:55 -0500
-Received: by mail-pl1-x631.google.com with SMTP id
- d9443c01a7336-216426b0865so60921425ad.0
- for <qemu-devel@nongnu.org>; Sun, 26 Jan 2025 13:13:53 -0800 (PST)
+ id 1tc9xu-0007id-OI
+ for qemu-devel@nongnu.org; Sun, 26 Jan 2025 16:14:48 -0500
+Received: by mail-pj1-x102c.google.com with SMTP id
+ 98e67ed59e1d1-2ef760a1001so6543955a91.0
+ for <qemu-devel@nongnu.org>; Sun, 26 Jan 2025 13:14:46 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1737926031; x=1738530831; darn=nongnu.org;
+ d=linaro.org; s=google; t=1737926085; x=1738530885; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=M9kpcRwj4XMG8ftG4wmZyZnxF1iU/ErySCW5MvOqlTU=;
- b=zdBYWagp9hSeDHJac3Tylk/CZ0NJAHrYYQmgphgN5UOt7kzvEdhqKUHjDFAbKSpe+f
- zFv+4Nehw2N8HsWfYDTrUTO+w7Ae4ORgPj02f6zgJin6yfzUqiOIwmb9CepmfdZ2hOQq
- 1KMYYbLkDwOIMwqJfoI/TRTd22QZ0GsF2qyxvi3Z0oXjP/kpwT4TQQHmfdVABCyRsjYg
- SOAM3/G9HPxKEYixhQfmxJq65pn9Z1TXMX2eHXvDtHTbgcSpZpqnMGOyu22yZQ45yHCE
- U9RgaKT/BvZ6pX6TYBQcrcGb/6zBiZlkwUorYO4YjyFxXBESZJls1MLY8hlrgxg2w7Cg
- sHWw==
+ bh=dM482TolBOr/dYb2pXuY2SYJtabVGHzvURXSW1TjI40=;
+ b=EW5QVXJDzlPKt7uDkgOwcHnHWR5FioUVdH95HqC2zGt+1GlD/TsWn45AHq0foKxRHE
+ OXWp+4wQLjnrRFBQGWDyCU2U0UeY28M57wqz3OJoBcvIlkNCceaezmgBq5hMpSiibIqO
+ EuXuoDUtRgsAXzik2ynkqAZLP3cFhmn5h6FtkFXPDec/hKaZ8Hj3fFg4w6ZBs8Y2nNJl
+ 3qSMA5VlvQNwRtyYqQIw2S71q/Ux/Jq/lLZnfErtzcg6lwfRYJZZ0t/L49Rgtq73wHQg
+ Zyr1OboX0LdYfjFAjI6nvIJ8rJmEvdBKMhdbVjDSDrZ3IJ7ygCAI/73fKDYEpIxBS7w7
+ c4Ew==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1737926031; x=1738530831;
+ d=1e100.net; s=20230601; t=1737926085; x=1738530885;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=M9kpcRwj4XMG8ftG4wmZyZnxF1iU/ErySCW5MvOqlTU=;
- b=dhwh5Gh9lkd18uGhBQrJXOp/Tm40yc/p3fq8WsOEBMGf3ZxctOphLrD1ZUbSnXkUbQ
- pcTU0Lz930b9zFfAf/0Zx9Weu8EBowrgoqpFsWfkH3OzZXvBFmtTZoKdYe6Dl28G+bGU
- CWELVWiOTDlmz7rNGdRDcBI6p10QbrVq9qdjH140nltbiK9MXrI/yYTFCuZFX/Ku7rY8
- I8UqBRKk+uYsQcy6m87Z+AE+xvNmlxCOJINsUQTMmHlszvaPYJK011C0qdfbk/4WQC5M
- HhFxsrngLQTTMhR9kugRW452nQfwwIm/E9HTgchwc/62E8ORHYS7WgI+Ag4iBVO8doHu
- sIhQ==
+ bh=dM482TolBOr/dYb2pXuY2SYJtabVGHzvURXSW1TjI40=;
+ b=mzhxoI3QvkPbvzeqHDKXuOx4F77qh8bRJkqz3QnplNOPLesCNcn4eF+bqpX2aQ3SV6
+ 55NNRy3aV4AbKKG8sYrOHdOP2ghrN4QIBCHCTuc/zlV4u9Kvsp82xUvLS9T5CC5j62tL
+ nhdoa8+YwsfkHu+Dd3pN4/wohwFPmyWVYOvghIkS6ig7VvrKhV6lB3/iwTBUN4u6j3hD
+ dsd1MBE+6xNozGgHF9G2T2e2ASfeb3xhuOk6vc4poGAuAhiL+KBFzU5DfDI5TEiTA6l+
+ XtgFL6+AKLg6Z3jiJz91G21h9twn7U9ErkDfw6NlvHQFlPHFI5OGrpxYJcu8ya12L64Z
+ dfSQ==
 X-Forwarded-Encrypted: i=1;
- AJvYcCV7HRxvQFbG0MGgppDnCLgJ0rNMGKR9U/MC/wQHoWMrn+jBS+K+GoLfcm2VujLGHP/B5KEI5YIO1aNo@nongnu.org
-X-Gm-Message-State: AOJu0YzrRCYHMjkwH7WwFZamFcWzsjtYaZg1GHhSukJnqZxQtdal80ax
- XK/KwEGbelhwX+tFNNE4qZQn1hG81DWX9oJ+oP3aneNtuZa/JOBjmMBVPg+w4Zw=
-X-Gm-Gg: ASbGnctUR8YHE8dETcI3YxIdPRtddP2qqtaulXgi0TOaTvhCb1NTVdkI2zN3pOFTsUp
- 5HhVQGWcJS2C0SyA21bkGOyVSgO07ZnmNW5AkoV21utFP7MflXElhrDV9KlnVq42xZp/j1MLOJq
- RO+6xYqez3ctGSc1+Fsw19aWDQA6AXpu+fnlwuXMmMPRfSgWd5FKREcSO5hqQB3HF+S7nNK1wNf
- Xg67ZitzqEmRMLmK93EZ/unM71xvypjRj79fWxTQvA0BO2114Rb8K3jGvKYP8oaC6lRJO9DVFKs
- +lkmxJygBNz0tUdFrAKseRvCiqnw+kzL92OB+vYi17JzjAw=
-X-Google-Smtp-Source: AGHT+IEZs0zeKB5IzyrVqsgjZQ8Qgr6yuUndfoZR9xIIrSSkISsRSLWzsvON9msLe4CFxT+Ly8wqnw==
-X-Received: by 2002:a17:902:f551:b0:215:431f:268a with SMTP id
- d9443c01a7336-21c3556016amr565306785ad.31.1737926031507; 
- Sun, 26 Jan 2025 13:13:51 -0800 (PST)
+ AJvYcCWhd/mx+kODnfDOwYnmUvUrXd6NdpoliPeNGHpDO61jWcT8OL0WoN1+yTrg/xovdKaRo8dNaa7C1/7k@nongnu.org
+X-Gm-Message-State: AOJu0YzFydbVwJSEsJXDIr8h2e99x/vDJ1Fc80S+hdSsF7M/xgdOFzmX
+ Jn2MO4Fc+KR0CuEOt+AZjh7P6SSiZ/HZMRgSDLgpo0iLmgLxc+A1bUOfihV3QIU=
+X-Gm-Gg: ASbGncsrMT51qGBrFWSI/WNJv2Ms9+OWM1PCFhCCBmJUw90w3S07YUmi5rM6VWgb9Qz
+ pRDjtX1V2gF8h5lXf07QHi2Y+la6DuW5tZvH4bE8dqljVBQjLZV5KqyqZUi0FFvNGB3/JMsnxVz
+ IXzyPZZWXxWWm4MRlJTLRLK33MVD8EkhCOwhZk2UuHz54yvjkWU4m4mw9EbJ6SS610Er55cXSS2
+ W1M3mxdbWK6l2CrURGY7wa6KtNiBPFXtLp+bCs5eSciwBHyWkj06BfqmHTWLxAdNMS/cXDI4MT5
+ YHNUYnEWmIpTuyxxpfv9oN70SmjvIWcSXcAI60YH+nz/FtY=
+X-Google-Smtp-Source: AGHT+IE1AaZn04VsAmZoovvHskfFwwHs+/I0v2XJVpXr12XD+Jd8EH5sfL0xlHcxmhZL8x5QsccIOQ==
+X-Received: by 2002:a17:90b:2f50:b0:2ee:fdf3:38ea with SMTP id
+ 98e67ed59e1d1-2f782d32c45mr47771107a91.23.1737926085217; 
+ Sun, 26 Jan 2025 13:14:45 -0800 (PST)
 Received: from [192.168.0.4] (174-21-71-127.tukw.qwest.net. [174.21.71.127])
  by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-21da3ea3bb9sm50157355ad.92.2025.01.26.13.13.50
+ 98e67ed59e1d1-2f7ffb193e1sm5644337a91.42.2025.01.26.13.14.44
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Sun, 26 Jan 2025 13:13:51 -0800 (PST)
-Message-ID: <c844b086-b3fd-438d-a4ce-6571094e5e14@linaro.org>
-Date: Sun, 26 Jan 2025 13:13:49 -0800
+ Sun, 26 Jan 2025 13:14:44 -0800 (PST)
+Message-ID: <f7c1590d-5c61-4408-92c9-7241aed2c6be@linaro.org>
+Date: Sun, 26 Jan 2025 13:14:43 -0800
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 14/20] accel/tcg: Move cpu_memory_rw_debug() user
- implementation to user-exec.c
+Subject: Re: [PATCH 15/20] cpus: Fix style in cpu-target.c
 To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  qemu-devel@nongnu.org
 Cc: Peter Maydell <peter.maydell@linaro.org>,
@@ -80,14 +79,14 @@ Cc: Peter Maydell <peter.maydell@linaro.org>,
  qemu-riscv@nongnu.org, David Hildenbrand <david@redhat.com>,
  qemu-s390x@nongnu.org, xen-devel@lists.xenproject.org
 References: <20250123234415.59850-1-philmd@linaro.org>
- <20250123234415.59850-15-philmd@linaro.org>
+ <20250123234415.59850-16-philmd@linaro.org>
 Content-Language: en-US
 From: Richard Henderson <richard.henderson@linaro.org>
-In-Reply-To: <20250123234415.59850-15-philmd@linaro.org>
+In-Reply-To: <20250123234415.59850-16-philmd@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::631;
- envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x631.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::102c;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pj1-x102c.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -111,55 +110,38 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 1/23/25 15:44, Philippe Mathieu-Daudé wrote:
-> cpu_memory_rw_debug() system implementation is defined in
-> system/physmem.c. Move the user one to accel/tcg/user-exec.c
-> to simplify cpu-target.c maintenance.
+> Fix style on code we are going to modify.
 > 
 > Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 > ---
->   accel/tcg/user-exec.c |  92 +++++++++++++++++++++++++++++++++++++
->   cpu-target.c          | 102 +-----------------------------------------
->   2 files changed, 94 insertions(+), 100 deletions(-)
+>   cpu-target.c | 9 ++++++---
+>   1 file changed, 6 insertions(+), 3 deletions(-)
 > 
-> diff --git a/accel/tcg/user-exec.c b/accel/tcg/user-exec.c
-> index c4454100ad7..e7e99a46087 100644
-> --- a/accel/tcg/user-exec.c
-> +++ b/accel/tcg/user-exec.c
-> @@ -19,6 +19,8 @@
->   #include "qemu/osdep.h"
->   #include "accel/tcg/cpu-ops.h"
->   #include "disas/disas.h"
-> +#include "exec/vaddr.h"
-> +#include "exec/tswap.h"
->   #include "exec/exec-all.h"
->   #include "tcg/tcg.h"
->   #include "qemu/bitops.h"
-> @@ -35,6 +37,7 @@
->   #include "internal-common.h"
->   #include "internal-target.h"
->   #include "tb-internal.h"
-> +#include "qemu.h"
+> diff --git a/cpu-target.c b/cpu-target.c
+> index 6d8b7825746..a2999e7c3c0 100644
+> --- a/cpu-target.c
+> +++ b/cpu-target.c
+> @@ -47,12 +47,15 @@ static int cpu_common_post_load(void *opaque, int version_id)
+>   {
+>       CPUState *cpu = opaque;
+>   
+> -    /* 0x01 was CPU_INTERRUPT_EXIT. This line can be removed when the
+> -       version_id is increased. */
+> +    /*
+> +     * 0x01 was CPU_INTERRUPT_EXIT. This line can be removed when the
+> +     * version_id is increased.
+> +     */
+>       cpu->interrupt_request &= ~0x01;
+>       tlb_flush(cpu);
+>   
+> -    /* loadvm has just updated the content of RAM, bypassing the
+> +    /*
+> +     * loadvm has just updated the content of RAM, bypassing the
+>        * usual mechanisms that ensure we flush TBs for writes to
+>        * memory we've translated code from. So we must flush all TBs,
+>        * which will now be stale.
 
-What is required from *-user/qemu.h?
-We really should not be including that in accel/tcg/.
-
-> +            if (flags & PAGE_WRITE) {
-> +                /* XXX: this code should not depend on lock_user */
-> +                p = lock_user(VERIFY_WRITE, addr, l, 0);
-
-Ah, here it is, complete with comment.
-
-Indeed, I don't think lock_user is required at all.  page_get_flags() and g2h() are 
-sufficient.
-
-> +                mmap_lock();
-> +                tb_invalidate_phys_range(addr, addr + l - 1);
-> +                written = pwrite(fd, buf, l,
-> +                                 (off_t)(uintptr_t)g2h_untagged(addr));
-> +                mmap_unlock();
-
-We probably want to own mmap_lock for the entire function.
-
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 
 r~
 
