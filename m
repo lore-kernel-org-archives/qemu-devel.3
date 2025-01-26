@@ -4,89 +4,67 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7BBB1C02181
-	for <qemu-devel@archiver.kernel.org>; Sun, 26 Jan 2025 13:32:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7D28DC02181
+	for <qemu-devel@archiver.kernel.org>; Sun, 26 Jan 2025 14:57:11 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tc2kg-00072n-Dp; Sun, 26 Jan 2025 08:32:38 -0500
+	id 1tc43m-0007HL-PY; Sun, 26 Jan 2025 09:56:26 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1tc2kZ-00070n-C4
- for qemu-devel@nongnu.org; Sun, 26 Jan 2025 08:32:33 -0500
-Received: from mail-pj1-x1029.google.com ([2607:f8b0:4864:20::1029])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1tc2kX-0004aU-UW
- for qemu-devel@nongnu.org; Sun, 26 Jan 2025 08:32:31 -0500
-Received: by mail-pj1-x1029.google.com with SMTP id
- 98e67ed59e1d1-2ee9a780de4so4752375a91.3
- for <qemu-devel@nongnu.org>; Sun, 26 Jan 2025 05:32:29 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1737898348; x=1738503148; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:to:subject:user-agent:mime-version:date:message-id:from
- :to:cc:subject:date:message-id:reply-to;
- bh=BUWt2eNQRdRiGergJ+CJi+bbHTkIz2AqkOY1oiKjqjM=;
- b=ganQdMxERvLNYXAL70k9oZoGvV/pN9EyM9sygLsUWBnN5RJR8ObZiVJfxrAsy3Kv7n
- +FdnYg18xGkqCgXrQrt0CypvPWw/cn2LtIVEMeZ4MrixKF8HwLdrPza1RN7TenzmLHvs
- Vf7SE7CFNraaJH6L/v2N6vPxHZaL1cFVZKS8AwXBBTri5zREN9a+xbiQGKBSUC/FAIuh
- fBC2gOkv5TpXYI95MUWC5FBHsyit9VtuH+hzQpAF0f2jNyzDi9O9vp0nePJi8WxNgg+n
- KbrZpPn3EPcvWzbHIVnBgZHYHhcpY7L5GPGHqZWpszSspsg2GCIq4nyC/aOcT4E156D9
- KqVA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1737898348; x=1738503148;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=BUWt2eNQRdRiGergJ+CJi+bbHTkIz2AqkOY1oiKjqjM=;
- b=IDC/6LEvslLHcfcF2l7gQE5vkVpHs/0OYWCcJmHoQAjJ4uHPaXuQo2vznh7hT4EH3z
- WuVCPSBhGYjjLigrNsKL63yD18Y/HWYZtVMV38QQbrAencxP74ldMXS+37gLMu546v1N
- g3wFADqQzyf4TXuqk4ge1kavY1dNOEQCyao4NG9qZsWe1sgCCBclZsv4XTUAuKKXjLi/
- ItMISZM5ECaRZgbyfPETu+y5TuiqXlUjZAVtZspByHlsfD2b3JaujkrCPHaeqUZyy+fr
- ttearkpiZuIfS4k5Kifkvkfl1ZZ/08HVujZmb5Gqq35S28PcQtCtXYNbLAMaHGMILfsv
- FkCQ==
-X-Gm-Message-State: AOJu0YxJuuxa2wtYy1rJz5oVEfVgI9rNJSr8vdT+LxzkWnRnclZNfk1h
- U57nDjHoTY//sixuIs0lg7F3ty6L8ANmZLffud9gXmuLmHpbgSj/l75huwVSgpVhfxYbsykijc2
- t
-X-Gm-Gg: ASbGncvcOPd/1I1L/vdX1eCaUqkpY5hAcsnAqPtv14wOiU5BzkphgxJNstPt5lquPqj
- c196LMLaozFHcJ3v7tJoCX7gDnrImlsZS1C1DrtlGlENdctUMsEtjv/eVdrEsPpSXguD0cqMzag
- LvNypKsFubvBqIKnnCKUtE+vm2MIIOxyxFEQ+KGjUztjOF4j4NEKxh4wGt6/bjpLf4rjsP681zI
- XfK3PJ4k1KkSfvXn00rHt1xOuxYqk+ScSO1whH0fb6i/7YrJHSCR7JABunTUVvWwbHpNNC3AAFa
- aH8JuGbY+npL5YuJVji916M=
-X-Google-Smtp-Source: AGHT+IEy/+5FKnYtwgohwBBrWUH1/Fysfx+ZBNNy/jxgHAfgT0g11ez6AHfLq5ovriNUf6KtDvf1lA==
-X-Received: by 2002:a17:90b:4ece:b0:2ee:c04a:4276 with SMTP id
- 98e67ed59e1d1-2f782c50befmr47621045a91.5.1737898348376; 
- Sun, 26 Jan 2025 05:32:28 -0800 (PST)
-Received: from [192.168.163.227] ([50.225.135.10])
- by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-2f7ffaf80dfsm5145366a91.33.2025.01.26.05.32.27
- for <qemu-devel@nongnu.org>
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Sun, 26 Jan 2025 05:32:28 -0800 (PST)
-Message-ID: <5ebe9700-a454-4e32-98c7-3a4885f6e9b2@linaro.org>
-Date: Sun, 26 Jan 2025 05:32:26 -0800
+ (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
+ id 1tc43k-0007Gl-Ot; Sun, 26 Jan 2025 09:56:25 -0500
+Received: from mgamail.intel.com ([192.198.163.15])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
+ id 1tc43i-0007gS-Sd; Sun, 26 Jan 2025 09:56:24 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+ d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+ t=1737903383; x=1769439383;
+ h=date:from:to:cc:subject:message-id:references:
+ mime-version:in-reply-to;
+ bh=EOfQD7wJs/heqaF+kayW8lEZfAd8tm/HXf2yRjISUGQ=;
+ b=K9n2pmwKvocriTgYZIAhMvbvtVDrEkLQQWnyU0plDEqDaHXKV5uXKerY
+ 22O57OsQu/dB5iWiGwEOxQ+QrgkeJpm1uZQv55fj8u68cx1RL45Ac4fyr
+ +ldQz/whQh+hwcXvuswq0p8b+6U1uDEF5frR+c4IQR7ablfy5rj1Tzr6e
+ QawRpmHEZR8NJtQE7PcmfPQRWX4XVLBssKTku3luXZOZuo4ul3+Ghw9XF
+ eyh6r+29E8OEIgjJiazTi5yaxlSHeULQxV1fNtGyBTT9yZiAzeGBh0Y3v
+ Lmf8iWiu92LwVBmJwa9ybwuxn2+et/sRid2/69I6+i/3/aAeCuhAcdQpg A==;
+X-CSE-ConnectionGUID: LERZRKl0TC+vERTlfODZqA==
+X-CSE-MsgGUID: /rl33qU8Qpm2twvDzd4dKA==
+X-IronPort-AV: E=McAfee;i="6700,10204,11327"; a="38543974"
+X-IronPort-AV: E=Sophos;i="6.13,236,1732608000"; d="scan'208";a="38543974"
+Received: from fmviesa003.fm.intel.com ([10.60.135.143])
+ by fmvoesa109.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 26 Jan 2025 06:56:18 -0800
+X-CSE-ConnectionGUID: Hty65QKfRR+5TFQbFn+wiw==
+X-CSE-MsgGUID: qgm0VFW0RtKHT7rZopBC/w==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.12,224,1728975600"; d="scan'208";a="112237615"
+Received: from liuzhao-optiplex-7080.sh.intel.com (HELO localhost)
+ ([10.239.160.39])
+ by fmviesa003.fm.intel.com with ESMTP; 26 Jan 2025 06:56:17 -0800
+Date: Sun, 26 Jan 2025 23:15:41 +0800
+From: Zhao Liu <zhao1.liu@intel.com>
+To: Paolo Bonzini <pbonzini@redhat.com>
+Cc: qemu-devel@nongnu.org, qemu-rust@nongnu.org
+Subject: Re: [PATCH 02/10] rust: qom: add reference counting functionality
+Message-ID: <Z5ZRnYDZdZcgyCsR@intel.com>
+References: <20250117194003.1173231-1-pbonzini@redhat.com>
+ <20250117194003.1173231-3-pbonzini@redhat.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 76/76] tests/tcg/x86_64/fma: add test for exact-denormal
- output
-To: qemu-devel@nongnu.org
-References: <20250124162836.2332150-1-peter.maydell@linaro.org>
- <20250124162836.2332150-77-peter.maydell@linaro.org>
-Content-Language: en-US
-From: Richard Henderson <richard.henderson@linaro.org>
-In-Reply-To: <20250124162836.2332150-77-peter.maydell@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1029;
- envelope-from=richard.henderson@linaro.org; helo=mail-pj1-x1029.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20250117194003.1173231-3-pbonzini@redhat.com>
+Received-SPF: pass client-ip=192.198.163.15; envelope-from=zhao1.liu@intel.com;
+ helo=mgamail.intel.com
+X-Spam_score_int: -56
+X-Spam_score: -5.7
+X-Spam_bar: -----
+X-Spam_report: (-5.7 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.299,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -103,40 +81,68 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 1/24/25 08:28, Peter Maydell wrote:
-> Add some fma test cases that check for correct handling of FTZ and
-> for the flag that indicates that the input denormal was consumed.
-> 
-> Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
-> ---
->   tests/tcg/x86_64/fma.c | 12 ++++++++++++
->   1 file changed, 12 insertions(+)
-> 
-> diff --git a/tests/tcg/x86_64/fma.c b/tests/tcg/x86_64/fma.c
-> index 46f863005ed..34219614c0a 100644
-> --- a/tests/tcg/x86_64/fma.c
-> +++ b/tests/tcg/x86_64/fma.c
-> @@ -82,6 +82,18 @@ static testdata tests[] = {
->        */
->       { 0x3fdfffffffffffff, 0x001fffffffffffff, 0x801fffffffffffff, true,
->         0x8010000000000000, 0x20 }, /* Enabling FTZ shouldn't change flags */
-> +    /*
-> +     * normal * 0 + a denormal. With FTZ disabled this gives an exact
-> +     * result (equal to the input denormal) that has consumed the denormal.
-> +     */
-> +    { 0x3cc8000000000000, 0x0000000000000000, 0x8008000000000000, false,
-> +      0x8008000000000000, 0x2 }, /* Denormal */
-> +    /*
-> +     * With FTZ enabled, this consumes the denormal, returns zero (because
-> +     * flushed) and indicates also Underflow and Precision.
-> +     */
-> +    { 0x3cc8000000000000, 0x0000000000000000, 0x8008000000000000, true,
-> +      0x8000000000000000, 0x32 }, /* Precision, Underflow, Denormal */
->   };
->   
->   int main(void)
+Hi Paolo,
 
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+On Fri, Jan 17, 2025 at 08:39:55PM +0100, Paolo Bonzini wrote:
+> Date: Fri, 17 Jan 2025 20:39:55 +0100
+> From: Paolo Bonzini <pbonzini@redhat.com>
+> Subject: [PATCH 02/10] rust: qom: add reference counting functionality
+> X-Mailer: git-send-email 2.47.1
+> 
+> Add a smart pointer that allows to add and remove references from
+> QOM objects.  It's important to note that while all QOM objects have a
+> reference count, in practice not all of them have their lifetime guarded
+> by it.
 
-r~
+About the background, I have a maybe common question...why Rust needs
+extra reference count guarding?
+
+For C side, I notice for child objects, which may be totally embedded in
+parent object, or may be pointed to by a pointer member in parent object
+(like pl011's clock), they usually become the Child<> property of their
+parents by object_initialize_child() (for embedded child) or
+object_property_add_child() (for child pointer).
+
+And both these 2 interfaces will increase the ref count in
+object_property_try_add_child(). With ref count increasing, it seems
+that the Child<> property also express the meaning like "the child
+object is 'owned' by its parent".
+
+So, what are the benefits of `Owned` when we also creates Child<>
+relationship?
+
+Additionally, I felt that the ref count may be a bit confusing. After
+creating Child<> property, the child object's ref count is sometimes 1,
+and other times it's 2:
+
+ * With object_initialize_child(), child's ref count is 1.
+
+ * With object_property_add_child() (usually after a object_new() to
+   create child first):
+
+   - sometimes user will call object_unref(), and then the ref count is 1.
+     E.g., x86_cpu_apic_create() in target/i386/cpu-apic.c.
+
+   - sometimes no object_unref(), then ref count is 2.
+     E.g., exynos4210_realize() in hw/arm/exynos4210.c, creats "cortex-a9".
+
+> Embedded objects, specifically, are confined to the lifetime of
+> the owner.
+> 
+> When writing Rust bindings this is important, because embedded objects are
+> *never* used through the "Owned<>" smart pointer that is introduced here.
+
+From this description, I understand your goal is:
+
+ * For embedded child object, its lifetimer is managed by its parent
+   object, through Child<> for the most cases.
+
+ * For non-embedded child - a pointer/reference in parent object, its
+   lifetimer is managed by `Owned<>` (and with Child<>).
+
+Am I right?
+
+Thanks,
+Zhao
+
 
