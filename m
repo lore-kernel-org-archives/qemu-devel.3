@@ -4,83 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2DC92C02181
-	for <qemu-devel@archiver.kernel.org>; Sun, 26 Jan 2025 13:31:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8A641C02181
+	for <qemu-devel@archiver.kernel.org>; Sun, 26 Jan 2025 13:32:18 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tc2jJ-0005NM-5R; Sun, 26 Jan 2025 08:31:13 -0500
+	id 1tc2k2-0006YN-4X; Sun, 26 Jan 2025 08:31:58 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1tc2j6-000590-3h
- for qemu-devel@nongnu.org; Sun, 26 Jan 2025 08:31:00 -0500
-Received: from mail-pl1-x62d.google.com ([2607:f8b0:4864:20::62d])
+ id 1tc2jz-0006YE-Pp
+ for qemu-devel@nongnu.org; Sun, 26 Jan 2025 08:31:56 -0500
+Received: from mail-pl1-x630.google.com ([2607:f8b0:4864:20::630])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1tc2j4-0004Xx-Hj
- for qemu-devel@nongnu.org; Sun, 26 Jan 2025 08:30:59 -0500
-Received: by mail-pl1-x62d.google.com with SMTP id
- d9443c01a7336-21a7ed0155cso58322355ad.3
- for <qemu-devel@nongnu.org>; Sun, 26 Jan 2025 05:30:58 -0800 (PST)
+ id 1tc2jy-0004Zf-9s
+ for qemu-devel@nongnu.org; Sun, 26 Jan 2025 08:31:55 -0500
+Received: by mail-pl1-x630.google.com with SMTP id
+ d9443c01a7336-216281bc30fso83616975ad.0
+ for <qemu-devel@nongnu.org>; Sun, 26 Jan 2025 05:31:53 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1737898257; x=1738503057; darn=nongnu.org;
+ d=linaro.org; s=google; t=1737898313; x=1738503113; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:to:subject:user-agent:mime-version:date:message-id:from
  :to:cc:subject:date:message-id:reply-to;
- bh=zlY71SNYgk7QC67qDDFZMs7k3zolz9eizgaAdkILSd8=;
- b=QQrwpafcUVe2euyffdZKQEbw7f/YhVGfHWgr4VpxE/y+2wwQJAqI0LSEnATZS1Vnpl
- 9hYHQ8r+EfjTx0eUlhldblijw2L3uUh9TsHHGmu+8/5RO44WvnaNVZVWpJblLsNSCWQy
- MPvdO6qAeTiC/G+NGlpv1Pb1LxNK6xSVQMArAclBrDNpHMb6kUytO7hH6Kgupu/crdZZ
- iqXoP33j0DylQmhPTMCkZcj+FvYFqZgYbFcTuGySVyWfonbEEGnHRFM5rtMT7H/Wcunq
- /PmqTC/1A32szQl3DEcFt4KYbzQ5uu+N4Jd061X4bZCnZcjMkZED9qSLk9PaxHexe2MZ
- WkRg==
+ bh=xwyNbU6M3MPZ/2O3Ag6nCxSFTBuaiEpD9VGNOD+P+nw=;
+ b=bQmAJGDXJxvkeQWn6p7RT2NhGOsFI8k0K+Q7p/EhWUTgzzuPNAR/OBQd8GO2t//Fhn
+ PgXHPT6/RH7i5pryXfcSKHbOOpVbLgeEZe1E4Nzgr1cfMgGoIaTo2A97zcTScVTsj6eb
+ 81PJRiP6nDDyfJr2sdxEMLhd0Hv/i+eiERvp6XI3fnTPVg8mN3cn95z6Od5dBM8euhpV
+ RC5wh86ciwJGWTR8ekHsyoBeg+L9cdVHUpvw6UpRBeck4eweqfZKomwRd1TtVN9cuFwM
+ dRwBUsHjFuUkbVuRpCCqZu1hzFNNtwSPwA4Rwkm/ntzpmLHERg6jUyNpOJlWPyggLgwB
+ yE7Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1737898257; x=1738503057;
+ d=1e100.net; s=20230601; t=1737898313; x=1738503113;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=zlY71SNYgk7QC67qDDFZMs7k3zolz9eizgaAdkILSd8=;
- b=h0GpJwFwWGjG+yZhv9RYuGM7++txUiOof75Mpi9OgUhUntUjOcnXKWZNN8QxDqB9Cg
- xXQW4SWVESB6JhWExenEuMyz28PQ99s3wDD3/ENC0dZetJQodQOdgWlupASp5ZQ3RAo8
- RsNxwnScBYex4UA8O2MxQs3uAD8uKA95KHAhv34BOCBbGsQCtQgWa5xKg16YxfxuIIUa
- 2PcecYzPJLwXCyojHxFxFoVLaZWKVP/lFmvtUsaq/MTSzGm945zm6+i9Q8MtMhU+zDlQ
- 04e1SvLqzSVegAFNppsIlBlHtSN4auOe6i5kMoRX0wRLVrzNBYXWlDCuNZbfYM5+0Uno
- dwXw==
-X-Gm-Message-State: AOJu0Yy/Kzj/ZeolTQajI7PHnIsBVTYcQbzj6WI5RgmAFspoJ/4JxyqV
- i7ZDVjLQX+d7WxPv+wzMmFi1BaI44jgzapFhVBCsc4AYgeGihR47qD+iSSbIBxmV39hFNGmBEBa
- f
-X-Gm-Gg: ASbGncuB7mbILkI0jcHe2BiGp7LbwUXZwuTHvXaWhKxu60frvynG7b+bTj0cvo5dF7x
- v8OcBnZgJeOEpN36KaeVWYrFK8w1ZbQG/5Jzqg0fV8T9SsssYX4QEVex5/rHhomlXNBZcaFajJD
- Y6/F1q9SU1XtUSMUvhNZhbF8p2mjaayeXvg3P9h0LZaAfoTf70CNbv/qU5nyFoo0J4CeN2RWwZq
- Nf64d3UTWiAKSFJ1kNfpxdok7IFG+0jGFQOLH4a8b/SpuSxOSZlijUVjbrvkhoSayENGymTY4Y1
- hWtfh8NmYphQkGUXGGIAT94=
-X-Google-Smtp-Source: AGHT+IEzf04gNhdEzLNeqyhDe4i5jJgAaD6u7glmqDD57SDrpHCTfeWRmiBfAakQqP0KTBu3MJJIwA==
-X-Received: by 2002:a17:903:124d:b0:21a:8dec:e57a with SMTP id
- d9443c01a7336-21c35619607mr505605535ad.48.1737898257126; 
- Sun, 26 Jan 2025 05:30:57 -0800 (PST)
+ bh=xwyNbU6M3MPZ/2O3Ag6nCxSFTBuaiEpD9VGNOD+P+nw=;
+ b=vWYiMILoyblU8VupfMX3VZPx/du9Rm7hY8EBnZY2mEX/y6XXLhWysb+Rahj57VJLrm
+ cyWzU9TXBaghzqzheggSPkmQwwV9F9raQVLjdZmeyAaco5AFEtQ/BV2ZerIMY+2Xs5Dw
+ l/4flUNBrYcpWWmCV+CaCZ0geE/jCKeD1rG5C8vcZSvTyLwA+CfSq46KOUlnY6GzMGy3
+ GoIDrTrSXkS9J9TqdRS8qmJuxCY/hHkNsW14M7J/6ml6dn1iro4AQSgk6TYN3H+k3zYv
+ BC0SeKbtksZs4aogZ9dBwViY6Km7nS4iyL9ggvKnJm6Q/dcVess40OphJOBtd/6eUYQB
+ GYgQ==
+X-Gm-Message-State: AOJu0Yx3LGUiJ9odUxPVp/AFixdVFq6LQkMVmJ3m0gtjVPHYhMl8yaSI
+ TKlwyg3qh3eLaQJp7RkjTQHM2sArV5Yg48iQa3brnCXZc+JSpA86mk97RjiGR0D5JClUixJbz67
+ 8
+X-Gm-Gg: ASbGncvaFH0U2OnoscUST9LcZYVt6TnbYpyro5FPXUgRDykNOXtDrEck0a5+ySKM4vd
+ GM5jfPZaIYY7+K+iG53iJQnbAff06KN6sGxs+8BMXy9ODVEJ4nbHXCi2d0TQLnbCYGSX/FMX5tJ
+ /ua77xxjBVnV7Dj0BPKw8sCSbMvB8vPyqQbjTNRS9tx9ds+92sw6F2LhH8AD9AVD30PzrXk+rMk
+ d2CEjk700opY+QGWsH50s3fYNQFaAGN1VAdDPVDmvks7gIbAXRKS/WF5BW3HGnYQa/Jwpe7nRcg
+ opourSyLYiBCurXVpvz9fWU=
+X-Google-Smtp-Source: AGHT+IFM69f9HHMPvH0cLfLcMJmOOFYaEQDrEPFMhrJ5rRjHGdfRaRcde2bqUZVfalP/qFAkAUkofw==
+X-Received: by 2002:a05:6a00:2184:b0:72a:8cc8:34aa with SMTP id
+ d2e1a72fcca58-72daf88b65dmr56629043b3a.0.1737898312978; 
+ Sun, 26 Jan 2025 05:31:52 -0800 (PST)
 Received: from [192.168.163.227] ([50.225.135.10])
  by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-21da3ea3adesm45773595ad.74.2025.01.26.05.30.56
+ 41be03b00d2f7-ac48e84d0b0sm4587162a12.5.2025.01.26.05.31.52
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Sun, 26 Jan 2025 05:30:56 -0800 (PST)
-Message-ID: <1ebf9d7c-8825-4c8b-8e79-18126e055865@linaro.org>
-Date: Sun, 26 Jan 2025 05:30:55 -0800
+ Sun, 26 Jan 2025 05:31:52 -0800 (PST)
+Message-ID: <dc67f5cc-358a-43b8-ada2-25ed57e9a80b@linaro.org>
+Date: Sun, 26 Jan 2025 05:31:50 -0800
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 74/76] target/i386: Use correct type for
- get_float_exception_flags() values
+Subject: Re: [PATCH 75/76] target/i386: Wire up MXCSR.DE and FPUS.DE correctly
 To: qemu-devel@nongnu.org
 References: <20250124162836.2332150-1-peter.maydell@linaro.org>
- <20250124162836.2332150-75-peter.maydell@linaro.org>
+ <20250124162836.2332150-76-peter.maydell@linaro.org>
 Content-Language: en-US
 From: Richard Henderson <richard.henderson@linaro.org>
-In-Reply-To: <20250124162836.2332150-75-peter.maydell@linaro.org>
+In-Reply-To: <20250124162836.2332150-76-peter.maydell@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::62d;
- envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x62d.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::630;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x630.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -104,22 +103,19 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 1/24/25 08:28, Peter Maydell wrote:
-> The softfloat get_float_exception_flags() function returns 'int', but
-> in various places in target/i386 we incorrectly store the returned
-> value into a uint8_t.  This currently has no ill effects because i386
-> doesn't care about any of the float_flag enum values above 0x40.
-> However, we want to start using float_flag_input_denormal_used, which
-> is 0x4000.
+> The x86 DE bit in the FPU and MXCSR status is supposed to be set
+> when an input denormal is consumed. We didn't previously report
+> this from softfloat, so the x86 code either simply didn't set
+> the DE bit or else incorrectly wired it up to denormal_flushed,
+> depending on which register you looked at.
 > 
-> Switch to using 'int' so that we can handle all the possible valid
-> float_flag_* values. This includes changing the return type of
-> save_exception_flags() and the argument to merge_exception_flags().
+> Now we have input_denormal_used we can wire up these DE bits
+> with the semantics they are supposed to have.
 > 
 > Signed-off-by: Peter Maydell<peter.maydell@linaro.org>
 > ---
->   target/i386/ops_sse.h        | 16 +++----
->   target/i386/tcg/fpu_helper.c | 82 ++++++++++++++++++------------------
->   2 files changed, 49 insertions(+), 49 deletions(-)
+>   target/i386/tcg/fpu_helper.c | 11 +++--------
+>   1 file changed, 3 insertions(+), 8 deletions(-)
 
 Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 
