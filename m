@@ -4,80 +4,68 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 00706C0218D
-	for <qemu-devel@archiver.kernel.org>; Sun, 26 Jan 2025 09:39:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id EEFDCC02181
+	for <qemu-devel@archiver.kernel.org>; Sun, 26 Jan 2025 11:44:59 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tbz66-00005h-Bv; Sun, 26 Jan 2025 04:38:30 -0500
+	id 1tc13g-0006qh-Ms; Sun, 26 Jan 2025 06:44:08 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <a.tarasenko@gmail.com>)
- id 1tbz64-00005K-7C
- for qemu-devel@nongnu.org; Sun, 26 Jan 2025 04:38:28 -0500
-Received: from mail-pj1-x1032.google.com ([2607:f8b0:4864:20::1032])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <a.tarasenko@gmail.com>)
- id 1tbz62-0005sS-Pl
- for qemu-devel@nongnu.org; Sun, 26 Jan 2025 04:38:27 -0500
-Received: by mail-pj1-x1032.google.com with SMTP id
- 98e67ed59e1d1-2ee67e9287fso6185016a91.0
- for <qemu-devel@nongnu.org>; Sun, 26 Jan 2025 01:38:25 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1737884304; x=1738489104; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=LYXFH/NXmdJOu2qSI4OYG8rVdkXuwqjNWBjqnq2+yJA=;
- b=jVeAr4qczYbXwzQamVdy+QxoVWZcY41NABcR0l2OTjyR+Fhhmk5/8Aj4dlPYvuitvA
- 9U16jXpz8e1RaGXRazorm/ADB9ZmMKBE8VHuZtbSXwwT2lRux6M2TBRq3dHR8wz2TQPy
- f9q4oY17EEhMqVEKriyXDdDGKiFL+Z8rJuBHjf6O++7+/bZBGTvoqVv8TVXdcS3w1m6l
- 1Cx7MS/H7MOXeSCTxsKtOqVCdC/dmwpvoWH4+ahIXERmTRJ920yOTQEauP9IDehJTw/1
- ddpC4M5w8QzJOdjoWFIPMsxMXkARwsOlKqJosB45jBrAJskBq2Jwg38s6Ztpzz9hn9Ji
- zKJw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1737884304; x=1738489104;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=LYXFH/NXmdJOu2qSI4OYG8rVdkXuwqjNWBjqnq2+yJA=;
- b=Xp62lc9Ur4IsFnxcXI1HA0usKbNw6PpgGUNGvY88uVwifhLpLj7K5ua9nebLnrCz6e
- kiqeCtu+rnSah+MkSdot0vjahV/9QNvOIP0hD6TQVLicuFZge5Wj+16a5OMQLJvT17RL
- xVUNYxe7pDU5bg8uQbO38CaTYR0XZ69p8POnU7oMxvXdIwbfERz+qhOvaZLR++WDQZ61
- BJXGvuit4wJy0tRVkxRYUerCA+Oy60DdpPZwl8l3Iy2mIYGjmzhpfl1azbH27wFWSp4e
- r7j2WBs+c2iyxfOQwRbQ5fN62ItRPz3frNtO/p1q/2nrGvUvOzYuhZJkBKy9m/YF5rIF
- Q/ag==
-X-Gm-Message-State: AOJu0YwJS3ThVWO60WbZvyrkwkYn8KT+bQKkIo8hZoqy5Bbr6rguSYFP
- GqVq1ED/oXtwcP9IzsVzQ46UsxsnK50prc5x3cucVaXQDALe/bkrXaCaTDtTqZeY2s0rxli4Oad
- w6eR1Zvw2eLD6JI5iOQ5pfVlrdLg=
-X-Gm-Gg: ASbGncttP3QwoWqdDpBzL/vVjqJrlHW82qa1PGxSJuuMRLhiMDPUcwda0kkCXjsWqk7
- u5GJ5BhK/4e5w84CcMfuYe9Y+v+FgPp/G25vOOUPwdyB6VN9JS+R8Q5AuTFlsdRI=
-X-Google-Smtp-Source: AGHT+IGqVvZdXnz2+Xr9q6hBvmVDSzZ9rePGU3HMi0I4Gn+lnCteHs++nccnsrXNgyBXPqjIaW4AymOBHGk8ojKt/rQ=
-X-Received: by 2002:a05:6a00:4647:b0:725:d1d5:6d86 with SMTP id
- d2e1a72fcca58-72dafb91467mr54034310b3a.19.1737884304599; Sun, 26 Jan 2025
- 01:38:24 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <yfliu2008@qq.com>)
+ id 1tc13M-0006il-Kp; Sun, 26 Jan 2025 06:43:49 -0500
+Received: from out203-205-221-233.mail.qq.com ([203.205.221.233])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <yfliu2008@qq.com>)
+ id 1tc13J-0000rL-St; Sun, 26 Jan 2025 06:43:48 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qq.com; s=s201512;
+ t=1737891796; bh=SGuCtHP2wIGnIRB/ebsPc462WzrpPSsQAk6sUNIN27U=;
+ h=From:To:Cc:Subject:Date;
+ b=G7UYaZFx/NnOfXsJ3MWt7zUOpwSqAfr7Lmnf5FIbH7RreVCe5oFZjtLrVyz8mnN41
+ bV9MHcB/P4lDPN1MZVhsVverstqhnyVk2eMO8fCZ+5aCXbKt1aPTDgGMopVPMaskQU
+ ZuF8SzSUOf4uD7YlNGcXk4PXepg23feoAK+SZ2fY=
+Received: from qq.com ([171.213.183.53])
+ by newxmesmtplogicsvrszb20-0.qq.com (NewEsmtp) with SMTP
+ id ACDB2857; Sun, 26 Jan 2025 19:43:13 +0800
+X-QQ-mid: xmsmtpt1737891793thhs5g8ew
+Message-ID: <tencent_033217F7900714A999352724A7790C3F0007@qq.com>
+X-QQ-XMAILINFO: MZtEYADUG4Ag1NtHGjbzsiOPOGZ4dUoJ/D39B8U0Yr5wNdi23JkzaenR+f94mr
+ ifqN/l5F7lMxAxJl7u3MKdsR2qhMmDGdpTS0dbcbWC/h9YJQkj/W+mYSz1ofeXijUy+g1XulYNB/
+ 02kENn/hFsfLB3U6b6Ia8dF/+Pe3AzMUGB/0Yy/GmcqzXxf4WQzpxi9GsGT/FokRzTSYnhF3xj6e
+ mrk7THKYPuqFO1ZQXMW/IUSTT4l0U5ShdZbcZUjBxTlOqdrylVyiqWEZbbErbZnFi2aM12ZIrS+f
+ KE1SR0kzsByALXqBjqMjm/pT6xvat8T0YW0S2WIpcdu1nvyvsXUCk/6y2+6TSg1RKthYPboomqtW
+ 7Il+LTHTV5dnvACKLo4fOjy+zrEVaYUczKr8DLdkFE5yvG8PmSW/DBeMVf24BpUPxd3Z10rw02CS
+ ej5N/0CVaw5HwzGB7hPwIm96RiLJCg1vmTfUx9obkmngGrn8BIb1ccSceU4It6R50PPHc9Rs0hI5
+ 7D0AIR6W4JkYCaHdc626KNj8Dxq6y3G8C5cZKGVRXlumWq3Lzf3OG4uY+a7Cutd86aMXgqgxD6Z8
+ oEn+rTDbFQSpVLWAsbdfGVhFkCsM4snPQjHkMHAOz6+f5xQtlY2B25WeeKEsFO6VTTy5lT/gv3B5
+ SQ1vUo2lnCUYpsEIgFy1mWm5K7WcwgcW9LRVV0udUI2QUDVpgYJCqvQi3XggJfCjm+midIB3IXGp
+ egyuvpPv4TRbkVpBemxpf5hwKA3J96b6Qa6CfJaag9BfQ022XX6yt0aJjv+aYVkj5mD1z/2CPtZh
+ HBos6rwlwBQ+tdLgHLd/0cbZJ6SnoZQvwFyOAWf80sFfHE9oA4+RTc8AgJe0CeN4JtYrujIFC+WY
+ rLJx19IvVEI38xyTe+COUI1jUPMOgYlUxl/j4yPBzkRCbRZELrX1XgWdlxLBHwZCiB5SKii3s8eX
+ FNahekw08zJDlo2F3Y8EIxzm8ZYoMJYzL7QI8DTBhgOL6qeYitIu9IeRFK8cM6
+X-QQ-XMRINFO: Mp0Kj//9VHAxr69bL5MkOOs=
+From: Yanfeng Liu <yfliu2008@qq.com>
+To: qemu-arm@nongnu.org
+Cc: qemu-devel@nongnu.org, peter.maydell@linaro.org, alistair.francis@wdc.com,
+ Yanfeng Liu <p-liuyanfeng9@xiaomi.com>, Yanfeng Liu <yfliu2008@qq.com>
+Subject: [PATCH] arm/cpu: revises cortex-r5
+Date: Sun, 26 Jan 2025 19:43:03 +0800
+X-OQ-MSGID: <20250126114303.3488-1-yfliu2008@qq.com>
+X-Mailer: git-send-email 2.34.1
 MIME-Version: 1.0
-References: <20231013212846.165724-1-richard.henderson@linaro.org>
- <20231013212846.165724-10-richard.henderson@linaro.org>
-In-Reply-To: <20231013212846.165724-10-richard.henderson@linaro.org>
-From: Artyom Tarasenko <atar4qemu@gmail.com>
-Date: Sun, 26 Jan 2025 10:38:13 +0100
-X-Gm-Features: AWEUYZn_EzrcM4KIR1X5J_psumpQBJAlIMxh0XPIe_OZfdvpFYgVq4P1j969Cs4
-Message-ID: <CAAM0arN7MW4+HYHiBDYa9YOqvaDVcDn4sOczAzZM1Tbjb9CsVQ@mail.gmail.com>
-Subject: Re: [PATCH 09/85] target/sparc: Move FBPfcc and FBfcc to decodetree
-To: Richard Henderson <richard.henderson@linaro.org>
-Cc: qemu-devel@nongnu.org, mark.cave-ayland@ilande.co.uk
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1032;
- envelope-from=a.tarasenko@gmail.com; helo=mail-pj1-x1032.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=203.205.221.233; envelope-from=yfliu2008@qq.com;
+ helo=out203-205-221-233.mail.qq.com
+X-Spam_score_int: 11
+X-Spam_score: 1.1
+X-Spam_bar: +
+X-Spam_report: (1.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1, DKIM_VALID=-0.1,
+ DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_ENVFROM_END_DIGIT=0.25,
+ FREEMAIL_FROM=0.001, HELO_DYNAMIC_IPADDR=1.951, RCVD_IN_DNSWL_NONE=-0.0001,
+ RCVD_IN_MSPIKE_H3=-0.01, RCVD_IN_MSPIKE_WL=-0.01,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ RDNS_DYNAMIC=0.982, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -93,38 +81,33 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Richard,
+From: Yanfeng Liu <p-liuyanfeng9@xiaomi.com>
 
-On Fri, Oct 13, 2023 at 11:29=E2=80=AFPM Richard Henderson
-<richard.henderson@linaro.org> wrote:
->
-> Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
-> ---
->  target/sparc/insns.decode |   4 ++
->  target/sparc/translate.c  | 105 +++++++++++++++-----------------------
->  2 files changed, 46 insertions(+), 63 deletions(-)
->
-> diff --git a/target/sparc/insns.decode b/target/sparc/insns.decode
-> index 838f4cdb1d..9ab3f2eb82 100644
-> --- a/target/sparc/insns.decode
-> +++ b/target/sparc/insns.decode
-> @@ -6,8 +6,12 @@
->  &bcc    i a cond cc
->  BPcc    00 a:1 cond:4   001 cc:1 0 - i:s19                 &bcc
->  Bicc    00 a:1 cond:4   010          i:s22                 &bcc cc=3D0
-> +FBPfcc  00 a:1 cond:4   101 cc:2   - i:s19                 &bcc
-> +FBfcc   00 a:1 cond:4   110          i:s22                 &bcc cc=3D0
->
->  %d16    20:s2 0:14
->  BPr     00 a:1 0 cond:3 011 ..     - rs1:5 ..............  i=3D%d16
->
-> +NCP     00 -   ----     111 ----------------------         # CBcc
+This enables generic timer feature for Cortex-R5 so that to support guests
+like NuttX RTOS.
 
-Do we have a convention, when do we use "-" and when "."?
-I plan to add a few instructions which do something with special
-registers on OpenSparc, but would be nop in QEMU. Shall I use dots? Or
-rather dashes?
+Signed-off-by: Yanfeng Liu <yfliu2008@qq.com>
+---
+ target/arm/tcg/cpu32.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-Regards,
-Artyom
+diff --git a/target/arm/tcg/cpu32.c b/target/arm/tcg/cpu32.c
+index 2ad2182525..5d68d515b4 100644
+--- a/target/arm/tcg/cpu32.c
++++ b/target/arm/tcg/cpu32.c
+@@ -590,9 +590,10 @@ static void cortex_r5_initfn(Object *obj)
+     set_feature(&cpu->env, ARM_FEATURE_V7MP);
+     set_feature(&cpu->env, ARM_FEATURE_PMSA);
+     set_feature(&cpu->env, ARM_FEATURE_PMU);
++    set_feature(&cpu->env, ARM_FEATURE_GENERIC_TIMER);
+     cpu->midr = 0x411fc153; /* r1p3 */
+     cpu->isar.id_pfr0 = 0x0131;
+-    cpu->isar.id_pfr1 = 0x001;
++    cpu->isar.id_pfr1 = 0x10001;
+     cpu->isar.id_dfr0 = 0x010400;
+     cpu->id_afr0 = 0x0;
+     cpu->isar.id_mmfr0 = 0x0210030;
+-- 
+2.34.1
+
 
