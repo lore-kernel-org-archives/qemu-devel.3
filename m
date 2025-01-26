@@ -4,84 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 74983C0218D
-	for <qemu-devel@archiver.kernel.org>; Sun, 26 Jan 2025 21:55:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5D809C0218D
+	for <qemu-devel@archiver.kernel.org>; Sun, 26 Jan 2025 21:55:53 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tcAao-0007pj-Ld; Sun, 26 Jan 2025 16:54:58 -0500
+	id 1tcAbd-0000mD-2u; Sun, 26 Jan 2025 16:55:49 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1tcAal-0007om-FO
- for qemu-devel@nongnu.org; Sun, 26 Jan 2025 16:54:56 -0500
-Received: from mail-pl1-x62c.google.com ([2607:f8b0:4864:20::62c])
+ id 1tcAbZ-0000jf-L5
+ for qemu-devel@nongnu.org; Sun, 26 Jan 2025 16:55:46 -0500
+Received: from mail-pl1-x634.google.com ([2607:f8b0:4864:20::634])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1tcAak-0006CF-4F
- for qemu-devel@nongnu.org; Sun, 26 Jan 2025 16:54:55 -0500
-Received: by mail-pl1-x62c.google.com with SMTP id
- d9443c01a7336-21654fdd5daso63423715ad.1
- for <qemu-devel@nongnu.org>; Sun, 26 Jan 2025 13:54:52 -0800 (PST)
+ id 1tcAbX-0006WN-Fq
+ for qemu-devel@nongnu.org; Sun, 26 Jan 2025 16:55:45 -0500
+Received: by mail-pl1-x634.google.com with SMTP id
+ d9443c01a7336-2156e078563so51932465ad.2
+ for <qemu-devel@nongnu.org>; Sun, 26 Jan 2025 13:55:43 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1737928491; x=1738533291; darn=nongnu.org;
+ d=linaro.org; s=google; t=1737928542; x=1738533342; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:to:subject:user-agent:mime-version:date:message-id:from
  :to:cc:subject:date:message-id:reply-to;
- bh=ffEZpz3v0M/irEE8yth40wZ74SwfVWMRm1d3CYWuQSE=;
- b=Y9vq40WXv0ledCjVUvgQR07zvFyi3pHg77OQae7/l6AikPG5fVlFnmtrvfQwJWN8tu
- 9J1uaDCkUOxhghgVBBEyjkiShNzy3hfa4tyMZ6d+VEdboD9metuFe+VY05EfqvrcKfR1
- o2kEstFo92vkvKISUrbcwmt+ZYxoqToZCeE4ReoT+3JfBG+vNL663oGWOVeVmuXe82B7
- 9F+c571EdV+bU12kCcDVze5NrOyLEiu0xtc0jpyUSnFu19t67UqhboASA4J9FjyQTLw1
- PRrL4sgWWZBX+3Hg8abSc6Gr3F9AHSyKiWnlZTrUam9p0J0SqrUurAeXhd2gk2mGkz+R
- 5XAg==
+ bh=DmWAfRYK5boijsv6cV4zUJ6voOlP5Qa6aGO+wBJIhrg=;
+ b=MFvLv8hUeIVFkjQeICT1nfghyhpZRXWB5bM9cn3CYpmqNp0n/TIy+L72eIMK6NWRnu
+ krVSle5i/FIfrZMYhcj/NyDpm7l1N4CcNBAG1KRpFEq1oGd4VnDxzK6VN/8bKi34cswW
+ mvFTCKea72sBufXuhJ3baBiX/ttGPL9cDMvnKkA+ErlKf4/B9g0faxJ4h5dEccxHf/t3
+ YbzzkM9oZ+fYwRMDLKy2IHRqsxA20ULu+/Bp0LdSNah/oV27m6Y2v3Kzp3DMfLpELfk6
+ IMZRUArgV5C5ycdlfU0fcZ0ZKVwrH4UweCaAa9SOl/kCfu4mBmRqgb1zk1/338qGZWZL
+ zcpA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1737928491; x=1738533291;
+ d=1e100.net; s=20230601; t=1737928542; x=1738533342;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=ffEZpz3v0M/irEE8yth40wZ74SwfVWMRm1d3CYWuQSE=;
- b=JKJ+LZ8IUZf5tmF0mLmB4NrppCebvPuK6q3Bop5K6UseqI85dYaIfgaUr18aIWD1M0
- NTcmgj9i7213wYAGiEQWtxjCdZ6sOcTEkuSiAVQD5Hh78AHcpMWK01u5NlxLhN9mgVFj
- zvwbsQpNy1dyF2RrotIyni6HZpzPd2sLk8eM9xPldKL5JAEpEMi2pQuzLElpvEktmUa5
- XR/q/65IBTz1LiGMKO6yRnP/cWKK8eF1+A0PzkCvQzmmwC1WqDpW4AaC9I5bFnuGjDKC
- hUPtqOdeWN+NEFAxhM3jG9jae9hRQWRfwC50kglc4QBusTgOIbAZUx812sLk5P4kPsRI
- GFQQ==
+ bh=DmWAfRYK5boijsv6cV4zUJ6voOlP5Qa6aGO+wBJIhrg=;
+ b=G2IQzykLBNlP6ZCY+LLjmo1h2tfOqkMR7yQVu6UmpH8xo8Cygqk7qDu2suzK1y+jPy
+ rONPD+0IB1RfTGplHF3aMz3G4iwximK03Owk6NTcwZkq2UjS3/C9HFT6Cqo2eflZQkUi
+ rVI2VAj2mZwk2xdnD/JFOBaq0eVu/zBjxf+40lOhkU5VDdononwojvaFwaGlocIT3Rqw
+ 3ywXxG8kXcxqAuG46FddnUjehULvBaxNpRCg5gZk13bO+jLZDgLNn3j09OkpQuTQu63Q
+ cbUwC6bomh9ugj6NGaxK9pZ3AdqqGUlPJ+YM47lVYtLZokO8Y7ORZ6pkco+Ej/rcw4Tl
+ OCFA==
 X-Forwarded-Encrypted: i=1;
- AJvYcCUmFDYGmyYoOIwyVVX+w/gwqsWVNpBHQ6Go7hxjYC9OqPY9e7Sg54CbVVtc8liysvz0z/1yBktupyv0@nongnu.org
-X-Gm-Message-State: AOJu0YwMkaYGsdueD/QFpwxvMere0UaeV0JGURRLk0tlt0l4QUSsu9aU
- KKXMndVJfbrUKUjqVAiAYy0b/ufM2xMWIQSIcONyKMT3FpyYXt0YR6MMwqF+xds=
-X-Gm-Gg: ASbGncvXJaM1rLLKV17OKALDH6BWHM0rGTqTJuXcizODvpy/UtUO0Xoqw20ylWnXqBH
- pe7oA1uBWWfFJLdiMBY0pfV3AAuT+y0eTcuzmIkP3gPEUGwtrigIUSzg2eWkCYWIf6enLymQDmL
- P9lBimASijWRvP0S7BZi+P18FY/D4KNybcAm9jeDScyMi6bHSmhE+sEyyXXX+h5f2VFZE2kXy8Q
- sLHGzPFWAgf0/NP7nOIcRn2iyuJjp75ZG7qHlg7VYpyFtXH6MmuK9Q+z7mx2WvZ/tUcfM4xicXd
- A63EdPbUR5LCXzgGixnBLFS9mQd6GwahQsvnsyUzzwdKtDs=
-X-Google-Smtp-Source: AGHT+IFIWJCj7Khb7BxA7AUT+6bLoqxKXiEUIeJc6aixgxHk7LI1FnnihQltAjGu4WhUtNoHh+aA2g==
-X-Received: by 2002:a05:6a00:bd7:b0:72d:b2ed:8788 with SMTP id
- d2e1a72fcca58-72db2ed89dbmr37433047b3a.10.1737928491319; 
- Sun, 26 Jan 2025 13:54:51 -0800 (PST)
+ AJvYcCUXNAire+RnSA57ORGpXwFDnVpB/I8MfWN8Tpv9J7x/2+3VITFyPW3Rqkxouj/JScbn1rNit0jJ6+HK@nongnu.org
+X-Gm-Message-State: AOJu0Yx5rLWfPTqXravMd9LlJ8KWckTVjbt41i7dl6wKakqTS7YBqSVZ
+ Wmxcxocv1SM/Di6WyjoOel7uwsYpXVnQ4CvgXYDU4T+ZSQPneYssGxNAfudC9Fw=
+X-Gm-Gg: ASbGncu/OWVwA7z+YIjB/qd1iBC05DiC63XxI3twx12e66m0jdeRSlR1oomG4sHnVP2
+ OdniuMPDyxZ9L07n6LBjqPuSxSknBbyvmqHZS1gAYJEGi61mOKxmMZBe1Vpl+0V73+DG7kOPkMI
+ Jcaae3k5CD9uWcpml8ZIhaCBi/WvaSDoXRrheCqlGyCyzuzEQBtQDTk8Oewt/4BARD32qgmTq9S
+ cWKKZ8pVa5PsSMu7P0NxKV3IIIy7XIdIsgoBsNv44lPrJeKYlxtbfTI+VRCtDtJmz0gMypXkn0h
+ CtFz7iQ6pIMe9Jr+Ag3JXt0i/QUkbTnZ2zsCZXyncA0i5yw=
+X-Google-Smtp-Source: AGHT+IE3YIYOdo1T6JkUVpGn/pfyuAiore5HYKcZFPZXQV4+qKy/YHVMga/C4yeWraXoaPQj9ToeeQ==
+X-Received: by 2002:a05:6a00:4289:b0:725:cfa3:bc76 with SMTP id
+ d2e1a72fcca58-72daf92bbcamr52517798b3a.4.1737928542145; 
+ Sun, 26 Jan 2025 13:55:42 -0800 (PST)
 Received: from [192.168.0.4] (174-21-71-127.tukw.qwest.net. [174.21.71.127])
  by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-72f8a69f401sm5679767b3a.29.2025.01.26.13.54.50
+ 41be03b00d2f7-ac490cb8bf7sm4212809a12.42.2025.01.26.13.55.41
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Sun, 26 Jan 2025 13:54:51 -0800 (PST)
-Message-ID: <cf54c2fc-f22c-4704-9a70-e0955d75d0b6@linaro.org>
-Date: Sun, 26 Jan 2025 13:54:49 -0800
+ Sun, 26 Jan 2025 13:55:41 -0800 (PST)
+Message-ID: <d5ae1267-988e-4e35-9db3-ac19f32f41a5@linaro.org>
+Date: Sun, 26 Jan 2025 13:55:40 -0800
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 7/9] hw/net: Have eTSEC device inherit from
+Subject: Re: [PATCH 8/9] hw/tpm: Have TPM TIS sysbus device inherit from
  DYNAMIC_SYS_BUS_DEVICE
 To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  qemu-devel@nongnu.org
 References: <20250125181343.59151-1-philmd@linaro.org>
- <20250125181343.59151-8-philmd@linaro.org>
+ <20250125181343.59151-9-philmd@linaro.org>
 Content-Language: en-US
 From: Richard Henderson <richard.henderson@linaro.org>
-In-Reply-To: <20250125181343.59151-8-philmd@linaro.org>
+In-Reply-To: <20250125181343.59151-9-philmd@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::62c;
- envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x62c.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::634;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x634.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -105,15 +105,16 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 1/25/25 10:13, Philippe Mathieu-Daudé wrote:
-> Because the network eTSEC device can be optionally plugged on the
+> Because the TPM TIS sysbus device can be optionally plugged on the
 > TYPE_PLATFORM_BUS_DEVICE, have it inherit TYPE_DYNAMIC_SYS_BUS_DEVICE.
 > 
 > Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 > ---
->   hw/net/fsl_etsec/etsec.c | 4 +---
->   1 file changed, 1 insertion(+), 3 deletions(-)
+>   hw/tpm/tpm_tis_sysbus.c | 3 +--
+>   1 file changed, 1 insertion(+), 2 deletions(-)
 
 Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+
 
 r~
 
