@@ -4,93 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BB210C0218C
-	for <qemu-devel@archiver.kernel.org>; Sat, 25 Jan 2025 23:06:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1CF65C02181
+	for <qemu-devel@archiver.kernel.org>; Sun, 26 Jan 2025 03:36:03 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tbpDy-0001hZ-Kz; Sat, 25 Jan 2025 18:05:58 -0500
+	id 1tbtQN-0004gP-Ct; Sat, 25 Jan 2025 22:35:03 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1tbpDw-0001hM-Jd
- for qemu-devel@nongnu.org; Sat, 25 Jan 2025 18:05:56 -0500
-Received: from mail-wm1-x32a.google.com ([2a00:1450:4864:20::32a])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1tbpDu-0004Cy-7z
- for qemu-devel@nongnu.org; Sat, 25 Jan 2025 18:05:55 -0500
-Received: by mail-wm1-x32a.google.com with SMTP id
- 5b1f17b1804b1-435f8f29f8aso22853735e9.2
- for <qemu-devel@nongnu.org>; Sat, 25 Jan 2025 15:05:52 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1737846351; x=1738451151; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:user-agent
- :references:in-reply-to:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=eercXj945o7oJZHQCGogwU6yR8cOAMFLmy9oLFZPEo8=;
- b=k7sxXjDXWYumpoTD3OGuzxFdLJKWQ1lTH8aUB0/lEw7bffBqIdFrMD8ytvu5CIG809
- jvsESHiR7ZDpdqyWl6U/JH9/Dd3g07JQCvckzxwE70GyQ4N0H2C7g0BnxR6AtxGi3+PZ
- lcF1ZQ9U3e5Y4ssDgcRLf0txwBWgvTR8MWYNTwdG6Tm/t2MrASQp+2IyrYqCOkqPBiAf
- /L/eNJoJtSpzufIO11XoGuBzlGHSpB2b2XXQGonNi8Fqe5m7XY7C7TU+1024DUMEWVzL
- 6bN3y0KCCFe+jATVNpGuaXsVsCFMdegsW8Emh2Kjz0g9j43snmlJtAJtBp+TcnEAs8XM
- Kpeg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1737846351; x=1738451151;
- h=content-transfer-encoding:mime-version:message-id:date:user-agent
- :references:in-reply-to:subject:cc:to:from:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=eercXj945o7oJZHQCGogwU6yR8cOAMFLmy9oLFZPEo8=;
- b=FNjwY4O9i1EwKti3qiBYUWgnzZNkmHZajfRZIUySVFsKvRX6LCWutu0qqpf18UP6p3
- HFs8QVQpeFc6zpIbCdWI73HusrShAVo+D/THiReOfTPdbTUY2sT52Aiph3kRtgVlA+m7
- h8uYkirHwdxdUr/PV9Ekw5Pf+VdNtv9+V7cbFCreq0AuwCjoxul0cS3h1VL2rRw9xn5H
- OOV7Nu2QIc5qpHsvw+malJ7eQVYFiaIf3GcfXgAMgx5Kad+IuySphtqdVDdSXp+dEqz6
- 5ac1dqOXShQK69VC4KNGxj+GNgGRIvr4Jix/vgP2nUnlYmPihW5fk7pVURa/UVVADp54
- io0A==
-X-Forwarded-Encrypted: i=1;
- AJvYcCU2dM9lH5yaQHGod+igCuqEZ30fT5iq8q96hskPuV4uFrhh/JfDRU9K3uLVIz77sa+4lztWnF5JA2pU@nongnu.org
-X-Gm-Message-State: AOJu0YxHEa7Wr6QmgoWD7e6QTujp9dlN3/E6U3X/eQxtOddeB+wIVSws
- lgPJW7vPzgNyA/CCygCh2TseD2YuX+C4edtD7YCzJHXGKyiqeeOsMyiGTC/lbOE=
-X-Gm-Gg: ASbGncvOXJSJVc+PzOL6L41ouF3m8VOellDmAkNjXcEisR7YioWRbAeu48e6B/BKFst
- eEaIuY7zKboQCsO3k+HZOrmoLROc9MoCKmrzWAAhgb3k0czEc8DfT5qDTndge+ULFoeXZVMqAr0
- us+xNbG6BHkz8RbLl74UK5wxdfpbacwDy8qwpSTbUitZZICydFXgXFcT8TPIWMWqYitJGORS7iS
- QVV11QQzCUx6+H+yBmc14pOQe99PfmRtxSGzKWVs/rhTO3BVbWCsOAc6J8k8MIflkes1XX8xP5r
- JpY=
-X-Google-Smtp-Source: AGHT+IFBrtduqdoIxt+Lashl/e2b6SIOlGV+KMO0hJYNQeiCYeSWDrZ3Hk7FZHhUDI4wIObI+7t77Q==
-X-Received: by 2002:a05:600c:1c93:b0:434:fbda:1f36 with SMTP id
- 5b1f17b1804b1-438914299bdmr309820165e9.20.1737846351098; 
- Sat, 25 Jan 2025 15:05:51 -0800 (PST)
-Received: from draig.lan ([85.9.250.243]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-438bd47eecasm75127935e9.6.2025.01.25.15.05.50
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sat, 25 Jan 2025 15:05:50 -0800 (PST)
-Received: from draig (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id 870A55F94A;
- Sat, 25 Jan 2025 23:05:49 +0000 (GMT)
-From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
-To: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Cc: Thomas Huth <thuth@redhat.com>,  qemu-devel@nongnu.org
-Subject: Re: [PULL 15/32] tests/functional/aarch64: add tests for FEAT_RME
-In-Reply-To: <a5f10050-1914-4f58-a71e-0703ab9a5a19@linaro.org> (Pierrick
- Bouvier's message of "Fri, 24 Jan 2025 08:18:56 -0800")
-References: <20250110131754.2769814-1-alex.bennee@linaro.org>
- <20250110131754.2769814-16-alex.bennee@linaro.org>
- <d9094d1e-10bc-4b15-9efe-ebc8bab5d158@redhat.com>
- <a5f10050-1914-4f58-a71e-0703ab9a5a19@linaro.org>
-User-Agent: mu4e 1.12.8; emacs 29.4
-Date: Sat, 25 Jan 2025 23:05:49 +0000
-Message-ID: <877c6itrxu.fsf@draig.linaro.org>
+ (Exim 4.90_1) (envelope-from <yilun.xu@linux.intel.com>)
+ id 1tbtQK-0004gB-SI
+ for qemu-devel@nongnu.org; Sat, 25 Jan 2025 22:35:00 -0500
+Received: from mgamail.intel.com ([192.198.163.18])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <yilun.xu@linux.intel.com>)
+ id 1tbtQI-0007d9-CW
+ for qemu-devel@nongnu.org; Sat, 25 Jan 2025 22:35:00 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+ d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+ t=1737862498; x=1769398498;
+ h=date:from:to:cc:subject:message-id:references:
+ mime-version:in-reply-to;
+ bh=AxH/KOjNZ7bGqZuAZbGbffqbSslE+PDxCx1zDr03ZS4=;
+ b=E4yXKNuzDgvr6Tcb0IwDRQeceiMqTgbM28HfMbQr9dINMk5w2iRsg0Nf
+ liPMib5QSCUMqHHubhnqL7gGscvHaovNnAJZpWa/wFRrTbY8d0YmpmyCf
+ Y1oPzzrOND5YOTNSHnE9JfxAMcVbntjcyUkjVtpW1wKLaWpBzrPT1jxWf
+ FfkwCI5qJaDEJNZA0y8ZfDkgNKNnprZxCCIRhjJk4hWzgHZAVxHq+7l36
+ QBt5ZbLgQ2RYa3T5T1V2JVuz7QnizsLMel6uqKtbYOZT9lHNd6XgaBXtG
+ paeuAQcHQOghmj/J/clin1ZvaeojdSwNYDYD1lOnqflyE3j9beyrAT4bU g==;
+X-CSE-ConnectionGUID: +QF6AiE6SDWGpJWoqniKHg==
+X-CSE-MsgGUID: x86jSWgWS/270fvcTduYIg==
+X-IronPort-AV: E=McAfee;i="6700,10204,11326"; a="37611636"
+X-IronPort-AV: E=Sophos;i="6.13,235,1732608000"; d="scan'208";a="37611636"
+Received: from orviesa004.jf.intel.com ([10.64.159.144])
+ by fmvoesa112.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 25 Jan 2025 19:34:53 -0800
+X-CSE-ConnectionGUID: LP9krpO0Rt6/x9mLgNPCXg==
+X-CSE-MsgGUID: Hmg03IfQRwyvDtewIGau1A==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.13,235,1732608000"; d="scan'208";a="113126474"
+Received: from yilunxu-optiplex-7050.sh.intel.com (HELO localhost)
+ ([10.239.159.165])
+ by orviesa004.jf.intel.com with ESMTP; 25 Jan 2025 19:34:50 -0800
+Date: Sun, 26 Jan 2025 11:34:29 +0800
+From: Xu Yilun <yilun.xu@linux.intel.com>
+To: Peter Xu <peterx@redhat.com>
+Cc: Alexey Kardashevskiy <aik@amd.com>, Chenyi Qiang <chenyi.qiang@intel.com>,
+ David Hildenbrand <david@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
+ Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Michael Roth <michael.roth@amd.com>, qemu-devel@nongnu.org,
+ kvm@vger.kernel.org, Williams Dan J <dan.j.williams@intel.com>,
+ Peng Chao P <chao.p.peng@intel.com>, Gao Chao <chao.gao@intel.com>,
+ Xu Yilun <yilun.xu@intel.com>
+Subject: Re: [PATCH 2/7] guest_memfd: Introduce an object to manage the
+ guest-memfd with RamDiscardManager
+Message-ID: <Z5WtRYSf7cjqITXH@yilunxu-OptiPlex-7050>
+References: <Z462F1Dwm6cUdCcy@x1n> <ZnmfUelBs3Cm0ZHd@yilunxu-OptiPlex-7050>
+ <Z4-6u5_9NChu_KZq@x1n>
+ <95a14f7d-4782-40b3-a55d-7cf67b911bbe@amd.com>
+ <Z5C9SzXxX7M1DBE3@yilunxu-OptiPlex-7050> <Z5EgFaWIyjIiOZnv@x1n>
+ <Z5INAQjxyYhwyc+1@yilunxu-OptiPlex-7050> <Z5Jylb73kDJ6HTEZ@x1n>
+ <Z5NhwW/IXaLfvjvb@yilunxu-OptiPlex-7050> <Z5O4BSCjlhhu4rrw@x1n>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::32a;
- envelope-from=alex.bennee@linaro.org; helo=mail-wm1-x32a.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <Z5O4BSCjlhhu4rrw@x1n>
+Received-SPF: none client-ip=192.198.163.18;
+ envelope-from=yilun.xu@linux.intel.com; helo=mgamail.intel.com
+X-Spam_score_int: -72
+X-Spam_score: -7.3
+X-Spam_bar: -------
+X-Spam_report: (-7.3 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-2.996,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_MED=-2.3,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_NONE=0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -107,59 +94,65 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Pierrick Bouvier <pierrick.bouvier@linaro.org> writes:
+> Definitely not suggesting to install an invalid pointer anywhere.  The
+> mapped pointer will still be valid for gmem for example, but the fault
+> isn't.  We need to differenciate two things (1) virtual address mapping,
+> then (2) permission and accesses on the folios / pages of the mapping.
+> Here I think it's okay if the host pointer is correctly mapped.
+> 
+> For your private MMIO use case, my question is if there's no host pointer
+> to be mapped anyway, then what's the benefit to make the MR to be ram=on?
+> Can we simply make it a normal IO memory region?  The only benefit of a
 
-> Hi Thomas,
->
-> On 1/24/25 05:29, Thomas Huth wrote:
->> On 10/01/2025 14.17, Alex Benn=C3=A9e wrote:
->>> From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
->>>
->>> This boot an OP-TEE environment, and launch a nested guest VM inside it
->>> using the Realms feature. We do it for virt and sbsa-ref platforms.
->>    Hi,
->> FWIW, I just saw this test_aarch64_rme_virt test failing once.
->> Looking at
->> the console.log, it seems like the guest crashed somewhere at the end of=
- the
->> firmware or very early in the kernel:
->> EFI stub: Booting Linux Kernel...
->> 2025-01-24 13:25:28,226:
->> 2025-01-24 13:25:28,226:
->> 2025-01-24 13:25:28,227: Synchronous Exception at 0x00000000BF526498
->> 2025-01-24 13:25:28,227:
->> 2025-01-24 13:25:28,227:
->> 2025-01-24 13:25:28,228: Synchronous Exception at 0x00000000BF526498
->> I wasn't able to reproduce it afterwards anymore, but in case
->> somebody runs
->> into this later again and wonders if it is a later regression: It happen=
-ed
->> for me with commit cf86770c7aa31ebd.
->>    Thomas
->>=20
->
-> I met this kind of error before (not on rme), and if I remember well,
-> it's coming from EDK2.
->
-> We might have a race condition here.
+The guest access to normal IO memory region would be emulated by QEMU,
+while private assigned MMIO requires guest direct access via Secure EPT.
 
-I'm measuring a 1-3% hit rates:
+Seems the existing code doesn't support guest direct access if
+mr->ram == false:
 
-  retry.py -n 400 -c -- ./pyvenv/bin/meson test --setup thorough --suite fu=
-nc-thorough func-aarch64-aarch64_rme_virt func-aarch64-aarch64_rme_sbsaref =
--v
+static void kvm_set_phys_mem(KVMMemoryListener *kml,
+                             MemoryRegionSection *section, bool add)
+{
+    [...]
 
-Gave:
+    if (!memory_region_is_ram(mr)) {
+        if (writable || !kvm_readonly_mem_allowed) {
+            return;
+        } else if (!mr->romd_mode) {
+            /* If the memory device is not in romd_mode, then we actually want
+             * to remove the kvm memory slot so all accesses will trap. */
+            add = false;
+        }
+    }
 
-  Results summary:
-  0: 388 times (97.00%), avg time 196.924 (7.99 varience/2.83 deviation)
-  1: 12 times (3.00%), avg time 1205.900 (0.00 varience/0.01 deviation)
-  Ran command 400 times, 388 passes
+    [...]
 
-It might be worth trying it under rr --chaos mode and seeing if that
-shakes anything out.
+    /* register the new slot */
+    do {
 
---=20
-Alex Benn=C3=A9e
-Virtualisation Tech Lead @ Linaro
+        [...]
+
+        err = kvm_set_user_memory_region(kml, mem, true);
+    }
+}
+
+> ram=on MR is, IMHO, being able to be accessed as RAM-like.  If there's no
+> host pointer at all, I don't yet understand how that helps private MMIO
+> from working.
+
+I expect private MMIO not accessible from host, but accessible from
+guest so has kvm_userspace_memory_region2 set. That means the resolving
+of its PFN during EPT fault cannot depends on host pointer.
+
+https://lore.kernel.org/all/20250107142719.179636-1-yilun.xu@linux.intel.com/
+
+Thanks,
+Yilun
+
+> 
+> Thanks,
+> 
+> -- 
+> Peter Xu
+> 
 
