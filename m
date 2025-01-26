@@ -4,73 +4,72 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 27C06C0218F
-	for <qemu-devel@archiver.kernel.org>; Sun, 26 Jan 2025 20:02:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 69597C0218F
+	for <qemu-devel@archiver.kernel.org>; Sun, 26 Jan 2025 20:02:14 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tc8pF-00051a-II; Sun, 26 Jan 2025 15:01:45 -0500
+	id 1tc8pI-00054S-PE; Sun, 26 Jan 2025 15:01:48 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1tc8ny-0003X3-E6
- for qemu-devel@nongnu.org; Sun, 26 Jan 2025 15:00:28 -0500
-Received: from mail-pl1-x62f.google.com ([2607:f8b0:4864:20::62f])
+ id 1tc8oj-0004I0-1D
+ for qemu-devel@nongnu.org; Sun, 26 Jan 2025 15:01:18 -0500
+Received: from mail-pl1-x632.google.com ([2607:f8b0:4864:20::632])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1tc8nv-0003Yl-RJ
- for qemu-devel@nongnu.org; Sun, 26 Jan 2025 15:00:26 -0500
-Received: by mail-pl1-x62f.google.com with SMTP id
- d9443c01a7336-2167141dfa1so65355045ad.1
- for <qemu-devel@nongnu.org>; Sun, 26 Jan 2025 12:00:23 -0800 (PST)
+ id 1tc8oX-0003hd-26
+ for qemu-devel@nongnu.org; Sun, 26 Jan 2025 15:01:03 -0500
+Received: by mail-pl1-x632.google.com with SMTP id
+ d9443c01a7336-2166022c5caso56947445ad.2
+ for <qemu-devel@nongnu.org>; Sun, 26 Jan 2025 12:01:00 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1737921622; x=1738526422; darn=nongnu.org;
+ d=linaro.org; s=google; t=1737921659; x=1738526459; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=r4XT8sSxnuMIL4fpPA4fND9osMVr0JW6MvSO5af0S0M=;
- b=OcE3bwx/vx4RyLJY0EdGPjrB64rKNR80VhhcqWOAM9X3CVqJ/ARvSj9Z0puv7SEHYm
- gaR8jpq2vxo9EDP7mmyvdpq5m0wISjMPNLxUXB+cglmnaU0yPa5yrUsTSxoD+eOMK+XH
- uRjv7l/KH9Ym9l2FRk4+zypCn60prK6xlyr+k/4JiST9cO9GW6dmojILijYa/egsq2ow
- GVdSv8me0GR8HmTjAq0OZq+y7//v7zIIHcOM0xIL8mscZUUIWqqS7PJUG4GS6263Ing4
- geZw5+UILhKD9+rpI8HD5BNHlAtAoyqWeT9GcEVVHPaozW+Iv+15FAL9hlXiFLoYNYHg
- 1RHQ==
+ bh=UTEeD0XMSKGDjb4UjeehXNP6i1pjJAUAQz3ZrUzV6BY=;
+ b=IhfovkTsNlpTlmE+0B6my/uNwrkrKslF9w3NMhA6vZ9i4MxSo2zxkjeEt362Y+RHRx
+ qeac3aJFSDFstdggaaFlINTHatwV5Ie0p7R7FDJccmX7V1m9grwwRGhJbLCOoiRX0rY7
+ ZhsJZuX2tlkjnvCajHSU7ftJx7b4Z5n9WYn90JYQ9K/36FfV8ArXn7sYWkbYoJt2nxfz
+ r9DY+O8M6wLL3E3PBeoSzXKbk1aGn3rMvMIu244wwRoxXWzBY8Tb6kno9bJ3eoaIZpGu
+ BC+O9OGENeaOcRGR3iT6oVXUng87FwrGUY7dhO0WTtphz8Tko3ybjCzTN5zEebbf1HQD
+ Rp5g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1737921622; x=1738526422;
+ d=1e100.net; s=20230601; t=1737921659; x=1738526459;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=r4XT8sSxnuMIL4fpPA4fND9osMVr0JW6MvSO5af0S0M=;
- b=YF1JX1r+sKmECtqVmM5PfdZoulJLoxF5A67lLMbxnJnZ4t8yKeM+CggLyjHx0YAGbB
- 5MpRw3UYpAYqFNNf0xtgV4dKmAaCmKENNISexUIsv5+MnKBmGmlwzd05ELCVujERWil1
- CfW+gK9XB24B2zOl+UlyUtNV1+YHep24wKGyDorJWF+7zFajzhxAYZXRk0H2hLYyL6ag
- 6AIrOculP1kDw+ACcoQlwZb2GNpbby0FrqD2X4jT0GMRrju0fJxCEb0pcdvzBDOwaNtP
- FMUWM0bgqBrmOOGZiZoGIMSFDI1BOyiXHAEEBMdXkJx/sw6mqsQOI+xBPEuRR1TTc17W
- Q76w==
+ bh=UTEeD0XMSKGDjb4UjeehXNP6i1pjJAUAQz3ZrUzV6BY=;
+ b=sqaD0jLAh3XYUh8ktd10fh/Xv6Dx7D3q3hFN9GPQKX9FIwtbldbjz9AeQybQgjW72J
+ WJrBEENedWwvDkChHUGVtnl5pfxC80OeX6b+F4rKJr/FSzp4vFTVSyMljxKNm/jMduQT
+ Bv9aZXBp3dMQq5sWFxSkDDApah9M9tx+1UPjmjz0HHwuNv1iYoKY3yAMkRfGT9ucoIn3
+ jOamiyGEmbVyHMgV7p1ckiJdIv+knjBmyYG/WQDypxgvsPzLU5O0aud9Sra66k1ioEQf
+ TsJj+uUsnzgXc0ld1WBVTVVrBWQQDgQHE8Qqd5i4V5B4pg6cFH4yhreDfO6nLqj4W58w
+ PB6w==
 X-Forwarded-Encrypted: i=1;
- AJvYcCVv4DhUxdHAsLhvE3cZZp6QVaCXLQMTns7twXkDAO+wwBxJW6Rj+fqJMP0KwaNr5Mz4AY7wFcyLf8Sh@nongnu.org
-X-Gm-Message-State: AOJu0YxG/7xL+mxDGu5nqhHCsCNIlZ5Hy1Hp6eBm96Ccy+M94SNTEe4H
- llk4LV2vKXHhQkLUC3fju2glMxxGl29fBnbdtJBz4aipN8BD5nwqwRhoDL2bc+U=
-X-Gm-Gg: ASbGncs2rtHdjM9+/WJoN+lX4+hyUDkFSWwocj9/NLKOLIWGbyNdmkpAZh9RzRaEAQ8
- rmt3PdsC24+8tOSsXcs2/LfVI+zc6RsZ04p9ZYKJMwHnIFnqVvWgXPPA2JvL+wF3OOmKL5YhR04
- 8T/bbpTK7cOp/e8mx4Oqdtm+znQb9Nk19Xq1LoxqTGiw2o4+LIM6P0vB53ExfdPdNTobiyIH92f
- rjOT7VslW+AoiJpLVTtWzkOMcb0E4vmsqtLUkMTz+IOHAdd/IiYqBdLoGvJ9vyvgn7UIdnksMlM
- wMvOPyiYei+LgsvjBNSJCNhnHM759Qlc4BdU8h5X5pnvuNQ=
-X-Google-Smtp-Source: AGHT+IFeEZa5nVv+mtwIu6A9hZNGU86wznbWhD1KnBdApuLwR5PvKTBdXCajk9Qtynkb/fqX/bwRng==
-X-Received: by 2002:a17:903:124b:b0:215:98e7:9b1 with SMTP id
- d9443c01a7336-21d993177a2mr227130405ad.5.1737921622320; 
- Sun, 26 Jan 2025 12:00:22 -0800 (PST)
+ AJvYcCUPSj2QDGH5Tnr27X5B5HigDgvBCC7hm1lVaHPNWD8Q71SAVjWpfuZwcU9NVTBDdD9X11DpwM5oS46n@nongnu.org
+X-Gm-Message-State: AOJu0YwLTxQjg3KSkqLsJeKmY7mQ8dkqbybPb9+MKLIO7MbqxBVbYB7F
+ cUX+zPv8Z/aNynoLW/MhS19dife/6p+0BrO5AV4PDwoGr0kWN7B1LirrmkgBtgI=
+X-Gm-Gg: ASbGncv+mY2CxXM3gnUmY1UZSdKejzUWUUP3/CKSZ7NO7YtoDQTAO5AqQAnMnmABqSn
+ FZWxz7Y1WqEILmRaGFp9lxbsqXg8nD3/FvGhkn4zzFSorPBqGXH50zII+mYWFmmJKXXD/tpFkFr
+ VpFvqvi25kcFsy/fNWZZ9JCxL6b8HOqz5ofD9N8BSXvZ32vmloCxXTqV00WbUC1uDmSAV7oeVym
+ +lQTkhL13WiaLsWd5nkwu2xYw7xOYR0EErsatcVYqbF118I0/nzpzNyFjKtzUOHN3jzMnaUwp/q
+ SmUzwrqqvM1EU/xnwCf9h3YsYY4IX5FV4Qaw4qb7oqpRTnQ=
+X-Google-Smtp-Source: AGHT+IHk4oCZBkQ3EpN55L01I/3BlN88uO4hEsi17nz9LIDtFF+nfMo3swxHhoOsy6uzlknivzwr8w==
+X-Received: by 2002:a05:6a21:99aa:b0:1e0:d89e:f5cc with SMTP id
+ adf61e73a8af0-1eb21485c9bmr55831284637.11.1737921659596; 
+ Sun, 26 Jan 2025 12:00:59 -0800 (PST)
 Received: from [192.168.0.4] (174-21-71-127.tukw.qwest.net. [174.21.71.127])
  by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-21da3d9e083sm49207555ad.25.2025.01.26.12.00.21
+ 41be03b00d2f7-ac495983698sm4974713a12.55.2025.01.26.12.00.58
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Sun, 26 Jan 2025 12:00:21 -0800 (PST)
-Message-ID: <bb022c56-2ec9-4e76-9bc6-efe2f7272806@linaro.org>
-Date: Sun, 26 Jan 2025 12:00:19 -0800
+ Sun, 26 Jan 2025 12:00:59 -0800 (PST)
+Message-ID: <aa1564ba-b51d-4278-9368-2849266f8685@linaro.org>
+Date: Sun, 26 Jan 2025 12:00:56 -0800
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 06/20] accel/kvm: Remove unused 'system/cpus.h' header in
- kvm-cpus.h
+Subject: Re: [PATCH 07/20] accel/tcg: Build tcg_flags helpers as common code
 To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  qemu-devel@nongnu.org
 Cc: Peter Maydell <peter.maydell@linaro.org>,
@@ -80,14 +79,14 @@ Cc: Peter Maydell <peter.maydell@linaro.org>,
  qemu-riscv@nongnu.org, David Hildenbrand <david@redhat.com>,
  qemu-s390x@nongnu.org, xen-devel@lists.xenproject.org
 References: <20250123234415.59850-1-philmd@linaro.org>
- <20250123234415.59850-7-philmd@linaro.org>
+ <20250123234415.59850-8-philmd@linaro.org>
 Content-Language: en-US
 From: Richard Henderson <richard.henderson@linaro.org>
-In-Reply-To: <20250123234415.59850-7-philmd@linaro.org>
+In-Reply-To: <20250123234415.59850-8-philmd@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::62f;
- envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x62f.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::632;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x632.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -111,27 +110,15 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 1/23/25 15:44, Philippe Mathieu-Daudé wrote:
-> Missed in commit b86f59c7155 ("accel: replace struct CpusAccel
-> with AccelOpsClass") which removed the single CpusAccel use.
+> While cpu-exec.c is build for each target,tcg_flags helpers
+> aren't target specific. Move them to cpu-exec-common.c to
+> build them once.
 > 
-> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+> Signed-off-by: Philippe Mathieu-Daudé<philmd@linaro.org>
 > ---
->   accel/kvm/kvm-cpus.h | 2 --
->   1 file changed, 2 deletions(-)
-> 
-> diff --git a/accel/kvm/kvm-cpus.h b/accel/kvm/kvm-cpus.h
-> index b5435286e42..688511151c8 100644
-> --- a/accel/kvm/kvm-cpus.h
-> +++ b/accel/kvm/kvm-cpus.h
-> @@ -10,8 +10,6 @@
->   #ifndef KVM_CPUS_H
->   #define KVM_CPUS_H
->   
-> -#include "system/cpus.h"
-> -
->   int kvm_init_vcpu(CPUState *cpu, Error **errp);
->   int kvm_cpu_exec(CPUState *cpu);
->   void kvm_destroy_vcpu(CPUState *cpu);
+>   accel/tcg/cpu-exec-common.c | 33 +++++++++++++++++++++++++++++++++
+>   accel/tcg/cpu-exec.c        | 32 --------------------------------
+>   2 files changed, 33 insertions(+), 32 deletions(-)
 
 Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 
