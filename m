@@ -4,83 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 70E70C02181
-	for <qemu-devel@archiver.kernel.org>; Sun, 26 Jan 2025 12:46:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CDED4C02181
+	for <qemu-devel@archiver.kernel.org>; Sun, 26 Jan 2025 12:47:30 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tc21Y-0007Ib-US; Sun, 26 Jan 2025 07:46:01 -0500
+	id 1tc22o-0007n7-Rw; Sun, 26 Jan 2025 07:47:18 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1tc21Y-0007IT-4h
- for qemu-devel@nongnu.org; Sun, 26 Jan 2025 07:46:00 -0500
-Received: from mail-pl1-x62a.google.com ([2607:f8b0:4864:20::62a])
+ id 1tc22d-0007jN-9G
+ for qemu-devel@nongnu.org; Sun, 26 Jan 2025 07:47:14 -0500
+Received: from mail-pl1-x631.google.com ([2607:f8b0:4864:20::631])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1tc21W-0007Wc-OM
- for qemu-devel@nongnu.org; Sun, 26 Jan 2025 07:45:59 -0500
-Received: by mail-pl1-x62a.google.com with SMTP id
- d9443c01a7336-218c8aca5f1so85164225ad.0
- for <qemu-devel@nongnu.org>; Sun, 26 Jan 2025 04:45:58 -0800 (PST)
+ id 1tc22b-0007ct-QL
+ for qemu-devel@nongnu.org; Sun, 26 Jan 2025 07:47:07 -0500
+Received: by mail-pl1-x631.google.com with SMTP id
+ d9443c01a7336-219f8263ae0so64585295ad.0
+ for <qemu-devel@nongnu.org>; Sun, 26 Jan 2025 04:47:05 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1737895557; x=1738500357; darn=nongnu.org;
+ d=linaro.org; s=google; t=1737895624; x=1738500424; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:to:subject:user-agent:mime-version:date:message-id:from
  :to:cc:subject:date:message-id:reply-to;
- bh=y0khpsUGa7gfVqDH4A1DW8013hnLaXZNt9HsFKni5FE=;
- b=kTqv/myZ0m+J4wzOjNNKmDPLCKi1AnXdc2MwZ8Y3xSf6clEx6xF+vQf7RqtY8k5J83
- uRX/nGC8AyaqcGU5rxp3X3jtJJcJ/N9at0v+zToKRds/6KoANm/Wgt3DLHOQ99Z/B86M
- q1QmVjRptjTmR2MfPFXaCoZjZ4SvtNkSx2Vhmm+Ur3qfhQF6ZwUeKdeWkggIFTSa+ltd
- NMKEr3QkZLj1OvFlSqMu299167CpAtrCXEpAdmD3pHfwF2j7T1UFWrrzaaiJ3YkfvOT4
- VO/9oajlJpyWMJxMaDRrsCLU/FLHCbXbmDYeDqDFGi6nZqQmBNPbMZ/0aZHwWbd9UPyG
- Vzsg==
+ bh=QIAPL1pMk8OSHWDEGQ2zge5zvjgqFB4uXwdxce+MT5Y=;
+ b=jYYvksqVFF6OajNgb4hg+kUUl5Ly+cs65FXf/0rzetiLMa1xZwMX+P1vpoukKMJy99
+ E70I4viIQejnfRN+JcVBS9GM0B/hQH93I/xisdzv/UHV7kTPaKm+RGsn7mgkqYPlUd6W
+ lln+U3zcmhaIi28CckqCg3jKiIIgMuRFAR8DnMMe3RakPSqIlKtIFZPrSBMI+XlLYkDr
+ RHZaxLI2VXA/PRDtrAbNETK2hlODjoSn47OiwF3gRdmMwZMkVYfz6oYxgaLHxab/UBTl
+ tmwfdTQcEyPe/3K9ZOGU08+6m6IHGeoexy4UMK7N5kGY82Bo7afqtUcs1WP4dxrADMRA
+ +cDw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1737895557; x=1738500357;
+ d=1e100.net; s=20230601; t=1737895624; x=1738500424;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=y0khpsUGa7gfVqDH4A1DW8013hnLaXZNt9HsFKni5FE=;
- b=mjWNVWutEhyskrfvx0Ti/kglF5i8qgXeh0YPxuNMfLc4ecYap8HtW4VRlOJP4YyFYh
- MI8LLS4FmO/t+xBeLgmiy0uIaw/jF02zAkGdthm2xU5NLFAdUS7bWaM8gu9nL/Inopts
- 6x4OLLLw0T+IQ/YtzIwSujgBpq5R18Wet+Yur1laBQ33MQzQkeD+k39APGbum6D//Es1
- zkjBGbZrrAVV1hrJV3k9vCy/LRKhIHdF47FoDlhzYd3jcS5D5OehTXY1WaCSbn3NZs5D
- 3MCZok9A7s2blaZSPXXQRCivwIH3vIILy0S4ADlUo+JtIMYrXWT/2wHKaYHkzO7Z4ZFS
- dhPg==
-X-Gm-Message-State: AOJu0YzumLs1I7oTRdrMriBT+4jpvcsIFmNsjgM0xcKaI9MvjUQag5m+
- u22h9AMDIWu0m1iogParyQI0Z7NCybiRckVsLJ1Avsb3x5fZOzV4zOrn33cKna5MefUyOCMpYde
- b
-X-Gm-Gg: ASbGnctyKBTzp9Pu76EcfcXtf2Wupx0rXqzZTVxQc1gCx4lytQeBPukpQp+GcgRTvAQ
- 73gzA+3+WbRzQfeEcVIkg+nU86igCJGhjebAMIZYfVxnzbEhEa+nrS9vGMGzXvXuh2Z71YPlS7O
- tl1pThrVIzbX9sLWPf0UTwZyfIFV7Va0ghI5bycDqwJUyCG7lSrpQKZ4mvGa4HEJCpdxU3bjb7I
- a4egE+u18TfIg9dSBKlYGMx/iIgpzLFsuMGQ/mZN01pMtDjHNQUS4nI/5FuepkmjkEOP3xHLBfd
- 9sRayFv3B9o0fAP6bNEWmEM=
-X-Google-Smtp-Source: AGHT+IGEWJf3AYpcFD8O+4O/iPJRAEEjnLDRBr/w7aisX0DmdiR+wzZLHrWsrQq5WSn9/5eu/tfy2Q==
-X-Received: by 2002:a17:902:f544:b0:215:e98c:c5bc with SMTP id
- d9443c01a7336-21c3563a33cmr649026655ad.48.1737895557315; 
- Sun, 26 Jan 2025 04:45:57 -0800 (PST)
+ bh=QIAPL1pMk8OSHWDEGQ2zge5zvjgqFB4uXwdxce+MT5Y=;
+ b=Rg6jN51+BNt4uYjFigUQoh02b1TX0ozJxOn4XaCe2u6zS4qUsq5xtsSD6A5eWR0J7U
+ gvGH1zuijmMzXC+MMoqGf+NJIDHsOM4ryLhmgDaVS+ocfvnGj3WhFO7rr/WCrSL/aRfs
+ ydzemOWXqvp2hXuSPLBh4OCAKlpnFUoz3bBUqxROkFKs/I0dEUcSGRnyXKXoSYlA5Pdu
+ RbqoqmOP6BIm2a3GDizC2D0SctsphNcpZ+qE99nwzUU0CAMCLn6fgFqGJjGopCG5ppef
+ VuWqdYQn2BvDYSbC7AZsoj9uZk+GG/0hN3KI1BZoKIGUwpxyMPUmr/HgVAg7+8lraNqb
+ tsFw==
+X-Gm-Message-State: AOJu0YyDJuy/DRQmxdFw/9+Q4weJWFmEiP5Iow/rdGWLNfbiRvUUnPDR
+ 6IcJ+e4xzfVdKfzUb5z/M4HSELfoj+CZXf98l/DboyPs/R5eVyC4vRe4ovv8sQf0/dUzEbMKtIk
+ C
+X-Gm-Gg: ASbGnct5c6RBBIJNax8qhTOir0GudGomMWMRdqR8mk917nQyxhAeoxjLs6OiWTZsBzo
+ mO7ezAZRT951heAAQsO5C1EzNnxcfOCydD9TX/4++Yz0+UC0Gzh8abhqNShfr3wH6UcZCJ2AnB8
+ W71K798cGmaNl8Djnb8kf7Bg5/zJQ7rWMWuQeVQNbDZyVq7eJVqb4SWlrdeHQGHpnnlZ1hE9gw7
+ ausOHKfvb58WFcqBliyMo1gRAGX7o9YAcuPfTi70RcMxsz0ka6mDuslIWKeJNHtlRB1ufRuwln8
+ oKRKXyzacgVOKAaZ4qQgjb0=
+X-Google-Smtp-Source: AGHT+IH12cSd1tGmUdeNovOJjw4piEF0QWnLEGVulov3pjFIjui6xyC+us5WKf6kD+daq+K4FPDCSg==
+X-Received: by 2002:a17:902:d48a:b0:212:67a5:ab2d with SMTP id
+ d9443c01a7336-21c35604a08mr684339665ad.44.1737895624278; 
+ Sun, 26 Jan 2025 04:47:04 -0800 (PST)
 Received: from [192.168.163.227] ([50.225.135.10])
  by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-21da3d9e1b2sm45152305ad.17.2025.01.26.04.45.56
+ d9443c01a7336-21da413f474sm46023815ad.130.2025.01.26.04.47.03
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Sun, 26 Jan 2025 04:45:56 -0800 (PST)
-Message-ID: <ba9bd56a-849d-43c4-ac9d-3a609217bd3c@linaro.org>
-Date: Sun, 26 Jan 2025 04:45:55 -0800
+ Sun, 26 Jan 2025 04:47:03 -0800 (PST)
+Message-ID: <930f5644-80de-46ad-a57c-7bf7a7a50fbe@linaro.org>
+Date: Sun, 26 Jan 2025 04:47:02 -0800
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 46/76] target/arm: Implement FPCR.AH semantics for vector
- FMIN/FMAX
+Subject: Re: [PATCH 47/76] target/arm: Implement FPCR.AH semantics for FMAXV
+ and FMINV
 To: qemu-devel@nongnu.org
 References: <20250124162836.2332150-1-peter.maydell@linaro.org>
- <20250124162836.2332150-47-peter.maydell@linaro.org>
+ <20250124162836.2332150-48-peter.maydell@linaro.org>
 Content-Language: en-US
 From: Richard Henderson <richard.henderson@linaro.org>
-In-Reply-To: <20250124162836.2332150-47-peter.maydell@linaro.org>
+In-Reply-To: <20250124162836.2332150-48-peter.maydell@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::62a;
- envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x62a.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::631;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x631.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -104,16 +104,15 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 1/24/25 08:28, Peter Maydell wrote:
-> Implement the FPCR.AH == 1 semantics for vector FMIN/FMAX, by
-> creating new_ah_ versions of the gvec helpers which invoke the
-> scalar fmin_ah and fmax_ah helpers on each element.
+> Implement the FPCR.AH semantics for FMAXV and FMINV.  These are the
+> "recursively reduce all lanes of a vector to a scalar result" insns;
+> we just need to use the_ah_ helper for the reduction step when
+> FPCR.AH == 1.
 > 
 > Signed-off-by: Peter Maydell<peter.maydell@linaro.org>
 > ---
->   target/arm/tcg/helper-sve.h    | 14 ++++++++++++++
->   target/arm/tcg/translate-a64.c | 21 +++++++++++++++++++--
->   target/arm/tcg/vec_helper.c    |  8 ++++++++
->   3 files changed, 41 insertions(+), 2 deletions(-)
+>   target/arm/tcg/translate-a64.c | 28 ++++++++++++++++++----------
+>   1 file changed, 18 insertions(+), 10 deletions(-)
 
 Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 
