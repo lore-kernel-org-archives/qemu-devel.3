@@ -4,68 +4,92 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id EEFDCC02181
-	for <qemu-devel@archiver.kernel.org>; Sun, 26 Jan 2025 11:44:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E4A18C02181
+	for <qemu-devel@archiver.kernel.org>; Sun, 26 Jan 2025 12:06:59 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tc13g-0006qh-Ms; Sun, 26 Jan 2025 06:44:08 -0500
+	id 1tc1On-0002WZ-H4; Sun, 26 Jan 2025 07:05:57 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <yfliu2008@qq.com>)
- id 1tc13M-0006il-Kp; Sun, 26 Jan 2025 06:43:49 -0500
-Received: from out203-205-221-233.mail.qq.com ([203.205.221.233])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <yfliu2008@qq.com>)
- id 1tc13J-0000rL-St; Sun, 26 Jan 2025 06:43:48 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qq.com; s=s201512;
- t=1737891796; bh=SGuCtHP2wIGnIRB/ebsPc462WzrpPSsQAk6sUNIN27U=;
- h=From:To:Cc:Subject:Date;
- b=G7UYaZFx/NnOfXsJ3MWt7zUOpwSqAfr7Lmnf5FIbH7RreVCe5oFZjtLrVyz8mnN41
- bV9MHcB/P4lDPN1MZVhsVverstqhnyVk2eMO8fCZ+5aCXbKt1aPTDgGMopVPMaskQU
- ZuF8SzSUOf4uD7YlNGcXk4PXepg23feoAK+SZ2fY=
-Received: from qq.com ([171.213.183.53])
- by newxmesmtplogicsvrszb20-0.qq.com (NewEsmtp) with SMTP
- id ACDB2857; Sun, 26 Jan 2025 19:43:13 +0800
-X-QQ-mid: xmsmtpt1737891793thhs5g8ew
-Message-ID: <tencent_033217F7900714A999352724A7790C3F0007@qq.com>
-X-QQ-XMAILINFO: MZtEYADUG4Ag1NtHGjbzsiOPOGZ4dUoJ/D39B8U0Yr5wNdi23JkzaenR+f94mr
- ifqN/l5F7lMxAxJl7u3MKdsR2qhMmDGdpTS0dbcbWC/h9YJQkj/W+mYSz1ofeXijUy+g1XulYNB/
- 02kENn/hFsfLB3U6b6Ia8dF/+Pe3AzMUGB/0Yy/GmcqzXxf4WQzpxi9GsGT/FokRzTSYnhF3xj6e
- mrk7THKYPuqFO1ZQXMW/IUSTT4l0U5ShdZbcZUjBxTlOqdrylVyiqWEZbbErbZnFi2aM12ZIrS+f
- KE1SR0kzsByALXqBjqMjm/pT6xvat8T0YW0S2WIpcdu1nvyvsXUCk/6y2+6TSg1RKthYPboomqtW
- 7Il+LTHTV5dnvACKLo4fOjy+zrEVaYUczKr8DLdkFE5yvG8PmSW/DBeMVf24BpUPxd3Z10rw02CS
- ej5N/0CVaw5HwzGB7hPwIm96RiLJCg1vmTfUx9obkmngGrn8BIb1ccSceU4It6R50PPHc9Rs0hI5
- 7D0AIR6W4JkYCaHdc626KNj8Dxq6y3G8C5cZKGVRXlumWq3Lzf3OG4uY+a7Cutd86aMXgqgxD6Z8
- oEn+rTDbFQSpVLWAsbdfGVhFkCsM4snPQjHkMHAOz6+f5xQtlY2B25WeeKEsFO6VTTy5lT/gv3B5
- SQ1vUo2lnCUYpsEIgFy1mWm5K7WcwgcW9LRVV0udUI2QUDVpgYJCqvQi3XggJfCjm+midIB3IXGp
- egyuvpPv4TRbkVpBemxpf5hwKA3J96b6Qa6CfJaag9BfQ022XX6yt0aJjv+aYVkj5mD1z/2CPtZh
- HBos6rwlwBQ+tdLgHLd/0cbZJ6SnoZQvwFyOAWf80sFfHE9oA4+RTc8AgJe0CeN4JtYrujIFC+WY
- rLJx19IvVEI38xyTe+COUI1jUPMOgYlUxl/j4yPBzkRCbRZELrX1XgWdlxLBHwZCiB5SKii3s8eX
- FNahekw08zJDlo2F3Y8EIxzm8ZYoMJYzL7QI8DTBhgOL6qeYitIu9IeRFK8cM6
-X-QQ-XMRINFO: Mp0Kj//9VHAxr69bL5MkOOs=
-From: Yanfeng Liu <yfliu2008@qq.com>
-To: qemu-arm@nongnu.org
-Cc: qemu-devel@nongnu.org, peter.maydell@linaro.org, alistair.francis@wdc.com,
- Yanfeng Liu <p-liuyanfeng9@xiaomi.com>, Yanfeng Liu <yfliu2008@qq.com>
-Subject: [PATCH] arm/cpu: revises cortex-r5
-Date: Sun, 26 Jan 2025 19:43:03 +0800
-X-OQ-MSGID: <20250126114303.3488-1-yfliu2008@qq.com>
-X-Mailer: git-send-email 2.34.1
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1tc1Ol-0002WD-QG
+ for qemu-devel@nongnu.org; Sun, 26 Jan 2025 07:05:55 -0500
+Received: from mail-pl1-x62a.google.com ([2607:f8b0:4864:20::62a])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1tc1Oj-0002x6-LZ
+ for qemu-devel@nongnu.org; Sun, 26 Jan 2025 07:05:55 -0500
+Received: by mail-pl1-x62a.google.com with SMTP id
+ d9443c01a7336-2166022c5caso54455275ad.2
+ for <qemu-devel@nongnu.org>; Sun, 26 Jan 2025 04:05:52 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1737893151; x=1738497951; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=NXI+fUyb1SarYqNh1xoKEHKVl7wDUkYCByfMkNIZbdc=;
+ b=pORJFjsNxbcLIUJLS5/kU4Y9q2uouseKqkpcUrK5YUgJwg3RqjFxbfGV6hubyDbiDx
+ Bg1A/U6yeasvBWvhdHyUsAYXpfygik829c3+d9bRQOaA7Bd0CMxcENLjSkyzKZneI0At
+ 4NEMEvUIV3zI49H/xSJubruPMU79RhlxqmW49/iE1cFa8GwUFdl6GboXYME7gjbz/SvR
+ Wq+Ltq0cXcY3lPvXv0fHSPkmlXIMfbkPGEbIO+P/uS7z0iT2EqJ7jTnJfJdQao7ucq5x
+ bf9M9YSzyGn8kS3AOJO8UgqFLEQ7i2LdvFkg4xia13yTZxQRV4rBLEhwfgcwIqMhUKo+
+ BA8g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1737893151; x=1738497951;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=NXI+fUyb1SarYqNh1xoKEHKVl7wDUkYCByfMkNIZbdc=;
+ b=WPb5Nbg8GiIiQPvD6YlQfknIcRMYZzbDUrL33PlPu6bhEArPzRyC6+DGP+/U1N+BPW
+ QEYZ4aNQrmxkoEm5GPiGkfSgmhHsTOA1coEGFY+uLq6bY5mlvXgjIstK1YxuLduGpjyd
+ n4BJoMzRyYpEwvBrZEii2zYKqQDGRt2qjPa6OXWE7MqOATSneWP/i46kdJNkfVCE2ixu
+ 6eOixi+sD2VSMCAO5e2vG8aoFt4WAfJPMwpu23QyjudRfjUmsoK1w9S5CYUO7stx1vtk
+ DNiylC7Gi/gKGeXgREvSJM00ogZBAtt6ag8JOBjJEpazU90CUd3gGArzL568e1eGy60h
+ sFaw==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCU3584pCFIfAYUmaquswlG8KK092gHYN3cI705fLIDxRuIIEcqpWFJqre6IpMsTd+wAya58Ermv5lDn@nongnu.org
+X-Gm-Message-State: AOJu0YwVwzCDaYpme8WLbkpMWRN09fbCD5hyDtG+T/LIAJ2ejOSGwloM
+ BnSS9G7iNdkuAqcSEVqfDHVuroboC2qwn0K0MoOYbQByYIzAwOfBAxj0NtpsxBA=
+X-Gm-Gg: ASbGncubnydNG87cFPoPhHBf2y+fwel1w7sqXwFbSEvKw5L0qHxOuwRFpOIk5TwkFxX
+ WdA7DFd+vOabe/BzmDMWRV9v0HkUktLYdnyOw9aw1ylWLIX2Iyco71ojGw0Bd1tJmcDYO/xoM3N
+ P3AojkyqgjjiO1G1EiNRFRKVyptcef0l7Yh8kDsd2GTZdSvxrTuWdWe/fzxh5W2hWsjvg8EypQb
+ TF6x93xr6ykuvkzJz6dHPT2cYzw+Z5IYKl+e/1qGRIVu5Ar9yY5Eu+qPtdaH49tj2gJZHof746A
+ NxDfuyytZ/ZE/Oh4IE2kkBA=
+X-Google-Smtp-Source: AGHT+IFqKr5yTtXZMFyoSn0W97cEkNJMOSVpqP0PzqugKfDuibgRP9SDGquELr4vTMfQXIQR3tTLrA==
+X-Received: by 2002:a17:902:cec6:b0:216:5568:38c9 with SMTP id
+ d9443c01a7336-21c35574ee8mr536779355ad.31.1737893151250; 
+ Sun, 26 Jan 2025 04:05:51 -0800 (PST)
+Received: from [192.168.163.227] ([50.225.135.10])
+ by smtp.gmail.com with ESMTPSA id
+ d9443c01a7336-21da3d9c95fsm45063465ad.14.2025.01.26.04.05.49
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Sun, 26 Jan 2025 04:05:50 -0800 (PST)
+Message-ID: <c3e345f9-5718-4459-b9a4-cb537468f981@linaro.org>
+Date: Sun, 26 Jan 2025 04:05:46 -0800
 MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 16/24] target/riscv: Move has_work() from CPUClass to
+ SysemuCPUOps
+To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ qemu-devel@nongnu.org
+Cc: qemu-riscv@nongnu.org
+References: <20250125160552.20546-1-philmd@linaro.org>
+ <20250125160552.20546-17-philmd@linaro.org>
+Content-Language: en-US
+From: Richard Henderson <richard.henderson@linaro.org>
+In-Reply-To: <20250125160552.20546-17-philmd@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=203.205.221.233; envelope-from=yfliu2008@qq.com;
- helo=out203-205-221-233.mail.qq.com
-X-Spam_score_int: 11
-X-Spam_score: 1.1
-X-Spam_bar: +
-X-Spam_report: (1.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1, DKIM_VALID=-0.1,
- DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_ENVFROM_END_DIGIT=0.25,
- FREEMAIL_FROM=0.001, HELO_DYNAMIC_IPADDR=1.951, RCVD_IN_DNSWL_NONE=-0.0001,
- RCVD_IN_MSPIKE_H3=-0.01, RCVD_IN_MSPIKE_WL=-0.01,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- RDNS_DYNAMIC=0.982, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=no autolearn_force=no
+Received-SPF: pass client-ip=2607:f8b0:4864:20::62a;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x62a.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -81,33 +105,16 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Yanfeng Liu <p-liuyanfeng9@xiaomi.com>
+On 1/25/25 08:05, Philippe Mathieu-Daudé wrote:
+> Signed-off-by: Philippe Mathieu-Daudé<philmd@linaro.org>
+> ---
+> Cc:qemu-riscv@nongnu.org
+> ---
+>   target/riscv/internals.h | 4 +++-
+>   target/riscv/cpu.c       | 8 +++-----
+>   2 files changed, 6 insertions(+), 6 deletions(-)
 
-This enables generic timer feature for Cortex-R5 so that to support guests
-like NuttX RTOS.
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 
-Signed-off-by: Yanfeng Liu <yfliu2008@qq.com>
----
- target/arm/tcg/cpu32.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
-
-diff --git a/target/arm/tcg/cpu32.c b/target/arm/tcg/cpu32.c
-index 2ad2182525..5d68d515b4 100644
---- a/target/arm/tcg/cpu32.c
-+++ b/target/arm/tcg/cpu32.c
-@@ -590,9 +590,10 @@ static void cortex_r5_initfn(Object *obj)
-     set_feature(&cpu->env, ARM_FEATURE_V7MP);
-     set_feature(&cpu->env, ARM_FEATURE_PMSA);
-     set_feature(&cpu->env, ARM_FEATURE_PMU);
-+    set_feature(&cpu->env, ARM_FEATURE_GENERIC_TIMER);
-     cpu->midr = 0x411fc153; /* r1p3 */
-     cpu->isar.id_pfr0 = 0x0131;
--    cpu->isar.id_pfr1 = 0x001;
-+    cpu->isar.id_pfr1 = 0x10001;
-     cpu->isar.id_dfr0 = 0x010400;
-     cpu->id_afr0 = 0x0;
-     cpu->isar.id_mmfr0 = 0x0210030;
--- 
-2.34.1
-
+r~
 
