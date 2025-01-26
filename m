@@ -4,88 +4,88 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 21E14C02181
-	for <qemu-devel@archiver.kernel.org>; Sun, 26 Jan 2025 04:01:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5B6C1C02181
+	for <qemu-devel@archiver.kernel.org>; Sun, 26 Jan 2025 04:03:25 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tbtp4-0000O2-6R; Sat, 25 Jan 2025 23:00:34 -0500
+	id 1tbtrV-0001Me-7j; Sat, 25 Jan 2025 23:03:05 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
- id 1tbtp2-0000MS-Fb
- for qemu-devel@nongnu.org; Sat, 25 Jan 2025 23:00:32 -0500
-Received: from mail-pj1-x1030.google.com ([2607:f8b0:4864:20::1030])
+ id 1tbtrU-0001MP-18
+ for qemu-devel@nongnu.org; Sat, 25 Jan 2025 23:03:04 -0500
+Received: from mail-pl1-x62e.google.com ([2607:f8b0:4864:20::62e])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
- id 1tbtoz-0001VR-JW
- for qemu-devel@nongnu.org; Sat, 25 Jan 2025 23:00:31 -0500
-Received: by mail-pj1-x1030.google.com with SMTP id
- 98e67ed59e1d1-2ef6c56032eso4543358a91.2
- for <qemu-devel@nongnu.org>; Sat, 25 Jan 2025 20:00:28 -0800 (PST)
+ id 1tbtrS-0001ev-Im
+ for qemu-devel@nongnu.org; Sat, 25 Jan 2025 23:03:03 -0500
+Received: by mail-pl1-x62e.google.com with SMTP id
+ d9443c01a7336-21631789fcdso58955275ad.1
+ for <qemu-devel@nongnu.org>; Sat, 25 Jan 2025 20:03:02 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=daynix-com.20230601.gappssmtp.com; s=20230601; t=1737864028; x=1738468828;
+ d=daynix-com.20230601.gappssmtp.com; s=20230601; t=1737864181; x=1738468981;
  darn=nongnu.org; 
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=McgbgCgV93+dm83QtiJSj8ab2FANHlW0yQFZsNeIDhQ=;
- b=mY60oNohDyg8oQ/ELinCTvghTCnTWsaicw9wYaCPA3fO/q2XfPyqEE/D825h7OpfXq
- FWFLGsICuIRigCt28gbmaPbf29fSveiwgtPn15ClYbtlQc1pFgK8jMd1B2qlQ+4rs5zc
- AGkMPMo59Xj1epGMEvsffiCIyLUppiarpibwgdaUDceQANaCA9Zfdpmiu3ksd9xL0e7O
- G1m1+u7mEongN1R7S9uT5+16ruBIZ+BfjqtUAIeSyObJS4X24vvZkXDbURDmytIiYivf
- pwAmO06NGStdOxj/EsAmmf6OE8XAVx6/9oBofjNldn6iEw1D1sjbQbWZV9XkTYpl6+qv
- rNtw==
+ bh=rlXAd1qPOHzbh/WdW2rkX5vHAatvrIrUCBoDhx8aIYI=;
+ b=trbhjB9sdv23i95yY3pavSXZnl62xTYhSg91uvVkta+yZ//nsSayIwd6dXCgxdTRup
+ RAIF7iQgy3qtj8PHzCKH1rDcEka1Q+jJ+Pj4DRso3LcbVXSZYsWPWzUtUAPeanLU7Pq+
+ kgd98DnH6ynzvuLBiUNnEENuL3TWjP6oZq0zoru2fiEvq8DkAJG8JKiW+elICsJciq8p
+ twLBbcBHdiDuXJAVUwez/gQdOSZ+OUXKGcQLnSEhshY2QiDoShpbgvp9PUuOU0LifEYh
+ +jBPLpNKMhgwparXXPZnCzzgPIwrcFrJomoKla3Lo3qmOs8h9nLUUVrqGSpolnI7d8AL
+ +QBw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1737864028; x=1738468828;
+ d=1e100.net; s=20230601; t=1737864181; x=1738468981;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=McgbgCgV93+dm83QtiJSj8ab2FANHlW0yQFZsNeIDhQ=;
- b=xRAYnOQCbKQzpwOK40x0K6ye40dV+FkKmFNi4vHAhyM+Um/WD8qLUb3imS5IoBB2xE
- 9YmGGBOZdjRTcgs+nQ6GZCXfH6pCkFLHgktl5olgYLGZZ9xspWJS4+nXb2mi8e56UMyx
- 5QCDGNFkoSdpWIZ2O5oM4x3aVBlmQBidTqEu/hVCHX1J9II3xiTRufpKiEVUn1iKEiR0
- Abu/ZdcKLO7bPqxWA14AysBogJLsj093kDrpWd97K3B6+EcizwTNWJddG0Ef96BgFhd3
- C8HlxReq8v924Rv1WSQ/XYtVvNLzvnbmzCSgH6C6N5S/q+AMMBUW+zLy4wvT8ZmxNZE+
- OxBg==
-X-Forwarded-Encrypted: i=1;
- AJvYcCWYo8raxklmVINkVWf84/p4i9SY5N7HNYeUXT1ASQtqxIKMCdDSZ+3ChBo0q/NQ9CS7dlq1pyW0qaGt@nongnu.org
-X-Gm-Message-State: AOJu0YxqRRvNnnfgvlEY/4+bPUJy/1OEDvbi4D/FagaAvOoYYt7LsQ73
- PbPYe/TcpGHnBNNSA6zk3/u8+G+wqMGdCIycoebY6d001c7Vzz90gSzW+yzfHa4=
-X-Gm-Gg: ASbGncukl4kWTAnejA35ulh3cflbzTtOwoURCL6Z92o44XE/z3BPRlbvJ2peKU6g2xd
- 29EBG913+8sLM0yhCAtZHRUkUBTWZUv8y3XdkmklN8RpYy5z+/rriJalmGuH9No0Db9EMMOX/Kh
- +VJ7EnU5wO+Fni4xRyZ7y3X6EGVJoWlhdtlli01iXnK2urC4JyRi8wjxiTGz7Pzwj6J8N2mbBKc
- 5LVUks5sDd0GubDx1E6xngM7gvEPKxw5h6kJu7hoKJknxBmowq811EQ8qAICxHubUcKT+HeHbXA
- FxqXUY8LGuDid/E=
-X-Google-Smtp-Source: AGHT+IHgJHoFnMZL9OUPzrWcZQJA+VIyLmE90xmFUyKqykMt1CA8keGgCGgamIriLsD40HR7dUouFw==
-X-Received: by 2002:a17:90b:1f8e:b0:2ef:114d:7bf8 with SMTP id
- 98e67ed59e1d1-2f782c4ff33mr46837064a91.6.1737864027464; 
- Sat, 25 Jan 2025 20:00:27 -0800 (PST)
+ bh=rlXAd1qPOHzbh/WdW2rkX5vHAatvrIrUCBoDhx8aIYI=;
+ b=Ln4GeO4Fdd35x32F3SDimR7+vT08avvGHMq/yobapyrSkB8/R6fYRRL4kiPggNicQy
+ t67wKWf33wBzHa35RJLmSBMw9tokubvNOmIBWPkZ4LWWRX8CZaNwOkSwmN4rcleLbs7K
+ zuNZ88GvKryTqgX5IV44gfjU0+d6eA+0dPAtba15fQKZbpOmVYeImB8gi70t7ZO/Bhqj
+ LT6WUABfP96bC8yaffKTKbnpnioCKNjuhYRANGP3Uwc4dc9UUiEMHAZ6QjH3YKe+KaBR
+ MpSgMhEbEsfZrb5zn2vZRSmOaFHGTS/gGqa28epEP1dtQ156oxXiZ7GK4Lp8+K7xaCUR
+ CXYQ==
+X-Gm-Message-State: AOJu0Yx7QWOPbk0si/XAhAIk6Jy+aC9uNSTHVUJLYNrJCivj0wZ4AlHd
+ RY2ShnhdCEUp1svUvSQat6AQU6RiC2dYilUbXX181cK9D70mydkdhSAKy8qA6kc=
+X-Gm-Gg: ASbGncvmtHmNbhR9POiYZDS6lBkKmqCEvf81+PlK2DVDah6oWj2NfgUtntc74r2BrW+
+ PqehFXh+TROPYV/0HA2cHRXN4hHeU83MdFaalTts3+D1In2UyixL0tpwINta7nycnfDe0SudfEp
+ Nd1oUyrqky6dYQXxxgL+wYhBH/Xa21wiiEVGmbFgXNBWwM08ZXYzffe+hXAqWqwTMgD1xUMXlKW
+ WCyeOWqShVt/te7eW706UdVmQYLLw4Q2gEOjmhgwgdFAe/eyCq2H86gkdNZoIA1LjdhLz0bzSOS
+ IUasih76OFuJCmQ=
+X-Google-Smtp-Source: AGHT+IHP//wBUFqOiAMnWOWww+WNH7JYS9EeEf3Ipp/cZy2IgXsR9Rbt49bX4EYvZn/+5jRwKj+P3Q==
+X-Received: by 2002:a05:6a21:6d9f:b0:1e1:ad90:dda6 with SMTP id
+ adf61e73a8af0-1eb697c1bb0mr21999765637.20.1737864180838; 
+ Sat, 25 Jan 2025 20:03:00 -0800 (PST)
 Received: from [157.82.203.37] ([157.82.203.37])
  by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-2f7ffa44ca2sm4316307a91.3.2025.01.25.20.00.24
+ d2e1a72fcca58-72f8a69fb30sm4524613b3a.32.2025.01.25.20.02.58
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Sat, 25 Jan 2025 20:00:26 -0800 (PST)
-Message-ID: <bb859df9-cb00-4ae7-a851-ac8d1d73b1cf@daynix.com>
-Date: Sun, 26 Jan 2025 13:00:23 +0900
+ Sat, 25 Jan 2025 20:03:00 -0800 (PST)
+Message-ID: <609e75fd-0430-440c-acac-04eb3e1b29f4@daynix.com>
+Date: Sun, 26 Jan 2025 13:02:57 +0900
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v7 1/6] coreaudio: Remove unnecessary explicit casts
-To: Christian Schoenebeck <qemu_oss@crudebyte.com>,
- Gerd Hoffmann <kraxel@redhat.com>, =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?=
- <philmd@linaro.org>, BALATON Zoltan <balaton@eik.bme.hu>,
- qemu-devel@nongnu.org
-Cc: devel@daynix.com
-References: <20250124-coreaudio-v7-0-9d9a4d91db37@daynix.com>
- <4562400.zP1BOZzIia@silver> <b9116fa5-aafd-4dc8-8b31-86b079f1ad9c@daynix.com>
- <2917255.Mg30ljiku8@silver>
+Subject: Re: [PATCH v5 3/4] audio: Add functions to initialize buffers
+To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Gerd Hoffmann <kraxel@redhat.com>,
+ Christian Schoenebeck <qemu_oss@crudebyte.com>
+Cc: qemu-devel@nongnu.org, devel@daynix.com,
+ Phil Dennis-Jordan <phil@philjordan.eu>
+References: <20250123-coreaudio-v5-0-6873df4215a0@daynix.com>
+ <20250123-coreaudio-v5-3-6873df4215a0@daynix.com>
+ <7a020e94-841a-4a3c-bdea-12c00579ef3f@linaro.org>
+ <f62af9d4-36ae-45ea-8aa6-9139502da47e@daynix.com>
+ <fbf13036-18b3-4aa5-b514-e6c8484ff33e@linaro.org>
 Content-Language: en-US
 From: Akihiko Odaki <akihiko.odaki@daynix.com>
-In-Reply-To: <2917255.Mg30ljiku8@silver>
+In-Reply-To: <fbf13036-18b3-4aa5-b514-e6c8484ff33e@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1030;
- envelope-from=akihiko.odaki@daynix.com; helo=mail-pj1-x1030.google.com
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::62e;
+ envelope-from=akihiko.odaki@daynix.com; helo=mail-pl1-x62e.google.com
 X-Spam_score_int: -18
 X-Spam_score: -1.9
 X-Spam_bar: -
@@ -107,75 +107,48 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 2025/01/25 19:41, Christian Schoenebeck wrote:
-> On Saturday, January 25, 2025 6:58:30 AM CET Akihiko Odaki wrote:
->> On 2025/01/24 18:39, Christian Schoenebeck wrote:
->>> On Friday, January 24, 2025 6:12:04 AM CET Akihiko Odaki wrote:
->>>> coreaudio had unnecessary explicit casts and they had extra whitespaces
->>>> around them so remove them.
+On 2025/01/26 3:25, Philippe Mathieu-Daudé wrote:
+> On 24/1/25 05:58, Akihiko Odaki wrote:
+>> On 2025/01/23 17:43, Philippe Mathieu-Daudé wrote:
+>>> Hi Akihiko,
+>>>
+>>> On 23/1/25 08:18, Akihiko Odaki wrote:
+>>>> These functions can be used to re-initialize buffers when hardware
+>>>> parameters change due to device hotplug, for example.
 >>>>
 >>>> Signed-off-by: Akihiko Odaki <akihiko.odaki@daynix.com>
+>>>> Reviewed-by: Phil Dennis-Jordan <phil@philjordan.eu>
+>>>> Reviewed-by: Christian Schoenebeck <qemu_oss@crudebyte.com>
 >>>> ---
->>>>    audio/coreaudio.m | 6 +++---
->>>>    1 file changed, 3 insertions(+), 3 deletions(-)
->>>>
->>>> diff --git a/audio/coreaudio.m b/audio/coreaudio.m
->>>> index cadd729d50537850d81718b9284efed5877d9185..0b67347ad7e8c43a77af308a1a3a654dd7084083 100644
->>>> --- a/audio/coreaudio.m
->>>> +++ b/audio/coreaudio.m
->>>> @@ -309,7 +309,7 @@ static OSStatus audioDeviceIOProc(
->>>>        UInt32 frameCount, pending_frames;
->>>>        void *out = outOutputData->mBuffers[0].mData;
->>>>        HWVoiceOut *hw = hwptr;
->>>> -    coreaudioVoiceOut *core = (coreaudioVoiceOut *) hwptr;
->>>> +    coreaudioVoiceOut *core = hwptr;
+>>>>   audio/audio_int.h |  2 ++
+>>>>   audio/audio.c     | 24 ++++++++++++++++++------
+>>>>   2 files changed, 20 insertions(+), 6 deletions(-)
 >>>
->>> Well, hwptr is void*, so both versions are fine.
 >>>
->>> struct name 'coreaudioVoiceOut' should start with upper case BTW.
+>>>> index 
+>>>> 87b4e9b6f2f356b6e5e972eabc100cf270fcbc29..17c6bbd0ae9e6ff810c0989dbfa1710ef674ff0a 100644
+>>>> --- a/audio/audio.c
+>>>> +++ b/audio/audio.c
+>>>> @@ -1407,12 +1407,18 @@ void audio_run(AudioState *s, const char *msg)
+>>>>   #endif
+>>>>   }
+>>>> +void audio_generic_initialize_buffer_in(HWVoiceIn *hw)
+>>>> +{
+>>>> +    g_free(hw->buf_emul);
+>>>> +    hw->size_emul = hw->samples * hw->info.bytes_per_frame;
+>>>> +    hw->buf_emul = g_malloc(hw->size_emul);
 >>>
->>>>        size_t len;
->>>>    
->>>>        if (coreaudio_buf_lock (core, "audioDeviceIOProc")) {
->>>> @@ -392,10 +392,10 @@ static OSStatus init_out_device(coreaudioVoiceOut *core)
->>>>        }
->>>>    
->>>>        if (frameRange.mMinimum > core->frameSizeSetting) {
->>>> -        core->audioDevicePropertyBufferFrameSize = (UInt32) frameRange.mMinimum;
->>>> +        core->audioDevicePropertyBufferFrameSize = frameRange.mMinimum;
->>>>            dolog ("warning: Upsizing Buffer Frames to %f\n", frameRange.mMinimum);
->>>>        } else if (frameRange.mMaximum < core->frameSizeSetting) {
->>>> -        core->audioDevicePropertyBufferFrameSize = (UInt32) frameRange.mMaximum;
->>>> +        core->audioDevicePropertyBufferFrameSize = frameRange.mMaximum;
->>>>            dolog ("warning: Downsizing Buffer Frames to %f\n", frameRange.mMaximum);
->>>>        } else {
->>>>            core->audioDevicePropertyBufferFrameSize = core->frameSizeSetting;
->>>
->>> Those casts are actually necessary, as AudioValueRange's members are Float64
->>> (a.k.a. double) types.
+>>> What about using g_realloc()? Otherwise LGTM.
 >>
->> Explicit casts are unnecessary. Implicit casts still happen at every
->> line changed with this patch.
+>> g_realloc() will copy the content, which is not necessary here.
 > 
-> Wooo, I wasn't aware that QEMU doesn't use -Wconversion. I am not used to
-> that. To me it makes sense to warn especially for things like implicit casts
-> from floating point to integer, as it would be the case here.
+> Oh I missed that! Maybe worth mentioning? Anyway, just nitpicking...
+> 
+> hw->size_emul = hw->samples * hw->info.bytes_per_frame;
+> g_free(hw->buf_emul); /* Discard previous content, no need to realloc */
+> hw->buf_emul = g_malloc(hw->size_emul);
 
-I tried '--extra-cflags=-Wconversion -Wno-sign-conversion -Wno-error'. 
-It may be actually spotting real bugs, there are just too many warnings.
-
-For this particular case, the implicit casts will never change the 
-values because the actual values are integers.
-
-AudioHardware.h says kAudioDevicePropertyBufferFrameSizeRange is "an 
-AudioValueRange indicating the minimum and maximum values, inclusive, 
-for kAudioDevicePropertyBufferFrameSize." 
-kAudioDevicePropertyBufferFrameSize is UInt32 so the values should 
-always be in the range of UInt32. The number of frames cannot be a 
-fractional value after all. They have Float64 values probably because 
-Apple were so lazy that they reused the AudioValueRange type that has 
-Float64 members.
-
-Regards,
-Akihiko Odaki
+I think we can just leave it as is. This function is named 
+audio_generic_initialize_buffer_in() so it is not expected to keep the 
+state.
 
