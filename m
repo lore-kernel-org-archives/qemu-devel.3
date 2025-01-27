@@ -4,87 +4,90 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 93405C0218C
-	for <qemu-devel@archiver.kernel.org>; Mon, 27 Jan 2025 08:04:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C01ACC0218C
+	for <qemu-devel@archiver.kernel.org>; Mon, 27 Jan 2025 08:06:33 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tcK5h-00067E-Bs; Mon, 27 Jan 2025 03:03:29 -0500
+	id 1tcK8P-00079W-RC; Mon, 27 Jan 2025 03:06:18 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tcK5b-00066p-NQ
- for qemu-devel@nongnu.org; Mon, 27 Jan 2025 03:03:23 -0500
-Received: from mail-wm1-x330.google.com ([2a00:1450:4864:20::330])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tcK8N-00078u-Ay
+ for qemu-devel@nongnu.org; Mon, 27 Jan 2025 03:06:15 -0500
+Received: from mail-wr1-x432.google.com ([2a00:1450:4864:20::432])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tcK5Z-0002As-Ej
- for qemu-devel@nongnu.org; Mon, 27 Jan 2025 03:03:22 -0500
-Received: by mail-wm1-x330.google.com with SMTP id
- 5b1f17b1804b1-4361e89b6daso25962855e9.3
- for <qemu-devel@nongnu.org>; Mon, 27 Jan 2025 00:03:20 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tcK8K-0002qt-5i
+ for qemu-devel@nongnu.org; Mon, 27 Jan 2025 03:06:13 -0500
+Received: by mail-wr1-x432.google.com with SMTP id
+ ffacd0b85a97d-385e27c75f4so3630460f8f.2
+ for <qemu-devel@nongnu.org>; Mon, 27 Jan 2025 00:06:11 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1737964999; x=1738569799; darn=nongnu.org;
+ d=linaro.org; s=google; t=1737965170; x=1738569970; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=oqH/2UccqE/MOQ+NxFoUmk0QRPM+fE/Q8MNlZykw8c0=;
- b=Bry5ZfXhHlU9AAcMNIJbaL/xLy/GH1VTiHTFpewZJWl1S+GNRx3miSbEMIaAEp29Pd
- 4Fembd61Cdz9ubeEoR/nRWDjC4OJuh36pwSgNtfTHk1ndjfICXdgh9yQUQnNEYw/e7CZ
- HUI/HQz29SAqB9azJnjEWgefbLlRm0h6X2pwzdKUb33QJHsZ5P4xlVPNO8gigBkpTeGM
- LOLCCOliuhy+Z8LgrdYiTYA29Sx10avJacTKlMgrI9vxTr380ga0eetjS3AfjCbK1LEj
- /LeOy+9kZReX24+nZzaYJj8bpA2SN24LvJFV8AgB3LHxiEe0KuuXOWTGO1aQjXnVKRRu
- Po3w==
+ bh=zRDFifUSykghhZo2AgAcnmAVAVfzz/ZXaFqrQ5/35Ro=;
+ b=Z1+H6JrRglWZ/Z816aTHetlCROTN1qB9ySZ9i3WXusbbFJ201HHkIVGfCUVgmWtIQf
+ bnuy5g8cmtUJ/5XwkObtMyCX2/JtyT4EQOTZ3US5Tubb9DMM+x8CHnVDxTkf0ppmcl+C
+ W7NArHSnsbnbAEP6IVVnU1r6BKNYJ2oJL2BOrH3qyCV7FbpUz/nEddNmeOh2gYG42VIl
+ dmvlgV3XxvKyAhoVvO5y+LUC/RdOA5hLCtYNuTZtIMHQfzwTq4F1EoybHe+6w6EWjApX
+ XxAtFgXPaoOvkcNbRu9/TtcDzm2z8DlAMTF77YxUIB1U2xRnygyDv42UbBJSkmGmcJfA
+ VX9g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1737964999; x=1738569799;
+ d=1e100.net; s=20230601; t=1737965170; x=1738569970;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=oqH/2UccqE/MOQ+NxFoUmk0QRPM+fE/Q8MNlZykw8c0=;
- b=napk4fVquiMkxvITleamPOU+5dG5C6oCAdzgrGjn7+s8MSsoZUN0n17YxhZWSjHLx7
- WMrjytZ05e20PHRlCTvUGfH3fObmU1BfAhMJH9B2pq0krQZRnPXDjRcfpqEux16W+Ni0
- QIQO76W1P+SmUAdh3PcU4jUIBzkShdetDNsSTLif2JCDU0xHDWJSL+whostb1gDP11qa
- iGcAef6zbT8CqNplURJrJmzZi5AhGLGG5x/+sIuoC7WB35fkm7A/arp+VamixujMdLQL
- a5iMWY21DulCFgPxZIF8C1w4XF+wdJIYvAMIfgBrQ1fJIm/RnrH5kn0B20aavMnQRQeR
- icrQ==
-X-Gm-Message-State: AOJu0Yx+FxcyAvvDUdWqKe73MX/zy+Zl4sdEYdqo1yyQtMGrvTuVKI+g
- E3jyxfpgbcMhDo2ZGoT1xxG1icKXUexYDAcpTqM9QNfEhvvo1mYWbaCIDZ+a/gmmeW7uzBoRH3Y
- j8Dc=
-X-Gm-Gg: ASbGncswhxZfLcilb/6GwC3/u2KegjfvCq1rvwIj2Aie6dXOOlXpR7BDKucU3kv/IG8
- UQj8avBClkJwLRi4GiL4ush5CpEGXwKhct1cf55EZFVaV1p6pDlqmfmh3kyg+9ugTWG4UbQBVUl
- iX8uF+7pcrjg62Kf9tb6rdrtfDL4rInvPfW+djfq+RRnvNgdCrv18PvPMIna6+P7mivRZceG8P0
- 6XMxUT821rIYG9ob7s+EL5orQUatRdYVCi1AhQ4z0Qdt0My62SQ4DZnkgFMz3pvSCKfiPTbjI8s
- hKMSE5Qa2Uk+LfXD2modVNixVYL0DKnfgLChnfHQ77d6kA0D
-X-Google-Smtp-Source: AGHT+IEJ+ox109EBn5aLshQLaw3guPO6t//d3GIcWRAw/mXfydzpv483qHLUwRzOdTtVm75l68Lkcg==
-X-Received: by 2002:a05:6000:4008:b0:38a:624b:e37b with SMTP id
- ffacd0b85a97d-38bf57b642dmr33221955f8f.53.1737964999214; 
- Mon, 27 Jan 2025 00:03:19 -0800 (PST)
+ bh=zRDFifUSykghhZo2AgAcnmAVAVfzz/ZXaFqrQ5/35Ro=;
+ b=J/iTaMM2M2BFmVbXz33I4n6efFaieyBzhoEvrgVcylwZDENJpMdkM6QcN3kjKqY2ss
+ cQRq/qak2PO+UGx74gxTVAGf6e/0sGiXgG8RZHAKzvC0M1BvOGBtiNOCI/zYIlkDW9Nl
+ lOZb0gqJ6lhCWFSk+CIHdxILMisOVKprzen9J/O1ZTUQ0hdVI4FTEYiMQiw/XO69cuSi
+ 0GJrzN+ZsY1VqBJwnB9HowxSpL7XTCgs7bd3LeZPtoKs5mG9CdgKz8Nk0aV56foVvko6
+ hH/wWdFX4sE/saH3ARHFgOrWO6q74t5lMnDH5VQ+Me5LL5crfha6e7jxX4+bG2eFXsht
+ 0TWA==
+X-Gm-Message-State: AOJu0Yz+bxMqzr0LLpSNziY8BiIRq3ZXPJ7rzgweenU6/caMVuLwu9lv
+ XdwC/c5DxkCWJbCz4zS2uTjS14EaWYeg5gVXOgxokfZ69ySfsZYSQ2YzPdwT3NY=
+X-Gm-Gg: ASbGncvYSg4+nb1ivu6adKogj1fFdJc84I1wpSx4wxo+uf18IsZyfjCTtElBAw6RMHg
+ Z4Zfyl2y0fe6e/fSEejUP9big0LTIADuV1rRqm2K9haGChnUCQdtbZIw3Un+impUvBqQBkRN5RN
+ GKUcup78Bm+8ewNhWKDQacq02q43x02IYIRED0ykSHZT4wHTS1yPElol0gqKkMM1Ih7dfXzy0sB
+ nVucGGoHJSqbJSTuJWHsywCjN3WvsJkQGLHKrMH1v9Tfaa61FBc9wWCf3hMFPjBCtWCjsCOBcCj
+ KRGM6B+gISdFtHxUaEBbhRjZGMolRDsxkpDR/oTS7PbupJp8
+X-Google-Smtp-Source: AGHT+IFg7/mUPKBN/mM6PW1LQiacIdLORSuEIWD+zXq3W1Q+I+5sEiovlW+kacyejyZ1ShEcvJhhIQ==
+X-Received: by 2002:a5d:6d82:0:b0:388:c61d:43e0 with SMTP id
+ ffacd0b85a97d-38bf59ef478mr41661468f8f.48.1737965170570; 
+ Mon, 27 Jan 2025 00:06:10 -0800 (PST)
 Received: from [192.168.69.181] (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-38c2a1bad92sm10295436f8f.61.2025.01.27.00.03.18
+ ffacd0b85a97d-38c2a1bb0d4sm10518840f8f.69.2025.01.27.00.06.09
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 27 Jan 2025 00:03:18 -0800 (PST)
-Message-ID: <67dbc202-7b6d-4bf4-8d18-2ba78f39a287@linaro.org>
-Date: Mon, 27 Jan 2025 09:03:17 +0100
+ Mon, 27 Jan 2025 00:06:10 -0800 (PST)
+Message-ID: <4ab5cc49-a8c6-430b-a3d8-82a62f0f0fe4@linaro.org>
+Date: Mon, 27 Jan 2025 09:06:09 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] arm/cpu: revises cortex-r5
-To: Yanfeng Liu <yfliu2008@qq.com>, qemu-arm@nongnu.org
-Cc: qemu-devel@nongnu.org, peter.maydell@linaro.org,
- alistair.francis@wdc.com, Yanfeng Liu <p-liuyanfeng9@xiaomi.com>
-References: <tencent_033217F7900714A999352724A7790C3F0007@qq.com>
+Subject: Re: [PATCH 2/2] qom: Introduce class_post_init() handler
+To: Markus Armbruster <armbru@redhat.com>
+Cc: qemu-devel@nongnu.org, =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?=
+ <berrange@redhat.com>, qemu-rust@nongnu.org,
+ Eduardo Habkost <eduardo@habkost.net>,
+ Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,
+ Paolo Bonzini <pbonzini@redhat.com>
+References: <20250125165855.32168-1-philmd@linaro.org>
+ <20250125165855.32168-3-philmd@linaro.org> <87wmegoi6g.fsf@pond.sub.org>
 Content-Language: en-US
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <tencent_033217F7900714A999352724A7790C3F0007@qq.com>
+In-Reply-To: <87wmegoi6g.fsf@pond.sub.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::330;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x330.google.com
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::432;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x432.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=unavailable autolearn_force=no
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -100,49 +103,24 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi,
-
-On 26/1/25 12:43, Yanfeng Liu wrote:
-> From: Yanfeng Liu <p-liuyanfeng9@xiaomi.com>
+On 27/1/25 08:00, Markus Armbruster wrote:
+> Philippe Mathieu-Daudé <philmd@linaro.org> writes:
 > 
-> This enables generic timer feature for Cortex-R5 so that to support guests
-> like NuttX RTOS.
-
-QEMU aims to model CPU faithful to hardware, than the R5
-doesn't has generic timer.
-
-Maybe you want to use the Cortex-R52 instead? I see NuttX supports it:
-https://nuttx.apache.org/docs/latest/platforms/arm/fvp-v8r-aarch32/boards/fvp-armv8r-aarch32/index.html
-
-If it works for you, could you add a test for NuttX on Cortex-R52?
-See for example tests/functional/test_avr_mega2560.py
-
-Thanks!
-
-Regards,
-
-Phil.
-
-> Signed-off-by: Yanfeng Liu <yfliu2008@qq.com>
-> ---
->   target/arm/tcg/cpu32.c | 3 ++-
->   1 file changed, 2 insertions(+), 1 deletion(-)
+>> Add a class_post_init() handler to be called by parents
+>> *after* child class_init() handler is called. This is
+>> necessary to have parent class check children properly
+>> set some values or mandatory handlers.
+>>
+>> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 > 
-> diff --git a/target/arm/tcg/cpu32.c b/target/arm/tcg/cpu32.c
-> index 2ad2182525..5d68d515b4 100644
-> --- a/target/arm/tcg/cpu32.c
-> +++ b/target/arm/tcg/cpu32.c
-> @@ -590,9 +590,10 @@ static void cortex_r5_initfn(Object *obj)
->       set_feature(&cpu->env, ARM_FEATURE_V7MP);
->       set_feature(&cpu->env, ARM_FEATURE_PMSA);
->       set_feature(&cpu->env, ARM_FEATURE_PMU);
-> +    set_feature(&cpu->env, ARM_FEATURE_GENERIC_TIMER);
->       cpu->midr = 0x411fc153; /* r1p3 */
->       cpu->isar.id_pfr0 = 0x0131;
-> -    cpu->isar.id_pfr1 = 0x001;
-> +    cpu->isar.id_pfr1 = 0x10001;
->       cpu->isar.id_dfr0 = 0x010400;
->       cpu->id_afr0 = 0x0;
->       cpu->isar.id_mmfr0 = 0x0210030;
+> Plausible, but I'd like to see actual use.  What uses do you have in
+> mind?
 
+See for example:
+https://lore.kernel.org/qemu-devel/20250125170125.32855-25-philmd@linaro.org/
+
+Where the abstract parent CPUClass checks concrete target implementation
+registered a handler.
+
+(I'll cc you on another use shortly).
 
