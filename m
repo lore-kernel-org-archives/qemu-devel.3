@@ -4,89 +4,100 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0AB23C02188
-	for <qemu-devel@archiver.kernel.org>; Mon, 27 Jan 2025 20:41:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 09D0CC02188
+	for <qemu-devel@archiver.kernel.org>; Mon, 27 Jan 2025 20:45:45 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tcVuv-0003AE-5N; Mon, 27 Jan 2025 15:41:09 -0500
+	id 1tcVyz-0004AX-Gv; Mon, 27 Jan 2025 15:45:21 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1tcVut-0003A2-M3
- for qemu-devel@nongnu.org; Mon, 27 Jan 2025 15:41:07 -0500
-Received: from mail-pl1-x635.google.com ([2607:f8b0:4864:20::635])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1tcVur-0004fH-Fc
- for qemu-devel@nongnu.org; Mon, 27 Jan 2025 15:41:07 -0500
-Received: by mail-pl1-x635.google.com with SMTP id
- d9443c01a7336-2161eb95317so86455415ad.1
- for <qemu-devel@nongnu.org>; Mon, 27 Jan 2025 12:41:04 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1738010463; x=1738615263; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:to:subject:user-agent:mime-version:date:message-id:from
- :to:cc:subject:date:message-id:reply-to;
- bh=70jgPy2Z/QYdI3UgWuImziCNXeNrQV3FgGpgfywprkY=;
- b=S5QadgUTgeFUzOgDyovH3X4mqiKlpa4ssICh8kBi/ZlR6iLdeF5lYcpSxmQMevLhB+
- nO7EEfvijMuDDCttmBbS+0XBEjds9yh2synbpC7a0KKXF4CBDDKc+VSr4LTEUbVhcN6J
- 4kYVVzpc/ZO81KhW+efPCKq5PQ5JshQQAfPbT1Z3BaLHlSYKgvU8iUyj0WdKZtldspn6
- AMqInEMwTV1uy9BXEy00OvSToViOYRpa8W1CAPFn7yB87GnR9qcEYPOE6GIku1SKv9sq
- b3Qirl0BnbHaiTvQNT/Rqaajz7DJvW50J7DAadD0yk8eveUDPasEXoTNtU8yMg5vbNUp
- 7urQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1738010463; x=1738615263;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=70jgPy2Z/QYdI3UgWuImziCNXeNrQV3FgGpgfywprkY=;
- b=SvNNWKO9NUIKpQandYDSEbj+SYRpp/zG57ShEjbK8T62WuOxXUMB3z4Fop/1db8NZC
- +a1tNRSeD0EgkS6n4Qg6byMYbpwUyKKEahhbeOwOa3rU5uDgePbD4n4MBQHqSBZuzHoT
- J7nbdE0Tdmr3ee6jx8/+bFVcIy2B6i37Vndih/hI7BG0CwqNWR6dxoawnmcw+SFqEivn
- EWQxfXlkp713RaDJZDHLBCMjlMuk7s8LHVJx3adnCwOYMtzCTQOnKwG/KsZvJvYx9hdU
- tGBTFp3KqnF8OrnTHAlIHt6wlQUYRG4omXTiINvUwMqJ6DLAW5bp51j7rPr0Uw3Dpl6i
- 7Flg==
-X-Gm-Message-State: AOJu0YznhmS3nBf3e2ebzFtbmiIYX08fnulL4hnRSw0kxYqhEfqYuuGG
- RxGULbbyVAE1U3B23mu+cwuCPlcjFUZq9G1d05QwtIQ0Pv3zSB73rEfIgWxRqCeO/7aYn5wv8L0
- a
-X-Gm-Gg: ASbGncu84GWOipblYPELaHI+NrWDfwErEUoNT4JHct6OiILjNae0QGpQGeziqcMQCud
- qcs8F+faHHvfSURWWsIGJi6wDWlr3fFimpR/U6QmTryZpSQ+rD6x83bbEX/Tc0nHeANNLiwYZTZ
- AfQQkOG9DP8Bx5kWu+kDWbv0h2VHpTzq+4CkA+2MMNmCljw1auKNl4G4rnTAtYrV7n3/3/QCqN6
- wp4EB9eZy5dLrmSPVoL9QCg6IyY0cs+soPRSGhW5/n50kq8LQEuEaBcm9U+8uZUTnzNIQk5LYe6
- rFMTo/Bwo0ysfZVf28PhwgnmZXuMQJ7AGowO5MCX2/szrC8=
-X-Google-Smtp-Source: AGHT+IFszxTwgxInFmGikM99x4HAs1lqNp5kZBCT0UmBxgqNGvTYuZ5wdM4Mvu7BouB9LOeD9BxEkA==
-X-Received: by 2002:a05:6a20:6a82:b0:1e0:d8c1:cfe2 with SMTP id
- adf61e73a8af0-1eb2158ef4dmr62109833637.34.1738010461818; 
- Mon, 27 Jan 2025 12:41:01 -0800 (PST)
-Received: from [192.168.0.4] (174-21-71-127.tukw.qwest.net. [174.21.71.127])
- by smtp.gmail.com with ESMTPSA id
- 41be03b00d2f7-ac48f898107sm6908519a12.31.2025.01.27.12.41.01
- for <qemu-devel@nongnu.org>
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 27 Jan 2025 12:41:01 -0800 (PST)
-Message-ID: <0e8eeee3-62d4-4c4c-9145-26983e0691d7@linaro.org>
-Date: Mon, 27 Jan 2025 12:41:00 -0800
+ (Exim 4.90_1) (envelope-from <mjrosato@linux.ibm.com>)
+ id 1tcVyq-00049L-DF; Mon, 27 Jan 2025 15:45:12 -0500
+Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <mjrosato@linux.ibm.com>)
+ id 1tcVyo-00055r-EO; Mon, 27 Jan 2025 15:45:11 -0500
+Received: from pps.filterd (m0360083.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 50RFuu5G025735;
+ Mon, 27 Jan 2025 20:45:04 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+ :content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=pp1; bh=x43rwo
+ bwNOPxy97wBt+6gGsoY7Ai78kvK/QQ13Eprgk=; b=ODHKb/DFbpGFQDLiwIAQNL
+ EQEOawDMWhq0HJhv42+rgPbq0IQsVUZ5JPWSBBwhi9wvVaPI/+wPm2+IbNyT86VP
+ qlKduwqrdwlWqFqLubmspNwZe6jhLSP+5ih7M2Ouh7k9REjcIvSc0ya3z9jHcrFV
+ tuQLzuKAJ67NDcTAZXnjrkp+7TaOxPx561aYKCVG/Zo6mdcy4jolo9TfqED6oBgR
+ O1JJhLy05P/W55l3RLFZbQ1pDFa7dGV9XWAuu3MiTUSykl9fva/dhKm6B5gIFO9A
+ YWvVA+Jq8dNUKMGfheDj/Oc9TFGYW+e3gwrM0Wmf1jAgZFa0Jji6PGWGY3OgxOsQ
+ ==
+Received: from ppma13.dal12v.mail.ibm.com
+ (dd.9e.1632.ip4.static.sl-reverse.com [50.22.158.221])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 44e079d55c-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Mon, 27 Jan 2025 20:45:04 +0000 (GMT)
+Received: from pps.filterd (ppma13.dal12v.mail.ibm.com [127.0.0.1])
+ by ppma13.dal12v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 50RHLCQP022229;
+ Mon, 27 Jan 2025 20:45:03 GMT
+Received: from smtprelay07.wdc07v.mail.ibm.com ([172.16.1.74])
+ by ppma13.dal12v.mail.ibm.com (PPS) with ESMTPS id 44dcgjfs1t-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Mon, 27 Jan 2025 20:45:03 +0000
+Received: from smtpav05.wdc07v.mail.ibm.com (smtpav05.wdc07v.mail.ibm.com
+ [10.39.53.232])
+ by smtprelay07.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 50RKj2pU22282864
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Mon, 27 Jan 2025 20:45:02 GMT
+Received: from smtpav05.wdc07v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 1BC2858053;
+ Mon, 27 Jan 2025 20:45:02 +0000 (GMT)
+Received: from smtpav05.wdc07v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id CAD0558043;
+ Mon, 27 Jan 2025 20:45:00 +0000 (GMT)
+Received: from [9.61.39.122] (unknown [9.61.39.122])
+ by smtpav05.wdc07v.mail.ibm.com (Postfix) with ESMTP;
+ Mon, 27 Jan 2025 20:45:00 +0000 (GMT)
+Message-ID: <6881033c-efb8-4276-aae7-234e611d5fb9@linux.ibm.com>
+Date: Mon, 27 Jan 2025 15:45:00 -0500
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 65/76] target/arm: Handle FPCR.AH in negation step in SVE
- FMLS (vector)
-To: qemu-devel@nongnu.org
-References: <20250124162836.2332150-1-peter.maydell@linaro.org>
- <20250124162836.2332150-66-peter.maydell@linaro.org>
+Subject: Re: [PATCH v3 1/2] s390x/pci: add support for guests that request
+ direct mapping
+To: Thomas Huth <thuth@redhat.com>, qemu-s390x@nongnu.org
+Cc: farman@linux.ibm.com, schnelle@linux.ibm.com, pasic@linux.ibm.com,
+ borntraeger@linux.ibm.com, richard.henderson@linaro.org,
+ david@redhat.com, iii@linux.ibm.com, clegoate@redhat.com,
+ qemu-devel@nongnu.org
+References: <20250124202115.349386-1-mjrosato@linux.ibm.com>
+ <20250124202115.349386-2-mjrosato@linux.ibm.com>
+ <209cba11-2fb3-404f-bbe4-e02b8e2595dd@redhat.com>
 Content-Language: en-US
-From: Richard Henderson <richard.henderson@linaro.org>
-In-Reply-To: <20250124162836.2332150-66-peter.maydell@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::635;
- envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x635.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+From: Matthew Rosato <mjrosato@linux.ibm.com>
+In-Reply-To: <209cba11-2fb3-404f-bbe4-e02b8e2595dd@redhat.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+X-TM-AS-GCONF: 00
+X-Proofpoint-ORIG-GUID: -n50dnVlI8EnNHLXmvhY0L3jpar8LOLG
+X-Proofpoint-GUID: -n50dnVlI8EnNHLXmvhY0L3jpar8LOLG
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1057,Hydra:6.0.680,FMLib:17.12.68.34
+ definitions=2025-01-27_10,2025-01-27_01,2024-11-22_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ impostorscore=0 adultscore=0
+ clxscore=1015 malwarescore=0 suspectscore=0 bulkscore=0 priorityscore=1501
+ mlxlogscore=682 mlxscore=0 phishscore=0 lowpriorityscore=0 spamscore=0
+ classifier=spam adjust=0 reason=mlx scancount=1 engine=8.19.0-2411120000
+ definitions=main-2501270161
+Received-SPF: pass client-ip=148.163.156.1;
+ envelope-from=mjrosato@linux.ibm.com; helo=mx0a-001b2d01.pphosted.com
+X-Spam_score_int: -26
+X-Spam_score: -2.7
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
+ RCVD_IN_MSPIKE_H2=0.001, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -103,27 +114,37 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 1/24/25 08:28, Peter Maydell wrote:
-> @@ -4910,9 +4958,15 @@ static void do_fmla_zpzzz_d(void *vd, void *vn, void *vm, void *va, void *vg,
->               if (likely((pg >> (i & 63)) & 1)) {
->                   float64 e1, e2, e3, r;
->   
-> -                e1 = *(uint64_t *)(vn + i) ^ neg1;
-> +                e1 = *(uint64_t *)(vn + i);
->                   e2 = *(uint64_t *)(vm + i);
-> -                e3 = *(uint64_t *)(va + i) ^ neg3;
-> +                e3 = *(uint64_t *)(va + i);
-> +                if (neg1 && !(fpcr_ah && float64_is_any_nan(e1))) {
-> +                    e1 ^= neg1;
-> +                }
-> +                if (neg3 && !(fpcr_ah && float64_is_any_nan(e3))) {
-> +                    e3 ^= neg3;
-> +                }
->                   r = float64_muladd(e1, e2, e3, 0, status);
 
-It occurs to me that with AH=1, we can use the float_muladd_* flags.
-We couldn't use those for AH=0, because there we *need* to negate NaNs.
+>>   #include "hw/s390x/s390-pci-bus.h"
+>> @@ -1008,17 +1009,25 @@ static int reg_ioat(CPUS390XState *env, S390PCIBusDevice *pbdev, ZpciFib fib,
+>>       }
+>>         /* currently we only support designation type 1 with translation */
+>> -    if (!(dt == ZPCI_IOTA_RTTO && t)) {
+>> +    if (t && !(dt == ZPCI_IOTA_RTTO)) {
+> 
+> While you're at it, you could change that "!(dt == ZPCI_IOTA_RTTO)" into
+> "dt != ZPCI_IOTA_RTTO".
+> 
+
+ACK
+
+>>           error_report("unsupported ioat dt %d t %d", dt, t);
+>>           s390_program_interrupt(env, PGM_OPERAND, ra);
+>>           return -EINVAL;
+>> +    } else if (!t && !pbdev->rtr_allowed) {
+>> +        error_report("relaxed translation not allowed");
+> 
+> Not sure, but maybe better use qemu_log_mask(LOG_GUEST_ERROR, ...) instead?
+> 
+
+Hrm, this one I'm not so sure.  If I force this path and we give back the operand exception to the guest, the guest kernel is going to panic as a result.  We are very much in a "that wasn't ever supposed to happen" path, just like the unsupported dt above, because we already reported what we do (not) support via CLP.
+
+I just tried to force the path with default settings + the above change, and I don't see anything in the qemu log from qemu_log_mask(LOG_GUEST_ERROR, ...) but I do with error_report.  Given the unlikely scenario that we reach this path and the potential ramifications, I think I'd rather leave it as error_report unless you've got a strong opinion on it!
+
+Thanks,
+Matt
 
 
-r~
+
+
 
