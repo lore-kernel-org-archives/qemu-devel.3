@@ -4,72 +4,72 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 33921C02188
-	for <qemu-devel@archiver.kernel.org>; Mon, 27 Jan 2025 21:32:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 953A2C02188
+	for <qemu-devel@archiver.kernel.org>; Mon, 27 Jan 2025 21:32:56 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tcWhw-00077I-S7; Mon, 27 Jan 2025 16:31:48 -0500
+	id 1tcWhp-00073o-Cv; Mon, 27 Jan 2025 16:31:41 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <william.roche@oracle.com>)
- id 1tcWhu-000763-N0; Mon, 27 Jan 2025 16:31:46 -0500
+ id 1tcWho-000710-7D; Mon, 27 Jan 2025 16:31:40 -0500
 Received: from mx0b-00069f02.pphosted.com ([205.220.177.32])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <william.roche@oracle.com>)
- id 1tcWhq-0003tX-N9; Mon, 27 Jan 2025 16:31:43 -0500
-Received: from pps.filterd (m0246631.ppops.net [127.0.0.1])
- by mx0b-00069f02.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 50RL13Te025087;
- Mon, 27 Jan 2025 21:31:36 GMT
+ id 1tcWhm-0003t1-Fs; Mon, 27 Jan 2025 16:31:39 -0500
+Received: from pps.filterd (m0246630.ppops.net [127.0.0.1])
+ by mx0b-00069f02.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 50RLR2H5015031;
+ Mon, 27 Jan 2025 21:31:30 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=oracle.com; h=cc
  :content-transfer-encoding:content-type:date:from:in-reply-to
  :message-id:mime-version:references:subject:to; s=
- corp-2023-11-20; bh=5XDCXlkgBm/NGnAQC6dIDVKtaeoq+xZCnX0nulNyL/Y=; b=
- ajYOtAIynxuIhPT8m0EKquQS36D4ijOkH0JSeU+2fh8ieStkBCv6g6Zqw3rUtnLK
- 4gOWJjTrI1i5dBicn3oVJHDOjwChiZm9tz1EM0U1K5WvV26xMdK+SYOaC0O+LTR6
- C1oRt/KYN9ESJzxU2AWrXaO9h7Te/21PftLIM4vyjkFqa0uChZlHUXfUZgt5+twj
- eVNy0CTXVtGWfgNiA891TMS1wvmRzqRhy6YPeWgEzVGM9UtYeWgb3+nSzivyufC9
- DlayR8skjBrevy7KyaLcJoGN/8qsGVHvVcuD7Cjcb65J3iY+W211ytsHHhsBsOVu
- H/FFBc5rWU889Gm/MheMnQ==
-Received: from iadpaimrmta02.imrmtpd1.prodappiadaev1.oraclevcn.com
- (iadpaimrmta02.appoci.oracle.com [147.154.18.20])
- by mx0b-00069f02.pphosted.com (PPS) with ESMTPS id 44ehpc826f-1
+ corp-2023-11-20; bh=2Jlw+KA+dy0s5soAPwah4SwL5d+bTAa+rRU0oNp+9gQ=; b=
+ EynJd/osXgU0/9ZrOpQHdxKVvFTYkRefsaUwYslZlu/K9TaTOFQ2mSebnp8zoJyY
+ Zx33MThOwxqENFQPiEjm3VmEY6qjZ1cR7w8yLiK6FHwBSzbaGFXWHdGkYF3z5l4S
+ muxaKWq6a9pdTmfyhS7lwJcHqz5KpdPSQHNPik0YQMp3spz2kEV9hZH2uSo66xey
+ R8oEtiR8gUr54+tF3UPURx+1bc4EN/w0U7C634vD4rPdY3PA5blecWOwAaqNkjXA
+ qvPkF5dOneiyf/UlWxGg+8V1BgF9ZOc5u5N9C9m+sp9AykCI+gYoAOLXIJhJCi9T
+ ySr4FCz1pJxDKTvdzIvy+g==
+Received: from iadpaimrmta03.imrmtpd1.prodappiadaev1.oraclevcn.com
+ (iadpaimrmta03.appoci.oracle.com [130.35.103.27])
+ by mx0b-00069f02.pphosted.com (PPS) with ESMTPS id 44ej2j80cu-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Mon, 27 Jan 2025 21:31:35 +0000 (GMT)
+ Mon, 27 Jan 2025 21:31:30 +0000 (GMT)
 Received: from pps.filterd
- (iadpaimrmta02.imrmtpd1.prodappiadaev1.oraclevcn.com [127.0.0.1])
- by iadpaimrmta02.imrmtpd1.prodappiadaev1.oraclevcn.com (8.18.1.2/8.18.1.2)
- with ESMTP id 50RJta23005676; Mon, 27 Jan 2025 21:31:35 GMT
-Received: from nam11-co1-obe.outbound.protection.outlook.com
- (mail-co1nam11lp2177.outbound.protection.outlook.com [104.47.56.177])
- by iadpaimrmta02.imrmtpd1.prodappiadaev1.oraclevcn.com (PPS) with ESMTPS id
- 44cpd7k1fq-1
+ (iadpaimrmta03.imrmtpd1.prodappiadaev1.oraclevcn.com [127.0.0.1])
+ by iadpaimrmta03.imrmtpd1.prodappiadaev1.oraclevcn.com (8.18.1.2/8.18.1.2)
+ with ESMTP id 50RKBEFY035875; Mon, 27 Jan 2025 21:31:29 GMT
+Received: from nam12-mw2-obe.outbound.protection.outlook.com
+ (mail-mw2nam12lp2042.outbound.protection.outlook.com [104.47.66.42])
+ by iadpaimrmta03.imrmtpd1.prodappiadaev1.oraclevcn.com (PPS) with ESMTPS id
+ 44cpddhxgn-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Mon, 27 Jan 2025 21:31:35 +0000
+ Mon, 27 Jan 2025 21:31:29 +0000
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=vch0KDJk/yfPjBqztHMDXROsvyg5qv9BmJiWVQfoKsb94uCovOO94jOqvmTmBWz9WV5BcCHU6Hm/WITOhqCrjGnCP0KK2jkQtxpsZQ40+gsZsn5F0R87877XyQ7mWpUR+i3GWq34s1jSdV15MR45fAtBVVBHbZCm1lq0CZsPxR7s3/o2jh5wxVtoZz4VhfiKwXeGv3MnSpnMJ/ZZZyIcHf3xZAbdo/NsNxgz51DkonyJsM7QgUs1QuT0TYe3aAYO+PQmXD281Igw/YlfJb5/ueJQ4T+3Iig+a9i5NzKzo68PLr+e9pbv1gcgJdPW9AUWkpLKM/OpejyxUXheirqjzA==
+ b=d6f9p/+CHoAQmN/hTh2ei2V1RLX7Is0WIX/cLedwK8v5eZbZD/igKqNxcwxQ3eRnZeiRqAB9RoRtSsALPMruwgm0Ui2dvBe+3dVnFckPbOVwcjQbTQLZZTTRCTAWwSlhQB19HEJ1/hIC7yssv5EzbF91WV+3i4apXhyB53R3akvWL69jip9eQI7XLyE/Gtpi0HrlyykVeWeC8yl8k4vcgCf94UylRRiQDc09yHc5Pe2YimhV5aluQGGRcBA4VGlDSVhrAnvu5/Qgp1xrH1IM+ldaIINiuAIOebuDdDJ7isRQGU2sR+yL093YkAE58fv0pSOYaTFMwz1Xv13Kb6VzOQ==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
  s=arcselector10001;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=5XDCXlkgBm/NGnAQC6dIDVKtaeoq+xZCnX0nulNyL/Y=;
- b=X6K5iil20GX0iVDE3eJpJhpOjrwr2fl3mTIMi02lifmDu+FWN3zSsdrVkjuFmVI55fcpsfcWVZvs/tVIyesXOzutFooK8wzOs+WkkJQMzgtCY6uMBScXgd836gETzyflKIb51dIXBJ/NKy+XW+X+NR1+zzB8RzYhNlIomH4EOvpGAnUbe8TLmsYaitkph4ZR/L9dSN95WWTunsyIlI2LYsVy5TQCmDvYk+geKhozotA4kaF6oNbHOyq5jriqPohzNnxYN9ZFzdI2lqcB7+dXkQt2iEZa1FHV6OLSPZz4r3egI5n4FAHYjiL6j7TmMFUjWwApPD1mB8fVNyzh0BtfCA==
+ bh=2Jlw+KA+dy0s5soAPwah4SwL5d+bTAa+rRU0oNp+9gQ=;
+ b=A2kn3iVWloC3sLtYAgCBlhAx1lCw2gYheeULNPT8HckHVUARXKLDOt4f1Se8b9cpkBO3NiTDC+G04dHiVf046ybxcRkmBQk7UAy0LHYslj5hGB3M523aEquul/H86dkbmxdC/3WLeNe2nlWtNUZeolSXL+lsNPMFhV1lhHdCzG/42QeyD7dlc+x3U2ysGes6/bU5vO670jRd9BU3+IcpBDxnCsioHnIbWs9aGwx36D+isCQ7BTJwNrQSxB7EPEHIK4SLgjClEmcYkKVF3NxWyH6o3R889H0dSQbfYhnMlhU2Q98I+hbJx+Pe9lwZ729ViZAlxDIZMZL7d3xtKFndgQ==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
  smtp.mailfrom=oracle.com; dmarc=pass action=none header.from=oracle.com;
  dkim=pass header.d=oracle.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=oracle.onmicrosoft.com; s=selector2-oracle-onmicrosoft-com;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=5XDCXlkgBm/NGnAQC6dIDVKtaeoq+xZCnX0nulNyL/Y=;
- b=oZru6MoHCQ0sPlloC77TAMHP5x/wQclCyVdECIBA1MU1mddEKAJuMYHgKnrtYzMUCWmqzBePPm8o+gp7sT/IFXFkG09fMo5I3Ka6BuerzEcl0YdnI3RIQP2nC0CI30Dz89lX7mKUDbpsdQ1Omi5XlEXp/Ehj1u2Wrnyd3YBd5kk=
+ bh=2Jlw+KA+dy0s5soAPwah4SwL5d+bTAa+rRU0oNp+9gQ=;
+ b=TngNXf9GTRR88/tupGky2JgttPlfywpfyKKzUvhZ97NtvOrjFkWiuspEiGHuiQocXQjd0jVPv+0JZkoGnfH7I24JqFob/lekmC44/FT4bwYS0y93oIZBCwM2JX0s1rBJ9L6HnvOserA8TCJx9J6laldHzt1rFMBDs5Kcg2LhKhI=
 Received: from CH3PR10MB7329.namprd10.prod.outlook.com (2603:10b6:610:12c::16)
  by PH0PR10MB4614.namprd10.prod.outlook.com (2603:10b6:510:42::11)
  with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.8377.23; Mon, 27 Jan
- 2025 21:31:32 +0000
+ 2025 21:31:27 +0000
 Received: from CH3PR10MB7329.namprd10.prod.outlook.com
  ([fe80::f238:6143:104c:da23]) by CH3PR10MB7329.namprd10.prod.outlook.com
  ([fe80::f238:6143:104c:da23%6]) with mapi id 15.20.8377.021; Mon, 27 Jan 2025
- 21:31:32 +0000
+ 21:31:26 +0000
 From: =?UTF-8?q?=E2=80=9CWilliam=20Roche?= <william.roche@oracle.com>
 To: david@redhat.com, kvm@vger.kernel.org, qemu-devel@nongnu.org,
  qemu-arm@nongnu.org
@@ -78,104 +78,102 @@ Cc: william.roche@oracle.com, peterx@redhat.com, pbonzini@redhat.com,
  peter.maydell@linaro.org, mtosatti@redhat.com, imammedo@redhat.com,
  eduardo@habkost.net, marcel.apfelbaum@gmail.com,
  wangyanan55@huawei.com, zhao1.liu@intel.com, joao.m.martins@oracle.com
-Subject: [PATCH v6 4/6] numa: Introduce and use ram_block_notify_remap()
-Date: Mon, 27 Jan 2025 21:31:05 +0000
-Message-ID: <20250127213107.3454680-5-william.roche@oracle.com>
+Subject: [PATCH v6 2/6] system/physmem: poisoned memory discard on reboot
+Date: Mon, 27 Jan 2025 21:31:03 +0000
+Message-ID: <20250127213107.3454680-3-william.roche@oracle.com>
 X-Mailer: git-send-email 2.43.5
 In-Reply-To: <20250127213107.3454680-1-william.roche@oracle.com>
 References: <20250127213107.3454680-1-william.roche@oracle.com>
 Content-Transfer-Encoding: 8bit
 Content-Type: text/plain
-X-ClientProxiedBy: LO4P265CA0233.GBRP265.PROD.OUTLOOK.COM
- (2603:10a6:600:315::19) To CH3PR10MB7329.namprd10.prod.outlook.com
+X-ClientProxiedBy: LO4P123CA0285.GBRP123.PROD.OUTLOOK.COM
+ (2603:10a6:600:195::20) To CH3PR10MB7329.namprd10.prod.outlook.com
  (2603:10b6:610:12c::16)
 MIME-Version: 1.0
 X-MS-PublicTrafficType: Email
 X-MS-TrafficTypeDiagnostic: CH3PR10MB7329:EE_|PH0PR10MB4614:EE_
-X-MS-Office365-Filtering-Correlation-Id: 06d26ade-78e0-4783-59a2-08dd3f19f81d
+X-MS-Office365-Filtering-Correlation-Id: c080f76c-0a11-4ddb-8551-08dd3f19f49b
 X-MS-Exchange-SenderADCheck: 1
 X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;
- ARA:13230040|1800799024|366016|7416014|376014|7053199007; 
-X-Microsoft-Antispam-Message-Info: =?us-ascii?Q?pFCNRE0neXEdoHq9PelYNlbdIvIezXeNw7B/imHe3I0rI0inojkSJDHwS0sS?=
- =?us-ascii?Q?8zYqS3/4+VSIYVymaFNo8IEvT1kcPpJVye8pSmh9S+nNZjqTQv34SMszFtqt?=
- =?us-ascii?Q?3aP+Ml6sMiPQwaXf0mUD/1PVwyFGtleudYsa5QsA5EyK/TsL1A0Vq6p63rzy?=
- =?us-ascii?Q?Uu963Bs8CDiTPRvPMgN9GC4e97OB2+iDRYUMa/jPI6AFIpWp3ldoZV1P5/Nf?=
- =?us-ascii?Q?4FB0JvZ7P9QqloL8reEuNfFw8T7T3775Fa5tksEs8K+Zj2oR+k0qOCmjuQ2w?=
- =?us-ascii?Q?QdI3lN3dhzGG+tzdvFdK7rmtJa8TFFp1Isiz/S/xDDksNXp0wm5s5wJvO1ec?=
- =?us-ascii?Q?ZNqB+tudjil31SQlYCX1zW2Kf1bHHpi9L6Ejy6Wz5gAaeo8PnZOP1HqBM5re?=
- =?us-ascii?Q?JllDHwuc806cCGEk3B+jpTChV5eBcFvjVzTFW/AX9L6TbbN9IXd6Ng3FHmW0?=
- =?us-ascii?Q?LvLFEWsutAYwJJlXdfhUoViaZX+z7X6k9K6YI26FnD4/v8H0jOYMXtXuRL8U?=
- =?us-ascii?Q?88IrhkKKtBlU/xD7roqF15VcubZAO5Qv5xbenu/qdIxhL3eg+eoa6JJJlOsU?=
- =?us-ascii?Q?ocHBxRocM4Jzhe0JjEgm4hGH7IYL/iCASHSPDPagICK6/Ty+biRhEk6q8uD/?=
- =?us-ascii?Q?rmSqbMgLcycpX9JrhnnsQRwEa/TMMcRvUfw+tOT/g0YLttc/8tX+hT8VPk4L?=
- =?us-ascii?Q?w+ZPbJcZmTekHZtYiwpxGqZusZYSfpOtCU4MUxj3HKph+6bOBzFpdswMcTPj?=
- =?us-ascii?Q?TTx3rqCgdl5iXeOdbKLNMkHHyzEHXYUUFrrPZuHdhIIIuQif8hwrX2A7wz9f?=
- =?us-ascii?Q?oNpLl9RPYInNe9e+ZWdbY237oKvQ9mFE8I7xfpbmEWKXo23+urpzTFTlNUYi?=
- =?us-ascii?Q?nvvDlKlua7dAUGy00Lg3/a1kseKf3CquOK9yxwK6ebR4MJYzZFipBtXANKaH?=
- =?us-ascii?Q?QviqatHGpQVUvxVbO6SouQZGxPhRpCcpmisgtIEflgXlTVT4UYwexK+nzMJe?=
- =?us-ascii?Q?0pohU3LIragwS8JJZXTd7e6C4utxLidaDnLCFNP3Fd7nt6ztqI1nhJtgrkik?=
- =?us-ascii?Q?ldX+7MOO0GGEwTeWNOejs3QfiWEo68tvlAMMmCk136V/arSJ9q9+liC/SSIm?=
- =?us-ascii?Q?3lC/NMyzpZEcUfokAoPx2sWx99C7iuiL70VGe/4S2xfdNXGEGlmGYGgMOCJ7?=
- =?us-ascii?Q?Fgy0vTILiriKO1VrlVwo0w3N7uqV2JuQIuof4IyJW3Ce3C3EVPz377UnTANU?=
- =?us-ascii?Q?0TTv1AW6mCjQzRvSBDmt3oGRipuMMVxQL/o6RUBgwLHbr7qNxmZQ+THrzScG?=
- =?us-ascii?Q?/0L72u2Y6yt/8v8AE6PHtJkjRE04t+HsQmU0WKtgF976+f/lAdYC6haqrSdv?=
- =?us-ascii?Q?DjsPcPdLhk4n4cBIPRbRlV+dKfx7?=
+X-Microsoft-Antispam: BCL:0;ARA:13230040|1800799024|366016|7416014|376014;
+X-Microsoft-Antispam-Message-Info: =?us-ascii?Q?E39DhOBJSxtmnePCyA6cEO2GyqVFO5fBmCiKaY/v4y2DkIuLA1jq3B9JGB22?=
+ =?us-ascii?Q?yGACLZ45Rb1QigUEABkGX0iV83ttrur4dQ6oF6Sm8XxzeQVq+6dQR5X15xor?=
+ =?us-ascii?Q?fRSoltknt+WQT0oWGTiwvcc9OuXBmxzIFAcxDo9d51GitNMFDV+UWEdzzVSw?=
+ =?us-ascii?Q?xaqVdIT1YILtl+SXk3BvzWZywL5LLq0ROcBGvHpn0oe7AvQ+yXyuicLP3r83?=
+ =?us-ascii?Q?XvCJgowaJU0ZbLLKsFeYmO66OA4z/p2lpTnVAZ5XtnHWneQfyL7UduJ51lkG?=
+ =?us-ascii?Q?NCM/bLcGzRN0zJJi/wt+/mO3uw3RsjUCZ1w9twOjGArZIomfn/vJE4h2VRzE?=
+ =?us-ascii?Q?asWjqWKRCZouuaWDuPusUpT3qpK02zWXfG0l0ZcZs1CGf6utyVvcQPUNoOMN?=
+ =?us-ascii?Q?rY775jPgbsOnieQGO/6V78rBIdDaWTOECJUDnDs03vd6coqoOfQuDl0PNY9i?=
+ =?us-ascii?Q?tx9+HgANTLdOPw1kQjnB3KP5iMmipCNbZhYHCvOHUXDX3oS6zfBGQBJyEv7m?=
+ =?us-ascii?Q?LH6TmpperOrvm+v3WOwsH/CE888NgYffJbzrHXJsV171ojitEr1AtE9FNq8N?=
+ =?us-ascii?Q?o+nSY2Bwj4CzET97kUXxlePYyJMW7wMrhmUq/fl4SezCJp4vHKbcEyS0B7Ze?=
+ =?us-ascii?Q?YScwktyoATawFvNECKNoH7zeza3Ekush3by4zRcL+oRfUwTVhNSRHjn8mmwu?=
+ =?us-ascii?Q?1ZnQMv3yQG7OUeJVyl6yGlrdOZw61Uw0mhinjjlLe0O4iFWCE8/vbvY/M0hF?=
+ =?us-ascii?Q?220YpdbVY1cbcWu7Lct7CeKs2ccuOyvE4jBZJ0h4HtJ678ERgDJ/zvYrhUCF?=
+ =?us-ascii?Q?8PWGzxNvJ8EBF4kZn/RJ51MUkhyqOLLGH578fp6DKP2zxUbaTp6HCFneRjq9?=
+ =?us-ascii?Q?z2QvBRdHHisJM52AuuYAlkTLIVApR6OVii1FxPaOr5PZuBSVs+P0iSMXWZSV?=
+ =?us-ascii?Q?OkOEkg5C7UPJ+Sj0wxz6DmbIUSm1o/vVEDdupoYeJ3t8Ase5VcqS5cG0pQZf?=
+ =?us-ascii?Q?JegnJAeAhs3Gudz2hRNhbkgKpdMQM0K/Jejr0zxkTvDJ2rH6t+sh/6ZbhzMW?=
+ =?us-ascii?Q?5bNtryZUsVJNMMWRC9SimXW6b/qS75ISwHIy9Hs7Px6hTQk8ZQ02Fgh78wDC?=
+ =?us-ascii?Q?dPCFqpKjJ+wLynMeMl8K8t2TdNa6CpbyL0kJBVPBh8uJxtMPrvPG1lC1BKGz?=
+ =?us-ascii?Q?OEioESXCuYhDGBLQTQA9v+wVkIea9U7VwOGqkzRwWSMfK8yySKJ4u0a+ChB2?=
+ =?us-ascii?Q?wmPQ88MC6XDfX8zLSsYAMwzftoASpQVfEhqEwTWDvVMWCXj1KCh7fbioXRw5?=
+ =?us-ascii?Q?pqENY9NO9wLBe/2wFWQLgy/e9zxn/r2rB7FMUXZYMA+MubL4JRO2CM2JpXzA?=
+ =?us-ascii?Q?wlGWguen0YIgPtaTSQyiEDIW8Tq3?=
 X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
  IPV:NLI; SFV:NSPM; H:CH3PR10MB7329.namprd10.prod.outlook.com; PTR:; CAT:NONE;
- SFS:(13230040)(1800799024)(366016)(7416014)(376014)(7053199007); DIR:OUT;
- SFP:1101; 
+ SFS:(13230040)(1800799024)(366016)(7416014)(376014); DIR:OUT; SFP:1101; 
 X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: =?us-ascii?Q?cvcy1Gjtr3gYbIRGwssv0q5JhZ6V4QZDHxl6i1Q/0hl00SeMbJeYG144gqYG?=
- =?us-ascii?Q?MLntC/S7iVvnUAHjWQEG72sTmvd+WnMmAPHYyOPbqNP5CU1XANRoOVOkLfgc?=
- =?us-ascii?Q?PkGXVdu9Rc1LnkdeF2b+TPBnFZ2013MA4Hel5N1kdxX86447jS9tMB387jsw?=
- =?us-ascii?Q?zeA33qBxF6ne3HfXRhXlO6SZWGCrVAIHAKtfJEwhfnlzN9ZyqNcoZE3J63bt?=
- =?us-ascii?Q?hRUlZz8JeoMMKZexohJEdliw6EvfWeC1Nf386p3I48WTXSaKCs9pf/YwCr6B?=
- =?us-ascii?Q?OD1EJOt0H4obdrN20pY0X9QoXouN0Qja4Icf792F0xVkxlT1LEW8ere2ufXZ?=
- =?us-ascii?Q?EhmmdJYyAmiE/GLDx+y4gyOLkonMINhY712CW/2AL2AXMPp+svY1cjohzmoT?=
- =?us-ascii?Q?5SOk3Ge6fhUnKX+bcjWynf8KDSSPA1FMO6KqP6XZ4MDCVqV07stz309sfazL?=
- =?us-ascii?Q?lXahDG/GEdFA2NwRzIpVYtJ1wKexnAr7DIf/EnsvKU9deIxFmLy7XFOKzbhx?=
- =?us-ascii?Q?x9GIYx06Ce3NpqfUYJKWN90YaEfPXAn3nTnN/1i5jm5q+8DTZuoETcvlOSYA?=
- =?us-ascii?Q?QUtPt8m0EL43T/GGZl6kPo9USBDcYMRGj7Dc4I16bPV6xGP5lcFXkeKXHHxZ?=
- =?us-ascii?Q?k+STLKf7YsU9JQajIl0rqvRcDEX3N6wWJSjU5uGD8J6XPYO6Yw47HMaECAdu?=
- =?us-ascii?Q?He8FViFY+C/nxTinsgNCB24SPvSSfu2JYBpDq/ZCSy2kOGTEGfYM16WdQwrA?=
- =?us-ascii?Q?opv2gO3pyLxS/0GLmVldCwjdO1/6udhVAuzYMhauaa1YesTogf+mtcQettOX?=
- =?us-ascii?Q?CBewo4LK73lcPIc2XIA9Luky39M3Q/A/3MTHYcPkMAxaOnT256b+iJutB1zX?=
- =?us-ascii?Q?Fp5Afsxx+giNY3/NMw+Aq66FMQnv5S4TVN+dG1Qq30slTtqYukTLkevBe3TQ?=
- =?us-ascii?Q?ulGy6dAK2GH67W3u4iMSV3Ajy0rMSAk7VX+EyOO0pQW81dAmgI01FUabxK03?=
- =?us-ascii?Q?leng2S/mFue+8TfCqQ3JLdQVTkxdkuZ6g6y1a+3bQ5TKORrfTZfvHk5gR6lD?=
- =?us-ascii?Q?iFAADvtQKsNZRwErolKAzFFTIWjaJOJN1tan96di/VPDj+WqYGG30Pxl8uyS?=
- =?us-ascii?Q?UPj4RcUkzLhAkbbQ/iNpgfGnfddo7hvvusHRH/RiLrUUThHocYY7ejQerQSe?=
- =?us-ascii?Q?VwtCgpi4qyb31xmaTGAFOQmfY8UVRjzTL1fnBOJacMQg8zpL2BX/n63vrWwk?=
- =?us-ascii?Q?/j8aKVRCw6io2zgKmGKPk9gXmCsvRrn2ZzlIiMij51Vt2l53KdNReOd3DNMF?=
- =?us-ascii?Q?Hi94/GsLZ35jhXJyjbTe69JYzHBAddDZbqWLB1TaXHtHwE3i4n7IMNlN085O?=
- =?us-ascii?Q?KSaYQMemYr3TsWGmMIdJQ4bNlEuCRXdsX+iWvq6EtjcmbFVpvrIv96dXu1KC?=
- =?us-ascii?Q?nErWcGaNkVl6AUufOlGGj74jr1xiaAFYhvSPu4y71THjBy2xiHzU3FSp6noe?=
- =?us-ascii?Q?jL1wdmMsBl69TJCKo5Zf+MQru2iP+yIo+KkU0w3b0SSZ7Xfl4LNbrAgCwdFL?=
- =?us-ascii?Q?E+ixbgzE6Y01B63A7UH1FEjcfMsljThnbfree9QVl4AhX6z9agRC6WN83QtE?=
- =?us-ascii?Q?DA=3D=3D?=
+X-MS-Exchange-AntiSpam-MessageData-0: =?us-ascii?Q?yej6SeUx/OVbAZMG93CkOgM4FBQ7tejlM//FSs5k8QLswokV9hdNZlcctwPM?=
+ =?us-ascii?Q?lvJxV0gVErHFS4oXjHn6tW1opQCWIsWuT0WIMRtTCGzI6SU4E3WT19cMWmks?=
+ =?us-ascii?Q?AJoh/HT6sIUy4NA7R1bZOtfFIXOTltOzwT829paHWJXKhPQETLddP1GdgsDY?=
+ =?us-ascii?Q?ZQPiiEPNsNAImGW6PhlR0l9ZrWmqqu7EyaE6Nw3JZoUJT7Lp6udeY9wghHA+?=
+ =?us-ascii?Q?TEezPq7dWqBu45ciT9m3AfNuAekm8DuyCRoCpWqNidjbajtmwGKnBZ6fkOhf?=
+ =?us-ascii?Q?jTY5LyMDj8XyUeDaKIDHvH2gsJPkC45u477cZjale/CTnnWhsS01q1sY/cUK?=
+ =?us-ascii?Q?uwwpIm6cfscxuIA0BlxBkbRTrtw8Dn0TQid7vVjSKsQCd+pibhWcf0XgZboX?=
+ =?us-ascii?Q?tgqz3cDCJMV7CD8zZKtz42sGeq6gf51a/OuZX6ERTWPAUkEGLhdz7Lsfesi0?=
+ =?us-ascii?Q?bfs9qZ00r8WgFZ2IbFW+axC0+neTOwFESbK/FkpmroaJhVpQxTIuszk4MOA9?=
+ =?us-ascii?Q?w0THvZ+sdCoXSt6vx5GUprBUiT7AQOpdD/PGF6wS+Jn0QQhjfTt/hENgiGRg?=
+ =?us-ascii?Q?xI3tQSjekVpaHmoF9U9pX2MJltWQrV2fnD7+tyXxgliON4vwiduf1U+BpKnU?=
+ =?us-ascii?Q?3+KQwq//rvPRCeG3z4YO8/smq3iuaKO/8yc3zBQCE6DhsPx+e6jmOP/QllUE?=
+ =?us-ascii?Q?jYRRpN0cKS1VCtw8mEOiG/0NmSm4np37vH7pJpC9PIya8V7P4zE9vSnL6Zro?=
+ =?us-ascii?Q?0GcbdLA3sHL5jssIELVfeBTM3ULx0gBvJHjNJa2jytFGTanz2Ut45PXEOW9D?=
+ =?us-ascii?Q?wJb1lbaNIqFo+gLuSu/PnACYeJo8CfJwQiISxqB/Eog6PF454HY5nSHWO3HE?=
+ =?us-ascii?Q?0bdm1IrkFRaH+HkVGC3OqhiFgTATrfH2Ic2AQpOGmZO7baFfeqct60Xi8zHc?=
+ =?us-ascii?Q?YfieEiVcEQXt9DFm4yW0y0afVPnLP8VMRSAA4s5ajuIgF3Cv7K5MUbAsqIvN?=
+ =?us-ascii?Q?zrWasodqfs7Xn7RI4JliNWDKq0KiiogFhsT8TGEqSTNENH2fAcmFFA+rF4Uj?=
+ =?us-ascii?Q?n6lKxtKLAm/qgQ13HZSJIB9KJnRRRX3xx7o8V8lQSdY1OJH9SwU41jSX04DD?=
+ =?us-ascii?Q?Xue+cSw6kKffw0bIDw2KI453ScRj6jdJbDOq3ofVMi0GNiKeXrx3GyanzZhD?=
+ =?us-ascii?Q?4XZZu94ENI62HL90TWbfOFYppfG844zrnx/sg1lh0esqxk18Tc/czQolLv/k?=
+ =?us-ascii?Q?yo0uQWmXSyJsnHnP5xXIK5bVOH3AvMlku6fWsydhvD1uuqTV9RFkimSaF5j7?=
+ =?us-ascii?Q?d11VKXEZiuq4AoiJHMwMD4LZyz5FYvcBDAXoLaeGBco93L9bCRGt0XqQRWbO?=
+ =?us-ascii?Q?CFgc2YvD8WfxmtGIPVAkHFid7c9Sq3N9CY5P5iP6OFlsFkiMsYTGr4yey3ev?=
+ =?us-ascii?Q?Z3/k7Xp7o5eO0pewjsjDrBDCPhkAprXETopAqXkrQ4kI/EjLMqjUrahPft5m?=
+ =?us-ascii?Q?eTZOpIl9QTZOwzD0rsIH3HkP4N57mmelC3B4BZb8L6W8rrws6ZD50ckS2gjI?=
+ =?us-ascii?Q?U67vxFGTYW/idmliBvk3mFZxQc/XzdP9F12pzdzQjXC4KKpVFDURK4JBPNP3?=
+ =?us-ascii?Q?0Q=3D=3D?=
 X-MS-Exchange-AntiSpam-ExternalHop-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-ExternalHop-MessageData-0: bUsNrRjExdD58hjXUjLAYW+zOXhmn/3aSVDRr/I9UEgfvS1HNqSMuWEygTdGyIpTe+Jdxe7SzoHqCjFN0qOka+tBH3tAOTgfyA5fjNh43yVBEFkq5ZMuV5i3ALMhnfYFhhnAwXHrcRuMoClMQ3lSyvtajxVDknQsHHSvskpzD+nMvQG+0OEyCaidSvHYKSqE27JILqv7Llaai6kr6tdcdHsrOB0dZJ/TlKRYFkRGP3iTikPy9OePYt6CKgeksLyNAc/ISdT0MPTdwKzb8cz53rpn6wQ1gcFqLUnh39NZIZ4sTLJI4jPqcnh40zJI1tLO37z9PVm/ZZx9HpwzfYH5OaJ3cIJpp+qhCKt/QS0Fn6Sztr5gHnHMeDO+2NjZUuuVp62bL+4+KlcPoVbChWiLdb1gTBA0u9RcUmg5SgKElvEUgVNa8p3ZuW9+gzLDnK+tssN2UVO2vLru0SDvhz29LzgGkb1UiWQEU/9eb2HnHFjwGM0wVYd1eFIkjG1WKdjisSyAWCWsh0WCzg2eINph7Z3Wu/zlqv0WnLfxERpXqHjWBp0LF3RXZ4dlKM10O9+VKC3T/8kJ84uO7B73reoWZkzbfljrdKZXJDxcYIkAE+U=
+X-MS-Exchange-AntiSpam-ExternalHop-MessageData-0: 51SSAv+IebtHsb9UjhUjkSByrB22UJonRZP0jq212y7Yq2aFsdl7ZMj9aYNzOqZCUalK9RPdaWCNNipfvqZtdlABs2tzf6CAC+3q4+JnV93ZL9UoG1rUk2j55uNuXF4SesMVen4pIoFNXb0miraU3Z6PNtrk9hcUKjOAsf27rCVpaMGH+/XbObXL4PDVY4Xh4ViA16H1OLqTpyQOn6XKVMq44+1ls4WFTx0w6qdCMtVMH8yDH9xXtoXiE4tJ1HeiJQmW2qnyb476VBhPy+yZAwdsioVkPJOxa4+cfcokS1SG2mYNM4R9ZP/EwZN51CJSMxNL2is7LfO2WenP1VM6IbmnfyTSFUgR3W7uoulV9ihXqRRN4CWG3hGH1Zm2W3lvZcyYIxk4o4qt6jPdr6Vhw/vaH3qol0HJ0s1B1F09mlaD9Y6o8fB3ACkU6sSlcTV/MvoeqgQgBa1tkRdMVRVVSTgXffkuxpqOz4FPg6u7FtcACBb6Xz6JCSevxQTxwYAxnAk1ZFGah5jIguJR0XTIU8FQLK9WHEGw05GDignjbYSqEzPMh5EOMlfQHQMTK4pusVySNLJ/lgOUVE+BveQltVgEI87Ta0fPHKKi1IPhtlc=
 X-OriginatorOrg: oracle.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 06d26ade-78e0-4783-59a2-08dd3f19f81d
+X-MS-Exchange-CrossTenant-Network-Message-Id: c080f76c-0a11-4ddb-8551-08dd3f19f49b
 X-MS-Exchange-CrossTenant-AuthSource: CH3PR10MB7329.namprd10.prod.outlook.com
 X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 27 Jan 2025 21:31:32.7297 (UTC)
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 27 Jan 2025 21:31:26.9316 (UTC)
 X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
 X-MS-Exchange-CrossTenant-Id: 4e2c6054-71cb-48f1-bd6c-3a9705aca71b
 X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: P4hTh4X9I4XX99SMRU6WyLwfuE9e5ifsIQTLmS14JV3wrk+Rqtq/5QKEMwM/qvaAkK7pG9QTftA1c0mW7t4/4PDZ080SvVTrw/921UonTU8=
+X-MS-Exchange-CrossTenant-UserPrincipalName: aQfTZIwPJn3arTSnA4EbNNSYeTk/FovP6ACN3uASJSoQb0fcizKkeqR0/6IhXAQ4TdEiED6Z7lbzbMOFh4fWJS+2oCQy6OxcazeRx/NqRO0=
 X-MS-Exchange-Transport-CrossTenantHeadersStamped: PH0PR10MB4614
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1057,Hydra:6.0.680,FMLib:17.12.68.34
  definitions=2025-01-27_10,2025-01-27_01,2024-11-22_01
-X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 phishscore=0
- mlxscore=0 adultscore=0
- malwarescore=0 spamscore=0 bulkscore=0 mlxlogscore=999 suspectscore=0
+X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 malwarescore=0
+ mlxscore=0 bulkscore=0
+ phishscore=0 suspectscore=0 adultscore=0 spamscore=0 mlxlogscore=999
  classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2411120000
  definitions=main-2501270169
-X-Proofpoint-GUID: NGYsoCr31AVAhYDZ41BzQYfZGARFYya-
-X-Proofpoint-ORIG-GUID: NGYsoCr31AVAhYDZ41BzQYfZGARFYya-
+X-Proofpoint-GUID: Nz9IXIjq9FuGQIXdpvaIDZ_Bkgiw10AF
+X-Proofpoint-ORIG-GUID: Nz9IXIjq9FuGQIXdpvaIDZ_Bkgiw10AF
 Received-SPF: pass client-ip=205.220.177.32;
  envelope-from=william.roche@oracle.com; helo=mx0b-00069f02.pphosted.com
 X-Spam_score_int: -27
@@ -202,72 +200,99 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: David Hildenbrand <david@redhat.com>
+From: William Roche <william.roche@oracle.com>
 
-Notify registered listeners about the remap at the end of
-qemu_ram_remap() so e.g., a memory backend can re-apply its
-settings correctly.
+Repair poisoned memory location(s), calling ram_block_discard_range():
+punching a hole in the backend file when necessary and regenerating
+a usable memory.
+If the kernel doesn't support the madvise calls used by this function
+and we are dealing with anonymous memory, fall back to remapping the
+location(s).
 
-Signed-off-by: David Hildenbrand <david@redhat.com>
 Signed-off-by: William Roche <william.roche@oracle.com>
 ---
- hw/core/numa.c         | 11 +++++++++++
- include/exec/ramlist.h |  3 +++
- system/physmem.c       |  1 +
- 3 files changed, 15 insertions(+)
+ system/physmem.c | 54 ++++++++++++++++++++++++++++--------------------
+ 1 file changed, 32 insertions(+), 22 deletions(-)
 
-diff --git a/hw/core/numa.c b/hw/core/numa.c
-index 218576f745..003bcd8a66 100644
---- a/hw/core/numa.c
-+++ b/hw/core/numa.c
-@@ -895,3 +895,14 @@ void ram_block_notify_resize(void *host, size_t old_size, size_t new_size)
-         }
-     }
- }
-+
-+void ram_block_notify_remap(void *host, size_t offset, size_t size)
-+{
-+    RAMBlockNotifier *notifier;
-+
-+    QLIST_FOREACH(notifier, &ram_list.ramblock_notifiers, next) {
-+        if (notifier->ram_block_remapped) {
-+            notifier->ram_block_remapped(notifier, host, offset, size);
-+        }
-+    }
-+}
-diff --git a/include/exec/ramlist.h b/include/exec/ramlist.h
-index d9cfe530be..c1dc785a57 100644
---- a/include/exec/ramlist.h
-+++ b/include/exec/ramlist.h
-@@ -72,6 +72,8 @@ struct RAMBlockNotifier {
-                               size_t max_size);
-     void (*ram_block_resized)(RAMBlockNotifier *n, void *host, size_t old_size,
-                               size_t new_size);
-+    void (*ram_block_remapped)(RAMBlockNotifier *n, void *host, size_t offset,
-+                               size_t size);
-     QLIST_ENTRY(RAMBlockNotifier) next;
- };
- 
-@@ -80,6 +82,7 @@ void ram_block_notifier_remove(RAMBlockNotifier *n);
- void ram_block_notify_add(void *host, size_t size, size_t max_size);
- void ram_block_notify_remove(void *host, size_t size, size_t max_size);
- void ram_block_notify_resize(void *host, size_t old_size, size_t new_size);
-+void ram_block_notify_remap(void *host, size_t offset, size_t size);
- 
- GString *ram_block_format(void);
- 
 diff --git a/system/physmem.c b/system/physmem.c
-index c835fef26b..146a78cce7 100644
+index 3dd2adde73..3dc10ae27b 100644
 --- a/system/physmem.c
 +++ b/system/physmem.c
-@@ -2254,6 +2254,7 @@ void qemu_ram_remap(ram_addr_t addr)
+@@ -2167,6 +2167,23 @@ void qemu_ram_free(RAMBlock *block)
+ }
+ 
+ #ifndef _WIN32
++/* Simply remap the given VM memory location from start to start+length */
++static int qemu_ram_remap_mmap(RAMBlock *block, uint64_t start, size_t length)
++{
++    int flags, prot;
++    void *area;
++    void *host_startaddr = block->host + start;
++
++    assert(block->fd < 0);
++    flags = MAP_FIXED | MAP_ANONYMOUS;
++    flags |= block->flags & RAM_SHARED ? MAP_SHARED : MAP_PRIVATE;
++    flags |= block->flags & RAM_NORESERVE ? MAP_NORESERVE : 0;
++    prot = PROT_READ;
++    prot |= block->flags & RAM_READONLY ? 0 : PROT_WRITE;
++    area = mmap(host_startaddr, length, prot, flags, -1, 0);
++    return area != host_startaddr ? -errno : 0;
++}
++
+ /*
+  * qemu_ram_remap - remap a single RAM page
+  *
+@@ -2184,9 +2201,7 @@ void qemu_ram_remap(ram_addr_t addr)
+ {
+     RAMBlock *block;
+     uint64_t offset;
+-    int flags;
+-    void *area, *vaddr;
+-    int prot;
++    void *vaddr;
+     size_t page_size;
+ 
+     RAMBLOCK_FOREACH(block) {
+@@ -2201,25 +2216,20 @@ void qemu_ram_remap(ram_addr_t addr)
+                 ;
+             } else if (xen_enabled()) {
+                 abort();
+-            } else {
+-                flags = MAP_FIXED;
+-                flags |= block->flags & RAM_SHARED ?
+-                         MAP_SHARED : MAP_PRIVATE;
+-                flags |= block->flags & RAM_NORESERVE ? MAP_NORESERVE : 0;
+-                prot = PROT_READ;
+-                prot |= block->flags & RAM_READONLY ? 0 : PROT_WRITE;
+-                if (block->fd >= 0) {
+-                    area = mmap(vaddr, page_size, prot, flags, block->fd,
+-                                offset + block->fd_offset);
+-                } else {
+-                    flags |= MAP_ANONYMOUS;
+-                    area = mmap(vaddr, page_size, prot, flags, -1, 0);
+-                }
+-                if (area != vaddr) {
+-                    error_report("Could not remap RAM %s:%" PRIx64 "+%" PRIx64
+-                                 " +%zx", block->idstr, offset,
+-                                 block->fd_offset, page_size);
+-                    exit(1);
++                if (ram_block_discard_range(block, offset, page_size) != 0) {
++                    /*
++                     * Fall back to using mmap() only for anonymous mapping,
++                     * as if a backing file is associated we may not be able
++                     * to recover the memory in all cases.
++                     * So don't take the risk of using only mmap and fail now.
++                     */
++                    if (block->fd >= 0 ||
++                        qemu_ram_remap_mmap(block, offset, page_size) != 0) {
++                        error_report("Could not remap RAM %s:%" PRIx64 "+%"
++                                     PRIx64 " +%zx", block->idstr, offset,
++                                     block->fd_offset, page_size);
++                        exit(1);
++                    }
                  }
                  memory_try_enable_merging(vaddr, page_size);
                  qemu_ram_setup_dump(vaddr, page_size);
-+                ram_block_notify_remap(block->host, offset, page_size);
-             }
- 
-             break;
 -- 
 2.43.5
 
