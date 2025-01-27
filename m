@@ -4,35 +4,35 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A7A70C02190
-	for <qemu-devel@archiver.kernel.org>; Tue, 28 Jan 2025 07:55:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 04687C0218D
+	for <qemu-devel@archiver.kernel.org>; Tue, 28 Jan 2025 07:55:24 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tcgQE-0001Pe-Jp; Tue, 28 Jan 2025 02:54:10 -0500
+	id 1tcgPg-0000y1-VP; Tue, 28 Jan 2025 02:53:37 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1tcgQB-0001LG-8w; Tue, 28 Jan 2025 02:54:08 -0500
+ id 1tcgPf-0000xY-Ov; Tue, 28 Jan 2025 02:53:35 -0500
 Received: from isrv.corpit.ru ([86.62.121.231])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1tcgQ9-0007rM-O5; Tue, 28 Jan 2025 02:54:07 -0500
+ id 1tcgPd-0007o5-Va; Tue, 28 Jan 2025 02:53:35 -0500
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id CCFFEE1AC7;
+ by isrv.corpit.ru (Postfix) with ESMTP id B265CE1AC0;
  Tue, 28 Jan 2025 10:52:59 +0300 (MSK)
 Received: from localhost.tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id 47D7A1A62B6;
+ by tsrv.corpit.ru (Postfix) with ESMTP id 2D39E1A62AF;
  Tue, 28 Jan 2025 10:53:25 +0300 (MSK)
 Received: by localhost.tls.msk.ru (Postfix, from userid 1000)
- id 253F852003; Tue, 28 Jan 2025 10:53:25 +0300 (MSK)
+ id 192BF51FF5; Tue, 28 Jan 2025 10:53:25 +0300 (MSK)
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Christian Schoenebeck <qemu_oss@crudebyte.com>,
- Greg Kurz <groug@kaod.org>, Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-7.2.16 14/31] tests/9p: also check 'Tgetattr' in
- 'use-after-unlink' test
-Date: Tue, 28 Jan 2025 00:41:06 +0300
-Message-Id: <20250127214124.3730126-14-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org, Jakub Jelen <jjelen@redhat.com>,
+ "Richard W . M . Jones" <rjones@redhat.com>, Kevin Wolf <kwolf@redhat.com>,
+ Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-7.2.16 07/31] ssh: Do not switch session to non-blocking mode
+Date: Tue, 28 Jan 2025 00:40:59 +0300
+Message-Id: <20250127214124.3730126-7-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <qemu-stable-7.2.16-20250128004119@cover.tls.msk.ru>
 References: <qemu-stable-7.2.16-20250128004119@cover.tls.msk.ru>
@@ -63,37 +63,49 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This verifies expected behaviour of previous bug fix patch.
+The libssh does not handle non-blocking mode in SFTP correctly. The
+driver code already changes the mode to blocking for the SFTP
+initialization, but for some reason changes to non-blocking mode.
+This used to work accidentally until libssh in 0.11 branch merged
+the patch to avoid infinite looping in case of network errors:
 
-Signed-off-by: Christian Schoenebeck <qemu_oss@crudebyte.com>
-Reviewed-by: Greg Kurz <groug@kaod.org>
-Message-Id: <7017658155c517b9665b75333a97c79aa2d4f3df.1732465720.git.qemu_oss@crudebyte.com>
-(cherry picked from commit eaab44ccc59b83d8dff60fca3361a9b98ec7fee6)
+https://gitlab.com/libssh/libssh-mirror/-/merge_requests/498
+
+Since then, the ssh driver in qemu fails to read files over SFTP
+as the first SFTP messages exchanged after switching the session
+to non-blocking mode return SSH_AGAIN, but that message is lost
+int the SFTP internals and interpretted as SSH_ERROR, which is
+returned to the caller:
+
+https://gitlab.com/libssh/libssh-mirror/-/issues/280
+
+This is indeed an issue in libssh that we should address in the
+long term, but it will require more work on the internals. For
+now, the SFTP is not supported in non-blocking mode.
+
+Fixes: https://gitlab.com/libssh/libssh-mirror/-/issues/280
+Signed-off-by: Jakub Jelen <jjelen@redhat.com>
+Signed-off-by: Richard W.M. Jones <rjones@redhat.com>
+Message-ID: <20241113125526.2495731-1-rjones@redhat.com>
+Reviewed-by: Kevin Wolf <kwolf@redhat.com>
+Signed-off-by: Kevin Wolf <kwolf@redhat.com>
+(cherry picked from commit fbdea3d6c13d5a75895c287a004c6f1a6bf6c164)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/tests/qtest/virtio-9p-test.c b/tests/qtest/virtio-9p-test.c
-index 7638c0a183..86ff86409c 100644
---- a/tests/qtest/virtio-9p-test.c
-+++ b/tests/qtest/virtio-9p-test.c
-@@ -702,6 +702,7 @@ static void fs_use_after_unlink(void *obj, void *data,
-     g_autofree char *real_file = virtio_9p_test_path("09/doa_file");
-     g_autofree char *buf = g_malloc0(write_count);
-     struct stat st_file;
-+    struct v9fs_attr attr;
-     uint32_t fid_file;
-     uint32_t count;
+diff --git a/block/ssh.c b/block/ssh.c
+index 04726d4ecb..c90d705453 100644
+--- a/block/ssh.c
++++ b/block/ssh.c
+@@ -859,9 +859,6 @@ static int ssh_file_open(BlockDriverState *bs, QDict *options, int bdrv_flags,
+         goto err;
+     }
  
-@@ -725,6 +726,10 @@ static void fs_use_after_unlink(void *obj, void *data,
-     tunlinkat({ .client = v9p, .atPath = "09", .name = "doa_file" });
- 
-     /* file is removed, but we still have it open, so this should succeed */
-+    tgetattr({
-+        .client = v9p, .fid = fid_file, .request_mask = P9_GETATTR_BASIC,
-+        .rgetattr.attr = &attr
-+    });
-     count = twrite({
-         .client = v9p, .fid = fid_file, .offset = 0, .count = write_count,
-         .data = buf
+-    /* Go non-blocking. */
+-    ssh_set_blocking(s->session, 0);
+-
+     if (s->attrs->type == SSH_FILEXFER_TYPE_REGULAR) {
+         bs->supported_truncate_flags = BDRV_REQ_ZERO_WRITE;
+     }
 -- 
 2.39.5
 
