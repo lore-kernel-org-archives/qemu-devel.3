@@ -4,91 +4,72 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 23510C02188
-	for <qemu-devel@archiver.kernel.org>; Mon, 27 Jan 2025 11:58:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2402BC0218C
+	for <qemu-devel@archiver.kernel.org>; Mon, 27 Jan 2025 12:10:07 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tcNhY-0006TF-O9; Mon, 27 Jan 2025 06:54:48 -0500
+	id 1tcNvp-0003ZY-3p; Mon, 27 Jan 2025 07:09:35 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tcNhW-0006RI-Us
- for qemu-devel@nongnu.org; Mon, 27 Jan 2025 06:54:47 -0500
-Received: from mail-wm1-x334.google.com ([2a00:1450:4864:20::334])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tcNhU-0006sJ-M4
- for qemu-devel@nongnu.org; Mon, 27 Jan 2025 06:54:46 -0500
-Received: by mail-wm1-x334.google.com with SMTP id
- 5b1f17b1804b1-4368a293339so49782855e9.3
- for <qemu-devel@nongnu.org>; Mon, 27 Jan 2025 03:54:44 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1737978883; x=1738583683; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=TmODB2YqiSgFfw6mNPswT7QwXij2cXKU42PdskrrlVY=;
- b=nJopVp7Gc8ludZpwD4BxQ8sutpItSjeKSfdjYi4I2VHJwGoQ4u1Ct49QRT/n+gmGsP
- ffjHeURqxJ9tnKSbixhvGytXMbcXrZkqEnzQbvaypw+1r+D98yZDQFTVGBm/ziFh5jKE
- RiGyAG7Or77NCuTCIcRqwW3chaZUuBc0NhFj7fR0VETYNi7qUwuVUL+02UIykKyKc1Kc
- jq35ZAw1Ibq9Zpn3RlYKeVun/Xlw7OEQZlOM4546xCffwgDwfToA+f192+mpQYEx35Ek
- j7VLQuQGjYaamu6NuQodAnY51MuK/CqaP9D+628ja3glAeliPS2aW+IYUVir1QEbkufD
- jFlw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1737978883; x=1738583683;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=TmODB2YqiSgFfw6mNPswT7QwXij2cXKU42PdskrrlVY=;
- b=Kw9Sp1Wef5DkhUssT3SIjwvpp3Py9evkDG8HVYFfGT3OQgbMrbg9VTMjtVWnEKlBe7
- E0Qdtk/qdJv9WqT56UIof8LaoYlpW0pXffTVdo2HN4YbZHTt01x05nJrny5CElrRlTJW
- 1socC63kn9MpGPVulWIAywoWu7/UCsi6+oN+dXLEq14FHzP1WNzRBHwJ8BMtrOy4d6rL
- g3LMOmzbqdE1hjxaC9XvPFFK+BG+8mhpbiKM2Zb9Fe3qUmZGshnLMv0lXQAiQ0tpDzwk
- LtKsOzNUKvNRlxC0jAw4lQ3iMffO7assJ6oQ7FC+QeT7f/b2b95EmPNjZH7hge9p15AI
- SWgg==
-X-Gm-Message-State: AOJu0Yx6YyS0Ubp/QhCjQ4m6+RSYH7n2VUzDvGvA5bw+IdciTPPfvpgj
- zWMztryjIUoA3445uS/G9cSV6BFfKVDuhb2L5wQ6gKKCPP2GkBrRSns8D7+npsRlbWeFb8fwtHo
- OQZQ=
-X-Gm-Gg: ASbGncsRkxt4/J8eisMNTz+6DBy858fnKDSwVsbAgQz8GcEWfaFeFwXi/f42zVAq1mt
- f6LV1GQiYWz41kFjzsHdUqtPktpMvp7uN5OuGIzBbwFmuOwm23ZRHgTMz6Xrk9SJJDZyxXmVK+H
- bzX+xCGpvpCmfhLcaYWEXRFa543qTDLyJJQD1qY5jTg5pjl+3dlsH3oZhcaTaetWfGchxNaluN0
- pRE5MfSqg3WBZliwZOBgrMGuhPfZwb0kdi0PwYTZfvXL4PqMVn5JQA+YKvViWcCwN8v+DtI+ROE
- HK3EQVq12Hev31XNIILpQMgXFq/hyoj6XnA7LLVFm37NOxh6ayHPIes=
-X-Google-Smtp-Source: AGHT+IHfR9UBAxL5TKZlxz7d+HrYqLOdlINPy2KjaKBrQjBGU4MYj2SOphGtEV4tgHtMC3mTf1Ohow==
-X-Received: by 2002:a05:6000:1849:b0:38a:8888:c0b6 with SMTP id
- ffacd0b85a97d-38bf57bfcf5mr42398725f8f.51.1737978882716; 
- Mon, 27 Jan 2025 03:54:42 -0800 (PST)
-Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
- [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-38c2a17d6f8sm10684291f8f.28.2025.01.27.03.54.41
- (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Mon, 27 Jan 2025 03:54:42 -0800 (PST)
-From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+ (Exim 4.90_1) (envelope-from <ppandit@redhat.com>)
+ id 1tcNvA-0003Q4-J1
+ for qemu-devel@nongnu.org; Mon, 27 Jan 2025 07:08:55 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <ppandit@redhat.com>)
+ id 1tcNv8-0000Vy-Es
+ for qemu-devel@nongnu.org; Mon, 27 Jan 2025 07:08:51 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1737979726;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=nZoro0e8aIpm3QgH5cnVqqj2gKfFFGgH2sdwpeyFU5g=;
+ b=HJxnr9Ay1jFler9XTYCcp8A1Q8oiI4IkLTUtSPr7kq8zbhRkPA4W+VJ7ZNmhfFjx0fASJt
+ F8+91a0Mbnwruiikqvbu1YC/YZi6/QwXSEiJH3U1ZXSCtI3Ehu4JgxxiZV6zChvLtItB0T
+ jDzPWpXkR0Ur/ByXaO/wOoOatpCG5bY=
+Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-263-UpC72XVfMvWUly0UMTSNGw-1; Mon,
+ 27 Jan 2025 07:08:43 -0500
+X-MC-Unique: UpC72XVfMvWUly0UMTSNGw-1
+X-Mimecast-MFC-AGG-ID: UpC72XVfMvWUly0UMTSNGw
+Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 3BEE6180887B; Mon, 27 Jan 2025 12:08:42 +0000 (UTC)
+Received: from kaapi.redhat.com (unknown [10.74.17.143])
+ by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id E35971800348; Mon, 27 Jan 2025 12:08:37 +0000 (UTC)
+From: Prasad Pandit <ppandit@redhat.com>
 To: qemu-devel@nongnu.org
-Cc: qemu-arm@nongnu.org, qemu-s390x@nongnu.org,
- Paolo Bonzini <pbonzini@redhat.com>, qemu-riscv@nongnu.org,
- Peter Maydell <peter.maydell@linaro.org>,
- Richard Henderson <richard.henderson@linaro.org>,
- Thomas Huth <thuth@redhat.com>, qemu-ppc@nongnu.org,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PATCH 03/10] target/arm: Set disassemble_info::endian value in
- disas_set_info()
-Date: Mon, 27 Jan 2025 12:54:19 +0100
-Message-ID: <20250127115426.51355-4-philmd@linaro.org>
-X-Mailer: git-send-email 2.47.1
-In-Reply-To: <20250127115426.51355-1-philmd@linaro.org>
-References: <20250127115426.51355-1-philmd@linaro.org>
+Cc: peterx@redhat.com, farosas@suse.de, berrange@redhat.com,
+ Prasad Pandit <pjp@fedoraproject.org>
+Subject: [PATCH v4 1/4] migration/multifd: move macros to multifd header
+Date: Mon, 27 Jan 2025 17:38:20 +0530
+Message-ID: <20250127120823.144949-2-ppandit@redhat.com>
+In-Reply-To: <20250127120823.144949-1-ppandit@redhat.com>
+References: <20250127120823.144949-1-ppandit@redhat.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::334;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x334.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=unavailable autolearn_force=no
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=ppandit@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -43
+X-Spam_score: -4.4
+X-Spam_bar: ----
+X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.299,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=-1, RCVD_IN_MSPIKE_WL=-0.01,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -104,28 +85,54 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Have the CPUClass::disas_set_info() callback set the
-disassemble_info::endian field.
+From: Prasad Pandit <pjp@fedoraproject.org>
 
-Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Move MULTIFD_ macros to the header file so that
+they are accessible from other source files.
+
+Reviewed-by: Fabiano Rosas <farosas@suse.de>
+Signed-off-by: Prasad Pandit <pjp@fedoraproject.org>
 ---
- target/arm/cpu.c | 2 ++
- 1 file changed, 2 insertions(+)
+ migration/multifd.c | 5 -----
+ migration/multifd.h | 5 +++++
+ 2 files changed, 5 insertions(+), 5 deletions(-)
 
-diff --git a/target/arm/cpu.c b/target/arm/cpu.c
-index f9fdf708653..9de8c799c77 100644
---- a/target/arm/cpu.c
-+++ b/target/arm/cpu.c
-@@ -1220,6 +1220,8 @@ static void arm_disas_set_info(CPUState *cpu, disassemble_info *info)
- #else
-         info->endian = BFD_ENDIAN_BIG;
- #endif
-+    } else {
-+        info->endian = BFD_ENDIAN_LITTLE;
-     }
-     info->flags &= ~INSN_ARM_BE32;
- #ifndef CONFIG_USER_ONLY
--- 
-2.47.1
+v3: No change
+- https://lore.kernel.org/qemu-devel/20250121131032.1611245-1-ppandit@redhat.com/T/#t
+
+diff --git a/migration/multifd.c b/migration/multifd.c
+index ab73d6d984..97ce831775 100644
+--- a/migration/multifd.c
++++ b/migration/multifd.c
+@@ -33,11 +33,6 @@
+ #include "io/channel-socket.h"
+ #include "yank_functions.h"
+ 
+-/* Multiple fd's */
+-
+-#define MULTIFD_MAGIC 0x11223344U
+-#define MULTIFD_VERSION 1
+-
+ typedef struct {
+     uint32_t magic;
+     uint32_t version;
+diff --git a/migration/multifd.h b/migration/multifd.h
+index bd785b9873..10149af654 100644
+--- a/migration/multifd.h
++++ b/migration/multifd.h
+@@ -49,6 +49,11 @@ bool multifd_queue_page(RAMBlock *block, ram_addr_t offset);
+ bool multifd_recv(void);
+ MultiFDRecvData *multifd_get_recv_data(void);
+ 
++/* Multiple fd's */
++
++#define MULTIFD_MAGIC 0x11223344U
++#define MULTIFD_VERSION 1
++
+ /* Multifd Compression flags */
+ #define MULTIFD_FLAG_SYNC (1 << 0)
+ 
+--
+2.48.1
 
 
