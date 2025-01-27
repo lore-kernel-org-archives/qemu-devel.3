@@ -4,79 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D0B89C02188
-	for <qemu-devel@archiver.kernel.org>; Mon, 27 Jan 2025 11:39:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C0E86C02188
+	for <qemu-devel@archiver.kernel.org>; Mon, 27 Jan 2025 11:39:37 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tcNRv-0005qh-76; Mon, 27 Jan 2025 06:38:40 -0500
+	id 1tcNST-00062g-B3; Mon, 27 Jan 2025 06:39:16 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tcNRn-0005pJ-6y
- for qemu-devel@nongnu.org; Mon, 27 Jan 2025 06:38:31 -0500
-Received: from mail-wr1-x430.google.com ([2a00:1450:4864:20::430])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tcNS5-0005zX-R7
+ for qemu-devel@nongnu.org; Mon, 27 Jan 2025 06:38:50 -0500
+Received: from mail-wr1-x42b.google.com ([2a00:1450:4864:20::42b])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tcNRk-0005A1-Em
- for qemu-devel@nongnu.org; Mon, 27 Jan 2025 06:38:30 -0500
-Received: by mail-wr1-x430.google.com with SMTP id
- ffacd0b85a97d-385d7f19f20so2191892f8f.1
- for <qemu-devel@nongnu.org>; Mon, 27 Jan 2025 03:38:28 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tcNS3-0005Dz-3O
+ for qemu-devel@nongnu.org; Mon, 27 Jan 2025 06:38:49 -0500
+Received: by mail-wr1-x42b.google.com with SMTP id
+ ffacd0b85a97d-385e06af753so2299560f8f.2
+ for <qemu-devel@nongnu.org>; Mon, 27 Jan 2025 03:38:46 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1737977906; x=1738582706; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=SDlniYJth9Q9EXO7ByEZmIQ07W79NQhs7LYdTCiW6J0=;
- b=wGPCXTo1INN1RdghhoxoK2shxTcqOy2t1U0HRgAPAQQqM8dhiUo5IEig6ihEFREh1v
- 5Al7Z4DFCFPgYp/UK5zRNfdTCerHDvJlM8S9captzMs3B94KQx7mz+HA1cFrw613e4XK
- 6mtkEgW3142P1XSi0eBaKgYleXSqh78nB0tNOLVsc1V2WnCocWBnkK1yIxbg0EKVcq/6
- eV8d7wT55wM6YHgMq6avJzXmSGyXDn2kLJ9w6XyMV8V60tjZL3R5le+dmtdSqMwTICCR
- 4QBEGAT98PzD3O63q/t17IL42VhJJuud7dMrW5zmyV0ulJx9do4MDpJdXmMw8D5nBkH0
- L67Q==
+ d=linaro.org; s=google; t=1737977925; x=1738582725; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=duOqb1GCMJx47PEXJD6iEC2jwq3vPcsjz9INrZ4jd4c=;
+ b=a1Gvi2c8CdABavKz3SYRmeVC1qz4mcgQyD7/kxnuGXAZS2raUuqMMsCZDNhlG8whOa
+ FNZPG5sw2UwFRofV5CTiIN/jKGFiY0EyIPDI8EcOvzgCnynKqcrxWtCVhu7g9r/8b+Qs
+ 260qRmKM5KFOvxv+3q6pdZxT17Pym2Yk9F0mdzmebRQIQUIA5ZDYfb/Zje32tBSGo7Jk
+ 1h5G0x/Gv61tyS2cBPMrwDcN0R5eGWJJ8Zp0NP2Z1HjhX4mXBPnTerJoK5fLNN481Drn
+ UaAu4QULdr0vMCmLhfmO6QuhLPfXSoaPgG/MasC4aavHu43u41D69IfthxDNujWNwE05
+ 1O0A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1737977906; x=1738582706;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=SDlniYJth9Q9EXO7ByEZmIQ07W79NQhs7LYdTCiW6J0=;
- b=pIuuSZjYvkK6nJ8pRe/vcNNPVJF3H+wfGVRa/7d8RLA1LnenwgqN5llGLwwkLuzJtM
- KeyfFreYjehqt636JyNE8GoF+P7m0eN7shBk+ps6zNdGoxBuml+wS0Av+nXnPqJiOWH8
- KsFSi4j6j0eQ0ZdPe9KGOgwUQkacNXTVWuLBZg5dEYVVBDqn93o4TdKM8D/Awdglab21
- M5GCuXV8wJgsR8XdsZuAQdPcPuIr6Q8iPIkNGDfilkAY+nhiy7pbauRVcTvYfSU1b5uc
- hd7ISELkAobJLrGfKEVKaKqLOyFlR+lMTHi+Q2xBaPW3VLa/CQ22PTL9hAqwi9rGRIAK
- dLqg==
-X-Gm-Message-State: AOJu0YwopGKSqiiQlvGr0SPX1BNwyWOIyzfK2QxQFXGW0PzHp3ReLyzW
- Zc4cUKVy+Y0shVYQNBpP+XrdcqMkdmfxweLCkpYrLVSsGsdzhrShm0zOSrlJ9ZnUmXEGzsVfmwC
- ixFE=
-X-Gm-Gg: ASbGncsxankWb7jyAUUoe6Hyv36OgLd8YYiMPQ8nMwlyJTxxu6LQ4nsgrYYBFq+uV4S
- 51T0jsv9obyVH0bDf9hZhq7FSr7jCmPyam4fGmN1s0GJ6eo0bEwP8OYLwPXAQ5MJakUjl28q0j9
- 4azGxWsY2Vij+rslzOgX89KNi9w20S+aJ2e6+daTnP0dKdI6WcVbvAe9DleFtuA3bvlZm+fPMds
- 2J+kKKMA+lkoZFqj9ve0TUc1MkooW35AXmoA0nV+rU72nKbESJ25Xba9vbUurs0011+FbCcY8VH
- b+JyTenfkbzgQDL/2BQ0chyRZFaMLKBrEDrSr2QKTXCbWKcZv64pzhY=
-X-Google-Smtp-Source: AGHT+IFJW9WkZQSpmC92vaPuDb9r4WHqMUMPbIj9qU4D5srdv/4IpNZ104blZCuu1NzG++OwrrzDhg==
-X-Received: by 2002:a5d:6b8b:0:b0:38a:8b2c:53ac with SMTP id
- ffacd0b85a97d-38bf57b3fe9mr26672006f8f.42.1737977906516; 
- Mon, 27 Jan 2025 03:38:26 -0800 (PST)
+ d=1e100.net; s=20230601; t=1737977925; x=1738582725;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=duOqb1GCMJx47PEXJD6iEC2jwq3vPcsjz9INrZ4jd4c=;
+ b=g17+eJQiSB1th4WsWJMoEJjAqP8xrU/nHhgct9xDC1c167GeelB1g0ss6Yu8UQu0W+
+ ZNt9N3fDMfgrYkNQb/asGRH5/31gvlj+Nh3DzOxZn5Wg+nVn/b3pw9N8wvLgLydtwOv+
+ WtT4eExQQ1yxoKnIXyo7iO1yTCUoLNqP9GnFvcty+zi4GxUWyR3PcLMGwL+wdg3F4iF1
+ 1ewDpqwfdbZSYqcdNYT927GrxBtVGFyes/eMc0JgbqYqdXJQiC02YGiWrnBXJpVr8HKi
+ h3f12W8S95vW+t1ILdHr6HLdTenIpLU6zaZWAyhriPo6E7TL4t05XOu7fbUR1I6j/YxD
+ v+LA==
+X-Gm-Message-State: AOJu0YzmxRyTbcfmZFFU62XV0IlwEPkR9z//nVp/G4ObnaJYOU5uezk9
+ 0mexiUazIFiCUS7Fd0SIzsmA80KvE3z16/DlsWQ/umvkemiosPb6vnW3QoFasQHgHyHFxXGo8Ez
+ otPI=
+X-Gm-Gg: ASbGncu3c0QADNlkKz8905C47k4YePwjbNZNriFMaVMy1XfyYNodE32YYfJ5qyXa8GM
+ t7tn0N8tTYRaiyA1+TLXkRm74naPqz5GzwJ4F0pO2Qr7fuD9a8kyl0a+sff/azxvJgLYWtWcewd
+ jIxWtF3vv/dEE9mRaU411zPlwp4yy5VW0BAx/kmfoIkCfSrwcfJVJQqcp3DQ+m8kyhKSMPTomxO
+ br3ID7XXW9HSYLlyHYcz/omtNRfVOx0cdZgjTu8pazaDpPEmeOtxU4+3xN6aZsJo6UCkz59q7nH
+ EweOwZYokMlICSTjawSRs2WGiQEDJ1ZHHeHYApY4R2R73TfC9IBv0djHh+wPdGV+3A==
+X-Google-Smtp-Source: AGHT+IE9m0Pju6AwqBuwa4CUoGUL98YIzUfDhFgQ9YFtEW+7z1/21S1cV6mkfoT9w9qLyFOOF1CAqw==
+X-Received: by 2002:adf:eb10:0:b0:385:fc00:f5d4 with SMTP id
+ ffacd0b85a97d-38bf566ce7dmr28102438f8f.29.1737977925293; 
+ Mon, 27 Jan 2025 03:38:45 -0800 (PST)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-38c2a1c403asm10982852f8f.93.2025.01.27.03.38.25
+ ffacd0b85a97d-38c2a1c3994sm10608811f8f.81.2025.01.27.03.38.44
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Mon, 27 Jan 2025 03:38:25 -0800 (PST)
+ Mon, 27 Jan 2025 03:38:44 -0800 (PST)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: qemu-riscv@nongnu.org, qemu-ppc@nongnu.org,
  Richard Henderson <richard.henderson@linaro.org>, qemu-s390x@nongnu.org,
  qemu-arm@nongnu.org, Peter Maydell <peter.maydell@linaro.org>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PATCH 0/6] hw/loader: Pass ELFDATA endian order argument to
- load_elf()
-Date: Mon, 27 Jan 2025 12:38:18 +0100
-Message-ID: <20250127113824.50177-1-philmd@linaro.org>
+Subject: [PATCH 4/6] hw/loader: Pass ELFDATA endian order argument to
+ load_elf_ram_sym()
+Date: Mon, 27 Jan 2025 12:38:22 +0100
+Message-ID: <20250127113824.50177-5-philmd@linaro.org>
 X-Mailer: git-send-email 2.47.1
+In-Reply-To: <20250127113824.50177-1-philmd@linaro.org>
+References: <20250127113824.50177-1-philmd@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::430;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x430.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::42b;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x42b.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -99,66 +102,114 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi,
+Rather than passing a boolean 'is_big_endian' argument,
+directly pass the ELFDATA, which can be unspecified using
+the ELFDATANONE value.
 
-The goal of this series is to be able to use the generic loader
-on heterogeneous binary. In order to do that we need to remove
-its target_words_bigendian() call. This series replace the
-'bool is_big_endian' (~equivalent) argument of load_elf*() API
-by ELFDATA (which can be LSB / MSB or NONE), updating all the
-call sites.
+Update the call sites:
+  0 -> ELFDATA2LSB
 
-Philippe Mathieu-Daudé (6):
-  hw/avr/boot: Replace load_elf_ram_sym() -> load_elf_as()
-  hw/loader: Remove unused load_elf_ram()
-  hw/loader: Clarify local variable name in load_elf_ram_sym()
-  hw/loader: Pass ELFDATA endian order argument to load_elf_ram_sym()
-  hw/loader: Pass ELFDATA endian order argument to load_elf_as()
-  hw/loader: Pass ELFDATA endian order argument to load_elf()
+Suggested-by: Richard Henderson <richard.henderson@linaro.org>
+Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+---
+ include/hw/loader.h |  4 ++--
+ hw/core/loader.c    | 23 ++++++++++-------------
+ hw/riscv/boot.c     |  3 ++-
+ 3 files changed, 14 insertions(+), 16 deletions(-)
 
- include/hw/loader.h            | 22 ++++------------
- hw/core/loader.c               | 48 +++++++++++-----------------------
- hw/alpha/dp264.c               |  4 +--
- hw/arm/armv7m.c                |  2 +-
- hw/arm/boot.c                  | 16 ++++++------
- hw/avr/boot.c                  |  8 +++---
- hw/core/generic-loader.c       |  6 +----
- hw/hppa/machine.c              |  4 +--
- hw/i386/multiboot.c            |  4 +--
- hw/i386/x86-common.c           |  4 +--
- hw/loongarch/boot.c            |  2 +-
- hw/m68k/an5206.c               |  2 +-
- hw/m68k/mcf5208.c              |  2 +-
- hw/m68k/q800.c                 |  2 +-
- hw/m68k/virt.c                 |  2 +-
- hw/microblaze/boot.c           |  6 +++--
- hw/mips/boston.c               |  2 +-
- hw/mips/fuloong2e.c            |  2 +-
- hw/mips/loongson3_virt.c       |  2 +-
- hw/mips/malta.c                |  5 ++--
- hw/mips/mipssim.c              |  3 ++-
- hw/openrisc/boot.c             |  2 +-
- hw/pci-host/raven.c            |  4 +--
- hw/ppc/e500.c                  |  2 +-
- hw/ppc/mac_newworld.c          |  5 ++--
- hw/ppc/mac_oldworld.c          |  4 +--
- hw/ppc/pegasos2.c              |  8 +++---
- hw/ppc/ppc405_boards.c         |  2 +-
- hw/ppc/ppc440_bamboo.c         |  3 ++-
- hw/ppc/sam460ex.c              |  2 +-
- hw/ppc/spapr.c                 |  8 +++---
- hw/ppc/virtex_ml507.c          |  4 +--
- hw/riscv/boot.c                |  3 ++-
- hw/s390x/ipl.c                 |  6 ++---
- hw/sparc/leon3.c               |  2 +-
- hw/sparc/sun4m.c               |  5 ++--
- hw/sparc64/sun4u.c             |  6 ++---
- hw/tricore/triboard.c          |  2 +-
- hw/tricore/tricore_testboard.c |  2 +-
- hw/xtensa/sim.c                |  3 ++-
- hw/xtensa/xtfpga.c             |  3 ++-
- 41 files changed, 99 insertions(+), 125 deletions(-)
-
+diff --git a/include/hw/loader.h b/include/hw/loader.h
+index 9bb34e6f062..8202c376043 100644
+--- a/include/hw/loader.h
++++ b/include/hw/loader.h
+@@ -120,7 +120,7 @@ const char *load_elf_strerror(ssize_t error);
+  * @lowaddr: Populated with lowest loaded address. Ignored if NULL.
+  * @highaddr: Populated with highest loaded address. Ignored if NULL.
+  * @pflags: Populated with ELF processor-specific flags. Ignore if NULL.
+- * @bigendian: Expected ELF endianness. 0 for LE otherwise BE
++ * @elf_data_order: Expected ELF endianness (ELFDATA2LSB or ELFDATA2MSB).
+  * @elf_machine: Expected ELF machine type
+  * @clear_lsb: Set to mask off LSB of addresses (Some architectures use
+  *             this for non-address data)
+@@ -151,7 +151,7 @@ ssize_t load_elf_ram_sym(const char *filename,
+                          uint64_t (*translate_fn)(void *, uint64_t),
+                          void *translate_opaque, uint64_t *pentry,
+                          uint64_t *lowaddr, uint64_t *highaddr,
+-                         uint32_t *pflags, int big_endian, int elf_machine,
++                         uint32_t *pflags, int elf_data_order, int elf_machine,
+                          int clear_lsb, int data_swab,
+                          AddressSpace *as, bool load_rom, symbol_fn_t sym_cb);
+ 
+diff --git a/hw/core/loader.c b/hw/core/loader.c
+index fc2e8f91267..0cd34425e9c 100644
+--- a/hw/core/loader.c
++++ b/hw/core/loader.c
+@@ -428,7 +428,8 @@ ssize_t load_elf_as(const char *filename,
+ {
+     return load_elf_ram_sym(filename, elf_note_fn,
+                             translate_fn, translate_opaque,
+-                            pentry, lowaddr, highaddr, pflags, big_endian,
++                            pentry, lowaddr, highaddr, pflags,
++                            big_endian ? ELFDATA2MSB : ELFDATA2LSB,
+                             elf_machine, clear_lsb, data_swab, as,
+                             true, NULL);
+ }
+@@ -439,11 +440,11 @@ ssize_t load_elf_ram_sym(const char *filename,
+                          uint64_t (*translate_fn)(void *, uint64_t),
+                          void *translate_opaque, uint64_t *pentry,
+                          uint64_t *lowaddr, uint64_t *highaddr,
+-                         uint32_t *pflags, int big_endian, int elf_machine,
++                         uint32_t *pflags, int elf_data_order, int elf_machine,
+                          int clear_lsb, int data_swab,
+                          AddressSpace *as, bool load_rom, symbol_fn_t sym_cb)
+ {
+-    int fd, host_data_order, target_data_order, must_swab;
++    int fd, host_data_order, must_swab;
+     ssize_t ret = ELF_LOAD_FAILED;
+     uint8_t e_ident[EI_NIDENT];
+ 
+@@ -461,22 +462,18 @@ ssize_t load_elf_ram_sym(const char *filename,
+         ret = ELF_LOAD_NOT_ELF;
+         goto fail;
+     }
++
++    if (elf_data_order != ELFDATANONE && elf_data_order != e_ident[EI_DATA]) {
++        ret = ELF_LOAD_WRONG_ENDIAN;
++        goto fail;
++    }
++
+ #if HOST_BIG_ENDIAN
+     host_data_order = ELFDATA2MSB;
+ #else
+     host_data_order = ELFDATA2LSB;
+ #endif
+     must_swab = host_data_order != e_ident[EI_DATA];
+-    if (big_endian) {
+-        target_data_order = ELFDATA2MSB;
+-    } else {
+-        target_data_order = ELFDATA2LSB;
+-    }
+-
+-    if (target_data_order != e_ident[EI_DATA]) {
+-        ret = ELF_LOAD_WRONG_ENDIAN;
+-        goto fail;
+-    }
+ 
+     lseek(fd, 0, SEEK_SET);
+     if (e_ident[EI_CLASS] == ELFCLASS64) {
+diff --git a/hw/riscv/boot.c b/hw/riscv/boot.c
+index 90e75c69a04..c309441b7d8 100644
+--- a/hw/riscv/boot.c
++++ b/hw/riscv/boot.c
+@@ -246,7 +246,8 @@ void riscv_load_kernel(MachineState *machine,
+      */
+     kernel_size = load_elf_ram_sym(kernel_filename, NULL, NULL, NULL, NULL,
+                                    &info->image_low_addr, &info->image_high_addr,
+-                                   NULL, 0, EM_RISCV, 1, 0, NULL, true, sym_cb);
++                                   NULL, ELFDATA2LSB, EM_RISCV,
++                                   1, 0, NULL, true, sym_cb);
+     if (kernel_size > 0) {
+         info->kernel_size = kernel_size;
+         goto out;
 -- 
 2.47.1
 
