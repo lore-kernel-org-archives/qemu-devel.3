@@ -4,40 +4,37 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id EF88EC02191
-	for <qemu-devel@archiver.kernel.org>; Mon, 27 Jan 2025 14:26:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 982A0C0218C
+	for <qemu-devel@archiver.kernel.org>; Mon, 27 Jan 2025 14:26:48 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tcQ2y-00047F-Ku; Mon, 27 Jan 2025 09:25:10 -0500
+	id 1tcQ3J-0004gQ-Em; Mon, 27 Jan 2025 09:25:27 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1tcQ2d-0003S8-J6; Mon, 27 Jan 2025 09:24:43 -0500
+ id 1tcQ2h-0003sx-2q; Mon, 27 Jan 2025 09:24:47 -0500
 Received: from isrv.corpit.ru ([86.62.121.231])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1tcQ2b-00031S-MW; Mon, 27 Jan 2025 09:24:43 -0500
+ id 1tcQ2f-00032G-11; Mon, 27 Jan 2025 09:24:46 -0500
 Received: from localhost.tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by isrv.corpit.ru (Postfix) with ESMTP id 5269AE0F71;
+ by isrv.corpit.ru (Postfix) with ESMTP id 581ACE0F72;
  Mon, 27 Jan 2025 17:24:11 +0300 (MSK)
 Received: by localhost.tls.msk.ru (Postfix, from userid 1000)
- id 5E85951D61; Mon, 27 Jan 2025 17:18:03 +0300 (MSK)
+ id 91AF151D93; Mon, 27 Jan 2025 17:18:03 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Richard Henderson <richard.henderson@linaro.org>,
- wannacu <wannacu2049@gmail.com>,
- Pierrick Bouvier <pierrick.bouvier@linaro.org>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-9.2.1 02/41] tcg: Reset free_temps before tcg_optimize
-Date: Mon, 27 Jan 2025 17:17:16 +0300
-Message-Id: <20250127141803.3514882-2-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org, Peter Xu <peterx@redhat.com>,
+ Fabiano Rosas <farosas@suse.de>, Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-9.2.1 23/41] migration: Dump correct JSON format for nullptr
+ replacement
+Date: Mon, 27 Jan 2025 17:17:37 +0300
+Message-Id: <20250127141803.3514882-23-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <qemu-stable-9.2.1-20250127154029@cover.tls.msk.ru>
 References: <qemu-stable-9.2.1-20250127154029@cover.tls.msk.ru>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=86.62.121.231; envelope-from=mjt@tls.msk.ru;
  helo=isrv.corpit.ru
@@ -63,77 +60,203 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Richard Henderson <richard.henderson@linaro.org>
+From: Peter Xu <peterx@redhat.com>
 
-When allocating new temps during tcg_optmize, do not re-use
-any EBB temps that were used within the TB.  We do not have
-any idea what span of the TB in which the temp was live.
+QEMU plays a trick with null pointers inside an array of pointers in a VMSD
+field.  See 07d4e69147 ("migration/vmstate: fix array of ptr with
+nullptrs") for more details on why.  The idea makes sense in general, but
+it may overlooked the JSON writer where it could write nothing in a
+"struct" in the JSON hints section.
 
-Introduce tcg_temp_ebb_reset_freed and use before tcg_optimize,
-as well as replacing the equivalent in plugin_gen_inject and
-tcg_func_start.
+We hit some analyze-migration.py issues on s390 recently, showing that some
+of the struct field contains nothing, like:
 
-Cc: qemu-stable@nongnu.org
-Fixes: fb04ab7ddd8 ("tcg/optimize: Lower TCG_COND_TST{EQ,NE} if unsupported")
-Resolves: https://gitlab.com/qemu-project/qemu/-/issues/2711
-Reported-by: wannacu <wannacu2049@gmail.com>
-Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
-Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-(cherry picked from commit 04e006ab36a8565b92d4e21dd346367fbade7d74)
+{"name": "css", "array_len": 256, "type": "struct", "struct": {}, "size": 1}
+
+As described in details by Fabiano:
+
+https://lore.kernel.org/r/87pll37cin.fsf@suse.de
+
+It could be that we hit some null pointers there, and JSON was gone when
+they're null pointers.
+
+To fix it, instead of hacking around only at VMStateInfo level, do that
+from VMStateField level, so that JSON writer can also be involved.  In this
+case, JSON writer will replace the pointer array (which used to be a
+"struct") to be the real representation of the nullptr field.
+
+Signed-off-by: Peter Xu <peterx@redhat.com>
+Message-Id: <20250109185249.23952-6-farosas@suse.de>
+Signed-off-by: Fabiano Rosas <farosas@suse.de>
+(cherry picked from commit 9867c3a7ced12dd7519155c047eb2c0098a11c5f)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/accel/tcg/plugin-gen.c b/accel/tcg/plugin-gen.c
-index 0f47bfbb48..1ef075552c 100644
---- a/accel/tcg/plugin-gen.c
-+++ b/accel/tcg/plugin-gen.c
-@@ -275,7 +275,7 @@ static void plugin_gen_inject(struct qemu_plugin_tb *plugin_tb)
-      * that might be live within the existing opcode stream.
-      * The simplest solution is to release them all and create new.
-      */
--    memset(tcg_ctx->free_temps, 0, sizeof(tcg_ctx->free_temps));
-+    tcg_temp_ebb_reset_freed(tcg_ctx);
+diff --git a/migration/vmstate.c b/migration/vmstate.c
+index aa2821dec6..52704c822c 100644
+--- a/migration/vmstate.c
++++ b/migration/vmstate.c
+@@ -51,6 +51,36 @@ vmstate_field_exists(const VMStateDescription *vmsd, const VMStateField *field,
+     return result;
+ }
  
-     QTAILQ_FOREACH_SAFE(op, &tcg_ctx->ops, link, next) {
-         switch (op->opc) {
-diff --git a/include/tcg/tcg-temp-internal.h b/include/tcg/tcg-temp-internal.h
-index 44192c55a9..98f91e68b7 100644
---- a/include/tcg/tcg-temp-internal.h
-+++ b/include/tcg/tcg-temp-internal.h
-@@ -42,4 +42,10 @@ TCGv_i64 tcg_temp_ebb_new_i64(void);
- TCGv_ptr tcg_temp_ebb_new_ptr(void);
- TCGv_i128 tcg_temp_ebb_new_i128(void);
- 
-+/* Forget all freed EBB temps, so that new allocations produce new temps. */
-+static inline void tcg_temp_ebb_reset_freed(TCGContext *s)
++/*
++ * Create a fake nullptr field when there's a NULL pointer detected in the
++ * array of a VMS_ARRAY_OF_POINTER VMSD field.  It's needed because we
++ * can't dereference the NULL pointer.
++ */
++static const VMStateField *
++vmsd_create_fake_nullptr_field(const VMStateField *field)
 +{
-+    memset(s->free_temps, 0, sizeof(s->free_temps));
++    VMStateField *fake = g_new0(VMStateField, 1);
++
++    /* It can only happen on an array of pointers! */
++    assert(field->flags & VMS_ARRAY_OF_POINTER);
++
++    /* Some of fake's properties should match the original's */
++    fake->name = field->name;
++    fake->version_id = field->version_id;
++
++    /* Do not need "field_exists" check as it always exists (which is null) */
++    fake->field_exists = NULL;
++
++    /* See vmstate_info_nullptr - use 1 byte to represent nullptr */
++    fake->size = 1;
++    fake->info = &vmstate_info_nullptr;
++    fake->flags = VMS_SINGLE;
++
++    /* All the rest fields shouldn't matter.. */
++
++    return (const VMStateField *)fake;
 +}
 +
- #endif /* TCG_TEMP_FREE_H */
-diff --git a/tcg/tcg.c b/tcg/tcg.c
-index 0babae1b88..4578b185be 100644
---- a/tcg/tcg.c
-+++ b/tcg/tcg.c
-@@ -1489,7 +1489,7 @@ void tcg_func_start(TCGContext *s)
-     s->nb_temps = s->nb_globals;
+ static int vmstate_n_elems(void *opaque, const VMStateField *field)
+ {
+     int n_elems = 1;
+@@ -143,23 +173,39 @@ int vmstate_load_state(QEMUFile *f, const VMStateDescription *vmsd,
+             }
+             for (i = 0; i < n_elems; i++) {
+                 void *curr_elem = first_elem + size * i;
++                const VMStateField *inner_field;
  
-     /* No temps have been previously allocated for size or locality.  */
--    memset(s->free_temps, 0, sizeof(s->free_temps));
-+    tcg_temp_ebb_reset_freed(s);
- 
-     /* No constant temps have been previously allocated. */
-     for (int i = 0; i < TCG_TYPE_COUNT; ++i) {
-@@ -6120,6 +6120,9 @@ int tcg_gen_code(TCGContext *s, TranslationBlock *tb, uint64_t pc_start)
-     }
- #endif
- 
-+    /* Do not reuse any EBB that may be allocated within the TB. */
-+    tcg_temp_ebb_reset_freed(s);
+                 if (field->flags & VMS_ARRAY_OF_POINTER) {
+                     curr_elem = *(void **)curr_elem;
+                 }
 +
-     tcg_optimize(s);
+                 if (!curr_elem && size) {
+-                    /* if null pointer check placeholder and do not follow */
+-                    assert(field->flags & VMS_ARRAY_OF_POINTER);
+-                    ret = vmstate_info_nullptr.get(f, curr_elem, size, NULL);
+-                } else if (field->flags & VMS_STRUCT) {
+-                    ret = vmstate_load_state(f, field->vmsd, curr_elem,
+-                                             field->vmsd->version_id);
+-                } else if (field->flags & VMS_VSTRUCT) {
+-                    ret = vmstate_load_state(f, field->vmsd, curr_elem,
+-                                             field->struct_version_id);
++                    /*
++                     * If null pointer found (which should only happen in
++                     * an array of pointers), use null placeholder and do
++                     * not follow.
++                     */
++                    inner_field = vmsd_create_fake_nullptr_field(field);
++                } else {
++                    inner_field = field;
++                }
++
++                if (inner_field->flags & VMS_STRUCT) {
++                    ret = vmstate_load_state(f, inner_field->vmsd, curr_elem,
++                                             inner_field->vmsd->version_id);
++                } else if (inner_field->flags & VMS_VSTRUCT) {
++                    ret = vmstate_load_state(f, inner_field->vmsd, curr_elem,
++                                             inner_field->struct_version_id);
+                 } else {
+-                    ret = field->info->get(f, curr_elem, size, field);
++                    ret = inner_field->info->get(f, curr_elem, size,
++                                                 inner_field);
+                 }
++
++                /* If we used a fake temp field.. free it now */
++                if (inner_field != field) {
++                    g_clear_pointer((gpointer *)&inner_field, g_free);
++                }
++
+                 if (ret >= 0) {
+                     ret = qemu_file_get_error(f);
+                 }
+@@ -387,29 +433,50 @@ int vmstate_save_state_v(QEMUFile *f, const VMStateDescription *vmsd,
+             }
+             for (i = 0; i < n_elems; i++) {
+                 void *curr_elem = first_elem + size * i;
++                const VMStateField *inner_field;
  
-     reachable_code_pass(s);
+-                vmsd_desc_field_start(vmsd, vmdesc_loop, field, i, n_elems);
+                 old_offset = qemu_file_transferred(f);
+                 if (field->flags & VMS_ARRAY_OF_POINTER) {
+                     assert(curr_elem);
+                     curr_elem = *(void **)curr_elem;
+                 }
++
+                 if (!curr_elem && size) {
+-                    /* if null pointer write placeholder and do not follow */
+-                    assert(field->flags & VMS_ARRAY_OF_POINTER);
+-                    ret = vmstate_info_nullptr.put(f, curr_elem, size, NULL,
+-                                                   NULL);
+-                } else if (field->flags & VMS_STRUCT) {
+-                    ret = vmstate_save_state(f, field->vmsd, curr_elem,
+-                                             vmdesc_loop);
+-                } else if (field->flags & VMS_VSTRUCT) {
+-                    ret = vmstate_save_state_v(f, field->vmsd, curr_elem,
+-                                               vmdesc_loop,
+-                                               field->struct_version_id, errp);
++                    /*
++                     * If null pointer found (which should only happen in
++                     * an array of pointers), use null placeholder and do
++                     * not follow.
++                     */
++                    inner_field = vmsd_create_fake_nullptr_field(field);
++                } else {
++                    inner_field = field;
++                }
++
++                vmsd_desc_field_start(vmsd, vmdesc_loop, inner_field,
++                                      i, n_elems);
++
++                if (inner_field->flags & VMS_STRUCT) {
++                    ret = vmstate_save_state(f, inner_field->vmsd,
++                                             curr_elem, vmdesc_loop);
++                } else if (inner_field->flags & VMS_VSTRUCT) {
++                    ret = vmstate_save_state_v(f, inner_field->vmsd,
++                                               curr_elem, vmdesc_loop,
++                                               inner_field->struct_version_id,
++                                               errp);
+                 } else {
+-                    ret = field->info->put(f, curr_elem, size, field,
+-                                     vmdesc_loop);
++                    ret = inner_field->info->put(f, curr_elem, size,
++                                                 inner_field, vmdesc_loop);
+                 }
++
++                written_bytes = qemu_file_transferred(f) - old_offset;
++                vmsd_desc_field_end(vmsd, vmdesc_loop, inner_field,
++                                    written_bytes);
++
++                /* If we used a fake temp field.. free it now */
++                if (inner_field != field) {
++                    g_clear_pointer((gpointer *)&inner_field, g_free);
++                }
++
+                 if (ret) {
+                     error_setg(errp, "Save of field %s/%s failed",
+                                 vmsd->name, field->name);
+@@ -419,9 +486,6 @@ int vmstate_save_state_v(QEMUFile *f, const VMStateDescription *vmsd,
+                     return ret;
+                 }
+ 
+-                written_bytes = qemu_file_transferred(f) - old_offset;
+-                vmsd_desc_field_end(vmsd, vmdesc_loop, field, written_bytes);
+-
+                 /* Compressed arrays only care about the first element */
+                 if (vmdesc_loop && vmsd_can_compress(field)) {
+                     vmdesc_loop = NULL;
 -- 
 2.39.5
 
