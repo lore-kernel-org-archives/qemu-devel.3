@@ -4,67 +4,67 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 771FEC0218C
-	for <qemu-devel@archiver.kernel.org>; Mon, 27 Jan 2025 09:22:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0D8A2C0218C
+	for <qemu-devel@archiver.kernel.org>; Mon, 27 Jan 2025 09:24:10 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tcLJZ-0008O5-MI; Mon, 27 Jan 2025 04:21:53 -0500
+	id 1tcLLU-0000kF-Ey; Mon, 27 Jan 2025 04:23:52 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <shentey@gmail.com>)
- id 1tcLJV-0008Nm-R6; Mon, 27 Jan 2025 04:21:50 -0500
-Received: from mail-ed1-x52c.google.com ([2a00:1450:4864:20::52c])
+ id 1tcLLL-0000jl-9M; Mon, 27 Jan 2025 04:23:43 -0500
+Received: from mail-ej1-x633.google.com ([2a00:1450:4864:20::633])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <shentey@gmail.com>)
- id 1tcLJT-0003G4-3F; Mon, 27 Jan 2025 04:21:49 -0500
-Received: by mail-ed1-x52c.google.com with SMTP id
- 4fb4d7f45d1cf-5d0ac27b412so5481495a12.1; 
- Mon, 27 Jan 2025 01:21:45 -0800 (PST)
+ id 1tcLLJ-0003LB-KQ; Mon, 27 Jan 2025 04:23:43 -0500
+Received: by mail-ej1-x633.google.com with SMTP id
+ a640c23a62f3a-aaee0b309adso578109466b.3; 
+ Mon, 27 Jan 2025 01:23:40 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1737969704; x=1738574504; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1737969819; x=1738574619; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:message-id:references
  :in-reply-to:subject:cc:to:from:date:from:to:cc:subject:date
  :message-id:reply-to;
- bh=+UuFjFlXx2cpy2FEWdZ5KX6cphMe20KLc2czhmRa7OM=;
- b=FkTagHrW5GaQsB3ZlYN4R3nfmn8/ND27HQqSgUug1WpOmFQ6dnVlxcjBLsqPPX2PKi
- Nh8bXRVbhGqs6N525ttwuZvz1VIvHQ/CZRh/bAP4SNQVo0IVBv5LbqH1ZUvCyjvK/w65
- aXaJEAnNR/cHTOz6H/1Kyxv2LDsjcKFj9BKgqwxk69p5NSy1kVlXxFEfS5+QTmDxZl81
- C/kNmWsfapWfLgej+WsQrtrENNXRlxxAS2EJC3SspVYpWdABat3k49vfoSb1zmElzaAd
- /Ta7yUG3EbfM1YxwD1ECjDdTXLXn6TG0G6bEMeGd/Ed9pAlAFv/s/pB8C9dl1A9eU9Z/
- xh+g==
+ bh=rdp6qM5HkNGE6pm93Ya34vtciW0eBxcidQ8OmMD0mDI=;
+ b=kvaIxQT5gL6V4wJ3CBY8feJmhgUeyZ3Lz6qs6fVMtL+gaEc381iu9Wi7UzTAJiU4Rw
+ Z85QmkCmYqop6YDTJZ9lMuCQ464CcRPdjhm6h41dVizZQrXXK1ChttCs34UX8DmcHER3
+ KaIEdsqY9CnKhO4dDCFVpPl2PjhyMUyOoHLB4Ak2palmk5JTu/qSTSH/cPQgWvw3ZDVp
+ 9m8IF6dPp+HQP7EFQLwMY5XTAnT98fJwTFGe9dnjqyOSz/GSES6BaDadzcua/3bBzNAJ
+ SjHksutgGsycH6+w1NIpnt1+Oa7Q20Lyab0NqQmv/CoM9bKrGNyM3Tc7COqVr0iPrwL2
+ P2yA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1737969704; x=1738574504;
+ d=1e100.net; s=20230601; t=1737969819; x=1738574619;
  h=content-transfer-encoding:mime-version:message-id:references
  :in-reply-to:subject:cc:to:from:date:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=+UuFjFlXx2cpy2FEWdZ5KX6cphMe20KLc2czhmRa7OM=;
- b=Ij85QD80W/0w+Gnl+MbLlvZWmGUu4wHYGNnHA+QWw51Wa40yDJ7YpQQYM3o9y9UfZv
- KUboyY+ZviqARCAiPL09gH7u+GnYM/YaS5z0R9CD9n4vx+Jts1QH8DwCAWU8Kzi8dUN3
- UVla5UbvXU0HVorFyrDkaHkmRGIpxCOA+X6nNHgxZdGVpp5Xs6RArcNjM4vl/l4apOhQ
- hfF2wbPEFPdv2rwkmVy4EBln0DFo/wwJj0GLP3MzPbJ7FKbYlt3i2wXTP8t7nYmfCOhz
- APM5ZHpjeoBwleVG8QpjXOByKv7vSdnO1b4c/QxSHlM2H5mObQdN8P6/Pa5KYrDlH0dL
- 2TAg==
+ bh=rdp6qM5HkNGE6pm93Ya34vtciW0eBxcidQ8OmMD0mDI=;
+ b=jDD1LAUciBn5xze1RysgoeVWRdnBXCQgDK09YiIGNQtHEycVSmqTClwl5UPo3EgfpB
+ GavAF+xsf+2RobDILoGSOF97gNb+/urDJnoX6HdwsmsQ/+cHIGbKM2R25Wigv/Kto7lo
+ Qo6qMKhjYPO7ohV5OOF4pT2lRZAxTL9KO85RiPA1SrcwZJk3kfnKwzLJxmHvNN6e8uQl
+ zmDpCSG0eoJYUGbzGd1FTKNyvzH88dcsquk6yW9KMTjufelANypg9pSdXx5Hcw6nQQHi
+ tArm+Lhulndsqsab5IgK7xkeGsgBKmQwEKKlBWnIlWnF2ZyeaOvZsB96piNqIh4a4UPG
+ OXtQ==
 X-Forwarded-Encrypted: i=1;
- AJvYcCU1oDeForzxvmRph+mng4d6QTrGr/9TvSlw0absPGl4ywKVDUEjHXRQZ9aZ3q9MBtObC6avW4Govrhv@nongnu.org,
- AJvYcCUoXD/rkkMzPmE5ixeJ/KSGfWJM6XnR39NOFfpPceyN0WkMF9HPbZOMJGt3Z+BlucaheUdws440T6Y=@nongnu.org
-X-Gm-Message-State: AOJu0YxvHDu+9ujxTHVNBBJNp28wvdRZjuNfiv7XtYgZtUvDS0BwAet+
- t469py5uw3xOmxy+ZycqfNYj9GDq3a4eOUeAu0TjKtamPw9wEaja
-X-Gm-Gg: ASbGncv5esFfSTrhMDYQQLdGgJXDFjM51CtW/yQ5jxVatSEDg6D4EpDMV5+NdKSgS/B
- g4yCT900Plxtg4zXlb/RKkEJD9HytXovyxkJPJllvKKRYEpkWiAhgXpHSLE0KueUneXkTcokI8x
- Kv811xEwWQWgQSvxPPj0VYbmzC8qWXpZ2785h58lzKjzyeUmUg2FUaECJencZH5ESDRQEN4s9/s
- PzsA8qxwqNfMwawzZSC5kn6+Z5VlNn3e3AGPF46wRzBbqlVECXl9WdnFPoqAFdaNBxdPYq4RbKU
- z8WW6AZaDs05DoIP8PlITdm7ZxIC07lLef5uJyer+jwJkpBKEqmp4OKBicuc+RyZNI4=
-X-Google-Smtp-Source: AGHT+IEkfmy1lj+GPVFBL2FtqWCYO3YjtUx8arnMB2aNAPatwxoDM48FZF5ggzn93a2OlFcmqgnFTQ==
-X-Received: by 2002:a17:906:f5a2:b0:aab:c78c:a7ed with SMTP id
- a640c23a62f3a-ab38b3db4d1mr3880527066b.49.1737969703759; 
- Mon, 27 Jan 2025 01:21:43 -0800 (PST)
+ AJvYcCUAod53ziElVOI24F4h/YMGJ9TlmXiy83OiHxFbDb4F0oZH7G+hn/oSgjTurG8Ap57YrB4ieawEGkOw@nongnu.org,
+ AJvYcCXRd6GHJ292AkJvQUReNh9FFUFDjMgRHNDb9xxIBx4+Ek1CxnykqEvYm96NpxPsHE6InwsQYr1s7VA=@nongnu.org
+X-Gm-Message-State: AOJu0YwxNwbue4nvCA5Uy1vCs2Md8oUozmY7pKN49Z3CM1HHakEHIMrd
+ QkQ/g31aMPwe7kpbuRQ5/DZAHmFcMZCn4lv0D9TNiQqKxQ8O8mne
+X-Gm-Gg: ASbGncsbZ9+UYKLnnvoWXsCNWyxGoi/+PmavBKJ4fuGrR09ZIMjpXPhiP82HVzaMMst
+ uGihSW26uy9mMcaZPSyPHJ/V4fGw50b6o3fbcy2VNEhEGabaJYk8Oe+3hXeYFCGlSUeDya5GCOh
+ Q+FyOBGj0BRB+ohQG/ToxYINtclmbS1wNRA9ZHyB8R1ekVERhy35C9bE4WL/qBnB16jPP+fIhEd
+ U6hTno4wyrDge8x0xS5fFrZfXGV0FWmf6vRSxq3BTTxu1FAA+GlcbaX7uv8oHCkhnisuS2E/Nml
+ +TKbWtZg1fkv2sc1PYPbbSC3s8EgQiQGo0rYCUzTrs0Fe6uifpRJtjpQ
+X-Google-Smtp-Source: AGHT+IGGdDiQNlIruAHADHHYWkF49cOK1bT139jWgdCV4iDBjNSzB0gu/pftWQhhkzbn6APXXw+Bbw==
+X-Received: by 2002:a17:907:3602:b0:aaf:74b3:80db with SMTP id
+ a640c23a62f3a-ab38b0b90f1mr3823978866b.3.1737969819097; 
+ Mon, 27 Jan 2025 01:23:39 -0800 (PST)
 Received: from [127.0.0.1] (dynamic-093-128-047-181.93.128.pool.telefonica.de.
  [93.128.47.181]) by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-ab6760b76acsm548940966b.113.2025.01.27.01.21.43
+ a640c23a62f3a-ab675e1373esm546856666b.1.2025.01.27.01.23.38
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 27 Jan 2025 01:21:43 -0800 (PST)
-Date: Mon, 27 Jan 2025 09:21:42 +0000
+ Mon, 27 Jan 2025 01:23:38 -0800 (PST)
+Date: Mon, 27 Jan 2025 09:23:38 +0000
 From: Bernhard Beschow <shentey@gmail.com>
 To: =?ISO-8859-1?Q?Philippe_Mathieu-Daud=E9?= <philmd@linaro.org>,
  qemu-devel@nongnu.org
@@ -85,18 +85,18 @@ CC: Yi Liu <yi.l.liu@intel.com>, Markus Armbruster <armbru@redhat.com>,
  Alex Williamson <alex.williamson@redhat.com>, Paul Durrant <paul@xen.org>,
  =?ISO-8859-1?Q?Cl=E9ment_Mathieu--Drif?= <clement.mathieu--drif@eviden.com>,
  =?ISO-8859-1?Q?C=E9dric_Le_Goater?= <clg@redhat.com>
-Subject: =?US-ASCII?Q?Re=3A_=5BPATCH_7/9=5D_hw/net=3A_Have_eTSEC_dev?=
- =?US-ASCII?Q?ice_inherit_from_DYNAMIC=5FSYS=5FBUS=5FDEVICE?=
-In-Reply-To: <20250125181343.59151-8-philmd@linaro.org>
+Subject: =?US-ASCII?Q?Re=3A_=5BPATCH_2/9=5D_hw/sysbus=3A_Declare_?=
+ =?US-ASCII?Q?QOM_types_using_DEFINE=5FTYPES=28=29_macro?=
+In-Reply-To: <20250125181343.59151-3-philmd@linaro.org>
 References: <20250125181343.59151-1-philmd@linaro.org>
- <20250125181343.59151-8-philmd@linaro.org>
-Message-ID: <0EF260B4-A6E0-47A5-9EA4-7E90F7261F5B@gmail.com>
+ <20250125181343.59151-3-philmd@linaro.org>
+Message-ID: <003404AB-0220-474C-B9DC-4CD88225C420@gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain;
  charset=utf-8
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::52c;
- envelope-from=shentey@gmail.com; helo=mail-ed1-x52c.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::633;
+ envelope-from=shentey@gmail.com; helo=mail-ej1-x633.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -121,39 +121,84 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 
 
-Am 25=2E Januar 2025 18:13:41 UTC schrieb "Philippe Mathieu-Daud=C3=A9" <p=
+Am 25=2E Januar 2025 18:13:36 UTC schrieb "Philippe Mathieu-Daud=C3=A9" <p=
 hilmd@linaro=2Eorg>:
->Because the network eTSEC device can be optionally plugged on the
->TYPE_PLATFORM_BUS_DEVICE, have it inherit TYPE_DYNAMIC_SYS_BUS_DEVICE=2E
+>When multiple QOM types are registered in the same file,
+>it is simpler to use the the DEFINE_TYPES() macro=2E In
+>particular because type array declared with such macro
+>are easier to review=2E
 >
 >Signed-off-by: Philippe Mathieu-Daud=C3=A9 <philmd@linaro=2Eorg>
-
-Tested-by: Bernhard Beschow <shentey@gmail=2Ecom>
-Acked-by: Bernhard Beschow <shentey@gmail=2Ecom>
-
 >---
-> hw/net/fsl_etsec/etsec=2Ec | 4 +---
-> 1 file changed, 1 insertion(+), 3 deletions(-)
+> hw/core/sysbus=2Ec | 39 +++++++++++++++++----------------------
+> 1 file changed, 17 insertions(+), 22 deletions(-)
 >
->diff --git a/hw/net/fsl_etsec/etsec=2Ec b/hw/net/fsl_etsec/etsec=2Ec
->index 781b9003954=2E=2E3ce4fa2662d 100644
->--- a/hw/net/fsl_etsec/etsec=2Ec
->+++ b/hw/net/fsl_etsec/etsec=2Ec
->@@ -425,14 +425,12 @@ static void etsec_class_init(ObjectClass *klass, vo=
-id *data)
->     dc->realize =3D etsec_realize;
->     device_class_set_legacy_reset(dc, etsec_reset);
->     device_class_set_props(dc, etsec_properties);
->-    /* Supported by ppce500 machine */
->-    dc->user_creatable =3D true;
+>diff --git a/hw/core/sysbus=2Ec b/hw/core/sysbus=2Ec
+>index f713bbfe04f=2E=2E306f98406c0 100644
+>--- a/hw/core/sysbus=2Ec
+>+++ b/hw/core/sysbus=2Ec
+>@@ -80,13 +80,6 @@ static void system_bus_class_init(ObjectClass *klass, =
+void *data)
+>     k->get_fw_dev_path =3D sysbus_get_fw_dev_path;
 > }
 >=20
-> static const TypeInfo etsec_types[] =3D {
->     {
->         =2Ename          =3D TYPE_ETSEC_COMMON,
->-        =2Eparent        =3D TYPE_SYS_BUS_DEVICE,
->+        =2Eparent        =3D TYPE_DYNAMIC_SYS_BUS_DEVICE,
->         =2Einstance_size =3D sizeof(eTSEC),
->         =2Eclass_init    =3D etsec_class_init,
->         =2Einstance_init =3D etsec_instance_init,
+>-static const TypeInfo system_bus_info =3D {
+>-    =2Ename =3D TYPE_SYSTEM_BUS,
+>-    =2Eparent =3D TYPE_BUS,
+>-    =2Einstance_size =3D sizeof(BusState),
+>-    =2Eclass_init =3D system_bus_class_init,
+>-};
+>-
+> /* Check whether an IRQ source exists */
+> bool sysbus_has_irq(SysBusDevice *dev, int n)
+> {
+>@@ -306,15 +299,6 @@ static void sysbus_device_class_init(ObjectClass *kl=
+ass, void *data)
+>     k->user_creatable =3D false;
+> }
+>=20
+>-static const TypeInfo sysbus_device_type_info =3D {
+>-    =2Ename =3D TYPE_SYS_BUS_DEVICE,
+>-    =2Eparent =3D TYPE_DEVICE,
+>-    =2Einstance_size =3D sizeof(SysBusDevice),
+>-    =2Eabstract =3D true,
+>-    =2Eclass_size =3D sizeof(SysBusDeviceClass),
+>-    =2Eclass_init =3D sysbus_device_class_init,
+>-};
+>-
+> static BusState *main_system_bus;
+>=20
+> static void main_system_bus_create(void)
+>@@ -337,10 +321,21 @@ BusState *sysbus_get_default(void)
+>     return main_system_bus;
+> }
+>=20
+>-static void sysbus_register_types(void)
+>-{
+>-    type_register_static(&system_bus_info);
+>-    type_register_static(&sysbus_device_type_info);
+>-}
+>+static const TypeInfo sysbus_types[] =3D {
+>+    {
+>+        =2Ename           =3D TYPE_SYSTEM_BUS,
+>+        =2Eparent         =3D TYPE_BUS,
+>+        =2Einstance_size  =3D sizeof(BusState),
+>+        =2Eclass_init     =3D system_bus_class_init,
+>+    },
+>+    {
+>+        =2Ename           =3D TYPE_SYS_BUS_DEVICE,
+>+        =2Eparent         =3D TYPE_DEVICE,
+>+        =2Einstance_size  =3D sizeof(SysBusDevice),
+>+        =2Eabstract       =3D true,
+>+        =2Eclass_size     =3D sizeof(SysBusDeviceClass),
+>+        =2Eclass_init     =3D sysbus_device_class_init,
+>+    },
+>+};
+>=20
+>-type_init(sysbus_register_types)
+>+DEFINE_TYPES(sysbus_types)
+
+Can now omit the "qom/module=2Eh" include=2E With that changed:
+
+Reviewed-by: Bernhard Beschow
 
