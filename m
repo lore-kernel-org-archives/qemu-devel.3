@@ -4,38 +4,38 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 578C6C0218D
-	for <qemu-devel@archiver.kernel.org>; Tue, 28 Jan 2025 07:59:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 77C37C02192
+	for <qemu-devel@archiver.kernel.org>; Tue, 28 Jan 2025 07:59:47 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tcgSs-0002pr-Ji; Tue, 28 Jan 2025 02:56:55 -0500
+	id 1tcgPg-0000xg-57; Tue, 28 Jan 2025 02:53:36 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1tcgSf-00021B-NU; Tue, 28 Jan 2025 02:56:43 -0500
+ id 1tcgPc-0000vJ-K2; Tue, 28 Jan 2025 02:53:32 -0500
 Received: from isrv.corpit.ru ([86.62.121.231])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1tcgSb-0000Ob-Te; Tue, 28 Jan 2025 02:56:41 -0500
+ id 1tcgPb-0007nM-1U; Tue, 28 Jan 2025 02:53:32 -0500
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 767CBE1AE8;
- Tue, 28 Jan 2025 10:54:25 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id AAD42E1ABE;
+ Tue, 28 Jan 2025 10:52:59 +0300 (MSK)
 Received: from localhost.tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id E5B401A62CF;
- Tue, 28 Jan 2025 10:54:50 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id 259E81A62AD;
+ Tue, 28 Jan 2025 10:53:25 +0300 (MSK)
 Received: by localhost.tls.msk.ru (Postfix, from userid 1000)
- id CEA7C52035; Tue, 28 Jan 2025 10:54:50 +0300 (MSK)
+ id 15E1D51FF1; Tue, 28 Jan 2025 10:53:25 +0300 (MSK)
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Jakub Jelen <jjelen@redhat.com>,
- "Richard W . M . Jones" <rjones@redhat.com>, Kevin Wolf <kwolf@redhat.com>,
- Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-8.2.9 07/45] ssh: Do not switch session to non-blocking mode
-Date: Mon, 27 Jan 2025 23:25:48 +0300
-Message-Id: <20250127202630.3724367-7-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org, Akihiko Odaki <akihiko.odaki@daynix.com>,
+ Jason Wang <jasowang@redhat.com>, Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-7.2.16 05/31] virtio-net: Fix size check in dhclient
+ workaround
+Date: Tue, 28 Jan 2025 00:40:57 +0300
+Message-Id: <20250127214124.3730126-5-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.39.5
-In-Reply-To: <qemu-stable-8.2.9-20250127232621@cover.tls.msk.ru>
-References: <qemu-stable-8.2.9-20250127232621@cover.tls.msk.ru>
+In-Reply-To: <qemu-stable-7.2.16-20250128004119@cover.tls.msk.ru>
+References: <qemu-stable-7.2.16-20250128004119@cover.tls.msk.ru>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 From: Michael Tokarev <mjt@tls.msk.ru>
@@ -63,49 +63,35 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The libssh does not handle non-blocking mode in SFTP correctly. The
-driver code already changes the mode to blocking for the SFTP
-initialization, but for some reason changes to non-blocking mode.
-This used to work accidentally until libssh in 0.11 branch merged
-the patch to avoid infinite looping in case of network errors:
+work_around_broken_dhclient() accesses IP and UDP headers to detect
+relevant packets and to calculate checksums, but it didn't check if
+the packet has size sufficient to accommodate them, causing out-of-bound
+access hazards. Fix this by correcting the size requirement.
 
-https://gitlab.com/libssh/libssh-mirror/-/merge_requests/498
-
-Since then, the ssh driver in qemu fails to read files over SFTP
-as the first SFTP messages exchanged after switching the session
-to non-blocking mode return SSH_AGAIN, but that message is lost
-int the SFTP internals and interpretted as SSH_ERROR, which is
-returned to the caller:
-
-https://gitlab.com/libssh/libssh-mirror/-/issues/280
-
-This is indeed an issue in libssh that we should address in the
-long term, but it will require more work on the internals. For
-now, the SFTP is not supported in non-blocking mode.
-
-Fixes: https://gitlab.com/libssh/libssh-mirror/-/issues/280
-Signed-off-by: Jakub Jelen <jjelen@redhat.com>
-Signed-off-by: Richard W.M. Jones <rjones@redhat.com>
-Message-ID: <20241113125526.2495731-1-rjones@redhat.com>
-Reviewed-by: Kevin Wolf <kwolf@redhat.com>
-Signed-off-by: Kevin Wolf <kwolf@redhat.com>
-(cherry picked from commit fbdea3d6c13d5a75895c287a004c6f1a6bf6c164)
+Fixes: 1d41b0c1ec66 ("Work around dhclient brokenness")
+Cc: qemu-stable@nongnu.org
+Signed-off-by: Akihiko Odaki <akihiko.odaki@daynix.com>
+Signed-off-by: Jason Wang <jasowang@redhat.com>
+(cherry picked from commit a8575f7fb2f213e6690b23160b04271d47fdfaa8)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/block/ssh.c b/block/ssh.c
-index 2748253d4a..b2da9bb4c8 100644
---- a/block/ssh.c
-+++ b/block/ssh.c
-@@ -860,9 +860,6 @@ static int ssh_file_open(BlockDriverState *bs, QDict *options, int bdrv_flags,
-         goto err;
-     }
- 
--    /* Go non-blocking. */
--    ssh_set_blocking(s->session, 0);
--
-     if (s->attrs->type == SSH_FILEXFER_TYPE_REGULAR) {
-         bs->supported_truncate_flags = BDRV_REQ_ZERO_WRITE;
-     }
+diff --git a/hw/net/virtio-net.c b/hw/net/virtio-net.c
+index 925a5c319e..204a80ec71 100644
+--- a/hw/net/virtio-net.c
++++ b/hw/net/virtio-net.c
+@@ -1647,8 +1647,11 @@ static void virtio_net_hdr_swap(VirtIODevice *vdev, struct virtio_net_hdr *hdr)
+ static void work_around_broken_dhclient(struct virtio_net_hdr *hdr,
+                                         uint8_t *buf, size_t size)
+ {
++    size_t csum_size = ETH_HLEN + sizeof(struct ip_header) +
++                       sizeof(struct udp_header);
++
+     if ((hdr->flags & VIRTIO_NET_HDR_F_NEEDS_CSUM) && /* missing csum */
+-        (size > 27 && size < 1500) && /* normal sized MTU */
++        (size >= csum_size && size < 1500) && /* normal sized MTU */
+         (buf[12] == 0x08 && buf[13] == 0x00) && /* ethertype == IPv4 */
+         (buf[23] == 17) && /* ip.protocol == UDP */
+         (buf[34] == 0 && buf[35] == 67)) { /* udp.srcport == bootps */
 -- 
 2.39.5
 
