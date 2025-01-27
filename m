@@ -4,34 +4,36 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DD023C02191
-	for <qemu-devel@archiver.kernel.org>; Mon, 27 Jan 2025 14:23:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3E75DC02192
+	for <qemu-devel@archiver.kernel.org>; Mon, 27 Jan 2025 14:23:05 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tcPxK-00009n-As; Mon, 27 Jan 2025 09:19:14 -0500
+	id 1tcPyc-0002L7-3u; Mon, 27 Jan 2025 09:20:37 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1tcPxH-00007k-N8; Mon, 27 Jan 2025 09:19:11 -0500
+ id 1tcPyT-0001uU-6G; Mon, 27 Jan 2025 09:20:26 -0500
 Received: from isrv.corpit.ru ([86.62.121.231])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1tcPxG-0002PY-89; Mon, 27 Jan 2025 09:19:11 -0500
+ id 1tcPyQ-0002gp-40; Mon, 27 Jan 2025 09:20:23 -0500
 Received: from localhost.tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by isrv.corpit.ru (Postfix) with ESMTP id 43950E0E34;
- Mon, 27 Jan 2025 17:18:40 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id 336B1E0F3B;
+ Mon, 27 Jan 2025 17:19:55 +0300 (MSK)
 Received: by localhost.tls.msk.ru (Postfix, from userid 1000)
- id AD69E51DA9; Mon, 27 Jan 2025 17:18:03 +0300 (MSK)
+ id A3C3151DA1; Mon, 27 Jan 2025 17:18:03 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Nicholas Piggin <npiggin@gmail.com>,
+Cc: qemu-stable@nongnu.org,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- "Michael S . Tsirkin" <mst@redhat.com>, Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-9.2.1 34/41] pci/msix: Fix msix pba read vector poll end
- calculation
-Date: Mon, 27 Jan 2025 17:17:48 +0300
-Message-Id: <20250127141803.3514882-34-mjt@tls.msk.ru>
+ Thomas Huth <thuth@redhat.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-9.2.1 30/41] tests/qtest/boot-serial-test: Correct HPPA
+ machine name
+Date: Mon, 27 Jan 2025 17:17:44 +0300
+Message-Id: <20250127141803.3514882-30-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <qemu-stable-9.2.1-20250127154029@cover.tls.msk.ru>
 References: <qemu-stable-9.2.1-20250127154029@cover.tls.msk.ru>
@@ -62,33 +64,35 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Nicholas Piggin <npiggin@gmail.com>
+From: Philippe Mathieu-Daudé <philmd@linaro.org>
 
-The end vector calculation has a bug that results in polling fewer
-than required vectors when reading at a non-zero offset in PBA memory.
+Commit 7df6f751176 ("hw/hppa: Split out machine creation")
+renamed the 'hppa' machine as 'B160L', but forgot to update
+the boot serial test, which ended being skipped.
 
-Fixes: bbef882cc193 ("msi: add API to get notified about pending bit poll")
-Signed-off-by: Nicholas Piggin <npiggin@gmail.com>
-Message-Id: <20241212120402.1475053-1-npiggin@gmail.com>
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
-Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
-(cherry picked from commit 42e2a7a0ab23784e44fcb18369e06067abc89305)
+Cc: qemu-stable@nongnu.org
+Fixes: 7df6f751176 ("hw/hppa: Split out machine creation")
+Reported-by: Thomas Huth <thuth@redhat.com>
+Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Reviewed-by: Thomas Huth <thuth@redhat.com>
+Message-Id: <20250102100340.43014-2-philmd@linaro.org>
+(cherry picked from commit a87077316ed2f1c1c8ba8faf05feed9dbf0f2fee)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/hw/pci/msix.c b/hw/pci/msix.c
-index 487e49834e..cc6e79ec67 100644
---- a/hw/pci/msix.c
-+++ b/hw/pci/msix.c
-@@ -250,7 +250,7 @@ static uint64_t msix_pba_mmio_read(void *opaque, hwaddr addr,
-     PCIDevice *dev = opaque;
-     if (dev->msix_vector_poll_notifier) {
-         unsigned vector_start = addr * 8;
--        unsigned vector_end = MIN(addr + size * 8, dev->msix_entries_nr);
-+        unsigned vector_end = MIN((addr + size) * 8, dev->msix_entries_nr);
-         dev->msix_vector_poll_notifier(dev, vector_start, vector_end);
-     }
- 
+diff --git a/tests/qtest/boot-serial-test.c b/tests/qtest/boot-serial-test.c
+index 3b92fa5d50..7759e8c970 100644
+--- a/tests/qtest/boot-serial-test.c
++++ b/tests/qtest/boot-serial-test.c
+@@ -185,7 +185,7 @@ static const testdef_t tests[] = {
+       sizeof(kernel_plml605), kernel_plml605 },
+     { "arm", "raspi2b", "", "TT", sizeof(bios_raspi2), 0, bios_raspi2 },
+     /* For hppa, force bios to output to serial by disabling graphics. */
+-    { "hppa", "hppa", "-vga none", "SeaBIOS wants SYSTEM HALT" },
++    { "hppa", "B160L", "-vga none", "SeaBIOS wants SYSTEM HALT" },
+     { "aarch64", "virt", "-cpu max", "TT", sizeof(kernel_aarch64),
+       kernel_aarch64 },
+     { "arm", "microbit", "", "T", sizeof(kernel_nrf51), kernel_nrf51 },
 -- 
 2.39.5
 
