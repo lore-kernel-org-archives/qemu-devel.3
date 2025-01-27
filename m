@@ -4,105 +4,71 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8DE3CC0218F
-	for <qemu-devel@archiver.kernel.org>; Mon, 27 Jan 2025 09:46:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6B513C0218F
+	for <qemu-devel@archiver.kernel.org>; Mon, 27 Jan 2025 09:46:51 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tcLhF-0003aO-3R; Mon, 27 Jan 2025 04:46:21 -0500
+	id 1tcLfL-0007GI-Jj; Mon, 27 Jan 2025 04:44:23 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <shentey@gmail.com>)
- id 1tcLhA-0003Nj-Lp; Mon, 27 Jan 2025 04:46:16 -0500
-Received: from mail-ej1-x62b.google.com ([2a00:1450:4864:20::62b])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <shentey@gmail.com>)
- id 1tcLh8-0005pv-Px; Mon, 27 Jan 2025 04:46:16 -0500
-Received: by mail-ej1-x62b.google.com with SMTP id
- a640c23a62f3a-ab651f1dd36so841494166b.0; 
- Mon, 27 Jan 2025 01:46:13 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1737971173; x=1738575973; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:references
- :in-reply-to:subject:cc:to:from:date:from:to:cc:subject:date
- :message-id:reply-to;
- bh=musWy1n7TogM8KXZsXOnvhQhrXqQAkckhg6RXEq4Bko=;
- b=dfXvlODoGkd5A7uyB559QzK7D3xxMr+Kk5cJUd1dLFV8v7xsoVDs3NvdQjg1r2zLIO
- jAqStIrbQv9UvK/Q2LWV0GjAfJN95uCZP1H7RwZ+xgnFsOCH1C68Zvkh3k9DP/bc0crr
- RRwAr0ba6QkpHktRuqSRnL5ZCP1+5IK6QgCC7CNc13F5Q97B+vpWOU1CbshiVR6SXN0c
- rA6q1wJNR2q17Gm5P88dHLzDsgTm0uQJ3cdaXxHtFZbKPa0yoH1XJ4+OZEKVP2m5GbTq
- iFLDBTE7hCQsDR6zty89CLXLfrOxuvrGeeWBgqmJKQ+SfbXVVRv4HKTjzDeWvBfBaJ2U
- DlOQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1737971173; x=1738575973;
- h=content-transfer-encoding:mime-version:message-id:references
- :in-reply-to:subject:cc:to:from:date:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=musWy1n7TogM8KXZsXOnvhQhrXqQAkckhg6RXEq4Bko=;
- b=EVVoykembeN3JRXdeEl+1g0RyEeP+DplrG8/RrXd5vqUdOWPphnu6aDiAxR3PFaBzK
- zJO34cPClkyLtgEkWBcILSIKnfVoaYMuduG9+4ICGEpZw6QQgR1EakO8gY4Dw4xqVe8l
- mp0pHSavt+XcZaDdBvscGQCDF4wH5VuxD/2R8OtIYnyxcgIs1z/1aNe8i0VH1gYwal7Y
- gyRo65KmbAlg8OSyw1mmbwjJf7zxATvdCRWlqQrLvCqIqth1O2OhnhV6zht7sIq+6fjp
- Iu0uKWqM0sWySkatsnZ2VZM6ycPhCwQB/Lln9cSecA+3EcR2DpOXwcMbEArT7LmEGUpy
- 7Ecw==
-X-Forwarded-Encrypted: i=1;
- AJvYcCUdXaipMBd3t1WGo8Lb+gsKBVdj/o8BYGcvZ5bCXNmkLiSHQw0Tv7EOL3zeU+nquFIzXbT0xaf3+wY=@nongnu.org,
- AJvYcCUsguGK4R0vGEOO8aNvfZ8AVNNGRKLvIrHsgmSOw57qqOu4yOi38r6E0paUA007Xf31mPc3nq7uzYqP@nongnu.org
-X-Gm-Message-State: AOJu0YxB/KNIqtiyHhGxPmYYgh0+WrQRckxK23WnWuvI8yXyUxw8tDLG
- pBiBrqU79uE4cjr7D05Pjgqqd7Pz3Mm4dTlOdlQY9DPwPMKYsv5380X7mQ==
-X-Gm-Gg: ASbGnctQajNhuH6tZefDwOXwU0gOEIh9V2PP5hd+9MvBuVEGkJQrR3WN9TW2nxoH8l1
- 7NnI3/MUxeaIOV/grPZ2mzVrUd0FF3QHJu0apIB+mA8Qju7DGJR9IuyCUeBrZ3C8S/qBk8b5Ecp
- 1Ti99uYe7hwpMTPOHSdcnByc4bP/uQShuFu3LGfMyTnc6nxImlo2Paxhz7N3n43tPUrWIGl8HAW
- VTVRjYl3OzUC1mGx5RkYVk/Aa3TPVq8AnSUh2PlEtdid21PTwejtN+U6XbXyFukZjxZlE5ugO6u
- dRIetoLVp8wJv0tJd9me0BAqB1tZ3LXrWCqxkJzynmLAzomlhsnsYWLU
-X-Google-Smtp-Source: AGHT+IHG0IaOyPVMUP/MqBB9v9/fX+0a85D1lpF7KinDYCL9eJYDjqGVvqsM8FHH5W5762wb2tK/pA==
-X-Received: by 2002:a17:907:6ea4:b0:ab2:bffb:4b5c with SMTP id
- a640c23a62f3a-ab38b24bd9emr3486146266b.18.1737971172417; 
- Mon, 27 Jan 2025 01:46:12 -0800 (PST)
-Received: from [127.0.0.1] (dynamic-093-128-047-181.93.128.pool.telefonica.de.
- [93.128.47.181]) by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-ab675e12505sm564891866b.17.2025.01.27.01.46.11
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 27 Jan 2025 01:46:12 -0800 (PST)
-Date: Mon, 27 Jan 2025 09:46:12 +0000
-From: Bernhard Beschow <shentey@gmail.com>
-To: =?ISO-8859-1?Q?Philippe_Mathieu-Daud=E9?= <philmd@linaro.org>,
- qemu-devel@nongnu.org
-CC: Yi Liu <yi.l.liu@intel.com>, Markus Armbruster <armbru@redhat.com>,
- Eduardo Habkost <eduardo@habkost.net>,
- Anthony PERARD <anthony@xenproject.org>,
- Gustavo Romero <gustavo.romero@linaro.org>, Jason Wang <jasowang@redhat.com>, 
- qemu-ppc@nongnu.org, "Michael S. Tsirkin" <mst@redhat.com>,
- Paolo Bonzini <pbonzini@redhat.com>, Alexander Graf <graf@amazon.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- Stefan Berger <stefanb@linux.vnet.ibm.com>,
- Stefano Stabellini <sstabellini@kernel.org>,
- Gerd Hoffmann <kraxel@redhat.com>,
- =?ISO-8859-1?Q?Daniel_P=2E_Berrang=E9?= <berrange@redhat.com>,
- "Edgar E. Iglesias" <edgar.iglesias@gmail.com>,
- xen-devel@lists.xenproject.org,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- Alex Williamson <alex.williamson@redhat.com>, Paul Durrant <paul@xen.org>,
- =?ISO-8859-1?Q?Cl=E9ment_Mathieu--Drif?= <clement.mathieu--drif@eviden.com>,
- =?ISO-8859-1?Q?C=E9dric_Le_Goater?= <clg@redhat.com>
-Subject: =?US-ASCII?Q?Re=3A_=5BRFC_PATCH_9/9=5D_hw/xen=3A_Have_legacy_Xen?=
- =?US-ASCII?Q?_backend_inherit_from_DYNAMIC=5FSYS=5FBUS=5FDEVICE?=
-In-Reply-To: <20250125181343.59151-10-philmd@linaro.org>
-References: <20250125181343.59151-1-philmd@linaro.org>
- <20250125181343.59151-10-philmd@linaro.org>
-Message-ID: <9A2B297A-6270-4482-B1B6-81F518C07C1E@gmail.com>
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1tcLeO-0006SX-K9
+ for qemu-devel@nongnu.org; Mon, 27 Jan 2025 04:43:27 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1tcLeL-0005Sk-7j
+ for qemu-devel@nongnu.org; Mon, 27 Jan 2025 04:43:23 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1737970999;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=MYFFX2avdRONuETFtnjg8dK8m+riW2xGtzskxvThhqA=;
+ b=Wf2qrajb/RPXDB0Ge9S5OIiAy0jwPUx+BN68uxX3ZdatvUNPDAqS4jVaCgNM1P8yAUXvLf
+ 2+g8Sl0KVzT+vVxcnZGBe7R4DIIXRmF2lxAR9D9W5rb9y6PpwiXjiiC/5eVN6K1DHk0zyE
+ 68zL0192bYZH7vBiUZ+0azRM9xjZYPk=
+Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-255-gksnzM6EPMSyDtdH_QvXGw-1; Mon,
+ 27 Jan 2025 04:43:13 -0500
+X-MC-Unique: gksnzM6EPMSyDtdH_QvXGw-1
+X-Mimecast-MFC-AGG-ID: gksnzM6EPMSyDtdH_QvXGw
+Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 40C8F1801F10; Mon, 27 Jan 2025 09:43:12 +0000 (UTC)
+Received: from corto.redhat.com (unknown [10.39.192.63])
+ by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 84B4A18008C8; Mon, 27 Jan 2025 09:43:05 +0000 (UTC)
+From: =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>
+To: qemu-arm@nongnu.org,
+	qemu-devel@nongnu.org
+Cc: =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>,
+ Jamin Lin <jamin_lin@aspeedtech.com>
+Subject: [PULL 08/12] test/functional: Update buildroot images to 2024.11
+Date: Mon, 27 Jan 2025 10:42:35 +0100
+Message-ID: <20250127094239.636526-9-clg@redhat.com>
+In-Reply-To: <20250127094239.636526-1-clg@redhat.com>
+References: <20250127094239.636526-1-clg@redhat.com>
 MIME-Version: 1.0
-Content-Type: text/plain;
- charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::62b;
- envelope-from=shentey@gmail.com; helo=mail-ej1-x62b.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=clg@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -43
+X-Spam_score: -4.4
+X-Spam_bar: ----
+X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.299,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=-1, RCVD_IN_MSPIKE_WL=-0.01,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -119,80 +85,95 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+The main changes compared to upstream 2024.11 buildroot are
 
+- bumped Linux to version 6.11.11 with a custom config
+- changed U-Boot to OpenBMC branch for more support
+- included extra target packages
 
-Am 25=2E Januar 2025 18:13:43 UTC schrieb "Philippe Mathieu-Daud=C3=A9" <p=
-hilmd@linaro=2Eorg>:
->Because the legacy Xen backend devices can optionally be plugged on the
->TYPE_PLATFORM_BUS_DEVICE, have it inherit TYPE_DYNAMIC_SYS_BUS_DEVICE=2E
->Remove the implicit TYPE_XENSYSDEV instance_size=2E
->
->Untested, but I'm surprised the legacy devices work because they
->had a broken instance size (QDev instead of Sysbus=2E=2E=2E), so accesses
->of XenLegacyDevice fields were overwritting sysbus ones=2E
->
->Signed-off-by: Philippe Mathieu-Daud=C3=A9 <philmd@linaro=2Eorg>
->---
-> include/hw/xen/xen_pvdev=2Eh  | 3 ++-
-> hw/xen/xen-legacy-backend=2Ec | 7 ++-----
-> 2 files changed, 4 insertions(+), 6 deletions(-)
->
->diff --git a/include/hw/xen/xen_pvdev=2Eh b/include/hw/xen/xen_pvdev=2Eh
->index 0c984440476=2E=2E48950dc2b57 100644
->--- a/include/hw/xen/xen_pvdev=2Eh
->+++ b/include/hw/xen/xen_pvdev=2Eh
->@@ -32,7 +32,8 @@ struct XenDevOps {
-> };
->=20
-> struct XenLegacyDevice {
->-    DeviceState        qdev;
->+    SysBusDevice parent_obj;
+See branch [1] for more details.
 
-This then needs sysbus=2Eh rather than qdev-core=2Eh include=2E
+There is a slight output change when powering off the machine,
+the console now contains :
 
-Moreover, the patch in the reply needs to be inserted into the series befo=
-re this patch=2E
+    reboot: Power off not available: System halted
 
-Both are needed for the patch to compile=2E
+Adjust accordingly the expect string in
+do_test_arm_aspeed_buildroot_poweroff().
 
-Best regards,
-Bernhard
+[1] https://github.com/legoater/buildroot/commits/aspeed-2024.11
 
->+
->     const char         *type;
->     int                dom;
->     int                dev;
->diff --git a/hw/xen/xen-legacy-backend=2Ec b/hw/xen/xen-legacy-backend=2E=
-c
->index 118c571b3a7=2E=2E4d079e35d83 100644
->--- a/hw/xen/xen-legacy-backend=2Ec
->+++ b/hw/xen/xen-legacy-backend=2Ec
->@@ -640,16 +640,14 @@ static void xendev_class_init(ObjectClass *klass, v=
-oid *data)
->     DeviceClass *dc =3D DEVICE_CLASS(klass);
->=20
->     set_bit(DEVICE_CATEGORY_MISC, dc->categories);
->-    /* xen-backend devices can be plugged/unplugged dynamically */
->-    dc->user_creatable =3D true;
->     dc->bus_type =3D TYPE_XENSYSBUS;
-> }
->=20
-> static const TypeInfo xendev_type_info =3D {
->     =2Ename          =3D TYPE_XENBACKEND,
->-    =2Eparent        =3D TYPE_DEVICE,
->+    =2Eparent        =3D TYPE_DYNAMIC_SYS_BUS_DEVICE,
->     =2Eclass_init    =3D xendev_class_init,
->-    =2Einstance_size =3D sizeof(struct XenLegacyDevice),
->+    =2Einstance_size =3D sizeof(XenLegacyDevice),
-> };
->=20
-> static void xen_sysbus_class_init(ObjectClass *klass, void *data)
->@@ -672,7 +670,6 @@ static const TypeInfo xensysbus_info =3D {
-> static const TypeInfo xensysdev_info =3D {
->     =2Ename          =3D TYPE_XENSYSDEV,
->     =2Eparent        =3D TYPE_SYS_BUS_DEVICE,
->-    =2Einstance_size =3D sizeof(SysBusDevice),
-> };
->=20
-> static void xenbe_register_types(void)
+Reviewed-by: Jamin Lin <jamin_lin@aspeedtech.com>
+Link: https://lore.kernel.org/qemu-devel/20250122070909.1138598-9-clg@redhat.com
+Signed-off-by: Cédric Le Goater <clg@redhat.com>
+---
+ tests/functional/aspeed.py                  | 2 +-
+ tests/functional/test_arm_aspeed_ast2500.py | 8 ++++----
+ tests/functional/test_arm_aspeed_ast2600.py | 8 ++++----
+ 3 files changed, 9 insertions(+), 9 deletions(-)
+
+diff --git a/tests/functional/aspeed.py b/tests/functional/aspeed.py
+index 62f50bab7a33..b52358bb8c61 100644
+--- a/tests/functional/aspeed.py
++++ b/tests/functional/aspeed.py
+@@ -42,7 +42,7 @@ def do_test_arm_aspeed_buildroot_start(self, image, cpu_id, pattern='Aspeed EVB'
+ 
+     def do_test_arm_aspeed_buildroot_poweroff(self):
+         exec_command_and_wait_for_pattern(self, 'poweroff',
+-                                          'reboot: System halted');
++                                          'System halted');
+ 
+     def do_test_arm_aspeed_sdk_start(self, image):
+         self.require_netdev('user')
+diff --git a/tests/functional/test_arm_aspeed_ast2500.py b/tests/functional/test_arm_aspeed_ast2500.py
+index 743fc46eb29e..1ffba6c9953d 100755
+--- a/tests/functional/test_arm_aspeed_ast2500.py
++++ b/tests/functional/test_arm_aspeed_ast2500.py
+@@ -11,15 +11,15 @@
+ 
+ class AST2500Machine(AspeedTest):
+ 
+-    ASSET_BR2_202311_AST2500_FLASH = Asset(
++    ASSET_BR2_202411_AST2500_FLASH = Asset(
+         ('https://github.com/legoater/qemu-aspeed-boot/raw/master/'
+-         'images/ast2500-evb/buildroot-2023.11/flash.img'),
+-        'c23db6160cf77d0258397eb2051162c8473a56c441417c52a91ba217186e715f')
++         'images/ast2500-evb/buildroot-2024.11/flash.img'),
++        '641e6906c18c0f19a2aeb48099d66d4771929c361001d554d0d45c667413e13a')
+ 
+     def test_arm_ast2500_evb_buildroot(self):
+         self.set_machine('ast2500-evb')
+ 
+-        image_path = self.ASSET_BR2_202311_AST2500_FLASH.fetch()
++        image_path = self.ASSET_BR2_202411_AST2500_FLASH.fetch()
+ 
+         self.vm.add_args('-device',
+                          'tmp105,bus=aspeed.i2c.bus.3,address=0x4d,id=tmp-test');
+diff --git a/tests/functional/test_arm_aspeed_ast2600.py b/tests/functional/test_arm_aspeed_ast2600.py
+index 21640123ee81..6ae4ed636ac3 100755
+--- a/tests/functional/test_arm_aspeed_ast2600.py
++++ b/tests/functional/test_arm_aspeed_ast2600.py
+@@ -16,15 +16,15 @@
+ 
+ class AST2600Machine(AspeedTest):
+ 
+-    ASSET_BR2_202311_AST2600_FLASH = Asset(
++    ASSET_BR2_202411_AST2600_FLASH = Asset(
+         ('https://github.com/legoater/qemu-aspeed-boot/raw/master/'
+-         'images/ast2600-evb/buildroot-2023.11/flash.img'),
+-        'b62808daef48b438d0728ee07662290490ecfa65987bb91294cafb1bb7ad1a68')
++         'images/ast2600-evb/buildroot-2024.11/flash.img'),
++        '4bb2f3dfdea31199b51d66b42f686dc5374c144a7346fdc650194a5578b73609')
+ 
+     def test_arm_ast2600_evb_buildroot(self):
+         self.set_machine('ast2600-evb')
+ 
+-        image_path = self.ASSET_BR2_202311_AST2600_FLASH.fetch()
++        image_path = self.ASSET_BR2_202411_AST2600_FLASH.fetch()
+ 
+         self.vm.add_args('-device',
+                          'tmp105,bus=aspeed.i2c.bus.3,address=0x4d,id=tmp-test');
+-- 
+2.48.1
+
 
