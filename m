@@ -4,38 +4,44 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 89BBDC0218D
-	for <qemu-devel@archiver.kernel.org>; Tue, 28 Jan 2025 08:28:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7B05BC02192
+	for <qemu-devel@archiver.kernel.org>; Tue, 28 Jan 2025 08:28:12 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tcgXL-00017p-1l; Tue, 28 Jan 2025 03:01:31 -0500
+	id 1tcgUL-0007RF-K6; Tue, 28 Jan 2025 02:58:27 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1tcgWE-0007sm-1t; Tue, 28 Jan 2025 03:00:22 -0500
+ id 1tcgU3-0006VN-Si; Tue, 28 Jan 2025 02:58:08 -0500
 Received: from isrv.corpit.ru ([86.62.121.231])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1tcgWA-0001cS-2i; Tue, 28 Jan 2025 03:00:21 -0500
+ id 1tcgTz-0000m9-3g; Tue, 28 Jan 2025 02:58:07 -0500
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 10761E1B0C;
- Tue, 28 Jan 2025 10:54:26 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id A4C81E1AF4;
+ Tue, 28 Jan 2025 10:54:25 +0300 (MSK)
 Received: from localhost.tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id 7E7871A62F3;
+ by tsrv.corpit.ru (Postfix) with ESMTP id 1FDC01A62DB;
  Tue, 28 Jan 2025 10:54:51 +0300 (MSK)
 Received: by localhost.tls.msk.ru (Postfix, from userid 1000)
- id 168505207D; Tue, 28 Jan 2025 10:54:51 +0300 (MSK)
+ id E26835204D; Tue, 28 Jan 2025 10:54:50 +0300 (MSK)
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Igor Mammedov <imammedo@redhat.com>,
- "Michael S . Tsirkin" <mst@redhat.com>, Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-8.2.9 43/45] pci: acpi: Windows 'PCI Label Id' bug workaround
-Date: Mon, 27 Jan 2025 23:26:24 +0300
-Message-Id: <20250127202630.3724367-43-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org, Peter Maydell <peter.maydell@linaro.org>,
+ Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Alistair Francis <alistair.francis@wdc.com>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-8.2.9 19/45] target/riscv: Avoid bad shift in
+ riscv_cpu_do_interrupt()
+Date: Mon, 27 Jan 2025 23:26:00 +0300
+Message-Id: <20250127202630.3724367-19-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <qemu-stable-8.2.9-20250127232621@cover.tls.msk.ru>
 References: <qemu-stable-8.2.9-20250127232621@cover.tls.msk.ru>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 From: Michael Tokarev <mjt@tls.msk.ru>
 Received-SPF: pass client-ip=86.62.121.231; envelope-from=mjt@tls.msk.ru;
@@ -45,8 +51,9 @@ X-Spam_score: -5.4
 X-Spam_bar: -----
 X-Spam_report: (-5.4 / 5.0 requ) BAYES_00=-1.9, DATE_IN_PAST_06_12=1.543,
  RCVD_IN_DNSWL_HI=-5, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01,
+ T_SPF_TEMPERROR=0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -62,94 +69,53 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Current versions of Windows call _DSM(func=7) regardless
-of whether it is supported or not. It leads to NICs having bogus
-'PCI Label Id = 0', where none should be set at all.
+In riscv_cpu_do_interrupt() we use the 'cause' value we got out of
+cs->exception as a shift value.  However this value can be larger
+than 31, which means that "1 << cause" is undefined behaviour,
+because we do the shift on an 'int' type.
 
-Also presence of 'PCI Label Id' triggers another Windows bug
-on localized versions that leads to hangs. The later bug is fixed
-in latest updates for 'Windows Server' but not in consumer
-versions of Windows (and there is no plans to fix it
-as far as I'm aware).
+This causes the undefined behaviour sanitizer to complain
+on one of the check-tcg tests:
 
-Given it's easy, implement Microsoft suggested workaround
-(return invalid Package) so that affected Windows versions
-could boot on QEMU.
-This would effectvely remove bogus 'PCI Label Id's on NICs,
-but MS teem confirmed that flipping 'PCI Label Id' should not
-change 'Network Connection' ennumeration, so it should be safe
-for QEMU to change _DSM without any compat code.
+$ UBSAN_OPTIONS=print_stacktrace=1:abort_on_error=1:halt_on_error=1 ./build/clang/qemu-system-riscv64 -M virt -semihosting -display none -device loader,file=build/clang/tests/tcg/riscv64-softmmu/issue1060
+../../target/riscv/cpu_helper.c:1805:38: runtime error: shift exponent 63 is too large for 32-bit type 'int'
+    #0 0x55f2dc026703 in riscv_cpu_do_interrupt /mnt/nvmedisk/linaro/qemu-from-laptop/qemu/build/clang/../../target/riscv/cpu_helper.c:1805:38
+    #1 0x55f2dc3d170e in cpu_handle_exception /mnt/nvmedisk/linaro/qemu-from-laptop/qemu/build/clang/../../accel/tcg/cpu-exec.c:752:9
 
-Smoke tested with WinXP and WS2022
-Resolves: https://gitlab.com/qemu-project/qemu/-/issues/774
-Signed-off-by: Igor Mammedov <imammedo@redhat.com>
-Message-Id: <20250115125342.3883374-3-imammedo@redhat.com>
-Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
-Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
-(cherry picked from commit 0b053391985abcc40b16ac8fc4a7f6588d1d95c1)
+In this case cause is RISCV_EXCP_SEMIHOST, which is 0x3f.
+
+Use 1ULL instead to ensure that the shift is in range.
+
+Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+Fixes: 1697837ed9 ("target/riscv: Add M-mode virtual interrupt and IRQ filtering support.")
+Fixes: 40336d5b1d ("target/riscv: Add HS-mode virtual interrupt and IRQ filtering support.")
+Reviewed-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
+Message-ID: <20241128103831.3452572-1-peter.maydell@linaro.org>
+Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+(cherry picked from commit 5311599cdc48337f2f27b1b51a80d46d75b05ed0)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/hw/i386/acpi-build.c b/hw/i386/acpi-build.c
-index 1e178341de..9f86a51970 100644
---- a/hw/i386/acpi-build.c
-+++ b/hw/i386/acpi-build.c
-@@ -666,6 +666,7 @@ static Aml *aml_pci_pdsm(void)
-     Aml *acpi_index = aml_local(2);
-     Aml *zero = aml_int(0);
-     Aml *one = aml_int(1);
-+    Aml *not_supp = aml_int(0xFFFFFFFF);
-     Aml *func = aml_arg(2);
-     Aml *params = aml_arg(4);
-     Aml *bnum = aml_derefof(aml_index(params, aml_int(0)));
-@@ -690,7 +691,7 @@ static Aml *aml_pci_pdsm(void)
-          */
-         ifctx1 = aml_if(aml_lnot(
-                      aml_or(aml_equal(acpi_index, zero),
--                            aml_equal(acpi_index, aml_int(0xFFFFFFFF)), NULL)
-+                            aml_equal(acpi_index, not_supp), NULL)
-                  ));
-         {
-             /* have supported functions */
-@@ -716,18 +717,30 @@ static Aml *aml_pci_pdsm(void)
-     {
-        Aml *pkg = aml_package(2);
- 
--       aml_append(pkg, zero);
--       /*
--        * optional, if not impl. should return null string
--        */
--       aml_append(pkg, aml_string("%s", ""));
--       aml_append(ifctx, aml_store(pkg, ret));
--
-        aml_append(ifctx, aml_store(aml_call2("AIDX", bnum, sunum), acpi_index));
-+       aml_append(ifctx, aml_store(pkg, ret));
-        /*
--        * update acpi-index to actual value
-+        * Windows calls func=7 without checking if it's available,
-+        * as workaround Microsoft has suggested to return invalid for func7
-+        * Package, so return 2 elements package but only initialize elements
-+        * when acpi_index is supported and leave them uninitialized, which
-+        * leads elements to being Uninitialized ObjectType and should trip
-+        * Windows into discarding result as an unexpected and prevent setting
-+        * bogus 'PCI Label' on the device.
-         */
--       aml_append(ifctx, aml_store(acpi_index, aml_index(ret, zero)));
-+       ifctx1 = aml_if(aml_lnot(aml_lor(
-+                    aml_equal(acpi_index, zero), aml_equal(acpi_index, not_supp)
-+                )));
-+       {
-+           aml_append(ifctx1, aml_store(acpi_index, aml_index(ret, zero)));
-+           /*
-+            * optional, if not impl. should return null string
-+            */
-+           aml_append(ifctx1, aml_store(aml_string("%s", ""),
-+                                        aml_index(ret, one)));
-+       }
-+       aml_append(ifctx, ifctx1);
-+
-        aml_append(ifctx, aml_return(ret));
-     }
- 
+diff --git a/target/riscv/cpu_helper.c b/target/riscv/cpu_helper.c
+index 62dda4f284..7fb2185863 100644
+--- a/target/riscv/cpu_helper.c
++++ b/target/riscv/cpu_helper.c
+@@ -1646,10 +1646,10 @@ void riscv_cpu_do_interrupt(CPUState *cs)
+     bool async = !!(cs->exception_index & RISCV_EXCP_INT_FLAG);
+     target_ulong cause = cs->exception_index & RISCV_EXCP_INT_MASK;
+     uint64_t deleg = async ? env->mideleg : env->medeleg;
+-    bool s_injected = env->mvip & (1 << cause) & env->mvien &&
+-        !(env->mip & (1 << cause));
+-    bool vs_injected = env->hvip & (1 << cause) & env->hvien &&
+-        !(env->mip & (1 << cause));
++    bool s_injected = env->mvip & (1ULL << cause) & env->mvien &&
++        !(env->mip & (1ULL << cause));
++    bool vs_injected = env->hvip & (1ULL << cause) & env->hvien &&
++        !(env->mip & (1ULL << cause));
+     target_ulong tval = 0;
+     target_ulong tinst = 0;
+     target_ulong htval = 0;
 -- 
 2.39.5
 
