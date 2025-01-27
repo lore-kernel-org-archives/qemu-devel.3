@@ -4,135 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 891E6C02188
-	for <qemu-devel@archiver.kernel.org>; Mon, 27 Jan 2025 18:08:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DA2D0C02188
+	for <qemu-devel@archiver.kernel.org>; Mon, 27 Jan 2025 18:12:31 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tcTWD-0006oz-Ub; Mon, 27 Jan 2025 13:07:29 -0500
+	id 1tcTaR-0007s6-Qz; Mon, 27 Jan 2025 13:11:51 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1tcTW6-0006oD-5p
- for qemu-devel@nongnu.org; Mon, 27 Jan 2025 13:07:22 -0500
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1tcTaC-0007qQ-1x
+ for qemu-devel@nongnu.org; Mon, 27 Jan 2025 13:11:39 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1tcTW4-0002i3-LT
- for qemu-devel@nongnu.org; Mon, 27 Jan 2025 13:07:21 -0500
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1tcTaA-0003Ff-4T
+ for qemu-devel@nongnu.org; Mon, 27 Jan 2025 13:11:35 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1738001235;
+ s=mimecast20190719; t=1738001493;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=6S1XEQ7Hvz0clFy9W2EjoNLBv5AxebswTMQ0Ceu3bQk=;
- b=So7OgpDpYeuF1OJUkGhllL1o9Rj95TLTE21nYYrXSsei+CwNIcfjXlwbmTmahkfZuTthAF
- /tUzfN6jBdGzlmNFB8kNLadkY62x2kbuRT0JjJtnNq+FM24qF6jrNixYredd0Sor681Iz8
- Nn7BaGZKj4AxcKkNrb/Rw6gokkjHlpo=
-Received: from mail-ej1-f72.google.com (mail-ej1-f72.google.com
- [209.85.218.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ in-reply-to:in-reply-to:references:references;
+ bh=GE00hi9qOq5/IhO9Vbw7OoAdWI6ml+3ACsrgpI2n1+4=;
+ b=K+Hx587U+QIQKoNjauoCmwUczkgl5E9Hq/oCkYprbyQtRbUiDTyGcMb9Vs3McqCDb/Cc/3
+ u4DCZElHIyPlKAF1PSgusa+nekiUe2HcxTvTI7mrahCpHRa/oxpseGEC3DHRCKwPYYA6J7
+ dHbvCkgWxrbUw9BZcKjm5MUvTnaGjmA=
+Received: from mail-wr1-f69.google.com (mail-wr1-f69.google.com
+ [209.85.221.69]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-91-lmFmmBLYP6u00W4U7RtY4w-1; Mon, 27 Jan 2025 13:07:14 -0500
-X-MC-Unique: lmFmmBLYP6u00W4U7RtY4w-1
-X-Mimecast-MFC-AGG-ID: lmFmmBLYP6u00W4U7RtY4w
-Received: by mail-ej1-f72.google.com with SMTP id
- a640c23a62f3a-ab6936cd142so149406466b.1
- for <qemu-devel@nongnu.org>; Mon, 27 Jan 2025 10:07:13 -0800 (PST)
+ us-mta-9-RZ7yV0lXO6KIZ5ReY_LLXA-1; Mon, 27 Jan 2025 13:11:30 -0500
+X-MC-Unique: RZ7yV0lXO6KIZ5ReY_LLXA-1
+X-Mimecast-MFC-AGG-ID: RZ7yV0lXO6KIZ5ReY_LLXA
+Received: by mail-wr1-f69.google.com with SMTP id
+ ffacd0b85a97d-385d52591d6so2019611f8f.1
+ for <qemu-devel@nongnu.org>; Mon, 27 Jan 2025 10:11:30 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1738001233; x=1738606033;
- h=content-transfer-encoding:in-reply-to:autocrypt:from
- :content-language:references:cc:to:subject:user-agent:mime-version
- :date:message-id:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=6S1XEQ7Hvz0clFy9W2EjoNLBv5AxebswTMQ0Ceu3bQk=;
- b=GBgSjmLIiUBksi5Wp/sVhXezN9GMDlv3GhizmyrEUJ3XkERt0q5fIu3ysv8eOactP0
- w2ox/de/JhpEZ42b0wlASiNvQRXk1bZjDBzrSKqAWicgDb639iLs2i42sRx0yikzsSj+
- YwzZB8h34nAZWePUfxoYq0LlvkQg9IUw62e4zqpXN4Wn2qq2In5UJxDJdIAxa1rJqlA9
- lEctQDaMpCzlCJ6rYu62cHE2m1bijadBXOZnckULoAxZW9vMl7MveTZoGmYwiiGjPAgw
- hUz8HlyVynm+HuwFauVCb/i3izZ/aYXeBtxfcBAfEt8jPI51zEgoPNUfOK43qzuQQWsG
- mSrA==
-X-Forwarded-Encrypted: i=1;
- AJvYcCXMiF+JRilEvyEnScyG/FzVU9V8IN0x0f2v29W+cDKRGp1FjaLy7/Y/33SAKbeX9HrIiotbHvRDw33c@nongnu.org
-X-Gm-Message-State: AOJu0YxsnphI5egSQXp0B+X+KEJy1Lvi5U7Xv8bjDFmzvxfvUFDiwC9b
- uf7pZ0ktDlwNx68bquQmvVrsL3pAKZnxQTkCAJm9YSS6Z5pKjfhQM7lXsxVUAnfIoP4Smw95cYg
- PvhzxIey9dGGFWCFQZPWRWmwSLxgGK8Xkw0zJmwYyzLf8pSlPz7TL
-X-Gm-Gg: ASbGncsuB2J9v3WhhsUlUPDphR8K4agHBOFuex6qcvvP8baXEjWi+1a/qtPq7XDaC0B
- ZX3ESFUkRLsU7kNJZMv0QD4WotQ/J0p/VPm7Jcw032HK0k0B/KnuGqSfLix2ASBCacxcGxesqJp
- fLQNFIcL7y/rOQmQipWbv99ZLtCDY+lbBGcipjA6AxNbSPqEOYbZrGAJgC0efuY0NYCIElfK8nD
- aa1JNVUY+2FVTVidk96t7c5YEHwPzjVHH7uuAUkBIXJDJarq2VaJGAyVG350LQfcLXbPa9rZh2b
- dfU8j+IXQKnzHU4eM7CaNjJEw/PImUnsPAeC
-X-Received: by 2002:a17:907:746:b0:ab3:2b85:5d5 with SMTP id
- a640c23a62f3a-ab38b4aa1c6mr3845943766b.49.1738001232835; 
- Mon, 27 Jan 2025 10:07:12 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IHGeS0oP+htg5YxkLIRFHXYps3Mppc+LaVEb78vsg/cYcVvXr9z7gE9IPXxif2JSiVOAdEbGQ==
-X-Received: by 2002:a17:907:746:b0:ab3:2b85:5d5 with SMTP id
- a640c23a62f3a-ab38b4aa1c6mr3845940966b.49.1738001232466; 
- Mon, 27 Jan 2025 10:07:12 -0800 (PST)
-Received: from [192.168.0.7] (ip-109-42-48-134.web.vodafone.de.
- [109.42.48.134]) by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-ab6760b6f4bsm629148966b.90.2025.01.27.10.07.11
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 27 Jan 2025 10:07:12 -0800 (PST)
-Message-ID: <28641399-021d-428a-a7b8-489d3059e79c@redhat.com>
-Date: Mon, 27 Jan 2025 19:07:10 +0100
+ d=1e100.net; s=20230601; t=1738001489; x=1738606289;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=GE00hi9qOq5/IhO9Vbw7OoAdWI6ml+3ACsrgpI2n1+4=;
+ b=Pj4dh+4D3us3EdsBTPaxp/Mw+AORZ0v57nuR3KcDdFlAAWNcLcf4bclCNrsChlna8v
+ GP+Xx4d6oOOKTMs/43iSMROphtclGPDC1J6LOvubJKuy/jt2bUvxII2lBZc7oRMlSKo9
+ IIQGTKZ7E4JFFy9y1EfB9DZ1BPHhWBLR82HrjQVGE1/EqycHO2yLi7F6mcr5BAY6vAoZ
+ B1CcVCeSRwrATVt+pgavKMdOWHl8eiPru/VKC2OkI9bNXIzBD7qx1E22uDhqUUMfPoyH
+ ERyr7K6UANpWt3wZxlvfzjrGDbrtUHpNRuojWCPufVuEox+0ylch8tFZqgF7M4wTisnU
+ PuJw==
+X-Gm-Message-State: AOJu0YzFNS/dMm/vIpoAoaGilRG9aFlP9Zf5/9M62l9a/rPSan+0Ckhv
+ WhPTq2PqmUiU0IXPJQrH8aeOJqARD+XWhIl84nzTL+5eUA51za3GzsfkAOnKzpjrktWr+WGHPUv
+ 93jcPzTozHlpgzMIl02JdHiizVmnwUxkNGCVItercA9rS+DtcIeFy9Vs/FdFjWDBipsjbNkHWmd
+ qTJiwmxGlT6IOOHs+DpAFBXQ07fI3hnUDwVLADLSh/
+X-Gm-Gg: ASbGnct77GpUf/wb0/aKHfIznsJQFUZsljlKfFiNEuURw0FtOrAqL9cd486n5FGeYu7
+ vt9nAWZycp5+PN+PI/NksbvgVUo1PXgM1yur0iIYZDZdn7ofCBPEFlBdsEAidVA==
+X-Received: by 2002:a5d:6481:0:b0:38a:4184:14ec with SMTP id
+ ffacd0b85a97d-38c49a1d7ebmr277817f8f.1.1738001488962; 
+ Mon, 27 Jan 2025 10:11:28 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IETfKo7oqEDrOKz2OM1g+LEv684jXBNwnXyWNJqhBu0qsVFA9fOJuJ8kKTWL4E591wzrHrOj78Aa/hS7njZOQ8=
+X-Received: by 2002:a5d:6481:0:b0:38a:4184:14ec with SMTP id
+ ffacd0b85a97d-38c49a1d7ebmr277805f8f.1.1738001488636; Mon, 27 Jan 2025
+ 10:11:28 -0800 (PST)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 3/5] tests/functional/test_mipsel_malta: Convert the
- mipsel replay tests
-To: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
-Cc: Pavel Dovgalyuk <pavel.dovgaluk@ispras.ru>,
- Paolo Bonzini <pbonzini@redhat.com>, Aurelien Jarno <aurelien@aurel32.net>,
- Jiaxun Yang <jiaxun.yang@flygoat.com>, qemu-devel@nongnu.org,
- =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-References: <20250124141529.1626877-1-thuth@redhat.com>
- <20250124141529.1626877-4-thuth@redhat.com> <Z5OzZrq7CRBICDyG@redhat.com>
-Content-Language: en-US
-From: Thomas Huth <thuth@redhat.com>
-Autocrypt: addr=thuth@redhat.com; keydata=
- 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
-In-Reply-To: <Z5OzZrq7CRBICDyG@redhat.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=thuth@redhat.com;
+References: <20250117194003.1173231-1-pbonzini@redhat.com>
+ <20250117194003.1173231-11-pbonzini@redhat.com>
+ <Z5d4PTtIRhgZ0tss@intel.com>
+In-Reply-To: <Z5d4PTtIRhgZ0tss@intel.com>
+From: Paolo Bonzini <pbonzini@redhat.com>
+Date: Mon, 27 Jan 2025 19:11:17 +0100
+X-Gm-Features: AWEUYZnnoLv7xDrpkzqO_6FjOf0yKVL-LulOVMSNiz8kVn63A6XpVQuI1lbug9U
+Message-ID: <CABgObfYc5ccC16=K7KVmdLP-jmvwVbxqv1L6c4Oe55MSK4ndng@mail.gmail.com>
+Subject: Re: [PATCH 10/10] rust: bindings for MemoryRegionOps
+To: Zhao Liu <zhao1.liu@intel.com>
+Cc: qemu-devel@nongnu.org, qemu-rust@nongnu.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=pbonzini@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -33
 X-Spam_score: -3.4
@@ -142,7 +88,7 @@ X-Spam_report: (-3.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.3,
  RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -158,29 +104,97 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 24/01/2025 16.36, Daniel P. Berrangé wrote:
-> On Fri, Jan 24, 2025 at 03:15:27PM +0100, Thomas Huth wrote:
->> Move the mipsel replay tests from tests/avocado/replay_kernel.py to
->> the functional framework. Since the functional tests should be run per
->> target, we cannot stick all replay tests in one file. Thus let's add
->> these tests to the file where we already use the same asset already.
-> 
-> Are the replay tests liable to impact running time much ?
-> 
-> The test timeouts are per-file, which could motivate
-> a separate test_mipsel_malta_replay.py file ?
+On Mon, Jan 27, 2025 at 12:53=E2=80=AFPM Zhao Liu <zhao1.liu@intel.com> wro=
+te:
+> > @@ -490,20 +490,24 @@ impl PL011State {
+> >      /// location/instance. All its fields are expected to hold unitial=
+ized
+> >      /// values with the sole exception of `parent_obj`.
+> >      unsafe fn init(&mut self) {
+> > +        static PL011_OPS: MemoryRegionOps<PL011State> =3D MemoryRegion=
+OpsBuilder::<PL011State>::new()
+> > +            .read(&PL011State::read)
+> > +            .write(&PL011State::write)
+> > +            .native_endian()
+> > +            .impl_sizes(4, 4)
+> > +            .build();
+> > +
+>
+> Nice design. Everything was done smoothly in one go.
 
-The mipsel tests take almost 2 minutes on my fast laptop already, so yes, on 
-CI and slow systems this will need a higher timeout setting.
+I hope something similar can be done with VMStateDescription too...
 
-> Guess that answers my own question. I'd think a separate
-> file for replay tests per target is nicer, so we leave the
-> default executed malta tests with short timeout in meson.
+> > +pub struct MemoryRegionOps<T>(
+> > +    bindings::MemoryRegionOps,
+> > +    // Note: quite often you'll see PhantomData<fn(&T)> mentioned when=
+ discussing
+> > +    // covariance and contravariance; you don't need any of those to u=
+nderstand
+> > +    // this usage of PhantomData.  Quite simply, MemoryRegionOps<T> *l=
+ogically*
+> > +    // holds callbacks that take an argument of type &T, except the ty=
+pe is erased
+> > +    // before the callback is stored in the bindings::MemoryRegionOps =
+field.
+> > +    // The argument of PhantomData is a function pointer in order to r=
+epresent
+> > +    // that relationship; while that will also provide desirable and s=
+afe variance
+> > +    // for T, variance is not the point but just a consequence.
+> > +    PhantomData<fn(&T)>,
+> > +);
+>
+> Wow, it can be wrapped like this!
 
-Thinking about this twice, it's also nicer for the MAINTAINERS file if we 
-have the replay related tests in separate files, so yes, let's go with 
-separate files for the replay tests.
+I like your enthusiasm but I'm not sure what you refer to. ;) Maybe
+it's worth documenting this pattern, so please tell me more (after
+your holidays).
 
-  Thomas
+> > +impl MemoryRegion {
+> > +    // inline to ensure that it is not included in tests, which only
+> > +    // link to hwcore and qom.  FIXME: inlining is actually the opposi=
+te
+> > +    // of what we want, since this is the type-erased version of the
+> > +    // init_io function below.  Look into splitting the qemu_api crate=
+.
+>
+> Ah, I didn't understand the issue described in this comment. Why would
+> inlining affect the linking of tests?
+
+If you don't inline it, do_init_io will always be linked into the
+tests because it is a non-generic function. The tests then fail to
+link, because memory_region_init_io is undefined.
+
+This is ugly because do_init_io exists *exactly* to extract the part
+that is not generic. (See
+https://users.rust-lang.org/t/soft-question-significantly-improve-rust-comp=
+ile-time-via-minimizing-generics/103632/8
+for an example of this; I think there's even a procedural macro crate
+that does that for you, but I can't find it right now).
+
+> > +    pub fn init_io<T: IsA<Object>>(
+> > +        &mut self,
+> > +        owner: *mut T,
+> > +        ops: &'static MemoryRegionOps<T>,
+> > +        name: &'static str,
+>
+> What about &'static CStr?
+>
+> Then pl011 could pass `c_str!("pl011")` or `Self::TYPE_NAME`.
+
+I think it's better to use a Rust string; there's no reason why the
+name of the memory region has to match Self::TYPE_NAME; unlike the
+name of the device, the name of the memory region is not visible on
+the command line for example.
+
+Thanks,
+
+Paolo
+
+> Otherwise,
+>
+> Reviewed-by: Zhao Liu <zhao1.liu@intel.com>
+>
+>
 
 
