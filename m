@@ -4,64 +4,64 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8FFBCC02188
-	for <qemu-devel@archiver.kernel.org>; Mon, 27 Jan 2025 10:28:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1869DC0218C
+	for <qemu-devel@archiver.kernel.org>; Mon, 27 Jan 2025 10:28:24 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tcMLe-0002yC-O2; Mon, 27 Jan 2025 05:28:08 -0500
+	id 1tcMK8-0001ct-5P; Mon, 27 Jan 2025 05:26:32 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tcML1-0002HN-Fz
- for qemu-devel@nongnu.org; Mon, 27 Jan 2025 05:27:32 -0500
-Received: from mail-wm1-x32c.google.com ([2a00:1450:4864:20::32c])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tcMK6-0001cW-0I
+ for qemu-devel@nongnu.org; Mon, 27 Jan 2025 05:26:30 -0500
+Received: from mail-wm1-x330.google.com ([2a00:1450:4864:20::330])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tcMKz-00023f-SY
- for qemu-devel@nongnu.org; Mon, 27 Jan 2025 05:27:27 -0500
-Received: by mail-wm1-x32c.google.com with SMTP id
- 5b1f17b1804b1-436202dd7f6so49012195e9.0
- for <qemu-devel@nongnu.org>; Mon, 27 Jan 2025 02:27:25 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tcMK4-0001vx-KR
+ for qemu-devel@nongnu.org; Mon, 27 Jan 2025 05:26:29 -0500
+Received: by mail-wm1-x330.google.com with SMTP id
+ 5b1f17b1804b1-438a3216fc2so43800505e9.1
+ for <qemu-devel@nongnu.org>; Mon, 27 Jan 2025 02:26:28 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1737973644; x=1738578444; darn=nongnu.org;
+ d=linaro.org; s=google; t=1737973587; x=1738578387; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=RzpnpQZgTCpT2g1dzq5DHmJ6x3mOiCDX9Ya9+aFts1Y=;
- b=bidTfYXrpnkDEp0krrJDRLdwd0DZB/wMmRmWkH/yMCe8Udy7JGST2xpcjuKXMABp5G
- yjBJKYULM+74zJ+JyJP/HIZLFpdjNTFm8wJTF3eXvxd7ug4b6XI1K3mvoYsNTD/GuS3m
- 4XqYoIK4dFpcrjcg5jGa7mmsosi9weuLZO6ctlLA1gbhPN+CGwMcko9VLNOm25bo2/oS
- eWGUWBPXRl45tHVQvfo+Z2pzv+lJZhyAD/EkjlIQRXGRUh+dNVUtjb0+ppjnuKd8hZOg
- tTMaJlKr4w8qgY5Uw1iX5yIWA+9OSjwWldqtwrKCAGYUO8jIE3xnj0jxRgY9y8zSueY0
- xiDg==
+ bh=t8IO10tm7cHN5fIAfICKPQ1+7FojlYdziCm/1tH9ciA=;
+ b=YJ+6Pqce8Jb3tfFsDcf4FsGLJznVGxyXJr6CQDzHVZLT+zbxkasevT0DSY5WQkuJ9v
+ pXR1TpCVfuRJ5Axm+4DbE+ry/dy9VLX3z+wK2QpbDKS08hxR6E21f5eqL3iZYwAm7Fom
+ ElWYA51tuK3swEXwNsJKiAdhIyxAX0t7GCa8BwAViW718SQLtsOT+Uft9LrG+iOaO90r
+ 7cmFg0ktYJ/OgV6xlcml/1yJTeHCsDNhidYBDG1G5NDPB3Jmkp9ofYFnC1zHmQ43m9H2
+ 0KN+t6mRrvGjwCgLt47JbGW8QY6OY3lNDe/OO/+05Ypw6S7SZuFU6riSDapmMzWUSvoe
+ L9wg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1737973644; x=1738578444;
+ d=1e100.net; s=20230601; t=1737973587; x=1738578387;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=RzpnpQZgTCpT2g1dzq5DHmJ6x3mOiCDX9Ya9+aFts1Y=;
- b=dsjkUULqnUUd7W3BQCmgcthTjGcVHR4F5ZTI5QwSv6aNrerSk1oHbhD//++XO0abl1
- +/JD/5myDX8oUBeXQZcKSycqHi93pj93tVCyiCmVGuU6EZBfY5ZWS5cBLCCq1admBv8F
- s3fVmU3fAwn8ReJHBo99J2IEd3yThats3YNOSQDFcQKDl1RBunUgK+Lu4FNOecBAV/aZ
- SXGwiJNefC/z/vs/PXEVKFjPmyjrkTVXZdgAKzQYYK8dqjPo6J8zUZDaLMwtaA8AEQhA
- HkEQMPr58QpoJDqYw9cZpeE0gPz9xqjLIfzqUBJ2K7h4nbfyLSoKC1aXAphhm8JpoiPo
- YScw==
-X-Gm-Message-State: AOJu0YywNijVqoryHFltzhnyivDfFM564AJyQnHV1ZBHjiVxZakP6TPy
- 1ZaKLSuxntDoaOksD0bgSvyNsldbmtMaTJT2I5im8uvNFJupUorz9thc/HB0oPGVcGalhfMp5Qs
- /wi8=
-X-Gm-Gg: ASbGncvsxEcERntYsSYraOGcuQJIaKCe8pqXrD/22b4KTMHk6aNXJFBtCIjN1le2pzL
- ScJL6JSVl2YPwMh8pD5MfUWRVXIxj9At7BPVp3l4NxEeubntkcYVBq5SuWX6ht9d1M59mZAYOSr
- 2K++7du3Rz3EEwBi0fdq4hqgVF78U0LokKWElEXZkDefKY/732ZJgUD9R3n2PmRMoYmc8VfUYgs
- nzmHGdpVusF4n7WQ35YTuQphTpGdKsnuob1+KuvbrsjTnLAyNg3jfMFh5i35rT1UjjYqODCuAun
- BY3OUZVGbSR0E0p/jO3TF2AOy3BRhkanV7G4gNPklWhBNEOjNxzCNCM=
-X-Google-Smtp-Source: AGHT+IEU0hjlRT8rqny+nncUcro2MpvqsbdJa4VexVaflsK6C3h0Ex3stm0HsInc19bT1JtiXm6o6g==
-X-Received: by 2002:a05:600c:3b02:b0:434:a781:f5d5 with SMTP id
- 5b1f17b1804b1-4389143ba53mr390629435e9.30.1737973643869; 
- Mon, 27 Jan 2025 02:27:23 -0800 (PST)
+ bh=t8IO10tm7cHN5fIAfICKPQ1+7FojlYdziCm/1tH9ciA=;
+ b=FL5rTO9sdAPfpM1zqqLtim2+Zif928GkXThUVMBmLs+lHqNAHzqizzkyDwfyBi8V8V
+ Teg/Pnrbk++4qvdIK6u21HWP532ROOvy1ia8ndq0HPKLwyKbm1mtGS0DnjHK1YCVNguT
+ F/LYfbJYTkFXxVjra7OJfMKMX44iqKbVTXPXKn6lgd571hQd0XRI+8x+CxiC8lh8iSbb
+ jlwyPq+kpt8g/o1bnbO1YbJMQa9QvEwQvsO1lEtHaRUzpv6f4F3iSnUFUEkpJdiHRcf+
+ 1JNHL8nLDPPUcku7b1NnNE/dhlWDCm4rhHfUZVarWbnr9Ir52fj0B0zqr2aggIwMqEoq
+ puYQ==
+X-Gm-Message-State: AOJu0YyTYRJwg2uKX7PXI0UCWWUl1rdwZ3ee3v90pV7PemmR2DNg7b9c
+ +XY3HJuGZjBf4OeNxlhXg3bt7HGsw5Gys8NAPE9oZU7dRKd/vEdbFu5ITjaWO1CxBAW8qlo7SFa
+ lVLs=
+X-Gm-Gg: ASbGncuMZuklxPj2HxVulsasU9M+aZ0jkBnYopaLkWigjLKd/a1Tu/XxWFGDTNhpcWJ
+ 8tgdootqu6GQ3IQ9AvzzDVdj6QLGJNMimD8UJtd2AW8c+WunqZCOdDWNSPoH9c5ZRNlHiUxcLba
+ MnbiYXsuHb8FgCJOWza1CyN+kK5CTveK6cy31oNbbx56pDAzZ5nInFS5d8fzKezoYyahwGoaV8a
+ gNo84kHoEY4YOWcVzED+9nngbJIAv3ZX09KBMe7QgdHPNa2anyP8puxhVowkIssq9MrIviHqFgH
+ FCTxS7h654UMgW+vEFpq4k/wVLN4VdWZOiFIcjQ72ECrEhxmnx4RKy8=
+X-Google-Smtp-Source: AGHT+IF3KR2EB0CNbkIIpYCWXnl9kH/1wsRFCm1vZnDqdDBjLNlVtB9zLQrIYRGhDHa40ypZtMpsjA==
+X-Received: by 2002:a05:600c:3114:b0:434:a386:6cf with SMTP id
+ 5b1f17b1804b1-438913bff57mr366945245e9.2.1737973586682; 
+ Mon, 27 Jan 2025 02:26:26 -0800 (PST)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-438bd507e0csm124511525e9.20.2025.01.27.02.27.22
+ 5b1f17b1804b1-438bd507dc9sm127885575e9.19.2025.01.27.02.26.25
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Mon, 27 Jan 2025 02:27:22 -0800 (PST)
+ Mon, 27 Jan 2025 02:26:26 -0800 (PST)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Daniel Henrique Barboza <danielhb413@gmail.com>,
@@ -69,17 +69,17 @@ Cc: Daniel Henrique Barboza <danielhb413@gmail.com>,
  Harsh Prateek Bora <harshpb@linux.ibm.com>, qemu-ppc@nongnu.org,
  Nicholas Piggin <npiggin@gmail.com>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PATCH v2 13/15] target/ppc: Make powerpc_excp() prototype public
-Date: Mon, 27 Jan 2025 11:26:17 +0100
-Message-ID: <20250127102620.39159-14-philmd@linaro.org>
+Subject: [PATCH v2 01/15] hw/ppc/spapr: Restrict CONFER hypercall to TCG
+Date: Mon, 27 Jan 2025 11:26:05 +0100
+Message-ID: <20250127102620.39159-2-philmd@linaro.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20250127102620.39159-1-philmd@linaro.org>
 References: <20250127102620.39159-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32c;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x32c.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::330;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x330.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -102,40 +102,26 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-In order to move TCG specific code dependent on powerpc_excp()
-in the next commit, expose its prototype in "internal.h".
+TODO: Add PPC folks why :)
 
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 ---
- target/ppc/internal.h    | 1 +
- target/ppc/excp_helper.c | 2 +-
- 2 files changed, 2 insertions(+), 1 deletion(-)
+ hw/ppc/spapr_hcall.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/target/ppc/internal.h b/target/ppc/internal.h
-index 0e66b29ec68..b8997ba31db 100644
---- a/target/ppc/internal.h
-+++ b/target/ppc/internal.h
-@@ -291,6 +291,7 @@ bool ppc_cpu_debug_check_breakpoint(CPUState *cs);
- bool ppc_cpu_debug_check_watchpoint(CPUState *cs, CPUWatchpoint *wp);
+diff --git a/hw/ppc/spapr_hcall.c b/hw/ppc/spapr_hcall.c
+index f8ab7670630..dbf30358a1a 100644
+--- a/hw/ppc/spapr_hcall.c
++++ b/hw/ppc/spapr_hcall.c
+@@ -578,6 +578,8 @@ static target_ulong h_confer(PowerPCCPU *cpu, SpaprMachineState *spapr,
+     CPUState *cs = CPU(cpu);
+     SpaprCpuState *spapr_cpu;
  
- G_NORETURN void powerpc_checkstop(CPUPPCState *env, const char *reason);
-+void powerpc_excp(PowerPCCPU *cpu, int excp);
- 
- #if defined(TARGET_PPC64)
- bool is_prefix_insn_excp(CPUPPCState *env, int excp);
-diff --git a/target/ppc/excp_helper.c b/target/ppc/excp_helper.c
-index 661d9650d9f..f0e734e1412 100644
---- a/target/ppc/excp_helper.c
-+++ b/target/ppc/excp_helper.c
-@@ -1494,7 +1494,7 @@ static inline void powerpc_excp_books(PowerPCCPU *cpu, int excp)
- }
- #endif /* TARGET_PPC64 */
- 
--static void powerpc_excp(PowerPCCPU *cpu, int excp)
-+void powerpc_excp(PowerPCCPU *cpu, int excp)
- {
-     CPUPPCState *env = &cpu->env;
- 
++    assert(tcg_enabled()); /* KVM will have handled this */
++
+     /*
+      * -1 means confer to all other CPUs without dispatch counter check,
+      *  otherwise it's a targeted confer.
 -- 
 2.47.1
 
