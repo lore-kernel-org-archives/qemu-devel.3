@@ -4,69 +4,69 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9042BC02188
-	for <qemu-devel@archiver.kernel.org>; Mon, 27 Jan 2025 16:17:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id EEB4DC02188
+	for <qemu-devel@archiver.kernel.org>; Mon, 27 Jan 2025 16:19:08 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tcRnf-0000Kz-DR; Mon, 27 Jan 2025 11:17:23 -0500
+	id 1tcRp8-00018T-7b; Mon, 27 Jan 2025 11:18:54 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1tcRnb-0000KY-9G
- for qemu-devel@nongnu.org; Mon, 27 Jan 2025 11:17:19 -0500
-Received: from mail-ej1-x62d.google.com ([2a00:1450:4864:20::62d])
+ id 1tcRp3-00015h-VC
+ for qemu-devel@nongnu.org; Mon, 27 Jan 2025 11:18:50 -0500
+Received: from mail-ej1-x636.google.com ([2a00:1450:4864:20::636])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1tcRnY-0001vV-Q6
- for qemu-devel@nongnu.org; Mon, 27 Jan 2025 11:17:18 -0500
-Received: by mail-ej1-x62d.google.com with SMTP id
- a640c23a62f3a-ab34a170526so773402966b.0
- for <qemu-devel@nongnu.org>; Mon, 27 Jan 2025 08:17:15 -0800 (PST)
+ id 1tcRp2-000210-9g
+ for qemu-devel@nongnu.org; Mon, 27 Jan 2025 11:18:49 -0500
+Received: by mail-ej1-x636.google.com with SMTP id
+ a640c23a62f3a-ab69bba49e2so243382166b.2
+ for <qemu-devel@nongnu.org>; Mon, 27 Jan 2025 08:18:47 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1737994634; x=1738599434; darn=nongnu.org;
+ d=linaro.org; s=google; t=1737994726; x=1738599526; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:message-id:date:user-agent
  :references:in-reply-to:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=AXJJq+BSmBpgHQ8o3SSzoAdmWb/+j11yRdzWZ8g4Ih8=;
- b=AmOww7RahACzU164ZX1zs7h/sIOhQPvIhfl/MmvnQPoGlryu+Jj6jTe6ET3EVum0J8
- UYIoLVJ1uhIiZ6FvyqSYba5+NLRlJrzqfkSIHgvL8bpZDAhSwdB7Ko100AChfLP0dRMe
- vbBqxQJwjuv1/gXUoqvEw0XoMlTcbeXH8Im5id0h9Ww6JMtAuxjsQqfyCUiIaAZzhjP6
- ohKVHoOCu47m3Wsi3vM/kXigEm3gqX/fsWHqFs4MJOQ+XuBk9lbHEiUx07OArQv8srSQ
- /xwfj1MHULc2rS++mRGjQW2B2IrqZ7RQKbIx5RfLupvPdylD0iMyvkcImz6ZGjlXXtsT
- +YDQ==
+ bh=NllUBgEBZxHqpiSwCHDJJXUJfmvp0DPqaPB0zddBIvM=;
+ b=hIyWqxo1YZb7rt6eBRCyGttKWeRqBqQzkQHWFC0afNs8FNRAAf+Tk+/cjiUFXFkUhd
+ 1T3GkErX04uUOB7CxFyf+j3AA8lbxz4+UWGCRFvYTNqiPPRwimgt87uSZrShRBABi4/l
+ 3LcydOmQycBF4UeHCEfnJ3Yj463qvzVoPs32BWQeTcGXN+SUIdPqnl2dDJb1j45pneYj
+ TLTvsI1FSS1KZFsrG7wt0+gMBKkunpE6lVxtuZ+mlLFUecVyQ1J42bNCtgbtaiFHF9iH
+ 0ffwD0WNYZsYpG+O7XxPerI2F0bahlg7kTZwtL2HFe2QJoyUAXchufZjYPFx+D92D6ol
+ rLFw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1737994634; x=1738599434;
+ d=1e100.net; s=20230601; t=1737994726; x=1738599526;
  h=content-transfer-encoding:mime-version:message-id:date:user-agent
  :references:in-reply-to:subject:cc:to:from:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=AXJJq+BSmBpgHQ8o3SSzoAdmWb/+j11yRdzWZ8g4Ih8=;
- b=IlK6eudO1BhkbuGmcPrsbuEfFj4Pv/syylJHLjDqARmITY4sxNBVjSNrHz+QkKyp8F
- Ab2nShceU7JgEC7+WcAoeqED6ekBp1WABVUS+hCT3513LbStO3XqMGfq0eqo68VyR87+
- boF2kyBwieiH0/DQJoSmjfWiL0N7QumSHl9aXivmn6ZSWa1cSBkP3O7zY4jUuCzjzMZF
- gni6A+H4Av2KrIzN1vg9tpxIFZfT01kSwbYHFiw02qCkFCO1LnM2Lvqv5V0xnq9N1Chh
- Xr/X2yG1g3wjMUH56IT/H8olU6CJxv/fqPePDblP83orq7cFxSB+Hv7UjOl5T7xOLCIe
- iNXg==
+ bh=NllUBgEBZxHqpiSwCHDJJXUJfmvp0DPqaPB0zddBIvM=;
+ b=PMFFZ3sP1694803PLrUG7pgfHqC4BUIAr1bmM5JQf8T+JjORnHnolmBONdGsL9Tx7x
+ P4LnbT+E+ePcX7gwv65AX6L/HLRyWZ4KGowQkuE7RRw+1RF+weBYYvZqeQhne/zUMe+T
+ FtoRRIPnA+OWe0Lz+317cqU15pF5YYioiXrJkmLL8uYR9hghSVyhnNQ8o8lW14vy2bzi
+ 3FYhBTWw8Dv2R6YqT3/60ugwrwUsTD6bitJ8PZesGcaCTChVtj0O1QNyuNQwfyvrm+hM
+ pugbI3kHylJ3T5zzyBDQLcNGCRuh0bKcPrExNLvNl/oe5w3/b40FBnL5JVJ4J5rNWPA6
+ UcJA==
 X-Forwarded-Encrypted: i=1;
- AJvYcCUDVe0ATHlKjEtEvDwGO9HlGISMYkFcv2w+BYaqEEwMK7HKa4n5wLVwSuz/YQ9ha9nMtSokw5npemXT@nongnu.org
-X-Gm-Message-State: AOJu0YwDEM2xpAPAtF+/mK9d9GCGoDZEuHytTRb7RI0v1zYkVsI8+H9h
- kls3T+fl5l8OHvWZS14Urr7gCALet0xpiZRktc6ws9gYuwITgRWZXhWpayux2EY=
-X-Gm-Gg: ASbGnct3rCxEOB4i3D3+HQ1n4wzDZO54pnzzy+FRD/aNgh3qstnNdLBG9u4/COoB9hD
- pEGgyPoJ6DHzYgsBcUvMpbaBYbpCzm3A+/xSsN4DC9bJRZZx0fSX0tnaOe3Jmz43IE/mZJ7PUDJ
- g1lC/9ppoqkPc4eyBg1OCxmhidUOYDp6EihgzEcBkjPk+MjK4O/5r5eT+CQtm5tCL6MA2gIkWMo
- 6Pgx1MNHdGbGym+mXTwkuJ9OojcBPf6qYx+hR00ttO1FHM+ZwmL1W8y+DcjCxzdMnl+ZpNfws+s
- oQs=
-X-Google-Smtp-Source: AGHT+IHsiuzt5cHJQF4iRZJzLB/WJNPBxVuFP4qUjPFGwyil3aNaMhA2KCj2aWu2fqUO1tY5Rnxf0Q==
-X-Received: by 2002:a17:906:f58c:b0:aaf:8f8e:6bf4 with SMTP id
- a640c23a62f3a-ab38b16333bmr3375752866b.26.1737994633812; 
- Mon, 27 Jan 2025 08:17:13 -0800 (PST)
+ AJvYcCVW3WB5cpFen1iAsNw0sNVTa5KPqx9PN1SUfhvg2u7upuF8yeyRlcwFjhYEu2xRDTHk89lRh3HfpgZb@nongnu.org
+X-Gm-Message-State: AOJu0YyYojv8Y/CSJb26yqQ7podRC5PAGw804DfzTxzMsg1Y+8dV6W2J
+ wd9IX1Pj88s24/oXUWaXrkfEQhI6m1hX0p2chvRFW4MFaHBxnhdQVBCMw7OI5h4=
+X-Gm-Gg: ASbGncsqVSFxEgmMxc8x+p+s8dY8aqfW8w4CI/369q5yF2Ur0heFPjQI60KGDj2SyL7
+ UNEXJQwrP0UlrZZaAdNtBRfJah/sDoWobwlcZ8w5M9A1JdQYbuLMj8nuwnIC7y7Jdbet0P1RNCp
+ qMLxe2t5UGftHuBDNjPegXOe0lhnvpGaynQghy4F9qlmvvexQ4Fn94WdeFoPypxmq0JgnNNma9B
+ o8UoUIFY0KTnp4SCzXY3sfQq++sQvWTS6HJGB9LZmOLOnV2nJbsfskrIkgVQv0G708z8Wai7bVP
+ OOk=
+X-Google-Smtp-Source: AGHT+IEJTCnKdByTXqtiBlXfv7CwN/2KryTnM6Fqcvobi7QNy2HvkExEpeI/aBHznJyOib8FwKjDKA==
+X-Received: by 2002:a05:6402:518a:b0:5d3:ba42:e9e3 with SMTP id
+ 4fb4d7f45d1cf-5db7d2f5ec0mr101636509a12.13.1737994725970; 
+ Mon, 27 Jan 2025 08:18:45 -0800 (PST)
 Received: from draig.lan ([85.9.250.243]) by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-ab69933f976sm309944466b.51.2025.01.27.08.17.13
+ 4fb4d7f45d1cf-5dc2ea16e7asm3167544a12.42.2025.01.27.08.18.45
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 27 Jan 2025 08:17:13 -0800 (PST)
+ Mon, 27 Jan 2025 08:18:45 -0800 (PST)
 Received: from draig (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id 2F6AE5F7CB;
- Mon, 27 Jan 2025 16:17:12 +0000 (GMT)
+ by draig.lan (Postfix) with ESMTP id BA89B5F7CB;
+ Mon, 27 Jan 2025 16:18:44 +0000 (GMT)
 From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
 To: Dmitry Osipenko <dmitry.osipenko@collabora.com>
 Cc: Akihiko Odaki <akihiko.odaki@daynix.com>,  Huang Rui
@@ -86,18 +86,19 @@ Cc: Akihiko Odaki <akihiko.odaki@daynix.com>,  Huang Rui
  <honglei1.huang@amd.com>,  Julia Zhang <julia.zhang@amd.com>,  Chen Jiqian
  <Jiqian.Chen@amd.com>,  Rob Clark <robdclark@gmail.com>,  Yiwei Zhang
  <zzyiwei@chromium.org>,  Sergio Lopez Pascual <slp@redhat.com>
-Subject: Re: [PATCH v6 00/10] Support virtio-gpu DRM native context
-In-Reply-To: <20250126201121.470990-1-dmitry.osipenko@collabora.com> (Dmitry
- Osipenko's message of "Sun, 26 Jan 2025 23:11:11 +0300")
+Subject: Re: [PATCH v6 04/10] virtio-gpu: Support asynchronous fencing
+In-Reply-To: <20250126201121.470990-5-dmitry.osipenko@collabora.com> (Dmitry
+ Osipenko's message of "Sun, 26 Jan 2025 23:11:15 +0300")
 References: <20250126201121.470990-1-dmitry.osipenko@collabora.com>
+ <20250126201121.470990-5-dmitry.osipenko@collabora.com>
 User-Agent: mu4e 1.12.8; emacs 29.4
-Date: Mon, 27 Jan 2025 16:17:12 +0000
-Message-ID: <87cyg844fr.fsf@draig.linaro.org>
+Date: Mon, 27 Jan 2025 16:18:44 +0000
+Message-ID: <877c6g44d7.fsf@draig.linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::62d;
- envelope-from=alex.bennee@linaro.org; helo=mail-ej1-x62d.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::636;
+ envelope-from=alex.bennee@linaro.org; helo=mail-ej1-x636.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -122,43 +123,18 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 Dmitry Osipenko <dmitry.osipenko@collabora.com> writes:
 
-> This patchset adds DRM native context support to VirtIO-GPU on Qemu.
+> Support asynchronous fencing feature of virglrenderer. It allows Qemu to
+> handle fence as soon as it's signalled instead of periodically polling
+> the fence status. This feature is required for enabling DRM context
+> support in Qemu because legacy fencing mode isn't supported for DRM
+> contexts in virglrenderer.
 >
-> Contarary to Virgl and Venus contexts that mediates high level GFX APIs,
-> DRM native context [1] mediates lower level kernel driver UAPI, which
-> reflects in a less CPU overhead and less/simpler code needed to support i=
-t.
-> DRM context consists of a host and guest parts that have to be implemented
-> for each GPU driver. On a guest side, DRM context presents a virtual GPU =
-as
-> a real/native host GPU device for GL/VK applications.
->
-> [1] https://www.youtube.com/watch?v=3D9sFP_yddLLQ
->
-> Today there are four DRM native context drivers existing in a wild:
->
->   - Freedreno (Qualcomm SoC GPUs), completely upstreamed
->   - AMDGPU, completely upstreamed
+> Reviewed-by: Akihiko Odaki <akihiko.odaki@daynix.com>
+> Acked-by: Michael S. Tsirkin <mst@redhat.com>
+> Tested-by: Alex Benn=C3=A9e <alex.bennee@linaro.org>
+> Signed-off-by: Dmitry Osipenko <dmitry.osipenko@collabora.com>
 
-Well good news and bad news.
-
-I can verify that AMD native context works when I run my Aarch64 guest
-on my Aarch64 host with -accel TCG (therefor avoiding KVM all together).
-I get potato frame rates though (~150FPS) although I suspect that is
-because the PCI errata workaround.
-
-When it comes to graphics memory allocation is there anything I can do
-to force all allocations to be very aligned? Is this in the purview of
-the AMD drm drivers or TTM itself?
-
-I'm still seeing corruption with -display gtk,gl=3Don on my x86 system
-BTW. I would like to understand if that is a problem with QEMU, GTK or
-something else in the stack before we merge.
-
->   - Intel (i915), merge requests are opened
->   - Asahi (Apple SoC GPUs), partially merged upstream
->
-<snip>
+Reviewed-by: Alex Benn=C3=A9e <alex.bennee@linaro.org>
 
 --=20
 Alex Benn=C3=A9e
