@@ -4,74 +4,70 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DFF10C0218C
-	for <qemu-devel@archiver.kernel.org>; Mon, 27 Jan 2025 15:00:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 67775C0218A
+	for <qemu-devel@archiver.kernel.org>; Mon, 27 Jan 2025 15:01:45 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tcQbR-0002d2-Gw; Mon, 27 Jan 2025 10:00:43 -0500
+	id 1tcQbu-00036U-R5; Mon, 27 Jan 2025 10:01:11 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1tcQbG-0002a0-8K
- for qemu-devel@nongnu.org; Mon, 27 Jan 2025 10:00:30 -0500
-Received: from mail-yb1-xb2c.google.com ([2607:f8b0:4864:20::b2c])
+ id 1tcQbo-00030l-TW
+ for qemu-devel@nongnu.org; Mon, 27 Jan 2025 10:01:04 -0500
+Received: from mail-yb1-xb2e.google.com ([2607:f8b0:4864:20::b2e])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1tcQbE-00005g-LR
- for qemu-devel@nongnu.org; Mon, 27 Jan 2025 10:00:29 -0500
-Received: by mail-yb1-xb2c.google.com with SMTP id
- 3f1490d57ef6-e461015fbd4so6577778276.2
- for <qemu-devel@nongnu.org>; Mon, 27 Jan 2025 07:00:28 -0800 (PST)
+ id 1tcQbn-00008w-9z
+ for qemu-devel@nongnu.org; Mon, 27 Jan 2025 10:01:04 -0500
+Received: by mail-yb1-xb2e.google.com with SMTP id
+ 3f1490d57ef6-e46ebe19368so6367496276.0
+ for <qemu-devel@nongnu.org>; Mon, 27 Jan 2025 07:01:02 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1737990027; x=1738594827; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=prIHRTcFxRjf8k9oXkyXV2TLH0whA2O0LDCYqNyw7ZE=;
- b=BR/bzXwHCao+6WB8DMl00Y4fE1q2ukAj8V/hN/p935coeZZ60sCJ/qo+WVRLmOBPRo
- 2KXIJVokwY8L+rYu5fX9sIXrnDTK6w9xk/+mv5KN6sq/GpV+3R74+ok4+GQf+DNl7y1w
- WsP5oW8iWAnMSniETMOH0VzJbV5R2KUsj/DBHOBS66oOJaaztf2AO5Yyu4f3L09OXKDz
- 0bgD/9BA6Ku7eQFI9ZRQAdyu3FRWcppIjuiUz8m0FS/3l+zpjDg78ledCZvoOZYifC04
- Q8ThqGLhNIObI9qqDBONCD8Vex427bh8ctv44H24QDKoEuYBnFO6U/s5ZdS/O2u4peYB
- XBWA==
+ d=linaro.org; s=google; t=1737990062; x=1738594862; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=Z+C5I7CFoAxs4fjig91TFCyeC8lhhlKttbQmuiJJyAI=;
+ b=Fbj/n41QOsqLyc6ucPpBd0b8zI4Cu1VvQMy/h22T/LkLIUA7r4HyFkfDhPWVUuKElu
+ 4nhnEpWWBooiyMyy9gszilTACH/t/JSISKYHQXXhUxJhEYusbcM5h8E+M6ah/77nEsDP
+ yqfbTCtZKpjdGzoYb3uiyoTHbt3Fn6b4xxHJImVgAXAdyMMh1EyPPBd/PDkjQbPvUKLn
+ hSAxf9YQJN4aPNdd2mOn0Ct0cLQ7rNgGg++oVN/hZbq2sybsSi0V8ZukpUxZHWxD6LJg
+ EVCwue/QZUnV37qs9KDZr3J+mXs/GFvCFDjvKhs7EiwQTMqtEJeCk5cJpIBTMVNayyBr
+ muKQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1737990027; x=1738594827;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=prIHRTcFxRjf8k9oXkyXV2TLH0whA2O0LDCYqNyw7ZE=;
- b=fgAtmQ8ynNQcUDhkOhWWgCZQiYjx7XLQomyjIwg+PeiSm+Hw3ggCvDYuPmUNyTXsPE
- oC6WZKcJMAeYbCHmcp7fv88BTG1LWR0nsUlPQf6F29sO8xb/XKht1Gi/+woh8NyyCKrp
- 9QZpt5P+RMSMueeGFwxdGC8xzUllUc9WDBYA8QTM0UmlzwdegIKYd5JJKsDbQOI2XzkF
- nyswFyilv2UcY6LIDIje2N3mmEMZjXGxncpEGK3jElblZS+1ra4L0SOQmgIKdxQwnNFC
- +FHDgx3hOeki0CC4XGNe8ElRqGR664BR47AUzeSuoyc61tQ7qCTL5e0xxfarDwulWc3S
- rZcQ==
-X-Gm-Message-State: AOJu0YzVnoGdqNc1wVGcfOU4GugPhhDHSi939iTQ64aVNISgNkTG+5Cg
- GuVPL6jAGnRaSGHroikA3JfMqtb/esP0DoUysoxwxwx+yRz3JR5Dl2B0B4sP5sSGf3ciEH1UVi5
- +SLtDFZNF5Ltxxoj0/WEngbBxjE2fYQrAe14n7Q==
-X-Gm-Gg: ASbGncspL1HC0KAflDtJX1hEd2ziZOBi+F1scIdiH3rDbBA2YUJfvC6cCtIUIL6pmPz
- SsqIOMefmN8vTSUFct1/7i71wPfVTWYKyFDZShcJMroyoH65wc+IsLj3R/2o7Mi0=
-X-Google-Smtp-Source: AGHT+IGBRSAFk/sy5cx23XsislhaBJPX8boKg/yhiV8pPE1VKot5LNCOOJpPtnCcmHNtujNo/EbYbDKWnPwLYEnrTcs=
-X-Received: by 2002:a25:7412:0:b0:e57:cb7c:29b2 with SMTP id
- 3f1490d57ef6-e57cb7c2ceamr22412031276.7.1737990026756; Mon, 27 Jan 2025
- 07:00:26 -0800 (PST)
+ d=1e100.net; s=20230601; t=1737990062; x=1738594862;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=Z+C5I7CFoAxs4fjig91TFCyeC8lhhlKttbQmuiJJyAI=;
+ b=R1tLv8RWzNUC6wfTx/ko6fhYj7VVb3ZL7PI7EhHITESW0OGYLv95Pbt1xLMGO6Vo+D
+ Bi2Iiu2q1ZSwl77vlGDH1RiuMSeP8ylrMBtlSxebAI2trn6jfjGTldlEOL3nsep+XYcM
+ f9Z/0Td4iXJGH7vRzJOQmIYO2A7b2LGPK+e2pf5+lWG56FrJfBTs0K74YpkiaHGh93+a
+ 3pjnvzXDx03HPmgMbpFGgrFZy0+VudqXtInPSG2hsAPpP6noUJHAWptcdPIBJw0BmLUP
+ EPY0jbK8hpUp5YPZNRt4jnSSDoT0E874Jr1edbqTUBY25vcQykkx+tPeRURsT259o1/Y
+ HdFQ==
+X-Gm-Message-State: AOJu0Yzx3NAgdj2VgtTXX0tzqqlu9Cw00GdPHSoOz2T2ATb0qrIqQkZK
+ 7qYQA3NQkl9hIo+u+nPc+9shIbtGdmdJ2QAClj3bcOmyW4bO+R27VO1W6alYJ8mOIRRjQ/GCklC
+ z/fWXZwUxtUdrUkxuD5Vabokd3dUHO/EfChQ5wsuhBgIR/2zX
+X-Gm-Gg: ASbGncsdIZ2Bz+HeyDl8831NjA/wu8bOwzZ8QQIIsfFWt9LXQvjYGYz2AE/LertDbJK
+ HrsuWtVZpZFwd3FrgA42DK0BhBp/wxLMlwB0ayuN81794tK0oj8lpLuOMGtJDwqw=
+X-Google-Smtp-Source: AGHT+IFjyIdNwvPG36Lvi2VJOj/b510smma0eJaNLoOo4sfQxle7eudVWyqcZjdSd0JscqruOrJSXwjyqRXf49w3jKA=
+X-Received: by 2002:a05:6902:2b8e:b0:e57:a314:cf2a with SMTP id
+ 3f1490d57ef6-e57b1047a16mr25669177276.16.1737990061479; Mon, 27 Jan 2025
+ 07:01:01 -0800 (PST)
 MIME-Version: 1.0
-References: <20250110160204.74997-1-philmd@linaro.org>
- <CAFEAcA95_AcsszEwqybegfabb-bcZK0qfvF1BjmbsSReTbwvaQ@mail.gmail.com>
- <d2a59e25-51f8-494d-8bd5-a1d5c50e8696@linaro.org>
-In-Reply-To: <d2a59e25-51f8-494d-8bd5-a1d5c50e8696@linaro.org>
+References: <20250124101709.1591761-1-thuth@redhat.com>
+In-Reply-To: <20250124101709.1591761-1-thuth@redhat.com>
 From: Peter Maydell <peter.maydell@linaro.org>
-Date: Mon, 27 Jan 2025 15:00:15 +0000
-X-Gm-Features: AWEUYZnyhbk4Mb2AgBOmnZOXwCLon0PXHfIlv97Sjm6m0W-6twXlOlVxBB9yM_o
-Message-ID: <CAFEAcA_+yQEiXwxu4ZEVkcWGV8s0cXTh9CHKh0zwn=sbGTfB_Q@mail.gmail.com>
-Subject: Re: [PATCH 0/9] hw/arm/stellaris: Fix overwritten IRQs and cleanups
-To: =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>
-Cc: qemu-devel@nongnu.org, qemu-arm@nongnu.org
+Date: Mon, 27 Jan 2025 15:00:50 +0000
+X-Gm-Features: AWEUYZn3aSKleID4eXj9a_tVllj3b5eCTUPBsh8-6cqEBIGegnJd0Jxa2lCy6lM
+Message-ID: <CAFEAcA8R00Y1w2W6NnUTORXvCkMijb59kyXLnyLXPWuG3-a=Pg@mail.gmail.com>
+Subject: Re: [PATCH] tests/functional: Add a test for the arm microbit machine
+To: Thomas Huth <thuth@redhat.com>
+Cc: qemu-devel@nongnu.org, qemu-arm@nongnu.org, Joel Stanley <joel@jms.id.au>
 Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::b2c;
- envelope-from=peter.maydell@linaro.org; helo=mail-yb1-xb2c.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::b2e;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yb1-xb2e.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -94,19 +90,24 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, 27 Jan 2025 at 14:49, Philippe Mathieu-Daud=C3=A9 <philmd@linaro.or=
-g> wrote:
+On Fri, 24 Jan 2025 at 10:17, Thomas Huth <thuth@redhat.com> wrote:
 >
-> On 27/1/25 15:31, Peter Maydell wrote:
-> > On Fri, 10 Jan 2025 at 16:02, Philippe Mathieu-Daud=C3=A9 <philmd@linar=
-o.org> wrote:
+> We don't have any functional tests for this machine yet, thus let's
+> add a test with a MicroPython binary that is available online
+> (thanks to Joel Stanley for providing it, see:
+>  https://www.mail-archive.com/qemu-devel@nongnu.org/msg606064.html ).
 >
-> > Applied 1-6 to target-arm.next; left review comments on the others.
->
-> Thanks, could you s/http/https/ in patch #1 or should I post a patch
-> on top?
+> Signed-off-by: Thomas Huth <thuth@redhat.com>
+> ---
+>  MAINTAINERS                           |  1 +
+>  tests/functional/meson.build          |  1 +
+>  tests/functional/test_arm_microbit.py | 31 +++++++++++++++++++++++++++
+>  3 files changed, 33 insertions(+)
+>  create mode 100755 tests/functional/test_arm_microbit.py
 
-Yeah, I made that fixup when I applied the patches.
+
+
+Applied to target-arm.next, thanks.
 
 -- PMM
 
