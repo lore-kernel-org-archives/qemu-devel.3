@@ -4,68 +4,88 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E00E4C02188
-	for <qemu-devel@archiver.kernel.org>; Mon, 27 Jan 2025 11:54:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 88A12C02188
+	for <qemu-devel@archiver.kernel.org>; Mon, 27 Jan 2025 11:54:57 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tcNgK-0005bB-W2; Mon, 27 Jan 2025 06:53:33 -0500
+	id 1tcNhL-0006Jo-BE; Mon, 27 Jan 2025 06:54:35 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1tcNgF-0005ad-Qy; Mon, 27 Jan 2025 06:53:28 -0500
-Received: from mgamail.intel.com ([198.175.65.15])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1tcNgD-0006fE-Qn; Mon, 27 Jan 2025 06:53:27 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
- d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1737978806; x=1769514806;
- h=date:from:to:cc:subject:message-id:references:
- mime-version:in-reply-to;
- bh=p/Ns84pvmRRQ8Ec+5wKSMGcwxNxmeBZgWM/aBoB6Es4=;
- b=b0CIrOh5I3u9tIh4M4YqcZ6Qb6IecuGgX2n+V7kJdw5n8X4qeaNL5xB4
- jCWmeINk4q5ebij1/M4rU55Rxqpg+e1t8/iuW3q+aOQGanwXy6VXY0pPR
- RkrsplqHjWBQXtZSKeYjUIGafS97kJOPblhvTzmYD+oAg8WDvyFhe3d2P
- PH0k5Bf4EP0kmpJHJMaF8rYqX0EFnACIkEMjYp074jI4TeXujxQ6cPBpM
- uC9JeWuyzVcYE+Pl381jlZ4LTVIybXz0MvbfT3DQgQx6MbmHx5KqCZ45Y
- sgSQ5OL41+O02U2csVU9/3Y8E2Ae2q7NlJGy9tctyMvXH/hWm7ujE8ISu g==;
-X-CSE-ConnectionGUID: ds2gzJ1FTQuKRvlVyaExcA==
-X-CSE-MsgGUID: Rkoi2m9zS8eVG8lFNc0yFQ==
-X-IronPort-AV: E=McAfee;i="6700,10204,11328"; a="42096731"
-X-IronPort-AV: E=Sophos;i="6.13,238,1732608000"; d="scan'208";a="42096731"
-Received: from orviesa003.jf.intel.com ([10.64.159.143])
- by orvoesa107.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 27 Jan 2025 03:53:23 -0800
-X-CSE-ConnectionGUID: xPPbDs0FReGqHyTLavpFZA==
-X-CSE-MsgGUID: 9LWblnFPRDyKmhCH4DlQLQ==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.11,199,1725346800"; d="scan'208";a="113381902"
-Received: from liuzhao-optiplex-7080.sh.intel.com (HELO localhost)
- ([10.239.160.39])
- by orviesa003.jf.intel.com with ESMTP; 27 Jan 2025 03:53:21 -0800
-Date: Mon, 27 Jan 2025 20:12:45 +0800
-From: Zhao Liu <zhao1.liu@intel.com>
-To: Paolo Bonzini <pbonzini@redhat.com>
-Cc: qemu-devel@nongnu.org, qemu-rust@nongnu.org
-Subject: Re: [PATCH 10/10] rust: bindings for MemoryRegionOps
-Message-ID: <Z5d4PTtIRhgZ0tss@intel.com>
-References: <20250117194003.1173231-1-pbonzini@redhat.com>
- <20250117194003.1173231-11-pbonzini@redhat.com>
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tcNhJ-0006Hj-9o
+ for qemu-devel@nongnu.org; Mon, 27 Jan 2025 06:54:33 -0500
+Received: from mail-wm1-x334.google.com ([2a00:1450:4864:20::334])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tcNhG-0006nW-CB
+ for qemu-devel@nongnu.org; Mon, 27 Jan 2025 06:54:33 -0500
+Received: by mail-wm1-x334.google.com with SMTP id
+ 5b1f17b1804b1-438a39e659cso27832435e9.2
+ for <qemu-devel@nongnu.org>; Mon, 27 Jan 2025 03:54:29 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1737978868; x=1738583668; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=OVs1uQBXV3uSV4KyChDtl5CQXcS/tEhsZMOP3GSwHeM=;
+ b=N0LmHQe2Z9uUckrFumMPBpDjQw+mazbdiciDwIuFFIvOpzFl+nBKV1aoaRtPdAmBrp
+ Oj5pygnyBwWQhUeR6Q/SdrEgN+5xNMCKrpHUMNDP+PWMEhNq9tDVo1kMhAUm4EoGoxYE
+ 7U0ss9yIAVyWt8+QM9HnIZsvmhFuUZUuZBQ5pFqFNXyIw0bAMRAvnQMeNX7njtN+c5X/
+ 2qYWzWmMnVr9ElMQ2DqffMcSwmmS/NS44l5EsOdsR0BC+i5OYZM9tdS79Q/YiJUysA3+
+ L0Jbgu96n24K5TtNH4zC2XQJPro22EFj+VjOROn723NuYYKcF8ptu2iMSNVtbeDqFeaG
+ cThg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1737978868; x=1738583668;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=OVs1uQBXV3uSV4KyChDtl5CQXcS/tEhsZMOP3GSwHeM=;
+ b=NmNoDsNJ3G8Bl87WB9/jAcrXkYEyNf3SX3OmlxIR18gCE5R5dhfyr7N4h6/7JN7DGQ
+ ZyS8KKHVvgz/CmUfvvidiAQl7ioGmLXAljcMogANRe6JGOf0jDXKnQ2B/8uvMkCasY+z
+ yVLChNStGP/ePXoghmbYM8FTeFKOx/pKlM4xmNxGeGJmeaFa24p5sQRBG6oO5tbDcW84
+ OO0U9BeoT+kR2dzJfQmsFcM7NOvnMJUkoCQVDPeDczxMZ5xV5eT/RH6yI5uVKa6saZ7h
+ vS8bIpjJ+bch5UOzMEROba1NcGKQ7CUdnlfQq7rsMa0ocgTdlqNJl5FCSrBAJbpfhDWx
+ o24Q==
+X-Gm-Message-State: AOJu0YxX/Rp2B9w4SnroK+MVPlEu7zqhW0FKVNOvhWKOL4qXCTI7JXFF
+ DfHL0JZkh4uHqrwqHQ7BXsNTYW4/xRvCKA5DozLGj1bX1abP52S7OUIOnkM1NU0fNZZHsLWyy/b
+ JxSs=
+X-Gm-Gg: ASbGnct2PICHln/wYt2lWoMjaXqsSup6M2QA/j01D2hrOXNL6EydeeuPUWsNZoVOQR6
+ bhlBqoP4KMNmnS/UOmFvnhSvRsakZXIyb8GWXhL5H4qFgsAel/OJqoB9dv7PEmYhf0ftSIwwgji
+ 0eOLBqY/ab6NZ4aqPVtF1KRpnz1W1ZFLDI5VxPREQEbm182W+n3Bzvi7dgCD9G/LJsFQuZ7fyTQ
+ wUUs7/cmfATcesWv5a1uHt0nJUZjeFKlerc+QhIInoTYfxHOuRR72nWfQlPeqErT7wxIpNmyOtQ
+ 0Ajx6eDPUw9svLTbUJFwL3WsivHZjNZTsXdlTgWPS8VDRuk0Znmf+2M=
+X-Google-Smtp-Source: AGHT+IGxSDj+2vWF9wluF6+VcjoBU0kC6hDQGQxaj9jSGxUYvlc3yjrZKjjs9Vc416KyvqLNh5zcsw==
+X-Received: by 2002:a5d:6c65:0:b0:38a:888c:676f with SMTP id
+ ffacd0b85a97d-38bf565f13bmr40889739f8f.15.1737978868609; 
+ Mon, 27 Jan 2025 03:54:28 -0800 (PST)
+Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
+ [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-38c2a188928sm10793575f8f.45.2025.01.27.03.54.27
+ (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
+ Mon, 27 Jan 2025 03:54:28 -0800 (PST)
+From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+To: qemu-devel@nongnu.org
+Cc: qemu-arm@nongnu.org, qemu-s390x@nongnu.org,
+ Paolo Bonzini <pbonzini@redhat.com>, qemu-riscv@nongnu.org,
+ Peter Maydell <peter.maydell@linaro.org>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Thomas Huth <thuth@redhat.com>, qemu-ppc@nongnu.org,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Subject: [PATCH 00/10] disas: Have CPUClass::disas_set_info() callback set the
+ endianness
+Date: Mon, 27 Jan 2025 12:54:16 +0100
+Message-ID: <20250127115426.51355-1-philmd@linaro.org>
+X-Mailer: git-send-email 2.47.1
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20250117194003.1173231-11-pbonzini@redhat.com>
-Received-SPF: pass client-ip=198.175.65.15; envelope-from=zhao1.liu@intel.com;
- helo=mgamail.intel.com
-X-Spam_score_int: -56
-X-Spam_score: -5.7
-X-Spam_bar: -----
-X-Spam_report: (-5.7 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.299,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::334;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x334.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -81,110 +101,49 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, Jan 17, 2025 at 08:40:03PM +0100, Paolo Bonzini wrote:
-> Date: Fri, 17 Jan 2025 20:40:03 +0100
-> From: Paolo Bonzini <pbonzini@redhat.com>
-> Subject: [PATCH 10/10] rust: bindings for MemoryRegionOps
-> X-Mailer: git-send-email 2.47.1
-> 
-> Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
-> ---
->  rust/hw/char/pl011/src/device.rs     |  43 +++---
->  rust/hw/char/pl011/src/lib.rs        |   1 -
->  rust/hw/char/pl011/src/memory_ops.rs |  36 -----
->  rust/qemu-api/meson.build            |   1 +
->  rust/qemu-api/src/lib.rs             |   1 +
->  rust/qemu-api/src/memory.rs          | 191 +++++++++++++++++++++++++++
->  rust/qemu-api/src/sysbus.rs          |   7 +-
->  rust/qemu-api/src/zeroable.rs        |  12 ++
->  8 files changed, 234 insertions(+), 58 deletions(-)
->  delete mode 100644 rust/hw/char/pl011/src/memory_ops.rs
->  create mode 100644 rust/qemu-api/src/memory.rs
- 
-...
+Targets are aware of their endianness. No need for a global
+target_words_bigendian() call in disas/ where we call the
+CPUClass::disas_set_info() handler which already update
+disassemble_info fields. Specify the target endianness in
+each CPUClass handler.
 
-> @@ -490,20 +490,24 @@ impl PL011State {
->      /// location/instance. All its fields are expected to hold unitialized
->      /// values with the sole exception of `parent_obj`.
->      unsafe fn init(&mut self) {
-> +        static PL011_OPS: MemoryRegionOps<PL011State> = MemoryRegionOpsBuilder::<PL011State>::new()
-> +            .read(&PL011State::read)
-> +            .write(&PL011State::write)
-> +            .native_endian()
-> +            .impl_sizes(4, 4)
-> +            .build();
-> +
+Philippe Mathieu-Daudé (10):
+  target: Set disassemble_info::endian value for little-endian targets
+  target: Set disassemble_info::endian value for big-endian targets
+  target/arm: Set disassemble_info::endian value in disas_set_info()
+  target/microblaze: Set disassemble_info::endian value in
+    disas_set_info
+  target/mips: Set disassemble_info::endian value in disas_set_info()
+  target/ppc: Set disassemble_info::endian value in disas_set_info()
+  target/riscv: Set disassemble_info::endian value in disas_set_info()
+  target/sh4: Set disassemble_info::endian value in disas_set_info()
+  target/xtensa: Set disassemble_info::endian value in disas_set_info()
+  disas: Remove target_words_bigendian() call in
+    initialize_debug_target()
 
-Nice design. Everything was done smoothly in one go.
+ disas/disas-common.c    | 13 ++++---------
+ target/alpha/cpu.c      |  1 +
+ target/arm/cpu.c        |  2 ++
+ target/avr/cpu.c        |  1 +
+ target/hexagon/cpu.c    |  1 +
+ target/hppa/cpu.c       |  1 +
+ target/i386/cpu.c       |  1 +
+ target/loongarch/cpu.c  |  1 +
+ target/m68k/cpu.c       |  1 +
+ target/microblaze/cpu.c |  5 +++++
+ target/mips/cpu.c       |  3 +++
+ target/openrisc/cpu.c   |  1 +
+ target/ppc/cpu_init.c   |  2 ++
+ target/riscv/cpu.c      |  9 +++++++++
+ target/rx/cpu.c         |  1 +
+ target/s390x/cpu.c      |  1 +
+ target/sh4/cpu.c        |  5 +++++
+ target/sparc/cpu.c      |  1 +
+ target/tricore/cpu.c    |  6 ++++++
+ target/xtensa/cpu.c     |  5 +++++
+ 20 files changed, 52 insertions(+), 9 deletions(-)
 
-> +pub struct MemoryRegionOps<T>(
-> +    bindings::MemoryRegionOps,
-> +    // Note: quite often you'll see PhantomData<fn(&T)> mentioned when discussing
-> +    // covariance and contravariance; you don't need any of those to understand
-> +    // this usage of PhantomData.  Quite simply, MemoryRegionOps<T> *logically*
-> +    // holds callbacks that take an argument of type &T, except the type is erased
-> +    // before the callback is stored in the bindings::MemoryRegionOps field.
-> +    // The argument of PhantomData is a function pointer in order to represent
-> +    // that relationship; while that will also provide desirable and safe variance
-> +    // for T, variance is not the point but just a consequence.
-> +    PhantomData<fn(&T)>,
-> +);
-
-Wow, it can be wrapped like this!
-
-> +}
-> +
-> +/// A safe wrapper around [`bindings::MemoryRegion`].  Compared to the
-> +/// underlying C struct it is marked as pinned because the QOM tree
-> +/// contains a pointer to it.
-> +pub struct MemoryRegion {
-> +    inner: bindings::MemoryRegion,
-> +    _pin: PhantomPinned,
-> +}
-> +
-> +impl MemoryRegion {
-> +    // inline to ensure that it is not included in tests, which only
-> +    // link to hwcore and qom.  FIXME: inlining is actually the opposite
-> +    // of what we want, since this is the type-erased version of the
-> +    // init_io function below.  Look into splitting the qemu_api crate.
-
-Ah, I didn't understand the issue described in this comment. Why would
-inlining affect the linking of tests?
-
-> +    #[inline(always)]
-> +    unsafe fn do_init_io(
-> +        slot: *mut bindings::MemoryRegion,
-> +        owner: *mut Object,
-> +        ops: &'static bindings::MemoryRegionOps,
-> +        name: &'static str,
-> +        size: u64,
-> +    ) {
-> +        unsafe {
-> +            let cstr = CString::new(name).unwrap();
-> +            memory_region_init_io(
-> +                slot,
-> +                owner.cast::<Object>(),
-> +                ops,
-> +                owner.cast::<c_void>(),
-> +                cstr.as_ptr(),
-> +                size,
-> +            );
-> +        }
-> +    }
-> +
-> +    pub fn init_io<T: IsA<Object>>(
-> +        &mut self,
-> +        owner: *mut T,
-> +        ops: &'static MemoryRegionOps<T>,
-> +        name: &'static str,
-
-What about &'static CStr?
-
-Then pl011 could pass `c_str!("pl011")` or `Self::TYPE_NAMSelf::TYPE_NAME`.
-
-Otherwise,
-
-Reviewed-by: Zhao Liu <zhao1.liu@intel.com>
-
+-- 
+2.47.1
 
 
