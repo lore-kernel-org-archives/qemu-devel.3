@@ -4,38 +4,42 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 809B7C0218D
-	for <qemu-devel@archiver.kernel.org>; Tue, 28 Jan 2025 08:07:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 495E7C0218D
+	for <qemu-devel@archiver.kernel.org>; Tue, 28 Jan 2025 08:07:44 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tcgYF-0005uc-JR; Tue, 28 Jan 2025 03:02:29 -0500
+	id 1tcgXh-0002lM-D5; Tue, 28 Jan 2025 03:01:53 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1tcgY1-0004dR-2g; Tue, 28 Jan 2025 03:02:13 -0500
+ id 1tcgXW-00023W-FM; Tue, 28 Jan 2025 03:01:42 -0500
 Received: from isrv.corpit.ru ([86.62.121.231])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1tcgXz-00023y-CJ; Tue, 28 Jan 2025 03:02:12 -0500
+ id 1tcgXU-0001re-Mb; Tue, 28 Jan 2025 03:01:42 -0500
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id B8941E1B56;
+ by isrv.corpit.ru (Postfix) with ESMTP id A07AFE1B50;
  Tue, 28 Jan 2025 10:57:08 +0300 (MSK)
 Received: from localhost.tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id 345A01A6309;
+ by tsrv.corpit.ru (Postfix) with ESMTP id 1C3E01A6303;
  Tue, 28 Jan 2025 10:57:34 +0300 (MSK)
 Received: by localhost.tls.msk.ru (Postfix, from userid 1000)
- id 01AA1520A3; Tue, 28 Jan 2025 10:57:34 +0300 (MSK)
+ id EBE9A52097; Tue, 28 Jan 2025 10:57:33 +0300 (MSK)
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Christian Schoenebeck <qemu_oss@crudebyte.com>,
- Greg Kurz <groug@kaod.org>, Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-9.1.3 15/58] tests/9p: add 'use-after-unlink' test
-Date: Mon, 27 Jan 2025 23:25:01 +0300
-Message-Id: <20250127202547.3723716-15-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org, Peter Xu <peterx@redhat.com>,
+ Fabiano Rosas <farosas@suse.de>, Peter Krempa <pkrempa@redhat.com>,
+ =?UTF-8?q?Daniel=20P=20=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
+ Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-9.1.3 09/58] migration: Allow pipes to keep working for fd
+ migrations
+Date: Mon, 27 Jan 2025 23:24:55 +0300
+Message-Id: <20250127202547.3723716-9-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <qemu-stable-9.1.3-20250127232536@cover.tls.msk.ru>
 References: <qemu-stable-9.1.3-20250127232536@cover.tls.msk.ru>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 From: Michael Tokarev <mjt@tls.msk.ru>
 Received-SPF: pass client-ip=86.62.121.231; envelope-from=mjt@tls.msk.ru;
@@ -62,80 +66,101 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-After removing a file from the file system, we should still be able to
-work with the file if we already had it open before removal.
+Libvirt may still use pipes for old file migrations in fd: URI form,
+especially when loading old images dumped from Libvirt's compression
+algorithms.
 
-As a first step we verify that it is possible to write to an unlinked
-file, as this is what already works. This test is extended later on
-after having fixed other use cases after unlink that are not working
-yet.
+In that case, Libvirt needs to compress / uncompress the images on its own
+over the migration binary stream, and pipes are passed over to QEMU for
+outgoing / incoming migrations in "fd:" URIs.
 
-Signed-off-by: Christian Schoenebeck <qemu_oss@crudebyte.com>
-Reviewed-by: Greg Kurz <groug@kaod.org>
-Message-Id: <3d6449d4df25bcdd3e807eff169f46f1385e5257.1732465720.git.qemu_oss@crudebyte.com>
-(cherry picked from commit 462db8fb1d405391b83a0d3099fdb9bfb85c2d92)
+For future such use case, it should be suggested to use mapped-ram when
+saving such VM image.  However there can still be old images that was
+compressed in such way, so libvirt needs to be able to load those images,
+uncompress them and use the same pipe mechanism to pass that over to QEMU.
+
+It means, even if new file migrations can be gradually moved over to
+mapped-ram (after Libvirt start supporting it), Libvirt still needs the
+uncompressor for the old images to be able to load like before.
+
+Meanwhile since Libvirt currently exposes the compression capability to
+guest images, it may needs its own lifecycle management to move that over
+to mapped-ram, maybe can be done after mapped-ram saved the image, however
+Dan and PeterK raised concern on temporary double disk space consumption.
+I suppose for now the easiest is to enable pipes for both sides of "fd:"
+migrations, until all things figured out from Libvirt side on how to move
+on.
+
+And for "channels" QMP interface support on "migrate" / "migrate-incoming"
+commands, we'll also need to move away from pipe.  But let's leave that for
+later too.
+
+So far, still allow pipes to happen like before on both save/load sides,
+just like we would allow sockets to pass.
+
+Cc: qemu-stable <qemu-stable@nongnu.org>
+Cc: Fabiano Rosas <farosas@suse.de>
+Cc: Peter Krempa <pkrempa@redhat.com>
+Cc: Daniel P. Berrangé <berrange@redhat.com>
+Fixes: c55deb860c ("migration: Deprecate fd: for file migration")
+Reviewed-by: Fabiano Rosas <farosas@suse.de>
+Link: https://lore.kernel.org/r/20241120160132.3659735-1-peterx@redhat.com
+Signed-off-by: Peter Xu <peterx@redhat.com>
+(cherry picked from commit 87ae45e602e2943d58509e470e3a1d4ba084ab2f)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
-(Mjt: pick it to stable so the next commit in this place applies too)
 
-diff --git a/tests/qtest/virtio-9p-test.c b/tests/qtest/virtio-9p-test.c
-index 3c8cd235cf..f6d7400a87 100644
---- a/tests/qtest/virtio-9p-test.c
-+++ b/tests/qtest/virtio-9p-test.c
-@@ -693,6 +693,45 @@ static void fs_unlinkat_hardlink(void *obj, void *data,
-     g_assert(stat(real_file, &st_real) == 0);
- }
+diff --git a/migration/fd.c b/migration/fd.c
+index aab5189eac..9bf9be6acb 100644
+--- a/migration/fd.c
++++ b/migration/fd.c
+@@ -25,6 +25,29 @@
+ #include "io/channel-util.h"
+ #include "trace.h"
  
-+static void fs_use_after_unlink(void *obj, void *data,
-+                                QGuestAllocator *t_alloc)
++static bool fd_is_pipe(int fd)
 +{
-+    QVirtio9P *v9p = obj;
-+    v9fs_set_allocator(t_alloc);
-+    static const uint32_t write_count = P9_MAX_SIZE / 2;
-+    g_autofree char *real_file = virtio_9p_test_path("09/doa_file");
-+    g_autofree char *buf = g_malloc0(write_count);
-+    struct stat st_file;
-+    uint32_t fid_file;
-+    uint32_t count;
++    struct stat statbuf;
 +
-+    tattach({ .client = v9p });
++    if (fstat(fd, &statbuf) == -1) {
++        return false;
++    }
 +
-+    /* create a file "09/doa_file" and make sure it exists and is regular */
-+    tmkdir({ .client = v9p, .atPath = "/", .name = "09" });
-+    tlcreate({ .client = v9p, .atPath = "09", .name = "doa_file" });
-+    g_assert(stat(real_file, &st_file) == 0);
-+    g_assert((st_file.st_mode & S_IFMT) == S_IFREG);
-+
-+    /* request a FID for that regular file that we can work with next */
-+    fid_file = twalk({
-+        .client = v9p, .fid = 0, .path = "09/doa_file"
-+    }).newfid;
-+    g_assert(fid_file != 0);
-+
-+    /* now first open the file in write mode before ... */
-+    tlopen({ .client = v9p, .fid = fid_file, .flags = O_WRONLY });
-+    /* ... removing the file from file system */
-+    tunlinkat({ .client = v9p, .atPath = "09", .name = "doa_file" });
-+
-+    /* file is removed, but we still have it open, so this should succeed */
-+    count = twrite({
-+        .client = v9p, .fid = fid_file, .offset = 0, .count = write_count,
-+        .data = buf
-+    }).count;
-+    g_assert_cmpint(count, ==, write_count);
++    return S_ISFIFO(statbuf.st_mode);
 +}
 +
- static void cleanup_9p_local_driver(void *data)
- {
-     /* remove previously created test dir when test is completed */
-@@ -758,6 +797,8 @@ static void register_virtio_9p_test(void)
-     qos_add_test("local/hardlink_file", "virtio-9p", fs_hardlink_file, &opts);
-     qos_add_test("local/unlinkat_hardlink", "virtio-9p", fs_unlinkat_hardlink,
-                  &opts);
-+    qos_add_test("local/use_after_unlink", "virtio-9p", fs_use_after_unlink,
-+                 &opts);
- }
++static bool migration_fd_valid(int fd)
++{
++    if (fd_is_socket(fd)) {
++        return true;
++    }
++
++    if (fd_is_pipe(fd)) {
++        return true;
++    }
++
++    return false;
++}
  
- libqos_init(register_virtio_9p_test);
+ void fd_start_outgoing_migration(MigrationState *s, const char *fdname, Error **errp)
+ {
+@@ -34,7 +57,7 @@ void fd_start_outgoing_migration(MigrationState *s, const char *fdname, Error **
+         return;
+     }
+ 
+-    if (!fd_is_socket(fd)) {
++    if (!migration_fd_valid(fd)) {
+         warn_report("fd: migration to a file is deprecated."
+                     " Use file: instead.");
+     }
+@@ -68,7 +91,7 @@ void fd_start_incoming_migration(const char *fdname, Error **errp)
+         return;
+     }
+ 
+-    if (!fd_is_socket(fd)) {
++    if (!migration_fd_valid(fd)) {
+         warn_report("fd: migration to a file is deprecated."
+                     " Use file: instead.");
+     }
 -- 
 2.39.5
 
