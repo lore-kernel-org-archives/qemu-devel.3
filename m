@@ -4,37 +4,38 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E38CBC0218D
-	for <qemu-devel@archiver.kernel.org>; Tue, 28 Jan 2025 08:18:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1D4F5C02194
+	for <qemu-devel@archiver.kernel.org>; Tue, 28 Jan 2025 08:18:09 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tcgd1-0007QT-KD; Tue, 28 Jan 2025 03:07:23 -0500
+	id 1tcgU5-0006X5-3P; Tue, 28 Jan 2025 02:58:09 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1tcgat-0002Kn-Ns; Tue, 28 Jan 2025 03:05:15 -0500
+ id 1tcgTc-0005a7-TL; Tue, 28 Jan 2025 02:57:42 -0500
 Received: from isrv.corpit.ru ([86.62.121.231])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1tcgas-00032L-2f; Tue, 28 Jan 2025 03:05:11 -0500
+ id 1tcgTY-0000kD-1G; Tue, 28 Jan 2025 02:57:38 -0500
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 35973E1B72;
- Tue, 28 Jan 2025 10:57:09 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id 99165E1AF1;
+ Tue, 28 Jan 2025 10:54:25 +0300 (MSK)
 Received: from localhost.tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id A56801A6325;
- Tue, 28 Jan 2025 10:57:34 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id 143AA1A62D8;
+ Tue, 28 Jan 2025 10:54:51 +0300 (MSK)
 Received: by localhost.tls.msk.ru (Postfix, from userid 1000)
- id 30B34520DB; Tue, 28 Jan 2025 10:57:34 +0300 (MSK)
+ id DD79752047; Tue, 28 Jan 2025 10:54:50 +0300 (MSK)
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Fabiano Rosas <farosas@suse.de>,
- Peter Xu <peterx@redhat.com>, Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-9.1.3 43/58] migration: Fix parsing of s390 stream
-Date: Mon, 27 Jan 2025 23:25:29 +0300
-Message-Id: <20250127202547.3723716-43-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org, Klaus Jensen <k.jensen@samsung.com>,
+ Jesper Wendel Devantier <foss@defmacro.it>,
+ Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-8.2.9 16/45] hw/nvme: fix msix_uninit with exclusive bar
+Date: Mon, 27 Jan 2025 23:25:57 +0300
+Message-Id: <20250127202630.3724367-16-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.39.5
-In-Reply-To: <qemu-stable-9.1.3-20250127232536@cover.tls.msk.ru>
-References: <qemu-stable-9.1.3-20250127232536@cover.tls.msk.ru>
+In-Reply-To: <qemu-stable-8.2.9-20250127232621@cover.tls.msk.ru>
+References: <qemu-stable-8.2.9-20250127232621@cover.tls.msk.ru>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 From: Michael Tokarev <mjt@tls.msk.ru>
@@ -62,63 +63,36 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The parsing for the S390StorageAttributes section is currently leaving
-an unconsumed token that is later interpreted by the generic code as
-QEMU_VM_EOF, cutting the parsing short.
+Commit fa905f65c554 introduced a machine compatibility parameter to
+enable an exclusive bar for msix. It failed to account for this when
+cleaning up. Make sure that if an exclusive bar is enabled, we use the
+proper cleanup routine.
 
-The migration will issue a STATTR_FLAG_DONE between iterations, which
-the script consumes correctly, but there's a final STATTR_FLAG_EOS at
-.save_complete that the script is ignoring. Since the EOS flag is a
-u64 0x1ULL and the stream is big endian, on little endian hosts a byte
-read from it will be 0x0, the same as QEMU_VM_EOF.
-
-Fixes: 81c2c9dd5d ("tests/qtest/migration-test: Fix analyze-migration.py for s390x")
-Reviewed-by: Peter Xu <peterx@redhat.com>
-Message-Id: <20250109185249.23952-4-farosas@suse.de>
-Signed-off-by: Fabiano Rosas <farosas@suse.de>
-(cherry picked from commit 69d1f784569fdb950f2923c3b6d00d7c1b71acc1)
+Cc: qemu-stable@nongnu.org
+Fixes: fa905f65c554 ("hw/nvme: add machine compatibility parameter to enable msix exclusive bar")
+Reviewed-by: Jesper Wendel Devantier <foss@defmacro.it>
+Signed-off-by: Klaus Jensen <k.jensen@samsung.com>
+(cherry picked from commit 9162f101257639cc4c7e20f72f77268b1256dd79)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/scripts/analyze-migration.py b/scripts/analyze-migration.py
-index f2457b1dde..fcda11f31d 100755
---- a/scripts/analyze-migration.py
-+++ b/scripts/analyze-migration.py
-@@ -65,6 +65,9 @@ def readvar(self, size = None):
-     def tell(self):
-         return self.file.tell()
+diff --git a/hw/nvme/ctrl.c b/hw/nvme/ctrl.c
+index 359313dbcb..94a37a3aef 100644
+--- a/hw/nvme/ctrl.c
++++ b/hw/nvme/ctrl.c
+@@ -8411,7 +8411,12 @@ static void nvme_exit(PCIDevice *pci_dev)
+         pcie_sriov_pf_exit(pci_dev);
+     }
  
-+    def seek(self, a, b):
-+        return self.file.seek(a, b)
+-    msix_uninit(pci_dev, &n->bar0, &n->bar0);
++    if (n->params.msix_exclusive_bar && !pci_is_vf(pci_dev)) {
++        msix_uninit_exclusive_bar(pci_dev);
++    } else {
++        msix_uninit(pci_dev, &n->bar0, &n->bar0);
++    }
 +
-     # The VMSD description is at the end of the file, after EOF. Look for
-     # the last NULL byte, then for the beginning brace of JSON.
-     def read_migration_debug_json(self):
-@@ -272,11 +275,24 @@ def __init__(self, file, version_id, device, section_key):
-         self.section_key = section_key
+     memory_region_del_subregion(&n->bar0, &n->iomem);
+ }
  
-     def read(self):
-+        pos = 0
-         while True:
-             addr_flags = self.file.read64()
-             flags = addr_flags & 0xfff
--            if (flags & (self.STATTR_FLAG_DONE | self.STATTR_FLAG_EOS)):
-+
-+            if flags & self.STATTR_FLAG_DONE:
-+                pos = self.file.tell()
-+                continue
-+            elif flags & self.STATTR_FLAG_EOS:
-                 return
-+            else:
-+                # No EOS came after DONE, that's OK, but rewind the
-+                # stream because this is not our data.
-+                if pos:
-+                    self.file.seek(pos, os.SEEK_SET)
-+                    return
-+                raise Exception("Unknown flags %x", flags)
-+
-             if (flags & self.STATTR_FLAG_ERROR):
-                 raise Exception("Error in migration stream")
-             count = self.file.read64()
 -- 
 2.39.5
 
