@@ -4,37 +4,37 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8AB32C02190
-	for <qemu-devel@archiver.kernel.org>; Tue, 28 Jan 2025 07:54:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A5DBBC02190
+	for <qemu-devel@archiver.kernel.org>; Tue, 28 Jan 2025 07:55:04 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tcgPe-0000vu-K7; Tue, 28 Jan 2025 02:53:34 -0500
+	id 1tcgPj-0000z4-Do; Tue, 28 Jan 2025 02:53:39 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1tcgPc-0000v9-44; Tue, 28 Jan 2025 02:53:32 -0500
+ id 1tcgPi-0000yZ-5F; Tue, 28 Jan 2025 02:53:38 -0500
 Received: from isrv.corpit.ru ([86.62.121.231])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1tcgPZ-0007ms-WE; Tue, 28 Jan 2025 02:53:31 -0500
+ id 1tcgPg-0007of-GW; Tue, 28 Jan 2025 02:53:37 -0500
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id A712CE1ABD;
+ by isrv.corpit.ru (Postfix) with ESMTP id B6369E1AC1;
  Tue, 28 Jan 2025 10:52:59 +0300 (MSK)
 Received: from localhost.tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id 21C321A62AC;
+ by tsrv.corpit.ru (Postfix) with ESMTP id 30FCD1A62B0;
  Tue, 28 Jan 2025 10:53:25 +0300 (MSK)
 Received: by localhost.tls.msk.ru (Postfix, from userid 1000)
- id 1439E51FEF; Tue, 28 Jan 2025 10:53:25 +0300 (MSK)
+ id 1ADA351FF7; Tue, 28 Jan 2025 10:53:25 +0300 (MSK)
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org,
+Cc: qemu-stable@nongnu.org, Guenter Roeck <linux@roeck-us.net>,
+ Fabiano Rosas <farosas@suse.de>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Richard Henderson <richard.henderson@linaro.org>,
- Thomas Huth <thuth@redhat.com>, Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-7.2.16 04/31] cirrus-ci: Remove MSYS2 jobs duplicated with
- gitlab-ci
-Date: Tue, 28 Jan 2025 00:40:56 +0300
-Message-Id: <20250127214124.3730126-4-mjt@tls.msk.ru>
+ Fiona Ebner <f.ebner@proxmox.com>, Paolo Bonzini <pbonzini@redhat.com>,
+ Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-7.2.16 08/31] scsi: megasas: Internal cdbs have 16-byte length
+Date: Tue, 28 Jan 2025 00:41:00 +0300
+Message-Id: <20250127214124.3730126-8-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <qemu-stable-7.2.16-20250128004119@cover.tls.msk.ru>
 References: <qemu-stable-7.2.16-20250128004119@cover.tls.msk.ru>
@@ -66,162 +66,69 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-- Various developers are reluctant to git Cirrus-CI the permissions
-  requested to access their GitHub account.
+Host drivers do not necessarily set cdb_len in megasas io commands.
+With commits 6d1511cea0 ("scsi: Reject commands if the CDB length
+exceeds buf_len") and fe9d8927e2 ("scsi: Add buf_len parameter to
+scsi_req_new()"), this results in failures to boot Linux from affected
+SCSI drives because cdb_len is set to 0 by the host driver.
+Set the cdb length to its actual size to solve the problem.
 
-- When we use the cirrus-run script to trigger Cirrus-CI job from
-  GitLab-CI, the GitLab-CI job is restricted to a 1h timeout
-  (often not enough).
-
-- Although Cirrus-CI VMs are more powerful than GitLab-CI ones,
-  its free plan is limited in 2 concurrent jobs.
-
-- The GitLab-CI MSYS2 jobs are a 1:1 mapping with the Cirrus-CI ones
-  (modulo the environment caching).
-
-Reduce the maintenance burden by removing the Cirrus-CI config file,
-keeping the GitLab-CI jobs.
-
-Update Yonggang Luo's maintenance file list to the new file, which
-use the same environment shell.
-
-Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-Message-Id: <20230322135721.61138-3-philmd@linaro.org>
-Signed-off-by: Thomas Huth <thuth@redhat.com>
-(cherry picked from commit da80f11efeea451eaa00e347f722d867ed9ac5be)
+Signed-off-by: Guenter Roeck <linux@roeck-us.net>
+Reviewed-by: Fabiano Rosas <farosas@suse.de>
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Tested-by: Fiona Ebner <f.ebner@proxmox.com>
+Link: https://lore.kernel.org/r/20230228171129.4094709-1-linux@roeck-us.net
+Cc: qemu-stable@nongnu.org
+Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
+(cherry picked from commit 3abb67323aeecf06a27191076ab50424ec21f334)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
-(Mjt: ignore previous changes in .cirrus.yml since it is being removed anyway)
 
-diff --git a/.cirrus.yml b/.cirrus.yml
-deleted file mode 100644
-index 4895987da4..0000000000
---- a/.cirrus.yml
-+++ /dev/null
-@@ -1,109 +0,0 @@
--env:
--  CIRRUS_CLONE_DEPTH: 1
--
--windows_msys2_task:
--  timeout_in: 90m
--  windows_container:
--    image: cirrusci/windowsservercore:2019
--    os_version: 2019
--    cpu: 8
--    memory: 8G
--  env:
--    CIRRUS_SHELL: powershell
--    MSYS: winsymlinks:native
--    MSYSTEM: MINGW64
--    MSYS2_URL: https://github.com/msys2/msys2-installer/releases/download/2022-06-03/msys2-base-x86_64-20220603.sfx.exe
--    MSYS2_FINGERPRINT: 0
--    MSYS2_PACKAGES: "
--      diffutils git grep make pkg-config sed
--      mingw-w64-x86_64-python
--      mingw-w64-x86_64-python-sphinx
--      mingw-w64-x86_64-toolchain
--      mingw-w64-x86_64-SDL2
--      mingw-w64-x86_64-SDL2_image
--      mingw-w64-x86_64-gtk3
--      mingw-w64-x86_64-glib2
--      mingw-w64-x86_64-ninja
--      mingw-w64-x86_64-jemalloc
--      mingw-w64-x86_64-lzo2
--      mingw-w64-x86_64-zstd
--      mingw-w64-x86_64-libjpeg-turbo
--      mingw-w64-x86_64-pixman
--      mingw-w64-x86_64-libgcrypt
--      mingw-w64-x86_64-libpng
--      mingw-w64-x86_64-libssh
--      mingw-w64-x86_64-snappy
--      mingw-w64-x86_64-libusb
--      mingw-w64-x86_64-usbredir
--      mingw-w64-x86_64-libtasn1
--      mingw-w64-x86_64-nettle
--      mingw-w64-x86_64-cyrus-sasl
--      mingw-w64-x86_64-curl
--      mingw-w64-x86_64-gnutls
--      mingw-w64-x86_64-libnfs
--    "
--    CHERE_INVOKING: 1
--  msys2_cache:
--    folder: C:\tools\archive
--    reupload_on_changes: false
--    # These env variables are used to generate fingerprint to trigger the cache procedure
--    # If wanna to force re-populate msys2, increase MSYS2_FINGERPRINT
--    fingerprint_script:
--      - |
--        echo $env:CIRRUS_TASK_NAME
--        echo $env:MSYS2_URL
--        echo $env:MSYS2_FINGERPRINT
--        echo $env:MSYS2_PACKAGES
--    populate_script:
--      - |
--        md -Force C:\tools\archive\pkg
--        $start_time = Get-Date
--        bitsadmin /transfer msys_download /dynamic /download /priority FOREGROUND $env:MSYS2_URL C:\tools\archive\base.exe
--        Write-Output "Download time taken: $((Get-Date).Subtract($start_time))"
--        cd C:\tools
--        C:\tools\archive\base.exe -y
--        del -Force C:\tools\archive\base.exe
--        Write-Output "Base install time taken: $((Get-Date).Subtract($start_time))"
--        $start_time = Get-Date
--
--        ((Get-Content -path C:\tools\msys64\etc\\post-install\\07-pacman-key.post -Raw) -replace '--refresh-keys', '--version') | Set-Content -Path C:\tools\msys64\etc\\post-install\\07-pacman-key.post
--        C:\tools\msys64\usr\bin\bash.exe -lc "sed -i 's/^CheckSpace/#CheckSpace/g' /etc/pacman.conf"
--        C:\tools\msys64\usr\bin\bash.exe -lc "export"
--        C:\tools\msys64\usr\bin\pacman.exe --noconfirm -Sy
--        echo Y | C:\tools\msys64\usr\bin\pacman.exe --noconfirm -Suu --overwrite=*
--        taskkill /F /FI "MODULES eq msys-2.0.dll"
--        tasklist
--        C:\tools\msys64\usr\bin\bash.exe -lc "mv -f /etc/pacman.conf.pacnew /etc/pacman.conf || true"
--        C:\tools\msys64\usr\bin\bash.exe -lc "pacman --noconfirm -Syuu --overwrite=*"
--        Write-Output "Core install time taken: $((Get-Date).Subtract($start_time))"
--        $start_time = Get-Date
--
--        C:\tools\msys64\usr\bin\bash.exe -lc "pacman --noconfirm -S --needed $env:MSYS2_PACKAGES"
--        Write-Output "Package install time taken: $((Get-Date).Subtract($start_time))"
--        $start_time = Get-Date
--
--        del -Force -ErrorAction SilentlyContinue C:\tools\msys64\etc\mtab
--        del -Force -ErrorAction SilentlyContinue C:\tools\msys64\dev\fd
--        del -Force -ErrorAction SilentlyContinue C:\tools\msys64\dev\stderr
--        del -Force -ErrorAction SilentlyContinue C:\tools\msys64\dev\stdin
--        del -Force -ErrorAction SilentlyContinue C:\tools\msys64\dev\stdout
--        del -Force -Recurse -ErrorAction SilentlyContinue C:\tools\msys64\var\cache\pacman\pkg
--        tar cf C:\tools\archive\msys64.tar -C C:\tools\ msys64
--
--        Write-Output "Package archive time taken: $((Get-Date).Subtract($start_time))"
--        del -Force -Recurse -ErrorAction SilentlyContinue c:\tools\msys64 
--  install_script:
--    - |
--      $start_time = Get-Date
--      cd C:\tools
--      ls C:\tools\archive\msys64.tar
--      tar xf C:\tools\archive\msys64.tar
--      Write-Output "Extract msys2 time taken: $((Get-Date).Subtract($start_time))"
--  script:
--    - C:\tools\msys64\usr\bin\bash.exe -lc "mkdir build"
--    - C:\tools\msys64\usr\bin\bash.exe -lc "cd build && ../configure --python=python3"
--    - C:\tools\msys64\usr\bin\bash.exe -lc "cd build && make -j8"
--    - exit $LastExitCode
--  test_script:
--    - C:\tools\msys64\usr\bin\bash.exe -lc "cd build && make V=1 check"
--    - exit $LastExitCode
-diff --git a/MAINTAINERS b/MAINTAINERS
-index e688db1f55..83c4eacc66 100644
---- a/MAINTAINERS
-+++ b/MAINTAINERS
-@@ -3731,8 +3731,7 @@ W: https://cirrus-ci.com/github/qemu/qemu
- Windows Hosted Continuous Integration
- M: Yonggang Luo <luoyonggang@gmail.com>
- S: Maintained
--F: .cirrus.yml
--W: https://cirrus-ci.com/github/qemu/qemu
-+F: .gitlab-ci.d/windows.yml
+diff --git a/hw/scsi/megasas.c b/hw/scsi/megasas.c
+index 9cbbb16121..d624866bb6 100644
+--- a/hw/scsi/megasas.c
++++ b/hw/scsi/megasas.c
+@@ -1780,7 +1780,7 @@ static int megasas_handle_io(MegasasState *s, MegasasCmd *cmd, int frame_cmd)
+     uint8_t cdb[16];
+     int len;
+     struct SCSIDevice *sdev = NULL;
+-    int target_id, lun_id, cdb_len;
++    int target_id, lun_id;
  
- Guest Test Compilation Support
- M: Alex Bennée <alex.bennee@linaro.org>
+     lba_count = le32_to_cpu(cmd->frame->io.header.data_len);
+     lba_start_lo = le32_to_cpu(cmd->frame->io.lba_lo);
+@@ -1789,7 +1789,6 @@ static int megasas_handle_io(MegasasState *s, MegasasCmd *cmd, int frame_cmd)
+ 
+     target_id = cmd->frame->header.target_id;
+     lun_id = cmd->frame->header.lun_id;
+-    cdb_len = cmd->frame->header.cdb_len;
+ 
+     if (target_id < MFI_MAX_LD && lun_id == 0) {
+         sdev = scsi_device_find(&s->bus, 0, target_id, lun_id);
+@@ -1804,15 +1803,6 @@ static int megasas_handle_io(MegasasState *s, MegasasCmd *cmd, int frame_cmd)
+         return MFI_STAT_DEVICE_NOT_FOUND;
+     }
+ 
+-    if (cdb_len > 16) {
+-        trace_megasas_scsi_invalid_cdb_len(
+-            mfi_frame_desc(frame_cmd), 1, target_id, lun_id, cdb_len);
+-        megasas_write_sense(cmd, SENSE_CODE(INVALID_OPCODE));
+-        cmd->frame->header.scsi_status = CHECK_CONDITION;
+-        s->event_count++;
+-        return MFI_STAT_SCSI_DONE_WITH_ERROR;
+-    }
+-
+     cmd->iov_size = lba_count * sdev->blocksize;
+     if (megasas_map_sgl(s, cmd, &cmd->frame->io.sgl)) {
+         megasas_write_sense(cmd, SENSE_CODE(TARGET_FAILURE));
+@@ -1823,7 +1813,7 @@ static int megasas_handle_io(MegasasState *s, MegasasCmd *cmd, int frame_cmd)
+ 
+     megasas_encode_lba(cdb, lba_start, lba_count, is_write);
+     cmd->req = scsi_req_new(sdev, cmd->index,
+-                            lun_id, cdb, cdb_len, cmd);
++                            lun_id, cdb, sizeof(cdb), cmd);
+     if (!cmd->req) {
+         trace_megasas_scsi_req_alloc_failed(
+             mfi_frame_desc(frame_cmd), target_id, lun_id);
 -- 
 2.39.5
 
