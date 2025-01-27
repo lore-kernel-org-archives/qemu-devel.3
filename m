@@ -4,34 +4,34 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 566E9C0218D
-	for <qemu-devel@archiver.kernel.org>; Tue, 28 Jan 2025 07:54:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 22D8EC0218D
+	for <qemu-devel@archiver.kernel.org>; Tue, 28 Jan 2025 07:54:20 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tcgPm-000119-WF; Tue, 28 Jan 2025 02:53:43 -0500
+	id 1tcgPo-00015A-ST; Tue, 28 Jan 2025 02:53:44 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1tcgPl-0000zc-4U; Tue, 28 Jan 2025 02:53:41 -0500
+ id 1tcgPl-000109-KY; Tue, 28 Jan 2025 02:53:41 -0500
 Received: from isrv.corpit.ru ([86.62.121.231])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1tcgPj-0007pY-Gj; Tue, 28 Jan 2025 02:53:40 -0500
+ id 1tcgPk-0007pg-26; Tue, 28 Jan 2025 02:53:41 -0500
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id BDC79E1AC3;
+ by isrv.corpit.ru (Postfix) with ESMTP id C1B57E1AC4;
  Tue, 28 Jan 2025 10:52:59 +0300 (MSK)
 Received: from localhost.tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id 388C51A62B2;
+ by tsrv.corpit.ru (Postfix) with ESMTP id 3C7641A62B3;
  Tue, 28 Jan 2025 10:53:25 +0300 (MSK)
 Received: by localhost.tls.msk.ru (Postfix, from userid 1000)
- id 1E30951FFB; Tue, 28 Jan 2025 10:53:25 +0300 (MSK)
+ id 2007A51FFD; Tue, 28 Jan 2025 10:53:25 +0300 (MSK)
 To: qemu-devel@nongnu.org
 Cc: qemu-stable@nongnu.org, Christian Schoenebeck <qemu_oss@crudebyte.com>,
  Greg Kurz <groug@kaod.org>, Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-7.2.16 10/31] tests/9p: add missing Rgetattr response name
-Date: Tue, 28 Jan 2025 00:41:02 +0300
-Message-Id: <20250127214124.3730126-10-mjt@tls.msk.ru>
+Subject: [Stable-7.2.16 11/31] tests/9p: add 'use-after-unlink' test
+Date: Tue, 28 Jan 2025 00:41:03 +0300
+Message-Id: <20250127214124.3730126-11-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <qemu-stable-7.2.16-20250128004119@cover.tls.msk.ru>
 References: <qemu-stable-7.2.16-20250128004119@cover.tls.msk.ru>
@@ -62,29 +62,80 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-'Tgetattr' 9p request and its 'Rgetattr' response types are already used
-by test client, however this response type is yet missing in function
-rmessage_name(), so add it.
+After removing a file from the file system, we should still be able to
+work with the file if we already had it open before removal.
 
-Fixes: a6821b828404 ("tests/9pfs: compare QIDs in fs_walk_none() test")
+As a first step we verify that it is possible to write to an unlinked
+file, as this is what already works. This test is extended later on
+after having fixed other use cases after unlink that are not working
+yet.
+
 Signed-off-by: Christian Schoenebeck <qemu_oss@crudebyte.com>
 Reviewed-by: Greg Kurz <groug@kaod.org>
-Message-Id: <e183da80d390cfd7d55bdbce92f0ff6e3e5cdced.1732465720.git.qemu_oss@crudebyte.com>
-(cherry picked from commit 4ec984965079b51a9afce339af75edea6de973a2)
+Message-Id: <3d6449d4df25bcdd3e807eff169f46f1385e5257.1732465720.git.qemu_oss@crudebyte.com>
+(cherry picked from commit 462db8fb1d405391b83a0d3099fdb9bfb85c2d92)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
+(Mjt: context fix, pick it to stable so the next patch in this place applies)
 
-diff --git a/tests/qtest/libqos/virtio-9p-client.c b/tests/qtest/libqos/virtio-9p-client.c
-index a9eb1876f0..340e704d24 100644
---- a/tests/qtest/libqos/virtio-9p-client.c
-+++ b/tests/qtest/libqos/virtio-9p-client.c
-@@ -235,6 +235,7 @@ static const char *rmessage_name(uint8_t id)
-         id == P9_RMKDIR ? "RMKDIR" :
-         id == P9_RLCREATE ? "RLCREATE" :
-         id == P9_RSYMLINK ? "RSYMLINK" :
-+        id == P9_RGETATTR ? "RGETATTR" :
-         id == P9_RLINK ? "RLINK" :
-         id == P9_RUNLINKAT ? "RUNLINKAT" :
-         id == P9_RFLUSH ? "RFLUSH" :
+diff --git a/tests/qtest/virtio-9p-test.c b/tests/qtest/virtio-9p-test.c
+index 65e69491e5..7638c0a183 100644
+--- a/tests/qtest/virtio-9p-test.c
++++ b/tests/qtest/virtio-9p-test.c
+@@ -693,6 +693,45 @@ static void fs_unlinkat_hardlink(void *obj, void *data,
+     g_assert(stat(real_file, &st_real) == 0);
+ }
+ 
++static void fs_use_after_unlink(void *obj, void *data,
++                                QGuestAllocator *t_alloc)
++{
++    QVirtio9P *v9p = obj;
++    v9fs_set_allocator(t_alloc);
++    static const uint32_t write_count = P9_MAX_SIZE / 2;
++    g_autofree char *real_file = virtio_9p_test_path("09/doa_file");
++    g_autofree char *buf = g_malloc0(write_count);
++    struct stat st_file;
++    uint32_t fid_file;
++    uint32_t count;
++
++    tattach({ .client = v9p });
++
++    /* create a file "09/doa_file" and make sure it exists and is regular */
++    tmkdir({ .client = v9p, .atPath = "/", .name = "09" });
++    tlcreate({ .client = v9p, .atPath = "09", .name = "doa_file" });
++    g_assert(stat(real_file, &st_file) == 0);
++    g_assert((st_file.st_mode & S_IFMT) == S_IFREG);
++
++    /* request a FID for that regular file that we can work with next */
++    fid_file = twalk({
++        .client = v9p, .fid = 0, .path = "09/doa_file"
++    }).newfid;
++    g_assert(fid_file != 0);
++
++    /* now first open the file in write mode before ... */
++    tlopen({ .client = v9p, .fid = fid_file, .flags = O_WRONLY });
++    /* ... removing the file from file system */
++    tunlinkat({ .client = v9p, .atPath = "09", .name = "doa_file" });
++
++    /* file is removed, but we still have it open, so this should succeed */
++    count = twrite({
++        .client = v9p, .fid = fid_file, .offset = 0, .count = write_count,
++        .data = buf
++    }).count;
++    g_assert_cmpint(count, ==, write_count);
++}
++
+ static void *assign_9p_local_driver(GString *cmd_line, void *arg)
+ {
+     virtio_9p_assign_local_driver(cmd_line, "security_model=mapped-xattr");
+@@ -756,6 +795,8 @@ static void register_virtio_9p_test(void)
+     qos_add_test("local/hardlink_file", "virtio-9p", fs_hardlink_file, &opts);
+     qos_add_test("local/unlinkat_hardlink", "virtio-9p", fs_unlinkat_hardlink,
+                  &opts);
++    qos_add_test("local/use_after_unlink", "virtio-9p", fs_use_after_unlink,
++                 &opts);
+ }
+ 
+ libqos_init(register_virtio_9p_test);
 -- 
 2.39.5
 
