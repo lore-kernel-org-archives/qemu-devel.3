@@ -4,39 +4,44 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4E0AFC0218D
-	for <qemu-devel@archiver.kernel.org>; Tue, 28 Jan 2025 08:08:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A6DA1C0218D
+	for <qemu-devel@archiver.kernel.org>; Tue, 28 Jan 2025 08:10:59 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tcgaw-0002ET-8a; Tue, 28 Jan 2025 03:05:18 -0500
+	id 1tcgcC-0004iT-4k; Tue, 28 Jan 2025 03:06:32 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1tcgYW-0006Kx-7a; Tue, 28 Jan 2025 03:02:45 -0500
+ id 1tcgYw-0006jx-Gj; Tue, 28 Jan 2025 03:03:14 -0500
 Received: from isrv.corpit.ru ([86.62.121.231])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1tcgYS-0002Ag-CS; Tue, 28 Jan 2025 03:02:41 -0500
+ id 1tcgYu-0002HE-CU; Tue, 28 Jan 2025 03:03:09 -0500
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id C808DE1B5A;
+ by isrv.corpit.ru (Postfix) with ESMTP id DB5FBE1B5F;
  Tue, 28 Jan 2025 10:57:08 +0300 (MSK)
 Received: from localhost.tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id 43DCB1A630D;
+ by tsrv.corpit.ru (Postfix) with ESMTP id 572021A6312;
  Tue, 28 Jan 2025 10:57:34 +0300 (MSK)
 Received: by localhost.tls.msk.ru (Postfix, from userid 1000)
- id 0823D520AB; Tue, 28 Jan 2025 10:57:34 +0300 (MSK)
+ id 10AB8520B5; Tue, 28 Jan 2025 10:57:34 +0300 (MSK)
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Nicholas Piggin <npiggin@gmail.com>,
- Glenn Miles <milesg@linux.ibm.com>, Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-9.1.3 19/58] target/ppc: Fix non-maskable interrupt while
- halted
-Date: Mon, 27 Jan 2025 23:25:05 +0300
-Message-Id: <20250127202547.3723716-19-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org, Peter Maydell <peter.maydell@linaro.org>,
+ Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Alistair Francis <alistair.francis@wdc.com>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-9.1.3 24/58] target/riscv: Avoid bad shift in
+ riscv_cpu_do_interrupt()
+Date: Mon, 27 Jan 2025 23:25:10 +0300
+Message-Id: <20250127202547.3723716-24-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <qemu-stable-9.1.3-20250127232536@cover.tls.msk.ru>
 References: <qemu-stable-9.1.3-20250127232536@cover.tls.msk.ru>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 From: Michael Tokarev <mjt@tls.msk.ru>
 Received-SPF: pass client-ip=86.62.121.231; envelope-from=mjt@tls.msk.ru;
@@ -63,53 +68,53 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The ppc (pnv and spapr) NMI injection code does not go through the
-asynchronous interrupt path and set a bit in env->pending_interrupts
-and raise an interrupt request that the cpu_exec() loop can see.
-Instead it injects the exception directly into registers.
+In riscv_cpu_do_interrupt() we use the 'cause' value we got out of
+cs->exception as a shift value.  However this value can be larger
+than 31, which means that "1 << cause" is undefined behaviour,
+because we do the shift on an 'int' type.
 
-This can lead to cpu_exec() missing that the thread has work to do,
-if a NMI is injected while it was idle.
+This causes the undefined behaviour sanitizer to complain
+on one of the check-tcg tests:
 
-Fix this by clearing halted when injecting the interrupt. Probably
-NMI injection should be reworked to use the interrupt request interface,
-but this seems to work as a minimal fix.
+$ UBSAN_OPTIONS=print_stacktrace=1:abort_on_error=1:halt_on_error=1 ./build/clang/qemu-system-riscv64 -M virt -semihosting -display none -device loader,file=build/clang/tests/tcg/riscv64-softmmu/issue1060
+../../target/riscv/cpu_helper.c:1805:38: runtime error: shift exponent 63 is too large for 32-bit type 'int'
+    #0 0x55f2dc026703 in riscv_cpu_do_interrupt /mnt/nvmedisk/linaro/qemu-from-laptop/qemu/build/clang/../../target/riscv/cpu_helper.c:1805:38
+    #1 0x55f2dc3d170e in cpu_handle_exception /mnt/nvmedisk/linaro/qemu-from-laptop/qemu/build/clang/../../accel/tcg/cpu-exec.c:752:9
 
-Fixes: 3431648272d3 ("spapr: Add support for new NMI interface")
-Reviewed-by: Glenn Miles <milesg@linux.ibm.com>
-Signed-off-by: Nicholas Piggin <npiggin@gmail.com>
-(cherry picked from commit fa416ae6157a933ad3f7106090684759baaaf3c9)
+In this case cause is RISCV_EXCP_SEMIHOST, which is 0x3f.
+
+Use 1ULL instead to ensure that the shift is in range.
+
+Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+Fixes: 1697837ed9 ("target/riscv: Add M-mode virtual interrupt and IRQ filtering support.")
+Fixes: 40336d5b1d ("target/riscv: Add HS-mode virtual interrupt and IRQ filtering support.")
+Reviewed-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
+Message-ID: <20241128103831.3452572-1-peter.maydell@linaro.org>
+Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+(cherry picked from commit 5311599cdc48337f2f27b1b51a80d46d75b05ed0)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/target/ppc/excp_helper.c b/target/ppc/excp_helper.c
-index f33fc36db2..cc4ef2598c 100644
---- a/target/ppc/excp_helper.c
-+++ b/target/ppc/excp_helper.c
-@@ -2479,10 +2479,16 @@ static void ppc_deliver_interrupt(CPUPPCState *env, int interrupt)
-     }
- }
- 
-+/*
-+ * system reset is not delivered via normal irq method, so have to set
-+ * halted = 0 to resume CPU running if it was halted. Possibly we should
-+ * move it over to using PPC_INTERRUPT_RESET rather than async_run_on_cpu.
-+ */
- void ppc_cpu_do_system_reset(CPUState *cs)
- {
-     PowerPCCPU *cpu = POWERPC_CPU(cs);
- 
-+    cs->halted = 0;
-     powerpc_excp(cpu, POWERPC_EXCP_RESET);
- }
- 
-@@ -2504,6 +2510,7 @@ void ppc_cpu_do_fwnmi_machine_check(CPUState *cs, target_ulong vector)
- 
-     /* Anything for nested required here? MSR[HV] bit? */
- 
-+    cs->halted = 0;
-     powerpc_set_excp_state(cpu, vector, msr);
- }
- 
+diff --git a/target/riscv/cpu_helper.c b/target/riscv/cpu_helper.c
+index 395a1d9140..6e8ce87d74 100644
+--- a/target/riscv/cpu_helper.c
++++ b/target/riscv/cpu_helper.c
+@@ -1662,10 +1662,10 @@ void riscv_cpu_do_interrupt(CPUState *cs)
+     bool async = !!(cs->exception_index & RISCV_EXCP_INT_FLAG);
+     target_ulong cause = cs->exception_index & RISCV_EXCP_INT_MASK;
+     uint64_t deleg = async ? env->mideleg : env->medeleg;
+-    bool s_injected = env->mvip & (1 << cause) & env->mvien &&
+-        !(env->mip & (1 << cause));
+-    bool vs_injected = env->hvip & (1 << cause) & env->hvien &&
+-        !(env->mip & (1 << cause));
++    bool s_injected = env->mvip & (1ULL << cause) & env->mvien &&
++        !(env->mip & (1ULL << cause));
++    bool vs_injected = env->hvip & (1ULL << cause) & env->hvien &&
++        !(env->mip & (1ULL << cause));
+     target_ulong tval = 0;
+     target_ulong tinst = 0;
+     target_ulong htval = 0;
 -- 
 2.39.5
 
