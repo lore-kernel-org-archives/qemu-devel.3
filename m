@@ -4,99 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0D8A2C0218C
-	for <qemu-devel@archiver.kernel.org>; Mon, 27 Jan 2025 09:24:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3B9F7C0218C
+	for <qemu-devel@archiver.kernel.org>; Mon, 27 Jan 2025 09:42:23 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tcLLU-0000kF-Ey; Mon, 27 Jan 2025 04:23:52 -0500
+	id 1tcLcu-0005Nk-UD; Mon, 27 Jan 2025 04:41:52 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <shentey@gmail.com>)
- id 1tcLLL-0000jl-9M; Mon, 27 Jan 2025 04:23:43 -0500
-Received: from mail-ej1-x633.google.com ([2a00:1450:4864:20::633])
+ (Exim 4.90_1) (envelope-from <shentey@gmail.com>) id 1tcLcr-0005Jz-Bi
+ for qemu-devel@nongnu.org; Mon, 27 Jan 2025 04:41:49 -0500
+Received: from mail-ed1-x536.google.com ([2a00:1450:4864:20::536])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <shentey@gmail.com>)
- id 1tcLLJ-0003LB-KQ; Mon, 27 Jan 2025 04:23:43 -0500
-Received: by mail-ej1-x633.google.com with SMTP id
- a640c23a62f3a-aaee0b309adso578109466b.3; 
- Mon, 27 Jan 2025 01:23:40 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <shentey@gmail.com>) id 1tcLco-0005E0-AH
+ for qemu-devel@nongnu.org; Mon, 27 Jan 2025 04:41:48 -0500
+Received: by mail-ed1-x536.google.com with SMTP id
+ 4fb4d7f45d1cf-5d3f28881d6so6252966a12.1
+ for <qemu-devel@nongnu.org>; Mon, 27 Jan 2025 01:41:45 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1737969819; x=1738574619; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:references
- :in-reply-to:subject:cc:to:from:date:from:to:cc:subject:date
+ d=gmail.com; s=20230601; t=1737970904; x=1738575704; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=rdp6qM5HkNGE6pm93Ya34vtciW0eBxcidQ8OmMD0mDI=;
- b=kvaIxQT5gL6V4wJ3CBY8feJmhgUeyZ3Lz6qs6fVMtL+gaEc381iu9Wi7UzTAJiU4Rw
- Z85QmkCmYqop6YDTJZ9lMuCQ464CcRPdjhm6h41dVizZQrXXK1ChttCs34UX8DmcHER3
- KaIEdsqY9CnKhO4dDCFVpPl2PjhyMUyOoHLB4Ak2palmk5JTu/qSTSH/cPQgWvw3ZDVp
- 9m8IF6dPp+HQP7EFQLwMY5XTAnT98fJwTFGe9dnjqyOSz/GSES6BaDadzcua/3bBzNAJ
- SjHksutgGsycH6+w1NIpnt1+Oa7Q20Lyab0NqQmv/CoM9bKrGNyM3Tc7COqVr0iPrwL2
- P2yA==
+ bh=yjPzdHFXd2uRfONBBPJoicdiCvhjmel6wJx9kp25WTk=;
+ b=GJU9snrvB/L3qs9BfswlfvHUGRkDPk2QHAJFikL6Y4tT+9MT9zPF8Wl3ddWOyDXrdN
+ gTHlURvGSbp4sxmqJNd2DXSoph8X2n4uuj2FnPYHdEAchD7T0KaedtCdsJUBqPJDa9ZQ
+ ChJI+114ahKAowDvGTGZ58sf2PFbpWpWOd2DL5AwkvrVoPo4USBwP3tb8rLwn6wxq4Nk
+ 42evmVpX9T5rHmE4N4SsBcbnwpsiSmYV19NpJ23Q6HICrD/4y1QrUxDKVYqeq4Q8mDz3
+ w894TrvtEfqqw9fl2AaID7mIN7AdVoZdTuZrLsLDwreTjN/MTiequRklYbjwNwvc1Peo
+ Y5aw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1737969819; x=1738574619;
- h=content-transfer-encoding:mime-version:message-id:references
- :in-reply-to:subject:cc:to:from:date:x-gm-message-state:from:to:cc
+ d=1e100.net; s=20230601; t=1737970904; x=1738575704;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=rdp6qM5HkNGE6pm93Ya34vtciW0eBxcidQ8OmMD0mDI=;
- b=jDD1LAUciBn5xze1RysgoeVWRdnBXCQgDK09YiIGNQtHEycVSmqTClwl5UPo3EgfpB
- GavAF+xsf+2RobDILoGSOF97gNb+/urDJnoX6HdwsmsQ/+cHIGbKM2R25Wigv/Kto7lo
- Qo6qMKhjYPO7ohV5OOF4pT2lRZAxTL9KO85RiPA1SrcwZJk3kfnKwzLJxmHvNN6e8uQl
- zmDpCSG0eoJYUGbzGd1FTKNyvzH88dcsquk6yW9KMTjufelANypg9pSdXx5Hcw6nQQHi
- tArm+Lhulndsqsab5IgK7xkeGsgBKmQwEKKlBWnIlWnF2ZyeaOvZsB96piNqIh4a4UPG
- OXtQ==
-X-Forwarded-Encrypted: i=1;
- AJvYcCUAod53ziElVOI24F4h/YMGJ9TlmXiy83OiHxFbDb4F0oZH7G+hn/oSgjTurG8Ap57YrB4ieawEGkOw@nongnu.org,
- AJvYcCXRd6GHJ292AkJvQUReNh9FFUFDjMgRHNDb9xxIBx4+Ek1CxnykqEvYm96NpxPsHE6InwsQYr1s7VA=@nongnu.org
-X-Gm-Message-State: AOJu0YwxNwbue4nvCA5Uy1vCs2Md8oUozmY7pKN49Z3CM1HHakEHIMrd
- QkQ/g31aMPwe7kpbuRQ5/DZAHmFcMZCn4lv0D9TNiQqKxQ8O8mne
-X-Gm-Gg: ASbGncsbZ9+UYKLnnvoWXsCNWyxGoi/+PmavBKJ4fuGrR09ZIMjpXPhiP82HVzaMMst
- uGihSW26uy9mMcaZPSyPHJ/V4fGw50b6o3fbcy2VNEhEGabaJYk8Oe+3hXeYFCGlSUeDya5GCOh
- Q+FyOBGj0BRB+ohQG/ToxYINtclmbS1wNRA9ZHyB8R1ekVERhy35C9bE4WL/qBnB16jPP+fIhEd
- U6hTno4wyrDge8x0xS5fFrZfXGV0FWmf6vRSxq3BTTxu1FAA+GlcbaX7uv8oHCkhnisuS2E/Nml
- +TKbWtZg1fkv2sc1PYPbbSC3s8EgQiQGo0rYCUzTrs0Fe6uifpRJtjpQ
-X-Google-Smtp-Source: AGHT+IGGdDiQNlIruAHADHHYWkF49cOK1bT139jWgdCV4iDBjNSzB0gu/pftWQhhkzbn6APXXw+Bbw==
-X-Received: by 2002:a17:907:3602:b0:aaf:74b3:80db with SMTP id
- a640c23a62f3a-ab38b0b90f1mr3823978866b.3.1737969819097; 
- Mon, 27 Jan 2025 01:23:39 -0800 (PST)
-Received: from [127.0.0.1] (dynamic-093-128-047-181.93.128.pool.telefonica.de.
- [93.128.47.181]) by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-ab675e1373esm546856666b.1.2025.01.27.01.23.38
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 27 Jan 2025 01:23:38 -0800 (PST)
-Date: Mon, 27 Jan 2025 09:23:38 +0000
+ bh=yjPzdHFXd2uRfONBBPJoicdiCvhjmel6wJx9kp25WTk=;
+ b=E+TRBEM/qduLHBgQwYq/xDHfCKg53dF4LngI0lycyoDexZNl4S1Qqc0soWsXOnD5nS
+ AnDoqxLvT5MWLC0aMAR8ZMi/YLXx10YOxmHcwO85nMKBpoQ0WdDOFOkcuUbrJRl8nkHg
+ 2XBiH7blg0uaWyHW8sECt9t/y6K1C5/zNK9dgv7Pdps3Q9BVQcSj40ovGGA+4l2zwn82
+ uztsNoIodZyf7feEIt7bx+QDLhYAI5MUAZuY4NH8o37LPe2pPX3TLI9ntHrZTb385XeM
+ toPP0bVedAgIm63V/ikxrZaKrDaUZT/GwiYZysfAxECnnvwa2ErK2sV9NIS4WM6U+yRW
+ htaQ==
+X-Gm-Message-State: AOJu0YzUD+DgZ5uiUnHB/rfb+ChCFpUSBXEZ/SqV3sR1QE7DjSym4TC0
+ /Rymdfi2tkjOGJRv4EtYZeIUDqvdjrb7FgslqTN8pT+MaEizSsAKLkK2rA==
+X-Gm-Gg: ASbGnctkz14nuIM7xWEja5UFs5bGkxRvF9bCAYRVG/y7gOnRtRqcKNktYXVnuP3lodJ
+ oQl/vyTbPAfbogAZeJCrvUGfEbskcUYL8LpAi1oFkzVcqYcwlK+bxPbMu94XityzEq4+UKOH+mO
+ TkUUmYNR7dvZbJ5m8FOqlZZhP8I+DOqlQvkODLaVbEcZpL3z7SziKxl2rtMRZsd7uhQ33dYLyB6
+ 8/KgK6mrzTtljvRq2lhjH+Jur+vii0T+RSxaSSYG1yeWjlSXpuF9RZRe+kb3qEi0QrHtUXxijCM
+ ZVbT7XYzqRrEsCspPI7GMWafHX/rWa26ITOIoaRgS3CPPHppmCYCkpSZzWQgoCS2kM/l8A==
+X-Google-Smtp-Source: AGHT+IFkv/KhCLVJUxMspAgUNe0GHT45E89xP1HqZLFbEuM2gS84XOsj/ALx/tTzcGTUQZwwVlsNIQ==
+X-Received: by 2002:a05:6402:50d4:b0:5d0:cfad:f71 with SMTP id
+ 4fb4d7f45d1cf-5db7db2bea3mr93510860a12.32.1737970904204; 
+ Mon, 27 Jan 2025 01:41:44 -0800 (PST)
+Received: from Provence.localdomain
+ (dynamic-093-128-047-181.93.128.pool.telefonica.de. [93.128.47.181])
+ by smtp.gmail.com with ESMTPSA id
+ 4fb4d7f45d1cf-5dc18619265sm5140631a12.7.2025.01.27.01.41.43
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Mon, 27 Jan 2025 01:41:43 -0800 (PST)
 From: Bernhard Beschow <shentey@gmail.com>
-To: =?ISO-8859-1?Q?Philippe_Mathieu-Daud=E9?= <philmd@linaro.org>,
- qemu-devel@nongnu.org
-CC: Yi Liu <yi.l.liu@intel.com>, Markus Armbruster <armbru@redhat.com>,
- Eduardo Habkost <eduardo@habkost.net>,
- Anthony PERARD <anthony@xenproject.org>,
- Gustavo Romero <gustavo.romero@linaro.org>, Jason Wang <jasowang@redhat.com>, 
- qemu-ppc@nongnu.org, "Michael S. Tsirkin" <mst@redhat.com>,
- Paolo Bonzini <pbonzini@redhat.com>, Alexander Graf <graf@amazon.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- Stefan Berger <stefanb@linux.vnet.ibm.com>,
+To: qemu-devel@nongnu.org
+Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  Stefano Stabellini <sstabellini@kernel.org>,
- Gerd Hoffmann <kraxel@redhat.com>,
- =?ISO-8859-1?Q?Daniel_P=2E_Berrang=E9?= <berrange@redhat.com>,
  "Edgar E. Iglesias" <edgar.iglesias@gmail.com>,
- xen-devel@lists.xenproject.org,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- Alex Williamson <alex.williamson@redhat.com>, Paul Durrant <paul@xen.org>,
- =?ISO-8859-1?Q?Cl=E9ment_Mathieu--Drif?= <clement.mathieu--drif@eviden.com>,
- =?ISO-8859-1?Q?C=E9dric_Le_Goater?= <clg@redhat.com>
-Subject: =?US-ASCII?Q?Re=3A_=5BPATCH_2/9=5D_hw/sysbus=3A_Declare_?=
- =?US-ASCII?Q?QOM_types_using_DEFINE=5FTYPES=28=29_macro?=
-In-Reply-To: <20250125181343.59151-3-philmd@linaro.org>
-References: <20250125181343.59151-1-philmd@linaro.org>
- <20250125181343.59151-3-philmd@linaro.org>
-Message-ID: <003404AB-0220-474C-B9DC-4CD88225C420@gmail.com>
+ xen-devel@lists.xenproject.org, Paul Durrant <paul@xen.org>,
+ Anthony PERARD <anthony@xenproject.org>,
+ Bernhard Beschow <shentey@gmail.com>
+Subject: [PATCH] hw/*/xen*: Prefer QOM cast for XenLegacyDevice
+Date: Mon, 27 Jan 2025 10:41:29 +0100
+Message-ID: <20250127094129.15941-1-shentey@gmail.com>
+X-Mailer: git-send-email 2.48.1
+In-Reply-To: <20250125181343.59151-10-philmd@linaro.org>
+References: <20250125181343.59151-10-philmd@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain;
- charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::633;
- envelope-from=shentey@gmail.com; helo=mail-ej1-x633.google.com
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::536;
+ envelope-from=shentey@gmail.com; helo=mail-ed1-x536.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -119,86 +102,69 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+Makes the code less sensitive regarding changes in the class hierarchy which
+will be performed in the next patch.
 
+Signed-off-by: Bernhard Beschow <shentey@gmail.com>
+---
+ hw/usb/xen-usb.c            | 6 +++---
+ hw/xen/xen-legacy-backend.c | 2 +-
+ hw/xen/xen_pvdev.c          | 2 +-
+ 3 files changed, 5 insertions(+), 5 deletions(-)
 
-Am 25=2E Januar 2025 18:13:36 UTC schrieb "Philippe Mathieu-Daud=C3=A9" <p=
-hilmd@linaro=2Eorg>:
->When multiple QOM types are registered in the same file,
->it is simpler to use the the DEFINE_TYPES() macro=2E In
->particular because type array declared with such macro
->are easier to review=2E
->
->Signed-off-by: Philippe Mathieu-Daud=C3=A9 <philmd@linaro=2Eorg>
->---
-> hw/core/sysbus=2Ec | 39 +++++++++++++++++----------------------
-> 1 file changed, 17 insertions(+), 22 deletions(-)
->
->diff --git a/hw/core/sysbus=2Ec b/hw/core/sysbus=2Ec
->index f713bbfe04f=2E=2E306f98406c0 100644
->--- a/hw/core/sysbus=2Ec
->+++ b/hw/core/sysbus=2Ec
->@@ -80,13 +80,6 @@ static void system_bus_class_init(ObjectClass *klass, =
-void *data)
->     k->get_fw_dev_path =3D sysbus_get_fw_dev_path;
-> }
->=20
->-static const TypeInfo system_bus_info =3D {
->-    =2Ename =3D TYPE_SYSTEM_BUS,
->-    =2Eparent =3D TYPE_BUS,
->-    =2Einstance_size =3D sizeof(BusState),
->-    =2Eclass_init =3D system_bus_class_init,
->-};
->-
-> /* Check whether an IRQ source exists */
-> bool sysbus_has_irq(SysBusDevice *dev, int n)
-> {
->@@ -306,15 +299,6 @@ static void sysbus_device_class_init(ObjectClass *kl=
-ass, void *data)
->     k->user_creatable =3D false;
-> }
->=20
->-static const TypeInfo sysbus_device_type_info =3D {
->-    =2Ename =3D TYPE_SYS_BUS_DEVICE,
->-    =2Eparent =3D TYPE_DEVICE,
->-    =2Einstance_size =3D sizeof(SysBusDevice),
->-    =2Eabstract =3D true,
->-    =2Eclass_size =3D sizeof(SysBusDeviceClass),
->-    =2Eclass_init =3D sysbus_device_class_init,
->-};
->-
-> static BusState *main_system_bus;
->=20
-> static void main_system_bus_create(void)
->@@ -337,10 +321,21 @@ BusState *sysbus_get_default(void)
->     return main_system_bus;
-> }
->=20
->-static void sysbus_register_types(void)
->-{
->-    type_register_static(&system_bus_info);
->-    type_register_static(&sysbus_device_type_info);
->-}
->+static const TypeInfo sysbus_types[] =3D {
->+    {
->+        =2Ename           =3D TYPE_SYSTEM_BUS,
->+        =2Eparent         =3D TYPE_BUS,
->+        =2Einstance_size  =3D sizeof(BusState),
->+        =2Eclass_init     =3D system_bus_class_init,
->+    },
->+    {
->+        =2Ename           =3D TYPE_SYS_BUS_DEVICE,
->+        =2Eparent         =3D TYPE_DEVICE,
->+        =2Einstance_size  =3D sizeof(SysBusDevice),
->+        =2Eabstract       =3D true,
->+        =2Eclass_size     =3D sizeof(SysBusDeviceClass),
->+        =2Eclass_init     =3D sysbus_device_class_init,
->+    },
->+};
->=20
->-type_init(sysbus_register_types)
->+DEFINE_TYPES(sysbus_types)
+diff --git a/hw/usb/xen-usb.c b/hw/usb/xen-usb.c
+index 13901625c0..3da30efc44 100644
+--- a/hw/usb/xen-usb.c
++++ b/hw/usb/xen-usb.c
+@@ -755,10 +755,10 @@ static void usbback_portid_add(struct usbback_info *usbif, unsigned port,
+ 
+     qdict = qdict_new();
+     qdict_put_str(qdict, "driver", "usb-host");
+-    tmp = g_strdup_printf("%s.0", usbif->xendev.qdev.id);
++    tmp = g_strdup_printf("%s.0", DEVICE(&usbif->xendev)->id);
+     qdict_put_str(qdict, "bus", tmp);
+     g_free(tmp);
+-    tmp = g_strdup_printf("%s-%u", usbif->xendev.qdev.id, port);
++    tmp = g_strdup_printf("%s-%u", DEVICE(&usbif->xendev)->id, port);
+     qdict_put_str(qdict, "id", tmp);
+     g_free(tmp);
+     qdict_put_int(qdict, "port", port);
+@@ -1022,7 +1022,7 @@ static void usbback_alloc(struct XenLegacyDevice *xendev)
+     usbif = container_of(xendev, struct usbback_info, xendev);
+ 
+     usb_bus_new(&usbif->bus, sizeof(usbif->bus), &xen_usb_bus_ops,
+-                DEVICE(&xendev->qdev));
++                DEVICE(xendev));
+     for (i = 0; i < USBBACK_MAXPORTS; i++) {
+         p = &(usbif->ports[i].port);
+         usb_register_port(&usbif->bus, p, usbif, i, &xen_usb_port_ops,
+diff --git a/hw/xen/xen-legacy-backend.c b/hw/xen/xen-legacy-backend.c
+index 118c571b3a..ca2fe0e6b3 100644
+--- a/hw/xen/xen-legacy-backend.c
++++ b/hw/xen/xen-legacy-backend.c
+@@ -163,7 +163,7 @@ static struct XenLegacyDevice *xen_be_get_xendev(const char *type, int dom,
+ 
+     /* init new xendev */
+     xendev = g_malloc0(ops->size);
+-    object_initialize(&xendev->qdev, ops->size, TYPE_XENBACKEND);
++    object_initialize(xendev, ops->size, TYPE_XENBACKEND);
+     OBJECT(xendev)->free = g_free;
+     qdev_set_id(DEVICE(xendev), g_strdup_printf("xen-%s-%d", type, dev),
+                 &error_fatal);
+diff --git a/hw/xen/xen_pvdev.c b/hw/xen/xen_pvdev.c
+index c9143ba259..fe95b62d13 100644
+--- a/hw/xen/xen_pvdev.c
++++ b/hw/xen/xen_pvdev.c
+@@ -273,7 +273,7 @@ void xen_pv_del_xendev(struct XenLegacyDevice *xendev)
+ 
+     QTAILQ_REMOVE(&xendevs, xendev, next);
+ 
+-    qdev_unplug(&xendev->qdev, NULL);
++    qdev_unplug(DEVICE(xendev), NULL);
+ }
+ 
+ void xen_pv_insert_xendev(struct XenLegacyDevice *xendev)
+-- 
+2.48.1
 
-Can now omit the "qom/module=2Eh" include=2E With that changed:
-
-Reviewed-by: Bernhard Beschow
 
