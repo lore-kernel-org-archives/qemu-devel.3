@@ -4,56 +4,55 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6B41BC0218F
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 44B90C0218C
 	for <qemu-devel@archiver.kernel.org>; Mon, 27 Jan 2025 09:44:12 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tcLeq-0006hq-NH; Mon, 27 Jan 2025 04:43:52 -0500
+	id 1tcLeF-0006F0-N3; Mon, 27 Jan 2025 04:43:15 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1tcLeN-0006SS-Es
- for qemu-devel@nongnu.org; Mon, 27 Jan 2025 04:43:27 -0500
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1tcLeB-0006DE-2m
+ for qemu-devel@nongnu.org; Mon, 27 Jan 2025 04:43:11 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1tcLeL-0005Sn-7I
- for qemu-devel@nongnu.org; Mon, 27 Jan 2025 04:43:23 -0500
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1tcLe9-0005RJ-AC
+ for qemu-devel@nongnu.org; Mon, 27 Jan 2025 04:43:10 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1737970999;
+ s=mimecast20190719; t=1737970988;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=Ld4QsWPuB3Hp8e8mg+d87KCgmjd8JfHeB5cd+waxL7g=;
- b=L8vctc0nlqFx8qHSY3JTy083RqGC/3Pab4/vkEDzl5fsVNs45yorQyvCy4ZwEGWaHEps08
- TPok8kCeiA/UE7n5qdSqC2sj8raRylah8OY6zSdckDaTUUDBx/GylWh3eU+Fcnyi7Vj6Ma
- qP1XfY5UZfWIAqnsmZPp6YZ6fa40EF0=
-Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
+ bh=HCgBPHkwQ9noTFqoX4NtX4SFLU9O8jURWveoSWvlS7U=;
+ b=ONG+9V9Cldvgo+zGVPgdHgD7uGPP5FxQzgTxqoq2Y4m0QQXYe5U6IApjICB39K4ClXHjbU
+ 6cwNoQrheCPkE4+vjkotkZOCz3cIT8DdDBTx2hogWu0QfnhdrPNOkup/SGmYB5+va9/1Tq
+ SbDaI4KkfRfns1lUptXmSaXeThcjeGc=
+Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-385-46qHC0x3MIaQZrEiucZMVA-1; Mon,
- 27 Jan 2025 04:43:15 -0500
-X-MC-Unique: 46qHC0x3MIaQZrEiucZMVA-1
-X-Mimecast-MFC-AGG-ID: 46qHC0x3MIaQZrEiucZMVA
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-669--C8pNZ6JOKiRChQFyLNdGg-1; Mon,
+ 27 Jan 2025 04:43:04 -0500
+X-MC-Unique: -C8pNZ6JOKiRChQFyLNdGg-1
+X-Mimecast-MFC-AGG-ID: -C8pNZ6JOKiRChQFyLNdGg
 Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 7701B18009B7; Mon, 27 Jan 2025 09:43:14 +0000 (UTC)
+ by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 3DD001801F16; Mon, 27 Jan 2025 09:43:03 +0000 (UTC)
 Received: from corto.redhat.com (unknown [10.39.192.63])
  by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id ABF6D18008C8; Mon, 27 Jan 2025 09:43:12 +0000 (UTC)
+ id 0F33618008E4; Mon, 27 Jan 2025 09:43:00 +0000 (UTC)
 From: =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>
 To: qemu-arm@nongnu.org,
 	qemu-devel@nongnu.org
-Cc: =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>,
- Jamin Lin <jamin_lin@aspeedtech.com>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PULL 09/12] aspeed: Create sd devices only when defaults are enabled
-Date: Mon, 27 Jan 2025 10:42:36 +0100
-Message-ID: <20250127094239.636526-10-clg@redhat.com>
+Cc: Jamin Lin <jamin_lin@aspeedtech.com>,
+ =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>
+Subject: [PULL 06/12] aspeed/soc: Support Timer for AST2700
+Date: Mon, 27 Jan 2025 10:42:33 +0100
+Message-ID: <20250127094239.636526-7-clg@redhat.com>
 In-Reply-To: <20250127094239.636526-1-clg@redhat.com>
 References: <20250127094239.636526-1-clg@redhat.com>
 MIME-Version: 1.0
@@ -86,47 +85,81 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-When the -nodefaults option is set, sd devices should not be
-automatically created by the machine. Instead they should be defined
-on the command line.
+From: Jamin Lin <jamin_lin@aspeedtech.com>
 
-Note that it is not currently possible to define which bus an
-"sd-card" device is attached to:
+Add Timer model for AST2700 Timer support. The Timer controller include 8 sets
+of 32-bit decrement counters.
 
-  -blockdev node-name=drive0,driver=file,filename=/path/to/file.img \
-  -device sd-card,drive=drive0,id=sd0
+The base address of TIMER0 to TIMER7 as following.
+Base Address of Timer 0 = 0x12C1_0000
+Base Address of Timer 1 = 0x12C1_0040
+Base Address of Timer 2 = 0x12C1_0080
+Base Address of Timer 3 = 0x12C1_00C0
+Base Address of Timer 4 = 0x12C1_0100
+Base Address of Timer 5 = 0x12C1_0140
+Base Address of Timer 6 = 0x12C1_0180
+Base Address of Timer 7 = 0x12C1_01C0
 
-and the first bus named "sd-bus" will be used.
+The interrupt of TIMER0 to TIMER7 as following.
+GICINT16 = TIMER 0 interrupt
+GICINT17 = TIMER 1 interrupt
+GICINT18 = TIMER 2 interrupt
+GICINT19 = TIMER 3 interrupt
+GICINT20 = TIMER 4 interrupt
+GICINT21 = TIMER 5 interrupt
+GICINT22 = TIMER 6 interrupt
+GICINT23 = TIMER 7 interrupt
 
-Reviewed-by: Jamin Lin <jamin_lin@aspeedtech.com>
-Acked-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Link: https://lore.kernel.org/qemu-devel/20250122070909.1138598-10-clg@redhat.com
+Signed-off-by: Jamin Lin <jamin_lin@aspeedtech.com>
+Reviewed-by: Cédric Le Goater <clg@redhat.com>
+Link: https://lore.kernel.org/r/20250113064455.1660564-4-jamin_lin@aspeedtech.com
 Signed-off-by: Cédric Le Goater <clg@redhat.com>
 ---
- hw/arm/aspeed.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ hw/arm/aspeed_ast27x0.c | 17 +++++++++++++++++
+ 1 file changed, 17 insertions(+)
 
-diff --git a/hw/arm/aspeed.c b/hw/arm/aspeed.c
-index 53a859a6e4aa..d9418e2b9f2c 100644
---- a/hw/arm/aspeed.c
-+++ b/hw/arm/aspeed.c
-@@ -456,14 +456,14 @@ static void aspeed_machine_init(MachineState *machine)
-         amc->i2c_init(bmc);
-     }
+diff --git a/hw/arm/aspeed_ast27x0.c b/hw/arm/aspeed_ast27x0.c
+index fee37558372a..4114e15dddf4 100644
+--- a/hw/arm/aspeed_ast27x0.c
++++ b/hw/arm/aspeed_ast27x0.c
+@@ -66,6 +66,7 @@ static const hwaddr aspeed_soc_ast2700_memmap[] = {
+     [ASPEED_DEV_GPIO]      =  0x14C0B000,
+     [ASPEED_DEV_RTC]       =  0x12C0F000,
+     [ASPEED_DEV_SDHCI]     =  0x14080000,
++    [ASPEED_DEV_TIMER1]    =  0x12C10000,
+ };
  
--    for (i = 0; i < bmc->soc->sdhci.num_slots; i++) {
-+    for (i = 0; i < bmc->soc->sdhci.num_slots && defaults_enabled(); i++) {
-         sdhci_attach_drive(&bmc->soc->sdhci.slots[i],
-                            drive_get(IF_SD, 0, i), false, false);
-     }
+ #define AST2700_MAX_IRQ 256
+@@ -397,6 +398,9 @@ static void aspeed_soc_ast2700_init(Object *obj)
  
-     boot_emmc = sc->boot_from_emmc(bmc->soc);
+     object_initialize_child(obj, "emmc-controller.sdhci", &s->emmc.slots[0],
+                             TYPE_SYSBUS_SDHCI);
++
++    snprintf(typename, sizeof(typename), "aspeed.timer-%s", socname);
++    object_initialize_child(obj, "timerctrl", &s->timerctrl, typename);
+ }
  
--    if (bmc->soc->emmc.num_slots) {
-+    if (bmc->soc->emmc.num_slots && defaults_enabled()) {
-         emmc0 = drive_get(IF_SD, 0, bmc->soc->sdhci.num_slots);
-         sdhci_attach_drive(&bmc->soc->emmc.slots[0], emmc0, true, boot_emmc);
-     }
+ /*
+@@ -716,6 +720,19 @@ static void aspeed_soc_ast2700_realize(DeviceState *dev, Error **errp)
+     sysbus_connect_irq(SYS_BUS_DEVICE(&s->emmc), 0,
+                        aspeed_soc_get_irq(s, ASPEED_DEV_EMMC));
+ 
++    /* Timer */
++    object_property_set_link(OBJECT(&s->timerctrl), "scu", OBJECT(&s->scu),
++                             &error_abort);
++    if (!sysbus_realize(SYS_BUS_DEVICE(&s->timerctrl), errp)) {
++        return;
++    }
++    aspeed_mmio_map(s, SYS_BUS_DEVICE(&s->timerctrl), 0,
++                    sc->memmap[ASPEED_DEV_TIMER1]);
++    for (i = 0; i < ASPEED_TIMER_NR_TIMERS; i++) {
++        irq = aspeed_soc_get_irq(s, ASPEED_DEV_TIMER1 + i);
++        sysbus_connect_irq(SYS_BUS_DEVICE(&s->timerctrl), i, irq);
++    }
++
+     create_unimplemented_device("ast2700.dpmcu", 0x11000000, 0x40000);
+     create_unimplemented_device("ast2700.iomem0", 0x12000000, 0x01000000);
+     create_unimplemented_device("ast2700.iomem1", 0x14000000, 0x01000000);
 -- 
 2.48.1
 
