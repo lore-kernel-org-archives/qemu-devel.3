@@ -4,32 +4,32 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 61B0EC02188
-	for <qemu-devel@archiver.kernel.org>; Mon, 27 Jan 2025 14:27:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7468FC02188
+	for <qemu-devel@archiver.kernel.org>; Mon, 27 Jan 2025 14:28:13 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tcQ1V-0000X5-BY; Mon, 27 Jan 2025 09:23:33 -0500
+	id 1tcPxA-0008Un-Gr; Mon, 27 Jan 2025 09:19:04 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1tcQ1K-00082i-JW; Mon, 27 Jan 2025 09:23:22 -0500
+ id 1tcPwS-0008Kl-LQ; Mon, 27 Jan 2025 09:18:29 -0500
 Received: from isrv.corpit.ru ([86.62.121.231])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1tcQ1I-0002vD-RP; Mon, 27 Jan 2025 09:23:22 -0500
+ id 1tcPwP-0002Kd-BI; Mon, 27 Jan 2025 09:18:19 -0500
 Received: from localhost.tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by isrv.corpit.ru (Postfix) with ESMTP id 04401E0F56;
- Mon, 27 Jan 2025 17:22:48 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id 2F7E9E0E29;
+ Mon, 27 Jan 2025 17:17:39 +0300 (MSK)
 Received: by localhost.tls.msk.ru (Postfix, from userid 1000)
- id 8A75851D8D; Mon, 27 Jan 2025 17:18:03 +0300 (MSK)
+ id 655CC51D67; Mon, 27 Jan 2025 17:18:03 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Fabiano Rosas <farosas@suse.de>,
- Peter Xu <peterx@redhat.com>, Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-9.2.1 20/41] migration: Fix parsing of s390 stream
-Date: Mon, 27 Jan 2025 17:17:34 +0300
-Message-Id: <20250127141803.3514882-20-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org, Gerd Hoffmann <kraxel@redhat.com>,
+ Liu Jaloo <liu.jaloo@gmail.com>, Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-9.2.1 05/41] roms: re-add edk2-basetools target
+Date: Mon, 27 Jan 2025 17:17:19 +0300
+Message-Id: <20250127141803.3514882-5-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <qemu-stable-9.2.1-20250127154029@cover.tls.msk.ru>
 References: <qemu-stable-9.2.1-20250127154029@cover.tls.msk.ru>
@@ -59,65 +59,33 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Fabiano Rosas <farosas@suse.de>
+From: Gerd Hoffmann <kraxel@redhat.com>
 
-The parsing for the S390StorageAttributes section is currently leaving
-an unconsumed token that is later interpreted by the generic code as
-QEMU_VM_EOF, cutting the parsing short.
+Needed to build ipxe nic roms.
 
-The migration will issue a STATTR_FLAG_DONE between iterations, which
-the script consumes correctly, but there's a final STATTR_FLAG_EOS at
-.save_complete that the script is ignoring. Since the EOS flag is a
-u64 0x1ULL and the stream is big endian, on little endian hosts a byte
-read from it will be 0x0, the same as QEMU_VM_EOF.
-
-Fixes: 81c2c9dd5d ("tests/qtest/migration-test: Fix analyze-migration.py for s390x")
-Reviewed-by: Peter Xu <peterx@redhat.com>
-Message-Id: <20250109185249.23952-4-farosas@suse.de>
-Signed-off-by: Fabiano Rosas <farosas@suse.de>
-(cherry picked from commit 69d1f784569fdb950f2923c3b6d00d7c1b71acc1)
+Reported-by: Liu Jaloo <liu.jaloo@gmail.com>
+Fixes: 22e11539e167 ("edk2: replace build scripts")
+Signed-off-by: Gerd Hoffmann <kraxel@redhat.com>
+Message-ID: <20241212084408.1390728-1-kraxel@redhat.com>
+(cherry picked from commit 0f5715e4b5706b31b3550d8e6b88871e029c7823)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/scripts/analyze-migration.py b/scripts/analyze-migration.py
-index f2457b1dde..fcda11f31d 100755
---- a/scripts/analyze-migration.py
-+++ b/scripts/analyze-migration.py
-@@ -65,6 +65,9 @@ def readvar(self, size = None):
-     def tell(self):
-         return self.file.tell()
+diff --git a/roms/Makefile b/roms/Makefile
+index dfed2b216a..31e4b97c98 100644
+--- a/roms/Makefile
++++ b/roms/Makefile
+@@ -157,6 +157,11 @@ edk2-version: edk2
+ 		touch $@; \
+ 	fi
  
-+    def seek(self, a, b):
-+        return self.file.seek(a, b)
++edk2-basetools: edk2-version
++	$(PYTHON) edk2-build.py --config edk2-build.config \
++		--silent --no-logs \
++		--match none # build only basetools
 +
-     # The VMSD description is at the end of the file, after EOF. Look for
-     # the last NULL byte, then for the beginning brace of JSON.
-     def read_migration_debug_json(self):
-@@ -272,11 +275,24 @@ def __init__(self, file, version_id, device, section_key):
-         self.section_key = section_key
- 
-     def read(self):
-+        pos = 0
-         while True:
-             addr_flags = self.file.read64()
-             flags = addr_flags & 0xfff
--            if (flags & (self.STATTR_FLAG_DONE | self.STATTR_FLAG_EOS)):
-+
-+            if flags & self.STATTR_FLAG_DONE:
-+                pos = self.file.tell()
-+                continue
-+            elif flags & self.STATTR_FLAG_EOS:
-                 return
-+            else:
-+                # No EOS came after DONE, that's OK, but rewind the
-+                # stream because this is not our data.
-+                if pos:
-+                    self.file.seek(pos, os.SEEK_SET)
-+                    return
-+                raise Exception("Unknown flags %x", flags)
-+
-             if (flags & self.STATTR_FLAG_ERROR):
-                 raise Exception("Error in migration stream")
-             count = self.file.read64()
+ efi: edk2-version
+ 	$(PYTHON) edk2-build.py --config edk2-build.config \
+ 		--version-override "$(EDK2_STABLE)$(FIRMWARE_EXTRAVERSION)" \
 -- 
 2.39.5
 
