@@ -4,40 +4,41 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 314D2C02192
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9D761C02190
 	for <qemu-devel@archiver.kernel.org>; Tue, 28 Jan 2025 07:55:25 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tcgQH-0001XF-13; Tue, 28 Jan 2025 02:54:13 -0500
+	id 1tcgPa-0000uW-Bp; Tue, 28 Jan 2025 02:53:30 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1tcgQE-0001RK-Qr; Tue, 28 Jan 2025 02:54:10 -0500
+ id 1tcgPY-0000tQ-JO; Tue, 28 Jan 2025 02:53:28 -0500
 Received: from isrv.corpit.ru ([86.62.121.231])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1tcgQC-000800-It; Tue, 28 Jan 2025 02:54:10 -0500
+ id 1tcgPW-0007ly-JN; Tue, 28 Jan 2025 02:53:28 -0500
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id D52B4E1AC9;
+ by isrv.corpit.ru (Postfix) with ESMTP id 9C7C6E1ABB;
  Tue, 28 Jan 2025 10:52:59 +0300 (MSK)
 Received: from localhost.tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id 4FBDE1A62B8;
+ by tsrv.corpit.ru (Postfix) with ESMTP id 16E781A62AA;
  Tue, 28 Jan 2025 10:53:25 +0300 (MSK)
 Received: by localhost.tls.msk.ru (Postfix, from userid 1000)
- id 2898152007; Tue, 28 Jan 2025 10:53:25 +0300 (MSK)
+ id 109FF51FEB; Tue, 28 Jan 2025 10:53:25 +0300 (MSK)
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Ahmad Fatoum <a.fatoum@pengutronix.de>,
- Stafford Horne <shorne@gmail.com>,
- Peter Maydell <peter.maydell@linaro.org>, Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-7.2.16 16/31] hw/openrisc/openrisc_sim: keep serial@90000000
- as default
-Date: Tue, 28 Jan 2025 00:41:08 +0300
-Message-Id: <20250127214124.3730126-16-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org, Peter Maydell <peter.maydell@linaro.org>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-7.2.16 02/31] bitops.h: Define bit operations on 'uint32_t'
+ arrays
+Date: Tue, 28 Jan 2025 00:40:54 +0300
+Message-Id: <20250127214124.3730126-2-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <qemu-stable-7.2.16-20250128004119@cover.tls.msk.ru>
 References: <qemu-stable-7.2.16-20250128004119@cover.tls.msk.ru>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 From: Michael Tokarev <mjt@tls.msk.ru>
 Received-SPF: pass client-ip=86.62.121.231; envelope-from=mjt@tls.msk.ru;
@@ -64,114 +65,252 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-We used to only have a single UART on the platform and it was located at
-address 0x90000000. When the number of UARTs was increased to 4, the
-first UART remained at it's location, but instead of being the first one
-to be registered, it became the last.
+Currently bitops.h defines a set of operations that work on
+arbitrary-length bit arrays.  However (largely because they
+originally came from the Linux kernel) the bit array storage is an
+array of 'unsigned long'.  This is OK for the kernel and even for
+parts of QEMU where we don't really care about the underlying storage
+format, but it is not good for devices, where we often want to expose
+the storage to the guest and so need a type that is not
+variably-sized between host OSes.
 
-This caused QEMU to pick 0x90000300 as the default UART, which broke
-software that hardcoded the address of 0x90000000 and expected it's
-output to be visible when the user configured only a single console.
+We already have a workaround for this in the GICv3 model:
+arm_gicv3_common.h defines equivalents of the bit operations that
+work on uint32_t.  It turns out that we should also be using
+something similar in hw/intc/loongarch_extioi.c, which currently
+casts a pointer to a uint32_t array to 'unsigned long *' in
+extio_setirq(), which is both undefined behaviour and not correct on
+a big-endian host.
 
-This caused regressions[1] in the barebox test suite when updating to a
-newer QEMU. As there seems to be no good reason to register the UARTs in
-inverse order, let's register them by ascending address, so existing
-software can remain oblivious to the additional UART ports.
+Define equivalents of the set_bit() function family which work
+with a uint32_t array.
 
-Changing the order of uart registration alone breaks Linux which
-was choosing the UART at 0x90000300 as the default for ttyS0.  To fix
-Linux we fix three things in the device tree:
+(Cc stable because we're about to provide a bugfix to
+loongarch_extioi which will depend on this commit.)
 
- 1. Define stdout-path only one time for the first registered UART
-    instead of incorrectly defining for each UART.
- 2. Change the UART alias name from 'uart0' to 'serial0' as almost all
-    Linux tty drivers look for an alias starting with "serial".
- 3. Add the UART nodes so they appear in the final DTB in the
-    order starting with the lowest address and working upwards.
-
-In summary these changes mean that the QEMU default UART (serial_hd(0))
-is now setup where:
-
- * serial_hd(0) is the lowest-address UART
- * serial_hd(0) is listed first in the DTB
- * serial_hd(0) is the /chosen/stdout-path one
- * the /aliases/serial0 alias points at serial_hd(0)
-
-[1]: https://lore.barebox.org/barebox/707e7c50-aad1-4459-8796-0cc54bab32e2@pengutronix.de/T/#m5da26e8a799033301489a938b5d5667b81cef6ad
-
-Fixes: 777784bda468 ("hw/openrisc: support 4 serial ports in or1ksim")
 Cc: qemu-stable@nongnu.org
-Signed-off-by: Ahmad Fatoum <a.fatoum@pengutronix.de>
-[stafford: Change to serial0 alias and update change message, reverse
- uart registration order]
-Signed-off-by: Stafford Horne <shorne@gmail.com>
-Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
-(cherry picked from commit 26dcf2be7e153defa289d20317707af034aca692)
+Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Message-id: 20241108135514.4006953-2-peter.maydell@linaro.org
+(cherry picked from commit 3d7680fb18c7b17701730589d241a32e85f763a3)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/hw/openrisc/openrisc_sim.c b/hw/openrisc/openrisc_sim.c
-index 35da123aef..dc1fea8cd8 100644
---- a/hw/openrisc/openrisc_sim.c
-+++ b/hw/openrisc/openrisc_sim.c
-@@ -248,7 +248,7 @@ static void openrisc_sim_serial_init(Or1ksimState *state, hwaddr base,
-     void *fdt = state->fdt;
-     char *nodename;
-     qemu_irq serial_irq;
--    char alias[sizeof("uart0")];
-+    char alias[sizeof("serial0")];
-     int i;
+diff --git a/include/qemu/bitmap.h b/include/qemu/bitmap.h
+index 3ccb00865f..1f35e0193f 100644
+--- a/include/qemu/bitmap.h
++++ b/include/qemu/bitmap.h
+@@ -69,6 +69,14 @@
+ #define DECLARE_BITMAP(name,bits)                  \
+         unsigned long name[BITS_TO_LONGS(bits)]
  
-     if (num_cpus > 1) {
-@@ -263,7 +263,7 @@ static void openrisc_sim_serial_init(Or1ksimState *state, hwaddr base,
-         serial_irq = get_cpu_irq(cpus, 0, irq_pin);
-     }
-     serial_mm_init(get_system_memory(), base, 0, serial_irq, 115200,
--                   serial_hd(OR1KSIM_UART_COUNT - uart_idx - 1),
-+                   serial_hd(uart_idx),
-                    DEVICE_NATIVE_ENDIAN);
- 
-     /* Add device tree node for serial. */
-@@ -275,10 +275,13 @@ static void openrisc_sim_serial_init(Or1ksimState *state, hwaddr base,
-     qemu_fdt_setprop_cell(fdt, nodename, "clock-frequency", OR1KSIM_CLK_MHZ);
-     qemu_fdt_setprop(fdt, nodename, "big-endian", NULL, 0);
- 
--    /* The /chosen node is created during fdt creation. */
--    qemu_fdt_setprop_string(fdt, "/chosen", "stdout-path", nodename);
--    snprintf(alias, sizeof(alias), "uart%d", uart_idx);
-+    if (uart_idx == 0) {
-+        /* The /chosen node is created during fdt creation. */
-+        qemu_fdt_setprop_string(fdt, "/chosen", "stdout-path", nodename);
-+    }
-+    snprintf(alias, sizeof(alias), "serial%d", uart_idx);
-     qemu_fdt_setprop_string(fdt, "/aliases", alias, nodename);
++/*
++ * This is for use with the bit32 versions of set_bit() etc;
++ * we don't currently support the full range of bitmap operations
++ * on bitmaps backed by an array of uint32_t.
++ */
++#define DECLARE_BITMAP32(name, bits)            \
++        uint32_t name[BITS_TO_U32S(bits)]
 +
-     g_free(nodename);
+ #define small_nbits(nbits)                      \
+         ((nbits) <= BITS_PER_LONG)
+ 
+diff --git a/include/qemu/bitops.h b/include/qemu/bitops.h
+index 03213ce952..888ac7f0e6 100644
+--- a/include/qemu/bitops.h
++++ b/include/qemu/bitops.h
+@@ -18,16 +18,47 @@
+ 
+ #define BITS_PER_BYTE           CHAR_BIT
+ #define BITS_PER_LONG           (sizeof (unsigned long) * BITS_PER_BYTE)
++#define BITS_TO_LONGS(nr)       DIV_ROUND_UP(nr, BITS_PER_BYTE * sizeof(long))
++#define BITS_TO_U32S(nr)        DIV_ROUND_UP(nr, BITS_PER_BYTE * sizeof(uint32_t))
+ 
+ #define BIT(nr)                 (1UL << (nr))
+ #define BIT_ULL(nr)             (1ULL << (nr))
+-#define BIT_MASK(nr)            (1UL << ((nr) % BITS_PER_LONG))
+-#define BIT_WORD(nr)            ((nr) / BITS_PER_LONG)
+-#define BITS_TO_LONGS(nr)       DIV_ROUND_UP(nr, BITS_PER_BYTE * sizeof(long))
+ 
+ #define MAKE_64BIT_MASK(shift, length) \
+     (((~0ULL) >> (64 - (length))) << (shift))
+ 
++/**
++ * DOC: Functions operating on arrays of bits
++ *
++ * We provide a set of functions which work on arbitrary-length arrays of
++ * bits. These come in several flavours which vary in what the type of the
++ * underlying storage for the bits is:
++ *
++ * - Bits stored in an array of 'unsigned long': set_bit(), clear_bit(), etc
++ * - Bits stored in an array of 'uint32_t': set_bit32(), clear_bit32(), etc
++ *
++ * Because the 'unsigned long' type has a size which varies between
++ * host systems, the versions using 'uint32_t' are often preferable.
++ * This is particularly the case in a device model where there may
++ * be some guest-visible register view of the bit array.
++ *
++ * We do not currently implement uint32_t versions of find_last_bit(),
++ * find_next_bit(), find_next_zero_bit(), find_first_bit() or
++ * find_first_zero_bit(), because we haven't yet needed them. If you
++ * need them you should implement them similarly to the 'unsigned long'
++ * versions.
++ *
++ * You can declare a bitmap to be used with these functions via the
++ * DECLARE_BITMAP and DECLARE_BITMAP32 macros in bitmap.h.
++ */
++
++/**
++ * DOC:  'unsigned long' bit array APIs
++ */
++
++#define BIT_MASK(nr)            (1UL << ((nr) % BITS_PER_LONG))
++#define BIT_WORD(nr)            ((nr) / BITS_PER_LONG)
++
+ /**
+  * set_bit - Set a bit in memory
+  * @nr: the bit to set
+@@ -211,6 +242,141 @@ static inline unsigned long find_first_zero_bit(const unsigned long *addr,
+     return find_next_zero_bit(addr, size, 0);
  }
  
-@@ -326,11 +329,22 @@ static void openrisc_sim_init(MachineState *machine)
-                                 smp_cpus, cpus, OR1KSIM_OMPIC_IRQ);
-     }
- 
--    for (n = 0; n < OR1KSIM_UART_COUNT; ++n)
-+    /*
-+     * We create the UART nodes starting with the highest address and
-+     * working downwards, because in QEMU the DTB nodes end up in the
-+     * DTB in reverse order of creation. Correctly-written guest software
-+     * will not care about the node order (it will look at stdout-path
-+     * or the alias nodes), but for the benefit of guest software which
-+     * just looks for the first UART node in the DTB, make sure the
-+     * lowest-address UART (which is QEMU's first serial port) appears
-+     * first in the DTB.
-+     */
-+    for (n = OR1KSIM_UART_COUNT - 1; n >= 0; n--) {
-         openrisc_sim_serial_init(state, or1ksim_memmap[OR1KSIM_UART].base +
-                                         or1ksim_memmap[OR1KSIM_UART].size * n,
-                                  or1ksim_memmap[OR1KSIM_UART].size,
-                                  smp_cpus, cpus, OR1KSIM_UART_IRQ, n);
-+    }
- 
-     load_addr = openrisc_load_kernel(ram_size, kernel_filename,
-                                      &boot_info.bootstrap_pc);
++/**
++ * DOC:  'uint32_t' bit array APIs
++ */
++
++#define BIT32_MASK(nr)            (1UL << ((nr) % 32))
++#define BIT32_WORD(nr)            ((nr) / 32)
++
++/**
++ * set_bit32 - Set a bit in memory
++ * @nr: the bit to set
++ * @addr: the address to start counting from
++ */
++static inline void set_bit32(long nr, uint32_t *addr)
++{
++    uint32_t mask = BIT32_MASK(nr);
++    uint32_t *p = addr + BIT32_WORD(nr);
++
++    *p  |= mask;
++}
++
++/**
++ * set_bit32_atomic - Set a bit in memory atomically
++ * @nr: the bit to set
++ * @addr: the address to start counting from
++ */
++static inline void set_bit32_atomic(long nr, uint32_t *addr)
++{
++    uint32_t mask = BIT32_MASK(nr);
++    uint32_t *p = addr + BIT32_WORD(nr);
++
++    qatomic_or(p, mask);
++}
++
++/**
++ * clear_bit32 - Clears a bit in memory
++ * @nr: Bit to clear
++ * @addr: Address to start counting from
++ */
++static inline void clear_bit32(long nr, uint32_t *addr)
++{
++    uint32_t mask = BIT32_MASK(nr);
++    uint32_t *p = addr + BIT32_WORD(nr);
++
++    *p &= ~mask;
++}
++
++/**
++ * clear_bit32_atomic - Clears a bit in memory atomically
++ * @nr: Bit to clear
++ * @addr: Address to start counting from
++ */
++static inline void clear_bit32_atomic(long nr, uint32_t *addr)
++{
++    uint32_t mask = BIT32_MASK(nr);
++    uint32_t *p = addr + BIT32_WORD(nr);
++
++    return qatomic_and(p, ~mask);
++}
++
++/**
++ * change_bit32 - Toggle a bit in memory
++ * @nr: Bit to change
++ * @addr: Address to start counting from
++ */
++static inline void change_bit32(long nr, uint32_t *addr)
++{
++    uint32_t mask = BIT32_MASK(nr);
++    uint32_t *p = addr + BIT32_WORD(nr);
++
++    *p ^= mask;
++}
++
++/**
++ * test_and_set_bit32 - Set a bit and return its old value
++ * @nr: Bit to set
++ * @addr: Address to count from
++ */
++static inline int test_and_set_bit32(long nr, uint32_t *addr)
++{
++    uint32_t mask = BIT32_MASK(nr);
++    uint32_t *p = addr + BIT32_WORD(nr);
++    uint32_t old = *p;
++
++    *p = old | mask;
++    return (old & mask) != 0;
++}
++
++/**
++ * test_and_clear_bit32 - Clear a bit and return its old value
++ * @nr: Bit to clear
++ * @addr: Address to count from
++ */
++static inline int test_and_clear_bit32(long nr, uint32_t *addr)
++{
++    uint32_t mask = BIT32_MASK(nr);
++    uint32_t *p = addr + BIT32_WORD(nr);
++    uint32_t old = *p;
++
++    *p = old & ~mask;
++    return (old & mask) != 0;
++}
++
++/**
++ * test_and_change_bit32 - Change a bit and return its old value
++ * @nr: Bit to change
++ * @addr: Address to count from
++ */
++static inline int test_and_change_bit32(long nr, uint32_t *addr)
++{
++    uint32_t mask = BIT32_MASK(nr);
++    uint32_t *p = addr + BIT32_WORD(nr);
++    uint32_t old = *p;
++
++    *p = old ^ mask;
++    return (old & mask) != 0;
++}
++
++/**
++ * test_bit32 - Determine whether a bit is set
++ * @nr: bit number to test
++ * @addr: Address to start counting from
++ */
++static inline int test_bit32(long nr, const uint32_t *addr)
++{
++    return 1U & (addr[BIT32_WORD(nr)] >> (nr & 31));
++}
++
++/**
++ * DOC: Miscellaneous bit operations on single values
++ *
++ * These functions are a collection of useful operations
++ * (rotations, bit extract, bit deposit, etc) on single
++ * integer values.
++ */
++
+ /**
+  * rol8 - rotate an 8-bit value left
+  * @word: value to rotate
 -- 
 2.39.5
 
