@@ -4,100 +4,89 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7BA99C0218A
-	for <qemu-devel@archiver.kernel.org>; Mon, 27 Jan 2025 20:33:19 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0AB23C02188
+	for <qemu-devel@archiver.kernel.org>; Mon, 27 Jan 2025 20:41:52 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tcVmI-0001GP-6c; Mon, 27 Jan 2025 15:32:14 -0500
+	id 1tcVuv-0003AE-5N; Mon, 27 Jan 2025 15:41:09 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjrosato@linux.ibm.com>)
- id 1tcVmG-0001FG-2y; Mon, 27 Jan 2025 15:32:12 -0500
-Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjrosato@linux.ibm.com>)
- id 1tcVmE-0002Sm-6Z; Mon, 27 Jan 2025 15:32:11 -0500
-Received: from pps.filterd (m0360083.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 50RFuvva025771;
- Mon, 27 Jan 2025 20:31:37 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=pp1; bh=cZpMuj
- +fM3X7a4+76JOAdq3UPWr4FwRFkfFhHshxUP4=; b=f1AOPnEEn1wD7ey9gWURVr
- 4d9xBnmsc2VRpVqLg0GX34iQvhZ3ZzFmCgb+TMT2qDcAIN2AavJLULnmVOSM/3Uv
- N/aTvrbnT93MlzssI9mE8xDX61kZZ4dgpMe6q5RmnzQBCOg/hKo81WD/tyoUyljw
- dp9WZ6+eHp5251thAc98Cm8h7OdrtGyA+3Qq/oV/aTrD/JpAecMYaYGvV8Yd+J6R
- gNRkccaJw004EeQSUxQ6nab/3yERgCxh4G1Ou93Rtg2Gt+rSvsH98Aj4edF352zv
- 7PcxwdzFEAKPsVj9SVl+6d6GlLqkEcopXI4+kAcpnodPC4nFvnJCKaSruHWMw7Rw
- ==
-Received: from ppma13.dal12v.mail.ibm.com
- (dd.9e.1632.ip4.static.sl-reverse.com [50.22.158.221])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 44e079d360-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Mon, 27 Jan 2025 20:31:37 +0000 (GMT)
-Received: from pps.filterd (ppma13.dal12v.mail.ibm.com [127.0.0.1])
- by ppma13.dal12v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 50RHPWUZ022236;
- Mon, 27 Jan 2025 20:31:36 GMT
-Received: from smtprelay05.wdc07v.mail.ibm.com ([172.16.1.72])
- by ppma13.dal12v.mail.ibm.com (PPS) with ESMTPS id 44dcgjfqr3-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Mon, 27 Jan 2025 20:31:36 +0000
-Received: from smtpav05.wdc07v.mail.ibm.com (smtpav05.wdc07v.mail.ibm.com
- [10.39.53.232])
- by smtprelay05.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 50RKVYdF31916650
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Mon, 27 Jan 2025 20:31:35 GMT
-Received: from smtpav05.wdc07v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id D29FE58059;
- Mon, 27 Jan 2025 20:31:34 +0000 (GMT)
-Received: from smtpav05.wdc07v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 91A3758043;
- Mon, 27 Jan 2025 20:31:33 +0000 (GMT)
-Received: from [9.61.39.122] (unknown [9.61.39.122])
- by smtpav05.wdc07v.mail.ibm.com (Postfix) with ESMTP;
- Mon, 27 Jan 2025 20:31:33 +0000 (GMT)
-Message-ID: <316ba215-929a-4311-be9b-12c4410e545c@linux.ibm.com>
-Date: Mon, 27 Jan 2025 15:31:33 -0500
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1tcVut-0003A2-M3
+ for qemu-devel@nongnu.org; Mon, 27 Jan 2025 15:41:07 -0500
+Received: from mail-pl1-x635.google.com ([2607:f8b0:4864:20::635])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1tcVur-0004fH-Fc
+ for qemu-devel@nongnu.org; Mon, 27 Jan 2025 15:41:07 -0500
+Received: by mail-pl1-x635.google.com with SMTP id
+ d9443c01a7336-2161eb95317so86455415ad.1
+ for <qemu-devel@nongnu.org>; Mon, 27 Jan 2025 12:41:04 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1738010463; x=1738615263; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:to:subject:user-agent:mime-version:date:message-id:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=70jgPy2Z/QYdI3UgWuImziCNXeNrQV3FgGpgfywprkY=;
+ b=S5QadgUTgeFUzOgDyovH3X4mqiKlpa4ssICh8kBi/ZlR6iLdeF5lYcpSxmQMevLhB+
+ nO7EEfvijMuDDCttmBbS+0XBEjds9yh2synbpC7a0KKXF4CBDDKc+VSr4LTEUbVhcN6J
+ 4kYVVzpc/ZO81KhW+efPCKq5PQ5JshQQAfPbT1Z3BaLHlSYKgvU8iUyj0WdKZtldspn6
+ AMqInEMwTV1uy9BXEy00OvSToViOYRpa8W1CAPFn7yB87GnR9qcEYPOE6GIku1SKv9sq
+ b3Qirl0BnbHaiTvQNT/Rqaajz7DJvW50J7DAadD0yk8eveUDPasEXoTNtU8yMg5vbNUp
+ 7urQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1738010463; x=1738615263;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=70jgPy2Z/QYdI3UgWuImziCNXeNrQV3FgGpgfywprkY=;
+ b=SvNNWKO9NUIKpQandYDSEbj+SYRpp/zG57ShEjbK8T62WuOxXUMB3z4Fop/1db8NZC
+ +a1tNRSeD0EgkS6n4Qg6byMYbpwUyKKEahhbeOwOa3rU5uDgePbD4n4MBQHqSBZuzHoT
+ J7nbdE0Tdmr3ee6jx8/+bFVcIy2B6i37Vndih/hI7BG0CwqNWR6dxoawnmcw+SFqEivn
+ EWQxfXlkp713RaDJZDHLBCMjlMuk7s8LHVJx3adnCwOYMtzCTQOnKwG/KsZvJvYx9hdU
+ tGBTFp3KqnF8OrnTHAlIHt6wlQUYRG4omXTiINvUwMqJ6DLAW5bp51j7rPr0Uw3Dpl6i
+ 7Flg==
+X-Gm-Message-State: AOJu0YznhmS3nBf3e2ebzFtbmiIYX08fnulL4hnRSw0kxYqhEfqYuuGG
+ RxGULbbyVAE1U3B23mu+cwuCPlcjFUZq9G1d05QwtIQ0Pv3zSB73rEfIgWxRqCeO/7aYn5wv8L0
+ a
+X-Gm-Gg: ASbGncu84GWOipblYPELaHI+NrWDfwErEUoNT4JHct6OiILjNae0QGpQGeziqcMQCud
+ qcs8F+faHHvfSURWWsIGJi6wDWlr3fFimpR/U6QmTryZpSQ+rD6x83bbEX/Tc0nHeANNLiwYZTZ
+ AfQQkOG9DP8Bx5kWu+kDWbv0h2VHpTzq+4CkA+2MMNmCljw1auKNl4G4rnTAtYrV7n3/3/QCqN6
+ wp4EB9eZy5dLrmSPVoL9QCg6IyY0cs+soPRSGhW5/n50kq8LQEuEaBcm9U+8uZUTnzNIQk5LYe6
+ rFMTo/Bwo0ysfZVf28PhwgnmZXuMQJ7AGowO5MCX2/szrC8=
+X-Google-Smtp-Source: AGHT+IFszxTwgxInFmGikM99x4HAs1lqNp5kZBCT0UmBxgqNGvTYuZ5wdM4Mvu7BouB9LOeD9BxEkA==
+X-Received: by 2002:a05:6a20:6a82:b0:1e0:d8c1:cfe2 with SMTP id
+ adf61e73a8af0-1eb2158ef4dmr62109833637.34.1738010461818; 
+ Mon, 27 Jan 2025 12:41:01 -0800 (PST)
+Received: from [192.168.0.4] (174-21-71-127.tukw.qwest.net. [174.21.71.127])
+ by smtp.gmail.com with ESMTPSA id
+ 41be03b00d2f7-ac48f898107sm6908519a12.31.2025.01.27.12.41.01
+ for <qemu-devel@nongnu.org>
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Mon, 27 Jan 2025 12:41:01 -0800 (PST)
+Message-ID: <0e8eeee3-62d4-4c4c-9145-26983e0691d7@linaro.org>
+Date: Mon, 27 Jan 2025 12:41:00 -0800
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 1/2] s390x/pci: add support for guests that request
- direct mapping
-To: David Hildenbrand <david@redhat.com>, qemu-s390x@nongnu.org
-Cc: farman@linux.ibm.com, schnelle@linux.ibm.com, thuth@redhat.com,
- pasic@linux.ibm.com, borntraeger@linux.ibm.com,
- richard.henderson@linaro.org, iii@linux.ibm.com, clegoate@redhat.com,
- qemu-devel@nongnu.org
-References: <20250124202115.349386-1-mjrosato@linux.ibm.com>
- <20250124202115.349386-2-mjrosato@linux.ibm.com>
- <cbe2a998-dc7d-4e86-8da6-659759f1b0cd@redhat.com>
+Subject: Re: [PATCH 65/76] target/arm: Handle FPCR.AH in negation step in SVE
+ FMLS (vector)
+To: qemu-devel@nongnu.org
+References: <20250124162836.2332150-1-peter.maydell@linaro.org>
+ <20250124162836.2332150-66-peter.maydell@linaro.org>
 Content-Language: en-US
-From: Matthew Rosato <mjrosato@linux.ibm.com>
-In-Reply-To: <cbe2a998-dc7d-4e86-8da6-659759f1b0cd@redhat.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-X-TM-AS-GCONF: 00
-X-Proofpoint-ORIG-GUID: uebRj63nwtGI2xNyCzTFRdpM4vGauSZC
-X-Proofpoint-GUID: uebRj63nwtGI2xNyCzTFRdpM4vGauSZC
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1057,Hydra:6.0.680,FMLib:17.12.68.34
- definitions=2025-01-27_10,2025-01-27_01,2024-11-22_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- impostorscore=0 adultscore=0
- clxscore=1015 malwarescore=0 suspectscore=0 bulkscore=0 priorityscore=1501
- mlxlogscore=999 mlxscore=0 phishscore=0 lowpriorityscore=0 spamscore=0
- classifier=spam adjust=0 reason=mlx scancount=1 engine=8.19.0-2411120000
- definitions=main-2501270161
-Received-SPF: pass client-ip=148.163.156.1;
- envelope-from=mjrosato@linux.ibm.com; helo=mx0a-001b2d01.pphosted.com
-X-Spam_score_int: -26
-X-Spam_score: -2.7
+From: Richard Henderson <richard.henderson@linaro.org>
+In-Reply-To: <20250124162836.2332150-66-peter.maydell@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::635;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x635.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H2=0.001, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -114,44 +103,27 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+On 1/24/25 08:28, Peter Maydell wrote:
+> @@ -4910,9 +4958,15 @@ static void do_fmla_zpzzz_d(void *vd, void *vn, void *vm, void *va, void *vg,
+>               if (likely((pg >> (i & 63)) & 1)) {
+>                   float64 e1, e2, e3, r;
+>   
+> -                e1 = *(uint64_t *)(vn + i) ^ neg1;
+> +                e1 = *(uint64_t *)(vn + i);
+>                   e2 = *(uint64_t *)(vm + i);
+> -                e3 = *(uint64_t *)(va + i) ^ neg3;
+> +                e3 = *(uint64_t *)(va + i);
+> +                if (neg1 && !(fpcr_ah && float64_is_any_nan(e1))) {
+> +                    e1 ^= neg1;
+> +                }
+> +                if (neg3 && !(fpcr_ah && float64_is_any_nan(e3))) {
+> +                    e3 ^= neg3;
+> +                }
+>                   r = float64_muladd(e1, e2, e3, 0, status);
 
->>   +void s390_pci_iommu_dm_enable(S390PCIIOMMU *iommu)
->> +{
->> +    MachineState *ms = MACHINE(qdev_get_machine());
->> +    S390CcwMachineState *s390ms = S390_CCW_MACHINE(ms);
->> +
->> +    /*
->> +     * For direct-mapping we must map the entire guest address space.  Rather
->> +     * than using an iommu, create a memory region alias that maps GPA X to
->> +     * iova X + SDMA.  VFIO will handle pinning via its memory listener.
->> +     */
->> +    g_autofree char *name = g_strdup_printf("iommu-dm-s390-%04x",
->> +                                            iommu->pbdev->uid);
->> +    memory_region_init_alias(&iommu->dm_mr, OBJECT(&iommu->mr), name, ms->ram,
->> +                             0, s390_get_memory_limit(s390ms));
-> 
-> Hm, the memory limit can exceed  ms->ram.
-> 
-> Would it be possible to use get_system_memory() here, such that whatever is mapped into physical address space (including virtio-mem devices etc) would simply be aliased with an offset?
-> 
-> Or does that blow up elsewhere?
-
-Testing with
-
-    memory_region_init_alias(&iommu->dm_mr, OBJECT(&iommu->mr), name,
-                             get_system_memory(), 0,
-                             s390_get_memory_limit(s390ms));
-
-Looks good so far, will change for next version
+It occurs to me that with AH=1, we can use the float_muladd_* flags.
+We couldn't use those for AH=0, because there we *need* to negate NaNs.
 
 
-> 
-> target/i386/kvm/kvm.c seems to do that:
-> 
-> memory_region_init_alias(&smram_as_mem, OBJECT(kvm_state), "mem-smram",
->              get_system_memory(), 0, ~0ull);
-> 
-> and target/i386/tcg/system/tcg-cpu.c
-> 
-
+r~
 
