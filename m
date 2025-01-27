@@ -4,38 +4,41 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BEBB3C0218D
-	for <qemu-devel@archiver.kernel.org>; Tue, 28 Jan 2025 07:51:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 49525C0218D
+	for <qemu-devel@archiver.kernel.org>; Tue, 28 Jan 2025 07:52:47 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tcgNk-0007yh-2y; Tue, 28 Jan 2025 02:51:36 -0500
+	id 1tcgOX-0008WF-Lh; Tue, 28 Jan 2025 02:52:26 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1tcgNe-0007xX-G6; Tue, 28 Jan 2025 02:51:30 -0500
+ id 1tcgOV-0008Qn-24; Tue, 28 Jan 2025 02:52:23 -0500
 Received: from isrv.corpit.ru ([86.62.121.231])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1tcgNT-0007Ny-5O; Tue, 28 Jan 2025 02:51:21 -0500
+ id 1tcgOT-0007a6-4g; Tue, 28 Jan 2025 02:52:22 -0500
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 696A0E1AAD;
- Tue, 28 Jan 2025 10:50:50 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id 2ED51E1AB2;
+ Tue, 28 Jan 2025 10:51:54 +0300 (MSK)
 Received: from localhost.tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id D3F4A1A62A7;
- Tue, 28 Jan 2025 10:51:15 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id 9D14D1A62A8;
+ Tue, 28 Jan 2025 10:52:19 +0300 (MSK)
 Received: by localhost.tls.msk.ru (Postfix, from userid 1000)
- id C65CB51FE5; Tue, 28 Jan 2025 10:51:15 +0300 (MSK)
+ id 96F2851FE7; Tue, 28 Jan 2025 10:52:19 +0300 (MSK)
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org,
-	Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-7.2.16 00/31] Patch Round-up for stable 7.2.16,
- freeze on 2025-02-06
-Date: Tue, 28 Jan 2025 00:40:52 +0300
-Message-Id: <qemu-stable-7.2.16-20250128004119@cover.tls.msk.ru>
+Cc: qemu-stable@nongnu.org, Peter Maydell <peter.maydell@linaro.org>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>,
+ Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-7.2.16 01/31] hw/intc/openpic: Avoid taking address of
+ out-of-bounds array index
+Date: Tue, 28 Jan 2025 00:40:53 +0300
+Message-Id: <20250127214124.3730126-1-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.39.5
+In-Reply-To: <qemu-stable-7.2.16-20250128004119@cover.tls.msk.ru>
+References: <qemu-stable-7.2.16-20250128004119@cover.tls.msk.ru>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 From: Michael Tokarev <mjt@tls.msk.ru>
 Received-SPF: pass client-ip=86.62.121.231; envelope-from=mjt@tls.msk.ru;
@@ -62,85 +65,58 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The following patches are queued for QEMU stable v7.2.16:
+The clang sanitizer complains about the code in the EOI handling
+of openpic_cpu_write_internal():
 
-  https://gitlab.com/qemu-project/qemu/-/commits/staging-7.2
+UBSAN_OPTIONS=halt_on_error=1:abort_on_error=1 ./build/clang/qemu-system-ppc -M mac99,graphics=off -display none -kernel day15/invaders.elf
+../../hw/intc/openpic.c:1034:16: runtime error: index -1 out of bounds for type 'IRQSource[264]' (aka 'struct IRQSource[264]')
+SUMMARY: UndefinedBehaviorSanitizer: undefined-behavior ../../hw/intc/openpic.c:1034:16 in
 
-Patch freeze is 2025-02-06, and the release is planned for 2025-02-08:
+This is because we do
+  src = &opp->src[n_IRQ];
+when n_IRQ may be -1.  This is in practice harmless because if n_IRQ
+is -1 then we don't do anything with the src pointer, but it is
+undefined behaviour. (This has been present since this device
+was first added to QEMU.)
 
-  https://wiki.qemu.org/Planning/7.2
+Rearrange the code so we only do the array index when n_IRQ is not -1.
 
-Please respond here or CC qemu-stable@nongnu.org on any additional patches
-you think should (or shouldn't) be included in the release.
+Cc: qemu-stable@nongnu.org
+Fixes: e9df014c0b ("Implement embedded IRQ controller for PowerPC 6xx/740 & 75")
+Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Reviewed-by: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
+Message-id: 20241105180205.3074071-1-peter.maydell@linaro.org
+(cherry picked from commit 3bf7dcd47a3da0e86a9347ce5b2b5d5a1dcb5857)
+Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-The changes which are staging for inclusion, with the original commit hash
-from master branch, are given below the bottom line.
+diff --git a/hw/intc/openpic.c b/hw/intc/openpic.c
+index c757adbe53..adc79abbe5 100644
+--- a/hw/intc/openpic.c
++++ b/hw/intc/openpic.c
+@@ -1035,13 +1035,14 @@ static void openpic_cpu_write_internal(void *opaque, hwaddr addr,
+         s_IRQ = IRQ_get_next(opp, &dst->servicing);
+         /* Check queued interrupts. */
+         n_IRQ = IRQ_get_next(opp, &dst->raised);
+-        src = &opp->src[n_IRQ];
+-        if (n_IRQ != -1 &&
+-            (s_IRQ == -1 ||
+-             IVPR_PRIORITY(src->ivpr) > dst->servicing.priority)) {
+-            DPRINTF("Raise OpenPIC INT output cpu %d irq %d",
+-                    idx, n_IRQ);
+-            qemu_irq_raise(opp->dst[idx].irqs[OPENPIC_OUTPUT_INT]);
++        if (n_IRQ != -1) {
++            src = &opp->src[n_IRQ];
++            if (s_IRQ == -1 ||
++                IVPR_PRIORITY(src->ivpr) > dst->servicing.priority) {
++                DPRINTF("Raise OpenPIC INT output cpu %d irq %d",
++                        idx, n_IRQ);
++                qemu_irq_raise(opp->dst[idx].irqs[OPENPIC_OUTPUT_INT]);
++            }
+         }
+         break;
+     default:
+-- 
+2.39.5
 
-Thanks!
-
-/mjt
-
---------------------------------------
-01 3bf7dcd47a3d Peter Maydell:
-   hw/intc/openpic: Avoid taking address of out-of-bounds array index
-02 3d7680fb18c7 Peter Maydell:
-   bitops.h: Define bit operations on 'uint32_t' arrays
-03 335be5bc44aa Peter Maydell:
-   hw/intc/loongarch_extioi: Use set_bit32() and clear_bit32() for s->isr
-04 da80f11efeea Philippe Mathieu-Daudé:
-   cirrus-ci: Remove MSYS2 jobs duplicated with gitlab-ci
-05 a8575f7fb2f2 Akihiko Odaki:
-   virtio-net: Fix size check in dhclient workaround
-06 5102f9df4a9a Kevin Wolf:
-   qdev: Fix set_pci_devfn() to visit option only once
-07 fbdea3d6c13d Jakub Jelen:
-   ssh: Do not switch session to non-blocking mode
-08 3abb67323aee Guenter Roeck:
-   scsi: megasas: Internal cdbs have 16-byte length
-09 abf0f092c1dd Christian Schoenebeck:
-   tests/9p: fix Rreaddir response name
-10 4ec984965079 Christian Schoenebeck:
-   tests/9p: add missing Rgetattr response name
-11 462db8fb1d40 Christian Schoenebeck:
-   tests/9p: add 'use-after-unlink' test
-12 3bc4db44430f Christian Schoenebeck:
-   9pfs: remove obsolete comment in v9fs_getattr()
-13 c81e7219e073 Christian Schoenebeck:
-   9pfs: fix 'Tgetattr' after unlink
-14 eaab44ccc59b Christian Schoenebeck:
-   tests/9p: also check 'Tgetattr' in 'use-after-unlink' test
-15 fa416ae6157a Nicholas Piggin:
-   target/ppc: Fix non-maskable interrupt while halted
-16 26dcf2be7e15 Ahmad Fatoum:
-   hw/openrisc/openrisc_sim: keep serial@90000000 as default
-17 b438362a1425 Roman Artemev:
-   tcg/riscv: Fix StoreStore barrier generation
-18 e7fca81e1705 Alexander Bulekov:
-   fuzz: specify audiodev for usb-audio
-19 57e2cc9abf5d Gerd Hoffmann:
-   x86/loader: only patch linux kernels
-20 9678b9c50572 Peter Maydell:
-   hw/intc/arm_gicv3_its: Zero initialize local DTEntry etc structs
-21 e2d98f257138 Thomas Huth:
-   meson.build: Disallow libnfs v6 to fix the broken macOS build
-22 14e568ab4836 David Hildenbrand:
-   s390x/s390-virtio-ccw: don't crash on weird RAM sizes
-23 b4859e8f33a7 Philippe Mathieu-Daudé:
-   docs: Correct release of TCG trace-events removal
-24 93dcc9390e5a Han Han:
-   target/i386/cpu: Fix notes for CPU models
-25 78b0c15a563a Gabriel Barrantes:
-   backends/cryptodev-vhost-user: Fix local_error leaks
-26 bb5b7fced6b5 Phil Dennis-Jordan:
-   hw/usb/hcd-xhci-pci: Use modulo to select MSI vector as per spec
-27 694632fd4498 Sebastian Ott:
-   pci: ensure valid link status bits for downstream ports
-28 42e2a7a0ab23 Nicholas Piggin:
-   pci/msix: Fix msix pba read vector poll end calculation
-29 1ad32644fe4c Igor Mammedov:
-   tests: acpi: whitelist expected blobs
-30 0b053391985a Igor Mammedov:
-   pci: acpi: Windows 'PCI Label Id' bug workaround
-31 9fb1c9a1bb26 Igor Mammedov:
-   tests: acpi: update expected blobs
 
