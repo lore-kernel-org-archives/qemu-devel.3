@@ -4,34 +4,35 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9D795C0218D
-	for <qemu-devel@archiver.kernel.org>; Tue, 28 Jan 2025 08:19:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id EB2B7C0218D
+	for <qemu-devel@archiver.kernel.org>; Tue, 28 Jan 2025 08:19:36 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tcgd5-0007w1-1y; Tue, 28 Jan 2025 03:07:27 -0500
+	id 1tcghG-0004bG-KY; Tue, 28 Jan 2025 03:11:50 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1tcgZP-0007O8-GY; Tue, 28 Jan 2025 03:03:48 -0500
+ id 1tcgar-0002Gd-BY; Tue, 28 Jan 2025 03:05:15 -0500
 Received: from isrv.corpit.ru ([86.62.121.231])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1tcgZM-0002M3-Vq; Tue, 28 Jan 2025 03:03:38 -0500
+ id 1tcgap-0002mR-2v; Tue, 28 Jan 2025 03:05:08 -0500
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id ED396E1B63;
- Tue, 28 Jan 2025 10:57:08 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id 309D9E1B71;
+ Tue, 28 Jan 2025 10:57:09 +0300 (MSK)
 Received: from localhost.tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id 67D281A6316;
+ by tsrv.corpit.ru (Postfix) with ESMTP id A0A721A6324;
  Tue, 28 Jan 2025 10:57:34 +0300 (MSK)
 Received: by localhost.tls.msk.ru (Postfix, from userid 1000)
- id 1747E520BD; Tue, 28 Jan 2025 10:57:34 +0300 (MSK)
+ id 2F1C9520D9; Tue, 28 Jan 2025 10:57:34 +0300 (MSK)
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Gerd Hoffmann <kraxel@redhat.com>,
- Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-9.1.3 28/58] x86/loader: only patch linux kernels
-Date: Mon, 27 Jan 2025 23:25:14 +0300
-Message-Id: <20250127202547.3723716-28-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org, Fabiano Rosas <farosas@suse.de>,
+ Peter Xu <peterx@redhat.com>, Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-9.1.3 42/58] migration: Remove unused argument in
+ vmsd_desc_field_end
+Date: Mon, 27 Jan 2025 23:25:28 +0300
+Message-Id: <20250127202547.3723716-42-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <qemu-stable-9.1.3-20250127232536@cover.tls.msk.ru>
 References: <qemu-stable-9.1.3-20250127232536@cover.tls.msk.ru>
@@ -62,37 +63,34 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-If the binary loaded via -kernel is *not* a linux kernel (in which
-case protocol == 0), do not patch the linux kernel header fields.
-
-It's (a) pointless and (b) might break binaries by random patching
-and (c) changes the binary hash which in turn breaks secure boot
-verification.
-
-Background: OVMF happily loads and runs not only linux kernels but
-any efi binary via direct kernel boot.
-
-Note: Breaking the secure boot verification is a problem for linux
-kernels too, but fixed that is left for another day ...
-
-Signed-off-by: Gerd Hoffmann <kraxel@redhat.com>
-Message-ID: <20240905141211.1253307-3-kraxel@redhat.com>
-(cherry picked from commit 57e2cc9abf5da38f600354fe920ff20e719607b4)
+Reviewed-by: Peter Xu <peterx@redhat.com>
+Message-Id: <20250109185249.23952-3-farosas@suse.de>
+Signed-off-by: Fabiano Rosas <farosas@suse.de>
+(cherry picked from commit 2aead53d39b828f8d9d0769ffa3579dadd64d846)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/hw/i386/x86-common.c b/hw/i386/x86-common.c
-index 992ea1f25e..b52903c47f 100644
---- a/hw/i386/x86-common.c
-+++ b/hw/i386/x86-common.c
-@@ -943,7 +943,7 @@ void x86_load_linux(X86MachineState *x86ms,
-      * kernel on the other side of the fw_cfg interface matches the hash of the
-      * file the user passed in.
-      */
--    if (!sev_enabled()) {
-+    if (!sev_enabled() && protocol > 0) {
-         memcpy(setup, header, MIN(sizeof(header), setup_size));
-     }
+diff --git a/migration/vmstate.c b/migration/vmstate.c
+index fa002b24e8..aa2821dec6 100644
+--- a/migration/vmstate.c
++++ b/migration/vmstate.c
+@@ -311,7 +311,7 @@ static void vmsd_desc_field_start(const VMStateDescription *vmsd,
  
+ static void vmsd_desc_field_end(const VMStateDescription *vmsd,
+                                 JSONWriter *vmdesc,
+-                                const VMStateField *field, size_t size, int i)
++                                const VMStateField *field, size_t size)
+ {
+     if (!vmdesc) {
+         return;
+@@ -420,7 +420,7 @@ int vmstate_save_state_v(QEMUFile *f, const VMStateDescription *vmsd,
+                 }
+ 
+                 written_bytes = qemu_file_transferred(f) - old_offset;
+-                vmsd_desc_field_end(vmsd, vmdesc_loop, field, written_bytes, i);
++                vmsd_desc_field_end(vmsd, vmdesc_loop, field, written_bytes);
+ 
+                 /* Compressed arrays only care about the first element */
+                 if (vmdesc_loop && vmsd_can_compress(field)) {
 -- 
 2.39.5
 
