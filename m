@@ -4,34 +4,34 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9B4AFC0218D
-	for <qemu-devel@archiver.kernel.org>; Tue, 28 Jan 2025 07:56:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id AEC44C02192
+	for <qemu-devel@archiver.kernel.org>; Tue, 28 Jan 2025 07:56:25 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tcgPl-0000zb-Ce; Tue, 28 Jan 2025 02:53:41 -0500
+	id 1tcgQd-0002KP-SN; Tue, 28 Jan 2025 02:54:36 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1tcgPi-0000ym-LE; Tue, 28 Jan 2025 02:53:38 -0500
+ id 1tcgQc-0002IH-4p; Tue, 28 Jan 2025 02:54:34 -0500
 Received: from isrv.corpit.ru ([86.62.121.231])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1tcgPh-0007ot-5F; Tue, 28 Jan 2025 02:53:38 -0500
+ id 1tcgQa-00081c-G6; Tue, 28 Jan 2025 02:54:33 -0500
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id B9EACE1AC2;
+ by isrv.corpit.ru (Postfix) with ESMTP id DD17EE1ACB;
  Tue, 28 Jan 2025 10:52:59 +0300 (MSK)
 Received: from localhost.tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id 34D1B1A62B1;
+ by tsrv.corpit.ru (Postfix) with ESMTP id 57E2A1A62BA;
  Tue, 28 Jan 2025 10:53:25 +0300 (MSK)
 Received: by localhost.tls.msk.ru (Postfix, from userid 1000)
- id 1C74E51FF9; Tue, 28 Jan 2025 10:53:25 +0300 (MSK)
+ id 2BDE15200B; Tue, 28 Jan 2025 10:53:25 +0300 (MSK)
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Christian Schoenebeck <qemu_oss@crudebyte.com>,
- Greg Kurz <groug@kaod.org>, Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-7.2.16 09/31] tests/9p: fix Rreaddir response name
-Date: Tue, 28 Jan 2025 00:41:01 +0300
-Message-Id: <20250127214124.3730126-9-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org, Alexander Bulekov <alxndr@bu.edu>,
+ Thomas Huth <thuth@redhat.com>, Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-7.2.16 18/31] fuzz: specify audiodev for usb-audio
+Date: Tue, 28 Jan 2025 00:41:10 +0300
+Message-Id: <20250127214124.3730126-18-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <qemu-stable-7.2.16-20250128004119@cover.tls.msk.ru>
 References: <qemu-stable-7.2.16-20250128004119@cover.tls.msk.ru>
@@ -62,29 +62,30 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-All 9p response types are prefixed with an "R", therefore fix
-"READDIR" -> "RREADDIR" in function rmessage_name().
+Fixes test-failure on Fedora 40 CI.
 
-Fixes: 4829469fd9ff ("tests/virtio-9p: added readdir test")
-Signed-off-by: Christian Schoenebeck <qemu_oss@crudebyte.com>
-Reviewed-by: Greg Kurz <groug@kaod.org>
-Message-Id: <daad7af58b403aaa2487c566032beca36664b30e.1732465720.git.qemu_oss@crudebyte.com>
-(cherry picked from commit abf0f092c1dd33b9ffa986c6924addc0a9c1d0b8)
+Reported-by: Thomas Huth <thuth@redhat.com>
+Signed-off-by: Alexander Bulekov <alxndr@bu.edu>
+Reviewed-by: Thomas Huth <thuth@redhat.com>
+Message-ID: <20240527040711.311865-1-alxndr@bu.edu>
+Signed-off-by: Thomas Huth <thuth@redhat.com>
+(cherry picked from commit e7fca81e170530104c36bd8f3e1d7e7c11011481)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/tests/qtest/libqos/virtio-9p-client.c b/tests/qtest/libqos/virtio-9p-client.c
-index e4a368e036..a9eb1876f0 100644
---- a/tests/qtest/libqos/virtio-9p-client.c
-+++ b/tests/qtest/libqos/virtio-9p-client.c
-@@ -238,7 +238,7 @@ static const char *rmessage_name(uint8_t id)
-         id == P9_RLINK ? "RLINK" :
-         id == P9_RUNLINKAT ? "RUNLINKAT" :
-         id == P9_RFLUSH ? "RFLUSH" :
--        id == P9_RREADDIR ? "READDIR" :
-+        id == P9_RREADDIR ? "RREADDIR" :
-         "<unknown>";
- }
- 
+diff --git a/tests/qtest/fuzz/generic_fuzz_configs.h b/tests/qtest/fuzz/generic_fuzz_configs.h
+index a825b78c14..4c3235311b 100644
+--- a/tests/qtest/fuzz/generic_fuzz_configs.h
++++ b/tests/qtest/fuzz/generic_fuzz_configs.h
+@@ -143,7 +143,8 @@ const generic_fuzz_config predefined_configs[] = {
+         "-chardev null,id=cd0 -chardev null,id=cd1 "
+         "-device usb-braille,chardev=cd0 -device usb-ccid -device usb-ccid "
+         "-device usb-kbd -device usb-mouse -device usb-serial,chardev=cd1 "
+-        "-device usb-tablet -device usb-wacom-tablet -device usb-audio",
++        "-device usb-tablet -device usb-wacom-tablet "
++        "-device usb-audio,audiodev=snd0 -audiodev none,id=snd0",
+         .objects = "*usb* *uhci* *xhci*",
+     },{
+         .name = "pc-i440fx",
 -- 
 2.39.5
 
