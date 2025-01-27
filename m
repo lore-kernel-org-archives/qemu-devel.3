@@ -4,38 +4,38 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CE2D3C0218D
-	for <qemu-devel@archiver.kernel.org>; Tue, 28 Jan 2025 08:16:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 35ECAC02190
+	for <qemu-devel@archiver.kernel.org>; Tue, 28 Jan 2025 08:17:21 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tcgTy-0005n3-ER; Tue, 28 Jan 2025 02:58:02 -0500
+	id 1tcgZt-0000Gt-JC; Tue, 28 Jan 2025 03:04:10 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1tcgTY-0005QY-2g; Tue, 28 Jan 2025 02:57:40 -0500
+ id 1tcgZY-0007b0-2O; Tue, 28 Jan 2025 03:03:50 -0500
 Received: from isrv.corpit.ru ([86.62.121.231])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1tcgTU-0000en-HG; Tue, 28 Jan 2025 02:57:35 -0500
+ id 1tcgZU-0002O2-Jj; Tue, 28 Jan 2025 03:03:46 -0500
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 95645E1AF0;
- Tue, 28 Jan 2025 10:54:25 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id 0008EE1B65;
+ Tue, 28 Jan 2025 10:57:08 +0300 (MSK)
 Received: from localhost.tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id 108811A62D7;
- Tue, 28 Jan 2025 10:54:51 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id 6FBC71A6318;
+ Tue, 28 Jan 2025 10:57:34 +0300 (MSK)
 Received: by localhost.tls.msk.ru (Postfix, from userid 1000)
- id DBCC852045; Tue, 28 Jan 2025 10:54:50 +0300 (MSK)
+ id 1A997520C1; Tue, 28 Jan 2025 10:57:34 +0300 (MSK)
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Nicholas Piggin <npiggin@gmail.com>,
- Glenn Miles <milesg@linux.ibm.com>, Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-8.2.9 15/45] target/ppc: Fix non-maskable interrupt while
- halted
-Date: Mon, 27 Jan 2025 23:25:56 +0300
-Message-Id: <20250127202630.3724367-15-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org, Michael Tokarev <mjt@tls.msk.ru>,
+ Heinrich Schuchardt <heinrich.schuchardt@canonical.com>,
+ Gerd Hoffmann <kraxel@redhat.com>
+Subject: [Stable-9.1.3 30/58] pc-bios: add missing riscv64 descriptor
+Date: Mon, 27 Jan 2025 23:25:16 +0300
+Message-Id: <20250127202547.3723716-30-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.39.5
-In-Reply-To: <qemu-stable-8.2.9-20250127232621@cover.tls.msk.ru>
-References: <qemu-stable-8.2.9-20250127232621@cover.tls.msk.ru>
+In-Reply-To: <qemu-stable-9.1.3-20250127232536@cover.tls.msk.ru>
+References: <qemu-stable-9.1.3-20250127232536@cover.tls.msk.ru>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 From: Michael Tokarev <mjt@tls.msk.ru>
@@ -63,53 +63,68 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The ppc (pnv and spapr) NMI injection code does not go through the
-asynchronous interrupt path and set a bit in env->pending_interrupts
-and raise an interrupt request that the cpu_exec() loop can see.
-Instead it injects the exception directly into registers.
+Without descriptor libvirt cannot discover the EDK II binaries via
+the qemu:///system connection.
 
-This can lead to cpu_exec() missing that the thread has work to do,
-if a NMI is injected while it was idle.
-
-Fix this by clearing halted when injecting the interrupt. Probably
-NMI injection should be reworked to use the interrupt request interface,
-but this seems to work as a minimal fix.
-
-Fixes: 3431648272d3 ("spapr: Add support for new NMI interface")
-Reviewed-by: Glenn Miles <milesg@linux.ibm.com>
-Signed-off-by: Nicholas Piggin <npiggin@gmail.com>
-(cherry picked from commit fa416ae6157a933ad3f7106090684759baaaf3c9)
+Signed-off-by: Heinrich Schuchardt <heinrich.schuchardt@canonical.com>
+Message-ID: <20241212090059.94167-1-heinrich.schuchardt@canonical.com>
+Signed-off-by: Gerd Hoffmann <kraxel@redhat.com>
+(cherry picked from commit 74dc38d0c6c15fd57a5dee94125d13ac5b00491d)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
+(Mjt: context fix in pc-bios/descriptors/meson.build due to missing
+ v9.1.0-337-gb883fb93db "roms: Support compile the efi bios for loongarch")
 
-diff --git a/target/ppc/excp_helper.c b/target/ppc/excp_helper.c
-index 9b8fd69b85..c718c4c863 100644
---- a/target/ppc/excp_helper.c
-+++ b/target/ppc/excp_helper.c
-@@ -2567,10 +2567,16 @@ static void ppc_deliver_interrupt(CPUPPCState *env, int interrupt)
-     }
- }
- 
-+/*
-+ * system reset is not delivered via normal irq method, so have to set
-+ * halted = 0 to resume CPU running if it was halted. Possibly we should
-+ * move it over to using PPC_INTERRUPT_RESET rather than async_run_on_cpu.
-+ */
- void ppc_cpu_do_system_reset(CPUState *cs)
- {
-     PowerPCCPU *cpu = POWERPC_CPU(cs);
- 
-+    cs->halted = 0;
-     powerpc_excp(cpu, POWERPC_EXCP_RESET);
- }
- 
-@@ -2592,6 +2598,7 @@ void ppc_cpu_do_fwnmi_machine_check(CPUState *cs, target_ulong vector)
- 
-     /* Anything for nested required here? MSR[HV] bit? */
- 
-+    cs->halted = 0;
-     powerpc_set_excp_state(cpu, vector, msr);
- }
- 
+diff --git a/pc-bios/descriptors/60-edk2-riscv64.json b/pc-bios/descriptors/60-edk2-riscv64.json
+new file mode 100644
+index 0000000000..14811ca307
+--- /dev/null
++++ b/pc-bios/descriptors/60-edk2-riscv64.json
+@@ -0,0 +1,31 @@
++{
++    "description": "UEFI firmware for riscv64",
++    "interface-types": [
++        "uefi"
++    ],
++    "mapping": {
++        "device": "flash",
++        "executable": {
++            "filename": "@DATADIR@/edk2-riscv-code.fd",
++            "format": "raw"
++        },
++        "nvram-template": {
++            "filename": "@DATADIR@/edk2-riscv-vars.fd",
++            "format": "raw"
++        }
++    },
++    "targets": [
++        {
++            "architecture": "riscv64",
++            "machines": [
++                "virt*"
++            ]
++        }
++    ],
++    "features": [
++
++    ],
++    "tags": [
++
++    ]
++}
+diff --git a/pc-bios/descriptors/meson.build b/pc-bios/descriptors/meson.build
+index 66f85d01c4..18a584e5e3 100644
+--- a/pc-bios/descriptors/meson.build
++++ b/pc-bios/descriptors/meson.build
+@@ -5,7 +5,8 @@ if unpack_edk2_blobs and get_option('install_blobs')
+     '60-edk2-aarch64.json',
+     '60-edk2-arm.json',
+     '60-edk2-i386.json',
+-    '60-edk2-x86_64.json'
++    '60-edk2-x86_64.json',
++    '60-edk2-riscv64.json'
+   ]
+     configure_file(input: files(f),
+                    output: f,
 -- 
 2.39.5
 
