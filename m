@@ -4,40 +4,37 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6AB2CC0218D
-	for <qemu-devel@archiver.kernel.org>; Tue, 28 Jan 2025 07:58:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4D156C0218D
+	for <qemu-devel@archiver.kernel.org>; Tue, 28 Jan 2025 07:58:15 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tcgSD-0007kG-3y; Tue, 28 Jan 2025 02:56:13 -0500
+	id 1tcgTJ-00049y-Ji; Tue, 28 Jan 2025 02:57:21 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1tcgRX-0007SL-B7; Tue, 28 Jan 2025 02:55:32 -0500
+ id 1tcgT5-0003VD-Ro; Tue, 28 Jan 2025 02:57:11 -0500
 Received: from isrv.corpit.ru ([86.62.121.231])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1tcgRV-0008V3-D9; Tue, 28 Jan 2025 02:55:31 -0500
+ id 1tcgT4-0000Ui-6W; Tue, 28 Jan 2025 02:57:07 -0500
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 0C95EE1AD4;
- Tue, 28 Jan 2025 10:53:00 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id 8607CE1AEC;
+ Tue, 28 Jan 2025 10:54:25 +0300 (MSK)
 Received: from localhost.tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id 7B8A01A62C3;
- Tue, 28 Jan 2025 10:53:25 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id 011841A62D3;
+ Tue, 28 Jan 2025 10:54:51 +0300 (MSK)
 Received: by localhost.tls.msk.ru (Postfix, from userid 1000)
- id 3A8885201D; Tue, 28 Jan 2025 10:53:25 +0300 (MSK)
+ id D54175203D; Tue, 28 Jan 2025 10:54:50 +0300 (MSK)
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Sebastian Ott <sebott@redhat.com>,
- Zhenyu Zhang <zhenyzha@redhat.com>,
- Alex Williamson <alex.williamson@redhat.com>,
- "Michael S . Tsirkin" <mst@redhat.com>, Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-7.2.16 27/31] pci: ensure valid link status bits for
- downstream ports
-Date: Tue, 28 Jan 2025 00:41:19 +0300
-Message-Id: <20250127214124.3730126-27-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org, Christian Schoenebeck <qemu_oss@crudebyte.com>,
+ Greg Kurz <groug@kaod.org>, Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-8.2.9 11/45] tests/9p: add 'use-after-unlink' test
+Date: Mon, 27 Jan 2025 23:25:52 +0300
+Message-Id: <20250127202630.3724367-11-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.39.5
-In-Reply-To: <qemu-stable-7.2.16-20250128004119@cover.tls.msk.ru>
-References: <qemu-stable-7.2.16-20250128004119@cover.tls.msk.ru>
+In-Reply-To: <qemu-stable-8.2.9-20250127232621@cover.tls.msk.ru>
+References: <qemu-stable-8.2.9-20250127232621@cover.tls.msk.ru>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 From: Michael Tokarev <mjt@tls.msk.ru>
@@ -65,61 +62,80 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-PCI hotplug for downstream endpoints on arm fails because Linux'
-PCIe hotplug driver doesn't like the QEMU provided LNKSTA:
+After removing a file from the file system, we should still be able to
+work with the file if we already had it open before removal.
 
-  pcieport 0000:08:01.0: pciehp: Slot(2): Card present
-  pcieport 0000:08:01.0: pciehp: Slot(2): Link Up
-  pcieport 0000:08:01.0: pciehp: Slot(2): Cannot train link: status 0x2000
+As a first step we verify that it is possible to write to an unlinked
+file, as this is what already works. This test is extended later on
+after having fixed other use cases after unlink that are not working
+yet.
 
-There's 2 cases where LNKSTA isn't setup properly:
-* the downstream device has no express capability
-* max link width of the bridge is 0
-
-Move the sanity checks added via 88c869198aa63
-("pci: Sanity test minimum downstream LNKSTA") outside of the
-branch to make sure downstream ports always have a valid LNKSTA.
-
-Signed-off-by: Sebastian Ott <sebott@redhat.com>
-Tested-by: Zhenyu Zhang <zhenyzha@redhat.com>
-Message-Id: <20241203121928.14861-1-sebott@redhat.com>
-Reviewed-by: Alex Williamson <alex.williamson@redhat.com>
-Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
-Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
-(cherry picked from commit 694632fd44987cc4618612a38ad151047524a590)
+Signed-off-by: Christian Schoenebeck <qemu_oss@crudebyte.com>
+Reviewed-by: Greg Kurz <groug@kaod.org>
+Message-Id: <3d6449d4df25bcdd3e807eff169f46f1385e5257.1732465720.git.qemu_oss@crudebyte.com>
+(cherry picked from commit 462db8fb1d405391b83a0d3099fdb9bfb85c2d92)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
+(Mjt: context fix, pick it to stable so the next patch in this place applies)
 
-diff --git a/hw/pci/pcie.c b/hw/pci/pcie.c
-index 68a62da0b5..9ffc625cc2 100644
---- a/hw/pci/pcie.c
-+++ b/hw/pci/pcie.c
-@@ -999,18 +999,22 @@ void pcie_sync_bridge_lnk(PCIDevice *bridge_dev)
-         if ((lnksta & PCI_EXP_LNKSTA_NLW) > (lnkcap & PCI_EXP_LNKCAP_MLW)) {
-             lnksta &= ~PCI_EXP_LNKSTA_NLW;
-             lnksta |= lnkcap & PCI_EXP_LNKCAP_MLW;
--        } else if (!(lnksta & PCI_EXP_LNKSTA_NLW)) {
--            lnksta |= QEMU_PCI_EXP_LNKSTA_NLW(QEMU_PCI_EXP_LNK_X1);
-         }
+diff --git a/tests/qtest/virtio-9p-test.c b/tests/qtest/virtio-9p-test.c
+index 65e69491e5..7638c0a183 100644
+--- a/tests/qtest/virtio-9p-test.c
++++ b/tests/qtest/virtio-9p-test.c
+@@ -693,6 +693,45 @@ static void fs_unlinkat_hardlink(void *obj, void *data,
+     g_assert(stat(real_file, &st_real) == 0);
+ }
  
-         if ((lnksta & PCI_EXP_LNKSTA_CLS) > (lnkcap & PCI_EXP_LNKCAP_SLS)) {
-             lnksta &= ~PCI_EXP_LNKSTA_CLS;
-             lnksta |= lnkcap & PCI_EXP_LNKCAP_SLS;
--        } else if (!(lnksta & PCI_EXP_LNKSTA_CLS)) {
--            lnksta |= QEMU_PCI_EXP_LNKSTA_CLS(QEMU_PCI_EXP_LNK_2_5GT);
-         }
-     }
++static void fs_use_after_unlink(void *obj, void *data,
++                                QGuestAllocator *t_alloc)
++{
++    QVirtio9P *v9p = obj;
++    v9fs_set_allocator(t_alloc);
++    static const uint32_t write_count = P9_MAX_SIZE / 2;
++    g_autofree char *real_file = virtio_9p_test_path("09/doa_file");
++    g_autofree char *buf = g_malloc0(write_count);
++    struct stat st_file;
++    uint32_t fid_file;
++    uint32_t count;
++
++    tattach({ .client = v9p });
++
++    /* create a file "09/doa_file" and make sure it exists and is regular */
++    tmkdir({ .client = v9p, .atPath = "/", .name = "09" });
++    tlcreate({ .client = v9p, .atPath = "09", .name = "doa_file" });
++    g_assert(stat(real_file, &st_file) == 0);
++    g_assert((st_file.st_mode & S_IFMT) == S_IFREG);
++
++    /* request a FID for that regular file that we can work with next */
++    fid_file = twalk({
++        .client = v9p, .fid = 0, .path = "09/doa_file"
++    }).newfid;
++    g_assert(fid_file != 0);
++
++    /* now first open the file in write mode before ... */
++    tlopen({ .client = v9p, .fid = fid_file, .flags = O_WRONLY });
++    /* ... removing the file from file system */
++    tunlinkat({ .client = v9p, .atPath = "09", .name = "doa_file" });
++
++    /* file is removed, but we still have it open, so this should succeed */
++    count = twrite({
++        .client = v9p, .fid = fid_file, .offset = 0, .count = write_count,
++        .data = buf
++    }).count;
++    g_assert_cmpint(count, ==, write_count);
++}
++
+ static void *assign_9p_local_driver(GString *cmd_line, void *arg)
+ {
+     virtio_9p_assign_local_driver(cmd_line, "security_model=mapped-xattr");
+@@ -756,6 +795,8 @@ static void register_virtio_9p_test(void)
+     qos_add_test("local/hardlink_file", "virtio-9p", fs_hardlink_file, &opts);
+     qos_add_test("local/unlinkat_hardlink", "virtio-9p", fs_unlinkat_hardlink,
+                  &opts);
++    qos_add_test("local/use_after_unlink", "virtio-9p", fs_use_after_unlink,
++                 &opts);
+ }
  
-+    if (!(lnksta & PCI_EXP_LNKSTA_NLW)) {
-+        lnksta |= QEMU_PCI_EXP_LNKSTA_NLW(QEMU_PCI_EXP_LNK_X1);
-+    }
-+
-+    if (!(lnksta & PCI_EXP_LNKSTA_CLS)) {
-+        lnksta |= QEMU_PCI_EXP_LNKSTA_CLS(QEMU_PCI_EXP_LNK_2_5GT);
-+    }
-+
-     pci_word_test_and_clear_mask(exp_cap + PCI_EXP_LNKSTA,
-                                  PCI_EXP_LNKSTA_CLS | PCI_EXP_LNKSTA_NLW);
-     pci_word_test_and_set_mask(exp_cap + PCI_EXP_LNKSTA, lnksta &
+ libqos_init(register_virtio_9p_test);
 -- 
 2.39.5
 
