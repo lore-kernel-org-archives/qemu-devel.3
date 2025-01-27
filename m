@@ -4,38 +4,40 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 77D9FC02190
-	for <qemu-devel@archiver.kernel.org>; Tue, 28 Jan 2025 08:28:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 79103C0218D
+	for <qemu-devel@archiver.kernel.org>; Tue, 28 Jan 2025 08:28:50 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tcgdI-0000fd-6K; Tue, 28 Jan 2025 03:07:40 -0500
+	id 1tcgXH-000127-J3; Tue, 28 Jan 2025 03:01:27 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1tcgbI-0003T2-Ee; Tue, 28 Jan 2025 03:05:36 -0500
+ id 1tcgW7-0007ie-UF; Tue, 28 Jan 2025 03:00:17 -0500
 Received: from isrv.corpit.ru ([86.62.121.231])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1tcgbG-00033i-3A; Tue, 28 Jan 2025 03:05:36 -0500
+ id 1tcgW4-0001aW-8O; Tue, 28 Jan 2025 03:00:14 -0500
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 42050E1B75;
- Tue, 28 Jan 2025 10:57:09 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id 038B6E1B09;
+ Tue, 28 Jan 2025 10:54:26 +0300 (MSK)
 Received: from localhost.tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id B13451A6328;
- Tue, 28 Jan 2025 10:57:34 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id 72A961A62F0;
+ Tue, 28 Jan 2025 10:54:51 +0300 (MSK)
 Received: by localhost.tls.msk.ru (Postfix, from userid 1000)
- id 35C4F520E1; Tue, 28 Jan 2025 10:57:34 +0300 (MSK)
+ id 117F552077; Tue, 28 Jan 2025 10:54:51 +0300 (MSK)
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Peter Xu <peterx@redhat.com>,
- Fabiano Rosas <farosas@suse.de>, Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-9.1.3 46/58] migration: Dump correct JSON format for nullptr
- replacement
-Date: Mon, 27 Jan 2025 23:25:32 +0300
-Message-Id: <20250127202547.3723716-46-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org, Sebastian Ott <sebott@redhat.com>,
+ Zhenyu Zhang <zhenyzha@redhat.com>,
+ Alex Williamson <alex.williamson@redhat.com>,
+ "Michael S . Tsirkin" <mst@redhat.com>, Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-8.2.9 40/45] pci: ensure valid link status bits for
+ downstream ports
+Date: Mon, 27 Jan 2025 23:26:21 +0300
+Message-Id: <20250127202630.3724367-40-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.39.5
-In-Reply-To: <qemu-stable-9.1.3-20250127232536@cover.tls.msk.ru>
-References: <qemu-stable-9.1.3-20250127232536@cover.tls.msk.ru>
+In-Reply-To: <qemu-stable-8.2.9-20250127232621@cover.tls.msk.ru>
+References: <qemu-stable-8.2.9-20250127232621@cover.tls.msk.ru>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 From: Michael Tokarev <mjt@tls.msk.ru>
@@ -63,201 +65,61 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-QEMU plays a trick with null pointers inside an array of pointers in a VMSD
-field.  See 07d4e69147 ("migration/vmstate: fix array of ptr with
-nullptrs") for more details on why.  The idea makes sense in general, but
-it may overlooked the JSON writer where it could write nothing in a
-"struct" in the JSON hints section.
+PCI hotplug for downstream endpoints on arm fails because Linux'
+PCIe hotplug driver doesn't like the QEMU provided LNKSTA:
 
-We hit some analyze-migration.py issues on s390 recently, showing that some
-of the struct field contains nothing, like:
+  pcieport 0000:08:01.0: pciehp: Slot(2): Card present
+  pcieport 0000:08:01.0: pciehp: Slot(2): Link Up
+  pcieport 0000:08:01.0: pciehp: Slot(2): Cannot train link: status 0x2000
 
-{"name": "css", "array_len": 256, "type": "struct", "struct": {}, "size": 1}
+There's 2 cases where LNKSTA isn't setup properly:
+* the downstream device has no express capability
+* max link width of the bridge is 0
 
-As described in details by Fabiano:
+Move the sanity checks added via 88c869198aa63
+("pci: Sanity test minimum downstream LNKSTA") outside of the
+branch to make sure downstream ports always have a valid LNKSTA.
 
-https://lore.kernel.org/r/87pll37cin.fsf@suse.de
-
-It could be that we hit some null pointers there, and JSON was gone when
-they're null pointers.
-
-To fix it, instead of hacking around only at VMStateInfo level, do that
-from VMStateField level, so that JSON writer can also be involved.  In this
-case, JSON writer will replace the pointer array (which used to be a
-"struct") to be the real representation of the nullptr field.
-
-Signed-off-by: Peter Xu <peterx@redhat.com>
-Message-Id: <20250109185249.23952-6-farosas@suse.de>
-Signed-off-by: Fabiano Rosas <farosas@suse.de>
-(cherry picked from commit 9867c3a7ced12dd7519155c047eb2c0098a11c5f)
+Signed-off-by: Sebastian Ott <sebott@redhat.com>
+Tested-by: Zhenyu Zhang <zhenyzha@redhat.com>
+Message-Id: <20241203121928.14861-1-sebott@redhat.com>
+Reviewed-by: Alex Williamson <alex.williamson@redhat.com>
+Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
+Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
+(cherry picked from commit 694632fd44987cc4618612a38ad151047524a590)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/migration/vmstate.c b/migration/vmstate.c
-index aa2821dec6..52704c822c 100644
---- a/migration/vmstate.c
-+++ b/migration/vmstate.c
-@@ -51,6 +51,36 @@ vmstate_field_exists(const VMStateDescription *vmsd, const VMStateField *field,
-     return result;
- }
+diff --git a/hw/pci/pcie.c b/hw/pci/pcie.c
+index 6db0cf69cd..949b2f87f3 100644
+--- a/hw/pci/pcie.c
++++ b/hw/pci/pcie.c
+@@ -1016,18 +1016,22 @@ void pcie_sync_bridge_lnk(PCIDevice *bridge_dev)
+         if ((lnksta & PCI_EXP_LNKSTA_NLW) > (lnkcap & PCI_EXP_LNKCAP_MLW)) {
+             lnksta &= ~PCI_EXP_LNKSTA_NLW;
+             lnksta |= lnkcap & PCI_EXP_LNKCAP_MLW;
+-        } else if (!(lnksta & PCI_EXP_LNKSTA_NLW)) {
+-            lnksta |= QEMU_PCI_EXP_LNKSTA_NLW(QEMU_PCI_EXP_LNK_X1);
+         }
  
-+/*
-+ * Create a fake nullptr field when there's a NULL pointer detected in the
-+ * array of a VMS_ARRAY_OF_POINTER VMSD field.  It's needed because we
-+ * can't dereference the NULL pointer.
-+ */
-+static const VMStateField *
-+vmsd_create_fake_nullptr_field(const VMStateField *field)
-+{
-+    VMStateField *fake = g_new0(VMStateField, 1);
-+
-+    /* It can only happen on an array of pointers! */
-+    assert(field->flags & VMS_ARRAY_OF_POINTER);
-+
-+    /* Some of fake's properties should match the original's */
-+    fake->name = field->name;
-+    fake->version_id = field->version_id;
-+
-+    /* Do not need "field_exists" check as it always exists (which is null) */
-+    fake->field_exists = NULL;
-+
-+    /* See vmstate_info_nullptr - use 1 byte to represent nullptr */
-+    fake->size = 1;
-+    fake->info = &vmstate_info_nullptr;
-+    fake->flags = VMS_SINGLE;
-+
-+    /* All the rest fields shouldn't matter.. */
-+
-+    return (const VMStateField *)fake;
-+}
-+
- static int vmstate_n_elems(void *opaque, const VMStateField *field)
- {
-     int n_elems = 1;
-@@ -143,23 +173,39 @@ int vmstate_load_state(QEMUFile *f, const VMStateDescription *vmsd,
-             }
-             for (i = 0; i < n_elems; i++) {
-                 void *curr_elem = first_elem + size * i;
-+                const VMStateField *inner_field;
+         if ((lnksta & PCI_EXP_LNKSTA_CLS) > (lnkcap & PCI_EXP_LNKCAP_SLS)) {
+             lnksta &= ~PCI_EXP_LNKSTA_CLS;
+             lnksta |= lnkcap & PCI_EXP_LNKCAP_SLS;
+-        } else if (!(lnksta & PCI_EXP_LNKSTA_CLS)) {
+-            lnksta |= QEMU_PCI_EXP_LNKSTA_CLS(QEMU_PCI_EXP_LNK_2_5GT);
+         }
+     }
  
-                 if (field->flags & VMS_ARRAY_OF_POINTER) {
-                     curr_elem = *(void **)curr_elem;
-                 }
++    if (!(lnksta & PCI_EXP_LNKSTA_NLW)) {
++        lnksta |= QEMU_PCI_EXP_LNKSTA_NLW(QEMU_PCI_EXP_LNK_X1);
++    }
 +
-                 if (!curr_elem && size) {
--                    /* if null pointer check placeholder and do not follow */
--                    assert(field->flags & VMS_ARRAY_OF_POINTER);
--                    ret = vmstate_info_nullptr.get(f, curr_elem, size, NULL);
--                } else if (field->flags & VMS_STRUCT) {
--                    ret = vmstate_load_state(f, field->vmsd, curr_elem,
--                                             field->vmsd->version_id);
--                } else if (field->flags & VMS_VSTRUCT) {
--                    ret = vmstate_load_state(f, field->vmsd, curr_elem,
--                                             field->struct_version_id);
-+                    /*
-+                     * If null pointer found (which should only happen in
-+                     * an array of pointers), use null placeholder and do
-+                     * not follow.
-+                     */
-+                    inner_field = vmsd_create_fake_nullptr_field(field);
-+                } else {
-+                    inner_field = field;
-+                }
++    if (!(lnksta & PCI_EXP_LNKSTA_CLS)) {
++        lnksta |= QEMU_PCI_EXP_LNKSTA_CLS(QEMU_PCI_EXP_LNK_2_5GT);
++    }
 +
-+                if (inner_field->flags & VMS_STRUCT) {
-+                    ret = vmstate_load_state(f, inner_field->vmsd, curr_elem,
-+                                             inner_field->vmsd->version_id);
-+                } else if (inner_field->flags & VMS_VSTRUCT) {
-+                    ret = vmstate_load_state(f, inner_field->vmsd, curr_elem,
-+                                             inner_field->struct_version_id);
-                 } else {
--                    ret = field->info->get(f, curr_elem, size, field);
-+                    ret = inner_field->info->get(f, curr_elem, size,
-+                                                 inner_field);
-                 }
-+
-+                /* If we used a fake temp field.. free it now */
-+                if (inner_field != field) {
-+                    g_clear_pointer((gpointer *)&inner_field, g_free);
-+                }
-+
-                 if (ret >= 0) {
-                     ret = qemu_file_get_error(f);
-                 }
-@@ -387,29 +433,50 @@ int vmstate_save_state_v(QEMUFile *f, const VMStateDescription *vmsd,
-             }
-             for (i = 0; i < n_elems; i++) {
-                 void *curr_elem = first_elem + size * i;
-+                const VMStateField *inner_field;
- 
--                vmsd_desc_field_start(vmsd, vmdesc_loop, field, i, n_elems);
-                 old_offset = qemu_file_transferred(f);
-                 if (field->flags & VMS_ARRAY_OF_POINTER) {
-                     assert(curr_elem);
-                     curr_elem = *(void **)curr_elem;
-                 }
-+
-                 if (!curr_elem && size) {
--                    /* if null pointer write placeholder and do not follow */
--                    assert(field->flags & VMS_ARRAY_OF_POINTER);
--                    ret = vmstate_info_nullptr.put(f, curr_elem, size, NULL,
--                                                   NULL);
--                } else if (field->flags & VMS_STRUCT) {
--                    ret = vmstate_save_state(f, field->vmsd, curr_elem,
--                                             vmdesc_loop);
--                } else if (field->flags & VMS_VSTRUCT) {
--                    ret = vmstate_save_state_v(f, field->vmsd, curr_elem,
--                                               vmdesc_loop,
--                                               field->struct_version_id, errp);
-+                    /*
-+                     * If null pointer found (which should only happen in
-+                     * an array of pointers), use null placeholder and do
-+                     * not follow.
-+                     */
-+                    inner_field = vmsd_create_fake_nullptr_field(field);
-+                } else {
-+                    inner_field = field;
-+                }
-+
-+                vmsd_desc_field_start(vmsd, vmdesc_loop, inner_field,
-+                                      i, n_elems);
-+
-+                if (inner_field->flags & VMS_STRUCT) {
-+                    ret = vmstate_save_state(f, inner_field->vmsd,
-+                                             curr_elem, vmdesc_loop);
-+                } else if (inner_field->flags & VMS_VSTRUCT) {
-+                    ret = vmstate_save_state_v(f, inner_field->vmsd,
-+                                               curr_elem, vmdesc_loop,
-+                                               inner_field->struct_version_id,
-+                                               errp);
-                 } else {
--                    ret = field->info->put(f, curr_elem, size, field,
--                                     vmdesc_loop);
-+                    ret = inner_field->info->put(f, curr_elem, size,
-+                                                 inner_field, vmdesc_loop);
-                 }
-+
-+                written_bytes = qemu_file_transferred(f) - old_offset;
-+                vmsd_desc_field_end(vmsd, vmdesc_loop, inner_field,
-+                                    written_bytes);
-+
-+                /* If we used a fake temp field.. free it now */
-+                if (inner_field != field) {
-+                    g_clear_pointer((gpointer *)&inner_field, g_free);
-+                }
-+
-                 if (ret) {
-                     error_setg(errp, "Save of field %s/%s failed",
-                                 vmsd->name, field->name);
-@@ -419,9 +486,6 @@ int vmstate_save_state_v(QEMUFile *f, const VMStateDescription *vmsd,
-                     return ret;
-                 }
- 
--                written_bytes = qemu_file_transferred(f) - old_offset;
--                vmsd_desc_field_end(vmsd, vmdesc_loop, field, written_bytes);
--
-                 /* Compressed arrays only care about the first element */
-                 if (vmdesc_loop && vmsd_can_compress(field)) {
-                     vmdesc_loop = NULL;
+     pci_word_test_and_clear_mask(exp_cap + PCI_EXP_LNKSTA,
+                                  PCI_EXP_LNKSTA_CLS | PCI_EXP_LNKSTA_NLW);
+     pci_word_test_and_set_mask(exp_cap + PCI_EXP_LNKSTA, lnksta &
 -- 
 2.39.5
 
