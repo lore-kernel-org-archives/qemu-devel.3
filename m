@@ -4,34 +4,35 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 86623C02190
-	for <qemu-devel@archiver.kernel.org>; Tue, 28 Jan 2025 08:29:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7C60FC02190
+	for <qemu-devel@archiver.kernel.org>; Tue, 28 Jan 2025 08:30:00 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tcgZE-0006wk-Mc; Tue, 28 Jan 2025 03:03:30 -0500
+	id 1tcgaI-0000xl-Vd; Tue, 28 Jan 2025 03:04:35 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1tcgYP-0006I3-Iu; Tue, 28 Jan 2025 03:02:43 -0500
+ id 1tcgYQ-0006Ig-Px; Tue, 28 Jan 2025 03:02:44 -0500
 Received: from isrv.corpit.ru ([86.62.121.231])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1tcgYM-00025C-HD; Tue, 28 Jan 2025 03:02:37 -0500
+ id 1tcgYO-00025q-QW; Tue, 28 Jan 2025 03:02:38 -0500
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id C029DE1B58;
+ by isrv.corpit.ru (Postfix) with ESMTP id C4242E1B59;
  Tue, 28 Jan 2025 10:57:08 +0300 (MSK)
 Received: from localhost.tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id 3BF531A630B;
+ by tsrv.corpit.ru (Postfix) with ESMTP id 3FDDC1A630C;
  Tue, 28 Jan 2025 10:57:34 +0300 (MSK)
 Received: by localhost.tls.msk.ru (Postfix, from userid 1000)
- id 04E0D520A7; Tue, 28 Jan 2025 10:57:34 +0300 (MSK)
+ id 067B9520A9; Tue, 28 Jan 2025 10:57:34 +0300 (MSK)
 To: qemu-devel@nongnu.org
 Cc: qemu-stable@nongnu.org, Christian Schoenebeck <qemu_oss@crudebyte.com>,
  Greg Kurz <groug@kaod.org>, Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-9.1.3 17/58] 9pfs: fix 'Tgetattr' after unlink
-Date: Mon, 27 Jan 2025 23:25:03 +0300
-Message-Id: <20250127202547.3723716-17-mjt@tls.msk.ru>
+Subject: [Stable-9.1.3 18/58] tests/9p: also check 'Tgetattr' in
+ 'use-after-unlink' test
+Date: Mon, 27 Jan 2025 23:25:04 +0300
+Message-Id: <20250127202547.3723716-18-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <qemu-stable-9.1.3-20250127232536@cover.tls.msk.ru>
 References: <qemu-stable-9.1.3-20250127232536@cover.tls.msk.ru>
@@ -62,54 +63,37 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-With a valid file ID (FID) of an open file, it should be possible to send
-a 'Tgettattr' 9p request and successfully receive a 'Rgetattr' response,
-even if the file has been removed in the meantime. Currently this would
-fail with ENOENT.
+This verifies expected behaviour of previous bug fix patch.
 
-I.e. this fixes the following misbehaviour with a 9p Linux client:
-
-  open("/home/tst/filename", O_RDWR|O_CREAT|O_EXCL, 0600) = 3
-  unlink("/home/tst/filename") = 0
-  fstat(3, 0x23aa1a8) = -1 ENOENT (No such file or directory)
-
-Expected results:
-
-  open("/home/tst/filename", O_RDWR|O_CREAT|O_EXCL, 0600) = 3
-  unlink("/home/tst/filename") = 0
-  fstat(3, {st_mode=S_IFREG|0600, st_size=0, ...}) = 0
-
-This is because 9p server is always using a path name based lstat() call
-which fails as soon as the file got removed. So to fix this, use fstat()
-whenever we have an open file descriptor already.
-
-Fixes: 00ede4c2529b ("virtio-9p: getattr server implementation...")
-Resolves: https://gitlab.com/qemu-project/qemu/-/issues/103
 Signed-off-by: Christian Schoenebeck <qemu_oss@crudebyte.com>
 Reviewed-by: Greg Kurz <groug@kaod.org>
-Message-Id: <4c41ad47f449a5cc8bfa9285743e029080d5f324.1732465720.git.qemu_oss@crudebyte.com>
-(cherry picked from commit c81e7219e0736f80bfd3553676a19e2992cff41d)
+Message-Id: <7017658155c517b9665b75333a97c79aa2d4f3df.1732465720.git.qemu_oss@crudebyte.com>
+(cherry picked from commit eaab44ccc59b83d8dff60fca3361a9b98ec7fee6)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/hw/9pfs/9p.c b/hw/9pfs/9p.c
-index 851e36b9a1..578517739a 100644
---- a/hw/9pfs/9p.c
-+++ b/hw/9pfs/9p.c
-@@ -1596,7 +1596,13 @@ static void coroutine_fn v9fs_getattr(void *opaque)
-         retval = -ENOENT;
-         goto out_nofid;
-     }
--    retval = v9fs_co_lstat(pdu, &fidp->path, &stbuf);
-+    if ((fidp->fid_type == P9_FID_FILE && fidp->fs.fd != -1) ||
-+        (fidp->fid_type == P9_FID_DIR && fidp->fs.dir.stream))
-+    {
-+        retval = v9fs_co_fstat(pdu, fidp, &stbuf);
-+    } else {
-+        retval = v9fs_co_lstat(pdu, &fidp->path, &stbuf);
-+    }
-     if (retval < 0) {
-         goto out;
-     }
+diff --git a/tests/qtest/virtio-9p-test.c b/tests/qtest/virtio-9p-test.c
+index f6d7400a87..ab3a12c816 100644
+--- a/tests/qtest/virtio-9p-test.c
++++ b/tests/qtest/virtio-9p-test.c
+@@ -702,6 +702,7 @@ static void fs_use_after_unlink(void *obj, void *data,
+     g_autofree char *real_file = virtio_9p_test_path("09/doa_file");
+     g_autofree char *buf = g_malloc0(write_count);
+     struct stat st_file;
++    struct v9fs_attr attr;
+     uint32_t fid_file;
+     uint32_t count;
+ 
+@@ -725,6 +726,10 @@ static void fs_use_after_unlink(void *obj, void *data,
+     tunlinkat({ .client = v9p, .atPath = "09", .name = "doa_file" });
+ 
+     /* file is removed, but we still have it open, so this should succeed */
++    tgetattr({
++        .client = v9p, .fid = fid_file, .request_mask = P9_GETATTR_BASIC,
++        .rgetattr.attr = &attr
++    });
+     count = twrite({
+         .client = v9p, .fid = fid_file, .offset = 0, .count = write_count,
+         .data = buf
 -- 
 2.39.5
 
