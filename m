@@ -4,64 +4,64 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DDFC8C02188
-	for <qemu-devel@archiver.kernel.org>; Mon, 27 Jan 2025 10:30:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8BC74C02188
+	for <qemu-devel@archiver.kernel.org>; Mon, 27 Jan 2025 10:30:27 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tcMKp-00027J-6K; Mon, 27 Jan 2025 05:27:15 -0500
+	id 1tcMLl-0003Hs-7W; Mon, 27 Jan 2025 05:28:13 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tcMKn-00025J-Tq
- for qemu-devel@nongnu.org; Mon, 27 Jan 2025 05:27:13 -0500
-Received: from mail-wm1-x32a.google.com ([2a00:1450:4864:20::32a])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tcMKx-0002Gr-Oe
+ for qemu-devel@nongnu.org; Mon, 27 Jan 2025 05:27:31 -0500
+Received: from mail-wr1-x429.google.com ([2a00:1450:4864:20::429])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tcMKk-00021P-Sc
- for qemu-devel@nongnu.org; Mon, 27 Jan 2025 05:27:13 -0500
-Received: by mail-wm1-x32a.google.com with SMTP id
- 5b1f17b1804b1-436281c8a38so29363065e9.3
- for <qemu-devel@nongnu.org>; Mon, 27 Jan 2025 02:27:10 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tcMKu-00022u-91
+ for qemu-devel@nongnu.org; Mon, 27 Jan 2025 05:27:21 -0500
+Received: by mail-wr1-x429.google.com with SMTP id
+ ffacd0b85a97d-38a25d4b9d4so2245119f8f.0
+ for <qemu-devel@nongnu.org>; Mon, 27 Jan 2025 02:27:19 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1737973629; x=1738578429; darn=nongnu.org;
+ d=linaro.org; s=google; t=1737973638; x=1738578438; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=1d6GEdB7lAJOa4wOJPlMuA83RtA5O50buKaoS5o522A=;
- b=OnSOyEaej6hcF3p89GStX5Vhj/TXUtlKgnukwwzG0EagDwZJNne2yLiAOibvOrTxfU
- VxVpvBYHEfa2jAgcL07f9OErgmszP7WXaGRPnmSgOg1YHJqOgoxlC1QM9INN07B1IZcq
- twEyE0x1ucEXZ2+u/8xTv7Vxykhgffs/R6Q6HJF0/M0QQp7tkdFhQ+4e85jOzBPw3dpq
- +jKpTjN9GR0y+fy5QvaHyvJAwGIfxURNmFA0tG4QTHphPUQSMiC10Y54iFgQS+1QcwAe
- BjxgfKFnJPYCMUdW6g+h3YN9RUwQU0X2mjQ1rwOsf4xad5mlFbZQySB1Az+yg4sn1KtL
- FUgg==
+ bh=DgByrMylZY256tTsI6R1dbeQexynJICQtGDxrv9XG/o=;
+ b=XclhAAx5iYc/JMv1HNBVm+WAElCQry64kkpmpoIV9SWGwZ0UBaZkfzD1OHB8hQc8gP
+ BHyon7V7ui8TkSLXTy7hS04n4cMikc21gUGtkQ0iTDKqH3UWoZ3S3QZ9/zGimE06fchj
+ lu2BX/OzSEQPLuBF9EmnToGF7qJsigC3fiXr+5z/3poVZ5o2LfwgPSPzR7RX/yz8vUb3
+ APsX6LVdR6iJcW6BiMuc00yiihnkH5iTrzzuq5JcWrZtgF6NAs5f8hc4LaeUzkclPl0L
+ //fLZN0VDRSUIrp0Ni3eoh12FbLuPrrPE8Te5q4FAa+40LnTtj+oNbjeGLHjkYgd7tI5
+ 25Ag==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1737973629; x=1738578429;
+ d=1e100.net; s=20230601; t=1737973638; x=1738578438;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=1d6GEdB7lAJOa4wOJPlMuA83RtA5O50buKaoS5o522A=;
- b=JfrfaoRZx/Tzv3QlI41ENjWptS4EVu3HHnv/MeBWKYlSSygRAnxkbUiMEU6xsqT1gY
- jqOjdQm0sMKjEUBce+ANuiHInpRvzbqPNko275WhY/dBsdY3MbErE0Axl3R+HyYwCBfl
- pkDKJjziVeja71bClN/gKdEo92aG1PRDfD+wHnImDTIGcGOpcvUSFQmPai9Lihtabv9t
- bUvRw8mXZ3x6ehXjMnoMWdbRS0zekCuF9cp42AjGVUD7D4NukEOJwQosaguuUAedKXui
- 6Lm9aEkYBCvHYxztEwq5hpRiZe0WQy2OeTLLTo+rXuiLwjF/XhwiaihPASDZC3dsK7/S
- +RQA==
-X-Gm-Message-State: AOJu0YzLUszK9ZevqPyYstti0uLiBPNZYh/ImU7++C7+zNlHKfJ4IBe8
- NHGD/6na/X6NztgJhRP1D/MrGtKjxTZW95fmz3ECzXhb8IWjo9g0qAQxvQww0K+y1gxS51p8Rtf
- NB6k=
-X-Gm-Gg: ASbGnct1J1nF+2XIxKVejeBZHEJ3LefT7UEHgvsOfxXOLgncsC/UMAsmBMCcsx6K5sp
- oP/JT77YooLojdoTngXiC6uwlX9Tj8mt4dBNPSKGqacBNM1+AEHTFCax2PJUbVC142/4mIMwkVe
- 6P9MvMU5nZpVP8mUfVWLYT6cZ5y0rBnByTQa+kCtdNAN9Pcuhfi2LvpftWKX+YSuZQYRyuu/62G
- UglP7DiNCw8wjcDvlm6Zoam+RDnCI2+N77KXWWljYk33K/64UF8ScLb/nYyLdyAwQOg4rR4ZQ9g
- xBpKXINQRDDHEbqJd+RqS6wPb0VW3TQw7p/Tvc0xpZ3nDfk6OgcNC40=
-X-Google-Smtp-Source: AGHT+IFRbgpUckgelXJc4vXcDRMyUtx90IthuaaTMb4Zdo4gw04oR+hvFt34IodgdetT1LpQSHalRg==
-X-Received: by 2002:a5d:6da1:0:b0:385:e411:c894 with SMTP id
- ffacd0b85a97d-38bf57a6844mr37776084f8f.43.1737973628926; 
- Mon, 27 Jan 2025 02:27:08 -0800 (PST)
+ bh=DgByrMylZY256tTsI6R1dbeQexynJICQtGDxrv9XG/o=;
+ b=pJZvDsqUwCbxHAEcuAgZMNNQ0CRT+QbgRPd5VEyjeeTVKFlqw5v+AcX33bBFfTxBdz
+ 7Cm1/kgbA4hP/jyOVzEc4W2sfVfLlOW3ipwqNe/lxgRDFwOwtHHmxG5DnrdAvTObUPsd
+ 6lzT1ItHFF3V6CT9tSHzrHtJRKB9l9Wv+X5XVu3esEbZrIBJckujT4JXdI38l0VXp3Sd
+ UGTCGjWLRb3GNET6dXE6/RAGGbfXqrzeDb1KguK48XfQ0/rkImG/XffFzFvzZTyVUfed
+ +uXg5NUOym3UwbW2591GCkHv/+f7NeaLUXwl15lvxtEtRpSr8nQAHddySV/Oa6eKZN68
+ ltNA==
+X-Gm-Message-State: AOJu0YxCaoK/Pmq+0mrL2wbXhAM3m1ysmOZVCRNCaUoRWR4R4KqKz1eD
+ NVGQoop2mveJwHohM4rX28MsnzB32N5+ocNIyKUKtw/o+otQ4h258v27h++k7Cecy3oHJywS+Wt
+ tcuQ=
+X-Gm-Gg: ASbGnctcc/send8fRj/nhLb88/wM6LVT8IWEVcHdfs3MAYVS2HvTgpfFZL400hTcNEo
+ Ui1FLV1vQB76QKR7YufrVoXo5qhLnmiOga5iI2MvgkFTHrkoIC8rwsmL/gHtxQBakbhf9P/SAzS
+ 5KDZI2NS2e9s6+QqzqhJ/SxUrYvP34tiph/3vHX3WBibXNDNa5cZMgkGMNdKoEQfF3NSWmoyazF
+ 9mcVfWT7Y4nPd2noZ7/yXjFjQr+2R9zUZ/qlTJ1esaaWwWIk1/wqHzSC0aHN7HBa/3KGCT0D2Z/
+ 387OzYLrrP0Mj59dUVUHUkYvzPhNfMzdaz9L3gUP0mgCe7HG5BdgyFM=
+X-Google-Smtp-Source: AGHT+IF4/RAIOkmM+IPjWgnA4MxEALT9K24zm4+BA5WHdDTZFgDDbKvtiTWYO4urJgB/scXWNOxenQ==
+X-Received: by 2002:a5d:64a1:0:b0:38a:39ad:3e2f with SMTP id
+ ffacd0b85a97d-38bf565573dmr34239179f8f.2.1737973638429; 
+ Mon, 27 Jan 2025 02:27:18 -0800 (PST)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-38c2a17d697sm10458453f8f.29.2025.01.27.02.27.08
+ ffacd0b85a97d-38c2a1764c8sm10467726f8f.3.2025.01.27.02.27.17
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Mon, 27 Jan 2025 02:27:08 -0800 (PST)
+ Mon, 27 Jan 2025 02:27:17 -0800 (PST)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Daniel Henrique Barboza <danielhb413@gmail.com>,
@@ -69,17 +69,17 @@ Cc: Daniel Henrique Barboza <danielhb413@gmail.com>,
  Harsh Prateek Bora <harshpb@linux.ibm.com>, qemu-ppc@nongnu.org,
  Nicholas Piggin <npiggin@gmail.com>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PATCH v2 10/15] target/ppc: Restrict ppc_tcg_hv_emu() to TCG
-Date: Mon, 27 Jan 2025 11:26:14 +0100
-Message-ID: <20250127102620.39159-11-philmd@linaro.org>
+Subject: [PATCH v2 12/15] target/ppc: Fix style in excp_helper.c
+Date: Mon, 27 Jan 2025 11:26:16 +0100
+Message-ID: <20250127102620.39159-13-philmd@linaro.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20250127102620.39159-1-philmd@linaro.org>
 References: <20250127102620.39159-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32a;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x32a.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::429;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x429.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -102,254 +102,28 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Make is_prefix_insn_excp() prototype but have it guarded by
-a tcg_enabled() check. Inline part of it in powerpc_excp_books().
-
-Extract POWERPC_EXCP_HV_EMU handling code to ppc_tcg_hv_emu(),
-also exposing its prototype in "internal.h".
+Fix style in do_rfi() before moving the code around.
 
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 ---
- target/ppc/internal.h        |   6 +++
- target/ppc/excp_helper.c     | 101 +++++------------------------------
- target/ppc/tcg-excp_helper.c |  75 ++++++++++++++++++++++++++
- 3 files changed, 93 insertions(+), 89 deletions(-)
+ target/ppc/excp_helper.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/target/ppc/internal.h b/target/ppc/internal.h
-index 62186bc1e61..0e66b29ec68 100644
---- a/target/ppc/internal.h
-+++ b/target/ppc/internal.h
-@@ -291,6 +291,12 @@ bool ppc_cpu_debug_check_breakpoint(CPUState *cs);
- bool ppc_cpu_debug_check_watchpoint(CPUState *cs, CPUWatchpoint *wp);
- 
- G_NORETURN void powerpc_checkstop(CPUPPCState *env, const char *reason);
-+
-+#if defined(TARGET_PPC64)
-+bool is_prefix_insn_excp(CPUPPCState *env, int excp);
-+void ppc_tcg_hv_emu(CPUPPCState *env, target_ulong *new_msr,
-+                    int *srr0, int *srr1);
-+#endif /* TARGET_PPC64 */
- #endif /* !CONFIG_USER_ONLY */
- 
- FIELD(GER_MSK, XMSK, 0, 4)
 diff --git a/target/ppc/excp_helper.c b/target/ppc/excp_helper.c
-index 6a12402b23a..56a56148a40 100644
+index 48e08d65bd7..661d9650d9f 100644
 --- a/target/ppc/excp_helper.c
 +++ b/target/ppc/excp_helper.c
-@@ -19,6 +19,7 @@
- #include "qemu/osdep.h"
- #include "qemu/main-loop.h"
- #include "qemu/log.h"
-+#include "system/kvm.h"
- #include "system/tcg.h"
- #include "system/system.h"
- #include "system/runstate.h"
-@@ -1194,81 +1195,6 @@ static bool books_vhyp_handles_hv_excp(PowerPCCPU *cpu)
-     return false;
- }
+@@ -2481,8 +2481,9 @@ static void do_rfi(CPUPPCState *env, target_ulong nip, target_ulong msr)
+     msr &= ~(1ULL << MSR_POW);
  
--#ifdef CONFIG_TCG
--static bool is_prefix_insn(CPUPPCState *env, uint32_t insn)
--{
--    if (!(env->insns_flags2 & PPC2_ISA310)) {
--        return false;
--    }
--    return ((insn & 0xfc000000) == 0x04000000);
--}
--
--static bool is_prefix_insn_excp(PowerPCCPU *cpu, int excp)
--{
--    CPUPPCState *env = &cpu->env;
--
--    if (!(env->insns_flags2 & PPC2_ISA310)) {
--        return false;
--    }
--
--    if (!tcg_enabled()) {
--        /*
--         * This does not load instructions and set the prefix bit correctly
--         * for injected interrupts with KVM. That may have to be discovered
--         * and set by the KVM layer before injecting.
--         */
--        return false;
--    }
--
--    switch (excp) {
--    case POWERPC_EXCP_MCHECK:
--        if (!(env->error_code & PPC_BIT(42))) {
--            /*
--             * Fetch attempt caused a machine check, so attempting to fetch
--             * again would cause a recursive machine check.
--             */
--            return false;
--        }
--        break;
--    case POWERPC_EXCP_HDSI:
--        /* HDSI PRTABLE_FAULT has the originating access type in error_code */
--        if ((env->spr[SPR_HDSISR] & DSISR_PRTABLE_FAULT) &&
--            (env->error_code == MMU_INST_FETCH)) {
--            /*
--             * Fetch failed due to partition scope translation, so prefix
--             * indication is not relevant (and attempting to load the
--             * instruction at NIP would cause recursive faults with the same
--             * translation).
--             */
--            return false;
--        }
--        break;
--
--    case POWERPC_EXCP_DSI:
--    case POWERPC_EXCP_DSEG:
--    case POWERPC_EXCP_ALIGN:
--    case POWERPC_EXCP_PROGRAM:
--    case POWERPC_EXCP_FPU:
--    case POWERPC_EXCP_TRACE:
--    case POWERPC_EXCP_HV_EMU:
--    case POWERPC_EXCP_VPU:
--    case POWERPC_EXCP_VSXU:
--    case POWERPC_EXCP_FU:
--    case POWERPC_EXCP_HV_FU:
--        break;
--    default:
--        return false;
--    }
--
--    return is_prefix_insn(env, ppc_ldl_code(env, env->nip));
--}
--#else
--static bool is_prefix_insn_excp(PowerPCCPU *cpu, int excp)
--{
--    return false;
--}
--#endif
--
- static void powerpc_excp_books(PowerPCCPU *cpu, int excp)
- {
-     CPUPPCState *env = &cpu->env;
-@@ -1310,7 +1236,15 @@ static void powerpc_excp_books(PowerPCCPU *cpu, int excp)
-     }
-     vector |= env->excp_prefix;
- 
--    if (is_prefix_insn_excp(cpu, excp)) {
-+    if (env->insns_flags2 & PPC2_ISA310) {
-+        /* nothing to do */
-+    } else if (kvm_enabled()) {
-+        /*
-+         * This does not load instructions and set the prefix bit correctly
-+         * for injected interrupts with KVM. That may have to be discovered
-+         * and set by the KVM layer before injecting.
-+         */
-+    } else if (tcg_enabled() && is_prefix_insn_excp(env, excp)) {
-         msr |= PPC_BIT(34);
-     }
- 
-@@ -1484,20 +1418,9 @@ static void powerpc_excp_books(PowerPCCPU *cpu, int excp)
-         new_msr |= env->msr & ((target_ulong)1 << MSR_RI);
-         break;
- #ifdef CONFIG_TCG
--    case POWERPC_EXCP_HV_EMU: {
--        uint32_t insn = ppc_ldl_code(env, env->nip);
--        env->spr[SPR_HEIR] = insn;
--        if (is_prefix_insn(env, insn)) {
--            uint32_t insn2 = ppc_ldl_code(env, env->nip + 4);
--            env->spr[SPR_HEIR] <<= 32;
--            env->spr[SPR_HEIR] |= insn2;
--        }
--        srr0 = SPR_HSRR0;
--        srr1 = SPR_HSRR1;
--        new_msr |= (target_ulong)MSR_HVB;
--        new_msr |= env->msr & ((target_ulong)1 << MSR_RI);
-+    case POWERPC_EXCP_HV_EMU:
-+        ppc_tcg_hv_emu(env, &new_msr, &srr0, &srr1);
-         break;
--    }
- #endif
-     case POWERPC_EXCP_VPU:       /* Vector unavailable exception             */
-     case POWERPC_EXCP_VSXU:       /* VSX unavailable exception               */
-diff --git a/target/ppc/tcg-excp_helper.c b/target/ppc/tcg-excp_helper.c
-index 268a1614597..dc5601a4577 100644
---- a/target/ppc/tcg-excp_helper.c
-+++ b/target/ppc/tcg-excp_helper.c
-@@ -283,4 +283,79 @@ uint32_t ppc_ldl_code(CPUArchState *env, target_ulong addr)
-     return insn;
- }
- 
-+#if defined(TARGET_PPC64)
-+
-+static bool is_prefix_insn(CPUPPCState *env, uint32_t insn)
-+{
-+    if (!(env->insns_flags2 & PPC2_ISA310)) {
-+        return false;
+     /* MSR:TGPR cannot be set by any form of rfi */
+-    if (env->flags & POWERPC_FLAG_TGPR)
++    if (env->flags & POWERPC_FLAG_TGPR) {
+         msr &= ~(1ULL << MSR_TGPR);
 +    }
-+    return ((insn & 0xfc000000) == 0x04000000);
-+}
-+
-+bool is_prefix_insn_excp(CPUPPCState *env, int excp)
-+{
-+    switch (excp) {
-+    case POWERPC_EXCP_MCHECK:
-+        if (!(env->error_code & PPC_BIT(42))) {
-+            /*
-+             * Fetch attempt caused a machine check, so attempting to fetch
-+             * again would cause a recursive machine check.
-+             */
-+            return false;
-+        }
-+        break;
-+    case POWERPC_EXCP_HDSI:
-+        /* HDSI PRTABLE_FAULT has the originating access type in error_code */
-+        if ((env->spr[SPR_HDSISR] & DSISR_PRTABLE_FAULT) &&
-+            (env->error_code == MMU_INST_FETCH)) {
-+            /*
-+             * Fetch failed due to partition scope translation, so prefix
-+             * indication is not relevant (and attempting to load the
-+             * instruction at NIP would cause recursive faults with the same
-+             * translation).
-+             */
-+            return false;
-+        }
-+        break;
-+
-+    case POWERPC_EXCP_DSI:
-+    case POWERPC_EXCP_DSEG:
-+    case POWERPC_EXCP_ALIGN:
-+    case POWERPC_EXCP_PROGRAM:
-+    case POWERPC_EXCP_FPU:
-+    case POWERPC_EXCP_TRACE:
-+    case POWERPC_EXCP_HV_EMU:
-+    case POWERPC_EXCP_VPU:
-+    case POWERPC_EXCP_VSXU:
-+    case POWERPC_EXCP_FU:
-+    case POWERPC_EXCP_HV_FU:
-+        break;
-+    default:
-+        return false;
-+    }
-+
-+    return is_prefix_insn(env, ppc_ldl_code(env, env->nip));
-+}
-+
-+void ppc_tcg_hv_emu(CPUPPCState *env, target_ulong *new_msr,
-+                    int *srr0, int *srr1)
-+{
-+    uint32_t insn = ppc_ldl_code(env, env->nip);
-+
-+    env->spr[SPR_HEIR] = insn;
-+    if (is_prefix_insn(env, insn)) {
-+        uint32_t insn2 = ppc_ldl_code(env, env->nip + 4);
-+
-+        env->spr[SPR_HEIR] <<= 32;
-+        env->spr[SPR_HEIR] |= insn2;
-+    }
-+    *srr0 = SPR_HSRR0;
-+    *srr1 = SPR_HSRR1;
-+    *new_msr |= (target_ulong)MSR_HVB;
-+    *new_msr |= env->msr & ((target_ulong)1 << MSR_RI);
-+}
-+
-+#endif /* TARGET_PPC64 */
-+
- #endif /* !CONFIG_USER_ONLY */
+ 
+ #ifdef TARGET_PPC64
+     /* Switching to 32-bit ? Crop the nip */
 -- 
 2.47.1
 
