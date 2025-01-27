@@ -4,35 +4,36 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2488BC02190
-	for <qemu-devel@archiver.kernel.org>; Tue, 28 Jan 2025 07:59:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9CDE9C0218D
+	for <qemu-devel@archiver.kernel.org>; Tue, 28 Jan 2025 07:59:43 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tcgUS-0007cC-JX; Tue, 28 Jan 2025 02:58:32 -0500
+	id 1tcgU1-00064O-0b; Tue, 28 Jan 2025 02:58:05 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1tcgUA-0007Pz-LI; Tue, 28 Jan 2025 02:58:18 -0500
+ id 1tcgTh-0005jZ-Op; Tue, 28 Jan 2025 02:57:49 -0500
 Received: from isrv.corpit.ru ([86.62.121.231])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1tcgU8-0000uQ-O5; Tue, 28 Jan 2025 02:58:14 -0500
+ id 1tcgTf-0000m5-36; Tue, 28 Jan 2025 02:57:44 -0500
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id B4909E1AF8;
+ by isrv.corpit.ru (Postfix) with ESMTP id A0AA5E1AF3;
  Tue, 28 Jan 2025 10:54:25 +0300 (MSK)
 Received: from localhost.tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id 2F9AA1A62DF;
+ by tsrv.corpit.ru (Postfix) with ESMTP id 1BB391A62DA;
  Tue, 28 Jan 2025 10:54:51 +0300 (MSK)
 Received: by localhost.tls.msk.ru (Postfix, from userid 1000)
- id E920252055; Tue, 28 Jan 2025 10:54:50 +0300 (MSK)
+ id E0C7B5204B; Tue, 28 Jan 2025 10:54:50 +0300 (MSK)
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Christian Schoenebeck <qemu_oss@crudebyte.com>,
- Dirk Herrendorfer <d.herrendoerfer@de.ibm.com>, Greg Kurz <groug@kaod.org>,
- Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-8.2.9 23/45] 9pfs: fix regression regarding CVE-2023-2861
-Date: Mon, 27 Jan 2025 23:26:04 +0300
-Message-Id: <20250127202630.3724367-23-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org, Ahmad Fatoum <a.fatoum@pengutronix.de>,
+ Stafford Horne <shorne@gmail.com>,
+ Peter Maydell <peter.maydell@linaro.org>, Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-8.2.9 18/45] hw/openrisc/openrisc_sim: keep serial@90000000
+ as default
+Date: Mon, 27 Jan 2025 23:25:59 +0300
+Message-Id: <20250127202630.3724367-18-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <qemu-stable-8.2.9-20250127232621@cover.tls.msk.ru>
 References: <qemu-stable-8.2.9-20250127232621@cover.tls.msk.ru>
@@ -63,99 +64,114 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The released fix for this CVE:
+We used to only have a single UART on the platform and it was located at
+address 0x90000000. When the number of UARTs was increased to 4, the
+first UART remained at it's location, but instead of being the first one
+to be registered, it became the last.
 
-  f6b0de53fb8 ("9pfs: prevent opening special files (CVE-2023-2861)")
+This caused QEMU to pick 0x90000300 as the default UART, which broke
+software that hardcoded the address of 0x90000000 and expected it's
+output to be visible when the user configured only a single console.
 
-caused a regression with security_model=passthrough. When handling a
-'Tmknod' request there was a side effect that 'Tmknod' request could fail
-as 9p server was trying to adjust permissions:
+This caused regressions[1] in the barebox test suite when updating to a
+newer QEMU. As there seems to be no good reason to register the UARTs in
+inverse order, let's register them by ascending address, so existing
+software can remain oblivious to the additional UART ports.
 
-  #6  close_if_special_file (fd=30) at ../hw/9pfs/9p-util.h:140
-  #7  openat_file (mode=<optimized out>, flags=2228224,
-      name=<optimized out>, dirfd=<optimized out>) at
-      ../hw/9pfs/9p-util.h:181
-  #8  fchmodat_nofollow (dirfd=dirfd@entry=31,
-      name=name@entry=0x5555577ea6e0 "mysocket", mode=493) at
-      ../hw/9pfs/9p-local.c:360
-  #9  local_set_cred_passthrough (credp=0x7ffbbc4ace10, name=0x5555577ea6e0
-      "mysocket", dirfd=31, fs_ctx=0x55555811f528) at
-      ../hw/9pfs/9p-local.c:457
-  #10 local_mknod (fs_ctx=0x55555811f528, dir_path=<optimized out>,
-      name=0x5555577ea6e0 "mysocket", credp=0x7ffbbc4ace10) at
-      ../hw/9pfs/9p-local.c:702
-  #11 v9fs_co_mknod (pdu=pdu@entry=0x555558121140,
-      fidp=fidp@entry=0x5555574c46c0, name=name@entry=0x7ffbbc4aced0,
-      uid=1000, gid=1000, dev=<optimized out>, mode=49645,
-      stbuf=0x7ffbbc4acef0) at ../hw/9pfs/cofs.c:205
-  #12 v9fs_mknod (opaque=0x555558121140) at ../hw/9pfs/9p.c:3711
+Changing the order of uart registration alone breaks Linux which
+was choosing the UART at 0x90000300 as the default for ttyS0.  To fix
+Linux we fix three things in the device tree:
 
-That's because server was opening the special file to adjust permissions,
-however it was using O_PATH and it would have not returned the file
-descriptor to guest. So the call to close_if_special_file() on that branch
-was incorrect.
+ 1. Define stdout-path only one time for the first registered UART
+    instead of incorrectly defining for each UART.
+ 2. Change the UART alias name from 'uart0' to 'serial0' as almost all
+    Linux tty drivers look for an alias starting with "serial".
+ 3. Add the UART nodes so they appear in the final DTB in the
+    order starting with the lowest address and working upwards.
 
-Let's lift the restriction introduced by f6b0de53fb8 such that it would
-allow to open special files on host if O_PATH flag is supplied, not only
-for 9p server's own operations as described above, but also for any client
-'Topen' request.
+In summary these changes mean that the QEMU default UART (serial_hd(0))
+is now setup where:
 
-It is safe to allow opening special files with O_PATH on host, because
-O_PATH only allows path based operations on the resulting file descriptor
-and prevents I/O such as read() and write() on that file descriptor.
+ * serial_hd(0) is the lowest-address UART
+ * serial_hd(0) is listed first in the DTB
+ * serial_hd(0) is the /chosen/stdout-path one
+ * the /aliases/serial0 alias points at serial_hd(0)
 
-Fixes: f6b0de53fb8 ("9pfs: prevent opening special files (CVE-2023-2861)")
-Resolves: https://gitlab.com/qemu-project/qemu/-/issues/2337
-Reported-by: Dirk Herrendorfer <d.herrendoerfer@de.ibm.com>
-Signed-off-by: Christian Schoenebeck <qemu_oss@crudebyte.com>
-Reviewed-by: Greg Kurz <groug@kaod.org>
-Tested-by: Dirk Herrendorfer <d.herrendoerfer@de.ibm.com>
-Message-Id: <E1tJWbk-007BH4-OB@kylie.crudebyte.com>
-(cherry picked from commit d06a9d843fb65351e0e4dc42ba0c404f01ea92b3)
+[1]: https://lore.barebox.org/barebox/707e7c50-aad1-4459-8796-0cc54bab32e2@pengutronix.de/T/#m5da26e8a799033301489a938b5d5667b81cef6ad
+
+Fixes: 777784bda468 ("hw/openrisc: support 4 serial ports in or1ksim")
+Cc: qemu-stable@nongnu.org
+Signed-off-by: Ahmad Fatoum <a.fatoum@pengutronix.de>
+[stafford: Change to serial0 alias and update change message, reverse
+ uart registration order]
+Signed-off-by: Stafford Horne <shorne@gmail.com>
+Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
+(cherry picked from commit 26dcf2be7e153defa289d20317707af034aca692)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/hw/9pfs/9p-util.h b/hw/9pfs/9p-util.h
-index 51c94b0116..95ee4da9bd 100644
---- a/hw/9pfs/9p-util.h
-+++ b/hw/9pfs/9p-util.h
-@@ -177,20 +177,27 @@ again:
-         return -1;
-     }
+diff --git a/hw/openrisc/openrisc_sim.c b/hw/openrisc/openrisc_sim.c
+index 35da123aef..dc1fea8cd8 100644
+--- a/hw/openrisc/openrisc_sim.c
++++ b/hw/openrisc/openrisc_sim.c
+@@ -248,7 +248,7 @@ static void openrisc_sim_serial_init(Or1ksimState *state, hwaddr base,
+     void *fdt = state->fdt;
+     char *nodename;
+     qemu_irq serial_irq;
+-    char alias[sizeof("uart0")];
++    char alias[sizeof("serial0")];
+     int i;
  
--    if (close_if_special_file(fd) < 0) {
--        return -1;
--    }
--
--    serrno = errno;
--    /* O_NONBLOCK was only needed to open the file. Let's drop it. We don't
--     * do that with O_PATH since fcntl(F_SETFL) isn't supported, and openat()
--     * ignored it anyway.
--     */
-+    /* Only if O_PATH is not set ... */
-     if (!(flags & O_PATH_9P_UTIL)) {
-+        /*
-+         * Prevent I/O on special files (device files, etc.) on host side,
-+         * however it is safe and required to allow opening them with O_PATH,
-+         * as this is limited to (required) path based operations only.
-+         */
-+        if (close_if_special_file(fd) < 0) {
-+            return -1;
-+        }
-+
-+        serrno = errno;
-+        /*
-+         * O_NONBLOCK was only needed to open the file. Let's drop it. We don't
-+         * do that with O_PATH since fcntl(F_SETFL) isn't supported, and
-+         * openat() ignored it anyway.
-+         */
-         ret = fcntl(fd, F_SETFL, flags);
-         assert(!ret);
-+        errno = serrno;
+     if (num_cpus > 1) {
+@@ -263,7 +263,7 @@ static void openrisc_sim_serial_init(Or1ksimState *state, hwaddr base,
+         serial_irq = get_cpu_irq(cpus, 0, irq_pin);
      }
--    errno = serrno;
-     return fd;
+     serial_mm_init(get_system_memory(), base, 0, serial_irq, 115200,
+-                   serial_hd(OR1KSIM_UART_COUNT - uart_idx - 1),
++                   serial_hd(uart_idx),
+                    DEVICE_NATIVE_ENDIAN);
+ 
+     /* Add device tree node for serial. */
+@@ -275,10 +275,13 @@ static void openrisc_sim_serial_init(Or1ksimState *state, hwaddr base,
+     qemu_fdt_setprop_cell(fdt, nodename, "clock-frequency", OR1KSIM_CLK_MHZ);
+     qemu_fdt_setprop(fdt, nodename, "big-endian", NULL, 0);
+ 
+-    /* The /chosen node is created during fdt creation. */
+-    qemu_fdt_setprop_string(fdt, "/chosen", "stdout-path", nodename);
+-    snprintf(alias, sizeof(alias), "uart%d", uart_idx);
++    if (uart_idx == 0) {
++        /* The /chosen node is created during fdt creation. */
++        qemu_fdt_setprop_string(fdt, "/chosen", "stdout-path", nodename);
++    }
++    snprintf(alias, sizeof(alias), "serial%d", uart_idx);
+     qemu_fdt_setprop_string(fdt, "/aliases", alias, nodename);
++
+     g_free(nodename);
  }
  
+@@ -326,11 +329,22 @@ static void openrisc_sim_init(MachineState *machine)
+                                 smp_cpus, cpus, OR1KSIM_OMPIC_IRQ);
+     }
+ 
+-    for (n = 0; n < OR1KSIM_UART_COUNT; ++n)
++    /*
++     * We create the UART nodes starting with the highest address and
++     * working downwards, because in QEMU the DTB nodes end up in the
++     * DTB in reverse order of creation. Correctly-written guest software
++     * will not care about the node order (it will look at stdout-path
++     * or the alias nodes), but for the benefit of guest software which
++     * just looks for the first UART node in the DTB, make sure the
++     * lowest-address UART (which is QEMU's first serial port) appears
++     * first in the DTB.
++     */
++    for (n = OR1KSIM_UART_COUNT - 1; n >= 0; n--) {
+         openrisc_sim_serial_init(state, or1ksim_memmap[OR1KSIM_UART].base +
+                                         or1ksim_memmap[OR1KSIM_UART].size * n,
+                                  or1ksim_memmap[OR1KSIM_UART].size,
+                                  smp_cpus, cpus, OR1KSIM_UART_IRQ, n);
++    }
+ 
+     load_addr = openrisc_load_kernel(ram_size, kernel_filename,
+                                      &boot_info.bootstrap_pc);
 -- 
 2.39.5
 
