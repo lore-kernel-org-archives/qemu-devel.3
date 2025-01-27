@@ -4,34 +4,34 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 55E5AC02190
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DC9C7C0218D
 	for <qemu-devel@archiver.kernel.org>; Tue, 28 Jan 2025 07:58:59 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tcgUj-0001OO-OQ; Tue, 28 Jan 2025 02:58:49 -0500
+	id 1tcgTG-0003id-5q; Tue, 28 Jan 2025 02:57:18 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1tcgUc-0000XZ-V7; Tue, 28 Jan 2025 02:58:43 -0500
+ id 1tcgT3-0003Ma-N9; Tue, 28 Jan 2025 02:57:07 -0500
 Received: from isrv.corpit.ru ([86.62.121.231])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1tcgUb-00013L-Dy; Tue, 28 Jan 2025 02:58:42 -0500
+ id 1tcgT2-0000UB-5m; Tue, 28 Jan 2025 02:57:05 -0500
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id C80EAE1AFD;
+ by isrv.corpit.ru (Postfix) with ESMTP id 82449E1AEB;
  Tue, 28 Jan 2025 10:54:25 +0300 (MSK)
 Received: from localhost.tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id 432B41A62E4;
- Tue, 28 Jan 2025 10:54:51 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id F13661A62D2;
+ Tue, 28 Jan 2025 10:54:50 +0300 (MSK)
 Received: by localhost.tls.msk.ru (Postfix, from userid 1000)
- id F17AF5205F; Tue, 28 Jan 2025 10:54:50 +0300 (MSK)
+ id D37D95203B; Tue, 28 Jan 2025 10:54:50 +0300 (MSK)
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Gerd Hoffmann <kraxel@redhat.com>,
- Peter Maydell <peter.maydell@linaro.org>, Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-8.2.9 28/45] edk2: commit version info
-Date: Mon, 27 Jan 2025 23:26:09 +0300
-Message-Id: <20250127202630.3724367-28-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org, Christian Schoenebeck <qemu_oss@crudebyte.com>,
+ Greg Kurz <groug@kaod.org>, Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-8.2.9 10/45] tests/9p: add missing Rgetattr response name
+Date: Mon, 27 Jan 2025 23:25:51 +0300
+Message-Id: <20250127202630.3724367-10-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <qemu-stable-8.2.9-20250127232621@cover.tls.msk.ru>
 References: <qemu-stable-8.2.9-20250127232621@cover.tls.msk.ru>
@@ -62,20 +62,29 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
-Signed-off-by: Gerd Hoffmann <kraxel@redhat.com>
-Message-ID: <20240327102448.61877-3-kraxel@redhat.com>
-(cherry picked from commit 6494a08d1025c1ca5341af61e47d1e369c2877c8)
+'Tgetattr' 9p request and its 'Rgetattr' response types are already used
+by test client, however this response type is yet missing in function
+rmessage_name(), so add it.
+
+Fixes: a6821b828404 ("tests/9pfs: compare QIDs in fs_walk_none() test")
+Signed-off-by: Christian Schoenebeck <qemu_oss@crudebyte.com>
+Reviewed-by: Greg Kurz <groug@kaod.org>
+Message-Id: <e183da80d390cfd7d55bdbce92f0ff6e3e5cdced.1732465720.git.qemu_oss@crudebyte.com>
+(cherry picked from commit 4ec984965079b51a9afce339af75edea6de973a2)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/roms/edk2-version b/roms/edk2-version
-new file mode 100644
-index 0000000000..1594ed8c4d
---- /dev/null
-+++ b/roms/edk2-version
-@@ -0,0 +1,2 @@
-+EDK2_STABLE = edk2-stable202402
-+EDK2_DATE = 02/14/2024
+diff --git a/tests/qtest/libqos/virtio-9p-client.c b/tests/qtest/libqos/virtio-9p-client.c
+index c61632fcd3..98b77db51d 100644
+--- a/tests/qtest/libqos/virtio-9p-client.c
++++ b/tests/qtest/libqos/virtio-9p-client.c
+@@ -235,6 +235,7 @@ static const char *rmessage_name(uint8_t id)
+         id == P9_RMKDIR ? "RMKDIR" :
+         id == P9_RLCREATE ? "RLCREATE" :
+         id == P9_RSYMLINK ? "RSYMLINK" :
++        id == P9_RGETATTR ? "RGETATTR" :
+         id == P9_RLINK ? "RLINK" :
+         id == P9_RUNLINKAT ? "RUNLINKAT" :
+         id == P9_RFLUSH ? "RFLUSH" :
 -- 
 2.39.5
 
