@@ -4,35 +4,35 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 14D56C02190
-	for <qemu-devel@archiver.kernel.org>; Tue, 28 Jan 2025 08:18:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 121B2C0218D
+	for <qemu-devel@archiver.kernel.org>; Tue, 28 Jan 2025 08:18:59 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tcgcd-0006x7-Ft; Tue, 28 Jan 2025 03:07:01 -0500
+	id 1tcgZj-000801-M4; Tue, 28 Jan 2025 03:04:00 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1tcgar-0002Hn-Bg; Tue, 28 Jan 2025 03:05:15 -0500
+ id 1tcgZK-0007I6-0H; Tue, 28 Jan 2025 03:03:39 -0500
 Received: from isrv.corpit.ru ([86.62.121.231])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1tcgap-0002mP-2v; Tue, 28 Jan 2025 03:05:09 -0500
+ id 1tcgZH-0002I3-Rc; Tue, 28 Jan 2025 03:03:33 -0500
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 2C559E1B70;
- Tue, 28 Jan 2025 10:57:09 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id DF4B1E1B60;
+ Tue, 28 Jan 2025 10:57:08 +0300 (MSK)
 Received: from localhost.tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id 9C3741A6323;
+ by tsrv.corpit.ru (Postfix) with ESMTP id 5B2661A6313;
  Tue, 28 Jan 2025 10:57:34 +0300 (MSK)
 Received: by localhost.tls.msk.ru (Postfix, from userid 1000)
- id 2D7B6520D7; Tue, 28 Jan 2025 10:57:34 +0300 (MSK)
+ id 1255C520B7; Tue, 28 Jan 2025 10:57:34 +0300 (MSK)
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Fabiano Rosas <farosas@suse.de>,
- Peter Xu <peterx@redhat.com>, Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-9.1.3 41/58] migration: Add more error handling to
- analyze-migration.py
-Date: Mon, 27 Jan 2025 23:25:27 +0300
-Message-Id: <20250127202547.3723716-41-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org, Christian Schoenebeck <qemu_oss@crudebyte.com>,
+ Dirk Herrendorfer <d.herrendoerfer@de.ibm.com>, Greg Kurz <groug@kaod.org>,
+ Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-9.1.3 25/58] 9pfs: fix regression regarding CVE-2023-2861
+Date: Mon, 27 Jan 2025 23:25:11 +0300
+Message-Id: <20250127202547.3723716-25-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <qemu-stable-9.1.3-20250127232536@cover.tls.msk.ru>
 References: <qemu-stable-9.1.3-20250127232536@cover.tls.msk.ru>
@@ -63,137 +63,99 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The analyze-migration script was seen failing in s390x in misterious
-ways. It seems we're reaching the VMSDFieldStruct constructor without
-any fields, which would indicate an empty .subsection entry, a
-VMSTATE_STRUCT with no fields or a vmsd with no fields. We don't have
-any of those, at least not without the unmigratable flag set, so this
-should never happen.
+The released fix for this CVE:
 
-Add some debug statements so that we can see what's going on the next
-time the issue happens.
+  f6b0de53fb8 ("9pfs: prevent opening special files (CVE-2023-2861)")
 
-Reviewed-by: Peter Xu <peterx@redhat.com>
-Message-Id: <20250109185249.23952-2-farosas@suse.de>
-Signed-off-by: Fabiano Rosas <farosas@suse.de>
-(cherry picked from commit 86bee9e0c761a3d0e67c43b44001fd752f894cb0)
+caused a regression with security_model=passthrough. When handling a
+'Tmknod' request there was a side effect that 'Tmknod' request could fail
+as 9p server was trying to adjust permissions:
+
+  #6  close_if_special_file (fd=30) at ../hw/9pfs/9p-util.h:140
+  #7  openat_file (mode=<optimized out>, flags=2228224,
+      name=<optimized out>, dirfd=<optimized out>) at
+      ../hw/9pfs/9p-util.h:181
+  #8  fchmodat_nofollow (dirfd=dirfd@entry=31,
+      name=name@entry=0x5555577ea6e0 "mysocket", mode=493) at
+      ../hw/9pfs/9p-local.c:360
+  #9  local_set_cred_passthrough (credp=0x7ffbbc4ace10, name=0x5555577ea6e0
+      "mysocket", dirfd=31, fs_ctx=0x55555811f528) at
+      ../hw/9pfs/9p-local.c:457
+  #10 local_mknod (fs_ctx=0x55555811f528, dir_path=<optimized out>,
+      name=0x5555577ea6e0 "mysocket", credp=0x7ffbbc4ace10) at
+      ../hw/9pfs/9p-local.c:702
+  #11 v9fs_co_mknod (pdu=pdu@entry=0x555558121140,
+      fidp=fidp@entry=0x5555574c46c0, name=name@entry=0x7ffbbc4aced0,
+      uid=1000, gid=1000, dev=<optimized out>, mode=49645,
+      stbuf=0x7ffbbc4acef0) at ../hw/9pfs/cofs.c:205
+  #12 v9fs_mknod (opaque=0x555558121140) at ../hw/9pfs/9p.c:3711
+
+That's because server was opening the special file to adjust permissions,
+however it was using O_PATH and it would have not returned the file
+descriptor to guest. So the call to close_if_special_file() on that branch
+was incorrect.
+
+Let's lift the restriction introduced by f6b0de53fb8 such that it would
+allow to open special files on host if O_PATH flag is supplied, not only
+for 9p server's own operations as described above, but also for any client
+'Topen' request.
+
+It is safe to allow opening special files with O_PATH on host, because
+O_PATH only allows path based operations on the resulting file descriptor
+and prevents I/O such as read() and write() on that file descriptor.
+
+Fixes: f6b0de53fb8 ("9pfs: prevent opening special files (CVE-2023-2861)")
+Resolves: https://gitlab.com/qemu-project/qemu/-/issues/2337
+Reported-by: Dirk Herrendorfer <d.herrendoerfer@de.ibm.com>
+Signed-off-by: Christian Schoenebeck <qemu_oss@crudebyte.com>
+Reviewed-by: Greg Kurz <groug@kaod.org>
+Tested-by: Dirk Herrendorfer <d.herrendoerfer@de.ibm.com>
+Message-Id: <E1tJWbk-007BH4-OB@kylie.crudebyte.com>
+(cherry picked from commit d06a9d843fb65351e0e4dc42ba0c404f01ea92b3)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/scripts/analyze-migration.py b/scripts/analyze-migration.py
-index 8a254a5b6a..f2457b1dde 100755
---- a/scripts/analyze-migration.py
-+++ b/scripts/analyze-migration.py
-@@ -429,6 +429,9 @@ def __init__(self, desc, file):
-         super(VMSDFieldStruct, self).__init__(desc, file)
-         self.data = collections.OrderedDict()
+diff --git a/hw/9pfs/9p-util.h b/hw/9pfs/9p-util.h
+index 51c94b0116..95ee4da9bd 100644
+--- a/hw/9pfs/9p-util.h
++++ b/hw/9pfs/9p-util.h
+@@ -177,20 +177,27 @@ again:
+         return -1;
+     }
  
-+        if 'fields' not in self.desc['struct']:
-+            raise Exception("No fields in struct. VMSD:\n%s" % self.desc)
-+
-         # When we see compressed array elements, unfold them here
-         new_fields = []
-         for field in self.desc['struct']['fields']:
-@@ -477,6 +480,10 @@ def read(self):
-                     raise Exception("Subsection %s not found at offset %x" % ( subsection['vmsd_name'], self.file.tell()))
-                 name = self.file.readstr()
-                 version_id = self.file.read32()
-+
-+                if not subsection:
-+                    raise Exception("Empty description for subsection: %s" % name)
-+
-                 self.data[name] = VMSDSection(self.file, version_id, subsection, (name, 0))
-                 self.data[name].read()
- 
-@@ -574,10 +581,13 @@ def __init__(self, filename):
-         }
-         self.filename = filename
-         self.vmsd_desc = None
-+        self.vmsd_json = ""
- 
--    def read(self, desc_only = False, dump_memory = False, write_memory = False):
-+    def read(self, desc_only = False, dump_memory = False,
-+             write_memory = False):
-         # Read in the whole file
-         file = MigrationFile(self.filename)
-+        self.vmsd_json = file.read_migration_debug_json()
- 
-         # File magic
-         data = file.read32()
-@@ -635,9 +645,11 @@ def read(self, desc_only = False, dump_memory = False, write_memory = False):
-         file.close()
- 
-     def load_vmsd_json(self, file):
--        vmsd_json = file.read_migration_debug_json()
--        self.vmsd_desc = json.loads(vmsd_json, object_pairs_hook=collections.OrderedDict)
-+        self.vmsd_desc = json.loads(self.vmsd_json,
-+                                    object_pairs_hook=collections.OrderedDict)
-         for device in self.vmsd_desc['devices']:
-+            if 'fields' not in device:
-+                raise Exception("vmstate for device %s has no fields" % device['name'])
-             key = (device['name'], device['instance_id'])
-             value = ( VMSDSection, device )
-             self.section_classes[key] = value
-@@ -666,31 +678,34 @@ def default(self, o):
- 
- jsonenc = JSONEncoder(indent=4, separators=(',', ': '))
- 
--if args.extract:
--    dump = MigrationDump(args.file)
-+if not any([args.extract, args.dump == "state", args.dump == "desc"]):
-+    raise Exception("Please specify either -x, -d state or -d desc")
- 
--    dump.read(desc_only = True)
--    print("desc.json")
--    f = open("desc.json", "w")
--    f.truncate()
--    f.write(jsonenc.encode(dump.vmsd_desc))
--    f.close()
+-    if (close_if_special_file(fd) < 0) {
+-        return -1;
+-    }
 -
--    dump.read(write_memory = True)
--    dict = dump.getDict()
--    print("state.json")
--    f = open("state.json", "w")
--    f.truncate()
--    f.write(jsonenc.encode(dict))
--    f.close()
--elif args.dump == "state":
--    dump = MigrationDump(args.file)
--    dump.read(dump_memory = args.memory)
--    dict = dump.getDict()
--    print(jsonenc.encode(dict))
--elif args.dump == "desc":
-+try:
-     dump = MigrationDump(args.file)
--    dump.read(desc_only = True)
--    print(jsonenc.encode(dump.vmsd_desc))
--else:
--    raise Exception("Please specify either -x, -d state or -d desc")
+-    serrno = errno;
+-    /* O_NONBLOCK was only needed to open the file. Let's drop it. We don't
+-     * do that with O_PATH since fcntl(F_SETFL) isn't supported, and openat()
+-     * ignored it anyway.
+-     */
++    /* Only if O_PATH is not set ... */
+     if (!(flags & O_PATH_9P_UTIL)) {
++        /*
++         * Prevent I/O on special files (device files, etc.) on host side,
++         * however it is safe and required to allow opening them with O_PATH,
++         * as this is limited to (required) path based operations only.
++         */
++        if (close_if_special_file(fd) < 0) {
++            return -1;
++        }
 +
-+    if args.extract:
-+        dump.read(desc_only = True)
-+
-+        print("desc.json")
-+        f = open("desc.json", "w")
-+        f.truncate()
-+        f.write(jsonenc.encode(dump.vmsd_desc))
-+        f.close()
-+
-+        dump.read(write_memory = True)
-+        dict = dump.getDict()
-+        print("state.json")
-+        f = open("state.json", "w")
-+        f.truncate()
-+        f.write(jsonenc.encode(dict))
-+        f.close()
-+    elif args.dump == "state":
-+        dump.read(dump_memory = args.memory)
-+        dict = dump.getDict()
-+        print(jsonenc.encode(dict))
-+    elif args.dump == "desc":
-+        dump.read(desc_only = True)
-+        print(jsonenc.encode(dump.vmsd_desc))
-+except Exception:
-+    raise Exception("Full JSON dump:\n%s", dump.vmsd_json)
++        serrno = errno;
++        /*
++         * O_NONBLOCK was only needed to open the file. Let's drop it. We don't
++         * do that with O_PATH since fcntl(F_SETFL) isn't supported, and
++         * openat() ignored it anyway.
++         */
+         ret = fcntl(fd, F_SETFL, flags);
+         assert(!ret);
++        errno = serrno;
+     }
+-    errno = serrno;
+     return fd;
+ }
+ 
 -- 
 2.39.5
 
