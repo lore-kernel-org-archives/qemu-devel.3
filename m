@@ -4,93 +4,97 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 77310C02188
-	for <qemu-devel@archiver.kernel.org>; Mon, 27 Jan 2025 21:35:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2A963C02188
+	for <qemu-devel@archiver.kernel.org>; Mon, 27 Jan 2025 23:12:02 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tcWl1-0003q4-TY; Mon, 27 Jan 2025 16:35:00 -0500
+	id 1tcYGE-0003sd-5l; Mon, 27 Jan 2025 18:11:19 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1tcWkx-0003pe-PH
- for qemu-devel@nongnu.org; Mon, 27 Jan 2025 16:34:55 -0500
-Received: from mail-pl1-x62b.google.com ([2607:f8b0:4864:20::62b])
+ (Exim 4.90_1) (envelope-from <shentey@gmail.com>)
+ id 1tcYGA-0003rx-KP; Mon, 27 Jan 2025 18:11:14 -0500
+Received: from mail-ed1-x52d.google.com ([2a00:1450:4864:20::52d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1tcWkw-0004Ot-6s
- for qemu-devel@nongnu.org; Mon, 27 Jan 2025 16:34:55 -0500
-Received: by mail-pl1-x62b.google.com with SMTP id
- d9443c01a7336-2166651f752so100526735ad.3
- for <qemu-devel@nongnu.org>; Mon, 27 Jan 2025 13:34:53 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <shentey@gmail.com>)
+ id 1tcYG8-0002up-SG; Mon, 27 Jan 2025 18:11:14 -0500
+Received: by mail-ed1-x52d.google.com with SMTP id
+ 4fb4d7f45d1cf-5d0d32cd31aso7327960a12.0; 
+ Mon, 27 Jan 2025 15:11:10 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1738013692; x=1738618492; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=r7gsIIcQvUJ0JH2mAc1rpcS3+SsghCgsaj/oUrn8DsI=;
- b=b/z/5pNEYhYKyR904v5qtOGv5LM+UUdNMoaZsEcu+PqHVhDXvL8suCI2ocqJoChs+q
- vWb0DUrQeUiC9kgnX2Ps4dOtS+2vV35NZM33S0xO3lhXloYKgxFnWZneRmHN0idUF12V
- ChzkNna5c5BIB3HtQnQyYpftrlu27x4F8jwxQZTi0e8cJ2bzezEeIJPpNV2KVbxFgN3C
- vMkXEKfYYDKEyLv2A2LdUvo1HWMmslzlsWMT8Y8/1tTxBbNf0n0Vly3WNfMBjmV9coQH
- sWXbcb9Newd75k7QRKgE4B7lrbzqkBzydxvCz0U3/CZLRr7VNjZXpeDBWFovFujFYreL
- TNqA==
+ d=gmail.com; s=20230601; t=1738019470; x=1738624270; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:references
+ :in-reply-to:subject:cc:to:from:date:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=5OAcb13yKxdtvwr2trvtvKYqKmZygughFPR3uezWb2o=;
+ b=AHJTqJgdnfBILRSFFY//YvBFPV9V+8QUrdb8ZXyfvxlKKEjX/kqU3z8JGlMerqsizP
+ hrUP7aZJDHFKFPlbp5OjkCPt2IKvthzTEOKShqEJxMEkwXuoaj2fABu5yytTlXW7PZGH
+ P1K3evZpEwV18Oi5VD7LJF+2uesBiXZkcrQ+a9hS22RWllmZlcHdSVbY2QHIZMlZ9XN0
+ oAjUFN5JTiyzfO2oao1mUPCzS930M0MzCQIDmvtLWyRlrPe65JoNMPEtPDOVSrRj0D5r
+ KT41LN1Xo2AlWwwXK9Ho2KKV1IB4D9LIb+b72XXppt5LZTooceK89waDfS/PEoGGU0xa
+ GrsA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1738013692; x=1738618492;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=r7gsIIcQvUJ0JH2mAc1rpcS3+SsghCgsaj/oUrn8DsI=;
- b=qHBGWIEXlTql279OW/WS7z7C8kMv9gdjphYNT7R2bCxJPldiVKZvI5BmVeLotTzQoy
- JTbEp7sYbiKTsB2C/xAGFLYYoiNmOLbW+JheboDRbpa/ZanRU/XaW9v4vhBTgRU1MSdu
- T+6ymUWyuZG1S1bjO7lV7iefIEqzVaG28UCwk5JDTj85s7FcMBdeKImGDEgVflloDUwx
- 8SwzlQuxPUSj+A623bgtH5PFvW43huVBasPG/qxzQ7h9I1xgrC+e0Lfs/eGf5hPQ7mMF
- KZpitry0yXj5hiCekgQDDEH5+3TvvOs2lFFQAAAgs5QZgT/Rz8oence+FFDqB8S/A1Ej
- DMWQ==
+ d=1e100.net; s=20230601; t=1738019470; x=1738624270;
+ h=content-transfer-encoding:mime-version:message-id:references
+ :in-reply-to:subject:cc:to:from:date:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=5OAcb13yKxdtvwr2trvtvKYqKmZygughFPR3uezWb2o=;
+ b=UnRJPNgztAVfDPuavU+yPJ1z3re8iAgqKmVsHvWGFPaPSOCUTnQvenZo4LVlghAbpv
+ 9BCbYvhm+vzWWymy4OpnJ5oPjy0Lpao8x1kQ/xzpxk4U8HXc7LYnduUZn+bciVGRJoVZ
+ JBDpfB86AwYSFXYWnGFQTGU6Affr8eXw4/hpwSH86Cmgt1TIC0namEu9CFRpTOhI0iC4
+ IDDnuyGuY8OzMfDwC7pXbCzSugj3N0/km1Et+E7AFebf6dkunJ+3gzXYj1+mliReeTvo
+ FXQ6xaFpNKaeRbXWJPpPsFVlV1BqXqziKbZm67oaTkwp9fPCKtmPYPvoay0qhvUXUl/7
+ OrpQ==
 X-Forwarded-Encrypted: i=1;
- AJvYcCVjJkw0AzRkBXXTxqErbD3RNStD1uGmgP9rUfa465SWXeqLA4SmiRAUCHu1mxO3GsGN6TMG2fauVtXy@nongnu.org
-X-Gm-Message-State: AOJu0YzzlgczbhrSLB7oVrtSQ1Ly2bBkwBlUtwdFGXhJbu0Lby91DhNn
- cNRg0l8fgE5W50ambdyC3CDGC5Gg5guOOH5BrQWMXn7E1c2gII9jAlSPO9KxnqE=
-X-Gm-Gg: ASbGncvU8gfu/+qGBsUVrkOroi8J9Ah5oytOYzI5DK7gMnKRWMdob3QIsXrkIdRCbA9
- Pa5DsOFkJhYncXz6EBfr1zrBl3e3bv+pD523iIGyadmG4S+tyu81MDChJLORqTNjoQM6FL5zJJo
- OAxnjoSzktb5tlM9QFuGSrojteILYjeEJUgj3sj71Qvdejfs+V+cDg+nh4+iNmJiTjcMSPZoN+M
- ZxdUsSSffcEaCuDpgRoQuxJbo1cHwBa/0Iu+MRBRD7O8smTMFaeWqlSEU9a1Hzge0JLc+O33yh9
- J/Xy/5rDLW+9SCo4jNL79MLb2oC/gL6BUOjPSuTJe2oUPeQ=
-X-Google-Smtp-Source: AGHT+IFzB9K8UbPAWbfGtU2Z6kIZtJm2FU/x805Oyll7oDMqM3Cc3+11FCkGdapSjgqAWgO/4+1VzA==
-X-Received: by 2002:a05:6a20:12d6:b0:1e5:dace:693f with SMTP id
- adf61e73a8af0-1eb2144d3f1mr64665975637.4.1738013692166; 
- Mon, 27 Jan 2025 13:34:52 -0800 (PST)
-Received: from [192.168.0.4] (174-21-71-127.tukw.qwest.net. [174.21.71.127])
- by smtp.gmail.com with ESMTPSA id
- 41be03b00d2f7-ac495d57960sm7049522a12.50.2025.01.27.13.34.51
+ AJvYcCUIsK8srcFyjTdvmABLbMn0NNkAwP/R+cHZVQZEVNYtjtegEl6shTOJ6hW+kGJR8mpqZD1pBRtHjoU5lQ==@nongnu.org,
+ AJvYcCXYbQpk/pDlqatL+cvAgWEZiscoKpaT28O5XzuVIJMQUPtrfc1CB3hb6uainQXA2LQA4xc3Hr8xlg==@nongnu.org
+X-Gm-Message-State: AOJu0YyDezOe8VwHWeZLxgSauuXZXkBrt9QR//BL2Mw63FCgCrWDv/Jz
+ CeS3w57pGOAj+D0ZjsHdcoSd40CqQprNs01w3nF6ezVmlyfgVyha
+X-Gm-Gg: ASbGncsGvIy4sz66KmUQY8ECHDwtpr/CPwru04LlK2fgW/BU4glqNDFxkHTsCRMdrWW
+ /SyTJzogiA3F+OAsiMztTG7LeUx4OHYBfb4WsnvpxjAkYvtVOtO+UFjbIU5ilyHWHmbPNxjJixV
+ hGah+EhGeH/ydTJNMDT7gd6eFRV3i8HYf7atrVYt9hUmY2SI2YzAmqW3KL1m2oyNDHIG+kTHs/F
+ MUphw1ySz6N7AmOcQAUdH/jgyhs4Lmze9rPp47xqG/oZESGRKkFqyv4L/TH4Ogi+SpkTXKnTUID
+ JsbMNbmgUMabexC+1BFTTARNfUKcO1uFRf0lA7kMMp8dD6wRP1RmUbVw
+X-Google-Smtp-Source: AGHT+IEisztnD29Cs/9MwqJ5PVpVEchSi8Fa9wYfAl0rdKmq3U0DVWzzKLSCg0S9vuu7BenhcXELaQ==
+X-Received: by 2002:a05:6402:1e8e:b0:5dc:1059:6b2 with SMTP id
+ 4fb4d7f45d1cf-5dc105a5ec1mr41869335a12.7.1738019469307; 
+ Mon, 27 Jan 2025 15:11:09 -0800 (PST)
+Received: from [127.0.0.1] (dynamic-093-128-047-181.93.128.pool.telefonica.de.
+ [93.128.47.181]) by smtp.gmail.com with ESMTPSA id
+ 4fb4d7f45d1cf-5dc1863ae37sm6246803a12.41.2025.01.27.15.11.08
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 27 Jan 2025 13:34:51 -0800 (PST)
-Message-ID: <3a24e07f-3da2-4798-942d-65d2ec398db6@linaro.org>
-Date: Mon, 27 Jan 2025 13:34:50 -0800
+ Mon, 27 Jan 2025 15:11:08 -0800 (PST)
+Date: Mon, 27 Jan 2025 23:11:07 +0000
+From: Bernhard Beschow <shentey@gmail.com>
+To: Peter Maydell <peter.maydell@linaro.org>
+CC: qemu-devel@nongnu.org, Fabiano Rosas <farosas@suse.de>,
+ Paolo Bonzini <pbonzini@redhat.com>, Guenter Roeck <linux@roeck-us.net>,
+ =?ISO-8859-1?Q?Philippe_Mathieu-Daud=E9?= <philmd@linaro.org>,
+ Andrey Smirnov <andrew.smirnov@gmail.com>, qemu-arm@nongnu.org,
+ =?ISO-8859-1?Q?Marc-Andr=E9_Lureau?= <marcandre.lureau@redhat.com>,
+ Jean-Christophe Dubois <jcd@tribudubois.net>,
+ Laurent Vivier <lvivier@redhat.com>, Bin Meng <bmeng.cn@gmail.com>,
+ qemu-block@nongnu.org
+Subject: =?US-ASCII?Q?Re=3A_=5BPATCH_v2_06/13=5D_hw/sd/sd=3A_Remove?=
+ =?US-ASCII?Q?_legacy_sd=5Fset=5Fcb=28=29_in_favor_of_GPIOs?=
+In-Reply-To: <CAFEAcA_m29rWYQPtz=xSBsS_FXb5_L6+DGBA2o_TrLcFy6YC3g@mail.gmail.com>
+References: <20250111183711.2338-1-shentey@gmail.com>
+ <20250111183711.2338-7-shentey@gmail.com>
+ <CAFEAcA_m29rWYQPtz=xSBsS_FXb5_L6+DGBA2o_TrLcFy6YC3g@mail.gmail.com>
+Message-ID: <BB80F4B5-02D5-411A-95DF-9EEE91237EDB@gmail.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 6/6] hw/loader: Pass ELFDATA endian order argument to
- load_elf()
-To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- qemu-devel@nongnu.org
-Cc: qemu-riscv@nongnu.org, qemu-ppc@nongnu.org, qemu-s390x@nongnu.org,
- qemu-arm@nongnu.org, Peter Maydell <peter.maydell@linaro.org>
-References: <20250127113824.50177-1-philmd@linaro.org>
- <20250127113824.50177-7-philmd@linaro.org>
-Content-Language: en-US
-From: Richard Henderson <richard.henderson@linaro.org>
-In-Reply-To: <20250127113824.50177-7-philmd@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::62b;
- envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x62b.google.com
+Content-Type: text/plain;
+ charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:20::52d;
+ envelope-from=shentey@gmail.com; helo=mail-ed1-x52d.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=unavailable autolearn_force=no
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -106,23 +110,47 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 1/27/25 03:38, Philippe Mathieu-Daudé wrote:
-> Rather than passing a boolean 'is_big_endian' argument,
-> directly pass the ELFDATA, which can be unspecified using
-> the ELFDATANONE value.
-> 
-> Update the call sites:
->    0                 -> ELFDATA2LSB
->    1                 -> ELFDATA2MSB
->    TARGET_BIG_ENDIAN -> TARGET_BIG_ENDIAN ? ELFDATA2MSB : ELFDATA2LSB
-> 
-> Suggested-by: Richard Henderson<richard.henderson@linaro.org>
-> Signed-off-by: Philippe Mathieu-Daudé<philmd@linaro.org>
-> ---
-> Sorry, couldn't find good ways to split this patch...
-> ---
 
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 
-r~
+Am 27=2E Januar 2025 13:24:46 UTC schrieb Peter Maydell <peter=2Emaydell@l=
+inaro=2Eorg>:
+>On Sat, 11 Jan 2025 at 18:37, Bernhard Beschow <shentey@gmail=2Ecom> wrot=
+e:
+>>
+>> Commit ce5dd27534b0 "hw/sd: Remove omap2_mmc device" removed the last u=
+ser of
+>> sd_set_cb()=2E Rework this functionality into GPIOs=2E
+>>
+>> Reviewed-by: Philippe Mathieu-Daud=C3=A9 <philmd@linaro=2Eorg>
+>> Signed-off-by: Bernhard Beschow <shentey@gmail=2Ecom>
+>
+>What is this for? We have a non-legacy API for "the SD controller
+>needs to know when the SD card is inserted or the readonly
+>status changes", which is that the controller implements the
+>SDBasClass set_inserted and set_readonly methods=2E (See the pl011
+>for an example=2E)
+>
+>I would prefer it if we used that consistently, rather than having
+>two mechanisms, one using GPIO lines and one using class methods=2E
+>I think we should delete the sd_set_cb() API and handling code
+>entirely=2E
+
+According to the Linux MMC controller DT schema, there are actually two wa=
+ys to implement cd and wp lines [1]=2E When implementing the imx8mp-evk boa=
+rd, I thought I would need to model the GPIO style [2], hence I implemented=
+ it plus the active low part on the SD card=2E Later I noticed that the car=
+d gets detected anyway without the GPIO wiring, so I'm fine if the code get=
+s removed instead=2E
+
+Best regards,
+Bernhard
+
+[1] <https://github=2Ecom/torvalds/linux/blob/v6=2E13/Documentation/device=
+tree/bindings/mmc/mmc-controller=2Eyaml#L60>
+[2] <https://github=2Ecom/torvalds/linux/blob/v6=2E13/arch/arm64/boot/dts/=
+freescale/imx8mp-evk=2Edts#L776>
+
+>
+>thanks
+>-- PMM
 
