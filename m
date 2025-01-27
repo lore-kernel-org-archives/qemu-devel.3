@@ -4,84 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 47616C0218F
-	for <qemu-devel@archiver.kernel.org>; Mon, 27 Jan 2025 09:55:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6F435C02188
+	for <qemu-devel@archiver.kernel.org>; Mon, 27 Jan 2025 10:02:11 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tcLpX-0000x7-8W; Mon, 27 Jan 2025 04:54:55 -0500
+	id 1tcLvp-0002xV-HX; Mon, 27 Jan 2025 05:01:26 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1tcLpO-0000vQ-8f
- for qemu-devel@nongnu.org; Mon, 27 Jan 2025 04:54:46 -0500
-Received: from mail-yb1-xb35.google.com ([2607:f8b0:4864:20::b35])
+ id 1tcLvn-0002ss-3D
+ for qemu-devel@nongnu.org; Mon, 27 Jan 2025 05:01:23 -0500
+Received: from mail-yb1-xb2e.google.com ([2607:f8b0:4864:20::b2e])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1tcLpL-0006mv-Ux
- for qemu-devel@nongnu.org; Mon, 27 Jan 2025 04:54:46 -0500
-Received: by mail-yb1-xb35.google.com with SMTP id
- 3f1490d57ef6-e398484b60bso6162536276.1
- for <qemu-devel@nongnu.org>; Mon, 27 Jan 2025 01:54:42 -0800 (PST)
+ id 1tcLvl-0007Wn-AB
+ for qemu-devel@nongnu.org; Mon, 27 Jan 2025 05:01:22 -0500
+Received: by mail-yb1-xb2e.google.com with SMTP id
+ 3f1490d57ef6-e399e904940so5591876276.2
+ for <qemu-devel@nongnu.org>; Mon, 27 Jan 2025 02:01:19 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1737971681; x=1738576481; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=SaFx5AsSluXaTySUd0lAk0jzO07EJ6XLZxNTSbwUjHY=;
- b=sU84f0ri3vCCLJ1hTGH7CbZPtHmWDaVvho/jU+Q88kiw4sGNOHq+YlfrXHcD9KIgXQ
- IBCAsLGrkdiW8T7JwfBKtenCgOpzEAsleHgog17G1qgVhOJUzs7DpLcorBGonnxbO81/
- zL5ArK3sPE9uiqxU735ZHzLCTyetmpMQVsp1yw/2aYz7qs8GS81HzSd0nHmWz+ERaNB7
- JXbPGTK0bsqBhVMLNtW/ZDBOHjUTOU1bbH6xzkm91ha2KKLbXtKzfkY6VlcDqPX/xN33
- z76ct6vHhGkLdGKenqPpnvQ0t4dEQ8MO/J4yERKtAmvevJ+cLiWmdEWYmVe4EVMY30W6
- fLzA==
+ d=linaro.org; s=google; t=1737972078; x=1738576878; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=r5HShamqKRZpHpY9V5gNyVgPIE3a6AxZASXWABEGCbc=;
+ b=sgQaB3poLwes5jW3uSnsCcSqTHMKuk4SaGyHDLHLJqyCO86dhF/cAOMxzfTBitHTtb
+ 6QqHNVtA0169yeuF2t8FWvMwGJwkapGfe0Jdi4xKbMohDw7OYL0/MNYZpXyil0Gr9xwO
+ LJ0JtDT7WtF6UAdey+UlFgtjWtmD7L0LeBZzYgpnbAyxTZQCHDuuzX0dm4wBo1oiDkPg
+ 1Bw7+IyISwdQlFW9/nfLfQY+B8ETnwE2X6nmIKevl0Nkd05zKHnlyIOtGaNsEbqULbVz
+ 7lABd/srqUW6zvR5eOmu4JpmoNk0rSXNjfkhpOt0eSzzisyvcjwZXYdFb1IF0ow9cAvh
+ RCbQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1737971681; x=1738576481;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=SaFx5AsSluXaTySUd0lAk0jzO07EJ6XLZxNTSbwUjHY=;
- b=vhIZ+rTx+zKpOR2ZlswPP8sTJLGB6sf7dBzm5t1wrcQazdVM5fX1cKbFZuLFv2h0T0
- sP0YXIEI9lS3Aqw/fr2LofLPmUEJynGRgsh4u9tNwarzBxmqLdBYpKicYItDUDNkLid9
- HiHsFTio28hb77oK/ppQ5or9XVBR3P+48ElDprSJVEzwVSnNYATw1Ddnne0W0nikfmGD
- N0zYVGRf4qumvismTiLLvASDrEiqSBe/OhL18qCSGmYFOsIuFbftujMT48BcjRP1Y08y
- HUkyXunO1CykeIK0mckExs1PoWlb934pyS+Hyph5W2NU0AAH7/mbs20JLI4fQ0Nx6/sU
- bc8w==
-X-Forwarded-Encrypted: i=1;
- AJvYcCXffXYCsraeLMamCwiZ07+ND/adne0tH9mVPZuwaI1SNN6uqpHmLFN/okh3AUTi2B/Ccz0aGhRjMI15@nongnu.org
-X-Gm-Message-State: AOJu0YxED+B+O8Daujs/3QTtkESWetqyR62z/hfC3mVejQEsrgjILNSE
- bXh+/HfI0M38iNg330EwrM/jr+z4juA8p9EX0ivr+XsHQnPDy4KRge3lEI1eAugJTOyht7QEGEo
- zHk5eChQm4prcTSu0depf/JKJzhu2KiTbCTeJqg==
-X-Gm-Gg: ASbGncubrGPyYhKhIOWfeFqjEUCa2oCxAk2lXw86vmV6Z0f+l3CpDumvC8rFRDwy1bn
- hCsH7o+u/nhrSqIRTzrv+G2n319FXK1FJWEHzpyMuZZrdK7N5gtcoeA2IAWJ2Pfg=
-X-Google-Smtp-Source: AGHT+IFdfq8MVmjFTGY6IdNHjHFJGE/2PTlrrVXChNXrIH2RY6s0n6Uz2li8ZSo01vnWiwhkYGbo/9MPHO5uCTKuHWY=
-X-Received: by 2002:a05:6902:10c8:b0:e58:30dc:615b with SMTP id
- 3f1490d57ef6-e5830dc66edmr9480156276.22.1737971681470; Mon, 27 Jan 2025
- 01:54:41 -0800 (PST)
+ d=1e100.net; s=20230601; t=1737972078; x=1738576878;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=r5HShamqKRZpHpY9V5gNyVgPIE3a6AxZASXWABEGCbc=;
+ b=byKnHCSwzduvr3+K2BWQWFbzLieNdzTodGdyvayThLPM9COC0ez43813ZEFPCd5UPA
+ YUg5yLVk1H3/jJms7D/fah1ucmmFqOxNKO1w6v+0JlGhrAFOOi++Y/QUlw1aNmEjSASw
+ XKeTz6eGruHwjGNRLi2vGgiMDFrDk4jE41/iaspEl/Y525AIaL9a/qw4f0dcux1IqW7q
+ W0fQYn2wkIPk1HbyVFU6W9aF7YzOGB5PC5jsMao8ZH9pgLDOYVxcNh1CIlJ+V7Xe2nOG
+ yLdzp8oG8Tu9nQU+nOD57zXN0qc+YZa/JsmfzPPDDKmh/lkJI18hynDUvbhusKy8CPyu
+ IRRA==
+X-Gm-Message-State: AOJu0Yxr0ELh3vVdqUlTo7yNw+6x18XlIrV0zcTWwJRj9gx7dZkStKKg
+ bhR0CObOuBDDcqHi7j43WCjz9pskV1UxCJE2ojJM6Ydsi6E0/skeMVdI+TFVxkqzhWVWEh8PVy4
+ mO0V9K6bQgnnGwX+CwSsYr8fHsxrZ0oOTQe/ELw==
+X-Gm-Gg: ASbGncu7pCVqHKSElQrzVMFXvqZKxALo33yEwZzCqhTQJ1+H2IJV4llFRrJozqVEOxW
+ oKBOIPs9jBQ3Yd89+MqmUEEByi5P8M/VF1a9TnWof7+PY4Yi1mrK/jovlgXXN+0M=
+X-Google-Smtp-Source: AGHT+IHUrqG5oRurGlu8NtxCpp42Wkz1eT1cG9NL6VCVDQs02e53Lpe77IRGXhMJNx7//e7NmbGLJeMEu/pRdxHsmIM=
+X-Received: by 2002:a25:d34a:0:b0:e57:d22a:1914 with SMTP id
+ 3f1490d57ef6-e57d22a1a98mr20194732276.16.1737972077773; Mon, 27 Jan 2025
+ 02:01:17 -0800 (PST)
 MIME-Version: 1.0
 References: <20250124162836.2332150-1-peter.maydell@linaro.org>
- <20250124162836.2332150-3-peter.maydell@linaro.org>
- <87r04si15d.fsf@draig.linaro.org>
-In-Reply-To: <87r04si15d.fsf@draig.linaro.org>
+ <20250124162836.2332150-25-peter.maydell@linaro.org>
+ <d8d04708-ddc2-476e-9e17-8493f573d7a5@linaro.org>
+In-Reply-To: <d8d04708-ddc2-476e-9e17-8493f573d7a5@linaro.org>
 From: Peter Maydell <peter.maydell@linaro.org>
-Date: Mon, 27 Jan 2025 09:54:30 +0000
-X-Gm-Features: AWEUYZnFn4dk-Uh-xNZQkU1dCUCT8VIaBX6KZlRlUoBeC841rKowp6mjgEaUTww
-Message-ID: <CAFEAcA-LrHsiazeVa1Zx9QrjJsaDvOe0vGtk9RQYUOpiEyDqFA@mail.gmail.com>
-Subject: Re: [PATCH 02/76] tests/tcg/x86_64/fma: Test some x86
- fused-multiply-add cases
-To: =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>
-Cc: qemu-arm@nongnu.org, qemu-devel@nongnu.org
+Date: Mon, 27 Jan 2025 10:01:06 +0000
+X-Gm-Features: AWEUYZmALvSCKtEz26pOJsY-LUFq82dSkiszHxj5pC_Id6D3fJAjOjZxv9_pG08
+Message-ID: <CAFEAcA9c2WKA+z8d=Hp6Jp+3PYqQ5wuCxWL_fGzQxRfJKn+jEQ@mail.gmail.com>
+Subject: Re: [PATCH 24/76] fpu: allow flushing of output denormals to be after
+ rounding
+To: Richard Henderson <richard.henderson@linaro.org>
+Cc: qemu-devel@nongnu.org
 Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::b35;
- envelope-from=peter.maydell@linaro.org; helo=mail-yb1-xb35.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::b2e;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yb1-xb2e.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=unavailable autolearn_force=no
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -97,65 +93,67 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, 24 Jan 2025 at 17:15, Alex Benn=C3=A9e <alex.bennee@linaro.org> wro=
-te:
+On Sat, 25 Jan 2025 at 16:42, Richard Henderson
+<richard.henderson@linaro.org> wrote:
 >
-> Peter Maydell <peter.maydell@linaro.org> writes:
+> On 1/24/25 08:27, Peter Maydell wrote:
+> > Currently we handle flushing of output denormals in uncanon_normal
+> > always before we deal with rounding.  This works for architectures
+> > that detect tininess before rounding, but is usually not the right
+> > place when the architecture detects tininess after rounding.  For
+> > example, for x86 the SDM states that the MXCSR FTZ control bit causes
+> > outputs to be flushed to zero "when it detects a floating-point
+> > underflow condition".  This means that we mustn't flush to zero if
+> > the input is such that after rounding it is no longer tiny.
+> >
+> > At least one of our guest architectures does underflow detection
+> > after rounding but flushing of denormals before rounding (MIPS MSA);
 >
-> > Add a test case which tests some corner case behaviour of
-> > fused-multiply-add on x86:
-> >  * 0 * Inf + SNaN should raise Invalid
-> >  * 0 * Inf + QNaN shouldh not raise Invalid
-> >  * tininess should be detected after rounding
+> Whacky, but yes, I see that in the msa docs.
+>
+> > Add an ftz_detection flag.  For consistency with
+> > tininess_before_rounding, we make it default to "detect ftz after
+> > rounding"; this means that we need to explicitly set the flag to
+> > "detect ftz before rounding" on every existing architecture that sets
+> > flush_to_zero, so that this commit has no behaviour change.
+> > (This means more code change here but for the long term a less
+> > confusing API.)
+>
+> Do we really want flush_to_zero to be separate from ftz_detection?
+>
+> E.g.
+>
+> enum {
+>    float_ftz_disabled,
+>    float_ftz_after_rounding,
+>    float_ftz_before_rounding,
+> }
 
-> > +static testdata tests[] =3D {
-> > +    { 0, 0x7ff0000000000000, 0x7ff000000000aaaa, false, /* 0 * Inf + S=
-NaN */
-> > +      0x7ff800000000aaaa, 1 }, /* Should be QNaN and does raise Invali=
-d */
-> > +    { 0, 0x7ff0000000000000, 0x7ff800000000aaaa, false, /* 0 * Inf + Q=
-NaN */
-> > +      0x7ff800000000aaaa, 0 }, /* Should be QNaN and does *not* raise =
-Invalid */
-> > +    /*
-> > +     * These inputs give a result which is tiny before rounding but wh=
-ich
-> > +     * becomes non-tiny after rounding. x86 is a "detect tininess afte=
-r
-> > +     * rounding" architecture, so it should give a non-denormal result=
- and
-> > +     * not set the Underflow flag (only the Precision flag for an inex=
-act
-> > +     * result).
-> > +     */
-> > +    { 0x3fdfffffffffffff, 0x001fffffffffffff, 0x801fffffffffffff, fals=
-e,
-> > +      0x8010000000000000, 0x20 },
-> > +    /*
-> > +     * Flushing of denormal outputs to zero should also happen after
-> > +     * rounding, so setting FTZ should not affect the result or the fl=
-ags.
-> > +     * QEMU currently does not emulate this correctly because we do th=
-e
-> > +     * flush-to-zero check before rounding, so we incorrectly produce =
-a
-> > +     * zero result and set Underflow as well as Precision.
-> > +     */
-> > +#ifdef ENABLE_FAILING_TESTS
-> > +    { 0x3fdfffffffffffff, 0x001fffffffffffff, 0x801fffffffffffff, true=
-,
-> > +      0x8010000000000000, 0x20 }, /* Enabling FTZ shouldn't change fla=
-gs */
-> > +#endif
->
-> We could extend the multiarch/float_madds test to handle doubles as well
-> (or create a new multiarch test).
+I did consider that, but on almost all targets the "before
+or after rounding" setting is constant for the life of the
+emulation, whereas turning ftz on and off via a status register
+bit is common. I preferred to leave it so that you could continue
+to write:
+ set_flush_to_zero((vscr >> VSCR_NJ) & 1, &env->vec_status)
+or whatever, rather than having to switch to
+  (vscr >> VSCR_NJ) ? float_ftz_before_rounding : float_ftz_disabled.
+which in addition to being more longwinded also means that the
+"is this architecture ftz before or after rounding" setting is
+scattered in multiple places, wherever it turns FTZ on or off.
+And for Arm it gets more awkward, because the FZ bit is
+"turn FTZ on or off, whatever its current semantics are", so
+you end up needing "FZ ? AH ? after_rounding : before_rounding : disabled".
 
-This test case is specifically testing a corner case of x86
-semantics -- on Arm, for instance, you would not get the same
-result/flags, because Arm does tininess and flushing-of-denormal
-before rounding, and Arm does raise Invalid for 0 * Inf + QNaN.
-So I'm not sure that a multiarch test would be possible.
+Keeping the on/off and the "what semantics is your architecture"
+separate questions I think is simpler.
+
+> BTW, I'm not keen on your "detect_*" names, without "float_" prefix like (almost?)
+> everything else.
+
+Yes, I'm not super enthused about them either. Happy to switch
+to something else. We're not very consistent about 'float',
+though: eg set_flush_to_zero, set_snan_bit_is_one,
+set_flush_inputs_to_zero.
 
 -- PMM
 
