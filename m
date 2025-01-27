@@ -4,35 +4,36 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7C60FC02190
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 89887C02192
 	for <qemu-devel@archiver.kernel.org>; Tue, 28 Jan 2025 08:30:00 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tcgaI-0000xl-Vd; Tue, 28 Jan 2025 03:04:35 -0500
+	id 1tcgdI-0000fh-7M; Tue, 28 Jan 2025 03:07:40 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1tcgYQ-0006Ig-Px; Tue, 28 Jan 2025 03:02:44 -0500
+ id 1tcgZz-0000gY-AG; Tue, 28 Jan 2025 03:04:18 -0500
 Received: from isrv.corpit.ru ([86.62.121.231])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1tcgYO-00025q-QW; Tue, 28 Jan 2025 03:02:38 -0500
+ id 1tcgZx-0002fA-J3; Tue, 28 Jan 2025 03:04:15 -0500
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id C4242E1B59;
- Tue, 28 Jan 2025 10:57:08 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id 0FED6E1B69;
+ Tue, 28 Jan 2025 10:57:09 +0300 (MSK)
 Received: from localhost.tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id 3FDDC1A630C;
+ by tsrv.corpit.ru (Postfix) with ESMTP id 7FF2C1A631C;
  Tue, 28 Jan 2025 10:57:34 +0300 (MSK)
 Received: by localhost.tls.msk.ru (Postfix, from userid 1000)
- id 067B9520A9; Tue, 28 Jan 2025 10:57:34 +0300 (MSK)
+ id 216B2520C9; Tue, 28 Jan 2025 10:57:34 +0300 (MSK)
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Christian Schoenebeck <qemu_oss@crudebyte.com>,
- Greg Kurz <groug@kaod.org>, Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-9.1.3 18/58] tests/9p: also check 'Tgetattr' in
- 'use-after-unlink' test
-Date: Mon, 27 Jan 2025 23:25:04 +0300
-Message-Id: <20250127202547.3723716-18-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org,
+ "Maciej S. Szmigiero" <maciej.szmigiero@oracle.com>,
+ Paolo Bonzini <pbonzini@redhat.com>, Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-9.1.3 34/58] target/i386: Reset TSCs of parked vCPUs too on
+ VM reset
+Date: Mon, 27 Jan 2025 23:25:20 +0300
+Message-Id: <20250127202547.3723716-34-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <qemu-stable-9.1.3-20250127232536@cover.tls.msk.ru>
 References: <qemu-stable-9.1.3-20250127232536@cover.tls.msk.ru>
@@ -63,37 +64,143 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This verifies expected behaviour of previous bug fix patch.
+Since commit 5286c3662294 ("target/i386: properly reset TSC on reset")
+QEMU writes the special value of "1" to each online vCPU TSC on VM reset
+to reset it.
 
-Signed-off-by: Christian Schoenebeck <qemu_oss@crudebyte.com>
-Reviewed-by: Greg Kurz <groug@kaod.org>
-Message-Id: <7017658155c517b9665b75333a97c79aa2d4f3df.1732465720.git.qemu_oss@crudebyte.com>
-(cherry picked from commit eaab44ccc59b83d8dff60fca3361a9b98ec7fee6)
+However parked vCPUs don't get that handling and due to that their TSCs
+get desynchronized when the VM gets reset.
+This in turn causes KVM to turn off PVCLOCK_TSC_STABLE_BIT in its exported
+PV clock.
+Note that KVM has no understanding of vCPU being currently parked.
+
+Without PVCLOCK_TSC_STABLE_BIT the sched clock is marked unstable in
+the guest's kvm_sched_clock_init().
+This causes a performance regressions to show in some tests.
+
+Fix this issue by writing the special value of "1" also to TSCs of parked
+vCPUs on VM reset.
+
+Reproducing the issue:
+1) Boot a VM with "-smp 2,maxcpus=3" or similar
+
+2) device_add host-x86_64-cpu,id=vcpu,node-id=0,socket-id=0,core-id=2,thread-id=0
+
+3) Wait a few seconds
+
+4) device_del vcpu
+
+5) Inside the VM run:
+# echo "t" >/proc/sysrq-trigger; dmesg | grep sched_clock_stable
+Observe the sched_clock_stable() value is 1.
+
+6) Reboot the VM
+
+7) Once the VM boots once again run inside it:
+# echo "t" >/proc/sysrq-trigger; dmesg | grep sched_clock_stable
+Observe the sched_clock_stable() value is now 0.
+
+Fixes: 5286c3662294 ("target/i386: properly reset TSC on reset")
+Signed-off-by: Maciej S. Szmigiero <maciej.szmigiero@oracle.com>
+Link: https://lore.kernel.org/r/5a605a88e9a231386dc803c60f5fed9b48108139.1734014926.git.maciej.szmigiero@oracle.com
+Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
+(cherry picked from commit 3f2a05b31ee9ce2ddb6c75a9bc3f5e7f7af9a76f)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/tests/qtest/virtio-9p-test.c b/tests/qtest/virtio-9p-test.c
-index f6d7400a87..ab3a12c816 100644
---- a/tests/qtest/virtio-9p-test.c
-+++ b/tests/qtest/virtio-9p-test.c
-@@ -702,6 +702,7 @@ static void fs_use_after_unlink(void *obj, void *data,
-     g_autofree char *real_file = virtio_9p_test_path("09/doa_file");
-     g_autofree char *buf = g_malloc0(write_count);
-     struct stat st_file;
-+    struct v9fs_attr attr;
-     uint32_t fid_file;
-     uint32_t count;
+diff --git a/accel/kvm/kvm-all.c b/accel/kvm/kvm-all.c
+index 8c5e71f20c..056a9c63b7 100644
+--- a/accel/kvm/kvm-all.c
++++ b/accel/kvm/kvm-all.c
+@@ -435,6 +435,16 @@ int kvm_unpark_vcpu(KVMState *s, unsigned long vcpu_id)
+     return kvm_fd;
+ }
  
-@@ -725,6 +726,10 @@ static void fs_use_after_unlink(void *obj, void *data,
-     tunlinkat({ .client = v9p, .atPath = "09", .name = "doa_file" });
++static void kvm_reset_parked_vcpus(void *param)
++{
++    KVMState *s = param;
++    struct KVMParkedVcpu *cpu;
++
++    QLIST_FOREACH(cpu, &s->kvm_parked_vcpus, node) {
++        kvm_arch_reset_parked_vcpu(cpu->vcpu_id, cpu->kvm_fd);
++    }
++}
++
+ int kvm_create_vcpu(CPUState *cpu)
+ {
+     unsigned long vcpu_id = kvm_arch_vcpu_id(cpu);
+@@ -2699,6 +2709,7 @@ static int kvm_init(MachineState *ms)
+     }
  
-     /* file is removed, but we still have it open, so this should succeed */
-+    tgetattr({
-+        .client = v9p, .fid = fid_file, .request_mask = P9_GETATTR_BASIC,
-+        .rgetattr.attr = &attr
-+    });
-     count = twrite({
-         .client = v9p, .fid = fid_file, .offset = 0, .count = write_count,
-         .data = buf
+     qemu_register_reset(kvm_unpoison_all, NULL);
++    qemu_register_reset(kvm_reset_parked_vcpus, s);
+ 
+     if (s->kernel_irqchip_allowed) {
+         kvm_irqchip_create(s);
+diff --git a/configs/targets/i386-softmmu.mak b/configs/targets/i386-softmmu.mak
+index 2ac69d5ba3..2eb0e86250 100644
+--- a/configs/targets/i386-softmmu.mak
++++ b/configs/targets/i386-softmmu.mak
+@@ -1,4 +1,5 @@
+ TARGET_ARCH=i386
+ TARGET_SUPPORTS_MTTCG=y
+ TARGET_KVM_HAVE_GUEST_DEBUG=y
++TARGET_KVM_HAVE_RESET_PARKED_VCPU=y
+ TARGET_XML_FILES= gdb-xml/i386-32bit.xml
+diff --git a/configs/targets/x86_64-softmmu.mak b/configs/targets/x86_64-softmmu.mak
+index e12ac3dc59..920e9a4200 100644
+--- a/configs/targets/x86_64-softmmu.mak
++++ b/configs/targets/x86_64-softmmu.mak
+@@ -2,4 +2,5 @@ TARGET_ARCH=x86_64
+ TARGET_BASE_ARCH=i386
+ TARGET_SUPPORTS_MTTCG=y
+ TARGET_KVM_HAVE_GUEST_DEBUG=y
++TARGET_KVM_HAVE_RESET_PARKED_VCPU=y
+ TARGET_XML_FILES= gdb-xml/i386-64bit.xml
+diff --git a/include/sysemu/kvm.h b/include/sysemu/kvm.h
+index 9cf14ca3d5..7035b46a89 100644
+--- a/include/sysemu/kvm.h
++++ b/include/sysemu/kvm.h
+@@ -377,6 +377,14 @@ int kvm_arch_init(MachineState *ms, KVMState *s);
+ int kvm_arch_init_vcpu(CPUState *cpu);
+ int kvm_arch_destroy_vcpu(CPUState *cpu);
+ 
++#ifdef TARGET_KVM_HAVE_RESET_PARKED_VCPU
++void kvm_arch_reset_parked_vcpu(unsigned long vcpu_id, int kvm_fd);
++#else
++static inline void kvm_arch_reset_parked_vcpu(unsigned long vcpu_id, int kvm_fd)
++{
++}
++#endif
++
+ bool kvm_vcpu_id_is_valid(int vcpu_id);
+ 
+ /* Returns VCPU ID to be used on KVM_CREATE_VCPU ioctl() */
+diff --git a/target/i386/kvm/kvm.c b/target/i386/kvm/kvm.c
+index 2fa88ef1e3..a45d2510e6 100644
+--- a/target/i386/kvm/kvm.c
++++ b/target/i386/kvm/kvm.c
+@@ -2382,6 +2382,21 @@ void kvm_arch_after_reset_vcpu(X86CPU *cpu)
+     }
+ }
+ 
++void kvm_arch_reset_parked_vcpu(unsigned long vcpu_id, int kvm_fd)
++{
++    g_autofree struct kvm_msrs *msrs = NULL;
++
++    msrs = g_malloc0(sizeof(*msrs) + sizeof(msrs->entries[0]));
++    msrs->entries[0].index = MSR_IA32_TSC;
++    msrs->entries[0].data = 1; /* match the value in x86_cpu_reset() */
++    msrs->nmsrs++;
++
++    if (ioctl(kvm_fd, KVM_SET_MSRS, msrs) != 1) {
++        warn_report("parked vCPU %lu TSC reset failed: %d",
++                    vcpu_id, errno);
++    }
++}
++
+ void kvm_arch_do_init_vcpu(X86CPU *cpu)
+ {
+     CPUX86State *env = &cpu->env;
 -- 
 2.39.5
 
