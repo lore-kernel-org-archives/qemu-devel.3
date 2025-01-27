@@ -4,72 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5A36BC02188
-	for <qemu-devel@archiver.kernel.org>; Mon, 27 Jan 2025 12:10:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5DA37C02188
+	for <qemu-devel@archiver.kernel.org>; Mon, 27 Jan 2025 12:34:22 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tcNvz-0003c3-Hm; Mon, 27 Jan 2025 07:09:43 -0500
+	id 1tcOHN-00049T-LI; Mon, 27 Jan 2025 07:31:51 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <ppandit@redhat.com>)
- id 1tcNvR-0003V6-9h
- for qemu-devel@nongnu.org; Mon, 27 Jan 2025 07:09:11 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <ppandit@redhat.com>)
- id 1tcNvJ-0000X7-Ha
- for qemu-devel@nongnu.org; Mon, 27 Jan 2025 07:09:05 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1737979741;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=Cki1l7UtndETUZwjLpH1MbRXENQVe807FrCj4OdFnvU=;
- b=RMBPslO1Y0+CxJqAjsBdXxbVn4ZDsFcwa/8Syc4XOV0Yjye9JrrkprV2FrXZaJo32tBSBZ
- JeI76jkeFkYSb2uKDlE+sXJBjAvHgjGU+fhcp4PwlZQNVC4ECH52LJnDXvyIx8AOw9wFaR
- oI/+HXzQFqX5leawhK7BJux5u6Cjg1o=
-Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-42-hz5y9pxwOSWv8W6hqe7z-Q-1; Mon,
- 27 Jan 2025 07:08:59 -0500
-X-MC-Unique: hz5y9pxwOSWv8W6hqe7z-Q-1
-X-Mimecast-MFC-AGG-ID: hz5y9pxwOSWv8W6hqe7z-Q
-Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 954541956053; Mon, 27 Jan 2025 12:08:58 +0000 (UTC)
-Received: from kaapi.redhat.com (unknown [10.74.17.143])
- by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 9AE561800344; Mon, 27 Jan 2025 12:08:53 +0000 (UTC)
-From: Prasad Pandit <ppandit@redhat.com>
-To: qemu-devel@nongnu.org
-Cc: peterx@redhat.com, farosas@suse.de, berrange@redhat.com,
- Prasad Pandit <pjp@fedoraproject.org>
-Subject: [PATCH v4 4/4] tests/qtest/migration: add postcopy tests with multifd
-Date: Mon, 27 Jan 2025 17:38:23 +0530
-Message-ID: <20250127120823.144949-5-ppandit@redhat.com>
-In-Reply-To: <20250127120823.144949-1-ppandit@redhat.com>
-References: <20250127120823.144949-1-ppandit@redhat.com>
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1tcOGt-00041X-53
+ for qemu-devel@nongnu.org; Mon, 27 Jan 2025 07:31:19 -0500
+Received: from mail-wm1-x32a.google.com ([2a00:1450:4864:20::32a])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1tcOGr-0003MO-C4
+ for qemu-devel@nongnu.org; Mon, 27 Jan 2025 07:31:18 -0500
+Received: by mail-wm1-x32a.google.com with SMTP id
+ 5b1f17b1804b1-435f8f29f8aso30560035e9.2
+ for <qemu-devel@nongnu.org>; Mon, 27 Jan 2025 04:31:16 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1737981075; x=1738585875; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:to
+ :from:from:to:cc:subject:date:message-id:reply-to;
+ bh=KSwYm9Ifvrp3w/cECG9Gy3rSjhlrv0zcjhWArVvCSig=;
+ b=EfUFLFQ2TC9YW1K/ijIvCWWl0pUxa7X5P5DpAT9xuN4y5G5Ys1wEd3Tq7XZVRBS3Ow
+ eEa6pFt391O5PvoCM9KGf2Vb1/FBqKUtoUsYqBzUMJOfVAr6EBkEb/ZweyJCMCyWh6V2
+ ncDHvHoET0TSOXbOxwzhs31/g5Q9EM8Eowfw5R3clXo1O3RSAMwbffdyBh+LO2O2nnxl
+ G+gJr/rq0+uqHnCvu+DHHIvTchLAbmi6XhziuF3XKATW82slSWk54OFKmeBqmqqZwsVt
+ /+gNWGB2vt/Qx37FFx8fLVEyzjpIWgcKJ/i/p8IIQ91ZfwhRdzPPQSjCrqtOS+E+2Pc8
+ VOpw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1737981075; x=1738585875;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:to
+ :from:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=KSwYm9Ifvrp3w/cECG9Gy3rSjhlrv0zcjhWArVvCSig=;
+ b=kUWMg9frI4ii01WDTJ1LIgfR00dIsdGFbMaWmY0brAezy4aDVXyoHBU8BedlpJHDwc
+ 1cyuOdeWJ6ZZgsmzWPLl88Ctu258h7mu9T2fDygsdLOblZvA66ocA25gVIDpfR4nq2kL
+ WM8lYezxlmbWgGVT486ZXx596WpfyOZ1f1ehRphwkcBMkY77Z6SOIDejyu95LAfJuTRc
+ 78zI4i1nwipIl3jtlH4+5o+xU2/6qoYgAFzlFv2LLa3dARBlg1UwGrYreuRNd7NQZJG3
+ T90+iTI5XquWY8vUf60CpCfs3vRYADWCG2pxIA5ofgJ0wlyrIYdyj9iJSlNfxi8lleYI
+ RuRQ==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCVQagtswAPmUdEtbL5BpaeJWULJYtXNRhy69tsscywVC2tehEvxtrgy+VYwIjr8rTitxSjmRR4xqJ78@nongnu.org
+X-Gm-Message-State: AOJu0YwLzKrf2p5bLNM+Q6y/MgXRZUOcQF3AZtpFtJ+zS/l9LU+gesRt
+ 0bWOS4A/7wOea5XuMmdg3xIp24n1kkNmlKIxe58oHqhVAdPdOU1rA2EzSHqhCls=
+X-Gm-Gg: ASbGncu99eTnlrdwHm/pmjnFeKK+DaxbeU9dnjtwhM9ZCWeDX48sc479BLz1TJmW/c3
+ kiMT9lv6R2taJcaewkivvR2WMnHZQBT+vIJ44hlNm4vU4jjnAGr/BRPGvBx6kxLati/GpFS6njW
+ ts+f0Evy474fbjVF2WKZxpQMkag7by1bvf8V+G2kk8XS3XOTmk5vkb7RGIP0eMFIoF2dXykHBbd
+ a8KxcEEL9+7ewJTbxkOT17+i1aL5V33y/AZDzDWtQQ+gQzWc9222UAHfKtpjkBY+KZ6xYHptF4T
+ z5k9GzJPeg==
+X-Google-Smtp-Source: AGHT+IHxEvC1D1UUTu26xAWuzJiUvw5hk4nIKkBi+PJs3DH+w6tVD6vveRkbHdY8fnQb4QCNRx1QzQ==
+X-Received: by 2002:a05:600c:1e8b:b0:434:f609:1af7 with SMTP id
+ 5b1f17b1804b1-438913bf885mr386127875e9.4.1737981075421; 
+ Mon, 27 Jan 2025 04:31:15 -0800 (PST)
+Received: from orth.archaic.org.uk (orth.archaic.org.uk. [2001:8b0:1d0::2])
+ by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-438bd4857b8sm129052505e9.15.2025.01.27.04.31.14
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Mon, 27 Jan 2025 04:31:14 -0800 (PST)
+From: Peter Maydell <peter.maydell@linaro.org>
+To: qemu-arm@nongnu.org,
+	qemu-devel@nongnu.org
+Subject: [PATCH] qemu-options: Deprecate -old-param command line option
+Date: Mon, 27 Jan 2025 12:31:13 +0000
+Message-Id: <20250127123113.2947620-1-peter.maydell@linaro.org>
+X-Mailer: git-send-email 2.34.1
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=ppandit@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -33
-X-Spam_score: -3.4
-X-Spam_bar: ---
-X-Spam_report: (-3.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.299,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.01,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+Received-SPF: pass client-ip=2a00:1450:4864:20::32a;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x32a.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -85,285 +96,68 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Prasad Pandit <pjp@fedoraproject.org>
+The '-old-param' command line option is specific to Arm targets; it
+is very briefly documented as "old param mode".  What this option
+actually does is change the behaviour when directly booting a guest
+kernel, so that command line arguments are passed to the kernel using
+the extremely old "param_struct" ABI, rather than the newer ATAGS or
+even newer DTB mechanisms.
 
-Add new postcopy tests to run postcopy migration with
-multifd channels enabled. Add a boolean fields 'multifd'
-and 'postcopy_ram' to the MigrateCommon structure.
-It helps to enable multifd channels and postcopy-ram
-during migration tests.
+This support was added back in 2007 to support an old vendor kernel
+on the akita/terrier board types:
+ https://mail.gnu.org/archive/html/qemu-devel/2007-07/msg00344.html
+Even then, it was an out-of-date mechanism from the kernel's
+point of view -- the kernel has had a comment since 2001 marking
+it as deprecated. As of mid-2024, the kernel only retained
+param_struct support for the RiscPC and Footbridge platforms:
+ https://lore.kernel.org/linux-arm-kernel/2831c5a6-cfbf-4fe0-b51c-0396e5b0aeb7@app.fastmail.com/
 
-Signed-off-by: Prasad Pandit <pjp@fedoraproject.org>
+None of the board types QEMU supports need param_struct support;
+mark this option as deprecated.
+
+Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
 ---
- tests/qtest/migration/compression-tests.c | 13 ++++++++
- tests/qtest/migration/framework.c         | 13 ++++++++
- tests/qtest/migration/framework.h         |  4 +++
- tests/qtest/migration/postcopy-tests.c    | 23 +++++++++++++
- tests/qtest/migration/precopy-tests.c     | 19 +++++++++++
- tests/qtest/migration/tls-tests.c         | 40 +++++++++++++++++++++++
- 6 files changed, 112 insertions(+)
+ docs/about/deprecated.rst | 13 +++++++++++++
+ system/vl.c               |  1 +
+ 2 files changed, 14 insertions(+)
 
-v3: Add more qtests to cover precopy with 'postcopy-ram' attribute
-    and postcopy with multifd channels enabled.
-- https://lore.kernel.org/qemu-devel/20250121131032.1611245-1-ppandit@redhat.com/T/#t
-
-diff --git a/tests/qtest/migration/compression-tests.c b/tests/qtest/migration/compression-tests.c
-index d78f1f11f1..3252ba2f73 100644
---- a/tests/qtest/migration/compression-tests.c
-+++ b/tests/qtest/migration/compression-tests.c
-@@ -39,6 +39,17 @@ static void test_multifd_tcp_zstd(void)
-     };
-     test_precopy_common(&args);
- }
-+
-+static void test_multifd_postcopy_tcp_zstd(void)
-+{
-+    MigrateCommon args = {
-+        .postcopy_ram = true,
-+        .listen_uri = "defer",
-+        .start_hook = migrate_hook_start_precopy_tcp_multifd_zstd,
-+    };
-+
-+    test_precopy_common(&args);
-+}
- #endif /* CONFIG_ZSTD */
+diff --git a/docs/about/deprecated.rst b/docs/about/deprecated.rst
+index 29de49351d1..a4c7d642236 100644
+--- a/docs/about/deprecated.rst
++++ b/docs/about/deprecated.rst
+@@ -68,6 +68,19 @@ configurations (e.g. -smp drawers=1,books=1,clusters=1 for x86 PC machine) is
+ marked deprecated since 9.0, users have to ensure that all the topology members
+ described with -smp are supported by the target machine.
  
- #ifdef CONFIG_QATZIP
-@@ -158,6 +169,8 @@ void migration_test_add_compression(MigrationTestEnv *env)
- #ifdef CONFIG_ZSTD
-     migration_test_add("/migration/multifd/tcp/plain/zstd",
-                        test_multifd_tcp_zstd);
-+    migration_test_add("/migration/multifd+postcopy/tcp/plain/zstd",
-+                       test_multifd_postcopy_tcp_zstd);
- #endif
- 
- #ifdef CONFIG_QATZIP
-diff --git a/tests/qtest/migration/framework.c b/tests/qtest/migration/framework.c
-index 4550cda129..00776f858c 100644
---- a/tests/qtest/migration/framework.c
-+++ b/tests/qtest/migration/framework.c
-@@ -427,6 +427,14 @@ static int migrate_postcopy_prepare(QTestState **from_ptr,
-         migrate_set_capability(to, "postcopy-preempt", true);
-     }
- 
-+    if (args->multifd) {
-+        migrate_set_capability(from, "multifd", true);
-+        migrate_set_capability(to, "multifd", true);
++``-old-param`` option for booting Arm kernels via param_struct (since 10.0)
++'''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
 +
-+        migrate_set_parameter_int(from, "multifd-channels", 8);
-+        migrate_set_parameter_int(to, "multifd-channels", 8);
-+    }
++The ``-old-param`` command line option is specific to Arm targets:
++it is used when directly booting a guest kernel to pass it the
++command line and other information via the old ``param_struct`` ABI,
++rather than the newer ATAGS or DTB mechanisms. This option was only
++ever needed to support ancient kernels on some old board types
++like the ``akita`` or ``terrier``; it has been deprecated in the
++kernel since 2001. None of the board types QEMU supports need
++``param_struct`` support, so this option has been deprecated and will
++be removed in a future QEMU version.
 +
-     migrate_ensure_non_converge(from);
+ User-mode emulator command line arguments
+ -----------------------------------------
  
-     migrate_prepare_for_dirty_mem(from);
-@@ -691,6 +699,11 @@ void test_precopy_common(MigrateCommon *args)
-         return;
-     }
- 
-+    if (args->postcopy_ram) {
-+        migrate_set_capability(from, "postcopy-ram", true);
-+        migrate_set_capability(to, "postcopy-ram", true);
-+    }
-+
-     if (args->start_hook) {
-         data_hook = args->start_hook(from, to);
-     }
-diff --git a/tests/qtest/migration/framework.h b/tests/qtest/migration/framework.h
-index 7991ee56b6..214288ca42 100644
---- a/tests/qtest/migration/framework.h
-+++ b/tests/qtest/migration/framework.h
-@@ -193,7 +193,11 @@ typedef struct {
-      */
-     bool live;
- 
-+    /* set multifd on */
-+    bool multifd;
-+
-     /* Postcopy specific fields */
-+    bool postcopy_ram;
-     void *postcopy_data;
-     bool postcopy_preempt;
-     PostcopyRecoveryFailStage postcopy_recovery_fail_stage;
-diff --git a/tests/qtest/migration/postcopy-tests.c b/tests/qtest/migration/postcopy-tests.c
-index daf7449f2c..212a5ea600 100644
---- a/tests/qtest/migration/postcopy-tests.c
-+++ b/tests/qtest/migration/postcopy-tests.c
-@@ -79,6 +79,25 @@ static void test_postcopy_preempt_recovery(void)
-     test_postcopy_recovery_common(&args);
- }
- 
-+static void test_multifd_postcopy(void)
-+{
-+    MigrateCommon args = {
-+        .multifd = true,
-+    };
-+
-+    test_postcopy_common(&args);
-+}
-+
-+static void test_multifd_postcopy_preempt(void)
-+{
-+    MigrateCommon args = {
-+        .multifd = true,
-+        .postcopy_preempt = true,
-+    };
-+
-+    test_postcopy_common(&args);
-+}
-+
- void migration_test_add_postcopy(MigrationTestEnv *env)
- {
-     if (env->has_uffd) {
-@@ -98,6 +117,10 @@ void migration_test_add_postcopy(MigrationTestEnv *env)
-             "/migration/postcopy/recovery/double-failures/reconnect",
-             test_postcopy_recovery_fail_reconnect);
- 
-+        migration_test_add("/migration/multifd+postcopy/plain",
-+                           test_multifd_postcopy);
-+        migration_test_add("/migration/multifd+postcopy/preempt/plain",
-+                           test_multifd_postcopy_preempt);
-         if (env->is_x86) {
-             migration_test_add("/migration/postcopy/suspend",
-                                test_postcopy_suspend);
-diff --git a/tests/qtest/migration/precopy-tests.c b/tests/qtest/migration/precopy-tests.c
-index 23599b29ee..b1a4e7bbb1 100644
---- a/tests/qtest/migration/precopy-tests.c
-+++ b/tests/qtest/migration/precopy-tests.c
-@@ -33,6 +33,7 @@
- #define DIRTYLIMIT_TOLERANCE_RANGE  25  /* MB/s */
- 
- static char *tmpfs;
-+static bool postcopy_ram = false;
- 
- static void test_precopy_unix_plain(void)
- {
-@@ -472,6 +473,11 @@ static void test_multifd_tcp_cancel(void)
-     migrate_ensure_non_converge(from);
-     migrate_prepare_for_dirty_mem(from);
- 
-+    if (postcopy_ram) {
-+        migrate_set_capability(from, "postcopy-ram", true);
-+        migrate_set_capability(to, "postcopy-ram", true);
-+    }
-+
-     migrate_set_parameter_int(from, "multifd-channels", 16);
-     migrate_set_parameter_int(to, "multifd-channels", 16);
- 
-@@ -513,6 +519,10 @@ static void test_multifd_tcp_cancel(void)
-         return;
-     }
- 
-+    if (postcopy_ram) {
-+        migrate_set_capability(to2, "postcopy-ram", true);
-+    }
-+
-     migrate_set_parameter_int(to2, "multifd-channels", 16);
- 
-     migrate_set_capability(to2, "multifd", true);
-@@ -536,6 +546,13 @@ static void test_multifd_tcp_cancel(void)
-     migrate_end(from, to2, true);
- }
- 
-+static void test_multifd_postcopy_tcp_cancel(void)
-+{
-+    postcopy_ram = true;
-+    test_multifd_tcp_cancel();
-+    postcopy_ram = false;
-+}
-+
- static void calc_dirty_rate(QTestState *who, uint64_t calc_time)
- {
-     qtest_qmp_assert_success(who,
-@@ -999,6 +1016,8 @@ void migration_test_add_precopy(MigrationTestEnv *env)
-                        test_multifd_tcp_no_zero_page);
-     migration_test_add("/migration/multifd/tcp/plain/cancel",
-                        test_multifd_tcp_cancel);
-+    migration_test_add("migration/multifd+postcopy/tcp/plain/cancel",
-+                       test_multifd_postcopy_tcp_cancel);
-     if (g_str_equal(env->arch, "x86_64")
-         && env->has_kvm && env->has_dirty_ring) {
- 
-diff --git a/tests/qtest/migration/tls-tests.c b/tests/qtest/migration/tls-tests.c
-index 5704a1f992..094dc1d814 100644
---- a/tests/qtest/migration/tls-tests.c
-+++ b/tests/qtest/migration/tls-tests.c
-@@ -393,6 +393,17 @@ static void test_postcopy_recovery_tls_psk(void)
-     test_postcopy_recovery_common(&args);
- }
- 
-+static void test_multifd_postcopy_recovery_tls_psk(void)
-+{
-+    MigrateCommon args = {
-+        .start_hook = migrate_hook_start_tls_psk_match,
-+        .end_hook = migrate_hook_end_tls_psk,
-+        .multifd = true,
-+    };
-+
-+    test_postcopy_recovery_common(&args);
-+}
-+
- /* This contains preempt+recovery+tls test altogether */
- static void test_postcopy_preempt_all(void)
- {
-@@ -405,6 +416,17 @@ static void test_postcopy_preempt_all(void)
-     test_postcopy_recovery_common(&args);
- }
- 
-+static void test_multifd_postcopy_preempt_recovery_tls_psk(void)
-+{
-+    MigrateCommon args = {
-+        .start_hook = migrate_hook_start_tls_psk_match,
-+        .end_hook = migrate_hook_end_tls_psk,
-+        .multifd = true,
-+    };
-+
-+    test_postcopy_recovery_common(&args);
-+}
-+
- static void test_precopy_unix_tls_psk(void)
- {
-     g_autofree char *uri = g_strdup_printf("unix:%s/migsocket", tmpfs);
-@@ -649,6 +671,18 @@ static void test_multifd_tcp_tls_psk_mismatch(void)
-     test_precopy_common(&args);
- }
- 
-+static void test_multifd_postcopy_tcp_tls_psk_match(void)
-+{
-+    MigrateCommon args = {
-+        .multifd = true,
-+        .listen_uri = "defer",
-+        .start_hook = migrate_hook_start_multifd_tcp_tls_psk_match,
-+        .end_hook = migrate_hook_end_tls_psk,
-+    };
-+
-+    test_precopy_common(&args);
-+}
-+
- #ifdef CONFIG_TASN1
- static void test_multifd_tcp_tls_x509_default_host(void)
- {
-@@ -743,6 +777,10 @@ void migration_test_add_tls(MigrationTestEnv *env)
-                            test_postcopy_preempt_tls_psk);
-         migration_test_add("/migration/postcopy/preempt/recovery/tls/psk",
-                            test_postcopy_preempt_all);
-+        migration_test_add("/migration/multifd+postcopy/recovery/tls/psk",
-+                           test_multifd_postcopy_recovery_tls_psk);
-+        migration_test_add("/migration/multifd+postcopy/preempt/recovery/tls/psk",
-+                           test_multifd_postcopy_preempt_recovery_tls_psk);
-     }
- #ifdef CONFIG_TASN1
-     migration_test_add("/migration/precopy/unix/tls/x509/default-host",
-@@ -776,6 +814,8 @@ void migration_test_add_tls(MigrationTestEnv *env)
-                        test_multifd_tcp_tls_psk_match);
-     migration_test_add("/migration/multifd/tcp/tls/psk/mismatch",
-                        test_multifd_tcp_tls_psk_mismatch);
-+    migration_test_add("/migration/multifd+postcopy/tcp/tls/psk/match",
-+                       test_multifd_postcopy_tcp_tls_psk_match);
- #ifdef CONFIG_TASN1
-     migration_test_add("/migration/multifd/tcp/tls/x509/default-host",
-                        test_multifd_tcp_tls_x509_default_host);
+diff --git a/system/vl.c b/system/vl.c
+index c5678267182..32ee1ce7041 100644
+--- a/system/vl.c
++++ b/system/vl.c
+@@ -3438,6 +3438,7 @@ void qemu_init(int argc, char **argv)
+                 nb_prom_envs++;
+                 break;
+             case QEMU_OPTION_old_param:
++                warn_report("-old-param is deprecated");
+                 old_param = 1;
+                 break;
+             case QEMU_OPTION_rtc:
 -- 
-2.48.1
+2.34.1
 
 
