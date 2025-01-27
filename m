@@ -4,34 +4,35 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 987EAC0218D
-	for <qemu-devel@archiver.kernel.org>; Tue, 28 Jan 2025 08:08:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4E0AFC0218D
+	for <qemu-devel@archiver.kernel.org>; Tue, 28 Jan 2025 08:08:44 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tcgdC-0000HF-7V; Tue, 28 Jan 2025 03:07:34 -0500
+	id 1tcgaw-0002ET-8a; Tue, 28 Jan 2025 03:05:18 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1tcgbI-0003T1-E4; Tue, 28 Jan 2025 03:05:36 -0500
+ id 1tcgYW-0006Kx-7a; Tue, 28 Jan 2025 03:02:45 -0500
 Received: from isrv.corpit.ru ([86.62.121.231])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1tcgbG-00033R-3I; Tue, 28 Jan 2025 03:05:35 -0500
+ id 1tcgYS-0002Ag-CS; Tue, 28 Jan 2025 03:02:41 -0500
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 3D68DE1B74;
- Tue, 28 Jan 2025 10:57:09 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id C808DE1B5A;
+ Tue, 28 Jan 2025 10:57:08 +0300 (MSK)
 Received: from localhost.tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id AD6F61A6327;
+ by tsrv.corpit.ru (Postfix) with ESMTP id 43DCB1A630D;
  Tue, 28 Jan 2025 10:57:34 +0300 (MSK)
 Received: by localhost.tls.msk.ru (Postfix, from userid 1000)
- id 341DE520DF; Tue, 28 Jan 2025 10:57:34 +0300 (MSK)
+ id 0823D520AB; Tue, 28 Jan 2025 10:57:34 +0300 (MSK)
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Fabiano Rosas <farosas@suse.de>,
- Peter Xu <peterx@redhat.com>, Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-9.1.3 45/58] migration: Rename vmstate_info_nullptr
-Date: Mon, 27 Jan 2025 23:25:31 +0300
-Message-Id: <20250127202547.3723716-45-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org, Nicholas Piggin <npiggin@gmail.com>,
+ Glenn Miles <milesg@linux.ibm.com>, Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-9.1.3 19/58] target/ppc: Fix non-maskable interrupt while
+ halted
+Date: Mon, 27 Jan 2025 23:25:05 +0300
+Message-Id: <20250127202547.3723716-19-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <qemu-stable-9.1.3-20250127232536@cover.tls.msk.ru>
 References: <qemu-stable-9.1.3-20250127232536@cover.tls.msk.ru>
@@ -62,75 +63,51 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Rename vmstate_info_nullptr from "uint64_t" to "nullptr". This vmstate
-actually reads and writes just a byte, so the proper name would be
-uint8. However, since this is a marker for a NULL pointer, it's
-convenient to have a more explicit name that can be identified by the
-consumers of the JSON part of the stream.
+The ppc (pnv and spapr) NMI injection code does not go through the
+asynchronous interrupt path and set a bit in env->pending_interrupts
+and raise an interrupt request that the cpu_exec() loop can see.
+Instead it injects the exception directly into registers.
 
-Change the name to "nullptr" and add support for it in the
-analyze-migration.py script. Arbitrarily use the name of the type as
-the value of the field to avoid the script showing 0x30 or '0', which
-could be confusing for readers.
+This can lead to cpu_exec() missing that the thread has work to do,
+if a NMI is injected while it was idle.
 
-Reviewed-by: Peter Xu <peterx@redhat.com>
-Message-Id: <20250109185249.23952-5-farosas@suse.de>
-Signed-off-by: Fabiano Rosas <farosas@suse.de>
-(cherry picked from commit f52965bf0eeee28e89933264f1a9dbdcdaa76a7e)
+Fix this by clearing halted when injecting the interrupt. Probably
+NMI injection should be reworked to use the interrupt request interface,
+but this seems to work as a minimal fix.
+
+Fixes: 3431648272d3 ("spapr: Add support for new NMI interface")
+Reviewed-by: Glenn Miles <milesg@linux.ibm.com>
+Signed-off-by: Nicholas Piggin <npiggin@gmail.com>
+(cherry picked from commit fa416ae6157a933ad3f7106090684759baaaf3c9)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/migration/vmstate-types.c b/migration/vmstate-types.c
-index e83bfccb9e..d70d573dbd 100644
---- a/migration/vmstate-types.c
-+++ b/migration/vmstate-types.c
-@@ -338,7 +338,7 @@ static int put_nullptr(QEMUFile *f, void *pv, size_t size,
+diff --git a/target/ppc/excp_helper.c b/target/ppc/excp_helper.c
+index f33fc36db2..cc4ef2598c 100644
+--- a/target/ppc/excp_helper.c
++++ b/target/ppc/excp_helper.c
+@@ -2479,10 +2479,16 @@ static void ppc_deliver_interrupt(CPUPPCState *env, int interrupt)
+     }
  }
  
- const VMStateInfo vmstate_info_nullptr = {
--    .name = "uint64",
-+    .name = "nullptr",
-     .get  = get_nullptr,
-     .put  = put_nullptr,
- };
-diff --git a/scripts/analyze-migration.py b/scripts/analyze-migration.py
-index fcda11f31d..923f174f1b 100755
---- a/scripts/analyze-migration.py
-+++ b/scripts/analyze-migration.py
-@@ -417,6 +417,28 @@ def __init__(self, desc, file):
-         super(VMSDFieldIntLE, self).__init__(desc, file)
-         self.dtype = '<i%d' % self.size
++/*
++ * system reset is not delivered via normal irq method, so have to set
++ * halted = 0 to resume CPU running if it was halted. Possibly we should
++ * move it over to using PPC_INTERRUPT_RESET rather than async_run_on_cpu.
++ */
+ void ppc_cpu_do_system_reset(CPUState *cs)
+ {
+     PowerPCCPU *cpu = POWERPC_CPU(cs);
  
-+class VMSDFieldNull(VMSDFieldGeneric):
-+    NULL_PTR_MARKER = b'0'
-+
-+    def __init__(self, desc, file):
-+        super(VMSDFieldNull, self).__init__(desc, file)
-+
-+    def __repr__(self):
-+        # A NULL pointer is encoded in the stream as a '0' to
-+        # disambiguate from a mere 0x0 value and avoid consumers
-+        # trying to follow the NULL pointer. Displaying '0', 0x30 or
-+        # 0x0 when analyzing the JSON debug stream could become
-+        # confusing, so use an explicit term instead.
-+        return "nullptr"
-+
-+    def __str__(self):
-+        return self.__repr__()
-+
-+    def read(self):
-+        super(VMSDFieldNull, self).read()
-+        assert(self.data == self.NULL_PTR_MARKER)
-+        return self.data
-+
- class VMSDFieldBool(VMSDFieldGeneric):
-     def __init__(self, desc, file):
-         super(VMSDFieldBool, self).__init__(desc, file)
-@@ -558,6 +580,7 @@ def getDict(self):
-     "bitmap" : VMSDFieldGeneric,
-     "struct" : VMSDFieldStruct,
-     "capability": VMSDFieldCap,
-+    "nullptr": VMSDFieldNull,
-     "unknown" : VMSDFieldGeneric,
++    cs->halted = 0;
+     powerpc_excp(cpu, POWERPC_EXCP_RESET);
+ }
+ 
+@@ -2504,6 +2510,7 @@ void ppc_cpu_do_fwnmi_machine_check(CPUState *cs, target_ulong vector)
+ 
+     /* Anything for nested required here? MSR[HV] bit? */
+ 
++    cs->halted = 0;
+     powerpc_set_excp_state(cpu, vector, msr);
  }
  
 -- 
