@@ -4,56 +4,56 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E05D2C0218A
-	for <qemu-devel@archiver.kernel.org>; Mon, 27 Jan 2025 12:10:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5A36BC02188
+	for <qemu-devel@archiver.kernel.org>; Mon, 27 Jan 2025 12:10:41 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tcNw7-0003k0-DI; Mon, 27 Jan 2025 07:09:51 -0500
+	id 1tcNvz-0003c3-Hm; Mon, 27 Jan 2025 07:09:43 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <ppandit@redhat.com>)
- id 1tcNvH-0003S4-Ka
- for qemu-devel@nongnu.org; Mon, 27 Jan 2025 07:09:02 -0500
+ id 1tcNvR-0003V6-9h
+ for qemu-devel@nongnu.org; Mon, 27 Jan 2025 07:09:11 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <ppandit@redhat.com>)
- id 1tcNvF-0000Wl-5E
- for qemu-devel@nongnu.org; Mon, 27 Jan 2025 07:08:58 -0500
+ id 1tcNvJ-0000X7-Ha
+ for qemu-devel@nongnu.org; Mon, 27 Jan 2025 07:09:05 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1737979736;
+ s=mimecast20190719; t=1737979741;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=vEs6IKRnvz/wdC8sgVzFgsrVo0G56TzxpaSk5RVOSEU=;
- b=HwlrIZY9bSURTB7eLjZWsz7GJYgQbThc8qvO7SyIowyC/UOhV6x9ZWzBMrryt0KS/11CbY
- qRODUYIsJmXsKKM1r5MiBHKTLgSwzCswTlT3Ki+QEGpqMgBPWiOcFOFRy2qxpIpAiUrjeJ
- 1csAPB7Va4ZRLaTsxqJUmEdFMKY/c2M=
-Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ bh=Cki1l7UtndETUZwjLpH1MbRXENQVe807FrCj4OdFnvU=;
+ b=RMBPslO1Y0+CxJqAjsBdXxbVn4ZDsFcwa/8Syc4XOV0Yjye9JrrkprV2FrXZaJo32tBSBZ
+ JeI76jkeFkYSb2uKDlE+sXJBjAvHgjGU+fhcp4PwlZQNVC4ECH52LJnDXvyIx8AOw9wFaR
+ oI/+HXzQFqX5leawhK7BJux5u6Cjg1o=
+Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-404-Dz_s5J9zPxeBk6Hg7hNN2A-1; Mon,
- 27 Jan 2025 07:08:54 -0500
-X-MC-Unique: Dz_s5J9zPxeBk6Hg7hNN2A-1
-X-Mimecast-MFC-AGG-ID: Dz_s5J9zPxeBk6Hg7hNN2A
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-42-hz5y9pxwOSWv8W6hqe7z-Q-1; Mon,
+ 27 Jan 2025 07:08:59 -0500
+X-MC-Unique: hz5y9pxwOSWv8W6hqe7z-Q-1
+X-Mimecast-MFC-AGG-ID: hz5y9pxwOSWv8W6hqe7z-Q
 Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id CB6EB1801F15; Mon, 27 Jan 2025 12:08:52 +0000 (UTC)
+ by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 954541956053; Mon, 27 Jan 2025 12:08:58 +0000 (UTC)
 Received: from kaapi.redhat.com (unknown [10.74.17.143])
  by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 76E821800358; Mon, 27 Jan 2025 12:08:47 +0000 (UTC)
+ id 9AE561800344; Mon, 27 Jan 2025 12:08:53 +0000 (UTC)
 From: Prasad Pandit <ppandit@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: peterx@redhat.com, farosas@suse.de, berrange@redhat.com,
  Prasad Pandit <pjp@fedoraproject.org>
-Subject: [PATCH v4 3/4] migration: enable multifd and postcopy together
-Date: Mon, 27 Jan 2025 17:38:22 +0530
-Message-ID: <20250127120823.144949-4-ppandit@redhat.com>
+Subject: [PATCH v4 4/4] tests/qtest/migration: add postcopy tests with multifd
+Date: Mon, 27 Jan 2025 17:38:23 +0530
+Message-ID: <20250127120823.144949-5-ppandit@redhat.com>
 In-Reply-To: <20250127120823.144949-1-ppandit@redhat.com>
 References: <20250127120823.144949-1-ppandit@redhat.com>
 MIME-Version: 1.0
@@ -87,271 +87,282 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Prasad Pandit <pjp@fedoraproject.org>
 
-Enable Multifd and Postcopy migration together.
-The migration_ioc_process_incoming() routine
-checks magic value sent on each channel and
-helps to properly setup multifd and postcopy
-channels.
-
-The Precopy and Multifd threads work during the
-initial guest RAM transfer. When migration moves
-to the Postcopy phase, the multifd threads are
-restrained and Postcopy threads on the destination
-request/pull data from the source side.
+Add new postcopy tests to run postcopy migration with
+multifd channels enabled. Add a boolean fields 'multifd'
+and 'postcopy_ram' to the MigrateCommon structure.
+It helps to enable multifd channels and postcopy-ram
+during migration tests.
 
 Signed-off-by: Prasad Pandit <pjp@fedoraproject.org>
 ---
- migration/migration.c      | 106 +++++++++++++++++++++++--------------
- migration/multifd-nocomp.c |   3 +-
- migration/options.c        |   5 --
- migration/ram.c            |   4 +-
- 4 files changed, 70 insertions(+), 48 deletions(-)
+ tests/qtest/migration/compression-tests.c | 13 ++++++++
+ tests/qtest/migration/framework.c         | 13 ++++++++
+ tests/qtest/migration/framework.h         |  4 +++
+ tests/qtest/migration/postcopy-tests.c    | 23 +++++++++++++
+ tests/qtest/migration/precopy-tests.c     | 19 +++++++++++
+ tests/qtest/migration/tls-tests.c         | 40 +++++++++++++++++++++++
+ 6 files changed, 112 insertions(+)
 
-v3: No change
+v3: Add more qtests to cover precopy with 'postcopy-ram' attribute
+    and postcopy with multifd channels enabled.
 - https://lore.kernel.org/qemu-devel/20250121131032.1611245-1-ppandit@redhat.com/T/#t
 
-diff --git a/migration/migration.c b/migration/migration.c
-index 2d1da917c7..a280722e9e 100644
---- a/migration/migration.c
-+++ b/migration/migration.c
-@@ -92,6 +92,9 @@ enum mig_rp_message_type {
-     MIG_RP_MSG_MAX
- };
- 
-+/* Migration channel types */
-+enum { CH_DEFAULT, CH_MULTIFD, CH_POSTCOPY };
-+
- /* When we add fault tolerance, we could have several
-    migrations at once.  For now we don't need to add
-    dynamic creation of migration */
-@@ -929,26 +932,33 @@ void migration_fd_process_incoming(QEMUFile *f)
- /*
-  * Returns true when we want to start a new incoming migration process,
-  * false otherwise.
-+ *
-+ * All the required channels must be in place before a new incoming
-+ * migration process starts.
-+ *  - Multifd enabled:
-+ *    The main channel and the multifd channels are required.
-+ *  - Multifd/Postcopy disabled:
-+ *    The main channel is required.
-+ *  - Postcopy enabled:
-+ *    We don't want to start a new incoming migration when
-+ *    the postcopy channel is created. Because it is created
-+ *    towards the end of the precopy migration.
-+ *
-  */
--static bool migration_should_start_incoming(bool main_channel)
-+static bool migration_should_start_incoming(uint8_t channel)
- {
--    /* Multifd doesn't start unless all channels are established */
--    if (migrate_multifd()) {
--        return migration_has_all_channels();
--    }
-+    bool ret = false;
-+
-+    if (channel != CH_POSTCOPY) {
-+        MigrationIncomingState *mis = migration_incoming_get_current();
-+        ret = mis->from_src_file ? true : false;
- 
--    /* Preempt channel only starts when the main channel is created */
--    if (migrate_postcopy_preempt()) {
--        return main_channel;
-+        if (ret && migrate_multifd()) {
-+            ret = multifd_recv_all_channels_created();
-+        }
-     }
- 
--    /*
--     * For all the rest types of migration, we should only reach here when
--     * it's the main channel that's being created, and we should always
--     * proceed with this channel.
--     */
--    assert(main_channel);
--    return true;
-+    return ret;
+diff --git a/tests/qtest/migration/compression-tests.c b/tests/qtest/migration/compression-tests.c
+index d78f1f11f1..3252ba2f73 100644
+--- a/tests/qtest/migration/compression-tests.c
++++ b/tests/qtest/migration/compression-tests.c
+@@ -39,6 +39,17 @@ static void test_multifd_tcp_zstd(void)
+     };
+     test_precopy_common(&args);
  }
++
++static void test_multifd_postcopy_tcp_zstd(void)
++{
++    MigrateCommon args = {
++        .postcopy_ram = true,
++        .listen_uri = "defer",
++        .start_hook = migrate_hook_start_precopy_tcp_multifd_zstd,
++    };
++
++    test_precopy_common(&args);
++}
+ #endif /* CONFIG_ZSTD */
  
- void migration_ioc_process_incoming(QIOChannel *ioc, Error **errp)
-@@ -956,13 +966,12 @@ void migration_ioc_process_incoming(QIOChannel *ioc, Error **errp)
-     MigrationIncomingState *mis = migration_incoming_get_current();
-     Error *local_err = NULL;
-     QEMUFile *f;
--    bool default_channel = true;
-     uint32_t channel_magic = 0;
-+    uint8_t channel = CH_DEFAULT;
-     int ret = 0;
+ #ifdef CONFIG_QATZIP
+@@ -158,6 +169,8 @@ void migration_test_add_compression(MigrationTestEnv *env)
+ #ifdef CONFIG_ZSTD
+     migration_test_add("/migration/multifd/tcp/plain/zstd",
+                        test_multifd_tcp_zstd);
++    migration_test_add("/migration/multifd+postcopy/tcp/plain/zstd",
++                       test_multifd_postcopy_tcp_zstd);
+ #endif
  
--    if (migrate_multifd() && !migrate_mapped_ram() &&
--        !migrate_postcopy_ram() &&
--        qio_channel_has_feature(ioc, QIO_CHANNEL_FEATURE_READ_MSG_PEEK)) {
-+    if (!migration_should_start_incoming(channel)) {
-+        if (qio_channel_has_feature(ioc, QIO_CHANNEL_FEATURE_READ_MSG_PEEK)) {
-         /*
-          * With multiple channels, it is possible that we receive channels
-          * out of order on destination side, causing incorrect mapping of
-@@ -973,42 +982,58 @@ void migration_ioc_process_incoming(QIOChannel *ioc, Error **errp)
-          * tls handshake while initializing main channel so with tls this
-          * issue is not possible.
-          */
--        ret = migration_channel_read_peek(ioc, (void *)&channel_magic,
--                                          sizeof(channel_magic), errp);
-+            ret = migration_channel_read_peek(ioc, (void *)&channel_magic,
-+                                              sizeof(channel_magic), errp);
-+            if (ret != 0) {
-+                return;
-+            }
- 
--        if (ret != 0) {
--            return;
-+            if (channel_magic == cpu_to_be32(QEMU_VM_FILE_MAGIC)) {
-+                channel = CH_DEFAULT;
-+            } else if (channel_magic == cpu_to_be32(MULTIFD_MAGIC)) {
-+                channel = CH_MULTIFD;
-+            } else if (!mis->from_src_file
-+                        && mis->state == MIGRATION_STATUS_POSTCOPY_PAUSED) {
-+                /* reconnect default channel for postcopy recovery */
-+                channel = CH_DEFAULT;
-+            } else {
-+                error_report("%s: could not identify channel, unknown magic: %u",
-+                                __func__, channel_magic);
-+                return;
-+            }
-+        } else if (mis->from_src_file
-+            && (!strcmp(ioc->name, "migration-tls-incoming")
-+                || !strcmp(ioc->name, "migration-file-incoming"))) {
-+            channel = CH_MULTIFD;
-         }
--
--        default_channel = (channel_magic == cpu_to_be32(QEMU_VM_FILE_MAGIC));
--    } else {
--        default_channel = !mis->from_src_file;
-+    } else if (mis->from_src_file) { // && migrate_postcopy_preempt()
-+        channel = CH_POSTCOPY;
+ #ifdef CONFIG_QATZIP
+diff --git a/tests/qtest/migration/framework.c b/tests/qtest/migration/framework.c
+index 4550cda129..00776f858c 100644
+--- a/tests/qtest/migration/framework.c
++++ b/tests/qtest/migration/framework.c
+@@ -427,6 +427,14 @@ static int migrate_postcopy_prepare(QTestState **from_ptr,
+         migrate_set_capability(to, "postcopy-preempt", true);
      }
  
-     if (multifd_recv_setup(errp) != 0) {
++    if (args->multifd) {
++        migrate_set_capability(from, "multifd", true);
++        migrate_set_capability(to, "multifd", true);
++
++        migrate_set_parameter_int(from, "multifd-channels", 8);
++        migrate_set_parameter_int(to, "multifd-channels", 8);
++    }
++
+     migrate_ensure_non_converge(from);
+ 
+     migrate_prepare_for_dirty_mem(from);
+@@ -691,6 +699,11 @@ void test_precopy_common(MigrateCommon *args)
          return;
      }
  
--    if (default_channel) {
-+    if (channel == CH_DEFAULT) {
-         f = qemu_file_new_input(ioc);
-         migration_incoming_setup(f);
--    } else {
-+    } else if (channel == CH_MULTIFD) {
-         /* Multiple connections */
--        assert(migration_needs_multiple_sockets());
-         if (migrate_multifd()) {
-             multifd_recv_new_channel(ioc, &local_err);
--        } else {
--            assert(migrate_postcopy_preempt());
--            f = qemu_file_new_input(ioc);
--            postcopy_preempt_new_channel(mis, f);
-         }
-         if (local_err) {
-             error_propagate(errp, local_err);
-             return;
-         }
-+    } else if (channel == CH_POSTCOPY) {
-+        assert(migrate_postcopy_preempt());
-+        assert(!mis->postcopy_qemufile_dst);
-+        f = qemu_file_new_input(ioc);
-+        postcopy_preempt_new_channel(mis, f);
++    if (args->postcopy_ram) {
++        migrate_set_capability(from, "postcopy-ram", true);
++        migrate_set_capability(to, "postcopy-ram", true);
++    }
++
+     if (args->start_hook) {
+         data_hook = args->start_hook(from, to);
      }
+diff --git a/tests/qtest/migration/framework.h b/tests/qtest/migration/framework.h
+index 7991ee56b6..214288ca42 100644
+--- a/tests/qtest/migration/framework.h
++++ b/tests/qtest/migration/framework.h
+@@ -193,7 +193,11 @@ typedef struct {
+      */
+     bool live;
  
--    if (migration_should_start_incoming(default_channel)) {
-+    if (migration_should_start_incoming(channel)) {
-         /* If it's a recovery, we're done */
-         if (postcopy_try_recover()) {
-             return;
-@@ -1025,21 +1050,22 @@ void migration_ioc_process_incoming(QIOChannel *ioc, Error **errp)
-  */
- bool migration_has_all_channels(void)
- {
-+    bool ret = false;
-     MigrationIncomingState *mis = migration_incoming_get_current();
- 
-     if (!mis->from_src_file) {
--        return false;
-+        return ret;
-     }
- 
-     if (migrate_multifd()) {
--        return multifd_recv_all_channels_created();
-+        ret = multifd_recv_all_channels_created();
-     }
- 
--    if (migrate_postcopy_preempt()) {
--        return mis->postcopy_qemufile_dst != NULL;
-+    if (ret && migrate_postcopy_preempt()) {
-+        ret = mis->postcopy_qemufile_dst != NULL;
-     }
- 
--    return true;
-+    return ret;
++    /* set multifd on */
++    bool multifd;
++
+     /* Postcopy specific fields */
++    bool postcopy_ram;
+     void *postcopy_data;
+     bool postcopy_preempt;
+     PostcopyRecoveryFailStage postcopy_recovery_fail_stage;
+diff --git a/tests/qtest/migration/postcopy-tests.c b/tests/qtest/migration/postcopy-tests.c
+index daf7449f2c..212a5ea600 100644
+--- a/tests/qtest/migration/postcopy-tests.c
++++ b/tests/qtest/migration/postcopy-tests.c
+@@ -79,6 +79,25 @@ static void test_postcopy_preempt_recovery(void)
+     test_postcopy_recovery_common(&args);
  }
  
- int migrate_send_rp_switchover_ack(MigrationIncomingState *mis)
-diff --git a/migration/multifd-nocomp.c b/migration/multifd-nocomp.c
-index 1325dba97c..d0edec7cd1 100644
---- a/migration/multifd-nocomp.c
-+++ b/migration/multifd-nocomp.c
-@@ -16,6 +16,7 @@
- #include "file.h"
- #include "multifd.h"
- #include "options.h"
-+#include "migration.h"
- #include "qapi/error.h"
- #include "qemu/cutils.h"
- #include "qemu/error-report.h"
-@@ -391,7 +392,7 @@ int multifd_ram_flush_and_sync(QEMUFile *f)
-     MultiFDSyncReq req;
-     int ret;
++static void test_multifd_postcopy(void)
++{
++    MigrateCommon args = {
++        .multifd = true,
++    };
++
++    test_postcopy_common(&args);
++}
++
++static void test_multifd_postcopy_preempt(void)
++{
++    MigrateCommon args = {
++        .multifd = true,
++        .postcopy_preempt = true,
++    };
++
++    test_postcopy_common(&args);
++}
++
+ void migration_test_add_postcopy(MigrationTestEnv *env)
+ {
+     if (env->has_uffd) {
+@@ -98,6 +117,10 @@ void migration_test_add_postcopy(MigrationTestEnv *env)
+             "/migration/postcopy/recovery/double-failures/reconnect",
+             test_postcopy_recovery_fail_reconnect);
  
--    if (!migrate_multifd()) {
-+    if (!migrate_multifd() || migration_in_postcopy()) {
-         return 0;
++        migration_test_add("/migration/multifd+postcopy/plain",
++                           test_multifd_postcopy);
++        migration_test_add("/migration/multifd+postcopy/preempt/plain",
++                           test_multifd_postcopy_preempt);
+         if (env->is_x86) {
+             migration_test_add("/migration/postcopy/suspend",
+                                test_postcopy_suspend);
+diff --git a/tests/qtest/migration/precopy-tests.c b/tests/qtest/migration/precopy-tests.c
+index 23599b29ee..b1a4e7bbb1 100644
+--- a/tests/qtest/migration/precopy-tests.c
++++ b/tests/qtest/migration/precopy-tests.c
+@@ -33,6 +33,7 @@
+ #define DIRTYLIMIT_TOLERANCE_RANGE  25  /* MB/s */
+ 
+ static char *tmpfs;
++static bool postcopy_ram = false;
+ 
+ static void test_precopy_unix_plain(void)
+ {
+@@ -472,6 +473,11 @@ static void test_multifd_tcp_cancel(void)
+     migrate_ensure_non_converge(from);
+     migrate_prepare_for_dirty_mem(from);
+ 
++    if (postcopy_ram) {
++        migrate_set_capability(from, "postcopy-ram", true);
++        migrate_set_capability(to, "postcopy-ram", true);
++    }
++
+     migrate_set_parameter_int(from, "multifd-channels", 16);
+     migrate_set_parameter_int(to, "multifd-channels", 16);
+ 
+@@ -513,6 +519,10 @@ static void test_multifd_tcp_cancel(void)
+         return;
      }
  
-diff --git a/migration/options.c b/migration/options.c
-index b8d5300326..8c878dea49 100644
---- a/migration/options.c
-+++ b/migration/options.c
-@@ -479,11 +479,6 @@ bool migrate_caps_check(bool *old_caps, bool *new_caps, Error **errp)
-             error_setg(errp, "Postcopy is not compatible with ignore-shared");
-             return false;
-         }
--
--        if (new_caps[MIGRATION_CAPABILITY_MULTIFD]) {
--            error_setg(errp, "Postcopy is not yet compatible with multifd");
--            return false;
--        }
-     }
++    if (postcopy_ram) {
++        migrate_set_capability(to2, "postcopy-ram", true);
++    }
++
+     migrate_set_parameter_int(to2, "multifd-channels", 16);
  
-     if (new_caps[MIGRATION_CAPABILITY_BACKGROUND_SNAPSHOT]) {
-diff --git a/migration/ram.c b/migration/ram.c
-index f2326788de..bdba7abe73 100644
---- a/migration/ram.c
-+++ b/migration/ram.c
-@@ -1295,7 +1295,7 @@ static int find_dirty_block(RAMState *rs, PageSearchStatus *pss)
-         pss->page = 0;
-         pss->block = QLIST_NEXT_RCU(pss->block, next);
-         if (!pss->block) {
--            if (multifd_ram_sync_per_round()) {
-+            if (multifd_ram_sync_per_round() && !migration_in_postcopy()) {
-                 QEMUFile *f = rs->pss[RAM_CHANNEL_PRECOPY].pss_channel;
-                 int ret = multifd_ram_flush_and_sync(f);
-                 if (ret < 0) {
-@@ -1969,7 +1969,7 @@ static int ram_save_target_page(RAMState *rs, PageSearchStatus *pss)
-         }
-     }
+     migrate_set_capability(to2, "multifd", true);
+@@ -536,6 +546,13 @@ static void test_multifd_tcp_cancel(void)
+     migrate_end(from, to2, true);
+ }
  
--    if (migrate_multifd()) {
-+    if (migrate_multifd() && !migration_in_postcopy()) {
-         RAMBlock *block = pss->block;
-         return ram_save_multifd_page(block, offset);
++static void test_multifd_postcopy_tcp_cancel(void)
++{
++    postcopy_ram = true;
++    test_multifd_tcp_cancel();
++    postcopy_ram = false;
++}
++
+ static void calc_dirty_rate(QTestState *who, uint64_t calc_time)
+ {
+     qtest_qmp_assert_success(who,
+@@ -999,6 +1016,8 @@ void migration_test_add_precopy(MigrationTestEnv *env)
+                        test_multifd_tcp_no_zero_page);
+     migration_test_add("/migration/multifd/tcp/plain/cancel",
+                        test_multifd_tcp_cancel);
++    migration_test_add("migration/multifd+postcopy/tcp/plain/cancel",
++                       test_multifd_postcopy_tcp_cancel);
+     if (g_str_equal(env->arch, "x86_64")
+         && env->has_kvm && env->has_dirty_ring) {
+ 
+diff --git a/tests/qtest/migration/tls-tests.c b/tests/qtest/migration/tls-tests.c
+index 5704a1f992..094dc1d814 100644
+--- a/tests/qtest/migration/tls-tests.c
++++ b/tests/qtest/migration/tls-tests.c
+@@ -393,6 +393,17 @@ static void test_postcopy_recovery_tls_psk(void)
+     test_postcopy_recovery_common(&args);
+ }
+ 
++static void test_multifd_postcopy_recovery_tls_psk(void)
++{
++    MigrateCommon args = {
++        .start_hook = migrate_hook_start_tls_psk_match,
++        .end_hook = migrate_hook_end_tls_psk,
++        .multifd = true,
++    };
++
++    test_postcopy_recovery_common(&args);
++}
++
+ /* This contains preempt+recovery+tls test altogether */
+ static void test_postcopy_preempt_all(void)
+ {
+@@ -405,6 +416,17 @@ static void test_postcopy_preempt_all(void)
+     test_postcopy_recovery_common(&args);
+ }
+ 
++static void test_multifd_postcopy_preempt_recovery_tls_psk(void)
++{
++    MigrateCommon args = {
++        .start_hook = migrate_hook_start_tls_psk_match,
++        .end_hook = migrate_hook_end_tls_psk,
++        .multifd = true,
++    };
++
++    test_postcopy_recovery_common(&args);
++}
++
+ static void test_precopy_unix_tls_psk(void)
+ {
+     g_autofree char *uri = g_strdup_printf("unix:%s/migsocket", tmpfs);
+@@ -649,6 +671,18 @@ static void test_multifd_tcp_tls_psk_mismatch(void)
+     test_precopy_common(&args);
+ }
+ 
++static void test_multifd_postcopy_tcp_tls_psk_match(void)
++{
++    MigrateCommon args = {
++        .multifd = true,
++        .listen_uri = "defer",
++        .start_hook = migrate_hook_start_multifd_tcp_tls_psk_match,
++        .end_hook = migrate_hook_end_tls_psk,
++    };
++
++    test_precopy_common(&args);
++}
++
+ #ifdef CONFIG_TASN1
+ static void test_multifd_tcp_tls_x509_default_host(void)
+ {
+@@ -743,6 +777,10 @@ void migration_test_add_tls(MigrationTestEnv *env)
+                            test_postcopy_preempt_tls_psk);
+         migration_test_add("/migration/postcopy/preempt/recovery/tls/psk",
+                            test_postcopy_preempt_all);
++        migration_test_add("/migration/multifd+postcopy/recovery/tls/psk",
++                           test_multifd_postcopy_recovery_tls_psk);
++        migration_test_add("/migration/multifd+postcopy/preempt/recovery/tls/psk",
++                           test_multifd_postcopy_preempt_recovery_tls_psk);
      }
+ #ifdef CONFIG_TASN1
+     migration_test_add("/migration/precopy/unix/tls/x509/default-host",
+@@ -776,6 +814,8 @@ void migration_test_add_tls(MigrationTestEnv *env)
+                        test_multifd_tcp_tls_psk_match);
+     migration_test_add("/migration/multifd/tcp/tls/psk/mismatch",
+                        test_multifd_tcp_tls_psk_mismatch);
++    migration_test_add("/migration/multifd+postcopy/tcp/tls/psk/match",
++                       test_multifd_postcopy_tcp_tls_psk_match);
+ #ifdef CONFIG_TASN1
+     migration_test_add("/migration/multifd/tcp/tls/x509/default-host",
+                        test_multifd_tcp_tls_x509_default_host);
 -- 
 2.48.1
 
