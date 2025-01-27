@@ -4,87 +4,90 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A3C40C02188
-	for <qemu-devel@archiver.kernel.org>; Mon, 27 Jan 2025 20:49:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B094AC0218A
+	for <qemu-devel@archiver.kernel.org>; Mon, 27 Jan 2025 20:59:56 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tcW2E-0005cH-JM; Mon, 27 Jan 2025 15:48:42 -0500
+	id 1tcWCK-0008Sw-Fd; Mon, 27 Jan 2025 15:59:08 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <lacraig3@gmail.com>)
- id 1tcVYC-0006gL-5I
- for qemu-devel@nongnu.org; Mon, 27 Jan 2025 15:17:40 -0500
-Received: from mail-qt1-x829.google.com ([2607:f8b0:4864:20::829])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <lacraig3@gmail.com>)
- id 1tcVYA-0000U0-ND
- for qemu-devel@nongnu.org; Mon, 27 Jan 2025 15:17:39 -0500
-Received: by mail-qt1-x829.google.com with SMTP id
- d75a77b69052e-467b74a1754so67550411cf.1
- for <qemu-devel@nongnu.org>; Mon, 27 Jan 2025 12:17:37 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1738009056; x=1738613856; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=m+4AY+aIcsFifSg6NxmWCaZNdEgX06WNWe8R70VVWKk=;
- b=M0aeLFUQ8SHg8Kvei716jvtQmNexk3e1extMtd0MPeKPcviAfP05PdkT6igsVNC6Gg
- BkqY5yV5htRE0nGQJMZMqeqK8XdhuCULgqybMArc6K9q1BJcQHCce3Xw+xObcX1qIjwR
- k/26j9zBxbjDZj3qKYWZJ2dectxiYylannT+OYWzfZbMko5pt7xORMuefvqHrqeETO1X
- 6NGIs651i/+0bKdEJ3CyOtcpkA5eYOEY9VWGLsNJ+3GysiR9jw7FkOqCVC3qltVk+eXH
- 7dRJiwyxw372b4UQlh7eapz166Tqnc1X6ONvgbGkFLD6k1P14VVEK7s4EASYcE0XZ4ut
- 7g4w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1738009056; x=1738613856;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=m+4AY+aIcsFifSg6NxmWCaZNdEgX06WNWe8R70VVWKk=;
- b=Vr/43levNVx//BvLxwQUh8w1oHgpDe3evGYk4VTGOL4ebLlo3caUS/HNseRzowxpSM
- g69kjOA4vx/F/zjPDAkeK5M5IHWaqaKXOPo/s5FY5WPnjmSe6q+pO4ng0BHFBpoQ5yFh
- 6pJkQuZnS5i1NwjaoHR705yGgpZ0kmr1HeTe04OWfaY/XwJbmF/Nna3cRlW47n7gkKjq
- AZG6Cn7zfxN04RNDN3DlhJZ0cy/Knfocf5bWfCWwtH0VYRl+NX+usr2/B/FO0nQH78Bf
- Ws8v54/GQvJO/2qsCr9hIiySbp4Vib+qAKrB8FdvoKi/nnWFetgnAdSefLHzo1FqeT5h
- vWsQ==
-X-Gm-Message-State: AOJu0Ywyj8OS2W+wDl5SIFVxSsZD8OjjvWvvZIO/+IqiWANb4+OC0w7S
- Fb6S/IiHeKspzN3L/KtqtI8z9Ol4E40pHM1q06392S7YAeairK7WaUq9MPAOC2c=
-X-Gm-Gg: ASbGncsIP+tvm8Qee6JHGlzG6ylj/t3cSQyIeA4JEaZIv4D9TPFFm0Q5K+v+0kLmwq+
- +MqblxhOE/PyZVuBcl7RlRKOPoa4Ozd97UFO2ubL20an1mV8ZWcfXk6Rh9qIUiIX2cHxKYMx0Q+
- O1CGpw80EZAej6tnfSIcOR8UZBw6Ro4163FiAhH3xYImgXZ1jehv9UZ7K0sNG+UqNhrNoIAAiA9
- i2cpY68RAavaE0AAB0iRFG1qfOQknd8gjNsa184lTEjTmPJUPNbUszDprpcQg9UK4X4SMIU9OUZ
-X-Google-Smtp-Source: AGHT+IFXRswBqMcfThZa1S6hQ7NTDlnfOTRSCWtiJR132xtw7TIcfCE5Dvg4V1tKKmFeX+xsc4RR2A==
-X-Received: by 2002:a05:622a:24c:b0:46c:71f6:819b with SMTP id
- d75a77b69052e-46e12bdd346mr595964991cf.49.1738009056546; 
- Mon, 27 Jan 2025 12:17:36 -0800 (PST)
-Received: from luke-igloo.. ([18.4.85.124]) by smtp.gmail.com with ESMTPSA id
- d75a77b69052e-46e668636e5sm42601081cf.4.2025.01.27.12.17.36
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 27 Jan 2025 12:17:36 -0800 (PST)
-From: Luke Craig <lacraig3@gmail.com>
-To: qemu-devel@nongnu.org
-Cc: Alexandre Iooss <erdnaxe@crans.org>,
- Mahmoud Mandour <ma.mandourr@gmail.com>,
- Pierrick Bouvier <pierrick.bouvier@linaro.org>,
- =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Luke Craig <lacraig3@gmail.com>
-Subject: [PATCH 0/2] plugins: add tb convenience functions
-Date: Mon, 27 Jan 2025 15:17:32 -0500
-Message-Id: <20250127201734.1769540-1-lacraig3@gmail.com>
-X-Mailer: git-send-email 2.34.1
+ (Exim 4.90_1) (envelope-from <mark.cave-ayland@ilande.co.uk>)
+ id 1tcWCH-0008S3-9U
+ for qemu-devel@nongnu.org; Mon, 27 Jan 2025 15:59:06 -0500
+Received: from mail.ilande.co.uk ([2001:41c9:1:41f::167])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <mark.cave-ayland@ilande.co.uk>)
+ id 1tcWCF-0006sU-I1
+ for qemu-devel@nongnu.org; Mon, 27 Jan 2025 15:59:05 -0500
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+ d=ilande.co.uk; s=20220518; h=Subject:Content-Transfer-Encoding:Content-Type:
+ In-Reply-To:From:References:To:MIME-Version:Date:Message-ID:Sender:Reply-To:
+ Cc:Content-ID:Content-Description:Resent-Date:Resent-From:Resent-Sender:
+ Resent-To:Resent-Cc:Resent-Message-ID;
+ bh=cMknxMmh2Ic5EV5xImTAHMVs+jwEWmwlW2VDl7CO1Ts=; b=W52ijwrKxK9/pE0qW/MTZ/gnXt
+ vkOOYFx285Qhx+kVVYe/bBnXEKIWGhFFWHq1zgqHWz6uNFcqoPvKq1Pp9imlkNTeaQh9nM9HJONuw
+ FkUArlWlSe6epr5rwVEyGk238aKx3xYJfGxa+WkVtcXMM0E9Dl3OAHxbUjG4hKltd55w9SGvdXz2J
+ blLS9Nuk0hQtn+IZ3qveIjvFxgDEraRpSL4JlPI1hhuhO9X6BYNSfKvHjwbm+4rLWfWWUT4abdb1F
+ tZARYC/MfQXOzfjCgtzAuvunCy9kLHDVkafyLMvLvnuTYZXM2a5bucAh3gIb7Q6wI8i8hFLBToRBV
+ WVm65CUvF21MG6cJXTAuir1iwb8G3rzbtnBy2flJQ/xoj2b1SYcsSkoAjTlidkW/pC/sX60oFf2zK
+ qDj7oPzi5TWEAmzUkTgtOrHHQ1UIv/LlwtPuG+646HJtUw1QIw4iUx5aJ4ZcLrdI9lYkS7Ycu1l9n
+ z4s6FmOry66gHIzR8aC6Tm8WRLzljnyEsOMW+/mzztZk7iBxJXWsbdhj/xibaVclDrCPRstFwssef
+ XXXggJnf748K0o15LLOC3UbH36wbvE2iw5ruT0lyYZN55k9WusJDxspwtnYJO3xHyyaghEy6bpfrW
+ BL0bAYoL++9nSocNk9dZGLvyDtoJlBP6BuWoeQpYk=;
+Received: from [2a02:8012:2f01:0:6e58:597a:7a31:479a]
+ by mail.ilande.co.uk with esmtpsa (TLS1.3:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.92) (envelope-from <mark.cave-ayland@ilande.co.uk>)
+ id 1tcWBI-000ATP-8W; Mon, 27 Jan 2025 20:58:15 +0000
+Message-ID: <19794460-a662-4efc-81b7-d2817e1e8d99@ilande.co.uk>
+Date: Mon, 27 Jan 2025 20:58:45 +0000
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::829;
- envelope-from=lacraig3@gmail.com; helo=mail-qt1-x829.google.com
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+User-Agent: Mozilla Thunderbird
+To: Nicholas Papadonis <nick.papadonis.ml@gmail.com>, qemu-devel@nongnu.org
+References: <CAKD0t1JkVt4wV-EyOu4pUNzT1zkMZ8=izjFu-_0DcsYD+0+syg@mail.gmail.com>
+Content-Language: en-US
+From: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
+Autocrypt: addr=mark.cave-ayland@ilande.co.uk; keydata=
+ xsBNBFQJuzwBCADAYvxrwUh1p/PvUlNFwKosVtVHHplgWi5p29t58QlOUkceZG0DBYSNqk93
+ 3JzBTbtd4JfFcSupo6MNNOrCzdCbCjZ64ik8ycaUOSzK2tKbeQLEXzXoaDL1Y7vuVO7nL9bG
+ E5Ru3wkhCFc7SkoypIoAUqz8EtiB6T89/D9TDEyjdXUacc53R5gu8wEWiMg5MQQuGwzbQy9n
+ PFI+mXC7AaEUqBVc2lBQVpAYXkN0EyqNNT12UfDLdxaxaFpUAE2pCa2LTyo5vn5hEW+i3VdN
+ PkmjyPvL6DdY03fvC01PyY8zaw+UI94QqjlrDisHpUH40IUPpC/NB0LwzL2aQOMkzT2NABEB
+ AAHNME1hcmsgQ2F2ZS1BeWxhbmQgPG1hcmsuY2F2ZS1heWxhbmRAaWxhbmRlLmNvLnVrPsLA
+ eAQTAQIAIgUCVAm7PAIbAwYLCQgHAwIGFQgCCQoLBBYCAwECHgECF4AACgkQW8LFb64PMh9f
+ NAgAuc3ObOEY8NbZko72AGrg2tWKdybcMVITxmcor4hb9155o/OWcA4IDbeATR6cfiDL/oxU
+ mcmtXVgPqOwtW3NYAKr5g/FrZZ3uluQ2mtNYAyTFeALy8YF7N3yhs7LOcpbFP7tEbkSzoXNG
+ z8iYMiYtKwttt40WaheWuRs0ZOLbs6yoczZBDhna3Nj0LA3GpeJKlaV03O4umjKJgACP1c/q
+ T2Pkg+FCBHHFP454+waqojHp4OCBo6HyK+8I4wJRa9Z0EFqXIu8lTDYoggeX0Xd6bWeCFHK3
+ DhD0/Xi/kegSW33unsp8oVcM4kcFxTkpBgj39dB4KwAUznhTJR0zUHf63M7ATQRUCbs8AQgA
+ y7kyevA4bpetM/EjtuqQX4U05MBhEz/2SFkX6IaGtTG2NNw5wbcAfhOIuNNBYbw6ExuaJ3um
+ 2uLseHnudmvN4VSJ5Hfbd8rhqoMmmO71szgT/ZD9MEe2KHzBdmhmhxJdp+zQNivy215j6H27
+ 14mbC2dia7ktwP1rxPIX1OOfQwPuqlkmYPuVwZP19S4EYnCELOrnJ0m56tZLn5Zj+1jZX9Co
+ YbNLMa28qsktYJ4oU4jtn6V79H+/zpERZAHmH40IRXdR3hA+Ye7iC/ZpWzT2VSDlPbGY9Yja
+ Sp7w2347L5G+LLbAfaVoejHlfy/msPeehUcuKjAdBLoEhSPYzzdvEQARAQABwsBfBBgBAgAJ
+ BQJUCbs8AhsMAAoJEFvCxW+uDzIfabYIAJXmBepHJpvCPiMNEQJNJ2ZSzSjhic84LTMWMbJ+
+ opQgr5cb8SPQyyb508fc8b4uD8ejlF/cdbbBNktp3BXsHlO5BrmcABgxSP8HYYNsX0n9kERv
+ NMToU0oiBuAaX7O/0K9+BW+3+PGMwiu5ml0cwDqljxfVN0dUBZnQ8kZpLsY+WDrIHmQWjtH+
+ Ir6VauZs5Gp25XLrL6bh/SL8aK0BX6y79m5nhfKI1/6qtzHAjtMAjqy8ChPvOqVVVqmGUzFg
+ KPsrrIoklWcYHXPyMLj9afispPVR8e0tMKvxzFBWzrWX1mzljbBlnV2n8BIwVXWNbgwpHSsj
+ imgcU9TTGC5qd9g=
+In-Reply-To: <CAKD0t1JkVt4wV-EyOu4pUNzT1zkMZ8=izjFu-_0DcsYD+0+syg@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-SA-Exim-Connect-IP: 2a02:8012:2f01:0:6e58:597a:7a31:479a
+X-SA-Exim-Mail-From: mark.cave-ayland@ilande.co.uk
+Subject: Re: SPARC64 Support and Solaris 10
+X-SA-Exim-Version: 4.2.1 (built Wed, 08 May 2019 21:11:16 +0000)
+X-SA-Exim-Scanned: Yes (on mail.ilande.co.uk)
+Received-SPF: pass client-ip=2001:41c9:1:41f::167;
+ envelope-from=mark.cave-ayland@ilande.co.uk; helo=mail.ilande.co.uk
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001, T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
-X-Mailman-Approved-At: Mon, 27 Jan 2025 15:48:31 -0500
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -99,21 +102,19 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This PR extends the plugin API with two functions which allow convenient access around tbs.
+On 26/01/2025 04:26, Nicholas Papadonis wrote:
 
-The first, qemu_plugin_tb_size, provides a mechanism for determining the total size of a translation block.
+> How is the support for SPARC64?
+> 
+> Is anyone able to run Solaris 10?
 
-The second, qemu_plugin_tb_get_insn_by_vaddr, allows users to get a reference to an instruction by its virtual address rather than just its index.
+Not yet on the sun4u machine, but it is possible to run the sun4v OpenSPARC T1 image 
+on the niagara machine. You can find more information on the wiki at 
+https://wiki.qemu.org/Documentation/Platforms/SPARC.
 
-Luke Craig (2):
-  plugin: extend API with qemu_plugin_tb_get_insn_by_vaddr
-  plugin: extend API with qemu_plugin_tb_size
 
- include/qemu/qemu-plugin.h | 21 +++++++++++++++++++++
- plugins/api.c              | 18 ++++++++++++++++++
- 2 files changed, 39 insertions(+)
+ATB,
 
--- 
-2.34.1
+Mark.
 
 
