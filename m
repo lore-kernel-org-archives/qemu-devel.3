@@ -4,37 +4,37 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DC1C1C02190
-	for <qemu-devel@archiver.kernel.org>; Tue, 28 Jan 2025 07:57:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 951BEC02190
+	for <qemu-devel@archiver.kernel.org>; Tue, 28 Jan 2025 07:57:34 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tcgPq-00016q-7h; Tue, 28 Jan 2025 02:53:46 -0500
+	id 1tcgSq-0002XF-AL; Tue, 28 Jan 2025 02:56:52 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1tcgPo-000140-A0; Tue, 28 Jan 2025 02:53:44 -0500
+ id 1tcgSa-0001mI-6j; Tue, 28 Jan 2025 02:56:37 -0500
 Received: from isrv.corpit.ru ([86.62.121.231])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1tcgPm-0007qO-GB; Tue, 28 Jan 2025 02:53:43 -0500
+ id 1tcgSY-0000Jg-NC; Tue, 28 Jan 2025 02:56:35 -0500
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id C56D0E1AC5;
- Tue, 28 Jan 2025 10:52:59 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id 6F293E1AE6;
+ Tue, 28 Jan 2025 10:54:25 +0300 (MSK)
 Received: from localhost.tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id 4049A1A62B4;
- Tue, 28 Jan 2025 10:53:25 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id DE57E1A62CD;
+ Tue, 28 Jan 2025 10:54:50 +0300 (MSK)
 Received: by localhost.tls.msk.ru (Postfix, from userid 1000)
- id 21DA251FFF; Tue, 28 Jan 2025 10:53:25 +0300 (MSK)
+ id CAE0A52031; Tue, 28 Jan 2025 10:54:50 +0300 (MSK)
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Christian Schoenebeck <qemu_oss@crudebyte.com>,
- Greg Kurz <groug@kaod.org>, Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-7.2.16 12/31] 9pfs: remove obsolete comment in v9fs_getattr()
-Date: Tue, 28 Jan 2025 00:41:04 +0300
-Message-Id: <20250127214124.3730126-12-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org, Akihiko Odaki <akihiko.odaki@daynix.com>,
+ Jason Wang <jasowang@redhat.com>, Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-8.2.9 05/45] virtio-net: Fix size check in dhclient workaround
+Date: Mon, 27 Jan 2025 23:25:46 +0300
+Message-Id: <20250127202630.3724367-5-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.39.5
-In-Reply-To: <qemu-stable-7.2.16-20250128004119@cover.tls.msk.ru>
-References: <qemu-stable-7.2.16-20250128004119@cover.tls.msk.ru>
+In-Reply-To: <qemu-stable-8.2.9-20250127232621@cover.tls.msk.ru>
+References: <qemu-stable-8.2.9-20250127232621@cover.tls.msk.ru>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 From: Michael Tokarev <mjt@tls.msk.ru>
@@ -62,31 +62,35 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The comment claims that we'd only support basic Tgetattr fields. This is
-no longer true, so remove this comment.
+work_around_broken_dhclient() accesses IP and UDP headers to detect
+relevant packets and to calculate checksums, but it didn't check if
+the packet has size sufficient to accommodate them, causing out-of-bound
+access hazards. Fix this by correcting the size requirement.
 
-Fixes: e06a765efbe3 ("hw/9pfs: Add st_gen support in getattr reply")
-Signed-off-by: Christian Schoenebeck <qemu_oss@crudebyte.com>
-Reviewed-by: Greg Kurz <groug@kaod.org>
-Message-Id: <fb364d12045217a4c6ccd0dd6368103ddb80698b.1732465720.git.qemu_oss@crudebyte.com>
-(cherry picked from commit 3bc4db44430f53387d17145bb52b330a830a03fe)
+Fixes: 1d41b0c1ec66 ("Work around dhclient brokenness")
+Cc: qemu-stable@nongnu.org
+Signed-off-by: Akihiko Odaki <akihiko.odaki@daynix.com>
+Signed-off-by: Jason Wang <jasowang@redhat.com>
+(cherry picked from commit a8575f7fb2f213e6690b23160b04271d47fdfaa8)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/hw/9pfs/9p.c b/hw/9pfs/9p.c
-index 51ad5bfb11..cfe90f63cb 100644
---- a/hw/9pfs/9p.c
-+++ b/hw/9pfs/9p.c
-@@ -1605,10 +1605,6 @@ static void coroutine_fn v9fs_getattr(void *opaque)
-         retval = -ENOENT;
-         goto out_nofid;
-     }
--    /*
--     * Currently we only support BASIC fields in stat, so there is no
--     * need to look at request_mask.
--     */
-     retval = v9fs_co_lstat(pdu, &fidp->path, &stbuf);
-     if (retval < 0) {
-         goto out;
+diff --git a/hw/net/virtio-net.c b/hw/net/virtio-net.c
+index 038604bbec..534faa1b88 100644
+--- a/hw/net/virtio-net.c
++++ b/hw/net/virtio-net.c
+@@ -1690,8 +1690,11 @@ static void virtio_net_hdr_swap(VirtIODevice *vdev, struct virtio_net_hdr *hdr)
+ static void work_around_broken_dhclient(struct virtio_net_hdr *hdr,
+                                         uint8_t *buf, size_t size)
+ {
++    size_t csum_size = ETH_HLEN + sizeof(struct ip_header) +
++                       sizeof(struct udp_header);
++
+     if ((hdr->flags & VIRTIO_NET_HDR_F_NEEDS_CSUM) && /* missing csum */
+-        (size > 27 && size < 1500) && /* normal sized MTU */
++        (size >= csum_size && size < 1500) && /* normal sized MTU */
+         (buf[12] == 0x08 && buf[13] == 0x00) && /* ethertype == IPv4 */
+         (buf[23] == 17) && /* ip.protocol == UDP */
+         (buf[34] == 0 && buf[35] == 67)) { /* udp.srcport == bootps */
 -- 
 2.39.5
 
