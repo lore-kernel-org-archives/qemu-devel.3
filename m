@@ -4,90 +4,93 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6B396C02188
-	for <qemu-devel@archiver.kernel.org>; Mon, 27 Jan 2025 13:10:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 00E35C02188
+	for <qemu-devel@archiver.kernel.org>; Mon, 27 Jan 2025 13:11:43 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tcOrp-0005Nd-0T; Mon, 27 Jan 2025 08:09:29 -0500
+	id 1tcOtm-0006I2-PT; Mon, 27 Jan 2025 08:11:32 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <david@redhat.com>) id 1tcOrj-0005KQ-4L
- for qemu-devel@nongnu.org; Mon, 27 Jan 2025 08:09:24 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <david@redhat.com>) id 1tcOtX-0006Gy-Mu
+ for qemu-devel@nongnu.org; Mon, 27 Jan 2025 08:11:15 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <david@redhat.com>) id 1tcOrh-0001iw-GY
- for qemu-devel@nongnu.org; Mon, 27 Jan 2025 08:09:22 -0500
+ (Exim 4.90_1) (envelope-from <david@redhat.com>) id 1tcOtV-00021p-UL
+ for qemu-devel@nongnu.org; Mon, 27 Jan 2025 08:11:15 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1737983358;
+ s=mimecast20190719; t=1737983472;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=wTTWvJPtKVoF6iXSgvgp/3855piVuUQyBtdCJQN3lFo=;
- b=aKIs9eNZF5Vn95SziK28ys7C/CMhR1rrFH+h1c9l4Zk9ECZ4h4LvDdW4bmm5rPiZqsybfS
- T7Tz8SA2mOQ1jG+GPOHUz1b0eeuSJ5N/LJK+X0TwySHAxaDeeqwtCti93yfVAahVLefakO
- 9rkxLlbGxYtbqavrhxBzj9jbZMfg4rs=
-Received: from mail-wr1-f69.google.com (mail-wr1-f69.google.com
- [209.85.221.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=Xb6Qt0vSU9A+XbKdS+/m/b3WKYqpnikUarpmPrKgm10=;
+ b=TqYv4yaLFCP/2W1c2zHDox1mhrUZ/DFjXXQh88xUZu0i7hfYiqCo4S/kX1LiJYgIwh4brr
+ 30CKZzg4Lu+eIs7/u7eYFTAFqBOHAObnUO1kZBK0Xa96UOuBRXXxtsQIo2WjQxLsSZ9CDW
+ ANFSV/F/10Mm+LiP1rcHLSQXWNARldw=
+Received: from mail-wr1-f72.google.com (mail-wr1-f72.google.com
+ [209.85.221.72]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-622-rC-jCCHQO42Fyp-unZ9S1w-1; Mon, 27 Jan 2025 08:09:16 -0500
-X-MC-Unique: rC-jCCHQO42Fyp-unZ9S1w-1
-X-Mimecast-MFC-AGG-ID: rC-jCCHQO42Fyp-unZ9S1w
-Received: by mail-wr1-f69.google.com with SMTP id
- ffacd0b85a97d-385e03f54d0so1723300f8f.3
- for <qemu-devel@nongnu.org>; Mon, 27 Jan 2025 05:09:16 -0800 (PST)
+ us-mta-321-SFBRxveJNcG96ps4VMOmcg-1; Mon, 27 Jan 2025 08:11:11 -0500
+X-MC-Unique: SFBRxveJNcG96ps4VMOmcg-1
+X-Mimecast-MFC-AGG-ID: SFBRxveJNcG96ps4VMOmcg
+Received: by mail-wr1-f72.google.com with SMTP id
+ ffacd0b85a97d-3860bc1d4f1so2750281f8f.2
+ for <qemu-devel@nongnu.org>; Mon, 27 Jan 2025 05:11:11 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1737983355; x=1738588155;
+ d=1e100.net; s=20230601; t=1737983470; x=1738588270;
  h=content-transfer-encoding:in-reply-to:organization:autocrypt
  :content-language:from:references:cc:to:subject:user-agent
  :mime-version:date:message-id:x-gm-message-state:from:to:cc:subject
  :date:message-id:reply-to;
- bh=wTTWvJPtKVoF6iXSgvgp/3855piVuUQyBtdCJQN3lFo=;
- b=SyjXjjW7ZTPevBjUeWK69d+lUQLYIpXiAP9MSxbzJu+2tpUR9MZDsqd6UvwNkrXpAP
- iTc1NshCzfH5Rr7srkyJ/y5sZC2w5YhpakOjJuka2Szi4CB0r0GAf3yXQjJMjwkxuWRu
- 7vz2eWYOYnqBBtbVl4aqq9ITZ+JAEslifgkiWgMgDx4xAWA77hunQGvMtuJUdcDJP4P9
- M7ymVFNYR8cxg87K7RxOA6z2Usy1w9GwfBQxUjwnQJ7rx7WXiW+9XIkSsjCzahMgIM22
- 2aE3jVnYq4MsTDxw2xC6ZcC8lpEfEeajA0f3rIwj9EfX4DiEemTn+T5VTzG6f+UebVV5
- O4+A==
+ bh=Xb6Qt0vSU9A+XbKdS+/m/b3WKYqpnikUarpmPrKgm10=;
+ b=p1jIyrnRvuyTUO9T+SYKumDsIAjKLnEYJGaipoeL8qh3KyLB4t7qEzX8UhRZk/+GEl
+ XpJv2nFLTuAk9mbYvj+JhRX2gbl68knf0yx3j9VrCswsODqPsmhZdSb2+7MH12f5kgOk
+ JLR0fiZD3s6t/JVITXZNgAPrRp8My4Nj7bXgm9h0gg8hp8TbmvcDTjH6mUbernZDsBlm
+ v/vx9zV7R72bD7B/L+VEuHbCiDzYVQ3VdNC3iTGN8RYXlIs5v1Tmp3BmwxipcbDa20Et
+ 7dR0GI2dX7P9SCixp2lh+aLb9SvE8V9MTyZ1DJLXcIekLr20QkScuibqhIpPm+/ZwWjw
+ EsTg==
 X-Forwarded-Encrypted: i=1;
- AJvYcCWfpAuyFXuJyW4luxvzhGQfMcF+qbZ/55meyF7lbRCobFO4GJfF9nVMa3EtT8u4gz+EIoywEwcn8EDA@nongnu.org
-X-Gm-Message-State: AOJu0YzDHEZ90ArO+0xyfCSAAc69eUKI/1fG8xcjpGvZdQq1zaEVG9O2
- ilAvEitMvAj2MkWJwmIZv93RUeB0xfWuxEPGMtOjIdIbOXjxnRKPhRZBeNUOIl5OaaL/thjNpbO
- V8N84wtvpbtDIly3xOEjgoQb30Yu8MHcQ1T+PCo53X6mNWqeOr0uB
-X-Gm-Gg: ASbGncslzNR41xas5s8GOLunUbidMENGlrTae1HILiNUwMRhvi8TBoLXeCPW6Y37f7G
- wgjDtxj8StlNfVbwV/OyVNnuOYFrPJyH8xp95Z6dzr06mfXavlxPxx+EsHmKB9AnOEg0oGek7U4
- 6DRX4hdJIGrkgHDp638w0wJy+UhSq4MejQZgBptwxgkh5hvyAgbXCstvq/e+JJHXyRCpj/KG6qU
- Ag5ZF3Dp+kEwYoNr6YvY1k2gPWN5rd5lQiP6gZjfEDscN0yWbXVszL9CPr96EBzfFi9wBrUCCUW
- jFBl/oJq5HnkwsQ1EyWAWgcaodeGDdlwHdtiVQVoUVr/ZRaXisU4dsTGGkrf74QjIGqIHwRAsK+
- vc5boIZItI6EOXCnx4dBWF9fGoDorlSMe
-X-Received: by 2002:a05:6000:1fab:b0:382:6f3:a20f with SMTP id
- ffacd0b85a97d-38bf5656e01mr32673006f8f.11.1737983355144; 
- Mon, 27 Jan 2025 05:09:15 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IG/EY5BnO4EoIJyCBqP2fZgoVrW97x7tX98LJwFJpLdU+gaETa5BE1lID5+v9+XINk6xxZzbg==
-X-Received: by 2002:a05:6000:1fab:b0:382:6f3:a20f with SMTP id
- ffacd0b85a97d-38bf5656e01mr32672983f8f.11.1737983354665; 
- Mon, 27 Jan 2025 05:09:14 -0800 (PST)
+ AJvYcCUIvBzZQ/76RYcIkOl1BevMNCDgOBNRaUGtqT4iN3S8r3h5jugRIatoO2wQB65TiOjtfu1MlVGAJ6uI@nongnu.org
+X-Gm-Message-State: AOJu0YzUAhLA0pE/R4ihru9ESK934knlVbGHwP6GTW8kjwFhZBwny6B+
+ 5ZHWOnoCt3/Ll4MRP5ROkVM/kRrC8PkHy67k8aeChjVJXBq+YnysqEubduqDmkptayr72s5+fdv
+ 9YAHYEbBx7R3qkYB1ECNbdW9H8sXKxxu6t+gkHtUM6TqD+vBJ/4vs
+X-Gm-Gg: ASbGncsgMFdlw5jyIt3n5i3pxPdl+w5hWvxPlkBCF9zg5wzQdAVGxLZ7shPkV7pn34G
+ gijZNxEO1Q2rSFZGUGHVuuVG/QFZhfA77ovhEuVcjTZcGHi9+hWUInbG1ApxBlFG+xdHFL62uwD
+ l0QBcoi9YDn+Vw0fYaLEKIU5Ns8lbiL9j+hYUrP6sBBzL1Wi4+/zmt59Rs4Jhgr7FV/BjtMDofH
+ Al9gyDVOnMJiCOregcPYRSJx5IctI8mod7NLDLO5NcjWe2exgGQy0UdK1L4qG7S+DLyQvt/3s3+
+ JDiyXwwcQPMAhBjGIp5s7ZOw0S7FuYDqZMgOGdQvxNaxfldvqhxFAXopCE6N4pgO87TJyI+dATe
+ 8URlcdKgqYsJT+Cx2YvYhu9vYsMrg64/9
+X-Received: by 2002:a05:6000:1567:b0:385:fd07:8616 with SMTP id
+ ffacd0b85a97d-38bf55c4d1emr37229440f8f.0.1737983470201; 
+ Mon, 27 Jan 2025 05:11:10 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IErnfJWIEtMt26DL8hBsSnvD6vA5oBHsWQjgIjZtxB63dP5OjEIK90YW+2JaRpn6AYCp7DY5g==
+X-Received: by 2002:a05:6000:1567:b0:385:fd07:8616 with SMTP id
+ ffacd0b85a97d-38bf55c4d1emr37229409f8f.0.1737983469846; 
+ Mon, 27 Jan 2025 05:11:09 -0800 (PST)
 Received: from ?IPV6:2003:cb:c736:ca00:b4c3:24bd:c2f5:863c?
  (p200300cbc736ca00b4c324bdc2f5863c.dip0.t-ipconnect.de.
  [2003:cb:c736:ca00:b4c3:24bd:c2f5:863c])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-38c2a17d70bsm11339651f8f.33.2025.01.27.05.09.12
+ ffacd0b85a97d-38c3ec83e20sm4363993f8f.23.2025.01.27.05.11.07
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 27 Jan 2025 05:09:13 -0800 (PST)
-Message-ID: <cbe2a998-dc7d-4e86-8da6-659759f1b0cd@redhat.com>
-Date: Mon, 27 Jan 2025 14:09:11 +0100
+ Mon, 27 Jan 2025 05:11:08 -0800 (PST)
+Message-ID: <78f810b1-3a02-47b7-bdc3-4d61cac74926@redhat.com>
+Date: Mon, 27 Jan 2025 14:11:06 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 1/2] s390x/pci: add support for guests that request
- direct mapping
-To: Matthew Rosato <mjrosato@linux.ibm.com>, qemu-s390x@nongnu.org
-Cc: farman@linux.ibm.com, schnelle@linux.ibm.com, thuth@redhat.com,
- pasic@linux.ibm.com, borntraeger@linux.ibm.com,
- richard.henderson@linaro.org, iii@linux.ibm.com, clegoate@redhat.com,
- qemu-devel@nongnu.org
-References: <20250124202115.349386-1-mjrosato@linux.ibm.com>
- <20250124202115.349386-2-mjrosato@linux.ibm.com>
+Subject: Re: [PATCH v2] virtio-balloon-pci: Allow setting nvectors, so we can
+ use MSI-X
+To: Reza Arbab <arbab@linux.ibm.com>, qemu-devel@nongnu.org
+Cc: Eduardo Habkost <eduardo@habkost.net>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Yanan Wang <wangyanan55@huawei.com>, Zhao Liu <zhao1.liu@intel.com>,
+ "Michael S . Tsirkin" <mst@redhat.com>,
+ Matthew Rosato <mjrosato@linux.ibm.com>,
+ Boris Fiuczynski <fiuczy@linux.ibm.com>,
+ Matthew Rosato <mjrosato@linux.ibm.com>, Eric Farman <farman@linux.ibm.com>
+References: <20250115161425.246348-1-arbab@linux.ibm.com>
 From: David Hildenbrand <david@redhat.com>
 Content-Language: en-US
 Autocrypt: addr=david@redhat.com; keydata=
@@ -135,17 +138,17 @@ Autocrypt: addr=david@redhat.com; keydata=
  jPrnvUsUUsjRoRNJjKKA/REq+sAnhkNPPZ/NNMjaZ5b8Tovi8C0tmxiCHaQYqj7G2rgnT0kt
  WNyWQQ==
 Organization: Red Hat
-In-Reply-To: <20250124202115.349386-2-mjrosato@linux.ibm.com>
+In-Reply-To: <20250115161425.246348-1-arbab@linux.ibm.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=david@redhat.com;
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=david@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -33
 X-Spam_score: -3.4
 X-Spam_bar: ---
 X-Spam_report: (-3.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.3,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
@@ -164,81 +167,47 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 24.01.25 21:21, Matthew Rosato wrote:
-> When receiving a guest mpcifc(4) or mpcifc(6) instruction without the T
-> bit set, treat this as a request to perform direct mapping instead of
-> address translation.  In order to facilitate this, pin the entirety of
-> guest memory into the host iommu.
+On 15.01.25 17:14, Reza Arbab wrote:
+> Most virtio-pci devices allow MSI-X. Add it to virtio-balloon-pci, but
+> only enable it in new machine types, so we don't break migration of
+> existing machine types between different qemu versions.
 > 
-> Pinning for the direct mapping case is handled via vfio and its memory
-> listener.  Additionally, ram discard settings are inherited from vfio:
-> coordinated discards (e.g. virtio-mem) are allowed while uncoordinated
-> discards (e.g. virtio-balloon) are disabled.
+> This copies what was done for virtio-rng-pci in:
+> 9ea02e8f1306 ("virtio-rng-pci: Allow setting nvectors, so we can use MSI-X")
+> bad9c5a5166f ("virtio-rng-pci: fix migration compat for vectors")
+> 62bdb8871512 ("virtio-rng-pci: fix transitional migration compat for vectors")
 > 
-> Subsequent guest DMA operations are all expected to be of the format
-> guest_phys+sdma, allowing them to be used as lookup into the host
-> iommu table.
-> 
-> Signed-off-by: Matthew Rosato <mjrosato@linux.ibm.com>
+> Acked-by: David Hildenbrand <david@redhat.com>
+> Signed-off-by: Reza Arbab <arbab@linux.ibm.com>
 > ---
->   hw/s390x/s390-pci-bus.c         | 36 +++++++++++++++++++++++++++++++--
->   hw/s390x/s390-pci-inst.c        | 13 ++++++++++--
->   hw/s390x/s390-pci-vfio.c        | 15 ++++++++++----
->   hw/s390x/s390-virtio-ccw.c      |  5 +++++
->   include/hw/s390x/s390-pci-bus.h |  4 ++++
->   5 files changed, 65 insertions(+), 8 deletions(-)
-> 
-> diff --git a/hw/s390x/s390-pci-bus.c b/hw/s390x/s390-pci-bus.c
-> index eead269cc2..8cf5aec1a2 100644
-> --- a/hw/s390x/s390-pci-bus.c
-> +++ b/hw/s390x/s390-pci-bus.c
-> @@ -18,6 +18,8 @@
->   #include "hw/s390x/s390-pci-inst.h"
->   #include "hw/s390x/s390-pci-kvm.h"
->   #include "hw/s390x/s390-pci-vfio.h"
-> +#include "hw/s390x/s390-virtio-ccw.h"
-> +#include "hw/boards.h"
->   #include "hw/pci/pci_bus.h"
->   #include "hw/qdev-properties.h"
->   #include "hw/pci/pci_bridge.h"
-> @@ -720,16 +722,44 @@ void s390_pci_iommu_enable(S390PCIIOMMU *iommu)
->                                TYPE_S390_IOMMU_MEMORY_REGION, OBJECT(&iommu->mr),
->                                name, iommu->pal + 1);
->       iommu->enabled = true;
-> +    iommu->direct_map = false;
->       memory_region_add_subregion(&iommu->mr, 0, MEMORY_REGION(&iommu->iommu_mr));
->       g_free(name);
->   }
->   
-> +void s390_pci_iommu_dm_enable(S390PCIIOMMU *iommu)
-> +{
-> +    MachineState *ms = MACHINE(qdev_get_machine());
-> +    S390CcwMachineState *s390ms = S390_CCW_MACHINE(ms);
-> +
-> +    /*
-> +     * For direct-mapping we must map the entire guest address space.  Rather
-> +     * than using an iommu, create a memory region alias that maps GPA X to
-> +     * iova X + SDMA.  VFIO will handle pinning via its memory listener.
-> +     */
-> +    g_autofree char *name = g_strdup_printf("iommu-dm-s390-%04x",
-> +                                            iommu->pbdev->uid);
-> +    memory_region_init_alias(&iommu->dm_mr, OBJECT(&iommu->mr), name, ms->ram,
-> +                             0, s390_get_memory_limit(s390ms));
 
-Hm, the memory limit can exceed  ms->ram.
+This patch enables the virtio-balloon-pci device to be plugged on s390x.
+Before this change, plugging that device would fail with "MSI-X support is
+mandatory on s390".
 
-Would it be possible to use get_system_memory() here, such that whatever 
-is mapped into physical address space (including virtio-mem devices etc) 
-would simply be aliased with an offset?
+However, the device does not seem to be initialized by the Linux guest:
 
-Or does that blow up elsewhere?
+# lspci -v
+0001:00:00.0 Unclassified device [00ff]: Red Hat, Inc. Virtio memory balloon
+         Subsystem: Red Hat, Inc. Device 0005
+         Physical Slot: 00000000
+         Flags: fast devsel, IOMMU group 0
+         Memory at 4001000000000000 (32-bit, non-prefetchable) [virtual] [size=4K]
+         Memory at 4002000000000000 (64-bit, prefetchable) [size=16K]
+         Capabilities: [98] MSI-X: Enable- Count=2 Masked-
+         Capabilities: [84] Vendor Specific Information: VirtIO: <unknown>
+         Capabilities: [70] Vendor Specific Information: VirtIO: Notify
+         Capabilities: [60] Vendor Specific Information: VirtIO: DeviceCfg
+         Capabilities: [50] Vendor Specific Information: VirtIO: ISR
+         Capabilities: [40] Vendor Specific Information: VirtIO: CommonCfg
 
-target/i386/kvm/kvm.c seems to do that:
 
-memory_region_init_alias(&smram_as_mem, OBJECT(kvm_state), "mem-smram",
-			 get_system_memory(), 0, ~0ull);
+I tried enabling it:
 
-and target/i386/tcg/system/tcg-cpu.c
+[  343.718529] pci 0001:00:00.0: enabling device (0000 -> 0002)
+
+Without any change. @s390x folks, is there something missing to make it fly,
+or are there additional steps to initialize+use such devices from inside the VM?
 
 -- 
 Cheers,
