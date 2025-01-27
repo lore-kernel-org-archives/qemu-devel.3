@@ -4,91 +4,74 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DA2D0C02188
-	for <qemu-devel@archiver.kernel.org>; Mon, 27 Jan 2025 18:12:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0BC34C02188
+	for <qemu-devel@archiver.kernel.org>; Mon, 27 Jan 2025 18:30:25 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tcTaR-0007s6-Qz; Mon, 27 Jan 2025 13:11:51 -0500
+	id 1tcTrk-0001sP-SG; Mon, 27 Jan 2025 13:29:45 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1tcTaC-0007qQ-1x
- for qemu-devel@nongnu.org; Mon, 27 Jan 2025 13:11:39 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <abologna@redhat.com>)
+ id 1tcTrh-0001rx-3U
+ for qemu-devel@nongnu.org; Mon, 27 Jan 2025 13:29:41 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1tcTaA-0003Ff-4T
- for qemu-devel@nongnu.org; Mon, 27 Jan 2025 13:11:35 -0500
+ (Exim 4.90_1) (envelope-from <abologna@redhat.com>)
+ id 1tcTrf-00066I-CR
+ for qemu-devel@nongnu.org; Mon, 27 Jan 2025 13:29:40 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1738001493;
+ s=mimecast20190719; t=1738002578;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=GE00hi9qOq5/IhO9Vbw7OoAdWI6ml+3ACsrgpI2n1+4=;
- b=K+Hx587U+QIQKoNjauoCmwUczkgl5E9Hq/oCkYprbyQtRbUiDTyGcMb9Vs3McqCDb/Cc/3
- u4DCZElHIyPlKAF1PSgusa+nekiUe2HcxTvTI7mrahCpHRa/oxpseGEC3DHRCKwPYYA6J7
- dHbvCkgWxrbUw9BZcKjm5MUvTnaGjmA=
-Received: from mail-wr1-f69.google.com (mail-wr1-f69.google.com
- [209.85.221.69]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-9-RZ7yV0lXO6KIZ5ReY_LLXA-1; Mon, 27 Jan 2025 13:11:30 -0500
-X-MC-Unique: RZ7yV0lXO6KIZ5ReY_LLXA-1
-X-Mimecast-MFC-AGG-ID: RZ7yV0lXO6KIZ5ReY_LLXA
-Received: by mail-wr1-f69.google.com with SMTP id
- ffacd0b85a97d-385d52591d6so2019611f8f.1
- for <qemu-devel@nongnu.org>; Mon, 27 Jan 2025 10:11:30 -0800 (PST)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1738001489; x=1738606289;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=GE00hi9qOq5/IhO9Vbw7OoAdWI6ml+3ACsrgpI2n1+4=;
- b=Pj4dh+4D3us3EdsBTPaxp/Mw+AORZ0v57nuR3KcDdFlAAWNcLcf4bclCNrsChlna8v
- GP+Xx4d6oOOKTMs/43iSMROphtclGPDC1J6LOvubJKuy/jt2bUvxII2lBZc7oRMlSKo9
- IIQGTKZ7E4JFFy9y1EfB9DZ1BPHhWBLR82HrjQVGE1/EqycHO2yLi7F6mcr5BAY6vAoZ
- B1CcVCeSRwrATVt+pgavKMdOWHl8eiPru/VKC2OkI9bNXIzBD7qx1E22uDhqUUMfPoyH
- ERyr7K6UANpWt3wZxlvfzjrGDbrtUHpNRuojWCPufVuEox+0ylch8tFZqgF7M4wTisnU
- PuJw==
-X-Gm-Message-State: AOJu0YzFNS/dMm/vIpoAoaGilRG9aFlP9Zf5/9M62l9a/rPSan+0Ckhv
- WhPTq2PqmUiU0IXPJQrH8aeOJqARD+XWhIl84nzTL+5eUA51za3GzsfkAOnKzpjrktWr+WGHPUv
- 93jcPzTozHlpgzMIl02JdHiizVmnwUxkNGCVItercA9rS+DtcIeFy9Vs/FdFjWDBipsjbNkHWmd
- qTJiwmxGlT6IOOHs+DpAFBXQ07fI3hnUDwVLADLSh/
-X-Gm-Gg: ASbGnct77GpUf/wb0/aKHfIznsJQFUZsljlKfFiNEuURw0FtOrAqL9cd486n5FGeYu7
- vt9nAWZycp5+PN+PI/NksbvgVUo1PXgM1yur0iIYZDZdn7ofCBPEFlBdsEAidVA==
-X-Received: by 2002:a5d:6481:0:b0:38a:4184:14ec with SMTP id
- ffacd0b85a97d-38c49a1d7ebmr277817f8f.1.1738001488962; 
- Mon, 27 Jan 2025 10:11:28 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IETfKo7oqEDrOKz2OM1g+LEv684jXBNwnXyWNJqhBu0qsVFA9fOJuJ8kKTWL4E591wzrHrOj78Aa/hS7njZOQ8=
-X-Received: by 2002:a5d:6481:0:b0:38a:4184:14ec with SMTP id
- ffacd0b85a97d-38c49a1d7ebmr277805f8f.1.1738001488636; Mon, 27 Jan 2025
- 10:11:28 -0800 (PST)
+ bh=2+loXBye3EAweVzTP0a16F0J9pn82TdKoCRiTYEG6sM=;
+ b=JzO1teo29KDG9HKWP1Dht0UxL6+C6x30sIsuPH1oJFhuw4um6J49qddeCx/SJjod/9neBU
+ /RBg2wQPDyWbLVsVDT5MMmg5zeUozzCNANrukNvHEf/bWbtVn46q2aQYJ8Rg0ZpxbHDE0G
+ GQrjwcVnL7Bqwg1FbFYFZVEPyZWMCKc=
+Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-636-E7kskyKEPMuotJNMIXKJLQ-1; Mon,
+ 27 Jan 2025 13:29:37 -0500
+X-MC-Unique: E7kskyKEPMuotJNMIXKJLQ-1
+X-Mimecast-MFC-AGG-ID: E7kskyKEPMuotJNMIXKJLQ
+Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 9AF09195608A; Mon, 27 Jan 2025 18:29:35 +0000 (UTC)
+Received: from harajuku.usersys.redhat.com (unknown [10.45.224.68])
+ by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 752C919560A3; Mon, 27 Jan 2025 18:29:33 +0000 (UTC)
+From: Andrea Bolognani <abologna@redhat.com>
+To: qemu-devel@nongnu.org
+Cc: Alistair Francis <alistair23@gmail.com>,
+ Laurent Vivier <laurent@vivier.eu>,
+ =?UTF-8?q?Daniel=20P=20=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
+ David Abdurachmanov <davidlt@rivosinc.com>
+Subject: [PATCH v2 2/3] binfmt: Normalize host CPU architecture
+Date: Mon, 27 Jan 2025 19:29:23 +0100
+Message-ID: <20250127182924.103510-3-abologna@redhat.com>
+In-Reply-To: <20250127182924.103510-1-abologna@redhat.com>
+References: <20250127182924.103510-1-abologna@redhat.com>
 MIME-Version: 1.0
-References: <20250117194003.1173231-1-pbonzini@redhat.com>
- <20250117194003.1173231-11-pbonzini@redhat.com>
- <Z5d4PTtIRhgZ0tss@intel.com>
-In-Reply-To: <Z5d4PTtIRhgZ0tss@intel.com>
-From: Paolo Bonzini <pbonzini@redhat.com>
-Date: Mon, 27 Jan 2025 19:11:17 +0100
-X-Gm-Features: AWEUYZnnoLv7xDrpkzqO_6FjOf0yKVL-LulOVMSNiz8kVn63A6XpVQuI1lbug9U
-Message-ID: <CABgObfYc5ccC16=K7KVmdLP-jmvwVbxqv1L6c4Oe55MSK4ndng@mail.gmail.com>
-Subject: Re: [PATCH 10/10] rust: bindings for MemoryRegionOps
-To: Zhao Liu <zhao1.liu@intel.com>
-Cc: qemu-devel@nongnu.org, qemu-rust@nongnu.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=pbonzini@redhat.com;
+Content-Transfer-Encoding: 8bit
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=abologna@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -33
 X-Spam_score: -3.4
 X-Spam_bar: ---
 X-Spam_report: (-3.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.3,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=unavailable autolearn_force=no
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -104,97 +87,105 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, Jan 27, 2025 at 12:53=E2=80=AFPM Zhao Liu <zhao1.liu@intel.com> wro=
-te:
-> > @@ -490,20 +490,24 @@ impl PL011State {
-> >      /// location/instance. All its fields are expected to hold unitial=
-ized
-> >      /// values with the sole exception of `parent_obj`.
-> >      unsafe fn init(&mut self) {
-> > +        static PL011_OPS: MemoryRegionOps<PL011State> =3D MemoryRegion=
-OpsBuilder::<PL011State>::new()
-> > +            .read(&PL011State::read)
-> > +            .write(&PL011State::write)
-> > +            .native_endian()
-> > +            .impl_sizes(4, 4)
-> > +            .build();
-> > +
->
-> Nice design. Everything was done smoothly in one go.
+Right now information regarding the family each CPU type belongs
+to is recorded in two places: the large data table at the top of
+the script, and the qemu_host_family() function.
 
-I hope something similar can be done with VMStateDescription too...
+We can make things better by mapping host CPU architecture to
+QEMU target in the few cases where the two don't already match
+and then using the data table to look up the family, same as
+we're already doing for the guest CPU architecture.
 
-> > +pub struct MemoryRegionOps<T>(
-> > +    bindings::MemoryRegionOps,
-> > +    // Note: quite often you'll see PhantomData<fn(&T)> mentioned when=
- discussing
-> > +    // covariance and contravariance; you don't need any of those to u=
-nderstand
-> > +    // this usage of PhantomData.  Quite simply, MemoryRegionOps<T> *l=
-ogically*
-> > +    // holds callbacks that take an argument of type &T, except the ty=
-pe is erased
-> > +    // before the callback is stored in the bindings::MemoryRegionOps =
-field.
-> > +    // The argument of PhantomData is a function pointer in order to r=
-epresent
-> > +    // that relationship; while that will also provide desirable and s=
-afe variance
-> > +    // for T, variance is not the point but just a consequence.
-> > +    PhantomData<fn(&T)>,
-> > +);
->
-> Wow, it can be wrapped like this!
+Being able to reason in terms of QEMU target regardless of
+whether we're looking at the host or guest CPU architecture will
+come in handy to implement upcoming changes.
 
-I like your enthusiasm but I'm not sure what you refer to. ;) Maybe
-it's worth documenting this pattern, so please tell me more (after
-your holidays).
+A couple of entries are dropped in the process: BePC and Power
+Macintosh. I'm quite certain neither of those have ever been
+reported as CPU architectures by Linux. I believe many more of
+the entries that are carried forward could be dropped as well,
+but I don't have the same level of confidence there so I
+decided to play it safe just in case.
 
-> > +impl MemoryRegion {
-> > +    // inline to ensure that it is not included in tests, which only
-> > +    // link to hwcore and qom.  FIXME: inlining is actually the opposi=
-te
-> > +    // of what we want, since this is the type-erased version of the
-> > +    // init_io function below.  Look into splitting the qemu_api crate=
-.
->
-> Ah, I didn't understand the issue described in this comment. Why would
-> inlining affect the linking of tests?
+Signed-off-by: Andrea Bolognani <abologna@redhat.com>
+---
+ scripts/qemu-binfmt-conf.sh | 44 +++++++++++++++++++++----------------
+ 1 file changed, 25 insertions(+), 19 deletions(-)
 
-If you don't inline it, do_init_io will always be linked into the
-tests because it is a non-generic function. The tests then fail to
-link, because memory_region_init_io is undefined.
-
-This is ugly because do_init_io exists *exactly* to extract the part
-that is not generic. (See
-https://users.rust-lang.org/t/soft-question-significantly-improve-rust-comp=
-ile-time-via-minimizing-generics/103632/8
-for an example of this; I think there's even a procedural macro crate
-that does that for you, but I can't find it right now).
-
-> > +    pub fn init_io<T: IsA<Object>>(
-> > +        &mut self,
-> > +        owner: *mut T,
-> > +        ops: &'static MemoryRegionOps<T>,
-> > +        name: &'static str,
->
-> What about &'static CStr?
->
-> Then pl011 could pass `c_str!("pl011")` or `Self::TYPE_NAME`.
-
-I think it's better to use a Rust string; there's no reason why the
-name of the memory region has to match Self::TYPE_NAME; unlike the
-name of the device, the name of the memory region is not visible on
-the command line for example.
-
-Thanks,
-
-Paolo
-
-> Otherwise,
->
-> Reviewed-by: Zhao Liu <zhao1.liu@intel.com>
->
->
+diff --git a/scripts/qemu-binfmt-conf.sh b/scripts/qemu-binfmt-conf.sh
+index 426f075e31..8d9136a29f 100755
+--- a/scripts/qemu-binfmt-conf.sh
++++ b/scripts/qemu-binfmt-conf.sh
+@@ -144,35 +144,35 @@ loongarch64_magic='\x7fELF\x02\x01\x01\x00\x00\x00\x00\x00\x00\x00\x00\x00\x02\x
+ loongarch64_mask='\xff\xff\xff\xff\xff\xff\xff\xfc\x00\xff\xff\xff\xff\xff\xff\xff\xfe\xff\xff\xff'
+ loongarch64_family=loongarch
+ 
+-qemu_get_family() {
+-    cpu=${HOST_ARCH:-$(uname -m)}
++# Converts the name of a host CPU architecture to the corresponding QEMU
++# target.
++#
++# FIXME: This can probably be simplified a lot by dropping most entries.
++#        Remember that the script is only used on Linux, so we only need to
++#        handle the strings Linux uses to report the host CPU architecture.
++qemu_normalize() {
++    cpu="$1"
+     case "$cpu" in
+-    amd64|i386|i486|i586|i686|i86pc|BePC|x86_64)
++    i[3-6]86)
+         echo "i386"
+         ;;
+-    mips*)
+-        echo "mips"
++    amd64)
++        echo "x86_64"
+         ;;
+-    "Power Macintosh"|ppc64|powerpc|ppc)
++    powerpc)
+         echo "ppc"
+         ;;
+-    ppc64el|ppc64le)
+-        echo "ppcle"
++    ppc64el)
++        echo "ppc64le"
+         ;;
+-    arm|armel|armhf|arm64|armv[4-9]*l|aarch64)
++    armel|armhf|armv[4-9]*l)
+         echo "arm"
+         ;;
+-    armeb|armv[4-9]*b|aarch64_be)
++    armv[4-9]*b)
+         echo "armeb"
+         ;;
+-    sparc*)
+-        echo "sparc"
+-        ;;
+-    riscv*)
+-        echo "riscv"
+-        ;;
+-    loongarch*)
+-        echo "loongarch"
++    arm64)
++        echo "aarch64"
+         ;;
+     *)
+         echo "$cpu"
+@@ -309,7 +309,13 @@ EOF
+ 
+ qemu_set_binfmts() {
+     # probe cpu type
+-    host_family=$(qemu_get_family)
++    host_cpu=$(qemu_normalize ${HOST_ARCH:-$(uname -m)})
++    host_family=$(eval echo \$${host_cpu}_family)
++
++    if [ "$host_family" = "" ] ; then
++        echo "INTERNAL ERROR: unknown host cpu $host_cpu" 1>&2
++        exit 1
++    fi
+ 
+     # register the interpreter for each cpu except for the native one
+ 
+-- 
+2.48.1
 
 
