@@ -4,37 +4,38 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 80575C0218D
-	for <qemu-devel@archiver.kernel.org>; Tue, 28 Jan 2025 08:18:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 14D56C02190
+	for <qemu-devel@archiver.kernel.org>; Tue, 28 Jan 2025 08:18:52 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tcgUT-0007pu-EE; Tue, 28 Jan 2025 02:58:34 -0500
+	id 1tcgcd-0006x7-Ft; Tue, 28 Jan 2025 03:07:01 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1tcgU5-0006i7-FL; Tue, 28 Jan 2025 02:58:09 -0500
+ id 1tcgar-0002Hn-Bg; Tue, 28 Jan 2025 03:05:15 -0500
 Received: from isrv.corpit.ru ([86.62.121.231])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1tcgU3-0000nG-DT; Tue, 28 Jan 2025 02:58:09 -0500
+ id 1tcgap-0002mP-2v; Tue, 28 Jan 2025 03:05:09 -0500
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id A8B53E1AF5;
- Tue, 28 Jan 2025 10:54:25 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id 2C559E1B70;
+ Tue, 28 Jan 2025 10:57:09 +0300 (MSK)
 Received: from localhost.tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id 23C021A62DC;
- Tue, 28 Jan 2025 10:54:51 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id 9C3741A6323;
+ Tue, 28 Jan 2025 10:57:34 +0300 (MSK)
 Received: by localhost.tls.msk.ru (Postfix, from userid 1000)
- id E413C5204F; Tue, 28 Jan 2025 10:54:50 +0300 (MSK)
+ id 2D7B6520D7; Tue, 28 Jan 2025 10:57:34 +0300 (MSK)
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Thomas Huth <thuth@redhat.com>,
- Li-Wen Hsu <lwhsu@FreeBSD.org>, Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-8.2.9 20/45] Update FreeBSD CI jobs FreeBSD 14.1
-Date: Mon, 27 Jan 2025 23:26:01 +0300
-Message-Id: <20250127202630.3724367-20-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org, Fabiano Rosas <farosas@suse.de>,
+ Peter Xu <peterx@redhat.com>, Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-9.1.3 41/58] migration: Add more error handling to
+ analyze-migration.py
+Date: Mon, 27 Jan 2025 23:25:27 +0300
+Message-Id: <20250127202547.3723716-41-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.39.5
-In-Reply-To: <qemu-stable-8.2.9-20250127232621@cover.tls.msk.ru>
-References: <qemu-stable-8.2.9-20250127232621@cover.tls.msk.ru>
+In-Reply-To: <qemu-stable-9.1.3-20250127232536@cover.tls.msk.ru>
+References: <qemu-stable-9.1.3-20250127232536@cover.tls.msk.ru>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 From: Michael Tokarev <mjt@tls.msk.ru>
@@ -62,104 +63,137 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The current FreeBSD CI jobs are failing installation since the
-"opencv" package is now missing there. Updating to 14.1 fixes
-the issue.
+The analyze-migration script was seen failing in s390x in misterious
+ways. It seems we're reaching the VMSDFieldStruct constructor without
+any fields, which would indicate an empty .subsection entry, a
+VMSTATE_STRUCT with no fields or a vmsd with no fields. We don't have
+any of those, at least not without the unmigratable flag set, so this
+should never happen.
 
-Message-Id: <20240911090149.286257-1-thuth@redhat.com>
-Reviewed-by: Li-Wen Hsu <lwhsu@FreeBSD.org>
-Signed-off-by: Thomas Huth <thuth@redhat.com>
-(cherry picked from commit b4358ed4fd29c21c69e492d814f0926c58caa10f)
+Add some debug statements so that we can see what's going on the next
+time the issue happens.
+
+Reviewed-by: Peter Xu <peterx@redhat.com>
+Message-Id: <20250109185249.23952-2-farosas@suse.de>
+Signed-off-by: Fabiano Rosas <farosas@suse.de>
+(cherry picked from commit 86bee9e0c761a3d0e67c43b44001fd752f894cb0)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/.gitlab-ci.d/cirrus.yml b/.gitlab-ci.d/cirrus.yml
-index 49f86fadaf..cbc68a567a 100644
---- a/.gitlab-ci.d/cirrus.yml
-+++ b/.gitlab-ci.d/cirrus.yml
-@@ -46,13 +46,13 @@
-   variables:
-     QEMU_JOB_CIRRUS: 1
+diff --git a/scripts/analyze-migration.py b/scripts/analyze-migration.py
+index 8a254a5b6a..f2457b1dde 100755
+--- a/scripts/analyze-migration.py
++++ b/scripts/analyze-migration.py
+@@ -429,6 +429,9 @@ def __init__(self, desc, file):
+         super(VMSDFieldStruct, self).__init__(desc, file)
+         self.data = collections.OrderedDict()
  
--x64-freebsd-13-build:
-+x64-freebsd-14-build:
-   extends: .cirrus_build_job
-   variables:
--    NAME: freebsd-13
-+    NAME: freebsd-14
-     CIRRUS_VM_INSTANCE_TYPE: freebsd_instance
-     CIRRUS_VM_IMAGE_SELECTOR: image_family
--    CIRRUS_VM_IMAGE_NAME: freebsd-13-3
-+    CIRRUS_VM_IMAGE_NAME: freebsd-14-1
-     CIRRUS_VM_CPUS: 8
-     CIRRUS_VM_RAM: 8G
-     UPDATE_COMMAND: pkg update; pkg upgrade -y
-diff --git a/.gitlab-ci.d/cirrus/freebsd-13.vars b/.gitlab-ci.d/cirrus/freebsd-14.vars
-similarity index 58%
-rename from .gitlab-ci.d/cirrus/freebsd-13.vars
-rename to .gitlab-ci.d/cirrus/freebsd-14.vars
-index 3785afca36..7032cba031 100644
---- a/.gitlab-ci.d/cirrus/freebsd-13.vars
-+++ b/.gitlab-ci.d/cirrus/freebsd-14.vars
-@@ -1,6 +1,6 @@
- # THIS FILE WAS AUTO-GENERATED
- #
--#  $ lcitool variables freebsd-13 qemu
-+#  $ lcitool variables freebsd-14 qemu
- #
- # https://gitlab.com/libvirt/libvirt-ci
++        if 'fields' not in self.desc['struct']:
++            raise Exception("No fields in struct. VMSD:\n%s" % self.desc)
++
+         # When we see compressed array elements, unfold them here
+         new_fields = []
+         for field in self.desc['struct']['fields']:
+@@ -477,6 +480,10 @@ def read(self):
+                     raise Exception("Subsection %s not found at offset %x" % ( subsection['vmsd_name'], self.file.tell()))
+                 name = self.file.readstr()
+                 version_id = self.file.read32()
++
++                if not subsection:
++                    raise Exception("Empty description for subsection: %s" % name)
++
+                 self.data[name] = VMSDSection(self.file, version_id, subsection, (name, 0))
+                 self.data[name].read()
  
-@@ -12,5 +12,6 @@ NINJA='/usr/local/bin/ninja'
- PACKAGING_COMMAND='pkg'
- PIP3='/usr/local/bin/pip-3.8'
- PKGS='alsa-lib bash bison bzip2 ca_root_nss capstone4 ccache cmocka ctags curl cyrus-sasl dbus diffutils dtc flex fusefs-libs3 gettext git glib gmake gnutls gsed gtk3 json-c libepoxy libffi libgcrypt libjpeg-turbo libnfs libslirp libspice-server libssh libtasn1 llvm lzo2 meson mtools ncurses nettle ninja opencv pixman pkgconf png py39-numpy py39-pillow py39-pip py39-sphinx py39-sphinx_rtd_theme py39-tomli py39-yaml python3 rpm2cpio sdl2 sdl2_image snappy sndio socat spice-protocol tesseract usbredir virglrenderer vte3 xorriso zstd'
-+PKGS='alsa-lib bash bison bzip2 ca_root_nss capstone4 ccache cmocka ctags curl cyrus-sasl dbus diffutils dtc flex fusefs-libs3 gettext git glib gmake gnutls gsed gtk-vnc gtk3 json-c libepoxy libffi libgcrypt libjpeg-turbo libnfs libslirp libspice-server libssh libtasn1 llvm lzo2 meson mtools ncurses nettle ninja opencv pixman pkgconf png py311-numpy py311-pillow py311-pip py311-pyyaml py311-sphinx py311-sphinx_rtd_theme py311-tomli python3 rpm2cpio sdl2 sdl2_image snappy sndio socat spice-protocol tesseract usbredir virglrenderer vte3 xorriso zstd'
- PYPI_PKGS=''
- PYTHON='/usr/local/bin/python3'
-diff --git a/tests/lcitool/refresh b/tests/lcitool/refresh
-index d4b9301311..59dd6939e7 100755
---- a/tests/lcitool/refresh
-+++ b/tests/lcitool/refresh
-@@ -199,14 +199,14 @@ try:
-     #
-     # Cirrus packages lists for GitLab
-     #
--    generate_cirrus("freebsd-13")
-+    generate_cirrus("freebsd-14")
-     generate_cirrus("macos-13")
-     generate_cirrus("macos-14")
+@@ -574,10 +581,13 @@ def __init__(self, filename):
+         }
+         self.filename = filename
+         self.vmsd_desc = None
++        self.vmsd_json = ""
  
-     #
-     # VM packages lists
-     #
--    generate_pkglist("freebsd", "freebsd-13")
-+    generate_pkglist("freebsd", "freebsd-14")
+-    def read(self, desc_only = False, dump_memory = False, write_memory = False):
++    def read(self, desc_only = False, dump_memory = False,
++             write_memory = False):
+         # Read in the whole file
+         file = MigrationFile(self.filename)
++        self.vmsd_json = file.read_migration_debug_json()
  
-     sys.exit(0)
- except Exception as ex:
-diff --git a/tests/vm/freebsd b/tests/vm/freebsd
-index b581bd17fb..9dd9805935 100755
---- a/tests/vm/freebsd
-+++ b/tests/vm/freebsd
-@@ -28,8 +28,8 @@ class FreeBSDVM(basevm.BaseVM):
-     name = "freebsd"
-     arch = "x86_64"
+         # File magic
+         data = file.read32()
+@@ -635,9 +645,11 @@ def read(self, desc_only = False, dump_memory = False, write_memory = False):
+         file.close()
  
--    link = "https://download.freebsd.org/releases/CI-IMAGES/13.2-RELEASE/amd64/Latest/FreeBSD-13.2-RELEASE-amd64-BASIC-CI.raw.xz"
--    csum = "a4fb3b6c7b75dd4d58fb0d75e4caf72844bffe0ca00e66459c028b198ffb3c0e"
-+    link = "https://download.freebsd.org/releases/CI-IMAGES/14.1-RELEASE/amd64/Latest/FreeBSD-14.1-RELEASE-amd64-BASIC-CI.raw.xz"
-+    csum = "202fe27a05427f0a86d3ebb97712745186f2776ccc4f70d95466dd99a0238ba5"
-     size = "20G"
+     def load_vmsd_json(self, file):
+-        vmsd_json = file.read_migration_debug_json()
+-        self.vmsd_desc = json.loads(vmsd_json, object_pairs_hook=collections.OrderedDict)
++        self.vmsd_desc = json.loads(self.vmsd_json,
++                                    object_pairs_hook=collections.OrderedDict)
+         for device in self.vmsd_desc['devices']:
++            if 'fields' not in device:
++                raise Exception("vmstate for device %s has no fields" % device['name'])
+             key = (device['name'], device['instance_id'])
+             value = ( VMSDSection, device )
+             self.section_classes[key] = value
+@@ -666,31 +678,34 @@ def default(self, o):
  
-     BUILD_SCRIPT = """
-@@ -39,7 +39,7 @@ class FreeBSDVM(basevm.BaseVM):
-         mkdir src build; cd src;
-         tar -xf /dev/vtbd1;
-         cd ../build;
--        ../src/configure --python=python3.9  --extra-ldflags=-L/usr/local/lib \
-+        ../src/configure --extra-ldflags=-L/usr/local/lib \
-                          --extra-cflags=-I/usr/local/include {configure_opts};
-         gmake --output-sync -j{jobs} {target} {verbose};
-     """
+ jsonenc = JSONEncoder(indent=4, separators=(',', ': '))
+ 
+-if args.extract:
+-    dump = MigrationDump(args.file)
++if not any([args.extract, args.dump == "state", args.dump == "desc"]):
++    raise Exception("Please specify either -x, -d state or -d desc")
+ 
+-    dump.read(desc_only = True)
+-    print("desc.json")
+-    f = open("desc.json", "w")
+-    f.truncate()
+-    f.write(jsonenc.encode(dump.vmsd_desc))
+-    f.close()
+-
+-    dump.read(write_memory = True)
+-    dict = dump.getDict()
+-    print("state.json")
+-    f = open("state.json", "w")
+-    f.truncate()
+-    f.write(jsonenc.encode(dict))
+-    f.close()
+-elif args.dump == "state":
+-    dump = MigrationDump(args.file)
+-    dump.read(dump_memory = args.memory)
+-    dict = dump.getDict()
+-    print(jsonenc.encode(dict))
+-elif args.dump == "desc":
++try:
+     dump = MigrationDump(args.file)
+-    dump.read(desc_only = True)
+-    print(jsonenc.encode(dump.vmsd_desc))
+-else:
+-    raise Exception("Please specify either -x, -d state or -d desc")
++
++    if args.extract:
++        dump.read(desc_only = True)
++
++        print("desc.json")
++        f = open("desc.json", "w")
++        f.truncate()
++        f.write(jsonenc.encode(dump.vmsd_desc))
++        f.close()
++
++        dump.read(write_memory = True)
++        dict = dump.getDict()
++        print("state.json")
++        f = open("state.json", "w")
++        f.truncate()
++        f.write(jsonenc.encode(dict))
++        f.close()
++    elif args.dump == "state":
++        dump.read(dump_memory = args.memory)
++        dict = dump.getDict()
++        print(jsonenc.encode(dict))
++    elif args.dump == "desc":
++        dump.read(desc_only = True)
++        print(jsonenc.encode(dump.vmsd_desc))
++except Exception:
++    raise Exception("Full JSON dump:\n%s", dump.vmsd_json)
 -- 
 2.39.5
 
