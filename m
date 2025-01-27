@@ -4,35 +4,34 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 57C7EC0218D
-	for <qemu-devel@archiver.kernel.org>; Tue, 28 Jan 2025 08:19:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9D795C0218D
+	for <qemu-devel@archiver.kernel.org>; Tue, 28 Jan 2025 08:19:30 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tcgY3-0004fU-E6; Tue, 28 Jan 2025 03:02:15 -0500
+	id 1tcgd5-0007w1-1y; Tue, 28 Jan 2025 03:07:27 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1tcgX9-0000wA-2G; Tue, 28 Jan 2025 03:01:19 -0500
+ id 1tcgZP-0007O8-GY; Tue, 28 Jan 2025 03:03:48 -0500
 Received: from isrv.corpit.ru ([86.62.121.231])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1tcgX7-0001qT-DI; Tue, 28 Jan 2025 03:01:18 -0500
+ id 1tcgZM-0002M3-Vq; Tue, 28 Jan 2025 03:03:38 -0500
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 98D2AE1B4E;
+ by isrv.corpit.ru (Postfix) with ESMTP id ED396E1B63;
  Tue, 28 Jan 2025 10:57:08 +0300 (MSK)
 Received: from localhost.tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id 149B81A6301;
+ by tsrv.corpit.ru (Postfix) with ESMTP id 67D281A6316;
  Tue, 28 Jan 2025 10:57:34 +0300 (MSK)
 Received: by localhost.tls.msk.ru (Postfix, from userid 1000)
- id E85C552093; Tue, 28 Jan 2025 10:57:33 +0300 (MSK)
+ id 1747E520BD; Tue, 28 Jan 2025 10:57:34 +0300 (MSK)
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Jakub Jelen <jjelen@redhat.com>,
- "Richard W . M . Jones" <rjones@redhat.com>, Kevin Wolf <kwolf@redhat.com>,
+Cc: qemu-stable@nongnu.org, Gerd Hoffmann <kraxel@redhat.com>,
  Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-9.1.3 07/58] ssh: Do not switch session to non-blocking mode
-Date: Mon, 27 Jan 2025 23:24:53 +0300
-Message-Id: <20250127202547.3723716-7-mjt@tls.msk.ru>
+Subject: [Stable-9.1.3 28/58] x86/loader: only patch linux kernels
+Date: Mon, 27 Jan 2025 23:25:14 +0300
+Message-Id: <20250127202547.3723716-28-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <qemu-stable-9.1.3-20250127232536@cover.tls.msk.ru>
 References: <qemu-stable-9.1.3-20250127232536@cover.tls.msk.ru>
@@ -63,49 +62,37 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The libssh does not handle non-blocking mode in SFTP correctly. The
-driver code already changes the mode to blocking for the SFTP
-initialization, but for some reason changes to non-blocking mode.
-This used to work accidentally until libssh in 0.11 branch merged
-the patch to avoid infinite looping in case of network errors:
+If the binary loaded via -kernel is *not* a linux kernel (in which
+case protocol == 0), do not patch the linux kernel header fields.
 
-https://gitlab.com/libssh/libssh-mirror/-/merge_requests/498
+It's (a) pointless and (b) might break binaries by random patching
+and (c) changes the binary hash which in turn breaks secure boot
+verification.
 
-Since then, the ssh driver in qemu fails to read files over SFTP
-as the first SFTP messages exchanged after switching the session
-to non-blocking mode return SSH_AGAIN, but that message is lost
-int the SFTP internals and interpretted as SSH_ERROR, which is
-returned to the caller:
+Background: OVMF happily loads and runs not only linux kernels but
+any efi binary via direct kernel boot.
 
-https://gitlab.com/libssh/libssh-mirror/-/issues/280
+Note: Breaking the secure boot verification is a problem for linux
+kernels too, but fixed that is left for another day ...
 
-This is indeed an issue in libssh that we should address in the
-long term, but it will require more work on the internals. For
-now, the SFTP is not supported in non-blocking mode.
-
-Fixes: https://gitlab.com/libssh/libssh-mirror/-/issues/280
-Signed-off-by: Jakub Jelen <jjelen@redhat.com>
-Signed-off-by: Richard W.M. Jones <rjones@redhat.com>
-Message-ID: <20241113125526.2495731-1-rjones@redhat.com>
-Reviewed-by: Kevin Wolf <kwolf@redhat.com>
-Signed-off-by: Kevin Wolf <kwolf@redhat.com>
-(cherry picked from commit fbdea3d6c13d5a75895c287a004c6f1a6bf6c164)
+Signed-off-by: Gerd Hoffmann <kraxel@redhat.com>
+Message-ID: <20240905141211.1253307-3-kraxel@redhat.com>
+(cherry picked from commit 57e2cc9abf5da38f600354fe920ff20e719607b4)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/block/ssh.c b/block/ssh.c
-index 27d582e0e3..5c16ff4fb6 100644
---- a/block/ssh.c
-+++ b/block/ssh.c
-@@ -865,9 +865,6 @@ static int ssh_open(BlockDriverState *bs, QDict *options, int bdrv_flags,
-         goto err;
+diff --git a/hw/i386/x86-common.c b/hw/i386/x86-common.c
+index 992ea1f25e..b52903c47f 100644
+--- a/hw/i386/x86-common.c
++++ b/hw/i386/x86-common.c
+@@ -943,7 +943,7 @@ void x86_load_linux(X86MachineState *x86ms,
+      * kernel on the other side of the fw_cfg interface matches the hash of the
+      * file the user passed in.
+      */
+-    if (!sev_enabled()) {
++    if (!sev_enabled() && protocol > 0) {
+         memcpy(setup, header, MIN(sizeof(header), setup_size));
      }
  
--    /* Go non-blocking. */
--    ssh_set_blocking(s->session, 0);
--
-     if (s->attrs->type == SSH_FILEXFER_TYPE_REGULAR) {
-         bs->supported_truncate_flags = BDRV_REQ_ZERO_WRITE;
-     }
 -- 
 2.39.5
 
