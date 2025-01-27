@@ -4,38 +4,43 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C68C7C0218D
-	for <qemu-devel@archiver.kernel.org>; Tue, 28 Jan 2025 08:01:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 64A0AC0218D
+	for <qemu-devel@archiver.kernel.org>; Tue, 28 Jan 2025 08:01:12 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tcgTM-0004Vl-39; Tue, 28 Jan 2025 02:57:24 -0500
+	id 1tcgWG-0007u7-Fb; Tue, 28 Jan 2025 03:00:24 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1tcgT9-0003Yo-3q; Tue, 28 Jan 2025 02:57:11 -0500
+ id 1tcgW0-0007cw-Kw; Tue, 28 Jan 2025 03:00:11 -0500
 Received: from isrv.corpit.ru ([86.62.121.231])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1tcgT7-0000dl-HB; Tue, 28 Jan 2025 02:57:10 -0500
+ id 1tcgVt-0001JJ-RG; Tue, 28 Jan 2025 03:00:05 -0500
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 8DCF6E1AEE;
+ by isrv.corpit.ru (Postfix) with ESMTP id EFC07E1B07;
  Tue, 28 Jan 2025 10:54:25 +0300 (MSK)
 Received: from localhost.tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id 08D961A62D5;
+ by tsrv.corpit.ru (Postfix) with ESMTP id 6ACE91A62EE;
  Tue, 28 Jan 2025 10:54:51 +0300 (MSK)
 Received: by localhost.tls.msk.ru (Postfix, from userid 1000)
- id D87F452041; Tue, 28 Jan 2025 10:54:50 +0300 (MSK)
+ id 0E03452073; Tue, 28 Jan 2025 10:54:51 +0300 (MSK)
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Christian Schoenebeck <qemu_oss@crudebyte.com>,
- Greg Kurz <groug@kaod.org>, Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-8.2.9 13/45] 9pfs: fix 'Tgetattr' after unlink
-Date: Mon, 27 Jan 2025 23:25:54 +0300
-Message-Id: <20250127202630.3724367-13-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org,
+ Gabriel Barrantes <gabriel.barrantes.dev@outlook.com>,
+ zhenwei pi <pizhenwei@bytedance.com>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-8.2.9 38/45] backends/cryptodev-vhost-user: Fix local_error
+ leaks
+Date: Mon, 27 Jan 2025 23:26:19 +0300
+Message-Id: <20250127202630.3724367-38-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <qemu-stable-8.2.9-20250127232621@cover.tls.msk.ru>
 References: <qemu-stable-8.2.9-20250127232621@cover.tls.msk.ru>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 From: Michael Tokarev <mjt@tls.msk.ru>
 Received-SPF: pass client-ip=86.62.121.231; envelope-from=mjt@tls.msk.ru;
@@ -62,54 +67,32 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-With a valid file ID (FID) of an open file, it should be possible to send
-a 'Tgettattr' 9p request and successfully receive a 'Rgetattr' response,
-even if the file has been removed in the meantime. Currently this would
-fail with ENOENT.
+Do not propagate error to the upper, directly output the error
+to avoid leaks.
 
-I.e. this fixes the following misbehaviour with a 9p Linux client:
-
-  open("/home/tst/filename", O_RDWR|O_CREAT|O_EXCL, 0600) = 3
-  unlink("/home/tst/filename") = 0
-  fstat(3, 0x23aa1a8) = -1 ENOENT (No such file or directory)
-
-Expected results:
-
-  open("/home/tst/filename", O_RDWR|O_CREAT|O_EXCL, 0600) = 3
-  unlink("/home/tst/filename") = 0
-  fstat(3, {st_mode=S_IFREG|0600, st_size=0, ...}) = 0
-
-This is because 9p server is always using a path name based lstat() call
-which fails as soon as the file got removed. So to fix this, use fstat()
-whenever we have an open file descriptor already.
-
-Fixes: 00ede4c2529b ("virtio-9p: getattr server implementation...")
-Resolves: https://gitlab.com/qemu-project/qemu/-/issues/103
-Signed-off-by: Christian Schoenebeck <qemu_oss@crudebyte.com>
-Reviewed-by: Greg Kurz <groug@kaod.org>
-Message-Id: <4c41ad47f449a5cc8bfa9285743e029080d5f324.1732465720.git.qemu_oss@crudebyte.com>
-(cherry picked from commit c81e7219e0736f80bfd3553676a19e2992cff41d)
+Fixes: 2fda101de07 ("virtio-crypto: Support asynchronous mode")
+Resolves: https://gitlab.com/qemu-project/qemu/-/issues/2714
+Signed-off-by: Gabriel Barrantes <gabriel.barrantes.dev@outlook.com>
+Reviewed-by: zhenwei pi <pizhenwei@bytedance.com>
+Message-Id: <DM8PR13MB50781054A4FDACE6F4FB6469B30F2@DM8PR13MB5078.namprd13.prod.outlook.com>
+Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+(cherry picked from commit 78b0c15a563ac4be5afb0375602ca0a3adc6c442)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/hw/9pfs/9p.c b/hw/9pfs/9p.c
-index 851e36b9a1..578517739a 100644
---- a/hw/9pfs/9p.c
-+++ b/hw/9pfs/9p.c
-@@ -1596,7 +1596,13 @@ static void coroutine_fn v9fs_getattr(void *opaque)
-         retval = -ENOENT;
-         goto out_nofid;
+diff --git a/backends/cryptodev-vhost-user.c b/backends/cryptodev-vhost-user.c
+index c3283ba84a..b8e95ca8b4 100644
+--- a/backends/cryptodev-vhost-user.c
++++ b/backends/cryptodev-vhost-user.c
+@@ -281,8 +281,7 @@ static int cryptodev_vhost_user_create_session(
+         break;
+ 
+     default:
+-        error_setg(&local_error, "Unsupported opcode :%" PRIu32 "",
+-                   sess_info->op_code);
++        error_report("Unsupported opcode :%" PRIu32 "", sess_info->op_code);
+         return -VIRTIO_CRYPTO_NOTSUPP;
      }
--    retval = v9fs_co_lstat(pdu, &fidp->path, &stbuf);
-+    if ((fidp->fid_type == P9_FID_FILE && fidp->fs.fd != -1) ||
-+        (fidp->fid_type == P9_FID_DIR && fidp->fs.dir.stream))
-+    {
-+        retval = v9fs_co_fstat(pdu, fidp, &stbuf);
-+    } else {
-+        retval = v9fs_co_lstat(pdu, &fidp->path, &stbuf);
-+    }
-     if (retval < 0) {
-         goto out;
-     }
+ 
 -- 
 2.39.5
 
