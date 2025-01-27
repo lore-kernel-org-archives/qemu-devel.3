@@ -4,34 +4,35 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2AC97C0218D
-	for <qemu-devel@archiver.kernel.org>; Tue, 28 Jan 2025 07:58:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8B836C0218D
+	for <qemu-devel@archiver.kernel.org>; Tue, 28 Jan 2025 07:58:53 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tcgTG-0003lO-BZ; Tue, 28 Jan 2025 02:57:19 -0500
+	id 1tcgTl-0005cL-2z; Tue, 28 Jan 2025 02:57:54 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1tcgT6-0003Vv-M3; Tue, 28 Jan 2025 02:57:11 -0500
+ id 1tcgTV-0005JX-LI; Tue, 28 Jan 2025 02:57:33 -0500
 Received: from isrv.corpit.ru ([86.62.121.231])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1tcgT4-0000ct-Ve; Tue, 28 Jan 2025 02:57:08 -0500
+ id 1tcgTS-0000e4-25; Tue, 28 Jan 2025 02:57:31 -0500
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 89CB3E1AED;
+ by isrv.corpit.ru (Postfix) with ESMTP id 91955E1AEF;
  Tue, 28 Jan 2025 10:54:25 +0300 (MSK)
 Received: from localhost.tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id 04DFF1A62D4;
+ by tsrv.corpit.ru (Postfix) with ESMTP id 0CABC1A62D6;
  Tue, 28 Jan 2025 10:54:51 +0300 (MSK)
 Received: by localhost.tls.msk.ru (Postfix, from userid 1000)
- id D6E9E5203F; Tue, 28 Jan 2025 10:54:50 +0300 (MSK)
+ id DA22452043; Tue, 28 Jan 2025 10:54:50 +0300 (MSK)
 To: qemu-devel@nongnu.org
 Cc: qemu-stable@nongnu.org, Christian Schoenebeck <qemu_oss@crudebyte.com>,
  Greg Kurz <groug@kaod.org>, Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-8.2.9 12/45] 9pfs: remove obsolete comment in v9fs_getattr()
-Date: Mon, 27 Jan 2025 23:25:53 +0300
-Message-Id: <20250127202630.3724367-12-mjt@tls.msk.ru>
+Subject: [Stable-8.2.9 14/45] tests/9p: also check 'Tgetattr' in
+ 'use-after-unlink' test
+Date: Mon, 27 Jan 2025 23:25:55 +0300
+Message-Id: <20250127202630.3724367-14-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <qemu-stable-8.2.9-20250127232621@cover.tls.msk.ru>
 References: <qemu-stable-8.2.9-20250127232621@cover.tls.msk.ru>
@@ -62,32 +63,37 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The comment claims that we'd only support basic Tgetattr fields. This is
-no longer true, so remove this comment.
+This verifies expected behaviour of previous bug fix patch.
 
-Fixes: e06a765efbe3 ("hw/9pfs: Add st_gen support in getattr reply")
 Signed-off-by: Christian Schoenebeck <qemu_oss@crudebyte.com>
 Reviewed-by: Greg Kurz <groug@kaod.org>
-Message-Id: <fb364d12045217a4c6ccd0dd6368103ddb80698b.1732465720.git.qemu_oss@crudebyte.com>
-(cherry picked from commit 3bc4db44430f53387d17145bb52b330a830a03fe)
+Message-Id: <7017658155c517b9665b75333a97c79aa2d4f3df.1732465720.git.qemu_oss@crudebyte.com>
+(cherry picked from commit eaab44ccc59b83d8dff60fca3361a9b98ec7fee6)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
-(Mjt: pick it to stable so the next commit applies cleanly)
 
-diff --git a/hw/9pfs/9p.c b/hw/9pfs/9p.c
-index 9a291d1b51..851e36b9a1 100644
---- a/hw/9pfs/9p.c
-+++ b/hw/9pfs/9p.c
-@@ -1596,10 +1596,6 @@ static void coroutine_fn v9fs_getattr(void *opaque)
-         retval = -ENOENT;
-         goto out_nofid;
-     }
--    /*
--     * Currently we only support BASIC fields in stat, so there is no
--     * need to look at request_mask.
--     */
-     retval = v9fs_co_lstat(pdu, &fidp->path, &stbuf);
-     if (retval < 0) {
-         goto out;
+diff --git a/tests/qtest/virtio-9p-test.c b/tests/qtest/virtio-9p-test.c
+index 7638c0a183..86ff86409c 100644
+--- a/tests/qtest/virtio-9p-test.c
++++ b/tests/qtest/virtio-9p-test.c
+@@ -702,6 +702,7 @@ static void fs_use_after_unlink(void *obj, void *data,
+     g_autofree char *real_file = virtio_9p_test_path("09/doa_file");
+     g_autofree char *buf = g_malloc0(write_count);
+     struct stat st_file;
++    struct v9fs_attr attr;
+     uint32_t fid_file;
+     uint32_t count;
+ 
+@@ -725,6 +726,10 @@ static void fs_use_after_unlink(void *obj, void *data,
+     tunlinkat({ .client = v9p, .atPath = "09", .name = "doa_file" });
+ 
+     /* file is removed, but we still have it open, so this should succeed */
++    tgetattr({
++        .client = v9p, .fid = fid_file, .request_mask = P9_GETATTR_BASIC,
++        .rgetattr.attr = &attr
++    });
+     count = twrite({
+         .client = v9p, .fid = fid_file, .offset = 0, .count = write_count,
+         .data = buf
 -- 
 2.39.5
 
