@@ -4,34 +4,35 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 26660C02188
-	for <qemu-devel@archiver.kernel.org>; Mon, 27 Jan 2025 14:20:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1739FC0218A
+	for <qemu-devel@archiver.kernel.org>; Mon, 27 Jan 2025 14:21:05 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tcPxM-0000AG-3M; Mon, 27 Jan 2025 09:19:16 -0500
+	id 1tcPxC-0008Vn-Vq; Mon, 27 Jan 2025 09:19:07 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1tcPxJ-00009E-UR; Mon, 27 Jan 2025 09:19:13 -0500
+ id 1tcPwX-0008LO-9u; Mon, 27 Jan 2025 09:18:34 -0500
 Received: from isrv.corpit.ru ([86.62.121.231])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1tcPxH-0002Po-TD; Mon, 27 Jan 2025 09:19:13 -0500
+ id 1tcPwU-0002LE-3E; Mon, 27 Jan 2025 09:18:23 -0500
 Received: from localhost.tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by isrv.corpit.ru (Postfix) with ESMTP id 495ACE0E35;
- Mon, 27 Jan 2025 17:18:40 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id 3B01CE0E2C;
+ Mon, 27 Jan 2025 17:17:39 +0300 (MSK)
 Received: by localhost.tls.msk.ru (Postfix, from userid 1000)
- id 6F54151D74; Mon, 27 Jan 2025 17:18:03 +0300 (MSK)
+ id 7453051D78; Mon, 27 Jan 2025 17:18:03 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org,
- "Maciej S. Szmigiero" <maciej.szmigiero@oracle.com>,
- Paolo Bonzini <pbonzini@redhat.com>, Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-9.2.1 09/41] target/i386: Reset TSCs of parked vCPUs too on
- VM reset
-Date: Mon, 27 Jan 2025 17:17:23 +0300
-Message-Id: <20250127141803.3514882-9-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org, David Hildenbrand <david@redhat.com>,
+ "Michael S . Tsirkin" <mst@redhat.com>, Eric Farman <farman@linux.ibm.com>,
+ Thomas Huth <thuth@redhat.com>, Janosch Frank <frankja@linux.ibm.com>,
+ Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-9.2.1 11/41] s390x/s390-virtio-ccw: don't crash on weird RAM
+ sizes
+Date: Mon, 27 Jan 2025 17:17:25 +0300
+Message-Id: <20250127141803.3514882-11-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <qemu-stable-9.2.1-20250127154029@cover.tls.msk.ru>
 References: <qemu-stable-9.2.1-20250127154029@cover.tls.msk.ru>
@@ -61,145 +62,53 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: "Maciej S. Szmigiero" <maciej.szmigiero@oracle.com>
+From: David Hildenbrand <david@redhat.com>
 
-Since commit 5286c3662294 ("target/i386: properly reset TSC on reset")
-QEMU writes the special value of "1" to each online vCPU TSC on VM reset
-to reset it.
+KVM is not happy when starting a VM with weird RAM sizes:
 
-However parked vCPUs don't get that handling and due to that their TSCs
-get desynchronized when the VM gets reset.
-This in turn causes KVM to turn off PVCLOCK_TSC_STABLE_BIT in its exported
-PV clock.
-Note that KVM has no understanding of vCPU being currently parked.
+  # qemu-system-s390x --enable-kvm --nographic -m 1234K
+  qemu-system-s390x: kvm_set_user_memory_region: KVM_SET_USER_MEMORY_REGION
+    failed, slot=0, start=0x0, size=0x244000: Invalid argument
+  kvm_set_phys_mem: error registering slot: Invalid argument
+  Aborted (core dumped)
 
-Without PVCLOCK_TSC_STABLE_BIT the sched clock is marked unstable in
-the guest's kvm_sched_clock_init().
-This causes a performance regressions to show in some tests.
+Let's handle that in a better way by rejecting such weird RAM sizes
+right from the start:
 
-Fix this issue by writing the special value of "1" also to TSCs of parked
-vCPUs on VM reset.
+  # qemu-system-s390x --enable-kvm --nographic -m 1234K
+  qemu-system-s390x: ram size must be multiples of 1 MiB
 
-Reproducing the issue:
-1) Boot a VM with "-smp 2,maxcpus=3" or similar
-
-2) device_add host-x86_64-cpu,id=vcpu,node-id=0,socket-id=0,core-id=2,thread-id=0
-
-3) Wait a few seconds
-
-4) device_del vcpu
-
-5) Inside the VM run:
-# echo "t" >/proc/sysrq-trigger; dmesg | grep sched_clock_stable
-Observe the sched_clock_stable() value is 1.
-
-6) Reboot the VM
-
-7) Once the VM boots once again run inside it:
-# echo "t" >/proc/sysrq-trigger; dmesg | grep sched_clock_stable
-Observe the sched_clock_stable() value is now 0.
-
-Fixes: 5286c3662294 ("target/i386: properly reset TSC on reset")
-Signed-off-by: Maciej S. Szmigiero <maciej.szmigiero@oracle.com>
-Link: https://lore.kernel.org/r/5a605a88e9a231386dc803c60f5fed9b48108139.1734014926.git.maciej.szmigiero@oracle.com
-Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
-(cherry picked from commit 3f2a05b31ee9ce2ddb6c75a9bc3f5e7f7af9a76f)
+Message-ID: <20241219144115.2820241-2-david@redhat.com>
+Acked-by: Michael S. Tsirkin <mst@redhat.com>
+Reviewed-by: Eric Farman <farman@linux.ibm.com>
+Reviewed-by: Thomas Huth <thuth@redhat.com>
+Acked-by: Janosch Frank <frankja@linux.ibm.com>
+Signed-off-by: David Hildenbrand <david@redhat.com>
+(cherry picked from commit 14e568ab4836347481af2e334009c385f456a734)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/accel/kvm/kvm-all.c b/accel/kvm/kvm-all.c
-index 801cff16a5..dec1d1c16a 100644
---- a/accel/kvm/kvm-all.c
-+++ b/accel/kvm/kvm-all.c
-@@ -437,6 +437,16 @@ int kvm_unpark_vcpu(KVMState *s, unsigned long vcpu_id)
-     return kvm_fd;
- }
- 
-+static void kvm_reset_parked_vcpus(void *param)
-+{
-+    KVMState *s = param;
-+    struct KVMParkedVcpu *cpu;
-+
-+    QLIST_FOREACH(cpu, &s->kvm_parked_vcpus, node) {
-+        kvm_arch_reset_parked_vcpu(cpu->vcpu_id, cpu->kvm_fd);
-+    }
-+}
-+
- int kvm_create_vcpu(CPUState *cpu)
+diff --git a/hw/s390x/s390-virtio-ccw.c b/hw/s390x/s390-virtio-ccw.c
+index fe03f716f3..53c62fb77c 100644
+--- a/hw/s390x/s390-virtio-ccw.c
++++ b/hw/s390x/s390-virtio-ccw.c
+@@ -180,6 +180,17 @@ static void s390_memory_init(MemoryRegion *ram)
  {
-     unsigned long vcpu_id = kvm_arch_vcpu_id(cpu);
-@@ -2728,6 +2738,7 @@ static int kvm_init(MachineState *ms)
-     }
+     MemoryRegion *sysmem = get_system_memory();
  
-     qemu_register_reset(kvm_unpoison_all, NULL);
-+    qemu_register_reset(kvm_reset_parked_vcpus, s);
- 
-     if (s->kernel_irqchip_allowed) {
-         kvm_irqchip_create(s);
-diff --git a/configs/targets/i386-softmmu.mak b/configs/targets/i386-softmmu.mak
-index 2ac69d5ba3..2eb0e86250 100644
---- a/configs/targets/i386-softmmu.mak
-+++ b/configs/targets/i386-softmmu.mak
-@@ -1,4 +1,5 @@
- TARGET_ARCH=i386
- TARGET_SUPPORTS_MTTCG=y
- TARGET_KVM_HAVE_GUEST_DEBUG=y
-+TARGET_KVM_HAVE_RESET_PARKED_VCPU=y
- TARGET_XML_FILES= gdb-xml/i386-32bit.xml
-diff --git a/configs/targets/x86_64-softmmu.mak b/configs/targets/x86_64-softmmu.mak
-index e12ac3dc59..920e9a4200 100644
---- a/configs/targets/x86_64-softmmu.mak
-+++ b/configs/targets/x86_64-softmmu.mak
-@@ -2,4 +2,5 @@ TARGET_ARCH=x86_64
- TARGET_BASE_ARCH=i386
- TARGET_SUPPORTS_MTTCG=y
- TARGET_KVM_HAVE_GUEST_DEBUG=y
-+TARGET_KVM_HAVE_RESET_PARKED_VCPU=y
- TARGET_XML_FILES= gdb-xml/i386-64bit.xml
-diff --git a/include/sysemu/kvm.h b/include/sysemu/kvm.h
-index c3a60b2890..ab17c09a55 100644
---- a/include/sysemu/kvm.h
-+++ b/include/sysemu/kvm.h
-@@ -377,6 +377,14 @@ int kvm_arch_init(MachineState *ms, KVMState *s);
- int kvm_arch_init_vcpu(CPUState *cpu);
- int kvm_arch_destroy_vcpu(CPUState *cpu);
- 
-+#ifdef TARGET_KVM_HAVE_RESET_PARKED_VCPU
-+void kvm_arch_reset_parked_vcpu(unsigned long vcpu_id, int kvm_fd);
-+#else
-+static inline void kvm_arch_reset_parked_vcpu(unsigned long vcpu_id, int kvm_fd)
-+{
-+}
-+#endif
-+
- bool kvm_vcpu_id_is_valid(int vcpu_id);
- 
- /* Returns VCPU ID to be used on KVM_CREATE_VCPU ioctl() */
-diff --git a/target/i386/kvm/kvm.c b/target/i386/kvm/kvm.c
-index 8e17942c3b..2ff618fbf1 100644
---- a/target/i386/kvm/kvm.c
-+++ b/target/i386/kvm/kvm.c
-@@ -2415,6 +2415,21 @@ void kvm_arch_after_reset_vcpu(X86CPU *cpu)
-     }
- }
- 
-+void kvm_arch_reset_parked_vcpu(unsigned long vcpu_id, int kvm_fd)
-+{
-+    g_autofree struct kvm_msrs *msrs = NULL;
-+
-+    msrs = g_malloc0(sizeof(*msrs) + sizeof(msrs->entries[0]));
-+    msrs->entries[0].index = MSR_IA32_TSC;
-+    msrs->entries[0].data = 1; /* match the value in x86_cpu_reset() */
-+    msrs->nmsrs++;
-+
-+    if (ioctl(kvm_fd, KVM_SET_MSRS, msrs) != 1) {
-+        warn_report("parked vCPU %lu TSC reset failed: %d",
-+                    vcpu_id, errno);
++    if (!QEMU_IS_ALIGNED(memory_region_size(ram), 1 * MiB)) {
++        /*
++         * SCLP cannot possibly expose smaller granularity right now and KVM
++         * cannot handle smaller granularity. As we don't support NUMA, the
++         * region size directly corresponds to machine->ram_size, and the region
++         * is a single RAM memory region.
++         */
++        error_report("ram size must be multiples of 1 MiB");
++        exit(EXIT_FAILURE);
 +    }
-+}
 +
- void kvm_arch_do_init_vcpu(X86CPU *cpu)
- {
-     CPUX86State *env = &cpu->env;
+     /* allocate RAM for core */
+     memory_region_add_subregion(sysmem, 0, ram);
+ 
 -- 
 2.39.5
 
