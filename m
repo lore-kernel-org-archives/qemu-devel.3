@@ -4,34 +4,34 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4D156C0218D
-	for <qemu-devel@archiver.kernel.org>; Tue, 28 Jan 2025 07:58:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2AC97C0218D
+	for <qemu-devel@archiver.kernel.org>; Tue, 28 Jan 2025 07:58:45 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tcgTJ-00049y-Ji; Tue, 28 Jan 2025 02:57:21 -0500
+	id 1tcgTG-0003lO-BZ; Tue, 28 Jan 2025 02:57:19 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1tcgT5-0003VD-Ro; Tue, 28 Jan 2025 02:57:11 -0500
+ id 1tcgT6-0003Vv-M3; Tue, 28 Jan 2025 02:57:11 -0500
 Received: from isrv.corpit.ru ([86.62.121.231])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1tcgT4-0000Ui-6W; Tue, 28 Jan 2025 02:57:07 -0500
+ id 1tcgT4-0000ct-Ve; Tue, 28 Jan 2025 02:57:08 -0500
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 8607CE1AEC;
+ by isrv.corpit.ru (Postfix) with ESMTP id 89CB3E1AED;
  Tue, 28 Jan 2025 10:54:25 +0300 (MSK)
 Received: from localhost.tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id 011841A62D3;
+ by tsrv.corpit.ru (Postfix) with ESMTP id 04DFF1A62D4;
  Tue, 28 Jan 2025 10:54:51 +0300 (MSK)
 Received: by localhost.tls.msk.ru (Postfix, from userid 1000)
- id D54175203D; Tue, 28 Jan 2025 10:54:50 +0300 (MSK)
+ id D6E9E5203F; Tue, 28 Jan 2025 10:54:50 +0300 (MSK)
 To: qemu-devel@nongnu.org
 Cc: qemu-stable@nongnu.org, Christian Schoenebeck <qemu_oss@crudebyte.com>,
  Greg Kurz <groug@kaod.org>, Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-8.2.9 11/45] tests/9p: add 'use-after-unlink' test
-Date: Mon, 27 Jan 2025 23:25:52 +0300
-Message-Id: <20250127202630.3724367-11-mjt@tls.msk.ru>
+Subject: [Stable-8.2.9 12/45] 9pfs: remove obsolete comment in v9fs_getattr()
+Date: Mon, 27 Jan 2025 23:25:53 +0300
+Message-Id: <20250127202630.3724367-12-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <qemu-stable-8.2.9-20250127232621@cover.tls.msk.ru>
 References: <qemu-stable-8.2.9-20250127232621@cover.tls.msk.ru>
@@ -62,80 +62,32 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-After removing a file from the file system, we should still be able to
-work with the file if we already had it open before removal.
+The comment claims that we'd only support basic Tgetattr fields. This is
+no longer true, so remove this comment.
 
-As a first step we verify that it is possible to write to an unlinked
-file, as this is what already works. This test is extended later on
-after having fixed other use cases after unlink that are not working
-yet.
-
+Fixes: e06a765efbe3 ("hw/9pfs: Add st_gen support in getattr reply")
 Signed-off-by: Christian Schoenebeck <qemu_oss@crudebyte.com>
 Reviewed-by: Greg Kurz <groug@kaod.org>
-Message-Id: <3d6449d4df25bcdd3e807eff169f46f1385e5257.1732465720.git.qemu_oss@crudebyte.com>
-(cherry picked from commit 462db8fb1d405391b83a0d3099fdb9bfb85c2d92)
+Message-Id: <fb364d12045217a4c6ccd0dd6368103ddb80698b.1732465720.git.qemu_oss@crudebyte.com>
+(cherry picked from commit 3bc4db44430f53387d17145bb52b330a830a03fe)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
-(Mjt: context fix, pick it to stable so the next patch in this place applies)
+(Mjt: pick it to stable so the next commit applies cleanly)
 
-diff --git a/tests/qtest/virtio-9p-test.c b/tests/qtest/virtio-9p-test.c
-index 65e69491e5..7638c0a183 100644
---- a/tests/qtest/virtio-9p-test.c
-+++ b/tests/qtest/virtio-9p-test.c
-@@ -693,6 +693,45 @@ static void fs_unlinkat_hardlink(void *obj, void *data,
-     g_assert(stat(real_file, &st_real) == 0);
- }
- 
-+static void fs_use_after_unlink(void *obj, void *data,
-+                                QGuestAllocator *t_alloc)
-+{
-+    QVirtio9P *v9p = obj;
-+    v9fs_set_allocator(t_alloc);
-+    static const uint32_t write_count = P9_MAX_SIZE / 2;
-+    g_autofree char *real_file = virtio_9p_test_path("09/doa_file");
-+    g_autofree char *buf = g_malloc0(write_count);
-+    struct stat st_file;
-+    uint32_t fid_file;
-+    uint32_t count;
-+
-+    tattach({ .client = v9p });
-+
-+    /* create a file "09/doa_file" and make sure it exists and is regular */
-+    tmkdir({ .client = v9p, .atPath = "/", .name = "09" });
-+    tlcreate({ .client = v9p, .atPath = "09", .name = "doa_file" });
-+    g_assert(stat(real_file, &st_file) == 0);
-+    g_assert((st_file.st_mode & S_IFMT) == S_IFREG);
-+
-+    /* request a FID for that regular file that we can work with next */
-+    fid_file = twalk({
-+        .client = v9p, .fid = 0, .path = "09/doa_file"
-+    }).newfid;
-+    g_assert(fid_file != 0);
-+
-+    /* now first open the file in write mode before ... */
-+    tlopen({ .client = v9p, .fid = fid_file, .flags = O_WRONLY });
-+    /* ... removing the file from file system */
-+    tunlinkat({ .client = v9p, .atPath = "09", .name = "doa_file" });
-+
-+    /* file is removed, but we still have it open, so this should succeed */
-+    count = twrite({
-+        .client = v9p, .fid = fid_file, .offset = 0, .count = write_count,
-+        .data = buf
-+    }).count;
-+    g_assert_cmpint(count, ==, write_count);
-+}
-+
- static void *assign_9p_local_driver(GString *cmd_line, void *arg)
- {
-     virtio_9p_assign_local_driver(cmd_line, "security_model=mapped-xattr");
-@@ -756,6 +795,8 @@ static void register_virtio_9p_test(void)
-     qos_add_test("local/hardlink_file", "virtio-9p", fs_hardlink_file, &opts);
-     qos_add_test("local/unlinkat_hardlink", "virtio-9p", fs_unlinkat_hardlink,
-                  &opts);
-+    qos_add_test("local/use_after_unlink", "virtio-9p", fs_use_after_unlink,
-+                 &opts);
- }
- 
- libqos_init(register_virtio_9p_test);
+diff --git a/hw/9pfs/9p.c b/hw/9pfs/9p.c
+index 9a291d1b51..851e36b9a1 100644
+--- a/hw/9pfs/9p.c
++++ b/hw/9pfs/9p.c
+@@ -1596,10 +1596,6 @@ static void coroutine_fn v9fs_getattr(void *opaque)
+         retval = -ENOENT;
+         goto out_nofid;
+     }
+-    /*
+-     * Currently we only support BASIC fields in stat, so there is no
+-     * need to look at request_mask.
+-     */
+     retval = v9fs_co_lstat(pdu, &fidp->path, &stbuf);
+     if (retval < 0) {
+         goto out;
 -- 
 2.39.5
 
