@@ -4,83 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E3BE3C0218C
-	for <qemu-devel@archiver.kernel.org>; Mon, 27 Jan 2025 07:39:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A563CC0218C
+	for <qemu-devel@archiver.kernel.org>; Mon, 27 Jan 2025 07:51:19 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tcJiM-0001Ci-4S; Mon, 27 Jan 2025 02:39:22 -0500
+	id 1tcJtD-0003Xv-Px; Mon, 27 Jan 2025 02:50:35 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tcJiH-0001C5-32
- for qemu-devel@nongnu.org; Mon, 27 Jan 2025 02:39:18 -0500
-Received: from mail-wm1-x334.google.com ([2a00:1450:4864:20::334])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tcJtB-0003Xd-30
+ for qemu-devel@nongnu.org; Mon, 27 Jan 2025 02:50:33 -0500
+Received: from mail-wr1-x436.google.com ([2a00:1450:4864:20::436])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tcJiF-0000Cn-86
- for qemu-devel@nongnu.org; Mon, 27 Jan 2025 02:39:16 -0500
-Received: by mail-wm1-x334.google.com with SMTP id
- 5b1f17b1804b1-436a39e4891so26624465e9.1
- for <qemu-devel@nongnu.org>; Sun, 26 Jan 2025 23:39:14 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tcJt8-0001DA-22
+ for qemu-devel@nongnu.org; Mon, 27 Jan 2025 02:50:31 -0500
+Received: by mail-wr1-x436.google.com with SMTP id
+ ffacd0b85a97d-3862ca8e0bbso3585896f8f.0
+ for <qemu-devel@nongnu.org>; Sun, 26 Jan 2025 23:50:29 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1737963553; x=1738568353; darn=nongnu.org;
+ d=linaro.org; s=google; t=1737964227; x=1738569027; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=Gpv2l3R1VJBW+Ge2xKFxwGte3q9zy3oa3cWK5QGMrqg=;
- b=JCapP66Y8kQAsaK+2URdA1sokJUXLcWZOONVDE6V7VkWk1hVHnub0sQCmHqpk+ZROY
- k0UMhC9wjkfrLrTVgdVgZcFabzFnajzu0Iy+AvvRGGwJkQyuP6ZsqPawNH+KSin/BKXg
- 1P3FIUTqo51/zfKB51Y3KVE/ZPyvGY3+bzVxNEZT6f3Rf/e9z7M8EgrcqnLGAZvFpkf8
- W2q2/KH1PL9Cp9cxgeoWAIZcMlvOM3WnQPDWu8oIcAvK64GLth8Q8BB3N64B0uH7xD2M
- i4RXQdldoedc1RGc3u3ZGmmmvkJ7SyQFjT/ylgebO+RgjtvLUCo7eZjIQKH6E5vhuw6q
- LZ/Q==
+ :references:to:subject:user-agent:mime-version:date:message-id:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=xqxrY7CJUWJqaUwf9NqB7WHQSEoMMiX/6GgCODIwrAA=;
+ b=t/DVvnt75I+elbUFxLSJXEB5uLNSmUZU0gcc5xu3FqjDB34FPVBMGTrBdDqDJJOKuE
+ LmNTxWAgCLbICL043/xG7MSeZns5717uK+RqtFJdq1CDOLzLOdPbOwyAsArtO11S1fSI
+ cm04SIB+wtTsyxjbXIx5cPv+gHyoZ1/Pf5ntVWGmsegjD6pV/EjWeFQW8+AZNIglzZ+Y
+ hPBX9ySdESrMqk+Os7hd8j9mae1edgKeXJ7tytPDrYXXrA+oJyAnQQfw+CRcKSdAoFxc
+ IL07CX6G26FdUII2qtRKykwSg5+9ckoG17Wf7YFFmchkay6NLSRzpA/XjQ4vUsYhGq3d
+ 9/ag==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1737963553; x=1738568353;
+ d=1e100.net; s=20230601; t=1737964227; x=1738569027;
  h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :references:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=Gpv2l3R1VJBW+Ge2xKFxwGte3q9zy3oa3cWK5QGMrqg=;
- b=puQAFUBZCcEg3386+j/GAlVbwRN664nu2ynKR7em9agR1J6GddQyb792TE1GSKsx9V
- q0Q8UyDRtXrEzocZhNsTJMe0hIGe3BqbNMQ1PRXwUhlgxc9NUy4TjGPXcwk1DPfPm5N7
- oVLJKZn7kcsi6ZGOaKov26oZ6lx2zIr8VsO64FWbPuVtcF5W0fI1AARNJuuRDhdGZs+q
- VNWCQk1g+ZX+HCTEGNRLDB6qhR7cijUiBaXweIxhK9iuuoSGv6qK7UylMeaVxLOZDqY5
- 2D4ZwB0q1WJBaRPHxBXy8LZIw6kk7vWXlop8H5C/DU3HvdFJeACIatUbhhHaFsBy0EKu
- HOow==
-X-Gm-Message-State: AOJu0YxerTtj9pK7HqV7dEs7uvOOLcpcMdZ+/R5pqKkUAUiSIOqYIPk9
- ndSFWM4r84p2xbD3rKzd0vJmudgM0C7DqpPJHeXlzmuS+92pVbYdsxd+5cn8Toy0+tJPgNHbBkD
- YDPM=
-X-Gm-Gg: ASbGnctmS/Qdxks8zKoXzIcqDrf5f0Oekw1V5bB4+pXh+ERS1YaiLZtJNVdxCRFebx4
- L2af6rwU33bdWKAH/J2aTQqFG+Vu083EDRDgksKNl2Ho0X4yZ7lWrAwwYm1bq9lfaKp23eIvjKD
- rnnfyXQqqHUDERlFkcbLS7wc8HKeTK8ghSkgXoHjQfpygT1sksAfCzqltwWCNbNo/d1XEx7c+RT
- SgyV26DDSg+xC5+D9Tz7elariopFf9Ak982i0gCOwdLkMGtgez35ZwB+BmJP7LOZoAVcvwLGKJO
- lF8wFkzv4TSWtagYRNuG163vWyXacuGuuebEGaUZHw52fwfy
-X-Google-Smtp-Source: AGHT+IGVNKOIDIrhyJe9b/wsftL9iaX14dDk27caZYFeYEToUKsT9tv+UPV7H9UnxMTeyeLnwa8JtA==
-X-Received: by 2002:a05:600c:1d14:b0:436:46f9:4fc6 with SMTP id
- 5b1f17b1804b1-438913d63cfmr355823035e9.8.1737963552700; 
- Sun, 26 Jan 2025 23:39:12 -0800 (PST)
+ bh=xqxrY7CJUWJqaUwf9NqB7WHQSEoMMiX/6GgCODIwrAA=;
+ b=YxFPlDsdULFRmvFZtB6kwasRsia2ciNVUPFSS8+1xJGyOb4gYvk+sW47WBtEM7Uceq
+ hBklzeys6SxHgvZCAb3E1OpdD615Ib86kw9SUxiXebsgK5pOId/KdHMDYs5e6EdluK6e
+ aZfKlAbTOJgdqYcJU/s6hXxb62p5o5OlY/9nmbEUkSr6du8/39i5Fn2IH2+Fu17viFDw
+ bgUKuCJcXsibzXxETEMzLC0rwfxPuQkCookLmLAWsYoOCQgouxSCYOLQnfTg9TXf4/Hi
+ UX2iQiHrts3Nt+w0Ym+IpvbLpEvPfdgFwCco1zV9QYG952NB+6II/9aaTUbJMHr9mdad
+ oWyQ==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCUvpJQM+1+i8SpfbkbR5vHB9N7NC2Qxqw3CdkFz+8P0oQH5qFTC0OGGe+FFkbUF1nkOhJ+/EXKLLDeB@nongnu.org
+X-Gm-Message-State: AOJu0YyZFE52+RmGflsLKFMEOHumUmzu3H625k+5FnfPEn83Fjo7nDTK
+ I4fxzsXDrnuUvCMQvyPyqZSojOEaytBuiEAtyQIsSMPp6fsFSZ5GzRWNI7/Y/MSbZKzZaGkEJvx
+ E7NA=
+X-Gm-Gg: ASbGnctS0zSDUgKDqQjXR6iwViQrFaqge1lBxD4QULkMg6W8cv21quB+UhAzxtyQeY8
+ OCoE313deWqTxEsuF3eO+GK+psNGPbdBBkIdeIOT3g4sVcuIkB3Digd3Lf6oh7a4vJlUHY0DI8p
+ RzhHTd07rm5h6pHLqy0LOMFEwLJiiPT9OFBHM9IWJPew5nMQwqBQXmwtzMElv2W0gmJtlShABlq
+ BbM1oZH9WwaoTgzzfzeb7x1LfNqxShCwUBoxIy/VNoUfSqsV9YZZsnC0Ngfk6nd3EHNX5zAb2J1
+ gO+btbgM39w1oCP8XL/7i5EE3gmj5DSOVlifrNytik9U7UmQ
+X-Google-Smtp-Source: AGHT+IHLIteo38YZs3mQYbCDTQri74RaLgE+CKK9TQ3Ta7VqDPyTkhTXAsHk3SE8ymH+ek32R6Y44g==
+X-Received: by 2002:a5d:64c3:0:b0:38c:3fab:3def with SMTP id
+ ffacd0b85a97d-38c3fab419cmr3174950f8f.10.1737964227332; 
+ Sun, 26 Jan 2025 23:50:27 -0800 (PST)
 Received: from [192.168.69.181] (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-438bd47eecasm120152875e9.6.2025.01.26.23.39.11
+ ffacd0b85a97d-38c2a188928sm10163351f8f.45.2025.01.26.23.50.26
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Sun, 26 Jan 2025 23:39:12 -0800 (PST)
-Message-ID: <2eff4bdc-ac87-42ae-a896-38883c515de9@linaro.org>
-Date: Mon, 27 Jan 2025 08:39:11 +0100
+ Sun, 26 Jan 2025 23:50:26 -0800 (PST)
+Message-ID: <8da57d8a-a42a-446e-ad5b-a6ab07c65647@linaro.org>
+Date: Mon, 27 Jan 2025 08:50:26 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 10/15] target/ppc: Restrict ppc_tcg_hv_emu() to TCG
-To: qemu-devel@nongnu.org
-Cc: Daniel Henrique Barboza <danielhb413@gmail.com>,
- Harsh Prateek Bora <harshpb@linux.ibm.com>,
- Richard Henderson <richard.henderson@linaro.org>, qemu-ppc@nongnu.org,
- Nicholas Piggin <npiggin@gmail.com>
-References: <20250123215609.30432-1-philmd@linaro.org>
- <20250123215609.30432-11-philmd@linaro.org>
+Subject: Re: [PATCH v3 24/24] cpus: Remove CPUClass::has_work() handler
+To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
+References: <20250125170125.32855-1-philmd@linaro.org>
+ <20250125170125.32855-25-philmd@linaro.org>
+ <cbd78ef0-c06e-4a6a-8c17-1072fc58c777@linaro.org>
 Content-Language: en-US
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20250123215609.30432-11-philmd@linaro.org>
+In-Reply-To: <cbd78ef0-c06e-4a6a-8c17-1072fc58c777@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::334;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x334.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::436;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x436.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -103,90 +102,47 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 23/1/25 22:56, Philippe Mathieu-Daudé wrote:
-> Make is_prefix_insn_excp() prototype but have it guarded by
-> a tcg_enabled() check. Inline part of it in powerpc_excp_books().
+On 26/1/25 13:31, Richard Henderson wrote:
+> On 1/25/25 09:01, Philippe Mathieu-Daudé wrote:
+>> diff --git a/cpu-target.c b/cpu-target.c
+>> index 98e9e7cc4a1..778f622b07a 100644
+>> --- a/cpu-target.c
+>> +++ b/cpu-target.c
+>> @@ -230,6 +230,14 @@ void cpu_class_init_props(DeviceClass *dc)
+>>       device_class_set_props(dc, cpu_common_props);
+>>   }
+>> +void cpu_exec_class_post_init(CPUClass *cc, void *data)
+>> +{
+>> +#ifndef CONFIG_USER_ONLY
+>> +    /* Check mandatory SysemuCPUOps handlers */
+>> +    g_assert(cc->sysemu_ops->has_work);
+>> +#endif
+>> +}
+>> +
 > 
-> Extract POWERPC_EXCP_HV_EMU handling code to ppc_tcg_hv_emu(),
-> also exposing its prototype in "internal.h".
+> Does this really need to be split from...
 > 
-> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-> ---
->   target/ppc/internal.h        |   3 ++
->   target/ppc/excp_helper.c     | 101 +++++------------------------------
->   target/ppc/tcg-excp_helper.c |  71 ++++++++++++++++++++++++
->   3 files changed, 86 insertions(+), 89 deletions(-)
 
-I missed this code is TARGET_PPC64 ...:
+ > diff --git a/hw/core/cpu-common.c b/hw/core/cpu-common.c
+ >
+>> @@ -319,6 +313,11 @@ static void cpu_common_class_init(ObjectClass 
+>> *klass, void *data)
+>>       dc->user_creatable = false;
+>>   }
+>> +static void cpu_common_post_class_init(ObjectClass *klass, void *data)
+>> +{
+>> +    cpu_exec_class_post_init(CPU_CLASS(klass), data);
+>> +}
+> 
+> ... here?
 
->   static void powerpc_excp_books(PowerPCCPU *cpu, int excp)
->   {
->       CPUPPCState *env = &cpu->env;
-> @@ -1310,7 +1236,15 @@ static void powerpc_excp_books(PowerPCCPU *cpu, int excp)
->       }
->       vector |= env->excp_prefix;
->   
-> -    if (is_prefix_insn_excp(cpu, excp)) {
-> +    if (env->insns_flags2 & PPC2_ISA310) {
-> +        /* nothing to do */
-> +    } else if (kvm_enabled()) {
-> +        /*
-> +         * This does not load instructions and set the prefix bit correctly
-> +         * for injected interrupts with KVM. That may have to be discovered
-> +         * and set by the KVM layer before injecting.
-> +         */
-> +    } else if (tcg_enabled() && is_prefix_insn_excp(env, excp)) {
->           msr |= PPC_BIT(34);
->       }
->   
-> @@ -1484,20 +1418,9 @@ static void powerpc_excp_books(PowerPCCPU *cpu, int excp)
->           new_msr |= env->msr & ((target_ulong)1 << MSR_RI);
->           break;
->   #ifdef CONFIG_TCG
-> -    case POWERPC_EXCP_HV_EMU: {
-> -        uint32_t insn = ppc_ldl_code(env, env->nip);
-> -        env->spr[SPR_HEIR] = insn;
-> -        if (is_prefix_insn(env, insn)) {
-> -            uint32_t insn2 = ppc_ldl_code(env, env->nip + 4);
-> -            env->spr[SPR_HEIR] <<= 32;
-> -            env->spr[SPR_HEIR] |= insn2;
-> -        }
-> -        srr0 = SPR_HSRR0;
-> -        srr1 = SPR_HSRR1;
-> -        new_msr |= (target_ulong)MSR_HVB;
-> -        new_msr |= env->msr & ((target_ulong)1 << MSR_RI);
-> +    case POWERPC_EXCP_HV_EMU:
-> +        ppc_tcg_hv_emu(env, &new_msr, &srr0, &srr1);
->           break;
-> -    }
->   #endif
+cpu-target.c is in specific_ss[], cpu-common.c in common_ss[]
+where CONFIG_USER_ONLY is not available thus defined.
 
-
-> diff --git a/target/ppc/tcg-excp_helper.c b/target/ppc/tcg-excp_helper.c
-> index 268a1614597..ecc9e4de8ba 100644
-> --- a/target/ppc/tcg-excp_helper.c
-> +++ b/target/ppc/tcg-excp_helper.c
-
-... so should be this:
-
-> +void ppc_tcg_hv_emu(CPUPPCState *env, target_ulong *new_msr,
-> +                    int *srr0, int *srr1)
-> +{
-> +    uint32_t insn = ppc_ldl_code(env, env->nip);
-> +
-> +    env->spr[SPR_HEIR] = insn;
-> +    if (is_prefix_insn(env, insn)) {
-> +        uint32_t insn2 = ppc_ldl_code(env, env->nip + 4);
-> +
-> +        env->spr[SPR_HEIR] <<= 32;
-> +        env->spr[SPR_HEIR] |= insn2;
-> +    }
-> +    *srr0 = SPR_HSRR0;
-> +    *srr1 = SPR_HSRR1;
-> +    *new_msr |= (target_ulong)MSR_HVB;
-> +    *new_msr |= env->msr & ((target_ulong)1 << MSR_RI);
-> +}
-> +
->   #endif /* !CONFIG_USER_ONLY */
-
+We could define cpu_common_post_class_init() in cpu-target.c,
+which is odd because not common; or name it differently 
+(cpu_exec_post_class_init?) and have it registered as common
+post_init handler but again it seems a dirty API mismatch, so
+I went this way, hoping that eventually cpu-common.c ends
+better abstracted and cpu-target.c disappearing...
 
