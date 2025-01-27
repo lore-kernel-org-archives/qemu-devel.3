@@ -4,36 +4,36 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A383EC02190
-	for <qemu-devel@archiver.kernel.org>; Tue, 28 Jan 2025 08:26:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C3176C02192
+	for <qemu-devel@archiver.kernel.org>; Tue, 28 Jan 2025 08:26:17 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tcgWx-0000RT-RY; Tue, 28 Jan 2025 03:01:09 -0500
+	id 1tcghR-0004qO-Ek; Tue, 28 Jan 2025 03:11:57 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1tcgWh-0008Pp-1J; Tue, 28 Jan 2025 03:00:57 -0500
+ id 1tcgbr-0004aR-VB; Tue, 28 Jan 2025 03:06:20 -0500
 Received: from isrv.corpit.ru ([86.62.121.231])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1tcgWe-0001kT-JH; Tue, 28 Jan 2025 03:00:50 -0500
+ id 1tcgbo-0003Z2-Uk; Tue, 28 Jan 2025 03:06:11 -0500
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 853D0E1B49;
- Tue, 28 Jan 2025 10:57:08 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id 5BD4CE1B7B;
+ Tue, 28 Jan 2025 10:57:09 +0300 (MSK)
 Received: from localhost.tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id 00E0B1A62FC;
+ by tsrv.corpit.ru (Postfix) with ESMTP id CBC161A632E;
  Tue, 28 Jan 2025 10:57:34 +0300 (MSK)
 Received: by localhost.tls.msk.ru (Postfix, from userid 1000)
- id DFF7E52089; Tue, 28 Jan 2025 10:57:33 +0300 (MSK)
+ id 4097F520ED; Tue, 28 Jan 2025 10:57:34 +0300 (MSK)
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Peter Maydell <peter.maydell@linaro.org>,
+Cc: qemu-stable@nongnu.org, Phil Dennis-Jordan <phil@philjordan.eu>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-9.1.3 02/58] bitops.h: Define bit operations on 'uint32_t'
- arrays
-Date: Mon, 27 Jan 2025 23:24:48 +0300
-Message-Id: <20250127202547.3723716-2-mjt@tls.msk.ru>
+Subject: [Stable-9.1.3 52/58] hw/usb/hcd-xhci-pci: Use modulo to select MSI
+ vector as per spec
+Date: Mon, 27 Jan 2025 23:25:38 +0300
+Message-Id: <20250127202547.3723716-52-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <qemu-stable-9.1.3-20250127232536@cover.tls.msk.ru>
 References: <qemu-stable-9.1.3-20250127232536@cover.tls.msk.ru>
@@ -65,252 +65,47 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Currently bitops.h defines a set of operations that work on
-arbitrary-length bit arrays.  However (largely because they
-originally came from the Linux kernel) the bit array storage is an
-array of 'unsigned long'.  This is OK for the kernel and even for
-parts of QEMU where we don't really care about the underlying storage
-format, but it is not good for devices, where we often want to expose
-the storage to the guest and so need a type that is not
-variably-sized between host OSes.
+QEMU would crash with a failed assertion if the XHCI controller
+attempted to raise the interrupt on an interrupter corresponding
+to a MSI vector with a higher index than the highest configured
+for the device by the guest driver.
 
-We already have a workaround for this in the GICv3 model:
-arm_gicv3_common.h defines equivalents of the bit operations that
-work on uint32_t.  It turns out that we should also be using
-something similar in hw/intc/loongarch_extioi.c, which currently
-casts a pointer to a uint32_t array to 'unsigned long *' in
-extio_setirq(), which is both undefined behaviour and not correct on
-a big-endian host.
+This behaviour is correct on the MSI/PCI side: per PCI 3.0 spec,
+devices must ensure they do not send MSI notifications for
+vectors beyond the range of those allocated by the system/driver
+software. Unlike MSI-X, there is no generic way for handling
+aliasing in the case of fewer allocated vectors than requested,
+so the specifics are up to device implementors. (Section
+6.8.3.4. "Sending Messages")
 
-Define equivalents of the set_bit() function family which work
-with a uint32_t array.
+It turns out the XHCI spec (Implementation Note in section 4.17,
+"Interrupters") requires that the host controller signal the MSI
+vector with the number computed by taking the interrupter number
+modulo the number of enabled MSI vectors.
 
-(Cc stable because we're about to provide a bugfix to
-loongarch_extioi which will depend on this commit.)
+This change introduces that modulo calculation, fixing the
+failed assertion. This makes the device work correctly in MSI mode
+with macOS's XHCI driver, which only allocates a single vector.
 
-Cc: qemu-stable@nongnu.org
-Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+Signed-off-by: Phil Dennis-Jordan <phil@philjordan.eu>
 Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Message-id: 20241108135514.4006953-2-peter.maydell@linaro.org
-(cherry picked from commit 3d7680fb18c7b17701730589d241a32e85f763a3)
+Message-ID: <20250112210056.16658-2-phil@philjordan.eu>
+Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+(cherry picked from commit bb5b7fced6b5d3334ab20702fc846e47bb1fb731)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/include/qemu/bitmap.h b/include/qemu/bitmap.h
-index 1cf288445f..0044333cb5 100644
---- a/include/qemu/bitmap.h
-+++ b/include/qemu/bitmap.h
-@@ -69,6 +69,14 @@
- #define DECLARE_BITMAP(name,bits)                  \
-         unsigned long name[BITS_TO_LONGS(bits)]
+diff --git a/hw/usb/hcd-xhci-pci.c b/hw/usb/hcd-xhci-pci.c
+index 264d7ebb77..831ba31277 100644
+--- a/hw/usb/hcd-xhci-pci.c
++++ b/hw/usb/hcd-xhci-pci.c
+@@ -74,6 +74,7 @@ static bool xhci_pci_intr_raise(XHCIState *xhci, int n, bool level)
+     }
  
-+/*
-+ * This is for use with the bit32 versions of set_bit() etc;
-+ * we don't currently support the full range of bitmap operations
-+ * on bitmaps backed by an array of uint32_t.
-+ */
-+#define DECLARE_BITMAP32(name, bits)            \
-+        uint32_t name[BITS_TO_U32S(bits)]
-+
- #define small_nbits(nbits)                      \
-         ((nbits) <= BITS_PER_LONG)
- 
-diff --git a/include/qemu/bitops.h b/include/qemu/bitops.h
-index 2c0a2fe751..c7b838a628 100644
---- a/include/qemu/bitops.h
-+++ b/include/qemu/bitops.h
-@@ -18,16 +18,47 @@
- 
- #define BITS_PER_BYTE           CHAR_BIT
- #define BITS_PER_LONG           (sizeof (unsigned long) * BITS_PER_BYTE)
-+#define BITS_TO_LONGS(nr)       DIV_ROUND_UP(nr, BITS_PER_BYTE * sizeof(long))
-+#define BITS_TO_U32S(nr)        DIV_ROUND_UP(nr, BITS_PER_BYTE * sizeof(uint32_t))
- 
- #define BIT(nr)                 (1UL << (nr))
- #define BIT_ULL(nr)             (1ULL << (nr))
--#define BIT_MASK(nr)            (1UL << ((nr) % BITS_PER_LONG))
--#define BIT_WORD(nr)            ((nr) / BITS_PER_LONG)
--#define BITS_TO_LONGS(nr)       DIV_ROUND_UP(nr, BITS_PER_BYTE * sizeof(long))
- 
- #define MAKE_64BIT_MASK(shift, length) \
-     (((~0ULL) >> (64 - (length))) << (shift))
- 
-+/**
-+ * DOC: Functions operating on arrays of bits
-+ *
-+ * We provide a set of functions which work on arbitrary-length arrays of
-+ * bits. These come in several flavours which vary in what the type of the
-+ * underlying storage for the bits is:
-+ *
-+ * - Bits stored in an array of 'unsigned long': set_bit(), clear_bit(), etc
-+ * - Bits stored in an array of 'uint32_t': set_bit32(), clear_bit32(), etc
-+ *
-+ * Because the 'unsigned long' type has a size which varies between
-+ * host systems, the versions using 'uint32_t' are often preferable.
-+ * This is particularly the case in a device model where there may
-+ * be some guest-visible register view of the bit array.
-+ *
-+ * We do not currently implement uint32_t versions of find_last_bit(),
-+ * find_next_bit(), find_next_zero_bit(), find_first_bit() or
-+ * find_first_zero_bit(), because we haven't yet needed them. If you
-+ * need them you should implement them similarly to the 'unsigned long'
-+ * versions.
-+ *
-+ * You can declare a bitmap to be used with these functions via the
-+ * DECLARE_BITMAP and DECLARE_BITMAP32 macros in bitmap.h.
-+ */
-+
-+/**
-+ * DOC:  'unsigned long' bit array APIs
-+ */
-+
-+#define BIT_MASK(nr)            (1UL << ((nr) % BITS_PER_LONG))
-+#define BIT_WORD(nr)            ((nr) / BITS_PER_LONG)
-+
- /**
-  * set_bit - Set a bit in memory
-  * @nr: the bit to set
-@@ -224,6 +255,141 @@ static inline unsigned long find_first_zero_bit(const unsigned long *addr,
-     return find_next_zero_bit(addr, size, 0);
- }
- 
-+/**
-+ * DOC:  'uint32_t' bit array APIs
-+ */
-+
-+#define BIT32_MASK(nr)            (1UL << ((nr) % 32))
-+#define BIT32_WORD(nr)            ((nr) / 32)
-+
-+/**
-+ * set_bit32 - Set a bit in memory
-+ * @nr: the bit to set
-+ * @addr: the address to start counting from
-+ */
-+static inline void set_bit32(long nr, uint32_t *addr)
-+{
-+    uint32_t mask = BIT32_MASK(nr);
-+    uint32_t *p = addr + BIT32_WORD(nr);
-+
-+    *p  |= mask;
-+}
-+
-+/**
-+ * set_bit32_atomic - Set a bit in memory atomically
-+ * @nr: the bit to set
-+ * @addr: the address to start counting from
-+ */
-+static inline void set_bit32_atomic(long nr, uint32_t *addr)
-+{
-+    uint32_t mask = BIT32_MASK(nr);
-+    uint32_t *p = addr + BIT32_WORD(nr);
-+
-+    qatomic_or(p, mask);
-+}
-+
-+/**
-+ * clear_bit32 - Clears a bit in memory
-+ * @nr: Bit to clear
-+ * @addr: Address to start counting from
-+ */
-+static inline void clear_bit32(long nr, uint32_t *addr)
-+{
-+    uint32_t mask = BIT32_MASK(nr);
-+    uint32_t *p = addr + BIT32_WORD(nr);
-+
-+    *p &= ~mask;
-+}
-+
-+/**
-+ * clear_bit32_atomic - Clears a bit in memory atomically
-+ * @nr: Bit to clear
-+ * @addr: Address to start counting from
-+ */
-+static inline void clear_bit32_atomic(long nr, uint32_t *addr)
-+{
-+    uint32_t mask = BIT32_MASK(nr);
-+    uint32_t *p = addr + BIT32_WORD(nr);
-+
-+    return qatomic_and(p, ~mask);
-+}
-+
-+/**
-+ * change_bit32 - Toggle a bit in memory
-+ * @nr: Bit to change
-+ * @addr: Address to start counting from
-+ */
-+static inline void change_bit32(long nr, uint32_t *addr)
-+{
-+    uint32_t mask = BIT32_MASK(nr);
-+    uint32_t *p = addr + BIT32_WORD(nr);
-+
-+    *p ^= mask;
-+}
-+
-+/**
-+ * test_and_set_bit32 - Set a bit and return its old value
-+ * @nr: Bit to set
-+ * @addr: Address to count from
-+ */
-+static inline int test_and_set_bit32(long nr, uint32_t *addr)
-+{
-+    uint32_t mask = BIT32_MASK(nr);
-+    uint32_t *p = addr + BIT32_WORD(nr);
-+    uint32_t old = *p;
-+
-+    *p = old | mask;
-+    return (old & mask) != 0;
-+}
-+
-+/**
-+ * test_and_clear_bit32 - Clear a bit and return its old value
-+ * @nr: Bit to clear
-+ * @addr: Address to count from
-+ */
-+static inline int test_and_clear_bit32(long nr, uint32_t *addr)
-+{
-+    uint32_t mask = BIT32_MASK(nr);
-+    uint32_t *p = addr + BIT32_WORD(nr);
-+    uint32_t old = *p;
-+
-+    *p = old & ~mask;
-+    return (old & mask) != 0;
-+}
-+
-+/**
-+ * test_and_change_bit32 - Change a bit and return its old value
-+ * @nr: Bit to change
-+ * @addr: Address to count from
-+ */
-+static inline int test_and_change_bit32(long nr, uint32_t *addr)
-+{
-+    uint32_t mask = BIT32_MASK(nr);
-+    uint32_t *p = addr + BIT32_WORD(nr);
-+    uint32_t old = *p;
-+
-+    *p = old ^ mask;
-+    return (old & mask) != 0;
-+}
-+
-+/**
-+ * test_bit32 - Determine whether a bit is set
-+ * @nr: bit number to test
-+ * @addr: Address to start counting from
-+ */
-+static inline int test_bit32(long nr, const uint32_t *addr)
-+{
-+    return 1U & (addr[BIT32_WORD(nr)] >> (nr & 31));
-+}
-+
-+/**
-+ * DOC: Miscellaneous bit operations on single values
-+ *
-+ * These functions are a collection of useful operations
-+ * (rotations, bit extract, bit deposit, etc) on single
-+ * integer values.
-+ */
-+
- /**
-  * rol8 - rotate an 8-bit value left
-  * @word: value to rotate
+     if (msi_enabled(pci_dev) && level) {
++        n %= msi_nr_vectors_allocated(pci_dev);
+         msi_notify(pci_dev, n);
+         return true;
+     }
 -- 
 2.39.5
 
