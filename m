@@ -4,35 +4,35 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CAC4CC02192
-	for <qemu-devel@archiver.kernel.org>; Tue, 28 Jan 2025 07:59:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2488BC02190
+	for <qemu-devel@archiver.kernel.org>; Tue, 28 Jan 2025 07:59:40 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tcgSf-0001uK-PO; Tue, 28 Jan 2025 02:56:43 -0500
+	id 1tcgUS-0007cC-JX; Tue, 28 Jan 2025 02:58:32 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1tcgSF-0008Dt-15; Tue, 28 Jan 2025 02:56:15 -0500
+ id 1tcgUA-0007Pz-LI; Tue, 28 Jan 2025 02:58:18 -0500
 Received: from isrv.corpit.ru ([86.62.121.231])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1tcgSD-0000IV-7h; Tue, 28 Jan 2025 02:56:14 -0500
+ id 1tcgU8-0000uQ-O5; Tue, 28 Jan 2025 02:58:14 -0500
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 6B4C8E1AE5;
+ by isrv.corpit.ru (Postfix) with ESMTP id B4909E1AF8;
  Tue, 28 Jan 2025 10:54:25 +0300 (MSK)
 Received: from localhost.tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id DA85D1A62CC;
- Tue, 28 Jan 2025 10:54:50 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id 2F9AA1A62DF;
+ Tue, 28 Jan 2025 10:54:51 +0300 (MSK)
 Received: by localhost.tls.msk.ru (Postfix, from userid 1000)
- id C941D5202F; Tue, 28 Jan 2025 10:54:50 +0300 (MSK)
+ id E920252055; Tue, 28 Jan 2025 10:54:50 +0300 (MSK)
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Ilya Leoshkevich <iii@linux.ibm.com>,
- Richard Henderson <richard.henderson@linaro.org>,
+Cc: qemu-stable@nongnu.org, Christian Schoenebeck <qemu_oss@crudebyte.com>,
+ Dirk Herrendorfer <d.herrendoerfer@de.ibm.com>, Greg Kurz <groug@kaod.org>,
  Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-8.2.9 04/45] linux-user: Fix strace output for s390x mmap()
-Date: Mon, 27 Jan 2025 23:25:45 +0300
-Message-Id: <20250127202630.3724367-4-mjt@tls.msk.ru>
+Subject: [Stable-8.2.9 23/45] 9pfs: fix regression regarding CVE-2023-2861
+Date: Mon, 27 Jan 2025 23:26:04 +0300
+Message-Id: <20250127202630.3724367-23-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <qemu-stable-8.2.9-20250127232621@cover.tls.msk.ru>
 References: <qemu-stable-8.2.9-20250127232621@cover.tls.msk.ru>
@@ -63,70 +63,99 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-print_mmap() assumes that mmap() receives arguments via memory if
-mmap2() is present. s390x (as opposed to s390) does not fit this
-pattern: it does not have mmap2(), but mmap() still receives arguments
-via memory.
+The released fix for this CVE:
 
-Fix by sharing the detection logic between syscall.c and strace.c.
+  f6b0de53fb8 ("9pfs: prevent opening special files (CVE-2023-2861)")
 
-Cc: qemu-stable@nongnu.org
-Fixes: d971040c2d16 ("linux-user: Fix strace output for old_mmap")
-Suggested-by: Richard Henderson <richard.henderson@linaro.org>
-Signed-off-by: Ilya Leoshkevich <iii@linux.ibm.com>
-Message-ID: <20241120212717.246186-1-iii@linux.ibm.com>
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
-(cherry picked from commit d95fd9838b540e69da9b07538ec8ad6ab9eab260)
+caused a regression with security_model=passthrough. When handling a
+'Tmknod' request there was a side effect that 'Tmknod' request could fail
+as 9p server was trying to adjust permissions:
+
+  #6  close_if_special_file (fd=30) at ../hw/9pfs/9p-util.h:140
+  #7  openat_file (mode=<optimized out>, flags=2228224,
+      name=<optimized out>, dirfd=<optimized out>) at
+      ../hw/9pfs/9p-util.h:181
+  #8  fchmodat_nofollow (dirfd=dirfd@entry=31,
+      name=name@entry=0x5555577ea6e0 "mysocket", mode=493) at
+      ../hw/9pfs/9p-local.c:360
+  #9  local_set_cred_passthrough (credp=0x7ffbbc4ace10, name=0x5555577ea6e0
+      "mysocket", dirfd=31, fs_ctx=0x55555811f528) at
+      ../hw/9pfs/9p-local.c:457
+  #10 local_mknod (fs_ctx=0x55555811f528, dir_path=<optimized out>,
+      name=0x5555577ea6e0 "mysocket", credp=0x7ffbbc4ace10) at
+      ../hw/9pfs/9p-local.c:702
+  #11 v9fs_co_mknod (pdu=pdu@entry=0x555558121140,
+      fidp=fidp@entry=0x5555574c46c0, name=name@entry=0x7ffbbc4aced0,
+      uid=1000, gid=1000, dev=<optimized out>, mode=49645,
+      stbuf=0x7ffbbc4acef0) at ../hw/9pfs/cofs.c:205
+  #12 v9fs_mknod (opaque=0x555558121140) at ../hw/9pfs/9p.c:3711
+
+That's because server was opening the special file to adjust permissions,
+however it was using O_PATH and it would have not returned the file
+descriptor to guest. So the call to close_if_special_file() on that branch
+was incorrect.
+
+Let's lift the restriction introduced by f6b0de53fb8 such that it would
+allow to open special files on host if O_PATH flag is supplied, not only
+for 9p server's own operations as described above, but also for any client
+'Topen' request.
+
+It is safe to allow opening special files with O_PATH on host, because
+O_PATH only allows path based operations on the resulting file descriptor
+and prevents I/O such as read() and write() on that file descriptor.
+
+Fixes: f6b0de53fb8 ("9pfs: prevent opening special files (CVE-2023-2861)")
+Resolves: https://gitlab.com/qemu-project/qemu/-/issues/2337
+Reported-by: Dirk Herrendorfer <d.herrendoerfer@de.ibm.com>
+Signed-off-by: Christian Schoenebeck <qemu_oss@crudebyte.com>
+Reviewed-by: Greg Kurz <groug@kaod.org>
+Tested-by: Dirk Herrendorfer <d.herrendoerfer@de.ibm.com>
+Message-Id: <E1tJWbk-007BH4-OB@kylie.crudebyte.com>
+(cherry picked from commit d06a9d843fb65351e0e4dc42ba0c404f01ea92b3)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
-(Mjt: compensate for chris architecture removal by v9.1.0-282-gbff4b02ca1f4
- "linux-user: Remove support for CRIS target")
 
-diff --git a/linux-user/strace.c b/linux-user/strace.c
-index cf26e55264..3be77c4a38 100644
---- a/linux-user/strace.c
-+++ b/linux-user/strace.c
-@@ -3803,7 +3803,7 @@ print_mmap(CPUArchState *cpu_env, const struct syscallname *name,
- {
-     return print_mmap_both(cpu_env, name, arg0, arg1, arg2, arg3,
-                            arg4, arg5,
--#if defined(TARGET_NR_mmap2)
-+#ifdef TARGET_ARCH_WANT_SYS_OLD_MMAP
-                             true
- #else
-                             false
-diff --git a/linux-user/syscall.c b/linux-user/syscall.c
-index 2a4137fc22..7ee1d61248 100644
---- a/linux-user/syscall.c
-+++ b/linux-user/syscall.c
-@@ -10394,10 +10394,7 @@ static abi_long do_syscall1(CPUArchState *cpu_env, int num, abi_long arg1,
-         return ret;
- #ifdef TARGET_NR_mmap
-     case TARGET_NR_mmap:
--#if (defined(TARGET_I386) && defined(TARGET_ABI32)) || \
--    (defined(TARGET_ARM) && defined(TARGET_ABI32)) || \
--    defined(TARGET_M68K) || defined(TARGET_CRIS) || defined(TARGET_MICROBLAZE) \
--    || defined(TARGET_S390X)
-+#ifdef TARGET_ARCH_WANT_SYS_OLD_MMAP
-         {
-             abi_ulong *v;
-             abi_ulong v1, v2, v3, v4, v5, v6;
-diff --git a/linux-user/syscall_defs.h b/linux-user/syscall_defs.h
-index 77ba343c85..e58c627d00 100644
---- a/linux-user/syscall_defs.h
-+++ b/linux-user/syscall_defs.h
-@@ -2750,4 +2750,11 @@ struct target_sched_param {
-     abi_int sched_priority;
- };
+diff --git a/hw/9pfs/9p-util.h b/hw/9pfs/9p-util.h
+index 51c94b0116..95ee4da9bd 100644
+--- a/hw/9pfs/9p-util.h
++++ b/hw/9pfs/9p-util.h
+@@ -177,20 +177,27 @@ again:
+         return -1;
+     }
  
-+#if (defined(TARGET_I386) && defined(TARGET_ABI32)) || \
-+    (defined(TARGET_ARM) && defined(TARGET_ABI32)) || \
-+    defined(TARGET_M68K) || defined(TARGET_CRIS) || defined(TARGET_MICROBLAZE) \
-+    || defined(TARGET_S390X)
-+#define TARGET_ARCH_WANT_SYS_OLD_MMAP
-+#endif
+-    if (close_if_special_file(fd) < 0) {
+-        return -1;
+-    }
+-
+-    serrno = errno;
+-    /* O_NONBLOCK was only needed to open the file. Let's drop it. We don't
+-     * do that with O_PATH since fcntl(F_SETFL) isn't supported, and openat()
+-     * ignored it anyway.
+-     */
++    /* Only if O_PATH is not set ... */
+     if (!(flags & O_PATH_9P_UTIL)) {
++        /*
++         * Prevent I/O on special files (device files, etc.) on host side,
++         * however it is safe and required to allow opening them with O_PATH,
++         * as this is limited to (required) path based operations only.
++         */
++        if (close_if_special_file(fd) < 0) {
++            return -1;
++        }
 +
- #endif
++        serrno = errno;
++        /*
++         * O_NONBLOCK was only needed to open the file. Let's drop it. We don't
++         * do that with O_PATH since fcntl(F_SETFL) isn't supported, and
++         * openat() ignored it anyway.
++         */
+         ret = fcntl(fd, F_SETFL, flags);
+         assert(!ret);
++        errno = serrno;
+     }
+-    errno = serrno;
+     return fd;
+ }
+ 
 -- 
 2.39.5
 
