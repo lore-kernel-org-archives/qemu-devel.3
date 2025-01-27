@@ -4,107 +4,140 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 131A1C0218C
-	for <qemu-devel@archiver.kernel.org>; Mon, 27 Jan 2025 06:28:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BBF44C0218C
+	for <qemu-devel@archiver.kernel.org>; Mon, 27 Jan 2025 06:34:49 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tcIbg-0000XT-IG; Mon, 27 Jan 2025 01:28:24 -0500
+	id 1tcIh0-0002gR-Cd; Mon, 27 Jan 2025 01:33:54 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
- id 1tcIbf-0000XL-2o
- for qemu-devel@nongnu.org; Mon, 27 Jan 2025 01:28:23 -0500
-Received: from mail-pj1-x1034.google.com ([2607:f8b0:4864:20::1034])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
- id 1tcIbc-0003J4-B4
- for qemu-devel@nongnu.org; Mon, 27 Jan 2025 01:28:22 -0500
-Received: by mail-pj1-x1034.google.com with SMTP id
- 98e67ed59e1d1-2efb17478adso6936798a91.1
- for <qemu-devel@nongnu.org>; Sun, 26 Jan 2025 22:28:19 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=daynix-com.20230601.gappssmtp.com; s=20230601; t=1737959298; x=1738564098;
- darn=nongnu.org; 
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=qdGklV3bD/Na9yyaq0qF6kZZAzrWlyOwPH/OxSTWyMY=;
- b=dwPPTcfBuydPYVoDhxvJZsr1RtybMyzNP2d3Dl8AtJ2OSVkdj3waYcGksFL6XbmNAT
- YLSnldCf1EFT134U9uNz2myFgwGGDXHUmr2aogHVz7b0PUmePermnCWFxvhgJua080yc
- I6aVRAnUnqO1RO5l5AWiwXHrd4B/80xDU4ZY14pSNie+TjOd+nnoIlqEmfBvgMYffmLM
- 9UF9pjhdDmH3d+q13y8yn/OfB/GVVnCp+huIukSStCHNUx88nlw+KbthiUmmp70unThj
- hgurhs0dFv8pwjOyvT1YVYW3inTrdl8+Dr9kvQHAjQUlzuOKZiVu7keKDp6sA1W3KlDP
- LAcA==
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1tcIgy-0002fu-49
+ for qemu-devel@nongnu.org; Mon, 27 Jan 2025 01:33:52 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1tcIgv-0004Ue-TM
+ for qemu-devel@nongnu.org; Mon, 27 Jan 2025 01:33:51 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1737959628;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+ bh=pXn9VZ9E0zTaknGuPvVcaJ6MFsVueGXrRF+RkjaXQNg=;
+ b=XwHDP/eBGXp0ZN9r/7yGTGAtTgITuhS24zwHc85B6IZZuUXKXAU/0Ks9JBtGgiCfS9Uq+m
+ VNEwXAlPBm/vII88GMvEvqdft+q6ftnmZmDGLNo+vLbvfpnjyfXpc3F0nYKyICEaxF9C4a
+ qN1/AuprL2fzc1Dbk8o+jLvFvQrxJ8o=
+Received: from mail-wr1-f69.google.com (mail-wr1-f69.google.com
+ [209.85.221.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-677-Ythn70LTPq6I6ipPc-VNuA-1; Mon, 27 Jan 2025 01:33:46 -0500
+X-MC-Unique: Ythn70LTPq6I6ipPc-VNuA-1
+X-Mimecast-MFC-AGG-ID: Ythn70LTPq6I6ipPc-VNuA
+Received: by mail-wr1-f69.google.com with SMTP id
+ ffacd0b85a97d-385fdff9db5so1299505f8f.0
+ for <qemu-devel@nongnu.org>; Sun, 26 Jan 2025 22:33:46 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1737959298; x=1738564098;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=qdGklV3bD/Na9yyaq0qF6kZZAzrWlyOwPH/OxSTWyMY=;
- b=KTkMu+kex4ntvWraTyKyV2+dFmuP5Ul6da0yOJSBr6DhI4eKgji4qULKMj+WeWqxZy
- 5p07+O5SHo8tHD+fhTcajtBL9rB7De4FYnyfodzlioqDtygjGHrAehoZAa07lfS9tlus
- Q5p3uqzDWiqLq8lela8iH6qvVg43Wvu6fUSNsmMYx/EFFJICEd5T9e8bjpt1JDre+lxX
- J0E/HLCyeYVAIrE3MsFKG27AbTZfD1lcDD8xZmDgkDpXNT8W5fHOjG4Lyifslzv89gA0
- WR1NoVGMrb+GWiUX+twDb8Hva5nllS7j8i4VB9hlcnI5e4Vz9+warP+3yZ/IInTEg+3i
- p9hA==
-X-Forwarded-Encrypted: i=1;
- AJvYcCU2WoM+upRXdZf+rqPS1nn0RlEfJiCQ37iyqJdPdRgBs8ilZ6JUzp12kNclBhj/wIp9/MY2SrWFyOjv@nongnu.org
-X-Gm-Message-State: AOJu0Yw/BBVPjH/q8lahZf5zMajaVj4wDRmfH6UY8rCTYW5EYVgh0H52
- KwyX3Bv1+OYXITvfZOh7GU/pp/Ex5FbInETnLn6Nr8EfQuAf7KhtkaJrby6FNzs=
-X-Gm-Gg: ASbGncuOxYEeYyhRir9vSCzu7i4QuP7pWqg728n6NBOfEi5W/p3R+AtzkkhxdfRgaVy
- wky0+Wgja5YdIKOEfbsZgJp2wst4i8bbc63zEeiyw0KmbwSIQ+WlGhzCt1FiswFymTnGUPdUh9t
- BfXcYJZG2lmg5mtWaOGb2FDdYOsh+FQMkOmxavnfOnHsiy42sb78Se9f38BrBnCVQBS9RG6kXJo
- A02CdS3KuXy4rTYgBLnzlSjlimmoCA5IgZzARpmmgvgzGbNPmNLSy6z5iAK/0/0rAP6VTFRDKT2
- B5rMMIo9bVLmYbg=
-X-Google-Smtp-Source: AGHT+IHGQiOksgMIIWv0sF8aFMIL+v6xACbWm9bVb0A8iZkgQZWlNDid+2LMquWAJMyvykGaQBqIVA==
-X-Received: by 2002:a17:90b:2703:b0:2ee:d63f:d71 with SMTP id
- 98e67ed59e1d1-2f782c7252dmr65163412a91.14.1737959298309; 
- Sun, 26 Jan 2025 22:28:18 -0800 (PST)
-Received: from [157.82.203.37] ([157.82.203.37])
- by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-2f7ffa6ad74sm6150355a91.23.2025.01.26.22.28.12
+ d=1e100.net; s=20230601; t=1737959625; x=1738564425;
+ h=content-transfer-encoding:in-reply-to:autocrypt:content-language
+ :from:references:cc:to:subject:user-agent:mime-version:date
+ :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=pXn9VZ9E0zTaknGuPvVcaJ6MFsVueGXrRF+RkjaXQNg=;
+ b=uKW8k4Id9HP6+Uy6ziFB4fbm2+moFsObJE8iyUiWh7JFqHbYBIOXOdFsFmyhyQUrjl
+ ygBhgN6vOfBSiDRXT7QMGJNiTjzJuBU42zGzgBv4FChrrKVuLfdHkDTqTV/7PmNQQ0kO
+ ROPIYOejxKmBQY7H/P1/ERcg3aSjH6VsEt14a292aE5BitJJ08KmoUKnFtIqCPNyAyPA
+ BKII7gXNjVVGIw/OLKCsh0CQQSb941sFyjzZWETLUXcKuHNBqbR82sUdn+9DQ2Rl2p8J
+ BrSEjE/Eo4zqgb397ZwDD1gtFHU/wMGIJTm4NEq9HH62DztcmNWvb73VaGmN0voDgDhu
+ NFDQ==
+X-Gm-Message-State: AOJu0Yz/hgjZoU/qpwKV0EeLsl3ZDzF3BC5wvv1zE/dO3Q9JIlvbBWhU
+ frRwCoyYXHgXJi26XtXx5srABgi3O4KNYkeYtC4o/NP+MhUxsCtP0Yh6BFxDIh2LsbN/TiE0XQG
+ 4Dv+3PEMVDlWl63Uj9sRZ4JcgeCg0OpnDWTY8/ZKjLq68GUxG+m39oP56kXpo
+X-Gm-Gg: ASbGnctKhI+g4x3K3nvLg8X0uIb7PnZLMGdEKlCStbW6V8WFYqpYoEoA20DYs4h8owB
+ HCb34/JUDXA71FjtzGfcbvGYEQbv8LoxxVv8YweCkBfbGgYO4CFluLyfNv5ANdGhcawEOW+zIUg
+ RuJ+G10SipXH1BhoG6NRk8UgNuZi4e2FP/I/L/r1YISpkTBi0NfstHF+pJFMe388J0PvHhY3ryy
+ 6fNDNGdBnf9xumkXS5YM6BGN34kBVeo/AQVGuT3FHCRiXzsPi2FK++W55lsasOPAtQ2Fq89B7IS
+ 1cmV/aYyGwqZKCurdvzqvtsB/BlagqyTCbmy
+X-Received: by 2002:a5d:64a1:0:b0:38a:39ad:3e2f with SMTP id
+ ffacd0b85a97d-38bf565573dmr33514025f8f.2.1737959625151; 
+ Sun, 26 Jan 2025 22:33:45 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IFNjiQKQu8qRl9fC+PeL8PoWspejKT+6kmIi857PM6dedK2OVf7Z6bj/zupB/W6NaLmPdr2hw==
+X-Received: by 2002:a5d:64a1:0:b0:38a:39ad:3e2f with SMTP id
+ ffacd0b85a97d-38bf565573dmr33514000f8f.2.1737959624711; 
+ Sun, 26 Jan 2025 22:33:44 -0800 (PST)
+Received: from [192.168.0.7] (ip-109-42-48-134.web.vodafone.de.
+ [109.42.48.134]) by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-38c2a17d7bfsm10147190f8f.35.2025.01.26.22.33.43
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Sun, 26 Jan 2025 22:28:17 -0800 (PST)
-Message-ID: <42646f72-c2c8-43c5-abe1-e8e1b3c9d31b@daynix.com>
-Date: Mon, 27 Jan 2025 15:28:10 +0900
+ Sun, 26 Jan 2025 22:33:44 -0800 (PST)
+Message-ID: <88b154a1-452e-4f5c-a6f0-9b0f148f6b80@redhat.com>
+Date: Mon, 27 Jan 2025 07:33:42 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v6 10/10] docs/system: virtio-gpu: Document host/guest
- requirements
-To: Dmitry Osipenko <dmitry.osipenko@collabora.com>,
- Huang Rui <ray.huang@amd.com>,
- =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
- =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Gerd Hoffmann <kraxel@redhat.com>, =?UTF-8?Q?Alex_Benn=C3=A9e?=
- <alex.bennee@linaro.org>, "Michael S . Tsirkin" <mst@redhat.com>,
- Paolo Bonzini <pbonzini@redhat.com>
-Cc: Gert Wollny <gert.wollny@collabora.com>, qemu-devel@nongnu.org,
- Gurchetan Singh <gurchetansingh@chromium.org>, Alyssa Ross <hi@alyssa.is>,
- =?UTF-8?Q?Roger_Pau_Monn=C3=A9?= <roger.pau@citrix.com>,
- Alex Deucher <alexander.deucher@amd.com>,
- Stefano Stabellini <stefano.stabellini@amd.com>,
- =?UTF-8?Q?Christian_K=C3=B6nig?= <christian.koenig@amd.com>,
- Xenia Ragiadakou <xenia.ragiadakou@amd.com>,
- Pierre-Eric Pelloux-Prayer <pierre-eric.pelloux-prayer@amd.com>,
- Honglei Huang <honglei1.huang@amd.com>, Julia Zhang <julia.zhang@amd.com>,
- Chen Jiqian <Jiqian.Chen@amd.com>, Rob Clark <robdclark@gmail.com>,
- Yiwei Zhang <zzyiwei@chromium.org>, Sergio Lopez Pascual <slp@redhat.com>
-References: <20250126201121.470990-1-dmitry.osipenko@collabora.com>
- <20250126201121.470990-11-dmitry.osipenko@collabora.com>
+Subject: Re: [PATCH] tests/functional: Add a test for the arm microbit machine
+To: =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
+Cc: qemu-devel@nongnu.org, qemu-arm@nongnu.org, Joel Stanley
+ <joel@jms.id.au>, Peter Maydell <peter.maydell@linaro.org>
+References: <20250124101709.1591761-1-thuth@redhat.com>
+ <8734h8joui.fsf@draig.linaro.org>
+From: Thomas Huth <thuth@redhat.com>
 Content-Language: en-US
-From: Akihiko Odaki <akihiko.odaki@daynix.com>
-In-Reply-To: <20250126201121.470990-11-dmitry.osipenko@collabora.com>
+Autocrypt: addr=thuth@redhat.com; keydata=
+ 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
+In-Reply-To: <8734h8joui.fsf@draig.linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1034;
- envelope-from=akihiko.odaki@daynix.com; helo=mail-pj1-x1034.google.com
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001, T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=thuth@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -43
+X-Spam_score: -4.4
+X-Spam_bar: ----
+X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.299,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=-1, RCVD_IN_MSPIKE_WL=-0.01,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -120,220 +153,110 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 2025/01/27 5:11, Dmitry Osipenko wrote:
-> From: Alex Bennée <alex.bennee@linaro.org>
+On 24/01/2025 14.58, Alex Bennée wrote:
+> Thomas Huth <thuth@redhat.com> writes:
 > 
-> This attempts to tidy up the VirtIO GPU documentation to make the list
-> of requirements clearer. There are still a lot of moving parts and the
-> distros have some catching up to do before this is all handled
-> automatically.
+>> We don't have any functional tests for this machine yet, thus let's
+>> add a test with a MicroPython binary that is available online
 > 
-> Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
-> Cc: Sergio Lopez Pascual <slp@redhat.com>
-> Signed-off-by: Dmitry Osipenko <dmitry.osipenko@collabora.com>
-> [dmitry.osipenko@collabora.com: Extended and corrected doc]
-> ---
->   docs/system/devices/virtio-gpu.rst | 107 ++++++++++++++++++++++++++++-
->   1 file changed, 106 insertions(+), 1 deletion(-)
+> We do have a basic system test:
 > 
-> diff --git a/docs/system/devices/virtio-gpu.rst b/docs/system/devices/virtio-gpu.rst
-> index ea3eb052df3c..b3db984ff2d3 100644
-> --- a/docs/system/devices/virtio-gpu.rst
-> +++ b/docs/system/devices/virtio-gpu.rst
-> @@ -5,7 +5,9 @@ virtio-gpu
->   ==========
->   
->   This document explains the setup and usage of the virtio-gpu device.
-> -The virtio-gpu device paravirtualizes the GPU and display controller.
-> +The virtio-gpu device provides a GPU and display controller
-> +paravirtualized using VirtIO. It supports a number of different modes
-> +from simple 2D displays to fully accelerated 3D graphics.
->   
->   Linux kernel support
->   --------------------
-> @@ -13,6 +15,24 @@ Linux kernel support
->   virtio-gpu requires a guest Linux kernel built with the
->   ``CONFIG_DRM_VIRTIO_GPU`` option.
->   
-> +Dependencies
-> +............
-> +
-> +.. note::
-> +  GPU virtualisation is still an evolving field. Depending on the mode
-> +  you are running you may need to override distribution supplied
-> +  libraries with more recent versions or enable build options.
+>    test-armv6m-undef: test-armv6m-undef.S
+>            $(CC) -mcpu=cortex-m0 -mfloat-abi=soft \
+>                    -Wl,--build-id=none -x assembler-with-cpp \
+>                    $< -o $@ -nostdlib -static \
+>                    -T $(ARM_SRC)/$@.ld
+> 
+>    run-test-armv6m-undef: QEMU_OPTS=-semihosting-config enable=on,target=native,chardev=output -M microbit -kernel
+> 
+>    ARM_TESTS+=test-armv6m-undef
+> 
+> But I guess this exercised more of the machine as micropython actually
+> comes up.
+> 
+>> (thanks to Joel Stanley for providing it, see:
+>>   https://www.mail-archive.com/qemu-devel@nongnu.org/msg606064.html ).
+>>
+>> Signed-off-by: Thomas Huth <thuth@redhat.com>
+>> ---
+>>   MAINTAINERS                           |  1 +
+>>   tests/functional/meson.build          |  1 +
+>>   tests/functional/test_arm_microbit.py | 31 +++++++++++++++++++++++++++
+>>   3 files changed, 33 insertions(+)
+>>   create mode 100755 tests/functional/test_arm_microbit.py
+>>
+>> diff --git a/MAINTAINERS b/MAINTAINERS
+>> index 1d9b3a0011..7b4d84bf5f 100644
+>> --- a/MAINTAINERS
+>> +++ b/MAINTAINERS
+>> @@ -1157,6 +1157,7 @@ F: hw/*/microbit*.c
+>>   F: include/hw/*/nrf51*.h
+>>   F: include/hw/*/microbit*.h
+>>   F: tests/qtest/microbit-test.c
+>> +F: tests/functional/test_arm_microbit.py
+>>   F: docs/system/arm/nrf.rst
+>>   
+>>   ARM PL011 Rust device
+>> diff --git a/tests/functional/meson.build b/tests/functional/meson.build
+>> index bcfbb70b65..a301c38806 100644
+>> --- a/tests/functional/meson.build
+>> +++ b/tests/functional/meson.build
+>> @@ -105,6 +105,7 @@ tests_arm_system_thorough = [
+>>     'arm_cubieboard',
+>>     'arm_emcraft_sf2',
+>>     'arm_integratorcp',
+>> +  'arm_microbit',
+>>     'arm_orangepi',
+>>     'arm_quanta_gsj',
+>>     'arm_raspi2',
+>> diff --git a/tests/functional/test_arm_microbit.py b/tests/functional/test_arm_microbit.py
+>> new file mode 100755
+>> index 0000000000..68ea4e73d6
+>> --- /dev/null
+>> +++ b/tests/functional/test_arm_microbit.py
+>> @@ -0,0 +1,31 @@
+>> +#!/usr/bin/env python3
+>> +#
+>> +# SPDX-License-Identifier: GPL-2.0-or-later
+>> +#
+>> +# Copyright 2025, The QEMU Project Developers.
+>> +#
+>> +# A functional test that runs MicroPython on the arm microbit machine.
+>> +
+>> +from qemu_test import QemuSystemTest, Asset, exec_command_and_wait_for_pattern
+>> +from qemu_test import wait_for_console_pattern
+>> +
+>> +
+>> +class MicrobitMachine(QemuSystemTest):
+>> +
+>> +    ASSET_MICRO = Asset('https://ozlabs.org/~joel/microbit-micropython.hex',
+>> +        '021641f93dfb11767d4978dbb3ca7f475d1b13c69e7f4aec3382f212636bffd6')
+>> +
+>> +    def test_arm_microbit(self):
+>> +        self.set_machine('microbit')
+>> +
+>> +        micropython = self.ASSET_MICRO.fetch()
+>> +        self.vm.set_console()
+>> +        self.vm.add_args('-device', f'loader,file={micropython}')
+>> +        self.vm.launch()
+>> +        wait_for_console_pattern(self, 'Type "help()" for more information.')
+>> +        exec_command_and_wait_for_pattern(self, 'import machine as mch', '>>>')
+>> +        exec_command_and_wait_for_pattern(self, 'mch.reset()', 'MicroPython')
+>> +        wait_for_console_pattern(self, '>>>')
+> 
+> We could do more if we wanted - all the microbit specific stuff lives in
+> the microbit module:
+> 
+>    https://microbit-micropython.readthedocs.io/en/latest/microbit_micropython_api.html
 
-s/virtualisation/virtualization/ for consistency with other documentations.
+Is there anything that can be done beside just "run a python command and see 
+that it did not crash"? E.g. is it possible to set a different temperature 
+via QOM/QAPI or simulate button presses?
 
-> +
-> +  Depending on the mode there are a number of requirements the host must
-> +  meet to be able to be able to support guests. For 3D acceleration QEMU
-> +  must be able to access the hosts GPU and for the best performance be
-> +  able to reliably share GPU memory with the guest.
-> +
-> +  Virtio-gpu requires a guest Linux kernel built with the
-> +  ``CONFIG_DRM_VIRTIO_GPU`` option. For 3D accelerations you
-> +  will need support from guest Mesa configured for whichever encapsulation
-> +  you need.
+> Reviewed-by: Alex Bennée <alex.bennee@linaro.org>
 
-This section is part of the "Linux kernel support" chapter, which used 
-to describe the guest Linux kernel requirement, but this section 
-discusses a broader topic that includes the host requirements and guest 
-Mesa. This section needs to be re-structured.
+Thanks!
 
-It says "GPU virtualisation is still an evolving field", but I believe 
-the main evolving field is 3D acceleration. The later parts also 
-repetitively mention 3D acceleration. Instead of repeating the same 
-phrase, let the reader know that this section talks about 3D 
-acceleration at the beginning. It will make the section more concise and 
-allows readers to skip it when they do not care 3D acceleration.
-
-The ``CONFIG_DRM_VIRTIO_GPU`` option is already described earlier so its 
-description is redundant.
-
-> +
->   QEMU virtio-gpu variants
->   ------------------------
->   
-> @@ -56,6 +76,16 @@ on typical modern Linux distributions.
->   .. _Mesa: https://www.mesa3d.org/
->   .. _SwiftShader: https://github.com/google/swiftshader
->   
-> +.. list-table:: Host Requirements
-> +  :header-rows: 1
-> +
-> +  * - Mode
-> +    - Kernel
-> +    - Userspace
-> +  * - virtio-gpu
-> +    - Framebuffer enabled
-
-It is not clear what "framebuffer enabled" means, and it is also 
-inconsistent with the host requirements tables in later sections that 
-describes the Linux kernel version. Also be aware that virtio-gpu works 
-effectively anywhere, not just Linux.
-
-> +    - GTK or SDL display
-
-It is also inconsistent with later section that describes acceleration 
-backends instead of the display. virtio-gpu also works with any display 
-and is not restricted to GTK or SDL.
-
-> +
->   virtio-gpu virglrenderer
->   ------------------------
->   
-> @@ -94,6 +124,61 @@ of virtio-gpu host memory window. This is typically between 256M and 8G.
->   
->   .. _drm: https://gitlab.freedesktop.org/virgl/virglrenderer/-/tree/main/src/drm
->   
-> +.. list-table:: Host Requirements
-> +  :header-rows: 1
-> +
-> +  * - Mode
-> +    - Kernel
-> +    - Userspace
-> +  * - virtio-gpu-gl (OpenGL pass-through)
-
-It's already in the "virtio-gpu virglrenderer" setion so you don't have 
-to mention "virtio-gpu-gl" again here.
-
-> +    - GPU enabled> +    - libvirglrenderer (virgl support)> +  * - virtio-gpu-gl (Vulkan 
-pass-through)
-> +    - Linux 6.13+
-> +    - libvirglrenderer (>= 1.0.0, venus support)
-
-"venus support" is a vague wording. I can guess it means it requires a 
-build flag, but it's not clear for a novice.
-
-Perhaps you may write the build flag as you did for Mesa.
-
-> +  * - virtio-gpu-gl (vDRM native context/AMD)
-
-The later part of documentation calls it "DRM native context", not "vDRM 
-native context"; let's keep them consistent. "vDRM native context" seems 
-rarely used; I could only find one example of existing literature:
-https://www.collabora.com/news-and-blog/blog/2025/01/15/the-state-of-gfx-virtualization-using-virglrenderer/
-
-Mesa has a directory named vdrm but it is mentioned in no user-facing 
-documentation.
-
-> +    - Linux 6.13+
-> +    - libvirglrenderer (>= 1.1.0, DRM renderer support)
-> +  * - virtio-gpu-gl (vDRM native context/Freedreno)
-> +    - Linux 6.4+
-> +    - libvirglrenderer (>= 1.0.0, DRM renderer support)
-> +  * - virtio-gpu-gl (vDRM native context/Intel i915)
-> +    - Linux 6.13+
-> +    - libvirglrenderer (`mr1384`_, DRM renderer support)
-> +  * - virtio-gpu-gl (vDRM native context/Asahi)
-> +    - Linux 6.13+
-> +    - libvirglrenderer (`mr1274`_, DRM renderer support)
-> +
-> +.. _mr1384: https://gitlab.freedesktop.org/virgl/virglrenderer/-/merge_requests/1384
-> +.. _mr1274: https://gitlab.freedesktop.org/virgl/virglrenderer/-/merge_requests/1274
- > +> +.. list-table:: Guest Requirements
-> +  :header-rows: 1
-> +
-> +  * - Mode
-> +    - Mesa Version
-> +    - Mesa build flags
-> +  * - virtio-gpu-gl (OpenGL pass-through)
-> +    - 20.3.0+
-> +    - -Dgallium-drivers=virgl
-> +  * - virtio-gpu-gl (Vulkan pass-through)
-> +    - 24.2.0+
-> +    - -Dvulkan-drivers=virtio
-> +  * - virtio-gpu-gl (vDRM native context/AMD)
-> +    - 25.0.0+
-> +    - -Dgallium-drivers=radeonsi -Dvulkan-drivers=amd -Damdgpu-virtio=true
-> +  * - virtio-gpu-gl (vDRM native context/Freedreno)
-> +    - 23.1.0+
-> +    - -Dgallium-drivers=freedreno -Dvulkan-drivers=freedreno
-> +  * - virtio-gpu-gl (vDRM native context/Intel i915)
-> +    - `mr29870`_
-> +    - -Dgallium-drivers=iris -Dvulkan-drivers=intel -Dintel-virtio-experimental=true
-> +  * - virtio-gpu-gl (vDRM native context/Asahi)
-> +    - 24.2.0+
-> +    - -Dgallium-drivers=asahi -Dvulkan-drivers=asahi
-> +
-> +.. _mr29870: https://gitlab.freedesktop.org/mesa/mesa/-/merge_requests/29870
-> +
->   virtio-gpu rutabaga
->   -------------------
->   
-> @@ -133,3 +218,23 @@ Surfaceless is the default if ``wsi`` is not specified.
->   .. _Wayland display passthrough: https://www.youtube.com/watch?v=OZJiHMtIQ2M
->   .. _gfxstream-enabled rutabaga: https://crosvm.dev/book/appendix/rutabaga_gfx.html
->   .. _guest Wayland proxy: https://crosvm.dev/book/devices/wayland.html
-> +
-> +.. list-table:: Host Requirements
-> +  :header-rows: 1
-> +
-> +  * - Mode
-> +    - Kernel
-> +    - Userspace
-> +  * - virtio-gpu-gl (rutabaga/gfxstream)
-> +    - GPU enabled
-> +    - aemu/rutabaga_gfx_ffi or vhost-user client with support
-
-Let's omit the mention of aemu. It is a dependency of rutabaga_gfx_ffi 
-and referring to dependencies of our dependencies will make the 
-documentation too cluttered. Users should also see rutabaga_gfx_ffi 
-needs aemu anyway in its build guide; the reference of aemu here is 
-effectively redundant.
-
-I don't see the vhost-user support in Rutabaga. Does it really exist?
-
-> +
-> +.. list-table:: Guest Requirements
-> +  :header-rows: 1
-> +
-> +  * - Mode
-> +    - Mesa Version
-> +    - Mesa build flags
-> +  * - virtio-gpu-gl (rutabaga/gfxstream)
-> +    - 24.3.0+
-> +    - -Dvulkan-drivers=gfxstream
+   Thomas
 
 
