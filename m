@@ -4,35 +4,37 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 12110C02190
-	for <qemu-devel@archiver.kernel.org>; Tue, 28 Jan 2025 08:08:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3D80DC0218D
+	for <qemu-devel@archiver.kernel.org>; Tue, 28 Jan 2025 08:08:22 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tcgXr-0003r2-Ha; Tue, 28 Jan 2025 03:02:03 -0500
+	id 1tcgXv-0004Cv-Mf; Tue, 28 Jan 2025 03:02:09 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1tcgX4-0000iw-07; Tue, 28 Jan 2025 03:01:17 -0500
+ id 1tcgX9-0000vk-0W; Tue, 28 Jan 2025 03:01:19 -0500
 Received: from isrv.corpit.ru ([86.62.121.231])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1tcgX2-0001lO-Ck; Tue, 28 Jan 2025 03:01:13 -0500
+ id 1tcgX5-0001q8-E6; Tue, 28 Jan 2025 03:01:18 -0500
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 8CF9BE1B4B;
+ by isrv.corpit.ru (Postfix) with ESMTP id 94D54E1B4D;
  Tue, 28 Jan 2025 10:57:08 +0300 (MSK)
 Received: from localhost.tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id 08D111A62FE;
+ by tsrv.corpit.ru (Postfix) with ESMTP id 10A011A6300;
  Tue, 28 Jan 2025 10:57:34 +0300 (MSK)
 Received: by localhost.tls.msk.ru (Postfix, from userid 1000)
- id E367F5208D; Tue, 28 Jan 2025 10:57:33 +0300 (MSK)
+ id E6B6952091; Tue, 28 Jan 2025 10:57:33 +0300 (MSK)
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Ilya Leoshkevich <iii@linux.ibm.com>,
- Richard Henderson <richard.henderson@linaro.org>,
+Cc: qemu-stable@nongnu.org, Kevin Wolf <kwolf@redhat.com>,
+ Peter Maydell <peter.maydell@linaro.org>,
+ Paolo Bonzini <pbonzini@redhat.com>, Markus Armbruster <armbru@redhat.com>,
  Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-9.1.3 04/58] linux-user: Fix strace output for s390x mmap()
-Date: Mon, 27 Jan 2025 23:24:50 +0300
-Message-Id: <20250127202547.3723716-4-mjt@tls.msk.ru>
+Subject: [Stable-9.1.3 06/58] qdev: Fix set_pci_devfn() to visit option only
+ once
+Date: Mon, 27 Jan 2025 23:24:52 +0300
+Message-Id: <20250127202547.3723716-6-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <qemu-stable-9.1.3-20250127232536@cover.tls.msk.ru>
 References: <qemu-stable-9.1.3-20250127232536@cover.tls.msk.ru>
@@ -63,70 +65,116 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-print_mmap() assumes that mmap() receives arguments via memory if
-mmap2() is present. s390x (as opposed to s390) does not fit this
-pattern: it does not have mmap2(), but mmap() still receives arguments
-via memory.
+pci_devfn properties accept either a string or an integer as input. To
+implement this, set_pci_devfn() first tries to visit the option as a
+string, and if that fails, it visits it as an integer instead. While the
+QemuOpts visitor happens to accept this, it is invalid according to the
+visitor interface. QObject input visitors run into an assertion failure
+when this is done.
 
-Fix by sharing the detection logic between syscall.c and strace.c.
+QObject input visitors are used with the JSON syntax version of -device
+on the command line:
+
+$ ./qemu-system-x86_64 -enable-kvm -M q35 -device pcie-pci-bridge,id=pci.1,bus=pcie.0 -blockdev null-co,node-name=disk -device '{ "driver": "virtio-blk-pci", "drive": "disk", "id": "virtio-disk0", "bus": "pci.1", "addr": 1 }'
+qemu-system-x86_64: ../qapi/qobject-input-visitor.c:143: QObject *qobject_input_try_get_object(QObjectInputVisitor *, const char *, _Bool): Assertion `removed' failed.
+
+The proper way to accept both strings and integers is using the
+alternate mechanism, which tells us the type of the input before it's
+visited. With this information, we can directly visit it as the right
+type.
+
+This fixes set_pci_devfn() by using the alternate mechanism.
 
 Cc: qemu-stable@nongnu.org
-Fixes: d971040c2d16 ("linux-user: Fix strace output for old_mmap")
-Suggested-by: Richard Henderson <richard.henderson@linaro.org>
-Signed-off-by: Ilya Leoshkevich <iii@linux.ibm.com>
-Message-ID: <20241120212717.246186-1-iii@linux.ibm.com>
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
-(cherry picked from commit d95fd9838b540e69da9b07538ec8ad6ab9eab260)
+Reported-by: Peter Maydell <peter.maydell@linaro.org>
+Signed-off-by: Kevin Wolf <kwolf@redhat.com>
+Message-ID: <20241119120353.57812-1-kwolf@redhat.com>
+Acked-by: Paolo Bonzini <pbonzini@redhat.com>
+Reviewed-by: Markus Armbruster <armbru@redhat.com>
+Signed-off-by: Kevin Wolf <kwolf@redhat.com>
+(cherry picked from commit 5102f9df4a9a7adfbd902f9515c3f8f53dba288e)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
-(Mjt: compensate for chris architecture removal by v9.1.0-282-gbff4b02ca1f4
- "linux-user: Remove support for CRIS target")
 
-diff --git a/linux-user/strace.c b/linux-user/strace.c
-index b4d1098170..4dabe0bd42 100644
---- a/linux-user/strace.c
-+++ b/linux-user/strace.c
-@@ -3823,7 +3823,7 @@ print_mmap(CPUArchState *cpu_env, const struct syscallname *name,
+diff --git a/hw/core/qdev-properties-system.c b/hw/core/qdev-properties-system.c
+index f13350b4fb..30e040f98e 100644
+--- a/hw/core/qdev-properties-system.c
++++ b/hw/core/qdev-properties-system.c
+@@ -794,39 +794,57 @@ static void set_pci_devfn(Object *obj, Visitor *v, const char *name,
+                           void *opaque, Error **errp)
  {
-     return print_mmap_both(cpu_env, name, arg0, arg1, arg2, arg3,
-                            arg4, arg5,
--#if defined(TARGET_NR_mmap2)
-+#ifdef TARGET_ARCH_WANT_SYS_OLD_MMAP
-                             true
- #else
-                             false
-diff --git a/linux-user/syscall.c b/linux-user/syscall.c
-index c393ca6716..900872a741 100644
---- a/linux-user/syscall.c
-+++ b/linux-user/syscall.c
-@@ -10496,10 +10496,7 @@ static abi_long do_syscall1(CPUArchState *cpu_env, int num, abi_long arg1,
-         return ret;
- #ifdef TARGET_NR_mmap
-     case TARGET_NR_mmap:
--#if (defined(TARGET_I386) && defined(TARGET_ABI32)) || \
--    (defined(TARGET_ARM) && defined(TARGET_ABI32)) || \
--    defined(TARGET_M68K) || defined(TARGET_CRIS) || defined(TARGET_MICROBLAZE) \
--    || defined(TARGET_S390X)
-+#ifdef TARGET_ARCH_WANT_SYS_OLD_MMAP
-         {
-             abi_ulong *v;
-             abi_ulong v1, v2, v3, v4, v5, v6;
-diff --git a/linux-user/syscall_defs.h b/linux-user/syscall_defs.h
-index a00b617cae..7ca5972296 100644
---- a/linux-user/syscall_defs.h
-+++ b/linux-user/syscall_defs.h
-@@ -2754,4 +2754,11 @@ struct target_sched_param {
-     abi_int sched_priority;
- };
- 
-+#if (defined(TARGET_I386) && defined(TARGET_ABI32)) || \
-+    (defined(TARGET_ARM) && defined(TARGET_ABI32)) || \
-+    defined(TARGET_M68K) || defined(TARGET_CRIS) || defined(TARGET_MICROBLAZE) \
-+    || defined(TARGET_S390X)
-+#define TARGET_ARCH_WANT_SYS_OLD_MMAP
-+#endif
+     Property *prop = opaque;
++    g_autofree GenericAlternate *alt;
+     int32_t value, *ptr = object_field_prop_ptr(obj, prop);
+     unsigned int slot, fn, n;
+-    char *str;
++    g_autofree char *str = NULL;
 +
- #endif
++    if (!visit_start_alternate(v, name, &alt, sizeof(*alt), errp)) {
++        return;
++    }
++
++    switch (alt->type) {
++    case QTYPE_QSTRING:
++        if (!visit_type_str(v, name, &str, errp)) {
++            goto out;
++        }
+ 
+-    if (!visit_type_str(v, name, &str, NULL)) {
++        if (sscanf(str, "%x.%x%n", &slot, &fn, &n) != 2) {
++            fn = 0;
++            if (sscanf(str, "%x%n", &slot, &n) != 1) {
++                goto invalid;
++            }
++        }
++        if (str[n] != '\0' || fn > 7 || slot > 31) {
++            goto invalid;
++        }
++        *ptr = slot << 3 | fn;
++        break;
++
++    case QTYPE_QNUM:
+         if (!visit_type_int32(v, name, &value, errp)) {
+-            return;
++            goto out;
+         }
+         if (value < -1 || value > 255) {
+             error_setg(errp, QERR_INVALID_PARAMETER_VALUE,
+                        name ? name : "null", "a value between -1 and 255");
+-            return;
++            goto out;
+         }
+         *ptr = value;
+-        return;
+-    }
++        break;
+ 
+-    if (sscanf(str, "%x.%x%n", &slot, &fn, &n) != 2) {
+-        fn = 0;
+-        if (sscanf(str, "%x%n", &slot, &n) != 1) {
+-            goto invalid;
+-        }
+-    }
+-    if (str[n] != '\0' || fn > 7 || slot > 31) {
+-        goto invalid;
++    default:
++        error_setg(errp, "Invalid parameter type for '%s', expected int or str",
++                   name ? name : "null");
++        goto out;
+     }
+-    *ptr = slot << 3 | fn;
+-    g_free(str);
+-    return;
++
++    goto out;
+ 
+ invalid:
+     error_set_from_qdev_prop_error(errp, EINVAL, obj, name, str);
+-    g_free(str);
++out:
++    visit_end_alternate(v, (void **) &alt);
+ }
+ 
+ static int print_pci_devfn(Object *obj, Property *prop, char *dest,
 -- 
 2.39.5
 
