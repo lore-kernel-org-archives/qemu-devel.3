@@ -4,86 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CBFB8C02188
-	for <qemu-devel@archiver.kernel.org>; Mon, 27 Jan 2025 11:28:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5CBC6C02188
+	for <qemu-devel@archiver.kernel.org>; Mon, 27 Jan 2025 11:29:08 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tcNHX-00073A-UU; Mon, 27 Jan 2025 06:27:56 -0500
+	id 1tcNHN-0006vF-IL; Mon, 27 Jan 2025 06:27:45 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1tcNH3-0006qp-C1
- for qemu-devel@nongnu.org; Mon, 27 Jan 2025 06:27:28 -0500
-Received: from mail-wm1-x335.google.com ([2a00:1450:4864:20::335])
+ id 1tcNH1-0006qd-45
+ for qemu-devel@nongnu.org; Mon, 27 Jan 2025 06:27:27 -0500
+Received: from mail-wr1-x42d.google.com ([2a00:1450:4864:20::42d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1tcNGy-0002ur-7t
- for qemu-devel@nongnu.org; Mon, 27 Jan 2025 06:27:24 -0500
-Received: by mail-wm1-x335.google.com with SMTP id
- 5b1f17b1804b1-43621d27adeso28304355e9.2
+ id 1tcNGy-0002ua-AK
+ for qemu-devel@nongnu.org; Mon, 27 Jan 2025 06:27:22 -0500
+Received: by mail-wr1-x42d.google.com with SMTP id
+ ffacd0b85a97d-38be3bfb045so3557974f8f.0
  for <qemu-devel@nongnu.org>; Mon, 27 Jan 2025 03:27:19 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1737977238; x=1738582038; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=5G4uQcdWEEYcrkDnKmN/Wnx0lr4v5vW4hQqGLNo2IKU=;
- b=chAV1WlaUJ81BnN9MCbWMgCxqk8+BXhMD6pDQyxjiCXbv/agH/M7p1HQ5BAjaieKac
- UFxilqC42gS3VkrPDJwad/YI7FKMYYhiYKRFEuBsAd0zAcejae55v28NUT4v2Ah+/moK
- 4AVN1M/r1x7IW4mFxcOSO8IBH/YaBPW2SnJKE49nckWAiHq7vsWNnP9ZPOwgxmDHGgrO
- zhrPUUHqG241X8Z6h3UNQ5XbeWm4On/GjHE0A4qwE+zZO/noDh57uIJScDtdy73IhzKk
- GzoiMv3LYYaxzsfvVoEk09Nk8qQaIuCfUrE8OH/RrlAh1N7sqp1I6LZKkodcnQqk390g
- DX9w==
+ d=linaro.org; s=google; t=1737977237; x=1738582037; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:to
+ :from:from:to:cc:subject:date:message-id:reply-to;
+ bh=ZRakPZ6OV3eBLWtDvjLaBsJfRq8OfeLe2uxM2sXVI94=;
+ b=N37l6MjSWTDRX4Lw3xnnsfa5t6rBbTT2dCDd0vDLAfnBp00USrdIg0ttSYTM0TybnF
+ iSIMLD2cg62br5VOW0/WesMwLp/xinN+CcpdTNuawn9mm5WaOouiu47yTgrNaPUaD8O6
+ nQG9mkGEgIjeQAKXQ2f7PLW7bVUMv/n7E0e8dV1sxBGJ/Kdo87F6PNhoNL0KxVIh+9BU
+ t8nQN8Ti7f44jVBXlm5GHmXpvOPLD6xjzGhfz8+I5WjKK9bxa8ScjHf8WjvX3grW15qc
+ +V5CcreICvt3dbAJnWeonP5zLwzl4kUrhDVZ7mLkkG4nqcJpSgeMXlgJEap1+BfAJftd
+ ieug==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1737977238; x=1738582038;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=5G4uQcdWEEYcrkDnKmN/Wnx0lr4v5vW4hQqGLNo2IKU=;
- b=ba8MmpLIyHR6En3qm5UGUwkSbsW9R8xQbUFo9JXVAa7BrJfP1qsdnrlhdV3mRlfGOj
- rEB5WruVZ8Lf8OI2yGsBMi/q5XUOpnMRYiKEGz+WumK7DZvDQhEJUqLcnf1Pre3ezkCv
- rqo1pEvoHYta4BHGR+IJ5reLiOqO8kzyFBU4NP7lHh8SWhvR+F4xF7eCgAQKv7yakJOB
- bbyNoCyNtYAs7bapQAU0IjHqFnRHncG0IEHwYnI5gU3Syg7yPpUyFfP+olCPMP5Vl5Zb
- /A+03L1HOCpVGQgrBS92M5MVtmtgNMsrXxRROSboqSlyQQNc8FTYzuWUufkuTxGdo/TL
- mTig==
+ d=1e100.net; s=20230601; t=1737977237; x=1738582037;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:to
+ :from:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=ZRakPZ6OV3eBLWtDvjLaBsJfRq8OfeLe2uxM2sXVI94=;
+ b=Beim/XIUrkxaOCmESJo9Wm9/tdxjYahQ2Hy9CgDbyRzpS5+/TNOCmtrwtd2YPWqgt0
+ D0wtZYAI0yZzzdvtokrUbJBrN6sQL/cnW6FPexSp2NL8FOpkuS8CUeuJAChZeq2wz6/C
+ ptbZtuWfOSX1YGmnbhALF1ANzYCl7cRHftm6pKiW27R6IRKi4kJftagzCGm2Tyr3qTOE
+ IKo8c6MTpVsuFBmMJ13nJD69VSbIUOJ0951LTi5N6Lfb2qZM45Zm96iux2GjMnPURtSv
+ fmcuVVCMA3j7fZ4t4XMjbqdH+RxwAt3+P12nIzubd1KsG6xiJZnpXsAr8CYbJNOvz1VY
+ kCpw==
 X-Forwarded-Encrypted: i=1;
- AJvYcCXuEMys2mYNVD1QZAQZrvOOKGK0kMa2NlY4iSl5H9OaFUdebh/5Mp7kKIXT3yKqc00Jna+CvOM3y9Ny@nongnu.org
-X-Gm-Message-State: AOJu0YxL0dWKRQ0FhDOZMrjPPUE/4USxDJ/x8hVOmIf3MZ2ituRWVGcq
- eyaSSnHIrdBXs4Anxn8Jqq03iGEIHISSoge4kFEa+O5Xt3OFkUkVwNbZjKKjK74=
-X-Gm-Gg: ASbGncsnq9lwaxcHg0qhj+PnM0k9RafmrBLKegLXTuZqhMQggEqvzC73+UMhc7nXQC2
- KA6syX6cLIlXxF6ADDEGfO2ioQ2Ptp4w/9hUs6likKgEFkjpt6/wefBVFnDW6hWz9WiMp14g2gR
- CotSkweTIf80S66qpt2YErbJdgVna/f4rgwb2ohxLhdCghhAdHUHxbc5TwBi9gToK778hmjae7x
- oHtgwUhJM6P+GPEnDQhOQYAcfWOijbocYmEbil3u4MO0R64F/ijTcLFku9gyAszbZIsuApGWAhi
- MmeXFb+OJA==
-X-Google-Smtp-Source: AGHT+IFS5qvE5400iYt8aAuVvZh7h5/kbFszigU/fBrdiBGEIHN8RXMtn2inPKA3g9KNd0dZFx0Ufg==
-X-Received: by 2002:a05:6000:1a8c:b0:38a:888c:6786 with SMTP id
- ffacd0b85a97d-38bf57c063fmr36670530f8f.52.1737977238492; 
- Mon, 27 Jan 2025 03:27:18 -0800 (PST)
+ AJvYcCXiYSl7jvIykVMljJQqrU7GgOd8bBI+APNiKp/DVJI8/kr5CY5O4Kuas4Ne7cEM1Fs93oAvb/RCGe//@nongnu.org
+X-Gm-Message-State: AOJu0YzVS6piH6tM72RBYe5/2GYJznc2PEA6zk3GgHLyF0TkHz0FHRVN
+ 4QXfdeKn+mNCb6q7DKVIIypiCvtBMXEKhXwA0Tfvw+DbB3NQjFxyl9gU/tmWaGPjLmUfP4agIt7
+ L
+X-Gm-Gg: ASbGncvzNBiow+EVBVyFXIHYewe5kE2KAEr2Kl0e0YGfk0GaraFJ3fqdKfWFPr1xrgM
+ z4RcDqOZF1dHoALwm+EliAXYqYY/aOmzhjCb84iBX0IDpaOvxY3NjA8yj39XuhIVFbRSn7Uu+xd
+ iGKHKE8S6PmWlY5Fr/kzrLXOsQG2WvzgfbHUWQykCQESj5h43pZ/cJEHlmfvCPaivRUPmH9DLgc
+ mFIRkRCKPp4Efp36yhVjPzWsOI0W4j9T+KqAFF1c/t8koCffdT1FDhLAzIaeTTCopb+j3cdViU+
+ Q4H1LviBBA==
+X-Google-Smtp-Source: AGHT+IFEhsDNE79jQlGV9DJmJTYivqF8DL1W0eW1HSPlawlxrYEI5BpzZJQSs04wm6g8rFlZDK9rbw==
+X-Received: by 2002:a5d:47a4:0:b0:386:37f8:451c with SMTP id
+ ffacd0b85a97d-38c2b65eccbmr11107200f8f.1.1737977237462; 
+ Mon, 27 Jan 2025 03:27:17 -0800 (PST)
 Received: from orth.archaic.org.uk (orth.archaic.org.uk. [2001:8b0:1d0::2])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-38c2a176449sm10925329f8f.11.2025.01.27.03.27.17
+ ffacd0b85a97d-38c2a176449sm10925329f8f.11.2025.01.27.03.27.16
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 27 Jan 2025 03:27:17 -0800 (PST)
+ Mon, 27 Jan 2025 03:27:16 -0800 (PST)
 From: Peter Maydell <peter.maydell@linaro.org>
 To: qemu-arm@nongnu.org,
 	qemu-devel@nongnu.org
-Subject: [PATCH 1/2] target/arm: deprecate the pxa2xx CPUs and iwMMXt emulation
-Date: Mon, 27 Jan 2025 11:27:14 +0000
-Message-Id: <20250127112715.2936555-2-peter.maydell@linaro.org>
+Subject: [PATCH 0/2] target/arm: Deprecate iwMMXt emulation and associated CPUs
+Date: Mon, 27 Jan 2025 11:27:13 +0000
+Message-Id: <20250127112715.2936555-1-peter.maydell@linaro.org>
 X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20250127112715.2936555-1-peter.maydell@linaro.org>
-References: <20250127112715.2936555-1-peter.maydell@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::335;
- envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x335.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::42d;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wr1-x42d.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -99,6 +97,14 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+This patchset marks all the CPUs that support iwMMXt as deprecated,
+because I don't believe anybody is using them, and we have no way to
+test the thousands of lines of code we have that's only there for
+iwMMXt emulation.  (See for instance the recent thread where a patch
+was submitted to fix an issue detected by a static analyzer: we
+didn't take it, largely because we had no way to know if the
+behaviour change the patch would produce was correct or not.)
+
 The pxa2xx CPUs are now only useful with user-mode emulation, because
 we dropped all the machine types that used them in 9.2.  (Technically
 you could alse use "-cpu pxa270" with a board model like versatilepb
@@ -107,131 +113,41 @@ supported config.)
 
 To use them (or iwMMXt emulation) with QEMU user-mode you would need
 to explicitly select them with the -cpu option or the QEMU_CPU
-environment variable.  A google search finds no examples of anybody
-doing this in the last decade; I don't believe the GCC folks are
-using QEMU to test their iwMMXt codegen either.  In fact, GCC is in
-the process of dropping support for iwMMXT entirely.
+environment variable, because the '-cpu max' default CPU does not
+include iwMMXt emulation.  A google search finds no examples of
+anybody doing this in the last decade.
 
-The iwMMXt emulation is thousands of lines of code in QEMU, and
-is now the only bit of Arm insn decode which doesn't use decodetree.
-We have no way to test or validate changes to it. This code is
-just dead weight that is almost certainly not being used by anybody.
-Mark it as deprecated.
+I asked some of the Linaro GCC folks if they were using QEMU to test
+their iwMMXt codegen, or knew anybody doing that upstream, and the
+answer was "no". In fact, GCC is in the process of dropping support
+for iwMMXt entirely.
+                    
+We have one test case in check-tcg which purports to be checking
+iwMMXt. In fact it is doing no such thing: it runs the test without
+selecting an iwMMXt CPU, which means the iwMMXt insns are interpreted
+as FPA11 insns by the linux-user emulate_arm_fpa11() code. So the test
+prints garbage and then succeeds anyway. Modern distro toolchains
+can't generate a binary that will run with -cpu pxa270 (because their
+crt startup code uses Thumb insns); rather than putting in a lot of
+effort trying to salvage the test case to really test a feature we've
+deprecated, I opted to just remove the test.
 
-Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
----
- docs/about/deprecated.rst | 21 +++++++++++++++++++++
- target/arm/cpu.h          |  1 +
- target/arm/cpu.c          |  3 +++
- target/arm/tcg/cpu32.c    | 36 ++++++++++++++++++++++++------------
- 4 files changed, 49 insertions(+), 12 deletions(-)
+-- PMM
 
-diff --git a/docs/about/deprecated.rst b/docs/about/deprecated.rst
-index 4a3c302962a..29de49351d1 100644
---- a/docs/about/deprecated.rst
-+++ b/docs/about/deprecated.rst
-@@ -204,6 +204,27 @@ is going to be so much slower it wouldn't make sense for any serious
- instrumentation. Due to implementation differences there will also be
- anomalies in things like memory instrumentation.
- 
-+linux-user mode CPUs
-+--------------------
-+
-+iwMMXt emulation and the ``pxa`` CPUs (since 10.0)
-+''''''''''''''''''''''''''''''''''''''''''''''''''
-+
-+The ``pxa`` CPU family (``pxa250``, ``pxa255``, ``pxa260``,
-+``pxa261``, ``pxa262``, ``pxa270-a0``, ``pxa270-a1``, ``pxa270``,
-+``pxa270-b0``, ``pxa270-b1``, ``pxa270-c0``, ``pxa270-c5``) are no
-+longer used in system emulation, because all the machine types which
-+used these CPUs were removed in the QEMU 9.2 release. These CPUs can
-+now only be used in linux-user mode, and to do that you would have to
-+explicitly select one of these CPUs with the ``-cpu`` command line
-+option or the ``QEMU_CPU`` environment variable.
-+
-+We don't believe that anybody is using the iwMMXt emulation, and we do
-+not have any tests to validate it or any real hardware or similar
-+known-good implementation to test against. GCC is in the process of
-+dropping their support for iwMMXt codegen. These CPU types are
-+therefore deprecated in QEMU, and will be removed in a future release.
-+
- System emulator CPUs
- --------------------
- 
-diff --git a/target/arm/cpu.h b/target/arm/cpu.h
-index 9a6e8e589cc..71df9d3a0c4 100644
---- a/target/arm/cpu.h
-+++ b/target/arm/cpu.h
-@@ -1114,6 +1114,7 @@ struct ArchCPU {
- 
- typedef struct ARMCPUInfo {
-     const char *name;
-+    const char *deprecation_note;
-     void (*initfn)(Object *obj);
-     void (*class_init)(ObjectClass *oc, void *data);
- } ARMCPUInfo;
-diff --git a/target/arm/cpu.c b/target/arm/cpu.c
-index dc0231233a6..8a0e3d12f3f 100644
---- a/target/arm/cpu.c
-+++ b/target/arm/cpu.c
-@@ -2756,6 +2756,9 @@ static void cpu_register_class_init(ObjectClass *oc, void *data)
- 
-     acc->info = data;
-     cc->gdb_core_xml_file = "arm-core.xml";
-+    if (acc->info->deprecation_note) {
-+        cc->deprecation_note = acc->info->deprecation_note;
-+    }
- }
- 
- void arm_cpu_register(const ARMCPUInfo *info)
-diff --git a/target/arm/tcg/cpu32.c b/target/arm/tcg/cpu32.c
-index 2ad21825255..0f1c5bc87e8 100644
---- a/target/arm/tcg/cpu32.c
-+++ b/target/arm/tcg/cpu32.c
-@@ -1026,19 +1026,31 @@ static const ARMCPUInfo arm_tcg_cpus[] = {
-     { .name = "ti925t",      .initfn = ti925t_initfn },
-     { .name = "sa1100",      .initfn = sa1100_initfn },
-     { .name = "sa1110",      .initfn = sa1110_initfn },
--    { .name = "pxa250",      .initfn = pxa250_initfn },
--    { .name = "pxa255",      .initfn = pxa255_initfn },
--    { .name = "pxa260",      .initfn = pxa260_initfn },
--    { .name = "pxa261",      .initfn = pxa261_initfn },
--    { .name = "pxa262",      .initfn = pxa262_initfn },
-+    { .name = "pxa250",      .initfn = pxa250_initfn,
-+      .deprecation_note = "iwMMXt CPUs are no longer supported", },
-+    { .name = "pxa255",      .initfn = pxa255_initfn,
-+      .deprecation_note = "iwMMXt CPUs are no longer supported", },
-+    { .name = "pxa260",      .initfn = pxa260_initfn,
-+      .deprecation_note = "iwMMXt CPUs are no longer supported", },
-+    { .name = "pxa261",      .initfn = pxa261_initfn,
-+      .deprecation_note = "iwMMXt CPUs are no longer supported", },
-+    { .name = "pxa262",      .initfn = pxa262_initfn,
-+      .deprecation_note = "iwMMXt CPUs are no longer supported", },
-     /* "pxa270" is an alias for "pxa270-a0" */
--    { .name = "pxa270",      .initfn = pxa270a0_initfn },
--    { .name = "pxa270-a0",   .initfn = pxa270a0_initfn },
--    { .name = "pxa270-a1",   .initfn = pxa270a1_initfn },
--    { .name = "pxa270-b0",   .initfn = pxa270b0_initfn },
--    { .name = "pxa270-b1",   .initfn = pxa270b1_initfn },
--    { .name = "pxa270-c0",   .initfn = pxa270c0_initfn },
--    { .name = "pxa270-c5",   .initfn = pxa270c5_initfn },
-+    { .name = "pxa270",      .initfn = pxa270a0_initfn,
-+      .deprecation_note = "iwMMXt CPUs are no longer supported", },
-+    { .name = "pxa270-a0",   .initfn = pxa270a0_initfn,
-+      .deprecation_note = "iwMMXt CPUs are no longer supported", },
-+    { .name = "pxa270-a1",   .initfn = pxa270a1_initfn,
-+      .deprecation_note = "iwMMXt CPUs are no longer supported", },
-+    { .name = "pxa270-b0",   .initfn = pxa270b0_initfn,
-+      .deprecation_note = "iwMMXt CPUs are no longer supported", },
-+    { .name = "pxa270-b1",   .initfn = pxa270b1_initfn,
-+      .deprecation_note = "iwMMXt CPUs are no longer supported", },
-+    { .name = "pxa270-c0",   .initfn = pxa270c0_initfn,
-+      .deprecation_note = "iwMMXt CPUs are no longer supported", },
-+    { .name = "pxa270-c5",   .initfn = pxa270c5_initfn,
-+      .deprecation_note = "iwMMXt CPUs are no longer supported", },
- #ifndef TARGET_AARCH64
-     { .name = "max",         .initfn = arm_max_initfn },
- #endif
+Peter Maydell (2):
+  target/arm: deprecate the pxa2xx CPUs and iwMMXt emulation
+  tests/tcg/arm: Remove test-arm-iwmmxt test
+
+ docs/about/deprecated.rst       | 21 ++++++++++++++
+ target/arm/cpu.h                |  1 +
+ target/arm/cpu.c                |  3 ++
+ target/arm/tcg/cpu32.c          | 36 ++++++++++++++++--------
+ tests/tcg/arm/Makefile.target   |  7 -----
+ tests/tcg/arm/README            |  5 ----
+ tests/tcg/arm/test-arm-iwmmxt.S | 49 ---------------------------------
+ 7 files changed, 49 insertions(+), 73 deletions(-)
+ delete mode 100644 tests/tcg/arm/test-arm-iwmmxt.S
+
 -- 
 2.34.1
 
