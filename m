@@ -4,41 +4,36 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2000EC02188
-	for <qemu-devel@archiver.kernel.org>; Mon, 27 Jan 2025 14:26:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 61B0EC02188
+	for <qemu-devel@archiver.kernel.org>; Mon, 27 Jan 2025 14:27:37 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tcQ4N-0006iG-RT; Mon, 27 Jan 2025 09:26:31 -0500
+	id 1tcQ1V-0000X5-BY; Mon, 27 Jan 2025 09:23:33 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1tcQ47-0005qH-4d; Mon, 27 Jan 2025 09:26:17 -0500
+ id 1tcQ1K-00082i-JW; Mon, 27 Jan 2025 09:23:22 -0500
 Received: from isrv.corpit.ru ([86.62.121.231])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1tcQ45-0003K0-BJ; Mon, 27 Jan 2025 09:26:14 -0500
+ id 1tcQ1I-0002vD-RP; Mon, 27 Jan 2025 09:23:22 -0500
 Received: from localhost.tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by isrv.corpit.ru (Postfix) with ESMTP id A698DE0F84;
- Mon, 27 Jan 2025 17:25:41 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id 04401E0F56;
+ Mon, 27 Jan 2025 17:22:48 +0300 (MSK)
 Received: by localhost.tls.msk.ru (Postfix, from userid 1000)
- id 9DEB751D9D; Mon, 27 Jan 2025 17:18:03 +0300 (MSK)
+ id 8A75851D8D; Mon, 27 Jan 2025 17:18:03 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <f4bug@amsat.org>,
- Yoshinori Sato <ysato@users.sourceforge.jp>,
- =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Thomas Huth <thuth@redhat.com>, Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-9.2.1 28/41] tests/functional/test_rx_gdbsim: Use stable URL
- for test_linux_sash
-Date: Mon, 27 Jan 2025 17:17:42 +0300
-Message-Id: <20250127141803.3514882-28-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org, Fabiano Rosas <farosas@suse.de>,
+ Peter Xu <peterx@redhat.com>, Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-9.2.1 20/41] migration: Fix parsing of s390 stream
+Date: Mon, 27 Jan 2025 17:17:34 +0300
+Message-Id: <20250127141803.3514882-20-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <qemu-stable-9.2.1-20250127154029@cover.tls.msk.ru>
 References: <qemu-stable-9.2.1-20250127154029@cover.tls.msk.ru>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=86.62.121.231; envelope-from=mjt@tls.msk.ru;
  helo=isrv.corpit.ru
@@ -64,61 +59,65 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Philippe Mathieu-Daudé <f4bug@amsat.org>
+From: Fabiano Rosas <farosas@suse.de>
 
-Yoshinori said [*] URL references on OSDN were stable, but they
-appear not to be. Mirror the artifacts on GitHub to avoid failures
-while testing on CI.
+The parsing for the S390StorageAttributes section is currently leaving
+an unconsumed token that is later interpreted by the generic code as
+QEMU_VM_EOF, cutting the parsing short.
 
-[*] https://www.mail-archive.com/qemu-devel@nongnu.org/msg686487.html
+The migration will issue a STATTR_FLAG_DONE between iterations, which
+the script consumes correctly, but there's a final STATTR_FLAG_EOS at
+.save_complete that the script is ignoring. Since the EOS flag is a
+u64 0x1ULL and the stream is big endian, on little endian hosts a byte
+read from it will be 0x0, the same as QEMU_VM_EOF.
 
-Cc: Yoshinori Sato <ysato@users.sourceforge.jp>
-Reported-by: Alex Bennée <alex.bennee@linaro.org>
-Signed-off-by: Philippe Mathieu-Daudé <f4bug@amsat.org>
-Message-ID: <20200630202631.7345-1-f4bug@amsat.org>
-[huth: Adapt the patch to the new version in the functional framework]
-Message-ID: <20241229083419.180423-1-huth@tuxfamily.org>
-Signed-off-by: Thomas Huth <thuth@redhat.com>
-(cherry picked from commit ec2dfb7c389b94d71ee825caa20b709d5df6c166)
+Fixes: 81c2c9dd5d ("tests/qtest/migration-test: Fix analyze-migration.py for s390x")
+Reviewed-by: Peter Xu <peterx@redhat.com>
+Message-Id: <20250109185249.23952-4-farosas@suse.de>
+Signed-off-by: Fabiano Rosas <farosas@suse.de>
+(cherry picked from commit 69d1f784569fdb950f2923c3b6d00d7c1b71acc1)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
-(Mjt: fixup for missing v9.2.0-421-g65d35a4e27a8 "tests/functional: convert tests to new uncompress helper")
 
-diff --git a/tests/functional/test_rx_gdbsim.py b/tests/functional/test_rx_gdbsim.py
-index 5687f756bb..7daf1571c4 100755
---- a/tests/functional/test_rx_gdbsim.py
-+++ b/tests/functional/test_rx_gdbsim.py
-@@ -25,13 +25,16 @@ class RxGdbSimMachine(QemuSystemTest):
-     KERNEL_COMMON_COMMAND_LINE = 'printk.time=0 '
+diff --git a/scripts/analyze-migration.py b/scripts/analyze-migration.py
+index f2457b1dde..fcda11f31d 100755
+--- a/scripts/analyze-migration.py
++++ b/scripts/analyze-migration.py
+@@ -65,6 +65,9 @@ def readvar(self, size = None):
+     def tell(self):
+         return self.file.tell()
  
-     ASSET_UBOOT = Asset(
--        'https://acc.dl.osdn.jp/users/23/23888/u-boot.bin.gz',
--        '7146567d669e91dbac166384b29aeba1715beb844c8551e904b86831bfd9d046')
-+        ('https://github.com/philmd/qemu-testing-blob/raw/rx-gdbsim/rx/gdbsim/'
-+         'u-boot.bin'),
-+        'dd7dd4220cccf7aeb32227b26233bf39600db05c3f8e26005bcc2bf6c927207d')
-     ASSET_DTB = Asset(
--        'https://acc.dl.osdn.jp/users/23/23887/rx-virt.dtb',
-+        ('https://github.com/philmd/qemu-testing-blob/raw/rx-gdbsim/rx/gdbsim/'
-+         'rx-gdbsim.dtb'),
-         'aa278d9c1907a4501741d7ee57e7f65c02dd1b3e0323b33c6d4247f1b32cf29a')
-     ASSET_KERNEL = Asset(
--        'http://acc.dl.osdn.jp/users/23/23845/zImage',
-+        ('https://github.com/philmd/qemu-testing-blob/raw/rx-gdbsim/rx/gdbsim/'
-+         'zImage'),
-         'baa43205e74a7220ed8482188c5e9ce497226712abb7f4e7e4f825ce19ff9656')
++    def seek(self, a, b):
++        return self.file.seek(a, b)
++
+     # The VMSD description is at the end of the file, after EOF. Look for
+     # the last NULL byte, then for the beginning brace of JSON.
+     def read_migration_debug_json(self):
+@@ -272,11 +275,24 @@ def __init__(self, file, version_id, device, section_key):
+         self.section_key = section_key
  
-     def test_uboot(self):
-@@ -40,9 +43,7 @@ def test_uboot(self):
-         """
-         self.set_machine('gdbsim-r5f562n8')
- 
--        uboot_path_gz = self.ASSET_UBOOT.fetch()
--        uboot_path = os.path.join(self.workdir, 'u-boot.bin')
--        gzip_uncompress(uboot_path_gz, uboot_path)
-+        uboot_path = self.ASSET_UBOOT.fetch()
- 
-         self.vm.set_console()
-         self.vm.add_args('-bios', uboot_path,
+     def read(self):
++        pos = 0
+         while True:
+             addr_flags = self.file.read64()
+             flags = addr_flags & 0xfff
+-            if (flags & (self.STATTR_FLAG_DONE | self.STATTR_FLAG_EOS)):
++
++            if flags & self.STATTR_FLAG_DONE:
++                pos = self.file.tell()
++                continue
++            elif flags & self.STATTR_FLAG_EOS:
+                 return
++            else:
++                # No EOS came after DONE, that's OK, but rewind the
++                # stream because this is not our data.
++                if pos:
++                    self.file.seek(pos, os.SEEK_SET)
++                    return
++                raise Exception("Unknown flags %x", flags)
++
+             if (flags & self.STATTR_FLAG_ERROR):
+                 raise Exception("Error in migration stream")
+             count = self.file.read64()
 -- 
 2.39.5
 
