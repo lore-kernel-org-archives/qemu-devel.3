@@ -4,79 +4,67 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6F435C02188
-	for <qemu-devel@archiver.kernel.org>; Mon, 27 Jan 2025 10:02:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C039CC02188
+	for <qemu-devel@archiver.kernel.org>; Mon, 27 Jan 2025 10:13:43 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tcLvp-0002xV-HX; Mon, 27 Jan 2025 05:01:26 -0500
+	id 1tcM6r-0005ag-1O; Mon, 27 Jan 2025 05:12:49 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1tcLvn-0002ss-3D
- for qemu-devel@nongnu.org; Mon, 27 Jan 2025 05:01:23 -0500
-Received: from mail-yb1-xb2e.google.com ([2607:f8b0:4864:20::b2e])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1tcLvl-0007Wn-AB
- for qemu-devel@nongnu.org; Mon, 27 Jan 2025 05:01:22 -0500
-Received: by mail-yb1-xb2e.google.com with SMTP id
- 3f1490d57ef6-e399e904940so5591876276.2
- for <qemu-devel@nongnu.org>; Mon, 27 Jan 2025 02:01:19 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1737972078; x=1738576878; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=r5HShamqKRZpHpY9V5gNyVgPIE3a6AxZASXWABEGCbc=;
- b=sgQaB3poLwes5jW3uSnsCcSqTHMKuk4SaGyHDLHLJqyCO86dhF/cAOMxzfTBitHTtb
- 6QqHNVtA0169yeuF2t8FWvMwGJwkapGfe0Jdi4xKbMohDw7OYL0/MNYZpXyil0Gr9xwO
- LJ0JtDT7WtF6UAdey+UlFgtjWtmD7L0LeBZzYgpnbAyxTZQCHDuuzX0dm4wBo1oiDkPg
- 1Bw7+IyISwdQlFW9/nfLfQY+B8ETnwE2X6nmIKevl0Nkd05zKHnlyIOtGaNsEbqULbVz
- 7lABd/srqUW6zvR5eOmu4JpmoNk0rSXNjfkhpOt0eSzzisyvcjwZXYdFb1IF0ow9cAvh
- RCbQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1737972078; x=1738576878;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=r5HShamqKRZpHpY9V5gNyVgPIE3a6AxZASXWABEGCbc=;
- b=byKnHCSwzduvr3+K2BWQWFbzLieNdzTodGdyvayThLPM9COC0ez43813ZEFPCd5UPA
- YUg5yLVk1H3/jJms7D/fah1ucmmFqOxNKO1w6v+0JlGhrAFOOi++Y/QUlw1aNmEjSASw
- XKeTz6eGruHwjGNRLi2vGgiMDFrDk4jE41/iaspEl/Y525AIaL9a/qw4f0dcux1IqW7q
- W0fQYn2wkIPk1HbyVFU6W9aF7YzOGB5PC5jsMao8ZH9pgLDOYVxcNh1CIlJ+V7Xe2nOG
- yLdzp8oG8Tu9nQU+nOD57zXN0qc+YZa/JsmfzPPDDKmh/lkJI18hynDUvbhusKy8CPyu
- IRRA==
-X-Gm-Message-State: AOJu0Yxr0ELh3vVdqUlTo7yNw+6x18XlIrV0zcTWwJRj9gx7dZkStKKg
- bhR0CObOuBDDcqHi7j43WCjz9pskV1UxCJE2ojJM6Ydsi6E0/skeMVdI+TFVxkqzhWVWEh8PVy4
- mO0V9K6bQgnnGwX+CwSsYr8fHsxrZ0oOTQe/ELw==
-X-Gm-Gg: ASbGncu7pCVqHKSElQrzVMFXvqZKxALo33yEwZzCqhTQJ1+H2IJV4llFRrJozqVEOxW
- oKBOIPs9jBQ3Yd89+MqmUEEByi5P8M/VF1a9TnWof7+PY4Yi1mrK/jovlgXXN+0M=
-X-Google-Smtp-Source: AGHT+IHUrqG5oRurGlu8NtxCpp42Wkz1eT1cG9NL6VCVDQs02e53Lpe77IRGXhMJNx7//e7NmbGLJeMEu/pRdxHsmIM=
-X-Received: by 2002:a25:d34a:0:b0:e57:d22a:1914 with SMTP id
- 3f1490d57ef6-e57d22a1a98mr20194732276.16.1737972077773; Mon, 27 Jan 2025
- 02:01:17 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
+ id 1tcM6k-0005aE-54; Mon, 27 Jan 2025 05:12:43 -0500
+Received: from mgamail.intel.com ([198.175.65.15])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
+ id 1tcM6i-0000f4-4R; Mon, 27 Jan 2025 05:12:41 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+ d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+ t=1737972760; x=1769508760;
+ h=date:from:to:cc:subject:message-id:references:
+ mime-version:in-reply-to;
+ bh=iu57v9/ANTE0Gzuc/7drSyoftYkaLDydCoSoFawrCkw=;
+ b=ChQUDCy1tV6srqmz8Z/WiPdzzlHUefKbYY+7OoeX9TbDJDuVrmvzulR7
+ j8PMTqS+SRAfsFM2Eq1jpmesIeUfLZmQD/he5Vr6z+v2DIyG1el1iPdwU
+ Do0bd1/qBovdJtp++WvbOyBB3ujoWHMM0khMpTtcu9i3ypVKL/B9EfWVA
+ Aoh+QlXUlW+tIlPDsn0d5iqPQzsEGfx3pzwPfx7xeWDY8Rd3WeJr/mhXy
+ 4mrmQcHlp4O5Aa2tubJrAHS97Fmt7yqNeOPIxDGn535Jbc5D/E9TvJYhi
+ R6ZSNO+T+7fFVd1kJRL9Doy5Nc/g2WElnnYA2uI3GbQiEJR1xqfq7EgFb w==;
+X-CSE-ConnectionGUID: If4+ovKSS/WDnG/IbG2MJg==
+X-CSE-MsgGUID: SXulBOq5SSeqm78LTt8hnA==
+X-IronPort-AV: E=McAfee;i="6700,10204,11327"; a="42088843"
+X-IronPort-AV: E=Sophos;i="6.13,238,1732608000"; d="scan'208";a="42088843"
+Received: from fmviesa009.fm.intel.com ([10.60.135.149])
+ by orvoesa107.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 27 Jan 2025 02:12:36 -0800
+X-CSE-ConnectionGUID: 7+DXXvz4T2akgpNeuEQYTQ==
+X-CSE-MsgGUID: Xkycg4MtQ4iPnFO5RN4zdg==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.13,238,1732608000"; d="scan'208";a="108982137"
+Received: from liuzhao-optiplex-7080.sh.intel.com (HELO localhost)
+ ([10.239.160.39])
+ by fmviesa009.fm.intel.com with ESMTP; 27 Jan 2025 02:12:35 -0800
+Date: Mon, 27 Jan 2025 18:31:59 +0800
+From: Zhao Liu <zhao1.liu@intel.com>
+To: Paolo Bonzini <pbonzini@redhat.com>
+Cc: qemu-devel@nongnu.org, qemu-rust@nongnu.org
+Subject: Re: [PATCH 08/10] rust: qdev: switch from legacy reset to Resettable
+Message-ID: <Z5dgn5MQNGEa5lry@intel.com>
+References: <20250117194003.1173231-1-pbonzini@redhat.com>
+ <20250117194003.1173231-9-pbonzini@redhat.com>
 MIME-Version: 1.0
-References: <20250124162836.2332150-1-peter.maydell@linaro.org>
- <20250124162836.2332150-25-peter.maydell@linaro.org>
- <d8d04708-ddc2-476e-9e17-8493f573d7a5@linaro.org>
-In-Reply-To: <d8d04708-ddc2-476e-9e17-8493f573d7a5@linaro.org>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Mon, 27 Jan 2025 10:01:06 +0000
-X-Gm-Features: AWEUYZmALvSCKtEz26pOJsY-LUFq82dSkiszHxj5pC_Id6D3fJAjOjZxv9_pG08
-Message-ID: <CAFEAcA9c2WKA+z8d=Hp6Jp+3PYqQ5wuCxWL_fGzQxRfJKn+jEQ@mail.gmail.com>
-Subject: Re: [PATCH 24/76] fpu: allow flushing of output denormals to be after
- rounding
-To: Richard Henderson <richard.henderson@linaro.org>
-Cc: qemu-devel@nongnu.org
-Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::b2e;
- envelope-from=peter.maydell@linaro.org; helo=mail-yb1-xb2e.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20250117194003.1173231-9-pbonzini@redhat.com>
+Received-SPF: pass client-ip=198.175.65.15; envelope-from=zhao1.liu@intel.com;
+ helo=mgamail.intel.com
+X-Spam_score_int: -56
+X-Spam_score: -5.7
+X-Spam_bar: -----
+X-Spam_report: (-5.7 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.299,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -93,67 +81,109 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Sat, 25 Jan 2025 at 16:42, Richard Henderson
-<richard.henderson@linaro.org> wrote:
->
-> On 1/24/25 08:27, Peter Maydell wrote:
-> > Currently we handle flushing of output denormals in uncanon_normal
-> > always before we deal with rounding.  This works for architectures
-> > that detect tininess before rounding, but is usually not the right
-> > place when the architecture detects tininess after rounding.  For
-> > example, for x86 the SDM states that the MXCSR FTZ control bit causes
-> > outputs to be flushed to zero "when it detects a floating-point
-> > underflow condition".  This means that we mustn't flush to zero if
-> > the input is such that after rounding it is no longer tiny.
-> >
-> > At least one of our guest architectures does underflow detection
-> > after rounding but flushing of denormals before rounding (MIPS MSA);
->
-> Whacky, but yes, I see that in the msa docs.
->
-> > Add an ftz_detection flag.  For consistency with
-> > tininess_before_rounding, we make it default to "detect ftz after
-> > rounding"; this means that we need to explicitly set the flag to
-> > "detect ftz before rounding" on every existing architecture that sets
-> > flush_to_zero, so that this commit has no behaviour change.
-> > (This means more code change here but for the long term a less
-> > confusing API.)
->
-> Do we really want flush_to_zero to be separate from ftz_detection?
->
-> E.g.
->
-> enum {
->    float_ftz_disabled,
->    float_ftz_after_rounding,
->    float_ftz_before_rounding,
-> }
+> +/// Trait providing the contents of [`ResettablePhases`].
+> +pub trait ResettablePhasesImpl {
+> +    /// If not None, this is called when the object enters reset. It
+> +    /// can reset local state of the object, but it must not do anything that
+> +    /// has a side-effect on other objects, such as raising or lowering a
+> +    /// [`qemu_irq`] line or reading or writing guest memory. It takes the
+> +    /// reset's type as argument.
+> +    const ENTER: Option<fn(&Self, ResetType)> = None;
+> +
+> +    /// If not None, this is called when the object for entry into reset, once
+> +    /// every object in the system which is being reset has had its
+> +    /// @phases.enter method called. At this point devices can do actions
 
-I did consider that, but on almost all targets the "before
-or after rounding" setting is constant for the life of the
-emulation, whereas turning ftz on and off via a status register
-bit is common. I preferred to leave it so that you could continue
-to write:
- set_flush_to_zero((vscr >> VSCR_NJ) & 1, &env->vec_status)
-or whatever, rather than having to switch to
-  (vscr >> VSCR_NJ) ? float_ftz_before_rounding : float_ftz_disabled.
-which in addition to being more longwinded also means that the
-"is this architecture ftz before or after rounding" setting is
-scattered in multiple places, wherever it turns FTZ on or off.
-And for Arm it gets more awkward, because the FZ bit is
-"turn FTZ on or off, whatever its current semantics are", so
-you end up needing "FZ ? AH ? after_rounding : before_rounding : disabled".
+Maybe s/@phases.enter/ResettablePhasesImpl::ENTER/?
 
-Keeping the on/off and the "what semantics is your architecture"
-separate questions I think is simpler.
+> +    /// that affect other objects.
+> +    ///
+> +    /// If in doubt, implement this method.
+> +    const HOLD: Option<fn(&Self, ResetType)> = None;
+> +
+> +    /// If not None, this phase is called when the object leaves the reset
+> +    /// state. Actions affecting other objects are permitted.
+> +    const EXIT: Option<fn(&Self, ResetType)> = None;
+> +}
+> +
 
-> BTW, I'm not keen on your "detect_*" names, without "float_" prefix like (almost?)
-> everything else.
+...
+ 
+>  impl<T> ClassInitImpl<DeviceClass> for T
+>  where
+> -    T: ClassInitImpl<ObjectClass> + DeviceImpl,
+> +    T: ClassInitImpl<ObjectClass> + ClassInitImpl<ResettableClass> + DeviceImpl,
 
-Yes, I'm not super enthused about them either. Happy to switch
-to something else. We're not very consistent about 'float',
-though: eg set_flush_to_zero, set_snan_bit_is_one,
-set_flush_inputs_to_zero.
+This constraint requires each device to explicitly implement ResettablePhasesImpl,
+even the device doesn't want to do anything for reset.
 
--- PMM
+So what about the following changes:
+ * Define 3-Phases methods in DeviceImpl.
+ * Implement ResettablePhasesImpl for all devices by passing their 3-Phases
+   methods to ResettablePhasesImpl's.
+
+Then device doesn't need to implement this reset trait if unnecessary.
+
+For example:
+
+--- a/rust/qemu-api/src/qdev.rs
++++ b/rust/qemu-api/src/qdev.rs
+@@ -84,7 +84,7 @@ pub trait ResettablePhasesImpl {
+ }
+
+ /// Trait providing the contents of [`DeviceClass`].
+-pub trait DeviceImpl: ObjectImpl + ResettablePhasesImpl {
++pub trait DeviceImpl: ObjectImpl {
+     /// _Realization_ is the second stage of device creation. It contains
+     /// all operations that depend on device properties and can fail (note:
+     /// this is not yet supported for Rust devices).
+@@ -106,6 +106,18 @@ fn properties() -> &'static [Property] {
+     fn vmsd() -> Option<&'static VMStateDescription> {
+         None
+     }
++
++    const RESET_ENTER: Option<fn(&Self, ResetType)> = None;
++    const RESET_HOLD: Option<fn(&Self, ResetType)> = None;
++    const RESET_EXIT: Option<fn(&Self, ResetType)> = None;
++}
++
++impl<T> ResettablePhasesImpl for T
++where T: DeviceImpl
++{
++    const ENTER: Option<fn(&Self, ResetType)> = T::RESET_ENTER;
++    const HOLD: Option<fn(&Self, ResetType)> = T::RESET_HOLD;
++    const EXIT: Option<fn(&Self, ResetType)> = T::RESET_EXIT;
+ }
+
+ /// # Safety
+
+---
+
+Though this way add duplicate methods, it reduces the burden on the
+device developer.
+
+Regards,
+Zhao
+
+>  {
+>      fn class_init(dc: &mut DeviceClass) {
+>          if <T as DeviceImpl>::REALIZE.is_some() {
+>              dc.realize = Some(rust_realize_fn::<T>);
+>          }
+> -        if <T as DeviceImpl>::RESET.is_some() {
+> -            unsafe {
+> -                bindings::device_class_set_legacy_reset(dc, Some(rust_reset_fn::<T>));
+> -            }
+> -        }
+>          if let Some(vmsd) = <T as DeviceImpl>::vmsd() {
+>              dc.vmsd = vmsd;
+>          }
+> @@ -99,6 +162,7 @@ fn class_init(dc: &mut DeviceClass) {
+>              }
+>          }
+>  
+> +        ResettableClass::interface_init::<T, DeviceState>(dc);
+>          <T as ClassInitImpl<ObjectClass>>::class_init(&mut dc.parent_class);
+>      }
+>  }
 
