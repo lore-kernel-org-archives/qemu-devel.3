@@ -4,82 +4,100 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CF572C02188
-	for <qemu-devel@archiver.kernel.org>; Mon, 27 Jan 2025 16:14:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9042BC02188
+	for <qemu-devel@archiver.kernel.org>; Mon, 27 Jan 2025 16:17:46 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tcRkF-0007JV-HI; Mon, 27 Jan 2025 11:13:51 -0500
+	id 1tcRnf-0000Kz-DR; Mon, 27 Jan 2025 11:17:23 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1tcRk8-0007IZ-P9
- for qemu-devel@nongnu.org; Mon, 27 Jan 2025 11:13:46 -0500
-Received: from mail-pl1-x62f.google.com ([2607:f8b0:4864:20::62f])
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1tcRnb-0000KY-9G
+ for qemu-devel@nongnu.org; Mon, 27 Jan 2025 11:17:19 -0500
+Received: from mail-ej1-x62d.google.com ([2a00:1450:4864:20::62d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1tcRk6-0001KN-RH
- for qemu-devel@nongnu.org; Mon, 27 Jan 2025 11:13:44 -0500
-Received: by mail-pl1-x62f.google.com with SMTP id
- d9443c01a7336-219f8263ae0so85537155ad.0
- for <qemu-devel@nongnu.org>; Mon, 27 Jan 2025 08:13:40 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1tcRnY-0001vV-Q6
+ for qemu-devel@nongnu.org; Mon, 27 Jan 2025 11:17:18 -0500
+Received: by mail-ej1-x62d.google.com with SMTP id
+ a640c23a62f3a-ab34a170526so773402966b.0
+ for <qemu-devel@nongnu.org>; Mon, 27 Jan 2025 08:17:15 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1737994420; x=1738599220; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:to:subject:user-agent:mime-version:date:message-id:from
- :to:cc:subject:date:message-id:reply-to;
- bh=qvBQUlFuceOnRV4gwyW6jEWHBYnxnL5ZP+Yw/kJ48x4=;
- b=hwf7+MifUHuzz+GIvtof/zYo8eEPB1e6qLukeLhTMWLJGri/0NofLDqxyCggnfyp7f
- YV82ffgbV8tN1dBPESHJ4PRJ04eGWEixTgUF0Jt3avVb+rwrKuukoDiWgi3UYen6RTrL
- DsVUdDURW10VBDu+XJm/9YLFaetGZrWECuqoWUOnveVExmNFmFhJ7+UZ6kzVFRRWK3if
- uoFF+ny/lqaf0J20AhQ6mWLWlc7eQziyqJMPajvqW6LgaxfofC+VHf2wSTkyw7yAsv0J
- NIOOFqVWHKa+d+mgGic1WOfrFQQ1QmRAdjt1+1spw5u2mrgWynvOtx3YRfVV2yXpzZoh
- 09rQ==
+ d=linaro.org; s=google; t=1737994634; x=1738599434; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:user-agent
+ :references:in-reply-to:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=AXJJq+BSmBpgHQ8o3SSzoAdmWb/+j11yRdzWZ8g4Ih8=;
+ b=AmOww7RahACzU164ZX1zs7h/sIOhQPvIhfl/MmvnQPoGlryu+Jj6jTe6ET3EVum0J8
+ UYIoLVJ1uhIiZ6FvyqSYba5+NLRlJrzqfkSIHgvL8bpZDAhSwdB7Ko100AChfLP0dRMe
+ vbBqxQJwjuv1/gXUoqvEw0XoMlTcbeXH8Im5id0h9Ww6JMtAuxjsQqfyCUiIaAZzhjP6
+ ohKVHoOCu47m3Wsi3vM/kXigEm3gqX/fsWHqFs4MJOQ+XuBk9lbHEiUx07OArQv8srSQ
+ /xwfj1MHULc2rS++mRGjQW2B2IrqZ7RQKbIx5RfLupvPdylD0iMyvkcImz6ZGjlXXtsT
+ +YDQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1737994420; x=1738599220;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=qvBQUlFuceOnRV4gwyW6jEWHBYnxnL5ZP+Yw/kJ48x4=;
- b=O3Ntmk8bF3iG4Gp/9qW50bF5QmRAOu8/FQMo+xW6nA4OeBDRN/WfBvrpOLKEaZXDtt
- 5FAVYI3xCCJyVF/okAon+SH78fS2jCD3SBlHDqYaKQMHoSPtEzStsFCaoSDBe4uigGX1
- 9vznNpbrJ4ZXU56QvTMn+Syj2xah+hdik6Wc0CXinsMcIqUxq5nmK5p5lWFSsOR4Ymq0
- 0+Vkb2Rw03UZkpqVsp6/ZqByqgmgmKFO/K1DHxUBoYt19ahxWsHJbOF5kVDu0765FRkU
- 9OoBpGR15NKFOkDM3M2bJTa+ePDVkr4Llp03atwKMJ8KVNVQCbcdT7vPmiDMTnjatb9i
- v3nQ==
-X-Gm-Message-State: AOJu0YySp4JJmeFdi4SFMixKnEs/i74ogmENP0Cm8nmuNrQRjg7CM8E+
- 3kFclUqdV7WdRsdeOmY6Mxta1Sp1HN05Icro2/7GHps/DgV+/ZkrxtPJtH12j5sJ86yQN8UA5m6
- O
-X-Gm-Gg: ASbGnctBwr1ctF5Uj2vvFFcplmFzxYXEJUFEJxu/LRYWrWlyBhhJ36pFCb1nNXn7o05
- aosT5FQAfkzO5sfFXmuopVKH0hLowZ1yhiMkO84MCgLAT9/tJQtAnMIFm2CBfx3A68/TLiVW4TQ
- 3g26Ue67Kb/FxirscjQxSO4+HqCSlbBx8SIrcCCPEIQJEc8nNDXsk/V/DNfxPAhXVbbwZkxoAhI
- MblARUNfb1S3fNA1ThH4p+VZjVUdj63vH74ny5glWvO1d8LJ5/SCEnnIF29iX7+yREBBhjXnJ8I
- riOdZ2Vo1q0RAfrjIg3juTZaz1tMYyXWonVUbH74BJarHCg=
-X-Google-Smtp-Source: AGHT+IGLyF4dF6fQ+7dnDzVrV8rHJBrILeMFxXk3M8srEvcHPMMYAIXCLBye6vPS5nE5VIkAvnpNcg==
-X-Received: by 2002:a17:903:41c4:b0:216:2259:a4bd with SMTP id
- d9443c01a7336-21c3562a640mr574924945ad.52.1737994419839; 
- Mon, 27 Jan 2025 08:13:39 -0800 (PST)
-Received: from [192.168.0.4] (174-21-71-127.tukw.qwest.net. [174.21.71.127])
- by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-21da3d9e216sm66155755ad.21.2025.01.27.08.13.39
- for <qemu-devel@nongnu.org>
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 27 Jan 2025 08:13:39 -0800 (PST)
-Message-ID: <09e353a6-026d-4966-88ab-c4b300e3524f@linaro.org>
-Date: Mon, 27 Jan 2025 08:13:37 -0800
+ d=1e100.net; s=20230601; t=1737994634; x=1738599434;
+ h=content-transfer-encoding:mime-version:message-id:date:user-agent
+ :references:in-reply-to:subject:cc:to:from:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=AXJJq+BSmBpgHQ8o3SSzoAdmWb/+j11yRdzWZ8g4Ih8=;
+ b=IlK6eudO1BhkbuGmcPrsbuEfFj4Pv/syylJHLjDqARmITY4sxNBVjSNrHz+QkKyp8F
+ Ab2nShceU7JgEC7+WcAoeqED6ekBp1WABVUS+hCT3513LbStO3XqMGfq0eqo68VyR87+
+ boF2kyBwieiH0/DQJoSmjfWiL0N7QumSHl9aXivmn6ZSWa1cSBkP3O7zY4jUuCzjzMZF
+ gni6A+H4Av2KrIzN1vg9tpxIFZfT01kSwbYHFiw02qCkFCO1LnM2Lvqv5V0xnq9N1Chh
+ Xr/X2yG1g3wjMUH56IT/H8olU6CJxv/fqPePDblP83orq7cFxSB+Hv7UjOl5T7xOLCIe
+ iNXg==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCUDVe0ATHlKjEtEvDwGO9HlGISMYkFcv2w+BYaqEEwMK7HKa4n5wLVwSuz/YQ9ha9nMtSokw5npemXT@nongnu.org
+X-Gm-Message-State: AOJu0YwDEM2xpAPAtF+/mK9d9GCGoDZEuHytTRb7RI0v1zYkVsI8+H9h
+ kls3T+fl5l8OHvWZS14Urr7gCALet0xpiZRktc6ws9gYuwITgRWZXhWpayux2EY=
+X-Gm-Gg: ASbGnct3rCxEOB4i3D3+HQ1n4wzDZO54pnzzy+FRD/aNgh3qstnNdLBG9u4/COoB9hD
+ pEGgyPoJ6DHzYgsBcUvMpbaBYbpCzm3A+/xSsN4DC9bJRZZx0fSX0tnaOe3Jmz43IE/mZJ7PUDJ
+ g1lC/9ppoqkPc4eyBg1OCxmhidUOYDp6EihgzEcBkjPk+MjK4O/5r5eT+CQtm5tCL6MA2gIkWMo
+ 6Pgx1MNHdGbGym+mXTwkuJ9OojcBPf6qYx+hR00ttO1FHM+ZwmL1W8y+DcjCxzdMnl+ZpNfws+s
+ oQs=
+X-Google-Smtp-Source: AGHT+IHsiuzt5cHJQF4iRZJzLB/WJNPBxVuFP4qUjPFGwyil3aNaMhA2KCj2aWu2fqUO1tY5Rnxf0Q==
+X-Received: by 2002:a17:906:f58c:b0:aaf:8f8e:6bf4 with SMTP id
+ a640c23a62f3a-ab38b16333bmr3375752866b.26.1737994633812; 
+ Mon, 27 Jan 2025 08:17:13 -0800 (PST)
+Received: from draig.lan ([85.9.250.243]) by smtp.gmail.com with ESMTPSA id
+ a640c23a62f3a-ab69933f976sm309944466b.51.2025.01.27.08.17.13
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Mon, 27 Jan 2025 08:17:13 -0800 (PST)
+Received: from draig (localhost [IPv6:::1])
+ by draig.lan (Postfix) with ESMTP id 2F6AE5F7CB;
+ Mon, 27 Jan 2025 16:17:12 +0000 (GMT)
+From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
+To: Dmitry Osipenko <dmitry.osipenko@collabora.com>
+Cc: Akihiko Odaki <akihiko.odaki@daynix.com>,  Huang Rui
+ <ray.huang@amd.com>,  =?utf-8?Q?Marc-Andr=C3=A9?= Lureau
+ <marcandre.lureau@redhat.com>,
+ Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>,  Gerd Hoffmann
+ <kraxel@redhat.com>,  "Michael S . Tsirkin" <mst@redhat.com>,  Paolo
+ Bonzini <pbonzini@redhat.com>,  Gert Wollny <gert.wollny@collabora.com>,
+ qemu-devel@nongnu.org,  Gurchetan Singh <gurchetansingh@chromium.org>,
+ Alyssa Ross <hi@alyssa.is>,  Roger Pau =?utf-8?Q?Monn=C3=A9?=
+ <roger.pau@citrix.com>,
+ Alex Deucher <alexander.deucher@amd.com>,  Stefano Stabellini
+ <stefano.stabellini@amd.com>,  Christian =?utf-8?Q?K=C3=B6nig?=
+ <christian.koenig@amd.com>,
+ Xenia Ragiadakou <xenia.ragiadakou@amd.com>,  Pierre-Eric Pelloux-Prayer
+ <pierre-eric.pelloux-prayer@amd.com>,  Honglei Huang
+ <honglei1.huang@amd.com>,  Julia Zhang <julia.zhang@amd.com>,  Chen Jiqian
+ <Jiqian.Chen@amd.com>,  Rob Clark <robdclark@gmail.com>,  Yiwei Zhang
+ <zzyiwei@chromium.org>,  Sergio Lopez Pascual <slp@redhat.com>
+Subject: Re: [PATCH v6 00/10] Support virtio-gpu DRM native context
+In-Reply-To: <20250126201121.470990-1-dmitry.osipenko@collabora.com> (Dmitry
+ Osipenko's message of "Sun, 26 Jan 2025 23:11:11 +0300")
+References: <20250126201121.470990-1-dmitry.osipenko@collabora.com>
+User-Agent: mu4e 1.12.8; emacs 29.4
+Date: Mon, 27 Jan 2025 16:17:12 +0000
+Message-ID: <87cyg844fr.fsf@draig.linaro.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 0/2] target/arm: Deprecate iwMMXt emulation and associated
- CPUs
-To: qemu-devel@nongnu.org
-References: <20250127112715.2936555-1-peter.maydell@linaro.org>
-Content-Language: en-US
-From: Richard Henderson <richard.henderson@linaro.org>
-In-Reply-To: <20250127112715.2936555-1-peter.maydell@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::62f;
- envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x62f.google.com
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:20::62d;
+ envelope-from=alex.bennee@linaro.org; helo=mail-ej1-x62d.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -102,43 +120,47 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 1/27/25 03:27, Peter Maydell wrote:
-> This patchset marks all the CPUs that support iwMMXt as deprecated,
-> because I don't believe anybody is using them, and we have no way to
-> test the thousands of lines of code we have that's only there for
-> iwMMXt emulation.  (See for instance the recent thread where a patch
-> was submitted to fix an issue detected by a static analyzer: we
-> didn't take it, largely because we had no way to know if the
-> behaviour change the patch would produce was correct or not.)
-> 
-> The pxa2xx CPUs are now only useful with user-mode emulation, because
-> we dropped all the machine types that used them in 9.2.  (Technically
-> you could alse use "-cpu pxa270" with a board model like versatilepb
-> which doesn't sanity-check the CPU type, but that has never been a
-> supported config.)
-> 
-> To use them (or iwMMXt emulation) with QEMU user-mode you would need
-> to explicitly select them with the -cpu option or the QEMU_CPU
-> environment variable, because the '-cpu max' default CPU does not
-> include iwMMXt emulation.  A google search finds no examples of
-> anybody doing this in the last decade.
-> 
-> I asked some of the Linaro GCC folks if they were using QEMU to test
-> their iwMMXt codegen, or knew anybody doing that upstream, and the
-> answer was "no". In fact, GCC is in the process of dropping support
-> for iwMMXt entirely.
->                      
-> We have one test case in check-tcg which purports to be checking
-> iwMMXt. In fact it is doing no such thing: it runs the test without
-> selecting an iwMMXt CPU, which means the iwMMXt insns are interpreted
-> as FPA11 insns by the linux-user emulate_arm_fpa11() code. So the test
-> prints garbage and then succeeds anyway. Modern distro toolchains
-> can't generate a binary that will run with -cpu pxa270 (because their
-> crt startup code uses Thumb insns); rather than putting in a lot of
-> effort trying to salvage the test case to really test a feature we've
-> deprecated, I opted to just remove the test.
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Dmitry Osipenko <dmitry.osipenko@collabora.com> writes:
 
+> This patchset adds DRM native context support to VirtIO-GPU on Qemu.
+>
+> Contarary to Virgl and Venus contexts that mediates high level GFX APIs,
+> DRM native context [1] mediates lower level kernel driver UAPI, which
+> reflects in a less CPU overhead and less/simpler code needed to support i=
+t.
+> DRM context consists of a host and guest parts that have to be implemented
+> for each GPU driver. On a guest side, DRM context presents a virtual GPU =
+as
+> a real/native host GPU device for GL/VK applications.
+>
+> [1] https://www.youtube.com/watch?v=3D9sFP_yddLLQ
+>
+> Today there are four DRM native context drivers existing in a wild:
+>
+>   - Freedreno (Qualcomm SoC GPUs), completely upstreamed
+>   - AMDGPU, completely upstreamed
 
-r~
+Well good news and bad news.
+
+I can verify that AMD native context works when I run my Aarch64 guest
+on my Aarch64 host with -accel TCG (therefor avoiding KVM all together).
+I get potato frame rates though (~150FPS) although I suspect that is
+because the PCI errata workaround.
+
+When it comes to graphics memory allocation is there anything I can do
+to force all allocations to be very aligned? Is this in the purview of
+the AMD drm drivers or TTM itself?
+
+I'm still seeing corruption with -display gtk,gl=3Don on my x86 system
+BTW. I would like to understand if that is a problem with QEMU, GTK or
+something else in the stack before we merge.
+
+>   - Intel (i915), merge requests are opened
+>   - Asahi (Apple SoC GPUs), partially merged upstream
+>
+<snip>
+
+--=20
+Alex Benn=C3=A9e
+Virtualisation Tech Lead @ Linaro
 
