@@ -4,87 +4,48 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0413FC0218D
-	for <qemu-devel@archiver.kernel.org>; Tue, 28 Jan 2025 07:50:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BEBB3C0218D
+	for <qemu-devel@archiver.kernel.org>; Tue, 28 Jan 2025 07:51:59 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tcgLz-00073m-5H; Tue, 28 Jan 2025 02:49:47 -0500
+	id 1tcgNk-0007yh-2y; Tue, 28 Jan 2025 02:51:36 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tcgLq-00072Y-VN
- for qemu-devel@nongnu.org; Tue, 28 Jan 2025 02:49:39 -0500
-Received: from mail-wm1-x332.google.com ([2a00:1450:4864:20::332])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tcgLp-0006pv-9v
- for qemu-devel@nongnu.org; Tue, 28 Jan 2025 02:49:38 -0500
-Received: by mail-wm1-x332.google.com with SMTP id
- 5b1f17b1804b1-438a3216fc2so54370515e9.1
- for <qemu-devel@nongnu.org>; Mon, 27 Jan 2025 23:49:35 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1738050574; x=1738655374; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=rUmyIiDaNrOoEKJwvjuDpM2uOTfEtcf4KoYX4nbPq+8=;
- b=NEfqDIZs1SWok+HR0z44M2/cUEVbJ+ydfFwIE7qFVqRYkJNOzFP++xkQmvS2Me/7K0
- zSkrot2J3+quNMIhQ4FPC8l9nNoxzra+10MXo3gW3PsFkQFtqiebNDb7UsRl5jMU3YqB
- J1LSVmJfRk2uX30f6cRPxUCFxJiWgnoChm9+6byP+hCaTVHyc8Z0r5nIavx7cCcpOsHD
- 7lU82OoX3Ryk3uEkXwy5X0Utm+89GH5CszrWUYWSzEkN1a7vkJcHi3lPE8tnhQvuc3nE
- f7LMxMrjWP7RO3rUJOZpcQsl4qziAd/fWAxflCoHbpA52M7OkrW4Q2++vQ1dsA6kODEs
- AbIQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1738050574; x=1738655374;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=rUmyIiDaNrOoEKJwvjuDpM2uOTfEtcf4KoYX4nbPq+8=;
- b=lEny4tOHJb7Lh0278SsNy4/EDU6SO+qU+QXaFgFwrq9hudzb59R30L5S4tGWDbGQiq
- TYohUtsw22UrW699icwRRiOaKNgrVz4n0yomJflYSBXa7BDkit4A4HmQm72lHUuZb+nd
- RD/5BOC8r/Lk5qrz1JWx4SlyTE71yRB3Rp1ieTzDfNDwsk4vRy8PLpPXyk6BcsLb88zK
- V8UxqTuaZpYRdxvQgWGGJ4XMe4iP/ZOvGPW15vmBUC9bl9jdh/mIZEA3/v0PtVybLgWe
- Rk6zbPsbc1ZiKirNpW0gMoKUAS0F3Y5/+DLRgPXN0C5eGJjZBaFAtGALMzTcuk2KE6g6
- gh0A==
-X-Gm-Message-State: AOJu0YwnE4c30nwHgPUzLEZMgoO+SFGytg/f7DaDYXiL1zo15uahLvBN
- KQ/+6iLpye2OdUvqa413tg29XYwL25PYJpLEuSYnJt6TEH0yWyv88UClhqFuu4w=
-X-Gm-Gg: ASbGnct5PyBeDUpXED0yHGvNxWlSWlIYEsmjwnWU+E9HApBE8ezL6FTKYl1TALCHAUB
- UM4AJYFFrx83bJYHksrp7oRpBP06t9zJzIm+dRRwi40E8MxM7q4Wn+AWHmiGPgRGZEQERaTdDfq
- gCwTVpM4TK6Uvff1j0S/bg78CeTwrNrsd+JYsJFc7AlP+5SqODmD4LkuanpYJqsTlVVwXzHm42/
- m1o+MII3maUL2ft+taZgr6axAgfAlKX74azLZFMbFyjDRnz9JDiAJO6ScQ8QiUOnq+vF4YGjt4B
- HjbHBAcpezF3XBi+j5LVzOU+z+cUpyCDNNRVrLvpg1AuI7HyQEfkBs7JkeI=
-X-Google-Smtp-Source: AGHT+IFpa8pZHjhc4X3Ns7uaW6VRofGWCMk742fvNeAaBwh7piprIE6mfhLNCfGJUSrS1VzDc8S1fg==
-X-Received: by 2002:adf:fec5:0:b0:38a:88d0:18d6 with SMTP id
- ffacd0b85a97d-38bf58e8fa8mr27202453f8f.42.1738050574101; 
- Mon, 27 Jan 2025 23:49:34 -0800 (PST)
-Received: from [192.168.69.151] (88-187-86-199.subs.proxad.net.
- [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-38c2a1766d8sm13732792f8f.14.2025.01.27.23.49.33
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 27 Jan 2025 23:49:33 -0800 (PST)
-Message-ID: <df5c23f8-f8a4-40c3-9117-82af31e122f4@linaro.org>
-Date: Tue, 28 Jan 2025 08:49:32 +0100
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
+ id 1tcgNe-0007xX-G6; Tue, 28 Jan 2025 02:51:30 -0500
+Received: from isrv.corpit.ru ([86.62.121.231])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
+ id 1tcgNT-0007Ny-5O; Tue, 28 Jan 2025 02:51:21 -0500
+Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
+ by isrv.corpit.ru (Postfix) with ESMTP id 696A0E1AAD;
+ Tue, 28 Jan 2025 10:50:50 +0300 (MSK)
+Received: from localhost.tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
+ by tsrv.corpit.ru (Postfix) with ESMTP id D3F4A1A62A7;
+ Tue, 28 Jan 2025 10:51:15 +0300 (MSK)
+Received: by localhost.tls.msk.ru (Postfix, from userid 1000)
+ id C65CB51FE5; Tue, 28 Jan 2025 10:51:15 +0300 (MSK)
+To: qemu-devel@nongnu.org
+Cc: qemu-stable@nongnu.org,
+	Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-7.2.16 00/31] Patch Round-up for stable 7.2.16,
+ freeze on 2025-02-06
+Date: Tue, 28 Jan 2025 00:40:52 +0300
+Message-Id: <qemu-stable-7.2.16-20250128004119@cover.tls.msk.ru>
+X-Mailer: git-send-email 2.39.5
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] MAINTAINERS: Remove Bin Meng from RISC-V maintainers
-To: Alistair Francis <alistair23@gmail.com>, palmer@dabbelt.com,
- liwei1518@gmail.com, dbarboza@ventanamicro.com,
- zhiwei_liu@linux.alibaba.com, qemu-riscv@nongnu.org
-Cc: qemu-devel@nongnu.org, Alistair Francis <alistair.francis@wdc.com>,
- Bin Meng <bin.meng@windriver.com>
-References: <20250128060546.1374394-1-alistair.francis@wdc.com>
-Content-Language: en-US
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20250128060546.1374394-1-alistair.francis@wdc.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::332;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x332.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+From: Michael Tokarev <mjt@tls.msk.ru>
+Received-SPF: pass client-ip=86.62.121.231; envelope-from=mjt@tls.msk.ru;
+ helo=isrv.corpit.ru
+X-Spam_score_int: -53
+X-Spam_score: -5.4
+X-Spam_bar: -----
+X-Spam_report: (-5.4 / 5.0 requ) BAYES_00=-1.9, DATE_IN_PAST_06_12=1.543,
+ RCVD_IN_DNSWL_HI=-5, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -101,59 +62,85 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Cc'ing work email
+The following patches are queued for QEMU stable v7.2.16:
 
-On 28/1/25 07:05, Alistair Francis wrote:
-> Bin Meng has been a long time contributor and maintainer for QEMU RISC-V
-> and has been very beneficial to the RISC-V ecosystem.
-> 
-> Unfortunately his email has started to bounce so this patch is removing
-> them from MAINTAINERS. If in the future Bin Meng wants to return we will
-> happily re-add them.
-> 
-> Note that I'm not removing Bin Meng as a "SD (Secure Card)" maintainer.
-> 
-> Signed-off-by: Alistair Francis <alistair.francis@wdc.com>
-> ---
->   MAINTAINERS | 5 +----
->   1 file changed, 1 insertion(+), 4 deletions(-)
-> 
-> diff --git a/MAINTAINERS b/MAINTAINERS
-> index 7be3d8f431..a0e305aa99 100644
-> --- a/MAINTAINERS
-> +++ b/MAINTAINERS
-> @@ -318,7 +318,6 @@ F: tests/functional/test_ppc_74xx.py
->   RISC-V TCG CPUs
->   M: Palmer Dabbelt <palmer@dabbelt.com>
->   M: Alistair Francis <alistair.francis@wdc.com>
-> -M: Bin Meng <bmeng.cn@gmail.com>
->   R: Weiwei Li <liwei1518@gmail.com>
->   R: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
->   R: Liu Zhiwei <zhiwei_liu@linux.alibaba.com>
-> @@ -1599,7 +1598,6 @@ F: include/hw/riscv/opentitan.h
->   F: include/hw/*/ibex_*.h
->   
->   Microchip PolarFire SoC Icicle Kit
-> -M: Bin Meng <bmeng.cn@gmail.com>
->   L: qemu-riscv@nongnu.org
->   S: Supported
->   F: docs/system/riscv/microchip-icicle-kit.rst
-> @@ -1626,7 +1624,6 @@ F: include/hw/char/shakti_uart.h
->   
->   SiFive Machines
->   M: Alistair Francis <Alistair.Francis@wdc.com>
-> -M: Bin Meng <bmeng.cn@gmail.com>
->   M: Palmer Dabbelt <palmer@dabbelt.com>
->   L: qemu-riscv@nongnu.org
->   S: Supported
-> @@ -3721,7 +3718,7 @@ S: Orphan
->   F: hw/i386/amd_iommu.?
->   
->   OpenSBI Firmware
-> -M: Bin Meng <bmeng.cn@gmail.com>
-> +L: qemu-riscv@nongnu.org
->   S: Supported
->   F: pc-bios/opensbi-*
->   F: .gitlab-ci.d/opensbi.yml
+  https://gitlab.com/qemu-project/qemu/-/commits/staging-7.2
 
+Patch freeze is 2025-02-06, and the release is planned for 2025-02-08:
+
+  https://wiki.qemu.org/Planning/7.2
+
+Please respond here or CC qemu-stable@nongnu.org on any additional patches
+you think should (or shouldn't) be included in the release.
+
+The changes which are staging for inclusion, with the original commit hash
+from master branch, are given below the bottom line.
+
+Thanks!
+
+/mjt
+
+--------------------------------------
+01 3bf7dcd47a3d Peter Maydell:
+   hw/intc/openpic: Avoid taking address of out-of-bounds array index
+02 3d7680fb18c7 Peter Maydell:
+   bitops.h: Define bit operations on 'uint32_t' arrays
+03 335be5bc44aa Peter Maydell:
+   hw/intc/loongarch_extioi: Use set_bit32() and clear_bit32() for s->isr
+04 da80f11efeea Philippe Mathieu-Daudé:
+   cirrus-ci: Remove MSYS2 jobs duplicated with gitlab-ci
+05 a8575f7fb2f2 Akihiko Odaki:
+   virtio-net: Fix size check in dhclient workaround
+06 5102f9df4a9a Kevin Wolf:
+   qdev: Fix set_pci_devfn() to visit option only once
+07 fbdea3d6c13d Jakub Jelen:
+   ssh: Do not switch session to non-blocking mode
+08 3abb67323aee Guenter Roeck:
+   scsi: megasas: Internal cdbs have 16-byte length
+09 abf0f092c1dd Christian Schoenebeck:
+   tests/9p: fix Rreaddir response name
+10 4ec984965079 Christian Schoenebeck:
+   tests/9p: add missing Rgetattr response name
+11 462db8fb1d40 Christian Schoenebeck:
+   tests/9p: add 'use-after-unlink' test
+12 3bc4db44430f Christian Schoenebeck:
+   9pfs: remove obsolete comment in v9fs_getattr()
+13 c81e7219e073 Christian Schoenebeck:
+   9pfs: fix 'Tgetattr' after unlink
+14 eaab44ccc59b Christian Schoenebeck:
+   tests/9p: also check 'Tgetattr' in 'use-after-unlink' test
+15 fa416ae6157a Nicholas Piggin:
+   target/ppc: Fix non-maskable interrupt while halted
+16 26dcf2be7e15 Ahmad Fatoum:
+   hw/openrisc/openrisc_sim: keep serial@90000000 as default
+17 b438362a1425 Roman Artemev:
+   tcg/riscv: Fix StoreStore barrier generation
+18 e7fca81e1705 Alexander Bulekov:
+   fuzz: specify audiodev for usb-audio
+19 57e2cc9abf5d Gerd Hoffmann:
+   x86/loader: only patch linux kernels
+20 9678b9c50572 Peter Maydell:
+   hw/intc/arm_gicv3_its: Zero initialize local DTEntry etc structs
+21 e2d98f257138 Thomas Huth:
+   meson.build: Disallow libnfs v6 to fix the broken macOS build
+22 14e568ab4836 David Hildenbrand:
+   s390x/s390-virtio-ccw: don't crash on weird RAM sizes
+23 b4859e8f33a7 Philippe Mathieu-Daudé:
+   docs: Correct release of TCG trace-events removal
+24 93dcc9390e5a Han Han:
+   target/i386/cpu: Fix notes for CPU models
+25 78b0c15a563a Gabriel Barrantes:
+   backends/cryptodev-vhost-user: Fix local_error leaks
+26 bb5b7fced6b5 Phil Dennis-Jordan:
+   hw/usb/hcd-xhci-pci: Use modulo to select MSI vector as per spec
+27 694632fd4498 Sebastian Ott:
+   pci: ensure valid link status bits for downstream ports
+28 42e2a7a0ab23 Nicholas Piggin:
+   pci/msix: Fix msix pba read vector poll end calculation
+29 1ad32644fe4c Igor Mammedov:
+   tests: acpi: whitelist expected blobs
+30 0b053391985a Igor Mammedov:
+   pci: acpi: Windows 'PCI Label Id' bug workaround
+31 9fb1c9a1bb26 Igor Mammedov:
+   tests: acpi: update expected blobs
 
