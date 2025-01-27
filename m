@@ -4,34 +4,35 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id F02E4C0218D
-	for <qemu-devel@archiver.kernel.org>; Tue, 28 Jan 2025 07:59:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CAC4CC02192
+	for <qemu-devel@archiver.kernel.org>; Tue, 28 Jan 2025 07:59:39 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tcgUj-0001K1-3T; Tue, 28 Jan 2025 02:58:49 -0500
+	id 1tcgSf-0001uK-PO; Tue, 28 Jan 2025 02:56:43 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1tcgUa-0000HQ-J4; Tue, 28 Jan 2025 02:58:40 -0500
+ id 1tcgSF-0008Dt-15; Tue, 28 Jan 2025 02:56:15 -0500
 Received: from isrv.corpit.ru ([86.62.121.231])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1tcgUY-000128-V8; Tue, 28 Jan 2025 02:58:40 -0500
+ id 1tcgSD-0000IV-7h; Tue, 28 Jan 2025 02:56:14 -0500
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id C43E3E1AFC;
+ by isrv.corpit.ru (Postfix) with ESMTP id 6B4C8E1AE5;
  Tue, 28 Jan 2025 10:54:25 +0300 (MSK)
 Received: from localhost.tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id 3F4A61A62E3;
- Tue, 28 Jan 2025 10:54:51 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id DA85D1A62CC;
+ Tue, 28 Jan 2025 10:54:50 +0300 (MSK)
 Received: by localhost.tls.msk.ru (Postfix, from userid 1000)
- id EFDFA5205D; Tue, 28 Jan 2025 10:54:50 +0300 (MSK)
+ id C941D5202F; Tue, 28 Jan 2025 10:54:50 +0300 (MSK)
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Gerd Hoffmann <kraxel@redhat.com>,
- Peter Maydell <peter.maydell@linaro.org>, Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-8.2.9 27/45] edk2: get version + date from git submodule
-Date: Mon, 27 Jan 2025 23:26:08 +0300
-Message-Id: <20250127202630.3724367-27-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org, Ilya Leoshkevich <iii@linux.ibm.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-8.2.9 04/45] linux-user: Fix strace output for s390x mmap()
+Date: Mon, 27 Jan 2025 23:25:45 +0300
+Message-Id: <20250127202630.3724367-4-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <qemu-stable-8.2.9-20250127232621@cover.tls.msk.ru>
 References: <qemu-stable-8.2.9-20250127232621@cover.tls.msk.ru>
@@ -62,53 +63,70 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Turned out hard-coding version and date in the Makefile wasn't a bright
-idea.  Updating it on edk2 updates is easily forgotten.  Fetch the info
-from git instead.  Store in edk2-version, so this can be committed to
-the repo and is present in tarballs too.
+print_mmap() assumes that mmap() receives arguments via memory if
+mmap2() is present. s390x (as opposed to s390) does not fit this
+pattern: it does not have mmap2(), but mmap() still receives arguments
+via memory.
 
-Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
-Signed-off-by: Gerd Hoffmann <kraxel@redhat.com>
-Message-ID: <20240327102448.61877-2-kraxel@redhat.com>
-(cherry picked from commit 6539c73dccfa8fff1f83d40f1c4477a233876071)
+Fix by sharing the detection logic between syscall.c and strace.c.
+
+Cc: qemu-stable@nongnu.org
+Fixes: d971040c2d16 ("linux-user: Fix strace output for old_mmap")
+Suggested-by: Richard Henderson <richard.henderson@linaro.org>
+Signed-off-by: Ilya Leoshkevich <iii@linux.ibm.com>
+Message-ID: <20241120212717.246186-1-iii@linux.ibm.com>
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+(cherry picked from commit d95fd9838b540e69da9b07538ec8ad6ab9eab260)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
+(Mjt: compensate for chris architecture removal by v9.1.0-282-gbff4b02ca1f4
+ "linux-user: Remove support for CRIS target")
 
-diff --git a/roms/Makefile b/roms/Makefile
-index 67f709ba2d..3caae36bbb 100644
---- a/roms/Makefile
-+++ b/roms/Makefile
-@@ -52,6 +52,8 @@ SEABIOS_EXTRAVERSION="-prebuilt.qemu.org"
- #
- EDK2_EFIROM = edk2/BaseTools/Source/C/bin/EfiRom
+diff --git a/linux-user/strace.c b/linux-user/strace.c
+index cf26e55264..3be77c4a38 100644
+--- a/linux-user/strace.c
++++ b/linux-user/strace.c
+@@ -3803,7 +3803,7 @@ print_mmap(CPUArchState *cpu_env, const struct syscallname *name,
+ {
+     return print_mmap_both(cpu_env, name, arg0, arg1, arg2, arg3,
+                            arg4, arg5,
+-#if defined(TARGET_NR_mmap2)
++#ifdef TARGET_ARCH_WANT_SYS_OLD_MMAP
+                             true
+ #else
+                             false
+diff --git a/linux-user/syscall.c b/linux-user/syscall.c
+index 2a4137fc22..7ee1d61248 100644
+--- a/linux-user/syscall.c
++++ b/linux-user/syscall.c
+@@ -10394,10 +10394,7 @@ static abi_long do_syscall1(CPUArchState *cpu_env, int num, abi_long arg1,
+         return ret;
+ #ifdef TARGET_NR_mmap
+     case TARGET_NR_mmap:
+-#if (defined(TARGET_I386) && defined(TARGET_ABI32)) || \
+-    (defined(TARGET_ARM) && defined(TARGET_ABI32)) || \
+-    defined(TARGET_M68K) || defined(TARGET_CRIS) || defined(TARGET_MICROBLAZE) \
+-    || defined(TARGET_S390X)
++#ifdef TARGET_ARCH_WANT_SYS_OLD_MMAP
+         {
+             abi_ulong *v;
+             abi_ulong v1, v2, v3, v4, v5, v6;
+diff --git a/linux-user/syscall_defs.h b/linux-user/syscall_defs.h
+index 77ba343c85..e58c627d00 100644
+--- a/linux-user/syscall_defs.h
++++ b/linux-user/syscall_defs.h
+@@ -2750,4 +2750,11 @@ struct target_sched_param {
+     abi_int sched_priority;
+ };
  
-+-include edk2-version
++#if (defined(TARGET_I386) && defined(TARGET_ABI32)) || \
++    (defined(TARGET_ARM) && defined(TARGET_ABI32)) || \
++    defined(TARGET_M68K) || defined(TARGET_CRIS) || defined(TARGET_MICROBLAZE) \
++    || defined(TARGET_S390X)
++#define TARGET_ARCH_WANT_SYS_OLD_MMAP
++#endif
 +
- default help:
- 	@echo "nothing is build by default"
- 	@echo "available build targets:"
-@@ -146,10 +148,19 @@ skiboot:
- 	$(MAKE) -C skiboot CROSS=$(powerpc64_cross_prefix)
- 	cp skiboot/skiboot.lid ../pc-bios/skiboot.lid
- 
--efi:
-+edk2-version: edk2
-+	if test -e edk2/.git; then \
-+		echo "EDK2_STABLE = $$(cd edk2; git describe --tags --match 'edk2-stable*')" > $@; \
-+		echo "EDK2_DATE = $$(cd edk2; git log -1 --pretty='format:%cd' --date='format:%m/%d/%Y')" >> $@; \
-+	else \
-+		touch $@; \
-+	fi
-+
-+efi: edk2-version
- 	$(PYTHON) edk2-build.py --config edk2-build.config \
--		--version-override "edk2-stable202302-for-qemu" \
--		--release-date "03/01/2023"
-+		--version-override "$(EDK2_STABLE)-for-qemu" \
-+		--release-date "$(EDK2_DATE)" \
-+		--silent --no-logs
- 	rm -f ../pc-bios/edk2-*.fd.bz2
- 	bzip2 --verbose ../pc-bios/edk2-*.fd
- 
+ #endif
 -- 
 2.39.5
 
