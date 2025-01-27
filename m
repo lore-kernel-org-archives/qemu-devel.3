@@ -4,42 +4,38 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 179D8C02192
-	for <qemu-devel@archiver.kernel.org>; Tue, 28 Jan 2025 07:58:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 55E5AC02190
+	for <qemu-devel@archiver.kernel.org>; Tue, 28 Jan 2025 07:58:59 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tcgQj-0002e1-9k; Tue, 28 Jan 2025 02:54:41 -0500
+	id 1tcgUj-0001OO-OQ; Tue, 28 Jan 2025 02:58:49 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1tcgQg-0002Rj-Hh; Tue, 28 Jan 2025 02:54:38 -0500
+ id 1tcgUc-0000XZ-V7; Tue, 28 Jan 2025 02:58:43 -0500
 Received: from isrv.corpit.ru ([86.62.121.231])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1tcgQe-0008CD-Lu; Tue, 28 Jan 2025 02:54:38 -0500
+ id 1tcgUb-00013L-Dy; Tue, 28 Jan 2025 02:58:42 -0500
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id E91A3E1ACE;
- Tue, 28 Jan 2025 10:52:59 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id C80EAE1AFD;
+ Tue, 28 Jan 2025 10:54:25 +0300 (MSK)
 Received: from localhost.tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id 63E441A62BD;
- Tue, 28 Jan 2025 10:53:25 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id 432B41A62E4;
+ Tue, 28 Jan 2025 10:54:51 +0300 (MSK)
 Received: by localhost.tls.msk.ru (Postfix, from userid 1000)
- id 30DF152011; Tue, 28 Jan 2025 10:53:25 +0300 (MSK)
+ id F17AF5205F; Tue, 28 Jan 2025 10:54:50 +0300 (MSK)
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Thomas Huth <thuth@redhat.com>,
- =?UTF-8?q?Daniel=20P=20=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-7.2.16 21/31] meson.build: Disallow libnfs v6 to fix the
- broken macOS build
-Date: Tue, 28 Jan 2025 00:41:13 +0300
-Message-Id: <20250127214124.3730126-21-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org, Gerd Hoffmann <kraxel@redhat.com>,
+ Peter Maydell <peter.maydell@linaro.org>, Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-8.2.9 28/45] edk2: commit version info
+Date: Mon, 27 Jan 2025 23:26:09 +0300
+Message-Id: <20250127202630.3724367-28-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.39.5
-In-Reply-To: <qemu-stable-7.2.16-20250128004119@cover.tls.msk.ru>
-References: <qemu-stable-7.2.16-20250128004119@cover.tls.msk.ru>
+In-Reply-To: <qemu-stable-8.2.9-20250127232621@cover.tls.msk.ru>
+References: <qemu-stable-8.2.9-20250127232621@cover.tls.msk.ru>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 From: Michael Tokarev <mjt@tls.msk.ru>
 Received-SPF: pass client-ip=86.62.121.231; envelope-from=mjt@tls.msk.ru;
@@ -66,37 +62,20 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The macOS builds in our CI (and possibly other very recent distros)
-are currently broken since the update to libnfs version 6 there.
-That version apparently comes with a big API breakage. v5.0.3 was
-the final release of the old API (see the libnfs commit here:
-https://github.com/sahlberg/libnfs/commit/4379837 ).
-
-Disallow version 6.x for now to get the broken CI job working
-again. Once somebody had enough time to adapt our code in
-block/nfs.c, we can revert this change again.
-
-Message-ID: <20241218065157.209020-1-thuth@redhat.com>
-Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Signed-off-by: Thomas Huth <thuth@redhat.com>
-(cherry picked from commit e2d98f257138b83b6a492d1da5847a7fe0930d10)
+Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
+Signed-off-by: Gerd Hoffmann <kraxel@redhat.com>
+Message-ID: <20240327102448.61877-3-kraxel@redhat.com>
+(cherry picked from commit 6494a08d1025c1ca5341af61e47d1e369c2877c8)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
-(Mjt: context fixup)
 
-diff --git a/meson.build b/meson.build
-index 16dc9627e0..c0608332cd 100644
---- a/meson.build
-+++ b/meson.build
-@@ -580,7 +580,7 @@ endif
- 
- libnfs = not_found
- if not get_option('libnfs').auto() or have_block
--  libnfs = dependency('libnfs', version: '>=1.9.3',
-+  libnfs = dependency('libnfs', version: ['>=1.9.3', '<6.0.0'],
-                       required: get_option('libnfs'),
-                       method: 'pkg-config', kwargs: static_kwargs)
- endif
+diff --git a/roms/edk2-version b/roms/edk2-version
+new file mode 100644
+index 0000000000..1594ed8c4d
+--- /dev/null
++++ b/roms/edk2-version
+@@ -0,0 +1,2 @@
++EDK2_STABLE = edk2-stable202402
++EDK2_DATE = 02/14/2024
 -- 
 2.39.5
 
