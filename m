@@ -4,38 +4,37 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 64A0AC0218D
-	for <qemu-devel@archiver.kernel.org>; Tue, 28 Jan 2025 08:01:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6F630C02190
+	for <qemu-devel@archiver.kernel.org>; Tue, 28 Jan 2025 08:01:20 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tcgWG-0007u7-Fb; Tue, 28 Jan 2025 03:00:24 -0500
+	id 1tcgVc-0006aC-Ug; Tue, 28 Jan 2025 02:59:45 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1tcgW0-0007cw-Kw; Tue, 28 Jan 2025 03:00:11 -0500
+ id 1tcgVV-0005u7-CD; Tue, 28 Jan 2025 02:59:37 -0500
 Received: from isrv.corpit.ru ([86.62.121.231])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1tcgVt-0001JJ-RG; Tue, 28 Jan 2025 03:00:05 -0500
+ id 1tcgVS-0001CW-RI; Tue, 28 Jan 2025 02:59:37 -0500
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id EFC07E1B07;
+ by isrv.corpit.ru (Postfix) with ESMTP id DFD66E1B03;
  Tue, 28 Jan 2025 10:54:25 +0300 (MSK)
 Received: from localhost.tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id 6ACE91A62EE;
+ by tsrv.corpit.ru (Postfix) with ESMTP id 5AF671A62EA;
  Tue, 28 Jan 2025 10:54:51 +0300 (MSK)
 Received: by localhost.tls.msk.ru (Postfix, from userid 1000)
- id 0E03452073; Tue, 28 Jan 2025 10:54:51 +0300 (MSK)
+ id 075FF5206B; Tue, 28 Jan 2025 10:54:51 +0300 (MSK)
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org,
- Gabriel Barrantes <gabriel.barrantes.dev@outlook.com>,
- zhenwei pi <pizhenwei@bytedance.com>,
+Cc: qemu-stable@nongnu.org, Bibo Mao <maobibo@loongson.cn>,
+ Richard Henderson <richard.henderson@linaro.org>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-8.2.9 38/45] backends/cryptodev-vhost-user: Fix local_error
- leaks
-Date: Mon, 27 Jan 2025 23:26:19 +0300
-Message-Id: <20250127202630.3724367-38-mjt@tls.msk.ru>
+Subject: [Stable-8.2.9 34/45] target/loongarch: Use actual operand size with
+ vbsrl check
+Date: Mon, 27 Jan 2025 23:26:15 +0300
+Message-Id: <20250127202630.3724367-34-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <qemu-stable-8.2.9-20250127232621@cover.tls.msk.ru>
 References: <qemu-stable-8.2.9-20250127232621@cover.tls.msk.ru>
@@ -67,30 +66,31 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Do not propagate error to the upper, directly output the error
-to avoid leaks.
+Hardcoded 32 bytes is used for vbsrl emulation check, there is
+problem when options lsx=on,lasx=off is used for vbsrl.v instruction
+in TCG mode. It injects LASX exception rather LSX exception.
 
-Fixes: 2fda101de07 ("virtio-crypto: Support asynchronous mode")
-Resolves: https://gitlab.com/qemu-project/qemu/-/issues/2714
-Signed-off-by: Gabriel Barrantes <gabriel.barrantes.dev@outlook.com>
-Reviewed-by: zhenwei pi <pizhenwei@bytedance.com>
-Message-Id: <DM8PR13MB50781054A4FDACE6F4FB6469B30F2@DM8PR13MB5078.namprd13.prod.outlook.com>
-Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-(cherry picked from commit 78b0c15a563ac4be5afb0375602ca0a3adc6c442)
+Here actual operand size is used.
+
+Cc: qemu-stable@nongnu.org
+Fixes: df97f338076 ("target/loongarch: Implement xvreplve xvinsve0 xvpickve")
+Signed-off-by: Bibo Mao <maobibo@loongson.cn>
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+(cherry picked from commit d41989e7548397b469ec9c7be4cee699321a317e)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/backends/cryptodev-vhost-user.c b/backends/cryptodev-vhost-user.c
-index c3283ba84a..b8e95ca8b4 100644
---- a/backends/cryptodev-vhost-user.c
-+++ b/backends/cryptodev-vhost-user.c
-@@ -281,8 +281,7 @@ static int cryptodev_vhost_user_create_session(
-         break;
+diff --git a/target/loongarch/insn_trans/trans_vec.c.inc b/target/loongarch/insn_trans/trans_vec.c.inc
+index 92b1d22e28..ba5ca98a33 100644
+--- a/target/loongarch/insn_trans/trans_vec.c.inc
++++ b/target/loongarch/insn_trans/trans_vec.c.inc
+@@ -5126,7 +5126,7 @@ static bool do_vbsrl_v(DisasContext *ctx, arg_vv_i *a, uint32_t oprsz)
+ {
+     int i, ofs;
  
-     default:
--        error_setg(&local_error, "Unsupported opcode :%" PRIu32 "",
--                   sess_info->op_code);
-+        error_report("Unsupported opcode :%" PRIu32 "", sess_info->op_code);
-         return -VIRTIO_CRYPTO_NOTSUPP;
+-    if (!check_vec(ctx, 32)) {
++    if (!check_vec(ctx, oprsz)) {
+         return true;
      }
  
 -- 
