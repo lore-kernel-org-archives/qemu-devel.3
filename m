@@ -4,37 +4,36 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 49AD5C0218D
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BBCA9C02192
 	for <qemu-devel@archiver.kernel.org>; Tue, 28 Jan 2025 08:22:54 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tcgcG-0005Cc-VC; Tue, 28 Jan 2025 03:06:37 -0500
+	id 1tcgXo-0003XJ-M3; Tue, 28 Jan 2025 03:02:00 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1tcgYz-0006rk-Ht; Tue, 28 Jan 2025 03:03:17 -0500
+ id 1tcgX1-0000cX-4Z; Tue, 28 Jan 2025 03:01:13 -0500
 Received: from isrv.corpit.ru ([86.62.121.231])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1tcgYx-0002I5-Q0; Tue, 28 Jan 2025 03:03:13 -0500
+ id 1tcgWz-0001kf-5t; Tue, 28 Jan 2025 03:01:10 -0500
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id E3D15E1B61;
+ by isrv.corpit.ru (Postfix) with ESMTP id 8937AE1B4A;
  Tue, 28 Jan 2025 10:57:08 +0300 (MSK)
 Received: from localhost.tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id 5F86D1A6314;
+ by tsrv.corpit.ru (Postfix) with ESMTP id 04F6E1A62FD;
  Tue, 28 Jan 2025 10:57:34 +0300 (MSK)
 Received: by localhost.tls.msk.ru (Postfix, from userid 1000)
- id 1410D520B9; Tue, 28 Jan 2025 10:57:34 +0300 (MSK)
+ id E1C475208B; Tue, 28 Jan 2025 10:57:33 +0300 (MSK)
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Richard Henderson <richard.henderson@linaro.org>,
- wannacu <wannacu2049@gmail.com>,
- Pierrick Bouvier <pierrick.bouvier@linaro.org>,
+Cc: qemu-stable@nongnu.org, Peter Maydell <peter.maydell@linaro.org>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-9.1.3 26/58] tcg: Reset free_temps before tcg_optimize
-Date: Mon, 27 Jan 2025 23:25:12 +0300
-Message-Id: <20250127202547.3723716-26-mjt@tls.msk.ru>
+ Bibo Mao <maobibo@loongson.cn>, Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-9.1.3 03/58] hw/intc/loongarch_extioi: Use set_bit32() and
+ clear_bit32() for s->isr
+Date: Mon, 27 Jan 2025 23:24:49 +0300
+Message-Id: <20250127202547.3723716-3-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <qemu-stable-9.1.3-20250127232536@cover.tls.msk.ru>
 References: <qemu-stable-9.1.3-20250127232536@cover.tls.msk.ru>
@@ -66,75 +65,71 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-When allocating new temps during tcg_optmize, do not re-use
-any EBB temps that were used within the TB.  We do not have
-any idea what span of the TB in which the temp was live.
+In extioi_setirq() we try to operate on a bit array stored as an
+array of uint32_t using the set_bit() and clear_bit() functions
+by casting the pointer to 'unsigned long *'.
+This has two problems:
+ * the alignment of 'uint32_t' is less than that of 'unsigned long'
+   so we pass an insufficiently aligned pointer, which is
+   undefined behaviour
+ * on big-endian hosts the 64-bit 'unsigned long' will have
+   its two halves the wrong way around, and we will produce
+   incorrect results
 
-Introduce tcg_temp_ebb_reset_freed and use before tcg_optimize,
-as well as replacing the equivalent in plugin_gen_inject and
-tcg_func_start.
+The undefined behaviour is shown by the clang undefined-behaviour
+sanitizer when running the loongarch64-virt functional test:
+
+/mnt/nvmedisk/linaro/qemu-from-laptop/qemu/include/qemu/bitops.h:41:5: runtime error: store to misaligned address 0x555559745d9c for type 'unsigned long', which requires 8 byte alignment
+0x555559745d9c: note: pointer points here
+  ff ff ff ff 00 00 00 00  00 00 00 00 00 00 00 00  00 00 00 00 00 00 00 00  00 00 00 00 00 00 00 00
+              ^
+    #0 0x555556fb81c4 in set_bit /mnt/nvmedisk/linaro/qemu-from-laptop/qemu/include/qemu/bitops.h:41:9
+    #1 0x555556fb81c4 in extioi_setirq /mnt/nvmedisk/linaro/qemu-from-laptop/qemu/build/clang/../../hw/intc/loongarch_extioi.c:65:9
+    #2 0x555556fb6e90 in pch_pic_irq_handler /mnt/nvmedisk/linaro/qemu-from-laptop/qemu/build/clang/../../hw/intc/loongarch_pch_pic.c:75:5
+    #3 0x555556710265 in serial_ioport_write /mnt/nvmedisk/linaro/qemu-from-laptop/qemu/build/clang/../../hw/char/serial.c
+
+Fix these problems by using set_bit32() and clear_bit32(),
+which work with bit arrays stored as an array of uint32_t.
 
 Cc: qemu-stable@nongnu.org
-Fixes: fb04ab7ddd8 ("tcg/optimize: Lower TCG_COND_TST{EQ,NE} if unsupported")
-Resolves: https://gitlab.com/qemu-project/qemu/-/issues/2711
-Reported-by: wannacu <wannacu2049@gmail.com>
-Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
-Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Fixes: cbff2db1e92f8759 ("hw/intc: Add LoongArch extioi interrupt controller(EIOINTC)")
+Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
 Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-(cherry picked from commit 04e006ab36a8565b92d4e21dd346367fbade7d74)
+Reviewed-by: Bibo Mao <maobibo@loongson.cn>
+Message-id: 20241108135514.4006953-4-peter.maydell@linaro.org
+(cherry picked from commit 335be5bc44aa6800a9e3ba5859ea3833cfe5a7bc)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/accel/tcg/plugin-gen.c b/accel/tcg/plugin-gen.c
-index 99643dd960..e6327d4fe1 100644
---- a/accel/tcg/plugin-gen.c
-+++ b/accel/tcg/plugin-gen.c
-@@ -276,7 +276,7 @@ static void plugin_gen_inject(struct qemu_plugin_tb *plugin_tb)
-      * that might be live within the existing opcode stream.
-      * The simplest solution is to release them all and create new.
-      */
--    memset(tcg_ctx->free_temps, 0, sizeof(tcg_ctx->free_temps));
-+    tcg_temp_ebb_reset_freed(tcg_ctx);
- 
-     QTAILQ_FOREACH_SAFE(op, &tcg_ctx->ops, link, next) {
-         switch (op->opc) {
-diff --git a/include/tcg/tcg-temp-internal.h b/include/tcg/tcg-temp-internal.h
-index 44192c55a9..98f91e68b7 100644
---- a/include/tcg/tcg-temp-internal.h
-+++ b/include/tcg/tcg-temp-internal.h
-@@ -42,4 +42,10 @@ TCGv_i64 tcg_temp_ebb_new_i64(void);
- TCGv_ptr tcg_temp_ebb_new_ptr(void);
- TCGv_i128 tcg_temp_ebb_new_i128(void);
- 
-+/* Forget all freed EBB temps, so that new allocations produce new temps. */
-+static inline void tcg_temp_ebb_reset_freed(TCGContext *s)
-+{
-+    memset(s->free_temps, 0, sizeof(s->free_temps));
-+}
-+
- #endif /* TCG_TEMP_FREE_H */
-diff --git a/tcg/tcg.c b/tcg/tcg.c
-index b1b8b8bba3..e1f6c0f573 100644
---- a/tcg/tcg.c
-+++ b/tcg/tcg.c
-@@ -1489,7 +1489,7 @@ void tcg_func_start(TCGContext *s)
-     s->nb_temps = s->nb_globals;
- 
-     /* No temps have been previously allocated for size or locality.  */
--    memset(s->free_temps, 0, sizeof(s->free_temps));
-+    tcg_temp_ebb_reset_freed(s);
- 
-     /* No constant temps have been previously allocated. */
-     for (int i = 0; i < TCG_TYPE_COUNT; ++i) {
-@@ -6120,6 +6120,9 @@ int tcg_gen_code(TCGContext *s, TranslationBlock *tb, uint64_t pc_start)
+diff --git a/hw/intc/loongarch_extioi.c b/hw/intc/loongarch_extioi.c
+index 1e8e0114dc..498da96122 100644
+--- a/hw/intc/loongarch_extioi.c
++++ b/hw/intc/loongarch_extioi.c
+@@ -57,14 +57,9 @@ static void extioi_setirq(void *opaque, int irq, int level)
+     LoongArchExtIOI *s = LOONGARCH_EXTIOI(opaque);
+     trace_loongarch_extioi_setirq(irq, level);
+     if (level) {
+-        /*
+-         * s->isr should be used in vmstate structure,
+-         * but it not support 'unsigned long',
+-         * so we have to switch it.
+-         */
+-        set_bit(irq, (unsigned long *)s->isr);
++        set_bit32(irq, s->isr);
+     } else {
+-        clear_bit(irq, (unsigned long *)s->isr);
++        clear_bit32(irq, s->isr);
      }
- #endif
+     extioi_update_irq(s, irq, level);
+ }
+@@ -154,7 +149,7 @@ static inline void extioi_update_sw_coremap(LoongArchExtIOI *s, int irq,
+             continue;
+         }
  
-+    /* Do not reuse any EBB that may be allocated within the TB. */
-+    tcg_temp_ebb_reset_freed(s);
-+
-     tcg_optimize(s);
- 
-     reachable_code_pass(s);
+-        if (notify && test_bit(irq + i, (unsigned long *)s->isr)) {
++        if (notify && test_bit32(irq + i, s->isr)) {
+             /*
+              * lower irq at old cpu and raise irq at new cpu
+              */
 -- 
 2.39.5
 
