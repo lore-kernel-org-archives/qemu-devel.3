@@ -4,63 +4,62 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E3941C02188
-	for <qemu-devel@archiver.kernel.org>; Mon, 27 Jan 2025 20:49:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A3C40C02188
+	for <qemu-devel@archiver.kernel.org>; Mon, 27 Jan 2025 20:49:30 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tcW2F-0005dB-O6; Mon, 27 Jan 2025 15:48:43 -0500
+	id 1tcW2E-0005cH-JM; Mon, 27 Jan 2025 15:48:42 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <lacraig3@gmail.com>)
- id 1tcVYE-0006hH-GL
- for qemu-devel@nongnu.org; Mon, 27 Jan 2025 15:17:43 -0500
+ id 1tcVYC-0006gL-5I
+ for qemu-devel@nongnu.org; Mon, 27 Jan 2025 15:17:40 -0500
 Received: from mail-qt1-x829.google.com ([2607:f8b0:4864:20::829])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <lacraig3@gmail.com>)
- id 1tcVYB-0000Un-8I
- for qemu-devel@nongnu.org; Mon, 27 Jan 2025 15:17:41 -0500
+ id 1tcVYA-0000U0-ND
+ for qemu-devel@nongnu.org; Mon, 27 Jan 2025 15:17:39 -0500
 Received: by mail-qt1-x829.google.com with SMTP id
- d75a77b69052e-467a17055e6so53725531cf.3
- for <qemu-devel@nongnu.org>; Mon, 27 Jan 2025 12:17:38 -0800 (PST)
+ d75a77b69052e-467b74a1754so67550411cf.1
+ for <qemu-devel@nongnu.org>; Mon, 27 Jan 2025 12:17:37 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1738009058; x=1738613858; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=YrPftONXk3GzsFDMQyrnwK7mxsH9D1E2c7v5NO85doA=;
- b=O70/eyY6pIDgvvZRMkovOF2cMzHUFLQKMa9LQfiEIGTJjIQDFjCUj/hyP3jWiCDMT7
- RwHn9StHyg7qqV5e2kEqvvXEh3qdKDTlUqX2MWtoy9+8vPcSETrgAIziRzAPiYGG69AP
- p+4sovpFtX0JVbQKoX8TbEKsk1Na+13dtLmFfnU98nrmH9vfbGflTCn9mFOXmlZB21HI
- aCx/8HJXdsjV/wgxPPIGmuQg9HsLykvD0l1IyVr0+ZNaKRSiLPRiq1wUkn0XQV+E64Fa
- AeKeg3Bz8cNjm2SE2b/N79XoSEaEPHP9eABo1/pnqQoEwd8gzYRFn2r1l0UZ5453NsaL
- pQ5A==
+ d=gmail.com; s=20230601; t=1738009056; x=1738613856; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=m+4AY+aIcsFifSg6NxmWCaZNdEgX06WNWe8R70VVWKk=;
+ b=M0aeLFUQ8SHg8Kvei716jvtQmNexk3e1extMtd0MPeKPcviAfP05PdkT6igsVNC6Gg
+ BkqY5yV5htRE0nGQJMZMqeqK8XdhuCULgqybMArc6K9q1BJcQHCce3Xw+xObcX1qIjwR
+ k/26j9zBxbjDZj3qKYWZJ2dectxiYylannT+OYWzfZbMko5pt7xORMuefvqHrqeETO1X
+ 6NGIs651i/+0bKdEJ3CyOtcpkA5eYOEY9VWGLsNJ+3GysiR9jw7FkOqCVC3qltVk+eXH
+ 7dRJiwyxw372b4UQlh7eapz166Tqnc1X6ONvgbGkFLD6k1P14VVEK7s4EASYcE0XZ4ut
+ 7g4w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1738009058; x=1738613858;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=YrPftONXk3GzsFDMQyrnwK7mxsH9D1E2c7v5NO85doA=;
- b=tE9X5DRGwQR/i2sQoimzN6XuGAktIIgWkSGTIoCFWztDy2zLALmkqWmaoYYCFtJrmC
- q5lCuCsNzOjoKkNfxW0XLYAUoJYPv286gzToboacyVRV79IYWYU98bMg2AAqE/1wQpBK
- fayTfsX+na7va+1sUq1SAZPk/9cX89zh763Iy8QFl8HBYWfpWugBggEd35u09XbpbrG4
- Yz4kMOvMTnmG3ribLqZDExcwAmACLWHg59UPyQmrWpFJtTNDDzs00exr6kamT8EieM/Y
- fbHygegFDHNyuC+swtTMHiGwE+dYkHCFYjdskGCdvwus/GlOXP6W+00Ijl6OXXIfYaA3
- OxIQ==
-X-Gm-Message-State: AOJu0YzDsHPUlDOAo+lTQbYES3/+JJnzrhPJ3qmhzNlnZuahFykusM1p
- HQvx4OD4cpK2G1lWBJGeE2cjUdB9yNuQukaTpo75UYzb0W8GTENMyhnWVtvq
-X-Gm-Gg: ASbGncvBy9v+SOYTCoAFzcskvSKFc47wSu9JgqrBWkQRDhkhZmqxSevbMLEc6tvdzSf
- /21Vv0fUpN8tourFMKg3Q6UPfvTHwfNPIgbQZkDN1s8qEviZUTFkPQ08JdhpwjnzOuPWdsMf79L
- J4gFXnbyL9NWuY/F29ZsRB4pRT0UZ6sBS/Ls5yphpMS9KD82UUea4pN3LlD5HHQzJevmGzI+nWt
- DcrqKRKFO/c/EzM8MvrpFG3TOP4y3X9q3jNIKuLSNNPATAwAoeLM5dXe+KxoFWfu+JMQaWW89TX
-X-Google-Smtp-Source: AGHT+IFHu7n0kzv/4FfvnulW3Q9HJrZXrs0KScjWoUJI6Hf5SwXwrrRAfEmGIB05/PdsiY90tl0sWw==
-X-Received: by 2002:ac8:5ac1:0:b0:46c:7646:4a29 with SMTP id
- d75a77b69052e-46e12a8727cmr643033001cf.29.1738009057943; 
- Mon, 27 Jan 2025 12:17:37 -0800 (PST)
+ d=1e100.net; s=20230601; t=1738009056; x=1738613856;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=m+4AY+aIcsFifSg6NxmWCaZNdEgX06WNWe8R70VVWKk=;
+ b=Vr/43levNVx//BvLxwQUh8w1oHgpDe3evGYk4VTGOL4ebLlo3caUS/HNseRzowxpSM
+ g69kjOA4vx/F/zjPDAkeK5M5IHWaqaKXOPo/s5FY5WPnjmSe6q+pO4ng0BHFBpoQ5yFh
+ 6pJkQuZnS5i1NwjaoHR705yGgpZ0kmr1HeTe04OWfaY/XwJbmF/Nna3cRlW47n7gkKjq
+ AZG6Cn7zfxN04RNDN3DlhJZ0cy/Knfocf5bWfCWwtH0VYRl+NX+usr2/B/FO0nQH78Bf
+ Ws8v54/GQvJO/2qsCr9hIiySbp4Vib+qAKrB8FdvoKi/nnWFetgnAdSefLHzo1FqeT5h
+ vWsQ==
+X-Gm-Message-State: AOJu0Ywyj8OS2W+wDl5SIFVxSsZD8OjjvWvvZIO/+IqiWANb4+OC0w7S
+ Fb6S/IiHeKspzN3L/KtqtI8z9Ol4E40pHM1q06392S7YAeairK7WaUq9MPAOC2c=
+X-Gm-Gg: ASbGncsIP+tvm8Qee6JHGlzG6ylj/t3cSQyIeA4JEaZIv4D9TPFFm0Q5K+v+0kLmwq+
+ +MqblxhOE/PyZVuBcl7RlRKOPoa4Ozd97UFO2ubL20an1mV8ZWcfXk6Rh9qIUiIX2cHxKYMx0Q+
+ O1CGpw80EZAej6tnfSIcOR8UZBw6Ro4163FiAhH3xYImgXZ1jehv9UZ7K0sNG+UqNhrNoIAAiA9
+ i2cpY68RAavaE0AAB0iRFG1qfOQknd8gjNsa184lTEjTmPJUPNbUszDprpcQg9UK4X4SMIU9OUZ
+X-Google-Smtp-Source: AGHT+IFXRswBqMcfThZa1S6hQ7NTDlnfOTRSCWtiJR132xtw7TIcfCE5Dvg4V1tKKmFeX+xsc4RR2A==
+X-Received: by 2002:a05:622a:24c:b0:46c:71f6:819b with SMTP id
+ d75a77b69052e-46e12bdd346mr595964991cf.49.1738009056546; 
+ Mon, 27 Jan 2025 12:17:36 -0800 (PST)
 Received: from luke-igloo.. ([18.4.85.124]) by smtp.gmail.com with ESMTPSA id
- d75a77b69052e-46e668636e5sm42601081cf.4.2025.01.27.12.17.37
+ d75a77b69052e-46e668636e5sm42601081cf.4.2025.01.27.12.17.36
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 27 Jan 2025 12:17:37 -0800 (PST)
+ Mon, 27 Jan 2025 12:17:36 -0800 (PST)
 From: Luke Craig <lacraig3@gmail.com>
 To: qemu-devel@nongnu.org
 Cc: Alexandre Iooss <erdnaxe@crans.org>,
@@ -68,12 +67,10 @@ Cc: Alexandre Iooss <erdnaxe@crans.org>,
  Pierrick Bouvier <pierrick.bouvier@linaro.org>,
  =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
  Luke Craig <lacraig3@gmail.com>
-Subject: [PATCH 2/2] plugin: extend API with qemu_plugin_tb_size
-Date: Mon, 27 Jan 2025 15:17:34 -0500
-Message-Id: <20250127201734.1769540-3-lacraig3@gmail.com>
+Subject: [PATCH 0/2] plugins: add tb convenience functions
+Date: Mon, 27 Jan 2025 15:17:32 -0500
+Message-Id: <20250127201734.1769540-1-lacraig3@gmail.com>
 X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20250127201734.1769540-1-lacraig3@gmail.com>
-References: <20250127201734.1769540-1-lacraig3@gmail.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=2607:f8b0:4864:20::829;
@@ -87,7 +84,7 @@ X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
-X-Mailman-Approved-At: Mon, 27 Jan 2025 15:48:33 -0500
+X-Mailman-Approved-At: Mon, 27 Jan 2025 15:48:31 -0500
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -102,48 +99,20 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
----
- include/qemu/qemu-plugin.h | 10 ++++++++++
- plugins/api.c              |  5 +++++
- 2 files changed, 15 insertions(+)
+This PR extends the plugin API with two functions which allow convenient access around tbs.
 
-diff --git a/include/qemu/qemu-plugin.h b/include/qemu/qemu-plugin.h
-index a1c478c54f..1fa656da82 100644
---- a/include/qemu/qemu-plugin.h
-+++ b/include/qemu/qemu-plugin.h
-@@ -476,6 +476,16 @@ void qemu_plugin_register_vcpu_insn_exec_inline_per_vcpu(
- QEMU_PLUGIN_API
- size_t qemu_plugin_tb_n_insns(const struct qemu_plugin_tb *tb);
- 
-+/**
-+ * qemu_plugin_tb_size() - query helper for size of TB
-+ * @tb: opaque handle to TB passed to callback
-+ * 
-+ * Returns: size of block in bytes
-+ */
-+
-+QEMU_PLUGIN_API
-+size_t qemu_plugin_tb_size(const struct qemu_plugin_tb *tb);
-+
- /**
-  * qemu_plugin_tb_vaddr() - query helper for vaddr of TB start
-  * @tb: opaque handle to TB passed to callback
-diff --git a/plugins/api.c b/plugins/api.c
-index 7ff5e1c1bd..177f0ac9b6 100644
---- a/plugins/api.c
-+++ b/plugins/api.c
-@@ -241,6 +241,11 @@ size_t qemu_plugin_tb_n_insns(const struct qemu_plugin_tb *tb)
-     return tb->n;
- }
- 
-+size_t qemu_plugin_tb_size(const struct qemu_plugin_tb *tb){
-+    const DisasContextBase *db = tcg_ctx->plugin_db;
-+    return db->size;
-+}
-+
- uint64_t qemu_plugin_tb_vaddr(const struct qemu_plugin_tb *tb)
- {
-     const DisasContextBase *db = tcg_ctx->plugin_db;
+The first, qemu_plugin_tb_size, provides a mechanism for determining the total size of a translation block.
+
+The second, qemu_plugin_tb_get_insn_by_vaddr, allows users to get a reference to an instruction by its virtual address rather than just its index.
+
+Luke Craig (2):
+  plugin: extend API with qemu_plugin_tb_get_insn_by_vaddr
+  plugin: extend API with qemu_plugin_tb_size
+
+ include/qemu/qemu-plugin.h | 21 +++++++++++++++++++++
+ plugins/api.c              | 18 ++++++++++++++++++
+ 2 files changed, 39 insertions(+)
+
 -- 
 2.34.1
 
