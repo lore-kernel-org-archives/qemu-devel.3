@@ -4,89 +4,68 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8B729C02188
-	for <qemu-devel@archiver.kernel.org>; Mon, 27 Jan 2025 11:41:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E00E4C02188
+	for <qemu-devel@archiver.kernel.org>; Mon, 27 Jan 2025 11:54:08 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tcNSX-00066L-4N; Mon, 27 Jan 2025 06:39:18 -0500
+	id 1tcNgK-0005bB-W2; Mon, 27 Jan 2025 06:53:33 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tcNSB-000614-Do
- for qemu-devel@nongnu.org; Mon, 27 Jan 2025 06:38:56 -0500
-Received: from mail-wm1-x32b.google.com ([2a00:1450:4864:20::32b])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tcNS8-0005Er-BK
- for qemu-devel@nongnu.org; Mon, 27 Jan 2025 06:38:55 -0500
-Received: by mail-wm1-x32b.google.com with SMTP id
- 5b1f17b1804b1-438a3216fc2so44609085e9.1
- for <qemu-devel@nongnu.org>; Mon, 27 Jan 2025 03:38:51 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1737977931; x=1738582731; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=uL+nnGyGOIubwvzcr2z3yGpj5dC7Jx5PGuyfw3ZHtPA=;
- b=vFHi0fXoI5Y0r6xCKe8YY2REAlR7joZUigBzw9yjP9gdkJtQsscyeDE5GInmNaLnun
- 4gEu7NhdyOaUgo7oE1moQMa3RoanFD1TiBEBt+8CIUk/qyVRbLYjPOGthC6WKN2Rsri0
- wwkNJTtvGwM3vT5PU2MaDzXedcsbFtNcf1yOofJ8GQrpZgo3NGZALxBkT2QK5/GIP0H4
- PB67qrDKm6wKRoy+Um2v0joMee8WHFi+ErQUlVVDUOZPxsCfte23yLPCAoCb88nD41EO
- 8vgglxKaZooZVH2tXE+Dicxeph8AUtnJxAUIyj5z0pP7O5Ph0jlrXDiC2mH4EkmsbFJS
- qI9w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1737977931; x=1738582731;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=uL+nnGyGOIubwvzcr2z3yGpj5dC7Jx5PGuyfw3ZHtPA=;
- b=kdGNkDaOVwNrHHHtxma0gDzeckLthhLPfh59uBHJmsIruW3P1i6DmrvkDGUqIXgRdX
- 0MLyl1UkZz0KdZw7wFU6OkKmxKby7BD/tb1eD1UZxkF+u6egYuDEcz/FJQBWNBsKMeRd
- H2fJH+t3n+VnAsTyxsOJ6YpG4yKYWPSxUinSFCDq8DjtbQDJADFsR17Ib5d7zwvQ3DA+
- TcO67fOC3k85Hu4qJPUpv8WM22iVJDW9s5SF5reH9wU9M6oduWs9M97FnRHwC9vgCb+D
- HdCNUQszw5Ha+YKenSGKKh+ibACbm/mYVIXzMVT073Y9pI+qlGSMAVQTYudgCuEY4en0
- miVQ==
-X-Gm-Message-State: AOJu0YxVTiNXA//q9Mbs4G84pFZhZJyz+RfRQ1F9yl3PxT9AR0AaNYsJ
- igDzUHwDO+k4kaq8ztl//3R998+tETLBD11t8Exxui5ch54ezQWkWhGaMA628sqs2Bk4/+V9pwD
- HssQ=
-X-Gm-Gg: ASbGnctUYBUalnU3LKZVFfyVYErpL1LeEXc1wH8O8f0z1jRfHf6WhSeiNgT4c6nC/Xc
- x0EjNwPXvSraCti4h0ILI9a/vVb4xhdOqH7EuufaN/zYXEJTD28oKIwMnBagXNdK5wCVIVxZHqm
- iYpkIGZw+YHtt/OKMuR1rhlKsP3yWHZAhVR9gTsyCz/RBjvPU3BlNtks19tSLQ09Y2akKxDsxtM
- QG0KgJ2gXmqXCbegb0YVjl0IsXS7BLqgwZAbsWNtzNCNXixjnOF3Ne/TSEZ9LvQxjzjNds9gozf
- u4pafTR+PZYa5g5dQVzFK1PxR+Ufq5pYYUsIO0F90rCEPdTWqUaK9Q0=
-X-Google-Smtp-Source: AGHT+IF4ibR7kZRreK3zGw/53OzPbMV5BDzRm6fHb6QGe1KZCCEtl9T0CyI8Zp8iSXw5RdnPvibVFA==
-X-Received: by 2002:a05:600c:35c3:b0:438:a290:3ce0 with SMTP id
- 5b1f17b1804b1-438a2903f47mr322246355e9.8.1737977930619; 
- Mon, 27 Jan 2025 03:38:50 -0800 (PST)
-Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
- [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-438bd54c0d1sm130524395e9.26.2025.01.27.03.38.48
- (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Mon, 27 Jan 2025 03:38:49 -0800 (PST)
-From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-To: qemu-devel@nongnu.org
-Cc: qemu-riscv@nongnu.org, qemu-ppc@nongnu.org,
- Richard Henderson <richard.henderson@linaro.org>, qemu-s390x@nongnu.org,
- qemu-arm@nongnu.org, Peter Maydell <peter.maydell@linaro.org>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PATCH 5/6] hw/loader: Pass ELFDATA endian order argument to
- load_elf_as()
-Date: Mon, 27 Jan 2025 12:38:23 +0100
-Message-ID: <20250127113824.50177-6-philmd@linaro.org>
-X-Mailer: git-send-email 2.47.1
-In-Reply-To: <20250127113824.50177-1-philmd@linaro.org>
-References: <20250127113824.50177-1-philmd@linaro.org>
+ (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
+ id 1tcNgF-0005ad-Qy; Mon, 27 Jan 2025 06:53:28 -0500
+Received: from mgamail.intel.com ([198.175.65.15])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
+ id 1tcNgD-0006fE-Qn; Mon, 27 Jan 2025 06:53:27 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+ d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+ t=1737978806; x=1769514806;
+ h=date:from:to:cc:subject:message-id:references:
+ mime-version:in-reply-to;
+ bh=p/Ns84pvmRRQ8Ec+5wKSMGcwxNxmeBZgWM/aBoB6Es4=;
+ b=b0CIrOh5I3u9tIh4M4YqcZ6Qb6IecuGgX2n+V7kJdw5n8X4qeaNL5xB4
+ jCWmeINk4q5ebij1/M4rU55Rxqpg+e1t8/iuW3q+aOQGanwXy6VXY0pPR
+ RkrsplqHjWBQXtZSKeYjUIGafS97kJOPblhvTzmYD+oAg8WDvyFhe3d2P
+ PH0k5Bf4EP0kmpJHJMaF8rYqX0EFnACIkEMjYp074jI4TeXujxQ6cPBpM
+ uC9JeWuyzVcYE+Pl381jlZ4LTVIybXz0MvbfT3DQgQx6MbmHx5KqCZ45Y
+ sgSQ5OL41+O02U2csVU9/3Y8E2Ae2q7NlJGy9tctyMvXH/hWm7ujE8ISu g==;
+X-CSE-ConnectionGUID: ds2gzJ1FTQuKRvlVyaExcA==
+X-CSE-MsgGUID: Rkoi2m9zS8eVG8lFNc0yFQ==
+X-IronPort-AV: E=McAfee;i="6700,10204,11328"; a="42096731"
+X-IronPort-AV: E=Sophos;i="6.13,238,1732608000"; d="scan'208";a="42096731"
+Received: from orviesa003.jf.intel.com ([10.64.159.143])
+ by orvoesa107.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 27 Jan 2025 03:53:23 -0800
+X-CSE-ConnectionGUID: xPPbDs0FReGqHyTLavpFZA==
+X-CSE-MsgGUID: 9LWblnFPRDyKmhCH4DlQLQ==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.11,199,1725346800"; d="scan'208";a="113381902"
+Received: from liuzhao-optiplex-7080.sh.intel.com (HELO localhost)
+ ([10.239.160.39])
+ by orviesa003.jf.intel.com with ESMTP; 27 Jan 2025 03:53:21 -0800
+Date: Mon, 27 Jan 2025 20:12:45 +0800
+From: Zhao Liu <zhao1.liu@intel.com>
+To: Paolo Bonzini <pbonzini@redhat.com>
+Cc: qemu-devel@nongnu.org, qemu-rust@nongnu.org
+Subject: Re: [PATCH 10/10] rust: bindings for MemoryRegionOps
+Message-ID: <Z5d4PTtIRhgZ0tss@intel.com>
+References: <20250117194003.1173231-1-pbonzini@redhat.com>
+ <20250117194003.1173231-11-pbonzini@redhat.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32b;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x32b.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=unavailable autolearn_force=no
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20250117194003.1173231-11-pbonzini@redhat.com>
+Received-SPF: pass client-ip=198.175.65.15; envelope-from=zhao1.liu@intel.com;
+ helo=mgamail.intel.com
+X-Spam_score_int: -56
+X-Spam_score: -5.7
+X-Spam_bar: -----
+X-Spam_report: (-5.7 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.299,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -102,177 +81,110 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Rather than passing a boolean 'is_big_endian' argument,
-directly pass the ELFDATA, which can be unspecified using
-the ELFDATANONE value.
+On Fri, Jan 17, 2025 at 08:40:03PM +0100, Paolo Bonzini wrote:
+> Date: Fri, 17 Jan 2025 20:40:03 +0100
+> From: Paolo Bonzini <pbonzini@redhat.com>
+> Subject: [PATCH 10/10] rust: bindings for MemoryRegionOps
+> X-Mailer: git-send-email 2.47.1
+> 
+> Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
+> ---
+>  rust/hw/char/pl011/src/device.rs     |  43 +++---
+>  rust/hw/char/pl011/src/lib.rs        |   1 -
+>  rust/hw/char/pl011/src/memory_ops.rs |  36 -----
+>  rust/qemu-api/meson.build            |   1 +
+>  rust/qemu-api/src/lib.rs             |   1 +
+>  rust/qemu-api/src/memory.rs          | 191 +++++++++++++++++++++++++++
+>  rust/qemu-api/src/sysbus.rs          |   7 +-
+>  rust/qemu-api/src/zeroable.rs        |  12 ++
+>  8 files changed, 234 insertions(+), 58 deletions(-)
+>  delete mode 100644 rust/hw/char/pl011/src/memory_ops.rs
+>  create mode 100644 rust/qemu-api/src/memory.rs
+ 
+...
 
-Update the call sites:
-  0 -> ELFDATA2LSB
-  1 -> ELFDATA2MSB
+> @@ -490,20 +490,24 @@ impl PL011State {
+>      /// location/instance. All its fields are expected to hold unitialized
+>      /// values with the sole exception of `parent_obj`.
+>      unsafe fn init(&mut self) {
+> +        static PL011_OPS: MemoryRegionOps<PL011State> = MemoryRegionOpsBuilder::<PL011State>::new()
+> +            .read(&PL011State::read)
+> +            .write(&PL011State::write)
+> +            .native_endian()
+> +            .impl_sizes(4, 4)
+> +            .build();
+> +
 
-Note, this allow removing the target_words_bigendian() call
-in the GENERIC_LOADER device, where we pass ELFDATANONE.
+Nice design. Everything was done smoothly in one go.
 
-Suggested-by: Richard Henderson <richard.henderson@linaro.org>
-Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
----
- include/hw/loader.h      |  2 +-
- hw/core/loader.c         |  8 ++++----
- hw/arm/armv7m.c          |  2 +-
- hw/arm/boot.c            | 16 ++++++++--------
- hw/avr/boot.c            |  2 +-
- hw/core/generic-loader.c |  6 +-----
- 6 files changed, 16 insertions(+), 20 deletions(-)
+> +pub struct MemoryRegionOps<T>(
+> +    bindings::MemoryRegionOps,
+> +    // Note: quite often you'll see PhantomData<fn(&T)> mentioned when discussing
+> +    // covariance and contravariance; you don't need any of those to understand
+> +    // this usage of PhantomData.  Quite simply, MemoryRegionOps<T> *logically*
+> +    // holds callbacks that take an argument of type &T, except the type is erased
+> +    // before the callback is stored in the bindings::MemoryRegionOps field.
+> +    // The argument of PhantomData is a function pointer in order to represent
+> +    // that relationship; while that will also provide desirable and safe variance
+> +    // for T, variance is not the point but just a consequence.
+> +    PhantomData<fn(&T)>,
+> +);
 
-diff --git a/include/hw/loader.h b/include/hw/loader.h
-index 8202c376043..84737c05b8d 100644
---- a/include/hw/loader.h
-+++ b/include/hw/loader.h
-@@ -162,7 +162,7 @@ ssize_t load_elf_as(const char *filename,
-                     uint64_t (*elf_note_fn)(void *, void *, bool),
-                     uint64_t (*translate_fn)(void *, uint64_t),
-                     void *translate_opaque, uint64_t *pentry, uint64_t *lowaddr,
--                    uint64_t *highaddr, uint32_t *pflags, int big_endian,
-+                    uint64_t *highaddr, uint32_t *pflags, int elf_data_order,
-                     int elf_machine, int clear_lsb, int data_swab,
-                     AddressSpace *as);
- 
-diff --git a/hw/core/loader.c b/hw/core/loader.c
-index 0cd34425e9c..84c7f7987ec 100644
---- a/hw/core/loader.c
-+++ b/hw/core/loader.c
-@@ -413,7 +413,8 @@ ssize_t load_elf(const char *filename,
-                  int elf_machine, int clear_lsb, int data_swab)
- {
-     return load_elf_as(filename, elf_note_fn, translate_fn, translate_opaque,
--                       pentry, lowaddr, highaddr, pflags, big_endian,
-+                       pentry, lowaddr, highaddr, pflags,
-+                       big_endian ? ELFDATA2MSB : ELFDATA2LSB,
-                        elf_machine, clear_lsb, data_swab, NULL);
- }
- 
-@@ -422,14 +423,13 @@ ssize_t load_elf_as(const char *filename,
-                     uint64_t (*elf_note_fn)(void *, void *, bool),
-                     uint64_t (*translate_fn)(void *, uint64_t),
-                     void *translate_opaque, uint64_t *pentry, uint64_t *lowaddr,
--                    uint64_t *highaddr, uint32_t *pflags, int big_endian,
-+                    uint64_t *highaddr, uint32_t *pflags, int elf_data_order,
-                     int elf_machine, int clear_lsb, int data_swab,
-                     AddressSpace *as)
- {
-     return load_elf_ram_sym(filename, elf_note_fn,
-                             translate_fn, translate_opaque,
--                            pentry, lowaddr, highaddr, pflags,
--                            big_endian ? ELFDATA2MSB : ELFDATA2LSB,
-+                            pentry, lowaddr, highaddr, pflags, elf_data_order,
-                             elf_machine, clear_lsb, data_swab, as,
-                             true, NULL);
- }
-diff --git a/hw/arm/armv7m.c b/hw/arm/armv7m.c
-index a67a890a33e..98a69846119 100644
---- a/hw/arm/armv7m.c
-+++ b/hw/arm/armv7m.c
-@@ -608,7 +608,7 @@ void armv7m_load_kernel(ARMCPU *cpu, const char *kernel_filename,
-     if (kernel_filename) {
-         image_size = load_elf_as(kernel_filename, NULL, NULL, NULL,
-                                  &entry, NULL, NULL,
--                                 NULL, 0, EM_ARM, 1, 0, as);
-+                                 NULL, ELFDATA2LSB, EM_ARM, 1, 0, as);
-         if (image_size < 0) {
-             image_size = load_image_targphys_as(kernel_filename, mem_base,
-                                                 mem_size, as);
-diff --git a/hw/arm/boot.c b/hw/arm/boot.c
-index b44bea8a821..cbc24356fc1 100644
---- a/hw/arm/boot.c
-+++ b/hw/arm/boot.c
-@@ -798,7 +798,7 @@ static ssize_t arm_load_elf(struct arm_boot_info *info, uint64_t *pentry,
-         Elf64_Ehdr h64;
-     } elf_header;
-     int data_swab = 0;
--    bool big_endian;
-+    int elf_data_order;
-     ssize_t ret;
-     Error *err = NULL;
- 
-@@ -814,12 +814,12 @@ static ssize_t arm_load_elf(struct arm_boot_info *info, uint64_t *pentry,
-     }
- 
-     if (elf_is64) {
--        big_endian = elf_header.h64.e_ident[EI_DATA] == ELFDATA2MSB;
--        info->endianness = big_endian ? ARM_ENDIANNESS_BE8
--                                      : ARM_ENDIANNESS_LE;
-+        elf_data_order = elf_header.h64.e_ident[EI_DATA];
-+        info->endianness = elf_data_order == ELFDATA2MSB ? ARM_ENDIANNESS_BE8
-+                                                         : ARM_ENDIANNESS_LE;
-     } else {
--        big_endian = elf_header.h32.e_ident[EI_DATA] == ELFDATA2MSB;
--        if (big_endian) {
-+        elf_data_order = elf_header.h32.e_ident[EI_DATA];
-+        if (elf_data_order == ELFDATA2MSB) {
-             if (bswap32(elf_header.h32.e_flags) & EF_ARM_BE8) {
-                 info->endianness = ARM_ENDIANNESS_BE8;
-             } else {
-@@ -839,8 +839,8 @@ static ssize_t arm_load_elf(struct arm_boot_info *info, uint64_t *pentry,
-     }
- 
-     ret = load_elf_as(info->kernel_filename, NULL, NULL, NULL,
--                      pentry, lowaddr, highaddr, NULL, big_endian, elf_machine,
--                      1, data_swab, as);
-+                      pentry, lowaddr, highaddr, NULL, elf_data_order,
-+                      elf_machine, 1, data_swab, as);
-     if (ret <= 0) {
-         /* The header loaded but the image didn't */
-         error_report("Couldn't load elf '%s': %s",
-diff --git a/hw/avr/boot.c b/hw/avr/boot.c
-index 6a91dcd12d0..e5a29c7218e 100644
---- a/hw/avr/boot.c
-+++ b/hw/avr/boot.c
-@@ -73,7 +73,7 @@ bool avr_load_firmware(AVRCPU *cpu, MachineState *ms,
- 
-     bytes_loaded = load_elf_as(filename, NULL, NULL, NULL,
-                                &entry, NULL, NULL,
--                               &e_flags, 0, EM_AVR, 0, 0, NULL);
-+                               &e_flags, ELFDATA2LSB, EM_AVR, 0, 0, NULL);
-     if (bytes_loaded >= 0) {
-         /* If ELF file is provided, determine CPU type reading ELF e_flags. */
-         const char *elf_cpu = avr_elf_e_flags_to_cpu_type(e_flags);
-diff --git a/hw/core/generic-loader.c b/hw/core/generic-loader.c
-index 0ddb3a359a2..5fdbc3f3be2 100644
---- a/hw/core/generic-loader.c
-+++ b/hw/core/generic-loader.c
-@@ -31,7 +31,6 @@
-  */
- 
- #include "qemu/osdep.h"
--#include "exec/tswap.h"
- #include "system/dma.h"
- #include "system/reset.h"
- #include "hw/boards.h"
-@@ -63,7 +62,6 @@ static void generic_loader_realize(DeviceState *dev, Error **errp)
- {
-     GenericLoaderState *s = GENERIC_LOADER(dev);
-     hwaddr entry;
--    int big_endian;
-     ssize_t size = 0;
- 
-     s->set_pc = false;
-@@ -131,14 +129,12 @@ static void generic_loader_realize(DeviceState *dev, Error **errp)
-         s->cpu = first_cpu;
-     }
- 
--    big_endian = target_words_bigendian();
--
-     if (s->file) {
-         AddressSpace *as = s->cpu ? s->cpu->as :  NULL;
- 
-         if (!s->force_raw) {
-             size = load_elf_as(s->file, NULL, NULL, NULL, &entry, NULL, NULL,
--                               NULL, big_endian, 0, 0, 0, as);
-+                               NULL, ELFDATANONE, 0, 0, 0, as);
- 
-             if (size < 0) {
-                 size = load_uimage_as(s->file, &entry, NULL, NULL, NULL, NULL,
--- 
-2.47.1
+Wow, it can be wrapped like this!
+
+> +}
+> +
+> +/// A safe wrapper around [`bindings::MemoryRegion`].  Compared to the
+> +/// underlying C struct it is marked as pinned because the QOM tree
+> +/// contains a pointer to it.
+> +pub struct MemoryRegion {
+> +    inner: bindings::MemoryRegion,
+> +    _pin: PhantomPinned,
+> +}
+> +
+> +impl MemoryRegion {
+> +    // inline to ensure that it is not included in tests, which only
+> +    // link to hwcore and qom.  FIXME: inlining is actually the opposite
+> +    // of what we want, since this is the type-erased version of the
+> +    // init_io function below.  Look into splitting the qemu_api crate.
+
+Ah, I didn't understand the issue described in this comment. Why would
+inlining affect the linking of tests?
+
+> +    #[inline(always)]
+> +    unsafe fn do_init_io(
+> +        slot: *mut bindings::MemoryRegion,
+> +        owner: *mut Object,
+> +        ops: &'static bindings::MemoryRegionOps,
+> +        name: &'static str,
+> +        size: u64,
+> +    ) {
+> +        unsafe {
+> +            let cstr = CString::new(name).unwrap();
+> +            memory_region_init_io(
+> +                slot,
+> +                owner.cast::<Object>(),
+> +                ops,
+> +                owner.cast::<c_void>(),
+> +                cstr.as_ptr(),
+> +                size,
+> +            );
+> +        }
+> +    }
+> +
+> +    pub fn init_io<T: IsA<Object>>(
+> +        &mut self,
+> +        owner: *mut T,
+> +        ops: &'static MemoryRegionOps<T>,
+> +        name: &'static str,
+
+What about &'static CStr?
+
+Then pl011 could pass `c_str!("pl011")` or `Self::TYPE_NAMSelf::TYPE_NAME`.
+
+Otherwise,
+
+Reviewed-by: Zhao Liu <zhao1.liu@intel.com>
+
 
 
