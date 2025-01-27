@@ -4,41 +4,43 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 08222C02192
-	for <qemu-devel@archiver.kernel.org>; Tue, 28 Jan 2025 08:01:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0934AC0218D
+	for <qemu-devel@archiver.kernel.org>; Tue, 28 Jan 2025 08:01:55 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tcgSW-0001cr-TX; Tue, 28 Jan 2025 02:56:33 -0500
+	id 1tcgXb-0002Q6-6B; Tue, 28 Jan 2025 03:01:47 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1tcgS6-0007r5-Gp; Tue, 28 Jan 2025 02:56:13 -0500
+ id 1tcgXW-00023C-4j; Tue, 28 Jan 2025 03:01:42 -0500
 Received: from isrv.corpit.ru ([86.62.121.231])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1tcgS4-0000GN-Uf; Tue, 28 Jan 2025 02:56:06 -0500
+ id 1tcgXU-0001ra-E0; Tue, 28 Jan 2025 03:01:41 -0500
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 5FBC9E1AE2;
- Tue, 28 Jan 2025 10:54:25 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id 9C994E1B4F;
+ Tue, 28 Jan 2025 10:57:08 +0300 (MSK)
 Received: from localhost.tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id CEEB11A62C9;
- Tue, 28 Jan 2025 10:54:50 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id 187991A6302;
+ Tue, 28 Jan 2025 10:57:34 +0300 (MSK)
 Received: by localhost.tls.msk.ru (Postfix, from userid 1000)
- id C4D2A52029; Tue, 28 Jan 2025 10:54:50 +0300 (MSK)
+ id EA28C52095; Tue, 28 Jan 2025 10:57:33 +0300 (MSK)
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Peter Maydell <peter.maydell@linaro.org>,
+Cc: qemu-stable@nongnu.org, Pierrick Bouvier <pierrick.bouvier@linaro.org>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  Richard Henderson <richard.henderson@linaro.org>,
- Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>,
+ =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
  Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-8.2.9 01/45] hw/intc/openpic: Avoid taking address of
- out-of-bounds array index
-Date: Mon, 27 Jan 2025 23:25:42 +0300
-Message-Id: <20250127202630.3724367-1-mjt@tls.msk.ru>
+Subject: [Stable-9.1.3 08/58] plugins: add missing export for
+ qemu_plugin_num_vcpus
+Date: Mon, 27 Jan 2025 23:24:54 +0300
+Message-Id: <20250127202547.3723716-8-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.39.5
-In-Reply-To: <qemu-stable-8.2.9-20250127232621@cover.tls.msk.ru>
-References: <qemu-stable-8.2.9-20250127232621@cover.tls.msk.ru>
+In-Reply-To: <qemu-stable-9.1.3-20250127232536@cover.tls.msk.ru>
+References: <qemu-stable-9.1.3-20250127232536@cover.tls.msk.ru>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 From: Michael Tokarev <mjt@tls.msk.ru>
 Received-SPF: pass client-ip=86.62.121.231; envelope-from=mjt@tls.msk.ru;
@@ -65,57 +67,28 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The clang sanitizer complains about the code in the EOI handling
-of openpic_cpu_write_internal():
-
-UBSAN_OPTIONS=halt_on_error=1:abort_on_error=1 ./build/clang/qemu-system-ppc -M mac99,graphics=off -display none -kernel day15/invaders.elf
-../../hw/intc/openpic.c:1034:16: runtime error: index -1 out of bounds for type 'IRQSource[264]' (aka 'struct IRQSource[264]')
-SUMMARY: UndefinedBehaviorSanitizer: undefined-behavior ../../hw/intc/openpic.c:1034:16 in
-
-This is because we do
-  src = &opp->src[n_IRQ];
-when n_IRQ may be -1.  This is in practice harmless because if n_IRQ
-is -1 then we don't do anything with the src pointer, but it is
-undefined behaviour. (This has been present since this device
-was first added to QEMU.)
-
-Rearrange the code so we only do the array index when n_IRQ is not -1.
-
-Cc: qemu-stable@nongnu.org
-Fixes: e9df014c0b ("Implement embedded IRQ controller for PowerPC 6xx/740 & 75")
-Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+Fixes: 4a448b148ca ("plugins: add qemu_plugin_num_vcpus function")
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Message-Id: <20241112212622.3590693-2-pierrick.bouvier@linaro.org>
 Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-Reviewed-by: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
-Message-id: 20241105180205.3074071-1-peter.maydell@linaro.org
-(cherry picked from commit 3bf7dcd47a3da0e86a9347ce5b2b5d5a1dcb5857)
+Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
+Message-Id: <20241121165806.476008-36-alex.bennee@linaro.org>
+(cherry picked from commit cfa3a6c54511374e9ccee26d9c38ac1698fc7af2)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/hw/intc/openpic.c b/hw/intc/openpic.c
-index a6f91d4bcd..01aabac206 100644
---- a/hw/intc/openpic.c
-+++ b/hw/intc/openpic.c
-@@ -1032,13 +1032,14 @@ static void openpic_cpu_write_internal(void *opaque, hwaddr addr,
-         s_IRQ = IRQ_get_next(opp, &dst->servicing);
-         /* Check queued interrupts. */
-         n_IRQ = IRQ_get_next(opp, &dst->raised);
--        src = &opp->src[n_IRQ];
--        if (n_IRQ != -1 &&
--            (s_IRQ == -1 ||
--             IVPR_PRIORITY(src->ivpr) > dst->servicing.priority)) {
--            DPRINTF("Raise OpenPIC INT output cpu %d irq %d",
--                    idx, n_IRQ);
--            qemu_irq_raise(opp->dst[idx].irqs[OPENPIC_OUTPUT_INT]);
-+        if (n_IRQ != -1) {
-+            src = &opp->src[n_IRQ];
-+            if (s_IRQ == -1 ||
-+                IVPR_PRIORITY(src->ivpr) > dst->servicing.priority) {
-+                DPRINTF("Raise OpenPIC INT output cpu %d irq %d",
-+                        idx, n_IRQ);
-+                qemu_irq_raise(opp->dst[idx].irqs[OPENPIC_OUTPUT_INT]);
-+            }
-         }
-         break;
-     default:
+diff --git a/include/qemu/qemu-plugin.h b/include/qemu/qemu-plugin.h
+index c71c705b69..d72d45628f 100644
+--- a/include/qemu/qemu-plugin.h
++++ b/include/qemu/qemu-plugin.h
+@@ -763,6 +763,7 @@ void qemu_plugin_register_atexit_cb(qemu_plugin_id_t id,
+                                     qemu_plugin_udata_cb_t cb, void *userdata);
+ 
+ /* returns how many vcpus were started at this point */
++QEMU_PLUGIN_API
+ int qemu_plugin_num_vcpus(void);
+ 
+ /**
 -- 
 2.39.5
 
