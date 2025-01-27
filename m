@@ -4,40 +4,40 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id ECFFCC02190
-	for <qemu-devel@archiver.kernel.org>; Tue, 28 Jan 2025 08:27:19 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4515FC0218D
+	for <qemu-devel@archiver.kernel.org>; Tue, 28 Jan 2025 08:27:21 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tcgVI-0004W8-Dk; Tue, 28 Jan 2025 02:59:24 -0500
+	id 1tcgdD-0000Tc-RI; Tue, 28 Jan 2025 03:07:36 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1tcgV8-0003gR-FZ; Tue, 28 Jan 2025 02:59:16 -0500
+ id 1tcgbr-0004YV-8E; Tue, 28 Jan 2025 03:06:20 -0500
 Received: from isrv.corpit.ru ([86.62.121.231])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1tcgV6-0001Bb-5r; Tue, 28 Jan 2025 02:59:14 -0500
+ id 1tcgbo-0003Z0-Lx; Tue, 28 Jan 2025 03:06:11 -0500
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id DBD1CE1B02;
- Tue, 28 Jan 2025 10:54:25 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id 5FD83E1B7C;
+ Tue, 28 Jan 2025 10:57:09 +0300 (MSK)
 Received: from localhost.tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id 56E211A62E9;
- Tue, 28 Jan 2025 10:54:51 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id CFBF21A632F;
+ Tue, 28 Jan 2025 10:57:34 +0300 (MSK)
 Received: by localhost.tls.msk.ru (Postfix, from userid 1000)
- id 05A6552069; Tue, 28 Jan 2025 10:54:51 +0300 (MSK)
+ id 416C9520EF; Tue, 28 Jan 2025 10:57:34 +0300 (MSK)
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, David Hildenbrand <david@redhat.com>,
- "Michael S . Tsirkin" <mst@redhat.com>, Eric Farman <farman@linux.ibm.com>,
- Thomas Huth <thuth@redhat.com>, Janosch Frank <frankja@linux.ibm.com>,
- Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-8.2.9 33/45] s390x/s390-virtio-ccw: don't crash on weird RAM
- sizes
-Date: Mon, 27 Jan 2025 23:26:14 +0300
-Message-Id: <20250127202630.3724367-33-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org, Sebastian Ott <sebott@redhat.com>,
+ Zhenyu Zhang <zhenyzha@redhat.com>,
+ Alex Williamson <alex.williamson@redhat.com>,
+ "Michael S . Tsirkin" <mst@redhat.com>, Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-9.1.3 53/58] pci: ensure valid link status bits for
+ downstream ports
+Date: Mon, 27 Jan 2025 23:25:39 +0300
+Message-Id: <20250127202547.3723716-53-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.39.5
-In-Reply-To: <qemu-stable-8.2.9-20250127232621@cover.tls.msk.ru>
-References: <qemu-stable-8.2.9-20250127232621@cover.tls.msk.ru>
+In-Reply-To: <qemu-stable-9.1.3-20250127232536@cover.tls.msk.ru>
+References: <qemu-stable-9.1.3-20250127232536@cover.tls.msk.ru>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 From: Michael Tokarev <mjt@tls.msk.ru>
@@ -65,51 +65,61 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-KVM is not happy when starting a VM with weird RAM sizes:
+PCI hotplug for downstream endpoints on arm fails because Linux'
+PCIe hotplug driver doesn't like the QEMU provided LNKSTA:
 
-  # qemu-system-s390x --enable-kvm --nographic -m 1234K
-  qemu-system-s390x: kvm_set_user_memory_region: KVM_SET_USER_MEMORY_REGION
-    failed, slot=0, start=0x0, size=0x244000: Invalid argument
-  kvm_set_phys_mem: error registering slot: Invalid argument
-  Aborted (core dumped)
+  pcieport 0000:08:01.0: pciehp: Slot(2): Card present
+  pcieport 0000:08:01.0: pciehp: Slot(2): Link Up
+  pcieport 0000:08:01.0: pciehp: Slot(2): Cannot train link: status 0x2000
 
-Let's handle that in a better way by rejecting such weird RAM sizes
-right from the start:
+There's 2 cases where LNKSTA isn't setup properly:
+* the downstream device has no express capability
+* max link width of the bridge is 0
 
-  # qemu-system-s390x --enable-kvm --nographic -m 1234K
-  qemu-system-s390x: ram size must be multiples of 1 MiB
+Move the sanity checks added via 88c869198aa63
+("pci: Sanity test minimum downstream LNKSTA") outside of the
+branch to make sure downstream ports always have a valid LNKSTA.
 
-Message-ID: <20241219144115.2820241-2-david@redhat.com>
-Acked-by: Michael S. Tsirkin <mst@redhat.com>
-Reviewed-by: Eric Farman <farman@linux.ibm.com>
-Reviewed-by: Thomas Huth <thuth@redhat.com>
-Acked-by: Janosch Frank <frankja@linux.ibm.com>
-Signed-off-by: David Hildenbrand <david@redhat.com>
-(cherry picked from commit 14e568ab4836347481af2e334009c385f456a734)
+Signed-off-by: Sebastian Ott <sebott@redhat.com>
+Tested-by: Zhenyu Zhang <zhenyzha@redhat.com>
+Message-Id: <20241203121928.14861-1-sebott@redhat.com>
+Reviewed-by: Alex Williamson <alex.williamson@redhat.com>
+Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
+Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
+(cherry picked from commit 694632fd44987cc4618612a38ad151047524a590)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/hw/s390x/s390-virtio-ccw.c b/hw/s390x/s390-virtio-ccw.c
-index 2d6b86624f..d31686e105 100644
---- a/hw/s390x/s390-virtio-ccw.c
-+++ b/hw/s390x/s390-virtio-ccw.c
-@@ -184,6 +184,17 @@ static void s390_memory_init(MemoryRegion *ram)
- {
-     MemoryRegion *sysmem = get_system_memory();
+diff --git a/hw/pci/pcie.c b/hw/pci/pcie.c
+index 4b2f0805c6..9cb137c30f 100644
+--- a/hw/pci/pcie.c
++++ b/hw/pci/pcie.c
+@@ -1080,18 +1080,22 @@ void pcie_sync_bridge_lnk(PCIDevice *bridge_dev)
+         if ((lnksta & PCI_EXP_LNKSTA_NLW) > (lnkcap & PCI_EXP_LNKCAP_MLW)) {
+             lnksta &= ~PCI_EXP_LNKSTA_NLW;
+             lnksta |= lnkcap & PCI_EXP_LNKCAP_MLW;
+-        } else if (!(lnksta & PCI_EXP_LNKSTA_NLW)) {
+-            lnksta |= QEMU_PCI_EXP_LNKSTA_NLW(QEMU_PCI_EXP_LNK_X1);
+         }
  
-+    if (!QEMU_IS_ALIGNED(memory_region_size(ram), 1 * MiB)) {
-+        /*
-+         * SCLP cannot possibly expose smaller granularity right now and KVM
-+         * cannot handle smaller granularity. As we don't support NUMA, the
-+         * region size directly corresponds to machine->ram_size, and the region
-+         * is a single RAM memory region.
-+         */
-+        error_report("ram size must be multiples of 1 MiB");
-+        exit(EXIT_FAILURE);
+         if ((lnksta & PCI_EXP_LNKSTA_CLS) > (lnkcap & PCI_EXP_LNKCAP_SLS)) {
+             lnksta &= ~PCI_EXP_LNKSTA_CLS;
+             lnksta |= lnkcap & PCI_EXP_LNKCAP_SLS;
+-        } else if (!(lnksta & PCI_EXP_LNKSTA_CLS)) {
+-            lnksta |= QEMU_PCI_EXP_LNKSTA_CLS(QEMU_PCI_EXP_LNK_2_5GT);
+         }
+     }
+ 
++    if (!(lnksta & PCI_EXP_LNKSTA_NLW)) {
++        lnksta |= QEMU_PCI_EXP_LNKSTA_NLW(QEMU_PCI_EXP_LNK_X1);
 +    }
 +
-     /* allocate RAM for core */
-     memory_region_add_subregion(sysmem, 0, ram);
- 
++    if (!(lnksta & PCI_EXP_LNKSTA_CLS)) {
++        lnksta |= QEMU_PCI_EXP_LNKSTA_CLS(QEMU_PCI_EXP_LNK_2_5GT);
++    }
++
+     pci_word_test_and_clear_mask(exp_cap + PCI_EXP_LNKSTA,
+                                  PCI_EXP_LNKSTA_CLS | PCI_EXP_LNKSTA_NLW);
+     pci_word_test_and_set_mask(exp_cap + PCI_EXP_LNKSTA, lnksta &
 -- 
 2.39.5
 
