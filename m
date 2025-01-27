@@ -4,74 +4,69 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D9E0FC02188
-	for <qemu-devel@archiver.kernel.org>; Mon, 27 Jan 2025 15:04:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 85358C02188
+	for <qemu-devel@archiver.kernel.org>; Mon, 27 Jan 2025 15:28:08 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tcQe7-0005Ho-9J; Mon, 27 Jan 2025 10:03:28 -0500
+	id 1tcR0x-00063V-P4; Mon, 27 Jan 2025 10:27:04 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1tcQdx-0005DM-KQ
- for qemu-devel@nongnu.org; Mon, 27 Jan 2025 10:03:19 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <shameerali.kolothum.thodi@huawei.com>)
+ id 1tcR0f-0005xL-4y; Mon, 27 Jan 2025 10:26:46 -0500
+Received: from frasgout.his.huawei.com ([185.176.79.56])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1tcQdv-0000MT-B9
- for qemu-devel@nongnu.org; Mon, 27 Jan 2025 10:03:17 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1737990192;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=BjUC0lh4lW8oacLiMc3Ity9vakxsKwgKmhp2R5NIb4w=;
- b=XtYa9pCMiCSnw5qTWVEEKk0HoF/Bybt9A5HaSTiKZwPi7lv+EigEW3RToZkJ7acLr+XSWQ
- bZqGeD6rIVGahXeOFQ4VPwft3Ff8QDKGxQ/Zu8hQUHnRwW45citVTSR3eBYJDBoZ9CbzrB
- lIpt3ArWmylzSsNc9OB68BkS2xrZdwg=
-Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-567-p58Qrp8_O_GIBxMeWhp8Ig-1; Mon,
- 27 Jan 2025 10:03:11 -0500
-X-MC-Unique: p58Qrp8_O_GIBxMeWhp8Ig-1
-X-Mimecast-MFC-AGG-ID: p58Qrp8_O_GIBxMeWhp8Ig
-Received: from mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.40])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 09A861800A0D; Mon, 27 Jan 2025 15:03:09 +0000 (UTC)
-Received: from redhat.com (unknown [10.39.193.225])
- by mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 42CF519560AD; Mon, 27 Jan 2025 15:03:07 +0000 (UTC)
-Date: Mon, 27 Jan 2025 16:03:05 +0100
-From: Kevin Wolf <kwolf@redhat.com>
-To: Peter Krempa <pkrempa@redhat.com>
-Cc: Daniel =?iso-8859-1?Q?P=2E_Berrang=E9?= <berrange@redhat.com>,
- qemu-devel@nongnu.org, Hanna Reitz <hreitz@redhat.com>,
- qemu-block@nongnu.org, qemu-stable@nongnu.org
-Subject: Re: [PATCH] block-backend: Fix argument order when calling
- 'qapi_event_send_block_io_error()'
-Message-ID: <Z5egKZ6AAXomuRZe@redhat.com>
-References: <09728d784888b38d7a8f09ee5e9e9c542c875e1e.1737973614.git.pkrempa@redhat.com>
- <Z5dlnHdG_mWS5InU@redhat.com> <Z5do3aP6rGbXV_Mw@angien.pipo.sk>
+ (Exim 4.90_1) (envelope-from <shameerali.kolothum.thodi@huawei.com>)
+ id 1tcR0c-0003a0-Ji; Mon, 27 Jan 2025 10:26:44 -0500
+Received: from mail.maildlp.com (unknown [172.18.186.231])
+ by frasgout.his.huawei.com (SkyGuard) with ESMTP id 4YhXJm6w1lz6L51M;
+ Mon, 27 Jan 2025 23:24:24 +0800 (CST)
+Received: from frapeml500006.china.huawei.com (unknown [7.182.85.219])
+ by mail.maildlp.com (Postfix) with ESMTPS id 940DF1400D4;
+ Mon, 27 Jan 2025 23:26:34 +0800 (CST)
+Received: from frapeml500008.china.huawei.com (7.182.85.71) by
+ frapeml500006.china.huawei.com (7.182.85.219) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.1.2507.39; Mon, 27 Jan 2025 16:26:34 +0100
+Received: from frapeml500008.china.huawei.com ([7.182.85.71]) by
+ frapeml500008.china.huawei.com ([7.182.85.71]) with mapi id 15.01.2507.039;
+ Mon, 27 Jan 2025 16:26:34 +0100
+To: Nathan Chen <nathanc@nvidia.com>
+CC: "ddutile@redhat.com" <ddutile@redhat.com>, "eric.auger@redhat.com"
+ <eric.auger@redhat.com>, "jgg@nvidia.com" <jgg@nvidia.com>, jiangkunkun
+ <jiangkunkun@huawei.com>, Jonathan Cameron <jonathan.cameron@huawei.com>,
+ Linuxarm <linuxarm@huawei.com>, "nicolinc@nvidia.com" <nicolinc@nvidia.com>,
+ "peter.maydell@linaro.org" <peter.maydell@linaro.org>, "qemu-arm@nongnu.org"
+ <qemu-arm@nongnu.org>, "Wangzhou (B)" <wangzhou1@hisilicon.com>,
+ "zhangfei.gao@linaro.org" <zhangfei.gao@linaro.org>, "qemu-devel@nongnu.org"
+ <qemu-devel@nongnu.org>
+Subject: RE: [RFC PATCH 0/5] hw/arm/virt: Add support for user-creatable
+ nested SMMUv3
+Thread-Topic: [RFC PATCH 0/5] hw/arm/virt: Add support for user-creatable
+ nested SMMUv3
+Thread-Index: AQHbMeB0+Q5BEZc9JkeH/U6Jz+dF4rK0OI0AgAyjUACAIpIKgIAAEq8AgAVS2bCAPl33AIAECLLQ
+Date: Mon, 27 Jan 2025 15:26:34 +0000
+Message-ID: <0b281d2f8ebf4368b7e7b97aa0a4cfd3@huawei.com>
+References: <31db1f75110e46ccaffffb801e894605@huawei.com>
+ <a80c78fd-6203-4aca-a3d3-d67a68b8e595@nvidia.com>
+In-Reply-To: <a80c78fd-6203-4aca-a3d3-d67a68b8e595@nvidia.com>
+Accept-Language: en-GB, en-US
+Content-Language: en-US
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+x-originating-ip: [10.203.177.241]
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: base64
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <Z5do3aP6rGbXV_Mw@angien.pipo.sk>
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.40
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=kwolf@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -33
-X-Spam_score: -3.4
-X-Spam_bar: ---
-X-Spam_report: (-3.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.3,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+Received-SPF: pass client-ip=185.176.79.56;
+ envelope-from=shameerali.kolothum.thodi@huawei.com;
+ helo=frasgout.his.huawei.com
+X-Spam_score_int: -41
+X-Spam_score: -4.2
+X-Spam_bar: ----
+X-Spam_report: (-4.2 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_MED=-2.3,
+ RCVD_IN_MSPIKE_H2=0.001, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -85,57 +80,54 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-to:  Shameerali Kolothum Thodi <shameerali.kolothum.thodi@huawei.com>
+From:  Shameerali Kolothum Thodi via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Am 27.01.2025 um 12:07 hat Peter Krempa geschrieben:
-> On Mon, Jan 27, 2025 at 10:53:16 +0000, Daniel P. Berrangé wrote:
-> > On Mon, Jan 27, 2025 at 11:29:24AM +0100, Peter Krempa wrote:
-> > > Commit 7452162adec25c10 introduced 'qom-path' argument to BLOCK_IO_ERROR
-> > > event but when the event is instantiated in 'send_qmp_error_event()' the
-> > > arguments for 'device' and 'qom_path' in
-> > > qapi_event_send_block_io_error() were reversed :
-> > > 
-> > > Generated code for sending event:
-> > > 
-> > >   void qapi_event_send_block_io_error(const char *qom_path,
-> > >                                       const char *device,
-> > >                                       const char *node_name,
-> > >                                       IoOperationType operation,
-> > >                                       [...]
-> > > 
-> > > Call inside send_qmp_error_event():
-> > > 
-> > >      qapi_event_send_block_io_error(blk_name(blk),
-> > >                                     blk_get_attached_dev_path(blk),
-> > >                                     bs ? bdrv_get_node_name(bs) : NULL, optype,
-> > >                                     [...]
-> > > 
-> > > This results into reporting the QOM path as the device alias and vice
-> > > versa which in turn breaks libvirt, which expects the device alias being
-> > > either a valid alias or empty (which would make libvirt do the lookup by
-> > > node-name instead).
-> > > 
-> > > Fixes: 7452162adec25c1003d5bf0079aca52913a80e0c
-> > > Signed-off-by: Peter Krempa <pkrempa@redhat.com>
-> > 
-> > Hmm, luckily that was only introduced in 9.2.0, so we can probably just
-> > fix it in stable, and not worry about libvirt needs to add back compat
-> > to workaround the initially broken 9.2.0 release events.
-> 
-> Indeed, there's no need for a specific libvirt workaround. Although I
-> still plan to modify the libvirt code to prefer node-name if present due
-> to other reasons (to have the correct path of the image if the error
-> happened in a backing image), which will also workaround this issue in
-> the end.
-
-Currently, QEMU always puts the node name of the root node there, so for
-now you won't see backing file nodes in these events. But it's probably
-a good idea to prepare libvirt for it anyway, maybe we can find a way to
-have better error events later. The challenge in doing that is that the
-error events are sent by the devices, not by the block node that
-actually first encountered the error.
-
-Kevin
-
+DQoNCj4gLS0tLS1PcmlnaW5hbCBNZXNzYWdlLS0tLS0NCj4gRnJvbTogTmF0aGFuIENoZW4gPG5h
+dGhhbmNAbnZpZGlhLmNvbT4NCj4gU2VudDogU2F0dXJkYXksIEphbnVhcnkgMjUsIDIwMjUgMjo0
+NCBBTQ0KPiBUbzogU2hhbWVlcmFsaSBLb2xvdGh1bSBUaG9kaSA8c2hhbWVlcmFsaS5rb2xvdGh1
+bS50aG9kaUBodWF3ZWkuY29tPg0KPiBDYzogZGR1dGlsZUByZWRoYXQuY29tOyBlcmljLmF1Z2Vy
+QHJlZGhhdC5jb207IGpnZ0BudmlkaWEuY29tOw0KPiBqaWFuZ2t1bmt1biA8amlhbmdrdW5rdW5A
+aHVhd2VpLmNvbT47IEpvbmF0aGFuIENhbWVyb24NCj4gPGpvbmF0aGFuLmNhbWVyb25AaHVhd2Vp
+LmNvbT47IExpbnV4YXJtIDxsaW51eGFybUBodWF3ZWkuY29tPjsNCj4gbmF0aGFuY0BudmlkaWEu
+Y29tOyBuaWNvbGluY0BudmlkaWEuY29tOyBwZXRlci5tYXlkZWxsQGxpbmFyby5vcmc7DQo+IHFl
+bXUtYXJtQG5vbmdudS5vcmc7IFdhbmd6aG91IChCKSA8d2FuZ3pob3UxQGhpc2lsaWNvbi5jb20+
+Ow0KPiB6aGFuZ2ZlaS5nYW9AbGluYXJvLm9yZzsgcWVtdS1kZXZlbEBub25nbnUub3JnDQo+IFN1
+YmplY3Q6IFJFOiBbUkZDIFBBVENIIDAvNV0gaHcvYXJtL3ZpcnQ6IEFkZCBzdXBwb3J0IGZvciB1
+c2VyLWNyZWF0YWJsZQ0KPiBuZXN0ZWQgU01NVXYzDQo+IA0KPiA+PiAgPndpdGggYW4gZXJyb3Ig
+bWVzc2FnZSBpbmRpY2F0aW5nIERNQSBtYXBwaW5nIGZhaWxlZCBmb3IgdGhlDQo+ID4+IHBhc3N0
+aHJvdWdoID5kZXZpY2VzLg0KPiA+Pg0KPiA+PiBBIGNvcnJlY3Rpb24gLSB0aGUgbWVzc2FnZSBp
+bmRpY2F0ZXMgVUVGSSBmYWlsZWQgdG8gZmluZCBhIG1hcHBpbmcgZm9yDQo+ID4+IHRoZSBib290
+IHBhcnRpdGlvbiAoIm1hcDogbm8gbWFwcGluZyBmb3VuZCIpLCBub3QgdGhhdCBETUEgbWFwcGlu
+Zw0KPiA+PiBmYWlsZWQuIEJ1dCBlYXJsaWVyIEVESyBkZWJ1ZyBsb2dzIHN0aWxsIHNob3cgUENJ
+IGhvc3QgYnJpZGdlIHJlc291cmNlDQo+ID4+IGNvbmZsaWN0cyBmb3IgdGhlIHBhc3N0aHJvdWdo
+IGRldmljZXMgdGhhdCBzZWVtIHJlbGF0ZWQgdG8gdGhlIFZNIGJvb3QNCj4gPj4gZmFpbHVyZS4N
+Cj4gPg0KPiA+IEkgaGF2ZSB0cmllZCBhIDIwMjMgdmVyc2lvbiBFRkkgd2hpY2ggd29ya3MuIEFu
+ZCBmb3IgbW9yZSByZWNlbnQgdGVzdHMgSQ0KPiBhbQ0KPiA+IHVzaW5nIGEgb25lIGJ1aWx0IGRp
+cmVjdGx5IGZyb20sDQo+ID4gaHR0cHM6Ly9naXRodWIuY29tL3RpYW5vY29yZS9lZGsyLmdpdCBt
+YXN0ZXINCj4gPg0KPiA+IENvbW1pdDogMGYzODY3ZmE2ZWYwKCJVZWZpUGF5bG9hZFBrZy9VZWZp
+UGF5bG9hZEVudHJ5OiBGaXggUFQNCj4gcHJvdGVjdGlvbg0KPiA+IGluIDUgbGV2ZWwgcGFnaW5n
+Ig0KPiA+DQo+ID4gV2l0aCBib3RoLCBJIGRvbuKAmXQgcmVtZW1iZXIgc2VlaW5nIGFueSBib290
+IGZhaWx1cmUgYW5kIHRoZSBhYm92ZSBVRUZJDQo+ID4gcmVsYXRlZCAibWFwOiBubyBtYXBwaW5n
+IGZvdW5kIiBlcnJvci4gQnV0IHRoZSBHdWVzdCBrZXJuZWwgYXQgdGltZXMNCj4gPiBjb21wbGFp
+bnRzIGFib3V0IHBjaSBicmlkZ2Ugd2luZG93IG1lbW9yeSBhc3NpZ25tZW50IGZhaWx1cmVzLg0K
+PiA+IC4uLg0KPiA+IHBjaSAwMDAwOjEwOjAxLjA6IGJyaWRnZSB3aW5kb3cgW21lbSBzaXplIDB4
+MDAyMDAwMDAgNjRiaXQgcHJlZl06IGNhbid0DQo+IGFzc2lnbjsgbm8gc3BhY2UNCj4gPiBwY2kg
+MDAwMDoxMDowMS4wOiBicmlkZ2Ugd2luZG93IFttZW0gc2l6ZSAweDAwMjAwMDAwIDY0Yml0IHBy
+ZWZdOiBmYWlsZWQNCj4gdG8gYXNzaWduDQo+ID4gcGNpIDAwMDA6MTA6MDAuMDogYnJpZGdlIHdp
+bmRvdyBbaW8gIHNpemUgMHgxMDAwXTpjYW4ndCBhc3NpZ247IG5vIHNwYWNlDQo+ID4gLi4uDQo+
+ID4NCj4gPiBCdXQgR3Vlc3Qgc3RpbGwgYm9vdHMgYW5kIHdvcmtlZCBmaW5lIHNvIGZhci4NCj4g
+DQo+IEhpIFNoYW1lZXIsDQo+IA0KPiBKdXN0IGxldHRpbmcgeW91IGtub3cgSSByZXNvbHZlZCB0
+aGlzIGJ5IGluY3JlYXNpbmcgdGhlIE1NSU8gcmVnaW9uIHNpemUNCj4gaW4gaHcvYXJtL3ZpcnQu
+YyB0byBzdXBwb3J0IHBhc3NpbmcgdGhyb3VnaCBHUFVzIHdpdGggbGFyZ2UgQkFSIHJlZ2lvbnMN
+Cj4gKFZJUlRfSElHSF9QQ0lFX01NSU8pLiBUaGFua3MgZm9yIHRha2luZyBhIGxvb2suDQo+IA0K
+DQpPay4gVGhhbmtzIGZvciB0aGF0LiBEb2VzIHRoYXQgbWVhbiBtYXkgYmUgYW4gb3B0aW9uYWwg
+cHJvcGVydHkgdG8gc3BlY2lmeQ0KdGhlIHNpemUgZm9yIFZJUlRfSElHSF9QQ0lFX01NSU8gaXMg
+d29ydGggYWRkaW5nPw0KDQpBbmQgZm9yIHRoZSBQQ0kgYnJpZGdlIHdpbmRvdyBzcGVjaWZpYyBl
+cnJvcnMgdGhhdCBJIG1lbnRpb25lZCBhYm92ZSwNCg0KPj5wY2kgMDAwMDoxMDowMS4wOiBicmlk
+Z2Ugd2luZG93IFttZW0gc2l6ZSAweDAwMjAwMDAwIDY0Yml0IHByZWZdOiBjYW4ndCBhc3NpZ247
+IG5vIHNwYWNlDQoNCmFkZGluZyAgIiJtZW0tcmVzZXJ2ZT1YIiBhbmQgImlvLXJlc2VydmU9WCIg
+dG8gcGNpZS1yb290LXBvcnQgaGVscHMuDQoNClRoYW5rcywNClNoYW1lZXINCg0KDQo=
 
