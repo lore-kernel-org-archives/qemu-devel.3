@@ -4,55 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1C0A3C02188
-	for <qemu-devel@archiver.kernel.org>; Mon, 27 Jan 2025 13:01:25 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D8C45C02188
+	for <qemu-devel@archiver.kernel.org>; Mon, 27 Jan 2025 13:04:21 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tcOjO-0000Vw-8g; Mon, 27 Jan 2025 08:00:46 -0500
+	id 1tcOmY-00024i-0p; Mon, 27 Jan 2025 08:04:02 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
- id 1tcOjK-0000Ot-0W; Mon, 27 Jan 2025 08:00:42 -0500
-Received: from zero.eik.bme.hu ([152.66.115.2])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
- id 1tcOjI-0008RM-41; Mon, 27 Jan 2025 08:00:41 -0500
-Received: from zero.eik.bme.hu (localhost [127.0.0.1])
- by zero.eik.bme.hu (Postfix) with ESMTP id AA7354E600E;
- Mon, 27 Jan 2025 14:00:33 +0100 (CET)
-X-Virus-Scanned: amavisd-new at eik.bme.hu
-Received: from zero.eik.bme.hu ([127.0.0.1])
- by zero.eik.bme.hu (zero.eik.bme.hu [127.0.0.1]) (amavisd-new, port 10028)
- with ESMTP id ed1xDBco8JDT; Mon, 27 Jan 2025 14:00:31 +0100 (CET)
-Received: by zero.eik.bme.hu (Postfix, from userid 432)
- id AA3FD4E6004; Mon, 27 Jan 2025 14:00:31 +0100 (CET)
-Received: from localhost (localhost [127.0.0.1])
- by zero.eik.bme.hu (Postfix) with ESMTP id A7F7274577C;
- Mon, 27 Jan 2025 14:00:31 +0100 (CET)
-Date: Mon, 27 Jan 2025 14:00:31 +0100 (CET)
-From: BALATON Zoltan <balaton@eik.bme.hu>
-To: =?ISO-8859-15?Q?Philippe_Mathieu-Daud=E9?= <philmd@linaro.org>
-cc: qemu-devel@nongnu.org, qemu-riscv@nongnu.org, qemu-ppc@nongnu.org, 
- Richard Henderson <richard.henderson@linaro.org>, qemu-s390x@nongnu.org, 
- qemu-arm@nongnu.org, Peter Maydell <peter.maydell@linaro.org>
-Subject: Re: [PATCH 3/6] hw/loader: Clarify local variable name in
- load_elf_ram_sym()
-In-Reply-To: <20250127113824.50177-4-philmd@linaro.org>
-Message-ID: <6c51f4a7-ae43-fadb-cf3b-191d4b59975c@eik.bme.hu>
-References: <20250127113824.50177-1-philmd@linaro.org>
- <20250127113824.50177-4-philmd@linaro.org>
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1tcOki-00014q-M1
+ for qemu-devel@nongnu.org; Mon, 27 Jan 2025 08:02:14 -0500
+Received: from mail-yb1-xb2b.google.com ([2607:f8b0:4864:20::b2b])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1tcOkh-00006r-1X
+ for qemu-devel@nongnu.org; Mon, 27 Jan 2025 08:02:08 -0500
+Received: by mail-yb1-xb2b.google.com with SMTP id
+ 3f1490d57ef6-e587cca1e47so998421276.0
+ for <qemu-devel@nongnu.org>; Mon, 27 Jan 2025 05:02:06 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1737982926; x=1738587726; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=3uyBwHzj2AVHRnrzQUCsaSjF7zSPrzS8gQIbg7umwpQ=;
+ b=WvQgMMpTD52Pmqrl2mr9ejSiQsd6m42ygTb+WZdoHo5hZmpH/HdIcNAPJBs5VFgypf
+ V8N0+y7SAEq3Hq88YnN3pc8jjO+JPOFMeQPxICW0gDYFOqxYiytzbtRS9KUiJNqqCk6K
+ PouKPWYZQLxA7r9UopjCQLp9cS5nGD39x+L2okvJrfY4PjNRHUu+yO0LRa8kXldPoZWe
+ nSpyfreqt/wyhscMgqRHI89eKy8jtcomH47pJ+MOBpiVQ0nXD4pyKsRbSRWEpAmY8yT/
+ A9smP3ewVJFFktk6oqRh4MNdY27bUajoguLQBX3xPvwkjjWJ8Tx4DqzRstaUEXf9Wmjd
+ AEnA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1737982926; x=1738587726;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=3uyBwHzj2AVHRnrzQUCsaSjF7zSPrzS8gQIbg7umwpQ=;
+ b=piXKr0MOMOpJCsUGSHI7PAdPCuaNAHsqiLVCABxbKBm1YEp3EU+N5xS4AA3qppZzzw
+ +oPzbQ4AEZc4N9LO2iLQL6aJ71bBH5VXOXDp5K8ufu1i7p9GoQCuST2elkIDVf/4WaEn
+ BBpLcOGZU9Vz6aoW91/APIxI3s5g4u85V0dpmyQDZ2MdVkmJILG8ts/rwxVo4uey9oPe
+ EGQAdVXTM7xG1XTkFbG32mi/AKghsyPP+PhSfyBPkLSkoPPbhV4H+qIFcS+B74wSmUxz
+ HzUQ2He5Rw1/ADkygSRmGuDmpotUnD9pigi2ee58DDX8X9uOxNN0vuq3k/qJyM6XWhnh
+ +MgQ==
+X-Gm-Message-State: AOJu0Yy0d0AasTOlwKe1Z7I0TPCQjcjVHlwIbcRfVHDRsdQ6k2G6Br5w
+ vvPPrTDmlqlgj9uGpZfZWR0Cd1+eq7Ff3ZyNIErBslQLgY1b26m9QT8Q7KZiO5zatpuaNJjMUGz
+ HZ/sjHsxBuyFCxdwq6FFA0zR8e/XAFeapkHfmWg==
+X-Gm-Gg: ASbGncsQQgfn66AMBBraJmwFqywzCi8AmBkQ+Lg1yTXc9iJg62N6grz2Jb7sRxnFwtO
+ RrtmYC1U8VoGuO18fz7nFLaqEqKYidVB56MBvaGGAsN1ybceHtBT9q/cyLg+h+hw=
+X-Google-Smtp-Source: AGHT+IHLaBM1qZzk85dBPYZpsLk0OEEyzuH3yZ8Grwzg+F93EvKRLTneH5dUHsNZm+Haw5HsAna+zcCm4Z9ZHBqz5Jg=
+X-Received: by 2002:a05:6902:1791:b0:e57:327a:268 with SMTP id
+ 3f1490d57ef6-e57b105a86cmr28892743276.18.1737982925895; Mon, 27 Jan 2025
+ 05:02:05 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: multipart/mixed;
- boundary="3866299591-1921631016-1737982831=:99138"
-Received-SPF: pass client-ip=152.66.115.2; envelope-from=balaton@eik.bme.hu;
- helo=zero.eik.bme.hu
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+References: <20250117191106.322363-1-kchamart@redhat.com>
+ <20250117191106.322363-2-kchamart@redhat.com>
+In-Reply-To: <20250117191106.322363-2-kchamart@redhat.com>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Mon, 27 Jan 2025 13:01:54 +0000
+X-Gm-Features: AWEUYZkC4M_jBwBZ3x7bZR6I8U6BFNGyxbmG1rgt8gCNeoiYNKK_JwjTIFf0fpc
+Message-ID: <CAFEAcA9k-L+XHKEE0TMp+NZDNj1P-CVj2=y4Lk=n+O3F8t2-Fw@mail.gmail.com>
+Subject: Re: [PATCH 1/2] docs/cpu-features: Consistently use vCPU instead of
+ VCPU
+To: Kashyap Chamarthy <kchamart@redhat.com>
+Cc: qemu-devel@nongnu.org, qemu-arm@nongnu.org, maz@kernel.org, 
+ sebott@redhat.com
+Content-Type: text/plain; charset="UTF-8"
+Received-SPF: pass client-ip=2607:f8b0:4864:20::b2b;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yb1-xb2b.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -69,54 +93,16 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-  This message is in MIME format.  The first part should be readable text,
-  while the remaining parts are likely unreadable without MIME-aware tools.
-
---3866299591-1921631016-1737982831=:99138
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8BIT
-
-On Mon, 27 Jan 2025, Philippe Mathieu-Daudé wrote:
-> load_elf_ram_sym() compares target_data_order versus
-> host data_order. Rename 'data_order' -> 'host_data_order'
-> to ease code review.
+On Fri, 17 Jan 2025 at 19:11, Kashyap Chamarthy <kchamart@redhat.com> wrote:
 >
-> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-
-Reviewed-by: BALATON Zoltan <balaton@eik.bme.hu>
-
+> Signed-off-by: Kashyap Chamarthy <kchamart@redhat.com>
 > ---
-> hw/core/loader.c | 8 ++++----
-> 1 file changed, 4 insertions(+), 4 deletions(-)
+>  docs/system/arm/cpu-features.rst | 20 ++++++++++----------
+>  1 file changed, 10 insertions(+), 10 deletions(-)
 >
-> diff --git a/hw/core/loader.c b/hw/core/loader.c
-> index ead10fb6cb5..fc2e8f91267 100644
-> --- a/hw/core/loader.c
-> +++ b/hw/core/loader.c
-> @@ -443,7 +443,7 @@ ssize_t load_elf_ram_sym(const char *filename,
->                          int clear_lsb, int data_swab,
->                          AddressSpace *as, bool load_rom, symbol_fn_t sym_cb)
-> {
-> -    int fd, data_order, target_data_order, must_swab;
-> +    int fd, host_data_order, target_data_order, must_swab;
->     ssize_t ret = ELF_LOAD_FAILED;
->     uint8_t e_ident[EI_NIDENT];
->
-> @@ -462,11 +462,11 @@ ssize_t load_elf_ram_sym(const char *filename,
->         goto fail;
->     }
-> #if HOST_BIG_ENDIAN
-> -    data_order = ELFDATA2MSB;
-> +    host_data_order = ELFDATA2MSB;
-> #else
-> -    data_order = ELFDATA2LSB;
-> +    host_data_order = ELFDATA2LSB;
-> #endif
-> -    must_swab = data_order != e_ident[EI_DATA];
-> +    must_swab = host_data_order != e_ident[EI_DATA];
->     if (big_endian) {
->         target_data_order = ELFDATA2MSB;
->     } else {
->
---3866299591-1921631016-1737982831=:99138--
+
+Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
+
+thanks
+-- PMM
 
