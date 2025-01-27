@@ -4,32 +4,32 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C4E8BC02188
-	for <qemu-devel@archiver.kernel.org>; Mon, 27 Jan 2025 14:26:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 57595C0218A
+	for <qemu-devel@archiver.kernel.org>; Mon, 27 Jan 2025 14:26:47 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tcQ1L-000864-Qx; Mon, 27 Jan 2025 09:23:23 -0500
+	id 1tcQ1K-00081b-Ur; Mon, 27 Jan 2025 09:23:23 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1tcQ1H-0007kY-D6; Mon, 27 Jan 2025 09:23:19 -0500
+ id 1tcQ1G-0007kV-Vo; Mon, 27 Jan 2025 09:23:19 -0500
 Received: from isrv.corpit.ru ([86.62.121.231])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1tcQ1F-0002ui-8d; Mon, 27 Jan 2025 09:23:19 -0500
+ id 1tcQ1F-0002uf-7G; Mon, 27 Jan 2025 09:23:18 -0500
 Received: from localhost.tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by isrv.corpit.ru (Postfix) with ESMTP id ECAD4E0F54;
+ by isrv.corpit.ru (Postfix) with ESMTP id E6D3BE0F53;
  Mon, 27 Jan 2025 17:22:47 +0300 (MSK)
 Received: by localhost.tls.msk.ru (Postfix, from userid 1000)
- id 8F2D451D91; Mon, 27 Jan 2025 17:18:03 +0300 (MSK)
+ id 8338D51D87; Mon, 27 Jan 2025 17:18:03 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
 Cc: qemu-stable@nongnu.org, Fabiano Rosas <farosas@suse.de>,
  Peter Xu <peterx@redhat.com>, Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-9.2.1 22/41] migration: Rename vmstate_info_nullptr
-Date: Mon, 27 Jan 2025 17:17:36 +0300
-Message-Id: <20250127141803.3514882-22-mjt@tls.msk.ru>
+Subject: [Stable-9.2.1 17/41] migration/multifd: Fix compat with QEMU < 9.0
+Date: Mon, 27 Jan 2025 17:17:31 +0300
+Message-Id: <20250127141803.3514882-17-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <qemu-stable-9.2.1-20250127154029@cover.tls.msk.ru>
 References: <qemu-stable-9.2.1-20250127154029@cover.tls.msk.ru>
@@ -61,77 +61,78 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Fabiano Rosas <farosas@suse.de>
 
-Rename vmstate_info_nullptr from "uint64_t" to "nullptr". This vmstate
-actually reads and writes just a byte, so the proper name would be
-uint8. However, since this is a marker for a NULL pointer, it's
-convenient to have a more explicit name that can be identified by the
-consumers of the JSON part of the stream.
+Commit f5f48a7891 ("migration/multifd: Separate SYNC request with
+normal jobs") changed the multifd source side to stop sending data
+along with the MULTIFD_FLAG_SYNC, effectively introducing the concept
+of a SYNC-only packet. Relying on that, commit d7e58f412c
+("migration/multifd: Don't send ram data during SYNC") later came
+along and skipped reading data from SYNC packets.
 
-Change the name to "nullptr" and add support for it in the
-analyze-migration.py script. Arbitrarily use the name of the type as
-the value of the field to avoid the script showing 0x30 or '0', which
-could be confusing for readers.
+In a versions timeline like this:
 
+  8.2 f5f48a7 9.0 9.1 d7e58f41 9.2
+
+The issue arises that QEMUs < 9.0 still send data along with SYNC, but
+QEMUs > 9.1 don't gather that data anymore. This leads to various
+kinds of migration failures due to desync/missing data.
+
+Stop checking for a SYNC packet on the destination and unconditionally
+unfill the packet.
+
+>From now on:
+
+old -> new:
+the source sends data + sync, destination reads normally
+
+new -> new:
+source sends only sync, destination reads zeros
+
+new -> old:
+source sends only sync, destination reads zeros
+
+CC: qemu-stable@nongnu.org
+Fixes: d7e58f412c ("migration/multifd: Don't send ram data during SYNC")
+Resolves: https://gitlab.com/qemu-project/qemu/-/issues/2720
 Reviewed-by: Peter Xu <peterx@redhat.com>
-Message-Id: <20250109185249.23952-5-farosas@suse.de>
 Signed-off-by: Fabiano Rosas <farosas@suse.de>
-(cherry picked from commit f52965bf0eeee28e89933264f1a9dbdcdaa76a7e)
+Message-Id: <20241213160120.23880-2-farosas@suse.de>
+Signed-off-by: Fabiano Rosas <farosas@suse.de>
+(cherry picked from commit b93d897ea2f0abbe7fc341a9ac176b5ecd0f3c93)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/migration/vmstate-types.c b/migration/vmstate-types.c
-index e83bfccb9e..d70d573dbd 100644
---- a/migration/vmstate-types.c
-+++ b/migration/vmstate-types.c
-@@ -338,7 +338,7 @@ static int put_nullptr(QEMUFile *f, void *pv, size_t size,
- }
+diff --git a/migration/multifd.c b/migration/multifd.c
+index 498e71fd10..8d0a763a72 100644
+--- a/migration/multifd.c
++++ b/migration/multifd.c
+@@ -252,9 +252,8 @@ static int multifd_recv_unfill_packet(MultiFDRecvParams *p, Error **errp)
+     p->packet_num = be64_to_cpu(packet->packet_num);
+     p->packets_recved++;
  
- const VMStateInfo vmstate_info_nullptr = {
--    .name = "uint64",
-+    .name = "nullptr",
-     .get  = get_nullptr,
-     .put  = put_nullptr,
- };
-diff --git a/scripts/analyze-migration.py b/scripts/analyze-migration.py
-index fcda11f31d..923f174f1b 100755
---- a/scripts/analyze-migration.py
-+++ b/scripts/analyze-migration.py
-@@ -417,6 +417,28 @@ def __init__(self, desc, file):
-         super(VMSDFieldIntLE, self).__init__(desc, file)
-         self.dtype = '<i%d' % self.size
+-    if (!(p->flags & MULTIFD_FLAG_SYNC)) {
+-        ret = multifd_ram_unfill_packet(p, errp);
+-    }
++    /* Always unfill, old QEMUs (<9.0) send data along with SYNC */
++    ret = multifd_ram_unfill_packet(p, errp);
  
-+class VMSDFieldNull(VMSDFieldGeneric):
-+    NULL_PTR_MARKER = b'0'
+     trace_multifd_recv_unfill(p->id, p->packet_num, p->flags,
+                               p->next_packet_size);
+@@ -1151,9 +1150,13 @@ static void *multifd_recv_thread(void *opaque)
+             flags = p->flags;
+             /* recv methods don't know how to handle the SYNC flag */
+             p->flags &= ~MULTIFD_FLAG_SYNC;
+-            if (!(flags & MULTIFD_FLAG_SYNC)) {
+-                has_data = p->normal_num || p->zero_num;
+-            }
 +
-+    def __init__(self, desc, file):
-+        super(VMSDFieldNull, self).__init__(desc, file)
-+
-+    def __repr__(self):
-+        # A NULL pointer is encoded in the stream as a '0' to
-+        # disambiguate from a mere 0x0 value and avoid consumers
-+        # trying to follow the NULL pointer. Displaying '0', 0x30 or
-+        # 0x0 when analyzing the JSON debug stream could become
-+        # confusing, so use an explicit term instead.
-+        return "nullptr"
-+
-+    def __str__(self):
-+        return self.__repr__()
-+
-+    def read(self):
-+        super(VMSDFieldNull, self).read()
-+        assert(self.data == self.NULL_PTR_MARKER)
-+        return self.data
-+
- class VMSDFieldBool(VMSDFieldGeneric):
-     def __init__(self, desc, file):
-         super(VMSDFieldBool, self).__init__(desc, file)
-@@ -558,6 +580,7 @@ def getDict(self):
-     "bitmap" : VMSDFieldGeneric,
-     "struct" : VMSDFieldStruct,
-     "capability": VMSDFieldCap,
-+    "nullptr": VMSDFieldNull,
-     "unknown" : VMSDFieldGeneric,
- }
- 
++            /*
++             * Even if it's a SYNC packet, this needs to be set
++             * because older QEMUs (<9.0) still send data along with
++             * the SYNC packet.
++             */
++            has_data = p->normal_num || p->zero_num;
+             qemu_mutex_unlock(&p->mutex);
+         } else {
+             /*
 -- 
 2.39.5
 
