@@ -4,73 +4,74 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5F427C0218C
-	for <qemu-devel@archiver.kernel.org>; Mon, 27 Jan 2025 14:07:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7ED5FC02188
+	for <qemu-devel@archiver.kernel.org>; Mon, 27 Jan 2025 14:07:29 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tcPkz-0001bu-Kq; Mon, 27 Jan 2025 09:06:29 -0500
+	id 1tcPln-0003qA-HR; Mon, 27 Jan 2025 09:07:19 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1tcPk9-00011R-NL
- for qemu-devel@nongnu.org; Mon, 27 Jan 2025 09:05:38 -0500
-Received: from mail-yb1-xb31.google.com ([2607:f8b0:4864:20::b31])
+ id 1tcPlm-0003ia-2Z
+ for qemu-devel@nongnu.org; Mon, 27 Jan 2025 09:07:18 -0500
+Received: from mail-yb1-xb32.google.com ([2607:f8b0:4864:20::b32])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1tcPk3-0000Re-8P
- for qemu-devel@nongnu.org; Mon, 27 Jan 2025 09:05:35 -0500
-Received: by mail-yb1-xb31.google.com with SMTP id
- 3f1490d57ef6-e3978c00a5aso6804757276.1
- for <qemu-devel@nongnu.org>; Mon, 27 Jan 2025 06:05:29 -0800 (PST)
+ id 1tcPlk-00010n-N1
+ for qemu-devel@nongnu.org; Mon, 27 Jan 2025 09:07:17 -0500
+Received: by mail-yb1-xb32.google.com with SMTP id
+ 3f1490d57ef6-e3c9ec344efso5967101276.2
+ for <qemu-devel@nongnu.org>; Mon, 27 Jan 2025 06:07:16 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1737986728; x=1738591528; darn=nongnu.org;
+ d=linaro.org; s=google; t=1737986835; x=1738591635; darn=nongnu.org;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:from:to:cc:subject:date
  :message-id:reply-to;
- bh=0f/+bc0kd6n9shuuZMp6H7ri9BWeXQE2RqF5LIcHtr0=;
- b=CCdYfZdIlZwI74cnpVG6PvFb3ZkWMBKERh09FvzYNLkV6/m1IuQwB65ujx4CCLiDgo
- 86pPvNVdlvu1RGXl5jK2QX/dktDycRfbdw9WbIETPlH35D2/MbljoGpGMXa+2AsqOrF8
- L/2/LdV4WSgs2fJXwj/QiaKK9T8kznDF1sLVsbdkVbqJzVaLUGEcBlsE0CsE96lxEGrR
- Rx8wGHl/rsrqFDFHYWTfYQUpXgGGaZaE4F3K2um+SvnNI1LvR1qJEmYYEBcl83bGXxHd
- VnIlI1hlpVn+nT7R1Z7MzX+iDJAW/QN4hUirWSgQpLCJ6vjsSshZXspFhj2egDnl81rW
- cRxg==
+ bh=uora7f7BTfYvMegFw8XG2TVR2DRXRe8oGNu2WeQsM9A=;
+ b=ZCInhUBFDwgG5vRZsIk5o971ZF6NfD8gT3vEjy7Ddumhcmv5vipiNxrup8gePioF3p
+ 76Ihi1BQPThYX+dNzzHk53k8GncONNUjIdE2cr18Vyft46o6RNS5eiV/e5TAMA+cyLdP
+ NU2VxOc1mTKnZjGQUtme/0XTIT1vYU8NJuov3kbgXt9casrE0JBB08XpBHtruBRZC2FO
+ bxldN4BaKM+obdKoQMRolJLxDL2awycG4HX8tHaB/k+ZhNSkqXUFcHw2hQNkGiphnRgj
+ njNtSua0O7aLsZ8tZUpMz/3QQ9XtE8uLWT4BDbyvWb/YxOKoQmTZn/2G3yomV2dYQLWE
+ fZqg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1737986728; x=1738591528;
+ d=1e100.net; s=20230601; t=1737986835; x=1738591635;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=0f/+bc0kd6n9shuuZMp6H7ri9BWeXQE2RqF5LIcHtr0=;
- b=Fa0UfLAHIAk/dYhRZu+NDJV/ZU9CnG9jtQZbeWL1brHavfK/stZiub7z5N4uSULH6f
- /7zcCGyi8sW5YQvrJ36bm27nYJh6yaPII4qqY9KYnVlVGX17o7fE1/bKxM1KUoEHzrcn
- Hf79JU6gmXzYt7EKXFulgRc36zL+p1uL6PpZ1bDjCt+dwRDO4qG11dgZ+OaYG91qtN2K
- NGKOqaVa7prk+FxFUGlR3tuvlUy8ej6pk7Lan0dntX6qWnRS6on+SCLjSAw5ciozk5FP
- p7dnO5CiKcAfXuJL3VR6vQVe7aYpgp3I7ahBpJ53HgeZtF16Oi+OP8D348WGKyON1zWp
- f1qA==
-X-Gm-Message-State: AOJu0YyLeNdIc0vHpRooYvmLXccVh3EKr9KmIp+p5dWFDIbP3qgGvJOy
- ftfKpQLJmsB2LdXjfKtWCn+kaPIOWIpIuPV1cd44ljxhlChYPFSWt9zLgV/iADg9gnOv29Al8lW
- BaFTevY0eKYyMHNAS7k+AtnQw0YwDIlFs9ehqrg==
-X-Gm-Gg: ASbGncuG5t/S0NiUfvlUTbIJYmmRGtR0l+CkoLHrEf50H2PNEj3dbV422b9MDpoejuR
- rQNvvT1P8OOhiF8j8LCYRu3NAA7fHhR+z8mFvoM/tN05rIeR2fTHSruqxQ0SPOd4=
-X-Google-Smtp-Source: AGHT+IGIgQBJPIIW7DZ3QNrLxEHMFwGrTzK3TEE4sVx+xxZPcVrcPETCaw0E0pMW5s844bbH5wOpbEaFSrChAbHg6yA=
-X-Received: by 2002:a05:6902:2e01:b0:e58:141d:b6d3 with SMTP id
- 3f1490d57ef6-e58141db753mr15722459276.16.1737986728483; Mon, 27 Jan 2025
- 06:05:28 -0800 (PST)
+ bh=uora7f7BTfYvMegFw8XG2TVR2DRXRe8oGNu2WeQsM9A=;
+ b=VSBh0kJhtrlCJURyTVB0e65zo7LEW4wBN5KLhmHv8vvDYUORNzV64o8uhVDL+7V0O6
+ GxbLAuDZ3iyN5Jjz44IClcO3953D8MAkI/U5rtSTSz9qZG6HN3O7L5j+Xb7Vjcp9xCAY
+ /Z0jz3IrKB4puR5fDJL97idfJ9dB0onzC/LYYAuigtm6Y8m1SFeO91NOs3mV2KrMP2Zn
+ DaW0CBFB7ULnRR9Cm4WVvkZyDMrKvmWkVKbEe3tbNdxTFBWidgI5lLSRD49xZwMtFIjL
+ P5I2tOoB6hBU4XzXcBuOmUGbsQdkTTis1Cy7GAAGqmEFDJ6iP0LIOIYAm9QgBLnQiCfD
+ 2b9g==
+X-Gm-Message-State: AOJu0Yz0T9vP0uJaddZLZS5bE+6uN4eVzLKkrUWOI/TGA3SGAFZ5S3nh
+ dCabfeWBpoeJWo1bZtHFXJ3mjBZJirXvcDEj7nXGzZASYGkI8BConvm2bwLEN/f6MoHd27+5FCG
+ L15SnqhxuWftCuU3KqXvHmeAATrcJOQ+DSigypwmPixmaA7GN
+X-Gm-Gg: ASbGncvYkPOCq+qY+y8qeacxOKtmfQBM1aF4TYDGtKlvEry+DcepqKnBvwRjPdU5RUk
+ a3ghmVGB7VAh+9yt6y58oSlET4x+WfrWKmEndRO11H6PFBTW0viPQGCkDZsx57lw=
+X-Google-Smtp-Source: AGHT+IHV1f83ixfGDp6VUV+sHx+1mYlBLO27TF5YbwKaWqU2UbW9CnfXmJ2lsMHuek9cdmYxR+HgfOWawWdrLhH4U1E=
+X-Received: by 2002:a05:6902:2202:b0:e57:f5b5:dbd9 with SMTP id
+ 3f1490d57ef6-e57f5b5dcecmr23019716276.47.1737986835499; Mon, 27 Jan 2025
+ 06:07:15 -0800 (PST)
 MIME-Version: 1.0
 References: <20250110160204.74997-1-philmd@linaro.org>
- <20250110160204.74997-7-philmd@linaro.org>
-In-Reply-To: <20250110160204.74997-7-philmd@linaro.org>
+ <20250110160204.74997-6-philmd@linaro.org>
+In-Reply-To: <20250110160204.74997-6-philmd@linaro.org>
 From: Peter Maydell <peter.maydell@linaro.org>
-Date: Mon, 27 Jan 2025 14:05:17 +0000
-X-Gm-Features: AWEUYZlLgtIT2NpJoGkfIArakE_T3vp17KcCkow5g2Jv9sBxZMDSq4BZh342iUo
-Message-ID: <CAFEAcA_u17=F2bE42bAfHkpq_ffLPaeEZ+0i6QitX=huMVB_pA@mail.gmail.com>
-Subject: Re: [PATCH 6/9] hw/arm/stellaris: Map both I2C controllers
+Date: Mon, 27 Jan 2025 14:07:04 +0000
+X-Gm-Features: AWEUYZlAkEWhV99FqBXUNgk3QJJI9YQRuVkWrrLl80b3Y4VYBg34FGOwfi-lWek
+Message-ID: <CAFEAcA9CqK0BM5C+GTJ_f57uNStHVrTfKk=6W4KdsNh7AiiscQ@mail.gmail.com>
+Subject: Re: [PATCH 5/9] hw/arm/stellaris: Use DEVCAP macro to access
+ DeviceCapability registers
 To: =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>
 Cc: qemu-devel@nongnu.org, qemu-arm@nongnu.org
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::b31;
- envelope-from=peter.maydell@linaro.org; helo=mail-yb1-xb31.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::b32;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yb1-xb32.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -96,13 +97,15 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 On Fri, 10 Jan 2025 at 16:02, Philippe Mathieu-Daud=C3=A9 <philmd@linaro.or=
 g> wrote:
 >
-> There are 2 I2C controllers, map them both, removing
-> the unimplemented one. Keep the OLED controller on the
-> first I2C bus.
+> Add definitions (DCx_periph) for the DeviceCapability bits,
+> replace direct bitmask checks with the DEV_CAP() macro,
+> which use the extract/deposit API.
 >
 > Signed-off-by: Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org>
 > ---
->  hw/arm/stellaris.c | 21 +++++++++++++--------
+>  hw/arm/stellaris.c | 37 +++++++++++++++++++++++++++++--------
+>  1 file changed, 29 insertions(+), 8 deletions(-)
+>
 
 Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
 
