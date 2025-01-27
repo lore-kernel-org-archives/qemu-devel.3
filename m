@@ -4,41 +4,36 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1DDBEC02188
-	for <qemu-devel@archiver.kernel.org>; Mon, 27 Jan 2025 14:30:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 93C1AC0218C
+	for <qemu-devel@archiver.kernel.org>; Mon, 27 Jan 2025 14:30:56 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tcQ5P-0001Sc-4E; Mon, 27 Jan 2025 09:27:37 -0500
+	id 1tcQ3W-00056u-1T; Mon, 27 Jan 2025 09:25:38 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1tcQ58-0000o3-1t; Mon, 27 Jan 2025 09:27:18 -0500
+ id 1tcQ2g-0003qp-Vm; Mon, 27 Jan 2025 09:24:47 -0500
 Received: from isrv.corpit.ru ([86.62.121.231])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1tcQ56-0003Pq-Ao; Mon, 27 Jan 2025 09:27:17 -0500
+ id 1tcQ2f-00032M-0b; Mon, 27 Jan 2025 09:24:46 -0500
 Received: from localhost.tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by isrv.corpit.ru (Postfix) with ESMTP id F1AF4E0F98;
- Mon, 27 Jan 2025 17:26:46 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id 5DFCFE0F73;
+ Mon, 27 Jan 2025 17:24:11 +0300 (MSK)
 Received: by localhost.tls.msk.ru (Postfix, from userid 1000)
- id BE6A851DB7; Mon, 27 Jan 2025 17:18:03 +0300 (MSK)
+ id 942AE51D95; Mon, 27 Jan 2025 17:18:03 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org,
- =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
- Thomas Huth <thuth@redhat.com>,
- "Richard W . M . Jones" <rjones@redhat.com>,
- Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-9.2.1 41/41] crypto: fix bogus error benchmarking pbkdf on
- fast machines
-Date: Mon, 27 Jan 2025 17:17:55 +0300
-Message-Id: <20250127141803.3514882-41-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org, Fabiano Rosas <farosas@suse.de>,
+ Peter Xu <peterx@redhat.com>, Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-9.2.1 24/41] migration: Fix arrays of pointers in JSON writer
+Date: Mon, 27 Jan 2025 17:17:38 +0300
+Message-Id: <20250127141803.3514882-24-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <qemu-stable-9.2.1-20250127154029@cover.tls.msk.ru>
 References: <qemu-stable-9.2.1-20250127154029@cover.tls.msk.ru>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=86.62.121.231; envelope-from=mjt@tls.msk.ru;
  helo=isrv.corpit.ru
@@ -64,101 +59,187 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Daniel P. Berrangé <berrange@redhat.com>
+From: Fabiano Rosas <farosas@suse.de>
 
-We're seeing periodic reports of errors like:
+Currently, if an array of pointers contains a NULL pointer, that
+pointer will be encoded as '0' in the stream. Since the JSON writer
+doesn't define a "pointer" type, that '0' will now be an uint8, which
+is different from the original type being pointed to, e.g. struct.
 
-$ qemu-img create -f luks --object secret,data=123456,id=sec0 \
-                  -o key-secret=sec0 luks-info.img 1M
-  Formatting 'luks-info.img', fmt=luks size=1048576 key-secret=sec0
-  qemu-img: luks-info.img: Unable to get accurate CPU usage
+(we're further calling uint8 "nullptr", but that's irrelevant to the
+issue)
 
-This error message comes from a recent attempt to workaround a
-kernel bug with measuring rusage in long running processes:
+That mixed-type array shouldn't be compressed, otherwise data is lost
+as the code currently makes the whole array have the type of the first
+element:
 
-  commit c72cab5ad9f849bbcfcf4be7952b8b8946cc626e
-  Author: Tiago Pasqualini <tiago.pasqualini@canonical.com>
-  Date:   Wed Sep 4 20:52:30 2024 -0300
+css = {NULL, NULL, ..., 0x5555568a7940, NULL};
 
-    crypto: run qcrypto_pbkdf2_count_iters in a new thread
+{"name": "s390_css", "instance_id": 0, "vmsd_name": "s390_css",
+ "version": 1, "fields": [
+    ...,
+    {"name": "css", "array_len": 256, "type": "nullptr", "size": 1},
+    ...,
+]}
 
-Unfortunately this has a subtle bug on machines which are very fast.
+In the above, the valid pointer at position 254 got lost among the
+compressed array of nullptr.
 
-On the first time around the loop, the 'iterations' value is quite
-small (1 << 15), and so will run quite fast. Testing has shown that
-some machines can complete this benchmarking task in as little as
-7 milliseconds.
+While we could disable the array compression when a NULL pointer is
+found, the JSON part of the stream still makes part of downtime, so we
+should avoid writing unecessary bytes to it.
 
-Unfortunately the 'getrusage' data is not updated at the time of
-the 'getrusage' call, it is done asynchronously by the scheduler.
-The 7 millisecond completion time for the benchmark is short
-enough that 'getrusage' sometimes reports 0 accumulated execution
-time.
+Keep the array compression in place, but if NULL and non-NULL pointers
+are mixed break the array into several type-contiguous pieces :
 
-As a result the 'delay_ms == 0' sanity check in the above commit
-is triggering non-deterministically on such machines.
+css = {NULL, NULL, ..., 0x5555568a7940, NULL};
 
-The benchmarking loop intended to run multiple times, increasing
-the 'iterations' value until the benchmark ran for > 500 ms, but
-the sanity check doesn't allow this to happen.
+{"name": "s390_css", "instance_id": 0, "vmsd_name": "s390_css",
+ "version": 1, "fields": [
+     ...,
+     {"name": "css", "array_len": 254, "type": "nullptr", "size": 1},
+     {"name": "css", "type": "struct", "struct": {"vmsd_name": "s390_css_img", ... }, "size": 768},
+     {"name": "css", "type": "nullptr", "size": 1},
+     ...,
+]}
 
-To fix it, we keep a loop counter and only run the sanity check
-after we've been around the loop more than 5 times. At that point
-the 'iterations' value is high enough that even with infrequent
-updates of 'getrusage' accounting data on fast machines, we should
-see a non-zero value.
+Now each type-discontiguous region will become a new JSON entry. The
+reader should interpret this as a concatenation of values, all part of
+the same field.
 
-Fixes: https://lore.kernel.org/qemu-devel/ffe542bb-310c-4616-b0ca-13182f849fd1@redhat.com/
-Fixes: https://bugzilla.redhat.com/show_bug.cgi?id=2336437
-Reported-by: Thomas Huth <thuth@redhat.com>
-Reported-by: Richard W.M. Jones <rjones@redhat.com>
-Tested-by: Thomas Huth <thuth@redhat.com>
-Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
-Message-ID: <20250109093746.1216300-1-berrange@redhat.com>
-Signed-off-by: Thomas Huth <thuth@redhat.com>
-(cherry picked from commit 145f12ea885c8fcfbe2d0ac5230630f071b5a9fb)
+Parsing the JSON with analyze-script.py now shows the proper data
+being pointed to at the places where the pointer is valid and
+"nullptr" where there's NULL:
+
+"s390_css (14)": {
+    ...
+    "css": [
+        "nullptr",
+        "nullptr",
+        ...
+        "nullptr",
+        {
+            "chpids": [
+            {
+                "in_use": "0x00",
+                "type": "0x00",
+                "is_virtual": "0x00"
+            },
+            ...
+            ]
+        },
+        "nullptr",
+    }
+
+Reviewed-by: Peter Xu <peterx@redhat.com>
+Message-Id: <20250109185249.23952-7-farosas@suse.de>
+Signed-off-by: Fabiano Rosas <farosas@suse.de>
+(cherry picked from commit 35049eb0d2fc72bb8c563196ec75b4d6c13fce02)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/crypto/pbkdf.c b/crypto/pbkdf.c
-index 0dd7c3aeaa..2989fc0a40 100644
---- a/crypto/pbkdf.c
-+++ b/crypto/pbkdf.c
-@@ -107,7 +107,7 @@ static void *threaded_qcrypto_pbkdf2_count_iters(void *data)
-     size_t nsalt = iters_data->nsalt;
-     size_t nout = iters_data->nout;
-     Error **errp = iters_data->errp;
--
-+    size_t scaled = 0;
-     uint64_t ret = -1;
-     g_autofree uint8_t *out = g_new(uint8_t, nout);
-     uint64_t iterations = (1 << 15);
-@@ -131,7 +131,17 @@ static void *threaded_qcrypto_pbkdf2_count_iters(void *data)
+diff --git a/migration/vmstate.c b/migration/vmstate.c
+index 52704c822c..82bd005a83 100644
+--- a/migration/vmstate.c
++++ b/migration/vmstate.c
+@@ -425,15 +425,19 @@ int vmstate_save_state_v(QEMUFile *f, const VMStateDescription *vmsd,
+             int size = vmstate_size(opaque, field);
+             uint64_t old_offset, written_bytes;
+             JSONWriter *vmdesc_loop = vmdesc;
++            bool is_prev_null = false;
  
-         delta_ms = end_ms - start_ms;
+             trace_vmstate_save_state_loop(vmsd->name, field->name, n_elems);
+             if (field->flags & VMS_POINTER) {
+                 first_elem = *(void **)first_elem;
+                 assert(first_elem || !n_elems || !size);
+             }
++
+             for (i = 0; i < n_elems; i++) {
+                 void *curr_elem = first_elem + size * i;
+                 const VMStateField *inner_field;
++                bool is_null;
++                int max_elems = n_elems - i;
  
--        if (delta_ms == 0) { /* sanity check */
-+        /*
-+         * For very small 'iterations' values, CPU (or crypto
-+         * accelerator) might be fast enough that the scheduler
-+         * hasn't incremented getrusage() data, or incremented
-+         * it by a very small amount, resulting in delta_ms == 0.
-+         * Once we've scaled 'iterations' x10, 5 times, we really
-+         * should be seeing delta_ms != 0, so sanity check at
-+         * that point.
-+         */
-+        if (scaled > 5 &&
-+            delta_ms == 0) { /* sanity check */
-             error_setg(errp, "Unable to get accurate CPU usage");
-             goto cleanup;
-         } else if (delta_ms > 500) {
-@@ -141,6 +151,7 @@ static void *threaded_qcrypto_pbkdf2_count_iters(void *data)
-         } else {
-             iterations = (iterations * 1000 / delta_ms);
-         }
-+        scaled++;
-     }
+                 old_offset = qemu_file_transferred(f);
+                 if (field->flags & VMS_ARRAY_OF_POINTER) {
+@@ -448,12 +452,39 @@ int vmstate_save_state_v(QEMUFile *f, const VMStateDescription *vmsd,
+                      * not follow.
+                      */
+                     inner_field = vmsd_create_fake_nullptr_field(field);
++                    is_null = true;
+                 } else {
+                     inner_field = field;
++                    is_null = false;
++                }
++
++                /*
++                 * Due to the fake nullptr handling above, if there's mixed
++                 * null/non-null data, it doesn't make sense to emit a
++                 * compressed array representation spanning the entire array
++                 * because the field types will be different (e.g. struct
++                 * vs. nullptr). Search ahead for the next null/non-null element
++                 * and start a new compressed array if found.
++                 */
++                if (field->flags & VMS_ARRAY_OF_POINTER &&
++                    is_null != is_prev_null) {
++
++                    is_prev_null = is_null;
++                    vmdesc_loop = vmdesc;
++
++                    for (int j = i + 1; j < n_elems; j++) {
++                        void *elem = *(void **)(first_elem + size * j);
++                        bool elem_is_null = !elem && size;
++
++                        if (is_null != elem_is_null) {
++                            max_elems = j - i;
++                            break;
++                        }
++                    }
+                 }
  
-     iterations = iterations * 1000 / delta_ms;
+                 vmsd_desc_field_start(vmsd, vmdesc_loop, inner_field,
+-                                      i, n_elems);
++                                      i, max_elems);
+ 
+                 if (inner_field->flags & VMS_STRUCT) {
+                     ret = vmstate_save_state(f, inner_field->vmsd,
+diff --git a/scripts/analyze-migration.py b/scripts/analyze-migration.py
+index 923f174f1b..8e1fbf4c9d 100755
+--- a/scripts/analyze-migration.py
++++ b/scripts/analyze-migration.py
+@@ -502,15 +502,25 @@ def read(self):
+             field['data'] = reader(field, self.file)
+             field['data'].read()
+ 
+-            if 'index' in field:
+-                if field['name'] not in self.data:
+-                    self.data[field['name']] = []
+-                a = self.data[field['name']]
+-                if len(a) != int(field['index']):
+-                    raise Exception("internal index of data field unmatched (%d/%d)" % (len(a), int(field['index'])))
+-                a.append(field['data'])
++            fname = field['name']
++            fdata = field['data']
++
++            # The field could be:
++            # i) a single data entry, e.g. uint64
++            # ii) an array, indicated by it containing the 'index' key
++            #
++            # However, the overall data after parsing the whole
++            # stream, could be a mix of arrays and single data fields,
++            # all sharing the same field name due to how QEMU breaks
++            # up arrays with NULL pointers into multiple compressed
++            # array segments.
++            if fname not in self.data:
++                self.data[fname] = fdata
++            elif type(self.data[fname]) == list:
++                self.data[fname].append(fdata)
+             else:
+-                self.data[field['name']] = field['data']
++                tmp = self.data[fname]
++                self.data[fname] = [tmp, fdata]
+ 
+         if 'subsections' in self.desc['struct']:
+             for subsection in self.desc['struct']['subsections']:
 -- 
 2.39.5
 
