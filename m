@@ -4,38 +4,42 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 39AA1C02192
-	for <qemu-devel@archiver.kernel.org>; Tue, 28 Jan 2025 08:27:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A035BC02190
+	for <qemu-devel@archiver.kernel.org>; Tue, 28 Jan 2025 08:27:33 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tcgWs-0008R0-J6; Tue, 28 Jan 2025 03:01:02 -0500
+	id 1tcgVI-0004Vr-Dl; Tue, 28 Jan 2025 02:59:24 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1tcgWC-0007qA-23; Tue, 28 Jan 2025 03:00:21 -0500
+ id 1tcgV4-0003PO-E4; Tue, 28 Jan 2025 02:59:12 -0500
 Received: from isrv.corpit.ru ([86.62.121.231])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1tcgW8-0001c4-5H; Tue, 28 Jan 2025 03:00:18 -0500
+ id 1tcgV2-0001AO-Em; Tue, 28 Jan 2025 02:59:09 -0500
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 0CE17E1B0B;
- Tue, 28 Jan 2025 10:54:26 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id D3EE2E1B00;
+ Tue, 28 Jan 2025 10:54:25 +0300 (MSK)
 Received: from localhost.tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id 7A8D61A62F2;
+ by tsrv.corpit.ru (Postfix) with ESMTP id 4EF791A62E7;
  Tue, 28 Jan 2025 10:54:51 +0300 (MSK)
 Received: by localhost.tls.msk.ru (Postfix, from userid 1000)
- id 14B5F5207B; Tue, 28 Jan 2025 10:54:51 +0300 (MSK)
+ id 025BA52065; Tue, 28 Jan 2025 10:54:51 +0300 (MSK)
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Igor Mammedov <imammedo@redhat.com>,
- "Michael S . Tsirkin" <mst@redhat.com>, Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-8.2.9 42/45] tests: acpi: whitelist expected blobs
-Date: Mon, 27 Jan 2025 23:26:23 +0300
-Message-Id: <20250127202630.3724367-42-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org, Thomas Huth <thuth@redhat.com>,
+ =?UTF-8?q?Daniel=20P=20=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-8.2.9 31/45] meson.build: Disallow libnfs v6 to fix the
+ broken macOS build
+Date: Mon, 27 Jan 2025 23:26:12 +0300
+Message-Id: <20250127202630.3724367-31-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <qemu-stable-8.2.9-20250127232621@cover.tls.msk.ru>
 References: <qemu-stable-8.2.9-20250127232621@cover.tls.msk.ru>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 From: Michael Tokarev <mjt@tls.msk.ru>
 Received-SPF: pass client-ip=86.62.121.231; envelope-from=mjt@tls.msk.ru;
@@ -62,59 +66,36 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Signed-off-by: Igor Mammedov <imammedo@redhat.com>
-Message-Id: <20250115125342.3883374-2-imammedo@redhat.com>
-Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
-Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
-(cherry picked from commit 1ad32644fe4c9fb25086be15a66dde1d55d3410f)
-Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
-(Mjt: drop x86/ subdir and tables not relevant for 8.2)
+The macOS builds in our CI (and possibly other very recent distros)
+are currently broken since the update to libnfs version 6 there.
+That version apparently comes with a big API breakage. v5.0.3 was
+the final release of the old API (see the libnfs commit here:
+https://github.com/sahlberg/libnfs/commit/4379837 ).
 
-diff --git a/tests/qtest/bios-tables-test-allowed-diff.h b/tests/qtest/bios-tables-test-allowed-diff.h
-index dfb8523c8b..b96a9b60a8 100644
---- a/tests/qtest/bios-tables-test-allowed-diff.h
-+++ b/tests/qtest/bios-tables-test-allowed-diff.h
-@@ -1 +1,40 @@
- /* List of comma-separated changed AML files to ignore */
-+"tests/data/acpi/pc/DSDT",
-+"tests/data/acpi/pc/DSDT.acpierst",
-+"tests/data/acpi/pc/DSDT.acpihmat",
-+"tests/data/acpi/pc/DSDT.bridge",
-+"tests/data/acpi/pc/DSDT.cphp",
-+"tests/data/acpi/pc/DSDT.dimmpxm",
-+"tests/data/acpi/pc/DSDT.hpbridge",
-+"tests/data/acpi/pc/DSDT.ipmikcs",
-+"tests/data/acpi/pc/DSDT.memhp",
-+"tests/data/acpi/pc/DSDT.nohpet",
-+"tests/data/acpi/pc/DSDT.numamem",
-+"tests/data/acpi/pc/DSDT.roothp",
-+"tests/data/acpi/q35/DSDT",
-+"tests/data/acpi/q35/DSDT.acpierst",
-+"tests/data/acpi/q35/DSDT.acpihmat",
-+"tests/data/acpi/q35/DSDT.acpihmat-noinitiator",
-+"tests/data/acpi/q35/DSDT.applesmc",
-+"tests/data/acpi/q35/DSDT.bridge",
-+"tests/data/acpi/q35/DSDT.core-count",
-+"tests/data/acpi/q35/DSDT.core-count2",
-+"tests/data/acpi/q35/DSDT.cphp",
-+"tests/data/acpi/q35/DSDT.cxl",
-+"tests/data/acpi/q35/DSDT.dimmpxm",
-+"tests/data/acpi/q35/DSDT.ipmibt",
-+"tests/data/acpi/q35/DSDT.ipmismbus",
-+"tests/data/acpi/q35/DSDT.ivrs",
-+"tests/data/acpi/q35/DSDT.memhp",
-+"tests/data/acpi/q35/DSDT.mmio64",
-+"tests/data/acpi/q35/DSDT.multi-bridge",
-+"tests/data/acpi/q35/DSDT.nohpet",
-+"tests/data/acpi/q35/DSDT.numamem",
-+"tests/data/acpi/q35/DSDT.pvpanic-isa",
-+"tests/data/acpi/q35/DSDT.thread-count",
-+"tests/data/acpi/q35/DSDT.thread-count2",
-+"tests/data/acpi/q35/DSDT.tis.tpm12",
-+"tests/data/acpi/q35/DSDT.tis.tpm2",
-+"tests/data/acpi/q35/DSDT.type4-count",
-+"tests/data/acpi/q35/DSDT.viot",
-+"tests/data/acpi/q35/DSDT.xapic",
+Disallow version 6.x for now to get the broken CI job working
+again. Once somebody had enough time to adapt our code in
+block/nfs.c, we can revert this change again.
+
+Message-ID: <20241218065157.209020-1-thuth@redhat.com>
+Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Signed-off-by: Thomas Huth <thuth@redhat.com>
+(cherry picked from commit e2d98f257138b83b6a492d1da5847a7fe0930d10)
+Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
+
+diff --git a/meson.build b/meson.build
+index 048e07a648..5bd8a35523 100644
+--- a/meson.build
++++ b/meson.build
+@@ -848,7 +848,7 @@ endif
+ 
+ libnfs = not_found
+ if not get_option('libnfs').auto() or have_block
+-  libnfs = dependency('libnfs', version: '>=1.9.3',
++  libnfs = dependency('libnfs', version: ['>=1.9.3', '<6.0.0'],
+                       required: get_option('libnfs'),
+                       method: 'pkg-config')
+ endif
 -- 
 2.39.5
 
