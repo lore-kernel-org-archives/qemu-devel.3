@@ -4,39 +4,41 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 77C37C02192
-	for <qemu-devel@archiver.kernel.org>; Tue, 28 Jan 2025 07:59:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4C03EC0218D
+	for <qemu-devel@archiver.kernel.org>; Tue, 28 Jan 2025 07:59:52 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tcgPg-0000xg-57; Tue, 28 Jan 2025 02:53:36 -0500
+	id 1tcgUb-0000Hv-6n; Tue, 28 Jan 2025 02:58:41 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1tcgPc-0000vJ-K2; Tue, 28 Jan 2025 02:53:32 -0500
+ id 1tcgU8-0007EY-Vr; Tue, 28 Jan 2025 02:58:13 -0500
 Received: from isrv.corpit.ru ([86.62.121.231])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1tcgPb-0007nM-1U; Tue, 28 Jan 2025 02:53:32 -0500
+ id 1tcgU6-0000tZ-TI; Tue, 28 Jan 2025 02:58:12 -0500
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id AAD42E1ABE;
- Tue, 28 Jan 2025 10:52:59 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id B0A04E1AF7;
+ Tue, 28 Jan 2025 10:54:25 +0300 (MSK)
 Received: from localhost.tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id 259E81A62AD;
- Tue, 28 Jan 2025 10:53:25 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id 2BA1B1A62DE;
+ Tue, 28 Jan 2025 10:54:51 +0300 (MSK)
 Received: by localhost.tls.msk.ru (Postfix, from userid 1000)
- id 15E1D51FF1; Tue, 28 Jan 2025 10:53:25 +0300 (MSK)
+ id E762052053; Tue, 28 Jan 2025 10:54:50 +0300 (MSK)
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Akihiko Odaki <akihiko.odaki@daynix.com>,
- Jason Wang <jasowang@redhat.com>, Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-7.2.16 05/31] virtio-net: Fix size check in dhclient
- workaround
-Date: Tue, 28 Jan 2025 00:40:57 +0300
-Message-Id: <20250127214124.3730126-5-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Thomas Huth <thuth@redhat.com>, Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-8.2.9 22/45] .gitlab-ci.d/cirrus: Drop support for macOS 13
+ (Ventura)
+Date: Mon, 27 Jan 2025 23:26:03 +0300
+Message-Id: <20250127202630.3724367-22-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.39.5
-In-Reply-To: <qemu-stable-7.2.16-20250128004119@cover.tls.msk.ru>
-References: <qemu-stable-7.2.16-20250128004119@cover.tls.msk.ru>
+In-Reply-To: <qemu-stable-8.2.9-20250127232621@cover.tls.msk.ru>
+References: <qemu-stable-8.2.9-20250127232621@cover.tls.msk.ru>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 From: Michael Tokarev <mjt@tls.msk.ru>
 Received-SPF: pass client-ip=86.62.121.231; envelope-from=mjt@tls.msk.ru;
@@ -63,35 +65,95 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-work_around_broken_dhclient() accesses IP and UDP headers to detect
-relevant packets and to calculate checksums, but it didn't check if
-the packet has size sufficient to accommodate them, causing out-of-bound
-access hazards. Fix this by correcting the size requirement.
+macOS 15 "Sequoia" was released on September 16, 2024 [1].
 
-Fixes: 1d41b0c1ec66 ("Work around dhclient brokenness")
-Cc: qemu-stable@nongnu.org
-Signed-off-by: Akihiko Odaki <akihiko.odaki@daynix.com>
-Signed-off-by: Jason Wang <jasowang@redhat.com>
-(cherry picked from commit a8575f7fb2f213e6690b23160b04271d47fdfaa8)
+According to QEMU's support policy, we stop supporting
+the previous major release two years after the the new
+major release has been published. Time to remove support
+for macOS 13 (Ventura, released on October 2022, [2]).
+
+Promote the macOS 14 job, which was only built manually,
+to be run by default.
+
+[1] https://www.apple.com/newsroom/2024/09/macos-sequoia-is-available-today/
+[2] https://www.apple.com/newsroom/2022/10/macos-ventura-is-now-available/
+
+Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Message-ID: <20240917085058.1740-3-philmd@linaro.org>
+Signed-off-by: Thomas Huth <thuth@redhat.com>
+(cherry picked from commit de11da6448ca4278197fb2923af06c50e2385259)
+[thuth: Pick some changes from 9094f7c934, too]
+Signed-off-by: Thomas Huth <thuth@redhat.com>
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/hw/net/virtio-net.c b/hw/net/virtio-net.c
-index 925a5c319e..204a80ec71 100644
---- a/hw/net/virtio-net.c
-+++ b/hw/net/virtio-net.c
-@@ -1647,8 +1647,11 @@ static void virtio_net_hdr_swap(VirtIODevice *vdev, struct virtio_net_hdr *hdr)
- static void work_around_broken_dhclient(struct virtio_net_hdr *hdr,
-                                         uint8_t *buf, size_t size)
- {
-+    size_t csum_size = ETH_HLEN + sizeof(struct ip_header) +
-+                       sizeof(struct udp_header);
-+
-     if ((hdr->flags & VIRTIO_NET_HDR_F_NEEDS_CSUM) && /* missing csum */
--        (size > 27 && size < 1500) && /* normal sized MTU */
-+        (size >= csum_size && size < 1500) && /* normal sized MTU */
-         (buf[12] == 0x08 && buf[13] == 0x00) && /* ethertype == IPv4 */
-         (buf[23] == 17) && /* ip.protocol == UDP */
-         (buf[34] == 0 && buf[35] == 67)) { /* udp.srcport == bootps */
+diff --git a/.gitlab-ci.d/cirrus.yml b/.gitlab-ci.d/cirrus.yml
+index 92c97eefc1..a79d04200d 100644
+--- a/.gitlab-ci.d/cirrus.yml
++++ b/.gitlab-ci.d/cirrus.yml
+@@ -60,22 +60,6 @@ x64-freebsd-14-build:
+     CONFIGURE_ARGS: --target-list-exclude=arm-softmmu,i386-softmmu,microblaze-softmmu,mips64el-softmmu,mipsel-softmmu,mips-softmmu,ppc-softmmu,sh4eb-softmmu,xtensa-softmmu
+     TEST_TARGETS: check
+ 
+-aarch64-macos-13-base-build:
+-  extends: .cirrus_build_job
+-  variables:
+-    NAME: macos-13
+-    CIRRUS_VM_INSTANCE_TYPE: macos_instance
+-    CIRRUS_VM_IMAGE_SELECTOR: image
+-    CIRRUS_VM_IMAGE_NAME: ghcr.io/cirruslabs/macos-ventura-base:latest
+-    CIRRUS_VM_CPUS: 12
+-    CIRRUS_VM_RAM: 24G
+-    UPDATE_COMMAND: brew update
+-    INSTALL_COMMAND: brew install
+-    PATH_EXTRA: /opt/homebrew/ccache/libexec:/opt/homebrew/gettext/bin
+-    PKG_CONFIG_PATH: /opt/homebrew/curl/lib/pkgconfig:/opt/homebrew/ncurses/lib/pkgconfig:/opt/homebrew/readline/lib/pkgconfig
+-    CONFIGURE_ARGS: --target-list-exclude=arm-softmmu,i386-softmmu,microblazeel-softmmu,mips64-softmmu,mipsel-softmmu,mips-softmmu,ppc-softmmu,sh4-softmmu,xtensaeb-softmmu
+-    TEST_TARGETS: check-unit check-block check-qapi-schema check-softfloat check-qtest-x86_64
+-
+ aarch64-macos-14-base-build:
+   extends: .cirrus_build_job
+   variables:
+@@ -89,5 +73,5 @@ aarch64-macos-14-base-build:
+     INSTALL_COMMAND: brew install
+     PATH_EXTRA: /opt/homebrew/ccache/libexec:/opt/homebrew/gettext/bin
+     PKG_CONFIG_PATH: /opt/homebrew/curl/lib/pkgconfig:/opt/homebrew/ncurses/lib/pkgconfig:/opt/homebrew/readline/lib/pkgconfig
++    CONFIGURE_ARGS: --target-list-exclude=arm-softmmu,i386-softmmu,microblazeel-softmmu,mips64-softmmu,mipsel-softmmu,mips-softmmu,ppc-softmmu,sh4-softmmu,xtensaeb-softmmu
+     TEST_TARGETS: check-unit check-block check-qapi-schema check-softfloat check-qtest-x86_64
+-    QEMU_JOB_OPTIONAL: 1
+diff --git a/.gitlab-ci.d/cirrus/macos-13.vars b/.gitlab-ci.d/cirrus/macos-13.vars
+deleted file mode 100644
+index 534f029956..0000000000
+--- a/.gitlab-ci.d/cirrus/macos-13.vars
++++ /dev/null
+@@ -1,16 +0,0 @@
+-# THIS FILE WAS AUTO-GENERATED
+-#
+-#  $ lcitool variables macos-13 qemu
+-#
+-# https://gitlab.com/libvirt/libvirt-ci
+-
+-CCACHE='/opt/homebrew/bin/ccache'
+-CPAN_PKGS=''
+-CROSS_PKGS=''
+-MAKE='/opt/homebrew/bin/gmake'
+-NINJA='/opt/homebrew/bin/ninja'
+-PACKAGING_COMMAND='brew'
+-PIP3='/opt/homebrew/bin/pip3'
+-PKGS='bash bc bison bzip2 capstone ccache cmocka ctags curl dbus diffutils dtc flex gcovr gettext git glib gnu-sed gnutls gtk+3 jemalloc jpeg-turbo json-c libepoxy libffi libgcrypt libiscsi libnfs libpng libslirp libssh libtasn1 libusb llvm lzo make meson mtools ncurses nettle ninja pixman pkg-config python3 rpm2cpio sdl2 sdl2_image snappy socat sparse spice-protocol swtpm tesseract usbredir vde vte3 xorriso zlib zstd'
+-PYPI_PKGS='PyYAML numpy pillow sphinx sphinx-rtd-theme tomli'
+-PYTHON='/opt/homebrew/bin/python3'
+diff --git a/tests/lcitool/refresh b/tests/lcitool/refresh
+index 59dd6939e7..a5412d352c 100755
+--- a/tests/lcitool/refresh
++++ b/tests/lcitool/refresh
+@@ -200,7 +200,6 @@ try:
+     # Cirrus packages lists for GitLab
+     #
+     generate_cirrus("freebsd-14")
+-    generate_cirrus("macos-13")
+     generate_cirrus("macos-14")
+ 
+     #
 -- 
 2.39.5
 
