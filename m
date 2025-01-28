@@ -4,83 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6022FC0218A
-	for <qemu-devel@archiver.kernel.org>; Tue, 28 Jan 2025 10:47:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id ED394C0218D
+	for <qemu-devel@archiver.kernel.org>; Tue, 28 Jan 2025 10:47:29 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tcj6a-0001Ik-7P; Tue, 28 Jan 2025 05:46:04 -0500
+	id 1tcj6Y-0001I3-VW; Tue, 28 Jan 2025 05:46:03 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1tcj67-0001AG-5F
+ id 1tcj65-0001A7-Tn
  for qemu-devel@nongnu.org; Tue, 28 Jan 2025 05:45:39 -0500
-Received: from mail-wr1-x42e.google.com ([2a00:1450:4864:20::42e])
+Received: from mail-wm1-x32e.google.com ([2a00:1450:4864:20::32e])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1tcj65-0003Yf-C4
- for qemu-devel@nongnu.org; Tue, 28 Jan 2025 05:45:34 -0500
-Received: by mail-wr1-x42e.google.com with SMTP id
- ffacd0b85a97d-38a34e8410bso2720594f8f.2
- for <qemu-devel@nongnu.org>; Tue, 28 Jan 2025 02:45:30 -0800 (PST)
+ id 1tcj61-0003Y9-Tl
+ for qemu-devel@nongnu.org; Tue, 28 Jan 2025 05:45:32 -0500
+Received: by mail-wm1-x32e.google.com with SMTP id
+ 5b1f17b1804b1-436341f575fso59928975e9.1
+ for <qemu-devel@nongnu.org>; Tue, 28 Jan 2025 02:45:29 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1738061129; x=1738665929; darn=nongnu.org;
+ d=linaro.org; s=google; t=1738061128; x=1738665928; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=Ane9GQydmwnJiMFHOBDXlrUGP0wnx1nfccZAfAb02YM=;
- b=cCXCqCJ/e1UWsRMmFPudHZWLExXOMug/UKklTYM9PaabZTSaiUylVkFZPntU5Qp2Zq
- VcIXhuksyMQ3F1A3QIKZ5RhxfEsDX0yCAEMFx4exOzYXu5vk9w87ef2Y/T8BvPyV9ubU
- UAoWtnaX5t0ngM/VS1KEv367waKbcZdGE9bQI0366gouE8oFvTLYMnr/eh0oi+cv5l5Y
- Iwehg7jUrwYqguGfBTSIRQQDFeIAeAfFOHrAGTsmic3eAV4U3LGCKoq13v0rsK5NC8yn
- Y5z1Kg5q7hz2gLVdGoHet3B5H+cUm3syG8Thow/AaXp8UzmOENyImuqdGgXS0cZG6zZr
- aNbQ==
+ bh=5CvEPXzfVhE9gpoEHv/zIext3ELuNXpVwzWWv2pS9vE=;
+ b=Zgtsjtsr/LvvOK/IrZPzcg/OPl7/knd3l8j7vjrc5aCMeVqqYL1YImY2a0hynIgCLn
+ CDnRgqFDy7V+haGw9vvN5MRSvdrJBwzapUniorUZnG1dPdnzPqyWIsfJ5qsO8W9cILAB
+ KXmuUdPlllurqUlbT1Iv5jWd2L2Y6ssUW8cuNaz6zcWegdDHQ3EbCFj3F2fZ50xim8qD
+ dvJMsyZMMuoe7fyl8Id05DuYgpBoIP7e6t16udad+AzmDoIgYl8BdVp0k027BIF/eAJb
+ PyRAfgta8C+UEWlVOiI06CrouCGhxKfsS+71cPCb4TyuOwkk1wsFsOimu3uZG1a1d6DZ
+ VT0g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1738061129; x=1738665929;
+ d=1e100.net; s=20230601; t=1738061128; x=1738665928;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=Ane9GQydmwnJiMFHOBDXlrUGP0wnx1nfccZAfAb02YM=;
- b=KiVHSopMer39YrojyQF5lMjYGBNT5P8Ivd+JO4swRVIGo963HXW0PBUnVoN6be/PW7
- bV7I6Q8dcFr+lU3iDalickpUt5DfyEasJYhWcv1OdyQFWIaquMijJGSw/XqP+jUV5Z3l
- EfTqGmo3erPRWlOZ39FcJAyKGgzOl8OsQ2IoHluFCyYAw8yQkqfboc4ja1RXqusmwyqk
- nOa/WjCsmffs9es+RLpXXBACjeDevuA2C9xH1WxnakYaLvL4vd2ceQ1jKEvktyoq/CgW
- yNqaHEXUt9L1uWYnu0fgawqc/Z99ct+tgPOcCI+qytx7vYqLg+pkO6ssEKU8bbeKABj1
- rm+A==
+ bh=5CvEPXzfVhE9gpoEHv/zIext3ELuNXpVwzWWv2pS9vE=;
+ b=VwwRP3AyoBkCr9o6AN3J0y2BgXBq+j2qJ6LRwZka2e23AnC3uGQeVtsDLvtwp/SQb5
+ c0hGAeH6ZsoESwj8Vok2zE0rQflEWY9hgoa00n2qNcXv8X6Ywst2sjr6jEH7aEP3yw0u
+ OgcNw7/TwSKqCXz/cqX/HxtjscN4ansq6pHdhLu+HlO+LXGopwhrUPm57J90e6ibX/yC
+ HYMSNxV20xUVsVWbszes8hfmpmJIHhTncJ1oGBCAxXhem0F5Ci/snkdAHhFaJtD8rvfj
+ M3/0ICe/yqoPc7HsdHCoZ0TnGWShV1fWYiV+DLoOZBD2nJCftpzrKTxoSJ70yKKa1uKQ
+ ELnA==
 X-Forwarded-Encrypted: i=1;
- AJvYcCVELrU4D/5RBOeTdgADuwRh4ULnD1BYWcFb+yQdHiOmMYpivG5WA8WTO4LXirNWhOaMdhmZkaU2j/FD@nongnu.org
-X-Gm-Message-State: AOJu0YyIxRJ/mMnH+g7vIZuuctAdT8Yb2/r0mOvDSLajJmlzvsAWAH5e
- svZ8n2cQk9efCwhNLGtelp1s1VkHh2kRyxmd35XeGnqi81x+nzHHpVzILc9kMFg=
-X-Gm-Gg: ASbGncv2NeiyeUsohzJ698NQcAMiJYkShaw7PCigQ6KpXldebTJcb4tBRXXgbZbskXe
- IwxIRVcNrW0kx1L3zxPqV9OQ/kcRjte/QThBOKSLeb8XTbc0MFpAv/iGoRkcC1QPZ6CDGvZz4WD
- wGvuq1g2iSu6svZlf7HcuUWSh0XDnkMwR++3r9ikqDMZ1561MsXN8hh2pURJpHp0cIdI+0VrkTZ
- P+JKllJ6734XDzw+ua91FH8X7wqqAmB3ZKLmouQ7J/QGDv+HwoTF5oErb8ILTM9/7oo2Mg4GJ0L
- gS1dRiKJz8zOeXhk4YBB
-X-Google-Smtp-Source: AGHT+IGWrOckgxgh9bh5+ZiX4ZUdbUmPM93BVig9PJKaw4h39mt2apYtDeRvOXWjYgTyfzz7FuSrgg==
-X-Received: by 2002:a05:6000:1f85:b0:38b:e32a:109d with SMTP id
- ffacd0b85a97d-38bf59e1d83mr35900134f8f.34.1738061129221; 
- Tue, 28 Jan 2025 02:45:29 -0800 (PST)
+ AJvYcCU6vxSh2UJNx+Fy35D6f9Vi4k0Ko/+kBiRjmBKy/ZhZ+VdjLGB6kuKM5FhBUbHVCUW3TQ9hJdMUqrV/@nongnu.org
+X-Gm-Message-State: AOJu0YzU/5YUI6E0gs3jnYUK+2WYqgN2HuQPpvZqjH3E+uWBuuvskGo2
+ N00ZX9tWkybpm/2MtU9fktEV23oX9Oq6AxSvbjU0GUOQM494ucPVxbdZ7GpWWb4=
+X-Gm-Gg: ASbGncsJVNvHW4fmFZ6Iln+pqNdnQUVYf0lEe/SIbCRmym8rbafl3/aNmLcV4vKaEei
+ 7peDdg4pF3NFJmWgXh3UD/xAiUvAAi5Abcd2n5Vf8wd8xAxilxoz5EyxN/ykIneyE7RT2OMXTbU
+ xrK/GXuea6i0UyORPzMA6nbfuGMgQ/TE9zoSn876c1JX1/4bU7jOv54N4aDFMXu0qQyhh5+SOc0
+ QsQhLVBy8mOHjvtHOMZL/LKW7qwAanTYfYgg4MHE3m8bmIBWJHibSPGTJayQCvvyo9Ty/8RF++3
+ SomrJb+opHoxWaXu0s1S
+X-Google-Smtp-Source: AGHT+IFHKm8LWijzuhpAkrJkJO72SMaHhVd2ZledEOuVmn8ZEefLtGzCTBQcYOD9rG8FlpSoQ019gQ==
+X-Received: by 2002:a5d:64ec:0:b0:385:f66a:4271 with SMTP id
+ ffacd0b85a97d-38bf5649632mr37686789f8f.4.1738061128079; 
+ Tue, 28 Jan 2025 02:45:28 -0800 (PST)
 Received: from orth.archaic.org.uk (orth.archaic.org.uk. [2001:8b0:1d0::2])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-38c2a1c418esm13920133f8f.95.2025.01.28.02.45.28
+ ffacd0b85a97d-38c2a1c418esm13920133f8f.95.2025.01.28.02.45.27
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 28 Jan 2025 02:45:28 -0800 (PST)
+ Tue, 28 Jan 2025 02:45:27 -0800 (PST)
 From: Peter Maydell <peter.maydell@linaro.org>
 To: qemu-arm@nongnu.org,
 	qemu-devel@nongnu.org
 Cc: qemu-block@nongnu.org,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  Bin Meng <bmeng.cn@gmail.com>, Bernhard Beschow <shentey@gmail.com>
-Subject: [PATCH 07/11] hw/sd/omap_mmc: Remove unused coverswitch qemu_irq
-Date: Tue, 28 Jan 2025 10:45:15 +0000
-Message-Id: <20250128104519.3981448-8-peter.maydell@linaro.org>
+Subject: [PATCH 06/11] hw/arm/omap1: Inline creation of MMC
+Date: Tue, 28 Jan 2025 10:45:14 +0000
+Message-Id: <20250128104519.3981448-7-peter.maydell@linaro.org>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20250128104519.3981448-1-peter.maydell@linaro.org>
 References: <20250128104519.3981448-1-peter.maydell@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::42e;
- envelope-from=peter.maydell@linaro.org; helo=mail-wr1-x42e.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::32e;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x32e.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -103,34 +103,76 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The coverswitch qemu_irq is never connected to anything, and the only thing
-we do with it is set it in omap_mmc_reset(). Remove it.
+Our style for other conversions of OMAP devices to qdev has been to
+inline the creation and wiring into omap310_mpu_init() -- see for
+instance the handling of omap-intc, omap-gpio and omap_i2c. Do
+the same for omap-mmc.
 
 Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
 ---
- hw/sd/omap_mmc.c | 2 --
- 1 file changed, 2 deletions(-)
+ hw/arm/omap1.c   | 15 +++++++++++----
+ hw/sd/omap_mmc.c | 22 ----------------------
+ 2 files changed, 11 insertions(+), 26 deletions(-)
 
+diff --git a/hw/arm/omap1.c b/hw/arm/omap1.c
+index 15ba0a0d0c4..ca2eb0d1576 100644
+--- a/hw/arm/omap1.c
++++ b/hw/arm/omap1.c
+@@ -3981,10 +3981,17 @@ struct omap_mpu_state_s *omap310_mpu_init(MemoryRegion *dram,
+     if (!dinfo && !qtest_enabled()) {
+         warn_report("missing SecureDigital device");
+     }
+-    s->mmc = omap_mmc_init(0xfffb7800, system_memory,
+-                           qdev_get_gpio_in(s->ih[1], OMAP_INT_OQN),
+-                           &s->drq[OMAP_DMA_MMC_TX],
+-                    omap_findclk(s, "mmc_ck"));
++
++    s->mmc = qdev_new(TYPE_OMAP_MMC);
++    sysbus_realize_and_unref(SYS_BUS_DEVICE(s->mmc), &error_fatal);
++    omap_mmc_set_clk(s->mmc, omap_findclk(s, "mmc_ck"));
++
++    memory_region_add_subregion(system_memory, 0xfffb7800,
++                                sysbus_mmio_get_region(SYS_BUS_DEVICE(s->mmc), 0));
++    qdev_connect_gpio_out_named(s->mmc, "dma-tx", 0, s->drq[OMAP_DMA_MMC_TX]);
++    qdev_connect_gpio_out_named(s->mmc, "dma-rx", 0, s->drq[OMAP_DMA_MMC_RX]);
++    sysbus_connect_irq(SYS_BUS_DEVICE(s->mmc), 0,
++                       qdev_get_gpio_in(s->ih[1], OMAP_INT_OQN));
+ 
+     if (dinfo) {
+         DeviceState *card = qdev_new(TYPE_SD_CARD);
 diff --git a/hw/sd/omap_mmc.c b/hw/sd/omap_mmc.c
-index dacbea13aad..07d47421bc8 100644
+index fcec2899afb..dacbea13aad 100644
 --- a/hw/sd/omap_mmc.c
 +++ b/hw/sd/omap_mmc.c
-@@ -35,7 +35,6 @@ typedef struct OMAPMMCState {
-     qemu_irq irq;
-     qemu_irq dma_tx_gpio;
-     qemu_irq dma_rx_gpio;
--    qemu_irq coverswitch;
-     MemoryRegion iomem;
-     omap_clk clk;
-     uint16_t last_cmd;
-@@ -325,7 +324,6 @@ static void omap_mmc_reset(OMAPMMCState *host)
-     host->transfer = 0;
-     host->cdet_wakeup = 0;
-     host->cdet_enable = 0;
--    qemu_set_irq(host->coverswitch, host->cdet_state);
-     host->clkdiv = 0;
+@@ -590,28 +590,6 @@ void omap_mmc_set_clk(DeviceState *dev, omap_clk clk)
+     s->clk = clk;
+ }
  
-     omap_mmc_pseudo_reset(host);
+-DeviceState *omap_mmc_init(hwaddr base,
+-                           MemoryRegion *sysmem,
+-                           qemu_irq irq, qemu_irq dma[], omap_clk clk)
+-{
+-    DeviceState *dev;
+-    OMAPMMCState *s;
+-
+-    dev = qdev_new(TYPE_OMAP_MMC);
+-    s = OMAP_MMC(dev);
+-    sysbus_realize_and_unref(SYS_BUS_DEVICE(s), &error_fatal);
+-
+-    omap_mmc_set_clk(dev, clk);
+-
+-    memory_region_add_subregion(sysmem, base,
+-                                sysbus_mmio_get_region(SYS_BUS_DEVICE(s), 0));
+-    qdev_connect_gpio_out_named(dev, "dma-tx", 0, dma[0]);
+-    qdev_connect_gpio_out_named(dev, "dma-rx", 0, dma[1]);
+-    sysbus_connect_irq(SYS_BUS_DEVICE(dev), 0, irq);
+-
+-    return dev;
+-}
+-
+ static void omap_mmc_reset_hold(Object *obj, ResetType type)
+ {
+     OMAPMMCState *s = OMAP_MMC(obj);
 -- 
 2.34.1
 
