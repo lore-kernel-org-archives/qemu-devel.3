@@ -4,79 +4,78 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id EC74AC0218A
-	for <qemu-devel@archiver.kernel.org>; Tue, 28 Jan 2025 20:18:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E695BC0218A
+	for <qemu-devel@archiver.kernel.org>; Tue, 28 Jan 2025 20:19:18 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tcrxl-00028C-GV; Tue, 28 Jan 2025 15:13:33 -0500
+	id 1tcry0-0002Gf-CR; Tue, 28 Jan 2025 15:13:48 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1tcrxk-00027W-Jn
- for qemu-devel@nongnu.org; Tue, 28 Jan 2025 15:13:32 -0500
-Received: from mail-wm1-x32c.google.com ([2a00:1450:4864:20::32c])
+ id 1tcrxw-0002Ep-Hb
+ for qemu-devel@nongnu.org; Tue, 28 Jan 2025 15:13:45 -0500
+Received: from mail-wm1-x32b.google.com ([2a00:1450:4864:20::32b])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1tcrxi-0001aZ-RD
- for qemu-devel@nongnu.org; Tue, 28 Jan 2025 15:13:32 -0500
-Received: by mail-wm1-x32c.google.com with SMTP id
- 5b1f17b1804b1-438a3216fc2so62254775e9.1
- for <qemu-devel@nongnu.org>; Tue, 28 Jan 2025 12:13:30 -0800 (PST)
+ id 1tcrxt-0001cz-6o
+ for qemu-devel@nongnu.org; Tue, 28 Jan 2025 15:13:44 -0500
+Received: by mail-wm1-x32b.google.com with SMTP id
+ 5b1f17b1804b1-4368a293339so69456725e9.3
+ for <qemu-devel@nongnu.org>; Tue, 28 Jan 2025 12:13:40 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1738095209; x=1738700009; darn=nongnu.org;
+ d=linaro.org; s=google; t=1738095220; x=1738700020; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=7fwK0HVGmxgRXSNDyN8ycHXrfWgJUyub54CCwlOJt4s=;
- b=IYGps0yx+o12sJjAGVOuK0EGqdvavRs+6tvubEOHYzTtAwZ+5W+aoDxltHT9cyVbUA
- MxG78f/phIdKH5NIp2NYWKzRIBSt85Ndfu+Ae+xx/WE1LcnbD40Y9zWJx9HMNAiymspj
- C9k/Fn8XmFB8AL7sO3aLFu2iN3fMcB0uvJYMtA+FG90rjKLoTVa0FSfoB4WbPemDU77Z
- QTNMqBRs7XypJbMVEXgAZmcJYNLsAiI4sgqJTnbg6KssS5vhJRObj1gVLIL6IO0qa5HE
- NgtFfNWl0cZzsHUnkcyUpeSCRXmez5jWVyFpFfBZ1CCpUc16eKlUKdzLvtMsWDMpY4Bb
- dXWg==
+ :reply-to; bh=r17lK6EWItzezJyUoImPl9XSowSNSJOkNsi0cwyoOMU=;
+ b=bSQ5SSKYKV6fSDj3djy5S7RmxyzIC0XeWRDWPpnDG9KTdjlEdMlHs5qb7P44UxqIHd
+ yxC4zHryWTh1mHRkbAMGn4UiMbXJ8IG5ItL4DiTWNIuHOhF3q5Kv6z3a9v7/911Cccyn
+ a0+ZLN1lgn1e7zthUYLLKtmc8X70DiE05/zUajXPo0nsohITJ3TJ8indXAoJPexwyeAd
+ a8hdL3/04yU7xErlMWdC7Sala1ezz68UMEtdSC2c71LFq5fjFWoff/38wMcnt6DOmc7g
+ nKmIJw4GHRC9sHXXE1XUhZo9rh6Vci9lqiEzSEY25m8F/yM8rGcpUAhyaP128PjzEEQZ
+ FdaA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1738095209; x=1738700009;
+ d=1e100.net; s=20230601; t=1738095220; x=1738700020;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=7fwK0HVGmxgRXSNDyN8ycHXrfWgJUyub54CCwlOJt4s=;
- b=ZiMdtWN5ga4eAak5T7LN44t/WD6KKxtSGZCNnB7BXQyoYf7cdAQAM3/0VSLt+abukm
- 4SDFaAkScJhOwoXOlF6JuwEBP8pAj2GZyt2WZ45yqAVvtrw+ojuCD8QRiX6wAF50mS/M
- wAiYHVcozpDS/Vu9xsQbPh1nVWPO24/2FbzO220m1jGw/dwwahaWG9VX/S7CFReB0+oN
- 3rswAF9id2x1LVpbDu3B97UYVA8lewthj02hHaX+tq4GiZV4WW85I86iRBMMgXRygPJI
- 8C9Kz5O0GnjiT+xFl8in1t/gYXJPk1PHhQR7cv+pFlOT3sE8TAFwhL+ch6OznLMEC8eG
- z6Yg==
-X-Gm-Message-State: AOJu0Yxl3ADGF0Dh9Eo5rWw7N+mC1tbDUCkJIEhlgjaWXzgX7NSyJoyb
- PPYKRAh41wsW7mXH5wXSe3U8r2R7tgODHAckqDJIUleylLBVF11hLkLInUKPPv+ANqYlJGna3FF
- I
-X-Gm-Gg: ASbGnctPwMtwttKR9ZfauJnwWuVfY3fuF3z0UWKJSdFk1p2g1U286BrGBCsFgsNdQsm
- ybCZkAWnKW5zdFzkDzBD/z0k5R9ra0mKijAW+OVdhdMSpGixZTonX2Q6zdiv67NreeBPxhISSyO
- 3fcLcCBO1pNtwvbkVCvqL+BBRdPjKaWoT1CTWM/bwHBqFX+QPjsxYX1Abf+F4F2gIwlwOR+TbWh
- L3IGp3JYOqtAl5FeR/2iMkwe5m0ieFcSd6xU6kDg9rtZRVPsVy1Gl/rRFnEYoGyFRbejxv6DWsh
- YeHBiOcHa/i0wQW9fH17jg==
-X-Google-Smtp-Source: AGHT+IHRQQLZA53dRNC4yTPEtjGiJ8iOqgUeXfC6Iq1IXGDs4rIZPTfOgqdyidFip+qtVOmjE8YACg==
-X-Received: by 2002:a05:600c:4fd6:b0:434:ff30:a159 with SMTP id
- 5b1f17b1804b1-438dc3360b9mr3020415e9.0.1738095209421; 
- Tue, 28 Jan 2025 12:13:29 -0800 (PST)
+ bh=r17lK6EWItzezJyUoImPl9XSowSNSJOkNsi0cwyoOMU=;
+ b=v6+L5xGsnOgifdJmvU0bkIQbecgIAwk5QbAnl+GNn4fYJQswBruPz3oNp22QgWNjx9
+ Bau8e/JHc88BmeJqaNWsD60XKCDsevsH6Qdo+eBs4AjvmqE5CT8E6Ll4VVGKjLUVZtlc
+ NuENkk19sZ+C6J5brXUzZ52U8VrilFvRI/wus1qjZ90VQpEkhu1tIimj0/etmDzfbrQp
+ 8Of/MeXc+kL4lhzFFtBFYymPr/HBAFyLnPO5/w+PRvmHED90UT6SJQ3VM6XtQvfl1KW4
+ XIaWqxw9wh25PstnAlfJ6zdMZMFt7PUyx2TgkEEk+dgODFkSwwj4Lit7W603xOZHhEXS
+ ZcJQ==
+X-Gm-Message-State: AOJu0Yz97R8K7ZKJNpBPD7St128KPXNuLUN+Abu61MumG7wrepLVLrRW
+ cGfcUuflzJF3B5M5Nkc0WuoWEKSNbFwqjAyLriDy4oFKQcGoxpRtY+sC8jNu/d+3rMDCIhOPZMI
+ 5
+X-Gm-Gg: ASbGncvi3E4Ugcuw2jSAvhf8gRo09BjQRK4vuUfPFOytkP1rvnDZzYtuk4gZFHbUw7S
+ OeWmGxAHv8oNA7Chwvdhs/ka3mp5ZE8Y2ClKT10lCLTGJnvZoc5FMjD6It4fNBmDHGM2VNPI0Wl
+ dnRrR/zidBBp0mvQTkU8YmYoilaWRWNWD8pqgg4BKFDb40Dx8DIRD0FmL+eakaKKGVxGz+VEQST
+ kJOFp8IjlbT2ZU0rVbfgqub//BW7Nmk5gVk2HNUK2za/YGcKSE2t47WO7JbmlHxXIvDPwBRxXcL
+ KHm/QIaP5sS3erbCmxVzQw==
+X-Google-Smtp-Source: AGHT+IHxLUM+JaHOVcEmB+q4m2KrBMpSrO9kuYdVXfh1GmINFni1vSSUA5w/9OHZD/ecbDtWjuepTA==
+X-Received: by 2002:a05:600c:1d83:b0:434:a781:f5d5 with SMTP id
+ 5b1f17b1804b1-438dc43540bmr2649785e9.30.1738095219573; 
+ Tue, 28 Jan 2025 12:13:39 -0800 (PST)
 Received: from orth.archaic.org.uk (orth.archaic.org.uk. [2001:8b0:1d0::2])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-438bd4fa3efsm182524105e9.2.2025.01.28.12.13.27
+ 5b1f17b1804b1-438bd4fa3efsm182524105e9.2.2025.01.28.12.13.38
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 28 Jan 2025 12:13:28 -0800 (PST)
+ Tue, 28 Jan 2025 12:13:38 -0800 (PST)
 From: Peter Maydell <peter.maydell@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 12/36] hw/arm/stellaris: Map both I2C controllers
-Date: Tue, 28 Jan 2025 20:12:50 +0000
-Message-Id: <20250128201314.44038-13-peter.maydell@linaro.org>
+Subject: [PULL 22/36] target/arm: Use FPST_A32 in A32 decoder
+Date: Tue, 28 Jan 2025 20:13:00 +0000
+Message-Id: <20250128201314.44038-23-peter.maydell@linaro.org>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20250128201314.44038-1-peter.maydell@linaro.org>
 References: <20250128201314.44038-1-peter.maydell@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32c;
- envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x32c.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::32b;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x32b.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -99,76 +98,265 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Philippe Mathieu-Daudé <philmd@linaro.org>
+In the A32 decoder, use FPST_A32 rather than FPST_FPCR.  By
+doing an automated conversion of the whole file we avoid possibly
+using more than one fpst value in a set_rmode/op/restore_rmode
+sequence.
 
-There are 2 I2C controllers, map them both, removing
-the unimplemented one. Keep the OLED controller on the
-first I2C bus.
+Patch created with
+  perl -p -i -e 's/FPST_FPCR(?!_)/FPST_A32/g' target/arm/tcg/translate-vfp.c
 
-Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
-Message-id: 20250110160204.74997-7-philmd@linaro.org
-[PMM: tweak to appease maybe-use-uninitialized warning]
 Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Message-id: 20250124162836.2332150-11-peter.maydell@linaro.org
 ---
- hw/arm/stellaris.c | 21 +++++++++++++--------
- 1 file changed, 13 insertions(+), 8 deletions(-)
+ target/arm/tcg/translate-vfp.c | 54 +++++++++++++++++-----------------
+ 1 file changed, 27 insertions(+), 27 deletions(-)
 
-diff --git a/hw/arm/stellaris.c b/hw/arm/stellaris.c
-index 82f935cb329..c3c3fd0410e 100644
---- a/hw/arm/stellaris.c
-+++ b/hw/arm/stellaris.c
-@@ -1021,6 +1021,8 @@ static void stellaris_init(MachineState *ms, stellaris_board_info *board)
-       { 0x40004000, 0x40005000, 0x40006000, 0x40007000,
-         0x40024000, 0x40025000, 0x40026000};
-     static const int gpio_irq[NUM_GPIO] = {0, 1, 2, 3, 4, 30, 31};
-+    static const uint32_t i2c_addr[NUM_I2C] = {0x40020000, 0x40021000};
-+    static const int i2c_irq[NUM_I2C] = {8, 37};
- 
-     /* Memory map of SoC devices, from
-      * Stellaris LM3S6965 Microcontroller Data Sheet (rev I)
-@@ -1062,7 +1064,7 @@ static void stellaris_init(MachineState *ms, stellaris_board_info *board)
-     qemu_irq adc;
-     int sram_size;
-     int flash_size;
--    I2CBus *i2c;
-+    DeviceState *i2c_dev[NUM_I2C] = { };
-     DeviceState *dev;
-     DeviceState *ssys_dev;
-     int i;
-@@ -1196,14 +1198,18 @@ static void stellaris_init(MachineState *ms, stellaris_board_info *board)
-         }
+diff --git a/target/arm/tcg/translate-vfp.c b/target/arm/tcg/translate-vfp.c
+index 3cbe9a7418d..c82f41234cd 100644
+--- a/target/arm/tcg/translate-vfp.c
++++ b/target/arm/tcg/translate-vfp.c
+@@ -462,7 +462,7 @@ static bool trans_VRINT(DisasContext *s, arg_VRINT *a)
+     if (sz == 1) {
+         fpst = fpstatus_ptr(FPST_FPCR_F16);
+     } else {
+-        fpst = fpstatus_ptr(FPST_FPCR);
++        fpst = fpstatus_ptr(FPST_A32);
      }
  
--    if (DEV_CAP(2, I2C(0))) {
--        dev = sysbus_create_simple(TYPE_STELLARIS_I2C, 0x40020000,
--                                   qdev_get_gpio_in(nvic, 8));
--        i2c = (I2CBus *)qdev_get_child_bus(dev, "i2c");
--        if (board->peripherals & BP_OLED_I2C) {
--            i2c_slave_create_simple(i2c, "ssd0303", 0x3d);
-+    for (i = 0; i < NUM_I2C; i++) {
-+        if (DEV_CAP(2, I2C(i))) {
-+            i2c_dev[i] = sysbus_create_simple(TYPE_STELLARIS_I2C, i2c_addr[i],
-+                                              qdev_get_gpio_in(nvic,
-+                                                               i2c_irq[i]));
-         }
+     tcg_rmode = gen_set_rmode(rounding, fpst);
+@@ -529,7 +529,7 @@ static bool trans_VCVT(DisasContext *s, arg_VCVT *a)
+     if (sz == 1) {
+         fpst = fpstatus_ptr(FPST_FPCR_F16);
+     } else {
+-        fpst = fpstatus_ptr(FPST_FPCR);
++        fpst = fpstatus_ptr(FPST_A32);
      }
-+    if (board->peripherals & BP_OLED_I2C) {
-+        I2CBus *bus = (I2CBus *)qdev_get_child_bus(i2c_dev[0], "i2c");
-+
-+        i2c_slave_create_simple(bus, "ssd0303", 0x3d);
-+    }
  
-     for (i = 0; i < NUM_UART; i++) {
-         if (DEV_CAP(2, UART(i))) {
-@@ -1382,7 +1388,6 @@ static void stellaris_init(MachineState *ms, stellaris_board_info *board)
-     /* Add dummy regions for the devices we don't implement yet,
-      * so guest accesses don't cause unlogged crashes.
-      */
--    create_unimplemented_device("i2c-2", 0x40021000, 0x1000);
-     create_unimplemented_device("PWM", 0x40028000, 0x1000);
-     create_unimplemented_device("QEI-0", 0x4002c000, 0x1000);
-     create_unimplemented_device("QEI-1", 0x4002d000, 0x1000);
+     tcg_shift = tcg_constant_i32(0);
+@@ -1398,7 +1398,7 @@ static bool do_vfp_3op_sp(DisasContext *s, VFPGen3OpSPFn *fn,
+     f0 = tcg_temp_new_i32();
+     f1 = tcg_temp_new_i32();
+     fd = tcg_temp_new_i32();
+-    fpst = fpstatus_ptr(FPST_FPCR);
++    fpst = fpstatus_ptr(FPST_A32);
+ 
+     vfp_load_reg32(f0, vn);
+     vfp_load_reg32(f1, vm);
+@@ -1517,7 +1517,7 @@ static bool do_vfp_3op_dp(DisasContext *s, VFPGen3OpDPFn *fn,
+     f0 = tcg_temp_new_i64();
+     f1 = tcg_temp_new_i64();
+     fd = tcg_temp_new_i64();
+-    fpst = fpstatus_ptr(FPST_FPCR);
++    fpst = fpstatus_ptr(FPST_A32);
+ 
+     vfp_load_reg64(f0, vn);
+     vfp_load_reg64(f1, vm);
+@@ -2181,7 +2181,7 @@ static bool do_vfm_sp(DisasContext *s, arg_VFMA_sp *a, bool neg_n, bool neg_d)
+         /* VFNMA, VFNMS */
+         gen_vfp_negs(vd, vd);
+     }
+-    fpst = fpstatus_ptr(FPST_FPCR);
++    fpst = fpstatus_ptr(FPST_A32);
+     gen_helper_vfp_muladds(vd, vn, vm, vd, fpst);
+     vfp_store_reg32(vd, a->vd);
+     return true;
+@@ -2246,7 +2246,7 @@ static bool do_vfm_dp(DisasContext *s, arg_VFMA_dp *a, bool neg_n, bool neg_d)
+         /* VFNMA, VFNMS */
+         gen_vfp_negd(vd, vd);
+     }
+-    fpst = fpstatus_ptr(FPST_FPCR);
++    fpst = fpstatus_ptr(FPST_A32);
+     gen_helper_vfp_muladdd(vd, vn, vm, vd, fpst);
+     vfp_store_reg64(vd, a->vd);
+     return true;
+@@ -2429,12 +2429,12 @@ static void gen_VSQRT_hp(TCGv_i32 vd, TCGv_i32 vm)
+ 
+ static void gen_VSQRT_sp(TCGv_i32 vd, TCGv_i32 vm)
+ {
+-    gen_helper_vfp_sqrts(vd, vm, fpstatus_ptr(FPST_FPCR));
++    gen_helper_vfp_sqrts(vd, vm, fpstatus_ptr(FPST_A32));
+ }
+ 
+ static void gen_VSQRT_dp(TCGv_i64 vd, TCGv_i64 vm)
+ {
+-    gen_helper_vfp_sqrtd(vd, vm, fpstatus_ptr(FPST_FPCR));
++    gen_helper_vfp_sqrtd(vd, vm, fpstatus_ptr(FPST_A32));
+ }
+ 
+ DO_VFP_2OP(VSQRT, hp, gen_VSQRT_hp, aa32_fp16_arith)
+@@ -2565,7 +2565,7 @@ static bool trans_VCVT_f32_f16(DisasContext *s, arg_VCVT_f32_f16 *a)
+         return true;
+     }
+ 
+-    fpst = fpstatus_ptr(FPST_FPCR);
++    fpst = fpstatus_ptr(FPST_A32);
+     ahp_mode = get_ahp_flag();
+     tmp = tcg_temp_new_i32();
+     /* The T bit tells us if we want the low or high 16 bits of Vm */
+@@ -2599,7 +2599,7 @@ static bool trans_VCVT_f64_f16(DisasContext *s, arg_VCVT_f64_f16 *a)
+         return true;
+     }
+ 
+-    fpst = fpstatus_ptr(FPST_FPCR);
++    fpst = fpstatus_ptr(FPST_A32);
+     ahp_mode = get_ahp_flag();
+     tmp = tcg_temp_new_i32();
+     /* The T bit tells us if we want the low or high 16 bits of Vm */
+@@ -2623,7 +2623,7 @@ static bool trans_VCVT_b16_f32(DisasContext *s, arg_VCVT_b16_f32 *a)
+         return true;
+     }
+ 
+-    fpst = fpstatus_ptr(FPST_FPCR);
++    fpst = fpstatus_ptr(FPST_A32);
+     tmp = tcg_temp_new_i32();
+ 
+     vfp_load_reg32(tmp, a->vm);
+@@ -2646,7 +2646,7 @@ static bool trans_VCVT_f16_f32(DisasContext *s, arg_VCVT_f16_f32 *a)
+         return true;
+     }
+ 
+-    fpst = fpstatus_ptr(FPST_FPCR);
++    fpst = fpstatus_ptr(FPST_A32);
+     ahp_mode = get_ahp_flag();
+     tmp = tcg_temp_new_i32();
+ 
+@@ -2680,7 +2680,7 @@ static bool trans_VCVT_f16_f64(DisasContext *s, arg_VCVT_f16_f64 *a)
+         return true;
+     }
+ 
+-    fpst = fpstatus_ptr(FPST_FPCR);
++    fpst = fpstatus_ptr(FPST_A32);
+     ahp_mode = get_ahp_flag();
+     tmp = tcg_temp_new_i32();
+     vm = tcg_temp_new_i64();
+@@ -2727,7 +2727,7 @@ static bool trans_VRINTR_sp(DisasContext *s, arg_VRINTR_sp *a)
+ 
+     tmp = tcg_temp_new_i32();
+     vfp_load_reg32(tmp, a->vm);
+-    fpst = fpstatus_ptr(FPST_FPCR);
++    fpst = fpstatus_ptr(FPST_A32);
+     gen_helper_rints(tmp, tmp, fpst);
+     vfp_store_reg32(tmp, a->vd);
+     return true;
+@@ -2757,7 +2757,7 @@ static bool trans_VRINTR_dp(DisasContext *s, arg_VRINTR_dp *a)
+ 
+     tmp = tcg_temp_new_i64();
+     vfp_load_reg64(tmp, a->vm);
+-    fpst = fpstatus_ptr(FPST_FPCR);
++    fpst = fpstatus_ptr(FPST_A32);
+     gen_helper_rintd(tmp, tmp, fpst);
+     vfp_store_reg64(tmp, a->vd);
+     return true;
+@@ -2803,7 +2803,7 @@ static bool trans_VRINTZ_sp(DisasContext *s, arg_VRINTZ_sp *a)
+ 
+     tmp = tcg_temp_new_i32();
+     vfp_load_reg32(tmp, a->vm);
+-    fpst = fpstatus_ptr(FPST_FPCR);
++    fpst = fpstatus_ptr(FPST_A32);
+     tcg_rmode = gen_set_rmode(FPROUNDING_ZERO, fpst);
+     gen_helper_rints(tmp, tmp, fpst);
+     gen_restore_rmode(tcg_rmode, fpst);
+@@ -2836,7 +2836,7 @@ static bool trans_VRINTZ_dp(DisasContext *s, arg_VRINTZ_dp *a)
+ 
+     tmp = tcg_temp_new_i64();
+     vfp_load_reg64(tmp, a->vm);
+-    fpst = fpstatus_ptr(FPST_FPCR);
++    fpst = fpstatus_ptr(FPST_A32);
+     tcg_rmode = gen_set_rmode(FPROUNDING_ZERO, fpst);
+     gen_helper_rintd(tmp, tmp, fpst);
+     gen_restore_rmode(tcg_rmode, fpst);
+@@ -2880,7 +2880,7 @@ static bool trans_VRINTX_sp(DisasContext *s, arg_VRINTX_sp *a)
+ 
+     tmp = tcg_temp_new_i32();
+     vfp_load_reg32(tmp, a->vm);
+-    fpst = fpstatus_ptr(FPST_FPCR);
++    fpst = fpstatus_ptr(FPST_A32);
+     gen_helper_rints_exact(tmp, tmp, fpst);
+     vfp_store_reg32(tmp, a->vd);
+     return true;
+@@ -2910,7 +2910,7 @@ static bool trans_VRINTX_dp(DisasContext *s, arg_VRINTX_dp *a)
+ 
+     tmp = tcg_temp_new_i64();
+     vfp_load_reg64(tmp, a->vm);
+-    fpst = fpstatus_ptr(FPST_FPCR);
++    fpst = fpstatus_ptr(FPST_A32);
+     gen_helper_rintd_exact(tmp, tmp, fpst);
+     vfp_store_reg64(tmp, a->vd);
+     return true;
+@@ -2937,7 +2937,7 @@ static bool trans_VCVT_sp(DisasContext *s, arg_VCVT_sp *a)
+     vm = tcg_temp_new_i32();
+     vd = tcg_temp_new_i64();
+     vfp_load_reg32(vm, a->vm);
+-    gen_helper_vfp_fcvtds(vd, vm, fpstatus_ptr(FPST_FPCR));
++    gen_helper_vfp_fcvtds(vd, vm, fpstatus_ptr(FPST_A32));
+     vfp_store_reg64(vd, a->vd);
+     return true;
+ }
+@@ -2963,7 +2963,7 @@ static bool trans_VCVT_dp(DisasContext *s, arg_VCVT_dp *a)
+     vd = tcg_temp_new_i32();
+     vm = tcg_temp_new_i64();
+     vfp_load_reg64(vm, a->vm);
+-    gen_helper_vfp_fcvtsd(vd, vm, fpstatus_ptr(FPST_FPCR));
++    gen_helper_vfp_fcvtsd(vd, vm, fpstatus_ptr(FPST_A32));
+     vfp_store_reg32(vd, a->vd);
+     return true;
+ }
+@@ -3010,7 +3010,7 @@ static bool trans_VCVT_int_sp(DisasContext *s, arg_VCVT_int_sp *a)
+ 
+     vm = tcg_temp_new_i32();
+     vfp_load_reg32(vm, a->vm);
+-    fpst = fpstatus_ptr(FPST_FPCR);
++    fpst = fpstatus_ptr(FPST_A32);
+     if (a->s) {
+         /* i32 -> f32 */
+         gen_helper_vfp_sitos(vm, vm, fpst);
+@@ -3044,7 +3044,7 @@ static bool trans_VCVT_int_dp(DisasContext *s, arg_VCVT_int_dp *a)
+     vm = tcg_temp_new_i32();
+     vd = tcg_temp_new_i64();
+     vfp_load_reg32(vm, a->vm);
+-    fpst = fpstatus_ptr(FPST_FPCR);
++    fpst = fpstatus_ptr(FPST_A32);
+     if (a->s) {
+         /* i32 -> f64 */
+         gen_helper_vfp_sitod(vd, vm, fpst);
+@@ -3161,7 +3161,7 @@ static bool trans_VCVT_fix_sp(DisasContext *s, arg_VCVT_fix_sp *a)
+     vd = tcg_temp_new_i32();
+     vfp_load_reg32(vd, a->vd);
+ 
+-    fpst = fpstatus_ptr(FPST_FPCR);
++    fpst = fpstatus_ptr(FPST_A32);
+     shift = tcg_constant_i32(frac_bits);
+ 
+     /* Switch on op:U:sx bits */
+@@ -3223,7 +3223,7 @@ static bool trans_VCVT_fix_dp(DisasContext *s, arg_VCVT_fix_dp *a)
+     vd = tcg_temp_new_i64();
+     vfp_load_reg64(vd, a->vd);
+ 
+-    fpst = fpstatus_ptr(FPST_FPCR);
++    fpst = fpstatus_ptr(FPST_A32);
+     shift = tcg_constant_i32(frac_bits);
+ 
+     /* Switch on op:U:sx bits */
+@@ -3307,7 +3307,7 @@ static bool trans_VCVT_sp_int(DisasContext *s, arg_VCVT_sp_int *a)
+         return true;
+     }
+ 
+-    fpst = fpstatus_ptr(FPST_FPCR);
++    fpst = fpstatus_ptr(FPST_A32);
+     vm = tcg_temp_new_i32();
+     vfp_load_reg32(vm, a->vm);
+ 
+@@ -3347,7 +3347,7 @@ static bool trans_VCVT_dp_int(DisasContext *s, arg_VCVT_dp_int *a)
+         return true;
+     }
+ 
+-    fpst = fpstatus_ptr(FPST_FPCR);
++    fpst = fpstatus_ptr(FPST_A32);
+     vm = tcg_temp_new_i64();
+     vd = tcg_temp_new_i32();
+     vfp_load_reg64(vm, a->vm);
 -- 
 2.34.1
 
