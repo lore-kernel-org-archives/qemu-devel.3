@@ -4,83 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 926DAC0218A
-	for <qemu-devel@archiver.kernel.org>; Tue, 28 Jan 2025 18:58:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9BDDEC02190
+	for <qemu-devel@archiver.kernel.org>; Tue, 28 Jan 2025 19:05:04 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tcqn6-0008Pa-Up; Tue, 28 Jan 2025 13:58:28 -0500
+	id 1tcqtA-0001YZ-Ua; Tue, 28 Jan 2025 14:04:44 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1tcqn4-0008PQ-W8
- for qemu-devel@nongnu.org; Tue, 28 Jan 2025 13:58:27 -0500
-Received: from mail-pl1-x629.google.com ([2607:f8b0:4864:20::629])
+ id 1tcqt8-0001YI-AZ
+ for qemu-devel@nongnu.org; Tue, 28 Jan 2025 14:04:43 -0500
+Received: from mail-pl1-x62b.google.com ([2607:f8b0:4864:20::62b])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1tcqn3-0000nt-I6
- for qemu-devel@nongnu.org; Tue, 28 Jan 2025 13:58:26 -0500
-Received: by mail-pl1-x629.google.com with SMTP id
- d9443c01a7336-2163b0c09afso110302865ad.0
- for <qemu-devel@nongnu.org>; Tue, 28 Jan 2025 10:58:25 -0800 (PST)
+ id 1tcqt5-0001GC-Qk
+ for qemu-devel@nongnu.org; Tue, 28 Jan 2025 14:04:41 -0500
+Received: by mail-pl1-x62b.google.com with SMTP id
+ d9443c01a7336-21636268e43so131890985ad.2
+ for <qemu-devel@nongnu.org>; Tue, 28 Jan 2025 11:04:39 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1738090704; x=1738695504; darn=nongnu.org;
+ d=linaro.org; s=google; t=1738091078; x=1738695878; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:to:subject:user-agent:mime-version:date:message-id:from
  :to:cc:subject:date:message-id:reply-to;
- bh=VWkdfHACvdl+KbSNIE6ymng3iIndWpluAohbgoCgy3w=;
- b=WLJlLCr/Vi5z3q3tM0GGv/q90O5lgDGuTsF3/yzliMbSZivmvIAq8Z+Wjo6S/3mAhp
- fPAvVtz6+NnM68te1qMSGhxOSvWTe3ySpzPTNhBGzPih9GOBvnLlWX/f2258Xf97450w
- Pp5zKLWqohh+25K3JuSDMFOLWae0pXR8agvrtyFZphMI1+ll+8MwiUd6Zk5GyWWjIpik
- pZhLB2ltKFhrRianOjK5Ku0+E9dI/gGmtUh75Z62o7RjembAWV02XmB4Vb4EYhuwSLG/
- HA6uUVPF4V95VQQUPhO7zpWJZcbc9RbuhhWH9Sd1zVnw++LOQiQcsfGH1+FuoCYp7BeY
- Ep+Q==
+ bh=30OaTN0zqpbntnWZ4GRDo0FRzUkUSiDN7VKoXqrL52E=;
+ b=OjW8baYPSVKRq0XHIqw0IjPlzR/iHOCDc0ux+6ho2RJ/DdCFqBuxd9aT25gaMnGk78
+ ROhyXXN89ECCcGTrJWs1yvRDBWlK5j9qqH0GnGbb64pTNXk+Kz2P3etq6+ito1OBZLKg
+ UVhPswiKsdb0aKENUS7DvaPZLxE44AtxSDEw6e7ZvYSMf/7rAUTOoZGV4QXsZGemyCmO
+ lig1v5LRAqLtkW8JSDnYCZPhei2/+8/A8jDaqnwwtTDfZPWcvzCkUrg65VQon6UPlP91
+ D/0GRFKhBh2hfYGKo5pLGjGHEogcTiAAoAR0RBVZelLD/+eRSNnuDJjA309+RcjCY29P
+ BAKg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1738090704; x=1738695504;
+ d=1e100.net; s=20230601; t=1738091078; x=1738695878;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=VWkdfHACvdl+KbSNIE6ymng3iIndWpluAohbgoCgy3w=;
- b=kJTgIW1XLgQfpMVl/uiM2x+2b1jQFDCjnbUyRmV+R6mL3XfXgn6U/zffSlCkDkM5EY
- WwqfvqTbaGcx7ctglcwK+2pOwaNpNR9UycWmpKe9cCAfPGww8Q6GxEN6sdlspIPnKXX4
- qVgXxjfmZEgGLLXd8/Ux8RaWQT8VpZ/6PdBI14wPsOulaQouPJTpPcsk8Nz9Zv6ND66f
- cP5xXGercM+bX79pnFxS/KBpV/giEQqdStYCpVIatdsxFuxCeQX7apr/v5bzCeZkP6sC
- wKMWJjcDjn1lz4L1hv2NbB9h1wKOevwyBy790AL8WHs581svrE6gr/ScegMdCCYlAtPi
- 8xbQ==
-X-Gm-Message-State: AOJu0YyYcaHy4Se/QJY/Gep1MFlnfZxlMGhFr0YtMBCc9rCSRV+feOha
- VdpFgzojmBJkRtDwqqK+fQykjrPTPIZM6ERUhyQiMNwwo4y+Leggh3grJj8Serbh0vrFsl/1Ezc
- L
-X-Gm-Gg: ASbGncui8dX1fONgfTPDyPFoibmVkMNJBckJcrpBNVl2jX4jlBMAf3FgvyCUOVLUPiQ
- O012t2HeN9D8X1br4rOuSdUtAeSFe2oEfml1NfnBliMFjChmTlD7/hnRKzdXIXfzpUrwGlOutKX
- KHvM8HQU8mo+F2UDlTBv+5DELR8DU8xE74qxWVynUtXHkNSt983lLIxnDcJQb4SBWwhYAuQ8IQx
- F7FsBWNpphSSZ3dtkSt0ccqgfqXWWs+oh/2lK5ruU+e9LBWVbP0op0H9AvHNVY1tBEfXxJEycP2
- 3UGALW/RlpgW7SS3/ESAillICb2o6t6ee9Q4RolBI8YL1TPOYKzJfUmpmg==
-X-Google-Smtp-Source: AGHT+IG+WmfNazD/ph4kVdAPU/WmBsNosAhV4jmpa0H3FFQNt/R68t6yPjew9bVtT87T0InLjYFR1w==
-X-Received: by 2002:a05:6a00:2184:b0:728:b601:86df with SMTP id
- d2e1a72fcca58-72fd0bf480bmr327614b3a.10.1738090703890; 
- Tue, 28 Jan 2025 10:58:23 -0800 (PST)
+ bh=30OaTN0zqpbntnWZ4GRDo0FRzUkUSiDN7VKoXqrL52E=;
+ b=v4jcfJpTFX9JYWFYn1xNriy/u1XKbAjtiCH/46cICIUs1UtqTpKLajCz9wNtSeiTeR
+ NXuuDRq8UTeayYhfz46QVo2J9a3RQij5VTisy2EIgRWnZSI5k1Z+CTALzabSTLMXSLu9
+ bS36Emh134rTPgmC0sVACO+F5pefCurOT0jzXwzkyo/r40mwsUO1S+AC7jiruBnFyJI5
+ yHMMKQ7WecmV9NoDUZad396x62TUQ8fehrw+edeVomPqcURTMNCe8b76T9zo/YJES2AJ
+ RqbD6aw+1Iqg1xSBiTIMVIwIVANNW4c8SI2mQh6GwZYc8IKklHvYxsqKxs6IoE0z7FYO
+ sCPQ==
+X-Gm-Message-State: AOJu0YwbdbVSjy3fC8LKm8II2dUkH7w43t9nyK9C3W94UilNZ2vCmizq
+ wpqR6dQoisT+//5ig/KADOID8zDFF8c1RCvt7MJRyyZrFqgyLzfaguAC/gljSmSbctGOAnQ4CFS
+ i
+X-Gm-Gg: ASbGnct2f95SQfg1x2RJRiJWGBW4IW6YNK1SSRFZvcaImVYo2w6rd+0t9bUMxjIpfkk
+ xDSYNb+FNwpNGnssDDA6N1rSvtneB3ObNkJJ1O8GWAQvOQoV9cFGbyCxoUgCq87OAfDIVLWq68P
+ ZKx40J6PB8gwxRanNTQP4EugQLeGc1soRDgQs6qF5vzbFSpluQDBObYyIMtHdt4PVTPvBiOxMR0
+ JK0iXc2l+btNQBytxVMSIEXbvmvIQfE4dnd4NifoZvJtXPGFg1wPVvpy241pHb4cmpaFxjpFEjw
+ kyvVY+eoOKBaEt3o/orN0pDVa1x33WSBmY03h47wKWzfpQ+Z00xQP/K1Qw==
+X-Google-Smtp-Source: AGHT+IEZTHFBCMSBgFRB3cl0ieVWbCE7r0PnJe7uAX4muqbvNpxefHNkC4CAI6NaTgjB4cvix25DOA==
+X-Received: by 2002:a17:902:7c93:b0:21b:bc95:e8d4 with SMTP id
+ d9443c01a7336-21dd7dcb1e7mr2628215ad.35.1738091078515; 
+ Tue, 28 Jan 2025 11:04:38 -0800 (PST)
 Received: from [192.168.0.4] (174-21-71-127.tukw.qwest.net. [174.21.71.127])
  by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-72f8a6b2ed8sm9529681b3a.41.2025.01.28.10.58.23
+ d9443c01a7336-21da3ea3c9asm85559815ad.94.2025.01.28.11.04.37
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 28 Jan 2025 10:58:23 -0800 (PST)
-Message-ID: <429db883-84b4-4486-9789-132d13e4d4dc@linaro.org>
-Date: Tue, 28 Jan 2025 10:58:22 -0800
+ Tue, 28 Jan 2025 11:04:38 -0800 (PST)
+Message-ID: <3040b8ac-9424-4cb2-9c4d-09e319bc4b94@linaro.org>
+Date: Tue, 28 Jan 2025 11:04:36 -0800
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 03/11] hw/sd/omap_mmc: Convert output qemu_irqs to gpio
- and sysbus IRQ APIs
+Subject: Re: [PATCH 08/11] hw/sd/omap_mmc: Untabify
 To: qemu-devel@nongnu.org
 References: <20250128104519.3981448-1-peter.maydell@linaro.org>
- <20250128104519.3981448-4-peter.maydell@linaro.org>
+ <20250128104519.3981448-9-peter.maydell@linaro.org>
 Content-Language: en-US
 From: Richard Henderson <richard.henderson@linaro.org>
-In-Reply-To: <20250128104519.3981448-4-peter.maydell@linaro.org>
+In-Reply-To: <20250128104519.3981448-9-peter.maydell@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::629;
- envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x629.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::62b;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x62b.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -104,17 +103,16 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 1/28/25 02:45, Peter Maydell wrote:
-> The omap_mmc device has three outbound qemu_irq lines:
->   * one actual interrupt line
->   * two which connect to the DMA controller and are signalled for
->     TX and RX DMA
-> 
-> Convert these to a sysbus IRQ and two named GPIO outputs.
+> This is a very old source file, and still has some lingering
+> hard-coded tabs; untabify it.
 > 
 > Signed-off-by: Peter Maydell<peter.maydell@linaro.org>
 > ---
->   hw/sd/omap_mmc.c | 20 +++++++++++++-------
->   1 file changed, 13 insertions(+), 7 deletions(-)
+> I don't propose to try to bring the whole file up to modern
+> coding style, but hard-coded tabs are a particular wart.
+> ---
+>   hw/sd/omap_mmc.c | 124 +++++++++++++++++++++++------------------------
+>   1 file changed, 62 insertions(+), 62 deletions(-)
 
 Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 
