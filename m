@@ -4,64 +4,64 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7C1CEC0218D
-	for <qemu-devel@archiver.kernel.org>; Tue, 28 Jan 2025 14:22:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 60BAFC0218A
+	for <qemu-devel@archiver.kernel.org>; Tue, 28 Jan 2025 14:23:13 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tcmUJ-0008KG-TO; Tue, 28 Jan 2025 09:22:48 -0500
+	id 1tcmU9-00085u-VE; Tue, 28 Jan 2025 09:22:38 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tcmU5-00089B-FX
- for qemu-devel@nongnu.org; Tue, 28 Jan 2025 09:22:36 -0500
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tcmTx-0007xt-Bd
+ for qemu-devel@nongnu.org; Tue, 28 Jan 2025 09:22:25 -0500
 Received: from mail-wm1-x32f.google.com ([2a00:1450:4864:20::32f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tcmU3-0002Mt-JZ
- for qemu-devel@nongnu.org; Tue, 28 Jan 2025 09:22:33 -0500
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tcmTv-0002Lk-1v
+ for qemu-devel@nongnu.org; Tue, 28 Jan 2025 09:22:24 -0500
 Received: by mail-wm1-x32f.google.com with SMTP id
- 5b1f17b1804b1-4361b6f9faeso36461625e9.1
- for <qemu-devel@nongnu.org>; Tue, 28 Jan 2025 06:22:31 -0800 (PST)
+ 5b1f17b1804b1-4363dc916ceso42395915e9.0
+ for <qemu-devel@nongnu.org>; Tue, 28 Jan 2025 06:22:21 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1738074150; x=1738678950; darn=nongnu.org;
+ d=linaro.org; s=google; t=1738074140; x=1738678940; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=fwXtzSsp3Wrsq7TzutaYeT0jWiU8kps8I7b8yY/9nhU=;
- b=vR+5kYOuo5nLCtHiXUYmRklsOoNxvJ322cR1L7dRRdsUyiqqm457bwG3T4P/beoCK9
- vSQ2Z2jwwn4m9CHtLFVGrElEf+HCGiLxUgXVRx0Fva8qvklK8JllId2IVVUtgVOjKTc9
- bqxLNDTesKDfcFaSEd9mbgHytoaODMK18PNX3JRwYwvj6hYjsK/jYuwEbnUJriq4AMOz
- 9YqLaJSkq8FekObaC1FvZqLKUcGPO4KnJ7Tm+oOCaWZ1KuEReV6BJ5Nfs7IYD36NxQlA
- rEQZhfTG67z/9BrhbKOx9UfX2bksJy04uxqb/YAmJ0nxNEaYzSLihVCWUmfWhbGt0mLs
- Lm0g==
+ bh=mCOhYMyVhf/9MTlWJYC1Pyb8EOr+qnDpIx/K4OIle8U=;
+ b=HIXX8jpfYmx3orluh9tJuCSgZoXZhUMxVWmCNBwLqs+lQ2cOELDtbNhEi8FIn7KMTG
+ D9GZrP3o5Rilow385pzHojPZYWXLFSKONzg9KyyLCpoD9iQj8oPEWZIK6c/Mq0GJ9C9N
+ OfBXsSUVdQUSOh8+a844BI9ZyO9bz7JHyy/GxfQYn15nEjaOPfgOINdvVNMnSwWq8Qgk
+ FrerrPoV+7O9Wvr7VnaFC37p4AZzSMme2QfEe0PkLnpa4EfdrlNKBi3wfLMwwrudZr1a
+ 72xjRdu1LEKn5qOx7UCwVbs5iGuYEHahyvqBz+oUIVf27wiMgISfZ/viswW+0f7Eo2Zh
+ D1Lw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1738074150; x=1738678950;
+ d=1e100.net; s=20230601; t=1738074140; x=1738678940;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=fwXtzSsp3Wrsq7TzutaYeT0jWiU8kps8I7b8yY/9nhU=;
- b=tW7SvLV2GTkV6Fk7QM6INe/vx5xj7/bFUbV97lRuuNzKCQFJ5Ka2sUOP6UL4xYK7RU
- qp6FOC3qtyJF7QS9nv6G19biqumSHifbJGBg5uikdqhgc3eHyEjCG5E/+FIky/sddh/x
- QPiFu7VXY9S9hA8v2eojQelfJPqtXXmBqMPu7fRm/75ikBcw/hTm7KaKPFS1CmQDRqW+
- xo41V/LPZBRSUoiWSxAcUas/zeyQ98YdXCY7x8Jk2Kp6riRTY4UiJWqdf0jpKLkwWBhv
- EahXfgBYIFziDQ1du7yOg0JMsBZkoyJaoHA4i+noRiqVND79KJtV35EMgNOlG40u9Ujy
- wyqg==
-X-Gm-Message-State: AOJu0YyU4VLK9UelG+qWVKXhbtpnxGyqSjWtD+qb2ly5X4/rY2t2+xT1
- gZ4pA5JEO1tVH2706Ki/jaKGX9oDRrc152Jv0UKKBZIJnsG7qbMxZQMuSA+f77XDXTr4cDPs3Qd
- 6reM=
-X-Gm-Gg: ASbGncuRMa007jYHrANpXPvKv/8Nch7TelXd1lP+09+rjIslxJZFfc7X51Lm/lVDglQ
- DrikQDHKt3RuBle13j77jvw9VUevh5ZjcHU+NY69gAoWSfMr+YqElei+MqBFtC2tcomiFLLcXwk
- 4kNhWbk2vasuwXwxbHOP+AB1ua7ztx1S5J1YGzLNbPb9nGuZ19f0FgdJc09rOavsh1O/M8Jtgje
- T23GXkT0CGU0HmXOEogDexBC8CCaTV2vdOrfoHmDX3SvKObYYj/s3MbyQn58LLFpvzznbukSl3l
- sgqOiOhAGbTftNTYSnG7p208eyA7CSe/t98nY1fuDAFBVBgI28ZD0uHWMl4b97755Q==
-X-Google-Smtp-Source: AGHT+IGJgZU4Cp2hilxwmoMaixsHyforairgw/17QEoYqTReWbKeDv+qCHMAqmyxnXcqNHDKAhm1lA==
-X-Received: by 2002:a05:600c:46d2:b0:434:f1bd:1e40 with SMTP id
- 5b1f17b1804b1-438d596d1bamr27108845e9.6.1738074149822; 
- Tue, 28 Jan 2025 06:22:29 -0800 (PST)
+ bh=mCOhYMyVhf/9MTlWJYC1Pyb8EOr+qnDpIx/K4OIle8U=;
+ b=Y69Nu9Tnx/7snDTbOEyFzhP4RlHM+RrQqvuO/fcAKJov8X3kcvykYll/WdL8LrwXFz
+ KkWbYWULLLUy3UPvylJUliedgLa0S69TyFMLXEwMFJXfNUIfVrNCIdb+RF0/fPXPDurC
+ vBWK4/epo6DophsrXfvr3w4rHmaBU6qE0+iCSC1kGx/VXbxCC5agJ1dOuW9G7Qr7YqjB
+ lVEQbXoT/KZXKCiOHpVkHKSZzAmoZ0cSQu30EqM3arGhHuwuERJo1AcH4w+cEM0i3YiY
+ smZR3xcR4wKXGQ0ULIzgecJjWLT6DMo21FfLvcRRVdVCckLvLz7acEaTubgqc3Jj7jL4
+ K/Wg==
+X-Gm-Message-State: AOJu0YyOUSpTrPb/fkuv3BfAAHqVIjriASwsgH9IffBBrC+WydGtFkDd
+ eEGBDO4zU2W1YTwSNxe0zyiewFU7zDMMP92dd4K+K0F/cTbEY4tAzT6Om6ZhUeqfYLjhltMWR88
+ +EYg=
+X-Gm-Gg: ASbGncuovb0nUC05K6IyTE2cdeCvJo5U1ys9YZp/uI4Gwm399GRlYhWRb5l0LCn7/ri
+ 9+yGeGSTMN3uG+7uosHxx7CVUCEgS6eNTIrJ0netkMg+0LBwE5ypnXQaF5JNnWee3CwgX3hlfLH
+ Wm+aOd40Ppd1bJM9uYRcblXwTIIaY+khv8ora5TNkyADOHyTigxBH4jVxyrYdJtgRzHOUXLHFIw
+ 5AXGv1aC7M4oIik4PfGyunBIOoZVj6OnS+FDwuWgl0Fwm4pDUlqpuJvYls9ZCb4F8HDuwLBW0Ub
+ d8Tji/uUVlnZhKYaEhUsE/EJxomilk9qD/YZErQ/gR96dyCvkIzlPr+IsZCV8OvrAA==
+X-Google-Smtp-Source: AGHT+IE44lMFstrRJbbKMMn+hBpz79bGQD7lLRHTYaowiK6y0WzRah7ztkDdk12TT/+zj/uGA78k7A==
+X-Received: by 2002:a05:600c:6c92:b0:437:c453:ff19 with SMTP id
+ 5b1f17b1804b1-438d59b566dmr30503145e9.14.1738074139917; 
+ Tue, 28 Jan 2025 06:22:19 -0800 (PST)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-38c2a17d7bfsm14358242f8f.35.2025.01.28.06.22.28
+ 5b1f17b1804b1-438bd57325csm172106435e9.34.2025.01.28.06.22.18
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Tue, 28 Jan 2025 06:22:29 -0800 (PST)
+ Tue, 28 Jan 2025 06:22:19 -0800 (PST)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Peter Maydell <peter.maydell@linaro.org>,
@@ -75,9 +75,9 @@ Cc: Peter Maydell <peter.maydell@linaro.org>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  Paolo Bonzini <pbonzini@redhat.com>,
  Richard Henderson <richard.henderson@linaro.org>
-Subject: [RFC PATCH 7/9] cpus: Only expose REALIZED vCPUs to global &cpus_queue
-Date: Tue, 28 Jan 2025 15:21:50 +0100
-Message-ID: <20250128142152.9889-8-philmd@linaro.org>
+Subject: [PATCH 5/9] cpus: Add DeviceClass::[un]wire() stubs
+Date: Tue, 28 Jan 2025 15:21:48 +0100
+Message-ID: <20250128142152.9889-6-philmd@linaro.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20250128142152.9889-1-philmd@linaro.org>
 References: <20250128142152.9889-1-philmd@linaro.org>
@@ -108,70 +108,39 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-cpu_list_add() was doing 2 distinct things:
-- assign some index to vCPU
-- add unrealized (thus in inconsistent state) vcpu to &cpus_queue
-
-Code using CPU_FOREACH() macro would iterate over possibly
-unrealized vCPUs, often dealt with special casing.
-
-In order to avoid that, we move the addition of vCPU to global queue
-to the DeviceWire handler, which is called just before switching the
-vCPU to REALIZED state. This ensure all &cpus_queue users (like via
-&first_cpu or CPU_FOREACH) get a realized vCPU in consistent state.
-
-Similarly we remove it from the global queue at DeviceUnwire phase,
-just after marking the vCPU UNREALIZED.
-
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 ---
- cpu-common.c         | 2 --
- hw/core/cpu-common.c | 5 +++++
- 2 files changed, 5 insertions(+), 2 deletions(-)
+ hw/core/cpu-common.c | 10 ++++++++++
+ 1 file changed, 10 insertions(+)
 
-diff --git a/cpu-common.c b/cpu-common.c
-index 4248b2d727e..72ee8dc414e 100644
---- a/cpu-common.c
-+++ b/cpu-common.c
-@@ -91,7 +91,6 @@ void cpu_list_add(CPUState *cpu)
-     } else {
-         assert(!cpu_index_auto_assigned);
-     }
--    QTAILQ_INSERT_TAIL_RCU(&cpus_queue, cpu, node);
-     cpu_list_generation_id++;
- }
- 
-@@ -103,7 +102,6 @@ void cpu_list_remove(CPUState *cpu)
-         return;
-     }
- 
--    QTAILQ_REMOVE_RCU(&cpus_queue, cpu, node);
-     cpu->cpu_index = UNASSIGNED_CPU_INDEX;
-     cpu_list_generation_id++;
- }
 diff --git a/hw/core/cpu-common.c b/hw/core/cpu-common.c
-index 8a02ac146f6..df7a6913603 100644
+index cb79566cc51..9ee44a00277 100644
 --- a/hw/core/cpu-common.c
 +++ b/hw/core/cpu-common.c
-@@ -218,6 +218,8 @@ static void cpu_common_wire(DeviceState *dev)
- {
-     CPUState *cpu = CPU(dev);
- 
-+    QTAILQ_INSERT_TAIL_RCU(&cpus_queue, cpu, node);
-+
-     if (dev->hotplugged) {
-         cpu_synchronize_post_init(cpu);
-         cpu_resume(cpu);
-@@ -226,6 +228,9 @@ static void cpu_common_wire(DeviceState *dev)
- 
- static void cpu_common_unwire(DeviceState *dev)
- {
-+    CPUState *cpu = CPU(dev);
-+
-+    QTAILQ_REMOVE_RCU(&cpus_queue, cpu, node);
+@@ -219,6 +219,14 @@ static void cpu_common_realizefn(DeviceState *dev, Error **errp)
+     /* NOTE: latest generic point where the cpu is fully realized */
  }
  
++static void cpu_common_wire(DeviceState *dev)
++{
++}
++
++static void cpu_common_unwire(DeviceState *dev)
++{
++}
++
  static void cpu_common_unrealizefn(DeviceState *dev)
+ {
+     CPUState *cpu = CPU(dev);
+@@ -311,6 +319,8 @@ static void cpu_common_class_init(ObjectClass *klass, void *data)
+     k->gdb_write_register = cpu_common_gdb_write_register;
+     set_bit(DEVICE_CATEGORY_CPU, dc->categories);
+     dc->realize = cpu_common_realizefn;
++    dc->wire = cpu_common_wire;
++    dc->unwire = cpu_common_unwire;
+     dc->unrealize = cpu_common_unrealizefn;
+     rc->phases.hold = cpu_common_reset_hold;
+     cpu_class_init_props(dc);
 -- 
 2.47.1
 
