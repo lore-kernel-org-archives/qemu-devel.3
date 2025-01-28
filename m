@@ -4,100 +4,105 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BD534C0218D
-	for <qemu-devel@archiver.kernel.org>; Tue, 28 Jan 2025 10:50:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DCAB8C0218A
+	for <qemu-devel@archiver.kernel.org>; Tue, 28 Jan 2025 10:53:21 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tcjAy-0001kv-C8; Tue, 28 Jan 2025 05:50:36 -0500
+	id 1tcjDK-0002vW-Sz; Tue, 28 Jan 2025 05:53:02 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1tcjAx-0001kc-5v
- for qemu-devel@nongnu.org; Tue, 28 Jan 2025 05:50:35 -0500
-Received: from mail-yb1-xb2e.google.com ([2607:f8b0:4864:20::b2e])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1tcjAo-0004yO-NC
- for qemu-devel@nongnu.org; Tue, 28 Jan 2025 05:50:27 -0500
-Received: by mail-yb1-xb2e.google.com with SMTP id
- 3f1490d57ef6-e3a26de697fso8131641276.3
- for <qemu-devel@nongnu.org>; Tue, 28 Jan 2025 02:50:26 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1738061425; x=1738666225; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=3v34krr+R/W/GJLfn6JaO0A1nQiepmfIj00rt+nc7XI=;
- b=e0ub/p/HtKt9vAt6VRySDThmwxmSDBrxgn4r8fcG3+1EsSdndpeZqEdJEX6acge+xd
- fop3Z9LWzUo7/KumboUk+rKmYopKV4b2/dbJwwqPvlHKUXAcxqtMGfpVh+Pn1ZRfMtKQ
- 4HVhM8Uof5X8Q1r3stOnyqRxZYk5aaW8yiCYbRG1N1kAwpBljHDs4w/LxwclUxNGN6S3
- yibm14LvspW+twv9Zmg0Aeb1hexvfqmEffGGsORWiHPBTb5G0Y3itWVooXi6u7Uzk97q
- xHhQ+iTbh/IENzqBrLaWDbmwrGV6XHfa88w1hQzBWfswCMJO3objMVhac1Jz3G7fBloA
- blTQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1738061425; x=1738666225;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=3v34krr+R/W/GJLfn6JaO0A1nQiepmfIj00rt+nc7XI=;
- b=llFT2zxeGWrvENNTJwnEd+bMta4fxvOc736cfGC06XcJv0PnWPBHVwaYskj/sERBWZ
- u3OrKwUOcKgQ+JrsKQKGYBWRZwWf+8ley1hu1l9xiqScO1zLrsVYIT+f3zlwHs2VjfcL
- VDMk/EexPay3/n0uS0yh4IdKG3J+r2x+NQpJ/iVdAYiFhCdW0sCfv3QPRv5LnsR0JnKe
- VPllgmgEdtWligqHMU3LBe/oRQh0Gs8Qq5Z7n2H6QDpLMGSIyrWbkEsnQ9tpyAx6YjKI
- ohUau9bWzbvUGuyFgzSdAJfq6sLInn7rexMsjqLrvKBUsv1xBCwtctbhISQXsNnc1u6j
- Sb+g==
-X-Forwarded-Encrypted: i=1;
- AJvYcCUKhf510gtObmLbYZZRQs11NyHOv7dMbcWIWyneomVmhzBttWktYlGN2IXD7uiBZ7lti2SJR8puoLo9@nongnu.org
-X-Gm-Message-State: AOJu0YwbClmJTcIKBjKTuTSFSm5/1G/ScJHpsYs1wFzPqKrxgdKZhAlC
- UPQBIbSFbds/KLwqtkbbNbCu7OI37FE/F0gSbL0pJ4Fr5PrnKIoZymav2TD6MNqQ+X+MsngX8rR
- J++QWyni9SSX/7rrNugPZ3jCgp5hsdr8r2uiibg==
-X-Gm-Gg: ASbGnctuGC0ffHGEpGCQDq3nrqbRzOcEoJDXWoUwFpfBVI6lKuea4gL0KDZYTlJO41Y
- tvfAR/aYrryrKkvxfHn4uN00aOrdS3kOtT2n46eIy/+h1wG3ELc/IgTeiI+GCaXVgDWJeLCAuow
+ (Exim 4.90_1) (envelope-from <iii@linux.ibm.com>)
+ id 1tcjDA-0002u3-EE; Tue, 28 Jan 2025 05:52:53 -0500
+Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <iii@linux.ibm.com>)
+ id 1tcjD8-0005k1-JK; Tue, 28 Jan 2025 05:52:52 -0500
+Received: from pps.filterd (m0356517.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 50RLISWS009891;
+ Tue, 28 Jan 2025 10:52:47 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+ :content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=pp1; bh=a5xbIJ
+ oxctM/EpTOE90pzJTkv+04nrN9+8ORprdwcEU=; b=p2NF53WqqBINOZHwznfgpu
+ W7hfcQNgx/NqThowYvcQVz9fo8d1ashbQDgvFvUOqE4zdOcVQXzRePklXoOloAtG
+ kS5viwCOQuEc4v9g/6hiiV4zNp/suOGuXe3rvYQcpIzceQ8iuUHxIS6k91qm95+c
+ o9xvTEIGWzlGZG922tEow/8KmbDKwhTAqo9qVi0QG07vC4gA+cIVdNeQ/xaduMXS
+ H++wBTKCB7k5ki8CRF+libGFJB8n4V5/zmwcPofQtqgH7kbMKjNwnY49wDhZXHBX
+ FGtxWF70shKI3FGbsxtMOlynOj08ZF8tUkCi47TxW6jd8lajTsadx8wWZhn8uk7g
  ==
-X-Google-Smtp-Source: AGHT+IGf0QlTdyAwJ7XFE9WBWDnIZoVSKqzGdakhyKNC/XpP9riGmVHzhlBgZYEGGXx14ZaPvjqXAQBpwZ1OiMaZNEw=
-X-Received: by 2002:a05:6902:12c5:b0:e58:173e:abcf with SMTP id
- 3f1490d57ef6-e58173ead2fmr17795541276.8.1738061425452; Tue, 28 Jan 2025
- 02:50:25 -0800 (PST)
-MIME-Version: 1.0
-References: <20250125181343.59151-1-philmd@linaro.org>
- <wkb53fhvfchqa4uvmifgitvcr7t7rfpc3hcohdhzczkzvktetx@yjveswjel3s4>
-In-Reply-To: <wkb53fhvfchqa4uvmifgitvcr7t7rfpc3hcohdhzczkzvktetx@yjveswjel3s4>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Tue, 28 Jan 2025 10:50:14 +0000
-X-Gm-Features: AWEUYZml6bfUrxGGjA2uylNFRM6bH2fiw1eM--KZHV8IsWc8hLbPBULX6GMnCq4
-Message-ID: <CAFEAcA-QOYcnJi=joKHbRmUCXK1UFOgQRgYP-fDq4h_1SkMGyQ@mail.gmail.com>
-Subject: Re: [PATCH 0/9] hw/sysbus/platform-bus: Introduce
- TYPE_DYNAMIC_SYS_BUS_DEVICE
-To: Gerd Hoffmann <kraxel@redhat.com>
-Cc: =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
- qemu-devel@nongnu.org, Yi Liu <yi.l.liu@intel.com>, 
- Markus Armbruster <armbru@redhat.com>, Eduardo Habkost <eduardo@habkost.net>, 
- Anthony PERARD <anthony@xenproject.org>,
- Gustavo Romero <gustavo.romero@linaro.org>, 
- Jason Wang <jasowang@redhat.com>, qemu-ppc@nongnu.org, 
- "Michael S. Tsirkin" <mst@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
- Alexander Graf <graf@amazon.com>, 
- Richard Henderson <richard.henderson@linaro.org>,
- Stefan Berger <stefanb@linux.vnet.ibm.com>, 
- Bernhard Beschow <shentey@gmail.com>,
- Stefano Stabellini <sstabellini@kernel.org>, 
- =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>, 
- "Edgar E. Iglesias" <edgar.iglesias@gmail.com>, xen-devel@lists.xenproject.org,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- Alex Williamson <alex.williamson@redhat.com>, Paul Durrant <paul@xen.org>,
- =?UTF-8?Q?Cl=C3=A9ment_Mathieu=2D=2DDrif?= <clement.mathieu--drif@eviden.com>,
- =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
+Received: from pps.reinject (localhost [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 44ecdycujj-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Tue, 28 Jan 2025 10:52:47 +0000 (GMT)
+Received: from m0356517.ppops.net (m0356517.ppops.net [127.0.0.1])
+ by pps.reinject (8.18.0.8/8.18.0.8) with ESMTP id 50SAqkIM026057;
+ Tue, 28 Jan 2025 10:52:46 GMT
+Received: from ppma23.wdc07v.mail.ibm.com
+ (5d.69.3da9.ip4.static.sl-reverse.com [169.61.105.93])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 44ecdycujf-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Tue, 28 Jan 2025 10:52:46 +0000 (GMT)
+Received: from pps.filterd (ppma23.wdc07v.mail.ibm.com [127.0.0.1])
+ by ppma23.wdc07v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 50S9ZMr0028045;
+ Tue, 28 Jan 2025 10:52:45 GMT
+Received: from smtprelay05.fra02v.mail.ibm.com ([9.218.2.225])
+ by ppma23.wdc07v.mail.ibm.com (PPS) with ESMTPS id 44dbskashy-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Tue, 28 Jan 2025 10:52:45 +0000
+Received: from smtpav02.fra02v.mail.ibm.com (smtpav02.fra02v.mail.ibm.com
+ [10.20.54.101])
+ by smtprelay05.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 50SAqhN636176356
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Tue, 28 Jan 2025 10:52:43 GMT
+Received: from smtpav02.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 465E92004E;
+ Tue, 28 Jan 2025 10:52:43 +0000 (GMT)
+Received: from smtpav02.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id C8D9B20043;
+ Tue, 28 Jan 2025 10:52:42 +0000 (GMT)
+Received: from [127.0.0.1] (unknown [9.152.108.100])
+ by smtpav02.fra02v.mail.ibm.com (Postfix) with ESMTP;
+ Tue, 28 Jan 2025 10:52:42 +0000 (GMT)
+Message-ID: <9851753c85bcf31890e41fb5cdb29375a7095f87.camel@linux.ibm.com>
+Subject: Re: [PATCH 1/2] target/s390x: Fix MVC not always invalidating
+ translation blocks
+From: Ilya Leoshkevich <iii@linux.ibm.com>
+To: David Hildenbrand <david@redhat.com>, Richard Henderson
+ <richard.henderson@linaro.org>, Thomas Huth <thuth@redhat.com>
+Cc: qemu-s390x@nongnu.org, qemu-devel@nongnu.org, Berthold Gunreben
+ <azouhr@opensuse.org>,
+ Sarah Kriesch <ada.lovelace@gmx.de>, qemu-stable@nongnu.org
+Date: Tue, 28 Jan 2025 11:52:42 +0100
+In-Reply-To: <a26d7e7a-27c2-4d36-82cb-35012f72d446@redhat.com>
+References: <20250128001338.11474-1-iii@linux.ibm.com>
+ <a26d7e7a-27c2-4d36-82cb-35012f72d446@redhat.com>
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::b2e;
- envelope-from=peter.maydell@linaro.org; helo=mail-yb1-xb2e.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+User-Agent: Evolution 3.52.4 (3.52.4-2.fc40) 
+MIME-Version: 1.0
+X-TM-AS-GCONF: 00
+X-Proofpoint-GUID: Zn6HGiwr-HCGEosimUfSC0gNZk5oUPUK
+X-Proofpoint-ORIG-GUID: NpNx181pNzh_xWslNrbtb7gwwZBmeKqF
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1057,Hydra:6.0.680,FMLib:17.12.68.34
+ definitions=2025-01-28_03,2025-01-27_01,2024-11-22_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ phishscore=0 impostorscore=0
+ lowpriorityscore=0 adultscore=0 clxscore=1015 priorityscore=1501
+ mlxlogscore=999 bulkscore=0 suspectscore=0 malwarescore=0 spamscore=0
+ mlxscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2411120000 definitions=main-2501280077
+Received-SPF: pass client-ip=148.163.156.1; envelope-from=iii@linux.ibm.com;
+ helo=mx0a-001b2d01.pphosted.com
+X-Spam_score_int: -26
+X-Spam_score: -2.7
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
+ RCVD_IN_MSPIKE_H2=0.001, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -114,29 +119,102 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, 28 Jan 2025 at 10:42, Gerd Hoffmann <kraxel@redhat.com> wrote:
->
-> On Sat, Jan 25, 2025 at 07:13:34PM +0100, Philippe Mathieu-Daud=C3=A9 wro=
-te:
-> > Some SysBus devices can optionally be dynamically plugged onto
-> > the sysbus-platform-bus (then virtual guests are aware of
-> > mmio mapping and IRQs via device tree / ACPI rules).
->
-> Do we have some sane way to have user-pluggable sysbus devices on arm?
+On Tue, 2025-01-28 at 10:56 +0100, David Hildenbrand wrote:
+> On 28.01.25 01:12, Ilya Leoshkevich wrote:
+> > Node.js crashes in qemu-system-s390x with random SIGSEGVs /
+> > SIGILLs.
+> >=20
+> > The v8 JIT used by Node.js can garbage collect and overwrite unused
+> > code. Overwriting is performed by
+> > WritableJitAllocation::CopyCode(),
+> > which ultimately calls memcpy(). For certain sizes, memcpy() uses
+> > the
+> > MVC instruction.
+> >=20
+> > QEMU implements MVC and other similar instructions using helpers.
+> > While
+> > TCG store ops invalidate affected translation blocks automatically,
+> > helpers must do this manually by calling probe_access_flags(). The
+> > MVC
+> > helper does this using the access_prepare() -> access_prepare_nf()
+> > ->
+> > s390_probe_access() -> probe_access_flags() call chain.
+> >=20
+> > At the last step of this chain, the store size is replaced with 0.
+> > This
+> > causes the probe_access_flags() -> notdirty_write() ->
+> > tb_invalidate_phys_range_fast() chain to miss some translation
+> > blocks.
+>=20
+> We added the size parameter in:
+>=20
+> commit 1770b2f2d3d6fe8f1e2d61692692264cac44340d
+> Author: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
+> Date:=C2=A0=C2=A0 Thu Feb 23 20:44:24 2023 -0300
+>=20
+> =C2=A0=C2=A0=C2=A0=C2=A0 accel/tcg: Add 'size' param to probe_access_flag=
+s()
+> =C2=A0=C2=A0=C2=A0=C2=A0=20
+> =C2=A0=C2=A0=C2=A0=C2=A0 probe_access_flags() as it is today uses probe_a=
+ccess_full(),
+> which in
+> =C2=A0=C2=A0=C2=A0=C2=A0 turn uses probe_access_internal() with size =3D =
+0.
+> probe_access_internal()
+> =C2=A0=C2=A0=C2=A0=C2=A0 then uses the size to call the tlb_fill() callba=
+ck for the given
+> CPU.
+> =C2=A0=C2=A0=C2=A0=C2=A0 This size param ('fault_size' as probe_access_in=
+ternal() calls
+> it) is
+> =C2=A0=C2=A0=C2=A0=C2=A0 ignored by most existing .tlb_fill callback impl=
+ementations,
+> e.g.
+> =C2=A0=C2=A0=C2=A0=C2=A0 arm_cpu_tlb_fill(), ppc_cpu_tlb_fill(), x86_cpu_=
+tlb_fill() and
+> =C2=A0=C2=A0=C2=A0=C2=A0 mips_cpu_tlb_fill() to name a few.
+>=20
+>=20
+> And added support for more than one byte for the notdirty case in
+>=20
+> commit e2faabee78ff127848f59892747d4c07c56de033
+> Author: Jessica Clarke <jrtc27@jrtc27.com>
+> Date:=C2=A0=C2=A0 Fri Nov 10 21:43:03 2023 -0800
+>=20
+> =C2=A0=C2=A0=C2=A0=C2=A0 accel/tcg: Forward probe size on to notdirty_wri=
+te
+> =C2=A0=C2=A0=C2=A0=C2=A0=20
+> =C2=A0=C2=A0=C2=A0=C2=A0 Without this, we just dirty a single byte, and s=
+o if the caller
+> writes
+> =C2=A0=C2=A0=C2=A0=C2=A0 more than one byte to the host memory then we wo=
+n't have
+> invalidated any
+> =C2=A0=C2=A0=C2=A0=C2=A0 translation blocks that start after the first by=
+te and overlap
+> those
+> =C2=A0=C2=A0=C2=A0=C2=A0 writes.
+>=20
+> So I guess it's rather hard to find a "Fixes:" tag, because likely
+> it's been
+> broken forever?
 
-The answer in a general sense is "no, because user pluggable
-sysbus is a weird idea". "sysbus" means "it's wired into a
-specific bit of the memory map and to specific IRQs, and whoever
-does that needs to know what IRQs and bits of memory are usable,
-and the guest OS needs to know it's there". "user-pluggable" means
-"it's all automatic and the guest can just do some kind of
-probing for what is or isn't present". All the platform bus stuff
-is a nasty mess that's working around the things people want
-to plug in not being clean devices on probeable buses :-(
-And the platform bus is only supported on the "virt" board,
-because that's the only one where QEMU is generating its
-own dtb or ACPI tables where it can tell the guest "hey,
-there's some device here".
+Yes, I thought about this too and gave up.
+However, I now wonder if we still need one for non-philosophical, but
+rather practical backporting reasons? Then
 
--- PMM
+Fixes: e2faabee78ff ("accel/tcg: Forward probe size on to
+notdirty_write")
+
+(v8.2.0+) should be the right one I think?
+
+> > When this happens, QEMU executes a mix of old and new code. This
+> > quickly leads to either a SIGSEGV or a SIGILL in case the old code
+> > ends in the middle of a new instruction.
+> >=20
+> > Fix by passing the true size.
+>=20
+>=20
+> Reviewed-by: David Hildenbrand <david@redhat.com>
+
 
