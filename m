@@ -4,82 +4,105 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 02554C0218A
-	for <qemu-devel@archiver.kernel.org>; Tue, 28 Jan 2025 09:28:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B68A6C0218A
+	for <qemu-devel@archiver.kernel.org>; Tue, 28 Jan 2025 09:32:32 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tchsl-0008AF-J9; Tue, 28 Jan 2025 04:27:43 -0500
+	id 1tchwu-0002RD-W8; Tue, 28 Jan 2025 04:32:01 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1tchsj-00089N-Jd
- for qemu-devel@nongnu.org; Tue, 28 Jan 2025 04:27:41 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <harshpb@linux.ibm.com>)
+ id 1tchwj-0002J2-Nu; Tue, 28 Jan 2025 04:31:50 -0500
+Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1tchsh-0003g7-EZ
- for qemu-devel@nongnu.org; Tue, 28 Jan 2025 04:27:41 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1738056456;
- h=from:from:reply-to:reply-to:subject:subject:date:date:
- message-id:message-id:to:to:cc:cc:mime-version:mime-version:
- content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=pFXGczmCI1uIYY0pZ8yX7AdD/+GTcX3EoYpVnV837Yw=;
- b=Hxn7E3f3yvq5gIZftIWU2RvCVUSQJL/QvEJll08E9CQMkMxDUYXKSahofh9K+d4r8D05Zd
- s+twfCbgirgnNze13hsETU148HbV5pj0ZTbRopXIxSPZOB7e5Z9i+KJEviA+VkOdeD0VE6
- UZLiILn00FthlP7cFrL81CfU2dpPDcw=
-Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-31-JqKx6VZzM7WbYDHoEqi2mw-1; Tue,
- 28 Jan 2025 04:27:32 -0500
-X-MC-Unique: JqKx6VZzM7WbYDHoEqi2mw-1
-X-Mimecast-MFC-AGG-ID: JqKx6VZzM7WbYDHoEqi2mw
-Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id CB4441801F1A; Tue, 28 Jan 2025 09:27:29 +0000 (UTC)
-Received: from redhat.com (unknown [10.42.28.75])
- by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 044531956056; Tue, 28 Jan 2025 09:27:25 +0000 (UTC)
-Date: Tue, 28 Jan 2025 09:27:22 +0000
-From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
-To: Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Cc: Alex =?utf-8?Q?Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Thomas Huth <thuth@redhat.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- qemu-devel@nongnu.org, peter.maydell@linaro.org,
- stefanha@redhat.com, pbonzini@redhat.com,
- mark.cave-ayland@ilande.co.uk, Liviu Ionescu <ilg@livius.net>
-Subject: Re: [PATCH 0/1] meson: Deprecate 32-bit host systems
-Message-ID: <Z5ii-ueFt5-5Brxz@redhat.com>
-References: <20250128004254.33442-1-richard.henderson@linaro.org>
- <9a280789-9248-4eca-b50c-048fc58e3f53@redhat.com>
- <87plk72tvr.fsf@draig.linaro.org>
- <ad6ca73a-c38a-4a9b-bdcb-ab50aa53ccd1@linaro.org>
+ (Exim 4.90_1) (envelope-from <harshpb@linux.ibm.com>)
+ id 1tchwh-0004n7-LG; Tue, 28 Jan 2025 04:31:49 -0500
+Received: from pps.filterd (m0353729.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 50S5NkA9023481;
+ Tue, 28 Jan 2025 09:31:44 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+ :content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=pp1; bh=/xVJ+T
+ 2W2wVDBUzJvUwOJDIPn04LuYXNzIsZTZ9vxZo=; b=kt6qF6bAle86xqAqapa/Bg
+ Iaz+F/sc0SiOZB0OlUip7w24LNXiulplH/QbV/MxwxdPbtfLHqDr1SDGTNU8J8Oq
+ Y41gZ2COXKI7NFWRi9Qy820jgvIR5/tal3DW1HdVDPmAK3xYXXk8MLlmyq5X019X
+ kLPQhPomArsP11TKTmEaarc4eIxmIcVjKUEbAhmadYgZbrhSeiTFhCDa0PBZTCw8
+ Zn2vXxIvoi2GnNzK/3loYGwTpGdEYhE+sgTRO7phFPU8lUluXXISNwvi9EZ/+OBw
+ HMvbUyStAbBteUzgj0kJTjTOh3RY4mgE9ASGiVu6DDklR+lObFesfzbYDnjAKD/w
+ ==
+Received: from pps.reinject (localhost [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 44es27h1xx-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Tue, 28 Jan 2025 09:31:44 +0000 (GMT)
+Received: from m0353729.ppops.net (m0353729.ppops.net [127.0.0.1])
+ by pps.reinject (8.18.0.8/8.18.0.8) with ESMTP id 50S8rXu3027219;
+ Tue, 28 Jan 2025 09:31:44 GMT
+Received: from ppma21.wdc07v.mail.ibm.com
+ (5b.69.3da9.ip4.static.sl-reverse.com [169.61.105.91])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 44es27h1xs-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Tue, 28 Jan 2025 09:31:44 +0000 (GMT)
+Received: from pps.filterd (ppma21.wdc07v.mail.ibm.com [127.0.0.1])
+ by ppma21.wdc07v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 50S9JWr1019445;
+ Tue, 28 Jan 2025 09:31:42 GMT
+Received: from smtprelay03.dal12v.mail.ibm.com ([172.16.1.5])
+ by ppma21.wdc07v.mail.ibm.com (PPS) with ESMTPS id 44db9mtjyd-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Tue, 28 Jan 2025 09:31:42 +0000
+Received: from smtpav04.dal12v.mail.ibm.com (smtpav04.dal12v.mail.ibm.com
+ [10.241.53.103])
+ by smtprelay03.dal12v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 50S9Vgwd32244304
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Tue, 28 Jan 2025 09:31:42 GMT
+Received: from smtpav04.dal12v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 1C98A5805A;
+ Tue, 28 Jan 2025 09:31:42 +0000 (GMT)
+Received: from smtpav04.dal12v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id ECC4058052;
+ Tue, 28 Jan 2025 09:31:39 +0000 (GMT)
+Received: from [9.124.214.156] (unknown [9.124.214.156])
+ by smtpav04.dal12v.mail.ibm.com (Postfix) with ESMTP;
+ Tue, 28 Jan 2025 09:31:39 +0000 (GMT)
+Message-ID: <af2c2503-e066-4b5d-8045-c6f1c4ee6ba7@linux.ibm.com>
+Date: Tue, 28 Jan 2025 15:01:38 +0530
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 07/15] target/ppc: Restrict powerpc_checkstop() to TCG
+To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ qemu-devel@nongnu.org
+Cc: Daniel Henrique Barboza <danielhb413@gmail.com>,
+ Richard Henderson <richard.henderson@linaro.org>, qemu-ppc@nongnu.org,
+ Nicholas Piggin <npiggin@gmail.com>
+References: <20250127102620.39159-1-philmd@linaro.org>
+ <20250127102620.39159-8-philmd@linaro.org>
+Content-Language: en-US
+From: Harsh Prateek Bora <harshpb@linux.ibm.com>
+In-Reply-To: <20250127102620.39159-8-philmd@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <ad6ca73a-c38a-4a9b-bdcb-ab50aa53ccd1@linaro.org>
-User-Agent: Mutt/2.2.13 (2024-03-09)
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -33
-X-Spam_score: -3.4
-X-Spam_bar: ---
-X-Spam_report: (-3.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.3,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+X-TM-AS-GCONF: 00
+X-Proofpoint-ORIG-GUID: hKZLpdQHt1L0tKWWFrEFX5Nw9Y5LPQMM
+X-Proofpoint-GUID: IPkZk5ObJWdaF7HtC8mR-gHnExDcpkeF
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1057,Hydra:6.0.680,FMLib:17.12.68.34
+ definitions=2025-01-28_03,2025-01-27_01,2024-11-22_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ spamscore=0 clxscore=1015
+ priorityscore=1501 phishscore=0 bulkscore=0 lowpriorityscore=0
+ malwarescore=0 suspectscore=0 adultscore=0 mlxscore=0 impostorscore=0
+ mlxlogscore=999 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2411120000 definitions=main-2501280073
+Received-SPF: pass client-ip=148.163.156.1; envelope-from=harshpb@linux.ibm.com;
+ helo=mx0a-001b2d01.pphosted.com
+X-Spam_score_int: -26
+X-Spam_score: -2.7
+X-Spam_bar: --
+X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
+ RCVD_IN_MSPIKE_H2=0.001, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -93,100 +116,122 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, Jan 28, 2025 at 10:17:33AM +0100, Philippe Mathieu-Daudé wrote:
-> On 28/1/25 10:02, Alex Bennée wrote:
-> > Thomas Huth <thuth@redhat.com> writes:
-> > 
-> > > On 28/01/2025 01.42, Richard Henderson wrote:
-> > > > Time for our biennial attempt to kill ancient hosts.
-> > > > I've been re-working the tcg code generator a bit over the holidays.
-> > > > One place that screams for a bit of cleanup is with 64-bit guest
-> > > > addresses on 32-bit hosts.  Of course the best "cleanup" is to not
-> > > > have to handle such silliness at all.
-> > > > Two years after Thomas' last attempt,
-> > > >     https://lore.kernel.org/qemu-devel/20230130114428.1297295-1-thuth@redhat.com/
-> > > > which resulted only in deprecation of i686 host for system
-> > > > emulation.
-> > > > By itself, this just isn't enough for large-scale cleanups.
-> > > > I'll note that we've separately deprecated mips32, set to expire
-> > > > with the end of Debian bookworm, set to enter LTS in June 2026.
-> > > > I'll note that there is *already* no Debian support for ppc32,
-> > > > and that I am currently unable to cross-compile that host at all.
-> > > 
-> > > IIRC the biggest pushback that I got two years ago was with regards to
-> > > 32-bit arm: The recommended version of Raspberry Pi OS is still
-> > > 32-bit:
-> > > 
-> > >   https://lore.kernel.org/qemu-devel/F852C238-77B8-4E24-9494-8D060EB78F9F@livius.net/
-> > > 
-> > > And looking at https://www.raspberrypi.com/software/operating-systems/
-> > > this still seems to be the case...
-> > > 
-> > > So I guess the main question is now: Would it be ok to kill support
-> > > for 32-bit Raspberry Pi OS nowadays?
-> > 
-> > I would argue yes for a few reasons.
-> > 
-> >    - you can't buy 32 bit only Pi's AFAICT, even the Pi Zero 2W can work
-> >      with a 64 bit OS.
-> > 
-> >    - It's not like the versions shipping in bullseye and bookworm will
-> >      stop working.
-> > 
-> >    - Even if we deprecate now there will likely be one more Debian
-> >      release cycle that gets 32 bit host support.
-> > 
-> > > > Showing my hand a bit, I am willing to limit deprecation to
-> > > > 64-bit guests on 32-bit hosts.  But I'd prefer to go the whole hog:
-> > > > unconditional support for TCG_TYPE_I64 would remove a *lot* of
-> > > > 32-bit fallback code.
-> > 
-> > I support going the whole hog. I would be curious what use cases still
-> > exist for an up to date 32-on-32 QEMU based emulation?
+
+
+On 1/27/25 15:56, Philippe Mathieu-Daudé wrote:
+> Expose powerpc_checkstop() prototype, and move it to
+> tcg-excp_helper.c, only built when TCG is available.
 > 
-> Current maintainers don't have spare time to support the 32-on-32
-> emulation. If there is interest in the community for such niche,
-> someone needs to step forward, willing to maintain it.
+> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 
-I'm not sure that's the case here.
+Reviewed-by: Harsh Prateek Bora <harshpb@linux.ibm.com>
 
-32-on-32 is already effectively unmaintained, so we're not suffering
-in terms of keeping the 32-on-32 code reliable.
-
-We're suffering from the complexity that 32-on-32 code places on the
-rest of the XX-on-64 code that we do care about.
-
-IOW if someone volunteered to maintain 32-on-32 that's not actually
-solving the complexity problem, just perpetuating it.
-
-The current maintainers only interested in XX-on-64 will still suffer
-ongoing burden from the code complexity caused by 32-on-32 merely
-existing.
-
-So again lets be clear...
-
-Either we...
-
- * ...want to kill 32-on-32 code to reduce the complexity on the
-   main XX-on-64 codebase regardless of interest in 32-on-32
-
-Or
-
- * ...want to kill 32-on-32 code because it is buggy due to lack
-   of maintainers, but would welcome someone to step forward to
-   maintain it
-
-It sounded like we were wanting the former, not the latter.
-
-With regards,
-Daniel
--- 
-|: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
-|: https://libvirt.org         -o-            https://fstop138.berrange.com :|
-|: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
-
+> ---
+>   target/ppc/internal.h        |  4 +++-
+>   target/ppc/excp_helper.c     | 26 --------------------------
+>   target/ppc/tcg-excp_helper.c | 28 ++++++++++++++++++++++++++++
+>   3 files changed, 31 insertions(+), 27 deletions(-)
+> 
+> diff --git a/target/ppc/internal.h b/target/ppc/internal.h
+> index 46db6adfcf6..62186bc1e61 100644
+> --- a/target/ppc/internal.h
+> +++ b/target/ppc/internal.h
+> @@ -289,7 +289,9 @@ void ppc_cpu_do_transaction_failed(CPUState *cs, hwaddr physaddr,
+>   void ppc_cpu_debug_excp_handler(CPUState *cs);
+>   bool ppc_cpu_debug_check_breakpoint(CPUState *cs);
+>   bool ppc_cpu_debug_check_watchpoint(CPUState *cs, CPUWatchpoint *wp);
+> -#endif
+> +
+> +G_NORETURN void powerpc_checkstop(CPUPPCState *env, const char *reason);
+> +#endif /* !CONFIG_USER_ONLY */
+>   
+>   FIELD(GER_MSK, XMSK, 0, 4)
+>   FIELD(GER_MSK, YMSK, 4, 4)
+> diff --git a/target/ppc/excp_helper.c b/target/ppc/excp_helper.c
+> index b08cd53688c..236e5078f56 100644
+> --- a/target/ppc/excp_helper.c
+> +++ b/target/ppc/excp_helper.c
+> @@ -400,32 +400,6 @@ static void powerpc_set_excp_state(PowerPCCPU *cpu, target_ulong vector,
+>   }
+>   
+>   #ifdef CONFIG_TCG
+> -/*
+> - * This stops the machine and logs CPU state without killing QEMU (like
+> - * cpu_abort()) because it is often a guest error as opposed to a QEMU error,
+> - * so the machine can still be debugged.
+> - */
+> -static G_NORETURN void powerpc_checkstop(CPUPPCState *env, const char *reason)
+> -{
+> -    CPUState *cs = env_cpu(env);
+> -    FILE *f;
+> -
+> -    f = qemu_log_trylock();
+> -    if (f) {
+> -        fprintf(f, "Entering checkstop state: %s\n", reason);
+> -        cpu_dump_state(cs, f, CPU_DUMP_FPU | CPU_DUMP_CCOP);
+> -        qemu_log_unlock(f);
+> -    }
+> -
+> -    /*
+> -     * This stops the machine and logs CPU state without killing QEMU
+> -     * (like cpu_abort()) so the machine can still be debugged (because
+> -     * it is often a guest error).
+> -     */
+> -    qemu_system_guest_panicked(NULL);
+> -    cpu_loop_exit_noexc(cs);
+> -}
+> -
+>   #if defined(TARGET_PPC64) && !defined(CONFIG_USER_ONLY)
+>   void helper_attn(CPUPPCState *env)
+>   {
+> diff --git a/target/ppc/tcg-excp_helper.c b/target/ppc/tcg-excp_helper.c
+> index 6950b78774d..93c2d6b5a03 100644
+> --- a/target/ppc/tcg-excp_helper.c
+> +++ b/target/ppc/tcg-excp_helper.c
+> @@ -17,7 +17,9 @@
+>    * License along with this library; if not, see <http://www.gnu.org/licenses/>.
+>    */
+>   #include "qemu/osdep.h"
+> +#include "qemu/log.h"
+>   #include "exec/cpu_ldst.h"
+> +#include "system/runstate.h"
+>   
+>   #include "hw/ppc/ppc.h"
+>   #include "internal.h"
+> @@ -199,6 +201,32 @@ bool ppc_cpu_debug_check_watchpoint(CPUState *cs, CPUWatchpoint *wp)
+>       return false;
+>   }
+>   
+> +/*
+> + * This stops the machine and logs CPU state without killing QEMU (like
+> + * cpu_abort()) because it is often a guest error as opposed to a QEMU error,
+> + * so the machine can still be debugged.
+> + */
+> +G_NORETURN void powerpc_checkstop(CPUPPCState *env, const char *reason)
+> +{
+> +    CPUState *cs = env_cpu(env);
+> +    FILE *f;
+> +
+> +    f = qemu_log_trylock();
+> +    if (f) {
+> +        fprintf(f, "Entering checkstop state: %s\n", reason);
+> +        cpu_dump_state(cs, f, CPU_DUMP_FPU | CPU_DUMP_CCOP);
+> +        qemu_log_unlock(f);
+> +    }
+> +
+> +    /*
+> +     * This stops the machine and logs CPU state without killing QEMU
+> +     * (like cpu_abort()) so the machine can still be debugged (because
+> +     * it is often a guest error).
+> +     */
+> +    qemu_system_guest_panicked(NULL);
+> +    cpu_loop_exit_noexc(cs);
+> +}
+> +
+>   /* Return true iff byteswap is needed to load instruction */
+>   static inline bool insn_need_byteswap(CPUArchState *env)
+>   {
 
