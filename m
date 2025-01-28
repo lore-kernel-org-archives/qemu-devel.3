@@ -4,47 +4,47 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 929E8C0218A
-	for <qemu-devel@archiver.kernel.org>; Tue, 28 Jan 2025 15:29:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 852CEC0218A
+	for <qemu-devel@archiver.kernel.org>; Tue, 28 Jan 2025 15:30:14 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tcnWS-0002Jq-8m; Tue, 28 Jan 2025 10:29:04 -0500
+	id 1tcnWd-0002LZ-Rg; Tue, 28 Jan 2025 10:29:15 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1tcnWP-0002JC-SK
- for qemu-devel@nongnu.org; Tue, 28 Jan 2025 10:29:01 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1tcnWc-0002L9-B2
+ for qemu-devel@nongnu.org; Tue, 28 Jan 2025 10:29:14 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1tcnWM-0004r3-U6
- for qemu-devel@nongnu.org; Tue, 28 Jan 2025 10:29:01 -0500
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1tcnWa-0004wR-Ns
+ for qemu-devel@nongnu.org; Tue, 28 Jan 2025 10:29:14 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1738078138;
+ s=mimecast20190719; t=1738078152;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=lv3Ka4V/ZPVfcOWeFSZrzX7E/PKrgr/Opz80XQvHiws=;
- b=heLAbPtMDUeangHEMQSSkZxN4gJNwNU50kgiCJoajT6cfhM2Kj6/hnRUBSIxGGzhKfF+sH
- DsNqPc/FH7gw3+CvaQrawkgPFpU5ptvgaI20Qtk5JcU/TweC/PDJhX1i9slPYmVJ3O/j0k
- tvUrahInhkrVlOSmGvxTCWuDzgWXKFw=
-Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ bh=mAQDM6qHfX2kRPn8z9DWXC7M3EqrDePFHHJ6Wk42zM4=;
+ b=Ccq2h9qvb9hIUM71TCUTd2zdKZi5hrYb0NpOgBAa7tQjR6dFijTor1ijbt9PybKc1n44pX
+ HDGuJGyBLsmXgTUwEy96ugCd4ciqeFMLGrwtbWvNd9oAEYkbbv+lbduEFj2wGEVe0kSV87
+ S3t3dT7S1TnHtZggyAwijYxHhijwghw=
+Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-367-XH93sBUlO66zWNv_oWacVA-1; Tue,
- 28 Jan 2025 10:28:54 -0500
-X-MC-Unique: XH93sBUlO66zWNv_oWacVA-1
-X-Mimecast-MFC-AGG-ID: XH93sBUlO66zWNv_oWacVA
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-540-b9ownlZcMQK_Ioet83deuw-1; Tue,
+ 28 Jan 2025 10:29:03 -0500
+X-MC-Unique: b9ownlZcMQK_Ioet83deuw-1
+X-Mimecast-MFC-AGG-ID: b9ownlZcMQK_Ioet83deuw
 Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 99E69195605E; Tue, 28 Jan 2025 15:28:51 +0000 (UTC)
+ by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 8E4B21802ABD; Tue, 28 Jan 2025 15:28:55 +0000 (UTC)
 Received: from thuth-p1g4.redhat.com (unknown [10.39.195.33])
  by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 0519D1800348; Tue, 28 Jan 2025 15:28:45 +0000 (UTC)
+ id 77E2D18088AA; Tue, 28 Jan 2025 15:28:51 +0000 (UTC)
 From: Thomas Huth <thuth@redhat.com>
 To: Pavel Dovgalyuk <pavel.dovgaluk@ispras.ru>,
  Paolo Bonzini <pbonzini@redhat.com>, Jiaxun Yang <jiaxun.yang@flygoat.com>,
@@ -55,23 +55,23 @@ Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  Leif Lindholm <leif.lindholm@oss.qualcomm.com>,
  Radoslaw Biernacki <rad@semihalf.com>,
  Peter Maydell <peter.maydell@linaro.org>
-Subject: [PATCH v2 1/5] tests/functional: Add a decorator for skipping long
- running tests
-Date: Tue, 28 Jan 2025 16:28:35 +0100
-Message-ID: <20250128152839.184599-2-thuth@redhat.com>
+Subject: [PATCH v2 2/5] tests/functional: Add the ReplayKernelBase class
+Date: Tue, 28 Jan 2025 16:28:36 +0100
+Message-ID: <20250128152839.184599-3-thuth@redhat.com>
 In-Reply-To: <20250128152839.184599-1-thuth@redhat.com>
 References: <20250128152839.184599-1-thuth@redhat.com>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=thuth@redhat.com;
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=thuth@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -33
 X-Spam_score: -3.4
 X-Spam_bar: ---
 X-Spam_report: (-3.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.3,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
@@ -90,156 +90,119 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Some tests have a very long runtime and might run into timeout issues
-e.g. when QEMU has been compiled with --enable-debug. Add a decorator
-for marking them more easily. Rename the corresponding environment
-variable to be more in sync with the other QEMU_TEST_ALLOW_* switches
-that we already have, and add a paragraph about it in the documentation.
+Copy the ReplayKernelBase class from the avocado tests. We are going
+to need it to convert the related replay tests in the following patches.
 
+Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
 Signed-off-by: Thomas Huth <thuth@redhat.com>
 ---
- docs/devel/testing/functional.rst                |  8 ++++++++
- tests/functional/qemu_test/__init__.py           |  2 +-
- tests/functional/qemu_test/decorators.py         | 14 ++++++++++++++
- tests/functional/test_aarch64_sbsaref_alpine.py  |  5 ++---
- tests/functional/test_aarch64_sbsaref_freebsd.py |  9 +++------
- tests/functional/test_arm_quanta_gsj.py          |  6 +++---
- 6 files changed, 31 insertions(+), 13 deletions(-)
+ MAINTAINERS                       |  1 +
+ tests/functional/replay_kernel.py | 84 +++++++++++++++++++++++++++++++
+ 2 files changed, 85 insertions(+)
+ create mode 100644 tests/functional/replay_kernel.py
 
-diff --git a/docs/devel/testing/functional.rst b/docs/devel/testing/functional.rst
-index ae238ed3fc..ecc738922b 100644
---- a/docs/devel/testing/functional.rst
-+++ b/docs/devel/testing/functional.rst
-@@ -351,5 +351,13 @@ the code snippet below:
- Tests should not live in this state forever and should either be fixed
- or eventually removed.
+diff --git a/MAINTAINERS b/MAINTAINERS
+index 7b4d84bf5f..414b6f35fe 100644
+--- a/MAINTAINERS
++++ b/MAINTAINERS
+@@ -3632,6 +3632,7 @@ F: stubs/replay.c
+ F: tests/avocado/replay_kernel.py
+ F: tests/avocado/replay_linux.py
+ F: tests/avocado/reverse_debugging.py
++F: tests/functional/*replay*.py
+ F: qapi/replay.json
  
-+QEMU_TEST_ALLOW_SLOW
-+^^^^^^^^^^^^^^^^^^^^
-+Tests that have a very long runtime and might run into timeout issues
-+e.g. if the QEMU binary has been compiled with debugging options enabled.
-+To avoid these timeout issues by default and to save some precious CPU
-+cycles during normal testing, such tests are disabled by default unless
-+the QEMU_TEST_ALLOW_SLOW environment variable has been set.
+ IOVA Tree
+diff --git a/tests/functional/replay_kernel.py b/tests/functional/replay_kernel.py
+new file mode 100644
+index 0000000000..8e8ac7d052
+--- /dev/null
++++ b/tests/functional/replay_kernel.py
+@@ -0,0 +1,84 @@
++# Record/replay test that boots a Linux kernel
++#
++# Copyright (c) 2020 ISP RAS
++#
++# Author:
++#  Pavel Dovgalyuk <Pavel.Dovgaluk@ispras.ru>
++#
++# This work is licensed under the terms of the GNU GPL, version 2 or
++# later.  See the COPYING file in the top-level directory.
 +
- 
- .. _unittest: https://docs.python.org/3/library/unittest.html
-diff --git a/tests/functional/qemu_test/__init__.py b/tests/functional/qemu_test/__init__.py
-index da1830286d..5c972843a6 100644
---- a/tests/functional/qemu_test/__init__.py
-+++ b/tests/functional/qemu_test/__init__.py
-@@ -14,7 +14,7 @@
- from .testcase import QemuBaseTest, QemuUserTest, QemuSystemTest
- from .linuxkernel import LinuxKernelTest
- from .decorators import skipIfMissingCommands, skipIfNotMachine, \
--    skipFlakyTest, skipUntrustedTest, skipBigDataTest, \
-+    skipFlakyTest, skipUntrustedTest, skipBigDataTest, skipSlowTest, \
-     skipIfMissingImports
- from .archive import archive_extract
- from .uncompress import uncompress
-diff --git a/tests/functional/qemu_test/decorators.py b/tests/functional/qemu_test/decorators.py
-index 3d9c02fd59..1651eb739a 100644
---- a/tests/functional/qemu_test/decorators.py
-+++ b/tests/functional/qemu_test/decorators.py
-@@ -86,6 +86,20 @@ def skipBigDataTest():
-     return skipUnless(os.getenv('QEMU_TEST_ALLOW_LARGE_STORAGE'),
-                       'Test requires large host storage space')
- 
-+'''
-+Decorator to skip execution of tests which have a really long
-+runtime (and might e.g. time out if QEMU has been compiled with
-+debugging enabled) unless the $QEMU_TEST_ALLOW_SLOW
-+environment variable is set
++import os
++import logging
++import time
++import subprocess
 +
-+Example:
++from qemu_test.linuxkernel import LinuxKernelTest
 +
-+  @skipSlowTest()
-+'''
-+def skipSlowTest():
-+    return skipUnless(os.getenv('QEMU_TEST_ALLOW_SLOW'),
-+                      'Test has a very long runtime and might time out')
++class ReplayKernelBase(LinuxKernelTest):
++    """
++    Boots a Linux kernel in record mode and checks that the console
++    is operational and the kernel command line is properly passed
++    from QEMU to the kernel.
++    Then replays the same scenario and verifies, that QEMU correctly
++    terminates.
++    """
 +
- '''
- Decorator to skip execution of a test if the list
- of python imports is not available.
-diff --git a/tests/functional/test_aarch64_sbsaref_alpine.py b/tests/functional/test_aarch64_sbsaref_alpine.py
-index 6dbc90f30e..ce974fd7e1 100755
---- a/tests/functional/test_aarch64_sbsaref_alpine.py
-+++ b/tests/functional/test_aarch64_sbsaref_alpine.py
-@@ -10,7 +10,7 @@
- 
- import os
- 
--from qemu_test import QemuSystemTest, Asset
-+from qemu_test import QemuSystemTest, Asset, skipSlowTest
- from qemu_test import wait_for_console_pattern
- from unittest import skipUnless
- from test_aarch64_sbsaref import fetch_firmware
-@@ -53,8 +53,7 @@ def test_sbsaref_alpine_linux_max_pauth_off(self):
-     def test_sbsaref_alpine_linux_max_pauth_impdef(self):
-         self.boot_alpine_linux("max,pauth-impdef=on")
- 
--    @skipUnless(os.getenv('QEMU_TEST_TIMEOUT_EXPECTED'),
--                'Test might timeout due to PAuth emulation')
-+    @skipSlowTest()  # Test might timeout due to PAuth emulation
-     def test_sbsaref_alpine_linux_max(self):
-         self.boot_alpine_linux("max")
- 
-diff --git a/tests/functional/test_aarch64_sbsaref_freebsd.py b/tests/functional/test_aarch64_sbsaref_freebsd.py
-index 77ba2ba1da..5b10bb9b64 100755
---- a/tests/functional/test_aarch64_sbsaref_freebsd.py
-+++ b/tests/functional/test_aarch64_sbsaref_freebsd.py
-@@ -10,9 +10,8 @@
- 
- import os
- 
--from qemu_test import QemuSystemTest, Asset
-+from qemu_test import QemuSystemTest, Asset, skipSlowTest
- from qemu_test import wait_for_console_pattern
--from unittest import skipUnless
- from test_aarch64_sbsaref import fetch_firmware
- 
- 
-@@ -50,13 +49,11 @@ def test_sbsaref_freebsd14_default_cpu(self):
-     def test_sbsaref_freebsd14_max_pauth_off(self):
-         self.boot_freebsd14("max,pauth=off")
- 
--    @skipUnless(os.getenv('QEMU_TEST_TIMEOUT_EXPECTED'),
--                'Test might timeout due to PAuth emulation')
-+    @skipSlowTest()  # Test might timeout due to PAuth emulation
-     def test_sbsaref_freebsd14_max_pauth_impdef(self):
-         self.boot_freebsd14("max,pauth-impdef=on")
- 
--    @skipUnless(os.getenv('QEMU_TEST_TIMEOUT_EXPECTED'),
--                'Test might timeout due to PAuth emulation')
-+    @skipSlowTest()  # Test might timeout due to PAuth emulation
-     def test_sbsaref_freebsd14_max(self):
-         self.boot_freebsd14("max")
- 
-diff --git a/tests/functional/test_arm_quanta_gsj.py b/tests/functional/test_arm_quanta_gsj.py
-index 7b82e2185c..da60aeb659 100755
---- a/tests/functional/test_arm_quanta_gsj.py
-+++ b/tests/functional/test_arm_quanta_gsj.py
-@@ -7,8 +7,8 @@
- import os
- 
- from qemu_test import LinuxKernelTest, Asset, exec_command_and_wait_for_pattern
--from qemu_test import interrupt_interactive_console_until_pattern
--from unittest import skipUnless
-+from qemu_test import interrupt_interactive_console_until_pattern, skipSlowTest
++    timeout = 180
++    REPLAY_KERNEL_COMMAND_LINE = 'printk.time=1 panic=-1 '
 +
- 
- class EmcraftSf2Machine(LinuxKernelTest):
- 
-@@ -32,7 +32,7 @@ class EmcraftSf2Machine(LinuxKernelTest):
-          '20200711-gsj-qemu-0/nuvoton-npcm730-gsj.dtb'),
-         '3249b2da787d4b9ad4e61f315b160abfceb87b5e1895a7ce898ce7f40c8d4045')
- 
--    @skipUnless(os.getenv('QEMU_TEST_TIMEOUT_EXPECTED'), 'Test might timeout')
-+    @skipSlowTest()
-     def test_arm_quanta_gsj(self):
-         self.set_machine('quanta-gsj')
-         image_path = self.uncompress(self.ASSET_IMAGE, format='gz')
++    def run_vm(self, kernel_path, kernel_command_line, console_pattern,
++               record, shift, args, replay_path):
++        # icount requires TCG to be available
++        self.require_accelerator('tcg')
++
++        logger = logging.getLogger('replay')
++        start_time = time.time()
++        vm = self.get_vm()
++        vm.set_console()
++        if record:
++            logger.info('recording the execution...')
++            mode = 'record'
++        else:
++            logger.info('replaying the execution...')
++            mode = 'replay'
++        vm.add_args('-icount', 'shift=%s,rr=%s,rrfile=%s' %
++                    (shift, mode, replay_path),
++                    '-kernel', kernel_path,
++                    '-append', kernel_command_line,
++                    '-net', 'none',
++                    '-no-reboot')
++        if args:
++            vm.add_args(*args)
++        vm.launch()
++        self.wait_for_console_pattern(console_pattern, vm)
++        if record:
++            vm.shutdown()
++            logger.info('finished the recording with log size %s bytes'
++                        % os.path.getsize(replay_path))
++            self.run_replay_dump(replay_path)
++            logger.info('successfully tested replay-dump.py')
++        else:
++            vm.wait()
++            logger.info('successfully finished the replay')
++        elapsed = time.time() - start_time
++        logger.info('elapsed time %.2f sec' % elapsed)
++        return elapsed
++
++    def run_replay_dump(self, replay_path):
++        try:
++            subprocess.check_call(["./scripts/replay-dump.py",
++                                   "-f", replay_path],
++                                  stdout=subprocess.DEVNULL)
++        except subprocess.CalledProcessError:
++            self.fail('replay-dump.py failed')
++
++    def run_rr(self, kernel_path, kernel_command_line, console_pattern,
++               shift=7, args=None):
++        replay_path = os.path.join(self.workdir, 'replay.bin')
++        t1 = self.run_vm(kernel_path, kernel_command_line, console_pattern,
++                         True, shift, args, replay_path)
++        t2 = self.run_vm(kernel_path, kernel_command_line, console_pattern,
++                         False, shift, args, replay_path)
++        logger = logging.getLogger('replay')
++        logger.info('replay overhead {:.2%}'.format(t2 / t1 - 1))
 -- 
 2.48.1
 
