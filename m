@@ -4,150 +4,88 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 087DFC0218A
-	for <qemu-devel@archiver.kernel.org>; Tue, 28 Jan 2025 18:46:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3089EC02192
+	for <qemu-devel@archiver.kernel.org>; Tue, 28 Jan 2025 18:51:48 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tcqau-0003Gk-N5; Tue, 28 Jan 2025 13:46:01 -0500
+	id 1tcqfs-0004va-Q8; Tue, 28 Jan 2025 13:51:01 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <david@redhat.com>) id 1tcqaZ-0003Fq-Ux
- for qemu-devel@nongnu.org; Tue, 28 Jan 2025 13:45:32 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <david@redhat.com>) id 1tcqaW-0007yN-Uf
- for qemu-devel@nongnu.org; Tue, 28 Jan 2025 13:45:31 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1738089927;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=q27/2aSdx5lOP1NOJSSPYwY+yJxfdisInLm4qJVtMyQ=;
- b=CtUMvNRIyyS/yifOPG1yNXthPdQdaE2L47H7VBAhHq5uNGXTRpDjD5JF/pWUzeKGlsB/b7
- D78C9joVxO3je2yPHAyWNGoyXs9/T290VZdK2w61MDdbTlQAx4DAHwBlx7axWD+vbiRSvD
- nzvgqdvfGt1oYCIG6a/VzseduqZsgZA=
-Received: from mail-wm1-f69.google.com (mail-wm1-f69.google.com
- [209.85.128.69]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-197-ag5Y143IObG0wYBtLGFLhQ-1; Tue, 28 Jan 2025 13:45:25 -0500
-X-MC-Unique: ag5Y143IObG0wYBtLGFLhQ-1
-X-Mimecast-MFC-AGG-ID: ag5Y143IObG0wYBtLGFLhQ
-Received: by mail-wm1-f69.google.com with SMTP id
- 5b1f17b1804b1-436379713baso28294165e9.2
- for <qemu-devel@nongnu.org>; Tue, 28 Jan 2025 10:45:25 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1tcqfj-0004u2-Uw
+ for qemu-devel@nongnu.org; Tue, 28 Jan 2025 13:50:52 -0500
+Received: from mail-pl1-x631.google.com ([2607:f8b0:4864:20::631])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1tcqfi-00007Z-EG
+ for qemu-devel@nongnu.org; Tue, 28 Jan 2025 13:50:51 -0500
+Received: by mail-pl1-x631.google.com with SMTP id
+ d9443c01a7336-2166360285dso102622645ad.1
+ for <qemu-devel@nongnu.org>; Tue, 28 Jan 2025 10:50:49 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1738090249; x=1738695049; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:cc:content-language
+ :references:to:subject:user-agent:mime-version:date:message-id:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=xSSf7IgQXK6gMQWAfO++aq3NKrjLxffUMT4/QUlqwg8=;
+ b=kV9f52K7Z/kkHGxXh22JkOSBgtOebbMX2I0ceQF2VMtz8Yjeyb+ATMn2H5amcPJ/bE
+ JceKHEA4vydE/VyZLXALSVNRCWY01QCzUxJ55SZUPoXRwAN3+gdg31mhb8EYRtM8IP/p
+ fdjpIzwMD0zhLPK2T/qEPb3yx8zEER5h+QhDvP1lRZCR+pN9TkQSr/PdHhy8DzSpWPCZ
+ vQ0BwOdZiOhmWAd7IR5MGDbJhG8iqWCstcg7xtKSfEoAxuxkSMO9SjdWhXIvLvM2zy17
+ rPNiSYi/nvEVsUWOpf3SGGNMHCHZ6QHSQ3M1xmh6uw2OLtM7q6LcquZe00+6v8IBCPYE
+ VC9A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1738089924; x=1738694724;
- h=content-transfer-encoding:in-reply-to:organization:autocrypt
- :content-language:from:references:cc:to:subject:user-agent
- :mime-version:date:message-id:x-gm-message-state:from:to:cc:subject
- :date:message-id:reply-to;
- bh=q27/2aSdx5lOP1NOJSSPYwY+yJxfdisInLm4qJVtMyQ=;
- b=WlCtpxNI+d30mbr8nvWBcDFghb1+hUw+OcVt/WvHYziajpNCaLzP1+Rtd6Iy+4Tq6q
- 0srzSMh/6T+vLJVvZ6pI4+sg5jU3ZZdqVFLcG6SIn453aQvBDi7a0w6pPoqePaiP+upO
- C18EJLK7h4O5niEuVFBCJJVcw85ep3WkhKVsLtr39oQwRqxwPUAWymI8v5h4QMzju+jN
- Ftq4jZyMZfCOTSuCKHo8YOr2iZqj5O/AkPv/Zg7/dwJR7xb073HKvrQsSTqmIK230ySj
- TsPIZap1U28szfWY1vbYvdcYCv7tLu2lFLqSgtZln8qtmxlW3f9S0d7Q6p2y6zwLZPVc
- 7W6A==
-X-Forwarded-Encrypted: i=1;
- AJvYcCW4M0lxmoh8y3WcmyhYiGsZazJfjRjnneUAwcX+SJcIO1h5luvuSydjMRFuC0ch2quJNpkWzS1yir8z@nongnu.org
-X-Gm-Message-State: AOJu0YwWe6WhoAX2mt4809MbgiktFlGeQdVNzC3O00c8hE979omker+D
- g5XzpKfRN38hZD5Fp6jyefoT3voPmeg4BCmm/xrSFaj2O0Wu5hBkqh1ii2gMxMe4rWeK9VcYRrH
- XxoL+Wn+8cQObFtbPfcZsbk6FE1tikl3SDugWVpQ0aVfabTUcKCIe
-X-Gm-Gg: ASbGncv1X55NcuyJVca/eKbVr6aK0j5A+txju+aU5D3ggO10uaAd4+zU12eE00i3IM3
- wciuwLDRAH2h810tKcNGyBmxgr7cNd5lh8TYij0p9oQaydEi8VPCj4g702lKz3HrHuZh2A1pblm
- AJ6h+JP5MQJ1VZzTvqW/U35XwRMWFUXvHraRrs+gCrViOoNoLvPHvnmjfKjh6xVhjfc7IlPRElB
- Zt/u5ictXhjLq+5s+bc8oF9SjSnjD2ChVeMimlmeJwI8e7fXQACKWhEAZk5y192LJgEgzUVyKHw
- A8/mkrsN6X0SAczrdIiaAa/7adXq6mOzEA==
-X-Received: by 2002:a05:600c:4fc1:b0:434:9d62:aa23 with SMTP id
- 5b1f17b1804b1-438dc40d296mr127545e9.20.1738089924277; 
- Tue, 28 Jan 2025 10:45:24 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IFTtwo6F6zljjBDh6dKdeA1KgNaFsPiCxAmJFPUWRJvyVet/1WRthdnHf28NqFFYxVmTx10hA==
-X-Received: by 2002:a05:600c:4fc1:b0:434:9d62:aa23 with SMTP id
- 5b1f17b1804b1-438dc40d296mr127345e9.20.1738089923853; 
- Tue, 28 Jan 2025 10:45:23 -0800 (PST)
-Received: from [192.168.3.141] (p5b0c6662.dip0.t-ipconnect.de. [91.12.102.98])
+ d=1e100.net; s=20230601; t=1738090249; x=1738695049;
+ h=content-transfer-encoding:in-reply-to:from:cc:content-language
+ :references:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=xSSf7IgQXK6gMQWAfO++aq3NKrjLxffUMT4/QUlqwg8=;
+ b=weFdanyzcLD4Q1tPDB0a6elVsYT1I3HiZNq6cNJWM4MqLzfDqxor5VWP0D29z9f89I
+ RnIYbkNEgNt2WV0pDPhWpm81gHinUflDpf7ln7FIj7Z/lvoxJeg9QhajRllwPOZj3hrC
+ VGjB8cOALXwJuqbkBhMI8LLSTMbhPbntY1lt1Ep1qplYc8ksEGuRSspbyN6VyrMvPE6E
+ 8TskC8UNZ8/UpnDLOw48fv3FBxIoAb4eB2uM1A6ae9tL4XCKXjOC1Lol9qDywFBgUagO
+ 4AcST/Vcv9Fa7xJ/BF//80U2xxb8pKNbeknASIkGegMEpum8jHJ5QABsfkYvlHvOQK3b
+ DX7A==
+X-Gm-Message-State: AOJu0YyOUZbNGotQOFLZ938TCKT2K2MUVFtPSX65B5mRyJjNQRCYm5Um
+ LH7bC8/3MQALoxARAHK3NLw313Xx4LGuSV2Q8OuNErpvax0ebK4xVi9UHd9Gtg5Q4JdSmbGB3LT
+ V
+X-Gm-Gg: ASbGnctVq+8aIQBYRO3w4Zp10S1A6i4/USMNih9nTygzzaSJDpJ+hyF8O2PQNvAcEzJ
+ Dyb74tVrNC9YhL+ka4RnMTNfqFAJij2/z8n6d8ps0XeCR/RTUXuqTvVYDagv+OFo0Z5zEgdQH5J
+ MJEzA8A776N3y/GkIN3TIWpF9zteTIgUDHgo7Vm6Cfuo0VCFjl5+1LmezBtAamRzQbVkySxtveU
+ JzG2oMu8+D5/Iz+Sk/Qy7fjlcV7J7KVgTQtyqgCxlz8Z4lJX8HXIT5gQyMxO77hVJ/ELFwY8PtR
+ zHEdFE81e5MVCt3mNBJ4UP2i6JdSMeozcMuwx1AArsKGsDFePzY6XrAHRg==
+X-Google-Smtp-Source: AGHT+IGz0l6yF+DP+mrQhEf+McyqpABUkpUoFcRawusVg41Cui8jbKHnGx1PawlmdHl+K0BBwkAVoA==
+X-Received: by 2002:a05:6a20:7fa8:b0:1e1:ae4a:1d48 with SMTP id
+ adf61e73a8af0-1ed7a6e1696mr609126637.40.1738090248783; 
+ Tue, 28 Jan 2025 10:50:48 -0800 (PST)
+Received: from [192.168.0.4] (174-21-71-127.tukw.qwest.net. [174.21.71.127])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-438bd5023acsm179953565e9.16.2025.01.28.10.45.21
+ d2e1a72fcca58-72f8a78ee49sm9937925b3a.171.2025.01.28.10.50.48
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 28 Jan 2025 10:45:22 -0800 (PST)
-Message-ID: <5dd69f1b-7ef8-4d4a-b7f3-a6f3a5db410b@redhat.com>
-Date: Tue, 28 Jan 2025 19:45:20 +0100
+ Tue, 28 Jan 2025 10:50:48 -0800 (PST)
+Message-ID: <e47672f6-5788-4322-aa0a-230fe1161ef4@linaro.org>
+Date: Tue, 28 Jan 2025 10:50:47 -0800
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v5 3/6] accel/kvm: Report the loss of a large memory page
-To: William Roche <william.roche@oracle.com>, kvm@vger.kernel.org,
- qemu-devel@nongnu.org, qemu-arm@nongnu.org
-Cc: peterx@redhat.com, pbonzini@redhat.com, richard.henderson@linaro.org,
- philmd@linaro.org, peter.maydell@linaro.org, mtosatti@redhat.com,
- imammedo@redhat.com, eduardo@habkost.net, marcel.apfelbaum@gmail.com,
- wangyanan55@huawei.com, zhao1.liu@intel.com, joao.m.martins@oracle.com
-References: <cf587c8b-3894-4589-bfea-be5db70e81f3@redhat.com>
- <20250110211405.2284121-1-william.roche@oracle.com>
- <20250110211405.2284121-4-william.roche@oracle.com>
- <39b26b64-deaa-4c52-8656-b334e992c28c@redhat.com>
- <df085742-3a10-4a84-8828-15a4d3f97405@oracle.com>
-From: David Hildenbrand <david@redhat.com>
+Subject: Re: [PATCH 01/11] hw/sd/omap_mmc: Do a minimal conversion to QDev
+To: qemu-devel@nongnu.org
+References: <20250128104519.3981448-1-peter.maydell@linaro.org>
+ <20250128104519.3981448-2-peter.maydell@linaro.org>
 Content-Language: en-US
-Autocrypt: addr=david@redhat.com; keydata=
- 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
- WNyWQQ==
-Organization: Red Hat
-In-Reply-To: <df085742-3a10-4a84-8828-15a4d3f97405@oracle.com>
+Cc: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+From: Richard Henderson <richard.henderson@linaro.org>
+In-Reply-To: <20250128104519.3981448-2-peter.maydell@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=david@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -33
-X-Spam_score: -3.4
-X-Spam_bar: ---
-X-Spam_report: (-3.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.3,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+Received-SPF: pass client-ip=2607:f8b0:4864:20::631;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x631.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -164,110 +102,27 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-> Yes, we can collect the information from the block associated to this
-> ram_addr. But instead of duplicating the necessary code into both i386
-> and ARM, I came back to adding the change into the
-> kvm_hwpoison_page_add() function called from both i386 and ARM specific
-> code.
-> 
-> I also needed a new possibility to retrieve the information while we are
-> dealing with the SIGBUS signal, and created a new function to gather the
-> information from the RAMBlock:
-> qemu_ram_block_location_info_from_addr(ram_addr_t ram_addr,
->                                          struct RAMBlockInfo *b_info)
-> with the associated struct.
-> 
-> So that we can use the RCU_READ_LOCK_GUARD() and retrieve all the data.
+On 1/28/25 02:45, Peter Maydell wrote:
+> +static const TypeInfo omap_mmc_info = {
+> +    .name = TYPE_OMAP_MMC,
+> +    .parent = TYPE_SYS_BUS_DEVICE,
+> +    .instance_size = sizeof(OMAPMMCState),
+> +    .instance_init = omap_mmc_initfn,
+> +    .class_init = omap_mmc_class_init,
+> +};
+> +
+> +static void omap_mmc_register_types(void)
+> +{
+> +    type_register_static(&omap_mmc_info);
+> +}
+> +
+> +type_init(omap_mmc_register_types)
 
-Makes sense.
+Phil seems to be moving everything to DEFINE_TYPES now.
 
-> 
-> 
-> Note about ARM failing on large pages:
-> ----------=====----------------------
-> I could test that ARM VMs impacted by memory errors on a large
-> underlying memory page, can end up looping on reporting the error:
-> The VM encountering an error has a high probability to crash and can try
-> to save a vmcore with a kdump phase.
+Otherwise,
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 
-Yeah, that's what I thought. If you rip out 1 GiB of memory, your VM is 
-going to have a bad time :/
 
-> 
-> This fix introduces qemu messages reporting errors when they are relayed
-> to the VM.
-> A large page being poisoned by an error on ARM can make a VM loop on the
-> vmcore collection phase and the console would show messages like that
-> appearing every 10 seconds (before the change):
-> 
->    vvv
->            Starting Kdump Vmcore Save Service...
-> [    3.095399] kdump[445]: Kdump is using the default log level(3).
-> [    3.173998] kdump[481]: saving to
-> /sysroot/var/crash/127.0.0.1-2025-01-27-20:17:40/
-> [    3.189683] kdump[486]: saving vmcore-dmesg.txt to
-> /sysroot/var/crash/127.0.0.1-2025-01-27-20:17:40/
-> [    3.213584] kdump[492]: saving vmcore-dmesg.txt complete
-> [    3.220295] kdump[494]: saving vmcore
-> [   10.029515] EDAC MC0: 1 UE unknown on unknown memory ( page:0x116c60
-> offset:0x0 grain:1 - APEI location: )
-> [   10.033647] [Firmware Warn]: GHES: Invalid address in generic error
-> data: 0x116c60000
-> [   10.036974] {2}[Hardware Error]: Hardware error from APEI Generic
-> Hardware Error Source: 0
-> [   10.040514] {2}[Hardware Error]: event severity: recoverable
-> [   10.042911] {2}[Hardware Error]:  Error 0, type: recoverable
-> [   10.045310] {2}[Hardware Error]:   section_type: memory error
-> [   10.047666] {2}[Hardware Error]:   physical_address: 0x0000000116c60000
-> [   10.050486] {2}[Hardware Error]:   error_type: 0, unknown
-> [   20.053205] EDAC MC0: 1 UE unknown on unknown memory ( page:0x116c60
-> offset:0x0 grain:1 - APEI location: )
-> [   20.057416] [Firmware Warn]: GHES: Invalid address in generic error
-> data: 0x116c60000
-> [   20.060781] {3}[Hardware Error]: Hardware error from APEI Generic
-> Hardware Error Source: 0
-> [   20.065472] {3}[Hardware Error]: event severity: recoverable
-> [   20.067878] {3}[Hardware Error]:  Error 0, type: recoverable
-> [   20.070273] {3}[Hardware Error]:   section_type: memory error
-> [   20.072686] {3}[Hardware Error]:   physical_address: 0x0000000116c60000
-> [   20.075590] {3}[Hardware Error]:   error_type: 0, unknown
->    ^^^
-> 
-> with the fix, we now have a flood of messages like:
-> 
->    vvv
-> qemu-system-aarch64: Memory Error on large page from
-> ram-node1:d5e00000+0 +200000
-> qemu-system-aarch64: Guest Memory Error at QEMU addr 0xffff35c79000 and
-> GUEST addr 0x115e79000 of type BUS_MCEERR_AR injected
-> qemu-system-aarch64: Memory Error on large page from
-> ram-node1:d5e00000+0 +200000
-> qemu-system-aarch64: Guest Memory Error at QEMU addr 0xffff35c79000 and
-> GUEST addr 0x115e79000 of type BUS_MCEERR_AR injected
-> qemu-system-aarch64: Memory Error on large page from
-> ram-node1:d5e00000+0 +200000
-> qemu-system-aarch64: Guest Memory Error at QEMU addr 0xffff35c79000 and
-> GUEST addr 0x115e79000 of type BUS_MCEERR_AR injected
->    ^^^
-> 
-> 
-> In both cases, this situation loops indefinitely !
-> 
-> I'm just informing of a change of behavior, fixing this issue would most
-> probably require VM kernel modifications  or a work-around in qemu when
-> errors are reported too often, but is out of the scope of this current
-> qemu fix.
-
-Agreed. I think one problem is that kdump cannot really cope with new 
-memory errors (it tries to not touch pages that had a memory error in 
-the old kernel).
-
-Maybe this is also due to the fact that we inform the kernel only about 
-a single page vanishing, whereby actually a whole 1 GiB is vanishing.
-
--- 
-Cheers,
-
-David / dhildenb
-
+r~
 
