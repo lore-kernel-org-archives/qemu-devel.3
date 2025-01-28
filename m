@@ -4,95 +4,68 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0521DC02193
-	for <qemu-devel@archiver.kernel.org>; Tue, 28 Jan 2025 11:25:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C85AFC0218A
+	for <qemu-devel@archiver.kernel.org>; Tue, 28 Jan 2025 11:30:56 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tcjiO-0005nu-Nu; Tue, 28 Jan 2025 06:25:11 -0500
+	id 1tcjnC-0008Hm-7Z; Tue, 28 Jan 2025 06:30:06 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1tcji9-0005n2-6f
- for qemu-devel@nongnu.org; Tue, 28 Jan 2025 06:24:53 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <mchehab+huawei@kernel.org>)
+ id 1tcjn9-0008FH-Gy; Tue, 28 Jan 2025 06:30:03 -0500
+Received: from dfw.source.kernel.org ([139.178.84.217])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1tcji4-0006eC-GB
- for qemu-devel@nongnu.org; Tue, 28 Jan 2025 06:24:52 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1738063485;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:mime-version:mime-version:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=lDmJeSVmqIl7bo9t4FXgMCJM+eGvynx39oSnnpzw4Vc=;
- b=HHT7nrNkpUwCAbOqbGtFENc+E3uiomO/FrXjqsaaw6V3mEXvMxNE9qJe6i+yR5WhXqNT0i
- nVYUI10Zg+ZAaCo3HWBNtKdiRkuOChqIkPH7oqMD/GM+glfZ5E3T2kHZ9+YqQx/AATle/b
- PkjpkNc4/lddWtApQr1tigmt5tF6Slk=
-Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com
- [209.85.128.71]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-128-ViQg625PPTKuqULjej2DMQ-1; Tue, 28 Jan 2025 06:24:44 -0500
-X-MC-Unique: ViQg625PPTKuqULjej2DMQ-1
-X-Mimecast-MFC-AGG-ID: ViQg625PPTKuqULjej2DMQ
-Received: by mail-wm1-f71.google.com with SMTP id
- 5b1f17b1804b1-436289a570eso42186235e9.0
- for <qemu-devel@nongnu.org>; Tue, 28 Jan 2025 03:24:44 -0800 (PST)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1738063483; x=1738668283;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=lDmJeSVmqIl7bo9t4FXgMCJM+eGvynx39oSnnpzw4Vc=;
- b=MuFDSKfOuYIYTLqp5KG1vqhwWjWcoSd4xy+67f4eeZS1UP3F+tBsE6vjPclU0dNrOF
- ZgwxRsNDJr9hFhCogf2s8sh9w1X1uMQ3BS6wazuvvN6UOWX2rIM/bIPOXw7JKCDfJx3Y
- 2wovp5hbyrBb2NdptAaojjwjGDNMFdl2Pe7mUn/XZzroyWVI8NWepNs+t2pD3Z9XF6jJ
- gXF4lu7HYKhTNSlR5Nn0A4V0gRUX5qpExb295LZF2YxgcQTsoJLA89z7MWnqqKm4Q/XD
- v40/9jZ/3sZqgvfvClewZszLZemBk0a4oipJeLD/E/Zzb/cWCwsUc5Bhs6rW1p8WlAX6
- 3cZw==
-X-Gm-Message-State: AOJu0YwiGhfuoU6sS4dT4TgG0xCgWiJSnYyIRvFKlzOO5ylQcip+vbD8
- +Uj4bZhWqeFg/0JoW0zG5d7ovmvkcMdn+LyLZ/T2YsiQ2gdzcX8jg9AtNj0lKWfUexPN/XqxVTu
- X7nFEGuM3GGIFsllvKtzrI9h5RHEnjF79pnI1ndCu7bmcXfpVbor8IPIVDXtFuaVKMlhpfDRpM1
- h7+ZR8ASLYfezYOAN7VzXJIw+nh9KECWVeJ5br5/E=
-X-Gm-Gg: ASbGncsdN4tDk7HGIf6tyOBq4xMZb5SYuXkdRgs+F0bKbCz3/hKTw6h3H8Pcgmh83at
- wB7JCDn9C7FrKCTJpia8TQUVi88V/4hLESroJJn8HQoFADU6l88K0sekPcXkjwul+htdJ/cP2zA
- Z4XGNIITEAxpg10mLTteCkURMwedKY938ExBWjtmhNXajd2mYoFFVKVvRqtumE9wtIir8/VL4FP
- Zj762mVqiG+QrMzdgRhn+FS4JlVF7bsnaFP5sc6p7Q51agKmbC+B77FbUO8hAEPMAvr14PHeiMh
- aHAinG/P
-X-Received: by 2002:a05:600c:8712:b0:434:a802:e9a6 with SMTP id
- 5b1f17b1804b1-438913ce0b7mr442513465e9.7.1738063482769; 
- Tue, 28 Jan 2025 03:24:42 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IEQKhoKExLrGRSpOKcEzT5ZPqo+NdAP79dD53KIeoliCQTSt0kY2PRWp1Y2atec5lZbNyWTGA==
-X-Received: by 2002:a05:600c:8712:b0:434:a802:e9a6 with SMTP id
- 5b1f17b1804b1-438913ce0b7mr442513225e9.7.1738063482147; 
- Tue, 28 Jan 2025 03:24:42 -0800 (PST)
-Received: from [192.168.10.48] ([151.95.59.125])
- by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-438bd54c066sm163846705e9.29.2025.01.28.03.24.41
- for <qemu-devel@nongnu.org>
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 28 Jan 2025 03:24:41 -0800 (PST)
-From: Paolo Bonzini <pbonzini@redhat.com>
-To: qemu-devel@nongnu.org
-Subject: [PULL 38/48] rust: pl011: extract conversion to RegisterOffset
-Date: Tue, 28 Jan 2025 12:24:39 +0100
-Message-ID: <20250128112439.1225171-2-pbonzini@redhat.com>
-X-Mailer: git-send-email 2.48.1
-In-Reply-To: <20250128112439.1225171-1-pbonzini@redhat.com>
-References: <20250128112439.1225171-1-pbonzini@redhat.com>
+ (Exim 4.90_1) (envelope-from <mchehab+huawei@kernel.org>)
+ id 1tcjn7-0008Jj-C5; Tue, 28 Jan 2025 06:30:03 -0500
+Received: from smtp.kernel.org (transwarp.subspace.kernel.org [100.75.92.58])
+ by dfw.source.kernel.org (Postfix) with ESMTP id 87DF75C5B2D;
+ Tue, 28 Jan 2025 11:29:17 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2C942C4CED3;
+ Tue, 28 Jan 2025 11:29:53 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+ s=k20201202; t=1738063797;
+ bh=HtBGi7YGzaS/LF0lwzhNy8DAMFo2XB5Zw5gl+KQ8Q8s=;
+ h=Date:From:To:Cc:Subject:In-Reply-To:References:From;
+ b=ulelSqIgHDdWFTk/bLAHEPBurJE6kNBiCTdV/TGX1fHYUFOB1/k5v3JYoGIuibSEo
+ 4XmPYi/Q58xn9tBoqVvSLjivDrxnwR5lG2qFzlBZ2O13tCLToykB490ubJ/sUWKUk/
+ AIXHZR/VfXC4bIpgo1RtLtKw3uhbw0wweScYOhWRhq34+6naq20dm6P5kwX2TqWao/
+ o9F512xrHUOFQuH03zhbNVLi2tTX5kxH9jfLEJueT/Rd6Lp69rtof7kk6mYh2udLo8
+ GP81GkMhJK7iSZLQ7t8iwF0JMwe4ufpbjt5OvEFv7WBP3RM7BNW54cFs03kBzGRTxu
+ MdhhfmOgwdXMw==
+Date: Tue, 28 Jan 2025 12:29:51 +0100
+From: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
+To: Igor Mammedov <imammedo@redhat.com>
+Cc: "Michael S . Tsirkin" <mst@redhat.com>, Jonathan Cameron
+ <Jonathan.Cameron@huawei.com>, Shiju Jose <shiju.jose@huawei.com>,
+ qemu-arm@nongnu.org, qemu-devel@nongnu.org, Philippe =?UTF-8?B?TWF0aGll?=
+ =?UTF-8?B?dS1EYXVkw6k=?= <philmd@linaro.org>, Ani Sinha
+ <anisinha@redhat.com>, Dongjiu Geng <gengdongjiu1@gmail.com>, Eduardo
+ Habkost <eduardo@habkost.net>, Marcel Apfelbaum
+ <marcel.apfelbaum@gmail.com>, Peter Maydell <peter.maydell@linaro.org>,
+ Shannon Zhao <shannon.zhaosl@gmail.com>, Yanan Wang
+ <wangyanan55@huawei.com>, Zhao Liu <zhao1.liu@intel.com>,
+ linux-kernel@vger.kernel.org
+Subject: Re: [PATCH 05/11] acpi/generic_event_device: add logic to detect if
+ HEST addr is available
+Message-ID: <20250128122951.6bd52b89@foz.lan>
+In-Reply-To: <20250124112346.4751ccf2@imammedo.users.ipa.redhat.com>
+References: <cover.1737560101.git.mchehab+huawei@kernel.org>
+ <556c19c1f3fa907c6cc13b62e060f6baa6faf2cf.1737560101.git.mchehab+huawei@kernel.org>
+ <20250124112346.4751ccf2@imammedo.users.ipa.redhat.com>
+X-Mailer: Claws Mail 4.3.0 (GTK 3.24.43; x86_64-redhat-linux-gnu)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -33
-X-Spam_score: -3.4
-X-Spam_bar: ---
-X-Spam_report: (-3.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.3,
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=139.178.84.217;
+ envelope-from=mchehab+huawei@kernel.org; helo=dfw.source.kernel.org
+X-Spam_score_int: -83
+X-Spam_score: -8.4
+X-Spam_bar: --------
+X-Spam_report: (-8.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.3,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ RCVD_IN_DNSWL_HI=-5, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -109,243 +82,243 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-As an added bonus, this also makes the new function return u32 instead
-of u64, thus factoring some casts into a single place.
+Em Fri, 24 Jan 2025 11:23:46 +0100
+Igor Mammedov <imammedo@redhat.com> escreveu:
 
-Reviewed-by: Zhao Liu <zhao1.liu@intel.com>
-Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
----
- rust/hw/char/pl011/src/device.rs | 137 ++++++++++++++++++-------------
- rust/hw/char/pl011/src/lib.rs    |   2 +-
- 2 files changed, 79 insertions(+), 60 deletions(-)
+> On Wed, 22 Jan 2025 16:46:22 +0100
+> Mauro Carvalho Chehab <mchehab+huawei@kernel.org> wrote:
+>=20
+> > Create a new property (x-has-hest-addr) and use it to detect if
+> > the GHES table offsets can be calculated from the HEST address
+> > (qemu 9.2 and upper) or via the legacy way via an offset obtained =20
+>=20
+> 10.0 by now
+>=20
+> > from the hardware_errors firmware file.
+> >=20
+> > Signed-off-by: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
+> > ---
+> >  hw/acpi/generic_event_device.c |  1 +
+> >  hw/acpi/ghes.c                 | 28 +++++++++++++++++++++-------
+> >  hw/arm/virt-acpi-build.c       | 30 ++++++++++++++++++++++++++----
+> >  hw/core/machine.c              |  2 ++
+> >  include/hw/acpi/ghes.h         |  1 +
+> >  5 files changed, 51 insertions(+), 11 deletions(-)
+> >=20
+> > diff --git a/hw/acpi/generic_event_device.c b/hw/acpi/generic_event_dev=
+ice.c
+> > index 5346cae573b7..fe537ed05c66 100644
+> > --- a/hw/acpi/generic_event_device.c
+> > +++ b/hw/acpi/generic_event_device.c
+> > @@ -318,6 +318,7 @@ static void acpi_ged_send_event(AcpiDeviceIf *adev,=
+ AcpiEventStatusBits ev)
+> > =20
+> >  static const Property acpi_ged_properties[] =3D {
+> >      DEFINE_PROP_UINT32("ged-event", AcpiGedState, ged_event_bitmap, 0),
+> > +    DEFINE_PROP_BOOL("x-has-hest-addr", AcpiGedState, ghes_state.hest_=
+lookup, true), =20
+>=20
+> s/hest_lookup/use_hest_addr/
+>=20
+> >  };
+> > =20
+> >  static const VMStateDescription vmstate_memhp_state =3D {
+> > diff --git a/hw/acpi/ghes.c b/hw/acpi/ghes.c
+> > index b46b563bcaf8..86c97f60d6a0 100644
+> > --- a/hw/acpi/ghes.c
+> > +++ b/hw/acpi/ghes.c
+> > @@ -359,6 +359,8 @@ void acpi_build_hest(GArray *table_data, GArray *ha=
+rdware_errors,
+> >  {
+> >      AcpiTable table =3D { .sig =3D "HEST", .rev =3D 1,
+> >                          .oem_id =3D oem_id, .oem_table_id =3D oem_tabl=
+e_id };
+> > +    AcpiGedState *acpi_ged_state;
+> > +    AcpiGhesState *ags =3D NULL;
+> >      int i;
+> > =20
+> >      build_ghes_error_table(hardware_errors, linker, num_sources);
+> > @@ -379,10 +381,20 @@ void acpi_build_hest(GArray *table_data, GArray *=
+hardware_errors,
+> >       * tell firmware to write into GPA the address of HEST via fw_cfg,
+> >       * once initialized.
+> >       */
+> > -    bios_linker_loader_write_pointer(linker,
+> > -                                     ACPI_HEST_ADDR_FW_CFG_FILE, 0,
+> > -                                     sizeof(uint64_t),
+> > -                                     ACPI_BUILD_TABLE_FILE, hest_offse=
+t);
+> > +
+> > +    acpi_ged_state =3D ACPI_GED(object_resolve_path_type("", TYPE_ACPI=
+_GED,
+> > +                                                       NULL)); =20
+>=20
+> the caller, already did lookup,
+> just pass hest_lookup as an argument and use it here
 
-diff --git a/rust/hw/char/pl011/src/device.rs b/rust/hw/char/pl011/src/device.rs
-index c8496eeb1b6..64e7234f627 100644
---- a/rust/hw/char/pl011/src/device.rs
-+++ b/rust/hw/char/pl011/src/device.rs
-@@ -5,6 +5,7 @@
- use core::ptr::{addr_of, addr_of_mut, NonNull};
- use std::{
-     ffi::CStr,
-+    ops::ControlFlow,
-     os::raw::{c_int, c_uint, c_void},
- };
- 
-@@ -222,19 +223,11 @@ fn post_init(&self) {
-         }
-     }
- 
--    pub fn read(&mut self, offset: hwaddr, _size: c_uint) -> std::ops::ControlFlow<u64, u64> {
-+    fn regs_read(&mut self, offset: RegisterOffset) -> ControlFlow<u32, u32> {
-         use RegisterOffset::*;
- 
--        let value = match RegisterOffset::try_from(offset) {
--            Err(v) if (0x3f8..0x400).contains(&(v >> 2)) => {
--                let device_id = self.get_class().device_id;
--                u32::from(device_id[(offset - 0xfe0) >> 2])
--            }
--            Err(_) => {
--                // qemu_log_mask(LOG_GUEST_ERROR, "pl011_read: Bad offset 0x%x\n", (int)offset);
--                0
--            }
--            Ok(DR) => {
-+        ControlFlow::Break(match offset {
-+            DR => {
-                 self.flags.set_receive_fifo_full(false);
-                 let c = self.read_fifo[self.read_pos];
-                 if self.read_count > 0 {
-@@ -251,69 +244,53 @@ pub fn read(&mut self, offset: hwaddr, _size: c_uint) -> std::ops::ControlFlow<u
-                 self.receive_status_error_clear.set_from_data(c);
-                 self.update();
-                 // Must call qemu_chr_fe_accept_input, so return Continue:
--                let c = u32::from(c);
--                return std::ops::ControlFlow::Continue(u64::from(c));
-+                return ControlFlow::Continue(u32::from(c));
-             }
--            Ok(RSR) => u32::from(self.receive_status_error_clear),
--            Ok(FR) => u32::from(self.flags),
--            Ok(FBRD) => self.fbrd,
--            Ok(ILPR) => self.ilpr,
--            Ok(IBRD) => self.ibrd,
--            Ok(LCR_H) => u32::from(self.line_control),
--            Ok(CR) => u32::from(self.control),
--            Ok(FLS) => self.ifl,
--            Ok(IMSC) => self.int_enabled,
--            Ok(RIS) => self.int_level,
--            Ok(MIS) => self.int_level & self.int_enabled,
--            Ok(ICR) => {
-+            RSR => u32::from(self.receive_status_error_clear),
-+            FR => u32::from(self.flags),
-+            FBRD => self.fbrd,
-+            ILPR => self.ilpr,
-+            IBRD => self.ibrd,
-+            LCR_H => u32::from(self.line_control),
-+            CR => u32::from(self.control),
-+            FLS => self.ifl,
-+            IMSC => self.int_enabled,
-+            RIS => self.int_level,
-+            MIS => self.int_level & self.int_enabled,
-+            ICR => {
-                 // "The UARTICR Register is the interrupt clear register and is write-only"
-                 // Source: ARM DDI 0183G 3.3.13 Interrupt Clear Register, UARTICR
-                 0
-             }
--            Ok(DMACR) => self.dmacr,
--        };
--        std::ops::ControlFlow::Break(value.into())
-+            DMACR => self.dmacr,
-+        })
-     }
- 
--    pub fn write(&mut self, offset: hwaddr, value: u64) {
-+    fn regs_write(&mut self, offset: RegisterOffset, value: u32) {
-         // eprintln!("write offset {offset} value {value}");
-         use RegisterOffset::*;
--        let value: u32 = value as u32;
--        match RegisterOffset::try_from(offset) {
--            Err(_bad_offset) => {
--                eprintln!("write bad offset {offset} value {value}");
--            }
--            Ok(DR) => {
--                // ??? Check if transmitter is enabled.
--                let ch: u8 = value as u8;
--                // XXX this blocks entire thread. Rewrite to use
--                // qemu_chr_fe_write and background I/O callbacks
--
--                // SAFETY: self.char_backend is a valid CharBackend instance after it's been
--                // initialized in realize().
--                unsafe {
--                    qemu_chr_fe_write_all(addr_of_mut!(self.char_backend), &ch, 1);
--                }
-+        match offset {
-+            DR => {
-                 self.loopback_tx(value);
-                 self.int_level |= registers::INT_TX;
-                 self.update();
-             }
--            Ok(RSR) => {
--                self.receive_status_error_clear.reset();
-+            RSR => {
-+                self.receive_status_error_clear = 0.into();
-             }
--            Ok(FR) => {
-+            FR => {
-                 // flag writes are ignored
-             }
--            Ok(ILPR) => {
-+            ILPR => {
-                 self.ilpr = value;
-             }
--            Ok(IBRD) => {
-+            IBRD => {
-                 self.ibrd = value;
-             }
--            Ok(FBRD) => {
-+            FBRD => {
-                 self.fbrd = value;
-             }
--            Ok(LCR_H) => {
-+            LCR_H => {
-                 let new_val: registers::LineControl = value.into();
-                 // Reset the FIFO state on FIFO enable or disable
-                 if self.line_control.fifos_enabled() != new_val.fifos_enabled() {
-@@ -336,26 +313,26 @@ pub fn write(&mut self, offset: hwaddr, value: u64) {
-                 self.line_control = new_val;
-                 self.set_read_trigger();
-             }
--            Ok(CR) => {
-+            CR => {
-                 // ??? Need to implement the enable bit.
-                 self.control = value.into();
-                 self.loopback_mdmctrl();
-             }
--            Ok(FLS) => {
-+            FLS => {
-                 self.ifl = value;
-                 self.set_read_trigger();
-             }
--            Ok(IMSC) => {
-+            IMSC => {
-                 self.int_enabled = value;
-                 self.update();
-             }
--            Ok(RIS) => {}
--            Ok(MIS) => {}
--            Ok(ICR) => {
-+            RIS => {}
-+            MIS => {}
-+            ICR => {
-                 self.int_level &= !value;
-                 self.update();
-             }
--            Ok(DMACR) => {
-+            DMACR => {
-                 self.dmacr = value;
-                 if value & 3 > 0 {
-                     // qemu_log_mask(LOG_UNIMP, "pl011: DMA not implemented\n");
-@@ -570,6 +547,48 @@ pub fn post_load(&mut self, _version_id: u32) -> Result<(), ()> {
- 
-         Ok(())
-     }
-+
-+    pub fn read(&mut self, offset: hwaddr, _size: u32) -> ControlFlow<u64, u64> {
-+        match RegisterOffset::try_from(offset) {
-+            Err(v) if (0x3f8..0x400).contains(&(v >> 2)) => {
-+                let device_id = self.get_class().device_id;
-+                ControlFlow::Break(u64::from(device_id[(offset - 0xfe0) >> 2]))
-+            }
-+            Err(_) => {
-+                // qemu_log_mask(LOG_GUEST_ERROR, "pl011_read: Bad offset 0x%x\n", (int)offset);
-+                ControlFlow::Break(0)
-+            }
-+            Ok(field) => {
-+                let result = self.regs_read(field);
-+                match result {
-+                    ControlFlow::Break(value) => ControlFlow::Break(value.into()),
-+                    ControlFlow::Continue(value) => ControlFlow::Continue(value.into()),
-+                }
-+            }
-+        }
-+    }
-+
-+    pub fn write(&mut self, offset: hwaddr, value: u64) {
-+        if let Ok(field) = RegisterOffset::try_from(offset) {
-+            // qemu_chr_fe_write_all() calls into the can_receive
-+            // callback, so handle writes before entering PL011Registers.
-+            if field == RegisterOffset::DR {
-+                // ??? Check if transmitter is enabled.
-+                let ch: u8 = value as u8;
-+                // SAFETY: char_backend is a valid CharBackend instance after it's been
-+                // initialized in realize().
-+                // XXX this blocks entire thread. Rewrite to use
-+                // qemu_chr_fe_write and background I/O callbacks
-+                unsafe {
-+                    qemu_chr_fe_write_all(&mut self.char_backend, &ch, 1);
-+                }
-+            }
-+
-+            self.regs_write(field, value as u32);
-+        } else {
-+            eprintln!("write bad offset {offset} value {value}");
-+        }
-+    }
- }
- 
- /// Which bits in the interrupt status matter for each outbound IRQ line ?
-diff --git a/rust/hw/char/pl011/src/lib.rs b/rust/hw/char/pl011/src/lib.rs
-index 2baacba2306..a35fff8d44d 100644
---- a/rust/hw/char/pl011/src/lib.rs
-+++ b/rust/hw/char/pl011/src/lib.rs
-@@ -43,7 +43,7 @@
- #[doc(alias = "offset")]
- #[allow(non_camel_case_types)]
- #[repr(u64)]
--#[derive(Debug, qemu_api_macros::TryInto)]
-+#[derive(Debug, Eq, PartialEq, qemu_api_macros::TryInto)]
- enum RegisterOffset {
-     /// Data Register
-     ///
--- 
-2.48.1
+for all the above: OK.
 
+> > +    if (!acpi_ged_state) {
+> > +        return;
+> > +    }
+> > +
+> > +    ags =3D &acpi_ged_state->ghes_state;
+> > +    if (ags->hest_lookup) {
+> > +        bios_linker_loader_write_pointer(linker,
+> > +                                         ACPI_HEST_ADDR_FW_CFG_FILE, 0,
+> > +                                         sizeof(uint64_t),
+> > +                                         ACPI_BUILD_TABLE_FILE, hest_o=
+ffset);
+> > +    }
+> >  }
+> > =20
+> >  void acpi_ghes_add_fw_cfg(AcpiGhesState *ags, FWCfgState *s,
+> > @@ -396,8 +408,10 @@ void acpi_ghes_add_fw_cfg(AcpiGhesState *ags, FWCf=
+gState *s,
+> >      fw_cfg_add_file_callback(s, ACPI_HW_ERROR_ADDR_FW_CFG_FILE, NULL, =
+NULL,
+> >          NULL, &(ags->hw_error_le), sizeof(ags->hw_error_le), false); =
+=20
+>=20
+> btw shouldn't we disable hw_error_le if hest_lookup is active?
+
+Despite not being used, we still need the fw_cfg logic to recalculate the=20
+table offsets, solving the bios_linker stuff.
+
+At the tests I did, not having a callback causes some fw_cfg issue when QEMU
+tries to load the firmware or tries to update it.
+
+> > =20
+> > -    fw_cfg_add_file_callback(s, ACPI_HEST_ADDR_FW_CFG_FILE, NULL, NULL,
+> > -        NULL, &(ags->hest_addr_le), sizeof(ags->hest_addr_le), false);
+> > +    if (ags && ags->hest_lookup) { =20
+>=20
+> why bother with 'ags &&' if we don't do it hw_error_le?
+
+Legacy stuff. I'll drop "ags &&".
+
+>=20
+>=20
+> > +        fw_cfg_add_file_callback(s, ACPI_HEST_ADDR_FW_CFG_FILE, NULL, =
+NULL,
+> > +            NULL, &(ags->hest_addr_le), sizeof(ags->hest_addr_le), fal=
+se);
+> > +    }
+> > =20
+> >      ags->present =3D true;
+> >  }
+> > @@ -512,7 +526,7 @@ void ghes_record_cper_errors(const void *cper, size=
+_t len,
+> >      }
+> >      ags =3D &acpi_ged_state->ghes_state;
+> > =20
+> > -    if (!ags->hest_addr_le) {
+> > +    if (!ags->hest_lookup) { =20
+> why? !ags->hest_addr_le is sufficient
+
+Either checking for "hest_addr_le" or for "use_hest_addr" would
+equally work, assuming that address =3D=3D 0 is invalid. I opted to use
+the latest one because you requested on a previous review, and also
+because it makes clearer that this comes from the migration logic,
+which dictates what kind of lookup should be done.
+
+=46rom my side, either way works fine. What do you prefer?
+
+>=20
+> >          get_hw_error_offsets(le64_to_cpu(ags->hw_error_le),
+> >                               &cper_addr, &read_ack_register_addr);
+> >      } else {
+> > diff --git a/hw/arm/virt-acpi-build.c b/hw/arm/virt-acpi-build.c
+> > index 3d411787fc37..ada5d08cfbe7 100644
+> > --- a/hw/arm/virt-acpi-build.c
+> > +++ b/hw/arm/virt-acpi-build.c
+> > @@ -897,6 +897,10 @@ static const AcpiNotificationSourceId hest_ghes_no=
+tify[] =3D {
+> >      { ACPI_HEST_SRC_ID_SYNC, ACPI_GHES_NOTIFY_SEA },
+> >  };
+> > =20
+> > +static const AcpiNotificationSourceId hest_ghes_notify_9_2[] =3D {
+> > +    { ACPI_HEST_SRC_ID_SYNC, ACPI_GHES_NOTIFY_SEA },
+> > +};
+> > +
+> >  static
+> >  void virt_acpi_build(VirtMachineState *vms, AcpiBuildTables *tables)
+> >  {
+> > @@ -950,10 +954,28 @@ void virt_acpi_build(VirtMachineState *vms, AcpiB=
+uildTables *tables)
+> >      build_dbg2(tables_blob, tables->linker, vms);
+> > =20
+> >      if (vms->ras) {
+> > -        acpi_add_table(table_offsets, tables_blob);
+> > -        acpi_build_hest(tables_blob, tables->hardware_errors, tables->=
+linker,
+> > -                        hest_ghes_notify, ARRAY_SIZE(hest_ghes_notify),
+> > -                        vms->oem_id, vms->oem_table_id);
+> > +        AcpiGhesState *ags;
+> > +        AcpiGedState *acpi_ged_state;
+> > +
+> > +        acpi_ged_state =3D ACPI_GED(object_resolve_path_type("", TYPE_=
+ACPI_GED,
+> > +                                                       NULL));
+> > +        if (acpi_ged_state) {
+> > +            ags =3D &acpi_ged_state->ghes_state;
+> > +
+> > +            acpi_add_table(table_offsets, tables_blob);
+> > +
+> > +            if (!ags->hest_lookup) {
+> > +                acpi_build_hest(tables_blob, tables->hardware_errors,
+> > +                                tables->linker, hest_ghes_notify_9_2,
+> > +                                ARRAY_SIZE(hest_ghes_notify_9_2),
+> > +                                vms->oem_id, vms->oem_table_id);
+> > +            } else {
+> > +                acpi_build_hest(tables_blob, tables->hardware_errors,
+> > +                                tables->linker, hest_ghes_notify,
+> > +                                ARRAY_SIZE(hest_ghes_notify),
+> > +                                vms->oem_id, vms->oem_table_id);
+> > +            }
+> > +        }
+> >      }
+> > =20
+> >      if (ms->numa_state->num_nodes > 0) {
+> > diff --git a/hw/core/machine.c b/hw/core/machine.c
+> > index c23b39949649..0d0cde481954 100644
+> > --- a/hw/core/machine.c
+> > +++ b/hw/core/machine.c
+> > @@ -34,10 +34,12 @@
+> >  #include "hw/virtio/virtio-pci.h"
+> >  #include "hw/virtio/virtio-net.h"
+> >  #include "hw/virtio/virtio-iommu.h"
+> > +#include "hw/acpi/generic_event_device.h"
+> >  #include "audio/audio.h"
+> > =20
+> >  GlobalProperty hw_compat_9_2[] =3D {
+> >      {"arm-cpu", "backcompat-pauth-default-use-qarma5", "true"},
+> > +    { TYPE_ACPI_GED, "x-has-hest-addr", "false" },
+> >  };
+> >  const size_t hw_compat_9_2_len =3D G_N_ELEMENTS(hw_compat_9_2);
+> > =20
+> > diff --git a/include/hw/acpi/ghes.h b/include/hw/acpi/ghes.h
+> > index 237721fec0a2..164ed8b0f9a3 100644
+> > --- a/include/hw/acpi/ghes.h
+> > +++ b/include/hw/acpi/ghes.h
+> > @@ -61,6 +61,7 @@ typedef struct AcpiGhesState {
+> >      uint64_t hest_addr_le;
+> >      uint64_t hw_error_le;
+> >      bool present; /* True if GHES is present at all on this board */ =
+=20
+>                         and perhaps reformulate this as well
+>=20
+> > +    bool hest_lookup; /* True if HEST address is present */ =20
+>                                  if device should use HEST addr for error=
+ source lookup=20
+>=20
+> >  } AcpiGhesState;
+> > =20
+> >  /* =20
+>=20
+
+
+
+Thanks,
+Mauro
 
