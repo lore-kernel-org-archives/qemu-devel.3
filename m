@@ -4,72 +4,73 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 83028C0218A
-	for <qemu-devel@archiver.kernel.org>; Tue, 28 Jan 2025 20:53:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 62208C02190
+	for <qemu-devel@archiver.kernel.org>; Tue, 28 Jan 2025 20:54:06 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tcsad-0001x5-8q; Tue, 28 Jan 2025 15:53:43 -0500
+	id 1tcsas-0002NY-DL; Tue, 28 Jan 2025 15:53:58 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1tcsaZ-0001pd-Hf
- for qemu-devel@nongnu.org; Tue, 28 Jan 2025 15:53:41 -0500
-Received: from mail-pl1-x636.google.com ([2607:f8b0:4864:20::636])
+ id 1tcsaq-0002Jk-7s
+ for qemu-devel@nongnu.org; Tue, 28 Jan 2025 15:53:56 -0500
+Received: from mail-pl1-x629.google.com ([2607:f8b0:4864:20::629])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1tcsaY-0001Qv-33
- for qemu-devel@nongnu.org; Tue, 28 Jan 2025 15:53:39 -0500
-Received: by mail-pl1-x636.google.com with SMTP id
- d9443c01a7336-2162c0f6a39so1306535ad.0
- for <qemu-devel@nongnu.org>; Tue, 28 Jan 2025 12:53:37 -0800 (PST)
+ id 1tcsao-0001RZ-Lw
+ for qemu-devel@nongnu.org; Tue, 28 Jan 2025 15:53:55 -0500
+Received: by mail-pl1-x629.google.com with SMTP id
+ d9443c01a7336-2167141dfa1so1098145ad.1
+ for <qemu-devel@nongnu.org>; Tue, 28 Jan 2025 12:53:54 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1738097617; x=1738702417; darn=nongnu.org;
+ d=linaro.org; s=google; t=1738097633; x=1738702433; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=SVGsgP2JxnTbIVukHbum7BO51ahJ2agUN7ZMpTkHHzw=;
- b=C2J6AGSd/OXUn93uVNKZFv9Rvf13vt1luKcNzcJ5qY7ZFjYw80442IkxJRDK3ZsTUf
- ciHpncurQqAn9hnuhyAcXWXTOvYLybqu0QbkzdWMS07nSUuIJLO4gCuxTB4jMLlw5my9
- QRdAAfOhN/V21lKD8IEfc2bCI6PJ324AHyeaJEaJEVHhNc27j/XqxvjVOyPAbYbFtPRa
- Afxw5fTxeFVgmvsrb4Wp9gyEWZH5lJjedBYmphGFDzPmXCK3uBwsRby56b+8sk32GLtB
- D6jptp9+c+/OJm2YqbZU4z3+aW8TriHymC6ooc95+zqXNNbgCoecq4J24brxZqDXTB9+
- g1HA==
+ bh=EdYR+g3RZySNqBRj2P+MBIC+Dp11IBEcEZZWpWgjeRQ=;
+ b=QockUr7+kZ+gutPM1ddaeYyp1kNWh2076BpVeKV7nx1yf48kqjVj/LAtH8SCyBadq1
+ KEOn73UxiVIa7XDwHYFxyTRZbnGT/Tg0MpSZO94R+ta3ARJstGMHazWoIvISnuEsV50v
+ aK64EZwgLNcZ6D51UEMom3f4V/xZ8m+kpJ6n87jmNFTKTSHTmxF+QXp5TG7irlYVbljo
+ kvu9+W7Z3o61o0Z7SMEUqgnQeE6hOwC9M5mRSZVd1Qy1dVCM4LSBiIF3h2O++Sf2Gt8J
+ Tzn8cGxITNoLfBFKILjUCoTljq8uEpnmI3Tu9kN7lBp5Ha0FsVh1eZI0U5tHPOjq5ioh
+ WcOg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1738097617; x=1738702417;
+ d=1e100.net; s=20230601; t=1738097633; x=1738702433;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=SVGsgP2JxnTbIVukHbum7BO51ahJ2agUN7ZMpTkHHzw=;
- b=lRMGtdlSVdA4gCoTVxVwoOY1H9wmIsUw9qIMeqBzvTKkr/0UzZ+sBR2FC5UemrJdZk
- wBauQFkktlT8jKz1vZkMNwX45GA8eHLqVHHkQ0Z9wE/uDqy+gwdM+YsOfmkqr3VzME86
- AWdD2kleeWCZZhxuaUcU1Fp6+g3j0Cavafv9MP2boVIFfTq5sVknG36/b0w5CK+rc6vv
- mhhFIDtKmxxWgrFPCqJIG3goSd+QKQSLNFS6gTJIxhdIvq8PE1N3H5wm2Yj+x0iDm/nP
- YcqW7A1sSUCKE0m4CUjN/jbaJkzoRVgbqA51t1iYIOaqt7G+yw1cHk6Jc2IQy1v/wzCG
- Q9WA==
+ bh=EdYR+g3RZySNqBRj2P+MBIC+Dp11IBEcEZZWpWgjeRQ=;
+ b=j2ez3QZfgaptTEZCJERSYw53q2Lla0cT/zG/ePfP4/ejQP/XOyeDluFPjwF5ZFKgvb
+ ZGf299MTQRqGfbGeriNwB6a+exixzCb6X8bHCqmShFagNHz8AijQoaFkAaW/poePyWxf
+ 0SRauytS4z/gydroEUnwulCPaef5y1PY3hscQ3n/OuHL/LZ1ypkzWJdDOkPlTfC30hep
+ rmWs57nQLwg+FwByq+oWqTKwnZMC3U6IJ7fJlDwQ8Q/gzqhfmyRRFi8ie73atBUQqtLr
+ Rv36Imr8p8hja+ra4nGgumLGjFvf48zo3ZxWJ9GESu63tXzJduBHWi8N6F4DVEmZO9Ik
+ 3HJw==
 X-Forwarded-Encrypted: i=1;
- AJvYcCUEpHAk9HEvGdUe1dfdUEnp3lMrmfgrHQvLOP+eAwEjoQNcNAEtqm2KFF2q6KY01KqM24+WFppOF2PI@nongnu.org
-X-Gm-Message-State: AOJu0Yy38LrnjFYOCfZDA/mWYUiw0cpHw8/AE70yGkLZqrV1PhdnBN7D
- Dp4Wknan2x2NI+QuodgVpadCWFqyog4Whc95DzNvWEGU2K2rBY/ICIDWCGVUfQQ=
-X-Gm-Gg: ASbGncv2jpcsPvsP0Fler5eORRW8/0uiuLuCq771V5jKgR16yIsxlCD/kcLeAbbtF99
- Ss4Ch1aSJATJqV2uyAwqHsqtSRZ0rBubnivqjhlvbanIpX/LwFAVEBgNnBJ6g8ibK30KucDxMvO
- RGTBJszqMY4qt/w1stskJvNTcvWCqIgDIigaL/a9lZCZD5vBeH6f4rQqtCipMif1I58UCnsIH0Z
- hlKbfrmv85jH+xbBF4AVtszq72cgdlnas33hEQ9n51Mw8ShGrKY7gfCunNRJnpVnjU3cuDSjEl1
- r4IIG/vRDi/PeY2zPhd0nFJkeF9lw92MRFMG/lGkwe8FikSQrzpxGIdOJyiULjVjbS7J
-X-Google-Smtp-Source: AGHT+IGynnfw6l0HWGM419rZ6NjdwyyMXK8dmbERaW3Nncp5VQsCdqzgSfuOiObtiy+GivS9eKjeqw==
-X-Received: by 2002:a05:6a21:b8a:b0:1e1:a449:ff71 with SMTP id
- adf61e73a8af0-1ed7a48c8c6mr1126983637.1.1738097616739; 
- Tue, 28 Jan 2025 12:53:36 -0800 (PST)
+ AJvYcCUiaQxSbyTZFyp1gwBZ7v2hyPPaRm2RCEEFKlQmi5N5sOVMDEUYj4FwCjH/NqVqSKwBWaHbadWwTBwP@nongnu.org
+X-Gm-Message-State: AOJu0Yw5xphq48GOa+0Adul7DctThw3pLR13+vh8rT+Xvs2NJAGWNc4D
+ l72OHl6FmqJBoextuoYb1IjHgY4xJ+O2M/8v3xvxb5WWa62mplKQoZIvfc+nzhQ=
+X-Gm-Gg: ASbGncv+aK1Wq4ltdM0Ct2b8hHOQk3txBNs4k+wXjf8+I9loCeQH33CSOKA4OGzGt6g
+ d9gTs4thfZQRDyLKkx/e2yhCAvwKBMmOc1NaiviCXQz+MX6w17HPgMnx3E5uEQdgRgmhHd6H6q8
+ Epm1nMD6kIOjQL5Tew8DbZ+UghbZJ5zMdYQoKdxtGfiYV6LCCU0YWENCfxESGIxNhpO/i3XyqOz
+ a2IQmbPP13YmHfs+faZAzHO+DhTWmLGWwMs9DkZ+fqRnCqENfwCba+ep4rolz6Qg5GZxnTLGq7g
+ JC0o1ky2eNjJLUiY2ItRiu2eOcIA3eL1w9W9x9L2MDLDRGpqvTTY5CxuFw==
+X-Google-Smtp-Source: AGHT+IGT3RYwq4TvBuMp7Yb1ABeHTb5L2izZWLlG8mrwmQfObeRas+wAp0zgDA63rMhcPAFSml9DFg==
+X-Received: by 2002:a17:903:2445:b0:216:5db1:5dc1 with SMTP id
+ d9443c01a7336-21dd7618768mr10778945ad.1.1738097633229; 
+ Tue, 28 Jan 2025 12:53:53 -0800 (PST)
 Received: from [192.168.0.4] (174-21-71-127.tukw.qwest.net. [174.21.71.127])
  by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-72f8a69fe05sm9732184b3a.27.2025.01.28.12.53.36
+ d9443c01a7336-21da414ef91sm85718885ad.209.2025.01.28.12.53.52
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 28 Jan 2025 12:53:36 -0800 (PST)
-Message-ID: <6b7d03ac-68d3-4fbd-adc8-554e815ad785@linaro.org>
-Date: Tue, 28 Jan 2025 12:53:34 -0800
+ Tue, 28 Jan 2025 12:53:52 -0800 (PST)
+Message-ID: <81a4e102-1eb9-40af-9c8c-beef06204390@linaro.org>
+Date: Tue, 28 Jan 2025 12:53:51 -0800
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 6/9] cpus: Call hotplug handlers in DeviceWire()
+Subject: Re: [RFC PATCH 7/9] cpus: Only expose REALIZED vCPUs to global
+ &cpus_queue
 To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  qemu-devel@nongnu.org
 Cc: Peter Maydell <peter.maydell@linaro.org>,
@@ -81,14 +82,14 @@ Cc: Peter Maydell <peter.maydell@linaro.org>,
  Marcel Apfelbaum <marcel.apfelbaum@gmail.com>, Peter Xu <peterx@redhat.com>,
  Paolo Bonzini <pbonzini@redhat.com>
 References: <20250128142152.9889-1-philmd@linaro.org>
- <20250128142152.9889-7-philmd@linaro.org>
+ <20250128142152.9889-8-philmd@linaro.org>
 Content-Language: en-US
 From: Richard Henderson <richard.henderson@linaro.org>
-In-Reply-To: <20250128142152.9889-7-philmd@linaro.org>
+In-Reply-To: <20250128142152.9889-8-philmd@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::636;
- envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x636.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::629;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x629.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -112,41 +113,26 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 1/28/25 06:21, Philippe Mathieu-Daudé wrote:
-> To call the hotplug handlers with REALIZED vCPU, we can
-> use the DeviceWire handler.
+> cpu_list_add() was doing 2 distinct things:
+> - assign some index to vCPU
+> - add unrealized (thus in inconsistent state) vcpu to &cpus_queue
 > 
-> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+> Code using CPU_FOREACH() macro would iterate over possibly
+> unrealized vCPUs, often dealt with special casing.
+> 
+> In order to avoid that, we move the addition of vCPU to global queue
+> to the DeviceWire handler, which is called just before switching the
+> vCPU to REALIZED state. This ensure all &cpus_queue users (like via
+> &first_cpu or CPU_FOREACH) get a realized vCPU in consistent state.
+> 
+> Similarly we remove it from the global queue at DeviceUnwire phase,
+> just after marking the vCPU UNREALIZED.
+> 
+> Signed-off-by: Philippe Mathieu-Daudé<philmd@linaro.org>
 > ---
->   hw/core/cpu-common.c | 11 ++++++-----
->   1 file changed, 6 insertions(+), 5 deletions(-)
-> 
-> diff --git a/hw/core/cpu-common.c b/hw/core/cpu-common.c
-> index 9ee44a00277..8a02ac146f6 100644
-> --- a/hw/core/cpu-common.c
-> +++ b/hw/core/cpu-common.c
-> @@ -211,16 +211,17 @@ static void cpu_common_realizefn(DeviceState *dev, Error **errp)
->           }
->       }
->   
-> -    if (dev->hotplugged) {
-> -        cpu_synchronize_post_init(cpu);
-> -        cpu_resume(cpu);
-> -    }
-> -
->       /* NOTE: latest generic point where the cpu is fully realized */
->   }
->   
->   static void cpu_common_wire(DeviceState *dev)
->   {
-> +    CPUState *cpu = CPU(dev);
-> +
-> +    if (dev->hotplugged) {
-> +        cpu_synchronize_post_init(cpu);
-> +        cpu_resume(cpu);
-> +    }
->   }
->   
->   static void cpu_common_unwire(DeviceState *dev)
+>   cpu-common.c         | 2 --
+>   hw/core/cpu-common.c | 5 +++++
+>   2 files changed, 5 insertions(+), 2 deletions(-)
 
 Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 
