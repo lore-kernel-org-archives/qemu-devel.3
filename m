@@ -4,105 +4,78 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DCAB8C0218A
-	for <qemu-devel@archiver.kernel.org>; Tue, 28 Jan 2025 10:53:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C2931C0218A
+	for <qemu-devel@archiver.kernel.org>; Tue, 28 Jan 2025 11:03:48 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tcjDK-0002vW-Sz; Tue, 28 Jan 2025 05:53:02 -0500
+	id 1tcjN8-0005Xr-QL; Tue, 28 Jan 2025 06:03:11 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <iii@linux.ibm.com>)
- id 1tcjDA-0002u3-EE; Tue, 28 Jan 2025 05:52:53 -0500
-Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <iii@linux.ibm.com>)
- id 1tcjD8-0005k1-JK; Tue, 28 Jan 2025 05:52:52 -0500
-Received: from pps.filterd (m0356517.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 50RLISWS009891;
- Tue, 28 Jan 2025 10:52:47 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=pp1; bh=a5xbIJ
- oxctM/EpTOE90pzJTkv+04nrN9+8ORprdwcEU=; b=p2NF53WqqBINOZHwznfgpu
- W7hfcQNgx/NqThowYvcQVz9fo8d1ashbQDgvFvUOqE4zdOcVQXzRePklXoOloAtG
- kS5viwCOQuEc4v9g/6hiiV4zNp/suOGuXe3rvYQcpIzceQ8iuUHxIS6k91qm95+c
- o9xvTEIGWzlGZG922tEow/8KmbDKwhTAqo9qVi0QG07vC4gA+cIVdNeQ/xaduMXS
- H++wBTKCB7k5ki8CRF+libGFJB8n4V5/zmwcPofQtqgH7kbMKjNwnY49wDhZXHBX
- FGtxWF70shKI3FGbsxtMOlynOj08ZF8tUkCi47TxW6jd8lajTsadx8wWZhn8uk7g
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1tcjMk-0005Re-4Z
+ for qemu-devel@nongnu.org; Tue, 28 Jan 2025 06:02:46 -0500
+Received: from mail-yb1-xb33.google.com ([2607:f8b0:4864:20::b33])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1tcjMi-0008Sn-Jx
+ for qemu-devel@nongnu.org; Tue, 28 Jan 2025 06:02:45 -0500
+Received: by mail-yb1-xb33.google.com with SMTP id
+ 3f1490d57ef6-e46ebe19368so7820388276.0
+ for <qemu-devel@nongnu.org>; Tue, 28 Jan 2025 03:02:44 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1738062163; x=1738666963; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=V2I2NjmN3Mq2+zaxHECDvWFrfzR/EWpUa/NXwTC2lBw=;
+ b=nPSdM2G9VoXayD/3KcTZAs7ngw8V+NjPTRt7ZJ62PMJY/3qj8l0gZH9H6ys2U/COE5
+ 5LHcsITF2Ogc7SpNRk3aUoTeE6Znu1tVtBgT8JK/d8PUupwJljRifh+e1/cwlEyDMbBM
+ 8COMjW2qL6QfInlIZ00Fkm0gc86Dk+LaRL4UEgNuWuMneVIBtAeqGjlBkxUO8653tq/Z
+ Lj5fKebz5f/cMdJI6yzZu9GqUkhPiKTtpu1wDChP3ujHcXUaDxOkKGdpEJHiXiDzcpmW
+ oTOOF9lcnolsMOxtW6Ev1eAua1UpQCN0dzmjw303rLlzEWG9O7AjFgIsNWAbj8OYwX2s
+ slxQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1738062163; x=1738666963;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=V2I2NjmN3Mq2+zaxHECDvWFrfzR/EWpUa/NXwTC2lBw=;
+ b=MXWnxZvDgdK+NvFeP/rSYG/UQBXmjwy/J1K/y31Udj475SgjY6moBA/+kMuip5F3A4
+ MQqnjrhLIY1xXl9GlZ07vgyfVLY8CA7EOE6sVmvHcWT5TQnMBJ9e9siu2kTh4diUIvBy
+ bPyc2rpQcy/bRTOx7ElxWO6s6JWEBtPT8tzjARfGWWa/Vp7cwvBkqZzfnpGHe8j1QkAp
+ Zq8apXI05QmcYAzDiT8K+bjLY2ZT716x10kUKHy5rEIX1hdNQlEllq1mZvuTsvTLubnx
+ HEIDs3a9H6LjvjALIP1wcb4CxNE32s0pKwM0pwKQgy7rdLwaPyc06rh0YuTPwI7UhT6h
+ mH7Q==
+X-Gm-Message-State: AOJu0YwgFNEd6e8GtKLY0E09tKG3S5JghUQCNB7jlJkFiG6ZtPANizuy
+ TiapRyXip5GNVvC20L3CivrY1lx/zIkTxyJZE1m58rZKyZcV5Cx75u41hQyY8EZBFxjpz7A0G3l
+ lKJPGO0GIGBLQRp/f1jgmukLpRZqB8xnKeUwv9g==
+X-Gm-Gg: ASbGnct0jek26Jbpy+uIMXDOJyexwplMpEOfqgIwDGTBvGvbnGZj5QSnzQzOXbzt3XB
+ 9+8gm1ML8QcxoLDGu2YfoVkNWvIKbSRzKzreLBB344ioSrzVXAxopQKZ4rkcznkRO9SD7fR5Ohw
  ==
-Received: from pps.reinject (localhost [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 44ecdycujj-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Tue, 28 Jan 2025 10:52:47 +0000 (GMT)
-Received: from m0356517.ppops.net (m0356517.ppops.net [127.0.0.1])
- by pps.reinject (8.18.0.8/8.18.0.8) with ESMTP id 50SAqkIM026057;
- Tue, 28 Jan 2025 10:52:46 GMT
-Received: from ppma23.wdc07v.mail.ibm.com
- (5d.69.3da9.ip4.static.sl-reverse.com [169.61.105.93])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 44ecdycujf-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Tue, 28 Jan 2025 10:52:46 +0000 (GMT)
-Received: from pps.filterd (ppma23.wdc07v.mail.ibm.com [127.0.0.1])
- by ppma23.wdc07v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 50S9ZMr0028045;
- Tue, 28 Jan 2025 10:52:45 GMT
-Received: from smtprelay05.fra02v.mail.ibm.com ([9.218.2.225])
- by ppma23.wdc07v.mail.ibm.com (PPS) with ESMTPS id 44dbskashy-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Tue, 28 Jan 2025 10:52:45 +0000
-Received: from smtpav02.fra02v.mail.ibm.com (smtpav02.fra02v.mail.ibm.com
- [10.20.54.101])
- by smtprelay05.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 50SAqhN636176356
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Tue, 28 Jan 2025 10:52:43 GMT
-Received: from smtpav02.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 465E92004E;
- Tue, 28 Jan 2025 10:52:43 +0000 (GMT)
-Received: from smtpav02.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id C8D9B20043;
- Tue, 28 Jan 2025 10:52:42 +0000 (GMT)
-Received: from [127.0.0.1] (unknown [9.152.108.100])
- by smtpav02.fra02v.mail.ibm.com (Postfix) with ESMTP;
- Tue, 28 Jan 2025 10:52:42 +0000 (GMT)
-Message-ID: <9851753c85bcf31890e41fb5cdb29375a7095f87.camel@linux.ibm.com>
-Subject: Re: [PATCH 1/2] target/s390x: Fix MVC not always invalidating
- translation blocks
-From: Ilya Leoshkevich <iii@linux.ibm.com>
-To: David Hildenbrand <david@redhat.com>, Richard Henderson
- <richard.henderson@linaro.org>, Thomas Huth <thuth@redhat.com>
-Cc: qemu-s390x@nongnu.org, qemu-devel@nongnu.org, Berthold Gunreben
- <azouhr@opensuse.org>,
- Sarah Kriesch <ada.lovelace@gmx.de>, qemu-stable@nongnu.org
-Date: Tue, 28 Jan 2025 11:52:42 +0100
-In-Reply-To: <a26d7e7a-27c2-4d36-82cb-35012f72d446@redhat.com>
-References: <20250128001338.11474-1-iii@linux.ibm.com>
- <a26d7e7a-27c2-4d36-82cb-35012f72d446@redhat.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-User-Agent: Evolution 3.52.4 (3.52.4-2.fc40) 
+X-Google-Smtp-Source: AGHT+IH/krcDHFxqG4g8kqykLnaAt21ebyPiN/u/0FHhOQf9xLaFpY+5dPcR8fvfOV6z14MXuX3LQf8x59SZV873lhk=
+X-Received: by 2002:a05:6902:72c:b0:e58:32b4:4866 with SMTP id
+ 3f1490d57ef6-e5832b449dcmr14727103276.25.1738062163125; Tue, 28 Jan 2025
+ 03:02:43 -0800 (PST)
 MIME-Version: 1.0
-X-TM-AS-GCONF: 00
-X-Proofpoint-GUID: Zn6HGiwr-HCGEosimUfSC0gNZk5oUPUK
-X-Proofpoint-ORIG-GUID: NpNx181pNzh_xWslNrbtb7gwwZBmeKqF
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1057,Hydra:6.0.680,FMLib:17.12.68.34
- definitions=2025-01-28_03,2025-01-27_01,2024-11-22_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- phishscore=0 impostorscore=0
- lowpriorityscore=0 adultscore=0 clxscore=1015 priorityscore=1501
- mlxlogscore=999 bulkscore=0 suspectscore=0 malwarescore=0 spamscore=0
- mlxscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2411120000 definitions=main-2501280077
-Received-SPF: pass client-ip=148.163.156.1; envelope-from=iii@linux.ibm.com;
- helo=mx0a-001b2d01.pphosted.com
-X-Spam_score_int: -26
-X-Spam_score: -2.7
+References: <20250127232604.20386-1-richard.henderson@linaro.org>
+ <20250127232604.20386-2-richard.henderson@linaro.org>
+In-Reply-To: <20250127232604.20386-2-richard.henderson@linaro.org>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Tue, 28 Jan 2025 11:02:31 +0000
+X-Gm-Features: AWEUYZmFKLyyX3nrLHgttrWoWZvbCOJuRJ0yA24pa5A78USgOfr-8mV372KHqwM
+Message-ID: <CAFEAcA9Uy9=rWXNYiWoXhwyhDu+6p162_EKTX3kksBdmmvBwcQ@mail.gmail.com>
+Subject: Re: [PATCH 01/22] target/arm: Rename FPST_FPCR_A32 to FPST_A32
+To: Richard Henderson <richard.henderson@linaro.org>
+Cc: qemu-devel@nongnu.org, qemu-arm@nongnu.org
+Content-Type: text/plain; charset="UTF-8"
+Received-SPF: pass client-ip=2607:f8b0:4864:20::b33;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yb1-xb33.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H2=0.001, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -119,102 +92,46 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, 2025-01-28 at 10:56 +0100, David Hildenbrand wrote:
-> On 28.01.25 01:12, Ilya Leoshkevich wrote:
-> > Node.js crashes in qemu-system-s390x with random SIGSEGVs /
-> > SIGILLs.
-> >=20
-> > The v8 JIT used by Node.js can garbage collect and overwrite unused
-> > code. Overwriting is performed by
-> > WritableJitAllocation::CopyCode(),
-> > which ultimately calls memcpy(). For certain sizes, memcpy() uses
-> > the
-> > MVC instruction.
-> >=20
-> > QEMU implements MVC and other similar instructions using helpers.
-> > While
-> > TCG store ops invalidate affected translation blocks automatically,
-> > helpers must do this manually by calling probe_access_flags(). The
-> > MVC
-> > helper does this using the access_prepare() -> access_prepare_nf()
-> > ->
-> > s390_probe_access() -> probe_access_flags() call chain.
-> >=20
-> > At the last step of this chain, the store size is replaced with 0.
-> > This
-> > causes the probe_access_flags() -> notdirty_write() ->
-> > tb_invalidate_phys_range_fast() chain to miss some translation
-> > blocks.
->=20
-> We added the size parameter in:
->=20
-> commit 1770b2f2d3d6fe8f1e2d61692692264cac44340d
-> Author: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
-> Date:=C2=A0=C2=A0 Thu Feb 23 20:44:24 2023 -0300
->=20
-> =C2=A0=C2=A0=C2=A0=C2=A0 accel/tcg: Add 'size' param to probe_access_flag=
-s()
-> =C2=A0=C2=A0=C2=A0=C2=A0=20
-> =C2=A0=C2=A0=C2=A0=C2=A0 probe_access_flags() as it is today uses probe_a=
-ccess_full(),
-> which in
-> =C2=A0=C2=A0=C2=A0=C2=A0 turn uses probe_access_internal() with size =3D =
-0.
-> probe_access_internal()
-> =C2=A0=C2=A0=C2=A0=C2=A0 then uses the size to call the tlb_fill() callba=
-ck for the given
-> CPU.
-> =C2=A0=C2=A0=C2=A0=C2=A0 This size param ('fault_size' as probe_access_in=
-ternal() calls
-> it) is
-> =C2=A0=C2=A0=C2=A0=C2=A0 ignored by most existing .tlb_fill callback impl=
-ementations,
-> e.g.
-> =C2=A0=C2=A0=C2=A0=C2=A0 arm_cpu_tlb_fill(), ppc_cpu_tlb_fill(), x86_cpu_=
-tlb_fill() and
-> =C2=A0=C2=A0=C2=A0=C2=A0 mips_cpu_tlb_fill() to name a few.
->=20
->=20
-> And added support for more than one byte for the notdirty case in
->=20
-> commit e2faabee78ff127848f59892747d4c07c56de033
-> Author: Jessica Clarke <jrtc27@jrtc27.com>
-> Date:=C2=A0=C2=A0 Fri Nov 10 21:43:03 2023 -0800
->=20
-> =C2=A0=C2=A0=C2=A0=C2=A0 accel/tcg: Forward probe size on to notdirty_wri=
-te
-> =C2=A0=C2=A0=C2=A0=C2=A0=20
-> =C2=A0=C2=A0=C2=A0=C2=A0 Without this, we just dirty a single byte, and s=
-o if the caller
-> writes
-> =C2=A0=C2=A0=C2=A0=C2=A0 more than one byte to the host memory then we wo=
-n't have
-> invalidated any
-> =C2=A0=C2=A0=C2=A0=C2=A0 translation blocks that start after the first by=
-te and overlap
-> those
-> =C2=A0=C2=A0=C2=A0=C2=A0 writes.
->=20
-> So I guess it's rather hard to find a "Fixes:" tag, because likely
-> it's been
-> broken forever?
+On Mon, 27 Jan 2025 at 23:26, Richard Henderson
+<richard.henderson@linaro.org> wrote:
+>
+> Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+> ---
+>  target/arm/tcg/translate.h     |  6 ++--
+>  target/arm/tcg/translate-vfp.c | 54 +++++++++++++++++-----------------
+>  2 files changed, 30 insertions(+), 30 deletions(-)
+>
+> diff --git a/target/arm/tcg/translate.h b/target/arm/tcg/translate.h
+> index 59e780df2e..6ce2471aa6 100644
+> --- a/target/arm/tcg/translate.h
+> +++ b/target/arm/tcg/translate.h
+> @@ -674,7 +674,7 @@ static inline CPUARMTBFlags arm_tbflags_from_tb(const TranslationBlock *tb)
+>   * Enum for argument to fpstatus_ptr().
+>   */
+>  typedef enum ARMFPStatusFlavour {
+> -    FPST_FPCR_A32,
+> +    FPST_A32,
+>      FPST_FPCR_A64,
+>      FPST_FPCR_F16_A32,
+>      FPST_FPCR_F16_A64,
+> @@ -692,7 +692,7 @@ typedef enum ARMFPStatusFlavour {
+>   * been set up to point to the requested field in the CPU state struct.
+>   * The options are:
+>   *
+> - * FPST_FPCR_A32
+> + * FPST_A32
+>   *   for AArch32 non-FP16 operations controlled by the FPCR
 
-Yes, I thought about this too and gave up.
-However, I now wonder if we still need one for non-philosophical, but
-rather practical backporting reasons? Then
+So the reason we had "FPCR" in the names here is, as the
+comment notes, because the original distinction was
+"operations that use the 'standard FPSCR value'" versus
+"operations controlled by the FPCR". But I think with the
+profusion of float_status values we've ended up with,
+most of which are sort-of-but-not-entirely controlled
+by FPCR bits in one way or another, that the "FPCR"
+part of the constant name has outlived its usefulness.
+So I'm happy with renaming these to be shorter.
 
-Fixes: e2faabee78ff ("accel/tcg: Forward probe size on to
-notdirty_write")
-
-(v8.2.0+) should be the right one I think?
-
-> > When this happens, QEMU executes a mix of old and new code. This
-> > quickly leads to either a SIGSEGV or a SIGILL in case the old code
-> > ends in the middle of a new instruction.
-> >=20
-> > Fix by passing the true size.
->=20
->=20
-> Reviewed-by: David Hildenbrand <david@redhat.com>
-
+thanks
+-- PMM
 
