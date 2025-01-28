@@ -4,94 +4,69 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id ABE1CC0218A
-	for <qemu-devel@archiver.kernel.org>; Tue, 28 Jan 2025 09:03:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D624AC0218A
+	for <qemu-devel@archiver.kernel.org>; Tue, 28 Jan 2025 09:07:14 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tchUs-0003Iw-VE; Tue, 28 Jan 2025 04:03:02 -0500
+	id 1tchYZ-00065j-JM; Tue, 28 Jan 2025 04:06:51 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1tchUk-0003GU-UN
- for qemu-devel@nongnu.org; Tue, 28 Jan 2025 04:02:55 -0500
-Received: from mail-ej1-x629.google.com ([2a00:1450:4864:20::629])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1tchUh-0006xd-Ob
- for qemu-devel@nongnu.org; Tue, 28 Jan 2025 04:02:54 -0500
-Received: by mail-ej1-x629.google.com with SMTP id
- a640c23a62f3a-ab2e308a99bso1035414366b.1
- for <qemu-devel@nongnu.org>; Tue, 28 Jan 2025 01:02:51 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1738054970; x=1738659770; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:user-agent
- :references:in-reply-to:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=gjjqAXex8o3R+VWVCq3+VLzEEhpnDBIE+N34LWU+rt8=;
- b=FK3HQ2obzKlWKUO39QNT7mdZA+v5cQykL3w6n1XzCejpbDIdZAG+4l2ZH1gSJkEdAO
- whOWWb0XrLnAmXxUcGbCOz0996xIkJLys4GIVy3Go8I3+TlzPNetiuSgycgBy1FtcPU9
- J4iiOCIFnErxeb12tqnQD0L9Ekq/KazK1safNpuicXkJogVFKbXjDaP61i7bOTREVQ3o
- McKOZG3pb2jClVaqkeC7TuYZgCFW5D8kwxt4Jq0PSaLOTb5ZUNJC8smtEN75jTVO2WGt
- KULwjpjIneqZnLJdxi87nIt/mz44HsRQjbeZOBOpzEpgyN5JXVMggZBwHcCYcox8S/J8
- fFQQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1738054970; x=1738659770;
- h=content-transfer-encoding:mime-version:message-id:date:user-agent
- :references:in-reply-to:subject:cc:to:from:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=gjjqAXex8o3R+VWVCq3+VLzEEhpnDBIE+N34LWU+rt8=;
- b=YRtxE4ujWXk8vXNwVytIu/gkKC1Nmu7Iw6xQmrOOweG2s0EMEIafREvighC65fh89u
- iwWlhbNCo+c7LmN+6etD+aKcz0cqbumuaduLYvaM9S6ovJCYO2QABOPBhkd/41xJ3UTr
- 9ROXAqnND4NwumkZpX03JkgGToHJDq0fgTPTwOpqagJ6Nzw/7W3toMVl+PxIRaRJggWU
- lnowJbZV3aydGmgbdR4dWHbsXZds4ILuBtfrEzqbLXHZptWfmLNgZy9zxj8/qrphUtr5
- ST1R4arI1S3/PY+Usmc5IBhUdlSdxgMTPXEDWj29sCK5cSweZhzPsJ7pn3cwN5pQLWj/
- McfA==
-X-Forwarded-Encrypted: i=1;
- AJvYcCX8M9Wf6zB71U5x9M9En9H6gDQWef+F0hIeXAbppWCoPbRCpCRu4lmuXy8CqOUD64nhwBROLI5oJDgE@nongnu.org
-X-Gm-Message-State: AOJu0YzeaFV2Jjt/gwPHhskKvYnw8JA5she7V4E5gXSiMGNIK62kqUy9
- PPaD1Y7ZhhkNuqvT66Tty4LH33HNxt9J9S4lTwAW6VtoJy5mugaks9VRTpKlcHY=
-X-Gm-Gg: ASbGncuWhyBDKf1NMUe+NLqaQppEE3VRj1tOukGtYrI+7Cv9AyPdZ56tcw0Tu0BfwgO
- jGevjol/EaRGqaBv1Sf2b5nl8dNssGyEXfTCBl6mZXJwbmDoeQDxTYBzgZnIURWLz3n9Yh59pMC
- GrZroc9I+Q+DbKZp4Mo6kycQBLT52Vi7AFP3TXW9Vr/zHC8hOtRg4qWEWTpgIh9MoPttS+bPdIi
- XZUaMr0t42ZJ2pjXHD1pTkRnxHpSdQmRlV8tSfpWRB/jd6dVHrcc2rNbbhwJZ+oFp8lOe1K+exQ
- /LCm2qLSEqDg2A==
-X-Google-Smtp-Source: AGHT+IG4wX6NltI+yIxIDiCtUSKLTDWzO8bditeLUvc+kUqIh0iId5trPSv/U9FBYNunumDR1/9wJQ==
-X-Received: by 2002:a17:906:6a24:b0:ab3:8f33:408a with SMTP id
- a640c23a62f3a-ab6bbbcd33emr247900266b.19.1738054969952; 
- Tue, 28 Jan 2025 01:02:49 -0800 (PST)
-Received: from draig.lan ([85.9.250.243]) by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-ab6760fbf38sm742420666b.143.2025.01.28.01.02.49
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 28 Jan 2025 01:02:49 -0800 (PST)
-Received: from draig (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id 719AF5F8D1;
- Tue, 28 Jan 2025 09:02:48 +0000 (GMT)
-From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
-To: Thomas Huth <thuth@redhat.com>
-Cc: Richard Henderson <richard.henderson@linaro.org>,
- qemu-devel@nongnu.org,  peter.maydell@linaro.org,  stefanha@redhat.com,
- pbonzini@redhat.com,  berrange@redhat.com,  philmd@linaro.org,
- mark.cave-ayland@ilande.co.uk,  Liviu Ionescu <ilg@livius.net>
-Subject: Re: [PATCH 0/1] meson: Deprecate 32-bit host systems
-In-Reply-To: <9a280789-9248-4eca-b50c-048fc58e3f53@redhat.com> (Thomas Huth's
- message of "Tue, 28 Jan 2025 05:00:35 +0100")
-References: <20250128004254.33442-1-richard.henderson@linaro.org>
- <9a280789-9248-4eca-b50c-048fc58e3f53@redhat.com>
-User-Agent: mu4e 1.12.8; emacs 29.4
-Date: Tue, 28 Jan 2025 09:02:48 +0000
-Message-ID: <87plk72tvr.fsf@draig.linaro.org>
+ (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
+ id 1tchYS-00064O-7v; Tue, 28 Jan 2025 04:06:46 -0500
+Received: from mgamail.intel.com ([192.198.163.19])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
+ id 1tchYN-000814-Pm; Tue, 28 Jan 2025 04:06:41 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+ d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+ t=1738055200; x=1769591200;
+ h=date:from:to:cc:subject:message-id:references:
+ mime-version:in-reply-to;
+ bh=svtEERmO0y/WUJqzqzMGiKh6vDD28jhLrj06Mv458Ns=;
+ b=nWz4BStWQqWIGNyRWA5H0UHLb2g5jFu5GxdJ2GtPH7Xj+7HzYmF+r8N6
+ 95mwbwrNKUm0tPTL2qebYKDXDTMy4kLW3VgbmvtyJv6XssATUfryzrLsE
+ 6c12iCNCW4z1cb5Z1PJc2efp/NbmpTpXVihwnJa8T56rfY4ydu0wcCzTx
+ FLdk2Z8jw+AqCtMzmanTV+COKgV3vErz9Pc6vmLW2W5y3IKC6QjDJOZRg
+ j4G9KLUqFvXInp/sQQ4kCiAr1iixwvDqy7PV2t11ymk1ovnDespbmnBsG
+ aRfS/Nv0PmbAZhiVtD1+gpaKrVFFrDEYtlLI0/eQiSL7e+pF4rz4K6N1E w==;
+X-CSE-ConnectionGUID: EvW37kJMQqeq3DBLTAgfjA==
+X-CSE-MsgGUID: q2PmtiusSHK/pU0r221m6w==
+X-IronPort-AV: E=McAfee;i="6700,10204,11328"; a="37733141"
+X-IronPort-AV: E=Sophos;i="6.13,240,1732608000"; d="scan'208";a="37733141"
+Received: from fmviesa003.fm.intel.com ([10.60.135.143])
+ by fmvoesa113.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 28 Jan 2025 01:06:35 -0800
+X-CSE-ConnectionGUID: VdeX3PHHQ7KJEtMRXcaFKA==
+X-CSE-MsgGUID: yGmw4x6ORRGfGtebLB79DQ==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.12,224,1728975600"; d="scan'208";a="112682506"
+Received: from liuzhao-optiplex-7080.sh.intel.com (HELO localhost)
+ ([10.239.160.39])
+ by fmviesa003.fm.intel.com with ESMTP; 28 Jan 2025 01:06:34 -0800
+Date: Tue, 28 Jan 2025 17:25:59 +0800
+From: Zhao Liu <zhao1.liu@intel.com>
+To: Paolo Bonzini <pbonzini@redhat.com>
+Cc: qemu-devel@nongnu.org, qemu-rust@nongnu.org
+Subject: Re: [PATCH 08/10] rust: qdev: switch from legacy reset to Resettable
+Message-ID: <Z5iip55RwMTs8lNT@intel.com>
+References: <20250117194003.1173231-1-pbonzini@redhat.com>
+ <20250117194003.1173231-9-pbonzini@redhat.com>
+ <Z5dgn5MQNGEa5lry@intel.com>
+ <CABgObfY1LqB=9KOH0NOxdu+2gF4K+Xg9JqHWLfS9jpnN6Hp6wQ@mail.gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::629;
- envelope-from=alex.bennee@linaro.org; helo=mail-ej1-x629.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <CABgObfY1LqB=9KOH0NOxdu+2gF4K+Xg9JqHWLfS9jpnN6Hp6wQ@mail.gmail.com>
+Received-SPF: pass client-ip=192.198.163.19; envelope-from=zhao1.liu@intel.com;
+ helo=mgamail.intel.com
+X-Spam_score_int: -56
+X-Spam_score: -5.7
+X-Spam_bar: -----
+X-Spam_report: (-5.7 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.3,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -108,63 +83,20 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Thomas Huth <thuth@redhat.com> writes:
+> For now I prefer to make things homogeneous... this way if someone has
+> to copy the code into a wrapper for a new interface they don't have to
+> wonder about small differences.
 
-> On 28/01/2025 01.42, Richard Henderson wrote:
->> Time for our biennial attempt to kill ancient hosts.
->> I've been re-working the tcg code generator a bit over the holidays.
->> One place that screams for a bit of cleanup is with 64-bit guest
->> addresses on 32-bit hosts.  Of course the best "cleanup" is to not
->> have to handle such silliness at all.
->> Two years after Thomas' last attempt,
->>    https://lore.kernel.org/qemu-devel/20230130114428.1297295-1-thuth@red=
-hat.com/
->> which resulted only in deprecation of i686 host for system
->> emulation.
->> By itself, this just isn't enough for large-scale cleanups.
->> I'll note that we've separately deprecated mips32, set to expire
->> with the end of Debian bookworm, set to enter LTS in June 2026.
->> I'll note that there is *already* no Debian support for ppc32,
->> and that I am currently unable to cross-compile that host at all.
->
-> IIRC the biggest pushback that I got two years ago was with regards to
-> 32-bit arm: The recommended version of Raspberry Pi OS is still
-> 32-bit:
->
->  https://lore.kernel.org/qemu-devel/F852C238-77B8-4E24-9494-8D060EB78F9F@=
-livius.net/
->
-> And looking at https://www.raspberrypi.com/software/operating-systems/
-> this still seems to be the case...
->
-> So I guess the main question is now: Would it be ok to kill support
-> for 32-bit Raspberry Pi OS nowadays?
+Yes.
 
-I would argue yes for a few reasons.
+> (This by the way will also be a reason to use function pointers for
+> character devices as well, instead of the trait approach that I used
+> in https://lists.nongnu.org/archive/html/qemu-rust/2024-12/msg00006.html).
+> 
 
-  - you can't buy 32 bit only Pi's AFAICT, even the Pi Zero 2W can work
-    with a 64 bit OS.
+Got it.
 
-  - It's not like the versions shipping in bullseye and bookworm will
-    stop working.
+Thanks,
+Zhao
 
-  - Even if we deprecate now there will likely be one more Debian
-    release cycle that gets 32 bit host support.
-
->> Showing my hand a bit, I am willing to limit deprecation to
->> 64-bit guests on 32-bit hosts.  But I'd prefer to go the whole hog:
->> unconditional support for TCG_TYPE_I64 would remove a *lot* of
->> 32-bit fallback code.
-
-I support going the whole hog. I would be curious what use cases still
-exist for an up to date 32-on-32 QEMU based emulation?=20
-
->
-> Sound like a good alternative to me!
->
->  Thomas
-
---=20
-Alex Benn=C3=A9e
-Virtualisation Tech Lead @ Linaro
 
