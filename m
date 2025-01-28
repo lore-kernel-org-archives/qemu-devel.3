@@ -4,78 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 951C6C0218A
-	for <qemu-devel@archiver.kernel.org>; Tue, 28 Jan 2025 20:18:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id EC74AC0218A
+	for <qemu-devel@archiver.kernel.org>; Tue, 28 Jan 2025 20:18:42 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tcrz4-0004cU-HX; Tue, 28 Jan 2025 15:14:54 -0500
+	id 1tcrxl-00028C-GV; Tue, 28 Jan 2025 15:13:33 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1tcryD-0002S2-Ll
- for qemu-devel@nongnu.org; Tue, 28 Jan 2025 15:14:02 -0500
-Received: from mail-wm1-x32d.google.com ([2a00:1450:4864:20::32d])
+ id 1tcrxk-00027W-Jn
+ for qemu-devel@nongnu.org; Tue, 28 Jan 2025 15:13:32 -0500
+Received: from mail-wm1-x32c.google.com ([2a00:1450:4864:20::32c])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1tcry8-0001ga-Pq
- for qemu-devel@nongnu.org; Tue, 28 Jan 2025 15:13:58 -0500
-Received: by mail-wm1-x32d.google.com with SMTP id
- 5b1f17b1804b1-4363ae65100so68177995e9.0
- for <qemu-devel@nongnu.org>; Tue, 28 Jan 2025 12:13:56 -0800 (PST)
+ id 1tcrxi-0001aZ-RD
+ for qemu-devel@nongnu.org; Tue, 28 Jan 2025 15:13:32 -0500
+Received: by mail-wm1-x32c.google.com with SMTP id
+ 5b1f17b1804b1-438a3216fc2so62254775e9.1
+ for <qemu-devel@nongnu.org>; Tue, 28 Jan 2025 12:13:30 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1738095235; x=1738700035; darn=nongnu.org;
+ d=linaro.org; s=google; t=1738095209; x=1738700009; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=D4r0o4ouDgyMwto03p97/ZTNbKwsZTo7cBCLFrtLIeI=;
- b=z8TqQtIF7xIqYyxu4SkEksCVYXflEAg2QhMzux5bMiCNG92UeaefXTvx+BmIOpye4D
- kHgeMOWvARi6o9aUSYnopoDUY/bMxCoMrgNGrT81LWNee4bJcG1q/DcFrdrxXpoKg+dS
- zdD7JfdIoDDkwCScqxenUImJGrNhojboeAs45ZxIhjVVh6cJNUmPGTaLOjEL6SvgoyEf
- xJQhcjla+NntTtc4QMIOu/BmWSblp+NxxlulsN07eolOFgLQ3Gxazp3dJ333S0tdbsf1
- Y1rZvhd01q7jGSfkNjx1m6gk6oTRwSx58qwv4d0507r/zftltio7P/t0HN+37HLXGk1G
- 0GPQ==
+ :reply-to; bh=7fwK0HVGmxgRXSNDyN8ycHXrfWgJUyub54CCwlOJt4s=;
+ b=IYGps0yx+o12sJjAGVOuK0EGqdvavRs+6tvubEOHYzTtAwZ+5W+aoDxltHT9cyVbUA
+ MxG78f/phIdKH5NIp2NYWKzRIBSt85Ndfu+Ae+xx/WE1LcnbD40Y9zWJx9HMNAiymspj
+ C9k/Fn8XmFB8AL7sO3aLFu2iN3fMcB0uvJYMtA+FG90rjKLoTVa0FSfoB4WbPemDU77Z
+ QTNMqBRs7XypJbMVEXgAZmcJYNLsAiI4sgqJTnbg6KssS5vhJRObj1gVLIL6IO0qa5HE
+ NgtFfNWl0cZzsHUnkcyUpeSCRXmez5jWVyFpFfBZ1CCpUc16eKlUKdzLvtMsWDMpY4Bb
+ dXWg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1738095235; x=1738700035;
+ d=1e100.net; s=20230601; t=1738095209; x=1738700009;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=D4r0o4ouDgyMwto03p97/ZTNbKwsZTo7cBCLFrtLIeI=;
- b=ZCeoAKZRg/voR8qvgpHjQHUT+TiEQfr7H0Zupq0ikHUDbMwvhO2Dgr1p3rDqL/JMl2
- Qaj1SZM8FKbzfJum5EgJyox0zgx9Ee1oHkAfYAigXcsFCqqxIO3Hu4J0HVTdDoofeb4I
- Kr2qnhpcUnULlJv7ZA8Qp8eGlsMLZc+cuaSsSlt7HZYDwWLhJakFj93WuD+Tps7sbwNZ
- C6YFlISVleS+Enanbtr5V/QlNYycmolwqOIIm5FS/XBQcJpiZWo8HMzCTuAncsfw0vaI
- ZaC5SzOFf1MIipjNAkVoa9kue5xNng+r+/mstw4VBRLfUBfFVOdDTcSq9LCubL79ASP3
- XgbA==
-X-Gm-Message-State: AOJu0YyXupYtiJYqWCV9OMmXIGYz7fS0eZ5KiSxVygRCRSjKe4uJ3K8+
- SQ6szyj+aB0o33IhwdZCHJUOogqQq4ltbLMVkHyLzZvcK6jta7MCu8dHuQmSJdghSUfaTY9W8p7
- 0
-X-Gm-Gg: ASbGncsJrUlI2JOX71g2ok6kDT/uG0CxVy/9HO5oJJ6hoGG0/3PwQX//yFaRX27e4vG
- a0TeNemNhKizmEKRUjk6FBEhJYNOgwP6w6l+43fHQbqbRpXqpWcnXtXeC3BN6/j2RN9CwdGB7KS
- gfk29dX8Y8TYS6FB/ZMx5bS5fmqlHcEfOWPkr/F64C+gJPNxR3JXOVdMnYB0wrnSPZahOZ1w2P6
- GMd1ILjPH7KOB7hPL484+p6ARboZR8xHM8kzradlxkPVH1IvNOIvLuoYk3z8B6goh9sJ4PmdCOo
- 8ArQEUr/VWcIdH9eChZMkw==
-X-Google-Smtp-Source: AGHT+IFLadsEv3bLbWDJkntoAW9qXMCkG1KxbFK1EVtTpVFqfshqhxPgtkwA1JyqoOzS+o1Hi+8A4g==
-X-Received: by 2002:a05:600c:1e02:b0:434:a802:e9a6 with SMTP id
- 5b1f17b1804b1-438dc3c22acmr3126435e9.7.1738095235227; 
- Tue, 28 Jan 2025 12:13:55 -0800 (PST)
+ bh=7fwK0HVGmxgRXSNDyN8ycHXrfWgJUyub54CCwlOJt4s=;
+ b=ZiMdtWN5ga4eAak5T7LN44t/WD6KKxtSGZCNnB7BXQyoYf7cdAQAM3/0VSLt+abukm
+ 4SDFaAkScJhOwoXOlF6JuwEBP8pAj2GZyt2WZ45yqAVvtrw+ojuCD8QRiX6wAF50mS/M
+ wAiYHVcozpDS/Vu9xsQbPh1nVWPO24/2FbzO220m1jGw/dwwahaWG9VX/S7CFReB0+oN
+ 3rswAF9id2x1LVpbDu3B97UYVA8lewthj02hHaX+tq4GiZV4WW85I86iRBMMgXRygPJI
+ 8C9Kz5O0GnjiT+xFl8in1t/gYXJPk1PHhQR7cv+pFlOT3sE8TAFwhL+ch6OznLMEC8eG
+ z6Yg==
+X-Gm-Message-State: AOJu0Yxl3ADGF0Dh9Eo5rWw7N+mC1tbDUCkJIEhlgjaWXzgX7NSyJoyb
+ PPYKRAh41wsW7mXH5wXSe3U8r2R7tgODHAckqDJIUleylLBVF11hLkLInUKPPv+ANqYlJGna3FF
+ I
+X-Gm-Gg: ASbGnctPwMtwttKR9ZfauJnwWuVfY3fuF3z0UWKJSdFk1p2g1U286BrGBCsFgsNdQsm
+ ybCZkAWnKW5zdFzkDzBD/z0k5R9ra0mKijAW+OVdhdMSpGixZTonX2Q6zdiv67NreeBPxhISSyO
+ 3fcLcCBO1pNtwvbkVCvqL+BBRdPjKaWoT1CTWM/bwHBqFX+QPjsxYX1Abf+F4F2gIwlwOR+TbWh
+ L3IGp3JYOqtAl5FeR/2iMkwe5m0ieFcSd6xU6kDg9rtZRVPsVy1Gl/rRFnEYoGyFRbejxv6DWsh
+ YeHBiOcHa/i0wQW9fH17jg==
+X-Google-Smtp-Source: AGHT+IHRQQLZA53dRNC4yTPEtjGiJ8iOqgUeXfC6Iq1IXGDs4rIZPTfOgqdyidFip+qtVOmjE8YACg==
+X-Received: by 2002:a05:600c:4fd6:b0:434:ff30:a159 with SMTP id
+ 5b1f17b1804b1-438dc3360b9mr3020415e9.0.1738095209421; 
+ Tue, 28 Jan 2025 12:13:29 -0800 (PST)
 Received: from orth.archaic.org.uk (orth.archaic.org.uk. [2001:8b0:1d0::2])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-438bd4fa3efsm182524105e9.2.2025.01.28.12.13.54
+ 5b1f17b1804b1-438bd4fa3efsm182524105e9.2.2025.01.28.12.13.27
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 28 Jan 2025 12:13:54 -0800 (PST)
+ Tue, 28 Jan 2025 12:13:28 -0800 (PST)
 From: Peter Maydell <peter.maydell@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 36/36] hw/usb/canokey: Fix buffer overflow for OUT packet
-Date: Tue, 28 Jan 2025 20:13:14 +0000
-Message-Id: <20250128201314.44038-37-peter.maydell@linaro.org>
+Subject: [PULL 12/36] hw/arm/stellaris: Map both I2C controllers
+Date: Tue, 28 Jan 2025 20:12:50 +0000
+Message-Id: <20250128201314.44038-13-peter.maydell@linaro.org>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20250128201314.44038-1-peter.maydell@linaro.org>
 References: <20250128201314.44038-1-peter.maydell@linaro.org>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32d;
- envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x32d.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::32c;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x32c.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -98,82 +99,76 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Hongren Zheng <i@zenithal.me>
+From: Philippe Mathieu-Daudé <philmd@linaro.org>
 
-When USBPacket in OUT direction has larger payload
-than the ep_out_buffer (of size 512), a buffer overflow
-would occur.
+There are 2 I2C controllers, map them both, removing
+the unimplemented one. Keep the OLED controller on the
+first I2C bus.
 
-It could be fixed by limiting the size of usb_packet_copy
-to be at most buffer size. Further optimization gets rid
-of the ep_out_buffer and directly uses ep_out as the target
-buffer.
-
-This is reported by a security researcher who artificially
-constructed an OUT packet of size 2047. The report has gone
-through the QEMU security process, and as this device is for
-testing purpose and no deployment of it in virtualization
-environment is observed, it is triaged not to be a security bug.
-
-Cc: qemu-stable@nongnu.org
-Fixes: d7d34918551dc48 ("hw/usb: Add CanoKey Implementation")
-Reported-by: Juan Jose Lopez Jaimez <thatjiaozi@gmail.com>
-Signed-off-by: Hongren Zheng <i@zenithal.me>
-Message-id: Z4TfMOrZz6IQYl_h@Sun
+Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
+Message-id: 20250110160204.74997-7-philmd@linaro.org
+[PMM: tweak to appease maybe-use-uninitialized warning]
 Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
 ---
- hw/usb/canokey.h | 4 ----
- hw/usb/canokey.c | 6 +++---
- 2 files changed, 3 insertions(+), 7 deletions(-)
+ hw/arm/stellaris.c | 21 +++++++++++++--------
+ 1 file changed, 13 insertions(+), 8 deletions(-)
 
-diff --git a/hw/usb/canokey.h b/hw/usb/canokey.h
-index e528889d332..1b60d734850 100644
---- a/hw/usb/canokey.h
-+++ b/hw/usb/canokey.h
-@@ -24,8 +24,6 @@
- #define CANOKEY_EP_NUM 3
- /* BULK/INTR IN can be up to 1352 bytes, e.g. get key info */
- #define CANOKEY_EP_IN_BUFFER_SIZE 2048
--/* BULK OUT can be up to 270 bytes, e.g. PIV import cert */
--#define CANOKEY_EP_OUT_BUFFER_SIZE 512
+diff --git a/hw/arm/stellaris.c b/hw/arm/stellaris.c
+index 82f935cb329..c3c3fd0410e 100644
+--- a/hw/arm/stellaris.c
++++ b/hw/arm/stellaris.c
+@@ -1021,6 +1021,8 @@ static void stellaris_init(MachineState *ms, stellaris_board_info *board)
+       { 0x40004000, 0x40005000, 0x40006000, 0x40007000,
+         0x40024000, 0x40025000, 0x40026000};
+     static const int gpio_irq[NUM_GPIO] = {0, 1, 2, 3, 4, 30, 31};
++    static const uint32_t i2c_addr[NUM_I2C] = {0x40020000, 0x40021000};
++    static const int i2c_irq[NUM_I2C] = {8, 37};
  
- typedef enum {
-     CANOKEY_EP_IN_WAIT,
-@@ -59,8 +57,6 @@ typedef struct CanoKeyState {
-     /* OUT pointer to canokey recv buffer */
-     uint8_t *ep_out[CANOKEY_EP_NUM];
-     uint32_t ep_out_size[CANOKEY_EP_NUM];
--    /* For large BULK OUT, multiple write to ep_out is needed */
--    uint8_t ep_out_buffer[CANOKEY_EP_NUM][CANOKEY_EP_OUT_BUFFER_SIZE];
+     /* Memory map of SoC devices, from
+      * Stellaris LM3S6965 Microcontroller Data Sheet (rev I)
+@@ -1062,7 +1064,7 @@ static void stellaris_init(MachineState *ms, stellaris_board_info *board)
+     qemu_irq adc;
+     int sram_size;
+     int flash_size;
+-    I2CBus *i2c;
++    DeviceState *i2c_dev[NUM_I2C] = { };
+     DeviceState *dev;
+     DeviceState *ssys_dev;
+     int i;
+@@ -1196,14 +1198,18 @@ static void stellaris_init(MachineState *ms, stellaris_board_info *board)
+         }
+     }
  
-     /* Properties */
-     char *file; /* canokey-file */
-diff --git a/hw/usb/canokey.c b/hw/usb/canokey.c
-index fae212f0530..e2d66179e0b 100644
---- a/hw/usb/canokey.c
-+++ b/hw/usb/canokey.c
-@@ -197,8 +197,8 @@ static void canokey_handle_data(USBDevice *dev, USBPacket *p)
-     switch (p->pid) {
-     case USB_TOKEN_OUT:
-         trace_canokey_handle_data_out(ep_out, p->iov.size);
--        usb_packet_copy(p, key->ep_out_buffer[ep_out], p->iov.size);
-         out_pos = 0;
-+        /* segment packet into (possibly multiple) ep_out */
-         while (out_pos != p->iov.size) {
-             /*
-              * key->ep_out[ep_out] set by prepare_receive
-@@ -207,8 +207,8 @@ static void canokey_handle_data(USBDevice *dev, USBPacket *p)
-              * to be the buffer length
-              */
-             out_len = MIN(p->iov.size - out_pos, key->ep_out_size[ep_out]);
--            memcpy(key->ep_out[ep_out],
--                    key->ep_out_buffer[ep_out] + out_pos, out_len);
-+            /* usb_packet_copy would update the pos offset internally */
-+            usb_packet_copy(p, key->ep_out[ep_out], out_len);
-             out_pos += out_len;
-             /* update ep_out_size to actual len */
-             key->ep_out_size[ep_out] = out_len;
+-    if (DEV_CAP(2, I2C(0))) {
+-        dev = sysbus_create_simple(TYPE_STELLARIS_I2C, 0x40020000,
+-                                   qdev_get_gpio_in(nvic, 8));
+-        i2c = (I2CBus *)qdev_get_child_bus(dev, "i2c");
+-        if (board->peripherals & BP_OLED_I2C) {
+-            i2c_slave_create_simple(i2c, "ssd0303", 0x3d);
++    for (i = 0; i < NUM_I2C; i++) {
++        if (DEV_CAP(2, I2C(i))) {
++            i2c_dev[i] = sysbus_create_simple(TYPE_STELLARIS_I2C, i2c_addr[i],
++                                              qdev_get_gpio_in(nvic,
++                                                               i2c_irq[i]));
+         }
+     }
++    if (board->peripherals & BP_OLED_I2C) {
++        I2CBus *bus = (I2CBus *)qdev_get_child_bus(i2c_dev[0], "i2c");
++
++        i2c_slave_create_simple(bus, "ssd0303", 0x3d);
++    }
+ 
+     for (i = 0; i < NUM_UART; i++) {
+         if (DEV_CAP(2, UART(i))) {
+@@ -1382,7 +1388,6 @@ static void stellaris_init(MachineState *ms, stellaris_board_info *board)
+     /* Add dummy regions for the devices we don't implement yet,
+      * so guest accesses don't cause unlogged crashes.
+      */
+-    create_unimplemented_device("i2c-2", 0x40021000, 0x1000);
+     create_unimplemented_device("PWM", 0x40028000, 0x1000);
+     create_unimplemented_device("QEI-0", 0x4002c000, 0x1000);
+     create_unimplemented_device("QEI-1", 0x4002d000, 0x1000);
 -- 
 2.34.1
 
