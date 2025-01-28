@@ -4,100 +4,108 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 691D5C0218A
-	for <qemu-devel@archiver.kernel.org>; Tue, 28 Jan 2025 17:46:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7DADCC0218A
+	for <qemu-devel@archiver.kernel.org>; Tue, 28 Jan 2025 17:53:10 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tcpeh-0000YP-0V; Tue, 28 Jan 2025 12:45:43 -0500
+	id 1tcpl4-0002qj-Ar; Tue, 28 Jan 2025 12:52:18 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1tcpeU-0000Rr-Ge
- for qemu-devel@nongnu.org; Tue, 28 Jan 2025 12:45:35 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
+ id 1tcpky-0002q8-UV
+ for qemu-devel@nongnu.org; Tue, 28 Jan 2025 12:52:13 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1tcpeR-0008OP-9R
- for qemu-devel@nongnu.org; Tue, 28 Jan 2025 12:45:29 -0500
+ (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
+ id 1tcpkx-0000wl-2d
+ for qemu-devel@nongnu.org; Tue, 28 Jan 2025 12:52:12 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1738086320;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ s=mimecast20190719; t=1738086728;
+ h=from:from:reply-to:reply-to:subject:subject:date:date:
+ message-id:message-id:to:to:cc:cc:mime-version:mime-version:
+ content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=Zfqr89imXWDmMtnNPX5X8QpR+faPY8u+j0Hd9gtBUJ8=;
- b=KhHXPhwi28fQSP1ce+jI1ao3RboaVdoHNu6A3AvqjMancemH4xAoTH5zkpe3GfFS2XCg+a
- T8hZWM5B925GDGKZLGVWDaiwgEGPiFW4aSHkipmcF/1NjWt/tK33pnvTzR+njxUN0HQtkz
- AFPcwMWSEMZFmBhsNZTKqZqMytxaYoA=
-Received: from mail-wr1-f72.google.com (mail-wr1-f72.google.com
- [209.85.221.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=Co1qvkzN2SFQkO+88Cn3GMOo2A6hPGhIIGmHVtr2uK4=;
+ b=YAjvZ6DF/kUUZo2jvDAPex8rVR5Csf+OITAgt05OrM31kqvD03GdiZU7eBSuLMR+p46oaE
+ ds2olcEi4iiofv/50db1brEAvTsVNEkHMbMm+DBmADKslZiYhSRKRkQAK4GkYDpgM4BMH4
+ /ltbImBajEbNF8qmgBjXW6aysko4Js0=
+Received: from mail-wm1-f69.google.com (mail-wm1-f69.google.com
+ [209.85.128.69]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-298-_ngsqHd9OPyfsVjNTprp3A-1; Tue, 28 Jan 2025 12:45:19 -0500
-X-MC-Unique: _ngsqHd9OPyfsVjNTprp3A-1
-X-Mimecast-MFC-AGG-ID: _ngsqHd9OPyfsVjNTprp3A
-Received: by mail-wr1-f72.google.com with SMTP id
- ffacd0b85a97d-385dcae001fso2264486f8f.1
- for <qemu-devel@nongnu.org>; Tue, 28 Jan 2025 09:45:19 -0800 (PST)
+ us-mta-191-o2-bDIeuOnu1JlKIb8AdmQ-1; Tue, 28 Jan 2025 12:52:04 -0500
+X-MC-Unique: o2-bDIeuOnu1JlKIb8AdmQ-1
+X-Mimecast-MFC-AGG-ID: o2-bDIeuOnu1JlKIb8AdmQ
+Received: by mail-wm1-f69.google.com with SMTP id
+ 5b1f17b1804b1-43673af80a6so43629585e9.1
+ for <qemu-devel@nongnu.org>; Tue, 28 Jan 2025 09:52:03 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1738086318; x=1738691118;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=Zfqr89imXWDmMtnNPX5X8QpR+faPY8u+j0Hd9gtBUJ8=;
- b=VaUbCNGVOjLPIPj3KjaobRbci6+Mp0Zxt6ABtf4HrpcG3xdJHVOuardyckqEY6Gwik
- YlotAxFfrgudN0ieca2i3d6XJY8a3PvpCE9Ddh9obd1e0vpcIGNycSl/1Dd90fZinLTI
- FZ1JVv5RQ9sor9EBsIEvRyDL804bh1tYXWHkzvTaMRVUP2JqGbh+HiMmZYij9r3k/st6
- h1P6bgiWslgz+SCZkWZiYH1ZyZbmwYPATculk+6z49rWvVM4XTehe0LYPeJwbOE212xM
- kzCoSWlQV5OdRSAmbj1gYpyCCpP3/Q6aTy+5VqJf5Ws0zS+JLVIR64tzV/LseRzy2p3D
- mAXw==
+ d=1e100.net; s=20230601; t=1738086722; x=1738691522;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:reply-to:user-agent:mime-version:date
+ :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=Co1qvkzN2SFQkO+88Cn3GMOo2A6hPGhIIGmHVtr2uK4=;
+ b=qAdWkalaFGnGldRlRYbdJ6aXsz59IIB+7t6zfpvBVYG+7TUHUaq8qnwgFcj98pVo8L
+ ZgBvhNT/Iw/Vdf4H0aEhhgevM17H1g72t83ZY24jkveubcalgAZT+2rHlIp0wjlc+6TV
+ Nj4Nwf6FV5Sep+ttirVL+aE8jFYEnAo7cBROldC+03ak9tE+sZhIaE1kFuDD2e3GiXhm
+ 55as4R5ZRiiyyFKIQ09jSB5oYBAmLAbDinxvIvUPOrgFMqfI4ipMPJdX2gV9ws3tn+o4
+ PxKBrVG3KsA9CVF2k7EAyIfus2VCzyzT5q8DCXdUTBVbUa3hQNfpvIFzx7HC8cxDHwmy
+ tuAg==
 X-Forwarded-Encrypted: i=1;
- AJvYcCXl765f5BZQKe1t1GWfsZZz0wvempspbUGVEN8Ru4inDTcVGJkaLQREwk/3BZQ30GcTR6pD5FoII694@nongnu.org
-X-Gm-Message-State: AOJu0YxF67YoioklanqlFPpPfL0run3F6UaLCtPKkpA6oxTHws86wDnF
- afSyDIOLtkv2dc8uf2yvvRamww5mawBaPBZK/cYFTrTyFVNhlg1bSCiN4HvKkuO/Bw/HnHNOdSy
- KYx7qMARHXcIQ9aW+ACupZq7TvZecysf5KArryRFWfcfgEjBLF/Nt
-X-Gm-Gg: ASbGncucoK0NuNCSHvHHJ0Fh6RRp475jWLTbi9sJ4kgPlcoa7TkTH125ypUGaU4BZ0n
- fNlihgWRwEZLvoPjHjW5+vURZyZFISx5oxnpgC0GfYmnv5nOSv4FOOpAwGnEJ8DoKmCR0aNPPIW
- GIADfr0JKTjUJqev41mgaKATu3jQs89bD298GdEKe1P0RVImi7r5Wd0YfYxU7Mi3pYNYP/+Wlhs
- WUXC6Tp+/VSOOQvkrN7Hvn0GW6t6mQVBfPoFm+tFmdNlo1Cu9+JPRKdGL/AoM/YSb5RjkLy8Q==
-X-Received: by 2002:a05:6000:1287:b0:38a:4184:151c with SMTP id
- ffacd0b85a97d-38bf5675482mr37150656f8f.27.1738086318245; 
- Tue, 28 Jan 2025 09:45:18 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IG05BrGR1VyaTRayiSZONOSSIJjJsyNyeB94bV2zt+0V+DLja+3X5VG0RIFVxSQXk8rhI68UQ==
-X-Received: by 2002:a05:6000:1287:b0:38a:4184:151c with SMTP id
- ffacd0b85a97d-38bf5675482mr37150632f8f.27.1738086317802; 
- Tue, 28 Jan 2025 09:45:17 -0800 (PST)
-Received: from redhat.com ([2a02:14f:1ed:1cfa:28ca:8a9:c621:2a28])
+ AJvYcCWFdDJCoa06yfJgnzxUbD1sYuEdw5wdpBkCRn1DTxpPUFzusyC/CayAKhQ0/HEJYA7I+Vi/b5myaS7Q@nongnu.org
+X-Gm-Message-State: AOJu0YyxQlrmRtQrNklIw6o8Tbm96nw88dV7hOAeX8/Do7PgU0H25hLD
+ IW7w8g3d6Dchb6bAVRq+g3xrPbW+5afCC6RR3yX+9ebXH+SAUY4Ob89Po2ns43YB1CvYAnwioge
+ oHfkAcdQIngoPyuJ4jIgl0bbjC448aJwkep9dJDaQTfj8wiuuFjGU
+X-Gm-Gg: ASbGncsaVy9DqFAJzhG6Zsfbwlb4a6Z+gSd+aFEOvWXd5ndfjRGrHrPf9rmSj7v2Wg2
+ npwC+w+Uel/tMKzX6d1mviSwBemdwYXkyISbjZ3+xenXDHoIyGl14hgWeDApLb4z1NNlCSvFdWl
+ kKFIO69XTzYEI2OS7LPGLNayygnmJE95nd60BibclJ2ewD+NG+i6QMRrtxFCYomiyadxt9RZx9+
+ mSt6hXhS0MxtRMxiYN2z2y9zbg7E2wEzx2W5I3lf1BeFfVwKMOVloYxn1g0SQ6MzuK2Poio7fyY
+ xDTL48WsP7uLIZ4J9rgnn0w5U2Yer9dvmmAX7RbZXecPodmQTDcg
+X-Received: by 2002:a05:600c:4e12:b0:42c:b9c8:2bb0 with SMTP id
+ 5b1f17b1804b1-438913bdcd2mr378028665e9.4.1738086722489; 
+ Tue, 28 Jan 2025 09:52:02 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IFISPq2Lpr+KTh6IoE1YcmqB0qJlnyO3W645qDMYnMoefkRZFPfuXhZizP97zmMcLtGQj8h9g==
+X-Received: by 2002:a05:600c:4e12:b0:42c:b9c8:2bb0 with SMTP id
+ 5b1f17b1804b1-438913bdcd2mr378028445e9.4.1738086722074; 
+ Tue, 28 Jan 2025 09:52:02 -0800 (PST)
+Received: from ?IPV6:2a01:e0a:59e:9d80:527b:9dff:feef:3874?
+ ([2a01:e0a:59e:9d80:527b:9dff:feef:3874])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-38c4a160ba3sm3010862f8f.18.2025.01.28.09.45.15
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 28 Jan 2025 09:45:16 -0800 (PST)
-Date: Tue, 28 Jan 2025 12:45:13 -0500
-From: "Michael S. Tsirkin" <mst@redhat.com>
-To: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
-Cc: Igor Mammedov <imammedo@redhat.com>,
- Jonathan Cameron <Jonathan.Cameron@huawei.com>,
- Shiju Jose <shiju.jose@huawei.com>, qemu-arm@nongnu.org,
- qemu-devel@nongnu.org, Ani Sinha <anisinha@redhat.com>,
- linux-kernel@vger.kernel.org
-Subject: Re: [PATCH 08/11] acpi/generic_event_device: add an APEI error device
-Message-ID: <20250128124438-mutt-send-email-mst@kernel.org>
-References: <cover.1737560101.git.mchehab+huawei@kernel.org>
- <41b6846394154ddac4d00c3644cd2de577d10115.1737560101.git.mchehab+huawei@kernel.org>
- <20250124133054.1f06579c@imammedo.users.ipa.redhat.com>
- <20250128184202.14778f27@foz.lan>
+ 5b1f17b1804b1-438bd57517fsm173347395e9.38.2025.01.28.09.52.00
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Tue, 28 Jan 2025 09:52:01 -0800 (PST)
+Message-ID: <cb91da0e-9163-4e59-a060-4a76a077c5d5@redhat.com>
+Date: Tue, 28 Jan 2025 18:52:00 +0100
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20250128184202.14778f27@foz.lan>
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=mst@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] hw/arm/virt: Support larger highmem MMIO regions
+Content-Language: en-US
+To: Shameerali Kolothum Thodi <shameerali.kolothum.thodi@huawei.com>,
+ "Matthew R. Ochs" <mochs@nvidia.com>,
+ "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>,
+ "nathanc@nvidia.com" <nathanc@nvidia.com>
+Cc: "ddutile@redhat.com" <ddutile@redhat.com>,
+ "nicolinc@nvidia.com" <nicolinc@nvidia.com>,
+ "ankita@nvidia.com" <ankita@nvidia.com>
+References: <20250128160237.3379569-1-mochs@nvidia.com>
+ <73f3e4cf927845809c6b10424c00c0ff@huawei.com>
+From: Eric Auger <eric.auger@redhat.com>
+In-Reply-To: <73f3e4cf927845809c6b10424c00c0ff@huawei.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=170.10.129.124;
+ envelope-from=eric.auger@redhat.com; helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -33
 X-Spam_score: -3.4
 X-Spam_bar: ---
 X-Spam_report: (-3.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.3,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=unavailable autolearn_force=no
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -110,156 +118,140 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: eric.auger@redhat.com
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, Jan 28, 2025 at 06:42:02PM +0100, Mauro Carvalho Chehab wrote:
-> Em Fri, 24 Jan 2025 13:30:54 +0100
-> Igor Mammedov <imammedo@redhat.com> escreveu:
-> 
-> > On Wed, 22 Jan 2025 16:46:25 +0100
-> > Mauro Carvalho Chehab <mchehab+huawei@kernel.org> wrote:
-> > 
-> > > Adds a generic error device to handle generic hardware error
-> > > events as specified at ACPI 6.5 specification at 18.3.2.7.2:
-> > > https://uefi.org/specs/ACPI/6.5/18_Platform_Error_Interfaces.html#event-notification-for-generic-error-sources
-> > > using HID PNP0C33.
-> > > 
-> > > The PNP0C33 device is used to report hardware errors to
-> > > the guest via ACPI APEI Generic Hardware Error Source (GHES).
-> > > 
-> > > Co-authored-by: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
-> > > Co-authored-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
-> > > Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
-> > > Signed-off-by: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
-> > > Reviewed-by: Igor Mammedov <imammedo@redhat.com>
-> > > ---
-> > >  hw/acpi/aml-build.c                    | 10 ++++++++++
-> > >  hw/acpi/generic_event_device.c         |  8 ++++++++
-> > >  include/hw/acpi/acpi_dev_interface.h   |  1 +
-> > >  include/hw/acpi/aml-build.h            |  2 ++
-> > >  include/hw/acpi/generic_event_device.h |  1 +
-> > >  5 files changed, 22 insertions(+)
-> > > 
-> > > diff --git a/hw/acpi/aml-build.c b/hw/acpi/aml-build.c
-> > > index f8f93a9f66c8..e4bd7b611372 100644
-> > > --- a/hw/acpi/aml-build.c
-> > > +++ b/hw/acpi/aml-build.c
-> > > @@ -2614,3 +2614,13 @@ Aml *aml_i2c_serial_bus_device(uint16_t address, const char *resource_source)
-> > >  
-> > >      return var;
-> > >  }
-> > > +
-> > > +/* ACPI 5.0b: 18.3.2.6.2 Event Notification For Generic Error Sources */
-> > > +Aml *aml_error_device(void)
-> > > +{
-> > > +    Aml *dev = aml_device(ACPI_APEI_ERROR_DEVICE);
-> > > +    aml_append(dev, aml_name_decl("_HID", aml_string("PNP0C33")));
-> > > +    aml_append(dev, aml_name_decl("_UID", aml_int(0)));
-> > > +
-> > > +    return dev;
-> > > +}
-> > > diff --git a/hw/acpi/generic_event_device.c b/hw/acpi/generic_event_device.c
-> > > index fe537ed05c66..ce00c80054f4 100644
-> > > --- a/hw/acpi/generic_event_device.c
-> > > +++ b/hw/acpi/generic_event_device.c
-> > > @@ -26,6 +26,7 @@ static const uint32_t ged_supported_events[] = {
-> > >      ACPI_GED_PWR_DOWN_EVT,
-> > >      ACPI_GED_NVDIMM_HOTPLUG_EVT,
-> > >      ACPI_GED_CPU_HOTPLUG_EVT,
-> > > +    ACPI_GED_ERROR_EVT,
-> > >  };
-> > >  
-> > >  /*
-> > > @@ -116,6 +117,11 @@ void build_ged_aml(Aml *table, const char *name, HotplugHandler *hotplug_dev,
-> > >                             aml_notify(aml_name(ACPI_POWER_BUTTON_DEVICE),
-> > >                                        aml_int(0x80)));
-> > >                  break;
-> > > +            case ACPI_GED_ERROR_EVT:
-> > > +                aml_append(if_ctx,
-> > > +                           aml_notify(aml_name(ACPI_APEI_ERROR_DEVICE),
-> > > +                                      aml_int(0x80)));  
-> >                                                  ^^^^^
-> > nit: perhaps add a comment with intent and ref to spec wrt above  value
-> 
-> Will add this as with a define:
-> 
-> 	/*
-> 	 * ACPI 5.0b: 5.6.6 Device Object Notifications
-> 	 * Table 5-135 Error Device Notification Values
-> 	 */
-> 	#define ERROR_DEVICE_NOTIFICATION   0x80
-> 
-> (the spec here is the same as we used on this patch for aml_error_device()
-> function)
+Hi Matthew, Shameer,
 
-we do not do a lot of defines definetely not for 1 time used constants.
 
-just comment on top of the value.
+On 1/28/25 6:36 PM, Shameerali Kolothum Thodi wrote:
+>
+>> -----Original Message-----
+>> From: Matthew R. Ochs <mochs@nvidia.com>
+>> Sent: Tuesday, January 28, 2025 4:03 PM
+>> To: qemu-devel@nongnu.org; Shameerali Kolothum Thodi
+>> <shameerali.kolothum.thodi@huawei.com>; nathanc@nvidia.com
+>> Cc: ddutile@redhat.com; eric.auger@redhat.com; nicolinc@nvidia.com;
+>> ankita@nvidia.com
+>> Subject: [PATCH] hw/arm/virt: Support larger highmem MMIO regions
+>>
+>> The MMIO region size required to support virtualized environments with
+>> large PCI BAR regions can exceed the hardcoded limit configured in QEMU.
+>> For example, a VM with multiple NVIDIA Grace-Hopper GPUs passed
+>> through
+>> requires more MMIO memory than the amount provided by
+>> VIRT_HIGH_PCIE_MMIO
+>> (currently 512GB). Instead of updating VIRT_HIGH_PCIE_MMIO, introduce a
+>> new parameter, highmem-mmio-size, that specifies the MMIO size required
+>> to support the VM configuration.
+>>
+>> Example usage with 1TB MMIO region size:
+>> 	-machine virt,gic-version=3,highmem-mmio-size=1099511627776
+> I guess you could do highmem-mmio-size=1024G as well.
+>
+>> Signed-off-by: Matthew R. Ochs <mochs@nvidia.com>
+>> ---
+>>  docs/system/arm/virt.rst |  4 ++++
+>>  hw/arm/virt.c            | 36 ++++++++++++++++++++++++++++++++++++
+>>  2 files changed, 40 insertions(+)
+>>
+>> diff --git a/docs/system/arm/virt.rst b/docs/system/arm/virt.rst
+>> index e67e7f0f7c50..36344554788a 100644
+>> --- a/docs/system/arm/virt.rst
+>> +++ b/docs/system/arm/virt.rst
+>> @@ -138,6 +138,10 @@ highmem-mmio
+>>    Set ``on``/``off`` to enable/disable the high memory region for PCI MMIO.
+>>    The default is ``on``.
+>>
+>> +highmem-mmio-size
+>> +  Set extended MMIO memory map size. Must be a power-of-2 and greater
+maybe keep the existing terminology, ie. high PCIE MMIO region.
+extended_memmap
+Would deserve to add some comments on top of extended_memmap[] too.
+>> than
+>> +  the default size.
+>> +
+>>  gic-version
+>>    Specify the version of the Generic Interrupt Controller (GIC) to provide.
+>>    Valid values are:
+>> diff --git a/hw/arm/virt.c b/hw/arm/virt.c
+>> index 49eb0355ef0c..43d47ffedd9a 100644
+>> --- a/hw/arm/virt.c
+>> +++ b/hw/arm/virt.c
+>> @@ -2773,6 +2773,35 @@ static void virt_set_highmem_mmio(Object *obj,
+>> bool value, Error **errp)
+>>      vms->highmem_mmio = value;
+>>  }
+>>
+>> +static void virt_get_highmem_mmio_size(Object *obj, Visitor *v, const
+>> char *name,
+>> +                          void *opaque, Error **errp)
+>> +{
+>> +    uint64_t size = extended_memmap[VIRT_HIGH_PCIE_MMIO].size;
+>> +
+>> +    visit_type_size(v, name, &size, errp);
+>> +}
+>> +
+>> +static void virt_set_highmem_mmio_size(Object *obj, Visitor *v, const char
+>> *name,
+>> +                          void *opaque, Error **errp)
+>> +{
+>> +    uint64_t size;
+>> +
+>> +    if (!visit_type_size(v, name, &size, errp))
+>> +        return;
+> Qemu style mandates braces around.
+>
+>> +
+>> +    if (!is_power_of_2(size)) {
+>> +        error_setg(errp, "highmem_mmio_size is not a power-of-2");
+>> +        return;
+>> +    }
+>> +
+>> +    if (size < extended_memmap[VIRT_HIGH_PCIE_MMIO].size) {
+> Not sure it is better to fallback to default size here instead of setting error.
+I think if the user sets a value it shall be obeyed
+Note that per the dynamic memory map algo, changing the size will also
+change the base address. See
 
-> > 
-> > > +                break;
-> > >              case ACPI_GED_NVDIMM_HOTPLUG_EVT:
-> > >                  aml_append(if_ctx,
-> > >                             aml_notify(aml_name("\\_SB.NVDR"),
-> > > @@ -295,6 +301,8 @@ static void acpi_ged_send_event(AcpiDeviceIf *adev, AcpiEventStatusBits ev)
-> > >          sel = ACPI_GED_MEM_HOTPLUG_EVT;
-> > >      } else if (ev & ACPI_POWER_DOWN_STATUS) {
-> > >          sel = ACPI_GED_PWR_DOWN_EVT;
-> > > +    } else if (ev & ACPI_GENERIC_ERROR) {
-> > > +        sel = ACPI_GED_ERROR_EVT;
-> > >      } else if (ev & ACPI_NVDIMM_HOTPLUG_STATUS) {
-> > >          sel = ACPI_GED_NVDIMM_HOTPLUG_EVT;
-> > >      } else if (ev & ACPI_CPU_HOTPLUG_STATUS) {
-> > > diff --git a/include/hw/acpi/acpi_dev_interface.h b/include/hw/acpi/acpi_dev_interface.h
-> > > index 68d9d15f50aa..8294f8f0ccca 100644
-> > > --- a/include/hw/acpi/acpi_dev_interface.h
-> > > +++ b/include/hw/acpi/acpi_dev_interface.h
-> > > @@ -13,6 +13,7 @@ typedef enum {
-> > >      ACPI_NVDIMM_HOTPLUG_STATUS = 16,
-> > >      ACPI_VMGENID_CHANGE_STATUS = 32,
-> > >      ACPI_POWER_DOWN_STATUS = 64,
-> > > +    ACPI_GENERIC_ERROR = 128,
-> > >  } AcpiEventStatusBits;
-> > >  
-> > >  #define TYPE_ACPI_DEVICE_IF "acpi-device-interface"
-> > > diff --git a/include/hw/acpi/aml-build.h b/include/hw/acpi/aml-build.h
-> > > index c18f68134246..f38e12971932 100644
-> > > --- a/include/hw/acpi/aml-build.h
-> > > +++ b/include/hw/acpi/aml-build.h
-> > > @@ -252,6 +252,7 @@ struct CrsRangeSet {
-> > >  /* Consumer/Producer */
-> > >  #define AML_SERIAL_BUS_FLAG_CONSUME_ONLY        (1 << 1)
-> > >  
-> > > +#define ACPI_APEI_ERROR_DEVICE   "GEDD"
-> > >  /**
-> > >   * init_aml_allocator:
-> > >   *
-> > > @@ -382,6 +383,7 @@ Aml *aml_dma(AmlDmaType typ, AmlDmaBusMaster bm, AmlTransferSize sz,
-> > >               uint8_t channel);
-> > >  Aml *aml_sleep(uint64_t msec);
-> > >  Aml *aml_i2c_serial_bus_device(uint16_t address, const char *resource_source);
-> > > +Aml *aml_error_device(void);
-> > >  
-> > >  /* Block AML object primitives */
-> > >  Aml *aml_scope(const char *name_format, ...) G_GNUC_PRINTF(1, 2);
-> > > diff --git a/include/hw/acpi/generic_event_device.h b/include/hw/acpi/generic_event_device.h
-> > > index d2dac87b4a9f..1c18ac296fcb 100644
-> > > --- a/include/hw/acpi/generic_event_device.h
-> > > +++ b/include/hw/acpi/generic_event_device.h
-> > > @@ -101,6 +101,7 @@ OBJECT_DECLARE_SIMPLE_TYPE(AcpiGedState, ACPI_GED)
-> > >  #define ACPI_GED_PWR_DOWN_EVT      0x2
-> > >  #define ACPI_GED_NVDIMM_HOTPLUG_EVT 0x4
-> > >  #define ACPI_GED_CPU_HOTPLUG_EVT    0x8
-> > > +#define ACPI_GED_ERROR_EVT          0x10
-> > >  
-> > >  typedef struct GEDState {
-> > >      MemoryRegion evt;  
-> > 
-> 
-> 
-> 
+virt_set_high_memmap(). By the wayn why do we forbid a smaller size?
+
+>
+>> +        error_setg(errp, "highmem_mmio_size is less than the default (%lu)",
+>> +                   extended_memmap[VIRT_HIGH_PCIE_MMIO].size);
+>> +        return;
+>> +    }
+>> +
+>> +    extended_memmap[VIRT_HIGH_PCIE_MMIO].size = size;
+>> +}
+>>
+>>  static bool virt_get_its(Object *obj, Error **errp)
+>>  {
+>> @@ -3446,6 +3475,13 @@ static void virt_machine_class_init(ObjectClass
+>> *oc, void *data)
+>>                                            "Set on/off to enable/disable high "
+>>                                            "memory region for PCI MMIO");
+>>
+>> +    object_class_property_add(oc, "highmem-mmio-size", "size",
+>> +                                   virt_get_highmem_mmio_size,
+>> +                                   virt_set_highmem_mmio_size,
+>> +                                   NULL, NULL);
+>> +    object_class_property_set_description(oc, "highmem-mmio-size",
+>> +                                          "Set extended MMIO memory map size");
+>> +
+> I think this probably needs backward compatibility to keep migration happy.
+> Isn't it? See the no_highmem_compact handling.
+I guess if we keep the same value as default we are good. The difference
+with highmem_compact is it was set by default from 7.2 onwards hence
+changing the mmio layout. Here by default you keep the same IIUC.
+
+Thanks
+
+Eric
+>
 > Thanks,
-> Mauro
+> Shameer
+>
 
 
