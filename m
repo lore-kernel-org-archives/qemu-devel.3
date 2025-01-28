@@ -4,119 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C8B6DC0218A
-	for <qemu-devel@archiver.kernel.org>; Tue, 28 Jan 2025 14:44:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2A990C0218D
+	for <qemu-devel@archiver.kernel.org>; Tue, 28 Jan 2025 14:49:36 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tcmo6-0006HO-JL; Tue, 28 Jan 2025 09:43:14 -0500
+	id 1tcmta-0007fk-JT; Tue, 28 Jan 2025 09:48:54 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1tcmo4-0006Eg-Ld
- for qemu-devel@nongnu.org; Tue, 28 Jan 2025 09:43:12 -0500
-Received: from smtp-out1.suse.de ([195.135.223.130])
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1tcmtX-0007em-Vl
+ for qemu-devel@nongnu.org; Tue, 28 Jan 2025 09:48:52 -0500
+Received: from mail-yb1-xb36.google.com ([2607:f8b0:4864:20::b36])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1tcmo3-00063M-0S
- for qemu-devel@nongnu.org; Tue, 28 Jan 2025 09:43:12 -0500
-Received: from imap1.dmz-prg2.suse.org (imap1.dmz-prg2.suse.org
- [IPv6:2a07:de40:b281:104:10:150:64:97])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (No client certificate requested)
- by smtp-out1.suse.de (Postfix) with ESMTPS id D46C721120;
- Tue, 28 Jan 2025 14:43:08 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1738075389; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=JpbOMcPy0x4tgI3Ygdi1H85DMesbLLs1RTVUxva78Ls=;
- b=B8FboIdrPGjKMQzv2IW0auV4P7ipUuQ1Fp6bL8lLU1akJMv+x39UGHoa/bkRfEfPiyhy42
- koZtOX77O8wnE/d979icWHkS8D6F8SMLCD6ydZXAQBs1u11Zx/gIPmVLfF7hpD2ZH4lM52
- wNDBcPMTa7q2JfV/XwLvCCKG3LrDDTQ=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1738075389;
- h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=JpbOMcPy0x4tgI3Ygdi1H85DMesbLLs1RTVUxva78Ls=;
- b=I06N8Gnir6kCbO+jn/Tpcg5bX81Vs799Iserv9HtBeP+uZ0wcFYyJ+m3YY4ri/PKg6UsLf
- hLBt3U7NuycgQ3Bw==
-Authentication-Results: smtp-out1.suse.de;
- dkim=pass header.d=suse.de header.s=susede2_rsa header.b="O/LX+yZm";
- dkim=pass header.d=suse.de header.s=susede2_ed25519 header.b=TSIRSIF4
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1738075388; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=JpbOMcPy0x4tgI3Ygdi1H85DMesbLLs1RTVUxva78Ls=;
- b=O/LX+yZmSvipaSOnfEfW4SjAZIEbe04uO8uJDrN/t3Ca3BOCJTJOPjdzVE/lthLOMlSzQf
- OJ1Yogqbc+sQUrBrtyc2ek8IYKeCBg3HuC3LGsFObG4B0h17bsuPnsCrGjtoDUGNUQmeVR
- wGt+ers7Phbikl1LAzWSUTlSBjaxAME=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1738075388;
- h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=JpbOMcPy0x4tgI3Ygdi1H85DMesbLLs1RTVUxva78Ls=;
- b=TSIRSIF4owVIZdwvPjvgLP5F1ukBYsL0scZ8hrEk+csgco2p8emsGND6Q7r/BNLsPbBmk/
- PSzlAFPucnIVSPBA==
-Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (No client certificate requested)
- by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 4B8B513625;
- Tue, 28 Jan 2025 14:43:08 +0000 (UTC)
-Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
- by imap1.dmz-prg2.suse.org with ESMTPSA id owKKAvzsmGccMQAAD6G6ig
- (envelope-from <farosas@suse.de>); Tue, 28 Jan 2025 14:43:08 +0000
-From: Fabiano Rosas <farosas@suse.de>
-To: Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- qemu-devel@nongnu.org
-Cc: Paolo Bonzini <pbonzini@redhat.com>, Laurent Vivier
- <lvivier@redhat.com>, Thomas Huth <thuth@redhat.com>, Hyman Huang
- <yong.huang@smartx.com>, Phil Dennis-Jordan <phil@philjordan.eu>, Peter Xu
- <peterx@redhat.com>, Akihiko Odaki <akihiko.odaki@daynix.com>, Philippe
- =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: Re: [PATCH 3/7] tests/qtest/migration: Initialize
- MigrationTestEnv::arch early
-In-Reply-To: <20250128135429.8500-4-philmd@linaro.org>
-References: <20250128135429.8500-1-philmd@linaro.org>
- <20250128135429.8500-4-philmd@linaro.org>
-Date: Tue, 28 Jan 2025 11:43:05 -0300
-Message-ID: <87sep3t2x2.fsf@suse.de>
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1tcmtW-0006tM-5l
+ for qemu-devel@nongnu.org; Tue, 28 Jan 2025 09:48:51 -0500
+Received: by mail-yb1-xb36.google.com with SMTP id
+ 3f1490d57ef6-e53a5ff2233so10270286276.3
+ for <qemu-devel@nongnu.org>; Tue, 28 Jan 2025 06:48:49 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1738075729; x=1738680529; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=aJUCYvX3rMcr6GjYeBujEpQOfmkv12NhagSQAFdjln0=;
+ b=AKF57XNZtLQMKZjG2IDbx48VO6eSC75oLow9BFXWjdRKmi9TkvEIz9C4q1jqZgKZ97
+ rdmnBTlP2D+EubSWzLKByjpfBFGkJFwKB1T9kCVNPwES5oR3EjiLbjsaSHGrezNvAtmY
+ gq3gdGMG38X7dpAds8EBknflWEjCRnt2j29iFh7x5ud0GBimvr+/P9W6KwXtHYvXGlIF
+ oeEbSNEe3RzU/pOIW8HlGY/mRc8yf2Dxlg3IsHOVo9XjNdf56GZGGefVYzm+oROYWbtk
+ AhHV32TdhtyNmWanUsr50KHjSZYRhLW25wjG3G8Anrph3Nv0jW8OH10S3X2OC8LH28IQ
+ gNqA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1738075729; x=1738680529;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=aJUCYvX3rMcr6GjYeBujEpQOfmkv12NhagSQAFdjln0=;
+ b=HzXnYx1eaOXTdSUiFMqvCKgA5M3mVDAmvQzc8rFVulvIjbjMbm6g8lxw7yTDh8RSZf
+ vBXMSpb4wFI5MT4TauzoL9mLDQvPnq2Us3hyD29IuNLqV5/Lkf/DQyRoF0pdEmTdOouK
+ Be0u1QWnYB/mR8XYLgIAK9VMDS1wMRg1HJxk4V2S5xMaDtslhwSx9Lu15k0CCwOvvmQi
+ LexAWbxedSwt2B9enekrP9FCBSU0SlsirxU6NL0X5IuwPsICMSp3NKcU+DDDEFiHOSoW
+ 3upJqm5E1nVKXILivSgCYd5aqeZGMOL2doT4fob7wBpx3oCGZfCkMmnPLb9Xfd93i+/s
+ spFQ==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCWZ1HdKepgosp1zYPRJ4+3kYfOuDe1sZ5H1oQ0lkWd0ZODvxpB/ScNByZbB5B2wMp4gHG9UkqlTeFKR@nongnu.org
+X-Gm-Message-State: AOJu0YwZCgRrjmnpipV92S2MhHMumzapwlRrEXPtRyQAXNY6UrsvqyWU
+ eLFuTDD/XbVeiptzWjOkeJXrHOce8Son/Tzguip+pUPyVS+IhQc1ix+gDFjz34t+TYctzKy2zwB
+ hRkfS8UiQe3bEt7hhA9H1clvzlpIoe5OmZtCq59BI2c17W/Z8
+X-Gm-Gg: ASbGncsuPbbFXd/2Ow2D/vThkzFVwYgL6RgHAb+e44/bsOY514SSzMnOmIm/RI3/XnR
+ zOspcvl+UitsXcRPXz2YfWNMI3jZT+/o0KwuBdd7Xu+OmXvWpUU9X7mO3ordSlbX2BFfaKK6zfQ
+ ==
+X-Google-Smtp-Source: AGHT+IEQuz6Clbv5WDuz0z4V+Bs4pR5STmbY2gDPbv8scEBlvESvGCp6Lmzcd8cdkrnPa7ZBGK2jhs4Cxm1AMb8pc0w=
+X-Received: by 2002:a05:6902:20c6:b0:e57:935d:380 with SMTP id
+ 3f1490d57ef6-e57b13310fcmr32632736276.47.1738075728870; Tue, 28 Jan 2025
+ 06:48:48 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-X-Rspamd-Queue-Id: D46C721120
-X-Rspamd-Action: no action
-X-Spamd-Result: default: False [-4.51 / 50.00]; BAYES_HAM(-3.00)[99.99%];
- NEURAL_HAM_LONG(-1.00)[-1.000];
- R_DKIM_ALLOW(-0.20)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
- NEURAL_HAM_SHORT(-0.20)[-1.000]; MIME_GOOD(-0.10)[text/plain];
- MX_GOOD(-0.01)[]; RCVD_VIA_SMTP_AUTH(0.00)[]; ARC_NA(0.00)[];
- MISSING_XM_UA(0.00)[]; RCPT_COUNT_SEVEN(0.00)[10];
- MIME_TRACE(0.00)[0:+]; MID_RHS_MATCH_FROM(0.00)[];
- RCVD_TLS_ALL(0.00)[]; TO_DN_SOME(0.00)[];
- FROM_EQ_ENVFROM(0.00)[]; FROM_HAS_DN(0.00)[];
- FUZZY_BLOCKED(0.00)[rspamd.com]; RCVD_COUNT_TWO(0.00)[2];
- TO_MATCH_ENVRCPT_ALL(0.00)[];
- DBL_BLOCKED_OPENRESOLVER(0.00)[imap1.dmz-prg2.suse.org:rdns,imap1.dmz-prg2.suse.org:helo,suse.de:dkim,suse.de:mid,suse.de:email];
- DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
- DKIM_TRACE(0.00)[suse.de:+]
-X-Rspamd-Server: rspamd1.dmz-prg2.suse.org
-Received-SPF: pass client-ip=195.135.223.130; envelope-from=farosas@suse.de;
- helo=smtp-out1.suse.de
-X-Spam_score_int: -43
-X-Spam_score: -4.4
-X-Spam_bar: ----
-X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+References: <20250104-pmu-v5-1-be9c8777c786@daynix.com>
+In-Reply-To: <20250104-pmu-v5-1-be9c8777c786@daynix.com>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Tue, 28 Jan 2025 14:48:37 +0000
+X-Gm-Features: AWEUYZnuNraVr6I5i3m0D3BjF8hIuL06pYnzzd_BEQCeqolmWGXrA-CVlPFyblg
+Message-ID: <CAFEAcA9NzHeo+V8FpXDBjPK9n2i+LDVCxe1AS8z7O9DX9Cvzuw@mail.gmail.com>
+Subject: Re: [PATCH v5] target/arm: Always add pmu property for Armv7-A/R+
+To: Akihiko Odaki <akihiko.odaki@daynix.com>
+Cc: Thomas Huth <thuth@redhat.com>, Laurent Vivier <lvivier@redhat.com>, 
+ Paolo Bonzini <pbonzini@redhat.com>, Cornelia Huck <cohuck@redhat.com>,
+ qemu-arm@nongnu.org, 
+ qemu-devel@nongnu.org, kvm@vger.kernel.org, devel@daynix.com
+Content-Type: text/plain; charset="UTF-8"
+Received-SPF: pass client-ip=2607:f8b0:4864:20::b36;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yb1-xb36.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -133,60 +96,61 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org> writes:
+On Sat, 4 Jan 2025 at 07:10, Akihiko Odaki <akihiko.odaki@daynix.com> wrote:
+>
+> kvm-steal-time and sve properties are added for KVM even if the
+> corresponding features are not available. Always add pmu property for
+> Armv7+. Note that the property is added only for Armv7-A/R+ as QEMU
+> currently emulates PMU only for such versions, and a different
+> version may have a different definition of PMU or may not have one at
+> all.
 
-> Some tests expect MigrationTestEnv::arch to be set. Initialize
-> it early enough to avoid SIGSEGV, for example like the following
-> g_str_equal() call in migration/precopy-tests.c:
->
->    954 void migration_test_add_precopy(MigrationTestEnv *env)
->    955 {
->    ...
->   1001     if (g_str_equal(env->arch, "x86_64") && env->has_dirty_ring) {
->   1002
->   1003         migration_test_add("/migration/dirty_ring",
->   1004                            test_precopy_unix_dirty_ring);
->
-> Signed-off-by: Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org>
+This isn't how we generally handle CPU properties corresponding
+to features. The standard setup is:
+ * if the CPU can't have feature foo, no property
+ * if the CPU does have feature foo, define a property, so the
+   user can turn it off
+
+See also my longer explanation in reply to this patch in v4:
+
+https://lore.kernel.org/all/CAFEAcA_HWfCU09NfZDf6EC=rpvHn148avySCztQ8PqPBMFx4_Q@mail.gmail.com/
+
+> Signed-off-by: Akihiko Odaki <akihiko.odaki@daynix.com>
 > ---
->  tests/qtest/migration/framework.c | 3 ++-
->  1 file changed, 2 insertions(+), 1 deletion(-)
+> The "pmu" property is added only when the PMU is available. This makes
+> tests/qtest/arm-cpu-features.c fail as it reads the property to check
+> the availability. Always add the property when the architecture defines
+> the PMU even if it's not available to fix this.
+
+This seems to me like a bug in the test.
+
+> diff --git a/target/arm/cpu.c b/target/arm/cpu.c
+> index dcedadc89eaf..e76d42398eb2 100644
+> --- a/target/arm/cpu.c
+> +++ b/target/arm/cpu.c
+> @@ -1761,6 +1761,10 @@ void arm_cpu_post_init(Object *obj)
 >
-> diff --git a/tests/qtest/migration/framework.c b/tests/qtest/migration/fr=
-amework.c
-> index a3bd92a9519..38a0a1a5264 100644
-> --- a/tests/qtest/migration/framework.c
-> +++ b/tests/qtest/migration/framework.c
-> @@ -938,6 +938,8 @@ MigrationTestEnv *migration_get_env(void)
->          exit(1);
->      }
->=20=20
-> +    env->arch =3D qtest_get_arch();
+>      if (!arm_feature(&cpu->env, ARM_FEATURE_M)) {
+>          qdev_property_add_static(DEVICE(obj), &arm_cpu_reset_hivecs_property);
 > +
->      env->has_kvm =3D qtest_has_accel("kvm");
->      env->has_tcg =3D qtest_has_accel("tcg");
->=20=20
-> @@ -948,7 +950,6 @@ MigrationTestEnv *migration_get_env(void)
->=20=20
->      env->has_dirty_ring =3D env->has_kvm && kvm_dirty_ring_supported();
->      env->has_uffd =3D ufd_version_check(&env->uffd_feature_thread_id);
-> -    env->arch =3D qtest_get_arch();
->      env->is_x86 =3D !strcmp(env->arch, "i386") || !strcmp(env->arch, "x8=
-6_64");
->=20=20
->      env->tmpfs =3D g_dir_make_tmp("migration-test-XXXXXX", &err);
+> +        if (arm_feature(&cpu->env, ARM_FEATURE_V7)) {
+> +            object_property_add_bool(obj, "pmu", arm_get_pmu, arm_set_pmu);
+> +        }
+>      }
+>
+>      if (arm_feature(&cpu->env, ARM_FEATURE_V8)) {
+> @@ -1790,7 +1794,6 @@ void arm_cpu_post_init(Object *obj)
+>
+>      if (arm_feature(&cpu->env, ARM_FEATURE_PMU)) {
+>          cpu->has_pmu = true;
+> -        object_property_add_bool(obj, "pmu", arm_get_pmu, arm_set_pmu);
+>      }
+>
+>      /*
 
-Reviewed-by: Fabiano Rosas <farosas@suse.de>
+This would allow the user to enable the PMU on a CPU that
+says it doesn't have one. We don't generally permit that.
 
-The change itself is fine, but I think the actual issue is that we
-shouldn't be calling g_test_skip() from migration_get_env(). There's no
-point adding a bunch of tests if none of them will run because there's
-no supported accel present. So:
-
-    if (!env->has_tcg && !env->has_kvm) {
--        g_test_skip("No KVM or TCG accelerator available");
--        return env;
-+        g_test_message("No KVM or TCG accelerator available");
-+        exit(0);
-    }
+thanks
+-- PMM
 
