@@ -4,107 +4,109 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 32E48C0218D
-	for <qemu-devel@archiver.kernel.org>; Tue, 28 Jan 2025 06:14:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B2122C0218D
+	for <qemu-devel@archiver.kernel.org>; Tue, 28 Jan 2025 06:21:08 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tcerD-0001v4-Ef; Tue, 28 Jan 2025 01:13:55 -0500
+	id 1tcexL-0003li-EW; Tue, 28 Jan 2025 01:20:15 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <harshpb@linux.ibm.com>)
- id 1tcerC-0001us-CW; Tue, 28 Jan 2025 01:13:54 -0500
-Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <harshpb@linux.ibm.com>)
- id 1tcerA-000378-Jh; Tue, 28 Jan 2025 01:13:54 -0500
-Received: from pps.filterd (m0360083.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 50S18BrI010125;
- Tue, 28 Jan 2025 06:13:49 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=pp1; bh=TqHps1
- ErmAR/Mh2uCNOpi27t161oEHOTxj/nndRhwhQ=; b=Qa95JkntcyfOXzxN47LezA
- VewNTS3EecK4Xj+zp6QbH9W9EkObkQfeGg6dNDmIzwKZe3gfHH2Y9tmLfL00sIAI
- U3MH/6rqF0+xDhkRW0A08JSrssvo8BDSuRktYA+cD7BMz0ZC9+G1kkNamqm7hSuC
- ssGDbl7k8v0B/FiA830fIKR5/+LJb748vxDUoJh5938zuzF5Ok3lGMemyMC40mUM
- nXBX//6fRSt10mM4P84XY8Et9w0bhQk7uKHxX7xsZL0/Bj9BH4YUWI1hSbQ5Lsel
- VqpsR3YXGvO48bWs6ra1NrkADBjBnwXaALFavOiRLWlcqSirpox4ZufriXcJ6udg
- ==
-Received: from pps.reinject (localhost [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 44ena9s1u7-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Tue, 28 Jan 2025 06:13:49 +0000 (GMT)
-Received: from m0360083.ppops.net (m0360083.ppops.net [127.0.0.1])
- by pps.reinject (8.18.0.8/8.18.0.8) with ESMTP id 50S6DD7H028162;
- Tue, 28 Jan 2025 06:13:48 GMT
-Received: from ppma23.wdc07v.mail.ibm.com
- (5d.69.3da9.ip4.static.sl-reverse.com [169.61.105.93])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 44ena9s1u5-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Tue, 28 Jan 2025 06:13:48 +0000 (GMT)
-Received: from pps.filterd (ppma23.wdc07v.mail.ibm.com [127.0.0.1])
- by ppma23.wdc07v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 50S5Uek2028045;
- Tue, 28 Jan 2025 06:13:47 GMT
-Received: from smtprelay04.dal12v.mail.ibm.com ([172.16.1.6])
- by ppma23.wdc07v.mail.ibm.com (PPS) with ESMTPS id 44dbsk9tbw-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Tue, 28 Jan 2025 06:13:47 +0000
-Received: from smtpav04.dal12v.mail.ibm.com (smtpav04.dal12v.mail.ibm.com
- [10.241.53.103])
- by smtprelay04.dal12v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 50S6DkfQ29557002
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Tue, 28 Jan 2025 06:13:47 GMT
-Received: from smtpav04.dal12v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id E6D3B5805E;
- Tue, 28 Jan 2025 06:13:46 +0000 (GMT)
-Received: from smtpav04.dal12v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id BF3C258062;
- Tue, 28 Jan 2025 06:13:44 +0000 (GMT)
-Received: from [9.124.214.156] (unknown [9.124.214.156])
- by smtpav04.dal12v.mail.ibm.com (Postfix) with ESMTP;
- Tue, 28 Jan 2025 06:13:44 +0000 (GMT)
-Message-ID: <34b75938-ce88-47d5-ab86-715e50de4cb8@linux.ibm.com>
-Date: Tue, 28 Jan 2025 11:43:42 +0530
+ (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
+ id 1tcexK-0003lK-7y
+ for qemu-devel@nongnu.org; Tue, 28 Jan 2025 01:20:14 -0500
+Received: from mail-pl1-x62c.google.com ([2607:f8b0:4864:20::62c])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
+ id 1tcexH-0005dR-T6
+ for qemu-devel@nongnu.org; Tue, 28 Jan 2025 01:20:13 -0500
+Received: by mail-pl1-x62c.google.com with SMTP id
+ d9443c01a7336-218c8aca5f1so125852595ad.0
+ for <qemu-devel@nongnu.org>; Mon, 27 Jan 2025 22:20:10 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=daynix-com.20230601.gappssmtp.com; s=20230601; t=1738045209; x=1738650009;
+ darn=nongnu.org; 
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=mjsCUZaDl0yzpolexEoh0zQSspxNLCnIR4s0Hae1izA=;
+ b=tQfG5sT2JZMvlEVsoWQ+0m42EBoyoOHd4Su30ae+dOg3RnkuH3N8J4uiQYQ+pPEDel
+ kgHVWO/O0QoCtuabJf6VGR/MmkghxfXb0YwURBaOGnEG0ru8FnAIhM3xTvTWcQTdavp9
+ hg+2hcFf/6pxDsEvAnhKu690pXpxS9ConrHh3ShY6LQyKQpTQLSciv6EEW7Llz19OPSt
+ mUooiR2WdBoEXYoXDqMpVZFcO9QAQydap6NsFfFXSr4gVcBnUB7HeHf/mwrimLN1F6et
+ QyZETZAv3zczOsT7nIgEoWj584Fp8e23OPj5EZmHF36EhSjDnIm5N4lWVHGS5ST3c1XJ
+ yzmw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1738045209; x=1738650009;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=mjsCUZaDl0yzpolexEoh0zQSspxNLCnIR4s0Hae1izA=;
+ b=XzxS1qcWkzYVaOHNM7wvne0FeZp/IOgc6M4kUzypPz16tto2Jd9nnT+xDyV2k3PKck
+ 1jz3A9BmB8CjI75FRGyerZDRjQil/IbkLQUdA7JFIhnGPkIY/7TsLwrkkk5E0M+pvSLM
+ jxlxFqwrkdhF53hn5LvZFq3De0TC4zCAFVhKZw1PzaC5JGuKuwj65B8Q2fLAWVVbF2LN
+ ZYBSib+k+nclMuPm26aJrSoN47HvVS6w25S+wACxflG7gLXm6U6Ug6kzQvrGTqgYovXg
+ cfx6Tz5CxzIroX2GLdI4IKdtTdaH/+gcwWztqWudUfNahtWa3x5bMNDj7sVK9qIXS8pZ
+ zY5A==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCUwbqs3DQuZohbi4zdkoyZhU6M756emMv1joe5Y5KJGfVodxgQE+teclyT6FRT+O7jQoE3rrwC6azc7@nongnu.org
+X-Gm-Message-State: AOJu0Yy8xwm2poI+0OBlgEMIaeUE/qy6+mp+NY0vhqhpSP+fScgAHOVD
+ KJ8z8SsQQxs/X7Oj84DriLRshj6iBFjJCeHipnzQPdXV9Kh75RKkOnYdacIxZRI=
+X-Gm-Gg: ASbGncuT0ad3FJ/LXQB3L3QtBE68dtToIaQaAE+B8CLmNtnu8tBx0umlcTfuuYSjqpV
+ +tiTv+fTeyVNI2wJd6EnFVz1tr7DFHGXor3EKcwyuZCBeH0jPA3uoOuiWs/IXhWSg4s0DxMOv8V
+ bPu5/cKO2fiJpyBym4hhaGiAHIOfs3geNvaVBHcV8OVxJ9ZGJKR6UTCQlurSFJ3abapDIgH7Xgb
+ 6RhrqUKERgI5UbIawzINjobbaR8LZrnNYkeoRBKkvy0U11LSzqSuEMuIb7lle97QMj1XmMhgMdI
+ YNwloAJyP8utYieP/wU4bflXTQ/B
+X-Google-Smtp-Source: AGHT+IFJD7IW2qh+kO/WNcje5OChbVzh2FbTpcqICrvBxpZiAXx2364Iol4X+a8jcs7qNUUnsUcPJA==
+X-Received: by 2002:a05:6a20:72a3:b0:1e1:dbfd:1fde with SMTP id
+ adf61e73a8af0-1eb2157fba4mr66829952637.27.1738045209174; 
+ Mon, 27 Jan 2025 22:20:09 -0800 (PST)
+Received: from [157.82.205.237] ([157.82.205.237])
+ by smtp.gmail.com with ESMTPSA id
+ d2e1a72fcca58-72f8a6b2c07sm8338087b3a.40.2025.01.27.22.20.03
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Mon, 27 Jan 2025 22:20:08 -0800 (PST)
+Message-ID: <0c9ce831-8b81-4cd2-8544-54b62fa81624@daynix.com>
+Date: Tue, 28 Jan 2025 15:20:01 +0900
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 05/15] target/ppc: Move ppc_ldl_code() to
- tcg-excp_helper.c
-To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- qemu-devel@nongnu.org
-Cc: Daniel Henrique Barboza <danielhb413@gmail.com>,
- Richard Henderson <richard.henderson@linaro.org>, qemu-ppc@nongnu.org,
- Nicholas Piggin <npiggin@gmail.com>
-References: <20250127102620.39159-1-philmd@linaro.org>
- <20250127102620.39159-6-philmd@linaro.org>
+Subject: Re: [PATCH v6 10/10] docs/system: virtio-gpu: Document host/guest
+ requirements
+To: =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
+Cc: Dmitry Osipenko <dmitry.osipenko@collabora.com>,
+ Huang Rui <ray.huang@amd.com>,
+ =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
+ =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Gerd Hoffmann <kraxel@redhat.com>, "Michael S . Tsirkin" <mst@redhat.com>,
+ Paolo Bonzini <pbonzini@redhat.com>, Gert Wollny
+ <gert.wollny@collabora.com>, qemu-devel@nongnu.org,
+ Gurchetan Singh <gurchetansingh@chromium.org>, Alyssa Ross <hi@alyssa.is>,
+ =?UTF-8?Q?Roger_Pau_Monn=C3=A9?= <roger.pau@citrix.com>,
+ Alex Deucher <alexander.deucher@amd.com>,
+ Stefano Stabellini <stefano.stabellini@amd.com>,
+ =?UTF-8?Q?Christian_K=C3=B6nig?= <christian.koenig@amd.com>,
+ Xenia Ragiadakou <xenia.ragiadakou@amd.com>,
+ Pierre-Eric Pelloux-Prayer <pierre-eric.pelloux-prayer@amd.com>,
+ Honglei Huang <honglei1.huang@amd.com>, Julia Zhang <julia.zhang@amd.com>,
+ Chen Jiqian <Jiqian.Chen@amd.com>, Rob Clark <robdclark@gmail.com>,
+ Yiwei Zhang <zzyiwei@chromium.org>, Sergio Lopez Pascual <slp@redhat.com>
+References: <20250126201121.470990-1-dmitry.osipenko@collabora.com>
+ <20250126201121.470990-11-dmitry.osipenko@collabora.com>
+ <42646f72-c2c8-43c5-abe1-e8e1b3c9d31b@daynix.com>
+ <87o6zs4mle.fsf@draig.linaro.org>
 Content-Language: en-US
-From: Harsh Prateek Bora <harshpb@linux.ibm.com>
-In-Reply-To: <20250127102620.39159-6-philmd@linaro.org>
+From: Akihiko Odaki <akihiko.odaki@daynix.com>
+In-Reply-To: <87o6zs4mle.fsf@draig.linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-X-TM-AS-GCONF: 00
-X-Proofpoint-ORIG-GUID: GsIP7zSJnh40D4LlCN4HPzJy36DXvRYL
-X-Proofpoint-GUID: -ZtfjHv4cPYilPsstG-ZLd4yydBzmeej
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1057,Hydra:6.0.680,FMLib:17.12.68.34
- definitions=2025-01-28_01,2025-01-27_01,2024-11-22_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- lowpriorityscore=0 mlxscore=0
- mlxlogscore=845 malwarescore=0 phishscore=0 priorityscore=1501
- clxscore=1015 spamscore=0 suspectscore=0 adultscore=0 impostorscore=0
- bulkscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2411120000 definitions=main-2501280044
-Received-SPF: pass client-ip=148.163.156.1; envelope-from=harshpb@linux.ibm.com;
- helo=mx0a-001b2d01.pphosted.com
-X-Spam_score_int: -26
-X-Spam_score: -2.7
-X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H2=0.001, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+Received-SPF: pass client-ip=2607:f8b0:4864:20::62c;
+ envelope-from=akihiko.odaki@daynix.com; helo=mail-pl1-x62c.google.com
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001, T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -120,79 +122,71 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+On 2025/01/27 18:45, Alex Bennée wrote:
+> Akihiko Odaki <akihiko.odaki@daynix.com> writes:
+> 
+>> On 2025/01/27 5:11, Dmitry Osipenko wrote:
+>>> From: Alex Bennée <alex.bennee@linaro.org>
+>>> This attempts to tidy up the VirtIO GPU documentation to make the
+>>> list
+>>> of requirements clearer. There are still a lot of moving parts and the
+>>> distros have some catching up to do before this is all handled
+>>> automatically.
+>>> Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
+>>> Cc: Sergio Lopez Pascual <slp@redhat.com>
+>>> Signed-off-by: Dmitry Osipenko <dmitry.osipenko@collabora.com>
+>>> [dmitry.osipenko@collabora.com: Extended and corrected doc]
+> <snip>
+>>>    virtio-gpu rutabaga
+>>>    -------------------
+>>>    @@ -133,3 +218,23 @@ Surfaceless is the default if ``wsi`` is not
+>>> specified.
+>>>    .. _Wayland display passthrough: https://www.youtube.com/watch?v=OZJiHMtIQ2M
+>>>    .. _gfxstream-enabled rutabaga: https://crosvm.dev/book/appendix/rutabaga_gfx.html
+>>>    .. _guest Wayland proxy: https://crosvm.dev/book/devices/wayland.html
+>>> +
+>>> +.. list-table:: Host Requirements
+>>> +  :header-rows: 1
+>>> +
+>>> +  * - Mode
+>>> +    - Kernel
+>>> +    - Userspace
+>>> +  * - virtio-gpu-gl (rutabaga/gfxstream)
+>>> +    - GPU enabled
+>>> +    - aemu/rutabaga_gfx_ffi or vhost-user client with support
+>>
+>> Let's omit the mention of aemu. It is a dependency of rutabaga_gfx_ffi
+>> and referring to dependencies of our dependencies will make the
+>> documentation too cluttered. Users should also see rutabaga_gfx_ffi
+>> needs aemu anyway in its build guide; the reference of aemu here is
+>> effectively redundant.
+>>
+>> I don't see the vhost-user support in Rutabaga. Does it really exist?
+> 
+> vhost-device-gpu supports gfxstream although the 3D acceleration parts
+> of that are still WIP:
+> 
+>    https://github.com/rust-vmm/vhost-device/tree/main/staging/vhost-device-gpu
 
+It is nice to know the project.
 
-On 1/27/25 15:56, Philippe Mathieu-Daudé wrote:
-> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-> ---
->   target/ppc/excp_helper.c     | 21 ---------------------
->   target/ppc/tcg-excp_helper.c | 18 ++++++++++++++++++
->   2 files changed, 18 insertions(+), 21 deletions(-)
+vhost-user support is implemented with virtio-gpu-gl but it has its own 
+device variant so it is not a right place to describe it. vhost-user-gpu 
+is not documented at all so if you are going to write its documentation 
+it will be a great addition.
+
+> 
+>>
+>>> +
+>>> +.. list-table:: Guest Requirements
+>>> +  :header-rows: 1
+>>> +
+>>> +  * - Mode
+>>> +    - Mesa Version
+>>> +    - Mesa build flags
+>>> +  * - virtio-gpu-gl (rutabaga/gfxstream)
+>>> +    - 24.3.0+
+>>> +    - -Dvulkan-drivers=gfxstream
 > 
 
-This patch also needs to remove the function declaration introduced in 
-internal.h in patch 3.
-
-Otherwise,
-Reviewed-by: Harsh Prateek Bora <harshpb@linux.ibm.com>
-
-> diff --git a/target/ppc/excp_helper.c b/target/ppc/excp_helper.c
-> index b05eb7f5aec..8956466db1d 100644
-> --- a/target/ppc/excp_helper.c
-> +++ b/target/ppc/excp_helper.c
-> @@ -136,27 +136,6 @@ static void dump_hcall(CPUPPCState *env)
->                     env->nip);
->   }
->   
-> -#ifdef CONFIG_TCG
-> -/* Return true iff byteswap is needed to load instruction */
-> -static inline bool insn_need_byteswap(CPUArchState *env)
-> -{
-> -    /* SYSTEM builds TARGET_BIG_ENDIAN. Need to swap when MSR[LE] is set */
-> -    return !!(env->msr & ((target_ulong)1 << MSR_LE));
-> -}
-> -
-> -uint32_t ppc_ldl_code(CPUArchState *env, target_ulong addr)
-> -{
-> -    uint32_t insn = cpu_ldl_code(env, addr);
-> -
-> -    if (insn_need_byteswap(env)) {
-> -        insn = bswap32(insn);
-> -    }
-> -
-> -    return insn;
-> -}
-> -
-> -#endif
-> -
->   static void ppc_excp_debug_sw_tlb(CPUPPCState *env, int excp)
->   {
->       const char *es;
-> diff --git a/target/ppc/tcg-excp_helper.c b/target/ppc/tcg-excp_helper.c
-> index 3402dbe05ee..6950b78774d 100644
-> --- a/target/ppc/tcg-excp_helper.c
-> +++ b/target/ppc/tcg-excp_helper.c
-> @@ -199,4 +199,22 @@ bool ppc_cpu_debug_check_watchpoint(CPUState *cs, CPUWatchpoint *wp)
->       return false;
->   }
->   
-> +/* Return true iff byteswap is needed to load instruction */
-> +static inline bool insn_need_byteswap(CPUArchState *env)
-> +{
-> +    /* SYSTEM builds TARGET_BIG_ENDIAN. Need to swap when MSR[LE] is set */
-> +    return !!(env->msr & ((target_ulong)1 << MSR_LE));
-> +}
-> +
-> +uint32_t ppc_ldl_code(CPUArchState *env, target_ulong addr)
-> +{
-> +    uint32_t insn = cpu_ldl_code(env, addr);
-> +
-> +    if (insn_need_byteswap(env)) {
-> +        insn = bswap32(insn);
-> +    }
-> +
-> +    return insn;
-> +}
-> +
->   #endif /* !CONFIG_USER_ONLY */
 
