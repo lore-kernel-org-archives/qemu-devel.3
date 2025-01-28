@@ -4,90 +4,133 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2C6A0C0218A
-	for <qemu-devel@archiver.kernel.org>; Tue, 28 Jan 2025 16:04:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 02B2EC02190
+	for <qemu-devel@archiver.kernel.org>; Tue, 28 Jan 2025 16:16:02 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tco3l-0003LF-H2; Tue, 28 Jan 2025 11:03:29 -0500
+	id 1tcoEg-0005F4-5B; Tue, 28 Jan 2025 11:14:46 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1tco3j-0003Jo-Hi
- for qemu-devel@nongnu.org; Tue, 28 Jan 2025 11:03:27 -0500
-Received: from mail-wm1-x32e.google.com ([2a00:1450:4864:20::32e])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1tco3h-0001Fa-MB
- for qemu-devel@nongnu.org; Tue, 28 Jan 2025 11:03:27 -0500
-Received: by mail-wm1-x32e.google.com with SMTP id
- 5b1f17b1804b1-4364a37a1d7so59705455e9.3
- for <qemu-devel@nongnu.org>; Tue, 28 Jan 2025 08:03:23 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1738080202; x=1738685002; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:user-agent
- :references:in-reply-to:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=AMXscEc1WJ9MTRSQI0SXbF0xZCxvtd8Q/GmNjY8YuGc=;
- b=dlINntjd9GPxIYj7R3eKGTYZXh68oUJz4eFcKMbBHCv1tjfLM5qCg+agF5vlLHOHPY
- QW9d5eaJ4O3DzdFFDrX2uiLTzhN1Nr5Wece+l52lYVjELEQnRLlDp2lPBji4fGRruyB6
- qlLP8w/gcMCk5csEi37dw4BgkqXTYQykF5qiaDuWM0Ry5n6zpmtit6OCP3LdhM3DKo6q
- Ou3MCl20MSauQ76SHuBG6JBN++kwOPOJhAjnUqJtQVTngsTNdVyvTIBSnminhvCPbHQf
- JiDj++xjqUHHVy/esNZsqdT5xRtBdmNzi9urMMrAgdWJ0L0b/c3sNdYBLE2lLU7FAfb2
- 7Uug==
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1tcoEe-0005Ea-44
+ for qemu-devel@nongnu.org; Tue, 28 Jan 2025 11:14:44 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1tcoEb-0002Zs-Lr
+ for qemu-devel@nongnu.org; Tue, 28 Jan 2025 11:14:43 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1738080859;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+ bh=kc8enLSj1HDrlTEGHcsZbJOKRFBv8ol2f9z+k40dNvE=;
+ b=cNUP6y3A2XUu1Sk/5kbxQwjP83s30PdkesfBbXFeM78WNqVuewAj9OjGQkbe+Y5hK4MQQT
+ zypPjA4BiRIGbiJrl1Opp2uPuQPejaHNGmwSEvn+wKmJ4Zxv89pD8lwLqFs4NMEJa/3Ve0
+ wZKtaDcgKkt+f+MMQwHElpPhFZA7Nso=
+Received: from mail-wm1-f70.google.com (mail-wm1-f70.google.com
+ [209.85.128.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-653-MfKLQGi-MF-fh-RHpmgIfg-1; Tue, 28 Jan 2025 11:12:00 -0500
+X-MC-Unique: MfKLQGi-MF-fh-RHpmgIfg-1
+X-Mimecast-MFC-AGG-ID: MfKLQGi-MF-fh-RHpmgIfg
+Received: by mail-wm1-f70.google.com with SMTP id
+ 5b1f17b1804b1-43673af80a6so42921885e9.1
+ for <qemu-devel@nongnu.org>; Tue, 28 Jan 2025 08:11:55 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1738080202; x=1738685002;
- h=content-transfer-encoding:mime-version:message-id:date:user-agent
- :references:in-reply-to:subject:cc:to:from:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=AMXscEc1WJ9MTRSQI0SXbF0xZCxvtd8Q/GmNjY8YuGc=;
- b=e5nf7HDFfyLmbTvfog6+4VHD7V2tI9PL7lVnwlOjbszl/T0XBoZaBGwWbFzfaTZOc4
- OEaP5Zx83bD32+h8IP6p0RWyiMLpBBxX9cjEh4hkPiYVOWx3X2ZRTGWha19uHwdeuj9u
- Y36lfPb9dDbdWUNoV6mFvDnvrwU6WtOFZJuH5UTtbgVgYd5nJd646pIU+Q3TdUgvIUtr
- sck3AUVpjK0OxjRwNunMjY0h2cKxY/fS596wINNeaH4XkC7Rzb06Bbg873c9X7yS0ItQ
- r5+ktYLI7rxCKPck5XaaQpBKIhkrDc9u9+1I8wpskmS1ayNILH/DvI1MS1oj4IhGodRX
- H8yQ==
-X-Gm-Message-State: AOJu0YycpJd1f2fvFTFl11j0VUjtjn//Vr0JInoQWoqeJ0RkxoHYeU+f
- YoHD0m4qIn/v3izMoWjEWpowjYIFDmS6JC3do7wPNjCNosQbHZYfO4NJVG1IJJ8=
-X-Gm-Gg: ASbGncvjnluKLnsH4xwHt7zGm0WxSvbjWP4M7OhcHGAp/QVicTCJg0J8ip+NnBaKu1p
- oljojU7N9FWyjCQH9xGRhjXO13MYpQ4gncayIrfn6acjlCbYWvaeM4b02rg6hz+eer5tYMIgJ1T
- OQ6I4Ui84lbF5a3NJg7sJOusAQE4/kY2Q9a9+AP5ZTuu22Tam1X/ZZ1RAk7lx1A3vmtHxhnjdTd
- foQDxkm6JT4OOf/J2idgwp/haUyUqzu5G1U6tUV/HP8ahgCCnR8YFP1OcWxiNmlMvShtExYwZBD
- By3q0+iQP4GJJw==
-X-Google-Smtp-Source: AGHT+IFvfk1WOK7CC0pqkkOZGVi2wJCqS+pxXC+qzXL4PUDIhsoEjl/oMTnQLTIFcfboNu7a5dIzWQ==
-X-Received: by 2002:a05:600c:4e52:b0:436:e751:e445 with SMTP id
- 5b1f17b1804b1-438a079c1e7mr404672515e9.5.1738080202020; 
- Tue, 28 Jan 2025 08:03:22 -0800 (PST)
-Received: from draig.lan ([85.9.250.243]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-438bd47f269sm175989545e9.8.2025.01.28.08.03.20
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 28 Jan 2025 08:03:20 -0800 (PST)
-Received: from draig (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id 8937C5F87E;
- Tue, 28 Jan 2025 16:03:19 +0000 (GMT)
-From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
-To: marcandre.lureau@redhat.com
-Cc: qemu-devel@nongnu.org,  Alexandre Iooss <erdnaxe@crans.org>,  Mahmoud
- Mandour <ma.mandourr@gmail.com>,  Pierrick Bouvier
- <pierrick.bouvier@linaro.org>
-Subject: Re: [PATCH] plugins: fix -Werror=maybe-uninitialized false-positive
-In-Reply-To: <20250114104820.2613099-1-marcandre.lureau@redhat.com> (marcandre
- lureau's message of "Tue, 14 Jan 2025 14:48:20 +0400")
-References: <20250114104820.2613099-1-marcandre.lureau@redhat.com>
-User-Agent: mu4e 1.12.8; emacs 29.4
-Date: Tue, 28 Jan 2025 16:03:19 +0000
-Message-ID: <878qqv2aew.fsf@draig.linaro.org>
+ d=1e100.net; s=20230601; t=1738080710; x=1738685510;
+ h=content-transfer-encoding:in-reply-to:autocrypt:content-language
+ :from:references:cc:to:subject:user-agent:mime-version:date
+ :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=kc8enLSj1HDrlTEGHcsZbJOKRFBv8ol2f9z+k40dNvE=;
+ b=WEVCyRsGhj9oSruSlHrQKL8Vx3tEFZx88i4zhHeEpbmynKfiw3pP/JngDoU55GAH7m
+ Haj64wAk3Ss90WUB66IQ9QyhOg0SRWwVVyTJc7buSaY1p8ewib/MhDKHBaSxHMRqcIPE
+ nHw0i7ew8+oA1tBzzxUN1dgSQIZ39dpXin3WG9ngwgbqNjEFIOPEliHctSBgtoW+ScU5
+ Jk+mXRkCsJ5rgHjdhEtyOdRFIf/5F2ouKoOLcmVY+/q44aDxN+HreNbIn/vqBlYxjMNz
+ apiEXRq31dSL5chlcEeE+gtuMCi1V3FNoAvvrf3L6bluJYcSP/MJwCYjskOYUDOI7gHa
+ a+2A==
+X-Gm-Message-State: AOJu0YxGod3gEhxojZLXsR+IiBphGh6Am5MPGyxKVX4yN0johxgiIQc5
+ 1ODAyUvl+RYy4SvuF6DwoQ00aOPVbEZZ1PiZTOlfCeU1yOdrFUBrGKJAfQn/JYHaaiuVOXoWo6S
+ iWz1R+e9f6sCYhqa/4RrA4FuPcMwwxCwcitbRQGtfsR0bE3+DfEyXY8+5zWgBpK4=
+X-Gm-Gg: ASbGncv2kyiE/pqzShk4+Qv7+lZes8GZZ1+yj4UpsZRc5gTsg7k5kEzY4jttStOCSEW
+ 8VSudBI5+9esuIiiT77ElCrqS7hZWSVYf7HRuqKK2AeaJbmp9llocb2L0M6vwMc+szMPYXoTnWK
+ coQtZYUZD3lcwcCU/ndKNU0o+PllVTjodBgn+V3LFjxU5pL9ZZTXOEF/CgZIZ+OVwX6LkyGNIFo
+ +C6X746u+pNTKrhxeTr2PgVZv2YSOStdfQBP05PtgyMPDZCevmWI1EokQjTLmyVcFOIbBxkDnVx
+ EWhFIgs=
+X-Received: by 2002:a05:600c:3acd:b0:438:c18c:5ad8 with SMTP id
+ 5b1f17b1804b1-438c18c5b00mr150188555e9.31.1738080709801; 
+ Tue, 28 Jan 2025 08:11:49 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IGPldeE1c+RDHGCGrgGaD/5eRUzA3OmQ84wDsxMwx+u3n3eTx9TtEgY1cZKqCKKnrhBR1fogg==
+X-Received: by 2002:a05:600c:3acd:b0:438:c18c:5ad8 with SMTP id
+ 5b1f17b1804b1-438c18c5b00mr150188305e9.31.1738080709429; 
+ Tue, 28 Jan 2025 08:11:49 -0800 (PST)
+Received: from [192.168.10.3] ([151.95.59.125])
+ by smtp.googlemail.com with ESMTPSA id
+ ffacd0b85a97d-38c2a188928sm14409962f8f.45.2025.01.28.08.11.48
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Tue, 28 Jan 2025 08:11:48 -0800 (PST)
+Message-ID: <935c6d55-eb55-44e8-9903-aef05c2f97a6@redhat.com>
+Date: Tue, 28 Jan 2025 17:11:48 +0100
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::32e;
- envelope-from=alex.bennee@linaro.org; helo=mail-wm1-x32e.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PULL 00/48] i386, rust changes for 2024-01-24
+To: Stefan Hajnoczi <stefanha@gmail.com>
+Cc: qemu-devel@nongnu.org
+References: <20250128112439.1225171-1-pbonzini@redhat.com>
+ <CAJSP0QWJ=qkA2Bzih7nGq5K=YrJRqUOt85RAGL=mj3MEjAW6ug@mail.gmail.com>
+From: Paolo Bonzini <pbonzini@redhat.com>
+Content-Language: en-US
+Autocrypt: addr=pbonzini@redhat.com; keydata=
+ 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
+In-Reply-To: <CAJSP0QWJ=qkA2Bzih7nGq5K=YrJRqUOt85RAGL=mj3MEjAW6ug@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=pbonzini@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -33
+X-Spam_score: -3.4
+X-Spam_bar: ---
+X-Spam_report: (-3.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.3,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -104,23 +147,24 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-marcandre.lureau@redhat.com writes:
+On 1/28/25 15:19, Stefan Hajnoczi wrote:
+> thread '<unnamed>' panicked at 'already borrowed',
+> rust/qemu-api/libqemu_api.rlib.p/structured/cell.rs:450:5
+> note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+> fatal runtime error: failed to initiate panic, error 5
+> 
+> https://gitlab.com/qemu-project/qemu/-/jobs/8972076251/artifacts/browse/build/tests/functional/arm/test_arm_tuxrun.TuxRunArmTest.test_armv7be/
 
-> From: Marc-Andr=C3=A9 Lureau <marcandre.lureau@redhat.com>
->
-> ../contrib/plugins/cache.c:638:9: error: =E2=80=98l2_cache=E2=80=99 may b=
-e used uninitialized [-Werror=3Dmaybe-uninitialized]
->   638 |         append_stats_line(rep, l1_dmem_accesses, l1_dmisses,
->       |         ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
->
-> Is a false-positive, since cores > 1, so the variable is set in the
-> above loop.
->
-> Signed-off-by: Marc-Andr=C3=A9 Lureau <marcandre.lureau@redhat.com>
+Hmm, this one does not reproduce locally.  I've started a
+QEMU_CI_AVOCADO_TESTING run.
 
-Queued to plugins/next, thanks.
+> Do you want to include a patch that sets RUST_BACKTRACE=1 in the test
+> environment so the backtrace is captured in the logs?
+Yeah, I'll send one in the next version of the pull request.  The 
+BqlRefCell issues are easy to track (because you cannot drop the BQL 
+while you have an outstanding borrow, unlike regular Rust RefCells), but 
+you do need a backtrace...
 
---=20
-Alex Benn=C3=A9e
-Virtualisation Tech Lead @ Linaro
+Paolo
+
 
