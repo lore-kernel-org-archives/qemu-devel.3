@@ -4,76 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 81E55C0218A
-	for <qemu-devel@archiver.kernel.org>; Tue, 28 Jan 2025 20:17:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D08A3C02192
+	for <qemu-devel@archiver.kernel.org>; Tue, 28 Jan 2025 20:17:25 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tcrxa-00022Y-Ha; Tue, 28 Jan 2025 15:13:22 -0500
+	id 1tcrxp-00029v-7C; Tue, 28 Jan 2025 15:13:37 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1tcrxY-00021p-An
- for qemu-devel@nongnu.org; Tue, 28 Jan 2025 15:13:20 -0500
-Received: from mail-wm1-x32d.google.com ([2a00:1450:4864:20::32d])
+ id 1tcrxm-00028q-8l
+ for qemu-devel@nongnu.org; Tue, 28 Jan 2025 15:13:34 -0500
+Received: from mail-wm1-x336.google.com ([2a00:1450:4864:20::336])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1tcrxW-0001Xl-4J
- for qemu-devel@nongnu.org; Tue, 28 Jan 2025 15:13:20 -0500
-Received: by mail-wm1-x32d.google.com with SMTP id
- 5b1f17b1804b1-436202dd7f6so69760555e9.0
- for <qemu-devel@nongnu.org>; Tue, 28 Jan 2025 12:13:17 -0800 (PST)
+ id 1tcrxk-0001as-Cs
+ for qemu-devel@nongnu.org; Tue, 28 Jan 2025 15:13:34 -0500
+Received: by mail-wm1-x336.google.com with SMTP id
+ 5b1f17b1804b1-4363dc916ceso241015e9.0
+ for <qemu-devel@nongnu.org>; Tue, 28 Jan 2025 12:13:31 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1738095196; x=1738699996; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:to
- :from:from:to:cc:subject:date:message-id:reply-to;
- bh=CJXplQcGS66yhEIleNiGNMA//eCmIAzfBUs/cxy068s=;
- b=VTE90ecZ0cDSYlXrhUVCuycVudOAIMmnLfyI9UsVxVXTVT2Zoz56bWt2q+ocPLz/C+
- UMIwd8QNCxPRjlXOHmyptAnGjZb2Pg7MXhrCd6S0o9dq4eAK/dR3Ah424K7eBoq0ZOfY
- VJK5o8j+BzPrGgPUkOP49a0JMj5P3unq+FlI8YulrZj/cyjo8wcPZeN8u6htEdEiTR9J
- 6khdQrkAggrRJNXQOEHj+BE5wNTfmAoOoY3RLJBm4kTXqoeClCNTQoRxY5SR4yBp2QE8
- FdvrkrvLTSDgTP2hGMnxSAPWxcRBPsEOJPJEcLsC4hcHWB9xaPJWKyj/P8Ke5pdee8pj
- SOpg==
+ d=linaro.org; s=google; t=1738095210; x=1738700010; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
+ :reply-to; bh=+293gS1Cw1SuA2t316+tbEnWzM7aAkmjNNaFrnYHJG0=;
+ b=XI4Y07LV4qJy3aTqbFSUjGokj2WYuYWNfXAEYursrg+QMfIVSbaZBWwIZ5XwX/ObtG
+ Sq9khgvmqPiwq1GmRuCwIcbKLKGZK47j4SRlP5h6i6Z66vjl1idBLMG4w3H7Whnjk5BQ
+ n8L+Yuvmc6xa3QrZ5VeI+Fbl4uMAKTburhLZQl14gvbjinpr4evsQ3b4tWNcuAclwP3v
+ 1w52ZecPpZyZExlavScIwRe7myC4NFVuykokZxGxYhTKyRdMKhnei/5t1/sNtubjhNkL
+ RJHh9X5LezPRfZMTbU5toGEO6/0XIMiNJllu5j0S5bqae8HMvO0eAdjLc0GSu1davbef
+ HOWg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1738095196; x=1738699996;
- h=content-transfer-encoding:mime-version:message-id:date:subject:to
- :from:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=CJXplQcGS66yhEIleNiGNMA//eCmIAzfBUs/cxy068s=;
- b=fayj3MFDFWpt7r9EcWSPIjFPppBnKcg11Xzwmk/ZAk9LssJaZIBuOLJLB6+UH9SM5s
- SJ4zjp9PGzJz5hA/JjJ9fVorTdFYUAvdH+5aPNs4lhd5CUdespgY05NPWr2i3IvO/8Fp
- npOXBdNvg2LuJv97AHldjDajHLS8FtA/Q7LLMpnf+SZzLiNvkLqYhhvsXkChi+VAQhps
- vJ7K/N4XWMHRf4zUBEyeU468spbziVTCCltyoB1rNHZFyPFi9DGXNILUDTchiUjBtgk6
- L0qoXDzR0hYHSX8pHhsH/tluRbOFfGBaAbIWKWHlHb3en3Ncz0/cNgr38721xTxsgL4D
- YgOw==
-X-Gm-Message-State: AOJu0YxH0E2K/ErPuuhLsZLhzZl8mYDHO8igz7lO56aKIcnSK9HrdXzP
- NKl8IrVnXSNoKSWJiTRloFbQhElMjqlnBLwyV+lY6Wa99unmaN1ZD5ucs62jzbRenkeTncF7gTV
- y
-X-Gm-Gg: ASbGncvtNbSc2dZ9rhw0ebl3MwK+yAYO4A4OAjLUmYl3C6sDgGA3WQ3e6msfKeJ7ePj
- HYZetekpDTUyZPf62jYSMGzNhlKafz1sj1Ns23Bq2C5JsIJY5QUr34I0jInMTeH+7X/XNkidO5w
- Gug4JElFvsiYLnjBdR0WxhomCUoKFI07lB5dl6LSjj2DuZxfYJcDBMiJZwil5Jmrcocs1kxtgDj
- qiYhUBRSApWpCcgXoIdVMwcvm9WJRZl7VlfWKt1vF/ygs8sm0a/8iN7lFOIYoPbC99qwML3YSoM
- e4yXmBexdJrp1WKbGgD3Eg==
-X-Google-Smtp-Source: AGHT+IGe+Axmf5bHr8xsbaCa2oa9Y8px6PQqWzB/BojSyHB/Y4sXIwifNsijORFrVa0F8tFI05pnCA==
-X-Received: by 2002:a05:600c:1c1a:b0:434:f9c4:a850 with SMTP id
- 5b1f17b1804b1-438dc3c4623mr2750165e9.10.1738095196095; 
- Tue, 28 Jan 2025 12:13:16 -0800 (PST)
+ d=1e100.net; s=20230601; t=1738095210; x=1738700010;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=+293gS1Cw1SuA2t316+tbEnWzM7aAkmjNNaFrnYHJG0=;
+ b=sv7eANnR3whXrVrjyq/xfGGEhBaTGzKAk6ErIOc9UAmYGYNdNfhaaRgebXbxYc8KS5
+ PC/0GvFvWDUvTmC0Z3rzdSHsV4eaMeHN74j1K+iwadj6OH3BnIg9ZlcAhlkTGa/v8ssa
+ eUgBUpHuGYAy4CltsTYD2bUTC8ZQF07oxE+xwE+mdIJn9PXrwrnuPjqteyTy/uz+TMsm
+ Y1s+QrNeOQ7VAHBH/8PxnbByS+SQI1e2BJFYtjtLOTIXrjhc08G4HcPpqUfdjMXQ0a52
+ 3femMMvzdfMiXJtIA6xU2Kj1T+TKyGUgJfBMCLEPZWQ1WZjcKrLDKYy9vDESWYFpAQJx
+ 80Pg==
+X-Gm-Message-State: AOJu0YzIuLv5M8l+UnF0TRcqv5OpEgIrGoniSBp6mzoP3YpxtdbHDsVL
+ gNsSd1+/MOvJruQipZ+YY4c09uBjooPpZLwyIsbjb0rIjSjqkwTFGL3637WdW1Eh5U5OEfbneeD
+ s
+X-Gm-Gg: ASbGncu5H3l+h2+X3bssG6d+okfq2JZf7uTEAGCCVlHY0jXp/ORLU6yUr+MFh5SwS5W
+ oj2ItYdBr9rtyg+TWuxudAOiRWF6zPUDN8ifEs2ttGYvKuhtN8sA5YFqEuhLx6dAs70RGSVlX+8
+ ikMkh//k+ZNStSNZexKSm4jqOCzD6sgU5bAN5HMSC/Ok3GialbsZseiAEnr86j/rEjZs2Q1BWKi
+ SbRobVSUpNrvZtvWB/E5huvqgll/y0PXYZuKWcDdsl/rHtVEGX5ZPATs5GM/Z61jan8dG7Dz1+P
+ 5ZVjeiv9QBVC3P/uPhnWAg==
+X-Google-Smtp-Source: AGHT+IHr3jWPFyAtiA8tH49CKS/Z6XBUNkunP4fTAOxleY3+VP4e5aW+oh1SalETexksZrjNqw9Jlg==
+X-Received: by 2002:a05:600c:4f8e:b0:434:f9ad:7222 with SMTP id
+ 5b1f17b1804b1-438dbe99cd0mr5398495e9.7.1738095210436; 
+ Tue, 28 Jan 2025 12:13:30 -0800 (PST)
 Received: from orth.archaic.org.uk (orth.archaic.org.uk. [2001:8b0:1d0::2])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-438bd4fa3efsm182524105e9.2.2025.01.28.12.13.15
+ 5b1f17b1804b1-438bd4fa3efsm182524105e9.2.2025.01.28.12.13.29
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 28 Jan 2025 12:13:15 -0800 (PST)
+ Tue, 28 Jan 2025 12:13:29 -0800 (PST)
 From: Peter Maydell <peter.maydell@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 00/36] target-arm queue
-Date: Tue, 28 Jan 2025 20:12:38 +0000
-Message-Id: <20250128201314.44038-1-peter.maydell@linaro.org>
+Subject: [PULL 13/36] tests/functional: Add a test for the arm microbit machine
+Date: Tue, 28 Jan 2025 20:12:51 +0000
+Message-Id: <20250128201314.44038-14-peter.maydell@linaro.org>
 X-Mailer: git-send-email 2.34.1
+In-Reply-To: <20250128201314.44038-1-peter.maydell@linaro.org>
+References: <20250128201314.44038-1-peter.maydell@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32d;
- envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x32d.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::336;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x336.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -96,136 +99,86 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi; here's another arm pullreq; by volume most of this is
-refactoring from me, but there are also some bugfixes and
-other bits and pieces here.
+From: Thomas Huth <thuth@redhat.com>
 
-thanks
--- PMM
+We don't have any functional tests for this machine yet, thus let's
+add a test with a MicroPython binary that is available online
+(thanks to Joel Stanley for providing it, see:
+ https://www.mail-archive.com/qemu-devel@nongnu.org/msg606064.html ).
 
-The following changes since commit ed734377ab3f3f3cc15d7aa301a87ab6370f2eed:
-
-  Merge tag 'linux-user-fix-gupnp-pull-request' of https://github.com/hdeller/qemu-hppa into staging (2025-01-24 14:43:07 -0500)
-
-are available in the Git repository at:
-
-  https://git.linaro.org/people/pmaydell/qemu-arm.git tags/pull-target-arm-20250128-1
-
-for you to fetch changes up to 664280abddcb3cacc9c6204706bb739fcc1316f7:
-
-  hw/usb/canokey: Fix buffer overflow for OUT packet (2025-01-28 18:40:19 +0000)
-
-----------------------------------------------------------------
-target-arm queue:
- * hw/arm: Remove various uses of first_cpu global
- * hw/char/imx_serial: Fix reset value of UFCR register
- * hw/char/imx_serial: Update all state before restarting ageing timer
- * hw/pci-host/designware: Expose MSI IRQ
- * hw/arm/stellaris: refactoring, cleanup
- * hw/arm/stellaris: map both I2C controllers
- * tests/functional: Add a test for the arm microbit machine
- * target/arm: arm_reset_sve_state() should set FPSR, not FPCR
- * target/arm: refactorings preparatory to FEAT_AFP implementation
- * fpu: Rename float_flag_input_denormal to float_flag_input_denormal_flushed
- * fpu: Rename float_flag_output_denormal to float_flag_output_denormal_flushed
- * hw/usb/canokey: Fix buffer overflow for OUT packet
-
-----------------------------------------------------------------
-Bernhard Beschow (3):
-      hw/char/imx_serial: Fix reset value of UFCR register
-      hw/char/imx_serial: Update all state before restarting ageing timer
-      hw/pci-host/designware: Expose MSI IRQ
-
-Hongren Zheng (1):
-      hw/usb/canokey: Fix buffer overflow for OUT packet
-
-Peter Maydell (22):
-      target/arm: arm_reset_sve_state() should set FPSR, not FPCR
-      target/arm: Use FPSR_ constants in vfp_exceptbits_from_host()
-      target/arm: Use uint32_t in vfp_exceptbits_from_host()
-      target/arm: Define new fp_status_a32 and fp_status_a64
-      target/arm: Use vfp.fp_status_a64 in A64-only helper functions
-      target/arm: Use fp_status_a64 or fp_status_a32 in is_ebf()
-      target/arm: Use fp_status_a32 in vjvct helper
-      target/arm: Use fp_status_a32 in vfp_cmp helpers
-      target/arm: Use FPST_A32 in A32 decoder
-      target/arm: Use FPST_A64 in A64 decoder
-      target/arm: Remove now-unused vfp.fp_status and FPST_FPCR
-      target/arm: Define new fp_status_f16_a32 and fp_status_f16_a64
-      target/arm: Use fp_status_f16_a32 in AArch32-only helpers
-      target/arm: Use fp_status_f16_a64 in AArch64-only helpers
-      target/arm: Use FPST_A32_F16 in A32 decoder
-      target/arm: Use FPST_A64_F16 in A64 decoder
-      target/arm: Remove now-unused vfp.fp_status_f16 and FPST_FPCR_F16
-      fpu: Rename float_flag_input_denormal to float_flag_input_denormal_flushed
-      fpu: Rename float_flag_output_denormal to float_flag_output_denormal_flushed
-      fpu: Fix a comment in softfloat-types.h
-      target/arm: Remove redundant advsimd float16 helpers
-      target/arm: Use FPST_A64_F16 for halfprec-to-other conversions
-
-Philippe Mathieu-Daudé (9):
-      hw/arm/nrf51: Rename ARMv7MState 'cpu' -> 'armv7m'
-      hw/arm/stellaris: Add 'armv7m' local variable
-      hw/arm/v7m: Remove use of &first_cpu in machine_init()
-      hw/arm/stellaris: Link each board schematic
-      hw/arm/stellaris: Constify read-only arrays
-      hw/arm/stellaris: Remove incorrect unimplemented i2c-0 at 0x40002000
-      hw/arm/stellaris: Replace magic numbers by definitions
-      hw/arm/stellaris: Use DEVCAP macro to access DeviceCapability registers
-      hw/arm/stellaris: Map both I2C controllers
-
-Thomas Huth (1):
-      tests/functional: Add a test for the arm microbit machine
-
- MAINTAINERS                           |   1 +
- hw/usb/canokey.h                      |   4 --
- include/fpu/softfloat-types.h         |  10 +--
- include/hw/arm/fsl-imx6.h             |   4 +-
- include/hw/arm/fsl-imx7.h             |   4 +-
- include/hw/arm/nrf51_soc.h            |   2 +-
- include/hw/char/imx_serial.h          |   2 +-
- include/hw/pci-host/designware.h      |   1 +
- target/arm/cpu.h                      |  12 ++--
- target/arm/tcg/helper-a64.h           |   8 ---
- target/arm/tcg/translate.h            |  32 ++++++---
- fpu/softfloat.c                       |   6 +-
- hw/arm/b-l475e-iot01a.c               |   2 +-
- hw/arm/fsl-imx6.c                     |  13 +++-
- hw/arm/fsl-imx7.c                     |  13 +++-
- hw/arm/microbit.c                     |   2 +-
- hw/arm/mps2-tz.c                      |   2 +-
- hw/arm/mps2.c                         |   2 +-
- hw/arm/msf2-som.c                     |   2 +-
- hw/arm/musca.c                        |   2 +-
- hw/arm/netduino2.c                    |   2 +-
- hw/arm/netduinoplus2.c                |   2 +-
- hw/arm/nrf51_soc.c                    |  18 ++---
- hw/arm/olimex-stm32-h405.c            |   2 +-
- hw/arm/stellaris.c                    | 118 +++++++++++++++++++-----------
- hw/arm/stm32vldiscovery.c             |   2 +-
- hw/char/imx_serial.c                  |   7 +-
- hw/pci-host/designware.c              |   7 +-
- hw/usb/canokey.c                      |   6 +-
- target/arm/cpu.c                      |   6 +-
- target/arm/helper.c                   |   2 +-
- target/arm/tcg/helper-a64.c           |   9 ---
- target/arm/tcg/sme_helper.c           |   6 +-
- target/arm/tcg/sve_helper.c           |   6 +-
- target/arm/tcg/translate-a64.c        | 103 ++++++++++++++-------------
- target/arm/tcg/translate-sme.c        |   4 +-
- target/arm/tcg/translate-sve.c        | 130 +++++++++++++++++-----------------
- target/arm/tcg/translate-vfp.c        |  78 ++++++++++----------
- target/arm/tcg/vec_helper.c           |  22 +++---
- target/arm/vfp_helper.c               |  73 +++++++++++--------
- target/i386/tcg/fpu_helper.c          |   8 +--
- target/m68k/fpu_helper.c              |   2 +-
- target/mips/tcg/msa_helper.c          |   4 +-
- target/rx/op_helper.c                 |   4 +-
- target/tricore/fpu_helper.c           |   6 +-
- fpu/softfloat-parts.c.inc             |   4 +-
- hw/arm/Kconfig                        |   2 +
- tests/functional/meson.build          |   1 +
- tests/functional/test_arm_microbit.py |  31 ++++++++
- 49 files changed, 452 insertions(+), 337 deletions(-)
+Signed-off-by: Thomas Huth <thuth@redhat.com>
+Reviewed-by: Alex Bennée <alex.bennee@linaro.org>
+Message-id: 20250124101709.1591761-1-thuth@redhat.com
+Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+---
+ MAINTAINERS                           |  1 +
+ tests/functional/meson.build          |  1 +
+ tests/functional/test_arm_microbit.py | 31 +++++++++++++++++++++++++++
+ 3 files changed, 33 insertions(+)
  create mode 100755 tests/functional/test_arm_microbit.py
+
+diff --git a/MAINTAINERS b/MAINTAINERS
+index 7be3d8f431a..bb96a00db04 100644
+--- a/MAINTAINERS
++++ b/MAINTAINERS
+@@ -1157,6 +1157,7 @@ F: hw/*/microbit*.c
+ F: include/hw/*/nrf51*.h
+ F: include/hw/*/microbit*.h
+ F: tests/qtest/microbit-test.c
++F: tests/functional/test_arm_microbit.py
+ F: docs/system/arm/nrf.rst
+ 
+ ARM PL011 Rust device
+diff --git a/tests/functional/meson.build b/tests/functional/meson.build
+index b7719ab85f9..b62f7142201 100644
+--- a/tests/functional/meson.build
++++ b/tests/functional/meson.build
+@@ -91,6 +91,7 @@ tests_arm_system_thorough = [
+   'arm_cubieboard',
+   'arm_emcraft_sf2',
+   'arm_integratorcp',
++  'arm_microbit',
+   'arm_orangepi',
+   'arm_quanta_gsj',
+   'arm_raspi2',
+diff --git a/tests/functional/test_arm_microbit.py b/tests/functional/test_arm_microbit.py
+new file mode 100755
+index 00000000000..68ea4e73d62
+--- /dev/null
++++ b/tests/functional/test_arm_microbit.py
+@@ -0,0 +1,31 @@
++#!/usr/bin/env python3
++#
++# SPDX-License-Identifier: GPL-2.0-or-later
++#
++# Copyright 2025, The QEMU Project Developers.
++#
++# A functional test that runs MicroPython on the arm microbit machine.
++
++from qemu_test import QemuSystemTest, Asset, exec_command_and_wait_for_pattern
++from qemu_test import wait_for_console_pattern
++
++
++class MicrobitMachine(QemuSystemTest):
++
++    ASSET_MICRO = Asset('https://ozlabs.org/~joel/microbit-micropython.hex',
++        '021641f93dfb11767d4978dbb3ca7f475d1b13c69e7f4aec3382f212636bffd6')
++
++    def test_arm_microbit(self):
++        self.set_machine('microbit')
++
++        micropython = self.ASSET_MICRO.fetch()
++        self.vm.set_console()
++        self.vm.add_args('-device', f'loader,file={micropython}')
++        self.vm.launch()
++        wait_for_console_pattern(self, 'Type "help()" for more information.')
++        exec_command_and_wait_for_pattern(self, 'import machine as mch', '>>>')
++        exec_command_and_wait_for_pattern(self, 'mch.reset()', 'MicroPython')
++        wait_for_console_pattern(self, '>>>')
++
++if __name__ == '__main__':
++    QemuSystemTest.main()
+-- 
+2.34.1
+
 
