@@ -4,76 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CA39BC0218A
-	for <qemu-devel@archiver.kernel.org>; Tue, 28 Jan 2025 13:51:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8CFFCC0218D
+	for <qemu-devel@archiver.kernel.org>; Tue, 28 Jan 2025 13:55:06 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tclzX-0002p7-Cx; Tue, 28 Jan 2025 08:51:00 -0500
+	id 1tcm38-0004TF-Cy; Tue, 28 Jan 2025 08:54:43 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1tclzS-0002eU-4O
- for qemu-devel@nongnu.org; Tue, 28 Jan 2025 08:50:57 -0500
-Received: from mail-wm1-x32f.google.com ([2a00:1450:4864:20::32f])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tcm30-0004S7-HQ
+ for qemu-devel@nongnu.org; Tue, 28 Jan 2025 08:54:35 -0500
+Received: from mail-wr1-x42e.google.com ([2a00:1450:4864:20::42e])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1tclzO-0005p5-IE
- for qemu-devel@nongnu.org; Tue, 28 Jan 2025 08:50:53 -0500
-Received: by mail-wm1-x32f.google.com with SMTP id
- 5b1f17b1804b1-4361815b96cso38166755e9.1
- for <qemu-devel@nongnu.org>; Tue, 28 Jan 2025 05:50:49 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tcm2z-0006YE-2f
+ for qemu-devel@nongnu.org; Tue, 28 Jan 2025 08:54:34 -0500
+Received: by mail-wr1-x42e.google.com with SMTP id
+ ffacd0b85a97d-3862ca8e0bbso4970366f8f.0
+ for <qemu-devel@nongnu.org>; Tue, 28 Jan 2025 05:54:32 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1738072248; x=1738677048; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:to
- :from:from:to:cc:subject:date:message-id:reply-to;
- bh=52mhp+vtFIClG/JV9VKGPgaQ+SxucWci0KhLtwQ6JRY=;
- b=c+yePwLZCzXKq47sRt4fibuKJ2qwIixD9Arnwp6ZEA8aefJWjwN44l5p7P+H26YoRM
- P2lSdZEYZDRVW7i0D3SJKCHgHJEhZ1HeIrmCqBGrOJBAfvANXmJvqNl3DqZXzEjEfnOV
- VZNzfTZSFZ5fNA1MceIUR+yXcmLKYI6Rd/Q/QbGKFaCaaoqKRrL+RwY+744klMNXC5ZI
- 3saSl8ctqAdjHnt1kBAwG7i36xZ5kiuVGkBDYIPsTO6JTC7oAzye7KDcNttizA4Yz5tU
- C4xcJpgf5Nz+R29bexQcYKzEN9qDt6mjTcqLQcc3fLCpJ+upi9AVNLc8oo+OoRWQ5YmL
- 7CmQ==
+ d=linaro.org; s=google; t=1738072471; x=1738677271; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=a+r7ODhuu9s0569fMZKjXAvTdbCLGmUJt4rbO9ZfXGQ=;
+ b=RMCxZD/YtMrOmufKiKsMhHKYfThvWCvogewbBLlwgZg4pd8kbgWhNq3BSrH9I0AENx
+ 1lR/3kmBEKMuMwjWIgYowOTMQA2OlwYsKBgtFXvTFlxOCqK63+s72hxrD1OVnPKsRoPW
+ ugC+LvCHgmr/4SJvtg1VqYgWK5sQ/iolAlLtTnark5O2PHgr0rP9SRyfrplwnqdAe3iv
+ nU1LMiKHLX4H7BmLISuw/JeXwVR6owbgJO+BbVGi2xQG6ltL3AUZfhla65Md/Ib2qBeW
+ cdHiUd+FXb2Em1VZd0waNwIP7vqkfcCRoFNFvGZjVABhyTO/cvdswYGArx5bBb0qhabc
+ HFhQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1738072248; x=1738677048;
- h=content-transfer-encoding:mime-version:message-id:date:subject:to
- :from:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=52mhp+vtFIClG/JV9VKGPgaQ+SxucWci0KhLtwQ6JRY=;
- b=Jbe6Txt0ILWoyD8m5X6tXglsCCvZTRlIc+S3GqqinOOOVH4CNhTQXs1jFayYEt3lw+
- JznDbRIhmgYEvgTMq4PYcgYGBzqKyWikEexv7P5QT+km5w2Qy1F2Pk9JZ4x7nsN2e2I5
- MkeewXu+aX07sb9h5pCTFqPA75Bxn795o3US1PK7v2eD+fuZqckudOTAAj/vlXAHNJsM
- t+JTzxwPsoIxI6IZzEoiugX38IZm5JfAPdiPpgkyp/Qd7zLkZOL0ziM4jAuOg4iKg1v5
- Q2+C/oG1H4CDry3qH84SrrVdUvLY4xuNWmdC+QQ59oKFRATQ5OetSUV++38f+lKwyrWU
- uZcA==
-X-Forwarded-Encrypted: i=1;
- AJvYcCUIpwP2Z7/kOBcMDibhn8Lsg96jdS8K+I7D7L/FuqhftXgjsk/1j7xI653AlAwTHijA4/iZkv1de0xf@nongnu.org
-X-Gm-Message-State: AOJu0Yy19juLaT+wwxUkFcxmrJc8uzJfQpFV0MyIXzE917YFm4ZRk1hF
- N8Jot+pLNu9OMI2Np6lsZGNhitgH6eHWpKFL7hicBlSSOvgbLR3+JWRtxp79jNM=
-X-Gm-Gg: ASbGncsASb1RgwMnCR2dpDVLF1IwAwLV0KF0o5mrWgnK/b5wAhxOxKPwJCcQ1rtsTgY
- pOIPsVqIytFMAVeelT9GNUA72yVI68b+s8qcNVOx/Um3LDwEDsISP943+HsT0BHaMVKm9e+DnRI
- fgHCJ+0za9ladoL1fC4a+u5vKYhK4TgEj9VzbBQmeIxBNWsBSTROj57d81ldnjSXS+GOJPK+ZGC
- EGVb1sC4XvkxVd+c4+j/FoAzXVpAxftofSoTMsvnu+Hz3fAc/saT0mtSFhF98g8omws55nxGekF
- nVgrD+izuF2yL6xcHlw1zg==
-X-Google-Smtp-Source: AGHT+IEh7NajhsGVT+p5BZnUFwExbYLAQgtpWBOplA7yJvZkqNPuMLywkb7IBRzYZaRsYOZTU1h94w==
-X-Received: by 2002:a05:600c:1da8:b0:438:da66:fdf9 with SMTP id
- 5b1f17b1804b1-438da66fffbmr12841735e9.18.1738072248280; 
- Tue, 28 Jan 2025 05:50:48 -0800 (PST)
-Received: from orth.archaic.org.uk (orth.archaic.org.uk. [2001:8b0:1d0::2])
- by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-438bd48a906sm174368445e9.18.2025.01.28.05.50.47
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 28 Jan 2025 05:50:47 -0800 (PST)
-From: Peter Maydell <peter.maydell@linaro.org>
-To: qemu-arm@nongnu.org,
-	qemu-devel@nongnu.org
-Subject: [PATCH] target/arm: Drop unused AARCh64DecodeTable typedefs
-Date: Tue, 28 Jan 2025 13:50:46 +0000
-Message-Id: <20250128135046.4108775-1-peter.maydell@linaro.org>
-X-Mailer: git-send-email 2.34.1
+ d=1e100.net; s=20230601; t=1738072471; x=1738677271;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=a+r7ODhuu9s0569fMZKjXAvTdbCLGmUJt4rbO9ZfXGQ=;
+ b=uhKZgFeED4npyAfbLJ3aSuszBHI20GzVZJKEfivvlMli6ZxkyRz9ROxq8QKmt41HWq
+ qIwgspxBD6Qh/fWL14KHzBrz1hTPxPnYEIl547Utrjbss0tQ9ArMRRU1JIoGfFJHPLcj
+ YiG6fFvwo4rpapz1PBVkPp+F7KrRfnlqlYF1gtRV1JRigHg5QVfJ9CgZDecuAJ9LtvF0
+ kqwTEM9NEvGe9Gd85BxpARmSREKhi/5N6RA/efcdUGNvfEeI615DR4MVpYReJKtTHycS
+ g3lBfguzbGDaAKqmWWsXmUDxiL6FAiXmdFSRnprH0SAwzcc4Yt87v/DLyim0gCKDNqD9
+ BheQ==
+X-Gm-Message-State: AOJu0YxpgwdP9SEPu6SSel8Bf8KIouMhsnFQ0Emd3TtG3gc5lRJwI5CS
+ wOJwNLFY6J1Z655iLWF+FD1OZI7RId8Q2ff0LmW55SkieQ8SXgR5Za1kvoFS1AyVMBlgAYy8rXa
+ mKWE=
+X-Gm-Gg: ASbGncuxgshOZhu0wdvxo/S9v+sWMlekLKtbxGL5UP+3/qSsWMbIOTOWPQ239I8p75Z
+ gAgQi541Keeb1jCJIAlqc76BsZlvv4atdSY2bc9kxfQHQeULG09rnfDERvIkJFic1pALHLbOE3H
+ 818X4d6VlH83diM7YXoTbvBVTa8ZE+rTozxOsxz4GlqGj21mTg5mQ6rw9pwfGupCB0KCqemAj8G
+ 3ehYbfe3Ew+KmuGZloBzAq8Dws4zUmo31xtrxOp1Z5ljTPmAFo4uybQFds9mUsvtAedKOgPdtH/
+ tX25eP1qFxFzowLvdzqYaQFXF46jdMEQNWIQm+9OBrPxgNgg1AqtU356x9jJW2/LIQ==
+X-Google-Smtp-Source: AGHT+IHjU9b1hywaCt9ZZDZOTAJ9SR1tTjRqfBZNwE+PZczTctgcNXvDhfPe2+qhd2h4R/nm0QLLSg==
+X-Received: by 2002:a5d:47a9:0:b0:382:40ad:44b2 with SMTP id
+ ffacd0b85a97d-38bf57a77aemr41255759f8f.34.1738072471175; 
+ Tue, 28 Jan 2025 05:54:31 -0800 (PST)
+Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
+ [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-38c2a1764e9sm14380488f8f.17.2025.01.28.05.54.30
+ (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
+ Tue, 28 Jan 2025 05:54:30 -0800 (PST)
+From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+To: qemu-devel@nongnu.org
+Cc: Fabiano Rosas <farosas@suse.de>, Paolo Bonzini <pbonzini@redhat.com>,
+ Laurent Vivier <lvivier@redhat.com>, Thomas Huth <thuth@redhat.com>,
+ Hyman Huang <yong.huang@smartx.com>,
+ Phil Dennis-Jordan <phil@philjordan.eu>, Peter Xu <peterx@redhat.com>,
+ Akihiko Odaki <akihiko.odaki@daynix.com>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Subject: [PATCH 0/7] tests/qtest/migration: Update framework to allow using
+ HVF accelerator
+Date: Tue, 28 Jan 2025 14:54:22 +0100
+Message-ID: <20250128135429.8500-1-philmd@linaro.org>
+X-Mailer: git-send-email 2.47.1
 MIME-Version: 1.0
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32f;
- envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x32f.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::42e;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x42e.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -96,37 +101,29 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-We removed the old table-based decoder in favour of decodetree, but
-we left a couple of typedefs that are now unused; delete them.
+Hi,
 
-Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
----
- target/arm/tcg/translate-a64.c | 11 -----------
- 1 file changed, 11 deletions(-)
+This series modify few bits of the migration QTest framework
+to allow running the tests using the HVF framework (also
+leaving the possibilty for other ones, removing the KVM/TCG
+restriction).
 
-diff --git a/target/arm/tcg/translate-a64.c b/target/arm/tcg/translate-a64.c
-index bd814849c19..155169aeafd 100644
---- a/target/arm/tcg/translate-a64.c
-+++ b/target/arm/tcg/translate-a64.c
-@@ -75,17 +75,6 @@ static int scale_by_log2_tag_granule(DisasContext *s, int x)
- #include "decode-sme-fa64.c.inc"
- #include "decode-a64.c.inc"
- 
--/* Table based decoder typedefs - used when the relevant bits for decode
-- * are too awkwardly scattered across the instruction (eg SIMD).
-- */
--typedef void AArch64DecodeFn(DisasContext *s, uint32_t insn);
--
--typedef struct AArch64DecodeTable {
--    uint32_t pattern;
--    uint32_t mask;
--    AArch64DecodeFn *disas_fn;
--} AArch64DecodeTable;
--
- /* initialize TCG globals.  */
- void a64_translate_init(void)
- {
+Philippe Mathieu-Daudé (7):
+  migration/dirtyrate: Do not unlock cpu_list lock twice
+  tests/qtest/migration: Make 'has_dirty_ring' generic
+  tests/qtest/migration: Initialize MigrationTestEnv::arch early
+  tests/qtest/migration: Pass accelerator arguments as machine option
+  tests/qtest/migration: Add MigrationTestEnv::has_hvf field
+  tests/qtest/migration: Run aarch64/HVF tests using GICv2
+  tests/qtest/migration: Allow using accelerators different of TCG / KVM
+
+ tests/qtest/migration/framework.h     |  1 +
+ migration/dirtyrate.c                 |  1 -
+ tests/qtest/migration/framework.c     | 43 ++++++++++++++-------------
+ tests/qtest/migration/precopy-tests.c |  6 ++--
+ 4 files changed, 26 insertions(+), 25 deletions(-)
+
 -- 
-2.34.1
+2.47.1
 
 
