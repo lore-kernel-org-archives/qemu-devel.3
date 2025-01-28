@@ -4,86 +4,146 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E5054C0218A
-	for <qemu-devel@archiver.kernel.org>; Tue, 28 Jan 2025 16:17:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3EA89C0218A
+	for <qemu-devel@archiver.kernel.org>; Tue, 28 Jan 2025 16:23:40 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tcoH1-0001I9-1f; Tue, 28 Jan 2025 11:17:12 -0500
+	id 1tcoMY-0002nq-Bm; Tue, 28 Jan 2025 11:22:54 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <stefanha@gmail.com>)
- id 1tcoGv-0001Gf-OZ
- for qemu-devel@nongnu.org; Tue, 28 Jan 2025 11:17:05 -0500
-Received: from mail-ed1-x535.google.com ([2a00:1450:4864:20::535])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <stefanha@gmail.com>)
- id 1tcoGo-0003Gv-Lq
- for qemu-devel@nongnu.org; Tue, 28 Jan 2025 11:17:05 -0500
-Received: by mail-ed1-x535.google.com with SMTP id
- 4fb4d7f45d1cf-5d3e6274015so10854726a12.0
- for <qemu-devel@nongnu.org>; Tue, 28 Jan 2025 08:16:58 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1738081016; x=1738685816; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:mime-version:from:to:cc:subject
- :date:message-id:reply-to;
- bh=3LQ/ClTRLQHNt4BKzJFSQ1S6KMu6e4COGZ7nkXwwF2I=;
- b=jY5HeY/5QaVwC+EWTmI1JZhoJsuRilePsC3TaU09BuTBgVb585kk5MZ2sKjSzWsXlx
- wMp0/1J+gloU9tRa8AFqFMm0hehh9xC722pCMrsJvm0nr8HKHEUqpysT6BOWqK869oSq
- ghQ7c0I48adNk69dNbVYql+rDEYJtFrIYbvDtqY/tr2gX0jZAHCFxy5WHELmOtlshcM3
- eWCpMgnlwfjZ49Dl0NGj1Mh9t7kELeISkJSdo/x2by2imFUvJFaal6MxCCO/sfuhzJlX
- btIvR51eK8yI5mrj1L1xN9XbzW9xJ1EmxQf6Ildtt0moaLC9HcsgW03xfdY12vVgwQEE
- 6PuQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1738081016; x=1738685816;
- h=cc:to:subject:message-id:date:from:mime-version:x-gm-message-state
- :from:to:cc:subject:date:message-id:reply-to;
- bh=3LQ/ClTRLQHNt4BKzJFSQ1S6KMu6e4COGZ7nkXwwF2I=;
- b=sLSkd2j8Wf4g6/29EbMUQKhCFY+DYzY2DXyQiBSNxcZD8y5dXGWrDa98O08olkY9Qk
- gDZYEO3wxxPYbLpwQaZF0H3dd6kMrjWwtl1MmnR1DK9HXYm6F+K2Qpo22OrhmAWYBKDw
- lYWdmiIAm2+a1jJwjSrhc0rVSd7pSSlsrd4cB9RaDUb8Brp0n8uuPMZ8OKQ48mODlWdr
- P0CCQPFpuFUqOb5o5+x2y9+Id6T+1coXVVFtctdAeaTc2PwgOO1oKF8B9O0ABy+nERhh
- sQukrst/sOoDUiVpbDIDNNxZyNF772+YSlxdU5sC7uUmqx+ibK5ne7HA2Wjw1Uf6A1rP
- Zk4w==
-X-Gm-Message-State: AOJu0YyaLhTY6WVGa7yLUD1f302bRGvqGQtIP8x3meoU6ttdwIQvrz48
- SGWqbQ+MmnK7ILCRZ1OlRGLRObwB907zP/1u2PbrEkMlzUFScXGPZB50UghVk9cP+dJZVtgSzLO
- Sr4RcbOeEPnn3ESSOrkeU1jS9xUxByo97
-X-Gm-Gg: ASbGncuViC2NoJi2U3Zrss1UMrj1MYsy6nLiDUWIowa4vy8yeg/YtZ/8o5gw6+eCbjl
- i+S8CMRgXWkDnfi+xCFHA57wBNdcUqHTSZX2LyXohP9QBFMlUiIyrHzTH5aT8vgorTcJ4+ao=
-X-Google-Smtp-Source: AGHT+IGngLilCkICpFdFa6Vm437XBCWWwcasw+Elf7wFv6/VQJdMbOLWzcjCVg/H+uh/2YDurB3D04hfy2p3poSvAJE=
-X-Received: by 2002:a05:6402:51d3:b0:5d1:22c2:6c56 with SMTP id
- 4fb4d7f45d1cf-5db7d318a90mr41206988a12.17.1738081016306; Tue, 28 Jan 2025
- 08:16:56 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <mochs@nvidia.com>) id 1tco7x-0004Vp-MY
+ for qemu-devel@nongnu.org; Tue, 28 Jan 2025 11:07:50 -0500
+Received: from mail-dm6nam12on2086.outbound.protection.outlook.com
+ ([40.107.243.86] helo=NAM12-DM6-obe.outbound.protection.outlook.com)
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <mochs@nvidia.com>) id 1tco7v-0001r4-F7
+ for qemu-devel@nongnu.org; Tue, 28 Jan 2025 11:07:49 -0500
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=vkwrGD/kVFZmeyRSsoJd5xjiXu/40tBgZK3Rvh+mEnVSIpdNahF/IlgGQ56D2Doc+AtjPJDTuqpKolk532c7YS1KQ+4tT/3pyb03fk4nrGg+THNjmPOcDt32NVXB1aNlPVGqhk1FBdx5akoq9O3HDR6XXeuWI2sKEc1pfF12i3kRWL4TBzxbyUAkZUiRwHmhLXMh3NWQgsakOkdu/jTk5Rp+ggVcD7oxM8pqs9Ng473nZQB3nDotRXOE/V/hsCYpR6QqrrEEtbsBIPQAATSrel0ytCUq0c2Y2ZJMFJHlHBjZ8QXZlBCv7H8VFOfjhoWeir4xYKztlIJyFoiJTkwkZg==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=sljcWpfigYeX0ULkEdIXnEwyOkmS5zmxlkLD9bA3XT8=;
+ b=Cpr6nCSsKwVWjG5wpsrsA7IECOOUjy9ltQwpw83oQqXaLOvYRkJnCLz94h3HnjHzZi4xzCap18Ch11f8kjV/aO75UfUh9M7hfMzeZBscTtuxcoZr6IvciTlVLJbzy0YuSsJaIGtFbmESHS7eECPBwyTv8IcG+sbrGohW3zCJla38HQlVqQ/iUcc+7eda9c/ZSutt/g0icjNxow17VGF4mL/ONJDTQ6FOmhRJqv1A3A/1iTjzwC1MvXWxQMZV2bWlSar+82dRN5w0FMHQTVK/Y232jro1d//f4qAdfZFYEYjnxtNqlmh6j8l/ZtGyBO13MiII1PxuFEjKqa6eBhFVzA==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=nvidia.com; dmarc=pass action=none header.from=nvidia.com;
+ dkim=pass header.d=nvidia.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
+ s=selector2;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=sljcWpfigYeX0ULkEdIXnEwyOkmS5zmxlkLD9bA3XT8=;
+ b=fRITqRIRdxYlI+LVBtXQSdPycd9XA6w46J85WaosvBkVKwDtT8aidyxRo0PXEHunduQ244ipAmvHz4DJVugy4zw1YCCLGD71yjk6ThUkVybY6sDPmZuaDGgiJmTSBjyRmCKX6cRSlpgHrxgegvsd5UP9khuOURW1vs7d8TpuUSHoK9PRWnBip7caa1SUQOxH7okJUdOkI+Ay7FVZUe3uGROM+FCNS/Gzkt7hgxc1Q/j3jTaKohhDoDYWHxQJJRSj7n25gNzpWTrVJnYiXkXNNeiAmieTPqWB/b+IMHkifSwsy4jE7Q9lb61i20epWEi+FRXC8V+RcbmnmK6hqD0w2g==
+Authentication-Results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=nvidia.com;
+Received: from MW6PR12MB8897.namprd12.prod.outlook.com (2603:10b6:303:24a::19)
+ by SN7PR12MB8602.namprd12.prod.outlook.com (2603:10b6:806:26d::13)
+ with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.8377.22; Tue, 28 Jan
+ 2025 16:02:38 +0000
+Received: from MW6PR12MB8897.namprd12.prod.outlook.com
+ ([fe80::7c55:5a45:be80:e971]) by MW6PR12MB8897.namprd12.prod.outlook.com
+ ([fe80::7c55:5a45:be80:e971%3]) with mapi id 15.20.8377.021; Tue, 28 Jan 2025
+ 16:02:38 +0000
+From: "Matthew R. Ochs" <mochs@nvidia.com>
+To: qemu-devel@nongnu.org, shameerali.kolothum.thodi@huawei.com,
+ nathanc@nvidia.com
+Cc: ddutile@redhat.com, eric.auger@redhat.com, nicolinc@nvidia.com,
+ ankita@nvidia.com
+Subject: [PATCH] hw/arm/virt: Support larger highmem MMIO regions
+Date: Tue, 28 Jan 2025 08:02:37 -0800
+Message-ID: <20250128160237.3379569-1-mochs@nvidia.com>
+X-Mailer: git-send-email 2.46.0
+X-NVConfidentiality: public
+Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
+X-ClientProxiedBy: SJ0PR05CA0153.namprd05.prod.outlook.com
+ (2603:10b6:a03:339::8) To MW6PR12MB8897.namprd12.prod.outlook.com
+ (2603:10b6:303:24a::19)
 MIME-Version: 1.0
-From: Stefan Hajnoczi <stefanha@gmail.com>
-Date: Tue, 28 Jan 2025 11:16:43 -0500
-X-Gm-Features: AWEUYZkrZf4SPzQFoSAMMjj0I90DjwDlrKYXqyZ3YgDtCPyHRXPw_rrlon-LEvY
-Message-ID: <CAJSP0QVYE1Zcws=9hoO6+B+xB-hVWv38Dtu_LM8SysAmS4qRMw@mail.gmail.com>
-Subject: Call for GSoC internship project ideas
-To: qemu-devel <qemu-devel@nongnu.org>, kvm <kvm@vger.kernel.org>
-Cc: Richard Henderson <richard.henderson@linaro.org>, 
- =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
- Peter Maydell <peter.maydell@linaro.org>, Paolo Bonzini <pbonzini@redhat.com>, 
- Thomas Huth <thuth@redhat.com>, "Daniel P. Berrange" <berrange@redhat.com>, 
- Pierrick Bouvier <pierrick.bouvier@linaro.org>,
- Alex Bennee <alex.bennee@linaro.org>, 
- Akihiko Odaki <akihiko.odaki@gmail.com>, Zhao Liu <zhao1.liu@intel.com>, 
- Bibo Mao <maobibo@loongson.cn>, Jamin Lin <jamin_lin@aspeedtech.com>, 
- =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>, 
- Fabiano Rosas <farosas@suse.de>, Palmer Dabbelt <palmer@dabbelt.com>, 
- =?UTF-8?Q?Eugenio_P=C3=A9rez?= <eperezma@redhat.com>, 
- Hanna Reitz <hreitz@redhat.com>, Stefano Garzarella <sgarzare@redhat.com>
-Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2a00:1450:4864:20::535;
- envelope-from=stefanha@gmail.com; helo=mail-ed1-x535.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: MW6PR12MB8897:EE_|SN7PR12MB8602:EE_
+X-MS-Office365-Filtering-Correlation-Id: 93d69549-65e7-482c-5107-08dd3fb5300d
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;ARA:13230040|1800799024|376014|366016;
+X-Microsoft-Antispam-Message-Info: =?us-ascii?Q?ZWHSrqGZcv12PEN1JafqF9bc0JatBX8c4A3GqIFBKCSq1TUmmYCO92xjkEGH?=
+ =?us-ascii?Q?vCYy2/Im4YVDsXmG66ZDa2ndbF8RUIzbRha+iBJQjA54ApM2FfYXStU0k6zb?=
+ =?us-ascii?Q?YGxoThdNlkA04fYvjOqQv1JBR5FUms9A8Y1bkcvRmKIk7zSqZGjpvow9ilBk?=
+ =?us-ascii?Q?/on7CwNibM0eXTZ5OhfE6bS0VQMiGhRg7G1soDte2vdcJ0yQESXkOVjCiTwe?=
+ =?us-ascii?Q?UqLLvHjnBmn2iK9qaQ9KjHKaWtRMLzabkDP14fWAvDZo8wgjVskqwUNDb0Wk?=
+ =?us-ascii?Q?ghnz/gDpYTJjX1hyfN52bBieZ0i3reP54go4hej1LrNSQveGXwsMthQjgd4L?=
+ =?us-ascii?Q?/pxYhVuMJ7NaNF1fMop8n+PpjuEXn4HPp6Mb/ZOYqFF5f6jeE8/+n40i+Hla?=
+ =?us-ascii?Q?4G7iAYBawhMJ1fkeidBkJciBT/ms2lIfzxNXcE01cOyXMvR/qoq5fIU0GIpu?=
+ =?us-ascii?Q?U5d9aNCmCjXT6CRjMl2H1o4bG+FvlnQkbHi2UVEf3IvvrcJAhShb9wEbgU3/?=
+ =?us-ascii?Q?O2Vsi1UbRHoGjoYsTjVF5zBNODmHTKJttVfekYn5yXZC7ff3lCnH0XxMCDfc?=
+ =?us-ascii?Q?sJLqMM56xKkW4i0M0X9lHNsmLeLAzKR+a0pBE/ji2A2/KGd6N+fMqDDiz3zf?=
+ =?us-ascii?Q?0z9ei/QkkIIAPKtvixPYKhuDKivMrYXV21DlPkLrZlqFvIgiZPuHaYWrdtYb?=
+ =?us-ascii?Q?CaFqxAoIk/CflYrfwbSyJQaDIUGWdJeMI5wNv95VXZ8sbAT3DYMyIAhvUx4F?=
+ =?us-ascii?Q?207cdbiOF6dFq1ipXloelpfGDrEd5y2orwMu4BfOUvUZc/WyXEoMl1J7fdMS?=
+ =?us-ascii?Q?6mLqZKXEyr+QW7Qi4WjPD44vKy9f2w66Zl2KoXuBpu/rgqCd7rrLlig+BxaM?=
+ =?us-ascii?Q?Ez/xpfgsg8yVP8gxFIMnoY9c4g7KTdLmJaDN4HTSLLM1uqd6pW55ZS6XbbyV?=
+ =?us-ascii?Q?5G/TC3y7tOwzfnFjXPesQrPBDgGLetZh0AQAS0Lkxv30eXTN3If7Vt01O2om?=
+ =?us-ascii?Q?duEh/h7NuvkDhEo5vrM+F/EB2r6byfBEoCbptDFSeqG94ZR6jv9ENxMf7g52?=
+ =?us-ascii?Q?6X1nEZAhIGndSV7AlGJEWMmWZT7M4EU8cRDa1pVD/t5Sc/UbYuhSRRdEvRtE?=
+ =?us-ascii?Q?esVbkPcY0JwRtIhrvPpfZGhEBnyLX1LLhumv2nZ42Mab2ptWfRynkaRPdl5F?=
+ =?us-ascii?Q?ujbbT8EtVUIWJcxjZrEENnTAjPbTqFFN0Hr++ZrHAMj0Ob8GYf7wuGTgIZ+s?=
+ =?us-ascii?Q?Ib3cgSKQ/C/6ZwfEfSNANq7OyZkosMCZO33bteMA2AV+3St7NP+ogypdBjUF?=
+ =?us-ascii?Q?GWSvIm/5l3rifJ/iYGQTvgM++Xe69ggRn6uDF7p4YD9wCNZ2+D5kiCALWpLt?=
+ =?us-ascii?Q?n2PhnqdSKwRpFhGHNmG34Lge9jm0?=
+X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:MW6PR12MB8897.namprd12.prod.outlook.com; PTR:; CAT:NONE;
+ SFS:(13230040)(1800799024)(376014)(366016); DIR:OUT; SFP:1101; 
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0: =?us-ascii?Q?vYNcPgTd0bRlZ7yx3oWjvdVBojiJUK4enjRzBKh8zyoxekaPmA13BSyRNXQf?=
+ =?us-ascii?Q?EQ3aPY34O4rVellbtrHJ+lwFHujlM7aq1MzosGFVncQ/RF0eqcVYAPW4oYwq?=
+ =?us-ascii?Q?sLgh/S6I241ZsoBjTQY8l/A27kR4Bn99SAKDb7+5AT28m98uGaoweS2EU8Uw?=
+ =?us-ascii?Q?K2mULiEdenjQZ77ia1cXNOw9QOjaBUMX8MruBTfiRLTpgOWM+nhK9upXwVoT?=
+ =?us-ascii?Q?KmUhrpHOk//vcuVKHSSzFrbDNqx94tpP+LnbPmJ1RuutRpQM413k4l0TjJQJ?=
+ =?us-ascii?Q?B95kcU5NI7cfa1VSEVRAmGiTqC4yfnwo5+AIETCHAlfYhmXbdyn3k9s1TaU/?=
+ =?us-ascii?Q?c7RZner+SytjGoLMokIK5dNYbXUwJ/Hsb9VXWbrkLeHvz/ajT3XpHPXUGmHM?=
+ =?us-ascii?Q?p/N7M3wXegk3S9vB7P7ahrFNQzUvlNT6DUyyPWpVuroA0KqMYpvQ3mCw4I5i?=
+ =?us-ascii?Q?uu5CuwWrxtbR4RHQ9Cv96NSxWl3sLaaRCI6nxIKPS9wVNF4JV0944lYhaKnh?=
+ =?us-ascii?Q?lLdyXUYuGAarIMDTvCTUEv5j1G6V8NkbalEtnTtJoxd9uaHYlINacTvefkXp?=
+ =?us-ascii?Q?QEFKxqN/1XTX0x7EBe0Em6/VJ+B+cu3qjXOVrfFoE2Fyunlb1pPrjbNXOzJe?=
+ =?us-ascii?Q?HUjVr9J3hXc2krm9aJMMA+fdTH3V42Q6oBXb5E3dZ4HXRrhQNzmgvGqM47cf?=
+ =?us-ascii?Q?v35f20stWtN51fsYeR+d53oVaoAXhZwNR0mZc4fXhtbAOU6yXdydvVYMe5+/?=
+ =?us-ascii?Q?grVeQt1ySmhYHLSmkWWcSkjX9HTsL85T5oNyeL+jZ36BPHNZPT9t0Wzz+joB?=
+ =?us-ascii?Q?sUzLdKFpG/nX9WYWrt2Ri/uA/0noZFPRtQEFApLkk4ETJQnvpoqPteC8GqFq?=
+ =?us-ascii?Q?dGDFRiMIQ38Z0lXxBCnjREJajZQSCUbJtpTJET6Z50EUMawmO/I4MafsSAFl?=
+ =?us-ascii?Q?Nzaex79/mST0PoGuKKmz6zhObPyEQkGAM21ZQFBDa5G3RhzTp8sJFyxfz5TF?=
+ =?us-ascii?Q?sWX6nEySMCgw9JkcEIjq4zDImrO4IryKy+gbFx8Px48XLv1+gWQlpQ4WdkFs?=
+ =?us-ascii?Q?K9MG/ZI/VFZZEilaLIe1nUa7Zoid6mgFWrTKjw/7FdAVNNjlXYF5A62mHyhs?=
+ =?us-ascii?Q?fWfy2Kb89w83/NmsENKxK9R8zl4DwFe72hYfFeVj2yGNlgiW7+8HnZJYV92b?=
+ =?us-ascii?Q?ljZCZO+hyAnf9JOf9J7xiX+56SJmhjzGR1Wmh0bywsLsySDYBGd0xmuID/Fz?=
+ =?us-ascii?Q?rDFnE/O4od71vbOqdChkL223bpEYom8f2Lt05Laq9V7BHCxsl+sNRysty4LI?=
+ =?us-ascii?Q?bLCxn+GQOhmMIxrDKysd5tAcNJB1sle5xmyV1savmVDiSRZxIkcGlgN/H4FG?=
+ =?us-ascii?Q?Yl/vhahtXAqr3rkB7yQWITBuct6BHphH8vN59HNxm46bA+g//Ae/udPSu9is?=
+ =?us-ascii?Q?rgiGdMWlik0irUkAdW77NXt/UXug6oRj794a6XysICd0Fs2rM9UCHG3e9Dsu?=
+ =?us-ascii?Q?5dxW/QUS1m2OyAvyljOp9G5abVxoIHQ//jboA1DugwW0RAamHXV9cUmXuGEc?=
+ =?us-ascii?Q?BrWQnn4SXSWwkT8GzYNQ97JgM/XK2AFQXMrsEcqz?=
+X-OriginatorOrg: Nvidia.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 93d69549-65e7-482c-5107-08dd3fb5300d
+X-MS-Exchange-CrossTenant-AuthSource: MW6PR12MB8897.namprd12.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 28 Jan 2025 16:02:38.5464 (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: +mpUC2s0SxznwksvdLvZoFxSTuh0tXXxpFkDqXV0TLkqhSwhr6V8PVwrz0k8UdRkCWhhYiOZcKuK03Qgpl/W4A==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: SN7PR12MB8602
+Received-SPF: softfail client-ip=40.107.243.86; envelope-from=mochs@nvidia.com;
+ helo=NAM12-DM6-obe.outbound.protection.outlook.com
+X-Spam_score_int: -33
+X-Spam_score: -3.4
+X-Spam_bar: ---
+X-Spam_report: (-3.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.3,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_MSPIKE_H2=0.001, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_PASS=-0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
+X-Mailman-Approved-At: Tue, 28 Jan 2025 11:22:51 -0500
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -98,69 +158,93 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Dear QEMU and KVM communities,
-QEMU will apply for the Google Summer of Code internship
-program again this year. Regular contributors can submit project
-ideas that they'd like to mentor by replying to this email by
-February 7th.
+The MMIO region size required to support virtualized environments with
+large PCI BAR regions can exceed the hardcoded limit configured in QEMU.
+For example, a VM with multiple NVIDIA Grace-Hopper GPUs passed through
+requires more MMIO memory than the amount provided by VIRT_HIGH_PCIE_MMIO
+(currently 512GB). Instead of updating VIRT_HIGH_PCIE_MMIO, introduce a
+new parameter, highmem-mmio-size, that specifies the MMIO size required
+to support the VM configuration.
 
-About Google Summer of Code
------------------------------------------
-GSoC (https://summerofcode.withgoogle.com/) offers paid open
-source remote work internships to eligible people wishing to participate
-in open source development. QEMU has been doing internship for
-many years. Our mentors have enjoyed helping talented interns make
-their first open source contributions and some former interns continue
-to participate today.
+Example usage with 1TB MMIO region size:
+	-machine virt,gic-version=3,highmem-mmio-size=1099511627776
 
-Who can mentor
-----------------------
-Regular contributors to QEMU and KVM can participate as mentors.
-Mentorship involves about 5 hours of time commitment per week to
-communicate with the intern, review their patches, etc. Time is also
-required during the intern selection phase to communicate with
-applicants. Being a mentor is an opportunity to help someone get
-started in open source development, will give you experience with
-managing a project in a low-stakes environment, and a chance to
-explore interesting technical ideas that you may not have time to
-develop yourself.
+Signed-off-by: Matthew R. Ochs <mochs@nvidia.com>
+---
+ docs/system/arm/virt.rst |  4 ++++
+ hw/arm/virt.c            | 36 ++++++++++++++++++++++++++++++++++++
+ 2 files changed, 40 insertions(+)
 
-How to propose your idea
-------------------------------
-Reply to this email with the following project idea template filled in:
+diff --git a/docs/system/arm/virt.rst b/docs/system/arm/virt.rst
+index e67e7f0f7c50..36344554788a 100644
+--- a/docs/system/arm/virt.rst
++++ b/docs/system/arm/virt.rst
+@@ -138,6 +138,10 @@ highmem-mmio
+   Set ``on``/``off`` to enable/disable the high memory region for PCI MMIO.
+   The default is ``on``.
+ 
++highmem-mmio-size
++  Set extended MMIO memory map size. Must be a power-of-2 and greater than
++  the default size.
++
+ gic-version
+   Specify the version of the Generic Interrupt Controller (GIC) to provide.
+   Valid values are:
+diff --git a/hw/arm/virt.c b/hw/arm/virt.c
+index 49eb0355ef0c..43d47ffedd9a 100644
+--- a/hw/arm/virt.c
++++ b/hw/arm/virt.c
+@@ -2773,6 +2773,35 @@ static void virt_set_highmem_mmio(Object *obj, bool value, Error **errp)
+     vms->highmem_mmio = value;
+ }
+ 
++static void virt_get_highmem_mmio_size(Object *obj, Visitor *v, const char *name,
++                          void *opaque, Error **errp)
++{
++    uint64_t size = extended_memmap[VIRT_HIGH_PCIE_MMIO].size;
++
++    visit_type_size(v, name, &size, errp);
++}
++
++static void virt_set_highmem_mmio_size(Object *obj, Visitor *v, const char *name,
++                          void *opaque, Error **errp)
++{
++    uint64_t size;
++
++    if (!visit_type_size(v, name, &size, errp))
++        return;
++
++    if (!is_power_of_2(size)) {
++        error_setg(errp, "highmem_mmio_size is not a power-of-2");
++        return;
++    }
++
++    if (size < extended_memmap[VIRT_HIGH_PCIE_MMIO].size) {
++        error_setg(errp, "highmem_mmio_size is less than the default (%lu)",
++                   extended_memmap[VIRT_HIGH_PCIE_MMIO].size);
++        return;
++    }
++
++    extended_memmap[VIRT_HIGH_PCIE_MMIO].size = size;
++}
+ 
+ static bool virt_get_its(Object *obj, Error **errp)
+ {
+@@ -3446,6 +3475,13 @@ static void virt_machine_class_init(ObjectClass *oc, void *data)
+                                           "Set on/off to enable/disable high "
+                                           "memory region for PCI MMIO");
+ 
++    object_class_property_add(oc, "highmem-mmio-size", "size",
++                                   virt_get_highmem_mmio_size,
++                                   virt_set_highmem_mmio_size,
++                                   NULL, NULL);
++    object_class_property_set_description(oc, "highmem-mmio-size",
++                                          "Set extended MMIO memory map size");
++
+     object_class_property_add_str(oc, "gic-version", virt_get_gic_version,
+                                   virt_set_gic_version);
+     object_class_property_set_description(oc, "gic-version",
+-- 
+2.46.0
 
-=== TITLE ===
-
-'''Summary:''' Short description of the project
-
-Detailed description of the project that explains the general idea,
-including a list of high-level tasks that will be completed by the
-project, and provides enough background for someone unfamiliar with
-the code base to research the idea. Typically 2 or 3 paragraphs.
-
-'''Links:'''
-* Links to mailing lists threads, git repos, or web sites
-
-'''Details:'''
-* Skill level: beginner or intermediate or advanced
-* Language: C/Python/Rust/etc
-
-More information
-----------------------
-You can find out about the process we follow here:
-Video: https://www.youtube.com/watch?v=xNVCX7YMUL8
-Slides (PDF): https://vmsplice.net/~stefan/stefanha-kvm-forum-2016.pdf
-
-The QEMU wiki page for GSoC 2024 is now available:
-https://wiki.qemu.org/Google_Summer_of_Code_2025
-
-What about Outreachy?
--------------------------------
-We have struggled to find sponsors for the Outreachy internship
-program (https://www.outreachy.org/) in recent years. If you or your
-organization would like to sponsor an Outreachy internship, please get
-in touch.
-
-Thanks,
-Stefan
 
