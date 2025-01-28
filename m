@@ -4,64 +4,64 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D6E89C0218A
-	for <qemu-devel@archiver.kernel.org>; Tue, 28 Jan 2025 13:55:19 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8C61BC0218D
+	for <qemu-devel@archiver.kernel.org>; Tue, 28 Jan 2025 13:55:22 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tcm3Z-0004a9-C3; Tue, 28 Jan 2025 08:55:09 -0500
+	id 1tcm3L-0004XO-S6; Tue, 28 Jan 2025 08:54:57 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tcm3F-0004WO-Ke
- for qemu-devel@nongnu.org; Tue, 28 Jan 2025 08:54:51 -0500
-Received: from mail-wm1-x32d.google.com ([2a00:1450:4864:20::32d])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tcm36-0004Sg-Tw
+ for qemu-devel@nongnu.org; Tue, 28 Jan 2025 08:54:41 -0500
+Received: from mail-wm1-x32b.google.com ([2a00:1450:4864:20::32b])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tcm3E-0006aW-2m
- for qemu-devel@nongnu.org; Tue, 28 Jan 2025 08:54:49 -0500
-Received: by mail-wm1-x32d.google.com with SMTP id
- 5b1f17b1804b1-43634b570c1so40017535e9.0
- for <qemu-devel@nongnu.org>; Tue, 28 Jan 2025 05:54:47 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tcm35-0006Yn-A3
+ for qemu-devel@nongnu.org; Tue, 28 Jan 2025 08:54:40 -0500
+Received: by mail-wm1-x32b.google.com with SMTP id
+ 5b1f17b1804b1-436345cc17bso40353585e9.0
+ for <qemu-devel@nongnu.org>; Tue, 28 Jan 2025 05:54:37 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1738072486; x=1738677286; darn=nongnu.org;
+ d=linaro.org; s=google; t=1738072476; x=1738677276; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=0i342P8VSr9afA5LND7tALkWhr4DBdVvCjT09Me9Agg=;
- b=PeIXKkOv/DI7xdIOEg1AeLXDUInspFnBiL0+1hVgMGWhPfypaavq8oLz0BY0TTnpGg
- 8Cb0XfpIKjTILIV79vn8g0Yj7krtKCrR/apskwdUsH5P+5xy3aF8Dj1PdYF2mins9RwI
- uSpt01iDeLpKvxPM+sij0BhO5AVdUCkTAHJGZLpd2aUqoMLzQzM7SzXkVmYKRFPApKKr
- /zUrjQ0VjHE5izYNk2B+CD1fN7su4UBqcfEilspEfs2bd5hwLV5ODXjBNhS1yeaaAZgs
- jNuOtyxdAY+TJyQ013h9bQVvDSFWdqgdVtOJaACG7m1alFLtzNRFzJW494Hm7rbnKujy
- kODQ==
+ bh=xFX3tCyD8J8AsK027Or5bRe/fC+DXtJLFTNEYqXZkJ0=;
+ b=KzKpqIB1fQ7eS0wvaQ5VJeIJBGjxaOmmXyMClK+RF/9ckMQ6+rE7Km4rR044ramPNV
+ nhLZPoLpk+Dy/4HPTykpdyabeVL93qmVxpbNnOAcd2mbC+2yI8pVhUN6TJVr+SCXCYdp
+ 4SeL50RgUFJNIAGmwjbdV6J93Uj1R0OvruLRX20XecQEOE0yy5iE280FYr6SItvPeSID
+ b2QZUjwKuLAduAD533iE+godwxiwaO+IXEV6zX06GG+tAOkpnMhf90PRbHeOBP7OGX40
+ BVzHiv3HCCjse76yZMIbhls8XAgz3ZoHtzrWda+IXRan8A1TjMvZWiijXd6PiAx1mOe1
+ cQcg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1738072486; x=1738677286;
+ d=1e100.net; s=20230601; t=1738072476; x=1738677276;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=0i342P8VSr9afA5LND7tALkWhr4DBdVvCjT09Me9Agg=;
- b=TptS064fgIsa7hRlYlSsnIPNgIGfZxwbCj5iU/B5GJG7wjQoFNf2RqPskL76rcatrW
- fKa/ulm3IMsza3K464ygCxtsrpdKZASJ6bfhtTtMNNFoxksspZRyaflH15w1l3BUIner
- 2jiUra3vvN7zgx6xRgC569einNPaC09WoCDEP6g2GNEEQ6ABWjHXcpJQpqnW2KZFN9St
- bZapQD/OnrA+2ahZDnoZmzN84kYr8tsyx6ftWC6aD2UH5eTvDJGBMZ98gMEQS4M78CDK
- 9IOTJ/e42Kiq0ypP0HEUeJvlF7HBcLls+afrHBH7lDhuuF1khcqZrC0CooQBK6Yc+zWO
- ikcw==
-X-Gm-Message-State: AOJu0YyCEOtCR/iBnfiOZXc6Vhv1hrWcdx8Q0DayRMgRSMHeVVb4BwQg
- +Te5Lp5qd8PiTQkvi0Jg5wb6zOZR0KWnX1bzSFP2C+owMv748rYaGhgmXZ1vyaRPkCVAM+tsig6
- mBpI=
-X-Gm-Gg: ASbGncvOqgfbLHD7YLme5Q1KFqH81WuRnjqYQxAZufWNDVDgT/G4faIIG05+qLascKa
- wcQoD44OIFE/fNgkyGtn5Z3Yi+rGKVGd23ti8/56fY+KXJUnm+zeXSV62Lvfr4Pf2dRj728r9YX
- AfCcvdwwDIT7XyN9TXapim9of/Fg5NwsZ4DWuozAu8hG60Lxe3otx7mJX2SCRlusET4w/T5Ii2u
- ITZilxIgjC29IQRYjkNoYE6t2qTJJ+vhbxsOlm1NYNynJ6e3LnAFXjO4YbsL3hDaCQW/nUOohtS
- f5MLVT++aWqA5KKdl1qDahiwsg070sUSiqrIY9FwlARNvE+217V+5D5o6Gx/2Nw3MQ==
-X-Google-Smtp-Source: AGHT+IFszYMNCA760X/36juug+cQmcxc9DtQ3nSuMbWEchxTwOYnx8pEHvT0Le588CdPOzffkysKLQ==
-X-Received: by 2002:a05:600c:1f82:b0:436:fbe0:cebe with SMTP id
- 5b1f17b1804b1-43891452f6emr461566115e9.30.1738072485683; 
- Tue, 28 Jan 2025 05:54:45 -0800 (PST)
+ bh=xFX3tCyD8J8AsK027Or5bRe/fC+DXtJLFTNEYqXZkJ0=;
+ b=iV9hWeIZfqSYZfKq9MLp1UAzeXH7sE+O9XTRoX859yRH77uZGZQ1+4WW0JIRz3cSSw
+ mvxYA5iR12w96VRZx9mf34rGWYeKENO4Wq4zHYNqzIINmmojJ8jRFlIUIntcfj04QayV
+ qrqnH4Vf8P0+s/oOTNe0fYDV1PFLN+v0xuOFsMTF3olBQSRDFxRZpv36jDegBhl8tcBT
+ u6FhQZEJCB25JF1XG0KwRfTWWzU5ct4JRES+Gqdjo/NTRUr0JzP/RT/26G+I2VqUq9tz
+ 7Xlxag19bZ0ctHZawd6LEGAiiXSl9rakiF5tuhdqMQep8xp8YYIQF2pTBv78Vvp7VAMB
+ A4AA==
+X-Gm-Message-State: AOJu0Yz35AB+W36g2FPK5CQOXzotD+febkN5juDE7UGZeQpJYMgE/DvP
+ 0K3prAFMja5l+D+1b5F11RR7nyomvPuDDhydBX86GEonyAsGi4x52Gybl4ygR1y3k11MgPp3IZ+
+ TVNg=
+X-Gm-Gg: ASbGncuK1591MMN8tB+fuKYOSKEgkg5/bqtMmwA7ltMFsznuTZgLpagJy2LM4xlKMVt
+ ojKOl7L6XpOsRDM+sBN+1xv4WCr1OHc9aKqSVT0tjRRcyNf9g0cJtdiIdFl+KCvb9Bk1Hdd6pFY
+ PCTBV1yo+gnRTBajmkS3YV/1ubzvklJA5u2E70uJdNs2DCE28i23iTZzaSGHWnViuuixPQeCP03
+ yjgkngZ3C3/slQzB6rjReeQS0moPyVrrZbm6k8hkZfsNqwm6rFgm3a3k7XNZuJGMdAejEhDQnf+
+ K4WEztWerLUGxY8PqOu+eDBAqOdez+L6/dsyNyWIbhLuIWAb81hQl1b2CYz4ESmq5w==
+X-Google-Smtp-Source: AGHT+IFACyEWOGSeWrN0Jbyt1XTZ0wcCq1PQoT8zk7QDW032i2AACfFKvtrPgaE6qgWr0/IwqfDm3Q==
+X-Received: by 2002:a05:600c:4f48:b0:42c:b16e:7a22 with SMTP id
+ 5b1f17b1804b1-438913cb740mr458739165e9.12.1738072476039; 
+ Tue, 28 Jan 2025 05:54:36 -0800 (PST)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-438d75de282sm11809185e9.2.2025.01.28.05.54.44
+ 5b1f17b1804b1-438bd5730a6sm167998125e9.35.2025.01.28.05.54.35
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Tue, 28 Jan 2025 05:54:45 -0800 (PST)
+ Tue, 28 Jan 2025 05:54:35 -0800 (PST)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Fabiano Rosas <farosas@suse.de>, Paolo Bonzini <pbonzini@redhat.com>,
@@ -70,18 +70,17 @@ Cc: Fabiano Rosas <farosas@suse.de>, Paolo Bonzini <pbonzini@redhat.com>,
  Phil Dennis-Jordan <phil@philjordan.eu>, Peter Xu <peterx@redhat.com>,
  Akihiko Odaki <akihiko.odaki@daynix.com>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PATCH 3/7] tests/qtest/migration: Initialize MigrationTestEnv::arch
- early
-Date: Tue, 28 Jan 2025 14:54:25 +0100
-Message-ID: <20250128135429.8500-4-philmd@linaro.org>
+Subject: [PATCH 1/7] migration/dirtyrate: Do not unlock cpu_list lock twice
+Date: Tue, 28 Jan 2025 14:54:23 +0100
+Message-ID: <20250128135429.8500-2-philmd@linaro.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20250128135429.8500-1-philmd@linaro.org>
 References: <20250128135429.8500-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32d;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x32d.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::32b;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x32b.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -104,44 +103,27 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Some tests expect MigrationTestEnv::arch to be set. Initialize
-it early enough to avoid SIGSEGV, for example like the following
-g_str_equal() call in migration/precopy-tests.c:
+&qemu_cpu_list_lock is locked within the WITH_QEMU_LOCK_GUARD()
+context, then unlocked. No need to manually unlock it.
 
-   954 void migration_test_add_precopy(MigrationTestEnv *env)
-   955 {
-   ...
-  1001     if (g_str_equal(env->arch, "x86_64") && env->has_dirty_ring) {
-  1002
-  1003         migration_test_add("/migration/dirty_ring",
-  1004                            test_precopy_unix_dirty_ring);
-
+Fixes: 370ed600296 ("cpu: expose qemu_cpu_list_lock for lock-guard use")
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 ---
- tests/qtest/migration/framework.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ migration/dirtyrate.c | 1 -
+ 1 file changed, 1 deletion(-)
 
-diff --git a/tests/qtest/migration/framework.c b/tests/qtest/migration/framework.c
-index a3bd92a9519..38a0a1a5264 100644
---- a/tests/qtest/migration/framework.c
-+++ b/tests/qtest/migration/framework.c
-@@ -938,6 +938,8 @@ MigrationTestEnv *migration_get_env(void)
-         exit(1);
-     }
- 
-+    env->arch = qtest_get_arch();
-+
-     env->has_kvm = qtest_has_accel("kvm");
-     env->has_tcg = qtest_has_accel("tcg");
- 
-@@ -948,7 +950,6 @@ MigrationTestEnv *migration_get_env(void)
- 
-     env->has_dirty_ring = env->has_kvm && kvm_dirty_ring_supported();
-     env->has_uffd = ufd_version_check(&env->uffd_feature_thread_id);
--    env->arch = qtest_get_arch();
-     env->is_x86 = !strcmp(env->arch, "i386") || !strcmp(env->arch, "x86_64");
- 
-     env->tmpfs = g_dir_make_tmp("migration-test-XXXXXX", &err);
+diff --git a/migration/dirtyrate.c b/migration/dirtyrate.c
+index 7c955894e47..4b94dd7c500 100644
+--- a/migration/dirtyrate.c
++++ b/migration/dirtyrate.c
+@@ -174,7 +174,6 @@ retry:
+         if (gen_id != cpu_list_generation_id_get()) {
+             g_free(records);
+             g_free(stat->rates);
+-            cpu_list_unlock();
+             goto retry;
+         }
+         vcpu_dirty_stat_collect(records, false);
 -- 
 2.47.1
 
