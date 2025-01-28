@@ -4,91 +4,90 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 69D58C0218A
-	for <qemu-devel@archiver.kernel.org>; Tue, 28 Jan 2025 10:35:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 10419C0218A
+	for <qemu-devel@archiver.kernel.org>; Tue, 28 Jan 2025 10:42:30 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tcivi-0006EV-0N; Tue, 28 Jan 2025 05:34:50 -0500
+	id 1tcj2P-00005Z-G1; Tue, 28 Jan 2025 05:41:45 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1tcivY-0006Cq-16
- for qemu-devel@nongnu.org; Tue, 28 Jan 2025 05:34:40 -0500
-Received: from mail-yb1-xb2f.google.com ([2607:f8b0:4864:20::b2f])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1tcivW-0000sH-Gl
- for qemu-devel@nongnu.org; Tue, 28 Jan 2025 05:34:39 -0500
-Received: by mail-yb1-xb2f.google.com with SMTP id
- 3f1490d57ef6-e573136107bso8994863276.3
- for <qemu-devel@nongnu.org>; Tue, 28 Jan 2025 02:34:35 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1738060474; x=1738665274; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=Y0OHA9rm33lGie9sv0JBjn3ZpI8DI9Dz60NLKtMDdSo=;
- b=c8hSf/yLjpLoWXo7RuqG41nZe5fQ1fGqs+3IWi//TbcZ1rsc42QoUKNaapafSmM+Mm
- SbEMiDZ/dYCSrnGOsIhsBOoUy/CnweaymoyhbyD5yK9zbhglAjylmgEvscEzrLKxWnTC
- 7nKzlZeMdl7sGD8lwET3wvI48ItUQXUuK7AwUA46+OIFfdiEvG6UZwc6nediOXgnjP0S
- gd5qrpskOPIS4QUQO+BH9cqrWNmlAtnfHEz/YKBH+Htndyu3Gti4G9t7HO7hjMKz4T+E
- OFwTBCUnn1KFWRA5qswwkeb6n2/96C6TxfgYHcOCyh/OJbB2hMAhE+VzVgS4HZdOkXNh
- tPKg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1738060474; x=1738665274;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=Y0OHA9rm33lGie9sv0JBjn3ZpI8DI9Dz60NLKtMDdSo=;
- b=TcUz7dBThIrRGKmQXFKDQLFx5a67ubLQeYfzMAPDQ0Idk1IQUgNhjM53KxlnKTY6pW
- aVabjgvzeoyf3fy9a09tJHNMB8TCP4kcFX/ByosKDX+5dM0x/Hjapjwjr+3wLynDhWQ4
- S9UC1qjrs0435zv/MgW/IY5TdPok8A0Awl3t5uPjaax27krGJnSIqbu6PZTQ54+ej33w
- akq5rjBOSfcCdRInfsxBvj+2g7fJ/PgGiGOohq7kYJC1lP18PeIjgR2CItm86XKU/L8O
- hhUMUqNl3VVO3p9IsuIQndLKBGvdoWcPPFhe6CHGNL16DSn3XoGzhCvp9QY3An0IB2t7
- yNWg==
-X-Gm-Message-State: AOJu0YwK4qnUh5tVwgJzEXiydTNmB/ZK7hm2I831JNd1pf4zNrPjkT20
- RcfIpBtNsr/s4cvwxup5nQNEqCYh+jEZeJm6Bza1X/MGmKWq5ymPi71lQ4RxJYMenW865JO4JYd
- 2cB/qAStfa8QLofhoIXFQHD8oSM9IdlshGqSB7A==
-X-Gm-Gg: ASbGncvt3bvda6JAm8mWNxe5zo50QCRf8im25HCOhhr3pCWsA/tcABrS6Vk8ZZob283
- ZkpNs++sbZwc4U2Ah3LudH4RlbUuXa6XL+9UHvG5h+gN7K0sEMPVTwvZugbOvfOzvfPwRF65g7A
- ==
-X-Google-Smtp-Source: AGHT+IHqMy2XU0uUgPCW6MM8rjcfdGIo29ILl+epwUXt6wV+5ueic5xoGlbVV+TT9INo/KWqtBF9TXdaGwXKMfgUJow=
-X-Received: by 2002:a05:6902:841:b0:e30:ebdf:9643 with SMTP id
- 3f1490d57ef6-e57b1039cc5mr33290277276.8.1738060474550; Tue, 28 Jan 2025
- 02:34:34 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <kraxel@redhat.com>) id 1tcj2N-0008Vf-Dk
+ for qemu-devel@nongnu.org; Tue, 28 Jan 2025 05:41:43 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <kraxel@redhat.com>) id 1tcj2H-0002X9-91
+ for qemu-devel@nongnu.org; Tue, 28 Jan 2025 05:41:42 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1738060894;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=Q5BmEW4DnGq+UdM0tnVbqKqLrMEw80/0eIPX20ASm4I=;
+ b=gzn6kWHsTWUMB7E2fJqPWnbAkBwuoAo2ovjzCCx6RKtwM8k1icD0XgSjpdIRivmHkZpGxR
+ OKS9hihhdEMTxPtnmMlFYh31+3W3nSCT3rfX1fMSRWd6+ShRxiGzPovqo61TdBuXnykxJS
+ 7l053QVvdreIpMXJgT+TNR1B6S9mO80=
+Received: from mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-180-kr_aKd0hPQ-uwOo_sUl5pw-1; Tue,
+ 28 Jan 2025 05:41:30 -0500
+X-MC-Unique: kr_aKd0hPQ-uwOo_sUl5pw-1
+X-Mimecast-MFC-AGG-ID: kr_aKd0hPQ-uwOo_sUl5pw
+Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id A601C19560A1; Tue, 28 Jan 2025 10:41:26 +0000 (UTC)
+Received: from sirius.home.kraxel.org (unknown [10.39.192.226])
+ by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 2C17C180035E; Tue, 28 Jan 2025 10:41:22 +0000 (UTC)
+Received: by sirius.home.kraxel.org (Postfix, from userid 1000)
+ id CEE951800097; Tue, 28 Jan 2025 11:41:19 +0100 (CET)
+Date: Tue, 28 Jan 2025 11:41:19 +0100
+From: Gerd Hoffmann <kraxel@redhat.com>
+To: Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Cc: qemu-devel@nongnu.org, Yi Liu <yi.l.liu@intel.com>, 
+ Markus Armbruster <armbru@redhat.com>, Eduardo Habkost <eduardo@habkost.net>, 
+ Anthony PERARD <anthony@xenproject.org>,
+ Gustavo Romero <gustavo.romero@linaro.org>, 
+ Jason Wang <jasowang@redhat.com>, qemu-ppc@nongnu.org,
+ "Michael S. Tsirkin" <mst@redhat.com>, 
+ Paolo Bonzini <pbonzini@redhat.com>, Alexander Graf <graf@amazon.com>, 
+ Richard Henderson <richard.henderson@linaro.org>,
+ Stefan Berger <stefanb@linux.vnet.ibm.com>, 
+ Bernhard Beschow <shentey@gmail.com>,
+ Stefano Stabellini <sstabellini@kernel.org>, 
+ Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>,
+ "Edgar E. Iglesias" <edgar.iglesias@gmail.com>, 
+ xen-devel@lists.xenproject.org, Marcel Apfelbaum <marcel.apfelbaum@gmail.com>, 
+ Alex Williamson <alex.williamson@redhat.com>, Paul Durrant <paul@xen.org>, 
+ =?utf-8?Q?Cl=C3=A9ment?= Mathieu--Drif <clement.mathieu--drif@eviden.com>,
+ =?utf-8?Q?C=C3=A9dric?= Le Goater <clg@redhat.com>
+Subject: Re: [PATCH 0/9] hw/sysbus/platform-bus: Introduce
+ TYPE_DYNAMIC_SYS_BUS_DEVICE
+Message-ID: <wkb53fhvfchqa4uvmifgitvcr7t7rfpc3hcohdhzczkzvktetx@yjveswjel3s4>
+References: <20250125181343.59151-1-philmd@linaro.org>
 MIME-Version: 1.0
-References: <20250111183711.2338-1-shentey@gmail.com>
- <20250111183711.2338-7-shentey@gmail.com>
- <CAFEAcA_m29rWYQPtz=xSBsS_FXb5_L6+DGBA2o_TrLcFy6YC3g@mail.gmail.com>
- <BB80F4B5-02D5-411A-95DF-9EEE91237EDB@gmail.com>
-In-Reply-To: <BB80F4B5-02D5-411A-95DF-9EEE91237EDB@gmail.com>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Tue, 28 Jan 2025 10:34:23 +0000
-X-Gm-Features: AWEUYZnFdLOz3esAFPsdw6ALQspsJMycIuoQyLwQr78QvRL3XQ3yHF1OvF1VCtU
-Message-ID: <CAFEAcA-V1fuGeSRvEusMg-03rwBwLq4rKoVPcrW95ByzeQ3kZA@mail.gmail.com>
-Subject: Re: [PATCH v2 06/13] hw/sd/sd: Remove legacy sd_set_cb() in favor of
- GPIOs
-To: Bernhard Beschow <shentey@gmail.com>
-Cc: qemu-devel@nongnu.org, Fabiano Rosas <farosas@suse.de>, 
- Paolo Bonzini <pbonzini@redhat.com>, Guenter Roeck <linux@roeck-us.net>, 
- =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
- Andrey Smirnov <andrew.smirnov@gmail.com>, qemu-arm@nongnu.org, 
- =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@redhat.com>, 
- Jean-Christophe Dubois <jcd@tribudubois.net>,
- Laurent Vivier <lvivier@redhat.com>, Bin Meng <bmeng.cn@gmail.com>, 
- qemu-block@nongnu.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::b2f;
- envelope-from=peter.maydell@linaro.org; helo=mail-yb1-xb2f.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20250125181343.59151-1-philmd@linaro.org>
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=kraxel@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -33
+X-Spam_score: -3.4
+X-Spam_bar: ---
+X-Spam_report: (-3.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.3,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, T_SCC_BODY_TEXT_LINE=-0.01,
+ T_SPF_TEMPERROR=0.01 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -104,51 +103,25 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, 27 Jan 2025 at 23:11, Bernhard Beschow <shentey@gmail.com> wrote:
->
->
->
-> Am 27. Januar 2025 13:24:46 UTC schrieb Peter Maydell <peter.maydell@lina=
-ro.org>:
-> >On Sat, 11 Jan 2025 at 18:37, Bernhard Beschow <shentey@gmail.com> wrote=
-:
-> >>
-> >> Commit ce5dd27534b0 "hw/sd: Remove omap2_mmc device" removed the last =
-user of
-> >> sd_set_cb(). Rework this functionality into GPIOs.
-> >>
-> >> Reviewed-by: Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org>
-> >> Signed-off-by: Bernhard Beschow <shentey@gmail.com>
-> >
-> >What is this for? We have a non-legacy API for "the SD controller
-> >needs to know when the SD card is inserted or the readonly
-> >status changes", which is that the controller implements the
-> >SDBasClass set_inserted and set_readonly methods. (See the pl011
-> >for an example.)
-> >
-> >I would prefer it if we used that consistently, rather than having
-> >two mechanisms, one using GPIO lines and one using class methods.
-> >I think we should delete the sd_set_cb() API and handling code
-> >entirely.
->
-> According to the Linux MMC controller DT schema, there are actually two w=
-ays to implement cd and wp lines [1]. When implementing the imx8mp-evk boar=
-d, I thought I would need to model the GPIO style [2], hence I implemented =
-it plus the active low part on the SD card. Later I noticed that the card g=
-ets detected anyway without the GPIO wiring, so I'm fine if the code gets r=
-emoved instead.
+On Sat, Jan 25, 2025 at 07:13:34PM +0100, Philippe Mathieu-Daudé wrote:
+> Some SysBus devices can optionally be dynamically plugged onto
+> the sysbus-platform-bus (then virtual guests are aware of
+> mmio mapping and IRQs via device tree / ACPI rules).
 
-Even if you did need to implement that GPIO wiring, I think the
-right way to do it is for the SD controller to implement a
-subclass of SDBusClass so it can have its own implementations
-of the set_inserted and set_readonly methods, and then it
-is the SD controller object that has the GPIO lines, not
-the SD card itself.
+Do we have some sane way to have user-pluggable sysbus devices on arm?
 
-(I have a series almost ready to send out which QOMifies
-the omap_mmc device and then deletes the "legacy" SD API,
-including sd_set_cb().)
+I've played around with that a bit, with the uefi variable service I'm
+working on.  Specifically I'd prefer to *not* have a patch wiring things
+up in machine type code like this ...
 
-thanks
--- PMM
+https://lore.kernel.org/qemu-devel/20250107153353.1144978-20-kraxel@redhat.com/
+
+... and just use 'qemu -device uefi-vars-sysbus' instead.
+
+Something like AcpiDevAmlIfClass but for device tree seems to not exist
+though.  Also apparently AcpiDevAmlIfClass is not used.
+
+take care,
+  Gerd
+
 
