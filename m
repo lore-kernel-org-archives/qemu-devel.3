@@ -4,106 +4,90 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 18E26C02192
-	for <qemu-devel@archiver.kernel.org>; Tue, 28 Jan 2025 05:02:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id AD97BC0218D
+	for <qemu-devel@archiver.kernel.org>; Tue, 28 Jan 2025 05:31:30 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tcdk0-0002zq-70; Tue, 28 Jan 2025 00:02:24 -0500
+	id 1tceBH-0001DF-OU; Tue, 28 Jan 2025 00:30:35 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <harshpb@linux.ibm.com>)
- id 1tcdjo-0002z9-CL; Tue, 28 Jan 2025 00:02:18 -0500
-Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
+ (Exim 4.90_1) (envelope-from <ppandit@redhat.com>)
+ id 1tceBG-0001Cn-Fa
+ for qemu-devel@nongnu.org; Tue, 28 Jan 2025 00:30:34 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <harshpb@linux.ibm.com>)
- id 1tcdjm-0007Ih-IY; Tue, 28 Jan 2025 00:02:12 -0500
-Received: from pps.filterd (m0353725.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 50S21Kxj007387;
- Tue, 28 Jan 2025 05:02:08 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=pp1; bh=OSYylV
- GYZk5WZBZA4+c6nnwTlr/USs0Nk+xIlCKsmlo=; b=IsPNb9muer2+xt99RIwmq1
- KMkN67d+W/vU0h+nP1B2hvZlmKgkW8yU+JgV3tMz0WpFjVgb4jmJNr9Qy855LO2S
- 5Vz0HPEqcij0vJAIGDzNOcu7l0tpP53NC35FwpcBhL5w32o4b+9eciuZVTq7c5Q9
- k1Vhqu28Fzgp13kklpfTIopZHPmHZ5/FTTKkcQakkWEmgiTY8cTYFgoHNMZH883W
- r/zwFHH39VN1aONSzrzwj5+jwIAJ5hBvyInafAwjfPbPzPUmffvcrLvStb+DwaEW
- qIsS/7I1buC2Okl3Q8pu+FGcrEZ5Uml2W7vngmMTam8t8dI58t+3PdwcgFPIF5rA
- ==
-Received: from pps.reinject (localhost [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 44ep2ygheh-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Tue, 28 Jan 2025 05:02:08 +0000 (GMT)
-Received: from m0353725.ppops.net (m0353725.ppops.net [127.0.0.1])
- by pps.reinject (8.18.0.8/8.18.0.8) with ESMTP id 50S5279u015832;
- Tue, 28 Jan 2025 05:02:07 GMT
-Received: from ppma13.dal12v.mail.ibm.com
- (dd.9e.1632.ip4.static.sl-reverse.com [50.22.158.221])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 44ep2yghe7-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Tue, 28 Jan 2025 05:02:07 +0000 (GMT)
-Received: from pps.filterd (ppma13.dal12v.mail.ibm.com [127.0.0.1])
- by ppma13.dal12v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 50S1hWEi022175;
- Tue, 28 Jan 2025 05:02:06 GMT
-Received: from smtprelay03.wdc07v.mail.ibm.com ([172.16.1.70])
- by ppma13.dal12v.mail.ibm.com (PPS) with ESMTPS id 44dcgjhc3x-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Tue, 28 Jan 2025 05:02:06 +0000
-Received: from smtpav04.dal12v.mail.ibm.com (smtpav04.dal12v.mail.ibm.com
- [10.241.53.103])
- by smtprelay03.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 50S525lG6750748
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Tue, 28 Jan 2025 05:02:05 GMT
-Received: from smtpav04.dal12v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id BA7125805A;
- Tue, 28 Jan 2025 05:02:05 +0000 (GMT)
-Received: from smtpav04.dal12v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 955D758056;
- Tue, 28 Jan 2025 05:02:03 +0000 (GMT)
-Received: from [9.124.214.156] (unknown [9.124.214.156])
- by smtpav04.dal12v.mail.ibm.com (Postfix) with ESMTP;
- Tue, 28 Jan 2025 05:02:03 +0000 (GMT)
-Message-ID: <74e1cef3-abcd-4e32-8d7d-55f57c40cba2@linux.ibm.com>
-Date: Tue, 28 Jan 2025 10:32:02 +0530
+ (Exim 4.90_1) (envelope-from <ppandit@redhat.com>)
+ id 1tceBE-0001gC-OF
+ for qemu-devel@nongnu.org; Tue, 28 Jan 2025 00:30:34 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1738042230;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=R7QIOZWc4riGdOEeltugd053q1rBEuvcEhZArvkKTeA=;
+ b=Ihu2astOtBnsSlSfyVZFGSDT37mu3kK9BKUh5ipgodBP1icGV8EC+aVzUVcI1d5q0f5Wgy
+ iqTHhlcYlcsUlVRfWtE1WZ49m+FrXLsS7oDClP0F5Dk6d8f2vT4c+UHaVMBooWeAnrA9UO
+ WaVToXxEUvEipwjPSfro78t0hRJcCKM=
+Received: from mail-wm1-f69.google.com (mail-wm1-f69.google.com
+ [209.85.128.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-413-QbOLQMbjPyiUnnxzKLzzLA-1; Tue, 28 Jan 2025 00:30:27 -0500
+X-MC-Unique: QbOLQMbjPyiUnnxzKLzzLA-1
+X-Mimecast-MFC-AGG-ID: QbOLQMbjPyiUnnxzKLzzLA
+Received: by mail-wm1-f69.google.com with SMTP id
+ 5b1f17b1804b1-4361c040ba8so29513135e9.1
+ for <qemu-devel@nongnu.org>; Mon, 27 Jan 2025 21:30:27 -0800 (PST)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1738042226; x=1738647026;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=R7QIOZWc4riGdOEeltugd053q1rBEuvcEhZArvkKTeA=;
+ b=Fdu8R5Cn0YyUCYwRFO06LQgbFeH/txKhGzwhYap0SEElWSLUr0U/q6wExf1q8a6mXc
+ VJPBh8Zin6omOcZ01SknSjlnC+29MuBS/kVB8m499wCd3dJmOJC2lHRAGiKbbVdWO4DP
+ P53k+jXELohh88bvyOUhraD5JaMGOmFjuU0OSRSOa0u2+ql1Z+W67Hqsr4ov8PwAz0J6
+ BTLAMZE7qqPnRE4ZTMHHbyCZi+T4yi+8sy2VfFGehBqQnFgR2kDWKMwHcZ+VtT+2RaXw
+ YmvwgRnuVK+LfAszcWKqjCXrxQa3Qd4GscbiTT1EPIkCcUo6lNldUjvMVdztWgzevvvI
+ aqtg==
+X-Gm-Message-State: AOJu0Yw3Ec8HnD3iam3wmV/rHgXXApBBYl2RGrbrN61AceJbFHFkTcQl
+ 3NMc94Q0SrCBxErWQvlMtt0/RZhyWhrzOUTjzOL9heF29EBjFzkqYLRPieBAFN4Khhar4ZerVCD
+ BWHmR+jy/zqbgRoOyZGzGrp+tbmu48aAuZ+t2gmgGRU3gKuGtcJzpcnsuowtmrYS8mSCFNhibbJ
+ fn1p+5qGBr0j8/vwikUiQR5JVmUjI=
+X-Gm-Gg: ASbGncuLpnOFzWia4WAQfzJYOmXAmxLkeWf++7bOrdfoIYybTKY/2RmsODeI4qn2K4v
+ LwM4+OMbZDYl3Wvf+dO/UjNxUJ8+50iVD7SoGg2ksCcHndAjuId45j3Zd9+WAosA=
+X-Received: by 2002:a05:600c:83c3:b0:434:f5c0:328d with SMTP id
+ 5b1f17b1804b1-43891433ff6mr382241255e9.23.1738042226369; 
+ Mon, 27 Jan 2025 21:30:26 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IEad/8BY3x/QlL3aPcyyAVraJF0zb2w+A+8pOF4TJkIZ926n1s4aVXwCSQq+yV4v/RLu7xpqtonsdbuDwe8us0=
+X-Received: by 2002:a05:600c:83c3:b0:434:f5c0:328d with SMTP id
+ 5b1f17b1804b1-43891433ff6mr382241115e9.23.1738042226026; Mon, 27 Jan 2025
+ 21:30:26 -0800 (PST)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 02/15] hw/ppc/spapr: Restrict part of PAGE_INIT
- hypercall to TCG
-To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- qemu-devel@nongnu.org
-Cc: Daniel Henrique Barboza <danielhb413@gmail.com>,
- Richard Henderson <richard.henderson@linaro.org>, qemu-ppc@nongnu.org,
- Nicholas Piggin <npiggin@gmail.com>
-References: <20250127102620.39159-1-philmd@linaro.org>
- <20250127102620.39159-3-philmd@linaro.org>
-Content-Language: en-US
-From: Harsh Prateek Bora <harshpb@linux.ibm.com>
-In-Reply-To: <20250127102620.39159-3-philmd@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-X-TM-AS-GCONF: 00
-X-Proofpoint-ORIG-GUID: U_EWgfpretVPygKMMdSbWJ4bBVQuXO1f
-X-Proofpoint-GUID: TBku1FhF05cDEAY9tAWOYgzhLEOICg2H
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1057,Hydra:6.0.680,FMLib:17.12.68.34
- definitions=2025-01-28_01,2025-01-27_01,2024-11-22_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- phishscore=0 impostorscore=0
- priorityscore=1501 clxscore=1015 suspectscore=0 mlxscore=0 malwarescore=0
- lowpriorityscore=0 spamscore=0 mlxlogscore=703 adultscore=0 bulkscore=0
- classifier=spam adjust=0 reason=mlx scancount=1 engine=8.19.0-2411120000
- definitions=main-2501280035
-Received-SPF: pass client-ip=148.163.158.5; envelope-from=harshpb@linux.ibm.com;
- helo=mx0b-001b2d01.pphosted.com
-X-Spam_score_int: -26
-X-Spam_score: -2.7
-X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H2=0.001, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+References: <20250127120823.144949-1-ppandit@redhat.com>
+ <20250127120823.144949-5-ppandit@redhat.com>
+ <874j1kufin.fsf@suse.de>
+In-Reply-To: <874j1kufin.fsf@suse.de>
+From: Prasad Pandit <ppandit@redhat.com>
+Date: Tue, 28 Jan 2025 11:00:09 +0530
+X-Gm-Features: AWEUYZmy4cPNf5eG3BQWL5KQUZWpXWwTWTf3A9rpbb3gXmQzFz7AUUIfcwGjesk
+Message-ID: <CAE8KmOyj0DvODhRVoyaqGaTSe+YDV8ymieFwCgnFZM0rWRuK-w@mail.gmail.com>
+Subject: Re: [PATCH v4 4/4] tests/qtest/migration: add postcopy tests with
+ multifd
+To: Fabiano Rosas <farosas@suse.de>
+Cc: qemu-devel@nongnu.org, peterx@redhat.com, berrange@redhat.com, 
+ Prasad Pandit <pjp@fedoraproject.org>
+Content-Type: text/plain; charset="UTF-8"
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=ppandit@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -33
+X-Spam_score: -3.4
+X-Spam_bar: ---
+X-Spam_report: (-3.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.3,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -120,33 +104,53 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+Hello Fabiano,
 
+On Tue, 28 Jan 2025 at 02:43, Fabiano Rosas <farosas@suse.de> wrote:
+> > +    if (args->multifd) {
+> > +        migrate_set_capability(from, "multifd", true);
+> > +        migrate_set_capability(to, "multifd", true);
+>
+> This is slightly backwards because currently that's what the hooks are
+> for. I don't see the need for separate flags for multifd and
+> postcopy. This also makes the code less maintainable because it creates
+> two different ways of doing the same thing (hooks vs. args).
 
-On 1/27/25 15:56, Philippe Mathieu-Daudé wrote:
-> Restrict the tb_flush() call to TCG. Assert we are using KVM or TCG.
-> 
-> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+* I did look at the hook functions. In 'postcopy-tests.c' hook
+function is not used. Fields are set in the 'MigrateCommon args'
+object, which gets passed to migrate_postcopy_prepare() to
+enable/disable capability.
 
-Reviewed-by: Harsh Prateek Bora <harshpb@linux.ibm.com>
+* If we look at precopy-tests.c/tls-tests.c/compression-tests.c, the
+same hook function 'migrate_hook_start_precopy_tcp_multifd_common'
+gets called from them. Setting a capability therein shall affect all
+tests which call that function. Defining a new hook function to set a
+single field/capability and then calling the existing common hook
+function for other attributes is doable, but doing so for multiple
+qtests would only increase the number of hook functions, creating
+clutter and confusion over time. (thinking aloud)
 
-> ---
->   hw/ppc/spapr_hcall.c | 4 +++-
->   1 file changed, 3 insertions(+), 1 deletion(-)
-> 
-> diff --git a/hw/ppc/spapr_hcall.c b/hw/ppc/spapr_hcall.c
-> index dbf30358a1a..4f1933b8da6 100644
-> --- a/hw/ppc/spapr_hcall.c
-> +++ b/hw/ppc/spapr_hcall.c
-> @@ -299,8 +299,10 @@ static target_ulong h_page_init(PowerPCCPU *cpu, SpaprMachineState *spapr,
->       if (flags & (H_ICACHE_SYNCHRONIZE | H_ICACHE_INVALIDATE)) {
->           if (kvm_enabled()) {
->               kvmppc_icbi_range(cpu, pdst, len);
-> -        } else {
-> +        } else if (tcg_enabled()) {
->               tb_flush(CPU(cpu));
-> +        } else {
-> +            g_assert_not_reached();
->           }
->       }
->   
+> Alternatively, we could add a more generic args->caps and have every test set the capabilities it wants and
+> the _common code to iterate over those and set them to true. Something
+> like this perhaps:
+>
+>     for (int i = 0; i < MIGRATION_CAPABILITY__MAX; i++) {
+>         if (args->caps[i]) {
+>             migrate_set_capability(from, MigrationCapability_str(args->caps[i]), true);
+>             migrate_set_capability(to, MigrationCapability_str(args->caps[i]), true);
+>         }
+>     }
+>
+> We could also set the number of channels as a default value. The tests
+> could overwrite it from the hook if needed.
+
+* Yes, this seems like a better option, I'll give it a try.  But
+should we include it in this patch series OR make it a separate one?
+I'm leaning towards the latter, because it is a generic change
+affecting all tests, it's not specific to this series.
+
+Thank you.
+---
+  - Prasad
+
 
