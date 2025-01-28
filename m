@@ -4,66 +4,66 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9877EC0218A
-	for <qemu-devel@archiver.kernel.org>; Tue, 28 Jan 2025 21:54:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0E334C0218A
+	for <qemu-devel@archiver.kernel.org>; Tue, 28 Jan 2025 22:05:03 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tctWR-0007ba-Pw; Tue, 28 Jan 2025 16:53:27 -0500
+	id 1tcthA-0001ti-2f; Tue, 28 Jan 2025 17:04:33 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <shentey@gmail.com>)
- id 1tctWQ-0007aw-7e; Tue, 28 Jan 2025 16:53:26 -0500
-Received: from mail-ed1-x52c.google.com ([2a00:1450:4864:20::52c])
+ id 1tctgv-0001r1-9G; Tue, 28 Jan 2025 17:04:17 -0500
+Received: from mail-ed1-x529.google.com ([2a00:1450:4864:20::529])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <shentey@gmail.com>)
- id 1tctWO-0001w7-Do; Tue, 28 Jan 2025 16:53:25 -0500
-Received: by mail-ed1-x52c.google.com with SMTP id
- 4fb4d7f45d1cf-5d3f65844deso11116015a12.0; 
- Tue, 28 Jan 2025 13:53:23 -0800 (PST)
+ id 1tctgr-0003xa-RP; Tue, 28 Jan 2025 17:04:16 -0500
+Received: by mail-ed1-x529.google.com with SMTP id
+ 4fb4d7f45d1cf-5dc10fe4e62so11647197a12.1; 
+ Tue, 28 Jan 2025 14:04:13 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1738101202; x=1738706002; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1738101850; x=1738706650; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:message-id:references
  :in-reply-to:subject:cc:to:from:date:from:to:cc:subject:date
  :message-id:reply-to;
- bh=pdvvjMccK7T6CukrXbRsD3VUnuJMdZyPkQbI6b4Hk9I=;
- b=ZLR2S3Ed8n1g0AicGUuqVWgrjwf3xYguKWl/yqJaXMfpfvR2Z9VDLU8T0VgBmPQiRJ
- 7Yu2uUozLOGiJE5zDgzHtCCsIJphBZ68DzPX1z/01+PnNIDhp901tze+O+Yg+OEo5qgx
- 5N3H0cZQ3N1RWh9gfFW27W1ZBIWpZZMtvh9vNON60J4DX7km7V9HXjiQGhffN3mcE9o4
- 2X7iVzO4GzjNneIr1W4Ee6//iZNGecOh3Csm8b3luXXRtF8GCLw36aUg5VB8zg1gOvEM
- Q0N55pd5C45lNNdMmBn4HwhuYtz7x63ck6mY95Sutidfv81b+hdpE2YZfMMaAgDOag4L
- UlHA==
+ bh=AuGyuN9SnUjh2crkIjE0gAGw4/S/C50O6CaHRBPgFmE=;
+ b=H5AJxnbAhSEAwm8O/OepxNwN9UCZ4RAVVS/ms+vyWqjPLcIDSI1syZU6aGZNcfOcCM
+ xGmkF1okjyP7cawuQGeh7JnL5258pGUBKjXNerRdpzyioddKA7krPHZP+KoXBrbVCIr/
+ mZDy32HjYGCzF0o6kXjuuw4PdefHURG0oBD/M4h5r/Ec7NzHgP2dl5jZGedZ4THYJKlT
+ 5mfcL10WJmoyIpvYx/ANuseWgF8U1ycmH//I/aIWtyvqElKVJohL3LAjIouLPh/4RwgW
+ o7iWkNfuoz0h15vTXkbj9XHUkVIxJmdV4nqocFIG8lt3sff4IJONwF4pg4VkhuqHo+B2
+ CMbA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1738101202; x=1738706002;
+ d=1e100.net; s=20230601; t=1738101850; x=1738706650;
  h=content-transfer-encoding:mime-version:message-id:references
  :in-reply-to:subject:cc:to:from:date:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=pdvvjMccK7T6CukrXbRsD3VUnuJMdZyPkQbI6b4Hk9I=;
- b=K/TOwE1lwvOLhlWPFnkkX94O6Im6Z4bNrguNu6H0JssCjbarkdeLybQ2v2n9CEBNQy
- HdktXMBg03+FYEtUCZ3BcENp+q5g8sbGIE1LOThdEPoJObAoolJ60IsKeERgwaF60lZv
- ROrDMNRDrNBb1RM3ttDuKmRJkb3eFxLiZX6jv60jZpRKAU8VA0NpjydHiX1VFgyCwDur
- j5J0PuVvcVOeNq5WKJlNLKTrJ++yP1qJlT8Mw2SW/IsIC87IfsOrGpnKwsyvaewLkgC6
- Nm7UhBCDSdj701oNrGgY3wyddM8cWA/f7TWqyB9MVF02qNg1ISq6M9z+XCLvuWsKwnbp
- 4oZQ==
+ bh=AuGyuN9SnUjh2crkIjE0gAGw4/S/C50O6CaHRBPgFmE=;
+ b=I5W6FGiyrO4ntnttalmRXpkAkPElhxFldddKYNj11UKP560Mmnv0az8pv4spYiUove
+ X8RGfh2IDykk2uE6T+Mr5wm5DAL4K5XAnNFG6/xGuOjv2iQzW04CTfc0QoD925CW3R1R
+ SUkq5VHOXNraIyjjmw4rXgHl2j8xfE58dCy3B2HYFNeghfSEZqjewGKqBVIeM5nlj+F7
+ VJNWeudQzrXW0g4NNXsQvT383zwhR/YN5/yQYg086x4MpISbXrnN+zcE0/iUotjrb6qI
+ 2hShv3VhN5wdkfSbytK8fBAu9U1P0flpvVYsP6B9S8R/2Yv2XBP75t/u3+gZrsdJ0cuO
+ CZiA==
 X-Forwarded-Encrypted: i=1;
- AJvYcCV+35eLYYlZLEj0J8aqqxL35X0XKfdCxH0PNVNlf7W4Oydc78VtbPaiNxiobICEV1HdmeVUbX4XIw==@nongnu.org
-X-Gm-Message-State: AOJu0YwqoswGnA+WEi1s4X2o4VQOkrlY8FvMqPYx61C0rv4+mvjjLx7a
- K6Q1OYwoCqYznQTbQd9IGj8X86dkUL3tx32TLBDllaJSiaUJVa4s
-X-Gm-Gg: ASbGncvdTQ5YrreAJ1w6IjdkTVBiFKNGCPc586Vk6XiqerwLb54pmx5gOr1k3A66hOf
- n1BQEorQwxAP3I7eimz6ZGoApnClIIyXLP3wvDwvhnY0wTHdW0ffiWuOZ3Z6tsqp28Jifbo7xiJ
- VV8r6Me8Mv55SAAdVi16BUX29BldNsjlN0X0IwgI3VRrYgQ6CVS9Plza/9+w+L259sEb0poboAN
- 54vtY6vgkubzDmuy2Jr2O8fb+MFsFD+ZCWAvLBmt2Ia6OTZ41j861CzZMWc1yF83wkAOTLdMiYm
- rJpWLkdNHNYA2/hmMsJyLdTdISyjKo+1IY1QXldTgtAsiei4AMoWuGkdxYH7Wx6B
-X-Google-Smtp-Source: AGHT+IEGLIalHhFmqQmF/VUYp/xEX8NaGioDi/b8xhnTJw+lNby9HV5V3oPdAwEgbwuPvpvn3flmjQ==
-X-Received: by 2002:a05:6402:524d:b0:5dc:4f4:74c3 with SMTP id
- 4fb4d7f45d1cf-5dc5efa8eb6mr458102a12.4.1738101201936; 
- Tue, 28 Jan 2025 13:53:21 -0800 (PST)
+ AJvYcCXzTCO+cTH7OrNZ0JLtd9JzcHOqOyjJ+XJNsdL79/BS3tVttvBumrRCqUXR0Z8QBje3wSMuXHQyYw==@nongnu.org
+X-Gm-Message-State: AOJu0Yxews4Uu8R7NrNLM6n5na8NhygCxrVmA98qn3CwF3JN6a3+XUMX
+ mJqS5ZjByOGth3y+bmcmkjmWgQnMBguezuHlzJl9GIVTsKSKvR9oys6+lQ==
+X-Gm-Gg: ASbGncvUq8FA7DKtNzwaqJXhVTYzL02jAxav7BgrX/PgHNTAhjbqUP5cb3bLV0c9CLL
+ tyN2AW63WBtgMyJgtKnnQxwIwxwFlSGPk3jL7oTDKBYElDwryDDZTmEtAXeWpP7l1mLrWPvzMu0
+ ld+h7B9Cy+4Ut5V8aB9MiB8nfyWF1R7qkTu7ltyQnX+3L86lKwNjLHSVYE0jYkfTu+01FetRtvd
+ ibQiH8QBYeaelz+2h0pQTzwUdAvJ1cj/4dhp740P5/o4XpeZwMmKlJq1hDaUpXiYtPy1JTVLu4K
+ K7o978GZHQ9yxE0Oi5bl809liL/B/xFoQJ/3w70txu4Pmh/twyrjuXrSpwpRqWLQ
+X-Google-Smtp-Source: AGHT+IHdfxyO0g3BoX8ePLnngW/h90/cYja/L4mhtjWNrRj/bSVSLlSiUQLlIk2SMsv+zsryYi8kQg==
+X-Received: by 2002:a05:6402:13ce:b0:5da:9d4:ad6 with SMTP id
+ 4fb4d7f45d1cf-5dc5effb09bmr549712a12.28.1738101850231; 
+ Tue, 28 Jan 2025 14:04:10 -0800 (PST)
 Received: from [127.0.0.1] (dynamic-089-012-042-254.89.12.pool.telefonica.de.
  [89.12.42.254]) by smtp.gmail.com with ESMTPSA id
- 4fb4d7f45d1cf-5dc186183b4sm7789840a12.4.2025.01.28.13.53.20
+ 4fb4d7f45d1cf-5dc18628d00sm7899905a12.27.2025.01.28.14.04.09
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 28 Jan 2025 13:53:21 -0800 (PST)
-Date: Tue, 28 Jan 2025 21:53:20 +0000
+ Tue, 28 Jan 2025 14:04:09 -0800 (PST)
+Date: Tue, 28 Jan 2025 22:04:08 +0000
 From: Bernhard Beschow <shentey@gmail.com>
 To: Peter Maydell <peter.maydell@linaro.org>
 CC: qemu-devel@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>,
@@ -72,18 +72,18 @@ CC: qemu-devel@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>,
  Jean-Christophe Dubois <jcd@tribudubois.net>, qemu-arm@nongnu.org,
  Andrey Smirnov <andrew.smirnov@gmail.com>,
  "Edgar E. Iglesias" <edgar.iglesias@gmail.com>
-Subject: Re: [PATCH 06/21] hw/arm/fsl-imx8mp: Implement clock tree
-In-Reply-To: <CAFEAcA8Ox+CjVVgPWciFOPv748tvCSOHpcQn_ihwCXAvSNnk8Q@mail.gmail.com>
+Subject: Re: [PATCH 09/21] hw/arm/fsl-imx8mp: Add PCIe support
+In-Reply-To: <CAFEAcA9efWMDxaTCfa6t8MiCgFUEU+nsyurNOqVDxAa9=KS=-Q@mail.gmail.com>
 References: <20250120203748.4687-1-shentey@gmail.com>
- <20250120203748.4687-7-shentey@gmail.com>
- <CAFEAcA8Ox+CjVVgPWciFOPv748tvCSOHpcQn_ihwCXAvSNnk8Q@mail.gmail.com>
-Message-ID: <C5F68E08-2125-4EAC-B114-559F253AC20F@gmail.com>
+ <20250120203748.4687-10-shentey@gmail.com>
+ <CAFEAcA9efWMDxaTCfa6t8MiCgFUEU+nsyurNOqVDxAa9=KS=-Q@mail.gmail.com>
+Message-ID: <137C0579-19AB-4D92-82DC-6CBE2422AD6A@gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain;
  charset=utf-8
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::52c;
- envelope-from=shentey@gmail.com; helo=mail-ed1-x52c.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::529;
+ envelope-from=shentey@gmail.com; helo=mail-ed1-x529.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -108,140 +108,59 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 
 
-Am 28=2E Januar 2025 14:35:14 UTC schrieb Peter Maydell <peter=2Emaydell@l=
+Am 28=2E Januar 2025 14:33:14 UTC schrieb Peter Maydell <peter=2Emaydell@l=
 inaro=2Eorg>:
 >On Mon, 20 Jan 2025 at 20:38, Bernhard Beschow <shentey@gmail=2Ecom> wrot=
 e:
 >>
->> Fixes quite a few stack traces during the Linux boot process=2E Also pr=
-ovides the
->> clocks for devices added later, e=2Eg=2E enet1=2E
+>> Linux checks for the PLLs in the PHY to be locked, so implement a model
+>> emulating that=2E
 >>
 >> Signed-off-by: Bernhard Beschow <shentey@gmail=2Ecom>
->> ---
->>  MAINTAINERS                    |   2 +
->>  docs/system/arm/imx8mp-evk=2Erst |   1 +
->>  include/hw/arm/fsl-imx8mp=2Eh    |   3 +
->>  include/hw/misc/imx8mp_ccm=2Eh   |  97 ++++++++++
->>  hw/arm/fsl-imx8mp=2Ec            |  20 +++
->>  hw/misc/imx8mp_ccm=2Ec           | 315 +++++++++++++++++++++++++++++++=
-++
->>  hw/misc/meson=2Ebuild            |   1 +
->>  7 files changed, 439 insertions(+)
->>  create mode 100644 include/hw/misc/imx8mp_ccm=2Eh
->>  create mode 100644 hw/misc/imx8mp_ccm=2Ec
->> diff --git a/include/hw/misc/imx8mp_ccm=2Eh b/include/hw/misc/imx8mp_cc=
-m=2Eh
->> new file mode 100644
->> index 0000000000=2E=2E2378c157de
->> --- /dev/null
->> +++ b/include/hw/misc/imx8mp_ccm=2Eh
->> @@ -0,0 +1,97 @@
->> +/*
->> + * Copyright (c) 2025 Bernhard Beschow <shentey@gmail=2Ecom>
->> + *
->> + * i=2EMX8MP CCM, ANALOG IP blocks emulation code
->> + *
->> + * SPDX-License-Identifier: GPL-2=2E0-or-later
->> + */
->> +
->> +#ifndef IMX8MP_CCM_H
->> +#define IMX8MP_CCM_H
->> +
->> +#include "hw/misc/imx_ccm=2Eh"
->> +#include "qom/object=2Eh"
->> +
->> +enum IMX8MPAnalogRegisters {
->> +    ANALOG_AUDIO_PLL1_GEN_CTRL =3D 0x000 / 4,
->> +    ANALOG_AUDIO_PLL1_FDIV_CTL0 =3D 0x004 / 4,
->> +    ANALOG_AUDIO_PLL1_FDIV_CTL1 =3D 0x008 / 4,
->> +    ANALOG_AUDIO_PLL1_SSCG_CTRL =3D 0x00c / 4,
->> +    ANALOG_AUDIO_PLL1_MNIT_CTRL =3D 0x010 / 4,
->> +    ANALOG_AUDIO_PLL2_GEN_CTRL =3D 0x014 / 4,
->> +    ANALOG_AUDIO_PLL2_FDIV_CTL0 =3D 0x018 / 4,
->> +    ANALOG_AUDIO_PLL2_FDIV_CTL1 =3D 0x01c / 4,
->> +    ANALOG_AUDIO_PLL2_SSCG_CTRL =3D 0x020 / 4,
->> +    ANALOG_AUDIO_PLL2_MNIT_CTRL =3D 0x024 / 4,
->> +    ANALOG_VIDEO_PLL1_GEN_CTRL =3D 0x028 / 4,
->> +    ANALOG_VIDEO_PLL1_FDIV_CTL0 =3D 0x02c / 4,
->> +    ANALOG_VIDEO_PLL1_FDIV_CTL1 =3D 0x030 / 4,
->> +    ANALOG_VIDEO_PLL1_SSCG_CTRL =3D 0x034 / 4,
->> +    ANALOG_VIDEO_PLL1_MNIT_CTRL =3D 0x038 / 4,
->> +    ANALOG_DRAM_PLL_GEN_CTRL =3D 0x050 / 4,
->> +    ANALOG_DRAM_PLL_FDIV_CTL0 =3D 0x054 / 4,
->> +    ANALOG_DRAM_PLL_FDIV_CTL1 =3D 0x058 / 4,
->> +    ANALOG_DRAM_PLL_SSCG_CTRL =3D 0x05c / 4,
->> +    ANALOG_DRAM_PLL_MNIT_CTRL =3D 0x060 / 4,
->> +    ANALOG_GPU_PLL_GEN_CTRL =3D 0x064 / 4,
->> +    ANALOG_GPU_PLL_FDIV_CTL0 =3D 0x068 / 4,
->> +    ANALOG_GPU_PLL_LOCKD_CTRL =3D 0x06c / 4,
->> +    ANALOG_GPU_PLL_MNIT_CTRL =3D 0x070 / 4,
->> +    ANALOG_VPU_PLL_GEN_CTRL =3D 0x074 / 4,
->> +    ANALOG_VPU_PLL_FDIV_CTL0 =3D 0x078 / 4,
->> +    ANALOG_VPU_PLL_LOCKD_CTRL =3D 0x07c / 4,
->> +    ANALOG_VPU_PLL_MNIT_CTRL =3D 0x080 / 4,
->> +    ANALOG_ARM_PLL_GEN_CTRL =3D 0x084 / 4,
->> +    ANALOG_ARM_PLL_FDIV_CTL0 =3D 0x088 / 4,
->> +    ANALOG_ARM_PLL_LOCKD_CTRL =3D 0x08c / 4,
->> +    ANALOG_ARM_PLL_MNIT_CTRL =3D 0x090 / 4,
->> +    ANALOG_SYS_PLL1_GEN_CTRL =3D 0x094 / 4,
->> +    ANALOG_SYS_PLL1_FDIV_CTL0 =3D 0x098 / 4,
->> +    ANALOG_SYS_PLL1_LOCKD_CTRL =3D 0x09c / 4,
->> +    ANALOG_SYS_PLL1_MNIT_CTRL =3D 0x100 / 4,
->> +    ANALOG_SYS_PLL2_GEN_CTRL =3D 0x104 / 4,
->> +    ANALOG_SYS_PLL2_FDIV_CTL0 =3D 0x108 / 4,
->> +    ANALOG_SYS_PLL2_LOCKD_CTRL =3D 0x10c / 4,
->> +    ANALOG_SYS_PLL2_MNIT_CTRL =3D 0x110 / 4,
->> +    ANALOG_SYS_PLL3_GEN_CTRL =3D 0x114 / 4,
->> +    ANALOG_SYS_PLL3_FDIV_CTL0 =3D 0x118 / 4,
->> +    ANALOG_SYS_PLL3_LOCKD_CTRL =3D 0x11c / 4,
->> +    ANALOG_SYS_PLL3_MNIT_CTRL =3D 0x120 / 4,
->> +    ANALOG_OSC_MISC_CFG =3D 0x124 / 4,
->> +    ANALOG_ANAMIX_PLL_MNIT_CTL =3D 0x128 / 4,
->> +
->> +    ANALOG_DIGPROG =3D 0x800 / 4,
->> +    ANALOG_MAX,
->> +};
->> +
->> +enum IMX8MPCCMRegisters {
->> +    CCM_MAX =3D 0xc6fc / sizeof(uint32_t) + 1,
->> +};
->> +
->> +#define TYPE_IMX8MP_CCM "imx8mp=2Eccm"
->> +OBJECT_DECLARE_SIMPLE_TYPE(IMX8MPCCMState, IMX8MP_CCM)
->> +
->> +struct IMX8MPCCMState {
->> +    IMXCCMState parent_obj;
->> +
->> +    MemoryRegion iomem;
->> +
->> +    uint32_t ccm[CCM_MAX];
->> +};
->> +
->> +
->> +#define TYPE_IMX8MP_ANALOG "imx8mp=2Eanalog"
->> +OBJECT_DECLARE_SIMPLE_TYPE(IMX8MPAnalogState, IMX8MP_ANALOG)
->> +
->> +struct IMX8MPAnalogState {
->> +    IMXCCMState parent_obj;
->> +
->> +    struct {
->> +        MemoryRegion container;
->> +        MemoryRegion analog;
->> +    } mmio;
->> +
->> +    uint32_t analog[ANALOG_MAX];
->> +};
->> +
->> +#endif /* IMX8MP_CCM_H */
 >
->This seems to be implementing two separate devices in a single
->source file=2E Generally we prefer one device per file=2E Is
->there a reason they can't be split?
+>> diff --git a/docs/system/arm/imx8mp-evk=2Erst b/docs/system/arm/imx8mp-=
+evk=2Erst
+>> index 1514bc5864=2E=2E8d48580cb4 100644
+>> --- a/docs/system/arm/imx8mp-evk=2Erst
+>> +++ b/docs/system/arm/imx8mp-evk=2Erst
+>> @@ -14,6 +14,7 @@ The ``imx8mp-evk`` machine implements the following d=
+evices:
+>>   * Generic Interrupt Controller (GICv3)
+>>   * 4 UARTs
+>>   * 3 USDHC Storage Controllers
+>> + * 1 Designware PCI Express Controller
+>>   * Secure Non-Volatile Storage (SNVS) including an RTC
+>>   * Clock Tree
+>>
+>> @@ -62,3 +63,15 @@ Now that everything is prepared the newly built imag=
+e can be run in the QEMU
+>>        -dtb imx8mp-evk-patched=2Edtb \
+>>        -append "root=3D/dev/mmcblk2p2" \
+>>        -drive file=3Dsdcard=2Eimg,if=3Dsd,bus=3D2,format=3Draw,id=3Dmmc=
+blk2
+>> +
+>> +Using PCI Devices
+>> +-----------------
+>> +
+>> +The PCI Express controller spawns two PCI buses, of which only one can=
+ be used=2E
+>> +By default QEMU assigns the wrong bus, so the correct one has to be sp=
+ecified
+>> +manually by adding ``bus=3Ddw-pcie``=2E For example, when adding an In=
+tel e1000
+>> +network card, the command line looks like:
+>> +
+>> +=2E=2E code-block:: bash
+>> +
+>> +  $ qemu-system-aarch64 -M imximp-evk =2E=2E=2E -device virtio-net-pci=
+,bus=3Ddw-pcie
+>
+>Why does this happen? Isn't there some way to make QEMU default to
+>using the right bus? Otherwise there's likely to be a lot of
+>user confusion because PCI "doesn't work"=2E=2E=2E
 
-I took inspiration from i=2Emx7 where these two are also implemented in on=
-e file, presumably because both share some code=2E This isn't the case here=
- so I'm more than happy to split=2E
+Yeah, this is really confusing and I forget about it myself=2E I'd appreci=
+ate any hints here=2E
 
 Best regards,
 Bernhard
