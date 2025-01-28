@@ -4,79 +4,76 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 45A64C02192
-	for <qemu-devel@archiver.kernel.org>; Tue, 28 Jan 2025 20:17:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 81E55C0218A
+	for <qemu-devel@archiver.kernel.org>; Tue, 28 Jan 2025 20:17:23 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tcrxh-00025h-PR; Tue, 28 Jan 2025 15:13:29 -0500
+	id 1tcrxa-00022Y-Ha; Tue, 28 Jan 2025 15:13:22 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1tcrxg-00025L-42
- for qemu-devel@nongnu.org; Tue, 28 Jan 2025 15:13:28 -0500
-Received: from mail-wm1-x32c.google.com ([2a00:1450:4864:20::32c])
+ id 1tcrxY-00021p-An
+ for qemu-devel@nongnu.org; Tue, 28 Jan 2025 15:13:20 -0500
+Received: from mail-wm1-x32d.google.com ([2a00:1450:4864:20::32d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1tcrxe-0001ZQ-EN
- for qemu-devel@nongnu.org; Tue, 28 Jan 2025 15:13:27 -0500
-Received: by mail-wm1-x32c.google.com with SMTP id
- 5b1f17b1804b1-4361b0ec57aso64495535e9.0
- for <qemu-devel@nongnu.org>; Tue, 28 Jan 2025 12:13:26 -0800 (PST)
+ id 1tcrxW-0001Xl-4J
+ for qemu-devel@nongnu.org; Tue, 28 Jan 2025 15:13:20 -0500
+Received: by mail-wm1-x32d.google.com with SMTP id
+ 5b1f17b1804b1-436202dd7f6so69760555e9.0
+ for <qemu-devel@nongnu.org>; Tue, 28 Jan 2025 12:13:17 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1738095205; x=1738700005; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=KrludJeelw8t7WfACCxjoGW3Sdcn7j7Tu3Qi7W2JqPY=;
- b=k+EtdDZ2pNhRaN1dk6c2IR5NovvueQ11ZFTDv6nbtb3qM7Vle2VHebOoiblvYRAR4Z
- 9QwwLpQ0ynac0eu/Bx7kKSES6nXWmHYa+54Bhk6Ad5AR/VzO0DzuFyGVYcTe8cxusana
- IK+oFlJemSgkcYUsT0H2M9rrRoZEw3q8YvELgsnGHthPQxlqyA3n+NHESNxJBYTgRk/m
- oXdLvdr1SeKKnZD8Goont9VEdY+1Sopuy89U21pT7JF8TD38k3Q9fKGHxVl/uEySKWYk
- YV9RzQlkgC8B3uqeAt1AQjVD5sZNHaNS6DQ/YCUli7K8U5OFcmk6HeMQEZjLG2/nk2ck
- Ukgw==
+ d=linaro.org; s=google; t=1738095196; x=1738699996; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:to
+ :from:from:to:cc:subject:date:message-id:reply-to;
+ bh=CJXplQcGS66yhEIleNiGNMA//eCmIAzfBUs/cxy068s=;
+ b=VTE90ecZ0cDSYlXrhUVCuycVudOAIMmnLfyI9UsVxVXTVT2Zoz56bWt2q+ocPLz/C+
+ UMIwd8QNCxPRjlXOHmyptAnGjZb2Pg7MXhrCd6S0o9dq4eAK/dR3Ah424K7eBoq0ZOfY
+ VJK5o8j+BzPrGgPUkOP49a0JMj5P3unq+FlI8YulrZj/cyjo8wcPZeN8u6htEdEiTR9J
+ 6khdQrkAggrRJNXQOEHj+BE5wNTfmAoOoY3RLJBm4kTXqoeClCNTQoRxY5SR4yBp2QE8
+ FdvrkrvLTSDgTP2hGMnxSAPWxcRBPsEOJPJEcLsC4hcHWB9xaPJWKyj/P8Ke5pdee8pj
+ SOpg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1738095205; x=1738700005;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=KrludJeelw8t7WfACCxjoGW3Sdcn7j7Tu3Qi7W2JqPY=;
- b=qyJHyzfFq9LeambyC7qZBTjO84QqcQ58wZmVn/M/1Wyxm2KD3OGWHNT7smbn2M8Mc3
- /mRa+HzMkOd5DuNGSKQC7VSd26g4ct4MfZ8QiNNfNObFX7t+lepuAEBR3Tw0sR17NOzF
- OXdrOu6vJyg/EWxfdkUImIvS9dQd+OVoOxbABfy4rMTA7F7xLLk20QSIMyWkBRy0mbmx
- Eznxpmp6v/5I6YdVqWzS+wPJaEHzV2xz+oe+f5rJKotELG3QEJWPj490e7c8jUrFg4dL
- Ve/0Iatd3MVAn/sTcai4Qi9zEUjWa9OUNGc6f2aQervHST89i9Xhxby7UOpywCHYAw87
- tRzA==
-X-Gm-Message-State: AOJu0YxhjUHKpmEecDPfL+f1r//dKWD6PxtF/FzlNoj1EiiDeVKsEvFD
- 1eOHOb4QETyDa9DXy9EH2a9iD83/WmXO8oeQkKvhnv85FSWM1S0ctDE58Y/wZ6KPVWpXLTEJ2kE
- f
-X-Gm-Gg: ASbGncvFJ0pVrdXdaU+yN4owmDudr5oPo5aqQ2pj9maM6lWoRhelCrqYH9tfMx/zCAp
- FTadtdm1lsGsS976L0EXpNTMIegt0G/VUEMD42jAh0N5CaGoA9Zpy1uHhluwIv369YG1Yeixzxg
- 6S8aBpZ0WUkVen3L0yPeIokVDZpH3GY0XD0l5UyZFM3ZogrvXjHkB+A1DCBgzmQj7cabkWu1Aru
- N8Fo8I26me/DddjvZ4KDe9rJt2+2j0oDUMlreZIuVUj0YP+AR4CP8JNdzF4TMlhQ7Fj0jwqjIaj
- KwI0/BQBuQfR99hAmSus0g==
-X-Google-Smtp-Source: AGHT+IHUqD/RIuKD9UFbg6vV23vlWkuycHk8mSje4Fctqz/Whb0EgJwOj47CNZRJV3mnLsKyzGzh5A==
-X-Received: by 2002:a05:600c:19d2:b0:435:330d:de86 with SMTP id
- 5b1f17b1804b1-438dc34b37bmr3005425e9.0.1738095204870; 
- Tue, 28 Jan 2025 12:13:24 -0800 (PST)
+ d=1e100.net; s=20230601; t=1738095196; x=1738699996;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:to
+ :from:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=CJXplQcGS66yhEIleNiGNMA//eCmIAzfBUs/cxy068s=;
+ b=fayj3MFDFWpt7r9EcWSPIjFPppBnKcg11Xzwmk/ZAk9LssJaZIBuOLJLB6+UH9SM5s
+ SJ4zjp9PGzJz5hA/JjJ9fVorTdFYUAvdH+5aPNs4lhd5CUdespgY05NPWr2i3IvO/8Fp
+ npOXBdNvg2LuJv97AHldjDajHLS8FtA/Q7LLMpnf+SZzLiNvkLqYhhvsXkChi+VAQhps
+ vJ7K/N4XWMHRf4zUBEyeU468spbziVTCCltyoB1rNHZFyPFi9DGXNILUDTchiUjBtgk6
+ L0qoXDzR0hYHSX8pHhsH/tluRbOFfGBaAbIWKWHlHb3en3Ncz0/cNgr38721xTxsgL4D
+ YgOw==
+X-Gm-Message-State: AOJu0YxH0E2K/ErPuuhLsZLhzZl8mYDHO8igz7lO56aKIcnSK9HrdXzP
+ NKl8IrVnXSNoKSWJiTRloFbQhElMjqlnBLwyV+lY6Wa99unmaN1ZD5ucs62jzbRenkeTncF7gTV
+ y
+X-Gm-Gg: ASbGncvtNbSc2dZ9rhw0ebl3MwK+yAYO4A4OAjLUmYl3C6sDgGA3WQ3e6msfKeJ7ePj
+ HYZetekpDTUyZPf62jYSMGzNhlKafz1sj1Ns23Bq2C5JsIJY5QUr34I0jInMTeH+7X/XNkidO5w
+ Gug4JElFvsiYLnjBdR0WxhomCUoKFI07lB5dl6LSjj2DuZxfYJcDBMiJZwil5Jmrcocs1kxtgDj
+ qiYhUBRSApWpCcgXoIdVMwcvm9WJRZl7VlfWKt1vF/ygs8sm0a/8iN7lFOIYoPbC99qwML3YSoM
+ e4yXmBexdJrp1WKbGgD3Eg==
+X-Google-Smtp-Source: AGHT+IGe+Axmf5bHr8xsbaCa2oa9Y8px6PQqWzB/BojSyHB/Y4sXIwifNsijORFrVa0F8tFI05pnCA==
+X-Received: by 2002:a05:600c:1c1a:b0:434:f9c4:a850 with SMTP id
+ 5b1f17b1804b1-438dc3c4623mr2750165e9.10.1738095196095; 
+ Tue, 28 Jan 2025 12:13:16 -0800 (PST)
 Received: from orth.archaic.org.uk (orth.archaic.org.uk. [2001:8b0:1d0::2])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-438bd4fa3efsm182524105e9.2.2025.01.28.12.13.24
+ 5b1f17b1804b1-438bd4fa3efsm182524105e9.2.2025.01.28.12.13.15
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 28 Jan 2025 12:13:24 -0800 (PST)
+ Tue, 28 Jan 2025 12:13:15 -0800 (PST)
 From: Peter Maydell <peter.maydell@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 08/36] hw/arm/stellaris: Constify read-only arrays
-Date: Tue, 28 Jan 2025 20:12:46 +0000
-Message-Id: <20250128201314.44038-9-peter.maydell@linaro.org>
+Subject: [PULL 00/36] target-arm queue
+Date: Tue, 28 Jan 2025 20:12:38 +0000
+Message-Id: <20250128201314.44038-1-peter.maydell@linaro.org>
 X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20250128201314.44038-1-peter.maydell@linaro.org>
-References: <20250128201314.44038-1-peter.maydell@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32c;
- envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x32c.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::32d;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x32d.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -99,48 +96,136 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Philippe Mathieu-Daudé <philmd@linaro.org>
+Hi; here's another arm pullreq; by volume most of this is
+refactoring from me, but there are also some bugfixes and
+other bits and pieces here.
 
-Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
-Message-id: 20250110160204.74997-3-philmd@linaro.org
-Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
----
- hw/arm/stellaris.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+thanks
+-- PMM
 
-diff --git a/hw/arm/stellaris.c b/hw/arm/stellaris.c
-index 3f525d2dcf6..42498cc1e53 100644
---- a/hw/arm/stellaris.c
-+++ b/hw/arm/stellaris.c
-@@ -101,7 +101,7 @@ static void ssys_update(ssys_state *s)
-   qemu_set_irq(s->irq, (s->int_status & s->int_mask) != 0);
- }
- 
--static uint32_t pllcfg_sandstorm[16] = {
-+static const uint32_t pllcfg_sandstorm[16] = {
-     0x31c0, /* 1 Mhz */
-     0x1ae0, /* 1.8432 Mhz */
-     0x18c0, /* 2 Mhz */
-@@ -120,7 +120,7 @@ static uint32_t pllcfg_sandstorm[16] = {
-     0x585b /* 8.192 Mhz */
- };
- 
--static uint32_t pllcfg_fury[16] = {
-+static const uint32_t pllcfg_fury[16] = {
-     0x3200, /* 1 Mhz */
-     0x1b20, /* 1.8432 Mhz */
-     0x1900, /* 2 Mhz */
-@@ -964,7 +964,7 @@ static void stellaris_adc_init(Object *obj)
- }
- 
- /* Board init.  */
--static stellaris_board_info stellaris_boards[] = {
-+static const stellaris_board_info stellaris_boards[] = {
-   { "LM3S811EVB",
-     0,
-     0x0032000e,
--- 
-2.34.1
+The following changes since commit ed734377ab3f3f3cc15d7aa301a87ab6370f2eed:
 
+  Merge tag 'linux-user-fix-gupnp-pull-request' of https://github.com/hdeller/qemu-hppa into staging (2025-01-24 14:43:07 -0500)
+
+are available in the Git repository at:
+
+  https://git.linaro.org/people/pmaydell/qemu-arm.git tags/pull-target-arm-20250128-1
+
+for you to fetch changes up to 664280abddcb3cacc9c6204706bb739fcc1316f7:
+
+  hw/usb/canokey: Fix buffer overflow for OUT packet (2025-01-28 18:40:19 +0000)
+
+----------------------------------------------------------------
+target-arm queue:
+ * hw/arm: Remove various uses of first_cpu global
+ * hw/char/imx_serial: Fix reset value of UFCR register
+ * hw/char/imx_serial: Update all state before restarting ageing timer
+ * hw/pci-host/designware: Expose MSI IRQ
+ * hw/arm/stellaris: refactoring, cleanup
+ * hw/arm/stellaris: map both I2C controllers
+ * tests/functional: Add a test for the arm microbit machine
+ * target/arm: arm_reset_sve_state() should set FPSR, not FPCR
+ * target/arm: refactorings preparatory to FEAT_AFP implementation
+ * fpu: Rename float_flag_input_denormal to float_flag_input_denormal_flushed
+ * fpu: Rename float_flag_output_denormal to float_flag_output_denormal_flushed
+ * hw/usb/canokey: Fix buffer overflow for OUT packet
+
+----------------------------------------------------------------
+Bernhard Beschow (3):
+      hw/char/imx_serial: Fix reset value of UFCR register
+      hw/char/imx_serial: Update all state before restarting ageing timer
+      hw/pci-host/designware: Expose MSI IRQ
+
+Hongren Zheng (1):
+      hw/usb/canokey: Fix buffer overflow for OUT packet
+
+Peter Maydell (22):
+      target/arm: arm_reset_sve_state() should set FPSR, not FPCR
+      target/arm: Use FPSR_ constants in vfp_exceptbits_from_host()
+      target/arm: Use uint32_t in vfp_exceptbits_from_host()
+      target/arm: Define new fp_status_a32 and fp_status_a64
+      target/arm: Use vfp.fp_status_a64 in A64-only helper functions
+      target/arm: Use fp_status_a64 or fp_status_a32 in is_ebf()
+      target/arm: Use fp_status_a32 in vjvct helper
+      target/arm: Use fp_status_a32 in vfp_cmp helpers
+      target/arm: Use FPST_A32 in A32 decoder
+      target/arm: Use FPST_A64 in A64 decoder
+      target/arm: Remove now-unused vfp.fp_status and FPST_FPCR
+      target/arm: Define new fp_status_f16_a32 and fp_status_f16_a64
+      target/arm: Use fp_status_f16_a32 in AArch32-only helpers
+      target/arm: Use fp_status_f16_a64 in AArch64-only helpers
+      target/arm: Use FPST_A32_F16 in A32 decoder
+      target/arm: Use FPST_A64_F16 in A64 decoder
+      target/arm: Remove now-unused vfp.fp_status_f16 and FPST_FPCR_F16
+      fpu: Rename float_flag_input_denormal to float_flag_input_denormal_flushed
+      fpu: Rename float_flag_output_denormal to float_flag_output_denormal_flushed
+      fpu: Fix a comment in softfloat-types.h
+      target/arm: Remove redundant advsimd float16 helpers
+      target/arm: Use FPST_A64_F16 for halfprec-to-other conversions
+
+Philippe Mathieu-Daudé (9):
+      hw/arm/nrf51: Rename ARMv7MState 'cpu' -> 'armv7m'
+      hw/arm/stellaris: Add 'armv7m' local variable
+      hw/arm/v7m: Remove use of &first_cpu in machine_init()
+      hw/arm/stellaris: Link each board schematic
+      hw/arm/stellaris: Constify read-only arrays
+      hw/arm/stellaris: Remove incorrect unimplemented i2c-0 at 0x40002000
+      hw/arm/stellaris: Replace magic numbers by definitions
+      hw/arm/stellaris: Use DEVCAP macro to access DeviceCapability registers
+      hw/arm/stellaris: Map both I2C controllers
+
+Thomas Huth (1):
+      tests/functional: Add a test for the arm microbit machine
+
+ MAINTAINERS                           |   1 +
+ hw/usb/canokey.h                      |   4 --
+ include/fpu/softfloat-types.h         |  10 +--
+ include/hw/arm/fsl-imx6.h             |   4 +-
+ include/hw/arm/fsl-imx7.h             |   4 +-
+ include/hw/arm/nrf51_soc.h            |   2 +-
+ include/hw/char/imx_serial.h          |   2 +-
+ include/hw/pci-host/designware.h      |   1 +
+ target/arm/cpu.h                      |  12 ++--
+ target/arm/tcg/helper-a64.h           |   8 ---
+ target/arm/tcg/translate.h            |  32 ++++++---
+ fpu/softfloat.c                       |   6 +-
+ hw/arm/b-l475e-iot01a.c               |   2 +-
+ hw/arm/fsl-imx6.c                     |  13 +++-
+ hw/arm/fsl-imx7.c                     |  13 +++-
+ hw/arm/microbit.c                     |   2 +-
+ hw/arm/mps2-tz.c                      |   2 +-
+ hw/arm/mps2.c                         |   2 +-
+ hw/arm/msf2-som.c                     |   2 +-
+ hw/arm/musca.c                        |   2 +-
+ hw/arm/netduino2.c                    |   2 +-
+ hw/arm/netduinoplus2.c                |   2 +-
+ hw/arm/nrf51_soc.c                    |  18 ++---
+ hw/arm/olimex-stm32-h405.c            |   2 +-
+ hw/arm/stellaris.c                    | 118 +++++++++++++++++++-----------
+ hw/arm/stm32vldiscovery.c             |   2 +-
+ hw/char/imx_serial.c                  |   7 +-
+ hw/pci-host/designware.c              |   7 +-
+ hw/usb/canokey.c                      |   6 +-
+ target/arm/cpu.c                      |   6 +-
+ target/arm/helper.c                   |   2 +-
+ target/arm/tcg/helper-a64.c           |   9 ---
+ target/arm/tcg/sme_helper.c           |   6 +-
+ target/arm/tcg/sve_helper.c           |   6 +-
+ target/arm/tcg/translate-a64.c        | 103 ++++++++++++++-------------
+ target/arm/tcg/translate-sme.c        |   4 +-
+ target/arm/tcg/translate-sve.c        | 130 +++++++++++++++++-----------------
+ target/arm/tcg/translate-vfp.c        |  78 ++++++++++----------
+ target/arm/tcg/vec_helper.c           |  22 +++---
+ target/arm/vfp_helper.c               |  73 +++++++++++--------
+ target/i386/tcg/fpu_helper.c          |   8 +--
+ target/m68k/fpu_helper.c              |   2 +-
+ target/mips/tcg/msa_helper.c          |   4 +-
+ target/rx/op_helper.c                 |   4 +-
+ target/tricore/fpu_helper.c           |   6 +-
+ fpu/softfloat-parts.c.inc             |   4 +-
+ hw/arm/Kconfig                        |   2 +
+ tests/functional/meson.build          |   1 +
+ tests/functional/test_arm_microbit.py |  31 ++++++++
+ 49 files changed, 452 insertions(+), 337 deletions(-)
+ create mode 100755 tests/functional/test_arm_microbit.py
 
