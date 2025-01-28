@@ -4,90 +4,91 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B7471C0218A
-	for <qemu-devel@archiver.kernel.org>; Tue, 28 Jan 2025 20:40:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 320B9C02194
+	for <qemu-devel@archiver.kernel.org>; Tue, 28 Jan 2025 20:53:47 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tcsMy-0006cv-7X; Tue, 28 Jan 2025 15:39:36 -0500
+	id 1tcsaR-0001mw-KG; Tue, 28 Jan 2025 15:53:31 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1tcsMv-0006al-T7
- for qemu-devel@nongnu.org; Tue, 28 Jan 2025 15:39:34 -0500
-Received: from mail-pl1-x62a.google.com ([2607:f8b0:4864:20::62a])
+ id 1tcsaC-0001i7-Mg
+ for qemu-devel@nongnu.org; Tue, 28 Jan 2025 15:53:18 -0500
+Received: from mail-pj1-x1030.google.com ([2607:f8b0:4864:20::1030])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1tcsMt-0007fL-PS
- for qemu-devel@nongnu.org; Tue, 28 Jan 2025 15:39:33 -0500
-Received: by mail-pl1-x62a.google.com with SMTP id
- d9443c01a7336-2166022c5caso97761305ad.2
- for <qemu-devel@nongnu.org>; Tue, 28 Jan 2025 12:39:31 -0800 (PST)
+ id 1tcsaB-0001QT-1Y
+ for qemu-devel@nongnu.org; Tue, 28 Jan 2025 15:53:16 -0500
+Received: by mail-pj1-x1030.google.com with SMTP id
+ 98e67ed59e1d1-2ef28f07dbaso8585743a91.2
+ for <qemu-devel@nongnu.org>; Tue, 28 Jan 2025 12:53:14 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1738096770; x=1738701570; darn=nongnu.org;
+ d=linaro.org; s=google; t=1738097593; x=1738702393; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=0m6gfdZfDonnsI66KDe3RyzYXNsfMO17neQ9nUSBVYE=;
- b=ihDtCu8EEwNXaF51XbEig7Em4bSMEv2eVG0SbKMRVCpiqd/Bec/2AYvwW0SxeGyvto
- npBm3PE0W2XQ0GLElF5P03dy5VZiNOOwsefc/P6EJQkKf1RSv3EefA1EfxMBcmtBY74v
- /25ap4gKZZ/LJjw+4PpK3chCd+VkMCVK4h6fr6BwrFpGGkP8ufhg2X551n2yLOY5ok3K
- 3UYJj/JwRujmPYbBq/pGJXOkS7wYWzj2tjHLc3cyPnYQWvj7VXvkPmSrjeA9HXC1qqK3
- 8Sjy/boa2bm3mfZ3NvTHKWE0HPHF02Lcs4BMidZj9tmxjqQ2rPNPQtIQWobD2XukcTYF
- Qb8g==
+ bh=URo8FEmDFzB6A///SxC3rjAeGZIUOBN9+BRHaomH+z8=;
+ b=uJ/wVrx3v7Bp2zjievknXA9UAR1FkzUPNEApmSDvzH7aS8SRRT0qZdZ+oyP1n+H2aK
+ PDRE5msyApPcdjC9lBsUlyDlYJur7LUGPrhd6RMO+IUbzrnqRHF10J8J19+F0RNv8wqw
+ a0u5nJ9WzKgnWiCzqwmoqocll/WYXtiBEMlfy+4bOKjop63LjivJfmRdoiLJrGfjkJyl
+ bkQcq8p8fKrs/OzERg9BG/tKxpvwknk13O++GyoVvQjx1pHj4JMHIbU0wuCxDWSlz47H
+ kqcsbViKeK8NGy9IZIpvQz92JUWFwa5ZIk1o/bWhHvDyP3VIk1U4bkYPdcD2Wd7Moavz
+ /Yiw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1738096770; x=1738701570;
+ d=1e100.net; s=20230601; t=1738097593; x=1738702393;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=0m6gfdZfDonnsI66KDe3RyzYXNsfMO17neQ9nUSBVYE=;
- b=Fi8nrK2KTRWxJsyudr8pP62mbM06MRj6XlXsPmgTogm7oIfS9+joatGmQtpyvjhbC0
- VmM9SaTw0TO5RViQuAZxQhVu2olMv1194CmQNNIwJO2/53BvkJgWjvnn5nYb/iYAWJpt
- WuId4o1pSzQ1L8f99JgBo00AkuA/vAjXJrG9uQg9o93C3efUJcCFh45ofJofaeNQ9YGL
- KPtga0Yq3qPE3EBUP/RtDBJokETUyxPcDTpZjBOo3aU2OrtQCgLLSnVsHGiwqoqDqDX1
- FefOfV8jWKUorhxfOx6o/keof169QnEfrcVAT0NkliRj2itlH7LhQ654X9oUN7Zdp+LD
- /JEg==
+ bh=URo8FEmDFzB6A///SxC3rjAeGZIUOBN9+BRHaomH+z8=;
+ b=cx1BRqQBnAE6kLusU/fGmioDgXuHVrJOP2DprVuIOBWViI32FA3eB8Pl7qUpv/lWHy
+ 6mGm/ea0lnU1X+E4DjWV4A2FZBcoUygbzu8j1b4L0JWLqc1AeVN1TQXpqhXqML9y8kQY
+ ckUL4BhMNXyjbNn/UtCWblfjp1el2GSlf4nwfeJLdefLUvBQy2ShMdp3b3UscqRIRZms
+ RIZaUcq3/rCdk7q3qnf9VESErOT41yF59Gdwr7LH4vUx4zpgWhkWqSdYzpalwdAciRBQ
+ GTCOove0iq23rdkHBM25zwivH3jjbPYJupX2YFvdai/kTXQGCFOI5EVipBf8iOUTBAlG
+ irdA==
 X-Forwarded-Encrypted: i=1;
- AJvYcCXPlRLRGvE37g67gVrgPOX+bgQk5D7JvXSyEgxwSb8TvUkwbiwqVDn5LnryAm6vlKKXpZkoNbcoae8U@nongnu.org
-X-Gm-Message-State: AOJu0YyJNqAYL7lCmAkZcsnRPyQT5J3RLro9kZErK7RSBz+nruOAeJ6/
- SZfXicXDgYc4qa8ZFPdCUKq9O6NXwwTNDGBq798Cz0Sy5w+JbFN4mi9cB5D41lE=
-X-Gm-Gg: ASbGncvFaJ9u4n4KIAbpTuVd9mIbm9P020wPQoGLrCX+NU13YUdPQtyZtZajflbkPQv
- XbmYctrlgdAOa/j6rcK1xd8ONgtV1LBRSTXzVGLA11ZuQOF4OGy0+dTgmDe/F2r/I4kPkeEY2SJ
- d/XpP5h8vdg2ezVkAPRccfaj1REWbuxugmXTCZkBW4QX/x5tNwA0lmgYVSVEP8IcqbaCZM9YCNC
- 5huEsGjVVwSgRrHuVQkZBSXFgVBrNhiDkf9iRa1dv85Bp/9rm43kwBVJnzkpjCxaBX45w9h9fqG
- pdN2TIbEsgcFigaYU0iwNIsgv6dkTio7mbKhVWh8cMHL/Csm9CUo4ynxcA==
-X-Google-Smtp-Source: AGHT+IEn9YS06OeYDPQIxTG4TK6aeOsG98QHjnXvqTb++MpsGWzFfJ2DMMjIG/l31Hb1PXLRQsQmvA==
-X-Received: by 2002:a05:6a00:ad8a:b0:726:41e:b314 with SMTP id
- d2e1a72fcca58-72fd0c623femr920016b3a.19.1738096770029; 
- Tue, 28 Jan 2025 12:39:30 -0800 (PST)
+ AJvYcCXW/f0IVMpqNkz/H2onWMqhzjYpOCIa8c6p1a+LaW36tSxUIxe0CeVu1kqc4SkjhNlVV0g7oTaWTyGh@nongnu.org
+X-Gm-Message-State: AOJu0Yy7ZlKmgpIVX7mqaZLG4POICSMYN3MpOMIid5wDZX5BoaJ9Vd2F
+ fOzdx6r7Jz8QNuD97GflcG+fMRPYSW/VkTekp/ULJH12P81OJEBNjBp1lFr46JY=
+X-Gm-Gg: ASbGncvfhkrnc75enBS3d+s12arTYCosfUf4NSW+we/yfnHTOw4CwlVS+r9+hOJFKuP
+ Dy/paocusdEm3JzT/dZ3vSjPals2kdMjHmjj8JpqMTPWUdxP036WF0LxqFt8ShncT0i/dd2QRbu
+ hna0jRDyVRTzNBkRavvitxZdmX5/DVjai2vTBYUbSAukZvIsvPptjL4THULrfHd6xdf4JznAGHQ
+ 89dxRxtjp2zVfZzwd0N3v4cS3yHf0NLTo84FJdX4qMHfgfAmg+dG9ZVvzL3pRK6vkY8cBw1zt7f
+ I/M0aHYZByHdJPfavRapIjSHfYduaCqq2R8r/FRC3HMO/F8OovIoDJL27Q==
+X-Google-Smtp-Source: AGHT+IGbCkwFcnvbvgjiI0FpzcUxshvLULe2uXuxSWfByzQcwn839F54/2Qol24ldyXXBsV6F8SoBA==
+X-Received: by 2002:a17:90b:4d06:b0:2ee:ab29:1a57 with SMTP id
+ 98e67ed59e1d1-2f83abb3553mr703945a91.2.1738097593044; 
+ Tue, 28 Jan 2025 12:53:13 -0800 (PST)
 Received: from [192.168.0.4] (174-21-71-127.tukw.qwest.net. [174.21.71.127])
  by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-72f8a760e42sm10003743b3a.100.2025.01.28.12.39.29
+ 98e67ed59e1d1-2f830a3d74esm589772a91.2.2025.01.28.12.53.12
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 28 Jan 2025 12:39:29 -0800 (PST)
-Message-ID: <f60d500d-f299-4d4c-b857-29e34b33416d@linaro.org>
-Date: Tue, 28 Jan 2025 12:39:28 -0800
+ Tue, 28 Jan 2025 12:53:12 -0800 (PST)
+Message-ID: <e57a850a-0f1d-426c-ad35-54ea6106f5a0@linaro.org>
+Date: Tue, 28 Jan 2025 12:53:11 -0800
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 0/1] meson: Deprecate 32-bit host systems
-To: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
- =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Cc: =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Thomas Huth <thuth@redhat.com>, qemu-devel@nongnu.org,
- peter.maydell@linaro.org, stefanha@redhat.com, pbonzini@redhat.com,
- mark.cave-ayland@ilande.co.uk, Liviu Ionescu <ilg@livius.net>
-References: <20250128004254.33442-1-richard.henderson@linaro.org>
- <9a280789-9248-4eca-b50c-048fc58e3f53@redhat.com>
- <87plk72tvr.fsf@draig.linaro.org>
- <ad6ca73a-c38a-4a9b-bdcb-ab50aa53ccd1@linaro.org>
- <Z5ii-ueFt5-5Brxz@redhat.com>
+Subject: Re: [PATCH 5/9] cpus: Add DeviceClass::[un]wire() stubs
+To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ qemu-devel@nongnu.org
+Cc: Peter Maydell <peter.maydell@linaro.org>,
+ Yanan Wang <wangyanan55@huawei.com>, Eduardo Habkost <eduardo@habkost.net>,
+ Harsh Prateek Bora <harshpb@linux.ibm.com>, kvm@vger.kernel.org,
+ Zhao Liu <zhao1.liu@intel.com>, =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?=
+ <berrange@redhat.com>, Markus Armbruster <armbru@redhat.com>,
+ Igor Mammedov <imammedo@redhat.com>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>, Peter Xu <peterx@redhat.com>,
+ Paolo Bonzini <pbonzini@redhat.com>
+References: <20250128142152.9889-1-philmd@linaro.org>
+ <20250128142152.9889-6-philmd@linaro.org>
 Content-Language: en-US
 From: Richard Henderson <richard.henderson@linaro.org>
-In-Reply-To: <Z5ii-ueFt5-5Brxz@redhat.com>
+In-Reply-To: <20250128142152.9889-6-philmd@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::62a;
- envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x62a.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1030;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pj1-x1030.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -110,74 +111,44 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 1/28/25 01:27, Daniel P. Berrangé wrote:
-> I'm not sure that's the case here.
+On 1/28/25 06:21, Philippe Mathieu-Daudé wrote:
+> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+> ---
+>   hw/core/cpu-common.c | 10 ++++++++++
+>   1 file changed, 10 insertions(+)
 > 
-> 32-on-32 is already effectively unmaintained, so we're not suffering
-> in terms of keeping the 32-on-32 code reliable.
+> diff --git a/hw/core/cpu-common.c b/hw/core/cpu-common.c
+> index cb79566cc51..9ee44a00277 100644
+> --- a/hw/core/cpu-common.c
+> +++ b/hw/core/cpu-common.c
+> @@ -219,6 +219,14 @@ static void cpu_common_realizefn(DeviceState *dev, Error **errp)
+>       /* NOTE: latest generic point where the cpu is fully realized */
+>   }
+>   
+> +static void cpu_common_wire(DeviceState *dev)
+> +{
+> +}
+> +
+> +static void cpu_common_unwire(DeviceState *dev)
+> +{
+> +}
+> +
+>   static void cpu_common_unrealizefn(DeviceState *dev)
+>   {
+>       CPUState *cpu = CPU(dev);
+> @@ -311,6 +319,8 @@ static void cpu_common_class_init(ObjectClass *klass, void *data)
+>       k->gdb_write_register = cpu_common_gdb_write_register;
+>       set_bit(DEVICE_CATEGORY_CPU, dc->categories);
+>       dc->realize = cpu_common_realizefn;
+> +    dc->wire = cpu_common_wire;
+> +    dc->unwire = cpu_common_unwire;
+>       dc->unrealize = cpu_common_unrealizefn;
+>       rc->phases.hold = cpu_common_reset_hold;
+>       cpu_class_init_props(dc);
 
-Correct.
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 
-As evidence, on i686, the absolutely easiest available 32-bit host, we have the following 
-failures with make check-functional:
-
->   2/185 qemu:func-thorough+func-aarch64-thorough+thorough / func-aarch64-aarch64_rme_virt                  ERROR             1.50s   exit status 1
->   3/185 qemu:func-thorough+func-aarch64-thorough+thorough / func-aarch64-aarch64_rme_sbsaref               ERROR             2.69s   exit status 1
->   4/185 qemu:func-thorough+func-aarch64-thorough+thorough / func-aarch64-aarch64_virt                      ERROR           206.84s   exit status 1
->  12/185 qemu:func-thorough+func-ppc64-thorough+thorough / func-ppc64-ppc64_tuxrun                          ERROR             4.95s   exit status 1
->  17/185 qemu:func-thorough+func-aarch64-thorough+thorough / func-aarch64-aarch64_aspeed                    TIMEOUT         600.01s   killed by signal 15 SIGTERM
->  24/185 qemu:func-thorough+func-ppc64-thorough+thorough / func-ppc64-ppc64_powernv                         TIMEOUT         480.01s   killed by signal 15 SIGTERM
-> 115/185 qemu:func-quick+func-x86_64 / func-x86_64-mem_addr_space                                           ERROR             8.92s   exit status 1
-> 132/185 qemu:func-thorough+func-aarch64-thorough+thorough / func-aarch64-aarch64_xlnx_versal               ERROR             0.35s   exit status 1
-> 147/185 qemu:func-thorough+func-m68k-thorough+thorough / func-m68k-m68k_q800                               ERROR             0.88s   exit status 1
-> 156/185 qemu:func-thorough+func-riscv64-thorough+thorough / func-riscv64-riscv64_tuxrun                    TIMEOUT         120.01s   killed by signal 15 SIGTERM
-> 163/185 qemu:func-thorough+func-x86_64-thorough+thorough / func-x86_64-x86_64_kvm_xen                      TIMEOUT         180.01s   killed by signal 15 SIGTERM
-> 177/185 qemu:func-thorough+func-x86_64-thorough+thorough / func-x86_64-linux_initrd                        ERROR             0.35s   exit status 1
-> 178/185 qemu:func-thorough+func-x86_64-thorough+thorough / func-x86_64-multiprocess                        ERROR             0.77s   exit status 1
-
-8 of these are due to the test asking for more RAM than the host can provide to the guest.
-
-   Output: qemu-system-aarch64: at most 2047 MB RAM can be simulated
-   Output: qemu-system-ppc64: ram size 4294967296 exceeds permitted maximum 4294967295
-   Output: qemu-system-x86_64: ram size 4294967296 exceeds permitted maximum 4294967295
-
-Some are probably trivially fixable, simply by asking for less RAM.  But the point is that 
-no one has reported the failures, and I can only conclude that no one cares about this 
-host.  And if we can't keep i686 working, then other more obscure hosts have even less chance.
-
-I'll also note that those error messages above are misleading -- in at least some of the 
-x86_64 cases the command-line is "-m 512,slots=1,maxmem=59.6G".  So we're asking to 
-reserve physical address space for almost 60G, which is not what the error message suggests.
-
-
-> We're suffering from the complexity that 32-on-32 code places on the
-> rest of the XX-on-64 code that we do care about.
-> 
-> IOW if someone volunteered to maintain 32-on-32 that's not actually
-> solving the complexity problem, just perpetuating it.
-
-Correct.
-
-
-> So again lets be clear...
-> 
-> Either we...
-> 
->   * ...want to kill 32-on-32 code to reduce the complexity on the
->     main XX-on-64 codebase regardless of interest in 32-on-32
-> 
-> Or
-> 
->   * ...want to kill 32-on-32 code because it is buggy due to lack
->     of maintainers, but would welcome someone to step forward to
->     maintain it
-> 
-> It sounded like we were wanting the former, not the latter.
-Correct.
-
-Frankly, no one has stepped forward in the last 2 years, the last time we mooted 
-deprecating all 32-bit hosts, but got talked out of it.  So I don't think option 2 is a 
-real option.
+But doesn't need to be split from patch 6.
 
 
 r~
