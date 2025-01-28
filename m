@@ -4,47 +4,47 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8FF29C0218A
-	for <qemu-devel@archiver.kernel.org>; Tue, 28 Jan 2025 20:25:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 314D3C0218A
+	for <qemu-devel@archiver.kernel.org>; Tue, 28 Jan 2025 20:28:22 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tcs96-0001Q0-1k; Tue, 28 Jan 2025 15:25:16 -0500
+	id 1tcsBd-0002kT-Jg; Tue, 28 Jan 2025 15:27:53 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
- id 1tcs94-0001OO-52; Tue, 28 Jan 2025 15:25:14 -0500
+ id 1tcsBW-0002jA-M7; Tue, 28 Jan 2025 15:27:51 -0500
 Received: from zero.eik.bme.hu ([152.66.115.2])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
- id 1tcs90-00048w-Ck; Tue, 28 Jan 2025 15:25:13 -0500
+ id 1tcsBU-0004iE-0L; Tue, 28 Jan 2025 15:27:45 -0500
 Received: from zero.eik.bme.hu (localhost [127.0.0.1])
- by zero.eik.bme.hu (Postfix) with ESMTP id 6828F4E6013;
- Tue, 28 Jan 2025 21:25:08 +0100 (CET)
+ by zero.eik.bme.hu (Postfix) with ESMTP id 737CD4E6013;
+ Tue, 28 Jan 2025 21:27:42 +0100 (CET)
 X-Virus-Scanned: amavisd-new at eik.bme.hu
 Received: from zero.eik.bme.hu ([127.0.0.1])
  by zero.eik.bme.hu (zero.eik.bme.hu [127.0.0.1]) (amavisd-new, port 10028)
- with ESMTP id J9_Ezi5ma5M5; Tue, 28 Jan 2025 21:25:06 +0100 (CET)
+ with ESMTP id 3x4ynASbava6; Tue, 28 Jan 2025 21:27:40 +0100 (CET)
 Received: by zero.eik.bme.hu (Postfix, from userid 432)
- id 1FE794E600F; Tue, 28 Jan 2025 21:25:06 +0100 (CET)
+ id 30F6B4E600F; Tue, 28 Jan 2025 21:27:40 +0100 (CET)
 Received: from localhost (localhost [127.0.0.1])
- by zero.eik.bme.hu (Postfix) with ESMTP id 1DF0974577C;
- Tue, 28 Jan 2025 21:25:06 +0100 (CET)
-Date: Tue, 28 Jan 2025 21:25:06 +0100 (CET)
+ by zero.eik.bme.hu (Postfix) with ESMTP id 2BCC174577C;
+ Tue, 28 Jan 2025 21:27:40 +0100 (CET)
+Date: Tue, 28 Jan 2025 21:27:40 +0100 (CET)
 From: BALATON Zoltan <balaton@eik.bme.hu>
 To: Thomas Huth <thuth@redhat.com>
 cc: =?ISO-8859-15?Q?C=E9dric_Le_Goater?= <clg@redhat.com>, qemu-ppc@nongnu.org,
  Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>, qemu-devel@nongnu.org
 Subject: Re: [PATCH] tests/functional: Add a ppc64 mac99 test
 In-Reply-To: <85e8445a-b7bf-4d01-a6e5-5fcb7d562780@redhat.com>
-Message-ID: <c770d85f-f950-b38b-ac89-7b091d9b2a4b@eik.bme.hu>
+Message-ID: <d237f9fc-82ca-0311-5e15-28b077452a08@eik.bme.hu>
 References: <20250128180742.1137741-1-clg@redhat.com>
  <7bb6ab1b-169e-4752-8aee-ef87877a38b4@redhat.com>
  <9bf6cf01-d8c4-4ed8-808d-03e6ee05bc7b@redhat.com>
  <85e8445a-b7bf-4d01-a6e5-5fcb7d562780@redhat.com>
 MIME-Version: 1.0
 Content-Type: multipart/mixed;
- boundary="3866299591-570655886-1738095906=:49616"
+ boundary="3866299591-1617115639-1738096060=:49616"
 Received-SPF: pass client-ip=152.66.115.2; envelope-from=balaton@eik.bme.hu;
  helo=zero.eik.bme.hu
 X-Spam_score_int: -18
@@ -72,11 +72,14 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
   This message is in MIME format.  The first part should be readable text,
   while the remaining parts are likely unreadable without MIME-aware tools.
 
---3866299591-570655886-1738095906=:49616
+--3866299591-1617115639-1738096060=:49616
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8BIT
 
+
+
 On Tue, 28 Jan 2025, Thomas Huth wrote:
+
 > On 28/01/2025 19.35, Cédric Le Goater wrote:
 >> On 1/28/25 19:20, Thomas Huth wrote:
 >>> On 28/01/2025 19.07, Cédric Le Goater wrote:
@@ -187,21 +190,15 @@ On Tue, 28 Jan 2025, Thomas Huth wrote:
 >> 
 >> I think we need -nographic else OpenBIOS crashes.  I will check.
 >
-> Oh, you're right, OpenBIOS hangs with "milliseconds isn't unique" when
+> Oh, you're right, OpenBIOS hangs with "milliseconds isn't unique" when 
+> running "qemu-system-ppc64 -M mac99 -display none -serial stdio" ... that's 
+> weird... so you need to keep the -nographic here, indeed!
 
-The "milliseconds isn't unique" is something you always get, this has 
-something to do with how it's implemented in OpenBIOS but it was deemed 
-harmless. (I don't remember the details but it's also unrelated to this.)
+qemu-system-ppc64 -M mac99 -display none -vga none -serial stdio
+
+does work.
 
 Regards,
 BALATON Zoltan
-
-> running "qemu-system-ppc64 -M mac99 -display none -serial stdio" ... that's 
-> weird... so you need to keep the -nographic here, indeed!
->
-> Thomas
->
->
->
---3866299591-570655886-1738095906=:49616--
+--3866299591-1617115639-1738096060=:49616--
 
