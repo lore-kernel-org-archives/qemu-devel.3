@@ -4,56 +4,75 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 680DDC0218A
-	for <qemu-devel@archiver.kernel.org>; Tue, 28 Jan 2025 12:42:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7BCB0C0218A
+	for <qemu-devel@archiver.kernel.org>; Tue, 28 Jan 2025 12:58:19 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tckuN-0000iV-2q; Tue, 28 Jan 2025 07:41:35 -0500
+	id 1tcl9m-0005V6-Mv; Tue, 28 Jan 2025 07:57:30 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
- id 1tckuF-0000gb-OE; Tue, 28 Jan 2025 07:41:27 -0500
-Received: from zero.eik.bme.hu ([2001:738:2001:2001::2001])
+ id 1tcl9k-0005UU-Rb; Tue, 28 Jan 2025 07:57:28 -0500
+Received: from zero.eik.bme.hu ([152.66.115.2])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
- id 1tckuC-0003ut-5A; Tue, 28 Jan 2025 07:41:26 -0500
+ id 1tcl9i-000673-Tq; Tue, 28 Jan 2025 07:57:28 -0500
 Received: from zero.eik.bme.hu (localhost [127.0.0.1])
- by zero.eik.bme.hu (Postfix) with ESMTP id 83F784E6027;
- Tue, 28 Jan 2025 13:41:19 +0100 (CET)
+ by zero.eik.bme.hu (Postfix) with ESMTP id 7D45F4E6029;
+ Tue, 28 Jan 2025 13:57:23 +0100 (CET)
 X-Virus-Scanned: amavisd-new at eik.bme.hu
 Received: from zero.eik.bme.hu ([127.0.0.1])
  by zero.eik.bme.hu (zero.eik.bme.hu [127.0.0.1]) (amavisd-new, port 10028)
- with ESMTP id FrTpr2yC6uhQ; Tue, 28 Jan 2025 13:41:17 +0100 (CET)
+ with ESMTP id 3uK6LJmOcV0F; Tue, 28 Jan 2025 13:57:21 +0100 (CET)
 Received: by zero.eik.bme.hu (Postfix, from userid 432)
- id 235994E600F; Tue, 28 Jan 2025 13:41:17 +0100 (CET)
+ id 811C44E6027; Tue, 28 Jan 2025 13:57:21 +0100 (CET)
 Received: from localhost (localhost [127.0.0.1])
- by zero.eik.bme.hu (Postfix) with ESMTP id 2077274577C;
- Tue, 28 Jan 2025 13:41:17 +0100 (CET)
-Date: Tue, 28 Jan 2025 13:41:17 +0100 (CET)
+ by zero.eik.bme.hu (Postfix) with ESMTP id 7E1B874577C;
+ Tue, 28 Jan 2025 13:57:21 +0100 (CET)
+Date: Tue, 28 Jan 2025 13:57:21 +0100 (CET)
 From: BALATON Zoltan <balaton@eik.bme.hu>
-To: Harsh Prateek Bora <harshpb@linux.ibm.com>
-cc: =?ISO-8859-15?Q?Philippe_Mathieu-Daud=E9?= <philmd@linaro.org>, 
- qemu-devel@nongnu.org, Daniel Henrique Barboza <danielhb413@gmail.com>, 
- Richard Henderson <richard.henderson@linaro.org>, qemu-ppc@nongnu.org, 
- Nicholas Piggin <npiggin@gmail.com>
-Subject: Re: [PATCH v2 04/15] target/ppc: Move TCG specific exception handlers
- to tcg-excp_helper.c
-In-Reply-To: <758609bc-c399-4de9-94eb-e0b3215e1df9@linux.ibm.com>
-Message-ID: <c2a910a3-ba4c-f396-ddf4-c1cc9d502fc2@eik.bme.hu>
-References: <20250127102620.39159-1-philmd@linaro.org>
- <20250127102620.39159-5-philmd@linaro.org>
- <758609bc-c399-4de9-94eb-e0b3215e1df9@linux.ibm.com>
+To: Peter Maydell <peter.maydell@linaro.org>
+cc: Gerd Hoffmann <kraxel@redhat.com>, 
+ =?ISO-8859-15?Q?Philippe_Mathieu-Daud=E9?= <philmd@linaro.org>, 
+ qemu-devel@nongnu.org, Yi Liu <yi.l.liu@intel.com>, 
+ Markus Armbruster <armbru@redhat.com>, 
+ Eduardo Habkost <eduardo@habkost.net>, 
+ Anthony PERARD <anthony@xenproject.org>, 
+ Gustavo Romero <gustavo.romero@linaro.org>, 
+ Jason Wang <jasowang@redhat.com>, qemu-ppc@nongnu.org, 
+ "Michael S. Tsirkin" <mst@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>, 
+ Alexander Graf <graf@amazon.com>, 
+ Richard Henderson <richard.henderson@linaro.org>, 
+ Stefan Berger <stefanb@linux.vnet.ibm.com>, 
+ Bernhard Beschow <shentey@gmail.com>, 
+ Stefano Stabellini <sstabellini@kernel.org>, 
+ =?ISO-8859-15?Q?Daniel_P=2E_Berrang=E9?= <berrange@redhat.com>, 
+ "Edgar E. Iglesias" <edgar.iglesias@gmail.com>, 
+ xen-devel@lists.xenproject.org, 
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>, 
+ Alex Williamson <alex.williamson@redhat.com>, Paul Durrant <paul@xen.org>, 
+ =?ISO-8859-15?Q?Cl=E9ment_Mathieu--Drif?= <clement.mathieu--drif@eviden.com>, 
+ =?ISO-8859-15?Q?C=E9dric_Le_Goater?= <clg@redhat.com>
+Subject: Re: [PATCH 0/9] hw/sysbus/platform-bus: Introduce
+ TYPE_DYNAMIC_SYS_BUS_DEVICE
+In-Reply-To: <CAFEAcA-QOYcnJi=joKHbRmUCXK1UFOgQRgYP-fDq4h_1SkMGyQ@mail.gmail.com>
+Message-ID: <2893a552-ca6c-01c4-dcc0-6107ccf1c7b5@eik.bme.hu>
+References: <20250125181343.59151-1-philmd@linaro.org>
+ <wkb53fhvfchqa4uvmifgitvcr7t7rfpc3hcohdhzczkzvktetx@yjveswjel3s4>
+ <CAFEAcA-QOYcnJi=joKHbRmUCXK1UFOgQRgYP-fDq4h_1SkMGyQ@mail.gmail.com>
 MIME-Version: 1.0
 Content-Type: multipart/mixed;
- boundary="3866299591-1106242621-1738068077=:16171"
-Received-SPF: pass client-ip=2001:738:2001:2001::2001;
- envelope-from=balaton@eik.bme.hu; helo=zero.eik.bme.hu
+ boundary="3866299591-275533675-1738069041=:16171"
+Received-SPF: pass client-ip=152.66.115.2; envelope-from=balaton@eik.bme.hu;
+ helo=zero.eik.bme.hu
 X-Spam_score_int: -18
 X-Spam_score: -1.9
 X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001, T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -72,464 +91,53 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
   This message is in MIME format.  The first part should be readable text,
   while the remaining parts are likely unreadable without MIME-aware tools.
 
---3866299591-1106242621-1738068077=:16171
+--3866299591-275533675-1738069041=:16171
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8BIT
 
-On Tue, 28 Jan 2025, Harsh Prateek Bora wrote:
-> On 1/27/25 15:56, Philippe Mathieu-Daudé wrote:
->> Move the TCGCPUOps handlers to a new unit: tcg-excp_helper.c,
->> only built when TCG is selected.
->> 
+On Tue, 28 Jan 2025, Peter Maydell wrote:
+> On Tue, 28 Jan 2025 at 10:42, Gerd Hoffmann <kraxel@redhat.com> wrote:
+>>
+>> On Sat, Jan 25, 2025 at 07:13:34PM +0100, Philippe Mathieu-Daudé wrote:
+>>> Some SysBus devices can optionally be dynamically plugged onto
+>>> the sysbus-platform-bus (then virtual guests are aware of
+>>> mmio mapping and IRQs via device tree / ACPI rules).
+>>
+>> Do we have some sane way to have user-pluggable sysbus devices on arm?
 >
-> Nice.
-> Just a thought - will the filename look better as excp_helper-tcg.c ?
-> That naming usually help developers when using tab completion.
+> The answer in a general sense is "no, because user pluggable
+> sysbus is a weird idea". "sysbus" means "it's wired into a
+> specific bit of the memory map and to specific IRQs, and whoever
+> does that needs to know what IRQs and bits of memory are usable,
+> and the guest OS needs to know it's there". "user-pluggable" means
+> "it's all automatic and the guest can just do some kind of
+> probing for what is or isn't present". All the platform bus stuff
+> is a nasty mess that's working around the things people want
+> to plug in not being clean devices on probeable buses :-(
+> And the platform bus is only supported on the "virt" board,
+> because that's the only one where QEMU is generating its
+> own dtb or ACPI tables where it can tell the guest "hey,
+> there's some device here".
 
-Or maybe stick to either _ or - in the filename and not mix both in one 
-name? If you want to use -tcg or tcg- then also rename to excp-helper. We 
-already have a mix of _ and - names but at least try to be consistent 
-within one name.
+There are some SoCs that have memory mapped devices but different versions 
+in the same family have different devices. Either older ones missing some 
+devices or have less USB or network ports while newer SoCs have more of 
+those or they have PCIe instead of PCI. Modelling these could use 
+pluggable sysbus devices so one could add the devices needed for a SoC 
+version without having to write or modify a board code. I think Bernhard's 
+attempt to try creating e500 SoCs from a device tree goes in that 
+direction too. We could also model this by having a SoC that can 
+instantiate devices based on some properties but maybe pluggable devices 
+could be more generic for this. The issue seems to be how to tell the 
+board or SoC where to map it and what IRQ to connect it as this is done by 
+the board and not the device so properties on the device to set these does 
+not really help unless the board can somehow query it and instantiate the 
+devices based on that. Otherwise whatever handles the -device option to 
+create the device would need knowledge about the board. (E.g. the e500 
+devices are mapped in the CCSR memory region so one can't just use system 
+address space for them.)
 
 Regards,
 BALATON Zoltan
-
->> See in target/ppc/cpu_init.c:
->>
->>      #ifdef CONFIG_TCG
->>      static const TCGCPUOps ppc_tcg_ops = {
->>        ...
->>        .do_unaligned_access = ppc_cpu_do_unaligned_access,
->>        .do_transaction_failed = ppc_cpu_do_transaction_failed,
->>        .debug_excp_handler = ppc_cpu_debug_excp_handler,
->>        .debug_check_breakpoint = ppc_cpu_debug_check_breakpoint,
->>        .debug_check_watchpoint = ppc_cpu_debug_check_watchpoint,
->>      };
->>      #endif /* CONFIG_TCG */
->> 
->
-> Thanks for capturing this in commit log.
->
->> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
->
-> Reviewed-by: Harsh Prateek Bora <harshpb@linux.ibm.com>
->
->> ---
->>   target/ppc/excp_helper.c     | 173 ------------------------------
->>   target/ppc/tcg-excp_helper.c | 202 +++++++++++++++++++++++++++++++++++
->>   target/ppc/meson.build       |   1 +
->>   3 files changed, 203 insertions(+), 173 deletions(-)
->>   create mode 100644 target/ppc/tcg-excp_helper.c
->> 
->> diff --git a/target/ppc/excp_helper.c b/target/ppc/excp_helper.c
->> index 7ed4bbec035..b05eb7f5aec 100644
->> --- a/target/ppc/excp_helper.c
->> +++ b/target/ppc/excp_helper.c
->> @@ -3144,178 +3144,5 @@ void helper_book3s_trace(CPUPPCState *env, 
->> target_ulong prev_ip)
->>       raise_exception_err(env, POWERPC_EXCP_TRACE, error_code);
->>   }
->>   -void ppc_cpu_do_unaligned_access(CPUState *cs, vaddr vaddr,
->> -                                 MMUAccessType access_type,
->> -                                 int mmu_idx, uintptr_t retaddr)
->> -{
->> -    CPUPPCState *env = cpu_env(cs);
->> -    uint32_t insn;
->> -
->> -    /* Restore state and reload the insn we executed, for filling in 
->> DSISR.  */
->> -    cpu_restore_state(cs, retaddr);
->> -    insn = ppc_ldl_code(env, env->nip);
->> -
->> -    switch (env->mmu_model) {
->> -    case POWERPC_MMU_SOFT_4xx:
->> -        env->spr[SPR_40x_DEAR] = vaddr;
->> -        break;
->> -    case POWERPC_MMU_BOOKE:
->> -    case POWERPC_MMU_BOOKE206:
->> -        env->spr[SPR_BOOKE_DEAR] = vaddr;
->> -        break;
->> -    default:
->> -        env->spr[SPR_DAR] = vaddr;
->> -        break;
->> -    }
->> -
->> -    cs->exception_index = POWERPC_EXCP_ALIGN;
->> -    env->error_code = insn & 0x03FF0000;
->> -    cpu_loop_exit(cs);
->> -}
->> -
->> -void ppc_cpu_do_transaction_failed(CPUState *cs, hwaddr physaddr,
->> -                                   vaddr vaddr, unsigned size,
->> -                                   MMUAccessType access_type,
->> -                                   int mmu_idx, MemTxAttrs attrs,
->> -                                   MemTxResult response, uintptr_t 
->> retaddr)
->> -{
->> -    CPUPPCState *env = cpu_env(cs);
->> -
->> -    switch (env->excp_model) {
->> -#if defined(TARGET_PPC64)
->> -    case POWERPC_EXCP_POWER8:
->> -    case POWERPC_EXCP_POWER9:
->> -    case POWERPC_EXCP_POWER10:
->> -    case POWERPC_EXCP_POWER11:
->> -        /*
->> -         * Machine check codes can be found in processor User Manual or
->> -         * Linux or skiboot source.
->> -         */
->> -        if (access_type == MMU_DATA_LOAD) {
->> -            env->spr[SPR_DAR] = vaddr;
->> -            env->spr[SPR_DSISR] = PPC_BIT(57);
->> -            env->error_code = PPC_BIT(42);
->> -
->> -        } else if (access_type == MMU_DATA_STORE) {
->> -            /*
->> -             * MCE for stores in POWER is asynchronous so hardware does
->> -             * not set DAR, but QEMU can do better.
->> -             */
->> -            env->spr[SPR_DAR] = vaddr;
->> -            env->error_code = PPC_BIT(36) | PPC_BIT(43) | PPC_BIT(45);
->> -            env->error_code |= PPC_BIT(42);
->> -
->> -        } else { /* Fetch */
->> -            /*
->> -             * is_prefix_insn_excp() tests !PPC_BIT(42) to avoid fetching
->> -             * the instruction, so that must always be clear for fetches.
->> -             */
->> -            env->error_code = PPC_BIT(36) | PPC_BIT(44) | PPC_BIT(45);
->> -        }
->> -        break;
->> -#endif
->> -    default:
->> -        /*
->> -         * TODO: Check behaviour for other CPUs, for now do nothing.
->> -         * Could add a basic MCE even if real hardware ignores.
->> -         */
->> -        return;
->> -    }
->> -
->> -    cs->exception_index = POWERPC_EXCP_MCHECK;
->> -    cpu_loop_exit_restore(cs, retaddr);
->> -}
->> -
->> -void ppc_cpu_debug_excp_handler(CPUState *cs)
->> -{
->> -#if defined(TARGET_PPC64)
->> -    CPUPPCState *env = cpu_env(cs);
->> -
->> -    if (env->insns_flags2 & PPC2_ISA207S) {
->> -        if (cs->watchpoint_hit) {
->> -            if (cs->watchpoint_hit->flags & BP_CPU) {
->> -                env->spr[SPR_DAR] = cs->watchpoint_hit->hitaddr;
->> -                env->spr[SPR_DSISR] = PPC_BIT(41);
->> -                cs->watchpoint_hit = NULL;
->> -                raise_exception(env, POWERPC_EXCP_DSI);
->> -            }
->> -            cs->watchpoint_hit = NULL;
->> -        } else if (cpu_breakpoint_test(cs, env->nip, BP_CPU)) {
->> -            raise_exception_err(env, POWERPC_EXCP_TRACE,
->> -                                PPC_BIT(33) | PPC_BIT(43));
->> -        }
->> -    }
->> -#endif
->> -}
->> -
->> -bool ppc_cpu_debug_check_breakpoint(CPUState *cs)
->> -{
->> -#if defined(TARGET_PPC64)
->> -    CPUPPCState *env = cpu_env(cs);
->> -
->> -    if (env->insns_flags2 & PPC2_ISA207S) {
->> -        target_ulong priv;
->> -
->> -        priv = env->spr[SPR_CIABR] & PPC_BITMASK(62, 63);
->> -        switch (priv) {
->> -        case 0x1: /* problem */
->> -            return env->msr & ((target_ulong)1 << MSR_PR);
->> -        case 0x2: /* supervisor */
->> -            return (!(env->msr & ((target_ulong)1 << MSR_PR)) &&
->> -                    !(env->msr & ((target_ulong)1 << MSR_HV)));
->> -        case 0x3: /* hypervisor */
->> -            return (!(env->msr & ((target_ulong)1 << MSR_PR)) &&
->> -                     (env->msr & ((target_ulong)1 << MSR_HV)));
->> -        default:
->> -            g_assert_not_reached();
->> -        }
->> -    }
->> -#endif
->> -
->> -    return false;
->> -}
->> -
->> -bool ppc_cpu_debug_check_watchpoint(CPUState *cs, CPUWatchpoint *wp)
->> -{
->> -#if defined(TARGET_PPC64)
->> -    CPUPPCState *env = cpu_env(cs);
->> -
->> -    if (env->insns_flags2 & PPC2_ISA207S) {
->> -        if (wp == env->dawr0_watchpoint) {
->> -            uint32_t dawrx = env->spr[SPR_DAWRX0];
->> -            bool wt = extract32(dawrx, PPC_BIT_NR(59), 1);
->> -            bool wti = extract32(dawrx, PPC_BIT_NR(60), 1);
->> -            bool hv = extract32(dawrx, PPC_BIT_NR(61), 1);
->> -            bool sv = extract32(dawrx, PPC_BIT_NR(62), 1);
->> -            bool pr = extract32(dawrx, PPC_BIT_NR(62), 1);
->> -
->> -            if ((env->msr & ((target_ulong)1 << MSR_PR)) && !pr) {
->> -                return false;
->> -            } else if ((env->msr & ((target_ulong)1 << MSR_HV)) && !hv) {
->> -                return false;
->> -            } else if (!sv) {
->> -                return false;
->> -            }
->> -
->> -            if (!wti) {
->> -                if (env->msr & ((target_ulong)1 << MSR_DR)) {
->> -                    if (!wt) {
->> -                        return false;
->> -                    }
->> -                } else {
->> -                    if (wt) {
->> -                        return false;
->> -                    }
->> -                }
->> -            }
->> -
->> -            return true;
->> -        }
->> -    }
->> -#endif
->> -
->> -    return false;
->> -}
->> -
->>   #endif /* !CONFIG_USER_ONLY */
->>   #endif /* CONFIG_TCG */
->> diff --git a/target/ppc/tcg-excp_helper.c b/target/ppc/tcg-excp_helper.c
->> new file mode 100644
->> index 00000000000..3402dbe05ee
->> --- /dev/null
->> +++ b/target/ppc/tcg-excp_helper.c
->> @@ -0,0 +1,202 @@
->> +/*
->> + *  PowerPC exception emulation helpers for QEMU (TCG specific)
->> + *
->> + *  Copyright (c) 2003-2007 Jocelyn Mayer
->> + *
->> + * This library is free software; you can redistribute it and/or
->> + * modify it under the terms of the GNU Lesser General Public
->> + * License as published by the Free Software Foundation; either
->> + * version 2.1 of the License, or (at your option) any later version.
->> + *
->> + * This library is distributed in the hope that it will be useful,
->> + * but WITHOUT ANY WARRANTY; without even the implied warranty of
->> + * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
->> + * Lesser General Public License for more details.
->> + *
->> + * You should have received a copy of the GNU Lesser General Public
->> + * License along with this library; if not, see 
->> <http://www.gnu.org/licenses/>.
->> + */
->> +#include "qemu/osdep.h"
->> +#include "exec/cpu_ldst.h"
->> +
->> +#include "hw/ppc/ppc.h"
->> +#include "internal.h"
->> +#include "cpu.h"
->> +#include "trace.h"
->> +
->> +#ifndef CONFIG_USER_ONLY
->> +
->> +void ppc_cpu_do_unaligned_access(CPUState *cs, vaddr vaddr,
->> +                                 MMUAccessType access_type,
->> +                                 int mmu_idx, uintptr_t retaddr)
->> +{
->> +    CPUPPCState *env = cpu_env(cs);
->> +    uint32_t insn;
->> +
->> +    /* Restore state and reload the insn we executed, for filling in 
->> DSISR.  */
->> +    cpu_restore_state(cs, retaddr);
->> +    insn = ppc_ldl_code(env, env->nip);
->> +
->> +    switch (env->mmu_model) {
->> +    case POWERPC_MMU_SOFT_4xx:
->> +        env->spr[SPR_40x_DEAR] = vaddr;
->> +        break;
->> +    case POWERPC_MMU_BOOKE:
->> +    case POWERPC_MMU_BOOKE206:
->> +        env->spr[SPR_BOOKE_DEAR] = vaddr;
->> +        break;
->> +    default:
->> +        env->spr[SPR_DAR] = vaddr;
->> +        break;
->> +    }
->> +
->> +    cs->exception_index = POWERPC_EXCP_ALIGN;
->> +    env->error_code = insn & 0x03FF0000;
->> +    cpu_loop_exit(cs);
->> +}
->> +
->> +void ppc_cpu_do_transaction_failed(CPUState *cs, hwaddr physaddr,
->> +                                   vaddr vaddr, unsigned size,
->> +                                   MMUAccessType access_type,
->> +                                   int mmu_idx, MemTxAttrs attrs,
->> +                                   MemTxResult response, uintptr_t 
->> retaddr)
->> +{
->> +    CPUPPCState *env = cpu_env(cs);
->> +
->> +    switch (env->excp_model) {
->> +#if defined(TARGET_PPC64)
->> +    case POWERPC_EXCP_POWER8:
->> +    case POWERPC_EXCP_POWER9:
->> +    case POWERPC_EXCP_POWER10:
->> +    case POWERPC_EXCP_POWER11:
->> +        /*
->> +         * Machine check codes can be found in processor User Manual or
->> +         * Linux or skiboot source.
->> +         */
->> +        if (access_type == MMU_DATA_LOAD) {
->> +            env->spr[SPR_DAR] = vaddr;
->> +            env->spr[SPR_DSISR] = PPC_BIT(57);
->> +            env->error_code = PPC_BIT(42);
->> +
->> +        } else if (access_type == MMU_DATA_STORE) {
->> +            /*
->> +             * MCE for stores in POWER is asynchronous so hardware does
->> +             * not set DAR, but QEMU can do better.
->> +             */
->> +            env->spr[SPR_DAR] = vaddr;
->> +            env->error_code = PPC_BIT(36) | PPC_BIT(43) | PPC_BIT(45);
->> +            env->error_code |= PPC_BIT(42);
->> +
->> +        } else { /* Fetch */
->> +            /*
->> +             * is_prefix_insn_excp() tests !PPC_BIT(42) to avoid fetching
->> +             * the instruction, so that must always be clear for fetches.
->> +             */
->> +            env->error_code = PPC_BIT(36) | PPC_BIT(44) | PPC_BIT(45);
->> +        }
->> +        break;
->> +#endif
->> +    default:
->> +        /*
->> +         * TODO: Check behaviour for other CPUs, for now do nothing.
->> +         * Could add a basic MCE even if real hardware ignores.
->> +         */
->> +        return;
->> +    }
->> +
->> +    cs->exception_index = POWERPC_EXCP_MCHECK;
->> +    cpu_loop_exit_restore(cs, retaddr);
->> +}
->> +
->> +void ppc_cpu_debug_excp_handler(CPUState *cs)
->> +{
->> +#if defined(TARGET_PPC64)
->> +    CPUPPCState *env = cpu_env(cs);
->> +
->> +    if (env->insns_flags2 & PPC2_ISA207S) {
->> +        if (cs->watchpoint_hit) {
->> +            if (cs->watchpoint_hit->flags & BP_CPU) {
->> +                env->spr[SPR_DAR] = cs->watchpoint_hit->hitaddr;
->> +                env->spr[SPR_DSISR] = PPC_BIT(41);
->> +                cs->watchpoint_hit = NULL;
->> +                raise_exception(env, POWERPC_EXCP_DSI);
->> +            }
->> +            cs->watchpoint_hit = NULL;
->> +        } else if (cpu_breakpoint_test(cs, env->nip, BP_CPU)) {
->> +            raise_exception_err(env, POWERPC_EXCP_TRACE,
->> +                                PPC_BIT(33) | PPC_BIT(43));
->> +        }
->> +    }
->> +#endif
->> +}
->> +
->> +bool ppc_cpu_debug_check_breakpoint(CPUState *cs)
->> +{
->> +#if defined(TARGET_PPC64)
->> +    CPUPPCState *env = cpu_env(cs);
->> +
->> +    if (env->insns_flags2 & PPC2_ISA207S) {
->> +        target_ulong priv;
->> +
->> +        priv = env->spr[SPR_CIABR] & PPC_BITMASK(62, 63);
->> +        switch (priv) {
->> +        case 0x1: /* problem */
->> +            return env->msr & ((target_ulong)1 << MSR_PR);
->> +        case 0x2: /* supervisor */
->> +            return (!(env->msr & ((target_ulong)1 << MSR_PR)) &&
->> +                    !(env->msr & ((target_ulong)1 << MSR_HV)));
->> +        case 0x3: /* hypervisor */
->> +            return (!(env->msr & ((target_ulong)1 << MSR_PR)) &&
->> +                     (env->msr & ((target_ulong)1 << MSR_HV)));
->> +        default:
->> +            g_assert_not_reached();
->> +        }
->> +    }
->> +#endif
->> +
->> +    return false;
->> +}
->> +
->> +bool ppc_cpu_debug_check_watchpoint(CPUState *cs, CPUWatchpoint *wp)
->> +{
->> +#if defined(TARGET_PPC64)
->> +    CPUPPCState *env = cpu_env(cs);
->> +
->> +    if (env->insns_flags2 & PPC2_ISA207S) {
->> +        if (wp == env->dawr0_watchpoint) {
->> +            uint32_t dawrx = env->spr[SPR_DAWRX0];
->> +            bool wt = extract32(dawrx, PPC_BIT_NR(59), 1);
->> +            bool wti = extract32(dawrx, PPC_BIT_NR(60), 1);
->> +            bool hv = extract32(dawrx, PPC_BIT_NR(61), 1);
->> +            bool sv = extract32(dawrx, PPC_BIT_NR(62), 1);
->> +            bool pr = extract32(dawrx, PPC_BIT_NR(62), 1);
->> +
->> +            if ((env->msr & ((target_ulong)1 << MSR_PR)) && !pr) {
->> +                return false;
->> +            } else if ((env->msr & ((target_ulong)1 << MSR_HV)) && !hv) {
->> +                return false;
->> +            } else if (!sv) {
->> +                return false;
->> +            }
->> +
->> +            if (!wti) {
->> +                if (env->msr & ((target_ulong)1 << MSR_DR)) {
->> +                    if (!wt) {
->> +                        return false;
->> +                    }
->> +                } else {
->> +                    if (wt) {
->> +                        return false;
->> +                    }
->> +                }
->> +            }
->> +
->> +            return true;
->> +        }
->> +    }
->> +#endif
->> +
->> +    return false;
->> +}
->> +
->> +#endif /* !CONFIG_USER_ONLY */
->> diff --git a/target/ppc/meson.build b/target/ppc/meson.build
->> index db3b7a0c33b..8eed1fa40ca 100644
->> --- a/target/ppc/meson.build
->> +++ b/target/ppc/meson.build
->> @@ -14,6 +14,7 @@ ppc_ss.add(when: 'CONFIG_TCG', if_true: files(
->>     'int_helper.c',
->>     'mem_helper.c',
->>     'misc_helper.c',
->> +  'tcg-excp_helper.c',
->>     'timebase_helper.c',
->>     'translate.c',
->>     'power8-pmu.c',
->
->
---3866299591-1106242621-1738068077=:16171--
+--3866299591-275533675-1738069041=:16171--
 
