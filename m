@@ -4,85 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CEBC9C0218A
-	for <qemu-devel@archiver.kernel.org>; Tue, 28 Jan 2025 18:32:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3B9ACC0218A
+	for <qemu-devel@archiver.kernel.org>; Tue, 28 Jan 2025 18:34:52 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tcqNr-0005xf-7A; Tue, 28 Jan 2025 13:32:23 -0500
+	id 1tcqQ2-0006lJ-46; Tue, 28 Jan 2025 13:34:38 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1tcqNg-0005wr-N2
- for qemu-devel@nongnu.org; Tue, 28 Jan 2025 13:32:14 -0500
-Received: from mail-pl1-x62a.google.com ([2607:f8b0:4864:20::62a])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tcqQ0-0006kO-Kb
+ for qemu-devel@nongnu.org; Tue, 28 Jan 2025 13:34:36 -0500
+Received: from mail-wm1-x336.google.com ([2a00:1450:4864:20::336])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1tcqNf-0005aq-4W
- for qemu-devel@nongnu.org; Tue, 28 Jan 2025 13:32:12 -0500
-Received: by mail-pl1-x62a.google.com with SMTP id
- d9443c01a7336-218c8aca5f1so144236575ad.0
- for <qemu-devel@nongnu.org>; Tue, 28 Jan 2025 10:32:09 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tcqPy-0005jE-Gx
+ for qemu-devel@nongnu.org; Tue, 28 Jan 2025 13:34:36 -0500
+Received: by mail-wm1-x336.google.com with SMTP id
+ 5b1f17b1804b1-438a39e659cso40018775e9.2
+ for <qemu-devel@nongnu.org>; Tue, 28 Jan 2025 10:34:33 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1738089128; x=1738693928; darn=nongnu.org;
+ d=linaro.org; s=google; t=1738089273; x=1738694073; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=iZMiW42i/FOJkEcdj1yuSIik5IMzJMuSgQyY9MOKepo=;
- b=DByslOd35wpFgT+LCsmQiRuBZW+4i9rbMv/eVB6yXbT3Kuarfd8IeQvV26bLw8W3X+
- cFfY5QiyDTRvfeZDcr9fF0DgYt8G9ZTADhFKVWJhXbOR0GA1f/730kalRf9NX5njmsEk
- dZYwq32TUpIJuycfFV6yhUKlxIc1J5GkmnpN5dJD4m+gTrnGEqX1RBQ7cASS2jpOd++n
- TQKVrft4jkFVy1iPc8RxJ7X/zyszxSHJq/x83UwVxyt2kRQhEWFCDTTnxekwDBECodz2
- U0Oxm68e21jUJJMdNRyJ38b2MQSfOuJTC0SnJDNQ5MHNApUiNGPbzOhAYlkKHnXX3JP/
- rQJA==
+ bh=Wet72yOjpWce2wt8e0A0ok/61g/UShWlC+bbn2LdEMs=;
+ b=cIra9cpwfB8y54sW0FZZ4JQ9u3EbLXmwKbWjZZ8ceWwQReNJjGRYWYmo8B4KWg3i7K
+ zec52pzYNG9uMmzIThfWLxe6ieL39MNPG296bQ2GyKhzLDKcA56ZKr5yZ/qp6RAUuu1N
+ kcQjFC/tMZIsjqANqgtxmnTEH71U8b6JGYaiolyWGckPMqelBquHc/Mgwv2NPDqjAGF9
+ up1qFazUuBWreuGAJisOS/6mmOBB3I370Cgg4KGm39guE2tSNGIdMxcrpz1NyfJh3Ysp
+ FT5UK124pe695znDoXeBsS8gwI/MSU+eR3+CVZYutMqelnabNi4M5euM8rpe4Rd8pbZo
+ EqcQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1738089128; x=1738693928;
+ d=1e100.net; s=20230601; t=1738089273; x=1738694073;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=iZMiW42i/FOJkEcdj1yuSIik5IMzJMuSgQyY9MOKepo=;
- b=tTcdeAhE1XetSceOY90JQQIvxME1rXLIYF+xD6eoge1OXyNiELB8p3C2YUdHz2HO79
- PfsSddQWXtvSnjm/1G14UQsdGbQ+13edesnbxHT4MUGHy7p2XMp8qct//iLbc8+mxOyE
- rgKHqsTKVJ1mJbQsuRyp+aO3fwt7xvgFAln0biW7onu85u5FGMLP62eZXX6atHKIryNQ
- q9EJi0fn22Oec15/ZE9rxnmV3G8CSQg6u/BhhRQ5uDFPTIvXVqpANjoGtomK6OFd5M1d
- gTEnvYDzo2nTJoQUxcgMbAJI0keKkTEv2AuFN+qLyBTNFBr4xOD5gzVCIjM17FeyTEhi
- aW+w==
+ bh=Wet72yOjpWce2wt8e0A0ok/61g/UShWlC+bbn2LdEMs=;
+ b=k0xFxCNP1ltB3SWb3BUydIqn1ToE2BJb02Ayy+yeKKFNBA448kOG/sq7n1wRmtJxVe
+ Tqul7Ue8n8eBBTdrNvjU3QcVjogYiFRAbBAZlV5mmYC0A7Nxz1WGkd1hwB9GOl6HHcKh
+ PFhpRV/Ph+msxwZ/SH4MD5H0kIaF8TBQorB7aKYXl5I961lQp7/Tii+oBGd8kUgqaLxI
+ F7nxaA6LLOq4yEj/8Hlb30suxITyd8jPz3Vfqjq4o1u9S5VlgB4vS9fgbgwA4Kz+CwdQ
+ XamfVVPId016O2GB7Px3yJS88jP7IrciFDLvUTqQSjFScPu23Q/6kz6UDwVkL+K+quHC
+ +Q1g==
 X-Forwarded-Encrypted: i=1;
- AJvYcCV0I9pFX/ZwlX4sPA/HviKRTkC3SN40aO/GR0uVaX0vjTTFPkjBEDyrnaP5hgNrrkVQewguJekQ86zD@nongnu.org
-X-Gm-Message-State: AOJu0Yz3q39nWVOH2SGjaLCboAsqqMCuZ4PVxJCGY91oJ6Uz9mWoowtb
- RuIjDaA2dQqxrjd8iYWurXhwsrg+rkTGSQ5dph9rTaQbnDksuZjJve5m2XhFQzg=
-X-Gm-Gg: ASbGnctYyp0Saeqd6apG+fv3qanyxXzARrWstRyMy7ZXxgEIOgAc6b+PbWGALVz5ryQ
- NS0qwoC+4t7v1d3VqJiq8vmEGWNpQ+v8NMt2Tg2FA74Q06G5nIg86N5/AJzUt3MwOUZr6BSYys2
- KO0J8lzfwSHKFmcCiRQvBdRQyoDRoZO61DqC6K7Rs2yTgRPkJOP5iPe8sNYYNivpps1ZkQ8H70D
- 4YEi8xpNKz/cW/8hivNVAaDYhhU8BU31oXmGmLJx4kVz/PvRnBdO6948IniZ3RTQzWO0XB0gpID
- 8KDJxLokzZvQBelCwYJKNM8kfFM4
-X-Google-Smtp-Source: AGHT+IETyQBoCDKrKvvnx1vaxIC+YbbWz7lZRHxPdvDhPTnWige4e9MBqjVTWDvJP3ZBUduZD6cxjg==
-X-Received: by 2002:a05:6a00:130c:b0:728:e1e3:3d88 with SMTP id
- d2e1a72fcca58-72fd0be17f5mr251260b3a.7.1738089128592; 
- Tue, 28 Jan 2025 10:32:08 -0800 (PST)
-Received: from [192.168.1.67] ([38.39.164.180])
- by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-72f8a77c779sm9832172b3a.145.2025.01.28.10.32.07
+ AJvYcCUirv7+dX/EdMrSzTZmYYWJRfa048de0QKTr6mCqr3cFxpNjFkCiAcIbb808LPnyCbtcUBCLxDUnPM1@nongnu.org
+X-Gm-Message-State: AOJu0Yy/7VzrUuTMSlUxEuMTnKKQIZaqZwPO0fc4atUC4dbUkncCOfII
+ eD3PUqxDI007JKJCm9oBb1M8Jnj6oFv7WzA0UjVffw9wxAlU7sBIYylKXUgez5g=
+X-Gm-Gg: ASbGncv8eFy1UxUNt2NMf01J27qgVdRQZJ76+MRPZGp15wf//AQ9yZRvX93EkisN1zQ
+ Ff4cs9yr1bgrITvvKW2fxixNzzpfGogRlyxleMCdgo39pPubmYTRoCdG/iadVu55jIZJk31Wil0
+ tloVaSlGTyx0i8Y/vqVIiJvhq10TBqj3ait8smbp/KZ2mGgqlX6b7jAifzX4TaR7yfXc3yBmp2Y
+ Ob+13tkWY+qvXxjljwqOLsc7lvi201mOMRZ3qQYxbOYsFbIa33sANMfoQ6utyWuXIEubZ61mNyQ
+ mCj8+spbKvVvPDG9aGwnmNXuA/3m4FEoqwYtrcSa361Ap6GRelo7LBQHOBk=
+X-Google-Smtp-Source: AGHT+IGUNhzpXj5hnpBOb91gKmsvwyQSYg7t9qfSvdoQyhGwpaYTMmxounnzgAEW6jZKe3b2dthowA==
+X-Received: by 2002:a05:600c:28c:b0:436:5fc9:309d with SMTP id
+ 5b1f17b1804b1-4389ec8a8d0mr455457655e9.30.1738089272654; 
+ Tue, 28 Jan 2025 10:34:32 -0800 (PST)
+Received: from [192.168.69.151] (88-187-86-199.subs.proxad.net.
+ [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-438bd50184dsm174672735e9.10.2025.01.28.10.34.31
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 28 Jan 2025 10:32:08 -0800 (PST)
-Message-ID: <2858941f-c745-41d6-8b52-cfa7f4648574@linaro.org>
-Date: Tue, 28 Jan 2025 10:32:07 -0800
+ Tue, 28 Jan 2025 10:34:32 -0800 (PST)
+Message-ID: <28c5e1cc-6d78-4116-ae55-d59ab492cf78@linaro.org>
+Date: Tue, 28 Jan 2025 19:34:31 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 2/2] plugin: extend API with qemu_plugin_tb_size
-To: Luke Craig <lacraig3@gmail.com>, qemu-devel@nongnu.org
-Cc: Alexandre Iooss <erdnaxe@crans.org>,
- Mahmoud Mandour <ma.mandourr@gmail.com>, =?UTF-8?Q?Alex_Benn=C3=A9e?=
- <alex.bennee@linaro.org>
-References: <20250127201734.1769540-1-lacraig3@gmail.com>
- <20250127201734.1769540-3-lacraig3@gmail.com>
+Subject: Re: [PATCH] tests/functional: Add a ppc64 mac99 test
+To: Thomas Huth <thuth@redhat.com>, =?UTF-8?Q?C=C3=A9dric_Le_Goater?=
+ <clg@redhat.com>, qemu-ppc@nongnu.org
+Cc: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>, qemu-devel@nongnu.org
+References: <20250128180742.1137741-1-clg@redhat.com>
+ <7bb6ab1b-169e-4752-8aee-ef87877a38b4@redhat.com>
 Content-Language: en-US
-From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-In-Reply-To: <20250127201734.1769540-3-lacraig3@gmail.com>
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <7bb6ab1b-169e-4752-8aee-ef87877a38b4@redhat.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::62a;
- envelope-from=pierrick.bouvier@linaro.org; helo=mail-pl1-x62a.google.com
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::336;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x336.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -105,58 +102,120 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Luke,
-
-On 1/27/25 12:17, Luke Craig wrote:
-> ---
->   include/qemu/qemu-plugin.h | 10 ++++++++++
->   plugins/api.c              |  5 +++++
->   2 files changed, 15 insertions(+)
+On 28/1/25 19:20, Thomas Huth wrote:
+> On 28/01/2025 19.07, Cédric Le Goater wrote:
+>> The test sequence boots from disk a mac99 machine in 64-bit mode, in
+>> which case the CPU is a PPC 970.
+>>
+>> The buildroot rootfs is built with config :
+>>
+>> BR2_powerpc64=y
+>> BR2_powerpc_970=y
+>>
+>> and the kernel with the g5 deconfig.
+>>
+>> Signed-off-by: Cédric Le Goater <clg@redhat.com>
+>> ---
+>>   MAINTAINERS                          |  1 +
+>>   tests/functional/meson.build         |  2 ++
+>>   tests/functional/test_ppc64_mac99.py | 45 ++++++++++++++++++++++++++++
+>>   3 files changed, 48 insertions(+)
+>>   create mode 100644 tests/functional/test_ppc64_mac99.py
+>>
+>> diff --git a/MAINTAINERS b/MAINTAINERS
+>> index 3a2291d17d7e..ebf249173f00 100644
+>> --- a/MAINTAINERS
+>> +++ b/MAINTAINERS
+>> @@ -1446,6 +1446,7 @@ F: include/hw/pci-host/uninorth.h
+>>   F: include/hw/input/adb*
+>>   F: pc-bios/qemu_vga.ndrv
+>>   F: tests/functional/test_ppc_mac.py
+>> +F: tests/functional/test_ppc64_mac99.py
+>>   Old World (g3beige)
+>>   M: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
+>> diff --git a/tests/functional/meson.build b/tests/functional/meson.build
+>> index 01a87b03e553..821a0a7c49ac 100644
+>> --- a/tests/functional/meson.build
+>> +++ b/tests/functional/meson.build
+>> @@ -41,6 +41,7 @@ test_timeouts = {
+>>     'ppc64_powernv' : 480,
+>>     'ppc64_pseries' : 480,
+>>     'ppc64_tuxrun' : 420,
+>> +  'ppc64_mac99' : 120,
+>>     'riscv64_tuxrun' : 120,
+>>     's390x_ccw_virtio' : 420,
+>>     'sh4_tuxrun' : 240,
+>> @@ -181,6 +182,7 @@ tests_ppc64_system_thorough = [
+>>     'ppc64_powernv',
+>>     'ppc64_pseries',
+>>     'ppc64_tuxrun',
+>> +  'ppc64_mac99',
+>>   ]
+>>   tests_riscv32_system_quick = [
+>> diff --git a/tests/functional/test_ppc64_mac99.py b/tests/functional/ 
+>> test_ppc64_mac99.py
+>> new file mode 100644
+>> index 000000000000..ba582d267dae
+>> --- /dev/null
+>> +++ b/tests/functional/test_ppc64_mac99.py
+>> @@ -0,0 +1,45 @@
+>> +#!/usr/bin/env python3
+>> +#
+>> +# Functional test that boots a mac99 machine with a PPC970 CPU
+>> +#
+>> +# SPDX-License-Identifier: GPL-2.0-or-later
+>> +
+>> +from qemu_test import LinuxKernelTest, Asset
+>> +from qemu_test import exec_command_and_wait_for_pattern
+>> +
+>> +class mac99Test(LinuxKernelTest):
+>> +
+>> +    ASSET_BR2_MAC99_LINUX = Asset(
+>> +        'https://github.com/legoater/qemu-ppc-boot/raw/refs/heads/ 
+>> main/buildroot/qemu_ppc64_mac99-2023.11-8-gdcd9f0f6eb-20240105/vmlinux',
+>> +        
+>> 'd59307437e4365f2cced0bbd1b04949f7397b282ef349b7cafd894d74aadfbff')
+>> +
+>> +    ASSET_BR2_MAC99_ROOTFS = Asset(
+>> +        'https://github.com/legoater/qemu-ppc-boot/raw/refs/heads/ 
+>> main//buildroot/qemu_ppc64_mac99-2023.11-8-gdcd9f0f6eb-20240105/ 
+>> rootfs.ext2',
+>> +        
+>> 'bbd5fd8af62f580bc4e585f326fe584e22856572633a8333178ea6d4ed4955a4')
+>> +
+>> +    def test_ppc64_mac99_buildroot(self):
+>> +        self.require_netdev('user')
+>> +
+>> +        linux_path = self.ASSET_BR2_MAC99_LINUX.fetch()
+>> +        rootfs_path = self.ASSET_BR2_MAC99_ROOTFS.fetch()
+>> +
+>> +        self.set_machine('mac99')
 > 
-> diff --git a/include/qemu/qemu-plugin.h b/include/qemu/qemu-plugin.h
-> index a1c478c54f..1fa656da82 100644
-> --- a/include/qemu/qemu-plugin.h
-> +++ b/include/qemu/qemu-plugin.h
-> @@ -476,6 +476,16 @@ void qemu_plugin_register_vcpu_insn_exec_inline_per_vcpu(
->   QEMU_PLUGIN_API
->   size_t qemu_plugin_tb_n_insns(const struct qemu_plugin_tb *tb);
->   
-> +/**
-> + * qemu_plugin_tb_size() - query helper for size of TB
-> + * @tb: opaque handle to TB passed to callback
-> + *
-> + * Returns: size of block in bytes
-> + */
-> +
-> +QEMU_PLUGIN_API
-> +size_t qemu_plugin_tb_size(const struct qemu_plugin_tb *tb);
-> +
->   /**
->    * qemu_plugin_tb_vaddr() - query helper for vaddr of TB start
->    * @tb: opaque handle to TB passed to callback
-> diff --git a/plugins/api.c b/plugins/api.c
-> index 7ff5e1c1bd..177f0ac9b6 100644
-> --- a/plugins/api.c
-> +++ b/plugins/api.c
-> @@ -241,6 +241,11 @@ size_t qemu_plugin_tb_n_insns(const struct qemu_plugin_tb *tb)
->       return tb->n;
->   }
->   
-> +size_t qemu_plugin_tb_size(const struct qemu_plugin_tb *tb){
-> +    const DisasContextBase *db = tcg_ctx->plugin_db;
-> +    return db->size;
-> +}
-> +
->   uint64_t qemu_plugin_tb_vaddr(const struct qemu_plugin_tb *tb)
->   {
->       const DisasContextBase *db = tcg_ctx->plugin_db;
+> Nit: Move the set_machine to the top of the function, so that the assets 
+> don't have to be fetched in case the machine is not available.
 
-by tb size, do you mean the size, in bytes, of all (original) 
-instructions of the tb?
+Nice to know, this is not obvious. Should we check for unset machine
+in fetch()? Or add fetch_for_machine()... Nitpicking yet more :p
 
-If yes, you can get it by fetching first and last instruction, and 
-compute the difference between last->vaddr + last->len -  first->vaddr.
+> 
+> With that nit fixed:
+> Reviewed-by: Thomas Huth <thuth@redhat.com>
+> 
+> 
+>> +        self.vm.set_console()
+>> +
+>> +        self.vm.add_args('-kernel', linux_path,
+>> +                         '-append', 'root=/dev/sda',
+>> +                         '-drive', f'file={rootfs_path},format=raw',
+>> +                         '-net', 'nic,model=sungem', '-net', 'user',
+>> +                         '-snapshot', '-nographic')
+> 
+> I just also noticed that we already have "-display none" in python/qemu/ 
+> machine/machine.py, so you likely don't need the -nographic here (but 
+> looks like we've got that wrong in a bunch of tests already).
 
-Regards,
-Pierrick
+Maybe warn in QEMUMachine::_pre_launch() if "-display none" && '-nographic'?
+
+> 
+>> +        self.vm.launch()
 
