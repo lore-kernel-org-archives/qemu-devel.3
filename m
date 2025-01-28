@@ -4,64 +4,64 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 90093C0218A
-	for <qemu-devel@archiver.kernel.org>; Tue, 28 Jan 2025 14:23:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6B0CBC0218A
+	for <qemu-devel@archiver.kernel.org>; Tue, 28 Jan 2025 14:24:15 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tcmUK-0008Mw-RI; Tue, 28 Jan 2025 09:22:48 -0500
+	id 1tcmUn-0000N3-EO; Tue, 28 Jan 2025 09:23:17 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tcmU0-00085l-NA
- for qemu-devel@nongnu.org; Tue, 28 Jan 2025 09:22:32 -0500
-Received: from mail-wr1-x434.google.com ([2a00:1450:4864:20::434])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tcmUG-0008EY-3z
+ for qemu-devel@nongnu.org; Tue, 28 Jan 2025 09:22:44 -0500
+Received: from mail-wr1-x42d.google.com ([2a00:1450:4864:20::42d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tcmTz-0002MH-3H
- for qemu-devel@nongnu.org; Tue, 28 Jan 2025 09:22:28 -0500
-Received: by mail-wr1-x434.google.com with SMTP id
- ffacd0b85a97d-386329da1d9so2946761f8f.1
- for <qemu-devel@nongnu.org>; Tue, 28 Jan 2025 06:22:26 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tcmUD-0002O9-Ia
+ for qemu-devel@nongnu.org; Tue, 28 Jan 2025 09:22:42 -0500
+Received: by mail-wr1-x42d.google.com with SMTP id
+ ffacd0b85a97d-3863c36a731so4736889f8f.1
+ for <qemu-devel@nongnu.org>; Tue, 28 Jan 2025 06:22:41 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1738074145; x=1738678945; darn=nongnu.org;
+ d=linaro.org; s=google; t=1738074159; x=1738678959; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=Tw046dW5+uhhYJLaed8H1nN+PEtNbdWPjJLIYS364MM=;
- b=YKno2KaP2dzwxTaB/PiXXuz+K/eXiPdccvmP5hSAxH1W5+BaYZckgTNiYgtREK3+QR
- CG2aRMqxBLjGcRAIcy/FM8e/+g+0knSti3rPq2CcKDiOokosZJ4H1bAOTvkPa1o8BQ+h
- 27690LMDUIt1+hVVBgyCVNbQ9KSpmaQndpP2bZFDl0WbgemVMM5TUo05bShR1FoLnoB8
- n+/JILks46I06DWwF7VOfsEwSPUKHOynfWXWu9KR/B9lq49FxC5ao6pewTWKWhBCFzqU
- j6g1iu8V1V/ukBIS8fbHeQ3MbXuIiVu6KBDFjgAsDXBtvJsaHR81PepaAsIeMBBhktaB
- Ecug==
+ bh=jN7tNGrfnQkH1jp+7zEAfhWZCNwGy2KakJL6oRXbHIo=;
+ b=TV29y09RKOW9xtqH++5r4H5mCmJPqDWmlztjWX8yRMiZkGVo/Jbw3GEhZWYSVjX4PY
+ y/ge17IxfBxPD7KroxTHrSd3mgQEdltaM3SJuGG7OLzCbZ3FRTx6XV39yMRAgf7C4sCs
+ lZsj7kKnPaq2dFuzjFufnDXAWvvz8krjU40TSOWItbvPXzuAVyXgoZtr0ysWfq9tzn9D
+ dM3+W+B8SzrnrK0PR1Ec19OP+xP8dobdnzCpHGeWOJAwgm/8OThYMN7ANvhLqoREpImH
+ 8uv65GqO0CDCtfYp3tNGFcy7MbkvuJA0zl6UGq2TaXVEAG6JGhBfZx92nxwEmCWPzyBQ
+ Wc0A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1738074145; x=1738678945;
+ d=1e100.net; s=20230601; t=1738074159; x=1738678959;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=Tw046dW5+uhhYJLaed8H1nN+PEtNbdWPjJLIYS364MM=;
- b=QN2Eb9T9pcbm1hoLnx3SSLcX7yQB71DVNN0ADFEyiFq6huy0Nf4DNJYOW2KKqAs3t1
- L/tz10/PazGkFezFCCQ7NkhfKerKwHxoOYjppF+6hGMLMqhr/DOR+gc4wr3Jn8urb4Ks
- gzK5vvm0qbgikcGePN8vK+2X5HBvRWj/TAJ7/lMoET/edbmC04RyZ9FXw1SN7qtTYfbS
- 2CjKOqKdPoewvDZy7N7w8Jy/ZCZbzFU37wAvEAp1Vn7lIoWTqjFAIrJLE4doRZCFO8dq
- Gx4VxSn4iU3omUFHzp7XxhFI3pcmuYlDNjjkyDKlglvKssBoD0GZzeav5dYqdcHPyCFs
- MjwA==
-X-Gm-Message-State: AOJu0YyxUpYyqb96W0q8JPh298n0KhMJChwv/c6Or70WAGpcJH0tXmUu
- yyzqruKBuBVYvosGxxRoax5gAnFwy8tsXwPiE4hFM1DsTi8s0c81Ro8uv5wdQgk7e9+r/eDEHyV
- JnxI=
-X-Gm-Gg: ASbGncvWaq/Gv0fxPhXRkoX//UZKODyLs7CngiP/qrk+zbMDYuKHmEpl6gcO7hNIZnH
- k4f/RSc6V+3GhfP1CcCO5/UvFRw3SHvNqbCfaNJ48e0TYJRW0YnmCg4zRjjJ8iPLd65OmFMqR+h
- 3WAZGpml3fzv9ILAueFfX+nW8Q0fBsDM/DQbLGOi0OuIpAkClz4bOsNhvJf+PHy4IGeOHqxSlME
- pJsep1APKE+dNVp8Zx0BTLQyDTCS2u+Q23Ia+Yi+i1Q/kGV4THsNOHGQNK3mTqGxiOLP9/pVyIP
- ihAm5eDPot0qqQznhC9IYnlKxGiYcmSe9L5w1KLxoJysf86uxKZXv3BfK94na/AeIg==
-X-Google-Smtp-Source: AGHT+IEyyaAAlYQ5I3ppwUr7kelaVWlDzVIFlhZYrwH74VA7sdBpE5YrUhEnY7P3LEg7nQWsma+f4A==
-X-Received: by 2002:a5d:47ac:0:b0:38b:e919:4053 with SMTP id
- ffacd0b85a97d-38bf57a993dmr44371093f8f.44.1738074144814; 
- Tue, 28 Jan 2025 06:22:24 -0800 (PST)
+ bh=jN7tNGrfnQkH1jp+7zEAfhWZCNwGy2KakJL6oRXbHIo=;
+ b=h5llxzRwTo168iBSOCU7YWSm3IogJsnPkEjRA4+p+H1AJdhKE6GhMDx3G5AQDhGfz4
+ L+9SAV1efDii9jlcak2U2lSy5Ncx8HRY9KFGnaBP5cPjUgrNXXSEDGm7NErIPkyMphZC
+ /wU7Gqx2O0R5XljtArKlQ91IrGRo5WIK9ET7ztt+u87mMjeA3jk4MH/TCjDI6foMp7Pp
+ bUZwZ/rLrtdphhHAFHaciHbJ7PliLQNDZxHRcGL6hVr8gX/QqmuuVT9U9KYLeftBYFlN
+ a42Jqn/B7Um/cXafQyjn+SJHUiOUgefID2taxFSmZi87WFC1nukX6dMjeRsqZJVwqqah
+ /leg==
+X-Gm-Message-State: AOJu0YwbPHk3RKoAtkIAjBLp27r9e3nyVmMGjrR6IpjjnOGzP7/5BBFr
+ gOu9KmS75Tiw4n4c0JxkOiBO+pqFykJjV7l0qALmj1gjLGkT6npDG0gzluVwSBpizaE0xl5Ruav
+ PjmM=
+X-Gm-Gg: ASbGncuhnzDNKHuzXOgk5Hr2Slz2Gge4iNeCVS/Vvm+EnWQv/k2P/LKbrNExNnRJ7xx
+ 1PqhaAkXloKsQ/GIWoLmx9vLHZCeOT5ZRq0VvIUyBC0trBg13tNzafM+jRpAeIAzWVccSjrRpl2
+ uar7iz/zJKsJdCx32yWEB02E1Ck6z76+o8YjmJ29HwG2U6wXUHt6qyjDqrcfCwsU7IrRHXQOfAR
+ gE5e9Jmr2awzxDjBlzywTlvcauK6ZUm05m3Ge8bXVHma+NmRj9I4R7B6O37SXXNRUJSrx6far8V
+ J3iKvOr0JDGtw4+zNsl+woGVmsfATRLXdVAioE1RNiGoBmbqNuPY339z1rHz3P8NVQ==
+X-Google-Smtp-Source: AGHT+IHfjGCtubVM9RMAK88E03g9Q6/raB5p2ips8Ty3wdrHPHY423HNQ2wht5Ir+apIlpYx+7iAnw==
+X-Received: by 2002:a5d:64e9:0:b0:38a:88bc:bae4 with SMTP id
+ ffacd0b85a97d-38bf5784ab8mr43777014f8f.18.1738074159686; 
+ Tue, 28 Jan 2025 06:22:39 -0800 (PST)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-38c2a1bad92sm14282474f8f.61.2025.01.28.06.22.23
+ ffacd0b85a97d-38c2a176434sm14462219f8f.13.2025.01.28.06.22.38
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Tue, 28 Jan 2025 06:22:24 -0800 (PST)
+ Tue, 28 Jan 2025 06:22:39 -0800 (PST)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Peter Maydell <peter.maydell@linaro.org>,
@@ -75,17 +75,18 @@ Cc: Peter Maydell <peter.maydell@linaro.org>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  Paolo Bonzini <pbonzini@redhat.com>,
  Richard Henderson <richard.henderson@linaro.org>
-Subject: [PATCH 6/9] cpus: Call hotplug handlers in DeviceWire()
-Date: Tue, 28 Jan 2025 15:21:49 +0100
-Message-ID: <20250128142152.9889-7-philmd@linaro.org>
+Subject: [PATCH 9/9] accel/kvm: Remove unreachable assertion in
+ kvm_dirty_ring_reap*()
+Date: Tue, 28 Jan 2025 15:21:52 +0100
+Message-ID: <20250128142152.9889-10-philmd@linaro.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20250128142152.9889-1-philmd@linaro.org>
 References: <20250128142152.9889-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::434;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x434.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::42d;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x42d.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -108,41 +109,32 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-To call the hotplug handlers with REALIZED vCPU, we can
-use the DeviceWire handler.
+Previous commit passed all our CI tests, this assertion being
+never triggered. Remove it as dead code.
 
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 ---
- hw/core/cpu-common.c | 11 ++++++-----
- 1 file changed, 6 insertions(+), 5 deletions(-)
+ accel/kvm/kvm-all.c | 7 -------
+ 1 file changed, 7 deletions(-)
 
-diff --git a/hw/core/cpu-common.c b/hw/core/cpu-common.c
-index 9ee44a00277..8a02ac146f6 100644
---- a/hw/core/cpu-common.c
-+++ b/hw/core/cpu-common.c
-@@ -211,16 +211,17 @@ static void cpu_common_realizefn(DeviceState *dev, Error **errp)
-         }
-     }
+diff --git a/accel/kvm/kvm-all.c b/accel/kvm/kvm-all.c
+index cb56d120a91..814b1a53eb8 100644
+--- a/accel/kvm/kvm-all.c
++++ b/accel/kvm/kvm-all.c
+@@ -830,13 +830,6 @@ static uint32_t kvm_dirty_ring_reap_one(KVMState *s, CPUState *cpu)
+     uint32_t ring_size = s->kvm_dirty_ring_size;
+     uint32_t count = 0, fetch = cpu->kvm_fetch_index;
  
--    if (dev->hotplugged) {
--        cpu_synchronize_post_init(cpu);
--        cpu_resume(cpu);
--    }
+-    /*
+-     * It's not possible that we race with vcpu creation code where the vcpu is
+-     * put onto the vcpus list but not yet initialized the dirty ring
+-     * structures.
+-     */
+-    assert(cpu->created);
 -
-     /* NOTE: latest generic point where the cpu is fully realized */
- }
+     assert(dirty_gfns && ring_size);
+     trace_kvm_dirty_ring_reap_vcpu(cpu->cpu_index);
  
- static void cpu_common_wire(DeviceState *dev)
- {
-+    CPUState *cpu = CPU(dev);
-+
-+    if (dev->hotplugged) {
-+        cpu_synchronize_post_init(cpu);
-+        cpu_resume(cpu);
-+    }
- }
- 
- static void cpu_common_unwire(DeviceState *dev)
 -- 
 2.47.1
 
