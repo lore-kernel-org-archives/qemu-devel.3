@@ -4,89 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 78C52C0218D
-	for <qemu-devel@archiver.kernel.org>; Tue, 28 Jan 2025 06:07:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A1DF8C0218D
+	for <qemu-devel@archiver.kernel.org>; Tue, 28 Jan 2025 06:08:03 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tcejZ-0007RF-3c; Tue, 28 Jan 2025 01:06:01 -0500
+	id 1tcel1-00089w-Sn; Tue, 28 Jan 2025 01:07:31 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1tcejX-0007Qx-Ta; Tue, 28 Jan 2025 01:05:59 -0500
-Received: from mail-pl1-x631.google.com ([2607:f8b0:4864:20::631])
+ id 1tcekz-00089W-L9; Tue, 28 Jan 2025 01:07:29 -0500
+Received: from mail-vs1-xe2b.google.com ([2607:f8b0:4864:20::e2b])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1tcejW-0008Co-Am; Tue, 28 Jan 2025 01:05:59 -0500
-Received: by mail-pl1-x631.google.com with SMTP id
- d9443c01a7336-219f8263ae0so96196755ad.0; 
- Mon, 27 Jan 2025 22:05:57 -0800 (PST)
+ id 1tceky-0000Xe-7M; Tue, 28 Jan 2025 01:07:29 -0500
+Received: by mail-vs1-xe2b.google.com with SMTP id
+ ada2fe7eead31-4afdfd3124dso1361195137.2; 
+ Mon, 27 Jan 2025 22:07:27 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1738044356; x=1738649156; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=YrAW79KiOv42U4iKuxM5UGtySL8UZjDnK2Geh/ESVTc=;
- b=McC2KsoX4u92Qn4cI/o1XpoVSrXyxd+hp37IfEuoYKgt4svYrzal8lRRVa94w8evke
- 9EJQS1GYHNwl9r4OfPRea2SbRHR7jKl8H5dEAI0tHWAdv9xMMyWKF/Av+OpPUQBsXgDC
- wBQQiT7eCH3kae4kHRDxFeTFPi97eC1G2f5aFI9KO2Eah4/WMCvyhwxsf5HYRLJfB8cl
- Tq+SyfwwMWRAYHPOIi3CI9B6cNN39qJNjenD4PjJRWaEIIlBIOaJkFQHMt10z6Q/5j/A
- IWwmSPB64aTwxEMkipWPUcoz0F6v/rCXWD15vLiKRbwFqhT2/e6k8bNRdOwmCAHMk9iz
- GoSQ==
+ d=gmail.com; s=20230601; t=1738044446; x=1738649246; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=7JLOM9yNigSIhn3umV/qEMOjUB2vhbHjIdZMCdFsO8E=;
+ b=QSn+F7MJOxX3QzML56hiWjfpqpW4w1aDBIegqh9tzQq1bQU5vSA/CvDMBpxbx30FGK
+ gdcMDIQjXmBRjLnNUzCCl9DHfyJBIvltQFup//8HT5PhYVePDHfRqLRrjZfIcn0GL1D1
+ IbC8hFSFplsa+4Nxwg4jKtfhthryKIvCiT2AGdHZpxHPOwtTRITV/3dOpq4FTy91RcAF
+ K4+HUD+Z9wC/fpQY2eAi6cqarQfKS4MVXH5gWgop4mDP4cEaC8OxOJZYRMjpK4ZIJ6wi
+ AEsYGeuhVI3H+Nf69jlPc6PNgCCe2ULQPw/3RjqF2WV3CCLrAWkwTZRL5hj7NVM9e/DT
+ ENFA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1738044356; x=1738649156;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=YrAW79KiOv42U4iKuxM5UGtySL8UZjDnK2Geh/ESVTc=;
- b=Ul1px8lYpsJQQWTih5YGG0wPRA6nn4nqy9+LtuZstSa/ZiN1OFIdsVr3oBxKxV57+a
- eqMxh96lm3wzaS8kU5ijI2/yJlFBSnKltD2wp5z/uaYBtsnxVuV5HnYBH6IjgucPCgK5
- pnsZVayngnJLk0BdKpNWB/B/78Rth0tCJ/A0JDmQUrfpWlZMZU3RXhVnHfK3BTE7/D/G
- shJC6JIIoDEXUwiQ+ve8+IOLg8HXquQDas6C0O26zMtRXop5HjHFAtZpbjg9eyQnR4ja
- CPO5fd3Lla+wuKoy4Ul4aUsYim4zxXdHEA9l4OrNTjdrXHnpW0iIaM4KGQWTl6w/VgGr
- vWpw==
+ d=1e100.net; s=20230601; t=1738044446; x=1738649246;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=7JLOM9yNigSIhn3umV/qEMOjUB2vhbHjIdZMCdFsO8E=;
+ b=MEM2i5TTh76bmZWRHHj+jf4zlmbYOzUWm5QvEOoR3p+qmZPZtTK/Jd9G1wAiB8XrYp
+ EVgNDp+4UiL8YesgAJmbdX8DEOrvn7o8wAy+JS7ij4sY8QVQ/IZOId0P5C30ZMB2ZN+Z
+ Vd9X7UJ6xEXLcsqyBu0uqDHCGQqnqTB1zW3+VOjN9zhzYKakIAlzcs47GtwUeTsLYZn8
+ xX7VnvJmTbD0tC+A+XlJ14NLsF2ACpwUdA5W7tCATlBrgZaE9/bnbnxlyF3D8crquS+j
+ 6jGxvr8JqakIoREezOUpzDIw62eNdxCdUtwlrQTgVhssMqxnTnT/z0Qh+Z59uYGNZV7y
+ LQuw==
 X-Forwarded-Encrypted: i=1;
- AJvYcCWEi0mpd2iaEhyNYo/O7Dhc6JBT/pdLFxAR7Piyv9eAT/ZGVHWDMw/GGsFbYLe+LGSo9S6l5pprWg7V@nongnu.org
-X-Gm-Message-State: AOJu0Yz5IVmqLfsZcc1rExgf2W52G86QvN5r530gLMf8QvzIqho7KQMR
- fpCkWXQxUkHK1AYxjFuPCWSBYx+DQIJlCDgnhWCZ+dMDpt57cwq+
-X-Gm-Gg: ASbGnctMLITX+i4B3J/u7qsHn15wrCV6AL+kfjVXnOUiGS4fnB4ZEdKN22+ycB3g0+f
- lwvssM4DC0B9dPd8XckIf3CFU6wkt0S+xV4v2XHOIIndoOOOPfwXc1gMhzGoGmC7YRbWP/QYe1H
- zA8JBcSgc7aVQyQxXDt4Nkkokt32+ZxJjaOK/zXQVMLHI1e7uCMiEz2u4XuvjnSwHOcVdZmntk6
- Q8vO3o81X+c99EtbZaqAga7xUVIy8s4zDZzG705ORnfrRLRGHdxODztfjBgTFy0kyuRjQ42+BRp
- oIfnQ4buF6WEj6JsAQd6RhN9oOt0Uqk3O2av3ukqMykHaDoZSmBbLRK9RgEEahVJlKqCkXVPjbA
- MghBu5+QkRxuu6BCX1C6a0nLS18tzDw==
-X-Google-Smtp-Source: AGHT+IE6oeSsJ7WA/7Ag1h0zI3KSmNi4b8INrQVQY55DMvVA65HCITIvSbbOBlzAVJV/p8Nxbh59tw==
-X-Received: by 2002:a17:902:f644:b0:216:4e8d:4803 with SMTP id
- d9443c01a7336-21c355f6ab4mr620505475ad.42.1738044356016; 
- Mon, 27 Jan 2025 22:05:56 -0800 (PST)
-Received: from toolbox.alistair23.me
- (2403-580b-97e8-0-321-6fb2-58f1-a1b1.ip6.aussiebb.net.
- [2403:580b:97e8:0:321:6fb2:58f1:a1b1])
- by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-21da3ea3b3asm73741145ad.85.2025.01.27.22.05.51
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 27 Jan 2025 22:05:54 -0800 (PST)
-From: Alistair Francis <alistair23@gmail.com>
-X-Google-Original-From: Alistair Francis <alistair.francis@wdc.com>
-To: palmer@dabbelt.com, liwei1518@gmail.com, dbarboza@ventanamicro.com,
- zhiwei_liu@linux.alibaba.com, qemu-riscv@nongnu.org, philmd@linaro.org
-Cc: qemu-devel@nongnu.org,
-	Alistair Francis <alistair.francis@wdc.com>
-Subject: [PATCH] MAINTAINERS: Remove Bin Meng from RISC-V maintainers
-Date: Tue, 28 Jan 2025 16:05:46 +1000
-Message-ID: <20250128060546.1374394-1-alistair.francis@wdc.com>
-X-Mailer: git-send-email 2.48.1
+ AJvYcCUbLxPTCbdCzE/hXfKGIK22z8Rtlw42kqjwETPZKGpE6+5OOmY6gafXCzZ0ris/Px1qbRc67LNaG9SB@nongnu.org
+X-Gm-Message-State: AOJu0Yyl3VyyPiZwu2qme0CmJGCYwf9xsQbgLCx2JNbz7shBAkLFzkTP
+ xqFH5UEYiA7m2ItNgIxMlxQRZbKSgCmOfPbwB97LRunEcjlTXYJTfcHjid+HVz1E7SOh7XjxwFz
+ S1VFCrFHNSpnm75XbK1Oo/ymKPR8=
+X-Gm-Gg: ASbGnctgsC1uj4Vo3eDpOPhBsADENHuQmLQTfodlspFfQlQ5HS8Y5R7tqbp0JK6QG6j
+ U/ZIH7mGHI7I6tL8NUfTrXpdn3Wl7J7ZOj1NVfPKnYYjN1/gQGdnDHWeQutwBLStlH9n9ja8P/W
+ aQRcmUnXvj1TYmc/QXq4UqkvJgbQ==
+X-Google-Smtp-Source: AGHT+IGwNPM7UGDLxNOsxJjEiSqQeMgiUprUsFuyFZqd7/JiQ+svQNZAXY/BYz+eRz4d2fJWKmlrpfxeNEtgr1EgVuo=
+X-Received: by 2002:a05:6102:26d0:b0:4b2:cca8:88d0 with SMTP id
+ ada2fe7eead31-4b690b8780amr35393484137.1.1738044446626; Mon, 27 Jan 2025
+ 22:07:26 -0800 (PST)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::631;
- envelope-from=alistair23@gmail.com; helo=mail-pl1-x631.google.com
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+References: <20250128060546.1374394-1-alistair.francis@wdc.com>
+In-Reply-To: <20250128060546.1374394-1-alistair.francis@wdc.com>
+From: Alistair Francis <alistair23@gmail.com>
+Date: Tue, 28 Jan 2025 16:07:00 +1000
+X-Gm-Features: AWEUYZmjkJkY01fLiho-nhURR7i9CMBIe0uYFqIxRHzCkv5KfpIbSJemAb0irUg
+Message-ID: <CAKmqyKOWY-im1Kt_mCN5+o8c9Fanqrt4_+j6DyEi6h6zN1u0ZQ@mail.gmail.com>
+Subject: Re: [PATCH] MAINTAINERS: Remove Bin Meng from RISC-V maintainers
+To: palmer@dabbelt.com, liwei1518@gmail.com, dbarboza@ventanamicro.com, 
+ zhiwei_liu@linux.alibaba.com, qemu-riscv@nongnu.org, philmd@linaro.org, 
+ Bin Meng <bmeng.cn@gmail.com>
+Cc: qemu-devel@nongnu.org, Alistair Francis <alistair.francis@wdc.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2607:f8b0:4864:20::e2b;
+ envelope-from=alistair23@gmail.com; helo=mail-vs1-xe2b.google.com
+X-Spam_score_int: -8
+X-Spam_score: -0.9
+X-Spam_bar: /
+X-Spam_report: (-0.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
+ FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001, FREEMAIL_REPLY=1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -102,58 +96,21 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Bin Meng has been a long time contributor and maintainer for QEMU RISC-V
-and has been very beneficial to the RISC-V ecosystem.
+On Tue, Jan 28, 2025 at 4:05=E2=80=AFPM Alistair Francis <alistair23@gmail.=
+com> wrote:
+>
+> Bin Meng has been a long time contributor and maintainer for QEMU RISC-V
+> and has been very beneficial to the RISC-V ecosystem.
+>
+> Unfortunately his email has started to bounce so this patch is removing
+> them from MAINTAINERS. If in the future Bin Meng wants to return we will
+> happily re-add them.
+>
+> Note that I'm not removing Bin Meng as a "SD (Secure Card)" maintainer.
+>
+> Signed-off-by: Alistair Francis <alistair.francis@wdc.com>
 
-Unfortunately his email has started to bounce so this patch is removing
-them from MAINTAINERS. If in the future Bin Meng wants to return we will
-happily re-add them.
++ bmeng.cn@gmail.com to keep you in the loop
 
-Note that I'm not removing Bin Meng as a "SD (Secure Card)" maintainer.
-
-Signed-off-by: Alistair Francis <alistair.francis@wdc.com>
----
- MAINTAINERS | 5 +----
- 1 file changed, 1 insertion(+), 4 deletions(-)
-
-diff --git a/MAINTAINERS b/MAINTAINERS
-index 7be3d8f431..a0e305aa99 100644
---- a/MAINTAINERS
-+++ b/MAINTAINERS
-@@ -318,7 +318,6 @@ F: tests/functional/test_ppc_74xx.py
- RISC-V TCG CPUs
- M: Palmer Dabbelt <palmer@dabbelt.com>
- M: Alistair Francis <alistair.francis@wdc.com>
--M: Bin Meng <bmeng.cn@gmail.com>
- R: Weiwei Li <liwei1518@gmail.com>
- R: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
- R: Liu Zhiwei <zhiwei_liu@linux.alibaba.com>
-@@ -1599,7 +1598,6 @@ F: include/hw/riscv/opentitan.h
- F: include/hw/*/ibex_*.h
- 
- Microchip PolarFire SoC Icicle Kit
--M: Bin Meng <bmeng.cn@gmail.com>
- L: qemu-riscv@nongnu.org
- S: Supported
- F: docs/system/riscv/microchip-icicle-kit.rst
-@@ -1626,7 +1624,6 @@ F: include/hw/char/shakti_uart.h
- 
- SiFive Machines
- M: Alistair Francis <Alistair.Francis@wdc.com>
--M: Bin Meng <bmeng.cn@gmail.com>
- M: Palmer Dabbelt <palmer@dabbelt.com>
- L: qemu-riscv@nongnu.org
- S: Supported
-@@ -3721,7 +3718,7 @@ S: Orphan
- F: hw/i386/amd_iommu.?
- 
- OpenSBI Firmware
--M: Bin Meng <bmeng.cn@gmail.com>
-+L: qemu-riscv@nongnu.org
- S: Supported
- F: pc-bios/opensbi-*
- F: .gitlab-ci.d/opensbi.yml
--- 
-2.48.1
-
+Alistair
 
