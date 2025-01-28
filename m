@@ -4,47 +4,47 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 852CEC0218A
-	for <qemu-devel@archiver.kernel.org>; Tue, 28 Jan 2025 15:30:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7DDBAC02190
+	for <qemu-devel@archiver.kernel.org>; Tue, 28 Jan 2025 15:30:17 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tcnWd-0002LZ-Rg; Tue, 28 Jan 2025 10:29:15 -0500
+	id 1tcnWe-0002MI-Np; Tue, 28 Jan 2025 10:29:16 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1tcnWc-0002L9-B2
- for qemu-devel@nongnu.org; Tue, 28 Jan 2025 10:29:14 -0500
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1tcnWd-0002LM-2g
+ for qemu-devel@nongnu.org; Tue, 28 Jan 2025 10:29:15 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1tcnWa-0004wR-Ns
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1tcnWb-0004wO-7i
  for qemu-devel@nongnu.org; Tue, 28 Jan 2025 10:29:14 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1738078152;
+ s=mimecast20190719; t=1738078151;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=mAQDM6qHfX2kRPn8z9DWXC7M3EqrDePFHHJ6Wk42zM4=;
- b=Ccq2h9qvb9hIUM71TCUTd2zdKZi5hrYb0NpOgBAa7tQjR6dFijTor1ijbt9PybKc1n44pX
- HDGuJGyBLsmXgTUwEy96ugCd4ciqeFMLGrwtbWvNd9oAEYkbbv+lbduEFj2wGEVe0kSV87
- S3t3dT7S1TnHtZggyAwijYxHhijwghw=
-Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
+ bh=tM0B3uoFmYfLI02HZ+jHFeL5lO19q8fqLWhwulpqLwE=;
+ b=XkX0eged2QUAmolkkTg//pZ8yBsmo0Puc+gUrpDHOVOQ1IyIbkmi7tWFP76q07lR9ohkH3
+ o/8CENBRKDWLAEvh9qOTZdVYUm2v9tZMClby/1IDjD4GsRWvVuSD8+4Nb1hdvd85tg8VpR
+ 7fbCpbuJcPBISSXjQL1Ldx/T4JwOF68=
+Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-540-b9ownlZcMQK_Ioet83deuw-1; Tue,
- 28 Jan 2025 10:29:03 -0500
-X-MC-Unique: b9ownlZcMQK_Ioet83deuw-1
-X-Mimecast-MFC-AGG-ID: b9ownlZcMQK_Ioet83deuw
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-580-1k6EdaCePyCEbFHVV3U0FQ-1; Tue,
+ 28 Jan 2025 10:29:08 -0500
+X-MC-Unique: 1k6EdaCePyCEbFHVV3U0FQ-1
+X-Mimecast-MFC-AGG-ID: 1k6EdaCePyCEbFHVV3U0FQ
 Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 8E4B21802ABD; Tue, 28 Jan 2025 15:28:55 +0000 (UTC)
+ by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 9A686180188D; Tue, 28 Jan 2025 15:29:06 +0000 (UTC)
 Received: from thuth-p1g4.redhat.com (unknown [10.39.195.33])
  by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 77E2D18088AA; Tue, 28 Jan 2025 15:28:51 +0000 (UTC)
+ id 8AA001801A60; Tue, 28 Jan 2025 15:29:01 +0000 (UTC)
 From: Thomas Huth <thuth@redhat.com>
 To: Pavel Dovgalyuk <pavel.dovgaluk@ispras.ru>,
  Paolo Bonzini <pbonzini@redhat.com>, Jiaxun Yang <jiaxun.yang@flygoat.com>,
@@ -55,23 +55,23 @@ Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  Leif Lindholm <leif.lindholm@oss.qualcomm.com>,
  Radoslaw Biernacki <rad@semihalf.com>,
  Peter Maydell <peter.maydell@linaro.org>
-Subject: [PATCH v2 2/5] tests/functional: Add the ReplayKernelBase class
-Date: Tue, 28 Jan 2025 16:28:36 +0100
-Message-ID: <20250128152839.184599-3-thuth@redhat.com>
+Subject: [PATCH v2 4/5] tests/functional/test_mips64el_malta: Convert the
+ mips64el replay tests
+Date: Tue, 28 Jan 2025 16:28:38 +0100
+Message-ID: <20250128152839.184599-5-thuth@redhat.com>
 In-Reply-To: <20250128152839.184599-1-thuth@redhat.com>
 References: <20250128152839.184599-1-thuth@redhat.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
 Received-SPF: pass client-ip=170.10.133.124; envelope-from=thuth@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -33
-X-Spam_score: -3.4
-X-Spam_bar: ---
-X-Spam_report: (-3.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.3,
+X-Spam_score_int: -28
+X-Spam_score: -2.9
+X-Spam_bar: --
+X-Spam_report: (-2.9 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.3,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
+ PDS_BTC_ID=0.5, RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
@@ -90,119 +90,169 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Copy the ReplayKernelBase class from the avocado tests. We are going
-to need it to convert the related replay tests in the following patches.
+Move the mips64el replay tests from tests/avocado/replay_kernel.py to
+the functional framework. Since the functional tests should be run per
+target, we cannot stick all replay tests in one file. Thus let's add
+these tests to a separate file there now.
 
-Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
 Signed-off-by: Thomas Huth <thuth@redhat.com>
 ---
- MAINTAINERS                       |  1 +
- tests/functional/replay_kernel.py | 84 +++++++++++++++++++++++++++++++
- 2 files changed, 85 insertions(+)
- create mode 100644 tests/functional/replay_kernel.py
+ tests/avocado/replay_kernel.py           | 57 ----------------------
+ tests/functional/meson.build             |  1 +
+ tests/functional/test_mips64el_replay.py | 60 ++++++++++++++++++++++++
+ 3 files changed, 61 insertions(+), 57 deletions(-)
+ create mode 100755 tests/functional/test_mips64el_replay.py
 
-diff --git a/MAINTAINERS b/MAINTAINERS
-index 7b4d84bf5f..414b6f35fe 100644
---- a/MAINTAINERS
-+++ b/MAINTAINERS
-@@ -3632,6 +3632,7 @@ F: stubs/replay.c
- F: tests/avocado/replay_kernel.py
- F: tests/avocado/replay_linux.py
- F: tests/avocado/reverse_debugging.py
-+F: tests/functional/*replay*.py
- F: qapi/replay.json
+diff --git a/tests/avocado/replay_kernel.py b/tests/avocado/replay_kernel.py
+index 9a3f175129..89a0c0b997 100644
+--- a/tests/avocado/replay_kernel.py
++++ b/tests/avocado/replay_kernel.py
+@@ -146,33 +146,6 @@ def test_mips_malta(self):
  
- IOVA Tree
-diff --git a/tests/functional/replay_kernel.py b/tests/functional/replay_kernel.py
-new file mode 100644
-index 0000000000..8e8ac7d052
+         self.run_rr(kernel_path, kernel_command_line, console_pattern, shift=5)
+ 
+-    def test_mips64el_malta(self):
+-        """
+-        This test requires the ar tool to extract "data.tar.gz" from
+-        the Debian package.
+-
+-        The kernel can be rebuilt using this Debian kernel source [1] and
+-        following the instructions on [2].
+-
+-        [1] http://snapshot.debian.org/package/linux-2.6/2.6.32-48/
+-            #linux-source-2.6.32_2.6.32-48
+-        [2] https://kernel-team.pages.debian.net/kernel-handbook/
+-            ch-common-tasks.html#s-common-official
+-
+-        :avocado: tags=arch:mips64el
+-        :avocado: tags=machine:malta
+-        """
+-        deb_url = ('http://snapshot.debian.org/archive/debian/'
+-                   '20130217T032700Z/pool/main/l/linux-2.6/'
+-                   'linux-image-2.6.32-5-5kc-malta_2.6.32-48_mipsel.deb')
+-        deb_hash = '1aaec92083bf22fda31e0d27fa8d9a388e5fc3d5'
+-        deb_path = self.fetch_asset(deb_url, asset_hash=deb_hash)
+-        kernel_path = self.extract_from_deb(deb_path,
+-                                            '/boot/vmlinux-2.6.32-5-5kc-malta')
+-        kernel_command_line = self.KERNEL_COMMON_COMMAND_LINE + 'console=ttyS0'
+-        console_pattern = 'Kernel command line: %s' % kernel_command_line
+-        self.run_rr(kernel_path, kernel_command_line, console_pattern, shift=5)
+-
+     def test_aarch64_virt(self):
+         """
+         :avocado: tags=arch:aarch64
+@@ -475,33 +448,3 @@ def test_mips_malta_cpio(self):
+         console_pattern = 'Boot successful.'
+         self.run_rr(kernel_path, kernel_command_line, console_pattern, shift=5,
+                     args=('-initrd', initrd_path))
+-
+-    @skipUnless(os.getenv('AVOCADO_ALLOW_UNTRUSTED_CODE'), 'untrusted code')
+-    def test_mips64el_malta_5KEc_cpio(self):
+-        """
+-        :avocado: tags=arch:mips64el
+-        :avocado: tags=machine:malta
+-        :avocado: tags=endian:little
+-        :avocado: tags=slowness:high
+-        :avocado: tags=cpu:5KEc
+-        """
+-        kernel_url = ('https://github.com/philmd/qemu-testing-blob/'
+-                      'raw/9ad2df38/mips/malta/mips64el/'
+-                      'vmlinux-3.19.3.mtoman.20150408')
+-        kernel_hash = '00d1d268fb9f7d8beda1de6bebcc46e884d71754'
+-        kernel_path = self.fetch_asset(kernel_url, asset_hash=kernel_hash)
+-        initrd_url = ('https://github.com/groeck/linux-build-test/'
+-                      'raw/8584a59e/rootfs/'
+-                      'mipsel64/rootfs.mipsel64r1.cpio.gz')
+-        initrd_hash = '1dbb8a396e916847325284dbe2151167'
+-        initrd_path_gz = self.fetch_asset(initrd_url, algorithm='md5',
+-                                          asset_hash=initrd_hash)
+-        initrd_path = self.workdir + "rootfs.cpio"
+-        archive.gzip_uncompress(initrd_path_gz, initrd_path)
+-
+-        kernel_command_line = (self.KERNEL_COMMON_COMMAND_LINE +
+-                               'console=ttyS0 console=tty '
+-                               'rdinit=/sbin/init noreboot')
+-        console_pattern = 'Boot successful.'
+-        self.run_rr(kernel_path, kernel_command_line, console_pattern, shift=5,
+-                    args=('-initrd', initrd_path))
+diff --git a/tests/functional/meson.build b/tests/functional/meson.build
+index 13de54a1a8..0a7a382ef6 100644
+--- a/tests/functional/meson.build
++++ b/tests/functional/meson.build
+@@ -174,6 +174,7 @@ tests_mips64el_system_thorough = [
+   'mips64el_fuloong2e',
+   'mips64el_loongson3v',
+   'mips64el_malta',
++  'mips64el_replay',
+   'mips64el_tuxrun',
+ ]
+ 
+diff --git a/tests/functional/test_mips64el_replay.py b/tests/functional/test_mips64el_replay.py
+new file mode 100755
+index 0000000000..4f63d7fb34
 --- /dev/null
-+++ b/tests/functional/replay_kernel.py
-@@ -0,0 +1,84 @@
-+# Record/replay test that boots a Linux kernel
++++ b/tests/functional/test_mips64el_replay.py
+@@ -0,0 +1,60 @@
++#!/usr/bin/env python3
 +#
-+# Copyright (c) 2020 ISP RAS
++# Replay tests for the little-endian 64-bit MIPS Malta board
 +#
-+# Author:
-+#  Pavel Dovgalyuk <Pavel.Dovgaluk@ispras.ru>
-+#
-+# This work is licensed under the terms of the GNU GPL, version 2 or
-+# later.  See the COPYING file in the top-level directory.
++# SPDX-License-Identifier: GPL-2.0-or-later
 +
 +import os
 +import logging
-+import time
-+import subprocess
 +
-+from qemu_test.linuxkernel import LinuxKernelTest
++from qemu_test import Asset, exec_command_and_wait_for_pattern
++from qemu_test import skipIfMissingImports, skipFlakyTest, skipUntrustedTest
++from replay_kernel import ReplayKernelBase
 +
-+class ReplayKernelBase(LinuxKernelTest):
-+    """
-+    Boots a Linux kernel in record mode and checks that the console
-+    is operational and the kernel command line is properly passed
-+    from QEMU to the kernel.
-+    Then replays the same scenario and verifies, that QEMU correctly
-+    terminates.
-+    """
 +
-+    timeout = 180
-+    REPLAY_KERNEL_COMMAND_LINE = 'printk.time=1 panic=-1 '
++class Mips64elReplay(ReplayKernelBase):
 +
-+    def run_vm(self, kernel_path, kernel_command_line, console_pattern,
-+               record, shift, args, replay_path):
-+        # icount requires TCG to be available
-+        self.require_accelerator('tcg')
++    ASSET_KERNEL_2_63_2 = Asset(
++        ('http://snapshot.debian.org/archive/debian/'
++         '20130217T032700Z/pool/main/l/linux-2.6/'
++         'linux-image-2.6.32-5-5kc-malta_2.6.32-48_mipsel.deb'),
++        '35eb476f03be589824b0310358f1c447d85e645b88cbcd2ac02b97ef560f9f8d')
 +
-+        logger = logging.getLogger('replay')
-+        start_time = time.time()
-+        vm = self.get_vm()
-+        vm.set_console()
-+        if record:
-+            logger.info('recording the execution...')
-+            mode = 'record'
-+        else:
-+            logger.info('replaying the execution...')
-+            mode = 'replay'
-+        vm.add_args('-icount', 'shift=%s,rr=%s,rrfile=%s' %
-+                    (shift, mode, replay_path),
-+                    '-kernel', kernel_path,
-+                    '-append', kernel_command_line,
-+                    '-net', 'none',
-+                    '-no-reboot')
-+        if args:
-+            vm.add_args(*args)
-+        vm.launch()
-+        self.wait_for_console_pattern(console_pattern, vm)
-+        if record:
-+            vm.shutdown()
-+            logger.info('finished the recording with log size %s bytes'
-+                        % os.path.getsize(replay_path))
-+            self.run_replay_dump(replay_path)
-+            logger.info('successfully tested replay-dump.py')
-+        else:
-+            vm.wait()
-+            logger.info('successfully finished the replay')
-+        elapsed = time.time() - start_time
-+        logger.info('elapsed time %.2f sec' % elapsed)
-+        return elapsed
++    def test_replay_mips64el_malta(self):
++        self.set_machine('malta')
++        kernel_path = self.archive_extract(self.ASSET_KERNEL_2_63_2,
++                                    member='boot/vmlinux-2.6.32-5-5kc-malta')
++        kernel_command_line = self.KERNEL_COMMON_COMMAND_LINE + 'console=ttyS0'
++        console_pattern = 'Kernel command line: %s' % kernel_command_line
++        self.run_rr(kernel_path, kernel_command_line, console_pattern, shift=5)
 +
-+    def run_replay_dump(self, replay_path):
-+        try:
-+            subprocess.check_call(["./scripts/replay-dump.py",
-+                                   "-f", replay_path],
-+                                  stdout=subprocess.DEVNULL)
-+        except subprocess.CalledProcessError:
-+            self.fail('replay-dump.py failed')
 +
-+    def run_rr(self, kernel_path, kernel_command_line, console_pattern,
-+               shift=7, args=None):
-+        replay_path = os.path.join(self.workdir, 'replay.bin')
-+        t1 = self.run_vm(kernel_path, kernel_command_line, console_pattern,
-+                         True, shift, args, replay_path)
-+        t2 = self.run_vm(kernel_path, kernel_command_line, console_pattern,
-+                         False, shift, args, replay_path)
-+        logger = logging.getLogger('replay')
-+        logger.info('replay overhead {:.2%}'.format(t2 / t1 - 1))
++    ASSET_KERNEL_3_19_3 = Asset(
++        ('https://github.com/philmd/qemu-testing-blob/'
++         'raw/9ad2df38/mips/malta/mips64el/'
++         'vmlinux-3.19.3.mtoman.20150408'),
++        '8d3beb003bc66051ead98e7172139017fcf9ce2172576541c57e86418dfa5ab8')
++
++    ASSET_CPIO_R1 = Asset(
++        ('https://github.com/groeck/linux-build-test/'
++         'raw/8584a59e/rootfs/mipsel64/'
++         'rootfs.mipsel64r1.cpio.gz'),
++        '75ba10cd35fb44e32948eeb26974f061b703c81c4ba2fab1ebcacf1d1bec3b61')
++
++    @skipUntrustedTest()
++    def test_replay_mips64el_malta_5KEc_cpio(self):
++        self.set_machine('malta')
++        self.cpu = '5KEc'
++        kernel_path = self.ASSET_KERNEL_3_19_3.fetch()
++        initrd_path = self.uncompress(self.ASSET_CPIO_R1)
++
++        kernel_command_line = (self.KERNEL_COMMON_COMMAND_LINE +
++                               'console=ttyS0 console=tty '
++                               'rdinit=/sbin/init noreboot')
++        console_pattern = 'Boot successful.'
++        self.run_rr(kernel_path, kernel_command_line, console_pattern, shift=5,
++                    args=('-initrd', initrd_path))
++
++
++if __name__ == '__main__':
++    ReplayKernelBase.main()
 -- 
 2.48.1
 
