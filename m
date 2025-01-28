@@ -4,90 +4,58 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1B75AC0218A
-	for <qemu-devel@archiver.kernel.org>; Tue, 28 Jan 2025 13:56:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 60790C0218A
+	for <qemu-devel@archiver.kernel.org>; Tue, 28 Jan 2025 14:12:01 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tcm3d-0004mJ-9C; Tue, 28 Jan 2025 08:55:13 -0500
+	id 1tcmJ4-00053b-HF; Tue, 28 Jan 2025 09:11:11 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tcm3X-0004eT-JA
- for qemu-devel@nongnu.org; Tue, 28 Jan 2025 08:55:09 -0500
-Received: from mail-wr1-x436.google.com ([2a00:1450:4864:20::436])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tcm3T-0006di-HD
- for qemu-devel@nongnu.org; Tue, 28 Jan 2025 08:55:06 -0500
-Received: by mail-wr1-x436.google.com with SMTP id
- ffacd0b85a97d-385e06af753so3090609f8f.2
- for <qemu-devel@nongnu.org>; Tue, 28 Jan 2025 05:55:01 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1738072500; x=1738677300; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=NfNuHQWNeJu5X2wCDgIQnnHrGGyk47oR/kdhbtMYcjw=;
- b=AEVHp+e57Gd41rHDlvEsxaCHvRpz8C8nKq/vP8rT8vuiXgYysVcVqCP3zgnncC+baq
- 2KcsT/2yAiQg9ZfIP52SaE44rrCWK8N+wX/ggl5nYp+4K0joJ1K0JyDwB8ug838MeNj2
- Ft8rwEpp5IH/y6N9krOJhZNBBc+t5Wx0zTBaqGxKLOLaVyKgwi6mw7gZOTeM4fPkVct7
- 4x8xZ8pECXzF41McTTEXjNCZHX7oONuvgmqCcedgifJ805PKk8usHhwGsaFAWIV3tFkU
- YPYJ1rcnraGUOT3lNpsAnMJCxmv9L4TiqqkkrQZI8aGYYL2DWkeggGGmVkz/TJi6EzNn
- S1bw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1738072500; x=1738677300;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=NfNuHQWNeJu5X2wCDgIQnnHrGGyk47oR/kdhbtMYcjw=;
- b=oE79qVJU37NHqyGk0FpQogPEfdCfXU2nQzdi4W5tDdJrnAEn27l5tVJoP0BjYfck+8
- 6Al0Q7FzwRcrOeIZAXBFNNitdSakQHSNQ8yo6FafBRYwZJrpoXAyIYoN4V2OpkZPQMSL
- 8Rg0Is8TFYVA5f9EESJzTAj5qMGsOHvgpL2Ue6XJvLIjx/FD5doOcfdcyamjqesWVnIY
- 02yb+qhBaDDrut+rvKZO/3TjYLWMQBA8PWcxgIQSWZhpKVnlUaIk/UH7XET+3u1URjOD
- 2VED6B3nAUwvqnksvNKz8KUTkn0Ooz1b5+oGfyrVh4TfrhFY15K6iBL7PKvoxJon2cs6
- +E3Q==
-X-Gm-Message-State: AOJu0Yw3WvZKU5LdHCwn8pGSkuFEm2A+pWoBpRfnQVZIfmrNYmDPWSiz
- ScGgFhpoQ+ziC3l/C8Fu83rOxV8WqKn91Qv1+N76ltuLCiQ5gHyDB1lmpbJ4mXqPsqAFIlxzhR8
- vyl4=
-X-Gm-Gg: ASbGncuoeIzrF3a9oWjeUUcWMXhs9EbX5niWptnTH48rgPPW+N3Re26hTiJo5Mb4StS
- 2ynx8JzRndMT4OcS1sk3s8ydCqU96t0d+TUWEr54/mNl8NIvJPRcKEyDq8odCw+Qx9y81Rzs3p5
- rWxaY1lycIIHtRCuvDLuxkXk61GVN2j3NPeQKDs1n29Y9qvMm0CObH2WZKCRyZ601bHintsjkA8
- Pr87QzMWBSwHNmuMFnzr5Z7CGei3x2j8xJd3RhZ28rRJxqSsvuhXuLy+SdTxoTJllyMRIlOuMWP
- P9LZr1Sb0Y0HCxXvQxCdHScpO64BGotsCHsmX+lukhkVgHRMJT4cDX7CU9EMBquSlg==
-X-Google-Smtp-Source: AGHT+IF6FaWdiPaqacNKbyj/s2k3FO3tLGIOMg0xoKeEAz10Xzv4C6qQkS0Cwu9Wf1A7n99AR/Eycw==
-X-Received: by 2002:adf:eb10:0:b0:385:fc00:f5d4 with SMTP id
- ffacd0b85a97d-38bf566ce7dmr31162296f8f.29.1738072500350; 
- Tue, 28 Jan 2025 05:55:00 -0800 (PST)
-Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
- [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-38c2a1bad16sm14540405f8f.68.2025.01.28.05.54.59
- (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Tue, 28 Jan 2025 05:54:59 -0800 (PST)
-From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-To: qemu-devel@nongnu.org
-Cc: Fabiano Rosas <farosas@suse.de>, Paolo Bonzini <pbonzini@redhat.com>,
- Laurent Vivier <lvivier@redhat.com>, Thomas Huth <thuth@redhat.com>,
- Hyman Huang <yong.huang@smartx.com>,
- Phil Dennis-Jordan <phil@philjordan.eu>, Peter Xu <peterx@redhat.com>,
- Akihiko Odaki <akihiko.odaki@daynix.com>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [RFC PATCH 6/7] tests/qtest/migration: Run aarch64/HVF tests using
- GICv2
-Date: Tue, 28 Jan 2025 14:54:28 +0100
-Message-ID: <20250128135429.8500-7-philmd@linaro.org>
-X-Mailer: git-send-email 2.47.1
-In-Reply-To: <20250128135429.8500-1-philmd@linaro.org>
-References: <20250128135429.8500-1-philmd@linaro.org>
+ (Exim 4.90_1) (envelope-from <jonathan.cameron@huawei.com>)
+ id 1tcmJ2-00053K-Hi; Tue, 28 Jan 2025 09:11:08 -0500
+Received: from frasgout.his.huawei.com ([185.176.79.56])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <jonathan.cameron@huawei.com>)
+ id 1tcmJ0-0000sr-4Z; Tue, 28 Jan 2025 09:11:08 -0500
+Received: from mail.maildlp.com (unknown [172.18.186.31])
+ by frasgout.his.huawei.com (SkyGuard) with ESMTP id 4Yj6cr5w1Kz6K8kL;
+ Tue, 28 Jan 2025 22:10:20 +0800 (CST)
+Received: from frapeml500008.china.huawei.com (unknown [7.182.85.71])
+ by mail.maildlp.com (Postfix) with ESMTPS id 164C61402DB;
+ Tue, 28 Jan 2025 22:10:54 +0800 (CST)
+Received: from localhost (10.195.245.182) by frapeml500008.china.huawei.com
+ (7.182.85.71) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.1.2507.39; Tue, 28 Jan
+ 2025 15:10:53 +0100
+Date: Tue, 28 Jan 2025 14:10:51 +0000
+To: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
+CC: Igor Mammedov <imammedo@redhat.com>, "Michael S . Tsirkin"
+ <mst@redhat.com>, Shiju Jose <shiju.jose@huawei.com>, <qemu-arm@nongnu.org>,
+ <qemu-devel@nongnu.org>, Ani Sinha <anisinha@redhat.com>, Dongjiu Geng
+ <gengdongjiu1@gmail.com>, <linux-kernel@vger.kernel.org>
+Subject: Re: [PATCH 02/11] acpi/ghes: add a firmware file with HEST address
+Message-ID: <20250128141051.00000899@huawei.com>
+In-Reply-To: <20250128110034.650445fc@foz.lan>
+References: <cover.1737560101.git.mchehab+huawei@kernel.org>
+ <a3579f6c2c24e764e544f83b6e1b2dbef730e3e3.1737560101.git.mchehab+huawei@kernel.org>
+ <20250123100217.00007373@huawei.com>
+ <20250128110034.650445fc@foz.lan>
+X-Mailer: Claws Mail 4.3.0 (GTK 3.24.42; x86_64-w64-mingw32)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::436;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x436.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+Content-Type: text/plain; charset="US-ASCII"
+Content-Transfer-Encoding: 7bit
+X-Originating-IP: [10.195.245.182]
+X-ClientProxiedBy: lhrpeml100004.china.huawei.com (7.191.162.219) To
+ frapeml500008.china.huawei.com (7.182.85.71)
+Received-SPF: pass client-ip=185.176.79.56;
+ envelope-from=jonathan.cameron@huawei.com; helo=frasgout.his.huawei.com
+X-Spam_score_int: -41
+X-Spam_score: -4.2
+X-Spam_bar: ----
+X-Spam_report: (-4.2 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_MED=-2.3,
+ RCVD_IN_MSPIKE_H2=0.001, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -101,41 +69,90 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-to:  Jonathan Cameron <Jonathan.Cameron@huawei.com>
+From:  Jonathan Cameron via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-GICv3 isn't supported on aarch64/HVF, but GICv2 is.
+On Tue, 28 Jan 2025 11:00:34 +0100
+Mauro Carvalho Chehab <mchehab+huawei@kernel.org> wrote:
 
-Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
----
-RFC: Test eventually timeouts :(
+> Em Thu, 23 Jan 2025 10:02:17 +0000
+> Jonathan Cameron <Jonathan.Cameron@huawei.com> escreveu:
+> 
+> > On Wed, 22 Jan 2025 16:46:19 +0100
+> > Mauro Carvalho Chehab <mchehab+huawei@kernel.org> wrote:
+> >   
+> > > Store HEST table address at GPA, placing its content at
+> > > hest_addr_le variable.
+> > > 
+> > > Signed-off-by: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
+> > > Reviewed-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+> > >     
+> > A few trivial things inline.
+> > 
+> > Jonathan
+> >   
+> > > ---
+> > > 
+> > > Change from v8:
+> > > - hest_addr_lr is now pointing to the error source size and data.
+> > > 
+> > > Signed-off-by: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>    
+> > Bonus.  I guess you really like this patch :)  
+> > > ---
+> > >  hw/acpi/ghes.c         | 17 ++++++++++++++++-
+> > >  include/hw/acpi/ghes.h |  1 +
+> > >  2 files changed, 17 insertions(+), 1 deletion(-)
+> > > 
+> > > diff --git a/hw/acpi/ghes.c b/hw/acpi/ghes.c
+> > > index 3f519ccab90d..34e3364d3fd8 100644
+> > > --- a/hw/acpi/ghes.c
+> > > +++ b/hw/acpi/ghes.c
+> > > @@ -30,6 +30,7 @@
+> > >  
+> > >  #define ACPI_HW_ERROR_FW_CFG_FILE           "etc/hardware_errors"
+> > >  #define ACPI_HW_ERROR_ADDR_FW_CFG_FILE      "etc/hardware_errors_addr"
+> > > +#define ACPI_HEST_ADDR_FW_CFG_FILE          "etc/acpi_table_hest_addr"
+> > >  
+> > >  /* The max size in bytes for one error block */
+> > >  #define ACPI_GHES_MAX_RAW_DATA_LENGTH   (1 * KiB)
+> > > @@ -261,7 +262,7 @@ static void build_ghes_error_table(GArray *hardware_errors, BIOSLinker *linker,
+> > >      }
+> > >  
+> > >      /*
+> > > -     * tell firmware to write hardware_errors GPA into
+> > > +     * Tell firmware to write hardware_errors GPA into    
+> > 
+> > Sneaky tidy up.  No problem with it in general but adding noise here, so if there
+> > are others in the series maybe gather them up in a cleanup patch.  
+> 
+> There are no other cleanups pending. Besides, as you noticed, this
+> aligns with the comment below. So, I'm opting to add a note at the
+> patch's description.
 
- tests/qtest/migration/framework.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ok.
 
-diff --git a/tests/qtest/migration/framework.c b/tests/qtest/migration/framework.c
-index 5629b8ba4e3..30808de14e0 100644
---- a/tests/qtest/migration/framework.c
-+++ b/tests/qtest/migration/framework.c
-@@ -266,7 +266,7 @@ int migrate_start(QTestState **from, QTestState **to, const char *uri,
-     } else if (strcmp(arch, "aarch64") == 0) {
-         memory_size = "150M";
-         machine_alias = "virt";
--        machine_opts = "gic-version=3";
-+        machine_opts = env->has_hvf ? "gic-version=2" : "gic-version=3";
-         arch_opts = g_strdup_printf("-cpu max -kernel %s", bootpath);
-         start_address = ARM_TEST_MEM_START;
-         end_address = ARM_TEST_MEM_END;
-@@ -303,6 +303,8 @@ int migrate_start(QTestState **from, QTestState **to, const char *uri,
-         } else {
-             accel_args = "kvm";
-         }
-+    } else if (env->has_hvf) {
-+        accel_args = "hvf";
-     } else {
-         assert(env->has_tcg);
-         accel_args = "tcg";
--- 
-2.47.1
+
+> 
+> > > +     * once initialized.
+> > > +     */
+> > > +    bios_linker_loader_write_pointer(linker,
+> > > +                                     ACPI_HEST_ADDR_FW_CFG_FILE, 0,    
+> > 
+> > Could wrap less and stay under 80 chars as both lines above add up to 70 something  
+> 
+> Why? This follows QEMU coding style and lines aren't longer than 80
+> columns. Besides, at least for my eyes and some experience doing maintainership
+> on other projects over the years, it is a lot quicker to identify function
+> parameters if they're properly aligned with the parenthesis.
+Ah. I didn't state this clearly enough.
+       bios_linker_loader_write_pointer(linker, ACPI_HEST_ADDR_FW_CFG_FILE, 0,    
+is also under 80 chars.
+
+
+> 
+> Thanks,
+> Mauro
 
 
