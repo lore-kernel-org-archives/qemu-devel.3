@@ -4,78 +4,105 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C2931C0218A
-	for <qemu-devel@archiver.kernel.org>; Tue, 28 Jan 2025 11:03:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 332BEC0218D
+	for <qemu-devel@archiver.kernel.org>; Tue, 28 Jan 2025 11:06:32 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tcjN8-0005Xr-QL; Tue, 28 Jan 2025 06:03:11 -0500
+	id 1tcjQ8-00076p-9e; Tue, 28 Jan 2025 06:06:16 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1tcjMk-0005Re-4Z
- for qemu-devel@nongnu.org; Tue, 28 Jan 2025 06:02:46 -0500
-Received: from mail-yb1-xb33.google.com ([2607:f8b0:4864:20::b33])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1tcjMi-0008Sn-Jx
- for qemu-devel@nongnu.org; Tue, 28 Jan 2025 06:02:45 -0500
-Received: by mail-yb1-xb33.google.com with SMTP id
- 3f1490d57ef6-e46ebe19368so7820388276.0
- for <qemu-devel@nongnu.org>; Tue, 28 Jan 2025 03:02:44 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1738062163; x=1738666963; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=V2I2NjmN3Mq2+zaxHECDvWFrfzR/EWpUa/NXwTC2lBw=;
- b=nPSdM2G9VoXayD/3KcTZAs7ngw8V+NjPTRt7ZJ62PMJY/3qj8l0gZH9H6ys2U/COE5
- 5LHcsITF2Ogc7SpNRk3aUoTeE6Znu1tVtBgT8JK/d8PUupwJljRifh+e1/cwlEyDMbBM
- 8COMjW2qL6QfInlIZ00Fkm0gc86Dk+LaRL4UEgNuWuMneVIBtAeqGjlBkxUO8653tq/Z
- Lj5fKebz5f/cMdJI6yzZu9GqUkhPiKTtpu1wDChP3ujHcXUaDxOkKGdpEJHiXiDzcpmW
- oTOOF9lcnolsMOxtW6Ev1eAua1UpQCN0dzmjw303rLlzEWG9O7AjFgIsNWAbj8OYwX2s
- slxQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1738062163; x=1738666963;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=V2I2NjmN3Mq2+zaxHECDvWFrfzR/EWpUa/NXwTC2lBw=;
- b=MXWnxZvDgdK+NvFeP/rSYG/UQBXmjwy/J1K/y31Udj475SgjY6moBA/+kMuip5F3A4
- MQqnjrhLIY1xXl9GlZ07vgyfVLY8CA7EOE6sVmvHcWT5TQnMBJ9e9siu2kTh4diUIvBy
- bPyc2rpQcy/bRTOx7ElxWO6s6JWEBtPT8tzjARfGWWa/Vp7cwvBkqZzfnpGHe8j1QkAp
- Zq8apXI05QmcYAzDiT8K+bjLY2ZT716x10kUKHy5rEIX1hdNQlEllq1mZvuTsvTLubnx
- HEIDs3a9H6LjvjALIP1wcb4CxNE32s0pKwM0pwKQgy7rdLwaPyc06rh0YuTPwI7UhT6h
- mH7Q==
-X-Gm-Message-State: AOJu0YwgFNEd6e8GtKLY0E09tKG3S5JghUQCNB7jlJkFiG6ZtPANizuy
- TiapRyXip5GNVvC20L3CivrY1lx/zIkTxyJZE1m58rZKyZcV5Cx75u41hQyY8EZBFxjpz7A0G3l
- lKJPGO0GIGBLQRp/f1jgmukLpRZqB8xnKeUwv9g==
-X-Gm-Gg: ASbGnct0jek26Jbpy+uIMXDOJyexwplMpEOfqgIwDGTBvGvbnGZj5QSnzQzOXbzt3XB
- 9+8gm1ML8QcxoLDGu2YfoVkNWvIKbSRzKzreLBB344ioSrzVXAxopQKZ4rkcznkRO9SD7fR5Ohw
+ (Exim 4.90_1) (envelope-from <harshpb@linux.ibm.com>)
+ id 1tcjQ2-00076G-KR; Tue, 28 Jan 2025 06:06:11 -0500
+Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <harshpb@linux.ibm.com>)
+ id 1tcjPz-00019b-HZ; Tue, 28 Jan 2025 06:06:09 -0500
+Received: from pps.filterd (m0356517.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 50RLISFd009873;
+ Tue, 28 Jan 2025 11:06:04 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+ :content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=pp1; bh=2wgAdB
+ GR15oDj8Db1fqS8W/zK0Z5aGTeB/5YxjCcjLo=; b=dWrdVaIV/+hNtdT0BL5qus
+ KJ5Jy9Q2R5pX54GdYq9RCSRQGSZQ4669jt2UuGQp3UlrQ7+tkvsX4xUyka01YDd4
+ I+IBdeLqzr2n7KrjB7cYNO3HwF8C3dgw1q0Ekuq5PFCTKiCp4E553AcMoH+G4wTc
+ 9cK7v222UVtIj+r4XyWPR9n1hAt9G7J+/0WnyscKXv11qfMIPTDzqxrXoQZlUTzj
+ m/FFgVY8351LsrifCgak08bcjmeXIwy0VsqnDm7+TCHAqZnqL0xt0q0HUje9SOVV
+ 9Ljq3CWjdFhksxix2fEws0VwWZcFld9ic/Fah1FuExgMT84kJ42l8EbVuH8a/2ww
  ==
-X-Google-Smtp-Source: AGHT+IH/krcDHFxqG4g8kqykLnaAt21ebyPiN/u/0FHhOQf9xLaFpY+5dPcR8fvfOV6z14MXuX3LQf8x59SZV873lhk=
-X-Received: by 2002:a05:6902:72c:b0:e58:32b4:4866 with SMTP id
- 3f1490d57ef6-e5832b449dcmr14727103276.25.1738062163125; Tue, 28 Jan 2025
- 03:02:43 -0800 (PST)
+Received: from pps.reinject (localhost [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 44ecdycw7c-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Tue, 28 Jan 2025 11:06:04 +0000 (GMT)
+Received: from m0356517.ppops.net (m0356517.ppops.net [127.0.0.1])
+ by pps.reinject (8.18.0.8/8.18.0.8) with ESMTP id 50SB633J022473;
+ Tue, 28 Jan 2025 11:06:03 GMT
+Received: from ppma22.wdc07v.mail.ibm.com
+ (5c.69.3da9.ip4.static.sl-reverse.com [169.61.105.92])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 44ecdycw76-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Tue, 28 Jan 2025 11:06:03 +0000 (GMT)
+Received: from pps.filterd (ppma22.wdc07v.mail.ibm.com [127.0.0.1])
+ by ppma22.wdc07v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 50S88cfJ012444;
+ Tue, 28 Jan 2025 11:06:02 GMT
+Received: from smtprelay02.wdc07v.mail.ibm.com ([172.16.1.69])
+ by ppma22.wdc07v.mail.ibm.com (PPS) with ESMTPS id 44dany32vu-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Tue, 28 Jan 2025 11:06:02 +0000
+Received: from smtpav04.dal12v.mail.ibm.com (smtpav04.dal12v.mail.ibm.com
+ [10.241.53.103])
+ by smtprelay02.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 50SB61oU30212614
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Tue, 28 Jan 2025 11:06:01 GMT
+Received: from smtpav04.dal12v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 731AE58133;
+ Tue, 28 Jan 2025 11:06:01 +0000 (GMT)
+Received: from smtpav04.dal12v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 54A1A58132;
+ Tue, 28 Jan 2025 11:05:59 +0000 (GMT)
+Received: from [9.124.214.156] (unknown [9.124.214.156])
+ by smtpav04.dal12v.mail.ibm.com (Postfix) with ESMTP;
+ Tue, 28 Jan 2025 11:05:59 +0000 (GMT)
+Message-ID: <6345e260-8478-4e9e-8377-cb51ed5a0a26@linux.ibm.com>
+Date: Tue, 28 Jan 2025 16:35:57 +0530
 MIME-Version: 1.0
-References: <20250127232604.20386-1-richard.henderson@linaro.org>
- <20250127232604.20386-2-richard.henderson@linaro.org>
-In-Reply-To: <20250127232604.20386-2-richard.henderson@linaro.org>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Tue, 28 Jan 2025 11:02:31 +0000
-X-Gm-Features: AWEUYZmFKLyyX3nrLHgttrWoWZvbCOJuRJ0yA24pa5A78USgOfr-8mV372KHqwM
-Message-ID: <CAFEAcA9Uy9=rWXNYiWoXhwyhDu+6p162_EKTX3kksBdmmvBwcQ@mail.gmail.com>
-Subject: Re: [PATCH 01/22] target/arm: Rename FPST_FPCR_A32 to FPST_A32
-To: Richard Henderson <richard.henderson@linaro.org>
-Cc: qemu-devel@nongnu.org, qemu-arm@nongnu.org
-Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::b33;
- envelope-from=peter.maydell@linaro.org; helo=mail-yb1-xb33.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 10/15] target/ppc: Restrict ppc_tcg_hv_emu() to TCG
+To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ qemu-devel@nongnu.org
+Cc: Daniel Henrique Barboza <danielhb413@gmail.com>,
+ Richard Henderson <richard.henderson@linaro.org>, qemu-ppc@nongnu.org,
+ Nicholas Piggin <npiggin@gmail.com>
+References: <20250127102620.39159-1-philmd@linaro.org>
+ <20250127102620.39159-11-philmd@linaro.org>
+Content-Language: en-US
+From: Harsh Prateek Bora <harshpb@linux.ibm.com>
+In-Reply-To: <20250127102620.39159-11-philmd@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+X-TM-AS-GCONF: 00
+X-Proofpoint-GUID: 6vMgDDGxg1g-lCG3bzC-aUA8xSZX4uhe
+X-Proofpoint-ORIG-GUID: _XbSVVvjLAV5wRw7oAwc0nyYfb6HTQrU
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1057,Hydra:6.0.680,FMLib:17.12.68.34
+ definitions=2025-01-28_04,2025-01-27_01,2024-11-22_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ phishscore=0 impostorscore=0
+ lowpriorityscore=0 adultscore=0 clxscore=1015 priorityscore=1501
+ mlxlogscore=725 bulkscore=0 suspectscore=0 malwarescore=0 spamscore=0
+ mlxscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2411120000 definitions=main-2501280085
+Received-SPF: pass client-ip=148.163.156.1; envelope-from=harshpb@linux.ibm.com;
+ helo=mx0a-001b2d01.pphosted.com
+X-Spam_score_int: -26
+X-Spam_score: -2.7
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
+ RCVD_IN_MSPIKE_H2=0.001, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -92,46 +119,265 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, 27 Jan 2025 at 23:26, Richard Henderson
-<richard.henderson@linaro.org> wrote:
->
-> Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+
+
+On 1/27/25 15:56, Philippe Mathieu-Daudé wrote:
+> Make is_prefix_insn_excp() prototype but have it guarded by
+> a tcg_enabled() check. Inline part of it in powerpc_excp_books().
+> 
+> Extract POWERPC_EXCP_HV_EMU handling code to ppc_tcg_hv_emu(),
+> also exposing its prototype in "internal.h".
+> 
+> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 > ---
->  target/arm/tcg/translate.h     |  6 ++--
->  target/arm/tcg/translate-vfp.c | 54 +++++++++++++++++-----------------
->  2 files changed, 30 insertions(+), 30 deletions(-)
->
-> diff --git a/target/arm/tcg/translate.h b/target/arm/tcg/translate.h
-> index 59e780df2e..6ce2471aa6 100644
-> --- a/target/arm/tcg/translate.h
-> +++ b/target/arm/tcg/translate.h
-> @@ -674,7 +674,7 @@ static inline CPUARMTBFlags arm_tbflags_from_tb(const TranslationBlock *tb)
->   * Enum for argument to fpstatus_ptr().
->   */
->  typedef enum ARMFPStatusFlavour {
-> -    FPST_FPCR_A32,
-> +    FPST_A32,
->      FPST_FPCR_A64,
->      FPST_FPCR_F16_A32,
->      FPST_FPCR_F16_A64,
-> @@ -692,7 +692,7 @@ typedef enum ARMFPStatusFlavour {
->   * been set up to point to the requested field in the CPU state struct.
->   * The options are:
->   *
-> - * FPST_FPCR_A32
-> + * FPST_A32
->   *   for AArch32 non-FP16 operations controlled by the FPCR
+>   target/ppc/internal.h        |   6 +++
+>   target/ppc/excp_helper.c     | 101 +++++------------------------------
+>   target/ppc/tcg-excp_helper.c |  75 ++++++++++++++++++++++++++
+>   3 files changed, 93 insertions(+), 89 deletions(-)
+> 
+> diff --git a/target/ppc/internal.h b/target/ppc/internal.h
+> index 62186bc1e61..0e66b29ec68 100644
+> --- a/target/ppc/internal.h
+> +++ b/target/ppc/internal.h
+> @@ -291,6 +291,12 @@ bool ppc_cpu_debug_check_breakpoint(CPUState *cs);
+>   bool ppc_cpu_debug_check_watchpoint(CPUState *cs, CPUWatchpoint *wp);
+>   
+>   G_NORETURN void powerpc_checkstop(CPUPPCState *env, const char *reason);
+> +
+> +#if defined(TARGET_PPC64)
+> +bool is_prefix_insn_excp(CPUPPCState *env, int excp);
+> +void ppc_tcg_hv_emu(CPUPPCState *env, target_ulong *new_msr,
+> +                    int *srr0, int *srr1);
+> +#endif /* TARGET_PPC64 */
+>   #endif /* !CONFIG_USER_ONLY */
+>   
+>   FIELD(GER_MSK, XMSK, 0, 4)
+> diff --git a/target/ppc/excp_helper.c b/target/ppc/excp_helper.c
+> index 6a12402b23a..56a56148a40 100644
+> --- a/target/ppc/excp_helper.c
+> +++ b/target/ppc/excp_helper.c
+> @@ -19,6 +19,7 @@
+>   #include "qemu/osdep.h"
+>   #include "qemu/main-loop.h"
+>   #include "qemu/log.h"
+> +#include "system/kvm.h"
+>   #include "system/tcg.h"
+>   #include "system/system.h"
+>   #include "system/runstate.h"
+> @@ -1194,81 +1195,6 @@ static bool books_vhyp_handles_hv_excp(PowerPCCPU *cpu)
+>       return false;
+>   }
+>   
+> -#ifdef CONFIG_TCG
+> -static bool is_prefix_insn(CPUPPCState *env, uint32_t insn)
+> -{
+> -    if (!(env->insns_flags2 & PPC2_ISA310)) {
+> -        return false;
+> -    }
+> -    return ((insn & 0xfc000000) == 0x04000000);
+> -}
+> -
+> -static bool is_prefix_insn_excp(PowerPCCPU *cpu, int excp)
+> -{
+> -    CPUPPCState *env = &cpu->env;
+> -
+> -    if (!(env->insns_flags2 & PPC2_ISA310)) {
+> -        return false;
+> -    }
+> -
+> -    if (!tcg_enabled()) {
+> -        /*
+> -         * This does not load instructions and set the prefix bit correctly
+> -         * for injected interrupts with KVM. That may have to be discovered
+> -         * and set by the KVM layer before injecting.
+> -         */
+> -        return false;
+> -    }
+> -
+> -    switch (excp) {
+> -    case POWERPC_EXCP_MCHECK:
+> -        if (!(env->error_code & PPC_BIT(42))) {
+> -            /*
+> -             * Fetch attempt caused a machine check, so attempting to fetch
+> -             * again would cause a recursive machine check.
+> -             */
+> -            return false;
+> -        }
+> -        break;
+> -    case POWERPC_EXCP_HDSI:
+> -        /* HDSI PRTABLE_FAULT has the originating access type in error_code */
+> -        if ((env->spr[SPR_HDSISR] & DSISR_PRTABLE_FAULT) &&
+> -            (env->error_code == MMU_INST_FETCH)) {
+> -            /*
+> -             * Fetch failed due to partition scope translation, so prefix
+> -             * indication is not relevant (and attempting to load the
+> -             * instruction at NIP would cause recursive faults with the same
+> -             * translation).
+> -             */
+> -            return false;
+> -        }
+> -        break;
+> -
+> -    case POWERPC_EXCP_DSI:
+> -    case POWERPC_EXCP_DSEG:
+> -    case POWERPC_EXCP_ALIGN:
+> -    case POWERPC_EXCP_PROGRAM:
+> -    case POWERPC_EXCP_FPU:
+> -    case POWERPC_EXCP_TRACE:
+> -    case POWERPC_EXCP_HV_EMU:
+> -    case POWERPC_EXCP_VPU:
+> -    case POWERPC_EXCP_VSXU:
+> -    case POWERPC_EXCP_FU:
+> -    case POWERPC_EXCP_HV_FU:
+> -        break;
+> -    default:
+> -        return false;
+> -    }
+> -
+> -    return is_prefix_insn(env, ppc_ldl_code(env, env->nip));
+> -}
+> -#else
+> -static bool is_prefix_insn_excp(PowerPCCPU *cpu, int excp)
+> -{
+> -    return false;
+> -}
+> -#endif
+> -
+>   static void powerpc_excp_books(PowerPCCPU *cpu, int excp)
+>   {
+>       CPUPPCState *env = &cpu->env;
+> @@ -1310,7 +1236,15 @@ static void powerpc_excp_books(PowerPCCPU *cpu, int excp)
+>       }
+>       vector |= env->excp_prefix;
+>   
+> -    if (is_prefix_insn_excp(cpu, excp)) {
+> +    if (env->insns_flags2 & PPC2_ISA310) {
 
-So the reason we had "FPCR" in the names here is, as the
-comment notes, because the original distinction was
-"operations that use the 'standard FPSCR value'" versus
-"operations controlled by the FPCR". But I think with the
-profusion of float_status values we've ended up with,
-most of which are sort-of-but-not-entirely controlled
-by FPCR bits in one way or another, that the "FPCR"
-part of the constant name has outlived its usefulness.
-So I'm happy with renaming these to be shorter.
+I guess you meant checking for ! of above.
+is_prefix_insn_excp() returns false for ! of above.
 
-thanks
--- PMM
+> +        /* nothing to do */
+> +    } else if (kvm_enabled()) {
+> +        /*
+> +         * This does not load instructions and set the prefix bit correctly
+> +         * for injected interrupts with KVM. That may have to be discovered
+> +         * and set by the KVM layer before injecting.
+> +         */
+> +    } else if (tcg_enabled() && is_prefix_insn_excp(env, excp)) {
+>           msr |= PPC_BIT(34);
+>       }
+>   
+> @@ -1484,20 +1418,9 @@ static void powerpc_excp_books(PowerPCCPU *cpu, int excp)
+>           new_msr |= env->msr & ((target_ulong)1 << MSR_RI);
+>           break;
+>   #ifdef CONFIG_TCG
+> -    case POWERPC_EXCP_HV_EMU: {
+> -        uint32_t insn = ppc_ldl_code(env, env->nip);
+> -        env->spr[SPR_HEIR] = insn;
+> -        if (is_prefix_insn(env, insn)) {
+> -            uint32_t insn2 = ppc_ldl_code(env, env->nip + 4);
+> -            env->spr[SPR_HEIR] <<= 32;
+> -            env->spr[SPR_HEIR] |= insn2;
+> -        }
+> -        srr0 = SPR_HSRR0;
+> -        srr1 = SPR_HSRR1;
+> -        new_msr |= (target_ulong)MSR_HVB;
+> -        new_msr |= env->msr & ((target_ulong)1 << MSR_RI);
+> +    case POWERPC_EXCP_HV_EMU:
+> +        ppc_tcg_hv_emu(env, &new_msr, &srr0, &srr1);
+
+Naming suggestion: ppc_excp_hv_emu may be more apt.
+
+Thanks,
+Harsh
+
+>           break;
+> -    }
+>   #endif
+>       case POWERPC_EXCP_VPU:       /* Vector unavailable exception             */
+>       case POWERPC_EXCP_VSXU:       /* VSX unavailable exception               */
+> diff --git a/target/ppc/tcg-excp_helper.c b/target/ppc/tcg-excp_helper.c
+> index 268a1614597..dc5601a4577 100644
+> --- a/target/ppc/tcg-excp_helper.c
+> +++ b/target/ppc/tcg-excp_helper.c
+> @@ -283,4 +283,79 @@ uint32_t ppc_ldl_code(CPUArchState *env, target_ulong addr)
+>       return insn;
+>   }
+>   
+> +#if defined(TARGET_PPC64)
+> +
+> +static bool is_prefix_insn(CPUPPCState *env, uint32_t insn)
+> +{
+> +    if (!(env->insns_flags2 & PPC2_ISA310)) {
+> +        return false;
+> +    }
+> +    return ((insn & 0xfc000000) == 0x04000000);
+> +}
+> +
+> +bool is_prefix_insn_excp(CPUPPCState *env, int excp)
+> +{
+> +    switch (excp) {
+> +    case POWERPC_EXCP_MCHECK:
+> +        if (!(env->error_code & PPC_BIT(42))) {
+> +            /*
+> +             * Fetch attempt caused a machine check, so attempting to fetch
+> +             * again would cause a recursive machine check.
+> +             */
+> +            return false;
+> +        }
+> +        break;
+> +    case POWERPC_EXCP_HDSI:
+> +        /* HDSI PRTABLE_FAULT has the originating access type in error_code */
+> +        if ((env->spr[SPR_HDSISR] & DSISR_PRTABLE_FAULT) &&
+> +            (env->error_code == MMU_INST_FETCH)) {
+> +            /*
+> +             * Fetch failed due to partition scope translation, so prefix
+> +             * indication is not relevant (and attempting to load the
+> +             * instruction at NIP would cause recursive faults with the same
+> +             * translation).
+> +             */
+> +            return false;
+> +        }
+> +        break;
+> +
+> +    case POWERPC_EXCP_DSI:
+> +    case POWERPC_EXCP_DSEG:
+> +    case POWERPC_EXCP_ALIGN:
+> +    case POWERPC_EXCP_PROGRAM:
+> +    case POWERPC_EXCP_FPU:
+> +    case POWERPC_EXCP_TRACE:
+> +    case POWERPC_EXCP_HV_EMU:
+> +    case POWERPC_EXCP_VPU:
+> +    case POWERPC_EXCP_VSXU:
+> +    case POWERPC_EXCP_FU:
+> +    case POWERPC_EXCP_HV_FU:
+> +        break;
+> +    default:
+> +        return false;
+> +    }
+> +
+> +    return is_prefix_insn(env, ppc_ldl_code(env, env->nip));
+> +}
+> +
+> +void ppc_tcg_hv_emu(CPUPPCState *env, target_ulong *new_msr,
+> +                    int *srr0, int *srr1)
+> +{
+> +    uint32_t insn = ppc_ldl_code(env, env->nip);
+> +
+> +    env->spr[SPR_HEIR] = insn;
+> +    if (is_prefix_insn(env, insn)) {
+> +        uint32_t insn2 = ppc_ldl_code(env, env->nip + 4);
+> +
+> +        env->spr[SPR_HEIR] <<= 32;
+> +        env->spr[SPR_HEIR] |= insn2;
+> +    }
+> +    *srr0 = SPR_HSRR0;
+> +    *srr1 = SPR_HSRR1;
+> +    *new_msr |= (target_ulong)MSR_HVB;
+> +    *new_msr |= env->msr & ((target_ulong)1 << MSR_RI);
+> +}
+> +
+> +#endif /* TARGET_PPC64 */
+> +
+>   #endif /* !CONFIG_USER_ONLY */
 
