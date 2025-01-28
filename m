@@ -4,63 +4,64 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8CFFCC0218D
-	for <qemu-devel@archiver.kernel.org>; Tue, 28 Jan 2025 13:55:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D6E89C0218A
+	for <qemu-devel@archiver.kernel.org>; Tue, 28 Jan 2025 13:55:19 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tcm38-0004TF-Cy; Tue, 28 Jan 2025 08:54:43 -0500
+	id 1tcm3Z-0004a9-C3; Tue, 28 Jan 2025 08:55:09 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tcm30-0004S7-HQ
- for qemu-devel@nongnu.org; Tue, 28 Jan 2025 08:54:35 -0500
-Received: from mail-wr1-x42e.google.com ([2a00:1450:4864:20::42e])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tcm3F-0004WO-Ke
+ for qemu-devel@nongnu.org; Tue, 28 Jan 2025 08:54:51 -0500
+Received: from mail-wm1-x32d.google.com ([2a00:1450:4864:20::32d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tcm2z-0006YE-2f
- for qemu-devel@nongnu.org; Tue, 28 Jan 2025 08:54:34 -0500
-Received: by mail-wr1-x42e.google.com with SMTP id
- ffacd0b85a97d-3862ca8e0bbso4970366f8f.0
- for <qemu-devel@nongnu.org>; Tue, 28 Jan 2025 05:54:32 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tcm3E-0006aW-2m
+ for qemu-devel@nongnu.org; Tue, 28 Jan 2025 08:54:49 -0500
+Received: by mail-wm1-x32d.google.com with SMTP id
+ 5b1f17b1804b1-43634b570c1so40017535e9.0
+ for <qemu-devel@nongnu.org>; Tue, 28 Jan 2025 05:54:47 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1738072471; x=1738677271; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=a+r7ODhuu9s0569fMZKjXAvTdbCLGmUJt4rbO9ZfXGQ=;
- b=RMCxZD/YtMrOmufKiKsMhHKYfThvWCvogewbBLlwgZg4pd8kbgWhNq3BSrH9I0AENx
- 1lR/3kmBEKMuMwjWIgYowOTMQA2OlwYsKBgtFXvTFlxOCqK63+s72hxrD1OVnPKsRoPW
- ugC+LvCHgmr/4SJvtg1VqYgWK5sQ/iolAlLtTnark5O2PHgr0rP9SRyfrplwnqdAe3iv
- nU1LMiKHLX4H7BmLISuw/JeXwVR6owbgJO+BbVGi2xQG6ltL3AUZfhla65Md/Ib2qBeW
- cdHiUd+FXb2Em1VZd0waNwIP7vqkfcCRoFNFvGZjVABhyTO/cvdswYGArx5bBb0qhabc
- HFhQ==
+ d=linaro.org; s=google; t=1738072486; x=1738677286; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=0i342P8VSr9afA5LND7tALkWhr4DBdVvCjT09Me9Agg=;
+ b=PeIXKkOv/DI7xdIOEg1AeLXDUInspFnBiL0+1hVgMGWhPfypaavq8oLz0BY0TTnpGg
+ 8Cb0XfpIKjTILIV79vn8g0Yj7krtKCrR/apskwdUsH5P+5xy3aF8Dj1PdYF2mins9RwI
+ uSpt01iDeLpKvxPM+sij0BhO5AVdUCkTAHJGZLpd2aUqoMLzQzM7SzXkVmYKRFPApKKr
+ /zUrjQ0VjHE5izYNk2B+CD1fN7su4UBqcfEilspEfs2bd5hwLV5ODXjBNhS1yeaaAZgs
+ jNuOtyxdAY+TJyQ013h9bQVvDSFWdqgdVtOJaACG7m1alFLtzNRFzJW494Hm7rbnKujy
+ kODQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1738072471; x=1738677271;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=a+r7ODhuu9s0569fMZKjXAvTdbCLGmUJt4rbO9ZfXGQ=;
- b=uhKZgFeED4npyAfbLJ3aSuszBHI20GzVZJKEfivvlMli6ZxkyRz9ROxq8QKmt41HWq
- qIwgspxBD6Qh/fWL14KHzBrz1hTPxPnYEIl547Utrjbss0tQ9ArMRRU1JIoGfFJHPLcj
- YiG6fFvwo4rpapz1PBVkPp+F7KrRfnlqlYF1gtRV1JRigHg5QVfJ9CgZDecuAJ9LtvF0
- kqwTEM9NEvGe9Gd85BxpARmSREKhi/5N6RA/efcdUGNvfEeI615DR4MVpYReJKtTHycS
- g3lBfguzbGDaAKqmWWsXmUDxiL6FAiXmdFSRnprH0SAwzcc4Yt87v/DLyim0gCKDNqD9
- BheQ==
-X-Gm-Message-State: AOJu0YxpgwdP9SEPu6SSel8Bf8KIouMhsnFQ0Emd3TtG3gc5lRJwI5CS
- wOJwNLFY6J1Z655iLWF+FD1OZI7RId8Q2ff0LmW55SkieQ8SXgR5Za1kvoFS1AyVMBlgAYy8rXa
- mKWE=
-X-Gm-Gg: ASbGncuxgshOZhu0wdvxo/S9v+sWMlekLKtbxGL5UP+3/qSsWMbIOTOWPQ239I8p75Z
- gAgQi541Keeb1jCJIAlqc76BsZlvv4atdSY2bc9kxfQHQeULG09rnfDERvIkJFic1pALHLbOE3H
- 818X4d6VlH83diM7YXoTbvBVTa8ZE+rTozxOsxz4GlqGj21mTg5mQ6rw9pwfGupCB0KCqemAj8G
- 3ehYbfe3Ew+KmuGZloBzAq8Dws4zUmo31xtrxOp1Z5ljTPmAFo4uybQFds9mUsvtAedKOgPdtH/
- tX25eP1qFxFzowLvdzqYaQFXF46jdMEQNWIQm+9OBrPxgNgg1AqtU356x9jJW2/LIQ==
-X-Google-Smtp-Source: AGHT+IHjU9b1hywaCt9ZZDZOTAJ9SR1tTjRqfBZNwE+PZczTctgcNXvDhfPe2+qhd2h4R/nm0QLLSg==
-X-Received: by 2002:a5d:47a9:0:b0:382:40ad:44b2 with SMTP id
- ffacd0b85a97d-38bf57a77aemr41255759f8f.34.1738072471175; 
- Tue, 28 Jan 2025 05:54:31 -0800 (PST)
+ d=1e100.net; s=20230601; t=1738072486; x=1738677286;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=0i342P8VSr9afA5LND7tALkWhr4DBdVvCjT09Me9Agg=;
+ b=TptS064fgIsa7hRlYlSsnIPNgIGfZxwbCj5iU/B5GJG7wjQoFNf2RqPskL76rcatrW
+ fKa/ulm3IMsza3K464ygCxtsrpdKZASJ6bfhtTtMNNFoxksspZRyaflH15w1l3BUIner
+ 2jiUra3vvN7zgx6xRgC569einNPaC09WoCDEP6g2GNEEQ6ABWjHXcpJQpqnW2KZFN9St
+ bZapQD/OnrA+2ahZDnoZmzN84kYr8tsyx6ftWC6aD2UH5eTvDJGBMZ98gMEQS4M78CDK
+ 9IOTJ/e42Kiq0ypP0HEUeJvlF7HBcLls+afrHBH7lDhuuF1khcqZrC0CooQBK6Yc+zWO
+ ikcw==
+X-Gm-Message-State: AOJu0YyCEOtCR/iBnfiOZXc6Vhv1hrWcdx8Q0DayRMgRSMHeVVb4BwQg
+ +Te5Lp5qd8PiTQkvi0Jg5wb6zOZR0KWnX1bzSFP2C+owMv748rYaGhgmXZ1vyaRPkCVAM+tsig6
+ mBpI=
+X-Gm-Gg: ASbGncvOqgfbLHD7YLme5Q1KFqH81WuRnjqYQxAZufWNDVDgT/G4faIIG05+qLascKa
+ wcQoD44OIFE/fNgkyGtn5Z3Yi+rGKVGd23ti8/56fY+KXJUnm+zeXSV62Lvfr4Pf2dRj728r9YX
+ AfCcvdwwDIT7XyN9TXapim9of/Fg5NwsZ4DWuozAu8hG60Lxe3otx7mJX2SCRlusET4w/T5Ii2u
+ ITZilxIgjC29IQRYjkNoYE6t2qTJJ+vhbxsOlm1NYNynJ6e3LnAFXjO4YbsL3hDaCQW/nUOohtS
+ f5MLVT++aWqA5KKdl1qDahiwsg070sUSiqrIY9FwlARNvE+217V+5D5o6Gx/2Nw3MQ==
+X-Google-Smtp-Source: AGHT+IFszYMNCA760X/36juug+cQmcxc9DtQ3nSuMbWEchxTwOYnx8pEHvT0Le588CdPOzffkysKLQ==
+X-Received: by 2002:a05:600c:1f82:b0:436:fbe0:cebe with SMTP id
+ 5b1f17b1804b1-43891452f6emr461566115e9.30.1738072485683; 
+ Tue, 28 Jan 2025 05:54:45 -0800 (PST)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-38c2a1764e9sm14380488f8f.17.2025.01.28.05.54.30
+ 5b1f17b1804b1-438d75de282sm11809185e9.2.2025.01.28.05.54.44
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Tue, 28 Jan 2025 05:54:30 -0800 (PST)
+ Tue, 28 Jan 2025 05:54:45 -0800 (PST)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Fabiano Rosas <farosas@suse.de>, Paolo Bonzini <pbonzini@redhat.com>,
@@ -69,16 +70,18 @@ Cc: Fabiano Rosas <farosas@suse.de>, Paolo Bonzini <pbonzini@redhat.com>,
  Phil Dennis-Jordan <phil@philjordan.eu>, Peter Xu <peterx@redhat.com>,
  Akihiko Odaki <akihiko.odaki@daynix.com>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PATCH 0/7] tests/qtest/migration: Update framework to allow using
- HVF accelerator
-Date: Tue, 28 Jan 2025 14:54:22 +0100
-Message-ID: <20250128135429.8500-1-philmd@linaro.org>
+Subject: [PATCH 3/7] tests/qtest/migration: Initialize MigrationTestEnv::arch
+ early
+Date: Tue, 28 Jan 2025 14:54:25 +0100
+Message-ID: <20250128135429.8500-4-philmd@linaro.org>
 X-Mailer: git-send-email 2.47.1
+In-Reply-To: <20250128135429.8500-1-philmd@linaro.org>
+References: <20250128135429.8500-1-philmd@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::42e;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x42e.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::32d;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x32d.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -101,28 +104,44 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi,
+Some tests expect MigrationTestEnv::arch to be set. Initialize
+it early enough to avoid SIGSEGV, for example like the following
+g_str_equal() call in migration/precopy-tests.c:
 
-This series modify few bits of the migration QTest framework
-to allow running the tests using the HVF framework (also
-leaving the possibilty for other ones, removing the KVM/TCG
-restriction).
+   954 void migration_test_add_precopy(MigrationTestEnv *env)
+   955 {
+   ...
+  1001     if (g_str_equal(env->arch, "x86_64") && env->has_dirty_ring) {
+  1002
+  1003         migration_test_add("/migration/dirty_ring",
+  1004                            test_precopy_unix_dirty_ring);
 
-Philippe Mathieu-Daudé (7):
-  migration/dirtyrate: Do not unlock cpu_list lock twice
-  tests/qtest/migration: Make 'has_dirty_ring' generic
-  tests/qtest/migration: Initialize MigrationTestEnv::arch early
-  tests/qtest/migration: Pass accelerator arguments as machine option
-  tests/qtest/migration: Add MigrationTestEnv::has_hvf field
-  tests/qtest/migration: Run aarch64/HVF tests using GICv2
-  tests/qtest/migration: Allow using accelerators different of TCG / KVM
+Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+---
+ tests/qtest/migration/framework.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
- tests/qtest/migration/framework.h     |  1 +
- migration/dirtyrate.c                 |  1 -
- tests/qtest/migration/framework.c     | 43 ++++++++++++++-------------
- tests/qtest/migration/precopy-tests.c |  6 ++--
- 4 files changed, 26 insertions(+), 25 deletions(-)
-
+diff --git a/tests/qtest/migration/framework.c b/tests/qtest/migration/framework.c
+index a3bd92a9519..38a0a1a5264 100644
+--- a/tests/qtest/migration/framework.c
++++ b/tests/qtest/migration/framework.c
+@@ -938,6 +938,8 @@ MigrationTestEnv *migration_get_env(void)
+         exit(1);
+     }
+ 
++    env->arch = qtest_get_arch();
++
+     env->has_kvm = qtest_has_accel("kvm");
+     env->has_tcg = qtest_has_accel("tcg");
+ 
+@@ -948,7 +950,6 @@ MigrationTestEnv *migration_get_env(void)
+ 
+     env->has_dirty_ring = env->has_kvm && kvm_dirty_ring_supported();
+     env->has_uffd = ufd_version_check(&env->uffd_feature_thread_id);
+-    env->arch = qtest_get_arch();
+     env->is_x86 = !strcmp(env->arch, "i386") || !strcmp(env->arch, "x86_64");
+ 
+     env->tmpfs = g_dir_make_tmp("migration-test-XXXXXX", &err);
 -- 
 2.47.1
 
