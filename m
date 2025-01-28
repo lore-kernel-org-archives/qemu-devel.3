@@ -4,98 +4,99 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 307DDC02190
-	for <qemu-devel@archiver.kernel.org>; Tue, 28 Jan 2025 05:00:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 18E26C02192
+	for <qemu-devel@archiver.kernel.org>; Tue, 28 Jan 2025 05:02:43 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tcdhH-0001vn-1h; Mon, 27 Jan 2025 23:59:35 -0500
+	id 1tcdk0-0002zq-70; Tue, 28 Jan 2025 00:02:24 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <harshpb@linux.ibm.com>)
- id 1tcdhA-0001ur-LO; Mon, 27 Jan 2025 23:59:29 -0500
-Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
+ id 1tcdjo-0002z9-CL; Tue, 28 Jan 2025 00:02:18 -0500
+Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <harshpb@linux.ibm.com>)
- id 1tcdh9-0006OK-0V; Mon, 27 Jan 2025 23:59:28 -0500
-Received: from pps.filterd (m0353729.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 50RLIT98026454;
- Tue, 28 Jan 2025 04:59:21 GMT
+ id 1tcdjm-0007Ih-IY; Tue, 28 Jan 2025 00:02:12 -0500
+Received: from pps.filterd (m0353725.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 50S21Kxj007387;
+ Tue, 28 Jan 2025 05:02:08 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
  :content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=pp1; bh=ch9Vgi
- QRxaGLW4hRfLWAWJHC47V5EvQwG3eYJ/sITKI=; b=CAO2X/hSpT2rh4jP4B5sR1
- HSddNMi9iEoyObjdD0nMF7CwfUiyoxwjzpcU/qV5q3kktAtzu9bexdaQbEWnDz9F
- N+vjdsvKh/nWfnQmQVZzAiap2FrXGMkApH92ZkYLqbokjWkH6sVyvM1w20WqcaJh
- vU+vpwXkR5XhzfcS7jiumCReOqo/hVt2xsFrmkotnW+lHPP/ISIgBzmeOB4wCt6s
- CGOQ7bO4RbATWJvWy5cISVSjFInD86+O/vtNwlxMQIbITzqvCddOTA9MnmJBNTrF
- zpRrc8BeMaNphwuvPc31AdCo+BES/maknVCKANGzV+b8oM7dtIjPm6xIwS5SBoyw
+ :message-id:mime-version:references:subject:to; s=pp1; bh=OSYylV
+ GYZk5WZBZA4+c6nnwTlr/USs0Nk+xIlCKsmlo=; b=IsPNb9muer2+xt99RIwmq1
+ KMkN67d+W/vU0h+nP1B2hvZlmKgkW8yU+JgV3tMz0WpFjVgb4jmJNr9Qy855LO2S
+ 5Vz0HPEqcij0vJAIGDzNOcu7l0tpP53NC35FwpcBhL5w32o4b+9eciuZVTq7c5Q9
+ k1Vhqu28Fzgp13kklpfTIopZHPmHZ5/FTTKkcQakkWEmgiTY8cTYFgoHNMZH883W
+ r/zwFHH39VN1aONSzrzwj5+jwIAJ5hBvyInafAwjfPbPzPUmffvcrLvStb+DwaEW
+ qIsS/7I1buC2Okl3Q8pu+FGcrEZ5Uml2W7vngmMTam8t8dI58t+3PdwcgFPIF5rA
  ==
 Received: from pps.reinject (localhost [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 44e3y7wyw6-1
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 44ep2ygheh-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Tue, 28 Jan 2025 04:59:21 +0000 (GMT)
-Received: from m0353729.ppops.net (m0353729.ppops.net [127.0.0.1])
- by pps.reinject (8.18.0.8/8.18.0.8) with ESMTP id 50S4uROL028586;
- Tue, 28 Jan 2025 04:59:20 GMT
-Received: from ppma11.dal12v.mail.ibm.com
- (db.9e.1632.ip4.static.sl-reverse.com [50.22.158.219])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 44e3y7wyw1-1
+ Tue, 28 Jan 2025 05:02:08 +0000 (GMT)
+Received: from m0353725.ppops.net (m0353725.ppops.net [127.0.0.1])
+ by pps.reinject (8.18.0.8/8.18.0.8) with ESMTP id 50S5279u015832;
+ Tue, 28 Jan 2025 05:02:07 GMT
+Received: from ppma13.dal12v.mail.ibm.com
+ (dd.9e.1632.ip4.static.sl-reverse.com [50.22.158.221])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 44ep2yghe7-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Tue, 28 Jan 2025 04:59:20 +0000 (GMT)
-Received: from pps.filterd (ppma11.dal12v.mail.ibm.com [127.0.0.1])
- by ppma11.dal12v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 50S24WLd018922;
- Tue, 28 Jan 2025 04:59:19 GMT
-Received: from smtprelay05.wdc07v.mail.ibm.com ([172.16.1.72])
- by ppma11.dal12v.mail.ibm.com (PPS) with ESMTPS id 44dd0198m7-1
+ Tue, 28 Jan 2025 05:02:07 +0000 (GMT)
+Received: from pps.filterd (ppma13.dal12v.mail.ibm.com [127.0.0.1])
+ by ppma13.dal12v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 50S1hWEi022175;
+ Tue, 28 Jan 2025 05:02:06 GMT
+Received: from smtprelay03.wdc07v.mail.ibm.com ([172.16.1.70])
+ by ppma13.dal12v.mail.ibm.com (PPS) with ESMTPS id 44dcgjhc3x-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Tue, 28 Jan 2025 04:59:19 +0000
+ Tue, 28 Jan 2025 05:02:06 +0000
 Received: from smtpav04.dal12v.mail.ibm.com (smtpav04.dal12v.mail.ibm.com
  [10.241.53.103])
- by smtprelay05.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 50S4xIVE32834236
+ by smtprelay03.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 50S525lG6750748
  (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Tue, 28 Jan 2025 04:59:19 GMT
+ Tue, 28 Jan 2025 05:02:05 GMT
 Received: from smtpav04.dal12v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id A2D2B5805A;
- Tue, 28 Jan 2025 04:59:18 +0000 (GMT)
+ by IMSVA (Postfix) with ESMTP id BA7125805A;
+ Tue, 28 Jan 2025 05:02:05 +0000 (GMT)
 Received: from smtpav04.dal12v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 258AA58056;
- Tue, 28 Jan 2025 04:59:16 +0000 (GMT)
+ by IMSVA (Postfix) with ESMTP id 955D758056;
+ Tue, 28 Jan 2025 05:02:03 +0000 (GMT)
 Received: from [9.124.214.156] (unknown [9.124.214.156])
  by smtpav04.dal12v.mail.ibm.com (Postfix) with ESMTP;
- Tue, 28 Jan 2025 04:59:15 +0000 (GMT)
-Message-ID: <86b77fec-15ef-437b-b9c4-9a90a3edbf3b@linux.ibm.com>
-Date: Tue, 28 Jan 2025 10:29:14 +0530
+ Tue, 28 Jan 2025 05:02:03 +0000 (GMT)
+Message-ID: <74e1cef3-abcd-4e32-8d7d-55f57c40cba2@linux.ibm.com>
+Date: Tue, 28 Jan 2025 10:32:02 +0530
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 01/15] hw/ppc/spapr: Restrict CONFER hypercall to TCG
+Subject: Re: [PATCH v2 02/15] hw/ppc/spapr: Restrict part of PAGE_INIT
+ hypercall to TCG
 To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  qemu-devel@nongnu.org
 Cc: Daniel Henrique Barboza <danielhb413@gmail.com>,
  Richard Henderson <richard.henderson@linaro.org>, qemu-ppc@nongnu.org,
  Nicholas Piggin <npiggin@gmail.com>
 References: <20250127102620.39159-1-philmd@linaro.org>
- <20250127102620.39159-2-philmd@linaro.org>
+ <20250127102620.39159-3-philmd@linaro.org>
 Content-Language: en-US
 From: Harsh Prateek Bora <harshpb@linux.ibm.com>
-In-Reply-To: <20250127102620.39159-2-philmd@linaro.org>
+In-Reply-To: <20250127102620.39159-3-philmd@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
 X-TM-AS-GCONF: 00
-X-Proofpoint-ORIG-GUID: zuaN6lxn9TOt65PSK3-eQ4-JWumgqF6t
-X-Proofpoint-GUID: Y2bY_7pRBwA8l0TLlsWieOz5I-2rZ5_h
+X-Proofpoint-ORIG-GUID: U_EWgfpretVPygKMMdSbWJ4bBVQuXO1f
+X-Proofpoint-GUID: TBku1FhF05cDEAY9tAWOYgzhLEOICg2H
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1057,Hydra:6.0.680,FMLib:17.12.68.34
  definitions=2025-01-28_01,2025-01-27_01,2024-11-22_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- spamscore=0 clxscore=1015
- phishscore=0 impostorscore=0 lowpriorityscore=0 priorityscore=1501
- suspectscore=0 bulkscore=0 mlxscore=0 mlxlogscore=686 malwarescore=0
- adultscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2411120000 definitions=main-2501280035
-Received-SPF: pass client-ip=148.163.156.1; envelope-from=harshpb@linux.ibm.com;
- helo=mx0a-001b2d01.pphosted.com
+ phishscore=0 impostorscore=0
+ priorityscore=1501 clxscore=1015 suspectscore=0 mlxscore=0 malwarescore=0
+ lowpriorityscore=0 spamscore=0 mlxlogscore=703 adultscore=0 bulkscore=0
+ classifier=spam adjust=0 reason=mlx scancount=1 engine=8.19.0-2411120000
+ definitions=main-2501280035
+Received-SPF: pass client-ip=148.163.158.5; envelope-from=harshpb@linux.ibm.com;
+ helo=mx0b-001b2d01.pphosted.com
 X-Spam_score_int: -26
 X-Spam_score: -2.7
 X-Spam_bar: --
@@ -119,38 +120,33 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Philippe,
+
 
 On 1/27/25 15:56, Philippe Mathieu-Daudé wrote:
-> TODO: Add PPC folks why :)
-
-While this appear be TCG specific, may I know what caused you to bring 
-this change? Usually we have blanks stubs for hcalls in KVM mode which 
-are only TCG specific. That helps in avoiding building TCG specific code 
-when building with TCG disabled.
-
-Nick, thoughts?
-
-regards,
-Harsh
-
+> Restrict the tb_flush() call to TCG. Assert we are using KVM or TCG.
 > 
 > Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+
+Reviewed-by: Harsh Prateek Bora <harshpb@linux.ibm.com>
+
 > ---
->   hw/ppc/spapr_hcall.c | 2 ++
->   1 file changed, 2 insertions(+)
+>   hw/ppc/spapr_hcall.c | 4 +++-
+>   1 file changed, 3 insertions(+), 1 deletion(-)
 > 
 > diff --git a/hw/ppc/spapr_hcall.c b/hw/ppc/spapr_hcall.c
-> index f8ab7670630..dbf30358a1a 100644
+> index dbf30358a1a..4f1933b8da6 100644
 > --- a/hw/ppc/spapr_hcall.c
 > +++ b/hw/ppc/spapr_hcall.c
-> @@ -578,6 +578,8 @@ static target_ulong h_confer(PowerPCCPU *cpu, SpaprMachineState *spapr,
->       CPUState *cs = CPU(cpu);
->       SpaprCpuState *spapr_cpu;
+> @@ -299,8 +299,10 @@ static target_ulong h_page_init(PowerPCCPU *cpu, SpaprMachineState *spapr,
+>       if (flags & (H_ICACHE_SYNCHRONIZE | H_ICACHE_INVALIDATE)) {
+>           if (kvm_enabled()) {
+>               kvmppc_icbi_range(cpu, pdst, len);
+> -        } else {
+> +        } else if (tcg_enabled()) {
+>               tb_flush(CPU(cpu));
+> +        } else {
+> +            g_assert_not_reached();
+>           }
+>       }
 >   
-> +    assert(tcg_enabled()); /* KVM will have handled this */
-> +
->       /*
->        * -1 means confer to all other CPUs without dispatch counter check,
->        *  otherwise it's a targeted confer.
 
