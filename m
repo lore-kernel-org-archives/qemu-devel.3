@@ -4,90 +4,77 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1BE7BC0218A
-	for <qemu-devel@archiver.kernel.org>; Tue, 28 Jan 2025 14:34:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E978FC0218D
+	for <qemu-devel@archiver.kernel.org>; Tue, 28 Jan 2025 14:36:05 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tcmen-0001ln-SP; Tue, 28 Jan 2025 09:33:37 -0500
+	id 1tcmgd-0003hv-8e; Tue, 28 Jan 2025 09:35:31 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <gustavo.romero@linaro.org>)
- id 1tcmem-0001kd-ED
- for qemu-devel@nongnu.org; Tue, 28 Jan 2025 09:33:36 -0500
-Received: from mail-pl1-x633.google.com ([2607:f8b0:4864:20::633])
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1tcmga-0003hG-QO
+ for qemu-devel@nongnu.org; Tue, 28 Jan 2025 09:35:28 -0500
+Received: from mail-yb1-xb30.google.com ([2607:f8b0:4864:20::b30])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <gustavo.romero@linaro.org>)
- id 1tcmek-0004LN-RX
- for qemu-devel@nongnu.org; Tue, 28 Jan 2025 09:33:36 -0500
-Received: by mail-pl1-x633.google.com with SMTP id
- d9443c01a7336-21661be2c2dso97944305ad.1
- for <qemu-devel@nongnu.org>; Tue, 28 Jan 2025 06:33:34 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1tcmgZ-0004of-5F
+ for qemu-devel@nongnu.org; Tue, 28 Jan 2025 09:35:28 -0500
+Received: by mail-yb1-xb30.google.com with SMTP id
+ 3f1490d57ef6-e549b0f8d57so9569317276.3
+ for <qemu-devel@nongnu.org>; Tue, 28 Jan 2025 06:35:26 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1738074813; x=1738679613; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=+7zR+WOlWPVsc5sCsvLuqT4FX/5nFZMkjKWuY6UE8Uo=;
- b=cetn5fOCUUqCGszh7oRpSpaIewXE6FFHppFoLBj3GviFbXxtQWECS0MciPCf8reBJ2
- c6G7PFoWQFo/J+BFbHmUIRgV64JtymRG+xVRtVV9/Eoqy6QwBy4ifsrd+H285QLgKsxm
- kL+WGYxYXL6jQ4TCUr+MPimVRRjFm/hpGKaKl6L5vLMQo4qLgPfOfJoBF7xj0nQj490p
- 1E5cui3tdj/T3yZ4OjAiX3ejLt1cHRkyIh3Af35s8vMGg7ko03L0kydeTnySeQ05naZh
- nqD3h9IMnDkboIvzNJJYTrbG5Ziv/Yd3qtXTd1X+Rj5u0X4uxBkUIlsgEvEspyXgK6TB
- hv2w==
+ d=linaro.org; s=google; t=1738074926; x=1738679726; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=lDbZzhgXIddCbAed15y8FhY2UG9TovmqYlE6jiN2G/s=;
+ b=K0MVsoY6UPte6b2nB8DkiJlkpDH84/tcoDZYBLAjTC14Mjt5HUIOCBBDXg0osWfXNt
+ mh0OOG4ncGNBL6trM2WSRdqImCenxA+uVYRIpvF0Aa7ZwsCJ+71zm/GR4fUoCj/d0si9
+ xJqqdXJYr4PM8v+QA5iCUmRGdfGxMWzoxnOZCOPbtKMzYTmJ3hI/qd2bjEw9jtzpqwyu
+ 8eztJ9eHcayc11aKsU+jp8Sh+pv5YgB9PSwTxuFqMyR6Jbk/XgyvEUXNDcomj0cOLtPc
+ KEOMAg2ZQyEYH9ad4Og89g4r2LuKWVhT8x6QIrqdToV34Jcej/jozRVfsckH6Luh6QKK
+ Tv6Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1738074813; x=1738679613;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=+7zR+WOlWPVsc5sCsvLuqT4FX/5nFZMkjKWuY6UE8Uo=;
- b=fkkzUV9wzRkrnN6fyEw9QUMXCXF8k+InzpwfrNsFYX9PoQgwHiPt6ffDJbU3a/p1C2
- vkXNZVPYmItVIq2dUTjlIrKcUhf1+IDZG+HmJI0utCUwVLOWnnKm+Sn6uzJiiMVn0jnu
- LhuiTFO/M+Nc3wLzKbjns/+iAyp/kQXZVSNxRQk/WBcisD22tl/7QhM0p6A41CUDqNkZ
- d7ZWAQvAXaAm637j5wILDWmkwEobU3ic2O3U6EwGVUxOo5FpYWUDS4Pqy+3rTuryLYk/
- buf/nMsAFH9Ay+qkDXBcgj6kzWqIFMEacln0QFsXzqd7yfEItSz+r5IxdTWCBF/hlcTq
- Yt5Q==
-X-Forwarded-Encrypted: i=1;
- AJvYcCWyoeUhQBTyrSLMwjEPZkzXREdTpZTeG3YH18iJPylku+GX9Ck0f7klJYKEGRmpyWKfEg4Nhxi1/yu7@nongnu.org
-X-Gm-Message-State: AOJu0YwKUrgAUHL8udCa7W/GlDRhKjFoNiQGC2uEoVxziMq3GHmGhGxj
- D2q4xWMg3dTkVJx8wQrgAt4xUANLkP07ZsEh4s7Blobs79CdLbLvAE4qr/lcd4E=
-X-Gm-Gg: ASbGncsJ0+eUa4TsmBy8GyIq3u33zRjQcv94ml9p/PEIGDB2NsknEtsfeB70v+QfSC5
- 2rD7B3KcPx084P1g14m96lZxiU95bBixHRf8omyJVQHsxCMWgqb9W0UrPIXVPPHgW84OweWStE/
- BFq3ojQ2/d44Gqz4jCrS4GptBFNSBL6hdVnOJbgMoXleIc5wiz55H4hh2teKUu5Y16nTowVCkpd
- i2PGeR59dYwiiz4/enItbm63Tgl3KTF04medPN9L9iI61Si1CQefxXcJER4wd9V5bB2l3saWVe6
- fBxzZXDykd4NimyjEEYeGYfr6SA=
-X-Google-Smtp-Source: AGHT+IF2l8r64sdL3KYabFnCCL2XBv2n8H/uZn0mf9S7pPIG182sktZwVbU/nE9BasKlF5+2CNH2HQ==
-X-Received: by 2002:a17:903:2381:b0:21a:8dec:e596 with SMTP id
- d9443c01a7336-21c355b54e7mr765127045ad.35.1738074813118; 
- Tue, 28 Jan 2025 06:33:33 -0800 (PST)
-Received: from [192.168.0.102] ([187.75.36.205])
- by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-21da424aee6sm81655205ad.215.2025.01.28.06.33.29
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 28 Jan 2025 06:33:32 -0800 (PST)
-Message-ID: <bd929bd7-88d7-4808-b801-26a2858ef620@linaro.org>
-Date: Tue, 28 Jan 2025 11:33:27 -0300
+ d=1e100.net; s=20230601; t=1738074926; x=1738679726;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=lDbZzhgXIddCbAed15y8FhY2UG9TovmqYlE6jiN2G/s=;
+ b=fT7YBnqkkFjoR1vnTbiq1te7KdD8DSkJ0hggaASjasDFkePNi/pkz8usk8Lw5IY74r
+ 7f6xFc68a7n+ZhtPN+YwbYOYXrsoedJnjQFgKHzU6KytucTanN+AbH058862P1Ohdsn2
+ bNWdUxYz3ETy5iG5lnwRdo9E08pV+VAzOZrlDnKuNcT6SoRtOaWBdI+1M7V0Nu8LnLnd
+ 3y1l8hrjxx2ArSYt3uOqQl4/i2Ny/J1n+VfxzgaqoISfpXd3gfnaz82GWllKOURCr3iq
+ wcWUBHKgSBWvS5wRCZPfGqcwXpv3/By4+pwwgZWQf6vaNZrz0z/cAdXkwSWl+hb/7LRN
+ GLqw==
+X-Gm-Message-State: AOJu0YzZCL9yEFOZScUL7gDt27Y2xjnOMO2CxBy+RzTmgs5s4lXowHsi
+ kD1A0snZRKjncK2It/WTVkv1drTE4xXxQ9PJZgWCvandTswrrx/WIqzwjLpRGtY4G0b4r/SLpsC
+ 79UxAkRJ36yDJpCrMreGMhTIiYsbL815QxOyWAQ==
+X-Gm-Gg: ASbGncsZemE0XkbVHYfj0/YWC76mcYWUDmeOdLaI0YBHs6OU9q+ghZ83uiO+3pfKN2j
+ BvZfxk26x5OszxOPF84jTMbT+XDNKa+yYRZ87w6Wwmjv+TRn9AWLJCTDBp5hyK8GY6VaVeMHluA
+ ==
+X-Google-Smtp-Source: AGHT+IF2hePQPy7+LLnOlAI+oLOSUwjTWiLhuKkywDxDVxooe/o3UfOwVQYboDtgJduMe5Q47oEuGAkKo+WKym/010M=
+X-Received: by 2002:a05:6902:2683:b0:e4d:25c6:c3b2 with SMTP id
+ 3f1490d57ef6-e57b103cb9cmr33760637276.7.1738074925814; Tue, 28 Jan 2025
+ 06:35:25 -0800 (PST)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 21/21] hw/gpio/imx_gpio: Don't clear input GPIO values
- upon reset
-To: Bernhard Beschow <shentey@gmail.com>, qemu-devel@nongnu.org
-Cc: Paolo Bonzini <pbonzini@redhat.com>,
- =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
+References: <20250120203748.4687-1-shentey@gmail.com>
+ <20250120203748.4687-7-shentey@gmail.com>
+In-Reply-To: <20250120203748.4687-7-shentey@gmail.com>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Tue, 28 Jan 2025 14:35:14 +0000
+X-Gm-Features: AWEUYZmvaKfiikR68ibuXrx2iaQ62ZYQ-2HsxLCFCdtX9sVh8QxAIi0uPUrUEW8
+Message-ID: <CAFEAcA8Ox+CjVVgPWciFOPv748tvCSOHpcQn_ihwCXAvSNnk8Q@mail.gmail.com>
+Subject: Re: [PATCH 06/21] hw/arm/fsl-imx8mp: Implement clock tree
+To: Bernhard Beschow <shentey@gmail.com>
+Cc: qemu-devel@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>, 
+ =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@redhat.com>, 
  Alistair Francis <alistair@alistair23.me>,
- Peter Maydell <peter.maydell@linaro.org>,
- Jean-Christophe Dubois <jcd@tribudubois.net>, qemu-arm@nongnu.org,
+ Jean-Christophe Dubois <jcd@tribudubois.net>, qemu-arm@nongnu.org, 
  Andrey Smirnov <andrew.smirnov@gmail.com>,
  "Edgar E. Iglesias" <edgar.iglesias@gmail.com>
-References: <20250120203748.4687-1-shentey@gmail.com>
- <20250120203748.4687-22-shentey@gmail.com>
-Content-Language: en-US
-From: Gustavo Romero <gustavo.romero@linaro.org>
-In-Reply-To: <20250120203748.4687-22-shentey@gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::633;
- envelope-from=gustavo.romero@linaro.org; helo=mail-pl1-x633.google.com
+Content-Type: text/plain; charset="UTF-8"
+Received-SPF: pass client-ip=2607:f8b0:4864:20::b30;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yb1-xb30.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -110,37 +97,131 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi,
-
-On 1/20/25 17:37, Bernhard Beschow wrote:
-> Input GPIO values such as a present SD card may get notified before the GPIO
-> controller itself gets reset. Claring the input values thus loses data. Assuming
-
-                                 ^- nit: Clearing
-
-
-Cheers,
-Gustavo
-
-> that input GPIO events are only fired when the state changes, the input values
-> shouldn't be reset.
-> 
+On Mon, 20 Jan 2025 at 20:38, Bernhard Beschow <shentey@gmail.com> wrote:
+>
+> Fixes quite a few stack traces during the Linux boot process. Also provides the
+> clocks for devices added later, e.g. enet1.
+>
 > Signed-off-by: Bernhard Beschow <shentey@gmail.com>
 > ---
->   hw/gpio/imx_gpio.c | 1 -
->   1 file changed, 1 deletion(-)
-> 
-> diff --git a/hw/gpio/imx_gpio.c b/hw/gpio/imx_gpio.c
-> index 549a281ed7..25546221e0 100644
-> --- a/hw/gpio/imx_gpio.c
-> +++ b/hw/gpio/imx_gpio.c
-> @@ -298,7 +298,6 @@ static void imx_gpio_reset(DeviceState *dev)
->   
->       s->dr       = 0;
->       s->gdir     = 0;
-> -    s->psr      = 0;
->       s->icr      = 0;
->       s->imr      = 0;
->       s->isr      = 0;
+>  MAINTAINERS                    |   2 +
+>  docs/system/arm/imx8mp-evk.rst |   1 +
+>  include/hw/arm/fsl-imx8mp.h    |   3 +
+>  include/hw/misc/imx8mp_ccm.h   |  97 ++++++++++
+>  hw/arm/fsl-imx8mp.c            |  20 +++
+>  hw/misc/imx8mp_ccm.c           | 315 +++++++++++++++++++++++++++++++++
+>  hw/misc/meson.build            |   1 +
+>  7 files changed, 439 insertions(+)
+>  create mode 100644 include/hw/misc/imx8mp_ccm.h
+>  create mode 100644 hw/misc/imx8mp_ccm.c
+> diff --git a/include/hw/misc/imx8mp_ccm.h b/include/hw/misc/imx8mp_ccm.h
+> new file mode 100644
+> index 0000000000..2378c157de
+> --- /dev/null
+> +++ b/include/hw/misc/imx8mp_ccm.h
+> @@ -0,0 +1,97 @@
+> +/*
+> + * Copyright (c) 2025 Bernhard Beschow <shentey@gmail.com>
+> + *
+> + * i.MX8MP CCM, ANALOG IP blocks emulation code
+> + *
+> + * SPDX-License-Identifier: GPL-2.0-or-later
+> + */
+> +
+> +#ifndef IMX8MP_CCM_H
+> +#define IMX8MP_CCM_H
+> +
+> +#include "hw/misc/imx_ccm.h"
+> +#include "qom/object.h"
+> +
+> +enum IMX8MPAnalogRegisters {
+> +    ANALOG_AUDIO_PLL1_GEN_CTRL = 0x000 / 4,
+> +    ANALOG_AUDIO_PLL1_FDIV_CTL0 = 0x004 / 4,
+> +    ANALOG_AUDIO_PLL1_FDIV_CTL1 = 0x008 / 4,
+> +    ANALOG_AUDIO_PLL1_SSCG_CTRL = 0x00c / 4,
+> +    ANALOG_AUDIO_PLL1_MNIT_CTRL = 0x010 / 4,
+> +    ANALOG_AUDIO_PLL2_GEN_CTRL = 0x014 / 4,
+> +    ANALOG_AUDIO_PLL2_FDIV_CTL0 = 0x018 / 4,
+> +    ANALOG_AUDIO_PLL2_FDIV_CTL1 = 0x01c / 4,
+> +    ANALOG_AUDIO_PLL2_SSCG_CTRL = 0x020 / 4,
+> +    ANALOG_AUDIO_PLL2_MNIT_CTRL = 0x024 / 4,
+> +    ANALOG_VIDEO_PLL1_GEN_CTRL = 0x028 / 4,
+> +    ANALOG_VIDEO_PLL1_FDIV_CTL0 = 0x02c / 4,
+> +    ANALOG_VIDEO_PLL1_FDIV_CTL1 = 0x030 / 4,
+> +    ANALOG_VIDEO_PLL1_SSCG_CTRL = 0x034 / 4,
+> +    ANALOG_VIDEO_PLL1_MNIT_CTRL = 0x038 / 4,
+> +    ANALOG_DRAM_PLL_GEN_CTRL = 0x050 / 4,
+> +    ANALOG_DRAM_PLL_FDIV_CTL0 = 0x054 / 4,
+> +    ANALOG_DRAM_PLL_FDIV_CTL1 = 0x058 / 4,
+> +    ANALOG_DRAM_PLL_SSCG_CTRL = 0x05c / 4,
+> +    ANALOG_DRAM_PLL_MNIT_CTRL = 0x060 / 4,
+> +    ANALOG_GPU_PLL_GEN_CTRL = 0x064 / 4,
+> +    ANALOG_GPU_PLL_FDIV_CTL0 = 0x068 / 4,
+> +    ANALOG_GPU_PLL_LOCKD_CTRL = 0x06c / 4,
+> +    ANALOG_GPU_PLL_MNIT_CTRL = 0x070 / 4,
+> +    ANALOG_VPU_PLL_GEN_CTRL = 0x074 / 4,
+> +    ANALOG_VPU_PLL_FDIV_CTL0 = 0x078 / 4,
+> +    ANALOG_VPU_PLL_LOCKD_CTRL = 0x07c / 4,
+> +    ANALOG_VPU_PLL_MNIT_CTRL = 0x080 / 4,
+> +    ANALOG_ARM_PLL_GEN_CTRL = 0x084 / 4,
+> +    ANALOG_ARM_PLL_FDIV_CTL0 = 0x088 / 4,
+> +    ANALOG_ARM_PLL_LOCKD_CTRL = 0x08c / 4,
+> +    ANALOG_ARM_PLL_MNIT_CTRL = 0x090 / 4,
+> +    ANALOG_SYS_PLL1_GEN_CTRL = 0x094 / 4,
+> +    ANALOG_SYS_PLL1_FDIV_CTL0 = 0x098 / 4,
+> +    ANALOG_SYS_PLL1_LOCKD_CTRL = 0x09c / 4,
+> +    ANALOG_SYS_PLL1_MNIT_CTRL = 0x100 / 4,
+> +    ANALOG_SYS_PLL2_GEN_CTRL = 0x104 / 4,
+> +    ANALOG_SYS_PLL2_FDIV_CTL0 = 0x108 / 4,
+> +    ANALOG_SYS_PLL2_LOCKD_CTRL = 0x10c / 4,
+> +    ANALOG_SYS_PLL2_MNIT_CTRL = 0x110 / 4,
+> +    ANALOG_SYS_PLL3_GEN_CTRL = 0x114 / 4,
+> +    ANALOG_SYS_PLL3_FDIV_CTL0 = 0x118 / 4,
+> +    ANALOG_SYS_PLL3_LOCKD_CTRL = 0x11c / 4,
+> +    ANALOG_SYS_PLL3_MNIT_CTRL = 0x120 / 4,
+> +    ANALOG_OSC_MISC_CFG = 0x124 / 4,
+> +    ANALOG_ANAMIX_PLL_MNIT_CTL = 0x128 / 4,
+> +
+> +    ANALOG_DIGPROG = 0x800 / 4,
+> +    ANALOG_MAX,
+> +};
+> +
+> +enum IMX8MPCCMRegisters {
+> +    CCM_MAX = 0xc6fc / sizeof(uint32_t) + 1,
+> +};
+> +
+> +#define TYPE_IMX8MP_CCM "imx8mp.ccm"
+> +OBJECT_DECLARE_SIMPLE_TYPE(IMX8MPCCMState, IMX8MP_CCM)
+> +
+> +struct IMX8MPCCMState {
+> +    IMXCCMState parent_obj;
+> +
+> +    MemoryRegion iomem;
+> +
+> +    uint32_t ccm[CCM_MAX];
+> +};
+> +
+> +
+> +#define TYPE_IMX8MP_ANALOG "imx8mp.analog"
+> +OBJECT_DECLARE_SIMPLE_TYPE(IMX8MPAnalogState, IMX8MP_ANALOG)
+> +
+> +struct IMX8MPAnalogState {
+> +    IMXCCMState parent_obj;
+> +
+> +    struct {
+> +        MemoryRegion container;
+> +        MemoryRegion analog;
+> +    } mmio;
+> +
+> +    uint32_t analog[ANALOG_MAX];
+> +};
+> +
+> +#endif /* IMX8MP_CCM_H */
 
+This seems to be implementing two separate devices in a single
+source file. Generally we prefer one device per file. Is
+there a reason they can't be split?
+
+thanks
+-- PMM
 
