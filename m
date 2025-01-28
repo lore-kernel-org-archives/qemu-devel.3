@@ -4,103 +4,91 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 26F8FC0218A
-	for <qemu-devel@archiver.kernel.org>; Tue, 28 Jan 2025 21:01:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 19058C02190
+	for <qemu-devel@archiver.kernel.org>; Tue, 28 Jan 2025 21:09:40 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tcshu-00071g-Uk; Tue, 28 Jan 2025 16:01:15 -0500
+	id 1tcspP-0001N6-RX; Tue, 28 Jan 2025 16:09:01 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1tcshs-00070L-MT
- for qemu-devel@nongnu.org; Tue, 28 Jan 2025 16:01:12 -0500
-Received: from smtp-out2.suse.de ([2a07:de40:b251:101:10:150:64:2])
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1tcspM-0001Mw-4Z
+ for qemu-devel@nongnu.org; Tue, 28 Jan 2025 16:08:56 -0500
+Received: from mail-pl1-x62f.google.com ([2607:f8b0:4864:20::62f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1tcshp-0002Ag-3i
- for qemu-devel@nongnu.org; Tue, 28 Jan 2025 16:01:11 -0500
-Received: from imap1.dmz-prg2.suse.org (unknown [10.150.64.97])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (No client certificate requested)
- by smtp-out2.suse.de (Postfix) with ESMTPS id 8EAC41F365;
- Tue, 28 Jan 2025 21:01:02 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1738098063; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=TrDduViFI/tiGmKfgFfiqOsqgJOgOICwoCOZMeS4AWU=;
- b=TcE7ADDJ05afSAw7Gch7BmJ2HBimzkNmP1WiEk1O/xm5ZJniP1OpX/1ef9qmlE69KtXzN9
- 2BPYXuUjJMhf3HRhlh4FHkKu6lyTtjbJIhDMOOQUT9qC+U5JBqXnZ9/FNPM59+d1fTqlYa
- Uqar7Hvu6X3pSk+LbrgeO+wmhVAObCI=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1738098063;
- h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=TrDduViFI/tiGmKfgFfiqOsqgJOgOICwoCOZMeS4AWU=;
- b=vwBInEDT3dXgaEDALUInzVR1T7B40PjCMGGR1Q1sXBJQwWSOn4rkzeyZpuRc0cBPEvaLf4
- J+gaNHK0UVcuTdBw==
-Authentication-Results: smtp-out2.suse.de;
-	none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1738098062; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=TrDduViFI/tiGmKfgFfiqOsqgJOgOICwoCOZMeS4AWU=;
- b=dkg8qB4h0fBzBlmScrG6KcNP5wFGXyIaot2oSOBx4GG5dZbrGQsWehkX2K7PRYhYZPCW5/
- +FrpWXv+3PP3p1UYJ6yEEE8aYSorFakq6Xe4a4eeRY0MlfMSqRB5O47kf/13TT0Gcmk/zp
- Sajb4GNG11UWQ12uX4vFZqMyJH+AfDw=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1738098062;
- h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=TrDduViFI/tiGmKfgFfiqOsqgJOgOICwoCOZMeS4AWU=;
- b=w0Pjdp/jzza1t4EOdazm3++tv6gNfY/WxKJ19bBhr29l0PMCqOc6wxdneS9hSLD55CsWK3
- 6ciYexFPCNDfdFDA==
-Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (No client certificate requested)
- by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id EE04813625;
- Tue, 28 Jan 2025 21:01:01 +0000 (UTC)
-Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
- by imap1.dmz-prg2.suse.org with ESMTPSA id 2/3QKY1FmWezWQAAD6G6ig
- (envelope-from <farosas@suse.de>); Tue, 28 Jan 2025 21:01:01 +0000
-From: Fabiano Rosas <farosas@suse.de>
-To: Thomas Huth <thuth@redhat.com>
-Cc: Laurent Vivier <lvivier@redhat.com>, Paolo Bonzini
- <pbonzini@redhat.com>, qemu-devel@nongnu.org, "Daniel P . Berrange"
- <berrange@redhat.com>, Eduardo Habkost <eduardo@habkost.net>
-Subject: Re: [PATCH] tests/qtest/qom-test: Test retrieval of machine class
- properties
-In-Reply-To: <20250123204956.1561463-1-thuth@redhat.com>
-References: <20250123204956.1561463-1-thuth@redhat.com>
-Date: Tue, 28 Jan 2025 18:00:59 -0300
-Message-ID: <87bjvq1wms.fsf@suse.de>
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1tcspJ-000348-Eq
+ for qemu-devel@nongnu.org; Tue, 28 Jan 2025 16:08:55 -0500
+Received: by mail-pl1-x62f.google.com with SMTP id
+ d9443c01a7336-2164b1f05caso106585615ad.3
+ for <qemu-devel@nongnu.org>; Tue, 28 Jan 2025 13:08:52 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1738098531; x=1738703331; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:to:subject:user-agent:mime-version:date:message-id:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=ucbb9qmuVK87oA2mZ81iMzR3KJnu6u/nhAR7EnKBOVg=;
+ b=D1L4NPCPt4tfe2eSNWA7U3Gmlp7x7h3kDzu/YEiZr0ZGufnA58sZPmIlYLTpA8UfpA
+ 3GDfNCYrDcrArGu3bp1sZmGrfXh8In87MS0jnq7tk52ogWPWbYA6iNBngE3nFSkxifl9
+ CDK43LPO89zju+DUUpy4fpPFLnWX6FoBIDXmd7d44ptF7flBebnTFmoFk/3Ro+BVP+CS
+ /IgOhMnn7vkAu3/0jxIDMEGDUmaOnSFxd04BEh2fJ3OtWgVKvoQzrJjMcunOgAB5iCpR
+ 67H53wq959h2QV9Qc24hjj6/iG1IQSKWg35ZIcMvcpS7OSw3SFcJJ4lOu+Xf+WJCgXQq
+ t27w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1738098531; x=1738703331;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=ucbb9qmuVK87oA2mZ81iMzR3KJnu6u/nhAR7EnKBOVg=;
+ b=wn7jSOhH/L1WycCOD5aU4isT15J5W5mjzWsnS4tIRitwNlj4pteOjN6Wiu1i+GDebc
+ /RYXumcackaOiBt0+LJEjAdzo1l7ih/GNt9VWJAx/DPYTwCZwAZqQ1T2ANiXud7t4Vjl
+ PnV01Xg0iwo4A8XMm/wPVimRarOPHhDWsaa186z7uwzPbTssm1B3k8uvMXZ4vWNj5KOX
+ GkKI18RQAl8k0zxOYyQtpyBsiy2p1oAVUBuyK0oL6HAp9cGkQd5xBNEhq4tymp1K0jQl
+ DXv2JliUPvzRj32ye/QvTKKLXzO/tW5xnN1bfJIjtp2u5NVTwqZ/Fh1QHOiZE8lAM8P/
+ Tkaw==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCWGnpCwuvdL8xDXUajenaO5mKmt42sKzv224nX2BqOxLB9XhKhRXrljxGwIBiEok7j1m7p4r4uSuBkk@nongnu.org
+X-Gm-Message-State: AOJu0Yx9xT2ZOf/hfRT1MMAq4PWA66W9Ax7As4MIUGUGlnFgZ4l2MkmY
+ rll/ppnjVP8fcO+U3sl3TiU/3GzQwcmK7nrVp/dAZ1ntxexyO0Zrc6XKx4ZRfCqBlHIVOCusYTh
+ X
+X-Gm-Gg: ASbGncv96YyuTrrIS5RvTEIowMU4S5DnP8VOMBh6L0Sccxr4zqaiwKEIxl0WNdsvsUk
+ 7gHJq0UbZEEjrT1j67AI1GkXpdyjg+vjCz3RF/I20f4G9/Lcnb3PugRMDQvM2+aIoSV/Z29S9qR
+ fbjMWIBKJu2oDrjBBENLtQclIx4ZbtDBn8KRanNX0vjUad2en7viZneLqBeT9UaRKhxyrinsZp8
+ azlAKutTm/0ootz3row9qIRcaW0I93RuCHoRccD36OFlWGgMWup64+i1KVPBNlDlVHheGeM3E+1
+ InFtqKguX4/4FKdhJRoqtbK7EO2V7lPeSaqJ2Mg/1sdsoTNOUgdooetWcED8IFuL++3J
+X-Google-Smtp-Source: AGHT+IE4uO8hUrMbFmpjdy8SwPd9r/hdSYFu4mE54IELOObvMf9o2U6+6OfHAOJy078qd8CsgOI0uw==
+X-Received: by 2002:a05:6a21:700f:b0:1e1:f40d:9783 with SMTP id
+ adf61e73a8af0-1ed7a6e0786mr1430845637.40.1738098531140; 
+ Tue, 28 Jan 2025 13:08:51 -0800 (PST)
+Received: from [192.168.0.4] (174-21-71-127.tukw.qwest.net. [174.21.71.127])
+ by smtp.gmail.com with ESMTPSA id
+ d2e1a72fcca58-72f8a6c7ca3sm9771454b3a.75.2025.01.28.13.08.50
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Tue, 28 Jan 2025 13:08:50 -0800 (PST)
+Message-ID: <3f7347e3-59b2-4e52-a9b5-2c46a3d9a635@linaro.org>
+Date: Tue, 28 Jan 2025 13:08:49 -0800
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Spamd-Result: default: False [-3.96 / 50.00]; BAYES_HAM(-2.66)[98.51%];
- NEURAL_HAM_LONG(-1.00)[-1.000];
- NEURAL_HAM_SHORT(-0.20)[-1.000]; MIME_GOOD(-0.10)[text/plain];
- RCVD_VIA_SMTP_AUTH(0.00)[]; ARC_NA(0.00)[];
- MIME_TRACE(0.00)[0:+]; MISSING_XM_UA(0.00)[];
- TO_DN_SOME(0.00)[]; MID_RHS_MATCH_FROM(0.00)[];
- RCVD_TLS_ALL(0.00)[];
- DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
- FROM_EQ_ENVFROM(0.00)[]; FROM_HAS_DN(0.00)[];
- RCPT_COUNT_FIVE(0.00)[6]; RCVD_COUNT_TWO(0.00)[2];
- FUZZY_BLOCKED(0.00)[rspamd.com]; TO_MATCH_ENVRCPT_ALL(0.00)[];
- DBL_BLOCKED_OPENRESOLVER(0.00)[imap1.dmz-prg2.suse.org:helo, suse.de:mid,
- suse.de:email]
-Received-SPF: pass client-ip=2a07:de40:b251:101:10:150:64:2;
- envelope-from=farosas@suse.de; helo=smtp-out2.suse.de
-X-Spam_score_int: -43
-X-Spam_score: -4.4
-X-Spam_bar: ----
-X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 7/7] tests/qtest/migration: Allow using accelerators
+ different of TCG / KVM
+To: Fabiano Rosas <farosas@suse.de>, qemu-devel@nongnu.org
+References: <20250128135429.8500-1-philmd@linaro.org>
+ <20250128135429.8500-8-philmd@linaro.org> <87ikpzt1xw.fsf@suse.de>
+ <aa745382-40e4-40f6-bec0-4012626f1fbc@linaro.org> <87frl2u39e.fsf@suse.de>
+Content-Language: en-US
+From: Richard Henderson <richard.henderson@linaro.org>
+In-Reply-To: <87frl2u39e.fsf@suse.de>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::62f;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x62f.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -117,13 +105,36 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Thomas Huth <thuth@redhat.com> writes:
+On 1/28/25 11:50, Fabiano Rosas wrote:
+> Richard Henderson <richard.henderson@linaro.org> writes:
+> 
+>> On 1/28/25 07:04, Fabiano Rosas wrote:
+>>> Philippe Mathieu-Daudé <philmd@linaro.org> writes:
+>>>
+>>>> There is no particular reason to restrict all the framework
+>>>> to TCG or KVM, since we can check on a per-test basis which
+>>>> accelerator is available (via MigrationTestEnv::has_$ACCEL).
+>>>
+>>> The reason is:
+>>>
+>>> CONFIG_KVM=n
+>>> CONFIG_TCG=n
+>>>
+>>> The check is about "there is no accelerator at all".
+>>
+>> We perform the no accelerator check in meson.build on a per-target basis.
+>> So you'll never have a qemu-system-foo binary with zero accelerators.
+>>
+> 
+> Ok, the issue was not zero accelerators, but Xen. On aarch64, this
+> produces a binary with no TCG nor KVM:
+> 
+> --target-list=x86_64-softmmu --disable-tcg --enable-xen
 
-> There were recently some crashes that occurred when trying to
-> retrieve the properties of machines. Let's add a test to avoid
-> regression here.
->
-> Signed-off-by: Thomas Huth <thuth@redhat.com>
+Right.  Phil's patch set specifically mentions HVF, but there's no reason Xen can't be 
+better handled too.  Unless there's something explicit about Xen that cannot be handled 
+here?  But even then, the if condition needs updating.
 
-Reviewed-by: Fabiano Rosas <farosas@suse.de>
+
+r~
 
