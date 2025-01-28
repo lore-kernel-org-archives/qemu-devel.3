@@ -4,81 +4,86 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8963FC02188
-	for <qemu-devel@archiver.kernel.org>; Tue, 28 Jan 2025 00:44:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 404CAC02188
+	for <qemu-devel@archiver.kernel.org>; Tue, 28 Jan 2025 01:00:09 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tcZh3-0008N9-3h; Mon, 27 Jan 2025 19:43:05 -0500
+	id 1tcZwZ-0003u4-W3; Mon, 27 Jan 2025 19:59:08 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1tcZh0-0008Lm-G1
- for qemu-devel@nongnu.org; Mon, 27 Jan 2025 19:43:02 -0500
-Received: from mail-pj1-x102b.google.com ([2607:f8b0:4864:20::102b])
+ id 1tcZwY-0003tm-Tj
+ for qemu-devel@nongnu.org; Mon, 27 Jan 2025 19:59:06 -0500
+Received: from mail-pl1-x62f.google.com ([2607:f8b0:4864:20::62f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1tcZgy-0003Tq-Na
- for qemu-devel@nongnu.org; Mon, 27 Jan 2025 19:43:02 -0500
-Received: by mail-pj1-x102b.google.com with SMTP id
- 98e67ed59e1d1-2ee50ffcf14so9500458a91.0
- for <qemu-devel@nongnu.org>; Mon, 27 Jan 2025 16:43:00 -0800 (PST)
+ id 1tcZwX-0008Bi-49
+ for qemu-devel@nongnu.org; Mon, 27 Jan 2025 19:59:06 -0500
+Received: by mail-pl1-x62f.google.com with SMTP id
+ d9443c01a7336-2166360285dso86328945ad.1
+ for <qemu-devel@nongnu.org>; Mon, 27 Jan 2025 16:59:04 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1738024978; x=1738629778; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=9K0gzoVmD8GMKzwq0FIbI66sQB1frBuqpa3K1kcWYM8=;
- b=z7NA+w4i23cgXgWSGUN2wqxk7iLNGhqxnp7S2ZXLiXPRg1/RwNN9HnVzloxYzKQpl1
- L1rUtIhinUqPrUvP2YnUYKm3ZTNDR2Q8FzZHrsnR8DKr+Xr7bYS5NQwMZtXQQlnYjUnV
- O0itCgsdf8YWZo/A4yc95UA3J9osIO4vSXv/NEnSKK1QOpdqH/BR+Yanf/dwrU+DJui8
- LtkO0t7ZGzhno8JU1apF4DjKOeaIQrMWA7eVr1wwKA/f98MfWfvqknI6cOPxPzaGdEkC
- ukwE5WWa+s7DJzx4M+kTotdAB8VYU0MIVDMTZpnZ0xr8trvm5RLcB4AJbGZ1P+hxJUxn
- QvoQ==
+ d=linaro.org; s=google; t=1738025943; x=1738630743; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=ZNJkqOFUlf+JMjg/qrCd8u92786zvrxFFOaN8oYOYEc=;
+ b=qlqAS8HFj/dLqgr5IhOfz9jXxApcdEIdZ11aUYpUFWsGCP2gjs+v8ez3abp42j5enn
+ pDW1hU62Q8KSJWwti79Rj6GzJCHQzTf/ZLZAMhRgJp6rycRKaqMcgg9UGahr61tdOwtN
+ u0doFaZ6PF76AgGumXg/Ml15OmUh9XnbjvFsm38B2t3QhpxmTh2+Ef8kqJ9FMk9EA7pY
+ KeTF/WkqDI9cEIpUVCB/hMRLQqecn/J1y+Ntf9LWHsSwqJ81Kc4oQOIsSLR1qdQIjiuJ
+ K7x1471eE/VOWHl1uHXxdT0sF7uhbW6XOeFKhC/APpvzHSL7PQneM7kwzU/23aZUYe+7
+ X3ug==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1738024978; x=1738629778;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=9K0gzoVmD8GMKzwq0FIbI66sQB1frBuqpa3K1kcWYM8=;
- b=fViNqyjdfckdBf0u5hHt7ByGGbmmu73fd8xtda+MkUxZUHNJPB/u5J2/z2jtK6dZ55
- JZF1k90a/m49A3fUU1bFNAmZfrWKK7HzA2AWHO9Okl3DfYl2sf7MTGGOs//pGlZou+Ng
- pUI8cVFMCAh2lM5DYquhvfM/eycsWPTJuETe6NB1GS3SajdTeSOTxy+TXI9iJmP1ex00
- IHtTPhibB/a03YTScakon97zb1AjQ+YPgcDxm34+WolddBcSULeGWJ1JZRvgMgyU3o+Y
- 0VA9zVorHSmyD1Y1HlTW7EUOcKpLMh/J1x4+WZJuCtRlic3W7ZkNdyd0O3RCLN3fYD74
- 1DnQ==
-X-Gm-Message-State: AOJu0YyfnZbD+2bi3twWI1G8h9oOMlkr6zLbscrDojkydb9mgK+IoGnn
- Fvhg0qPHQzJQTmHZISk1bhBILNrkjRpRuAxwuPTcTLZE608BhNGuCCHqA1dVz4t8ENASu2E45JC
- 5
-X-Gm-Gg: ASbGncu5yOAqRYffVZglEeJHl5IKx8fRK50bYdpx/3ibFqj+VbF9VYF4X8d2gacELU/
- 1Wot4ESHsGyaJTnIams54eqLw8PuKQ/S0EU4dVyLbD5dGB29YQkFgv6nKOCGIIWT1hiuWvSVeu0
- DhyHM7rpmSlUT/CpVRdZXYvuD8ZKOkATKrOzHMvhzailkETbmGpB9FFyYkfAs1qBZJWrXkgX563
- MTATcKHB3VIKjVtdEHj3TCCiAKd987ESsEsNetegd7C2DLggi9uAlWMpLhY72E0yRCV6DJBEqBC
- 66aKjT5ecaKvMZuPu1PTdhytsGG2f2DkF+2lkRU=
-X-Google-Smtp-Source: AGHT+IGX66kXlWCLsXjLpckkOk7s9aDkHq4k02dGPzAcPDTdc7sUDg41jEfHU7c/mVp4w1mlmOrzfg==
-X-Received: by 2002:a05:6a00:2188:b0:728:f21b:ce4c with SMTP id
- d2e1a72fcca58-72fc08fa5c8mr2159107b3a.5.1738024978084; 
- Mon, 27 Jan 2025 16:42:58 -0800 (PST)
-Received: from stoup.. (174-21-71-127.tukw.qwest.net. [174.21.71.127])
+ d=1e100.net; s=20230601; t=1738025943; x=1738630743;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=ZNJkqOFUlf+JMjg/qrCd8u92786zvrxFFOaN8oYOYEc=;
+ b=eXqx/lPgMYOjVqtvISSwCraiFjgZttxerwXWiC2JTgtpCfIBKEiuK+jmjxV5/9FhjO
+ tX6oLdtrRGAqCG+bBoqtz6AdlH5/49C7ComQ7aT6K5/BV2AcY03XpY+Hr49nGVIRd4c0
+ wAQmg0zdxXuvQdJUdMklNCHZufpDch7SJIUK2S9LO14iESFXW1a8QRQpc+nwOHi7aF0+
+ QImw/sC4OVOlzoJVk40Cg3CAryNkwC0IIu0KJmt6kpc7GmCK8MQGnYkisca1+rvnHyCT
+ CEbm8IRdj2ZPEe3bTafoMrwj340WKdGI6An4ktSp/8YidjDipbectRA5+gPndOVa+38+
+ GjiQ==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCW3PV9S56/veY1q7OzkpbyFX0dNFjUzg6OElQB8nLAWMPcyPk3wtc0j4W8QO+OebgmOT2nQ6AIlE1G9@nongnu.org
+X-Gm-Message-State: AOJu0Ywck2Sl8ZkYnUz89ve9FdbKH3Q+8EGOxAfi1YyvgkbF8voOT31f
+ NFAIu0ZEv6y5we7nX8WjJBh5AQW87ecZXiGz3JizO+xElx5fC+10gY2z8p5GdAA=
+X-Gm-Gg: ASbGncuP/kIzdvjmNui74z8KQLZGwE60jxZVvLS490phYwsbTWiSWdVGEQkAE86ijLS
+ lFq/vwZgL+G38/SNAjJqTEP3fXxmVjaVwRZmlzjpUwf0xDb54w43ALk5lb3gAJAbwZOiJv59xcU
+ YhJEVbTk+CETYUJHH2tEk/xrGg0PB4/UwJmpyzwUe9P3wa16lYPbZsG8W5yYoYIdjyPKoohAP5q
+ QJoXd/A2DkX3hSSHwEpqnxrRwmnXu90jcFwGe8c/NNumkxMisFhlQzU4p1707t6bLPoUQ4qfRuC
+ Z0sSS5zOAQeo4cdaT9j7jrIjo734a58esCAeolI4aJy5Hbs=
+X-Google-Smtp-Source: AGHT+IH27hf7HZ5c3c2GnWkLLuKzdKaXPizPPZ03ZLRwN7UXGlw3Nw97F3aNY4gpq2oWlUwSyr9fRg==
+X-Received: by 2002:a17:902:d590:b0:216:725c:a122 with SMTP id
+ d9443c01a7336-21c35512745mr704957345ad.19.1738025942983; 
+ Mon, 27 Jan 2025 16:59:02 -0800 (PST)
+Received: from [192.168.0.4] (174-21-71-127.tukw.qwest.net. [174.21.71.127])
  by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-72f8a78e0f9sm7791026b3a.158.2025.01.27.16.42.57
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 27 Jan 2025 16:42:57 -0800 (PST)
-From: Richard Henderson <richard.henderson@linaro.org>
-To: qemu-devel@nongnu.org
-Cc: thuth@redhat.com, peter.maydell@linaro.org, stefanha@redhat.com,
- pbonzini@redhat.com, berrange@redhat.com, philmd@linaro.org,
- mark.cave-ayland@ilande.co.uk, alex.bennee@linaro.org
-Subject: [PATCH 1/1] meson: Deprecate 32-bit host support
-Date: Mon, 27 Jan 2025 16:42:54 -0800
-Message-ID: <20250128004254.33442-2-richard.henderson@linaro.org>
-X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20250128004254.33442-1-richard.henderson@linaro.org>
-References: <20250128004254.33442-1-richard.henderson@linaro.org>
+ d9443c01a7336-21da3ea3346sm69560465ad.78.2025.01.27.16.59.02
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Mon, 27 Jan 2025 16:59:02 -0800 (PST)
+Message-ID: <d48a825f-571c-4158-834c-96bf63b88bb1@linaro.org>
+Date: Mon, 27 Jan 2025 16:59:00 -0800
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::102b;
- envelope-from=richard.henderson@linaro.org; helo=mail-pj1-x102b.google.com
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 1/2] target/s390x: Fix MVC not always invalidating
+ translation blocks
+To: Ilya Leoshkevich <iii@linux.ibm.com>, David Hildenbrand
+ <david@redhat.com>, Thomas Huth <thuth@redhat.com>
+Cc: qemu-s390x@nongnu.org, qemu-devel@nongnu.org,
+ Berthold Gunreben <azouhr@opensuse.org>, Sarah Kriesch
+ <ada.lovelace@gmx.de>, qemu-stable@nongnu.org
+References: <20250128001338.11474-1-iii@linux.ibm.com>
+Content-Language: en-US
+From: Richard Henderson <richard.henderson@linaro.org>
+In-Reply-To: <20250128001338.11474-1-iii@linux.ibm.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::62f;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x62f.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -101,57 +106,57 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-We deprecated i686 system mode support for qemu 8.0.
-However, to make real cleanups to TCG we need to remove
-all 32-bit hosts.
+On 1/27/25 16:12, Ilya Leoshkevich wrote:
+> Node.js crashes in qemu-system-s390x with random SIGSEGVs / SIGILLs.
+> 
+> The v8 JIT used by Node.js can garbage collect and overwrite unused
+> code. Overwriting is performed by WritableJitAllocation::CopyCode(),
+> which ultimately calls memcpy(). For certain sizes, memcpy() uses the
+> MVC instruction.
+> 
+> QEMU implements MVC and other similar instructions using helpers. While
+> TCG store ops invalidate affected translation blocks automatically,
+> helpers must do this manually by calling probe_access_flags(). The MVC
+> helper does this using the access_prepare() -> access_prepare_nf() ->
+> s390_probe_access() -> probe_access_flags() call chain.
+> 
+> At the last step of this chain, the store size is replaced with 0. This
+> causes the probe_access_flags() -> notdirty_write() ->
+> tb_invalidate_phys_range_fast() chain to miss some translation blocks.
+> 
+> When this happens, QEMU executes a mix of old and new code. This
+> quickly leads to either a SIGSEGV or a SIGILL in case the old code
+> ends in the middle of a new instruction.
+> 
+> Fix by passing the true size.
 
-Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
----
- docs/about/deprecated.rst | 8 ++++++++
- meson.build               | 6 ++----
- 2 files changed, 10 insertions(+), 4 deletions(-)
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 
-diff --git a/docs/about/deprecated.rst b/docs/about/deprecated.rst
-index 4a3c302962..a200f4fd28 100644
---- a/docs/about/deprecated.rst
-+++ b/docs/about/deprecated.rst
-@@ -204,6 +204,14 @@ is going to be so much slower it wouldn't make sense for any serious
- instrumentation. Due to implementation differences there will also be
- anomalies in things like memory instrumentation.
- 
-+32-bit host operating systems (since 10.0)
-+''''''''''''''''''''''''''''''''''''''''''
-+
-+Keeping the 32-bit support alive is a substantial burden for the QEMU
-+project. Thus QEMU will soon drop the support for 32-bit host systems.
-+Recent testing on 32-bit host OS has been inadequate at best, apparently
-+due to lack of interest and usage on such hosts.
-+
- System emulator CPUs
- --------------------
- 
-diff --git a/meson.build b/meson.build
-index 15a066043b..0bf5c93777 100644
---- a/meson.build
-+++ b/meson.build
-@@ -4834,14 +4834,12 @@ if host_arch == 'unknown'
-     message('configure has succeeded and you can continue to build, but')
-     message('QEMU will use a slow interpreter to emulate the target CPU.')
-   endif
--elif host_arch == 'mips'
-+elif cc.sizeof('void *') < 8
-   message()
-   warning('DEPRECATED HOST CPU')
-   message()
-   message('Support for CPU host architecture ' + cpu + ' is going to be')
--  message('dropped as soon as the QEMU project stops supporting Debian 12')
--  message('("Bookworm"). Going forward, the QEMU project will not guarantee')
--  message('that QEMU will compile or work on this host CPU.')
-+  message('dropped in a future QEMU release.')
- endif
- 
- if not supported_oses.contains(host_os)
--- 
-2.43.0
+
+r~
+
+> 
+> Reported-by: Berthold Gunreben <azouhr@opensuse.org>
+> Cc: Sarah Kriesch <ada.lovelace@gmx.de>
+> Cc: qemu-stable@nongnu.org
+> Closes: https://bugzilla.opensuse.org/show_bug.cgi?id=1235709
+> Signed-off-by: Ilya Leoshkevich <iii@linux.ibm.com>
+> ---
+>   target/s390x/tcg/mem_helper.c | 2 +-
+>   1 file changed, 1 insertion(+), 1 deletion(-)
+> 
+> diff --git a/target/s390x/tcg/mem_helper.c b/target/s390x/tcg/mem_helper.c
+> index 32717acb7d1..c6ab2901e5a 100644
+> --- a/target/s390x/tcg/mem_helper.c
+> +++ b/target/s390x/tcg/mem_helper.c
+> @@ -149,7 +149,7 @@ static inline int s390_probe_access(CPUArchState *env, target_ulong addr,
+>                                       int mmu_idx, bool nonfault,
+>                                       void **phost, uintptr_t ra)
+>   {
+> -    int flags = probe_access_flags(env, addr, 0, access_type, mmu_idx,
+> +    int flags = probe_access_flags(env, addr, size, access_type, mmu_idx,
+>                                      nonfault, phost, ra);
+>   
+>       if (unlikely(flags & TLB_INVALID_MASK)) {
 
 
