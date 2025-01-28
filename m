@@ -4,56 +4,58 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C4D74C0218A
-	for <qemu-devel@archiver.kernel.org>; Tue, 28 Jan 2025 22:49:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 59C88C0218A
+	for <qemu-devel@archiver.kernel.org>; Tue, 28 Jan 2025 23:30:53 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tcuNv-0002bt-0p; Tue, 28 Jan 2025 17:48:43 -0500
+	id 1tcv28-0003WP-T1; Tue, 28 Jan 2025 18:30:16 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <deller@kernel.org>) id 1tcuNm-0002ZY-Nc
- for qemu-devel@nongnu.org; Tue, 28 Jan 2025 17:48:36 -0500
-Received: from nyc.source.kernel.org ([2604:1380:45d1:ec00::3])
+ (Exim 4.90_1) (envelope-from <andrew@codeconstruct.com.au>)
+ id 1tcv27-0003VV-A0; Tue, 28 Jan 2025 18:30:15 -0500
+Received: from pi.codeconstruct.com.au ([203.29.241.158]
+ helo=codeconstruct.com.au)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <deller@kernel.org>) id 1tcuNl-00024S-5a
- for qemu-devel@nongnu.org; Tue, 28 Jan 2025 17:48:34 -0500
-Received: from smtp.kernel.org (transwarp.subspace.kernel.org [100.75.92.58])
- by nyc.source.kernel.org (Postfix) with ESMTP id B519DA4148E;
- Tue, 28 Jan 2025 22:46:45 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6671DC4CED3;
- Tue, 28 Jan 2025 22:48:31 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
- s=k20201202; t=1738104512;
- bh=1XT/07xMdO+36fCCsQzMRTN3C9LUWm0QozbepHCvoD4=;
- h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
- b=Ld3EoNuPJs3S0Mnd+jrccZq6yVqUnuhlr9orI/ixj1KCdJe3Hs6z8qs38AOKZ2gLK
- ZooaFPwiu9V2xRT2054BwdirRirlGGAD42qsH+9cDfmXEbEJotjYES1aXnNSZHbyuB
- raohV4C+5PoEngiml+miKDjbtHUfacjME+aBw/JXl3tGLBBzmRXdFdujw6OX/ntO5W
- UOZF6MBB5FfRDOz3qB77MSd26fYBpI9izhLIqxEXTNxe6clAhvltmQZxJXYALmNRg7
- JBjxTgiQjNJDzQFRCB3fVehqoIg4pfOuRbijExBIrfr+tw9+KOW/Z6RDhRQ8OZGEfs
- cZmRi5UzO+3zQ==
-From: deller@kernel.org
-To: richard.henderson@linaro.org,
-	qemu-devel@nongnu.org
-Cc: deller@gmx.de
-Subject: [PATCH 3/4] target/hppa: 64-bit CPUs start with space register
- hashing enabled
-Date: Tue, 28 Jan 2025 23:45:43 +0100
-Message-ID: <20250128224817.24715-4-deller@kernel.org>
-X-Mailer: git-send-email 2.47.0
-In-Reply-To: <20250128224817.24715-1-deller@kernel.org>
-References: <20250128224817.24715-1-deller@kernel.org>
+ (Exim 4.90_1) (envelope-from <andrew@codeconstruct.com.au>)
+ id 1tcv23-0008OX-V9; Tue, 28 Jan 2025 18:30:14 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=codeconstruct.com.au; s=2022a; t=1738107000;
+ bh=5Fe4Kd9zjpckFGitNEIbV20ei3cICRR3NvaaUVbexI4=;
+ h=Subject:From:To:Cc:Date:In-Reply-To:References;
+ b=PZySY69tTwJnce1/IEs79QK2+xCnKa5fKUgVE5TOucmyNw3CoJRT8LxRVPKrzuGVK
+ CUE5Iq3b+VPmGNyB2UDw+LjuguX5kUVnqvo/xkqKfLAN1jRfLkMGc/yTvTxXD4lqZW
+ g/wPezXhJy9LTQmcYc8nNTBv7doDyr3FHfTTECc1QQkGbJSAt7YM4+lhN0eBpc0/A1
+ 688ZBuHTESsOrqyGryxwAH2haQleVCv7UDnMET+dNTpVC9YzNSYnwfYh9C/U/fmX+J
+ H4qiUdeN+3xS+bO/E01pbPlt+XEs9yOileYDszAhsnYrmsoUkXHGSM/6FcXDw2U5jk
+ 0XfTl+FpKOydg==
+Received: from [192.168.68.112] (58-7-145-34.dyn.iinet.net.au [58.7.145.34])
+ by mail.codeconstruct.com.au (Postfix) with ESMTPSA id 231E8734DE;
+ Wed, 29 Jan 2025 07:29:58 +0800 (AWST)
+Message-ID: <bee99a3ef4821f69f6f1a2f6cfc77c3e247e5d87.camel@codeconstruct.com.au>
+Subject: Re: [PATCH 0/5] tests/functional: Update Aspeed OpenBMC images
+From: Andrew Jeffery <andrew@codeconstruct.com.au>
+To: =?ISO-8859-1?Q?C=E9dric?= Le Goater <clg@redhat.com>,
+ qemu-arm@nongnu.org,  qemu-devel@nongnu.org
+Cc: Joel Stanley <joel@jms.id.au>, Troy Lee <troy_lee@aspeedtech.com>, Jamin
+ Lin <jamin_lin@aspeedtech.com>, Steven Lee <steven_lee@aspeedtech.com>,
+ Thomas Huth <thuth@redhat.com>
+Date: Wed, 29 Jan 2025 09:59:57 +1030
+In-Reply-To: <20250128214100.1196243-1-clg@redhat.com>
+References: <20250128214100.1196243-1-clg@redhat.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+User-Agent: Evolution 3.46.4-2 
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2604:1380:45d1:ec00::3;
- envelope-from=deller@kernel.org; helo=nyc.source.kernel.org
-X-Spam_score_int: -56
-X-Spam_score: -5.7
-X-Spam_bar: -----
-X-Spam_report: (-5.7 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.3,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+Received-SPF: pass client-ip=203.29.241.158;
+ envelope-from=andrew@codeconstruct.com.au; helo=codeconstruct.com.au
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -70,39 +72,31 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Helge Deller <deller@gmx.de>
+Hi C=C3=A9dric,
 
-Turn on space register hashing for 64-bit CPUs when reset.
+On Tue, 2025-01-28 at 22:41 +0100, C=C3=A9dric Le Goater wrote:
+> Hello,
+>=20
+> This series updates the OpenBMC firmware images to the latest version
+> for existing tests and also adds 2 new tests for Aspeed machines
+> which
+> were not tested before : witherspoon and bletchley.
+>=20
+> Thanks,
+>=20
+> C.
+>=20
+> C=C3=A9dric Le Goater (5):
+> =C2=A0 tests/functional: Introduce a new test routine for OpenBMC images
+> =C2=A0 tests/functional: Update OpenBMC image of palmetto machine
+> =C2=A0 tests/functional: Update OpenBMC image of romulus machine
+> =C2=A0 tests/functional: Introduce a witherspoon machine test
+> =C2=A0 tests/functional: Introduce a bletchley machine test
 
-Signed-off-by: Helge Deller <deller@gmx.de>
----
- target/hppa/cpu.c | 5 +++++
- 1 file changed, 5 insertions(+)
+The rest of the patches haven't reached my inbox. Did you send them? It
+also seems they're missing on lore :)
 
-diff --git a/target/hppa/cpu.c b/target/hppa/cpu.c
-index b0bc9d35e4..c86f9190d2 100644
---- a/target/hppa/cpu.c
-+++ b/target/hppa/cpu.c
-@@ -28,6 +28,7 @@
- #include "exec/translation-block.h"
- #include "fpu/softfloat.h"
- #include "tcg/tcg.h"
-+#include "hw/hppa/hppa_hardware.h"
- 
- static void hppa_cpu_set_pc(CPUState *cs, vaddr value)
- {
-@@ -217,6 +218,10 @@ static void hppa_cpu_reset_hold(Object *obj, ResetType type)
-     memset(env, 0, offsetof(CPUHPPAState, end_reset_fields));
- 
-     cpu_hppa_loaded_fr0(env);
-+
-+    /* 64-bit machines start with space-register hashing enabled in %dr2 */
-+    env->dr[2] = hppa_is_pa20(env) ? HPPA64_DIAG_SPHASH_ENABLE : 0;
-+
-     cpu_hppa_put_psw(env, PSW_M);
- }
- 
--- 
-2.47.0
+https://lore.kernel.org/all/20250128214100.1196243-1-clg@redhat.com/
 
+Andrew
 
