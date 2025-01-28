@@ -4,89 +4,141 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6FDE8C0218A
-	for <qemu-devel@archiver.kernel.org>; Tue, 28 Jan 2025 19:11:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id EEAFBC0218A
+	for <qemu-devel@archiver.kernel.org>; Tue, 28 Jan 2025 19:11:28 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tcqyh-0004k5-Rf; Tue, 28 Jan 2025 14:10:27 -0500
+	id 1tcqzS-0005OI-7c; Tue, 28 Jan 2025 14:11:14 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1tcqyf-0004jm-Vw
- for qemu-devel@nongnu.org; Tue, 28 Jan 2025 14:10:26 -0500
-Received: from mail-pl1-x62a.google.com ([2607:f8b0:4864:20::62a])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1tcqye-0002Hr-20
- for qemu-devel@nongnu.org; Tue, 28 Jan 2025 14:10:25 -0500
-Received: by mail-pl1-x62a.google.com with SMTP id
- d9443c01a7336-2166022c5caso96523625ad.2
- for <qemu-devel@nongnu.org>; Tue, 28 Jan 2025 11:10:23 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1738091421; x=1738696221; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:to:subject:user-agent:mime-version:date:message-id:from
- :to:cc:subject:date:message-id:reply-to;
- bh=Kcgv2eXaFHv5SGUG/wPANzI5CwN2KvJHTaV7LE75ktk=;
- b=n1axMNpKuu0mBXYKeJ+OA39PpQPUkH7oD3422S7SZAUMeJBb7GTo4Q+sDAtWbYzc8a
- /AyA/DUvvCggJ7GEo+PWobght/tWGCG/KUTqZr1YIRxtdNteBKdw8s5j0w3TT4sqV/Bm
- 1cMH/xYYhht4kf4ff2ck2LzFcsf/hNuHpwYwrn4GMWlkNeSqcm7Jgv/2ign8QgbA2F7i
- GiJ8wLGXUi/DZrDwV+r7I17qx4DTR0loJ0j9TtvSsVR4u17/ap2dp2qlzc/RFlICbH0W
- pGuF5zCcr2UyzkaEMR49//5RdgorRq/ZtbUcvLSxuwVc78XUDDaz238FyIK4r+7yt0ip
- cXIw==
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1tcqzQ-0005Mi-0i
+ for qemu-devel@nongnu.org; Tue, 28 Jan 2025 14:11:12 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1tcqzN-0002NP-Vu
+ for qemu-devel@nongnu.org; Tue, 28 Jan 2025 14:11:11 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1738091468;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+ bh=taEQaIz4Xu54R8WatT5PKzjuXNb0YiJvxBzapfMhUGs=;
+ b=Cn2x+Y5MMJx9EPiGkB6tVXaF395w/IVTZiPb1tWnWPGoBoeIku/bwHWpjQhTm6dA6iCUQy
+ lYXuWwj87kieHLe+80My8zLS/UB420qK59enzNVbbZBa7GDTIq0ne/pmvXq6ChJmpkjSbJ
+ j0WHFt9JaROOUfFCZMKyhmi8ZO8QPVs=
+Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com
+ [209.85.128.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-665-IRZQbd7FPRuQGSPQU0nrYg-1; Tue, 28 Jan 2025 14:11:06 -0500
+X-MC-Unique: IRZQbd7FPRuQGSPQU0nrYg-1
+X-Mimecast-MFC-AGG-ID: IRZQbd7FPRuQGSPQU0nrYg
+Received: by mail-wm1-f71.google.com with SMTP id
+ 5b1f17b1804b1-438da39bb69so5159585e9.0
+ for <qemu-devel@nongnu.org>; Tue, 28 Jan 2025 11:11:05 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1738091421; x=1738696221;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=Kcgv2eXaFHv5SGUG/wPANzI5CwN2KvJHTaV7LE75ktk=;
- b=uQ2S2RxBvihy2nLN3s/Dg4g3nLSkvofsINVccIF+7GRPC+C1G5kLdmj0Uxvuje7fS6
- YzF/a9OlOZ5d3PPthIiMHsCkfH20xjH2KIcXIM6OMgnHc6GBiigHuUI4ri+qwBTICdtQ
- WKIiVBTU6fisej2HzsGqk+Ewrkrk4QHWPYxR66Dl3Srtb/WjHTZmUbaGBVoMvYR37kyU
- n4HsomXP8DMzVfhTYAMOcIp2AbATvHT+EyQ2LT4myUaHM6oAhtrXQEyO5iSIjSLSOOSd
- VYtDsLGf7I8K/Wek+GeDOPupQGrUMs1EOHVmjeEfBAplL6jZ3HRoY0xa16T+C9Qs3Xmf
- DASA==
-X-Gm-Message-State: AOJu0YzRGxqTScmWK4Ien1cgZF5OyBZjovltKv9MvRqU96qJR8wVznNF
- TsQtK0ZO9LgU3pp+xZvOcU0bTT4GYxfqkwDUOuXTCuuUkvojju6lRzVHH9Dd1b2lMCBw9vvv1aq
- b
-X-Gm-Gg: ASbGncvV4CsqpDMmBKYB7wQl3kYNs08J2C+VAyo3fP4Cl4fAD9SQGktC8LUVVWAVXfy
- +YydXNBUl73sqW8yNmaF8ksxQIvvlpgftmuSscrS0xbinwFiA5ZmgjVRqGwmacTFqF7wjfWGR/n
- 4O4MtIoKTgB7Fhox8RTNERIa+Bh3/qow1/YpimhORpm3vyLEXcBx/3cpAkTcJWbKbhUVv2ghe8R
- 6yKluX3lMIGdcFqJAKJBCiuFrU+idEimR39DOBkpblT3mkzoRYmMtEo4KY3yyB7kvNYpj4+2Tft
- oVq2vnVMdLkveGJd1Y+glDMW/gq7RjPSI+ka1TyZQgcgo/rOH0Onu3eOPw==
-X-Google-Smtp-Source: AGHT+IH/YUWRTC8EalZSql2W6wuA7pd9/bA9UwrlwSJHASkwFJgyYmqF6p7gM4uoacOeO2jUI+Vjig==
-X-Received: by 2002:a17:903:184:b0:216:6d48:9177 with SMTP id
- d9443c01a7336-21dd7c354d3mr3934565ad.11.1738091421154; 
- Tue, 28 Jan 2025 11:10:21 -0800 (PST)
-Received: from [192.168.0.4] (174-21-71-127.tukw.qwest.net. [174.21.71.127])
- by smtp.gmail.com with ESMTPSA id
- 41be03b00d2f7-ac48f897f33sm8824288a12.23.2025.01.28.11.10.20
- for <qemu-devel@nongnu.org>
+ d=1e100.net; s=20230601; t=1738091465; x=1738696265;
+ h=content-transfer-encoding:in-reply-to:autocrypt:content-language
+ :from:references:cc:to:subject:user-agent:mime-version:date
+ :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=taEQaIz4Xu54R8WatT5PKzjuXNb0YiJvxBzapfMhUGs=;
+ b=P7NoEBXDM9EIEaEaIwAZpi8EJoctXiGhCDuGj1lnGQWHhPC2gkQZTumBJ5dNmt/LcH
+ 2PtE9keRPiAJPz2GkUMn2cvN/g+MW3ZBJACR4TEuXtJW1sqdg6A/So+SN72XNENmP+Z6
+ pRuhG8K4ESySQysQT5TOGjaSIdKBXmt/k6JFoOE6oHhAkN/C75vJtcE+Y36a+Uf1sJql
+ K2cJuCGSAZYs2G8Uz7owvBudhfeAlqCMGNYbe669X0mYr0j4mLKoijOfJxb9WzHbhXRh
+ PYoP+iEqOBNBq1fBoyiPdHgU570UUSqwRBhZCMLs0cUfOIBEfUzZB8/O4c9G7CUIpm27
+ e6rw==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCW2bw6rojMph9oMtsmd1Yq6ic/EDqyeayAwav+Q5iA4Synbri6OFv/TtM6m0RhWhZ3S1TlxRwJsV+eA@nongnu.org
+X-Gm-Message-State: AOJu0YyTachAyxvbroix4R80Rzsq14xCFH64wTkAiVhu/wp/VmqFUY6P
+ rfnAu697KwEiVWNjgHSRzq7sRvv4SQwsuQLPFq57Nm67ZmAa+c6hx0fhkoe2tNGXDAnfDYz6JGj
+ 65g0AQQ118FLrBJxzEEFwXzdjXWrxvFjkCVVzZneImyStVK1kFnCB
+X-Gm-Gg: ASbGncuwrstHzDHDIFXNUo7MtC5UdEd1FqVYfSVVbObu1zoP9idW/aZBp6frcuRmLUl
+ OEqCVXeTR+BfJCuZzX++07EbvuNu0I/PnVR+wS4MkS/PISuEWZiUtFgdLEu6VdWIgZbfqWuGXeA
+ TqaqUZIz3DBRptwHiVU2ejC4D2jlk1ljBaQZDLmJvLgrApEttISbVsOorxdwErDrZ4AO9IHNPv0
+ lNTJjn2cVKvGX3wJlgSlK7Bwjwn2puvo8MtQ8FeflV7GrgcJZyvtKWBMG17CzUZG5tbknXP23fL
+ LbI1hxc8mBiL0EAkunto9H3d7VwrKP5IyL/Q
+X-Received: by 2002:a05:6000:1788:b0:385:fb8d:8658 with SMTP id
+ ffacd0b85a97d-38c52090799mr198270f8f.40.1738091464992; 
+ Tue, 28 Jan 2025 11:11:04 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IFoZUhkTRWc23QWVP6ZqLe6G7p08scVJ2/9Fvwaznjax/+PL0pPwM5ZAoXzOiQJBw7MHaTxvQ==
+X-Received: by 2002:a05:6000:1788:b0:385:fb8d:8658 with SMTP id
+ ffacd0b85a97d-38c52090799mr198252f8f.40.1738091464613; 
+ Tue, 28 Jan 2025 11:11:04 -0800 (PST)
+Received: from [192.168.0.7] (ip-109-42-50-234.web.vodafone.de.
+ [109.42.50.234]) by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-38c2a17630asm14899171f8f.6.2025.01.28.11.11.02
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 28 Jan 2025 11:10:20 -0800 (PST)
-Message-ID: <2048868b-7954-46f6-a9fb-4a3020342023@linaro.org>
-Date: Tue, 28 Jan 2025 11:10:19 -0800
+ Tue, 28 Jan 2025 11:11:04 -0800 (PST)
+Message-ID: <85e8445a-b7bf-4d01-a6e5-5fcb7d562780@redhat.com>
+Date: Tue, 28 Jan 2025 20:11:01 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 10/11] hw/sd: Remove unused legacy functions, stop killing
- mammoths
-To: qemu-devel@nongnu.org
-References: <20250128104519.3981448-1-peter.maydell@linaro.org>
- <20250128104519.3981448-11-peter.maydell@linaro.org>
+Subject: Re: [PATCH] tests/functional: Add a ppc64 mac99 test
+To: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>, qemu-ppc@nongnu.org
+Cc: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>, qemu-devel@nongnu.org
+References: <20250128180742.1137741-1-clg@redhat.com>
+ <7bb6ab1b-169e-4752-8aee-ef87877a38b4@redhat.com>
+ <9bf6cf01-d8c4-4ed8-808d-03e6ee05bc7b@redhat.com>
+From: Thomas Huth <thuth@redhat.com>
 Content-Language: en-US
-From: Richard Henderson <richard.henderson@linaro.org>
-In-Reply-To: <20250128104519.3981448-11-peter.maydell@linaro.org>
+Autocrypt: addr=thuth@redhat.com; keydata=
+ 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
+In-Reply-To: <9bf6cf01-d8c4-4ed8-808d-03e6ee05bc7b@redhat.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::62a;
- envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x62a.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=thuth@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -33
+X-Spam_score: -3.4
+X-Spam_bar: ---
+X-Spam_report: (-3.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.3,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -103,33 +155,118 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 1/28/25 02:45, Peter Maydell wrote:
-> The sdcard_legacy.h header defines function prototypes for the "legacy"
-> SD card API, which was used by non-qdevified SD controller models.
-> We've now converted the only remaining non-qdev SD controller, so
-> we can drop the legacy API.
+On 28/01/2025 19.35, Cédric Le Goater wrote:
+> On 1/28/25 19:20, Thomas Huth wrote:
+>> On 28/01/2025 19.07, Cédric Le Goater wrote:
+>>> The test sequence boots from disk a mac99 machine in 64-bit mode, in
+>>> which case the CPU is a PPC 970.
+>>>
+>>> The buildroot rootfs is built with config :
+>>>
+>>> BR2_powerpc64=y
+>>> BR2_powerpc_970=y
+>>>
+>>> and the kernel with the g5 deconfig.
+>>>
+>>> Signed-off-by: Cédric Le Goater <clg@redhat.com>
+>>> ---
+>>>   MAINTAINERS                          |  1 +
+>>>   tests/functional/meson.build         |  2 ++
+>>>   tests/functional/test_ppc64_mac99.py | 45 ++++++++++++++++++++++++++++
+>>>   3 files changed, 48 insertions(+)
+>>>   create mode 100644 tests/functional/test_ppc64_mac99.py
+>>>
+>>> diff --git a/MAINTAINERS b/MAINTAINERS
+>>> index 3a2291d17d7e..ebf249173f00 100644
+>>> --- a/MAINTAINERS
+>>> +++ b/MAINTAINERS
+>>> @@ -1446,6 +1446,7 @@ F: include/hw/pci-host/uninorth.h
+>>>   F: include/hw/input/adb*
+>>>   F: pc-bios/qemu_vga.ndrv
+>>>   F: tests/functional/test_ppc_mac.py
+>>> +F: tests/functional/test_ppc64_mac99.py
+>>>   Old World (g3beige)
+>>>   M: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
+>>> diff --git a/tests/functional/meson.build b/tests/functional/meson.build
+>>> index 01a87b03e553..821a0a7c49ac 100644
+>>> --- a/tests/functional/meson.build
+>>> +++ b/tests/functional/meson.build
+>>> @@ -41,6 +41,7 @@ test_timeouts = {
+>>>     'ppc64_powernv' : 480,
+>>>     'ppc64_pseries' : 480,
+>>>     'ppc64_tuxrun' : 420,
+>>> +  'ppc64_mac99' : 120,
+>>>     'riscv64_tuxrun' : 120,
+>>>     's390x_ccw_virtio' : 420,
+>>>     'sh4_tuxrun' : 240,
+>>> @@ -181,6 +182,7 @@ tests_ppc64_system_thorough = [
+>>>     'ppc64_powernv',
+>>>     'ppc64_pseries',
+>>>     'ppc64_tuxrun',
+>>> +  'ppc64_mac99',
+>>>   ]
+>>>   tests_riscv32_system_quick = [
+>>> diff --git a/tests/functional/test_ppc64_mac99.py b/tests/functional/ 
+>>> test_ppc64_mac99.py
+>>> new file mode 100644
+>>> index 000000000000..ba582d267dae
+>>> --- /dev/null
+>>> +++ b/tests/functional/test_ppc64_mac99.py
+>>> @@ -0,0 +1,45 @@
+>>> +#!/usr/bin/env python3
+>>> +#
+>>> +# Functional test that boots a mac99 machine with a PPC970 CPU
+>>> +#
+>>> +# SPDX-License-Identifier: GPL-2.0-or-later
+>>> +
+>>> +from qemu_test import LinuxKernelTest, Asset
+>>> +from qemu_test import exec_command_and_wait_for_pattern
+>>> +
+>>> +class mac99Test(LinuxKernelTest):
+>>> +
+>>> +    ASSET_BR2_MAC99_LINUX = Asset(
+>>> +        'https://github.com/legoater/qemu-ppc-boot/raw/refs/heads/main/ 
+>>> buildroot/qemu_ppc64_mac99-2023.11-8-gdcd9f0f6eb-20240105/vmlinux',
+>>> +        'd59307437e4365f2cced0bbd1b04949f7397b282ef349b7cafd894d74aadfbff')
+>>> +
+>>> +    ASSET_BR2_MAC99_ROOTFS = Asset(
+>>> +        'https://github.com/legoater/qemu-ppc-boot/raw/refs/heads/main// 
+>>> buildroot/qemu_ppc64_mac99-2023.11-8-gdcd9f0f6eb-20240105/rootfs.ext2',
+>>> +        'bbd5fd8af62f580bc4e585f326fe584e22856572633a8333178ea6d4ed4955a4')
+>>> +
+>>> +    def test_ppc64_mac99_buildroot(self):
+>>> +        self.require_netdev('user')
+>>> +
+>>> +        linux_path = self.ASSET_BR2_MAC99_LINUX.fetch()
+>>> +        rootfs_path = self.ASSET_BR2_MAC99_ROOTFS.fetch()
+>>> +
+>>> +        self.set_machine('mac99')
+>>
+>> Nit: Move the set_machine to the top of the function, so that the assets 
+>> don't have to be fetched in case the machine is not available.
+>>
+>> With that nit fixed:
+>> Reviewed-by: Thomas Huth <thuth@redhat.com>
+>>
+>>
+>>> +        self.vm.set_console()
+>>> +
+>>> +        self.vm.add_args('-kernel', linux_path,
+>>> +                         '-append', 'root=/dev/sda',
+>>> +                         '-drive', f'file={rootfs_path},format=raw',
+>>> +                         '-net', 'nic,model=sungem', '-net', 'user',
+>>> +                         '-snapshot', '-nographic')
+>>
+>> I just also noticed that we already have "-display none" in python/qemu/ 
+>> machine/machine.py, so you likely don't need the -nographic here (but 
+>> looks like we've got that wrong in a bunch of tests already).
 > 
-> Entirely unused functions:
->    sd_init(), sd_set_cb(), sd_enable()
-> 
-> Functions which now become static inside sd.c (they are the
-> underlying implementations of methods on SDCardClass):
->    sd_do_command(), sd_write_byte(), sd_read_byte()
-> 
-> Removal of sd_init() means that we can also remove the
-> me_no_qdev_me_kill_mammoth_with_rocks flag, the codepaths that were
-> only reachable when it was set, and the inserted_cb and readonly_cb
-> qemu_irq lines that went with that.
-> 
-> Signed-off-by: Peter Maydell<peter.maydell@linaro.org>
-> ---
->   include/hw/sd/sdcard_legacy.h | 50 -----------------------
->   hw/sd/omap_mmc.c              |  2 +-
->   hw/sd/sd.c                    | 77 ++++-------------------------------
->   3 files changed, 9 insertions(+), 120 deletions(-)
->   delete mode 100644 include/hw/sd/sdcard_legacy.h
+> I think we need -nographic else OpenBIOS crashes.  I will check.
 
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Oh, you're right, OpenBIOS hangs with "milliseconds isn't unique" when 
+running "qemu-system-ppc64 -M mac99 -display none -serial stdio" ... that's 
+weird... so you need to keep the -nographic here, indeed!
 
-r~
+  Thomas
+
 
