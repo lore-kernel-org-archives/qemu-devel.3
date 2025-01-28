@@ -4,55 +4,96 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 314D3C0218A
-	for <qemu-devel@archiver.kernel.org>; Tue, 28 Jan 2025 20:28:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B7471C0218A
+	for <qemu-devel@archiver.kernel.org>; Tue, 28 Jan 2025 20:40:16 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tcsBd-0002kT-Jg; Tue, 28 Jan 2025 15:27:53 -0500
+	id 1tcsMy-0006cv-7X; Tue, 28 Jan 2025 15:39:36 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
- id 1tcsBW-0002jA-M7; Tue, 28 Jan 2025 15:27:51 -0500
-Received: from zero.eik.bme.hu ([152.66.115.2])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
- id 1tcsBU-0004iE-0L; Tue, 28 Jan 2025 15:27:45 -0500
-Received: from zero.eik.bme.hu (localhost [127.0.0.1])
- by zero.eik.bme.hu (Postfix) with ESMTP id 737CD4E6013;
- Tue, 28 Jan 2025 21:27:42 +0100 (CET)
-X-Virus-Scanned: amavisd-new at eik.bme.hu
-Received: from zero.eik.bme.hu ([127.0.0.1])
- by zero.eik.bme.hu (zero.eik.bme.hu [127.0.0.1]) (amavisd-new, port 10028)
- with ESMTP id 3x4ynASbava6; Tue, 28 Jan 2025 21:27:40 +0100 (CET)
-Received: by zero.eik.bme.hu (Postfix, from userid 432)
- id 30F6B4E600F; Tue, 28 Jan 2025 21:27:40 +0100 (CET)
-Received: from localhost (localhost [127.0.0.1])
- by zero.eik.bme.hu (Postfix) with ESMTP id 2BCC174577C;
- Tue, 28 Jan 2025 21:27:40 +0100 (CET)
-Date: Tue, 28 Jan 2025 21:27:40 +0100 (CET)
-From: BALATON Zoltan <balaton@eik.bme.hu>
-To: Thomas Huth <thuth@redhat.com>
-cc: =?ISO-8859-15?Q?C=E9dric_Le_Goater?= <clg@redhat.com>, qemu-ppc@nongnu.org,
- Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>, qemu-devel@nongnu.org
-Subject: Re: [PATCH] tests/functional: Add a ppc64 mac99 test
-In-Reply-To: <85e8445a-b7bf-4d01-a6e5-5fcb7d562780@redhat.com>
-Message-ID: <d237f9fc-82ca-0311-5e15-28b077452a08@eik.bme.hu>
-References: <20250128180742.1137741-1-clg@redhat.com>
- <7bb6ab1b-169e-4752-8aee-ef87877a38b4@redhat.com>
- <9bf6cf01-d8c4-4ed8-808d-03e6ee05bc7b@redhat.com>
- <85e8445a-b7bf-4d01-a6e5-5fcb7d562780@redhat.com>
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1tcsMv-0006al-T7
+ for qemu-devel@nongnu.org; Tue, 28 Jan 2025 15:39:34 -0500
+Received: from mail-pl1-x62a.google.com ([2607:f8b0:4864:20::62a])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1tcsMt-0007fL-PS
+ for qemu-devel@nongnu.org; Tue, 28 Jan 2025 15:39:33 -0500
+Received: by mail-pl1-x62a.google.com with SMTP id
+ d9443c01a7336-2166022c5caso97761305ad.2
+ for <qemu-devel@nongnu.org>; Tue, 28 Jan 2025 12:39:31 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1738096770; x=1738701570; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=0m6gfdZfDonnsI66KDe3RyzYXNsfMO17neQ9nUSBVYE=;
+ b=ihDtCu8EEwNXaF51XbEig7Em4bSMEv2eVG0SbKMRVCpiqd/Bec/2AYvwW0SxeGyvto
+ npBm3PE0W2XQ0GLElF5P03dy5VZiNOOwsefc/P6EJQkKf1RSv3EefA1EfxMBcmtBY74v
+ /25ap4gKZZ/LJjw+4PpK3chCd+VkMCVK4h6fr6BwrFpGGkP8ufhg2X551n2yLOY5ok3K
+ 3UYJj/JwRujmPYbBq/pGJXOkS7wYWzj2tjHLc3cyPnYQWvj7VXvkPmSrjeA9HXC1qqK3
+ 8Sjy/boa2bm3mfZ3NvTHKWE0HPHF02Lcs4BMidZj9tmxjqQ2rPNPQtIQWobD2XukcTYF
+ Qb8g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1738096770; x=1738701570;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=0m6gfdZfDonnsI66KDe3RyzYXNsfMO17neQ9nUSBVYE=;
+ b=Fi8nrK2KTRWxJsyudr8pP62mbM06MRj6XlXsPmgTogm7oIfS9+joatGmQtpyvjhbC0
+ VmM9SaTw0TO5RViQuAZxQhVu2olMv1194CmQNNIwJO2/53BvkJgWjvnn5nYb/iYAWJpt
+ WuId4o1pSzQ1L8f99JgBo00AkuA/vAjXJrG9uQg9o93C3efUJcCFh45ofJofaeNQ9YGL
+ KPtga0Yq3qPE3EBUP/RtDBJokETUyxPcDTpZjBOo3aU2OrtQCgLLSnVsHGiwqoqDqDX1
+ FefOfV8jWKUorhxfOx6o/keof169QnEfrcVAT0NkliRj2itlH7LhQ654X9oUN7Zdp+LD
+ /JEg==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCXPlRLRGvE37g67gVrgPOX+bgQk5D7JvXSyEgxwSb8TvUkwbiwqVDn5LnryAm6vlKKXpZkoNbcoae8U@nongnu.org
+X-Gm-Message-State: AOJu0YyJNqAYL7lCmAkZcsnRPyQT5J3RLro9kZErK7RSBz+nruOAeJ6/
+ SZfXicXDgYc4qa8ZFPdCUKq9O6NXwwTNDGBq798Cz0Sy5w+JbFN4mi9cB5D41lE=
+X-Gm-Gg: ASbGncvFaJ9u4n4KIAbpTuVd9mIbm9P020wPQoGLrCX+NU13YUdPQtyZtZajflbkPQv
+ XbmYctrlgdAOa/j6rcK1xd8ONgtV1LBRSTXzVGLA11ZuQOF4OGy0+dTgmDe/F2r/I4kPkeEY2SJ
+ d/XpP5h8vdg2ezVkAPRccfaj1REWbuxugmXTCZkBW4QX/x5tNwA0lmgYVSVEP8IcqbaCZM9YCNC
+ 5huEsGjVVwSgRrHuVQkZBSXFgVBrNhiDkf9iRa1dv85Bp/9rm43kwBVJnzkpjCxaBX45w9h9fqG
+ pdN2TIbEsgcFigaYU0iwNIsgv6dkTio7mbKhVWh8cMHL/Csm9CUo4ynxcA==
+X-Google-Smtp-Source: AGHT+IEn9YS06OeYDPQIxTG4TK6aeOsG98QHjnXvqTb++MpsGWzFfJ2DMMjIG/l31Hb1PXLRQsQmvA==
+X-Received: by 2002:a05:6a00:ad8a:b0:726:41e:b314 with SMTP id
+ d2e1a72fcca58-72fd0c623femr920016b3a.19.1738096770029; 
+ Tue, 28 Jan 2025 12:39:30 -0800 (PST)
+Received: from [192.168.0.4] (174-21-71-127.tukw.qwest.net. [174.21.71.127])
+ by smtp.gmail.com with ESMTPSA id
+ d2e1a72fcca58-72f8a760e42sm10003743b3a.100.2025.01.28.12.39.29
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Tue, 28 Jan 2025 12:39:29 -0800 (PST)
+Message-ID: <f60d500d-f299-4d4c-b857-29e34b33416d@linaro.org>
+Date: Tue, 28 Jan 2025 12:39:28 -0800
 MIME-Version: 1.0
-Content-Type: multipart/mixed;
- boundary="3866299591-1617115639-1738096060=:49616"
-Received-SPF: pass client-ip=152.66.115.2; envelope-from=balaton@eik.bme.hu;
- helo=zero.eik.bme.hu
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 0/1] meson: Deprecate 32-bit host systems
+To: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
+ =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Cc: =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Thomas Huth <thuth@redhat.com>, qemu-devel@nongnu.org,
+ peter.maydell@linaro.org, stefanha@redhat.com, pbonzini@redhat.com,
+ mark.cave-ayland@ilande.co.uk, Liviu Ionescu <ilg@livius.net>
+References: <20250128004254.33442-1-richard.henderson@linaro.org>
+ <9a280789-9248-4eca-b50c-048fc58e3f53@redhat.com>
+ <87plk72tvr.fsf@draig.linaro.org>
+ <ad6ca73a-c38a-4a9b-bdcb-ab50aa53ccd1@linaro.org>
+ <Z5ii-ueFt5-5Brxz@redhat.com>
+Content-Language: en-US
+From: Richard Henderson <richard.henderson@linaro.org>
+In-Reply-To: <Z5ii-ueFt5-5Brxz@redhat.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::62a;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x62a.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -69,136 +110,75 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-  This message is in MIME format.  The first part should be readable text,
-  while the remaining parts are likely unreadable without MIME-aware tools.
+On 1/28/25 01:27, Daniel P. Berrangé wrote:
+> I'm not sure that's the case here.
+> 
+> 32-on-32 is already effectively unmaintained, so we're not suffering
+> in terms of keeping the 32-on-32 code reliable.
 
---3866299591-1617115639-1738096060=:49616
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8BIT
+Correct.
+
+As evidence, on i686, the absolutely easiest available 32-bit host, we have the following 
+failures with make check-functional:
+
+>   2/185 qemu:func-thorough+func-aarch64-thorough+thorough / func-aarch64-aarch64_rme_virt                  ERROR             1.50s   exit status 1
+>   3/185 qemu:func-thorough+func-aarch64-thorough+thorough / func-aarch64-aarch64_rme_sbsaref               ERROR             2.69s   exit status 1
+>   4/185 qemu:func-thorough+func-aarch64-thorough+thorough / func-aarch64-aarch64_virt                      ERROR           206.84s   exit status 1
+>  12/185 qemu:func-thorough+func-ppc64-thorough+thorough / func-ppc64-ppc64_tuxrun                          ERROR             4.95s   exit status 1
+>  17/185 qemu:func-thorough+func-aarch64-thorough+thorough / func-aarch64-aarch64_aspeed                    TIMEOUT         600.01s   killed by signal 15 SIGTERM
+>  24/185 qemu:func-thorough+func-ppc64-thorough+thorough / func-ppc64-ppc64_powernv                         TIMEOUT         480.01s   killed by signal 15 SIGTERM
+> 115/185 qemu:func-quick+func-x86_64 / func-x86_64-mem_addr_space                                           ERROR             8.92s   exit status 1
+> 132/185 qemu:func-thorough+func-aarch64-thorough+thorough / func-aarch64-aarch64_xlnx_versal               ERROR             0.35s   exit status 1
+> 147/185 qemu:func-thorough+func-m68k-thorough+thorough / func-m68k-m68k_q800                               ERROR             0.88s   exit status 1
+> 156/185 qemu:func-thorough+func-riscv64-thorough+thorough / func-riscv64-riscv64_tuxrun                    TIMEOUT         120.01s   killed by signal 15 SIGTERM
+> 163/185 qemu:func-thorough+func-x86_64-thorough+thorough / func-x86_64-x86_64_kvm_xen                      TIMEOUT         180.01s   killed by signal 15 SIGTERM
+> 177/185 qemu:func-thorough+func-x86_64-thorough+thorough / func-x86_64-linux_initrd                        ERROR             0.35s   exit status 1
+> 178/185 qemu:func-thorough+func-x86_64-thorough+thorough / func-x86_64-multiprocess                        ERROR             0.77s   exit status 1
+
+8 of these are due to the test asking for more RAM than the host can provide to the guest.
+
+   Output: qemu-system-aarch64: at most 2047 MB RAM can be simulated
+   Output: qemu-system-ppc64: ram size 4294967296 exceeds permitted maximum 4294967295
+   Output: qemu-system-x86_64: ram size 4294967296 exceeds permitted maximum 4294967295
+
+Some are probably trivially fixable, simply by asking for less RAM.  But the point is that 
+no one has reported the failures, and I can only conclude that no one cares about this 
+host.  And if we can't keep i686 working, then other more obscure hosts have even less chance.
+
+I'll also note that those error messages above are misleading -- in at least some of the 
+x86_64 cases the command-line is "-m 512,slots=1,maxmem=59.6G".  So we're asking to 
+reserve physical address space for almost 60G, which is not what the error message suggests.
 
 
+> We're suffering from the complexity that 32-on-32 code places on the
+> rest of the XX-on-64 code that we do care about.
+> 
+> IOW if someone volunteered to maintain 32-on-32 that's not actually
+> solving the complexity problem, just perpetuating it.
 
-On Tue, 28 Jan 2025, Thomas Huth wrote:
+Correct.
 
-> On 28/01/2025 19.35, Cédric Le Goater wrote:
->> On 1/28/25 19:20, Thomas Huth wrote:
->>> On 28/01/2025 19.07, Cédric Le Goater wrote:
->>>> The test sequence boots from disk a mac99 machine in 64-bit mode, in
->>>> which case the CPU is a PPC 970.
->>>> 
->>>> The buildroot rootfs is built with config :
->>>> 
->>>> BR2_powerpc64=y
->>>> BR2_powerpc_970=y
->>>> 
->>>> and the kernel with the g5 deconfig.
->>>> 
->>>> Signed-off-by: Cédric Le Goater <clg@redhat.com>
->>>> ---
->>>>   MAINTAINERS                          |  1 +
->>>>   tests/functional/meson.build         |  2 ++
->>>>   tests/functional/test_ppc64_mac99.py | 45 ++++++++++++++++++++++++++++
->>>>   3 files changed, 48 insertions(+)
->>>>   create mode 100644 tests/functional/test_ppc64_mac99.py
->>>> 
->>>> diff --git a/MAINTAINERS b/MAINTAINERS
->>>> index 3a2291d17d7e..ebf249173f00 100644
->>>> --- a/MAINTAINERS
->>>> +++ b/MAINTAINERS
->>>> @@ -1446,6 +1446,7 @@ F: include/hw/pci-host/uninorth.h
->>>>   F: include/hw/input/adb*
->>>>   F: pc-bios/qemu_vga.ndrv
->>>>   F: tests/functional/test_ppc_mac.py
->>>> +F: tests/functional/test_ppc64_mac99.py
->>>>   Old World (g3beige)
->>>>   M: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
->>>> diff --git a/tests/functional/meson.build b/tests/functional/meson.build
->>>> index 01a87b03e553..821a0a7c49ac 100644
->>>> --- a/tests/functional/meson.build
->>>> +++ b/tests/functional/meson.build
->>>> @@ -41,6 +41,7 @@ test_timeouts = {
->>>>     'ppc64_powernv' : 480,
->>>>     'ppc64_pseries' : 480,
->>>>     'ppc64_tuxrun' : 420,
->>>> +  'ppc64_mac99' : 120,
->>>>     'riscv64_tuxrun' : 120,
->>>>     's390x_ccw_virtio' : 420,
->>>>     'sh4_tuxrun' : 240,
->>>> @@ -181,6 +182,7 @@ tests_ppc64_system_thorough = [
->>>>     'ppc64_powernv',
->>>>     'ppc64_pseries',
->>>>     'ppc64_tuxrun',
->>>> +  'ppc64_mac99',
->>>>   ]
->>>>   tests_riscv32_system_quick = [
->>>> diff --git a/tests/functional/test_ppc64_mac99.py b/tests/functional/ 
->>>> test_ppc64_mac99.py
->>>> new file mode 100644
->>>> index 000000000000..ba582d267dae
->>>> --- /dev/null
->>>> +++ b/tests/functional/test_ppc64_mac99.py
->>>> @@ -0,0 +1,45 @@
->>>> +#!/usr/bin/env python3
->>>> +#
->>>> +# Functional test that boots a mac99 machine with a PPC970 CPU
->>>> +#
->>>> +# SPDX-License-Identifier: GPL-2.0-or-later
->>>> +
->>>> +from qemu_test import LinuxKernelTest, Asset
->>>> +from qemu_test import exec_command_and_wait_for_pattern
->>>> +
->>>> +class mac99Test(LinuxKernelTest):
->>>> +
->>>> +    ASSET_BR2_MAC99_LINUX = Asset(
->>>> +        'https://github.com/legoater/qemu-ppc-boot/raw/refs/heads/main/ 
->>>> buildroot/qemu_ppc64_mac99-2023.11-8-gdcd9f0f6eb-20240105/vmlinux',
->>>> +        
->>>> 'd59307437e4365f2cced0bbd1b04949f7397b282ef349b7cafd894d74aadfbff')
->>>> +
->>>> +    ASSET_BR2_MAC99_ROOTFS = Asset(
->>>> +        'https://github.com/legoater/qemu-ppc-boot/raw/refs/heads/main// 
->>>> buildroot/qemu_ppc64_mac99-2023.11-8-gdcd9f0f6eb-20240105/rootfs.ext2',
->>>> +        
->>>> 'bbd5fd8af62f580bc4e585f326fe584e22856572633a8333178ea6d4ed4955a4')
->>>> +
->>>> +    def test_ppc64_mac99_buildroot(self):
->>>> +        self.require_netdev('user')
->>>> +
->>>> +        linux_path = self.ASSET_BR2_MAC99_LINUX.fetch()
->>>> +        rootfs_path = self.ASSET_BR2_MAC99_ROOTFS.fetch()
->>>> +
->>>> +        self.set_machine('mac99')
->>> 
->>> Nit: Move the set_machine to the top of the function, so that the assets 
->>> don't have to be fetched in case the machine is not available.
->>> 
->>> With that nit fixed:
->>> Reviewed-by: Thomas Huth <thuth@redhat.com>
->>> 
->>> 
->>>> +        self.vm.set_console()
->>>> +
->>>> +        self.vm.add_args('-kernel', linux_path,
->>>> +                         '-append', 'root=/dev/sda',
->>>> +                         '-drive', f'file={rootfs_path},format=raw',
->>>> +                         '-net', 'nic,model=sungem', '-net', 'user',
->>>> +                         '-snapshot', '-nographic')
->>> 
->>> I just also noticed that we already have "-display none" in python/qemu/ 
->>> machine/machine.py, so you likely don't need the -nographic here (but 
->>> looks like we've got that wrong in a bunch of tests already).
->> 
->> I think we need -nographic else OpenBIOS crashes.  I will check.
->
-> Oh, you're right, OpenBIOS hangs with "milliseconds isn't unique" when 
-> running "qemu-system-ppc64 -M mac99 -display none -serial stdio" ... that's 
-> weird... so you need to keep the -nographic here, indeed!
 
-qemu-system-ppc64 -M mac99 -display none -vga none -serial stdio
+> So again lets be clear...
+> 
+> Either we...
+> 
+>   * ...want to kill 32-on-32 code to reduce the complexity on the
+>     main XX-on-64 codebase regardless of interest in 32-on-32
+> 
+> Or
+> 
+>   * ...want to kill 32-on-32 code because it is buggy due to lack
+>     of maintainers, but would welcome someone to step forward to
+>     maintain it
+> 
+> It sounded like we were wanting the former, not the latter.
+Correct.
 
-does work.
+Frankly, no one has stepped forward in the last 2 years, the last time we mooted 
+deprecating all 32-bit hosts, but got talked out of it.  So I don't think option 2 is a 
+real option.
 
-Regards,
-BALATON Zoltan
---3866299591-1617115639-1738096060=:49616--
+
+r~
 
