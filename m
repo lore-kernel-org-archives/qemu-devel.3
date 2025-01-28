@@ -4,73 +4,73 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1B864C0218A
-	for <qemu-devel@archiver.kernel.org>; Tue, 28 Jan 2025 15:00:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 38320C0218A
+	for <qemu-devel@archiver.kernel.org>; Tue, 28 Jan 2025 15:01:03 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tcn4T-0001rE-EB; Tue, 28 Jan 2025 10:00:09 -0500
+	id 1tcn4j-0001x0-Rq; Tue, 28 Jan 2025 10:00:25 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1tcn4P-0001oT-Pg
- for qemu-devel@nongnu.org; Tue, 28 Jan 2025 10:00:05 -0500
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1tcn4i-0001wn-BN
+ for qemu-devel@nongnu.org; Tue, 28 Jan 2025 10:00:24 -0500
 Received: from smtp-out1.suse.de ([2a07:de40:b251:101:10:150:64:1])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1tcn4N-0000AB-S4
- for qemu-devel@nongnu.org; Tue, 28 Jan 2025 10:00:05 -0500
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1tcn4g-0000Ob-Rg
+ for qemu-devel@nongnu.org; Tue, 28 Jan 2025 10:00:24 -0500
 Received: from imap1.dmz-prg2.suse.org (unknown [10.150.64.97])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
  (No client certificate requested)
- by smtp-out1.suse.de (Postfix) with ESMTPS id C2CD0210F9;
- Tue, 28 Jan 2025 15:00:01 +0000 (UTC)
+ by smtp-out1.suse.de (Postfix) with ESMTPS id 499E8210F7;
+ Tue, 28 Jan 2025 15:00:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1738076401; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ t=1738076420; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
  mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=PFzi8qR8PXEMNRyDqlcLJS32cPVPanpsfToIXqj7+3k=;
- b=fCXF04RGAwnc99aBipb5ekzpC6BLsuOTf4/0hd3JpqinuoCGEmTgfrs/PJq7rSJNPILvjx
- ppbdXUMN+31KVT8qHH6jJuX6MXJ7KzagAd9fHgcrnsxCfcmQCFb8mXn0Z2+BB7Xm/afAHw
- U0kZ7bs7Z6Yuwln3asWwOUHt1L/Wm3E=
+ bh=cBJw1y7rtrVUcng5Evq+0LTNCeoeBBe6UQVxSY7/iz8=;
+ b=AQCYEliQ9jNpP66B8JmjRN7uhgCSrZD60bk3/8jJfYM+nHdyZ9hIDKz/piHmCfgN7Bohy8
+ MMZzb+79XX4BmC4pzVmwhTvHft6DZQuM2kFCEawmOQ+gpnelJ279Lp49lXo1xLUaL1DAqW
+ lDEw7JX7S1uzn+/XVw2DNIRdH1b41ME=
 DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1738076401;
+ s=susede2_ed25519; t=1738076420;
  h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
  mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=PFzi8qR8PXEMNRyDqlcLJS32cPVPanpsfToIXqj7+3k=;
- b=Um8V5YPCCfLKqnY2rJ2ilRZZ+ch8kf0pjqHxORPn/Zn+ro5hCrVgAzZ2QowgEStMdBZXCF
- xE0ovUOgGsdKIqAg==
+ bh=cBJw1y7rtrVUcng5Evq+0LTNCeoeBBe6UQVxSY7/iz8=;
+ b=O6qejYpm5zvMt2yWyU7xDhJJsVVqS0u5wWSDWaTQ0VE1LThx7sWe7OiCvcJUosau8GWcfT
+ /Xo2uCxObhOCGjCA==
 Authentication-Results: smtp-out1.suse.de;
 	none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1738076401; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ t=1738076420; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
  mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=PFzi8qR8PXEMNRyDqlcLJS32cPVPanpsfToIXqj7+3k=;
- b=fCXF04RGAwnc99aBipb5ekzpC6BLsuOTf4/0hd3JpqinuoCGEmTgfrs/PJq7rSJNPILvjx
- ppbdXUMN+31KVT8qHH6jJuX6MXJ7KzagAd9fHgcrnsxCfcmQCFb8mXn0Z2+BB7Xm/afAHw
- U0kZ7bs7Z6Yuwln3asWwOUHt1L/Wm3E=
+ bh=cBJw1y7rtrVUcng5Evq+0LTNCeoeBBe6UQVxSY7/iz8=;
+ b=AQCYEliQ9jNpP66B8JmjRN7uhgCSrZD60bk3/8jJfYM+nHdyZ9hIDKz/piHmCfgN7Bohy8
+ MMZzb+79XX4BmC4pzVmwhTvHft6DZQuM2kFCEawmOQ+gpnelJ279Lp49lXo1xLUaL1DAqW
+ lDEw7JX7S1uzn+/XVw2DNIRdH1b41ME=
 DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1738076401;
+ s=susede2_ed25519; t=1738076420;
  h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
  mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=PFzi8qR8PXEMNRyDqlcLJS32cPVPanpsfToIXqj7+3k=;
- b=Um8V5YPCCfLKqnY2rJ2ilRZZ+ch8kf0pjqHxORPn/Zn+ro5hCrVgAzZ2QowgEStMdBZXCF
- xE0ovUOgGsdKIqAg==
+ bh=cBJw1y7rtrVUcng5Evq+0LTNCeoeBBe6UQVxSY7/iz8=;
+ b=O6qejYpm5zvMt2yWyU7xDhJJsVVqS0u5wWSDWaTQ0VE1LThx7sWe7OiCvcJUosau8GWcfT
+ /Xo2uCxObhOCGjCA==
 Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
  (No client certificate requested)
- by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 2ECBD13625;
- Tue, 28 Jan 2025 15:00:00 +0000 (UTC)
+ by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id B6E6A13625;
+ Tue, 28 Jan 2025 15:00:19 +0000 (UTC)
 Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
- by imap1.dmz-prg2.suse.org with ESMTPSA id py5BN/DwmGfqbQAAD6G6ig
- (envelope-from <farosas@suse.de>); Tue, 28 Jan 2025 15:00:00 +0000
+ by imap1.dmz-prg2.suse.org with ESMTPSA id /V/bHAPxmGfMcwAAD6G6ig
+ (envelope-from <farosas@suse.de>); Tue, 28 Jan 2025 15:00:19 +0000
 From: Fabiano Rosas <farosas@suse.de>
 To: Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  qemu-devel@nongnu.org
@@ -79,17 +79,17 @@ Cc: Paolo Bonzini <pbonzini@redhat.com>, Laurent Vivier
  <yong.huang@smartx.com>, Phil Dennis-Jordan <phil@philjordan.eu>, Peter Xu
  <peterx@redhat.com>, Akihiko Odaki <akihiko.odaki@daynix.com>, Philippe
  =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: Re: [PATCH 4/7] tests/qtest/migration: Pass accelerator arguments
- as machine option
-In-Reply-To: <20250128135429.8500-5-philmd@linaro.org>
+Subject: Re: [PATCH 5/7] tests/qtest/migration: Add
+ MigrationTestEnv::has_hvf field
+In-Reply-To: <20250128135429.8500-6-philmd@linaro.org>
 References: <20250128135429.8500-1-philmd@linaro.org>
- <20250128135429.8500-5-philmd@linaro.org>
-Date: Tue, 28 Jan 2025 11:59:57 -0300
-Message-ID: <87o6zrt24y.fsf@suse.de>
+ <20250128135429.8500-6-philmd@linaro.org>
+Date: Tue, 28 Jan 2025 12:00:16 -0300
+Message-ID: <87lduvt24f.fsf@suse.de>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: quoted-printable
-X-Spamd-Result: default: False [-4.30 / 50.00]; BAYES_HAM(-3.00)[100.00%];
+X-Spamd-Result: default: False [-4.18 / 50.00]; BAYES_HAM(-2.88)[99.50%];
  NEURAL_HAM_LONG(-1.00)[-1.000];
  NEURAL_HAM_SHORT(-0.20)[-1.000]; MIME_GOOD(-0.10)[text/plain];
  ARC_NA(0.00)[]; RCVD_VIA_SMTP_AUTH(0.00)[];
@@ -100,8 +100,8 @@ X-Spamd-Result: default: False [-4.30 / 50.00]; BAYES_HAM(-3.00)[100.00%];
  FROM_EQ_ENVFROM(0.00)[]; FROM_HAS_DN(0.00)[];
  TO_DN_SOME(0.00)[]; RCVD_COUNT_TWO(0.00)[2];
  FUZZY_BLOCKED(0.00)[rspamd.com]; TO_MATCH_ENVRCPT_ALL(0.00)[];
- DBL_BLOCKED_OPENRESOLVER(0.00)[linaro.org:email, imap1.dmz-prg2.suse.org:helo,
- suse.de:mid]
+ DBL_BLOCKED_OPENRESOLVER(0.00)[imap1.dmz-prg2.suse.org:helo, linaro.org:email,
+ suse.de:email, suse.de:mid]
 Received-SPF: pass client-ip=2a07:de40:b251:101:10:150:64:1;
  envelope-from=farosas@suse.de; helo=smtp-out1.suse.de
 X-Spam_score_int: -20
@@ -127,96 +127,9 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org> writes:
 
-> The '-accel' CLI option is handler as sugar property as
-> '-machine,accel=3D'. Replace the migration tests command
-> line, only using the best accelerator available (first
-> hardware, then software).
+> Allow tests to tune their parameters when running on HVF.
 >
 > Signed-off-by: Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org>
-> ---
->  tests/qtest/migration/framework.c | 28 ++++++++++++++++------------
->  1 file changed, 16 insertions(+), 12 deletions(-)
->
-> diff --git a/tests/qtest/migration/framework.c b/tests/qtest/migration/fr=
-amework.c
-> index 38a0a1a5264..e567296b014 100644
-> --- a/tests/qtest/migration/framework.c
-> +++ b/tests/qtest/migration/framework.c
-> @@ -214,8 +214,9 @@ int migrate_start(QTestState **from, QTestState **to,=
- const char *uri,
->      const gchar *ignore_stderr;
->      g_autofree char *shmem_opts =3D NULL;
->      g_autofree char *shmem_path =3D NULL;
-> -    const char *kvm_opts =3D NULL;
-> -    const char *arch =3D qtest_get_arch();
-> +    const char *accel_args =3D NULL;
-> +    const MigrationTestEnv *env =3D migration_get_env();
-> +    const char *arch =3D env->arch;
->      const char *memory_size;
->      const char *machine_alias, *machine_opts =3D "";
->      g_autofree char *machine =3D NULL;
-> @@ -296,8 +297,15 @@ int migrate_start(QTestState **from, QTestState **to=
-, const char *uri,
->              memory_size, shmem_path);
->      }
->=20=20
-> -    if (args->use_dirty_ring) {
-> -        kvm_opts =3D ",dirty-ring-size=3D4096";
-> +    if (env->has_kvm) {
-> +        if (args->use_dirty_ring) {
-> +            accel_args =3D "kvm,dirty-ring-size=3D4096";
-> +        } else {
-> +            accel_args =3D "kvm";
-> +        }
-> +    } else {
-> +        assert(env->has_tcg);
-> +        accel_args =3D "tcg";
->      }
 
-I don't think this approach works when testing across
-architectures. IIUC has_kvm will be true whenever the *test* can access
-/dev/kvm. Which means if we run on a x86 while testing
-qemu-system-s390x, then has_kvm=3D=3Dtrue but we actually need to use TCG,
-so the fallback in the QEMU binary (-accel kvm -accel tcg) will be
-automatically used.
-
->=20=20
->      if (!qtest_has_machine(machine_alias)) {
-> @@ -311,14 +319,12 @@ int migrate_start(QTestState **from, QTestState **t=
-o, const char *uri,
->=20=20
->      g_test_message("Using machine type: %s", machine);
->=20=20
-> -    cmd_source =3D g_strdup_printf("-accel kvm%s -accel tcg "
-> -                                 "-machine %s,%s "
-> +    cmd_source =3D g_strdup_printf("-machine %s,%s,accel=3D%s "
->                                   "-name source,debug-threads=3Don "
->                                   "-m %s "
->                                   "-serial file:%s/src_serial "
->                                   "%s %s %s %s",
-> -                                 kvm_opts ? kvm_opts : "",
-> -                                 machine, machine_opts,
-> +                                 machine, machine_opts, accel_args,
->                                   memory_size, tmpfs,
->                                   arch_opts ? arch_opts : "",
->                                   shmem_opts ? shmem_opts : "",
-> @@ -332,15 +338,13 @@ int migrate_start(QTestState **from, QTestState **t=
-o, const char *uri,
->                                       &src_state);
->      }
->=20=20
-> -    cmd_target =3D g_strdup_printf("-accel kvm%s -accel tcg "
-> -                                 "-machine %s,%s "
-> +    cmd_target =3D g_strdup_printf("-machine %s,%s,accel=3D%s "
->                                   "-name target,debug-threads=3Don "
->                                   "-m %s "
->                                   "-serial file:%s/dest_serial "
->                                   "-incoming %s "
->                                   "%s %s %s %s",
-> -                                 kvm_opts ? kvm_opts : "",
-> -                                 machine, machine_opts,
-> +                                 machine, machine_opts, accel_args,
->                                   memory_size, tmpfs, uri,
->                                   arch_opts ? arch_opts : "",
->                                   shmem_opts ? shmem_opts : "",
+Reviewed-by: Fabiano Rosas <farosas@suse.de>
 
