@@ -4,62 +4,140 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 56E7AC02193
-	for <qemu-devel@archiver.kernel.org>; Wed, 29 Jan 2025 10:30:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5AEEDC0218D
+	for <qemu-devel@archiver.kernel.org>; Wed, 29 Jan 2025 10:42:50 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1td5Ka-0004EU-4c; Wed, 29 Jan 2025 05:30:00 -0500
+	id 1td5W4-0006Il-Hl; Wed, 29 Jan 2025 05:41:52 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jonathan.cameron@huawei.com>)
- id 1td5KT-0004DT-Sy
- for qemu-devel@nongnu.org; Wed, 29 Jan 2025 05:29:56 -0500
-Received: from frasgout.his.huawei.com ([185.176.79.56])
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1td5W2-0006IR-SZ
+ for qemu-devel@nongnu.org; Wed, 29 Jan 2025 05:41:51 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jonathan.cameron@huawei.com>)
- id 1td5KQ-0005Hl-Uz
- for qemu-devel@nongnu.org; Wed, 29 Jan 2025 05:29:53 -0500
-Received: from mail.maildlp.com (unknown [172.18.186.216])
- by frasgout.his.huawei.com (SkyGuard) with ESMTP id 4YjddQ5nY5z6D97q;
- Wed, 29 Jan 2025 18:27:38 +0800 (CST)
-Received: from frapeml500008.china.huawei.com (unknown [7.182.85.71])
- by mail.maildlp.com (Postfix) with ESMTPS id 18374140B18;
- Wed, 29 Jan 2025 18:29:44 +0800 (CST)
-Received: from localhost (10.48.154.188) by frapeml500008.china.huawei.com
- (7.182.85.71) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.1.2507.39; Wed, 29 Jan
- 2025 11:29:43 +0100
-Date: Wed, 29 Jan 2025 10:29:36 +0000
-To: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-CC: <fan.ni@samsung.com>, <linux-cxl@vger.kernel.org>,
- <qemu-devel@nongnu.org>, Alex =?ISO-8859-1?Q?Benn=E9e?=
- <alex.bennee@linaro.org>, Alexandre Iooss <erdnaxe@crans.org>, Mahmoud
- Mandour <ma.mandourr@gmail.com>, <linuxarm@huawei.com>, Niyas Sait
- <niyas.sait@huawei.com>
-Subject: Re: [RFC PATCH QEMU 0/3] cxl/plugins: Hotness Monitoring Unit with
- 'real' data.
-Message-ID: <20250129102936.00006782@huawei.com>
-In-Reply-To: <c595c1c1-63cc-462a-982e-66ac61a2eb9a@linaro.org>
-References: <20250124172905.84099-1-Jonathan.Cameron@huawei.com>
- <5e0876e8-4c2c-4ba5-86dc-d9ca241b743d@linaro.org>
- <20250127102009.00002dbd@huawei.com>
- <c595c1c1-63cc-462a-982e-66ac61a2eb9a@linaro.org>
-X-Mailer: Claws Mail 4.3.0 (GTK 3.24.42; x86_64-w64-mingw32)
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1td5Vz-0007C6-K1
+ for qemu-devel@nongnu.org; Wed, 29 Jan 2025 05:41:49 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1738147305;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+ bh=rKsIqkxhIJzFL53c2E8QgMWxqch1cYpijGwulYYKRdY=;
+ b=O9IIi4SiBddgdK4572BffbZXUl4rgQ+2VQJ6bQT/FmUW0flR+DI6RG9MAhLelaxD6Y8tNq
+ q3fV1Fh76FpK8cQ00PqVF+VOUEtIcPRjtRUAWmDvnygqfvVoaBdanJh2Ers77GZqfZyjwg
+ 8C9zfHIEhhapZBH/F77CzNPhfry7v48=
+Received: from mail-wm1-f72.google.com (mail-wm1-f72.google.com
+ [209.85.128.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-99-N-hADQa1ODS2VUlQyKPZRw-1; Wed, 29 Jan 2025 05:41:43 -0500
+X-MC-Unique: N-hADQa1ODS2VUlQyKPZRw-1
+X-Mimecast-MFC-AGG-ID: N-hADQa1ODS2VUlQyKPZRw
+Received: by mail-wm1-f72.google.com with SMTP id
+ 5b1f17b1804b1-43619b135bcso32210285e9.1
+ for <qemu-devel@nongnu.org>; Wed, 29 Jan 2025 02:41:43 -0800 (PST)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1738147302; x=1738752102;
+ h=content-transfer-encoding:in-reply-to:autocrypt:from
+ :content-language:references:cc:to:subject:user-agent:mime-version
+ :date:message-id:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=rKsIqkxhIJzFL53c2E8QgMWxqch1cYpijGwulYYKRdY=;
+ b=kuVrKM2dcuZ51pLQPBqgOlacME+n2bFAtxoKVCHCYXBqltrf5ngNxPvHtzLYuU/AyE
+ r2ETDNCXrXP744Kb9wY9WW8Mklbcl8LGdyKxBqjmWGSLZfmp6Lk5PcKUWAflqIZV+3aB
+ cJGaR6oX+uluKDsa2yWWLECbQiILc4sgnMMgofl/u7B9q9HIureu7yfvqk3pYvnxmxxP
+ ncxDF3Z+0vgBedBREax89XAvP6tC6OMwRIHVDyHpGT83N0P88iu3TTVLQnTVtbr/lP+x
+ nFLy0OQnJelMTgWaG7RLWIZZtW1dSQ6a4DlHBZSKOH0n9CLxEuiekJKTrt4yvxzUm+hs
+ mXGA==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCW3UegvlqEMS5zDbXfa1AdA6uGrgo1KnceTu5HwuEmtZf1JyqPxcVZYcwIjsn9BxckZ5iRlludYrLdK@nongnu.org
+X-Gm-Message-State: AOJu0Yw5zlV1TxiA+N5zo8xeb3BcETNKuu6N8EB4NmqfiDRSpi1cfpW1
+ zvjiYNkuyebgsjEWtxAx3y8KjOsRfMNaNO/B93Ih6Oi00Wb6s8G15REd913Gwtfs6+uuqap3iIi
+ dUkuw1k2bCL7ZU5xWQah3C1qidrp88m+L/GrerVXCA8GHbDmLCB2M0bK7SXB8
+X-Gm-Gg: ASbGncs10chCOcy+ZaJ+ZJ9D8gfuXHiu/eYGRN+yhDDofp/ZmPNwQ6kPn2+TktliR8g
+ ehVa8G9aidR1Iyp0QwDJe77RPP/CZNtUMYRb4YqzQ77ZQ2C1okQ7y90+ICchfwM8ATam2cMmfRO
+ tmP+QjCfHOzcVTbVmN/ih0Y61N4zwKCK/rMDVmne7EOQrREkW28uxL6bNq9yaj3tFB1HRzyD5wm
+ FjdirpnC0H9zGazH9WSmwfLsHFxA3V8nlKUB+HOVcenzVwMcnv6MJaJBRjJ6+BqK7uy1l/TAojU
+ nG2XvSXaD8nVXIAYFiGl3c1nae+3GeyO2Hza
+X-Received: by 2002:a05:600c:b8d:b0:436:f3f6:9582 with SMTP id
+ 5b1f17b1804b1-438dc3c2221mr20861225e9.8.1738147302496; 
+ Wed, 29 Jan 2025 02:41:42 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IGmi3xno0TUZqts3dTH/fAKZrUQycC8Y4rXH6TawqFEJGbYxUSpB5rYzikICAkwDQx1TzTNww==
+X-Received: by 2002:a05:600c:b8d:b0:436:f3f6:9582 with SMTP id
+ 5b1f17b1804b1-438dc3c2221mr20861025e9.8.1738147302145; 
+ Wed, 29 Jan 2025 02:41:42 -0800 (PST)
+Received: from [192.168.0.7] (ip-109-42-50-234.web.vodafone.de.
+ [109.42.50.234]) by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-438dcc6de2dsm18128425e9.26.2025.01.29.02.41.41
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Wed, 29 Jan 2025 02:41:41 -0800 (PST)
+Message-ID: <03ac1d2d-cb78-40f7-b2d3-31dcba0ee6d6@redhat.com>
+Date: Wed, 29 Jan 2025 11:41:40 +0100
 MIME-Version: 1.0
-Content-Type: text/plain; charset="US-ASCII"
-Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.48.154.188]
-X-ClientProxiedBy: lhrpeml500005.china.huawei.com (7.191.163.240) To
- frapeml500008.china.huawei.com (7.182.85.71)
-Received-SPF: pass client-ip=185.176.79.56;
- envelope-from=jonathan.cameron@huawei.com; helo=frasgout.his.huawei.com
-X-Spam_score_int: -41
-X-Spam_score: -4.2
-X-Spam_bar: ----
-X-Spam_report: (-4.2 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_MED=-2.3,
- RCVD_IN_MSPIKE_H2=0.001, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] tests/functional: Extend PPC 40p test with Linux boot
+To: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>, qemu-ppc@nongnu.org
+Cc: =?UTF-8?Q?Herv=C3=A9_Poussineau?= <hpoussin@reactos.org>,
+ qemu-devel@nongnu.org, "Daniel P. Berrange" <berrange@redhat.com>
+References: <20250129102223.1313703-1-clg@redhat.com>
+Content-Language: en-US
+From: Thomas Huth <thuth@redhat.com>
+Autocrypt: addr=thuth@redhat.com; keydata=
+ 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
+In-Reply-To: <20250129102223.1313703-1-clg@redhat.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=thuth@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -33
+X-Spam_score: -3.4
+X-Spam_bar: ---
+X-Spam_report: (-3.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.3,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -73,288 +151,61 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-to:  Jonathan Cameron <Jonathan.Cameron@huawei.com>
-From:  Jonathan Cameron via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, 28 Jan 2025 12:04:19 -0800
-Pierrick Bouvier <pierrick.bouvier@linaro.org> wrote:
-
-> On 1/27/25 02:20, Jonathan Cameron wrote:
-> > On Fri, 24 Jan 2025 12:55:52 -0800
-> > Pierrick Bouvier <pierrick.bouvier@linaro.org> wrote:
-> >   
-> >> Hi Jonathan,
-> >>
-> >> thanks for posting this. It's a creative usage of plugins.
-> >>
-> >> I think that your current approach, decoupling plugins, CHMU and device
-> >> model is a good thing.
-> >>
-> >> I'm not familiar with CXL, but one question that comes to my mind is:
-> >> Is that mandatory to do this analysis during execution (vs dumping
-> >> binary traces from CHMU and plugin and running an analysis post execution)?  
-> > 
-> > Short answer is that post run analysis isn't of much use for developing the OS
-> > software story. It works to some degree if you are designing the tracking
-> > hardware or algorithms to use that hardware capture a snapshot of hotness -
-> > dealing with lack of counters, that sort of thing.
-> > 
-> > The main intent of this support is to drive live usage of the data in the OS.
-> > So it gets this hotness information and migrates more frequently accessed memory
-> > to a 'nearer'/lower latency memory node.
-> > 
-> >  From an OS point of view there will be two ways it uses it:
-> > 1) Offline application optimization  - that aligns with your suggestion of offline
-> >     analysis but would typically still need to be live because we have to do
-> >     the reverse maps and work out what was allocated in particular locations.
-> >     Not impossible to dump that information from QEMU + the guest OS but the usage
-> >     flow would then look quite different from what makes sense on real hardware
-> >     where all the data is available to the host OS directly.
-> > 2) Migration of memory.  This will dynamically change the PA backing a VA whilst
-> >     applications are running. The aim being to develop how that happens, we need
-> >     the dynamic state.
-> >   
+On 29/01/2025 11.22, Cédric Le Goater wrote:
+> Fetch the cdrom image for the IBM 6015 PReP PowerPC machine hosted on
+> the Juneau Linux Users Group site, boot and check Linux version.
 > 
-> In the end, are you modeling how the real CHMU will work, or simply 
-> gathering data to help designing it (number of counters, line size, ...)?
-
-This work is modeling how a real (ish) CHMU will work - particular interest being
-use in Linux kernel usecases. Otherwise we wouldn't share! :) 
-
-For CHMU hardware design, until people reach the live algorithms in the loop
-stage, tracing techniques and offline analysis tend to be easier to use.
-
-A annoying corner is that the implementations in QEMU will 'probably' remain
-simplistic because the detailed designs of CHMUs may be considered sensitive.
-It's a complex space and there are some really interesting and to me surprising
-approaches.
-
-What we can implement should be good enough for working out the basics of a
-general software stack but possible it will need tuning against specific
-implementations.  Maybe that necessity will result in more openness on the
-parts of various uarch / arch teams.
-
-There are some academic works on how to build these trackers, and there should
-be less sensitivity around those.
-
-This is perhaps an odd corner for QEMU because we are emulating an interface
-accurately but the hardware behind it intentionally does not have a specification
-defined implementation and the unusual bit is that implementation affects
-the output.  We can implement a few options that are well defined though.
-1) An Oracle ('infinite' counters)
-2) Limited counters allocated on first touch in a given epoch (sampling period).
-
-1 is useful for putting an upper bound on data accuracy.
-2 is a typical first thing people will look at when considering a implementation.
-
-So conclusion. This is about enabling software development, not tuning a hardware
-design.
-
-Jonathan
-
+> Signed-off-by: Cédric Le Goater <clg@redhat.com>
+> ---
+>   tests/functional/test_ppc_40p.py | 20 +++++++++++++++++++-
+>   1 file changed, 19 insertions(+), 1 deletion(-)
 > 
-> Pierrick
-> 
-> > Jonathan
-> >   
-> >>
-> >> Regards,
-> >> Pierrick
-> >>
-> >> On 1/24/25 09:29, Jonathan Cameron wrote:  
-> >>> Hi All,
-> >>>
-> >>> This is an RFC mainly to seek feedback on the approach used, particularly
-> >>> the aspect of how to get data from a TCG plugin into a device model.
-> >>> Two options that we have tried
-> >>> 1. Socket over which the plugin sends data to an external server
-> >>>      (as seen here)
-> >>> 2. Register and manage a plugin from within a device model
-> >>>
-> >>> The external server approach keeps things loosely coupled, but at the cost
-> >>> of separately maintaining that server, protocol definitions etc and
-> >>> some overhead.
-> >>> The closely couple solution is neater, but I suspect might be controversial
-> >>> (hence I didn't start with that :)
-> >>>
-> >>> The code here is at best a PoC to illustrate what we have in mind
-> >>> It's not nice code at all, feature gaps, bugs and all!  So whilst
-> >>> review is always welcome I'm not requesting it for now.
-> >>>
-> >>> Kernel support was posted a while back but was done against fake data
-> >>> (still supported here if you don't provide the port parameter to the type3 device)
-> >>> https://lore.kernel.org/linux-cxl/20241121101845.1815660-1-Jonathan.Cameron@huawei.com/
-> >>> I'll post a minor update of that driver shortly to take into account
-> >>> a few specification clarifications but it should work with this without
-> >>> those.
-> >>>
-> >>> Note there are some other patches on the tree I generated this from
-> >>> so this may not apply to upstream. Easiest is probably to test
-> >>> using gitlab.com/jic23/qemu cxl-2025-01-24
-> >>>
-> >>> Thanks to Niyas for his suggestions on how to make all this work!
-> >>>
-> >>> Background
-> >>> ----------
-> >>>
-> >>> What is the Compute eXpress Link Hotness Monitoring unit and what is it for?
-> >>> - In a tiered memory equipped server with the slow tier being attached via
-> >>>     CXL the expectation is a given workload will benefit from putting data
-> >>>     that is frequently fetched from memory in lower latency directly attached
-> >>>     DRAM.  Less frequently used data can be served from the CXL attached memory
-> >>>     with no significant loss of performance.  Any data that is hot enough to
-> >>>     almost always be in cache doesn't matter as it is only fetch from memory
-> >>>     occasionally.
-> >>> - Working out which memory is best places where is hard to do and in some
-> >>>     workloads a dynamic problem. As such we need something we can measure
-> >>>     to provide some indication of what data is in the wrong place.
-> >>>     There are existing techniques to do this (page faulting, various
-> >>>     CPU tracing systems, access bit scanning etc) but they all have significant
-> >>>     overheads.
-> >>> - Monitoring accesses on the CXL device provides a path to getting good
-> >>>     data without those overheads.  These units are known as CXL Hotness
-> >>>     Monitoring Units or CHMUs.  Loosely speaking they count accesses to
-> >>>     granuals of data (e.g. 4KiB pages).  Exactly how they do that and
-> >>>     where they sacrifice data accuracy is an implementation trade off.
-> >>>
-> >>> Why do we need a model that gives real data?
-> >>> - In general there is a need to develop software on top of these units
-> >>>     to move data to the right place. Hard to evaluate that if we are making
-> >>>     up the info on what is 'hot'.
-> >>> - Need to allow for a bunch of 'impdef' solutions. Note that CHMU
-> >>>     in this patch set is an oracle - it has enough counters to count
-> >>>     every access.  That's not realistic but it doesn't get me shouted
-> >>>     at by our architecture teams for giving away any secrets.
-> >>>     If we move forward with this, I'll probably implement a limited
-> >>>     counter + full CAM solution (also unrealistic, but closer to real)
-> >>>     I'd be very interested in contributions of other approaches (there
-> >>>     are lots in the literature, under the term top-k)
-> >>> - Resources will be constrained, so whilst a CHMU might in theory
-> >>>     allow monitoring everything at once, that will come with a big
-> >>>     accuracy cost.  We need to design the algorithms that give us
-> >>>     good data given those constraints.
-> >>>
-> >>> So we need a solution to explore the design space and develop the software
-> >>> to take advantage of this hardware (there are various LSF/MM proposals
-> >>> on how to use this an other ways of tracking hotness).
-> >>> https://lore.kernel.org/all/20250123105721.424117-1-raghavendra.kt@amd.com/
-> >>> https://lore.kernel.org/lkml/Z4XUoWlU-UgRik18@gourry-fedora-PF4VCD3F/T/
-> >>>
-> >>> QEMU plugins give us a way to do this.  In particular the existing
-> >>> Cache plugin can be easily modified to tell use what memory addresses
-> >>> missed at the last level of emulated cache.  We can then filter those
-> >>> for the memory address range that maps to CXL and feed them to our
-> >>> counter implementation. On the other side, each instance of CXL type 3
-> >>> device can connect to this server and request hotness monitoring
-> >>> services + provide parameters etc.  Elements such as list threshold
-> >>> management and overflow detection etc are in the CXL HMU QEMU device mode.
-> >>> As noted above, we have an alternative approach that can closely couple
-> >>> things, so the device model registers the plugin directly and there
-> >>> is no server.
-> >>>
-> >>> How to use it!
-> >>> --------------
-> >>>
-> >>> It runs a little slow but it runs and generates somewhat plausible outputs.
-> >>> I'd definitely suggest running it with the pass through optimization
-> >>> patch on the CXL staging tree (and a single direct connected device).
-> >>> Your millage will vary if you try to use other parameters, or
-> >>> hotness units beyond the first one (implementation far from complete!)
-> >>>
-> >>> To run start the server in contrib/hmu/ providing a port number to listen
-> >>> on.
-> >>>
-> >>> ./chmu 4443
-> >>>
-> >>> Then launch QEMU with something like the following.
-> >>>
-> >>> qemu-system-aarch64 -icount shift=1 \
-> >>>    -plugin ../qemu/bin/native/contrib/plugins/libcache.so,port=4443,missfilterbase=1099511627776,missfiltersize=1099511627776,dcachesize=8192,dassoc=4,dblksize=64,icachesize=8192,iassoc=4,iblksize=64,l2cachesize=32768,l2assoc=16,l2blksize=64 \
-> >>>    -M virt,ras=on,nvdimm=on,gic-version=3,cxl=on,hmat=on -m 4g,maxmem=8g,slots=4 -cpu max -smp 4 \
-> >>>    -kernel Image \
-> >>>    -drive if=none,file=full.qcow2,format=qcow2,id=hd \
-> >>>    -device pcie-root-port,id=root_port1 \
-> >>>    -device virtio-blk-pci,drive=hd,x-max-bounce-buffer-size=512k \
-> >>>    -nographic -no-reboot -append 'earlycon memblock=debug root=/dev/vda2 fsck.mode=skip maxcpus=4 tp_printk' \
-> >>>    -monitor telnet:127.0.0.1:1234,server,nowait -bios QEMU_EFI.fd \
-> >>>    -object memory-backend-ram,size=4G,id=mem0 \
-> >>>    -object memory-backend-file,id=cxl-mem1,share=on,mem-path=/tmp/t3_cxl1.raw,size=1G,align=256M \
-> >>>    -object memory-backend-file,id=cxl-mem2,share=on,mem-path=/tmp/t3_cxl2.raw,size=1G,align=256M \
-> >>>    -object memory-backend-file,id=cxl-lsa1,share=on,mem-path=/tmp/t3_lsa1.raw,size=1M,align=1M \
-> >>>     -object memory-backend-file,id=cxl-mem3,share=on,mem-path=/tmp/t3_cxl3.raw,size=1G,align=256M \
-> >>>    -object memory-backend-file,id=cxl-mem4,share=on,mem-path=/tmp/t3_cxl4.raw,size=1G,align=256M \
-> >>>    -object memory-backend-file,id=cxl-lsa2,share=on,mem-path=/tmp/t3_lsa2.raw,size=1M,align=1M \
-> >>>    -device pxb-cxl,bus_nr=12,bus=pcie.0,id=cxl.1,hdm_for_passthrough=true,numa_node=0\
-> >>>    -device cxl-rp,port=0,bus=cxl.1,id=cxl_rp_port0,chassis=0,slot=2 \
-> >>>    -device cxl-type3,bus=cxl_rp_port0,volatile-memdev=cxl-mem1,id=cxl-pmem1,lsa=cxl-lsa1,sn=3,x-speed=32,x-width=16,chmu-port=4443 \
-> >>>    -machine cxl-fmw.0.targets.0=cxl.1,cxl-fmw.0.size=8G,cxl-fmw.0.interleave-granularity=1k \
-> >>>    -numa node,nodeid=0,cpus=0-3,memdev=mem0 \
-> >>>    -numa node,nodeid=1 \
-> >>>    -object acpi-generic-initiator,id=bob2,pci-dev=bob,node=1 \
-> >>>    -numa node,nodeid=2 \
-> >>>    -object acpi-generic-port,id=bob11,pci-bus=cxl.1,node=2 \
-> >>>
-> >>> In the guest, create and bind the region - this brings up the CXL memory
-> >>> device so accesses go to the memory.
-> >>>
-> >>>     cd /sys/bus/cxl/devices/decoder0.0/
-> >>>     cat create_ram_region
-> >>>     echo region0 > create_ram_region
-> >>>     echo ram > /sys/bus/cxl/devices/decoder2.0/mode
-> >>>     echo ram > /sys/bus/cxl/devices/decoder3.0/mode
-> >>>     echo $((256 << 21)) > /sys/bus/cxl/devices/decoder2.0/dpa_size
-> >>>     cd /sys/bus/cxl/devices/region0/
-> >>>     echo 256 > interleave_granularity
-> >>>     echo 1 > interleave_ways
-> >>>     echo $((256 << 21)) > size
-> >>>     echo decoder2.0 > target0
-> >>>     echo 1 > commit
-> >>>     echo region0 > /sys/bus/cxl/drivers/cxl_region/bind
-> >>>
-> >>> Finally start perf with something like:
-> >>>
-> >>> ./perf record -a  -e cxl_hmu_mem0.0.0/epoch_type=0,access_type=6,\
-> >>> hotness_threshold=635,epoch_multiplier=4,epoch_scale=4,\
-> >>> range_base=0,range_size=4096/  ./stress.sh
-> >>>
-> >>> where stress.sh is
-> >>>
-> >>>     sleep 2
-> >>>     numactl --membind 3 stress-ng --vm 1 --vm-bytes 1M --vm-keep -t 5s
-> >>>     sleep 2
-> >>>
-> >>> See the results with
-> >>> ./perf report --dump-raw-trace | grep -A 200 HMU
-> >>>
-> >>> Enjoy and have a good weekend.
-> >>>
-> >>> Thanks,
-> >>>
-> >>> Jonathan
-> >>>
-> >>> Jonathan Cameron (3):
-> >>>     hw/cxl: Initial CXL Hotness Monitoring Unit Emulation
-> >>>     plugins: Add cache miss reporting over a socket.
-> >>>     contrib: Add example hotness monitoring unit server
-> >>>
-> >>>    include/hw/cxl/cxl.h        |   1 +
-> >>>    include/hw/cxl/cxl_chmu.h   | 154 ++++++++++++
-> >>>    include/hw/cxl/cxl_device.h |  13 +-
-> >>>    include/hw/cxl/cxl_pci.h    |   7 +-
-> >>>    contrib/hmu/hmu.c           | 312 ++++++++++++++++++++++++
-> >>>    contrib/plugins/cache.c     |  75 +++++-
-> >>>    hw/cxl/cxl-chmu.c           | 459 ++++++++++++++++++++++++++++++++++++
-> >>>    hw/mem/cxl_type3.c          |  25 +-
-> >>>    hw/cxl/meson.build          |   1 +
-> >>>    9 files changed, 1035 insertions(+), 12 deletions(-)
-> >>>    create mode 100644 include/hw/cxl/cxl_chmu.h
-> >>>    create mode 100644 contrib/hmu/hmu.c
-> >>>    create mode 100644 hw/cxl/cxl-chmu.c
-> >>>      
-> >>  
-> >   
-> 
+> diff --git a/tests/functional/test_ppc_40p.py b/tests/functional/test_ppc_40p.py
+> index 7a74e0cca70b..5ce79aec5e6b 100755
+> --- a/tests/functional/test_ppc_40p.py
+> +++ b/tests/functional/test_ppc_40p.py
+> @@ -9,7 +9,7 @@
+>   
+>   from qemu_test import QemuSystemTest, Asset
+>   from qemu_test import wait_for_console_pattern, skipUntrustedTest
+> -
+> +from qemu_test import exec_command_and_wait_for_pattern
+>   
+
+Please keep 2 empty lines between the imports and the class statements 
+(Daniel recently tried to standardize on this coding style)
+
+>   class IbmPrep40pMachine(QemuSystemTest):
+>   
+> @@ -72,5 +72,23 @@ def test_openbios_and_netbsd(self):
+>           self.vm.launch()
+>           wait_for_console_pattern(self, 'NetBSD/prep BOOT, Revision 1.9')
+>   
+> +    ASSET_40P_SANDALFOOT = Asset(
+> +        'http://www.juneau-lug.org/zImage.initrd.sandalfoot',
+> +        '749ab02f576c6dc8f33b9fb022ecb44bf6a35a0472f2ea6a5e9956bc15933901')
+> +
+> +    def test_openbios_and_linux(self):
+> +        self.set_machine('40p')
+> +        self.require_accelerator("tcg")
+> +        drive_path = self.ASSET_40P_SANDALFOOT.fetch()
+> +        self.vm.set_console()
+> +        self.vm.add_args('-cdrom', drive_path,
+> +                         '-boot', 'd')
+> +
+> +        self.vm.launch()
+> +        wait_for_console_pattern(self, 'Please press Enter to activate this console.')
+> +        exec_command_and_wait_for_pattern(self, '\012', '#')
+> +        exec_command_and_wait_for_pattern(self, 'uname -a', 'Linux ppc 2.4.18')
+> +        exec_command_and_wait_for_pattern(self, 'poweroff', 'Terminated')
+> +
+>   if __name__ == '__main__':
+>       QemuSystemTest.main()
+
+With the nit fixed:
+Reviewed-by: Thomas Huth <thuth@redhat.com>
 
 
