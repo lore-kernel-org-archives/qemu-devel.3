@@ -4,57 +4,59 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C666EC02193
-	for <qemu-devel@archiver.kernel.org>; Wed, 29 Jan 2025 13:45:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 77DB2C0218D
+	for <qemu-devel@archiver.kernel.org>; Wed, 29 Jan 2025 13:45:44 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1td8NM-0007aQ-RY; Wed, 29 Jan 2025 08:45:05 -0500
+	id 1td8NR-0007h6-W1; Wed, 29 Jan 2025 08:45:10 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <imammedo@redhat.com>)
- id 1td8NB-0007ZU-K6
- for qemu-devel@nongnu.org; Wed, 29 Jan 2025 08:44:53 -0500
+ id 1td8NN-0007cb-9M
+ for qemu-devel@nongnu.org; Wed, 29 Jan 2025 08:45:05 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <imammedo@redhat.com>)
- id 1td8N9-00088e-8G
- for qemu-devel@nongnu.org; Wed, 29 Jan 2025 08:44:53 -0500
+ id 1td8NJ-0008Am-Ny
+ for qemu-devel@nongnu.org; Wed, 29 Jan 2025 08:45:05 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1738158289;
+ s=mimecast20190719; t=1738158300;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding;
- bh=eLkU0jczH9+axJY8TTBFUBAllbC/EeHNAL6GZX89o9o=;
- b=bdH/Wk00oIhhNbj4EIu4ipIHGW6rx9eKyPISZaCKOQ1F0P1ned7L88hIcJvzHvDL65ym4m
- 7oKoUQwAiV1TC+AIJTOUzlOIp+1YtxU4UIFXOTm/qGlOP3ffxcfeSHR9lNo+WZ4igXml2b
- E4paWbfF3os+HeavL8mOg9vtHIeYZQ0=
-Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=mBQt2BZ9Pble/MczGAKPnWj9zi6Lm9BXY9A2HjlrxTM=;
+ b=DZ2aE6M0AnKCFsUT6tUPjsCtvIiI80b5J4fXfKw5n5Uvo2TKuWqJ4Ynv45gyKKOXTX9b68
+ FX8ACVkJ6YtnyxZP/93oPRa+jiyQ/DPGoKNcfUvKCOlXzm9CbVSCMBS/ZjXGTaPZ1I9mKu
+ 25yAaKTHCTyckvjr+cNb8Jiy/nU/gXk=
+Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-684-FzkuO1cAOXWl0-JRVVJHgw-1; Wed,
- 29 Jan 2025 08:44:46 -0500
-X-MC-Unique: FzkuO1cAOXWl0-JRVVJHgw-1
-X-Mimecast-MFC-AGG-ID: FzkuO1cAOXWl0-JRVVJHgw
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-686-CruW9kk2OmaWWgH41rV15g-1; Wed,
+ 29 Jan 2025 08:44:57 -0500
+X-MC-Unique: CruW9kk2OmaWWgH41rV15g-1
+X-Mimecast-MFC-AGG-ID: CruW9kk2OmaWWgH41rV15g
 Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 73D35195605A; Wed, 29 Jan 2025 13:44:43 +0000 (UTC)
+ by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 17EEF1800361; Wed, 29 Jan 2025 13:44:56 +0000 (UTC)
 Received: from dell-r430-03.lab.eng.brq2.redhat.com
  (dell-r430-03.lab.eng.brq2.redhat.com [10.37.153.18])
  by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 8B3CF1800352; Wed, 29 Jan 2025 13:44:39 +0000 (UTC)
+ id AD1A11800352; Wed, 29 Jan 2025 13:44:53 +0000 (UTC)
 From: Igor Mammedov <imammedo@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: alex.bennee@linaro.org, richard.henderson@linaro.org, pbonzini@redhat.com,
  imp@bsdimp.com, kevans@freebsd.org, gaosong@loongson.cn, laurent@vivier.eu
-Subject: [PATCH 0/6] tcg: fix qemu crash when add assert_cpu_is_self() is
- enabled and cleanups related to cpu->created check
-Date: Wed, 29 Jan 2025 14:44:30 +0100
-Message-ID: <20250129134436.1240740-1-imammedo@redhat.com>
+Subject: [PATCH 4/6] tcg:tlb: use tcg_debug_assert() in assert_cpu_is_self()
+Date: Wed, 29 Jan 2025 14:44:34 +0100
+Message-ID: <20250129134436.1240740-5-imammedo@redhat.com>
+In-Reply-To: <20250129134436.1240740-1-imammedo@redhat.com>
+References: <20250129134436.1240740-1-imammedo@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -84,40 +86,49 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-1st 3 patches are cleanups around cpu_reset logic
-4th patch enables assert_cpu_is_self() macro on --enable-debug builds
-5th drops offending patch
-    (since my understanding of TCG is close to nill, so I'd leave it up to
-     TCG folks to fix if needed properly) 
-6th is removing no longer needed cpu->created check, since
-    by the time it's invoked, cpu->created == true
+that will enable assert_cpu_is_self when QEMU is configured with
+   --enable-debug
+without need for manual patching DEBUG_TLB_GATE define.
 
-CC: alex.bennee@linaro.org
-CC: richard.henderson@linaro.org
-CC: pbonzini@redhat.com 
-CC: imp@bsdimp.com
-CC: kevans@freebsd.org
-CC: gaosong@loongson.cn
-CC: laurent@vivier.eu
+Need to manually path DEBUG_TLB_GATE define to enable assert,
+let regression caused by [1] creep in unnoticed.
 
-Igor Mammedov (6):
-  bsd-user: drop not longer used target_reset_cpu()
-  loongarch: reset vcpu after it's created
-  m68k: reset vcpu after it's created
-  tcg:tlb: use tcg_debug_assert() in assert_cpu_is_self()
-  Revert "tcg/cputlb: remove other-cpu capability from TLB flushing"
-  tcg: drop cpu->created check
+1) 30933c4fb4f3d ("tcg/cputlb: remove other-cpu capability from TLB flushing")
+Signed-off-by: Igor Mammedov <imammedo@redhat.com>
+Suggested-by: Alex Bennée <alex.bennee@linaro.org>
+---
+ accel/tcg/cputlb.c | 11 ++++-------
+ 1 file changed, 4 insertions(+), 7 deletions(-)
 
- bsd-user/aarch64/target_arch_cpu.h |  5 ---
- bsd-user/arm/target_arch_cpu.h     |  4 ---
- bsd-user/i386/target_arch_cpu.h    |  5 ---
- bsd-user/riscv/target_arch_cpu.h   |  4 ---
- bsd-user/x86_64/target_arch_cpu.h  |  5 ---
- accel/tcg/cputlb.c                 | 53 +++++++++++++++++++++---------
- target/loongarch/cpu.c             |  2 +-
- target/m68k/cpu.c                  |  2 +-
- 8 files changed, 39 insertions(+), 41 deletions(-)
-
+diff --git a/accel/tcg/cputlb.c b/accel/tcg/cputlb.c
+index b4ccf0cdcb..71207d6dbf 100644
+--- a/accel/tcg/cputlb.c
++++ b/accel/tcg/cputlb.c
+@@ -61,8 +61,8 @@
+ #  define DEBUG_TLB_LOG_GATE 0
+ # endif
+ #else
+-# define DEBUG_TLB_GATE 0
+-# define DEBUG_TLB_LOG_GATE 0
++# define DEBUG_TLB_GATE 1
++# define DEBUG_TLB_LOG_GATE 1
+ #endif
+ 
+ #define tlb_debug(fmt, ...) do { \
+@@ -74,11 +74,8 @@
+     } \
+ } while (0)
+ 
+-#define assert_cpu_is_self(cpu) do {                              \
+-        if (DEBUG_TLB_GATE) {                                     \
+-            g_assert(!(cpu)->created || qemu_cpu_is_self(cpu));   \
+-        }                                                         \
+-    } while (0)
++#define assert_cpu_is_self(cpu)                             \
++    tcg_debug_assert(!(cpu)->created || qemu_cpu_is_self(cpu))
+ 
+ /* run_on_cpu_data.target_ptr should always be big enough for a
+  * vaddr even on 32 bit builds
 -- 
 2.43.0
 
