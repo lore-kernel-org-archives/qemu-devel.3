@@ -4,55 +4,54 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5E813C0218D
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A0B61C02193
 	for <qemu-devel@archiver.kernel.org>; Wed, 29 Jan 2025 14:44:40 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1td9IL-0000Xy-MI; Wed, 29 Jan 2025 09:43:57 -0500
+	id 1td9IG-0000VU-De; Wed, 29 Jan 2025 09:43:52 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <steven.sistare@oracle.com>)
- id 1td9IG-0000Va-CH
- for qemu-devel@nongnu.org; Wed, 29 Jan 2025 09:43:52 -0500
+ id 1td9ID-0000Ul-TP
+ for qemu-devel@nongnu.org; Wed, 29 Jan 2025 09:43:50 -0500
 Received: from mx0b-00069f02.pphosted.com ([205.220.177.32])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <steven.sistare@oracle.com>)
- id 1td9ID-0001Kg-MH
- for qemu-devel@nongnu.org; Wed, 29 Jan 2025 09:43:51 -0500
-Received: from pps.filterd (m0246631.ppops.net [127.0.0.1])
- by mx0b-00069f02.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 50TEXofu029996;
- Wed, 29 Jan 2025 14:43:47 GMT
+ id 1td9IB-0001KA-0U
+ for qemu-devel@nongnu.org; Wed, 29 Jan 2025 09:43:49 -0500
+Received: from pps.filterd (m0246632.ppops.net [127.0.0.1])
+ by mx0b-00069f02.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 50TEXoCF031305;
+ Wed, 29 Jan 2025 14:43:43 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=oracle.com; h=cc
- :date:from:in-reply-to:message-id:references:subject:to; s=
- corp-2023-11-20; bh=dxO7RmoHpuyW7MIQrWXdvs9viXY+6yordmUe816rFj8=; b=
- MyDsoodEdcVMtx1o+1YSZsQtywkEeMuL2nrgjq1XOvVkA+heCISXDKWJDEX8Fcud
- q5g/vDhLqyaJ34uy5gNtrDA3Xvxzu2mav8bqrmAAWQ5zvXRURtFE95c0301c+DtU
- fqwU8iYYAyYyVHkdKe3zFNAyAVd6B/x+F92g/uipIdy75sleBDYA5QkC24FT3e+V
- sEMgzIbCBHgnKscL+z3Y+aNUAGOSzeqNNH0vdUR8tKbzTnugiy4qyx9Vr2wUWe6O
- qd69nvmXS7pLckSui1SQwOPeHzmhk5njxl2gA35gOZKjoyrQfOLfVJ/4wOyg4oJB
- EpS3zrpMYljjCXAWUMquBg==
+ :date:from:message-id:subject:to; s=corp-2023-11-20; bh=EjLGAx2B
+ FvnCfffJ89gWXqCQ78YvsXXfKrAwxdK1xgI=; b=Tl5Rr5/BojzBqlZAHNN74LJM
+ MsWbAIfwLc4Ege0gOZ+zjMA76DAEwoa6UIIwawv3q/q1ANHA5KrB5CX2a8fluulW
+ 9frx6dPUeFlrtP1XIbcY/ZvEss4hPrzovqrwWH+URANJsg2es9364eHDL7T0cTt/
+ 3kFWowGjGwMaMmukNyz5++zq+7CNZncc1ogd0UHicHSVrenkXLWgg0mFOq+rtFo8
+ dFmFUY7f15A6i4QgviAZKFvhw6iaEQ3q8qMdhnNJAbApsFshnPZ5+/7ZTRn7qim8
+ PGHMWcg75PFefC9gP2lUTi+oSE3SpXtpgzXjFjVMFNCmHQZOjDQFrkWM1bCSJA==
 Received: from phxpaimrmta01.imrmtpd1.prodappphxaev1.oraclevcn.com
  (phxpaimrmta01.appoci.oracle.com [138.1.114.2])
- by mx0b-00069f02.pphosted.com (PPS) with ESMTPS id 44fn2ug602-1
+ by mx0b-00069f02.pphosted.com (PPS) with ESMTPS id 44fp1a81dg-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Wed, 29 Jan 2025 14:43:47 +0000 (GMT)
+ Wed, 29 Jan 2025 14:43:43 +0000 (GMT)
 Received: from pps.filterd
  (phxpaimrmta01.imrmtpd1.prodappphxaev1.oraclevcn.com [127.0.0.1])
  by phxpaimrmta01.imrmtpd1.prodappphxaev1.oraclevcn.com (8.18.1.2/8.18.1.2)
- with ESMTP id 50TEGPIL034279; Wed, 29 Jan 2025 14:43:46 GMT
+ with ESMTP id 50TEa4L5034436; Wed, 29 Jan 2025 14:43:42 GMT
 Received: from pps.reinject (localhost [127.0.0.1])
  by phxpaimrmta01.imrmtpd1.prodappphxaev1.oraclevcn.com (PPS) with ESMTPS id
- 44cpd9s4qq-1
+ 44cpd9s4nc-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Wed, 29 Jan 2025 14:43:46 +0000
+ Wed, 29 Jan 2025 14:43:41 +0000
 Received: from phxpaimrmta01.imrmtpd1.prodappphxaev1.oraclevcn.com
  (phxpaimrmta01.imrmtpd1.prodappphxaev1.oraclevcn.com [127.0.0.1])
- by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 50TEhf8Q003307;
- Wed, 29 Jan 2025 14:43:45 GMT
+ by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 50TEhf8E003307;
+ Wed, 29 Jan 2025 14:43:41 GMT
 Received: from ca-dev63.us.oracle.com (ca-dev63.us.oracle.com [10.211.8.221])
  by phxpaimrmta01.imrmtpd1.prodappphxaev1.oraclevcn.com (PPS) with
- ESMTP id 44cpd9s49q-7; Wed, 29 Jan 2025 14:43:45 +0000
+ ESMTP id 44cpd9s49q-1; Wed, 29 Jan 2025 14:43:41 +0000
 From: Steve Sistare <steven.sistare@oracle.com>
 To: qemu-devel@nongnu.org
 Cc: Alex Williamson <alex.williamson@redhat.com>,
@@ -63,12 +62,10 @@ Cc: Alex Williamson <alex.williamson@redhat.com>,
  Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
  Peter Xu <peterx@redhat.com>, Fabiano Rosas <farosas@suse.de>,
  Steve Sistare <steven.sistare@oracle.com>
-Subject: [PATCH V1 06/26] vfio/container: preserve DMA mappings
-Date: Wed, 29 Jan 2025 06:43:02 -0800
-Message-Id: <1738161802-172631-7-git-send-email-steven.sistare@oracle.com>
+Subject: [PATCH V1 00/26] Live update: vfio and iommufd
+Date: Wed, 29 Jan 2025 06:42:56 -0800
+Message-Id: <1738161802-172631-1-git-send-email-steven.sistare@oracle.com>
 X-Mailer: git-send-email 1.8.3.1
-In-Reply-To: <1738161802-172631-1-git-send-email-steven.sistare@oracle.com>
-References: <1738161802-172631-1-git-send-email-steven.sistare@oracle.com>
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1057,Hydra:6.0.680,FMLib:17.12.68.34
  definitions=2025-01-29_02,2025-01-29_01,2024-11-22_01
@@ -77,8 +74,8 @@ X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 phishscore=0
  mlxlogscore=999 suspectscore=0 spamscore=0 mlxscore=0 adultscore=0
  classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2411120000
  definitions=main-2501290119
-X-Proofpoint-ORIG-GUID: d8-N8NYa9Y5YbUuwJIA_q-jZQleOcuLw
-X-Proofpoint-GUID: d8-N8NYa9Y5YbUuwJIA_q-jZQleOcuLw
+X-Proofpoint-GUID: 36szkNa7lWdkt4uW0bNObhmopLpcSw0r
+X-Proofpoint-ORIG-GUID: 36szkNa7lWdkt4uW0bNObhmopLpcSw0r
 Received-SPF: pass client-ip=205.220.177.32;
  envelope-from=steven.sistare@oracle.com; helo=mx0b-00069f02.pphosted.com
 X-Spam_score_int: -32
@@ -104,218 +101,117 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Preserve DMA mappings during cpr-transfer.
+Support vfio and iommufd devices with the cpr-transfer live migration mode.
+Devices that do not support live migration can still support cpr-transfer,
+allowing live update to a new version of QEMU on the same host, with no loss
+of guest connectivity.
 
-In the container pre_save handler, suspend the use of virtual addresses
-in DMA mappings with VFIO_DMA_UNMAP_FLAG_VADDR, because guest RAM will
-be remapped at a different VA after exec.  DMA to already-mapped pages
-continues.
+No user-visible interfaces are added.
 
-Because the vaddr is temporarily invalid, mediated devices cannot be
-supported, so add a blocker for them.  This restriction will not apply
-to iommufd containers when CPR is added for them in a future patch.
+For legacy containers:
 
-In new QEMU, do not register the memory listener at device creation time.
-Register it later, in the container post_load handler, after all vmstate
-that may affect regions and mapping boundaries has been loaded.  The
-post_load registration will cause the listener to invoke its callback on
-each flat section, and the calls will match the mappings remembered by the
-kernel.  Modify vfio_dma_map (which is called by the listener) to pass the
-new VA to the kernel using VFIO_DMA_MAP_FLAG_VADDR.
+Pass vfio device descriptors to new QEMU.  In new QEMU, during vfio_realize,
+skip the ioctls that configure the device, because it is already configured.
 
-Signed-off-by: Steve Sistare <steven.sistare@oracle.com>
----
- hw/vfio/container.c           | 44 +++++++++++++++++++++++++++++++++++++++----
- hw/vfio/cpr-legacy.c          | 32 +++++++++++++++++++++++++++++++
- include/hw/vfio/vfio-common.h |  3 +++
- 3 files changed, 75 insertions(+), 4 deletions(-)
+Use VFIO_DMA_UNMAP_FLAG_VADDR to abandon the old VA's for DMA mapped
+regions, and use VFIO_DMA_MAP_FLAG_VADDR to register the new VA in new
+QEMU and update the locked memory accounting.  The physical pages remain
+pinned, because the descriptor of the device that locked them remains open,
+so DMA to those pages continues without interruption.  Mediated devices are
+not supported, however, because they require the VA to always be valid, and
+there is a brief window where no VA is registered.
 
-diff --git a/hw/vfio/container.c b/hw/vfio/container.c
-index 81d0ccc..2b5125e 100644
---- a/hw/vfio/container.c
-+++ b/hw/vfio/container.c
-@@ -32,6 +32,7 @@
- #include "trace.h"
- #include "qapi/error.h"
- #include "migration/cpr.h"
-+#include "migration/blocker.h"
- #include "pci.h"
- 
- VFIOGroupList vfio_group_list =
-@@ -132,6 +133,8 @@ static int vfio_legacy_dma_unmap(const VFIOContainerBase *bcontainer,
-     int ret;
-     Error *local_err = NULL;
- 
-+    assert(!container->reused);
-+
-     if (iotlb && vfio_devices_all_dirty_tracking_started(bcontainer)) {
-         if (!vfio_devices_all_device_dirty_tracking(bcontainer) &&
-             bcontainer->dirty_pages_supported) {
-@@ -183,12 +186,24 @@ static int vfio_legacy_dma_map(const VFIOContainerBase *bcontainer, hwaddr iova,
-                                                   bcontainer);
-     struct vfio_iommu_type1_dma_map map = {
-         .argsz = sizeof(map),
--        .flags = VFIO_DMA_MAP_FLAG_READ,
-         .vaddr = (__u64)(uintptr_t)vaddr,
-         .iova = iova,
-         .size = size,
-     };
- 
-+    /*
-+     * Set the new vaddr for any mappings registered during cpr load.
-+     * Reused is cleared thereafter.
-+     */
-+    if (container->reused) {
-+        map.flags = VFIO_DMA_MAP_FLAG_VADDR;
-+        if (ioctl(container->fd, VFIO_IOMMU_MAP_DMA, &map)) {
-+            goto fail;
-+        }
-+        return 0;
-+    }
-+
-+    map.flags = VFIO_DMA_MAP_FLAG_READ;
-     if (!readonly) {
-         map.flags |= VFIO_DMA_MAP_FLAG_WRITE;
-     }
-@@ -205,7 +220,11 @@ static int vfio_legacy_dma_map(const VFIOContainerBase *bcontainer, hwaddr iova,
-         return 0;
-     }
- 
--    error_report("VFIO_MAP_DMA failed: %s", strerror(errno));
-+fail:
-+    error_report("vfio_dma_map %s (iova %lu, size %ld, va %p): %s",
-+        (container->reused ? "VADDR" : ""), iova, size, vaddr,
-+        strerror(errno));
-+
-     return -errno;
- }
- 
-@@ -689,8 +708,17 @@ static bool vfio_connect_container(VFIOGroup *group, AddressSpace *as,
-     group->container = container;
-     QLIST_INSERT_HEAD(&container->group_list, group, container_next);
- 
--    bcontainer->listener = vfio_memory_listener;
--    memory_listener_register(&bcontainer->listener, bcontainer->space->as);
-+    /*
-+     * If reused, register the listener later, after all state that may
-+     * affect regions and mapping boundaries has been cpr load'ed.  Later,
-+     * the listener will invoke its callback on each flat section and call
-+     * vfio_dma_map to supply the new vaddr, and the calls will match the
-+     * mappings remembered by the kernel.
-+     */
-+    if (!reused) {
-+        bcontainer->listener = vfio_memory_listener;
-+        memory_listener_register(&bcontainer->listener, bcontainer->space->as);
-+    }
- 
-     if (bcontainer->error) {
-         error_propagate_prepend(errp, bcontainer->error,
-@@ -1002,6 +1030,13 @@ static bool vfio_legacy_attach_device(const char *name, VFIODevice *vbasedev,
-         return false;
-     }
- 
-+    if (vbasedev->mdev) {
-+        error_setg(&vbasedev->cpr_mdev_blocker,
-+                   "CPR does not support vfio mdev %s", vbasedev->name);
-+        migrate_add_blocker_modes(&vbasedev->cpr_mdev_blocker, &error_fatal,
-+                                  MIG_MODE_CPR_TRANSFER, -1);
-+    }
-+
-     bcontainer = &group->container->bcontainer;
-     vbasedev->bcontainer = bcontainer;
-     QLIST_INSERT_HEAD(&bcontainer->device_list, vbasedev, container_next);
-@@ -1018,6 +1053,7 @@ static void vfio_legacy_detach_device(VFIODevice *vbasedev)
-     QLIST_REMOVE(vbasedev, container_next);
-     vbasedev->bcontainer = NULL;
-     trace_vfio_detach_device(vbasedev->name, group->groupid);
-+    migrate_del_blocker(&vbasedev->cpr_mdev_blocker);
-     vfio_put_base_device(vbasedev);
-     vfio_put_group(group);
- }
-diff --git a/hw/vfio/cpr-legacy.c b/hw/vfio/cpr-legacy.c
-index ce6f14e..f3a31d1 100644
---- a/hw/vfio/cpr-legacy.c
-+++ b/hw/vfio/cpr-legacy.c
-@@ -14,6 +14,21 @@
- #include "migration/vmstate.h"
- #include "qapi/error.h"
- 
-+static bool vfio_dma_unmap_vaddr_all(VFIOContainer *container, Error **errp)
-+{
-+    struct vfio_iommu_type1_dma_unmap unmap = {
-+        .argsz = sizeof(unmap),
-+        .flags = VFIO_DMA_UNMAP_FLAG_VADDR | VFIO_DMA_UNMAP_FLAG_ALL,
-+        .iova = 0,
-+        .size = 0,
-+    };
-+    if (ioctl(container->fd, VFIO_IOMMU_UNMAP_DMA, &unmap)) {
-+        error_setg_errno(errp, errno, "vfio_dma_unmap_vaddr_all");
-+        return false;
-+    }
-+    return true;
-+}
-+
- static bool vfio_cpr_supported(VFIOContainer *container, Error **errp)
- {
-     if (!ioctl(container->fd, VFIO_CHECK_EXTENSION, VFIO_UPDATE_VADDR)) {
-@@ -29,12 +44,27 @@ static bool vfio_cpr_supported(VFIOContainer *container, Error **errp)
-     }
- }
- 
-+static int vfio_container_pre_save(void *opaque)
-+{
-+    VFIOContainer *container = opaque;
-+    Error *err = NULL;
-+
-+    if (!vfio_dma_unmap_vaddr_all(container, &err)) {
-+        error_report_err(err);
-+        return -1;
-+    }
-+    return 0;
-+}
-+
- static int vfio_container_post_load(void *opaque, int version_id)
- {
-     VFIOContainer *container = opaque;
-+    VFIOContainerBase *bcontainer = &container->bcontainer;
-     VFIOGroup *group;
-     VFIODevice *vbasedev;
- 
-+    bcontainer->listener = vfio_memory_listener;
-+    memory_listener_register(&bcontainer->listener, bcontainer->space->as);
-     container->reused = false;
- 
-     QLIST_FOREACH(group, &container->group_list, container_next) {
-@@ -49,6 +79,8 @@ static const VMStateDescription vfio_container_vmstate = {
-     .name = "vfio-container",
-     .version_id = 0,
-     .minimum_version_id = 0,
-+    .priority = MIG_PRI_LOW,  /* Must happen after devices and groups */
-+    .pre_save = vfio_container_pre_save,
-     .post_load = vfio_container_post_load,
-     .needed = cpr_needed_for_reuse,
-     .fields = (VMStateField[]) {
-diff --git a/include/hw/vfio/vfio-common.h b/include/hw/vfio/vfio-common.h
-index a435a90..1e974e0 100644
---- a/include/hw/vfio/vfio-common.h
-+++ b/include/hw/vfio/vfio-common.h
-@@ -143,6 +143,7 @@ typedef struct VFIODevice {
-     unsigned int flags;
-     VFIOMigration *migration;
-     Error *migration_blocker;
-+    Error *cpr_mdev_blocker;
-     OnOffAuto pre_copy_dirty_page_tracking;
-     OnOffAuto device_dirty_page_tracking;
-     bool dirty_pages_supported;
-@@ -310,6 +311,8 @@ int vfio_devices_query_dirty_bitmap(const VFIOContainerBase *bcontainer,
- int vfio_get_dirty_bitmap(const VFIOContainerBase *bcontainer, uint64_t iova,
-                           uint64_t size, ram_addr_t ram_addr, Error **errp);
- 
-+void vfio_listener_register(VFIOContainerBase *bcontainer);
-+
- /* Returns 0 on success, or a negative errno. */
- bool vfio_device_get_name(VFIODevice *vbasedev, Error **errp);
- void vfio_device_set_fd(VFIODevice *vbasedev, const char *str, Error **errp);
+Save the MSI message area as part of vfio-pci vmstate, and pass the interrupt
+and notifier eventfd's to new QEMU.  New QEMU loads the MSI data, then the
+vfio-pci post_load handler finds the eventfds in CPR state, rebuilds vector
+data structures, and attaches the interrupts to the new KVM instance.  This
+logic also applies to iommufd containers.
+
+For iommufd containers:
+
+Use IOMMU_IOAS_MAP_FILE to register memory regions for DMA when they are
+backed by a file (including a memfd), so DMA mappings do not depend on VA,
+which can differ after live update.  This allows mediated devices to be
+supported.
+
+Pass the iommufd and vfio device descriptors from old to new QEMU.  In new
+QEMU, during vfio_realize, skip the ioctls that configure the device, because
+it is already configured.
+
+In new QEMU, call ioctl(IOMMU_IOAS_CHANGE_PROCESS) to update mm ownership and
+locked memory accounting.
+
+Patches 3 to 7 are specific to legacy containers.
+Patches 15 to 26 are specific to iommufd containers.
+Patches 1, 2 and 8 to 14 apply to both.
+
+Changes from previous versions:
+  * This series contains minor changes from the "Live update: vfio" and
+    "Live update: iommufd" series, mainly bug fixes and refactored patches.
+
+Steve Sistare (26):
+  migration: cpr helpers
+  migration: lower handler priority
+  vfio: vfio_find_ram_discard_listener
+  vfio/container: register container for cpr
+  vfio/container: preserve descriptors
+  vfio/container: preserve DMA mappings
+  vfio/container: recover from unmap-all-vaddr failure
+  pci: skip reset during cpr
+  pci: export msix_is_pending
+  vfio-pci: refactor for cpr
+  vfio-pci: skip reset during cpr
+  vfio-pci: preserve MSI
+  vfio-pci: preserve INTx
+  migration: close kvm after cpr
+  migration: cpr_get_fd_param helper
+  vfio: return mr from vfio_get_xlat_addr
+  vfio: pass ramblock to vfio_container_dma_map
+  vfio/iommufd: define iommufd_cdev_make_hwpt
+  vfio/iommufd: use IOMMU_IOAS_MAP_FILE
+  vfio/iommufd: export iommufd_cdev_get_info_iova_range
+  iommufd: change process ioctl
+  vfio/iommufd: invariant device name
+  vfio/iommufd: register container for cpr
+  vfio/iommufd: preserve descriptors
+  vfio/iommufd: reconstruct device
+  iommufd: preserve DMA mappings
+
+ accel/kvm/kvm-all.c                   |  20 +++
+ backends/iommufd.c                    |  88 +++++++++-
+ backends/trace-events                 |   2 +
+ hw/pci/msix.c                         |   2 +-
+ hw/pci/pci.c                          |  13 ++
+ hw/vfio/common.c                      | 108 +++++++++---
+ hw/vfio/container-base.c              |  12 +-
+ hw/vfio/container.c                   | 155 ++++++++++++++---
+ hw/vfio/cpr-iommufd.c                 | 161 ++++++++++++++++++
+ hw/vfio/cpr-legacy.c                  | 161 ++++++++++++++++++
+ hw/vfio/helpers.c                     |  28 ++--
+ hw/vfio/iommufd.c                     | 156 ++++++++++++-----
+ hw/vfio/meson.build                   |   4 +-
+ hw/vfio/pci.c                         | 307 +++++++++++++++++++++++++++++-----
+ hw/vfio/trace-events                  |   1 +
+ hw/virtio/vhost-vdpa.c                |   2 +-
+ include/exec/cpu-common.h             |   1 +
+ include/exec/memory.h                 |   5 +-
+ include/hw/pci/msix.h                 |   1 +
+ include/hw/vfio/vfio-common.h         |  25 +++
+ include/hw/vfio/vfio-container-base.h |   6 +-
+ include/migration/cpr.h               |   7 +
+ include/migration/vmstate.h           |   3 +-
+ include/system/iommufd.h              |   6 +
+ include/system/kvm.h                  |   1 +
+ migration/cpr-transfer.c              |  18 ++
+ migration/cpr.c                       |  70 ++++++++
+ migration/migration.c                 |   1 +
+ migration/savevm.c                    |   4 +-
+ system/memory.c                       |   8 +-
+ system/physmem.c                      |   5 +
+ 31 files changed, 1230 insertions(+), 151 deletions(-)
+ create mode 100644 hw/vfio/cpr-iommufd.c
+ create mode 100644 hw/vfio/cpr-legacy.c
+
 -- 
 1.8.3.1
 
