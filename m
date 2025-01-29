@@ -4,77 +4,75 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 01199C0218A
-	for <qemu-devel@archiver.kernel.org>; Wed, 29 Jan 2025 01:00:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 23938C0218D
+	for <qemu-devel@archiver.kernel.org>; Wed, 29 Jan 2025 01:06:01 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tcwR6-0004sN-74; Tue, 28 Jan 2025 20:00:08 -0500
+	id 1tcwW8-0006Kp-Ac; Tue, 28 Jan 2025 20:05:20 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1tcwR3-0004qN-1X; Tue, 28 Jan 2025 20:00:05 -0500
-Received: from mail-vs1-xe2d.google.com ([2607:f8b0:4864:20::e2d])
+ id 1tcwW6-0006KC-Qb; Tue, 28 Jan 2025 20:05:18 -0500
+Received: from mail-ua1-x934.google.com ([2607:f8b0:4864:20::934])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1tcwR1-0004rz-BW; Tue, 28 Jan 2025 20:00:04 -0500
-Received: by mail-vs1-xe2d.google.com with SMTP id
- ada2fe7eead31-4b9486a15a0so128526137.0; 
- Tue, 28 Jan 2025 17:00:02 -0800 (PST)
+ id 1tcwW5-0005uS-9a; Tue, 28 Jan 2025 20:05:18 -0500
+Received: by mail-ua1-x934.google.com with SMTP id
+ a1e0cc1a2514c-85bc7d126b2so2842423241.1; 
+ Tue, 28 Jan 2025 17:05:16 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1738112402; x=1738717202; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1738112715; x=1738717515; darn=nongnu.org;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:from:to:cc:subject:date
  :message-id:reply-to;
- bh=HkdmX8gPEFyvj0m3HEF0go/A8M0DJshISK66TH0tYi8=;
- b=lmVufwg1CU2h2p8M+LKHg09qgjS6D0bLCdYgiqW0cy2Uc8yhw6g5N7tS6+boBVgYgj
- OrAWZqCBQJl6xvxBcmn7Nf3+354lXHcePSWUDJdMyQjUAAhl0GJ5TcL+N+nq8oFuz/Vp
- 6NYfrO02Gla12UaO66BZ9EW78UY8RIcrnPSMmHd1Voqqphi4NQxQiQlFDQtDIfaQZXHc
- SVP6F7BCR2rjJ9zzakGQ6uKUq5TYfRZHhD1XheN++l+QOhxMBA/2n9HOa0SUH4CqBytO
- HBQT3eHtHfyJVKD4/+U1GmOxtx/tTw7wBldKgpsBBIC1EulrFxVzF2CFFw5Np96ujVhZ
- YCFA==
+ bh=OWjPYn55C2+fkdad5womY7nkq8+qoDutzXQw4gGhr4k=;
+ b=egRbA1xiqeeJYjtESwHwaOqc01GkhcUxlJTgRJmlNmOHwhXGtIhv3l7N25NXKl+bsy
+ UhEAfIRzczdkFhWtu8tF1GmC0oeBj5GlUWx8x9SGBFwrr2sFJfsKyiOkVfI22yPhiIo1
+ y3gi7Ca01HdW296kqDQE+1A+Hoxf3grwis/5lQuaaKpd73abIz9Sk23iru8nSW8LD4Y3
+ /8fJWoCV1EhLooA0s0k4663w6qF8Ez9r6xN2VpLWxi3DUfOGGHe6Ci3RwldevLpwPg1Z
+ o1+gAkCwApaiyjf0vRaI19NtjmZsD+/poA8z6BA6Qp56PgiPQU73cbuyjwvaR5DjPFhQ
+ b1VQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1738112402; x=1738717202;
+ d=1e100.net; s=20230601; t=1738112715; x=1738717515;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=HkdmX8gPEFyvj0m3HEF0go/A8M0DJshISK66TH0tYi8=;
- b=vz5jXF204ZOGdgvQv6NifFiu7J3+nIXIFncF+4jgjbnd4BO9TxmIqVJ03gG/UihrES
- 365SYLDUCY82ndV3eRPITVko5IV5E1XKymMgyR2VJ4foQ8DsZU3ufKBapFIaM/43ckjQ
- gf2AufKIqZfdhw8WYWl/eqofkK3dnaKRF+Sbwo1O0P9q3SnfmWetm6ieWuvFor582V64
- 9eR9ytQ/QoscY/bMxnkz9G7kJgMi/ZIFy6bm1qw96Sm+glcAT1pSXz4/lxdGrT48NV2B
- WvzKmGZvTeA3Eq8CtTrIz7/tz86Z4uUHC6U6kuuRFAKrDvgsGpxRLU1m3L486d2x0SVo
- 3C7w==
+ bh=OWjPYn55C2+fkdad5womY7nkq8+qoDutzXQw4gGhr4k=;
+ b=UTRHQzCM+GU/93qxq9kx43qr8u8QA0KeaMudYjOmlun90iG8kuynqWhR5ztaI4kLh7
+ ZJzsgWnfC2yPBX3CXitggsID3W37ko+18lz1gHALWvpvPbGEKugKbMz72EC2830ql2Mi
+ +J4GlfkNiTTXaoQwIOIZrHhsqsTWDCiSALssdBjZN61nvF97FkQ0nt/AWTCY6nWYLvS7
+ +sMyOfVU6olHaMKXLuDez1rzSYGdAc1e1d10Jvhwd6U6Nc9+N6XpPIIpGEMtLkcqOuQX
+ E8GfD9OzH3cRaIzBHI7qSGQwN5++Rh9jSrFXqn0cfjC4wxjhWRliX/arkrQJfCGWsQil
+ uR9w==
 X-Forwarded-Encrypted: i=1;
- AJvYcCU+nNRHz52KgPXmD9+IaLaiMYCAJ808goyuTAsbPk8Qkv+oCRhLpBTaVyqRZlpBSxAWa0yJX23Eoi5w@nongnu.org
-X-Gm-Message-State: AOJu0YzlD2aN6t4fNeFHB0aLk3dWaI+kkhPvV8e1NFwaZE4FK7Mgdhza
- xpmdhCnWvfudGRGXtwbPUQ/p82K+ntd7Qf4tFiwRXNk4ASi33+TOlO97bYFzq6lbCWVPTH19W4E
- 7YEjhG5GThAtYoW1qKYQ5Hwk1gig=
-X-Gm-Gg: ASbGncuzfc060r1qS3GVI1WjXZTodAvS4g1uRajfyJwM2MMKv1PIkJlSVltEahiRicB
- iJwL4eSidl9tgSS7deWqbawjftznWN/0vNSfyR8yd61Un35Vyp2KgjssiGaC1BEh1SOpwH5PaIH
- FJrx8deDHUB2XfVAyWsFBMs02xiA==
-X-Google-Smtp-Source: AGHT+IG7lXvX0zEqIGUUTvCRXAolTHF479WJCiPGZt8O8z5KVl5HZ/q6zEa0yorvGefyzI38OaSX82XHTjGJ7WCNk7w=
-X-Received: by 2002:a05:6102:5798:b0:4b6:99c:dd8f with SMTP id
- ada2fe7eead31-4b9a3d936bfmr1611703137.10.1738112401908; Tue, 28 Jan 2025
- 17:00:01 -0800 (PST)
+ AJvYcCUhYWbQ7XeB0lDq3aF9F307RlQbqu3paV4r5M+ttLiq2I/kRoCODl1iz64gaO8t4G8NqfCri5hhq1Lg@nongnu.org
+X-Gm-Message-State: AOJu0YyqYqi+gjLNIG5zJcmnj08mZ35SGi3UUJURHvTtYpHgtF2gsoaR
+ OGJx32w0V9LIVqCbTTeMJsDaUS7NM7RtpNnjJRo82Em59diLk2cRgAwM/xCW5D7L2Gn+zZJVxYb
+ rUUa9ZAqLDpodO7IlzNXI/8LyHWM=
+X-Gm-Gg: ASbGncvnero9qHG5v60yzzYYTMSMRVgVmljPDCdEsbPEd6ZQuagdy8z9O4ICR7aQ3o4
+ zLV5YE8lAIx4p7nT++rEMa/F3CwqTk43vztUj2IeN+yUjdWAnxAtxhyli1DwEFLFc6k7AdZVuKd
+ l2jn6Y2H/R1a3S01yVpUgQv31/Sg==
+X-Google-Smtp-Source: AGHT+IFr5+ABJL4g1vHof1xe6rdmmmbnMNettoA5kx+M8FL5n5QN7GsItKdpWOy4P5AXGvFX0pzs8JvBp1fOkkR8HCE=
+X-Received: by 2002:a05:6122:348a:b0:51e:20de:f9f2 with SMTP id
+ 71dfb90a1353d-51e9e3f6a45mr1893118e0c.6.1738112715655; Tue, 28 Jan 2025
+ 17:05:15 -0800 (PST)
 MIME-Version: 1.0
 References: <20250121184847.2109128-1-dbarboza@ventanamicro.com>
- <20250121184847.2109128-6-dbarboza@ventanamicro.com>
-In-Reply-To: <20250121184847.2109128-6-dbarboza@ventanamicro.com>
+In-Reply-To: <20250121184847.2109128-1-dbarboza@ventanamicro.com>
 From: Alistair Francis <alistair23@gmail.com>
-Date: Wed, 29 Jan 2025 10:59:35 +1000
-X-Gm-Features: AWEUYZk6TWtwTg8cPOEvSszN2evaXozmKciSxtGwAuMU6sbH_HUWlQiAeiWgPpE
-Message-ID: <CAKmqyKM5-E7pF8YR+DQSCRciYvb=TERce6mCx_Uo_ASZNHX-sQ@mail.gmail.com>
-Subject: Re: [PATCH 5/5] target/riscv/cpu_helper.c: fix bad_shift in
- riscv_cpu_interrupt()
+Date: Wed, 29 Jan 2025 11:04:49 +1000
+X-Gm-Features: AWEUYZk4wBghpvU2yL5wJweoUu2t3nsmZMSc5DMDJiAlw83jkcmL-Lvew8ACNVM
+Message-ID: <CAKmqyKPq1eqGpzZJLK2EsgFyDO4Q1w3jEFcvnu5Tuy7Cb81k4w@mail.gmail.com>
+Subject: Re: [PATCH 0/5] target/riscv: Coverity fixes
 To: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
 Cc: qemu-devel@nongnu.org, qemu-riscv@nongnu.org, alistair.francis@wdc.com, 
  bmeng@tinylab.org, liwei1518@gmail.com, zhiwei_liu@linux.alibaba.com, 
  palmer@rivosinc.com, peter.maydell@linaro.org
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::e2d;
- envelope-from=alistair23@gmail.com; helo=mail-vs1-xe2d.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::934;
+ envelope-from=alistair23@gmail.com; helo=mail-ua1-x934.google.com
 X-Spam_score_int: -18
 X-Spam_score: -1.9
 X-Spam_bar: -
@@ -101,55 +99,35 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 On Wed, Jan 22, 2025 at 4:49=E2=80=AFAM Daniel Henrique Barboza
 <dbarboza@ventanamicro.com> wrote:
 >
-> Coverity reported a BAD_SHIFT issue in the following code:
+> Hi,
 >
->  > 2097
->  >>>>      CID 1590355:  Integer handling issues  (BAD_SHIFT)
->  >>>>      In expression "hdeleg >> cause", right shifting by more than 6=
-3
->        bits has undefined behavior.  The shift amount, "cause", is at lea=
-st 64.
->  > 2098         vsmode_exc =3D env->virt_enabled && (((hdeleg >> cause) &=
- 1) || vs_injected);
->  > 2099         /*
+> This series contains Coverity fixes for issues found in the latest
+> RISC-V pull made yesterday.
 >
-> It is not clear to me how the tool guarantees that '"cause" is at least
-> 64', but indeed there's no guarantees that it would be < 64 in the
-> 'async =3D true' code path.
+> Coverity CIDs being resolved: 1590355, 1590356, 1590357, 1590358 and
+> 1590359.
 >
-> A simple fix to avoid a potential UB is to add a 'cause < 64' guard like
-> 'mode' is already doing right before 'vsmode_exc'.
+> Patches based on master.
 >
-> Resolves: Coverity CID 1590355
-> Fixes: 967760f62c ("target/riscv: Implement Ssdbltrp exception handling")
-> Signed-off-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
+>
+> Daniel Henrique Barboza (5):
+>   target/riscv/csr.c: fix deadcode in rmw_xireg()
+>   target/riscv/csr.c: fix 'ret' deadcode in rmw_xireg()
+>   target/riscv/csr.c: fix deadcode in rmw_xiregi()
+>   target/riscv/csr.c: fix deadcode in aia_smode32()
+>   target/riscv/cpu_helper.c: fix bad_shift in riscv_cpu_interrupt()
 
-Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
+Thanks!
+
+Applied to riscv-to-apply.next
 
 Alistair
 
-> ---
->  target/riscv/cpu_helper.c | 4 +++-
->  1 file changed, 3 insertions(+), 1 deletion(-)
 >
-> diff --git a/target/riscv/cpu_helper.c b/target/riscv/cpu_helper.c
-> index e1dfc4ecbf..64d1d68550 100644
-> --- a/target/riscv/cpu_helper.c
-> +++ b/target/riscv/cpu_helper.c
-> @@ -2095,7 +2095,9 @@ void riscv_cpu_do_interrupt(CPUState *cs)
->      mode =3D env->priv <=3D PRV_S && cause < 64 &&
->          (((deleg >> cause) & 1) || s_injected || vs_injected) ? PRV_S : =
-PRV_M;
+>  target/riscv/cpu_helper.c |  4 +++-
+>  target/riscv/csr.c        | 24 +++---------------------
+>  2 files changed, 6 insertions(+), 22 deletions(-)
 >
-> -    vsmode_exc =3D env->virt_enabled && (((hdeleg >> cause) & 1) || vs_i=
-njected);
-> +    vsmode_exc =3D env->virt_enabled && cause < 64 &&
-> +        (((hdeleg >> cause) & 1) || vs_injected);
-> +
->      /*
->       * Check double trap condition only if already in S-mode and targeti=
-ng
->       * S-mode
 > --
 > 2.47.1
 >
