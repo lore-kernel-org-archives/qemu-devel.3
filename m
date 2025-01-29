@@ -4,61 +4,96 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2B9B3C0218D
-	for <qemu-devel@archiver.kernel.org>; Wed, 29 Jan 2025 04:09:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 52B25C02192
+	for <qemu-devel@archiver.kernel.org>; Wed, 29 Jan 2025 04:56:17 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tczMs-0001Md-4u; Tue, 28 Jan 2025 23:07:58 -0500
+	id 1td06s-0002al-Ub; Tue, 28 Jan 2025 23:55:31 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <deller@kernel.org>) id 1tczMe-0001MJ-RC
- for qemu-devel@nongnu.org; Tue, 28 Jan 2025 23:07:45 -0500
-Received: from dfw.source.kernel.org ([139.178.84.217])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <deller@kernel.org>) id 1tczMc-0004HI-Ey
- for qemu-devel@nongnu.org; Tue, 28 Jan 2025 23:07:44 -0500
-Received: from smtp.kernel.org (transwarp.subspace.kernel.org [100.75.92.58])
- by dfw.source.kernel.org (Postfix) with ESMTP id EB6205C01DA;
- Wed, 29 Jan 2025 04:06:58 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A20CCC4CED3;
- Wed, 29 Jan 2025 04:07:37 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
- s=k20201202; t=1738123658;
- bh=DapCS/Lwt6yEz8EDtPldxl8Gd28zVQ+LiiwMOkAfJpU=;
- h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
- b=qIaM4l0o0r+0y1Aqe1eKitZD9/NPRRTWTq+nXrshMRPIUQMt8XSHkVqQS9OzqMOM/
- Civ42X+TBkO5TlwUpVVJ8bx+0BG5OrsBhmU9BYCWVH1P2EQLC8sSY9sIRvuq0om/DC
- 67uJb4R/R0iDllLXCSJUHOZ6PXXdtBVbk3SDgUC0jxGyA4B7qZ6bpGOwn6NuMWrQq7
- X9Qiu4tSbvLORjPutWZS7df3fBZnoWx8XBov3YHd52tnhjF9Al7DF4RC13mYxfVtPl
- wEQmb18xHL3w6We2CyhmEVNggouTqfNbKGj7aTxf8MRxHyr4UC4LbPTbZOtKRYd+wl
- OC+V31deXn6/Q==
-Date: Wed, 29 Jan 2025 05:07:35 +0100
-From: Helge Deller <deller@kernel.org>
-To: Richard Henderson <richard.henderson@linaro.org>
-Cc: qemu-devel@nongnu.org, deller@gmx.de
-Subject: Re: [PATCH 4/4] target/hppa: Implement space register hashing for
- 64-bit HP-UX
-Message-ID: <Z5mph0gdQHbCsKit@p100>
-References: <20250128224817.24715-1-deller@kernel.org>
- <20250128224817.24715-5-deller@kernel.org>
- <34f4e42f-b08a-42dd-ad11-f720f6d8a440@linaro.org>
- <6f445eb1-2626-4a08-abbb-580cdd7fe682@linaro.org>
+ (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
+ id 1td06o-0002Zw-Be
+ for qemu-devel@nongnu.org; Tue, 28 Jan 2025 23:55:26 -0500
+Received: from mail-pl1-x632.google.com ([2607:f8b0:4864:20::632])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
+ id 1td06l-00021C-Hf
+ for qemu-devel@nongnu.org; Tue, 28 Jan 2025 23:55:25 -0500
+Received: by mail-pl1-x632.google.com with SMTP id
+ d9443c01a7336-2166360285dso108886035ad.1
+ for <qemu-devel@nongnu.org>; Tue, 28 Jan 2025 20:55:23 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=daynix-com.20230601.gappssmtp.com; s=20230601; t=1738126522; x=1738731322;
+ darn=nongnu.org; 
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=/IFeUQjMu1pqweZZ2zI+5/tYS9SLCsGUkfUbrwEx0iA=;
+ b=piZ+EAU0rTL6iFbtmYEGplu5lUTiHkb+S2ITRRoFCc6YffEt4LH/3OhDE21RD4/i85
+ O/ue9JbSxkHNBLhxoKnlnhsd0Yn4tXn/tUPEq25RhJeqNK/5HOTNWlG5/eExAgiMILfE
+ RTxlFEmCoWFgOTytKyj4qxXkJhMDVqn5Shy9uGJo4L/jPFmtwWuy13RRSfkYsyEMxgm2
+ MaYZNoGIb2jwnxLrdDgxtXkbMEQI+ovWew0vM/3XF9VXFOhW777kJi2N2SkL9TjYUmK/
+ 9NGIllyAAM0d0+AjToIlSTmN628rKn8S332R71C77u5VvJe/Yd4UVhocQZ0m4sY9rdvT
+ 1kzg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1738126522; x=1738731322;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=/IFeUQjMu1pqweZZ2zI+5/tYS9SLCsGUkfUbrwEx0iA=;
+ b=EUockREqYXV5Hp4fLVg2ileG1RzuS/ei7YRNyKkE+NHKIG/fnIX82q0iiWYiuXLgpU
+ KZq0tM18GGTV3Tgvub4zzFpkBSOVNPNpdNvPPSYjjE3SIZrSWMFliyYro35l9fv5WqcY
+ GRnDmDST3lziw113PXTkg40EM3XabPyaV+Pidr//F4VyMZLIIV40I4n+6K76C9U8s2PB
+ GmYBk9yI5s3txsH8mU8gob9NUq/SPusXgGvMimzb0HC0K+pPzGEp4CpTPn0bvBPiCpGn
+ rKDyYvYh4EliGKPuJ7uPhs88sODaUylhdGZyHyaiDaG+iVz2uk+Se6EZQ7JEz0hzWBxx
+ Hupw==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCUfEqXMcs72EbPG8GdLu/13ouXb1LbxIUmmqbfoLURwLvYJdItwL+D0NCv5DOvR1ISvs5xVxepDR11e@nongnu.org
+X-Gm-Message-State: AOJu0YxwuLK7tk5pPH1dMN0S63iVdH8af4i25yLfE3MDCmQnwVwdTN97
+ ECxQKUB9VLhW6z8dshqurss2LesYFjqaJ+Az/tuA3CtIH6R/FKIGyMd5teDrlvg=
+X-Gm-Gg: ASbGnculJH69DVwebxqODQIpvVfRIxbEpT+lwzsZL7yrunH1lhjG5+99BTebmW7vptE
+ I5P0EbFpiBlO3NYN28XYWjwuKANJl9oHFs+4kr83Y6lXnIFnJ9YwXHaiZhrClWvTnMfsG33NDQw
+ hwMA6KdTqLxwu9DD0/gYquctUDkXY0c5KFk5yl9rXKjqp7TQ39voD652Ld8a6fEaaQP5lXMrju8
+ TrvrOMZOY2AH1EJSwNFFtCJQ38j/Uc+8cL1V2m7R6Q756T8L1zsj7VQFnKLFlfPMOdTUQnYAsZ8
+ t+8267XARLmMUarabqlHIiS2C0z4
+X-Google-Smtp-Source: AGHT+IE/ZkJCXSSPk6z1jArpZ1Lcz87un7Bm147NNNCD173L++5cdH5qki30oCucXAEB8021oAu+eQ==
+X-Received: by 2002:a05:6a20:12d6:b0:1e1:ab51:f53e with SMTP id
+ adf61e73a8af0-1ed7a5b66e1mr3007763637.5.1738126521875; 
+ Tue, 28 Jan 2025 20:55:21 -0800 (PST)
+Received: from [157.82.205.237] ([157.82.205.237])
+ by smtp.gmail.com with ESMTPSA id
+ d2e1a72fcca58-72f8a7609b5sm10625337b3a.107.2025.01.28.20.55.18
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Tue, 28 Jan 2025 20:55:21 -0800 (PST)
+Message-ID: <ddbacd27-d978-409b-be12-060f27cea9d6@daynix.com>
+Date: Wed, 29 Jan 2025 13:55:17 +0900
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-15
-Content-Disposition: inline
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 2/2] tests/qtest: Make qtest_has_accel() generic
+To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ qemu-devel@nongnu.org
+Cc: xen-devel@lists.xenproject.org, =?UTF-8?Q?Daniel_P_=2E_Berrang=C3=A9?=
+ <berrange@redhat.com>, Fabiano Rosas <farosas@suse.de>,
+ Markus Armbruster <armbru@redhat.com>, Thomas Huth <thuth@redhat.com>,
+ Laurent Vivier <lvivier@redhat.com>, Phil Dennis-Jordan
+ <phil@philjordan.eu>, Bernhard Beschow <shentey@gmail.com>,
+ Paolo Bonzini <pbonzini@redhat.com>
+References: <20250128111821.93767-1-philmd@linaro.org>
+ <20250128111821.93767-3-philmd@linaro.org>
+Content-Language: en-US
+From: Akihiko Odaki <akihiko.odaki@daynix.com>
+In-Reply-To: <20250128111821.93767-3-philmd@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <6f445eb1-2626-4a08-abbb-580cdd7fe682@linaro.org>
-Received-SPF: pass client-ip=139.178.84.217; envelope-from=deller@kernel.org;
- helo=dfw.source.kernel.org
-X-Spam_score_int: -83
-X-Spam_score: -8.4
-X-Spam_bar: --------
-X-Spam_report: (-8.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.3,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_HI=-5, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+Received-SPF: pass client-ip=2607:f8b0:4864:20::632;
+ envelope-from=akihiko.odaki@daynix.com; helo=mail-pl1-x632.google.com
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001, T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -74,320 +109,67 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-* Richard Henderson <richard.henderson@linaro.org>:
-> On 1/28/25 17:52, Richard Henderson wrote:
-> > On 1/28/25 14:45, deller@kernel.org wrote:
-> > > +††† if (ctx->is_pa20 && (a->dr == 2)) {
-> > > +††††††† /* Exit TB to recalculate gva_offset_mask on %dr2 */
-> > > +††††††† ctx->base.is_jmp = DISAS_IAQ_N_STALE_EXIT;
-> > > +††† }
-> > 
-> > Where does this update happen?† I think you've missed that step.
+On 2025/01/28 20:18, Philippe Mathieu-Daud√© wrote:
+> Since commit b14a0b7469f ("accel: Use QOM classes for accel types")
+> accelerators are registered as QOM objects. Use QOM as a generic
+> API to query for available accelerators. This is in particular
+> useful to query hardware accelerators such HFV, Xen or WHPX which
+> otherwise have their definitions poisoned in "exec/poison.h".
 > 
-> To expand on this, I believe you want a new helper, invoked here, which
-> calls update_gva_offset_mask().  Then exit the tb as you do above.
+> Signed-off-by: Philippe Mathieu-Daud√© <philmd@linaro.org>
+> ---
+>   tests/qtest/libqtest.c | 21 ++++++++++-----------
+>   1 file changed, 10 insertions(+), 11 deletions(-)
 > 
-> We don't really have to go back to the main loop, but we can't chain with
-> DISAS_IAQ_N_STALE either.  We'd have to invent another DISAS thingy for an
-> exact fit.  For something that's probably called once at boot and never
-> again, it hardly seems worth the effort.
+> diff --git a/tests/qtest/libqtest.c b/tests/qtest/libqtest.c
+> index 7e9366ad6d5..3071dedeff6 100644
+> --- a/tests/qtest/libqtest.c
+> +++ b/tests/qtest/libqtest.c
+> @@ -30,6 +30,7 @@
+>   
+>   #include "libqtest.h"
+>   #include "libqmp.h"
+> +#include "qemu/accel.h"
+>   #include "qemu/ctype.h"
+>   #include "qemu/cutils.h"
+>   #include "qemu/sockets.h"
+> @@ -1030,13 +1031,10 @@ static bool qtest_qom_has_concrete_type(const char *parent_typename,
+>   
+>   bool qtest_has_accel(const char *accel_name)
+>   {
+> -    if (g_str_equal(accel_name, "tcg")) {
+> -#if defined(CONFIG_TCG)
+> -        return true;
+> -#else
+> -        return false;
+> -#endif
+> -    } else if (g_str_equal(accel_name, "kvm")) {
+> +    static QList *list;
+> +    g_autofree char *accel_type = NULL;
+> +
+> +    if (g_str_equal(accel_name, "kvm")) {
+>           int i;
+>           const char *arch = qtest_get_arch();
+>           const char *targets[] = { CONFIG_KVM_TARGETS };
+> @@ -1048,11 +1046,12 @@ bool qtest_has_accel(const char *accel_name)
+>                   }
+>               }
+>           }
+> -    } else {
+> -        /* not implemented */
+> -        g_assert_not_reached();
+> +        return false;
+>       }
+> -    return false;
+> +
+> +    accel_type = g_strdup_printf("%s%s", accel_name, ACCEL_CLASS_SUFFIX);
 
-I adjusted it, please see current patch version at the end of the mail.
+g_strconcat() will make this a bit shorter.
 
-What I'm not sure about is gva_offset_mask in those hunks and where you
-said I can't read from env:
+> +
+> +    return qtest_qom_has_concrete_type("accel", accel_type, &list);
+>   }
+>   
+>   bool qtest_get_irq(QTestState *s, int num)
 
-+++ b/target/hppa/translate.c
-@@ -73,6 +73,7 @@ typedef struct DisasContext {
- 
-     /* IAOQ_Front at entry to TB. */
-     uint64_t iaoq_first;
-+    uint64_t gva_offset_mask;
- 
-     DisasCond null_cond;
-     TCGLabel *null_lab;
-@@ -1577,7 +1578,7 @@ static void form_gva(DisasContext *ctx, TCGv_i64 *pgva, TCGv_i64 *pofs,
-     *pofs = ofs;
-     *pgva = addr = tcg_temp_new_i64();
-     tcg_gen_andi_i64(addr, modify <= 0 ? ofs : base,
--                     gva_offset_mask(ctx->tb_flags));
-+                     ctx->gva_offset_mask);
- #ifndef CONFIG_USER_ONLY
-     if (!is_phys) {
-         tcg_gen_or_i64(addr, addr, space_select(ctx, sp, base));
-@@ -4635,6 +4641,7 @@ static void hppa_tr_init_disas_context(DisasContextBase *dcbase, CPUState *cs)
-     ctx->tb_flags = ctx->base.tb->flags;
-     ctx->is_pa20 = hppa_is_pa20(cpu_env(cs));
-     ctx->psw_xb = ctx->tb_flags & (PSW_X | PSW_B);
-+    ctx->gva_offset_mask = cpu_env(cs)->gva_offset_mask;
- 
-Do I need to change the code in form_gva() to read at runtime from env
-instead?
-
-Helge
-
-
-
-
-
-
-
-
-Current patch:
-
-diff --git a/target/hppa/cpu.c b/target/hppa/cpu.c
-index c86f9190d2..c64495332f 100644
---- a/target/hppa/cpu.c
-+++ b/target/hppa/cpu.c
-@@ -45,8 +45,9 @@ static vaddr hppa_cpu_get_pc(CPUState *cs)
- {
-     CPUHPPAState *env = cpu_env(cs);
- 
--    return hppa_form_gva_psw(env->psw, (env->psw & PSW_C ? env->iasq_f : 0),
--                             env->iaoq_f & -4);
-+    return hppa_form_gva_mask(env->gva_offset_mask,
-+                         (env->psw & PSW_C ? env->iasq_f : 0),
-+                         env->iaoq_f & -4);
- }
- 
- void cpu_get_tb_cpu_state(CPUHPPAState *env, vaddr *pc,
-diff --git a/target/hppa/cpu.h b/target/hppa/cpu.h
-index b858986c41..52dc6ec700 100644
---- a/target/hppa/cpu.h
-+++ b/target/hppa/cpu.h
-@@ -223,6 +223,7 @@ typedef struct CPUArchState {
-     target_ulong psw_cb;     /* in least significant bit of next nibble */
-     target_ulong psw_cb_msb; /* boolean */
- 
-+    uint64_t gva_offset_mask; /* cached address mask based on PSW and %dr2 */
-     uint64_t iasq_f;
-     uint64_t iasq_b;
- 
-@@ -320,27 +321,20 @@ void hppa_translate_code(CPUState *cs, TranslationBlock *tb,
- 
- #define CPU_RESOLVING_TYPE TYPE_HPPA_CPU
- 
--static inline uint64_t gva_offset_mask(target_ulong psw)
--{
--    return (psw & PSW_W
--            ? MAKE_64BIT_MASK(0, 62)
--            : MAKE_64BIT_MASK(0, 32));
--}
--
--static inline target_ulong hppa_form_gva_psw(target_ulong psw, uint64_t spc,
--                                             target_ulong off)
-+static inline target_ulong hppa_form_gva_mask(uint64_t gva_offset_mask,
-+                                        uint64_t spc, target_ulong off)
- {
- #ifdef CONFIG_USER_ONLY
--    return off & gva_offset_mask(psw);
-+    return off & gva_offset_mask;
- #else
--    return spc | (off & gva_offset_mask(psw));
-+    return spc | (off & gva_offset_mask);
- #endif
- }
- 
- static inline target_ulong hppa_form_gva(CPUHPPAState *env, uint64_t spc,
-                                          target_ulong off)
- {
--    return hppa_form_gva_psw(env->psw, spc, off);
-+    return hppa_form_gva_mask(env->gva_offset_mask, spc, off);
- }
- 
- hwaddr hppa_abs_to_phys_pa2_w0(vaddr addr);
-@@ -362,6 +356,7 @@ void cpu_get_tb_cpu_state(CPUHPPAState *env, vaddr *pc,
- 
- target_ulong cpu_hppa_get_psw(CPUHPPAState *env);
- void cpu_hppa_put_psw(CPUHPPAState *env, target_ulong);
-+void update_gva_offset_mask(CPUHPPAState *env);
- void cpu_hppa_loaded_fr0(CPUHPPAState *env);
- 
- #ifdef CONFIG_USER_ONLY
-diff --git a/target/hppa/helper.c b/target/hppa/helper.c
-index d4b1a3cd5a..ac7f58f0af 100644
---- a/target/hppa/helper.c
-+++ b/target/hppa/helper.c
-@@ -24,6 +24,7 @@
- #include "exec/exec-all.h"
- #include "exec/helper-proto.h"
- #include "qemu/qemu-print.h"
-+#include "hw/hppa/hppa_hardware.h"
- 
- target_ulong cpu_hppa_get_psw(CPUHPPAState *env)
- {
-@@ -59,6 +60,22 @@ target_ulong cpu_hppa_get_psw(CPUHPPAState *env)
-     return psw;
- }
- 
-+void update_gva_offset_mask(CPUHPPAState *env)
-+{
-+    uint64_t gom;
-+
-+    if (env->psw & PSW_W) {
-+        gom = (env->dr[2] & HPPA64_DIAG_SPHASH_ENABLE)
-+            ? MAKE_64BIT_MASK(0, 62) &
-+                ~((uint64_t)HPPA64_PDC_CACHE_RET_SPID_VAL << 48)
-+            : MAKE_64BIT_MASK(0, 62);
-+    } else {
-+        gom = MAKE_64BIT_MASK(0, 32);
-+    }
-+
-+    env->gva_offset_mask = gom;
-+}
-+
- void cpu_hppa_put_psw(CPUHPPAState *env, target_ulong psw)
- {
-     uint64_t reserved;
-@@ -98,6 +115,8 @@ void cpu_hppa_put_psw(CPUHPPAState *env, target_ulong psw)
-     cb |= ((psw >>  9) & 1) <<  8;
-     cb |= ((psw >>  8) & 1) <<  4;
-     env->psw_cb = cb;
-+
-+    update_gva_offset_mask(env);
- }
- 
- void hppa_cpu_dump_state(CPUState *cs, FILE *f, int flags)
-@@ -133,9 +152,11 @@ void hppa_cpu_dump_state(CPUState *cs, FILE *f, int flags)
-     qemu_fprintf(f, "IA_F %08" PRIx64 ":%0*" PRIx64 " (" TARGET_FMT_lx ")\n"
-                     "IA_B %08" PRIx64 ":%0*" PRIx64 " (" TARGET_FMT_lx ")\n",
-                  env->iasq_f >> 32, w, m & env->iaoq_f,
--                 hppa_form_gva_psw(psw, env->iasq_f, env->iaoq_f),
-+                 hppa_form_gva_mask(env->gva_offset_mask, env->iasq_f,
-+				    env->iaoq_f),
-                  env->iasq_b >> 32, w, m & env->iaoq_b,
--                 hppa_form_gva_psw(psw, env->iasq_b, env->iaoq_b));
-+                 hppa_form_gva_mask(env->gva_offset_mask, env->iasq_b,
-+				    env->iaoq_b));
- 
-     psw_c[0]  = (psw & PSW_W ? 'W' : '-');
-     psw_c[1]  = (psw & PSW_E ? 'E' : '-');
-diff --git a/target/hppa/helper.h b/target/hppa/helper.h
-index de411923d9..8369855d78 100644
---- a/target/hppa/helper.h
-+++ b/target/hppa/helper.h
-@@ -99,6 +99,7 @@ DEF_HELPER_FLAGS_2(ptlb_l, TCG_CALL_NO_RWG, void, env, tl)
- DEF_HELPER_FLAGS_1(ptlbe, TCG_CALL_NO_RWG, void, env)
- DEF_HELPER_FLAGS_2(lpa, TCG_CALL_NO_WG, tl, env, tl)
- DEF_HELPER_FLAGS_1(change_prot_id, TCG_CALL_NO_RWG, void, env)
-+DEF_HELPER_FLAGS_1(update_gva_offset_mask, TCG_CALL_NO_RWG, void, env)
- DEF_HELPER_1(diag_btlb, void, env)
- DEF_HELPER_1(diag_console_output, void, env)
- #endif
-diff --git a/target/hppa/int_helper.c b/target/hppa/int_helper.c
-index 58695def82..7d48643bb6 100644
---- a/target/hppa/int_helper.c
-+++ b/target/hppa/int_helper.c
-@@ -94,11 +94,12 @@ void hppa_cpu_do_interrupt(CPUState *cs)
-     HPPACPU *cpu = HPPA_CPU(cs);
-     CPUHPPAState *env = &cpu->env;
-     int i = cs->exception_index;
--    uint64_t old_psw;
-+    uint64_t old_psw, old_gva_offset_mask;
- 
-     /* As documented in pa2.0 -- interruption handling.  */
-     /* step 1 */
-     env->cr[CR_IPSW] = old_psw = cpu_hppa_get_psw(env);
-+    old_gva_offset_mask = env->gva_offset_mask;
- 
-     /* step 2 -- Note PSW_W is masked out again for pa1.x */
-     cpu_hppa_put_psw(env,
-@@ -112,9 +113,9 @@ void hppa_cpu_do_interrupt(CPUState *cs)
-      */
-     if (old_psw & PSW_C) {
-         env->cr[CR_IIASQ] =
--            hppa_form_gva_psw(old_psw, env->iasq_f, env->iaoq_f) >> 32;
-+            hppa_form_gva_mask(old_gva_offset_mask, env->iasq_f, env->iaoq_f) >> 32;
-         env->cr_back[0] =
--            hppa_form_gva_psw(old_psw, env->iasq_b, env->iaoq_b) >> 32;
-+            hppa_form_gva_mask(old_gva_offset_mask, env->iasq_b, env->iaoq_b) >> 32;
-     } else {
-         env->cr[CR_IIASQ] = 0;
-         env->cr_back[0] = 0;
-@@ -165,7 +166,8 @@ void hppa_cpu_do_interrupt(CPUState *cs)
-                 if (old_psw & PSW_C) {
-                     int prot, t;
- 
--                    vaddr = hppa_form_gva_psw(old_psw, env->iasq_f, vaddr);
-+                    vaddr = hppa_form_gva_mask(old_gva_offset_mask,
-+					       env->iasq_f, vaddr);
-                     t = hppa_get_physical_address(env, vaddr, MMU_KERNEL_IDX,
-                                                   0, 0, &paddr, &prot);
-                     if (t >= 0) {
-diff --git a/target/hppa/mem_helper.c b/target/hppa/mem_helper.c
-index b8c3e55170..304f0b61e2 100644
---- a/target/hppa/mem_helper.c
-+++ b/target/hppa/mem_helper.c
-@@ -824,3 +824,8 @@ uint64_t HELPER(b_gate_priv)(CPUHPPAState *env, uint64_t iaoq_f)
-     }
-     return iaoq_f;
- }
-+
-+void HELPER(update_gva_offset_mask)(CPUHPPAState *env)
-+{
-+    update_gva_offset_mask(env);
-+}
-diff --git a/target/hppa/sys_helper.c b/target/hppa/sys_helper.c
-index da5b569de8..052a6a88a2 100644
---- a/target/hppa/sys_helper.c
-+++ b/target/hppa/sys_helper.c
-@@ -73,7 +73,7 @@ target_ulong HELPER(swap_system_mask)(CPUHPPAState *env, target_ulong nsm)
-      * machines set the Q bit from 0 to 1 without an exception,
-      * so let this go without comment.
-      */
--    env->psw = (psw & ~PSW_SM) | (nsm & PSW_SM);
-+    cpu_hppa_put_psw(env, (psw & ~PSW_SM) | (nsm & PSW_SM));
-     return psw & PSW_SM;
- }
- 
-@@ -88,7 +88,7 @@ void HELPER(rfi)(CPUHPPAState *env)
-      * To recreate the space identifier, remove the offset bits.
-      * For pa1.x, the mask reduces to no change to space.
-      */
--    mask = gva_offset_mask(env->psw);
-+    mask = env->gva_offset_mask;
- 
-     env->iaoq_f = env->cr[CR_IIAOQ];
-     env->iaoq_b = env->cr_back[1];
-diff --git a/target/hppa/translate.c b/target/hppa/translate.c
-index 7b9d3deb39..5508c55378 100644
---- a/target/hppa/translate.c
-+++ b/target/hppa/translate.c
-@@ -73,6 +73,7 @@ typedef struct DisasContext {
- 
-     /* IAOQ_Front at entry to TB. */
-     uint64_t iaoq_first;
-+    uint64_t gva_offset_mask;
- 
-     DisasCond null_cond;
-     TCGLabel *null_lab;
-@@ -1577,7 +1578,7 @@ static void form_gva(DisasContext *ctx, TCGv_i64 *pgva, TCGv_i64 *pofs,
-     *pofs = ofs;
-     *pgva = addr = tcg_temp_new_i64();
-     tcg_gen_andi_i64(addr, modify <= 0 ? ofs : base,
--                     gva_offset_mask(ctx->tb_flags));
-+                     ctx->gva_offset_mask);
- #ifndef CONFIG_USER_ONLY
-     if (!is_phys) {
-         tcg_gen_or_i64(addr, addr, space_select(ctx, sp, base));
-@@ -4615,6 +4616,11 @@ static bool trans_diag_mtdiag(DisasContext *ctx, arg_diag_mtdiag *a)
-     nullify_over(ctx);
-     tcg_gen_st_i64(load_gpr(ctx, a->r1), tcg_env,
-                         offsetof(CPUHPPAState, dr[a->dr]));
-+    if (ctx->is_pa20 && (a->dr == 2)) {
-+        gen_helper_update_gva_offset_mask(tcg_env);
-+        /* Exit TB to recalculate gva_offset_mask on %dr2 */
-+        ctx->base.is_jmp = DISAS_IAQ_N_STALE_EXIT;
-+    }
-     return nullify_end(ctx);
- }
- 
-@@ -4635,6 +4641,7 @@ static void hppa_tr_init_disas_context(DisasContextBase *dcbase, CPUState *cs)
-     ctx->tb_flags = ctx->base.tb->flags;
-     ctx->is_pa20 = hppa_is_pa20(cpu_env(cs));
-     ctx->psw_xb = ctx->tb_flags & (PSW_X | PSW_B);
-+    ctx->gva_offset_mask = cpu_env(cs)->gva_offset_mask;
- 
- #ifdef CONFIG_USER_ONLY
-     ctx->privilege = PRIV_USER;
 
