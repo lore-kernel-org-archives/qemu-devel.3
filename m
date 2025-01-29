@@ -4,114 +4,105 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1C521C02190
-	for <qemu-devel@archiver.kernel.org>; Wed, 29 Jan 2025 16:10:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 49A65C02190
+	for <qemu-devel@archiver.kernel.org>; Wed, 29 Jan 2025 16:11:01 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tdAWA-0003v7-Nx; Wed, 29 Jan 2025 11:02:18 -0500
+	id 1tdAXL-0005F9-VR; Wed, 29 Jan 2025 11:03:32 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1tdAVr-0003PK-W7
- for qemu-devel@nongnu.org; Wed, 29 Jan 2025 11:02:01 -0500
-Received: from smtp-out1.suse.de ([2a07:de40:b251:101:10:150:64:1])
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1tdAVV-0003HE-AM
+ for qemu-devel@nongnu.org; Wed, 29 Jan 2025 11:01:39 -0500
+Received: from smtp-out2.suse.de ([195.135.223.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1tdAVo-0005LH-Bs
- for qemu-devel@nongnu.org; Wed, 29 Jan 2025 11:01:58 -0500
-Received: from imap1.dmz-prg2.suse.org (imap1.dmz-prg2.suse.org
- [IPv6:2a07:de40:b281:104:10:150:64:97])
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1tdAVT-0005Hg-6i
+ for qemu-devel@nongnu.org; Wed, 29 Jan 2025 11:01:37 -0500
+Received: from imap1.dmz-prg2.suse.org (unknown [10.150.64.97])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
  (No client certificate requested)
- by smtp-out1.suse.de (Postfix) with ESMTPS id 16BEF210F9;
- Wed, 29 Jan 2025 16:01:55 +0000 (UTC)
+ by smtp-out2.suse.de (Postfix) with ESMTPS id 8B9661F383;
+ Wed, 29 Jan 2025 16:01:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1738166515; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ t=1738166493; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
  mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=ne8zasNAUKeQPHV8fe2tlKT45NW5x2BvopjfSXSIWGY=;
- b=ZaWWKTMxHJQNFVIaFiK4OdBhSgk/m7ok8dFwcawkmOPO1fzKRNzULicQLCNsoSMnAeMymM
- ZQXvsaYzRJituyl100cGaqarijRhCV6rdXb+q1z7NQKbik6aGaKTwYCet5TFIfMaYdihQn
- cChBO1tLT3DNs2RQxjBYaHeHgGdXO1s=
+ bh=TUnVXpFQqxzjBZXmvQTIkTsUNjcdzug5M7k2BEjvNoA=;
+ b=TSKWmTIQ56yNCM13wPSFmspGltRJ9iRe2PEccMUXQVnjrlnRtuUCajKQrWOefuAuBBpQ5G
+ Lx3h9mxVvb3Y0kuAcSw6B6YN3qWQzIHJ/2r/4Wdv+RKTC7fY2rSB8zlzFE5Et+eRFksbWa
+ VGbHoqTNirSM5SF2AQ6ah/xCo5TLaVY=
 DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1738166515;
+ s=susede2_ed25519; t=1738166493;
  h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
  mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=ne8zasNAUKeQPHV8fe2tlKT45NW5x2BvopjfSXSIWGY=;
- b=Ffo3gmChxuaoOikL8LQ27MWetCzmDhkTQ0w2vAFqnqPNKfHZuNa4X4QWRDkT74OeIwfAqu
- t3iApCQOmzjyBvAw==
-Authentication-Results: smtp-out1.suse.de;
- dkim=pass header.d=suse.de header.s=susede2_rsa header.b=ZaWWKTMx;
- dkim=pass header.d=suse.de header.s=susede2_ed25519 header.b=Ffo3gmCh
+ bh=TUnVXpFQqxzjBZXmvQTIkTsUNjcdzug5M7k2BEjvNoA=;
+ b=Dy2CKKNO0AbM2qLHhl/17rjv9IcCqGg3VX8UJtUNT68qPvWrDV+M1AL3eY64561pZvUlxd
+ ogJYzqzMCvPCh0BA==
+Authentication-Results: smtp-out2.suse.de;
+	none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1738166515; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ t=1738166493; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
  mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=ne8zasNAUKeQPHV8fe2tlKT45NW5x2BvopjfSXSIWGY=;
- b=ZaWWKTMxHJQNFVIaFiK4OdBhSgk/m7ok8dFwcawkmOPO1fzKRNzULicQLCNsoSMnAeMymM
- ZQXvsaYzRJituyl100cGaqarijRhCV6rdXb+q1z7NQKbik6aGaKTwYCet5TFIfMaYdihQn
- cChBO1tLT3DNs2RQxjBYaHeHgGdXO1s=
+ bh=TUnVXpFQqxzjBZXmvQTIkTsUNjcdzug5M7k2BEjvNoA=;
+ b=TSKWmTIQ56yNCM13wPSFmspGltRJ9iRe2PEccMUXQVnjrlnRtuUCajKQrWOefuAuBBpQ5G
+ Lx3h9mxVvb3Y0kuAcSw6B6YN3qWQzIHJ/2r/4Wdv+RKTC7fY2rSB8zlzFE5Et+eRFksbWa
+ VGbHoqTNirSM5SF2AQ6ah/xCo5TLaVY=
 DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1738166515;
+ s=susede2_ed25519; t=1738166493;
  h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
  mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=ne8zasNAUKeQPHV8fe2tlKT45NW5x2BvopjfSXSIWGY=;
- b=Ffo3gmChxuaoOikL8LQ27MWetCzmDhkTQ0w2vAFqnqPNKfHZuNa4X4QWRDkT74OeIwfAqu
- t3iApCQOmzjyBvAw==
+ bh=TUnVXpFQqxzjBZXmvQTIkTsUNjcdzug5M7k2BEjvNoA=;
+ b=Dy2CKKNO0AbM2qLHhl/17rjv9IcCqGg3VX8UJtUNT68qPvWrDV+M1AL3eY64561pZvUlxd
+ ogJYzqzMCvPCh0BA==
 Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
  (No client certificate requested)
- by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id C3ABF137DB;
- Wed, 29 Jan 2025 16:01:53 +0000 (UTC)
+ by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 42572137DB;
+ Wed, 29 Jan 2025 16:01:32 +0000 (UTC)
 Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
- by imap1.dmz-prg2.suse.org with ESMTPSA id sKXjIPFQmmffPAAAD6G6ig
- (envelope-from <farosas@suse.de>); Wed, 29 Jan 2025 16:01:53 +0000
+ by imap1.dmz-prg2.suse.org with ESMTPSA id AJQLAdxQmmffPAAAD6G6ig
+ (envelope-from <farosas@suse.de>); Wed, 29 Jan 2025 16:01:32 +0000
 From: Fabiano Rosas <farosas@suse.de>
 To: qemu-devel@nongnu.org
 Cc: Peter Xu <peterx@redhat.com>,
 	Steve Sistare <steven.sistare@oracle.com>
-Subject: [PULL 25/42] migration: cpr-transfer documentation
-Date: Wed, 29 Jan 2025 13:00:42 -0300
-Message-Id: <20250129160059.6987-26-farosas@suse.de>
+Subject: [PULL 13/42] migration: incoming channel
+Date: Wed, 29 Jan 2025 13:00:30 -0300
+Message-Id: <20250129160059.6987-14-farosas@suse.de>
 X-Mailer: git-send-email 2.35.3
 In-Reply-To: <20250129160059.6987-1-farosas@suse.de>
 References: <20250129160059.6987-1-farosas@suse.de>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-Rspamd-Queue-Id: 16BEF210F9
-X-Spamd-Result: default: False [-3.01 / 50.00]; BAYES_HAM(-3.00)[100.00%];
- NEURAL_HAM_LONG(-1.00)[-1.000]; MID_CONTAINS_FROM(1.00)[];
- R_MISSING_CHARSET(0.50)[];
- R_DKIM_ALLOW(-0.20)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
- NEURAL_HAM_SHORT(-0.20)[-1.000]; MIME_GOOD(-0.10)[text/plain];
- MX_GOOD(-0.01)[]; RCVD_VIA_SMTP_AUTH(0.00)[]; ARC_NA(0.00)[];
- RCVD_COUNT_TWO(0.00)[2]; MIME_TRACE(0.00)[0:+];
- RBL_SPAMHAUS_BLOCKED_OPENRESOLVER(0.00)[2a07:de40:b281:104:10:150:64:97:from]; 
- SPAMHAUS_XBL(0.00)[2a07:de40:b281:104:10:150:64:97:from];
- TO_DN_SOME(0.00)[]; FUZZY_BLOCKED(0.00)[rspamd.com];
- RECEIVED_SPAMHAUS_BLOCKED_OPENRESOLVER(0.00)[2a07:de40:b281:106:10:150:64:167:received];
- FROM_HAS_DN(0.00)[]; TO_MATCH_ENVRCPT_ALL(0.00)[];
- DBL_BLOCKED_OPENRESOLVER(0.00)[oracle.com:email,suse.de:email,suse.de:dkim,suse.de:mid];
- RCVD_TLS_ALL(0.00)[]; FROM_EQ_ENVFROM(0.00)[];
- RCPT_COUNT_THREE(0.00)[3];
+X-Spamd-Result: default: False [-2.80 / 50.00]; BAYES_HAM(-3.00)[100.00%];
+ MID_CONTAINS_FROM(1.00)[]; NEURAL_HAM_LONG(-1.00)[-1.000];
+ R_MISSING_CHARSET(0.50)[]; NEURAL_HAM_SHORT(-0.20)[-1.000];
+ MIME_GOOD(-0.10)[text/plain]; MIME_TRACE(0.00)[0:+];
+ TO_DN_SOME(0.00)[]; RCVD_VIA_SMTP_AUTH(0.00)[]; ARC_NA(0.00)[];
  DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
- DKIM_TRACE(0.00)[suse.de:+]
-X-Rspamd-Server: rspamd2.dmz-prg2.suse.org
-X-Rspamd-Action: no action
-Received-SPF: pass client-ip=2a07:de40:b251:101:10:150:64:1;
- envelope-from=farosas@suse.de; helo=smtp-out1.suse.de
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
+ FUZZY_BLOCKED(0.00)[rspamd.com]; FROM_EQ_ENVFROM(0.00)[];
+ FROM_HAS_DN(0.00)[]; RCPT_COUNT_THREE(0.00)[3];
+ RCVD_COUNT_TWO(0.00)[2]; TO_MATCH_ENVRCPT_ALL(0.00)[];
+ DBL_BLOCKED_OPENRESOLVER(0.00)[suse.de:mid,suse.de:email,oracle.com:email];
+ RCVD_TLS_ALL(0.00)[]
+Received-SPF: pass client-ip=195.135.223.131; envelope-from=farosas@suse.de;
+ helo=smtp-out2.suse.de
+X-Spam_score_int: -43
+X-Spam_score: -4.4
+X-Spam_bar: ----
+X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -130,223 +121,186 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Steve Sistare <steven.sistare@oracle.com>
 
-Add documentation for the cpr-transfer migration mode.
+Extend the -incoming option to allow an @MigrationChannel to be specified.
+This allows channels other than 'main' to be described on the command
+line, which will be needed for CPR.
 
 Signed-off-by: Steve Sistare <steven.sistare@oracle.com>
-Reviewed-by: Peter Xu <peterx@redhat.com>
-Link: https://lore.kernel.org/r/1736967650-129648-25-git-send-email-steven.sistare@oracle.com
-[add -machine memory-backend=ram0]
+Acked-by: Peter Xu <peterx@redhat.com>
+Link: https://lore.kernel.org/r/1736967650-129648-13-git-send-email-steven.sistare@oracle.com
 Signed-off-by: Fabiano Rosas <farosas@suse.de>
 ---
- docs/devel/migration/CPR.rst | 184 ++++++++++++++++++++++++++++++++++-
- 1 file changed, 182 insertions(+), 2 deletions(-)
+ migration/migration.c | 21 ++++++++++++++++-----
+ qemu-options.hx       | 21 +++++++++++++++++++++
+ system/vl.c           | 36 +++++++++++++++++++++++++++++++++---
+ 3 files changed, 70 insertions(+), 8 deletions(-)
 
-diff --git a/docs/devel/migration/CPR.rst b/docs/devel/migration/CPR.rst
-index 63c36470cf..7897873c86 100644
---- a/docs/devel/migration/CPR.rst
-+++ b/docs/devel/migration/CPR.rst
-@@ -5,7 +5,7 @@ CPR is the umbrella name for a set of migration modes in which the
- VM is migrated to a new QEMU instance on the same host.  It is
- intended for use when the goal is to update host software components
- that run the VM, such as QEMU or even the host kernel.  At this time,
--cpr-reboot is the only available mode.
-+the cpr-reboot and cpr-transfer modes are available.
+diff --git a/migration/migration.c b/migration/migration.c
+index b5ee98e691..5f2540fac3 100644
+--- a/migration/migration.c
++++ b/migration/migration.c
+@@ -695,7 +695,8 @@ static void qemu_start_incoming_migration(const char *uri, bool has_channels,
+     if (channels) {
+         /* To verify that Migrate channel list has only item */
+         if (channels->next) {
+-            error_setg(errp, "Channel list has more than one entries");
++            error_setg(errp, "Channel list must have only one entry, "
++                             "for type 'main'");
+             return;
+         }
+         addr = channels->value->addr;
+@@ -2054,6 +2055,7 @@ void qmp_migrate(const char *uri, bool has_channels,
+     MigrationState *s = migrate_get_current();
+     g_autoptr(MigrationChannel) channel = NULL;
+     MigrationAddress *addr = NULL;
++    MigrationChannel *channelv[MIGRATION_CHANNEL_TYPE__MAX] = { NULL };
  
- Because QEMU is restarted on the same host, with access to the same
- local devices, CPR is allowed in certain cases where normal migration
-@@ -53,7 +53,7 @@ RAM is copied to the migration URI.
- Outgoing:
-   * Set the migration mode parameter to ``cpr-reboot``.
-   * Set the ``x-ignore-shared`` capability if desired.
--  * Issue the ``migrate`` command.  It is recommended the the URI be a
-+  * Issue the ``migrate`` command.  It is recommended the URI be a
-     ``file`` type, but one can use other types such as ``exec``,
-     provided the command captures all the data from the outgoing side,
-     and provides all the data to the incoming side.
-@@ -145,3 +145,183 @@ Caveats
+     /*
+      * Having preliminary checks for uri and channel
+@@ -2064,12 +2066,21 @@ void qmp_migrate(const char *uri, bool has_channels,
+     }
  
- cpr-reboot mode may not be used with postcopy, background-snapshot,
- or COLO.
+     if (channels) {
+-        /* To verify that Migrate channel list has only item */
+-        if (channels->next) {
+-            error_setg(errp, "Channel list has more than one entries");
++        for ( ; channels; channels = channels->next) {
++            MigrationChannelType type = channels->value->channel_type;
 +
-+cpr-transfer mode
-+-----------------
++            if (channelv[type]) {
++                error_setg(errp, "Channel list has more than one %s entry",
++                           MigrationChannelType_str(type));
++                return;
++            }
++            channelv[type] = channels->value;
++        }
++        addr = channelv[MIGRATION_CHANNEL_TYPE_MAIN]->addr;
++        if (!addr) {
++            error_setg(errp, "Channel list has no main entry");
+             return;
+         }
+-        addr = channels->value->addr;
+     }
+ 
+     if (uri) {
+diff --git a/qemu-options.hx b/qemu-options.hx
+index 90fad31590..3d1af7325b 100644
+--- a/qemu-options.hx
++++ b/qemu-options.hx
+@@ -4940,10 +4940,18 @@ DEF("incoming", HAS_ARG, QEMU_OPTION_incoming, \
+     "-incoming exec:cmdline\n" \
+     "                accept incoming migration on given file descriptor\n" \
+     "                or from given external command\n" \
++    "-incoming <channel>\n" \
++    "                accept incoming migration on the migration channel\n" \
+     "-incoming defer\n" \
+     "                wait for the URI to be specified via migrate_incoming\n",
+     QEMU_ARCH_ALL)
+ SRST
++The -incoming option specifies the migration channel for an incoming
++migration.  It may be used multiple times to specify multiple
++migration channel types.  The channel type is specified in <channel>,
++or is 'main' for all other forms of -incoming.  If multiple -incoming
++options are specified for a channel type, the last one takes precedence.
 +
-+This mode allows the user to transfer a guest to a new QEMU instance
-+on the same host with minimal guest pause time, by preserving guest
-+RAM in place, albeit with new virtual addresses in new QEMU.  Devices
-+and their pinned memory pages will also be preserved in a future QEMU
-+release.
+ ``-incoming tcp:[host]:port[,to=maxport][,ipv4=on|off][,ipv6=on|off]``
+   \ 
+ ``-incoming rdma:host:port[,ipv4=on|off][,ipv6=on|off]``
+@@ -4963,6 +4971,19 @@ SRST
+     Accept incoming migration as an output from specified external
+     command.
+ 
++``-incoming <channel>``
++    Accept incoming migration on the migration channel.  For the syntax
++    of <channel>, see the QAPI documentation of ``MigrationChannel``.
++    Examples:
++    ::
 +
-+The user starts new QEMU on the same host as old QEMU, with command-
-+line arguments to create the same machine, plus the ``-incoming``
-+option for the main migration channel, like normal live migration.
-+In addition, the user adds a second -incoming option with channel
-+type ``cpr``.  This CPR channel must support file descriptor transfer
-+with SCM_RIGHTS, i.e. it must be a UNIX domain socket.
++        -incoming '{"channel-type": "main",
++                    "addr": { "transport": "socket",
++                              "type": "unix",
++                              "path": "my.sock" }}'
 +
-+To initiate CPR, the user issues a migrate command to old QEMU,
-+adding a second migration channel of type ``cpr`` in the channels
-+argument.  Old QEMU stops the VM, saves state to the migration
-+channels, and enters the postmigrate state.  Execution resumes in
-+new QEMU.
++        -incoming main,addr.transport=socket,addr.type=unix,addr.path=my.sock
 +
-+New QEMU reads the CPR channel before opening a monitor, hence
-+the CPR channel cannot be specified in the list of channels for a
-+migrate-incoming command.  It may only be specified on the command
-+line.
+ ``-incoming defer``
+     Wait for the URI to be specified via migrate\_incoming. The monitor
+     can be used to change settings (such as migration parameters) prior
+diff --git a/system/vl.c b/system/vl.c
+index c567826718..504f05b954 100644
+--- a/system/vl.c
++++ b/system/vl.c
+@@ -123,6 +123,7 @@
+ #include "qapi/qapi-visit-block-core.h"
+ #include "qapi/qapi-visit-compat.h"
+ #include "qapi/qapi-visit-machine.h"
++#include "qapi/qapi-visit-migration.h"
+ #include "qapi/qapi-visit-ui.h"
+ #include "qapi/qapi-commands-block-core.h"
+ #include "qapi/qapi-commands-migration.h"
+@@ -159,6 +160,8 @@ typedef struct DeviceOption {
+ static const char *cpu_option;
+ static const char *mem_path;
+ static const char *incoming;
++static const char *incoming_str[MIGRATION_CHANNEL_TYPE__MAX];
++static MigrationChannel *incoming_channels[MIGRATION_CHANNEL_TYPE__MAX];
+ static const char *loadvm;
+ static const char *accelerators;
+ static bool have_custom_ram_size;
+@@ -1813,6 +1816,30 @@ static void object_option_add_visitor(Visitor *v)
+     QTAILQ_INSERT_TAIL(&object_opts, opt, next);
+ }
+ 
++static void incoming_option_parse(const char *str)
++{
++    MigrationChannelType type = MIGRATION_CHANNEL_TYPE_MAIN;
++    MigrationChannel *channel;
++    Visitor *v;
 +
-+Usage
-+^^^^^
++    if (!strcmp(str, "defer")) {
++        channel = NULL;
++    } else if (migrate_is_uri(str)) {
++        migrate_uri_parse(str, &channel, &error_fatal);
++    } else {
++        v = qobject_input_visitor_new_str(str, "channel-type", &error_fatal);
++        visit_type_MigrationChannel(v, NULL, &channel, &error_fatal);
++        visit_free(v);
++        type = channel->channel_type;
++    }
 +
-+Memory backend objects must have the ``share=on`` attribute.
++    /* New incoming spec replaces the previous */
++    qapi_free_MigrationChannel(incoming_channels[type]);
++    incoming_channels[type] = channel;
++    incoming_str[type] = str;
++    incoming = incoming_str[MIGRATION_CHANNEL_TYPE_MAIN];
++}
 +
-+The VM must be started with the ``-machine aux-ram-share=on``
-+option.  This causes implicit RAM blocks (those not described by
-+a memory-backend object) to be allocated by mmap'ing a memfd.
-+Examples include VGA and ROM.
+ static void object_option_parse(const char *str)
+ {
+     QemuOpts *opts;
+@@ -2738,8 +2765,11 @@ void qmp_x_exit_preconfig(Error **errp)
+     if (incoming) {
+         Error *local_err = NULL;
+         if (strcmp(incoming, "defer") != 0) {
+-            qmp_migrate_incoming(incoming, false, NULL, true, true,
+-                                 &local_err);
++            g_autofree MigrationChannelList *channels =
++                g_new0(MigrationChannelList, 1);
 +
-+Outgoing:
-+  * Set the migration mode parameter to ``cpr-transfer``.
-+  * Issue the ``migrate`` command, containing a main channel and
-+    a cpr channel.
-+
-+Incoming:
-+  * Start new QEMU with two ``-incoming`` options.
-+  * If the VM was running when the outgoing ``migrate`` command was
-+    issued, then QEMU automatically resumes VM execution.
-+
-+Caveats
-+^^^^^^^
-+
-+cpr-transfer mode may not be used with postcopy, background-snapshot,
-+or COLO.
-+
-+memory-backend-epc is not supported.
-+
-+The main incoming migration channel address cannot be a file type.
-+
-+If the main incoming channel address is an inet socket, then the port
-+cannot be 0 (meaning dynamically choose a port).
-+
-+When using ``-incoming defer``, you must issue the migrate command to
-+old QEMU before issuing any monitor commands to new QEMU, because new
-+QEMU blocks waiting to read from the cpr channel before starting its
-+monitor, and old QEMU does not write to the channel until the migrate
-+command is issued.  However, new QEMU does not open and read the
-+main migration channel until you issue the migrate incoming command.
-+
-+Example 1: incoming channel
-+^^^^^^^^^^^^^^^^^^^^^^^^^^^
-+
-+In these examples, we simply restart the same version of QEMU, but
-+in a real scenario one would start new QEMU on the incoming side.
-+Note that new QEMU does not print the monitor prompt until old QEMU
-+has issued the migrate command.  The outgoing side uses QMP because
-+HMP cannot specify a CPR channel.  Some QMP responses are omitted for
-+brevity.
-+
-+::
-+
-+  Outgoing:                             Incoming:
-+
-+  # qemu-kvm -qmp stdio
-+  -object memory-backend-file,id=ram0,size=4G,
-+  mem-path=/dev/shm/ram0,share=on -m 4G
-+  -machine memory-backend=ram0
-+  -machine aux-ram-share=on
-+  ...
-+                                        # qemu-kvm -monitor stdio
-+                                        -incoming tcp:0:44444
-+                                        -incoming '{"channel-type": "cpr",
-+                                          "addr": { "transport": "socket",
-+                                          "type": "unix", "path": "cpr.sock"}}'
-+                                        ...
-+  {"execute":"qmp_capabilities"}
-+
-+  {"execute": "query-status"}
-+  {"return": {"status": "running",
-+              "running": true}}
-+
-+  {"execute":"migrate-set-parameters",
-+   "arguments":{"mode":"cpr-transfer"}}
-+
-+  {"execute": "migrate", "arguments": { "channels": [
-+    {"channel-type": "main",
-+     "addr": { "transport": "socket", "type": "inet",
-+               "host": "0", "port": "44444" }},
-+    {"channel-type": "cpr",
-+     "addr": { "transport": "socket", "type": "unix",
-+               "path": "cpr.sock" }}]}}
-+
-+                                        QEMU 10.0.50 monitor
-+                                        (qemu) info status
-+                                        VM status: running
-+
-+  {"execute": "query-status"}
-+  {"return": {"status": "postmigrate",
-+              "running": false}}
-+
-+Example 2: incoming defer
-+^^^^^^^^^^^^^^^^^^^^^^^^^
-+
-+This example uses ``-incoming defer`` to hot plug a device before
-+accepting the main migration channel.  Again note you must issue the
-+migrate command to old QEMU before you can issue any monitor
-+commands to new QEMU.
-+
-+
-+::
-+
-+  Outgoing:                             Incoming:
-+
-+  # qemu-kvm -monitor stdio
-+  -object memory-backend-file,id=ram0,size=4G,
-+  mem-path=/dev/shm/ram0,share=on -m 4G
-+  -machine memory-backend=ram0
-+  -machine aux-ram-share=on
-+  ...
-+                                        # qemu-kvm -monitor stdio
-+                                        -incoming defer
-+                                        -incoming '{"channel-type": "cpr",
-+                                          "addr": { "transport": "socket",
-+                                          "type": "unix", "path": "cpr.sock"}}'
-+                                        ...
-+  {"execute":"qmp_capabilities"}
-+
-+  {"execute": "device_add",
-+   "arguments": {"driver": "pcie-root-port"}}
-+
-+  {"execute":"migrate-set-parameters",
-+   "arguments":{"mode":"cpr-transfer"}}
-+
-+  {"execute": "migrate", "arguments": { "channels": [
-+    {"channel-type": "main",
-+     "addr": { "transport": "socket", "type": "inet",
-+               "host": "0", "port": "44444" }},
-+    {"channel-type": "cpr",
-+     "addr": { "transport": "socket", "type": "unix",
-+               "path": "cpr.sock" }}]}}
-+
-+                                        QEMU 10.0.50 monitor
-+                                        (qemu) info status
-+                                        VM status: paused (inmigrate)
-+                                        (qemu) device_add pcie-root-port
-+                                        (qemu) migrate_incoming tcp:0:44444
-+                                        (qemu) info status
-+                                        VM status: running
-+
-+  {"execute": "query-status"}
-+  {"return": {"status": "postmigrate",
-+              "running": false}}
-+
-+Futures
-+^^^^^^^
-+
-+cpr-transfer mode is based on a capability to transfer open file
-+descriptors from old to new QEMU.  In the future, descriptors for
-+vfio, iommufd, vhost, and char devices could be transferred,
-+preserving those devices and their kernel state without interruption,
-+even if they do not explicitly support live migration.
++            channels->value = incoming_channels[MIGRATION_CHANNEL_TYPE_MAIN];
++            qmp_migrate_incoming(NULL, true, channels, true, true, &local_err);
+             if (local_err) {
+                 error_reportf_err(local_err, "-incoming %s: ", incoming);
+                 exit(1);
+@@ -3458,7 +3488,7 @@ void qemu_init(int argc, char **argv)
+                 if (!incoming) {
+                     runstate_set(RUN_STATE_INMIGRATE);
+                 }
+-                incoming = optarg;
++                incoming_option_parse(optarg);
+                 break;
+             case QEMU_OPTION_only_migratable:
+                 only_migratable = 1;
 -- 
 2.35.3
 
