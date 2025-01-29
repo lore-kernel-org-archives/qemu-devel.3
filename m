@@ -4,79 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2D55FC02193
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 71B2BC0218D
 	for <qemu-devel@archiver.kernel.org>; Wed, 29 Jan 2025 01:44:52 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tcx2y-0000sN-4m; Tue, 28 Jan 2025 20:39:16 -0500
+	id 1tcx34-0000xG-Pt; Tue, 28 Jan 2025 20:39:22 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1tcx2q-0000nR-5y
- for qemu-devel@nongnu.org; Tue, 28 Jan 2025 20:39:08 -0500
-Received: from mail-pl1-x62b.google.com ([2607:f8b0:4864:20::62b])
+ id 1tcx33-0000wS-DV
+ for qemu-devel@nongnu.org; Tue, 28 Jan 2025 20:39:21 -0500
+Received: from mail-pl1-x62a.google.com ([2607:f8b0:4864:20::62a])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1tcx2o-0003V2-6M
- for qemu-devel@nongnu.org; Tue, 28 Jan 2025 20:39:07 -0500
-Received: by mail-pl1-x62b.google.com with SMTP id
- d9443c01a7336-2163b0c09afso115531415ad.0
- for <qemu-devel@nongnu.org>; Tue, 28 Jan 2025 17:39:05 -0800 (PST)
+ id 1tcx31-0003ao-Nk
+ for qemu-devel@nongnu.org; Tue, 28 Jan 2025 20:39:21 -0500
+Received: by mail-pl1-x62a.google.com with SMTP id
+ d9443c01a7336-2165448243fso135574925ad.1
+ for <qemu-devel@nongnu.org>; Tue, 28 Jan 2025 17:39:19 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1738114745; x=1738719545; darn=nongnu.org;
+ d=linaro.org; s=google; t=1738114758; x=1738719558; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=/o3PZF+VYx9BlUZcSvSihlV0semqIWO9oR/VySJrxZU=;
- b=w16XCVW3VYxiyLaZpsmZVxHxNUXbJcxSTcshsxbB7Fn0isdCfcdhTR+jcD9jvZxpUj
- jHJa8mD8G/m5XQ/n7D5fvqME96tZOzm8c4dOcJTLDZTRdQqMylhHoprLu9Z9ordERKGI
- WWtJDMfTjwZqPcq+CCo+TcSNuWgqoQFO+zinOoLdg/0I0Y+AaezrJzsvvXLuQL92KdfQ
- l9DK+7NBSZiKsswOOtBmDoB2t8Oo5SUS0VWU3CHCzXeuS/TJjKWhQfVi0qZld1JsSpi8
- iM38j/TRlm8d3INj+ZbIzWtdF73KemoGUm7rjC5MrhXd0tdy4Yv1Dk1rFMZcqdCIKa0n
- 2XwQ==
+ bh=jyXIzV33gyYu8Yx/Zaoosm62k8fnxSLH8R4umO1CXbY=;
+ b=hnaadgNo8llYo1lDH5Zmn0Gy9n1CxXS7L8bt3m0Xx4AwOAQ77PErSe3UJpczKJCjB9
+ bMLHa51BnwxKd+QJWAJ+6ppEuvQP4plUh24+fs/pUHsRTLZI3WWcAp0Tf6qSSnMIjlx0
+ AFgXF5MxX47xU80xINv8XmSazEz4qAba4qVdMlkKuS88nItmmJOfphBAJ6tUDjsvO0mc
+ 7YzzN6yk+lDXD1+bbTwzz2rG6en6KolYxLqtZiUXJXFUZdo1gzRqq2JTVwyzORZNsWRW
+ 9jWzTj8+1Gzghas6iYRk5AIeTIh5Xqdc/GD4taMN4lJPi1kZmvOSxiqlqzBpyfWvocNc
+ cFgQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1738114745; x=1738719545;
+ d=1e100.net; s=20230601; t=1738114758; x=1738719558;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=/o3PZF+VYx9BlUZcSvSihlV0semqIWO9oR/VySJrxZU=;
- b=D7WyFcQ/ocQyxmiw08ABl00f6InaHecGMVT8t67XsGo+acwNMaRpcHjuDHdcoDYF98
- B8HJzFw8DI2wZb6aoWqAzSt0MfUO3LNs5Yj79Mse7h3FRn8sXmcKeqP7eImWnW79I0UE
- DYDkTbgds6n1PEymjoap3SYX3cFJQ1d9yhkt4qIOPI5jaoqhd0CpY40B5WqgA1goyvDy
- pdFUyWgl4VvbB8bhu6suLjehHgq0qr83BBRTh4EIO1L7pAolFASQuDkOSKPL/wQoiOKb
- GI9rskk5l9bz+lgRYWyaeL8DWl4S3GlWCmui1Xi9X/k2U7fhYiwFmRyH9loiRCVKbKm7
- +KEg==
-X-Gm-Message-State: AOJu0Yx5utfsD9f7zAYSmZp4cojuDZjpGTmS17YWdz739JQuTwuAat8H
- SSi8VxWIHYG2o3z4iwIA5fSSKm7OqoYLcnU00vl3sr4685MN4y2oceAhIbjU4TVahnZOF2E8CXG
- F
-X-Gm-Gg: ASbGncvqCFqGriQ8UxyFUC6FNG0TdCtSEtTuBPeD6b7vmwa8KbYsHWrWGPI5NzqfhcI
- h8LhM+VTf7ys0l/etuAqvuRkkQNn7AXzcx7ZyNrL8Bc5/9m4XShE93YD/Acql2zD5RvDk6mfo/G
- doxsHsonJpVyAK228ZwVJj1o3SgHzgygQtWniNWuV+fzPeZROs+EvpMl22NyLTn3qRbJbpX4QNU
- V/SKc0cdjcUKFuWVEu11ZT/g/U+gkxRza0z4bPtQhxfLIZosiIzMu3gwvebg/rl6T3unvhlkpZI
- LGmjBWrvJgFf/SakusgZEjKL1/IynzSs0AKsGJzNQ3WuFIbPEA==
-X-Google-Smtp-Source: AGHT+IE/fwcfB9IdyEFVN8nDtugGuxMamm2B1iPoOBWxOaCN4QR0/eBQWk5mmOETqJWePfhwWnqOBg==
-X-Received: by 2002:a17:902:d584:b0:216:2a36:5b2a with SMTP id
- d9443c01a7336-21dd7df1bfcmr14526455ad.47.1738114744524; 
- Tue, 28 Jan 2025 17:39:04 -0800 (PST)
+ bh=jyXIzV33gyYu8Yx/Zaoosm62k8fnxSLH8R4umO1CXbY=;
+ b=JJq3viDFXbdKCXFZ55pbpjn8ZRhvYV9w43bKRyt/3TNxjj1IYvUpuWUEPFQv5GzdfL
+ eaLJta6pNHKGkWk8L/8lnel8pKqwjFRAuCH0+8T9c1Ys+tRcygD9euzyNp08uvDALfuh
+ oWpdiOexOMAbzJvZ1AVi4+uUuTPZfRwj3ODcn55wi0LyeQiw8ZHLGA0f8dEmogBOVObP
+ yEgzUqjvT0ky3ZJh9jOzfTShjttSJ26hJ1TcQWC2Ut5wRZf9A8ymty75qNj5cqezA9BL
+ dA3TUCimL+uviAESyaKPZKYwLOs0O0qukBapsO3Wd7Fbhg2HPR4iCeJmis/Qe0PFQ+Qf
+ jKOg==
+X-Gm-Message-State: AOJu0YxRGbnqt+bIhMrYzlnTt4mHyN/3L8kRMueyI6FHEstvpZDk9NZb
+ Jlw5Diq8l0ZVrdvUZ81J6duNK3XrU/l3f6Hdu5lMltEb7IKkRKWDJ1CFKNdLsWhl86wEHmXBVso
+ a
+X-Gm-Gg: ASbGnctsUAckOdmf1/W6sh+EjJORzxaEGhBYXFoIQxecLZqGKYd4kykKE+T7PVSQNYd
+ Vcx2r0xdwUUwFsRQWf2oeTa3GJJx7PPvn5bllTKa1UmDxbfFd81SYqhgnXwHUM24sZyHZqpKZYr
+ IGsffQ813MyhKc3CINd6pif5AcbLpQJl6260RrvyxexxWEiLXl268mI6Vxs/oTX+VBE4Ae0VCf5
+ XEUee8ltfEzygjmamNaT6omyhU+1s/55JXADXTWRec+lzJU1fJJUZ+fFwHm2sOcyyYEkmk6XMjo
+ 2/9uQGmsOeds4YEyjNPROjGjY7B+AAkWcGP8roKk6CMTGFPzAg==
+X-Google-Smtp-Source: AGHT+IEq1/dKXMyEs4Hrm5fvcwN3uSaPfcUpEtl5VlgMQgUX3Xie/UT+5wgkH4sQc35ls8Y5dMUEyA==
+X-Received: by 2002:a17:903:2f84:b0:216:3e87:c9fc with SMTP id
+ d9443c01a7336-21dd7c4c204mr21786515ad.5.1738114758443; 
+ Tue, 28 Jan 2025 17:39:18 -0800 (PST)
 Received: from stoup.. (71-212-32-190.tukw.qwest.net. [71.212.32.190])
  by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-21da3ea4200sm89341745ad.88.2025.01.28.17.39.04
+ d9443c01a7336-21da3ea4200sm89341745ad.88.2025.01.28.17.39.17
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 28 Jan 2025 17:39:04 -0800 (PST)
+ Tue, 28 Jan 2025 17:39:18 -0800 (PST)
 From: Richard Henderson <richard.henderson@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: peter.maydell@linaro.org
-Subject: [PATCH v2 08/34] target/arm: Remove standard_fp_status
-Date: Tue, 28 Jan 2025 17:38:31 -0800
-Message-ID: <20250129013857.135256-9-richard.henderson@linaro.org>
+Subject: [PATCH v2 29/34] Revert "target/arm: Handle FPCR.AH in FMLSL"
+Date: Tue, 28 Jan 2025 17:38:52 -0800
+Message-ID: <20250129013857.135256-30-richard.henderson@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20250129013857.135256-1-richard.henderson@linaro.org>
 References: <20250129013857.135256-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::62b;
- envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x62b.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::62a;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x62a.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -99,225 +99,103 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Replace with fp_status[FPST_STD].
-
-Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+This reverts commit c5eb0b62e603c1d391ee2199108f0eb34aadc8f5.
 ---
- target/arm/cpu.h            |  1 -
- target/arm/cpu.c            |  8 ++++----
- target/arm/tcg/mve_helper.c | 28 ++++++++++++++--------------
- target/arm/tcg/vec_helper.c |  4 ++--
- target/arm/vfp_helper.c     |  4 ++--
- 5 files changed, 22 insertions(+), 23 deletions(-)
+ target/arm/tcg/translate-a64.c |  4 ++--
+ target/arm/tcg/vec_helper.c    | 28 ++++------------------------
+ 2 files changed, 6 insertions(+), 26 deletions(-)
 
-diff --git a/target/arm/cpu.h b/target/arm/cpu.h
-index 893a2cdd0a..18afff8509 100644
---- a/target/arm/cpu.h
-+++ b/target/arm/cpu.h
-@@ -696,7 +696,6 @@ typedef struct CPUArchState {
-                 float_status fp_status_f16_a64;
-                 float_status ah_fp_status;
-                 float_status ah_fp_status_f16;
--                float_status standard_fp_status;
-             };
-         };
- 
-diff --git a/target/arm/cpu.c b/target/arm/cpu.c
-index b887edf1d1..26e3465a4b 100644
---- a/target/arm/cpu.c
-+++ b/target/arm/cpu.c
-@@ -546,13 +546,13 @@ static void arm_cpu_reset_hold(Object *obj, ResetType type)
-         env->sau.ctrl = 0;
-     }
- 
--    set_flush_to_zero(1, &env->vfp.standard_fp_status);
--    set_flush_inputs_to_zero(1, &env->vfp.standard_fp_status);
--    set_default_nan_mode(1, &env->vfp.standard_fp_status);
-+    set_flush_to_zero(1, &env->vfp.fp_status[FPST_STD]);
-+    set_flush_inputs_to_zero(1, &env->vfp.fp_status[FPST_STD]);
-+    set_default_nan_mode(1, &env->vfp.fp_status[FPST_STD]);
-     set_default_nan_mode(1, &env->vfp.fp_status[FPST_STD_F16]);
-     arm_set_default_fp_behaviours(&env->vfp.fp_status_a32);
-     arm_set_default_fp_behaviours(&env->vfp.fp_status_a64);
--    arm_set_default_fp_behaviours(&env->vfp.standard_fp_status);
-+    arm_set_default_fp_behaviours(&env->vfp.fp_status[FPST_STD]);
-     arm_set_default_fp_behaviours(&env->vfp.fp_status_f16_a32);
-     arm_set_default_fp_behaviours(&env->vfp.fp_status_f16_a64);
-     arm_set_default_fp_behaviours(&env->vfp.fp_status[FPST_STD_F16]);
-diff --git a/target/arm/tcg/mve_helper.c b/target/arm/tcg/mve_helper.c
-index 911a53a23a..3763d71e20 100644
---- a/target/arm/tcg/mve_helper.c
-+++ b/target/arm/tcg/mve_helper.c
-@@ -2815,7 +2815,7 @@ DO_VMAXMINA(vminaw, 4, int32_t, uint32_t, DO_MIN)
-                 continue;                                               \
-             }                                                           \
-             fpst = (ESIZE == 2) ? &env->vfp.fp_status[FPST_STD_F16] :   \
--                &env->vfp.standard_fp_status;                           \
-+                &env->vfp.fp_status[FPST_STD];                           \
-             if (!(mask & 1)) {                                          \
-                 /* We need the result but without updating flags */     \
-                 scratch_fpst = *fpst;                                   \
-@@ -2889,7 +2889,7 @@ DO_2OP_FP_ALL(vminnma, minnuma)
-                 continue;                                               \
-             }                                                           \
-             fpst = (ESIZE == 2) ? &env->vfp.fp_status[FPST_STD_F16] :   \
--                &env->vfp.standard_fp_status;                           \
-+                &env->vfp.fp_status[FPST_STD];                           \
-             if (!(tm & 1)) {                                            \
-                 /* We need the result but without updating flags */     \
-                 scratch_fpst = *fpst;                                   \
-@@ -2927,7 +2927,7 @@ DO_VCADD_FP(vfcadd270s, 4, float32, float32_add, float32_sub)
-                 continue;                                               \
-             }                                                           \
-             fpst = (ESIZE == 2) ? &env->vfp.fp_status[FPST_STD_F16] :   \
--                &env->vfp.standard_fp_status;                           \
-+                &env->vfp.fp_status[FPST_STD];                           \
-             if (!(mask & 1)) {                                          \
-                 /* We need the result but without updating flags */     \
-                 scratch_fpst = *fpst;                                   \
-@@ -2965,7 +2965,7 @@ DO_VFMA(vfmss, 4, float32, true)
-                 continue;                                               \
-             }                                                           \
-             fpst0 = (ESIZE == 2) ? &env->vfp.fp_status[FPST_STD_F16] :  \
--                &env->vfp.standard_fp_status;                           \
-+                &env->vfp.fp_status[FPST_STD];                           \
-             fpst1 = fpst0;                                              \
-             if (!(mask & 1)) {                                          \
-                 scratch_fpst = *fpst0;                                  \
-@@ -3050,7 +3050,7 @@ DO_VCMLA(vcmla270s, 4, float32, 3, DO_VCMLAS)
-                 continue;                                               \
-             }                                                           \
-             fpst = (ESIZE == 2) ? &env->vfp.fp_status[FPST_STD_F16] :   \
--                &env->vfp.standard_fp_status;                           \
-+                &env->vfp.fp_status[FPST_STD];                           \
-             if (!(mask & 1)) {                                          \
-                 /* We need the result but without updating flags */     \
-                 scratch_fpst = *fpst;                                   \
-@@ -3085,7 +3085,7 @@ DO_2OP_FP_SCALAR_ALL(vfmul_scalar, mul)
-                 continue;                                               \
-             }                                                           \
-             fpst = (ESIZE == 2) ? &env->vfp.fp_status[FPST_STD_F16] :   \
--                &env->vfp.standard_fp_status;                           \
-+                &env->vfp.fp_status[FPST_STD];                           \
-             if (!(mask & 1)) {                                          \
-                 /* We need the result but without updating flags */     \
-                 scratch_fpst = *fpst;                                   \
-@@ -3118,7 +3118,7 @@ DO_2OP_FP_ACC_SCALAR(vfmas_scalars, 4, float32, DO_VFMAS_SCALARS)
-         TYPE ra = (TYPE)ra_in;                                  \
-         float_status *fpst = (ESIZE == 2) ?                     \
-             &env->vfp.fp_status[FPST_STD_F16] :                 \
--            &env->vfp.standard_fp_status;                       \
-+            &env->vfp.fp_status[FPST_STD];                       \
-         for (e = 0; e < 16 / ESIZE; e++, mask >>= ESIZE) {      \
-             if (mask & 1) {                                     \
-                 TYPE v = m[H##ESIZE(e)];                        \
-@@ -3169,7 +3169,7 @@ DO_FP_VMAXMINV(vminnmavs, 4, float32, true, float32_minnum)
-                 continue;                                               \
-             }                                                           \
-             fpst = (ESIZE == 2) ? &env->vfp.fp_status[FPST_STD_F16] :   \
--                &env->vfp.standard_fp_status;                           \
-+                &env->vfp.fp_status[FPST_STD];                           \
-             if (!(mask & (1 << (e * ESIZE)))) {                         \
-                 /* We need the result but without updating flags */     \
-                 scratch_fpst = *fpst;                                   \
-@@ -3203,7 +3203,7 @@ DO_FP_VMAXMINV(vminnmavs, 4, float32, true, float32_minnum)
-                 continue;                                               \
-             }                                                           \
-             fpst = (ESIZE == 2) ? &env->vfp.fp_status[FPST_STD_F16] :   \
--                &env->vfp.standard_fp_status;                           \
-+                &env->vfp.fp_status[FPST_STD];                           \
-             if (!(mask & (1 << (e * ESIZE)))) {                         \
-                 /* We need the result but without updating flags */     \
-                 scratch_fpst = *fpst;                                   \
-@@ -3268,7 +3268,7 @@ DO_VCMP_FP_BOTH(vfcmples, vfcmple_scalars, 4, float32, !DO_GT32)
-                 continue;                                               \
-             }                                                           \
-             fpst = (ESIZE == 2) ? &env->vfp.fp_status[FPST_STD_F16] :   \
--                &env->vfp.standard_fp_status;                           \
-+                &env->vfp.fp_status[FPST_STD];                           \
-             if (!(mask & 1)) {                                          \
-                 /* We need the result but without updating flags */     \
-                 scratch_fpst = *fpst;                                   \
-@@ -3302,7 +3302,7 @@ DO_VCVT_FIXED(vcvt_fu, 4, uint32_t, helper_vfp_touls_round_to_zero)
-         float_status scratch_fpst;                                      \
-         float_status *base_fpst = (ESIZE == 2) ?                        \
-             &env->vfp.fp_status[FPST_STD_F16] :                         \
--            &env->vfp.standard_fp_status;                               \
-+            &env->vfp.fp_status[FPST_STD];                               \
-         uint32_t prev_rmode = get_float_rounding_mode(base_fpst);       \
-         set_float_rounding_mode(rmode, base_fpst);                      \
-         for (e = 0; e < 16 / ESIZE; e++, mask >>= ESIZE) {              \
-@@ -3347,7 +3347,7 @@ static void do_vcvt_sh(CPUARMState *env, void *vd, void *vm, int top)
-     unsigned e;
-     float_status *fpst;
-     float_status scratch_fpst;
--    float_status *base_fpst = &env->vfp.standard_fp_status;
-+    float_status *base_fpst = &env->vfp.fp_status[FPST_STD];
-     bool old_fz = get_flush_to_zero(base_fpst);
-     set_flush_to_zero(false, base_fpst);
-     for (e = 0; e < 16 / 4; e++, mask >>= 4) {
-@@ -3377,7 +3377,7 @@ static void do_vcvt_hs(CPUARMState *env, void *vd, void *vm, int top)
-     unsigned e;
-     float_status *fpst;
-     float_status scratch_fpst;
--    float_status *base_fpst = &env->vfp.standard_fp_status;
-+    float_status *base_fpst = &env->vfp.fp_status[FPST_STD];
-     bool old_fiz = get_flush_inputs_to_zero(base_fpst);
-     set_flush_inputs_to_zero(false, base_fpst);
-     for (e = 0; e < 16 / 4; e++, mask >>= 4) {
-@@ -3428,7 +3428,7 @@ void HELPER(mve_vcvtt_hs)(CPUARMState *env, void *vd, void *vm)
-                 continue;                                               \
-             }                                                           \
-             fpst = (ESIZE == 2) ? &env->vfp.fp_status[FPST_STD_F16] :   \
--                &env->vfp.standard_fp_status;                           \
-+                &env->vfp.fp_status[FPST_STD];                           \
-             if (!(mask & 1)) {                                          \
-                 /* We need the result but without updating flags */     \
-                 scratch_fpst = *fpst;                                   \
+diff --git a/target/arm/tcg/translate-a64.c b/target/arm/tcg/translate-a64.c
+index 9b1675b041..d27b4e964d 100644
+--- a/target/arm/tcg/translate-a64.c
++++ b/target/arm/tcg/translate-a64.c
+@@ -5997,7 +5997,7 @@ TRANS(FMINNMP_v, do_fp3_vector, a, 0, f_vector_fminnmp)
+ static bool do_fmlal(DisasContext *s, arg_qrrr_e *a, bool is_s, bool is_2)
+ {
+     if (fp_access_check(s)) {
+-        int data = (s->fpcr_ah << 2) | (is_2 << 1) | is_s;
++        int data = (is_2 << 1) | is_s;
+         tcg_gen_gvec_3_ptr(vec_full_reg_offset(s, a->rd),
+                            vec_full_reg_offset(s, a->rn),
+                            vec_full_reg_offset(s, a->rm), tcg_env,
+@@ -6772,7 +6772,7 @@ TRANS(FMLS_vi, do_fmla_vector_idx, a, true)
+ static bool do_fmlal_idx(DisasContext *s, arg_qrrx_e *a, bool is_s, bool is_2)
+ {
+     if (fp_access_check(s)) {
+-        int data = (s->fpcr_ah << 5) | (a->idx << 2) | (is_2 << 1) | is_s;
++        int data = (a->idx << 2) | (is_2 << 1) | is_s;
+         tcg_gen_gvec_3_ptr(vec_full_reg_offset(s, a->rd),
+                            vec_full_reg_offset(s, a->rn),
+                            vec_full_reg_offset(s, a->rm), tcg_env,
 diff --git a/target/arm/tcg/vec_helper.c b/target/arm/tcg/vec_helper.c
-index b369c9f45b..60839ae560 100644
+index 728473e919..b3ed6533bb 100644
 --- a/target/arm/tcg/vec_helper.c
 +++ b/target/arm/tcg/vec_helper.c
-@@ -2177,7 +2177,7 @@ static void do_fmlal(float32 *d, void *vn, void *vm, float_status *fpst,
- void HELPER(gvec_fmlal_a32)(void *vd, void *vn, void *vm,
-                             CPUARMState *env, uint32_t desc)
- {
--    do_fmlal(vd, vn, vm, &env->vfp.standard_fp_status, desc,
-+    do_fmlal(vd, vn, vm, &env->vfp.fp_status[FPST_STD], desc,
-              get_flush_inputs_to_zero(&env->vfp.fp_status_f16_a32));
+@@ -2120,26 +2120,6 @@ static uint64_t load4_f16(uint64_t *ptr, int is_q, int is_2)
+     return ptr[is_q & is_2] >> ((is_2 & ~is_q) << 5);
  }
  
-@@ -2239,7 +2239,7 @@ static void do_fmlal_idx(float32 *d, void *vn, void *vm, float_status *fpst,
- void HELPER(gvec_fmlal_idx_a32)(void *vd, void *vn, void *vm,
-                                 CPUARMState *env, uint32_t desc)
- {
--    do_fmlal_idx(vd, vn, vm, &env->vfp.standard_fp_status, desc,
-+    do_fmlal_idx(vd, vn, vm, &env->vfp.fp_status[FPST_STD], desc,
-                  get_flush_inputs_to_zero(&env->vfp.fp_status_f16_a32));
- }
+-static uint64_t neg4_f16(uint64_t v, bool fpcr_ah)
+-{
+-    /*
+-     * Negate all inputs for FMLSL at once. This is slightly complicated
+-     * by the need to avoid flipping the sign of a NaN when FPCR.AH == 1
+-     */
+-    uint64_t mask = 0x8000800080008000ull;
+-    if (fpcr_ah) {
+-        uint64_t tmp = v, signbit = 0x8000;
+-        for (int i = 0; i < 4; i++) {
+-            if (float16_is_any_nan(extract64(tmp, 0, 16))) {
+-                mask ^= signbit;
+-            }
+-            tmp >>= 16;
+-            signbit <<= 16;
+-        }
+-    }
+-    return v ^ mask;
+-}
+-
+ /*
+  * Note that FMLAL requires oprsz == 8 or oprsz == 16,
+  * as there is not yet SVE versions that might use blocking.
+@@ -2151,7 +2131,6 @@ static void do_fmlal(float32 *d, void *vn, void *vm, float_status *fpst,
+     intptr_t i, oprsz = simd_oprsz(desc);
+     int is_s = extract32(desc, SIMD_DATA_SHIFT, 1);
+     int is_2 = extract32(desc, SIMD_DATA_SHIFT + 1, 1);
+-    bool fpcr_ah = extract32(desc, SIMD_DATA_SHIFT + 2, 1);
+     int is_q = oprsz == 16;
+     uint64_t n_4, m_4;
  
-diff --git a/target/arm/vfp_helper.c b/target/arm/vfp_helper.c
-index 28c2b40bd8..93db713a40 100644
---- a/target/arm/vfp_helper.c
-+++ b/target/arm/vfp_helper.c
-@@ -118,7 +118,7 @@ static uint32_t vfp_get_fpsr_from_host(CPUARMState *env)
-     uint32_t a32_flags = 0, a64_flags = 0;
+@@ -2159,8 +2138,9 @@ static void do_fmlal(float32 *d, void *vn, void *vm, float_status *fpst,
+     n_4 = load4_f16(vn, is_q, is_2);
+     m_4 = load4_f16(vm, is_q, is_2);
  
-     a32_flags |= get_float_exception_flags(&env->vfp.fp_status_a32);
--    a32_flags |= get_float_exception_flags(&env->vfp.standard_fp_status);
-+    a32_flags |= get_float_exception_flags(&env->vfp.fp_status[FPST_STD]);
-     /* FZ16 does not generate an input denormal exception.  */
-     a32_flags |= (get_float_exception_flags(&env->vfp.fp_status_f16_a32)
-           & ~float_flag_input_denormal_flushed);
-@@ -157,7 +157,7 @@ static void vfp_clear_float_status_exc_flags(CPUARMState *env)
-     set_float_exception_flags(0, &env->vfp.fp_status_a64);
-     set_float_exception_flags(0, &env->vfp.fp_status_f16_a32);
-     set_float_exception_flags(0, &env->vfp.fp_status_f16_a64);
--    set_float_exception_flags(0, &env->vfp.standard_fp_status);
-+    set_float_exception_flags(0, &env->vfp.fp_status[FPST_STD]);
-     set_float_exception_flags(0, &env->vfp.fp_status[FPST_STD_F16]);
-     set_float_exception_flags(0, &env->vfp.ah_fp_status);
-     set_float_exception_flags(0, &env->vfp.ah_fp_status_f16);
++    /* Negate all inputs for FMLSL at once.  */
+     if (is_s) {
+-        n_4 = neg4_f16(n_4, fpcr_ah);
++        n_4 ^= 0x8000800080008000ull;
+     }
+ 
+     for (i = 0; i < oprsz / 4; i++) {
+@@ -2212,7 +2192,6 @@ static void do_fmlal_idx(float32 *d, void *vn, void *vm, float_status *fpst,
+     int is_s = extract32(desc, SIMD_DATA_SHIFT, 1);
+     int is_2 = extract32(desc, SIMD_DATA_SHIFT + 1, 1);
+     int index = extract32(desc, SIMD_DATA_SHIFT + 2, 3);
+-    bool fpcr_ah = extract32(desc, SIMD_DATA_SHIFT + 5, 1);
+     int is_q = oprsz == 16;
+     uint64_t n_4;
+     float32 m_1;
+@@ -2220,8 +2199,9 @@ static void do_fmlal_idx(float32 *d, void *vn, void *vm, float_status *fpst,
+     /* Pre-load all of the f16 data, avoiding overlap issues.  */
+     n_4 = load4_f16(vn, is_q, is_2);
+ 
++    /* Negate all inputs for FMLSL at once.  */
+     if (is_s) {
+-        n_4 = neg4_f16(n_4, fpcr_ah);
++        n_4 ^= 0x8000800080008000ull;
+     }
+ 
+     m_1 = float16_to_float32_by_bits(((float16 *)vm)[H2(index)], fz16);
 -- 
 2.43.0
 
