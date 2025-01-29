@@ -4,79 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7FDE5C0218D
-	for <qemu-devel@archiver.kernel.org>; Wed, 29 Jan 2025 08:00:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E0CE4C0218D
+	for <qemu-devel@archiver.kernel.org>; Wed, 29 Jan 2025 08:01:46 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1td2zo-0006Qv-2T; Wed, 29 Jan 2025 03:00:24 -0500
+	id 1td30w-00078S-Co; Wed, 29 Jan 2025 03:01:34 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1td2zm-0006QH-38
- for qemu-devel@nongnu.org; Wed, 29 Jan 2025 03:00:22 -0500
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1td30q-00075O-Rh
+ for qemu-devel@nongnu.org; Wed, 29 Jan 2025 03:01:30 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1td2zj-0000ar-Dw
- for qemu-devel@nongnu.org; Wed, 29 Jan 2025 03:00:21 -0500
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1td30o-0000hL-9Z
+ for qemu-devel@nongnu.org; Wed, 29 Jan 2025 03:01:28 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1738137618;
+ s=mimecast20190719; t=1738137684;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=k6U0L8438dCK4pNfU/omhvYd2yRE8ufXDSaTOhtLdY8=;
- b=EOBt5vtdG5ly++wvNiJTqsSg8Oz7voQ14QYWHo21o8eKcGQc0DWNDW3iAPNHU6hFjM9RCN
- qv5tLiqVq0M6v6nkn6j/kVhSoc8aS8s5ITN8mYx8auo048MY7ylNi3MGXCqKCTCu2hcYHK
- j2l7OKdTYgl5213uK3WDnD4X8ogLp2Y=
-Received: from mail-wm1-f69.google.com (mail-wm1-f69.google.com
- [209.85.128.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=err2UpLg6YtFBMBFIJKjfIDlmGO+wT8SNDOdtpjl1ac=;
+ b=FUTdNXYpgOKxEX9r9U207lIuhCJBMzvbieO3yu3DjYIMy0fXHvpbKOnxNrYijhpRPD2uRp
+ EVxFSXVq8lZFxCniqTUj1vQ3p5/CqeBK8FxZqW7oYPE1t3vQx+U7nM60dNkyK0y2dR0qpG
+ nOW6N4ZLzJIVoPqHnvcG5Dvab4+H7YA=
+Received: from mail-wm1-f72.google.com (mail-wm1-f72.google.com
+ [209.85.128.72]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-205-qXy7YAblM5qcKrZosN6cTw-1; Wed, 29 Jan 2025 03:00:16 -0500
-X-MC-Unique: qXy7YAblM5qcKrZosN6cTw-1
-X-Mimecast-MFC-AGG-ID: qXy7YAblM5qcKrZosN6cTw
-Received: by mail-wm1-f69.google.com with SMTP id
- 5b1f17b1804b1-4361b090d23so33049055e9.0
- for <qemu-devel@nongnu.org>; Wed, 29 Jan 2025 00:00:16 -0800 (PST)
+ us-mta-185-mfnP3jAQNrKpZfKqcla25A-1; Wed, 29 Jan 2025 03:01:23 -0500
+X-MC-Unique: mfnP3jAQNrKpZfKqcla25A-1
+X-Mimecast-MFC-AGG-ID: mfnP3jAQNrKpZfKqcla25A
+Received: by mail-wm1-f72.google.com with SMTP id
+ 5b1f17b1804b1-436225d4389so1852595e9.1
+ for <qemu-devel@nongnu.org>; Wed, 29 Jan 2025 00:01:22 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1738137615; x=1738742415;
+ d=1e100.net; s=20230601; t=1738137682; x=1738742482;
  h=content-transfer-encoding:in-reply-to:autocrypt:content-language
  :from:references:cc:to:subject:user-agent:mime-version:date
  :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=k6U0L8438dCK4pNfU/omhvYd2yRE8ufXDSaTOhtLdY8=;
- b=BHcFXjtxcAtAde82e6QE6kTc/zjSh19mvH+hu0xQ0j1RQvPHeSNJxorIu35OpSq+in
- +2LRhjBTKybQ9mfxmjehHj9Tomn/+bkQdYzOhdq1ONqw1nm9GnC2CGDRsqyks+U0E++e
- TW0kU34FVZzTu/e601xNlSTEpPYdYOZWocBGfeYADxHQ5O45EaUSRFBOJ1LBuNxKOHw+
- PjwieI5t++KeUDrnium51dy82fmS20cfu+CIUva1tYBVo5M3p7Yqa6hDYyWyyRDgzjvx
- 0vtkUNW7k61uQvprUGNQTyhwfdVfH9MYJnpLzdPeDUe6avR/6XDVhHAJldtWd+aYBjcA
- dd2A==
+ bh=err2UpLg6YtFBMBFIJKjfIDlmGO+wT8SNDOdtpjl1ac=;
+ b=Xs650ftkhpBTbH95GdCIbsj8wVAdNio7oiHkc9/zjSa/ReBmKeZVvm7Erow1eSeYXm
+ tv7HxRBA27jKgUOtw4aau/bh8vGJo+Rj+8v7T7DeixCN8x67hfn95sT9BG7j0464BUO6
+ JlbxaQCfNEa+15KoAugspmbfv5rqq/jQCI4dRGcohiNnlqK5ihKjv8eUoHtFEd/bGvhr
+ /sEY8qfhvwegl+hyObJGOvxZ34szc0GcvrJkSetpSz52uhnglu6P+x1kNJ7LSnNO2fgf
+ b5uifyTex50l9c7LCe8xDUMkRPlCVAIy0hbyo6nUIq/jbkj8pOcXgEZi9eNHirxwjQ94
+ DZMA==
 X-Forwarded-Encrypted: i=1;
- AJvYcCU8IzQoNYdvoMam1/pSjg+5eBeQkmhBWxvINC9/uOTL+M8uV+5qaeqsgwcAwZo0JwXM97LaxkfMWVjM@nongnu.org
-X-Gm-Message-State: AOJu0Yxn+xjBEQYMUJr6VlWsNVV5mDWqzT7+3y6jpFBXIvq+1Uda6myv
- 36ByN39DgFqiWUQ6J1li+nAEixcqq0NiPP6SABzVta/yukn6XakzxJPgkqRgj2tqTU/vpZXFWVG
- ofSqjLhIg9RNb33xQ/+fQFpWblqVKpAGRDWVG3Rj08kKrlojDg82UKFFD5ne9
-X-Gm-Gg: ASbGncvPMN8l6PYWEWqgBhXtQw+S70zdjnNuK4ZGKvikpdU7ArvRxIBafiZNbgjMbEl
- 1kItuovDwaCeXKRzlr4wyEzBDpvl2gIdf13LZI9OwZ2rmLPi57GdwOeDDhtALSRr/+BeKu/i+Vm
- hWZAZ9ehH1WoQ/yTC2XNUM4nD6hUbHWi4C7u+4cAqMJhOOJWDrY8FTCxynUXDdWm1ss+8EAoNwg
- iZR4M0SRkLrnLD99m+UHp/CHESFA5At/LnropLZQTp5MyxEy0UevGpa79acAQ3jKPJzM1b7eao1
- BZFGzUr3NI9tIFpD+ZPUziuIJx3IMbyLDsGn
-X-Received: by 2002:a05:600c:1f8e:b0:431:44fe:fd9f with SMTP id
- 5b1f17b1804b1-438dc410c6amr14851485e9.23.1738137615572; 
- Wed, 29 Jan 2025 00:00:15 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IGmfniMQgsjRJNKUe00ebJtI1hRjY8gq6KgBwR+jeqUWfs2aKQuHXy6O1hqfHMxdpWPJQeXww==
-X-Received: by 2002:a05:600c:1f8e:b0:431:44fe:fd9f with SMTP id
- 5b1f17b1804b1-438dc410c6amr14851225e9.23.1738137615257; 
- Wed, 29 Jan 2025 00:00:15 -0800 (PST)
+ AJvYcCVadASgbHbCSRrp29n8kjEny6A5I/1dm7BlbBN73eixaTKr+JG4TdHcBpEndRYtbgzpXpFf0Fi0Oqbh@nongnu.org
+X-Gm-Message-State: AOJu0YwqnMDC0Usmzjp/ca39psHZDczVdDyUEO42y4JSkpmvDCQKp5+q
+ i25s6qe9BK/KDOnJ3LFC8albfTvOBEcTXtbhvrCt59Wp6+LwpIq8Q7M/LI8AQlhHdv2qfEsx/cy
+ JxAzdEo/pwMtdf5BKy8eimhrDteD6nqWuCY5rwb/H6SAAXalNgFEz
+X-Gm-Gg: ASbGncuLpkBUYC9kuCUwV4lFk3V3VXbog9Emdj+gFXJROeOoF2IH7sfnpd1S+Jxioc0
+ JohlOoPHJgE8+l2xZmbi0zrItRThdzGJ9PQc8xr7UO+NOehNfRsbwpzF7fk5KE5frchD06nFvH2
+ WeXg16xazrkUNkJ3p0FMgwbS7PP2jfdT04T0qHQUC7E7ZEwcwv4r6dOD6OvbIlGY8HCARoi2rkn
+ dxQJnXDsO4nUbFiUpmmRZodeSnHRf41IfA0sCRiCuhQc9eVKv8QcDEcmDQoEWEiFmJp9Q9cA89w
+ L7YQ5qHHGh4czitRTAq9Octcap8omdk7Sw90
+X-Received: by 2002:a05:600c:1ca6:b0:434:f3d8:62db with SMTP id
+ 5b1f17b1804b1-438dbe86462mr18562115e9.2.1738137681872; 
+ Wed, 29 Jan 2025 00:01:21 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IEhwljN4oU2phfMqxIV3r7+Lf14VH1XjNpIIjCjvN3AK4mXsyw7hPG6joQSeLj8f7oMMqBAew==
+X-Received: by 2002:a05:600c:1ca6:b0:434:f3d8:62db with SMTP id
+ 5b1f17b1804b1-438dbe86462mr18561625e9.2.1738137681243; 
+ Wed, 29 Jan 2025 00:01:21 -0800 (PST)
 Received: from [192.168.0.7] (ip-109-42-50-234.web.vodafone.de.
  [109.42.50.234]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-438dcc3401fsm12989685e9.32.2025.01.29.00.00.14
+ 5b1f17b1804b1-438dcc2b231sm13107625e9.24.2025.01.29.00.01.19
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 29 Jan 2025 00:00:14 -0800 (PST)
-Message-ID: <e7111bb5-c2b7-4d38-b7a2-3f196e4a5da1@redhat.com>
-Date: Wed, 29 Jan 2025 09:00:13 +0100
+ Wed, 29 Jan 2025 00:01:20 -0800 (PST)
+Message-ID: <9ff7ecb1-cda9-4681-acfb-3468bf57c271@redhat.com>
+Date: Wed, 29 Jan 2025 09:01:19 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 2/5] tests/functional: Update OpenBMC image of palmetto
+Subject: Re: [PATCH 3/5] tests/functional: Update OpenBMC image of romulus
  machine
 To: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>, qemu-arm@nongnu.org,
  qemu-devel@nongnu.org
@@ -85,7 +85,7 @@ Cc: Joel Stanley <joel@jms.id.au>,
  Troy Lee <troy_lee@aspeedtech.com>, Jamin Lin <jamin_lin@aspeedtech.com>,
  Steven Lee <steven_lee@aspeedtech.com>
 References: <20250129071820.1258133-1-clg@redhat.com>
- <20250129071820.1258133-3-clg@redhat.com>
+ <20250129071820.1258133-4-clg@redhat.com>
 From: Thomas Huth <thuth@redhat.com>
 Content-Language: en-US
 Autocrypt: addr=thuth@redhat.com; keydata=
@@ -130,7 +130,7 @@ Autocrypt: addr=thuth@redhat.com; keydata=
  oiT+z+/E59qj/EKfyce3sbC9XLjXv3mHMrq1tKX4G7IJGnS989E/fg6crv6NHae9Ckm7+lSs
  IQu4bBP2GxiRQ+NV3iV/KU3ebMRzqIC//DCOxzQNFNJAKldPe/bKZMCxEqtVoRkuJtNdp/5a
  yXFZ6TfE1hGKrDBYAm4vrnZ4CXFSBDllL59cFFOJCkn4Xboj/aVxxJxF30bn
-In-Reply-To: <20250129071820.1258133-3-clg@redhat.com>
+In-Reply-To: <20250129071820.1258133-4-clg@redhat.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=170.10.129.124; envelope-from=thuth@redhat.com;
@@ -161,36 +161,14 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 29/01/2025 08.18, Cédric Le Goater wrote:
 > Use the new do_test_arm_aspeed_openbmc() routine to run the latest
-> OpenBMC firmware build of the palmetto BMC.
+> OpenBMC firmware build of the romulus BMC. Remove the older routine
+> which is now unused.
 > 
 > Signed-off-by: Cédric Le Goater <clg@redhat.com>
 > ---
->   tests/functional/test_arm_aspeed_palmetto.py | 12 ++++++------
->   1 file changed, 6 insertions(+), 6 deletions(-)
-> 
-> diff --git a/tests/functional/test_arm_aspeed_palmetto.py b/tests/functional/test_arm_aspeed_palmetto.py
-> index 6588c02aad79..815d05a0e5c9 100755
-> --- a/tests/functional/test_arm_aspeed_palmetto.py
-> +++ b/tests/functional/test_arm_aspeed_palmetto.py
-> @@ -10,15 +10,15 @@
->   class PalmettoMachine(AspeedTest):
->   
->       ASSET_PALMETTO_FLASH = Asset(
-> -        ('https://github.com/openbmc/openbmc/releases/download/2.9.0/'
-> -         'obmc-phosphor-image-palmetto.static.mtd'),
-> -        '3e13bbbc28e424865dc42f35ad672b10f2e82cdb11846bb28fa625b48beafd0d');
-> +        'https://github.com/legoater/qemu-aspeed-boot/raw/master/images/palmetto-bmc/openbmc-20250128071432/obmc-phosphor-image-palmetto-20250128071432.static.mtd',
-> +        'bce7c392eec75c707a91cfc8fad7ca9a69d7e4f10df936930d65c1cb9897ac81');
->   
-> -    def test_arm_ast2400_palmetto_openbmc_v2_9_0(self):
-> +    def test_arm_ast2400_palmetto_openbmc(self):
->           image_path = self.ASSET_PALMETTO_FLASH.fetch()
->   
-> -        self.do_test_arm_aspeed('palmetto-bmc', image_path)
-> -
-> +        self.do_test_arm_aspeed_openbmc('palmetto-bmc', image=image_path,
-> +                                        uboot='2019.04', cpu_id='0x0',
-> +                                        soc='AST2400 rev A1');
+>   tests/functional/aspeed.py                  | 16 ----------------
+>   tests/functional/test_arm_aspeed_romulus.py | 12 ++++++------
+>   2 files changed, 6 insertions(+), 22 deletions(-)
 
 Reviewed-by: Thomas Huth <thuth@redhat.com>
 
