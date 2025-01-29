@@ -4,77 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6C7AAC0218A
-	for <qemu-devel@archiver.kernel.org>; Wed, 29 Jan 2025 01:29:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id ACFBEC0218A
+	for <qemu-devel@archiver.kernel.org>; Wed, 29 Jan 2025 01:31:46 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tcwse-0005QQ-DG; Tue, 28 Jan 2025 20:28:36 -0500
+	id 1tcwv6-0006TW-I2; Tue, 28 Jan 2025 20:31:08 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1tcwsa-0005Q0-FL; Tue, 28 Jan 2025 20:28:32 -0500
-Received: from mail-vk1-xa2f.google.com ([2607:f8b0:4864:20::a2f])
+ id 1tcwv2-0006Sc-6N; Tue, 28 Jan 2025 20:31:04 -0500
+Received: from mail-ua1-x931.google.com ([2607:f8b0:4864:20::931])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1tcwsY-0001fp-N8; Tue, 28 Jan 2025 20:28:32 -0500
-Received: by mail-vk1-xa2f.google.com with SMTP id
- 71dfb90a1353d-518a52c8b5aso2064606e0c.2; 
- Tue, 28 Jan 2025 17:28:30 -0800 (PST)
+ id 1tcwv0-0002CQ-9t; Tue, 28 Jan 2025 20:31:03 -0500
+Received: by mail-ua1-x931.google.com with SMTP id
+ a1e0cc1a2514c-8641c7574a5so1455248241.1; 
+ Tue, 28 Jan 2025 17:31:01 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1738114109; x=1738718909; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1738114260; x=1738719060; darn=nongnu.org;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:from:to:cc:subject:date
  :message-id:reply-to;
- bh=cG8yehSPIw7MwAxwKTF1P68Vgihkaupl72Rb/W4O0XI=;
- b=f7qSPmBUrrG2n6l/FA/5xihrVrdrEegGkY5DI5YTZ+LWogBbi5xiGsUHtSHNVKCUG6
- 9ewpXY32UhMz0qvQLK5BcC/XrU+pA5WbjVq6EPW+0AVoObxz/Ju0TuAbUMcCPqW61CLh
- J+mCec9KqFw0BQmBlkquAMIZ216rK3oEOKDz8PIG3MqijNbIfvyex0vThf0O0/LFKin6
- +jiOhMHehgJHj3oEtRRv5Z6nQJWpPOE8PHOKy5PlaAHii+ZYpnjAhbFvV4NTJ56QqpVF
- jGhLMWeMTlwmc71xIlS5wAKCAfgn1lFf+IDv/R6XaFJ/PU0HxQ8Ir1GMK84Dggo+X3YW
- rgyQ==
+ bh=qaLUs9twnx89ethfBEVX2/9DHnVMqQcRSUAy5j8RYdM=;
+ b=Z9He5/z6Fua1+OpNAApgNNtouv5UwQVwnMKn6CpwFcIonCvPJODYHE/MS55d2zZwNV
+ bEGs97sjoR8s9AGkkpA8Pe82qiLTH+WFTui2f8wWrTg/QLQNGHUXOOyhFm1t1iAbR1+A
+ BlrkaHb2DN5KEh6qDZJzTZM+goiz47r/KWewq/9x2AtrXWEiJjpjXburKSHDRCN2C6Q7
+ P+PqLJgW2B0RJ5siS8jLmm5SoGolqvLlJuhWK9hXGVTOnBlTQ1NDM0rTz9lYe6foQTcW
+ r8NfM+V8n7bo/bPz0FFuEWijrH0D1Qce8JA4BsjRM/SrENUTfoJHWBoHkhPArG1unJcz
+ deKQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1738114109; x=1738718909;
+ d=1e100.net; s=20230601; t=1738114260; x=1738719060;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=cG8yehSPIw7MwAxwKTF1P68Vgihkaupl72Rb/W4O0XI=;
- b=QuapuPQeVLgkH25c7M4nOd781N/G9jfSkhTuvFlWCCA9uGygV+Ywho4K2BKUXw8rdN
- +CMX/aivxdzM5A9GLQqHHEg8TPveOln98QGJafUZeRBsHvPNwSD8m9eDpen6HaTMKj/i
- 05p+fzGiuiezteyzfDe5PB4cFIlexoxGY11380TMVPN5JK57S+wx7Apnat24j9cuGuki
- ZmW/KZ8PWD8mIe2Hqb3B0Ip0w2WMFjzabJ/Swg1Lk/wnXPYqyQ1cgcECj/8FS0l3mu4q
- zMt3PLvnT/38DLpzA1BKI26IYMqacNN5y4VP8uIfEVqJccp+mQcv07t+ssEqw7PaXPfC
- 6YVA==
+ bh=qaLUs9twnx89ethfBEVX2/9DHnVMqQcRSUAy5j8RYdM=;
+ b=Mkzvn/yFgSM/aoThZQzaQBqArpw99M7eZ9SFAno88v7kWsoqz+BAi1K2oXFsLpF8Ms
+ YXRNSdaBwCvn/MYc+/lNjFN7LyF4p1ilzzd+MG2VEIpZ2HYKG4xzcNe3x9p9zlznA4PR
+ 4ao329Dte29EfskNpmn70JIluy5VbFq4XwqNNQzncey4mxl9zYvWP6TZlV68JkUd+2F4
+ qKYk3pw9P7hbYqTwqiZgZ4z8B5ImBfoZ+wTkzV5S6RJubXrRSQHtiKKiGKIvZ8VXVvGy
+ Nl2bL0VJGdu6r0UJuomGKAYhownjGj68Fn8IroJ6XDE1QcxvaQQwSOo0F4Wpmgpt9h9r
+ yUbQ==
 X-Forwarded-Encrypted: i=1;
- AJvYcCU+4oiA8geUDdq3axuuc4jWVweoiUSTvwi4AZ5QXq2acWCxyqVedXCRQsf4DqYHuGNCIi9E2rVteUVe@nongnu.org,
- AJvYcCVJ1o7/ecYeRdCPxnMImgwZvRGqIaaXRsOzYhSS6Dyl3gJDbhl47hGVP0JBdYpZ6PUa7r8Zli/d7x5cSA==@nongnu.org
-X-Gm-Message-State: AOJu0YxjRPgPumaNkg4a7WDjLXoUjwB0z+9Sqgdig1MLCDm4YqeArVsN
- KB/oTIrqo82vIhW2wn5ZNZdi8Zduj2zo5Brx3N5e/uDYDtTjlLaKF7FEyt7H+GPCMvWM1UfESAC
- gXPe53NtGaxYZHhapG09UBhE2AiQ=
-X-Gm-Gg: ASbGncutwmnYws6+xo1GO9me3EKi+Krrr9IbMBWOG9P6QE2orGy4nLWsU8Pi77xXeLA
- MMP56jWIAIMXTjMCBnTTw1aPLvKpvT9uBwsXFnR8RymLyfkamhCFFp0RbJhdPVR8IfDb/aO9J1t
- LEMQcXT33A//Xiq5Dnex9Lhu8H2g==
-X-Google-Smtp-Source: AGHT+IFiHdLxcTitrRcA1DOhx2X8kDIjMP2gctaXtBf63XewCItz0XzF7fUAD7k5DebyexybRigNib/pLFXxHPQwRTg=
-X-Received: by 2002:a05:6122:4f90:b0:50b:e9a5:cd7b with SMTP id
- 71dfb90a1353d-51e9e53e28fmr1686557e0c.9.1738114109242; Tue, 28 Jan 2025
- 17:28:29 -0800 (PST)
+ AJvYcCUBqd/CbVV//DwrbW7MlN0nly9pa/y/Nj6Cwb3KoHuCsS7m+dck54jxYmRfgzrJFotMDXtzZ6CT0qci@nongnu.org
+X-Gm-Message-State: AOJu0YyoK3j9EzjLsN333IRTbTT1cVA6EPLQF0WlHO2Je7GXKND8KPl4
+ Yq3S7ph3HW723rrRW/3a04YGe7wvHbsuhqdNRQARUX79Cl/ycEnO1AkJXN7cNhfu3CGA4mrAJ42
+ F0NTtBMdpWbKjOp4rfCsbNhRfETo=
+X-Gm-Gg: ASbGnctFEdfW/W/oXEiOaOzgRmXLSuwg5Lmi9qOrzobZ69elKtYEuPP1t5Nr/0nMTHe
+ 4F/92YxqlLt5Wl0gSJs+S4u7IwQGvU7f8cQrC1qr2ocXbV8y+QUQnHqDlcUR85oi1/sYDFO9awH
+ 2CsbHy4Hlost71Eb5YSjmQiYRMqw==
+X-Google-Smtp-Source: AGHT+IErclkbByHOVbLcd72MsHRfKWOn6hn+dNTlP0qzB0cbvJ3WM5279XuR5EmfF5qaLPp0YyH5czJcCSUGQNDuHcM=
+X-Received: by 2002:a05:6102:3e15:b0:4b2:5c2a:cc9d with SMTP id
+ ada2fe7eead31-4b9a5230b82mr1406292137.16.1738114260623; Tue, 28 Jan 2025
+ 17:31:00 -0800 (PST)
 MIME-Version: 1.0
-References: <20250114092012.29024-1-evgenii.prokopiev@syntacore.com>
-In-Reply-To: <20250114092012.29024-1-evgenii.prokopiev@syntacore.com>
+References: <20250124101452.2519171-1-max.chou@sifive.com>
+In-Reply-To: <20250124101452.2519171-1-max.chou@sifive.com>
 From: Alistair Francis <alistair23@gmail.com>
-Date: Wed, 29 Jan 2025 11:28:03 +1000
-X-Gm-Features: AWEUYZnal9Woe4wA-30YTyfZlXrdc3Hmmz_5CB5A8bCEg6-OiqWPnr4MBk2iV6s
-Message-ID: <CAKmqyKNpF0+8AUcnC2hqqQLRG7sE-6RwQCrEV4vajYYFtuMzPw@mail.gmail.com>
-Subject: Re: [PATCH] target/riscv/csr.c: Turn off mstatus.vs when misa.v is
- turned off
-To: Evgenii Prokopiev <evgenii.prokopiev@syntacore.com>
-Cc: palmer@dabbelt.com, alistair.francis@wdc.com, bmeng.cn@gmail.com, 
- liwei1518@gmail.com, dbarboza@ventanamicro.com, zhiwei_liu@linux.alibaba.com, 
- qemu-riscv@nongnu.org, qemu-devel@nongnu.org
+Date: Wed, 29 Jan 2025 11:30:34 +1000
+X-Gm-Features: AWEUYZm2vbORMTeE-Aw4qVaKw3xv7oYNkY89t_UXLhUhssO1tGfxt__CBkyXiuY
+Message-ID: <CAKmqyKP+cM0eeZ3BnN2R_ToNvKbqcPJsFd8QvZOAWTzAu5g6zA@mail.gmail.com>
+Subject: Re: [PATCH] target/riscv: rvv: Fix unexpected behavior of vector
+ reduction instructions when vl is 0
+To: Max Chou <max.chou@sifive.com>
+Cc: qemu-devel@nongnu.org, qemu-riscv@nongnu.org, 
+ Palmer Dabbelt <palmer@dabbelt.com>,
+ Alistair Francis <alistair.francis@wdc.com>, 
+ Bin Meng <bmeng.cn@gmail.com>, Weiwei Li <liwei1518@gmail.com>, 
+ Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
+ Liu Zhiwei <zhiwei_liu@linux.alibaba.com>
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::a2f;
- envelope-from=alistair23@gmail.com; helo=mail-vk1-xa2f.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::931;
+ envelope-from=alistair23@gmail.com; helo=mail-ua1-x931.google.com
 X-Spam_score_int: -18
 X-Spam_score: -1.9
 X-Spam_bar: -
@@ -98,15 +100,17 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, Jan 14, 2025 at 7:33=E2=80=AFPM Evgenii Prokopiev
-<evgenii.prokopiev@syntacore.com> wrote:
+On Fri, Jan 24, 2025 at 8:16=E2=80=AFPM Max Chou <max.chou@sifive.com> wrot=
+e:
 >
-> A behavior of misa.v must be similar as misa.f.
-> So when this bit's field is turned off, mstatus.vs must be turned off
-> too. It follows from the privileged manual of RISC-V, paragraph 3.1.1.
-> "Machine ISA (misa) Register".
+> According to the Vector Reduction Operations section in the RISC-V "V"
+> Vector Extension spec,
+> "If vl=3D0, no operation is performed and the destination register is not
+> updated."
 >
-> Signed-off-by: Evgenii Prokopiev <evgenii.prokopiev@syntacore.com>
+> The vd should be updated when vl is larger than 0.
+>
+> Signed-off-by: Max Chou <max.chou@sifive.com>
 
 Thanks!
 
@@ -115,28 +119,39 @@ Applied to riscv-to-apply.next
 Alistair
 
 > ---
->  target/riscv/csr.c | 4 ++++
->  1 file changed, 4 insertions(+)
+>  target/riscv/vector_helper.c | 8 ++++++--
+>  1 file changed, 6 insertions(+), 2 deletions(-)
 >
-> diff --git a/target/riscv/csr.c b/target/riscv/csr.c
-> index eab8e50012..fca2b1b40f 100644
-> --- a/target/riscv/csr.c
-> +++ b/target/riscv/csr.c
-> @@ -1537,6 +1537,10 @@ static RISCVException write_misa(CPURISCVState *en=
-v, int csrno,
->          env->mstatus &=3D ~MSTATUS_FS;
->      }
->
-> +    if (!(env->misa_ext & RVV)) {
-> +        env->mstatus &=3D ~MSTATUS_VS;
-> +    }
-> +
->      /* flush translation cache */
->      tb_flush(env_cpu(env));
->      env->xl =3D riscv_cpu_mxl(env);
+> diff --git a/target/riscv/vector_helper.c b/target/riscv/vector_helper.c
+> index 5386e3b97c5..7773df6a7c7 100644
+> --- a/target/riscv/vector_helper.c
+> +++ b/target/riscv/vector_helper.c
+> @@ -4659,7 +4659,9 @@ void HELPER(NAME)(void *vd, void *v0, void *vs1,   =
+       \
+>          }                                                 \
+>          s1 =3D OP(s1, (TD)s2);                              \
+>      }                                                     \
+> -    *((TD *)vd + HD(0)) =3D s1;                             \
+> +    if (vl > 0) {                                         \
+> +        *((TD *)vd + HD(0)) =3D s1;                         \
+> +    }                                                     \
+>      env->vstart =3D 0;                                      \
+>      /* set tail elements to 1s */                         \
+>      vext_set_elems_1s(vd, vta, esz, vlenb);               \
+> @@ -4745,7 +4747,9 @@ void HELPER(NAME)(void *vd, void *v0, void *vs1,   =
+        \
+>          }                                                  \
+>          s1 =3D OP(s1, (TD)s2, &env->fp_status);              \
+>      }                                                      \
+> -    *((TD *)vd + HD(0)) =3D s1;                              \
+> +    if (vl > 0) {                                          \
+> +        *((TD *)vd + HD(0)) =3D s1;                          \
+> +    }                                                      \
+>      env->vstart =3D 0;                                       \
+>      /* set tail elements to 1s */                          \
+>      vext_set_elems_1s(vd, vta, esz, vlenb);                \
 > --
 > 2.34.1
->
 >
 >
 
