@@ -4,85 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7C215C0218A
-	for <qemu-devel@archiver.kernel.org>; Wed, 29 Jan 2025 01:32:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 24C88C0218A
+	for <qemu-devel@archiver.kernel.org>; Wed, 29 Jan 2025 01:39:55 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tcwwD-0007Eg-3v; Tue, 28 Jan 2025 20:32:17 -0500
+	id 1tcx39-0000zr-MH; Tue, 28 Jan 2025 20:39:27 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1tcwwA-0007EQ-Gc; Tue, 28 Jan 2025 20:32:15 -0500
-Received: from mail-vk1-xa33.google.com ([2607:f8b0:4864:20::a33])
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1tcx37-0000yb-0A
+ for qemu-devel@nongnu.org; Tue, 28 Jan 2025 20:39:25 -0500
+Received: from mail-pl1-x62e.google.com ([2607:f8b0:4864:20::62e])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1tcww8-0002MI-UO; Tue, 28 Jan 2025 20:32:14 -0500
-Received: by mail-vk1-xa33.google.com with SMTP id
- 71dfb90a1353d-518ae5060d4so1883855e0c.0; 
- Tue, 28 Jan 2025 17:32:12 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1tcx35-0003cd-9W
+ for qemu-devel@nongnu.org; Tue, 28 Jan 2025 20:39:24 -0500
+Received: by mail-pl1-x62e.google.com with SMTP id
+ d9443c01a7336-2163b0c09afso115533505ad.0
+ for <qemu-devel@nongnu.org>; Tue, 28 Jan 2025 17:39:22 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1738114331; x=1738719131; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
+ d=linaro.org; s=google; t=1738114762; x=1738719562; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=GDd66CP6UFkg12Zal74nSBqi1oirSeJQfa2FBkIje1w=;
- b=e4dN32r1iBwl90z3GIoJ7XzZ0/o6qwRm7YDmAcqz6T+VQo60Tgpnn1nCAB2ZRq2gBF
- t7Sp6wunKmvCu2mZawSxVWzrhYDkAZGnYYrkwZBTAV+OJJbeWSzdA2fr/tsS4gGHW+4t
- cj+3UVOG4eTbAWg13B1EzUUW/dJqJ/QGyE5dvlXmCFbBTJzzIfq+dd7zzeSbQdR64kWH
- 6VNGmgmz5c7DcpPdy8jwkpgekgszTCkSI6WjGcbkcKCyfUGM5MEtO3QRUaFn2ABsEXwo
- QKl4O3d3Av1tYad9tkEHQCyI9nhp5xy2iUuAVx52Z1lxAHQEZBVVB2rMeV0Bv/xg0AD7
- HF6A==
+ bh=Q33D6yJnXJXu9dlEjHBd58w+LYInd4Y2qLPYlRCltEc=;
+ b=yyCSHKqb3d8RIygFMbXT/KF/Ivrp5GBqXXacDfWKfFa3hv8JWYpL4xJazZwPAkK334
+ b1LYpt6HWSGkZ/MKpvHM69RfBy9sAyBc3z9b0oVCzp7D+YZLjmFTfGcK5M7BmaojNr1X
+ lGVgZJfDL6t0RgcLWbdsS7MFUUMyIT/D/eLdYI/zE0fqOFtVCh0+NUf7JtnLDe+AGmCB
+ cr6As6+eQL1/VDkhn1RqiqQVDr+eK6PGlse/FBDdtem5BanF/Buy83ST5bHglE9GGZ/g
+ tTOS97/FIxLva5lOCeqFhnUu3EyxzHQEBzA9eaGmoXeaKAqwMlWB/DkzSsr7j2X493OT
+ EmQQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1738114331; x=1738719131;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ d=1e100.net; s=20230601; t=1738114762; x=1738719562;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=GDd66CP6UFkg12Zal74nSBqi1oirSeJQfa2FBkIje1w=;
- b=SbuTxk3OtBSJLXZTm/lIXC06aaJdmEZMnoLPu5IAuEGhLGX5eh5kK7XPZaxhdJs8RK
- W0FDsgSZvG5g5BFBRhOXxm37JpNeC+KpCjTJ45F2jPDOd4WaCYhyuCfQy9BmKucenv+c
- dtHHY6PAosrCvUpLNjgVCS+3SkJOMk+ptTAvgNvoBX3PlI76IIbcsYEXapRCZKpt/Qw9
- Q521E6LIPXMulBewY6ENSDZ/4HnBb20cLnO61SlqLHuwlzFlSEoFSmFY+Oiu/uilAgHt
- rOuwkqr6CzSSQaVO+oOREG6N4w9p6L/9tkAPdBEMMBcJFj7BqwFSyO8yS1VpMK/x9DN8
- wVew==
-X-Forwarded-Encrypted: i=1;
- AJvYcCXNtTrL9UsyMS26UW8nzQ52z4edm2t/R8krEjlIXybmgbB7EujXTAWikD8fk77NuUdvdnyMB1d9fLZK@nongnu.org
-X-Gm-Message-State: AOJu0Yw0CH2ffNVlcjrjWOr12wGmzNfWdlt8GyG2ob9xUYTIuH0iehP4
- q9F1NQAHtaHhgUSI+o2BFZc4XhFtj1WYWd00fWl9zCv8HznrrZyVWrJDwltzaHWaChh1j/kRueV
- uNSCHgG15pXSEkNZW+oMuQtH5vrA=
-X-Gm-Gg: ASbGncuP2nDgrllVpGk0C8yqedu7FBxXGPF2jHbc1Cb23kk0fdsS7TZ4EsWc+3giilG
- 2nS13r7qaXMrMw04m1iP8Y1GmFmlriB9pfNL++OXclcnhmZI/gNbiKDrSvlvnxmEvDQ1wfq620E
- fRNbV0+p+3vwXnwDhvaXrPRKYniA==
-X-Google-Smtp-Source: AGHT+IF2oi95A+RGaTwsbi8a9Ny9RndMWYbs4BbcJ7FJH5jhJQCmta7TI/HQ4BjeapvNQA3MIPQI2Ay/NHMW1pMFduk=
-X-Received: by 2002:a05:6122:1c87:b0:517:4fca:86e2 with SMTP id
- 71dfb90a1353d-51e9e55009dmr1646575e0c.10.1738114331500; Tue, 28 Jan 2025
- 17:32:11 -0800 (PST)
+ bh=Q33D6yJnXJXu9dlEjHBd58w+LYInd4Y2qLPYlRCltEc=;
+ b=qRV4oN7MpvgTSWTvOrEIee9u56VNWQMk9MDrLHSmcegQk3V1p0omdNquk1urAPGm9R
+ N5nQE+XNDKk1RU/Z8j1b1tItBJe/khvghbeLN1wX2de8uXs87NMl8XYOj0WhRVYyNGOA
+ Ov9Zud9ZmANdS8Ni5t3/ANCcrWAY28WtG8r8Y3+pypG3jzdyH6E8Foz3usU9wdhvUQkG
+ ZVxymlq8h1HOycsTgVsFiDkidDBQ84tKvKJRtPUtav7MZGlAVrW9iSQMu6WfIFZ5Cy6u
+ hq4Zslqxv1LUhjpaRtFC6gjbxh664Kpm6Kly9F1dwmAkphIej25ASU3WcyqRE+e4i4ny
+ fMIQ==
+X-Gm-Message-State: AOJu0YwGrrGxc2PG90/e+Vvl5ZaiUuXS7bHUfTdYD64jDgHyo69vHuZA
+ caIjftnANqcvJv60hdjBRY2aIAIHxhiRuM+DVzh2aduHL3AFtzTsR98/3IP1YMiDjoDvp3V9RI0
+ s
+X-Gm-Gg: ASbGnctdBg9KIj7XGNWENK8vabiuoOQ6pPulOFFxxllt7ypGFpFphc6PXWzuWJJZD8T
+ aKeIJdcM47bIilr+HLSEn+10wgnqCB5dQPJ64zC1m14H434twm1vcDl9XVPpeRF0XNd6XyvhH+t
+ D4w2ptqEa+l34R+V+Y0J026o/R3JNg4rzfOEn5n5q79f6L527i7JIJqaWoZ+BXUCuWxP4ykqYA6
+ mvmZYNbKZDkvv7rjr1Q/jO71W5Ul3qjCiNixUfdWnYBOrVqQRebD23mdQG8/Ola9BGHx2t7qv+y
+ jOIlSqlvQec7VXSB3qfX13WaaEn1vuMU5cv3d2au6Zh+VJh7Eg==
+X-Google-Smtp-Source: AGHT+IEG+u8ABc9bgjUdLNZvWMRA1hjmls6+I6MJBvDQavjYH362r/ZGH0MBDI9NPEDrtrCsZGf5ww==
+X-Received: by 2002:a17:902:d2c5:b0:211:e812:3948 with SMTP id
+ d9443c01a7336-21dd7b681dfmr23545015ad.0.1738114761947; 
+ Tue, 28 Jan 2025 17:39:21 -0800 (PST)
+Received: from stoup.. (71-212-32-190.tukw.qwest.net. [71.212.32.190])
+ by smtp.gmail.com with ESMTPSA id
+ d9443c01a7336-21da3ea4200sm89341745ad.88.2025.01.28.17.39.21
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Tue, 28 Jan 2025 17:39:21 -0800 (PST)
+From: Richard Henderson <richard.henderson@linaro.org>
+To: qemu-devel@nongnu.org
+Cc: peter.maydell@linaro.org
+Subject: [PATCH v2 34/34] target/arm: Sink fp_status and fpcr access into
+ do_fmlal*
+Date: Tue, 28 Jan 2025 17:38:57 -0800
+Message-ID: <20250129013857.135256-35-richard.henderson@linaro.org>
+X-Mailer: git-send-email 2.43.0
+In-Reply-To: <20250129013857.135256-1-richard.henderson@linaro.org>
+References: <20250129013857.135256-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
-References: <20250124090539.2506448-1-max.chou@sifive.com>
-In-Reply-To: <20250124090539.2506448-1-max.chou@sifive.com>
-From: Alistair Francis <alistair23@gmail.com>
-Date: Wed, 29 Jan 2025 11:31:45 +1000
-X-Gm-Features: AWEUYZl0FHbAzWllC-f8KHh0C2dNzt5v_z_jma9NJFdufcvSwA4LGRNaj5bs38Q
-Message-ID: <CAKmqyKP9R7p0YVEmjj4QSvz46JSXZEut9NRnUjTxQw-PJHujug@mail.gmail.com>
-Subject: Re: [PATCH] target/riscv: rvv: Fix incorrect vlen comparison in
- prop_vlen_set
-To: Max Chou <max.chou@sifive.com>
-Cc: qemu-devel@nongnu.org, qemu-riscv@nongnu.org, 
- Palmer Dabbelt <palmer@dabbelt.com>,
- Alistair Francis <alistair.francis@wdc.com>, 
- Bin Meng <bmeng.cn@gmail.com>, Weiwei Li <liwei1518@gmail.com>, 
- Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
- Liu Zhiwei <zhiwei_liu@linux.alibaba.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::a33;
- envelope-from=alistair23@gmail.com; helo=mail-vk1-xa33.google.com
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::62e;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x62e.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -100,56 +100,92 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, Jan 24, 2025 at 7:06=E2=80=AFPM Max Chou <max.chou@sifive.com> wrot=
-e:
->
-> In prop_vlen_set function, there is an incorrect comparison between
-> vlen(bit) and vlenb(byte).
-> This will cause unexpected error when user applies the `vlen=3D1024` cpu
-> option with a vendor predefined cpu type that the default vlen is
-> 1024(vlenb=3D128).
->
-> Signed-off-by: Max Chou <max.chou@sifive.com>
+Sink common code from the callers into do_fmlal
+and do_fmlal_idx.  Reorder the arguments to minimize
+the re-sorting from the caller's arguments.
 
-Thanks!
+Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+---
+ target/arm/tcg/vec_helper.c | 28 ++++++++++++++++------------
+ 1 file changed, 16 insertions(+), 12 deletions(-)
 
-Applied to riscv-to-apply.next
+diff --git a/target/arm/tcg/vec_helper.c b/target/arm/tcg/vec_helper.c
+index 03b0a6ebed..25ef7af029 100644
+--- a/target/arm/tcg/vec_helper.c
++++ b/target/arm/tcg/vec_helper.c
+@@ -2125,9 +2125,13 @@ static uint64_t load4_f16(uint64_t *ptr, int is_q, int is_2)
+  * as there is not yet SVE versions that might use blocking.
+  */
+ 
+-static void do_fmlal(float32 *d, void *vn, void *vm, float_status *fpst,
+-                     uint64_t negx, int negf, uint32_t desc, bool fz16)
++static void do_fmlal(float32 *d, void *vn, void *vm,
++                     CPUARMState *env, uint32_t desc,
++                     ARMFPStatusFlavour fpst_idx,
++                     uint64_t negx, int negf)
+ {
++    float_status *fpst = &env->vfp.fp_status[fpst_idx];
++    bool fz16 = env->vfp.fpcr & FPCR_FZ16;
+     intptr_t i, oprsz = simd_oprsz(desc);
+     int is_2 = extract32(desc, SIMD_DATA_SHIFT + 1, 1);
+     int is_q = oprsz == 16;
+@@ -2154,8 +2158,7 @@ void HELPER(gvec_fmlal_a32)(void *vd, void *vn, void *vm,
+     bool is_s = extract32(desc, SIMD_DATA_SHIFT, 1);
+     uint64_t negx = is_s ? 0x8000800080008000ull : 0;
+ 
+-    do_fmlal(vd, vn, vm, &env->vfp.fp_status[FPST_STD], negx, 0, desc,
+-             env->vfp.fpcr & FPCR_FZ16);
++    do_fmlal(vd, vn, vm, env, desc, FPST_STD, negx, 0);
+ }
+ 
+ void HELPER(gvec_fmlal_a64)(void *vd, void *vn, void *vm,
+@@ -2172,8 +2175,7 @@ void HELPER(gvec_fmlal_a64)(void *vd, void *vn, void *vm,
+             negx = 0x8000800080008000ull;
+         }
+     }
+-    do_fmlal(vd, vn, vm, &env->vfp.fp_status[FPST_A64], negx, negf, desc,
+-             env->vfp.fpcr & FPCR_FZ16);
++    do_fmlal(vd, vn, vm, env, desc, FPST_A64, negx, negf);
+ }
+ 
+ void HELPER(sve2_fmlal_zzzw_s)(void *vd, void *vn, void *vm, void *va,
+@@ -2205,9 +2207,13 @@ void HELPER(sve2_fmlal_zzzw_s)(void *vd, void *vn, void *vm, void *va,
+     }
+ }
+ 
+-static void do_fmlal_idx(float32 *d, void *vn, void *vm, float_status *fpst,
+-                         uint64_t negx, int negf, uint32_t desc, bool fz16)
++static void do_fmlal_idx(float32 *d, void *vn, void *vm,
++                         CPUARMState *env, uint32_t desc,
++                         ARMFPStatusFlavour fpst_idx,
++                         uint64_t negx, int negf)
+ {
++    float_status *fpst = &env->vfp.fp_status[fpst_idx];
++    bool fz16 = env->vfp.fpcr & FPCR_FZ16;
+     intptr_t i, oprsz = simd_oprsz(desc);
+     int is_2 = extract32(desc, SIMD_DATA_SHIFT + 1, 1);
+     int index = extract32(desc, SIMD_DATA_SHIFT + 2, 3);
+@@ -2235,8 +2241,7 @@ void HELPER(gvec_fmlal_idx_a32)(void *vd, void *vn, void *vm,
+     bool is_s = extract32(desc, SIMD_DATA_SHIFT, 1);
+     uint64_t negx = is_s ? 0x8000800080008000ull : 0;
+ 
+-    do_fmlal_idx(vd, vn, vm, &env->vfp.fp_status[FPST_STD], negx, 0, desc,
+-                 env->vfp.fpcr & FPCR_FZ16);
++    do_fmlal_idx(vd, vn, vm, env, desc, FPST_STD, negx, 0);
+ }
+ 
+ void HELPER(gvec_fmlal_idx_a64)(void *vd, void *vn, void *vm,
+@@ -2253,8 +2258,7 @@ void HELPER(gvec_fmlal_idx_a64)(void *vd, void *vn, void *vm,
+             negx = 0x8000800080008000ull;
+         }
+     }
+-    do_fmlal_idx(vd, vn, vm, &env->vfp.fp_status[FPST_A64], negx, negf, desc,
+-                 env->vfp.fpcr & FPCR_FZ16);
++    do_fmlal_idx(vd, vn, vm, env, desc, FPST_A64, negx, negf);
+ }
+ 
+ void HELPER(sve2_fmlal_zzxw_s)(void *vd, void *vn, void *vm, void *va,
+-- 
+2.43.0
 
-Alistair
-
-> ---
->  target/riscv/cpu.c | 5 +++--
->  1 file changed, 3 insertions(+), 2 deletions(-)
->
-> diff --git a/target/riscv/cpu.c b/target/riscv/cpu.c
-> index 3d4bd157d2c..2f53acbab59 100644
-> --- a/target/riscv/cpu.c
-> +++ b/target/riscv/cpu.c
-> @@ -2034,6 +2034,7 @@ static void prop_vlen_set(Object *obj, Visitor *v, =
-const char *name,
->                           void *opaque, Error **errp)
->  {
->      RISCVCPU *cpu =3D RISCV_CPU(obj);
-> +    uint16_t cpu_vlen =3D cpu->cfg.vlenb << 3;
->      uint16_t value;
->
->      if (!visit_type_uint16(v, name, &value, errp)) {
-> @@ -2045,10 +2046,10 @@ static void prop_vlen_set(Object *obj, Visitor *v=
-, const char *name,
->          return;
->      }
->
-> -    if (value !=3D cpu->cfg.vlenb && riscv_cpu_is_vendor(obj)) {
-> +    if (value !=3D cpu_vlen && riscv_cpu_is_vendor(obj)) {
->          cpu_set_prop_err(cpu, name, errp);
->          error_append_hint(errp, "Current '%s' val: %u\n",
-> -                          name, cpu->cfg.vlenb << 3);
-> +                          name, cpu_vlen);
->          return;
->      }
->
-> --
-> 2.34.1
->
->
 
