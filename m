@@ -4,95 +4,91 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 694D3C0218D
-	for <qemu-devel@archiver.kernel.org>; Wed, 29 Jan 2025 14:48:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 177A8C0218D
+	for <qemu-devel@archiver.kernel.org>; Wed, 29 Jan 2025 14:48:46 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1td9J6-00015o-4d; Wed, 29 Jan 2025 09:44:44 -0500
+	id 1td9Ic-0000fD-SF; Wed, 29 Jan 2025 09:44:14 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <paolo.savini@embecosm.com>)
- id 1td9J5-00015U-6w
- for qemu-devel@nongnu.org; Wed, 29 Jan 2025 09:44:43 -0500
-Received: from mail-wm1-x32a.google.com ([2a00:1450:4864:20::32a])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <paolo.savini@embecosm.com>)
- id 1td9J3-0001Qv-Ej
- for qemu-devel@nongnu.org; Wed, 29 Jan 2025 09:44:42 -0500
-Received: by mail-wm1-x32a.google.com with SMTP id
- 5b1f17b1804b1-436a39e4891so47101035e9.1
- for <qemu-devel@nongnu.org>; Wed, 29 Jan 2025 06:44:40 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=embecosm.com; s=google; t=1738161879; x=1738766679; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=Ca02c4HTyov26OWTopwnjJQjAi+Im0reN1N4mz+OyIs=;
- b=O28WJEfFHnYVjvfEyHyPTlRrvy1qEv1Tjm83CC8Mm53i52dbAHSgG/40fUT+MQfDrB
- d0kpgqHjscXMuUwCKeyyUKwHZjx4y6zn9N0hdYZZNDp9fV81jbYbuEC2K0CZRoaRc4yp
- flozJQHObw8WZGeahNhwYygVTFa0RN2B2KCHSdpg4i98R2+0YK+ah3DZGe4hVlPUqiTp
- f+7XzHqQza1D0WpbiW+Q5GS7iZFrrASYu1ZpAkdnpkL2IQt9vcIwr/Ryu2J8mgm5z/+o
- FK/ODSWvSaosEPg/BbaEP4on4aXsl88Kqemg64kEfddKLvz+Xf2kC6xVJ2eIDToQd2qL
- 0Qaw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1738161879; x=1738766679;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=Ca02c4HTyov26OWTopwnjJQjAi+Im0reN1N4mz+OyIs=;
- b=AENctiJ3GVHdYEbS3tQfA31VYxBOj3vj/OKl3cQ4GD43DDf6iE2im+Zb6HfP3xn2HA
- +0dhk/EzsTR2uQVj8REAWLU5fV2b7b9UjuKQh3jkrTLPjzbMJdK1ZJ0k+BbKxDo62f8s
- m41ZK9UShHrNFNdOUlyb3HU8oh5ngQx0wvVcU80m78wd5PEF2kN0UV/uwppueQ1W8C8T
- EnEsH2PVfd8vFe2T00mt8dPlYTbdaPluh6TJ5YZ/HU8QOfiP+0K8Wb4TUqsyqfNJ+twg
- hQmBh4vSpa7ASco8UpJUqERamJ5PKQVOcXo7buoyxPZDkngJgvtFlmgbIrX1cLNIOoXw
- UoUA==
-X-Gm-Message-State: AOJu0Yw4pZqwn/y1mAbXjQGMd/saJ0BgSyaG9K5nmYODNE86hA3PTc38
- 3yrCmzPZ3C8qWr/Np6Pdf++XVNtm6rby4oIQejgYSQElMwtQD+RFK400ipDFxZvUHlXdD1F4iJo
- rMeo=
-X-Gm-Gg: ASbGncsLr210aPNb6/a3frVxOYeoyHeoXsD+PQHHSmemv/G4vgryMDkZ4hsb7tYJJCi
- 5Hm0vy04xq3fFUNb2xcckQb1wRx1mnpzF/khQZLFVqdAX/td0JT2mrVFtUKyc1v3gaw5irGnzwG
- mdFS0kpo1GMpO+L7DZz96NPTgLGPZaBY8rxDN9CrAtTDaTc37YOX058lcVrNGJDmvLsPz4ecGe0
- FYuitzf+h2l+zeZbV35/5chAQj1mDX1NQKTGMT4YDELXeReEQO2XwagSg6X6+/R6WWOkmPHscZD
- EZ026Q2JA/ziudnFhfMSJL2SwzRet85hlmWUWzLiLCMpFgIaPILH9Mrk
-X-Google-Smtp-Source: AGHT+IF/s1UIWbzRIkUXnMdAp9m6tetxuwrKb5P+HtZ24GxHS7BmY/GExsWu6A7RoIZHdgGfrMeBig==
-X-Received: by 2002:a05:600c:470e:b0:431:52f5:f48d with SMTP id
- 5b1f17b1804b1-438dc436f30mr31159225e9.31.1738161878706; 
- Wed, 29 Jan 2025 06:44:38 -0800 (PST)
-Received: from paolo-laptop-amd.sou.embecosm-corp.com ([212.69.42.53])
- by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-438dcc51df6sm24665255e9.38.2025.01.29.06.44.37
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 29 Jan 2025 06:44:38 -0800 (PST)
-From: Paolo Savini <paolo.savini@embecosm.com>
-To: qemu-devel@nongnu.org,
-	qemu-riscv@nongnu.org
-Cc: Paolo Savini <paolo.savini@embecosm.com>,
- Richard Handerson <richard.henderson@linaro.org>,
- Palmer Dabbelt <palmer@dabbelt.com>,
- Alistair Francis <alistair.francis@wdc.com>, Bin Meng <bmeng.cn@gmail.com>,
- Weiwei Li <liwei1518@gmail.com>,
- Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
- Liu Zhiwei <zhiwei_liu@linux.alibaba.com>,
- Helene Chelin <helene.chelin@embecosm.com>, Nathan Egge <negge@google.com>,
- Max Chou <max.chou@sifive.com>,
- Jeremy Bennett <jeremy.bennett@embecosm.com>,
- Craig Blackmore <craig.blackmore@embecosm.com>
-Subject: [RFC 0/1 v1] target/riscv: optimize the memory probing for vector
- fault-only-first loads.
-Date: Wed, 29 Jan 2025 14:44:34 +0000
-Message-ID: <20250129144435.82451-1-paolo.savini@embecosm.com>
-X-Mailer: git-send-email 2.43.0
-MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32a;
- envelope-from=paolo.savini@embecosm.com; helo=mail-wm1-x32a.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ (Exim 4.90_1) (envelope-from <steven.sistare@oracle.com>)
+ id 1td9Ib-0000ek-8P
+ for qemu-devel@nongnu.org; Wed, 29 Jan 2025 09:44:13 -0500
+Received: from mx0a-00069f02.pphosted.com ([205.220.165.32])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <steven.sistare@oracle.com>)
+ id 1td9IZ-0001OG-Df
+ for qemu-devel@nongnu.org; Wed, 29 Jan 2025 09:44:13 -0500
+Received: from pps.filterd (m0333521.ppops.net [127.0.0.1])
+ by mx0b-00069f02.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 50TEbAZr007524;
+ Wed, 29 Jan 2025 14:43:58 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=oracle.com; h=cc
+ :date:from:in-reply-to:message-id:references:subject:to; s=
+ corp-2023-11-20; bh=WKa651mN2NNSEZD+2QEoBB8PQPBvkMwFFWRK+gIEq6o=; b=
+ KJVxYKKqYGgCaImdDaAdyca/s2M7t6mTR2ew9ecHKUUv8NtETRKw8G89RaxyPQAs
+ F+dKkya8EpzRxIyYtcDuenz1VO1WtEJDmNifMtEpyWkeMQTHiRYMDkp1v3i27oPh
+ r8MIO51XKhlD9Mw/2zc4lr6lGI/B+s5J+JlsQQxuhnp7WjzY3nL7ZXL1XCAC20zC
+ Vej8MvRs0oNTe0A5oxi/C/xkRjaPeoAWF0BnME/aLvMRJYjZpMbcr3giNHWm6UuR
+ kQu69ta6v+tK3Ro0zSOEysu5SV7QDm1D4CDvk/4XIiKY7dpbQk0SlKWDbxR9ZvtI
+ aKW2Hb/rGjHHyUYYn8hXuQ==
+Received: from phxpaimrmta01.imrmtpd1.prodappphxaev1.oraclevcn.com
+ (phxpaimrmta01.appoci.oracle.com [138.1.114.2])
+ by mx0b-00069f02.pphosted.com (PPS) with ESMTPS id 44fp8e00rh-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Wed, 29 Jan 2025 14:43:58 +0000 (GMT)
+Received: from pps.filterd
+ (phxpaimrmta01.imrmtpd1.prodappphxaev1.oraclevcn.com [127.0.0.1])
+ by phxpaimrmta01.imrmtpd1.prodappphxaev1.oraclevcn.com (8.18.1.2/8.18.1.2)
+ with ESMTP id 50TDo8GP034292; Wed, 29 Jan 2025 14:43:57 GMT
+Received: from pps.reinject (localhost [127.0.0.1])
+ by phxpaimrmta01.imrmtpd1.prodappphxaev1.oraclevcn.com (PPS) with ESMTPS id
+ 44cpd9s4uw-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Wed, 29 Jan 2025 14:43:57 +0000
+Received: from phxpaimrmta01.imrmtpd1.prodappphxaev1.oraclevcn.com
+ (phxpaimrmta01.imrmtpd1.prodappphxaev1.oraclevcn.com [127.0.0.1])
+ by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 50TEhf90003307;
+ Wed, 29 Jan 2025 14:43:57 GMT
+Received: from ca-dev63.us.oracle.com (ca-dev63.us.oracle.com [10.211.8.221])
+ by phxpaimrmta01.imrmtpd1.prodappphxaev1.oraclevcn.com (PPS) with
+ ESMTP id 44cpd9s49q-24; Wed, 29 Jan 2025 14:43:57 +0000
+From: Steve Sistare <steven.sistare@oracle.com>
+To: qemu-devel@nongnu.org
+Cc: Alex Williamson <alex.williamson@redhat.com>,
+ Cedric Le Goater <clg@redhat.com>, Yi Liu <yi.l.liu@intel.com>,
+ Eric Auger <eric.auger@redhat.com>,
+ Zhenzhong Duan <zhenzhong.duan@intel.com>,
+ "Michael S. Tsirkin" <mst@redhat.com>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ Peter Xu <peterx@redhat.com>, Fabiano Rosas <farosas@suse.de>,
+ Steve Sistare <steven.sistare@oracle.com>
+Subject: [PATCH V1 23/26] vfio/iommufd: register container for cpr
+Date: Wed, 29 Jan 2025 06:43:19 -0800
+Message-Id: <1738161802-172631-24-git-send-email-steven.sistare@oracle.com>
+X-Mailer: git-send-email 1.8.3.1
+In-Reply-To: <1738161802-172631-1-git-send-email-steven.sistare@oracle.com>
+References: <1738161802-172631-1-git-send-email-steven.sistare@oracle.com>
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1057,Hydra:6.0.680,FMLib:17.12.68.34
+ definitions=2025-01-29_02,2025-01-29_01,2024-11-22_01
+X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 phishscore=0
+ bulkscore=0 malwarescore=0
+ mlxlogscore=999 suspectscore=0 spamscore=0 mlxscore=0 adultscore=0
+ classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2411120000
+ definitions=main-2501290119
+X-Proofpoint-ORIG-GUID: IeCykdG45YSBN_lQYD9j--_93Qc4u0jA
+X-Proofpoint-GUID: IeCykdG45YSBN_lQYD9j--_93Qc4u0jA
+Received-SPF: pass client-ip=205.220.165.32;
+ envelope-from=steven.sistare@oracle.com; helo=mx0a-00069f02.pphosted.com
+X-Spam_score_int: -32
+X-Spam_score: -3.3
+X-Spam_bar: ---
+X-Spam_report: (-3.3 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_MED=-0.498,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H2=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -108,43 +104,209 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This patch aims at optimizing the helper function that emulates the
-fault-only-first load instructions of the RISC-V vector extension.
+Register a vfio iommufd container for CPR.  Add a blocker if the kernel does
+not support IOMMU_IOAS_CHANGE_PROCESS.
 
-The current patch removes redundant memory probing from the common execution
-path where we don't get exceptions.
-The previous version of this emulation always probed the memory with an
-element-wise loop over the memory area covered by the load operation and updated
-the vl parameter with the element index causing the exception (if any exception
-happened).
+This is mostly boiler plate.  The fields to to saved and restored are added
+in subsequent patches.
 
-In this patch we do a probe of the whole memory area covered by the load
-instruction and only if a flag other than a watchpoint flag is raised we do
-the element-wise probing to find the index of the element causing the exception.
+Signed-off-by: Steve Sistare <steven.sistare@oracle.com>
+---
+ hw/vfio/cpr-iommufd.c         | 96 +++++++++++++++++++++++++++++++++++++++++++
+ hw/vfio/iommufd.c             | 12 +++---
+ hw/vfio/meson.build           |  1 +
+ include/hw/vfio/vfio-common.h |  6 +++
+ 4 files changed, 110 insertions(+), 5 deletions(-)
+ create mode 100644 hw/vfio/cpr-iommufd.c
 
-As stated in the standard we don't change vl for watchpoints otherwise the
-debug watchpoint events might be lost.
-
-Cc: Richard Handerson <richard.henderson@linaro.org>
-Cc: Palmer Dabbelt <palmer@dabbelt.com>
-Cc: Alistair Francis <alistair.francis@wdc.com>
-Cc: Bin Meng <bmeng.cn@gmail.com>
-Cc: Weiwei Li <liwei1518@gmail.com>
-Cc: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
-Cc: Liu Zhiwei <zhiwei_liu@linux.alibaba.com>
-Cc: Helene Chelin <helene.chelin@embecosm.com>
-Cc: Nathan Egge <negge@google.com>
-Cc: Max Chou <max.chou@sifive.com>
-Cc: Jeremy Bennett <jeremy.bennett@embecosm.com>
-Cc: Craig Blackmore <craig.blackmore@embecosm.com>
-
-Paolo Savini (1):
-  target/riscv: optimize the memory probing for vector fault-only-first
-    loads.
-
- target/riscv/vector_helper.c | 91 ++++++++++++++++++++++--------------
- 1 file changed, 56 insertions(+), 35 deletions(-)
-
+diff --git a/hw/vfio/cpr-iommufd.c b/hw/vfio/cpr-iommufd.c
+new file mode 100644
+index 0000000..4eb358a
+--- /dev/null
++++ b/hw/vfio/cpr-iommufd.c
+@@ -0,0 +1,96 @@
++/*
++ * Copyright (c) 2024-2025 Oracle and/or its affiliates.
++ *
++ * This work is licensed under the terms of the GNU GPL, version 2 or later.
++ * See the COPYING file in the top-level directory.
++ */
++
++#include "qemu/osdep.h"
++#include "qapi/error.h"
++#include "hw/vfio/vfio-common.h"
++#include "migration/blocker.h"
++#include "migration/cpr.h"
++#include "migration/migration.h"
++#include "migration/vmstate.h"
++#include "system/iommufd.h"
++
++static bool vfio_cpr_supported(VFIOIOMMUFDContainer *container, Error **errp)
++{
++    if (!iommufd_change_process_capable(container->be)) {
++        error_setg(errp,
++                   "VFIO container does not support IOMMU_IOAS_CHANGE_PROCESS");
++        return false;
++    }
++    return true;
++}
++
++static const VMStateDescription vfio_container_vmstate = {
++    .name = "vfio-iommufd-container",
++    .version_id = 0,
++    .minimum_version_id = 0,
++    .needed = cpr_needed_for_reuse,
++    .fields = (VMStateField[]) {
++        VMSTATE_END_OF_LIST()
++    }
++};
++
++static const VMStateDescription iommufd_cpr_vmstate = {
++    .name = "iommufd",
++    .version_id = 0,
++    .minimum_version_id = 0,
++    .needed = cpr_needed_for_reuse,
++    .fields = (VMStateField[]) {
++        VMSTATE_END_OF_LIST()
++    }
++};
++
++bool vfio_iommufd_cpr_register_container(VFIOIOMMUFDContainer *container,
++                                         Error **errp)
++{
++    VFIOContainerBase *bcontainer = &container->bcontainer;
++    Error **cpr_blocker = &container->cpr_blocker;
++
++    if (!vfio_cpr_register_container(bcontainer, errp)) {
++        return false;
++    }
++
++    if (!vfio_cpr_supported(container, cpr_blocker)) {
++        return migrate_add_blocker_modes(cpr_blocker, errp,
++                                         MIG_MODE_CPR_TRANSFER, -1) == 0;
++    }
++
++    vmstate_register(NULL, -1, &vfio_container_vmstate, container);
++    vmstate_register(NULL, -1, &iommufd_cpr_vmstate, container->be);
++
++    return true;
++}
++
++void vfio_iommufd_cpr_unregister_container(VFIOIOMMUFDContainer *container)
++{
++    VFIOContainerBase *bcontainer = &container->bcontainer;
++
++    vmstate_unregister(NULL, &iommufd_cpr_vmstate, container->be);
++    vmstate_unregister(NULL, &vfio_container_vmstate, container);
++    migrate_del_blocker(&container->cpr_blocker);
++    vfio_cpr_unregister_container(bcontainer);
++}
++
++static const VMStateDescription vfio_device_vmstate = {
++    .name = "vfio-iommufd-device",
++    .version_id = 0,
++    .minimum_version_id = 0,
++    .needed = cpr_needed_for_reuse,
++    .fields = (VMStateField[]) {
++        VMSTATE_END_OF_LIST()
++    }
++};
++
++void vfio_iommufd_cpr_register_device(VFIODevice *vbasedev)
++{
++    vmstate_register(NULL, -1, &vfio_device_vmstate, vbasedev);
++}
++
++void vfio_iommufd_cpr_unregister_device(VFIODevice *vbasedev)
++{
++    vmstate_unregister(NULL, &vfio_device_vmstate, vbasedev);
++}
+diff --git a/hw/vfio/iommufd.c b/hw/vfio/iommufd.c
+index 8308715..ae78e00 100644
+--- a/hw/vfio/iommufd.c
++++ b/hw/vfio/iommufd.c
+@@ -592,6 +592,10 @@ static bool iommufd_cdev_attach(const char *name, VFIODevice *vbasedev,
+ 
+     bcontainer->initialized = true;
+ 
++    if (!vfio_iommufd_cpr_register_container(container, errp)) {
++        goto err_listener_register;
++    }
++
+ found_container:
+     ret = ioctl(devfd, VFIO_DEVICE_GET_INFO, &dev_info);
+     if (ret) {
+@@ -599,10 +603,6 @@ found_container:
+         goto err_listener_register;
+     }
+ 
+-    if (!vfio_cpr_register_container(bcontainer, errp)) {
+-        goto err_listener_register;
+-    }
+-
+     /*
+      * TODO: examine RAM_BLOCK_DISCARD stuff, should we do group level
+      * for discarding incompatibility check as well?
+@@ -619,6 +619,7 @@ found_container:
+     vbasedev->bcontainer = bcontainer;
+     QLIST_INSERT_HEAD(&bcontainer->device_list, vbasedev, container_next);
+     QLIST_INSERT_HEAD(&vfio_device_list, vbasedev, global_next);
++    vfio_iommufd_cpr_register_device(vbasedev);
+ 
+     trace_iommufd_cdev_device_info(vbasedev->name, devfd, vbasedev->num_irqs,
+                                    vbasedev->num_regions, vbasedev->flags);
+@@ -653,12 +654,13 @@ static void iommufd_cdev_detach(VFIODevice *vbasedev)
+         iommufd_cdev_ram_block_discard_disable(false);
+     }
+ 
+-    vfio_cpr_unregister_container(bcontainer);
++    vfio_iommufd_cpr_unregister_container(container);
+     iommufd_cdev_detach_container(vbasedev, container);
+     iommufd_cdev_container_destroy(container);
+     vfio_put_address_space(space);
+ 
+     migrate_del_blocker(&vbasedev->cpr_id_blocker);
++    vfio_iommufd_cpr_unregister_device(vbasedev);
+     iommufd_cdev_unbind_and_disconnect(vbasedev);
+     close(vbasedev->fd);
+ }
+diff --git a/hw/vfio/meson.build b/hw/vfio/meson.build
+index 5487815..998adb5 100644
+--- a/hw/vfio/meson.build
++++ b/hw/vfio/meson.build
+@@ -13,6 +13,7 @@ vfio_ss.add(when: 'CONFIG_IOMMUFD', if_true: files(
+ vfio_ss.add(when: 'CONFIG_VFIO_PCI', if_true: files(
+   'cpr.c',
+   'cpr-legacy.c',
++  'cpr-iommufd.c',
+   'display.c',
+   'pci-quirks.c',
+   'pci.c',
+diff --git a/include/hw/vfio/vfio-common.h b/include/hw/vfio/vfio-common.h
+index 37e7c26..add44d4 100644
+--- a/include/hw/vfio/vfio-common.h
++++ b/include/hw/vfio/vfio-common.h
+@@ -113,6 +113,7 @@ typedef struct VFIOIOASHwpt {
+ typedef struct VFIOIOMMUFDContainer {
+     VFIOContainerBase bcontainer;
+     IOMMUFDBackend *be;
++    Error *cpr_blocker;
+     uint32_t ioas_id;
+     QLIST_HEAD(, VFIOIOASHwpt) hwpt_list;
+ } VFIOIOMMUFDContainer;
+@@ -271,6 +272,11 @@ bool vfio_legacy_cpr_register_container(VFIOContainer *container, Error **errp);
+ void vfio_legacy_cpr_unregister_container(VFIOContainer *container);
+ bool iommufd_cdev_get_info_iova_range(VFIOIOMMUFDContainer *container,
+                                       uint32_t ioas_id, Error **errp);
++bool vfio_iommufd_cpr_register_container(VFIOIOMMUFDContainer *container,
++                                         Error **errp);
++void vfio_iommufd_cpr_unregister_container(VFIOIOMMUFDContainer *container);
++void vfio_iommufd_cpr_register_device(VFIODevice *vbasedev);
++void vfio_iommufd_cpr_unregister_device(VFIODevice *vbasedev);
+ 
+ extern const MemoryRegionOps vfio_region_ops;
+ typedef QLIST_HEAD(VFIOGroupList, VFIOGroup) VFIOGroupList;
 -- 
-2.34.1
+1.8.3.1
+
 
