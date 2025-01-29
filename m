@@ -4,108 +4,99 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1CBA4C02194
-	for <qemu-devel@archiver.kernel.org>; Wed, 29 Jan 2025 16:11:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 10298C0218D
+	for <qemu-devel@archiver.kernel.org>; Wed, 29 Jan 2025 16:11:29 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tdAXZ-0006E4-4M; Wed, 29 Jan 2025 11:03:45 -0500
+	id 1tdAXS-0005aL-8r; Wed, 29 Jan 2025 11:03:38 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1tdAWP-0004By-1O
- for qemu-devel@nongnu.org; Wed, 29 Jan 2025 11:02:33 -0500
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1tdAW8-0003rk-BF
+ for qemu-devel@nongnu.org; Wed, 29 Jan 2025 11:02:16 -0500
 Received: from smtp-out2.suse.de ([2a07:de40:b251:101:10:150:64:2])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1tdAWM-0005Rj-S8
- for qemu-devel@nongnu.org; Wed, 29 Jan 2025 11:02:32 -0500
-Received: from imap1.dmz-prg2.suse.org (imap1.dmz-prg2.suse.org
- [IPv6:2a07:de40:b281:104:10:150:64:97])
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1tdAW6-0005Od-Di
+ for qemu-devel@nongnu.org; Wed, 29 Jan 2025 11:02:16 -0500
+Received: from imap1.dmz-prg2.suse.org (unknown [10.150.64.97])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
  (No client certificate requested)
- by smtp-out2.suse.de (Postfix) with ESMTPS id A2C631F38C;
- Wed, 29 Jan 2025 16:02:29 +0000 (UTC)
+ by smtp-out2.suse.de (Postfix) with ESMTPS id 408931F387;
+ Wed, 29 Jan 2025 16:02:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1738166549; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ t=1738166533; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
  mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=+9TPyvjnE3kDrY7MJFLMeXGUdl4urV7i313lRCU8Acc=;
- b=1WKUoo/EKYAEcFLAf3/Wd3ItMa2SYsPjgMHoTV3M7ey05s38enNxVfEAd0K/L7G6Ckq//O
- 54Z5kh+nEEj910zrs45YE/BDykJ+90LN4texQDU49ZT2f2Ryzh4eJGNtyiJ6bwkypJ2RJQ
- 4/ap83nkZ9W9t2+nbb8XcMhaFgqEr4g=
+ bh=QTRQtWFUFJVm6xsbgty07pAWu9rR9ojTVsMJzKOEOa0=;
+ b=163hRYts1r7ZGNHRzMe+2wDox2J29pg78PDIhTKIvsOUDLBfvBp9m9WfX0eICHt07CUNe9
+ vxpcTHip0djLzWNvCtWQTfgdpuFRXPu4/OAVcRu0ybSP4m1oR/akjHKtpO6j+N5pxkZ/Bh
+ Ir+iIuO8tyMhZKmJmgc0jJAspGm2C0w=
 DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1738166549;
+ s=susede2_ed25519; t=1738166533;
  h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
  mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=+9TPyvjnE3kDrY7MJFLMeXGUdl4urV7i313lRCU8Acc=;
- b=CvBqu4FnB57KVRMw4j8XLg8CqxeoMs9v85Au+/JCIBlBnOqyE7ta5RG3bPrjFVxyM15km4
- DBGkwWFHlUSoWNDQ==
+ bh=QTRQtWFUFJVm6xsbgty07pAWu9rR9ojTVsMJzKOEOa0=;
+ b=62jrYBCmcQaaS9TRm5dy6r/56d8F+Miab7wG7w+Dga5hH7ueq+Uk3abavGw8PAPfrcGC8z
+ TBiinUSL6ZGA2DCQ==
 Authentication-Results: smtp-out2.suse.de;
- dkim=pass header.d=suse.de header.s=susede2_rsa header.b="1WKUoo/E";
- dkim=pass header.d=suse.de header.s=susede2_ed25519 header.b=CvBqu4Fn
+	none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1738166549; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ t=1738166533; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
  mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=+9TPyvjnE3kDrY7MJFLMeXGUdl4urV7i313lRCU8Acc=;
- b=1WKUoo/EKYAEcFLAf3/Wd3ItMa2SYsPjgMHoTV3M7ey05s38enNxVfEAd0K/L7G6Ckq//O
- 54Z5kh+nEEj910zrs45YE/BDykJ+90LN4texQDU49ZT2f2Ryzh4eJGNtyiJ6bwkypJ2RJQ
- 4/ap83nkZ9W9t2+nbb8XcMhaFgqEr4g=
+ bh=QTRQtWFUFJVm6xsbgty07pAWu9rR9ojTVsMJzKOEOa0=;
+ b=163hRYts1r7ZGNHRzMe+2wDox2J29pg78PDIhTKIvsOUDLBfvBp9m9WfX0eICHt07CUNe9
+ vxpcTHip0djLzWNvCtWQTfgdpuFRXPu4/OAVcRu0ybSP4m1oR/akjHKtpO6j+N5pxkZ/Bh
+ Ir+iIuO8tyMhZKmJmgc0jJAspGm2C0w=
 DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1738166549;
+ s=susede2_ed25519; t=1738166533;
  h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
  mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=+9TPyvjnE3kDrY7MJFLMeXGUdl4urV7i313lRCU8Acc=;
- b=CvBqu4FnB57KVRMw4j8XLg8CqxeoMs9v85Au+/JCIBlBnOqyE7ta5RG3bPrjFVxyM15km4
- DBGkwWFHlUSoWNDQ==
+ bh=QTRQtWFUFJVm6xsbgty07pAWu9rR9ojTVsMJzKOEOa0=;
+ b=62jrYBCmcQaaS9TRm5dy6r/56d8F+Miab7wG7w+Dga5hH7ueq+Uk3abavGw8PAPfrcGC8z
+ TBiinUSL6ZGA2DCQ==
 Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
  (No client certificate requested)
- by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 5D47E137DB;
- Wed, 29 Jan 2025 16:02:28 +0000 (UTC)
+ by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id B3564137DB;
+ Wed, 29 Jan 2025 16:02:11 +0000 (UTC)
 Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
- by imap1.dmz-prg2.suse.org with ESMTPSA id 8Fa7BxRRmmffPAAAD6G6ig
- (envelope-from <farosas@suse.de>); Wed, 29 Jan 2025 16:02:28 +0000
+ by imap1.dmz-prg2.suse.org with ESMTPSA id GG3RHANRmmffPAAAD6G6ig
+ (envelope-from <farosas@suse.de>); Wed, 29 Jan 2025 16:02:11 +0000
 From: Fabiano Rosas <farosas@suse.de>
 To: qemu-devel@nongnu.org
-Cc: Peter Xu <peterx@redhat.com>,
-	Prasad Pandit <pjp@fedoraproject.org>
-Subject: [PULL 42/42] migration: refactor ram_save_target_page functions
-Date: Wed, 29 Jan 2025 13:00:59 -0300
-Message-Id: <20250129160059.6987-43-farosas@suse.de>
+Cc: Peter Xu <peterx@redhat.com>, Jiri Denemark <jdenemar@redhat.com>,
+ Juraj Marcin <jmarcin@redhat.com>
+Subject: [PULL 34/42] migration: Drop cached migration state in
+ migration_maybe_pause()
+Date: Wed, 29 Jan 2025 13:00:51 -0300
+Message-Id: <20250129160059.6987-35-farosas@suse.de>
 X-Mailer: git-send-email 2.35.3
 In-Reply-To: <20250129160059.6987-1-farosas@suse.de>
 References: <20250129160059.6987-1-farosas@suse.de>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-Rspamd-Queue-Id: A2C631F38C
-X-Spamd-Result: default: False [-3.01 / 50.00]; BAYES_HAM(-3.00)[100.00%];
- NEURAL_HAM_LONG(-1.00)[-1.000]; MID_CONTAINS_FROM(1.00)[];
- R_MISSING_CHARSET(0.50)[];
- R_DKIM_ALLOW(-0.20)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
- NEURAL_HAM_SHORT(-0.20)[-1.000]; MIME_GOOD(-0.10)[text/plain];
- MX_GOOD(-0.01)[]; RCVD_VIA_SMTP_AUTH(0.00)[]; ARC_NA(0.00)[];
- RCVD_COUNT_TWO(0.00)[2]; MIME_TRACE(0.00)[0:+];
- RBL_SPAMHAUS_BLOCKED_OPENRESOLVER(0.00)[2a07:de40:b281:104:10:150:64:97:from]; 
- SPAMHAUS_XBL(0.00)[2a07:de40:b281:104:10:150:64:97:from];
- TO_DN_SOME(0.00)[];
- RECEIVED_SPAMHAUS_BLOCKED_OPENRESOLVER(0.00)[2a07:de40:b281:106:10:150:64:167:received];
- FUZZY_BLOCKED(0.00)[rspamd.com]; FROM_HAS_DN(0.00)[];
- TO_MATCH_ENVRCPT_ALL(0.00)[];
- DBL_BLOCKED_OPENRESOLVER(0.00)[suse.de:email,suse.de:dkim,suse.de:mid];
- RCVD_TLS_ALL(0.00)[]; FROM_EQ_ENVFROM(0.00)[];
- RCPT_COUNT_THREE(0.00)[3];
+X-Spamd-Result: default: False [-2.80 / 50.00]; BAYES_HAM(-3.00)[99.99%];
+ MID_CONTAINS_FROM(1.00)[]; NEURAL_HAM_LONG(-1.00)[-1.000];
+ R_MISSING_CHARSET(0.50)[]; NEURAL_HAM_SHORT(-0.20)[-1.000];
+ MIME_GOOD(-0.10)[text/plain]; RCVD_VIA_SMTP_AUTH(0.00)[];
+ MIME_TRACE(0.00)[0:+];
+ R_RATELIMIT(0.00)[to_ip_from(RLjrdmmf3juheryardexw6jb95)];
+ ARC_NA(0.00)[]; TO_DN_SOME(0.00)[];
  DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
- DKIM_TRACE(0.00)[suse.de:+]
-X-Rspamd-Server: rspamd2.dmz-prg2.suse.org
-X-Rspamd-Action: no action
+ FUZZY_BLOCKED(0.00)[rspamd.com]; FROM_EQ_ENVFROM(0.00)[];
+ FROM_HAS_DN(0.00)[]; RCPT_COUNT_THREE(0.00)[4];
+ RCVD_COUNT_TWO(0.00)[2]; TO_MATCH_ENVRCPT_ALL(0.00)[];
+ DBL_BLOCKED_OPENRESOLVER(0.00)[suse.de:email,suse.de:mid];
+ RCVD_TLS_ALL(0.00)[]
 Received-SPF: pass client-ip=2a07:de40:b251:101:10:150:64:2;
  envelope-from=farosas@suse.de; helo=smtp-out2.suse.de
 X-Spam_score_int: -43
@@ -130,151 +121,124 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Prasad Pandit <pjp@fedoraproject.org>
+From: Peter Xu <peterx@redhat.com>
 
-Refactor ram_save_target_page legacy and multifd
-functions into one. Other than simplifying it,
-it frees 'migration_ops' object from usage, so it
-is expunged.
+I can't see why we must cache the state now after we avoided possible
+CANCEL race: that's the only thing I can think of that can modify the
+migration state concurrently with the migration thread itself.  Make all
+the state updates to happen always, then we don't need to cache the state
+anymore.
 
-Signed-off-by: Prasad Pandit <pjp@fedoraproject.org>
-Reviewed-by: Fabiano Rosas <farosas@suse.de>
-Message-ID: <20250127120823.144949-3-ppandit@redhat.com>
+Signed-off-by: Peter Xu <peterx@redhat.com>
+Tested-by: Jiri Denemark <jdenemar@redhat.com>
+Reviewed-by: Juraj Marcin <jmarcin@redhat.com>
+Link: https://lore.kernel.org/r/20250114230746.3268797-10-peterx@redhat.com
 Signed-off-by: Fabiano Rosas <farosas@suse.de>
 ---
- migration/ram.c | 67 +++++++++++++------------------------------------
- 1 file changed, 17 insertions(+), 50 deletions(-)
+ migration/migration.c | 27 ++++++++-------------------
+ 1 file changed, 8 insertions(+), 19 deletions(-)
 
-diff --git a/migration/ram.c b/migration/ram.c
-index 5aace00bf1..6f460fd22d 100644
---- a/migration/ram.c
-+++ b/migration/ram.c
-@@ -448,13 +448,6 @@ void ram_transferred_add(uint64_t bytes)
+diff --git a/migration/migration.c b/migration/migration.c
+index 4e4bf8ffed..5a3d0750ec 100644
+--- a/migration/migration.c
++++ b/migration/migration.c
+@@ -105,9 +105,7 @@ static MigrationIncomingState *current_incoming;
+ static GSList *migration_blockers[MIG_MODE__MAX];
+ 
+ static bool migration_object_check(MigrationState *ms, Error **errp);
+-static int migration_maybe_pause(MigrationState *s,
+-                                 int *current_active_state,
+-                                 int new_state);
++static int migration_maybe_pause(MigrationState *s, int new_state);
+ static void migrate_fd_cancel(MigrationState *s);
+ static bool close_return_path_on_source(MigrationState *s);
+ static void migration_completion_end(MigrationState *s);
+@@ -2629,7 +2627,6 @@ static int postcopy_start(MigrationState *ms, Error **errp)
+     int ret;
+     QIOChannelBuffer *bioc;
+     QEMUFile *fb;
+-    int cur_state = MIGRATION_STATUS_ACTIVE;
+ 
+     /*
+      * Now we're 100% sure to switch to postcopy, so JSON writer won't be
+@@ -2664,8 +2661,7 @@ static int postcopy_start(MigrationState *ms, Error **errp)
+         goto fail;
      }
+ 
+-    ret = migration_maybe_pause(ms, &cur_state,
+-                                MIGRATION_STATUS_POSTCOPY_ACTIVE);
++    ret = migration_maybe_pause(ms, MIGRATION_STATUS_POSTCOPY_ACTIVE);
+     if (ret < 0) {
+         error_setg_errno(errp, -ret, "%s: Failed in migration_maybe_pause()",
+                          __func__);
+@@ -2803,9 +2799,7 @@ fail:
+  * migrate_pause_before_switchover called with the BQL locked
+  * Returns: 0 on success
+  */
+-static int migration_maybe_pause(MigrationState *s,
+-                                 int *current_active_state,
+-                                 int new_state)
++static int migration_maybe_pause(MigrationState *s, int new_state)
+ {
+     if (!migrate_pause_before_switchover()) {
+         return 0;
+@@ -2828,21 +2822,19 @@ static int migration_maybe_pause(MigrationState *s,
+      * wait for the 'pause_sem' semaphore.
+      */
+     if (s->state != MIGRATION_STATUS_CANCELLING) {
+-        migrate_set_state(&s->state, *current_active_state,
++        migrate_set_state(&s->state, s->state,
+                           MIGRATION_STATUS_PRE_SWITCHOVER);
+         bql_unlock();
+         qemu_sem_wait(&s->pause_sem);
+         bql_lock();
+         migrate_set_state(&s->state, MIGRATION_STATUS_PRE_SWITCHOVER,
+                           new_state);
+-        *current_active_state = new_state;
+     }
+ 
+     return s->state == new_state ? 0 : -EINVAL;
  }
  
--struct MigrationOps {
--    int (*ram_save_target_page)(RAMState *rs, PageSearchStatus *pss);
--};
--typedef struct MigrationOps MigrationOps;
--
--MigrationOps *migration_ops;
--
- static int ram_save_host_page_urgent(PageSearchStatus *pss);
+-static int migration_completion_precopy(MigrationState *s,
+-                                        int *current_active_state)
++static int migration_completion_precopy(MigrationState *s)
+ {
+     int ret;
  
- /* NOTE: page is the PFN not real ram_addr_t. */
-@@ -1960,55 +1953,36 @@ int ram_save_queue_pages(const char *rbname, ram_addr_t start, ram_addr_t len,
+@@ -2855,8 +2847,7 @@ static int migration_completion_precopy(MigrationState *s,
+         }
+     }
+ 
+-    ret = migration_maybe_pause(s, current_active_state,
+-                                MIGRATION_STATUS_DEVICE);
++    ret = migration_maybe_pause(s, MIGRATION_STATUS_DEVICE);
+     if (ret < 0) {
+         goto out_unlock;
+     }
+@@ -2909,11 +2900,10 @@ static void migration_completion_postcopy(MigrationState *s)
+ static void migration_completion(MigrationState *s)
+ {
+     int ret = 0;
+-    int current_active_state = s->state;
+     Error *local_err = NULL;
+ 
+     if (s->state == MIGRATION_STATUS_ACTIVE) {
+-        ret = migration_completion_precopy(s, &current_active_state);
++        ret = migration_completion_precopy(s);
+     } else if (s->state == MIGRATION_STATUS_POSTCOPY_ACTIVE) {
+         migration_completion_postcopy(s);
+     } else {
+@@ -2953,8 +2943,7 @@ fail:
+         error_free(local_err);
+     }
+ 
+-    migrate_set_state(&s->state, current_active_state,
+-                      MIGRATION_STATUS_FAILED);
++    migrate_set_state(&s->state, s->state, MIGRATION_STATUS_FAILED);
  }
  
  /**
-- * ram_save_target_page_legacy: save one target page
-- *
-- * Returns the number of pages written
-+ * ram_save_target_page: save one target page to the precopy thread
-+ * OR to multifd workers.
-  *
-  * @rs: current RAM state
-  * @pss: data about the page we want to send
-  */
--static int ram_save_target_page_legacy(RAMState *rs, PageSearchStatus *pss)
-+static int ram_save_target_page(RAMState *rs, PageSearchStatus *pss)
- {
-     ram_addr_t offset = ((ram_addr_t)pss->page) << TARGET_PAGE_BITS;
-     int res;
- 
-+    if (!migrate_multifd()
-+        || migrate_zero_page_detection() == ZERO_PAGE_DETECTION_LEGACY) {
-+        if (save_zero_page(rs, pss, offset)) {
-+            return 1;
-+        }
-+    }
-+
-+    if (migrate_multifd()) {
-+        RAMBlock *block = pss->block;
-+        return ram_save_multifd_page(block, offset);
-+    }
-+
-     if (control_save_page(pss, offset, &res)) {
-         return res;
-     }
- 
--    if (save_zero_page(rs, pss, offset)) {
--        return 1;
--    }
--
-     return ram_save_page(rs, pss);
- }
- 
--/**
-- * ram_save_target_page_multifd: send one target page to multifd workers
-- *
-- * Returns 1 if the page was queued, -1 otherwise.
-- *
-- * @rs: current RAM state
-- * @pss: data about the page we want to send
-- */
--static int ram_save_target_page_multifd(RAMState *rs, PageSearchStatus *pss)
--{
--    RAMBlock *block = pss->block;
--    ram_addr_t offset = ((ram_addr_t)pss->page) << TARGET_PAGE_BITS;
--
--    /*
--     * While using multifd live migration, we still need to handle zero
--     * page checking on the migration main thread.
--     */
--    if (migrate_zero_page_detection() == ZERO_PAGE_DETECTION_LEGACY) {
--        if (save_zero_page(rs, pss, offset)) {
--            return 1;
--        }
--    }
--
--    return ram_save_multifd_page(block, offset);
--}
--
- /* Should be called before sending a host page */
- static void pss_host_page_prepare(PageSearchStatus *pss)
- {
-@@ -2095,7 +2069,7 @@ static int ram_save_host_page_urgent(PageSearchStatus *pss)
- 
-         if (page_dirty) {
-             /* Be strict to return code; it must be 1, or what else? */
--            if (migration_ops->ram_save_target_page(rs, pss) != 1) {
-+            if (ram_save_target_page(rs, pss) != 1) {
-                 error_report_once("%s: ram_save_target_page failed", __func__);
-                 ret = -1;
-                 goto out;
-@@ -2164,7 +2138,7 @@ static int ram_save_host_page(RAMState *rs, PageSearchStatus *pss)
-             if (preempt_active) {
-                 qemu_mutex_unlock(&rs->bitmap_mutex);
-             }
--            tmppages = migration_ops->ram_save_target_page(rs, pss);
-+            tmppages = ram_save_target_page(rs, pss);
-             if (tmppages >= 0) {
-                 pages += tmppages;
-                 /*
-@@ -2362,8 +2336,6 @@ static void ram_save_cleanup(void *opaque)
-     xbzrle_cleanup();
-     multifd_ram_save_cleanup();
-     ram_state_cleanup(rsp);
--    g_free(migration_ops);
--    migration_ops = NULL;
- }
- 
- static void ram_state_reset(RAMState *rs)
-@@ -3029,13 +3001,8 @@ static int ram_save_setup(QEMUFile *f, void *opaque, Error **errp)
-         return ret;
-     }
- 
--    migration_ops = g_malloc0(sizeof(MigrationOps));
--
-     if (migrate_multifd()) {
-         multifd_ram_save_setup();
--        migration_ops->ram_save_target_page = ram_save_target_page_multifd;
--    } else {
--        migration_ops->ram_save_target_page = ram_save_target_page_legacy;
-     }
- 
-     /*
 -- 
 2.35.3
 
