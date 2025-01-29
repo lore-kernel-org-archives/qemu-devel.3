@@ -4,116 +4,107 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 436BAC0218D
-	for <qemu-devel@archiver.kernel.org>; Wed, 29 Jan 2025 16:05:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 864F8C02190
+	for <qemu-devel@archiver.kernel.org>; Wed, 29 Jan 2025 16:07:16 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tdAW6-0003j7-KK; Wed, 29 Jan 2025 11:02:14 -0500
+	id 1tdAXr-0007mI-9s; Wed, 29 Jan 2025 11:04:03 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1tdAVj-0003Jj-BW
- for qemu-devel@nongnu.org; Wed, 29 Jan 2025 11:01:52 -0500
-Received: from smtp-out2.suse.de ([2a07:de40:b251:101:10:150:64:2])
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1tdAWC-00040r-IA
+ for qemu-devel@nongnu.org; Wed, 29 Jan 2025 11:02:20 -0500
+Received: from smtp-out1.suse.de ([195.135.223.130])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1tdAVh-0005K0-6P
- for qemu-devel@nongnu.org; Wed, 29 Jan 2025 11:01:51 -0500
-Received: from imap1.dmz-prg2.suse.org (imap1.dmz-prg2.suse.org
- [IPv6:2a07:de40:b281:104:10:150:64:97])
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1tdAWA-0005Pf-FX
+ for qemu-devel@nongnu.org; Wed, 29 Jan 2025 11:02:20 -0500
+Received: from imap1.dmz-prg2.suse.org (unknown [10.150.64.97])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
  (No client certificate requested)
- by smtp-out2.suse.de (Postfix) with ESMTPS id 0BDD61F365;
- Wed, 29 Jan 2025 16:01:48 +0000 (UTC)
+ by smtp-out1.suse.de (Postfix) with ESMTPS id 4BC07210F3;
+ Wed, 29 Jan 2025 16:02:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1738166508; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ t=1738166537; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
  mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=W0hKLwNtge3IEeKEZWAzFdq1zJGNWX+FsIZwPUvFO8Y=;
- b=JVO3iea4zC4c00+wN7eNPi9gxliTMyzai5xc7/umwEFYrOML3ssXa1yMzZONmPO3IShX8t
- BcspNtlnVvmHgIUvDuT6enASIwOAbWN+Sn+c8Lf9EXoq0LBpQ5weeG4hZ3P9brHjmoUowk
- vFR00obe+J0hu91w70/sX2EW4PM+fxQ=
+ bh=W+jNODwaydQfziVnBX/QJ79md5AANhz63mgLGphz4sw=;
+ b=y6EysCrOcT1GtZ96yEcqvs3z4r48laCjrzErRVS91X49vcZpbakfr4tQatKc3ZIw55PKEg
+ cWDiKRZY6gkBEUOSHi0KA7aS3sFXzv1UWU+bJGrP5QGan0u2nZKZrhZPBp8WDcSqEQHI7r
+ MurguizjYIhWxRQhI3fdpHTBr3noJGA=
 DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1738166508;
+ s=susede2_ed25519; t=1738166537;
  h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
  mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=W0hKLwNtge3IEeKEZWAzFdq1zJGNWX+FsIZwPUvFO8Y=;
- b=RF6lANcxNtvS7Bp5YQvDRG30eDF0BxW1wysFAlgiLMoEnpU/8dTCkQdArBFORqIKbvN/xU
- iuCWDf0DHmBNWjDg==
-Authentication-Results: smtp-out2.suse.de;
- dkim=pass header.d=suse.de header.s=susede2_rsa header.b=JVO3iea4;
- dkim=pass header.d=suse.de header.s=susede2_ed25519 header.b=RF6lANcx
+ bh=W+jNODwaydQfziVnBX/QJ79md5AANhz63mgLGphz4sw=;
+ b=GmAnmbocxDpIItibOWOUnzOJjJ3EbSWuIIxzF9XhRBxtMdDNUt0kKjC7it8xFRBWpeUB8Y
+ i9mf+L/PffdtGFAw==
+Authentication-Results: smtp-out1.suse.de;
+	none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1738166508; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ t=1738166537; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
  mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=W0hKLwNtge3IEeKEZWAzFdq1zJGNWX+FsIZwPUvFO8Y=;
- b=JVO3iea4zC4c00+wN7eNPi9gxliTMyzai5xc7/umwEFYrOML3ssXa1yMzZONmPO3IShX8t
- BcspNtlnVvmHgIUvDuT6enASIwOAbWN+Sn+c8Lf9EXoq0LBpQ5weeG4hZ3P9brHjmoUowk
- vFR00obe+J0hu91w70/sX2EW4PM+fxQ=
+ bh=W+jNODwaydQfziVnBX/QJ79md5AANhz63mgLGphz4sw=;
+ b=y6EysCrOcT1GtZ96yEcqvs3z4r48laCjrzErRVS91X49vcZpbakfr4tQatKc3ZIw55PKEg
+ cWDiKRZY6gkBEUOSHi0KA7aS3sFXzv1UWU+bJGrP5QGan0u2nZKZrhZPBp8WDcSqEQHI7r
+ MurguizjYIhWxRQhI3fdpHTBr3noJGA=
 DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1738166508;
+ s=susede2_ed25519; t=1738166537;
  h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
  mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=W0hKLwNtge3IEeKEZWAzFdq1zJGNWX+FsIZwPUvFO8Y=;
- b=RF6lANcxNtvS7Bp5YQvDRG30eDF0BxW1wysFAlgiLMoEnpU/8dTCkQdArBFORqIKbvN/xU
- iuCWDf0DHmBNWjDg==
+ bh=W+jNODwaydQfziVnBX/QJ79md5AANhz63mgLGphz4sw=;
+ b=GmAnmbocxDpIItibOWOUnzOJjJ3EbSWuIIxzF9XhRBxtMdDNUt0kKjC7it8xFRBWpeUB8Y
+ i9mf+L/PffdtGFAw==
 Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
  (No client certificate requested)
- by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id AD951137DB;
- Wed, 29 Jan 2025 16:01:46 +0000 (UTC)
+ by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id BEA42137DB;
+ Wed, 29 Jan 2025 16:02:15 +0000 (UTC)
 Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
- by imap1.dmz-prg2.suse.org with ESMTPSA id +IeHG+pQmmffPAAAD6G6ig
- (envelope-from <farosas@suse.de>); Wed, 29 Jan 2025 16:01:46 +0000
+ by imap1.dmz-prg2.suse.org with ESMTPSA id 4DCTHwdRmmffPAAAD6G6ig
+ (envelope-from <farosas@suse.de>); Wed, 29 Jan 2025 16:02:15 +0000
 From: Fabiano Rosas <farosas@suse.de>
 To: qemu-devel@nongnu.org
-Cc: Peter Xu <peterx@redhat.com>,
-	Steve Sistare <steven.sistare@oracle.com>
-Subject: [PULL 21/42] migration-test: defer connection
-Date: Wed, 29 Jan 2025 13:00:38 -0300
-Message-Id: <20250129160059.6987-22-farosas@suse.de>
+Cc: Peter Xu <peterx@redhat.com>, Jiri Denemark <jdenemar@redhat.com>,
+ Juraj Marcin <jmarcin@redhat.com>
+Subject: [PULL 36/42] migration: Notify COMPLETE once for postcopy
+Date: Wed, 29 Jan 2025 13:00:53 -0300
+Message-Id: <20250129160059.6987-37-farosas@suse.de>
 X-Mailer: git-send-email 2.35.3
 In-Reply-To: <20250129160059.6987-1-farosas@suse.de>
 References: <20250129160059.6987-1-farosas@suse.de>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-Rspamd-Queue-Id: 0BDD61F365
-X-Spamd-Result: default: False [-3.01 / 50.00]; BAYES_HAM(-3.00)[100.00%];
- NEURAL_HAM_LONG(-1.00)[-1.000]; MID_CONTAINS_FROM(1.00)[];
- R_MISSING_CHARSET(0.50)[];
- R_DKIM_ALLOW(-0.20)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
- NEURAL_HAM_SHORT(-0.20)[-1.000]; MIME_GOOD(-0.10)[text/plain];
- MX_GOOD(-0.01)[]; RCVD_VIA_SMTP_AUTH(0.00)[]; ARC_NA(0.00)[];
- RCVD_COUNT_TWO(0.00)[2]; MIME_TRACE(0.00)[0:+];
- RBL_SPAMHAUS_BLOCKED_OPENRESOLVER(0.00)[2a07:de40:b281:104:10:150:64:97:from]; 
- SPAMHAUS_XBL(0.00)[2a07:de40:b281:104:10:150:64:97:from];
- TO_DN_SOME(0.00)[];
- RECEIVED_SPAMHAUS_BLOCKED_OPENRESOLVER(0.00)[2a07:de40:b281:106:10:150:64:167:received];
- FUZZY_BLOCKED(0.00)[rspamd.com]; FROM_HAS_DN(0.00)[];
- TO_MATCH_ENVRCPT_ALL(0.00)[];
- DBL_BLOCKED_OPENRESOLVER(0.00)[oracle.com:email,suse.de:email,suse.de:dkim,suse.de:mid];
- RCVD_TLS_ALL(0.00)[]; FROM_EQ_ENVFROM(0.00)[];
- RCPT_COUNT_THREE(0.00)[3];
+X-Spamd-Result: default: False [-2.80 / 50.00]; BAYES_HAM(-3.00)[99.99%];
+ MID_CONTAINS_FROM(1.00)[]; NEURAL_HAM_LONG(-1.00)[-1.000];
+ R_MISSING_CHARSET(0.50)[]; NEURAL_HAM_SHORT(-0.20)[-1.000];
+ MIME_GOOD(-0.10)[text/plain]; RCVD_VIA_SMTP_AUTH(0.00)[];
+ MIME_TRACE(0.00)[0:+];
+ R_RATELIMIT(0.00)[to_ip_from(RLjrdmmf3juheryardexw6jb95)];
+ ARC_NA(0.00)[]; TO_DN_SOME(0.00)[];
  DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
- DKIM_TRACE(0.00)[suse.de:+]
-X-Rspamd-Server: rspamd2.dmz-prg2.suse.org
-X-Rspamd-Action: no action
-Received-SPF: pass client-ip=2a07:de40:b251:101:10:150:64:2;
- envelope-from=farosas@suse.de; helo=smtp-out2.suse.de
+ FUZZY_BLOCKED(0.00)[rspamd.com]; FROM_EQ_ENVFROM(0.00)[];
+ FROM_HAS_DN(0.00)[]; RCPT_COUNT_THREE(0.00)[4];
+ RCVD_COUNT_TWO(0.00)[2]; TO_MATCH_ENVRCPT_ALL(0.00)[];
+ DBL_BLOCKED_OPENRESOLVER(0.00)[suse.de:email,suse.de:mid];
+ RCVD_TLS_ALL(0.00)[]
+Received-SPF: pass client-ip=195.135.223.130; envelope-from=farosas@suse.de;
+ helo=smtp-out1.suse.de
 X-Spam_score_int: -43
 X-Spam_score: -4.4
 X-Spam_bar: ----
 X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001,
+ RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -130,102 +121,116 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Steve Sistare <steven.sistare@oracle.com>
+From: Peter Xu <peterx@redhat.com>
 
-Add an option to defer connection to the target monitor, needed by the
-cpr-transfer test.
+Postcopy invokes qemu_savevm_state_complete_precopy() twice, that means
+it'll invoke COMPLETE notify twice.. also twice the tracepoints that
+marking precopy complete.
 
-Signed-off-by: Steve Sistare <steven.sistare@oracle.com>
-Reviewed-by: Fabiano Rosas <farosas@suse.de>
-Link: https://lore.kernel.org/r/1736967650-129648-21-git-send-email-steven.sistare@oracle.com
+Move that notification (along with the tracepoint) out to the caller, so
+that postcopy will only notify once right at the start of switchover phase
+from precopy.  When at it, rename it to suite the file now it locates.
+
+For precopy, there should have no functional change except the tracepoint
+has a name change.
+
+For the other two users of qemu_savevm_state_complete_precopy(), namely:
+qemu_savevm_state() and qemu_savevm_live_state(): the notifier shouldn't
+matter because they're not precopy at all.  Now in these two contexts (aka,
+"savevm", and "colo") sometimes the precopy notifiers will still be
+invoked, but that's outside the scope of this patch.
+
+Signed-off-by: Peter Xu <peterx@redhat.com>
+Tested-by: Jiri Denemark <jdenemar@redhat.com>
+Reviewed-by: Juraj Marcin <jmarcin@redhat.com>
+Link: https://lore.kernel.org/r/20250114230746.3268797-12-peterx@redhat.com
 Signed-off-by: Fabiano Rosas <farosas@suse.de>
 ---
- tests/qtest/migration/framework.c | 22 +++++++++++++++++++---
- tests/qtest/migration/framework.h |  3 +++
- 2 files changed, 22 insertions(+), 3 deletions(-)
+ migration/migration.c  | 15 +++++++++++++++
+ migration/savevm.c     |  7 -------
+ migration/trace-events |  2 +-
+ 3 files changed, 16 insertions(+), 8 deletions(-)
 
-diff --git a/tests/qtest/migration/framework.c b/tests/qtest/migration/framework.c
-index f7add75ed5..2611c31c1b 100644
---- a/tests/qtest/migration/framework.c
-+++ b/tests/qtest/migration/framework.c
-@@ -223,6 +223,7 @@ int migrate_start(QTestState **from, QTestState **to, const char *uri,
-     const char *bootpath;
-     g_autoptr(QList) capabilities = migrate_start_get_qmp_capabilities(args);
-     g_autofree char *memory_backend = NULL;
-+    const char *events;
- 
-     if (args->use_shmem) {
-         if (!g_file_test("/dev/shm", G_FILE_TEST_IS_DIR)) {
-@@ -340,22 +341,30 @@ int migrate_start(QTestState **from, QTestState **to, const char *uri,
-                                      &src_state);
+diff --git a/migration/migration.c b/migration/migration.c
+index 4ba6c8912a..72802d6133 100644
+--- a/migration/migration.c
++++ b/migration/migration.c
+@@ -131,6 +131,17 @@ static void migration_downtime_end(MigrationState *s)
      }
- 
-+    /*
-+     * If the monitor connection is deferred, enable events on the command line
-+     * so none are missed.  This is for testing only, do not set migration
-+     * options like this in general.
-+     */
-+    events = args->defer_target_connect ? "-global migration.x-events=on" : "";
-+
-     cmd_target = g_strdup_printf("-accel kvm%s -accel tcg "
-                                  "-machine %s,%s "
-                                  "-name target,debug-threads=on "
-                                  "%s "
-                                  "-serial file:%s/dest_serial "
-                                  "-incoming %s "
--                                 "%s %s %s %s",
-+                                 "%s %s %s %s %s",
-                                  kvm_opts ? kvm_opts : "",
-                                  machine, machine_opts,
-                                  memory_backend, tmpfs, uri,
-+                                 events,
-                                  arch_opts ? arch_opts : "",
-                                  shmem_opts ? shmem_opts : "",
-                                  args->opts_target ? args->opts_target : "",
-                                  ignore_stderr);
-     *to = qtest_init_with_env_and_capabilities(QEMU_ENV_DST, cmd_target,
--                                               capabilities, true);
-+                                               capabilities, !args->defer_target_connect);
-     qtest_qmp_set_event_callback(*to,
-                                  migrate_watch_for_events,
-                                  &dst_state);
-@@ -373,7 +382,9 @@ int migrate_start(QTestState **from, QTestState **to, const char *uri,
-      * to mimic as closer as that.
-      */
-     migrate_set_capability(*from, "events", true);
--    migrate_set_capability(*to, "events", true);
-+    if (!args->defer_target_connect) {
-+        migrate_set_capability(*to, "events", true);
-+    }
- 
-     return 0;
  }
-@@ -733,6 +744,11 @@ void test_precopy_common(MigrateCommon *args)
  
-     migrate_qmp(from, to, args->connect_uri, args->connect_channels, "{}");
- 
-+    if (args->start.defer_target_connect) {
-+        qtest_connect(to);
-+        qtest_qmp_handshake(to, NULL);
++static void precopy_notify_complete(void)
++{
++    Error *local_err = NULL;
++
++    if (precopy_notify(PRECOPY_NOTIFY_COMPLETE, &local_err)) {
++        error_report_err(local_err);
 +    }
 +
-     if (args->result != MIG_TEST_SUCCEED) {
-         bool allow_active = args->result == MIG_TEST_FAIL;
-         wait_for_migration_fail(from, allow_active);
-diff --git a/tests/qtest/migration/framework.h b/tests/qtest/migration/framework.h
-index dd2db1c000..32f3a93632 100644
---- a/tests/qtest/migration/framework.h
-+++ b/tests/qtest/migration/framework.h
-@@ -116,6 +116,9 @@ typedef struct {
-      * size is plugged in.  If omitted, "-m %s" is used.
-      */
-     const char *memory_backend;
++    trace_migration_precopy_complete();
++}
 +
-+    /* Do not connect to target monitor and qtest sockets in qtest_init */
-+    bool defer_target_connect;
- } MigrateStart;
+ static bool migration_needs_multiple_sockets(void)
+ {
+     return migrate_multifd() || migrate_postcopy_preempt();
+@@ -2676,6 +2687,8 @@ static int postcopy_start(MigrationState *ms, Error **errp)
+     /* Switchover phase, switch to unlimited */
+     migration_rate_set(RATE_LIMIT_DISABLED);
  
- typedef enum PostcopyRecoveryFailStage {
++    precopy_notify_complete();
++
+     /*
+      * Cause any non-postcopiable, but iterative devices to
+      * send out their final data.
+@@ -2865,6 +2878,8 @@ static int migration_completion_precopy(MigrationState *s)
+ 
+     migration_rate_set(RATE_LIMIT_DISABLED);
+ 
++    precopy_notify_complete();
++
+     ret = qemu_savevm_state_complete_precopy(s->to_dst_file, false);
+ out_unlock:
+     bql_unlock();
+diff --git a/migration/savevm.c b/migration/savevm.c
+index 92e77ca92b..9aef2fa3c9 100644
+--- a/migration/savevm.c
++++ b/migration/savevm.c
+@@ -1578,15 +1578,8 @@ int qemu_savevm_state_complete_precopy_non_iterable(QEMUFile *f,
+ int qemu_savevm_state_complete_precopy(QEMUFile *f, bool iterable_only)
+ {
+     int ret;
+-    Error *local_err = NULL;
+     bool in_postcopy = migration_in_postcopy();
+ 
+-    if (precopy_notify(PRECOPY_NOTIFY_COMPLETE, &local_err)) {
+-        error_report_err(local_err);
+-    }
+-
+-    trace_savevm_state_complete_precopy();
+-
+     if (!in_postcopy || iterable_only) {
+         ret = qemu_savevm_state_complete_precopy_iterable(f, in_postcopy);
+         if (ret) {
+diff --git a/migration/trace-events b/migration/trace-events
+index e03a914afb..12b262f8ee 100644
+--- a/migration/trace-events
++++ b/migration/trace-events
+@@ -44,7 +44,6 @@ savevm_state_resume_prepare(void) ""
+ savevm_state_header(void) ""
+ savevm_state_iterate(void) ""
+ savevm_state_cleanup(void) ""
+-savevm_state_complete_precopy(void) ""
+ vmstate_save(const char *idstr, const char *vmsd_name) "%s, %s"
+ vmstate_load(const char *idstr, const char *vmsd_name) "%s, %s"
+ vmstate_downtime_save(const char *type, const char *idstr, uint32_t instance_id, int64_t downtime) "type=%s idstr=%s instance_id=%d downtime=%"PRIi64
+@@ -195,6 +194,7 @@ migrate_transferred(uint64_t transferred, uint64_t time_spent, uint64_t bandwidt
+ process_incoming_migration_co_end(int ret, int ps) "ret=%d postcopy-state=%d"
+ process_incoming_migration_co_postcopy_end_main(void) ""
+ postcopy_preempt_enabled(bool value) "%d"
++migration_precopy_complete(void) ""
+ 
+ # migration-stats
+ migration_transferred_bytes(uint64_t qemu_file, uint64_t multifd, uint64_t rdma) "qemu_file %" PRIu64 " multifd %" PRIu64 " RDMA %" PRIu64
 -- 
 2.35.3
 
