@@ -4,95 +4,91 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 43A7DC0218D
-	for <qemu-devel@archiver.kernel.org>; Wed, 29 Jan 2025 05:19:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4CF83C0218D
+	for <qemu-devel@archiver.kernel.org>; Wed, 29 Jan 2025 05:34:30 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1td0TY-0006Ei-6l; Wed, 29 Jan 2025 00:18:56 -0500
+	id 1td0hh-0001cN-1S; Wed, 29 Jan 2025 00:33:33 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
- id 1td0TT-0006EK-Kr
- for qemu-devel@nongnu.org; Wed, 29 Jan 2025 00:18:52 -0500
-Received: from mail-pl1-x636.google.com ([2607:f8b0:4864:20::636])
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1td0hg-0001cD-1s
+ for qemu-devel@nongnu.org; Wed, 29 Jan 2025 00:33:32 -0500
+Received: from mail-pl1-x62f.google.com ([2607:f8b0:4864:20::62f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
- id 1td0TQ-0005JN-3a
- for qemu-devel@nongnu.org; Wed, 29 Jan 2025 00:18:50 -0500
-Received: by mail-pl1-x636.google.com with SMTP id
- d9443c01a7336-2156e078563so91123975ad.2
- for <qemu-devel@nongnu.org>; Tue, 28 Jan 2025 21:18:47 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1td0hc-0006p8-HP
+ for qemu-devel@nongnu.org; Wed, 29 Jan 2025 00:33:31 -0500
+Received: by mail-pl1-x62f.google.com with SMTP id
+ d9443c01a7336-21628b3fe7dso114729355ad.3
+ for <qemu-devel@nongnu.org>; Tue, 28 Jan 2025 21:33:27 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=daynix-com.20230601.gappssmtp.com; s=20230601; t=1738127925; x=1738732725;
- darn=nongnu.org; 
+ d=linaro.org; s=google; t=1738128806; x=1738733606; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=+MvKBDTYqZ4kgG+IAuEhkVM5rhrVIL9eA78RgLiixmk=;
- b=CCTVoGessg73LeCpnDe6txkjSo4jLeH0RwHwKNL37fS4LepRbbeOI4qyYue2vyiwHa
- lLmT8h9CRQDcNwpQV+4dsUGUXx/StyJm0QxkZWA6ms20SfEAV5++eB/MhY8Jq1A0FHQS
- uXmTs7PTa1ps5Lldd67ZcALblwOxdmrjBdKNDAkMX+smw3J8vmBzndYfa6lizF3ej32q
- PubqN7C7dv1fyBW/tV6ea5ssxzHXmDq4G4LjSNq2EB1OO2JGlWaWh+BRstxKs5QQJ9kQ
- M+hMqKa9+RLgU+TsHqLBJHRcPOAp/iNiWdqkqB5wW2T1AUpHUyAw85cpmX/hq/YXAEDr
- zRQw==
+ bh=qwsO3K1glESWuZ2JEl/lsipH/yeI8nLJ3iyn6ywczAI=;
+ b=eHiQQ0eUdkahG2Hj4vlJVZulkH9+mnkncHLCeMy0TW/hDCC+we6R4Q58pVokSx1xmT
+ spT82UftpKLB8qzTyn8zQWBa8009OPy/UvtCvSSe9lzaYyYL2Hio7R5ZaZ+Ac3ijWcyx
+ Rysjjw+OsG5nBTJR831ewkxCJJjTfowvg259duEpdUBDpr/zpltiXNL5Lto9xim7DFsD
+ VAOEbYWRSay8VC9l6uT1jNE2WzlpP7GoITMpmzhdXFXjLJpOMmsg8ukfLErj+TjHVgiH
+ 3djZyB5908Hrr/WiRde3MzpI5P6RPAciXQwZAjzQXReA1z1c2GA2YqpmEpzizEUfy90e
+ 4cGA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1738127925; x=1738732725;
+ d=1e100.net; s=20230601; t=1738128806; x=1738733606;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=+MvKBDTYqZ4kgG+IAuEhkVM5rhrVIL9eA78RgLiixmk=;
- b=Q4ztQakr5ExUVbudev7OnKQdbH5Say5F+dJ5SQlsF+PNXBVE2/OJHmBZSOZo8GudiZ
- Z90Y7uXjs0S4dTleeq2CEVFVJfJxSEfCSUv78TUrQARgKLzAuIVFMGcaBHfKe0vJAMzA
- eeKL7kmiuhY20LjsJzn77EXEDdS7vE3d6OgaNngjgIc6FKIptzf46FxJ5qM6bNGQllVy
- +k1xQQZID5WGVd8YkXBZzVu643giYighwfgqAaz19eypN2AlGIJzl28p5/IGQENDt7kw
- awdxd/dhtoejVSqHVtPojj70FzJdVS1N3zM/b1m40x+3RJxWCBJjSdhSbQs4SgywL82I
- 5/ng==
-X-Forwarded-Encrypted: i=1;
- AJvYcCWooFZsIvt6MtlEuF5SunjcNPGFBHOy5+smn4S15YH9oB9vTOZv8gk7IgK3UPzhrtIBvL3PiLZYX8fy@nongnu.org
-X-Gm-Message-State: AOJu0YwRcvqK+sL0DdgWpLMbIWV/TO/YZhQUHkickJX+3sDegUIHEy+l
- FmcQ11iRb/6Da3sE7a/lOmWT9mqbthYFWFW8EqnSiTH3iKfxZcX5umrLA1C8omobFPHlA3FvLzf
- ehBY=
-X-Gm-Gg: ASbGncsBdHlIKvijYY2f2wutG3uiZZR4psn+P2Y3P8F/wKQxEs3u8d/wYxhJmY/eJFd
- kKY28deCrtz8GkOYpWK6Cmi9EBvTqPh2OEtShAuKuKBm+T1AcQET1rtZMnYRIibYgXjhLrvkMO8
- sOLUyyPHqSzPpdk0JTzLNH6eW4zz6cNGbHLtDKqRYrXjsi6zu5uciH1gUyLdROE7jvydPOMOrsP
- CujiS0fehDKzIqq7lqN0R4kop+ZMdiL2NuTZYBe0irfRqfAX3ddGfJIwY75Oo23zt2W19u+O9I/
- PoXBJzQIv87gW87pYucGLP2SQ5Qe
-X-Google-Smtp-Source: AGHT+IHNV33fcZHTRms+0VcI1kW4iI9FQyT3CGxyPaVhJDp2GhW9NkzGc0l25U9aBMjLUxXYJZCR1w==
-X-Received: by 2002:a17:903:287:b0:215:cbbf:8926 with SMTP id
- d9443c01a7336-21dd7dddeabmr32201765ad.35.1738127925290; 
- Tue, 28 Jan 2025 21:18:45 -0800 (PST)
-Received: from [157.82.205.237] ([157.82.205.237])
+ bh=qwsO3K1glESWuZ2JEl/lsipH/yeI8nLJ3iyn6ywczAI=;
+ b=sFUgyrND4xRFqxv5ctYuxkgVuztiSrrLJl+etZtg5UQwIwOP0wOY+lOU4YNdtZUgR4
+ wXj/sJBgAVx6VReYtoYiafluN+sC3FC7mYCZigINqOyLwLvpJz40t1YEkIDkJ6FpNnAa
+ hEi6uAqJg3RQXzTNfwl97qE3NLr1966+jIfvCssB/J9IUQTOWiFaBTi967mns4bDQTkJ
+ EIIiAmor5ZoHZQ8JBCB7ZKJCt78kBczXndSA5GiAT6MhGa8yIzU2P1N2CzZPPRWteSAH
+ w/yVUUeX9kUd21Ze14gohuL5j0Bz4a2mBWJOaK95BJ/VUozAwWaKx3ElgT7LMk9cuOnr
+ 7U7A==
+X-Gm-Message-State: AOJu0Yy234SZB5KunGIThG3IRgUHpmXtXwbeZMD3KZQcc+xuRflEoWoJ
+ E65sSODfrpQzBEeEC0g37bxs5046ns5/oG7heEp4xZ7e2Lwbpbrtnb7DZ+qEviY=
+X-Gm-Gg: ASbGncuFXLc+sj9TRfpvIVuK/tfeAtajhxcZwc+sW1zBcSawT4gRKIH1/Yfnd/gOPgD
+ yRp8NGtebku7vbjTu5Q37qqohTcIeLU8c4IDe7wgsSRcXN528o7PP7c5KN+0e9jfFDq8K5hoRaX
+ RIiafWrzbVzKus6OHX3ZM9MR+8M+US2Z6wKqgKD/8M1ZuJhq+zj/WqJZ8mjem0PeMFE3qSBcit0
+ GEGKYgC0qZzqX6afL30tvq3fxT5IpgqujS0X/ApLTaa+rP7C/xLgf0O9hqbZ2KAi31lsFp56NWg
+ gjW63qq1Rv4Ne6is7CZKGd2N6/EOMNEef9lbuFwYJQSGegy4FJa/Lyb2JQ==
+X-Google-Smtp-Source: AGHT+IEJ1Ghwfm/evl/4VqxK8s+diOXBkhoG/1DLfr+1J6IuciV4cwmFzoGDW3d1wihsFU1yPXTkew==
+X-Received: by 2002:a17:903:41cc:b0:216:73a5:ea16 with SMTP id
+ d9443c01a7336-21dd7c66121mr23911505ad.21.1738128806288; 
+ Tue, 28 Jan 2025 21:33:26 -0800 (PST)
+Received: from [192.168.0.4] (71-212-32-190.tukw.qwest.net. [71.212.32.190])
  by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-21da414db7fsm89756735ad.176.2025.01.28.21.18.42
+ 41be03b00d2f7-ac49717de96sm9321251a12.77.2025.01.28.21.33.25
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 28 Jan 2025 21:18:44 -0800 (PST)
-Message-ID: <f3c2af5f-43f9-45f7-871e-ad572b17449a@daynix.com>
-Date: Wed, 29 Jan 2025 14:18:41 +0900
+ Tue, 28 Jan 2025 21:33:25 -0800 (PST)
+Message-ID: <ccbf7be1-db49-4eb6-8ccb-32bcfd3b380a@linaro.org>
+Date: Tue, 28 Jan 2025 21:33:24 -0800
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v5] target/arm: Always add pmu property for Armv7-A/R+
-To: Peter Maydell <peter.maydell@linaro.org>
-Cc: Thomas Huth <thuth@redhat.com>, Laurent Vivier <lvivier@redhat.com>,
- Paolo Bonzini <pbonzini@redhat.com>, Cornelia Huck <cohuck@redhat.com>,
- qemu-arm@nongnu.org, qemu-devel@nongnu.org, kvm@vger.kernel.org,
- devel@daynix.com
-References: <20250104-pmu-v5-1-be9c8777c786@daynix.com>
- <CAFEAcA9NzHeo+V8FpXDBjPK9n2i+LDVCxe1AS8z7O9DX9Cvzuw@mail.gmail.com>
+Subject: Re: [PATCH 4/4] target/hppa: Implement space register hashing for
+ 64-bit HP-UX
+To: Helge Deller <deller@kernel.org>
+Cc: qemu-devel@nongnu.org, deller@gmx.de
+References: <20250128224817.24715-1-deller@kernel.org>
+ <20250128224817.24715-5-deller@kernel.org>
+ <34f4e42f-b08a-42dd-ad11-f720f6d8a440@linaro.org>
+ <6f445eb1-2626-4a08-abbb-580cdd7fe682@linaro.org> <Z5mph0gdQHbCsKit@p100>
 Content-Language: en-US
-From: Akihiko Odaki <akihiko.odaki@daynix.com>
-In-Reply-To: <CAFEAcA9NzHeo+V8FpXDBjPK9n2i+LDVCxe1AS8z7O9DX9Cvzuw@mail.gmail.com>
+From: Richard Henderson <richard.henderson@linaro.org>
+In-Reply-To: <Z5mph0gdQHbCsKit@p100>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::636;
- envelope-from=akihiko.odaki@daynix.com; helo=mail-pl1-x636.google.com
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=unavailable autolearn_force=no
+Received-SPF: pass client-ip=2607:f8b0:4864:20::62f;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x62f.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -108,82 +104,63 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 2025/01/28 23:48, Peter Maydell wrote:
-> On Sat, 4 Jan 2025 at 07:10, Akihiko Odaki <akihiko.odaki@daynix.com> wrote:
->>
->> kvm-steal-time and sve properties are added for KVM even if the
->> corresponding features are not available. Always add pmu property for
->> Armv7+. Note that the property is added only for Armv7-A/R+ as QEMU
->> currently emulates PMU only for such versions, and a different
->> version may have a different definition of PMU or may not have one at
->> all.
-> 
-> This isn't how we generally handle CPU properties corresponding
-> to features. The standard setup is:
->   * if the CPU can't have feature foo, no property
->   * if the CPU does have feature foo, define a property, so the
->     user can turn it off
+On 1/28/25 20:07, Helge Deller wrote:
+> What I'm not sure about is gva_offset_mask in those hunks and where you
+> said I can't read from env:
+...
+> @@ -4635,6 +4641,7 @@ static void hppa_tr_init_disas_context(DisasContextBase *dcbase, CPUState *cs)
+>       ctx->tb_flags = ctx->base.tb->flags;
+>       ctx->is_pa20 = hppa_is_pa20(cpu_env(cs));
+>       ctx->psw_xb = ctx->tb_flags & (PSW_X | PSW_B);
+> +    ctx->gva_offset_mask = cpu_env(cs)->gva_offset_mask;
+>   
+> Do I need to change the code in form_gva() to read at runtime from env
+> instead?
 
-Is that really standard? The patch message says kvm-steal-time and sve 
-properties are added even if the features are not available. Looking at 
-other architectures, I can confirm that IvyBridge, an x86_64 CPU, has a 
-property avx512f that can be set to true though the physical CPU model 
-does not have one. I believe the situation is no different for RISC-V too.
+That's one way to do it, sure.  But it's not so hard:
 
-> 
-> See also my longer explanation in reply to this patch in v4:
-> 
-> https://lore.kernel.org/all/CAFEAcA_HWfCU09NfZDf6EC=rpvHn148avySCztQ8PqPBMFx4_Q@mail.gmail.com/
+#define TB_FLAG_SPHASH  0x800
 
-It explains well why the PMU of ARMv7 is different from other features 
-like avx512f on x86_64 or RISC-V features; the architecture does not 
-allow feature detection. However, as I noted in an earlier email, it 
-also means explicitly disabling the PMU on ARMv7 is equally dangerous as 
-enabling the PMU. So I see two logical design options:
+void cpu_get_tb_cpu_state(CPUHPPAState *env, vaddr *pc,
+                           uint64_t *pcsbase, uint32_t *pflags)
+{
+...
+#ifdef CONFIG_USER_ONLY
+     flags |= TB_FLAG_UNALIGN * !env_cpu(env)->prctl_unalign_sigbus;
+#else
+     if ((env->sr[4] == env->sr[5])
+         & (env->sr[4] == env->sr[6])
+         & (env->sr[4] == env->sr[7])) {
+         flags |= TB_FLAG_SR_SAME;
+     }
+     if ((flags & PSW_W) &&
+         (env->dr[2] & HPPA64_DIAG_SPHASH_ENABLE)) {
+         flags |= TB_FLAG_SPHASH;
+     }
+#endif
+...
+}
 
-1. Forbid to explicitly disable or enable the PMU on ARMv7 at all to 
-avoid breaking the guest.
-2. Allow explicitly disabling or enabling the PMU on ARMv7 under the 
-assumption that the property will be used only by experienced users.
+Now tb_flags is constrained by both inputs to update_gva_offset_mask, and you *can* read 
+from env->gva_offset_mask.  It's guaranteed to be the same every time.
 
-> 
->> Signed-off-by: Akihiko Odaki <akihiko.odaki@daynix.com>
->> ---
->> The "pmu" property is added only when the PMU is available. This makes
->> tests/qtest/arm-cpu-features.c fail as it reads the property to check
->> the availability. Always add the property when the architecture defines
->> the PMU even if it's not available to fix this.
-> 
-> This seems to me like a bug in the test.
-> 
->> diff --git a/target/arm/cpu.c b/target/arm/cpu.c
->> index dcedadc89eaf..e76d42398eb2 100644
->> --- a/target/arm/cpu.c
->> +++ b/target/arm/cpu.c
->> @@ -1761,6 +1761,10 @@ void arm_cpu_post_init(Object *obj)
->>
->>       if (!arm_feature(&cpu->env, ARM_FEATURE_M)) {
->>           qdev_property_add_static(DEVICE(obj), &arm_cpu_reset_hivecs_property);
->> +
->> +        if (arm_feature(&cpu->env, ARM_FEATURE_V7)) {
->> +            object_property_add_bool(obj, "pmu", arm_get_pmu, arm_set_pmu);
->> +        }
->>       }
->>
->>       if (arm_feature(&cpu->env, ARM_FEATURE_V8)) {
->> @@ -1790,7 +1794,6 @@ void arm_cpu_post_init(Object *obj)
->>
->>       if (arm_feature(&cpu->env, ARM_FEATURE_PMU)) {
->>           cpu->has_pmu = true;
->> -        object_property_add_bool(obj, "pmu", arm_get_pmu, arm_set_pmu);
->>       }
->>
->>       /*
-> 
-> This would allow the user to enable the PMU on a CPU that
-> says it doesn't have one. We don't generally permit that.
-> 
-> thanks
-> -- PMM
 
+>       nullify_over(ctx);
+>       tcg_gen_st_i64(load_gpr(ctx, a->r1), tcg_env,
+>                           offsetof(CPUHPPAState, dr[a->dr]));
+> +    if (ctx->is_pa20 && (a->dr == 2)) {
+> +        gen_helper_update_gva_offset_mask(tcg_env);
+> +        /* Exit TB to recalculate gva_offset_mask on %dr2 */
+> +        ctx->base.is_jmp = DISAS_IAQ_N_STALE_EXIT;
+> +    }
+
+Better comment:
+
+     /* Update gva_offset_mask from the new value of %dr2 */
+     gen_helper_update_gva_offset_mask(tcg_env);
+     /* Exit to capture the new value for the next TB. */
+     ctx->base.is_jmp = DISAS_IAQ_N_STALE_EXIT;
+
+
+r~
 
