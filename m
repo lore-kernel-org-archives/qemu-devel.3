@@ -4,72 +4,73 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E6F2AC0218D
-	for <qemu-devel@archiver.kernel.org>; Wed, 29 Jan 2025 08:19:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id EEC13C0218D
+	for <qemu-devel@archiver.kernel.org>; Wed, 29 Jan 2025 08:19:45 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1td3HS-0004El-Ua; Wed, 29 Jan 2025 03:18:38 -0500
+	id 1td3IH-0004dN-Fs; Wed, 29 Jan 2025 03:19:30 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1td3HR-0004EG-As
- for qemu-devel@nongnu.org; Wed, 29 Jan 2025 03:18:37 -0500
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1td3Ht-0004Rz-0g
+ for qemu-devel@nongnu.org; Wed, 29 Jan 2025 03:19:13 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1td3HP-0003rX-Mx
- for qemu-devel@nongnu.org; Wed, 29 Jan 2025 03:18:37 -0500
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1td3Hq-0003ss-GH
+ for qemu-devel@nongnu.org; Wed, 29 Jan 2025 03:19:03 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1738138714;
+ s=mimecast20190719; t=1738138741;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  resent-to:resent-from:resent-message-id:in-reply-to:in-reply-to:
- references:references; bh=oqVZtEymuYphrtvOCec4Vy+RZEVjAU6lMKKNoyIYxKU=;
- b=aTvphLHNyAU/ZoF9fSsSmwl4eY+IIax66mBb7AbcGJbsLpJYiVMeC27GaK26nu+xFkkP5g
- ce7bC2sAHR4y+p7GwmQp0b9QZi+3v3eTCmfE1SMSlY1QF4B5MCpZMWgAWHlIT13E7MjrhH
- 47LFh+1JiCftUqL2/QJmdT7bnJME0B0=
-Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ references:references; bh=Q1iuRqRDp/pVEonF/eYPL5SAHd/ogI+WlsGMZ4+dmps=;
+ b=f6j2ulh8RZpH2iXgEjzXQ63WXsiZNzVVrH5Q0iiA96JsSOYdqFg1JIufLCN25Mrkj68gME
+ CZbHH8kafOQrihVTUQqB9UDC2tCcGBmo9cdebaFn57kE11N8MYqf78ynd8KQGk/N6V+Ttx
+ f3jsUWkkplvXqUDFyhlv4vXFKWkRLfs=
+Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-557-kuvVwq6SNKaBtPvpdWd5DA-1; Wed,
- 29 Jan 2025 03:18:31 -0500
-X-MC-Unique: kuvVwq6SNKaBtPvpdWd5DA-1
-X-Mimecast-MFC-AGG-ID: kuvVwq6SNKaBtPvpdWd5DA
-Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-447--7xwQXHTOb6-trgLmm7DQw-1; Wed,
+ 29 Jan 2025 03:18:58 -0500
+X-MC-Unique: -7xwQXHTOb6-trgLmm7DQw-1
+X-Mimecast-MFC-AGG-ID: -7xwQXHTOb6-trgLmm7DQw
+Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 32247195608B; Wed, 29 Jan 2025 08:18:30 +0000 (UTC)
+ by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id B6E6918009E1; Wed, 29 Jan 2025 08:18:56 +0000 (UTC)
 Received: from blackfin.pond.sub.org (unknown [10.39.193.71])
- by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 8ED1F1956056; Wed, 29 Jan 2025 08:18:29 +0000 (UTC)
+ by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 3434D180035E; Wed, 29 Jan 2025 08:18:56 +0000 (UTC)
 Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
- id 31B3321E6A28; Wed, 29 Jan 2025 09:18:27 +0100 (CET)
+ id B7AC621E6A28; Wed, 29 Jan 2025 09:18:53 +0100 (CET)
 Resent-To: marcel.apfelbaum@gmail.com, eduardo@habkost.net,
  philmd@linaro.org, qemu-devel@nongnu.org, steven.sistare@oracle.com,
  farosas@suse.de
 Resent-From: Markus Armbruster <armbru@redhat.com>
-Resent-Date: Wed, 29 Jan 2025 09:18:27 +0100
-Resent-Message-ID: <87y0yu6njg.fsf@pond.sub.org>
+Resent-Date: Wed, 29 Jan 2025 09:18:53 +0100
+Resent-Message-ID: <87tt9i6niq.fsf@pond.sub.org>
 From: Markus Armbruster <armbru@redhat.com>
 To: Steve Sistare <steven.sistare@oracle.com>
 Cc: qemu-devel@nongnu.org,  Peter Xu <peterx@redhat.com>,  Fabiano Rosas
  <farosas@suse.de>,  David Hildenbrand <david@redhat.com>,  Marcel
  Apfelbaum <marcel.apfelbaum@gmail.com>,  Eduardo Habkost
  <eduardo@habkost.net>,  Philippe Mathieu-Daude <philmd@linaro.org>,  Paolo
- Bonzini <pbonzini@redhat.com>,  "Daniel P. Berrange" <berrange@redhat.com>
-Subject: Re: [PATCH V5 15/23] migration: cpr-transfer mode
-In-Reply-To: <1735057028-308595-16-git-send-email-steven.sistare@oracle.com>
- (Steve Sistare's message of "Tue, 24 Dec 2024 08:17:00 -0800")
-References: <1735057028-308595-1-git-send-email-steven.sistare@oracle.com>
- <1735057028-308595-16-git-send-email-steven.sistare@oracle.com>
-Date: Wed, 29 Jan 2025 07:19:11 +0100
-Message-ID: <87lduu87mo.fsf@pond.sub.org>
+ Bonzini <pbonzini@redhat.com>,  "Daniel P. Berrange"
+ <berrange@redhat.com>,  Markus Armbruster <armbru@redhat.com>
+Subject: Re: [PATCH V7 16/24] migration: cpr-transfer mode
+In-Reply-To: <1736967650-129648-17-git-send-email-steven.sistare@oracle.com>
+ (Steve Sistare's message of "Wed, 15 Jan 2025 11:00:42 -0800")
+References: <1736967650-129648-1-git-send-email-steven.sistare@oracle.com>
+ <1736967650-129648-17-git-send-email-steven.sistare@oracle.com>
+Date: Wed, 29 Jan 2025 07:23:03 +0100
+Message-ID: <87h65i87g8.fsf@pond.sub.org>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 MIME-Version: 1.0
 Content-Type: text/plain
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
 Received-SPF: pass client-ip=170.10.129.124; envelope-from=armbru@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -33
@@ -123,8 +124,9 @@ Steve Sistare <steven.sistare@oracle.com> writes:
 > The user starts new QEMU on the same host as old QEMU, with command-line
 > arguments to create the same machine, plus the -incoming option for the
 > main migration channel, like normal live migration.  In addition, the user
-> adds a second -incoming option with channel type "cpr".  The CPR channel
-> address must be a type, such as unix socket, that supports SCM_RIGHTS.
+> adds a second -incoming option with channel type "cpr".  This CPR channel
+> must support file descriptor transfer with SCM_RIGHTS, i.e. it must be a
+> UNIX domain socket.
 >
 > To initiate CPR, the user issues a migrate command to old QEMU, adding
 > a second migration channel of type "cpr" in the channels argument.
@@ -150,6 +152,7 @@ Steve Sistare <steven.sistare@oracle.com> writes:
 >         {"channel-type": "main"...}, {"channel-type": "cpr"...} ... }
 >
 > Signed-off-by: Steve Sistare <steven.sistare@oracle.com>
+> Reviewed-by: Peter Xu <peterx@redhat.com>
 
 Acked-by: Markus Armbruster <armbru@redhat.com>
 
