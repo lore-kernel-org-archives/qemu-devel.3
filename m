@@ -4,88 +4,101 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 990E2C0218D
-	for <qemu-devel@archiver.kernel.org>; Wed, 29 Jan 2025 17:43:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 20AD7C0218D
+	for <qemu-devel@archiver.kernel.org>; Wed, 29 Jan 2025 17:45:06 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tdC5Z-0000aU-Lf; Wed, 29 Jan 2025 12:42:57 -0500
+	id 1tdC7G-0001xZ-Mt; Wed, 29 Jan 2025 12:44:42 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tdC5X-0000VY-GC
- for qemu-devel@nongnu.org; Wed, 29 Jan 2025 12:42:55 -0500
-Received: from mail-wm1-x329.google.com ([2a00:1450:4864:20::329])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tdC5W-00046q-1u
- for qemu-devel@nongnu.org; Wed, 29 Jan 2025 12:42:55 -0500
-Received: by mail-wm1-x329.google.com with SMTP id
- 5b1f17b1804b1-436341f575fso80304965e9.1
- for <qemu-devel@nongnu.org>; Wed, 29 Jan 2025 09:42:53 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1738172572; x=1738777372; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=W/4msfo+qvYPmEPvMWEBWlr7sfTxY/jzDjeDBRkXeG0=;
- b=FqdQrbkIMsfs6RAlqm/e7lyhfWqpPOmQoyry+vI9L8uHzkC/hy4M7gRzM/r8NhPPKO
- PUEa61Ns1Mkbn0+9hfX+OsGXEQjdX3xOq1DYibkXnxxkMWdCdpKC3UOuh39sOFa4j2f0
- EIhCq6kKkfwewHP81X2chHVksXlzB5FUum7+w4ZqTV0/S0kxPzI9viKcwWPUDjdEYLjf
- 8Lyi4+zBYnDbrYHCvgTntyyjFJp6M8bDaWxT83XoBW6cNJ9Ul5o5gW17tk7yYVH34/Ha
- UdXc8jN6R/2kw6Y0gq9MsCAAtK1teMazWwau1gR7qPcen3BiNvqTJn5nPGFBjVPFgcYC
- /LqA==
+ (Exim 4.90_1) (envelope-from <sgarzare@redhat.com>)
+ id 1tdC7F-0001xQ-RX
+ for qemu-devel@nongnu.org; Wed, 29 Jan 2025 12:44:41 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <sgarzare@redhat.com>)
+ id 1tdC7C-0004GY-LM
+ for qemu-devel@nongnu.org; Wed, 29 Jan 2025 12:44:41 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1738172674;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=AvgUszk41nkDWz7o/qDLFKe7j0Xtk/wXXBraGwlaMug=;
+ b=br/+EJxr7Y5Mu1ZkKYHW+0a0n68ZqS20OJ51iD4zpUBWlaEAqh/I9yPnNsiptqBlp1iRIb
+ dLF0KqbpTv/7tDPMZ/Dmm2ucvCPznJ++T388+xWG+JrqbhA3bKc5q5CEIFsB2hTQ+Ci3GG
+ glyqgr9UmsbqgP1ppScE1rRkIrJKK78=
+Received: from mail-yb1-f197.google.com (mail-yb1-f197.google.com
+ [209.85.219.197]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-640-0V8ZsTg1OdurHNiy0AoPEg-1; Wed, 29 Jan 2025 12:44:32 -0500
+X-MC-Unique: 0V8ZsTg1OdurHNiy0AoPEg-1
+X-Mimecast-MFC-AGG-ID: 0V8ZsTg1OdurHNiy0AoPEg
+Received: by mail-yb1-f197.google.com with SMTP id
+ 3f1490d57ef6-e549c458692so18306394276.2
+ for <qemu-devel@nongnu.org>; Wed, 29 Jan 2025 09:44:32 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1738172572; x=1738777372;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=W/4msfo+qvYPmEPvMWEBWlr7sfTxY/jzDjeDBRkXeG0=;
- b=hFp4oE7fqUEQRxeXbWr3vV1cMSnglDRZGTCbQuqsSGemCnDQyHrjkbMhnst4Fl0nUp
- ldEvKfjboO0/Y1dWEU9PbQnhDh6yY4gFPchufZ6x4tinAnyf6mCFEEfEQPV7JVG2Qge3
- SSYy2J7WMC+n41LsD74AGRwx4Qf7vcPGfFO4aC5EsyiZOwlMIE0n7PWDGV3i3aX2DT8E
- JwFl0jko/ZV6LMLH+4pcfpuI/KPtn4aCgqgJ6gL949k79NhIVkAb+2oTMN7ggvg+68N0
- 08ospKCHwgMAm9RTu5SEm/BCSQOnJPRNFGleZMW9CnARmmlhdmCsZf5dwX4Q1Wi5GGEM
- /6XQ==
+ d=1e100.net; s=20230601; t=1738172672; x=1738777472;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=AvgUszk41nkDWz7o/qDLFKe7j0Xtk/wXXBraGwlaMug=;
+ b=FUtmD6b0vKHzqRiJOe93nDmYv2gMvrMDBBKePvG0Z1UZMP9MCQkqXkBI75QLAWK3Is
+ ygsN+M69QuKSI0qxzXpy1S+c7JgT0jIHfmb2jDjWlxTjM7ZfeU6btblW/MDV0vsOkTQD
+ hseL5NQ4CWC/eRWSw7d45Ou101okc4qzxpGDjBjCvY3Msev1Ziku3bwf54WH3fB3sswT
+ 2Z0qh1RVf1gH5VAmei7Y23skn/FbYhHTNSERibCyM6S9oQ+bumrnND6jt2HdvvGmawDe
+ 6RRVzmddmyUhY+9ayN1D4Ou/atgmpndP1sJZFkO6651ri/Hr7839I5rFjdthIJr+MRhJ
+ m9og==
 X-Forwarded-Encrypted: i=1;
- AJvYcCXNk33SlNdz9EhAdUNrciXA+NBfEzoeQzfnoJK6dqHGZ3kuKto/HW2QUsxhr/uHEeNLBdZ7MMM7NgMZ@nongnu.org
-X-Gm-Message-State: AOJu0YxqpOryJH0Wvk4dsTBnM9IMrbXkAR+mSJMU07H/rDNLm4orjfYd
- NOOYVsoYnhL0oY8yrsdKbI1WgdlXkNKuzH5HadM/g4d2HwoPn02u6l/E2Cwmn8k=
-X-Gm-Gg: ASbGncu6G+QzZTXcNK2uUFWZdMZx4UzQZcvOJuxBwpfx0wEWg55uNA0AQ8NEDBidbcd
- tFgRegHgHbt6vLcKozXaETXjP7Xhp0hQpSD67YfA0SAewzB9L0aVd4jFSgdG2g7/EgpZ3a0F44g
- T8MV83DiIpmEIQ0JzHNjAOg7pLJ+sunuVoGNQmNVZRsz4JAwbcQ0A6X/zZZLKiJZHG+NA2AeHZg
- pI65d2OZWbIEClszGcjHpe0Cly8rSiMlmjXIgf6d+ym01KaEH8TzGUvICOXlthycmK5ifNGCZiJ
- Jtzm8DGmpjJQS43shof9DXhqQAYxBC7Z4NVHZ6JKrbpSAZYO/QcOrw30ypI=
-X-Google-Smtp-Source: AGHT+IE0Wy74BnNXTW8L//S4GXv+MdEZZ57Yz24TfmF0ZK5V7xNFfpAFstD2DMwWyFr18/lHGtW1zA==
-X-Received: by 2002:a05:600c:4f55:b0:434:a1d3:a321 with SMTP id
- 5b1f17b1804b1-438dc3aada7mr39276465e9.3.1738172572512; 
- Wed, 29 Jan 2025 09:42:52 -0800 (PST)
-Received: from [192.168.69.198] (88-187-86-199.subs.proxad.net.
- [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-438dcc518ddsm31472905e9.37.2025.01.29.09.42.51
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 29 Jan 2025 09:42:51 -0800 (PST)
-Message-ID: <3f3af28c-d024-478a-9394-382ecba503dd@linaro.org>
-Date: Wed, 29 Jan 2025 18:42:51 +0100
+ AJvYcCVe1283t37cxmpGwCV9dx7Rxx8So2ZndkT7wBOCNFKjSYw62/pgpuMvJdr9P4PJpD/hUVoivS5HJoDL@nongnu.org
+X-Gm-Message-State: AOJu0Yz6kQ4qpABDhM1W9soTQkIIb1iOsY3nVKROHnkaxSd/EaLBNGp3
+ XEBxtoJPTPJSIbv5yOqnNyOhJsharIp0yU1Rch4RuVIjtDv0xA7x1/8kEKhpiJKov22Pfq0mFRj
+ m2gPnd8QAornSGrRx9cJKT2SMD4wQX7yFCeo/VVIlKhh1B4zfgmMflmYmnMi68VPW2AYcMLVxnw
+ /7rxZ+/vujeCaMPxqYeSGdVsfi35U=
+X-Gm-Gg: ASbGncvgxHP/zstyXWHWCDhfFAAvOzlMZFAfOL04PiTKgmrgIbPnSiU26tbwYacTkaA
+ r6adaBcX6P3jOX32o4vVxcOoiXm/7T3dIZZqg7daIyif07tIqI3t3oLTt4SDcZIk=
+X-Received: by 2002:a05:690c:6f85:b0:6f5:3944:c726 with SMTP id
+ 00721157ae682-6f7a834bbd3mr33241837b3.11.1738172672114; 
+ Wed, 29 Jan 2025 09:44:32 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IE1ZgqO2ZYFZL0AUNRkowurFyg6L8O18hZ1EdDCylfT9QJU5trPnIGHCxiksuW62fCR2brpmmfhIDBezbc1nPY=
+X-Received: by 2002:a05:690c:6f85:b0:6f5:3944:c726 with SMTP id
+ 00721157ae682-6f7a834bbd3mr33241397b3.11.1738172671648; Wed, 29 Jan 2025
+ 09:44:31 -0800 (PST)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 05/34] target/arm: Rename FPST_FPCR_AH* to FPST_AH*
-To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
-Cc: peter.maydell@linaro.org
-References: <20250129013857.135256-1-richard.henderson@linaro.org>
- <20250129013857.135256-6-richard.henderson@linaro.org>
-Content-Language: en-US
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20250129013857.135256-6-richard.henderson@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::329;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x329.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+References: <CAJSP0QVYE1Zcws=9hoO6+B+xB-hVWv38Dtu_LM8SysAmS4qRMw@mail.gmail.com>
+In-Reply-To: <CAJSP0QVYE1Zcws=9hoO6+B+xB-hVWv38Dtu_LM8SysAmS4qRMw@mail.gmail.com>
+From: Stefano Garzarella <sgarzare@redhat.com>
+Date: Wed, 29 Jan 2025 18:44:20 +0100
+X-Gm-Features: AWEUYZkcXPafEx1u8FOKvY918kij3TPHmMPR0ZoE_pAFlRUBOw1ltp8b0p_yirg
+Message-ID: <CAGxU2F7oh+a7nZp9MLh67ghKtkwFvHRNqNvFqjgVhBhbe4HK2w@mail.gmail.com>
+Subject: Re: Call for GSoC internship project ideas
+To: Rust-VMM Mailing List <rust-vmm@lists.opendev.org>
+Cc: Stefan Hajnoczi <stefanha@gmail.com>, qemu-devel <qemu-devel@nongnu.org>,
+ kvm <kvm@vger.kernel.org>, 
+ Richard Henderson <richard.henderson@linaro.org>, 
+ =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
+ Peter Maydell <peter.maydell@linaro.org>, Paolo Bonzini <pbonzini@redhat.com>, 
+ Thomas Huth <thuth@redhat.com>, "Daniel P. Berrange" <berrange@redhat.com>, 
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>,
+ Alex Bennee <alex.bennee@linaro.org>, 
+ Akihiko Odaki <akihiko.odaki@gmail.com>, Zhao Liu <zhao1.liu@intel.com>, 
+ Bibo Mao <maobibo@loongson.cn>, Jamin Lin <jamin_lin@aspeedtech.com>, 
+ =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>, 
+ Fabiano Rosas <farosas@suse.de>, Palmer Dabbelt <palmer@dabbelt.com>, 
+ =?UTF-8?Q?Eugenio_P=C3=A9rez?= <eperezma@redhat.com>, 
+ Hanna Reitz <hreitz@redhat.com>
+Content-Type: text/plain; charset="UTF-8"
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=sgarzare@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -33
+X-Spam_score: -3.4
+X-Spam_bar: ---
+X-Spam_report: (-3.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.3,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -101,14 +114,79 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 29/1/25 02:38, Richard Henderson wrote:
-> Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
-> ---
->   target/arm/tcg/translate.h     | 14 +++++++-------
->   target/arm/tcg/translate-a64.c |  8 ++++----
->   target/arm/tcg/translate-sve.c |  8 ++++----
->   3 files changed, 15 insertions(+), 15 deletions(-)
++Cc rust-vmm ML, since in past years we have used QEMU as an umbrella
+project for rust-vmm ideas for GSoC.
 
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Thanks,
+Stefano
+
+On Tue, 28 Jan 2025 at 17:17, Stefan Hajnoczi <stefanha@gmail.com> wrote:
+>
+> Dear QEMU and KVM communities,
+> QEMU will apply for the Google Summer of Code internship
+> program again this year. Regular contributors can submit project
+> ideas that they'd like to mentor by replying to this email by
+> February 7th.
+>
+> About Google Summer of Code
+> -----------------------------------------
+> GSoC (https://summerofcode.withgoogle.com/) offers paid open
+> source remote work internships to eligible people wishing to participate
+> in open source development. QEMU has been doing internship for
+> many years. Our mentors have enjoyed helping talented interns make
+> their first open source contributions and some former interns continue
+> to participate today.
+>
+> Who can mentor
+> ----------------------
+> Regular contributors to QEMU and KVM can participate as mentors.
+> Mentorship involves about 5 hours of time commitment per week to
+> communicate with the intern, review their patches, etc. Time is also
+> required during the intern selection phase to communicate with
+> applicants. Being a mentor is an opportunity to help someone get
+> started in open source development, will give you experience with
+> managing a project in a low-stakes environment, and a chance to
+> explore interesting technical ideas that you may not have time to
+> develop yourself.
+>
+> How to propose your idea
+> ------------------------------
+> Reply to this email with the following project idea template filled in:
+>
+> === TITLE ===
+>
+> '''Summary:''' Short description of the project
+>
+> Detailed description of the project that explains the general idea,
+> including a list of high-level tasks that will be completed by the
+> project, and provides enough background for someone unfamiliar with
+> the code base to research the idea. Typically 2 or 3 paragraphs.
+>
+> '''Links:'''
+> * Links to mailing lists threads, git repos, or web sites
+>
+> '''Details:'''
+> * Skill level: beginner or intermediate or advanced
+> * Language: C/Python/Rust/etc
+>
+> More information
+> ----------------------
+> You can find out about the process we follow here:
+> Video: https://www.youtube.com/watch?v=xNVCX7YMUL8
+> Slides (PDF): https://vmsplice.net/~stefan/stefanha-kvm-forum-2016.pdf
+>
+> The QEMU wiki page for GSoC 2024 is now available:
+> https://wiki.qemu.org/Google_Summer_of_Code_2025
+>
+> What about Outreachy?
+> -------------------------------
+> We have struggled to find sponsors for the Outreachy internship
+> program (https://www.outreachy.org/) in recent years. If you or your
+> organization would like to sponsor an Outreachy internship, please get
+> in touch.
+>
+> Thanks,
+> Stefan
+>
 
 
