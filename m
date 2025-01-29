@@ -4,98 +4,91 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1F686C0218D
-	for <qemu-devel@archiver.kernel.org>; Wed, 29 Jan 2025 14:44:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 12546C0218D
+	for <qemu-devel@archiver.kernel.org>; Wed, 29 Jan 2025 14:44:58 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1td9J9-0001Df-2f; Wed, 29 Jan 2025 09:44:47 -0500
+	id 1td9IR-0000aL-Fw; Wed, 29 Jan 2025 09:44:03 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <paolo.savini@embecosm.com>)
- id 1td9J6-00015u-L6
- for qemu-devel@nongnu.org; Wed, 29 Jan 2025 09:44:44 -0500
-Received: from mail-wr1-x436.google.com ([2a00:1450:4864:20::436])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <paolo.savini@embecosm.com>)
- id 1td9J3-0001R3-U4
- for qemu-devel@nongnu.org; Wed, 29 Jan 2025 09:44:44 -0500
-Received: by mail-wr1-x436.google.com with SMTP id
- ffacd0b85a97d-3863703258fso535868f8f.1
- for <qemu-devel@nongnu.org>; Wed, 29 Jan 2025 06:44:41 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=embecosm.com; s=google; t=1738161880; x=1738766680; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=q1C/J9uCSlWbjvXbc+Puqx9H3UViVHSv3el8cbY4rC4=;
- b=ZhAgHnDHsq8t7gk44myFXx8lkPtwFofn87up+XLJRQe8o/x+b0/vZGvD3Bk9irw6ju
- iWCWZ8L1iuVGz8/bQSUzRNShHWfVmU9ndJxUYO00kc2//GMIA/MPmTz+gAvhDt2jTNPm
- lvkDKtFJSCvbwDmTUrngnQSuW9XjuNWC5H9glVrVMum1gsUl1bEmDSpwblMICp0C0wbu
- yvIJzkDC992wtbVIcpN+G+5Cd+CVe4hoHnxrVYz3YDItyigJn5P9FIqmdV+hxZRUAsvj
- TLq3u9CTQ05CBEfBrzU73ONcPcfl/KieCHB8RFEBz8B2toTucd9K/30FuovSpb6ZJVjh
- R2dA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1738161880; x=1738766680;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=q1C/J9uCSlWbjvXbc+Puqx9H3UViVHSv3el8cbY4rC4=;
- b=Ea4tVHnlIlIqnHkyRDd7LIDJA0gFSjSdiZqnclxkElYjjVTPvsE3aD1cxgTbQOq40D
- i+zmuZAsjiWkppMzllmUynzJPaWIu703Mt5XU5Jq5KWxNu5OxSBEtsq9ieSDAyV0iW/g
- QLVP/q6His3hCyMtddzkJfBf9pLi5Er7BtrIX0cNe7Smasbae3tmMefhuuRo/5YtH1Tf
- hCMWLdy3tSPAp2KsuNWJSBLnMZCOVJA4qo9OyiD99cQ/5cifOzTKZk501jzUmRtt3N15
- KHqd7QH7g+/gV7m7hESWimeUbHXLnpBgoQMz1V58cIq08ibv/YRUtueGfZZEGbNvzDM3
- efPg==
-X-Gm-Message-State: AOJu0YypNM3LjvspMjgoocMxSZY9ZOWEkIQkLBVbjoIzUkwyPmqvRL6e
- /bsYsZNTf9srnVPCinXYAERrCqlZiM6NB1VXlbFjv7qxWvpiAzXDgij66MsgEwvO7d2O6HQXG8+
- 8A6Q=
-X-Gm-Gg: ASbGncvD40ZhthUn2jlVA3waC+dfAOgUVwd+e36QB0Al7TlnL6Ft7Ni6EIN6jlY4FtE
- PdfMzKFwabu7bWsZIMLnBjwg+oc+yEAczYpd/FDpvpqyLHLpMBfpuIV2FOhlMBYdHArjrICKuS+
- 1BDCb4gDvQe/ulr8aDaY7NcP7Nz0mn/sKEZCJHS1KyZ1R1enger9mG2ik7/WCbkhqBLMHewwofX
- +nEy/MzPoGu8DpHVNmmHxMvw2VODDtJz8t5t3PJi4Cqw2ykiePfDEYVQ8lyE8JBGKJdxqGZi+QO
- nAlGoWU1nd7BptzFEPblbjy0xpT/bu3LFU75hwrpuGUkS/j/4dZMm0yf
-X-Google-Smtp-Source: AGHT+IHEB37kU1JBpkBUcL1DAmLi2+8ppbJk9xkhrkltPgR3/OX0cqHWoC3IAR2C5hqGm7umrxIdNA==
-X-Received: by 2002:a5d:64cf:0:b0:38a:4df5:a08 with SMTP id
- ffacd0b85a97d-38c49a63339mr7432462f8f.22.1738161880152; 
- Wed, 29 Jan 2025 06:44:40 -0800 (PST)
-Received: from paolo-laptop-amd.sou.embecosm-corp.com ([212.69.42.53])
- by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-438dcc51df6sm24665255e9.38.2025.01.29.06.44.39
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 29 Jan 2025 06:44:39 -0800 (PST)
-From: Paolo Savini <paolo.savini@embecosm.com>
-To: qemu-devel@nongnu.org,
-	qemu-riscv@nongnu.org
-Cc: Paolo Savini <paolo.savini@embecosm.com>,
- Richard Handerson <richard.henderson@linaro.org>,
- Palmer Dabbelt <palmer@dabbelt.com>,
- Alistair Francis <alistair.francis@wdc.com>, Bin Meng <bmeng.cn@gmail.com>,
- Weiwei Li <liwei1518@gmail.com>,
- Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
- Liu Zhiwei <zhiwei_liu@linux.alibaba.com>,
- Helene Chelin <helene.chelin@embecosm.com>, Nathan Egge <negge@google.com>,
- Max Chou <max.chou@sifive.com>,
- Jeremy Bennett <jeremy.bennett@embecosm.com>,
- Craig Blackmore <craig.blackmore@embecosm.com>
-Subject: [RFC 1/1 v1] target/riscv: optimize the memory probing for vector
- fault-only-first loads.
-Date: Wed, 29 Jan 2025 14:44:35 +0000
-Message-ID: <20250129144435.82451-2-paolo.savini@embecosm.com>
-X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20250129144435.82451-1-paolo.savini@embecosm.com>
-References: <20250129144435.82451-1-paolo.savini@embecosm.com>
-MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::436;
- envelope-from=paolo.savini@embecosm.com; helo=mail-wr1-x436.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ (Exim 4.90_1) (envelope-from <steven.sistare@oracle.com>)
+ id 1td9IG-0000Vb-Bv
+ for qemu-devel@nongnu.org; Wed, 29 Jan 2025 09:43:52 -0500
+Received: from mx0a-00069f02.pphosted.com ([205.220.165.32])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <steven.sistare@oracle.com>)
+ id 1td9IE-0001Ks-Ql
+ for qemu-devel@nongnu.org; Wed, 29 Jan 2025 09:43:52 -0500
+Received: from pps.filterd (m0246627.ppops.net [127.0.0.1])
+ by mx0b-00069f02.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 50TEXjb7006527;
+ Wed, 29 Jan 2025 14:43:48 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=oracle.com; h=cc
+ :date:from:in-reply-to:message-id:references:subject:to; s=
+ corp-2023-11-20; bh=GGZcMSpCnGW6+Z/reWg2u9/0/Cu3Onsywiw/DQXPyOc=; b=
+ fRtqVjSNugU98Fzi5cafu2c8cfRtAOnZsxDmxxYDJS9DazfwzLPkgi5Ota0rBiJA
+ 0ZnVCVKidAE7t9d40KeFmqlonLxS6tmaq7QNt64GTlQJWUCkqTuFS7EyXBW/LaV6
+ ja6chnjjpSCGpq57U/lDEp9Ba+4WR1221fM4ngUXGVjPMdiZLalyElqRyb8pqYV9
+ fab7MubBKCObBOQhAQRC/JiAf24pzGCX/jMsejPvR1vZK613V5gfIu2TC0wOHmN4
+ sAk4xISqsPRJiPXTtcRIR+w6RN0Lk4dY5H7B8fDluf+ddsE3psehnKs2rli/eALj
+ ZOe8KSRNqDBiJvGrPfUyaA==
+Received: from phxpaimrmta01.imrmtpd1.prodappphxaev1.oraclevcn.com
+ (phxpaimrmta01.appoci.oracle.com [138.1.114.2])
+ by mx0b-00069f02.pphosted.com (PPS) with ESMTPS id 44fmf808tc-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Wed, 29 Jan 2025 14:43:48 +0000 (GMT)
+Received: from pps.filterd
+ (phxpaimrmta01.imrmtpd1.prodappphxaev1.oraclevcn.com [127.0.0.1])
+ by phxpaimrmta01.imrmtpd1.prodappphxaev1.oraclevcn.com (8.18.1.2/8.18.1.2)
+ with ESMTP id 50TDo8GM034292; Wed, 29 Jan 2025 14:43:47 GMT
+Received: from pps.reinject (localhost [127.0.0.1])
+ by phxpaimrmta01.imrmtpd1.prodappphxaev1.oraclevcn.com (PPS) with ESMTPS id
+ 44cpd9s4r2-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Wed, 29 Jan 2025 14:43:47 +0000
+Received: from phxpaimrmta01.imrmtpd1.prodappphxaev1.oraclevcn.com
+ (phxpaimrmta01.imrmtpd1.prodappphxaev1.oraclevcn.com [127.0.0.1])
+ by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 50TEhf8U003307;
+ Wed, 29 Jan 2025 14:43:46 GMT
+Received: from ca-dev63.us.oracle.com (ca-dev63.us.oracle.com [10.211.8.221])
+ by phxpaimrmta01.imrmtpd1.prodappphxaev1.oraclevcn.com (PPS) with
+ ESMTP id 44cpd9s49q-9; Wed, 29 Jan 2025 14:43:46 +0000
+From: Steve Sistare <steven.sistare@oracle.com>
+To: qemu-devel@nongnu.org
+Cc: Alex Williamson <alex.williamson@redhat.com>,
+ Cedric Le Goater <clg@redhat.com>, Yi Liu <yi.l.liu@intel.com>,
+ Eric Auger <eric.auger@redhat.com>,
+ Zhenzhong Duan <zhenzhong.duan@intel.com>,
+ "Michael S. Tsirkin" <mst@redhat.com>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ Peter Xu <peterx@redhat.com>, Fabiano Rosas <farosas@suse.de>,
+ Steve Sistare <steven.sistare@oracle.com>
+Subject: [PATCH V1 08/26] pci: skip reset during cpr
+Date: Wed, 29 Jan 2025 06:43:04 -0800
+Message-Id: <1738161802-172631-9-git-send-email-steven.sistare@oracle.com>
+X-Mailer: git-send-email 1.8.3.1
+In-Reply-To: <1738161802-172631-1-git-send-email-steven.sistare@oracle.com>
+References: <1738161802-172631-1-git-send-email-steven.sistare@oracle.com>
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1057,Hydra:6.0.680,FMLib:17.12.68.34
+ definitions=2025-01-29_02,2025-01-29_01,2024-11-22_01
+X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 phishscore=0
+ bulkscore=0 malwarescore=0
+ mlxlogscore=999 suspectscore=0 spamscore=0 mlxscore=0 adultscore=0
+ classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2411120000
+ definitions=main-2501290119
+X-Proofpoint-GUID: yxD6vvUkSePz4OKhCOmbtBqIhLyz7hvz
+X-Proofpoint-ORIG-GUID: yxD6vvUkSePz4OKhCOmbtBqIhLyz7hvz
+Received-SPF: pass client-ip=205.220.165.32;
+ envelope-from=steven.sistare@oracle.com; helo=mx0a-00069f02.pphosted.com
+X-Spam_score_int: -32
+X-Spam_score: -3.3
+X-Spam_bar: ---
+X-Spam_report: (-3.3 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_MED=-0.498,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H2=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -111,132 +104,45 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Fault-only-first loads in the RISC-V vector extension need to update
-the vl with the element index that causes an exception.
-In order to ensure this the emulation of this instruction used to probe the
-memory covered by the load operation with a loop that iterated over each element
-so that when a flag was raised it was possible to set the vl to the
-corresponding element index.
-This loop was executed every time whether an exception happened or not.
+Do not reset a vfio-pci device during CPR.
 
-This commit removes the per element memory probing from the main execution path
-and adds a braod memory probing first. If this probing raises any flag that is
-not a watchpoint flag (that per standard is allowed by this instruction) we
-proceed with the per element probing to find the index of the element causing
-the exception and set vl to such index.
-
-Signed-off-by: Paolo Savini <paolo.savini@embecosm.com>
+Signed-off-by: Steve Sistare <steven.sistare@oracle.com>
 ---
- target/riscv/vector_helper.c | 91 ++++++++++++++++++++++--------------
- 1 file changed, 56 insertions(+), 35 deletions(-)
+ hw/pci/pci.c | 13 +++++++++++++
+ 1 file changed, 13 insertions(+)
 
-diff --git a/target/riscv/vector_helper.c b/target/riscv/vector_helper.c
-index 5386e3b97c..d3ac99c72d 100644
---- a/target/riscv/vector_helper.c
-+++ b/target/riscv/vector_helper.c
-@@ -635,45 +635,66 @@ vext_ldff(void *vd, void *v0, target_ulong base, CPURISCVState *env,
-     uint32_t vma = vext_vma(desc);
-     target_ulong addr, offset, remain, page_split, elems;
-     int mmu_index = riscv_env_mmu_index(env, false);
-+    int flags;
-+    void *host;
+diff --git a/hw/pci/pci.c b/hw/pci/pci.c
+index 2afa423..16b4f71 100644
+--- a/hw/pci/pci.c
++++ b/hw/pci/pci.c
+@@ -32,6 +32,7 @@
+ #include "hw/pci/pci_host.h"
+ #include "hw/qdev-properties.h"
+ #include "hw/qdev-properties-system.h"
++#include "migration/misc.h"
+ #include "migration/qemu-file-types.h"
+ #include "migration/vmstate.h"
+ #include "net/net.h"
+@@ -459,6 +460,18 @@ static void pci_reset_regions(PCIDevice *dev)
  
-     VSTART_CHECK_EARLY_EXIT(env);
- 
--    /* probe every access */
--    for (i = env->vstart; i < env->vl; i++) {
--        if (!vm && !vext_elem_mask(v0, i)) {
--            continue;
--        }
--        addr = adjust_addr(env, base + i * (nf << log2_esz));
--        if (i == 0) {
--            /* Allow fault on first element. */
--            probe_pages(env, addr, nf << log2_esz, ra, MMU_DATA_LOAD);
--        } else {
--            remain = nf << log2_esz;
--            while (remain > 0) {
--                void *host;
--                int flags;
--
--                offset = -(addr | TARGET_PAGE_MASK);
--
--                /* Probe nonfault on subsequent elements. */
--                flags = probe_access_flags(env, addr, offset, MMU_DATA_LOAD,
--                                           mmu_index, true, &host, 0);
--
--                /*
--                 * Stop if invalid (unmapped) or mmio (transaction may fail).
--                 * Do not stop if watchpoint, as the spec says that
--                 * first-fault should continue to access the same
--                 * elements regardless of any watchpoint.
--                 */
--                if (flags & ~TLB_WATCHPOINT) {
--                    vl = i;
--                    goto ProbeSuccess;
--                }
--                if (remain <= offset) {
--                    break;
-+    uint32_t probe_size = env->vl << log2_esz;
-+    addr = base + ((env->vstart * nf) << log2_esz);
-+    page_split = -(addr | TARGET_PAGE_MASK);
-+    /* Get number of elements */
-+    probe_size = page_split / msize;
-+    if (unlikely(env->vstart + probe_size >= env->vl)) {
-+        probe_size = env->vl - env->vstart;
+ static void pci_do_device_reset(PCIDevice *dev)
+ {
++    /*
++     * A PCI device that is resuming for cpr is already configured, so do
++     * not reset it here when we are called from qemu_system_reset prior to
++     * cpr load, else interrupts may be lost for vfio-pci devices.  It is
++     * safe to skip this reset for all PCI devices, because cpr load will set
++     * all fields that would have been set here.
++     */
++    MigMode mode = migrate_mode();
++    if (mode == MIG_MODE_CPR_TRANSFER) {
++        return;
 +    }
 +
-+    /* Check page permission/pmp/watchpoint/etc. */
-+    flags = probe_access_flags(env, adjust_addr(env, addr), probe_size,
-+                               MMU_DATA_LOAD, mmu_index, true, &host, ra);
-+
-+    /* If we are crossing a page check also the second page. */
-+    if (env->vl > probe_size) {
-+        addr = addr + (probe_size << log2_esz);
-+        flags |= probe_access_flags(env, adjust_addr(env, addr), probe_size,
-+                                    MMU_DATA_LOAD, mmu_index, true, &host, ra);
-+    }
-+
-+    if (flags & ~TLB_WATCHPOINT) {
-+        /* probe every access */
-+        for (i = env->vstart; i < env->vl; i++) {
-+            if (!vm && !vext_elem_mask(v0, i)) {
-+                continue;
-+            }
-+            addr = adjust_addr(env, base + i * (nf << log2_esz));
-+            if (i == 0) {
-+                /* Allow fault on first element. */
-+                probe_pages(env, addr, nf << log2_esz, ra, MMU_DATA_LOAD);
-+            } else {
-+                remain = nf << log2_esz;
-+                while (remain > 0) {
-+                    offset = -(addr | TARGET_PAGE_MASK);
-+
-+                    /* Probe nonfault on subsequent elements. */
-+                    flags = probe_access_flags(env, addr, offset, MMU_DATA_LOAD,
-+                                               mmu_index, true, &host, 0);
-+
-+                    /*
-+                     * Stop if invalid (unmapped) or mmio (transaction may
-+                     * fail). Do not stop if watchpoint, as the spec says that
-+                     * first-fault should continue to access the same
-+                     * elements regardless of any watchpoint.
-+                     */
-+                    if (flags & ~TLB_WATCHPOINT) {
-+                        vl = i;
-+                        goto ProbeSuccess;
-+                    }
-+                    if (remain <= offset) {
-+                        break;
-+                    }
-+                    remain -= offset;
-+                    addr = adjust_addr(env, addr + offset);
-                 }
--                remain -= offset;
--                addr = adjust_addr(env, addr + offset);
-             }
-         }
-     }
+     pci_device_deassert_intx(dev);
+     assert(dev->irq_state == 0);
+ 
 -- 
-2.34.1
+1.8.3.1
 
 
