@@ -4,91 +4,96 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4CF83C0218D
-	for <qemu-devel@archiver.kernel.org>; Wed, 29 Jan 2025 05:34:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D32F9C0218D
+	for <qemu-devel@archiver.kernel.org>; Wed, 29 Jan 2025 05:40:27 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1td0hh-0001cN-1S; Wed, 29 Jan 2025 00:33:33 -0500
+	id 1td0nv-0002py-BS; Wed, 29 Jan 2025 00:39:59 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1td0hg-0001cD-1s
- for qemu-devel@nongnu.org; Wed, 29 Jan 2025 00:33:32 -0500
-Received: from mail-pl1-x62f.google.com ([2607:f8b0:4864:20::62f])
+ (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
+ id 1td0nt-0002pq-Cc
+ for qemu-devel@nongnu.org; Wed, 29 Jan 2025 00:39:57 -0500
+Received: from mail-pl1-x62a.google.com ([2607:f8b0:4864:20::62a])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1td0hc-0006p8-HP
- for qemu-devel@nongnu.org; Wed, 29 Jan 2025 00:33:31 -0500
-Received: by mail-pl1-x62f.google.com with SMTP id
- d9443c01a7336-21628b3fe7dso114729355ad.3
- for <qemu-devel@nongnu.org>; Tue, 28 Jan 2025 21:33:27 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
+ id 1td0nr-0007cJ-IZ
+ for qemu-devel@nongnu.org; Wed, 29 Jan 2025 00:39:57 -0500
+Received: by mail-pl1-x62a.google.com with SMTP id
+ d9443c01a7336-218c8aca5f1so154594225ad.0
+ for <qemu-devel@nongnu.org>; Tue, 28 Jan 2025 21:39:54 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1738128806; x=1738733606; darn=nongnu.org;
+ d=daynix-com.20230601.gappssmtp.com; s=20230601; t=1738129194; x=1738733994;
+ darn=nongnu.org; 
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=qwsO3K1glESWuZ2JEl/lsipH/yeI8nLJ3iyn6ywczAI=;
- b=eHiQQ0eUdkahG2Hj4vlJVZulkH9+mnkncHLCeMy0TW/hDCC+we6R4Q58pVokSx1xmT
- spT82UftpKLB8qzTyn8zQWBa8009OPy/UvtCvSSe9lzaYyYL2Hio7R5ZaZ+Ac3ijWcyx
- Rysjjw+OsG5nBTJR831ewkxCJJjTfowvg259duEpdUBDpr/zpltiXNL5Lto9xim7DFsD
- VAOEbYWRSay8VC9l6uT1jNE2WzlpP7GoITMpmzhdXFXjLJpOMmsg8ukfLErj+TjHVgiH
- 3djZyB5908Hrr/WiRde3MzpI5P6RPAciXQwZAjzQXReA1z1c2GA2YqpmEpzizEUfy90e
- 4cGA==
+ bh=FtVTZ0lUjv/EwwEHhHcHaoUj+ZO+T4elwz33a0HovtM=;
+ b=uzDvzXS/o0wCt08rXHFf6nB0PBz9qI1+mq3JtC7PcjpORo+V4SOaMeHYqIb2qDiU99
+ 7austtrSZvJkqdSrwHDPWfifj7Zsn6nLF9XGLHMjHYlmMztLmH4YrpzvMimDChOYWTtF
+ CDZwem1ArxZDVXb6d6nANiZdK2aNVv04g8AyOUNqrE1iJ3QpVBzOw+BSonUQ5Io6O9Fg
+ GXCQ6MXKt8uXdrpSv+DzoW4fzHWH0KIUKcTPMSceX5zwL4d+XDZkTLZdr2JTJmwqfhaI
+ luzc0NZ4tVr+xDq0oN7Y2a25xTHGkFDF4miMzsVXBgABXhqAVLDBYhNZ+A6ziVEdAGJ6
+ 8ccw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1738128806; x=1738733606;
+ d=1e100.net; s=20230601; t=1738129194; x=1738733994;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=qwsO3K1glESWuZ2JEl/lsipH/yeI8nLJ3iyn6ywczAI=;
- b=sFUgyrND4xRFqxv5ctYuxkgVuztiSrrLJl+etZtg5UQwIwOP0wOY+lOU4YNdtZUgR4
- wXj/sJBgAVx6VReYtoYiafluN+sC3FC7mYCZigINqOyLwLvpJz40t1YEkIDkJ6FpNnAa
- hEi6uAqJg3RQXzTNfwl97qE3NLr1966+jIfvCssB/J9IUQTOWiFaBTi967mns4bDQTkJ
- EIIiAmor5ZoHZQ8JBCB7ZKJCt78kBczXndSA5GiAT6MhGa8yIzU2P1N2CzZPPRWteSAH
- w/yVUUeX9kUd21Ze14gohuL5j0Bz4a2mBWJOaK95BJ/VUozAwWaKx3ElgT7LMk9cuOnr
- 7U7A==
-X-Gm-Message-State: AOJu0Yy234SZB5KunGIThG3IRgUHpmXtXwbeZMD3KZQcc+xuRflEoWoJ
- E65sSODfrpQzBEeEC0g37bxs5046ns5/oG7heEp4xZ7e2Lwbpbrtnb7DZ+qEviY=
-X-Gm-Gg: ASbGncuFXLc+sj9TRfpvIVuK/tfeAtajhxcZwc+sW1zBcSawT4gRKIH1/Yfnd/gOPgD
- yRp8NGtebku7vbjTu5Q37qqohTcIeLU8c4IDe7wgsSRcXN528o7PP7c5KN+0e9jfFDq8K5hoRaX
- RIiafWrzbVzKus6OHX3ZM9MR+8M+US2Z6wKqgKD/8M1ZuJhq+zj/WqJZ8mjem0PeMFE3qSBcit0
- GEGKYgC0qZzqX6afL30tvq3fxT5IpgqujS0X/ApLTaa+rP7C/xLgf0O9hqbZ2KAi31lsFp56NWg
- gjW63qq1Rv4Ne6is7CZKGd2N6/EOMNEef9lbuFwYJQSGegy4FJa/Lyb2JQ==
-X-Google-Smtp-Source: AGHT+IEJ1Ghwfm/evl/4VqxK8s+diOXBkhoG/1DLfr+1J6IuciV4cwmFzoGDW3d1wihsFU1yPXTkew==
-X-Received: by 2002:a17:903:41cc:b0:216:73a5:ea16 with SMTP id
- d9443c01a7336-21dd7c66121mr23911505ad.21.1738128806288; 
- Tue, 28 Jan 2025 21:33:26 -0800 (PST)
-Received: from [192.168.0.4] (71-212-32-190.tukw.qwest.net. [71.212.32.190])
+ bh=FtVTZ0lUjv/EwwEHhHcHaoUj+ZO+T4elwz33a0HovtM=;
+ b=sEPYoUUTuurdjmDlFkC2+CFqmesXJcJEYlEHNAUbILcwa8N7GzytwEzJhcac73ohkj
+ VWUllwVwYIFjXXAGTa66lmOD5/Hzwgj2otNQ5ahbD0OGbmeHfIBx/tp/Ov5P9vE5Q/5p
+ EQBggPQ3DLR+1dsmN14Pj+npO71fj160P3+cUoGAlhUwcdevilVTfp143fOlAoBgpH9C
+ vr4Q8z9o/zsHl9ykUUCEGUAwtHp3c1/QHm5ItB9yFxfVGVUVhEL2+xZ5A7gR3QK9oDGy
+ PSc3HwpWoAOkAFFtiYi9qVgdkkxR1jbgxBL1N3HUG3HllRXqn538T8gI79/xGYCXqEZq
+ HcGQ==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCXcoe7CnSF/inI/Xy7cpRVr0ucZjW/x/9PCs0WXoy5Gx1aDG/NUTiU1k8zZ5LFSkDZWlYagfvmSm2Hy@nongnu.org
+X-Gm-Message-State: AOJu0YwuupLRJefNsNmtFScG0zinOOBS+LjVKqhxfK3qugL83PhygtvZ
+ 18oLqqVqnjnueJA0peKvWaGZqtQR46T7xgqPk2UfWilIkqtctHXGq5diD9ApVXZVpWbTM8lbDaz
+ qhqw=
+X-Gm-Gg: ASbGncsgBzdhDN98gsxR4oLTBZ2EDUv+sO/CAH4pnIocz2a6YUj7lUgKVwif1FYWYXG
+ qucm3yNRneG2tw+zj03UUCd43p1IB2ZuVX1sYmq0FtZWe4oCIgk8CUe41xSXt8gxRlWaXNW0UOd
+ 3jo+0KUCctVtehYnsLlGDxQKRkySPqO65+nIEQo1strfqRqgh1QTY9HxQaWp2Oh7VEDq15vibyB
+ SL4nQvlDD5iz6PiNcPxizqdnEFcIlk5KZZG1kWONVEV9l9iJvPtfJAAbPracKUEkdo4hwkR9r3E
+ GGL5yRrIXUhnWaE8rixu7tgG1O81
+X-Google-Smtp-Source: AGHT+IG1Nr872xkmuoqDWTq/9YSOhqsyyxxn58yWTbVfvuBHimxMH7xeIsj720m6vtWb66dyN201lA==
+X-Received: by 2002:a17:903:98f:b0:215:3fb9:5201 with SMTP id
+ d9443c01a7336-21dd7dff8c1mr34036365ad.44.1738129193795; 
+ Tue, 28 Jan 2025 21:39:53 -0800 (PST)
+Received: from [157.82.205.237] ([157.82.205.237])
  by smtp.gmail.com with ESMTPSA id
- 41be03b00d2f7-ac49717de96sm9321251a12.77.2025.01.28.21.33.25
+ d9443c01a7336-21da3ea1f85sm91243065ad.55.2025.01.28.21.39.51
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 28 Jan 2025 21:33:25 -0800 (PST)
-Message-ID: <ccbf7be1-db49-4eb6-8ccb-32bcfd3b380a@linaro.org>
-Date: Tue, 28 Jan 2025 21:33:24 -0800
+ Tue, 28 Jan 2025 21:39:53 -0800 (PST)
+Message-ID: <f77e2f82-fc96-407c-9bc9-5bd4762a0d93@daynix.com>
+Date: Wed, 29 Jan 2025 14:39:50 +0900
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 4/4] target/hppa: Implement space register hashing for
- 64-bit HP-UX
-To: Helge Deller <deller@kernel.org>
-Cc: qemu-devel@nongnu.org, deller@gmx.de
-References: <20250128224817.24715-1-deller@kernel.org>
- <20250128224817.24715-5-deller@kernel.org>
- <34f4e42f-b08a-42dd-ad11-f720f6d8a440@linaro.org>
- <6f445eb1-2626-4a08-abbb-580cdd7fe682@linaro.org> <Z5mph0gdQHbCsKit@p100>
+Subject: Re: [RFC PATCH 6/7] tests/qtest/migration: Run aarch64/HVF tests
+ using GICv2
+To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ qemu-devel@nongnu.org
+Cc: Fabiano Rosas <farosas@suse.de>, Paolo Bonzini <pbonzini@redhat.com>,
+ Laurent Vivier <lvivier@redhat.com>, Thomas Huth <thuth@redhat.com>,
+ Hyman Huang <yong.huang@smartx.com>, Phil Dennis-Jordan
+ <phil@philjordan.eu>, Peter Xu <peterx@redhat.com>
+References: <20250128135429.8500-1-philmd@linaro.org>
+ <20250128135429.8500-7-philmd@linaro.org>
 Content-Language: en-US
-From: Richard Henderson <richard.henderson@linaro.org>
-In-Reply-To: <Z5mph0gdQHbCsKit@p100>
+From: Akihiko Odaki <akihiko.odaki@daynix.com>
+In-Reply-To: <20250128135429.8500-7-philmd@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::62f;
- envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x62f.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::62a;
+ envelope-from=akihiko.odaki@daynix.com; helo=mail-pl1-x62a.google.com
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001, T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -104,63 +109,50 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 1/28/25 20:07, Helge Deller wrote:
-> What I'm not sure about is gva_offset_mask in those hunks and where you
-> said I can't read from env:
-...
-> @@ -4635,6 +4641,7 @@ static void hppa_tr_init_disas_context(DisasContextBase *dcbase, CPUState *cs)
->       ctx->tb_flags = ctx->base.tb->flags;
->       ctx->is_pa20 = hppa_is_pa20(cpu_env(cs));
->       ctx->psw_xb = ctx->tb_flags & (PSW_X | PSW_B);
-> +    ctx->gva_offset_mask = cpu_env(cs)->gva_offset_mask;
->   
-> Do I need to change the code in form_gva() to read at runtime from env
-> instead?
+On 2025/01/28 22:54, Philippe Mathieu-Daudé wrote:
+> GICv3 isn't supported on aarch64/HVF, but GICv2 is.
 
-That's one way to do it, sure.  But it's not so hard:
+Commit bdb0ade663c7 ("tests/migration-test: Stick with gicv3 in aarch64 
+test"), which set gic-version=3, says:
+ > Switch to a static gic version "3" rather than using version "max",
+ > so that GIC should be stable now across any future QEMU binaries for
+ > migration-test.
 
-#define TB_FLAG_SPHASH  0x800
+ > Here the version can actually be anything as long as the ABI is
+ > stable.
 
-void cpu_get_tb_cpu_state(CPUHPPAState *env, vaddr *pc,
-                           uint64_t *pcsbase, uint32_t *pflags)
-{
-...
-#ifdef CONFIG_USER_ONLY
-     flags |= TB_FLAG_UNALIGN * !env_cpu(env)->prctl_unalign_sigbus;
-#else
-     if ((env->sr[4] == env->sr[5])
-         & (env->sr[4] == env->sr[6])
-         & (env->sr[4] == env->sr[7])) {
-         flags |= TB_FLAG_SR_SAME;
-     }
-     if ((flags & PSW_W) &&
-         (env->dr[2] & HPPA64_DIAG_SPHASH_ENABLE)) {
-         flags |= TB_FLAG_SPHASH;
-     }
-#endif
-...
-}
+So I think we should always set gic-version=2 so that gic-version will 
+not vary with hosts.
 
-Now tb_flags is constrained by both inputs to update_gva_offset_mask, and you *can* read 
-from env->gva_offset_mask.  It's guaranteed to be the same every time.
+> 
+> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+> ---
+> RFC: Test eventually timeouts :(
+> 
+>   tests/qtest/migration/framework.c | 4 +++-
+>   1 file changed, 3 insertions(+), 1 deletion(-)
+> 
+> diff --git a/tests/qtest/migration/framework.c b/tests/qtest/migration/framework.c
+> index 5629b8ba4e3..30808de14e0 100644
+> --- a/tests/qtest/migration/framework.c
+> +++ b/tests/qtest/migration/framework.c
+> @@ -266,7 +266,7 @@ int migrate_start(QTestState **from, QTestState **to, const char *uri,
+>       } else if (strcmp(arch, "aarch64") == 0) {
+>           memory_size = "150M";
+>           machine_alias = "virt";
+> -        machine_opts = "gic-version=3";
+> +        machine_opts = env->has_hvf ? "gic-version=2" : "gic-version=3";
+>           arch_opts = g_strdup_printf("-cpu max -kernel %s", bootpath);
+>           start_address = ARM_TEST_MEM_START;
+>           end_address = ARM_TEST_MEM_END;
+> @@ -303,6 +303,8 @@ int migrate_start(QTestState **from, QTestState **to, const char *uri,
+>           } else {
+>               accel_args = "kvm";
+>           }
+> +    } else if (env->has_hvf) {
+> +        accel_args = "hvf";
+>       } else {
+>           assert(env->has_tcg);
+>           accel_args = "tcg";
 
-
->       nullify_over(ctx);
->       tcg_gen_st_i64(load_gpr(ctx, a->r1), tcg_env,
->                           offsetof(CPUHPPAState, dr[a->dr]));
-> +    if (ctx->is_pa20 && (a->dr == 2)) {
-> +        gen_helper_update_gva_offset_mask(tcg_env);
-> +        /* Exit TB to recalculate gva_offset_mask on %dr2 */
-> +        ctx->base.is_jmp = DISAS_IAQ_N_STALE_EXIT;
-> +    }
-
-Better comment:
-
-     /* Update gva_offset_mask from the new value of %dr2 */
-     gen_helper_update_gva_offset_mask(tcg_env);
-     /* Exit to capture the new value for the next TB. */
-     ctx->base.is_jmp = DISAS_IAQ_N_STALE_EXIT;
-
-
-r~
 
