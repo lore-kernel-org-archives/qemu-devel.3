@@ -4,97 +4,94 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BB22BC02192
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B792AC0218D
 	for <qemu-devel@archiver.kernel.org>; Wed, 29 Jan 2025 08:38:03 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1td3ZW-0002w9-CM; Wed, 29 Jan 2025 03:37:18 -0500
+	id 1td3Ze-0002yH-Vb; Wed, 29 Jan 2025 03:37:26 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1td3ZU-0002vS-Q0
- for qemu-devel@nongnu.org; Wed, 29 Jan 2025 03:37:16 -0500
+ id 1td3Zd-0002xi-7N
+ for qemu-devel@nongnu.org; Wed, 29 Jan 2025 03:37:25 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1td3ZS-0006W7-VP
- for qemu-devel@nongnu.org; Wed, 29 Jan 2025 03:37:16 -0500
+ id 1td3Za-0006XL-8C
+ for qemu-devel@nongnu.org; Wed, 29 Jan 2025 03:37:24 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1738139834;
+ s=mimecast20190719; t=1738139841;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=Lf4c6h56xYCNge6XjLmVtzeXRglB5fuipR2Vwz8DQLs=;
- b=WVBnblaqC7lpB4cIsEmUk7tBZ+GB3Z13M6A+fPhAsXrP1MleeueR5zXAM36pCQUQI8+xZb
- w7uc363qegaroJwqhpSqrDnolIjX3K/QdGyH4vrXO8rmsyf9rikymkbPoWQIRIAr5GtpnS
- oJtFqBzxRSe4wJP6s6UfTVnDsYK6tUY=
-Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com
- [209.85.128.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ to:to:cc:cc:mime-version:mime-version:
+ content-transfer-encoding:content-transfer-encoding;
+ bh=bZTrF9yuaTq6NNvHAR1cfIy3oKNzL8eR3Mt6kh0LLss=;
+ b=IJkboSnT+PwpTvKUGfuph9FOc8RllAuZMa/RgND+qvR+yFtQH9LcBltKEIX9bsZKzGAQvO
+ I/QIHInxzPV0TGWza/txE1wsOYDMa8iRw4RDq3AdmPuQyRfJEpDms8u01cf1Fa2AElFDQe
+ 6ZbCSwU5LSAi7HKFolIZAncFSjLGdj4=
+Received: from mail-wm1-f72.google.com (mail-wm1-f72.google.com
+ [209.85.128.72]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-172-x4iOQCzmMr2rPIdUWZNZuQ-1; Wed, 29 Jan 2025 03:37:12 -0500
-X-MC-Unique: x4iOQCzmMr2rPIdUWZNZuQ-1
-X-Mimecast-MFC-AGG-ID: x4iOQCzmMr2rPIdUWZNZuQ
-Received: by mail-wm1-f71.google.com with SMTP id
- 5b1f17b1804b1-43646b453bcso33133105e9.3
- for <qemu-devel@nongnu.org>; Wed, 29 Jan 2025 00:37:12 -0800 (PST)
+ us-mta-102-84-sYwJkPICLwveO8DOWAQ-1; Wed, 29 Jan 2025 03:37:19 -0500
+X-MC-Unique: 84-sYwJkPICLwveO8DOWAQ-1
+X-Mimecast-MFC-AGG-ID: 84-sYwJkPICLwveO8DOWAQ
+Received: by mail-wm1-f72.google.com with SMTP id
+ 5b1f17b1804b1-436289a570eso50456845e9.0
+ for <qemu-devel@nongnu.org>; Wed, 29 Jan 2025 00:37:19 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1738139830; x=1738744630;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=Lf4c6h56xYCNge6XjLmVtzeXRglB5fuipR2Vwz8DQLs=;
- b=SJP1CVbCI6oonscTSpeycXT+H+OVndKjgiuhEBvpSqhwDpLpRbcqZoCOcA6yYEp/dP
- s5TRZD0vKUzBHgVW+Ax+iZrJVU8/vpFcZj4UbqDo3RzVSzXzuoZMf0IatzOxM/z+gzMF
- nd9/5iFsWP1Yx9ZaLYkLkvYTlDIRmcVVeUjWNfBHYti4NYnjV4sT4Ob+cDqiT7wq94PO
- rYg+mNMX+qCRAQ87cAZAsJbO9rrtCH9tvZd6xdqlZfzEr7MYRwhZD9hAirrXc5Z73PjF
- ZN6JJ9k8dhCqnRUry6bJAdXJ/4phGXFrbvbcRcwIbUGJ3PWyLdLOcWejc7A1j+QmC5mH
- HgkQ==
-X-Gm-Message-State: AOJu0YwEQ+i0RP45fVGgc10TCmLVl1Vx3XRTRbC0+zfJDkI+xSG4dLEW
- Kl/0T6FNV1ULyg5gDEFFDRut9Lpa5wVwT1xWUC8rig82XisoC3ypMVPsvyvzAa4kzPNNL5k8Ri4
- Gz/uUl1ytM/00B43GKTyv/u5Ta48+OQTAhM6cDZIJVl8ddew/9aIPx691UYkLDMspXO5MKOfEpT
- HjHFUgbswCgh66GICGZK62G8N5BfDJ7iVWh13ZONc=
-X-Gm-Gg: ASbGnctQNwziSqz+W34gtZT9FkCNLw/tSx/WRz484zugTvVotKcyKWAQBbJl+Wl7ydu
- dVkk+sNfUQ1XTiUhUkpsS1ec721JwfABxj2hB17WwGnj//oN1gf8WfDVnROwb9h0bhvIl5HWrA8
- qxtTucimQkPAB8+yGB/E4aRQpXHTyknVmLZ71uCHotLlz5LlQjFIhvPxKdDkwvbzvX9oqnl9JPl
- g66WH7sVR6WwXYMkVpwaxO85Uce8ab5hVF51q4A8sSBfKVi8VXJHRQgLkm2bfol/fJnsAfVo1kP
- wZnlpw==
-X-Received: by 2002:a05:600c:1d1e:b0:431:5e3c:2ff0 with SMTP id
- 5b1f17b1804b1-438dc3bd896mr16331305e9.8.1738139830095; 
- Wed, 29 Jan 2025 00:37:10 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IG0oTdCksnKM5Ry20svhj0xsJ1mBq1bwn5vByG9CcgFXtBiJpLbwjMnEpORx25ZVJThaToxEQ==
-X-Received: by 2002:a05:600c:1d1e:b0:431:5e3c:2ff0 with SMTP id
- 5b1f17b1804b1-438dc3bd896mr16331035e9.8.1738139829654; 
- Wed, 29 Jan 2025 00:37:09 -0800 (PST)
+ d=1e100.net; s=20230601; t=1738139837; x=1738744637;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=bZTrF9yuaTq6NNvHAR1cfIy3oKNzL8eR3Mt6kh0LLss=;
+ b=u21KCmjKoKESqcsurq64GXijtNDu10vt+SlRd9M4sTlpXf5EORDHX80wALOGQCTHx4
+ Tf0Hn+MJ1v3E0PNoydO9yKCT62tcl3svVPGKUcesuEgywtkYLGskJeHGA2ottzPFa16U
+ xauTeMtgcQTinQdyRIDyB1+M54uIq8lejHt/nuUVqmDHCowU8KoTMBleqPZnGetBf43r
+ G/qzCl0rvP38yQSfIytdrDHhHJT8rXZ1Hbfh9//5Ruwue3ZEdPXxFIeWC0+z3oWaLjT/
+ cxFaRzWwK5J6cUuy4i3lqxvXh2VrdQEXwsorMI7Zb0ngsusA+qJqSEoCF1IzD964I3I8
+ NY0A==
+X-Gm-Message-State: AOJu0YwNMWdzBMmAbGTlE+dzbM5zf7iVilz5JHop/bjkmsxdAr/SltXj
+ q92vLCwq+Pt56I/c6nx+vq32a2s8zBQIHUalj9EAT0kkQZUOzDjDaQgxE7zDX8t6aS5UEl/eFyy
+ d2ECNv9Uv02snTosg7jyz62+yQNUY8/cIAHq2ZjK1EX2uoJAfozbpaPBJVZ76z2fiUJzKFx1H4X
+ VaEHJ2LvdXFQ3/2u4c4Qt5NsptGMwk6U2dPLMVxSc=
+X-Gm-Gg: ASbGncuzIKVD1yR/Uc2vTuAgU1ZaY3Ibr52v3hmLRS7AsOT37BcLuhNa49pB/HEK3Gf
+ EsjyWV1nnDaNKk1cDh/QBD4eXdW3IoHvLdbQcraG4uPZsBT8qLVnqJvpIYTgAtjcOtTSF0xhnjS
+ +mwiWYa2XDES2V0EGrpDuR3t72X6SAZB9U0uL+GoQkgvfL7TUkPCvEbeJVq9Kj4UWZz5fhca5K3
+ S8K1ssEXGVTReEUL/C2c4nomQDmkHo6rSXUj3/19iyXpxbKQtnQ6NOH+kTKLVuczZlkjPllEVCG
+ n7Ip4w==
+X-Received: by 2002:a05:6000:156b:b0:388:c61d:43e4 with SMTP id
+ ffacd0b85a97d-38c520a32d7mr1492788f8f.45.1738139837220; 
+ Wed, 29 Jan 2025 00:37:17 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IFJ2JBVwDeE5q+t4+y/fdB5TiihcdAFlZk8IBbk2dI09eqwmGHptgSAX2WpRv7w7LvjbQLJzg==
+X-Received: by 2002:a05:6000:156b:b0:388:c61d:43e4 with SMTP id
+ ffacd0b85a97d-38c520a32d7mr1492744f8f.45.1738139836452; 
+ Wed, 29 Jan 2025 00:37:16 -0800 (PST)
 Received: from [192.168.10.3] ([151.62.97.55])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-438dcc81d74sm14240565e9.37.2025.01.29.00.37.08
+ 5b1f17b1804b1-438dcc11adbsm14845235e9.8.2025.01.29.00.37.15
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 29 Jan 2025 00:37:08 -0800 (PST)
+ Wed, 29 Jan 2025 00:37:15 -0800 (PST)
 From: Paolo Bonzini <pbonzini@redhat.com>
 To: qemu-devel@nongnu.org
-Cc: qemu-rust@nongnu.org
-Subject: [PATCH 1/2] rust: remove unnecessary Cargo.toml metadata
-Date: Wed, 29 Jan 2025 09:37:03 +0100
-Message-ID: <20250129083705.1321407-2-pbonzini@redhat.com>
+Cc: peter.maydell@linaro.org,
+	qemu-rust@nongnu.org
+Subject: [PATCH] rust: add docs
+Date: Wed, 29 Jan 2025 09:37:15 +0100
+Message-ID: <20250129083715.1321520-1-pbonzini@redhat.com>
 X-Mailer: git-send-email 2.48.1
-In-Reply-To: <20250129083705.1321407-1-pbonzini@redhat.com>
-References: <20250129083705.1321407-1-pbonzini@redhat.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -33
-X-Spam_score: -3.4
+X-Spam_score_int: -32
+X-Spam_score: -3.3
 X-Spam_bar: ---
-X-Spam_report: (-3.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.3,
+X-Spam_report: (-3.3 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.3,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=unavailable autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001, T_SCC_BODY_TEXT_LINE=-0.01,
+ URIBL_SBL_A=0.1 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -110,129 +107,451 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Some items of Cargo.toml (readme, homepage, repository) are
-only present because of clippy::cargo warnings being enabled in
-rust/hw/char/pl011/src/lib.rs.  But these items are not
-particularly useful and would be all the same for all Cargo.toml
-files in the QEMU workspace.  Clean them up.
-
 Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 ---
- rust/hw/char/pl011/Cargo.toml   |  3 ---
- rust/hw/char/pl011/README.md    | 31 -------------------------------
- rust/hw/char/pl011/src/lib.rs   | 14 ++++++--------
- rust/qemu-api-macros/Cargo.toml |  3 ---
- rust/qemu-api-macros/README.md  |  1 -
- 5 files changed, 6 insertions(+), 46 deletions(-)
- delete mode 100644 rust/hw/char/pl011/README.md
- delete mode 100644 rust/qemu-api-macros/README.md
+ docs/devel/index-process.rst |   1 +
+ docs/devel/rust.rst          | 423 +++++++++++++++++++++++++++++++++++
+ 2 files changed, 424 insertions(+)
+ create mode 100644 docs/devel/rust.rst
 
-diff --git a/rust/hw/char/pl011/Cargo.toml b/rust/hw/char/pl011/Cargo.toml
-index 58f3e859f7e..2b4097864df 100644
---- a/rust/hw/char/pl011/Cargo.toml
-+++ b/rust/hw/char/pl011/Cargo.toml
-@@ -4,10 +4,7 @@ version = "0.1.0"
- edition = "2021"
- authors = ["Manos Pitsidianakis <manos.pitsidianakis@linaro.org>"]
- license = "GPL-2.0-or-later"
--readme = "README.md"
--homepage = "https://www.qemu.org"
- description = "pl011 device model for QEMU"
--repository = "https://gitlab.com/epilys/rust-for-qemu"
- resolver = "2"
- publish = false
- keywords = []
-diff --git a/rust/hw/char/pl011/README.md b/rust/hw/char/pl011/README.md
-deleted file mode 100644
-index cd7dea31634..00000000000
---- a/rust/hw/char/pl011/README.md
-+++ /dev/null
-@@ -1,31 +0,0 @@
--# PL011 QEMU Device Model
--
--This library implements a device model for the PrimeCell® UART (PL011)
--device in QEMU.
--
--## Build static lib
--
--Host build target must be explicitly specified:
--
--```sh
--cargo build --target x86_64-unknown-linux-gnu
--```
--
--Replace host target triplet if necessary.
--
--## Generate Rust documentation
--
--To generate docs for this crate, including private items:
--
--```sh
--cargo doc --no-deps --document-private-items --target x86_64-unknown-linux-gnu
--```
--
--To include direct dependencies like `bilge` (bitmaps for register types):
--
--```sh
--cargo tree --depth 1 -e normal --prefix none \
-- | cut -d' ' -f1 \
-- | xargs printf -- '-p %s\n' \
-- | xargs cargo doc --no-deps --document-private-items --target x86_64-unknown-linux-gnu
--```
-diff --git a/rust/hw/char/pl011/src/lib.rs b/rust/hw/char/pl011/src/lib.rs
-index e2df4586bcc..e704daf6e3e 100644
---- a/rust/hw/char/pl011/src/lib.rs
-+++ b/rust/hw/char/pl011/src/lib.rs
-@@ -1,13 +1,12 @@
- // Copyright 2024, Linaro Limited
- // Author(s): Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
- // SPDX-License-Identifier: GPL-2.0-or-later
--//
--// PL011 QEMU Device Model
--//
--// This library implements a device model for the PrimeCell® UART (PL011)
--// device in QEMU.
--//
--#![doc = include_str!("../README.md")]
+diff --git a/docs/devel/index-process.rst b/docs/devel/index-process.rst
+index 362f97ee300..cb7c6640fd2 100644
+--- a/docs/devel/index-process.rst
++++ b/docs/devel/index-process.rst
+@@ -17,3 +17,4 @@ Notes about how to interact with the community and how and where to submit patch
+    stable-process
+    submitting-a-pull-request
+    secure-coding-practices
++   rust
+diff --git a/docs/devel/rust.rst b/docs/devel/rust.rst
+new file mode 100644
+index 00000000000..2fc4e94fb6d
+--- /dev/null
++++ b/docs/devel/rust.rst
+@@ -0,0 +1,423 @@
++.. |msrv| replace:: 1.63.0
 +
-+//! PL011 QEMU Device Model
-+//!
-+//! This library implements a device model for the PrimeCell® UART (PL011)
-+//! device in QEMU.
-+//!
- //! # Library crate
- //!
- //! See [`PL011State`](crate::device::PL011State) for the device model type and
-@@ -18,7 +17,6 @@
-     clippy::suspicious,
-     clippy::complexity,
-     clippy::perf,
--    clippy::cargo,
-     clippy::nursery,
-     clippy::style
- )]
-diff --git a/rust/qemu-api-macros/Cargo.toml b/rust/qemu-api-macros/Cargo.toml
-index 5a27b52ee6e..b9b4baecddb 100644
---- a/rust/qemu-api-macros/Cargo.toml
-+++ b/rust/qemu-api-macros/Cargo.toml
-@@ -4,10 +4,7 @@ version = "0.1.0"
- edition = "2021"
- authors = ["Manos Pitsidianakis <manos.pitsidianakis@linaro.org>"]
- license = "GPL-2.0-or-later"
--readme = "README.md"
--homepage = "https://www.qemu.org"
- description = "Rust bindings for QEMU - Utility macros"
--repository = "https://gitlab.com/qemu-project/qemu/"
- resolver = "2"
- publish = false
- keywords = []
-diff --git a/rust/qemu-api-macros/README.md b/rust/qemu-api-macros/README.md
-deleted file mode 100644
-index f60f54ac4be..00000000000
---- a/rust/qemu-api-macros/README.md
-+++ /dev/null
-@@ -1 +0,0 @@
--# `qemu-api-macros` - Utility macros for defining QEMU devices
++Rust in QEMU
++============
++
++Rust in QEMU is a project to enable using the Rust programming language
++to add new functionality to QEMU.
++
++Right now, the focus is on making it possible to write devices that inherit
++from ``SysBusDevice`` in `*safe*`__ Rust.  Later, it may become possible
++to write other kinds of devices (e.g. PCI devices that can do DMA),
++complete boards, or backends (e.g. block device formats).
++
++__ https://doc.rust-lang.org/nomicon/meet-safe-and-unsafe.html
++
++Building the Rust in QEMU code
++------------------------------
++
++The Rust in QEMU code is included in the emulators via Meson.  Meson
++invokes rustc directly, building static libraries that are then linked
++together with the C code.  This is completely automatic when you run
++``make`` or ``ninja``.
++
++However, QEMU's build system also tries to be easy to use for people who
++are accustomed to the more "normal" Cargo-based development workflow.
++In particular:
++
++* the set of warnings and lints that are used to build QEMU always
++  comes from the ``rust/Cargo.toml`` workspace file
++
++* it is also possible to use ``cargo`` for common Rust-specific coding
++  tasks, in particular to invoke ``clippy``, ``rustfmt`` and ``rustdoc``.
++
++To this end, QEMU includes a ``build.rs`` build script that picks up
++generated sources from QEMU's build directory and puts it in Cargo's
++output directory (typically ``rust/target/``).  A vanilla invocation
++of Cargo will complain that it cannot find the generated sources,
++which can be fixed in different ways:
++
++* by using special shorthand targets in the QEMU build directory::
++
++    make clippy
++    make rustfmt
++    make rustdoc
++
++* by invoking ``cargo`` through the Meson `development environment`__
++  feature::
++
++    pyvenv/bin/meson devenv -w ../rust cargo clippy --tests
++    pyvenv/bin/meson devenv -w ../rust cargo fmt
++
++  If you are going to use ``cargo`` repeatedly, ``pyvenv/bin/meson devenv``
++  will enter a shell where commands like ``cargo clippy`` just work.
++
++__ https://mesonbuild.com/Commands.html#devenv
++
++* by pointing the ``MESON_BUILD_ROOT`` to the top of your QEMU build
++  tree.  This third method is useful if you are using ``rust-analyzer``;
++  you can set the environment variable through the
++  ``rust-analyzer.cargo.extraEnv`` setting.
++
++As shown above, you can use the ``--tests`` option as usual to operate on test
++code.  Note however that you cannot *build* or run tests via ``cargo``, because
++they need support C code from QEMU that Cargo does not know about.  Tests can
++be run via ``meson test`` or ``make``::
++
++   make check-rust
++
++Building Rust code with ``--enable-modules`` is not supported yet.
++
++Supported tools
++'''''''''''''''
++
++QEMU supports rustc version 1.63.0 and newer.  Notably, the following features
++are missing:
++
++* ``core::ffi`` (1.64.0).  Use ``std::os::raw`` and ``std::ffi`` instead.
++
++* ``cast_mut()``/``cast_const()`` (1.65.0).  Use ``as`` instead.
++
++* "let ... else" (1.65.0).  Use ``if let`` instead.  This is currently patched
++  in QEMU's vendored copy of the bilge and ``pinned_init`` crates.
++
++* Generic Associated Types (1.65.0)
++
++* ``CStr::from_bytes_with_nul()`` as a ``const`` function (1.72.0).
++
++* "Return position ``impl Trait`` in Traits" (1.75.0, can be useful with
++  the pinned-init create).
++
++* MaybeUninit::zeroed() as a ``const`` function (1.75.0).  QEMU uses a
++  ``Zeroable`` trait, and you can implement it to provide by hand a
++  ``Zeroable::ZERO`` associated constant.
++
++* ``c"" literals`` (stable in 1.77.0).  QEMU provides a ``c_str!()`` macro
++  to define ``CStr`` constants easily
++
++* ``offset_of!`` (stable in 1.77.0).  QEMU uses ``offset_of!()`` heavily; it
++  provides a replacement in the ``qemu_api`` crate, but it does not support
++  lifetime parameters and therefore `&'a Something` fields in the struct
++  may have to be replaced by `NonNull<Something>`.  *Nested* ``offset_of!``
++  was only stabilized in Rust 1.82.0, but it is not used.
++
++* inline const expression (stable in 1.79.0), currently worked around with
++  associated constants in the ``FnCall`` trait.
++
++* associated constants have to be explicitly marked ``'static`` (`changed in
++  1.81.0`__)
++
++* ``&raw`` (stable in 1.82.0).  Use ``addr_of!`` and ``addr_of_mut!`` instead,
++  though hopefully the need for raw pointers will go down over time.
++
++* ``new_uninit`` (stable in 1.82.0).  This is used internally by the ``pinned_init``
++  crate, and patched in QEMU's vendored copy of the crate.
++
++* referencing statics in constants (stable in 1.83.0).  For now use a const
++  function; this is an important limitation for QEMU's migration stream
++  architecture (VMState).  Right now, VMState lacks type safety because
++  it is hard to place the ``VMStateField`` definitions in traits.
++
++* associated const equality would be nice to have for some users of
++  ``callbacks::FnCall``, but is still experimental.  ``ASSERT_IS_SOME``
++  replaces it.
++
++__ https://github.com/rust-lang/rust/pull/125258
++
++It is expected that QEMU will advance its minimum supported version of
++rustc to 1.77.0 as soon; as of January 2025, blockers for that right now
++are Debian bookworm and 32-bit MIPS processors.  This unfortunately
++means that references to statics in constants will remain an issue.
++
++QEMU also supports version 0.60.x of bindgen, which is missing option
++``--generate-cstr``.  This option requires version 0.66.x and will
++be adopted as soon as supporting these older versions is not necessary
++anymore.
++
++Writing Rust code in QEMU
++-------------------------
++
++Right now QEMU includes three crates:
++
++* ``qemu_api`` for bindings to C code and useful functionality
++
++* ``qemu_api_macros`` defines several procedural macros that are useful when
++  writing C code
++
++* ``pl011`` (under ``rust/hw/char/pl011``) is the sample device that is being
++  used to further develop ``qemu_api`` and ``qemu_api_macros``.  It is a functional
++  replacement for the ``hw/char/pl011.c`` file.
++
++This section explains how to work with them.
++
++Status
++''''''
++
++Modules of ``qemu_api`` can be defined as:
++
++- *complete*: ready for use in new devices; if applicable, the API supports the
++  full functionality available in C
++
++- *stable*: ready for production use, the API is safe and should not undergo
++  major changes
++
++- *proof of concept*: the API is subject to change but allows working with safe
++  Rust
++
++- *initial*: the API is in its initial stages; it requires large amount of
++  unsafe code; it might have soundness or type-safety issues
++
++The status of the modules are
++
++================ ======================
++module           status
++================ ======================
++``assertions``   stable
++``bitops``       complete
++``callbacks``    complete
++``cell``         stable
++``c_str``        complete
++``irq``          complete
++``module``       complete
++``offset_of``    stable
++``qdev``         stable
++``qom``          stable
++``sysbus``       stable
++``vmstate``      proof of concept
++``zeroable``     stable
++================ ======================
++
++Common pitfalls
++'''''''''''''''
++
++Rust has very strict rules with respect to how you get an exclusive (``&mut``)
++reference; failure to respect those rules is a source of undefined behavior.
++In particular, even if a value is loaded from a raw mutable pointer (``*mut``),
++it *cannot* be casted to ``&mut`` unless the value was stored to the ``*mut``
++from a mutable reference.  Furthermore, it is undefined behavior if any
++shared reference was created between the store to the ``*mut`` and the load::
++
++    let mut p: u32 = 42;
++    let p_mut = &mut p;                              // 1
++    let p_raw = p_mut as *mut u32;                   // 2
++
++    // p_raw keeps the mutable reference "alive"
++
++    let p_shared = &p;                               // 3
++    println!("access from &u32: {}", *p_shared);
++
++    // Bring back the mutable reference, its lifetime overlaps
++    // with that of a shared reference.
++    let p_mut = unsafe { &mut *p_raw };              // 4
++    println!("access from &mut 32: {}", *p_mut);
++
++    println!("access from &u32: {}", *p_shared);     // 5
++
++These rules can be tested with `MIRI`__, for example.
++
++__ https://github.com/rust-lang/miri
++
++Almost all Rust code in QEMU will involve QOM objects, and pointers to these
++objects are *shared*, for example because they are part of the QOM composition
++tree.  This creates exactly the above scenario:
++
++1. a QOM object is created
++
++2. a ``*mut`` is created, for example as the opaque value for a ``MemoryRegion``
++
++3. the QOM object is placed in the composition tree
++
++4. a memory access dereferences the opaque value to a ``&mut``
++
++5. but the shared reference is still present in the composition tree
++
++Because of this, QOM objects should almost always use ``&self`` instead
++of ``&mut self``; access to internal fields must use *interior mutability*
++to go from a shared reference to a ``&mut``.
++
++Whenever C code provides you with an opaque ``void *``, avoid converting it
++to a Rust mutable reference, and use a shared reference instead.  Rust code
++will then have to use QEMU's ``BqlRefCell`` and ``BqlCell`` type, which
++enforce that locking rules for the "Big QEMU Lock" are respected.  These cell
++types are also known to the ``vmstate`` crate, which is able to "look inside"
++them when building an in-memory representation of a ``struct``s layout.
++Note that the same is not true of a ``RefCell`` or ``Mutex``.
++
++In the future, similar cell types might also be provided for ``AioContext``-based
++locking as well.
++
++Writing bindings to C code
++''''''''''''''''''''''''''
++
++Here are some things to keep in mind when working on the ``qemu_api`` crate.
++
++**Look at existing code**
++  Very often, similar idioms in C code correspond to similar tricks in
++  Rust bindings.  If the C code uses ``offsetof``, look at qdev properties
++  or ``vmstate``.  If the C code has a complex const struct, look at
++  ``MemoryRegion``.  Reuse existing patterns for handling lifetimes;
++  for example use ``&T`` for QOM objects that do not need a reference
++  count (including those that can be embedded in other objects) and
++  ``Owned<T>`` for those that need it.
++
++**Use the type system**
++  Bindings often will need access information that is specific to a type
++  (either a builtin one or a user-defined one) in order to pass it to C
++  functions.  Put them in a trait and access it through generic parameters.
++  The ``vmstate`` module has examples of how to retrieve type information
++  for the fields of a Rust ``struct``.
++
++**Prefer unsafe traits to unsafe functions**
++  Unsafe traits are much easier to prove correct than unsafe functions.
++  They are an excellent place to store metadata that can later be accessed
++  by generic functions.  C code usually places metadata in global variables;
++  in Rust, they can be stored in traits and then turned into ``static``
++  variables.  Often, unsafe traits can be generated by procedural macros.
++
++**Document limitations due to old Rust versions**
++  If you need to settle for an inferior solution because of the currently
++  supported set of Rust versions, document it in the source and in this
++  file.  This ensures that it can be fixed when the minimum supported
++  version is bumped.
++
++**Keep locking in mind**.
++  When marking a type ``Sync``, be careful of whether it needs the big
++  QEMU lock.  Use ``BqlCell`` and ``BqlRefCell`` for interior data,
++  or assert ``bql_locked()``.
++
++**Don't be afraid of complexity, but document and isolate it**
++  It's okay to be tricky; device code is written more often than bindings
++  code and it's important that it is idiomatic.  However, you should strive
++  to isolate any tricks in a place (for example a ``struct``, a trait
++  or a macro) where it can be documented and tested.  If needed, include
++  toy versions of the code in the documentation.
++
++Writing procedural macros
++'''''''''''''''''''''''''
++
++By conventions, procedural macros are split in two functions, one
++returning ``Result<proc_macro2::TokenStream, MacroError>` with the body of
++the procedural macro, and the second returning ``proc_macro::TokenStream``
++which is the actual procedural macro.  The former's name is the same as
++the latter with the ``_or_error`` suffix.  The code for the latter is more
++or less fixed; it follows the following template, which is fixed apart
++from the type after ``as`` in the invocation of ``parse_macro_input!``::
++
++    #[proc_macro_derive(Object)]
++    pub fn derive_object(input: TokenStream) -> TokenStream {
++        let input = parse_macro_input!(input as DeriveInput);
++        let expanded = derive_object_or_error(input).unwrap_or_else(Into::into);
++
++        TokenStream::from(expanded)
++    }
++
++The ``qemu_api_macros`` crate has utility functions to examine a
++``DeriveInput`` and perform common checks (e.g. looking for a struct
++with named fields).  These functions return ``Result<..., MacroError>``
++and can be used easily in the procedural macro function::
++
++    fn derive_object_or_error(input: DeriveInput) ->
++        Result<proc_macro2::TokenStream, MacroError>
++    {
++        is_c_repr(&input, "#[derive(Object)]")?;
++
++        let name = &input.ident;
++        let parent = &get_fields(&input, "#[derive(Object)]")?[0].ident;
++        ...
++    }
++
++Use procedural macros with care.  They are mostly useful for two purposes:
++
++* Performing consistency checks; for example ``#[derive(Object)]`` checks
++  that the structure has ``#[repr[C])`` and that the type of the first field
++  is consistent with the ``ObjectType`` declaration.
++
++* Extracting information from Rust source code into traits, typically based
++  on types and attributes.  For example, ``#[derive(TryInto)]`` builds an
++  implementation of ``TryFrom``, and it uses the ``#[repr(...)]`` attribute
++  as the ``TryFrom`` source and error types.
++
++Procedural macros can be hard to debug and test; if the code generation
++exceeds a few lines of code, it may be worthwhile to delegate work to
++"regular" declarative (``macro_rules!``) macros and write unit tests for
++those instead.
++
++
++Coding style
++''''''''''''
++
++Code should pass clippy and be formatted with rustfmt.
++
++Right now, only the nightly version of ``rustfmt`` is supported.  This
++might change in the future.  While CI checks for correct formatting via
++``cargo fmt --check``, maintainers can fix this for you when applying patches.
++
++It is expected that ``qemu_api`` provides full ``rustdoc`` documentation for
++bindings that are in their final shape or close.
++
++Adding dependencies
++-------------------
++
++Generally, the set of dependent crates is kept small.  Think twice before
++adding a new external crate, especially if it comes with a large set of
++dependencies itself.  Sometimes QEMU only needs a small subset of the
++functionality; see for example QEMU's ``assertions`` or ``c_str`` modules.
++
++On top of this recommendation, adding external crates to QEMU is a
++slightly complicated process, mostly due to the need to teach Meson how
++to build them.  While Meson has initial support for parsing ``Cargo.lock``
++files, it is still highly experimental and is therefore not used.
++
++First of all, the crate must be added to the relevant ``Cargo.toml`` files.
++External crates must be added as subprojects for Meson to learn how to
++build them, as well as to the relevant ``Cargo.toml`` files.  Because the
++``rust/`` directory forms a Cargo `workspace`__, there is a single
++``rust/Cargo.lock`` file for the whole build.
++
++__ https://doc.rust-lang.org/cargo/reference/workspaces.html#virtual-workspace
++
++Choose a version of the crate that works with QEMU's minimum supported
++Rust version (|msrv|).
++
++Second, a new ``wrap`` file must be added to teach Meson how to download the
++crate.  The wrap file must be named ``NAME-SEMVER-rs.wrap``, where ``NAME``
++is the name of the crate and ``SEMVER`` is the version up to and including the
++first non-zero number.  For example, a crate with version ``0.2.3`` will use
++``0.2`` for its ``SEMVER``, while a crate with version ``1.0.84`` will use ``1``.
++
++Third, the Meson rules to build the crate must be added at
++``subprojects/NAME-SEMVER-rs/meson.build``.  Generally this includes:
++
++* ``subproject`` and ``dependency`` lines for all dependent crates
++
++* a ``static_library`` or ``rust.proc_macro`` line to perform the actual build
++
++* ``declare_dependency`` and a ``meson.override_dependency`` lines to expose
++  the result to QEMU and to other subprojects
++
++Remember to add ``native: true`` to ``dependency``, ``static_library`` and
++``meson.override_dependency`` for dependencies of procedural macros.
++If a crate is needed in both procedural macros and QEMU binaries, everything
++apart from ``subproject`` must be duplicated to build both native and
++non-native versions of the crate.
++
++It's important to specify the right compiler options.  These include:
++
++* the language edition (which can be found in the ``Cargo.toml`` file)
++
++* the ``--cfg`` (which have to be "reverse engineered" from the ``build.rs``
++  file of the crate).
++
++* usually, a ``--cap-lints allow`` argument to hide warnings from rustc
++  or clippy.
++
++After every change to the ``meson.build`` file you have to update the patched
++version with ``meson subprojects update --reset ``NAME-SEMVER-rs``.  This might
++be automated in the future.
++
++Also, after every change to the ``meson.build`` file it is strongly suggested to
++do a dummy change to the ``.wrap`` file (for example adding a comment like
++``# version 2``), which will help Meson notice that the subproject is out of date.
++
++As a last step, add the new subproject to ``scripts/archive-source.sh``,
++``scripts/make-release`` and ``subprojects/.gitignore``.
 -- 
 2.48.1
 
