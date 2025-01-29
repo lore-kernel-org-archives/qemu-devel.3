@@ -4,98 +4,117 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 60E4FC0218D
-	for <qemu-devel@archiver.kernel.org>; Wed, 29 Jan 2025 16:02:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id ACD3DC02190
+	for <qemu-devel@archiver.kernel.org>; Wed, 29 Jan 2025 16:02:13 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tdAVK-0003F7-3f; Wed, 29 Jan 2025 11:01:26 -0500
+	id 1tdAVo-0003Is-3v; Wed, 29 Jan 2025 11:01:56 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1tdAVG-0003E0-Ch
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1tdAVI-0003Ea-LQ
  for qemu-devel@nongnu.org; Wed, 29 Jan 2025 11:01:24 -0500
-Received: from smtp-out2.suse.de ([2a07:de40:b251:101:10:150:64:2])
+Received: from smtp-out1.suse.de ([195.135.223.130])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1tdAV8-0005Co-Fk
- for qemu-devel@nongnu.org; Wed, 29 Jan 2025 11:01:17 -0500
-Received: from imap1.dmz-prg2.suse.org (unknown [10.150.64.97])
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1tdAVG-0005Do-5E
+ for qemu-devel@nongnu.org; Wed, 29 Jan 2025 11:01:24 -0500
+Received: from imap1.dmz-prg2.suse.org (imap1.dmz-prg2.suse.org
+ [IPv6:2a07:de40:b281:104:10:150:64:97])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
  (No client certificate requested)
- by smtp-out2.suse.de (Postfix) with ESMTPS id 6556B1F387;
- Wed, 29 Jan 2025 16:01:09 +0000 (UTC)
+ by smtp-out1.suse.de (Postfix) with ESMTPS id 8EFED21108;
+ Wed, 29 Jan 2025 16:01:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1738166469; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding;
- bh=/7QBmfG3G/iHlcfa1mr8yPHNyEZydifai14v7BRK6G4=;
- b=ObF49vL06AmgeK37bpf0AjWDoljso7uZnaHmjftFb7UmQnyNQPEKqFEkI69EuZNMVfF8eN
- AsF8vV2REuJg1j6y96sBKbMqefcsb++Tmk/JaCzQialomVsYLOol4h500mlFETfoSlY/3l
- H7AeQGz/eCq5cuocYFsEnnZbKWrkYss=
+ t=1738166477; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=j4K3cJYXvduQesKYhBn3uPc2PLLhekaZC/e7mZc37iA=;
+ b=0E3LsHVkIq4h0t4OBl6VUFttvfoxNUIUsPeql1WiJGU6vHnuGMr977cxOS5OrZPhrfNsz0
+ L7NklIJ85X7tbqHZCItS7iXQDtL3ONFjwDb4ZCUhwHghGasnOozNor9GyYW+j1YPptkElW
+ t3pKUFgxBVH/f5W1PKQJt/eZInc9TOw=
 DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1738166469;
+ s=susede2_ed25519; t=1738166477;
  h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding;
- bh=/7QBmfG3G/iHlcfa1mr8yPHNyEZydifai14v7BRK6G4=;
- b=kCGcvk2TGS8Owilp2VyHyx6SPEikJkToZJqCk9OCeCGKPWBwz6GKmMONIo5l7VwKAF/qHq
- Csa9VxRpizKfA9CQ==
-Authentication-Results: smtp-out2.suse.de;
-	none
+ mime-version:mime-version:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=j4K3cJYXvduQesKYhBn3uPc2PLLhekaZC/e7mZc37iA=;
+ b=QUo3zltEnbnU+IWSFcKa1foxn05qL7R9+uOWsCtRgZz9HGVPrtYJf/Khd2LWoFjz7G4cl1
+ lK6CT76vZIqJB7Dg==
+Authentication-Results: smtp-out1.suse.de;
+ dkim=pass header.d=suse.de header.s=susede2_rsa header.b=0E3LsHVk;
+ dkim=pass header.d=suse.de header.s=susede2_ed25519 header.b=QUo3zltE
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1738166469; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding;
- bh=/7QBmfG3G/iHlcfa1mr8yPHNyEZydifai14v7BRK6G4=;
- b=ObF49vL06AmgeK37bpf0AjWDoljso7uZnaHmjftFb7UmQnyNQPEKqFEkI69EuZNMVfF8eN
- AsF8vV2REuJg1j6y96sBKbMqefcsb++Tmk/JaCzQialomVsYLOol4h500mlFETfoSlY/3l
- H7AeQGz/eCq5cuocYFsEnnZbKWrkYss=
+ t=1738166477; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=j4K3cJYXvduQesKYhBn3uPc2PLLhekaZC/e7mZc37iA=;
+ b=0E3LsHVkIq4h0t4OBl6VUFttvfoxNUIUsPeql1WiJGU6vHnuGMr977cxOS5OrZPhrfNsz0
+ L7NklIJ85X7tbqHZCItS7iXQDtL3ONFjwDb4ZCUhwHghGasnOozNor9GyYW+j1YPptkElW
+ t3pKUFgxBVH/f5W1PKQJt/eZInc9TOw=
 DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1738166469;
+ s=susede2_ed25519; t=1738166477;
  h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding;
- bh=/7QBmfG3G/iHlcfa1mr8yPHNyEZydifai14v7BRK6G4=;
- b=kCGcvk2TGS8Owilp2VyHyx6SPEikJkToZJqCk9OCeCGKPWBwz6GKmMONIo5l7VwKAF/qHq
- Csa9VxRpizKfA9CQ==
+ mime-version:mime-version:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=j4K3cJYXvduQesKYhBn3uPc2PLLhekaZC/e7mZc37iA=;
+ b=QUo3zltEnbnU+IWSFcKa1foxn05qL7R9+uOWsCtRgZz9HGVPrtYJf/Khd2LWoFjz7G4cl1
+ lK6CT76vZIqJB7Dg==
 Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
  (No client certificate requested)
- by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 5D518137DB;
- Wed, 29 Jan 2025 16:01:08 +0000 (UTC)
+ by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 48390137DB;
+ Wed, 29 Jan 2025 16:01:16 +0000 (UTC)
 Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
- by imap1.dmz-prg2.suse.org with ESMTPSA id kY3RB8RQmmffPAAAD6G6ig
- (envelope-from <farosas@suse.de>); Wed, 29 Jan 2025 16:01:08 +0000
+ by imap1.dmz-prg2.suse.org with ESMTPSA id APibAsxQmmffPAAAD6G6ig
+ (envelope-from <farosas@suse.de>); Wed, 29 Jan 2025 16:01:16 +0000
 From: Fabiano Rosas <farosas@suse.de>
 To: qemu-devel@nongnu.org
-Cc: Peter Xu <peterx@redhat.com>
-Subject: [PULL 00/42] Migration patches for 2025-01-29
-Date: Wed, 29 Jan 2025 13:00:17 -0300
-Message-Id: <20250129160059.6987-1-farosas@suse.de>
+Cc: Peter Xu <peterx@redhat.com>,
+	Steve Sistare <steven.sistare@oracle.com>
+Subject: [PULL 04/42] physmem: qemu_ram_alloc_from_fd extensions
+Date: Wed, 29 Jan 2025 13:00:21 -0300
+Message-Id: <20250129160059.6987-5-farosas@suse.de>
 X-Mailer: git-send-email 2.35.3
+In-Reply-To: <20250129160059.6987-1-farosas@suse.de>
+References: <20250129160059.6987-1-farosas@suse.de>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-Spamd-Result: default: False [-3.30 / 50.00]; BAYES_HAM(-3.00)[100.00%];
- MID_CONTAINS_FROM(1.00)[]; NEURAL_HAM_LONG(-1.00)[-1.000];
+X-Rspamd-Queue-Id: 8EFED21108
+X-Rspamd-Action: no action
+X-Spamd-Result: default: False [-3.01 / 50.00]; BAYES_HAM(-3.00)[100.00%];
+ NEURAL_HAM_LONG(-1.00)[-1.000]; MID_CONTAINS_FROM(1.00)[];
+ R_MISSING_CHARSET(0.50)[];
+ R_DKIM_ALLOW(-0.20)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
  NEURAL_HAM_SHORT(-0.20)[-1.000]; MIME_GOOD(-0.10)[text/plain];
- RCVD_VIA_SMTP_AUTH(0.00)[]; ARC_NA(0.00)[];
- MIME_TRACE(0.00)[0:+]; RCPT_COUNT_TWO(0.00)[2];
- RCVD_TLS_ALL(0.00)[]; FUZZY_BLOCKED(0.00)[rspamd.com];
- TO_DN_SOME(0.00)[]; FROM_HAS_DN(0.00)[];
+ MX_GOOD(-0.01)[]; RCVD_VIA_SMTP_AUTH(0.00)[]; ARC_NA(0.00)[];
+ RCVD_COUNT_TWO(0.00)[2]; MIME_TRACE(0.00)[0:+];
+ RBL_SPAMHAUS_BLOCKED_OPENRESOLVER(0.00)[2a07:de40:b281:104:10:150:64:97:from]; 
+ SPAMHAUS_XBL(0.00)[2a07:de40:b281:104:10:150:64:97:from];
+ TO_DN_SOME(0.00)[];
+ RECEIVED_SPAMHAUS_BLOCKED_OPENRESOLVER(0.00)[2a07:de40:b281:106:10:150:64:167:received];
+ FUZZY_BLOCKED(0.00)[rspamd.com]; FROM_HAS_DN(0.00)[];
+ TO_MATCH_ENVRCPT_ALL(0.00)[];
+ DBL_BLOCKED_OPENRESOLVER(0.00)[suse.de:dkim,suse.de:mid,suse.de:email,oracle.com:email];
+ RCVD_TLS_ALL(0.00)[]; FROM_EQ_ENVFROM(0.00)[];
+ RCPT_COUNT_THREE(0.00)[3];
  DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
- FROM_EQ_ENVFROM(0.00)[]; TO_MATCH_ENVRCPT_ALL(0.00)[];
- RCVD_COUNT_TWO(0.00)[2];
- DBL_BLOCKED_OPENRESOLVER(0.00)[suse.de:mid]
-Received-SPF: pass client-ip=2a07:de40:b251:101:10:150:64:2;
- envelope-from=farosas@suse.de; helo=smtp-out2.suse.de
+ DKIM_TRACE(0.00)[suse.de:+]
+X-Rspamd-Server: rspamd1.dmz-prg2.suse.org
+Received-SPF: pass client-ip=195.135.223.130; envelope-from=farosas@suse.de;
+ helo=smtp-out1.suse.de
 X-Spam_score_int: -43
 X-Spam_score: -4.4
 X-Spam_bar: ----
 X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001,
+ RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -112,140 +131,181 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The following changes since commit 7faf9d2f12ace4c1d04cf1a2b39334eef9a45f22:
+From: Steve Sistare <steven.sistare@oracle.com>
 
-  Merge tag 'pull-aspeed-20250127' of https://github.com/legoater/qemu into staging (2025-01-27 11:20:35 -0500)
+Extend qemu_ram_alloc_from_fd to support resizable ram, and define
+qemu_ram_resize_cb to clean up the API.
 
-are available in the Git repository at:
+Add a grow parameter to extend the file if necessary.  However, if
+grow is false, a zero-sized file is always extended.
 
-  https://gitlab.com/farosas/qemu.git tags/migration-20250129-pull-request
+Signed-off-by: Steve Sistare <steven.sistare@oracle.com>
+Link: https://lore.kernel.org/r/1736967650-129648-4-git-send-email-steven.sistare@oracle.com
+Signed-off-by: Fabiano Rosas <farosas@suse.de>
+---
+ include/exec/ram_addr.h | 13 +++++++++----
+ system/memory.c         |  4 ++--
+ system/physmem.c        | 35 ++++++++++++++++++++---------------
+ 3 files changed, 31 insertions(+), 21 deletions(-)
 
-for you to fetch changes up to bc38dc2f5f350310724fd7d4f0a09f8c3a4811fa:
-
-  migration: refactor ram_save_target_page functions (2025-01-29 11:56:42 -0300)
-
-----------------------------------------------------------------
-Migration pull request
-
-- Purge of ram_save_target_page_legacy
-- Cleanups to postcopy, json writer, migration states
-- New migration mode cpr-transfer
-- Fix for a -Werror=maybe-uninitialized instance in savevm
-
-----------------------------------------------------------------
-
-Marc-André Lureau (1):
-  migration: fix -Werror=maybe-uninitialized
-
-Peter Xu (16):
-  migration: Remove postcopy implications in should_send_vmdesc()
-  migration: Do not construct JSON description if suppressed
-  migration: Optimize postcopy on downtime by avoiding JSON writer
-  migration: Avoid two src-downtime-end tracepoints for postcopy
-  migration: Drop inactivate_disk param in qemu_savevm_state_complete*
-  migration: Synchronize all CPU states only for non-iterable dump
-  migration: Adjust postcopy bandwidth during switchover
-  migration: Adjust locking in migration_maybe_pause()
-  migration: Drop cached migration state in migration_maybe_pause()
-  migration: Take BQL slightly longer in postcopy_start()
-  migration: Notify COMPLETE once for postcopy
-  migration: Unwrap qemu_savevm_state_complete_precopy() in postcopy
-  migration: Cleanup qemu_savevm_state_complete_precopy()
-  migration: Always set DEVICE state
-  migration: Merge precopy/postcopy on switchover start
-  migration: Trivial cleanup on JSON writer of vmstate_save()
-
-Prasad J Pandit (1):
-  migration: refactor ram_save_target_page functions
-
-Steve Sistare (24):
-  backends/hostmem-shm: factor out allocation of "anonymous shared
-    memory with an fd"
-  physmem: fix qemu_ram_alloc_from_fd size calculation
-  physmem: qemu_ram_alloc_from_fd extensions
-  physmem: fd-based shared memory
-  memory: add RAM_PRIVATE
-  machine: aux-ram-share option
-  migration: cpr-state
-  physmem: preserve ram blocks for cpr
-  hostmem-memfd: preserve for cpr
-  hostmem-shm: preserve for cpr
-  migration: enhance migrate_uri_parse
-  migration: incoming channel
-  migration: SCM_RIGHTS for QEMUFile
-  migration: VMSTATE_FD
-  migration: cpr-transfer save and load
-  migration: cpr-transfer mode
-  migration-test: memory_backend
-  tests/qtest: optimize migrate_set_ports
-  tests/qtest: defer connection
-  migration-test: defer connection
-  tests/qtest: enhance migration channels
-  tests/qtest: assert qmp connected
-  migration-test: cpr-transfer
-  migration: cpr-transfer documentation
-
- backends/hostmem-epc.c                 |   2 +-
- backends/hostmem-file.c                |   2 +-
- backends/hostmem-memfd.c               |  14 +-
- backends/hostmem-ram.c                 |   2 +-
- backends/hostmem-shm.c                 |  51 +---
- docs/devel/migration/CPR.rst           | 184 ++++++++++++-
- hw/core/machine.c                      |  22 ++
- include/exec/memory.h                  |  10 +
- include/exec/ram_addr.h                |  13 +-
- include/hw/boards.h                    |   1 +
- include/migration/cpr.h                |  33 +++
- include/migration/misc.h               |   7 +
- include/migration/vmstate.h            |   9 +
- include/qemu/osdep.h                   |   1 +
- meson.build                            |   8 +-
- migration/cpr-transfer.c               |  71 +++++
- migration/cpr.c                        | 224 ++++++++++++++++
- migration/meson.build                  |   2 +
- migration/migration.c                  | 348 +++++++++++++++++++------
- migration/migration.h                  |   5 +-
- migration/options.c                    |   8 +-
- migration/qemu-file.c                  |  84 +++++-
- migration/qemu-file.h                  |   2 +
- migration/ram.c                        |  69 ++---
- migration/savevm.c                     | 116 ++++-----
- migration/savevm.h                     |   6 +-
- migration/trace-events                 |  13 +-
- migration/vmstate-types.c              |  24 ++
- migration/vmstate.c                    |   6 +-
- qapi/migration.json                    |  51 +++-
- qemu-options.hx                        |  34 +++
- stubs/vmstate.c                        |   7 +
- system/memory.c                        |   4 +-
- system/physmem.c                       | 150 +++++++++--
- system/trace-events                    |   1 +
- system/vl.c                            |  43 ++-
- tests/qemu-iotests/194.out             |   1 +
- tests/qemu-iotests/203.out             |   1 +
- tests/qemu-iotests/234.out             |   2 +
- tests/qemu-iotests/262.out             |   1 +
- tests/qemu-iotests/280.out             |   1 +
- tests/qtest/libqos/libqos.c            |   3 +-
- tests/qtest/libqtest.c                 | 103 +++++---
- tests/qtest/libqtest.h                 |  24 +-
- tests/qtest/migration/cpr-tests.c      |  62 +++++
- tests/qtest/migration/framework.c      |  80 +++++-
- tests/qtest/migration/framework.h      |  11 +
- tests/qtest/migration/migration-qmp.c  |  53 +++-
- tests/qtest/migration/migration-qmp.h  |  10 +-
- tests/qtest/migration/migration-util.c |  23 +-
- tests/qtest/migration/misc-tests.c     |   9 +-
- tests/qtest/migration/precopy-tests.c  |   6 +-
- tests/qtest/virtio-net-failover.c      |   8 +-
- util/memfd.c                           |  16 +-
- util/oslib-posix.c                     |  52 ++++
- util/oslib-win32.c                     |   6 +
- 56 files changed, 1713 insertions(+), 386 deletions(-)
- create mode 100644 include/migration/cpr.h
- create mode 100644 migration/cpr-transfer.c
- create mode 100644 migration/cpr.c
-
+diff --git a/include/exec/ram_addr.h b/include/exec/ram_addr.h
+index ff157c1f42..94bb3ccbe4 100644
+--- a/include/exec/ram_addr.h
++++ b/include/exec/ram_addr.h
+@@ -111,23 +111,30 @@ long qemu_maxrampagesize(void);
+  *
+  * Parameters:
+  *  @size: the size in bytes of the ram block
++ *  @max_size: the maximum size of the block after resizing
+  *  @mr: the memory region where the ram block is
++ *  @resized: callback after calls to qemu_ram_resize
+  *  @ram_flags: RamBlock flags. Supported flags: RAM_SHARED, RAM_PMEM,
+  *              RAM_NORESERVE, RAM_PROTECTED, RAM_NAMED_FILE, RAM_READONLY,
+  *              RAM_READONLY_FD, RAM_GUEST_MEMFD
+  *  @mem_path or @fd: specify the backing file or device
+  *  @offset: Offset into target file
++ *  @grow: extend file if necessary (but an empty file is always extended).
+  *  @errp: pointer to Error*, to store an error if it happens
+  *
+  * Return:
+  *  On success, return a pointer to the ram block.
+  *  On failure, return NULL.
+  */
++typedef void (*qemu_ram_resize_cb)(const char *, uint64_t length, void *host);
++
+ RAMBlock *qemu_ram_alloc_from_file(ram_addr_t size, MemoryRegion *mr,
+                                    uint32_t ram_flags, const char *mem_path,
+                                    off_t offset, Error **errp);
+-RAMBlock *qemu_ram_alloc_from_fd(ram_addr_t size, MemoryRegion *mr,
++RAMBlock *qemu_ram_alloc_from_fd(ram_addr_t size, ram_addr_t max_size,
++                                 qemu_ram_resize_cb resized, MemoryRegion *mr,
+                                  uint32_t ram_flags, int fd, off_t offset,
++                                 bool grow,
+                                  Error **errp);
+ 
+ RAMBlock *qemu_ram_alloc_from_ptr(ram_addr_t size, void *host,
+@@ -135,9 +142,7 @@ RAMBlock *qemu_ram_alloc_from_ptr(ram_addr_t size, void *host,
+ RAMBlock *qemu_ram_alloc(ram_addr_t size, uint32_t ram_flags, MemoryRegion *mr,
+                          Error **errp);
+ RAMBlock *qemu_ram_alloc_resizeable(ram_addr_t size, ram_addr_t max_size,
+-                                    void (*resized)(const char*,
+-                                                    uint64_t length,
+-                                                    void *host),
++                                    qemu_ram_resize_cb resized,
+                                     MemoryRegion *mr, Error **errp);
+ void qemu_ram_free(RAMBlock *block);
+ 
+diff --git a/system/memory.c b/system/memory.c
+index b17b5538ff..4c829793a0 100644
+--- a/system/memory.c
++++ b/system/memory.c
+@@ -1680,8 +1680,8 @@ bool memory_region_init_ram_from_fd(MemoryRegion *mr,
+     mr->readonly = !!(ram_flags & RAM_READONLY);
+     mr->terminates = true;
+     mr->destructor = memory_region_destructor_ram;
+-    mr->ram_block = qemu_ram_alloc_from_fd(size, mr, ram_flags, fd, offset,
+-                                           &err);
++    mr->ram_block = qemu_ram_alloc_from_fd(size, size, NULL, mr, ram_flags, fd,
++                                           offset, false, &err);
+     if (err) {
+         mr->size = int128_zero();
+         object_unparent(OBJECT(mr));
+diff --git a/system/physmem.c b/system/physmem.c
+index 792844d5a5..4d13761329 100644
+--- a/system/physmem.c
++++ b/system/physmem.c
+@@ -1942,8 +1942,10 @@ out_free:
+ }
+ 
+ #ifdef CONFIG_POSIX
+-RAMBlock *qemu_ram_alloc_from_fd(ram_addr_t size, MemoryRegion *mr,
++RAMBlock *qemu_ram_alloc_from_fd(ram_addr_t size, ram_addr_t max_size,
++                                 qemu_ram_resize_cb resized, MemoryRegion *mr,
+                                  uint32_t ram_flags, int fd, off_t offset,
++                                 bool grow,
+                                  Error **errp)
+ {
+     RAMBlock *new_block;
+@@ -1953,7 +1955,9 @@ RAMBlock *qemu_ram_alloc_from_fd(ram_addr_t size, MemoryRegion *mr,
+     /* Just support these ram flags by now. */
+     assert((ram_flags & ~(RAM_SHARED | RAM_PMEM | RAM_NORESERVE |
+                           RAM_PROTECTED | RAM_NAMED_FILE | RAM_READONLY |
+-                          RAM_READONLY_FD | RAM_GUEST_MEMFD)) == 0);
++                          RAM_READONLY_FD | RAM_GUEST_MEMFD |
++                          RAM_RESIZEABLE)) == 0);
++    assert(max_size >= size);
+ 
+     if (xen_enabled()) {
+         error_setg(errp, "-mem-path not supported with Xen");
+@@ -1968,13 +1972,15 @@ RAMBlock *qemu_ram_alloc_from_fd(ram_addr_t size, MemoryRegion *mr,
+ 
+     size = TARGET_PAGE_ALIGN(size);
+     size = REAL_HOST_PAGE_ALIGN(size);
++    max_size = TARGET_PAGE_ALIGN(max_size);
++    max_size = REAL_HOST_PAGE_ALIGN(max_size);
+ 
+     file_size = get_file_size(fd);
+-    if (file_size && file_size < offset + size) {
++    if (file_size && file_size < offset + max_size && !grow) {
+         error_setg(errp, "%s backing store size 0x%" PRIx64
+                    " is too small for 'size' option 0x" RAM_ADDR_FMT
+                    " plus 'offset' option 0x%" PRIx64,
+-                   memory_region_name(mr), file_size, size,
++                   memory_region_name(mr), file_size, max_size,
+                    (uint64_t)offset);
+         return NULL;
+     }
+@@ -1990,11 +1996,13 @@ RAMBlock *qemu_ram_alloc_from_fd(ram_addr_t size, MemoryRegion *mr,
+     new_block = g_malloc0(sizeof(*new_block));
+     new_block->mr = mr;
+     new_block->used_length = size;
+-    new_block->max_length = size;
++    new_block->max_length = max_size;
++    new_block->resized = resized;
+     new_block->flags = ram_flags;
+     new_block->guest_memfd = -1;
+-    new_block->host = file_ram_alloc(new_block, size, fd, !file_size, offset,
+-                                     errp);
++    new_block->host = file_ram_alloc(new_block, max_size, fd,
++                                     file_size < offset + max_size,
++                                     offset, errp);
+     if (!new_block->host) {
+         g_free(new_block);
+         return NULL;
+@@ -2046,7 +2054,8 @@ RAMBlock *qemu_ram_alloc_from_file(ram_addr_t size, MemoryRegion *mr,
+         return NULL;
+     }
+ 
+-    block = qemu_ram_alloc_from_fd(size, mr, ram_flags, fd, offset, errp);
++    block = qemu_ram_alloc_from_fd(size, size, NULL, mr, ram_flags, fd, offset,
++                                   false, errp);
+     if (!block) {
+         if (created) {
+             unlink(mem_path);
+@@ -2061,9 +2070,7 @@ RAMBlock *qemu_ram_alloc_from_file(ram_addr_t size, MemoryRegion *mr,
+ 
+ static
+ RAMBlock *qemu_ram_alloc_internal(ram_addr_t size, ram_addr_t max_size,
+-                                  void (*resized)(const char*,
+-                                                  uint64_t length,
+-                                                  void *host),
++                                  qemu_ram_resize_cb resized,
+                                   void *host, uint32_t ram_flags,
+                                   MemoryRegion *mr, Error **errp)
+ {
+@@ -2115,10 +2122,8 @@ RAMBlock *qemu_ram_alloc(ram_addr_t size, uint32_t ram_flags,
+ }
+ 
+ RAMBlock *qemu_ram_alloc_resizeable(ram_addr_t size, ram_addr_t maxsz,
+-                                     void (*resized)(const char*,
+-                                                     uint64_t length,
+-                                                     void *host),
+-                                     MemoryRegion *mr, Error **errp)
++                                    qemu_ram_resize_cb resized,
++                                    MemoryRegion *mr, Error **errp)
+ {
+     return qemu_ram_alloc_internal(size, maxsz, resized, NULL,
+                                    RAM_RESIZEABLE, mr, errp);
 -- 
 2.35.3
 
