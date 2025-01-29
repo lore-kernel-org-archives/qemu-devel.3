@@ -4,84 +4,64 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D95A8C0218A
-	for <qemu-devel@archiver.kernel.org>; Wed, 29 Jan 2025 01:12:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 96155C0218D
+	for <qemu-devel@archiver.kernel.org>; Wed, 29 Jan 2025 01:15:58 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tcwcV-0007bJ-SA; Tue, 28 Jan 2025 20:11:55 -0500
+	id 1tcwft-0000C4-U2; Tue, 28 Jan 2025 20:15:26 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1tcwcU-0007ap-4E; Tue, 28 Jan 2025 20:11:54 -0500
-Received: from mail-vk1-xa29.google.com ([2607:f8b0:4864:20::a29])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1tcwcS-00075y-LZ; Tue, 28 Jan 2025 20:11:53 -0500
-Received: by mail-vk1-xa29.google.com with SMTP id
- 71dfb90a1353d-5187f0b893dso2029738e0c.3; 
- Tue, 28 Jan 2025 17:11:51 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1738113111; x=1738717911; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=EfzIBpiOP921J9whQs9LXBrgumMwFEAqWmhvUi7zBak=;
- b=BGHbzOVwlBygWSbsBIytr6vKb4q/G3RpRkQv84R0vxGTWs3Jgpj/d0fq2Qjyt5Rvfo
- e5qP8BYEBHm7pNcUCXKbRGv33DqfWCHzlXBws2rnkwbAJk6eS3ufOv5alkSLkEsx2six
- 4DeKnCYeMGR7vT0zIHOCvVE/pYQzrijgctf9RQW/544hBg3O8Sa62Irzpernp1mzK3wh
- 2TdFMJedJ0kn+vowKwE7i5gFvWPoeitHNcG2/bIGjbUeOvEGE09RHuNNOC1Ljbg30Rlf
- gaH8dIuNQBs17PQwtkP0nVFQ40jPlCrx62l15GZywwR1Pm+qDxmGXWdwpmkfR5A1mSTo
- nyzw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1738113111; x=1738717911;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=EfzIBpiOP921J9whQs9LXBrgumMwFEAqWmhvUi7zBak=;
- b=Uz0PFA+BMEAu6KBf+GbVel0NBec/+OfQhWgqH6xfIOgga7spFA6O6ICP57tmdubff0
- NR/8l3UYkxs7daat7WpTwAunjdB9FbDlaaODGIkV+rliKl0OpVVXq70u2/c9ZRssMebr
- hsVFrlI7HVgfQomi/iN7LXb0F9CZ20CQ/R2ZHWNUW1qIaGCuZEjYSMAPc+EdwSNq0eUy
- ZaNUQmc8R0DqG3mVarplfU7OymcTIeRGicONOsP4m2YTM56bN6TIdeEyTUXmrtBNOQX5
- UVJBcfkgQhvFCzvPUKTDzU+wddFO3rQSRssUnvyIQCEHX7vl+4YbMKKwQdPMjo6AcNA4
- 6njg==
-X-Forwarded-Encrypted: i=1;
- AJvYcCU9fyjp2VORxP5+gZHidnHyfz/PZCGx4swEQKj+THx061D0hzvJozKrhITPH6QgSdydPbaS9+LUysvt@nongnu.org
-X-Gm-Message-State: AOJu0YzMwJLzJqm2A22tVKMMrmV5QIHV4e69fkWQ0XaoSUliIBDfcyhD
- wXBCYdn7mKI+TtQ8pT590hV/eHczKbyMdHxQo2DrqkwbVs3Lh+jMKB8K2in2cIxttx+RbKvJ+me
- qqejLGcPd30M6IBlujYBoSFs5c6g=
-X-Gm-Gg: ASbGncv7mRRGFMQilEgC9r3K2KVNb8v/mbupTUZkB9SdtfRgKHKVkWqed07kwzidxeh
- 9S5y2S59DHiUoAjZs88S53EOp73+zZzXgVUx/eLenzQD6BTJrz+uCmCu3SDIBU2stN08/z5lKBa
- J+UvncbshvVepttP2myqHH4TarlQ==
-X-Google-Smtp-Source: AGHT+IFz0nFqhPlaYgixpMgb90iK2sDHqdVnysjjoCOF6jZj6fh0myRcX6RsruH2UW0MVeDqyjJAOE6MZos6OSFQ/Bg=
-X-Received: by 2002:a05:6102:3f56:b0:4b2:5d63:a0f3 with SMTP id
- ada2fe7eead31-4b9a4f9543cmr1243780137.15.1738113110700; Tue, 28 Jan 2025
- 17:11:50 -0800 (PST)
-MIME-Version: 1.0
-References: <20250114190001.1650942-1-dbarboza@ventanamicro.com>
- <20250114190001.1650942-2-dbarboza@ventanamicro.com>
-In-Reply-To: <20250114190001.1650942-2-dbarboza@ventanamicro.com>
-From: Alistair Francis <alistair23@gmail.com>
-Date: Wed, 29 Jan 2025 11:11:24 +1000
-X-Gm-Features: AWEUYZnQwbJNyBeq9-11zs_vpaCvAyE6ehQ_6rmJAAbBpjrctV3e_UUUevrZWnU
-Message-ID: <CAKmqyKPqGjJSrGWk-mpKSn8V_Nf9ripuRr0epH_bJq+BDtNP6w@mail.gmail.com>
-Subject: Re: [PATCH v2 1/4] target/riscv: add ssu64xl
-To: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
-Cc: qemu-devel@nongnu.org, qemu-riscv@nongnu.org, alistair.francis@wdc.com, 
- bmeng@tinylab.org, liwei1518@gmail.com, zhiwei_liu@linux.alibaba.com, 
- palmer@rivosinc.com, ajones@ventanamicro.com
-Content-Type: text/plain; charset="UTF-8"
+ (Exim 4.90_1) (envelope-from <itaru.kitayama@linux.dev>)
+ id 1tcwfn-0000B8-Gp
+ for qemu-devel@nongnu.org; Tue, 28 Jan 2025 20:15:20 -0500
+Received: from out-187.mta0.migadu.com ([2001:41d0:1004:224b::bb])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <itaru.kitayama@linux.dev>)
+ id 1tcwfk-0007ht-99
+ for qemu-devel@nongnu.org; Tue, 28 Jan 2025 20:15:19 -0500
+Content-Type: text/plain;
+	charset=utf-8
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.dev; s=key1;
+ t=1738113307;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=9aEQZOpGKMUe7hfLzlRH/vgghSpm+IMMygHT/V1+zy0=;
+ b=FLi5zA8ESxxGNgtcy1CQ+BOxSWDxxF/3XVTBcXYUWODCjVv1BicS1s2I0pLRE8k2VIGL0q
+ ss2fGGpnwuDU6OfEnxt1yyfA93RBUbBD9pyRuzUuMXWYQkC/8TZMyFXG3EH1Yv30O91afk
+ SNaS0EnK17Lw6RruoH5CoK3dAr9Btz4=
+Mime-Version: 1.0 (Mac OS X Mail 16.0 \(3826.300.87.4.3\))
+Subject: Re: CXL emulation on aarch64
+X-Report-Abuse: Please report any abuse attempt to abuse@migadu.com and
+ include these headers.
+From: Itaru Kitayama <itaru.kitayama@linux.dev>
+In-Reply-To: <20250122140712.00000682@huawei.com>
+Date: Wed, 29 Jan 2025 10:14:34 +0900
+Cc: Jonathan Cameron via <qemu-devel@nongnu.org>,
+ "Zhijian Li (Fujitsu)" <lizhijian@fujitsu.com>
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::a29;
- envelope-from=alistair23@gmail.com; helo=mail-vk1-xa29.google.com
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+Message-Id: <80DA1137-69C2-4B94-A0FA-43A1B3E1D4C3@linux.dev>
+References: <0C019F50-9020-42ED-B051-998F03BFB709@linux.dev>
+ <483e8037-3c72-4560-b4b8-2437d37ca8c4@fujitsu.com>
+ <20250110123128.00004a5b@huawei.com>
+ <09D52CDC-44E5-48C4-8D32-E4DD0964F9AF@linux.dev>
+ <20250114102626.00000c53@huawei.com>
+ <88E9D774-A760-45F7-A173-24A07BB55733@linux.dev>
+ <20250116105833.000056da@huawei.com>
+ <9DF43D0C-E03E-420E-AB4E-0EE571D06A38@linux.dev>
+ <20250117094311.00000e64@huawei.com> <20250122140712.00000682@huawei.com>
+To: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+X-Migadu-Flow: FLOW_OUT
+Received-SPF: pass client-ip=2001:41d0:1004:224b::bb;
+ envelope-from=itaru.kitayama@linux.dev; helo=out-187.mta0.migadu.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001, T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -97,55 +77,245 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, Jan 15, 2025 at 5:04=E2=80=AFAM Daniel Henrique Barboza
-<dbarboza@ventanamicro.com> wrote:
->
-> ssu64xl is defined in RVA22 as:
->
-> "sstatus.UXL must be capable of holding the value 2 (i.e., UXLEN=3D64 mus=
-t
-> be supported)."
->
-> This is always true in TCG and it's mandatory for RVA23, so claim
-> support for it.
->
-> Signed-off-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
 
-Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
 
-Alistair
+> On Jan 22, 2025, at 23:07, Jonathan Cameron =
+<Jonathan.Cameron@huawei.com> wrote:
+>=20
+> On Fri, 17 Jan 2025 09:43:11 +0000
+> Jonathan Cameron via <qemu-devel@nongnu.org> wrote:
+>=20
+>> On Fri, 17 Jan 2025 10:13:41 +0900
+>> Itaru Kitayama <itaru.kitayama@linux.dev> wrote:
+>>=20
+>>>> On Jan 16, 2025, at 19:58, Jonathan Cameron =
+<Jonathan.Cameron@huawei.com> wrote:
+>>>>=20
+>>>> On Thu, 16 Jan 2025 15:04:53 +0900
+>>>> Itaru Kitayama <itaru.kitayama@linux.dev> wrote:
+>>>>=20
+>>>>> Hi Jonathan,
+>>>>>=20
+>>>>>> On Jan 14, 2025, at 19:26, Jonathan Cameron =
+<Jonathan.Cameron@huawei.com> wrote:
+>>>>>>=20
+>>>>>> On Tue, 14 Jan 2025 12:03:03 +0900
+>>>>>> Itaru Kitayama <itaru.kitayama@linux.dev> wrote:
+>>>>>>=20
+>>>>>>> Hi Jonathan,=20
+>>>>>>>=20
+>>>>>>>> On Jan 10, 2025, at 21:31, Jonathan Cameron =
+<Jonathan.Cameron@huawei.com> wrote:
+>>>>>>>>=20
+>>>>>>>> On Fri, 10 Jan 2025 09:20:54 +0000
+>>>>>>>> "Zhijian Li (Fujitsu)" via <qemu-devel@nongnu.org> wrote:
+>>>>>>>>=20
+>>>>>>>>> On 10/01/2025 13:29, Itaru Kitayama wrote:       =20
+>>>>>>>>>> Hi,
+>>>>>>>>>> Is anybody working on the CXL emulation on aarch64?         =20=
 
-> ---
->  target/riscv/cpu.c                |   1 +
->  tests/data/acpi/riscv64/virt/RHCT | Bin 390 -> 398 bytes
->  2 files changed, 1 insertion(+)
->
-> diff --git a/target/riscv/cpu.c b/target/riscv/cpu.c
-> index 3d4bd157d2..b187ef2e4b 100644
-> --- a/target/riscv/cpu.c
-> +++ b/target/riscv/cpu.c
-> @@ -213,6 +213,7 @@ const RISCVIsaExtData isa_edata_arr[] =3D {
->      ISA_EXT_DATA_ENTRY(sstc, PRIV_VERSION_1_12_0, ext_sstc),
->      ISA_EXT_DATA_ENTRY(sstvala, PRIV_VERSION_1_12_0, has_priv_1_12),
->      ISA_EXT_DATA_ENTRY(sstvecd, PRIV_VERSION_1_12_0, has_priv_1_12),
-> +    ISA_EXT_DATA_ENTRY(ssu64xl, PRIV_VERSION_1_12_0, has_priv_1_12),
->      ISA_EXT_DATA_ENTRY(supm, PRIV_VERSION_1_13_0, ext_supm),
->      ISA_EXT_DATA_ENTRY(svade, PRIV_VERSION_1_11_0, ext_svade),
->      ISA_EXT_DATA_ENTRY(svadu, PRIV_VERSION_1_12_0, ext_svadu),
-> diff --git a/tests/data/acpi/riscv64/virt/RHCT b/tests/data/acpi/riscv64/=
-virt/RHCT
-> index 695022d56c4ac16607d4c622955ad339fbbfe997..b14ec15e553200760a63aad65=
-586913d31ea2edc 100644
-> GIT binary patch
-> delta 48
-> zcmZo;?qlW(@^B96V`N}pOqj@Jz^cQ@$e^;(o|BQSxYW#~B4@H2qXkC_BLhPoBLf2f
-> D`wIz-
->
-> delta 41
-> wcmeBUZe!*O@^B7mV`N}poG_8gfK`Q&kwIpoJtyPj07f&87)Az$G)4vn0JA^`U;qFB
->
-> --
-> 2.47.1
->
->
+>>>>>>>>>=20
+>>>>>>>>> I'm not currently working on the CXL emulation on aarch64.
+>>>>>>>>>=20
+>>>>>>>>> However, IIRC the CXL maintainer's tree should work.
+>>>>>>>>> https://gitlab.com/jic23/qemu/       =20
+>>>>>>>>=20
+>>>>>>>> Pick up latest branch from there. I'm prepping a rebased =
+version
+>>>>>>>> with some new stuff but might take a few more days.       =20
+>>>>>>>=20
+>>>>>>> Thanks for sharing your work with us.  Your master and =
+cxl-2024-11-27 branches give:
+>>>>>>>=20
+>>>>>>> $ qemu-system-aarch64: -accel tcg,cxl=3Don: Property =
+'tcg-accel.cxl' not found     =20
+>>>>>>=20
+>>>>>> cxl is a machine property not a accel one. So needs to be after =
+virt
+>>>>>> There are tests in the tree for bios tables. Copy the command =
+line from those.
+>>>>>>=20
+>>>>>>>=20
+>>>>>>> My commands are below:
+>>>>>>> $HOME/projects/qemu/build/qemu-system-aarch64 \
+>>>>>>>      -M virt,virtualization=3Don,gic-version=3D3 \
+>>>>>>>      -M acpi=3Doff -cpu max,sme=3Doff -m 8G -smp 4 \
+>>>>>>>      -accel tcg,cxl=3Don \
+>>>>>>>      -nographic \
+>>>>>>>      -bios $HOME/cca-v4/out/bin/flash.bin \
+>>>>>>>      -kernel Image-cca \
+>>>>>>>      -drive =
+format=3Draw,if=3Dnone,file=3D$HOME/cca-v4/out-or/images/rootfs.ext2,id=3D=
+hd0 \
+>>>>>>>      -device virtio-blk-pci,drive=3Dhd0 \
+>>>>>>>      -append root=3D/dev/vda \
+>>>>>>>      -nodefaults \
+>>>>>>>      --serial tcp:localhost:54320 \
+>>>>>>>       -serial tcp:localhost:54321 \
+>>>>>>>       -append "root=3D/dev/vda earlycon console=3Dhvc0" \
+>>>>>>>       -device virtio-net-pci,netdev=3Dnet0 \
+>>>>>>>       -netdev user,id=3Dnet0 \
+>>>>>>>       -device virtio-9p-device,fsdev=3Dshr0,mount_tag=3Dshr0 \
+>>>>>>>       -fsdev local,security_model=3Dnone,path=3D../../,id=3Dshr0
+>>>>>>>=20
+>>>>>>> Yes, I=E2=80=99m using Linaro=E2=80=99s CCA capable OP-TEE =
+builds above.     =20
+>>>>>>=20
+>>>>>> I'm a little curious why optee is relevant for this but shouldn't =
+matter as long
+>>>>>> as an appropriate EDK2 is loaded.
+>>>>>>=20
+>>>>>=20
+>>>>> I picked up your tree=E2=80=99s =E2=80=9Cmaster=E2=80=9D and =
+=E2=80=9Ccxl-next=E2=80=9D as of today, and only the latter at least =
+booted.
+>>>>> The former gives:
+>>>>>=20
+>>>>> qemu-system-aarch64: Property 'virt-9.2-machine.cxl' not found
+>>>>>=20
+>>>>> Should I stick with the cxl-next? My concern is that the base QEMU =
+version is a bit old
+>>>>> 7.0.50.   =20
+>>>>=20
+>>>> Always use the latest dated branch on that tree.  I release =
+whenever there
+>>>> is something new to carry or a major rebase needed.
+>>>>=20
+>>>> cxl-<date> is the right branch to use. Hope that helps.   =20
+>>>=20
+>>> When do you think you want to get them (aarch64 specific?) merged =
+mainline. Any reason you want to carry the patches by yourself? =20
+>>=20
+>> Nothing much has changed since I presented on this at Linaro connect =
+in 2023.
+>> https://resources.linaro.org/en/resource/hM986DSHfoTrZ98UjpvLg1
+>>=20
+>> The issue is device tree bindings for PCI Expander bridgess and the =
+fact that
+>> those need to be generated without the full enumeration that EDK2 is =
+doing
+>> prior to ACPI final table builds. In order to move forward with that =
+it
+>> needs a bunch of work to prove that we absolutely cannot get patches
+>> upstream to support kernel base enumeration and breaking up of the
+>> various resources (like EDK2 does).
+>=20
+> I was talking to Peter Maydell earlier and given developments in the =
+last couple
+> of years that have by necessity been ACPI only in arm virt he is less
+> opposed to ACPI only features being added where device tree is =
+challenging.
+>=20
+> So we may be able to move forwards without device tree support.
+>=20
+> The PXB enumeration question is also relevant for managing multiple
+> vIOMMUs to represent multiple physical IOMMUs with the correct =
+isolation
+> and do it efficiently which is probably a more pressing usecase than =
+CXL emulation.
+> The discussion was mainly about that usecase, but maybe it also =
+unblocks
+> upstreaming this support.
+>=20
+> Thanks,
+>=20
+> Jonathan
+
+I finally made some CXL tests ran within the ndctl test framework along =
+with the kernel modules (QEMU is on your cxl-2024-11-27 branch) on =
+aarch64. However, the recent rebase cxl-2025-01-24 fails to start the =
+system emulation
+
+qemu-system-aarch64: Property 'virt-10.0-machine.cxl' not found
+
+The build did not complain, what kind of tests you run against your =
+periodical QEMU rebase?
+
+Itaru.=20
+
+>=20
+>>=20
+>> Given PXB enumeration in kernel has some issues on ARM anyway (that =
+you can paper
+>> over with _DSM 5 - it self requiring an extra patch that isn't =
+upstreamable because
+>> of IO port issues) there is quite a bit of work needed, mostly not in =
+QEMU.
+>> Or convince Peter and others that not all virt support needs DT =
+bindings
+>> (note that PXB for PCIE has been supported for years without an DT =
+support,
+>> just no one noticed!)
+>>=20
+>> After that we'd need to figure out CXL DT bindings in general and add =
+kernel
+>> code support - despite there being no known DT based CXL systems out =
+there, so
+>> that is going to be hard to do.  Various CXL kernel maintainers have =
+expressed
+>> they aren't against such support, but it's hardly going to be review =
+priority
+>> (other than for me if someone else does the work!)
+>>=20
+>> For me this isn't particularly high priority. The ARM bit is fairly =
+easy to rebase.
+>> I would like to see it solved, but it is behind various other items =
+on my
+>> backlog.
+>>=20
+>> There are SBSA machine patches on list, but it's not a useful =
+platform for
+>> CXL kernel code development because of the limited supported =
+configurations
+>> (in keeping with the more or less fixed model that SBSA-ref uses).
+>>=20
+>> Jonathan
+>>=20
+>>=20
+>>=20
+>>>=20
+>>> Itaru.
+>>>=20
+>>>>=20
+>>>> Jonathan
+>>>>=20
+>>>>>=20
+>>>>> Thanks,
+>>>>> Itaru.
+>>>>>=20
+>>>>>> Jonathan
+>>>>>>=20
+>>>>>>>=20
+>>>>>>> Let me know which branch you were suggesting.
+>>>>>>>=20
+>>>>>>> Thanks,
+>>>>>>> Itaru.=20
+>>>>>>>=20
+>>>>>>>>=20
+>>>>>>>> Note my main development work is on arm64 so that tends to work
+>>>>>>>> more reliably than x86 which I only lightly test for stuff that
+>>>>>>>> isn't ready for upstream yet.
+>>>>>>>>=20
+>>>>>>>> Give me a shout if you run into any problems.
+>>>>>>>>=20
+>>>>>>>> The main blocker on upstreaming this is resolving the missing =
+device tree
+>>>>>>>> support for PCI expander bridges.  I've not made any progress =
+on this since
+>>>>>>>> talk at Linaro connect in 2023.
+>>>>>>>>=20
+>>>>>>>> Jonathan
+>>>>>>>>=20
+>>>>>>>>=20
+>>>>>>>>>=20
+>>>>>>>>>=20
+>>>>>>>>> Thanks
+>>>>>>>>> Zhijian
+>>>>>>>>>=20
+>>>>>>>>>> If there=E2=80=99s a WIP branch, a pointer would be =
+appreciated.
+>>>>>>>>>>=20
+>>>>>>>>>> Itaru         =20
+
+
 
