@@ -4,107 +4,117 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7C430C0218D
-	for <qemu-devel@archiver.kernel.org>; Wed, 29 Jan 2025 16:13:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E37A4C0218D
+	for <qemu-devel@archiver.kernel.org>; Wed, 29 Jan 2025 16:14:31 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tdAWC-00042A-TE; Wed, 29 Jan 2025 11:02:21 -0500
+	id 1tdAZv-0001qd-TO; Wed, 29 Jan 2025 11:06:12 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1tdAVK-0003GI-NG
- for qemu-devel@nongnu.org; Wed, 29 Jan 2025 11:01:26 -0500
-Received: from smtp-out1.suse.de ([195.135.223.130])
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1tdAWP-0004Bx-0E
+ for qemu-devel@nongnu.org; Wed, 29 Jan 2025 11:02:33 -0500
+Received: from smtp-out2.suse.de ([2a07:de40:b251:101:10:150:64:2])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1tdAVI-0005EF-6f
- for qemu-devel@nongnu.org; Wed, 29 Jan 2025 11:01:25 -0500
-Received: from imap1.dmz-prg2.suse.org (unknown [10.150.64.97])
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1tdAWM-0005RR-Bs
+ for qemu-devel@nongnu.org; Wed, 29 Jan 2025 11:02:31 -0500
+Received: from imap1.dmz-prg2.suse.org (imap1.dmz-prg2.suse.org
+ [IPv6:2a07:de40:b281:104:10:150:64:97])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
  (No client certificate requested)
- by smtp-out1.suse.de (Postfix) with ESMTPS id 1FD5521109;
- Wed, 29 Jan 2025 16:01:21 +0000 (UTC)
+ by smtp-out2.suse.de (Postfix) with ESMTPS id DDCD01F387;
+ Wed, 29 Jan 2025 16:02:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1738166481; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ t=1738166547; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
  mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=tyQ8iNi8nTPP5FzNwsYboT5UyLB4GDl+YnTjn8T3EEs=;
- b=h5+NFBYhE7yJDOhCaHmabaBELM4NdNNBfIeEv+25JMGCVLd6su2Q/8wUklq6Nau3O3Q082
- D5XQTqlKS6RrnfCcC6ExdKXSoVlAYakaG6pzir5EZYEoxUapDYLz1TRFNwwj95lFgIrJkg
- FJR7vuAytqCJwaaCesEB+uISFlzH7So=
+ bh=OdVk05hBbALDRP/FFPNs0KUa3stYnONnTa908dqriWM=;
+ b=a0R2nN3HANDQ9Byfqs1ByYrhyVXhv6MMVLEPMgvyq5hhUbf9HdaGrAXF5r1DncAHyKoLgH
+ ZLAoud5dnUNZxlVIoVDSWWRwQqjX5PA6/EhAqaQmWJkFoMjjhLtABN9VEXkvwsOIJvx1F4
+ dippG7tsZceXnQ1dr0ZFRVQ6aeiCyRU=
 DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1738166481;
+ s=susede2_ed25519; t=1738166547;
  h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
  mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=tyQ8iNi8nTPP5FzNwsYboT5UyLB4GDl+YnTjn8T3EEs=;
- b=nIi07LzbjqE88M6PV/8L+DXQlzDzAFe3XTjUfem7cDc6ZxkMMPD/ctT1Y5ZPOffjm7pVks
- T3eL66Tsh2mj82AQ==
-Authentication-Results: smtp-out1.suse.de;
-	none
+ bh=OdVk05hBbALDRP/FFPNs0KUa3stYnONnTa908dqriWM=;
+ b=soTH9HCltxIwIafXx2g8VQoE+6/xXq1iezdCWMD/nnyQxGBPHwDDmB+RqVSIiIjLAjpFbB
+ lIByn8Pa0GcSSkAA==
+Authentication-Results: smtp-out2.suse.de;
+ dkim=pass header.d=suse.de header.s=susede2_rsa header.b=a0R2nN3H;
+ dkim=pass header.d=suse.de header.s=susede2_ed25519 header.b=soTH9HCl
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1738166481; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ t=1738166547; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
  mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=tyQ8iNi8nTPP5FzNwsYboT5UyLB4GDl+YnTjn8T3EEs=;
- b=h5+NFBYhE7yJDOhCaHmabaBELM4NdNNBfIeEv+25JMGCVLd6su2Q/8wUklq6Nau3O3Q082
- D5XQTqlKS6RrnfCcC6ExdKXSoVlAYakaG6pzir5EZYEoxUapDYLz1TRFNwwj95lFgIrJkg
- FJR7vuAytqCJwaaCesEB+uISFlzH7So=
+ bh=OdVk05hBbALDRP/FFPNs0KUa3stYnONnTa908dqriWM=;
+ b=a0R2nN3HANDQ9Byfqs1ByYrhyVXhv6MMVLEPMgvyq5hhUbf9HdaGrAXF5r1DncAHyKoLgH
+ ZLAoud5dnUNZxlVIoVDSWWRwQqjX5PA6/EhAqaQmWJkFoMjjhLtABN9VEXkvwsOIJvx1F4
+ dippG7tsZceXnQ1dr0ZFRVQ6aeiCyRU=
 DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1738166481;
+ s=susede2_ed25519; t=1738166547;
  h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
  mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=tyQ8iNi8nTPP5FzNwsYboT5UyLB4GDl+YnTjn8T3EEs=;
- b=nIi07LzbjqE88M6PV/8L+DXQlzDzAFe3XTjUfem7cDc6ZxkMMPD/ctT1Y5ZPOffjm7pVks
- T3eL66Tsh2mj82AQ==
+ bh=OdVk05hBbALDRP/FFPNs0KUa3stYnONnTa908dqriWM=;
+ b=soTH9HCltxIwIafXx2g8VQoE+6/xXq1iezdCWMD/nnyQxGBPHwDDmB+RqVSIiIjLAjpFbB
+ lIByn8Pa0GcSSkAA==
 Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
  (No client certificate requested)
- by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id CE13A137DB;
- Wed, 29 Jan 2025 16:01:19 +0000 (UTC)
+ by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 58794137DB;
+ Wed, 29 Jan 2025 16:02:26 +0000 (UTC)
 Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
- by imap1.dmz-prg2.suse.org with ESMTPSA id uEwyI89QmmffPAAAD6G6ig
- (envelope-from <farosas@suse.de>); Wed, 29 Jan 2025 16:01:19 +0000
+ by imap1.dmz-prg2.suse.org with ESMTPSA id qLyyBhJRmmffPAAAD6G6ig
+ (envelope-from <farosas@suse.de>); Wed, 29 Jan 2025 16:02:26 +0000
 From: Fabiano Rosas <farosas@suse.de>
 To: qemu-devel@nongnu.org
-Cc: Peter Xu <peterx@redhat.com>,
-	Steve Sistare <steven.sistare@oracle.com>
-Subject: [PULL 06/42] memory: add RAM_PRIVATE
-Date: Wed, 29 Jan 2025 13:00:23 -0300
-Message-Id: <20250129160059.6987-7-farosas@suse.de>
+Cc: Peter Xu <peterx@redhat.com>, Jiri Denemark <jdenemar@redhat.com>,
+ Juraj Marcin <jmarcin@redhat.com>
+Subject: [PULL 41/42] migration: Trivial cleanup on JSON writer of
+ vmstate_save()
+Date: Wed, 29 Jan 2025 13:00:58 -0300
+Message-Id: <20250129160059.6987-42-farosas@suse.de>
 X-Mailer: git-send-email 2.35.3
 In-Reply-To: <20250129160059.6987-1-farosas@suse.de>
 References: <20250129160059.6987-1-farosas@suse.de>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-Spamd-Result: default: False [-2.80 / 50.00]; BAYES_HAM(-3.00)[100.00%];
+X-Rspamd-Queue-Id: DDCD01F387
+X-Rspamd-Action: no action
+X-Spamd-Result: default: False [-3.01 / 50.00]; BAYES_HAM(-3.00)[99.99%];
  MID_CONTAINS_FROM(1.00)[]; NEURAL_HAM_LONG(-1.00)[-1.000];
- R_MISSING_CHARSET(0.50)[]; NEURAL_HAM_SHORT(-0.20)[-1.000];
- MIME_GOOD(-0.10)[text/plain]; FUZZY_BLOCKED(0.00)[rspamd.com];
- MIME_TRACE(0.00)[0:+]; TO_MATCH_ENVRCPT_ALL(0.00)[];
- ARC_NA(0.00)[];
+ R_MISSING_CHARSET(0.50)[];
+ R_DKIM_ALLOW(-0.20)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
+ NEURAL_HAM_SHORT(-0.20)[-1.000]; MIME_GOOD(-0.10)[text/plain];
+ MX_GOOD(-0.01)[]; TO_MATCH_ENVRCPT_ALL(0.00)[]; ARC_NA(0.00)[];
  DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
- RCVD_TLS_ALL(0.00)[]; RCPT_COUNT_THREE(0.00)[3];
- FROM_HAS_DN(0.00)[]; TO_DN_SOME(0.00)[];
- FROM_EQ_ENVFROM(0.00)[]; RCVD_VIA_SMTP_AUTH(0.00)[];
- RCVD_COUNT_TWO(0.00)[2];
- DBL_BLOCKED_OPENRESOLVER(0.00)[suse.de:mid,suse.de:email,oracle.com:email]
-Received-SPF: pass client-ip=195.135.223.130; envelope-from=farosas@suse.de;
- helo=smtp-out1.suse.de
+ TO_DN_SOME(0.00)[]; MIME_TRACE(0.00)[0:+];
+ RBL_SPAMHAUS_BLOCKED_OPENRESOLVER(0.00)[2a07:de40:b281:104:10:150:64:97:from]; 
+ FUZZY_BLOCKED(0.00)[rspamd.com]; RCVD_TLS_ALL(0.00)[];
+ DKIM_TRACE(0.00)[suse.de:+]; RCVD_COUNT_TWO(0.00)[2];
+ FROM_EQ_ENVFROM(0.00)[]; FROM_HAS_DN(0.00)[];
+ SPAMHAUS_XBL(0.00)[2a07:de40:b281:104:10:150:64:97:from];
+ RECEIVED_SPAMHAUS_BLOCKED_OPENRESOLVER(0.00)[2a07:de40:b281:106:10:150:64:167:received];
+ R_RATELIMIT(0.00)[to_ip_from(RLi3368pnyb3ujpcs6u1hud8b3)];
+ RCVD_VIA_SMTP_AUTH(0.00)[]; RCPT_COUNT_THREE(0.00)[4];
+ DBL_BLOCKED_OPENRESOLVER(0.00)[suse.de:dkim,suse.de:mid,suse.de:email]
+X-Rspamd-Server: rspamd1.dmz-prg2.suse.org
+Received-SPF: pass client-ip=2a07:de40:b251:101:10:150:64:2;
+ envelope-from=farosas@suse.de; helo=smtp-out2.suse.de
 X-Spam_score_int: -43
 X-Spam_score: -4.4
 X-Spam_bar: ----
 X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_FILL_THIS_FORM_SHORT=0.01 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -120,143 +130,55 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Steve Sistare <steven.sistare@oracle.com>
+From: Peter Xu <peterx@redhat.com>
 
-Define the RAM_PRIVATE flag.
+Two small cleanups in the same section of vmstate_save():
 
-In RAMBlock creation functions, if MAP_SHARED is 0 in the flags parameter,
-in a subsequent patch the implementation may still create a shared mapping
-if other conditions require it.  Callers who specifically want a private
-mapping, eg for objects specified by the user, must pass RAM_PRIVATE.
+  - Check vmdesc before the "mixed null/non-null data in array" logic, to
+  be crystal clear that it's only about the JSON writer, not the vmstate on
+  its own in the migration stream.
 
-After RAMBlock creation, MAP_SHARED in the block's flags indicates whether
-the block is shared or private, and MAP_PRIVATE is omitted.
+  - Since we have is_null variable now, use that to replace a check.
 
-Signed-off-by: Steve Sistare <steven.sistare@oracle.com>
-Reviewed-by: Peter Xu <peterx@redhat.com>
-Link: https://lore.kernel.org/r/1736967650-129648-6-git-send-email-steven.sistare@oracle.com
+Signed-off-by: Peter Xu <peterx@redhat.com>
+Tested-by: Jiri Denemark <jdenemar@redhat.com>
+Reviewed-by: Juraj Marcin <jmarcin@redhat.com>
+Link: https://lore.kernel.org/r/20250114230746.3268797-17-peterx@redhat.com
 Signed-off-by: Fabiano Rosas <farosas@suse.de>
 ---
- backends/hostmem-epc.c   |  2 +-
- backends/hostmem-file.c  |  2 +-
- backends/hostmem-memfd.c |  2 +-
- backends/hostmem-ram.c   |  2 +-
- include/exec/memory.h    | 10 ++++++++++
- system/physmem.c         | 15 ++++++++++++---
- 6 files changed, 26 insertions(+), 7 deletions(-)
+ migration/vmstate.c | 6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
-diff --git a/backends/hostmem-epc.c b/backends/hostmem-epc.c
-index eb4b95dfd7..1fa2d031e4 100644
---- a/backends/hostmem-epc.c
-+++ b/backends/hostmem-epc.c
-@@ -36,7 +36,7 @@ sgx_epc_backend_memory_alloc(HostMemoryBackend *backend, Error **errp)
+diff --git a/migration/vmstate.c b/migration/vmstate.c
+index 82bd005a83..047a52af89 100644
+--- a/migration/vmstate.c
++++ b/migration/vmstate.c
+@@ -459,6 +459,8 @@ int vmstate_save_state_v(QEMUFile *f, const VMStateDescription *vmsd,
+                 }
  
-     backend->aligned = true;
-     name = object_get_canonical_path(OBJECT(backend));
--    ram_flags = (backend->share ? RAM_SHARED : 0) | RAM_PROTECTED;
-+    ram_flags = (backend->share ? RAM_SHARED : RAM_PRIVATE) | RAM_PROTECTED;
-     return memory_region_init_ram_from_fd(&backend->mr, OBJECT(backend), name,
-                                           backend->size, ram_flags, fd, 0, errp);
- }
-diff --git a/backends/hostmem-file.c b/backends/hostmem-file.c
-index 46321fda84..691a827819 100644
---- a/backends/hostmem-file.c
-+++ b/backends/hostmem-file.c
-@@ -82,7 +82,7 @@ file_backend_memory_alloc(HostMemoryBackend *backend, Error **errp)
+                 /*
++                 * This logic only matters when dumping VM Desc.
++                 *
+                  * Due to the fake nullptr handling above, if there's mixed
+                  * null/non-null data, it doesn't make sense to emit a
+                  * compressed array representation spanning the entire array
+@@ -466,7 +468,7 @@ int vmstate_save_state_v(QEMUFile *f, const VMStateDescription *vmsd,
+                  * vs. nullptr). Search ahead for the next null/non-null element
+                  * and start a new compressed array if found.
+                  */
+-                if (field->flags & VMS_ARRAY_OF_POINTER &&
++                if (vmdesc && (field->flags & VMS_ARRAY_OF_POINTER) &&
+                     is_null != is_prev_null) {
  
-     backend->aligned = true;
-     name = host_memory_backend_get_name(backend);
--    ram_flags = backend->share ? RAM_SHARED : 0;
-+    ram_flags = backend->share ? RAM_SHARED : RAM_PRIVATE;
-     ram_flags |= fb->readonly ? RAM_READONLY_FD : 0;
-     ram_flags |= fb->rom == ON_OFF_AUTO_ON ? RAM_READONLY : 0;
-     ram_flags |= backend->reserve ? 0 : RAM_NORESERVE;
-diff --git a/backends/hostmem-memfd.c b/backends/hostmem-memfd.c
-index d4d0620e6c..1672da9e30 100644
---- a/backends/hostmem-memfd.c
-+++ b/backends/hostmem-memfd.c
-@@ -52,7 +52,7 @@ memfd_backend_memory_alloc(HostMemoryBackend *backend, Error **errp)
+                     is_prev_null = is_null;
+@@ -504,7 +506,7 @@ int vmstate_save_state_v(QEMUFile *f, const VMStateDescription *vmsd,
+                                     written_bytes);
  
-     backend->aligned = true;
-     name = host_memory_backend_get_name(backend);
--    ram_flags = backend->share ? RAM_SHARED : 0;
-+    ram_flags = backend->share ? RAM_SHARED : RAM_PRIVATE;
-     ram_flags |= backend->reserve ? 0 : RAM_NORESERVE;
-     ram_flags |= backend->guest_memfd ? RAM_GUEST_MEMFD : 0;
-     return memory_region_init_ram_from_fd(&backend->mr, OBJECT(backend), name,
-diff --git a/backends/hostmem-ram.c b/backends/hostmem-ram.c
-index 39aac6bf35..868ae6ca80 100644
---- a/backends/hostmem-ram.c
-+++ b/backends/hostmem-ram.c
-@@ -28,7 +28,7 @@ ram_backend_memory_alloc(HostMemoryBackend *backend, Error **errp)
-     }
- 
-     name = host_memory_backend_get_name(backend);
--    ram_flags = backend->share ? RAM_SHARED : 0;
-+    ram_flags = backend->share ? RAM_SHARED : RAM_PRIVATE;
-     ram_flags |= backend->reserve ? 0 : RAM_NORESERVE;
-     ram_flags |= backend->guest_memfd ? RAM_GUEST_MEMFD : 0;
-     return memory_region_init_ram_flags_nomigrate(&backend->mr, OBJECT(backend),
-diff --git a/include/exec/memory.h b/include/exec/memory.h
-index 3ee1901b52..9f73b59867 100644
---- a/include/exec/memory.h
-+++ b/include/exec/memory.h
-@@ -246,6 +246,16 @@ typedef struct IOMMUTLBEvent {
- /* RAM can be private that has kvm guest memfd backend */
- #define RAM_GUEST_MEMFD   (1 << 12)
- 
-+/*
-+ * In RAMBlock creation functions, if MAP_SHARED is 0 in the flags parameter,
-+ * the implementation may still create a shared mapping if other conditions
-+ * require it.  Callers who specifically want a private mapping, eg objects
-+ * specified by the user, must pass RAM_PRIVATE.
-+ * After RAMBlock creation, MAP_SHARED in the block's flags indicates whether
-+ * the block is shared or private, and MAP_PRIVATE is omitted.
-+ */
-+#define RAM_PRIVATE (1 << 13)
-+
- static inline void iommu_notifier_init(IOMMUNotifier *n, IOMMUNotify fn,
-                                        IOMMUNotifierFlag flags,
-                                        hwaddr start, hwaddr end,
-diff --git a/system/physmem.c b/system/physmem.c
-index e4355649e9..03fac0a64f 100644
---- a/system/physmem.c
-+++ b/system/physmem.c
-@@ -1952,7 +1952,11 @@ RAMBlock *qemu_ram_alloc_from_fd(ram_addr_t size, ram_addr_t max_size,
-     ERRP_GUARD();
-     RAMBlock *new_block;
-     Error *local_err = NULL;
--    int64_t file_size, file_align;
-+    int64_t file_size, file_align, share_flags;
-+
-+    share_flags = ram_flags & (RAM_PRIVATE | RAM_SHARED);
-+    assert(share_flags != (RAM_SHARED | RAM_PRIVATE));
-+    ram_flags &= ~RAM_PRIVATE;
- 
-     /* Just support these ram flags by now. */
-     assert((ram_flags & ~(RAM_SHARED | RAM_PMEM | RAM_NORESERVE |
-@@ -2097,7 +2101,11 @@ RAMBlock *qemu_ram_alloc_internal(ram_addr_t size, ram_addr_t max_size,
- {
-     RAMBlock *new_block;
-     Error *local_err = NULL;
--    int align;
-+    int align, share_flags;
-+
-+    share_flags = ram_flags & (RAM_PRIVATE | RAM_SHARED);
-+    assert(share_flags != (RAM_SHARED | RAM_PRIVATE));
-+    ram_flags &= ~RAM_PRIVATE;
- 
-     assert((ram_flags & ~(RAM_SHARED | RAM_RESIZEABLE | RAM_PREALLOC |
-                           RAM_NORESERVE | RAM_GUEST_MEMFD)) == 0);
-@@ -2172,7 +2180,8 @@ RAMBlock *qemu_ram_alloc_from_ptr(ram_addr_t size, void *host,
- RAMBlock *qemu_ram_alloc(ram_addr_t size, uint32_t ram_flags,
-                          MemoryRegion *mr, Error **errp)
- {
--    assert((ram_flags & ~(RAM_SHARED | RAM_NORESERVE | RAM_GUEST_MEMFD)) == 0);
-+    assert((ram_flags & ~(RAM_SHARED | RAM_NORESERVE | RAM_GUEST_MEMFD |
-+                          RAM_PRIVATE)) == 0);
-     return qemu_ram_alloc_internal(size, size, NULL, NULL, ram_flags, mr, errp);
- }
+                 /* If we used a fake temp field.. free it now */
+-                if (inner_field != field) {
++                if (is_null) {
+                     g_clear_pointer((gpointer *)&inner_field, g_free);
+                 }
  
 -- 
 2.35.3
