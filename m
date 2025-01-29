@@ -4,82 +4,89 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B93B7C0218A
-	for <qemu-devel@archiver.kernel.org>; Wed, 29 Jan 2025 01:48:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id AA2FAC0218A
+	for <qemu-devel@archiver.kernel.org>; Wed, 29 Jan 2025 01:51:26 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tcxC6-0007hh-SG; Tue, 28 Jan 2025 20:48:43 -0500
+	id 1tcxEK-0000t3-Sv; Tue, 28 Jan 2025 20:51:01 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1tcxC4-0007hK-RD; Tue, 28 Jan 2025 20:48:40 -0500
-Received: from mail-vk1-xa2a.google.com ([2607:f8b0:4864:20::a2a])
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1tcxEJ-0000r0-6P
+ for qemu-devel@nongnu.org; Tue, 28 Jan 2025 20:50:59 -0500
+Received: from mail-pl1-x62a.google.com ([2607:f8b0:4864:20::62a])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1tcxC3-0005G4-5T; Tue, 28 Jan 2025 20:48:40 -0500
-Received: by mail-vk1-xa2a.google.com with SMTP id
- 71dfb90a1353d-5188e0c2b52so1879367e0c.1; 
- Tue, 28 Jan 2025 17:48:38 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1tcxEH-0005mX-Gk
+ for qemu-devel@nongnu.org; Tue, 28 Jan 2025 20:50:58 -0500
+Received: by mail-pl1-x62a.google.com with SMTP id
+ d9443c01a7336-216395e151bso3301835ad.0
+ for <qemu-devel@nongnu.org>; Tue, 28 Jan 2025 17:50:57 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1738115318; x=1738720118; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=Q7MpE9inRxOKKIFwH942mtqsH7coM70jyAcWa1TzOB8=;
- b=Ui9cCQmxIGlkgTt87Jb8Zvqf6RIl74XpCsQBz1YIsbBn4ePls5v01cB72yjXIn89Ch
- 8WuZP5p58HNqIshUksBe4+FpXxFJv/ipMQDj2QI6v7U54Ro/KCri2EaVzR+P/f2Acax4
- oSUjQptaiQvN5+Gvlf9rM0wYpbA3lHmDsSjl4nUGfp+3b0lFP7f8PYZhiFhnTAJz5zeM
- Th1va04Lg/HPLLcrocUUwmhqU3UbWwGY/eYJZJnf+vMaQJduxKh89HuH5rMTrf9zSr5P
- zy1YOnAy4ZMhGMOkgc/4uIOJO21ollJ20v81q9TjsZPNdHHOvISt1X3AlEIPKBtreACx
- Ca3g==
+ d=linaro.org; s=google; t=1738115456; x=1738720256; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=hbSk5oKJOts5f7vjrSvodn2hpengGPHgyjMR1OGz05o=;
+ b=fbt+DpX0zxtnmEZDVeYIbhQXPeiV6Vx92ejEMfcl2SpPy6EBFqiIQPnYxDB9hDOByh
+ 4FrEuE4Zvm1Psne9skCbPV2jTF8Wk+4Tuiw9fo7KpA64HoYHgQPWNRyVg5Tzx8doo6XY
+ bCLHxYdUvnWsRnELJpIhrrWC50Pw2LkHSAnGRzg02kDszwTjDzjEiGgDhhvNpKuQke8X
+ 90Lez7HcsWLByyGP8ibHWCbZ7JFCjv6oBkdO9TKUICPeA3WJu+KMPP9DFnrZTl6xV4Yu
+ 4KonkC85oZtI1i7xej5byrbmIyINLKS3qIKq936REXg1Pch+T/QFQ0e++tOs2uNYzfcI
+ mzrw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1738115318; x=1738720118;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=Q7MpE9inRxOKKIFwH942mtqsH7coM70jyAcWa1TzOB8=;
- b=UgJvvaPUHPSQ5Lno0xsADKmhITKDUGyIN0R0YL8vYiyNW2IlZbALdb6vwaDWF+yhAo
- B0J3zbVed05gfAeSDjQWQcB0RUwAIwjk6rfrrufqB2T1EG+k1Pv90XlQw0KRolJNagGl
- MGa8W0mDlc6lbABMr8TkrnA5LM/EG7S7ENQXEA7/1nof1BxtPc3SlQEcR2FD27OjPEsw
- 3TThEDxu5Xc97gsNSQFEcVxyr7DXxRIK5CSxNrNSxcr+LNgcic+Jy9E55N08B8DR/Sjf
- EsWBvS+LRKPneCj+2X2/8Eh5R1kcfJtn76geBA7nTX6WtbZnuA6Q/a86nP+pGFZuaX02
- M4eg==
+ d=1e100.net; s=20230601; t=1738115456; x=1738720256;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=hbSk5oKJOts5f7vjrSvodn2hpengGPHgyjMR1OGz05o=;
+ b=czFtonZ5vZXV6IHr6K2X01g8eWdLqYz1zjzhpLTAyO5sl2cxY87mBVIxwBRHmYDX75
+ vgzyjbaXDDZsW3mivEvIc4UdfCPxThS614ib5NmrQlpuGOdIrC1AaGOyo5B388Vtlw0H
+ rGEf548s3jLzVP4x9T+1GnL+MO7J0IinNZiqXAizpNQDG5l8ZjO2hDKJBx7wqGg3b5WI
+ cPWVp5+imYLoCCB8kK4AThOzXE/YoAWs1QRKFqQJC2nBdGoMibQPo2B8EguLBBC0g0P6
+ g5hJe87/S0vKTTbp+9nXuY276HiY8yuWvOFUe+fFOJfASVVJ6QrbPUwJjCNJwG057WA1
+ yeXg==
 X-Forwarded-Encrypted: i=1;
- AJvYcCUef1ARathXRhb7OP6wqZmzrsljP8+Iu/uKFZTV7pCyK+ienK7ys/ly0MiHqsbNc0u1VwGnkRPAbzv+@nongnu.org
-X-Gm-Message-State: AOJu0YzehpEq/52hg5VGZ1kMIzk2gT+1wjOfw3oAKuvEX0fSkDrBIv8N
- xUHs+9ZovqmsmUHBicOqMVlXkQRYGMpHTpvzMeWwmrOrmjv9f3KO8uwOnERJMI3aueqGm9xArHN
- N4Qmd5gYdwmL2mBSw+6+ALKZfPCv+cA==
-X-Gm-Gg: ASbGnctSvrRdl0NIRcjHRc1Hx42fSLzfxvhXX1FK8bsAa1/26L0499kDJu6rJdnqclW
- eHkQlQt6Z+bmIZPcx+BJMd0Ekr7G3AOIeU+wtHzVa45TjusNf3urLeOTsuU2Hbl4YKB/NZYKF9a
- ndvErOrbS33+QmjKIuDoOJzBO6Ww==
-X-Google-Smtp-Source: AGHT+IG6cB0+lcZyQn04P51zfEpHrzi0biN5QUqGu26PXz8ov830X5MxYKEk+lT3n2BX4CyU+uCQaQiqLCdyL58XCkA=
-X-Received: by 2002:a05:6122:17a6:b0:516:240b:58ff with SMTP id
- 71dfb90a1353d-51e9e45ecc4mr1920942e0c.5.1738115317630; Tue, 28 Jan 2025
- 17:48:37 -0800 (PST)
+ AJvYcCV394HEXoXi8fF737XqaQ2IldN1u4hhPuFUqiyJkkidwHcgT9aZssihwAf01LDLWExvcFjDUCevdKsM@nongnu.org
+X-Gm-Message-State: AOJu0YwqtTq5aMg+aQPfzXVCvKvuwuJ61BuUacokTtenrL67If6cD0y5
+ /sD7YZpRku0/o0AfuL88TxMzIbX2+HW8TVO9FI2zbC/hAhkYzgX5NgDgJs8SXGI=
+X-Gm-Gg: ASbGncsGpnMgyL6TnH5m4aVANtKkyXUnvR4OQv1oep6MR99pIlDBM/RqRWRp+SuiYlh
+ uelMy9nMU5ewda3oDM+qfzzXR5hzGb/RV8JXURI3R187KXxNTULaAdg36mnq+c/TuhnW2hMeXhq
+ rPEkdK7220y7fG4LW12Z21xSVw0nTWwswhwjpX1wXy04pTX5x9N7AYE3hWAHfbvqLWGcyKIDxmp
+ q0N6FHadl08aFVWinLzp9MNcVEYSZAG04hnKJ6iqKwshNjNkVQ39Ac9c0IlUn6dRSZjMbZnB8Ri
+ rM3B1y5XYg6OyrIZbv5aYPC3SHf4wvQgW2Rn9EhbsOuHovbe1MPscNJcog==
+X-Google-Smtp-Source: AGHT+IH6DdXgWKpy95TqAwjnfh0hu9LFYA2+drgRWuYt4ls6RZIUzKVMA/Uu4/jXatV+9T/M4+fy0g==
+X-Received: by 2002:a17:903:286:b0:215:9eac:1857 with SMTP id
+ d9443c01a7336-21dcc43a636mr79278045ad.5.1738115455961; 
+ Tue, 28 Jan 2025 17:50:55 -0800 (PST)
+Received: from [192.168.0.4] (71-212-32-190.tukw.qwest.net. [71.212.32.190])
+ by smtp.gmail.com with ESMTPSA id
+ d9443c01a7336-21da414cc20sm89074645ad.165.2025.01.28.17.50.55
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Tue, 28 Jan 2025 17:50:55 -0800 (PST)
+Message-ID: <a0d97225-f9f0-4765-bc73-4730d986d8b7@linaro.org>
+Date: Tue, 28 Jan 2025 17:50:54 -0800
 MIME-Version: 1.0
-References: <20250121170626.1992570-1-dbarboza@ventanamicro.com>
-In-Reply-To: <20250121170626.1992570-1-dbarboza@ventanamicro.com>
-From: Alistair Francis <alistair23@gmail.com>
-Date: Wed, 29 Jan 2025 11:48:10 +1000
-X-Gm-Features: AWEUYZkAcBUtot1696tZIMqqqjThBCemLCkqXcIy5bEjdr4PXtOjvTLOJfuot70
-Message-ID: <CAKmqyKN-+Jo0Hoexk5Up=DBiHqmB_6-SK87Gwx-+bEORoAwQQQ@mail.gmail.com>
-Subject: Re: [PATCH v3 0/2] target/riscv: throw debug exception before page
- fault
-To: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
-Cc: qemu-devel@nongnu.org, qemu-riscv@nongnu.org, alistair.francis@wdc.com, 
- bmeng@tinylab.org, liwei1518@gmail.com, zhiwei_liu@linux.alibaba.com, 
- palmer@rivosinc.com, richard.henderson@linaro.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::a2a;
- envelope-from=alistair23@gmail.com; helo=mail-vk1-xa2a.google.com
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 4/4] target/hppa: Implement space register hashing for
+ 64-bit HP-UX
+To: deller@kernel.org, qemu-devel@nongnu.org
+Cc: deller@gmx.de
+References: <20250128224817.24715-1-deller@kernel.org>
+ <20250128224817.24715-5-deller@kernel.org>
+Content-Language: en-US
+From: Richard Henderson <richard.henderson@linaro.org>
+In-Reply-To: <20250128224817.24715-5-deller@kernel.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::62a;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x62a.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -97,39 +104,16 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, Jan 22, 2025 at 3:07=E2=80=AFAM Daniel Henrique Barboza
-<dbarboza@ventanamicro.com> wrote:
->
-> Hi,
->
-> In this new version, in patch 2,  we're using the address 'size' val from
-> riscv_cpu_tlb_fill() instead of infering it from the CPU XLEN.
->
-> No other changes made. Patches based on master.
->
-> Changes from v2:
-> - patch 2:
->   - use 'size' instead of infering wp_len using the CPU XLEN
-> - v2 link: https://lore.kernel.org/qemu-riscv/20250120204910.1317013-1-db=
-arboza@ventanamicro.com/
->
-> Daniel Henrique Barboza (2):
->   target/riscv/debug.c: use wp size =3D 4 for 32-bit CPUs
->   target/riscv: throw debug exception before page fault
+On 1/28/25 14:45, deller@kernel.org wrote:
+> @@ -4635,6 +4640,7 @@ static void hppa_tr_init_disas_context(DisasContextBase *dcbase, CPUState *cs)
+>       ctx->tb_flags = ctx->base.tb->flags;
+>       ctx->is_pa20 = hppa_is_pa20(cpu_env(cs));
+>       ctx->psw_xb = ctx->tb_flags & (PSW_X | PSW_B);
+> +    ctx->gva_offset_mask = cpu_env(cs)->gva_offset_mask;
 
-Thanks!
+This is invalid because no portion of ds2 affects tb_flags.
+You can't just read from env.
 
-Applied to riscv-to-apply.next
 
-Alistair
-
->
->  target/riscv/cpu_helper.c | 18 ++++++++++++++++++
->  target/riscv/debug.c      |  6 ++++--
->  2 files changed, 22 insertions(+), 2 deletions(-)
->
-> --
-> 2.47.1
->
->
+r~
 
