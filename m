@@ -4,93 +4,69 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8ECBEC0218D
-	for <qemu-devel@archiver.kernel.org>; Wed, 29 Jan 2025 20:05:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6573BC0218D
+	for <qemu-devel@archiver.kernel.org>; Wed, 29 Jan 2025 20:25:48 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tdEIq-0001dh-Mv; Wed, 29 Jan 2025 15:04:50 -0500
+	id 1tdEcS-000467-2y; Wed, 29 Jan 2025 15:25:04 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1tdEIo-0001dJ-IH
- for qemu-devel@nongnu.org; Wed, 29 Jan 2025 15:04:46 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
+ id 1tdEcG-00044m-4l
+ for qemu-devel@nongnu.org; Wed, 29 Jan 2025 15:24:53 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1tdEIm-0007K1-Cd
- for qemu-devel@nongnu.org; Wed, 29 Jan 2025 15:04:46 -0500
+ (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
+ id 1tdEcE-00016m-KF
+ for qemu-devel@nongnu.org; Wed, 29 Jan 2025 15:24:51 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1738181081;
+ s=mimecast20190719; t=1738182288;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=owhrd8cWGW4rtZQz8iu8nYjLIYR3mq1uvIP/BqRMHxk=;
- b=FSrXNa1gVSBaz6hGf/sn4VpmeQSAGbWHS5hA1EU3uIuRRUB6DmWMah0aF2fVVatxrC/SVr
- TBzDhAdQNvwf692dpAfObi870w/K4NbppURhb5hbCM2wRREmZ/ZbUDv5bDuqR7Z9w8VVtU
- FahzUhT27Jz3BRmcyLz7qS6osCjTxfE=
-Received: from mail-wm1-f72.google.com (mail-wm1-f72.google.com
- [209.85.128.72]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-353-hpaR9letP2ycl-KOOej6Jg-1; Wed, 29 Jan 2025 15:04:39 -0500
-X-MC-Unique: hpaR9letP2ycl-KOOej6Jg-1
-X-Mimecast-MFC-AGG-ID: hpaR9letP2ycl-KOOej6Jg
-Received: by mail-wm1-f72.google.com with SMTP id
- 5b1f17b1804b1-43582d49dacso49891845e9.2
- for <qemu-devel@nongnu.org>; Wed, 29 Jan 2025 12:04:39 -0800 (PST)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1738181078; x=1738785878;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=owhrd8cWGW4rtZQz8iu8nYjLIYR3mq1uvIP/BqRMHxk=;
- b=CEWwo5K4YohfiXOc+vCkSgywvG3ZxesRxoRXhGjqK97eSmIhxqlaLleBAdx6vFsudc
- zqXUgCKy4f3fx5OICm6a3E/G7N6gr+3QA5vnJoucTozkndrNL7nTm5Uq9YJPHNFlOi8g
- nv+1XXX3fZoXUqWeMMhVYaMzLHvOPs0mYzMNM73qjgLm9esjTN6/JNCwDkFuLPI5Aoz9
- 1sDF/Fo7v84mlzMI0qdwedjYMnJAjQCF5Ng2uy/TRWFE/IbD6exPaumeAzkqPz9IMNVF
- 5pdqAuVsArl2C036C5bzIfoLIIXP1APTnyTCvpldjE5ssHAxOKMW4LBhRBFRyBFkPCPs
- evEQ==
-X-Gm-Message-State: AOJu0YwMNhZzMlpzaybig/G6vsAdQN0rpKm3mcEC8KJdxJVTsZa5823h
- 30iraydwaKEZBW2t59ZEt8SeDyue3QpGDdVoQ528bWNXxBFReVDTs1wRBB7wLVlFbHsOvywqNkw
- UWAWZQxtosYlElXywCU3YXW6r0MDmY6jPE5Y8XP1ssoZfF8ZIadiJ
-X-Gm-Gg: ASbGnct/h4A2ek+V7VaxPomTM2JR1bzUDiSESQ2gDyji8v//T8mVN8PR9gmLkUKjhUr
- lFVlRvdRsaBWGtudPmJz3BqWPv0QPjiPMJ5lK5vMBWNuPVVr175XkVJG1kqMKD0TU7lPqzK5RMW
- fED44yVW+epf+ElzxuyPU4yrjT52G/Jx67Bw3zkX3iDchJGJGbF1SFIcFiiU5XvbccGxD5U4NfK
- 0eBH0SzYSosKrqg7uoez/O9AMRXbxlzbjcinqB8i7TkUqOcskijUaiROk13oUPYKd1rqMijrQc=
-X-Received: by 2002:a05:600c:4f07:b0:436:6ddf:7a27 with SMTP id
- 5b1f17b1804b1-438dc40da5dmr38237785e9.23.1738181078575; 
- Wed, 29 Jan 2025 12:04:38 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IFeEnz8qBq5ww4bZ52zQTKc+Rpqlvf+dvEBDixCX1tiGA7i/UNZQvbr05wRwHTl/+Uu0J5Xbg==
-X-Received: by 2002:a05:600c:4f07:b0:436:6ddf:7a27 with SMTP id
- 5b1f17b1804b1-438dc40da5dmr38237535e9.23.1738181078238; 
- Wed, 29 Jan 2025 12:04:38 -0800 (PST)
-Received: from redhat.com ([2a02:14f:1f5:abf2:bc7d:34cf:2ab9:c2f9])
- by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-38c2a1764e9sm18211832f8f.17.2025.01.29.12.04.34
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 29 Jan 2025 12:04:37 -0800 (PST)
-Date: Wed, 29 Jan 2025 15:04:30 -0500
-From: "Michael S. Tsirkin" <mst@redhat.com>
-To: Thomas Huth <thuth@redhat.com>
-Cc: qemu-devel@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- Eduardo Habkost <eduardo@habkost.net>
-Subject: Re: [PATCH] hw/i386/pc: Fix crash that occurs when introspecting
- TYPE_PC_MACHINE machines
-Message-ID: <20250129150352-mutt-send-email-mst@kernel.org>
-References: <20250117192106.471029-1-thuth@redhat.com>
- <7e719e2d-1f89-4f67-b519-3279f18bccd6@redhat.com>
+ bh=iqrebWusiKDKbXzQ/dfuOvpGvWxGw+HqkWLlOCM6VOU=;
+ b=Dl0tiTLdYqZNOaF3Ccw5yrTNPRKcEVm3mRv4XEkP8MZAAA1kN/5YuxqpWjMT26P+5I5g28
+ bjKUStJUXC6wM5i5afpZhHohjlZmHqOD+qv9e2+/Va/sWhkGdOFHKAdgDETCeJpuM/URTM
+ pTjV+zpgumbmKBbP4d9G124yqNR8AZc=
+Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-156-fntTB4S4PrKJohtctnhChg-1; Wed,
+ 29 Jan 2025 15:24:45 -0500
+X-MC-Unique: fntTB4S4PrKJohtctnhChg-1
+X-Mimecast-MFC-AGG-ID: fntTB4S4PrKJohtctnhChg
+Received: from mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.40])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 5A7A5180034F; Wed, 29 Jan 2025 20:24:42 +0000 (UTC)
+Received: from localhost (unknown [10.2.17.72])
+ by mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 08D8719560AA; Wed, 29 Jan 2025 20:24:40 +0000 (UTC)
+Date: Wed, 29 Jan 2025 14:17:43 -0500
+From: Stefan Hajnoczi <stefanha@redhat.com>
+To: Peter Maydell <peter.maydell@linaro.org>
+Cc: qemu-devel@nongnu.org
+Subject: Re: [PULL 00/36] target-arm queue
+Message-ID: <20250129191743.GA193481@fedora>
+References: <20250128201314.44038-1-peter.maydell@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: multipart/signed; micalg=pgp-sha256;
+ protocol="application/pgp-signature"; boundary="48KAmklPXh+OWBah"
 Content-Disposition: inline
-In-Reply-To: <7e719e2d-1f89-4f67-b519-3279f18bccd6@redhat.com>
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=mst@redhat.com;
+In-Reply-To: <20250128201314.44038-1-peter.maydell@linaro.org>
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.40
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=stefanha@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -33
 X-Spam_score: -3.4
 X-Spam_bar: ---
 X-Spam_report: (-3.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.3,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -108,69 +84,30 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, Jan 29, 2025 at 08:00:40AM +0100, Thomas Huth wrote:
-> On 17/01/2025 20.21, Thomas Huth wrote:
-> > QEMU currently crashes when you try to inspect the machines based on
-> > TYPE_PC_MACHINE for their properties:
-> > 
-> >   $ echo '{ "execute": "qmp_capabilities" }
-> >           { "execute": "qom-list-properties","arguments":
-> >                        { "typename": "pc-q35-10.0-machine"}}' \
-> >     | ./qemu-system-x86_64 -M pc -qmp stdio
-> >   {"QMP": {"version": {"qemu": {"micro": 50, "minor": 2, "major": 9},
-> >    "package": "v9.2.0-1070-g87e115c122-dirty"}, "capabilities": ["oob"]}}
-> >   {"return": {}}
-> >   Segmentation fault (core dumped)
-> > 
-> > This happens because TYPE_PC_MACHINE machines add a machine_init-
-> > done_notifier in their instance_init function - but instance_init
-> > of machines are not only called for machines that are realized,
-> > but also for machines that are introspected, so in this case the
-> > listener is added for a q35 machine that is never realized. But
-> > since there is already a running pc machine, the listener function
-> > is triggered immediately, causing a crash since it was not for the
-> > right machine it was meant for.
-> > 
-> > Such listener functions must never be installed from an instance_init
-> > function. Let's do it from pc_basic_device_init() instead - this
-> > function is called from the MachineClass->init() function instead,
-> > i.e. guaranteed to be only called once in the lifetime of a QEMU
-> > process.
-> > 
-> > Resolves: https://gitlab.com/qemu-project/qemu/-/issues/2779
-> > Signed-off-by: Thomas Huth <thuth@redhat.com>
-> > ---
-> >   hw/i386/pc.c | 6 +++---
-> >   1 file changed, 3 insertions(+), 3 deletions(-)
-> > 
-> > diff --git a/hw/i386/pc.c b/hw/i386/pc.c
-> > index b46975c8a4..85b8a76455 100644
-> > --- a/hw/i386/pc.c
-> > +++ b/hw/i386/pc.c
-> > @@ -1241,6 +1241,9 @@ void pc_basic_device_init(struct PCMachineState *pcms,
-> >       /* Super I/O */
-> >       pc_superio_init(isa_bus, create_fdctrl, pcms->i8042_enabled,
-> >                       pcms->vmport != ON_OFF_AUTO_ON, &error_fatal);
-> > +
-> > +    pcms->machine_done.notify = pc_machine_done;
-> > +    qemu_add_machine_init_done_notifier(&pcms->machine_done);
-> >   }
-> >   void pc_nic_init(PCMachineClass *pcmc, ISABus *isa_bus, PCIBus *pci_bus)
-> > @@ -1714,9 +1717,6 @@ static void pc_machine_initfn(Object *obj)
-> >       if (pcmc->pci_enabled) {
-> >           cxl_machine_init(obj, &pcms->cxl_devices_state);
-> >       }
-> > -
-> > -    pcms->machine_done.notify = pc_machine_done;
-> > -    qemu_add_machine_init_done_notifier(&pcms->machine_done);
-> >   }
-> >   static void pc_machine_reset(MachineState *machine, ResetType type)
-> 
-> Friendly ping!
-> 
->  Thomas
 
+--48KAmklPXh+OWBah
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
 
-donnu how i missed it.  pls address Philip's comment though.
+Applied, thanks.
+
+Please update the changelog at https://wiki.qemu.org/ChangeLog/10.0 for any user-visible changes.
+
+--48KAmklPXh+OWBah
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iQEzBAEBCAAdFiEEhpWov9P5fNqsNXdanKSrs4Grc8gFAmeaftcACgkQnKSrs4Gr
+c8hxowf/ZnTB9je361X5qpj/5RdLkPHx0f4zyEytvruhVNB7uIgeTfXW+5su2yhG
+g6V2VuU6qypvjs1OTgyPsRf5sKm9ghAao+qaYxdR/aE5y2o8bKrwgqnANvC1coMZ
+EIPtFW1MYd3sryPqLMghlHXflggs1k+HHwt9xTz0HBr4WAjcmGKi5fcz8Ccwappz
+kIA2VK72qwEqbZ+YFQyp3y2E/hyiLT5x1xrUnww0BrFCRngpm01zT5JXr/g3ayMa
+2EEqoAhQdTGytSM8Epn87iP2qr5dnKNT24dfjuBXba3V/LSQHrFNmf7+Ym53kNNU
+2T//iEdOkY+fet6YfloJztYGAZm74A==
+=MxZU
+-----END PGP SIGNATURE-----
+
+--48KAmklPXh+OWBah--
 
 
