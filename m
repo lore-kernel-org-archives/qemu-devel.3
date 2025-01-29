@@ -4,79 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 53400C0218D
-	for <qemu-devel@archiver.kernel.org>; Wed, 29 Jan 2025 01:43:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 39A4AC0218A
+	for <qemu-devel@archiver.kernel.org>; Wed, 29 Jan 2025 01:43:41 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tcx2t-0000oS-9S; Tue, 28 Jan 2025 20:39:11 -0500
+	id 1tcx2v-0000qk-Me; Tue, 28 Jan 2025 20:39:13 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1tcx2n-0000mI-F9
- for qemu-devel@nongnu.org; Tue, 28 Jan 2025 20:39:05 -0500
-Received: from mail-pl1-x632.google.com ([2607:f8b0:4864:20::632])
+ id 1tcx2s-0000oF-7p
+ for qemu-devel@nongnu.org; Tue, 28 Jan 2025 20:39:10 -0500
+Received: from mail-pl1-x62a.google.com ([2607:f8b0:4864:20::62a])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1tcx2j-0003TY-SV
- for qemu-devel@nongnu.org; Tue, 28 Jan 2025 20:39:05 -0500
-Received: by mail-pl1-x632.google.com with SMTP id
- d9443c01a7336-216395e151bso3230195ad.0
- for <qemu-devel@nongnu.org>; Tue, 28 Jan 2025 17:39:01 -0800 (PST)
+ id 1tcx2q-0003Vl-Ba
+ for qemu-devel@nongnu.org; Tue, 28 Jan 2025 20:39:10 -0500
+Received: by mail-pl1-x62a.google.com with SMTP id
+ d9443c01a7336-216395e151bso3230935ad.0
+ for <qemu-devel@nongnu.org>; Tue, 28 Jan 2025 17:39:07 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1738114740; x=1738719540; darn=nongnu.org;
+ d=linaro.org; s=google; t=1738114747; x=1738719547; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=yghuBtj/DIiN8eRSXNAxvUfkjrNQffbHrvxPfCnEeII=;
- b=bhPapG1RGtve432mqt5mAVNRUTBnPDwcMbAtrdcOU7m/nDsDPaBYMPLJNfiivBYp3I
- QixjLO1ue2MmsyAHw/COrzCuCm+75doCws5GdJlGQcWsE2bn0TwoV343Sf8PjIQPFcQr
- ha8CEBn9BnApT0td4ogKUDiO+6hpQPtkszr96rASxDAn8ULrrUr2U3nQwCmnt1Wg55WC
- yJjgnL7AGMC8ERim8NLhp6sszHw9XQd9bBYiWjXq5qiYDRlxv7IVAD0M7PKEH5+xbnU8
- QA1RdnFvpgAsoGVCi4vLIIhdD5g3Zf4V9cgtGr5sCM7doBEvT4Sj7zFnSjTQwGp7zrPi
- h9Iw==
+ bh=l8VYMWiplic3kZJLmX14exYupN5jn8vNAASn/D9iwtU=;
+ b=rwVskywwgncaOfMEjA3fCRWqkVMEBVW7oxTXa5xHqTbhCtyIOYSIPggYwxn0RSMhfp
+ qMkRMgUQjOU7IaAxUeeIya/YO4RDWoNAYcqx+Nw9ZTKyLYMMc8b3gZVwhtHj4GfFoRXG
+ poPd8d29NWc16eSHtbGfRJuhJaym6MGeCgLkx0z9+3EZobwDoyZjhjrmX4BkS6j5g3P/
+ QzEGF9t34efCWWEoBR9sCE+yx70cngJYrQlJkcZyBa2Qcj7zr5Rd32jUjOgTNPHsBdPt
+ R7AypIdvwmFwEBCExWUBVe0HLkLqvviDnhvj4M3e/tPG5BOl7qOwQkX06mpqUQvU1XmW
+ BruA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1738114740; x=1738719540;
+ d=1e100.net; s=20230601; t=1738114747; x=1738719547;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=yghuBtj/DIiN8eRSXNAxvUfkjrNQffbHrvxPfCnEeII=;
- b=Tts3+hAZyU7w/1gVPUYlNGmw9cOyF75hYSTXAat2PdTnvrcDoaN62uy5Swo5dBtKHw
- Onxd6iwhVID8w9oq0jY2WRfDMq84ozXW40+FvoRU544jpwADxQ2v+M9yKBdLrek960Jf
- a+KJD4fEeYJr46QvqxWQIG9OmazXI4/EuCma9whKGF13c1K8Z2WpYl8rJdyhXWv00MVm
- AY/DxvxCpRZr3mz2igZibBSAwr7azMwxq7TWdgNypy5YlrcRuWaYcBhED/6StWuGNkVJ
- tMWrvSIjmOOvHKWWMFcU6fmHZg4BdL4SmkFmj2AeQA4yBMFRrl2rt9IdRkN/Wsgsbze+
- bGfA==
-X-Gm-Message-State: AOJu0YzXnBWNCgX008cSKXiXdJP/rXA2paCwk+/dmGM0UTyGnqWMVyIT
- SKYNNihmuwYNGtT78Mnl8ZKBwrDwObLBKcDvhFlBon0p9zeQMmB4B8er7iOlleOZwLwVYQ8c+2P
- z
-X-Gm-Gg: ASbGnct0cRwMXyH++2xb8L/0Z2iFMWKVGrPjuWKnCx7BmklZcRSnXKfIwsAaj/lgyfj
- fcKnLqJ1VcE98iuWaR+vFoFnRtt+VEGahqU94AUuVzPAvnSQNEhFmfPX4p8hZMvHNDQrk1UReiP
- jYwJYF+jCckplFZ/INCG24PloYOHdRDFT07G970pB9/1hdFJ8DDZFtTQbIdQK67C9Hg7vYgQM+x
- M0iK9eFS1TyZp7wH2bY2QFljfKwqYASCw4f92KWY/6bTjPdt/szx+Tdz0kINpT4p/1DsxNGfwCH
- LGWNB3dCJVC5ijnG/QyaEXKaTvQph5yB+ADtaB9AtI58HTpj+Q==
-X-Google-Smtp-Source: AGHT+IFTNdpoOLN/uktwFBZgtHV1y3tQQAXhrpndM1OOgHOxtrVJvpWv3YaMUfQr8dlUVOCbO3NAPA==
-X-Received: by 2002:a17:902:e74a:b0:215:8847:4377 with SMTP id
- d9443c01a7336-21dd778de3bmr19153395ad.15.1738114740129; 
- Tue, 28 Jan 2025 17:39:00 -0800 (PST)
+ bh=l8VYMWiplic3kZJLmX14exYupN5jn8vNAASn/D9iwtU=;
+ b=Fy8boDUBTE9uBZ9rokMJP0x1gvtU/Av+DtncYryzBdupdYDPhjF1etIO25imUYZUUK
+ jAzLq1Vdod2788xXeFmiQYI56n4vLdFRwNFdCdOdsqIEJFEY+7nYR8JSMOttKEzy3NCk
+ 1f/HWJAoq9tEt/sbr0GIm8KHv8okLGtQWowtmFuMcxpEdtlTQ9oXiA4BUcRQpHMpWTZH
+ GztLBOg3Qhlho5jfJe1EoEjSHt9pqsHljsYRgfvXgbwYlpFHYsWJSfKAA8zG+X5ZwbAs
+ VEecffrwAj7zGUztdqQixCtKpw/KSXiDq4xVz+AE/iTfVd3HHS6jDGkDDrVUA3FVLVJX
+ FBOA==
+X-Gm-Message-State: AOJu0YxR3awa3sXfmx6vBCOkt4D8bH6GPhI0APta/j+3s3QhEetko1qa
+ WxYwwWQJhtLf7IpSt2SY5wtSakDMrI1JkDXyTmHWRb7QMaRc8IgtvLsowwcIDjwrSvNTbrurJIf
+ K
+X-Gm-Gg: ASbGnctlK5k4yMAuDb7zVgsA3a5H82/sCIjmhfMcFWBWQVHQoirAPYkZblMmC/eeA65
+ pPBbhp9nVMk306ZvRq4k16/CxgZgfwrhjP4PzmNmZ5Og+bgdewsHEGFuLzX6FMu/7Eg4DHGwlxy
+ xYiCdP798UP1f+c3qj9QeZUWd3RJxwNbhEo4ZqyYbXjxqUNbXpnNTwWTp9lJ2flpKwlVFPj3Z/9
+ 6N+3T0st/4XwBWeMEk8Hu6uOENlLU8z10tC3grXFgoJ8gFa/u/TKtL8ZRyRkuTJIN7pA7CbD5V0
+ FbfL8wW6DuWoP6qCKrkY7cuESSPSEAsuo8iyXQj1hkZFFbpx6A==
+X-Google-Smtp-Source: AGHT+IFZ2Lap53EZRTpzDbELfT5dXKRe7yNGTE91YcJFKdF7u6OrWTy5uv+GILt5YZFro+V2kzBM9A==
+X-Received: by 2002:a17:903:2445:b0:216:5db1:5dc1 with SMTP id
+ d9443c01a7336-21dd7618768mr21918585ad.1.1738114746777; 
+ Tue, 28 Jan 2025 17:39:06 -0800 (PST)
 Received: from stoup.. (71-212-32-190.tukw.qwest.net. [71.212.32.190])
  by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-21da3ea4200sm89341745ad.88.2025.01.28.17.38.59
+ d9443c01a7336-21da3ea4200sm89341745ad.88.2025.01.28.17.39.06
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 28 Jan 2025 17:38:59 -0800 (PST)
+ Tue, 28 Jan 2025 17:39:06 -0800 (PST)
 From: Richard Henderson <richard.henderson@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: peter.maydell@linaro.org
-Subject: [PATCH v2 02/34] target/arm: Rename FPST_FPCR_A64 to FPST_A64
-Date: Tue, 28 Jan 2025 17:38:25 -0800
-Message-ID: <20250129013857.135256-3-richard.henderson@linaro.org>
+Subject: [PATCH v2 11/34] target/arm: Remove fp_status_f16_a64
+Date: Tue, 28 Jan 2025 17:38:34 -0800
+Message-ID: <20250129013857.135256-12-richard.henderson@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20250129013857.135256-1-richard.henderson@linaro.org>
 References: <20250129013857.135256-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::632;
- envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x632.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::62a;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x62a.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -99,738 +99,159 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+Replace with fp_status[FPST_A64_F16].
+
 Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 ---
- target/arm/tcg/translate.h     |  8 +--
- target/arm/tcg/translate-a64.c | 78 +++++++++++++--------------
- target/arm/tcg/translate-sme.c |  4 +-
- target/arm/tcg/translate-sve.c | 98 +++++++++++++++++-----------------
- 4 files changed, 94 insertions(+), 94 deletions(-)
+ target/arm/cpu.h            |  1 -
+ target/arm/cpu.c            |  2 +-
+ target/arm/tcg/sme_helper.c |  2 +-
+ target/arm/tcg/vec_helper.c |  8 ++++----
+ target/arm/vfp_helper.c     | 16 ++++++++--------
+ 5 files changed, 14 insertions(+), 15 deletions(-)
 
-diff --git a/target/arm/tcg/translate.h b/target/arm/tcg/translate.h
-index 6ce2471aa6..2edb707b85 100644
---- a/target/arm/tcg/translate.h
-+++ b/target/arm/tcg/translate.h
-@@ -675,7 +675,7 @@ static inline CPUARMTBFlags arm_tbflags_from_tb(const TranslationBlock *tb)
-  */
- typedef enum ARMFPStatusFlavour {
-     FPST_A32,
--    FPST_FPCR_A64,
-+    FPST_A64,
-     FPST_FPCR_F16_A32,
-     FPST_FPCR_F16_A64,
-     FPST_FPCR_AH,
-@@ -694,7 +694,7 @@ typedef enum ARMFPStatusFlavour {
-  *
-  * FPST_A32
-  *   for AArch32 non-FP16 operations controlled by the FPCR
-- * FPST_FPCR_A64
-+ * FPST_A64
-  *   for AArch64 non-FP16 operations controlled by the FPCR
-  * FPST_FPCR_F16_A32
-  *   for AArch32 operations controlled by the FPCR where FPCR.FZ16 is to be used
-@@ -720,7 +720,7 @@ static inline TCGv_ptr fpstatus_ptr(ARMFPStatusFlavour flavour)
-     case FPST_A32:
-         offset = offsetof(CPUARMState, vfp.fp_status_a32);
-         break;
--    case FPST_FPCR_A64:
-+    case FPST_A64:
-         offset = offsetof(CPUARMState, vfp.fp_status_a64);
-         break;
-     case FPST_FPCR_F16_A32:
-@@ -757,7 +757,7 @@ static inline ARMFPStatusFlavour select_fpst(DisasContext *s, MemOp esz)
-     if (s->fpcr_ah) {
-         return esz == MO_16 ? FPST_FPCR_AH_F16 : FPST_FPCR_AH;
-     } else {
--        return esz == MO_16 ? FPST_FPCR_F16_A64 : FPST_FPCR_A64;
-+        return esz == MO_16 ? FPST_FPCR_F16_A64 : FPST_A64;
-     }
- }
+diff --git a/target/arm/cpu.h b/target/arm/cpu.h
+index 5e3d952588..9e39c8d0d3 100644
+--- a/target/arm/cpu.h
++++ b/target/arm/cpu.h
+@@ -693,7 +693,6 @@ typedef struct CPUArchState {
+                 float_status fp_status_a32;
+                 float_status fp_status_a64;
+                 float_status fp_status_f16_a32;
+-                float_status fp_status_f16_a64;
+             };
+         };
  
-diff --git a/target/arm/tcg/translate-a64.c b/target/arm/tcg/translate-a64.c
-index 3e2fe46464..bf17ecca80 100644
---- a/target/arm/tcg/translate-a64.c
-+++ b/target/arm/tcg/translate-a64.c
-@@ -5247,7 +5247,7 @@ static bool do_fp3_scalar(DisasContext *s, arg_rrr_e *a, const FPScalar *f,
- {
-     return do_fp3_scalar_with_fpsttype(s, a, f, mergereg,
-                                        a->esz == MO_16 ?
--                                       FPST_FPCR_F16_A64 : FPST_FPCR_A64);
-+                                       FPST_FPCR_F16_A64 : FPST_A64);
- }
- 
- static bool do_fp3_scalar_ah_2fn(DisasContext *s, arg_rrr_e *a,
-@@ -5506,9 +5506,9 @@ static bool do_fcmp0_s(DisasContext *s, arg_rr_e *a,
-             TCGv_i64 t0 = read_fp_dreg(s, a->rn);
-             TCGv_i64 t1 = tcg_constant_i64(0);
-             if (swap) {
--                f->gen_d(t0, t1, t0, fpstatus_ptr(FPST_FPCR_A64));
-+                f->gen_d(t0, t1, t0, fpstatus_ptr(FPST_A64));
-             } else {
--                f->gen_d(t0, t0, t1, fpstatus_ptr(FPST_FPCR_A64));
-+                f->gen_d(t0, t0, t1, fpstatus_ptr(FPST_A64));
-             }
-             write_fp_dreg(s, a->rd, t0);
-         }
-@@ -5518,9 +5518,9 @@ static bool do_fcmp0_s(DisasContext *s, arg_rr_e *a,
-             TCGv_i32 t0 = read_fp_sreg(s, a->rn);
-             TCGv_i32 t1 = tcg_constant_i32(0);
-             if (swap) {
--                f->gen_s(t0, t1, t0, fpstatus_ptr(FPST_FPCR_A64));
-+                f->gen_s(t0, t1, t0, fpstatus_ptr(FPST_A64));
-             } else {
--                f->gen_s(t0, t0, t1, fpstatus_ptr(FPST_FPCR_A64));
-+                f->gen_s(t0, t0, t1, fpstatus_ptr(FPST_A64));
-             }
-             write_fp_sreg(s, a->rd, t0);
-         }
-@@ -5768,7 +5768,7 @@ static bool do_fp3_vector(DisasContext *s, arg_qrrr_e *a, int data,
- {
-     return do_fp3_vector_with_fpsttype(s, a, data, fns,
-                                        a->esz == MO_16 ?
--                                       FPST_FPCR_F16_A64 :FPST_FPCR_A64);
-+                                       FPST_FPCR_F16_A64 :FPST_A64);
- }
- 
- static bool do_fp3_vector_2fn(DisasContext *s, arg_qrrr_e *a, int data,
-@@ -6135,7 +6135,7 @@ static bool trans_BFMLAL_v(DisasContext *s, arg_qrrr_e *a)
-     if (fp_access_check(s)) {
-         /* Q bit selects BFMLALB vs BFMLALT. */
-         gen_gvec_op4_fpst(s, true, a->rd, a->rn, a->rm, a->rd,
--                          s->fpcr_ah ? FPST_FPCR_AH : FPST_FPCR_A64, a->q,
-+                          s->fpcr_ah ? FPST_FPCR_AH : FPST_A64, a->q,
-                           gen_helper_gvec_bfmlal);
-     }
-     return true;
-@@ -6174,7 +6174,7 @@ static bool trans_FCMLA_v(DisasContext *s, arg_FCMLA_v *a)
-     }
- 
-     gen_gvec_op4_fpst(s, a->q, a->rd, a->rn, a->rm, a->rd,
--                      a->esz == MO_16 ? FPST_FPCR_F16_A64 : FPST_FPCR_A64,
-+                      a->esz == MO_16 ? FPST_FPCR_F16_A64 : FPST_A64,
-                       a->rot, fn[a->esz]);
-     return true;
- }
-@@ -6543,7 +6543,7 @@ static bool do_fp3_scalar_idx(DisasContext *s, arg_rrx_e *a, const FPScalar *f)
-             TCGv_i64 t1 = tcg_temp_new_i64();
- 
-             read_vec_element(s, t1, a->rm, a->idx, MO_64);
--            f->gen_d(t0, t0, t1, fpstatus_ptr(FPST_FPCR_A64));
-+            f->gen_d(t0, t0, t1, fpstatus_ptr(FPST_A64));
-             write_fp_dreg_merging(s, a->rd, a->rn, t0);
-         }
-         break;
-@@ -6553,7 +6553,7 @@ static bool do_fp3_scalar_idx(DisasContext *s, arg_rrx_e *a, const FPScalar *f)
-             TCGv_i32 t1 = tcg_temp_new_i32();
- 
-             read_vec_element_i32(s, t1, a->rm, a->idx, MO_32);
--            f->gen_s(t0, t0, t1, fpstatus_ptr(FPST_FPCR_A64));
-+            f->gen_s(t0, t0, t1, fpstatus_ptr(FPST_A64));
-             write_fp_sreg_merging(s, a->rd, a->rn, t0);
-         }
-         break;
-@@ -6592,7 +6592,7 @@ static bool do_fmla_scalar_idx(DisasContext *s, arg_rrx_e *a, bool neg)
-             if (neg) {
-                 gen_vfp_maybe_ah_negd(s, t1, t1);
-             }
--            gen_helper_vfp_muladdd(t0, t1, t2, t0, fpstatus_ptr(FPST_FPCR_A64));
-+            gen_helper_vfp_muladdd(t0, t1, t2, t0, fpstatus_ptr(FPST_A64));
-             write_fp_dreg_merging(s, a->rd, a->rd, t0);
-         }
-         break;
-@@ -6606,7 +6606,7 @@ static bool do_fmla_scalar_idx(DisasContext *s, arg_rrx_e *a, bool neg)
-             if (neg) {
-                 gen_vfp_maybe_ah_negs(s, t1, t1);
-             }
--            gen_helper_vfp_muladds(t0, t1, t2, t0, fpstatus_ptr(FPST_FPCR_A64));
-+            gen_helper_vfp_muladds(t0, t1, t2, t0, fpstatus_ptr(FPST_A64));
-             write_fp_sreg_merging(s, a->rd, a->rd, t0);
-         }
-         break;
-@@ -6721,7 +6721,7 @@ static bool do_fp3_vector_idx(DisasContext *s, arg_qrrx_e *a,
-     }
- 
-     gen_gvec_op3_fpst(s, a->q, a->rd, a->rn, a->rm,
--                      esz == MO_16 ? FPST_FPCR_F16_A64 : FPST_FPCR_A64,
-+                      esz == MO_16 ? FPST_FPCR_F16_A64 : FPST_A64,
-                       a->idx, fns[esz - 1]);
-     return true;
- }
-@@ -6755,7 +6755,7 @@ static bool do_fmla_vector_idx(DisasContext *s, arg_qrrx_e *a, bool neg)
-     }
- 
-     gen_gvec_op4_fpst(s, a->q, a->rd, a->rn, a->rm, a->rd,
--                      esz == MO_16 ? FPST_FPCR_F16_A64 : FPST_FPCR_A64,
-+                      esz == MO_16 ? FPST_FPCR_F16_A64 : FPST_A64,
-                       (s->fpcr_ah << 5) | (a->idx << 1) | neg,
-                       fns[esz - 1]);
-     return true;
-@@ -6892,7 +6892,7 @@ static bool trans_BFMLAL_vi(DisasContext *s, arg_qrrx_e *a)
-     if (fp_access_check(s)) {
-         /* Q bit selects BFMLALB vs BFMLALT. */
-         gen_gvec_op4_fpst(s, true, a->rd, a->rn, a->rm, a->rd,
--                          s->fpcr_ah ? FPST_FPCR_AH : FPST_FPCR_A64,
-+                          s->fpcr_ah ? FPST_FPCR_AH : FPST_A64,
-                           (a->idx << 1) | a->q,
-                           gen_helper_gvec_bfmlal_idx);
-     }
-@@ -6921,7 +6921,7 @@ static bool trans_FCMLA_vi(DisasContext *s, arg_FCMLA_vi *a)
-     }
-     if (fp_access_check(s)) {
-         gen_gvec_op4_fpst(s, a->q, a->rd, a->rn, a->rm, a->rd,
--                          a->esz == MO_16 ? FPST_FPCR_F16_A64 : FPST_FPCR_A64,
-+                          a->esz == MO_16 ? FPST_FPCR_F16_A64 : FPST_A64,
-                           (a->idx << 2) | a->rot, fn);
-     }
-     return true;
-@@ -6941,7 +6941,7 @@ static bool do_fp3_scalar_pair(DisasContext *s, arg_rr_e *a, const FPScalar *f)
- 
-             read_vec_element(s, t0, a->rn, 0, MO_64);
-             read_vec_element(s, t1, a->rn, 1, MO_64);
--            f->gen_d(t0, t0, t1, fpstatus_ptr(FPST_FPCR_A64));
-+            f->gen_d(t0, t0, t1, fpstatus_ptr(FPST_A64));
-             write_fp_dreg(s, a->rd, t0);
-         }
-         break;
-@@ -6952,7 +6952,7 @@ static bool do_fp3_scalar_pair(DisasContext *s, arg_rr_e *a, const FPScalar *f)
- 
-             read_vec_element_i32(s, t0, a->rn, 0, MO_32);
-             read_vec_element_i32(s, t1, a->rn, 1, MO_32);
--            f->gen_s(t0, t0, t1, fpstatus_ptr(FPST_FPCR_A64));
-+            f->gen_s(t0, t0, t1, fpstatus_ptr(FPST_A64));
-             write_fp_sreg(s, a->rd, t0);
-         }
-         break;
-@@ -7109,7 +7109,7 @@ static bool do_fmadd(DisasContext *s, arg_rrrr_e *a, bool neg_a, bool neg_n)
-             if (neg_n) {
-                 gen_vfp_maybe_ah_negd(s, tn, tn);
-             }
--            fpst = fpstatus_ptr(FPST_FPCR_A64);
-+            fpst = fpstatus_ptr(FPST_A64);
-             gen_helper_vfp_muladdd(ta, tn, tm, ta, fpst);
-             write_fp_dreg_merging(s, a->rd, a->ra, ta);
-         }
-@@ -7127,7 +7127,7 @@ static bool do_fmadd(DisasContext *s, arg_rrrr_e *a, bool neg_a, bool neg_n)
-             if (neg_n) {
-                 gen_vfp_maybe_ah_negs(s, tn, tn);
-             }
--            fpst = fpstatus_ptr(FPST_FPCR_A64);
-+            fpst = fpstatus_ptr(FPST_A64);
-             gen_helper_vfp_muladds(ta, tn, tm, ta, fpst);
-             write_fp_sreg_merging(s, a->rd, a->ra, ta);
-         }
-@@ -7243,7 +7243,7 @@ static bool do_fp_reduction(DisasContext *s, arg_qrr_e *a,
-     if (fp_access_check(s)) {
-         MemOp esz = a->esz;
-         int elts = (a->q ? 16 : 8) >> esz;
--        TCGv_ptr fpst = fpstatus_ptr(esz == MO_16 ? FPST_FPCR_F16_A64 : FPST_FPCR_A64);
-+        TCGv_ptr fpst = fpstatus_ptr(esz == MO_16 ? FPST_FPCR_F16_A64 : FPST_A64);
-         TCGv_i32 res = do_reduction_op(s, a->rn, esz, 0, elts, fpst,
-                                        s->fpcr_ah ? fah : fnormal);
-         write_fp_sreg(s, a->rd, res);
-@@ -7294,7 +7294,7 @@ static void handle_fp_compare(DisasContext *s, int size,
-                               bool cmp_with_zero, bool signal_all_nans)
- {
-     TCGv_i64 tcg_flags = tcg_temp_new_i64();
--    TCGv_ptr fpst = fpstatus_ptr(size == MO_16 ? FPST_FPCR_F16_A64 : FPST_FPCR_A64);
-+    TCGv_ptr fpst = fpstatus_ptr(size == MO_16 ? FPST_FPCR_F16_A64 : FPST_A64);
- 
-     if (size == MO_64) {
-         TCGv_i64 tcg_vn, tcg_vm;
-@@ -8829,7 +8829,7 @@ static bool do_fp1_scalar(DisasContext *s, arg_rr_e *a,
- {
-     return do_fp1_scalar_with_fpsttype(s, a, f, rmode,
-                                        a->esz == MO_16 ?
--                                       FPST_FPCR_F16_A64 : FPST_FPCR_A64);
-+                                       FPST_FPCR_F16_A64 : FPST_A64);
- }
- 
- static bool do_fp1_scalar_ah(DisasContext *s, arg_rr_e *a,
-@@ -8866,7 +8866,7 @@ TRANS(FRINTX_s, do_fp1_scalar, a, &f_scalar_frintx, -1)
- 
- static bool trans_BFCVT_s(DisasContext *s, arg_rr_e *a)
- {
--    ARMFPStatusFlavour fpsttype = s->fpcr_ah ? FPST_FPCR_AH : FPST_FPCR_A64;
-+    ARMFPStatusFlavour fpsttype = s->fpcr_ah ? FPST_FPCR_AH : FPST_A64;
-     TCGv_i32 t32;
-     int check;
- 
-@@ -8944,7 +8944,7 @@ static bool trans_FCVT_s_ds(DisasContext *s, arg_rr *a)
-     if (fp_access_check(s)) {
-         TCGv_i32 tcg_rn = read_fp_sreg(s, a->rn);
-         TCGv_i64 tcg_rd = tcg_temp_new_i64();
--        TCGv_ptr fpst = fpstatus_ptr(FPST_FPCR_A64);
-+        TCGv_ptr fpst = fpstatus_ptr(FPST_A64);
- 
-         gen_helper_vfp_fcvtds(tcg_rd, tcg_rn, fpst);
-         write_fp_dreg_merging(s, a->rd, a->rd, tcg_rd);
-@@ -8957,7 +8957,7 @@ static bool trans_FCVT_s_hs(DisasContext *s, arg_rr *a)
-     if (fp_access_check(s)) {
-         TCGv_i32 tmp = read_fp_sreg(s, a->rn);
-         TCGv_i32 ahp = get_ahp_flag();
--        TCGv_ptr fpst = fpstatus_ptr(FPST_FPCR_A64);
-+        TCGv_ptr fpst = fpstatus_ptr(FPST_A64);
- 
-         gen_helper_vfp_fcvt_f32_to_f16(tmp, tmp, fpst, ahp);
-         /* write_fp_hreg_merging is OK here because top half of result is zero */
-@@ -8971,7 +8971,7 @@ static bool trans_FCVT_s_sd(DisasContext *s, arg_rr *a)
-     if (fp_access_check(s)) {
-         TCGv_i64 tcg_rn = read_fp_dreg(s, a->rn);
-         TCGv_i32 tcg_rd = tcg_temp_new_i32();
--        TCGv_ptr fpst = fpstatus_ptr(FPST_FPCR_A64);
-+        TCGv_ptr fpst = fpstatus_ptr(FPST_A64);
- 
-         gen_helper_vfp_fcvtsd(tcg_rd, tcg_rn, fpst);
-         write_fp_sreg_merging(s, a->rd, a->rd, tcg_rd);
-@@ -8985,7 +8985,7 @@ static bool trans_FCVT_s_hd(DisasContext *s, arg_rr *a)
-         TCGv_i64 tcg_rn = read_fp_dreg(s, a->rn);
-         TCGv_i32 tcg_rd = tcg_temp_new_i32();
-         TCGv_i32 ahp = get_ahp_flag();
--        TCGv_ptr fpst = fpstatus_ptr(FPST_FPCR_A64);
-+        TCGv_ptr fpst = fpstatus_ptr(FPST_A64);
- 
-         gen_helper_vfp_fcvt_f64_to_f16(tcg_rd, tcg_rn, fpst, ahp);
-         /* write_fp_hreg_merging is OK here because top half of tcg_rd is zero */
-@@ -9029,7 +9029,7 @@ static bool do_cvtf_scalar(DisasContext *s, MemOp esz, int rd, int shift,
-     TCGv_i32 tcg_shift, tcg_single;
-     TCGv_i64 tcg_double;
- 
--    tcg_fpstatus = fpstatus_ptr(esz == MO_16 ? FPST_FPCR_F16_A64 : FPST_FPCR_A64);
-+    tcg_fpstatus = fpstatus_ptr(esz == MO_16 ? FPST_FPCR_F16_A64 : FPST_A64);
-     tcg_shift = tcg_constant_i32(shift);
- 
-     switch (esz) {
-@@ -9124,7 +9124,7 @@ static void do_fcvt_scalar(DisasContext *s, MemOp out, MemOp esz,
-     TCGv_ptr tcg_fpstatus;
-     TCGv_i32 tcg_shift, tcg_rmode, tcg_single;
- 
--    tcg_fpstatus = fpstatus_ptr(esz == MO_16 ? FPST_FPCR_F16_A64 : FPST_FPCR_A64);
-+    tcg_fpstatus = fpstatus_ptr(esz == MO_16 ? FPST_FPCR_F16_A64 : FPST_A64);
-     tcg_shift = tcg_constant_i32(shift);
-     tcg_rmode = gen_set_rmode(rmode, tcg_fpstatus);
- 
-@@ -9290,7 +9290,7 @@ static bool trans_FJCVTZS(DisasContext *s, arg_FJCVTZS *a)
-     }
-     if (fp_access_check(s)) {
-         TCGv_i64 t = read_fp_dreg(s, a->rn);
--        TCGv_ptr fpstatus = fpstatus_ptr(FPST_FPCR_A64);
-+        TCGv_ptr fpstatus = fpstatus_ptr(FPST_A64);
- 
-         gen_helper_fjcvtzs(t, t, fpstatus);
- 
-@@ -9550,7 +9550,7 @@ static bool trans_FCVTXN_s(DisasContext *s, arg_rr_e *a)
-          */
-         TCGv_i64 src = read_fp_dreg(s, a->rn);
-         TCGv_i32 dst = tcg_temp_new_i32();
--        gen_helper_fcvtx_f64_to_f32(dst, src, fpstatus_ptr(FPST_FPCR_A64));
-+        gen_helper_fcvtx_f64_to_f32(dst, src, fpstatus_ptr(FPST_A64));
-         write_fp_sreg_merging(s, a->rd, a->rd, dst);
-     }
-     return true;
-@@ -9638,7 +9638,7 @@ static void gen_fcvtn_hs(TCGv_i64 d, TCGv_i64 n)
- {
-     TCGv_i32 tcg_lo = tcg_temp_new_i32();
-     TCGv_i32 tcg_hi = tcg_temp_new_i32();
--    TCGv_ptr fpst = fpstatus_ptr(FPST_FPCR_A64);
-+    TCGv_ptr fpst = fpstatus_ptr(FPST_A64);
-     TCGv_i32 ahp = get_ahp_flag();
- 
-     tcg_gen_extr_i64_i32(tcg_lo, tcg_hi, n);
-@@ -9651,7 +9651,7 @@ static void gen_fcvtn_hs(TCGv_i64 d, TCGv_i64 n)
- static void gen_fcvtn_sd(TCGv_i64 d, TCGv_i64 n)
- {
-     TCGv_i32 tmp = tcg_temp_new_i32();
--    TCGv_ptr fpst = fpstatus_ptr(FPST_FPCR_A64);
-+    TCGv_ptr fpst = fpstatus_ptr(FPST_A64);
- 
-     gen_helper_vfp_fcvtsd(tmp, n, fpst);
-     tcg_gen_extu_i32_i64(d, tmp);
-@@ -9664,7 +9664,7 @@ static void gen_fcvtxn_sd(TCGv_i64 d, TCGv_i64 n)
-      * with von Neumann rounding (round to odd)
+diff --git a/target/arm/cpu.c b/target/arm/cpu.c
+index 01a0428c6e..4fc1d00d60 100644
+--- a/target/arm/cpu.c
++++ b/target/arm/cpu.c
+@@ -554,7 +554,7 @@ static void arm_cpu_reset_hold(Object *obj, ResetType type)
+     arm_set_default_fp_behaviours(&env->vfp.fp_status_a64);
+     arm_set_default_fp_behaviours(&env->vfp.fp_status[FPST_STD]);
+     arm_set_default_fp_behaviours(&env->vfp.fp_status_f16_a32);
+-    arm_set_default_fp_behaviours(&env->vfp.fp_status_f16_a64);
++    arm_set_default_fp_behaviours(&env->vfp.fp_status[FPST_A64_F16]);
+     arm_set_default_fp_behaviours(&env->vfp.fp_status[FPST_STD_F16]);
+     arm_set_ah_fp_behaviours(&env->vfp.fp_status[FPST_AH]);
+     set_flush_to_zero(1, &env->vfp.fp_status[FPST_AH]);
+diff --git a/target/arm/tcg/sme_helper.c b/target/arm/tcg/sme_helper.c
+index 727c085f37..6e336e10c6 100644
+--- a/target/arm/tcg/sme_helper.c
++++ b/target/arm/tcg/sme_helper.c
+@@ -1043,7 +1043,7 @@ void HELPER(sme_fmopa_h)(void *vza, void *vzn, void *vzm, void *vpn,
+      * produces default NaNs. We also need a second copy of fp_status with
+      * round-to-odd -- see above.
       */
-     TCGv_i32 tmp = tcg_temp_new_i32();
--    gen_helper_fcvtx_f64_to_f32(tmp, n, fpstatus_ptr(FPST_FPCR_A64));
-+    gen_helper_fcvtx_f64_to_f32(tmp, n, fpstatus_ptr(FPST_A64));
-     tcg_gen_extu_i32_i64(d, tmp);
+-    fpst_f16 = env->vfp.fp_status_f16_a64;
++    fpst_f16 = env->vfp.fp_status[FPST_A64_F16];
+     fpst_std = env->vfp.fp_status_a64;
+     set_default_nan_mode(true, &fpst_std);
+     set_default_nan_mode(true, &fpst_f16);
+diff --git a/target/arm/tcg/vec_helper.c b/target/arm/tcg/vec_helper.c
+index 60839ae560..927dece4c1 100644
+--- a/target/arm/tcg/vec_helper.c
++++ b/target/arm/tcg/vec_helper.c
+@@ -2185,7 +2185,7 @@ void HELPER(gvec_fmlal_a64)(void *vd, void *vn, void *vm,
+                             CPUARMState *env, uint32_t desc)
+ {
+     do_fmlal(vd, vn, vm, &env->vfp.fp_status_a64, desc,
+-             get_flush_inputs_to_zero(&env->vfp.fp_status_f16_a64));
++             get_flush_inputs_to_zero(&env->vfp.fp_status[FPST_A64_F16]));
  }
  
-@@ -9683,7 +9683,7 @@ TRANS(FCVTXN_v, do_2misc_narrow_vector, a, f_scalar_fcvtxn)
+ void HELPER(sve2_fmlal_zzzw_s)(void *vd, void *vn, void *vm, void *va,
+@@ -2195,7 +2195,7 @@ void HELPER(sve2_fmlal_zzzw_s)(void *vd, void *vn, void *vm, void *va,
+     uint16_t negn = extract32(desc, SIMD_DATA_SHIFT, 1) << 15;
+     intptr_t sel = extract32(desc, SIMD_DATA_SHIFT + 1, 1) * sizeof(float16);
+     float_status *status = &env->vfp.fp_status_a64;
+-    bool fz16 = get_flush_inputs_to_zero(&env->vfp.fp_status_f16_a64);
++    bool fz16 = get_flush_inputs_to_zero(&env->vfp.fp_status[FPST_A64_F16]);
  
- static void gen_bfcvtn_hs(TCGv_i64 d, TCGv_i64 n)
+     for (i = 0; i < oprsz; i += sizeof(float32)) {
+         float16 nn_16 = *(float16 *)(vn + H1_2(i + sel)) ^ negn;
+@@ -2247,7 +2247,7 @@ void HELPER(gvec_fmlal_idx_a64)(void *vd, void *vn, void *vm,
+                                 CPUARMState *env, uint32_t desc)
  {
--    TCGv_ptr fpst = fpstatus_ptr(FPST_FPCR_A64);
-+    TCGv_ptr fpst = fpstatus_ptr(FPST_A64);
-     TCGv_i32 tmp = tcg_temp_new_i32();
-     gen_helper_bfcvt_pair(tmp, n, fpst);
-     tcg_gen_extu_i32_i64(d, tmp);
-@@ -9773,7 +9773,7 @@ static bool do_fp1_vector(DisasContext *s, arg_qrr_e *a,
-         return check == 0;
+     do_fmlal_idx(vd, vn, vm, &env->vfp.fp_status_a64, desc,
+-                 get_flush_inputs_to_zero(&env->vfp.fp_status_f16_a64));
++                 get_flush_inputs_to_zero(&env->vfp.fp_status[FPST_A64_F16]));
+ }
+ 
+ void HELPER(sve2_fmlal_zzxw_s)(void *vd, void *vn, void *vm, void *va,
+@@ -2258,7 +2258,7 @@ void HELPER(sve2_fmlal_zzxw_s)(void *vd, void *vn, void *vm, void *va,
+     intptr_t sel = extract32(desc, SIMD_DATA_SHIFT + 1, 1) * sizeof(float16);
+     intptr_t idx = extract32(desc, SIMD_DATA_SHIFT + 2, 3) * sizeof(float16);
+     float_status *status = &env->vfp.fp_status_a64;
+-    bool fz16 = get_flush_inputs_to_zero(&env->vfp.fp_status_f16_a64);
++    bool fz16 = get_flush_inputs_to_zero(&env->vfp.fp_status[FPST_A64_F16]);
+ 
+     for (i = 0; i < oprsz; i += 16) {
+         float16 mm_16 = *(float16 *)(vm + i + idx);
+diff --git a/target/arm/vfp_helper.c b/target/arm/vfp_helper.c
+index 78be434caf..bcb05d7ff9 100644
+--- a/target/arm/vfp_helper.c
++++ b/target/arm/vfp_helper.c
+@@ -126,7 +126,7 @@ static uint32_t vfp_get_fpsr_from_host(CPUARMState *env)
+           & ~float_flag_input_denormal_flushed);
+ 
+     a64_flags |= get_float_exception_flags(&env->vfp.fp_status_a64);
+-    a64_flags |= (get_float_exception_flags(&env->vfp.fp_status_f16_a64)
++    a64_flags |= (get_float_exception_flags(&env->vfp.fp_status[FPST_A64_F16])
+           & ~(float_flag_input_denormal_flushed | float_flag_input_denormal_used));
+     /*
+      * We do not merge in flags from FPST_AH or FPST_AH_F16, because
+@@ -156,7 +156,7 @@ static void vfp_clear_float_status_exc_flags(CPUARMState *env)
+     set_float_exception_flags(0, &env->vfp.fp_status_a32);
+     set_float_exception_flags(0, &env->vfp.fp_status_a64);
+     set_float_exception_flags(0, &env->vfp.fp_status_f16_a32);
+-    set_float_exception_flags(0, &env->vfp.fp_status_f16_a64);
++    set_float_exception_flags(0, &env->vfp.fp_status[FPST_A64_F16]);
+     set_float_exception_flags(0, &env->vfp.fp_status[FPST_STD]);
+     set_float_exception_flags(0, &env->vfp.fp_status[FPST_STD_F16]);
+     set_float_exception_flags(0, &env->vfp.fp_status[FPST_AH]);
+@@ -199,16 +199,16 @@ static void vfp_set_fpcr_to_host(CPUARMState *env, uint32_t val, uint32_t mask)
+         set_float_rounding_mode(i, &env->vfp.fp_status_a32);
+         set_float_rounding_mode(i, &env->vfp.fp_status_a64);
+         set_float_rounding_mode(i, &env->vfp.fp_status_f16_a32);
+-        set_float_rounding_mode(i, &env->vfp.fp_status_f16_a64);
++        set_float_rounding_mode(i, &env->vfp.fp_status[FPST_A64_F16]);
      }
- 
--    fpst = fpstatus_ptr(a->esz == MO_16 ? FPST_FPCR_F16_A64 : FPST_FPCR_A64);
-+    fpst = fpstatus_ptr(a->esz == MO_16 ? FPST_FPCR_F16_A64 : FPST_A64);
-     if (rmode >= 0) {
-         tcg_rmode = gen_set_rmode(rmode, fpst);
+     if (changed & FPCR_FZ16) {
+         bool ftz_enabled = val & FPCR_FZ16;
+         set_flush_to_zero(ftz_enabled, &env->vfp.fp_status_f16_a32);
+-        set_flush_to_zero(ftz_enabled, &env->vfp.fp_status_f16_a64);
++        set_flush_to_zero(ftz_enabled, &env->vfp.fp_status[FPST_A64_F16]);
+         set_flush_to_zero(ftz_enabled, &env->vfp.fp_status[FPST_STD_F16]);
+         set_flush_to_zero(ftz_enabled, &env->vfp.fp_status[FPST_AH_F16]);
+         set_flush_inputs_to_zero(ftz_enabled, &env->vfp.fp_status_f16_a32);
+-        set_flush_inputs_to_zero(ftz_enabled, &env->vfp.fp_status_f16_a64);
++        set_flush_inputs_to_zero(ftz_enabled, &env->vfp.fp_status[FPST_A64_F16]);
+         set_flush_inputs_to_zero(ftz_enabled, &env->vfp.fp_status[FPST_STD_F16]);
+         set_flush_inputs_to_zero(ftz_enabled, &env->vfp.fp_status[FPST_AH_F16]);
      }
-@@ -9848,7 +9848,7 @@ static bool do_gvec_op2_fpst(DisasContext *s, MemOp esz, bool is_q,
- {
-     return do_gvec_op2_fpst_with_fpsttype(s, esz, is_q, rd, rn, data, fns,
-                                           esz == MO_16 ? FPST_FPCR_F16_A64 :
--                                          FPST_FPCR_A64);
-+                                          FPST_A64);
- }
- 
- static bool do_gvec_op2_ah_fpst(DisasContext *s, MemOp esz, bool is_q,
-@@ -10008,7 +10008,7 @@ static bool trans_FCVTL_v(DisasContext *s, arg_qrr_e *a)
-         TCGv_i32 tcg_op = tcg_temp_new_i32();
-         int srcelt = a->q ? 2 : 0;
- 
--        fpst = fpstatus_ptr(FPST_FPCR_A64);
-+        fpst = fpstatus_ptr(FPST_A64);
- 
-         for (pass = 0; pass < 2; pass++) {
-             tcg_res[pass] = tcg_temp_new_i64();
-diff --git a/target/arm/tcg/translate-sme.c b/target/arm/tcg/translate-sme.c
-index 29bec7dd7b..fcbb350016 100644
---- a/target/arm/tcg/translate-sme.c
-+++ b/target/arm/tcg/translate-sme.c
-@@ -358,9 +358,9 @@ static bool do_outprod_env(DisasContext *s, arg_op *a, MemOp esz,
- TRANS_FEAT(FMOPA_h, aa64_sme, do_outprod_env, a,
-            MO_32, gen_helper_sme_fmopa_h)
- TRANS_FEAT(FMOPA_s, aa64_sme, do_outprod_fpst, a,
--           MO_32, FPST_FPCR_A64, gen_helper_sme_fmopa_s)
-+           MO_32, FPST_A64, gen_helper_sme_fmopa_s)
- TRANS_FEAT(FMOPA_d, aa64_sme_f64f64, do_outprod_fpst, a,
--           MO_64, FPST_FPCR_A64, gen_helper_sme_fmopa_d)
-+           MO_64, FPST_A64, gen_helper_sme_fmopa_d)
- 
- TRANS_FEAT(BFMOPA, aa64_sme, do_outprod_env, a, MO_32, gen_helper_sme_bfmopa)
- 
-diff --git a/target/arm/tcg/translate-sve.c b/target/arm/tcg/translate-sve.c
-index 454f7ff900..3cc678154a 100644
---- a/target/arm/tcg/translate-sve.c
-+++ b/target/arm/tcg/translate-sve.c
-@@ -191,7 +191,7 @@ static bool gen_gvec_fpst_arg_zzz(DisasContext *s, gen_helper_gvec_3_ptr *fn,
-                                   arg_rrr_esz *a, int data)
- {
-     return gen_gvec_fpst_zzz(s, fn, a->rd, a->rn, a->rm, data,
--                             a->esz == MO_16 ? FPST_FPCR_F16_A64 : FPST_FPCR_A64);
-+                             a->esz == MO_16 ? FPST_FPCR_F16_A64 : FPST_A64);
- }
- 
- static bool gen_gvec_fpst_ah_arg_zzz(DisasContext *s, gen_helper_gvec_3_ptr *fn,
-@@ -404,7 +404,7 @@ static bool gen_gvec_fpst_arg_zpzz(DisasContext *s, gen_helper_gvec_4_ptr *fn,
-                                    arg_rprr_esz *a)
- {
-     return gen_gvec_fpst_zzzp(s, fn, a->rd, a->rn, a->rm, a->pg, 0,
--                              a->esz == MO_16 ? FPST_FPCR_F16_A64 : FPST_FPCR_A64);
-+                              a->esz == MO_16 ? FPST_FPCR_F16_A64 : FPST_A64);
- }
- 
- /* Invoke a vector expander on two Zregs and an immediate.  */
-@@ -3534,7 +3534,7 @@ static bool do_FMLA_zzxz(DisasContext *s, arg_rrxr_esz *a, bool sub)
-     };
-     return gen_gvec_fpst_zzzz(s, fns[a->esz], a->rd, a->rn, a->rm, a->ra,
-                               (s->fpcr_ah << 5) | (a->index << 1) | sub,
--                              a->esz == MO_16 ? FPST_FPCR_F16_A64 : FPST_FPCR_A64);
-+                              a->esz == MO_16 ? FPST_FPCR_F16_A64 : FPST_A64);
- }
- 
- TRANS_FEAT(FMLA_zzxz, aa64_sve, do_FMLA_zzxz, a, false)
-@@ -3550,7 +3550,7 @@ static gen_helper_gvec_3_ptr * const fmul_idx_fns[4] = {
- };
- TRANS_FEAT(FMUL_zzx, aa64_sve, gen_gvec_fpst_zzz,
-            fmul_idx_fns[a->esz], a->rd, a->rn, a->rm, a->index,
--           a->esz == MO_16 ? FPST_FPCR_F16_A64 : FPST_FPCR_A64)
-+           a->esz == MO_16 ? FPST_FPCR_F16_A64 : FPST_A64)
- 
- /*
-  *** SVE Floating Point Fast Reduction Group
-@@ -3583,7 +3583,7 @@ static bool do_reduce(DisasContext *s, arg_rpr_esz *a,
- 
-     tcg_gen_addi_ptr(t_zn, tcg_env, vec_full_reg_offset(s, a->rn));
-     tcg_gen_addi_ptr(t_pg, tcg_env, pred_full_reg_offset(s, a->pg));
--    status = fpstatus_ptr(a->esz == MO_16 ? FPST_FPCR_F16_A64 : FPST_FPCR_A64);
-+    status = fpstatus_ptr(a->esz == MO_16 ? FPST_FPCR_F16_A64 : FPST_A64);
- 
-     fn(temp, t_zn, t_pg, status, t_desc);
- 
-@@ -3659,7 +3659,7 @@ static bool do_ppz_fp(DisasContext *s, arg_rpr_esz *a,
-     if (sve_access_check(s)) {
-         unsigned vsz = vec_full_reg_size(s);
-         TCGv_ptr status =
--            fpstatus_ptr(a->esz == MO_16 ? FPST_FPCR_F16_A64 : FPST_FPCR_A64);
-+            fpstatus_ptr(a->esz == MO_16 ? FPST_FPCR_F16_A64 : FPST_A64);
- 
-         tcg_gen_gvec_3_ptr(pred_full_reg_offset(s, a->rd),
-                            vec_full_reg_offset(s, a->rn),
-@@ -3696,7 +3696,7 @@ static gen_helper_gvec_3_ptr * const ftmad_fns[4] = {
- TRANS_FEAT_NONSTREAMING(FTMAD, aa64_sve, gen_gvec_fpst_zzz,
-                         ftmad_fns[a->esz], a->rd, a->rn, a->rm,
-                         a->imm | (s->fpcr_ah << 3),
--                        a->esz == MO_16 ? FPST_FPCR_F16_A64 : FPST_FPCR_A64)
-+                        a->esz == MO_16 ? FPST_FPCR_F16_A64 : FPST_A64)
- 
- /*
-  *** SVE Floating Point Accumulating Reduction Group
-@@ -3729,7 +3729,7 @@ static bool trans_FADDA(DisasContext *s, arg_rprr_esz *a)
-     t_pg = tcg_temp_new_ptr();
-     tcg_gen_addi_ptr(t_rm, tcg_env, vec_full_reg_offset(s, a->rm));
-     tcg_gen_addi_ptr(t_pg, tcg_env, pred_full_reg_offset(s, a->pg));
--    t_fpst = fpstatus_ptr(a->esz == MO_16 ? FPST_FPCR_F16_A64 : FPST_FPCR_A64);
-+    t_fpst = fpstatus_ptr(a->esz == MO_16 ? FPST_FPCR_F16_A64 : FPST_A64);
-     t_desc = tcg_constant_i32(simd_desc(vsz, vsz, 0));
- 
-     fns[a->esz - 1](t_val, t_val, t_rm, t_pg, t_fpst, t_desc);
-@@ -3829,7 +3829,7 @@ static void do_fp_scalar(DisasContext *s, int zd, int zn, int pg, bool is_fp16,
-     tcg_gen_addi_ptr(t_zn, tcg_env, vec_full_reg_offset(s, zn));
-     tcg_gen_addi_ptr(t_pg, tcg_env, pred_full_reg_offset(s, pg));
- 
--    status = fpstatus_ptr(is_fp16 ? FPST_FPCR_F16_A64 : FPST_FPCR_A64);
-+    status = fpstatus_ptr(is_fp16 ? FPST_FPCR_F16_A64 : FPST_A64);
-     desc = tcg_constant_i32(simd_desc(vsz, vsz, 0));
-     fn(t_zd, t_zn, t_pg, scalar, status, desc);
- }
-@@ -3902,7 +3902,7 @@ static bool do_fp_cmp(DisasContext *s, arg_rprr_esz *a,
+@@ -233,7 +233,7 @@ static void vfp_set_fpcr_to_host(CPUARMState *env, uint32_t val, uint32_t mask)
+         set_default_nan_mode(dnan_enabled, &env->vfp.fp_status_a32);
+         set_default_nan_mode(dnan_enabled, &env->vfp.fp_status_a64);
+         set_default_nan_mode(dnan_enabled, &env->vfp.fp_status_f16_a32);
+-        set_default_nan_mode(dnan_enabled, &env->vfp.fp_status_f16_a64);
++        set_default_nan_mode(dnan_enabled, &env->vfp.fp_status[FPST_A64_F16]);
+         set_default_nan_mode(dnan_enabled, &env->vfp.fp_status[FPST_AH]);
+         set_default_nan_mode(dnan_enabled, &env->vfp.fp_status[FPST_AH_F16]);
      }
-     if (sve_access_check(s)) {
-         unsigned vsz = vec_full_reg_size(s);
--        TCGv_ptr status = fpstatus_ptr(a->esz == MO_16 ? FPST_FPCR_F16_A64 : FPST_FPCR_A64);
-+        TCGv_ptr status = fpstatus_ptr(a->esz == MO_16 ? FPST_FPCR_F16_A64 : FPST_A64);
-         tcg_gen_gvec_4_ptr(pred_full_reg_offset(s, a->rd),
-                            vec_full_reg_offset(s, a->rn),
-                            vec_full_reg_offset(s, a->rm),
-@@ -3935,7 +3935,7 @@ static gen_helper_gvec_4_ptr * const fcadd_fns[] = {
- };
- TRANS_FEAT(FCADD, aa64_sve, gen_gvec_fpst_zzzp, fcadd_fns[a->esz],
-            a->rd, a->rn, a->rm, a->pg, a->rot | (s->fpcr_ah << 1),
--           a->esz == MO_16 ? FPST_FPCR_F16_A64 : FPST_FPCR_A64)
-+           a->esz == MO_16 ? FPST_FPCR_F16_A64 : FPST_A64)
- 
- #define DO_FMLA(NAME, name, ah_name)                                    \
-     static gen_helper_gvec_5_ptr * const name##_fns[4] = {              \
-@@ -3949,7 +3949,7 @@ TRANS_FEAT(FCADD, aa64_sve, gen_gvec_fpst_zzzp, fcadd_fns[a->esz],
-     TRANS_FEAT(NAME, aa64_sve, gen_gvec_fpst_zzzzp,                     \
-                s->fpcr_ah ? name##_ah_fns[a->esz] : name##_fns[a->esz], \
-                a->rd, a->rn, a->rm, a->ra, a->pg, 0,                    \
--               a->esz == MO_16 ? FPST_FPCR_F16_A64 : FPST_FPCR_A64)
-+               a->esz == MO_16 ? FPST_FPCR_F16_A64 : FPST_A64)
- 
- /* We don't need an ah_fmla_zpzzz because fmla doesn't negate anything */
- DO_FMLA(FMLA_zpzzz, fmla_zpzzz, fmla_zpzzz)
-@@ -3965,36 +3965,36 @@ static gen_helper_gvec_5_ptr * const fcmla_fns[4] = {
- };
- TRANS_FEAT(FCMLA_zpzzz, aa64_sve, gen_gvec_fpst_zzzzp, fcmla_fns[a->esz],
-            a->rd, a->rn, a->rm, a->ra, a->pg, a->rot,
--           a->esz == MO_16 ? FPST_FPCR_F16_A64 : FPST_FPCR_A64)
-+           a->esz == MO_16 ? FPST_FPCR_F16_A64 : FPST_A64)
- 
- static gen_helper_gvec_4_ptr * const fcmla_idx_fns[4] = {
-     NULL, gen_helper_gvec_fcmlah_idx, gen_helper_gvec_fcmlas_idx, NULL
- };
- TRANS_FEAT(FCMLA_zzxz, aa64_sve, gen_gvec_fpst_zzzz, fcmla_idx_fns[a->esz],
-            a->rd, a->rn, a->rm, a->ra, a->index * 4 + a->rot,
--           a->esz == MO_16 ? FPST_FPCR_F16_A64 : FPST_FPCR_A64)
-+           a->esz == MO_16 ? FPST_FPCR_F16_A64 : FPST_A64)
- 
- /*
-  *** SVE Floating Point Unary Operations Predicated Group
-  */
- 
- TRANS_FEAT(FCVT_sh, aa64_sve, gen_gvec_fpst_arg_zpz,
--           gen_helper_sve_fcvt_sh, a, 0, FPST_FPCR_A64)
-+           gen_helper_sve_fcvt_sh, a, 0, FPST_A64)
- TRANS_FEAT(FCVT_hs, aa64_sve, gen_gvec_fpst_arg_zpz,
-            gen_helper_sve_fcvt_hs, a, 0, FPST_FPCR_F16_A64)
- 
- TRANS_FEAT(BFCVT, aa64_sve_bf16, gen_gvec_fpst_arg_zpz,
-            gen_helper_sve_bfcvt, a, 0,
--           s->fpcr_ah ? FPST_FPCR_AH : FPST_FPCR_A64)
-+           s->fpcr_ah ? FPST_FPCR_AH : FPST_A64)
- 
- TRANS_FEAT(FCVT_dh, aa64_sve, gen_gvec_fpst_arg_zpz,
--           gen_helper_sve_fcvt_dh, a, 0, FPST_FPCR_A64)
-+           gen_helper_sve_fcvt_dh, a, 0, FPST_A64)
- TRANS_FEAT(FCVT_hd, aa64_sve, gen_gvec_fpst_arg_zpz,
-            gen_helper_sve_fcvt_hd, a, 0, FPST_FPCR_F16_A64)
- TRANS_FEAT(FCVT_ds, aa64_sve, gen_gvec_fpst_arg_zpz,
--           gen_helper_sve_fcvt_ds, a, 0, FPST_FPCR_A64)
-+           gen_helper_sve_fcvt_ds, a, 0, FPST_A64)
- TRANS_FEAT(FCVT_sd, aa64_sve, gen_gvec_fpst_arg_zpz,
--           gen_helper_sve_fcvt_sd, a, 0, FPST_FPCR_A64)
-+           gen_helper_sve_fcvt_sd, a, 0, FPST_A64)
- 
- TRANS_FEAT(FCVTZS_hh, aa64_sve, gen_gvec_fpst_arg_zpz,
-            gen_helper_sve_fcvtzs_hh, a, 0, FPST_FPCR_F16_A64)
-@@ -4010,22 +4010,22 @@ TRANS_FEAT(FCVTZU_hd, aa64_sve, gen_gvec_fpst_arg_zpz,
-            gen_helper_sve_fcvtzu_hd, a, 0, FPST_FPCR_F16_A64)
- 
- TRANS_FEAT(FCVTZS_ss, aa64_sve, gen_gvec_fpst_arg_zpz,
--           gen_helper_sve_fcvtzs_ss, a, 0, FPST_FPCR_A64)
-+           gen_helper_sve_fcvtzs_ss, a, 0, FPST_A64)
- TRANS_FEAT(FCVTZU_ss, aa64_sve, gen_gvec_fpst_arg_zpz,
--           gen_helper_sve_fcvtzu_ss, a, 0, FPST_FPCR_A64)
-+           gen_helper_sve_fcvtzu_ss, a, 0, FPST_A64)
- TRANS_FEAT(FCVTZS_sd, aa64_sve, gen_gvec_fpst_arg_zpz,
--           gen_helper_sve_fcvtzs_sd, a, 0, FPST_FPCR_A64)
-+           gen_helper_sve_fcvtzs_sd, a, 0, FPST_A64)
- TRANS_FEAT(FCVTZU_sd, aa64_sve, gen_gvec_fpst_arg_zpz,
--           gen_helper_sve_fcvtzu_sd, a, 0, FPST_FPCR_A64)
-+           gen_helper_sve_fcvtzu_sd, a, 0, FPST_A64)
- TRANS_FEAT(FCVTZS_ds, aa64_sve, gen_gvec_fpst_arg_zpz,
--           gen_helper_sve_fcvtzs_ds, a, 0, FPST_FPCR_A64)
-+           gen_helper_sve_fcvtzs_ds, a, 0, FPST_A64)
- TRANS_FEAT(FCVTZU_ds, aa64_sve, gen_gvec_fpst_arg_zpz,
--           gen_helper_sve_fcvtzu_ds, a, 0, FPST_FPCR_A64)
-+           gen_helper_sve_fcvtzu_ds, a, 0, FPST_A64)
- 
- TRANS_FEAT(FCVTZS_dd, aa64_sve, gen_gvec_fpst_arg_zpz,
--           gen_helper_sve_fcvtzs_dd, a, 0, FPST_FPCR_A64)
-+           gen_helper_sve_fcvtzs_dd, a, 0, FPST_A64)
- TRANS_FEAT(FCVTZU_dd, aa64_sve, gen_gvec_fpst_arg_zpz,
--           gen_helper_sve_fcvtzu_dd, a, 0, FPST_FPCR_A64)
-+           gen_helper_sve_fcvtzu_dd, a, 0, FPST_A64)
- 
- static gen_helper_gvec_3_ptr * const frint_fns[] = {
-     NULL,
-@@ -4034,7 +4034,7 @@ static gen_helper_gvec_3_ptr * const frint_fns[] = {
-     gen_helper_sve_frint_d
- };
- TRANS_FEAT(FRINTI, aa64_sve, gen_gvec_fpst_arg_zpz, frint_fns[a->esz],
--           a, 0, a->esz == MO_16 ? FPST_FPCR_F16_A64 : FPST_FPCR_A64)
-+           a, 0, a->esz == MO_16 ? FPST_FPCR_F16_A64 : FPST_A64)
- 
- static gen_helper_gvec_3_ptr * const frintx_fns[] = {
-     NULL,
-@@ -4043,7 +4043,7 @@ static gen_helper_gvec_3_ptr * const frintx_fns[] = {
-     gen_helper_sve_frintx_d
- };
- TRANS_FEAT(FRINTX, aa64_sve, gen_gvec_fpst_arg_zpz, frintx_fns[a->esz],
--           a, 0, a->esz == MO_16 ? FPST_FPCR_F16_A64 : FPST_FPCR_A64);
-+           a, 0, a->esz == MO_16 ? FPST_FPCR_F16_A64 : FPST_A64);
- 
- static bool do_frint_mode(DisasContext *s, arg_rpr_esz *a,
-                           ARMFPRounding mode, gen_helper_gvec_3_ptr *fn)
-@@ -4060,7 +4060,7 @@ static bool do_frint_mode(DisasContext *s, arg_rpr_esz *a,
+@@ -243,10 +243,10 @@ static void vfp_set_fpcr_to_host(CPUARMState *env, uint32_t val, uint32_t mask)
+         if (ah_enabled) {
+             /* Change behaviours for A64 FP operations */
+             arm_set_ah_fp_behaviours(&env->vfp.fp_status_a64);
+-            arm_set_ah_fp_behaviours(&env->vfp.fp_status_f16_a64);
++            arm_set_ah_fp_behaviours(&env->vfp.fp_status[FPST_A64_F16]);
+         } else {
+             arm_set_default_fp_behaviours(&env->vfp.fp_status_a64);
+-            arm_set_default_fp_behaviours(&env->vfp.fp_status_f16_a64);
++            arm_set_default_fp_behaviours(&env->vfp.fp_status[FPST_A64_F16]);
+         }
      }
- 
-     vsz = vec_full_reg_size(s);
--    status = fpstatus_ptr(a->esz == MO_16 ? FPST_FPCR_F16_A64 : FPST_FPCR_A64);
-+    status = fpstatus_ptr(a->esz == MO_16 ? FPST_FPCR_F16_A64 : FPST_A64);
-     tmode = gen_set_rmode(mode, status);
- 
-     tcg_gen_gvec_3_ptr(vec_full_reg_offset(s, a->rd),
-@@ -4095,7 +4095,7 @@ static gen_helper_gvec_3_ptr * const fsqrt_fns[] = {
-     gen_helper_sve_fsqrt_s, gen_helper_sve_fsqrt_d,
- };
- TRANS_FEAT(FSQRT, aa64_sve, gen_gvec_fpst_arg_zpz, fsqrt_fns[a->esz],
--           a, 0, a->esz == MO_16 ? FPST_FPCR_F16_A64 : FPST_FPCR_A64)
-+           a, 0, a->esz == MO_16 ? FPST_FPCR_F16_A64 : FPST_A64)
- 
- TRANS_FEAT(SCVTF_hh, aa64_sve, gen_gvec_fpst_arg_zpz,
-            gen_helper_sve_scvt_hh, a, 0, FPST_FPCR_F16_A64)
-@@ -4105,14 +4105,14 @@ TRANS_FEAT(SCVTF_dh, aa64_sve, gen_gvec_fpst_arg_zpz,
-            gen_helper_sve_scvt_dh, a, 0, FPST_FPCR_F16_A64)
- 
- TRANS_FEAT(SCVTF_ss, aa64_sve, gen_gvec_fpst_arg_zpz,
--           gen_helper_sve_scvt_ss, a, 0, FPST_FPCR_A64)
-+           gen_helper_sve_scvt_ss, a, 0, FPST_A64)
- TRANS_FEAT(SCVTF_ds, aa64_sve, gen_gvec_fpst_arg_zpz,
--           gen_helper_sve_scvt_ds, a, 0, FPST_FPCR_A64)
-+           gen_helper_sve_scvt_ds, a, 0, FPST_A64)
- 
- TRANS_FEAT(SCVTF_sd, aa64_sve, gen_gvec_fpst_arg_zpz,
--           gen_helper_sve_scvt_sd, a, 0, FPST_FPCR_A64)
-+           gen_helper_sve_scvt_sd, a, 0, FPST_A64)
- TRANS_FEAT(SCVTF_dd, aa64_sve, gen_gvec_fpst_arg_zpz,
--           gen_helper_sve_scvt_dd, a, 0, FPST_FPCR_A64)
-+           gen_helper_sve_scvt_dd, a, 0, FPST_A64)
- 
- TRANS_FEAT(UCVTF_hh, aa64_sve, gen_gvec_fpst_arg_zpz,
-            gen_helper_sve_ucvt_hh, a, 0, FPST_FPCR_F16_A64)
-@@ -4122,14 +4122,14 @@ TRANS_FEAT(UCVTF_dh, aa64_sve, gen_gvec_fpst_arg_zpz,
-            gen_helper_sve_ucvt_dh, a, 0, FPST_FPCR_F16_A64)
- 
- TRANS_FEAT(UCVTF_ss, aa64_sve, gen_gvec_fpst_arg_zpz,
--           gen_helper_sve_ucvt_ss, a, 0, FPST_FPCR_A64)
-+           gen_helper_sve_ucvt_ss, a, 0, FPST_A64)
- TRANS_FEAT(UCVTF_ds, aa64_sve, gen_gvec_fpst_arg_zpz,
--           gen_helper_sve_ucvt_ds, a, 0, FPST_FPCR_A64)
-+           gen_helper_sve_ucvt_ds, a, 0, FPST_A64)
- TRANS_FEAT(UCVTF_sd, aa64_sve, gen_gvec_fpst_arg_zpz,
--           gen_helper_sve_ucvt_sd, a, 0, FPST_FPCR_A64)
-+           gen_helper_sve_ucvt_sd, a, 0, FPST_A64)
- 
- TRANS_FEAT(UCVTF_dd, aa64_sve, gen_gvec_fpst_arg_zpz,
--           gen_helper_sve_ucvt_dd, a, 0, FPST_FPCR_A64)
-+           gen_helper_sve_ucvt_dd, a, 0, FPST_A64)
- 
- /*
-  *** SVE Memory - 32-bit Gather and Unsized Contiguous Group
-@@ -7011,10 +7011,10 @@ DO_ZPZZ_FP(FMINP, aa64_sve2, sve2_fminp_zpzz)
- 
- TRANS_FEAT_NONSTREAMING(FMMLA_s, aa64_sve_f32mm, gen_gvec_fpst_zzzz,
-                         gen_helper_fmmla_s, a->rd, a->rn, a->rm, a->ra,
--                        0, FPST_FPCR_A64)
-+                        0, FPST_A64)
- TRANS_FEAT_NONSTREAMING(FMMLA_d, aa64_sve_f64mm, gen_gvec_fpst_zzzz,
-                         gen_helper_fmmla_d, a->rd, a->rn, a->rm, a->ra,
--                        0, FPST_FPCR_A64)
-+                        0, FPST_A64)
- 
- static gen_helper_gvec_4 * const sqdmlal_zzzw_fns[] = {
-     NULL,                           gen_helper_sve2_sqdmlal_zzzw_h,
-@@ -7130,18 +7130,18 @@ TRANS_FEAT_NONSTREAMING(RAX1, aa64_sve2_sha3, gen_gvec_fn_arg_zzz,
-                         gen_gvec_rax1, a)
- 
- TRANS_FEAT(FCVTNT_sh, aa64_sve2, gen_gvec_fpst_arg_zpz,
--           gen_helper_sve2_fcvtnt_sh, a, 0, FPST_FPCR_A64)
-+           gen_helper_sve2_fcvtnt_sh, a, 0, FPST_A64)
- TRANS_FEAT(FCVTNT_ds, aa64_sve2, gen_gvec_fpst_arg_zpz,
--           gen_helper_sve2_fcvtnt_ds, a, 0, FPST_FPCR_A64)
-+           gen_helper_sve2_fcvtnt_ds, a, 0, FPST_A64)
- 
- TRANS_FEAT(BFCVTNT, aa64_sve_bf16, gen_gvec_fpst_arg_zpz,
-            gen_helper_sve_bfcvtnt, a, 0,
--           s->fpcr_ah ? FPST_FPCR_AH : FPST_FPCR_A64)
-+           s->fpcr_ah ? FPST_FPCR_AH : FPST_A64)
- 
- TRANS_FEAT(FCVTLT_hs, aa64_sve2, gen_gvec_fpst_arg_zpz,
--           gen_helper_sve2_fcvtlt_hs, a, 0, FPST_FPCR_A64)
-+           gen_helper_sve2_fcvtlt_hs, a, 0, FPST_A64)
- TRANS_FEAT(FCVTLT_sd, aa64_sve2, gen_gvec_fpst_arg_zpz,
--           gen_helper_sve2_fcvtlt_sd, a, 0, FPST_FPCR_A64)
-+           gen_helper_sve2_fcvtlt_sd, a, 0, FPST_A64)
- 
- TRANS_FEAT(FCVTX_ds, aa64_sve2, do_frint_mode, a,
-            FPROUNDING_ODD, gen_helper_sve_fcvt_ds)
-@@ -7153,7 +7153,7 @@ static gen_helper_gvec_3_ptr * const flogb_fns[] = {
-     gen_helper_flogb_s, gen_helper_flogb_d
- };
- TRANS_FEAT(FLOGB, aa64_sve2, gen_gvec_fpst_arg_zpz, flogb_fns[a->esz],
--           a, 0, a->esz == MO_16 ? FPST_FPCR_F16_A64 : FPST_FPCR_A64)
-+           a, 0, a->esz == MO_16 ? FPST_FPCR_F16_A64 : FPST_A64)
- 
- static bool do_FMLAL_zzzw(DisasContext *s, arg_rrrr_esz *a, bool sub, bool sel)
- {
-@@ -7198,7 +7198,7 @@ static bool do_BFMLAL_zzzw(DisasContext *s, arg_rrrr_esz *a, bool sel)
- {
-     return gen_gvec_fpst_zzzz(s, gen_helper_gvec_bfmlal,
-                               a->rd, a->rn, a->rm, a->ra, sel,
--                              s->fpcr_ah ? FPST_FPCR_AH : FPST_FPCR_A64);
-+                              s->fpcr_ah ? FPST_FPCR_AH : FPST_A64);
- }
- 
- TRANS_FEAT(BFMLALB_zzzw, aa64_sve_bf16, do_BFMLAL_zzzw, a, false)
-@@ -7209,7 +7209,7 @@ static bool do_BFMLAL_zzxw(DisasContext *s, arg_rrxr_esz *a, bool sel)
-     return gen_gvec_fpst_zzzz(s, gen_helper_gvec_bfmlal_idx,
-                               a->rd, a->rn, a->rm, a->ra,
-                               (a->index << 1) | sel,
--                              s->fpcr_ah ? FPST_FPCR_AH : FPST_FPCR_A64);
-+                              s->fpcr_ah ? FPST_FPCR_AH : FPST_A64);
- }
- 
- TRANS_FEAT(BFMLALB_zzxw, aa64_sve_bf16, do_BFMLAL_zzxw, a, false)
+     /*
 -- 
 2.43.0
 
