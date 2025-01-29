@@ -4,67 +4,67 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D4DC5C0218A
-	for <qemu-devel@archiver.kernel.org>; Wed, 29 Jan 2025 01:25:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6C7AAC0218A
+	for <qemu-devel@archiver.kernel.org>; Wed, 29 Jan 2025 01:29:01 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tcwox-0004MG-Aj; Tue, 28 Jan 2025 20:24:47 -0500
+	id 1tcwse-0005QQ-DG; Tue, 28 Jan 2025 20:28:36 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1tcwou-0004LK-Mm; Tue, 28 Jan 2025 20:24:44 -0500
-Received: from mail-vs1-xe33.google.com ([2607:f8b0:4864:20::e33])
+ id 1tcwsa-0005Q0-FL; Tue, 28 Jan 2025 20:28:32 -0500
+Received: from mail-vk1-xa2f.google.com ([2607:f8b0:4864:20::a2f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1tcwot-0000nT-9o; Tue, 28 Jan 2025 20:24:44 -0500
-Received: by mail-vs1-xe33.google.com with SMTP id
- ada2fe7eead31-4b6398d477fso1869434137.0; 
- Tue, 28 Jan 2025 17:24:41 -0800 (PST)
+ id 1tcwsY-0001fp-N8; Tue, 28 Jan 2025 20:28:32 -0500
+Received: by mail-vk1-xa2f.google.com with SMTP id
+ 71dfb90a1353d-518a52c8b5aso2064606e0c.2; 
+ Tue, 28 Jan 2025 17:28:30 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1738113881; x=1738718681; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1738114109; x=1738718909; darn=nongnu.org;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:from:to:cc:subject:date
  :message-id:reply-to;
- bh=8L3K9YIE3Jsq9qSbVfMRemus9lKR6FaCE1NxAPfGAO8=;
- b=cUBPsPBXCuJJldKf4flQZsVfXN9n7GuEcA7Dpohs1mO1pjAQKcSlWWSlcMleuyS4Vz
- af9ZAGfZ8fGUAg65XspTq86B8aF6GdmqlUlOrvZRugct8AOUgZ2OVTHaWD4JGZT04OiQ
- kbC7zie8kMViQS1Za5Go37vVnfP2sZdsbSTdiI+M9eug8jWTZbzCteeH3Hy27XnDORIO
- /pGXSTZCL21TLIoZfMockgO/xOtNZrvuCrAcnwpKgZBbqgqjZbcrSx7hnUav4jWz/8mb
- kAiWS4Gh6y6jWR32nV6InTk+3KIPdqXC443Pj4Z56i6oL/dl/DotwKmfsBsjFQN/qc4p
- BIXQ==
+ bh=cG8yehSPIw7MwAxwKTF1P68Vgihkaupl72Rb/W4O0XI=;
+ b=f7qSPmBUrrG2n6l/FA/5xihrVrdrEegGkY5DI5YTZ+LWogBbi5xiGsUHtSHNVKCUG6
+ 9ewpXY32UhMz0qvQLK5BcC/XrU+pA5WbjVq6EPW+0AVoObxz/Ju0TuAbUMcCPqW61CLh
+ J+mCec9KqFw0BQmBlkquAMIZ216rK3oEOKDz8PIG3MqijNbIfvyex0vThf0O0/LFKin6
+ +jiOhMHehgJHj3oEtRRv5Z6nQJWpPOE8PHOKy5PlaAHii+ZYpnjAhbFvV4NTJ56QqpVF
+ jGhLMWeMTlwmc71xIlS5wAKCAfgn1lFf+IDv/R6XaFJ/PU0HxQ8Ir1GMK84Dggo+X3YW
+ rgyQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1738113881; x=1738718681;
+ d=1e100.net; s=20230601; t=1738114109; x=1738718909;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=8L3K9YIE3Jsq9qSbVfMRemus9lKR6FaCE1NxAPfGAO8=;
- b=fcV4i/1WxIFAUol+UobInIDh2pOiPM9OnlPtuD0jYTJvNVNQgK1gn64i86ABEIkUgo
- lYyjYU7/Rhs4ouN/ZFHxMG8C94rwYdTeQqdIHgHOozT5sXEbNJEb/0uTTEB//gpZNVxP
- p50xZwH0cfioYvLdXx8gcAsYK+ESz+gJqMduRyt9OcZVTriHh9UmR65ep1kRANbmPIgH
- 9bOGpHoRBTvPsq7+1DeHkfgBjtHfgPoQA6SAFCzSgNe78wrVCEqfn+FAIRbqe9KwpdA3
- rkzeNOb8Zf5RJFmTWGAcKkrMOCn+PUPpdqtoHLqPokITAp1pC+ncjfbemkhDAONc1XvI
- LaSQ==
+ bh=cG8yehSPIw7MwAxwKTF1P68Vgihkaupl72Rb/W4O0XI=;
+ b=QuapuPQeVLgkH25c7M4nOd781N/G9jfSkhTuvFlWCCA9uGygV+Ywho4K2BKUXw8rdN
+ +CMX/aivxdzM5A9GLQqHHEg8TPveOln98QGJafUZeRBsHvPNwSD8m9eDpen6HaTMKj/i
+ 05p+fzGiuiezteyzfDe5PB4cFIlexoxGY11380TMVPN5JK57S+wx7Apnat24j9cuGuki
+ ZmW/KZ8PWD8mIe2Hqb3B0Ip0w2WMFjzabJ/Swg1Lk/wnXPYqyQ1cgcECj/8FS0l3mu4q
+ zMt3PLvnT/38DLpzA1BKI26IYMqacNN5y4VP8uIfEVqJccp+mQcv07t+ssEqw7PaXPfC
+ 6YVA==
 X-Forwarded-Encrypted: i=1;
- AJvYcCVKQZoV7SvhZFrmTueoFeWOjZx7cdeAa2S+S4PPYEyPNypx0rs0L3fGARbUtBqQa/GlNLic3zUFXZrN@nongnu.org,
- AJvYcCVwZ2l5PmHp/gFdl1tUGkZFkBTboGgCA+jRsbRG+IYRzO3r+ot7/EJ2NhJZYKua8FldDngU3YmsyWmv6w==@nongnu.org
-X-Gm-Message-State: AOJu0YyeHUBeiF35XU3iypj2PSUEqZVEBsFzxqm782g/96mKR/h7w1Ho
- GPCFnovDrgYQ6iVTyzkfAQsPCxDfp6AJShJC93YlAEMmMOPdXTl4AnsjezTr92hPykN9fx4fXih
- ZqhATKv/w7B37Jje2+l/PEx6kiUg=
-X-Gm-Gg: ASbGncsB1E3gr8m/w4Pc+aylvguv+e3gXRq+pylV9Z5YHXdm1M+qQmKla9BIXfVeOL2
- zDcK/K/9CwvQ/mDAbIEz17swy4O+FM7bAz+D4zbOzHWRBptjZH6vVwNuEVTZSy9WYpEM1nh7M8H
- ukGC/trjNP+6hAUwuF8QX/ipgl4A==
-X-Google-Smtp-Source: AGHT+IGTpO8ZHs2whCWJS6SAOXujPzEm/BpVD5CsgTVZkyqV+E5FwAHUeYgEr6sGK+FikHhKRuv9jEN98UNjjrZ5IqI=
-X-Received: by 2002:a05:6102:3581:b0:4b1:1abe:6131 with SMTP id
- ada2fe7eead31-4b9a525c407mr1180890137.25.1738113880998; Tue, 28 Jan 2025
- 17:24:40 -0800 (PST)
+ AJvYcCU+4oiA8geUDdq3axuuc4jWVweoiUSTvwi4AZ5QXq2acWCxyqVedXCRQsf4DqYHuGNCIi9E2rVteUVe@nongnu.org,
+ AJvYcCVJ1o7/ecYeRdCPxnMImgwZvRGqIaaXRsOzYhSS6Dyl3gJDbhl47hGVP0JBdYpZ6PUa7r8Zli/d7x5cSA==@nongnu.org
+X-Gm-Message-State: AOJu0YxjRPgPumaNkg4a7WDjLXoUjwB0z+9Sqgdig1MLCDm4YqeArVsN
+ KB/oTIrqo82vIhW2wn5ZNZdi8Zduj2zo5Brx3N5e/uDYDtTjlLaKF7FEyt7H+GPCMvWM1UfESAC
+ gXPe53NtGaxYZHhapG09UBhE2AiQ=
+X-Gm-Gg: ASbGncutwmnYws6+xo1GO9me3EKi+Krrr9IbMBWOG9P6QE2orGy4nLWsU8Pi77xXeLA
+ MMP56jWIAIMXTjMCBnTTw1aPLvKpvT9uBwsXFnR8RymLyfkamhCFFp0RbJhdPVR8IfDb/aO9J1t
+ LEMQcXT33A//Xiq5Dnex9Lhu8H2g==
+X-Google-Smtp-Source: AGHT+IFiHdLxcTitrRcA1DOhx2X8kDIjMP2gctaXtBf63XewCItz0XzF7fUAD7k5DebyexybRigNib/pLFXxHPQwRTg=
+X-Received: by 2002:a05:6122:4f90:b0:50b:e9a5:cd7b with SMTP id
+ 71dfb90a1353d-51e9e53e28fmr1686557e0c.9.1738114109242; Tue, 28 Jan 2025
+ 17:28:29 -0800 (PST)
 MIME-Version: 1.0
 References: <20250114092012.29024-1-evgenii.prokopiev@syntacore.com>
 In-Reply-To: <20250114092012.29024-1-evgenii.prokopiev@syntacore.com>
 From: Alistair Francis <alistair23@gmail.com>
-Date: Wed, 29 Jan 2025 11:24:15 +1000
-X-Gm-Features: AWEUYZmfuqI9VDdI9ajN7q-8zlHcoP_p11UkyDXQlhozyaEmS598DyymqMqEiYU
-Message-ID: <CAKmqyKMbBF9OS36ptWAuFtkaJCsq5NTLmgrY6nmQDpv0s_AK8w@mail.gmail.com>
+Date: Wed, 29 Jan 2025 11:28:03 +1000
+X-Gm-Features: AWEUYZnal9Woe4wA-30YTyfZlXrdc3Hmmz_5CB5A8bCEg6-OiqWPnr4MBk2iV6s
+Message-ID: <CAKmqyKNpF0+8AUcnC2hqqQLRG7sE-6RwQCrEV4vajYYFtuMzPw@mail.gmail.com>
 Subject: Re: [PATCH] target/riscv/csr.c: Turn off mstatus.vs when misa.v is
  turned off
 To: Evgenii Prokopiev <evgenii.prokopiev@syntacore.com>
@@ -73,8 +73,8 @@ Cc: palmer@dabbelt.com, alistair.francis@wdc.com, bmeng.cn@gmail.com,
  qemu-riscv@nongnu.org, qemu-devel@nongnu.org
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::e33;
- envelope-from=alistair23@gmail.com; helo=mail-vs1-xe33.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::a2f;
+ envelope-from=alistair23@gmail.com; helo=mail-vk1-xa2f.google.com
 X-Spam_score_int: -18
 X-Spam_score: -1.9
 X-Spam_bar: -
@@ -108,7 +108,9 @@ On Tue, Jan 14, 2025 at 7:33=E2=80=AFPM Evgenii Prokopiev
 >
 > Signed-off-by: Evgenii Prokopiev <evgenii.prokopiev@syntacore.com>
 
-Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
+Thanks!
+
+Applied to riscv-to-apply.next
 
 Alistair
 
