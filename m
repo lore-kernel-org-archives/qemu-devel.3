@@ -4,167 +4,97 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9BD6AC0218D
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C6E30C02193
 	for <qemu-devel@archiver.kernel.org>; Wed, 29 Jan 2025 17:05:25 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tdBUM-0000Et-W9; Wed, 29 Jan 2025 12:04:31 -0500
+	id 1tdBU6-0000Az-Pu; Wed, 29 Jan 2025 12:04:14 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mochs@nvidia.com>) id 1tdBUK-0000D1-7W
- for qemu-devel@nongnu.org; Wed, 29 Jan 2025 12:04:28 -0500
-Received: from mail-bn8nam12on2051.outbound.protection.outlook.com
- ([40.107.237.51] helo=NAM12-BN8-obe.outbound.protection.outlook.com)
+ (Exim 4.90_1) (envelope-from <SRS0=PAS2=UV=kaod.org=clg@ozlabs.org>)
+ id 1tdBU5-0000AK-8b; Wed, 29 Jan 2025 12:04:13 -0500
+Received: from gandalf.ozlabs.org ([150.107.74.76] helo=mail.ozlabs.org)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mochs@nvidia.com>) id 1tdBUH-0006QV-43
- for qemu-devel@nongnu.org; Wed, 29 Jan 2025 12:04:27 -0500
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=fUv0BUdf9E55fadaxddM6S+9SesDnmjtkcT2uSX/CwJmR8AsZ14ZUYbGPMb+RcO6nGgg8IqqaGahxIOIsvTqQ87ZNzPxgg1BOKBc6RC9llMSN0/BPf4lOL1QbgYLbWDlUEhm8OjN8DsuHr1KqZB2kAcLargoW6P5BAbBd/Ky9+BC0PwCj/P+bb9AmRCa2GbVLNDyGtOA/3+5NFtAiRpdCZLgB+xQEAWkx17H71UkN/EmtHmNvlIt1R9yytf9JNb2rL2FzxBXwSaX7LihIWB5c/UopN9hzOjysFSYdY8NVm33NsWwQ5B0cuOH6UZ2Wrh05ciXNa/8zte9dDXtfrLPMA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=0gL6NqvZ5KWnqT5aWNZUPoTj8EmqeT2zl+BJVLEYmkI=;
- b=mAIf6Ca79ScphfyxrRvnOO3rU1D+4GS/v6CtKxVEbXFvnUxiCDnnwleEE7S20FMuxEMc0jRouOAGKCYcedXR0Ru0+9kSXcEkcqOJ9CaMVtFloHQOD2dKjlWfWy1N0we+kDQ4dzWQ7QOWu404LwKkRWQWlbuKyKB8pG1Rq9aMk41gdQPD1R3F29RtDqN3AOFkaMT1qIP0eMUtCuo+atU6X4g5O2JBF/wJQuCI1w5PpHBnRyRQrfeWAKcIKnCZonXFetOueKEP2yThvfHMcD4/VeX1WWEvapOfeaPUwEizNBRuLpx0h8tUUvki9oqNaPOfsTx6l3asoqJovcFr0WgV1A==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=nvidia.com; dmarc=pass action=none header.from=nvidia.com;
- dkim=pass header.d=nvidia.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
- s=selector2;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=0gL6NqvZ5KWnqT5aWNZUPoTj8EmqeT2zl+BJVLEYmkI=;
- b=BImLKWVbeSdE7JrRmNBIuSfdn/KYdSk5eWgiwlCWoKu//HMNPn+cEN+v5RSM13cH6vkZdRkiWzkYUAtU5FZUpMogUZXdaxAr747BHjiaNTC7EZAMjeQT2yNjHqdsR8q83AsAt9aS2rCEXYz2npow/dGacIReTOaz8XqpsjXCY9qa8xdXpJCi/X5k7hR79DTxAdSOCs1kV7XjLjGPygfPmcB99aOW892TxSSm+zhzGKOPu3FBZqPhYIQ8Dj0RfZn6xiRwz7oKbAoJA5DvRl+Kc/IJVc/F/yzGLU7iAlanRYGN99IBAkMmyP4KRjp6xYkvT0qi+tZnjK8Zq1j5R4JdtA==
-Received: from MW6PR12MB8897.namprd12.prod.outlook.com (2603:10b6:303:24a::19)
- by SJ2PR12MB8181.namprd12.prod.outlook.com (2603:10b6:a03:4f6::18)
- with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.8398.18; Wed, 29 Jan
- 2025 16:59:19 +0000
-Received: from MW6PR12MB8897.namprd12.prod.outlook.com
- ([fe80::7c55:5a45:be80:e971]) by MW6PR12MB8897.namprd12.prod.outlook.com
- ([fe80::7c55:5a45:be80:e971%3]) with mapi id 15.20.8377.021; Wed, 29 Jan 2025
- 16:59:19 +0000
-From: Matt Ochs <mochs@nvidia.com>
-To: =?utf-8?B?UGhpbGlwcGUgTWF0aGlldS1EYXVkw6k=?= <philmd@linaro.org>
-CC: "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>, Shameerali Kolothum Thodi
- <shameerali.kolothum.thodi@huawei.com>, Nathan Chen <nathanc@nvidia.com>, 
- Donald Dutile <ddutile@redhat.com>, Eric Auger <eric.auger@redhat.com>,
- Nicolin Chen <nicolinc@nvidia.com>, Ankit Agrawal <ankita@nvidia.com>
-Subject: Re: [PATCH] hw/arm/virt: Support larger highmem MMIO regions
-Thread-Topic: [PATCH] hw/arm/virt: Support larger highmem MMIO regions
-Thread-Index: AQHbcZ4NVBrM9t9rn0KftTkrAnTiqbMta22AgACPjwA=
-Date: Wed, 29 Jan 2025 16:59:19 +0000
-Message-ID: <A5F74606-3DDA-4436-8356-CDB96DFF807C@nvidia.com>
-References: <20250128160237.3379569-1-mochs@nvidia.com>
- <0c7e5fb5-726d-4f65-9944-a24b738c542c@linaro.org>
-In-Reply-To: <0c7e5fb5-726d-4f65-9944-a24b738c542c@linaro.org>
-Accept-Language: en-US
-Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-authentication-results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=nvidia.com;
-x-ms-publictraffictype: Email
-x-ms-traffictypediagnostic: MW6PR12MB8897:EE_|SJ2PR12MB8181:EE_
-x-ms-office365-filtering-correlation-id: 7729aa6e-e3fc-4029-50be-08dd40864592
-x-ms-exchange-senderadcheck: 1
-x-ms-exchange-antispam-relay: 0
-x-microsoft-antispam: BCL:0;
- ARA:13230040|1800799024|376014|366016|7053199007|8096899003|38070700018; 
-x-microsoft-antispam-message-info: =?utf-8?B?OWZ1TnorUCtxekZWL296N1NjTjFnQjBjai9SNmMvcFM0ZGhzekRaVEZIR0xy?=
- =?utf-8?B?bkxVMEJOMGVwZCtmQzd4NEQ1SnBXWURmcG5WcWhSN0VNckRWUWMvL1lYSEdL?=
- =?utf-8?B?WVcrK3FFTVdCdmU1WXpoOU5WN1o4RDNzdXhmWjFJNFZFN2o2dVpVVjViUlBj?=
- =?utf-8?B?YWtVbS9LSitIbHBUdXRWaVJXVjR0QU9nQ2JYNEd0TWtNRy94YlJONHhtN0py?=
- =?utf-8?B?VTBlakFLeUNQVjFGWWszMmNxWSthVnBrWkc3bnI1UkMxS0NFVjdlVVg3ckdP?=
- =?utf-8?B?bGpPTkZ0VW1sRFFtT0NWMGNvMktPWEtuaFNob3NicE5HdHRIQzl1TDYrS0Fo?=
- =?utf-8?B?STRYT250RzB4TVMzOVFHY2ltV1JHeElaYzhuZEN4Q3kyaG5aRFI2QkdSZ0JE?=
- =?utf-8?B?RS9DSjNzd1FPNElRWnNKdkg2SjBIQktjUG1mOFl3dU5OSzR3cmJ3S2t3VmlO?=
- =?utf-8?B?azNMTDR0MUtUMFMzNXhWQnp1aXVNMk9idnpCdi94TkszUmxERGptQjlDOXg1?=
- =?utf-8?B?dVR4ZmhIVjBBT0IwelN3ZFdoV2c2c3NROEJjZ3JRdGswK2VxbEs5VlBRdjlO?=
- =?utf-8?B?MjlpUklhZWVsczFER3BBOGEyQnhiaWdqVWVaK0dnbENOUDc1cTN0QzdyVUhR?=
- =?utf-8?B?d0M3U2RFUmVuRnJlVG43ekxReU1jVXk0MnQzRFRzN3ZpMjA1OTVRMDFlRUVL?=
- =?utf-8?B?OUpLMHVFMERDVXB3bm1KV2dGMDIrNzJzUXlZbXh4YlVFZnNKT2VQajV2NU5o?=
- =?utf-8?B?VXJDZTVTMWl2bkVMZUJwNTdWRTh0NERPWXRPY1NOL1F1UlpKMnluZ2ZzdEtQ?=
- =?utf-8?B?bmk2aW5UeHlVemluakFkY0lBK2pMaGJ5cHRlTURoaVRxcFJacEQ4Qyt4cEZr?=
- =?utf-8?B?L1pPTENLQ1c2cG82TlV1d0FtTXBLSjV1QVUwQUxnU0N3a3I2MDVNM3JaQWlM?=
- =?utf-8?B?VW82Zi9jSWUxUzhUdVRheGt5ZDgxMTd1ZTcxMXhzenp5bHpOanhGT3dPQVl2?=
- =?utf-8?B?RW5JTzhvYW0zZFE2VFM2SWdHY1NuRTIvTFRXbnNDMDVHUzhRSXdhTHBYNUpn?=
- =?utf-8?B?V2g1dGY2T2M2ck1YNURMYm8xTWZMaVVQYVhpZXpKUmtYZTgyWnBpUVZuQ1VE?=
- =?utf-8?B?czdNTXZHTkJLT09CWW4rZDQwZ095bVpvd3orK01KTFFFSFlhSndoVjJDVXU3?=
- =?utf-8?B?cnBlMEJTVC8vVUJSeDJiSjNNTENoQU95L0h3YnlIa0Z0SDZUdWxKbGdmZVRq?=
- =?utf-8?B?eDYvZExMSlI0VjlSRjJWdTl0cXJpQUJrMnpDNTkreXREQXZvYWgvamE3eFd0?=
- =?utf-8?B?bXJBeEowMjJmRXF1SmhsNk1sS0huVXJta3Y2WC9OL3RzOHQ3VGJqSklmeGZO?=
- =?utf-8?B?UzhZNGhKdnAxbEVXVXRxSjQ1MHdQcVNRNXVONVprZzYxSVl0ZDh6MldmNjRI?=
- =?utf-8?B?NFU5T2hWTGttRjQ4V01RVUEwUDNkL0RFZk1tVytLRHFwRVAyRERmdDJOdXNG?=
- =?utf-8?B?VnNKbWRZT1BSOE10TDFSTEdnblFBWk9rOGVSbmxySmNid1MycmkvRDQrcXZV?=
- =?utf-8?B?THZERFE0SXNnWnV6SWwzb211ekxYdXk5elZzWGhMNEpUUVV0Mm9mL280VjZS?=
- =?utf-8?B?OXVMcFVBK0JRSE9JTVlkSFg5VHJzcTlmRGlkcVNpcHhkblRwS3RxTFNFdGti?=
- =?utf-8?B?TGsxU3h0M01oc29sbzArR1BpZVBtejJlaU9pUU9nd3hLN0hDNEw1MUhwckNT?=
- =?utf-8?B?WlQzMElWSHhnamNxSXZ1ZmZ6YUJScUZKQmY0RzVZSmo1NytIUE1JTEwrSGph?=
- =?utf-8?B?UXc4eUgxdTRwMHoxN0haekVINEhEYmhOdlFOdEpFVnRsUG9JR1k3Wm5EUGU3?=
- =?utf-8?B?RG16YW0zTVJFVjV5WWQ1dVBmd3QyV2Uzc0hiSG4zOW9RNXdWV21DYWRVUW42?=
- =?utf-8?Q?G4HcbmajuPvjAVSN5P+J1Ldt061fGUPl?=
-x-forefront-antispam-report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:MW6PR12MB8897.namprd12.prod.outlook.com; PTR:; CAT:NONE;
- SFS:(13230040)(1800799024)(376014)(366016)(7053199007)(8096899003)(38070700018);
- DIR:OUT; SFP:1101; 
-x-ms-exchange-antispam-messagedata-chunkcount: 1
-x-ms-exchange-antispam-messagedata-0: =?utf-8?B?bmV3K2c0MytXajdVSmFXRVNKZDhaZFlBWi9MQ2kyMjJ5S0ZMMEFvSzlpSW80?=
- =?utf-8?B?OXU4blRJQVdBRVNPYzBya1VzcWREK1ZSTVF1c1R0TFRhMW9heGtGZ3NPc09x?=
- =?utf-8?B?YmU5Q1RBZTlMSmR6WHBRVFViV3JCS0pBZEtudUtmTkNtNlBuUDVQK2ZrdlBL?=
- =?utf-8?B?b0xWRnRUVUtsNWl3RldWL3R0ekpONlZWRkFvNmZtbUJSYXQvcUZHUW5sSWll?=
- =?utf-8?B?MTFVQzlWdlVTV3pHQWZscXdYM3hHQyt0a0dNN2MrUkYyczVaTDlSazNVZVFx?=
- =?utf-8?B?b2I2b0NJQzRubDAvRlpFSUdvNVh0VkczU01sZFIxMytqeHpGUEphb0hCVTJp?=
- =?utf-8?B?SUV0UnF0QjFsTnowa2U1eWFTd0MyOSsvdElyWFNDTUhrRVdFUmErNWxEMXBv?=
- =?utf-8?B?QmNadDlVbXBZV2JiRDREOHFRUVRhMUkxN2ZJS05CODRBemdIREVLdVZXQWJj?=
- =?utf-8?B?M3hYTmV2d2REeHRjS09SOWNmSlg5OWxFYTVXbENCL09HZVJMVmNPa25hZE9k?=
- =?utf-8?B?YzdmYmN6SWRnTUJXckVUUEEza3dTYlVMTGRpWjJIUnBZUzRxSkxoYkxEaFhP?=
- =?utf-8?B?S0dvY25LVkVGMUdzMWdSOEVtSWdKNHpkSnNna0NBeGZpL04wVE1Jbk1od2sy?=
- =?utf-8?B?SHVLMHQxcEIxNWJybWJNT3B3eEpKbWl1WnduZjNOL2M1Tm1aY2RDcDYzNmF5?=
- =?utf-8?B?S3VodWNUa2NoUGEyVy9FQ1ZSOU5tMHh4akY5Ulh4SnRrRGpaay9DbkpBWnJL?=
- =?utf-8?B?ZkJBK21kOGprVXpWT0IzRE9BVXVlRy9zeExqNkdidzJPQko3ejhDSmZ3U1lU?=
- =?utf-8?B?NXFwR1FCTXM5S25rZlJ1OUlWRmc4bGNuazEvaDVIOEZ4UGVrclpYaGZ3VlJi?=
- =?utf-8?B?NFBIN0RxaDhzdENIL25vdXRBWSs4RTlMS05Rb3crWWt5VTcvLzcyK1grNjg1?=
- =?utf-8?B?eGRybFFYREJmN3o0Sk5icXg3U2RhUWdOa0RlZDhWSVlhdWRsejFla1d5ZFlX?=
- =?utf-8?B?cmVYUmJBYkkzYjZNcGM1Y1o3SGZEY0N2ekRhdVArS1NaMCtraEZoZXc2Njd6?=
- =?utf-8?B?WWQ2RVlXMUFUVldTVDRKRURlSTFDNDlVOXpXSFVyMDkvcE4rUFVwNGdrV2p4?=
- =?utf-8?B?R2hXdTVHb1VnL1czVzc1cUpBSG9LYlhhekQ0eU5pZ2pUYkVNeUsyTUNMelZs?=
- =?utf-8?B?SzFmWm9vQlZvVk41SHlLR2JuY2dRS3RxUjNsajRuT21CYVBxdWx2ZzVmZFRr?=
- =?utf-8?B?YmhoMkFXMTl2WCtoeHBPUWNRZnBPUmZZdmZ0MTJ6eEs5YS9LMElUS1Q2ZEVj?=
- =?utf-8?B?THM4QThxakV1c3ZIa1ArSUhNbTlHeW5zSmdhMm05ei8ySTNlaU9hMWozdUNP?=
- =?utf-8?B?YTZDMG5GN1JqY1ZQWDVid0d4MFpBek1wbCtwQnNBUnNWeXl4c0Q3Snc0SWl2?=
- =?utf-8?B?Sno0emVqZGUvcmxqcDVzbXRzVVhEUDVPbkJZNHpheUZmSndKRkpUMFFPZFJC?=
- =?utf-8?B?QW9LRVNEOE9QU09md3IyMCtMSWZVRE9VY2dCVGVWRUJlRGorODN1NFV3ajht?=
- =?utf-8?B?T1cxNkFRZEhERWVpd0p3MHdFb3o3bGJZQStzcUczaGY0WGlpL3dJRHJZWUhH?=
- =?utf-8?B?RVd0T2M0TTZhQ3ZES1p2R2RrMGZ2Vzg1OWpXdmlXMUNidk5MZ3VFcCtRbkdG?=
- =?utf-8?B?ZnJtZTRkMUQwaDUveDhzSDM0TnZSYnhwdkhHSGJUQ3I4RFQ1NlBtOFVBMWdl?=
- =?utf-8?B?Ujcwb2EzUG9NVUFoSjJleWltRmg0NXZDa1M2V3FLUTRSMi9SYU54VzAzK3BC?=
- =?utf-8?B?YUIxMyszTmNZYVliNU9CK3BqOFBkZSs0MFBvdzFjb045NEZsRlNPVWdaeEpR?=
- =?utf-8?B?NGtKTFBwOEVZMGVXYWhrNnp6YVMxc1FtNEFYa2ZMQkt6aVlkM2VsZTR2cU5n?=
- =?utf-8?B?dzF1aFp4Um1ITFpNKzVMcGlFdTU0T04xemZ5ZlBUdWcvRnlRUWZhUGtrSXRR?=
- =?utf-8?B?N2pOOVl2aEhqVVZBOTJrR3NwdTVhM0hDSEh0YmtSMTBUdld5aTlERHp2V2R4?=
- =?utf-8?B?eUZGbW56V25rV0JSS01QSXJnQ3hUU0NlYkRrS1dxWlVwTGczN0xHZXpadFhy?=
- =?utf-8?Q?04xxUztkb/By5zTG4erbaqf02?=
-Content-Type: multipart/alternative;
- boundary="_000_A5F746063DDA44368356CDB96DFF807Cnvidiacom_"
+ (Exim 4.90_1) (envelope-from <SRS0=PAS2=UV=kaod.org=clg@ozlabs.org>)
+ id 1tdBTy-0006Ox-Vf; Wed, 29 Jan 2025 12:04:12 -0500
+Received: from mail.ozlabs.org (mail.ozlabs.org [IPv6:2404:9400:2221:ea00::3])
+ by gandalf.ozlabs.org (Postfix) with ESMTP id 4YjpQY5BHcz4x4t;
+ Thu, 30 Jan 2025 04:03:49 +1100 (AEDT)
+Received: from authenticated.ozlabs.org (localhost [127.0.0.1])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (Client did not present a certificate)
+ by mail.ozlabs.org (Postfix) with ESMTPSA id 4YjpQT6pxFz4wxm;
+ Thu, 30 Jan 2025 04:03:44 +1100 (AEDT)
+Message-ID: <2d9247ab-34dd-4dde-a9c0-c04c2d8a1a18@kaod.org>
+Date: Wed, 29 Jan 2025 18:03:50 +0100
 MIME-Version: 1.0
-X-OriginatorOrg: Nvidia.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-AuthSource: MW6PR12MB8897.namprd12.prod.outlook.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 7729aa6e-e3fc-4029-50be-08dd40864592
-X-MS-Exchange-CrossTenant-originalarrivaltime: 29 Jan 2025 16:59:19.3084 (UTC)
-X-MS-Exchange-CrossTenant-fromentityheader: Hosted
-X-MS-Exchange-CrossTenant-id: 43083d15-7273-40c1-b7db-39efd9ccc17a
-X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
-X-MS-Exchange-CrossTenant-userprincipalname: L8ZNtBUttxMFEXTIr1FcE86JEk0hnmdJfYJFIwyAbsogYkSRHIrsfNx5pOLmPIX3kd0pGnEmK6GQPLd7GOpxUA==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: SJ2PR12MB8181
-Received-SPF: softfail client-ip=40.107.237.51; envelope-from=mochs@nvidia.com;
- helo=NAM12-BN8-obe.outbound.protection.outlook.com
-X-Spam_score_int: -33
-X-Spam_score: -3.4
-X-Spam_bar: ---
-X-Spam_report: (-3.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.3,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- HTML_MESSAGE=0.001, RCVD_IN_MSPIKE_H2=0.001,
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v1 01/18] hw/intc/aspeed: Rename INTC to INTC0
+To: Jamin Lin <jamin_lin@aspeedtech.com>,
+ Peter Maydell <peter.maydell@linaro.org>,
+ Steven Lee <steven_lee@aspeedtech.com>, Troy Lee <leetroy@gmail.com>,
+ Andrew Jeffery <andrew@codeconstruct.com.au>, Joel Stanley <joel@jms.id.au>,
+ "open list:ASPEED BMCs" <qemu-arm@nongnu.org>,
+ "open list:All patches CC here" <qemu-devel@nongnu.org>
+Cc: troy_lee@aspeedtech.com, yunlin.tang@aspeedtech.com
+References: <20250121070424.2465942-1-jamin_lin@aspeedtech.com>
+ <20250121070424.2465942-2-jamin_lin@aspeedtech.com>
+Content-Language: en-US, fr
+From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>
+Autocrypt: addr=clg@kaod.org; keydata=
+ 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
+In-Reply-To: <20250121070424.2465942-2-jamin_lin@aspeedtech.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=150.107.74.76;
+ envelope-from=SRS0=PAS2=UV=kaod.org=clg@ozlabs.org; helo=mail.ozlabs.org
+X-Spam_score_int: -25
+X-Spam_score: -2.6
+X-Spam_bar: --
+X-Spam_report: (-2.6 / 5.0 requ) BAYES_00=-1.9,
+ HEADER_FROM_DIFFERENT_DOMAINS=0.037, RCVD_IN_DNSWL_LOW=-0.7,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
  SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -182,170 +112,227 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
---_000_A5F746063DDA44368356CDB96DFF807Cnvidiacom_
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: base64
+On 1/21/25 08:04, Jamin Lin wrote:
+> The design of the INTC has significant changes in the AST2700 A1. In the
+> AST2700 A0, there was one INTC controller, whereas in the AST2700 A1,
+> there were two INTC controllers: INTC0 (CPU DIE) and INTC1 (I/O DIE).
+> 
+> The previous INTC model only supported the AST2700 A0 and was implemented for
+> the INTC0 (CPU DIE). To support the future INTC1 (I/O DIE) model, rename INTC
+> to INTC0.
 
-DQpPbiBKYW4gMjksIDIwMjUsIGF0IDI6MjXigK9BTSwgUGhpbGlwcGUgTWF0aGlldS1EYXVkw6kg
-PHBoaWxtZEBsaW5hcm8ub3JnPiB3cm90ZToNCg0KSGkgTWF0dGhldywNCg0KT24gMjgvMS8yNSAx
-NzowMiwgTWF0dGhldyBSLiBPY2hzIHdyb3RlOg0KVGhlIE1NSU8gcmVnaW9uIHNpemUgcmVxdWly
-ZWQgdG8gc3VwcG9ydCB2aXJ0dWFsaXplZCBlbnZpcm9ubWVudHMgd2l0aA0KbGFyZ2UgUENJIEJB
-UiByZWdpb25zIGNhbiBleGNlZWQgdGhlIGhhcmRjb2RlZCBsaW1pdCBjb25maWd1cmVkIGluIFFF
-TVUuDQpGb3IgZXhhbXBsZSwgYSBWTSB3aXRoIG11bHRpcGxlIE5WSURJQSBHcmFjZS1Ib3BwZXIg
-R1BVcyBwYXNzZWQgdGhyb3VnaA0KcmVxdWlyZXMgbW9yZSBNTUlPIG1lbW9yeSB0aGFuIHRoZSBh
-bW91bnQgcHJvdmlkZWQgYnkgVklSVF9ISUdIX1BDSUVfTU1JTw0KKGN1cnJlbnRseSA1MTJHQiku
-IEluc3RlYWQgb2YgdXBkYXRpbmcgVklSVF9ISUdIX1BDSUVfTU1JTywgaW50cm9kdWNlIGENCm5l
-dyBwYXJhbWV0ZXIsIGhpZ2htZW0tbW1pby1zaXplLCB0aGF0IHNwZWNpZmllcyB0aGUgTU1JTyBz
-aXplIHJlcXVpcmVkDQp0byBzdXBwb3J0IHRoZSBWTSBjb25maWd1cmF0aW9uLg0KRXhhbXBsZSB1
-c2FnZSB3aXRoIDFUQiBNTUlPIHJlZ2lvbiBzaXplOg0KLW1hY2hpbmUgdmlydCxnaWMtdmVyc2lv
-bj0zLGhpZ2htZW0tbW1pby1zaXplPTEwOTk1MTE2Mjc3NzYNClNpZ25lZC1vZmYtYnk6IE1hdHRo
-ZXcgUi4gT2NocyA8bW9jaHNAbnZpZGlhLmNvbT4NCi0tLQ0KIGRvY3Mvc3lzdGVtL2FybS92aXJ0
-LnJzdCB8ICA0ICsrKysNCiBody9hcm0vdmlydC5jICAgICAgICAgICAgfCAzNiArKysrKysrKysr
-KysrKysrKysrKysrKysrKysrKysrKysrKysNCiAyIGZpbGVzIGNoYW5nZWQsIDQwIGluc2VydGlv
-bnMoKykNCg0KDQpkaWZmIC0tZ2l0IGEvaHcvYXJtL3ZpcnQuYyBiL2h3L2FybS92aXJ0LmMNCmlu
-ZGV4IDQ5ZWIwMzU1ZWYwYy4uNDNkNDdmZmVkZDlhIDEwMDY0NA0KLS0tIGEvaHcvYXJtL3ZpcnQu
-Yw0KKysrIGIvaHcvYXJtL3ZpcnQuYw0KQEAgLTI3NzMsNiArMjc3MywzNSBAQCBzdGF0aWMgdm9p
-ZCB2aXJ0X3NldF9oaWdobWVtX21taW8oT2JqZWN0ICpvYmosIGJvb2wgdmFsdWUsIEVycm9yICoq
-ZXJycCkNCiAgICAgdm1zLT5oaWdobWVtX21taW8gPSB2YWx1ZTsNCiB9DQogK3N0YXRpYyB2b2lk
-IHZpcnRfZ2V0X2hpZ2htZW1fbW1pb19zaXplKE9iamVjdCAqb2JqLCBWaXNpdG9yICp2LCBjb25z
-dCBjaGFyICpuYW1lLA0KKyAgICAgICAgICAgICAgICAgICAgICAgICAgdm9pZCAqb3BhcXVlLCBF
-cnJvciAqKmVycnApDQorew0KKyAgICB1aW50NjRfdCBzaXplID0gZXh0ZW5kZWRfbWVtbWFwW1ZJ
-UlRfSElHSF9QQ0lFX01NSU9dLnNpemU7DQorDQorICAgIHZpc2l0X3R5cGVfc2l6ZSh2LCBuYW1l
-LCAmc2l6ZSwgZXJycCk7DQoNClNpbmNlIHlvdSBjb3JyZWN0bHkgdXNlIHZpc2l0X3R5cGVfc2l6
-ZSgpLCBtYXliZSB1c2UgaW4gY29tbWl0DQpkZXNjcmlwdGlvbiBleGFtcGxlICJoaWdobWVtLW1t
-aW8tc2l6ZT0xVEIiIHJhdGhlciB0aGFuIDEwOTk1MTE2Mjc3NzY/DQoNClllcywgdGhpcyB3aWxs
-IGJlIHVwZGF0ZWQgaW4gdjIuDQo=
 
---_000_A5F746063DDA44368356CDB96DFF807Cnvidiacom_
-Content-Type: text/html; charset="utf-8"
-Content-ID: <6416562497D669428B1B368AF78344AD@namprd12.prod.outlook.com>
-Content-Transfer-Encoding: base64
+Why not introduce definitions with _INTC_IO_ and leave alone the current
+instead ? Do we expect to have more than 2 INTC controllers ?
 
-PGh0bWw+DQo8aGVhZD4NCjxtZXRhIGh0dHAtZXF1aXY9IkNvbnRlbnQtVHlwZSIgY29udGVudD0i
-dGV4dC9odG1sOyBjaGFyc2V0PXV0Zi04Ij4NCjwvaGVhZD4NCjxib2R5IHN0eWxlPSJvdmVyZmxv
-dy13cmFwOiBicmVhay13b3JkOyAtd2Via2l0LW5ic3AtbW9kZTogc3BhY2U7IGxpbmUtYnJlYWs6
-IGFmdGVyLXdoaXRlLXNwYWNlOyI+DQo8YnIgaWQ9ImxpbmVCcmVha0F0QmVnaW5uaW5nT2ZNZXNz
-YWdlIj4NCjxkaXY+DQo8YmxvY2txdW90ZSB0eXBlPSJjaXRlIj4NCjxkaXY+T24gSmFuIDI5LCAy
-MDI1LCBhdCAyOjI14oCvQU0sIFBoaWxpcHBlIE1hdGhpZXUtRGF1ZMOpICZsdDtwaGlsbWRAbGlu
-YXJvLm9yZyZndDsgd3JvdGU6PC9kaXY+DQo8YnIgY2xhc3M9IkFwcGxlLWludGVyY2hhbmdlLW5l
-d2xpbmUiPg0KPGRpdj48c3BhbiBzdHlsZT0iY2FyZXQtY29sb3I6IHJnYigwLCAwLCAwKTsgZm9u
-dC1mYW1pbHk6IE5WSURJQVNhbnMtUmVndWxhcjsgZm9udC1zaXplOiAxNHB4OyBmb250LXN0eWxl
-OiBub3JtYWw7IGZvbnQtdmFyaWFudC1jYXBzOiBub3JtYWw7IGZvbnQtd2VpZ2h0OiA0MDA7IGxl
-dHRlci1zcGFjaW5nOiBub3JtYWw7IHRleHQtYWxpZ246IHN0YXJ0OyB0ZXh0LWluZGVudDogMHB4
-OyB0ZXh0LXRyYW5zZm9ybTogbm9uZTsgd2hpdGUtc3BhY2U6IG5vcm1hbDsgd29yZC1zcGFjaW5n
-OiAwcHg7IC13ZWJraXQtdGV4dC1zdHJva2Utd2lkdGg6IDBweDsgdGV4dC1kZWNvcmF0aW9uOiBu
-b25lOyBmbG9hdDogbm9uZTsgZGlzcGxheTogaW5saW5lICFpbXBvcnRhbnQ7Ij5IaQ0KIE1hdHRo
-ZXcsPC9zcGFuPjxiciBzdHlsZT0iY2FyZXQtY29sb3I6IHJnYigwLCAwLCAwKTsgZm9udC1mYW1p
-bHk6IE5WSURJQVNhbnMtUmVndWxhcjsgZm9udC1zaXplOiAxNHB4OyBmb250LXN0eWxlOiBub3Jt
-YWw7IGZvbnQtdmFyaWFudC1jYXBzOiBub3JtYWw7IGZvbnQtd2VpZ2h0OiA0MDA7IGxldHRlci1z
-cGFjaW5nOiBub3JtYWw7IHRleHQtYWxpZ246IHN0YXJ0OyB0ZXh0LWluZGVudDogMHB4OyB0ZXh0
-LXRyYW5zZm9ybTogbm9uZTsgd2hpdGUtc3BhY2U6IG5vcm1hbDsgd29yZC1zcGFjaW5nOiAwcHg7
-IC13ZWJraXQtdGV4dC1zdHJva2Utd2lkdGg6IDBweDsgdGV4dC1kZWNvcmF0aW9uOiBub25lOyI+
-DQo8YnIgc3R5bGU9ImNhcmV0LWNvbG9yOiByZ2IoMCwgMCwgMCk7IGZvbnQtZmFtaWx5OiBOVklE
-SUFTYW5zLVJlZ3VsYXI7IGZvbnQtc2l6ZTogMTRweDsgZm9udC1zdHlsZTogbm9ybWFsOyBmb250
-LXZhcmlhbnQtY2Fwczogbm9ybWFsOyBmb250LXdlaWdodDogNDAwOyBsZXR0ZXItc3BhY2luZzog
-bm9ybWFsOyB0ZXh0LWFsaWduOiBzdGFydDsgdGV4dC1pbmRlbnQ6IDBweDsgdGV4dC10cmFuc2Zv
-cm06IG5vbmU7IHdoaXRlLXNwYWNlOiBub3JtYWw7IHdvcmQtc3BhY2luZzogMHB4OyAtd2Via2l0
-LXRleHQtc3Ryb2tlLXdpZHRoOiAwcHg7IHRleHQtZGVjb3JhdGlvbjogbm9uZTsiPg0KPHNwYW4g
-c3R5bGU9ImNhcmV0LWNvbG9yOiByZ2IoMCwgMCwgMCk7IGZvbnQtZmFtaWx5OiBOVklESUFTYW5z
-LVJlZ3VsYXI7IGZvbnQtc2l6ZTogMTRweDsgZm9udC1zdHlsZTogbm9ybWFsOyBmb250LXZhcmlh
-bnQtY2Fwczogbm9ybWFsOyBmb250LXdlaWdodDogNDAwOyBsZXR0ZXItc3BhY2luZzogbm9ybWFs
-OyB0ZXh0LWFsaWduOiBzdGFydDsgdGV4dC1pbmRlbnQ6IDBweDsgdGV4dC10cmFuc2Zvcm06IG5v
-bmU7IHdoaXRlLXNwYWNlOiBub3JtYWw7IHdvcmQtc3BhY2luZzogMHB4OyAtd2Via2l0LXRleHQt
-c3Ryb2tlLXdpZHRoOiAwcHg7IHRleHQtZGVjb3JhdGlvbjogbm9uZTsgZmxvYXQ6IG5vbmU7IGRp
-c3BsYXk6IGlubGluZSAhaW1wb3J0YW50OyI+T24NCiAyOC8xLzI1IDE3OjAyLCBNYXR0aGV3IFIu
-IE9jaHMgd3JvdGU6PC9zcGFuPjxiciBzdHlsZT0iY2FyZXQtY29sb3I6IHJnYigwLCAwLCAwKTsg
-Zm9udC1mYW1pbHk6IE5WSURJQVNhbnMtUmVndWxhcjsgZm9udC1zaXplOiAxNHB4OyBmb250LXN0
-eWxlOiBub3JtYWw7IGZvbnQtdmFyaWFudC1jYXBzOiBub3JtYWw7IGZvbnQtd2VpZ2h0OiA0MDA7
-IGxldHRlci1zcGFjaW5nOiBub3JtYWw7IHRleHQtYWxpZ246IHN0YXJ0OyB0ZXh0LWluZGVudDog
-MHB4OyB0ZXh0LXRyYW5zZm9ybTogbm9uZTsgd2hpdGUtc3BhY2U6IG5vcm1hbDsgd29yZC1zcGFj
-aW5nOiAwcHg7IC13ZWJraXQtdGV4dC1zdHJva2Utd2lkdGg6IDBweDsgdGV4dC1kZWNvcmF0aW9u
-OiBub25lOyI+DQo8YmxvY2txdW90ZSB0eXBlPSJjaXRlIiBzdHlsZT0iZm9udC1mYW1pbHk6IE5W
-SURJQVNhbnMtUmVndWxhcjsgZm9udC1zaXplOiAxNHB4OyBmb250LXN0eWxlOiBub3JtYWw7IGZv
-bnQtdmFyaWFudC1jYXBzOiBub3JtYWw7IGZvbnQtd2VpZ2h0OiA0MDA7IGxldHRlci1zcGFjaW5n
-OiBub3JtYWw7IG9ycGhhbnM6IGF1dG87IHRleHQtYWxpZ246IHN0YXJ0OyB0ZXh0LWluZGVudDog
-MHB4OyB0ZXh0LXRyYW5zZm9ybTogbm9uZTsgd2hpdGUtc3BhY2U6IG5vcm1hbDsgd2lkb3dzOiBh
-dXRvOyB3b3JkLXNwYWNpbmc6IDBweDsgLXdlYmtpdC10ZXh0LXN0cm9rZS13aWR0aDogMHB4OyB0
-ZXh0LWRlY29yYXRpb246IG5vbmU7Ij4NClRoZSBNTUlPIHJlZ2lvbiBzaXplIHJlcXVpcmVkIHRv
-IHN1cHBvcnQgdmlydHVhbGl6ZWQgZW52aXJvbm1lbnRzIHdpdGg8YnI+DQpsYXJnZSBQQ0kgQkFS
-IHJlZ2lvbnMgY2FuIGV4Y2VlZCB0aGUgaGFyZGNvZGVkIGxpbWl0IGNvbmZpZ3VyZWQgaW4gUUVN
-VS48YnI+DQpGb3IgZXhhbXBsZSwgYSBWTSB3aXRoIG11bHRpcGxlIE5WSURJQSBHcmFjZS1Ib3Bw
-ZXIgR1BVcyBwYXNzZWQgdGhyb3VnaDxicj4NCnJlcXVpcmVzIG1vcmUgTU1JTyBtZW1vcnkgdGhh
-biB0aGUgYW1vdW50IHByb3ZpZGVkIGJ5IFZJUlRfSElHSF9QQ0lFX01NSU88YnI+DQooY3VycmVu
-dGx5IDUxMkdCKS4gSW5zdGVhZCBvZiB1cGRhdGluZyBWSVJUX0hJR0hfUENJRV9NTUlPLCBpbnRy
-b2R1Y2UgYTxicj4NCm5ldyBwYXJhbWV0ZXIsIGhpZ2htZW0tbW1pby1zaXplLCB0aGF0IHNwZWNp
-ZmllcyB0aGUgTU1JTyBzaXplIHJlcXVpcmVkPGJyPg0KdG8gc3VwcG9ydCB0aGUgVk0gY29uZmln
-dXJhdGlvbi48YnI+DQpFeGFtcGxlIHVzYWdlIHdpdGggMVRCIE1NSU8gcmVnaW9uIHNpemU6PGJy
-Pg0KPHNwYW4gY2xhc3M9IkFwcGxlLXRhYi1zcGFuIiBzdHlsZT0id2hpdGUtc3BhY2U6IHByZTsi
-Pjwvc3Bhbj4tbWFjaGluZSB2aXJ0LGdpYy12ZXJzaW9uPTMsaGlnaG1lbS1tbWlvLXNpemU9MTA5
-OTUxMTYyNzc3Njxicj4NClNpZ25lZC1vZmYtYnk6IE1hdHRoZXcgUi4gT2NocyAmbHQ7bW9jaHNA
-bnZpZGlhLmNvbSZndDs8YnI+DQotLS08YnI+DQombmJzcDtkb2NzL3N5c3RlbS9hcm0vdmlydC5y
-c3QgfCAmbmJzcDs0ICsrKys8YnI+DQombmJzcDtody9hcm0vdmlydC5jICZuYnNwOyZuYnNwOyZu
-YnNwOyZuYnNwOyZuYnNwOyZuYnNwOyZuYnNwOyZuYnNwOyZuYnNwOyZuYnNwOyZuYnNwO3wgMzYg
-KysrKysrKysrKysrKysrKysrKysrKysrKysrKysrKysrKysrPGJyPg0KJm5ic3A7MiBmaWxlcyBj
-aGFuZ2VkLCA0MCBpbnNlcnRpb25zKCspPGJyPg0KPC9ibG9ja3F1b3RlPg0KPGJyIHN0eWxlPSJj
-YXJldC1jb2xvcjogcmdiKDAsIDAsIDApOyBmb250LWZhbWlseTogTlZJRElBU2Fucy1SZWd1bGFy
-OyBmb250LXNpemU6IDE0cHg7IGZvbnQtc3R5bGU6IG5vcm1hbDsgZm9udC12YXJpYW50LWNhcHM6
-IG5vcm1hbDsgZm9udC13ZWlnaHQ6IDQwMDsgbGV0dGVyLXNwYWNpbmc6IG5vcm1hbDsgdGV4dC1h
-bGlnbjogc3RhcnQ7IHRleHQtaW5kZW50OiAwcHg7IHRleHQtdHJhbnNmb3JtOiBub25lOyB3aGl0
-ZS1zcGFjZTogbm9ybWFsOyB3b3JkLXNwYWNpbmc6IDBweDsgLXdlYmtpdC10ZXh0LXN0cm9rZS13
-aWR0aDogMHB4OyB0ZXh0LWRlY29yYXRpb246IG5vbmU7Ij4NCjxiciBzdHlsZT0iY2FyZXQtY29s
-b3I6IHJnYigwLCAwLCAwKTsgZm9udC1mYW1pbHk6IE5WSURJQVNhbnMtUmVndWxhcjsgZm9udC1z
-aXplOiAxNHB4OyBmb250LXN0eWxlOiBub3JtYWw7IGZvbnQtdmFyaWFudC1jYXBzOiBub3JtYWw7
-IGZvbnQtd2VpZ2h0OiA0MDA7IGxldHRlci1zcGFjaW5nOiBub3JtYWw7IHRleHQtYWxpZ246IHN0
-YXJ0OyB0ZXh0LWluZGVudDogMHB4OyB0ZXh0LXRyYW5zZm9ybTogbm9uZTsgd2hpdGUtc3BhY2U6
-IG5vcm1hbDsgd29yZC1zcGFjaW5nOiAwcHg7IC13ZWJraXQtdGV4dC1zdHJva2Utd2lkdGg6IDBw
-eDsgdGV4dC1kZWNvcmF0aW9uOiBub25lOyI+DQo8YmxvY2txdW90ZSB0eXBlPSJjaXRlIiBzdHls
-ZT0iZm9udC1mYW1pbHk6IE5WSURJQVNhbnMtUmVndWxhcjsgZm9udC1zaXplOiAxNHB4OyBmb250
-LXN0eWxlOiBub3JtYWw7IGZvbnQtdmFyaWFudC1jYXBzOiBub3JtYWw7IGZvbnQtd2VpZ2h0OiA0
-MDA7IGxldHRlci1zcGFjaW5nOiBub3JtYWw7IG9ycGhhbnM6IGF1dG87IHRleHQtYWxpZ246IHN0
-YXJ0OyB0ZXh0LWluZGVudDogMHB4OyB0ZXh0LXRyYW5zZm9ybTogbm9uZTsgd2hpdGUtc3BhY2U6
-IG5vcm1hbDsgd2lkb3dzOiBhdXRvOyB3b3JkLXNwYWNpbmc6IDBweDsgLXdlYmtpdC10ZXh0LXN0
-cm9rZS13aWR0aDogMHB4OyB0ZXh0LWRlY29yYXRpb246IG5vbmU7Ij4NCmRpZmYgLS1naXQgYS9o
-dy9hcm0vdmlydC5jIGIvaHcvYXJtL3ZpcnQuYzxicj4NCmluZGV4IDQ5ZWIwMzU1ZWYwYy4uNDNk
-NDdmZmVkZDlhIDEwMDY0NDxicj4NCi0tLSBhL2h3L2FybS92aXJ0LmM8YnI+DQorKysgYi9ody9h
-cm0vdmlydC5jPGJyPg0KQEAgLTI3NzMsNiArMjc3MywzNSBAQCBzdGF0aWMgdm9pZCB2aXJ0X3Nl
-dF9oaWdobWVtX21taW8oT2JqZWN0ICpvYmosIGJvb2wgdmFsdWUsIEVycm9yICoqZXJycCk8YnI+
-DQombmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDt2bXMtJmd0O2hpZ2htZW1fbW1pbyA9IHZh
-bHVlOzxicj4NCiZuYnNwO308YnI+DQombmJzcDsrc3RhdGljIHZvaWQgdmlydF9nZXRfaGlnaG1l
-bV9tbWlvX3NpemUoT2JqZWN0ICpvYmosIFZpc2l0b3IgKnYsIGNvbnN0IGNoYXIgKm5hbWUsPGJy
-Pg0KKyAmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJz
-cDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsm
-bmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDt2b2lkICpvcGFxdWUsIEVy
-cm9yICoqZXJycCk8YnI+DQorezxicj4NCisgJm5ic3A7Jm5ic3A7Jm5ic3A7dWludDY0X3Qgc2l6
-ZSA9IGV4dGVuZGVkX21lbW1hcFtWSVJUX0hJR0hfUENJRV9NTUlPXS5zaXplOzxicj4NCis8YnI+
-DQorICZuYnNwOyZuYnNwOyZuYnNwO3Zpc2l0X3R5cGVfc2l6ZSh2LCBuYW1lLCAmYW1wO3NpemUs
-IGVycnApOzxicj4NCjwvYmxvY2txdW90ZT4NCjxiciBzdHlsZT0iY2FyZXQtY29sb3I6IHJnYigw
-LCAwLCAwKTsgZm9udC1mYW1pbHk6IE5WSURJQVNhbnMtUmVndWxhcjsgZm9udC1zaXplOiAxNHB4
-OyBmb250LXN0eWxlOiBub3JtYWw7IGZvbnQtdmFyaWFudC1jYXBzOiBub3JtYWw7IGZvbnQtd2Vp
-Z2h0OiA0MDA7IGxldHRlci1zcGFjaW5nOiBub3JtYWw7IHRleHQtYWxpZ246IHN0YXJ0OyB0ZXh0
-LWluZGVudDogMHB4OyB0ZXh0LXRyYW5zZm9ybTogbm9uZTsgd2hpdGUtc3BhY2U6IG5vcm1hbDsg
-d29yZC1zcGFjaW5nOiAwcHg7IC13ZWJraXQtdGV4dC1zdHJva2Utd2lkdGg6IDBweDsgdGV4dC1k
-ZWNvcmF0aW9uOiBub25lOyI+DQo8c3BhbiBzdHlsZT0iY2FyZXQtY29sb3I6IHJnYigwLCAwLCAw
-KTsgZm9udC1mYW1pbHk6IE5WSURJQVNhbnMtUmVndWxhcjsgZm9udC1zaXplOiAxNHB4OyBmb250
-LXN0eWxlOiBub3JtYWw7IGZvbnQtdmFyaWFudC1jYXBzOiBub3JtYWw7IGZvbnQtd2VpZ2h0OiA0
-MDA7IGxldHRlci1zcGFjaW5nOiBub3JtYWw7IHRleHQtYWxpZ246IHN0YXJ0OyB0ZXh0LWluZGVu
-dDogMHB4OyB0ZXh0LXRyYW5zZm9ybTogbm9uZTsgd2hpdGUtc3BhY2U6IG5vcm1hbDsgd29yZC1z
-cGFjaW5nOiAwcHg7IC13ZWJraXQtdGV4dC1zdHJva2Utd2lkdGg6IDBweDsgdGV4dC1kZWNvcmF0
-aW9uOiBub25lOyBmbG9hdDogbm9uZTsgZGlzcGxheTogaW5saW5lICFpbXBvcnRhbnQ7Ij5TaW5j
-ZQ0KIHlvdSBjb3JyZWN0bHkgdXNlIHZpc2l0X3R5cGVfc2l6ZSgpLCBtYXliZSB1c2UgaW4gY29t
-bWl0PC9zcGFuPjxiciBzdHlsZT0iY2FyZXQtY29sb3I6IHJnYigwLCAwLCAwKTsgZm9udC1mYW1p
-bHk6IE5WSURJQVNhbnMtUmVndWxhcjsgZm9udC1zaXplOiAxNHB4OyBmb250LXN0eWxlOiBub3Jt
-YWw7IGZvbnQtdmFyaWFudC1jYXBzOiBub3JtYWw7IGZvbnQtd2VpZ2h0OiA0MDA7IGxldHRlci1z
-cGFjaW5nOiBub3JtYWw7IHRleHQtYWxpZ246IHN0YXJ0OyB0ZXh0LWluZGVudDogMHB4OyB0ZXh0
-LXRyYW5zZm9ybTogbm9uZTsgd2hpdGUtc3BhY2U6IG5vcm1hbDsgd29yZC1zcGFjaW5nOiAwcHg7
-IC13ZWJraXQtdGV4dC1zdHJva2Utd2lkdGg6IDBweDsgdGV4dC1kZWNvcmF0aW9uOiBub25lOyI+
-DQo8c3BhbiBzdHlsZT0iY2FyZXQtY29sb3I6IHJnYigwLCAwLCAwKTsgZm9udC1mYW1pbHk6IE5W
-SURJQVNhbnMtUmVndWxhcjsgZm9udC1zaXplOiAxNHB4OyBmb250LXN0eWxlOiBub3JtYWw7IGZv
-bnQtdmFyaWFudC1jYXBzOiBub3JtYWw7IGZvbnQtd2VpZ2h0OiA0MDA7IGxldHRlci1zcGFjaW5n
-OiBub3JtYWw7IHRleHQtYWxpZ246IHN0YXJ0OyB0ZXh0LWluZGVudDogMHB4OyB0ZXh0LXRyYW5z
-Zm9ybTogbm9uZTsgd2hpdGUtc3BhY2U6IG5vcm1hbDsgd29yZC1zcGFjaW5nOiAwcHg7IC13ZWJr
-aXQtdGV4dC1zdHJva2Utd2lkdGg6IDBweDsgdGV4dC1kZWNvcmF0aW9uOiBub25lOyBmbG9hdDog
-bm9uZTsgZGlzcGxheTogaW5saW5lICFpbXBvcnRhbnQ7Ij5kZXNjcmlwdGlvbg0KIGV4YW1wbGUg
-JnF1b3Q7aGlnaG1lbS1tbWlvLXNpemU9MVRCJnF1b3Q7IHJhdGhlciB0aGFuIDEwOTk1MTE2Mjc3
-NzY/PC9zcGFuPjxicj4NCjwvZGl2Pg0KPC9ibG9ja3F1b3RlPg0KPGJyPg0KPC9kaXY+DQo8ZGl2
-PlllcywgdGhpcyB3aWxsIGJlIHVwZGF0ZWQgaW4gdjIuPC9kaXY+DQo8L2JvZHk+DQo8L2h0bWw+
-DQo=
 
---_000_A5F746063DDA44368356CDB96DFF807Cnvidiacom_--
+Thanks,
+
+C.
+
+
+
+
+> Signed-off-by: Jamin Lin <jamin_lin@aspeedtech.com>
+> ---
+>   hw/arm/aspeed_ast27x0.c       |  6 +--
+>   hw/intc/aspeed_intc.c         | 90 +++++++++++++++++------------------
+>   include/hw/arm/aspeed_soc.h   |  2 +-
+>   include/hw/intc/aspeed_intc.h |  2 +-
+>   4 files changed, 50 insertions(+), 50 deletions(-)
+> 
+> diff --git a/hw/arm/aspeed_ast27x0.c b/hw/arm/aspeed_ast27x0.c
+> index 4114e15ddd..ba461fcd3c 100644
+> --- a/hw/arm/aspeed_ast27x0.c
+> +++ b/hw/arm/aspeed_ast27x0.c
+> @@ -56,7 +56,7 @@ static const hwaddr aspeed_soc_ast2700_memmap[] = {
+>       [ASPEED_DEV_ETH2]      =  0x14060000,
+>       [ASPEED_DEV_ETH3]      =  0x14070000,
+>       [ASPEED_DEV_EMMC]      =  0x12090000,
+> -    [ASPEED_DEV_INTC]      =  0x12100000,
+> +    [ASPEED_DEV_INTC0]     =  0x12100000,
+>       [ASPEED_DEV_SLI]       =  0x12C17000,
+>       [ASPEED_DEV_SLIIO]     =  0x14C1E000,
+>       [ASPEED_GIC_DIST]      =  0x12200000,
+> @@ -372,7 +372,7 @@ static void aspeed_soc_ast2700_init(Object *obj)
+>   
+>       object_initialize_child(obj, "sli", &s->sli, TYPE_ASPEED_2700_SLI);
+>       object_initialize_child(obj, "sliio", &s->sliio, TYPE_ASPEED_2700_SLIIO);
+> -    object_initialize_child(obj, "intc", &a->intc, TYPE_ASPEED_2700_INTC);
+> +    object_initialize_child(obj, "intc", &a->intc, TYPE_ASPEED_2700_INTC0);
+>   
+>       snprintf(typename, sizeof(typename), "aspeed.adc-%s", socname);
+>       object_initialize_child(obj, "adc", &s->adc, typename);
+> @@ -517,7 +517,7 @@ static void aspeed_soc_ast2700_realize(DeviceState *dev, Error **errp)
+>       }
+>   
+>       aspeed_mmio_map(s, SYS_BUS_DEVICE(&a->intc), 0,
+> -                    sc->memmap[ASPEED_DEV_INTC]);
+> +                    sc->memmap[ASPEED_DEV_INTC0]);
+>   
+>       /* GICINT orgates -> INTC -> GIC */
+>       for (i = 0; i < ic->num_ints; i++) {
+> diff --git a/hw/intc/aspeed_intc.c b/hw/intc/aspeed_intc.c
+> index 126b711b94..df4da759e1 100644
+> --- a/hw/intc/aspeed_intc.c
+> +++ b/hw/intc/aspeed_intc.c
+> @@ -14,27 +14,27 @@
+>   #include "hw/registerfields.h"
+>   #include "qapi/error.h"
+>   
+> -/* INTC Registers */
+> -REG32(GICINT128_EN,         0x1000)
+> -REG32(GICINT128_STATUS,     0x1004)
+> -REG32(GICINT129_EN,         0x1100)
+> -REG32(GICINT129_STATUS,     0x1104)
+> -REG32(GICINT130_EN,         0x1200)
+> -REG32(GICINT130_STATUS,     0x1204)
+> -REG32(GICINT131_EN,         0x1300)
+> -REG32(GICINT131_STATUS,     0x1304)
+> -REG32(GICINT132_EN,         0x1400)
+> -REG32(GICINT132_STATUS,     0x1404)
+> -REG32(GICINT133_EN,         0x1500)
+> -REG32(GICINT133_STATUS,     0x1504)
+> -REG32(GICINT134_EN,         0x1600)
+> -REG32(GICINT134_STATUS,     0x1604)
+> -REG32(GICINT135_EN,         0x1700)
+> -REG32(GICINT135_STATUS,     0x1704)
+> -REG32(GICINT136_EN,         0x1800)
+> -REG32(GICINT136_STATUS,     0x1804)
+> -
+> -#define GICINT_STATUS_BASE     R_GICINT128_STATUS
+> +/* AST2700 INTC0 Registers */
+> +REG32(INTC0_GICINT128_EN,         0x1000)
+> +REG32(INTC0_GICINT128_STATUS,     0x1004)
+> +REG32(INTC0_GICINT129_EN,         0x1100)
+> +REG32(INTC0_GICINT129_STATUS,     0x1104)
+> +REG32(INTC0_GICINT130_EN,         0x1200)
+> +REG32(INTC0_GICINT130_STATUS,     0x1204)
+> +REG32(INTC0_GICINT131_EN,         0x1300)
+> +REG32(INTC0_GICINT131_STATUS,     0x1304)
+> +REG32(INTC0_GICINT132_EN,         0x1400)
+> +REG32(INTC0_GICINT132_STATUS,     0x1404)
+> +REG32(INTC0_GICINT133_EN,         0x1500)
+> +REG32(INTC0_GICINT133_STATUS,     0x1504)
+> +REG32(INTC0_GICINT134_EN,         0x1600)
+> +REG32(INTC0_GICINT134_STATUS,     0x1604)
+> +REG32(INTC0_GICINT135_EN,         0x1700)
+> +REG32(INTC0_GICINT135_STATUS,     0x1704)
+> +REG32(INTC0_GICINT136_EN,         0x1800)
+> +REG32(INTC0_GICINT136_STATUS,     0x1804)
+> +
+> +#define GICINT_STATUS_BASE     R_INTC0_GICINT128_STATUS
+>   
+>   static void aspeed_intc_update(AspeedINTCState *s, int irq, int level)
+>   {
+> @@ -153,15 +153,15 @@ static void aspeed_intc_write(void *opaque, hwaddr offset, uint64_t data,
+>       trace_aspeed_intc_write(offset, size, data);
+>   
+>       switch (addr) {
+> -    case R_GICINT128_EN:
+> -    case R_GICINT129_EN:
+> -    case R_GICINT130_EN:
+> -    case R_GICINT131_EN:
+> -    case R_GICINT132_EN:
+> -    case R_GICINT133_EN:
+> -    case R_GICINT134_EN:
+> -    case R_GICINT135_EN:
+> -    case R_GICINT136_EN:
+> +    case R_INTC0_GICINT128_EN:
+> +    case R_INTC0_GICINT129_EN:
+> +    case R_INTC0_GICINT130_EN:
+> +    case R_INTC0_GICINT131_EN:
+> +    case R_INTC0_GICINT132_EN:
+> +    case R_INTC0_GICINT133_EN:
+> +    case R_INTC0_GICINT134_EN:
+> +    case R_INTC0_GICINT135_EN:
+> +    case R_INTC0_GICINT136_EN:
+>           irq = (offset & 0x0f00) >> 8;
+>   
+>           if (irq >= aic->num_ints) {
+> @@ -202,15 +202,15 @@ static void aspeed_intc_write(void *opaque, hwaddr offset, uint64_t data,
+>           }
+>           s->regs[addr] = data;
+>           break;
+> -    case R_GICINT128_STATUS:
+> -    case R_GICINT129_STATUS:
+> -    case R_GICINT130_STATUS:
+> -    case R_GICINT131_STATUS:
+> -    case R_GICINT132_STATUS:
+> -    case R_GICINT133_STATUS:
+> -    case R_GICINT134_STATUS:
+> -    case R_GICINT135_STATUS:
+> -    case R_GICINT136_STATUS:
+> +    case R_INTC0_GICINT128_STATUS:
+> +    case R_INTC0_GICINT129_STATUS:
+> +    case R_INTC0_GICINT130_STATUS:
+> +    case R_INTC0_GICINT131_STATUS:
+> +    case R_INTC0_GICINT132_STATUS:
+> +    case R_INTC0_GICINT133_STATUS:
+> +    case R_INTC0_GICINT134_STATUS:
+> +    case R_INTC0_GICINT135_STATUS:
+> +    case R_INTC0_GICINT136_STATUS:
+>           irq = (offset & 0x0f00) >> 8;
+>   
+>           if (irq >= aic->num_ints) {
+> @@ -336,26 +336,26 @@ static const TypeInfo aspeed_intc_info = {
+>       .abstract = true,
+>   };
+>   
+> -static void aspeed_2700_intc_class_init(ObjectClass *klass, void *data)
+> +static void aspeed_2700_intc0_class_init(ObjectClass *klass, void *data)
+>   {
+>       DeviceClass *dc = DEVICE_CLASS(klass);
+>       AspeedINTCClass *aic = ASPEED_INTC_CLASS(klass);
+>   
+> -    dc->desc = "ASPEED 2700 INTC Controller";
+> +    dc->desc = "ASPEED 2700 INTC 0 Controller";
+>       aic->num_lines = 32;
+>       aic->num_ints = 9;
+>   }
+>   
+> -static const TypeInfo aspeed_2700_intc_info = {
+> -    .name = TYPE_ASPEED_2700_INTC,
+> +static const TypeInfo aspeed_2700_intc0_info = {
+> +    .name = TYPE_ASPEED_2700_INTC0,
+>       .parent = TYPE_ASPEED_INTC,
+> -    .class_init = aspeed_2700_intc_class_init,
+> +    .class_init = aspeed_2700_intc0_class_init,
+>   };
+>   
+>   static void aspeed_intc_register_types(void)
+>   {
+>       type_register_static(&aspeed_intc_info);
+> -    type_register_static(&aspeed_2700_intc_info);
+> +    type_register_static(&aspeed_2700_intc0_info);
+>   }
+>   
+>   type_init(aspeed_intc_register_types);
+> diff --git a/include/hw/arm/aspeed_soc.h b/include/hw/arm/aspeed_soc.h
+> index 689f52dae8..51e585e3e4 100644
+> --- a/include/hw/arm/aspeed_soc.h
+> +++ b/include/hw/arm/aspeed_soc.h
+> @@ -194,7 +194,7 @@ enum {
+>       ASPEED_DEV_EHCI1,
+>       ASPEED_DEV_EHCI2,
+>       ASPEED_DEV_VIC,
+> -    ASPEED_DEV_INTC,
+> +    ASPEED_DEV_INTC0,
+>       ASPEED_DEV_SDMC,
+>       ASPEED_DEV_SCU,
+>       ASPEED_DEV_ADC,
+> diff --git a/include/hw/intc/aspeed_intc.h b/include/hw/intc/aspeed_intc.h
+> index 18cb43476c..10718ed4a1 100644
+> --- a/include/hw/intc/aspeed_intc.h
+> +++ b/include/hw/intc/aspeed_intc.h
+> @@ -13,7 +13,7 @@
+>   #include "hw/or-irq.h"
+>   
+>   #define TYPE_ASPEED_INTC "aspeed.intc"
+> -#define TYPE_ASPEED_2700_INTC TYPE_ASPEED_INTC "-ast2700"
+> +#define TYPE_ASPEED_2700_INTC0 TYPE_ASPEED_INTC "0" "-ast2700"
+>   OBJECT_DECLARE_TYPE(AspeedINTCState, AspeedINTCClass, ASPEED_INTC)
+>   
+>   #define ASPEED_INTC_NR_REGS (0x2000 >> 2)
+
 
