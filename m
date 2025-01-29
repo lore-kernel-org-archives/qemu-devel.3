@@ -4,76 +4,76 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4BA64C0218A
-	for <qemu-devel@archiver.kernel.org>; Wed, 29 Jan 2025 00:49:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 75731C0218A
+	for <qemu-devel@archiver.kernel.org>; Wed, 29 Jan 2025 00:54:36 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tcwFV-00080R-IP; Tue, 28 Jan 2025 19:48:09 -0500
+	id 1tcwL0-0001WL-6p; Tue, 28 Jan 2025 19:53:50 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1tcwFM-0007zY-EJ; Tue, 28 Jan 2025 19:48:01 -0500
-Received: from mail-vk1-xa32.google.com ([2607:f8b0:4864:20::a32])
+ id 1tcwKz-0001Vh-1S; Tue, 28 Jan 2025 19:53:49 -0500
+Received: from mail-vs1-xe2f.google.com ([2607:f8b0:4864:20::e2f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1tcwFK-0002Vq-SW; Tue, 28 Jan 2025 19:48:00 -0500
-Received: by mail-vk1-xa32.google.com with SMTP id
- 71dfb90a1353d-5160f1870f3so1857550e0c.0; 
- Tue, 28 Jan 2025 16:47:58 -0800 (PST)
+ id 1tcwKx-0003NA-Fi; Tue, 28 Jan 2025 19:53:48 -0500
+Received: by mail-vs1-xe2f.google.com with SMTP id
+ ada2fe7eead31-4afdf096fc5so1520698137.2; 
+ Tue, 28 Jan 2025 16:53:46 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1738111677; x=1738716477; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1738112026; x=1738716826; darn=nongnu.org;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:from:to:cc:subject:date
  :message-id:reply-to;
- bh=lz26FLioiiDEbLzbWJndIdzGUsjgsatgdS60Qo1tt6c=;
- b=GMLeQtlwqdhHQrU8Edd9kAD2Rp3YgloGI9/DrDN4xTXsoCSr5wDmzp9GUoYOha4Ikv
- WviudYNspkzny0FjFb53LH/49oy7o9kNNZxCRjQpQsosemzxPmws1Um68CX41nD/L5sv
- thHfe5fUg9hYwy0u3SlNiPtqMtkDFQTFhQv4mW0MSPzEMUOWwGLro3z8yN7jfvw2ufqs
- 3yWpDfAiRrXidbZ+GvxGUc11yJb5ilQ+Iobdovx/Fa9VnclvxuHLEfMyHz7N11v5lwgE
- KqgJAx9FzbDIirsUtK8lWMmQjoCKhJEnzXoNJJ2QbEl7gxbtI7M405uHAdM1dLgqt6dD
- dDCg==
+ bh=HjMUK7PzJcbkHtu60lYMfOtI1KIULJ3JTE/7jDoXzxc=;
+ b=fZf+5ih41MVQKeR9t38El1nHnPlt8WtoeUEyqrFpI4eonLAgr7S3mvCYw76lkBdHsk
+ HTn1h+tQvnuFKoayh7ABst2yxV0GTWTAsBtlobNglZJBGJ833s2jxqT40MkzWk3J4yPz
+ p1OAD7YwrmXZmk4++m17FeS2ch6ZsGarHGSQJ6ZKsh3AnwiI/HG28han5rtYAhhIjeWS
+ V066a4gubKmBw7YUZ1m6P8hmlB/WTaLkljTqbxWSUnF5pIxKsZW+hntwpWBGozPJZZcg
+ KQ5oo9PrfJrPAoZFD3lY0S8J2RsODaxXgGigWmchuC/Ehs6tgeYhXySVC+mxnSZr4yGF
+ IMCQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1738111677; x=1738716477;
+ d=1e100.net; s=20230601; t=1738112026; x=1738716826;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=lz26FLioiiDEbLzbWJndIdzGUsjgsatgdS60Qo1tt6c=;
- b=rE20eottmCHVgJvL0lDPAsaMH9LE1xx0/9CWxRZ1NLAstPdS5LqWji2GnH/W4qQMoG
- uM0S3xtKG9Bb7R7qYh8wvFjulXjGMCQsJbyXe1iiviACnmQ8HO73YQE7kBzZ50kKeHc1
- wo7gTqMg73aF0Cl41cTDZZ6skPHLnNTEbI20UZL0CmN0e4Kl8gtXWG/7xofRF+VDO8Kv
- iW9SoZbGVjxj5vK9WeWRoLoBcM7C0MtzTsd9EmKX120gpSbrzy+SckSTg/sUHhi5HK5w
- q5ve7IIi9MZLXcG4O5gIZonq+SoQOXshxiOGyprks7g2atp02ayQo9l2bqpE5rZ8oUCs
- H/Rg==
+ bh=HjMUK7PzJcbkHtu60lYMfOtI1KIULJ3JTE/7jDoXzxc=;
+ b=nT7Z/ozNn3d6AVQe88BWCnKmd1tISM6KW10wO7vvnkYYGfq5RWNPSXwYa/9Kxiyjp3
+ gNkFmb/P33+5bN1kTQOjN8hotXYJ4SQSElPxaL9c/RW8lavkaExNpkmCBNjX5lhyGDfJ
+ ngrGLHT9771vHI+wLCnhPHLth0cZow9A3pqLBxKZvBIXduucN+QZNPnhWkcwg9n5Tc0g
+ CxRLhFcmUtEcS6lFqVcf8Q5urMD6rg11oz9YdlPzpz59Tw9e2m8TbAgfbEIlSwU5BMw6
+ LMprIdfV3VQ01fI93P/JgR3EhTBduChxFvMk3SmFxH3PtOC49cXXYW4ofzjuzbsgqkFD
+ 5d4Q==
 X-Forwarded-Encrypted: i=1;
- AJvYcCW/kFz4642DfyJZYLJ5oZj1mfaHP96/x7lWaLgdFE/anlv02wy8UFNFt9KtX73Mzy8Z4gE8fxUd1QB4@nongnu.org
-X-Gm-Message-State: AOJu0YwfAHZtdMdcz2Va0se0VJlAGjLBDSlEkr7T9YoIctP3hLVZId5+
- Ix/oDncT6nGUifTEGWZ3ddlekILaGATn+biAnTdjyib7r9iGB8VeuDPULcmL0L0btMD05ZzNeXo
- 9zP4bLzhO3Fl+WxL01sEJMxqW80U=
-X-Gm-Gg: ASbGnctBZPqEK+mC1llzeCsw9QQ48Ll8/YqatNMEd+jbRzpW4wL8B+RJpVhK34/A7p8
- pFoLVbQJHdbvVYpIq0o/Y2SxMoUZbQdtLeCmhkv37VwNKtWVyq+iWgptTBRzn8ZJZ35/9ocYxp7
- CkyG5LGCSRzmWe1rx6mz5GO9eH4w==
-X-Google-Smtp-Source: AGHT+IFkzih4C69SB9h0mjRMPCeGNdtxXYh7QkjPV7AXu9/lNh77T3KTh9YsrX2nJI3JGMuyb1RPXUR6b3q1Yv/UkZM=
-X-Received: by 2002:a05:6122:4011:b0:518:8753:34aa with SMTP id
- 71dfb90a1353d-51e9e5699b0mr1750036e0c.10.1738111677271; Tue, 28 Jan 2025
- 16:47:57 -0800 (PST)
+ AJvYcCUaW7D89ANFCGW60ymYI9BBJGcj/hFEGPOH8UFVFklCzVSKJSpIZaqLrWsa+DnUoL9wd/PZvuA2bRIO@nongnu.org
+X-Gm-Message-State: AOJu0YyVTkNIzF8qisljSz7SkH5/PPAvddoIJuCqSnVbSQ0jvELkre6V
+ sLtBR6T03YtG3jxfWm0oEKV1H2nRuNIwp6Zr8Qpuuu4+P09jXm4RzZuD5RCSqG86K1Q64xMwNZW
+ AvWAKuumDIIeSCyEp/8FRKmCmGIU=
+X-Gm-Gg: ASbGncupM9lPLQnP7v56X/K4CsEOVXlLtx/BUpFuXkcj3XaizPxqyBP+BAfx88lDGYg
+ tItZEfC6pb105GBJfREULZs+nAaiWFTFapJRlqgZ5IgSCnkhqyzOaMj8r3mqwYYwCU2+ci9q9JC
+ hhIrP0dzSgm+pjQAr7Vzhlxnkbiw==
+X-Google-Smtp-Source: AGHT+IEGvaQJQMW1ISm4wgEfaS1n/f9EnNQD+kKfKs/SRaduCC3P6wABDXMPeZHY8Nvr5lC941s11D9bKP8BUbd2IK8=
+X-Received: by 2002:a05:6102:304f:b0:4b6:1a4e:9ed7 with SMTP id
+ ada2fe7eead31-4b9a4ec8bb1mr896794137.5.1738112025852; Tue, 28 Jan 2025
+ 16:53:45 -0800 (PST)
 MIME-Version: 1.0
-References: <20250115-pmu_minor_fixes-v1-0-c32388defb02@rivosinc.com>
- <20250115-pmu_minor_fixes-v1-1-c32388defb02@rivosinc.com>
-In-Reply-To: <20250115-pmu_minor_fixes-v1-1-c32388defb02@rivosinc.com>
+References: <20250121184847.2109128-1-dbarboza@ventanamicro.com>
+ <20250121184847.2109128-2-dbarboza@ventanamicro.com>
+In-Reply-To: <20250121184847.2109128-2-dbarboza@ventanamicro.com>
 From: Alistair Francis <alistair23@gmail.com>
-Date: Wed, 29 Jan 2025 10:47:31 +1000
-X-Gm-Features: AWEUYZl2ypl2sahTaOYD53IpHh4gSdrQH4ojqbrHkQvHBM-xTcFtxTTWjEam2e8
-Message-ID: <CAKmqyKO9SLuAnXNG76g-RQfUYJQZWTuUFWpzTC-hu37X2_OrUQ@mail.gmail.com>
-Subject: Re: [PATCH 1/2] target/riscv: Fix the hpmevent mask
-To: Atish Patra <atishp@rivosinc.com>
-Cc: qemu-riscv@nongnu.org, qemu-devel@nongnu.org, liwei1518@gmail.com, 
- zhiwei_liu@linux.alibaba.com, bin.meng@windriver.com, 
- dbarboza@ventanamicro.com, alistair.francis@wdc.com
+Date: Wed, 29 Jan 2025 10:53:19 +1000
+X-Gm-Features: AWEUYZnlOmwo1fIiEcI5lvmQDY4M-5d9zX6FFXmCyQ7z5pOy5qYf3i8Hkv8fNtk
+Message-ID: <CAKmqyKO91J5MjmyeUzJRf1ji_YYD2P2Li2TQxTeEZBGvPReJiQ@mail.gmail.com>
+Subject: Re: [PATCH 1/5] target/riscv/csr.c: fix deadcode in rmw_xireg()
+To: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
+Cc: qemu-devel@nongnu.org, qemu-riscv@nongnu.org, alistair.francis@wdc.com, 
+ bmeng@tinylab.org, liwei1518@gmail.com, zhiwei_liu@linux.alibaba.com, 
+ palmer@rivosinc.com, peter.maydell@linaro.org
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::a32;
- envelope-from=alistair23@gmail.com; helo=mail-vk1-xa32.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::e2f;
+ envelope-from=alistair23@gmail.com; helo=mail-vs1-xe2f.google.com
 X-Spam_score_int: -18
 X-Spam_score: -1.9
 X-Spam_bar: -
@@ -97,56 +97,111 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, Jan 16, 2025 at 10:51=E2=80=AFAM Atish Patra <atishp@rivosinc.com> =
-wrote:
+On Wed, Jan 22, 2025 at 4:52=E2=80=AFAM Daniel Henrique Barboza
+<dbarboza@ventanamicro.com> wrote:
 >
-> As per the latest privilege specification v1.13[1], the sscofpmf
-> only reserves first 8 bits of hpmeventX. Update the corresponding
-> masks accordingly.
+> Coverity found a DEADCODE issue in rmw_xireg() claiming that we can't
+> reach 'RISCV_EXCP_VIRT_INSTRUCTION_FAULT' at the 'done' label:
 >
-> [1]https://github.com/riscv/riscv-isa-manual/issues/1578
+> done:
+>     if (ret) {
+>         return (env->virt_enabled && virt) ?
+>                RISCV_EXCP_VIRT_INSTRUCTION_FAULT : RISCV_EXCP_ILLEGAL_INS=
+T;
+>     }
+>     return RISCV_EXCP_NONE;
 >
-> Signed-off-by: Atish Patra <atishp@rivosinc.com>
-> ---
->  target/riscv/cpu_bits.h | 9 ++++++---
->  1 file changed, 6 insertions(+), 3 deletions(-)
+> This happens because the 'virt' flag, which is only used by 'done', is
+> set to 'false' and it will always remain 'false' in any condition where
+> we'll jump to 'done':
 >
-> diff --git a/target/riscv/cpu_bits.h b/target/riscv/cpu_bits.h
-> index f97c48a3943f..b48c0af9d48e 100644
-> --- a/target/riscv/cpu_bits.h
-> +++ b/target/riscv/cpu_bits.h
-> @@ -9,6 +9,10 @@
->                   (((uint64_t)(val) * ((mask) & ~((mask) << 1))) & \
->                   (uint64_t)(mask)))
+>     switch (csrno) {
+>     (...)
+>     case CSR_VSIREG:
+>         isel =3D env->vsiselect;
+>         virt =3D true;
+>         break;
+>     default:
+>         goto done;
+>     };
 >
-> +#ifndef GENMASK_ULL
-> +#define GENMASK_ULL(h, l) (((~0ULL) >> (63 - (h) + (l))) << (l))
-> +#endif
+> 'virt =3D true' will never reach 'done' because we have a if/else-if/else
+> block right before the label that will always return:
+>
+>     if (xiselect_aia_range(isel)) {
+>         return ...
+>     } else if (...) {
+>         return ...
+>     } else {
+>         return RISCV_EXCP_ILLEGAL_INST;
+>     }
+>
+> All this means that we can preserve the current logic by reducing the
+> 'done' label to:
+>
+> done:
+>     if (ret) {
+>         return RISCV_EXCP_ILLEGAL_INST;
+>     }
+>     return RISCV_EXCP_NONE;
+>
+> The flag 'virt' is now unused. Remove it.
+>
+> Fix the 'goto done' identation while we're at it.
+>
+> Resolves: Coverity CID 1590359
+> Fixes: dc0280723d ("target/riscv: Decouple AIA processing from xiselect a=
+nd xireg")
+> Signed-off-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
 
-We should use the existing MAKE_64BIT_MASK() and avoid adding new mask macr=
-os
+Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
 
 Alistair
 
-> +
->  /* Extension context status mask */
->  #define EXT_STATUS_MASK     0x3ULL
+> ---
+>  target/riscv/csr.c | 7 ++-----
+>  1 file changed, 2 insertions(+), 5 deletions(-)
 >
-> @@ -933,9 +937,8 @@ typedef enum RISCVException {
->                                              MHPMEVENTH_BIT_VSINH | \
->                                              MHPMEVENTH_BIT_VUINH)
+> diff --git a/target/riscv/csr.c b/target/riscv/csr.c
+> index afb7544f07..ab209d0cda 100644
+> --- a/target/riscv/csr.c
+> +++ b/target/riscv/csr.c
+> @@ -2658,7 +2658,6 @@ static RISCVException rmw_xireg(CPURISCVState *env,=
+ int csrno,
+>                                  target_ulong *val, target_ulong new_val,
+>                                  target_ulong wr_mask)
+>  {
+> -    bool virt =3D false;
+>      int ret =3D -EINVAL;
+>      target_ulong isel;
 >
-> -#define MHPMEVENT_SSCOF_MASK               _ULL(0xFFFF000000000000)
-> -#define MHPMEVENT_IDX_MASK                 0xFFFFF
-> -#define MHPMEVENT_SSCOF_RESVD              16
-> +#define MHPMEVENT_SSCOF_MASK               GENMASK_ULL(63, 56)
-> +#define MHPMEVENT_IDX_MASK                 (~MHPMEVENT_SSCOF_MASK)
+> @@ -2680,10 +2679,9 @@ static RISCVException rmw_xireg(CPURISCVState *env=
+, int csrno,
+>          break;
+>      case CSR_VSIREG:
+>          isel =3D env->vsiselect;
+> -        virt =3D true;
+>          break;
+>      default:
+> -         goto done;
+> +        goto done;
+>      };
 >
->  /* RISC-V-specific interrupt pending bits. */
->  #define CPU_INTERRUPT_RNMI                 CPU_INTERRUPT_TGT_EXT_0
+>      /*
+> @@ -2705,8 +2703,7 @@ static RISCVException rmw_xireg(CPURISCVState *env,=
+ int csrno,
 >
+>  done:
+>      if (ret) {
+> -        return (env->virt_enabled && virt) ?
+> -               RISCV_EXCP_VIRT_INSTRUCTION_FAULT : RISCV_EXCP_ILLEGAL_IN=
+ST;
+> +        return RISCV_EXCP_ILLEGAL_INST;
+>      }
+>      return RISCV_EXCP_NONE;
+>  }
 > --
-> 2.34.1
+> 2.47.1
 >
 >
 
