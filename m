@@ -4,79 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E5453C0218D
-	for <qemu-devel@archiver.kernel.org>; Wed, 29 Jan 2025 12:18:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 24982C0218D
+	for <qemu-devel@archiver.kernel.org>; Wed, 29 Jan 2025 12:24:57 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1td70w-0002Xg-Ag; Wed, 29 Jan 2025 07:17:50 -0500
+	id 1td76x-0004Qt-5q; Wed, 29 Jan 2025 07:24:03 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1td70u-0002XG-Ma
- for qemu-devel@nongnu.org; Wed, 29 Jan 2025 07:17:48 -0500
-Received: from mail-yb1-xb30.google.com ([2607:f8b0:4864:20::b30])
+ id 1td76v-0004Ql-J3
+ for qemu-devel@nongnu.org; Wed, 29 Jan 2025 07:24:01 -0500
+Received: from mail-yb1-xb2e.google.com ([2607:f8b0:4864:20::b2e])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1td70s-0003u8-SR
- for qemu-devel@nongnu.org; Wed, 29 Jan 2025 07:17:48 -0500
-Received: by mail-yb1-xb30.google.com with SMTP id
- 3f1490d57ef6-e573136107bso11325673276.3
- for <qemu-devel@nongnu.org>; Wed, 29 Jan 2025 04:17:45 -0800 (PST)
+ id 1td76u-0004iA-2o
+ for qemu-devel@nongnu.org; Wed, 29 Jan 2025 07:24:01 -0500
+Received: by mail-yb1-xb2e.google.com with SMTP id
+ 3f1490d57ef6-e589c258663so2402787276.1
+ for <qemu-devel@nongnu.org>; Wed, 29 Jan 2025 04:23:59 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1738153065; x=1738757865; darn=nongnu.org;
+ d=linaro.org; s=google; t=1738153438; x=1738758238; darn=nongnu.org;
  h=cc:to:subject:message-id:date:from:in-reply-to:references
  :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=ptZga5H1gf4FFJ72Pk0ns03O/gjUlQr7tb0icgzWqxs=;
- b=ls3fcz6c4AR3rZNOD0/G+nLjEETmvgol0fNpSSc89Lq1ILUMtOOPdxpFFRnjSIDt2z
- ZpzV4bht3c/oFUjdKPyhSaNPMPHCd8G2/go1hhUwG/F8nWJsc5yaDHjReZDVWgTgpWZG
- 6X7+pq0q6WOJWEZ2Z7eIfpcx98+wrMqdS9XKxAlREIlX3278DJ9orfjWuakl4xnGDynU
- ZsYeTrDkmyYg1/viZMMeGcyQMTkG3u41DYDl88sUswPR/0pw7MkOBKmPzbI+8Oe7NFAV
- 7r7h8CkOpNGM/oajtAdWWYRlchOrGMZ4CnIxmCbrASQXXR/dw/rD10CpNwx6ZPV6jejW
- N7aQ==
+ bh=jjaKInOZaFKXwG5dQPq6skxdPuo9oJ4RovClDxSeoaE=;
+ b=Hya6n3frEOdnyNhq6GE/U+q006uGJf6EwEip5P0Xa+Uv7+3dyA2kcmAXlziJVblKVn
+ 5ih6lNLV9yPMcv0ZqleJYxHf/HrrXgreWYcFZT5olN2IwO34ai4lPQbxg5r821cdI+x2
+ /Sp3IA1D15q+BPuZfawCJPCJYeBbuoEXbDaimpKH6LiZdayfi0eKIdPvJEhbyuKfI3IN
+ ZUWdJJ4LD8u3uPmktdZwOStk05JZEbDpMNrV8sZYgEHZ4sfmobHkDqy7qrc5bAPReWdq
+ 53bmwv3ozkphRBHUf7/+6RkP/0szuP/dXvAYt67Od7hwqAQ7xWv0Y5Gsv/rwiT9Xal4v
+ wm5Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1738153065; x=1738757865;
+ d=1e100.net; s=20230601; t=1738153438; x=1738758238;
  h=cc:to:subject:message-id:date:from:in-reply-to:references
  :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=ptZga5H1gf4FFJ72Pk0ns03O/gjUlQr7tb0icgzWqxs=;
- b=FaX5dneweqboqn173ItUIDykBCGpVG/90o0ajWAShUhAC1tgDvkAssgtcSM+wfCQ4Q
- gjHvOYR1pVgCVfHuB7Icy1mExHQczC2Phc5TFdsykBqISWqbhLq4mU9VxuYdmuU+5wuA
- pSpg5tJGpqGGCfpk4rFy4NMysBX5TgOjVy2JRQ1p30LgfRL8FwPyUlxP7HW26fM1OGQw
- XEJX8BOg7XjNynEC0a7GIea78Pl41oaihRpAae3VRUNrLhcaP6DUpasOpXEu2lFamK+g
- v0jj472rY+b13AsX5jvKNfvWoYJuK5YrXWzdJvVoT1lvj62TNncpMFkQMnoK1fyXhTPN
- DxJg==
-X-Gm-Message-State: AOJu0YxPCRzzlg+z3zJgbcLAC1xEcxPhLzeXGjpk9uugY5Radgw35JNJ
- YF9CGzUdT3fqSDp/0Mk+qsfylSkplx9Jb0+PUTbU1+iSSqkMFRd1eArEzS+eqJbVg65ivudeZTn
- VdXMgFa7l0RZT44ENEpYEj82I0FyBi/ALt3MLeg==
-X-Gm-Gg: ASbGnctZeqFUqbkbjdA/P6tQEIdnWnOBZBgWwzW8NuarqyB7EMQsgjUgdzHnGDJAW6b
- O4sSV7jXXie9stQQagT/UCCvWA5+6NpHJfTaOg8ckgja18J+pzpJZP1hfFIiTtf7VqGlnfhN3y7
- urisxDxrFj
-X-Google-Smtp-Source: AGHT+IGN8hQ7QS0dJQnMXqC7llFxhUeViwW7Tn2oObzJQqQpdA7sL0CPNKnEyGV5X8zcToiE6Bky/8jeaqNdG6jObbk=
-X-Received: by 2002:a05:6902:118d:b0:e30:ebdf:9643 with SMTP id
- 3f1490d57ef6-e58a4a9a3ecmr1921228276.8.1738153064772; Wed, 29 Jan 2025
- 04:17:44 -0800 (PST)
+ bh=jjaKInOZaFKXwG5dQPq6skxdPuo9oJ4RovClDxSeoaE=;
+ b=jKIxYaqra1Rwq/XyX/4l9naTJlvn3kxaKf7/hDmw5AYxSuL75FZaOx8doHw2BWd6ie
+ 5tzOTeH6SOtSN1JAoj0DS+smwyq0XcjNt2HqcBpeMmQqymK6G2FUiizv7sTPWObpvN3d
+ krEwzSbttrgr3aU0UYVBLkgDNcHe/+ltf/FH/dS0dy+aeCDA0fVCqfh566kwvgVrEoXG
+ Xyb5pzuX5VKCvUVOQNQWMqaddSsx6geQ9wUF9JAkGRmGV55+W7429QUPAae0UA5PffJI
+ 7ZJRYswy5Q21J7qobTtbSkDSU0yo35EyomdbGqAeUJdoCc/WNg8RvoXDeoSCxlZD9rtu
+ eFEA==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCW2bzFUvxViIfcq0lacCnbYOcixli5JBjjkzxHDwhgfrmiZImnUjcDPLuIc+bjG/dTrz7NK1UElTsJV@nongnu.org
+X-Gm-Message-State: AOJu0YxIdKZWM+Je5HPvDWx4VCglpfzEmFDBXKY1fuMqUYXTnoB24r14
+ qIcefU9jyIsFo3qNzzOltMhPRBwjIskX9XWZtfUwMnTf/vPkCFPoM5uUCzu4eO2t7EJeKKiXLX+
+ iTEe/YNx2KF+r1lE6AxhtbB2iedT+mlgLKhhw8w==
+X-Gm-Gg: ASbGncuNMytvWLPTp7hHn3hKMibs95fiei1YwMeJ9wxR9Ph9PFdO/LJ1Mr7x2BWyYrc
+ C/UKyKqdhoefaLvovxRSbUZbS5RjVufzHIOItTPNtCZ7KvMY+5RLIYoIBJutZMVxxPdpO5nwV+g
+ ==
+X-Google-Smtp-Source: AGHT+IHQGLGyG0UVeIPjhd3AXoBOVxXHlI1nOByWBoISNIiCJQGVTj03eONAJBdiTitKuRn72RDVYgN6xNQMIYhUhTs=
+X-Received: by 2002:a05:6902:2583:b0:e58:8e82:5345 with SMTP id
+ 3f1490d57ef6-e58a4a9b3ccmr1841128276.4.1738153438548; Wed, 29 Jan 2025
+ 04:23:58 -0800 (PST)
 MIME-Version: 1.0
-References: <20250120203748.4687-1-shentey@gmail.com>
- <20250120203748.4687-6-shentey@gmail.com>
- <CAFEAcA_NBPqbOrVJw=bDC6=dTGKBKe42XoXMm82jj7+pHEvW3Q@mail.gmail.com>
- <4EC5E99E-804A-4154-8D61-22D1358C0F6B@gmail.com>
-In-Reply-To: <4EC5E99E-804A-4154-8D61-22D1358C0F6B@gmail.com>
+References: <20250128004254.33442-1-richard.henderson@linaro.org>
+ <9a280789-9248-4eca-b50c-048fc58e3f53@redhat.com>
+ <87plk72tvr.fsf@draig.linaro.org>
+ <ad6ca73a-c38a-4a9b-bdcb-ab50aa53ccd1@linaro.org>
+ <Z5ii-ueFt5-5Brxz@redhat.com>
+ <8c0eea44-d0bf-4b86-9b1b-1c2082ab2df9@linaro.org>
+ <9bf6d4b0-7a89-4110-a1e1-46bbdb2fc793@linaro.org>
+ <c13e207e-06a5-4f40-b319-f4f2e59d919a@redhat.com>
+In-Reply-To: <c13e207e-06a5-4f40-b319-f4f2e59d919a@redhat.com>
 From: Peter Maydell <peter.maydell@linaro.org>
-Date: Wed, 29 Jan 2025 12:17:33 +0000
-X-Gm-Features: AWEUYZmPJdkyfLwL73Fx_J6ci3Z3l64ovGh6AHYuylD5FXPAiehSzDL19rKViLI
-Message-ID: <CAFEAcA8E4Ao_bJTxKzJ_kQ1n+Teqw6brmJKFN9cFpraM6jTYag@mail.gmail.com>
-Subject: Re: [PATCH 05/21] hw/arm: Add i.MX 8M Plus EVK board
-To: Bernhard Beschow <shentey@gmail.com>
-Cc: qemu-devel@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>, 
- =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@redhat.com>, 
- Alistair Francis <alistair@alistair23.me>,
- Jean-Christophe Dubois <jcd@tribudubois.net>, qemu-arm@nongnu.org, 
- Andrey Smirnov <andrew.smirnov@gmail.com>,
- "Edgar E. Iglesias" <edgar.iglesias@gmail.com>
+Date: Wed, 29 Jan 2025 12:23:47 +0000
+X-Gm-Features: AWEUYZl4ecDSRLrG862MH7-Zp0qZG-Dun5UoZ9mm-cWF7Kmeepq_iS9vRCMnC0E
+Message-ID: <CAFEAcA_CfVfypS5yUtT3V34CDxmAqx7wYnDoKPfHq-o=54GgAg@mail.gmail.com>
+Subject: Re: [PATCH 0/1] meson: Deprecate 32-bit host systems
+To: Thomas Huth <thuth@redhat.com>
+Cc: =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
+ =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>, 
+ =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>, 
+ Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org,
+ stefanha@redhat.com, pbonzini@redhat.com, mark.cave-ayland@ilande.co.uk, 
+ Liviu Ionescu <ilg@livius.net>
 Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::b30;
- envelope-from=peter.maydell@linaro.org; helo=mail-yb1-xb30.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::b2e;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yb1-xb2e.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -99,40 +105,24 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, 28 Jan 2025 at 22:16, Bernhard Beschow <shentey@gmail.com> wrote:
->
->
->
-> Am 28. Januar 2025 14:29:53 UTC schrieb Peter Maydell <peter.maydell@linaro.org>:
-> >On Mon, 20 Jan 2025 at 20:38, Bernhard Beschow <shentey@gmail.com> wrote:
-> >>
-> >> diff --git a/MAINTAINERS b/MAINTAINERS
-> >> index 846b81e3ec..cace8cf25b 100644
-> >> --- a/MAINTAINERS
-> >> +++ b/MAINTAINERS
-> >> @@ -819,6 +819,15 @@ F: hw/pci-host/designware.c
-> >>  F: include/hw/pci-host/designware.h
-> >>  F: docs/system/arm/mcimx7d-sabre.rst
-> >>
-> >> +MCIMX8MP-EVK / i.MX8MP
-> >> +M: Bernhard Beschow <shentey@gmail.com>
-> >> +L: qemu-arm@nongnu.org
-> >> +S: Odd Fixes
-> >
-> >I'd rather we didn't take on a new board model that
-> >starts out in the "odd fixes" state. If you don't
-> >have enough time to look after it, it seems unlikely
-> >that anybody else is going to want to take it over.
->
-> I'd look after it, but I'd also not raise expectations
-> regarding commercial grade support. What state would you
-> suggest?
+On Wed, 29 Jan 2025 at 06:23, Thomas Huth <thuth@redhat.com> wrote:
+> So unless someone complains immediately with a good reason, I'm also in
+> favor of marking it as deprecated now. If then someone complains during the
+> deprecation period, we still can reconsider and remove the deprecation note
+> again.
 
-That's
-      Maintained:  Someone actually looks after it.
-(There's another step above that which is
-      Supported:   Someone is actually paid to look after this.)
+Well, I mean the reason would be that I suspect we do still have
+users who are using QEMU for some purposes on 32-bit arm hosts.
+That doesn't mean they're trying to run massively complex or
+high memory guests or that they care that our whole test suite
+doesn't run.
 
-thanks
+I'm not really strongly opposed to dropping 32-bit host support,
+but I don't think a thread on qemu-devel is exactly likely to
+get the attention of the people who might be using this
+functionality. (You could argue that functionality without
+representation among the developer community is fair game
+for being dumped even if it has users, of course.)
+
 -- PMM
 
