@@ -4,97 +4,66 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D2927C0218D
-	for <qemu-devel@archiver.kernel.org>; Wed, 29 Jan 2025 22:32:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 76698C0218D
+	for <qemu-devel@archiver.kernel.org>; Wed, 29 Jan 2025 23:08:24 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tdGac-0006Vl-AU; Wed, 29 Jan 2025 17:31:18 -0500
+	id 1tdH9T-00044x-0c; Wed, 29 Jan 2025 18:07:19 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1tdGaa-0006VZ-V7
- for qemu-devel@nongnu.org; Wed, 29 Jan 2025 17:31:17 -0500
-Received: from mail-pl1-x62a.google.com ([2607:f8b0:4864:20::62a])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1tdGaY-0007Oh-8G
- for qemu-devel@nongnu.org; Wed, 29 Jan 2025 17:31:16 -0500
-Received: by mail-pl1-x62a.google.com with SMTP id
- d9443c01a7336-2161eb95317so2158825ad.1
- for <qemu-devel@nongnu.org>; Wed, 29 Jan 2025 14:31:13 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1738189872; x=1738794672; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=AfTX0P7CYSRw74/FOnlB2IdFO96Y1VnIkrWYmENqclc=;
- b=giWSJwyTYsfBXs4iRjkRhqRtz7sSX4hEQOL5xoMpYeaHyH96BcV8/4gjAtFhfsi8AJ
- LmwobiIznTXvN0S36EOgmtweFj2o8ICHpsy3VDOMo4wbLNtAHkvi9QrQdRZLDFQUHL3G
- paDCVbYBiY9qFRcAT1V4zizli0zoYs2uU9OaHFUaUMEZIs6/bWCCz5jcyD/FQpmD+wny
- 45SVUrWTDys/U7zkvw4B9h2fmljTTSp9qHnjo0/ZYUfsx/jRGxMfEqV9k0C7eI/CdAhk
- CgVI7RyYnCELInqF88nhLxbr1fUiNDSoOIAW2dVevgMa2fp0TT8udJE442BiuW6lesSL
- hCdA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1738189872; x=1738794672;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=AfTX0P7CYSRw74/FOnlB2IdFO96Y1VnIkrWYmENqclc=;
- b=nuJ5cWg/zc+/VQWTXkpz6xDMmOzRpB9h4b487qgPIUo334uWURJ2dWhyUAtENp3N8g
- EE00ANHOxjAIvz0kIwszMMb+gm1JhdvV7YRlJe7Tegvd+VDZ8xttnRBbcbkbWF5q+NJl
- 51nNakRpC9Kar2H6aQIZBxu/DwIJpEYkYLMyUn/QKRmP0AuHH++MDmps0DcrszWIsJzo
- Yjp9dspyKQ9rexQjn2e7xfW3BUyeOXpGb03Aj3RtllnEpp+jY+vX60EXabD73xECgrnO
- xf7KuHHRcNKdJ3Pp97nt1DahQQvliH0Y+jVO9hPvCBFNzu2SgeUhnDflKJab8p0ceV81
- +yBw==
-X-Forwarded-Encrypted: i=1;
- AJvYcCX6L1tFwb0T+v4kaPWP7LOQkFonAhV5Lwb02A+viU7KRhP1GREZjmhvLNwpWNlBkJcbC4Jjj4Uc0lXI@nongnu.org
-X-Gm-Message-State: AOJu0YzQvcq4z194wWm5tShVsDW3vF0WThJY27cDyTl5R7BBxXOXwag/
- V0gInRk499PMUzLklv3z1gLae4bW4IuUzQexkWXD3oIBp+NhDFyLYvLI5pvTBh8=
-X-Gm-Gg: ASbGnct+urG7YvyQM9iX4/Vmxi803ZGOse/TzbP+mZCHDiuY4y0WSBzv2Lh+lse1kF+
- uTf8rNff3aItC5/isELbKiO4MD3RQAC0WvpvG/f6BYmWy6010+M2AKbCqCNXXEN1dsNfs2NERJb
- 77+fs1nF47QZQ62c1l69ZEpjaToDVPDpk/FNnczgoUL6z3ctzvnP9dq3g9BbxXPAgsC3f7gDk/F
- m5EouQbXgzUG6B8vmBAZOkzpuYZtEWDVCB+2iPxc/immA39AQwJq7SCEVhMf00Vf6rLEUmrQJ6Q
- CmXGfIS8RUFXigTOVBD3QAy9k0lj
-X-Google-Smtp-Source: AGHT+IEwHibgTKrYxJ55/edQwpyePjjVIZiVji9X4+KGBxU01Dwf2eDfBqrJgUIvJ8nEuOSLsq7Ruw==
-X-Received: by 2002:a17:903:2282:b0:20b:7210:5859 with SMTP id
- d9443c01a7336-21dd7deecd5mr76860555ad.38.1738189871955; 
- Wed, 29 Jan 2025 14:31:11 -0800 (PST)
-Received: from [192.168.1.67] ([38.39.164.180])
- by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-21de33076a8sm964975ad.208.2025.01.29.14.31.10
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 29 Jan 2025 14:31:11 -0800 (PST)
-Message-ID: <a2fa6e50-fa3c-49b0-8886-0818a68f8e08@linaro.org>
-Date: Wed, 29 Jan 2025 14:31:10 -0800
-MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [RFC PATCH QEMU 0/3] cxl/plugins: Hotness Monitoring Unit with
- 'real' data.
-Content-Language: en-US
+ (Exim 4.90_1) (envelope-from <itaru.kitayama@linux.dev>)
+ id 1tdH9Q-00044j-PF
+ for qemu-devel@nongnu.org; Wed, 29 Jan 2025 18:07:17 -0500
+Received: from out-180.mta1.migadu.com ([95.215.58.180])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <itaru.kitayama@linux.dev>)
+ id 1tdH9M-0002nh-GR
+ for qemu-devel@nongnu.org; Wed, 29 Jan 2025 18:07:16 -0500
+Content-Type: text/plain;
+	charset=utf-8
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.dev; s=key1;
+ t=1738192029;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=yoiunaMzsKKnHJMoO+ti7Wtkhq/h3akOoncHfuMDgfM=;
+ b=YhSk5MdDIQMG/8KvLa55ueb4hpNDkgNz4o3Asluoh3kkN+o+W+yUpQJFvewF9sDfaLm0Sa
+ IyUdzk80FElc5ov33CWZYsotfdYzm7OkV8mb4hO978SAFEmi3aFKtKBTpi1xXWZ94qnzRp
+ Hr2jL1D1CyO3uiPEohA9KPUm1tx2Iqk=
+Mime-Version: 1.0 (Mac OS X Mail 16.0 \(3826.400.131.1.6\))
+Subject: Re: CXL emulation on aarch64
+X-Report-Abuse: Please report any abuse attempt to abuse@migadu.com and
+ include these headers.
+From: Itaru Kitayama <itaru.kitayama@linux.dev>
+In-Reply-To: <20250129171635.00001c04@huawei.com>
+Date: Thu, 30 Jan 2025 08:06:42 +0900
+Cc: Jonathan Cameron via <qemu-devel@nongnu.org>,
+ "Zhijian Li (Fujitsu)" <lizhijian@fujitsu.com>
+Content-Transfer-Encoding: quoted-printable
+Message-Id: <4A60023D-21EF-4F4C-939D-40197C7AB32D@linux.dev>
+References: <0C019F50-9020-42ED-B051-998F03BFB709@linux.dev>
+ <483e8037-3c72-4560-b4b8-2437d37ca8c4@fujitsu.com>
+ <20250110123128.00004a5b@huawei.com>
+ <09D52CDC-44E5-48C4-8D32-E4DD0964F9AF@linux.dev>
+ <20250114102626.00000c53@huawei.com>
+ <88E9D774-A760-45F7-A173-24A07BB55733@linux.dev>
+ <20250116105833.000056da@huawei.com>
+ <9DF43D0C-E03E-420E-AB4E-0EE571D06A38@linux.dev>
+ <20250117094311.00000e64@huawei.com> <20250122140712.00000682@huawei.com>
+ <80DA1137-69C2-4B94-A0FA-43A1B3E1D4C3@linux.dev>
+ <20250129171635.00001c04@huawei.com>
 To: Jonathan Cameron <Jonathan.Cameron@huawei.com>
-Cc: fan.ni@samsung.com, linux-cxl@vger.kernel.org, qemu-devel@nongnu.org,
- =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Alexandre Iooss <erdnaxe@crans.org>, Mahmoud Mandour
- <ma.mandourr@gmail.com>, linuxarm@huawei.com,
- Niyas Sait <niyas.sait@huawei.com>
-References: <20250124172905.84099-1-Jonathan.Cameron@huawei.com>
- <5e0876e8-4c2c-4ba5-86dc-d9ca241b743d@linaro.org>
- <20250127102009.00002dbd@huawei.com>
- <c595c1c1-63cc-462a-982e-66ac61a2eb9a@linaro.org>
- <20250129102936.00006782@huawei.com>
-From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-In-Reply-To: <20250129102936.00006782@huawei.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::62a;
- envelope-from=pierrick.bouvier@linaro.org; helo=mail-pl1-x62a.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+X-Migadu-Flow: FLOW_OUT
+Received-SPF: pass client-ip=95.215.58.180;
+ envelope-from=itaru.kitayama@linux.dev; helo=out-180.mta1.migadu.com
+X-Spam_score_int: -23
+X-Spam_score: -2.4
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+X-Spam_report: (-2.4 / 5.0 requ) BAYES_00=-1.9, DKIM_INVALID=0.1,
+ DKIM_SIGNED=0.1, RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_PASS=-0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -111,317 +80,301 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Jonathan,
 
-On 1/29/25 02:29, Jonathan Cameron wrote:
-> On Tue, 28 Jan 2025 12:04:19 -0800
-> Pierrick Bouvier <pierrick.bouvier@linaro.org> wrote:
-> 
->> On 1/27/25 02:20, Jonathan Cameron wrote:
->>> On Fri, 24 Jan 2025 12:55:52 -0800
->>> Pierrick Bouvier <pierrick.bouvier@linaro.org> wrote:
->>>    
->>>> Hi Jonathan,
->>>>
->>>> thanks for posting this. It's a creative usage of plugins.
->>>>
->>>> I think that your current approach, decoupling plugins, CHMU and device
->>>> model is a good thing.
->>>>
->>>> I'm not familiar with CXL, but one question that comes to my mind is:
->>>> Is that mandatory to do this analysis during execution (vs dumping
->>>> binary traces from CHMU and plugin and running an analysis post execution)?
->>>
->>> Short answer is that post run analysis isn't of much use for developing the OS
->>> software story. It works to some degree if you are designing the tracking
->>> hardware or algorithms to use that hardware capture a snapshot of hotness -
->>> dealing with lack of counters, that sort of thing.
->>>
->>> The main intent of this support is to drive live usage of the data in the OS.
->>> So it gets this hotness information and migrates more frequently accessed memory
->>> to a 'nearer'/lower latency memory node.
->>>
->>>   From an OS point of view there will be two ways it uses it:
->>> 1) Offline application optimization  - that aligns with your suggestion of offline
->>>      analysis but would typically still need to be live because we have to do
->>>      the reverse maps and work out what was allocated in particular locations.
->>>      Not impossible to dump that information from QEMU + the guest OS but the usage
->>>      flow would then look quite different from what makes sense on real hardware
->>>      where all the data is available to the host OS directly.
->>> 2) Migration of memory.  This will dynamically change the PA backing a VA whilst
->>>      applications are running. The aim being to develop how that happens, we need
->>>      the dynamic state.
->>>    
->>
->> In the end, are you modeling how the real CHMU will work, or simply
->> gathering data to help designing it (number of counters, line size, ...)?
-> 
-> This work is modeling how a real (ish) CHMU will work - particular interest being
-> use in Linux kernel usecases. Otherwise we wouldn't share! :)
-> 
-> For CHMU hardware design, until people reach the live algorithms in the loop
-> stage, tracing techniques and offline analysis tend to be easier to use.
-> 
-> A annoying corner is that the implementations in QEMU will 'probably' remain
-> simplistic because the detailed designs of CHMUs may be considered sensitive.
-> It's a complex space and there are some really interesting and to me surprising
-> approaches.
-> 
-> What we can implement should be good enough for working out the basics of a
-> general software stack but possible it will need tuning against specific
-> implementations.  Maybe that necessity will result in more openness on the
-> parts of various uarch / arch teams.
-> 
-> There are some academic works on how to build these trackers, and there should
-> be less sensitivity around those.
-> 
-> This is perhaps an odd corner for QEMU because we are emulating an interface
-> accurately but the hardware behind it intentionally does not have a specification
-> defined implementation and the unusual bit is that implementation affects
-> the output.  We can implement a few options that are well defined though.
-> 1) An Oracle ('infinite' counters)
-> 2) Limited counters allocated on first touch in a given epoch (sampling period).
-> 
-> 1 is useful for putting an upper bound on data accuracy.
-> 2 is a typical first thing people will look at when considering a implementation.
-> 
-> So conclusion. This is about enabling software development, not tuning a hardware
-> design.
-> 
 
-Ok, thanks for the clarification.
+> On Jan 30, 2025, at 2:16, Jonathan Cameron =
+<Jonathan.Cameron@huawei.com> wrote:
+>=20
+> On Wed, 29 Jan 2025 10:14:34 +0900
+> Itaru Kitayama <itaru.kitayama@linux.dev> wrote:
+>=20
+>>> On Jan 22, 2025, at 23:07, Jonathan Cameron =
+<Jonathan.Cameron@huawei.com> wrote:
+>>>=20
+>>> On Fri, 17 Jan 2025 09:43:11 +0000
+>>> Jonathan Cameron via <qemu-devel@nongnu.org> wrote:
+>>>=20
+>>>> On Fri, 17 Jan 2025 10:13:41 +0900
+>>>> Itaru Kitayama <itaru.kitayama@linux.dev> wrote:
+>>>>=20
+>>>>>> On Jan 16, 2025, at 19:58, Jonathan Cameron =
+<Jonathan.Cameron@huawei.com> wrote:
+>>>>>>=20
+>>>>>> On Thu, 16 Jan 2025 15:04:53 +0900
+>>>>>> Itaru Kitayama <itaru.kitayama@linux.dev> wrote:
+>>>>>>=20
+>>>>>>> Hi Jonathan,
+>>>>>>>=20
+>>>>>>>> On Jan 14, 2025, at 19:26, Jonathan Cameron =
+<Jonathan.Cameron@huawei.com> wrote:
+>>>>>>>>=20
+>>>>>>>> On Tue, 14 Jan 2025 12:03:03 +0900
+>>>>>>>> Itaru Kitayama <itaru.kitayama@linux.dev> wrote:
+>>>>>>>>=20
+>>>>>>>>> Hi Jonathan,=20
+>>>>>>>>>=20
+>>>>>>>>>> On Jan 10, 2025, at 21:31, Jonathan Cameron =
+<Jonathan.Cameron@huawei.com> wrote:
+>>>>>>>>>>=20
+>>>>>>>>>> On Fri, 10 Jan 2025 09:20:54 +0000
+>>>>>>>>>> "Zhijian Li (Fujitsu)" via <qemu-devel@nongnu.org> wrote:
+>>>>>>>>>>=20
+>>>>>>>>>>> On 10/01/2025 13:29, Itaru Kitayama wrote:         =20
+>>>>>>>>>>>> Hi,
+>>>>>>>>>>>> Is anybody working on the CXL emulation on aarch64?         =
+  =20
+>>>>>>>>>>>=20
+>>>>>>>>>>> I'm not currently working on the CXL emulation on aarch64.
+>>>>>>>>>>>=20
+>>>>>>>>>>> However, IIRC the CXL maintainer's tree should work.
+>>>>>>>>>>> https://gitlab.com/jic23/qemu/         =20
+>>>>>>>>>>=20
+>>>>>>>>>> Pick up latest branch from there. I'm prepping a rebased =
+version
+>>>>>>>>>> with some new stuff but might take a few more days.         =20=
 
-Considering the approach you followed, as said before, choosing a 
-decoupled solution is the right choice. Plugins should not allow to 
-access internal details of QEMU implementation as a general rule.
+>>>>>>>>>=20
+>>>>>>>>> Thanks for sharing your work with us.  Your master and =
+cxl-2024-11-27 branches give:
+>>>>>>>>>=20
+>>>>>>>>> $ qemu-system-aarch64: -accel tcg,cxl=3Don: Property =
+'tcg-accel.cxl' not found       =20
+>>>>>>>>=20
+>>>>>>>> cxl is a machine property not a accel one. So needs to be after =
+virt
+>>>>>>>> There are tests in the tree for bios tables. Copy the command =
+line from those.
+>>>>>>>>=20
+>>>>>>>>>=20
+>>>>>>>>> My commands are below:
+>>>>>>>>> $HOME/projects/qemu/build/qemu-system-aarch64 \
+>>>>>>>>>     -M virt,virtualization=3Don,gic-version=3D3 \
+>>>>>>>>>     -M acpi=3Doff -cpu max,sme=3Doff -m 8G -smp 4 \
+>>>>>>>>>     -accel tcg,cxl=3Don \
+>>>>>>>>>     -nographic \
+>>>>>>>>>     -bios $HOME/cca-v4/out/bin/flash.bin \
+>>>>>>>>>     -kernel Image-cca \
+>>>>>>>>>     -drive =
+format=3Draw,if=3Dnone,file=3D$HOME/cca-v4/out-or/images/rootfs.ext2,id=3D=
+hd0 \
+>>>>>>>>>     -device virtio-blk-pci,drive=3Dhd0 \
+>>>>>>>>>     -append root=3D/dev/vda \
+>>>>>>>>>     -nodefaults \
+>>>>>>>>>     --serial tcp:localhost:54320 \
+>>>>>>>>>      -serial tcp:localhost:54321 \
+>>>>>>>>>      -append "root=3D/dev/vda earlycon console=3Dhvc0" \
+>>>>>>>>>      -device virtio-net-pci,netdev=3Dnet0 \
+>>>>>>>>>      -netdev user,id=3Dnet0 \
+>>>>>>>>>      -device virtio-9p-device,fsdev=3Dshr0,mount_tag=3Dshr0 \
+>>>>>>>>>      -fsdev local,security_model=3Dnone,path=3D../../,id=3Dshr0
+>>>>>>>>>=20
+>>>>>>>>> Yes, I=E2=80=99m using Linaro=E2=80=99s CCA capable OP-TEE =
+builds above.       =20
+>>>>>>>>=20
+>>>>>>>> I'm a little curious why optee is relevant for this but =
+shouldn't matter as long
+>>>>>>>> as an appropriate EDK2 is loaded.
+>>>>>>>>=20
+>>>>>>>=20
+>>>>>>> I picked up your tree=E2=80=99s =E2=80=9Cmaster=E2=80=9D and =
+=E2=80=9Ccxl-next=E2=80=9D as of today, and only the latter at least =
+booted.
+>>>>>>> The former gives:
+>>>>>>>=20
+>>>>>>> qemu-system-aarch64: Property 'virt-9.2-machine.cxl' not found
+>>>>>>>=20
+>>>>>>> Should I stick with the cxl-next? My concern is that the base =
+QEMU version is a bit old
+>>>>>>> 7.0.50.     =20
+>>>>>>=20
+>>>>>> Always use the latest dated branch on that tree.  I release =
+whenever there
+>>>>>> is something new to carry or a major rebase needed.
+>>>>>>=20
+>>>>>> cxl-<date> is the right branch to use. Hope that helps.     =20
+>>>>>=20
+>>>>> When do you think you want to get them (aarch64 specific?) merged =
+mainline. Any reason you want to carry the patches by yourself?   =20
+>>>>=20
+>>>> Nothing much has changed since I presented on this at Linaro =
+connect in 2023.
+>>>> https://resources.linaro.org/en/resource/hM986DSHfoTrZ98UjpvLg1
+>>>>=20
+>>>> The issue is device tree bindings for PCI Expander bridgess and the =
+fact that
+>>>> those need to be generated without the full enumeration that EDK2 =
+is doing
+>>>> prior to ACPI final table builds. In order to move forward with =
+that it
+>>>> needs a bunch of work to prove that we absolutely cannot get =
+patches
+>>>> upstream to support kernel base enumeration and breaking up of the
+>>>> various resources (like EDK2 does). =20
+>>>=20
+>>> I was talking to Peter Maydell earlier and given developments in the =
+last couple
+>>> of years that have by necessity been ACPI only in arm virt he is =
+less
+>>> opposed to ACPI only features being added where device tree is =
+challenging.
+>>>=20
+>>> So we may be able to move forwards without device tree support.
+>>>=20
+>>> The PXB enumeration question is also relevant for managing multiple
+>>> vIOMMUs to represent multiple physical IOMMUs with the correct =
+isolation
+>>> and do it efficiently which is probably a more pressing usecase than =
+CXL emulation.
+>>> The discussion was mainly about that usecase, but maybe it also =
+unblocks
+>>> upstreaming this support.
+>>>=20
+>>> Thanks,
+>>>=20
+>>> Jonathan =20
+>>=20
+>> I finally made some CXL tests ran within the ndctl test framework =
+along with the kernel modules (QEMU is on your cxl-2024-11-27 branch) on =
+aarch64. However, the recent rebase cxl-2025-01-24 fails to start the =
+system emulation
+>>=20
+>> qemu-system-aarch64: Property 'virt-10.0-machine.cxl' not found
+>>=20
+>> The build did not complain, what kind of tests you run against your =
+periodical QEMU rebase?
+>=20
+> On this run I was focused on chmu testing which will have included =
+what you
+> are running into here.  It's made a little tricky by some local =
+networking issues
+> so getting a branch up on gitlab is far from straight forward.
+>=20
+> Ah. Looks like the push went wrong as that has 0 patches on top of =
+main qemu branch
+> so that branch is effectively empty. Typo in what I pushed.
+> Sorry about that.
 
-Did you think about integrating the server directly in the plugin? From 
-what I understand, the CHMU will contact the server on a per request 
-basis, while instrumentation will contact it for every access.
+Not at all. I confirmed that the same branch now boots fine.
+=20
+>=20
+> Note this is far from a production tree as it carries many patches =
+with outstanding
+> review comments etc.  Mainly exists for the purposes of testing =
+specific kernel
+> patches where the support is not ready for upstream QEMU yet.  It is =
+not in any
+> sense a 'release' with the sort of testing that would imply, so mostly =
+a case
+> of local smoke tests.
 
-Beyond communication, the biggest overhead here is to have 
-instrumentation on all memory accesses. Another thing that comes out of 
-my mind is to do a sampling instrumentation. However, it's not easy to 
-do, because the current API does not allow to force a new translation of 
-existing TB, and at translation time, you have no clue whether or not 
-this will be a hot TB.
-What you can do though, is to ignore most of the accesses, and only send 
-information every 1000 memory accesses. (Note: I have no idea if 1000 is 
-a good threshold :)). It would allow you to skip most of the overhead 
-related to communication and hot pages management.
+I understand this.
 
- From what I understood about using plugins, the goal is to track hot 
-pages. Using the cache one is a possibility, but it might be better to 
-use contrib/plugins/hotpages.c instead, or better, a custom simple 
-plugin, simply reporting reads/writes to the server (and implementing 
-sampling as well).
+Thanks,
+Itaru.
 
-Which slow-down factor (order of magnitude) do you have with this series?
-
+>=20
+> Any help with more comprehensive tests would be much appreciated. I =
+know some other
+> folk in the CXL community are talking about that, but I don't think =
+anyone has
+> it in place yet. It's hard as there are typically a lot of moving =
+parts.
+>=20
+> Pushed now.
+>=20
 > Jonathan
-> 
->>
->> Pierrick
->>
->>> Jonathan
->>>    
->>>>
->>>> Regards,
->>>> Pierrick
->>>>
->>>> On 1/24/25 09:29, Jonathan Cameron wrote:
->>>>> Hi All,
->>>>>
->>>>> This is an RFC mainly to seek feedback on the approach used, particularly
->>>>> the aspect of how to get data from a TCG plugin into a device model.
->>>>> Two options that we have tried
->>>>> 1. Socket over which the plugin sends data to an external server
->>>>>       (as seen here)
->>>>> 2. Register and manage a plugin from within a device model
->>>>>
->>>>> The external server approach keeps things loosely coupled, but at the cost
->>>>> of separately maintaining that server, protocol definitions etc and
->>>>> some overhead.
->>>>> The closely couple solution is neater, but I suspect might be controversial
->>>>> (hence I didn't start with that :)
->>>>>
->>>>> The code here is at best a PoC to illustrate what we have in mind
->>>>> It's not nice code at all, feature gaps, bugs and all!  So whilst
->>>>> review is always welcome I'm not requesting it for now.
->>>>>
->>>>> Kernel support was posted a while back but was done against fake data
->>>>> (still supported here if you don't provide the port parameter to the type3 device)
->>>>> https://lore.kernel.org/linux-cxl/20241121101845.1815660-1-Jonathan.Cameron@huawei.com/
->>>>> I'll post a minor update of that driver shortly to take into account
->>>>> a few specification clarifications but it should work with this without
->>>>> those.
->>>>>
->>>>> Note there are some other patches on the tree I generated this from
->>>>> so this may not apply to upstream. Easiest is probably to test
->>>>> using gitlab.com/jic23/qemu cxl-2025-01-24
->>>>>
->>>>> Thanks to Niyas for his suggestions on how to make all this work!
->>>>>
->>>>> Background
->>>>> ----------
->>>>>
->>>>> What is the Compute eXpress Link Hotness Monitoring unit and what is it for?
->>>>> - In a tiered memory equipped server with the slow tier being attached via
->>>>>      CXL the expectation is a given workload will benefit from putting data
->>>>>      that is frequently fetched from memory in lower latency directly attached
->>>>>      DRAM.  Less frequently used data can be served from the CXL attached memory
->>>>>      with no significant loss of performance.  Any data that is hot enough to
->>>>>      almost always be in cache doesn't matter as it is only fetch from memory
->>>>>      occasionally.
->>>>> - Working out which memory is best places where is hard to do and in some
->>>>>      workloads a dynamic problem. As such we need something we can measure
->>>>>      to provide some indication of what data is in the wrong place.
->>>>>      There are existing techniques to do this (page faulting, various
->>>>>      CPU tracing systems, access bit scanning etc) but they all have significant
->>>>>      overheads.
->>>>> - Monitoring accesses on the CXL device provides a path to getting good
->>>>>      data without those overheads.  These units are known as CXL Hotness
->>>>>      Monitoring Units or CHMUs.  Loosely speaking they count accesses to
->>>>>      granuals of data (e.g. 4KiB pages).  Exactly how they do that and
->>>>>      where they sacrifice data accuracy is an implementation trade off.
->>>>>
->>>>> Why do we need a model that gives real data?
->>>>> - In general there is a need to develop software on top of these units
->>>>>      to move data to the right place. Hard to evaluate that if we are making
->>>>>      up the info on what is 'hot'.
->>>>> - Need to allow for a bunch of 'impdef' solutions. Note that CHMU
->>>>>      in this patch set is an oracle - it has enough counters to count
->>>>>      every access.  That's not realistic but it doesn't get me shouted
->>>>>      at by our architecture teams for giving away any secrets.
->>>>>      If we move forward with this, I'll probably implement a limited
->>>>>      counter + full CAM solution (also unrealistic, but closer to real)
->>>>>      I'd be very interested in contributions of other approaches (there
->>>>>      are lots in the literature, under the term top-k)
->>>>> - Resources will be constrained, so whilst a CHMU might in theory
->>>>>      allow monitoring everything at once, that will come with a big
->>>>>      accuracy cost.  We need to design the algorithms that give us
->>>>>      good data given those constraints.
->>>>>
->>>>> So we need a solution to explore the design space and develop the software
->>>>> to take advantage of this hardware (there are various LSF/MM proposals
->>>>> on how to use this an other ways of tracking hotness).
->>>>> https://lore.kernel.org/all/20250123105721.424117-1-raghavendra.kt@amd.com/
->>>>> https://lore.kernel.org/lkml/Z4XUoWlU-UgRik18@gourry-fedora-PF4VCD3F/T/
->>>>>
->>>>> QEMU plugins give us a way to do this.  In particular the existing
->>>>> Cache plugin can be easily modified to tell use what memory addresses
->>>>> missed at the last level of emulated cache.  We can then filter those
->>>>> for the memory address range that maps to CXL and feed them to our
->>>>> counter implementation. On the other side, each instance of CXL type 3
->>>>> device can connect to this server and request hotness monitoring
->>>>> services + provide parameters etc.  Elements such as list threshold
->>>>> management and overflow detection etc are in the CXL HMU QEMU device mode.
->>>>> As noted above, we have an alternative approach that can closely couple
->>>>> things, so the device model registers the plugin directly and there
->>>>> is no server.
->>>>>
->>>>> How to use it!
->>>>> --------------
->>>>>
->>>>> It runs a little slow but it runs and generates somewhat plausible outputs.
->>>>> I'd definitely suggest running it with the pass through optimization
->>>>> patch on the CXL staging tree (and a single direct connected device).
->>>>> Your millage will vary if you try to use other parameters, or
->>>>> hotness units beyond the first one (implementation far from complete!)
->>>>>
->>>>> To run start the server in contrib/hmu/ providing a port number to listen
->>>>> on.
->>>>>
->>>>> ./chmu 4443
->>>>>
->>>>> Then launch QEMU with something like the following.
->>>>>
->>>>> qemu-system-aarch64 -icount shift=1 \
->>>>>     -plugin ../qemu/bin/native/contrib/plugins/libcache.so,port=4443,missfilterbase=1099511627776,missfiltersize=1099511627776,dcachesize=8192,dassoc=4,dblksize=64,icachesize=8192,iassoc=4,iblksize=64,l2cachesize=32768,l2assoc=16,l2blksize=64 \
->>>>>     -M virt,ras=on,nvdimm=on,gic-version=3,cxl=on,hmat=on -m 4g,maxmem=8g,slots=4 -cpu max -smp 4 \
->>>>>     -kernel Image \
->>>>>     -drive if=none,file=full.qcow2,format=qcow2,id=hd \
->>>>>     -device pcie-root-port,id=root_port1 \
->>>>>     -device virtio-blk-pci,drive=hd,x-max-bounce-buffer-size=512k \
->>>>>     -nographic -no-reboot -append 'earlycon memblock=debug root=/dev/vda2 fsck.mode=skip maxcpus=4 tp_printk' \
->>>>>     -monitor telnet:127.0.0.1:1234,server,nowait -bios QEMU_EFI.fd \
->>>>>     -object memory-backend-ram,size=4G,id=mem0 \
->>>>>     -object memory-backend-file,id=cxl-mem1,share=on,mem-path=/tmp/t3_cxl1.raw,size=1G,align=256M \
->>>>>     -object memory-backend-file,id=cxl-mem2,share=on,mem-path=/tmp/t3_cxl2.raw,size=1G,align=256M \
->>>>>     -object memory-backend-file,id=cxl-lsa1,share=on,mem-path=/tmp/t3_lsa1.raw,size=1M,align=1M \
->>>>>      -object memory-backend-file,id=cxl-mem3,share=on,mem-path=/tmp/t3_cxl3.raw,size=1G,align=256M \
->>>>>     -object memory-backend-file,id=cxl-mem4,share=on,mem-path=/tmp/t3_cxl4.raw,size=1G,align=256M \
->>>>>     -object memory-backend-file,id=cxl-lsa2,share=on,mem-path=/tmp/t3_lsa2.raw,size=1M,align=1M \
->>>>>     -device pxb-cxl,bus_nr=12,bus=pcie.0,id=cxl.1,hdm_for_passthrough=true,numa_node=0\
->>>>>     -device cxl-rp,port=0,bus=cxl.1,id=cxl_rp_port0,chassis=0,slot=2 \
->>>>>     -device cxl-type3,bus=cxl_rp_port0,volatile-memdev=cxl-mem1,id=cxl-pmem1,lsa=cxl-lsa1,sn=3,x-speed=32,x-width=16,chmu-port=4443 \
->>>>>     -machine cxl-fmw.0.targets.0=cxl.1,cxl-fmw.0.size=8G,cxl-fmw.0.interleave-granularity=1k \
->>>>>     -numa node,nodeid=0,cpus=0-3,memdev=mem0 \
->>>>>     -numa node,nodeid=1 \
->>>>>     -object acpi-generic-initiator,id=bob2,pci-dev=bob,node=1 \
->>>>>     -numa node,nodeid=2 \
->>>>>     -object acpi-generic-port,id=bob11,pci-bus=cxl.1,node=2 \
->>>>>
->>>>> In the guest, create and bind the region - this brings up the CXL memory
->>>>> device so accesses go to the memory.
->>>>>
->>>>>      cd /sys/bus/cxl/devices/decoder0.0/
->>>>>      cat create_ram_region
->>>>>      echo region0 > create_ram_region
->>>>>      echo ram > /sys/bus/cxl/devices/decoder2.0/mode
->>>>>      echo ram > /sys/bus/cxl/devices/decoder3.0/mode
->>>>>      echo $((256 << 21)) > /sys/bus/cxl/devices/decoder2.0/dpa_size
->>>>>      cd /sys/bus/cxl/devices/region0/
->>>>>      echo 256 > interleave_granularity
->>>>>      echo 1 > interleave_ways
->>>>>      echo $((256 << 21)) > size
->>>>>      echo decoder2.0 > target0
->>>>>      echo 1 > commit
->>>>>      echo region0 > /sys/bus/cxl/drivers/cxl_region/bind
->>>>>
->>>>> Finally start perf with something like:
->>>>>
->>>>> ./perf record -a  -e cxl_hmu_mem0.0.0/epoch_type=0,access_type=6,\
->>>>> hotness_threshold=635,epoch_multiplier=4,epoch_scale=4,\
->>>>> range_base=0,range_size=4096/  ./stress.sh
->>>>>
->>>>> where stress.sh is
->>>>>
->>>>>      sleep 2
->>>>>      numactl --membind 3 stress-ng --vm 1 --vm-bytes 1M --vm-keep -t 5s
->>>>>      sleep 2
->>>>>
->>>>> See the results with
->>>>> ./perf report --dump-raw-trace | grep -A 200 HMU
->>>>>
->>>>> Enjoy and have a good weekend.
->>>>>
->>>>> Thanks,
->>>>>
->>>>> Jonathan
->>>>>
->>>>> Jonathan Cameron (3):
->>>>>      hw/cxl: Initial CXL Hotness Monitoring Unit Emulation
->>>>>      plugins: Add cache miss reporting over a socket.
->>>>>      contrib: Add example hotness monitoring unit server
->>>>>
->>>>>     include/hw/cxl/cxl.h        |   1 +
->>>>>     include/hw/cxl/cxl_chmu.h   | 154 ++++++++++++
->>>>>     include/hw/cxl/cxl_device.h |  13 +-
->>>>>     include/hw/cxl/cxl_pci.h    |   7 +-
->>>>>     contrib/hmu/hmu.c           | 312 ++++++++++++++++++++++++
->>>>>     contrib/plugins/cache.c     |  75 +++++-
->>>>>     hw/cxl/cxl-chmu.c           | 459 ++++++++++++++++++++++++++++++++++++
->>>>>     hw/mem/cxl_type3.c          |  25 +-
->>>>>     hw/cxl/meson.build          |   1 +
->>>>>     9 files changed, 1035 insertions(+), 12 deletions(-)
->>>>>     create mode 100644 include/hw/cxl/cxl_chmu.h
->>>>>     create mode 100644 contrib/hmu/hmu.c
->>>>>     create mode 100644 hw/cxl/cxl-chmu.c
->>>>>       
->>>>   
->>>    
->>
-> 
+>=20
+>=20
+>=20
+>=20
+>>=20
+>> Itaru.=20
+>>=20
+>>>=20
+>>>>=20
+>>>> Given PXB enumeration in kernel has some issues on ARM anyway (that =
+you can paper
+>>>> over with _DSM 5 - it self requiring an extra patch that isn't =
+upstreamable because
+>>>> of IO port issues) there is quite a bit of work needed, mostly not =
+in QEMU.
+>>>> Or convince Peter and others that not all virt support needs DT =
+bindings
+>>>> (note that PXB for PCIE has been supported for years without an DT =
+support,
+>>>> just no one noticed!)
+>>>>=20
+>>>> After that we'd need to figure out CXL DT bindings in general and =
+add kernel
+>>>> code support - despite there being no known DT based CXL systems =
+out there, so
+>>>> that is going to be hard to do.  Various CXL kernel maintainers =
+have expressed
+>>>> they aren't against such support, but it's hardly going to be =
+review priority
+>>>> (other than for me if someone else does the work!)
+>>>>=20
+>>>> For me this isn't particularly high priority. The ARM bit is fairly =
+easy to rebase.
+>>>> I would like to see it solved, but it is behind various other items =
+on my
+>>>> backlog.
+>>>>=20
+>>>> There are SBSA machine patches on list, but it's not a useful =
+platform for
+>>>> CXL kernel code development because of the limited supported =
+configurations
+>>>> (in keeping with the more or less fixed model that SBSA-ref uses).
+>>>>=20
+>>>> Jonathan
+>>>>=20
+>>>>=20
+>>>>=20
+>>>>>=20
+>>>>> Itaru.
+>>>>>=20
+>>>>>>=20
+>>>>>> Jonathan
+>>>>>>=20
+>>>>>>>=20
+>>>>>>> Thanks,
+>>>>>>> Itaru.
+>>>>>>>=20
+>>>>>>>> Jonathan
+>>>>>>>>=20
+>>>>>>>>>=20
+>>>>>>>>> Let me know which branch you were suggesting.
+>>>>>>>>>=20
+>>>>>>>>> Thanks,
+>>>>>>>>> Itaru.=20
+>>>>>>>>>=20
+>>>>>>>>>>=20
+>>>>>>>>>> Note my main development work is on arm64 so that tends to =
+work
+>>>>>>>>>> more reliably than x86 which I only lightly test for stuff =
+that
+>>>>>>>>>> isn't ready for upstream yet.
+>>>>>>>>>>=20
+>>>>>>>>>> Give me a shout if you run into any problems.
+>>>>>>>>>>=20
+>>>>>>>>>> The main blocker on upstreaming this is resolving the missing =
+device tree
+>>>>>>>>>> support for PCI expander bridges.  I've not made any progress =
+on this since
+>>>>>>>>>> talk at Linaro connect in 2023.
+>>>>>>>>>>=20
+>>>>>>>>>> Jonathan
+>>>>>>>>>>=20
+>>>>>>>>>>=20
+>>>>>>>>>>>=20
+>>>>>>>>>>>=20
+>>>>>>>>>>> Thanks
+>>>>>>>>>>> Zhijian
+>>>>>>>>>>>=20
+>>>>>>>>>>>> If there=E2=80=99s a WIP branch, a pointer would be =
+appreciated.
+>>>>>>>>>>>>=20
+>>>>>>>>>>>> Itaru           =20
+
 
 
