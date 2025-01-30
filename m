@@ -4,97 +4,90 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5BB9FC0218F
-	for <qemu-devel@archiver.kernel.org>; Thu, 30 Jan 2025 16:52:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8DAB3C0218F
+	for <qemu-devel@archiver.kernel.org>; Thu, 30 Jan 2025 17:03:41 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tdXl9-00017L-Qf; Thu, 30 Jan 2025 11:51:19 -0500
+	id 1tdXwe-0004cW-Rv; Thu, 30 Jan 2025 12:03:12 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <david@redhat.com>) id 1tdXl8-00017C-7o
- for qemu-devel@nongnu.org; Thu, 30 Jan 2025 11:51:18 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <david@redhat.com>) id 1tdXwX-0004Y7-Fz
+ for qemu-devel@nongnu.org; Thu, 30 Jan 2025 12:03:06 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <david@redhat.com>) id 1tdXl6-0007Bd-Mc
- for qemu-devel@nongnu.org; Thu, 30 Jan 2025 11:51:18 -0500
+ (Exim 4.90_1) (envelope-from <david@redhat.com>) id 1tdXwV-0000yb-Tt
+ for qemu-devel@nongnu.org; Thu, 30 Jan 2025 12:03:05 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1738255874;
+ s=mimecast20190719; t=1738256582;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=vSQbe4vosYMcB5B7Ti4t8tkhw8boR1ASmLvUEX8zDMk=;
- b=ZpNwecl73VeZa3Aye6yXLDQ44TE2ZLsW2xCOSsgRYjYO8geSXilh8OcDyM/roJRccFCmS1
- xh8ApFDItrEKm/UEZvqCtcjkuH9/933hoPxo/RLJ9mab5XlXwepULHhliGdLLL8yGR+d3H
- ooG7DcmeZsXL7s5U+zSqgGOHhRn/qBE=
-Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com
- [209.85.128.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=Bfgt8miLEvmEJe4gjJtXIFBmltvv0Vs8icMg+ADIw2c=;
+ b=ZYMz9I3LX8b5fAyr/NbWfKME0b9Uy0mkooBHmE6OUZmastubhnlR7utrLbzbjmOoJnaAFX
+ 8zlgsGqLrbgqs4GyxLpsbMS7Dyyd1weCQZuPfnSkZoYNZUwv8Gf2R60DMmqoHeaGVU8ZQ6
+ TgIEKf9rIn0TYfX7ktiBrAc7E0ykFuU=
+Received: from mail-wm1-f69.google.com (mail-wm1-f69.google.com
+ [209.85.128.69]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-374-HjJ1NPBKNp6rQV1kAcCL-g-1; Thu, 30 Jan 2025 11:51:12 -0500
-X-MC-Unique: HjJ1NPBKNp6rQV1kAcCL-g-1
-X-Mimecast-MFC-AGG-ID: HjJ1NPBKNp6rQV1kAcCL-g
-Received: by mail-wm1-f71.google.com with SMTP id
- 5b1f17b1804b1-43646b453bcso5242835e9.3
- for <qemu-devel@nongnu.org>; Thu, 30 Jan 2025 08:51:11 -0800 (PST)
+ us-mta-487-2GcFETWXPNuE3xTsT64Idg-1; Thu, 30 Jan 2025 12:03:01 -0500
+X-MC-Unique: 2GcFETWXPNuE3xTsT64Idg-1
+X-Mimecast-MFC-AGG-ID: 2GcFETWXPNuE3xTsT64Idg
+Received: by mail-wm1-f69.google.com with SMTP id
+ 5b1f17b1804b1-4359206e1e4so8763535e9.2
+ for <qemu-devel@nongnu.org>; Thu, 30 Jan 2025 09:03:00 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1738255871; x=1738860671;
+ d=1e100.net; s=20230601; t=1738256580; x=1738861380;
  h=content-transfer-encoding:in-reply-to:organization:autocrypt
  :content-language:from:references:cc:to:subject:user-agent
  :mime-version:date:message-id:x-gm-message-state:from:to:cc:subject
  :date:message-id:reply-to;
- bh=vSQbe4vosYMcB5B7Ti4t8tkhw8boR1ASmLvUEX8zDMk=;
- b=IzXz0Z3LaepnP6JYTFjn9KYTXxcydZODvRSRoDJdf7tS8sfpiQDkg+/9ByvHrgRaVJ
- bLGhRdYJX5rmCW2wsRsKv/AmTg+DEPttsDHGxk5ul5ZgloXIQM7QyA9jXZTIDJcIraOk
- Z/dB83K5LZqc55ecYlthgrj2jyHyQz1nnOIIiQN38JGSBm4+5PeX7xH4DnXNomsADbIf
- A7Hvvc6PwcUhMZ3u7Q9eDwxdLJVEuDlfTC2fhnyo8XP8V7KzSioArM5fFjUkeML9tI1h
- sPc6iJBW7V/rMqeinQWf+o6tPA2ZtyQraNnqxesOucepBe4TNEcCACDoyNLfMoB90Xil
- za8g==
+ bh=Bfgt8miLEvmEJe4gjJtXIFBmltvv0Vs8icMg+ADIw2c=;
+ b=fDz8DqqxNx63fZlucOuWm4vIhHe7dk5XSjtUWU0/8Ane8z/4R1rekswu0j+W8eQaqA
+ e0VLw3IA4NVJoj7cru1of1OKRJGQIsAZu9F58sM6uglkMbRun9n6pqhSm8DKausWp1gG
+ AdQ0gOswwY3k965eDgvm2b1sRi7404RR8yG5TlV03E2J+NOCGHL532MNVPkMhrPWLu9V
+ vkA1j336jOde87fYxgity6Y6tnBYa6VcXyzieilk4N9T6oxMvk0DjsUp3PerVVhtWxP8
+ XcUqMOB8joa1uMNGIbQ4+RCNu+M/3eJz5CG35wfSC/wR8s+cLwWIGt2cpIBZ+3vfu9VH
+ I8sg==
 X-Forwarded-Encrypted: i=1;
- AJvYcCUQrxzv7RgFPC/hXElWE2GGjCmz6wlBpIBLgdnzRSVeBh3MslBCIN/eWku+hWlZQA8FcxyZIaxhVAA+@nongnu.org
-X-Gm-Message-State: AOJu0YypXWL9C4ESGaw9oN/PRG1SamR4vz3grFAWKOUYoIpj0xOBvttC
- bFjAXWaQHgxFta9bWLODM4gbRUyZWTdaARbCEccpE2mg8+wRptDAP+2NTpln5zOzr7M+XFmvVB/
- mm3/6rECTbd+zi/VpyCQfvPOu29BITNnM7NxdFVNxsRiKtbApwVoL
-X-Gm-Gg: ASbGncvjb6o/LvRgx/+PaouCfBMsW2KT9Oh2R+vOQ3ypfGg4SFlQ26C9i2GEJyfTomW
- YsmGAeY+aCBIyyStkBilC7XM8XKxckWzCSYd/QHPRoXIiWfK9xy0ymYCmSGOH88LszLkULFoy1y
- U2G2ZnD4JxzPL5YtqUmW7yNYVieU46ix5uuK6f3/7WfUGTmLIRwe7C7zwxQtHp1actAYcFhr74F
- IhqC3x3pmb0G04CKxwjpC9Jt4ToFYFLxpKCz1GVggl98qkdtb0C0pt1m22dVW1u+r6TYaiMo94h
- 8/Cpbr0Wi9AY1lwXFLYnya8k555dV28+bcDEWIu0Cs/2NJ+i0l4oxlzTf++UaI4JG4gDnnwHj4m
- 2qdRc8VSxLoca19+41l/OWqIThVK6FWec
-X-Received: by 2002:a05:600c:4f08:b0:438:da66:fdf9 with SMTP id
- 5b1f17b1804b1-438dc3c87a5mr70162975e9.18.1738255870901; 
- Thu, 30 Jan 2025 08:51:10 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IE+YeKPmVzedXw+G5H15HnlT3K5Bk8St8bibSxXEtr+ee9TSYkrjNyM+ePPJ1ZPHWd0MzMKxQ==
-X-Received: by 2002:a05:600c:4f08:b0:438:da66:fdf9 with SMTP id
- 5b1f17b1804b1-438dc3c87a5mr70162785e9.18.1738255870554; 
- Thu, 30 Jan 2025 08:51:10 -0800 (PST)
+ AJvYcCW/8mtfju+YNiPzFT3Ogd4PMvOF6wFpmvYUcmWhumKCDHCPQfpwWDQvIkjI68t47mvtM+YEmI0kTe9K@nongnu.org
+X-Gm-Message-State: AOJu0YxLCXJ/tY2fMB3UWk8jB4BjKIGJtbMvij22et+k6BnnqkxyrS6W
+ ogCFxRgouDzvW9w+48wVsZIfER2A3kIzrtZSCXKZ1s5OoWL4DsEPpdEAWf4tvrEjuRZl7Ykc8BR
+ jAahn5yyp8a3Sg7ksEeskAHUk5AkEqeTeOaxWkLuig4KzUuPXJD8j
+X-Gm-Gg: ASbGncsB6KLPgsgQTCxsIn4Tiz9FnmG0mUY5OEOy4gKOT+mBVNw0FEFWC0apj5SSO/8
+ YuHDwGbrYQtP3VgFKkjiYdYZA/x2HQjpXkYyXTdwRJFzFZTkELvjwu1gow3k3plFfMx47e4iLFE
+ MNWFqdhXXkpEBBcsYpWwgFWaVRCsyBmh6mb6k/uSdJhade4Q+RQjizfOUQiDpy9HS+PlWaYa/iE
+ KTr5cK3PjoLJcThkYpeGBIsGuwn5SfykqjKMDx0jT/DCzK5sRy8B0vZWaNiMUf5km7yGn0XZC8d
+ TM2GcAHsB8n2d/+ZT+68UJqBCT/ca3Pw7KhpgIH+iWsU3AyceJR5VCh62QblVQAiXorK17GWtRq
+ k82ColC856vhP4qwtvXep0GW/rYgUO3Us
+X-Received: by 2002:a05:600c:3b0a:b0:434:f753:6012 with SMTP id
+ 5b1f17b1804b1-438dc3cae6cmr84005325e9.17.1738256578457; 
+ Thu, 30 Jan 2025 09:02:58 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IGJTMrJ+ZHtudEDY2UKFWTpuA46TyGJOceK2DiZsUkzLx3bBPGALFfhAxo0D71GP+vwZHTzQA==
+X-Received: by 2002:a05:600c:3b0a:b0:434:f753:6012 with SMTP id
+ 5b1f17b1804b1-438dc3cae6cmr84004615e9.17.1738256577933; 
+ Thu, 30 Jan 2025 09:02:57 -0800 (PST)
 Received: from ?IPV6:2003:cb:c713:3b00:16ce:8f1c:dd50:90fb?
  (p200300cbc7133b0016ce8f1cdd5090fb.dip0.t-ipconnect.de.
  [2003:cb:c713:3b00:16ce:8f1c:dd50:90fb])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-438e23d443esm29966775e9.1.2025.01.30.08.51.09
+ 5b1f17b1804b1-438dcc81a39sm63674615e9.35.2025.01.30.09.02.55
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 30 Jan 2025 08:51:09 -0800 (PST)
-Message-ID: <3c126ed2-f7d5-49f8-98f6-be28238f1e78@redhat.com>
-Date: Thu, 30 Jan 2025 17:51:08 +0100
+ Thu, 30 Jan 2025 09:02:57 -0800 (PST)
+Message-ID: <ca2c2d71-e4c0-4ed2-afc0-04f21df1f82d@redhat.com>
+Date: Thu, 30 Jan 2025 18:02:55 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 2/7] guest_memfd: Introduce an object to manage the
- guest-memfd with RamDiscardManager
-To: Peter Xu <peterx@redhat.com>, Xu Yilun <yilun.xu@linux.intel.com>
-Cc: Alexey Kardashevskiy <aik@amd.com>, Chenyi Qiang
- <chenyi.qiang@intel.com>, Paolo Bonzini <pbonzini@redhat.com>,
- =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Michael Roth <michael.roth@amd.com>, qemu-devel@nongnu.org,
- kvm@vger.kernel.org, Williams Dan J <dan.j.williams@intel.com>,
- Peng Chao P <chao.p.peng@intel.com>, Gao Chao <chao.gao@intel.com>,
- Xu Yilun <yilun.xu@intel.com>
-References: <ZnmfUelBs3Cm0ZHd@yilunxu-OptiPlex-7050> <Z4-6u5_9NChu_KZq@x1n>
- <95a14f7d-4782-40b3-a55d-7cf67b911bbe@amd.com>
- <Z5C9SzXxX7M1DBE3@yilunxu-OptiPlex-7050> <Z5EgFaWIyjIiOZnv@x1n>
- <Z5INAQjxyYhwyc+1@yilunxu-OptiPlex-7050> <Z5Jylb73kDJ6HTEZ@x1n>
- <Z5NhwW/IXaLfvjvb@yilunxu-OptiPlex-7050> <Z5O4BSCjlhhu4rrw@x1n>
- <Z5WtRYSf7cjqITXH@yilunxu-OptiPlex-7050> <Z5uom-NTtekV9Crd@x1.local>
+Subject: Re: [PATCH v6 3/6] accel/kvm: Report the loss of a large memory page
+To: =?UTF-8?Q?=E2=80=9CWilliam_Roche?= <william.roche@oracle.com>,
+ kvm@vger.kernel.org, qemu-devel@nongnu.org, qemu-arm@nongnu.org
+Cc: peterx@redhat.com, pbonzini@redhat.com, richard.henderson@linaro.org,
+ philmd@linaro.org, peter.maydell@linaro.org, mtosatti@redhat.com,
+ imammedo@redhat.com, eduardo@habkost.net, marcel.apfelbaum@gmail.com,
+ wangyanan55@huawei.com, zhao1.liu@intel.com, joao.m.martins@oracle.com
+References: <20250127213107.3454680-1-william.roche@oracle.com>
+ <20250127213107.3454680-4-william.roche@oracle.com>
 From: David Hildenbrand <david@redhat.com>
 Content-Language: en-US
 Autocrypt: addr=david@redhat.com; keydata=
@@ -142,17 +135,17 @@ Autocrypt: addr=david@redhat.com; keydata=
  jPrnvUsUUsjRoRNJjKKA/REq+sAnhkNPPZ/NNMjaZ5b8Tovi8C0tmxiCHaQYqj7G2rgnT0kt
  WNyWQQ==
 Organization: Red Hat
-In-Reply-To: <Z5uom-NTtekV9Crd@x1.local>
+In-Reply-To: <20250127213107.3454680-4-william.roche@oracle.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=david@redhat.com;
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=david@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -33
 X-Spam_score: -3.4
 X-Spam_bar: ---
 X-Spam_report: (-3.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.3,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -170,33 +163,57 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 30.01.25 17:28, Peter Xu wrote:
-> On Sun, Jan 26, 2025 at 11:34:29AM +0800, Xu Yilun wrote:
->>> Definitely not suggesting to install an invalid pointer anywhere.  The
->>> mapped pointer will still be valid for gmem for example, but the fault
->>> isn't.  We need to differenciate two things (1) virtual address mapping,
->>> then (2) permission and accesses on the folios / pages of the mapping.
->>> Here I think it's okay if the host pointer is correctly mapped.
->>>
->>> For your private MMIO use case, my question is if there's no host pointer
->>> to be mapped anyway, then what's the benefit to make the MR to be ram=on?
->>> Can we simply make it a normal IO memory region?  The only benefit of a
->>
->> The guest access to normal IO memory region would be emulated by QEMU,
->> while private assigned MMIO requires guest direct access via Secure EPT.
->>
->> Seems the existing code doesn't support guest direct access if
->> mr->ram == false:
+On 27.01.25 22:31, “William Roche wrote:
+> From: William Roche <william.roche@oracle.com>
 > 
-> Ah it's about this, ok.
+> In case of a large page impacted by a memory error, provide an
+> information about the impacted large page before the memory
+> error injection message.
 > 
-> I am not sure what's the best approach, but IMHO it's still better we stick
-> with host pointer always available when ram=on.  OTOH, VFIO private regions
-> may be able to provide a special mark somewhere, just like when romd_mode
-> was done previously as below (qemu 235e8982ad39), so that KVM should still
-> apply these MRs even if they're not RAM.
+> This message would also appear on ras enabled ARM platforms, with
+> the introduction of an x86 similar error injection message.
+> 
+> In the case of a large page impacted, we now report:
+> Memory Error on large page from <backend>:<address>+<fd_offset> +<page_size>
+> 
+> Signed-off-by: William Roche <william.roche@oracle.com>
+> ---
+>   accel/kvm/kvm-all.c       | 11 +++++++++++
+>   include/exec/cpu-common.h |  9 +++++++++
+>   system/physmem.c          | 21 +++++++++++++++++++++
+>   target/arm/kvm.c          |  3 +++
+>   4 files changed, 44 insertions(+)
+> 
+> diff --git a/accel/kvm/kvm-all.c b/accel/kvm/kvm-all.c
+> index f89568bfa3..08e14f8960 100644
+> --- a/accel/kvm/kvm-all.c
+> +++ b/accel/kvm/kvm-all.c
+> @@ -1296,6 +1296,17 @@ static void kvm_unpoison_all(void *param)
+>   void kvm_hwpoison_page_add(ram_addr_t ram_addr)
+>   {
+>       HWPoisonPage *page;
+> +    struct RAMBlockInfo rb_info;
+> +
+> +    if (qemu_ram_block_location_info_from_addr(ram_addr, &rb_info)) {
+> +        size_t ps = rb_info.page_size;
+> +        if (ps > TARGET_PAGE_SIZE) {
+> +            uint64_t offset = ram_addr - rb_info.offset;
+> +            error_report("Memory Error on large page from %s:%" PRIx64
+> +                         "+%" PRIx64 " +%zx", rb_info.idstr,
+> +                         QEMU_ALIGN_DOWN(offset, ps), rb_info.fd_offset, ps);
+> +        }
+> +    }
 
-I agree.
+Some smaller nits:
+
+1) I'd call it qemu_ram_block_info_from_addr() --  drop the "_location"
+
+2) Printing the fd_offset only makes sense if there is an fd, right? 
+You'd have to communicate that information as well.
+
+
+
+Apart from that, this series LGTM, thanks!
 
 -- 
 Cheers,
