@@ -4,89 +4,87 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7B795C0218A
-	for <qemu-devel@archiver.kernel.org>; Thu, 30 Jan 2025 21:50:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 70E0BC0218A
+	for <qemu-devel@archiver.kernel.org>; Thu, 30 Jan 2025 21:56:21 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tdcQ9-0003In-5u; Thu, 30 Jan 2025 16:49:57 -0500
+	id 1tdcV7-0004vK-U5; Thu, 30 Jan 2025 16:55:05 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tdcQ5-0003IS-Vi
- for qemu-devel@nongnu.org; Thu, 30 Jan 2025 16:49:54 -0500
-Received: from mail-wm1-x336.google.com ([2a00:1450:4864:20::336])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tdcV5-0004uc-4V
+ for qemu-devel@nongnu.org; Thu, 30 Jan 2025 16:55:03 -0500
+Received: from mail-wr1-x434.google.com ([2a00:1450:4864:20::434])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tdcPt-0000n4-OV
- for qemu-devel@nongnu.org; Thu, 30 Jan 2025 16:49:46 -0500
-Received: by mail-wm1-x336.google.com with SMTP id
- 5b1f17b1804b1-436249df846so9328165e9.3
- for <qemu-devel@nongnu.org>; Thu, 30 Jan 2025 13:49:39 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tdcUs-0002tf-2u
+ for qemu-devel@nongnu.org; Thu, 30 Jan 2025 16:55:00 -0500
+Received: by mail-wr1-x434.google.com with SMTP id
+ ffacd0b85a97d-385f07cd1a4so1193166f8f.1
+ for <qemu-devel@nongnu.org>; Thu, 30 Jan 2025 13:54:44 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1738273776; x=1738878576; darn=nongnu.org;
+ d=linaro.org; s=google; t=1738274081; x=1738878881; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=VF8M5RXxuuslbK4Gy/9lMrwDJqWefSUNRkmH178FWhY=;
- b=G7Dw3qYXeK+1vF3q20QLYdBQgN7JNFfVdUSEHD+0v8LbP3Fl3SgETUY0+pCNAFnlQz
- rWDnrnQ05bGGiosAidWkXAwMmbx6dOBX3KMXYPjIQf6fppAbvvUQU5U8rm/0VXkX9cmw
- IJwsVJz6u3mffQHZheg7DsYynFmz0igCqHu1rrzeofojbFLekDfv+mPySuDRdbCs14BB
- ttT41T/rKxnzu5TzhRySDoJ0ziwjsvcrzVg3j0IYhGWkMzzhQA5RXY8zjxHbpG8fxj2k
- wbaptxWTr4OhNPbM7wxec2n/oOdsJDusgsxPAtHVb7i/U96cE/IfnkpsvXtuhwvrmFwd
- PUrg==
+ :references:to:subject:user-agent:mime-version:date:message-id:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=X6cOHChUiLm1Lkp1lZc4xhZKxfhQwGE8VXRWiTHbK8U=;
+ b=FxXvDED8E9ouukrj+802KDupcFGPxAiI8Bmhd0pz6R5N/I+lRoC/DykJPlAo3yBDxD
+ ubiMmkT7rep8krM+j5CXYL298oOF3jeTUx4sIdNjVt0FQSGeuKXlYY1L2YQ0zxIAzrM2
+ Mj1poscPQWiH597e3asv2u3cav5P9s6a3ozTEBk9Ev1JSxZblsO3X5oOiJPrJxYlOgXz
+ ziH8nX4wVw4WScc1mp3lri8qhTSp90hAxvTBru31LlCzg8at6RqTZo8MBMLn72cGjSl3
+ iEvx4MfMtHG0xOy+hgVOdob30iLKsnGeIPH6qLtogVFnpFqUCrwFCVQgg4xC3nV/AFWW
+ C2oA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1738273776; x=1738878576;
+ d=1e100.net; s=20230601; t=1738274081; x=1738878881;
  h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :references:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=VF8M5RXxuuslbK4Gy/9lMrwDJqWefSUNRkmH178FWhY=;
- b=EBn7jM4GYYdloqjuqiq+1afc+1pqwA6MHcq16nVb2heyM+s27ynUbigLg9BtGkjYK3
- Lt8k4YgCOxF6atpsI63jbV0ei9btSKvbuXjLK7H5lJXJgYXvSQDXhcEwOdNGZGRaXmrw
- K5LgrrbMqVHbThqxOTbRzYjGLceg5w3BI2UfDZ4nLI9VE19VWTCln91bU+Ed+kS8unH0
- loPAttPBjE9JctFHqQ2iezTSDYEczO0Nf8s2hp4To4C5MzuxvSQuTCqVXgfyyyVkJo2e
- Gnwl62bGERyXbRdKaOhYWnFjB36g9TFLW+F0u5QGlwz0x6YQ+khPEe/fXBr9HW8Pm9M8
- YUsw==
-X-Gm-Message-State: AOJu0YyJkeM4OEOppNkL40h/Im/jndRhaK17WHV8iVTv6GxffkI7zce0
- 4/EGflY/Bl5U80ZMrFMdOjQl9f+1lHPtNi0yFL11QoCFd2Lp9J/lJEiKJbZXmmsFZUhYQLipsSi
- YoEQ=
-X-Gm-Gg: ASbGncvggAbR9V7Maix8KqdgHQ076oWSpOzrI8xypw7ifYX0O6u2J/qDNiiWRViQ7wd
- fwoipqfVotK00Sme398iHd88R/eg3g4EIRgNZYoeNSlbeNU+FHbWU0Edriutdu57eIhIlaGQikN
- RjRGklE1DoEGI0ICp3pYbZX2AVWkIAjBBHux+RrjWwooyQXjF88+PvbvfSnEcRGr3skD9IK/7FM
- 1pHcKUy9WuFancsIPR64kpm9xSXws17Q9z+zkKmyJK+ZBjdzHKI8Ra8nnMOfvzH22AQD6cf3QOG
- shhCaYccEA9e94l0Lu5MRt9YR6Wgt6a3B46s3IyTLswGfRlpm5N1vQLGSLw=
-X-Google-Smtp-Source: AGHT+IH82hLjDujqdgqa/RmOfl3PhPCAepGZQ0i4WYthxYPHlQnfBy6OcB1Bt2FwY8Zsc8sR+sxzIw==
-X-Received: by 2002:a5d:4d47:0:b0:38b:f44b:8663 with SMTP id
- ffacd0b85a97d-38c520bb322mr6225236f8f.55.1738273776542; 
- Thu, 30 Jan 2025 13:49:36 -0800 (PST)
+ bh=X6cOHChUiLm1Lkp1lZc4xhZKxfhQwGE8VXRWiTHbK8U=;
+ b=b7SMOJnTTlOxfFO15VL4qQsNSQj+bjooTQ9YEaqcqDZ+KQ5ZnyswDkocTawh0s2o9/
+ BtthSpX6F2AlA9AkZzIHQkuEJbZhx5VeZhPHREiRrjslixFszkRBkbPP1eK5MWXxL0Y0
+ K0y2FsQUa8ky3zsSX/1NcVSzQXt3H6vnLsrFTAO2KrTg4NaC7Hc9ngZIaCkGY2HpmmKx
+ DnS1KYHcpYBFbvypgFgUcxVbSQCJ4nHBqmOr/S7OPwvY8rPmrvVgjdx6qqV/q3KlFvpv
+ aqqQXIsMFVsnvtyIT8C0AZrghTmMYqmjIzqWyd7UBJ4aOLMk2UTO0L3n83TJncp9SLAr
+ AjEA==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCV0QbYyI/MfKiMFBujFsexcXDpGLqsDZ968dI/CrsqjV052X/1sKwG50SJx2zpcpLd6oRD832pLyRPj@nongnu.org
+X-Gm-Message-State: AOJu0YyMTot0ElhSimgzXzJ4jYZCNoyJdKEeUpE886hXpHLsQv/d4myB
+ Zcs2/DYAX1jmFxbt3D7eeA0qarW3w9Jk+teEu0c/qwMkbBauVYfLyh6vCmikTBg=
+X-Gm-Gg: ASbGnctD26/0TLk5yG09RN+u2FTlTcrk7VYVEd24bWcwUNiRqT2Exbx7jJzmrchOZUk
+ MW8BASQxIeNb6XO+k/6f77vXilHguLjdGZQoTzaSZQlB+I9wEiCSk/pYFgw78xaTrU50RDOxliO
+ z8tqwjaT/pPMBOZhVAA7TX1H13o/+lKGsoQEQJ6sUygu9RGfir8674um5u+rrMe4Ur/Vo3eOMHJ
+ T+9XOXgGrJK8TcT8Gv8W7QGuGL7ru8bc7IIeuWisCG8Jt1SrKUFS86IL55Y66LLfA8Kk8VpSWie
+ mVw48M62VX2zZ6kwliSqrBsHundfCnhwjzyZrBqOam+FWLF8TXndV9AK+sA=
+X-Google-Smtp-Source: AGHT+IGmfuE34/iS7t/ABilOONPgh204qTrBC5hThmK7Epdqbo9BO6wPS9yuRfYvPmiHjsHNMN5woA==
+X-Received: by 2002:a05:6000:1862:b0:38c:5d42:1528 with SMTP id
+ ffacd0b85a97d-38c5d4218cemr3425899f8f.40.1738274081479; 
+ Thu, 30 Jan 2025 13:54:41 -0800 (PST)
 Received: from [192.168.69.198] (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-38c5c11fadbsm2999098f8f.44.2025.01.30.13.49.35
+ ffacd0b85a97d-38c5c1cf560sm2994173f8f.89.2025.01.30.13.54.40
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 30 Jan 2025 13:49:36 -0800 (PST)
-Message-ID: <131cce7a-8697-4df1-8cf5-45b2ed0c8e31@linaro.org>
-Date: Thu, 30 Jan 2025 22:49:35 +0100
+ Thu, 30 Jan 2025 13:54:40 -0800 (PST)
+Message-ID: <883592af-e85a-4140-b728-1380b764ce28@linaro.org>
+Date: Thu, 30 Jan 2025 22:54:39 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] hw/sh4/r2d: Convert legacy qemu_allocate_irqs() to
- qemu_init_irqs()
-To: qemu-devel@nongnu.org
-Cc: Bernhard Beschow <shentey@gmail.com>,
- Yoshinori Sato <ysato@users.sourceforge.jp>,
- Magnus Damm <magnus.damm@gmail.com>
-References: <20250121182445.35309-1-philmd@linaro.org>
+Subject: Re: [PATCH v3] hw/usb/hcd-ehci: Fix debug printf format string
+To: BALATON Zoltan <balaton@eik.bme.hu>, qemu-devel@nongnu.org,
+ qemu-trivial@nongnu.org
+References: <20250124124713.64F8C4E6031@zero.eik.bme.hu>
 Content-Language: en-US
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20250121182445.35309-1-philmd@linaro.org>
+In-Reply-To: <20250124124713.64F8C4E6031@zero.eik.bme.hu>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::336;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x336.google.com
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::434;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x434.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ T_SPF_TEMPERROR=0.01 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -102,21 +100,17 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 21/1/25 19:24, Philippe Mathieu-Daudé wrote:
-> The FPGA exposes a fixed set of IRQs. Hold them in the FPGA
-> state and initialize them in place calling qemu_init_irqs().
+On 24/1/25 13:47, BALATON Zoltan wrote:
+> The variable is uint64_t so needs %PRIu64 instead of %d.
 > 
-> Move r2d_fpga_irq enums earlier so we can use NR_IRQS within
-> the r2d_fpga_t structure. r2d_fpga_init() returns r2d_fpga_t,
-> and we dereference irq from it in r2d_init().
+> Fixes: 3ae7eb88c47 ("ehci: fix overflow in frame timer code")
+> Signed-off-by: BALATON Zoltan <balaton@eik.bme.hu>
+> Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
+> ---
+> v3: Fixed commit message to match what the patch actually does
 > 
-> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-> ---
-> Based-on: <20250121155526.29982-2-philmd@linaro.org>
->            "hw/irq: Introduce qemu_init_irqs() helper"
-> ---
->   hw/sh4/r2d.c | 38 +++++++++++++++++++++-----------------
->   1 file changed, 21 insertions(+), 17 deletions(-)
+>   hw/usb/hcd-ehci.c | 3 ++-
+>   1 file changed, 2 insertions(+), 1 deletion(-)
 
-Patch queued.
+Patch queued, thanks.
 
