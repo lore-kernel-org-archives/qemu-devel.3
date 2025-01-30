@@ -4,133 +4,135 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1B989C0218A
-	for <qemu-devel@archiver.kernel.org>; Thu, 30 Jan 2025 09:38:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id F1FB7C0218A
+	for <qemu-devel@archiver.kernel.org>; Thu, 30 Jan 2025 09:54:50 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tdQzs-0000Ym-UK; Thu, 30 Jan 2025 04:38:04 -0500
+	id 1tdRFQ-00033H-Vt; Thu, 30 Jan 2025 04:54:09 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1tdQzl-0000YL-Bs
- for qemu-devel@nongnu.org; Thu, 30 Jan 2025 04:37:58 -0500
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1tdRFO-00032G-IG
+ for qemu-devel@nongnu.org; Thu, 30 Jan 2025 04:54:06 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1tdQzi-0002hx-QV
- for qemu-devel@nongnu.org; Thu, 30 Jan 2025 04:37:56 -0500
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1tdRFL-0004yi-2U
+ for qemu-devel@nongnu.org; Thu, 30 Jan 2025 04:54:05 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1738229873;
+ s=mimecast20190719; t=1738230841;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=i3kUb7IthIj+r9ml4OdmnnEr1v35Pm+G+lAuErYtOpU=;
- b=E5jFFVtxP4Z4geCjli80UacN+eH9N2brGA3m31oXOGP6wilzokefTuTCRiPBil4wn2lbHL
- b0nQzZPtxKNpR6hFmDo3PcX+cNOyFJ7CO68ynymLuOOzi7Vv4s0UN+7gXlsOlhpnkgPmQ7
- jn+MwqUNdKpmKlKEbQ4TMZVHmleAk1Q=
-Received: from mail-qt1-f198.google.com (mail-qt1-f198.google.com
- [209.85.160.198]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=QhMLr9EqRWlucnkq5C4x8L76n74Szbyb+BRVb3qhOg0=;
+ b=D8PVqBGM/eW9LlacJnX7GVWQ/6p2Ahhdwevfmjk0JFbbPtn15YpHLeCItqMIO7NB0t+01I
+ afPYcHLM+8wSK8WpFNyx6ku2rHMq9X/DKYejpgwmZwyQpc9ct7+5k1lRmAUDhyjmaSeHxj
+ ZhZIxklRJ+PnEZFVpykG8ZNPPGjKqS4=
+Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com
+ [209.85.128.71]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-482-QORhWOsNOOOvidBuI5hl_A-1; Thu, 30 Jan 2025 04:37:51 -0500
-X-MC-Unique: QORhWOsNOOOvidBuI5hl_A-1
-X-Mimecast-MFC-AGG-ID: QORhWOsNOOOvidBuI5hl_A
-Received: by mail-qt1-f198.google.com with SMTP id
- d75a77b69052e-467b19b5641so12050791cf.3
- for <qemu-devel@nongnu.org>; Thu, 30 Jan 2025 01:37:51 -0800 (PST)
+ us-mta-324-TU6GxynFNt2BGvEbP37zYQ-1; Thu, 30 Jan 2025 04:53:59 -0500
+X-MC-Unique: TU6GxynFNt2BGvEbP37zYQ-1
+X-Mimecast-MFC-AGG-ID: TU6GxynFNt2BGvEbP37zYQ
+Received: by mail-wm1-f71.google.com with SMTP id
+ 5b1f17b1804b1-43651b1ba8aso3758995e9.1
+ for <qemu-devel@nongnu.org>; Thu, 30 Jan 2025 01:53:59 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1738229870; x=1738834670;
- h=content-transfer-encoding:in-reply-to:autocrypt:content-language
- :from:references:cc:to:subject:user-agent:mime-version:date
- :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=i3kUb7IthIj+r9ml4OdmnnEr1v35Pm+G+lAuErYtOpU=;
- b=O8u9Mtc6UM2L696Yn5hVAL4Df86GOtqI/gLHazsxX/v5a6EI1qWJLr5dpvzJ1kr8oQ
- tocJlsm5ggdSsA6qik7akTzjG6cs1dL/mpG0cG6QSVcth7NfcZnrqxNS/tolOJ4YHxDv
- 8XXp8K5uoU5TTtwbbe9awA7yCV8lcnlaNabNuMmX1/UcH4sQXUTBXxNPPl+xqMvBnBpq
- amyG1GsBhoVZj6DZduT8jWhAZm98dBJ7tMqhTv0HFJVWqGoEo7HC2Ile267pxIPlj6Se
- QxFSQ34qw8ed6SDaqlu+iofMA11/KXBZs43pR0Xl1XjogN6w3HPoyZ04HAl4lej43ilt
- UsQg==
+ d=1e100.net; s=20230601; t=1738230838; x=1738835638;
+ h=content-transfer-encoding:in-reply-to:autocrypt:from
+ :content-language:references:cc:to:subject:user-agent:mime-version
+ :date:message-id:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=QhMLr9EqRWlucnkq5C4x8L76n74Szbyb+BRVb3qhOg0=;
+ b=k0m5UFCXZIJpBmSrrxkCKkG/sexyqo+1rF9iLbuT6rxRXn5OEGhuV7YAXy0LiVS/a0
+ LpknGp7eHCSYHcRGiwFjPry65ESLpmKZpDJSbM7+YGHNQr+bO2XEuiuc4YXQKpZAzMyU
+ oXNSDySAsThRy3/bnfXqxv+bpnT3Sd3xDhltkwWVCBhZ8OBZEqWrW6LqM2iDijzkq7YV
+ /4HK9peYVGpRy2ZkU/GY8Lz43XY/h+62Tewkn2EKd/9Ly5eo4sUzZW7QL0KHU0IuoTtk
+ UO6Ab+mP5EVhmcXmfiPWcqr5EXqY0QEeIhZEAuDXEKtLzms9aS1WIPYpYe6jF/BGjG6C
+ 3ItQ==
 X-Forwarded-Encrypted: i=1;
- AJvYcCUTAxGoaKSOCcZEPenvNsL4tpNaM87MORtlHd9jhYYwAO81zcA4xlCgREVoS2lc5Hz9ax+tTxASCdOz@nongnu.org
-X-Gm-Message-State: AOJu0YyWczzBTf6i0uZtvWXZW37Ag7KlCH4g8KhEfwV2kJAuwFebgSJN
- c2nSZjt8Koypb/2Ndbmhq40mEhxIvziyqZUJgp3N72Cb4x1DAksqcncdItFL4+i7eND84ipP5hj
- xpoaCbish2EBw7JL8i8V4BoNv3Eq1qGXE92I2MC8bWOpYaHs6dVU8
-X-Gm-Gg: ASbGncvjPCJxMXN/an5XKOLtBXW1vu6SGxWoVbd/MaVI6CYSATUDSEc9/scyqWv5n7v
- YCmByxR5MUV2ikc7wss5pmZdM7weAQYTLHIWSydvwfMKbdN4Rb77dxUAVbZvUR/CkDol2rKWAhv
- PaGWvZMT/pbpxTmuHsYjX6xL6KA5iTeY8SJClWyuzwiA2g7afHXdREdxQVLTKVjI7U4eCyYTxaM
- rJ0NHpRg+CtYW2ezzf3TfN/i2PrOVutzPD8IUd5UcVaNVBIkF1/owaqVR1gSUNRrkszT9YzoPLS
- x0sW9o5Rw70K9Mdqe14CnCCOJe0o9MRRdIFU
-X-Received: by 2002:a05:622a:544f:b0:467:867b:ff57 with SMTP id
- d75a77b69052e-46fd0ba140dmr109146531cf.44.1738229870693; 
- Thu, 30 Jan 2025 01:37:50 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IGjHHezs6gQMc8rfrL9jr8F7sZkHmYtp7N/YAI3tBTjP1RMC4THe1QNO/rjRdDhDWG3/DjcRQ==
-X-Received: by 2002:a05:622a:544f:b0:467:867b:ff57 with SMTP id
- d75a77b69052e-46fd0ba140dmr109146311cf.44.1738229870346; 
- Thu, 30 Jan 2025 01:37:50 -0800 (PST)
-Received: from [192.168.0.7] (ip-109-42-50-234.web.vodafone.de.
- [109.42.50.234]) by smtp.gmail.com with ESMTPSA id
- d75a77b69052e-46fe2fe0a21sm2764181cf.32.2025.01.30.01.37.47
+ AJvYcCVvUUWJFloZbR3kO4yFaEns0gq6vcKdKvfwWH4+J0wRT/DuV7y55PHlnwLwbkWYRynqmo+YmS0U2imY@nongnu.org
+X-Gm-Message-State: AOJu0Yyq7hzW5GZnzVrJDOEzdMcd78qH6dg9ITHol/VchOxaobQoL1IW
+ od/eUpC4e8DfGjyNbD/MC9hl1C28odxGLqPRJcQFb5D8WnI/BLBYhCVXt1qRUlC6bKq3FjcBaLN
+ LSNU3x6cX51TlMJfgWYEGl5Wl352//ugtU7RgUEoAcf4w1TeMHGWz
+X-Gm-Gg: ASbGncvDwiyay3MpHfYx62r8eHbpWHhCEmtfus6Flb8X2qazjBc8xgu5vsitIyX1cSf
+ D4BeDltmVubqkwTpvkEQ98nO8ooI0oNDZ7I8aAoM5ujfgwufGyGnkALlfQfWdLmA81XAW+3EZHl
+ t8MkM4GJT0he8i8KnWHqbJGkGVbSNRuXr0jSms9aJSnawmZ7ZzGXGWUS1Ll0mnOTY7bJE/qgAIw
+ 3keZFRHbcuug3zCZzpLUchJyWQB3voB+CreE/nmlUDlblHcoJxgtryBN9wCclvVbnz2xgzxxy5z
+ OFRdB0ADnOQ20Zbylc1EBnLILLjHhWdBKgd5eL+pMOk=
+X-Received: by 2002:a05:600c:5248:b0:436:1b81:b65c with SMTP id
+ 5b1f17b1804b1-438dc3cbf74mr60916385e9.15.1738230837916; 
+ Thu, 30 Jan 2025 01:53:57 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IGrDU9dvlj9SXHtWEYOGQhiUvJVNCO+KQsrWcftqX5pcp/BebGs0hBsPzvfD5eUIpg/stl26A==
+X-Received: by 2002:a05:600c:5248:b0:436:1b81:b65c with SMTP id
+ 5b1f17b1804b1-438dc3cbf74mr60916015e9.15.1738230837474; 
+ Thu, 30 Jan 2025 01:53:57 -0800 (PST)
+Received: from ?IPV6:2a01:e0a:280:24f0:9db0:474c:ff43:9f5c?
+ ([2a01:e0a:280:24f0:9db0:474c:ff43:9f5c])
+ by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-38c5c1cf53asm1426783f8f.87.2025.01.30.01.53.56
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 30 Jan 2025 01:37:49 -0800 (PST)
-Message-ID: <33dee683-ab7b-4c3d-8c57-bc9bd2489858@redhat.com>
-Date: Thu, 30 Jan 2025 10:37:46 +0100
+ Thu, 30 Jan 2025 01:53:56 -0800 (PST)
+Message-ID: <e96fc587-6317-4e6c-8e31-46baa64ccbc3@redhat.com>
+Date: Thu, 30 Jan 2025 10:53:56 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
 Subject: Re: [PATCH v2] tests/functional: Add a ppc64 mac99 test
-To: BALATON Zoltan <balaton@eik.bme.hu>, =?UTF-8?Q?C=C3=A9dric_Le_Goater?=
- <clg@redhat.com>
+To: Thomas Huth <thuth@redhat.com>, BALATON Zoltan <balaton@eik.bme.hu>
 Cc: qemu-ppc@nongnu.org, Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>,
  qemu-devel@nongnu.org
 References: <20250128212145.1186617-1-clg@redhat.com>
  <390bd0cd-c918-33e5-7647-3662944d3066@eik.bme.hu>
-From: Thomas Huth <thuth@redhat.com>
-Content-Language: en-US
-Autocrypt: addr=thuth@redhat.com; keydata=
- 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
-In-Reply-To: <390bd0cd-c918-33e5-7647-3662944d3066@eik.bme.hu>
+ <33dee683-ab7b-4c3d-8c57-bc9bd2489858@redhat.com>
+Content-Language: en-US, fr
+From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
+Autocrypt: addr=clg@redhat.com; keydata=
+ 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
+ uVKe8BVz4atMOoktmt0GWTOC8P4=
+In-Reply-To: <33dee683-ab7b-4c3d-8c57-bc9bd2489858@redhat.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=thuth@redhat.com;
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=clg@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -33
 X-Spam_score: -3.4
@@ -155,130 +157,137 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 29/01/2025 17.58, BALATON Zoltan wrote:
-> On Tue, 28 Jan 2025, Cédric Le Goater wrote:
->> The test sequence boots from disk a mac99 machine in 64-bit mode, in
->> which case the CPU is a PPC 970.
+On 1/30/25 10:37, Thomas Huth wrote:
+> On 29/01/2025 17.58, BALATON Zoltan wrote:
+>> On Tue, 28 Jan 2025, Cédric Le Goater wrote:
+>>> The test sequence boots from disk a mac99 machine in 64-bit mode, in
+>>> which case the CPU is a PPC 970.
+>>>
+>>> The buildroot rootfs is built with config :
+>>>
+>>> BR2_powerpc64=y
+>>> BR2_powerpc_970=y
+>>>
+>>> and the kernel with the g5 deconfig.
+>>>
+>>> Reviewed-by: Thomas Huth <thuth@redhat.com>
+>>> Signed-off-by: Cédric Le Goater <clg@redhat.com>
+>>> ---
+>>>
+>>> Changes in v2:
+>>>
+>>> - Moved self.set_machine('mac99') at the top
+>>> - Dropped sungem nic on the command line
+>>>
+>>> MAINTAINERS                          |  1 +
+>>> tests/functional/meson.build         |  2 ++
+>>> tests/functional/test_ppc64_mac99.py | 43 ++++++++++++++++++++++++++++
+>>> 3 files changed, 46 insertions(+)
+>>> create mode 100755 tests/functional/test_ppc64_mac99.py
+>>>
+>>> diff --git a/MAINTAINERS b/MAINTAINERS
+>>> index 3a2291d17d7e..ebf249173f00 100644
+>>> --- a/MAINTAINERS
+>>> +++ b/MAINTAINERS
+>>> @@ -1446,6 +1446,7 @@ F: include/hw/pci-host/uninorth.h
+>>> F: include/hw/input/adb*
+>>> F: pc-bios/qemu_vga.ndrv
+>>> F: tests/functional/test_ppc_mac.py
+>>> +F: tests/functional/test_ppc64_mac99.py
+>>>
+>>> Old World (g3beige)
+>>> M: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
+>>> diff --git a/tests/functional/meson.build b/tests/functional/meson.build
+>>> index 01a87b03e553..821a0a7c49ac 100644
+>>> --- a/tests/functional/meson.build
+>>> +++ b/tests/functional/meson.build
+>>> @@ -41,6 +41,7 @@ test_timeouts = {
+>>>   'ppc64_powernv' : 480,
+>>>   'ppc64_pseries' : 480,
+>>>   'ppc64_tuxrun' : 420,
+>>> +  'ppc64_mac99' : 120,
+>>>   'riscv64_tuxrun' : 120,
+>>>   's390x_ccw_virtio' : 420,
+>>>   'sh4_tuxrun' : 240,
+>>> @@ -181,6 +182,7 @@ tests_ppc64_system_thorough = [
+>>>   'ppc64_powernv',
+>>>   'ppc64_pseries',
+>>>   'ppc64_tuxrun',
+>>> +  'ppc64_mac99',
+>>> ]
+>>>
+>>> tests_riscv32_system_quick = [
+>>> diff --git a/tests/functional/test_ppc64_mac99.py b/tests/functional/ test_ppc64_mac99.py
+>>> new file mode 100755
+>>> index 000000000000..9aec7c020748
+>>> --- /dev/null
+>>> +++ b/tests/functional/test_ppc64_mac99.py
+>>> @@ -0,0 +1,43 @@
+>>> +#!/usr/bin/env python3
+>>> +#
+>>> +# Functional test that boots a mac99 machine with a PPC970 CPU
+>>> +#
+>>> +# SPDX-License-Identifier: GPL-2.0-or-later
+>>> +
+>>> +from qemu_test import LinuxKernelTest, Asset
+>>> +from qemu_test import exec_command_and_wait_for_pattern
+>>> +
+>>> +class mac99Test(LinuxKernelTest):
+>>> +
+>>> +    ASSET_BR2_MAC99_LINUX = Asset(
+>>> +        'https://github.com/legoater/qemu-ppc-boot/raw/refs/heads/main/ buildroot/qemu_ppc64_mac99-2023.11-8-gdcd9f0f6eb-20240105/vmlinux',
+>>> +        'd59307437e4365f2cced0bbd1b04949f7397b282ef349b7cafd894d74aadfbff')
+>>> +
+>>> +    ASSET_BR2_MAC99_ROOTFS = Asset(
+>>> +        'https://github.com/legoater/qemu-ppc-boot/raw/refs/heads/main// buildroot/qemu_ppc64_mac99-2023.11-8-gdcd9f0f6eb-20240105/rootfs.ext2',
+>>> +        'bbd5fd8af62f580bc4e585f326fe584e22856572633a8333178ea6d4ed4955a4')
+>>> +
+>>> +    def test_ppc64_mac99_buildroot(self):
+>>> +        self.set_machine('mac99')
+>>> +
+>>> +        linux_path = self.ASSET_BR2_MAC99_LINUX.fetch()
+>>> +        rootfs_path = self.ASSET_BR2_MAC99_ROOTFS.fetch()
+>>> +
+>>> +        self.vm.set_console()
+>>> +
+>>> +        self.vm.add_args('-kernel', linux_path,
+>>> +                         '-append', 'root=/dev/sda',
+>>> +                         '-drive', f'file={rootfs_path},format=raw',
+>>> +                         '-snapshot', '-nographic') # -nographic to get a console
 >>
->> The buildroot rootfs is built with config :
->>
->> BR2_powerpc64=y
->> BR2_powerpc_970=y
->>
->> and the kernel with the g5 deconfig.
->>
->> Reviewed-by: Thomas Huth <thuth@redhat.com>
->> Signed-off-by: Cédric Le Goater <clg@redhat.com>
->> ---
->>
->> Changes in v2:
->>
->> - Moved self.set_machine('mac99') at the top
->> - Dropped sungem nic on the command line
->>
->> MAINTAINERS                          |  1 +
->> tests/functional/meson.build         |  2 ++
->> tests/functional/test_ppc64_mac99.py | 43 ++++++++++++++++++++++++++++
->> 3 files changed, 46 insertions(+)
->> create mode 100755 tests/functional/test_ppc64_mac99.py
->>
->> diff --git a/MAINTAINERS b/MAINTAINERS
->> index 3a2291d17d7e..ebf249173f00 100644
->> --- a/MAINTAINERS
->> +++ b/MAINTAINERS
->> @@ -1446,6 +1446,7 @@ F: include/hw/pci-host/uninorth.h
->> F: include/hw/input/adb*
->> F: pc-bios/qemu_vga.ndrv
->> F: tests/functional/test_ppc_mac.py
->> +F: tests/functional/test_ppc64_mac99.py
->>
->> Old World (g3beige)
->> M: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
->> diff --git a/tests/functional/meson.build b/tests/functional/meson.build
->> index 01a87b03e553..821a0a7c49ac 100644
->> --- a/tests/functional/meson.build
->> +++ b/tests/functional/meson.build
->> @@ -41,6 +41,7 @@ test_timeouts = {
->>   'ppc64_powernv' : 480,
->>   'ppc64_pseries' : 480,
->>   'ppc64_tuxrun' : 420,
->> +  'ppc64_mac99' : 120,
->>   'riscv64_tuxrun' : 120,
->>   's390x_ccw_virtio' : 420,
->>   'sh4_tuxrun' : 240,
->> @@ -181,6 +182,7 @@ tests_ppc64_system_thorough = [
->>   'ppc64_powernv',
->>   'ppc64_pseries',
->>   'ppc64_tuxrun',
->> +  'ppc64_mac99',
->> ]
->>
->> tests_riscv32_system_quick = [
->> diff --git a/tests/functional/test_ppc64_mac99.py b/tests/functional/ 
->> test_ppc64_mac99.py
->> new file mode 100755
->> index 000000000000..9aec7c020748
->> --- /dev/null
->> +++ b/tests/functional/test_ppc64_mac99.py
->> @@ -0,0 +1,43 @@
->> +#!/usr/bin/env python3
->> +#
->> +# Functional test that boots a mac99 machine with a PPC970 CPU
->> +#
->> +# SPDX-License-Identifier: GPL-2.0-or-later
->> +
->> +from qemu_test import LinuxKernelTest, Asset
->> +from qemu_test import exec_command_and_wait_for_pattern
->> +
->> +class mac99Test(LinuxKernelTest):
->> +
->> +    ASSET_BR2_MAC99_LINUX = Asset(
->> +        'https://github.com/legoater/qemu-ppc-boot/raw/refs/heads/main/ 
->> buildroot/qemu_ppc64_mac99-2023.11-8-gdcd9f0f6eb-20240105/vmlinux',
->> +        'd59307437e4365f2cced0bbd1b04949f7397b282ef349b7cafd894d74aadfbff')
->> +
->> +    ASSET_BR2_MAC99_ROOTFS = Asset(
->> +        'https://github.com/legoater/qemu-ppc-boot/raw/refs/heads/main// 
->> buildroot/qemu_ppc64_mac99-2023.11-8-gdcd9f0f6eb-20240105/rootfs.ext2',
->> +        'bbd5fd8af62f580bc4e585f326fe584e22856572633a8333178ea6d4ed4955a4')
->> +
->> +    def test_ppc64_mac99_buildroot(self):
->> +        self.set_machine('mac99')
->> +
->> +        linux_path = self.ASSET_BR2_MAC99_LINUX.fetch()
->> +        rootfs_path = self.ASSET_BR2_MAC99_ROOTFS.fetch()
->> +
->> +        self.vm.set_console()
->> +
->> +        self.vm.add_args('-kernel', linux_path,
->> +                         '-append', 'root=/dev/sda',
->> +                         '-drive', f'file={rootfs_path},format=raw',
->> +                         '-snapshot', '-nographic') # -nographic to get a 
->> console
+>> Nit: # -nographic for serial console or get a console on serial
 > 
-> Nit: # -nographic for serial console or get a console on serial
+> Ok, but the line is getting too long ... I'll squash this when
+> picking up the patch (unless there are any objections):
+> 
+> diff --git a/tests/functional/test_ppc64_mac99.py b/tests/functional/test_ppc64_mac99.py
+> index 9aec7c0207..dfd9c01371 100755
+> --- a/tests/functional/test_ppc64_mac99.py
+> +++ b/tests/functional/test_ppc64_mac99.py
+> @@ -25,10 +25,11 @@ def test_ppc64_mac99_buildroot(self):
+> 
+>           self.vm.set_console()
+> 
+> +        # Note: We need '-nographic' to get a serial console
+>           self.vm.add_args('-kernel', linux_path,
+>                            '-append', 'root=/dev/sda',
+>                            '-drive', f'file={rootfs_path},format=raw',
+> -                         '-snapshot', '-nographic') # -nographic to get a console
+> +                         '-snapshot', '-nographic')
+>           self.vm.launch()
+> 
+>           self.wait_for_console_pattern('>> OpenBIOS')
+> 
+>   Thomas
+> 
 
-Ok, but the line is getting too long ... I'll squash this when
-picking up the patch (unless there are any objections):
+LGTM,
 
-diff --git a/tests/functional/test_ppc64_mac99.py b/tests/functional/test_ppc64_mac99.py
-index 9aec7c0207..dfd9c01371 100755
---- a/tests/functional/test_ppc64_mac99.py
-+++ b/tests/functional/test_ppc64_mac99.py
-@@ -25,10 +25,11 @@ def test_ppc64_mac99_buildroot(self):
-  
-          self.vm.set_console()
-  
-+        # Note: We need '-nographic' to get a serial console
-          self.vm.add_args('-kernel', linux_path,
-                           '-append', 'root=/dev/sda',
-                           '-drive', f'file={rootfs_path},format=raw',
--                         '-snapshot', '-nographic') # -nographic to get a console
-+                         '-snapshot', '-nographic')
-          self.vm.launch()
-  
-          self.wait_for_console_pattern('>> OpenBIOS')
 
-  Thomas
+Thanks,
+
+C.
+
+
 
 
