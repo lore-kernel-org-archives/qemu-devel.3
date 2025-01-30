@@ -4,72 +4,148 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 00E2EC0218F
-	for <qemu-devel@archiver.kernel.org>; Thu, 30 Jan 2025 16:42:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5BB9FC0218F
+	for <qemu-devel@archiver.kernel.org>; Thu, 30 Jan 2025 16:52:07 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tdXc8-00061W-GC; Thu, 30 Jan 2025 11:42:00 -0500
+	id 1tdXl9-00017L-Qf; Thu, 30 Jan 2025 11:51:19 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1tdXc3-0005xU-SV
- for qemu-devel@nongnu.org; Thu, 30 Jan 2025 11:41:56 -0500
+ (Exim 4.90_1) (envelope-from <david@redhat.com>) id 1tdXl8-00017C-7o
+ for qemu-devel@nongnu.org; Thu, 30 Jan 2025 11:51:18 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1tdXc1-0005Xs-I2
- for qemu-devel@nongnu.org; Thu, 30 Jan 2025 11:41:55 -0500
+ (Exim 4.90_1) (envelope-from <david@redhat.com>) id 1tdXl6-0007Bd-Mc
+ for qemu-devel@nongnu.org; Thu, 30 Jan 2025 11:51:18 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1738255310;
- h=from:from:reply-to:reply-to:subject:subject:date:date:
- message-id:message-id:to:to:cc:cc:mime-version:mime-version:
- content-type:content-type:
+ s=mimecast20190719; t=1738255874;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=3arpfGjz6zW/uQSYzu6lLVfacbd5PeZ0F2jl58xZJ9I=;
- b=XiB85PDsJ78cfQ70Ai6pBH0pjL+5W5LINUPYFoNcD2gl5PfF4GecxTcza5TqWcmJv0gHrg
- SwyEHhfD9A7hFda9UBBXezYHsFK4wAKNloWFww3tuK+XzADU3nTznt6BxEbMoyW7JNDJv9
- eaVjhfHyKs2WudsSW0P1XxvpkPqD/+w=
-Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-512-s5c8dsQbO0KASBhwAG12-g-1; Thu,
- 30 Jan 2025 11:41:47 -0500
-X-MC-Unique: s5c8dsQbO0KASBhwAG12-g-1
-X-Mimecast-MFC-AGG-ID: s5c8dsQbO0KASBhwAG12-g
-Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 4B2D01801F1F; Thu, 30 Jan 2025 16:41:45 +0000 (UTC)
-Received: from redhat.com (unknown [10.42.28.184])
- by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 35AAE18008D8; Thu, 30 Jan 2025 16:41:39 +0000 (UTC)
-Date: Thu, 30 Jan 2025 16:41:36 +0000
-From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
-To: Eric Auger <eric.auger@redhat.com>
-Cc: Shameer Kolothum <shameerali.kolothum.thodi@huawei.com>,
- qemu-arm@nongnu.org, qemu-devel@nongnu.org,
- peter.maydell@linaro.org, jgg@nvidia.com, nicolinc@nvidia.com,
- ddutile@redhat.com, linuxarm@huawei.com, wangzhou1@hisilicon.com,
- jiangkunkun@huawei.com, jonathan.cameron@huawei.com,
- zhangfei.gao@linaro.org, Andrea Bolognani <abologna@redhat.com>
-Subject: Re: [RFC PATCH 0/5] hw/arm/virt: Add support for user-creatable
- nested SMMUv3
-Message-ID: <Z5urwACWPO7CiQYN@redhat.com>
-References: <20241108125242.60136-1-shameerali.kolothum.thodi@huawei.com>
- <8ce24003-66ad-43da-b68a-14686758a85a@redhat.com>
+ in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+ bh=vSQbe4vosYMcB5B7Ti4t8tkhw8boR1ASmLvUEX8zDMk=;
+ b=ZpNwecl73VeZa3Aye6yXLDQ44TE2ZLsW2xCOSsgRYjYO8geSXilh8OcDyM/roJRccFCmS1
+ xh8ApFDItrEKm/UEZvqCtcjkuH9/933hoPxo/RLJ9mab5XlXwepULHhliGdLLL8yGR+d3H
+ ooG7DcmeZsXL7s5U+zSqgGOHhRn/qBE=
+Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com
+ [209.85.128.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-374-HjJ1NPBKNp6rQV1kAcCL-g-1; Thu, 30 Jan 2025 11:51:12 -0500
+X-MC-Unique: HjJ1NPBKNp6rQV1kAcCL-g-1
+X-Mimecast-MFC-AGG-ID: HjJ1NPBKNp6rQV1kAcCL-g
+Received: by mail-wm1-f71.google.com with SMTP id
+ 5b1f17b1804b1-43646b453bcso5242835e9.3
+ for <qemu-devel@nongnu.org>; Thu, 30 Jan 2025 08:51:11 -0800 (PST)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1738255871; x=1738860671;
+ h=content-transfer-encoding:in-reply-to:organization:autocrypt
+ :content-language:from:references:cc:to:subject:user-agent
+ :mime-version:date:message-id:x-gm-message-state:from:to:cc:subject
+ :date:message-id:reply-to;
+ bh=vSQbe4vosYMcB5B7Ti4t8tkhw8boR1ASmLvUEX8zDMk=;
+ b=IzXz0Z3LaepnP6JYTFjn9KYTXxcydZODvRSRoDJdf7tS8sfpiQDkg+/9ByvHrgRaVJ
+ bLGhRdYJX5rmCW2wsRsKv/AmTg+DEPttsDHGxk5ul5ZgloXIQM7QyA9jXZTIDJcIraOk
+ Z/dB83K5LZqc55ecYlthgrj2jyHyQz1nnOIIiQN38JGSBm4+5PeX7xH4DnXNomsADbIf
+ A7Hvvc6PwcUhMZ3u7Q9eDwxdLJVEuDlfTC2fhnyo8XP8V7KzSioArM5fFjUkeML9tI1h
+ sPc6iJBW7V/rMqeinQWf+o6tPA2ZtyQraNnqxesOucepBe4TNEcCACDoyNLfMoB90Xil
+ za8g==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCUQrxzv7RgFPC/hXElWE2GGjCmz6wlBpIBLgdnzRSVeBh3MslBCIN/eWku+hWlZQA8FcxyZIaxhVAA+@nongnu.org
+X-Gm-Message-State: AOJu0YypXWL9C4ESGaw9oN/PRG1SamR4vz3grFAWKOUYoIpj0xOBvttC
+ bFjAXWaQHgxFta9bWLODM4gbRUyZWTdaARbCEccpE2mg8+wRptDAP+2NTpln5zOzr7M+XFmvVB/
+ mm3/6rECTbd+zi/VpyCQfvPOu29BITNnM7NxdFVNxsRiKtbApwVoL
+X-Gm-Gg: ASbGncvjb6o/LvRgx/+PaouCfBMsW2KT9Oh2R+vOQ3ypfGg4SFlQ26C9i2GEJyfTomW
+ YsmGAeY+aCBIyyStkBilC7XM8XKxckWzCSYd/QHPRoXIiWfK9xy0ymYCmSGOH88LszLkULFoy1y
+ U2G2ZnD4JxzPL5YtqUmW7yNYVieU46ix5uuK6f3/7WfUGTmLIRwe7C7zwxQtHp1actAYcFhr74F
+ IhqC3x3pmb0G04CKxwjpC9Jt4ToFYFLxpKCz1GVggl98qkdtb0C0pt1m22dVW1u+r6TYaiMo94h
+ 8/Cpbr0Wi9AY1lwXFLYnya8k555dV28+bcDEWIu0Cs/2NJ+i0l4oxlzTf++UaI4JG4gDnnwHj4m
+ 2qdRc8VSxLoca19+41l/OWqIThVK6FWec
+X-Received: by 2002:a05:600c:4f08:b0:438:da66:fdf9 with SMTP id
+ 5b1f17b1804b1-438dc3c87a5mr70162975e9.18.1738255870901; 
+ Thu, 30 Jan 2025 08:51:10 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IE+YeKPmVzedXw+G5H15HnlT3K5Bk8St8bibSxXEtr+ee9TSYkrjNyM+ePPJ1ZPHWd0MzMKxQ==
+X-Received: by 2002:a05:600c:4f08:b0:438:da66:fdf9 with SMTP id
+ 5b1f17b1804b1-438dc3c87a5mr70162785e9.18.1738255870554; 
+ Thu, 30 Jan 2025 08:51:10 -0800 (PST)
+Received: from ?IPV6:2003:cb:c713:3b00:16ce:8f1c:dd50:90fb?
+ (p200300cbc7133b0016ce8f1cdd5090fb.dip0.t-ipconnect.de.
+ [2003:cb:c713:3b00:16ce:8f1c:dd50:90fb])
+ by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-438e23d443esm29966775e9.1.2025.01.30.08.51.09
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Thu, 30 Jan 2025 08:51:09 -0800 (PST)
+Message-ID: <3c126ed2-f7d5-49f8-98f6-be28238f1e78@redhat.com>
+Date: Thu, 30 Jan 2025 17:51:08 +0100
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <8ce24003-66ad-43da-b68a-14686758a85a@redhat.com>
-User-Agent: Mutt/2.2.13 (2024-03-09)
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=berrange@redhat.com;
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 2/7] guest_memfd: Introduce an object to manage the
+ guest-memfd with RamDiscardManager
+To: Peter Xu <peterx@redhat.com>, Xu Yilun <yilun.xu@linux.intel.com>
+Cc: Alexey Kardashevskiy <aik@amd.com>, Chenyi Qiang
+ <chenyi.qiang@intel.com>, Paolo Bonzini <pbonzini@redhat.com>,
+ =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Michael Roth <michael.roth@amd.com>, qemu-devel@nongnu.org,
+ kvm@vger.kernel.org, Williams Dan J <dan.j.williams@intel.com>,
+ Peng Chao P <chao.p.peng@intel.com>, Gao Chao <chao.gao@intel.com>,
+ Xu Yilun <yilun.xu@intel.com>
+References: <ZnmfUelBs3Cm0ZHd@yilunxu-OptiPlex-7050> <Z4-6u5_9NChu_KZq@x1n>
+ <95a14f7d-4782-40b3-a55d-7cf67b911bbe@amd.com>
+ <Z5C9SzXxX7M1DBE3@yilunxu-OptiPlex-7050> <Z5EgFaWIyjIiOZnv@x1n>
+ <Z5INAQjxyYhwyc+1@yilunxu-OptiPlex-7050> <Z5Jylb73kDJ6HTEZ@x1n>
+ <Z5NhwW/IXaLfvjvb@yilunxu-OptiPlex-7050> <Z5O4BSCjlhhu4rrw@x1n>
+ <Z5WtRYSf7cjqITXH@yilunxu-OptiPlex-7050> <Z5uom-NTtekV9Crd@x1.local>
+From: David Hildenbrand <david@redhat.com>
+Content-Language: en-US
+Autocrypt: addr=david@redhat.com; keydata=
+ xsFNBFXLn5EBEAC+zYvAFJxCBY9Tr1xZgcESmxVNI/0ffzE/ZQOiHJl6mGkmA1R7/uUpiCjJ
+ dBrn+lhhOYjjNefFQou6478faXE6o2AhmebqT4KiQoUQFV4R7y1KMEKoSyy8hQaK1umALTdL
+ QZLQMzNE74ap+GDK0wnacPQFpcG1AE9RMq3aeErY5tujekBS32jfC/7AnH7I0v1v1TbbK3Gp
+ XNeiN4QroO+5qaSr0ID2sz5jtBLRb15RMre27E1ImpaIv2Jw8NJgW0k/D1RyKCwaTsgRdwuK
+ Kx/Y91XuSBdz0uOyU/S8kM1+ag0wvsGlpBVxRR/xw/E8M7TEwuCZQArqqTCmkG6HGcXFT0V9
+ PXFNNgV5jXMQRwU0O/ztJIQqsE5LsUomE//bLwzj9IVsaQpKDqW6TAPjcdBDPLHvriq7kGjt
+ WhVhdl0qEYB8lkBEU7V2Yb+SYhmhpDrti9Fq1EsmhiHSkxJcGREoMK/63r9WLZYI3+4W2rAc
+ UucZa4OT27U5ZISjNg3Ev0rxU5UH2/pT4wJCfxwocmqaRr6UYmrtZmND89X0KigoFD/XSeVv
+ jwBRNjPAubK9/k5NoRrYqztM9W6sJqrH8+UWZ1Idd/DdmogJh0gNC0+N42Za9yBRURfIdKSb
+ B3JfpUqcWwE7vUaYrHG1nw54pLUoPG6sAA7Mehl3nd4pZUALHwARAQABzSREYXZpZCBIaWxk
+ ZW5icmFuZCA8ZGF2aWRAcmVkaGF0LmNvbT7CwZgEEwEIAEICGwMGCwkIBwMCBhUIAgkKCwQW
+ AgMBAh4BAheAAhkBFiEEG9nKrXNcTDpGDfzKTd4Q9wD/g1oFAl8Ox4kFCRKpKXgACgkQTd4Q
+ 9wD/g1oHcA//a6Tj7SBNjFNM1iNhWUo1lxAja0lpSodSnB2g4FCZ4R61SBR4l/psBL73xktp
+ rDHrx4aSpwkRP6Epu6mLvhlfjmkRG4OynJ5HG1gfv7RJJfnUdUM1z5kdS8JBrOhMJS2c/gPf
+ wv1TGRq2XdMPnfY2o0CxRqpcLkx4vBODvJGl2mQyJF/gPepdDfcT8/PY9BJ7FL6Hrq1gnAo4
+ 3Iv9qV0JiT2wmZciNyYQhmA1V6dyTRiQ4YAc31zOo2IM+xisPzeSHgw3ONY/XhYvfZ9r7W1l
+ pNQdc2G+o4Di9NPFHQQhDw3YTRR1opJaTlRDzxYxzU6ZnUUBghxt9cwUWTpfCktkMZiPSDGd
+ KgQBjnweV2jw9UOTxjb4LXqDjmSNkjDdQUOU69jGMUXgihvo4zhYcMX8F5gWdRtMR7DzW/YE
+ BgVcyxNkMIXoY1aYj6npHYiNQesQlqjU6azjbH70/SXKM5tNRplgW8TNprMDuntdvV9wNkFs
+ 9TyM02V5aWxFfI42+aivc4KEw69SE9KXwC7FSf5wXzuTot97N9Phj/Z3+jx443jo2NR34XgF
+ 89cct7wJMjOF7bBefo0fPPZQuIma0Zym71cP61OP/i11ahNye6HGKfxGCOcs5wW9kRQEk8P9
+ M/k2wt3mt/fCQnuP/mWutNPt95w9wSsUyATLmtNrwccz63XOwU0EVcufkQEQAOfX3n0g0fZz
+ Bgm/S2zF/kxQKCEKP8ID+Vz8sy2GpDvveBq4H2Y34XWsT1zLJdvqPI4af4ZSMxuerWjXbVWb
+ T6d4odQIG0fKx4F8NccDqbgHeZRNajXeeJ3R7gAzvWvQNLz4piHrO/B4tf8svmRBL0ZB5P5A
+ 2uhdwLU3NZuK22zpNn4is87BPWF8HhY0L5fafgDMOqnf4guJVJPYNPhUFzXUbPqOKOkL8ojk
+ CXxkOFHAbjstSK5Ca3fKquY3rdX3DNo+EL7FvAiw1mUtS+5GeYE+RMnDCsVFm/C7kY8c2d0G
+ NWkB9pJM5+mnIoFNxy7YBcldYATVeOHoY4LyaUWNnAvFYWp08dHWfZo9WCiJMuTfgtH9tc75
+ 7QanMVdPt6fDK8UUXIBLQ2TWr/sQKE9xtFuEmoQGlE1l6bGaDnnMLcYu+Asp3kDT0w4zYGsx
+ 5r6XQVRH4+5N6eHZiaeYtFOujp5n+pjBaQK7wUUjDilPQ5QMzIuCL4YjVoylWiBNknvQWBXS
+ lQCWmavOT9sttGQXdPCC5ynI+1ymZC1ORZKANLnRAb0NH/UCzcsstw2TAkFnMEbo9Zu9w7Kv
+ AxBQXWeXhJI9XQssfrf4Gusdqx8nPEpfOqCtbbwJMATbHyqLt7/oz/5deGuwxgb65pWIzufa
+ N7eop7uh+6bezi+rugUI+w6DABEBAAHCwXwEGAEIACYCGwwWIQQb2cqtc1xMOkYN/MpN3hD3
+ AP+DWgUCXw7HsgUJEqkpoQAKCRBN3hD3AP+DWrrpD/4qS3dyVRxDcDHIlmguXjC1Q5tZTwNB
+ boaBTPHSy/Nksu0eY7x6HfQJ3xajVH32Ms6t1trDQmPx2iP5+7iDsb7OKAb5eOS8h+BEBDeq
+ 3ecsQDv0fFJOA9ag5O3LLNk+3x3q7e0uo06XMaY7UHS341ozXUUI7wC7iKfoUTv03iO9El5f
+ XpNMx/YrIMduZ2+nd9Di7o5+KIwlb2mAB9sTNHdMrXesX8eBL6T9b+MZJk+mZuPxKNVfEQMQ
+ a5SxUEADIPQTPNvBewdeI80yeOCrN+Zzwy/Mrx9EPeu59Y5vSJOx/z6OUImD/GhX7Xvkt3kq
+ Er5KTrJz3++B6SH9pum9PuoE/k+nntJkNMmQpR4MCBaV/J9gIOPGodDKnjdng+mXliF3Ptu6
+ 3oxc2RCyGzTlxyMwuc2U5Q7KtUNTdDe8T0uE+9b8BLMVQDDfJjqY0VVqSUwImzTDLX9S4g/8
+ kC4HRcclk8hpyhY2jKGluZO0awwTIMgVEzmTyBphDg/Gx7dZU1Xf8HFuE+UZ5UDHDTnwgv7E
+ th6RC9+WrhDNspZ9fJjKWRbveQgUFCpe1sa77LAw+XFrKmBHXp9ZVIe90RMe2tRL06BGiRZr
+ jPrnvUsUUsjRoRNJjKKA/REq+sAnhkNPPZ/NNMjaZ5b8Tovi8C0tmxiCHaQYqj7G2rgnT0kt
+ WNyWQQ==
+Organization: Red Hat
+In-Reply-To: <Z5uom-NTtekV9Crd@x1.local>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=david@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -33
 X-Spam_score: -3.4
@@ -91,103 +167,40 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, Nov 18, 2024 at 11:50:46AM +0100, Eric Auger wrote:
-> Hi Shameer,
+On 30.01.25 17:28, Peter Xu wrote:
+> On Sun, Jan 26, 2025 at 11:34:29AM +0800, Xu Yilun wrote:
+>>> Definitely not suggesting to install an invalid pointer anywhere.  The
+>>> mapped pointer will still be valid for gmem for example, but the fault
+>>> isn't.  We need to differenciate two things (1) virtual address mapping,
+>>> then (2) permission and accesses on the folios / pages of the mapping.
+>>> Here I think it's okay if the host pointer is correctly mapped.
+>>>
+>>> For your private MMIO use case, my question is if there's no host pointer
+>>> to be mapped anyway, then what's the benefit to make the MR to be ram=on?
+>>> Can we simply make it a normal IO memory region?  The only benefit of a
+>>
+>> The guest access to normal IO memory region would be emulated by QEMU,
+>> while private assigned MMIO requires guest direct access via Secure EPT.
+>>
+>> Seems the existing code doesn't support guest direct access if
+>> mr->ram == false:
 > 
-> On 11/8/24 13:52, Shameer Kolothum wrote:
-> > Hi,
-> >
-> > This series adds initial support for a user-creatable "arm-smmuv3-nested"
-> > device to Qemu. At present the Qemu ARM SMMUv3 emulation is per machine
-> > and cannot support multiple SMMUv3s.
-> >
-> > In order to support vfio-pci dev assignment with vSMMUv3, the physical
-> > SMMUv3 has to be configured in nested mode. Having a pluggable
-> > "arm-smmuv3-nested" device enables us to have multiple vSMMUv3 for Guests
-> > running on a host with multiple physical SMMUv3s. A few benefits of doing
-> > this are,
-> >
-> > 1. Avoid invalidation broadcast or lookup in case devices are behind
-> >    multiple phys SMMUv3s.
-> > 2. Makes it easy to handle phys SMMUv3s that differ in features.
-> > 3. Easy to handle future requirements such as vCMDQ support.
-> >
-> > This is based on discussions/suggestions received for a previous RFC by
-> > Nicolin here[0].
-> >
-> > This series includes,
-> >  -Adds support for "arm-smmuv3-nested" device. At present only virt is
-> >   supported and is using _plug_cb() callback to hook the sysbus mem
-> >   and irq (Not sure this has any negative repercussions). Patch #3.
-> >  -Provides a way to associate a pci-bus(pxb-pcie) to the above device.
-> >   Patch #3.
-> >  -The last patch is adding RMR support for MSI doorbell handling. Patch #5.
-> >   This may change in future[1].
-> >
-> > This RFC is for initial discussion/test purposes only and includes patches
-> > that are only relevant for adding the "arm-smmuv3-nested" support. For the
-> > complete branch please find,
-> > https://github.com/hisilicon/qemu/tree/private-smmuv3-nested-dev-rfc-v1
-> >
-> > Few ToDos to note,
-> > 1. At present default-bus-bypass-iommu=on should be set when
-> >    arm-smmuv3-nested dev is specified. Otherwise you may get an IORT
-> >    related boot error.  Requires fixing.
-> > 2. Hot adding a device is not working at the moment. Looks like pcihp irq issue.
-> >    Could be a bug in IORT id mappings.
-> > 3. The above branch doesn't support vSVA yet.
-> >
-> > Hopefully this is helpful in taking the discussion forward. Please take a
-> > look and let me know.
-> >
-> > How to use it(Eg:):
-> >
-> > On a HiSilicon platform that has multiple physical SMMUv3s, the ACC ZIP VF
-> > devices and HNS VF devices are behind different SMMUv3s. So for a Guest,
-> > specify two smmuv3-nested devices each behind a pxb-pcie as below,
-> >
-> > ./qemu-system-aarch64 -machine virt,gic-version=3,default-bus-bypass-iommu=on \
-> > -enable-kvm -cpu host -m 4G -smp cpus=8,maxcpus=8 \
-> > -object iommufd,id=iommufd0 \
-> > -bios QEMU_EFI.fd \
-> > -kernel Image \
-> > -device virtio-blk-device,drive=fs \
-> > -drive if=none,file=rootfs.qcow2,id=fs \
-> > -device pxb-pcie,id=pcie.1,bus_nr=8,bus=pcie.0 \
-> > -device pcie-root-port,id=pcie.port1,bus=pcie.1,chassis=1 \
-> > -device arm-smmuv3-nested,id=smmuv1,pci-bus=pcie.1 \
-> > -device vfio-pci,host=0000:7d:02.1,bus=pcie.port1,iommufd=iommufd0 \
-> > -device pxb-pcie,id=pcie.2,bus_nr=16,bus=pcie.0 \
-> > -device pcie-root-port,id=pcie.port2,bus=pcie.2,chassis=2 \
-> > -device arm-smmuv3-nested,id=smmuv2,pci-bus=pcie.2 \
-> > -device vfio-pci,host=0000:75:00.1,bus=pcie.port2,iommufd=iommufd0 \
-> > -append "rdinit=init console=ttyAMA0 root=/dev/vda2 rw earlycon=pl011,0x9000000" \
-> > -device virtio-9p-pci,fsdev=p9fs2,mount_tag=p9,bus=pcie.0 \
-> > -fsdev local,id=p9fs2,path=p9root,security_model=mapped \
-> This kind of instantiation matches what I had in mind. It is
-> questionable whether the legacy SMMU shouldn't be migrated to that mode
-> too (instead of using a machine option setting), depending on Peter's
-> feedbacks and also comments from Libvirt guys. Adding Andrea in the loop.
+> Ah it's about this, ok.
+> 
+> I am not sure what's the best approach, but IMHO it's still better we stick
+> with host pointer always available when ram=on.  OTOH, VFIO private regions
+> may be able to provide a special mark somewhere, just like when romd_mode
+> was done previously as below (qemu 235e8982ad39), so that KVM should still
+> apply these MRs even if they're not RAM.
 
-Yeah, looking at the current config I'm pretty surprised to see it
-configured with '-machine virt,iommu=ssmuv3', where 'smmuv3' is a
-type name. This effectively a back-door reinvention of the '-device'
-arg.
+I agree.
 
-I think it'd make more sense to deprecate the 'iommu' property
-on the machine, and allow '-device ssmu3,pci-bus=pcie.0' to
-associate the IOMMU with the PCI root bus, so we have consistent
-approaches for all SMMU impls.
-
-With regards,
-Daniel
 -- 
-|: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
-|: https://libvirt.org         -o-            https://fstop138.berrange.com :|
-|: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
+Cheers,
+
+David / dhildenb
 
 
