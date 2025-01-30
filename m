@@ -4,67 +4,70 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9277FC0218A
-	for <qemu-devel@archiver.kernel.org>; Thu, 30 Jan 2025 13:45:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D505FC0218F
+	for <qemu-devel@archiver.kernel.org>; Thu, 30 Jan 2025 13:45:23 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tdUps-0000he-0k; Thu, 30 Jan 2025 08:44:00 -0500
+	id 1tdUpy-0000ke-2W; Thu, 30 Jan 2025 08:44:06 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1tdUpp-0000gq-KJ
- for qemu-devel@nongnu.org; Thu, 30 Jan 2025 08:43:57 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1tdUpw-0000jq-Em
+ for qemu-devel@nongnu.org; Thu, 30 Jan 2025 08:44:04 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1tdUpo-0003O7-5R
- for qemu-devel@nongnu.org; Thu, 30 Jan 2025 08:43:57 -0500
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1tdUpu-0003PF-V9
+ for qemu-devel@nongnu.org; Thu, 30 Jan 2025 08:44:04 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1738244633;
+ s=mimecast20190719; t=1738244642;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding;
- bh=6mI0ox+IW4A2wveybGPBBGrr0tC1d/ufYPPDScM5z98=;
- b=IO3DvLk+A2qHpDG+M4/NQVnTBljc38onGv7qKGeVrgqGDv0z2us+GjJ+8ejlRQSFlyq4j+
- uyUFwfDO8fW+OsYJS9SR7GOeXBs1bghJNnej5UFN3ory4oyJ7CFfiLXT8IHquOch8evcNH
- XFLwD9Aq8RZeX0YuTsnGCW+rdDk48rA=
-Received: from mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=LhYwL2n7iaraT9zUn/a63GO+IkCmCBew8nfdwsIZCkg=;
+ b=jBfH/daZb4DkosGZB7+Mr5Ptf5pHfi8zOXStKx8z8qnfju51kEvkwbG8ka5JOc4egM5RYt
+ UHlfTE2ICck37SBl+yUrFQ5fS8SFthxHbskWNl6BTh31Yq8584dRIGXMjfo+Kiyoh6MVnf
+ UNS/6qsTZOP49tEGDQsfyyemvlQb6Kk=
+Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-33-qeXmXs0CNHe3qVrdisvwWw-1; Thu,
- 30 Jan 2025 08:43:52 -0500
-X-MC-Unique: qeXmXs0CNHe3qVrdisvwWw-1
-X-Mimecast-MFC-AGG-ID: qeXmXs0CNHe3qVrdisvwWw
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-404-84Dtiu2wNemYculPZyky3Q-1; Thu,
+ 30 Jan 2025 08:44:00 -0500
+X-MC-Unique: 84Dtiu2wNemYculPZyky3Q-1
+X-Mimecast-MFC-AGG-ID: 84Dtiu2wNemYculPZyky3Q
 Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 73B7219560A3
- for <qemu-devel@nongnu.org>; Thu, 30 Jan 2025 13:43:51 +0000 (UTC)
+ by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id BE34019560B8
+ for <qemu-devel@nongnu.org>; Thu, 30 Jan 2025 13:43:59 +0000 (UTC)
 Received: from corto.redhat.com (unknown [10.39.192.105])
  by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id A88321800969; Thu, 30 Jan 2025 13:43:48 +0000 (UTC)
+ id 95329180035D; Thu, 30 Jan 2025 13:43:58 +0000 (UTC)
 From: =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Alex Williamson <alex.williamson@redhat.com>,
  =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>
-Subject: [PATCH v2 0/9]vfio: Improve error reporting when MMIO region mapping
+Subject: [PATCH v2 5/9] vfio: Improve error reporting when MMIO region mapping
  fails
-Date: Thu, 30 Jan 2025 14:43:37 +0100
-Message-ID: <20250130134346.1754143-1-clg@redhat.com>
+Date: Thu, 30 Jan 2025 14:43:42 +0100
+Message-ID: <20250130134346.1754143-6-clg@redhat.com>
+In-Reply-To: <20250130134346.1754143-1-clg@redhat.com>
+References: <20250130134346.1754143-1-clg@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=clg@redhat.com;
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=clg@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -33
 X-Spam_score: -3.4
 X-Spam_bar: ---
 X-Spam_report: (-3.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.3,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -82,54 +85,57 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hello,
+When the IOMMU address space width is smaller than the physical
+address width, a MMIO region of a device can fail to map because the
+region is outside the supported IOVA ranges of the VM. In this case,
+PCI peer-to-peer transactions on BARs are not supported.
 
-Under certain circumstances, a MMIO region of a device fails to map
-because the region is outside the supported IOVA ranges of the VM. In
-this case, PCI peer-to-peer transactions on BARs are not supported.
-This typically occurs when the IOMMU address space width is less than
-the physical address width, as can be the case on some consumer
-processors or when using a vIOMMU device with default settings.
+This can occur with the 39-bit IOMMU address space width, as can be
+the case on some consumer processors or when using a vIOMMU device
+with default settings. The current error message is unclear, also
+change the error report to a warning because it is a non fatal
+condition for the VM.
 
-This series tries to clarify the error message reported to the user.
+Signed-off-by: Cédric Le Goater <clg@redhat.com>
+---
+ hw/vfio/common.c | 17 ++++++++++++++++-
+ 1 file changed, 16 insertions(+), 1 deletion(-)
 
-Thanks,
-
-C.
-
-Changes in v2:
-
- - Removed advices on how to resolve the issue. Diagnostic is enough.
- - Introduced helpers
- - Checked device type, since this only applies to PCI
- - Added cleanup
-
-Cédric Le Goater (9):
-  util/error: Introduce warn_report_once_err()
-  vfio/pci: Replace "iommu_device" by "vIOMMU"
-  vfio: Rephrase comment in vfio_listener_region_add() error path
-  vfio: Introduce vfio_get_vfio_device()
-  vfio: Improve error reporting when MMIO region mapping fails
-  vfio: Remove reports of DMA mapping errors in backends
-  cpu: Introduce cpu_get_phys_bits()
-  vfio: Check compatibility of CPU and IOMMU address space width
-  vfio: Remove superfluous error report in vfio_listener_region_add()
-
- include/hw/core/cpu.h            |  9 +++++
- include/hw/core/sysemu-cpu-ops.h |  6 ++++
- include/hw/vfio/vfio-common.h    |  1 +
- include/qapi/error.h             |  5 +++
- backends/iommufd.c               |  3 --
- cpu-target.c                     |  5 +++
- hw/core/cpu-system.c             | 11 ++++++
- hw/vfio/common.c                 | 61 ++++++++++++++++++++++++++------
- hw/vfio/container.c              |  2 --
- hw/vfio/helpers.c                | 10 ++++++
- hw/vfio/pci.c                    |  2 +-
- target/i386/cpu.c                |  6 ++++
- util/error.c                     |  9 +++++
- 13 files changed, 113 insertions(+), 17 deletions(-)
-
+diff --git a/hw/vfio/common.c b/hw/vfio/common.c
+index 62af1216fc5a9089fc718c2afe3a405d9381db32..5c9d8657d746ce30af5ae8f9122101e086a61ef5 100644
+--- a/hw/vfio/common.c
++++ b/hw/vfio/common.c
+@@ -555,6 +555,18 @@ static bool vfio_get_section_iova_range(VFIOContainerBase *bcontainer,
+     return true;
+ }
+ 
++static void vfio_device_error_append(VFIODevice *vbasedev, Error **errp)
++{
++    /*
++     * MMIO region mapping failures are not fatal but in this case PCI
++     * peer-to-peer transactions are broken.
++     */
++    if (vbasedev && vbasedev->type == VFIO_DEVICE_TYPE_PCI) {
++        error_append_hint(errp, "%s: PCI peer-to-peer transactions "
++                          "on BARs are not supported.\n", vbasedev->name);
++    }
++}
++
+ static void vfio_listener_region_add(MemoryListener *listener,
+                                      MemoryRegionSection *section)
+ {
+@@ -670,7 +682,10 @@ static void vfio_listener_region_add(MemoryListener *listener,
+                    strerror(-ret));
+         if (memory_region_is_ram_device(section->mr)) {
+             /* Allow unexpected mappings not to be fatal for RAM devices */
+-            error_report_err(err);
++            VFIODevice *vbasedev =
++                vfio_get_vfio_device(memory_region_owner(section->mr));
++            vfio_device_error_append(vbasedev, &err);
++            warn_report_once_err(err);
+             return;
+         }
+         goto fail;
 -- 
 2.48.1
 
