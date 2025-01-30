@@ -4,42 +4,52 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2E88BC0218D
-	for <qemu-devel@archiver.kernel.org>; Thu, 30 Jan 2025 12:36:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6CC7DC0218D
+	for <qemu-devel@archiver.kernel.org>; Thu, 30 Jan 2025 12:46:51 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tdTmI-0005HW-Db; Thu, 30 Jan 2025 07:36:14 -0500
+	id 1tdTvv-0007WL-N5; Thu, 30 Jan 2025 07:46:11 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <samuel.thibault@gnu.org>)
- id 1tdTmG-0005H7-Mc; Thu, 30 Jan 2025 07:36:12 -0500
-Received: from fencepost.gnu.org ([2001:470:142:3::e])
+ (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
+ id 1tdTvt-0007Vx-AT; Thu, 30 Jan 2025 07:46:09 -0500
+Received: from zero.eik.bme.hu ([152.66.115.2])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <samuel.thibault@gnu.org>)
- id 1tdTmG-00039g-6O; Thu, 30 Jan 2025 07:36:12 -0500
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=gnu.org;
- s=fencepost-gnu-org; h=In-Reply-To:MIME-Version:References:Subject:To:From:
- Date; bh=RsWXZoYmg6y5SC08NjCPAv9kDw0y6mEiuTnP39CxVhI=; b=BGBEaOJrDKPIvLs0h27I
- E9JI0Pt+EP81LZRAI5xNpfqoZMp37z6A2bVaIyoxDn8p4nd3LDC4uTbgdBJ25fwC1FY2RTKb4kCmW
- pgwzVJ9ZY2aCJyvlB3xCGnLUIh+wCU9sSRZdmk2xqKjTHpAltWi5/C18ywC9Epe8gMfsCdJvVBlKR
- av5v65eGP7As3+c0xK9HzC3gnIUYdEaOxTsw4ETThV6YTpnrsywf8YMBmtzvgl6cafBhzcDhcjZ3V
- mgcwTf3mjsP6E523nQbzmYbNBpk9fbETQ0my9NSkuN31iRWZWmhixJT4DlEs9viwVvlIRIT+ElXHF
- 15Od/FiK8vUSGg==;
-Date: Thu, 30 Jan 2025 13:36:09 +0100
-From: Samuel Thibault <samuel.thibault@gnu.org>
-To: Michael Tokarev <mjt@tls.msk.ru>
-Cc: qemu-devel@nongnu.org, qemu-trivial@nongnu.org,
- Thomas Huth <thuth@redhat.com>,
- =?utf-8?Q?Marc-Andr=C3=A9?= Lureau <marcandre.lureau@redhat.com>
-Subject: Re: [PATCH v4] net/slirp: libslirp 4.9.0 compatibility
-Message-ID: <Z5tyORoVNNg608Ma@begin>
-References: <20250130123253.864681-1-mjt@tls.msk.ru>
+ (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
+ id 1tdTvq-0004S3-OY; Thu, 30 Jan 2025 07:46:09 -0500
+Received: from zero.eik.bme.hu (localhost [127.0.0.1])
+ by zero.eik.bme.hu (Postfix) with ESMTP id 7126C4E602A;
+ Thu, 30 Jan 2025 13:46:00 +0100 (CET)
+X-Virus-Scanned: amavisd-new at eik.bme.hu
+Received: from zero.eik.bme.hu ([127.0.0.1])
+ by zero.eik.bme.hu (zero.eik.bme.hu [127.0.0.1]) (amavisd-new, port 10028)
+ with ESMTP id Khp1bTi13PAF; Thu, 30 Jan 2025 13:45:58 +0100 (CET)
+Received: by zero.eik.bme.hu (Postfix, from userid 432)
+ id 809B84E6027; Thu, 30 Jan 2025 13:45:58 +0100 (CET)
+Received: from localhost (localhost [127.0.0.1])
+ by zero.eik.bme.hu (Postfix) with ESMTP id 7ED2B74577C;
+ Thu, 30 Jan 2025 13:45:58 +0100 (CET)
+Date: Thu, 30 Jan 2025 13:45:58 +0100 (CET)
+From: BALATON Zoltan <balaton@eik.bme.hu>
+To: qemu-devel@nongnu.org, qemu-ppc@nongnu.org
+cc: Bernhard Beschow <shentey@gmail.com>
+Subject: Re: [PATCH] hw/ppc/e500: Partial implementation of local access
+ window registers
+In-Reply-To: <20250115211544.307124E602F@zero.eik.bme.hu>
+Message-ID: <22e114ac-2c3f-76f1-2172-9adf0c50ad5f@eik.bme.hu>
+References: <20250115211544.307124E602F@zero.eik.bme.hu>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20250130123253.864681-1-mjt@tls.msk.ru>
-Organization: I am not organized
+Content-Type: text/plain; charset=US-ASCII; format=flowed
+Received-SPF: pass client-ip=152.66.115.2; envelope-from=balaton@eik.bme.hu;
+ helo=zero.eik.bme.hu
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -54,104 +64,138 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Michael Tokarev, le jeu. 30 janv. 2025 15:32:53 +0300, a ecrit:
-> Update the code in net/slirp.c to be compatible with
-> libslirp 4.9.0, which deprecated slirp_pollfds_fill()
-> and started using slirp_os_socket type for sockets
-> (which is a 64-bit integer on win64) for all callbacks
-> starting with version 6 of the interface.
-> 
-> Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
+On Wed, 15 Jan 2025, BALATON Zoltan wrote:
+> This allows guests to set the CCSR base address. Also store and return
+> values of the local access window registers but their functionality
+> isn't implemented.
 
-Reviewed-by: Samuel Thibault <samuel.thibault@ens-lyon.org>
+Ping?
 
-Thanks!
-
+> Signed-off-by: BALATON Zoltan <balaton@eik.bme.hu>
 > ---
-> v2: update other callbacks too, use version 6 of the interface
-> v3: commit the changes before sending (*_sock => *_socket)
-> v4: version is 4.9.0, not 4.8.0
-> 
->  net/slirp.c | 25 +++++++++++++++++--------
->  1 file changed, 17 insertions(+), 8 deletions(-)
-> 
-> diff --git a/net/slirp.c b/net/slirp.c
-> index eb9a456ed4..c61a93f3fa 100644
-> --- a/net/slirp.c
-> +++ b/net/slirp.c
-> @@ -247,7 +247,14 @@ static void net_slirp_timer_mod(void *timer, int64_t expire_timer,
->      timer_mod(&t->timer, expire_timer);
->  }
->  
-> -static void net_slirp_register_poll_fd(int fd, void *opaque)
-> +#if !SLIRP_CHECK_VERSION(4,9,0)
-> +# define slirp_os_socket int
-> +# define slirp_pollfds_fill_socket slirp_pollfds_fill
-> +# define register_poll_socket register_poll_fd
-> +# define unregister_poll_socket unregister_poll_fd
-> +#endif
+> hw/ppc/e500-ccsr.h |  4 +++
+> hw/ppc/e500.c      | 79 ++++++++++++++++++++++++++++++++++++++++++++--
+> 2 files changed, 80 insertions(+), 3 deletions(-)
+>
+> diff --git a/hw/ppc/e500-ccsr.h b/hw/ppc/e500-ccsr.h
+> index 249c17be3b..cfbf96e181 100644
+> --- a/hw/ppc/e500-ccsr.h
+> +++ b/hw/ppc/e500-ccsr.h
+> @@ -4,12 +4,16 @@
+> #include "hw/sysbus.h"
+> #include "qom/object.h"
+>
+> +#define NR_LAWS 12
 > +
-> +static void net_slirp_register_poll_sock(slirp_os_socket fd, void *opaque)
->  {
->  #ifdef WIN32
->      AioContext *ctxt = qemu_get_aio_context();
-> @@ -260,7 +267,7 @@ static void net_slirp_register_poll_fd(int fd, void *opaque)
->  #endif
->  }
->  
-> -static void net_slirp_unregister_poll_fd(int fd, void *opaque)
-> +static void net_slirp_unregister_poll_sock(slirp_os_socket fd, void *opaque)
->  {
->  #ifdef WIN32
->      if (WSAEventSelect(fd, NULL, 0) != 0) {
-> @@ -286,8 +293,8 @@ static const SlirpCb slirp_cb = {
->  #endif
->      .timer_free = net_slirp_timer_free,
->      .timer_mod = net_slirp_timer_mod,
-> -    .register_poll_fd = net_slirp_register_poll_fd,
-> -    .unregister_poll_fd = net_slirp_unregister_poll_fd,
-> +    .register_poll_socket = net_slirp_register_poll_sock,
-> +    .unregister_poll_socket = net_slirp_unregister_poll_sock,
->      .notify = net_slirp_notify,
->  };
->  
-> @@ -314,7 +321,7 @@ static int slirp_poll_to_gio(int events)
->      return ret;
->  }
->  
-> -static int net_slirp_add_poll(int fd, int events, void *opaque)
-> +static int net_slirp_add_poll(slirp_os_socket fd, int events, void *opaque)
->  {
->      GArray *pollfds = opaque;
->      GPollFD pfd = {
-> @@ -363,8 +370,8 @@ static void net_slirp_poll_notify(Notifier *notifier, void *data)
->  
->      switch (poll->state) {
->      case MAIN_LOOP_POLL_FILL:
-> -        slirp_pollfds_fill(s->slirp, &poll->timeout,
-> -                           net_slirp_add_poll, poll->pollfds);
-> +        slirp_pollfds_fill_socket(s->slirp, &poll->timeout,
-> +                                  net_slirp_add_poll, poll->pollfds);
->          break;
->      case MAIN_LOOP_POLL_OK:
->      case MAIN_LOOP_POLL_ERR:
-> @@ -629,7 +636,9 @@ static int net_slirp_init(NetClientState *peer, const char *model,
->  
->      s = DO_UPCAST(SlirpState, nc, nc);
->  
-> -    cfg.version = SLIRP_CHECK_VERSION(4,7,0) ? 4 : 1;
-> +    cfg.version =
-> +         SLIRP_CHECK_VERSION(4,9,0) ? 6 :
-> +         SLIRP_CHECK_VERSION(4,7,0) ? 4 : 1;
->      cfg.restricted = restricted;
->      cfg.in_enabled = ipv4;
->      cfg.vnetwork = net;
-> -- 
-> 2.39.5
-> 
-
--- 
-Samuel
-X-Favorit-Cartoon: Calvin and Hobbes
- -+- Mail header of Wim van Dorst -+-
+> struct PPCE500CCSRState {
+>     /*< private >*/
+>     SysBusDevice parent;
+>     /*< public >*/
+>
+>     MemoryRegion ccsr_space;
+> +
+> +    uint32_t law_regs[NR_LAWS * 2];
+> };
+>
+> #define TYPE_CCSR "e500-ccsr"
+> diff --git a/hw/ppc/e500.c b/hw/ppc/e500.c
+> index 64f8c766b4..376cb4cb37 100644
+> --- a/hw/ppc/e500.c
+> +++ b/hw/ppc/e500.c
+> @@ -43,6 +43,7 @@
+> #include "qemu/host-utils.h"
+> #include "qemu/option.h"
+> #include "hw/pci-host/ppce500.h"
+> +#include "qemu/log.h"
+> #include "qemu/error-report.h"
+> #include "hw/platform-bus.h"
+> #include "hw/net/fsl_etsec/etsec.h"
+> @@ -1331,11 +1332,83 @@ void ppce500_init(MachineState *machine)
+>     boot_info->dt_size = dt_size;
+> }
+>
+> +static int law_idx(hwaddr addr)
+> +{
+> +    int idx;
+> +
+> +    addr -= 0xc08;
+> +    idx = 2 * ((addr >> 5) & 0xf);
+> +    if (addr & 8) {
+> +        idx++;
+> +    }
+> +    assert(idx < 2 * NR_LAWS);
+> +    return idx;
+> +}
+> +
+> +static uint64_t law_read(void *opaque, hwaddr addr, unsigned size)
+> +{
+> +    PPCE500CCSRState *s = opaque;
+> +    uint64_t val = 0;
+> +
+> +    switch (addr) {
+> +    case 0:
+> +        val = s->ccsr_space.addr >> 12;
+> +        break;
+> +    case 0xc08 ... 0xd70:
+> +        val = s->law_regs[law_idx(addr)];
+> +        break;
+> +    default:
+> +        qemu_log_mask(LOG_GUEST_ERROR, "Invalid local access register read"
+> +                      "0x%" HWADDR_PRIx "\n", addr);
+> +    }
+> +    return val;
+> +}
+> +
+> +static void law_write(void *opaque, hwaddr addr, uint64_t val, unsigned size)
+> +{
+> +    PPCE500CCSRState *s = opaque;
+> +
+> +    switch (addr) {
+> +    case 0:
+> +        val &= 0xffff00;
+> +        memory_region_set_address(&s->ccsr_space, val << 12);
+> +        break;
+> +    case 0xc08 ... 0xd70:
+> +    {
+> +        int idx = law_idx(addr);
+> +
+> +        qemu_log_mask(LOG_UNIMP, "Unimplemented local access register write"
+> +                      "0x%" HWADDR_PRIx " <- 0x%" PRIx64 "\n", addr, val);
+> +        val &= (idx & 1) ? 0x80f0003f : 0xffffff;
+> +        s->law_regs[idx] = val;
+> +        break;
+> +    }
+> +    default:
+> +        qemu_log_mask(LOG_GUEST_ERROR, "Invalid local access register write"
+> +                      "0x%" HWADDR_PRIx "\n", addr);
+> +    }
+> +}
+> +
+> +static const MemoryRegionOps law_ops = {
+> +    .read = law_read,
+> +    .write = law_write,
+> +    .endianness = DEVICE_BIG_ENDIAN,
+> +    .valid = {
+> +        .min_access_size = 4,
+> +        .max_access_size = 4,
+> +    },
+> +};
+> +
+> static void e500_ccsr_initfn(Object *obj)
+> {
+> -    PPCE500CCSRState *ccsr = CCSR(obj);
+> -    memory_region_init(&ccsr->ccsr_space, obj, "e500-ccsr",
+> -                       MPC8544_CCSRBAR_SIZE);
+> +    PPCE500CCSRState *s = CCSR(obj);
+> +    MemoryRegion *mr;
+> +
+> +    memory_region_init(&s->ccsr_space, obj, "e500-ccsr", MPC8544_CCSRBAR_SIZE);
+> +
+> +    mr = g_new(MemoryRegion, 1);
+> +    memory_region_init_io(mr, obj, &law_ops, s, "local-access", 4096);
+> +    memory_region_add_subregion(&s->ccsr_space, 0, mr);
+> }
+>
+> static const TypeInfo e500_ccsr_info = {
+>
 
