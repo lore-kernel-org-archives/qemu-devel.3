@@ -4,26 +4,26 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6E388C0218A
-	for <qemu-devel@archiver.kernel.org>; Thu, 30 Jan 2025 10:13:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D05D8C02198
+	for <qemu-devel@archiver.kernel.org>; Thu, 30 Jan 2025 10:14:02 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tdRWo-00012i-AB; Thu, 30 Jan 2025 05:12:06 -0500
+	id 1tdRWE-000722-Az; Thu, 30 Jan 2025 05:11:30 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mhej@vps-ovh.mhejs.net>)
- id 1tdRWi-0000CO-Cz
- for qemu-devel@nongnu.org; Thu, 30 Jan 2025 05:12:00 -0500
+ id 1tdRWA-0006YK-NY
+ for qemu-devel@nongnu.org; Thu, 30 Jan 2025 05:11:26 -0500
 Received: from vps-ovh.mhejs.net ([145.239.82.108])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mhej@vps-ovh.mhejs.net>)
- id 1tdRWg-0007Qj-Pe
- for qemu-devel@nongnu.org; Thu, 30 Jan 2025 05:12:00 -0500
+ id 1tdRW7-0007Nh-KJ
+ for qemu-devel@nongnu.org; Thu, 30 Jan 2025 05:11:26 -0500
 Received: from MUA
  by vps-ovh.mhejs.net with esmtpsa  (TLS1.3) tls TLS_AES_256_GCM_SHA384
  (Exim 4.98) (envelope-from <mhej@vps-ovh.mhejs.net>)
- id 1tdRWT-00000006U1v-1p7J; Thu, 30 Jan 2025 11:11:45 +0100
+ id 1tdRVt-00000006U0g-1Zet; Thu, 30 Jan 2025 11:11:09 +0100
 From: "Maciej S. Szmigiero" <mail@maciej.szmigiero.name>
 To: Peter Xu <peterx@redhat.com>,
 	Fabiano Rosas <farosas@suse.de>
@@ -33,10 +33,10 @@ Cc: Alex Williamson <alex.williamson@redhat.com>,
  =?UTF-8?q?Daniel=20P=20=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
  Avihai Horon <avihaih@nvidia.com>,
  Joao Martins <joao.m.martins@oracle.com>, qemu-devel@nongnu.org
-Subject: [PATCH v4 30/33] migration/qemu-file: Define g_autoptr() cleanup
- function for QEMUFile
-Date: Thu, 30 Jan 2025 11:08:51 +0100
-Message-ID: <479b0232aa776e16f9d38300bb7933d361dac77a.1738171076.git.maciej.szmigiero@oracle.com>
+Subject: [PATCH v4 23/33] vfio/migration: Multifd device state transfer
+ support - basic types
+Date: Thu, 30 Jan 2025 11:08:44 +0100
+Message-ID: <eaf874f64709ab9ac88ef96d1656d9d9d423ec78.1738171076.git.maciej.szmigiero@oracle.com>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <cover.1738171076.git.maciej.szmigiero@oracle.com>
 References: <cover.1738171076.git.maciej.szmigiero@oracle.com>
@@ -68,26 +68,40 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: "Maciej S. Szmigiero" <maciej.szmigiero@oracle.com>
 
-Automatic memory management helps avoid memory safety issues.
+Add basic types and flags used by VFIO multifd device state transfer
+support.
 
-Reviewed-by: Fabiano Rosas <farosas@suse.de>
-Reviewed-by: Peter Xu <peterx@redhat.com>
 Signed-off-by: Maciej S. Szmigiero <maciej.szmigiero@oracle.com>
 ---
- migration/qemu-file.h | 2 ++
- 1 file changed, 2 insertions(+)
+ hw/vfio/migration.c | 10 ++++++++++
+ 1 file changed, 10 insertions(+)
 
-diff --git a/migration/qemu-file.h b/migration/qemu-file.h
-index 11c2120edd72..fdf21324df07 100644
---- a/migration/qemu-file.h
-+++ b/migration/qemu-file.h
-@@ -33,6 +33,8 @@ QEMUFile *qemu_file_new_input(QIOChannel *ioc);
- QEMUFile *qemu_file_new_output(QIOChannel *ioc);
- int qemu_fclose(QEMUFile *f);
+diff --git a/hw/vfio/migration.c b/hw/vfio/migration.c
+index cbb1e0b6f852..715182c4f810 100644
+--- a/hw/vfio/migration.c
++++ b/hw/vfio/migration.c
+@@ -47,6 +47,7 @@
+ #define VFIO_MIG_FLAG_DEV_SETUP_STATE   (0xffffffffef100003ULL)
+ #define VFIO_MIG_FLAG_DEV_DATA_STATE    (0xffffffffef100004ULL)
+ #define VFIO_MIG_FLAG_DEV_INIT_DATA_SENT (0xffffffffef100005ULL)
++#define VFIO_MIG_FLAG_DEV_CONFIG_LOAD_READY (0xffffffffef100006ULL)
  
-+G_DEFINE_AUTOPTR_CLEANUP_FUNC(QEMUFile, qemu_fclose)
-+
  /*
-  * qemu_file_transferred:
-  *
+  * This is an arbitrary size based on migration of mlx5 devices, where typically
+@@ -55,6 +56,15 @@
+  */
+ #define VFIO_MIG_DEFAULT_DATA_BUFFER_SIZE (1 * MiB)
+ 
++#define VFIO_DEVICE_STATE_CONFIG_STATE (1)
++
++typedef struct VFIODeviceStatePacket {
++    uint32_t version;
++    uint32_t idx;
++    uint32_t flags;
++    uint8_t data[0];
++} QEMU_PACKED VFIODeviceStatePacket;
++
+ static int64_t bytes_transferred;
+ 
+ static const char *mig_state_to_str(enum vfio_device_mig_state state)
 
