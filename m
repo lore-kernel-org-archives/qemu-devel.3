@@ -4,57 +4,58 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E754AC0218F
-	for <qemu-devel@archiver.kernel.org>; Thu, 30 Jan 2025 13:29:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A08A4C02190
+	for <qemu-devel@archiver.kernel.org>; Thu, 30 Jan 2025 13:29:58 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tdUbm-0004fM-QF; Thu, 30 Jan 2025 08:29:26 -0500
+	id 1tdUbl-0004f1-PF; Thu, 30 Jan 2025 08:29:25 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <deller@kernel.org>) id 1tdUbl-0004eu-Fq
- for qemu-devel@nongnu.org; Thu, 30 Jan 2025 08:29:25 -0500
-Received: from dfw.source.kernel.org ([2604:1380:4641:c500::1])
+ (Exim 4.90_1) (envelope-from <deller@kernel.org>) id 1tdUbk-0004ed-8a
+ for qemu-devel@nongnu.org; Thu, 30 Jan 2025 08:29:24 -0500
+Received: from nyc.source.kernel.org ([147.75.193.91])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <deller@kernel.org>) id 1tdUbj-0001Oc-OW
- for qemu-devel@nongnu.org; Thu, 30 Jan 2025 08:29:25 -0500
+ (Exim 4.90_1) (envelope-from <deller@kernel.org>) id 1tdUbi-0001Of-Nv
+ for qemu-devel@nongnu.org; Thu, 30 Jan 2025 08:29:24 -0500
 Received: from smtp.kernel.org (transwarp.subspace.kernel.org [100.75.92.58])
- by dfw.source.kernel.org (Postfix) with ESMTP id AD6525C03F5;
- Thu, 30 Jan 2025 13:28:41 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 45903C4CED2;
- Thu, 30 Jan 2025 13:29:20 +0000 (UTC)
+ by nyc.source.kernel.org (Postfix) with ESMTP id 6D486A40C33;
+ Thu, 30 Jan 2025 13:27:33 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9DC2AC4CEE0;
+ Thu, 30 Jan 2025 13:29:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
- s=k20201202; t=1738243761;
- bh=JbHKUaoOT21JZo4ZqtXrin1/f4CIQEzf3APbV087HeE=;
+ s=k20201202; t=1738243759;
+ bh=kFS5JPLZ6Yq0LhIiT+AHVHk3BwDkleBFMtJ92/ovT10=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
- b=JC9T691IGiVHRdPbkiWHNiePlwOf3n0EfgC8nG2YTaZI6HQ+EH56dnk0Vca/tjDn2
- Sw2fCb9oTcXs9a0PB7snyC7d6EU1XEuhm0Nw0slIc0pf2s2DcCCS+HuQtAzH3/B1Qx
- HggAD55thebR84dw6xr7KeOiIVJS78TzWi6OlsDapHpCDEMGaxHqgE8osAYlDdQBoK
- 1m7ePSJvlqadyS+f5+Txdmu8IPuwNZ/+2LrmCKjS1p7XMLdC2nf8ey4AI0lZnI/62h
- q9e//ANNzHuCmCTVDgemuCzHNtdHJIiJ0ilRQ1UyasM6/ooviEs+O5IBEhEw6JnZWw
- gu7imh/z17fig==
+ b=mTLybAPFPWgDU06R5MM9/rXroJ//GYDbaFqi+UMKYLHyzBFzvKDoDbbUhwMzg0SAU
+ TT/gl4jTFxuE/8AABXAMwBjDtAuJB5X11lIlDHKQu5N3SZ5qwRlpO7nxs+JAkJj6gi
+ mzwgvF2lHISfHxy/B2THVbTtCPm32QLHqOIHDBLS3ZVV7uzmlZDnIlpkpZpXuX3v00
+ gFIEHOypI3n4VkEu2h96ZS15j88XZsSY5JgmaKYrvJsNqLyyoDApD1WVnD4hgMTZPi
+ 7rcIV7UjfXY18H0PSiv8vj45veKiOAj5rbFkLElz/A1pJkegyt4XhOIbJdx47cwseb
+ /hcMdD4JkMZpw==
 From: deller@kernel.org
 To: qemu-devel@nongnu.org, Stefan Hajnoczi <stefanha@redhat.com>,
  Richard Henderson <richard.henderson@linaro.org>,
  Peter Maydell <peter.maydell@linaro.org>
 Cc: deller@gmx.de
-Subject: [PULL 2/9] hppa: Sync contents of hppa_hardware.h header file with
- SeaBIOS-hppa
-Date: Thu, 30 Jan 2025 14:29:07 +0100
-Message-ID: <20250130132915.16846-3-deller@kernel.org>
+Subject: [PULL 1/9] MAINTAINERS: Add myself as HPPA maintainer
+Date: Thu, 30 Jan 2025 14:29:06 +0100
+Message-ID: <20250130132915.16846-2-deller@kernel.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20250130132915.16846-1-deller@kernel.org>
 References: <20250130132915.16846-1-deller@kernel.org>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2604:1380:4641:c500::1;
- envelope-from=deller@kernel.org; helo=dfw.source.kernel.org
+Received-SPF: pass client-ip=147.75.193.91; envelope-from=deller@kernel.org;
+ helo=nyc.source.kernel.org
 X-Spam_score_int: -56
 X-Spam_score: -5.7
 X-Spam_bar: -----
 X-Spam_report: (-5.7 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.3,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001,
+ RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -73,95 +74,41 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Helge Deller <deller@gmx.de>
 
-The hppa_hardware.h header file holds many constants for addresses and
-offsets which are needed while building the firmware (SeaBIOS-hppa) and
-while setting up the virtual machine in QEMU.
-
-This patch brings it in sync between both source code repositories.
+Since I contribute quite some code to hppa, I'd like to step up and
+become the secondary maintainer for HPPA beside Richard.
+Additionally change status of hppa machines to maintained as I will
+take care of them.
 
 Signed-off-by: Helge Deller <deller@gmx.de>
-Acked-by: Richard Henderson <richard.henderson@linaro.org>
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 ---
- hw/hppa/hppa_hardware.h | 36 ++++++++++++++++++++++++++++++++----
- 1 file changed, 32 insertions(+), 4 deletions(-)
+ MAINTAINERS | 5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
-diff --git a/hw/hppa/hppa_hardware.h b/hw/hppa/hppa_hardware.h
-index a276240967..21c777cba6 100644
---- a/hw/hppa/hppa_hardware.h
-+++ b/hw/hppa/hppa_hardware.h
-@@ -6,6 +6,11 @@
+diff --git a/MAINTAINERS b/MAINTAINERS
+index 7be3d8f431..dbf39cfbb0 100644
+--- a/MAINTAINERS
++++ b/MAINTAINERS
+@@ -251,6 +251,7 @@ F: target/hexagon/gen_idef_parser_funcs.py
  
- #define FIRMWARE_START  0xf0000000
- #define FIRMWARE_END    0xf0800000
-+#define FIRMWARE_HIGH   0xfffffff0  /* upper 32-bits of 64-bit firmware address */
-+
-+#define RAM_MAP_HIGH  0x0100000000  /* memory above 3.75 GB is mapped here */
-+
-+#define MEM_PDC_ENTRY       0x4800  /* PDC entry address */
- 
- #define DEVICE_HPA_LEN  0x00100000
- 
-@@ -18,6 +23,7 @@
- #define LASI_UART_HPA   0xffd05000
- #define LASI_SCSI_HPA   0xffd06000
- #define LASI_LAN_HPA    0xffd07000
-+#define LASI_RTC_HPA    0xffd09000
- #define LASI_LPT_HPA    0xffd02000
- #define LASI_AUDIO_HPA  0xffd04000
- #define LASI_PS2KBD_HPA 0xffd08000
-@@ -27,16 +33,23 @@
- #define CPU_HPA         0xfffb0000
- #define MEMORY_HPA      0xfffff000
- 
--#define PCI_HPA         DINO_HPA        /* PCI bus */
- #define IDE_HPA         0xf9000000      /* Boot disc controller */
-+#define ASTRO_HPA       0xfed00000
-+#define ELROY0_HPA      0xfed30000
-+#define ELROY2_HPA      0xfed32000
-+#define ELROY8_HPA      0xfed38000
-+#define ELROYc_HPA      0xfed3c000
-+#define ASTRO_MEMORY_HPA 0xfed10200
-+
-+#define SCSI_HPA        0xf1040000      /* emulated SCSI, needs to be in f region */
- 
- /* offsets to DINO HPA: */
- #define DINO_PCI_ADDR           0x064
- #define DINO_CONFIG_DATA        0x068
- #define DINO_IO_DATA            0x06c
- 
--#define PORT_PCI_CMD    (PCI_HPA + DINO_PCI_ADDR)
--#define PORT_PCI_DATA   (PCI_HPA + DINO_CONFIG_DATA)
-+#define PORT_PCI_CMD    hppa_port_pci_cmd
-+#define PORT_PCI_DATA   hppa_port_pci_data
- 
- #define FW_CFG_IO_BASE  0xfffa0000
- 
-@@ -46,9 +59,24 @@
- #define HPPA_MAX_CPUS   16      /* max. number of SMP CPUs */
- #define CPU_CLOCK_MHZ   250     /* emulate a 250 MHz CPU */
- 
-+#define CR_PSW_DEFAULT  6       /* used by SeaBIOS & QEMU for default PSW */
- #define CPU_HPA_CR_REG  7       /* store CPU HPA in cr7 (SeaBIOS internal) */
- #define PIM_STORAGE_SIZE 600	/* storage size of pdc_pim_toc_struct (64bit) */
- 
--#define RAM_MAP_HIGH  0x0100000000  /* memory above 3.75 GB is mapped here */
-+#define ASTRO_BUS_MODULE        0x0a            /* C3700: 0x0a, others maybe 0 ? */
-+
-+/* ASTRO Memory and I/O regions */
-+#define ASTRO_BASE_HPA            0xfffed00000
-+#define ELROY0_BASE_HPA           0xfffed30000  /* ELROY0_HPA */
-+
-+#define ROPES_PER_IOC           8       /* per Ike half or Pluto/Astro */
-+
-+#define LMMIO_DIRECT0_BASE  0x300
-+#define LMMIO_DIRECT0_MASK  0x308
-+#define LMMIO_DIRECT0_ROUTE 0x310
-+
-+/* space register hashing */
-+#define HPPA64_DIAG_SPHASH_ENABLE       0x200   /* DIAG_SPHASH_ENAB (bit 54) */
-+#define HPPA64_PDC_CACHE_RET_SPID_VAL   0xfe0   /* PDC return value on 64-bit CPU */
- 
- #endif
+ HPPA (PA-RISC) TCG CPUs
+ M: Richard Henderson <richard.henderson@linaro.org>
++M: Helge Deller <deller@gmx.de>
+ S: Maintained
+ F: target/hppa/
+ F: disas/hppa.c
+@@ -1188,8 +1189,8 @@ HP-PARISC Machines
+ ------------------
+ HP B160L, HP C3700
+ M: Richard Henderson <richard.henderson@linaro.org>
+-R: Helge Deller <deller@gmx.de>
+-S: Odd Fixes
++M: Helge Deller <deller@gmx.de>
++S: Maintained
+ F: configs/devices/hppa-softmmu/default.mak
+ F: hw/display/artist.c
+ F: hw/hppa/
 -- 
 2.47.0
 
