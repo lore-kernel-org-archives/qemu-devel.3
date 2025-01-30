@@ -4,49 +4,74 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6B230C0218A
-	for <qemu-devel@archiver.kernel.org>; Thu, 30 Jan 2025 12:47:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B9BD2C0218A
+	for <qemu-devel@archiver.kernel.org>; Thu, 30 Jan 2025 13:00:02 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tdTwV-0007et-9i; Thu, 30 Jan 2025 07:46:47 -0500
+	id 1tdU8N-0001lT-SN; Thu, 30 Jan 2025 07:59:03 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
- id 1tdTwQ-0007de-Je; Thu, 30 Jan 2025 07:46:45 -0500
-Received: from zero.eik.bme.hu ([2001:738:2001:2001::2001])
+ (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
+ id 1tdU8M-0001kl-DV
+ for qemu-devel@nongnu.org; Thu, 30 Jan 2025 07:59:02 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
- id 1tdTwP-0004Uo-0v; Thu, 30 Jan 2025 07:46:42 -0500
-Received: from zero.eik.bme.hu (localhost [127.0.0.1])
- by zero.eik.bme.hu (Postfix) with ESMTP id E9D834E602B;
- Thu, 30 Jan 2025 13:46:37 +0100 (CET)
-X-Virus-Scanned: amavisd-new at eik.bme.hu
-Received: from zero.eik.bme.hu ([127.0.0.1])
- by zero.eik.bme.hu (zero.eik.bme.hu [127.0.0.1]) (amavisd-new, port 10028)
- with ESMTP id Nzks9eVqotiK; Thu, 30 Jan 2025 13:46:36 +0100 (CET)
-Received: by zero.eik.bme.hu (Postfix, from userid 432)
- id 062D94E6030; Thu, 30 Jan 2025 13:46:36 +0100 (CET)
-Received: from localhost (localhost [127.0.0.1])
- by zero.eik.bme.hu (Postfix) with ESMTP id 04ED774577E;
- Thu, 30 Jan 2025 13:46:36 +0100 (CET)
-Date: Thu, 30 Jan 2025 13:46:35 +0100 (CET)
-From: BALATON Zoltan <balaton@eik.bme.hu>
-To: qemu-devel@nongnu.org, qemu-block@nongnu.org
-cc: Bernhard Beschow <shentey@gmail.com>, philmd@linaro.org
-Subject: Re: [PATCH] hw/sd/sdhci: Set reset value of interrupt registers
-In-Reply-To: <20250115190422.5F0FA4E6030@zero.eik.bme.hu>
-Message-ID: <3b00eb8b-ae4b-3080-06d6-807553f3c8a3@eik.bme.hu>
-References: <20250115190422.5F0FA4E6030@zero.eik.bme.hu>
+ (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
+ id 1tdU8K-0005qw-Eh
+ for qemu-devel@nongnu.org; Thu, 30 Jan 2025 07:59:02 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1738241939;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=QMIJmEy25hnd8Rb0FyXTd9BfZsXdSt+6dIHFsKIq5Gw=;
+ b=AKQbz8VnmTsBjWjqvK5MFi8NRGRo8Vg6VC9aGWmhP+OuK7gXiGtek1aaPHNuUbLT/6o1Xk
+ ZfhjZUE5I6VSeyxKuEagfozp2aamkQb7cDost8+z/55bhutPSxI0jk+A0fvGS0/1lbrBbE
+ 1rEEJGqqMiy9LSp1tI7kTpOlWmV05GY=
+Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-301-y_7PvVz9Ovybd2CQj8ybvA-1; Thu,
+ 30 Jan 2025 07:58:55 -0500
+X-MC-Unique: y_7PvVz9Ovybd2CQj8ybvA-1
+X-Mimecast-MFC-AGG-ID: y_7PvVz9Ovybd2CQj8ybvA
+Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id B048F1956083; Thu, 30 Jan 2025 12:58:53 +0000 (UTC)
+Received: from localhost (unknown [10.2.16.33])
+ by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 26C8B18008C8; Thu, 30 Jan 2025 12:58:50 +0000 (UTC)
+Date: Thu, 30 Jan 2025 07:58:50 -0500
+From: Stefan Hajnoczi <stefanha@redhat.com>
+To: Philippe =?iso-8859-1?Q?Mathieu-Daud=E9?= <philmd@linaro.org>
+Cc: qemu-devel@nongnu.org, Pierrick Bouvier <pierrick.bouvier@linaro.org>,
+ Daniel =?iso-8859-1?Q?P=2E_Berrang=E9?= <berrange@redhat.com>,
+ qemu-ppc@nongnu.org, qemu-trivial@nongnu.org,
+ =?iso-8859-1?Q?Marc-Andr=E9?= Lureau <marcandre.lureau@redhat.com>
+Subject: Re: [PATCH] overall: Remove unnecessary g_strdup_printf() calls
+Message-ID: <20250130125850.GA212825@fedora>
+References: <20250130105743.1355-1-philmd@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII; format=flowed
-Received-SPF: pass client-ip=2001:738:2001:2001::2001;
- envelope-from=balaton@eik.bme.hu; helo=zero.eik.bme.hu
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Type: multipart/signed; micalg=pgp-sha256;
+ protocol="application/pgp-signature"; boundary="LKDsY9poPnfzWlMH"
+Content-Disposition: inline
+In-Reply-To: <20250130105743.1355-1-philmd@linaro.org>
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=stefanha@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -33
+X-Spam_score: -3.4
+X-Spam_bar: ---
+X-Spam_report: (-3.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.3,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -62,42 +87,45 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, 15 Jan 2025, BALATON Zoltan wrote:
-> The interrupt enable registers are not reset to 0 but some bits are
-> enabled on reset. At least some U-Boot versions seem to expect this
-> and not initialise these registers before expecting interrupts. The
-> numbers in this patch match what QorIQ P1022 has on reset and fix
-> U-Boot for this SoC and should not break other drivers that initialise
-> (and thus overwrite) these reset values.
 
-Ping?
+--LKDsY9poPnfzWlMH
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-> Signed-off-by: BALATON Zoltan <balaton@eik.bme.hu>
+On Thu, Jan 30, 2025 at 11:57:43AM +0100, Philippe Mathieu-Daud=E9 wrote:
+> Replace g_strdup_printf("%s", value) -> g_strdup(value)
+> to avoid unnecessary string formatting.
+>=20
+> Signed-off-by: Philippe Mathieu-Daud=E9 <philmd@linaro.org>
 > ---
-> I've also noticed that the work around marked with an XXX comment near
-> line 600 breaks the U-Boot I've tested so I need to disable it:
-> if ((s->sdmasysad % boundary_chk) == 0) {
-> -        page_aligned = true;
-> +//        page_aligned = true;
-> }
-> What should this hack fix and could it be now removed or somehow
-> restricted to cases where it's needed?
->
-> hw/sd/sdhci.c | 2 ++
-> 1 file changed, 2 insertions(+)
->
-> diff --git a/hw/sd/sdhci.c b/hw/sd/sdhci.c
-> index 58375483e3..88eb0bfcb2 100644
-> --- a/hw/sd/sdhci.c
-> +++ b/hw/sd/sdhci.c
-> @@ -303,6 +303,8 @@ static void sdhci_reset(SDHCIState *s)
->     s->data_count = 0;
->     s->stopped_state = sdhc_not_stopped;
->     s->pending_insert_state = false;
-> +    s->norintstsen = 0x013f;
-> +    s->errintstsen = 0x117f;
-> }
->
-> static void sdhci_poweron_reset(DeviceState *dev)
->
+>  crypto/hash-afalg.c | 2 +-
+>  hw/ppc/spapr_caps.c | 2 +-
+>  plugins/loader.c    | 2 +-
+>  target/i386/cpu.c   | 2 +-
+>  trace/simple.c      | 2 +-
+>  ui/console.c        | 4 +---
+>  ui/gtk.c            | 3 +--
+>  util/module.c       | 2 +-
+>  8 files changed, 8 insertions(+), 11 deletions(-)
+
+Reviewed-by: Stefan Hajnoczi <stefanha@redhat.com>
+
+--LKDsY9poPnfzWlMH
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iQEzBAEBCAAdFiEEhpWov9P5fNqsNXdanKSrs4Grc8gFAmebd4kACgkQnKSrs4Gr
+c8hq2AgAn34wJG4WgjJPg0YAl8+JxfXLwK4TknpyYYF9xeqVldDqsJG9FFgy7wI1
++lWgPzbqCSHA09oophlE9yqgISagfq7kvN6fpEB+EtlKtB/voV7Gi2LyqXT/UYzR
++r2VBcywk/nKrLu22ulQ0GVG7vR0JuVAhEI+J/2YiHiR/PDwCsNQNl+txI/2gp88
+RMpZSIig6dmrRFEU4BSlj4VJCphmgn3wM2fCAfM5EH7VxqQCrgqoQIo0KgB0uH6Z
+bdO7HZdg5E489+JZV7s4gXzCivua4hmwRwpQD2McuM+JBRezweq/HoeTyQlOCo1Z
+7GQurB9XG2fy2J0AMCwEfeZK0Wqqog==
+=arh6
+-----END PGP SIGNATURE-----
+
+--LKDsY9poPnfzWlMH--
+
 
