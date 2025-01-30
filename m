@@ -4,26 +4,26 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E43CFC02190
-	for <qemu-devel@archiver.kernel.org>; Thu, 30 Jan 2025 10:12:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 844DEC0218A
+	for <qemu-devel@archiver.kernel.org>; Thu, 30 Jan 2025 10:12:25 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tdRUi-0002Ef-61; Thu, 30 Jan 2025 05:09:56 -0500
+	id 1tdRWz-0002Xy-Gk; Thu, 30 Jan 2025 05:12:18 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mhej@vps-ovh.mhejs.net>)
- id 1tdRUg-0002EU-5w
- for qemu-devel@nongnu.org; Thu, 30 Jan 2025 05:09:54 -0500
+ id 1tdRWw-0002HM-Kx
+ for qemu-devel@nongnu.org; Thu, 30 Jan 2025 05:12:14 -0500
 Received: from vps-ovh.mhejs.net ([145.239.82.108])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mhej@vps-ovh.mhejs.net>)
- id 1tdRUe-00073x-MQ
- for qemu-devel@nongnu.org; Thu, 30 Jan 2025 05:09:53 -0500
+ id 1tdRWv-0007S9-3T
+ for qemu-devel@nongnu.org; Thu, 30 Jan 2025 05:12:14 -0500
 Received: from MUA
  by vps-ovh.mhejs.net with esmtpsa  (TLS1.3) tls TLS_AES_256_GCM_SHA384
  (Exim 4.98) (envelope-from <mhej@vps-ovh.mhejs.net>)
- id 1tdRUZ-00000006TxG-04Ei; Thu, 30 Jan 2025 11:09:47 +0100
+ id 1tdRWi-00000006U2S-3il1; Thu, 30 Jan 2025 11:12:00 +0100
 From: "Maciej S. Szmigiero" <mail@maciej.szmigiero.name>
 To: Peter Xu <peterx@redhat.com>,
 	Fabiano Rosas <farosas@suse.de>
@@ -33,10 +33,10 @@ Cc: Alex Williamson <alex.williamson@redhat.com>,
  =?UTF-8?q?Daniel=20P=20=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
  Avihai Horon <avihaih@nvidia.com>,
  Joao Martins <joao.m.martins@oracle.com>, qemu-devel@nongnu.org
-Subject: [PATCH v4 07/33] io: tls: Allow terminating the TLS session
- gracefully with EOF
-Date: Thu, 30 Jan 2025 11:08:28 +0100
-Message-ID: <fdd9a0a6053ac6aed32e08cc284991a3630bbfec.1738171076.git.maciej.szmigiero@oracle.com>
+Subject: [PATCH v4 33/33] hw/core/machine: Add compat for
+ x-migration-multifd-transfer VFIO property
+Date: Thu, 30 Jan 2025 11:08:54 +0100
+Message-ID: <049e09d1fd5ad3523ba23b37321b6171215ddeb8.1738171076.git.maciej.szmigiero@oracle.com>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <cover.1738171076.git.maciej.szmigiero@oracle.com>
 References: <cover.1738171076.git.maciej.szmigiero@oracle.com>
@@ -68,70 +68,24 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: "Maciej S. Szmigiero" <maciej.szmigiero@oracle.com>
 
-Currently, hitting EOF on receive without sender terminating the TLS
-session properly causes the TLS channel to return an error (unless
-the channel was already shut down for read).
-
-Add an optional setting whether we instead just return EOF in that
-case.
-
-This possibility will be soon used by the migration multifd code.
+Add a hw_compat entry for recently added x-migration-multifd-transfer VFIO
+property.
 
 Signed-off-by: Maciej S. Szmigiero <maciej.szmigiero@oracle.com>
 ---
- include/io/channel-tls.h | 11 +++++++++++
- io/channel-tls.c         |  6 ++++++
- 2 files changed, 17 insertions(+)
+ hw/core/machine.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/include/io/channel-tls.h b/include/io/channel-tls.h
-index 26c67f17e2d3..8552c0d0266e 100644
---- a/include/io/channel-tls.h
-+++ b/include/io/channel-tls.h
-@@ -49,6 +49,7 @@ struct QIOChannelTLS {
-     QCryptoTLSSession *session;
-     QIOChannelShutdown shutdown;
-     guint hs_ioc_tag;
-+    bool premature_eof_okay;
+diff --git a/hw/core/machine.c b/hw/core/machine.c
+index c2964503c5bd..3f06ea945859 100644
+--- a/hw/core/machine.c
++++ b/hw/core/machine.c
+@@ -39,6 +39,7 @@
+ GlobalProperty hw_compat_9_2[] = {
+     {"arm-cpu", "backcompat-pauth-default-use-qarma5", "true"},
+     { "migration", "send-switchover-start", "off"},
++    { "vfio-pci", "x-migration-multifd-transfer", "off" },
  };
+ const size_t hw_compat_9_2_len = G_N_ELEMENTS(hw_compat_9_2);
  
- /**
-@@ -143,4 +144,14 @@ void qio_channel_tls_handshake(QIOChannelTLS *ioc,
- QCryptoTLSSession *
- qio_channel_tls_get_session(QIOChannelTLS *ioc);
- 
-+/**
-+ * qio_channel_tls_set_premature_eof_okay:
-+ * @ioc: the TLS channel object
-+ *
-+ * Sets whether receiving an EOF without terminating the TLS session properly
-+ * by used the other side is considered okay or an error (the
-+ * default behaviour).
-+ */
-+void qio_channel_tls_set_premature_eof_okay(QIOChannelTLS *ioc, bool enabled);
-+
- #endif /* QIO_CHANNEL_TLS_H */
-diff --git a/io/channel-tls.c b/io/channel-tls.c
-index aab630e5ae32..1079d6d10de1 100644
---- a/io/channel-tls.c
-+++ b/io/channel-tls.c
-@@ -147,6 +147,11 @@ qio_channel_tls_new_client(QIOChannel *master,
-     return NULL;
- }
- 
-+void qio_channel_tls_set_premature_eof_okay(QIOChannelTLS *ioc, bool enabled)
-+{
-+    ioc->premature_eof_okay = enabled;
-+}
-+
- struct QIOChannelTLSData {
-     QIOTask *task;
-     GMainContext *context;
-@@ -279,6 +284,7 @@ static ssize_t qio_channel_tls_readv(QIOChannel *ioc,
-             tioc->session,
-             iov[i].iov_base,
-             iov[i].iov_len,
-+            tioc->premature_eof_okay ||
-             qatomic_load_acquire(&tioc->shutdown) & QIO_CHANNEL_SHUTDOWN_READ,
-             errp);
-         if (ret == QCRYPTO_TLS_SESSION_ERR_BLOCK) {
 
