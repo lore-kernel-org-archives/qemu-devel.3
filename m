@@ -4,55 +4,56 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 45292C0218A
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 60C3AC02190
 	for <qemu-devel@archiver.kernel.org>; Thu, 30 Jan 2025 17:13:33 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tdY6F-0000bU-UM; Thu, 30 Jan 2025 12:13:07 -0500
+	id 1tdY6B-0000YQ-8i; Thu, 30 Jan 2025 12:13:03 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1tdY6D-0000a1-9A
- for qemu-devel@nongnu.org; Thu, 30 Jan 2025 12:13:05 -0500
+ (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1tdY68-0000Wf-7V
+ for qemu-devel@nongnu.org; Thu, 30 Jan 2025 12:13:00 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1tdY6B-0003B8-Ii
- for qemu-devel@nongnu.org; Thu, 30 Jan 2025 12:13:04 -0500
+ (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1tdY66-00039j-6E
+ for qemu-devel@nongnu.org; Thu, 30 Jan 2025 12:12:59 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1738257182;
+ s=mimecast20190719; t=1738257177;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=ESM96NOFMTrfjmv5qDklK8Zu/7Pwmxh9z7Ci8tSUiJQ=;
- b=EueG9n2/tGo9gMsmih/vi5LgB/yk3wpfdMbosRxkXTAG6vyYjeRSDyEH3zgkacBRttcO+/
- Bwks8bf9Bm00f7oSPmlAcpSEdsYyeKbNtqZmvKUTTZ0phiVfyYubw0jfhlyFAPNOCh0Sdr
- 7r190SE7AU61nqLXMQ7TuHRyZj9l/Lk=
-Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
+ bh=O9R1bvCZlCby3nJpaX4lx6Gi7/oQpcND1WUKEvZhskk=;
+ b=WEOJ48rgKP5Vu07Hnrnist9gQTJA/c62jff4p+6hPHrtAeLl/yyP1ASwbCb1yNyoZtPFH9
+ nRlcspyl9Hc6Qcx28nBfrvaEjF2Tbzv9oIvHaRn0T24HJc567+wSUuw9XDhDmVPrrfRLW+
+ fJxTjQZKT1KJiLCJ/kaTEmQiP3S3KxQ=
+Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-507-sxmmHn9XN0KhoBlQsTOTlQ-1; Thu,
- 30 Jan 2025 12:12:58 -0500
-X-MC-Unique: sxmmHn9XN0KhoBlQsTOTlQ-1
-X-Mimecast-MFC-AGG-ID: sxmmHn9XN0KhoBlQsTOTlQ
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-481-0UBNsMEPNjG7tnJvPJ-h4g-1; Thu,
+ 30 Jan 2025 12:12:56 -0500
+X-MC-Unique: 0UBNsMEPNjG7tnJvPJ-h4g-1
+X-Mimecast-MFC-AGG-ID: 0UBNsMEPNjG7tnJvPJ-h4g
 Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id D9A44195608D; Thu, 30 Jan 2025 17:12:57 +0000 (UTC)
+ by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id D0E6919560B0; Thu, 30 Jan 2025 17:12:54 +0000 (UTC)
 Received: from merkur.redhat.com (unknown [10.39.193.13])
  by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 7490B30001BE; Thu, 30 Jan 2025 17:12:55 +0000 (UTC)
+ id 6DD643003FD2; Thu, 30 Jan 2025 17:12:52 +0000 (UTC)
 From: Kevin Wolf <kwolf@redhat.com>
 To: qemu-block@nongnu.org
 Cc: kwolf@redhat.com, hreitz@redhat.com, stefanha@redhat.com,
  pkrempa@redhat.com, peterx@redhat.com, farosas@suse.de,
  qemu-devel@nongnu.org
-Subject: [PATCH v2 03/15] migration/block-active: Remove global active flag
-Date: Thu, 30 Jan 2025 18:12:34 +0100
-Message-ID: <20250130171240.286878-4-kwolf@redhat.com>
+Subject: [PATCH v2 02/15] block: Inactivate external snapshot overlays when
+ necessary
+Date: Thu, 30 Jan 2025 18:12:33 +0100
+Message-ID: <20250130171240.286878-3-kwolf@redhat.com>
 In-Reply-To: <20250130171240.286878-1-kwolf@redhat.com>
 References: <20250130171240.286878-1-kwolf@redhat.com>
 MIME-Version: 1.0
@@ -67,7 +68,7 @@ X-Spam_report: (-3.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.3,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -83,143 +84,51 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Block devices have an individual active state, a single global flag
-can't cover this correctly. This becomes more important as we allow
-users to manually manage which nodes are active or inactive.
+Putting an active block node on top of an inactive one is strictly
+speaking an invalid configuration and the next patch will turn it into a
+hard error.
 
-Now that it's allowed to call bdrv_inactivate_all() even when some
-nodes are already inactive, we can remove the flag and just
-unconditionally call bdrv_inactivate_all() and, more importantly,
-bdrv_activate_all() before we make use of the nodes.
+However, taking a snapshot while disk images are inactive after
+completing migration has an important use case: After migrating to a
+file, taking an external snapshot is what is needed to take a full VM
+snapshot.
+
+In order for this to keep working after the later patches, change
+creating a snapshot such that it automatically inactivates an overlay
+that is added on top of an already inactive node.
 
 Signed-off-by: Kevin Wolf <kwolf@redhat.com>
 ---
- migration/migration.h    |  3 ---
- migration/block-active.c | 46 ----------------------------------------
- migration/migration.c    |  8 -------
- 3 files changed, 57 deletions(-)
+ blockdev.c | 16 ++++++++++++++++
+ 1 file changed, 16 insertions(+)
 
-diff --git a/migration/migration.h b/migration/migration.h
-index 0df2a187af..9540e8f04e 100644
---- a/migration/migration.h
-+++ b/migration/migration.h
-@@ -553,7 +553,4 @@ void migration_bitmap_sync_precopy(bool last_stage);
- /* migration/block-dirty-bitmap.c */
- void dirty_bitmap_mig_init(void);
- 
--/* migration/block-active.c */
--void migration_block_active_setup(bool active);
--
- #endif
-diff --git a/migration/block-active.c b/migration/block-active.c
-index d477cf8182..40e986aade 100644
---- a/migration/block-active.c
-+++ b/migration/block-active.c
-@@ -12,51 +12,12 @@
- #include "qemu/error-report.h"
- #include "trace.h"
- 
--/*
-- * Migration-only cache to remember the block layer activation status.
-- * Protected by BQL.
-- *
-- * We need this because..
-- *
-- * - Migration can fail after block devices are invalidated (during
-- *   switchover phase).  When that happens, we need to be able to recover
-- *   the block drive status by re-activating them.
-- *
-- * - Currently bdrv_inactivate_all() is not safe to be invoked on top of
-- *   invalidated drives (even if bdrv_activate_all() is actually safe to be
-- *   called any time!).  It means remembering this could help migration to
-- *   make sure it won't invalidate twice in a row, crashing QEMU.  It can
-- *   happen when we migrate a PAUSED VM from host1 to host2, then migrate
-- *   again to host3 without starting it.  TODO: a cleaner solution is to
-- *   allow safe invoke of bdrv_inactivate_all() at anytime, like
-- *   bdrv_activate_all().
-- *
-- * For freshly started QEMU, the flag is initialized to TRUE reflecting the
-- * scenario where QEMU owns block device ownerships.
-- *
-- * For incoming QEMU taking a migration stream, the flag is initialized to
-- * FALSE reflecting that the incoming side doesn't own the block devices,
-- * not until switchover happens.
-- */
--static bool migration_block_active;
--
--/* Setup the disk activation status */
--void migration_block_active_setup(bool active)
--{
--    migration_block_active = active;
--}
--
- bool migration_block_activate(Error **errp)
- {
-     ERRP_GUARD();
- 
-     assert(bql_locked());
- 
--    if (migration_block_active) {
--        trace_migration_block_activation("active-skipped");
--        return true;
--    }
--
-     trace_migration_block_activation("active");
- 
-     bdrv_activate_all(errp);
-@@ -65,7 +26,6 @@ bool migration_block_activate(Error **errp)
-         return false;
-     }
- 
--    migration_block_active = true;
-     return true;
- }
- 
-@@ -75,11 +35,6 @@ bool migration_block_inactivate(void)
- 
-     assert(bql_locked());
- 
--    if (!migration_block_active) {
--        trace_migration_block_activation("inactive-skipped");
--        return true;
--    }
--
-     trace_migration_block_activation("inactive");
- 
-     ret = bdrv_inactivate_all();
-@@ -89,6 +44,5 @@ bool migration_block_inactivate(void)
-         return false;
-     }
- 
--    migration_block_active = false;
-     return true;
- }
-diff --git a/migration/migration.c b/migration/migration.c
-index 2d1da917c7..ae252f24e6 100644
---- a/migration/migration.c
-+++ b/migration/migration.c
-@@ -1838,12 +1838,6 @@ void qmp_migrate_incoming(const char *uri, bool has_channels,
+diff --git a/blockdev.c b/blockdev.c
+index 218024497b..eb2517f1dd 100644
+--- a/blockdev.c
++++ b/blockdev.c
+@@ -1497,6 +1497,22 @@ static void external_snapshot_action(TransactionAction *action,
          return;
      }
  
--    /*
--     * Newly setup incoming QEMU.  Mark the block active state to reflect
--     * that the src currently owns the disks.
--     */
--    migration_block_active_setup(false);
--
-     once = false;
- }
- 
-@@ -3808,8 +3802,6 @@ static void migration_instance_init(Object *obj)
-     ms->state = MIGRATION_STATUS_NONE;
-     ms->mbps = -1;
-     ms->pages_per_second = -1;
--    /* Freshly started QEMU owns all the block devices */
--    migration_block_active_setup(true);
-     qemu_sem_init(&ms->pause_sem, 0);
-     qemu_mutex_init(&ms->error_mutex);
- 
++    /*
++     * Older QEMU versions have allowed adding an active parent node to an
++     * inactive child node. This is unsafe in the general case, but there is an
++     * important use case, which is taking a VM snapshot with migration to file
++     * and then adding an external snapshot while the VM is still stopped and
++     * images are inactive. Requiring the user to explicitly create the overlay
++     * as inactive would break compatibility, so just do it automatically here
++     * to keep this working.
++     */
++    if (bdrv_is_inactive(state->old_bs) && !bdrv_is_inactive(state->new_bs)) {
++        ret = bdrv_inactivate(state->new_bs, errp);
++        if (ret < 0) {
++            return;
++        }
++    }
++
+     ret = bdrv_append(state->new_bs, state->old_bs, errp);
+     if (ret < 0) {
+         return;
 -- 
 2.48.1
 
