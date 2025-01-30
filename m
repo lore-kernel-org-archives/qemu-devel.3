@@ -4,37 +4,37 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E2D7CC0218A
-	for <qemu-devel@archiver.kernel.org>; Thu, 30 Jan 2025 04:06:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 73C6CC0218A
+	for <qemu-devel@archiver.kernel.org>; Thu, 30 Jan 2025 04:21:14 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tdLof-0003SX-5M; Wed, 29 Jan 2025 23:06:09 -0500
+	id 1tdM2M-0005Tn-FS; Wed, 29 Jan 2025 23:20:18 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <andrew@codeconstruct.com.au>)
- id 1tdLoB-0003Q7-ID; Wed, 29 Jan 2025 23:05:39 -0500
+ id 1tdM2H-0005Sv-Pu; Wed, 29 Jan 2025 23:20:13 -0500
 Received: from pi.codeconstruct.com.au ([203.29.241.158]
  helo=codeconstruct.com.au)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <andrew@codeconstruct.com.au>)
- id 1tdLo7-0003r4-G4; Wed, 29 Jan 2025 23:05:38 -0500
+ id 1tdM2E-0005Up-Rk; Wed, 29 Jan 2025 23:20:13 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=codeconstruct.com.au; s=2022a; t=1738209928;
- bh=lRW4xmauVAzJq/V1EL2szV83WG7F+jbac36gaALUJCw=;
+ d=codeconstruct.com.au; s=2022a; t=1738210803;
+ bh=C4D84i4CF6tS2QPeI8Qjd6Nh/Onsno7Sz1wsmZHhR5E=;
  h=Subject:From:To:Cc:Date:In-Reply-To:References;
- b=Ug7OeyoxWAmvrMAtjmLhvlxMv/wSF19s8e18tv5LCtIi3+AEtuEIEkqIEQp3FBLye
- Ls55C8aX0W+Gb5zrgwXas/bVfSbIoi845DpBeMxNjV5z0jSGLlvlxSGRSTiL53pPYj
- sc01w0ULT1Hz/0huqDig8K8bQ9ZJIeZrccB//qNNI9z9VoW5YxBxjr+xErKCzTrrfq
- 1Q9hY23k6Obh1LQwsgZ6dsECpQdDmPYqVgs2v6jycjxkJhF4gqWgXs8onJdptaTEU8
- zuGp2upE8DMHgTZBiZPDzrXM1AZwh95VOxA9KoDTU/c5wcCV/Rcy82Lp3KkQdkKny7
- kPzJUYb3R1t2g==
+ b=WNvsGZDr/vZ1+85k7i9mf9FMYMq76oHuhvGW0sbRPHUKl3HkAbB4eQ1JeRFYw5v31
+ 2C3QUC72mKHyYSHaFZ6i1Hbg1M7i/WcrdxqD0Oq6yiumOes3Y3cbd8QcdJkFN3DnEi
+ Tp/RKspgm83pbUd9ofUATC2Yro+3/x/s6sdwzv58M9grYoueqAZAukuojDXNE0pMyg
+ KiLob5dm7LBRJ1/KbdnkDlA6+lDgpoYfUt2WANZF/nLSrGyGkChbcunqlekQm94lC6
+ ytZXA7yzJ1upVvT4Lj5YFxQ2owT7+u2+gaS6eWRdDJAlXML6UHPUyh4FMZvA/e6JPq
+ R/MJ7Ejg2aeqA==
 Received: from [192.168.68.112] (58-7-158-64.dyn.iinet.net.au [58.7.158.64])
- by mail.codeconstruct.com.au (Postfix) with ESMTPSA id 168617383B;
- Thu, 30 Jan 2025 12:05:26 +0800 (AWST)
-Message-ID: <64382a15c40b33fcfeeecee5489e0a034313b7ec.camel@codeconstruct.com.au>
-Subject: Re: [PATCH v1 11/18] hw/misc/aspeed_scu: Add Support for
- AST2700/AST2750 A1 Silicon Revisions
+ by mail.codeconstruct.com.au (Postfix) with ESMTPSA id E9BC57383B;
+ Thu, 30 Jan 2025 12:20:02 +0800 (AWST)
+Message-ID: <cb18b72dbfce3a606a4bd7ea41732d451fbea0f1.camel@codeconstruct.com.au>
+Subject: Re: [PATCH v1 12/18] hw/arm/aspeed_ast27x0: Support two levels of
+ INTC controllers for AST2700 A1
 From: Andrew Jeffery <andrew@codeconstruct.com.au>
 To: Jamin Lin <jamin_lin@aspeedtech.com>, =?ISO-8859-1?Q?C=E9dric?= Le
  Goater <clg@kaod.org>, Peter Maydell <peter.maydell@linaro.org>, Steven Lee
@@ -42,12 +42,12 @@ To: Jamin Lin <jamin_lin@aspeedtech.com>, =?ISO-8859-1?Q?C=E9dric?= Le
  <joel@jms.id.au>, "open list:ASPEED BMCs" <qemu-arm@nongnu.org>, "open
  list:All patches CC here" <qemu-devel@nongnu.org>
 Cc: troy_lee@aspeedtech.com, yunlin.tang@aspeedtech.com
-Date: Thu, 30 Jan 2025 14:35:25 +1030
-In-Reply-To: <20250121070424.2465942-12-jamin_lin@aspeedtech.com>
+Date: Thu, 30 Jan 2025 14:49:56 +1030
+In-Reply-To: <20250121070424.2465942-13-jamin_lin@aspeedtech.com>
 References: <20250121070424.2465942-1-jamin_lin@aspeedtech.com>
- <20250121070424.2465942-12-jamin_lin@aspeedtech.com>
+ <20250121070424.2465942-13-jamin_lin@aspeedtech.com>
 Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Transfer-Encoding: base64
 User-Agent: Evolution 3.46.4-2 
 MIME-Version: 1.0
 Received-SPF: pass client-ip=203.29.241.158;
@@ -74,74 +74,136 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, 2025-01-21 at 15:04 +0800, Jamin Lin wrote:
-> Added new definitions for AST2700_A1_SILICON_REV and
-> AST2750_A1_SILICON_REV to
-> identify the A1 silicon revisions.
->=20
-> Update "aspeed_ast2700_scu_reset" to set the silicon_rev field in the
-> SCU
-> registers.
->=20
-> Signed-off-by: Jamin Lin <jamin_lin@aspeedtech.com>
-> ---
-> =C2=A0hw/misc/aspeed_scu.c=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
-=A0 | 3 +++
-> =C2=A0include/hw/misc/aspeed_scu.h | 2 ++
-> =C2=A02 files changed, 5 insertions(+)
->=20
-> diff --git a/hw/misc/aspeed_scu.c b/hw/misc/aspeed_scu.c
-> index bac1441b06..f049a9fd96 100644
-> --- a/hw/misc/aspeed_scu.c
-> +++ b/hw/misc/aspeed_scu.c
-> @@ -559,6 +559,8 @@ static uint32_t aspeed_silicon_revs[] =3D {
-> =C2=A0=C2=A0=C2=A0=C2=A0 AST2700_A0_SILICON_REV,
-> =C2=A0=C2=A0=C2=A0=C2=A0 AST2720_A0_SILICON_REV,
-> =C2=A0=C2=A0=C2=A0=C2=A0 AST2750_A0_SILICON_REV,
-> +=C2=A0=C2=A0=C2=A0 AST2700_A1_SILICON_REV,
-> +=C2=A0=C2=A0=C2=A0 AST2750_A1_SILICON_REV,
-> =C2=A0};
-> =C2=A0
-> =C2=A0bool is_supported_silicon_rev(uint32_t silicon_rev)
-> @@ -938,6 +940,7 @@ static void aspeed_ast2700_scu_reset(DeviceState
-> *dev)
-> =C2=A0=C2=A0=C2=A0=C2=A0 AspeedSCUClass *asc =3D ASPEED_SCU_GET_CLASS(dev=
-);
-> =C2=A0
-> =C2=A0=C2=A0=C2=A0=C2=A0 memcpy(s->regs, asc->resets, asc->nr_regs * 4);
-> +=C2=A0=C2=A0=C2=A0 s->regs[AST2700_SILICON_REV] =3D s->silicon_rev;
-
-Has s->silicon_rev been set?
-
-Should we now remove the AST2700_SILICON_REV entry from asc->resets?
-
-This seems like a fix regardless. Perhaps separate it from the addition
-of the new silicon IDs?
-
-> =C2=A0}
-> =C2=A0
-> =C2=A0static void aspeed_2700_scu_class_init(ObjectClass *klass, void
-> *data)
-> diff --git a/include/hw/misc/aspeed_scu.h
-> b/include/hw/misc/aspeed_scu.h
-> index 356be95e45..684b48b722 100644
-> --- a/include/hw/misc/aspeed_scu.h
-> +++ b/include/hw/misc/aspeed_scu.h
-> @@ -54,6 +54,8 @@ struct AspeedSCUState {
-> =C2=A0#define AST2700_A0_SILICON_REV=C2=A0=C2=A0 0x06000103U
-> =C2=A0#define AST2720_A0_SILICON_REV=C2=A0=C2=A0 0x06000203U
-> =C2=A0#define AST2750_A0_SILICON_REV=C2=A0=C2=A0 0x06000003U
-> +#define AST2700_A1_SILICON_REV=C2=A0=C2=A0 0x06010103U
-> +#define AST2750_A1_SILICON_REV=C2=A0=C2=A0 0x06010003U
-
-These look fine.
-
-Andrew
-
-> =C2=A0
-> =C2=A0#define ASPEED_IS_AST2500(si_rev)=C2=A0=C2=A0=C2=A0=C2=A0 ((((si_re=
-v) >> 24) & 0xff) =3D=3D
-> 0x04)
-> =C2=A0
+T24gVHVlLCAyMDI1LTAxLTIxIGF0IDE1OjA0ICswODAwLCBKYW1pbiBMaW4gd3JvdGU6Cj4gVGhl
+IGRlc2lnbiBvZiBJTlRDIGNvbnRyb2xsZXJzIGhhcyBzaWduaWZpY2FudGx5IGNoYW5nZWQgaW4g
+QVNUMjcwMCBBMS4KPiAKPiBUaGVyZSBhcmUgYSB0b3RhbCBvZiA0ODAgaW50ZXJydXB0IHNvdXJj
+ZXMgaW4gQVNUMjcwMCBBMS4gRm9yIGludGVycnVwdCBudW1iZXJzCj4gZnJvbSAwIHRvIDEyNywg
+dGhleSBjYW4gcm91dGUgZGlyZWN0bHkgdG8gUFNQLCBTU1AsIGFuZCBUU1AuIER1ZSB0byB0aGUK
+PiBsaW1pdGF0aW9uIG9mIGludGVycnVwdCBudW1iZXJzIG9mIHByb2Nlc3NvcnMsIHRoZSBpbnRl
+cnJ1cHRzIGFyZSBtZXJnZWQgZXZlcnkKPiAzMiBzb3VyY2VzIGZvciBpbnRlcnJ1cHQgbnVtYmVy
+cyBncmVhdGVyIHRoYW4gMTI3Lgo+IAo+IFRoZXJlIGFyZSB0d28gbGV2ZWxzIG9mIGludGVycnVw
+dCBjb250cm9sbGVycywgSU5UQzAgYW5kIElOVEMxLiBUaGUgaW50ZXJydXB0Cj4gc291cmNlcyBv
+ZiBJTlRDMCBhcmUgdGhlIGludGVycnVwdCBudW1iZXJzIGZyb20gSU5UQ18wIHRvIElOVENfMTI3
+IGFuZAo+IGludGVycnVwdHMgZnJvbSBJTlRDMS4gVGhlIGludGVycnVwdCBzb3VyY2VzIG9mIElO
+VEMxIGFyZSB0aGUgaW50ZXJydXB0IG51bWJlcnMKPiBncmVhdGVyIHRoYW4gSU5UQ18xMjcuIElO
+VEMxIGNvbnRyb2xzIHRoZSBpbnRlcnJ1cHRzIElOVENfMTI4IHRvIElOVENfMzE5IG9ubHkuCj4g
+Cj4gQ3VycmVudGx5LCBvbmx5IEdJQyAxOTIgdG8gMjAxIGFyZSBzdXBwb3J0ZWQsIGFuZCB0aGVp
+ciBzb3VyY2UgaW50ZXJydXB0cyBhcmUKPiBmcm9tIElOVEMxIGFuZCBjb25uZWN0ZWQgdG8gSU5U
+QzAgYXQgaW5wdXQgcGluIDAgYW5kIG91dHB1dCBwaW5zIDAgdG8gOSBmb3IKPiBHSUMgMTkyLTIw
+MS4KPiAKPiBUbyBzdXBwb3J0IGJvdGggQVNUMjcwMCBBMSBhbmQgQTAsIElOVEMwIGlucHV0IHBp
+bnMgMSB0byA5IGFuZCBvdXRwdXQgcGlucwo+IDEwIHRvIDE4IHJlbWFpbiB0byBzdXBwb3J0IEdJ
+QyAxMjgtMTM2LCB3aGljaCBzb3VyY2UgaW50ZXJydXB0cyBmcm9tIElOVEMwLgo+IFRoZXNlIHdp
+bGwgYmUgcmVtb3ZlZCBpZiB3ZSBkZWNpZGUgbm90IHRvIHN1cHBvcnQgQVNUMjcwMCBBMCBpbiB0
+aGUgZnV0dXJlLgo+IAo+ICstLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0t
+LS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0rCj4gPiDCoMKg
+wqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgIEFTVDI3MDAg
+QTEgRGVzaWduwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKg
+wqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoCB8Cj4gPiDCoMKgwqDCoMKgwqDCoMKg
+wqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDC
+oMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKg
+wqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoCB8Cj4gPiDCoMKgwqDCoMKg
+wqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoCArLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0r
+wqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDC
+oMKgwqDCoMKgwqDCoMKgwqAgfAo+ID4gwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDC
+oMKgwqAgfMKgwqDCoMKgwqDCoMKgwqAgSU5UQzHCoMKgwqDCoMKgwqDCoMKgwqDCoMKgIHzCoMKg
+wqDCoMKgwqDCoCArLS0tLS0tLS0tLS0tLS0tK8KgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoCB8Cj4g
+PiDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoCB8wqDCoMKgwqDCoMKgwqDC
+oMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqAgfMKgwqDCoMKgwqDCoMKgIHzCoCBv
+cmdhdGVzWzBdwqDCoCB8wqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgIHwKPiA+IMKgwqAgb3JnYXRl
+c1swXSstLS0tPiB8aW5waW5bMF0rLS0tLS0tLT5vdXRwaW5bMF0rLS0tLS0tPiB8IDDCoMKgwqDC
+oMKgwqDCoMKgwqDCoMKgwqAgfMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoCB8Cj4gPiDCoMKgIG9y
+Z2F0ZXNbMV18LS0tLT4gfGlucGluWzFdfC0tLS0tLS0+b3V0cGluWzFdfC0tLS0tLT4gfCAxwqDC
+oCAwLTMxIGJpdHMgKy0tK8KgwqDCoMKgwqDCoMKgwqDCoCB8Cj4gPiDCoMKgIG9yZ2F0ZXNbMl18
+LS0tLT4gfGlucGluWzJdfC0tLS0tLS0+b3V0cGluWzJdfC0tLS0tLT4gfCAywqDCoMKgwqDCoMKg
+wqDCoMKgwqDCoMKgIHzCoCB8wqDCoMKgwqDCoMKgwqDCoMKgIHwKPiA+IMKgwqAgb3JnYXRlc1sz
+XXwtLS0tPiB8aW5waW5bM118LS0tLS0tLT5vdXRwaW5bM118LS0tLS0tPiB8IDPCoMKgwqDCoMKg
+wqDCoMKgwqDCoMKgwqAgfMKgIHzCoMKgwqDCoMKgwqDCoMKgwqAgfAo+ID4gwqDCoCBvcmdhdGVz
+WzRdfC0tLS0+IHxpbnBpbls0XXwtLS0tLS0tPm91dHBpbls0XXwtLS0tLS0+IHwgNMKgwqDCoMKg
+wqDCoMKgwqDCoMKgwqDCoCB8wqAgfMKgwqDCoMKgwqDCoMKgwqDCoCB8Cj4gPiDCoMKgIG9yZ2F0
+ZXNbNV0rLS0tLT4gfGlucGluWzVdKy0tLS0tLS0+b3V0cGluWzVdKy0tLS0tLT4gfCA1wqDCoMKg
+wqDCoMKgwqDCoMKgwqDCoMKgIHzCoCB8wqDCoMKgwqDCoMKgwqDCoMKgIHwKPiA+IMKgwqDCoMKg
+wqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgIHzCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDC
+oMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoCB8wqDCoMKgwqDCoMKgwqAgfC0tLS0tLS0tLS0tLS0t
+LXzCoCB8wqDCoMKgwqDCoMKgwqDCoMKgIHwKPiA+IMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKg
+wqDCoMKgwqDCoMKgICstLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLSvCoMKgwqDCoMKgwqDCoMKg
+wqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgIHzCoMKgwqDCoMKgwqDCoMKgwqAg
+fAo+ID4gwqDCoCArLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0t
+LS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS18wqDCoMKgwqDCoMKgwqDCoMKgIHwKPiA+IMKgwqAg
+fMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKg
+wqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDC
+oMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoCB8Cj4gPiDC
+oMKgIHzCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKg
+wqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDC
+oMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqAgfAo+
+ID4gwqDCoCB8wqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgICstLS0tLS0tLS0tLS0tLS0t
+LS0tLS0tLS0tLS0tLS0rwqDCoMKgwqDCoMKgwqDCoMKgwqAgKy0tLS0tLS0tLS0tLS0tLS0tK8Kg
+wqDCoCB8Cj4gPiDCoMKgIHzCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqAgfMKgwqDCoMKg
+wqDCoMKgwqDCoMKgwqAgSU5UQzDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqAgfMKgwqDCoMKgwqDC
+oMKgwqDCoMKgIHzCoMKgwqDCoCBHSUPCoMKgwqDCoMKgwqDCoMKgIHzCoMKgwqAgfAo+ID4gwqDC
+oCB8wqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgIHxpbnBpblswOjBdLS0tLS0tLS0tPm91
+dHBpblswXSArLS0tLS0tLS0tPiB8MTkywqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqAgfMKgwqDC
+oCB8Cj4gPiDCoMKgIHzCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqAgfGlucGluWzA6MV18
+LS0tLS0tLS0+b3V0cGluWzFdIHwtLS0tLS0tLS0+IHwxOTPCoMKgwqDCoMKgwqDCoMKgwqDCoMKg
+wqDCoCB8wqDCoMKgIHwKPiA+IMKgwqAgfMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoCB8
+aW5waW5bMDoyXXwtLS0tLS0tLT5vdXRwaW5bMl0gfC0tLS0tLS0tLT4gfDE5NMKgwqDCoMKgwqDC
+oMKgwqDCoMKgwqDCoMKgIHzCoMKgwqAgfAo+ID4gwqDCoCB8wqDCoMKgwqDCoMKgwqDCoMKgwqDC
+oMKgwqDCoMKgIHxpbnBpblswOjNdfC0tLS0tLS0tPm91dHBpblszXSB8LS0tLS0tLS0tPiB8MTk1
+wqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqAgfMKgwqDCoCB8Cj4gPiDCoMKgID4tLS0tLS0tLS0t
+LS0tLT4gfGlucGluWzA6NF18LS0tLS0tLS0+b3V0cGluWzRdIHwtLS0tLS0tLS0+IHwxOTbCoMKg
+wqDCoMKgwqDCoMKgwqDCoMKgwqDCoCB8wqDCoMKgIHwKPiA+IMKgwqDCoMKgwqDCoMKgwqDCoMKg
+wqDCoMKgwqDCoMKgwqDCoMKgIHxpbnBpblswOjVdfC0tLS0tLS0tPm91dHBpbls1XSB8LS0tLS0t
+LS0tPiB8MTk3wqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqAgfMKgwqDCoCB8Cj4gPiDCoMKgwqDC
+oMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoCB8aW5waW5bMDo2XXwtLS0tLS0tLT5vdXRw
+aW5bNl0gfC0tLS0tLS0tLT4gfDE5OMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgIHzCoMKgwqAg
+fAo+ID4gwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqAgfGlucGluWzA6N118
+LS0tLS0tLS0+b3V0cGluWzddIHwtLS0tLS0tLS0+IHwxOTnCoMKgwqDCoMKgwqDCoMKgwqDCoMKg
+wqDCoCB8wqDCoMKgIHwKPiA+IMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKg
+IHxpbnBpblswOjhdfC0tLS0tLS0tPm91dHBpbls4XSB8LS0tLS0tLS0tPiB8MjAwwqDCoMKgwqDC
+oMKgwqDCoMKgwqDCoMKgwqAgfMKgwqDCoCB8Cj4gPiDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDC
+oMKgwqDCoMKgwqDCoCB8aW5waW5bMDo5XXwtLS0tLS0tLT5vdXRwaW5bOV0gfC0tLS0tLS0tLT4g
+fDIwMcKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgIHzCoMKgwqAgfAo+ICstLS0tLS0tLS0tLS0t
+LS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0t
+LS0tLS0tLS0tLS0tLS0tLS0rCj4gKy0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0t
+LS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLSsKPiA+
+IMKgIG9yZ2F0ZXNbMV18LS0tLS0+IHxpbnBpblsxXXwtLS0tLS0tLS0tPm91dHBpblsxMF18LS0t
+LS0tLS0tPiB8MTI4wqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqAgfMKgwqDCoCB8Cj4gPiDCoCBv
+cmdhdGVzWzJdfC0tLS0tPiB8aW5waW5bMl18LS0tLS0tLS0tLT5vdXRwaW5bMTFdfC0tLS0tLS0t
+LT4gfDEyOcKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgIHzCoMKgwqAgfAo+ID4gwqAgb3JnYXRl
+c1szXXwtLS0tLT4gfGlucGluWzNdfC0tLS0tLS0tLS0+b3V0cGluWzEyXXwtLS0tLS0tLS0+IHwx
+MzDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoCB8wqDCoMKgIHwKPiA+IMKgIG9yZ2F0ZXNbNF18
+LS0tLS0+IHxpbnBpbls0XXwtLS0tLS0tLS0tPm91dHBpblsxM118LS0tLS0tLS0tPiB8MTMxwqDC
+oMKgwqDCoMKgwqDCoMKgwqDCoMKgwqAgfMKgwqDCoCB8Cj4gPiDCoCBvcmdhdGVzWzVdfC0tLS0t
+PiB8aW5waW5bNV18LS0tLS0tLS0tLT5vdXRwaW5bMTRdfC0tLS0tLS0tLT4gfDEzMsKgwqDCoMKg
+wqDCoMKgwqDCoMKgwqDCoMKgIHzCoMKgwqAgfAo+ID4gwqAgb3JnYXRlc1s2XXwtLS0tLT4gfGlu
+cGluWzZdfC0tLS0tLS0tLS0+b3V0cGluWzE1XXwtLS0tLS0tLS0+IHwxMzPCoMKgwqDCoMKgwqDC
+oMKgwqDCoMKgwqDCoCB8wqDCoMKgIHwKPiA+IMKgIG9yZ2F0ZXNbN118LS0tLS0+IHxpbnBpbls3
+XXwtLS0tLS0tLS0tPm91dHBpblsxNl18LS0tLS0tLS0tPiB8MTM0wqDCoMKgwqDCoMKgwqDCoMKg
+wqDCoMKgwqAgfMKgwqDCoCB8Cj4gPiDCoCBvcmdhdGVzWzhdfC0tLS0tPiB8aW5waW5bOF18LS0t
+LS0tLS0tLT5vdXRwaW5bMTddfC0tLS0tLS0tLT4gfDEzNcKgwqDCoMKgwqDCoMKgwqDCoMKgwqDC
+oMKgIHzCoMKgwqAgfAo+ID4gwqAgb3JnYXRlc1s5XSstLS0tLT4gfGlucGluWzldfC0tLS0tLS0t
+LS0+b3V0cGluWzE4XSstLS0tLS0tLS0+IHwxMzbCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoCB8
+wqDCoMKgIHwKPiA+IMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgICstLS0t
+LS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0rwqDCoMKgwqDCoMKgwqDCoMKgwqAgKy0tLS0tLS0t
+LS0tLS0tLS0tK8KgwqDCoCB8Cj4gPiDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKg
+wqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDC
+oMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKg
+wqDCoMKgwqDCoMKgwqDCoMKgwqDCoCB8Cj4gPiDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKg
+wqDCoMKgwqDCoCBBU1QyNzAwIEEwIERlc2lnbsKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDC
+oMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKg
+wqDCoMKgwqDCoCB8Cj4gPiDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKg
+wqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDC
+oMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKg
+wqDCoMKgwqDCoMKgwqDCoCB8Cj4gKy0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0t
+LS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLSsKPiAK
+Ck9rYXksIHNvIEkgdGhpbmsgdGhpcyBpcyB0aGUgZGlhZ3JhbSBhbmQgZGlzY3Vzc2lvbiBJIGFz
+a2VkIGZvciBhcwpkb2N1bWVudGF0aW9uIGVhcmxpZXIuIEkgc3RpbGwgcHJlZmVyIGl0IGRvZXNu
+J3QganVzdCBsaXZlIGluIGEgY29tbWl0Cm1lc3NhZ2UsIHRoYXQgeW91IHB1bGwgaXQgb3V0IHRv
+IGEgc2VwYXJhdGUgZG9jdW1lbnQgdGhhdCB3ZSBjYW4gZWFzaWx5CnBvaW50IHRvIGFuZCBldm9s
+dmUuCgpJJ20gYSBsaXR0bGUgaGF6eSBvbiBzb21lIG9mIHlvdXIgbm90YXRpb24gaW4gZGlhZ3Jh
+bSB0aG91Z2guIENhbiB5b3UKZXhwbGFpbiB5b3VyIHVzZSBvZiBwaXBlcyAoInwiKSwgcGx1c3Nl
+cyAoIisiKSwgdGhlICJvcmdhdGVzIiB0byB0aGUKbGVmdCBvZiBJTlRDMSAod2hhdCBhcmUgdGhl
+eSBPUmluZz8pLCBhbmQgdGhlIGNob2ljZSBvZiA1IGxpbmVzIGludG8KdGhlICJvcmdhdGVzWzBd
+IiBib3g/IEFsc28gd2h5IGRvZXMgdGhlICJvcmdhdGVzWzBdIiBhcnJvdyBwb2ludCB3aGVyZQpp
+dCBkb2VzIG9uIElOVEMwPwoKQW5kcmV3Cg==
 
 
