@@ -4,43 +4,44 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 88B5DC0218A
-	for <qemu-devel@archiver.kernel.org>; Thu, 30 Jan 2025 13:31:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5DCE9C0218A
+	for <qemu-devel@archiver.kernel.org>; Thu, 30 Jan 2025 13:31:15 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tdUbs-0004is-4r; Thu, 30 Jan 2025 08:29:32 -0500
+	id 1tdUbr-0004iN-2W; Thu, 30 Jan 2025 08:29:31 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <deller@kernel.org>) id 1tdUbq-0004iF-7x
- for qemu-devel@nongnu.org; Thu, 30 Jan 2025 08:29:30 -0500
+ (Exim 4.90_1) (envelope-from <deller@kernel.org>) id 1tdUbo-0004hh-Um
+ for qemu-devel@nongnu.org; Thu, 30 Jan 2025 08:29:28 -0500
 Received: from dfw.source.kernel.org ([2604:1380:4641:c500::1])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <deller@kernel.org>) id 1tdUbo-0001PK-OP
- for qemu-devel@nongnu.org; Thu, 30 Jan 2025 08:29:29 -0500
+ (Exim 4.90_1) (envelope-from <deller@kernel.org>) id 1tdUbn-0001Pa-FK
+ for qemu-devel@nongnu.org; Thu, 30 Jan 2025 08:29:28 -0500
 Received: from smtp.kernel.org (transwarp.subspace.kernel.org [100.75.92.58])
- by dfw.source.kernel.org (Postfix) with ESMTP id 3C86E5C05CD;
- Thu, 30 Jan 2025 13:28:48 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C83CBC4CED2;
- Thu, 30 Jan 2025 13:29:26 +0000 (UTC)
+ by dfw.source.kernel.org (Postfix) with ESMTP id 98B255C03F5;
+ Thu, 30 Jan 2025 13:28:46 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2BA64C4CED2;
+ Thu, 30 Jan 2025 13:29:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
- s=k20201202; t=1738243768;
- bh=TTZQ3gdFh6H6hJ0o3arXtbhMAP/Olm8bzx/GKUy+TWI=;
+ s=k20201202; t=1738243766;
+ bh=EdUmbIHS6wsR+QKUpjXCHpozaxkbBLR0Vx1ZIKvUOQA=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
- b=go3z/Y+Y96v0V6FQYz7+I5P/d55oszu4HB5K71ZxBLUpMW7KjGxXX95PL3RU1iXi4
- XKrmrYvGy+6vOMq2EVU+40u4Rm3zyOvqiYV8Muwi69n3WIDxl++HseRic1GvGaUUI/
- VucfxOFlYGm08T8ZxoRp+4Mf+HdQtfnWiJu+KlX0I8AWiYgwiniKopvj+Qfziwz8o5
- ShtcnAoDfXlURLlEZHnMF7vDQHm4doRP9jmqc8YVxIE9yXP3gpOX5leRPiG2BQfU9R
- Ji2ujXsHKv5quUDTgv226+sfTPH65GbxgsybYqBfTNBlEd173JLvQmEIC4KlJi1nIK
- ilUQ1Tot2JMqw==
+ b=GW2nmuwaG7u68z50KfCKJGTsZPi+mPl0vSZTHkxWya2QuMFW1iavQZqSJ4zCR0NmY
+ Vs/H0sXg3RMcOQtEI0GNIqUQGz9dIHVdsQINLo9henL8OHRoEIX4YRmvU2uS9MVicb
+ WRS/duEPIIO1v29/dwriY0FS6yFdy8iGJE1C0l8KJWS8IKiF0xqA/Dpgf1qHUKS084
+ jVLpatEBnFvCGjbQGwmGeAYAvs6xQQue128Nh+QjWpzEheFDQ1D+hOehu2RWb8tm7l
+ 3otLger7RwcoGRk5jerBxPIjBpKGbMmRaLa84J2I5jU1weWu7992IcZYfRJoBV/uis
+ yqQR+hXX1838g==
 From: deller@kernel.org
 To: qemu-devel@nongnu.org, Stefan Hajnoczi <stefanha@redhat.com>,
  Richard Henderson <richard.henderson@linaro.org>,
  Peter Maydell <peter.maydell@linaro.org>
 Cc: deller@gmx.de
-Subject: [PULL 6/9] target/hppa: Add instruction decoding for mfdiag and mtdiag
-Date: Thu, 30 Jan 2025 14:29:11 +0100
-Message-ID: <20250130132915.16846-7-deller@kernel.org>
+Subject: [PULL 5/9] target/hppa: Drop diag_getshadowregs_pa2 and
+ diag_putshadowregs_pa2
+Date: Thu, 30 Jan 2025 14:29:10 +0100
+Message-ID: <20250130132915.16846-6-deller@kernel.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20250130132915.16846-1-deller@kernel.org>
 References: <20250130132915.16846-1-deller@kernel.org>
@@ -72,61 +73,57 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Helge Deller <deller@gmx.de>
 
-Add 32- and 64-bit instruction decoding of the mfdiag and mtdiag
-instructions which modify the diagnose registers.
+diag_getshadowregs_pa2() and diag_putshadowregs_pa2() were added in
+commit 3bdf20819e68 based on some analysis of ODE code, but now they
+conflict with the generic mfdiag/mtdiag instructions. I believe the
+former analysis was wrong, so remove them again. Note that all diag
+instructions are badly documented, so most things are based on reverse
+engineering and thus may be wrong.
 
 Signed-off-by: Helge Deller <deller@gmx.de>
+Fixes: 3bdf20819e68 ("target/hppa: Add diag instructions to set/restore shadow registers")
 Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 ---
- target/hppa/insns.decode |  4 ++++
- target/hppa/translate.c  | 20 ++++++++++++++++++++
- 2 files changed, 24 insertions(+)
+ target/hppa/insns.decode |  2 --
+ target/hppa/translate.c  | 10 ----------
+ 2 files changed, 12 deletions(-)
 
 diff --git a/target/hppa/insns.decode b/target/hppa/insns.decode
-index 527c453443..4eaac750ea 100644
+index 71074a64c1..527c453443 100644
 --- a/target/hppa/insns.decode
 +++ b/target/hppa/insns.decode
-@@ -644,8 +644,12 @@ xmpyu           001110 ..... ..... 010 .0111 .00 t:5    r1=%ra64 r2=%rb64
-     # For 32-bit PA-7300LC (PCX-L2)
-     diag_getshadowregs_pa1  000101 00 0000 0000 0001 1010 0000 0000
+@@ -646,8 +646,6 @@ xmpyu           001110 ..... ..... 010 .0111 .00 t:5    r1=%ra64 r2=%rb64
      diag_putshadowregs_pa1  000101 00 0000 0000 0001 1010 0100 0000
-+    diag_mfdiag             000101 dr:5  rt:5   0000 0110 0000 0000
-+    diag_mtdiag             000101 dr:5  r1:5   0001 0110 0000 0000
  
      # For 64-bit PA8700 (PCX-W2)
-+    diag_mfdiag             000101 dr:5  0 0000 0000 1000 101  rt:5
-+    diag_mtdiag             000101 dr:5  r1:5   0001 1000 0100 0000
+-    diag_getshadowregs_pa2  000101 00 0111 1000 0001 1000 0100 0000
+-    diag_putshadowregs_pa2  000101 00 0111 0000 0001 1000 0100 0000
    ]
    diag_unimp                000101 i:26
  }
 diff --git a/target/hppa/translate.c b/target/hppa/translate.c
-index 30fba5297a..7b9d3deb39 100644
+index dc04f9f3c0..30fba5297a 100644
 --- a/target/hppa/translate.c
 +++ b/target/hppa/translate.c
-@@ -4598,6 +4598,26 @@ static bool trans_diag_putshadowregs_pa1(DisasContext *ctx, arg_empty *a)
+@@ -4593,21 +4593,11 @@ static bool trans_diag_getshadowregs_pa1(DisasContext *ctx, arg_empty *a)
+     return !ctx->is_pa20 && do_getshadowregs(ctx);
+ }
+ 
+-static bool trans_diag_getshadowregs_pa2(DisasContext *ctx, arg_empty *a)
+-{
+-    return ctx->is_pa20 && do_getshadowregs(ctx);
+-}
+-
+ static bool trans_diag_putshadowregs_pa1(DisasContext *ctx, arg_empty *a)
+ {
      return !ctx->is_pa20 && do_putshadowregs(ctx);
  }
  
-+static bool trans_diag_mfdiag(DisasContext *ctx, arg_diag_mfdiag *a)
-+{
-+    CHECK_MOST_PRIVILEGED(EXCP_PRIV_OPR);
-+    nullify_over(ctx);
-+    TCGv_i64 dest = dest_gpr(ctx, a->rt);
-+    tcg_gen_ld_i64(dest, tcg_env,
-+                       offsetof(CPUHPPAState, dr[a->dr]));
-+    save_gpr(ctx, a->rt, dest);
-+    return nullify_end(ctx);
-+}
-+
-+static bool trans_diag_mtdiag(DisasContext *ctx, arg_diag_mtdiag *a)
-+{
-+    CHECK_MOST_PRIVILEGED(EXCP_PRIV_OPR);
-+    nullify_over(ctx);
-+    tcg_gen_st_i64(load_gpr(ctx, a->r1), tcg_env,
-+                        offsetof(CPUHPPAState, dr[a->dr]));
-+    return nullify_end(ctx);
-+}
-+
+-static bool trans_diag_putshadowregs_pa2(DisasContext *ctx, arg_empty *a)
+-{
+-    return ctx->is_pa20 && do_putshadowregs(ctx);
+-}
+-
  static bool trans_diag_unimp(DisasContext *ctx, arg_diag_unimp *a)
  {
      CHECK_MOST_PRIVILEGED(EXCP_PRIV_OPR);
