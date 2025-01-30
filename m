@@ -4,89 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6E5ADC0218A
-	for <qemu-devel@archiver.kernel.org>; Thu, 30 Jan 2025 18:26:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 60AFFC02190
+	for <qemu-devel@archiver.kernel.org>; Thu, 30 Jan 2025 18:26:58 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tdZCR-0003y0-Bl; Thu, 30 Jan 2025 13:23:35 -0500
+	id 1tdZCQ-0003xZ-UX; Thu, 30 Jan 2025 13:23:35 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1tdZCL-0003u9-Ft
- for qemu-devel@nongnu.org; Thu, 30 Jan 2025 13:23:30 -0500
-Received: from mail-wr1-x436.google.com ([2a00:1450:4864:20::436])
+ id 1tdZCC-0003rX-GR
+ for qemu-devel@nongnu.org; Thu, 30 Jan 2025 13:23:20 -0500
+Received: from mail-wr1-x435.google.com ([2a00:1450:4864:20::435])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1tdZCJ-0000Yc-Iw
- for qemu-devel@nongnu.org; Thu, 30 Jan 2025 13:23:29 -0500
-Received: by mail-wr1-x436.google.com with SMTP id
- ffacd0b85a97d-385deda28b3so667132f8f.0
- for <qemu-devel@nongnu.org>; Thu, 30 Jan 2025 10:23:27 -0800 (PST)
+ id 1tdZC8-0000Tc-0u
+ for qemu-devel@nongnu.org; Thu, 30 Jan 2025 13:23:20 -0500
+Received: by mail-wr1-x435.google.com with SMTP id
+ ffacd0b85a97d-385deda28b3so667018f8f.0
+ for <qemu-devel@nongnu.org>; Thu, 30 Jan 2025 10:23:14 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1738261406; x=1738866206; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=hmP8UEFFJb/lmaE2ZgdfHHn0pCkyFx+RjhYIX8J7P0Q=;
- b=wjHx+KfK1qan9SGD7R9+UubvVr431lMZ4Hud71zAbFwVyevdmabmeK+Azx0G3WfFrn
- +NP3vLgvdM6cqBQKSUcYrqOSpmAa2yse8C02z7OUxfwBSMQ4nt7pAYq+inbep81QPph+
- eiT+93EPZuoxCwmX9d9oD7xuhXeo1junleMMdzAaxb3Cgk/FBJn+EiRMO6x1jYW0oHX/
- OHv69DtYSQVn0Okak6p9x5JS4U+Mj4ToBVv2Lh3nHNz52kDx53qpW/0dZ9hkvYI/1Zh0
- 9OcA6U46dwx+J4IF8GCD9gStXAMBsL+jt2EII4Vazt7WEOBmnIIcHgrOUbSNc1+DIAmK
- kW7g==
+ d=linaro.org; s=google; t=1738261391; x=1738866191; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=LiTob6eVO3/nTRL2jXJ4ehBWxJYYOLR6mf/DNOwkNQk=;
+ b=g3GJIW6R2aBGGIsRpXzYc4P1aM3MkIfNytWCycnN/3qhBVXnEKSqw5EKruI73x6D4j
+ TFZrpeQU3ygF94oIB3xQW0qWvi3BUnCPy6aNHn5R0fZ8x/WLDWwVjkAcpAVBfF1m+O/b
+ u+ZjZlSkZdpN6aWTaddjglQpjnLzkFnRGQRQEhFZNrrI/k1k4vHkj+SGHd3yX3L5V6bm
+ Fy3SQvlq5iBeZlcYoCToaEGT/A9+iGtxYmVQlZHbryuxWX6g/si3HZXTD+fm8QkRGIuk
+ B2ANs3oBEP7iXz3WDwne/dTL88knkLu66Xc/R2ur9jetnZASzQRReOWjIzmOgDRdXWAc
+ AWMA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1738261406; x=1738866206;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=hmP8UEFFJb/lmaE2ZgdfHHn0pCkyFx+RjhYIX8J7P0Q=;
- b=QJUheJuh+BLPq4D6yI+w4svkeIuhA7/Ta8vZA802b44CkeW754o+8OdTkEmtLopozW
- aHqpRAMWG6muzTLueoYmFLPjU3QM2rqQ41yjdx4g+78tfiK7EaJffuVYPo2BjsAFWj3h
- nyBzKKaOeFhJOkEQ2d7yex0W/8CTN6laOngATG3dKcwmG8P08w1JxT1TXPK31It1y3MD
- KSwbGxNHyIShGgglwM6bGRO8bxyf7k55M5vPNrjH5Bx7TyzxS7HPN1DXdtndDtkbB/rI
- UkTUtdcYFUAi2POHPPM2rrTAHlTbTQic+S2E9d0NnVC+FPEG4LBm4TdZ8KPDODi4c1hg
- JT2w==
+ d=1e100.net; s=20230601; t=1738261391; x=1738866191;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=LiTob6eVO3/nTRL2jXJ4ehBWxJYYOLR6mf/DNOwkNQk=;
+ b=g3IuGcKYuJcTk2KQq4MxubBUItEnISABt1/ro+H0d0lPMe/4k4Hdca42cX3OGYBcpg
+ J9jTkALiLQbpBKqSlOwtK5mTFP23GobITtr0z0RIppf8DLXLZoA5azxWZDHFVdC8C4Q6
+ RgmLoFziFk4nbCmzgbymM0dGQX/uI3lg42WVN7W8dDt2cG1/euuERSVP/RjIBzVtvigJ
+ /8n2p4NwhtyAKAbTCGqnByfp8jAsHLNawTiwLrejzIHP7c6L5IMKjIMXfsb7+cfQ9pKN
+ 0QHy78t//f/7AC+1BYaTMV41aiZvjRTzXq2Lo/kxmq/JykHc+a2K1vy+sTI7XooWueWN
+ 1q/w==
 X-Forwarded-Encrypted: i=1;
- AJvYcCXJNxLIWW9d3I4EURBEho5qOEwjApgIbOdvcacAtSTTM5mHgb93FNr8VsXauM2y3pnw4rzMkT1INK3X@nongnu.org
-X-Gm-Message-State: AOJu0Yx+sAP7YE0RXcoyelOR/kiivSzugCEJv/obWColiDdWoMnhirh8
- iQC3XMubBmxbGvWGT5afPdKAg2LLPaBliTHaNu14LujMbLxIhAzdGvaHqGgPtMWhZDh4ZeC9+BN
- L
-X-Gm-Gg: ASbGnctLk9wTwAH0D5C5fZXWpB9IQD9K2bOVIYB5SBAe7wlgPqJ4ZjVMLhrrV+MkG2l
- QprywMgKoCl8WbjUz6qW2bIFgpt3BHLDo0XvjGLZUo8qu0pszkMtMqSE8mMRSIwKygCyDpvhCZV
- zP8D5YDWKPckzW3j0lONgxa6k92o1/CSmz5j2g18nRLOoHIffl+UPz1YtJqxFUFww3Qo9dAWl+j
- wwCmeRbYfECQl3ZlpAAqXn9SJgP1uFTkb0YPGxq2PowAILUjMnukt0+pXUb0+ibdOrj9tq6UESG
- ma087jYMV8zDEi3dQIBFaw==
-X-Google-Smtp-Source: AGHT+IG8aY4r7B2b0xDU0aJSvyMovUrSwG/pPfK7hVFdfZtHezOuCQ61vk4gxxdxsTyiDNbfTQoHdw==
-X-Received: by 2002:a05:6000:dd2:b0:385:f0c9:4b66 with SMTP id
- ffacd0b85a97d-38c51969feemr6698796f8f.33.1738261405982; 
- Thu, 30 Jan 2025 10:23:25 -0800 (PST)
+ AJvYcCXExUcJtwxBG+lSh1bHDWY2952SdD0Ir3e1Vh1z+gtp4MzB5grJRU46aNMHUKjIu82SVLn8P6aw6z9L@nongnu.org
+X-Gm-Message-State: AOJu0YwqLy/y/RJdVZBELPAkGaypexD6fUZuI+ur7x4CNGl3xwf4G348
+ XjtcTEsM93D0+N3SagdwWOzWpJVQhw1FCJBy3t5/XGxaMOnqmtmxqk8oLY4gZ4Q=
+X-Gm-Gg: ASbGnct39V5U0+VSEmqSD05shcEhg8TJKMVjqHDx875NDA9pwiurlk32iYd7hSRv43Z
+ IC16a0V1YAo2s38OwYbIew/W+kjQd8LJveiml4OXmszMP9Kp/BERw+9kjLdY0Pcv2S27lNJDbs8
+ 9MQXCZQvFy5kH9hvbndq67V29CjVvkiVOTvq7aOJy0kG+TOQ015nQR8Czjv9twfawrjpTWk9CJd
+ VlXOGMKjK8DzpnuPe75HFWp8wKIVoEAiXxxsLgMf2D7cCArerctLiQ4F1oyW4EqkDPEbyFdg1Wz
+ os2e5prXtF0WDucy0mMcOQ==
+X-Google-Smtp-Source: AGHT+IGD9JikmYxLrxdEHhCKfC/JKg4qUSVgE4ZzgaMQIiGe+xzVUCFdOFH2xg//iRtdmAzcwRmylA==
+X-Received: by 2002:a05:6000:1567:b0:38c:5bb2:b91a with SMTP id
+ ffacd0b85a97d-38c5bb2bd03mr2815729f8f.17.1738261391471; 
+ Thu, 30 Jan 2025 10:23:11 -0800 (PST)
 Received: from orth.archaic.org.uk (orth.archaic.org.uk. [2001:8b0:1d0::2])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-38c5c101599sm2634426f8f.23.2025.01.30.10.23.25
+ ffacd0b85a97d-38c5c101599sm2634426f8f.23.2025.01.30.10.23.10
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 30 Jan 2025 10:23:25 -0800 (PST)
+ Thu, 30 Jan 2025 10:23:10 -0800 (PST)
 From: Peter Maydell <peter.maydell@linaro.org>
 To: qemu-arm@nongnu.org,
 	qemu-devel@nongnu.org
 Cc: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
-Subject: [PATCH 14/14] target/arm: Correct errors in WFI/WFE trapping
-Date: Thu, 30 Jan 2025 18:23:09 +0000
-Message-Id: <20250130182309.717346-15-peter.maydell@linaro.org>
+Subject: [PATCH 00/14] target/arm: Clean up some corner cases of sysreg traps
+Date: Thu, 30 Jan 2025 18:22:55 +0000
+Message-Id: <20250130182309.717346-1-peter.maydell@linaro.org>
 X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20250130182309.717346-1-peter.maydell@linaro.org>
-References: <20250130182309.717346-1-peter.maydell@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::436;
- envelope-from=peter.maydell@linaro.org; helo=mail-wr1-x436.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::435;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wr1-x435.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -102,125 +98,110 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The code for WFI/WFE trapping has several errors:
- * it wasn't using arm_sctlr(), so it would look at SCTLR_EL1
-   even if the CPU was in the EL2&0 translation regime
- * it was raising UNDEF, not Monitor Trap, for traps to
-   AArch32 EL3 because of SCR.{TWE,TWI}
- * it was not honouring SCR.{TWE,TWI} when running in
-   AArch32 at EL3 not in Monitor mode
- * it checked SCR.{TWE,TWI} even on v7 CPUs which don't have
-   those bits
+While reviewing Alex's recent secure timer patchset, I noticed a
+bug where it was using CP_ACCESS_TRAP when CP_ACCESS_TRAP_UNCATEGORIZED
+was wanted, and that we were making the same mistake elsewhere in
+our existing code. This series started out as an attempt to fix
+that and also rearrange the API so that it's harder to introduce
+other instances of this bug in future. In the process I noticed
+a different bug, where we weren't handling traps to AArch32
+Monitor mode correctly, so the series fixes those as well.
 
-Fix these bugs.
+The first four patches are fixes for the places where we were
+using CP_ACCESS_TRAP when we wanted CP_ACCESS_TRAP_UNCATEGORIZED.
+These are all situations where an attempt to access a sysreg
+should UNDEF and we were incorrectly reporting it with a
+syndrome value for a system register access trap. I've cc'd
+these to stable as they are technically bugs, but really the impact
+s very limited because I can't see a reason why any code except
+test code would deliberately attempt a sysreg access that they
+knew would take an exception and then look at the syndrome
+value for it.
 
-Cc: qemu-stable@nongnu.org
-Fixes: b1eced713d99 ("target-arm: Add WFx instruction trap support")
-Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
----
- target/arm/tcg/op_helper.c | 37 ++++++++++++++++++-------------------
- 1 file changed, 18 insertions(+), 19 deletions(-)
+Patches 5, 6 and 7 together fix bugs in our handling of sysreg
+traps that should go to AArch32 Monitor mode:
+ * we were incorrectly triggering an UNDEF exception for these
+   rather than a Monitor Trap, so the exception would go to
+   the wrong vector table and the wrong CPU mode
+ * in most cases we weren't trapping accesses from EL3
+   non-Monitor modes to Monitor mode
+This affects only:
+ * trapping of ERRIDR via SCR.TERR
+ * trapping of the debug channel registers via SDCR.TDCC
+ * trapping of GICv3 registers via SCR.IRQ and SCR.FIQ
+because most "trap sysreg access to EL3" situations are either for
+AArch64 only registers or for trap bits that are AArch64 only.
 
-diff --git a/target/arm/tcg/op_helper.c b/target/arm/tcg/op_helper.c
-index 2230351a8f4..02c375d196d 100644
---- a/target/arm/tcg/op_helper.c
-+++ b/target/arm/tcg/op_helper.c
-@@ -313,15 +313,19 @@ void HELPER(check_bxj_trap)(CPUARMState *env, uint32_t rm)
- }
- 
- #ifndef CONFIG_USER_ONLY
--/* Function checks whether WFx (WFI/WFE) instructions are set up to be trapped.
-+/*
-+ * Function checks whether WFx (WFI/WFE) instructions are set up to be trapped.
-  * The function returns the target EL (1-3) if the instruction is to be trapped;
-  * otherwise it returns 0 indicating it is not trapped.
-+ * For a trap, *excp is updated with the EXCP_* trap type to use.
-  */
--static inline int check_wfx_trap(CPUARMState *env, bool is_wfe)
-+static inline int check_wfx_trap(CPUARMState *env, bool is_wfe, uint32_t *excp)
- {
-     int cur_el = arm_current_el(env);
-     uint64_t mask;
- 
-+    *excp = EXCP_UDEF;
-+
-     if (arm_feature(env, ARM_FEATURE_M)) {
-         /* M profile cores can never trap WFI/WFE. */
-         return 0;
-@@ -331,18 +335,9 @@ static inline int check_wfx_trap(CPUARMState *env, bool is_wfe)
-      * WFx instructions being trapped to EL1. These trap bits don't exist in v7.
-      */
-     if (cur_el < 1 && arm_feature(env, ARM_FEATURE_V8)) {
--        int target_el;
--
-         mask = is_wfe ? SCTLR_nTWE : SCTLR_nTWI;
--        if (arm_is_secure_below_el3(env) && !arm_el_is_aa64(env, 3)) {
--            /* Secure EL0 and Secure PL1 is at EL3 */
--            target_el = 3;
--        } else {
--            target_el = 1;
--        }
--
--        if (!(env->cp15.sctlr_el[target_el] & mask)) {
--            return target_el;
-+        if (!(arm_sctlr(env, cur_el) & mask)) {
-+            return exception_target_el(env);
-         }
-     }
- 
-@@ -358,9 +353,12 @@ static inline int check_wfx_trap(CPUARMState *env, bool is_wfe)
-     }
- 
-     /* We are not trapping to EL1 or EL2; trap to EL3 if SCR_EL3 requires it */
--    if (cur_el < 3) {
-+    if (arm_feature(env, ARM_FEATURE_V8) && !arm_is_el3_or_mon(env)) {
-         mask = (is_wfe) ? SCR_TWE : SCR_TWI;
-         if (env->cp15.scr_el3 & mask) {
-+            if (!arm_el_is_aa64(env, 3)) {
-+                *excp = EXCP_MON_TRAP;
-+            }
-             return 3;
-         }
-     }
-@@ -383,7 +381,8 @@ void HELPER(wfi)(CPUARMState *env, uint32_t insn_len)
-     return;
- #else
-     CPUState *cs = env_cpu(env);
--    int target_el = check_wfx_trap(env, false);
-+    uint32_t excp;
-+    int target_el = check_wfx_trap(env, false, &excp);
- 
-     if (cpu_has_work(cs)) {
-         /* Don't bother to go into our "low power state" if
-@@ -399,7 +398,7 @@ void HELPER(wfi)(CPUARMState *env, uint32_t insn_len)
-             env->regs[15] -= insn_len;
-         }
- 
--        raise_exception(env, EXCP_UDEF, syn_wfx(1, 0xe, 0, insn_len == 2),
-+        raise_exception(env, excp, syn_wfx(1, 0xe, 0, insn_len == 2),
-                         target_el);
-     }
- 
-@@ -424,7 +423,8 @@ void HELPER(wfit)(CPUARMState *env, uint64_t timeout)
- #else
-     ARMCPU *cpu = env_archcpu(env);
-     CPUState *cs = env_cpu(env);
--    int target_el = check_wfx_trap(env, false);
-+    uint32_t excp;
-+    int target_el = check_wfx_trap(env, false, &excp);
-     /* The WFIT should time out when CNTVCT_EL0 >= the specified value. */
-     uint64_t cntval = gt_get_countervalue(env);
-     uint64_t offset = gt_virt_cnt_offset(env);
-@@ -441,8 +441,7 @@ void HELPER(wfit)(CPUARMState *env, uint64_t timeout)
- 
-     if (target_el) {
-         env->pc -= 4;
--        raise_exception(env, EXCP_UDEF, syn_wfx(1, 0xe, 0, false),
--                        target_el);
-+        raise_exception(env, excp, syn_wfx(1, 0xe, 0, false), target_el);
-     }
- 
-     if (uadd64_overflow(timeout, offset, &nexttick)) {
+Patch 8 is a trivial one removing an unnecessary clause in
+an if() condition in the GIC cpuif access functions.
+
+Patches 9-13 are the API change that tries to make the bug harder to
+write: we add CP_ACCESS_TRAP_EL1 for "trap a sysreg access direct to
+EL1". After all the bugfixes in the first half of the series, the
+remaining uses of CP_ACCESS_TRAP are all in contexts where we know the
+current EL is 0, so we can directly replace them with
+CP_ACCESS_TRAP_EL1, and remove CP_ACCESS_TRAP entirely. We also rename
+CP_ACCESS_TRAP_UNCATEGORIZED to CP_ACCESS_UNDEFINED, to be a clearer
+parallel with the pseudocode's use of "UNDEFINED" in this situation.
+The resulting
+API is that an accessfn can only return:
+ CP_ACCESS_OK for a success
+ CP_ACCESS_UNDEFINED for an UNDEF
+ CP_ACCESS_TRAP_EL{1,2,3} for a sysreg trap direct to an EL
+and everything else is invalid. UNCATEGORIZED traps never go to a
+specified target EL, and sysreg-traps always go to a specified target
+EL, matching the pseudocode which either uses "UNDEFINED" or some kind
+of SystemAccessTrap(ELx, ...).
+
+Patch 14 fixes some issues with the WFI/WFX trap code, some of
+which are like the above sysreg access check bugs (not using
+Monitor Trap, not honouring traps in EL3 not-Monitor-mode),
+plus one which I noticed while working on the code (it doesn't
+use arm_sctlr() so will look at the wrong SCTLR when in EL2&0).
+
+I've cc'd the relevant patches to stable, but I don't think
+it's very likely that anybody ever ran into these bugs, because
+they're all cases of "we did the wrong thing if code at an EL
+below EL3 tried to do something it shouldn't". I don't think that
+EL3 code generally uses the trap bits for trap-and-emulate
+of functionality, only to prevent the lower ELs messing with
+state it should not, and everything here with the exception of
+SCR.IRQ and SCR.FIQ is pretty obscure anyway.
+
+(Tested somewhat lightly, because I don't have any test images
+that test AArch32 EL3 really.)
+
+thanks
+-- PMM
+
+Peter Maydell (14):
+  target/arm: Report correct syndrome for UNDEFINED CNTPS_*_EL1 from EL2
+    and NS EL1
+  target/arm: Report correct syndrome for UNDEFINED AT ops with wrong
+    NSE,NS
+  target/arm: Report correct syndrome for UNDEFINED S1E2 AT ops at EL3
+  target/arm: Report correct syndrome for UNDEFINED LOR sysregs when
+    NS=0
+  target/arm: Make CP_ACCESS_TRAPs to AArch32 EL3 be Monitor traps
+  hw/intc/arm_gicv3_cpuif: Don't downgrade monitor traps for AArch32 EL3
+  target/arm: Honour SDCR.TDCC and SCR.TERR in AArch32 EL3 non-Monitor
+    modes
+  hw/intc/arm_gicv3_cpuif(): Remove redundant tests of is_a64()
+  target/arm: Support CP_ACCESS_TRAP_EL1 as a CPAccessResult
+  target/arm: Use CP_ACCESS_TRAP_EL1 for traps that are always to EL1
+  target/arm: Use TRAP_UNCATEGORIZED for XScale CPAR traps
+  target/arm: Remove CP_ACCESS_TRAP handling
+  target/arm: Rename CP_ACCESS_TRAP_UNCATEGORIZED to CP_ACCESS_UNDEFINED
+  target/arm: Correct errors in WFI/WFE trapping
+
+ target/arm/cpregs.h        | 15 +++++---
+ target/arm/cpu.h           |  6 +++
+ hw/intc/arm_gicv3_cpuif.c  | 15 ++------
+ target/arm/debug_helper.c  |  5 ++-
+ target/arm/helper.c        | 75 ++++++++++++++++++++++----------------
+ target/arm/tcg/op_helper.c | 71 ++++++++++++++++++++++--------------
+ 6 files changed, 107 insertions(+), 80 deletions(-)
+
 -- 
 2.34.1
 
