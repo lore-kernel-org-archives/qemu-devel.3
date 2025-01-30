@@ -4,60 +4,58 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DF30CC0218F
-	for <qemu-devel@archiver.kernel.org>; Thu, 30 Jan 2025 13:19:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BD11BC0218A
+	for <qemu-devel@archiver.kernel.org>; Thu, 30 Jan 2025 13:20:03 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tdUOt-0007N2-9Y; Thu, 30 Jan 2025 08:16:07 -0500
+	id 1tdUPv-0008Qd-KG; Thu, 30 Jan 2025 08:17:11 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1tdUOe-0007Ii-JK
- for qemu-devel@nongnu.org; Thu, 30 Jan 2025 08:15:53 -0500
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1tdUOl-0007LT-TW
+ for qemu-devel@nongnu.org; Thu, 30 Jan 2025 08:16:00 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1tdUOa-0008Ru-Fj
- for qemu-devel@nongnu.org; Thu, 30 Jan 2025 08:15:49 -0500
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1tdUOi-0008UI-Nc
+ for qemu-devel@nongnu.org; Thu, 30 Jan 2025 08:15:58 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1738242947;
+ s=mimecast20190719; t=1738242956;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=dxNpJ8n0NWJQONfwOlrs4HtxhS2jsCl2PTU9UmWLjO4=;
- b=MvJ5CMOiThUxqpVnV9JNJYnZXW02+eTJB+XNWn9DnbveTA/xseWMd3tiQu80JJSTYcWbXG
- yDT83PLNIwbPp7UpiGqh1IkoooPeRPg13l7UVRQ7faZl/giXxXxno60Ga+XunSGDgjfgvV
- lHOLLbjUp0xm7WD54hH6oGDCNUw2S+U=
-Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ bh=xpKOImKXo2WT1MMDOZAIAadvt9Pw5V++HYJU7Gh+g4E=;
+ b=SZqXZGJ/XiW/9tmHMH8TZBGxIv5CBONj1KhujGqalIHzI5jCeSqv80BWJu+X67xQeqjSmj
+ IPcuwm79z5SBAWPdj6RfcPemfA+WCKt/clusNAMXRl/os/NJZ8ZJeLQ/+USWalqf6p/Hu3
+ t4i/JrKkwnN7+EiVRFyBSskKIzfmSPc=
+Received: from mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-665-oQvf1_U_OziYPLWn4CDTSg-1; Thu,
- 30 Jan 2025 08:15:43 -0500
-X-MC-Unique: oQvf1_U_OziYPLWn4CDTSg-1
-X-Mimecast-MFC-AGG-ID: oQvf1_U_OziYPLWn4CDTSg
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-403-vrVhG0ONNU2uyY57L9e9jw-1; Thu,
+ 30 Jan 2025 08:15:54 -0500
+X-MC-Unique: vrVhG0ONNU2uyY57L9e9jw-1
+X-Mimecast-MFC-AGG-ID: vrVhG0ONNU2uyY57L9e9jw
 Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 22D3B1800361
- for <qemu-devel@nongnu.org>; Thu, 30 Jan 2025 13:15:43 +0000 (UTC)
+ by mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 9A27019560A1; Thu, 30 Jan 2025 13:15:53 +0000 (UTC)
 Received: from thuth-p1g4.redhat.com (unknown [10.39.192.95])
  by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id A47F230001BE; Thu, 30 Jan 2025 13:15:41 +0000 (UTC)
+ id 8681630001BE; Thu, 30 Jan 2025 13:15:51 +0000 (UTC)
 From: Thomas Huth <thuth@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Stefan Hajnoczi <stefanha@redhat.com>,
- =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
-Subject: [PULL 02/20] tests/functional: Fix broken decorators with lamda
- functions
-Date: Thu, 30 Jan 2025 14:15:16 +0100
-Message-ID: <20250130131535.91297-3-thuth@redhat.com>
+ Ilya Leoshkevich <iii@linux.ibm.com>,
+ Richard Henderson <richard.henderson@linaro.org>
+Subject: [PULL 07/20] target/s390x: Fix PPNO execution with icount
+Date: Thu, 30 Jan 2025 14:15:21 +0100
+Message-ID: <20250130131535.91297-8-thuth@redhat.com>
 In-Reply-To: <20250130131535.91297-1-thuth@redhat.com>
 References: <20250130131535.91297-1-thuth@redhat.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
 Received-SPF: pass client-ip=170.10.129.124; envelope-from=thuth@redhat.com;
@@ -85,85 +83,38 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The decorators that use a lambda function are currently broken
-and do not properly skip the test if the condition is not met.
-Using "return skipUnless(lambda: ...)" does not work as expected.
-To fix it, rewrite the decorators without lambda, it's simpler
-that way anyway.
+From: Ilya Leoshkevich <iii@linux.ibm.com>
 
-Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
-Message-ID: <20250122134315.1448794-3-thuth@redhat.com>
+Executing PERFORM RANDOM NUMBER OPERATION makes QEMU exit with "Bad
+icount read" when using record/replay. This is caused by
+icount_get_raw_locked() if the current instruction is not the last one
+in the respective translation block.
+
+For the x86_64's rdrand this is resolved by calling
+translator_io_start(). On s390x one uses IF_IO in order to make this
+call happen automatically.
+
+Signed-off-by: Ilya Leoshkevich <iii@linux.ibm.com>
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Message-ID: <20250123123808.194405-1-iii@linux.ibm.com>
 Signed-off-by: Thomas Huth <thuth@redhat.com>
 ---
- tests/functional/qemu_test/decorators.py | 44 +++++++++++-------------
- 1 file changed, 21 insertions(+), 23 deletions(-)
+ target/s390x/tcg/insn-data.h.inc | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/tests/functional/qemu_test/decorators.py b/tests/functional/qemu_test/decorators.py
-index 08f58f6b40..3d9c02fd59 100644
---- a/tests/functional/qemu_test/decorators.py
-+++ b/tests/functional/qemu_test/decorators.py
-@@ -17,15 +17,14 @@
-   @skipIfMissingCommands("mkisofs", "losetup")
- '''
- def skipIfMissingCommands(*args):
--    def has_cmds(cmdlist):
--        for cmd in cmdlist:
--            if not which(cmd):
--                return False
--        return True
--
--    return skipUnless(lambda: has_cmds(args),
--                      'required command(s) "%s" not installed' %
--                      ", ".join(args))
-+    has_cmds = True
-+    for cmd in args:
-+         if not which(cmd):
-+             has_cmds = False
-+             break
-+
-+    return skipUnless(has_cmds, 'required command(s) "%s" not installed' %
-+                                ", ".join(args))
+diff --git a/target/s390x/tcg/insn-data.h.inc b/target/s390x/tcg/insn-data.h.inc
+index e7d61cdec2..ec730ee091 100644
+--- a/target/s390x/tcg/insn-data.h.inc
++++ b/target/s390x/tcg/insn-data.h.inc
+@@ -1012,7 +1012,7 @@
+     D(0xb92e, KM,      RRE,   MSA,  0, 0, 0, 0, msa, 0, S390_FEAT_TYPE_KM)
+     D(0xb92f, KMC,     RRE,   MSA,  0, 0, 0, 0, msa, 0, S390_FEAT_TYPE_KMC)
+     D(0xb929, KMA,     RRF_b, MSA8, 0, 0, 0, 0, msa, 0, S390_FEAT_TYPE_KMA)
+-    D(0xb93c, PPNO,    RRE,   MSA5, 0, 0, 0, 0, msa, 0, S390_FEAT_TYPE_PPNO)
++    E(0xb93c, PPNO,    RRE,   MSA5, 0, 0, 0, 0, msa, 0, S390_FEAT_TYPE_PPNO, IF_IO)
+     D(0xb93e, KIMD,    RRE,   MSA,  0, 0, 0, 0, msa, 0, S390_FEAT_TYPE_KIMD)
+     D(0xb93f, KLMD,    RRE,   MSA,  0, 0, 0, 0, msa, 0, S390_FEAT_TYPE_KLMD)
  
- '''
- Decorator to skip execution of a test if the current
-@@ -36,9 +35,9 @@ def has_cmds(cmdlist):
-   @skipIfNotMachine("x86_64", "aarch64")
- '''
- def skipIfNotMachine(*args):
--    return skipUnless(lambda: platform.machine() in args,
--                        'not running on one of the required machine(s) "%s"' %
--                        ", ".join(args))
-+    return skipUnless(platform.machine() in args,
-+                      'not running on one of the required machine(s) "%s"' %
-+                      ", ".join(args))
- 
- '''
- Decorator to skip execution of flaky tests, unless
-@@ -95,14 +94,13 @@ def skipBigDataTest():
-   @skipIfMissingImports("numpy", "cv2")
- '''
- def skipIfMissingImports(*args):
--    def has_imports(importlist):
--        for impname in importlist:
--            try:
--                importlib.import_module(impname)
--            except ImportError:
--                return False
--        return True
--
--    return skipUnless(lambda: has_imports(args),
--                      'required import(s) "%s" not installed' %
--                      ", ".join(args))
-+    has_imports = True
-+    for impname in args:
-+        try:
-+            importlib.import_module(impname)
-+        except ImportError:
-+            has_imports = False
-+            break
-+
-+    return skipUnless(has_imports, 'required import(s) "%s" not installed' %
-+                                   ", ".join(args))
 -- 
 2.48.1
 
