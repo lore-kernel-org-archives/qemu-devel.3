@@ -4,55 +4,55 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D6AF1C0218A
-	for <qemu-devel@archiver.kernel.org>; Thu, 30 Jan 2025 17:14:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 09CA9C0218A
+	for <qemu-devel@archiver.kernel.org>; Thu, 30 Jan 2025 17:14:14 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tdY69-0000X1-4Q; Thu, 30 Jan 2025 12:13:01 -0500
+	id 1tdY6N-0000en-2P; Thu, 30 Jan 2025 12:13:15 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1tdY66-0000WP-PC
- for qemu-devel@nongnu.org; Thu, 30 Jan 2025 12:12:58 -0500
+ (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1tdY6J-0000do-Ra
+ for qemu-devel@nongnu.org; Thu, 30 Jan 2025 12:13:11 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1tdY64-00039I-Nc
- for qemu-devel@nongnu.org; Thu, 30 Jan 2025 12:12:58 -0500
+ (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1tdY6I-0003C7-63
+ for qemu-devel@nongnu.org; Thu, 30 Jan 2025 12:13:11 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1738257175;
+ s=mimecast20190719; t=1738257188;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=AkkF2cn/t641hJWFZPt980OvaWaQev/HN6FTjpix9O0=;
- b=PvnQFhIeP4PcRbuNu7zDYqs5uyZuU/yxJ43PZPKFDdkUFhT2fwGPtz9fH54p6rX0UV2tET
- eJdvoTkY2OEssoJAv5TWlq7H6Jtk2+wR2CUhTpLbKWoRIbpkeCggnvv0UefOGBllHTfW0S
- DgT4/JBHtldAeQP1/mgtMfKaOWbKRT0=
-Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
+ bh=bybbmbp4o3dm/8LvP5Lj7D6zru5NTPZT+ktuCm9LAKE=;
+ b=ZPu9WA+rllL+3kYFWkJ0xwiqqUEQoJkezWYWj5wtCpViVUyLS/ysq3abPQVeCqUxalT6CK
+ Luag/QwCW/kdvRCE+8Ixbbnay3I1hWpZhcl7fImCD/PJCrhymOo1CRFDfk8MnHL3dyIxT+
+ hXxAqGr8iOJXNfehsNOk8KGKlHOAnxQ=
+Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-260-mUdhSWqwODezgaFl6aavlw-1; Thu,
- 30 Jan 2025 12:12:54 -0500
-X-MC-Unique: mUdhSWqwODezgaFl6aavlw-1
-X-Mimecast-MFC-AGG-ID: mUdhSWqwODezgaFl6aavlw
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-680-Ljjwrv_tOZqs4wdk1OkJwA-1; Thu,
+ 30 Jan 2025 12:13:04 -0500
+X-MC-Unique: Ljjwrv_tOZqs4wdk1OkJwA-1
+X-Mimecast-MFC-AGG-ID: Ljjwrv_tOZqs4wdk1OkJwA
 Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 0324F1956052; Thu, 30 Jan 2025 17:12:52 +0000 (UTC)
+ by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id B1BDC1955F67; Thu, 30 Jan 2025 17:13:03 +0000 (UTC)
 Received: from merkur.redhat.com (unknown [10.39.193.13])
  by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id AB1CA30001BE; Thu, 30 Jan 2025 17:12:49 +0000 (UTC)
+ id 0C1BC30001BE; Thu, 30 Jan 2025 17:13:00 +0000 (UTC)
 From: Kevin Wolf <kwolf@redhat.com>
 To: qemu-block@nongnu.org
 Cc: kwolf@redhat.com, hreitz@redhat.com, stefanha@redhat.com,
  pkrempa@redhat.com, peterx@redhat.com, farosas@suse.de,
  qemu-devel@nongnu.org
-Subject: [PATCH v2 01/15] block: Add 'active' field to BlockDeviceInfo
-Date: Thu, 30 Jan 2025 18:12:32 +0100
-Message-ID: <20250130171240.286878-2-kwolf@redhat.com>
+Subject: [PATCH v2 05/15] block: Allow inactivating already inactive nodes
+Date: Thu, 30 Jan 2025 18:12:36 +0100
+Message-ID: <20250130171240.286878-6-kwolf@redhat.com>
 In-Reply-To: <20250130171240.286878-1-kwolf@redhat.com>
 References: <20250130171240.286878-1-kwolf@redhat.com>
 MIME-Version: 1.0
@@ -83,270 +83,64 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This allows querying from QMP (and also HMP) whether an image is
-currently active or inactive (in the sense of BDRV_O_INACTIVE).
+What we wanted to catch with the assertion is cases where the recursion
+finds that a child was inactive before its parent. This should never
+happen. But if the user tries to inactivate an image that is already
+inactive, that's harmless and we don't want to fail the assertion.
 
 Signed-off-by: Kevin Wolf <kwolf@redhat.com>
 ---
- qapi/block-core.json           |  6 +++++-
- block/monitor/block-hmp-cmds.c |  5 +++--
- block/qapi.c                   |  1 +
- tests/qemu-iotests/184.out     |  2 ++
- tests/qemu-iotests/191.out     | 16 ++++++++++++++++
- tests/qemu-iotests/273.out     |  5 +++++
- 6 files changed, 32 insertions(+), 3 deletions(-)
+ block.c | 16 ++++++++++++----
+ 1 file changed, 12 insertions(+), 4 deletions(-)
 
-diff --git a/qapi/block-core.json b/qapi/block-core.json
-index fd3bcc1c17..1296ca8ae2 100644
---- a/qapi/block-core.json
-+++ b/qapi/block-core.json
-@@ -486,6 +486,10 @@
- # @backing_file_depth: number of files in the backing file chain
- #     (since: 1.2)
- #
-+# @active: true if the backend is active; typical cases for inactive backends
-+#     are on the migration source instance after migration completes and on the
-+#     destination before it completes. (since: 10.0)
-+#
- # @encrypted: true if the backing device is encrypted
- #
- # @detect_zeroes: detect and optimize zero writes (Since 2.1)
-@@ -556,7 +560,7 @@
- { 'struct': 'BlockDeviceInfo',
-   'data': { 'file': 'str', '*node-name': 'str', 'ro': 'bool', 'drv': 'str',
-             '*backing_file': 'str', 'backing_file_depth': 'int',
--            'encrypted': 'bool',
-+            'active': 'bool', 'encrypted': 'bool',
-             'detect_zeroes': 'BlockdevDetectZeroesOptions',
-             'bps': 'int', 'bps_rd': 'int', 'bps_wr': 'int',
-             'iops': 'int', 'iops_rd': 'int', 'iops_wr': 'int',
-diff --git a/block/monitor/block-hmp-cmds.c b/block/monitor/block-hmp-cmds.c
-index 1d312513fc..e84ff6ab16 100644
---- a/block/monitor/block-hmp-cmds.c
-+++ b/block/monitor/block-hmp-cmds.c
-@@ -630,11 +630,12 @@ static void print_block_info(Monitor *mon, BlockInfo *info,
+diff --git a/block.c b/block.c
+index 94368a200e..be6b71c314 100644
+--- a/block.c
++++ b/block.c
+@@ -6960,7 +6960,8 @@ bdrv_has_bds_parent(BlockDriverState *bs, bool only_active)
+     return false;
+ }
+ 
+-static int GRAPH_RDLOCK bdrv_inactivate_recurse(BlockDriverState *bs)
++static int GRAPH_RDLOCK
++bdrv_inactivate_recurse(BlockDriverState *bs, bool top_level)
+ {
+     BdrvChild *child, *parent;
+     int ret;
+@@ -6978,7 +6979,14 @@ static int GRAPH_RDLOCK bdrv_inactivate_recurse(BlockDriverState *bs)
+         return 0;
      }
  
-     if (inserted) {
--        monitor_printf(mon, ": %s (%s%s%s)\n",
-+        monitor_printf(mon, ": %s (%s%s%s%s)\n",
-                        inserted->file,
-                        inserted->drv,
-                        inserted->ro ? ", read-only" : "",
--                       inserted->encrypted ? ", encrypted" : "");
-+                       inserted->encrypted ? ", encrypted" : "",
-+                       inserted->active ? "" : ", inactive");
-     } else {
-         monitor_printf(mon, ": [not inserted]\n");
-     }
-diff --git a/block/qapi.c b/block/qapi.c
-index 902ecb08e0..63604dc6d3 100644
---- a/block/qapi.c
-+++ b/block/qapi.c
-@@ -63,6 +63,7 @@ BlockDeviceInfo *bdrv_block_device_info(BlockBackend *blk,
-     info->file                   = g_strdup(bs->filename);
-     info->ro                     = bdrv_is_read_only(bs);
-     info->drv                    = g_strdup(bs->drv->format_name);
-+    info->active                 = !bdrv_is_inactive(bs);
-     info->encrypted              = bs->encrypted;
+-    assert(!(bs->open_flags & BDRV_O_INACTIVE));
++    /*
++     * Inactivating an already inactive node on user request is harmless, but if
++     * a child is already inactive before its parent, that's bad.
++     */
++    if (bs->open_flags & BDRV_O_INACTIVE) {
++        assert(top_level);
++        return 0;
++    }
  
-     info->cache = g_new(BlockdevCacheInfo, 1);
-diff --git a/tests/qemu-iotests/184.out b/tests/qemu-iotests/184.out
-index e8f631f853..52692b6b3b 100644
---- a/tests/qemu-iotests/184.out
-+++ b/tests/qemu-iotests/184.out
-@@ -26,6 +26,7 @@ Testing:
-         {
-             "iops_rd": 0,
-             "detect_zeroes": "off",
-+            "active": true,
-             "image": {
-                 "backing-image": {
-                     "virtual-size": 1073741824,
-@@ -59,6 +60,7 @@ Testing:
-         {
-             "iops_rd": 0,
-             "detect_zeroes": "off",
-+            "active": true,
-             "image": {
-                 "virtual-size": 1073741824,
-                 "filename": "null-co://",
-diff --git a/tests/qemu-iotests/191.out b/tests/qemu-iotests/191.out
-index c3309e4bc6..2a72ca7106 100644
---- a/tests/qemu-iotests/191.out
-+++ b/tests/qemu-iotests/191.out
-@@ -114,6 +114,7 @@ wrote 65536/65536 bytes at offset 1048576
-         {
-             "iops_rd": 0,
-             "detect_zeroes": "off",
-+            "active": true,
-             "image": {
-                 "backing-image": {
-                     "virtual-size": 67108864,
-@@ -155,6 +156,7 @@ wrote 65536/65536 bytes at offset 1048576
-         {
-             "iops_rd": 0,
-             "detect_zeroes": "off",
-+            "active": true,
-             "image": {
-                 "virtual-size": 197120,
-                 "filename": "TEST_DIR/t.IMGFMT.ovl2",
-@@ -183,6 +185,7 @@ wrote 65536/65536 bytes at offset 1048576
-         {
-             "iops_rd": 0,
-             "detect_zeroes": "off",
-+            "active": true,
-             "image": {
-                 "backing-image": {
-                     "virtual-size": 67108864,
-@@ -224,6 +227,7 @@ wrote 65536/65536 bytes at offset 1048576
-         {
-             "iops_rd": 0,
-             "detect_zeroes": "off",
-+            "active": true,
-             "image": {
-                 "virtual-size": 197120,
-                 "filename": "TEST_DIR/t.IMGFMT",
-@@ -252,6 +256,7 @@ wrote 65536/65536 bytes at offset 1048576
-         {
-             "iops_rd": 0,
-             "detect_zeroes": "off",
-+            "active": true,
-             "image": {
-                 "backing-image": {
-                     "virtual-size": 67108864,
-@@ -293,6 +298,7 @@ wrote 65536/65536 bytes at offset 1048576
-         {
-             "iops_rd": 0,
-             "detect_zeroes": "off",
-+            "active": true,
-             "image": {
-                 "virtual-size": 393216,
-                 "filename": "TEST_DIR/t.IMGFMT.mid",
-@@ -321,6 +327,7 @@ wrote 65536/65536 bytes at offset 1048576
-         {
-             "iops_rd": 0,
-             "detect_zeroes": "off",
-+            "active": true,
-             "image": {
-                 "virtual-size": 67108864,
-                 "filename": "TEST_DIR/t.IMGFMT.base",
-@@ -350,6 +357,7 @@ wrote 65536/65536 bytes at offset 1048576
-         {
-             "iops_rd": 0,
-             "detect_zeroes": "off",
-+            "active": true,
-             "image": {
-                 "virtual-size": 393216,
-                 "filename": "TEST_DIR/t.IMGFMT.base",
-@@ -521,6 +529,7 @@ wrote 65536/65536 bytes at offset 1048576
-         {
-             "iops_rd": 0,
-             "detect_zeroes": "off",
-+            "active": true,
-             "image": {
-                 "backing-image": {
-                     "virtual-size": 67108864,
-@@ -562,6 +571,7 @@ wrote 65536/65536 bytes at offset 1048576
-         {
-             "iops_rd": 0,
-             "detect_zeroes": "off",
-+            "active": true,
-             "image": {
-                 "virtual-size": 197120,
-                 "filename": "TEST_DIR/t.IMGFMT.ovl2",
-@@ -590,6 +600,7 @@ wrote 65536/65536 bytes at offset 1048576
-         {
-             "iops_rd": 0,
-             "detect_zeroes": "off",
-+            "active": true,
-             "image": {
-                 "backing-image": {
-                     "backing-image": {
-@@ -642,6 +653,7 @@ wrote 65536/65536 bytes at offset 1048576
-         {
-             "iops_rd": 0,
-             "detect_zeroes": "off",
-+            "active": true,
-             "image": {
-                 "virtual-size": 197120,
-                 "filename": "TEST_DIR/t.IMGFMT.ovl3",
-@@ -670,6 +682,7 @@ wrote 65536/65536 bytes at offset 1048576
-         {
-             "iops_rd": 0,
-             "detect_zeroes": "off",
-+            "active": true,
-             "image": {
-                 "virtual-size": 67108864,
-                 "filename": "TEST_DIR/t.IMGFMT.base",
-@@ -699,6 +712,7 @@ wrote 65536/65536 bytes at offset 1048576
-         {
-             "iops_rd": 0,
-             "detect_zeroes": "off",
-+            "active": true,
-             "image": {
-                 "virtual-size": 393216,
-                 "filename": "TEST_DIR/t.IMGFMT.base",
-@@ -727,6 +741,7 @@ wrote 65536/65536 bytes at offset 1048576
-         {
-             "iops_rd": 0,
-             "detect_zeroes": "off",
-+            "active": true,
-             "image": {
-                 "backing-image": {
-                     "virtual-size": 67108864,
-@@ -768,6 +783,7 @@ wrote 65536/65536 bytes at offset 1048576
-         {
-             "iops_rd": 0,
-             "detect_zeroes": "off",
-+            "active": true,
-             "image": {
-                 "virtual-size": 197120,
-                 "filename": "TEST_DIR/t.IMGFMT",
-diff --git a/tests/qemu-iotests/273.out b/tests/qemu-iotests/273.out
-index 71843f02de..c19753c685 100644
---- a/tests/qemu-iotests/273.out
-+++ b/tests/qemu-iotests/273.out
-@@ -23,6 +23,7 @@ Testing: -blockdev file,node-name=base,filename=TEST_DIR/t.IMGFMT.base -blockdev
-         {
-             "iops_rd": 0,
-             "detect_zeroes": "off",
-+            "active": true,
-             "image": {
-                 "backing-image": {
-                     "backing-image": {
-@@ -74,6 +75,7 @@ Testing: -blockdev file,node-name=base,filename=TEST_DIR/t.IMGFMT.base -blockdev
-         {
-             "iops_rd": 0,
-             "detect_zeroes": "off",
-+            "active": true,
-             "image": {
-                 "virtual-size": 197120,
-                 "filename": "TEST_DIR/t.IMGFMT",
-@@ -102,6 +104,7 @@ Testing: -blockdev file,node-name=base,filename=TEST_DIR/t.IMGFMT.base -blockdev
-         {
-             "iops_rd": 0,
-             "detect_zeroes": "off",
-+            "active": true,
-             "image": {
-                 "backing-image": {
-                     "virtual-size": 197120,
-@@ -142,6 +145,7 @@ Testing: -blockdev file,node-name=base,filename=TEST_DIR/t.IMGFMT.base -blockdev
-         {
-             "iops_rd": 0,
-             "detect_zeroes": "off",
-+            "active": true,
-             "image": {
-                 "virtual-size": 197120,
-                 "filename": "TEST_DIR/t.IMGFMT.mid",
-@@ -170,6 +174,7 @@ Testing: -blockdev file,node-name=base,filename=TEST_DIR/t.IMGFMT.base -blockdev
-         {
-             "iops_rd": 0,
-             "detect_zeroes": "off",
-+            "active": true,
-             "image": {
-                 "virtual-size": 197120,
-                 "filename": "TEST_DIR/t.IMGFMT.base",
+     /* Inactivate this node */
+     if (bs->drv->bdrv_inactivate) {
+@@ -7015,7 +7023,7 @@ static int GRAPH_RDLOCK bdrv_inactivate_recurse(BlockDriverState *bs)
+ 
+     /* Recursively inactivate children */
+     QLIST_FOREACH(child, &bs->children, next) {
+-        ret = bdrv_inactivate_recurse(child->bs);
++        ret = bdrv_inactivate_recurse(child->bs, false);
+         if (ret < 0) {
+             return ret;
+         }
+@@ -7040,7 +7048,7 @@ int bdrv_inactivate_all(void)
+         if (bdrv_has_bds_parent(bs, false)) {
+             continue;
+         }
+-        ret = bdrv_inactivate_recurse(bs);
++        ret = bdrv_inactivate_recurse(bs, true);
+         if (ret < 0) {
+             bdrv_next_cleanup(&it);
+             break;
 -- 
 2.48.1
 
