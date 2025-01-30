@@ -4,26 +4,26 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3B721C02190
-	for <qemu-devel@archiver.kernel.org>; Thu, 30 Jan 2025 10:12:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E43CFC02190
+	for <qemu-devel@archiver.kernel.org>; Thu, 30 Jan 2025 10:12:23 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tdRWj-0000SN-Vn; Thu, 30 Jan 2025 05:12:02 -0500
+	id 1tdRUi-0002Ef-61; Thu, 30 Jan 2025 05:09:56 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mhej@vps-ovh.mhejs.net>)
- id 1tdRWe-0008Jt-FE
- for qemu-devel@nongnu.org; Thu, 30 Jan 2025 05:11:56 -0500
+ id 1tdRUg-0002EU-5w
+ for qemu-devel@nongnu.org; Thu, 30 Jan 2025 05:09:54 -0500
 Received: from vps-ovh.mhejs.net ([145.239.82.108])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mhej@vps-ovh.mhejs.net>)
- id 1tdRWc-0007QN-O0
- for qemu-devel@nongnu.org; Thu, 30 Jan 2025 05:11:56 -0500
+ id 1tdRUe-00073x-MQ
+ for qemu-devel@nongnu.org; Thu, 30 Jan 2025 05:09:53 -0500
 Received: from MUA
  by vps-ovh.mhejs.net with esmtpsa  (TLS1.3) tls TLS_AES_256_GCM_SHA384
  (Exim 4.98) (envelope-from <mhej@vps-ovh.mhejs.net>)
- id 1tdRWO-00000006U1g-1BUc; Thu, 30 Jan 2025 11:11:40 +0100
+ id 1tdRUZ-00000006TxG-04Ei; Thu, 30 Jan 2025 11:09:47 +0100
 From: "Maciej S. Szmigiero" <mail@maciej.szmigiero.name>
 To: Peter Xu <peterx@redhat.com>,
 	Fabiano Rosas <farosas@suse.de>
@@ -33,10 +33,10 @@ Cc: Alex Williamson <alex.williamson@redhat.com>,
  =?UTF-8?q?Daniel=20P=20=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
  Avihai Horon <avihaih@nvidia.com>,
  Joao Martins <joao.m.martins@oracle.com>, qemu-devel@nongnu.org
-Subject: [PATCH v4 29/33] vfio/migration: Multifd device state transfer
- support - config loading support
-Date: Thu, 30 Jan 2025 11:08:50 +0100
-Message-ID: <de41d1ae244fccfa928eb78787ba903b420e1346.1738171076.git.maciej.szmigiero@oracle.com>
+Subject: [PATCH v4 07/33] io: tls: Allow terminating the TLS session
+ gracefully with EOF
+Date: Thu, 30 Jan 2025 11:08:28 +0100
+Message-ID: <fdd9a0a6053ac6aed32e08cc284991a3630bbfec.1738171076.git.maciej.szmigiero@oracle.com>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <cover.1738171076.git.maciej.szmigiero@oracle.com>
 References: <cover.1738171076.git.maciej.szmigiero@oracle.com>
@@ -68,163 +68,70 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: "Maciej S. Szmigiero" <maciej.szmigiero@oracle.com>
 
-Load device config received via multifd using the existing machinery
-behind vfio_load_device_config_state().
+Currently, hitting EOF on receive without sender terminating the TLS
+session properly causes the TLS channel to return an error (unless
+the channel was already shut down for read).
 
-Also, make sure to process the relevant main migration channel flags.
+Add an optional setting whether we instead just return EOF in that
+case.
+
+This possibility will be soon used by the migration multifd code.
 
 Signed-off-by: Maciej S. Szmigiero <maciej.szmigiero@oracle.com>
 ---
- hw/vfio/migration.c | 103 +++++++++++++++++++++++++++++++++++++++++---
- 1 file changed, 98 insertions(+), 5 deletions(-)
+ include/io/channel-tls.h | 11 +++++++++++
+ io/channel-tls.c         |  6 ++++++
+ 2 files changed, 17 insertions(+)
 
-diff --git a/hw/vfio/migration.c b/hw/vfio/migration.c
-index ab5b097f59c9..31f651ffee85 100644
---- a/hw/vfio/migration.c
-+++ b/hw/vfio/migration.c
-@@ -15,6 +15,7 @@
- #include <linux/vfio.h>
- #include <sys/ioctl.h>
+diff --git a/include/io/channel-tls.h b/include/io/channel-tls.h
+index 26c67f17e2d3..8552c0d0266e 100644
+--- a/include/io/channel-tls.h
++++ b/include/io/channel-tls.h
+@@ -49,6 +49,7 @@ struct QIOChannelTLS {
+     QCryptoTLSSession *session;
+     QIOChannelShutdown shutdown;
+     guint hs_ioc_tag;
++    bool premature_eof_okay;
+ };
  
-+#include "io/channel-buffer.h"
- #include "system/runstate.h"
- #include "hw/vfio/vfio-common.h"
- #include "migration/misc.h"
-@@ -457,6 +458,57 @@ static bool vfio_load_state_buffer(void *opaque, char *data, size_t data_size,
-     return true;
+ /**
+@@ -143,4 +144,14 @@ void qio_channel_tls_handshake(QIOChannelTLS *ioc,
+ QCryptoTLSSession *
+ qio_channel_tls_get_session(QIOChannelTLS *ioc);
+ 
++/**
++ * qio_channel_tls_set_premature_eof_okay:
++ * @ioc: the TLS channel object
++ *
++ * Sets whether receiving an EOF without terminating the TLS session properly
++ * by used the other side is considered okay or an error (the
++ * default behaviour).
++ */
++void qio_channel_tls_set_premature_eof_okay(QIOChannelTLS *ioc, bool enabled);
++
+ #endif /* QIO_CHANNEL_TLS_H */
+diff --git a/io/channel-tls.c b/io/channel-tls.c
+index aab630e5ae32..1079d6d10de1 100644
+--- a/io/channel-tls.c
++++ b/io/channel-tls.c
+@@ -147,6 +147,11 @@ qio_channel_tls_new_client(QIOChannel *master,
+     return NULL;
  }
  
-+static int vfio_load_device_config_state(QEMUFile *f, void *opaque);
-+
-+static int vfio_load_bufs_thread_load_config(VFIODevice *vbasedev)
++void qio_channel_tls_set_premature_eof_okay(QIOChannelTLS *ioc, bool enabled)
 +{
-+    VFIOMigration *migration = vbasedev->migration;
-+    VFIOMultifd *multifd = migration->multifd;
-+    VFIOStateBuffer *lb;
-+    g_autoptr(QIOChannelBuffer) bioc = NULL;
-+    QEMUFile *f_out = NULL, *f_in = NULL;
-+    uint64_t mig_header;
-+    int ret;
-+
-+    assert(multifd->load_buf_idx == multifd->load_buf_idx_last);
-+    lb = vfio_state_buffers_at(&multifd->load_bufs, multifd->load_buf_idx);
-+    assert(lb->is_present);
-+
-+    bioc = qio_channel_buffer_new(lb->len);
-+    qio_channel_set_name(QIO_CHANNEL(bioc), "vfio-device-config-load");
-+
-+    f_out = qemu_file_new_output(QIO_CHANNEL(bioc));
-+    qemu_put_buffer(f_out, (uint8_t *)lb->data, lb->len);
-+
-+    ret = qemu_fflush(f_out);
-+    if (ret) {
-+        g_clear_pointer(&f_out, qemu_fclose);
-+        return ret;
-+    }
-+
-+    qio_channel_io_seek(QIO_CHANNEL(bioc), 0, 0, NULL);
-+    f_in = qemu_file_new_input(QIO_CHANNEL(bioc));
-+
-+    mig_header = qemu_get_be64(f_in);
-+    if (mig_header != VFIO_MIG_FLAG_DEV_CONFIG_STATE) {
-+        g_clear_pointer(&f_out, qemu_fclose);
-+        g_clear_pointer(&f_in, qemu_fclose);
-+        return -EINVAL;
-+    }
-+
-+    bql_lock();
-+    ret = vfio_load_device_config_state(f_in, vbasedev);
-+    bql_unlock();
-+
-+    g_clear_pointer(&f_out, qemu_fclose);
-+    g_clear_pointer(&f_in, qemu_fclose);
-+    if (ret < 0) {
-+        return ret;
-+    }
-+
-+    return 0;
++    ioc->premature_eof_okay = enabled;
 +}
 +
- static VFIOStateBuffer *vfio_load_state_buffer_get(VFIOMultifd *multifd)
- {
-     VFIOStateBuffer *lb;
-@@ -477,11 +529,6 @@ static VFIOStateBuffer *vfio_load_state_buffer_get(VFIOMultifd *multifd)
-     return lb;
- }
- 
--static int vfio_load_bufs_thread_load_config(VFIODevice *vbasedev)
--{
--    return -EINVAL;
--}
--
- static bool vfio_load_state_buffer_write(VFIODevice *vbasedev,
-                                          VFIOStateBuffer *lb,
-                                          Error **errp)
-@@ -1168,6 +1215,8 @@ static int vfio_load_cleanup(void *opaque)
- static int vfio_load_state(QEMUFile *f, void *opaque, int version_id)
- {
-     VFIODevice *vbasedev = opaque;
-+    VFIOMigration *migration = vbasedev->migration;
-+    VFIOMultifd *multifd = migration->multifd;
-     int ret = 0;
-     uint64_t data;
- 
-@@ -1179,6 +1228,12 @@ static int vfio_load_state(QEMUFile *f, void *opaque, int version_id)
-         switch (data) {
-         case VFIO_MIG_FLAG_DEV_CONFIG_STATE:
-         {
-+            if (migration->multifd_transfer) {
-+                error_report("%s: got DEV_CONFIG_STATE but doing multifd transfer",
-+                             vbasedev->name);
-+                return -EINVAL;
-+            }
-+
-             return vfio_load_device_config_state(f, opaque);
-         }
-         case VFIO_MIG_FLAG_DEV_SETUP_STATE:
-@@ -1223,6 +1278,44 @@ static int vfio_load_state(QEMUFile *f, void *opaque, int version_id)
- 
-             return ret;
-         }
-+        case VFIO_MIG_FLAG_DEV_CONFIG_LOAD_READY:
-+        {
-+            if (!migration->multifd_transfer) {
-+                error_report("%s: got DEV_CONFIG_LOAD_READY outside multifd transfer",
-+                             vbasedev->name);
-+                return -EINVAL;
-+            }
-+
-+            if (!vfio_load_config_after_iter(vbasedev)) {
-+                error_report("%s: got DEV_CONFIG_LOAD_READY but was disabled",
-+                             vbasedev->name);
-+                return -EINVAL;
-+            }
-+
-+            assert(multifd);
-+
-+            /* The lock order is load_bufs_mutex -> BQL so unlock BQL here first */
-+            bql_unlock();
-+            WITH_QEMU_LOCK_GUARD(&multifd->load_bufs_mutex) {
-+                if (multifd->load_bufs_iter_done) {
-+                    /* Can't print error here as we're outside BQL */
-+                    ret = -EINVAL;
-+                    break;
-+                }
-+
-+                multifd->load_bufs_iter_done = true;
-+                qemu_cond_signal(&multifd->load_bufs_iter_done_cond);
-+
-+                ret = 0;
-+            }
-+            bql_lock();
-+
-+            if (ret) {
-+                error_report("%s: duplicate DEV_CONFIG_LOAD_READY",
-+                             vbasedev->name);
-+            }
-+            return ret;
-+        }
-         default:
-             error_report("%s: Unknown tag 0x%"PRIx64, vbasedev->name, data);
-             return -EINVAL;
+ struct QIOChannelTLSData {
+     QIOTask *task;
+     GMainContext *context;
+@@ -279,6 +284,7 @@ static ssize_t qio_channel_tls_readv(QIOChannel *ioc,
+             tioc->session,
+             iov[i].iov_base,
+             iov[i].iov_len,
++            tioc->premature_eof_okay ||
+             qatomic_load_acquire(&tioc->shutdown) & QIO_CHANNEL_SHUTDOWN_READ,
+             errp);
+         if (ret == QCRYPTO_TLS_SESSION_ERR_BLOCK) {
 
