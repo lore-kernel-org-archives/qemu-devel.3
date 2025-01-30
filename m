@@ -4,59 +4,59 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E82E1C0218F
-	for <qemu-devel@archiver.kernel.org>; Thu, 30 Jan 2025 13:18:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5CEDBC0218F
+	for <qemu-devel@archiver.kernel.org>; Thu, 30 Jan 2025 13:18:51 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tdUPy-0000Ab-Qa; Thu, 30 Jan 2025 08:17:14 -0500
+	id 1tdUQ2-0000NW-0L; Thu, 30 Jan 2025 08:17:19 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1tdUOy-0007QS-BT
- for qemu-devel@nongnu.org; Thu, 30 Jan 2025 08:16:15 -0500
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1tdUP7-0007WP-EJ
+ for qemu-devel@nongnu.org; Thu, 30 Jan 2025 08:16:25 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1tdUOt-000072-PZ
- for qemu-devel@nongnu.org; Thu, 30 Jan 2025 08:16:10 -0500
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1tdUP3-0000B3-CZ
+ for qemu-devel@nongnu.org; Thu, 30 Jan 2025 08:16:19 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1738242966;
+ s=mimecast20190719; t=1738242975;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=uRR7H0WP9B1yJ57bUByZTD6jaIfJLAD8x8hHtwlCHIg=;
- b=aexEoMQOUUJB1dQZwYBoNU3GDIw4g/xIOFD0+mw6QP+A0ibsjYxm2g699zFI5HgKa1M/6C
- GUYcMM49eu2stACHpEROH3kpijQLlj33agQt1+eagVfukOcs9GsihB6PDom3jyuXsvz1nx
- 9lbQPVcZUwhHl7cGUvYCrhf1xoeOpBs=
-Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
+ bh=1333MXfcJNjkCPS2IqEDL8zLZHoge3PzuNzOpIy/EgA=;
+ b=LBeEyzItyY8eIrpZFKCmdruvTgX7KoNqXWicKmZkoBjv10ulw4yu0AGLt4jVUrg3x0tuqC
+ bglHn1CkmQhBCETsVe2ReC6r+MVYmoiXodX1816Y0NI+aLqI4N8quI8VqId2Xoj0+HuE6M
+ NNXhL9ttPNVPSQb8EJ7ZG6LUFbeowLQ=
+Received: from mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-465-B1Fb_jhzObegA9xhJwTADw-1; Thu,
- 30 Jan 2025 08:16:03 -0500
-X-MC-Unique: B1Fb_jhzObegA9xhJwTADw-1
-X-Mimecast-MFC-AGG-ID: B1Fb_jhzObegA9xhJwTADw
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-3-2l3SF2j2Nw6hEtA2lITKNw-1; Thu,
+ 30 Jan 2025 08:16:14 -0500
+X-MC-Unique: 2l3SF2j2Nw6hEtA2lITKNw-1
+X-Mimecast-MFC-AGG-ID: 2l3SF2j2Nw6hEtA2lITKNw
 Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 57FFD19560B0; Thu, 30 Jan 2025 13:16:02 +0000 (UTC)
+ by mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 9AB531955DD4
+ for <qemu-devel@nongnu.org>; Thu, 30 Jan 2025 13:16:13 +0000 (UTC)
 Received: from thuth-p1g4.redhat.com (unknown [10.39.192.95])
  by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id BDBD630001BE; Thu, 30 Jan 2025 13:16:00 +0000 (UTC)
+ id C593A30001BE; Thu, 30 Jan 2025 13:16:11 +0000 (UTC)
 From: Thomas Huth <thuth@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Stefan Hajnoczi <stefanha@redhat.com>,
- Ilya Leoshkevich <iii@linux.ibm.com>,
- Richard Henderson <richard.henderson@linaro.org>
-Subject: [PULL 09/20] tests/tcg/s390x: Test modifying code using the MVC
- instruction
-Date: Thu, 30 Jan 2025 14:15:23 +0100
-Message-ID: <20250130131535.91297-10-thuth@redhat.com>
+ =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>
+Subject: [PULL 14/20] tests/functional: Extend PPC 40p test with Linux boot
+Date: Thu, 30 Jan 2025 14:15:28 +0100
+Message-ID: <20250130131535.91297-15-thuth@redhat.com>
 In-Reply-To: <20250130131535.91297-1-thuth@redhat.com>
 References: <20250130131535.91297-1-thuth@redhat.com>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
 Received-SPF: pass client-ip=170.10.129.124; envelope-from=thuth@redhat.com;
@@ -84,120 +84,54 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Ilya Leoshkevich <iii@linux.ibm.com>
+From: Cédric Le Goater <clg@redhat.com>
 
-Add a small test to prevent regressions.
+Fetch the cdrom image for the IBM 6015 PReP PowerPC machine hosted on
+the Juneau Linux Users Group site, boot and check Linux version.
 
-Signed-off-by: Ilya Leoshkevich <iii@linux.ibm.com>
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-Message-ID: <20250128001338.11474-2-iii@linux.ibm.com>
+Reviewed-by: Thomas Huth <thuth@redhat.com>
+Signed-off-by: Cédric Le Goater <clg@redhat.com>
+Message-ID: <20250129104844.1322100-1-clg@redhat.com>
 Signed-off-by: Thomas Huth <thuth@redhat.com>
 ---
- tests/tcg/s390x/mvc-smc.c               | 82 +++++++++++++++++++++++++
- tests/tcg/s390x/Makefile.softmmu-target |  1 +
- 2 files changed, 83 insertions(+)
- create mode 100644 tests/tcg/s390x/mvc-smc.c
+ tests/functional/test_ppc_40p.py | 18 ++++++++++++++++++
+ 1 file changed, 18 insertions(+)
 
-diff --git a/tests/tcg/s390x/mvc-smc.c b/tests/tcg/s390x/mvc-smc.c
-new file mode 100644
-index 0000000000..d68f60caa8
---- /dev/null
-+++ b/tests/tcg/s390x/mvc-smc.c
-@@ -0,0 +1,82 @@
-+/*
-+ * Test modifying code using the MVC instruction.
-+ *
-+ * SPDX-License-Identifier: GPL-2.0-or-later
-+ */
-+
-+#include <minilib.h>
-+
-+#define PAGE_SIZE 4096
-+#define BR_14_SIZE 2
-+#define RWX_OFFSET 2
-+
-+static unsigned char rw[PAGE_SIZE + BR_14_SIZE];
-+static unsigned char rwx[RWX_OFFSET + sizeof(rw)]
-+    __attribute__((aligned(PAGE_SIZE)));
-+
-+typedef unsigned long (*function_t)(unsigned long);
-+
-+static int emit_function(unsigned char *p, int n)
-+{
-+    int i = 0, val = 0;
-+
-+    while (i < n - 2) {
-+        /* aghi %r2,1 */
-+        p[i++] = 0xa7;
-+        p[i++] = 0x2b;
-+        p[i++] = 0x00;
-+        p[i++] = 0x01;
-+        val++;
-+    }
-+
-+    /* br %r14 */
-+    p[i++] = 0x07;
-+    p[i++] = 0xfe;
-+
-+    return val;
-+}
-+
-+static void memcpy_mvc(void *dest, void *src, unsigned long n)
-+{
-+    while (n >= 256) {
-+        asm("mvc 0(256,%[dest]),0(%[src])"
-+            :
-+            : [dest] "a" (dest)
-+            , [src] "a" (src)
-+            : "memory");
-+        dest += 256;
-+        src += 256;
-+        n -= 256;
-+    }
-+    asm("exrl %[n],0f\n"
-+        "j 1f\n"
-+        "0: mvc 0(1,%[dest]),0(%[src])\n"
-+        "1:"
-+        :
-+        : [dest] "a" (dest)
-+        , [src] "a" (src)
-+        , [n] "a" (n)
-+        : "memory");
-+}
-+
-+int main(void)
-+{
-+    int expected, size;
-+
-+    /* Create a TB. */
-+    size = sizeof(rwx) - RWX_OFFSET - 4;
-+    expected = emit_function(rwx + RWX_OFFSET, size);
-+    if (((function_t)(rwx + RWX_OFFSET))(0) != expected) {
-+        return 1;
-+    }
-+
-+    /* Overwrite the TB. */
-+    size += 4;
-+    expected = emit_function(rw, size);
-+    memcpy_mvc(rwx + RWX_OFFSET, rw, size);
-+    if (((function_t)(rwx + RWX_OFFSET))(0) != expected) {
-+        return 2;
-+    }
-+
-+    return 0;
-+}
-diff --git a/tests/tcg/s390x/Makefile.softmmu-target b/tests/tcg/s390x/Makefile.softmmu-target
-index 7adde2fa08..8cd4667c63 100644
---- a/tests/tcg/s390x/Makefile.softmmu-target
-+++ b/tests/tcg/s390x/Makefile.softmmu-target
-@@ -42,6 +42,7 @@ $(ASM_TESTS): LDFLAGS += -Wl,-T$(LINK_SCRIPT) -Wl,--build-id=none
- $(ASM_TESTS): $(LINK_SCRIPT)
- TESTS += $(ASM_TESTS)
+diff --git a/tests/functional/test_ppc_40p.py b/tests/functional/test_ppc_40p.py
+index 7a74e0cca7..614972a7eb 100755
+--- a/tests/functional/test_ppc_40p.py
++++ b/tests/functional/test_ppc_40p.py
+@@ -9,6 +9,7 @@
  
-+MULTIARCH_TESTS += mvc-smc
- S390X_MULTIARCH_RUNTIME_OBJS = head64.o console.o $(MINILIB_OBJS)
- $(MULTIARCH_TESTS): $(S390X_MULTIARCH_RUNTIME_OBJS)
- $(MULTIARCH_TESTS): LDFLAGS += $(S390X_MULTIARCH_RUNTIME_OBJS)
+ from qemu_test import QemuSystemTest, Asset
+ from qemu_test import wait_for_console_pattern, skipUntrustedTest
++from qemu_test import exec_command_and_wait_for_pattern
+ 
+ 
+ class IbmPrep40pMachine(QemuSystemTest):
+@@ -72,5 +73,22 @@ def test_openbios_and_netbsd(self):
+         self.vm.launch()
+         wait_for_console_pattern(self, 'NetBSD/prep BOOT, Revision 1.9')
+ 
++    ASSET_40P_SANDALFOOT = Asset(
++        'http://www.juneau-lug.org/zImage.initrd.sandalfoot',
++        '749ab02f576c6dc8f33b9fb022ecb44bf6a35a0472f2ea6a5e9956bc15933901')
++
++    def test_openbios_and_linux(self):
++        self.set_machine('40p')
++        self.require_accelerator("tcg")
++        drive_path = self.ASSET_40P_SANDALFOOT.fetch()
++        self.vm.set_console()
++        self.vm.add_args('-cdrom', drive_path,
++                         '-boot', 'd')
++
++        self.vm.launch()
++        wait_for_console_pattern(self, 'Please press Enter to activate this console.')
++        exec_command_and_wait_for_pattern(self, '\012', '#')
++        exec_command_and_wait_for_pattern(self, 'uname -a', 'Linux ppc 2.4.18')
++
+ if __name__ == '__main__':
+     QemuSystemTest.main()
 -- 
 2.48.1
 
