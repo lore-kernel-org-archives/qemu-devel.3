@@ -4,96 +4,132 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 07DFFC0218A
-	for <qemu-devel@archiver.kernel.org>; Thu, 30 Jan 2025 16:28:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3A823C0218A
+	for <qemu-devel@archiver.kernel.org>; Thu, 30 Jan 2025 16:28:55 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tdXP4-0007ol-GP; Thu, 30 Jan 2025 11:28:30 -0500
+	id 1tdXPB-0007yJ-5A; Thu, 30 Jan 2025 11:28:37 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1tdXOy-0007jQ-LR
- for qemu-devel@nongnu.org; Thu, 30 Jan 2025 11:28:25 -0500
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1tdXPA-0007w3-2f
+ for qemu-devel@nongnu.org; Thu, 30 Jan 2025 11:28:36 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1tdXOw-00034O-QM
- for qemu-devel@nongnu.org; Thu, 30 Jan 2025 11:28:24 -0500
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1tdXP8-0003Eu-Qx
+ for qemu-devel@nongnu.org; Thu, 30 Jan 2025 11:28:35 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1738254499;
+ s=mimecast20190719; t=1738254513;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=vXhPYxXivfpAUmoL63eWbkQQipXOPxccSSUSI/QcRPA=;
- b=WzPFPRuyoLYby3kusW1MXqOOBu4ouRRgi0kYz3sU4vrbM/3ozP7b4M8i7VK8M7V6vfFowH
- L5+DP5zOyxGZHvJnp18woVbTH3wbCUfgD/qTdFLg11HiiooayvBNuKWXCe72WeF45Adxjs
- trDhkkOk4Wy/eeHhAcIYq/gQIu06Q98=
-Received: from mail-qv1-f71.google.com (mail-qv1-f71.google.com
- [209.85.219.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+ bh=GLF2KFbjSEf9il3emjfHi1hCNd+TMuSN4FwUfMjcVuE=;
+ b=ChzxqsHoT90gGR9Rx+r+MVK2nPDrl5kuHicZwKvwthk6LwIhLKWHrtEli0OZUfc5IlVnft
+ KSCSU1/aJ6MqeZExRalZOT02/0cgm8/wvkkUsnu3u874gFR4wF0YcykizmSRSgHmitsEPh
+ 9ppYtGfBdN/TwB3He32YqMlPjS0Rbhw=
+Received: from mail-qv1-f70.google.com (mail-qv1-f70.google.com
+ [209.85.219.70]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-360-blV_mPZ0Mw-USNQhngJW4Q-1; Thu, 30 Jan 2025 11:28:16 -0500
-X-MC-Unique: blV_mPZ0Mw-USNQhngJW4Q-1
-X-Mimecast-MFC-AGG-ID: blV_mPZ0Mw-USNQhngJW4Q
-Received: by mail-qv1-f71.google.com with SMTP id
- 6a1803df08f44-6e2378169a4so21864906d6.2
- for <qemu-devel@nongnu.org>; Thu, 30 Jan 2025 08:28:15 -0800 (PST)
+ us-mta-654-iQpAfj12PcO2c52-i57VrA-1; Thu, 30 Jan 2025 11:28:32 -0500
+X-MC-Unique: iQpAfj12PcO2c52-i57VrA-1
+X-Mimecast-MFC-AGG-ID: iQpAfj12PcO2c52-i57VrA
+Received: by mail-qv1-f70.google.com with SMTP id
+ 6a1803df08f44-6d8f94518c9so19897286d6.1
+ for <qemu-devel@nongnu.org>; Thu, 30 Jan 2025 08:28:32 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1738254495; x=1738859295;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=vXhPYxXivfpAUmoL63eWbkQQipXOPxccSSUSI/QcRPA=;
- b=UaTWM6qSk+QJPWN/zS953+zx6luiFrbdzcA5TpaSIDI5p76kRrVv5+7teGbrRxyvoG
- CFCAxRS3nub4B7bQ0ebsD+Nn8RpcDDDs6Lnjc3DcEpZH1HPu6ZgaxLOXv2KXfHF7Gyyb
- FwwExAvEfgWiIojXxsUAwIE1ZmAbgufDm/kIUOaW/4L6k4ODoAVOmwIFLAqm72nG2R0V
- uT50LOpWXGvjT1AELbFc1ijnnasHUGQnccUvIZSxKrm13wOarA80Ch+1CEbzxzjsF2Nx
- owAdlJ5mZgvu4rmRPLjLa7u/me49GmNaueEYNxvVLY5kSY+nXl2fUv2ryeQeKNB1IK0Y
- MgVg==
-X-Forwarded-Encrypted: i=1;
- AJvYcCUm9RUACSWwDxAVwS1DqO3309gHFpt2fbja+O0hN8CEv3dE2R1cW/vIxBxnalae5xkiBpq6rhysnB5n@nongnu.org
-X-Gm-Message-State: AOJu0YyGEI8d0oKil2bdV44FdggVF6tfBVNMmcLQk5A0hd8c/LOWv7lj
- XbprmzTxTHg3wh7kfO+rraNhKZ+4CNV7KyWzjMXTDmI4+NL1JB0/YzWZbLTDoKfk3bBxWTYN8Lb
- EBro2AzhVAza/PZbgyC2SboA4wh+qvWkPmV5d2qJDdwxRaMozKloI
-X-Gm-Gg: ASbGncvRkno3jxCDffQGfo0RAEd85V/QbrSp6AxHwdlFw5jtkTeuQ4Ou5wVIDGZX5nY
- ULepaDlJcIcQL+KzdrxEZcoBHeuftv4M/4331UN8GuQAv8md2yEI7VNGWcLApWDlRHxUAiVSgUy
- 2u3lH9Aeg1dETSbl5QgUHT8Xdf78WPtmIpGzC+zL5bm8U5WVd3ihTTzA1LnfczT4sHVJI+zuXqm
- OZvgFW0ig8+V3AlCmovOfJ8qRzxIFBwy3H5JHY75WBx1jtqUMVCG2PdzpK7ifTmONM4HS9B6VQ9
- a+Y0Mh2s9DDK0arJ4aaA35ybXok/pGZukM+Ju4tWHXpu/u2+
-X-Received: by 2002:a05:6214:428f:b0:6e2:4940:400b with SMTP id
- 6a1803df08f44-6e249404305mr100836296d6.16.1738254495457; 
- Thu, 30 Jan 2025 08:28:15 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IHezdPdrcB465gv5HhXBH/dzV/lCJAFc7ts3XsdTfdwi+8v24sDD4NLRKI5jZWu3JiarcHE6Q==
-X-Received: by 2002:a05:6214:428f:b0:6e2:4940:400b with SMTP id
- 6a1803df08f44-6e249404305mr100835876d6.16.1738254495132; 
- Thu, 30 Jan 2025 08:28:15 -0800 (PST)
-Received: from x1.local (pool-99-254-114-190.cpe.net.cable.rogers.com.
- [99.254.114.190]) by smtp.gmail.com with ESMTPSA id
- 6a1803df08f44-6e2547f43f7sm7724526d6.9.2025.01.30.08.28.13
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 30 Jan 2025 08:28:14 -0800 (PST)
-Date: Thu, 30 Jan 2025 11:28:11 -0500
-From: Peter Xu <peterx@redhat.com>
-To: Xu Yilun <yilun.xu@linux.intel.com>
-Cc: Alexey Kardashevskiy <aik@amd.com>, Chenyi Qiang <chenyi.qiang@intel.com>,
- David Hildenbrand <david@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
- Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Michael Roth <michael.roth@amd.com>, qemu-devel@nongnu.org,
- kvm@vger.kernel.org, Williams Dan J <dan.j.williams@intel.com>,
- Peng Chao P <chao.p.peng@intel.com>, Gao Chao <chao.gao@intel.com>,
- Xu Yilun <yilun.xu@intel.com>
-Subject: Re: [PATCH 2/7] guest_memfd: Introduce an object to manage the
- guest-memfd with RamDiscardManager
-Message-ID: <Z5uom-NTtekV9Crd@x1.local>
-References: <ZnmfUelBs3Cm0ZHd@yilunxu-OptiPlex-7050> <Z4-6u5_9NChu_KZq@x1n>
- <95a14f7d-4782-40b3-a55d-7cf67b911bbe@amd.com>
- <Z5C9SzXxX7M1DBE3@yilunxu-OptiPlex-7050> <Z5EgFaWIyjIiOZnv@x1n>
- <Z5INAQjxyYhwyc+1@yilunxu-OptiPlex-7050> <Z5Jylb73kDJ6HTEZ@x1n>
- <Z5NhwW/IXaLfvjvb@yilunxu-OptiPlex-7050> <Z5O4BSCjlhhu4rrw@x1n>
- <Z5WtRYSf7cjqITXH@yilunxu-OptiPlex-7050>
+ d=1e100.net; s=20230601; t=1738254512; x=1738859312;
+ h=content-transfer-encoding:in-reply-to:autocrypt:content-language
+ :references:cc:to:from:subject:user-agent:mime-version:date
+ :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=GLF2KFbjSEf9il3emjfHi1hCNd+TMuSN4FwUfMjcVuE=;
+ b=LdzNkBeY3O1/i39QHrVWipb1js7AeGMczM8CRGL2SAOvDqAQtAavGMWia89Y7+fyCT
+ U5eUB96O9L9iTcyPRnjYrDsAwwd0spq6T3cd9Pn5oW/P3s+YULapR+d9vF45Ir++7qjV
+ SUekhz6zAJ08VHHd7vl5DSrFcjdpuKHNxgrgQ2mkJ96n4fOw3VlsmYogXwefRDGeLTHq
+ i0g07AbK9EiUvRjCMPUfMsOieqvPhF7r6YU2a6a6WumsKpeSjpW1cU4yEMfAzufpTjKu
+ L7lmWr0o6BXkK9Hcdc4PuMidUwcSEFQIEPLyIM1oIp+vWRiPKt9UBxbeZh0Ke34kjJmf
+ d84g==
+X-Gm-Message-State: AOJu0YzqEguuU0y4YuObGo05aCZLrsw6SYTptEoFE3N2qUwgXDruPYC4
+ TGqUIc5Z5H9b+m6d8Gb7mN7f0FW2XBH9qquKQOvwz4qK0cNclufZWxywphR40zVNgtWz0Zzratm
+ glr/IBlrixzsQf4qFgwTnNGBTJ4fsQQod3DuYAmLwGe3+aWGVL7G/
+X-Gm-Gg: ASbGncvseNruZPDetmVVO1yET8g6BLvMTxFg01vueub5ktnsO/l3wjGk2WAp2Ygy0e+
+ rz4oS2prb6LxvAmlqvPnqmQPADqkzZz3oFe94Q283s9ephS3w3vZ7olMD61EwpnhiQO25LqmztU
+ XgVvFmxizAjSqvkEiNs2euIQt+jYV/kVYtHQVIh4IJbfMl0qbawER+yRfgi7ppg7s20GGReywZ2
+ P7UnEuh2c5Q4Mft2+P+xMG2tIY7nl5NseviEFbAMLa+tIviZ9RYTULEpaPnS2G/Kbv9DINozouo
+ NG+iEsfkyYNBcMaiEvCu2IJNnxZvhqWrphrgwWrB6V8=
+X-Received: by 2002:a05:6214:411c:b0:6d8:adfe:4c73 with SMTP id
+ 6a1803df08f44-6e243c0ec8cmr124021916d6.27.1738254511711; 
+ Thu, 30 Jan 2025 08:28:31 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IFeYRzSJx0m9WNm/K2X6Orey9OajZIwPwt36JVFTtDvjSlmw6McJeh8bULY0tZ+OPccnlHQWw==
+X-Received: by 2002:a05:6214:411c:b0:6d8:adfe:4c73 with SMTP id
+ 6a1803df08f44-6e243c0ec8cmr124021676d6.27.1738254511438; 
+ Thu, 30 Jan 2025 08:28:31 -0800 (PST)
+Received: from ?IPV6:2a01:e0a:280:24f0:9db0:474c:ff43:9f5c?
+ ([2a01:e0a:280:24f0:9db0:474c:ff43:9f5c])
+ by smtp.gmail.com with ESMTPSA id
+ 6a1803df08f44-6e254832f71sm7700846d6.52.2025.01.30.08.28.30
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Thu, 30 Jan 2025 08:28:30 -0800 (PST)
+Message-ID: <b3ed229d-03ed-4b4e-888a-4b21cef881b3@redhat.com>
+Date: Thu, 30 Jan 2025 17:28:29 +0100
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <Z5WtRYSf7cjqITXH@yilunxu-OptiPlex-7050>
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=peterx@redhat.com;
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 1/9] util/error: Introduce warn_report_once_err()
+From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
+To: Markus Armbruster <armbru@redhat.com>
+Cc: qemu-devel@nongnu.org, Alex Williamson <alex.williamson@redhat.com>
+References: <20250130134346.1754143-1-clg@redhat.com>
+ <20250130134346.1754143-2-clg@redhat.com> <87msf8xttf.fsf@pond.sub.org>
+ <c3578100-bc5d-4f10-be67-f6a1f9ab128a@redhat.com>
+Content-Language: en-US, fr
+Autocrypt: addr=clg@redhat.com; keydata=
+ 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
+ uVKe8BVz4atMOoktmt0GWTOC8P4=
+In-Reply-To: <c3578100-bc5d-4f10-be67-f6a1f9ab128a@redhat.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=clg@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -33
 X-Spam_score: -3.4
@@ -118,111 +154,18 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Sun, Jan 26, 2025 at 11:34:29AM +0800, Xu Yilun wrote:
-> > Definitely not suggesting to install an invalid pointer anywhere.  The
-> > mapped pointer will still be valid for gmem for example, but the fault
-> > isn't.  We need to differenciate two things (1) virtual address mapping,
-> > then (2) permission and accesses on the folios / pages of the mapping.
-> > Here I think it's okay if the host pointer is correctly mapped.
-> > 
-> > For your private MMIO use case, my question is if there's no host pointer
-> > to be mapped anyway, then what's the benefit to make the MR to be ram=on?
-> > Can we simply make it a normal IO memory region?  The only benefit of a
+>> The related function warn_report_once_cond() takes the flag as a
+>> parameter.  Only the calls using the same flag suppress each other.
 > 
-> The guest access to normal IO memory region would be emulated by QEMU,
-> while private assigned MMIO requires guest direct access via Secure EPT.
-> 
-> Seems the existing code doesn't support guest direct access if
-> mr->ram == false:
+> yep. I wonder if we could use warn_report_once_cond() in a similar
+> macro.
 
-Ah it's about this, ok.
-
-I am not sure what's the best approach, but IMHO it's still better we stick
-with host pointer always available when ram=on.  OTOH, VFIO private regions
-may be able to provide a special mark somewhere, just like when romd_mode
-was done previously as below (qemu 235e8982ad39), so that KVM should still
-apply these MRs even if they're not RAM.
-
-> 
-> static void kvm_set_phys_mem(KVMMemoryListener *kml,
->                              MemoryRegionSection *section, bool add)
-> {
->     [...]
-> 
->     if (!memory_region_is_ram(mr)) {
->         if (writable || !kvm_readonly_mem_allowed) {
->             return;
->         } else if (!mr->romd_mode) {
->             /* If the memory device is not in romd_mode, then we actually want
->              * to remove the kvm memory slot so all accesses will trap. */
->             add = false;
->         }
->     }
-> 
->     [...]
-> 
->     /* register the new slot */
->     do {
-> 
->         [...]
-> 
->         err = kvm_set_user_memory_region(kml, mem, true);
->     }
-> }
-> 
-> > ram=on MR is, IMHO, being able to be accessed as RAM-like.  If there's no
-> > host pointer at all, I don't yet understand how that helps private MMIO
-> > from working.
-> 
-> I expect private MMIO not accessible from host, but accessible from
-> guest so has kvm_userspace_memory_region2 set. That means the resolving
-> of its PFN during EPT fault cannot depends on host pointer.
-> 
-> https://lore.kernel.org/all/20250107142719.179636-1-yilun.xu@linux.intel.com/
-
-I'll leave this to KVM experts, but I actually didn't follow exactly on why
-mmu notifier is an issue to make , as I thought that was per-mm anyway, and KVM
-should logically be able to skip all VFIO private MMIO regions if affected.
-This is a comment to this part of your commit message:
-
-        Rely on userspace mapping also means private MMIO mapping should
-        follow userspace mapping change via mmu_notifier. This conflicts
-        with the current design that mmu_notifier never impacts private
-        mapping. It also makes no sense to support mmu_notifier just for
-        private MMIO, private MMIO mapping should be fixed when CoCo-VM
-        accepts the private MMIO, any following mapping change without
-        guest permission should be invalid.
-
-So I don't yet see a hard-no of reusing userspace mapping even if they're
-not faultable as of now - what if they can be faultable in the future?  I
-am not sure..
-
-OTOH, I also don't think we need KVM_SET_USER_MEMORY_REGION3 anyway.. The
-_REGION2 API is already smart enough to leave some reserved fields:
-
-/* for KVM_SET_USER_MEMORY_REGION2 */
-struct kvm_userspace_memory_region2 {
-	__u32 slot;
-	__u32 flags;
-	__u64 guest_phys_addr;
-	__u64 memory_size;
-	__u64 userspace_addr;
-	__u64 guest_memfd_offset;
-	__u32 guest_memfd;
-	__u32 pad1;
-	__u64 pad2[14];
-};
-
-I think we _could_ reuse some pad*?  Reusing guest_memfd field sounds error
-prone to me.
-
-Not sure it could be easier if it's not guest_memfd* but fd + fd_offset
-since the start.  But I guess when introducing _REGION2 we didn't expect
-MMIO private regions come so soon..
+But vfio uses ->hint too which adds complexity. I will keep the
+custom version I have in vfio for now.
 
 Thanks,
 
--- 
-Peter Xu
+C.
+
 
 
