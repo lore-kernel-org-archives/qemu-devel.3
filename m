@@ -4,55 +4,53 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A5E8CC02190
-	for <qemu-devel@archiver.kernel.org>; Thu, 30 Jan 2025 13:17:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id AD5C5C02194
+	for <qemu-devel@archiver.kernel.org>; Thu, 30 Jan 2025 13:17:41 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tdUQ1-0000Fl-H3; Thu, 30 Jan 2025 08:17:17 -0500
+	id 1tdUPq-00084Y-8Q; Thu, 30 Jan 2025 08:17:06 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1tdUP4-0007SK-Cj
- for qemu-devel@nongnu.org; Thu, 30 Jan 2025 08:16:21 -0500
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1tdUOw-0007O7-Rp
+ for qemu-devel@nongnu.org; Thu, 30 Jan 2025 08:16:12 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1tdUP0-0000A1-FC
- for qemu-devel@nongnu.org; Thu, 30 Jan 2025 08:16:16 -0500
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1tdUOt-00006t-6Z
+ for qemu-devel@nongnu.org; Thu, 30 Jan 2025 08:16:08 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1738242973;
+ s=mimecast20190719; t=1738242966;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=kgVS5nOLBjp9lzAmjT/70TvKJ8N7XUJI0OxS/CKpcYU=;
- b=V2xQWS3HK0RyzrEJcXcVN9ai8FcwzJO6mV8aF9S8vRcad/mPgntvw2+T9+hDO1OlTsWLbq
- HGoSIMyUC/v9ImLv4Hs9ShzLso6Ok9GGQu37qDHT1hSFsfsuz6TUsFz8e6xxpAb4GL3QfI
- ADsDbAEHgPGMTYvlN7HQPST00jQ7psk=
-Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
+ bh=qV+61rvCL4A0t8T5oUkBk1b0e0MFCHm3CI8peZGVBkU=;
+ b=eGiGVgNp2wJeVDaE04Vw1QQiDHlE9wwMInIPlnJqfcuhXD2kGaCbR5NAQ55HPZfNadBJDq
+ gFU5FQGUzSjD53WM5lCJhSPzKwdCn5lirYMeY4TnSyyF3JyS4kX0FebzYmmXQKWslTMIS9
+ iSsbRAL8EP/dyw3AtKW5gQ6wcHarXgs=
+Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-324-jeaFdFeIPZ2CL3nOuQLQUw-1; Thu,
- 30 Jan 2025 08:16:12 -0500
-X-MC-Unique: jeaFdFeIPZ2CL3nOuQLQUw-1
-X-Mimecast-MFC-AGG-ID: jeaFdFeIPZ2CL3nOuQLQUw
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-390-HPCoOzYHMJu39-l2FkUQMg-1; Thu,
+ 30 Jan 2025 08:16:05 -0500
+X-MC-Unique: HPCoOzYHMJu39-l2FkUQMg-1
+X-Mimecast-MFC-AGG-ID: HPCoOzYHMJu39-l2FkUQMg
 Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 4EBE618009F9
- for <qemu-devel@nongnu.org>; Thu, 30 Jan 2025 13:16:11 +0000 (UTC)
+ by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 5CD8F1801F14; Thu, 30 Jan 2025 13:16:04 +0000 (UTC)
 Received: from thuth-p1g4.redhat.com (unknown [10.39.192.95])
  by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 7BCBD30001BE; Thu, 30 Jan 2025 13:16:09 +0000 (UTC)
+ id CEA4D30001BE; Thu, 30 Jan 2025 13:16:02 +0000 (UTC)
 From: Thomas Huth <thuth@redhat.com>
 To: qemu-devel@nongnu.org
-Cc: Stefan Hajnoczi <stefanha@redhat.com>, David Hildenbrand <david@redhat.com>
-Subject: [PULL 13/20] s390x/s390-virtio-ccw: Support plugging PCI-based virtio
- memory devices
-Date: Thu, 30 Jan 2025 14:15:27 +0100
-Message-ID: <20250130131535.91297-14-thuth@redhat.com>
+Cc: Stefan Hajnoczi <stefanha@redhat.com>, Ilya Leoshkevich <iii@linux.ibm.com>
+Subject: [PULL 10/20] hw/s390x/s390-virtio-ccw: Fix a record/replay deadlock
+Date: Thu, 30 Jan 2025 14:15:24 +0100
+Message-ID: <20250130131535.91297-11-thuth@redhat.com>
 In-Reply-To: <20250130131535.91297-1-thuth@redhat.com>
 References: <20250130131535.91297-1-thuth@redhat.com>
 MIME-Version: 1.0
@@ -83,83 +81,79 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: David Hildenbrand <david@redhat.com>
+From: Ilya Leoshkevich <iii@linux.ibm.com>
 
-Let's just wire it up, unlocking virtio-mem-pci support on s390x.
+Booting an s390x VM in record/replay mode hangs due to a deadlock
+between rr_cpu_thread_fn() and s390_machine_reset(). The former needs
+the record/replay mutex held by the latter, and the latter waits until
+the former completes its run_on_cpu() request.
 
-While at it, drop the "return;" in s390_machine_device_unplug_request(),
-to make it look like the other handlers.
+Fix by temporarily dropping the record/replay mutex, like it's done in
+pause_all_vcpus().
 
-Reviewed-by: Thomas Huth <thuth@redhat.com>
-Signed-off-by: David Hildenbrand <david@redhat.com>
-Message-ID: <20250128185705.1609038-3-david@redhat.com>
+Signed-off-by: Ilya Leoshkevich <iii@linux.ibm.com>
+Message-ID: <20250124112625.23050-1-iii@linux.ibm.com>
 Signed-off-by: Thomas Huth <thuth@redhat.com>
 ---
- hw/s390x/s390-virtio-ccw.c | 20 ++++++++++++++------
- 1 file changed, 14 insertions(+), 6 deletions(-)
+ hw/s390x/s390-virtio-ccw.c | 24 +++++++++++++++++++++++-
+ 1 file changed, 23 insertions(+), 1 deletion(-)
 
 diff --git a/hw/s390x/s390-virtio-ccw.c b/hw/s390x/s390-virtio-ccw.c
-index b069303592..d9e683c5b4 100644
+index 3af613d4e9..b069303592 100644
 --- a/hw/s390x/s390-virtio-ccw.c
 +++ b/hw/s390x/s390-virtio-ccw.c
-@@ -576,8 +576,7 @@ static void s390_machine_device_pre_plug(HotplugHandler *hotplug_dev,
-     if (object_dynamic_cast(OBJECT(dev), TYPE_VIRTIO_MD_CCW)) {
-         virtio_ccw_md_pre_plug(VIRTIO_MD_CCW(dev), MACHINE(hotplug_dev), errp);
-     } else if (object_dynamic_cast(OBJECT(dev), TYPE_VIRTIO_MD_PCI)) {
--        error_setg(errp,
--                   "PCI-attached virtio based memory devices not supported");
-+        virtio_md_pci_pre_plug(VIRTIO_MD_PCI(dev), MACHINE(hotplug_dev), errp);
-     }
- }
+@@ -48,6 +48,7 @@
+ #include "kvm/kvm_s390x.h"
+ #include "hw/virtio/virtio-md-pci.h"
+ #include "hw/s390x/virtio-ccw-md.h"
++#include "system/replay.h"
+ #include CONFIG_DEVICES
  
-@@ -588,7 +587,8 @@ static void s390_machine_device_plug(HotplugHandler *hotplug_dev,
+ static Error *pv_mig_blocker;
+@@ -454,6 +455,18 @@ static void s390_machine_reset(MachineState *machine, ResetType type)
+     CPUState *cs, *t;
+     S390CPU *cpu;
  
-     if (object_dynamic_cast(OBJECT(dev), TYPE_CPU)) {
-         s390_cpu_plug(hotplug_dev, dev, errp);
--    } else if (object_dynamic_cast(OBJECT(dev), TYPE_VIRTIO_MD_CCW)) {
-+    } else if (object_dynamic_cast(OBJECT(dev), TYPE_VIRTIO_MD_CCW) ||
-+               object_dynamic_cast(OBJECT(dev), TYPE_VIRTIO_MD_PCI)) {
-         /*
-          * At this point, the device is realized and set all memdevs mapped, so
-          * qemu_maxrampagesize() will pick up the page sizes of these memdevs
-@@ -602,7 +602,11 @@ static void s390_machine_device_plug(HotplugHandler *hotplug_dev,
-                        " initial memory");
-             return;
++    /*
++     * Temporarily drop the record/replay mutex to let rr_cpu_thread_fn()
++     * process the run_on_cpu() requests below. This is safe, because at this
++     * point one of the following is true:
++     * - All CPU threads are not running, either because the machine is being
++     *   initialized, or because the guest requested a reset using diag 308.
++     *   There is no risk to desync the record/replay state.
++     * - A snapshot is about to be loaded. The record/replay state consistency
++     *   is not important.
++     */
++    replay_mutex_unlock();
++
+     /* get the reset parameters, reset them once done */
+     s390_ipl_get_reset_request(&cs, &reset_type);
+ 
+@@ -533,7 +546,7 @@ static void s390_machine_reset(MachineState *machine, ResetType type)
+              * went wrong.
+              */
+             s390_cpu_set_state(S390_CPU_STATE_OPERATING, cpu);
+-            return;
++            goto out_lock;
          }
--        virtio_ccw_md_plug(VIRTIO_MD_CCW(dev), MACHINE(hotplug_dev), errp);
-+        if (object_dynamic_cast(OBJECT(dev), TYPE_VIRTIO_MD_CCW)) {
-+            virtio_ccw_md_plug(VIRTIO_MD_CCW(dev), MACHINE(hotplug_dev), errp);
-+        } else {
-+            virtio_md_pci_plug(VIRTIO_MD_PCI(dev), MACHINE(hotplug_dev), errp);
-+        }
+ 
+         run_on_cpu(cs, s390_do_cpu_load_normal, RUN_ON_CPU_NULL);
+@@ -546,6 +559,15 @@ static void s390_machine_reset(MachineState *machine, ResetType type)
+         run_on_cpu(t, s390_do_cpu_set_diag318, RUN_ON_CPU_HOST_ULONG(0));
      }
+     s390_ipl_clear_reset_request();
++
++out_lock:
++    /*
++     * Re-take the record/replay mutex, temporarily dropping the BQL in order
++     * to satisfy the ordering requirements.
++     */
++    bql_unlock();
++    replay_mutex_lock();
++    bql_lock();
  }
  
-@@ -611,10 +615,12 @@ static void s390_machine_device_unplug_request(HotplugHandler *hotplug_dev,
- {
-     if (object_dynamic_cast(OBJECT(dev), TYPE_CPU)) {
-         error_setg(errp, "CPU hot unplug not supported on this machine");
--        return;
-     } else if (object_dynamic_cast(OBJECT(dev), TYPE_VIRTIO_MD_CCW)) {
-         virtio_ccw_md_unplug_request(VIRTIO_MD_CCW(dev), MACHINE(hotplug_dev),
-                                      errp);
-+    } else if (object_dynamic_cast(OBJECT(dev), TYPE_VIRTIO_MD_PCI)) {
-+        virtio_md_pci_unplug_request(VIRTIO_MD_PCI(dev), MACHINE(hotplug_dev),
-+                                     errp);
-     }
- }
- 
-@@ -623,7 +629,9 @@ static void s390_machine_device_unplug(HotplugHandler *hotplug_dev,
- {
-     if (object_dynamic_cast(OBJECT(dev), TYPE_VIRTIO_MD_CCW)) {
-         virtio_ccw_md_unplug(VIRTIO_MD_CCW(dev), MACHINE(hotplug_dev), errp);
--     }
-+    } else if (object_dynamic_cast(OBJECT(dev), TYPE_VIRTIO_MD_PCI)) {
-+        virtio_md_pci_unplug(VIRTIO_MD_PCI(dev), MACHINE(hotplug_dev), errp);
-+    }
-  }
- 
- static CpuInstanceProperties s390_cpu_index_to_props(MachineState *ms,
+ static void s390_machine_device_pre_plug(HotplugHandler *hotplug_dev,
 -- 
 2.48.1
 
