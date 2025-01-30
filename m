@@ -4,53 +4,139 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 18016C0218A
-	for <qemu-devel@archiver.kernel.org>; Thu, 30 Jan 2025 10:11:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C102EC02193
+	for <qemu-devel@archiver.kernel.org>; Thu, 30 Jan 2025 10:11:33 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tdRVC-0003un-Ij; Thu, 30 Jan 2025 05:10:26 -0500
+	id 1tdRUu-0002nn-FC; Thu, 30 Jan 2025 05:10:08 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mhej@vps-ovh.mhejs.net>)
- id 1tdRVA-0003mH-5k
- for qemu-devel@nongnu.org; Thu, 30 Jan 2025 05:10:24 -0500
-Received: from vps-ovh.mhejs.net ([145.239.82.108])
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1tdRUs-0002fW-Lf
+ for qemu-devel@nongnu.org; Thu, 30 Jan 2025 05:10:06 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mhej@vps-ovh.mhejs.net>)
- id 1tdRV8-0007Iw-4i
- for qemu-devel@nongnu.org; Thu, 30 Jan 2025 05:10:23 -0500
-Received: from MUA
- by vps-ovh.mhejs.net with esmtpsa  (TLS1.3) tls TLS_AES_256_GCM_SHA384
- (Exim 4.98) (envelope-from <mhej@vps-ovh.mhejs.net>)
- id 1tdRV3-00000006Tyb-3bKh; Thu, 30 Jan 2025 11:10:17 +0100
-From: "Maciej S. Szmigiero" <mail@maciej.szmigiero.name>
-To: Peter Xu <peterx@redhat.com>,
-	Fabiano Rosas <farosas@suse.de>
-Cc: Alex Williamson <alex.williamson@redhat.com>,
- =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>,
- Eric Blake <eblake@redhat.com>, Markus Armbruster <armbru@redhat.com>,
- =?UTF-8?q?Daniel=20P=20=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
- Avihai Horon <avihaih@nvidia.com>,
- Joao Martins <joao.m.martins@oracle.com>, qemu-devel@nongnu.org
-Subject: [PATCH v4 13/33] migration/multifd: Device state transfer support -
- receive side
-Date: Thu, 30 Jan 2025 11:08:34 +0100
-Message-ID: <654768fd717b0def70906bf7adfd6739cfd2ecf3.1738171076.git.maciej.szmigiero@oracle.com>
-X-Mailer: git-send-email 2.48.1
-In-Reply-To: <cover.1738171076.git.maciej.szmigiero@oracle.com>
-References: <cover.1738171076.git.maciej.szmigiero@oracle.com>
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1tdRUq-0007EQ-RL
+ for qemu-devel@nongnu.org; Thu, 30 Jan 2025 05:10:06 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1738231804;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+ bh=qQ8eH81UYFL69XG+1S82ymzqJ03bYDhWvvzIvENlHII=;
+ b=T5KmbzkKe38GZ5EF8k9LJuc9Xb9ffKJXM0x2fAJX56PD8vevpkurJxyNDp/NXsplzDWutQ
+ oYQCbg7LzhAr4pa/wgL146hvNJ4qZgzt6D9nX3fMNQSxIV9UfbE3Q0/xBG70iRjKsdSq1D
+ unNNfmo1dy1TdhTzY7RwSMhupAvRcZc=
+Received: from mail-qt1-f197.google.com (mail-qt1-f197.google.com
+ [209.85.160.197]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-652-BVqJmesuOvqwmGt0gHmKtA-1; Thu, 30 Jan 2025 05:10:01 -0500
+X-MC-Unique: BVqJmesuOvqwmGt0gHmKtA-1
+X-Mimecast-MFC-AGG-ID: BVqJmesuOvqwmGt0gHmKtA
+Received: by mail-qt1-f197.google.com with SMTP id
+ d75a77b69052e-467be89d064so6521001cf.3
+ for <qemu-devel@nongnu.org>; Thu, 30 Jan 2025 02:10:01 -0800 (PST)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1738231801; x=1738836601;
+ h=content-transfer-encoding:in-reply-to:autocrypt:content-language
+ :from:references:cc:to:subject:user-agent:mime-version:date
+ :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=qQ8eH81UYFL69XG+1S82ymzqJ03bYDhWvvzIvENlHII=;
+ b=lBPpwVX2tbPck1fQnK1M3nxEf+0d6oZH4yfkDfZHg2KCQA4F6e4QG+vXUj0e8ph2yf
+ rbOLZbN3JD9NIY8JIiMdq4yTkbNSHg6oV511H3GEXUgWQ9iWhw5McLTA19AgHBoIHxw/
+ lOZ9WEbBfcrsQAUUsLjQXhybkV34hxwE/lNl9up0eA7+XeS/Qn1QJf+o3hN3fe8TxfGI
+ 3dvH9rpFi4Vg1bigrD3STs68LBA4RDPI1lH680z8juraxFKdBDnnpoMjn7xbeqPPcjKw
+ +2qJgTMro8DZF+PwhB5Lk0tQ2Y6kug9Awww7tY/M+dVuM/xmmN6mX8j/SC4SyfybbMYF
+ FJWg==
+X-Gm-Message-State: AOJu0YzyiVGFuFoRhhMIlC0B91BhwVpFZIoXuw68tqGXgM2O5mWFYEMK
+ uDbSvV2tbwtHIHbTWuPrF2My8Lqe9DuJRIyO6azsZ59hHGk5TfBr+bcmST0lzZ53TSMqYkO3oD2
+ ATx9AGKTK31QAc1pqUeBroprv9Ve+7PGeuUEgBoOHjI9JZoTuf7sk
+X-Gm-Gg: ASbGncutZ8rTTccz1UO1teQ2wOPs6qXfOOW82DPWLrGa4asNi0Hrg3Yelp++shQQ9kI
+ MNdkeG1kChuYpHom/WpNeJld0B4bDUm8k6FSxzT0wqfdsf9IjzxSxL6csiqSqQs4j6jNxl1rr+B
+ +YHkHOBZSInoLSQrWKp2zW5BbmKRPVMYlznXQhlQPVLvvKt5i7NAIngcZheEXIPhh3JHKi84L1+
+ 2cunVkvWz2a1PPItyKYgalctVXBTOXxbmJKkr1HH+ixmSU1HQxtzlif/UZkb3hCAyhPa+REzpa3
+ yQ3oy+agdP2UalJKMyczwX4OTTtxbuV/6v0a
+X-Received: by 2002:a05:622a:2609:b0:467:6b20:e0b5 with SMTP id
+ d75a77b69052e-46fd0a12f97mr121487091cf.2.1738231801072; 
+ Thu, 30 Jan 2025 02:10:01 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IHaolTWirT4mY3TNVQZSbzsUEworWN2Kv/IrZm1iKKAtV2aPwB1+F8EHqBeXK1vxxwuhWTUlQ==
+X-Received: by 2002:a05:622a:2609:b0:467:6b20:e0b5 with SMTP id
+ d75a77b69052e-46fd0a12f97mr121486711cf.2.1738231800768; 
+ Thu, 30 Jan 2025 02:10:00 -0800 (PST)
+Received: from [192.168.0.7] (ip-109-42-50-234.web.vodafone.de.
+ [109.42.50.234]) by smtp.gmail.com with ESMTPSA id
+ d75a77b69052e-46fdf0e0bfdsm5537971cf.41.2025.01.30.02.09.59
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Thu, 30 Jan 2025 02:10:00 -0800 (PST)
+Message-ID: <36e2ee26-89ee-442b-85fa-015d919cc86f@redhat.com>
+Date: Thu, 30 Jan 2025 11:09:56 +0100
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=145.239.82.108;
- envelope-from=mhej@vps-ovh.mhejs.net; helo=vps-ovh.mhejs.net
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9,
- HEADER_FROM_DIFFERENT_DOMAINS=0.037, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] net/slirp: introduce slirp_os_socket to stay compatible
+ with libslirp past 4.8.0
+To: Samuel Thibault <samuel.thibault@gnu.org>, Michael Tokarev <mjt@tls.msk.ru>
+Cc: qemu-devel@nongnu.org, Stefan Hajnoczi <stefanha@redhat.com>
+References: <20241005070753.1328079-1-mjt@tls.msk.ru> <ZwcMh1Vl9VsTbIRq@begin>
+ <Z5rgUDDB0X58-XZt@begin>
+From: Thomas Huth <thuth@redhat.com>
+Content-Language: en-US
+Autocrypt: addr=thuth@redhat.com; keydata=
+ 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
+In-Reply-To: <Z5rgUDDB0X58-XZt@begin>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=thuth@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -33
+X-Spam_score: -3.4
+X-Spam_bar: ---
+X-Spam_report: (-3.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.3,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -66,268 +152,28 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: "Maciej S. Szmigiero" <maciej.szmigiero@oracle.com>
+On 30/01/2025 03.13, Samuel Thibault wrote:
+> Hello,
+> 
+> Samuel Thibault, le jeu. 10 oct. 2024 01:06:47 +0200, a ecrit:
+>> Michael Tokarev, le sam. 05 oct. 2024 10:07:53 +0300, a ecrit:
+>>> libslirp introduced new typedef after 4.8.0, slirp_os_socket, which
+>>> is defined to SOCKET on windows, which, in turn, is a 64bit number.
+>>> qemu uses int, so callback function prorotypes changed.
+>>
+>> I have fixed the code in upstream libslirp, to avoid breaking the API
+>> and ABI, and instead provide new functions & methods so that
+>> qemu/libslirp can upgrade smoothly.
+> 
+> It is now released in version 4.9.0 of libslirp.
 
-Add a basic support for receiving device state via multifd channels -
-channels that are shared with RAM transfers.
+Seems like 4.9.0 breaks the CI:
 
-Depending whether MULTIFD_FLAG_DEVICE_STATE flag is present or not in the
-packet header either device state (MultiFDPacketDeviceState_t) or RAM
-data (existing MultiFDPacket_t) is read.
+https://gitlab.com/thuth/qemu/-/jobs/8994301595#L4373
 
-The received device state data is provided to
-qemu_loadvm_load_state_buffer() function for processing in the
-device's load_state_buffer handler.
+Could you please have a look?
 
-Signed-off-by: Maciej S. Szmigiero <maciej.szmigiero@oracle.com>
----
- migration/multifd.c | 99 ++++++++++++++++++++++++++++++++++++++++-----
- migration/multifd.h | 26 +++++++++++-
- 2 files changed, 113 insertions(+), 12 deletions(-)
+  Thanks,
+   Thomas
 
-diff --git a/migration/multifd.c b/migration/multifd.c
-index 53493676012e..810e7b1fb340 100644
---- a/migration/multifd.c
-+++ b/migration/multifd.c
-@@ -21,6 +21,7 @@
- #include "file.h"
- #include "migration.h"
- #include "migration-stats.h"
-+#include "savevm.h"
- #include "socket.h"
- #include "tls.h"
- #include "qemu-file.h"
-@@ -252,14 +253,24 @@ static int multifd_recv_unfill_packet_header(MultiFDRecvParams *p,
-     return 0;
- }
- 
--static int multifd_recv_unfill_packet(MultiFDRecvParams *p, Error **errp)
-+static int multifd_recv_unfill_packet_device_state(MultiFDRecvParams *p,
-+                                                   Error **errp)
-+{
-+    MultiFDPacketDeviceState_t *packet = p->packet_dev_state;
-+
-+    packet->instance_id = be32_to_cpu(packet->instance_id);
-+    p->next_packet_size = be32_to_cpu(packet->next_packet_size);
-+
-+    return 0;
-+}
-+
-+static int multifd_recv_unfill_packet_ram(MultiFDRecvParams *p, Error **errp)
- {
-     const MultiFDPacket_t *packet = p->packet;
-     int ret = 0;
- 
-     p->next_packet_size = be32_to_cpu(packet->next_packet_size);
-     p->packet_num = be64_to_cpu(packet->packet_num);
--    p->packets_recved++;
- 
-     /* Always unfill, old QEMUs (<9.0) send data along with SYNC */
-     ret = multifd_ram_unfill_packet(p, errp);
-@@ -270,6 +281,17 @@ static int multifd_recv_unfill_packet(MultiFDRecvParams *p, Error **errp)
-     return ret;
- }
- 
-+static int multifd_recv_unfill_packet(MultiFDRecvParams *p, Error **errp)
-+{
-+    p->packets_recved++;
-+
-+    if (p->flags & MULTIFD_FLAG_DEVICE_STATE) {
-+        return multifd_recv_unfill_packet_device_state(p, errp);
-+    }
-+
-+    return multifd_recv_unfill_packet_ram(p, errp);
-+}
-+
- static bool multifd_send_should_exit(void)
- {
-     return qatomic_read(&multifd_send_state->exiting);
-@@ -1027,6 +1049,7 @@ static void multifd_recv_cleanup_channel(MultiFDRecvParams *p)
-     p->packet_len = 0;
-     g_free(p->packet);
-     p->packet = NULL;
-+    g_clear_pointer(&p->packet_dev_state, g_free);
-     g_free(p->normal);
-     p->normal = NULL;
-     g_free(p->zero);
-@@ -1128,6 +1151,32 @@ void multifd_recv_sync_main(void)
-     trace_multifd_recv_sync_main(multifd_recv_state->packet_num);
- }
- 
-+static int multifd_device_state_recv(MultiFDRecvParams *p, Error **errp)
-+{
-+    g_autofree char *idstr = NULL;
-+    g_autofree char *dev_state_buf = NULL;
-+    int ret;
-+
-+    dev_state_buf = g_malloc(p->next_packet_size);
-+
-+    ret = qio_channel_read_all(p->c, dev_state_buf, p->next_packet_size, errp);
-+    if (ret != 0) {
-+        return ret;
-+    }
-+
-+    idstr = g_strndup(p->packet_dev_state->idstr,
-+                      sizeof(p->packet_dev_state->idstr));
-+
-+    if (!qemu_loadvm_load_state_buffer(idstr,
-+                                       p->packet_dev_state->instance_id,
-+                                       dev_state_buf, p->next_packet_size,
-+                                       errp)) {
-+        ret = -1;
-+    }
-+
-+    return ret;
-+}
-+
- static void *multifd_recv_thread(void *opaque)
- {
-     MultiFDRecvParams *p = opaque;
-@@ -1141,6 +1190,7 @@ static void *multifd_recv_thread(void *opaque)
-     while (true) {
-         MultiFDPacketHdr_t hdr;
-         uint32_t flags = 0;
-+        bool is_device_state = false;
-         bool has_data = false;
-         uint8_t *pkt_buf;
-         size_t pkt_len;
-@@ -1163,8 +1213,14 @@ static void *multifd_recv_thread(void *opaque)
-                 break;
-             }
- 
--            pkt_buf = (uint8_t *)p->packet + sizeof(hdr);
--            pkt_len = p->packet_len - sizeof(hdr);
-+            is_device_state = p->flags & MULTIFD_FLAG_DEVICE_STATE;
-+            if (is_device_state) {
-+                pkt_buf = (uint8_t *)p->packet_dev_state + sizeof(hdr);
-+                pkt_len = sizeof(*p->packet_dev_state) - sizeof(hdr);
-+            } else {
-+                pkt_buf = (uint8_t *)p->packet + sizeof(hdr);
-+                pkt_len = p->packet_len - sizeof(hdr);
-+            }
- 
-             ret = qio_channel_read_all_eof(p->c, (char *)pkt_buf, pkt_len,
-                                            &local_err);
-@@ -1183,12 +1239,17 @@ static void *multifd_recv_thread(void *opaque)
-             /* recv methods don't know how to handle the SYNC flag */
-             p->flags &= ~MULTIFD_FLAG_SYNC;
- 
--            /*
--             * Even if it's a SYNC packet, this needs to be set
--             * because older QEMUs (<9.0) still send data along with
--             * the SYNC packet.
--             */
--            has_data = p->normal_num || p->zero_num;
-+            if (is_device_state) {
-+                has_data = p->next_packet_size > 0;
-+            } else {
-+                /*
-+                 * Even if it's a SYNC packet, this needs to be set
-+                 * because older QEMUs (<9.0) still send data along with
-+                 * the SYNC packet.
-+                 */
-+                has_data = p->normal_num || p->zero_num;
-+            }
-+
-             qemu_mutex_unlock(&p->mutex);
-         } else {
-             /*
-@@ -1217,14 +1278,29 @@ static void *multifd_recv_thread(void *opaque)
-         }
- 
-         if (has_data) {
--            ret = multifd_recv_state->ops->recv(p, &local_err);
-+            if (is_device_state) {
-+                assert(use_packets);
-+                ret = multifd_device_state_recv(p, &local_err);
-+            } else {
-+                ret = multifd_recv_state->ops->recv(p, &local_err);
-+            }
-             if (ret != 0) {
-                 break;
-             }
-+        } else if (is_device_state) {
-+            error_setg(&local_err,
-+                       "multifd: received empty device state packet");
-+            break;
-         }
- 
-         if (use_packets) {
-             if (flags & MULTIFD_FLAG_SYNC) {
-+                if (is_device_state) {
-+                    error_setg(&local_err,
-+                               "multifd: received SYNC device state packet");
-+                    break;
-+                }
-+
-                 qemu_sem_post(&multifd_recv_state->sem_sync);
-                 qemu_sem_wait(&p->sem_sync);
-             }
-@@ -1293,6 +1369,7 @@ int multifd_recv_setup(Error **errp)
-             p->packet_len = sizeof(MultiFDPacket_t)
-                 + sizeof(uint64_t) * page_count;
-             p->packet = g_malloc0(p->packet_len);
-+            p->packet_dev_state = g_malloc0(sizeof(*p->packet_dev_state));
-         }
-         p->name = g_strdup_printf(MIGRATION_THREAD_DST_MULTIFD, i);
-         p->normal = g_new0(ram_addr_t, page_count);
-diff --git a/migration/multifd.h b/migration/multifd.h
-index 9e4baa066312..abf3acdcee40 100644
---- a/migration/multifd.h
-+++ b/migration/multifd.h
-@@ -62,6 +62,12 @@ MultiFDRecvData *multifd_get_recv_data(void);
- #define MULTIFD_FLAG_UADK (8 << 1)
- #define MULTIFD_FLAG_QATZIP (16 << 1)
- 
-+/*
-+ * If set it means that this packet contains device state
-+ * (MultiFDPacketDeviceState_t), not RAM data (MultiFDPacket_t).
-+ */
-+#define MULTIFD_FLAG_DEVICE_STATE (1 << 6)
-+
- /* This value needs to be a multiple of qemu_target_page_size() */
- #define MULTIFD_PACKET_SIZE (512 * 1024)
- 
-@@ -94,6 +100,16 @@ typedef struct {
-     uint64_t offset[];
- } __attribute__((packed)) MultiFDPacket_t;
- 
-+typedef struct {
-+    MultiFDPacketHdr_t hdr;
-+
-+    char idstr[256] QEMU_NONSTRING;
-+    uint32_t instance_id;
-+
-+    /* size of the next packet that contains the actual data */
-+    uint32_t next_packet_size;
-+} __attribute__((packed)) MultiFDPacketDeviceState_t;
-+
- typedef struct {
-     /* number of used pages */
-     uint32_t num;
-@@ -111,6 +127,13 @@ struct MultiFDRecvData {
-     off_t file_offset;
- };
- 
-+typedef struct {
-+    char *idstr;
-+    uint32_t instance_id;
-+    char *buf;
-+    size_t buf_len;
-+} MultiFDDeviceState_t;
-+
- typedef enum {
-     MULTIFD_PAYLOAD_NONE,
-     MULTIFD_PAYLOAD_RAM,
-@@ -227,8 +250,9 @@ typedef struct {
- 
-     /* thread local variables. No locking required */
- 
--    /* pointer to the packet */
-+    /* pointers to the possible packet types */
-     MultiFDPacket_t *packet;
-+    MultiFDPacketDeviceState_t *packet_dev_state;
-     /* size of the next packet that contains pages */
-     uint32_t next_packet_size;
-     /* packets received through this channel */
 
