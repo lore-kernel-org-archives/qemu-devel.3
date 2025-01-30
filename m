@@ -4,64 +4,71 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D70F3C0218A
-	for <qemu-devel@archiver.kernel.org>; Thu, 30 Jan 2025 13:45:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6ED35C02190
+	for <qemu-devel@archiver.kernel.org>; Thu, 30 Jan 2025 13:45:05 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tdUqk-0002OV-Q8; Thu, 30 Jan 2025 08:44:54 -0500
+	id 1tdUq5-0000n5-1i; Thu, 30 Jan 2025 08:44:13 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mchehab+huawei@kernel.org>)
- id 1tdUqi-0002IR-K2; Thu, 30 Jan 2025 08:44:52 -0500
-Received: from dfw.source.kernel.org ([2604:1380:4641:c500::1])
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1tdUq4-0000mO-Bh
+ for qemu-devel@nongnu.org; Thu, 30 Jan 2025 08:44:12 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mchehab+huawei@kernel.org>)
- id 1tdUqg-0003W0-Fd; Thu, 30 Jan 2025 08:44:52 -0500
-Received: from smtp.kernel.org (transwarp.subspace.kernel.org [100.75.92.58])
- by dfw.source.kernel.org (Postfix) with ESMTP id 34FAD5C5AC4;
- Thu, 30 Jan 2025 13:44:08 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0CBBAC4CEE6;
- Thu, 30 Jan 2025 13:44:43 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
- s=k20201202; t=1738244688;
- bh=pTupQhK3UFmZqalrxJHEzv9Y3Dcs3lrmuxts1lkpQH8=;
- h=Date:From:To:Cc:Subject:In-Reply-To:References:From;
- b=NPgwlwTMLlMVaG86tUE6kXlJKPHuz+ycfrc9wu6rYHQmumxdTGgNMcnFdeMEPDpXQ
- UgviBoClF/nPaNrecDnU35J4u+1yTf6FcJ6vj1mRuRyIUO03K8JcoPxsK0a18aJwEn
- ETvUT3hmURbljx5vhDYCQaL3BF2gzrKZgFfiMPDYCIZX2yypdKZpxH0lCC1kJzmcsG
- mxneE4mnNMAyMLcZD3IYpOEr83HLFVL9x9gNVh/XDuUqFNvicFFfscKoc+GLJYIYvR
- M9AolL93xMIkrwdol9WDpP5amvMUdjaBQPiW78UYfcc1paYnqOswZ+5P9blXsi/VHN
- 5C6LT4hUDVbdA==
-Date: Thu, 30 Jan 2025 14:44:39 +0100
-From: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
-To: Igor Mammedov <imammedo@redhat.com>
-Cc: "Michael S . Tsirkin" <mst@redhat.com>, Jonathan Cameron
- <Jonathan.Cameron@huawei.com>, Shiju Jose <shiju.jose@huawei.com>,
- qemu-arm@nongnu.org, qemu-devel@nongnu.org, Ani Sinha
- <anisinha@redhat.com>, Dongjiu Geng <gengdongjiu1@gmail.com>, Paolo Bonzini
- <pbonzini@redhat.com>, Peter Maydell <peter.maydell@linaro.org>,
- kvm@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH v2 08/13] acpi/ghes: Cleanup the code which gets ghes
- ged state
-Message-ID: <20250130144439.161165d4@foz.lan>
-In-Reply-To: <20250129155530.29455d45@imammedo.users.ipa.redhat.com>
-References: <cover.1738137123.git.mchehab+huawei@kernel.org>
- <f40cacd977b9eae69a5b0091d3e7a2746b2892be.1738137123.git.mchehab+huawei@kernel.org>
- <20250129155530.29455d45@imammedo.users.ipa.redhat.com>
-X-Mailer: Claws Mail 4.3.0 (GTK 3.24.43; x86_64-redhat-linux-gnu)
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1tdUpv-0003PH-8R
+ for qemu-devel@nongnu.org; Thu, 30 Jan 2025 08:44:12 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1738244642;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=Q3oJ/f2lYBy+mVYg+gP8Eo/xbAj6TYb489HgxZY98qM=;
+ b=XMTdlCcF+m84gYqj7UhPBg+viNlgzRAketvb5CtRQ80hWuUpGI1ZGjei4/NTSprLU0sKKT
+ JPAX4SMkdn7LOYzW895QKxfYgzRiVvCuOwqIV3V/ghwcZ/kjspz8fsEhjSMaSZXJLY6tnk
+ IQHxoZCV5RPu+Crut9nb3j+U1BMtI7I=
+Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-553-YmdxIYXZP2aBWhXDPmbUxg-1; Thu,
+ 30 Jan 2025 08:43:58 -0500
+X-MC-Unique: YmdxIYXZP2aBWhXDPmbUxg-1
+X-Mimecast-MFC-AGG-ID: YmdxIYXZP2aBWhXDPmbUxg
+Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 10EB11956080
+ for <qemu-devel@nongnu.org>; Thu, 30 Jan 2025 13:43:58 +0000 (UTC)
+Received: from corto.redhat.com (unknown [10.39.192.105])
+ by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id DBBFD1800955; Thu, 30 Jan 2025 13:43:56 +0000 (UTC)
+From: =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>
+To: qemu-devel@nongnu.org
+Cc: Alex Williamson <alex.williamson@redhat.com>,
+ =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>
+Subject: [PATCH v2 4/9] vfio: Introduce vfio_get_vfio_device()
+Date: Thu, 30 Jan 2025 14:43:41 +0100
+Message-ID: <20250130134346.1754143-5-clg@redhat.com>
+In-Reply-To: <20250130134346.1754143-1-clg@redhat.com>
+References: <20250130134346.1754143-1-clg@redhat.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2604:1380:4641:c500::1;
- envelope-from=mchehab+huawei@kernel.org; helo=dfw.source.kernel.org
-X-Spam_score_int: -56
-X-Spam_score: -5.7
-X-Spam_bar: -----
-X-Spam_report: (-5.7 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.3,
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=clg@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -33
+X-Spam_score: -3.4
+X-Spam_bar: ---
+X-Spam_report: (-3.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.3,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -77,272 +84,55 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Em Wed, 29 Jan 2025 15:55:30 +0100
-Igor Mammedov <imammedo@redhat.com> escreveu:
+This helper will be useful in the listener handlers to extract the
+VFIO device from a memory region using memory_region_owner(). At the
+moment, we only care for PCI passthrough devices. If the need arises,
+we will add more.
 
-> On Wed, 29 Jan 2025 09:04:14 +0100
-> Mauro Carvalho Chehab <mchehab+huawei@kernel.org> wrote:
-> 
-> > Move the check logic into a common function and simplify the
-> > code which checks if GHES is enabled and was properly setup.
-> > 
-> > Signed-off-by: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
-> > Reviewed-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>  
-> 
-> with nits fixed:
-> Reviewed-by:  Igor Mammedov <imammedo@redhat.com>
-> 
-> > ---
-> >  hw/acpi/ghes-stub.c    |  7 ++++---
-> >  hw/acpi/ghes.c         | 43 ++++++++++++------------------------------
-> >  include/hw/acpi/ghes.h | 15 ++++++++-------
-> >  target/arm/kvm.c       |  8 ++++++--
-> >  4 files changed, 30 insertions(+), 43 deletions(-)
-> > 
-> > diff --git a/hw/acpi/ghes-stub.c b/hw/acpi/ghes-stub.c
-> > index 7cec1812dad9..40f660c246fe 100644
-> > --- a/hw/acpi/ghes-stub.c
-> > +++ b/hw/acpi/ghes-stub.c
-> > @@ -11,12 +11,13 @@
-> >  #include "qemu/osdep.h"
-> >  #include "hw/acpi/ghes.h"
-> >  
-> > -int acpi_ghes_memory_errors(uint16_t source_id, uint64_t physical_address)
-> > +int acpi_ghes_memory_errors(AcpiGhesState *ags, uint16_t source_id,
-> > +                            uint64_t physical_address)
-> >  {
-> >      return -1;
-> >  }
-> >  
-> > -bool acpi_ghes_present(void)
-> > +AcpiGhesState *acpi_ghes_get_state(void)
-> >  {
-> > -    return false;
-> > +    return NULL;
-> >  }
-> > diff --git a/hw/acpi/ghes.c b/hw/acpi/ghes.c
-> > index 38ff95273706..849abfa12187 100644
-> > --- a/hw/acpi/ghes.c
-> > +++ b/hw/acpi/ghes.c
-> > @@ -407,18 +407,12 @@ void acpi_ghes_add_fw_cfg(AcpiGhesState *ags, FWCfgState *s,
-> >          fw_cfg_add_file_callback(s, ACPI_HEST_ADDR_FW_CFG_FILE, NULL, NULL,
-> >              NULL, &(ags->hest_addr_le), sizeof(ags->hest_addr_le), false);
-> >      }
-> > -
-> > -    ags->present = true;
-> >  }
-> >  
-> >  static void get_hw_error_offsets(uint64_t ghes_addr,
-> >                                   uint64_t *cper_addr,
-> >                                   uint64_t *read_ack_register_addr)
-> >  {
-> > -    if (!ghes_addr) {
-> > -        return;
-> > -    }
-> > -
-> >      /*
-> >       * non-HEST version supports only one source, so no need to change
-> >       * the start offset based on the source ID. Also, we can't validate
-> > @@ -447,9 +441,6 @@ static void get_ghes_source_offsets(uint16_t source_id,
-> >      uint64_t err_source_entry, error_block_addr;
-> >      uint32_t num_sources, i;
-> >  
-> > -    if (!hest_entry_addr) {
-> > -        return;
-> > -    }
-> >  
-> >      cpu_physical_memory_read(hest_entry_addr, &num_sources,
-> >                               sizeof(num_sources));
-> > @@ -515,27 +506,17 @@ static void get_ghes_source_offsets(uint16_t source_id,
-> >  NotifierList acpi_generic_error_notifiers =
-> >      NOTIFIER_LIST_INITIALIZER(error_device_notifiers);
-> >  
-> > -void ghes_record_cper_errors(const void *cper, size_t len,
-> > +void ghes_record_cper_errors(AcpiGhesState *ags, const void *cper, size_t len,
-> >                               uint16_t source_id, Error **errp)
-> >  {
-> >      uint64_t cper_addr = 0, read_ack_register_addr = 0, read_ack_register;
-> > -    AcpiGedState *acpi_ged_state;
-> > -    AcpiGhesState *ags;
-> >  
-> >      if (len > ACPI_GHES_MAX_RAW_DATA_LENGTH) {
-> >          error_setg(errp, "GHES CPER record is too big: %zd", len);
-> >          return;
-> >      }
-> >  
-> > -    acpi_ged_state = ACPI_GED(object_resolve_path_type("", TYPE_ACPI_GED,
-> > -                                                       NULL));
-> > -    if (!acpi_ged_state) {
-> > -        error_setg(errp, "Can't find ACPI_GED object");
-> > -        return;
-> > -    }
-> > -    ags = &acpi_ged_state->ghes_state;
-> > -
-> > -    if (!ags->hest_addr_le) {
-> > +    if (!ags->use_hest_addr) {
-> >          get_hw_error_offsets(le64_to_cpu(ags->hw_error_le),
-> >                               &cper_addr, &read_ack_register_addr);
-> >      } else {
-> > @@ -543,11 +524,6 @@ void ghes_record_cper_errors(const void *cper, size_t len,
-> >                                  &cper_addr, &read_ack_register_addr, errp);
-> >      }
-> >  
-> > -    if (!cper_addr) {
-> > -        error_setg(errp, "can not find Generic Error Status Block");
-> > -        return;
-> > -    }
-> > -
-> >      cpu_physical_memory_read(read_ack_register_addr,
-> >                               &read_ack_register, sizeof(read_ack_register));
-> >  
-> > @@ -573,7 +549,8 @@ void ghes_record_cper_errors(const void *cper, size_t len,
-> >      notifier_list_notify(&acpi_generic_error_notifiers, NULL);
-> >  }
-> >  
-> > -int acpi_ghes_memory_errors(uint16_t source_id, uint64_t physical_address)
-> > +int acpi_ghes_memory_errors(AcpiGhesState *ags, uint16_t source_id,
-> > +                            uint64_t physical_address)
-> >  {
-> >      /* Memory Error Section Type */
-> >      const uint8_t guid[] =
-> > @@ -599,7 +576,7 @@ int acpi_ghes_memory_errors(uint16_t source_id, uint64_t physical_address)
-> >      acpi_ghes_build_append_mem_cper(block, physical_address);
-> >  
-> >      /* Report the error */
-> > -    ghes_record_cper_errors(block->data, block->len, source_id, &errp);
-> > +    ghes_record_cper_errors(ags, block->data, block->len, source_id, &errp);
-> >  
-> >      g_array_free(block, true);
-> >  
-> > @@ -611,7 +588,7 @@ int acpi_ghes_memory_errors(uint16_t source_id, uint64_t physical_address)
-> >      return 0;
-> >  }
-> >  
-> > -bool acpi_ghes_present(void)
-> > +AcpiGhesState *acpi_ghes_get_state(void)
-> >  {
-> >      AcpiGedState *acpi_ged_state;
-> >      AcpiGhesState *ags;
-> > @@ -620,8 +597,12 @@ bool acpi_ghes_present(void)
-> >                                                         NULL));
-> >  
-> >      if (!acpi_ged_state) {
-> > -        return false;
-> > +        return NULL;
-> >      }
-> >      ags = &acpi_ged_state->ghes_state;
-> > -    return ags->present;
-> > +
-> > +    if (!ags->hw_error_le && !ags->hest_addr_le) {  
-> 
-> should we add a warning here?
-> (consider case where firmware hasn't managed to update pointers for some reason)
+Signed-off-by: Cédric Le Goater <clg@redhat.com>
+---
+ include/hw/vfio/vfio-common.h |  1 +
+ hw/vfio/helpers.c             | 10 ++++++++++
+ 2 files changed, 11 insertions(+)
 
-I don't think so, as this will also return NULL if ras=off. See, the
-original goal of acpi_ghes_present(void) were to avoid needing to check
-if ras is enabled outside GHES code, like here at target/arm/kvm.c:
+diff --git a/include/hw/vfio/vfio-common.h b/include/hw/vfio/vfio-common.h
+index 0c60be5b15c70168f4f94ad7054d9bd750a162d3..ac35136a11051b079cd9d04e6becd344a0e0f7e7 100644
+--- a/include/hw/vfio/vfio-common.h
++++ b/include/hw/vfio/vfio-common.h
+@@ -252,6 +252,7 @@ bool vfio_device_hiod_realize(VFIODevice *vbasedev, Error **errp);
+ bool vfio_attach_device(char *name, VFIODevice *vbasedev,
+                         AddressSpace *as, Error **errp);
+ void vfio_detach_device(VFIODevice *vbasedev);
++VFIODevice *vfio_get_vfio_device(Object *obj);
+ 
+ int vfio_kvm_device_add_fd(int fd, Error **errp);
+ int vfio_kvm_device_del_fd(int fd, Error **errp);
+diff --git a/hw/vfio/helpers.c b/hw/vfio/helpers.c
+index 913796f437f84eece8711cb4b4b654a44040d17c..4b255d4f3a9e81f55df00c68fc71da769fd5bd04 100644
+--- a/hw/vfio/helpers.c
++++ b/hw/vfio/helpers.c
+@@ -23,6 +23,7 @@
+ #include <sys/ioctl.h>
+ 
+ #include "hw/vfio/vfio-common.h"
++#include "hw/vfio/pci.h"
+ #include "hw/hw.h"
+ #include "trace.h"
+ #include "qapi/error.h"
+@@ -728,3 +729,12 @@ bool vfio_device_hiod_realize(VFIODevice *vbasedev, Error **errp)
+ 
+     return HOST_IOMMU_DEVICE_GET_CLASS(hiod)->realize(hiod, vbasedev, errp);
+ }
++
++VFIODevice *vfio_get_vfio_device(Object *obj)
++{
++    if (object_dynamic_cast(obj, TYPE_VFIO_PCI)) {
++        return &VFIO_PCI(obj)->vbasedev;
++    } else {
++        return NULL;
++    }
++}
+-- 
+2.48.1
 
-	void kvm_arch_on_sigbus_vcpu(CPUState *c, int code, void *addr)
-	{
-	    ram_addr_t ram_addr;
-	    hwaddr paddr;
-	    AcpiGhesState *ags;
-	
-	    assert(code == BUS_MCEERR_AR || code == BUS_MCEERR_AO);
-	
-	    ags = acpi_ghes_get_state();
-	    if (ags && addr) {
-...
-
-This new logic repurposed acpi_ghes_present() as acpi_ghes_get_state(),
-using it to full two situations:
-
-1) ras=on;
-2) either hw_err_addr_le or hest_addr_le exists.
-	  
-Except if some serious issue takes place, (2) is actually equivalent
-to check if ras is on or off.
-
-Besides that, Error **errp is not defined yet, so we can't do this:
-
-	error_setg(errp, "HEST/GHES pointer is not available")
-
-> > +        return NULL;
-> > +    }
-> > +    return ags;
-> >  }
-> > diff --git a/include/hw/acpi/ghes.h b/include/hw/acpi/ghes.h
-> > index 80a0c3fcfaca..e1b66141d01c 100644
-> > --- a/include/hw/acpi/ghes.h
-> > +++ b/include/hw/acpi/ghes.h
-> > @@ -63,7 +63,6 @@ enum AcpiGhesNotifyType {
-> >  typedef struct AcpiGhesState {
-> >      uint64_t hest_addr_le;
-> >      uint64_t hw_error_le;
-> > -    bool present; /* True if GHES is present at all on this board */
-> >      bool use_hest_addr; /* True if HEST address is present */
-> >  } AcpiGhesState;
-> >  
-> > @@ -87,15 +86,17 @@ void acpi_build_hest(AcpiGhesState *ags, GArray *table_data,
-> >                       const char *oem_id, const char *oem_table_id);
-> >  void acpi_ghes_add_fw_cfg(AcpiGhesState *vms, FWCfgState *s,
-> >                            GArray *hardware_errors);
-> > -int acpi_ghes_memory_errors(uint16_t source_id, uint64_t error_physical_addr);
-> > -void ghes_record_cper_errors(const void *cper, size_t len,
-> > +int acpi_ghes_memory_errors(AcpiGhesState *ags, uint16_t source_id,
-> > +                            uint64_t error_physical_addr);
-> > +void ghes_record_cper_errors(AcpiGhesState *ags, const void *cper, size_t len,
-> >                               uint16_t source_id, Error **errp);
-> >  
-> >  /**
-> > - * acpi_ghes_present: Report whether ACPI GHES table is present
-> > + * acpi_ghes_get_state: Get a pointer for ACPI ghes state
-> >   *
-> > - * Returns: true if the system has an ACPI GHES table and it is
-> > - * safe to call acpi_ghes_memory_errors() to record a memory error.
-> > + * Returns: a pointer to ghes state if the system has an ACPI GHES table,
-> > + * it is enabled and it is safe to call acpi_ghes_memory_errors() to record
-> > + * a memory error. Returns false, otherwise.
-> >   */
-> > -bool acpi_ghes_present(void);
-> > +AcpiGhesState *acpi_ghes_get_state(void);
-> >  #endif
-> > diff --git a/target/arm/kvm.c b/target/arm/kvm.c
-> > index da30bdbb2349..544ff174784d 100644
-> > --- a/target/arm/kvm.c
-> > +++ b/target/arm/kvm.c
-> > @@ -2366,10 +2366,13 @@ void kvm_arch_on_sigbus_vcpu(CPUState *c, int code, void *addr)
-> >  {
-> >      ram_addr_t ram_addr;
-> >      hwaddr paddr;
-> > +    AcpiGhesState *ags;
-> >  
-> >      assert(code == BUS_MCEERR_AR || code == BUS_MCEERR_AO);
-> >  
-> > -    if (acpi_ghes_present() && addr) {
-> > +    ags = acpi_ghes_get_state();  
-> 
-> > +  
-> I'd drop this newline
-> 
-> > +    if (ags && addr) {
-> >          ram_addr = qemu_ram_addr_from_host(addr);
-> >          if (ram_addr != RAM_ADDR_INVALID &&
-> >              kvm_physical_memory_addr_from_host(c->kvm_state, addr, &paddr)) {
-> > @@ -2387,7 +2390,8 @@ void kvm_arch_on_sigbus_vcpu(CPUState *c, int code, void *addr)
-> >               */
-> >              if (code == BUS_MCEERR_AR) {
-> >                  kvm_cpu_synchronize_state(c);
-> > -                if (!acpi_ghes_memory_errors(ACPI_HEST_SRC_ID_SEA, paddr)) {
-> > +                if (!acpi_ghes_memory_errors(ags, ACPI_HEST_SRC_ID_SEA,
-> > +                                             paddr)) {
-> >                      kvm_inject_arm_sea(c);
-> >                  } else {
-> >                      error_report("failed to record the error");  
-> 
-
-
-
-Thanks,
-Mauro
 
