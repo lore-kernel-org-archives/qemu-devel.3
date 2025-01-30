@@ -4,139 +4,53 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C102EC02193
-	for <qemu-devel@archiver.kernel.org>; Thu, 30 Jan 2025 10:11:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6A3ACC02190
+	for <qemu-devel@archiver.kernel.org>; Thu, 30 Jan 2025 10:11:34 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tdRUu-0002nn-FC; Thu, 30 Jan 2025 05:10:08 -0500
+	id 1tdRV8-0003kN-4b; Thu, 30 Jan 2025 05:10:22 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1tdRUs-0002fW-Lf
- for qemu-devel@nongnu.org; Thu, 30 Jan 2025 05:10:06 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <mhej@vps-ovh.mhejs.net>)
+ id 1tdRV5-0003cz-Ln
+ for qemu-devel@nongnu.org; Thu, 30 Jan 2025 05:10:19 -0500
+Received: from vps-ovh.mhejs.net ([145.239.82.108])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1tdRUq-0007EQ-RL
- for qemu-devel@nongnu.org; Thu, 30 Jan 2025 05:10:06 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1738231804;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=qQ8eH81UYFL69XG+1S82ymzqJ03bYDhWvvzIvENlHII=;
- b=T5KmbzkKe38GZ5EF8k9LJuc9Xb9ffKJXM0x2fAJX56PD8vevpkurJxyNDp/NXsplzDWutQ
- oYQCbg7LzhAr4pa/wgL146hvNJ4qZgzt6D9nX3fMNQSxIV9UfbE3Q0/xBG70iRjKsdSq1D
- unNNfmo1dy1TdhTzY7RwSMhupAvRcZc=
-Received: from mail-qt1-f197.google.com (mail-qt1-f197.google.com
- [209.85.160.197]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-652-BVqJmesuOvqwmGt0gHmKtA-1; Thu, 30 Jan 2025 05:10:01 -0500
-X-MC-Unique: BVqJmesuOvqwmGt0gHmKtA-1
-X-Mimecast-MFC-AGG-ID: BVqJmesuOvqwmGt0gHmKtA
-Received: by mail-qt1-f197.google.com with SMTP id
- d75a77b69052e-467be89d064so6521001cf.3
- for <qemu-devel@nongnu.org>; Thu, 30 Jan 2025 02:10:01 -0800 (PST)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1738231801; x=1738836601;
- h=content-transfer-encoding:in-reply-to:autocrypt:content-language
- :from:references:cc:to:subject:user-agent:mime-version:date
- :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=qQ8eH81UYFL69XG+1S82ymzqJ03bYDhWvvzIvENlHII=;
- b=lBPpwVX2tbPck1fQnK1M3nxEf+0d6oZH4yfkDfZHg2KCQA4F6e4QG+vXUj0e8ph2yf
- rbOLZbN3JD9NIY8JIiMdq4yTkbNSHg6oV511H3GEXUgWQ9iWhw5McLTA19AgHBoIHxw/
- lOZ9WEbBfcrsQAUUsLjQXhybkV34hxwE/lNl9up0eA7+XeS/Qn1QJf+o3hN3fe8TxfGI
- 3dvH9rpFi4Vg1bigrD3STs68LBA4RDPI1lH680z8juraxFKdBDnnpoMjn7xbeqPPcjKw
- +2qJgTMro8DZF+PwhB5Lk0tQ2Y6kug9Awww7tY/M+dVuM/xmmN6mX8j/SC4SyfybbMYF
- FJWg==
-X-Gm-Message-State: AOJu0YzyiVGFuFoRhhMIlC0B91BhwVpFZIoXuw68tqGXgM2O5mWFYEMK
- uDbSvV2tbwtHIHbTWuPrF2My8Lqe9DuJRIyO6azsZ59hHGk5TfBr+bcmST0lzZ53TSMqYkO3oD2
- ATx9AGKTK31QAc1pqUeBroprv9Ve+7PGeuUEgBoOHjI9JZoTuf7sk
-X-Gm-Gg: ASbGncutZ8rTTccz1UO1teQ2wOPs6qXfOOW82DPWLrGa4asNi0Hrg3Yelp++shQQ9kI
- MNdkeG1kChuYpHom/WpNeJld0B4bDUm8k6FSxzT0wqfdsf9IjzxSxL6csiqSqQs4j6jNxl1rr+B
- +YHkHOBZSInoLSQrWKp2zW5BbmKRPVMYlznXQhlQPVLvvKt5i7NAIngcZheEXIPhh3JHKi84L1+
- 2cunVkvWz2a1PPItyKYgalctVXBTOXxbmJKkr1HH+ixmSU1HQxtzlif/UZkb3hCAyhPa+REzpa3
- yQ3oy+agdP2UalJKMyczwX4OTTtxbuV/6v0a
-X-Received: by 2002:a05:622a:2609:b0:467:6b20:e0b5 with SMTP id
- d75a77b69052e-46fd0a12f97mr121487091cf.2.1738231801072; 
- Thu, 30 Jan 2025 02:10:01 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IHaolTWirT4mY3TNVQZSbzsUEworWN2Kv/IrZm1iKKAtV2aPwB1+F8EHqBeXK1vxxwuhWTUlQ==
-X-Received: by 2002:a05:622a:2609:b0:467:6b20:e0b5 with SMTP id
- d75a77b69052e-46fd0a12f97mr121486711cf.2.1738231800768; 
- Thu, 30 Jan 2025 02:10:00 -0800 (PST)
-Received: from [192.168.0.7] (ip-109-42-50-234.web.vodafone.de.
- [109.42.50.234]) by smtp.gmail.com with ESMTPSA id
- d75a77b69052e-46fdf0e0bfdsm5537971cf.41.2025.01.30.02.09.59
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 30 Jan 2025 02:10:00 -0800 (PST)
-Message-ID: <36e2ee26-89ee-442b-85fa-015d919cc86f@redhat.com>
-Date: Thu, 30 Jan 2025 11:09:56 +0100
+ (Exim 4.90_1) (envelope-from <mhej@vps-ovh.mhejs.net>)
+ id 1tdRV3-0007IX-WA
+ for qemu-devel@nongnu.org; Thu, 30 Jan 2025 05:10:19 -0500
+Received: from MUA
+ by vps-ovh.mhejs.net with esmtpsa  (TLS1.3) tls TLS_AES_256_GCM_SHA384
+ (Exim 4.98) (envelope-from <mhej@vps-ovh.mhejs.net>)
+ id 1tdRUy-00000006TyM-32DN; Thu, 30 Jan 2025 11:10:12 +0100
+From: "Maciej S. Szmigiero" <mail@maciej.szmigiero.name>
+To: Peter Xu <peterx@redhat.com>,
+	Fabiano Rosas <farosas@suse.de>
+Cc: Alex Williamson <alex.williamson@redhat.com>,
+ =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>,
+ Eric Blake <eblake@redhat.com>, Markus Armbruster <armbru@redhat.com>,
+ =?UTF-8?q?Daniel=20P=20=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
+ Avihai Horon <avihaih@nvidia.com>,
+ Joao Martins <joao.m.martins@oracle.com>, qemu-devel@nongnu.org
+Subject: [PATCH v4 12/33] migration/multifd: Split packet into header and RAM
+ data
+Date: Thu, 30 Jan 2025 11:08:33 +0100
+Message-ID: <a226929101610151fca90f1a8fd3199498e6c168.1738171076.git.maciej.szmigiero@oracle.com>
+X-Mailer: git-send-email 2.48.1
+In-Reply-To: <cover.1738171076.git.maciej.szmigiero@oracle.com>
+References: <cover.1738171076.git.maciej.szmigiero@oracle.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] net/slirp: introduce slirp_os_socket to stay compatible
- with libslirp past 4.8.0
-To: Samuel Thibault <samuel.thibault@gnu.org>, Michael Tokarev <mjt@tls.msk.ru>
-Cc: qemu-devel@nongnu.org, Stefan Hajnoczi <stefanha@redhat.com>
-References: <20241005070753.1328079-1-mjt@tls.msk.ru> <ZwcMh1Vl9VsTbIRq@begin>
- <Z5rgUDDB0X58-XZt@begin>
-From: Thomas Huth <thuth@redhat.com>
-Content-Language: en-US
-Autocrypt: addr=thuth@redhat.com; keydata=
- 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
-In-Reply-To: <Z5rgUDDB0X58-XZt@begin>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=thuth@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -33
-X-Spam_score: -3.4
-X-Spam_bar: ---
-X-Spam_report: (-3.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.3,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=145.239.82.108;
+ envelope-from=mhej@vps-ovh.mhejs.net; helo=vps-ovh.mhejs.net
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9,
+ HEADER_FROM_DIFFERENT_DOMAINS=0.037, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -152,28 +66,129 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 30/01/2025 03.13, Samuel Thibault wrote:
-> Hello,
-> 
-> Samuel Thibault, le jeu. 10 oct. 2024 01:06:47 +0200, a ecrit:
->> Michael Tokarev, le sam. 05 oct. 2024 10:07:53 +0300, a ecrit:
->>> libslirp introduced new typedef after 4.8.0, slirp_os_socket, which
->>> is defined to SOCKET on windows, which, in turn, is a 64bit number.
->>> qemu uses int, so callback function prorotypes changed.
->>
->> I have fixed the code in upstream libslirp, to avoid breaking the API
->> and ABI, and instead provide new functions & methods so that
->> qemu/libslirp can upgrade smoothly.
-> 
-> It is now released in version 4.9.0 of libslirp.
+From: "Maciej S. Szmigiero" <maciej.szmigiero@oracle.com>
 
-Seems like 4.9.0 breaks the CI:
+Read packet header first so in the future we will be able to
+differentiate between a RAM multifd packet and a device state multifd
+packet.
 
-https://gitlab.com/thuth/qemu/-/jobs/8994301595#L4373
+Since these two are of different size we can't read the packet body until
+we know which packet type it is.
 
-Could you please have a look?
+Reviewed-by: Fabiano Rosas <farosas@suse.de>
+Reviewed-by: Peter Xu <peterx@redhat.com>
+Signed-off-by: Maciej S. Szmigiero <maciej.szmigiero@oracle.com>
+---
+ migration/multifd.c | 49 +++++++++++++++++++++++++++++++++++----------
+ migration/multifd.h |  5 +++++
+ 2 files changed, 43 insertions(+), 11 deletions(-)
 
-  Thanks,
-   Thomas
-
+diff --git a/migration/multifd.c b/migration/multifd.c
+index ceaad930e141..53493676012e 100644
+--- a/migration/multifd.c
++++ b/migration/multifd.c
+@@ -209,10 +209,10 @@ void multifd_send_fill_packet(MultiFDSendParams *p)
+ 
+     memset(packet, 0, p->packet_len);
+ 
+-    packet->magic = cpu_to_be32(MULTIFD_MAGIC);
+-    packet->version = cpu_to_be32(MULTIFD_VERSION);
++    packet->hdr.magic = cpu_to_be32(MULTIFD_MAGIC);
++    packet->hdr.version = cpu_to_be32(MULTIFD_VERSION);
+ 
+-    packet->flags = cpu_to_be32(p->flags);
++    packet->hdr.flags = cpu_to_be32(p->flags);
+     packet->next_packet_size = cpu_to_be32(p->next_packet_size);
+ 
+     packet_num = qatomic_fetch_inc(&multifd_send_state->packet_num);
+@@ -228,12 +228,12 @@ void multifd_send_fill_packet(MultiFDSendParams *p)
+                             p->flags, p->next_packet_size);
+ }
+ 
+-static int multifd_recv_unfill_packet(MultiFDRecvParams *p, Error **errp)
++static int multifd_recv_unfill_packet_header(MultiFDRecvParams *p,
++                                             const MultiFDPacketHdr_t *hdr,
++                                             Error **errp)
+ {
+-    const MultiFDPacket_t *packet = p->packet;
+-    uint32_t magic = be32_to_cpu(packet->magic);
+-    uint32_t version = be32_to_cpu(packet->version);
+-    int ret = 0;
++    uint32_t magic = be32_to_cpu(hdr->magic);
++    uint32_t version = be32_to_cpu(hdr->version);
+ 
+     if (magic != MULTIFD_MAGIC) {
+         error_setg(errp, "multifd: received packet magic %x, expected %x",
+@@ -247,7 +247,16 @@ static int multifd_recv_unfill_packet(MultiFDRecvParams *p, Error **errp)
+         return -1;
+     }
+ 
+-    p->flags = be32_to_cpu(packet->flags);
++    p->flags = be32_to_cpu(hdr->flags);
++
++    return 0;
++}
++
++static int multifd_recv_unfill_packet(MultiFDRecvParams *p, Error **errp)
++{
++    const MultiFDPacket_t *packet = p->packet;
++    int ret = 0;
++
+     p->next_packet_size = be32_to_cpu(packet->next_packet_size);
+     p->packet_num = be64_to_cpu(packet->packet_num);
+     p->packets_recved++;
+@@ -1130,8 +1139,12 @@ static void *multifd_recv_thread(void *opaque)
+     rcu_register_thread();
+ 
+     while (true) {
++        MultiFDPacketHdr_t hdr;
+         uint32_t flags = 0;
+         bool has_data = false;
++        uint8_t *pkt_buf;
++        size_t pkt_len;
++
+         p->normal_num = 0;
+ 
+         if (use_packets) {
+@@ -1139,8 +1152,22 @@ static void *multifd_recv_thread(void *opaque)
+                 break;
+             }
+ 
+-            ret = qio_channel_read_all_eof(p->c, (void *)p->packet,
+-                                           p->packet_len, &local_err);
++            ret = qio_channel_read_all_eof(p->c, (void *)&hdr,
++                                           sizeof(hdr), &local_err);
++            if (ret == 0 || ret == -1) {   /* 0: EOF  -1: Error */
++                break;
++            }
++
++            ret = multifd_recv_unfill_packet_header(p, &hdr, &local_err);
++            if (ret) {
++                break;
++            }
++
++            pkt_buf = (uint8_t *)p->packet + sizeof(hdr);
++            pkt_len = p->packet_len - sizeof(hdr);
++
++            ret = qio_channel_read_all_eof(p->c, (char *)pkt_buf, pkt_len,
++                                           &local_err);
+             if (ret == 0 || ret == -1) {   /* 0: EOF  -1: Error */
+                 break;
+             }
+diff --git a/migration/multifd.h b/migration/multifd.h
+index bd785b987315..9e4baa066312 100644
+--- a/migration/multifd.h
++++ b/migration/multifd.h
+@@ -69,6 +69,11 @@ typedef struct {
+     uint32_t magic;
+     uint32_t version;
+     uint32_t flags;
++} __attribute__((packed)) MultiFDPacketHdr_t;
++
++typedef struct {
++    MultiFDPacketHdr_t hdr;
++
+     /* maximum number of allocated pages */
+     uint32_t pages_alloc;
+     /* non zero pages */
 
