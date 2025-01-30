@@ -4,81 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 45D8DC0218A
-	for <qemu-devel@archiver.kernel.org>; Thu, 30 Jan 2025 10:06:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2D2FEC0218A
+	for <qemu-devel@archiver.kernel.org>; Thu, 30 Jan 2025 10:08:46 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tdRQg-0007lz-P8; Thu, 30 Jan 2025 05:05:46 -0500
+	id 1tdRTR-0001OB-SQ; Thu, 30 Jan 2025 05:08:37 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <david@redhat.com>) id 1tdRQe-0007iJ-04
- for qemu-devel@nongnu.org; Thu, 30 Jan 2025 05:05:44 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <david@redhat.com>) id 1tdRTP-0001NM-RM
+ for qemu-devel@nongnu.org; Thu, 30 Jan 2025 05:08:35 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <david@redhat.com>) id 1tdRQa-0006SH-UB
- for qemu-devel@nongnu.org; Thu, 30 Jan 2025 05:05:43 -0500
+ (Exim 4.90_1) (envelope-from <david@redhat.com>) id 1tdRTO-0006u4-9P
+ for qemu-devel@nongnu.org; Thu, 30 Jan 2025 05:08:35 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1738231538;
+ s=mimecast20190719; t=1738231713;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=ej34TRKzCk3u66g7ZUBbMIDJC/Cfgozb+JXmH9zPuFY=;
- b=V3hyByeaUEcUYQtbTepP+/KVmDjpm0gpbfb2yuRzabLXhpVn5aM7g8go4XZrBxtJJCOOho
- 1emTjldytYJDXQBO54ze/JCNMo2fcT0kyHqACd6eDp//G/fy5cCgVlW34R0oIuIJqAwJpK
- yasshRuV3/MLraisJFAayFodo2byN2M=
-Received: from mail-wm1-f69.google.com (mail-wm1-f69.google.com
- [209.85.128.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=GxtuEqLCldMCiqHlL9qdk33s4rX5+fECbKiC+L8VbpM=;
+ b=GktfXlzRDb0vTbSK+kegPzMUesR3LoMjRQ2vBP00AMWP77qYLw2zbiTDOGzNEQwtowbHU+
+ eDFJjPlfsnNS43IISWm6s1bhHxd7/8Ri2yci8BAYIhc3oLrRndOCpFLwCtGnw+vjWSc9wX
+ hxszvHQECS8FuQceiQOrhy601roFMzs=
+Received: from mail-wr1-f70.google.com (mail-wr1-f70.google.com
+ [209.85.221.70]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-591-sCsLRWXcN-i306stBawK8g-1; Thu, 30 Jan 2025 05:05:36 -0500
-X-MC-Unique: sCsLRWXcN-i306stBawK8g-1
-X-Mimecast-MFC-AGG-ID: sCsLRWXcN-i306stBawK8g
-Received: by mail-wm1-f69.google.com with SMTP id
- 5b1f17b1804b1-436723db6c4so3802555e9.3
- for <qemu-devel@nongnu.org>; Thu, 30 Jan 2025 02:05:36 -0800 (PST)
+ us-mta-460-x2iZU0zrOcyQ-uLSfAYzDg-1; Thu, 30 Jan 2025 05:08:32 -0500
+X-MC-Unique: x2iZU0zrOcyQ-uLSfAYzDg-1
+X-Mimecast-MFC-AGG-ID: x2iZU0zrOcyQ-uLSfAYzDg
+Received: by mail-wr1-f70.google.com with SMTP id
+ ffacd0b85a97d-38a2140a400so386389f8f.0
+ for <qemu-devel@nongnu.org>; Thu, 30 Jan 2025 02:08:32 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1738231535; x=1738836335;
+ d=1e100.net; s=20230601; t=1738231711; x=1738836511;
  h=content-transfer-encoding:in-reply-to:organization:autocrypt
  :content-language:from:references:cc:to:subject:user-agent
  :mime-version:date:message-id:x-gm-message-state:from:to:cc:subject
  :date:message-id:reply-to;
- bh=ej34TRKzCk3u66g7ZUBbMIDJC/Cfgozb+JXmH9zPuFY=;
- b=Ed9R6j8eq6veCs5NTi5LRFBzCXcCyIk33FVeSuYpYBGcKCZx5EJL5+4BRPt3SvFMTR
- XbxpsCEa//nNHFcqWGVH5NGe3J8261bySv5vDsr8ivdat9Dx6VvE8xyQYonrJhkb7Mvf
- g7C1vDCSGRi+1yME3qct9mTKAkbdqEv8w6DK4ii0K6aalyX5G2QmTP8YffA1ZsDbTvR3
- U0oBKiOmAVMtzaHNSLpR1GmIyP1exzUxgnbwypuxeUwU8VAp0Bj5FwMLhSkhTFCr7bxT
- uxEgmpeAKhh70oA8Fc9oqQXW3V01BwLNlMGmy2o/MeDMThZyXJqB9LGRx//kun3vi4JM
- 2sHw==
+ bh=GxtuEqLCldMCiqHlL9qdk33s4rX5+fECbKiC+L8VbpM=;
+ b=L68nn9QdE8EI7JfKPMTu6oVjvZbW7i/LzDJ9H/ESGZqd/eiyMCIFvmT2PAvnZ2OVbv
+ UWP+RlrEpnFwPSmZUsrU0qQQ6Okj50sIEX55DmW9tZ4BVB/GUF1J59H/ypqH0kXTgVBs
+ VBU0Axuc41O8XNo5j2CGXQqC6ZWPaMVdXGADwRVMcV5xpgPe17BMaTTmARgLZuwWMaqw
+ B7aVoh8U92IQUUO5vNryBY1DBwu7ONQGy3LqX3jkaMJLMRIAFbce4U5QW5Qb7S8DePX/
+ MZpD4jL+24fgqqSCdxneHA6lR7Ekb85U35W/felZym3Y6OKK+FGrJFa7ezBNKHGXz9Hz
+ wung==
 X-Forwarded-Encrypted: i=1;
- AJvYcCXdzfdk8p3QDr8LlIPQv2dyp6EF1b/UFRriWCIoBzJq6EepEE6x1EJyAZ86QQDUpl7y5LM0FUL7Hphe@nongnu.org
-X-Gm-Message-State: AOJu0YxAeG44up77aqSewCyBHI9OP3b4I6XHDhjK0uCWcgnm+WsQRKqV
- Vw7zU9YJJujRs0G80hyzlZ6yVeYTRyuNbOOnnZwoeCZ2rIps6GhogSTAyho5teYm3SIBRtWCcuj
- G8JOmOuHoIjw4y+JTb9bqXLasd9u70NnBCs6qkGY8fxRUjcbuAe46
-X-Gm-Gg: ASbGnctntvKfLr+lvIRrPOzsh2zoy12x9YgIpTbv0HihHP5EUSRguStiQAHiBIFNMdE
- uEke04JJuu6tP/JX4fMsR2BQyrbZLUMX9B+Taov/SoBG6ao2rbnOVLmfGyOvr409TsA16uYeqAg
- Mi6uQWvKVl4xSeauLsfB9LL0KgXC6CyThG79/HpJij3y62NDG1x9Ys1ex5FcbcPd2RyvKoP4mgh
- ghPmZ3w2c/A7y6qyzaOk9K2onQTP9dpnVrP/9rTMdWBPcHzjgwPe4RVWyWDfA+3Mv8I2tdLWF/s
- Y0FhLqUWzSbUVtjVayMCqkqgUKlLxCUVrLVW+fHxq44s
-X-Received: by 2002:a05:600c:3306:b0:435:294:f1c8 with SMTP id
- 5b1f17b1804b1-438e018288dmr30450535e9.28.1738231535591; 
- Thu, 30 Jan 2025 02:05:35 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IFgp2XICVOdE2kJIWFsVmaEZlHa9/HKHWxrRKY9p1icaAeHtZ46p62yKdSY9hlFA7LqmysKkQ==
-X-Received: by 2002:a05:600c:3306:b0:435:294:f1c8 with SMTP id
- 5b1f17b1804b1-438e018288dmr30450285e9.28.1738231535217; 
- Thu, 30 Jan 2025 02:05:35 -0800 (PST)
+ AJvYcCU5CIl4pFTQtOlxPBPIvOytTms4GtumCku3IoILViokoXuDIhNDPeJq1ETEhOkqFw4affWmLvsgXIKN@nongnu.org
+X-Gm-Message-State: AOJu0YwSM3h17aOJ73qY0jh6DtiFkGwR5+ZrT0rm0jz9hwF6f8B9kbtC
+ 2ISXyb8yZSoINqf5e5/+ilcu2/ugNpUe3wNffp34y7iSseejjSax71hOSvIhbeBZPbjkryJxqtM
+ pc4i+vs7+yS79nZuHUK88C1pNf15DYTnAbupYeJX7CapmBtI/f6Zy
+X-Gm-Gg: ASbGncu7s9p4rj8TpJpjuYx8/ASuvvmRa9kjfyu3DWIQNOMkOs7eWMak8ehoEacOfIp
+ eBRBWa7fClCXGbaIPaTjTNi99Gmtau2j0K/vnLizKDQ0O3in6pc2+ndXhUbEefN8VQ9gkX1dTYW
+ UMXiFyGZ9fuUkqhCZzDcjezXlYHlvAmzzZjR7I+JRbUJC+SjQ/bUvYMNuLJZ/c8t+CIotsRV6qw
+ ePiv2bP7JRDZxgSzlQH5hGKXzASD0Pw0Jlv1KcU98Yw8n+RzVPFZ96kgnD9nVHO72N8CyDRverh
+ GiarmG7HEvF7LJNKSooZPsPhu+5PoIhqwJyAjABNFUL9
+X-Received: by 2002:a05:6000:1fac:b0:386:3329:6a04 with SMTP id
+ ffacd0b85a97d-38c51e8de63mr6292568f8f.39.1738231711172; 
+ Thu, 30 Jan 2025 02:08:31 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IGvS3Uy7Eodh52ChzmXqGnzBkmmZ7MfTvQSBcAfuge2S8sB/SSD++pYiQdwzpMFbW+y3P8ccA==
+X-Received: by 2002:a05:6000:1fac:b0:386:3329:6a04 with SMTP id
+ ffacd0b85a97d-38c51e8de63mr6292513f8f.39.1738231710443; 
+ Thu, 30 Jan 2025 02:08:30 -0800 (PST)
 Received: from ?IPV6:2a01:599:904:96e0:a245:aa9f:6c57:eb41?
  ([2a01:599:904:96e0:a245:aa9f:6c57:eb41])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-438e245f49dsm17378355e9.35.2025.01.30.02.05.33
+ ffacd0b85a97d-38c5c1cf555sm1508408f8f.97.2025.01.30.02.08.27
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 30 Jan 2025 02:05:34 -0800 (PST)
-Message-ID: <05295422-6baf-4f7e-9f02-d2bd9344b7e7@redhat.com>
-Date: Thu, 30 Jan 2025 11:05:33 +0100
+ Thu, 30 Jan 2025 02:08:29 -0800 (PST)
+Message-ID: <6943198a-4d3b-4e3c-a206-d031e8f943b9@redhat.com>
+Date: Thu, 30 Jan 2025 11:08:27 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v6 1/6] system/physmem: handle hugetlb correctly in
- qemu_ram_remap()
+Subject: Re: [PATCH v6 2/6] system/physmem: poisoned memory discard on reboot
 To: =?UTF-8?Q?=E2=80=9CWilliam_Roche?= <william.roche@oracle.com>,
  kvm@vger.kernel.org, qemu-devel@nongnu.org, qemu-arm@nongnu.org
 Cc: peterx@redhat.com, pbonzini@redhat.com, richard.henderson@linaro.org,
@@ -86,7 +85,7 @@ Cc: peterx@redhat.com, pbonzini@redhat.com, richard.henderson@linaro.org,
  imammedo@redhat.com, eduardo@habkost.net, marcel.apfelbaum@gmail.com,
  wangyanan55@huawei.com, zhao1.liu@intel.com, joao.m.martins@oracle.com
 References: <20250127213107.3454680-1-william.roche@oracle.com>
- <20250127213107.3454680-2-william.roche@oracle.com>
+ <20250127213107.3454680-3-william.roche@oracle.com>
 From: David Hildenbrand <david@redhat.com>
 Content-Language: en-US
 Autocrypt: addr=david@redhat.com; keydata=
@@ -134,19 +133,19 @@ Autocrypt: addr=david@redhat.com; keydata=
  jPrnvUsUUsjRoRNJjKKA/REq+sAnhkNPPZ/NNMjaZ5b8Tovi8C0tmxiCHaQYqj7G2rgnT0kt
  WNyWQQ==
 Organization: Red Hat
-In-Reply-To: <20250127213107.3454680-2-william.roche@oracle.com>
+In-Reply-To: <20250127213107.3454680-3-william.roche@oracle.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=david@redhat.com;
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=david@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -33
 X-Spam_score: -3.4
 X-Spam_bar: ---
 X-Spam_report: (-3.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.3,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -165,14 +164,98 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 On 27.01.25 22:31, “William Roche wrote:
 > From: William Roche <william.roche@oracle.com>
 > 
-> The list of hwpoison pages used to remap the memory on reset
-> is based on the backend real page size.
-> To correctly handle hugetlb, we must mmap(MAP_FIXED) a complete
-> hugetlb page; hugetlb pages cannot be partially mapped.
+> Repair poisoned memory location(s), calling ram_block_discard_range():
+> punching a hole in the backend file when necessary and regenerating
+> a usable memory.
+> If the kernel doesn't support the madvise calls used by this function
+> and we are dealing with anonymous memory, fall back to remapping the
+> location(s).
 > 
-> Co-developed-by: David Hildenbrand <david@redhat.com>
 > Signed-off-by: William Roche <william.roche@oracle.com>
 > ---
+>   system/physmem.c | 54 ++++++++++++++++++++++++++++--------------------
+>   1 file changed, 32 insertions(+), 22 deletions(-)
+> 
+> diff --git a/system/physmem.c b/system/physmem.c
+> index 3dd2adde73..3dc10ae27b 100644
+> --- a/system/physmem.c
+> +++ b/system/physmem.c
+> @@ -2167,6 +2167,23 @@ void qemu_ram_free(RAMBlock *block)
+>   }
+>   
+>   #ifndef _WIN32
+> +/* Simply remap the given VM memory location from start to start+length */
+> +static int qemu_ram_remap_mmap(RAMBlock *block, uint64_t start, size_t length)
+> +{
+> +    int flags, prot;
+> +    void *area;
+> +    void *host_startaddr = block->host + start;
+> +
+> +    assert(block->fd < 0);
+> +    flags = MAP_FIXED | MAP_ANONYMOUS;
+> +    flags |= block->flags & RAM_SHARED ? MAP_SHARED : MAP_PRIVATE;
+> +    flags |= block->flags & RAM_NORESERVE ? MAP_NORESERVE : 0;
+> +    prot = PROT_READ;
+> +    prot |= block->flags & RAM_READONLY ? 0 : PROT_WRITE;
+> +    area = mmap(host_startaddr, length, prot, flags, -1, 0);
+> +    return area != host_startaddr ? -errno : 0;
+> +}
+> +
+>   /*
+>    * qemu_ram_remap - remap a single RAM page
+>    *
+> @@ -2184,9 +2201,7 @@ void qemu_ram_remap(ram_addr_t addr)
+>   {
+>       RAMBlock *block;
+>       uint64_t offset;
+> -    int flags;
+> -    void *area, *vaddr;
+> -    int prot;
+> +    void *vaddr;
+>       size_t page_size;
+>   
+>       RAMBLOCK_FOREACH(block) {
+> @@ -2201,25 +2216,20 @@ void qemu_ram_remap(ram_addr_t addr)
+>                   ;
+>               } else if (xen_enabled()) {
+>                   abort();
+> -            } else {
+> -                flags = MAP_FIXED;
+> -                flags |= block->flags & RAM_SHARED ?
+> -                         MAP_SHARED : MAP_PRIVATE;
+> -                flags |= block->flags & RAM_NORESERVE ? MAP_NORESERVE : 0;
+> -                prot = PROT_READ;
+> -                prot |= block->flags & RAM_READONLY ? 0 : PROT_WRITE;
+> -                if (block->fd >= 0) {
+> -                    area = mmap(vaddr, page_size, prot, flags, block->fd,
+> -                                offset + block->fd_offset);
+> -                } else {
+> -                    flags |= MAP_ANONYMOUS;
+> -                    area = mmap(vaddr, page_size, prot, flags, -1, 0);
+> -                }
+> -                if (area != vaddr) {
+> -                    error_report("Could not remap RAM %s:%" PRIx64 "+%" PRIx64
+> -                                 " +%zx", block->idstr, offset,
+> -                                 block->fd_offset, page_size);
+> -                    exit(1);
+> +                if (ram_block_discard_range(block, offset, page_size) != 0) {
+> +                    /*
+> +                     * Fall back to using mmap() only for anonymous mapping,
+> +                     * as if a backing file is associated we may not be able
+> +                     * to recover the memory in all cases.
+> +                     * So don't take the risk of using only mmap and fail now.
+> +                     */
+> +                    if (block->fd >= 0 ||
+> +                        qemu_ram_remap_mmap(block, offset, page_size) != 0) {
+> +                        error_report("Could not remap RAM %s:%" PRIx64 "+%"
+> +                                     PRIx64 " +%zx", block->idstr, offset,
+> +                                     block->fd_offset, page_size);
+> +                        exit(1);
+> +                    }
+>                   }
+>                   memory_try_enable_merging(vaddr, page_size);
+>                   qemu_ram_setup_dump(vaddr, page_size);
+
 
 Acked-by: David Hildenbrand <david@redhat.com>
 
