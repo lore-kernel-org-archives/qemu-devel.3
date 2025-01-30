@@ -4,47 +4,48 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 22573C0218D
-	for <qemu-devel@archiver.kernel.org>; Thu, 30 Jan 2025 03:04:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5508AC0218A
+	for <qemu-devel@archiver.kernel.org>; Thu, 30 Jan 2025 03:23:19 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tdKq0-0003yt-Rx; Wed, 29 Jan 2025 22:03:28 -0500
+	id 1tdL8H-0005tj-Gj; Wed, 29 Jan 2025 22:22:21 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <andrew@codeconstruct.com.au>)
- id 1tdKpx-0003xf-Ks; Wed, 29 Jan 2025 22:03:25 -0500
+ id 1tdL8F-0005tW-Ub; Wed, 29 Jan 2025 22:22:19 -0500
 Received: from pi.codeconstruct.com.au ([203.29.241.158]
  helo=codeconstruct.com.au)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <andrew@codeconstruct.com.au>)
- id 1tdKpu-0004zV-EU; Wed, 29 Jan 2025 22:03:25 -0500
+ id 1tdL8D-0007Pg-33; Wed, 29 Jan 2025 22:22:19 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=codeconstruct.com.au; s=2022a; t=1738206190;
- bh=S5OrvSekYACv8+1dLNThyw1SZ+vG+x19oDy43O1blGs=;
+ d=codeconstruct.com.au; s=2022a; t=1738207331;
+ bh=JRnk1Jy3uF8oUUdYOGtwQqaTUM7N9ifDICdlGehOZaA=;
  h=Subject:From:To:Cc:Date:In-Reply-To:References;
- b=DP+QfC5bxb1c7eMBGhMH44KxM8zMJuol1ilhTDL2G7OqMfLKfAB56EMF+Ambtd/Tu
- 7Ap2iK0yhkwrjNFTU1MZeIVkiU2eCpDuTtZeuuruDuj4edtk+8zQshZRipjXDj1rL1
- oL2AB00rfG25LLgoMjyU2jH99BO7WOL/bLaEJde1Gh1QxGRFCPNWcPiM/HbimLNCsy
- emDpimU68Rh0zaj4TOxkBuHowrnQ9CR19os7CQcBBPJDPz3wevu6IIRzC3QWouP4z6
- rIsIgT6Nf7F9DyJTC9EQ7uxSZE2HC/L4tVA/wq7QPBZgTJsojz0un2O7SXN6V3drz4
- wVe1G+RYUQ2ow==
+ b=jFh12HKMoYjn3xPtP4sVfFqHgAy0PFX9VCyhH2PnZmBRss23zDQEs1SI/7reZF6Fw
+ kak2vl/Wzh9opMSuG9rpFGMuH/eDI1Qshd4p6JWg5KtFox0N7DB0EUqZOwnkSQHmJv
+ LRXo1yWuRMQkkde3a4gtpquo8Vz/TNbCFkhqSSUXTa0OQ/OP+bDUjn5TRVSBHUIjyV
+ wh6bT1DQz8fKVFvDmVVWuSYqHz0ITBV6spVXuYBeE9owH1t0YOWVBOtPZnlZz9mZBu
+ ENVTcsEA4eeU7MIdq+oop+Vf4t5vAzM33HEsb56lBfETpFvLjLx5+1NCPkbriAaeD7
+ jeOeVDT0RiW1Q==
 Received: from [192.168.68.112] (58-7-158-64.dyn.iinet.net.au [58.7.158.64])
- by mail.codeconstruct.com.au (Postfix) with ESMTPSA id 8825173803;
- Thu, 30 Jan 2025 11:03:08 +0800 (AWST)
-Message-ID: <4c7dc177de0e36a6f3e6ee444357f572affc30ca.camel@codeconstruct.com.au>
-Subject: Re: [PATCH 0/5] tests/functional: Update Aspeed OpenBMC images
+ by mail.codeconstruct.com.au (Postfix) with ESMTPSA id 3C70E73803;
+ Thu, 30 Jan 2025 11:22:10 +0800 (AWST)
+Message-ID: <d9575d2cec122e41e11d84667f4d7cc63848b3ce.camel@codeconstruct.com.au>
+Subject: Re: [PATCH v1 01/18] hw/intc/aspeed: Rename INTC to INTC0
 From: Andrew Jeffery <andrew@codeconstruct.com.au>
-To: =?ISO-8859-1?Q?C=E9dric?= Le Goater <clg@redhat.com>,
- qemu-arm@nongnu.org,  qemu-devel@nongnu.org
-Cc: Joel Stanley <joel@jms.id.au>, Troy Lee <troy_lee@aspeedtech.com>, Jamin
- Lin <jamin_lin@aspeedtech.com>, Steven Lee <steven_lee@aspeedtech.com>,
- Thomas Huth <thuth@redhat.com>
-Date: Thu, 30 Jan 2025 13:33:07 +1030
-In-Reply-To: <78e6b6ad-0422-4b43-95f5-f377ea101f09@redhat.com>
-References: <20250128214100.1196243-1-clg@redhat.com>
- <bee99a3ef4821f69f6f1a2f6cfc77c3e247e5d87.camel@codeconstruct.com.au>
- <78e6b6ad-0422-4b43-95f5-f377ea101f09@redhat.com>
+To: =?ISO-8859-1?Q?C=E9dric?= Le Goater <clg@kaod.org>, Jamin Lin
+ <jamin_lin@aspeedtech.com>, Peter Maydell <peter.maydell@linaro.org>,
+ Steven Lee <steven_lee@aspeedtech.com>, Troy Lee <leetroy@gmail.com>, Joel
+ Stanley <joel@jms.id.au>,  "open list:ASPEED BMCs" <qemu-arm@nongnu.org>,
+ "open list:All patches CC here" <qemu-devel@nongnu.org>
+Cc: troy_lee@aspeedtech.com, yunlin.tang@aspeedtech.com
+Date: Thu, 30 Jan 2025 13:52:09 +1030
+In-Reply-To: <2d9247ab-34dd-4dde-a9c0-c04c2d8a1a18@kaod.org>
+References: <20250121070424.2465942-1-jamin_lin@aspeedtech.com>
+ <20250121070424.2465942-2-jamin_lin@aspeedtech.com>
+ <2d9247ab-34dd-4dde-a9c0-c04c2d8a1a18@kaod.org>
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 User-Agent: Evolution 3.46.4-2 
@@ -73,46 +74,34 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, 2025-01-29 at 08:19 +0100, C=C3=A9dric Le Goater wrote:
-> On 1/29/25 00:29, Andrew Jeffery wrote:
-> > Hi C=C3=A9dric,
+On Wed, 2025-01-29 at 18:03 +0100, C=C3=A9dric Le Goater wrote:
+> On 1/21/25 08:04, Jamin Lin wrote:
+> > The design of the INTC has significant changes in the AST2700 A1.
+> > In the
+> > AST2700 A0, there was one INTC controller, whereas in the AST2700
+> > A1,
+> > there were two INTC controllers: INTC0 (CPU DIE) and INTC1 (I/O
+> > DIE).
 > >=20
-> > On Tue, 2025-01-28 at 22:41 +0100, C=C3=A9dric Le Goater wrote:
-> > > Hello,
-> > >=20
-> > > This series updates the OpenBMC firmware images to the latest
-> > > version
-> > > for existing tests and also adds 2 new tests for Aspeed machines
-> > > which
-> > > were not tested before : witherspoon and bletchley.
-> > >=20
-> > > Thanks,
-> > >=20
-> > > C.
-> > >=20
-> > > C=C3=A9dric Le Goater (5):
-> > > =C2=A0=C2=A0 tests/functional: Introduce a new test routine for OpenB=
-MC
-> > > images
-> > > =C2=A0=C2=A0 tests/functional: Update OpenBMC image of palmetto machi=
-ne
-> > > =C2=A0=C2=A0 tests/functional: Update OpenBMC image of romulus machin=
-e
-> > > =C2=A0=C2=A0 tests/functional: Introduce a witherspoon machine test
-> > > =C2=A0=C2=A0 tests/functional: Introduce a bletchley machine test
-> >=20
-> > The rest of the patches haven't reached my inbox. Did you send
-> > them? It
-> > also seems they're missing on lore :)
-> >=20
-> > https://lore.kernel.org/all/20250128214100.1196243-1-clg@redhat.com/
-> I shouldn't send series too late in the evening ...Sorry for the
-> noise.
+> > The previous INTC model only supported the AST2700 A0 and was
+> > implemented for
+> > the INTC0 (CPU DIE). To support the future INTC1 (I/O DIE) model,
+> > rename INTC
+> > to INTC0.
+>=20
+>=20
+> Why not introduce definitions with _INTC_IO_ and leave alone the
+> current
+> instead ? Do we expect to have more than 2 INTC controllers ?
 >=20
 
-Hah, no worries. I see Thomas has already reviewed the resend.
+There was similar discussion on the devicetree bindings for the SCU a
+while back:
 
-Thanks,
+https://lore.kernel.org/all/94efc2d4ff280a112b869124fc9d7e35ac031596.camel@=
+codeconstruct.com.au/
+
+Ryan didn't like deviating from their internal documentation :(
 
 Andrew
 
