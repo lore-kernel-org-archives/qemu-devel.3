@@ -4,70 +4,67 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id EDF63C0218A
-	for <qemu-devel@archiver.kernel.org>; Thu, 30 Jan 2025 13:17:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A2F3BC0218A
+	for <qemu-devel@archiver.kernel.org>; Thu, 30 Jan 2025 13:18:25 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tdUQG-0000rB-3Q; Thu, 30 Jan 2025 08:17:32 -0500
+	id 1tdUP4-0007R1-Ac; Thu, 30 Jan 2025 08:16:21 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1tdUP9-0007Wn-Ry
- for qemu-devel@nongnu.org; Thu, 30 Jan 2025 08:16:26 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1tdUOg-0007JT-AH
+ for qemu-devel@nongnu.org; Thu, 30 Jan 2025 08:15:54 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1tdUP4-0000Bb-Vv
- for qemu-devel@nongnu.org; Thu, 30 Jan 2025 08:16:21 -0500
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1tdUOd-0008S3-4b
+ for qemu-devel@nongnu.org; Thu, 30 Jan 2025 08:15:53 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1738242978;
+ s=mimecast20190719; t=1738242949;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=DuxX692H1MLvRwRVYiFpDcKXuYGU4JwO3UPNwM+LK+8=;
- b=Fm4xsmS8A6aXdQFGt5/PKgmxwWWoINOxdKO7ZnbYDputRCtv5UcpX0BqsYvlLV3ydSI/eH
- iiIJwn6PtjkxJmkXgmxesMhwiNCaRMDkvMloC86O52gahkpu8aiZY0Wz9vPnTMF0Y1eRUM
- DD1Y1bzP2iO91zuFYZR4RuZSIG4DxuU=
+ bh=lvLWZbNpmkDvoiJJCHx1BQ5Jl5GDuueHWcFNwgJmFeE=;
+ b=B4LAqNF2M62f5s/A7J8ayn4emdlqsMT6Ult7WRxRXVChgpLgE3vDA8W5k5/0dfc7cG/oJL
+ mqsyjNDNNCESRxuWSGXgwiKW1j0Uh9K0aRp8RPthcuCwXTcuWXVGZ5jlaP47o3Bo0Qvi98
+ Gfi8xsb0eKZldIAdtg3oqQntCO6bgtE=
 Received: from mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-626-oyBjd1YFNYKwtvdNTIBlWQ-1; Thu,
- 30 Jan 2025 08:16:16 -0500
-X-MC-Unique: oyBjd1YFNYKwtvdNTIBlWQ-1
-X-Mimecast-MFC-AGG-ID: oyBjd1YFNYKwtvdNTIBlWQ
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-687-xnLXe0DdOIKxJ_-K9jHimw-1; Thu,
+ 30 Jan 2025 08:15:47 -0500
+X-MC-Unique: xnLXe0DdOIKxJ_-K9jHimw-1
+X-Mimecast-MFC-AGG-ID: xnLXe0DdOIKxJ_-K9jHimw
 Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
  by mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id CD0411955DDF
- for <qemu-devel@nongnu.org>; Thu, 30 Jan 2025 13:16:15 +0000 (UTC)
+ id DA64519560B4
+ for <qemu-devel@nongnu.org>; Thu, 30 Jan 2025 13:15:46 +0000 (UTC)
 Received: from thuth-p1g4.redhat.com (unknown [10.39.192.95])
  by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 554FD30001BE; Thu, 30 Jan 2025 13:16:13 +0000 (UTC)
+ id AD02630001BE; Thu, 30 Jan 2025 13:15:45 +0000 (UTC)
 From: Thomas Huth <thuth@redhat.com>
 To: qemu-devel@nongnu.org
-Cc: Stefan Hajnoczi <stefanha@redhat.com>,
- =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
-Subject: [PULL 15/20] tests/functional: Add a decorator for skipping long
- running tests
-Date: Thu, 30 Jan 2025 14:15:29 +0100
-Message-ID: <20250130131535.91297-16-thuth@redhat.com>
+Cc: Stefan Hajnoczi <stefanha@redhat.com>
+Subject: [PULL 04/20] tests/functional: Fix the aarch64_tcg_plugins test
+Date: Thu, 30 Jan 2025 14:15:18 +0100
+Message-ID: <20250130131535.91297-5-thuth@redhat.com>
 In-Reply-To: <20250130131535.91297-1-thuth@redhat.com>
 References: <20250130131535.91297-1-thuth@redhat.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=thuth@redhat.com;
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=thuth@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -33
 X-Spam_score: -3.4
 X-Spam_bar: ---
 X-Spam_report: (-3.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.3,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -85,158 +82,89 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Some tests have a very long runtime and might run into timeout issues
-e.g. when QEMU has been compiled with --enable-debug. Add a decorator
-for marking them more easily. Rename the corresponding environment
-variable to be more in sync with the other QEMU_TEST_ALLOW_* switches
-that we already have, and add a paragraph about it in the documentation.
+Unfortunately, this test had not been added to meson.build, so we did
+not notice a regression: Looking for 'Kernel panic - not syncing: VFS:'
+as the indication for the final boot state of the kernel was a bad
+idea since 'Kernel panic - not syncing' is the default failure
+message of the LinuxKernelTest class, and since we're now reading
+the console input byte by byte instead of linewise (see commit
+cdad03b74f75), the failure now triggers before we fully read the
+success string. Let's fix this by simply looking for the previous
+line in the console output instead.
 
-Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
-Message-ID: <20250128152839.184599-2-thuth@redhat.com>
+Also, replace the call to cancel() - this was only available in the
+Avocado framework. In the functional framework, we must use skipTest()
+instead. While we're at it, also fix the TODO here by looking for the
+exact error and only skip the test if the plugins are not available.
+
+Fixes: 3abc545e66 ("tests/functional: Convert the tcg_plugins test")
+Fixes: cdad03b74f ("tests/functional: rewrite console handling to be bytewise")
+Message-ID: <20250123083625.1498495-1-thuth@redhat.com>
 Signed-off-by: Thomas Huth <thuth@redhat.com>
 ---
- docs/devel/testing/functional.rst                |  8 ++++++++
- tests/functional/qemu_test/__init__.py           |  2 +-
- tests/functional/qemu_test/decorators.py         | 14 ++++++++++++++
- tests/functional/test_aarch64_sbsaref_alpine.py  |  5 ++---
- tests/functional/test_aarch64_sbsaref_freebsd.py |  9 +++------
- tests/functional/test_arm_quanta_gsj.py          |  6 +++---
- 6 files changed, 31 insertions(+), 13 deletions(-)
+ tests/functional/meson.build                 |  1 +
+ tests/functional/test_aarch64_tcg_plugins.py | 15 +++++++++------
+ 2 files changed, 10 insertions(+), 6 deletions(-)
 
-diff --git a/docs/devel/testing/functional.rst b/docs/devel/testing/functional.rst
-index ae238ed3fc..ecc738922b 100644
---- a/docs/devel/testing/functional.rst
-+++ b/docs/devel/testing/functional.rst
-@@ -351,5 +351,13 @@ the code snippet below:
- Tests should not live in this state forever and should either be fixed
- or eventually removed.
+diff --git a/tests/functional/meson.build b/tests/functional/meson.build
+index 3e11b725cb..2b2d8953aa 100644
+--- a/tests/functional/meson.build
++++ b/tests/functional/meson.build
+@@ -72,6 +72,7 @@ tests_aarch64_system_thorough = [
+   'aarch64_sbsaref',
+   'aarch64_sbsaref_alpine',
+   'aarch64_sbsaref_freebsd',
++  'aarch64_tcg_plugins',
+   'aarch64_tuxrun',
+   'aarch64_virt',
+   'aarch64_xlnx_versal',
+diff --git a/tests/functional/test_aarch64_tcg_plugins.py b/tests/functional/test_aarch64_tcg_plugins.py
+index 01660eb090..7e8beacc83 100755
+--- a/tests/functional/test_aarch64_tcg_plugins.py
++++ b/tests/functional/test_aarch64_tcg_plugins.py
+@@ -15,6 +15,7 @@
+ import mmap
+ import re
  
-+QEMU_TEST_ALLOW_SLOW
-+^^^^^^^^^^^^^^^^^^^^
-+Tests that have a very long runtime and might run into timeout issues
-+e.g. if the QEMU binary has been compiled with debugging options enabled.
-+To avoid these timeout issues by default and to save some precious CPU
-+cycles during normal testing, such tests are disabled by default unless
-+the QEMU_TEST_ALLOW_SLOW environment variable has been set.
-+
- 
- .. _unittest: https://docs.python.org/3/library/unittest.html
-diff --git a/tests/functional/qemu_test/__init__.py b/tests/functional/qemu_test/__init__.py
-index da1830286d..5c972843a6 100644
---- a/tests/functional/qemu_test/__init__.py
-+++ b/tests/functional/qemu_test/__init__.py
-@@ -14,7 +14,7 @@
- from .testcase import QemuBaseTest, QemuUserTest, QemuSystemTest
- from .linuxkernel import LinuxKernelTest
- from .decorators import skipIfMissingCommands, skipIfNotMachine, \
--    skipFlakyTest, skipUntrustedTest, skipBigDataTest, \
-+    skipFlakyTest, skipUntrustedTest, skipBigDataTest, skipSlowTest, \
-     skipIfMissingImports
- from .archive import archive_extract
- from .uncompress import uncompress
-diff --git a/tests/functional/qemu_test/decorators.py b/tests/functional/qemu_test/decorators.py
-index 3d9c02fd59..1651eb739a 100644
---- a/tests/functional/qemu_test/decorators.py
-+++ b/tests/functional/qemu_test/decorators.py
-@@ -86,6 +86,20 @@ def skipBigDataTest():
-     return skipUnless(os.getenv('QEMU_TEST_ALLOW_LARGE_STORAGE'),
-                       'Test requires large host storage space')
- 
-+'''
-+Decorator to skip execution of tests which have a really long
-+runtime (and might e.g. time out if QEMU has been compiled with
-+debugging enabled) unless the $QEMU_TEST_ALLOW_SLOW
-+environment variable is set
-+
-+Example:
-+
-+  @skipSlowTest()
-+'''
-+def skipSlowTest():
-+    return skipUnless(os.getenv('QEMU_TEST_ALLOW_SLOW'),
-+                      'Test has a very long runtime and might time out')
-+
- '''
- Decorator to skip execution of a test if the list
- of python imports is not available.
-diff --git a/tests/functional/test_aarch64_sbsaref_alpine.py b/tests/functional/test_aarch64_sbsaref_alpine.py
-index 6dbc90f30e..ce974fd7e1 100755
---- a/tests/functional/test_aarch64_sbsaref_alpine.py
-+++ b/tests/functional/test_aarch64_sbsaref_alpine.py
-@@ -10,7 +10,7 @@
- 
- import os
- 
--from qemu_test import QemuSystemTest, Asset
-+from qemu_test import QemuSystemTest, Asset, skipSlowTest
- from qemu_test import wait_for_console_pattern
- from unittest import skipUnless
- from test_aarch64_sbsaref import fetch_firmware
-@@ -53,8 +53,7 @@ def test_sbsaref_alpine_linux_max_pauth_off(self):
-     def test_sbsaref_alpine_linux_max_pauth_impdef(self):
-         self.boot_alpine_linux("max,pauth-impdef=on")
- 
--    @skipUnless(os.getenv('QEMU_TEST_TIMEOUT_EXPECTED'),
--                'Test might timeout due to PAuth emulation')
-+    @skipSlowTest()  # Test might timeout due to PAuth emulation
-     def test_sbsaref_alpine_linux_max(self):
-         self.boot_alpine_linux("max")
- 
-diff --git a/tests/functional/test_aarch64_sbsaref_freebsd.py b/tests/functional/test_aarch64_sbsaref_freebsd.py
-index 77ba2ba1da..5b10bb9b64 100755
---- a/tests/functional/test_aarch64_sbsaref_freebsd.py
-+++ b/tests/functional/test_aarch64_sbsaref_freebsd.py
-@@ -10,9 +10,8 @@
- 
- import os
- 
--from qemu_test import QemuSystemTest, Asset
-+from qemu_test import QemuSystemTest, Asset, skipSlowTest
- from qemu_test import wait_for_console_pattern
--from unittest import skipUnless
- from test_aarch64_sbsaref import fetch_firmware
++from qemu.machine.machine import VMLaunchFailure
+ from qemu_test import LinuxKernelTest, Asset
  
  
-@@ -50,13 +49,11 @@ def test_sbsaref_freebsd14_default_cpu(self):
-     def test_sbsaref_freebsd14_max_pauth_off(self):
-         self.boot_freebsd14("max,pauth=off")
+@@ -43,10 +44,12 @@ def run_vm(self, kernel_path, kernel_command_line,
  
--    @skipUnless(os.getenv('QEMU_TEST_TIMEOUT_EXPECTED'),
--                'Test might timeout due to PAuth emulation')
-+    @skipSlowTest()  # Test might timeout due to PAuth emulation
-     def test_sbsaref_freebsd14_max_pauth_impdef(self):
-         self.boot_freebsd14("max,pauth-impdef=on")
+         try:
+             vm.launch()
+-        except:
+-            # TODO: probably fails because plugins not enabled but we
+-            # can't currently probe for the feature.
+-            self.cancel("TCG Plugins not enabled?")
++        except VMLaunchFailure as excp:
++            if "plugin interface not enabled in this build" in excp.output:
++                self.skipTest("TCG plugins not enabled")
++            else:
++                self.log.info(f"unhandled launch failure: {excp.output}")
++                raise excp
  
--    @skipUnless(os.getenv('QEMU_TEST_TIMEOUT_EXPECTED'),
--                'Test might timeout due to PAuth emulation')
-+    @skipSlowTest()  # Test might timeout due to PAuth emulation
-     def test_sbsaref_freebsd14_max(self):
-         self.boot_freebsd14("max")
+         self.wait_for_console_pattern(console_pattern, vm)
+         # ensure logs are flushed
+@@ -65,7 +68,7 @@ def test_aarch64_virt_insn(self):
+         kernel_path = self.ASSET_KERNEL.fetch()
+         kernel_command_line = (self.KERNEL_COMMON_COMMAND_LINE +
+                                'console=ttyAMA0')
+-        console_pattern = 'Kernel panic - not syncing: VFS:'
++        console_pattern = 'Please append a correct "root=" boot option'
  
-diff --git a/tests/functional/test_arm_quanta_gsj.py b/tests/functional/test_arm_quanta_gsj.py
-index 7b82e2185c..da60aeb659 100755
---- a/tests/functional/test_arm_quanta_gsj.py
-+++ b/tests/functional/test_arm_quanta_gsj.py
-@@ -7,8 +7,8 @@
- import os
+         plugin_log = tempfile.NamedTemporaryFile(mode="r+t", prefix="plugin",
+                                                  suffix=".log")
+@@ -91,7 +94,7 @@ def test_aarch64_virt_insn_icount(self):
+         kernel_path = self.ASSET_KERNEL.fetch()
+         kernel_command_line = (self.KERNEL_COMMON_COMMAND_LINE +
+                                'console=ttyAMA0')
+-        console_pattern = 'Kernel panic - not syncing: VFS:'
++        console_pattern = 'Please append a correct "root=" boot option'
  
- from qemu_test import LinuxKernelTest, Asset, exec_command_and_wait_for_pattern
--from qemu_test import interrupt_interactive_console_until_pattern
--from unittest import skipUnless
-+from qemu_test import interrupt_interactive_console_until_pattern, skipSlowTest
-+
- 
- class EmcraftSf2Machine(LinuxKernelTest):
- 
-@@ -32,7 +32,7 @@ class EmcraftSf2Machine(LinuxKernelTest):
-          '20200711-gsj-qemu-0/nuvoton-npcm730-gsj.dtb'),
-         '3249b2da787d4b9ad4e61f315b160abfceb87b5e1895a7ce898ce7f40c8d4045')
- 
--    @skipUnless(os.getenv('QEMU_TEST_TIMEOUT_EXPECTED'), 'Test might timeout')
-+    @skipSlowTest()
-     def test_arm_quanta_gsj(self):
-         self.set_machine('quanta-gsj')
-         image_path = self.uncompress(self.ASSET_IMAGE, format='gz')
+         plugin_log = tempfile.NamedTemporaryFile(mode="r+t", prefix="plugin",
+                                                  suffix=".log")
 -- 
 2.48.1
 
