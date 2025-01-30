@@ -4,64 +4,64 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 36244C02193
-	for <qemu-devel@archiver.kernel.org>; Thu, 30 Jan 2025 18:26:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9A4B4C0218A
+	for <qemu-devel@archiver.kernel.org>; Thu, 30 Jan 2025 18:26:52 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tdZFS-0002Hl-C4; Thu, 30 Jan 2025 13:26:43 -0500
+	id 1tdZEl-0001Q1-4Z; Thu, 30 Jan 2025 13:26:01 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tdZEk-0001Rw-Rv
- for qemu-devel@nongnu.org; Thu, 30 Jan 2025 13:26:00 -0500
-Received: from mail-wm1-x32c.google.com ([2a00:1450:4864:20::32c])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tdZEL-0000kX-GJ
+ for qemu-devel@nongnu.org; Thu, 30 Jan 2025 13:25:33 -0500
+Received: from mail-wr1-x42f.google.com ([2a00:1450:4864:20::42f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tdZEj-0001B6-4a
- for qemu-devel@nongnu.org; Thu, 30 Jan 2025 13:25:58 -0500
-Received: by mail-wm1-x32c.google.com with SMTP id
- 5b1f17b1804b1-4362bae4d7dso8583705e9.1
- for <qemu-devel@nongnu.org>; Thu, 30 Jan 2025 10:25:56 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tdZEJ-00014j-QO
+ for qemu-devel@nongnu.org; Thu, 30 Jan 2025 13:25:33 -0500
+Received: by mail-wr1-x42f.google.com with SMTP id
+ ffacd0b85a97d-3862b40a6e0so785198f8f.0
+ for <qemu-devel@nongnu.org>; Thu, 30 Jan 2025 10:25:31 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1738261555; x=1738866355; darn=nongnu.org;
+ d=linaro.org; s=google; t=1738261530; x=1738866330; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=9Z3aEZJL4Zoy5jUwLn3/iNglhcvTDiQUnyONCdVRxkU=;
- b=asK31Kya/tBaoaeQLuAFOYHg/L+Pas2BLip/vANU0jpXeNvky+txTkWeUVWWY+APz4
- 3s3f4cCRQTLlUW7h6us66FMzZyGytl6YZD+ql4LmP6tesPQfmfclq76G2e7Ry/ZIYvfZ
- RabVQxXJS7jWgW7Z2JLyHqnjXKKFkoAEeOidtIoC0hXQO4FhT8maikeA7GG/AQVhQsRq
- wHb99Qp77ree4muP9ySTzcJ8NyXxgn9rC5iuIniCsuI3e0sAUaPnl3qj8Tgpr4IbZTAs
- v+U1T892rx1p7+NTErBfo48a0U68ZpHsRqaifdDivFGy76Kc2WdIjsB/wbKCxA1R6qY3
- WCjg==
+ bh=t2o07b5g0HyyxOGpJQed/+y7o4V48M+fBcZRdRcyuiw=;
+ b=PwILAHdr1WZj/+x/ejnmhC/tD7zPsERQNUOwSvHjj71pcwdElvf0y4lUKXzzXUPBhP
+ gy4R1rl5sr3Hylt8H8FjfxKMV5vWQvtbP0FMNUBsAWf9PHICxbrr6YzcWc6nmyr4YIUK
+ WSrGkxmah73cJVaRAtCJjOh7UOfOhIT3krE2xtNLMqDKhqwASwvvYKpM/e4hj83RBow0
+ WKwPBl4Wf/HnvSPfw0eTxLioUwxOp9CFjlUvjh69byKfhlchner4faop/d/JQ/sq1DgT
+ JF3GfySerCQKn9GW3Wpcc7JLzJOtjRIz82c+nC/KWZ9jGzNiGkrzsAIVCjgTWpFvzbJ2
+ ebxQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1738261555; x=1738866355;
+ d=1e100.net; s=20230601; t=1738261530; x=1738866330;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=9Z3aEZJL4Zoy5jUwLn3/iNglhcvTDiQUnyONCdVRxkU=;
- b=uWYTWqrvv5tNGrF6bR718ftceIPZUTCs63/vi7RCr58f/xiQeG1bc+w8Yz5LdTtgNn
- V/X98nkdyzDSoqqBsXMLO+iXl2qitanZEBr8XFvEk9XxFfpspyqv4XbjbSqp7Qs6mIKJ
- 2ozmTgQkD+07w3kdJ5tSvbEjNG0BKK94iWxMrp7YqafpjWxjaqNaf8UV9VUvkgMRCWxV
- spS5m4g1hIkImHTxbn0kmTLvN17Srkb9wDHX90E1lwowTA9By6A6sGqz03w7fu5Mu3W4
- II5IC17JYyMmwjrKojH1LOhez5RZQZXJNyFDqekCViXAC+8q/Mu1/bzImWkAvPNcAmE7
- kyBA==
-X-Gm-Message-State: AOJu0YxV0T+E/QJ3fHyXeryoircjOVbLWSfhyn3vP7FquxFNEzpHlg14
- SfUZ7ngYdxJuhEz/DXtyfX1shbsFFwOgK2nMIiTxAaIFhn1qTwkbwSffDthRd70ASJxCXiFdA5S
- 9s74=
-X-Gm-Gg: ASbGnctL/EhmgZAzcvXxmKYwpoxmxcmN+AMYKFu0bwChE2EwbTQK2Z9kdpXAzDjU3Eg
- trswZQp50AOco89znQxd06BHBu7kvx7QGlIpfytz1kZkgQXWateL2q6HqifH/UCovDng4iHrKwE
- u/pZi3dKcnvZmSey6J13xBn0y7NYUAx9IkIH6Ui+NQIpuwJiqe+NJZ1bc6O4l9e34DJr/NcSwVk
- Lu9SCKf+jU1cjO+JDIriJgNA0mng1FEBYhlqQiSAn9HilnIhst8C1VaJ3vNfrUIM1jJiJkCRtvL
- iIj/vpo2fNI8dOfBTPqG9rGzDwORMXSb3gOXhdoA0qQNb7DxNsRZ8kt+3DO/M1Y8MQ==
-X-Google-Smtp-Source: AGHT+IHXblYVe6ZEv1ROTx59Wdz7A0x2phtSxM6lRbQYq9FYJZgBlhnJDmPUeWe8B4MCY6ArUJTPxQ==
-X-Received: by 2002:a05:600c:5486:b0:433:c76d:d57e with SMTP id
- 5b1f17b1804b1-438dc3a40d3mr86795265e9.5.1738261554878; 
- Thu, 30 Jan 2025 10:25:54 -0800 (PST)
+ bh=t2o07b5g0HyyxOGpJQed/+y7o4V48M+fBcZRdRcyuiw=;
+ b=gXikOKBz2e+cYQ5y6SG6ICW/rS7zk2+ZUdPdwYp0ZXEsQNbJhOu+j4CXL5EsAT9C8K
+ IFf6E8Hs0sQRwMmy3p2XyxEa8KkhljcbpZuaZ+Ij0lw+YRD6napGlT7aJGXVxRm/8ANn
+ E/HH6JIg19guzoOIGkjuAX4cv/KFOon2mDu8vOdV93wSjlTbJBf1R+kc9nRIHrn2z+8a
+ KpMhStd6/OPl8QKNa4vN1ualiUtzz8wNdI4sLwfbJ1IbV2tbPCtr/AUx7RhFu0S4f4k/
+ HhZJk5SX+s8wfPM4Lf2txwDrzUMGAqy6m02EKvUo47Fw3IDPOzmHqV/fRvETxqdCKuaI
+ jjFg==
+X-Gm-Message-State: AOJu0YzNWkog5ReFyks8XEAfF2xc186DZVoDmGE9p28mtCJ4qIfq3VSY
+ USGv3ewEB2rKHLm8qLcV95gGBLWTRi1XgFQjPn3byd/65/NHqVPLdvnl7/RvftC6SX/2hq1FvYX
+ XYco=
+X-Gm-Gg: ASbGncsPYy9PY8J6hAM7SeBs1P0QN8KYwffi6K/oGioBtRjh2MwPmfZk4HCkbE7QKHb
+ waL7lez3k+vDWnsbEh3N93yYmC2ePODnFMVjgSfBMES2Rp9j0TZJpFuHM0zmNcFGE3KvKABiqqx
+ unwAvEEg4kzjKaVFFYj7N5i6oIC/UwbyhGBsPLqPJG88AiQjUubg2QRsqfU63uaALKONzZ7QkLX
+ 1gzkQ28Yot3mux3x3YqjfyB82Z6qSfgs9suIShQpYXfRbylcjfx0LJghqpi8FaZpO7243Imywiv
+ w6vFf9W334q6LxBOZSY0d4jaZkirXelSse26rPa1fLTRUMCT0n/tntfk+FWAvb8hVw==
+X-Google-Smtp-Source: AGHT+IEnd37AOkXrN46UJvHrpeP9814E7CaHA5PfaeV4unfjn/p2NgrbC8UYeTDUK5HRwBMXSmyVYw==
+X-Received: by 2002:a05:6000:1788:b0:385:ef39:6ce9 with SMTP id
+ ffacd0b85a97d-38c5194c69amr9501640f8f.21.1738261529733; 
+ Thu, 30 Jan 2025 10:25:29 -0800 (PST)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-438dcc2f17dsm66550335e9.23.2025.01.30.10.25.51
+ ffacd0b85a97d-38c5c13a0efsm2733042f8f.60.2025.01.30.10.25.25
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Thu, 30 Jan 2025 10:25:54 -0800 (PST)
+ Thu, 30 Jan 2025 10:25:29 -0800 (PST)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: "Edgar E. Iglesias" <edgar.iglesias@gmail.com>,
@@ -70,17 +70,18 @@ Cc: "Edgar E. Iglesias" <edgar.iglesias@gmail.com>,
  Alistair Francis <alistair@alistair23.me>,
  Igor Mitsyanko <i.mitsyanko@gmail.com>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PATCH 3/8] hw/arm/realview: Explicit number of GIC external IRQs
-Date: Thu, 30 Jan 2025 19:24:36 +0100
-Message-ID: <20250130182441.40480-4-philmd@linaro.org>
+Subject: [PATCH 1/8] hw/arm/exynos4210: Replace magic 32 by proper
+ 'GIC_INTERNAL' definition
+Date: Thu, 30 Jan 2025 19:24:34 +0100
+Message-ID: <20250130182441.40480-2-philmd@linaro.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20250130182441.40480-1-philmd@linaro.org>
 References: <20250130182441.40480-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32c;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x32c.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::42f;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x42f.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -103,61 +104,47 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-When not specified, Cortex-A9MP configures its GIC with 64 external
-IRQs (see commit a32134aad89 "arm:make the number of GIC interrupts
-configurable"). Add the GIC_EXT_IRQS definition (with a comment)
-to make that explicit.
-
-Except explicitly setting a property value to its same implicit
-value, there is no logical change intended.
+The 32 IRQ lines skipped are the GIC internal ones.
+Use the GIC_INTERNAL definition for clarity.
+No logical change.
 
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 ---
- hw/arm/realview.c | 17 +++++++++++++++--
- 1 file changed, 15 insertions(+), 2 deletions(-)
+ hw/arm/exynos4210.c | 6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
-diff --git a/hw/arm/realview.c b/hw/arm/realview.c
-index 9900a98f3b8..4a62c83506b 100644
---- a/hw/arm/realview.c
-+++ b/hw/arm/realview.c
-@@ -35,6 +35,14 @@
- #define SMP_BOOT_ADDR 0xe0000000
- #define SMP_BOOTREG_ADDR 0x10000030
- 
-+/*
-+ * The Cortex-A9MP may have anything from 0 to 224 external interrupt
-+ * IRQ lines (with another 32 internal). We default to 64+32, which
-+ * is the number provided by the Cortex-A9MP test chip in the
-+ * Realview PBX-A9 and Versatile Express A9 development boards.
-+ */
-+#define GIC_EXT_IRQS 64
-+
- /* Board init.  */
- 
- static struct arm_boot_info realview_binfo = {
-@@ -185,7 +193,12 @@ static void realview_init(MachineState *machine,
-     sysbus_mmio_map(SYS_BUS_DEVICE(sysctl), 0, 0x10000000);
- 
-     if (is_mpcore) {
--        dev = qdev_new(is_pb ? TYPE_A9MPCORE_PRIV : "realview_mpcore");
-+        if (is_pb) {
-+            dev = qdev_new(TYPE_A9MPCORE_PRIV);
-+            qdev_prop_set_uint32(dev, "num-irq", GIC_EXT_IRQS + GIC_INTERNAL);
-+        } else {
-+            dev = qdev_new("realview_mpcore");
-+        }
-         qdev_prop_set_uint32(dev, "num-cpu", smp_cpus);
-         busdev = SYS_BUS_DEVICE(dev);
-         sysbus_realize_and_unref(busdev, &error_fatal);
-@@ -201,7 +214,7 @@ static void realview_init(MachineState *machine,
-         /* For now just create the nIRQ GIC, and ignore the others.  */
-         dev = sysbus_create_simple(TYPE_REALVIEW_GIC, gic_addr, cpu_irq[0]);
+diff --git a/hw/arm/exynos4210.c b/hw/arm/exynos4210.c
+index dd0edc81d5c..99b05a175d6 100644
+--- a/hw/arm/exynos4210.c
++++ b/hw/arm/exynos4210.c
+@@ -393,8 +393,9 @@ static void exynos4210_init_board_irqs(Exynos4210State *s)
+             }
+         }
+         if (irq_id) {
++            irq_id -= GIC_INTERNAL;
+             qdev_connect_gpio_out(splitter, splitin,
+-                                  qdev_get_gpio_in(extgicdev, irq_id - 32));
++                                  qdev_get_gpio_in(extgicdev, irq_id));
+         }
      }
--    for (n = 0; n < 64; n++) {
-+    for (n = 0; n < GIC_EXT_IRQS; n++) {
-         pic[n] = qdev_get_gpio_in(dev, n);
-     }
+     for (; n < EXYNOS4210_MAX_INT_COMBINER_IN_IRQ; n++) {
+@@ -413,6 +414,7 @@ static void exynos4210_init_board_irqs(Exynos4210State *s)
+         }
  
+         if (irq_id) {
++            irq_id -= GIC_INTERNAL;
+             assert(splitcount < EXYNOS4210_NUM_SPLITTERS);
+             splitter = DEVICE(&s->splitter[splitcount]);
+             qdev_prop_set_uint16(splitter, "num-lines", 2);
+@@ -421,7 +423,7 @@ static void exynos4210_init_board_irqs(Exynos4210State *s)
+             s->irq_table[n] = qdev_get_gpio_in(splitter, 0);
+             qdev_connect_gpio_out(splitter, 0, qdev_get_gpio_in(intcdev, n));
+             qdev_connect_gpio_out(splitter, 1,
+-                                  qdev_get_gpio_in(extgicdev, irq_id - 32));
++                                  qdev_get_gpio_in(extgicdev, irq_id));
+         } else {
+             s->irq_table[n] = qdev_get_gpio_in(intcdev, n);
+         }
 -- 
 2.47.1
 
