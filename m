@@ -4,70 +4,88 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 95348C0218A
-	for <qemu-devel@archiver.kernel.org>; Thu, 30 Jan 2025 18:21:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1CB19C02193
+	for <qemu-devel@archiver.kernel.org>; Thu, 30 Jan 2025 18:24:14 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tdZ90-0002eL-3P; Thu, 30 Jan 2025 13:20:02 -0500
+	id 1tdZCN-0003wW-GD; Thu, 30 Jan 2025 13:23:32 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <shameerali.kolothum.thodi@huawei.com>)
- id 1tdZ8x-0002dF-Kc; Thu, 30 Jan 2025 13:19:59 -0500
-Received: from frasgout.his.huawei.com ([185.176.79.56])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <shameerali.kolothum.thodi@huawei.com>)
- id 1tdZ8u-0008TX-Rh; Thu, 30 Jan 2025 13:19:59 -0500
-Received: from mail.maildlp.com (unknown [172.18.186.231])
- by frasgout.his.huawei.com (SkyGuard) with ESMTP id 4YkS1K2Lnbz6M4PN;
- Fri, 31 Jan 2025 02:17:41 +0800 (CST)
-Received: from frapeml500008.china.huawei.com (unknown [7.182.85.71])
- by mail.maildlp.com (Postfix) with ESMTPS id 8A204140517;
- Fri, 31 Jan 2025 02:19:48 +0800 (CST)
-Received: from frapeml500008.china.huawei.com (7.182.85.71) by
- frapeml500008.china.huawei.com (7.182.85.71) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.1.2507.39; Thu, 30 Jan 2025 19:19:48 +0100
-Received: from frapeml500008.china.huawei.com ([7.182.85.71]) by
- frapeml500008.china.huawei.com ([7.182.85.71]) with mapi id 15.01.2507.039;
- Thu, 30 Jan 2025 19:19:48 +0100
-To: =?utf-8?B?RGFuaWVsIFAuIEJlcnJhbmfDqQ==?= <berrange@redhat.com>
-CC: "qemu-arm@nongnu.org" <qemu-arm@nongnu.org>, "qemu-devel@nongnu.org"
- <qemu-devel@nongnu.org>, "eric.auger@redhat.com" <eric.auger@redhat.com>,
- "peter.maydell@linaro.org" <peter.maydell@linaro.org>, "jgg@nvidia.com"
- <jgg@nvidia.com>, "nicolinc@nvidia.com" <nicolinc@nvidia.com>,
- "ddutile@redhat.com" <ddutile@redhat.com>, Linuxarm <linuxarm@huawei.com>,
- "Wangzhou (B)" <wangzhou1@hisilicon.com>, jiangkunkun
- <jiangkunkun@huawei.com>, Jonathan Cameron <jonathan.cameron@huawei.com>,
- "zhangfei.gao@linaro.org" <zhangfei.gao@linaro.org>
-Subject: RE: [RFC PATCH 3/5] hw/arm/smmuv3: Associate a pci bus with a SMMUv3
- Nested device
-Thread-Topic: [RFC PATCH 3/5] hw/arm/smmuv3: Associate a pci bus with a SMMUv3
- Nested device
-Thread-Index: AQHbMd20WuQYJ64eBk2hccc55H+W27Mv89aAgAAtOHA=
-Date: Thu, 30 Jan 2025 18:19:48 +0000
-Message-ID: <9045488914674b32b726f37c881d3e7f@huawei.com>
-References: <20241108125242.60136-1-shameerali.kolothum.thodi@huawei.com>
- <20241108125242.60136-4-shameerali.kolothum.thodi@huawei.com>
- <Z5uo9y6MppYQctW3@redhat.com>
-In-Reply-To: <Z5uo9y6MppYQctW3@redhat.com>
-Accept-Language: en-GB, en-US
-Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-x-originating-ip: [10.195.35.225]
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: base64
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1tdZCB-0003qk-2t
+ for qemu-devel@nongnu.org; Thu, 30 Jan 2025 13:23:19 -0500
+Received: from mail-wm1-x32f.google.com ([2a00:1450:4864:20::32f])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1tdZC8-0000U5-0w
+ for qemu-devel@nongnu.org; Thu, 30 Jan 2025 13:23:18 -0500
+Received: by mail-wm1-x32f.google.com with SMTP id
+ 5b1f17b1804b1-436281c8a38so8512805e9.3
+ for <qemu-devel@nongnu.org>; Thu, 30 Jan 2025 10:23:15 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1738261394; x=1738866194; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=2HabG4XQXFtTl/vZ0C82NDKUjYubip/tkWdtm1VvavA=;
+ b=A7S4BPxHi0hL7F4tib8FPyP6ETLSvBBdg14iA1nsFaJ9qSEhWH2vmeg/rvTqHQMMn5
+ PS8dF+T1iypxancQY2Tn4HcZ0W7G39Qu/RaVuknWj9UK+gfTLpkt4Rva4hmAQRMstJEV
+ xP4/L3gykq14K0/IeQYDaTjBKxOdmv48UC4nIDXfAOcjNHXNWMZsEJSXwmgJHi2pd9Qk
+ MaEYVRmBhUJTO83W2rkd3eXOtCb/x/7KbN5UsDPmR+ZHQMp0SlXKhmcE0hVmrfcMfEdM
+ y9IXWPzz4BjHNE92xQPnPm3KbNmA/h7exDwaLlzBXrYdRAzHlPwrrv6DZ42X0UK2SaK1
+ P+0g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1738261394; x=1738866194;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=2HabG4XQXFtTl/vZ0C82NDKUjYubip/tkWdtm1VvavA=;
+ b=uBP0c2tkTxQR+cdmpOSBQzJNJTSlQNs5rvj/JIbchpsS8EVxhUvemWva9KaXPYVeIU
+ ijMyw+W8FGAmyZEhr1COOMU89eFl9wH0CcuYEuTgb9rXhCsSJV4OsxQPKw/7IXGCi61U
+ cJZM+iKLpNhRMfrQQNbDRcUTo6YgLFld87fKb3DC3iwXaAPcYdR6rc8mC+XNenz+80+e
+ mAdHW5TmxLzxA6nIUV0Jj/qf7u2Jvsfcp5wH0tvO6e9qAuTzXxmqzMZDH9XLk22yb1B7
+ CJs1LP9yfb+f39VP2od8MxDqbJwvo76aT9lR5JRsnVDwvC7M7qggnbs7HNN3/BT84I9e
+ RmWQ==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCUoDFZTh3IsFZxsxqLKUpSCPeAxlf7+WaWGjw+/CTgp8/VoMtrvW7MV0Axbc1DrKyGmcxo6Br2j1zNS@nongnu.org
+X-Gm-Message-State: AOJu0Yw5cC3BZ4ZqjTR6a7heL1bMjuxf8DxUZT9iGPK3XLL/Lb1SUBzs
+ EoasrU1oJLXKieA8vEavw/IbvMn5KnlgDLJYzx584Zu0dFcdgbfroHdhJljWLqY=
+X-Gm-Gg: ASbGncuaQyYFp4GynEzrbwsFpv4n2b4VCkTA0yHl0ULin2UUMh2nt+sPaRNnwMAsSeo
+ HVOuFlAshS0F4eZVf+3UDcmDDTpx4pZh86poq2YT3adLXJIujb8CSedsyDPfEKlVb1yk9TA87a/
+ tXkums7752S3qZgTGf5x4xXUv79EULSWSJdpt5kDg5rIXPU9H8+t7mjBvn/T30mGUXJRya1ycEi
+ sejl6t/2B6tb3WkV3NmQBx4rNd6Rx0WJ2KLcd7yrDTc/mm9NgqQ61ZORT0s0kcV08kZ9FJBn3ey
+ RK2ExCsALzixyN+2N3dptA==
+X-Google-Smtp-Source: AGHT+IGHWLRAr6UvyG5tkm3LNlD+rT9SlJQAJnIc0AxKJlDbszY93/3OUUNruL8dn9B3fuEhIAZdWA==
+X-Received: by 2002:a5d:6d86:0:b0:38b:ef22:d8c3 with SMTP id
+ ffacd0b85a97d-38c5209395cmr9473926f8f.35.1738261394371; 
+ Thu, 30 Jan 2025 10:23:14 -0800 (PST)
+Received: from orth.archaic.org.uk (orth.archaic.org.uk. [2001:8b0:1d0::2])
+ by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-38c5c101599sm2634426f8f.23.2025.01.30.10.23.13
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Thu, 30 Jan 2025 10:23:13 -0800 (PST)
+From: Peter Maydell <peter.maydell@linaro.org>
+To: qemu-arm@nongnu.org,
+	qemu-devel@nongnu.org
+Cc: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
+Subject: [PATCH 03/14] target/arm: Report correct syndrome for UNDEFINED S1E2
+ AT ops at EL3
+Date: Thu, 30 Jan 2025 18:22:58 +0000
+Message-Id: <20250130182309.717346-4-peter.maydell@linaro.org>
+X-Mailer: git-send-email 2.34.1
+In-Reply-To: <20250130182309.717346-1-peter.maydell@linaro.org>
+References: <20250130182309.717346-1-peter.maydell@linaro.org>
 MIME-Version: 1.0
-Received-SPF: pass client-ip=185.176.79.56;
- envelope-from=shameerali.kolothum.thodi@huawei.com;
- helo=frasgout.his.huawei.com
-X-Spam_score_int: -41
-X-Spam_score: -4.2
-X-Spam_bar: ----
-X-Spam_report: (-4.2 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_MED=-2.3,
- RCVD_IN_MSPIKE_H2=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::32f;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x32f.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -81,59 +99,35 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-to:  Shameerali Kolothum Thodi <shameerali.kolothum.thodi@huawei.com>
-From:  Shameerali Kolothum Thodi via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-DQoNCj4gLS0tLS1PcmlnaW5hbCBNZXNzYWdlLS0tLS0NCj4gRnJvbTogRGFuaWVsIFAuIEJlcnJh
-bmfDqSA8YmVycmFuZ2VAcmVkaGF0LmNvbT4NCj4gU2VudDogVGh1cnNkYXksIEphbnVhcnkgMzAs
-IDIwMjUgNDozMCBQTQ0KPiBUbzogU2hhbWVlcmFsaSBLb2xvdGh1bSBUaG9kaSA8c2hhbWVlcmFs
-aS5rb2xvdGh1bS50aG9kaUBodWF3ZWkuY29tPg0KPiBDYzogcWVtdS1hcm1Abm9uZ251Lm9yZzsg
-cWVtdS1kZXZlbEBub25nbnUub3JnOw0KPiBlcmljLmF1Z2VyQHJlZGhhdC5jb207IHBldGVyLm1h
-eWRlbGxAbGluYXJvLm9yZzsgamdnQG52aWRpYS5jb207DQo+IG5pY29saW5jQG52aWRpYS5jb207
-IGRkdXRpbGVAcmVkaGF0LmNvbTsgTGludXhhcm0NCj4gPGxpbnV4YXJtQGh1YXdlaS5jb20+OyBX
-YW5nemhvdSAoQikgPHdhbmd6aG91MUBoaXNpbGljb24uY29tPjsNCj4gamlhbmdrdW5rdW4gPGpp
-YW5na3Vua3VuQGh1YXdlaS5jb20+OyBKb25hdGhhbiBDYW1lcm9uDQo+IDxqb25hdGhhbi5jYW1l
-cm9uQGh1YXdlaS5jb20+OyB6aGFuZ2ZlaS5nYW9AbGluYXJvLm9yZw0KPiBTdWJqZWN0OiBSZTog
-W1JGQyBQQVRDSCAzLzVdIGh3L2FybS9zbW11djM6IEFzc29jaWF0ZSBhIHBjaSBidXMgd2l0aCBh
-DQo+IFNNTVV2MyBOZXN0ZWQgZGV2aWNlDQo+IA0KPiBPbiBGcmksIE5vdiAwOCwgMjAyNCBhdCAx
-Mjo1Mjo0MFBNICswMDAwLCBTaGFtZWVyIEtvbG90aHVtIHZpYSB3cm90ZToNCj4gPiBTdWJzZXF1
-ZW50IHBhdGNoZXMgd2lsbCBhZGQgSU9SVCBtb2RpZmljYXRpb25zIHRvIGdldCB0aGlzIHdvcmtp
-bmcuDQo+ID4NCj4gPiBTaWduZWQtb2ZmLWJ5OiBTaGFtZWVyIEtvbG90aHVtDQo+IDxzaGFtZWVy
-YWxpLmtvbG90aHVtLnRob2RpQGh1YXdlaS5jb20+DQo+ID4gLS0tDQo+ID4gIGh3L2FybS9zbW11
-djMuYyAgICAgICAgIHwgMjcgKysrKysrKysrKysrKysrKysrKysrKysrKysrDQo+ID4gIGluY2x1
-ZGUvaHcvYXJtL3NtbXV2My5oIHwgIDIgKysNCj4gPiAgMiBmaWxlcyBjaGFuZ2VkLCAyOSBpbnNl
-cnRpb25zKCspDQo+ID4NCj4gPiBkaWZmIC0tZ2l0IGEvaHcvYXJtL3NtbXV2My5jIGIvaHcvYXJt
-L3NtbXV2My5jDQo+ID4gaW5kZXggMDAzM2ViODEyNS4uOWIwYTc3Njc2OSAxMDA2NDQNCj4gPiAt
-LS0gYS9ody9hcm0vc21tdXYzLmMNCj4gPiArKysgYi9ody9hcm0vc21tdXYzLmMNCj4gPiBAQCAt
-MjQsNiArMjQsNyBAQA0KPiA+ICAjaW5jbHVkZSAiaHcvcWRldi1wcm9wZXJ0aWVzLmgiDQo+ID4g
-ICNpbmNsdWRlICJody9xZGV2LWNvcmUuaCINCj4gPiAgI2luY2x1ZGUgImh3L3BjaS9wY2kuaCIN
-Cj4gPiArI2luY2x1ZGUgImh3L3BjaS9wY2lfYnJpZGdlLmgiDQo+ID4gICNpbmNsdWRlICJjcHUu
-aCINCj4gPiAgI2luY2x1ZGUgInRyYWNlLmgiDQo+ID4gICNpbmNsdWRlICJxZW11L2xvZy5oIg0K
-PiA+IEBAIC0yMjAxLDEyICsyMjAyLDMyIEBAIHN0YXRpYyB2b2lkIHNtbXVfcmVhbGl6ZShEZXZp
-Y2VTdGF0ZSAqZCwNCj4gRXJyb3IgKiplcnJwKQ0KPiA+ICAgICAgc21tdV9pbml0X2lycShzLCBk
-ZXYpOw0KPiA+ICB9DQo+ID4NCj4gPiArc3RhdGljIGludCBzbW11djNfbmVzdGVkX3BjaV9ob3N0
-X2JyaWRnZShPYmplY3QgKm9iaiwgdm9pZCAqb3BhcXVlKQ0KPiA+ICt7DQo+ID4gKyAgICBEZXZp
-Y2VTdGF0ZSAqZCA9IG9wYXF1ZTsNCj4gPiArICAgIFNNTVV2M05lc3RlZFN0YXRlICpzX25lc3Rl
-ZCA9IEFSTV9TTU1VVjNfTkVTVEVEKGQpOw0KPiA+ICsNCj4gPiArICAgIGlmIChvYmplY3RfZHlu
-YW1pY19jYXN0KG9iaiwgVFlQRV9QQ0lfSE9TVF9CUklER0UpKSB7DQo+ID4gKyAgICAgICAgUENJ
-QnVzICpidXMgPSBQQ0lfSE9TVF9CUklER0Uob2JqKS0+YnVzOw0KPiA+ICsgICAgICAgIGlmIChz
-X25lc3RlZC0+cGNpX2J1cyAmJiAhc3RyY21wKGJ1cy0+cWJ1cy5uYW1lLCBzX25lc3RlZC0NCj4g
-PnBjaV9idXMpKSB7DQo+ID4gKyAgICAgICAgICAgIG9iamVjdF9wcm9wZXJ0eV9zZXRfbGluayhP
-QkpFQ1QoZCksICJwcmltYXJ5LWJ1cyIsIE9CSkVDVChidXMpLA0KPiA+ICsgICAgICAgICAgICAg
-ICAgICAgICAgICAgICAgICAgICAgICAgJmVycm9yX2Fib3J0KTsNCj4gDQo+IElzIHRoZSBTTU1V
-djNOZXN0ZWQgdXNlZnVsIGlmIG5vICdwcmltYXJ5LWJ1cycgaXMgc2V0ID8NCj4gDQo+IElmIG5v
-dCwgdGhlbiB0aGUgJ3JlYWxpemUnIG1ldGhvZCBvdWdodCB0byB2YWxpZGF0ZSAncGNpLWJ1cycg
-aXMgbm90DQo+IE5VTEwgYW5kIGFuZCByYWlzZSBhbiBlcnJvciBpZiBOVUxMLg0KPiANCj4gQWZ0
-ZXIgb2JqZWN0X2NoaWxkX2ZvcmVhY2hfcmVjdXJzaXZlIHJldHVybnMsICdyZWFsaXplJyBzaG91
-bGQNCj4gYWxzbyB2YWxpZGF0ZSB0aGF0ICdwcmltYXJ5LWJ1cycgaGFzIGJlZW4gc2V0LCBhbmQg
-cmFpc2UgYW4gZXJyb3INCj4gaXQgbm90IHNldCwgdG8gZGV0ZWN0IHR5cG9zIGluIHRoZSAncGNp
-LWJ1cycgcHJvcGVydHkuDQoNCkkgdGhpbmsgdGhhdCBnZXRzIGNoZWNrZWQgaW4gdGhlIHBhcmVu
-dC0+cmVhbGl6ZSgpIA0KDQpzbW11X2Jhc2VfcmVhbGl6ZSgpDQoNCmlmIChzLT5wcmltYXJ5X2J1
-cykgew0KICAgICAgICBwY2lfc2V0dXBfaW9tbXUocy0+cHJpbWFyeV9idXMsICZzbW11X29wcywg
-cyk7DQogICAgfSBlbHNlIHsNCiAgICAgICAgZXJyb3Jfc2V0ZyhlcnJwLCAiU01NVSBpcyBub3Qg
-YXR0YWNoZWQgdG8gYW55IFBDSSBidXMhIik7DQogICAgfQ0KDQpJIHdpbGwgZG91YmxlIGNoZWNr
-IGlmIHRoYXQgY292ZXJzIGFsbCB0aGUgY29ybmVyIGNhc2VzIG9yIG5vdC4NCg0KVGhhbmtzLA0K
-U2hhbWVlcg0KDQo=
+The pseudocode for AT S1E2R and AT S1E2W says that they should be
+UNDEFINED if executed at EL3 when EL2 is not enabled. We were
+incorrectly using CP_ACCESS_TRAP and reporting the wrong exception
+syndrome as a result. Use CP_ACCESS_TRAP_UNCATEGORIZED.
+
+Cc: qemu-stable@nongnu.org
+Fixes: 2a47df953202e1 ("target-arm: Wire up AArch64 EL2 and EL3 address translation ops")
+Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+---
+ target/arm/helper.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/target/arm/helper.c b/target/arm/helper.c
+index 7ddeed0283f..74b556b6766 100644
+--- a/target/arm/helper.c
++++ b/target/arm/helper.c
+@@ -3611,7 +3611,7 @@ static CPAccessResult at_s1e2_access(CPUARMState *env, const ARMCPRegInfo *ri,
+ {
+     if (arm_current_el(env) == 3 &&
+         !(env->cp15.scr_el3 & (SCR_NS | SCR_EEL2))) {
+-        return CP_ACCESS_TRAP;
++        return CP_ACCESS_TRAP_UNCATEGORIZED;
+     }
+     return at_e012_access(env, ri, isread);
+ }
+-- 
+2.34.1
+
 
