@@ -4,87 +4,46 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C2F82C0218A
-	for <qemu-devel@archiver.kernel.org>; Thu, 30 Jan 2025 11:28:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9697BC0218D
+	for <qemu-devel@archiver.kernel.org>; Thu, 30 Jan 2025 11:47:19 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tdSgv-0001VH-W9; Thu, 30 Jan 2025 06:26:38 -0500
+	id 1tdT0C-0000HT-Gu; Thu, 30 Jan 2025 06:46:32 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tdSgr-0001Ss-1X
- for qemu-devel@nongnu.org; Thu, 30 Jan 2025 06:26:34 -0500
-Received: from mail-wm1-x336.google.com ([2a00:1450:4864:20::336])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tdSgo-0001i2-Rm
- for qemu-devel@nongnu.org; Thu, 30 Jan 2025 06:26:32 -0500
-Received: by mail-wm1-x336.google.com with SMTP id
- 5b1f17b1804b1-4361f65ca01so6906105e9.1
- for <qemu-devel@nongnu.org>; Thu, 30 Jan 2025 03:26:29 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1738236387; x=1738841187; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=FhRlD77beLPzJcSw02NRGa4doYLPI9EP5dBJ40nCc7c=;
- b=N1FprsRioc9MNh6574cdcMnLgdauVDlNc3gUfn9U6WhmlX4Dva1CkKwxfmNLqYcX3u
- xJmq6u7977SgpExOetltkuhOcu1RbbTOx8CHw765Z5M97VHgbq59gmZKO8OfXaR1upru
- 5bALRbbwW6BasizcQMxjO+qNh0poWivRuPVgwZW4Opl+Xds2mLcr49k8w7kJWP9JhUWf
- AQPhhSVGtqPHV0sfGR+291B1M9YVXTS0u2Zr9zb3pbnJecDlIOTbMrmg44VhBq8ebrKN
- 8kGQIP3CnaZDvXnBGIdSAL6XExC/hYANhmzxjXTc0uGpTdheF4y1tKU8EgUzzedDPN04
- xMJQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1738236387; x=1738841187;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=FhRlD77beLPzJcSw02NRGa4doYLPI9EP5dBJ40nCc7c=;
- b=stbsvSP15Jd9HJchpiG4grxZuwOamY18zXDxSo/kSvf5aXbqrYfIMRu1hLHTcOjZAr
- 51gj0y942gVIDQ5JAiTUQ9D/dyutNk6+eBYQVOMmwR7/Kz99IOAh15AYe9SsaE3Fvj0S
- Gf4DEsAjKc5NnilYIVctPcL9HCsECQTyHW3pi1kazRSrR0uOIWSqFpq8t+Q8ALvN1DIy
- UTjQ7v/vd/K4SuDR9i/PIp02pnBbLnqwj6JoLmcepivnIWcpWejfwJObXUaBHPuTd+lT
- 3CnnfBspVaMBUWCNS1lFJmSwvbV6TBxMFoNF59/QVjT+Ri1Z7KRgAg8p3c1KTK5+NMy4
- KR1g==
-X-Gm-Message-State: AOJu0YyOyrEd6JEGd+OwndB13qAkghjwAUoVIDyQSJZ9wom2YZ37kGGJ
- lyU1bp8YZiK8YTHTR24mxQYy+tkLc/5I4OF54QpLtBzJF0imzjY8HHpf9t0Qme1wNHDTSOcrqSc
- LcBU=
-X-Gm-Gg: ASbGncslXjXQehumfyZRvaNheanwSMTw6JyNNqZUCmDlF+hkFf/APv8etD738VE8DBL
- tt4xXVyQ9Zcz/PcWqr6KgFrOEppMXXyl0rHKCLySYs2cIPqFqxC7kcH5y+ao8IlkHdGW4SqbY5P
- vKT9VtpPBDZgSmYLEkG+3NIWMYKpi5GeDQQuS4jNYi4VMVlIv/zVHfWU5G5wgHHpzxYCTG36jXI
- lA83didVX1prR/JBigqLtlvcKTqukTLpe9tN0CZ7Rnkif0ERbmDATM2T10AoT2+LM9H1swOQuos
- FPUb6yuiymREuUwlPAExB4ZnQ6K+qa13dXKqCUjw6ziaiPipMrsnc8ikmyChXcBlsQ==
-X-Google-Smtp-Source: AGHT+IHQjhsSFHFclv5jkxUmpblxUEtfO5GGS3h65ZoInT7gOUtNMA0LSMd0ouYnsy1+PTNDZyuziQ==
-X-Received: by 2002:a05:600c:450c:b0:434:ff25:199f with SMTP id
- 5b1f17b1804b1-438dc4213fbmr50596475e9.26.1738236387288; 
- Thu, 30 Jan 2025 03:26:27 -0800 (PST)
-Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
- [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-438e244ef41sm20089185e9.32.2025.01.30.03.26.26
- (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Thu, 30 Jan 2025 03:26:26 -0800 (PST)
-From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
+ id 1tdT0B-0000HF-C5; Thu, 30 Jan 2025 06:46:31 -0500
+Received: from isrv.corpit.ru ([86.62.121.231])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
+ id 1tdT09-0004Sg-Nd; Thu, 30 Jan 2025 06:46:31 -0500
+Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
+ by isrv.corpit.ru (Postfix) with ESMTP id 7BF8DE2F8D;
+ Thu, 30 Jan 2025 14:45:56 +0300 (MSK)
+Received: from gandalf.tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
+ by tsrv.corpit.ru (Postfix) with ESMTP id 4C4871A7E68;
+ Thu, 30 Jan 2025 14:46:25 +0300 (MSK)
+Received: by gandalf.tls.msk.ru (Postfix, from userid 1000)
+ id 41A58523D7; Thu, 30 Jan 2025 14:46:25 +0300 (MSK)
+From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-arm@nongnu.org, Peter Maydell <peter.maydell@linaro.org>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@kaod.org>
-Subject: [PATCH v2 2/6] hw/arm/fsl-imx6: Add local 'mpcore/gic' variables
-Date: Thu, 30 Jan 2025 12:26:11 +0100
-Message-ID: <20250130112615.3219-3-philmd@linaro.org>
-X-Mailer: git-send-email 2.47.1
-In-Reply-To: <20250130112615.3219-1-philmd@linaro.org>
-References: <20250130112615.3219-1-philmd@linaro.org>
+Cc: qemu-trivial@nongnu.org, Samuel Thibault <samuel.thibault@gnu.org>,
+ Thomas Huth <thuth@redhat.com>, Michael Tokarev <mjt@tls.msk.ru>
+Subject: [PATCH v2] net/slirp: libslirp 4.8.0 compatibility
+Date: Thu, 30 Jan 2025 14:46:21 +0300
+Message-Id: <20250130114621.857046-1-mjt@tls.msk.ru>
+X-Mailer: git-send-email 2.39.5
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::336;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x336.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+Received-SPF: pass client-ip=86.62.121.231; envelope-from=mjt@tls.msk.ru;
+ helo=isrv.corpit.ru
+X-Spam_score_int: -68
+X-Spam_score: -6.9
+X-Spam_bar: ------
+X-Spam_report: (-6.9 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_HI=-5,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -100,167 +59,91 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The A9MPCore forward the IRQs from its internal GIC.
-To make the code clearer, add the 'mpcore' and 'gic'
-variables.
+Update the code in net/slirp.c to be compatible with
+libslirp 4.8.0, which deprecated slirp_pollfds_fill()
+and started using slirp_os_socket type for sockets
+(which is a 64-bit integer on win64) for all callbacks
+starting with version 6 of the interface.
 
-Reviewed-by: Cédric Le Goater <clg@kaod.org>
-Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 ---
- hw/arm/fsl-imx6.c | 52 +++++++++++++++++++----------------------------
- 1 file changed, 21 insertions(+), 31 deletions(-)
+v2: update other callbacks too, use version 6 of the interface
 
-diff --git a/hw/arm/fsl-imx6.c b/hw/arm/fsl-imx6.c
-index 88b9ccff493..dc86338b3a5 100644
---- a/hw/arm/fsl-imx6.c
-+++ b/hw/arm/fsl-imx6.c
-@@ -117,6 +117,8 @@ static void fsl_imx6_realize(DeviceState *dev, Error **errp)
-     uint16_t i;
-     qemu_irq irq;
-     unsigned int smp_cpus = ms->smp.cpus;
-+    DeviceState *mpcore = DEVICE(&s->a9mpcore);
-+    DeviceState *gic;
+ net/slirp.c | 25 +++++++++++++++++--------
+ 1 file changed, 17 insertions(+), 8 deletions(-)
+
+diff --git a/net/slirp.c b/net/slirp.c
+index eb9a456ed4..2d2a58a6ee 100644
+--- a/net/slirp.c
++++ b/net/slirp.c
+@@ -247,7 +247,14 @@ static void net_slirp_timer_mod(void *timer, int64_t expire_timer,
+     timer_mod(&t->timer, expire_timer);
+ }
  
-     if (smp_cpus > FSL_IMX6_NUM_CPUS) {
-         error_setg(errp, "%s: Only %d CPUs are supported (%d requested)",
-@@ -143,21 +145,21 @@ static void fsl_imx6_realize(DeviceState *dev, Error **errp)
-         }
-     }
+-static void net_slirp_register_poll_fd(int fd, void *opaque)
++#if !SLIRP_CHECK_VERSION(4,8,0)
++# define slirp_os_socket int
++# define slirp_pollfds_fill_socket slirp_pollfds_fill
++# define register_poll_sock register_poll_fd
++# define unregister_poll_sock unregister_poll_fd
++#endif
++
++static void net_slirp_register_poll_sock(slirp_os_socket fd, void *opaque)
+ {
+ #ifdef WIN32
+     AioContext *ctxt = qemu_get_aio_context();
+@@ -260,7 +267,7 @@ static void net_slirp_register_poll_fd(int fd, void *opaque)
+ #endif
+ }
  
--    object_property_set_int(OBJECT(&s->a9mpcore), "num-cpu", smp_cpus,
--                            &error_abort);
-+    object_property_set_int(OBJECT(mpcore), "num-cpu", smp_cpus, &error_abort);
+-static void net_slirp_unregister_poll_fd(int fd, void *opaque)
++static void net_slirp_unregister_poll_sock(slirp_os_socket fd, void *opaque)
+ {
+ #ifdef WIN32
+     if (WSAEventSelect(fd, NULL, 0) != 0) {
+@@ -286,8 +293,8 @@ static const SlirpCb slirp_cb = {
+ #endif
+     .timer_free = net_slirp_timer_free,
+     .timer_mod = net_slirp_timer_mod,
+-    .register_poll_fd = net_slirp_register_poll_fd,
+-    .unregister_poll_fd = net_slirp_unregister_poll_fd,
++    .register_poll_socket = net_slirp_register_poll_sock,
++    .unregister_poll_socket = net_slirp_unregister_poll_sock,
+     .notify = net_slirp_notify,
+ };
  
--    object_property_set_int(OBJECT(&s->a9mpcore), "num-irq",
-+    object_property_set_int(OBJECT(mpcore), "num-irq",
-                             FSL_IMX6_MAX_IRQ + GIC_INTERNAL, &error_abort);
+@@ -314,7 +321,7 @@ static int slirp_poll_to_gio(int events)
+     return ret;
+ }
  
--    if (!sysbus_realize(SYS_BUS_DEVICE(&s->a9mpcore), errp)) {
-+    if (!sysbus_realize(SYS_BUS_DEVICE(mpcore), errp)) {
-         return;
-     }
--    sysbus_mmio_map(SYS_BUS_DEVICE(&s->a9mpcore), 0, FSL_IMX6_A9MPCORE_ADDR);
-+    sysbus_mmio_map(SYS_BUS_DEVICE(mpcore), 0, FSL_IMX6_A9MPCORE_ADDR);
+-static int net_slirp_add_poll(int fd, int events, void *opaque)
++static int net_slirp_add_poll(slirp_os_socket fd, int events, void *opaque)
+ {
+     GArray *pollfds = opaque;
+     GPollFD pfd = {
+@@ -363,8 +370,8 @@ static void net_slirp_poll_notify(Notifier *notifier, void *data)
  
-+    gic = mpcore;
-     for (i = 0; i < smp_cpus; i++) {
--        sysbus_connect_irq(SYS_BUS_DEVICE(&s->a9mpcore), i,
-+        sysbus_connect_irq(SYS_BUS_DEVICE(gic), i,
-                            qdev_get_gpio_in(DEVICE(&s->cpu[i]), ARM_CPU_IRQ));
--        sysbus_connect_irq(SYS_BUS_DEVICE(&s->a9mpcore), i + smp_cpus,
-+        sysbus_connect_irq(SYS_BUS_DEVICE(gic), i + smp_cpus,
-                            qdev_get_gpio_in(DEVICE(&s->cpu[i]), ARM_CPU_FIQ));
-     }
+     switch (poll->state) {
+     case MAIN_LOOP_POLL_FILL:
+-        slirp_pollfds_fill(s->slirp, &poll->timeout,
+-                           net_slirp_add_poll, poll->pollfds);
++        slirp_pollfds_fill_socket(s->slirp, &poll->timeout,
++                                  net_slirp_add_poll, poll->pollfds);
+         break;
+     case MAIN_LOOP_POLL_OK:
+     case MAIN_LOOP_POLL_ERR:
+@@ -629,7 +636,9 @@ static int net_slirp_init(NetClientState *peer, const char *model,
  
-@@ -195,8 +197,7 @@ static void fsl_imx6_realize(DeviceState *dev, Error **errp)
+     s = DO_UPCAST(SlirpState, nc, nc);
  
-         sysbus_mmio_map(SYS_BUS_DEVICE(&s->uart[i]), 0, serial_table[i].addr);
-         sysbus_connect_irq(SYS_BUS_DEVICE(&s->uart[i]), 0,
--                           qdev_get_gpio_in(DEVICE(&s->a9mpcore),
--                                            serial_table[i].irq));
-+                           qdev_get_gpio_in(gic, serial_table[i].irq));
-     }
- 
-     s->gpt.ccm = IMX_CCM(&s->ccm);
-@@ -207,8 +208,7 @@ static void fsl_imx6_realize(DeviceState *dev, Error **errp)
- 
-     sysbus_mmio_map(SYS_BUS_DEVICE(&s->gpt), 0, FSL_IMX6_GPT_ADDR);
-     sysbus_connect_irq(SYS_BUS_DEVICE(&s->gpt), 0,
--                       qdev_get_gpio_in(DEVICE(&s->a9mpcore),
--                                        FSL_IMX6_GPT_IRQ));
-+                       qdev_get_gpio_in(gic, FSL_IMX6_GPT_IRQ));
- 
-     /* Initialize all EPIT timers */
-     for (i = 0; i < FSL_IMX6_NUM_EPITS; i++) {
-@@ -228,8 +228,7 @@ static void fsl_imx6_realize(DeviceState *dev, Error **errp)
- 
-         sysbus_mmio_map(SYS_BUS_DEVICE(&s->epit[i]), 0, epit_table[i].addr);
-         sysbus_connect_irq(SYS_BUS_DEVICE(&s->epit[i]), 0,
--                           qdev_get_gpio_in(DEVICE(&s->a9mpcore),
--                                            epit_table[i].irq));
-+                           qdev_get_gpio_in(gic, epit_table[i].irq));
-     }
- 
-     /* Initialize all I2C */
-@@ -249,8 +248,7 @@ static void fsl_imx6_realize(DeviceState *dev, Error **errp)
- 
-         sysbus_mmio_map(SYS_BUS_DEVICE(&s->i2c[i]), 0, i2c_table[i].addr);
-         sysbus_connect_irq(SYS_BUS_DEVICE(&s->i2c[i]), 0,
--                           qdev_get_gpio_in(DEVICE(&s->a9mpcore),
--                                            i2c_table[i].irq));
-+                           qdev_get_gpio_in(gic, i2c_table[i].irq));
-     }
- 
-     /* Initialize all GPIOs */
-@@ -307,11 +305,9 @@ static void fsl_imx6_realize(DeviceState *dev, Error **errp)
- 
-         sysbus_mmio_map(SYS_BUS_DEVICE(&s->gpio[i]), 0, gpio_table[i].addr);
-         sysbus_connect_irq(SYS_BUS_DEVICE(&s->gpio[i]), 0,
--                           qdev_get_gpio_in(DEVICE(&s->a9mpcore),
--                                            gpio_table[i].irq_low));
-+                           qdev_get_gpio_in(gic, gpio_table[i].irq_low));
-         sysbus_connect_irq(SYS_BUS_DEVICE(&s->gpio[i]), 1,
--                           qdev_get_gpio_in(DEVICE(&s->a9mpcore),
--                                            gpio_table[i].irq_high));
-+                           qdev_get_gpio_in(gic, gpio_table[i].irq_high));
-     }
- 
-     /* Initialize all SDHC */
-@@ -338,8 +334,7 @@ static void fsl_imx6_realize(DeviceState *dev, Error **errp)
-         }
-         sysbus_mmio_map(SYS_BUS_DEVICE(&s->esdhc[i]), 0, esdhc_table[i].addr);
-         sysbus_connect_irq(SYS_BUS_DEVICE(&s->esdhc[i]), 0,
--                           qdev_get_gpio_in(DEVICE(&s->a9mpcore),
--                                            esdhc_table[i].irq));
-+                           qdev_get_gpio_in(gic, esdhc_table[i].irq));
-     }
- 
-     /* USB */
-@@ -360,8 +355,7 @@ static void fsl_imx6_realize(DeviceState *dev, Error **errp)
-         sysbus_mmio_map(SYS_BUS_DEVICE(&s->usb[i]), 0,
-                         FSL_IMX6_USBOH3_USB_ADDR + i * 0x200);
-         sysbus_connect_irq(SYS_BUS_DEVICE(&s->usb[i]), 0,
--                           qdev_get_gpio_in(DEVICE(&s->a9mpcore),
--                                            FSL_IMX6_USBn_IRQ[i]));
-+                           qdev_get_gpio_in(gic, FSL_IMX6_USBn_IRQ[i]));
-     }
- 
-     /* Initialize all ECSPI */
-@@ -384,8 +378,7 @@ static void fsl_imx6_realize(DeviceState *dev, Error **errp)
- 
-         sysbus_mmio_map(SYS_BUS_DEVICE(&s->spi[i]), 0, spi_table[i].addr);
-         sysbus_connect_irq(SYS_BUS_DEVICE(&s->spi[i]), 0,
--                           qdev_get_gpio_in(DEVICE(&s->a9mpcore),
--                                            spi_table[i].irq));
-+                           qdev_get_gpio_in(gic, spi_table[i].irq));
-     }
- 
-     object_property_set_uint(OBJECT(&s->eth), "phy-num", s->phy_num,
-@@ -396,11 +389,9 @@ static void fsl_imx6_realize(DeviceState *dev, Error **errp)
-     }
-     sysbus_mmio_map(SYS_BUS_DEVICE(&s->eth), 0, FSL_IMX6_ENET_ADDR);
-     sysbus_connect_irq(SYS_BUS_DEVICE(&s->eth), 0,
--                       qdev_get_gpio_in(DEVICE(&s->a9mpcore),
--                                        FSL_IMX6_ENET_MAC_IRQ));
-+                       qdev_get_gpio_in(gic, FSL_IMX6_ENET_MAC_IRQ));
-     sysbus_connect_irq(SYS_BUS_DEVICE(&s->eth), 1,
--                       qdev_get_gpio_in(DEVICE(&s->a9mpcore),
--                                        FSL_IMX6_ENET_MAC_1588_IRQ));
-+                       qdev_get_gpio_in(gic, FSL_IMX6_ENET_MAC_1588_IRQ));
- 
-     /*
-      * SNVS
-@@ -427,8 +418,7 @@ static void fsl_imx6_realize(DeviceState *dev, Error **errp)
- 
-         sysbus_mmio_map(SYS_BUS_DEVICE(&s->wdt[i]), 0, FSL_IMX6_WDOGn_ADDR[i]);
-         sysbus_connect_irq(SYS_BUS_DEVICE(&s->wdt[i]), 0,
--                           qdev_get_gpio_in(DEVICE(&s->a9mpcore),
--                                            FSL_IMX6_WDOGn_IRQ[i]));
-+                           qdev_get_gpio_in(gic, FSL_IMX6_WDOGn_IRQ[i]));
-     }
- 
-     /*
+-    cfg.version = SLIRP_CHECK_VERSION(4,7,0) ? 4 : 1;
++    cfg.version =
++         SLIRP_CHECK_VERSION(4,8,0) ? 6 :
++         SLIRP_CHECK_VERSION(4,7,0) ? 4 : 1;
+     cfg.restricted = restricted;
+     cfg.in_enabled = ipv4;
+     cfg.vnetwork = net;
 -- 
-2.47.1
+2.39.5
 
 
