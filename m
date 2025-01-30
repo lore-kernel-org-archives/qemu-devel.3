@@ -4,68 +4,70 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 435DCC0218F
-	for <qemu-devel@archiver.kernel.org>; Thu, 30 Jan 2025 13:19:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DF30CC0218F
+	for <qemu-devel@archiver.kernel.org>; Thu, 30 Jan 2025 13:19:58 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tdUQM-0001HW-LM; Thu, 30 Jan 2025 08:17:38 -0500
+	id 1tdUOt-0007N2-9Y; Thu, 30 Jan 2025 08:16:07 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1tdUP4-0007SH-9Y
- for qemu-devel@nongnu.org; Thu, 30 Jan 2025 08:16:21 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1tdUOe-0007Ii-JK
+ for qemu-devel@nongnu.org; Thu, 30 Jan 2025 08:15:53 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1tdUP0-00009M-00
- for qemu-devel@nongnu.org; Thu, 30 Jan 2025 08:16:16 -0500
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1tdUOa-0008Ru-Fj
+ for qemu-devel@nongnu.org; Thu, 30 Jan 2025 08:15:49 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1738242972;
+ s=mimecast20190719; t=1738242947;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=NLwua+vOM51f4+UaA6AyaKl3pPxM/d7eEICWljZUaKo=;
- b=MXeLqRBCc6msnobRsjPCRykKAVzxqGd6F6Hjq7PP/ETv6J30v95QQdKhxwvnxsiPRClK3h
- 37O8R2LYB92EIPIHG3Uj/v4asTMxHE6w5XIjtVNF42/acGURt/34y9dttbGE5T6oHhnj8T
- RhaERekzExsDPVrdyt5rkAFWoh2JdCc=
+ bh=dxNpJ8n0NWJQONfwOlrs4HtxhS2jsCl2PTU9UmWLjO4=;
+ b=MvJ5CMOiThUxqpVnV9JNJYnZXW02+eTJB+XNWn9DnbveTA/xseWMd3tiQu80JJSTYcWbXG
+ yDT83PLNIwbPp7UpiGqh1IkoooPeRPg13l7UVRQ7faZl/giXxXxno60Ga+XunSGDgjfgvV
+ lHOLLbjUp0xm7WD54hH6oGDCNUw2S+U=
 Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-536-MTTHucExNEunrfq14RmS6g-1; Thu,
- 30 Jan 2025 08:16:09 -0500
-X-MC-Unique: MTTHucExNEunrfq14RmS6g-1
-X-Mimecast-MFC-AGG-ID: MTTHucExNEunrfq14RmS6g
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-665-oQvf1_U_OziYPLWn4CDTSg-1; Thu,
+ 30 Jan 2025 08:15:43 -0500
+X-MC-Unique: oQvf1_U_OziYPLWn4CDTSg-1
+X-Mimecast-MFC-AGG-ID: oQvf1_U_OziYPLWn4CDTSg
 Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
  by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 0852A1800361
- for <qemu-devel@nongnu.org>; Thu, 30 Jan 2025 13:16:09 +0000 (UTC)
+ id 22D3B1800361
+ for <qemu-devel@nongnu.org>; Thu, 30 Jan 2025 13:15:43 +0000 (UTC)
 Received: from thuth-p1g4.redhat.com (unknown [10.39.192.95])
  by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 63E1130001BE; Thu, 30 Jan 2025 13:16:07 +0000 (UTC)
+ id A47F230001BE; Thu, 30 Jan 2025 13:15:41 +0000 (UTC)
 From: Thomas Huth <thuth@redhat.com>
 To: qemu-devel@nongnu.org
-Cc: Stefan Hajnoczi <stefanha@redhat.com>, David Hildenbrand <david@redhat.com>
-Subject: [PULL 12/20] virtio-mem-pci: Allow setting nvectors,
- so we can use MSI-X
-Date: Thu, 30 Jan 2025 14:15:26 +0100
-Message-ID: <20250130131535.91297-13-thuth@redhat.com>
+Cc: Stefan Hajnoczi <stefanha@redhat.com>,
+ =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
+Subject: [PULL 02/20] tests/functional: Fix broken decorators with lamda
+ functions
+Date: Thu, 30 Jan 2025 14:15:16 +0100
+Message-ID: <20250130131535.91297-3-thuth@redhat.com>
 In-Reply-To: <20250130131535.91297-1-thuth@redhat.com>
 References: <20250130131535.91297-1-thuth@redhat.com>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=thuth@redhat.com;
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=thuth@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -33
 X-Spam_score: -3.4
 X-Spam_bar: ---
 X-Spam_report: (-3.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.3,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -83,73 +85,85 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: David Hildenbrand <david@redhat.com>
+The decorators that use a lambda function are currently broken
+and do not properly skip the test if the condition is not met.
+Using "return skipUnless(lambda: ...)" does not work as expected.
+To fix it, rewrite the decorators without lambda, it's simpler
+that way anyway.
 
-Let's do it similar as virtio-balloon-pci. With this change, we can
-use virtio-mem-pci on s390x, although plugging will still fail until
-properly wired up in the machine.
-
-No need to worry about transitional/non_transitional devices, because they
-don't exist for virtio-mem.
-
-Signed-off-by: David Hildenbrand <david@redhat.com>
-Reviewed-by: Thomas Huth <thuth@redhat.com>
-Message-ID: <20250128185705.1609038-2-david@redhat.com>
+Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
+Message-ID: <20250122134315.1448794-3-thuth@redhat.com>
 Signed-off-by: Thomas Huth <thuth@redhat.com>
 ---
- hw/core/machine.c          |  1 +
- hw/virtio/virtio-mem-pci.c | 12 ++++++++++++
- 2 files changed, 13 insertions(+)
+ tests/functional/qemu_test/decorators.py | 44 +++++++++++-------------
+ 1 file changed, 21 insertions(+), 23 deletions(-)
 
-diff --git a/hw/core/machine.c b/hw/core/machine.c
-index 8f396ef803..7b74cde10a 100644
---- a/hw/core/machine.c
-+++ b/hw/core/machine.c
-@@ -41,6 +41,7 @@ GlobalProperty hw_compat_9_2[] = {
-     { "virtio-balloon-pci", "vectors", "0" },
-     { "virtio-balloon-pci-transitional", "vectors", "0" },
-     { "virtio-balloon-pci-non-transitional", "vectors", "0" },
-+    { "virtio-mem-pci", "vectors", "0" },
- };
- const size_t hw_compat_9_2_len = G_N_ELEMENTS(hw_compat_9_2);
- 
-diff --git a/hw/virtio/virtio-mem-pci.c b/hw/virtio/virtio-mem-pci.c
-index 1b4e9a3284..6cc5f0fd3b 100644
---- a/hw/virtio/virtio-mem-pci.c
-+++ b/hw/virtio/virtio-mem-pci.c
-@@ -22,6 +22,10 @@ static void virtio_mem_pci_realize(VirtIOPCIProxy *vpci_dev, Error **errp)
-     VirtIOMEMPCI *mem_pci = VIRTIO_MEM_PCI(vpci_dev);
-     DeviceState *vdev = DEVICE(&mem_pci->vdev);
- 
-+    if (vpci_dev->nvectors == DEV_NVECTORS_UNSPECIFIED) {
-+        vpci_dev->nvectors = 2;
-+    }
+diff --git a/tests/functional/qemu_test/decorators.py b/tests/functional/qemu_test/decorators.py
+index 08f58f6b40..3d9c02fd59 100644
+--- a/tests/functional/qemu_test/decorators.py
++++ b/tests/functional/qemu_test/decorators.py
+@@ -17,15 +17,14 @@
+   @skipIfMissingCommands("mkisofs", "losetup")
+ '''
+ def skipIfMissingCommands(*args):
+-    def has_cmds(cmdlist):
+-        for cmd in cmdlist:
+-            if not which(cmd):
+-                return False
+-        return True
+-
+-    return skipUnless(lambda: has_cmds(args),
+-                      'required command(s) "%s" not installed' %
+-                      ", ".join(args))
++    has_cmds = True
++    for cmd in args:
++         if not which(cmd):
++             has_cmds = False
++             break
 +
-     virtio_pci_force_virtio_1(vpci_dev);
-     qdev_realize(vdev, BUS(&vpci_dev->bus), errp);
- }
-@@ -152,6 +156,13 @@ static void virtio_mem_pci_set_requested_size(Object *obj, Visitor *v,
-     object_property_set(OBJECT(&pci_mem->vdev), name, v, errp);
- }
++    return skipUnless(has_cmds, 'required command(s) "%s" not installed' %
++                                ", ".join(args))
  
-+static const Property virtio_mem_pci_class_properties[] = {
-+    DEFINE_PROP_BIT("ioeventfd", VirtIOPCIProxy, flags,
-+                    VIRTIO_PCI_FLAG_USE_IOEVENTFD_BIT, true),
-+    DEFINE_PROP_UINT32("vectors", VirtIOPCIProxy, nvectors,
-+                       DEV_NVECTORS_UNSPECIFIED),
-+};
+ '''
+ Decorator to skip execution of a test if the current
+@@ -36,9 +35,9 @@ def has_cmds(cmdlist):
+   @skipIfNotMachine("x86_64", "aarch64")
+ '''
+ def skipIfNotMachine(*args):
+-    return skipUnless(lambda: platform.machine() in args,
+-                        'not running on one of the required machine(s) "%s"' %
+-                        ", ".join(args))
++    return skipUnless(platform.machine() in args,
++                      'not running on one of the required machine(s) "%s"' %
++                      ", ".join(args))
+ 
+ '''
+ Decorator to skip execution of flaky tests, unless
+@@ -95,14 +94,13 @@ def skipBigDataTest():
+   @skipIfMissingImports("numpy", "cv2")
+ '''
+ def skipIfMissingImports(*args):
+-    def has_imports(importlist):
+-        for impname in importlist:
+-            try:
+-                importlib.import_module(impname)
+-            except ImportError:
+-                return False
+-        return True
+-
+-    return skipUnless(lambda: has_imports(args),
+-                      'required import(s) "%s" not installed' %
+-                      ", ".join(args))
++    has_imports = True
++    for impname in args:
++        try:
++            importlib.import_module(impname)
++        except ImportError:
++            has_imports = False
++            break
 +
- static void virtio_mem_pci_class_init(ObjectClass *klass, void *data)
- {
-     DeviceClass *dc = DEVICE_CLASS(klass);
-@@ -164,6 +175,7 @@ static void virtio_mem_pci_class_init(ObjectClass *klass, void *data)
-     set_bit(DEVICE_CATEGORY_MISC, dc->categories);
-     pcidev_k->revision = VIRTIO_PCI_ABI_VERSION;
-     pcidev_k->class_id = PCI_CLASS_OTHERS;
-+    device_class_set_props(dc, virtio_mem_pci_class_properties);
- 
-     mdc->get_addr = virtio_mem_pci_get_addr;
-     mdc->set_addr = virtio_mem_pci_set_addr;
++    return skipUnless(has_imports, 'required import(s) "%s" not installed' %
++                                   ", ".join(args))
 -- 
 2.48.1
 
