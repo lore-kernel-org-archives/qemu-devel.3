@@ -4,57 +4,55 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6ED35C02190
-	for <qemu-devel@archiver.kernel.org>; Thu, 30 Jan 2025 13:45:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9277FC0218A
+	for <qemu-devel@archiver.kernel.org>; Thu, 30 Jan 2025 13:45:10 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tdUq5-0000n5-1i; Thu, 30 Jan 2025 08:44:13 -0500
+	id 1tdUps-0000he-0k; Thu, 30 Jan 2025 08:44:00 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1tdUq4-0000mO-Bh
- for qemu-devel@nongnu.org; Thu, 30 Jan 2025 08:44:12 -0500
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1tdUpp-0000gq-KJ
+ for qemu-devel@nongnu.org; Thu, 30 Jan 2025 08:43:57 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1tdUpv-0003PH-8R
- for qemu-devel@nongnu.org; Thu, 30 Jan 2025 08:44:12 -0500
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1tdUpo-0003O7-5R
+ for qemu-devel@nongnu.org; Thu, 30 Jan 2025 08:43:57 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1738244642;
+ s=mimecast20190719; t=1738244633;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=Q3oJ/f2lYBy+mVYg+gP8Eo/xbAj6TYb489HgxZY98qM=;
- b=XMTdlCcF+m84gYqj7UhPBg+viNlgzRAketvb5CtRQ80hWuUpGI1ZGjei4/NTSprLU0sKKT
- JPAX4SMkdn7LOYzW895QKxfYgzRiVvCuOwqIV3V/ghwcZ/kjspz8fsEhjSMaSZXJLY6tnk
- IQHxoZCV5RPu+Crut9nb3j+U1BMtI7I=
-Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
+ content-transfer-encoding:content-transfer-encoding;
+ bh=6mI0ox+IW4A2wveybGPBBGrr0tC1d/ufYPPDScM5z98=;
+ b=IO3DvLk+A2qHpDG+M4/NQVnTBljc38onGv7qKGeVrgqGDv0z2us+GjJ+8ejlRQSFlyq4j+
+ uyUFwfDO8fW+OsYJS9SR7GOeXBs1bghJNnej5UFN3ory4oyJ7CFfiLXT8IHquOch8evcNH
+ XFLwD9Aq8RZeX0YuTsnGCW+rdDk48rA=
+Received: from mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-553-YmdxIYXZP2aBWhXDPmbUxg-1; Thu,
- 30 Jan 2025 08:43:58 -0500
-X-MC-Unique: YmdxIYXZP2aBWhXDPmbUxg-1
-X-Mimecast-MFC-AGG-ID: YmdxIYXZP2aBWhXDPmbUxg
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-33-qeXmXs0CNHe3qVrdisvwWw-1; Thu,
+ 30 Jan 2025 08:43:52 -0500
+X-MC-Unique: qeXmXs0CNHe3qVrdisvwWw-1
+X-Mimecast-MFC-AGG-ID: qeXmXs0CNHe3qVrdisvwWw
 Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 10EB11956080
- for <qemu-devel@nongnu.org>; Thu, 30 Jan 2025 13:43:58 +0000 (UTC)
+ by mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 73B7219560A3
+ for <qemu-devel@nongnu.org>; Thu, 30 Jan 2025 13:43:51 +0000 (UTC)
 Received: from corto.redhat.com (unknown [10.39.192.105])
  by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id DBBFD1800955; Thu, 30 Jan 2025 13:43:56 +0000 (UTC)
+ id A88321800969; Thu, 30 Jan 2025 13:43:48 +0000 (UTC)
 From: =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Alex Williamson <alex.williamson@redhat.com>,
  =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>
-Subject: [PATCH v2 4/9] vfio: Introduce vfio_get_vfio_device()
-Date: Thu, 30 Jan 2025 14:43:41 +0100
-Message-ID: <20250130134346.1754143-5-clg@redhat.com>
-In-Reply-To: <20250130134346.1754143-1-clg@redhat.com>
-References: <20250130134346.1754143-1-clg@redhat.com>
+Subject: [PATCH v2 0/9]vfio: Improve error reporting when MMIO region mapping
+ fails
+Date: Thu, 30 Jan 2025 14:43:37 +0100
+Message-ID: <20250130134346.1754143-1-clg@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -84,54 +82,54 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This helper will be useful in the listener handlers to extract the
-VFIO device from a memory region using memory_region_owner(). At the
-moment, we only care for PCI passthrough devices. If the need arises,
-we will add more.
+Hello,
 
-Signed-off-by: Cédric Le Goater <clg@redhat.com>
----
- include/hw/vfio/vfio-common.h |  1 +
- hw/vfio/helpers.c             | 10 ++++++++++
- 2 files changed, 11 insertions(+)
+Under certain circumstances, a MMIO region of a device fails to map
+because the region is outside the supported IOVA ranges of the VM. In
+this case, PCI peer-to-peer transactions on BARs are not supported.
+This typically occurs when the IOMMU address space width is less than
+the physical address width, as can be the case on some consumer
+processors or when using a vIOMMU device with default settings.
 
-diff --git a/include/hw/vfio/vfio-common.h b/include/hw/vfio/vfio-common.h
-index 0c60be5b15c70168f4f94ad7054d9bd750a162d3..ac35136a11051b079cd9d04e6becd344a0e0f7e7 100644
---- a/include/hw/vfio/vfio-common.h
-+++ b/include/hw/vfio/vfio-common.h
-@@ -252,6 +252,7 @@ bool vfio_device_hiod_realize(VFIODevice *vbasedev, Error **errp);
- bool vfio_attach_device(char *name, VFIODevice *vbasedev,
-                         AddressSpace *as, Error **errp);
- void vfio_detach_device(VFIODevice *vbasedev);
-+VFIODevice *vfio_get_vfio_device(Object *obj);
- 
- int vfio_kvm_device_add_fd(int fd, Error **errp);
- int vfio_kvm_device_del_fd(int fd, Error **errp);
-diff --git a/hw/vfio/helpers.c b/hw/vfio/helpers.c
-index 913796f437f84eece8711cb4b4b654a44040d17c..4b255d4f3a9e81f55df00c68fc71da769fd5bd04 100644
---- a/hw/vfio/helpers.c
-+++ b/hw/vfio/helpers.c
-@@ -23,6 +23,7 @@
- #include <sys/ioctl.h>
- 
- #include "hw/vfio/vfio-common.h"
-+#include "hw/vfio/pci.h"
- #include "hw/hw.h"
- #include "trace.h"
- #include "qapi/error.h"
-@@ -728,3 +729,12 @@ bool vfio_device_hiod_realize(VFIODevice *vbasedev, Error **errp)
- 
-     return HOST_IOMMU_DEVICE_GET_CLASS(hiod)->realize(hiod, vbasedev, errp);
- }
-+
-+VFIODevice *vfio_get_vfio_device(Object *obj)
-+{
-+    if (object_dynamic_cast(obj, TYPE_VFIO_PCI)) {
-+        return &VFIO_PCI(obj)->vbasedev;
-+    } else {
-+        return NULL;
-+    }
-+}
+This series tries to clarify the error message reported to the user.
+
+Thanks,
+
+C.
+
+Changes in v2:
+
+ - Removed advices on how to resolve the issue. Diagnostic is enough.
+ - Introduced helpers
+ - Checked device type, since this only applies to PCI
+ - Added cleanup
+
+Cédric Le Goater (9):
+  util/error: Introduce warn_report_once_err()
+  vfio/pci: Replace "iommu_device" by "vIOMMU"
+  vfio: Rephrase comment in vfio_listener_region_add() error path
+  vfio: Introduce vfio_get_vfio_device()
+  vfio: Improve error reporting when MMIO region mapping fails
+  vfio: Remove reports of DMA mapping errors in backends
+  cpu: Introduce cpu_get_phys_bits()
+  vfio: Check compatibility of CPU and IOMMU address space width
+  vfio: Remove superfluous error report in vfio_listener_region_add()
+
+ include/hw/core/cpu.h            |  9 +++++
+ include/hw/core/sysemu-cpu-ops.h |  6 ++++
+ include/hw/vfio/vfio-common.h    |  1 +
+ include/qapi/error.h             |  5 +++
+ backends/iommufd.c               |  3 --
+ cpu-target.c                     |  5 +++
+ hw/core/cpu-system.c             | 11 ++++++
+ hw/vfio/common.c                 | 61 ++++++++++++++++++++++++++------
+ hw/vfio/container.c              |  2 --
+ hw/vfio/helpers.c                | 10 ++++++
+ hw/vfio/pci.c                    |  2 +-
+ target/i386/cpu.c                |  6 ++++
+ util/error.c                     |  9 +++++
+ 13 files changed, 113 insertions(+), 17 deletions(-)
+
 -- 
 2.48.1
 
