@@ -4,26 +4,26 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 71CA4C0218A
-	for <qemu-devel@archiver.kernel.org>; Thu, 30 Jan 2025 10:12:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 69297C02193
+	for <qemu-devel@archiver.kernel.org>; Thu, 30 Jan 2025 10:12:11 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tdRVz-0005cx-BS; Thu, 30 Jan 2025 05:11:15 -0500
+	id 1tdRUm-0002Ik-DQ; Thu, 30 Jan 2025 05:10:00 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mhej@vps-ovh.mhejs.net>)
- id 1tdRVk-0005Bc-VI
- for qemu-devel@nongnu.org; Thu, 30 Jan 2025 05:11:06 -0500
+ id 1tdRUk-0002Hy-GT
+ for qemu-devel@nongnu.org; Thu, 30 Jan 2025 05:09:58 -0500
 Received: from vps-ovh.mhejs.net ([145.239.82.108])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mhej@vps-ovh.mhejs.net>)
- id 1tdRVi-0007MF-84
- for qemu-devel@nongnu.org; Thu, 30 Jan 2025 05:10:59 -0500
+ id 1tdRUj-00074I-0A
+ for qemu-devel@nongnu.org; Thu, 30 Jan 2025 05:09:58 -0500
 Received: from MUA
  by vps-ovh.mhejs.net with esmtpsa  (TLS1.3) tls TLS_AES_256_GCM_SHA384
  (Exim 4.98) (envelope-from <mhej@vps-ovh.mhejs.net>)
- id 1tdRVd-00000006U01-3r2a; Thu, 30 Jan 2025 11:10:53 +0100
+ id 1tdRUe-00000006TxS-0eRP; Thu, 30 Jan 2025 11:09:52 +0100
 From: "Maciej S. Szmigiero" <mail@maciej.szmigiero.name>
 To: Peter Xu <peterx@redhat.com>,
 	Fabiano Rosas <farosas@suse.de>
@@ -33,10 +33,10 @@ Cc: Alex Williamson <alex.williamson@redhat.com>,
  =?UTF-8?q?Daniel=20P=20=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
  Avihai Horon <avihaih@nvidia.com>,
  Joao Martins <joao.m.martins@oracle.com>, qemu-devel@nongnu.org
-Subject: [PATCH v4 20/33] vfio/migration: Add
- x-migration-load-config-after-iter VFIO property
-Date: Thu, 30 Jan 2025 11:08:41 +0100
-Message-ID: <11f12c43e098ac5e2466e456e8cf8936c54210dc.1738171076.git.maciej.szmigiero@oracle.com>
+Subject: [PATCH v4 08/33] migration/multifd: Allow premature EOF on TLS
+ incoming channels
+Date: Thu, 30 Jan 2025 11:08:29 +0100
+Message-ID: <baf944c37ead5d30d7e268b2a4074d9acaac2db0.1738171076.git.maciej.szmigiero@oracle.com>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <cover.1738171076.git.maciej.szmigiero@oracle.com>
 References: <cover.1738171076.git.maciej.szmigiero@oracle.com>
@@ -68,81 +68,55 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: "Maciej S. Szmigiero" <maciej.szmigiero@oracle.com>
 
-This property allows configuring whether to start the config load only
-after all iterables were loaded.
-Such interlocking is required for ARM64 due to this platform VFIO
-dependency on interrupt controller being loaded first.
+Multifd send channels are terminated by calling
+qio_channel_shutdown(QIO_CHANNEL_SHUTDOWN_BOTH) in
+multifd_send_terminate_threads(), which in the TLS case essentially
+calls shutdown(SHUT_RDWR) on the underlying raw socket.
 
-The property defaults to AUTO, which means ON for ARM, OFF for other
-platforms.
+Unfortunately, this does not terminate the TLS session properly and
+the receive side sees this as a GNUTLS_E_PREMATURE_TERMINATION error.
+
+The only reason why this wasn't causing migration failures is because
+the current migration code apparently does not check for migration
+error being set after the end of the multifd receive process.
+
+However, this will change soon so the multifd receive code has to be
+prepared to not return an error on such premature TLS session EOF.
+Use the newly introduced QIOChannelTLS method for that.
+
+It's worth noting that even if the sender were to be changed to terminate
+the TLS connection properly the receive side still needs to remain
+compatible with older QEMU bit stream which does not do this.
 
 Signed-off-by: Maciej S. Szmigiero <maciej.szmigiero@oracle.com>
 ---
- hw/vfio/migration.c           | 25 +++++++++++++++++++++++++
- hw/vfio/pci.c                 |  3 +++
- include/hw/vfio/vfio-common.h |  1 +
- 3 files changed, 29 insertions(+)
+ migration/multifd.c | 8 ++++++++
+ 1 file changed, 8 insertions(+)
 
-diff --git a/hw/vfio/migration.c b/hw/vfio/migration.c
-index adfa752db527..d801c861d202 100644
---- a/hw/vfio/migration.c
-+++ b/hw/vfio/migration.c
-@@ -254,6 +254,31 @@ static int vfio_load_buffer(QEMUFile *f, VFIODevice *vbasedev,
-     return ret;
- }
+diff --git a/migration/multifd.c b/migration/multifd.c
+index ab73d6d984cf..ceaad930e141 100644
+--- a/migration/multifd.c
++++ b/migration/multifd.c
+@@ -1310,6 +1310,7 @@ void multifd_recv_new_channel(QIOChannel *ioc, Error **errp)
+     Error *local_err = NULL;
+     bool use_packets = multifd_use_packets();
+     int id;
++    QIOChannelTLS *ioc_tls;
  
-+static bool vfio_load_config_after_iter(VFIODevice *vbasedev)
-+{
-+    if (vbasedev->migration_load_config_after_iter == ON_OFF_AUTO_ON) {
-+        return true;
-+    } else if (vbasedev->migration_load_config_after_iter == ON_OFF_AUTO_OFF) {
-+        return false;
+     if (use_packets) {
+         id = multifd_recv_initial_packet(ioc, &local_err);
+@@ -1337,6 +1338,13 @@ void multifd_recv_new_channel(QIOChannel *ioc, Error **errp)
+     p->c = ioc;
+     object_ref(OBJECT(ioc));
+ 
++    ioc_tls = QIO_CHANNEL_TLS(object_dynamic_cast(OBJECT(ioc),
++                                                  TYPE_QIO_CHANNEL_TLS));
++    if (ioc_tls) {
++        /* Multifd send channels do not terminate the TLS session properly */
++        qio_channel_tls_set_premature_eof_okay(ioc_tls, true);
 +    }
 +
-+    assert(vbasedev->migration_load_config_after_iter == ON_OFF_AUTO_AUTO);
-+
-+    /*
-+     * Starting the config load only after all iterables were loaded is required
-+     * for ARM64 due to this platform VFIO dependency on interrupt controller
-+     * being loaded first.
-+     *
-+     * See commit d329f5032e17 ("vfio: Move the saving of the config space to
-+     * the right place in VFIO migration").
-+     */
-+#if defined(TARGET_ARM)
-+    return true;
-+#else
-+    return false;
-+#endif
-+}
-+
- static int vfio_save_device_config_state(QEMUFile *f, void *opaque,
-                                          Error **errp)
- {
-diff --git a/hw/vfio/pci.c b/hw/vfio/pci.c
-index ab17a98ee5b6..83090c544d95 100644
---- a/hw/vfio/pci.c
-+++ b/hw/vfio/pci.c
-@@ -3377,6 +3377,9 @@ static const Property vfio_pci_dev_properties[] = {
-                     VFIO_FEATURE_ENABLE_IGD_OPREGION_BIT, false),
-     DEFINE_PROP_ON_OFF_AUTO("enable-migration", VFIOPCIDevice,
-                             vbasedev.enable_migration, ON_OFF_AUTO_AUTO),
-+    DEFINE_PROP_ON_OFF_AUTO("x-migration-load-config-after-iter", VFIOPCIDevice,
-+                            vbasedev.migration_load_config_after_iter,
-+                            ON_OFF_AUTO_AUTO),
-     DEFINE_PROP_BOOL("migration-events", VFIOPCIDevice,
-                      vbasedev.migration_events, false),
-     DEFINE_PROP_BOOL("x-no-mmap", VFIOPCIDevice, vbasedev.no_mmap, false),
-diff --git a/include/hw/vfio/vfio-common.h b/include/hw/vfio/vfio-common.h
-index 0c60be5b15c7..153d03745dc7 100644
---- a/include/hw/vfio/vfio-common.h
-+++ b/include/hw/vfio/vfio-common.h
-@@ -133,6 +133,7 @@ typedef struct VFIODevice {
-     bool no_mmap;
-     bool ram_block_discard_allowed;
-     OnOffAuto enable_migration;
-+    OnOffAuto migration_load_config_after_iter;
-     bool migration_events;
-     VFIODeviceOps *ops;
-     unsigned int num_irqs;
+     p->thread_created = true;
+     qemu_thread_create(&p->thread, p->name, multifd_recv_thread, p,
+                        QEMU_THREAD_JOINABLE);
 
