@@ -4,26 +4,26 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 929E8C02190
-	for <qemu-devel@archiver.kernel.org>; Thu, 30 Jan 2025 10:11:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 30879C02190
+	for <qemu-devel@archiver.kernel.org>; Thu, 30 Jan 2025 10:11:56 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tdRVS-0004Xo-21; Thu, 30 Jan 2025 05:10:42 -0500
+	id 1tdRV2-0003Iv-8a; Thu, 30 Jan 2025 05:10:16 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mhej@vps-ovh.mhejs.net>)
- id 1tdRVP-0004UQ-CH
- for qemu-devel@nongnu.org; Thu, 30 Jan 2025 05:10:39 -0500
+ id 1tdRUz-0003AJ-9R
+ for qemu-devel@nongnu.org; Thu, 30 Jan 2025 05:10:13 -0500
 Received: from vps-ovh.mhejs.net ([145.239.82.108])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mhej@vps-ovh.mhejs.net>)
- id 1tdRVM-0007KM-U4
- for qemu-devel@nongnu.org; Thu, 30 Jan 2025 05:10:39 -0500
+ id 1tdRUx-0007I1-1Y
+ for qemu-devel@nongnu.org; Thu, 30 Jan 2025 05:10:12 -0500
 Received: from MUA
  by vps-ovh.mhejs.net with esmtpsa  (TLS1.3) tls TLS_AES_256_GCM_SHA384
  (Exim 4.98) (envelope-from <mhej@vps-ovh.mhejs.net>)
- id 1tdRVJ-00000006Tz7-1HWh; Thu, 30 Jan 2025 11:10:33 +0100
+ id 1tdRUt-00000006TyA-2Raz; Thu, 30 Jan 2025 11:10:07 +0100
 From: "Maciej S. Szmigiero" <mail@maciej.szmigiero.name>
 To: Peter Xu <peterx@redhat.com>,
 	Fabiano Rosas <farosas@suse.de>
@@ -33,10 +33,9 @@ Cc: Alex Williamson <alex.williamson@redhat.com>,
  =?UTF-8?q?Daniel=20P=20=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
  Avihai Horon <avihaih@nvidia.com>,
  Joao Martins <joao.m.martins@oracle.com>, qemu-devel@nongnu.org
-Subject: [PATCH v4 16/33] migration/multifd: Device state transfer support -
- send side
-Date: Thu, 30 Jan 2025 11:08:37 +0100
-Message-ID: <0d277461eb7cb849dc1af03c38275f7c9747f0db.1738171076.git.maciej.szmigiero@oracle.com>
+Subject: [PATCH v4 11/33] migration: Add thread pool of optional load threads
+Date: Thu, 30 Jan 2025 11:08:32 +0100
+Message-ID: <6bd6ea6a59ef6b350fbffa1ae82830762559fa52.1738171076.git.maciej.szmigiero@oracle.com>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <cover.1738171076.git.maciej.szmigiero@oracle.com>
 References: <cover.1738171076.git.maciej.szmigiero@oracle.com>
@@ -68,408 +67,249 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: "Maciej S. Szmigiero" <maciej.szmigiero@oracle.com>
 
-A new function multifd_queue_device_state() is provided for device to queue
-its state for transmission via a multifd channel.
+Some drivers might want to make use of auxiliary helper threads during VM
+state loading, for example to make sure that their blocking (sync) I/O
+operations don't block the rest of the migration process.
 
+Add a migration core managed thread pool to facilitate this use case.
+
+The migration core will wait for these threads to finish before
+(re)starting the VM at destination.
+
+Reviewed-by: Fabiano Rosas <farosas@suse.de>
 Signed-off-by: Maciej S. Szmigiero <maciej.szmigiero@oracle.com>
 ---
- include/migration/misc.h         |   4 ++
- migration/meson.build            |   1 +
- migration/multifd-device-state.c | 107 +++++++++++++++++++++++++++++++
- migration/multifd-nocomp.c       |  14 +++-
- migration/multifd.c              |  42 ++++++++++--
- migration/multifd.h              |  27 +++++---
- 6 files changed, 179 insertions(+), 16 deletions(-)
- create mode 100644 migration/multifd-device-state.c
+ include/migration/misc.h |  3 ++
+ include/qemu/typedefs.h  |  2 +
+ migration/migration.c    |  2 +-
+ migration/migration.h    |  5 +++
+ migration/savevm.c       | 92 +++++++++++++++++++++++++++++++++++++++-
+ migration/savevm.h       |  2 +-
+ 6 files changed, 103 insertions(+), 3 deletions(-)
 
 diff --git a/include/migration/misc.h b/include/migration/misc.h
-index bc5ce31b52e0..885022d21a0c 100644
+index 67f7ef7a0e5c..bc5ce31b52e0 100644
 --- a/include/migration/misc.h
 +++ b/include/migration/misc.h
-@@ -111,4 +111,8 @@ bool migration_in_bg_snapshot(void);
- bool migration_block_activate(Error **errp);
- bool migration_block_inactivate(void);
+@@ -45,9 +45,12 @@ bool migrate_ram_is_ignored(RAMBlock *block);
+ /* migration/block.c */
  
-+/* migration/multifd-device-state.c */
-+bool multifd_queue_device_state(char *idstr, uint32_t instance_id,
-+                                char *data, size_t len);
+ AnnounceParameters *migrate_announce_params(void);
 +
- #endif
-diff --git a/migration/meson.build b/migration/meson.build
-index dac687ee3acb..50263fa741e7 100644
---- a/migration/meson.build
-+++ b/migration/meson.build
-@@ -23,6 +23,7 @@ system_ss.add(files(
-   'migration-hmp-cmds.c',
-   'migration.c',
-   'multifd.c',
-+  'multifd-device-state.c',
-   'multifd-nocomp.c',
-   'multifd-zlib.c',
-   'multifd-zero-page.c',
-diff --git a/migration/multifd-device-state.c b/migration/multifd-device-state.c
-new file mode 100644
-index 000000000000..2207bea9bf8a
---- /dev/null
-+++ b/migration/multifd-device-state.c
-@@ -0,0 +1,107 @@
-+/*
-+ * Multifd device state migration
-+ *
-+ * Copyright (C) 2024,2025 Oracle and/or its affiliates.
-+ *
-+ * This work is licensed under the terms of the GNU GPL, version 2 or later.
-+ * See the COPYING file in the top-level directory.
-+ */
-+
-+#include "qemu/osdep.h"
-+#include "qemu/lockable.h"
-+#include "migration/misc.h"
-+#include "multifd.h"
-+
-+static QemuMutex queue_job_mutex;
-+
-+static MultiFDSendData *device_state_send;
-+
-+size_t multifd_device_state_payload_size(void)
-+{
-+    return sizeof(MultiFDDeviceState_t);
-+}
-+
-+void multifd_device_state_send_setup(void)
-+{
-+    qemu_mutex_init(&queue_job_mutex);
-+
-+    assert(!device_state_send);
-+    device_state_send = multifd_send_data_alloc();
-+}
-+
-+void multifd_device_state_send_cleanup(void)
-+{
-+    g_clear_pointer(&device_state_send, multifd_send_data_free);
-+
-+    qemu_mutex_destroy(&queue_job_mutex);
-+}
-+
-+void multifd_send_data_clear_device_state(MultiFDDeviceState_t *device_state)
-+{
-+    g_clear_pointer(&device_state->idstr, g_free);
-+    g_clear_pointer(&device_state->buf, g_free);
-+}
-+
-+static void multifd_device_state_fill_packet(MultiFDSendParams *p)
-+{
-+    MultiFDDeviceState_t *device_state = &p->data->u.device_state;
-+    MultiFDPacketDeviceState_t *packet = p->packet_device_state;
-+
-+    packet->hdr.flags = cpu_to_be32(p->flags);
-+    strncpy(packet->idstr, device_state->idstr, sizeof(packet->idstr));
-+    packet->instance_id = cpu_to_be32(device_state->instance_id);
-+    packet->next_packet_size = cpu_to_be32(p->next_packet_size);
-+}
-+
-+static void multifd_prepare_header_device_state(MultiFDSendParams *p)
-+{
-+    p->iov[0].iov_len = sizeof(*p->packet_device_state);
-+    p->iov[0].iov_base = p->packet_device_state;
-+    p->iovs_num++;
-+}
-+
-+void multifd_device_state_send_prepare(MultiFDSendParams *p)
-+{
-+    MultiFDDeviceState_t *device_state = &p->data->u.device_state;
-+
-+    assert(multifd_payload_device_state(p->data));
-+
-+    multifd_prepare_header_device_state(p);
-+
-+    assert(!(p->flags & MULTIFD_FLAG_SYNC));
-+
-+    p->next_packet_size = device_state->buf_len;
-+    if (p->next_packet_size > 0) {
-+        p->iov[p->iovs_num].iov_base = device_state->buf;
-+        p->iov[p->iovs_num].iov_len = p->next_packet_size;
-+        p->iovs_num++;
-+    }
-+
-+    p->flags |= MULTIFD_FLAG_NOCOMP | MULTIFD_FLAG_DEVICE_STATE;
-+
-+    multifd_device_state_fill_packet(p);
-+}
-+
-+bool multifd_queue_device_state(char *idstr, uint32_t instance_id,
-+                                char *data, size_t len)
-+{
-+    /* Device state submissions can come from multiple threads */
-+    QEMU_LOCK_GUARD(&queue_job_mutex);
-+    MultiFDDeviceState_t *device_state;
-+
-+    assert(multifd_payload_empty(device_state_send));
-+
-+    multifd_set_payload_type(device_state_send, MULTIFD_PAYLOAD_DEVICE_STATE);
-+    device_state = &device_state_send->u.device_state;
-+    device_state->idstr = g_strdup(idstr);
-+    device_state->instance_id = instance_id;
-+    device_state->buf = g_memdup2(data, len);
-+    device_state->buf_len = len;
-+
-+    if (!multifd_send(&device_state_send)) {
-+        multifd_send_data_clear(device_state_send);
-+        return false;
-+    }
-+
-+    return true;
-+}
-diff --git a/migration/multifd-nocomp.c b/migration/multifd-nocomp.c
-index e46e79d8b272..c00804652383 100644
---- a/migration/multifd-nocomp.c
-+++ b/migration/multifd-nocomp.c
-@@ -14,6 +14,7 @@
- #include "exec/ramblock.h"
- #include "exec/target_page.h"
- #include "file.h"
-+#include "migration-stats.h"
- #include "multifd.h"
- #include "options.h"
- #include "qapi/error.h"
-@@ -85,6 +86,13 @@ static void multifd_nocomp_send_cleanup(MultiFDSendParams *p, Error **errp)
-     return;
- }
+ /* migration/savevm.c */
  
-+static void multifd_ram_prepare_header(MultiFDSendParams *p)
-+{
-+    p->iov[0].iov_len = p->packet_len;
-+    p->iov[0].iov_base = p->packet;
-+    p->iovs_num++;
-+}
-+
- static void multifd_send_prepare_iovs(MultiFDSendParams *p)
- {
-     MultiFDPages_t *pages = &p->data->u.ram;
-@@ -118,7 +126,7 @@ static int multifd_nocomp_send_prepare(MultiFDSendParams *p, Error **errp)
-          * Only !zerocopy needs the header in IOV; zerocopy will
-          * send it separately.
-          */
--        multifd_send_prepare_header(p);
-+        multifd_ram_prepare_header(p);
-     }
+ void dump_vmstate_json_to_file(FILE *out_fp);
++void qemu_loadvm_start_load_thread(MigrationLoadThread function,
++                                   void *opaque);
  
-     multifd_send_prepare_iovs(p);
-@@ -133,6 +141,8 @@ static int multifd_nocomp_send_prepare(MultiFDSendParams *p, Error **errp)
-         if (ret != 0) {
-             return -1;
-         }
-+
-+        stat64_add(&mig_stats.multifd_bytes, p->packet_len);
-     }
+ /* migration/migration.c */
+ void migration_object_init(void);
+diff --git a/include/qemu/typedefs.h b/include/qemu/typedefs.h
+index 3d84efcac47a..fd23ff7771b1 100644
+--- a/include/qemu/typedefs.h
++++ b/include/qemu/typedefs.h
+@@ -131,5 +131,7 @@ typedef struct IRQState *qemu_irq;
+  * Function types
+  */
+ typedef void (*qemu_irq_handler)(void *opaque, int n, int level);
++typedef bool (*MigrationLoadThread)(void *opaque, bool *should_quit,
++                                    Error **errp);
  
-     return 0;
-@@ -431,7 +441,7 @@ int multifd_ram_flush_and_sync(QEMUFile *f)
- bool multifd_send_prepare_common(MultiFDSendParams *p)
- {
-     MultiFDPages_t *pages = &p->data->u.ram;
--    multifd_send_prepare_header(p);
-+    multifd_ram_prepare_header(p);
-     multifd_send_zero_page_detect(p);
- 
-     if (!pages->normal_num) {
-diff --git a/migration/multifd.c b/migration/multifd.c
-index 3353a5da7593..61b061a33d35 100644
---- a/migration/multifd.c
-+++ b/migration/multifd.c
-@@ -12,6 +12,7 @@
- 
- #include "qemu/osdep.h"
- #include "qemu/cutils.h"
-+#include "qemu/iov.h"
- #include "qemu/rcu.h"
- #include "exec/target_page.h"
- #include "system/system.h"
-@@ -19,6 +20,7 @@
- #include "qemu/error-report.h"
- #include "qapi/error.h"
- #include "file.h"
-+#include "migration/misc.h"
- #include "migration.h"
- #include "migration-stats.h"
- #include "savevm.h"
-@@ -111,7 +113,9 @@ MultiFDSendData *multifd_send_data_alloc(void)
-      * added to the union in the future are larger than
-      * (MultiFDPages_t + flex array).
+ #endif /* QEMU_TYPEDEFS_H */
+diff --git a/migration/migration.c b/migration/migration.c
+index 65b51d360896..0f29188499e4 100644
+--- a/migration/migration.c
++++ b/migration/migration.c
+@@ -400,7 +400,7 @@ void migration_incoming_state_destroy(void)
+      * RAM state cleanup needs to happen after multifd cleanup, because
+      * multifd threads can use some of its states (receivedmap).
       */
--    max_payload_size = MAX(multifd_ram_payload_size(), sizeof(MultiFDPayload));
-+    max_payload_size = MAX(multifd_ram_payload_size(),
-+                           multifd_device_state_payload_size());
-+    max_payload_size = MAX(max_payload_size, sizeof(MultiFDPayload));
+-    qemu_loadvm_state_cleanup();
++    qemu_loadvm_state_cleanup(mis);
  
+     if (mis->to_src_file) {
+         /* Tell source that we are done */
+diff --git a/migration/migration.h b/migration/migration.h
+index c5731626bbfb..1699fe7d91cc 100644
+--- a/migration/migration.h
++++ b/migration/migration.h
+@@ -43,6 +43,7 @@
+ #define  MIGRATION_THREAD_DST_PREEMPT       "mig/dst/preempt"
+ 
+ struct PostcopyBlocktimeContext;
++typedef struct ThreadPool ThreadPool;
+ 
+ #define  MIGRATION_RESUME_ACK_VALUE  (1)
+ 
+@@ -187,6 +188,10 @@ struct MigrationIncomingState {
+     Coroutine *colo_incoming_co;
+     QemuSemaphore colo_incoming_sem;
+ 
++    /* Optional load threads pool and its thread exit request flag */
++    ThreadPool *load_threads;
++    bool load_threads_abort;
++
      /*
-      * Account for any holes the compiler might insert. We can't pack
-@@ -130,6 +134,9 @@ void multifd_send_data_clear(MultiFDSendData *data)
-     }
+      * PostcopyBlocktimeContext to keep information for postcopy
+      * live migration, to calculate vCPU block time
+diff --git a/migration/savevm.c b/migration/savevm.c
+index 0ceea9638cc1..74d1960de3c6 100644
+--- a/migration/savevm.c
++++ b/migration/savevm.c
+@@ -54,6 +54,7 @@
+ #include "qemu/job.h"
+ #include "qemu/main-loop.h"
+ #include "block/snapshot.h"
++#include "block/thread-pool.h"
+ #include "qemu/cutils.h"
+ #include "io/channel-buffer.h"
+ #include "io/channel-file.h"
+@@ -131,6 +132,35 @@ static struct mig_cmd_args {
+  * generic extendable format with an exception for two old entities.
+  */
  
-     switch (data->type) {
-+    case MULTIFD_PAYLOAD_DEVICE_STATE:
-+        multifd_send_data_clear_device_state(&data->u.device_state);
-+        break;
-     default:
-         /* Nothing to do */
-         break;
-@@ -232,6 +239,7 @@ static int multifd_recv_initial_packet(QIOChannel *c, Error **errp)
-     return msg.id;
- }
- 
-+/* Fills a RAM multifd packet */
- void multifd_send_fill_packet(MultiFDSendParams *p)
- {
-     MultiFDPacket_t *packet = p->packet;
-@@ -524,6 +532,7 @@ static bool multifd_send_cleanup_channel(MultiFDSendParams *p, Error **errp)
-     p->name = NULL;
-     g_clear_pointer(&p->data, multifd_send_data_free);
-     p->packet_len = 0;
-+    g_clear_pointer(&p->packet_device_state, g_free);
-     g_free(p->packet);
-     p->packet = NULL;
-     multifd_send_state->ops->send_cleanup(p, errp);
-@@ -536,6 +545,7 @@ static void multifd_send_cleanup_state(void)
- {
-     file_cleanup_outgoing_migration();
-     socket_cleanup_outgoing_migration();
-+    multifd_device_state_send_cleanup();
-     qemu_sem_destroy(&multifd_send_state->channels_created);
-     qemu_sem_destroy(&multifd_send_state->channels_ready);
-     qemu_mutex_destroy(&multifd_send_state->multifd_send_mutex);
-@@ -664,16 +674,32 @@ static void *multifd_send_thread(void *opaque)
-          * qatomic_store_release() in multifd_send().
-          */
-         if (qatomic_load_acquire(&p->pending_job)) {
-+            bool is_device_state = multifd_payload_device_state(p->data);
-+            size_t total_size;
++/***********************************************************/
++/* Optional load threads pool support */
 +
-             p->flags = 0;
-             p->iovs_num = 0;
-             assert(!multifd_payload_empty(p->data));
- 
--            ret = multifd_send_state->ops->send_prepare(p, &local_err);
--            if (ret != 0) {
--                break;
-+            if (is_device_state) {
-+                multifd_device_state_send_prepare(p);
-+            } else {
-+                ret = multifd_send_state->ops->send_prepare(p, &local_err);
-+                if (ret != 0) {
-+                    break;
-+                }
-             }
- 
-+            /*
-+             * The packet header in the zerocopy RAM case is accounted for
-+             * in multifd_nocomp_send_prepare() - where it is actually
-+             * being sent.
-+             */
-+            total_size = iov_size(p->iov, p->iovs_num);
-+
-             if (migrate_mapped_ram()) {
-+                assert(!is_device_state);
-+
-                 ret = file_write_ramblock_iov(p->c, p->iov, p->iovs_num,
-                                               &p->data->u.ram, &local_err);
-             } else {
-@@ -686,8 +712,7 @@ static void *multifd_send_thread(void *opaque)
-                 break;
-             }
- 
--            stat64_add(&mig_stats.multifd_bytes,
--                       (uint64_t)p->next_packet_size + p->packet_len);
-+            stat64_add(&mig_stats.multifd_bytes, total_size);
- 
-             p->next_packet_size = 0;
-             multifd_send_data_clear(p->data);
-@@ -908,6 +933,9 @@ bool multifd_send_setup(void)
-             p->packet_len = sizeof(MultiFDPacket_t)
-                           + sizeof(uint64_t) * page_count;
-             p->packet = g_malloc0(p->packet_len);
-+            p->packet_device_state = g_malloc0(sizeof(*p->packet_device_state));
-+            p->packet_device_state->hdr.magic = cpu_to_be32(MULTIFD_MAGIC);
-+            p->packet_device_state->hdr.version = cpu_to_be32(MULTIFD_VERSION);
-         }
-         p->name = g_strdup_printf(MIGRATION_THREAD_SRC_MULTIFD, i);
-         p->write_flags = 0;
-@@ -943,6 +971,8 @@ bool multifd_send_setup(void)
-         assert(p->iov);
-     }
- 
-+    multifd_device_state_send_setup();
-+
-     return true;
- 
- err:
-diff --git a/migration/multifd.h b/migration/multifd.h
-index 436598999e6f..ddc617db9acb 100644
---- a/migration/multifd.h
-+++ b/migration/multifd.h
-@@ -137,10 +137,12 @@ typedef struct {
- typedef enum {
-     MULTIFD_PAYLOAD_NONE,
-     MULTIFD_PAYLOAD_RAM,
-+    MULTIFD_PAYLOAD_DEVICE_STATE,
- } MultiFDPayloadType;
- 
- typedef union MultiFDPayload {
-     MultiFDPages_t ram;
-+    MultiFDDeviceState_t device_state;
- } MultiFDPayload;
- 
- struct MultiFDSendData {
-@@ -153,6 +155,11 @@ static inline bool multifd_payload_empty(MultiFDSendData *data)
-     return data->type == MULTIFD_PAYLOAD_NONE;
- }
- 
-+static inline bool multifd_payload_device_state(MultiFDSendData *data)
++static void qemu_loadvm_thread_pool_create(MigrationIncomingState *mis)
 +{
-+    return data->type == MULTIFD_PAYLOAD_DEVICE_STATE;
++    assert(!mis->load_threads);
++    mis->load_threads = thread_pool_new();
++    mis->load_threads_abort = false;
 +}
 +
- static inline void multifd_set_payload_type(MultiFDSendData *data,
-                                             MultiFDPayloadType type)
++static void qemu_loadvm_thread_pool_destroy(MigrationIncomingState *mis)
++{
++    qatomic_set(&mis->load_threads_abort, true);
++
++    bql_unlock(); /* Load threads might be waiting for BQL */
++    g_clear_pointer(&mis->load_threads, thread_pool_free);
++    bql_lock();
++}
++
++static bool qemu_loadvm_thread_pool_wait(MigrationState *s,
++                                         MigrationIncomingState *mis)
++{
++    bql_unlock(); /* Let load threads do work requiring BQL */
++    thread_pool_wait(mis->load_threads);
++    bql_lock();
++
++    return !migrate_has_error(s);
++}
++
+ /***********************************************************/
+ /* savevm/loadvm support */
+ 
+@@ -2810,16 +2840,62 @@ static int qemu_loadvm_state_setup(QEMUFile *f, Error **errp)
+     return 0;
+ }
+ 
+-void qemu_loadvm_state_cleanup(void)
++struct LoadThreadData {
++    MigrationLoadThread function;
++    void *opaque;
++};
++
++static int qemu_loadvm_load_thread(void *thread_opaque)
++{
++    struct LoadThreadData *data = thread_opaque;
++    MigrationIncomingState *mis = migration_incoming_get_current();
++    g_autoptr(Error) local_err = NULL;
++
++    if (!data->function(data->opaque, &mis->load_threads_abort, &local_err)) {
++        MigrationState *s = migrate_get_current();
++
++        assert(local_err);
++
++        /*
++         * In case of multiple load threads failing which thread error
++         * return we end setting is purely arbitrary.
++         */
++        migrate_set_error(s, local_err);
++    }
++
++    return 0;
++}
++
++void qemu_loadvm_start_load_thread(MigrationLoadThread function,
++                                   void *opaque)
++{
++    MigrationIncomingState *mis = migration_incoming_get_current();
++    struct LoadThreadData *data;
++
++    /* We only set it from this thread so it's okay to read it directly */
++    assert(!mis->load_threads_abort);
++
++    data = g_new(struct LoadThreadData, 1);
++    data->function = function;
++    data->opaque = opaque;
++
++    thread_pool_submit_immediate(mis->load_threads, qemu_loadvm_load_thread,
++                                 data, g_free);
++}
++
++void qemu_loadvm_state_cleanup(MigrationIncomingState *mis)
  {
-@@ -205,8 +212,9 @@ typedef struct {
+     SaveStateEntry *se;
  
-     /* thread local variables. No locking required */
+     trace_loadvm_state_cleanup();
++
+     QTAILQ_FOREACH(se, &savevm_state.handlers, entry) {
+         if (se->ops && se->ops->load_cleanup) {
+             se->ops->load_cleanup(se->opaque);
+         }
+     }
++
++    qemu_loadvm_thread_pool_destroy(mis);
+ }
  
--    /* pointer to the packet */
-+    /* pointers to the possible packet types */
-     MultiFDPacket_t *packet;
-+    MultiFDPacketDeviceState_t *packet_device_state;
-     /* size of the next packet that contains pages */
-     uint32_t next_packet_size;
-     /* packets sent through this channel */
-@@ -363,13 +371,6 @@ bool multifd_send_prepare_common(MultiFDSendParams *p);
- void multifd_send_zero_page_detect(MultiFDSendParams *p);
- void multifd_recv_zero_page_process(MultiFDRecvParams *p);
+ /* Return true if we should continue the migration, or false. */
+@@ -2970,6 +3046,7 @@ out:
  
--static inline void multifd_send_prepare_header(MultiFDSendParams *p)
--{
--    p->iov[0].iov_len = p->packet_len;
--    p->iov[0].iov_base = p->packet;
--    p->iovs_num++;
--}
--
- void multifd_channel_connect(MultiFDSendParams *p, QIOChannel *ioc);
- bool multifd_send(MultiFDSendData **send_data);
- MultiFDSendData *multifd_send_data_alloc(void);
-@@ -394,4 +395,14 @@ bool multifd_ram_sync_per_section(void);
- size_t multifd_ram_payload_size(void);
- void multifd_ram_fill_packet(MultiFDSendParams *p);
- int multifd_ram_unfill_packet(MultiFDRecvParams *p, Error **errp);
+ int qemu_loadvm_state(QEMUFile *f)
+ {
++    MigrationState *s = migrate_get_current();
+     MigrationIncomingState *mis = migration_incoming_get_current();
+     Error *local_err = NULL;
+     int ret;
+@@ -2979,6 +3056,8 @@ int qemu_loadvm_state(QEMUFile *f)
+         return -EINVAL;
+     }
+ 
++    qemu_loadvm_thread_pool_create(mis);
 +
-+size_t multifd_device_state_payload_size(void);
+     ret = qemu_loadvm_state_header(f);
+     if (ret) {
+         return ret;
+@@ -3008,6 +3087,17 @@ int qemu_loadvm_state(QEMUFile *f)
+         return ret;
+     }
+ 
++    if (ret == 0) {
++        if (!qemu_loadvm_thread_pool_wait(s, mis)) {
++            ret = -EINVAL;
++        }
++    }
++    /*
++     * Set this flag unconditionally so we'll catch further attempts to
++     * start additional threads via an appropriate assert()
++     */
++    qatomic_set(&mis->load_threads_abort, true);
 +
-+void multifd_send_data_clear_device_state(MultiFDDeviceState_t *device_state);
-+
-+void multifd_device_state_send_setup(void);
-+void multifd_device_state_send_cleanup(void);
-+
-+void multifd_device_state_send_prepare(MultiFDSendParams *p);
-+
- #endif
+     if (ret == 0) {
+         ret = qemu_file_get_error(f);
+     }
+diff --git a/migration/savevm.h b/migration/savevm.h
+index 8b78493dbc0e..3fa06574e632 100644
+--- a/migration/savevm.h
++++ b/migration/savevm.h
+@@ -64,7 +64,7 @@ void qemu_savevm_live_state(QEMUFile *f);
+ int qemu_save_device_state(QEMUFile *f);
+ 
+ int qemu_loadvm_state(QEMUFile *f);
+-void qemu_loadvm_state_cleanup(void);
++void qemu_loadvm_state_cleanup(MigrationIncomingState *mis);
+ int qemu_loadvm_state_main(QEMUFile *f, MigrationIncomingState *mis);
+ int qemu_load_device_state(QEMUFile *f);
+ int qemu_loadvm_approve_switchover(void);
 
