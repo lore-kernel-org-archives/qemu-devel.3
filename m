@@ -4,145 +4,147 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3BFAAC0218A
-	for <qemu-devel@archiver.kernel.org>; Thu, 30 Jan 2025 06:48:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9AD0FC0218A
+	for <qemu-devel@archiver.kernel.org>; Thu, 30 Jan 2025 07:27:48 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tdOL2-0002Tz-5E; Thu, 30 Jan 2025 01:47:45 -0500
+	id 1tdOwt-0004l9-17; Thu, 30 Jan 2025 02:26:51 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1tdOKz-0002To-PE
- for qemu-devel@nongnu.org; Thu, 30 Jan 2025 01:47:41 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1tdOwn-0004k5-2r
+ for qemu-devel@nongnu.org; Thu, 30 Jan 2025 02:26:46 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1tdOKx-00078P-5e
- for qemu-devel@nongnu.org; Thu, 30 Jan 2025 01:47:41 -0500
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1tdOwl-0004yj-8a
+ for qemu-devel@nongnu.org; Thu, 30 Jan 2025 02:26:44 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1738219656;
+ s=mimecast20190719; t=1738222001;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=9+xdp+uhdMZH+f+h5dxzGq3sQBd5hYWFv6bGHjTE0nU=;
- b=BViqHnX0BAUi82KtbZbM660EHngOLevdSNQGcjzQu/WFpxWdXkpTU96CMF27BcAbVQyK+a
- hB9+Ouj1OEL3zIcWokBWskhanjhJ3V3gw3dfv3KQmJudUlXuWP6lepqTTQDzoXX5fYB1em
- nTl44sbWlzgiEw4xhcfuaHaH7DK9mAo=
-Received: from mail-wm1-f69.google.com (mail-wm1-f69.google.com
- [209.85.128.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=BhO/bkEOqZXL4xUWxtJffe4/Jv2vmtmuA+FU7OiMt8Y=;
+ b=PN7Tno+8BiEecpSmPlG4ixiZGt8tP24ssM2wGtok/e+BWegrJPd62m8TjgR32l5wVKp+zX
+ NWLRccqkWI0rRqOQzxD2tB4gzdPGySaoZI/NUayd3zhzCvqlNG3/WQf9ekwmof+uLszEfA
+ Vl3NvRia++q7XCxD11T8kF2SIfz7quo=
+Received: from mail-wr1-f69.google.com (mail-wr1-f69.google.com
+ [209.85.221.69]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-154-nB4vjs3CMT20acRNOE7BSQ-1; Thu, 30 Jan 2025 01:47:34 -0500
-X-MC-Unique: nB4vjs3CMT20acRNOE7BSQ-1
-X-Mimecast-MFC-AGG-ID: nB4vjs3CMT20acRNOE7BSQ
-Received: by mail-wm1-f69.google.com with SMTP id
- 5b1f17b1804b1-4362b9c1641so1611105e9.3
- for <qemu-devel@nongnu.org>; Wed, 29 Jan 2025 22:47:33 -0800 (PST)
+ us-mta-67-ThW4JA7MMT2hdVkR6tAM8A-1; Thu, 30 Jan 2025 02:26:38 -0500
+X-MC-Unique: ThW4JA7MMT2hdVkR6tAM8A-1
+X-Mimecast-MFC-AGG-ID: ThW4JA7MMT2hdVkR6tAM8A
+Received: by mail-wr1-f69.google.com with SMTP id
+ ffacd0b85a97d-385e03f54d0so187574f8f.3
+ for <qemu-devel@nongnu.org>; Wed, 29 Jan 2025 23:26:37 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1738219653; x=1738824453;
- h=content-transfer-encoding:in-reply-to:autocrypt:content-language
- :from:references:cc:to:subject:user-agent:mime-version:date
- :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=9+xdp+uhdMZH+f+h5dxzGq3sQBd5hYWFv6bGHjTE0nU=;
- b=HGtEu0CnP65oX6JWTVpW3fgXNW2aPWrHr+d8JYswME+24rBwBNxt77LOB1K3ExK2p7
- XaPX2FzNJYzYUqNpey+Nmkta6eFmwrdJP4nOvSBPFFF/zo3Ukh3f2zFhybndOEQvCCe3
- DxRRaps9UU6LDMZ1b6i9+Pk1YI18ESF4uTFsNWIHEm8k30KVhic/95m0HE27GJ0f4UxJ
- yXCy0qjFSBTHAZHPDQdN6Auo/SFazvLM20lf7I8gtSRQ3Cr0zax8aAuRweEfc9Ygy61i
- t/GxUtp9VwWJpS+7GXd4rpyT2x2hFa97tS2OrPRvg0M9OgzTXVMBNwd/OPld4gkrHapp
- QgRA==
+ d=1e100.net; s=20230601; t=1738221997; x=1738826797;
+ h=content-transfer-encoding:in-reply-to:autocrypt:from
+ :content-language:references:cc:to:subject:user-agent:mime-version
+ :date:message-id:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=BhO/bkEOqZXL4xUWxtJffe4/Jv2vmtmuA+FU7OiMt8Y=;
+ b=CyrNPh2ss7rujT6QPMHQJyPv6CMmx8EFaJ+C839TOKIVGWxI85RbUelv1ySlZuyMb4
+ PJlA5tnDsLgTuXA4Kz8ZvW3F8/J4JH8/zoV58VvfYmTUzg14sBE8kP0hOWJlqJ0z2+W4
+ qymXwJ4XT2469tSnGHJHOT6ae0Vz4aHpEcQU7sKk6tpsRKFs+6OA8jMAZz0Q7pud5IP6
+ /gnTd9v3P18Cf+o0Cd1GJ3oKWw9MhFILOFmuHZlKVeo59R5HXy4iKzX8xFGHkQsr/MGp
+ mEgxlJrCnEgHqYr2HQBhBfdJ9D3LgQIsSQbja+YB3V6AKqA5bi+0DuMbqyO3ReKnWHxf
+ 1sSA==
 X-Forwarded-Encrypted: i=1;
- AJvYcCWoRlEdPgYEvsjo408rWCEbLAucwbcI4mL9BisJfCO5O6D9YGNUmIRXMFt6pUXGl+keCuOCLm2LtVji@nongnu.org
-X-Gm-Message-State: AOJu0Yw5vhEPPgHBokfrNAb43xkiotWW/n+0+bVmxKI9+OqeJyswV/uP
- XxNOKt5otQ2weyiRkraY5HAmfqwEMB2LB43Wn9CIE9VtTHnFRRZdNSBeBWjMmOIWrEo3sz4ZKuk
- FwdUe5J/pb6t3+ovauICkzIFQnBhkQ1nWECZKV//zpSseyKqmsxr+
-X-Gm-Gg: ASbGnctX6/hlIHM5KmcEpDw0MQBG97LcbzRYtiHoQ3d/xp3R9Aw420fCwLj+QiaRisG
- cz+RFDwM9SWuR3b4e6ySdQSSxdHXGq2e2VlyqF9UYodPKc9aahuiu4FDfrV0KsXbGYDdMCPJCmg
- 20FoSaEF+GYhIJbGuXbMo/QQTzMabT0mtEsfLHcnxGdqqj1l0RyRY+Vy14jug7QnP7/czC0z/El
- p0zFpkUp6TyIdh5W2fakixZea50dpAydnTCx0jkdn0k8Pffo8/u1xJa5EpnRThWwPGtG9iX1vT7
- 7kEZxKDosWk+FGYarVP4gr9dMNvZJkPtbmBs
-X-Received: by 2002:a05:600c:a45:b0:434:f7e3:bfbd with SMTP id
- 5b1f17b1804b1-438dc40cf15mr47220565e9.23.1738219652855; 
- Wed, 29 Jan 2025 22:47:32 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IGEdxirgvvoD63otXc9hFJLgX/RvlV+PPRRZf+p0mjaGhn3uRAMz3lii3hOMGs2ONtvmN265Q==
-X-Received: by 2002:a05:600c:a45:b0:434:f7e3:bfbd with SMTP id
- 5b1f17b1804b1-438dc40cf15mr47220455e9.23.1738219652411; 
- Wed, 29 Jan 2025 22:47:32 -0800 (PST)
-Received: from [192.168.0.7] (ip-109-42-50-234.web.vodafone.de.
- [109.42.50.234]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-438dcc6df36sm49443585e9.25.2025.01.29.22.47.31
+ AJvYcCV5dWJt2SvSvAlGFFRb6l/VxF6+x0txNalzMuPxO93UM3Z+xOICF5aDXKi91SJMCEHTR0kkdZ5b+lw4@nongnu.org
+X-Gm-Message-State: AOJu0YxTRc366uaM6Ut+Rh57SkPmWP+pkLgzqblpWEQv6EragjheIsRo
+ QWge4OXufhzxvJC0iqWdd576MlXuobI5/2dRLSxRh4YsiOgVd1jVFhQnh4P23c9n7/sExoDAx2D
+ AOUngp+aMCDmGqQ7Sp5xvKGGtyF5+jxNRsUZy+/Get8ef01x6j2sO
+X-Gm-Gg: ASbGncvFYIASaLc6pAYRv5M4qqK5ThxkUGProGGi1+8loZqdBgJSFzxQ9cyU+d0B+n+
+ YWiXPzJqdDxj2MS+X+R8ZnqfLpqus3rPhlOaxT57jKw0TUJfda3EoBQppBmvEBP0bQhe0uHYkS0
+ qgxcFiHszcyxoBMqyxce0l6o74xyd5n76l9n9o9MM0wLZEvzbiQ5CT3Zdc7uNVcwc1vGlm95CLM
+ JJQCSmqjW3mQ6PnVG4NAul8cL3O5VV52dSKXzvA6P3xJiSo/WVuuPXfxZTtd/H1qKvtxSusSU5G
+ FixEffJ7tRUZmjuixk1wibDieXY7R7nXqQEVQg2cv+k=
+X-Received: by 2002:a5d:6149:0:b0:386:373f:47c4 with SMTP id
+ ffacd0b85a97d-38c520b0473mr4000625f8f.49.1738221996994; 
+ Wed, 29 Jan 2025 23:26:36 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IES78E//6ugpWSnQcOx9ytjYeHUzETTnV0zEduu8FbyjVjBi/vYbra2ZIfuzJXpv0Mr70G85A==
+X-Received: by 2002:a5d:6149:0:b0:386:373f:47c4 with SMTP id
+ ffacd0b85a97d-38c520b0473mr4000616f8f.49.1738221996675; 
+ Wed, 29 Jan 2025 23:26:36 -0800 (PST)
+Received: from ?IPV6:2a01:e0a:280:24f0:9db0:474c:ff43:9f5c?
+ ([2a01:e0a:280:24f0:9db0:474c:ff43:9f5c])
+ by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-438d7aa605asm52817235e9.1.2025.01.29.23.26.34
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 29 Jan 2025 22:47:31 -0800 (PST)
-Message-ID: <21df1d87-025a-400a-9f55-086f4544dfef@redhat.com>
-Date: Thu, 30 Jan 2025 07:47:30 +0100
+ Wed, 29 Jan 2025 23:26:35 -0800 (PST)
+Message-ID: <e74c87d7-d1e0-40db-8416-7ba48c2be2ef@redhat.com>
+Date: Thu, 30 Jan 2025 08:26:34 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] hw/i386/pc: Fix crash that occurs when introspecting
- TYPE_PC_MACHINE machines
-To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- qemu-devel@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>,
- "Michael S. Tsirkin" <mst@redhat.com>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>
-Cc: Richard Henderson <richard.henderson@linaro.org>,
- Eduardo Habkost <eduardo@habkost.net>
-References: <20250117192106.471029-1-thuth@redhat.com>
- <d48f6516-1c8f-4bf0-ae53-7bb364589c25@linaro.org>
-From: Thomas Huth <thuth@redhat.com>
-Content-Language: en-US
-Autocrypt: addr=thuth@redhat.com; keydata=
- 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
-In-Reply-To: <d48f6516-1c8f-4bf0-ae53-7bb364589c25@linaro.org>
+Subject: Re: [PATCH 0/5] tests/functional: Update Aspeed OpenBMC images
+To: Andrew Jeffery <andrew@codeconstruct.com.au>, qemu-arm@nongnu.org,
+ qemu-devel@nongnu.org
+Cc: Joel Stanley <joel@jms.id.au>, Troy Lee <troy_lee@aspeedtech.com>,
+ Jamin Lin <jamin_lin@aspeedtech.com>, Steven Lee
+ <steven_lee@aspeedtech.com>, Thomas Huth <thuth@redhat.com>
+References: <20250128214100.1196243-1-clg@redhat.com>
+ <bee99a3ef4821f69f6f1a2f6cfc77c3e247e5d87.camel@codeconstruct.com.au>
+ <78e6b6ad-0422-4b43-95f5-f377ea101f09@redhat.com>
+ <4c7dc177de0e36a6f3e6ee444357f572affc30ca.camel@codeconstruct.com.au>
+Content-Language: en-US, fr
+From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
+Autocrypt: addr=clg@redhat.com; keydata=
+ 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
+ uVKe8BVz4atMOoktmt0GWTOC8P4=
+In-Reply-To: <4c7dc177de0e36a6f3e6ee444357f572affc30ca.camel@codeconstruct.com.au>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=thuth@redhat.com;
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=clg@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -33
 X-Spam_score: -3.4
 X-Spam_bar: ---
 X-Spam_report: (-3.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.3,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -158,79 +160,47 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 29/01/2025 08.11, Philippe Mathieu-Daudé wrote:
-> Hi Thomas,
+On 1/30/25 04:03, Andrew Jeffery wrote:
+> On Wed, 2025-01-29 at 08:19 +0100, Cédric Le Goater wrote:
+>> On 1/29/25 00:29, Andrew Jeffery wrote:
+>>> Hi Cédric,
+>>>
+>>> On Tue, 2025-01-28 at 22:41 +0100, Cédric Le Goater wrote:
+>>>> Hello,
+>>>>
+>>>> This series updates the OpenBMC firmware images to the latest
+>>>> version
+>>>> for existing tests and also adds 2 new tests for Aspeed machines
+>>>> which
+>>>> were not tested before : witherspoon and bletchley.
+>>>>
+>>>> Thanks,
+>>>>
+>>>> C.
+>>>>
+>>>> Cédric Le Goater (5):
+>>>>     tests/functional: Introduce a new test routine for OpenBMC
+>>>> images
+>>>>     tests/functional: Update OpenBMC image of palmetto machine
+>>>>     tests/functional: Update OpenBMC image of romulus machine
+>>>>     tests/functional: Introduce a witherspoon machine test
+>>>>     tests/functional: Introduce a bletchley machine test
+>>>
+>>> The rest of the patches haven't reached my inbox. Did you send
+>>> them? It
+>>> also seems they're missing on lore :)
+>>>
+>>> https://lore.kernel.org/all/20250128214100.1196243-1-clg@redhat.com/
+>> I shouldn't send series too late in the evening ...Sorry for the
+>> noise.
+>>
 > 
-> On 17/1/25 20:21, Thomas Huth wrote:
->> QEMU currently crashes when you try to inspect the machines based on
->> TYPE_PC_MACHINE for their properties:
->>
->>   $ echo '{ "execute": "qmp_capabilities" }
->>           { "execute": "qom-list-properties","arguments":
->>                        { "typename": "pc-q35-10.0-machine"}}' \
->>     | ./qemu-system-x86_64 -M pc -qmp stdio
->>   {"QMP": {"version": {"qemu": {"micro": 50, "minor": 2, "major": 9},
->>    "package": "v9.2.0-1070-g87e115c122-dirty"}, "capabilities": ["oob"]}}
->>   {"return": {}}
->>   Segmentation fault (core dumped)
->>
->> This happens because TYPE_PC_MACHINE machines add a machine_init-
->> done_notifier in their instance_init function - but instance_init
->> of machines are not only called for machines that are realized,
->> but also for machines that are introspected, so in this case the
->> listener is added for a q35 machine that is never realized. But
->> since there is already a running pc machine, the listener function
->> is triggered immediately, causing a crash since it was not for the
->> right machine it was meant for.
->>
->> Such listener functions must never be installed from an instance_init
->> function. Let's do it from pc_basic_device_init() instead - this
->> function is called from the MachineClass->init() function instead,
->> i.e. guaranteed to be only called once in the lifetime of a QEMU
->> process.
->>
->> Resolves: https://gitlab.com/qemu-project/qemu/-/issues/2779
->> Signed-off-by: Thomas Huth <thuth@redhat.com>
->> ---
->>   hw/i386/pc.c | 6 +++---
->>   1 file changed, 3 insertions(+), 3 deletions(-)
->>
->> diff --git a/hw/i386/pc.c b/hw/i386/pc.c
->> index b46975c8a4..85b8a76455 100644
->> --- a/hw/i386/pc.c
->> +++ b/hw/i386/pc.c
->> @@ -1241,6 +1241,9 @@ void pc_basic_device_init(struct PCMachineState *pcms,
->>       /* Super I/O */
->>       pc_superio_init(isa_bus, create_fdctrl, pcms->i8042_enabled,
->>                       pcms->vmport != ON_OFF_AUTO_ON, &error_fatal);
->> +
->> +    pcms->machine_done.notify = pc_machine_done;
-> 
-> I could accept if we rename:
-> 
->    pc_machine_done() -> pc_basic_device_init_done[_notifier]()
+> Hah, no worries. I see Thomas has already reviewed the resend.
 
-Not sure whether that's such a good idea: The notifier is called when the 
-machine init has been done, not when the device init has been done. It just 
-happens to be instantiated from a function called pc_basic_device_init() 
-now, but that does not really mean that the notifier function should get a 
-similar name, should it?
+yep. patch 5/5 still needs to be looked at.
 
-  Thomas
+Thanks,
 
-
->> +    qemu_add_machine_init_done_notifier(&pcms->machine_done);
->>   }
->>   void pc_nic_init(PCMachineClass *pcmc, ISABus *isa_bus, PCIBus *pci_bus)
->> @@ -1714,9 +1717,6 @@ static void pc_machine_initfn(Object *obj)
->>       if (pcmc->pci_enabled) {
->>           cxl_machine_init(obj, &pcms->cxl_devices_state);
->>       }
->> -
->> -    pcms->machine_done.notify = pc_machine_done;
->> -    qemu_add_machine_init_done_notifier(&pcms->machine_done);
->>   }
->>   static void pc_machine_reset(MachineState *machine, ResetType type)
-> 
+C.
 
 
