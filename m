@@ -4,41 +4,39 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E00A9C0218A
-	for <qemu-devel@archiver.kernel.org>; Thu, 30 Jan 2025 13:35:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 18BEBC0218F
+	for <qemu-devel@archiver.kernel.org>; Thu, 30 Jan 2025 13:35:56 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tdUhB-0002ff-Cs; Thu, 30 Jan 2025 08:35:01 -0500
+	id 1tdUh5-0002ar-CL; Thu, 30 Jan 2025 08:34:55 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1tdUh9-0002dp-Ey; Thu, 30 Jan 2025 08:34:59 -0500
+ id 1tdUh2-0002aH-Cx; Thu, 30 Jan 2025 08:34:52 -0500
 Received: from isrv.corpit.ru ([86.62.121.231])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1tdUh8-0002XR-0b; Thu, 30 Jan 2025 08:34:59 -0500
+ id 1tdUh0-0002WM-L8; Thu, 30 Jan 2025 08:34:52 -0500
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id F35E3E3043;
+ by isrv.corpit.ru (Postfix) with ESMTP id E38E1E303F;
  Thu, 30 Jan 2025 16:34:18 +0300 (MSK)
 Received: from gandalf.tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id E34531A7F8A;
+ by tsrv.corpit.ru (Postfix) with ESMTP id D34A11A7F86;
  Thu, 30 Jan 2025 16:34:47 +0300 (MSK)
 Received: by gandalf.tls.msk.ru (Postfix, from userid 1000)
- id CEC3B5240A; Thu, 30 Jan 2025 16:34:47 +0300 (MSK)
+ id C4D0B52402; Thu, 30 Jan 2025 16:34:47 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: Thomas Huth <thuth@redhat.com>, qemu-trivial@nongnu.org,
- Michael Tokarev <mjt@tls.msk.ru>
-Subject: [PULL 5/7] tests/functional/test_mips_malta: Fix comment about
- endianness of the test
-Date: Thu, 30 Jan 2025 16:34:45 +0300
-Message-Id: <20250130133447.873566-6-mjt@tls.msk.ru>
+Cc: Laurent Vivier <lvivier@redhat.com>, qemu-trivial@nongnu.org,
+ akihiko.odaki@daynix.com, Michael Tokarev <mjt@tls.msk.ru>
+Subject: [PULL 1/7] net: Fix announce_self
+Date: Thu, 30 Jan 2025 16:34:41 +0300
+Message-Id: <20250130133447.873566-2-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <20250130133447.873566-1-mjt@tls.msk.ru>
 References: <20250130133447.873566-1-mjt@tls.msk.ru>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=86.62.121.231; envelope-from=mjt@tls.msk.ru;
  helo=isrv.corpit.ru
@@ -63,32 +61,68 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Thomas Huth <thuth@redhat.com>
+From: Laurent Vivier <lvivier@redhat.com>
 
-This test is for the big endian MIPS target, not for the little endian
-target.
+b9ad513e1876 ("net: Remove receive_raw()") adds an iovec entry
+in qemu_deliver_packet_iov() to add the virtio-net header
+in the data when QEMU_NET_PACKET_FLAG_RAW is set but forgets
+to increase the number of iovec entries in the array, so
+receive_iov() will only send the first entry (the virtio-net
+entry, full of 0) and no data. The packet will be discarded.
 
-Signed-off-by: Thomas Huth <thuth@redhat.com>
-Fixes: 79cb4a14cb6 ("tests/functional: Convert mips32eb 4Kc Malta tests")
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+The only user of QEMU_NET_PACKET_FLAG_RAW is announce_self.
+
+We can see the problem with tcpdump:
+
+- QEMU parameters:
+
+  .. -monitor stdio \
+     -netdev bridge,id=netdev0,br=virbr0 \
+     -device virtio-net,mac=9a:2b:2c:2d:2e:2f,netdev=netdev0 \
+
+- HMP command:
+
+  (qemu) announce_self
+
+- TCP dump:
+
+  $ sudo tcpdump -nxi virbr0
+
+  without the fix:
+
+    <nothing>
+
+  with the fix:
+
+   ARP, Reverse Request who-is 9a:2b:2c:2d:2e:2f tell 9a:2b:2c:2d:2e:2f, length 46
+        0x0000:  0001 0800 0604 0003 9a2b 2c2d 2e2f 0000
+        0x0010:  0000 9a2b 2c2d 2e2f 0000 0000 0000 0000
+        0x0020:  0000 0000 0000 0000 0000 0000 0000
+
+Reported-by: Xiaohui Li <xiaohli@redhat.com>
+Bug: https://issues.redhat.com/browse/RHEL-73891
+Fixes: b9ad513e1876 ("net: Remove receive_raw()")
+Cc: akihiko.odaki@daynix.com
+Signed-off-by: Laurent Vivier <lvivier@redhat.com>
+Reviewed-by: Akihiko Odaki <akihiko.odaki@daynix.com>
 Reviewed-by: Michael Tokarev <mjt@tls.msk.ru>
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 ---
- tests/functional/test_mips_malta.py | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ net/net.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/tests/functional/test_mips_malta.py b/tests/functional/test_mips_malta.py
-index 3b15038d89..eaf372255b 100755
---- a/tests/functional/test_mips_malta.py
-+++ b/tests/functional/test_mips_malta.py
-@@ -1,6 +1,6 @@
- #!/usr/bin/env python3
- #
--# Functional tests for the little-endian 32-bit MIPS Malta board
-+# Functional tests for the big-endian 32-bit MIPS Malta board
- #
- # Copyright (c) Philippe Mathieu-Daudé <f4bug@amsat.org>
- #
+diff --git a/net/net.c b/net/net.c
+index c1bb19a523..9cded70dde 100644
+--- a/net/net.c
++++ b/net/net.c
+@@ -822,6 +822,7 @@ static ssize_t qemu_deliver_packet_iov(NetClientState *sender,
+         iov_copy[0].iov_len =  nc->vnet_hdr_len;
+         memcpy(&iov_copy[1], iov, iovcnt * sizeof(*iov));
+         iov = iov_copy;
++        iovcnt++;
+     }
+ 
+     if (nc->info->receive_iov) {
 -- 
 2.39.5
 
