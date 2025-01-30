@@ -4,92 +4,135 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 60436C0218A
-	for <qemu-devel@archiver.kernel.org>; Thu, 30 Jan 2025 08:06:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5EBD0C0218A
+	for <qemu-devel@archiver.kernel.org>; Thu, 30 Jan 2025 09:30:16 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tdPZ4-0006y4-Ls; Thu, 30 Jan 2025 03:06:18 -0500
+	id 1tdQrm-0006PI-EH; Thu, 30 Jan 2025 04:29:42 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <imammedo@redhat.com>)
- id 1tdPZ2-0006xa-U8
- for qemu-devel@nongnu.org; Thu, 30 Jan 2025 03:06:16 -0500
+ (Exim 4.90_1) (envelope-from <lvivier@redhat.com>)
+ id 1tdQrl-0006Oj-QS
+ for qemu-devel@nongnu.org; Thu, 30 Jan 2025 04:29:41 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <imammedo@redhat.com>)
- id 1tdPZ0-0003O8-Mj
- for qemu-devel@nongnu.org; Thu, 30 Jan 2025 03:06:16 -0500
+ (Exim 4.90_1) (envelope-from <lvivier@redhat.com>)
+ id 1tdQri-00012a-Mi
+ for qemu-devel@nongnu.org; Thu, 30 Jan 2025 04:29:41 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1738224372;
+ s=mimecast20190719; t=1738229377;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=vU+nrQM1U+RMZa/EGBANTdwIWta1F0ZMP6w54UmnOsQ=;
- b=fLSn2NoWUfhLbL+pEvQNoPfoMmciCN22ySFV5ji1PUfhFaOC/a05Fh1NRU4VsrWq27BT5r
- 6IAPduuvcMKF9W4/skJp2mVcLf2fxgTNw1d5HahK47Cadp+Nd5PYfPbmIKb5bYUx1OhI6s
- AMga8og4NkT361PHwV4dGLowwgHv3uM=
-Received: from mail-wr1-f71.google.com (mail-wr1-f71.google.com
- [209.85.221.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+ bh=FTZ0NNL4KbUZBcmZeeafUqWWmSADVE4sxskeASIgPyc=;
+ b=DLMQV8/tY2EFdkXK53h1c8LXiMPD/4O4TfB1Lp1nH334U83S09x1oyDcM8HQqLTkevCHji
+ gQZ9dFMHs7YiGl1C5RgE/Hoe5Gh1G92slasOB80KFRNzLKscoWJH8k3ae8mUhwFrfqVgOP
+ yDYwmXJmmspaH315CF118SyywxQxi6M=
+Received: from mail-wr1-f69.google.com (mail-wr1-f69.google.com
+ [209.85.221.69]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-20-dHhPt6PZMl6JkSrvqVZbRg-1; Thu, 30 Jan 2025 03:06:10 -0500
-X-MC-Unique: dHhPt6PZMl6JkSrvqVZbRg-1
-X-Mimecast-MFC-AGG-ID: dHhPt6PZMl6JkSrvqVZbRg
-Received: by mail-wr1-f71.google.com with SMTP id
- ffacd0b85a97d-38bf4913659so317980f8f.1
- for <qemu-devel@nongnu.org>; Thu, 30 Jan 2025 00:06:10 -0800 (PST)
+ us-mta-298-dzzzwQF5Md-kuVFVFGuc3A-1; Thu, 30 Jan 2025 04:29:35 -0500
+X-MC-Unique: dzzzwQF5Md-kuVFVFGuc3A-1
+X-Mimecast-MFC-AGG-ID: dzzzwQF5Md-kuVFVFGuc3A
+Received: by mail-wr1-f69.google.com with SMTP id
+ ffacd0b85a97d-38c4a819c0aso334036f8f.3
+ for <qemu-devel@nongnu.org>; Thu, 30 Jan 2025 01:29:34 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1738224367; x=1738829167;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:subject:cc:to:from:date:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=vU+nrQM1U+RMZa/EGBANTdwIWta1F0ZMP6w54UmnOsQ=;
- b=RYwQKxjWKOOFycd7DFME6JJq/+vXwtit24hboYAEBcCLbTSghhNifOTSbDvlkSUnJf
- WmiJLR3xrHb6T5bS4cCRLbj/yiC+RZX4wi8wo0ENwPzXRZ4lMAswQkpJoP2LxwRC9Zzh
- iVI/XmUd4d2M9+OVjAJCGHjsoIGBhK6pAdtD7BuIUA727O3MWOB3+V/siL9JiAR8ci4o
- 2z39dMDUIKXerlgV2cJa2csXCScC37lvY/bnprnYyYDZt9CzNo7sUoDxmMO1YHJ/7c59
- a6IqxU4re6cXupEB+GYiU+Uc/WKKYlhlTOdv1W4tUJyL7L0MhbL8P0J9KVOceziS7ujw
- ok6g==
-X-Gm-Message-State: AOJu0Yykuf+oRiYFBwHRRGfDQJtppBFe1R2BkNUo0UWQPqepGq1NeZr8
- n0MNGM6n+BI4tpA+Z6rdcuJI7poR5NWRJ5JJtjCV5bxZPwmb/GflEY/BdRWLhgqDAbEtfWi9pVm
- ZjbPk2t5ZUtkrOC62E3rblBWbWlIIqKRpVA3CctgW3zG7XmilDem9YYbnz5Ce
-X-Gm-Gg: ASbGncvFrC+zk1ZWCQm1OQlfxp5cqXL3pGGUQsB4H0Hpu3oQGBP3IXUppIdEtZpNx9h
- s551buR8N4xik8p4BM/r7jtu8NP/C2w80XzRFTrl7VgMT0CSwwt+UD1YxD2aYq8mNaiUTxDlqcq
- +ZKY34GvNsvezBKZPSem8EXjpmiWG3m+GWGuI6ot5CODEyGpBoNAx3Cpeawmk9M785uvJ03BXnk
- OuhIWa7A+LPlos7BiRM63Qbj0sSSsqYrRoSOm6+77uXTtRlTrr5bq8M/CDGpp/vsmuhsCohgbuZ
- n/zUPMpzTWxqx8613DBMghzWa2R9Ay4EoVwDQ70vozr2v/oQQW/i
-X-Received: by 2002:adf:fbca:0:b0:385:f6b9:e762 with SMTP id
- ffacd0b85a97d-38c5209716amr3151409f8f.36.1738224367235; 
- Thu, 30 Jan 2025 00:06:07 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IHUIFjKOPxh0M6aDbInSbYtLIhrQKdcTWdeIJjjvBOsG3kVZj0yANz0SPCDLIed/wYlqdMmew==
-X-Received: by 2002:adf:fbca:0:b0:385:f6b9:e762 with SMTP id
- ffacd0b85a97d-38c5209716amr3151379f8f.36.1738224366773; 
- Thu, 30 Jan 2025 00:06:06 -0800 (PST)
-Received: from imammedo.users.ipa.redhat.com (nat-pool-brq-t.redhat.com.
- [213.175.37.10]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-438dcc6de7csm50132175e9.32.2025.01.30.00.06.05
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 30 Jan 2025 00:06:06 -0800 (PST)
-Date: Thu, 30 Jan 2025 09:06:04 +0100
-From: Igor Mammedov <imammedo@redhat.com>
-To: BALATON Zoltan <balaton@eik.bme.hu>
-Cc: qemu-devel@nongnu.org, alex.bennee@linaro.org,
- richard.henderson@linaro.org, pbonzini@redhat.com, imp@bsdimp.com,
- kevans@freebsd.org, gaosong@loongson.cn, laurent@vivier.eu,
- npiggin@gmail.com
-Subject: Re: [PATCH 5/6] Revert "tcg/cputlb: remove other-cpu capability
- from TLB flushing"
-Message-ID: <20250130090604.6251d084@imammedo.users.ipa.redhat.com>
-In-Reply-To: <82142340-a80e-49f0-8e45-aa043932e026@eik.bme.hu>
-References: <20250129134436.1240740-1-imammedo@redhat.com>
- <20250129134436.1240740-6-imammedo@redhat.com>
- <82142340-a80e-49f0-8e45-aa043932e026@eik.bme.hu>
-X-Mailer: Claws Mail 4.3.0 (GTK 3.24.43; x86_64-redhat-linux-gnu)
+ d=1e100.net; s=20230601; t=1738229373; x=1738834173;
+ h=content-transfer-encoding:in-reply-to:autocrypt:from
+ :content-language:references:cc:to:subject:user-agent:mime-version
+ :date:message-id:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=FTZ0NNL4KbUZBcmZeeafUqWWmSADVE4sxskeASIgPyc=;
+ b=tFIzp3R0PmNOe90+0x/6TmBviJmEw7uloBxyj/69x+5uPnoOQ3++6J9Z5VRLYrDRAm
+ 86Mat1QRNkXV7NkXzcX5LKc87/c/Ag3nKm3NKgRv//vz9/3VpCi5u0wRK8yJu0pphiK5
+ nI8FssnGdwJhYxu0w1RPnkOsItQUjV1XQba9TvfIhEXH9czVrcbaQXT1dc8gDUQVqgZM
+ W9NWcXnnR3IdMjJ9KeRFSnzA9Z7DRhdMHWATfJrnUgzrW9jZ+A0CXrfzhxT1NmPj6Ef+
+ hUYp/dH2bKwCEtsNo/MP/qtswqmbM9S30stWtgNJiZEq0kT2CDSaaf6EipR2eMnul6JM
+ qHCw==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCV9xDLRwFqOXLNraC+xs7yHynMrBDVTkLzR/Yylcy4rGDrKdNROSGsY//Ujm3DY+g3aAkITleAW/0Xg@nongnu.org
+X-Gm-Message-State: AOJu0YyYuxdfwq/zwYGCVelqAT3D/DsjiOlQ1Nx80xp+2752dg5+VqsB
+ GuU3nTkwjsFF31nUTTTbtu6g/3StQCGSqyPT0yIm11tPM7Otw8fD4Sn66BQ1dQA7cAuWimdfVPC
+ Tp031ePTBSK2dNhboQNLKLEkFIGxWQnQ4kI2FPZfkdkBGO2s/SI7EMMb/FSXj
+X-Gm-Gg: ASbGnctb8h1VjnZa0WrJy7DDZIy1CnkAU80NEFh406I4ESF1/5MG7x42mafXvEP1AnL
+ avJvgfeapa3GUdocU5uEISsA8zqJWKcP0Z2sOa8sFG9bZ5b2jytiwvw3uNxd8bu9XziR00d297D
+ 8NzolNcDuMPIRsaFLtiH3MizRzyaHcnX9eNvsxq5m2bBKTmU4Y4A7rTDg4g1zxHnfYnNRTngDUj
+ HbOoRsdt/3y6f9LChoulHh93YL2HKLMLRtAeQlt3fSXNKRXAtUKf8b0Jm5V/KZtyTGcwz+WK0gR
+ K/nyoSanBPuTN1P9HHwURAfFeSsLHgJDCbOcQ7ZfC+Y=
+X-Received: by 2002:a5d:6487:0:b0:38b:669d:4dd4 with SMTP id
+ ffacd0b85a97d-38c5192f1f4mr5166960f8f.11.1738229373694; 
+ Thu, 30 Jan 2025 01:29:33 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IHMxR9PgftdD47rhI9MraZxXAXEV5YIUWLzbB7qIk8tJaroQrHgLBaN1W8Mx+eWinyN2ca7vw==
+X-Received: by 2002:a5d:6487:0:b0:38b:669d:4dd4 with SMTP id
+ ffacd0b85a97d-38c5192f1f4mr5166937f8f.11.1738229373349; 
+ Thu, 30 Jan 2025 01:29:33 -0800 (PST)
+Received: from ?IPV6:2a01:e0a:e10:ef90:343a:68f:2e91:95c?
+ ([2a01:e0a:e10:ef90:343a:68f:2e91:95c])
+ by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-38c5c0ec35asm1441462f8f.15.2025.01.30.01.29.32
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Thu, 30 Jan 2025 01:29:32 -0800 (PST)
+Message-ID: <06f5b8c8-1d06-43aa-80ae-d7ef384d34a6@redhat.com>
+Date: Thu, 30 Jan 2025 10:29:32 +0100
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=imammedo@redhat.com;
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 0/2] net: Fix announce_self with vhost
+To: Michael Tokarev <mjt@tls.msk.ru>, qemu-devel@nongnu.org
+Cc: Jason Wang <jasowang@redhat.com>, QEMU Trivial <qemu-trivial@nongnu.org>, 
+ qemu-stable <qemu-stable@nongnu.org>
+References: <20250117111709.970789-1-lvivier@redhat.com>
+ <f508fd5f-23c6-4f0c-8fdc-bfedd5a9e9e0@tls.msk.ru>
+Content-Language: en-US
+From: Laurent Vivier <lvivier@redhat.com>
+Autocrypt: addr=lvivier@redhat.com; keydata=
+ xsFNBFYFJhkBEAC2me7w2+RizYOKZM+vZCx69GTewOwqzHrrHSG07MUAxJ6AY29/+HYf6EY2
+ WoeuLWDmXE7A3oJoIsRecD6BXHTb0OYS20lS608anr3B0xn5g0BX7es9Mw+hV/pL+63EOCVm
+ SUVTEQwbGQN62guOKnJJJfphbbv82glIC/Ei4Ky8BwZkUuXd7d5NFJKC9/GDrbWdj75cDNQx
+ UZ9XXbXEKY9MHX83Uy7JFoiFDMOVHn55HnncflUncO0zDzY7CxFeQFwYRbsCXOUL9yBtqLer
+ Ky8/yjBskIlNrp0uQSt9LMoMsdSjYLYhvk1StsNPg74+s4u0Q6z45+l8RAsgLw5OLtTa+ePM
+ JyS7OIGNYxAX6eZk1+91a6tnqfyPcMbduxyBaYXn94HUG162BeuyBkbNoIDkB7pCByed1A7q
+ q9/FbuTDwgVGVLYthYSfTtN0Y60OgNkWCMtFwKxRaXt1WFA5ceqinN/XkgA+vf2Ch72zBkJL
+ RBIhfOPFv5f2Hkkj0MvsUXpOWaOjatiu0fpPo6Hw14UEpywke1zN4NKubApQOlNKZZC4hu6/
+ 8pv2t4HRi7s0K88jQYBRPObjrN5+owtI51xMaYzvPitHQ2053LmgsOdN9EKOqZeHAYG2SmRW
+ LOxYWKX14YkZI5j/TXfKlTpwSMvXho+efN4kgFvFmP6WT+tPnwARAQABzSNMYXVyZW50IFZp
+ dmllciA8bHZpdmllckByZWRoYXQuY29tPsLBeAQTAQIAIgUCVgVQgAIbAwYLCQgHAwIGFQgC
+ CQoLBBYCAwECHgECF4AACgkQ8ww4vT8vvjwpgg//fSGy0Rs/t8cPFuzoY1cex4limJQfReLr
+ SJXCANg9NOWy/bFK5wunj+h/RCFxIFhZcyXveurkBwYikDPUrBoBRoOJY/BHK0iZo7/WQkur
+ 6H5losVZtrotmKOGnP/lJYZ3H6OWvXzdz8LL5hb3TvGOP68K8Bn8UsIaZJoeiKhaNR0sOJyI
+ YYbgFQPWMHfVwHD/U+/gqRhD7apVysxv5by/pKDln1I5v0cRRH6hd8M8oXgKhF2+rAOL7gvh
+ jEHSSWKUlMjC7YwwjSZmUkL+TQyE18e2XBk85X8Da3FznrLiHZFHQ/NzETYxRjnOzD7/kOVy
+ gKD/o7asyWQVU65mh/ECrtjfhtCBSYmIIVkopoLaVJ/kEbVJQegT2P6NgERC/31kmTF69vn8
+ uQyW11Hk8tyubicByL3/XVBrq4jZdJW3cePNJbTNaT0d/bjMg5zCWHbMErUib2Nellnbg6bc
+ 2HLDe0NLVPuRZhHUHM9hO/JNnHfvgiRQDh6loNOUnm9Iw2YiVgZNnT4soUehMZ7au8PwSl4I
+ KYE4ulJ8RRiydN7fES3IZWmOPlyskp1QMQBD/w16o+lEtY6HSFEzsK3o0vuBRBVp2WKnssVH
+ qeeV01ZHw0bvWKjxVNOksP98eJfWLfV9l9e7s6TaAeySKRRubtJ+21PRuYAxKsaueBfUE7ZT
+ 7zfOwU0EVgUmGQEQALxSQRbl/QOnmssVDxWhHM5TGxl7oLNJms2zmBpcmlrIsn8nNz0rRyxT
+ 460k2niaTwowSRK8KWVDeAW6ZAaWiYjLlTunoKwvF8vP3JyWpBz0diTxL5o+xpvy/Q6YU3BN
+ efdq8Vy3rFsxgW7mMSrI/CxJ667y8ot5DVugeS2NyHfmZlPGE0Nsy7hlebS4liisXOrN3jFz
+ asKyUws3VXek4V65lHwB23BVzsnFMn/bw/rPliqXGcwl8CoJu8dSyrCcd1Ibs0/Inq9S9+t0
+ VmWiQWfQkz4rvEeTQkp/VfgZ6z98JRW7S6l6eophoWs0/ZyRfOm+QVSqRfFZdxdP2PlGeIFM
+ C3fXJgygXJkFPyWkVElr76JTbtSHsGWbt6xUlYHKXWo+xf9WgtLeby3cfSkEchACrxDrQpj+
+ Jt/JFP+q997dybkyZ5IoHWuPkn7uZGBrKIHmBunTco1+cKSuRiSCYpBIXZMHCzPgVDjk4viP
+ brV9NwRkmaOxVvye0vctJeWvJ6KA7NoAURplIGCqkCRwg0MmLrfoZnK/gRqVJ/f6adhU1oo6
+ z4p2/z3PemA0C0ANatgHgBb90cd16AUxpdEQmOCmdNnNJF/3Zt3inzF+NFzHoM5Vwq6rc1JP
+ jfC3oqRLJzqAEHBDjQFlqNR3IFCIAo4SYQRBdAHBCzkM4rWyRhuVABEBAAHCwV8EGAECAAkF
+ AlYFJhkCGwwACgkQ8ww4vT8vvjwg9w//VQrcnVg3TsjEybxDEUBm8dBmnKqcnTBFmxN5FFtI
+ WlEuY8+YMiWRykd8Ln9RJ/98/ghABHz9TN8TRo2b6WimV64FmlVn17Ri6FgFU3xNt9TTEChq
+ AcNg88eYryKsYpFwegGpwUlaUaaGh1m9OrTzcQy+klVfZWaVJ9Nw0keoGRGb8j4XjVpL8+2x
+ OhXKrM1fzzb8JtAuSbuzZSQPDwQEI5CKKxp7zf76J21YeRrEW4WDznPyVcDTa+tz++q2S/Bp
+ P4W98bXCBIuQgs2m+OflERv5c3Ojldp04/S4NEjXEYRWdiCxN7ca5iPml5gLtuvhJMSy36gl
+ U6IW9kn30IWuSoBpTkgV7rLUEhh9Ms82VWW/h2TxL8enfx40PrfbDtWwqRID3WY8jLrjKfTd
+ R3LW8BnUDNkG+c4FzvvGUs8AvuqxxyHbXAfDx9o/jXfPHVRmJVhSmd+hC3mcQ+4iX5bBPBPM
+ oDqSoLt5w9GoQQ6gDVP2ZjTWqwSRMLzNr37rJjZ1pt0DCMMTbiYIUcrhX8eveCJtY7NGWNyx
+ FCRkhxRuGcpwPmRVDwOl39MB3iTsRighiMnijkbLXiKoJ5CDVvX5yicNqYJPKh5MFXN1bvsB
+ kmYiStMRbrD0HoY1kx5/VozBtc70OU0EB8Wrv9hZD+Ofp0T3KOr1RUHvCZoLURfFhSQ=
+In-Reply-To: <f508fd5f-23c6-4f0c-8fdc-bfedd5a9e9e0@tls.msk.ru>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=lvivier@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -33
 X-Spam_score: -3.4
@@ -98,7 +141,7 @@ X-Spam_report: (-3.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.3,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -114,135 +157,34 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, 29 Jan 2025 19:33:30 +0100 (CET)
-BALATON Zoltan <balaton@eik.bme.hu> wrote:
+On 18/01/2025 21:20, Michael Tokarev wrote:
+> 17.01.2025 14:17, Laurent Vivier wrote:
+>> announce_self that sends a RARP packet after migration
+>> or with announce_self QMP/HMP command doesn't work with
+>> vhost because of the vnet headers.
+>>
+>> announce_self is the only user of QEMU_NET_PACKET_FLAG_RAW and
+>> this flag is not correctly managed.
+>>
+>> This series fix a problem with this flag in filter-dump and in
+>> qemu_deliver_packet_iov().
+>>
+>> Laurent Vivier (2):
+>>    net: Fix announce_self
+>>    net/dump: Correctly compute Ethernet packet offset
+>>
+>>   net/dump.c | 3 ++-
+>>   net/net.c  | 1 +
+>>   2 files changed, 3 insertions(+), 1 deletion(-)
+> 
+> Reviewed-by: Michael Tokarev <mjt@tls.msk.ru>
+> 
+> Applied to trivial-patches and queued for qemu-stable.
+> 
 
-> On Wed, 29 Jan 2025, Igor Mammedov wrote:
-> > 1)
-> > This reverts commit 30933c4fb4f3df95ae44c4c3c86a5df049852c01.
-> >  ("tcg/cputlb: remove other-cpu capability from TLB flushing")
-> >
-> > The commit caused a regression which went unnoticed due to
-> > affected being disabled by default (DEBUG_TLB_GATE 0)
-> > Previous patch moved switched to using tcg_debug_assert() so that  
-> 
-> The verb "moved" not needed and left from editing?
-yep, I'll fix it up in case of respin
+When do you plan to send the PR for them?
 
-
-> 
-> Regards,
-> BALATON Zoltan
-> 
-> > at least on debug builds assert_cpu_is_self() path would be exercised.
-> >
-> > And that lead to exposing regression introduced by [1] with abort during tests.
-> > to reproduce:
-> >  $ configure  --target-list=x86_64-softmmu --enable-debug
-> >  $ make && ./qemu-system-x86_64
-> >
-> >  accel/tcg/cputlb.c:419: tlb_flush_by_mmuidx:
-> >    Assertion `!(cpu)->created || qemu_cpu_is_self(cpu)' failed.
-> >
-> > which is triggered by usage outside of cpu thread:
-> >    x86_cpu_new -> ... ->
-> >      x86_cpu_realizefn -> cpu_reset -> ... ->
-> >          tcg_cpu_reset_hold
-> >
-> > Drop offending commit for now, until a propper fix that doesn't break
-> > 'make check' is available.
-> >
-> > PS:
-> > fixup g_memdup() checkpatch error s/g_memdup/g_memdup2/
-> >
-> > Signed-off-by: Igor Mammedov <imammedo@redhat.com>
-> > ---
-> > I'll leave it upto TCG folz to fix it up propperly.
-> >
-> > CC: npiggin@gmail.com
-> > CC: richard.henderson@linaro.org
-> > ---
-> > accel/tcg/cputlb.c | 42 +++++++++++++++++++++++++++++++++---------
-> > 1 file changed, 33 insertions(+), 9 deletions(-)
-> >
-> > diff --git a/accel/tcg/cputlb.c b/accel/tcg/cputlb.c
-> > index 71207d6dbf..db1713b3ca 100644
-> > --- a/accel/tcg/cputlb.c
-> > +++ b/accel/tcg/cputlb.c
-> > @@ -416,9 +416,12 @@ void tlb_flush_by_mmuidx(CPUState *cpu, uint16_t idxmap)
-> > {
-> >     tlb_debug("mmu_idx: 0x%" PRIx16 "\n", idxmap);
-> >
-> > -    assert_cpu_is_self(cpu);
-> > -
-> > -    tlb_flush_by_mmuidx_async_work(cpu, RUN_ON_CPU_HOST_INT(idxmap));
-> > +    if (cpu->created && !qemu_cpu_is_self(cpu)) {
-> > +        async_run_on_cpu(cpu, tlb_flush_by_mmuidx_async_work,
-> > +                         RUN_ON_CPU_HOST_INT(idxmap));
-> > +    } else {
-> > +        tlb_flush_by_mmuidx_async_work(cpu, RUN_ON_CPU_HOST_INT(idxmap));
-> > +    }
-> > }
-> >
-> > void tlb_flush(CPUState *cpu)
-> > @@ -607,12 +610,28 @@ void tlb_flush_page_by_mmuidx(CPUState *cpu, vaddr addr, uint16_t idxmap)
-> > {
-> >     tlb_debug("addr: %016" VADDR_PRIx " mmu_idx:%" PRIx16 "\n", addr, idxmap);
-> >
-> > -    assert_cpu_is_self(cpu);
-> > -
-> >     /* This should already be page aligned */
-> >     addr &= TARGET_PAGE_MASK;
-> >
-> > -    tlb_flush_page_by_mmuidx_async_0(cpu, addr, idxmap);
-> > +    if (qemu_cpu_is_self(cpu)) {
-> > +        tlb_flush_page_by_mmuidx_async_0(cpu, addr, idxmap);
-> > +    } else if (idxmap < TARGET_PAGE_SIZE) {
-> > +        /*
-> > +         * Most targets have only a few mmu_idx.  In the case where
-> > +         * we can stuff idxmap into the low TARGET_PAGE_BITS, avoid
-> > +         * allocating memory for this operation.
-> > +         */
-> > +        async_run_on_cpu(cpu, tlb_flush_page_by_mmuidx_async_1,
-> > +                         RUN_ON_CPU_TARGET_PTR(addr | idxmap));
-> > +    } else {
-> > +        TLBFlushPageByMMUIdxData *d = g_new(TLBFlushPageByMMUIdxData, 1);
-> > +
-> > +        /* Otherwise allocate a structure, freed by the worker.  */
-> > +        d->addr = addr;
-> > +        d->idxmap = idxmap;
-> > +        async_run_on_cpu(cpu, tlb_flush_page_by_mmuidx_async_2,
-> > +                         RUN_ON_CPU_HOST_PTR(d));
-> > +    }
-> > }
-> >
-> > void tlb_flush_page(CPUState *cpu, vaddr addr)
-> > @@ -775,8 +794,6 @@ void tlb_flush_range_by_mmuidx(CPUState *cpu, vaddr addr,
-> > {
-> >     TLBFlushRangeData d;
-> >
-> > -    assert_cpu_is_self(cpu);
-> > -
-> >     /*
-> >      * If all bits are significant, and len is small,
-> >      * this devolves to tlb_flush_page.
-> > @@ -797,7 +814,14 @@ void tlb_flush_range_by_mmuidx(CPUState *cpu, vaddr addr,
-> >     d.idxmap = idxmap;
-> >     d.bits = bits;
-> >
-> > -    tlb_flush_range_by_mmuidx_async_0(cpu, d);
-> > +    if (qemu_cpu_is_self(cpu)) {
-> > +        tlb_flush_range_by_mmuidx_async_0(cpu, d);
-> > +    } else {
-> > +        /* Otherwise allocate a structure, freed by the worker.  */
-> > +        TLBFlushRangeData *p = g_memdup2(&d, sizeof(d));
-> > +        async_run_on_cpu(cpu, tlb_flush_range_by_mmuidx_async_1,
-> > +                         RUN_ON_CPU_HOST_PTR(p));
-> > +    }
-> > }
-> >
-> > void tlb_flush_page_bits_by_mmuidx(CPUState *cpu, vaddr addr,
-> >  
-> 
+Thanks,
+Laurent
 
 
