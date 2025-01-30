@@ -4,36 +4,39 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3F096C0218A
-	for <qemu-devel@archiver.kernel.org>; Thu, 30 Jan 2025 13:35:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E00A9C0218A
+	for <qemu-devel@archiver.kernel.org>; Thu, 30 Jan 2025 13:35:39 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tdUh5-0002as-Cj; Thu, 30 Jan 2025 08:34:55 -0500
+	id 1tdUhB-0002ff-Cs; Thu, 30 Jan 2025 08:35:01 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1tdUh2-0002aG-37; Thu, 30 Jan 2025 08:34:52 -0500
+ id 1tdUh9-0002dp-Ey; Thu, 30 Jan 2025 08:34:59 -0500
 Received: from isrv.corpit.ru ([86.62.121.231])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1tdUh0-0002WL-7G; Thu, 30 Jan 2025 08:34:51 -0500
+ id 1tdUh8-0002XR-0b; Thu, 30 Jan 2025 08:34:59 -0500
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id DCAFBE303E;
+ by isrv.corpit.ru (Postfix) with ESMTP id F35E3E3043;
  Thu, 30 Jan 2025 16:34:18 +0300 (MSK)
 Received: from gandalf.tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id CBBBE1A7F85;
+ by tsrv.corpit.ru (Postfix) with ESMTP id E34531A7F8A;
  Thu, 30 Jan 2025 16:34:47 +0300 (MSK)
 Received: by gandalf.tls.msk.ru (Postfix, from userid 1000)
- id C377552400; Thu, 30 Jan 2025 16:34:47 +0300 (MSK)
+ id CEC3B5240A; Thu, 30 Jan 2025 16:34:47 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: Michael Tokarev <mjt@tls.msk.ru>,
-	qemu-trivial@nongnu.org
-Subject: [PULL 0/7] Trivial patches for 2025-01-30
-Date: Thu, 30 Jan 2025 16:34:40 +0300
-Message-Id: <20250130133447.873566-1-mjt@tls.msk.ru>
+Cc: Thomas Huth <thuth@redhat.com>, qemu-trivial@nongnu.org,
+ Michael Tokarev <mjt@tls.msk.ru>
+Subject: [PULL 5/7] tests/functional/test_mips_malta: Fix comment about
+ endianness of the test
+Date: Thu, 30 Jan 2025 16:34:45 +0300
+Message-Id: <20250130133447.873566-6-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.39.5
+In-Reply-To: <20250130133447.873566-1-mjt@tls.msk.ru>
+References: <20250130133447.873566-1-mjt@tls.msk.ru>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -60,56 +63,33 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The following changes since commit 871af84dd599fab68c8ed414d9ecbdb2bcfc5801:
+From: Thomas Huth <thuth@redhat.com>
 
-  Merge tag 'for-upstream' of https://gitlab.com/bonzini/qemu into staging (2025-01-29 09:51:03 -0500)
+This test is for the big endian MIPS target, not for the little endian
+target.
 
-are available in the Git repository at:
+Signed-off-by: Thomas Huth <thuth@redhat.com>
+Fixes: 79cb4a14cb6 ("tests/functional: Convert mips32eb 4Kc Malta tests")
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Reviewed-by: Michael Tokarev <mjt@tls.msk.ru>
+Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
+---
+ tests/functional/test_mips_malta.py | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-  https://gitlab.com/mjt0k/qemu.git tags/pull-trivial-patches
+diff --git a/tests/functional/test_mips_malta.py b/tests/functional/test_mips_malta.py
+index 3b15038d89..eaf372255b 100755
+--- a/tests/functional/test_mips_malta.py
++++ b/tests/functional/test_mips_malta.py
+@@ -1,6 +1,6 @@
+ #!/usr/bin/env python3
+ #
+-# Functional tests for the little-endian 32-bit MIPS Malta board
++# Functional tests for the big-endian 32-bit MIPS Malta board
+ #
+ # Copyright (c) Philippe Mathieu-Daudé <f4bug@amsat.org>
+ #
+-- 
+2.39.5
 
-for you to fetch changes up to 6a784f12000582b9f0f40fadc967ad474fc27c7b:
-
-  hw/i386/pc: Remove unused pc_compat_2_3 declarations (2025-01-30 13:01:22 +0300)
-
-----------------------------------------------------------------
-trivial patches for 2025-01-30
-
-Just a few of them.  Including some bugfixes.
-
-----------------------------------------------------------------
-Dominik 'Disconnect3d' Czarnota (1):
-      gdbstub/user-target: fix gdbserver int format (%d -> %x)
-
-Laurent Vivier (2):
-      net: Fix announce_self
-      net/dump: Correctly compute Ethernet packet offset
-
-Michael Tokarev (1):
-      vvfat: create_long_filename: fix out-of-bounds array access
-
-Philippe Mathieu-Daudé (2):
-      licenses: Remove SPDX tags not being license identifier for Linaro
-      hw/i386/pc: Remove unused pc_compat_2_3 declarations
-
-Thomas Huth (1):
-      tests/functional/test_mips_malta: Fix comment about endianness of the test
-
- accel/tcg/vcpu-state.h                           |  9 +++++++--
- block/vvfat.c                                    | 11 +++++------
- gdbstub/user-target.c                            | 10 +++++-----
- hw/misc/ivshmem-flat.c                           |  5 +++--
- include/hw/i386/pc.h                             |  3 ---
- include/hw/misc/ivshmem-flat.h                   |  5 +++--
- net/dump.c                                       |  3 ++-
- net/net.c                                        |  1 +
- scripts/qom-cast-macro-clean-cocci-gen.py        |  7 +++++--
- target/m68k/semihosting-stub.c                   |  7 +++++--
- target/mips/tcg/system/semihosting-stub.c        |  5 +++--
- tests/functional/test_aarch64_sbsaref.py         |  8 +++++---
- tests/functional/test_aarch64_sbsaref_alpine.py  |  8 +++++---
- tests/functional/test_aarch64_sbsaref_freebsd.py |  8 +++++---
- tests/functional/test_mips_malta.py              |  2 +-
- tests/qtest/libqos/virtio-scmi.c                 |  2 +-
- 16 files changed, 56 insertions(+), 38 deletions(-)
 
