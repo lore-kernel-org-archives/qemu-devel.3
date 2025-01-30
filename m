@@ -4,41 +4,39 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 753B0C0218A
-	for <qemu-devel@archiver.kernel.org>; Thu, 30 Jan 2025 13:36:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B63D4C0218A
+	for <qemu-devel@archiver.kernel.org>; Thu, 30 Jan 2025 13:36:34 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tdUhC-0002fz-P2; Thu, 30 Jan 2025 08:35:02 -0500
+	id 1tdUh9-0002dO-8d; Thu, 30 Jan 2025 08:34:59 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1tdUh9-0002dQ-3v; Thu, 30 Jan 2025 08:34:59 -0500
+ id 1tdUh5-0002bI-HI; Thu, 30 Jan 2025 08:34:55 -0500
 Received: from isrv.corpit.ru ([86.62.121.231])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1tdUh7-0002XE-E6; Thu, 30 Jan 2025 08:34:58 -0500
+ id 1tdUh3-0002Wj-Dq; Thu, 30 Jan 2025 08:34:54 -0500
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id EF674E3042;
+ by isrv.corpit.ru (Postfix) with ESMTP id E7829E3040;
  Thu, 30 Jan 2025 16:34:18 +0300 (MSK)
 Received: from gandalf.tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id DF3531A7F89;
+ by tsrv.corpit.ru (Postfix) with ESMTP id D76111A7F87;
  Thu, 30 Jan 2025 16:34:47 +0300 (MSK)
 Received: by gandalf.tls.msk.ru (Postfix, from userid 1000)
- id CC5E252408; Thu, 30 Jan 2025 16:34:47 +0300 (MSK)
+ id C7C7C52404; Thu, 30 Jan 2025 16:34:47 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: Dominik 'Disconnect3d' Czarnota <dominik.b.czarnota@gmail.com>,
- qemu-trivial@nongnu.org, qemu-stable@nongnu.org,
- Michael Tokarev <mjt@tls.msk.ru>
-Subject: [PULL 4/7] gdbstub/user-target: fix gdbserver int format (%d -> %x)
-Date: Thu, 30 Jan 2025 16:34:44 +0300
-Message-Id: <20250130133447.873566-5-mjt@tls.msk.ru>
+Cc: Laurent Vivier <lvivier@redhat.com>, qemu-trivial@nongnu.org,
+ akihiko.odaki@daynix.com, Michael Tokarev <mjt@tls.msk.ru>
+Subject: [PULL 2/7] net/dump: Correctly compute Ethernet packet offset
+Date: Thu, 30 Jan 2025 16:34:42 +0300
+Message-Id: <20250130133447.873566-3-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <20250130133447.873566-1-mjt@tls.msk.ru>
 References: <20250130133447.873566-1-mjt@tls.msk.ru>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=86.62.121.231; envelope-from=mjt@tls.msk.ru;
  helo=isrv.corpit.ru
@@ -63,70 +61,68 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Dominik 'Disconnect3d' Czarnota <dominik.b.czarnota@gmail.com>
+From: Laurent Vivier <lvivier@redhat.com>
 
-This commit fixes an incorrect format string for formatting integers
-provided to GDB when debugging a target run in QEMU user mode.
+When a packet is sent with QEMU_NET_PACKET_FLAG_RAW by QEMU it
+never includes virtio-net header even if qemu_get_vnet_hdr_len()
+is not 0, and filter-dump is not managing this case.
 
-The correct format is hexadecimal for both success and errno values,
-some of which can be seen here [0].
+The only user of QEMU_NET_PACKET_FLAG_RAW is announce_self,
+we can show the problem using it and tcpddump:
 
-[0] https://github.com/bminor/binutils-gdb/blob/e65a355022d0dc6b5707310876a72b5693ec0aa5/gdbserver/hostio.cc#L196-L213
+- QEMU parameters:
 
-Signed-off-by: Dominik 'Disconnect3d' Czarnota <dominik.b.czarnota@gmail.com>
-Reviewed-by: Alex Bennée <alex.bennee@linaro.org>
-Fixes: e282010b2e1e ("gdbstub: Add support for info proc mappings")
-Cc: qemu-stable@nongnu.org
-Reviewed-by: Ilya Leoshkevich <iii@linux.ibm.com>
+  .. -monitor stdio \
+     -netdev bridge,id=netdev0,br=virbr0 \
+     -device virtio-net,mac=9a:2b:2c:2d:2e:2f,netdev=netdev0 \
+     -object filter-dump,netdev=netdev0,file=log.pcap,id=pcap0
+
+- HMP command:
+
+  (qemu) announce_self
+
+- TCP dump:
+
+  $ tcpdump -nxr log.pcap
+
+  without the fix:
+
+    08:00:06:04:00:03 > 2e:2f:80:35:00:01, ethertype Unknown (0x9a2b), length 50:
+         0x0000:  2c2d 2e2f 0000 0000 9a2b 2c2d 2e2f 0000
+         0x0010:  0000 0000 0000 0000 0000 0000 0000 0000
+         0x0020:  0000 0000
+
+  with the fix:
+
+    ARP, Reverse Request who-is 9a:2b:2c:2d:2e:2f tell 9a:2b:2c:2d:2e:2f, length 46
+         0x0000:  0001 0800 0604 0003 9a2b 2c2d 2e2f 0000
+         0x0010:  0000 9a2b 2c2d 2e2f 0000 0000 0000 0000
+         0x0020:  0000 0000 0000 0000 0000 0000 0000
+
+Fixes: 481c52320a26 ("net: Strip virtio-net header when dumping")
+Cc: akihiko.odaki@daynix.com
+Signed-off-by: Laurent Vivier <lvivier@redhat.com>
+Reviewed-by: Akihiko Odaki <akihiko.odaki@daynix.com>
 Reviewed-by: Michael Tokarev <mjt@tls.msk.ru>
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 ---
- gdbstub/user-target.c | 10 +++++-----
- 1 file changed, 5 insertions(+), 5 deletions(-)
+ net/dump.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/gdbstub/user-target.c b/gdbstub/user-target.c
-index 22bf4008c0..4bfcf78aaa 100644
---- a/gdbstub/user-target.c
-+++ b/gdbstub/user-target.c
-@@ -317,9 +317,9 @@ void gdb_handle_v_file_open(GArray *params, void *user_ctx)
-     int fd = open(filename, flags, mode);
- #endif
-     if (fd < 0) {
--        g_string_printf(gdbserver_state.str_buf, "F-1,%d", errno);
-+        g_string_printf(gdbserver_state.str_buf, "F-1,%x", errno);
-     } else {
--        g_string_printf(gdbserver_state.str_buf, "F%d", fd);
-+        g_string_printf(gdbserver_state.str_buf, "F%x", fd);
-     }
-     gdb_put_strbuf();
+diff --git a/net/dump.c b/net/dump.c
+index d7dd2ce461..140215aa10 100644
+--- a/net/dump.c
++++ b/net/dump.c
+@@ -155,7 +155,8 @@ static ssize_t filter_dump_receive_iov(NetFilterState *nf, NetClientState *sndr,
+ {
+     NetFilterDumpState *nfds = FILTER_DUMP(nf);
+ 
+-    dump_receive_iov(&nfds->ds, iov, iovcnt, qemu_get_vnet_hdr_len(nf->netdev));
++    dump_receive_iov(&nfds->ds, iov, iovcnt, flags & QEMU_NET_PACKET_FLAG_RAW ?
++                     0 : qemu_get_vnet_hdr_len(nf->netdev));
+     return 0;
  }
-@@ -329,7 +329,7 @@ void gdb_handle_v_file_close(GArray *params, void *user_ctx)
-     int fd = gdb_get_cmd_param(params, 0)->val_ul;
  
-     if (close(fd) == -1) {
--        g_string_printf(gdbserver_state.str_buf, "F-1,%d", errno);
-+        g_string_printf(gdbserver_state.str_buf, "F-1,%x", errno);
-         gdb_put_strbuf();
-         return;
-     }
-@@ -352,7 +352,7 @@ void gdb_handle_v_file_pread(GArray *params, void *user_ctx)
- 
-     ssize_t n = pread(fd, buf, bufsiz, offset);
-     if (n < 0) {
--        g_string_printf(gdbserver_state.str_buf, "F-1,%d", errno);
-+        g_string_printf(gdbserver_state.str_buf, "F-1,%x", errno);
-         gdb_put_strbuf();
-         return;
-     }
-@@ -375,7 +375,7 @@ void gdb_handle_v_file_readlink(GArray *params, void *user_ctx)
-     ssize_t n = readlink(filename, buf, BUFSIZ);
- #endif
-     if (n < 0) {
--        g_string_printf(gdbserver_state.str_buf, "F-1,%d", errno);
-+        g_string_printf(gdbserver_state.str_buf, "F-1,%x", errno);
-         gdb_put_strbuf();
-         return;
-     }
 -- 
 2.39.5
 
