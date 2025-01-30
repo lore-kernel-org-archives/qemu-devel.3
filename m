@@ -4,89 +4,42 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C6F37C0218D
-	for <qemu-devel@archiver.kernel.org>; Thu, 30 Jan 2025 01:24:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8DEE0C0218D
+	for <qemu-devel@archiver.kernel.org>; Thu, 30 Jan 2025 02:14:39 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tdJHM-0002GI-EZ; Wed, 29 Jan 2025 20:23:36 -0500
+	id 1tdK3q-0008R1-FS; Wed, 29 Jan 2025 21:13:42 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1tdJHK-0002Fz-DX
- for qemu-devel@nongnu.org; Wed, 29 Jan 2025 20:23:34 -0500
-Received: from mail-qv1-xf2a.google.com ([2607:f8b0:4864:20::f2a])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1tdJHJ-0001ea-0P
- for qemu-devel@nongnu.org; Wed, 29 Jan 2025 20:23:34 -0500
-Received: by mail-qv1-xf2a.google.com with SMTP id
- 6a1803df08f44-6dd43aa1558so2893116d6.0
- for <qemu-devel@nongnu.org>; Wed, 29 Jan 2025 17:23:32 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1738200211; x=1738805011; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:to:subject:user-agent:mime-version:date:message-id:from
- :to:cc:subject:date:message-id:reply-to;
- bh=bxckD1K7fVQcFKMaab19A+tS2ehSonVgCyxLx+jHw+4=;
- b=NKAEtKze2laIEjapB/7OQVn6ySgpiZD2IyTmV0FKspiItVsx7vMJzNoxrD2qG2ny/I
- 3Sja/jI9choAJQNqWpylHX40uKxd7lorOGpiIv/vX/QCqdkEmpqvgTT4C7ngzX+2kt0b
- JC/7Jofk9wJb8GVQZmigFK6EIrjAp1+RNAMLf2sI4+UZDkc7l8kJITUKLRKZ8AZ4Csh0
- Kx1PhvLz/NeTEd35sKNA0PG2k8FlH3mKGSxJ2StoRrbUFEWKMxYj5tdRUvgEJQvt4tWg
- fVPft7mtC6/xiZG0M0vusxJszr6EK56JvPwJw5vulkdMMqJ0GxuadvuyhV3bUBgVG5rc
- 2wDA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1738200211; x=1738805011;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=bxckD1K7fVQcFKMaab19A+tS2ehSonVgCyxLx+jHw+4=;
- b=IJrl/UFL9Kn80BdlquDaIaif5Wvq3dWqmmsA0UkBZnI9qEC3rp4SwgGFnuffzoSq71
- xGfZtDGrM6ktP6Vw2O+NsuyNUabW9CFGv7E+shfgt788CqwjqOYSnVCAAnJAYmibhjwv
- qWvIdFDlNrEpMCll6CYFtm1gai4EtcNldA1S/28+lbT6irkETKMVTsrrLTPHDZGhWEIM
- z4KUZvwuySomoF7zohGeR2H00mJ+XruHcHTwAlMaUdBmhR8mW5NFRy2kqXHL6fF4DWJn
- rPjH0E2I6ZHjK3+QRJ34DTcClLqsEqVoPLRE2WOgLeoR5jmYlqrhCh9HUH5bWFyidZDm
- n4Ow==
-X-Gm-Message-State: AOJu0YwsUmxcDZiCDQ8ATe1d5es3edJPDR50p0dSQbe6sL2xLdcpCtMy
- cuCuUf1Lz0PcFjF9+vKyu+LHAEY109zrQGy49PFl5RPc0n1aLPQAYhhPsJFXzc79g0N6kiA9zZP
- i
-X-Gm-Gg: ASbGncvInejm3vozf7LDJTOwrpPoxaPRZ7ZqSjCiiI3nCzt7FfJTCZ4y1WO1zbdinih
- GeiF2bTruH3GViWF6jaNVUBjokVX5WZcth7gro+L5dV1PfIy5B3k8vE+wL9OEoWPwmUcxRw5dNP
- qSHSRfj5RfDPLETuKPt8VvfUX+zsnpYQo9dplkZCg2TZgcYY1rIqUqp3sN2/bry/G1FPrnuqSix
- qUPJjKvKy6+VAyzH8ZusZ2R6orhbxdrInz71vBuLE1RiqZuH+CP9Gxk3YUe8Wr0Pypn1QTRSI1b
- xgFNRgbyM5W7o/bjUouQk2pTofV1gCUA
-X-Google-Smtp-Source: AGHT+IG3mD//aGqceTPmMSCnMU7qa9Bv0TpsepZBO0nM5jI4V20WnHf+rWkDxEp8PQt8NAvOOzdzCQ==
-X-Received: by 2002:ad4:5de3:0:b0:6d8:aa04:9a60 with SMTP id
- 6a1803df08f44-6e243befce7mr89509076d6.7.1738200211410; 
- Wed, 29 Jan 2025 17:23:31 -0800 (PST)
-Received: from [192.168.163.227] ([50.233.235.3])
- by smtp.gmail.com with ESMTPSA id
- 6a1803df08f44-6e254814d1esm1058416d6.38.2025.01.29.17.23.30
- for <qemu-devel@nongnu.org>
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 29 Jan 2025 17:23:31 -0800 (PST)
-Message-ID: <484b6063-e21f-48d6-9121-6c0c64396889@linaro.org>
-Date: Wed, 29 Jan 2025 17:23:29 -0800
+ (Exim 4.90_1) (envelope-from <samuel.thibault@gnu.org>)
+ id 1tdK3p-0008Qq-04
+ for qemu-devel@nongnu.org; Wed, 29 Jan 2025 21:13:41 -0500
+Received: from fencepost.gnu.org ([2001:470:142:3::e])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <samuel.thibault@gnu.org>)
+ id 1tdK3n-00079L-2c; Wed, 29 Jan 2025 21:13:39 -0500
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=gnu.org;
+ s=fencepost-gnu-org; h=In-Reply-To:MIME-Version:References:Subject:To:From:
+ Date; bh=iXJbLk/PigKn4WNm9Io25NtoNrttE3JAQ7eMTV1E3Eo=; b=sLKf1GRgTkdjMobAKZWX
+ 7a3EElJASy/zYu4JOjC8iAnY8WbicGTC4O13YnzHtU9uAMqVBNefoara/7z3w3v0H9/0rjNFjYvYE
+ zZcjo9h2Tp+l2xP4lRHMLz8+paFOz//4tb4WHJex3LJuC78REw2CCpOD7ANJlERknT4+qqr6qmpO1
+ WMm5S0D7ubDbIvCehdRsIpDCON0kPvokjnEj5fAfdlIlQUOATP1z+8d+jqw34L2Ei5zmnIxew6u4x
+ mMIEIsObqn0UEtMUUJmbNEJH1nckAGwxZDmmgt7TE99pbjcc4+j/QyU0zV+x86mgP/lmHWkHdmboB
+ WzlhhqX/+E2pmg==;
+Date: Thu, 30 Jan 2025 03:13:36 +0100
+From: Samuel Thibault <samuel.thibault@gnu.org>
+To: Michael Tokarev <mjt@tls.msk.ru>
+Cc: qemu-devel@nongnu.org
+Subject: Re: [PATCH] net/slirp: introduce slirp_os_socket to stay compatible
+ with libslirp past 4.8.0
+Message-ID: <Z5rgUDDB0X58-XZt@begin>
+References: <20241005070753.1328079-1-mjt@tls.msk.ru> <ZwcMh1Vl9VsTbIRq@begin>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3] tcg/optimize: optimize TSTNE using smask and zmask
-To: qemu-devel@nongnu.org
-References: <20250129131127.1368879-1-pbonzini@redhat.com>
-Content-Language: en-US
-From: Richard Henderson <richard.henderson@linaro.org>
-In-Reply-To: <20250129131127.1368879-1-pbonzini@redhat.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::f2a;
- envelope-from=richard.henderson@linaro.org; helo=mail-qv1-xf2a.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
-X-Spam_action: no action
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <ZwcMh1Vl9VsTbIRq@begin>
+Organization: I am not organized
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -101,31 +54,86 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 1/29/25 05:11, Paolo Bonzini wrote:
-> Generalize the existing optimization of "TSTNE x,sign" and "TSTNE x,-1".
-> This can be useful for example in the i386 frontend, which will generate
-> tests of zero-extended registers against 0xffffffff.
-> 
-> Ironically, on x86 hosts this is a very slight pessimization in the very
-> case it's meant to optimize because
-> 
->   brcond_i64 cc_dst,$0xffffffff,tsteq,$L1
-> 
-> (test %ebx, %ebx) is 1 byte smaller than
-> 
->   brcond_i64 cc_dst,$0x0,eq,$L1
-> 
-> (test %rbx, %rbx).  However, in general it is an improvement, especially
-> if it avoids placing a large immediate in the constant pool.
-> 
-> Signed-off-by: Paolo Bonzini<pbonzini@redhat.com>
-> ---
-> 	v2->v3: adjust for recent change to s_mask format
-> 
->   tcg/optimize.c | 13 ++++++++-----
->   1 file changed, 8 insertions(+), 5 deletions(-)
+Hello,
 
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Samuel Thibault, le jeu. 10 oct. 2024 01:06:47 +0200, a ecrit:
+> Michael Tokarev, le sam. 05 oct. 2024 10:07:53 +0300, a ecrit:
+> > libslirp introduced new typedef after 4.8.0, slirp_os_socket, which
+> > is defined to SOCKET on windows, which, in turn, is a 64bit number.
+> > qemu uses int, so callback function prorotypes changed.
+> 
+> I have fixed the code in upstream libslirp, to avoid breaking the API
+> and ABI, and instead provide new functions & methods so that
+> qemu/libslirp can upgrade smoothly.
 
-r~
+It is now released in version 4.9.0 of libslirp.
+
+Samuel
+
+> > Introduce
+> > slirp_os_socket locally if SLIRP_INVALID_SOCKET is not defined (this
+> > define has been introduced together wiht slirp_os_socket type), for
+> > libslirp <= 4.8.0, and use it in callback function definitions.
+> > 
+> > Link: https://gitlab.freedesktop.org/slirp/libslirp/-/commit/72f85005a2307fd0961543e3cea861ad7a4d201e
+> > Resolves: https://gitlab.com/qemu-project/qemu/-/issues/2603
+> > Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
+> > ---
+> >  net/slirp.c | 10 +++++++---
+> >  1 file changed, 7 insertions(+), 3 deletions(-)
+> > 
+> > diff --git a/net/slirp.c b/net/slirp.c
+> > index eb9a456ed4..fa07268cf4 100644
+> > --- a/net/slirp.c
+> > +++ b/net/slirp.c
+> > @@ -98,6 +98,10 @@ typedef struct SlirpState {
+> >      GSList *fwd;
+> >  } SlirpState;
+> >  
+> > +#ifndef SLIRP_INVALID_SOCKET /* after 4.8.0 */
+> 
+> You can instead use SLIRP_CONFIG_VERSION_MAX >= 6, and if so set
+> cfg.version to 6 and use the new fields and functions.
+> 
+> > +typedef int slirp_os_socket;
+> > +#endif
+> > +
+> >  static struct slirp_config_str *slirp_configs;
+> >  static QTAILQ_HEAD(, SlirpState) slirp_stacks =
+> >      QTAILQ_HEAD_INITIALIZER(slirp_stacks);
+> > @@ -247,7 +251,7 @@ static void net_slirp_timer_mod(void *timer, int64_t expire_timer,
+> >      timer_mod(&t->timer, expire_timer);
+> >  }
+> >  
+> > -static void net_slirp_register_poll_fd(int fd, void *opaque)
+> > +static void net_slirp_register_poll_fd(slirp_os_socket fd, void *opaque)
+> >  {
+> >  #ifdef WIN32
+> >      AioContext *ctxt = qemu_get_aio_context();
+> > @@ -260,7 +264,7 @@ static void net_slirp_register_poll_fd(int fd, void *opaque)
+> >  #endif
+> >  }
+> >  
+> > -static void net_slirp_unregister_poll_fd(int fd, void *opaque)
+> > +static void net_slirp_unregister_poll_fd(slirp_os_socket fd, void *opaque)
+> >  {
+> >  #ifdef WIN32
+> >      if (WSAEventSelect(fd, NULL, 0) != 0) {
+> > @@ -314,7 +318,7 @@ static int slirp_poll_to_gio(int events)
+> >      return ret;
+> >  }
+> >  
+> > -static int net_slirp_add_poll(int fd, int events, void *opaque)
+> > +static int net_slirp_add_poll(slirp_os_socket fd, int events, void *opaque)
+> >  {
+> >      GArray *pollfds = opaque;
+> >      GPollFD pfd = {
+> > -- 
+> > 2.39.5
+
+-- 
+Samuel
+c> ah (on trouve fluide glacial sur le net, ou il faut aller dans le monde reel ?)
+s> dans le monde reel
+c> zut
 
