@@ -4,90 +4,88 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A74E8C0218A
-	for <qemu-devel@archiver.kernel.org>; Thu, 30 Jan 2025 06:41:25 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3BFAAC0218A
+	for <qemu-devel@archiver.kernel.org>; Thu, 30 Jan 2025 06:48:17 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tdOE4-00017I-HG; Thu, 30 Jan 2025 01:40:32 -0500
+	id 1tdOL2-0002Tz-5E; Thu, 30 Jan 2025 01:47:45 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1tdODy-00016I-Bn
- for qemu-devel@nongnu.org; Thu, 30 Jan 2025 01:40:28 -0500
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1tdOKz-0002To-PE
+ for qemu-devel@nongnu.org; Thu, 30 Jan 2025 01:47:41 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1tdODv-0006DD-PV
- for qemu-devel@nongnu.org; Thu, 30 Jan 2025 01:40:25 -0500
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1tdOKx-00078P-5e
+ for qemu-devel@nongnu.org; Thu, 30 Jan 2025 01:47:41 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1738219220;
+ s=mimecast20190719; t=1738219656;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=HQKJjO18p/Ip3LdvMZeIgzo9C5VIOgiMZRgRDeBhUic=;
- b=ccNYbQMpPI5c/OU0OZF7DU0INk8zc/pAWZmBw6V/XW2SP/9XWpoERCG6NwbvRrJdHOroeM
- lodvbWh66pUyqcovQNSKyq5SE+sA6T7FUy26Vc396/QL8XpKxKey7MYS4Of1ixQLanFDT5
- TMIlz0+llygqf9GQ6cGKzten06HjTCE=
-Received: from mail-wm1-f72.google.com (mail-wm1-f72.google.com
- [209.85.128.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=9+xdp+uhdMZH+f+h5dxzGq3sQBd5hYWFv6bGHjTE0nU=;
+ b=BViqHnX0BAUi82KtbZbM660EHngOLevdSNQGcjzQu/WFpxWdXkpTU96CMF27BcAbVQyK+a
+ hB9+Ouj1OEL3zIcWokBWskhanjhJ3V3gw3dfv3KQmJudUlXuWP6lepqTTQDzoXX5fYB1em
+ nTl44sbWlzgiEw4xhcfuaHaH7DK9mAo=
+Received: from mail-wm1-f69.google.com (mail-wm1-f69.google.com
+ [209.85.128.69]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-374-gJRhf4ouN-eASQs-HiD_Nw-1; Thu, 30 Jan 2025 01:40:19 -0500
-X-MC-Unique: gJRhf4ouN-eASQs-HiD_Nw-1
-X-Mimecast-MFC-AGG-ID: gJRhf4ouN-eASQs-HiD_Nw
-Received: by mail-wm1-f72.google.com with SMTP id
- 5b1f17b1804b1-4362552ce62so1621155e9.0
- for <qemu-devel@nongnu.org>; Wed, 29 Jan 2025 22:40:18 -0800 (PST)
+ us-mta-154-nB4vjs3CMT20acRNOE7BSQ-1; Thu, 30 Jan 2025 01:47:34 -0500
+X-MC-Unique: nB4vjs3CMT20acRNOE7BSQ-1
+X-Mimecast-MFC-AGG-ID: nB4vjs3CMT20acRNOE7BSQ
+Received: by mail-wm1-f69.google.com with SMTP id
+ 5b1f17b1804b1-4362b9c1641so1611105e9.3
+ for <qemu-devel@nongnu.org>; Wed, 29 Jan 2025 22:47:33 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1738219218; x=1738824018;
+ d=1e100.net; s=20230601; t=1738219653; x=1738824453;
  h=content-transfer-encoding:in-reply-to:autocrypt:content-language
  :from:references:cc:to:subject:user-agent:mime-version:date
  :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=HQKJjO18p/Ip3LdvMZeIgzo9C5VIOgiMZRgRDeBhUic=;
- b=W8zHtgAuYSxu8S5viYQr4OQpgYqOmeX1UB15G3LzN46OlEeOljg+wJBX+99U/AFwvk
- 5/4oPAJJYzQCxM1VoYBVdfsDTUS1ahQliqyKn9RXYx7gcOp7/wzahIuY0wVr6yc9D7ia
- GNY8Z+0c8DV8DofrvhYE2JD+cEgekMchbGpNgDusfdDndHiuIo6phTmAHefYqPuIeVzA
- zKZTJnfD4nLg1FFwjzlssb2L0+QLKsy9uAy4wOEg5CGhNXlSQu7GO0Tht2+cpcG3WozI
- edfUU70gZN+nOgoMwNj0cY056a3Za+gPyPRMfkCUIOIxLjTaORIdH8ochRJZDNyJL7qn
- W15Q==
+ bh=9+xdp+uhdMZH+f+h5dxzGq3sQBd5hYWFv6bGHjTE0nU=;
+ b=HGtEu0CnP65oX6JWTVpW3fgXNW2aPWrHr+d8JYswME+24rBwBNxt77LOB1K3ExK2p7
+ XaPX2FzNJYzYUqNpey+Nmkta6eFmwrdJP4nOvSBPFFF/zo3Ukh3f2zFhybndOEQvCCe3
+ DxRRaps9UU6LDMZ1b6i9+Pk1YI18ESF4uTFsNWIHEm8k30KVhic/95m0HE27GJ0f4UxJ
+ yXCy0qjFSBTHAZHPDQdN6Auo/SFazvLM20lf7I8gtSRQ3Cr0zax8aAuRweEfc9Ygy61i
+ t/GxUtp9VwWJpS+7GXd4rpyT2x2hFa97tS2OrPRvg0M9OgzTXVMBNwd/OPld4gkrHapp
+ QgRA==
 X-Forwarded-Encrypted: i=1;
- AJvYcCU/zd4GI+8//5AQm/XoVty5XXEGat1FwnqqFHjDLvL5jPt8/kgHw+OcVogW3YDjaahO1XwnI1j9jJC9@nongnu.org
-X-Gm-Message-State: AOJu0YwLSJt8AbYmCRyPbTXPR9j2fr2mUacvg6i9rsR6QTQuJtj+RVHf
- PPsUhE9mNQGLY6mUu6ShcXa7d/wYbIr6Gf28qJKV67M9qDiKQya2m+vu4OpbnBSWu2m79NGhnTT
- F+3qahvlgFviddPYeCaUtW6owP0RhEJi+ZVnSVmuw+fBRXJ1RNIwy
-X-Gm-Gg: ASbGncvaX8awAJqvAuu81IkCpHLyFP1qbbtUlAWOYC8Yk9O0+Q8tVvxQxeEOsGgU+Nb
- kthK3DcQOl2jfALjhGtXm3fIbfiq+hKQjs2b5wbaxOrwhYHstOrzg+/op+78aI2ReM/6pMKTktF
- 3FDBvpwlaRA49RqZksXfk58E3CMk+d9GSBmiy/SXLv866Qp84yfm/5P5JLYs+ciiGdqx9EudWII
- fyDq+r+zjGUAvoxyk/5vGpABXgk1GfRaCBnq5IFgqhULSfAi6Fu+ObB8NVP/3k2h9f+/hCh/bHz
- IRqExUCEKo9UnGGKtZCWzUoMN3MoSMujWuiZ
-X-Received: by 2002:a05:600c:1e0e:b0:434:9934:575 with SMTP id
- 5b1f17b1804b1-438dc3caa59mr56255555e9.16.1738219217803; 
- Wed, 29 Jan 2025 22:40:17 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IHD+cPyy6MyWANE73ks2nw/RDOsS0SjO6MKrbgpKUJWk9/QDU+MvJPwrSVJUGroOdp8lGE7Jw==
-X-Received: by 2002:a05:600c:1e0e:b0:434:9934:575 with SMTP id
- 5b1f17b1804b1-438dc3caa59mr56255415e9.16.1738219217457; 
- Wed, 29 Jan 2025 22:40:17 -0800 (PST)
+ AJvYcCWoRlEdPgYEvsjo408rWCEbLAucwbcI4mL9BisJfCO5O6D9YGNUmIRXMFt6pUXGl+keCuOCLm2LtVji@nongnu.org
+X-Gm-Message-State: AOJu0Yw5vhEPPgHBokfrNAb43xkiotWW/n+0+bVmxKI9+OqeJyswV/uP
+ XxNOKt5otQ2weyiRkraY5HAmfqwEMB2LB43Wn9CIE9VtTHnFRRZdNSBeBWjMmOIWrEo3sz4ZKuk
+ FwdUe5J/pb6t3+ovauICkzIFQnBhkQ1nWECZKV//zpSseyKqmsxr+
+X-Gm-Gg: ASbGnctX6/hlIHM5KmcEpDw0MQBG97LcbzRYtiHoQ3d/xp3R9Aw420fCwLj+QiaRisG
+ cz+RFDwM9SWuR3b4e6ySdQSSxdHXGq2e2VlyqF9UYodPKc9aahuiu4FDfrV0KsXbGYDdMCPJCmg
+ 20FoSaEF+GYhIJbGuXbMo/QQTzMabT0mtEsfLHcnxGdqqj1l0RyRY+Vy14jug7QnP7/czC0z/El
+ p0zFpkUp6TyIdh5W2fakixZea50dpAydnTCx0jkdn0k8Pffo8/u1xJa5EpnRThWwPGtG9iX1vT7
+ 7kEZxKDosWk+FGYarVP4gr9dMNvZJkPtbmBs
+X-Received: by 2002:a05:600c:a45:b0:434:f7e3:bfbd with SMTP id
+ 5b1f17b1804b1-438dc40cf15mr47220565e9.23.1738219652855; 
+ Wed, 29 Jan 2025 22:47:32 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IGEdxirgvvoD63otXc9hFJLgX/RvlV+PPRRZf+p0mjaGhn3uRAMz3lii3hOMGs2ONtvmN265Q==
+X-Received: by 2002:a05:600c:a45:b0:434:f7e3:bfbd with SMTP id
+ 5b1f17b1804b1-438dc40cf15mr47220455e9.23.1738219652411; 
+ Wed, 29 Jan 2025 22:47:32 -0800 (PST)
 Received: from [192.168.0.7] (ip-109-42-50-234.web.vodafone.de.
  [109.42.50.234]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-438e23d444bsm11892935e9.8.2025.01.29.22.40.15
+ 5b1f17b1804b1-438dcc6df36sm49443585e9.25.2025.01.29.22.47.31
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 29 Jan 2025 22:40:16 -0800 (PST)
-Message-ID: <3fe2d7fa-0e2b-48ff-b69c-2c6d805fee12@redhat.com>
-Date: Thu, 30 Jan 2025 07:40:13 +0100
+ Wed, 29 Jan 2025 22:47:31 -0800 (PST)
+Message-ID: <21df1d87-025a-400a-9f55-086f4544dfef@redhat.com>
+Date: Thu, 30 Jan 2025 07:47:30 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 1/5] tests/functional: Introduce a new test routine for
- OpenBMC images
-To: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>, qemu-arm@nongnu.org,
- qemu-devel@nongnu.org
-Cc: Joel Stanley <joel@jms.id.au>,
- Andrew Jeffery <andrew@codeconstruct.com.au>,
- Troy Lee <troy_lee@aspeedtech.com>, Jamin Lin <jamin_lin@aspeedtech.com>,
- Steven Lee <steven_lee@aspeedtech.com>
-References: <20250129071820.1258133-1-clg@redhat.com>
- <20250129071820.1258133-2-clg@redhat.com>
- <98b2cdec-dcd2-44bf-a81e-91521e2bd446@redhat.com>
- <815ec281-f4b0-43e4-ba56-1400d16dfe21@redhat.com>
+Subject: Re: [PATCH] hw/i386/pc: Fix crash that occurs when introspecting
+ TYPE_PC_MACHINE machines
+To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ qemu-devel@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>,
+ "Michael S. Tsirkin" <mst@redhat.com>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>
+Cc: Richard Henderson <richard.henderson@linaro.org>,
+ Eduardo Habkost <eduardo@habkost.net>
+References: <20250117192106.471029-1-thuth@redhat.com>
+ <d48f6516-1c8f-4bf0-ae53-7bb364589c25@linaro.org>
 From: Thomas Huth <thuth@redhat.com>
 Content-Language: en-US
 Autocrypt: addr=thuth@redhat.com; keydata=
@@ -132,7 +130,7 @@ Autocrypt: addr=thuth@redhat.com; keydata=
  oiT+z+/E59qj/EKfyce3sbC9XLjXv3mHMrq1tKX4G7IJGnS989E/fg6crv6NHae9Ckm7+lSs
  IQu4bBP2GxiRQ+NV3iV/KU3ebMRzqIC//DCOxzQNFNJAKldPe/bKZMCxEqtVoRkuJtNdp/5a
  yXFZ6TfE1hGKrDBYAm4vrnZ4CXFSBDllL59cFFOJCkn4Xboj/aVxxJxF30bn
-In-Reply-To: <815ec281-f4b0-43e4-ba56-1400d16dfe21@redhat.com>
+In-Reply-To: <d48f6516-1c8f-4bf0-ae53-7bb364589c25@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=170.10.133.124; envelope-from=thuth@redhat.com;
@@ -144,7 +142,7 @@ X-Spam_report: (-3.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.3,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -160,48 +158,79 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 29/01/2025 17.28, Cédric Le Goater wrote:
-> On 1/29/25 08:58, Thomas Huth wrote:
->> On 29/01/2025 08.18, Cédric Le Goater wrote:
->>> The OpenBMC images currently used by QEMU to test the Aspeed machines
->>> are rather old. To prepare an update to the latest builds, we need to
->>> adjust the console patterns. Introduce a new routine to preserve the
->>> current tests.
->>>
->>> Signed-off-by: Cédric Le Goater <clg@redhat.com>
->>> ---
->>>   tests/functional/aspeed.py | 18 ++++++++++++++++++
->>>   1 file changed, 18 insertions(+)
->>>
->>> diff --git a/tests/functional/aspeed.py b/tests/functional/aspeed.py
->>> index b52358bb8c61..51c821944842 100644
->>> --- a/tests/functional/aspeed.py
->>> +++ b/tests/functional/aspeed.py
->>> @@ -23,6 +23,24 @@ def do_test_arm_aspeed(self, machine, image):
->>>           self.wait_for_console_pattern("ftgmac100 1e660000.ethernet 
->>> eth0: irq ")
->>>           self.wait_for_console_pattern("systemd[1]: Set hostname to")
->>> +    def do_test_arm_aspeed_openbmc(self, machine, image, uboot='2019.04',
->>> +                                   cpu_id='0x0', soc='AST2500 rev A1'):
->>> +        hostname = machine.removesuffix('-bmc')
->>> +
->>> +        self.set_machine(machine)
->>> +        self.vm.set_console()
->>> +        self.vm.add_args('-drive', 'file=' + image + ',if=mtd,format=raw',
->>> +                         '-net', 'nic', '-snapshot')
+On 29/01/2025 08.11, Philippe Mathieu-Daudé wrote:
+> Hi Thomas,
+> 
+> On 17/1/25 20:21, Thomas Huth wrote:
+>> QEMU currently crashes when you try to inspect the machines based on
+>> TYPE_PC_MACHINE for their properties:
 >>
->> "-net nic" is the default anyway, so unless you also use "-nodefaults", I 
->> think you can simply drop that?
+>>   $ echo '{ "execute": "qmp_capabilities" }
+>>           { "execute": "qom-list-properties","arguments":
+>>                        { "typename": "pc-q35-10.0-machine"}}' \
+>>     | ./qemu-system-x86_64 -M pc -qmp stdio
+>>   {"QMP": {"version": {"qemu": {"micro": 50, "minor": 2, "major": 9},
+>>    "package": "v9.2.0-1070-g87e115c122-dirty"}, "capabilities": ["oob"]}}
+>>   {"return": {}}
+>>   Segmentation fault (core dumped)
+>>
+>> This happens because TYPE_PC_MACHINE machines add a machine_init-
+>> done_notifier in their instance_init function - but instance_init
+>> of machines are not only called for machines that are realized,
+>> but also for machines that are introspected, so in this case the
+>> listener is added for a q35 machine that is never realized. But
+>> since there is already a running pc machine, the listener function
+>> is triggered immediately, causing a crash since it was not for the
+>> right machine it was meant for.
+>>
+>> Such listener functions must never be installed from an instance_init
+>> function. Let's do it from pc_basic_device_init() instead - this
+>> function is called from the MachineClass->init() function instead,
+>> i.e. guaranteed to be only called once in the lifetime of a QEMU
+>> process.
+>>
+>> Resolves: https://gitlab.com/qemu-project/qemu/-/issues/2779
+>> Signed-off-by: Thomas Huth <thuth@redhat.com>
+>> ---
+>>   hw/i386/pc.c | 6 +++---
+>>   1 file changed, 3 insertions(+), 3 deletions(-)
+>>
+>> diff --git a/hw/i386/pc.c b/hw/i386/pc.c
+>> index b46975c8a4..85b8a76455 100644
+>> --- a/hw/i386/pc.c
+>> +++ b/hw/i386/pc.c
+>> @@ -1241,6 +1241,9 @@ void pc_basic_device_init(struct PCMachineState *pcms,
+>>       /* Super I/O */
+>>       pc_superio_init(isa_bus, create_fdctrl, pcms->i8042_enabled,
+>>                       pcms->vmport != ON_OFF_AUTO_ON, &error_fatal);
+>> +
+>> +    pcms->machine_done.notify = pc_machine_done;
 > 
-> OK. Will do.
+> I could accept if we rename:
 > 
-> Do you want a resend for that ? Unless you prefer this series
-> to go through you tree, I will amend before sending PR.
+>    pc_machine_done() -> pc_basic_device_init_done[_notifier]()
 
-No, no need for a v2 just because of this. And yes, please take it through 
-the aspeed tree!
+Not sure whether that's such a good idea: The notifier is called when the 
+machine init has been done, not when the device init has been done. It just 
+happens to be instantiated from a function called pc_basic_device_init() 
+now, but that does not really mean that the notifier function should get a 
+similar name, should it?
 
-  Thanks,
-   Thomas
+  Thomas
+
+
+>> +    qemu_add_machine_init_done_notifier(&pcms->machine_done);
+>>   }
+>>   void pc_nic_init(PCMachineClass *pcmc, ISABus *isa_bus, PCIBus *pci_bus)
+>> @@ -1714,9 +1717,6 @@ static void pc_machine_initfn(Object *obj)
+>>       if (pcmc->pci_enabled) {
+>>           cxl_machine_init(obj, &pcms->cxl_devices_state);
+>>       }
+>> -
+>> -    pcms->machine_done.notify = pc_machine_done;
+>> -    qemu_add_machine_init_done_notifier(&pcms->machine_done);
+>>   }
+>>   static void pc_machine_reset(MachineState *machine, ResetType type)
+> 
 
 
