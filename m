@@ -4,82 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E06ACC02193
-	for <qemu-devel@archiver.kernel.org>; Thu, 30 Jan 2025 18:25:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A7A80C02190
+	for <qemu-devel@archiver.kernel.org>; Thu, 30 Jan 2025 18:25:34 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tdZCS-0003yF-4o; Thu, 30 Jan 2025 13:23:36 -0500
+	id 1tdZCT-0003zs-KR; Thu, 30 Jan 2025 13:23:37 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1tdZCE-0003sD-50
- for qemu-devel@nongnu.org; Thu, 30 Jan 2025 13:23:22 -0500
-Received: from mail-wr1-x431.google.com ([2a00:1450:4864:20::431])
+ id 1tdZCF-0003ss-2m
+ for qemu-devel@nongnu.org; Thu, 30 Jan 2025 13:23:24 -0500
+Received: from mail-wm1-x334.google.com ([2a00:1450:4864:20::334])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1tdZCA-0000Ua-Ab
- for qemu-devel@nongnu.org; Thu, 30 Jan 2025 13:23:20 -0500
-Received: by mail-wr1-x431.google.com with SMTP id
- ffacd0b85a97d-38a8b35e168so719154f8f.1
- for <qemu-devel@nongnu.org>; Thu, 30 Jan 2025 10:23:17 -0800 (PST)
+ id 1tdZCC-0000Vr-Ip
+ for qemu-devel@nongnu.org; Thu, 30 Jan 2025 13:23:22 -0500
+Received: by mail-wm1-x334.google.com with SMTP id
+ 5b1f17b1804b1-4363ae65100so13351805e9.0
+ for <qemu-devel@nongnu.org>; Thu, 30 Jan 2025 10:23:20 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1738261397; x=1738866197; darn=nongnu.org;
+ d=linaro.org; s=google; t=1738261399; x=1738866199; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=PQ3INqN7YHVgBd+O3rmiUMiDsje4n5n7QZ4vk3TY7Qg=;
- b=adPNNor4Zl2AIbZ0M3hbvRhjIJIKL/81vd7CL4Avcqu4lXaFKxVzKDlx8D7y/uEmnB
- PTv+31bPpd5eewclFdbrGCPpdSdAw0NezTPrh9T0+cSpuUoQGaFi3U/a4oRg/QjvVKaT
- sTxqU0R8Adnzx86PQ/xY/S2Vv68a3gCumb6j9DJxO0K1kRLCZ5KO/5iXmW4Mlatk/fZu
- vgemYuO0p+v3lCajnC7YOL8mba+dRHFSEf5MATNARx0qAAp84a52egRlYjBbUq/H8oUq
- US2gVbt1VXNT5A2mLb4O/igPn0NM8plGDwMcfsPqRykE04QwykAlYhnf8vK+eDVQliAs
- XTVA==
+ bh=fMa5YuSy0NDTUYP5ui6N/RSQpdjoNfs7F2yE5YfgTb4=;
+ b=QLyXT5avtYHv5+RnaydOyMFPb3tY6Bm6HiR/ActAnDiNW5sbqfSx6PdyT73xCIjTmQ
+ +BP11bH6Sg+Yt2gYXF6pMZJgW31ThkuLdNiGmDHhhCYDgyMHaNqveWh0mlRR1ZZ5R29o
+ YKEri0ZS7D/3VKkQ0LRikjIvFaH5kyMEk1UXRz76PhR0FXo0I/qt6Adtsb/UBWoK3DDZ
+ A+eF1FYHvHZo6T3k2Ph9NUWcCz+VmwifteJQyD5WYPlcTtem4i85DPv4Wt9wMWNTkZOD
+ I9BWzu5I1+z0aIRcpZkpJzfGWPW62MDDFZCjb5vgPhooXCbSEp/N35oMACguFUulBeHa
+ POMQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1738261397; x=1738866197;
+ d=1e100.net; s=20230601; t=1738261399; x=1738866199;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=PQ3INqN7YHVgBd+O3rmiUMiDsje4n5n7QZ4vk3TY7Qg=;
- b=rpdLc56yXVotH0Vs8EyiBTN9GFD7hhOlsp/upIr3CxXhvRJ16HXsjLylX3ByTN17ZD
- 8YPKF5LB1Ebpr7hMIw2ACitxxVi6WMBj6yY5uyjefsLy0X6rjiG/ct56ijzod7kccAek
- Sn8sB4k4F+bgndOtdNZCRlSxiS5k6DBz+tQWaetT7xqDhz3eBYBV9N3dHiBdSDhnAcgg
- bQuhB1NTdRt7MFGCqA+4dxU/4TQWFsmU+bvfYDFvLnIzv299qWsEB1wmYljWo0Y4hoiu
- yTNADoeGoP0LQvA/eGCHQ4NbXNdo5c2KmECIyxCsr96fZUmMJpRNY93svW1fb5QMcNjw
- m91Q==
+ bh=fMa5YuSy0NDTUYP5ui6N/RSQpdjoNfs7F2yE5YfgTb4=;
+ b=tpoI5q3wYQL3mjwl2iblT3jo1duZp9HglkF0GTcDXeLoINFjDXrH7IHdrOABW/3CEr
+ 4FKQLDFEj1nAbDWAcqHjJe3JIiIQnLGifGkoU3Bh9pmZEKqY5Puf3Dyw96TEnl8/k15N
+ Jc94ggRDD9J+IKDbA2Sogdsl8LMibBcXExIB8I0AY0XDr0vfHxJaki1fS8FdB6y9jk29
+ w/g9x4jv+15IorZQ8qBVrY9lll5diFpvR9tsWNHTbE9aRSaItSZRutrk/wYblPOwbTZe
+ F5kO7dcRfGHYwyXa9YIH7NfVzGvKc1RSpZsYzBWnFN9CY8V2beErJaxiP3r+cCKvoCEs
+ AKCw==
 X-Forwarded-Encrypted: i=1;
- AJvYcCV2iIt0UaTqeaUCgBwZ5+CtPgcLSHI1S4krZi+TL5ktIhbj402XsR6Fd3pobM2sBOJEBB4vUyU85hW2@nongnu.org
-X-Gm-Message-State: AOJu0YzoGCNtLBT82I+z4BsOKgo2NdIEh4Q8x3EWZLhXrAzs3VfJO3BO
- i2ULKC3hTVvICXesf3/pOJEoYv/Wl6vOWwr4V+PaUBazlgtsA5Mh6lAEL0ym5Mg=
-X-Gm-Gg: ASbGncuKewgSoGnpeI1yg6ps1BhX84Ewbjfk5dZdLn78MFg95gBDkewLdBD/etSTyx7
- Afz1ex152mYOQoJlRkl2PX34LfdBbqHrNNas6QO5u4c43zviMzeB/Y/nL+4yaYij2S3fmCLPRWc
- 6+8hdZV0p0CofOpxJ6bBNDr+i3ytD7n7evXaZj0CfsjDWJY6YkWSnlsbgYIwytMHKWMJCNN2uOV
- 05bXyPZJk9pjtArmunse6vLjj+T5Cq6r8+3cQDdplUTYicMIx+xvne/PXzwFVaGc/dH6S05Fsg2
- 6AJtkZv7M3JYZ7sA06jwxA==
-X-Google-Smtp-Source: AGHT+IFk46o9MJfRxDQ5fp1zop2gX0pBdlLuXLQqomMqheDgghI/upyTVaZIVnOv9Ncrv7Wp4oLxvQ==
-X-Received: by 2002:a05:6000:1fae:b0:38a:a019:30dd with SMTP id
- ffacd0b85a97d-38c5a96f0b7mr3987385f8f.8.1738261396692; 
- Thu, 30 Jan 2025 10:23:16 -0800 (PST)
+ AJvYcCVFe08sz41cVESBUleUjDIDXQfPTBYe1maWJijMAfgDqzWQ83nV+4pZIqOIBOhCRGcsbNXqXbxHh872@nongnu.org
+X-Gm-Message-State: AOJu0Yx3nlBPDFKDPRoZQNrsTEd3xCJMB9l9NAbfzuGgjjMOgGTuzuJ4
+ j/pQDEAsxJQ96n7uY2+nAwL8fs+uncs6l5fjz1CaGn05p3BYVVORAkvnpXzY9fVCQ+tn49vftZt
+ U
+X-Gm-Gg: ASbGncsTl6fF7JxKsdZXV59+Rc1IBKrjnKj9wP5UgGsgqqRREYmAZA6QHwE+xByMIIM
+ 4MSZdTda8yntlrm//yZWbM9HS/RlI2B52kBC1zn6eZvtt+8ik++BwiCuGHcSk89AXecqnjX/b9a
+ 6OmH/+i8+Hy3J48x074T6QQo2hAFHm2n1kuKdmXTv1ZJc7vXV+3FGVlXUmvvYE5QRbpAER6KtiL
+ yorlmMtRYQAWbaB1vifRxsvrdr/0cUVtWxlEG7GUVkw6kCj/ccS+R3nxHdmr01okOWPLP2siy2I
+ UwI7wQv0dRJ0K28BmrAfiw==
+X-Google-Smtp-Source: AGHT+IFxjIh48WU/dSlOaoPrzaGSoSizC3MFT5Mm3SI1EOiyMrYEpqnqyWB8Fb2376SJHBAQgkzR3Q==
+X-Received: by 2002:a05:6000:1548:b0:38c:3f12:64be with SMTP id
+ ffacd0b85a97d-38c51f8a3camr10044992f8f.35.1738261398740; 
+ Thu, 30 Jan 2025 10:23:18 -0800 (PST)
 Received: from orth.archaic.org.uk (orth.archaic.org.uk. [2001:8b0:1d0::2])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-38c5c101599sm2634426f8f.23.2025.01.30.10.23.15
+ ffacd0b85a97d-38c5c101599sm2634426f8f.23.2025.01.30.10.23.17
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 30 Jan 2025 10:23:15 -0800 (PST)
+ Thu, 30 Jan 2025 10:23:18 -0800 (PST)
 From: Peter Maydell <peter.maydell@linaro.org>
 To: qemu-arm@nongnu.org,
 	qemu-devel@nongnu.org
 Cc: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
-Subject: [PATCH 05/14] target/arm: Make CP_ACCESS_TRAPs to AArch32 EL3 be
- Monitor traps
-Date: Thu, 30 Jan 2025 18:23:00 +0000
-Message-Id: <20250130182309.717346-6-peter.maydell@linaro.org>
+Subject: [PATCH 07/14] target/arm: Honour SDCR.TDCC and SCR.TERR in AArch32
+ EL3 non-Monitor modes
+Date: Thu, 30 Jan 2025 18:23:02 +0000
+Message-Id: <20250130182309.717346-8-peter.maydell@linaro.org>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20250130182309.717346-1-peter.maydell@linaro.org>
 References: <20250130182309.717346-1-peter.maydell@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::431;
- envelope-from=peter.maydell@linaro.org; helo=mail-wr1-x431.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::334;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x334.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -102,145 +103,101 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-In system register access pseudocode the common pattern for
-AArch32 registers with access traps to EL3 is:
+There are not many traps in AArch32 which should trap to Monitor
+mode, but these trap bits should trap not just lower ELs to Monitor
+mode but also the non-Monitor modes running at EL3 (i.e.  Secure
+System, Secure Undef, etc).
 
-at EL1 and EL2:
-  if HaveEL(EL3) && !ELUsingAArch32(EL3) && (SCR_EL3.TERR == 1) then
-     AArch64.AArch32SystemAccessTrap(EL3, 0x03);
-  elsif HaveEL(EL3) && ELUsingAArch32(EL3) && (SCR.TERR == 1) then
-     AArch32.TakeMonitorTrapException();
-at EL3:
-  if (PSTATE.M != M32_Monitor) && (SCR.TERR == 1) then
-     AArch32.TakeMonitorTrapException();
+We get this wrong because the relevant access functions implement the
+AArch64-style logic of
+   if (el < 3 && trap_bit_set) {
+       return CP_ACCESS_TRAP_EL3;
+   }
+which won't trap the non-Monitor modes at EL3.
 
-(taking as an example the ERRIDR access pseudocode).
+Correct this error by using arm_is_el3_or_mon() instead, which
+returns true when the CPU is at AArch64 EL3 or AArch32 Monitor mode.
+(Since the new callsites are compiled also for the linux-user mode,
+we need to provide a dummy implementation for CONFIG_USER_ONLY.)
 
-This implements the behaviour of (in this case) SCR.TERR that
-"Accesses to the specified registers from modes other than Monitor
-mode generate a Monitor Trap exception" and of SCR_EL3.TERR that
-"Accesses of the specified Error Record registers at EL2 and EL1
-are trapped to EL3, unless the instruction generates a higher
-priority exception".
+This affects only:
+ * trapping of ERRIDR via SCR.TERR
+ * trapping of the debug channel registers via SDCR.TDCC
+ * trapping of GICv3 registers via SCR.IRQ and SCR.FIQ
+   (which we already used arm_is_el3_or_mon() for)
 
-In QEMU we don't implement this pattern correctly in two ways:
- * in access_check_cp_reg() we turn the CP_ACCESS_TRAP_EL3 into
-   an UNDEF, not a trap to Monitor mode
- * in the access functions, we check trap bits like SCR.TERR
-   only when arm_current_el(env) < 3 -- this is correct for
-   AArch64 EL3, but misses the "trap non-Monitor-mode execution
-   at EL3 into Monitor mode" case for AArch32 EL3
+This patch changes the handling of SCR.TERR and SDCR.TDCC. This
+patch only changes guest-visible behaviour for "-cpu max" on
+the qemu-system-arm binary, because SCR.TERR
+and SDCR.TDCC (and indeed the entire SDCR register) only arrived
+in Armv8, and the only guest CPU we support which has any v8
+features and also starts in AArch32 EL3 is the 32-bit 'max'.
 
-In this commit we fix the first of these two issues, by
-making access_check_cp_reg() handle CP_ACCESS_TRAP_EL3
-as a Monitor trap. This is a kind of exception that we haven't
-yet implemented(!), so we need a new EXCP_MON_TRAP for it.
+Other uses of CP_ACCESS_TRAP_EL3 don't need changing:
 
-This diverges from the pseudocode approach, where every access check
-function explicitly checks for "if EL3 is AArch32" and takes a
-monitor trap; if we wanted to be closer to the pseudocode we could
-add a new CP_ACCESS_TRAP_MONITOR and make all the accessfns use it
-when appropriate.  But because there are no non-standard cases in the
-pseudocode (i.e.  where either it raises a Monitor trap that doesn't
-correspond to an AArch64 SystemAccessTrap or where it raises a
-SystemAccessTrap that doesn't correspond to a Monitor trap), handling
-this all in one place seems less likely to result in future bugs
-where we forgot again about this special case when writing an
-accessor.
-
-(The cc of stable here is because "hw/intc/arm_gicv3_cpuif: Don't
-downgrade monitor traps for AArch32 EL3" which is also cc:stable
-will implicitly use the new EXCP_MON_TRAP code path.)
+ * uses in code paths that can't happen when EL3 is AArch32:
+   access_trap_aa32s_el1, cpacr_access, cptr_access, nsacr_access
+ * uses which are in accessfns for AArch64-only registers:
+   gt_stimer_access, gt_cntpoff_access, access_hxen, access_tpidr2,
+   access_smpri, access_smprimap, access_lor_ns, access_pauth,
+   access_mte, access_tfsr_el2, access_scxtnum, access_fgt
+ * trap bits which exist only in the AArch64 version of the
+   trap register, not the AArch32 one:
+   access_tpm, pmreg_access, access_dbgvcr32, access_tdra,
+   access_tda, access_tdosa (TPM, TDA and TDOSA exist only in
+   MDCR_EL3, not in SDCR, and we enforce this in sdcr_write())
 
 Cc: qemu-stable@nongnu.org
 Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
 ---
- target/arm/cpu.h           |  1 +
- target/arm/helper.c        | 11 +++++++++++
- target/arm/tcg/op_helper.c | 13 ++++++++++++-
- 3 files changed, 24 insertions(+), 1 deletion(-)
+ target/arm/cpu.h          | 5 +++++
+ target/arm/debug_helper.c | 3 ++-
+ target/arm/helper.c       | 2 +-
+ 3 files changed, 8 insertions(+), 2 deletions(-)
 
 diff --git a/target/arm/cpu.h b/target/arm/cpu.h
-index 2213c277348..4cb672c120b 100644
+index 4cb672c120b..ae1e8b1c779 100644
 --- a/target/arm/cpu.h
 +++ b/target/arm/cpu.h
-@@ -62,6 +62,7 @@
- #define EXCP_NMI            26
- #define EXCP_VINMI          27
- #define EXCP_VFNMI          28
-+#define EXCP_MON_TRAP       29   /* AArch32 trap to Monitor mode */
- /* NB: add new EXCP_ defines to the array in arm_log_exception() too */
- 
- #define ARMV7M_EXCP_RESET   1
-diff --git a/target/arm/helper.c b/target/arm/helper.c
-index 5d9eca35c04..c5cd27b249f 100644
---- a/target/arm/helper.c
-+++ b/target/arm/helper.c
-@@ -9684,6 +9684,7 @@ void arm_log_exception(CPUState *cs)
-             [EXCP_NMI] = "NMI",
-             [EXCP_VINMI] = "Virtual IRQ NMI",
-             [EXCP_VFNMI] = "Virtual FIQ NMI",
-+            [EXCP_MON_TRAP] = "Monitor Trap",
-         };
- 
-         if (idx >= 0 && idx < ARRAY_SIZE(excnames)) {
-@@ -10250,6 +10251,16 @@ static void arm_cpu_do_interrupt_aarch32(CPUState *cs)
-         mask = CPSR_A | CPSR_I | CPSR_F;
-         offset = 0;
-         break;
-+    case EXCP_MON_TRAP:
-+        new_mode = ARM_CPU_MODE_MON;
-+        addr = 0x04;
-+        mask = CPSR_A | CPSR_I | CPSR_F;
-+        if (env->thumb) {
-+            offset = 2;
-+        } else {
-+            offset = 4;
-+        }
-+        break;
-     default:
-         cpu_abort(cs, "Unhandled exception 0x%x\n", cs->exception_index);
-         return; /* Never happens.  Keep compiler happy.  */
-diff --git a/target/arm/tcg/op_helper.c b/target/arm/tcg/op_helper.c
-index 1161d301b71..1ba727e8e9f 100644
---- a/target/arm/tcg/op_helper.c
-+++ b/target/arm/tcg/op_helper.c
-@@ -758,6 +758,7 @@ const void *HELPER(access_check_cp_reg)(CPUARMState *env, uint32_t key,
-     const ARMCPRegInfo *ri = get_arm_cp_reginfo(cpu->cp_regs, key);
-     CPAccessResult res = CP_ACCESS_OK;
-     int target_el;
-+    uint32_t excp;
- 
-     assert(ri != NULL);
- 
-@@ -851,8 +852,18 @@ const void *HELPER(access_check_cp_reg)(CPUARMState *env, uint32_t key,
-     }
- 
-  fail:
-+    excp = EXCP_UDEF;
-     switch (res & ~CP_ACCESS_EL_MASK) {
-     case CP_ACCESS_TRAP:
-+        /*
-+         * If EL3 is AArch32 then there's no syndrome register; the cases
-+         * where we would raise a SystemAccessTrap to AArch64 EL3 all become
-+         * raising a Monitor trap exception. (Because there's no visible
-+         * syndrome it doesn't matter what we pass to raise_exception().)
-+         */
-+        if ((res & CP_ACCESS_EL_MASK) == 3 && !arm_el_is_aa64(env, 3)) {
-+            excp = EXCP_MON_TRAP;
-+        }
-         break;
-     case CP_ACCESS_TRAP_UNCATEGORIZED:
-         /* Only CP_ACCESS_TRAP traps are direct to a specified EL */
-@@ -888,7 +899,7 @@ const void *HELPER(access_check_cp_reg)(CPUARMState *env, uint32_t key,
-         g_assert_not_reached();
-     }
- 
--    raise_exception(env, EXCP_UDEF, syndrome, target_el);
-+    raise_exception(env, excp, syndrome, target_el);
+@@ -2570,6 +2570,11 @@ static inline bool arm_is_secure_below_el3(CPUARMState *env)
+     return false;
  }
  
- const void *HELPER(lookup_cp_reg)(CPUARMState *env, uint32_t key)
++static inline bool arm_is_el3_or_mon(CPUARMState *env)
++{
++    return false;
++}
++
+ static inline ARMSecuritySpace arm_security_space(CPUARMState *env)
+ {
+     return ARMSS_NonSecure;
+diff --git a/target/arm/debug_helper.c b/target/arm/debug_helper.c
+index 2212ef4a3b9..c3c1eb5f628 100644
+--- a/target/arm/debug_helper.c
++++ b/target/arm/debug_helper.c
+@@ -880,7 +880,8 @@ static CPAccessResult access_tdcc(CPUARMState *env, const ARMCPRegInfo *ri,
+     if (el < 2 && (mdcr_el2_tda || mdcr_el2_tdcc)) {
+         return CP_ACCESS_TRAP_EL2;
+     }
+-    if (el < 3 && ((env->cp15.mdcr_el3 & MDCR_TDA) || mdcr_el3_tdcc)) {
++    if (!arm_is_el3_or_mon(env) &&
++        ((env->cp15.mdcr_el3 & MDCR_TDA) || mdcr_el3_tdcc)) {
+         return CP_ACCESS_TRAP_EL3;
+     }
+     return CP_ACCESS_OK;
+diff --git a/target/arm/helper.c b/target/arm/helper.c
+index c5cd27b249f..058a5af3aaf 100644
+--- a/target/arm/helper.c
++++ b/target/arm/helper.c
+@@ -6103,7 +6103,7 @@ static CPAccessResult access_terr(CPUARMState *env, const ARMCPRegInfo *ri,
+     if (el < 2 && (arm_hcr_el2_eff(env) & HCR_TERR)) {
+         return CP_ACCESS_TRAP_EL2;
+     }
+-    if (el < 3 && (env->cp15.scr_el3 & SCR_TERR)) {
++    if (!arm_is_el3_or_mon(env) && (env->cp15.scr_el3 & SCR_TERR)) {
+         return CP_ACCESS_TRAP_EL3;
+     }
+     return CP_ACCESS_OK;
 -- 
 2.34.1
 
