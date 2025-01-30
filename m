@@ -4,26 +4,26 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6A3ACC02190
-	for <qemu-devel@archiver.kernel.org>; Thu, 30 Jan 2025 10:11:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4CE30C0218A
+	for <qemu-devel@archiver.kernel.org>; Thu, 30 Jan 2025 10:11:40 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tdRV8-0003kN-4b; Thu, 30 Jan 2025 05:10:22 -0500
+	id 1tdRW9-0006HL-4K; Thu, 30 Jan 2025 05:11:25 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mhej@vps-ovh.mhejs.net>)
- id 1tdRV5-0003cz-Ln
- for qemu-devel@nongnu.org; Thu, 30 Jan 2025 05:10:19 -0500
+ id 1tdRVq-0005LO-8B
+ for qemu-devel@nongnu.org; Thu, 30 Jan 2025 05:11:08 -0500
 Received: from vps-ovh.mhejs.net ([145.239.82.108])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mhej@vps-ovh.mhejs.net>)
- id 1tdRV3-0007IX-WA
- for qemu-devel@nongnu.org; Thu, 30 Jan 2025 05:10:19 -0500
+ id 1tdRVm-0007Mj-Mv
+ for qemu-devel@nongnu.org; Thu, 30 Jan 2025 05:11:05 -0500
 Received: from MUA
  by vps-ovh.mhejs.net with esmtpsa  (TLS1.3) tls TLS_AES_256_GCM_SHA384
  (Exim 4.98) (envelope-from <mhej@vps-ovh.mhejs.net>)
- id 1tdRUy-00000006TyM-32DN; Thu, 30 Jan 2025 11:10:12 +0100
+ id 1tdRVj-00000006U0E-0HN9; Thu, 30 Jan 2025 11:10:59 +0100
 From: "Maciej S. Szmigiero" <mail@maciej.szmigiero.name>
 To: Peter Xu <peterx@redhat.com>,
 	Fabiano Rosas <farosas@suse.de>
@@ -33,14 +33,15 @@ Cc: Alex Williamson <alex.williamson@redhat.com>,
  =?UTF-8?q?Daniel=20P=20=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
  Avihai Horon <avihaih@nvidia.com>,
  Joao Martins <joao.m.martins@oracle.com>, qemu-devel@nongnu.org
-Subject: [PATCH v4 12/33] migration/multifd: Split packet into header and RAM
- data
-Date: Thu, 30 Jan 2025 11:08:33 +0100
-Message-ID: <a226929101610151fca90f1a8fd3199498e6c168.1738171076.git.maciej.szmigiero@oracle.com>
+Subject: [PATCH v4 21/33] vfio/migration: Add load_device_config_state_start
+ trace event
+Date: Thu, 30 Jan 2025 11:08:42 +0100
+Message-ID: <5116e9675a0f5894f924bc7088d359767a588bdf.1738171076.git.maciej.szmigiero@oracle.com>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <cover.1738171076.git.maciej.szmigiero@oracle.com>
 References: <cover.1738171076.git.maciej.szmigiero@oracle.com>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=145.239.82.108;
  envelope-from=mhej@vps-ovh.mhejs.net; helo=vps-ovh.mhejs.net
@@ -68,127 +69,54 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: "Maciej S. Szmigiero" <maciej.szmigiero@oracle.com>
 
-Read packet header first so in the future we will be able to
-differentiate between a RAM multifd packet and a device state multifd
-packet.
+And rename existing load_device_config_state trace event to
+load_device_config_state_end for consistency since it is triggered at the
+end of loading of the VFIO device config state.
 
-Since these two are of different size we can't read the packet body until
-we know which packet type it is.
+This way both the start and end points of particular device config
+loading operation (a long, BQL-serialized operation) are known.
 
-Reviewed-by: Fabiano Rosas <farosas@suse.de>
-Reviewed-by: Peter Xu <peterx@redhat.com>
+Reviewed-by: Cédric Le Goater <clg@redhat.com>
 Signed-off-by: Maciej S. Szmigiero <maciej.szmigiero@oracle.com>
 ---
- migration/multifd.c | 49 +++++++++++++++++++++++++++++++++++----------
- migration/multifd.h |  5 +++++
- 2 files changed, 43 insertions(+), 11 deletions(-)
+ hw/vfio/migration.c  | 4 +++-
+ hw/vfio/trace-events | 3 ++-
+ 2 files changed, 5 insertions(+), 2 deletions(-)
 
-diff --git a/migration/multifd.c b/migration/multifd.c
-index ceaad930e141..53493676012e 100644
---- a/migration/multifd.c
-+++ b/migration/multifd.c
-@@ -209,10 +209,10 @@ void multifd_send_fill_packet(MultiFDSendParams *p)
+diff --git a/hw/vfio/migration.c b/hw/vfio/migration.c
+index d801c861d202..f5df5ef17080 100644
+--- a/hw/vfio/migration.c
++++ b/hw/vfio/migration.c
+@@ -310,6 +310,8 @@ static int vfio_load_device_config_state(QEMUFile *f, void *opaque)
+     VFIODevice *vbasedev = opaque;
+     uint64_t data;
  
-     memset(packet, 0, p->packet_len);
++    trace_vfio_load_device_config_state_start(vbasedev->name);
++
+     if (vbasedev->ops && vbasedev->ops->vfio_load_config) {
+         int ret;
  
--    packet->magic = cpu_to_be32(MULTIFD_MAGIC);
--    packet->version = cpu_to_be32(MULTIFD_VERSION);
-+    packet->hdr.magic = cpu_to_be32(MULTIFD_MAGIC);
-+    packet->hdr.version = cpu_to_be32(MULTIFD_VERSION);
- 
--    packet->flags = cpu_to_be32(p->flags);
-+    packet->hdr.flags = cpu_to_be32(p->flags);
-     packet->next_packet_size = cpu_to_be32(p->next_packet_size);
- 
-     packet_num = qatomic_fetch_inc(&multifd_send_state->packet_num);
-@@ -228,12 +228,12 @@ void multifd_send_fill_packet(MultiFDSendParams *p)
-                             p->flags, p->next_packet_size);
- }
- 
--static int multifd_recv_unfill_packet(MultiFDRecvParams *p, Error **errp)
-+static int multifd_recv_unfill_packet_header(MultiFDRecvParams *p,
-+                                             const MultiFDPacketHdr_t *hdr,
-+                                             Error **errp)
- {
--    const MultiFDPacket_t *packet = p->packet;
--    uint32_t magic = be32_to_cpu(packet->magic);
--    uint32_t version = be32_to_cpu(packet->version);
--    int ret = 0;
-+    uint32_t magic = be32_to_cpu(hdr->magic);
-+    uint32_t version = be32_to_cpu(hdr->version);
- 
-     if (magic != MULTIFD_MAGIC) {
-         error_setg(errp, "multifd: received packet magic %x, expected %x",
-@@ -247,7 +247,16 @@ static int multifd_recv_unfill_packet(MultiFDRecvParams *p, Error **errp)
-         return -1;
+@@ -328,7 +330,7 @@ static int vfio_load_device_config_state(QEMUFile *f, void *opaque)
+         return -EINVAL;
      }
  
--    p->flags = be32_to_cpu(packet->flags);
-+    p->flags = be32_to_cpu(hdr->flags);
-+
-+    return 0;
-+}
-+
-+static int multifd_recv_unfill_packet(MultiFDRecvParams *p, Error **errp)
-+{
-+    const MultiFDPacket_t *packet = p->packet;
-+    int ret = 0;
-+
-     p->next_packet_size = be32_to_cpu(packet->next_packet_size);
-     p->packet_num = be64_to_cpu(packet->packet_num);
-     p->packets_recved++;
-@@ -1130,8 +1139,12 @@ static void *multifd_recv_thread(void *opaque)
-     rcu_register_thread();
+-    trace_vfio_load_device_config_state(vbasedev->name);
++    trace_vfio_load_device_config_state_end(vbasedev->name);
+     return qemu_file_get_error(f);
+ }
  
-     while (true) {
-+        MultiFDPacketHdr_t hdr;
-         uint32_t flags = 0;
-         bool has_data = false;
-+        uint8_t *pkt_buf;
-+        size_t pkt_len;
-+
-         p->normal_num = 0;
+diff --git a/hw/vfio/trace-events b/hw/vfio/trace-events
+index cab1cf1de0a2..1bebe9877d88 100644
+--- a/hw/vfio/trace-events
++++ b/hw/vfio/trace-events
+@@ -149,7 +149,8 @@ vfio_display_edid_write_error(void) ""
  
-         if (use_packets) {
-@@ -1139,8 +1152,22 @@ static void *multifd_recv_thread(void *opaque)
-                 break;
-             }
- 
--            ret = qio_channel_read_all_eof(p->c, (void *)p->packet,
--                                           p->packet_len, &local_err);
-+            ret = qio_channel_read_all_eof(p->c, (void *)&hdr,
-+                                           sizeof(hdr), &local_err);
-+            if (ret == 0 || ret == -1) {   /* 0: EOF  -1: Error */
-+                break;
-+            }
-+
-+            ret = multifd_recv_unfill_packet_header(p, &hdr, &local_err);
-+            if (ret) {
-+                break;
-+            }
-+
-+            pkt_buf = (uint8_t *)p->packet + sizeof(hdr);
-+            pkt_len = p->packet_len - sizeof(hdr);
-+
-+            ret = qio_channel_read_all_eof(p->c, (char *)pkt_buf, pkt_len,
-+                                           &local_err);
-             if (ret == 0 || ret == -1) {   /* 0: EOF  -1: Error */
-                 break;
-             }
-diff --git a/migration/multifd.h b/migration/multifd.h
-index bd785b987315..9e4baa066312 100644
---- a/migration/multifd.h
-+++ b/migration/multifd.h
-@@ -69,6 +69,11 @@ typedef struct {
-     uint32_t magic;
-     uint32_t version;
-     uint32_t flags;
-+} __attribute__((packed)) MultiFDPacketHdr_t;
-+
-+typedef struct {
-+    MultiFDPacketHdr_t hdr;
-+
-     /* maximum number of allocated pages */
-     uint32_t pages_alloc;
-     /* non zero pages */
+ # migration.c
+ vfio_load_cleanup(const char *name) " (%s)"
+-vfio_load_device_config_state(const char *name) " (%s)"
++vfio_load_device_config_state_start(const char *name) " (%s)"
++vfio_load_device_config_state_end(const char *name) " (%s)"
+ vfio_load_state(const char *name, uint64_t data) " (%s) data 0x%"PRIx64
+ vfio_load_state_device_data(const char *name, uint64_t data_size, int ret) " (%s) size %"PRIu64" ret %d"
+ vfio_migration_realize(const char *name) " (%s)"
 
