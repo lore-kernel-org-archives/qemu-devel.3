@@ -4,26 +4,26 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BCEB8C0218A
-	for <qemu-devel@archiver.kernel.org>; Thu, 30 Jan 2025 10:12:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2E0CAC02193
+	for <qemu-devel@archiver.kernel.org>; Thu, 30 Jan 2025 10:12:04 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tdRWU-0007uO-1b; Thu, 30 Jan 2025 05:11:49 -0500
+	id 1tdRVH-0004FJ-0E; Thu, 30 Jan 2025 05:10:31 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mhej@vps-ovh.mhejs.net>)
- id 1tdRWJ-0007ij-OE
- for qemu-devel@nongnu.org; Thu, 30 Jan 2025 05:11:36 -0500
+ id 1tdRVF-0004Ai-9c
+ for qemu-devel@nongnu.org; Thu, 30 Jan 2025 05:10:29 -0500
 Received: from vps-ovh.mhejs.net ([145.239.82.108])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mhej@vps-ovh.mhejs.net>)
- id 1tdRWI-0007Oq-44
- for qemu-devel@nongnu.org; Thu, 30 Jan 2025 05:11:35 -0500
+ id 1tdRVD-0007JO-Bo
+ for qemu-devel@nongnu.org; Thu, 30 Jan 2025 05:10:28 -0500
 Received: from MUA
  by vps-ovh.mhejs.net with esmtpsa  (TLS1.3) tls TLS_AES_256_GCM_SHA384
  (Exim 4.98) (envelope-from <mhej@vps-ovh.mhejs.net>)
- id 1tdRW3-00000006U11-2tkP; Thu, 30 Jan 2025 11:11:19 +0100
+ id 1tdRV9-00000006Tyl-01e7; Thu, 30 Jan 2025 11:10:23 +0100
 From: "Maciej S. Szmigiero" <mail@maciej.szmigiero.name>
 To: Peter Xu <peterx@redhat.com>,
 	Fabiano Rosas <farosas@suse.de>
@@ -33,10 +33,9 @@ Cc: Alex Williamson <alex.williamson@redhat.com>,
  =?UTF-8?q?Daniel=20P=20=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
  Avihai Horon <avihaih@nvidia.com>,
  Joao Martins <joao.m.martins@oracle.com>, qemu-devel@nongnu.org
-Subject: [PATCH v4 25/33] vfio/migration: Multifd device state transfer - add
- support checking function
-Date: Thu, 30 Jan 2025 11:08:46 +0100
-Message-ID: <6895b3d49835cde3fe349fa0b46c9eadb85bb701.1738171076.git.maciej.szmigiero@oracle.com>
+Subject: [PATCH v4 14/33] migration/multifd: Make multifd_send() thread safe
+Date: Thu, 30 Jan 2025 11:08:35 +0100
+Message-ID: <b3aa816dd451edf1e00ffdcbf9740f28eccd8b91.1738171076.git.maciej.szmigiero@oracle.com>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <cover.1738171076.git.maciej.szmigiero@oracle.com>
 References: <cover.1738171076.git.maciej.szmigiero@oracle.com>
@@ -68,29 +67,56 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: "Maciej S. Szmigiero" <maciej.szmigiero@oracle.com>
 
-Add vfio_multifd_transfer_supported() function that tells whether the
-multifd device state transfer is supported.
+multifd_send() function is currently not thread safe, make it thread safe
+by holding a lock during its execution.
 
+This way it will be possible to safely call it concurrently from multiple
+threads.
+
+Reviewed-by: Peter Xu <peterx@redhat.com>
 Signed-off-by: Maciej S. Szmigiero <maciej.szmigiero@oracle.com>
 ---
- hw/vfio/migration.c | 6 ++++++
- 1 file changed, 6 insertions(+)
+ migration/multifd.c | 8 ++++++++
+ 1 file changed, 8 insertions(+)
 
-diff --git a/hw/vfio/migration.c b/hw/vfio/migration.c
-index 40cbe1be687d..3211041939c6 100644
---- a/hw/vfio/migration.c
-+++ b/hw/vfio/migration.c
-@@ -519,6 +519,12 @@ static bool vfio_precopy_supported(VFIODevice *vbasedev)
-     return migration->mig_flags & VFIO_MIGRATION_PRE_COPY;
- }
+diff --git a/migration/multifd.c b/migration/multifd.c
+index 810e7b1fb340..02d163fe292d 100644
+--- a/migration/multifd.c
++++ b/migration/multifd.c
+@@ -50,6 +50,10 @@ typedef struct {
  
-+static bool vfio_multifd_transfer_supported(void)
-+{
-+    return multifd_device_state_supported() &&
-+        migrate_send_switchover_start();
-+}
+ struct {
+     MultiFDSendParams *params;
 +
- /* ---------------------------------------------------------------------- */
++    /* multifd_send() body is not thread safe, needs serialization */
++    QemuMutex multifd_send_mutex;
++
+     /*
+      * Global number of generated multifd packets.
+      *
+@@ -339,6 +343,8 @@ bool multifd_send(MultiFDSendData **send_data)
+         return false;
+     }
  
- static int vfio_save_prepare(void *opaque, Error **errp)
++    QEMU_LOCK_GUARD(&multifd_send_state->multifd_send_mutex);
++
+     /* We wait here, until at least one channel is ready */
+     qemu_sem_wait(&multifd_send_state->channels_ready);
+ 
+@@ -507,6 +513,7 @@ static void multifd_send_cleanup_state(void)
+     socket_cleanup_outgoing_migration();
+     qemu_sem_destroy(&multifd_send_state->channels_created);
+     qemu_sem_destroy(&multifd_send_state->channels_ready);
++    qemu_mutex_destroy(&multifd_send_state->multifd_send_mutex);
+     g_free(multifd_send_state->params);
+     multifd_send_state->params = NULL;
+     g_free(multifd_send_state);
+@@ -857,6 +864,7 @@ bool multifd_send_setup(void)
+     thread_count = migrate_multifd_channels();
+     multifd_send_state = g_malloc0(sizeof(*multifd_send_state));
+     multifd_send_state->params = g_new0(MultiFDSendParams, thread_count);
++    qemu_mutex_init(&multifd_send_state->multifd_send_mutex);
+     qemu_sem_init(&multifd_send_state->channels_created, 0);
+     qemu_sem_init(&multifd_send_state->channels_ready, 0);
+     qatomic_set(&multifd_send_state->exiting, 0);
 
