@@ -4,35 +4,35 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9697BC0218D
-	for <qemu-devel@archiver.kernel.org>; Thu, 30 Jan 2025 11:47:19 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 41E3FC0218A
+	for <qemu-devel@archiver.kernel.org>; Thu, 30 Jan 2025 11:48:42 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tdT0C-0000HT-Gu; Thu, 30 Jan 2025 06:46:32 -0500
+	id 1tdT24-0000wv-R7; Thu, 30 Jan 2025 06:48:29 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1tdT0B-0000HF-C5; Thu, 30 Jan 2025 06:46:31 -0500
+ id 1tdT1q-0000pp-BO; Thu, 30 Jan 2025 06:48:18 -0500
 Received: from isrv.corpit.ru ([86.62.121.231])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1tdT09-0004Sg-Nd; Thu, 30 Jan 2025 06:46:31 -0500
+ id 1tdT1o-0004Zz-Lx; Thu, 30 Jan 2025 06:48:14 -0500
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 7BF8DE2F8D;
- Thu, 30 Jan 2025 14:45:56 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id 43B17E2F94;
+ Thu, 30 Jan 2025 14:47:42 +0300 (MSK)
 Received: from gandalf.tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id 4C4871A7E68;
- Thu, 30 Jan 2025 14:46:25 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id 14C131A7E69;
+ Thu, 30 Jan 2025 14:48:11 +0300 (MSK)
 Received: by gandalf.tls.msk.ru (Postfix, from userid 1000)
- id 41A58523D7; Thu, 30 Jan 2025 14:46:25 +0300 (MSK)
+ id 08391523D9; Thu, 30 Jan 2025 14:48:11 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
 Cc: qemu-trivial@nongnu.org, Samuel Thibault <samuel.thibault@gnu.org>,
  Thomas Huth <thuth@redhat.com>, Michael Tokarev <mjt@tls.msk.ru>
-Subject: [PATCH v2] net/slirp: libslirp 4.8.0 compatibility
-Date: Thu, 30 Jan 2025 14:46:21 +0300
-Message-Id: <20250130114621.857046-1-mjt@tls.msk.ru>
+Subject: [PATCH v3] net/slirp: libslirp 4.8.0 compatibility
+Date: Thu, 30 Jan 2025 14:48:10 +0300
+Message-Id: <20250130114810.857224-1-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.39.5
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
@@ -43,7 +43,7 @@ X-Spam_score: -6.9
 X-Spam_bar: ------
 X-Spam_report: (-6.9 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_HI=-5,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -68,6 +68,7 @@ starting with version 6 of the interface.
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 ---
 v2: update other callbacks too, use version 6 of the interface
+v3: commit the changes before sending (*_sock => *_socket)
 
  net/slirp.c | 25 +++++++++++++++++--------
  1 file changed, 17 insertions(+), 8 deletions(-)
@@ -84,8 +85,8 @@ index eb9a456ed4..2d2a58a6ee 100644
 +#if !SLIRP_CHECK_VERSION(4,8,0)
 +# define slirp_os_socket int
 +# define slirp_pollfds_fill_socket slirp_pollfds_fill
-+# define register_poll_sock register_poll_fd
-+# define unregister_poll_sock unregister_poll_fd
++# define register_poll_socket register_poll_fd
++# define unregister_poll_socket unregister_poll_fd
 +#endif
 +
 +static void net_slirp_register_poll_sock(slirp_os_socket fd, void *opaque)
