@@ -4,72 +4,71 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2FD55C02194
-	for <qemu-devel@archiver.kernel.org>; Fri, 31 Jan 2025 21:09:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B1B91C0218F
+	for <qemu-devel@archiver.kernel.org>; Fri, 31 Jan 2025 21:09:58 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tdyF5-0003vT-6p; Fri, 31 Jan 2025 16:08:05 -0500
+	id 1tdyE5-0000U5-Iz; Fri, 31 Jan 2025 16:06:57 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tdyEg-0003G9-Fg
- for qemu-devel@nongnu.org; Fri, 31 Jan 2025 16:07:35 -0500
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tdyE3-0000Kk-Jg
+ for qemu-devel@nongnu.org; Fri, 31 Jan 2025 16:06:55 -0500
 Received: from mail-wm1-x335.google.com ([2a00:1450:4864:20::335])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tdyEe-0007yV-GS
- for qemu-devel@nongnu.org; Fri, 31 Jan 2025 16:07:34 -0500
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tdyE1-0007u4-Rh
+ for qemu-devel@nongnu.org; Fri, 31 Jan 2025 16:06:55 -0500
 Received: by mail-wm1-x335.google.com with SMTP id
- 5b1f17b1804b1-4361f65ca01so24928355e9.1
- for <qemu-devel@nongnu.org>; Fri, 31 Jan 2025 13:07:32 -0800 (PST)
+ 5b1f17b1804b1-43690d4605dso17494065e9.0
+ for <qemu-devel@nongnu.org>; Fri, 31 Jan 2025 13:06:53 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1738357651; x=1738962451; darn=nongnu.org;
+ d=linaro.org; s=google; t=1738357612; x=1738962412; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=CI3fJcIwv6F5yUs6Iv79OMCJfAeeRwik7915FGrttBI=;
- b=rEt06LynfGHe4Guj8QTrSUZEppvAfhBidMPsLAZ0rQqJ1hzEacpAXq9+CeLTYKD7Xx
- 1syXWW4FvT9NVBEAi8pO2V5Txpf6CPIiuN2+e1fHoNoniP2w7xc3O7gsXE3715flf4t4
- lFvdm/GTwucuoamH9yDAal3pL4npwMGGzKMolxRCjQBxHrmcJxlu2SNNnkfKOTFBAITf
- nzEbh/Quuq2C9Q66fGnskwH32FHr+ZpwEDA8Vt3RQCoccJzbptx3Fa2keHYYfEJYgpUU
- eo51qk1s+hOfZUKXk+OACqdNze33xR6dJigwkmKTDqxzAh9TXkc4HH2DsKUyAP6Il3UE
- WxMA==
+ bh=Yx9zBwtSy3gGrxCYpvjzpuUDny+fjTYjt9csPoUwmf4=;
+ b=zxFO5hAcp8+5j6jTtmzp+r+tmo7gGDIrLQv9AZjeV24YCX+kQ+5Cof1vyoV4fPxCSx
+ nai6Rk3/+wBYUdn1HpxoUICcAw+eMMQZvkCuH9SNj4x35LVs/GRirVTpgPuPr9LCAOKj
+ PUBN+aE2bdIqmBI28yBnZ2QN9B/fHgPG0yQe6yMwqGVOehdK/o1HIw8pzhymt4vPvpu0
+ k+DXOxrHVCZZasIvRv18+M2ExKYrlf3esmU6FIlwb+MkSr2YA6PIIzr4X7OTZCz4jL5q
+ TExAuF/5iPgDXjSupQMsUzedfsmS1qVW3aTLDQk/2pEjcyLQwV9/GY8BagU72E2ubInN
+ WI8A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1738357651; x=1738962451;
+ d=1e100.net; s=20230601; t=1738357612; x=1738962412;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=CI3fJcIwv6F5yUs6Iv79OMCJfAeeRwik7915FGrttBI=;
- b=tzD8Jsveva1W4Ld0DNVZfc1WA/pzg52qvAbTGrsUs3sDyj+jMTxqsg21q5mLor02fO
- A4oXt6a+wJoZeaiEytK7FrsOA85b8Smmz11rGNH2IjKvwP4WxWiNNUojfwF1mSZPgU8l
- 1LFuW48wbrqkmDDK3xnr0w7cDBenjMBPg+U6CyEevsl+xVbesz+5YHYollFXxhY0FKDY
- sYgA2gSLS0nsgdV98OyriBZti1Q0XtRwlXt/aNY05pTv6IRdnnEanpG7Z4qh2iLs9RLI
- 4YDOrnRLhRErDnpymvZdBmTw8tyg43OB5uf/gom72EGDjS2xF9tZmNc75/epOEso0luh
- tENA==
-X-Gm-Message-State: AOJu0Yy/67Z1pjlkYYzzSBRRGKs1tn/c13s42GRH9oAozJZQfM7UuB1K
- MaVxQ0zVHiUtBDnkNFWtlRTv3bEkYR+DJHlnnpgM4eOn/ppF2L/XzT8LI9+isftJxc8i3P6yahw
- gkBo=
-X-Gm-Gg: ASbGncsCLj2eW4aUs9nYHuYOPaKlWarXqZkA8xsUOxGXK691VGmInbjcY5vaXXHLxGc
- aV3JAVGLxmlyjkw7k3FeYVJBj8EkSHicErIcCaKr3VHFBR47G80824DBW+n8gZH0Sv3SNGfv7T9
- D1NYl34uQ23UWgbDSFHPuKvXY5V58bkEkB5nScFFtBlkK0904JwdSjq5SEhTaXDKDWdydl36N7/
- PQR6Mj+zeupTvkFSwBWBCBwYQobNYngcphQdg4u3eNBuApwzlAsCY51ubMpbLbMLOSV7pZHjxIB
- 6aZmOB/IkqzJX9Vil1sYUbSof8i+I8rK1LuJMlWaDJ4BN6z8nmGa8M1ck0DHj9o9hg==
-X-Google-Smtp-Source: AGHT+IFoTD1sgynSL111p4mYKna9uh0kOurQLNp4GBb+ts4/konv0H6QitdCc+J7g7fKN1xN4qiuHQ==
-X-Received: by 2002:a05:600c:3c9f:b0:438:a240:c63 with SMTP id
- 5b1f17b1804b1-438dc3aa55emr117422865e9.2.1738357650656; 
- Fri, 31 Jan 2025 13:07:30 -0800 (PST)
+ bh=Yx9zBwtSy3gGrxCYpvjzpuUDny+fjTYjt9csPoUwmf4=;
+ b=iU3heIAfneJAh7b2T8v/+h0tyV4SmyB5L2Lkq0lPVqmP1eN7lXt86oyl+OR2etVu0u
+ xA9TD5vXvOJuNw80MzNZdirlU9uqOh6kMs/HgQma6L2Ou8qiUis7Hr/pLDinRXmZuYqa
+ r6BOKSiUAttpINLszf4i1qITDt6wErOJ45S/7CbXjnHQv9ZTvzLJthxxmU5dJ7EBqjS3
+ hMhbMktZRZpiPt5U4y89iH/VjunqXNR0i/rfOrqbVcpy+XiD6tP+y3r6FvYRWbi7qsBW
+ bgRT0BlYRqvi3kOPqRvVUIayxN0e3/Cc8hByQZwO4M8pORBbBY3mZNNaGhT1kn2MnmKQ
+ 5Oow==
+X-Gm-Message-State: AOJu0YwDC2PNJoYdUB52b/IjXIBsGjvX0vKVtjDBG6oNCge69fK/a96k
+ /s3Go9hZBKOf6E9k3BodiUPfUIu8S1njNu3eGE5rFu78Plhz4xnG+ZXSSaKZLDqpS6gIyVusnJx
+ PBDQ=
+X-Gm-Gg: ASbGncunFVGq/CfLV+tcZC2rE1gyii5BpLb1wqldv6pkXrMIHQejYHgN12vNeSaG3I5
+ EtdIQxhtInCsGPNbFuNopRFVBG+WUElaCeIFimzWEC5tkfaI1gmUzpXJxl9N6R0RbhDcZ5HKQLL
+ Hbprrqadh2sXpVG6HkJ0cCBsSJxjlENxy+8OgrPfQN5MaEVdnTAz9LY6i0et82ALKC20WZ3vTyo
+ DDNuwjf6vkEqewVuvuBttVNVTCJNWWXhM16lx4AUkIHpHz5pS2pijIqfpUEUszYAgrzX1UK+Jom
+ BnSRevuuIy2uFXLnP3tqYWpz/wk7lJ8feFFShBMRco1LCqVPQpUtONYVPk4m9wzEZw==
+X-Google-Smtp-Source: AGHT+IFtmVu8oi+o//GaboNDYBJNnpaB/ubHIhDTYcuTLDK1cG+ltJZD3LhM9GLPvE6TbYDaBrNyuQ==
+X-Received: by 2002:a05:600c:1d27:b0:436:5fc9:30ba with SMTP id
+ 5b1f17b1804b1-438dc429771mr122794815e9.29.1738357611713; 
+ Fri, 31 Jan 2025 13:06:51 -0800 (PST)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-438e23deddcsm66098885e9.14.2025.01.31.13.07.29
+ 5b1f17b1804b1-438dcc26b15sm102018555e9.11.2025.01.31.13.06.50
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Fri, 31 Jan 2025 13:07:30 -0800 (PST)
+ Fri, 31 Jan 2025 13:06:50 -0800 (PST)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
-Cc: Peter Maydell <peter.maydell@linaro.org>,
- Richard Henderson <richard.henderson@linaro.org>,
+Cc: Titus Rwantare <titusr@google.com>, Hao Wu <wuhaotsh@google.com>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PULL 26/36] hw/sd/omap_mmc: Do a minimal conversion to QDev
-Date: Fri, 31 Jan 2025 22:05:09 +0100
-Message-ID: <20250131210520.85874-27-philmd@linaro.org>
+Subject: [PULL 18/36] hw/misc/i2c-echo: add tracing
+Date: Fri, 31 Jan 2025 22:05:01 +0100
+Message-ID: <20250131210520.85874-19-philmd@linaro.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20250131210520.85874-1-philmd@linaro.org>
 References: <20250131210520.85874-1-philmd@linaro.org>
@@ -100,214 +99,92 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Peter Maydell <peter.maydell@linaro.org>
+From: Titus Rwantare <titusr@google.com>
 
-Do a minimal conversion of the omap_mmc device model to QDev.
+This has been useful when debugging and unsure if the guest is
+generating i2c traffic.
 
-In this commit we do the bare minimum to produce a working device:
- * add the SysBusDevice parent_obj and the usual type boilerplate
- * omap_mmc_init() now returns a DeviceState*
- * reset is handled by sysbus reset, so the SoC reset function
-   doesn't need to call omap_mmc_reset() any more
- * code that should obviously be in init/realize is moved there
-   from omap_mmc_init()
-
-We leave various pieces of cleanup to later commits:
- * rationalizing 'struct omap_mmc_s *' to 'OMAPMMCState *'
- * using gpio lines rather than having omap_mmc_init() directly
-   set s->irq, s->dma
- * switching away from the legacy SD API and instead having
-   the SD card plugged into a bus
-
-Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Signed-off-by: Titus Rwantare <titusr@google.com>
+Reviewed-by: Hao Wu <wuhaotsh@google.com>
 Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Message-ID: <20250128104519.3981448-2-peter.maydell@linaro.org>
-[PMD: Do not add omap_mmc_realize()]
+Message-ID: <20250121105935.3069035-1-titusr@google.com>
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 ---
- include/hw/arm/omap.h | 15 +++++----
- hw/arm/omap1.c        |  1 -
- hw/sd/omap_mmc.c      | 77 ++++++++++++++++++++++++++++++++++---------
- 3 files changed, 70 insertions(+), 23 deletions(-)
+ hw/misc/i2c-echo.c   | 8 ++++++++
+ hw/misc/trace-events | 5 +++++
+ 2 files changed, 13 insertions(+)
 
-diff --git a/include/hw/arm/omap.h b/include/hw/arm/omap.h
-index 420ed1d5735..6339c5a581e 100644
---- a/include/hw/arm/omap.h
-+++ b/include/hw/arm/omap.h
-@@ -529,12 +529,13 @@ struct omap_lcd_panel_s *omap_lcdc_init(MemoryRegion *sysmem,
-                                         omap_clk clk);
+diff --git a/hw/misc/i2c-echo.c b/hw/misc/i2c-echo.c
+index 5ae3d0817ea..65d10029dc7 100644
+--- a/hw/misc/i2c-echo.c
++++ b/hw/misc/i2c-echo.c
+@@ -13,6 +13,7 @@
+ #include "qemu/main-loop.h"
+ #include "block/aio.h"
+ #include "hw/i2c/i2c.h"
++#include "trace.h"
  
- /* omap_mmc.c */
--struct omap_mmc_s;
--struct omap_mmc_s *omap_mmc_init(hwaddr base,
--                MemoryRegion *sysmem,
--                BlockBackend *blk,
--                qemu_irq irq, qemu_irq dma[], omap_clk clk);
--void omap_mmc_reset(struct omap_mmc_s *s);
-+#define TYPE_OMAP_MMC "omap-mmc"
-+OBJECT_DECLARE_SIMPLE_TYPE(omap_mmc_s, OMAP_MMC)
-+
-+DeviceState *omap_mmc_init(hwaddr base,
-+                           MemoryRegion *sysmem,
-+                           BlockBackend *blk,
-+                           qemu_irq irq, qemu_irq dma[], omap_clk clk);
+ #define TYPE_I2C_ECHO "i2c-echo"
+ OBJECT_DECLARE_SIMPLE_TYPE(I2CEchoState, I2C_ECHO)
+@@ -80,11 +81,13 @@ static int i2c_echo_event(I2CSlave *s, enum i2c_event event)
+     case I2C_START_RECV:
+         state->pos = 0;
  
- /* omap_i2c.c */
- I2CBus *omap_i2c_bus(DeviceState *omap_i2c);
-@@ -601,7 +602,7 @@ struct omap_mpu_state_s {
-     /* MPU public TIPB peripherals */
-     struct omap_32khz_timer_s *os_timer;
++        trace_i2c_echo_event(DEVICE(s)->canonical_path, "I2C_START_RECV");
+         break;
  
--    struct omap_mmc_s *mmc;
-+    DeviceState *mmc;
+     case I2C_START_SEND:
+         state->pos = 0;
  
-     struct omap_mpuio_s *mpuio;
++        trace_i2c_echo_event(DEVICE(s)->canonical_path, "I2C_START_SEND");
+         break;
  
-diff --git a/hw/arm/omap1.c b/hw/arm/omap1.c
-index f3a0ac40e48..ea07b9aa31e 100644
---- a/hw/arm/omap1.c
-+++ b/hw/arm/omap1.c
-@@ -3716,7 +3716,6 @@ static void omap1_mpu_reset(void *opaque)
-     omap_uart_reset(mpu->uart[0]);
-     omap_uart_reset(mpu->uart[1]);
-     omap_uart_reset(mpu->uart[2]);
--    omap_mmc_reset(mpu->mmc);
-     omap_mpuio_reset(mpu->mpuio);
-     omap_uwire_reset(mpu->microwire);
-     omap_pwl_reset(mpu->pwl);
-diff --git a/hw/sd/omap_mmc.c b/hw/sd/omap_mmc.c
-index 1d4e30e6b7b..fec2cfd4d66 100644
---- a/hw/sd/omap_mmc.c
-+++ b/hw/sd/omap_mmc.c
-@@ -21,11 +21,15 @@
+     case I2C_FINISH:
+@@ -92,12 +95,15 @@ static int i2c_echo_event(I2CSlave *s, enum i2c_event event)
+         state->state = I2C_ECHO_STATE_START_SEND;
+         i2c_bus_master(state->bus, state->bh);
  
- #include "qemu/osdep.h"
- #include "qemu/log.h"
-+#include "qapi/error.h"
- #include "hw/irq.h"
-+#include "hw/sysbus.h"
- #include "hw/arm/omap.h"
- #include "hw/sd/sdcard_legacy.h"
++        trace_i2c_echo_event(DEVICE(s)->canonical_path, "I2C_FINISH");
+         break;
  
--struct omap_mmc_s {
-+typedef struct omap_mmc_s {
-+    SysBusDevice parent_obj;
-+
-     qemu_irq irq;
-     qemu_irq *dma;
-     qemu_irq coverswitch;
-@@ -66,7 +70,7 @@ struct omap_mmc_s {
-     int cdet_enable;
-     int cdet_state;
-     qemu_irq cdet;
--};
-+} OMAPMMCState;
+     case I2C_NACK:
++        trace_i2c_echo_event(DEVICE(s)->canonical_path, "I2C_NACK");
+         break;
  
- static void omap_mmc_interrupts_update(struct omap_mmc_s *s)
- {
-@@ -297,7 +301,7 @@ static void omap_mmc_pseudo_reset(struct omap_mmc_s *host)
-     host->fifo_len = 0;
- }
- 
--void omap_mmc_reset(struct omap_mmc_s *host)
-+static void omap_mmc_reset(struct omap_mmc_s *host)
- {
-     host->last_cmd = 0;
-     memset(host->rsp, 0, sizeof(host->rsp));
-@@ -328,7 +332,9 @@ void omap_mmc_reset(struct omap_mmc_s *host)
-      * into any bus, and we must reset it manually. When omap_mmc is
-      * QOMified this must move into the QOM reset function.
-      */
--    device_cold_reset(DEVICE(host->card));
-+    if (host->card) {
-+        device_cold_reset(DEVICE(host->card));
-+    }
- }
- 
- static uint64_t omap_mmc_read(void *opaque, hwaddr offset, unsigned size)
-@@ -583,29 +589,70 @@ static const MemoryRegionOps omap_mmc_ops = {
-     .endianness = DEVICE_NATIVE_ENDIAN,
- };
- 
--struct omap_mmc_s *omap_mmc_init(hwaddr base,
--                MemoryRegion *sysmem,
--                BlockBackend *blk,
--                qemu_irq irq, qemu_irq dma[], omap_clk clk)
-+DeviceState *omap_mmc_init(hwaddr base,
-+                           MemoryRegion *sysmem,
-+                           BlockBackend *blk,
-+                           qemu_irq irq, qemu_irq dma[], omap_clk clk)
- {
--    struct omap_mmc_s *s = g_new0(struct omap_mmc_s, 1);
-+    DeviceState *dev;
-+    OMAPMMCState *s;
-+
-+    dev = qdev_new(TYPE_OMAP_MMC);
-+    s = OMAP_MMC(dev);
-+    sysbus_realize_and_unref(SYS_BUS_DEVICE(s), &error_fatal);
- 
-     s->irq = irq;
-     s->dma = dma;
-     s->clk = clk;
--    s->lines = 1;	/* TODO: needs to be settable per-board */
--    s->rev = 1;
- 
--    memory_region_init_io(&s->iomem, NULL, &omap_mmc_ops, s, "omap.mmc", 0x800);
--    memory_region_add_subregion(sysmem, base, &s->iomem);
-+    memory_region_add_subregion(sysmem, base,
-+                                sysbus_mmio_get_region(SYS_BUS_DEVICE(s), 0));
- 
-     /* Instantiate the storage */
-     s->card = sd_init(blk, false);
-     if (s->card == NULL) {
-         exit(1);
+     default:
++        trace_i2c_echo_event(DEVICE(s)->canonical_path, "UNHANDLED");
+         return -1;
      }
-+    return dev;
-+}
-+
-+static void omap_mmc_reset_hold(Object *obj, ResetType type)
-+{
-+    OMAPMMCState *s = OMAP_MMC(obj);
  
-     omap_mmc_reset(s);
--
--    return s;
+@@ -112,6 +118,7 @@ static uint8_t i2c_echo_recv(I2CSlave *s)
+         return 0xff;
+     }
+ 
++    trace_i2c_echo_recv(DEVICE(s)->canonical_path, state->data[state->pos]);
+     return state->data[state->pos++];
  }
+ 
+@@ -119,6 +126,7 @@ static int i2c_echo_send(I2CSlave *s, uint8_t data)
+ {
+     I2CEchoState *state = I2C_ECHO(s);
+ 
++    trace_i2c_echo_send(DEVICE(s)->canonical_path, data);
+     if (state->pos > 2) {
+         return -1;
+     }
+diff --git a/hw/misc/trace-events b/hw/misc/trace-events
+index cf1abe69285..b35b0e77f7d 100644
+--- a/hw/misc/trace-events
++++ b/hw/misc/trace-events
+@@ -390,3 +390,8 @@ ivshmem_flat_read_write_mmr_invalid(uint64_t addr_offset) "No ivshmem register m
+ ivshmem_flat_interrupt_invalid_peer(uint16_t peer_id) "Can't interrupt non-existing peer %u"
+ ivshmem_flat_write_mmr(uint64_t addr_offset) "Write access at offset %"PRIu64
+ ivshmem_flat_interrupt_peer(uint16_t peer_id, uint16_t vector_id) "Interrupting peer ID %u, vector %u..."
 +
-+static void omap_mmc_initfn(Object *obj)
-+{
-+    OMAPMMCState *s = OMAP_MMC(obj);
-+
-+    /* In theory these could be settable per-board */
-+    s->lines = 1;
-+    s->rev = 1;
-+
-+    memory_region_init_io(&s->iomem, obj, &omap_mmc_ops, s, "omap.mmc", 0x800);
-+    sysbus_init_mmio(SYS_BUS_DEVICE(s), &s->iomem);
-+}
-+
-+static void omap_mmc_class_init(ObjectClass *oc, void *data)
-+{
-+    ResettableClass *rc = RESETTABLE_CLASS(oc);
-+
-+    rc->phases.hold = omap_mmc_reset_hold;
-+}
-+
-+static const TypeInfo omap_mmc_info = {
-+    .name = TYPE_OMAP_MMC,
-+    .parent = TYPE_SYS_BUS_DEVICE,
-+    .instance_size = sizeof(OMAPMMCState),
-+    .instance_init = omap_mmc_initfn,
-+    .class_init = omap_mmc_class_init,
-+};
-+
-+static void omap_mmc_register_types(void)
-+{
-+    type_register_static(&omap_mmc_info);
-+}
-+
-+type_init(omap_mmc_register_types)
++# i2c-echo.c
++i2c_echo_event(const char *id, const char *event) "%s: %s"
++i2c_echo_recv(const char *id, uint8_t data) "%s: recv 0x%02" PRIx8
++i2c_echo_send(const char *id, uint8_t data) "%s: send 0x%02" PRIx8
 -- 
 2.47.1
 
