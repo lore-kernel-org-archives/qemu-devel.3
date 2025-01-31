@@ -4,80 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DEB87C0218F
-	for <qemu-devel@archiver.kernel.org>; Fri, 31 Jan 2025 18:08:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B8B96C0218F
+	for <qemu-devel@archiver.kernel.org>; Fri, 31 Jan 2025 18:16:26 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tdvR7-0003y4-80; Fri, 31 Jan 2025 13:08:13 -0500
+	id 1tdvYG-0005dF-VG; Fri, 31 Jan 2025 13:15:37 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tdvR5-0003xU-Co
- for qemu-devel@nongnu.org; Fri, 31 Jan 2025 13:08:11 -0500
-Received: from mail-wm1-x32a.google.com ([2a00:1450:4864:20::32a])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tdvYC-0005ct-3p
+ for qemu-devel@nongnu.org; Fri, 31 Jan 2025 13:15:32 -0500
+Received: from mail-wr1-x432.google.com ([2a00:1450:4864:20::432])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tdvR3-0007ni-PG
- for qemu-devel@nongnu.org; Fri, 31 Jan 2025 13:08:11 -0500
-Received: by mail-wm1-x32a.google.com with SMTP id
- 5b1f17b1804b1-43625c4a50dso16643055e9.0
- for <qemu-devel@nongnu.org>; Fri, 31 Jan 2025 10:08:08 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tdvYA-0000lT-AN
+ for qemu-devel@nongnu.org; Fri, 31 Jan 2025 13:15:31 -0500
+Received: by mail-wr1-x432.google.com with SMTP id
+ ffacd0b85a97d-38632b8ae71so1986545f8f.0
+ for <qemu-devel@nongnu.org>; Fri, 31 Jan 2025 10:15:29 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1738346887; x=1738951687; darn=nongnu.org;
+ d=linaro.org; s=google; t=1738347328; x=1738952128; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=G3AVK0pDblv3sKq/DkQHirVhosW04Sc/mVNJJ3T2l2g=;
- b=DigHIqbj/zbK3BpdlqiVIx+1N6zhHb0vl15qe8+3NygvXwiSsPiL3ozcqFlc3u/vtv
- TAWEWX4f+/GzPZpF5Pp3/hXEdACofpm6bARADz6g/jPYGfDnyXwOsH4qTM6PGCmyLA1t
- 9CeiFbZMa5XTWa2XwWqgdZKZZUCjKEHLw/zmERJjEwC1HRTrO3ir3kKGkJ5t9d/IuKcz
- zmOrW5FtF+DndZ9L3cqevN1MPLXpjnUDW6QafjtsWheKRefh5hoai8KsZD2JIlPAVAD2
- BHfGvHwJqub5tn1iac98aViEFlqiZ3Sfj49EFqC0INbpZr1uwN0aMxZzFLLosd26J0L1
- JsCA==
+ bh=2Ckum/ebxHBs+gO8f3qPwJgyKzVsoTey5TFw+bbPxJE=;
+ b=Kc/Zb1CiHFhbeHmMkE5XpdPSEnSiAUb3sLdnJmHSfPvC3YOh5XlbADKwZSeg+NGkp2
+ wYp5K1/ZaAIjgdHzK+jvaDeF3fh4SPea8cUwqtfU+M/yZb/ApNMLL2IluRmlS3oZo8yz
+ ulQoQy5Xks0Sr+zw1GBVAgFNQLb8uCPZ5k8gaVAC2BE+ITfFkaWd7/UFi/WzLSzmb58Y
+ 98sllovLpYSx4AV7epeZNANZaTeKvXbex+IwwQC3c1cdUWhW8W1xW+LLSIfHuR43vCiw
+ tnps2R974f+z+PegYotdmmk1kw81LYKYf/d5CppXwdqffJ+25S14I9hb98f4EEZ4uZck
+ luHg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1738346887; x=1738951687;
+ d=1e100.net; s=20230601; t=1738347328; x=1738952128;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=G3AVK0pDblv3sKq/DkQHirVhosW04Sc/mVNJJ3T2l2g=;
- b=gpwPVHfBASfX9VGu8FLL8Nv+ikYIZRPil5o+sTS5XNZ7TWasGjIaltXGKvgL/n9Bl0
- IZe6+960P/2YshYlTeATcHa6t5+8wl27lUIGIybx8QPy90dm1rH8Q68umAis3PrmUTcW
- SaYfk5pHfRTZFu0PEcwhhsNR0n561tSt6Fg/wNZYhD5ZLbr8EgcBmD5bkSp3ZMsJhrka
- 4QVdoLcvJ7oaHhf3d375nokq7KWbNgpqXRDDNGSiP0oJbvw0cnN5E5yU6Kn/FGcUr3bi
- PLkL5BITgFRdmvWsEfqwnMAN6jICvP42R/VVSb1m1exnvoztXhiGXvXezuZiFv+bifbv
- NmeQ==
-X-Gm-Message-State: AOJu0Ywj/Vsukvg3wN6TiedtWvbfwrNMOi9dtJHe+mZDRv10bRcXB/ar
- kARW++8Z9GPFhhRsFa4og41c2DECTlrpQeDwtIR4ZwexFhnQ0RE+m/p89TZV4ESnAZHACwaxxew
- lLQs=
-X-Gm-Gg: ASbGncu3+YCZSXvXZw6k4tqXR4pNBMrQbc6Cp9LcQdAOkFS80qaSkjAbMTuoDHKzLyW
- XFnbh+xtMjW9GeloeZU0D/9+CSDMFxFmdyFFH/euJN2bnA5C9lmjlWHp1T+4JAYVGx40/PF5rb4
- iLQkbXJHJHhqn3ohi9jdSkLroExOLRX1UTYN5uOa1rY7hlvgUexZmARfK0yq3D1CWz9pOvNJ9ks
- RRP/jOgi+J9HaiAOOZY17WiukhIn26dAoRhFO4/WzuxQHuaRjxnSfDnZQOezo4cRZ5xVfupbZou
- ONSyEEpuy+KEmRQUSELj2ZKvZYDnzVh4iaiazZnMncVobp9zSHqNKM6EU8U=
-X-Google-Smtp-Source: AGHT+IGuJO3WEEVLjaNGS9gK/cK9idSxNhwbD2FcnU23ZTkdJ9O5vUNFd5FdvBj9D+5Vt0HNBQPL4Q==
-X-Received: by 2002:adf:f382:0:b0:38a:41a3:218 with SMTP id
- ffacd0b85a97d-38c51e92ab1mr7803738f8f.36.1738346887048; 
- Fri, 31 Jan 2025 10:08:07 -0800 (PST)
+ bh=2Ckum/ebxHBs+gO8f3qPwJgyKzVsoTey5TFw+bbPxJE=;
+ b=xSAwat7KfNiwz3SqXDOZ5BOJlPLRJNBpTxow11Z+n0eqV2qQZlpx74cmq6YSWypmUh
+ Ku1JfvtyHENkwCmlPzsTOfQO94i+8R6w6EzufcVOecM6ayR39o4G2i69Z5fm/Ge6a/fH
+ CJnvsb6tDJYlIIddwqnNUGC/HKbdIPxKjEiPA/bNFMZMrSqJ1Zo5EmvyPkzqhaCRkV5l
+ iYocRKgipQNfAvnPcRKR729qJt/b858Fb6WTL2pYXVf6WvzL6mx18yDfql0Tg/ez9LWe
+ n0HmsBGuxr7AYdLEeKDWgQfI3+hXIi4R/xGgOOQgg6GWd4Mwjd1R7Z6sMle0DD+zwarK
+ MgoA==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCW1uEqRXCsHydNihs0EOZTsIUmBwoclSgnCmAVxs63zvcS/CSuGg8UbToOuq4/3+7Xe1D2NJpD98wAg@nongnu.org
+X-Gm-Message-State: AOJu0YyT4yjanmxEUIaf0XuxhQUDzJj5AavAf9mMKNBY1ZtMyTCqt1bD
+ aefQoQsOw6hTYkizUhDHW3lv+nhRV/O2L6Uc0x8PfHWJyzqxqJSgoei+E15uG9c=
+X-Gm-Gg: ASbGncusiqNl6WSKxD22KRKU0dDuXCpEr5swnvGV1bsA/DOHwdJvFdH/XUmF2R2F4ki
+ DwOIhaycaAIi/7tkuO4SXsqFsxb07YAC9VfhHH3J57Im9/zIdNx9nbEx+ibE09viPE6RxIpgVgp
+ WFz29xyRUX27Hmz8dFD6KxktucNo9cizCr9F6dENowxXQqPjdUZJJhxUnymTewehM9olUrsfoOL
+ 2OBx5GFZNEqap8EhlBbxE4QVg1FTsWHAQYeC7VM9kHZHq6aPqgsg3VGCySIVn4aHIZE8K19TtS9
+ BGl+aiTTyaBKmWP/lQB8jBJVpQAliwIBbvtKHr5uY5CCv+ciqRSmyjcb6zs=
+X-Google-Smtp-Source: AGHT+IGvPgbmEawhbKZim8hUbYZBmQlTVHKsRKa00KwF1oQeefAWuJQ/sVt2ZAYBgbJ6WjqSXo0GOw==
+X-Received: by 2002:a5d:588e:0:b0:385:f16d:48b4 with SMTP id
+ ffacd0b85a97d-38c5209715fmr11848757f8f.40.1738347328444; 
+ Fri, 31 Jan 2025 10:15:28 -0800 (PST)
 Received: from [192.168.69.198] (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-38c5c1b576csm5334252f8f.63.2025.01.31.10.08.06
+ 5b1f17b1804b1-438dcc8a59dsm100239895e9.40.2025.01.31.10.15.27
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 31 Jan 2025 10:08:06 -0800 (PST)
-Message-ID: <7847f974-6316-41bd-9ea2-6d062f0b34bb@linaro.org>
-Date: Fri, 31 Jan 2025 19:08:05 +0100
+ Fri, 31 Jan 2025 10:15:27 -0800 (PST)
+Message-ID: <7484e0d5-66f7-4fb3-9262-7d698b2b1da7@linaro.org>
+Date: Fri, 31 Jan 2025 19:15:27 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 00/11] hw/mips/loongson3: Remove uses of &first_cpu
- global
-To: qemu-devel@nongnu.org
-Cc: Jiaxun Yang <jiaxun.yang@flygoat.com>, Huacai Chen <chenhuacai@kernel.org>
-References: <20250115232952.31166-1-philmd@linaro.org>
+Subject: Re: [PATCH] MAINTAINERS: Add myself as HPPA maintainer
+To: deller@kernel.org, richard.henderson@linaro.org, qemu-devel@nongnu.org
+Cc: deller@gmx.de
+References: <20250128170914.13353-2-deller@kernel.org>
 Content-Language: en-US
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20250115232952.31166-1-philmd@linaro.org>
+In-Reply-To: <20250128170914.13353-2-deller@kernel.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32a;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x32a.google.com
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::432;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x432.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -100,22 +100,18 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 16/1/25 00:29, Philippe Mathieu-Daudé wrote:
+On 28/1/25 18:09, deller@kernel.org wrote:
+> From: Helge Deller <deller@gmx.de>
+> 
+> Since I contribute quite some code to hppa, I'd like to step up and
+> become the secondary maintainer for HPPA beside Richard.
+> Additionally change status of hppa machines to maintained as I will
+> take care of them.
+> 
+> Signed-off-by: Helge Deller <deller@gmx.de>
+> ---
+>   MAINTAINERS | 5 +++--
+>   1 file changed, 3 insertions(+), 2 deletions(-)
 
-> Philippe Mathieu-Daudé (11):
->    hw/mips/loongson3_virt: Factor generic_cpu_reset() out
->    hw/mips/loongson3_virt: Invert vCPU creation order to remove
->      &first_cpu
->    hw/mips/loongson3_virt: Have fw_conf_init() access local loaderparams
->    hw/mips/loongson3_virt: Pass CPU argument to get_cpu_freq_hz()
->    hw/mips/loongson3_bootp: Include missing headers
->    hw/mips/loongson3: Propagate cpu_count to init_loongson_params()
->    hw/mips/loongson3_virt: Propagate cpu_count to init_boot_param()
->    hw/mips/loongson3_bootp: Propagate processor_id to init_cpu_info()
->    hw/mips/loongson3_virt: Propagate processor_id to
->      init_loongson_params()
->    hw/mips/loongson3_virt: Propagate %processor_id to init_boot_param()
->    hw/mips/loongson3_bootp: Move to common_ss[]
-
-Series queued, thanks.
+Patch queued, thanks!
 
