@@ -2,58 +2,58 @@ Return-Path: <qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org>
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E718FC02190
-	for <qemu-devel@archiver.kernel.org>; Thu, 30 Jan 2025 13:31:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A9614C0218D
+	for <qemu-devel@archiver.kernel.org>; Fri, 31 Jan 2025 09:24:36 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tdUcM-0004tY-Sx; Thu, 30 Jan 2025 08:30:03 -0500
+	id 1tdnEq-0008NB-HJ; Fri, 31 Jan 2025 04:23:00 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <deller@kernel.org>) id 1tdUc2-0004l9-Nt
- for qemu-devel@nongnu.org; Thu, 30 Jan 2025 08:29:45 -0500
-Received: from nyc.source.kernel.org ([147.75.193.91])
+ (Exim 4.90_1) (envelope-from <deller@kernel.org>) id 1tdnEn-0008L6-MU
+ for qemu-devel@nongnu.org; Fri, 31 Jan 2025 04:22:57 -0500
+Received: from dfw.source.kernel.org ([139.178.84.217])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <deller@kernel.org>) id 1tdUbv-0001Qo-R9
- for qemu-devel@nongnu.org; Thu, 30 Jan 2025 08:29:42 -0500
+ (Exim 4.90_1) (envelope-from <deller@kernel.org>) id 1tdnEh-0004FA-4s
+ for qemu-devel@nongnu.org; Fri, 31 Jan 2025 04:22:57 -0500
 Received: from smtp.kernel.org (transwarp.subspace.kernel.org [100.75.92.58])
- by nyc.source.kernel.org (Postfix) with ESMTP id 71F7CA4048C;
- Thu, 30 Jan 2025 13:27:47 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D30DFC4CED2;
- Thu, 30 Jan 2025 13:29:31 +0000 (UTC)
+ by dfw.source.kernel.org (Postfix) with ESMTP id 7E05D5C4C43;
+ Fri, 31 Jan 2025 09:22:08 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 15E6BC4CED1;
+ Fri, 31 Jan 2025 09:22:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
- s=k20201202; t=1738243773;
+ s=k20201202; t=1738315368;
  bh=/V75SxJCKgSvVznu04uaxoOcInHo3OEuasH43d6M4zw=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
- b=ftvBFCH6cIH6HjinSRs8LtHaOqfZh1zaA/KjnftcfbVBlcYVNYQfQBp39ogJPwWUH
- tFXaV0y/V943Wo1/O71T4MEBrT69hP9jgM7ffacdWuryJPUPtw1tYVL7ll2zsc1uUX
- DD1AJzKU5+3ot5EaSRIowpgPfLmcBW24xsmAs0e5qoqCfYIvXHyb5i7EOTSZDRylDX
- wlb8uo3B87Gw7Wzc1lvTQRBXU0/w77X4nvtZv6AuA/0IJR2LbC94ZU1hcl2mQy6QhD
- 5QwE50EU0pntQKptH+9Ms+sQEHWPSKthCz2jLPY5tpXKKXZI0c2n41vJvkaPDbhe/i
- hOP9IYfGu3duw==
+ b=BndLV+CItx06Yi4jBSylzwxfdSiGab2GDQw4CRp0OZZYMQn2j5baLJEkT+HsoraIz
+ Kaed0BJ8ICrWFUQVSRcmcsVhZHPm2+biMKGifcsZAA26//bEnzvI0fR7XQmm/3Sy4E
+ JUqGyOaz5ACuzdMCjAn0jA5QVj2Zja572xdfWHPIMUgGvz0lOCv4Bbus+dAfuaqtEz
+ NU2AAxOcvRDwQ8FACrTMu9NVsgb8MQXx8DuRwEy0r/pe5m1bwWgbZdGPmM4VDZDWdW
+ 6k26yJWrSgWVyYvkBFWKgLo/EwZQNOBkA/opMzod+28O0exoGCdxevwcucmoxKfv8u
+ TfXFRfH+t+qeQ==
 From: deller@kernel.org
-To: qemu-devel@nongnu.org, Stefan Hajnoczi <stefanha@redhat.com>,
- Richard Henderson <richard.henderson@linaro.org>,
+To: Richard Henderson <richard.henderson@linaro.org>,
+ Stefan Hajnoczi <stefanha@redhat.com>, qemu-devel@nongnu.org,
  Peter Maydell <peter.maydell@linaro.org>
 Cc: deller@gmx.de
-Subject: [PULL 9/9] target/hppa: Update SeaBIOS-hppa to version 18
-Date: Thu, 30 Jan 2025 14:29:14 +0100
-Message-ID: <20250130132915.16846-10-deller@kernel.org>
+Subject: [PULL v2 9/9] target/hppa: Update SeaBIOS-hppa to version 18
+Date: Fri, 31 Jan 2025 10:22:29 +0100
+Message-ID: <20250131092229.38232-10-deller@kernel.org>
 X-Mailer: git-send-email 2.47.0
-In-Reply-To: <20250130132915.16846-1-deller@kernel.org>
-References: <20250130132915.16846-1-deller@kernel.org>
+In-Reply-To: <20250131092229.38232-1-deller@kernel.org>
+References: <20250131092229.38232-1-deller@kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=147.75.193.91; envelope-from=deller@kernel.org;
- helo=nyc.source.kernel.org
-X-Spam_score_int: -56
-X-Spam_score: -5.7
-X-Spam_bar: -----
-X-Spam_report: (-5.7 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.3,
+Received-SPF: pass client-ip=139.178.84.217; envelope-from=deller@kernel.org;
+ helo=dfw.source.kernel.org
+X-Spam_score_int: -83
+X-Spam_score: -8.4
+X-Spam_bar: --------
+X-Spam_report: (-8.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.3,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- LOTS_OF_MONEY=0.001, RCVD_IN_DNSWL_MED=-2.3,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ LOTS_OF_MONEY=0.001, RCVD_IN_DNSWL_HI=-5, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
