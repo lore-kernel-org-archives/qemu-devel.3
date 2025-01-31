@@ -4,88 +4,59 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DAB60C0218F
-	for <qemu-devel@archiver.kernel.org>; Fri, 31 Jan 2025 18:35:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CE4D6C0218F
+	for <qemu-devel@archiver.kernel.org>; Fri, 31 Jan 2025 19:08:45 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tdvrF-00034E-TN; Fri, 31 Jan 2025 13:35:13 -0500
+	id 1tdwMs-0008Hq-Hy; Fri, 31 Jan 2025 14:07:55 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tdvrD-000322-Ji
- for qemu-devel@nongnu.org; Fri, 31 Jan 2025 13:35:11 -0500
-Received: from mail-wm1-x332.google.com ([2a00:1450:4864:20::332])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tdvrB-0006gZ-S8
- for qemu-devel@nongnu.org; Fri, 31 Jan 2025 13:35:11 -0500
-Received: by mail-wm1-x332.google.com with SMTP id
- 5b1f17b1804b1-43634b570c1so17378955e9.0
- for <qemu-devel@nongnu.org>; Fri, 31 Jan 2025 10:35:09 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1738348508; x=1738953308; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:to:subject:user-agent:mime-version:date:message-id:from
- :to:cc:subject:date:message-id:reply-to;
- bh=i9UCZy8TyUsrwOWNX3ilWmw5qoD14pkKlKd6Nvuynf0=;
- b=S9RtXBL82uJUcRjI0gktTrQThJSTm1OX/UESlwfQYZbkZj5LBmgDJnG3TyFAdeIcOV
- 0P0gxjT3qNa2Bxvk6UHjQ5cVjGoHE2xjUcV5tk+jTESzsvjTfem8njvokse51c5hVBl1
- BDWCSv0YOKQm9VXoQaNKB90xw0tS7lc87feYnzFsqCdMRx/N51BE2xpnDQU91LTx8waz
- jVY3hnO1kHQktOC27Sf5LfB5iMttFphnxI2OY9ZL1yWomrkY8KnFqGE1a8PaIFAc6o9F
- HUaNB39yda8XlStywSP0f1fVKOAX9ipP5zByt1Drupa5k250Wa9tptEWN220vqPOZ19x
- IIIA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1738348508; x=1738953308;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=i9UCZy8TyUsrwOWNX3ilWmw5qoD14pkKlKd6Nvuynf0=;
- b=n69gAXhcYy9ZYCxk5WWr3WoHfBjVGmiEbY4+dbw22bsYM9ZtV17KGUErnFLJAbaMJv
- A6LF5lavRODtukYPGV6nq0tuXMlXlhL9DQ1YbxwYPurUhA54lVXSZWueXPbt20YetFYc
- IWPam90O9xkYTh1PwReC3uM+AjzmfeIbHeUX89l0Gb5F527pSyHpRou/p9W795m4Etpq
- 0PKgByrSw/qffh3wqj1x2NDQhUrQ0K3uHr6W0vJ/PnxhJDQl6pvvsSUIRWhvgxGBIseM
- ARAS8Ms6bLRkytb1kN9LA/x8oWvIsB1xZhnv2+AnTNXvlKfjspGCyCK75unDKfCOW8iw
- 7nng==
-X-Forwarded-Encrypted: i=1;
- AJvYcCWiq7E9lqXAqE2uYu2/zsJjmdGiQZYD6I+yKHtnb1yNKfm4FwKSD58I6b+/TOLISqbeh23iI4rxIvM1@nongnu.org
-X-Gm-Message-State: AOJu0YyD4Q1TavPIekLKXqFSnMnboWPm4GUw0O77a8jLt6O3dNe4mHsF
- jwDkASgOiH0+snBth+/d9XsL2Js9QzHDjUSMxK+wGOYhAj80qhJaLO/sGydL38M=
-X-Gm-Gg: ASbGncv93CEI85ukgjtm+ItVHECVFgS8z9IRfjUvvCtdfm60Spna1iGmuiOenujxHK7
- 4UpJJd0fRJm47DV8kRLRkCtwfvPuFenHhyvcCQ02WHcxpPNZz8zjNpmvAdMXeUbJKtMrqG10Maz
- 9uTMngtV500IXTkT4vD6ef5Q5OHJ08JZFdycG6BG3uKRC7dg+rFPmva0YOfB+xRvktKPShSmTzg
- uSlYh2YqYU0WgzQgkV0Hp+6a7vK4RBapkf5mTUTTPt7h4eI4wjd/0XxVHgy1ZpSFocUkEdCm/Fs
- kU/6dOi7CTOGH6E8bj4cXTCXMQrIuZlgrYagdiRYfiH1f5wJ4y3vWXsGJ0M=
-X-Google-Smtp-Source: AGHT+IHw02jbYogO0+BsBx9fiWIitRGBud8wwnEBMHjQjg95m9If90oI2I/BG4HfNPmqbYxB1J0sAw==
-X-Received: by 2002:a05:600c:b89:b0:438:a240:c54 with SMTP id
- 5b1f17b1804b1-438dc3ae14bmr102274205e9.9.1738348506873; 
- Fri, 31 Jan 2025 10:35:06 -0800 (PST)
-Received: from [192.168.69.198] (88-187-86-199.subs.proxad.net.
- [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-438dcc2e384sm101291905e9.19.2025.01.31.10.35.06
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 31 Jan 2025 10:35:06 -0800 (PST)
-Message-ID: <562d0891-ef50-46e3-86fe-2d8a0509a7ab@linaro.org>
-Date: Fri, 31 Jan 2025 19:35:05 +0100
+ (Exim 4.90_1) (envelope-from <jonathan.cameron@huawei.com>)
+ id 1tdwMp-0008HO-Jz
+ for qemu-devel@nongnu.org; Fri, 31 Jan 2025 14:07:52 -0500
+Received: from frasgout.his.huawei.com ([185.176.79.56])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <jonathan.cameron@huawei.com>)
+ id 1tdwMn-0005sn-Kf
+ for qemu-devel@nongnu.org; Fri, 31 Jan 2025 14:07:51 -0500
+Received: from mail.maildlp.com (unknown [172.18.186.216])
+ by frasgout.his.huawei.com (SkyGuard) with ESMTP id 4Yl5263mW6z6M4T9;
+ Sat,  1 Feb 2025 03:05:34 +0800 (CST)
+Received: from frapeml500008.china.huawei.com (unknown [7.182.85.71])
+ by mail.maildlp.com (Postfix) with ESMTPS id 455EE140A86;
+ Sat,  1 Feb 2025 03:07:43 +0800 (CST)
+Received: from localhost (10.195.244.178) by frapeml500008.china.huawei.com
+ (7.182.85.71) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.1.2507.39; Fri, 31 Jan
+ 2025 20:07:42 +0100
+Date: Fri, 31 Jan 2025 19:07:41 +0000
+To: Philippe =?ISO-8859-1?Q?Mathieu-Daud=E9?= <philmd@linaro.org>
+CC: Jonathan Cameron via <qemu-devel@nongnu.org>, Fan Ni <fan.ni@samsung.com>, 
+ Paolo Bonzini <pbonzini@redhat.com>, <mst@redhat.com>
+Subject: Re: [PATCH 2/2] hw/cxl: Allow tracing component I/O accesses
+Message-ID: <20250131190741.000049cc@huawei.com>
+In-Reply-To: <d5749a49-a12f-4485-b2f1-189b3d9cc89e@linaro.org>
+References: <20250122065624.34203-1-philmd@linaro.org>
+ <20250122065624.34203-3-philmd@linaro.org>
+ <20250123095151.000041a0@huawei.com>
+ <20250124162028.0000464b@huawei.com>
+ <d5749a49-a12f-4485-b2f1-189b3d9cc89e@linaro.org>
+X-Mailer: Claws Mail 4.3.0 (GTK 3.24.42; x86_64-w64-mingw32)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] MAINTAINERS: Add myself as HPPA maintainer
-To: Helge Deller <deller@gmx.de>, deller@kernel.org,
- richard.henderson@linaro.org, qemu-devel@nongnu.org
-References: <20250128170914.13353-2-deller@kernel.org>
- <7484e0d5-66f7-4fb3-9262-7d698b2b1da7@linaro.org>
- <99c444aa-7acb-471b-81c1-653a924b315e@gmx.de>
-Content-Language: en-US
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <99c444aa-7acb-471b-81c1-653a924b315e@gmx.de>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::332;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x332.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+Content-Type: text/plain; charset="ISO-8859-1"
+Content-Transfer-Encoding: quoted-printable
+X-Originating-IP: [10.195.244.178]
+X-ClientProxiedBy: lhrpeml500009.china.huawei.com (7.191.174.84) To
+ frapeml500008.china.huawei.com (7.182.85.71)
+Received-SPF: pass client-ip=185.176.79.56;
+ envelope-from=jonathan.cameron@huawei.com; helo=frasgout.his.huawei.com
+X-Spam_score_int: -41
+X-Spam_score: -4.2
+X-Spam_bar: ----
+X-Spam_report: (-4.2 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_MED=-2.3,
+ RCVD_IN_MSPIKE_H2=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -99,30 +70,69 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-to:  Jonathan Cameron <Jonathan.Cameron@huawei.com>
+From:  Jonathan Cameron via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 31/1/25 19:30, Helge Deller wrote:
-> On 1/31/25 19:15, Philippe Mathieu-Daudé wrote:
->> On 28/1/25 18:09, deller@kernel.org wrote:
->>> From: Helge Deller <deller@gmx.de>
->>>
->>> Since I contribute quite some code to hppa, I'd like to step up and
->>> become the secondary maintainer for HPPA beside Richard.
->>> Additionally change status of hppa machines to maintained as I will
->>> take care of them.
->>>
->>> Signed-off-by: Helge Deller <deller@gmx.de>
->>> ---
->>>   MAINTAINERS | 5 +++--
->>>   1 file changed, 3 insertions(+), 2 deletions(-)
->>
->> Patch queued, thanks!
-> 
-> Thank you, Philippe!
-> But actually, I included it already in the series where I sent a pull 
-> request.
-> See mail thread: "[PULL v2 0/9] Hppa system mfdiag for v10 patches"
+On Fri, 24 Jan 2025 17:28:02 +0100
+Philippe Mathieu-Daud=E9 <philmd@linaro.org> wrote:
 
-Oops OK :/
+> On 24/1/25 17:20, Jonathan Cameron wrote:
+> > On Thu, 23 Jan 2025 09:51:51 +0000
+> > Jonathan Cameron via <qemu-devel@nongnu.org> wrote:
+> >  =20
+> >> On Wed, 22 Jan 2025 07:56:24 +0100
+> >> Philippe Mathieu-Daud=E9 <philmd@linaro.org> wrote:
+> >> =20
+> >>> Map the component I/O region as UnimplementedDevice
+> >>> to be able to trace guest I/O accesses with '-d unimp'.
+> >>>
+> >>> Signed-off-by: Philippe Mathieu-Daud=E9 <philmd@linaro.org> =20
+> >> I'm not that familiar with this infrastructure but seems
+> >> fine to me.
+> >>
+> >> I'd definitely be curious if anything is touching this space so
+> >> tracing may be helpful for that! =20
+> > Hi Philippe
+> >  =20
+> >>
+> >> Reviewed-by: Jonathan Cameron <Jonathan.Cameron@huawei.com> =20
+> > Retract that.
+> >=20
+> > Can't instantiate a CXL device with this patch because:
+> >=20
+> > Device unimplemented-device can not be dynamically instantiated. =20
+>=20
+> Hmm the qtests using CXL devices pass, how do you trigger that?
+
+Seems oddly enough to be arm64 only (well not x86 - there is
+no support for other arches than those two) which isn't upstream yet
+hence no tests upstream - I'll get back to that sometime soonish
+as the blocker of dt-bindings for PXBs may be less of an issue than it was.
+
+source of that print seems to be hw/core/sysbus-fdt.c
+add_fdt_node(). Seems it is looking for sysbus devices and gets
+confused when it finds this one. I'm not sure if it is in
+/peripheral or /peripheral-anon.
+
+For now you could try my gitlab tree
+gitlab.com/jic23/qemu.git   cxl-* whatever has latest date.
+
+Or shout if you want me to try anything.
+
+Jonathan
+
+
+>=20
+> >=20
+> > Reverting this patch on my tree fixes that.
+> >  =20
+> >>> ---
+> >>>   include/hw/cxl/cxl_component.h |  3 ++-
+> >>>   hw/cxl/cxl-component-utils.c   | 14 +++++++++++---
+> >>>   hw/cxl/Kconfig                 |  1 +
+> >>>   3 files changed, 14 insertions(+), 4 deletions(-) =20
+>=20
+
 
