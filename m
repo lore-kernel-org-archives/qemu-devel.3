@@ -4,103 +4,67 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5CAFAC0218D
-	for <qemu-devel@archiver.kernel.org>; Fri, 31 Jan 2025 11:23:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 16DCCC0218F
+	for <qemu-devel@archiver.kernel.org>; Fri, 31 Jan 2025 11:53:18 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tdp6K-0007zO-5Z; Fri, 31 Jan 2025 06:22:20 -0500
+	id 1tdpZX-0004y5-Q5; Fri, 31 Jan 2025 06:52:32 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <patrick@stwcx.xyz>)
- id 1tdp6H-0007z7-RG; Fri, 31 Jan 2025 06:22:17 -0500
-Received: from fhigh-b3-smtp.messagingengine.com ([202.12.124.154])
+ (Exim 4.90_1) (envelope-from <jonathan.cameron@huawei.com>)
+ id 1tdpZV-0004xi-IY
+ for qemu-devel@nongnu.org; Fri, 31 Jan 2025 06:52:29 -0500
+Received: from frasgout.his.huawei.com ([185.176.79.56])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <patrick@stwcx.xyz>)
- id 1tdp6F-0003mq-A2; Fri, 31 Jan 2025 06:22:17 -0500
-Received: from phl-compute-06.internal (phl-compute-06.phl.internal
- [10.202.2.46])
- by mailfhigh.stl.internal (Postfix) with ESMTP id EFAC7254012B;
- Fri, 31 Jan 2025 06:22:10 -0500 (EST)
-Received: from phl-mailfrontend-01 ([10.202.2.162])
- by phl-compute-06.internal (MEProxy); Fri, 31 Jan 2025 06:22:11 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=stwcx.xyz; h=cc
- :cc:content-type:content-type:date:date:from:from:in-reply-to
- :in-reply-to:message-id:mime-version:references:reply-to:subject
- :subject:to:to; s=fm2; t=1738322530; x=1738408930; bh=hcsLvU0+im
- ojPGm+4z29TOaRciQxSnUDJWle6+Hbym8=; b=jAsUyJBKNoKikRh/gKGRvnlPPJ
- FU18kOsP5p2VunpNV7O/8K32OQRrbcIWILtFBbZLLM6fL8yghLON7IuwzIhCtH0p
- OUqIVbXwSp79scfIsq2ohqhVrtv+rj4vSIvidPczd6pm6K+NxaQcGdN4MwCwONGV
- 1QIH2+An3YYPTwQxlYW2ObFvOUP129iuZX7idaj638/Yucw+iOGQNUH5gatq8Brh
- b926/DtsVpaj02+6CCRVjNSJVSyZeZI+WOvSreMPvcYfOchrIAP0dSE8f/C4vhxy
- U9u5ncEdz98MLmgISvTm5YWonKlToYHbfi5QOWVsjKOyqRn36uh+NQmgfixw==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
- messagingengine.com; h=cc:cc:content-type:content-type:date:date
- :feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
- :message-id:mime-version:references:reply-to:subject:subject:to
- :to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
- 1738322530; x=1738408930; bh=hcsLvU0+imojPGm+4z29TOaRciQxSnUDJWl
- e6+Hbym8=; b=rMdTbRO4o5kcF4rpZ2HOYuW2Ft4sdFU7bNa/HM83BcyA0zVbZvQ
- M+WnUnEypLyJm36MBoAZnlkIk/CyWuOLnakfeKtUpF6BAnWIEpwOp/1HEJVeCo9M
- abQ8w38ktOl04E06nprGO/XCaE8iRywJzZwCy+T/QJGVCB9v/HVPjXpZtjl3f+8F
- 0ZnD78fSrDNf9z8mDRoTtsMga1nm1AKIB6hy74Gj+9QzF6/wqm6I02IiXmOU2MlP
- szvrPow/383H1XBfLLlczvJ9DzXPA2NejZOgNiIXTFoH1F4nXO81aGr2gScu7wB7
- 4dNOjLCB7ULscBBdkmLY2EjNN96Nv7EoQFA==
-X-ME-Sender: <xms:YbKcZ2wcooIWKFWxuFxY77AnAcmAUKe-xVR-ftBqAhAmbDYQjBwXUQ>
- <xme:YbKcZyQ-FWhtdsya1JWY6HInOGprkAjgK3QWqBqIDXgljytkwVpQWfDXAgCHlFkrC
- njpaEqt18qebWM6qJ4>
-X-ME-Received: <xmr:YbKcZ4UlcN_01KnM32j53hWqGKPkAbsrM1xffLd4NNozxTV06z1i3SH3ugo>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgdekieegucetufdoteggodetrfdotf
- fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggvpdfu
- rfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnh
- htshculddquddttddmnegfrhhlucfvnfffucdljedtmdenucfjughrpeffhffvvefukfhf
- gggtuggjsehgtderredttddunecuhfhrohhmpefrrghtrhhitghkucghihhllhhirghmsh
- cuoehprghtrhhitghksehsthiftgigrdighiiiqeenucggtffrrghtthgvrhhnpedtjeej
- gfdugefhtedvudfghfejfeejfefhffeffeelgeduveejleelffefvdffleenucevlhhush
- htvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehprghtrhhitghksehs
- thiftgigrdighiiipdhnsggprhgtphhtthhopeelpdhmohguvgepshhmthhpohhuthdprh
- gtphhtthhopegtlhhgsehrvgguhhgrthdrtghomhdprhgtphhtthhopehqvghmuhdqrghr
- mhesnhhonhhgnhhurdhorhhgpdhrtghpthhtohepqhgvmhhuqdguvghvvghlsehnohhngh
- hnuhdrohhrghdprhgtphhtthhopehjohgvlhesjhhmshdrihgurdgruhdprhgtphhtthho
- pegrnhgurhgvfiestghouggvtghonhhsthhruhgtthdrtghomhdrrghupdhrtghpthhtoh
- epthhrohihpghlvggvsegrshhpvggvughtvggthhdrtghomhdprhgtphhtthhopehjrghm
- ihhnpghlihhnsegrshhpvggvughtvggthhdrtghomhdprhgtphhtthhopehsthgvvhgvnh
- gplhgvvgesrghsphgvvgguthgvtghhrdgtohhmpdhrtghpthhtohepthhhuhhthhesrhgv
- ughhrghtrdgtohhm
-X-ME-Proxy: <xmx:YbKcZ8jj9BV01bTzQ6F6Mr8Ag7Ur55oFs9YwG8VId6Mlb2bb0Hy61g>
- <xmx:YbKcZ4BwjgY0vn2wLiaOZYZS3L4Yi9COAnYWGfar-IBSHsOkUb2ZTA>
- <xmx:YbKcZ9KCn_rM3khVh8LGQD98xmYzJnTrB3DVK3RGQV00B6ISbQ7cFg>
- <xmx:YbKcZ_DwqC3QcF-rTJdycqbLaJPcOjP8lXwCUBEkbQmM-02xT8gUqQ>
- <xmx:YrKcZ4uGqtASdXtYZBIXiDKqbzJ1V_OFTonWB8FEK5W8jcKQh2tRvRjO>
-Feedback-ID: i68a1478a:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 31 Jan 2025 06:22:09 -0500 (EST)
-Date: Fri, 31 Jan 2025 06:22:08 -0500
-From: Patrick Williams <patrick@stwcx.xyz>
-To: =?iso-8859-1?Q?C=E9dric?= Le Goater <clg@redhat.com>
-Cc: qemu-arm@nongnu.org, qemu-devel@nongnu.org, Joel Stanley <joel@jms.id.au>,
- Andrew Jeffery <andrew@codeconstruct.com.au>,
- Troy Lee <troy_lee@aspeedtech.com>, Jamin Lin <jamin_lin@aspeedtech.com>,
- Steven Lee <steven_lee@aspeedtech.com>, Thomas Huth <thuth@redhat.com>
-Subject: Re: [PATCH 5/5] tests/functional: Introduce a bletchley machine test
-Message-ID: <Z5yyYELBy6e3-ZBF@heinlein>
-References: <20250129071820.1258133-1-clg@redhat.com>
- <20250129071820.1258133-6-clg@redhat.com>
+ (Exim 4.90_1) (envelope-from <jonathan.cameron@huawei.com>)
+ id 1tdpZT-0003Jl-33
+ for qemu-devel@nongnu.org; Fri, 31 Jan 2025 06:52:29 -0500
+Received: from mail.maildlp.com (unknown [172.18.186.31])
+ by frasgout.his.huawei.com (SkyGuard) with ESMTP id 4YkvPV01Mbz6K5ny;
+ Fri, 31 Jan 2025 19:51:42 +0800 (CST)
+Received: from frapeml500008.china.huawei.com (unknown [7.182.85.71])
+ by mail.maildlp.com (Postfix) with ESMTPS id 7BE32140155;
+ Fri, 31 Jan 2025 19:52:23 +0800 (CST)
+Received: from localhost (10.195.244.178) by frapeml500008.china.huawei.com
+ (7.182.85.71) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.1.2507.39; Fri, 31 Jan
+ 2025 12:52:22 +0100
+Date: Fri, 31 Jan 2025 11:52:20 +0000
+To: Zhi Wang <zhiw@nvidia.com>
+CC: "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>,
+ "dan.j.williams@intel.com" <dan.j.williams@intel.com>, "dave.jiang@intel.com"
+ <dave.jiang@intel.com>, "ira.weiny@intel.com" <ira.weiny@intel.com>,
+ "fan.ni@samsung.com" <fan.ni@samsung.com>, "alex.williamson@redhat.com"
+ <alex.williamson@redhat.com>, "alucerop@amd.com" <alucerop@amd.com>,
+ "clg@redhat.com" <clg@redhat.com>, Andy Currid <ACurrid@nvidia.com>, Neo Jia
+ <cjia@nvidia.com>, Surath Mitra <smitra@nvidia.com>, Ankit Agrawal
+ <ankita@nvidia.com>, Aniket Agashe <aniketa@nvidia.com>, Kirti Wankhede
+ <kwankhede@nvidia.com>, "Tarun Gupta (SW-GPU)" <targupta@nvidia.com>,
+ "zhiwang@kernel.org" <zhiwang@kernel.org>
+Subject: Re: [PATCH 3/3] hw/cxl: introduce CXL type-2 device emulation
+Message-ID: <20250131115220.0000625c@huawei.com>
+In-Reply-To: <8d08ab33-d989-4209-b137-a6991c7af415@nvidia.com>
+References: <20241212130422.69380-1-zhiw@nvidia.com>
+ <20241212130422.69380-4-zhiw@nvidia.com>
+ <20250121161610.000025af@huawei.com>
+ <8d08ab33-d989-4209-b137-a6991c7af415@nvidia.com>
+X-Mailer: Claws Mail 4.3.0 (GTK 3.24.42; x86_64-w64-mingw32)
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha256;
- protocol="application/pgp-signature"; boundary="nAP/AiS4pr374Q5Q"
-Content-Disposition: inline
-In-Reply-To: <20250129071820.1258133-6-clg@redhat.com>
-Received-SPF: pass client-ip=202.12.124.154; envelope-from=patrick@stwcx.xyz;
- helo=fhigh-b3-smtp.messagingengine.com
-X-Spam_score_int: -16
-X-Spam_score: -1.7
-X-Spam_bar: -
-X-Spam_report: (-1.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- FROM_SUSPICIOUS_NTLD=0.499, PDS_OTHER_BAD_TLD=0.629, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
+Content-Type: text/plain; charset="US-ASCII"
+Content-Transfer-Encoding: 7bit
+X-Originating-IP: [10.195.244.178]
+X-ClientProxiedBy: lhrpeml100009.china.huawei.com (7.191.174.83) To
+ frapeml500008.china.huawei.com (7.182.85.71)
+Received-SPF: pass client-ip=185.176.79.56;
+ envelope-from=jonathan.cameron@huawei.com; helo=frasgout.his.huawei.com
+X-Spam_score_int: -41
+X-Spam_score: -4.2
+X-Spam_bar: ----
+X-Spam_report: (-4.2 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_MED=-2.3,
+ RCVD_IN_MSPIKE_H2=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -113,45 +77,70 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-to:  Jonathan Cameron <Jonathan.Cameron@huawei.com>
+From:  Jonathan Cameron via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 
---nAP/AiS4pr374Q5Q
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+> >> +static void cxl_accel_class_init(ObjectClass *oc, void *data)
+> >> +{
+> >> +    DeviceClass *dc = DEVICE_CLASS(oc);
+> >> +    PCIDeviceClass *pc = PCI_DEVICE_CLASS(oc);
+> >> +
+> >> +    pc->realize = cxl_accel_realize;
+> >> +    pc->exit = cxl_accel_exit;
+> >> +
+> >> +    pc->class_id = PCI_CLASS_CXL_QEMU_ACCEL;
+> >> +    pc->vendor_id = PCI_VENDOR_ID_INTEL;
+> >> +    pc->device_id = 0xd94;  
+> >  
+> 
+> The IDs are mostly from Ira's original T2 emulated device patches.
+> I will take a look to see if there is a better option for this.
 
-On Wed, Jan 29, 2025 at 08:18:20AM +0100, C=E9dric Le Goater wrote:
-> Use do_test_arm_aspeed_openbmc() to run the latest OpenBMC firmware
-> build of the bletchley BMC.
->=20
-> Signed-off-by: C=E9dric Le Goater <clg@redhat.com>
+I pinged Ira and you on the CXL discord.  May be fine to use this
+and save you figuring out who in holds the magic list at NVidia
+and persuading them to let you have one ;)
 
-Reviewed-by: Patrick Williams <patrick@stwcx.xyz>
+> 
+> > If you are posting these I hope you have those IDs reserved
+> > (which seems unlikely ;)
+> > We need to be absolutely sure we never hit an existing ID which generally
+> > means you need to find whoever controls those allocations in your company
+> > and get them to give you an ID for this.
+> >  
+> >> +    pc->revision = 1;
+> >> +
+> >> +    set_bit(DEVICE_CATEGORY_STORAGE, dc->categories);
+> >> +    dc->desc = "CXL Accelerator Device (Type 2)";
+> >> +    device_class_set_legacy_reset(dc, cxl_accel_reset);
+> >> +    device_class_set_props(dc, cxl_accel_props);
+> >> +}  
+> >  
+> >>   void cxl_event_init(CXLDeviceState *cxlds, int start_msg_num);
+> >> diff --git a/include/hw/pci/pci_ids.h b/include/hw/pci/pci_ids.h
+> >> index f1a53fea8d..08bc469316 100644
+> >> --- a/include/hw/pci/pci_ids.h
+> >> +++ b/include/hw/pci/pci_ids.h
+> >> @@ -55,6 +55,7 @@
+> >>   #define PCI_CLASS_MEMORY_RAM             0x0500
+> >>   #define PCI_CLASS_MEMORY_FLASH           0x0501
+> >>   #define PCI_CLASS_MEMORY_CXL             0x0502
+> >> +#define PCI_CLASS_CXL_QEMU_ACCEL         0x0503  
+> >
+> > Either this is a real device class (which seems unlikely given the name)
+> > or you need to choose something else.  PCI maintains a big list of
+> > class codes and currently 0x0502 is the highest one define in baseclass 05h
+> > (memory controllers)
+> >
+> > https://members.pcisig.com/wg/PCI-SIG/document/20113
+> > (behind a pcisig login)
+> >  
+> >>   #define PCI_CLASS_MEMORY_OTHER           0x0580
+> >>
+> >>   #define PCI_BASE_CLASS_BRIDGE            0x06  
+> >  
+> 
 
---=20
-Patrick Williams
-
---nAP/AiS4pr374Q5Q
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iQIzBAABCAAdFiEEBGD9ii4LE9cNbqJBqwNHzC0AwRkFAmecsl4ACgkQqwNHzC0A
-wRmRHBAAkBZhIIEUehgh8o05HEzdAhDP/nuY8xVdaeaJ2H+IQJpQyUKyXis6jTru
-JvcBY87/6hpWzwmHpUq7D0m5Q/iDLIUphc2doQe0LpAiSCP2flv8C2J9PX8ak0Yl
-YZ5yEmR6EWc2mMDlOHlSsrpZUESSg7K0+Ejc+4hwKemX2cZ8xx0Ddro8/NYHJ/R6
-HeUjbJ+JAL9daaNClExdNk8UPJYx/x+X5ZHB3sXheGM3vooGIMwxWjghTdT4TcdY
-6dlGhsA3JmHLXO4gIn43DohjiN70xI4LtvbqIkb/k1fUFsVlLyQlreaTMfX3RQnh
-2/13aVQA8lxOV5oUoA6bRZ68n/6tSL4ADF+dDc/TzTBwqZqQb9S8uCOZGnwEyesk
-xMzZhQzMmhLvXYzfL/MtreyubXmXiqgPJJAVSbQSGB6Jqht2SPc/Bg475uNfKqlH
-f8Ahk4xvxksZrvtFJP6QnXsib5QJ95z5PDYA8jHH8DQI7JLZY61YRGlnUykKMhxK
-hprKKlzKZGJLUqA2p0YtyDtwKM+FY5rtEC8hilCYlxzTUFqA6r0G3lI/ilalsxLR
-d3bLkxfA89qUKEMywBTo8lhxntGdiv86ujuwxFJ/oNXc13Y0nq62Tir5udw/TeC9
-lfb85ZKq1MGzdCldtbI6+MEnArXJZbHywvnPOVjKCE7PC0uXzR8=
-=oAbZ
------END PGP SIGNATURE-----
-
---nAP/AiS4pr374Q5Q--
 
