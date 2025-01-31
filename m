@@ -4,97 +4,99 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 19B1BC0218F
-	for <qemu-devel@archiver.kernel.org>; Fri, 31 Jan 2025 18:16:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E6C77C0218F
+	for <qemu-devel@archiver.kernel.org>; Fri, 31 Jan 2025 18:28:45 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tdvZG-00061f-Mk; Fri, 31 Jan 2025 13:16:39 -0500
+	id 1tdvk2-00083T-KQ; Fri, 31 Jan 2025 13:27:46 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mhej@vps-ovh.mhejs.net>)
- id 1tdvZB-0005wM-Dz
- for qemu-devel@nongnu.org; Fri, 31 Jan 2025 13:16:35 -0500
-Received: from vps-ovh.mhejs.net ([145.239.82.108])
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1tdvjx-00082m-IT
+ for qemu-devel@nongnu.org; Fri, 31 Jan 2025 13:27:41 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mhej@vps-ovh.mhejs.net>)
- id 1tdvZ8-00022Y-Ll
- for qemu-devel@nongnu.org; Fri, 31 Jan 2025 13:16:33 -0500
-Received: from MUA
- by vps-ovh.mhejs.net with esmtpsa  (TLS1.3) tls TLS_AES_128_GCM_SHA256
- (Exim 4.98) (envelope-from <mhej@vps-ovh.mhejs.net>)
- id 1tdvYr-00000006atp-0g8r; Fri, 31 Jan 2025 19:16:13 +0100
-Message-ID: <0a09e627-955e-4f26-8d08-0192ecd250a8@maciej.szmigiero.name>
-Date: Fri, 31 Jan 2025 19:16:07 +0100
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1tdvjv-00040y-7J
+ for qemu-devel@nongnu.org; Fri, 31 Jan 2025 13:27:41 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1738348057;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=1fgF0oxOuv/c51hzbPAf4dzHnxocuQUHifZqvhBl13E=;
+ b=NpIaPWICaKqMKcv7oW3pHdWl38WFZXMM4fibFhyxWfPcDOXBLK4Dlc/IFuAUpqCkM0D4Tj
+ rffdA+8JhHd07fuSqmsxxLRx5g13a9KyS1ylLi7goVqPQKGpAJ1R3FdKao1fym4n/VrOTQ
+ q82CGFKR3nbNXbMkWcfZxOcykD/RWn8=
+Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com
+ [209.85.128.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-294-rJ2FS53cP5C0ymKX7MdmKg-1; Fri, 31 Jan 2025 13:27:35 -0500
+X-MC-Unique: rJ2FS53cP5C0ymKX7MdmKg-1
+X-Mimecast-MFC-AGG-ID: rJ2FS53cP5C0ymKX7MdmKg
+Received: by mail-wm1-f71.google.com with SMTP id
+ 5b1f17b1804b1-43626224274so11697465e9.0
+ for <qemu-devel@nongnu.org>; Fri, 31 Jan 2025 10:27:35 -0800 (PST)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1738348054; x=1738952854;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=1fgF0oxOuv/c51hzbPAf4dzHnxocuQUHifZqvhBl13E=;
+ b=t5I5qZX51huLvx4xE1rysqS2wAGQPrg46Bydx/HB48A2axFJPIQdmVpDkpjrwX7l9w
+ OLqLLFoT8xaARTpELzklXPGXG4MaVcliEvS7MHky3Wjo9j7DElikXAoypE45Ezv03mGd
+ TjhqfjItqn/GC723S3I0H9qUzlBHRbJfZqRUIJoJqcoXY2OApfuiHKMCBppwQPrwm011
+ mi3JMJFjlYaJ+1Ye2oS90d3LDkVzrZ2eiT22hGnB23U8/WXaWuV68h8TWMt+YOUATZz2
+ hm8g4UoifWYVL+dT3LIJLIxDxN2kzYxNnPYy9mAcIuAquvNMjKtng4ZaPDWLg4EwakDc
+ y3LQ==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCU3bVrLeXYOUwu1qwmRczrTBUqHb4JBLAFHSkDKb/+fHBz2kQO/nmyR3pReU6Zqti+bbMQynnVw6VnM@nongnu.org
+X-Gm-Message-State: AOJu0YxRhgTWyRds45e0SQ/pDuYIT6umTpvbivm2vnLgKrgf5QWW8uKN
+ bQ846lhsm145+dWHh24AY8oNPKGC9nXXrRoF5JyPFJgSC8zPA03yH6napxRLv988Imz/3UoYPbc
+ Ip9ls+rGtO3aH2TLira1ccEUWVXE53oQ/wk50pvIhkId7gwy/2KLpPKo00NN+WAcnp9VwvJhAXf
+ Uq9mlMJ5PFdO8GBx0H4CeUXQh3nvQ=
+X-Gm-Gg: ASbGncsutXMwLZWR07b+kTrIiTy70MkGP1NXoz/OPfc3Lo+pKB1BYyaIeG41N02q80K
+ xIDTohwEZxP9ZhWHb7aE71cDJjWbyWE+0M9U8ECclG12iwMFuFsNbDFMSkcVy
+X-Received: by 2002:a5d:5288:0:b0:385:ed16:c91 with SMTP id
+ ffacd0b85a97d-38c51b5df32mr7816839f8f.24.1738348054501; 
+ Fri, 31 Jan 2025 10:27:34 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IFjuSbM/qrVKiJ05icQUERlIhJRq8RcsL/5gDAvCAbWvG68rjTFDEsT514JBExK6jOm9Ro8GRryOPSZjNzpsHo=
+X-Received: by 2002:a5d:5288:0:b0:385:ed16:c91 with SMTP id
+ ffacd0b85a97d-38c51b5df32mr7816808f8f.24.1738348054184; Fri, 31 Jan 2025
+ 10:27:34 -0800 (PST)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: =?UTF-8?Q?Re=3A_=5BPATCH_v4_00/33=5D_Multifd_=F0=9F=94=80_device_st?=
- =?UTF-8?Q?ate_transfer_support_with_VFIO_consumer?=
-From: "Maciej S. Szmigiero" <mail@maciej.szmigiero.name>
-To: Fabiano Rosas <farosas@suse.de>, Peter Xu <peterx@redhat.com>
-Cc: Alex Williamson <alex.williamson@redhat.com>,
- =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>,
- Eric Blake <eblake@redhat.com>, Markus Armbruster <armbru@redhat.com>,
- =?UTF-8?Q?Daniel_P_=2E_Berrang=C3=A9?= <berrange@redhat.com>,
- Avihai Horon <avihaih@nvidia.com>, Joao Martins <joao.m.martins@oracle.com>,
- qemu-devel@nongnu.org
-References: <cover.1738171076.git.maciej.szmigiero@oracle.com>
- <87tt9gkqb6.fsf@suse.de>
- <adc80094-f7ea-4a30-8d59-f4a9864392f6@maciej.szmigiero.name>
-Content-Language: en-US, pl-PL
-Autocrypt: addr=mail@maciej.szmigiero.name; keydata=
- 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
-In-Reply-To: <adc80094-f7ea-4a30-8d59-f4a9864392f6@maciej.szmigiero.name>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=145.239.82.108;
- envelope-from=mhej@vps-ovh.mhejs.net; helo=vps-ovh.mhejs.net
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9,
- HEADER_FROM_DIFFERENT_DOMAINS=0.03, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+References: <20250124132048.3229049-1-xiaoyao.li@intel.com>
+ <20250124132048.3229049-52-xiaoyao.li@intel.com>
+In-Reply-To: <20250124132048.3229049-52-xiaoyao.li@intel.com>
+From: Paolo Bonzini <pbonzini@redhat.com>
+Date: Fri, 31 Jan 2025 19:27:23 +0100
+X-Gm-Features: AWEUYZkOCXHaRFghbH3lPJIDTaOq5XDRPgCRkvXwg6ltj_mr-tmQcXbYqf1FsWk
+Message-ID: <CABgObfb5ruVO2sxLCbZobiaqX-3h9Q+UKOZnp_hhxfJA=T-OJA@mail.gmail.com>
+Subject: Re: [PATCH v7 51/52] i386/tdx: Validate phys_bits against host value
+To: Xiaoyao Li <xiaoyao.li@intel.com>
+Cc: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>, 
+ =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
+ Igor Mammedov <imammedo@redhat.com>, Zhao Liu <zhao1.liu@intel.com>, 
+ "Michael S. Tsirkin" <mst@redhat.com>, Eric Blake <eblake@redhat.com>, 
+ Markus Armbruster <armbru@redhat.com>, Peter Maydell <peter.maydell@linaro.org>,
+ Marcelo Tosatti <mtosatti@redhat.com>, Huacai Chen <chenhuacai@kernel.org>, 
+ Rick Edgecombe <rick.p.edgecombe@intel.com>,
+ Francesco Lavra <francescolavra.fl@gmail.com>, 
+ qemu-devel@nongnu.org, kvm@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -33
+X-Spam_score: -3.4
+X-Spam_bar: ---
+X-Spam_report: (-3.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.3,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -110,255 +112,93 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 30.01.2025 21:27, Maciej S. Szmigiero wrote:
-> On 30.01.2025 21:19, Fabiano Rosas wrote:
->> "Maciej S. Szmigiero" <mail@maciej.szmigiero.name> writes:
->>
->>> From: "Maciej S. Szmigiero" <maciej.szmigiero@oracle.com>
->>>
->>> This is an updated v4 patch series of the v3 series located here:
->>> https://lore.kernel.org/qemu-devel/cover.1731773021.git.maciej.szmigiero@oracle.com/
->>>
->>> Changes from v3:
->>> * MigrationLoadThread now returns bool and an Error complex error type
->>> instead of just an int.
->>>
->>> * qemu_loadvm_load_thread_pool now reports error via migrate_set_error()
->>> instead of dedicated load_threads_ret variable.
->>>
->>> * Since the change above uncovered an issue with respect to multifd send
->>> channels not terminating TLS session properly QIOChannelTLS now allows
->>> gracefully handling this situation.
->>>
->>> * qemu_loadvm_load_thread_pool state is now part of MigrationIncomingState
->>> instead of being stored in global variables.
->>> This state now also has its own init/cleanup helpers.
->>>
->>> * qemu_loadvm_load_thread_pool code is now moved into a separate section
->>> of the savevm.c file, marked by an appropriate comment.
->>>
->>> * thread_pool_free() is now documented to have wait-before-free semantic,
->>> which allowed removal of explicit waits from thread pool cleanup paths.
->>>
->>> * thread_pool_submit_immediate() method was added since this functionality
->>> is used by both generic thread pool users in this patch set.
->>>
->>> * postcopy_ram_listen_thread() now takes BQL around function calls that
->>> ultimately call migration methods requiring BQL.
->>> This fixes one of QEMU tests failing when explicitly BQL-sensitive code
->>> is added later to these methods.
->>>
->>> * qemu_loadvm_load_state_buffer() now returns a bool value instead of int.
->>>
->>> * "Send final SYNC only after device state is complete" patch was
->>> dropped since Peter implemented equivalent functionality upstream.
->>>
->>> * "Document the BQL behavior of load SaveVMHandlers" patch was dropped
->>> since that's something better done later, separately from this patch set.
->>>
->>> * Header size is now added to mig_stats.multifd_bytes where it is actually
->>> sent in the zero copy case - in multifd_nocomp_send_prepare().
->>>
->>> * Spurious wakeups from qemu_cond_wait() are now handled properly as
->>> pointed out by Avihai.
->>>
->>> * VFIO migration FD now allows partial write() completion as pointed out
->>> by Avihai.
->>>
->>> * Patch "vfio/migration: Don't run load cleanup if load setup didn't run"
->>> was dropped, instead all objects related to multifd load are now located in
->>> their own VFIOMultifd struct which is allocated only if multifd device state
->>> transfer is actually in use.
->>>
->>> * Intermediate VFIOStateBuffers API as suggested by Avihai is now introduced
->>> to simplify vfio_load_state_buffer() and vfio_load_bufs_thread().
->>>
->>> * Optional VFIO device config state loading interlocking with loading
->>> other iterables is now possible due to ARM64 platform VFIO dependency on
->>> interrupt controller being loaded first as pointed out by Avihai.
->>>
->>> * Patch "Multifd device state transfer support - receive side" was split
->>> into a few smaller patches as suggested by Cédric.
->>>
->>> * x-migration-multifd-transfer VFIO property compat changes were moved
->>> into a separate patch as suggested by Cédric.
->>>
->>> * Other small changes, like renamed functions and variables/members, added
->>> review tags, code formatting, moved QEMU_LOCK_GUARD() instances closer to
->>> actual protected blocks, etc.
->>>
->>> ========================================================================
->>>
->>> This patch set is targeting QEMU 10.0.
->>>
->>> What's not yet present is documentation update under docs/devel/migration
->>> but I didn't want to delay posting the code any longer.
->>> Such doc can still be merged later when the design is 100% finalized.
->>>
->>> ========================================================================
->>>
->>> Maciej S. Szmigiero (32):
->>>    migration: Clarify that {load,save}_cleanup handlers can run without
->>>      setup
->>>    thread-pool: Remove thread_pool_submit() function
->>>    thread-pool: Rename AIO pool functions to *_aio() and data types to
->>>      *Aio
->>>    thread-pool: Implement generic (non-AIO) pool support
->>>    migration: Add MIG_CMD_SWITCHOVER_START and its load handler
->>>    migration: Add qemu_loadvm_load_state_buffer() and its handler
->>>    io: tls: Allow terminating the TLS session gracefully with EOF
->>>    migration/multifd: Allow premature EOF on TLS incoming channels
->>>    migration: postcopy_ram_listen_thread() needs to take BQL for some
->>>      calls
->>>    error: define g_autoptr() cleanup function for the Error type
->>>    migration: Add thread pool of optional load threads
->>>    migration/multifd: Split packet into header and RAM data
->>>    migration/multifd: Device state transfer support - receive side
->>>    migration/multifd: Make multifd_send() thread safe
->>>    migration/multifd: Add an explicit MultiFDSendData destructor
->>>    migration/multifd: Device state transfer support - send side
->>>    migration/multifd: Add multifd_device_state_supported()
->>>    migration: Add save_live_complete_precopy_thread handler
->>>    vfio/migration: Add x-migration-load-config-after-iter VFIO property
->>>    vfio/migration: Add load_device_config_state_start trace event
->>>    vfio/migration: Convert bytes_transferred counter to atomic
->>>    vfio/migration: Multifd device state transfer support - basic types
->>>    vfio/migration: Multifd device state transfer support -
->>>      VFIOStateBuffer(s)
->>>    vfio/migration: Multifd device state transfer - add support checking
->>>      function
->>>    vfio/migration: Multifd device state transfer support - receive
->>>      init/cleanup
->>>    vfio/migration: Multifd device state transfer support - received
->>>      buffers queuing
->>>    vfio/migration: Multifd device state transfer support - load thread
->>>    vfio/migration: Multifd device state transfer support - config loading
->>>      support
->>>    migration/qemu-file: Define g_autoptr() cleanup function for QEMUFile
->>>    vfio/migration: Multifd device state transfer support - send side
->>>    vfio/migration: Add x-migration-multifd-transfer VFIO property
->>>    hw/core/machine: Add compat for x-migration-multifd-transfer VFIO
->>>      property
->>>
->>> Peter Xu (1):
->>>    migration/multifd: Make MultiFDSendData a struct
->>>
->>>   hw/core/machine.c                  |   2 +
->>>   hw/vfio/migration.c                | 754 ++++++++++++++++++++++++++++-
->>>   hw/vfio/pci.c                      |  14 +
->>>   hw/vfio/trace-events               |  11 +-
->>>   include/block/aio.h                |   8 +-
->>>   include/block/thread-pool.h        |  62 ++-
->>>   include/hw/vfio/vfio-common.h      |   7 +
->>>   include/io/channel-tls.h           |  11 +
->>>   include/migration/client-options.h |   4 +
->>>   include/migration/misc.h           |  16 +
->>>   include/migration/register.h       |  54 ++-
->>>   include/qapi/error.h               |   2 +
->>>   include/qemu/typedefs.h            |   6 +
->>>   io/channel-tls.c                   |   6 +
->>>   migration/colo.c                   |   3 +
->>>   migration/meson.build              |   1 +
->>>   migration/migration-hmp-cmds.c     |   2 +
->>>   migration/migration.c              |   6 +-
->>>   migration/migration.h              |   7 +
->>>   migration/multifd-device-state.c   | 192 ++++++++
->>>   migration/multifd-nocomp.c         |  30 +-
->>>   migration/multifd.c                | 248 ++++++++--
->>>   migration/multifd.h                |  74 ++-
->>>   migration/options.c                |   9 +
->>>   migration/qemu-file.h              |   2 +
->>>   migration/savevm.c                 | 195 +++++++-
->>>   migration/savevm.h                 |   6 +-
->>>   migration/trace-events             |   1 +
->>>   scripts/analyze-migration.py       |  11 +
->>>   tests/unit/test-thread-pool.c      |   6 +-
->>>   util/async.c                       |   6 +-
->>>   util/thread-pool.c                 | 184 +++++--
->>>   util/trace-events                  |   6 +-
->>>   33 files changed, 1814 insertions(+), 132 deletions(-)
->>>   create mode 100644 migration/multifd-device-state.c
->>
->> Hi!
->>
->> We have build issues:
->>
->> https://gitlab.com/farosas/qemu/-/pipelines/1649146958
->>
-> 
-> Looks like that's an issue that qatomics on 64-bit
-> VFIO bytes transferred counters aren't available on
-> 32-bit host platforms.
-> 
-> The easiest way would be probably to change these to
-> 32-bit counters on 32-bit platforms since they can't
-> realistically address more memory anyway.
+On Fri, Jan 24, 2025 at 2:40=E2=80=AFPM Xiaoyao Li <xiaoyao.li@intel.com> w=
+rote:
+>
+> For TDX guest, the phys_bits is not configurable and can only be
+> host/native value.
+>
+> Validate phys_bits inside tdx_check_features().
 
-Updated the patch to use "unsigned long" counter instead:
-https://gitlab.com/maciejsszmigiero/qemu/-/commit/e42b16d2009067bff5a11936aece8a7af2436dc4
+Hi Xiaoyao,
 
->> And the postcopy/recovery test is failing. It seems the migration
->> finishes before the test can issue migrate-pause:
->>
->> QTEST_QEMU_BINARY=./qemu-system-x86_64  ./tests/qtest/migration-test -p
->> /x86_64/migration/postcopy/recovery/plain
->> ...
->> {"execute": "migrate-start-postcopy"}
->> {"return": {}}
->> {"secs": 1738267018, "usecs": 860991}, "event": "MIGRATION", "data": {"status": "postcopy-active"}
->> {"secs": 1738267018, "usecs": 861284}, "event": "STOP"
->> {"secs": 1738267017, "usecs": 960322}, "event": "MIGRATION", "data": {"status": "active"}
->> {"secs": 1738267018, "usecs": 865589}, "event": "MIGRATION", "data": {"status": "postcopy-active"}
->> {"secs": 1738267099, "usecs": 120971}, "event": "MIGRATION", "data": {"status": "completed"}
->> {"secs": 1738267099, "usecs": 121154}, "event": "RESUME"
->> {"execute": "query-migrate"}
->>
->> ERROR:../tests/qtest/migration/migration-qmp.c:172:check_migration_status:
->> assertion failed (current_status != "completed"): ("completed" !=
->> "completed")
->>
-> 
-> Hmm, it looks like this failure wasn't showing
-> in my tests because the test was skipped due to
-> missing userfaultfd support:
-> 
-> $ QTEST_QEMU_BINARY=./qemu-system-x86_64 ./tests/qtest/migration-test -p /x86_64/migration/postcopy/recovery/plain
-> TAP version 14
-> # random seed: R02Sc99a7d93274064bb87f3e0789fbf8326
-> # Skipping test: userfaultfd not available
-> # Start of x86_64 tests
-> # Start of migration tests
-> # End of migration tests
-> # End of x86_64 tests
-> 1..0
-> 
-> Will try to make this test run and investigate the reason for
-> failure.
+to avoid
 
-It looks like the issue here is that holding BQL around
-qemu_loadvm_state_main() in postcopy_ram_listen_thread() causes
-blocking QEMUFile operations in qemu_loadvm_state_main()
-(and its children) to effectively block the whole QEMU while they
-are waiting for I/O.
+qemu-kvm: TDX requires guest CPU physical bits (48) to match host CPU
+physical bits (52)
 
-This causes the test to fail because when that qemu_loadvm_state_main()
-call finishes and the postcopy thread relinquishes BQL the migration
-state immediately reaches "completed" without giving the test chance
-to abort the migration attempt.
+I need options like
 
-I still think that that qemu_loadvm_state_main() call needs BQL
-since every other its caller seems to hold it and
-qemu_loadvm_state_main() ultimately calls "load_state" SaveVMHandlers
-which otherwise would have inconsistent BQL semantics.
+-cpu host,phys-bits=3D52,guest-phys-bits=3D52,host-phys-bits-limit=3D52,-kv=
+m-asyncpf-int
 
-Since only the second BQL lock in postcopy_ram_listen_thread()
-(the one around migration_incoming_state_destroy()) is technically
-necessary for other parts of this patch set I have "downgraded"
-that other BQL around qemu_loadvm_state_main() to a TODO remark
-for now so postcopy tests now pass:
-https://gitlab.com/maciejsszmigiero/qemu/-/commit/005a79953aaa75cad160b95252ba421122d5a6a4
+to start a TDX guest, is that intentional?
 
 Thanks,
-Maciej
+
+Paolo
+
+> Signed-off-by: Xiaoyao Li <xiaoyao.li@intel.com>
+> ---
+>  target/i386/host-cpu.c | 2 +-
+>  target/i386/host-cpu.h | 1 +
+>  target/i386/kvm/tdx.c  | 8 ++++++++
+>  3 files changed, 10 insertions(+), 1 deletion(-)
+>
+> diff --git a/target/i386/host-cpu.c b/target/i386/host-cpu.c
+> index 3e4e85e729c8..8a15af458b05 100644
+> --- a/target/i386/host-cpu.c
+> +++ b/target/i386/host-cpu.c
+> @@ -15,7 +15,7 @@
+>  #include "system/system.h"
+>
+>  /* Note: Only safe for use on x86(-64) hosts */
+> -static uint32_t host_cpu_phys_bits(void)
+> +uint32_t host_cpu_phys_bits(void)
+>  {
+>      uint32_t eax;
+>      uint32_t host_phys_bits;
+> diff --git a/target/i386/host-cpu.h b/target/i386/host-cpu.h
+> index 6a9bc918baa4..b97ec01c9bec 100644
+> --- a/target/i386/host-cpu.h
+> +++ b/target/i386/host-cpu.h
+> @@ -10,6 +10,7 @@
+>  #ifndef HOST_CPU_H
+>  #define HOST_CPU_H
+>
+> +uint32_t host_cpu_phys_bits(void);
+>  void host_cpu_instance_init(X86CPU *cpu);
+>  void host_cpu_max_instance_init(X86CPU *cpu);
+>  bool host_cpu_realizefn(CPUState *cs, Error **errp);
+> diff --git a/target/i386/kvm/tdx.c b/target/i386/kvm/tdx.c
+> index bb75eb06dad9..c906a76c4c0e 100644
+> --- a/target/i386/kvm/tdx.c
+> +++ b/target/i386/kvm/tdx.c
+> @@ -24,6 +24,7 @@
+>
+>  #include "cpu.h"
+>  #include "cpu-internal.h"
+> +#include "host-cpu.h"
+>  #include "hw/i386/e820_memory_layout.h"
+>  #include "hw/i386/x86.h"
+>  #include "hw/i386/tdvf.h"
+> @@ -838,6 +839,13 @@ static int tdx_check_features(X86ConfidentialGuest *=
+cg, CPUState *cs)
+>          return -1;
+>      }
+>
+> +    if (cpu->phys_bits !=3D host_cpu_phys_bits()) {
+> +        error_report("TDX requires guest CPU physical bits (%u) "
+> +                     "to match host CPU physical bits (%u)",
+> +                     cpu->phys_bits, host_cpu_phys_bits());
+> +        exit(1);
+> +    }
+> +
+>      return 0;
+>  }
+>
+> --
+> 2.34.1
+>
 
 
