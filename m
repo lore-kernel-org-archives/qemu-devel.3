@@ -4,85 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7AEF1C0218F
-	for <qemu-devel@archiver.kernel.org>; Fri, 31 Jan 2025 13:36:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D0C95C0218F
+	for <qemu-devel@archiver.kernel.org>; Fri, 31 Jan 2025 13:38:00 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tdrC0-00045e-AA; Fri, 31 Jan 2025 08:36:20 -0500
+	id 1tdrD8-0004i8-L7; Fri, 31 Jan 2025 08:37:30 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1tdrBw-00045K-0X
- for qemu-devel@nongnu.org; Fri, 31 Jan 2025 08:36:16 -0500
-Received: from mail-pl1-x634.google.com ([2607:f8b0:4864:20::634])
+ id 1tdrD7-0004hs-K7
+ for qemu-devel@nongnu.org; Fri, 31 Jan 2025 08:37:29 -0500
+Received: from mail-pj1-x1032.google.com ([2607:f8b0:4864:20::1032])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1tdrBu-0000hF-EB
- for qemu-devel@nongnu.org; Fri, 31 Jan 2025 08:36:15 -0500
-Received: by mail-pl1-x634.google.com with SMTP id
- d9443c01a7336-21619108a6bso34298505ad.3
- for <qemu-devel@nongnu.org>; Fri, 31 Jan 2025 05:36:13 -0800 (PST)
+ id 1tdrD5-0000lU-UO
+ for qemu-devel@nongnu.org; Fri, 31 Jan 2025 08:37:29 -0500
+Received: by mail-pj1-x1032.google.com with SMTP id
+ 98e67ed59e1d1-2ef70c7efa5so2721438a91.2
+ for <qemu-devel@nongnu.org>; Fri, 31 Jan 2025 05:37:27 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1738330572; x=1738935372; darn=nongnu.org;
+ d=linaro.org; s=google; t=1738330646; x=1738935446; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=5MCeK5n+5gJL2xftSosJLZv/AHi2f2ABEnI3IJElVSI=;
- b=x7MhctkKIK8v968kNT+onyEgoR8rY3/5dkHSTsGR+KASNZ6OKvzf9nYlppZR4TIK3C
- BPFWWxWtUQA+gr5+PZ6ODx4xYtfM/14Z5NFrh9SfiEQFnSrXX/+LHVasJUxD71zO4XVl
- Iq/kcw6kOd5QqDjmtJ/iPm1PC9qVTx7152DMKo2PD9QUHn6rGCBOTfeIDrKhRlxfi0xd
- CiTmf69gcH7LrBJGOFMwDhbTYjjN4hwLNhaVjlFasTeXEviR4tcy0EQDx8BHEvd8ppOB
- SQz3V1i5wpFCTpDAK54zuomoreSwOmk7ZrhpyWJvPgtJH5jnuXh74WBmJbve+HgS35rL
- Mq6w==
+ bh=wdxCDNplt2fe5LaB2T3UPL9Sl8d0nhleNeASlwf62bo=;
+ b=dg/i1rRxd/wuKc0M57YktMUlw4iYl9c9Dkw5gq1v5sJijow4qaGOyqQwPyckS4BS5K
+ l7cDDqr1xl6YgAa77MQ8f2ACE+ZgCnv2aqim99gcQR4ZUFJlP0jckJvsHkxHYWX10OVo
+ 8q020xr26G2WC1Yxuktut/bXRi52el6nNWB2+p5GPGqQWsH/sbtWZa+vJ20ufmrO1WyU
+ oT16NKqYlRWRJ80BhrpCe8yDmRuJR8qDIVPmIhKaL+0hrWftKgz2PBD2/W6pxdQhbjfB
+ aDuC1Q7iHLNxKLdnPJqypvKpwwzEU40ffY5CQmEuuzbJ7piNedd9C4aggWQODkacb/Dm
+ rIwQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1738330572; x=1738935372;
+ d=1e100.net; s=20230601; t=1738330646; x=1738935446;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=5MCeK5n+5gJL2xftSosJLZv/AHi2f2ABEnI3IJElVSI=;
- b=mDus7hH2RnVq1VxXw4OMmNiTViWGrHv/y50TZ0/VMmt6UfE+SRMBH+uloSakc/8hXx
- EDXkmYueT1nZJp5IG+BK2FKNfjdIklt3ET5ylQH8CzowU6oNnBV74h1IsaLXvFKo0Iqn
- A6LMHmko8xr9ySYo7gP6qBC/KkrauKjWxslWI5r2RbcRuE1xyY8779bC4PQEEkLlq7Tz
- fxLb3x6HgAkhWMhIRcjQPViq+nq7HeNeSErcvfXMEw9LnxgNvSfVdDVy9bwJgnuux5li
- QNw/B7jyHXANjstq+J6WFlifTFFPtMzL1/lmcMTpDpMFX1cL5d8DGHnGv1TzVx0wSOfH
- 3nzw==
-X-Gm-Message-State: AOJu0YzEsnqQZ4JkUC0Cw8U5qnsRfD9sop4fbovsM9KZZUIYUFprDjRp
- B38LnNMiJrbCyZzwxr/a82dFRzO/0nDn8KBEomW4cBilAXe8xaoshhhVrRCcg51PLCakUmmeOKd
- U
-X-Gm-Gg: ASbGncv5vmGvQgPHCAMvQk2OqJZWqthNAS3kuWJnWKxbtRb9IT94wWEj3iqHXVTKc92
- eHXwVY7hzxEz2LzFQVUJUQZNel7gnXXAwwEAFJnDs5BiCrOASx7B91CFi4Bi9uW6yQ7LsHHN/G0
- SIgciI1sb4HKQ4LCFwrlhZC+MKjC0kzeFK5KF+iiEnCqhfFbwogEpqUkpq3cBRJBIwbJrL4cd1t
- 8yebi1ywwvJ3K9eJ0yb/bK4PVeQ/uUXFH5Sz/VVTAaTcUsA/l2kMrwDxctUaKG9HT1fn4i4Eusv
- tZGou1hhF8v7X84pocjv01S/ptSZQTfi
-X-Google-Smtp-Source: AGHT+IHuLJY2r8N7NNaWmk1HMrzsiDct5Q6PTZgC7Hi6tcguJzLsgKTny+ittmk3EK3rrsceapd2Cw==
-X-Received: by 2002:a05:6a00:214a:b0:72f:d50a:9084 with SMTP id
- d2e1a72fcca58-72fd50a9263mr11057521b3a.13.1738330571898; 
- Fri, 31 Jan 2025 05:36:11 -0800 (PST)
+ bh=wdxCDNplt2fe5LaB2T3UPL9Sl8d0nhleNeASlwf62bo=;
+ b=MRLzfqeXCWqnW6ixP2IsFQ4+kbmsxxmE6agiQ7VwhtMtlJzZFGqQ6h1V5vOGSyytWy
+ W9LBFUTkEnK35mzofA9Y5tfYVnNXmL+bgEERXfr3sX/qwdbtSSx8tqE75mNjokLeh8hM
+ fL3r3sxrraYtHrxv8vegLbm81FNEf0k72EW9a9vERgm2txpVXSknkT7Rye1szV2kdELS
+ aYfMX71t2IwNAV3OVYcP8a9Gjc0gUlWlVMQKXE9I29LnvWWvZA/02DZZvw6F5VtrxYK/
+ 6h2XLJ2nM+X7dSAfA8rY/+guk8j/sKJH16Z7loSkvCVIIprc959wtqOLA0asvspD0XNM
+ FzXQ==
+X-Gm-Message-State: AOJu0YxX0+l27SHdD2iLzzgMvzIBPQwBX3wSF9SAqB2lHyEularJUcih
+ EEL14Pm9HkhtWRLY0PxsZYId2pHvHAjkpq7zCJoSl9hd/fBxMV9CUNgmkv5NX85p4ghEKLFc9bZ
+ 9
+X-Gm-Gg: ASbGncsdW6KRLrK7erL9FnOeZIveYM7uZF6SU0Io999jHaxCjRvkVyLlD8+DDIRv3c4
+ GgtzGXD3/MUkvSVzjxNFRuPD75GYPvTCxgMm9eun3V8yQp1pdgPJLnnIAHiUsAd7Bk9LAsmxQFQ
+ N8NJwmDHzyMf+NVGW/VgGDjayMKeQCAVEAVn56GiVfrC5iKMjw4eUo6pjcp9a2YEYgDIlplkTRj
+ xNeQAmqCtsa+Vi1I0i2PuEvWPOFBhrQ53K2bq5wb7ZpxJJYJDad1DQo9URpqdgSMkBEEf7g+d+b
+ X2DybCClMeGYr2SIGPy2NfvlEjZUW4IB
+X-Google-Smtp-Source: AGHT+IFY25LMlzlU/diojJHOQ0GPjRw66fUXzGFetUxgbuwzZ8GOmlAAhEd0w/lziEqus5waOrCcJw==
+X-Received: by 2002:a17:90b:54ce:b0:2ee:f80c:6884 with SMTP id
+ 98e67ed59e1d1-2f83ac8ace6mr18652512a91.33.1738330646295; 
+ Fri, 31 Jan 2025 05:37:26 -0800 (PST)
 Received: from [192.168.163.227] ([50.233.235.3])
  by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-72fe69ba3acsm3197143b3a.111.2025.01.31.05.36.10
+ d9443c01a7336-21de33254a8sm30154945ad.246.2025.01.31.05.37.25
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 31 Jan 2025 05:36:11 -0800 (PST)
-Message-ID: <b79b0416-d387-4dad-aa0e-26acff4369a3@linaro.org>
-Date: Fri, 31 Jan 2025 05:36:06 -0800
+ Fri, 31 Jan 2025 05:37:25 -0800 (PST)
+Message-ID: <3a8cca34-bb6f-471d-a879-6e573fa00fac@linaro.org>
+Date: Fri, 31 Jan 2025 05:37:23 -0800
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 24/76] fpu: allow flushing of output denormals to be after
- rounding
+Subject: Re: [PATCH 45/76] target/arm: Implement FPCR.AH semantics for scalar
+ FMIN/FMAX
 To: Peter Maydell <peter.maydell@linaro.org>
 Cc: qemu-devel@nongnu.org
 References: <20250124162836.2332150-1-peter.maydell@linaro.org>
- <20250124162836.2332150-25-peter.maydell@linaro.org>
- <d8d04708-ddc2-476e-9e17-8493f573d7a5@linaro.org>
- <CAFEAcA91VD57mPb4y2bzWnf-p6o6O8Q_9HCdM0HGReddBp8WsA@mail.gmail.com>
+ <20250124162836.2332150-46-peter.maydell@linaro.org>
+ <7e368ef4-a60e-4308-aeb9-ec910361c424@linaro.org>
+ <CAFEAcA9RbsEpp3yyXe2Nf2KJ6yTXp36oEP7SHSrvX1NyPS3k1Q@mail.gmail.com>
 Content-Language: en-US
 From: Richard Henderson <richard.henderson@linaro.org>
-In-Reply-To: <CAFEAcA91VD57mPb4y2bzWnf-p6o6O8Q_9HCdM0HGReddBp8WsA@mail.gmail.com>
+In-Reply-To: <CAFEAcA9RbsEpp3yyXe2Nf2KJ6yTXp36oEP7SHSrvX1NyPS3k1Q@mail.gmail.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::634;
- envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x634.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1032;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pj1-x1032.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -105,42 +105,32 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 1/29/25 05:04, Peter Maydell wrote:
-> On Sat, 25 Jan 2025 at 16:42, Richard Henderson
-> <richard.henderson@linaro.org> wrote:
+On 1/31/25 05:09, Peter Maydell wrote:
+>>> +/*
+>>> + * AH=1 min/max have some odd special cases:
+>>> + * comparing two zeroes (even of different sign), (NaN, anything),
+>>> + * or (anything, NaN) should return the second argument (possibly
+>>> + * squashed to zero).
+>>> + * Also, denormal outputs are not squashed to zero regardless of FZ or FZ16.
+>>> + */
+>>> +#define AH_MINMAX_HELPER(NAME, CTYPE, FLOATTYPE, MINMAX)                \
+>>> +    CTYPE HELPER(NAME)(CTYPE a, CTYPE b, float_status *fpst)            \
+>>> +    {                                                                   \
+>>> +        bool save;                                                      \
+>>> +        CTYPE r;                                                        \
+>>> +        a = FLOATTYPE ## _squash_input_denormal(a, fpst);               \
+>>> +        b = FLOATTYPE ## _squash_input_denormal(b, fpst);               \
+>>> +        if (FLOATTYPE ## _is_zero(a) && FLOATTYPE ## _is_zero(b)) {     \
 >>
->> On 1/24/25 08:27, Peter Maydell wrote:
->>> Currently we handle flushing of output denormals in uncanon_normal
->>> always before we deal with rounding.  This works for architectures
->>> that detect tininess before rounding, but is usually not the right
->>> place when the architecture detects tininess after rounding.  For
->>> example, for x86 the SDM states that the MXCSR FTZ control bit causes
->>> outputs to be flushed to zero "when it detects a floating-point
->>> underflow condition".  This means that we mustn't flush to zero if
->>> the input is such that after rounding it is no longer tiny.
->>>
->>> At least one of our guest architectures does underflow detection
->>> after rounding but flushing of denormals before rounding (MIPS MSA);
->>
->> Whacky, but yes, I see that in the msa docs.
+>> The comment says "even of different sign", the pseudocode explicitly checks different
+>> sign.  But of course if they're the same sign a and b are indistinguishable.  Perhaps
+>> slightly different wording?
 > 
->> BTW, I'm not keen on your "detect_*" names, without "float_" prefix like (almost?)
->> everything else.
-> 
-> Do you have a suggestion for better naming? Maybe
->   set_float_detect_ftz()
->   get_float_detect_ftz()
-> to match set/get_float_detect_tininess()? Though "detect"
-> isn't quite the right verb, I feel...
-> 
-> And for the enum
-> 
-> typedef enum __attribute__((__packed__)) {
->      float_ftz_after_rounding = 0,
->      float_ftz_before_rounding = 1,
-> } FloatFTZDetection;
+> Sure. I changed from "(even of different sign)" to
+> "(regardless of sign)". Let me know if you have a
+> more specific tweak you'd like.
 
-The enum looks good.  The accessors are harder.  Maybe set_ftz_detection, matching the enum?
+Sounds good.
 
 
 r~
