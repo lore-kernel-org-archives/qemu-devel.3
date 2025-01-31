@@ -4,100 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 092FDC02190
-	for <qemu-devel@archiver.kernel.org>; Fri, 31 Jan 2025 17:16:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 10B55C0218F
+	for <qemu-devel@archiver.kernel.org>; Fri, 31 Jan 2025 17:19:22 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tduc9-0000JY-Ci; Fri, 31 Jan 2025 12:15:33 -0500
+	id 1tdufN-0001C8-4L; Fri, 31 Jan 2025 12:18:54 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <sbhat@linux.ibm.com>)
- id 1tdubr-0000E0-Lb; Fri, 31 Jan 2025 12:15:18 -0500
-Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
+ (Exim 4.90_1) (envelope-from <dmitry.osipenko@collabora.com>)
+ id 1tdufD-0001AV-O3
+ for qemu-devel@nongnu.org; Fri, 31 Jan 2025 12:18:44 -0500
+Received: from sender4-pp-f112.zoho.com ([136.143.188.112])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <sbhat@linux.ibm.com>)
- id 1tdubp-00009r-T4; Fri, 31 Jan 2025 12:15:15 -0500
-Received: from pps.filterd (m0356517.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 50VF1OLi012945;
- Fri, 31 Jan 2025 17:15:08 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-transfer-encoding:content-type:date:from:message-id
- :mime-version:subject:to; s=pp1; bh=RJGFp2lPcJyiUdcrq+LsEo/sn5Lx
- ChSu/NtsePRZARE=; b=bzQQmFD1CiyjhdDAniQja75NmpYjcpJQOnLNUPUnhXnB
- ZWfJ20m/oe1EMxEOO+BxWk2yEihWBpGn+AcLCNP829/xQ3YZdZQGBl/vhnpCf8k3
- fWyWemCA0MU78jp2MG9q+PxQhvCQnZGSLHw4MV+W+ipvKDLU5dYIGLI2jB+eVb9Y
- wMWvIOSf3MTusfEcGZxCeTzxsYx7FDs2/PtQswrENtNlmfASg4rpetoedVNcNiad
- nTh2sCQrL7ZKErRT2nZcLi+WvpH/LGBBzL/uA3nzb+2UzkTR1awiskEVmVn45fti
- b8aGBX7SBp3d2wzxdXAej3EVs1aLoNHgK3cVMBk+Mg==
-Received: from pps.reinject (localhost [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 44h0t00n8v-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Fri, 31 Jan 2025 17:15:08 +0000 (GMT)
-Received: from m0356517.ppops.net (m0356517.ppops.net [127.0.0.1])
- by pps.reinject (8.18.0.8/8.18.0.8) with ESMTP id 50VHBt2L011329;
- Fri, 31 Jan 2025 17:15:07 GMT
-Received: from ppma11.dal12v.mail.ibm.com
- (db.9e.1632.ip4.static.sl-reverse.com [50.22.158.219])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 44h0t00n8r-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Fri, 31 Jan 2025 17:15:07 +0000 (GMT)
-Received: from pps.filterd (ppma11.dal12v.mail.ibm.com [127.0.0.1])
- by ppma11.dal12v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 50VGWwv8016133;
- Fri, 31 Jan 2025 17:15:07 GMT
-Received: from smtprelay05.fra02v.mail.ibm.com ([9.218.2.225])
- by ppma11.dal12v.mail.ibm.com (PPS) with ESMTPS id 44gfaucjgd-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Fri, 31 Jan 2025 17:15:07 +0000
-Received: from smtpav07.fra02v.mail.ibm.com (smtpav07.fra02v.mail.ibm.com
- [10.20.54.106])
- by smtprelay05.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 50VHF3gp42991988
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Fri, 31 Jan 2025 17:15:03 GMT
-Received: from smtpav07.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 996AA20043;
- Fri, 31 Jan 2025 17:15:03 +0000 (GMT)
-Received: from smtpav07.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 6A2B420040;
- Fri, 31 Jan 2025 17:15:02 +0000 (GMT)
-Received: from [172.17.0.2] (unknown [9.3.101.175])
- by smtpav07.fra02v.mail.ibm.com (Postfix) with ESMTP;
- Fri, 31 Jan 2025 17:15:02 +0000 (GMT)
-Subject: [PATCH] vfio/pci: Skip enabling INTx if the IRQ line is also
- unassgined
-From: Shivaprasad G Bhat <sbhat@linux.ibm.com>
-To: alex.williamson@redhat.com, clg@redhat.com
-Cc: vaibhav@linux.ibm.com, npiggin@gmail.com, harshpb@linux.ibm.com,
- qemu-ppc@nongnu.org, qemu-devel@nongnu.org, sbhat@linux.ibm.com
-Date: Fri, 31 Jan 2025 17:15:01 +0000
-Message-ID: <173834353589.1880.3587671276264097972.stgit@linux.ibm.com>
-User-Agent: StGit/1.1
+ (Exim 4.90_1) (envelope-from <dmitry.osipenko@collabora.com>)
+ id 1tdufA-0001hV-VS
+ for qemu-devel@nongnu.org; Fri, 31 Jan 2025 12:18:42 -0500
+ARC-Seal: i=1; a=rsa-sha256; t=1738343904; cv=none; 
+ d=zohomail.com; s=zohoarc; 
+ b=LR8AWjl6gXmDH4ocscYsyNSd6TSUHRtwFRQKmlqWzou00F6GtogwAtF68hDMNSbCF7L/WLUEmxOpJdsI+eP3nNazjYcb1fz07gdo+AcLXBqDGfvcZMBQ36Lg249HYB9HgKgMcuLqvhiaxoSEfGZ3QUTxyLqUza0ZU3pY8JF/QXQ=
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=zohomail.com;
+ s=zohoarc; t=1738343904;
+ h=Content-Type:Content-Transfer-Encoding:Cc:Cc:Date:Date:From:From:In-Reply-To:MIME-Version:Message-ID:References:Subject:Subject:To:To:Message-Id:Reply-To;
+ bh=HNBssW6jtpxoOhbJ6J1/8461uHrAqjmnE8P3Q08kVgs=; 
+ b=I0iyoWUEkbqkmT/gwxxzRPBveYAArWIRNuERGhjo4UMfaYGZze7AWIs6M8JfphxV9fLKyDshqTmWErlHhEfi9C8QyL2wu7uDGurS/xum08PihmZctxrfu6p2IApkpZ3NjoiuPggCvNzNq0ys6SCDjLoIz0Z0CgTZGwp/PaIvHqU=
+ARC-Authentication-Results: i=1; mx.zohomail.com;
+ dkim=pass  header.i=collabora.com;
+ spf=pass  smtp.mailfrom=dmitry.osipenko@collabora.com;
+ dmarc=pass header.from=<dmitry.osipenko@collabora.com>
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; t=1738343904; 
+ s=zohomail; d=collabora.com; i=dmitry.osipenko@collabora.com; 
+ h=Message-ID:Date:Date:MIME-Version:Subject:Subject:To:To:Cc:Cc:References:From:From:In-Reply-To:Content-Type:Content-Transfer-Encoding:Message-Id:Reply-To;
+ bh=HNBssW6jtpxoOhbJ6J1/8461uHrAqjmnE8P3Q08kVgs=;
+ b=B6zRpVYOtb0ereqjvu/oS1YfpRKlJFRh/vHnSnvxNa1ik2SfMQwJb0PLrrbNCmLg
+ JMe3kMhUCPdBa1XfFNyEpwUpNbTwFxacr9+R1X01vjXTWVcnGXzFVPVULaUJodlQntp
+ 43W3AdKOLfn7S0cNjISR4GO1tiabb200DKjit3KE=
+Received: by mx.zohomail.com with SMTPS id 173834387576734.90243527676;
+ Fri, 31 Jan 2025 09:17:55 -0800 (PST)
+Message-ID: <044affa2-0fab-40d4-b17c-5d13569eb929@collabora.com>
+Date: Fri, 31 Jan 2025 20:17:47 +0300
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v6 10/10] docs/system: virtio-gpu: Document host/guest
+ requirements
+To: Akihiko Odaki <akihiko.odaki@daynix.com>, Huang Rui <ray.huang@amd.com>,
+ =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
+ =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Gerd Hoffmann <kraxel@redhat.com>, =?UTF-8?Q?Alex_Benn=C3=A9e?=
+ <alex.bennee@linaro.org>, "Michael S . Tsirkin" <mst@redhat.com>,
+ Paolo Bonzini <pbonzini@redhat.com>
+Cc: Gert Wollny <gert.wollny@collabora.com>, qemu-devel@nongnu.org,
+ Gurchetan Singh <gurchetansingh@chromium.org>, Alyssa Ross <hi@alyssa.is>,
+ =?UTF-8?Q?Roger_Pau_Monn=C3=A9?= <roger.pau@citrix.com>,
+ Alex Deucher <alexander.deucher@amd.com>,
+ Stefano Stabellini <stefano.stabellini@amd.com>,
+ =?UTF-8?Q?Christian_K=C3=B6nig?= <christian.koenig@amd.com>,
+ Xenia Ragiadakou <xenia.ragiadakou@amd.com>,
+ Pierre-Eric Pelloux-Prayer <pierre-eric.pelloux-prayer@amd.com>,
+ Honglei Huang <honglei1.huang@amd.com>, Julia Zhang <julia.zhang@amd.com>,
+ Chen Jiqian <Jiqian.Chen@amd.com>, Rob Clark <robdclark@gmail.com>,
+ Yiwei Zhang <zzyiwei@chromium.org>, Sergio Lopez Pascual <slp@redhat.com>
+References: <20250126201121.470990-1-dmitry.osipenko@collabora.com>
+ <20250126201121.470990-11-dmitry.osipenko@collabora.com>
+ <42646f72-c2c8-43c5-abe1-e8e1b3c9d31b@daynix.com>
+From: Dmitry Osipenko <dmitry.osipenko@collabora.com>
+Content-Language: en-US
+In-Reply-To: <42646f72-c2c8-43c5-abe1-e8e1b3c9d31b@daynix.com>
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-X-TM-AS-GCONF: 00
-X-Proofpoint-GUID: E4AuL1GeJfP5Ggh50P16w311gPuSTnWm
-X-Proofpoint-ORIG-GUID: wYur02Cmp1lChfuEiDF21C5LTfgZ0Tcz
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1057,Hydra:6.0.680,FMLib:17.12.68.34
- definitions=2025-01-31_06,2025-01-31_02,2024-11-22_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- bulkscore=0 adultscore=0
- priorityscore=1501 mlxscore=0 malwarescore=0 mlxlogscore=722
- lowpriorityscore=0 suspectscore=0 impostorscore=0 spamscore=0 phishscore=0
- clxscore=1011 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2501170000 definitions=main-2501310129
-Received-SPF: pass client-ip=148.163.156.1; envelope-from=sbhat@linux.ibm.com;
- helo=mx0a-001b2d01.pphosted.com
-X-Spam_score_int: -26
-X-Spam_score: -2.7
+X-ZohoMailClient: External
+Received-SPF: pass client-ip=136.143.188.112;
+ envelope-from=dmitry.osipenko@collabora.com; helo=sender4-pp-f112.zoho.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H2=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -113,41 +98,12 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Currently, the PCI_INTERRUPT_PIN alone is checked before enabling
-the INTx. Its also necessary to have the IRQ Lines assigned for
-the INTx to work. So, check the PCI_INTERRUPT_LINE against 0xff
-indicates no connection.
+On 1/27/25 09:28, Akihiko Odaki wrote:
+...
 
-The problem was observed on Power10 systems which primarily use
-MSI-X, and LSI lines are not connected on all devices under a
-PCIe switch. In this configuration where the PIN is non-zero
-but the LINE was 0xff, the VFIO_DEVICE_SET_IRQS was failing as
-it was trying to map the irqfd for the LSI of the device.
+Thanks for the doc review! Will improve the patch in the next iteration.
 
-Signed-off-by: Shivaprasad G Bhat <sbhat@linux.ibm.com>
----
- hw/vfio/pci.c |    4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
-
-diff --git a/hw/vfio/pci.c b/hw/vfio/pci.c
-index ab17a98ee5..69a519d143 100644
---- a/hw/vfio/pci.c
-+++ b/hw/vfio/pci.c
-@@ -264,12 +264,12 @@ static void vfio_irqchip_change(Notifier *notify, void *data)
- static bool vfio_intx_enable(VFIOPCIDevice *vdev, Error **errp)
- {
-     uint8_t pin = vfio_pci_read_config(&vdev->pdev, PCI_INTERRUPT_PIN, 1);
-+    uint8_t line = vfio_pci_read_config(&vdev->pdev, PCI_INTERRUPT_LINE, 1);
-     Error *err = NULL;
-     int32_t fd;
-     int ret;
- 
--
--    if (!pin) {
-+    if (!pin || (line == 0xFF)) {
-         return true;
-     }
- 
-
-
+-- 
+Best regards,
+Dmitry
 
