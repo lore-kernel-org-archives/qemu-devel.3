@@ -4,81 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7F4F7C02192
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3290DC0218F
 	for <qemu-devel@archiver.kernel.org>; Fri, 31 Jan 2025 21:10:15 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tdyFL-0004Cl-Jp; Fri, 31 Jan 2025 16:08:15 -0500
+	id 1tdyFQ-0004yn-5Z; Fri, 31 Jan 2025 16:08:20 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tdyEm-0003c4-BN
- for qemu-devel@nongnu.org; Fri, 31 Jan 2025 16:07:43 -0500
-Received: from mail-wr1-x432.google.com ([2a00:1450:4864:20::432])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tdyF9-00048o-Me
+ for qemu-devel@nongnu.org; Fri, 31 Jan 2025 16:08:07 -0500
+Received: from mail-wr1-x42a.google.com ([2a00:1450:4864:20::42a])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tdyEk-0007zR-HN
- for qemu-devel@nongnu.org; Fri, 31 Jan 2025 16:07:40 -0500
-Received: by mail-wr1-x432.google.com with SMTP id
- ffacd0b85a97d-38637614567so1147963f8f.3
- for <qemu-devel@nongnu.org>; Fri, 31 Jan 2025 13:07:37 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tdyF8-00081G-4T
+ for qemu-devel@nongnu.org; Fri, 31 Jan 2025 16:08:03 -0500
+Received: by mail-wr1-x42a.google.com with SMTP id
+ ffacd0b85a97d-385e27c75f4so2070544f8f.2
+ for <qemu-devel@nongnu.org>; Fri, 31 Jan 2025 13:08:01 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1738357656; x=1738962456; darn=nongnu.org;
+ d=linaro.org; s=google; t=1738357680; x=1738962480; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=VwhcEyrTW8SxL1gomr78xxwwBfYGuo9Xtd73z405jUg=;
- b=cKf9CMFlMp6xGGC2ZNg6hl1p0cGZ1WMzfS1iUUL/UJMaK4QPGNUMsE3v68KqMVrgBz
- XGehkAgHy4C5zrrNzLpHlCNcokaaVzPI8UeVC+FCvOGTtg1FE3gA65RjAZxOjjdHyJXc
- Vup01/OTTxwPtTLWdsHVOmnrsDLA7AiguWpYyy1zMQVRqW8DQTKdCg31J6lrXxpo9kwQ
- DRswJNQfn4Y9fdsBK8b82wgFDtRTsvO3P7i2IFYZEOqPr0RMzTnBs9AhPF2qRjHcopfW
- 2Ml4Gvm+Vy703/LmSlYpTYzpYJXoX3MxyMwXvJd+KDpC6oVXiuaqGnAw3G5rE/Lky+KR
- WBkQ==
+ bh=HNF/vS+/jQgJ4zkGiuyQoIln9Dsv44LkWIV1cquGqWI=;
+ b=DyiGMjYhr4bjRpuUXaRG6wUJQ68QO5io48wQxLHVVRkiBd70DjX4KAjMQDchRbFiU/
+ mtKB3JmbHN7Sembv88gGWDwfUQXfMyTghIAHu5x+9rGJSMCPbux47dV90nJXADBFQRbW
+ IZqe2bC6xmRPltsgz6FfgnYmj+HtsI7ObFVZWEAPwU/hkKlX2JjRiskqJriVgq8iQYUe
+ zWKhzpH51lUQjZd2emY6YXTtBrJ/17oZzATgxUE4Kfe4UtvSPfTYyCgVWNjvoNbh8K+x
+ aztl2/l7K1oRObww2Z8TZeKem8MeFID+ieUYmFVmf18Vb9doHGBJXIEgLan+dGSdvHDM
+ wtMg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1738357656; x=1738962456;
+ d=1e100.net; s=20230601; t=1738357680; x=1738962480;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=VwhcEyrTW8SxL1gomr78xxwwBfYGuo9Xtd73z405jUg=;
- b=cnVCHiebVMfOr/Qqcwxou8ewEYbGHzc17qMTJaRbu1Nchxdwc/FEZ2pjiQ/83Z7BCq
- cheJbMZW//YmS6C0IfzHi+loaAJgRNXZ2nEJshRU/I4PEcRY07lAWDBRkKSkcjbfv3Dr
- 1V9OcH/4Qov6F5soQ9gAhrcm6RkvZdzJc0sTeg/eoIhlUWgZg4m+bkcZ78b7WyXsWcY2
- 8O9gtmW0gPjCZMlDLLYhWNDu5cDa9V3OSPO1WxBxuXdAB9w40cmjO+G9Oo+1hWxb+A+z
- E6Rtm1cXS6CKT7nGw1mx3dQmBARTzjiC2cRx8kezzel+Igi7WbEOb/RY480X8GHF+rXo
- voGQ==
-X-Gm-Message-State: AOJu0YwUlqFNM7cYJkwDCItfag9K51x+rDluJJNjH/Kuo6Oyc8T1Mxbw
- wRsDqjhH9kEPdGjha4qn6S+Ta+hjs2kT5em++btRyfhG7x5afq7ZzMMJfLogVCJjBkuMI+vyIzg
- W3Bg=
-X-Gm-Gg: ASbGnctN2cGwKVy+tzWh6ezWYysUP8tB77xUx/6GccJOS1tAzjFu+WyssaQfbNvIikt
- zY+I6Noz7OlfSPnAyXkYvc4UqdbgtftSMQa8MByFgzVq83ZvWJiyDmFnjQbUddckgiGKRDOtHYr
- Cmi+41S/sa7DnwQOqVL10+M8CyhvIDZh26RB9VC6ek0M0ZA/6JAs8LORkbTVgQZCi+Vu+0Ght+N
- 2zx6Bnj8qV1LSWRgGTBc3htInAGIQ1EP4JK5xsOiw4DI85EFzOhPBt6719RcdL0uB5aMUjlI5wj
- ipuDfcSMWOwGFFG1avRFBdH2aQfkDz4ODsL3HkrCB77lRgP2dq3/FhyLAZOSDZmqHA==
-X-Google-Smtp-Source: AGHT+IFNQXg6pB9VnAgLLZCNaPka2MT5qyPvtKPrbcj4GjeQtaudzK7Cgtpr81+uFYtGcdgL8hHX0Q==
-X-Received: by 2002:a5d:588c:0:b0:385:f38e:c0c3 with SMTP id
- ffacd0b85a97d-38c51930ff6mr10790922f8f.6.1738357656042; 
- Fri, 31 Jan 2025 13:07:36 -0800 (PST)
+ bh=HNF/vS+/jQgJ4zkGiuyQoIln9Dsv44LkWIV1cquGqWI=;
+ b=PkiX7oNHsnInhQvPeHWNGALQ3368jHkvgtftl96J/9tnPSgXC2/MyXF6tkkcNPDmMf
+ hfv6mRN1wCuND8r7oeqeLWtUbUGh/mDTiPoI8kKNckah29mx4K83mpoMHCID5/PkBkZC
+ DUqeKHklGTKCMhkX2sbgkUzSBhOqSaEeq0Ea+Oy1gaaphUJkfx6hA/gSoSqNtgs7cWkN
+ tt+CMSiucnrgf3U0kkR/DK+fpT2Li2IXH+08hfdsPUdEfbRRtk2HBS0Iz+Nu6AfWozOx
+ nJSIEPFxyV679VjnlUajFqfAIK3zKqTimvMUZRarENY0i+u5pZ1jKqxqR23mQ8b9xqZB
+ 3qAw==
+X-Gm-Message-State: AOJu0YzqqIixki9CsS8UseV7QSC9AOZf+4EzqKv4N6ls61jA6MzN4IvO
+ sUeT5hWaI+sx56OVeecJ1sNFLZmjslSxoDKcirvdnIqKfvaFdxm6MqP9ibCjHOrcdB5enoBtmsr
+ vHxY=
+X-Gm-Gg: ASbGncuWJjhK8XHk0shhoDK0Xb7y3fXKZogl7XSxnhBGUund5jizNhS3IdBsZS9umOL
+ IN27WxG4bXc1VTIlm448HhP47NvPH4vfbEAV7s7oBVXNIz6sDm8JR80G4r5HxHYMSFOuhCNmOvp
+ 4uIbK+/5HbYR+eZWlhk2Dxyo3qbLviVVLkgDsijArm2zus3iRMGwITJE6ruWI3pWcVf1VJFyHor
+ nrxh/6C+JIulH+xZ0i0E6ik6csoC715MnpyDs8r3B1sUL3u2Gzn5/gVi2Cngqbgf4aAWvpQgTrS
+ ImdBum3sQuuXm31URZJHxcG5k46KtKsnLwEgnNj2v15/v0fRg2IfjNJgwnxi/7/fFA==
+X-Google-Smtp-Source: AGHT+IE6kyXvTP4xrKmLRL8B1WWfNtVINE4tctutqfaglYWUNHySTdiKH/SLE9mUWOQZB1lmG2yxlw==
+X-Received: by 2002:a5d:64a1:0:b0:385:f00a:a45b with SMTP id
+ ffacd0b85a97d-38c5196995emr13178613f8f.21.1738357680352; 
+ Fri, 31 Jan 2025 13:08:00 -0800 (PST)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-38c5c0ece21sm5529637f8f.20.2025.01.31.13.07.34
+ ffacd0b85a97d-38c5c11b851sm5525128f8f.43.2025.01.31.13.07.59
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Fri, 31 Jan 2025 13:07:35 -0800 (PST)
+ Fri, 31 Jan 2025 13:07:59 -0800 (PST)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Peter Maydell <peter.maydell@linaro.org>,
  Richard Henderson <richard.henderson@linaro.org>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PULL 27/36] hw/sd/omap_mmc: Convert remaining 'struct omap_mmc_s'
- uses to OMAPMMCState
-Date: Fri, 31 Jan 2025 22:05:10 +0100
-Message-ID: <20250131210520.85874-28-philmd@linaro.org>
+Subject: [PULL 32/36] hw/sd/omap_mmc: Remove unused coverswitch qemu_irq
+Date: Fri, 31 Jan 2025 22:05:15 +0100
+Message-ID: <20250131210520.85874-33-philmd@linaro.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20250131210520.85874-1-philmd@linaro.org>
 References: <20250131210520.85874-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::432;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x432.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::42a;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x42a.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -103,119 +102,47 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Peter Maydell <peter.maydell@linaro.org>
 
-Mechanically convert the remaining uses of 'struct omap_mmc_s' to
-'OMAPMMCState'.
+The coverswitch qemu_irq is never connected to anything, and the only thing
+we do with it is set it in omap_mmc_reset(). Remove it.
 
 Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
 Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Message-ID: <20250128104519.3981448-3-peter.maydell@linaro.org>
+Message-ID: <20250128104519.3981448-8-peter.maydell@linaro.org>
+[PMD: Remove unused 'coverswitch' field]
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 ---
- include/hw/arm/omap.h |  2 +-
- hw/sd/omap_mmc.c      | 20 ++++++++++----------
- 2 files changed, 11 insertions(+), 11 deletions(-)
+ hw/sd/omap_mmc.c | 3 ---
+ 1 file changed, 3 deletions(-)
 
-diff --git a/include/hw/arm/omap.h b/include/hw/arm/omap.h
-index 6339c5a581e..7d1a1afc4f8 100644
---- a/include/hw/arm/omap.h
-+++ b/include/hw/arm/omap.h
-@@ -530,7 +530,7 @@ struct omap_lcd_panel_s *omap_lcdc_init(MemoryRegion *sysmem,
- 
- /* omap_mmc.c */
- #define TYPE_OMAP_MMC "omap-mmc"
--OBJECT_DECLARE_SIMPLE_TYPE(omap_mmc_s, OMAP_MMC)
-+OBJECT_DECLARE_SIMPLE_TYPE(OMAPMMCState, OMAP_MMC)
- 
- DeviceState *omap_mmc_init(hwaddr base,
-                            MemoryRegion *sysmem,
 diff --git a/hw/sd/omap_mmc.c b/hw/sd/omap_mmc.c
-index fec2cfd4d66..0f17479ecb8 100644
+index a8b541ca788..18016a2f2e2 100644
 --- a/hw/sd/omap_mmc.c
 +++ b/hw/sd/omap_mmc.c
-@@ -27,7 +27,7 @@
- #include "hw/arm/omap.h"
- #include "hw/sd/sdcard_legacy.h"
- 
--typedef struct omap_mmc_s {
-+typedef struct OMAPMMCState {
-     SysBusDevice parent_obj;
- 
+@@ -35,7 +35,6 @@ typedef struct OMAPMMCState {
      qemu_irq irq;
-@@ -72,12 +72,12 @@ typedef struct omap_mmc_s {
+     qemu_irq dma_tx_gpio;
+     qemu_irq dma_rx_gpio;
+-    qemu_irq coverswitch;
+     MemoryRegion iomem;
+     omap_clk clk;
+     uint16_t last_cmd;
+@@ -70,7 +69,6 @@ typedef struct OMAPMMCState {
+ 
+     int cdet_wakeup;
+     int cdet_enable;
+-    int cdet_state;
      qemu_irq cdet;
  } OMAPMMCState;
  
--static void omap_mmc_interrupts_update(struct omap_mmc_s *s)
-+static void omap_mmc_interrupts_update(OMAPMMCState *s)
- {
-     qemu_set_irq(s->irq, !!(s->status & s->mask));
- }
+@@ -325,7 +323,6 @@ static void omap_mmc_reset(OMAPMMCState *host)
+     host->transfer = 0;
+     host->cdet_wakeup = 0;
+     host->cdet_enable = 0;
+-    qemu_set_irq(host->coverswitch, host->cdet_state);
+     host->clkdiv = 0;
  
--static void omap_mmc_fifolevel_update(struct omap_mmc_s *host)
-+static void omap_mmc_fifolevel_update(OMAPMMCState *host)
- {
-     if (!host->transfer && !host->fifo_len) {
-         host->status &= 0xf3ff;
-@@ -125,7 +125,7 @@ typedef enum {
-     SD_TYPE_ADTC = 3,   /* addressed with data transfer */
- } MMCCmdType;
- 
--static void omap_mmc_command(struct omap_mmc_s *host, int cmd, int dir,
-+static void omap_mmc_command(OMAPMMCState *host, int cmd, int dir,
-                              MMCCmdType type, int busy,
-                              sd_rsp_type_t resptype, int init)
- {
-@@ -234,7 +234,7 @@ static void omap_mmc_command(struct omap_mmc_s *host, int cmd, int dir,
-         host->status |= 0x0001;
- }
- 
--static void omap_mmc_transfer(struct omap_mmc_s *host)
-+static void omap_mmc_transfer(OMAPMMCState *host)
- {
-     uint8_t value;
- 
-@@ -289,19 +289,19 @@ static void omap_mmc_transfer(struct omap_mmc_s *host)
- 
- static void omap_mmc_update(void *opaque)
- {
--    struct omap_mmc_s *s = opaque;
-+    OMAPMMCState *s = opaque;
-     omap_mmc_transfer(s);
-     omap_mmc_fifolevel_update(s);
-     omap_mmc_interrupts_update(s);
- }
- 
--static void omap_mmc_pseudo_reset(struct omap_mmc_s *host)
-+static void omap_mmc_pseudo_reset(OMAPMMCState *host)
- {
-     host->status = 0;
-     host->fifo_len = 0;
- }
- 
--static void omap_mmc_reset(struct omap_mmc_s *host)
-+static void omap_mmc_reset(OMAPMMCState *host)
- {
-     host->last_cmd = 0;
-     memset(host->rsp, 0, sizeof(host->rsp));
-@@ -340,7 +340,7 @@ static void omap_mmc_reset(struct omap_mmc_s *host)
- static uint64_t omap_mmc_read(void *opaque, hwaddr offset, unsigned size)
- {
-     uint16_t i;
--    struct omap_mmc_s *s = opaque;
-+    OMAPMMCState *s = opaque;
- 
-     if (size != 2) {
-         return omap_badwidth_read16(opaque, offset);
-@@ -433,7 +433,7 @@ static void omap_mmc_write(void *opaque, hwaddr offset,
-                            uint64_t value, unsigned size)
- {
-     int i;
--    struct omap_mmc_s *s = opaque;
-+    OMAPMMCState *s = opaque;
- 
-     if (size != 2) {
-         omap_badwidth_write16(opaque, offset, value);
+     omap_mmc_pseudo_reset(host);
 -- 
 2.47.1
 
