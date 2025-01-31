@@ -4,85 +4,58 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 31A6DC0218A
-	for <qemu-devel@archiver.kernel.org>; Fri, 31 Jan 2025 02:03:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3210EC0218A
+	for <qemu-devel@archiver.kernel.org>; Fri, 31 Jan 2025 02:03:59 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tdgN1-0004GW-5N; Thu, 30 Jan 2025 21:02:59 -0500
+	id 1tdgNX-0004NT-05; Thu, 30 Jan 2025 21:03:31 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1tdgMt-0004FN-LA; Thu, 30 Jan 2025 21:02:51 -0500
-Received: from mail-vk1-xa30.google.com ([2607:f8b0:4864:20::a30])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1tdgMr-0005eN-RN; Thu, 30 Jan 2025 21:02:51 -0500
-Received: by mail-vk1-xa30.google.com with SMTP id
- 71dfb90a1353d-5174f9c0d2aso477166e0c.1; 
- Thu, 30 Jan 2025 18:02:49 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1738288968; x=1738893768; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=ELeHiLIcvWFtBOb3UEB1APK3nptoSWpTN2v5XS8N6Kc=;
- b=ivZhFH/Y5BkBQpN6tTljGNfmxsh4HXUFt7HMnw1h4lJW1+dXDfoDQq0YhLn0AmCV0c
- kT7YkpcIIca/OQHpPeup7o7k6MeUWyEHawE8h3sV6pE/IZdBOVtCHkzK0LMZrMzEzcsZ
- A76Hj5aTglc2YxrNqf8Vcv6sdM3b9+AjnWfHaR6PE7+lwsB8lc3ITYcuqTaXPLvcxXg+
- USqeDxddltqtUfHxB9ss5KDN0S7XklMF+3v2iZgWwzfowqGUF0wHLqaXwblQQjA4/dBW
- Js0GGT87NQbRgJ3NT1Y4gRZ2pCy+pHTA/aYSemIdP0RETRVEPfSL8ZN06aq3H463AhDI
- mzFA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1738288968; x=1738893768;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=ELeHiLIcvWFtBOb3UEB1APK3nptoSWpTN2v5XS8N6Kc=;
- b=nyFZrH9Qj2ItGAa76RRDJ/kfhPdFC/jSqB5gaJ47yJvtoBjs66GFMOm9qTDfFLEICZ
- ayN9qMWTQCTFdvevAiPuGpjoQTVewxpSViBKkl9l1aXDuz1US+YJJBlyDsx08cWOIYfp
- DamxFRKKPIRhrETOtxMTmOZAAim1NJMT3Sd4HYFmoUlrDJnwNywugPyotqDqZ5CISMXP
- 0XzHV3zkn55wEvn9IuZXFbYzJGHBcOYG3lE82YXMhn2ZZPAIWdauDkGkzAYEDaGm0bk3
- s5soVFCkT11mgMV/1y+m6twVF5okb3FeY4KGB50xtz7nqaaaHoy+olSSUZiaVjVDNRCV
- /+xQ==
-X-Forwarded-Encrypted: i=1;
- AJvYcCXFO6w7kNQX53o0baxszUrRowYXzJvkSFr4kgoPwJjBId+LYlOkLyjc8yEzksxaS+fq4jw1n3WTB+ja@nongnu.org
-X-Gm-Message-State: AOJu0YzEP9/UxrtV3qneOUoeQdbJK71KwIwmfsieY0CEwqZDfr9GKGRJ
- i9x7h7qajLPdrkaSA0E3nPjIwABNFS4KC0U5N+WmQ7vbKGGesNuphbiIQgdbhgTLHVZv1qbrOiY
- eqB53c8hA/em8zA88sKfTWmtKd8Dbzg==
-X-Gm-Gg: ASbGncsC+BeRw8IequEYtwB7TJM2bi6BYNtI32JWInMjkpr8iarLgUIqIb7385DQUJs
- iW+d41+zShKap2qidDvlNnrQ/EA5D+1eSznOnEihSyuvzSpqo3f+rLlemKYt9POff+PM3BW92I2
- XcKnd9SgCtvSjomyiTPBzuaVWlk5U=
-X-Google-Smtp-Source: AGHT+IE0pjK4efEoR/3hoYuZPYgCcYJbLnzn2JxTtFzJTV63OWehQhbIzUYr68ci9zvocQxAToVzQatiqLSao9VYHFY=
-X-Received: by 2002:a05:6122:4281:b0:518:773b:39f with SMTP id
- 71dfb90a1353d-51e9e3fe69fmr10114175e0c.4.1738288967529; Thu, 30 Jan 2025
- 18:02:47 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <mmorrell@tachyum.com>)
+ id 1tdgNV-0004L1-6D
+ for qemu-devel@nongnu.org; Thu, 30 Jan 2025 21:03:29 -0500
+Received: from mxa.tachyum.com ([66.160.133.173])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <mmorrell@tachyum.com>)
+ id 1tdgNT-0005h6-6Z
+ for qemu-devel@nongnu.org; Thu, 30 Jan 2025 21:03:28 -0500
+Received: from mxa.tachyum.com (localhost.localdomain [127.0.0.1])
+ by mxa.tachyum.com (Proxmox) with ESMTP id 9B9931E76E7
+ for <qemu-devel@nongnu.org>; Thu, 30 Jan 2025 18:03:11 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=tachyum.com; h=
+ cc:content-type:content-type:date:from:from:message-id
+ :mime-version:reply-to:subject:subject:to:to; s=dkim; bh=0t5Jwpy
+ AY4cRlBXX81QUB3goyHNS4ORGA+fldBxHj84=; b=sA8/P4unusi1zbDMe/KE+h1
+ 521uTNCaemQbNY36pIKk5V/igHJHQal4yHVy0o+qzxHut05PnRAcEJbz5fy0u4ch
+ +wIBqcOqiW00De/KqbO1K/TWfOj9XcTGbFTfnuwcucjoFFpsHPnkA3WRcfbT0TOv
+ jotSR4PYyOo6V2xJTC5WeRKtHQ/KvlLpVOiRUndqfYQixe/d2FNU/ZEFLgW5lFTk
+ btsBsu+//+FeP1rLYb2nENAx3jEkV4d+k1Z7G5jxAmeRNGaWb4P0S+p/+2qz0DhE
+ Big+q92DaHtLuMyhHOFoBtyIRAmD/29RCOZNOpEVfvVLITojYQ4t4xciyjqeGAg=
+ =
+From: Michael Morrell <mmorrell@tachyum.com>
+To: "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>
+Subject: x86 denormal flag handling
+Thread-Topic: x86 denormal flag handling
+Thread-Index: AdtzgjdbXE/Z+ZiSQg21Zmjyx/dbHA==
+Date: Fri, 31 Jan 2025 02:03:12 +0000
+Message-ID: <96e999333e9b49fcb60f051a29d41c83@tachyum.com>
+Accept-Language: en-US
+Content-Language: en-US
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+Content-Type: multipart/alternative;
+ boundary="_000_96e999333e9b49fcb60f051a29d41c83tachyumcom_"
 MIME-Version: 1.0
-References: <20250116161007.39710-1-vliaskovitis@suse.com>
-In-Reply-To: <20250116161007.39710-1-vliaskovitis@suse.com>
-From: Alistair Francis <alistair23@gmail.com>
-Date: Fri, 31 Jan 2025 12:02:21 +1000
-X-Gm-Features: AWEUYZmQCdd9iVzwkFnxH5WQxuvT8CR6XFcH9_I1AbVZS1SgIrQr4SuttlgtgEk
-Message-ID: <CAKmqyKOo+XT=rWdcjp6CYnWuw-iv71p_5dELt6dCOGakDBeVbA@mail.gmail.com>
-Subject: Re: [PATCH v3] hw/riscv/virt: Add serial alias in DTB
-To: Vasilis Liaskovitis <vliaskovitis@suse.com>
-Cc: qemu-devel@nongnu.org, qemu-riscv@nongnu.org, palmer@dabbelt.com, 
- alistair.francis@wdc.com, jason.chien@sifive.com, 
- zhiwei_liu@linux.alibaba.com, dbarboza@ventanamicro.com, 
- ajones@ventanamicro.com, bmeng.cn@gmail.com, liwei1518@gmail.com, 
- philmd@linaro.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::a30;
- envelope-from=alistair23@gmail.com; helo=mail-vk1-xa30.google.com
-X-Spam_score_int: -17
-X-Spam_score: -1.8
-X-Spam_bar: -
-X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Received-SPF: pass client-ip=66.160.133.173; envelope-from=mmorrell@tachyum.com;
+ helo=mxa.tachyum.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, HTML_MESSAGE=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -98,51 +71,131 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, Jan 17, 2025 at 2:13=E2=80=AFAM Vasilis Liaskovitis
-<vliaskovitis@suse.com> wrote:
->
-> Add an "aliases" node with a "serial0" entry for the single UART
-> in the riscv virt machine.
->
-> Resolves: https://gitlab.com/qemu-project/qemu/-/issues/2774
-> Signed-off-by: Vasilis Liaskovitis <vliaskovitis@suse.com>
-> Reviewed-by: Andrew Jones <ajones@ventanamicro.com>
+--_000_96e999333e9b49fcb60f051a29d41c83tachyumcom_
+Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: quoted-printable
 
-Thanks!
+I've been following the recent changes to better support denormal handling =
+and I don't think they are doing the right thing for x86.
 
-Applied to riscv-to-apply.next
+I tried a simple program to convert a denormal float value (0x1.0p-127) to =
+a double.  With the default of DAZ being 0 in MXCSR, x86 sets DE, but QEMU =
+doesn't.  This is the opposite behavior of AARCH64 which sets their denorma=
+l input flag when it flushes a denormal input to 0.
 
-Alistair
+Here's what I tried:
 
-> ---
->  hw/riscv/virt.c | 3 +++
->  1 file changed, 3 insertions(+)
+#include <stdio.h>
+#include <immintrin.h>
+
+volatile float f =3D 0x1.0p-127;
+
+int main()
+{
+    double d =3D f;
+    printf("Converting a denormal float to a double %s the DE bit in MXCSR\=
+n",
+           _mm_getcsr() & _MM_EXCEPT_DENORM ? "sets" : "does not set");
+    return 0;
+}
+
+When run on a native machine, it prints:
+
+Converting a denormal float to a double sets the DE bit in MXCSR
+
+But when run using QEMU, it prints:
+
+Converting a denormal float to a double does not set the DE bit in MXCSR
+
+--_000_96e999333e9b49fcb60f051a29d41c83tachyumcom_
+Content-Type: text/html; charset="us-ascii"
+Content-Transfer-Encoding: quoted-printable
+
+<html xmlns:v=3D"urn:schemas-microsoft-com:vml" xmlns:o=3D"urn:schemas-micr=
+osoft-com:office:office" xmlns:w=3D"urn:schemas-microsoft-com:office:word" =
+xmlns:m=3D"http://schemas.microsoft.com/office/2004/12/omml" xmlns=3D"http:=
+//www.w3.org/TR/REC-html40">
+<head>
+<meta http-equiv=3D"Content-Type" content=3D"text/html; charset=3Dus-ascii"=
 >
-> diff --git a/hw/riscv/virt.c b/hw/riscv/virt.c
-> index 2bc5a9dd98..fb1928cebf 100644
-> --- a/hw/riscv/virt.c
-> +++ b/hw/riscv/virt.c
-> @@ -971,6 +971,7 @@ static void create_fdt_uart(RISCVVirtState *s, const =
-MemMapEntry *memmap,
->      }
->
->      qemu_fdt_setprop_string(ms->fdt, "/chosen", "stdout-path", name);
-> +    qemu_fdt_setprop_string(ms->fdt, "/aliases", "serial0", name);
->  }
->
->  static void create_fdt_rtc(RISCVVirtState *s, const MemMapEntry *memmap,
-> @@ -1180,6 +1181,8 @@ static void create_fdt(RISCVVirtState *s, const Mem=
-MapEntry *memmap)
->      qemu_fdt_setprop(ms->fdt, "/chosen", "rng-seed",
->                       rng_seed, sizeof(rng_seed));
->
-> +    qemu_fdt_add_subnode(ms->fdt, "/aliases");
-> +
->      create_fdt_flash(s, memmap);
->      create_fdt_fw_cfg(s, memmap);
->      create_fdt_pmu(s);
-> --
-> 2.46.0
->
->
+<meta name=3D"Generator" content=3D"Microsoft Word 15 (filtered medium)">
+<style><!--
+/* Font Definitions */
+@font-face
+	{font-family:"Cambria Math";
+	panose-1:2 4 5 3 5 4 6 3 2 4;}
+@font-face
+	{font-family:Aptos;
+	panose-1:0 0 0 0 0 0 0 0 0 0;}
+/* Style Definitions */
+p.MsoNormal, li.MsoNormal, div.MsoNormal
+	{margin:0in;
+	font-size:12.0pt;
+	font-family:"Aptos",serif;
+	mso-ligatures:standardcontextual;}
+span.EmailStyle17
+	{mso-style-type:personal-compose;
+	font-family:"Aptos",serif;
+	color:windowtext;}
+.MsoChpDefault
+	{mso-style-type:export-only;}
+@page WordSection1
+	{size:8.5in 11.0in;
+	margin:1.0in 1.0in 1.0in 1.0in;}
+div.WordSection1
+	{page:WordSection1;}
+--></style><!--[if gte mso 9]><xml>
+<o:shapedefaults v:ext=3D"edit" spidmax=3D"1026" />
+</xml><![endif]--><!--[if gte mso 9]><xml>
+<o:shapelayout v:ext=3D"edit">
+<o:idmap v:ext=3D"edit" data=3D"1" />
+</o:shapelayout></xml><![endif]-->
+</head>
+<body lang=3D"EN-US" link=3D"#467886" vlink=3D"#96607D" style=3D"word-wrap:=
+break-word">
+<div class=3D"WordSection1">
+<p class=3D"MsoNormal">I&#8217;ve been following the recent changes to bett=
+er support denormal handling and I don&#8217;t think they are doing the rig=
+ht thing for x86.<o:p></o:p></p>
+<p class=3D"MsoNormal"><o:p>&nbsp;</o:p></p>
+<p class=3D"MsoNormal">I tried a simple program to convert a denormal float=
+ value (0x1.0p-127) to a double.&nbsp; With the default of DAZ being 0 in M=
+XCSR, x86 sets DE, but QEMU doesn&#8217;t.&nbsp; This is the opposite behav=
+ior of AARCH64 which sets their denormal input flag
+ when it flushes a denormal input to 0.<o:p></o:p></p>
+<p class=3D"MsoNormal"><o:p>&nbsp;</o:p></p>
+<p class=3D"MsoNormal">Here&#8217;s what I tried:<o:p></o:p></p>
+<p class=3D"MsoNormal"><o:p>&nbsp;</o:p></p>
+<p class=3D"MsoNormal">#include &lt;stdio.h&gt;<o:p></o:p></p>
+<p class=3D"MsoNormal">#include &lt;immintrin.h&gt;<o:p></o:p></p>
+<p class=3D"MsoNormal"><o:p>&nbsp;</o:p></p>
+<p class=3D"MsoNormal">volatile float f =3D 0x1.0p-127;<o:p></o:p></p>
+<p class=3D"MsoNormal"><o:p>&nbsp;</o:p></p>
+<p class=3D"MsoNormal">int main()<o:p></o:p></p>
+<p class=3D"MsoNormal">{<o:p></o:p></p>
+<p class=3D"MsoNormal">&nbsp;&nbsp;&nbsp; double d =3D f;<o:p></o:p></p>
+<p class=3D"MsoNormal">&nbsp;&nbsp;&nbsp; printf(&quot;Converting a denorma=
+l float to a double %s the DE bit in MXCSR\n&quot;,<o:p></o:p></p>
+<p class=3D"MsoNormal">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbs=
+p;&nbsp; _mm_getcsr() &amp; _MM_EXCEPT_DENORM ? &quot;sets&quot; : &quot;do=
+es not set&quot;);<o:p></o:p></p>
+<p class=3D"MsoNormal">&nbsp;&nbsp;&nbsp; return 0;<o:p></o:p></p>
+<p class=3D"MsoNormal">}<o:p></o:p></p>
+<p class=3D"MsoNormal"><o:p>&nbsp;</o:p></p>
+<p class=3D"MsoNormal">When run on a native machine, it prints:<o:p></o:p><=
+/p>
+<p class=3D"MsoNormal"><o:p>&nbsp;</o:p></p>
+<p class=3D"MsoNormal">Converting a denormal float to a double sets the DE =
+bit in MXCSR<o:p></o:p></p>
+<p class=3D"MsoNormal"><o:p>&nbsp;</o:p></p>
+<p class=3D"MsoNormal">But when run using QEMU, it prints:<o:p></o:p></p>
+<p class=3D"MsoNormal"><o:p>&nbsp;</o:p></p>
+<p class=3D"MsoNormal">Converting a denormal float to a double does not set=
+ the DE bit in MXCSR<o:p></o:p></p>
+</div>
+</body>
+</html>
+
+--_000_96e999333e9b49fcb60f051a29d41c83tachyumcom_--
+
 
