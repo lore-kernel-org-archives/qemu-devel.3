@@ -4,112 +4,77 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C144CC0218F
-	for <qemu-devel@archiver.kernel.org>; Fri, 31 Jan 2025 13:24:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7076AC0218F
+	for <qemu-devel@archiver.kernel.org>; Fri, 31 Jan 2025 13:33:01 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tdr0U-0000b9-VA; Fri, 31 Jan 2025 08:24:26 -0500
+	id 1tdr88-0002gj-C9; Fri, 31 Jan 2025 08:32:20 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1tdr0S-0000af-EN
- for qemu-devel@nongnu.org; Fri, 31 Jan 2025 08:24:24 -0500
-Received: from mail-ej1-x62f.google.com ([2a00:1450:4864:20::62f])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1tdr0Q-0005m0-Oj
- for qemu-devel@nongnu.org; Fri, 31 Jan 2025 08:24:24 -0500
-Received: by mail-ej1-x62f.google.com with SMTP id
- a640c23a62f3a-ab2e308a99bso378240766b.1
- for <qemu-devel@nongnu.org>; Fri, 31 Jan 2025 05:24:20 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1738329859; x=1738934659; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:user-agent
- :subject:to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=Y3M9F1/5vkIOrm1fcMjucdaqUtBTjno00tSzqG4xsEE=;
- b=hlJgjHABV6yEFfWvzqVRG/N3ZCU51hO8fpzZve8/yY5yBuBOZXdEUk7ObNJ8+CHZQ8
- 0N5HSOB+T/qTRtqk4kvYEXapqUiELLCSc91+0KU2B0/lpWmEui4gr5abV9BUFlxX325f
- yWymyBTgrHAJSc9NdsD0SqYoFDCNtq+UWrcckJbFoQveJnUZxQo5j3E8OolkBAFzDFhs
- 0T/wtYMWSaaka3QC9Ve9yqf9vRzeIU1ycfAqVDl1GCcd4h2AQauaNK62aEfxESlr1k7K
- m3lF2wEEBvwNp4Z6KAIk5zKodLr98lKbDgfh8iQfVd7xJ9dXFy/EI4iPiuJW0wk8RBjJ
- mJvg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1738329859; x=1738934659;
- h=content-transfer-encoding:mime-version:message-id:date:user-agent
- :subject:to:from:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=Y3M9F1/5vkIOrm1fcMjucdaqUtBTjno00tSzqG4xsEE=;
- b=e/j8XdKdrECDxpbmEuHN4CAQwan7ehAcJyJJZVtqinv6f3KOjcAouFuJqtW8IiWhc3
- kIqqPHtGRnxLn/pPEBdVQYi2hagIWd3f5uEmgxlQfsIj7M0WiOae66RX9AVYW9M94eK/
- jCpskrqaJMpOhvNC3E1K4IEW0m28ZRkrvRdfsQqHDCrv72OtPlLX5cesNKFnpc2/X9yF
- PdZhV0IfqcdyT5z09Ue9Y/o/sYBGpjSCLBKHUsFh4Moa9MgrUBVKiUR+IVk6P27RFFy3
- pee5k+HEqnVAmyV1/CR5jBRf0SxmO2Y7h5uFf0pkhBn3kAjT7Xjqc/Jj6qIgTeTg21IM
- ShDg==
-X-Forwarded-Encrypted: i=1;
- AJvYcCVxMq5CHsCoXKVQA/iYGiaBGZ34MqZB9qjRw/xzchsgrr4mtTMZeR4S3nsTmVXaduiGbelDiy0HLeIb@nongnu.org
-X-Gm-Message-State: AOJu0YwW7t/iwMZ5YqEck2Ce290NiBilv2JaIFPwDglC1oPJByCHE5fq
- jDTFK9nN/84dAkLpCkjj9ZnplTLD71Qds+OfUgavTAfPs51HbtriMh9mchKegFk=
-X-Gm-Gg: ASbGncs6EvsdUP0dMEycmOvsWzaXBm4yiqeu+SIIO0JO9zQ4pPo31hPczvaGOsua6+l
- G2UUSskQe0t4Y4UMc3a+BA9jSS8VF2QCYntseofzVTOY0KElJfuj/v/PLJCy5lnBXEs312T/F9L
- fOu+bbm4Zchu4XJMlko/G7UyGFYapYq7FNGzehLQPqlsNhEl2gv8bNaHkSLv/GfizDuTKj2N5SS
- lKKflifB6CftqOBNdHuHkJy/rZ3M+5W8ihnFlBv0HsmxS/gw61N77fdY6neepeBwy6VkxZXbVXP
- K74toD+X3aT5Lmsmkw==
-X-Google-Smtp-Source: AGHT+IHFXV0qtnAAIyPlLoD5xOWMKXpch8gNt9QcOZ+uu2nNHJHlIiM5u83idL8cXKFm2Sd/jGQSXw==
-X-Received: by 2002:a17:906:650:b0:ab6:f88f:bf1f with SMTP id
- a640c23a62f3a-ab6f88fc26fmr348739766b.27.1738329859266; 
- Fri, 31 Jan 2025 05:24:19 -0800 (PST)
-Received: from draig.lan ([185.126.160.109]) by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-ab6e49ffd63sm297646566b.94.2025.01.31.05.24.18
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 31 Jan 2025 05:24:18 -0800 (PST)
-Received: from draig (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id 89AFE5F78C;
- Fri, 31 Jan 2025 13:24:17 +0000 (GMT)
-From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
-To: Alessandro Di Federico <ale@rev.ng>, Alistair Francis
- <alistair.francis@wdc.com>, Anton Johansson <anjo@rev.ng>, Markus
- Armbruster <armbru@redhat.com>, Brian Cain <bcain@quicinc.com>, "Daniel P.
- Berrange" <berrange@redhat.com>, Chao Peng <chao.p.peng@linux.intel.com>,
- cjia@nvidia.com, =?utf-8?Q?C=C3=A9dric?= Le Goater <clg@kaod.org>,
- cw@f00f.org,
- dhedde@kalrayinc.com, Eric Blake <eblake@redhat.com>, eblot@rivosinc.com,
- "Edgar E. Iglesias" <edgar.iglesias@gmail.com>, Eduardo Habkost
- <eduardo@habkost.net>, Elena Ufimtseva <elena.ufimtseva@oracle.com>, Auger
- Eric <eric.auger@redhat.com>, felipe@nutanix.com, iggy@theiggy.com, Warner
- Losh <imp@bsdimp.com>, Jan Kiszka <jan.kiszka@web.de>, Jason Gunthorpe
- <jgg@nvidia.com>, jidong.xiao@gmail.com, Jim Shu <jim.shu@sifive.com>,
- Joao Martins <joao.m.martins@oracle.com>, Konrad Rzeszutek Wilk
- <konrad.wilk@oracle.com>, Luc Michel <luc@lmichel.fr>, Manos Pitsidianakis
- <manos.pitsidianakis@linaro.org>, Max Chou <max.chou@sifive.com>, Mark
- Burton <mburton@qti.qualcomm.com>, mdean@redhat.com,
- mimu@linux.vnet.ibm.com, "Ho, Nelson" <nelson.ho@windriver.com>, Paul
- Walmsley <paul.walmsley@sifive.com>, Paolo Bonzini <pbonzini@redhat.com>,
- Peter Maydell <peter.maydell@linaro.org>, Phil =?utf-8?Q?Mathieu-Daud?=
- =?utf-8?Q?=C3=A9?=
- <philmd@linaro.org>, QEMU Developers <qemu-devel@nongnu.org>, Roberto
- Campesato <rbc@meta.com>, Richard Henderson
- <richard.henderson@linaro.org>, Shameerali Kolothum Thodi
- <shameerali.kolothum.thodi@huawei.com>, Bernhard Beschow
- <shentey@gmail.com>, Stefan Hajnoczi <stefanha@gmail.com>, Thomas Huth
- <thuth@redhat.com>, Wei Wang <wei.w.wang@intel.com>, z.huo@139.com, LIU
- Zhiwei <zhiwei_liu@linux.alibaba.com>, zwu.kernel@gmail.com
-Subject: KVM/QEMU community call 4/2/2025 agenda items
-User-Agent: mu4e 1.12.8; emacs 29.4
-Date: Fri, 31 Jan 2025 13:24:17 +0000
-Message-ID: <87r04j15ha.fsf@draig.linaro.org>
+ (Exim 4.90_1) (envelope-from <kraxel@redhat.com>) id 1tdr7v-0002fq-8r
+ for qemu-devel@nongnu.org; Fri, 31 Jan 2025 08:32:17 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <kraxel@redhat.com>) id 1tdr7t-0006zM-NM
+ for qemu-devel@nongnu.org; Fri, 31 Jan 2025 08:32:06 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1738330322;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=VxldpuGbtOAylxynDZXG+yxBsTR164Rf3IvINXRAy6Y=;
+ b=Ka5b5EIHKuGdAqbuohz/7EcLVMTNsM7FGpZHLxo1/go4iPogj+CKMkWu+bB8rtrDAXrFwl
+ NJfNt7T14dXxBW1Umc/dQETvryktYKuqlQ+uJ1DQl1PKKyxuwPte9kEDD6UeH/y7MdQDag
+ +utvB3qZMnjp/s0uuX0pASD3xwhjJ04=
+Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-64-FTXVPYyFNraW-wYJFuTQjw-1; Fri,
+ 31 Jan 2025 08:32:00 -0500
+X-MC-Unique: FTXVPYyFNraW-wYJFuTQjw-1
+X-Mimecast-MFC-AGG-ID: FTXVPYyFNraW-wYJFuTQjw
+Received: from mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.40])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id E2AB31956083
+ for <qemu-devel@nongnu.org>; Fri, 31 Jan 2025 13:31:59 +0000 (UTC)
+Received: from dobby.home.kraxel.org (unknown [10.39.193.77])
+ by mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 223FA19560AA; Fri, 31 Jan 2025 13:31:59 +0000 (UTC)
+Received: by dobby.home.kraxel.org (Postfix, from userid 1000)
+ id 17D712EE2E9; Fri, 31 Jan 2025 14:23:58 +0100 (CET)
+Date: Fri, 31 Jan 2025 14:23:58 +0100
+From: Gerd Hoffmann <kraxel@redhat.com>
+To: =?utf-8?Q?C=C3=A9dric?= Le Goater <clg@redhat.com>
+Cc: Alex Williamson <alex.williamson@redhat.com>, qemu-devel@nongnu.org
+Subject: Re: [PATCH v2 8/9] vfio: Check compatibility of CPU and IOMMU
+ address space width
+Message-ID: <24w7fzx5rf2zdnowtjmuvwuirydryc366xumjf3isgzrhei2ty@ymyjyzdbggr2>
+References: <20250130134346.1754143-1-clg@redhat.com>
+ <20250130134346.1754143-9-clg@redhat.com>
+ <20250130115800.60b7cbe6.alex.williamson@redhat.com>
+ <9cfaf81e-d8cc-4ec0-9c56-956b716891e7@redhat.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::62f;
- envelope-from=alex.bennee@linaro.org; helo=mail-ej1-x62f.google.com
-X-Spam_score_int: 4
-X-Spam_score: 0.4
-X-Spam_bar: /
-X-Spam_report: (0.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1, DKIM_VALID=-0.1,
- DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_NONE=-0.0001,
- SORTED_RECIPS=2.499, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <9cfaf81e-d8cc-4ec0-9c56-956b716891e7@redhat.com>
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.40
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=kraxel@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -33
+X-Spam_score: -3.4
+X-Spam_bar: ---
+X-Spam_report: (-3.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.3,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -125,18 +90,47 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+On Fri, Jan 31, 2025 at 01:42:31PM +0100, Cédric Le Goater wrote:
+> + Gerd for insights regarding vIOMMU support in edk2.
+> 
+> > > +static bool vfio_device_check_address_space(VFIODevice *vbasedev, Error **errp)
+> > > +{
+> > > +    uint32_t cpu_aw_bits = cpu_get_phys_bits(first_cpu);
+> > > +    uint32_t iommu_aw_bits = vfio_device_get_aw_bits(vbasedev);
+> > > +
+> > > +    if (cpu_aw_bits && cpu_aw_bits > iommu_aw_bits) {
+> > 
+> > Should we be testing the 64-bit MMIO window and maximum RAM GPA rather
+> > than the vCPU physical address width?
 
-Hi,
+Placing the 64-bit  mmio window is done by the guest firmware,
+so this isn't something qemu can check before boot.
 
-The KVM/QEMU community call is at:
+> > However, we've decided to do exactly that for the 64-bit MMIO window.
+> > It's not that the vCPU width being greater than the IOMMU width is a
+> > fundamental problem, it's that we've chosen a 64-bit MMIO policy that
+> > makes this become a problem and QEMU only has a convenient mechanism to
+> > check the host IOMMU width when a vfio device is present.  Arguably,
+> > when a vIOMMU is present guest firmware should be enlightened to
+> > understand the address width of that vIOMMU when placing the 64-bit
+> > MMIO window.  I'd say the failure to do so is a current firmware bug.
 
-https://meet.jit.si/kvmcallmeeting
-@
-04/02/2025 14:00 UTC
+edk2 has no iommu driver ...
 
-Are there any agenda items for the sync-up?
+Is there some simple way to figure what the iommu width is (inside the
+guest)?
 
---=20
-Alex Benn=C3=A9e
-Virtualisation Tech Lead @ Linaro
+Note that there is a 'guest-phys-bits' property for x86 CPUs, which is a
+hint for the guest what the usable address width is.  It was added
+because there are cases where the guest simply can't figure that it is
+not possible to use the full physical address space of the cpu.  There
+are some non-obvious limitations around 5-level paging.  Intel has some
+CPUs with phys-bits > 48 but only 4-level EPT for example.
+
+So one option to handle this is to make sure guest-phys-bits is not
+larger than the iommu width.
+
+take care,
+  Gerd
+
 
