@@ -4,80 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CC8ADC0218F
-	for <qemu-devel@archiver.kernel.org>; Fri, 31 Jan 2025 21:08:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 293F8C02194
+	for <qemu-devel@archiver.kernel.org>; Fri, 31 Jan 2025 21:08:19 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tdyEY-0002Lk-KG; Fri, 31 Jan 2025 16:07:26 -0500
+	id 1tdyDq-0007b0-Is; Fri, 31 Jan 2025 16:06:42 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tdyEX-000299-5N
- for qemu-devel@nongnu.org; Fri, 31 Jan 2025 16:07:25 -0500
-Received: from mail-wr1-x431.google.com ([2a00:1450:4864:20::431])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tdyDo-0007OB-AK
+ for qemu-devel@nongnu.org; Fri, 31 Jan 2025 16:06:40 -0500
+Received: from mail-wm1-x330.google.com ([2a00:1450:4864:20::330])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tdyEV-0007xS-3Y
- for qemu-devel@nongnu.org; Fri, 31 Jan 2025 16:07:24 -0500
-Received: by mail-wr1-x431.google.com with SMTP id
- ffacd0b85a97d-385eed29d17so1247775f8f.0
- for <qemu-devel@nongnu.org>; Fri, 31 Jan 2025 13:07:22 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tdyDm-0007sU-Ln
+ for qemu-devel@nongnu.org; Fri, 31 Jan 2025 16:06:40 -0500
+Received: by mail-wm1-x330.google.com with SMTP id
+ 5b1f17b1804b1-43624b2d453so29122625e9.2
+ for <qemu-devel@nongnu.org>; Fri, 31 Jan 2025 13:06:38 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1738357641; x=1738962441; darn=nongnu.org;
+ d=linaro.org; s=google; t=1738357596; x=1738962396; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=dinpAx8ITAzxNXFcxO3+N8OMVR+J/iTRHlGIXFvtMes=;
- b=dgGmBDHF4Cv2hMkBmSx6xQ07545ZbUHSJMJM+uJOcq7GW5A8QIqenBi8UqLAM0ca14
- yiBbFa/27jJQUP3vy1wWhy+ASwq0V4pZs5cwVgmQhcel3jMjRf/3wgQ4ahP2QT+N8WQF
- MYyjyTtKAFE7SjyJHW13dZ/u32vOa4lS7/zwnyRgwIy2vN5As3wL6qg3F4fgGUm2+NEf
- Dc8qGL2YZJy2cruQt6pCBza3Ghy8d9BiI0/Uo1h2v8ZAHsY8t/CQXY7+TYG3uNNS99YI
- gaXscgwGwzeEiZUPjzP3WHQY15wkJOUJFR1M5bVV6jl5WhWN02VZK/ibD6ez8Q30zEu7
- BcWA==
+ bh=rqI9LRvktHJX4HtGOA/1PZYCP3HIyYy2w16C7Qz7++g=;
+ b=xTX9GH+SuP4fZoAVIFyG9oywBY1rgpNQZd6hhbrTHZzx0oML5+trmEJk3o3jwR9M0n
+ 4atxJfYz6UC1dRD1zb1c1cHp9iXD9rvQ9sevYkAj45Q3HKbR0Kc3RTw42K8VDNDTXHxd
+ nM3BBz8PvD6oAGdOgTo9oGOkafWEAq65RzhDmQbH/a0sGBj+aWvoORsaPFyd6mwBjmw2
+ 6EhTHaghrshloyFtjpzXb+ag4FK62eD404ruNDgXNhTyhBUBHSc+SJqv2q3hYqJi9Esz
+ GDJg0CfOfIBCUvYB0hOVtgawKlpoZco8zoEDH/2IS5LFV29LZUR/D7m8lC84QNn1eGoS
+ pk6g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1738357641; x=1738962441;
+ d=1e100.net; s=20230601; t=1738357596; x=1738962396;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=dinpAx8ITAzxNXFcxO3+N8OMVR+J/iTRHlGIXFvtMes=;
- b=WbzhNQ+dGx/p2Wzfom8+OmPbffpXYYyzrn5SN3ztO322E2R7eCUqSNHYvzvNv8rolW
- 2P7MNVw+U0THNWxnZLn+odTmGps77TCw2Dsmx+UEMkpDL9ry2STSywSWJmf/+uJi1Bqs
- uT9K6H0QVKFCsa8GG6nD7Y4jtFDB1Q2xZv3/Uu/ucG1in51qQ2mCxHfTRmeSwoQ0qc5j
- x6clYCTHqMT+yXvxOB48foiwZxDSXsqoRijORCJMFedxO3/DeF6cn+I1BQLp/YiC4OCa
- zXL+B7Lm3Jww5y9JGA2UF+eMxXXwwRyLx4JQM6Q2f5VGtuHRsFvr5aBoyHEoZUpjyjIz
- UfyA==
-X-Gm-Message-State: AOJu0Yxkj6DO/xuq7hh5zW5xD9LXFmqmz9e3bB1OLrcH5Lq8WysybA8O
- mna15R42gxODk3793xCLr65M2g3SuVr11XQfHxTWO6/DXLEd4PGf+IIgGO2WGCKKHpc+PJ5Vqqg
- Fte4=
-X-Gm-Gg: ASbGncunvWrmGLlUqMstkPXlfogOw5Qg2syNXZ6FHLzShOheXPhI5OyjkSJ/t4Z5U2v
- PZ+fs+8r74+u++FrkR5iJq7NFEEBtj1/4JaMr9t89biDCydYALh2P+v96pp71IlX1iKCIBbukMk
- uIWZghhN70Cc3B9DdkE7s+qn7KYQD0fjsNE1S8zwawUdz0cvJtBhk9EVDIWISMRZ6rQxWKmiG3D
- KOAOBGS8AtK1NNhABYj+mdw0Cx7OsxifktIjCewScfK8Z3fq+aBFqQwtaTfhwaBbGM9XOXPjlNh
- 10Hvg1cQMPPT/8vl1bMGMENaJOkkbVarlv43qSJkR9oQwfvWhdv+J94MPiVxsmWNNw==
-X-Google-Smtp-Source: AGHT+IG/zQ17C2m+V7S4U3cCNp4ZyqsNKSBFaY/Ki+zGfmywGPnVisvu0SJjVeWrAd/wryanmg9+Sg==
-X-Received: by 2002:a05:6000:e06:b0:385:faec:d94d with SMTP id
- ffacd0b85a97d-38c520b69d1mr8822640f8f.51.1738357641297; 
- Fri, 31 Jan 2025 13:07:21 -0800 (PST)
+ bh=rqI9LRvktHJX4HtGOA/1PZYCP3HIyYy2w16C7Qz7++g=;
+ b=q8gbxOsLSfkjKDfhrPYNHNMUG8qy+soY7AGQrDj2B58xLFmVfh1ZP4/u0gtOJTD36i
+ JnYobXU/R3oNkmEDv5Gizf+rvbJogfqppsHJ4Chbnd7oScqNGLBFwwmgHOsC2WhHs4qH
+ YuNOEFPZN7UIlkmz98M17OLBoX24Acht7Td4bVJXxnfWWu/V2IUCSFUyRtqUQ+cOtMLy
+ 5W7Hb2hBqjp7Vzs/a9bA3/90wGrh1/Pse3lYLmxWvLlABHC1y1htA/spVOOFSPKIDeMt
+ Cx/YYAZNuFMp0pYJq/ClOFWyVjGjf7ZqOlVZ3u6yMKvJR8Y/9E7YONtpcNjBCBBdO5oy
+ k4xQ==
+X-Gm-Message-State: AOJu0YwPfWC5BjNFSD8uHUN7OTsu9tinYoustBcIcGE8l9SVrsmTcnGO
+ t1/IOI0R2IaX82LqH+lG/6+0lp6YpsXAgGaAcQByJy0GteJF5fOv3SWJr3ECmBVs7lVkF7GoEfx
+ n8t8=
+X-Gm-Gg: ASbGnctxmaDDgT7yGjiLRiLpfZyQ61EjLdzrZgrEPGx8k4PWGgbkZU7TIUunHSiPbsd
+ YvBo+FBFuJjdUak4g909mSeXX/RfHLqtbvJohKSCL4PMRU4ocstvechuSsttByVTpcH7yMdXz0m
+ SaIpu8b6E5zMoPzfZ1FN3kAYF6aewe/WxrTQtKk+mhp/03GAdiaNIrxdqZv+PrODZXssIsH8YYk
+ MARg7EnSOR6QSsNiM3SyvI2/hrHLRAh/zS3PmU5BG9wR56UW5xlUl7ijQnLFQObhxY+32ZytC+Y
+ 2/4wmvvj0KqaAn4Y1+Uh9Y7eFxWrIH3PdWMIMs3SlQyXeblnWtA0/hEmF8fO8/hd2g==
+X-Google-Smtp-Source: AGHT+IE2UO3ZMofqihRMOa2Uoaqkcz7qTzdy+D6/6EBnsZqqnhVkX9oEh2+dPVQxFb8rkSShoEZ2Tg==
+X-Received: by 2002:a05:600c:1e02:b0:434:a802:e9a6 with SMTP id
+ 5b1f17b1804b1-438dc3c22acmr146724755e9.7.1738357596422; 
+ Fri, 31 Jan 2025 13:06:36 -0800 (PST)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-438dcc6df1esm102743845e9.27.2025.01.31.13.07.20
+ 5b1f17b1804b1-438dcc2e239sm100944485e9.18.2025.01.31.13.06.34
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Fri, 31 Jan 2025 13:07:20 -0800 (PST)
+ Fri, 31 Jan 2025 13:06:35 -0800 (PST)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  Richard Henderson <richard.henderson@linaro.org>
-Subject: [PULL 24/36] hw/loader: Pass ELFDATA endian order argument to
- load_elf_as()
-Date: Fri, 31 Jan 2025 22:05:07 +0100
-Message-ID: <20250131210520.85874-25-philmd@linaro.org>
+Subject: [PULL 15/36] hw/ipack: Remove legacy qemu_allocate_irqs() use
+Date: Fri, 31 Jan 2025 22:04:58 +0100
+Message-ID: <20250131210520.85874-16-philmd@linaro.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20250131210520.85874-1-philmd@linaro.org>
 References: <20250131210520.85874-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::431;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x431.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::330;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x330.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -100,178 +99,129 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Rather than passing a boolean 'is_big_endian' argument,
-directly pass the ELFDATA, which can be unspecified using
-the ELFDATANONE value.
+No need to dynamically allocate IRQ when we know before hands
+how many we'll use. Declare the 2 of them in IPackDevice state
+and initialize them in the DeviceRealize handler.
 
-Update the call sites:
-  0 -> ELFDATA2LSB
-  1 -> ELFDATA2MSB
-
-Note, this allow removing the target_words_bigendian() call
-in the GENERIC_LOADER device, where we pass ELFDATANONE.
-
-Suggested-by: Richard Henderson <richard.henderson@linaro.org>
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-Message-Id: <20250127113824.50177-6-philmd@linaro.org>
+Message-Id: <20250121155526.29982-4-philmd@linaro.org>
 ---
- include/hw/loader.h      |  2 +-
- hw/arm/armv7m.c          |  2 +-
- hw/arm/boot.c            | 16 ++++++++--------
- hw/avr/boot.c            |  2 +-
- hw/core/generic-loader.c |  6 +-----
- hw/core/loader.c         |  8 ++++----
- 6 files changed, 16 insertions(+), 20 deletions(-)
+ include/hw/ipack/ipack.h | 7 ++-----
+ hw/char/ipoctal232.c     | 4 ++--
+ hw/ipack/ipack.c         | 5 +----
+ hw/ipack/tpci200.c       | 6 +++---
+ 4 files changed, 8 insertions(+), 14 deletions(-)
 
-diff --git a/include/hw/loader.h b/include/hw/loader.h
-index 8202c376043..84737c05b8d 100644
---- a/include/hw/loader.h
-+++ b/include/hw/loader.h
-@@ -162,7 +162,7 @@ ssize_t load_elf_as(const char *filename,
-                     uint64_t (*elf_note_fn)(void *, void *, bool),
-                     uint64_t (*translate_fn)(void *, uint64_t),
-                     void *translate_opaque, uint64_t *pentry, uint64_t *lowaddr,
--                    uint64_t *highaddr, uint32_t *pflags, int big_endian,
-+                    uint64_t *highaddr, uint32_t *pflags, int elf_data_order,
-                     int elf_machine, int clear_lsb, int data_swab,
-                     AddressSpace *as);
+diff --git a/include/hw/ipack/ipack.h b/include/hw/ipack/ipack.h
+index cbcdda509d3..00f397fd020 100644
+--- a/include/hw/ipack/ipack.h
++++ b/include/hw/ipack/ipack.h
+@@ -12,6 +12,7 @@
+ #define QEMU_IPACK_H
  
-diff --git a/hw/arm/armv7m.c b/hw/arm/armv7m.c
-index a67a890a33e..98a69846119 100644
---- a/hw/arm/armv7m.c
-+++ b/hw/arm/armv7m.c
-@@ -608,7 +608,7 @@ void armv7m_load_kernel(ARMCPU *cpu, const char *kernel_filename,
-     if (kernel_filename) {
-         image_size = load_elf_as(kernel_filename, NULL, NULL, NULL,
-                                  &entry, NULL, NULL,
--                                 NULL, 0, EM_ARM, 1, 0, as);
-+                                 NULL, ELFDATA2LSB, EM_ARM, 1, 0, as);
-         if (image_size < 0) {
-             image_size = load_image_targphys_as(kernel_filename, mem_base,
-                                                 mem_size, as);
-diff --git a/hw/arm/boot.c b/hw/arm/boot.c
-index b44bea8a821..cbc24356fc1 100644
---- a/hw/arm/boot.c
-+++ b/hw/arm/boot.c
-@@ -798,7 +798,7 @@ static ssize_t arm_load_elf(struct arm_boot_info *info, uint64_t *pentry,
-         Elf64_Ehdr h64;
-     } elf_header;
-     int data_swab = 0;
--    bool big_endian;
-+    int elf_data_order;
-     ssize_t ret;
-     Error *err = NULL;
+ #include "hw/qdev-core.h"
++#include "hw/irq.h"
+ #include "qom/object.h"
  
-@@ -814,12 +814,12 @@ static ssize_t arm_load_elf(struct arm_boot_info *info, uint64_t *pentry,
-     }
  
-     if (elf_is64) {
--        big_endian = elf_header.h64.e_ident[EI_DATA] == ELFDATA2MSB;
--        info->endianness = big_endian ? ARM_ENDIANNESS_BE8
--                                      : ARM_ENDIANNESS_LE;
-+        elf_data_order = elf_header.h64.e_ident[EI_DATA];
-+        info->endianness = elf_data_order == ELFDATA2MSB ? ARM_ENDIANNESS_BE8
-+                                                         : ARM_ENDIANNESS_LE;
+@@ -19,10 +20,8 @@
+ OBJECT_DECLARE_SIMPLE_TYPE(IPackBus, IPACK_BUS)
+ 
+ struct IPackBus {
+-    /*< private >*/
+     BusState parent_obj;
+ 
+-    /* All fields are private */
+     uint8_t n_slots;
+     uint8_t free_slot;
+     qemu_irq_handler set_irq;
+@@ -58,13 +57,11 @@ struct IPackDeviceClass {
+ };
+ 
+ struct IPackDevice {
+-    /*< private >*/
+     DeviceState parent_obj;
+-    /*< public >*/
+ 
+     int32_t slot;
+     /* IRQ objects for the IndustryPack INT0# and INT1# */
+-    qemu_irq *irq;
++    IRQState irq[2];
+ };
+ 
+ extern const VMStateDescription vmstate_ipack_device;
+diff --git a/hw/char/ipoctal232.c b/hw/char/ipoctal232.c
+index d1e5f6dad2e..a2879977fb3 100644
+--- a/hw/char/ipoctal232.c
++++ b/hw/char/ipoctal232.c
+@@ -184,9 +184,9 @@ static void update_irq(IPOctalState *dev, unsigned block)
+     unsigned intno = block / 2;
+ 
+     if ((blk0->isr & blk0->imr) || (blk1->isr & blk1->imr)) {
+-        qemu_irq_raise(idev->irq[intno]);
++        qemu_irq_raise(&idev->irq[intno]);
      } else {
--        big_endian = elf_header.h32.e_ident[EI_DATA] == ELFDATA2MSB;
--        if (big_endian) {
-+        elf_data_order = elf_header.h32.e_ident[EI_DATA];
-+        if (elf_data_order == ELFDATA2MSB) {
-             if (bswap32(elf_header.h32.e_flags) & EF_ARM_BE8) {
-                 info->endianness = ARM_ENDIANNESS_BE8;
-             } else {
-@@ -839,8 +839,8 @@ static ssize_t arm_load_elf(struct arm_boot_info *info, uint64_t *pentry,
+-        qemu_irq_lower(idev->irq[intno]);
++        qemu_irq_lower(&idev->irq[intno]);
      }
+ }
  
-     ret = load_elf_as(info->kernel_filename, NULL, NULL, NULL,
--                      pentry, lowaddr, highaddr, NULL, big_endian, elf_machine,
--                      1, data_swab, as);
-+                      pentry, lowaddr, highaddr, NULL, elf_data_order,
-+                      elf_machine, 1, data_swab, as);
-     if (ret <= 0) {
-         /* The header loaded but the image didn't */
-         error_report("Couldn't load elf '%s': %s",
-diff --git a/hw/avr/boot.c b/hw/avr/boot.c
-index 6a91dcd12d0..e5a29c7218e 100644
---- a/hw/avr/boot.c
-+++ b/hw/avr/boot.c
-@@ -73,7 +73,7 @@ bool avr_load_firmware(AVRCPU *cpu, MachineState *ms,
+diff --git a/hw/ipack/ipack.c b/hw/ipack/ipack.c
+index ed75f791832..b6defae6025 100644
+--- a/hw/ipack/ipack.c
++++ b/hw/ipack/ipack.c
+@@ -55,22 +55,19 @@ static void ipack_device_realize(DeviceState *dev, Error **errp)
+     }
+     bus->free_slot = idev->slot + 1;
  
-     bytes_loaded = load_elf_as(filename, NULL, NULL, NULL,
-                                &entry, NULL, NULL,
--                               &e_flags, 0, EM_AVR, 0, 0, NULL);
-+                               &e_flags, ELFDATA2LSB, EM_AVR, 0, 0, NULL);
-     if (bytes_loaded >= 0) {
-         /* If ELF file is provided, determine CPU type reading ELF e_flags. */
-         const char *elf_cpu = avr_elf_e_flags_to_cpu_type(e_flags);
-diff --git a/hw/core/generic-loader.c b/hw/core/generic-loader.c
-index fb354693aff..d9f5c2e8325 100644
---- a/hw/core/generic-loader.c
-+++ b/hw/core/generic-loader.c
-@@ -31,7 +31,6 @@
-  */
+-    idev->irq = qemu_allocate_irqs(bus->set_irq, idev, 2);
++    qemu_init_irqs(idev->irq, ARRAY_SIZE(idev->irq), bus->set_irq, idev);
  
- #include "qemu/osdep.h"
--#include "exec/tswap.h"
- #include "system/dma.h"
- #include "system/reset.h"
- #include "hw/boards.h"
-@@ -66,7 +65,6 @@ static void generic_loader_realize(DeviceState *dev, Error **errp)
+     k->realize(dev, errp);
+ }
+ 
+ static void ipack_device_unrealize(DeviceState *dev)
  {
-     GenericLoaderState *s = GENERIC_LOADER(dev);
-     hwaddr entry;
--    int big_endian;
-     ssize_t size = 0;
+-    IPackDevice *idev = IPACK_DEVICE(dev);
+     IPackDeviceClass *k = IPACK_DEVICE_GET_CLASS(dev);
  
-     s->set_pc = false;
-@@ -134,14 +132,12 @@ static void generic_loader_realize(DeviceState *dev, Error **errp)
-         s->cpu = first_cpu;
+     if (k->unrealize) {
+         k->unrealize(dev);
+         return;
      }
- 
--    big_endian = target_words_bigendian();
 -
-     if (s->file) {
-         AddressSpace *as = s->cpu ? s->cpu->as :  NULL;
- 
-         if (!s->force_raw) {
-             size = load_elf_as(s->file, NULL, NULL, NULL, &entry, NULL, NULL,
--                               NULL, big_endian, 0, 0, 0, as);
-+                               NULL, ELFDATANONE, 0, 0, 0, as);
- 
-             if (size < 0) {
-                 size = load_uimage_as(s->file, &entry, NULL, NULL, NULL, NULL,
-diff --git a/hw/core/loader.c b/hw/core/loader.c
-index f1fab3e91b1..cc0631e7dd5 100644
---- a/hw/core/loader.c
-+++ b/hw/core/loader.c
-@@ -413,7 +413,8 @@ ssize_t load_elf(const char *filename,
-                  int elf_machine, int clear_lsb, int data_swab)
- {
-     return load_elf_as(filename, elf_note_fn, translate_fn, translate_opaque,
--                       pentry, lowaddr, highaddr, pflags, big_endian,
-+                       pentry, lowaddr, highaddr, pflags,
-+                       big_endian ? ELFDATA2MSB : ELFDATA2LSB,
-                        elf_machine, clear_lsb, data_swab, NULL);
+-    qemu_free_irqs(idev->irq, 2);
  }
  
-@@ -422,14 +423,13 @@ ssize_t load_elf_as(const char *filename,
-                     uint64_t (*elf_note_fn)(void *, void *, bool),
-                     uint64_t (*translate_fn)(void *, uint64_t),
-                     void *translate_opaque, uint64_t *pentry, uint64_t *lowaddr,
--                    uint64_t *highaddr, uint32_t *pflags, int big_endian,
-+                    uint64_t *highaddr, uint32_t *pflags, int elf_data_order,
-                     int elf_machine, int clear_lsb, int data_swab,
-                     AddressSpace *as)
- {
-     return load_elf_ram_sym(filename, elf_note_fn,
-                             translate_fn, translate_opaque,
--                            pentry, lowaddr, highaddr, pflags,
--                            big_endian ? ELFDATA2MSB : ELFDATA2LSB,
-+                            pentry, lowaddr, highaddr, pflags, elf_data_order,
-                             elf_machine, clear_lsb, data_swab, as,
-                             true, NULL);
- }
+ static const Property ipack_device_props[] = {
+diff --git a/hw/ipack/tpci200.c b/hw/ipack/tpci200.c
+index 88eef4b8308..470a4203ae4 100644
+--- a/hw/ipack/tpci200.c
++++ b/hw/ipack/tpci200.c
+@@ -275,11 +275,11 @@ static void tpci200_write_las0(void *opaque, hwaddr addr, uint64_t val,
+                 if (ip != NULL) {
+                     if (val & STATUS_INT(i, 0)) {
+                         DPRINTF("Clear IP %c INT0# status\n", 'A' + i);
+-                        qemu_irq_lower(ip->irq[0]);
++                        qemu_irq_lower(&ip->irq[0]);
+                     }
+                     if (val & STATUS_INT(i, 1)) {
+                         DPRINTF("Clear IP %c INT1# status\n", 'A' + i);
+-                        qemu_irq_lower(ip->irq[1]);
++                        qemu_irq_lower(&ip->irq[1]);
+                     }
+                 }
+ 
+@@ -344,7 +344,7 @@ static uint64_t tpci200_read_las1(void *opaque, hwaddr addr, unsigned size)
+                 bool int_set = s->status & STATUS_INT(ip_n, intno);
+                 bool int_edge_sensitive = s->ctrl[ip_n] & CTRL_INT_EDGE(intno);
+                 if (int_set && !int_edge_sensitive) {
+-                    qemu_irq_lower(ip->irq[intno]);
++                    qemu_irq_lower(&ip->irq[intno]);
+                 }
+             }
+ 
 -- 
 2.47.1
 
