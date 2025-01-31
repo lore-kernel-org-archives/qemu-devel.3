@@ -4,84 +4,87 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 30729C02194
-	for <qemu-devel@archiver.kernel.org>; Fri, 31 Jan 2025 21:10:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7715BC3DA4A
+	for <qemu-devel@archiver.kernel.org>; Fri, 31 Jan 2025 21:11:15 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tdyD7-00063x-47; Fri, 31 Jan 2025 16:05:57 -0500
+	id 1tdyFN-0004WN-7g; Fri, 31 Jan 2025 16:08:17 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tdyD4-00063m-8i
- for qemu-devel@nongnu.org; Fri, 31 Jan 2025 16:05:54 -0500
-Received: from mail-wr1-x431.google.com ([2a00:1450:4864:20::431])
+ (Exim 4.90_1) (envelope-from <lacraig3@gmail.com>)
+ id 1tdyEi-0003MO-16
+ for qemu-devel@nongnu.org; Fri, 31 Jan 2025 16:07:36 -0500
+Received: from mail-ej1-x62f.google.com ([2a00:1450:4864:20::62f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tdyD2-0007o8-Kz
- for qemu-devel@nongnu.org; Fri, 31 Jan 2025 16:05:53 -0500
-Received: by mail-wr1-x431.google.com with SMTP id
- ffacd0b85a97d-3862b40a6e0so1587451f8f.0
- for <qemu-devel@nongnu.org>; Fri, 31 Jan 2025 13:05:52 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <lacraig3@gmail.com>)
+ id 1tdyEg-0007yw-Fg
+ for qemu-devel@nongnu.org; Fri, 31 Jan 2025 16:07:35 -0500
+Received: by mail-ej1-x62f.google.com with SMTP id
+ a640c23a62f3a-ab6fb2940d4so249574766b.1
+ for <qemu-devel@nongnu.org>; Fri, 31 Jan 2025 13:07:34 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1738357551; x=1738962351; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1738357652; x=1738962452; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=QIVJQJKGcg0YWEqQO8oUWHaR7BCknrlB7uO1Y3XbfxU=;
- b=OVjpK5y1pKIIw/QkKzIpMmQKB0ER0fOzShgcYrhL2GVU6ndLzYkrWzpR0xD5K6Mblb
- RgR2p4nM3IByvgze9JQN/jqIq136PnjgyJb6wlMQB7L9r0es75RcJb4M4a36wH90cE1Z
- tPem9aJ1+YVy/SO3xZTjs1oVfZh4UE60696PzMR46bVY1nZR0vLVT1mbONl35ZKMsKDC
- /WTwlphVu2FidoQQ9P9KCAXdGVP6gO0FHa6I+L+XFw94Xt2/qQNtsomTIdNe7vATAu9q
- WrjRUDtU6kLvs+eJXxAWlHdyiAnbNou2VoZiQEETD4z3BGxvIhsYlaRLycpVPqsXKLPi
- yrfQ==
+ bh=eAxgMccAKNQBSKmFJ6B7KReCWa28c3YSMMPb7G/6Mi8=;
+ b=jmCRe/jrlnefXi65wsgnrJeI+OLMes6wplWT2HAUaYMSfNoUXiCzpncSOsliuLc+iK
+ Rc9dDNHLhKXCb8D3TxAefDnOSQcHTQClxJmw3jd92Oyb4abT6q5W9zyQHn76KUAHZReE
+ EcfuCxo21Nu/igEIBpBvLPRUXaHCgyc0gUPcZt1rzWKqxQT1QEvA2xqu3LMkQ3P+JFlr
+ 72qWSC1sn/vypyO0fP7tnvmI5s9xrtkrs+pfBnj4+uMTkcaWPrgFbH2N+LgMYvhXWoiZ
+ X7P1RL4j5tRPbssdWquId2aiavypmQ1MbgxaPLuDzEV86P3H8DHCJ2LzY5h6BJFecW/i
+ 6OaQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1738357551; x=1738962351;
+ d=1e100.net; s=20230601; t=1738357652; x=1738962452;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=QIVJQJKGcg0YWEqQO8oUWHaR7BCknrlB7uO1Y3XbfxU=;
- b=VsgqqqzjlyIpTiClXz6kHwslvmJUSs1A4Y27KcqkkGgaCMRC3xMXFQpnARucOT113Z
- 0PQrecwxeYOS+iJP+u52XzwIHNadMtk58Spf8uT1Hi+M/0KrmHsIYBWpVDDBq39tHMbt
- 0SOJuYjzmi1hmM6yyMgmqk6IyGc/gqmY7JV+T4mSOADJ2dIZ9izZ7T4o+BCkmLGBzTi2
- rY1VQRnoMqjB7C4eG1D3wF5y7jxvvWimwmkb2L0HEucY8et/5QrcYkxLETFubCp3v/6a
- A4msA61y0Ji4qqDsr4+X2X5WtFNblxxfTCpEIV2eyclB/4UnkilcxE9o72b04vAcYcol
- kUUg==
-X-Gm-Message-State: AOJu0Yytj02qmfBs6+IZ9ZBD5QelnRzhiF8PWIK+j1etoVBLEvODZqUv
- jr8bPQpg6vLeIh6U7ovG14lFvm++LPDj55ZgFo7Gf9QLc2o4nSTVN+9zdYqZik8gGKCgVuede9R
- C6WU=
-X-Gm-Gg: ASbGncvBbVLGWo14L4SBu5g85nmnHteE246PRm9mBnC8mH5Mb2/4JWb0xDbFRj9NrLR
- 98Yl0WEm2WesGWqasHn8J8wV4goMkDCmgeCBkpAyMMNKcQB9Ou42t8cXDvVS8Xm/R7D9Ahnq1pT
- mBntrEsQgTS9QpdwN4vSOjqj3mCozDZ+Wvo3AKPZm15RZKxw8t7Wyh4yFydo/7jxnOWbnd98ptr
- 6YhCDMvtsS+XS9q2LsdAT35BkumCjhQCO3RSIbKZrQAGOScvfY2Ziig1G0gdw0AraZfHA24MlSB
- smsf52MgKNVBInFXSwUqs5XqL0B5N4YAF0vBZly5xuKmCv/ffGAvpSvbDW8YZOXo7g==
-X-Google-Smtp-Source: AGHT+IHMYUHsLadZpB8NY6iQ1l994NQVviOZBVf8MHdApFxn5xR0mceVJAnIDyPMi3oraiSD/HiLbw==
-X-Received: by 2002:a5d:6d0c:0:b0:38a:888c:676f with SMTP id
- ffacd0b85a97d-38c5194a531mr10995878f8f.15.1738357550885; 
- Fri, 31 Jan 2025 13:05:50 -0800 (PST)
-Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
- [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-38c5c12247esm5765768f8f.53.2025.01.31.13.05.50
- (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Fri, 31 Jan 2025 13:05:50 -0800 (PST)
-From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+ bh=eAxgMccAKNQBSKmFJ6B7KReCWa28c3YSMMPb7G/6Mi8=;
+ b=OnUjlTXMbTODVlfHVHLM33JQx27RQrKl6SW6dKVYUoH51p6U3VGirKwjDkBCHy4wuy
+ pYLKCb9HQ4swIXRExT4FxBxcQW62JLbkpe+xe7pgFemUuDMBA4s/hWr/bddlmejiFkiD
+ W/6XrzhFfxzu+REebxXNS2kWHyA8ozVDJBiWDzK5mREKgnCZ1FdQ4ZKvyv3dw2g1qeC6
+ EF9sMk04gVKaAgwEKa2R0NVez2r/Ft5g2MdqyOoktGP1EUDm0vze/wEoZ6+3b+qoTA+o
+ aaPfETTcprLSbeHjWjbsjkLNKFWeHGIW9c1gBGoSvbJo1dtX7NeWD6MPMWHaDxMMVb5o
+ L52A==
+X-Gm-Message-State: AOJu0YxDr8jrMUCUf0me3MoeRvyv/62YGhUY4chX1OytDBAF2aREYP4T
+ wUQmRAWquT3WaDLdwo3CbdF+x9Ru7OsTbiyifYbB/ywv0eAvgGqAzmN5XA==
+X-Gm-Gg: ASbGncsKsXlc3hLPM5Np+AYhJWrPCp95XxK+VXX9rffVpHZ6upIL6hwIft3VlS3FZPp
+ 1hNfw3Qxd54n0I/EjUyHUZOgohyRMrS+ELYpdT4dXETbyBNnWOlh+3ifp7bh752qQBNdtrlv4CT
+ jVzyyL/knmvWf5EftcxeWQDKCS61JhdNVaRivp1lf/fNYkdz0d3oduJ9y/9uHd+pNU9ondU810G
+ qqcAI98iatwd/ZosrhciW/sJ0lmqNU/MrLJJeP+3UZrFZqy8Koc9JaDX0L+ms4KxPvbZATY61gw
+ q/Jf0fw/RKk=
+X-Google-Smtp-Source: AGHT+IFHNLIbIlNPVeE7/CWgy7DSofk+5tnWE39IVhCWcwXoBpZKaDFp3rm8iUt7NUdxa2tOLz67zg==
+X-Received: by 2002:a17:907:9412:b0:ab6:f140:1668 with SMTP id
+ a640c23a62f3a-ab6f1401c4emr888951066b.7.1738357652389; 
+ Fri, 31 Jan 2025 13:07:32 -0800 (PST)
+Received: from luke-igloo.. ([18.4.85.124]) by smtp.gmail.com with ESMTPSA id
+ a640c23a62f3a-ab6e4a31624sm347719666b.142.2025.01.31.13.07.30
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Fri, 31 Jan 2025 13:07:32 -0800 (PST)
+From: Luke Craig <lacraig3@gmail.com>
 To: qemu-devel@nongnu.org
-Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Richard Henderson <richard.henderson@linaro.org>
-Subject: [PULL 06/36] hw/mips/loongson3_bootp: Include missing headers
-Date: Fri, 31 Jan 2025 22:04:49 +0100
-Message-ID: <20250131210520.85874-7-philmd@linaro.org>
-X-Mailer: git-send-email 2.47.1
-In-Reply-To: <20250131210520.85874-1-philmd@linaro.org>
-References: <20250131210520.85874-1-philmd@linaro.org>
+Cc: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Alexandre Iooss <erdnaxe@crans.org>,
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>,
+ Mahmoud Mandour <ma.mandourr@gmail.com>, Luke Craig <luke.craig@mit.edu>,
+ Luke Craig <lacraig3@gmail.com>
+Subject: [PATCH v3 3/3] plugins: extend insn test for new convenience functions
+Date: Fri, 31 Jan 2025 16:07:24 -0500
+Message-Id: <20250131210724.3330110-4-lacraig3@gmail.com>
+X-Mailer: git-send-email 2.34.1
+In-Reply-To: <20250131210724.3330110-1-lacraig3@gmail.com>
+References: <20250131210724.3330110-1-lacraig3@gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::431;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x431.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+Received-SPF: pass client-ip=2a00:1450:4864:20::62f;
+ envelope-from=lacraig3@gmail.com; helo=mail-ej1-x62f.google.com
+X-Spam_score_int: -17
+X-Spam_score: -1.8
+X-Spam_bar: -
+X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -99,39 +102,49 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-MemMapEntry is declared in "exec/hwaddr.h", cpu_to_le32() in
-"qemu/bswap.h". These headers are indirectly included via "cpu.h".
-Include them explicitly in order to avoid when removing "cpu.h":
+From: Luke Craig <luke.craig@mit.edu>
 
-  In file included from ../../hw/mips/loongson3_bootp.c:27:
-  hw/mips/loongson3_bootp.h:234:14: error: unknown type name 'MemMapEntry'
-    234 | extern const MemMapEntry virt_memmap[];
-        |              ^
-  hw/mips/loongson3_bootp.c:33:18: error: call to undeclared function 'cpu_to_le32'; ISO C99 and later do not support implicit function declarations [-Wimplicit-function-declaration]
-     33 |     c->cputype = cpu_to_le32(Loongson_3A);
-        |                  ^
-
-Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-Message-Id: <20250115232952.31166-6-philmd@linaro.org>
+Signed-off-by: Luke Craig <lacraig3@gmail.com>
 ---
- hw/mips/loongson3_bootp.c | 2 ++
- 1 file changed, 2 insertions(+)
+ tests/tcg/plugins/insn.c | 10 ++++++++++
+ 1 file changed, 10 insertions(+)
 
-diff --git a/hw/mips/loongson3_bootp.c b/hw/mips/loongson3_bootp.c
-index b97b81903b7..712439c2575 100644
---- a/hw/mips/loongson3_bootp.c
-+++ b/hw/mips/loongson3_bootp.c
-@@ -21,6 +21,8 @@
- #include "qemu/osdep.h"
- #include "qemu/units.h"
- #include "qemu/cutils.h"
-+#include "qemu/bswap.h"
-+#include "exec/hwaddr.h"
- #include "cpu.h"
- #include "hw/boards.h"
- #include "hw/mips/loongson3_bootp.h"
+diff --git a/tests/tcg/plugins/insn.c b/tests/tcg/plugins/insn.c
+index 0c723cb9ed..5974e9d6e6 100644
+--- a/tests/tcg/plugins/insn.c
++++ b/tests/tcg/plugins/insn.c
+@@ -142,6 +142,8 @@ static void vcpu_tb_trans(qemu_plugin_id_t id, struct qemu_plugin_tb *tb)
+ {
+     size_t n = qemu_plugin_tb_n_insns(tb);
+     size_t i;
++    size_t tb_size = 0;
++    struct qemu_plugin_insn *last;
+ 
+     for (i = 0; i < n; i++) {
+         struct qemu_plugin_insn *insn = qemu_plugin_tb_get_insn(tb, i);
+@@ -156,6 +158,7 @@ static void vcpu_tb_trans(qemu_plugin_id_t id, struct qemu_plugin_tb *tb)
+ 
+         if (do_size) {
+             size_t sz = qemu_plugin_insn_size(insn);
++            tb_size += sz;
+             if (sz > sizes->len) {
+                 g_array_set_size(sizes, sz);
+             }
+@@ -188,6 +191,13 @@ static void vcpu_tb_trans(qemu_plugin_id_t id, struct qemu_plugin_tb *tb)
+             g_free(insn_disas);
+         }
+     }
++
++    last = qemu_plugin_tb_get_insn(tb, n - 1);
++    g_assert(qemu_plugin_tb_get_insn_by_vaddr(tb, qemu_plugin_insn_vaddr(last)) == last);
++
++    if (do_size){
++        g_assert(tb_size == qemu_plugin_tb_size(tb));
++    }
+ }
+ 
+ static void plugin_exit(qemu_plugin_id_t id, void *p)
 -- 
-2.47.1
+2.34.1
 
 
