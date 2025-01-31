@@ -4,100 +4,157 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DF239C0218F
-	for <qemu-devel@archiver.kernel.org>; Fri, 31 Jan 2025 13:54:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6B591C02192
+	for <qemu-devel@archiver.kernel.org>; Fri, 31 Jan 2025 14:25:30 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tdrSw-0001Te-3N; Fri, 31 Jan 2025 08:53:50 -0500
+	id 1tdrwb-0007gq-CW; Fri, 31 Jan 2025 09:24:29 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>)
- id 1tdrSt-0001TN-QE; Fri, 31 Jan 2025 08:53:47 -0500
-Received: from smtp-out2.suse.de ([2a07:de40:b251:101:10:150:64:2])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>)
- id 1tdrSq-0004Xs-Lc; Fri, 31 Jan 2025 08:53:46 -0500
-Received: from imap1.dmz-prg2.suse.org (unknown [10.150.64.97])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (No client certificate requested)
- by smtp-out2.suse.de (Postfix) with ESMTPS id 3D7F41F38D;
- Fri, 31 Jan 2025 13:53:40 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1738331620; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=SkDlXVZltxneLHkpjP0IQ5YhXaHIjYgPt5BhQKrBYf4=;
- b=HZxFZAHx0qist9+U8Loo3tZTt8xFuCgDGF5Cel/mWI+4wNbiJpQhniRrHNFxMKS90e1FHs
- E+LJn0plOBOumx+CJ6uzAJYUt+hpOC4b8frQ0L29t2/1AXbaJ9MjkzmCMKJTvELelwvCoa
- 30sqL2+8I8w+Hskyl2WdJFilCSplIps=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1738331620;
- h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=SkDlXVZltxneLHkpjP0IQ5YhXaHIjYgPt5BhQKrBYf4=;
- b=GhGMIoEoeoGy/W/+3POYGHq4J1vBSxUz4w5OLpDC4Ia4tEx2esOZYGIzBp7HXO6XA1uNWD
- aluvtgeWw3w0WhBA==
-Authentication-Results: smtp-out2.suse.de;
-	none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1738331620; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=SkDlXVZltxneLHkpjP0IQ5YhXaHIjYgPt5BhQKrBYf4=;
- b=HZxFZAHx0qist9+U8Loo3tZTt8xFuCgDGF5Cel/mWI+4wNbiJpQhniRrHNFxMKS90e1FHs
- E+LJn0plOBOumx+CJ6uzAJYUt+hpOC4b8frQ0L29t2/1AXbaJ9MjkzmCMKJTvELelwvCoa
- 30sqL2+8I8w+Hskyl2WdJFilCSplIps=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1738331620;
- h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=SkDlXVZltxneLHkpjP0IQ5YhXaHIjYgPt5BhQKrBYf4=;
- b=GhGMIoEoeoGy/W/+3POYGHq4J1vBSxUz4w5OLpDC4Ia4tEx2esOZYGIzBp7HXO6XA1uNWD
- aluvtgeWw3w0WhBA==
-Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (No client certificate requested)
- by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id AA562133A6;
- Fri, 31 Jan 2025 13:53:39 +0000 (UTC)
-Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
- by imap1.dmz-prg2.suse.org with ESMTPSA id U8cMGuPVnGc5bwAAD6G6ig
- (envelope-from <farosas@suse.de>); Fri, 31 Jan 2025 13:53:39 +0000
-From: Fabiano Rosas <farosas@suse.de>
-To: Kevin Wolf <kwolf@redhat.com>, qemu-block@nongnu.org
-Cc: kwolf@redhat.com, hreitz@redhat.com, stefanha@redhat.com,
- pkrempa@redhat.com, peterx@redhat.com, qemu-devel@nongnu.org
-Subject: Re: [PATCH v2 00/15] block: Managing inactive nodes (QSD migration)
-In-Reply-To: <20250130171240.286878-1-kwolf@redhat.com>
-References: <20250130171240.286878-1-kwolf@redhat.com>
-Date: Fri, 31 Jan 2025 10:53:36 -0300
-Message-ID: <877c6bgkdb.fsf@suse.de>
+ (Exim 4.90_1) (envelope-from <jgg@nvidia.com>)
+ id 1tdrwL-0007em-6u; Fri, 31 Jan 2025 09:24:13 -0500
+Received: from mail-dm6nam10on20611.outbound.protection.outlook.com
+ ([2a01:111:f403:2413::611]
+ helo=NAM10-DM6-obe.outbound.protection.outlook.com)
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <jgg@nvidia.com>)
+ id 1tdrwJ-0005rV-Cj; Fri, 31 Jan 2025 09:24:12 -0500
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=WwsHgUN8twjF5XzOemCO2PHP7JuVw2NRAFONhJlCVnzxd0hmLrUilddWP9/psa+bSYBPrpk/nkHtpY3VLt+DcOh25lefJnPunuV/oFUplNJ0ZsptbjluR9gF2F1OzBqT99vfM4TQuOOm7xV+isj5ashdnD0O2O5b0vgRUXTcaMHVZLWXWZDZ1vInrnAqYgujYQAxRBBtIdIDklziLKDAAmfggqKWmD07/V5Gx99EkIj91r4zwqsDgJKoLJnWBn/GN6+y+xn14mpDe6/T9Ck9ztGhg6Yevuxvi95YQAKLBrdmTE3AO9Musy+vzPlgxNCsORgBY2s7NIDUvIPbiEcbBA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=R3t7RLb7yWthYOoo+l2zhibXtVo3PeW87CUNfkJgMBU=;
+ b=nVmq9XCuR1ardwCPP2hjog7zRmj6pSgn+LwjtGbCnGSN69wSG3cMffcYdjNwn4k1aBWsbQWUL/sFUH367/uxhB0FxeDA5KzaCu7LhQqB+iO0SN2zbZALIprd69lmE546GXwKTJUn6HEGWLOXVyRoSteo+VdofuMLVZFsB0cD1umc+yYxLD7cWUeatMQelexhMLFkqMaIzKxMJd3NElSz0tNtNgshtcUcjgreFF3phafpsJJiaygdURHok+zN/YVB3bzLGnfNuHzenuoe6lFpxUpdT5KfumQaNxnjQHXDfJn5Qh8FkptdfDHTZV1YCXM8SBrJT0tqQoPo9g+VMXqN6Q==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=nvidia.com; dmarc=pass action=none header.from=nvidia.com;
+ dkim=pass header.d=nvidia.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
+ s=selector2;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=R3t7RLb7yWthYOoo+l2zhibXtVo3PeW87CUNfkJgMBU=;
+ b=QxxH0kY+5IPiE4Ur1kjBRmTwXkXL5qSVBrZ6//8FHRCHzIQ9YH2H+2d6peRcyg1gqkkQZZ3ww0DUGGzcQCbojm8GWDyxnvodpTRZD3hgi8NuDY8hb/VDs3NS4RhHnjQRbVrrZI3T2qowjxW9j6ymKcEQhxvkxybmBgburN6ScDRECxoQ4ENNrhFOdug2UkdG/fDiPeT3nm0nJIZzbQ74NwLXeNYcYfcmDdJ+v2VUXwGmzHkpyNdHk9m3oQBE6cqBbdhKDzmmO588hZPreXlz1JEbskrXmn8OS6y/smXyfDlmurqi7iJYX9S8sJRHhZq/v2Y5f2pA5XOIApMajSzHxg==
+Authentication-Results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=nvidia.com;
+Received: from CH3PR12MB8659.namprd12.prod.outlook.com (2603:10b6:610:17c::13)
+ by CH3PR12MB8482.namprd12.prod.outlook.com (2603:10b6:610:15b::8)
+ with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.8398.20; Fri, 31 Jan
+ 2025 14:24:05 +0000
+Received: from CH3PR12MB8659.namprd12.prod.outlook.com
+ ([fe80::6eb6:7d37:7b4b:1732]) by CH3PR12MB8659.namprd12.prod.outlook.com
+ ([fe80::6eb6:7d37:7b4b:1732%6]) with mapi id 15.20.8398.018; Fri, 31 Jan 2025
+ 14:24:05 +0000
+Date: Fri, 31 Jan 2025 10:24:04 -0400
+From: Jason Gunthorpe <jgg@nvidia.com>
+To: Shameerali Kolothum Thodi <shameerali.kolothum.thodi@huawei.com>
+Cc: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>,
+ "qemu-arm@nongnu.org" <qemu-arm@nongnu.org>,
+ "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>,
+ "eric.auger@redhat.com" <eric.auger@redhat.com>,
+ "peter.maydell@linaro.org" <peter.maydell@linaro.org>,
+ "nicolinc@nvidia.com" <nicolinc@nvidia.com>,
+ "ddutile@redhat.com" <ddutile@redhat.com>, Linuxarm <linuxarm@huawei.com>,
+ "Wangzhou (B)" <wangzhou1@hisilicon.com>,
+ jiangkunkun <jiangkunkun@huawei.com>,
+ Jonathan Cameron <jonathan.cameron@huawei.com>,
+ "zhangfei.gao@linaro.org" <zhangfei.gao@linaro.org>,
+ Nathan Chen <nathanc@nvidia.com>
+Subject: Re: [RFC PATCH 0/5] hw/arm/virt: Add support for user-creatable
+ nested SMMUv3
+Message-ID: <20250131142404.GP5556@nvidia.com>
+References: <20241108125242.60136-1-shameerali.kolothum.thodi@huawei.com>
+ <Z5uiGnAxUf4jXTEI@redhat.com>
+ <7ecabe74e0514367baf28d67675e5db8@huawei.com>
+ <fc91e1a798324390b2a556fae5d40f46@huawei.com>
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <fc91e1a798324390b2a556fae5d40f46@huawei.com>
+X-ClientProxiedBy: BN9PR03CA0527.namprd03.prod.outlook.com
+ (2603:10b6:408:131::22) To CH3PR12MB8659.namprd12.prod.outlook.com
+ (2603:10b6:610:17c::13)
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Spamd-Result: default: False [-2.80 / 50.00]; BAYES_HAM(-3.00)[100.00%];
- SUSPICIOUS_RECIPS(1.50)[]; NEURAL_HAM_LONG(-1.00)[-1.000];
- NEURAL_HAM_SHORT(-0.20)[-1.000]; MIME_GOOD(-0.10)[text/plain];
- FUZZY_BLOCKED(0.00)[rspamd.com];
- DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
- ARC_NA(0.00)[]; TO_MATCH_ENVRCPT_ALL(0.00)[];
- RCVD_TLS_ALL(0.00)[]; FROM_HAS_DN(0.00)[];
- MISSING_XM_UA(0.00)[]; RCVD_COUNT_TWO(0.00)[2];
- FROM_EQ_ENVFROM(0.00)[]; MIME_TRACE(0.00)[0:+];
- MID_RHS_MATCH_FROM(0.00)[]; RCVD_VIA_SMTP_AUTH(0.00)[];
- RCPT_COUNT_SEVEN(0.00)[8]; TO_DN_SOME(0.00)[]
-Received-SPF: pass client-ip=2a07:de40:b251:101:10:150:64:2;
- envelope-from=farosas@suse.de; helo=smtp-out2.suse.de
-X-Spam_score_int: -43
-X-Spam_score: -4.4
-X-Spam_bar: ----
-X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: CH3PR12MB8659:EE_|CH3PR12MB8482:EE_
+X-MS-Office365-Filtering-Correlation-Id: 44713bf9-8c85-450b-74d7-08dd4202eaa1
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;ARA:13230040|1800799024|366016|7416014|376014;
+X-Microsoft-Antispam-Message-Info: =?us-ascii?Q?HHV2HcyMhAuKKOnMVvd98dNrN1GNA7+d0nOSrB8iIJ2mTn1rjVZWXJcB/TUs?=
+ =?us-ascii?Q?ngLkLfWhYxsZTQn2bcXoZryo0REXkorrWPAdYBBEEGNqEFAm6DUeQTeWFZCk?=
+ =?us-ascii?Q?EQussUhFExiBeGAvueCc3iU/ktiezMp2IfhJUOk/iV597VoOyEnUvRuSrjOg?=
+ =?us-ascii?Q?ILXgqDTa1OS1YcsqQ94ihg0ynPOfHybkoxIOmBWPBLFIAGNeT6to70VpfUir?=
+ =?us-ascii?Q?WD3G4KO9rDQeskzV36NBhxWMBvyk6c0stxE4Ehdfg9HoSoCdvdnloRtpZMzi?=
+ =?us-ascii?Q?HlKR4YEzNgkcOxYWDRnbg98yvOYsfYHHFd6n1Yv/Xq5aoNNBIWeBT5FcBLPy?=
+ =?us-ascii?Q?QHUCSR/KMy0r1FP+FsrRUUP9zMPNQnRSjNuLd3PMHY/M7mixbOuQhzOgmIUn?=
+ =?us-ascii?Q?hzWot+RGjVTzOVCrQ7t4qkzwtGQfswT1okgH4Hux53/A+MbgRHnbUlpOewao?=
+ =?us-ascii?Q?Nd6IXUtJcUjiqoQtxu/KCTW8TiCkDZP3qO5l3dfCn1sgYiNl/6USsRChRcAx?=
+ =?us-ascii?Q?N176BHWgmp3oUxEVRd3REQhTb4PRra7rhdEmNkL/woIiSdQ70WEbB+gH2PNk?=
+ =?us-ascii?Q?KGBGZi9Q4M+xMX4BFD/aKrwkU8PQiJm//uAUPEydv636lTAtAV3EWW6aj4Nu?=
+ =?us-ascii?Q?zZggq9aB6rmM0HskirabMqqlXV3E/G5v7YBuFsYGwdl1yCIMZ0l/aUSpJluB?=
+ =?us-ascii?Q?6hTgvdjy+wJBZAGFnHU8OtL4fqZ0O7pKzJomSXMrbnQWCJNBgl6JDllvY/uJ?=
+ =?us-ascii?Q?S0+7hHh1h3OzFuXXEunc6ZqyBfHQObAxkNiIvqdI/Kad83D53VnUe3fakChm?=
+ =?us-ascii?Q?WAsr8SgfUj1OKn7Gqa5YD4wtpOxG4VpNHCADewaIAVUt0h4pXHDXkA+W5A09?=
+ =?us-ascii?Q?tRzktxkF/lGWJZrqAcjQNR9y9n6AtgIcWXpwjoM30PE3Q0EuG5AiVJlyAw0c?=
+ =?us-ascii?Q?5c6Tq20NIp9avWURUoMjUcSkaa2iTCD/xWofEzjgyoRp33naZ62WUa9nZNKX?=
+ =?us-ascii?Q?/GhbDbp5HlcI8m3URFMqKNB/AzMKTDpAy5mRRDa9uDNU4AcR4uocGckVqOU/?=
+ =?us-ascii?Q?1E1F/q4C3s94P3w1l2bLtMu6iKMLsAJkv+9SO9kZU8AuAkBf0YUpbbQ5WI2t?=
+ =?us-ascii?Q?ZEZv0NhosxDi86jw8Z2yx9QPTHEGR4zqKgveJw9hWwj7GuQMQzE/oQZPxwbn?=
+ =?us-ascii?Q?50JuIAov6056wZD35JJjfecU8xSzMuW1x9wmVbsgR9P2dSTEwRApCpkeVyJE?=
+ =?us-ascii?Q?Twef1kTILEBECj4YF0lEehJpHt9MJsCrnyvhW/0CQkq0CsSZ81FMITxaspP0?=
+ =?us-ascii?Q?IJGYNcBTYSw3huRzQgDEpDTjo6d3VMvziM80488sxGy7MPaFVvzStUcgFEPL?=
+ =?us-ascii?Q?ojIRYGKk6K3w+GUrthf4fEz2XzYn?=
+X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:CH3PR12MB8659.namprd12.prod.outlook.com; PTR:; CAT:NONE;
+ SFS:(13230040)(1800799024)(366016)(7416014)(376014); DIR:OUT; SFP:1101; 
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0: =?us-ascii?Q?AzNMDRxB/AUWCTjZdtBe/I1k/ZYREPz7YGiMKVRRespyOYLvb2ocns+Rbc31?=
+ =?us-ascii?Q?ADzQ570sOn23gRz2IWtQzVWsEJ9MPrFdzs0ALmQpZbH9cZahOiCVKX+ufO6E?=
+ =?us-ascii?Q?KJ7Q/LR9+Ovgnn1PWyH5mol4S4JlfTjuOLwsBcsQOzs+qalIqzZHRktRzdS8?=
+ =?us-ascii?Q?HVqMFKCwwhcHHvxI0HTuFm2liva3tdKzseEKJ7N+Rdvxz+wClG86xhiLrvw5?=
+ =?us-ascii?Q?yO9dunOvfmUW5E1lfUpnBbIfp4nRF7RO4Zuusl7YWG/aKIWw51fPN4lbOypG?=
+ =?us-ascii?Q?WaQroHCWzoG4O8N4bAOtWvm/mFH4DuPBSqha/1IC4tXpjYXInsDCWCPPX2VC?=
+ =?us-ascii?Q?ePsO0y7yGEuzez+jAn4gGY/aMvRBF+fjaofOq6bAUpX2/LXSyS4A1gFCB94z?=
+ =?us-ascii?Q?xPJgIZzhvSvhMVqRnb47W3Xu8JA/9i1yZEAT/yg4yPC6aGblDNd+/M/sbOIo?=
+ =?us-ascii?Q?QmHlC50Uiq4+C5o0YSOd29mMSvkRnHOm24Tq9ZLSnYXHjgi6lwOZd7KqJII0?=
+ =?us-ascii?Q?Ag2HEGRhr37QviXjEqwqgSOv61o/dh0z1uqJdRoDgoL5WMrdjt2IWBEAjGXf?=
+ =?us-ascii?Q?XuC+rjxiuz5WwYwrEw3+XSF+fOHXf4P/BHnJAWmUfeNajZW6pC7w6Ts5a+QF?=
+ =?us-ascii?Q?GzPTxVbkw8MS+2T+IVIj4MLBNm6AyWwCt/xPG3xGrOYDKoSqYVRb4tltrBrB?=
+ =?us-ascii?Q?bCKtt7u3nfCMmvPO1kzlRQbreOEb5NZ3OSKRHT06jriocCowlbEGFm/WkPxq?=
+ =?us-ascii?Q?0H+6OLgNVUSLwasFfE4Xs9SMhUnhJB+ScfdcuN9eU+tW96NrdRY/rHkdu4k9?=
+ =?us-ascii?Q?AejShzXAyHoeYGPcjt2z7Al+TCzbp5OHF0KuEqMqF/mmScuYpsLEpYFqSljP?=
+ =?us-ascii?Q?vY6Ne6XXAyI+zP+WExt8jk74ohnR9HI3jtCkl8HiIu6798G/kVR3C9hvTkK2?=
+ =?us-ascii?Q?ktCXMHuWz2sYZY1h/5jXlVO/MwldtZnaS2egXlQLW2lJK03RzUvEVgKeoNKE?=
+ =?us-ascii?Q?fmtSUmdrG++vm8hlJtNFJZ8jwiyDRTVRKWzDqSsi9K4OJuUdUNOArgUljLgM?=
+ =?us-ascii?Q?M6AskBwxKSuPaTyIr8xW8i1DVac6TjGxLgIa3g+ZEb21O0mtYdu7raPc0O7j?=
+ =?us-ascii?Q?r7nECaS7o5IPuYLwydY3Oqpy2qRCsRcYlpxc1Tx6uyXBcXpGWk8Jt0sUO1ID?=
+ =?us-ascii?Q?EAN29IjXlZBWtamKJL+ToxnMVwJds3X36C0yjOOYi/Q3tGHNqb6BG7/6FFuU?=
+ =?us-ascii?Q?+FdY9GXR0XV8N91xxmBmjnTwzwEigY7XNuq8Zq3msZDRUAhAJlALHkmpCxM7?=
+ =?us-ascii?Q?xG08roj/w4GpYF9TqH1HSfqDQ5OZNdzpc/kEnc3cm+fcHQb4pd/a4WqEHNeP?=
+ =?us-ascii?Q?OiCtNMcjCt8oGMaS2w59qHob/TBNAlr4ObHi/0KxvOBa0/lF2P7zoq1aob6U?=
+ =?us-ascii?Q?i6TiGVQUQ3Y6l6JbyszmzWw9yW25g+Q3bPCOeh5p6xwyo96ZYxWPFOBZwsgh?=
+ =?us-ascii?Q?MV1018lb+YF6RVvqT+HtcAV8yIEMMB7+VvXPDVOf3vyj8KhdYNhStsIJBQ/Q?=
+ =?us-ascii?Q?N2O5hYwKW039EBa4FVqdF/CTeNMw0wfTkIzR4jZk?=
+X-OriginatorOrg: Nvidia.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 44713bf9-8c85-450b-74d7-08dd4202eaa1
+X-MS-Exchange-CrossTenant-AuthSource: CH3PR12MB8659.namprd12.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 31 Jan 2025 14:24:05.2395 (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: cbIlP7ggBwUd0xn1i9mWlYe+wsfRE7waYs23oycQQnc5UTTqQddMHMVBTFr8ISKg
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: CH3PR12MB8482
+Received-SPF: softfail client-ip=2a01:111:f403:2413::611;
+ envelope-from=jgg@nvidia.com;
+ helo=NAM10-DM6-obe.outbound.protection.outlook.com
+X-Spam_score_int: -33
+X-Spam_score: -3.4
+X-Spam_bar: ---
+X-Spam_report: (-3.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.3,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -113,95 +170,20 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Kevin Wolf <kwolf@redhat.com> writes:
+On Fri, Jan 31, 2025 at 09:33:16AM +0000, Shameerali Kolothum Thodi wrote:
 
-> This series adds a mechanism that allows the user or management tool to
-> manually activate and inactivate block nodes instead of fully relying on
-> the automatic management in the migration code.
->
-> One case where this is needed is for migration with shared storage and
-> devices backed by qemu-storage-daemon, which as an external process is
-> not involved in the VM migration. Management tools can manually
-> orchestrate the handover in this scenario. The new qemu-iotests case
-> qsd-migrate demonstrates this.
->
-> There are other cases without qemu-storage-daemon where manual
-> management is necessary. For example, after migration, the destination
-> VM only activates images on 'cont', but after migrating a paused VM, the
-> user may want to perform operations on a block node while the VM is
-> still paused.
->
-> This series adds support for block exports on an inactive node (needed
-> for shared storage migration with qemu-storage-daemon) only to NBD.
-> Adding it to other export types will be done in a future series.
->
-> v2:
-> - Added a comprehensive test case that tests how inactive nodes
->   interoperate with many operations
-> - Added a couple of fixes for bugs uncovered by the tests (that would
->   usually lead to crashes when an unsupported operation is performed on
->   inactive nodes)
-> - Added 'active' status to query-block information
->
-> Kevin Wolf (15):
->   block: Add 'active' field to BlockDeviceInfo
->   block: Inactivate external snapshot overlays when necessary
->   migration/block-active: Remove global active flag
->   block: Don't attach inactive child to active node
->   block: Allow inactivating already inactive nodes
->   block: Fix crash on block_resize on inactive node
->   block: Add option to create inactive nodes
->   block: Add blockdev-set-active QMP command
->   block: Support inactive nodes in blk_insert_bs()
->   block/export: Don't ignore image activation error in blk_exp_add()
->   block/export: Add option to allow export of inactive nodes
->   nbd/server: Support inactive nodes
->   iotests: Add filter_qtest()
->   iotests: Add qsd-migrate case
->   iotests: Add (NBD-based) tests for inactive nodes
->
->  qapi/block-core.json                          |  44 ++-
->  qapi/block-export.json                        |  10 +-
->  include/block/block-common.h                  |   1 +
->  include/block/block-global-state.h            |   6 +
->  include/block/export.h                        |   3 +
->  migration/migration.h                         |   3 -
->  block.c                                       |  62 +++-
->  block/block-backend.c                         |  16 +-
->  block/export/export.c                         |  29 +-
->  block/monitor/block-hmp-cmds.c                |   5 +-
->  block/qapi.c                                  |   1 +
->  blockdev.c                                    |  48 +++
->  migration/block-active.c                      |  46 ---
->  migration/migration.c                         |   8 -
->  nbd/server.c                                  |  17 +
->  tests/qemu-iotests/iotests.py                 |   8 +
->  tests/qemu-iotests/041                        |   4 +-
->  tests/qemu-iotests/165                        |   4 +-
->  tests/qemu-iotests/184.out                    |   2 +
->  tests/qemu-iotests/191.out                    |  16 +
->  tests/qemu-iotests/273.out                    |   5 +
->  tests/qemu-iotests/tests/copy-before-write    |   3 +-
->  tests/qemu-iotests/tests/inactive-node-nbd    | 303 ++++++++++++++++++
->  .../qemu-iotests/tests/inactive-node-nbd.out  | 239 ++++++++++++++
->  tests/qemu-iotests/tests/migrate-bitmaps-test |   7 +-
->  tests/qemu-iotests/tests/qsd-migrate          | 132 ++++++++
->  tests/qemu-iotests/tests/qsd-migrate.out      |  51 +++
->  27 files changed, 986 insertions(+), 87 deletions(-)
->  create mode 100755 tests/qemu-iotests/tests/inactive-node-nbd
->  create mode 100644 tests/qemu-iotests/tests/inactive-node-nbd.out
->  create mode 100755 tests/qemu-iotests/tests/qsd-migrate
->  create mode 100644 tests/qemu-iotests/tests/qsd-migrate.out
+> And Qemu does some checking to make sure that the device is indeed associated
+> with the specified phys-smmuv3.  This can be done going through the sysfs path checking
+> which is what I guess libvirt is currently doing to populate the topology. So basically
+> Qemu is just replicating that to validate again.
 
-Series:
+I would prefer that iommufd users not have to go out to sysfs..
+ 
+> Or another option is extending the IOMMU_GET_HW_INFO IOCTL to return the phys
+> smmuv3 base address which can avoid going through the sysfs.
 
-Acked-by: Fabiano Rosas <farosas@suse.de>
+It also doesn't seem great to expose a physical address. But we could
+have an 'iommu instance id' that was a unique small integer?
 
-I checked that this series doesn't regress the original double
-inactivate issue fixed by Peter Xu [1]. I also ported the tests[2] on
-top of this and everything looks good. Thanks!
-
-1- 8597af7615 (migration/block: Rewrite disk activation, 2024-12-06)
-2- https://lore.kernel.org/r/20241125144612.16194-6-farosas@suse.de
-
+Jason
 
