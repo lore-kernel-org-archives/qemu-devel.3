@@ -4,84 +4,86 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 293F8C02194
-	for <qemu-devel@archiver.kernel.org>; Fri, 31 Jan 2025 21:08:19 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id AA150C0218F
+	for <qemu-devel@archiver.kernel.org>; Fri, 31 Jan 2025 21:08:31 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tdyDq-0007b0-Is; Fri, 31 Jan 2025 16:06:42 -0500
+	id 1tdyF9-00041H-3k; Fri, 31 Jan 2025 16:08:07 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tdyDo-0007OB-AK
- for qemu-devel@nongnu.org; Fri, 31 Jan 2025 16:06:40 -0500
-Received: from mail-wm1-x330.google.com ([2a00:1450:4864:20::330])
+ (Exim 4.90_1) (envelope-from <lacraig3@gmail.com>)
+ id 1tdyEg-0003F3-BQ
+ for qemu-devel@nongnu.org; Fri, 31 Jan 2025 16:07:34 -0500
+Received: from mail-ej1-x62f.google.com ([2a00:1450:4864:20::62f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tdyDm-0007sU-Ln
- for qemu-devel@nongnu.org; Fri, 31 Jan 2025 16:06:40 -0500
-Received: by mail-wm1-x330.google.com with SMTP id
- 5b1f17b1804b1-43624b2d453so29122625e9.2
- for <qemu-devel@nongnu.org>; Fri, 31 Jan 2025 13:06:38 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <lacraig3@gmail.com>)
+ id 1tdyEe-0007ya-RO
+ for qemu-devel@nongnu.org; Fri, 31 Jan 2025 16:07:34 -0500
+Received: by mail-ej1-x62f.google.com with SMTP id
+ a640c23a62f3a-aaf900cc7fbso530152066b.3
+ for <qemu-devel@nongnu.org>; Fri, 31 Jan 2025 13:07:32 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1738357596; x=1738962396; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1738357651; x=1738962451; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=rqI9LRvktHJX4HtGOA/1PZYCP3HIyYy2w16C7Qz7++g=;
- b=xTX9GH+SuP4fZoAVIFyG9oywBY1rgpNQZd6hhbrTHZzx0oML5+trmEJk3o3jwR9M0n
- 4atxJfYz6UC1dRD1zb1c1cHp9iXD9rvQ9sevYkAj45Q3HKbR0Kc3RTw42K8VDNDTXHxd
- nM3BBz8PvD6oAGdOgTo9oGOkafWEAq65RzhDmQbH/a0sGBj+aWvoORsaPFyd6mwBjmw2
- 6EhTHaghrshloyFtjpzXb+ag4FK62eD404ruNDgXNhTyhBUBHSc+SJqv2q3hYqJi9Esz
- GDJg0CfOfIBCUvYB0hOVtgawKlpoZco8zoEDH/2IS5LFV29LZUR/D7m8lC84QNn1eGoS
- pk6g==
+ bh=wOiwNYhDbwze8gvC4dinwCwNJ6c5NfBut9RqtRXEoZg=;
+ b=M2gE1u/E5yQ4fuX45Vbkh6mO7A/btW3RQyUP8+snnZtk49UdjaI8ImkCh/O00gJPFE
+ BVRhoFG/UxqjpT/wlBNU1pR5ZK+gGvcmKH+k1R0LF8dcI6F98cUqZ/RNjNm5zikqNCr1
+ GmxrZrcCsdUxpxHMn8GX71PX0fGKepnzLl48tFCwncV4VUrpYTbb/H1LaFzZ74TYA3mk
+ z6EHEw38+1NmlACChWDdNxNBx9sNySoM0ejozt86kky0jop4B+L736YCRjJLReR88RSu
+ BzYucbexjwn2qNtETQKnNGkzpga8dQ7xMJRI7DHjiTYYJgRzxxx+90w+QA/s/PiEgxAA
+ qeDg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1738357596; x=1738962396;
+ d=1e100.net; s=20230601; t=1738357651; x=1738962451;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=rqI9LRvktHJX4HtGOA/1PZYCP3HIyYy2w16C7Qz7++g=;
- b=q8gbxOsLSfkjKDfhrPYNHNMUG8qy+soY7AGQrDj2B58xLFmVfh1ZP4/u0gtOJTD36i
- JnYobXU/R3oNkmEDv5Gizf+rvbJogfqppsHJ4Chbnd7oScqNGLBFwwmgHOsC2WhHs4qH
- YuNOEFPZN7UIlkmz98M17OLBoX24Acht7Td4bVJXxnfWWu/V2IUCSFUyRtqUQ+cOtMLy
- 5W7Hb2hBqjp7Vzs/a9bA3/90wGrh1/Pse3lYLmxWvLlABHC1y1htA/spVOOFSPKIDeMt
- Cx/YYAZNuFMp0pYJq/ClOFWyVjGjf7ZqOlVZ3u6yMKvJR8Y/9E7YONtpcNjBCBBdO5oy
- k4xQ==
-X-Gm-Message-State: AOJu0YwPfWC5BjNFSD8uHUN7OTsu9tinYoustBcIcGE8l9SVrsmTcnGO
- t1/IOI0R2IaX82LqH+lG/6+0lp6YpsXAgGaAcQByJy0GteJF5fOv3SWJr3ECmBVs7lVkF7GoEfx
- n8t8=
-X-Gm-Gg: ASbGnctxmaDDgT7yGjiLRiLpfZyQ61EjLdzrZgrEPGx8k4PWGgbkZU7TIUunHSiPbsd
- YvBo+FBFuJjdUak4g909mSeXX/RfHLqtbvJohKSCL4PMRU4ocstvechuSsttByVTpcH7yMdXz0m
- SaIpu8b6E5zMoPzfZ1FN3kAYF6aewe/WxrTQtKk+mhp/03GAdiaNIrxdqZv+PrODZXssIsH8YYk
- MARg7EnSOR6QSsNiM3SyvI2/hrHLRAh/zS3PmU5BG9wR56UW5xlUl7ijQnLFQObhxY+32ZytC+Y
- 2/4wmvvj0KqaAn4Y1+Uh9Y7eFxWrIH3PdWMIMs3SlQyXeblnWtA0/hEmF8fO8/hd2g==
-X-Google-Smtp-Source: AGHT+IE2UO3ZMofqihRMOa2Uoaqkcz7qTzdy+D6/6EBnsZqqnhVkX9oEh2+dPVQxFb8rkSShoEZ2Tg==
-X-Received: by 2002:a05:600c:1e02:b0:434:a802:e9a6 with SMTP id
- 5b1f17b1804b1-438dc3c22acmr146724755e9.7.1738357596422; 
- Fri, 31 Jan 2025 13:06:36 -0800 (PST)
-Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
- [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-438dcc2e239sm100944485e9.18.2025.01.31.13.06.34
- (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Fri, 31 Jan 2025 13:06:35 -0800 (PST)
-From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+ bh=wOiwNYhDbwze8gvC4dinwCwNJ6c5NfBut9RqtRXEoZg=;
+ b=Im4IwsAuTq2IfYCngF1Z9gUJXJetlvMeZ4WK2OXrdbRFmeVdB9dRA5pcnC4lCv/kNe
+ EJDVfRcqZqXXyatbZvxs/XM4RMlARCHnDsSR64rWzkDPwpRPf1VDVJtwLnkhRoLCCpEN
+ mTOA+281L9tu5QympPPyIaQLKPlfdbl9BGFBJ2sraF/+6BeOJ/no9dgveqbnyU7iQ/ci
+ C9EsUvhn/shgv9JdAXxtLZjsOVqxvqJrj2mqsTM/RPAg50p6Rkra2clIczSbpnRxJYEY
+ zzUkpteiDJMuwVSTcCY8QzOjY5fNa+Uw5pOsIMnDqlXgh0X4ehYYhXORk0xa0Wwwky1Z
+ ++cA==
+X-Gm-Message-State: AOJu0YwK+X9g8e6FGlvE9DWb60qrtHB3TydN/IgFWos4ROUjA6wPawEb
+ A1u2w/BRk80/hqgkyW5KWTW/MU9gmmUc+o8kYvFfqYeCpZwlBXE77nyBqA==
+X-Gm-Gg: ASbGncuTmuhufQkwtuo5asFbHsaJjW813a1UyARlteg7ljy5WYKn7/a4C7Wm19eKVIQ
+ y7lw6eJ+/L5tK4508z3RO0IKAxLUOkDxfzoIlPl1L+U7F9CBxS1+I2hqq9Xfjd31w2bCxxPqllA
+ iBtAePKTt8dz0aj2B0gHTh/n5VwuQjNeySO498ZYLhlEAJBzrsNuyY47+f5gLJPO4PCVquJVggl
+ FqxzIYz+QYJ+JYIs8Uudlke4Lt8u9jINYnxCYnuMVGyaAZR2teDWJqbftLSW0xkx/9/h9LdCnZp
+ TMSU9Mhv6n4=
+X-Google-Smtp-Source: AGHT+IGK0o2EFZV2uelWHTqvTwMGAWgr5/ThhWq+g9nf5kNDLsjXsnMqgff/WFfW/bJnNNA6WjOizQ==
+X-Received: by 2002:a17:907:6d1f:b0:ab6:f06b:4a26 with SMTP id
+ a640c23a62f3a-ab6f06b4c6fmr770176566b.34.1738357650802; 
+ Fri, 31 Jan 2025 13:07:30 -0800 (PST)
+Received: from luke-igloo.. ([18.4.85.124]) by smtp.gmail.com with ESMTPSA id
+ a640c23a62f3a-ab6e4a31624sm347719666b.142.2025.01.31.13.07.29
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Fri, 31 Jan 2025 13:07:30 -0800 (PST)
+From: Luke Craig <lacraig3@gmail.com>
 To: qemu-devel@nongnu.org
-Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Richard Henderson <richard.henderson@linaro.org>
-Subject: [PULL 15/36] hw/ipack: Remove legacy qemu_allocate_irqs() use
-Date: Fri, 31 Jan 2025 22:04:58 +0100
-Message-ID: <20250131210520.85874-16-philmd@linaro.org>
-X-Mailer: git-send-email 2.47.1
-In-Reply-To: <20250131210520.85874-1-philmd@linaro.org>
-References: <20250131210520.85874-1-philmd@linaro.org>
+Cc: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Alexandre Iooss <erdnaxe@crans.org>,
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>,
+ Mahmoud Mandour <ma.mandourr@gmail.com>, Luke Craig <lacraig3@gmail.com>
+Subject: [PATCH v3 2/3] plugin: extend API with qemu_plugin_tb_size
+Date: Fri, 31 Jan 2025 16:07:23 -0500
+Message-Id: <20250131210724.3330110-3-lacraig3@gmail.com>
+X-Mailer: git-send-email 2.34.1
+In-Reply-To: <20250131210724.3330110-1-lacraig3@gmail.com>
+References: <20250131210724.3330110-1-lacraig3@gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::330;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x330.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+Received-SPF: pass client-ip=2a00:1450:4864:20::62f;
+ envelope-from=lacraig3@gmail.com; helo=mail-ej1-x62f.google.com
+X-Spam_score_int: -17
+X-Spam_score: -1.8
+X-Spam_bar: -
+X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -99,130 +101,52 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-No need to dynamically allocate IRQ when we know before hands
-how many we'll use. Declare the 2 of them in IPackDevice state
-and initialize them in the DeviceRealize handler.
-
-Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-Message-Id: <20250121155526.29982-4-philmd@linaro.org>
+Signed-off-by: Luke Craig <lacraig3@gmail.com>
 ---
- include/hw/ipack/ipack.h | 7 ++-----
- hw/char/ipoctal232.c     | 4 ++--
- hw/ipack/ipack.c         | 5 +----
- hw/ipack/tpci200.c       | 6 +++---
- 4 files changed, 8 insertions(+), 14 deletions(-)
+ include/qemu/qemu-plugin.h | 10 ++++++++++
+ plugins/api.c              |  7 +++++++
+ 2 files changed, 17 insertions(+)
 
-diff --git a/include/hw/ipack/ipack.h b/include/hw/ipack/ipack.h
-index cbcdda509d3..00f397fd020 100644
---- a/include/hw/ipack/ipack.h
-+++ b/include/hw/ipack/ipack.h
-@@ -12,6 +12,7 @@
- #define QEMU_IPACK_H
+diff --git a/include/qemu/qemu-plugin.h b/include/qemu/qemu-plugin.h
+index a1c478c54f..1fa656da82 100644
+--- a/include/qemu/qemu-plugin.h
++++ b/include/qemu/qemu-plugin.h
+@@ -476,6 +476,16 @@ void qemu_plugin_register_vcpu_insn_exec_inline_per_vcpu(
+ QEMU_PLUGIN_API
+ size_t qemu_plugin_tb_n_insns(const struct qemu_plugin_tb *tb);
  
- #include "hw/qdev-core.h"
-+#include "hw/irq.h"
- #include "qom/object.h"
- 
- 
-@@ -19,10 +20,8 @@
- OBJECT_DECLARE_SIMPLE_TYPE(IPackBus, IPACK_BUS)
- 
- struct IPackBus {
--    /*< private >*/
-     BusState parent_obj;
- 
--    /* All fields are private */
-     uint8_t n_slots;
-     uint8_t free_slot;
-     qemu_irq_handler set_irq;
-@@ -58,13 +57,11 @@ struct IPackDeviceClass {
- };
- 
- struct IPackDevice {
--    /*< private >*/
-     DeviceState parent_obj;
--    /*< public >*/
- 
-     int32_t slot;
-     /* IRQ objects for the IndustryPack INT0# and INT1# */
--    qemu_irq *irq;
-+    IRQState irq[2];
- };
- 
- extern const VMStateDescription vmstate_ipack_device;
-diff --git a/hw/char/ipoctal232.c b/hw/char/ipoctal232.c
-index d1e5f6dad2e..a2879977fb3 100644
---- a/hw/char/ipoctal232.c
-+++ b/hw/char/ipoctal232.c
-@@ -184,9 +184,9 @@ static void update_irq(IPOctalState *dev, unsigned block)
-     unsigned intno = block / 2;
- 
-     if ((blk0->isr & blk0->imr) || (blk1->isr & blk1->imr)) {
--        qemu_irq_raise(idev->irq[intno]);
-+        qemu_irq_raise(&idev->irq[intno]);
-     } else {
--        qemu_irq_lower(idev->irq[intno]);
-+        qemu_irq_lower(&idev->irq[intno]);
-     }
++/**
++ * qemu_plugin_tb_size() - query helper for size of TB
++ * @tb: opaque handle to TB passed to callback
++ * 
++ * Returns: size of block in bytes
++ */
++
++QEMU_PLUGIN_API
++size_t qemu_plugin_tb_size(const struct qemu_plugin_tb *tb);
++
+ /**
+  * qemu_plugin_tb_vaddr() - query helper for vaddr of TB start
+  * @tb: opaque handle to TB passed to callback
+diff --git a/plugins/api.c b/plugins/api.c
+index a6bd912c56..ae74668c2e 100644
+--- a/plugins/api.c
++++ b/plugins/api.c
+@@ -241,6 +241,13 @@ size_t qemu_plugin_tb_n_insns(const struct qemu_plugin_tb *tb)
+     return tb->n;
  }
  
-diff --git a/hw/ipack/ipack.c b/hw/ipack/ipack.c
-index ed75f791832..b6defae6025 100644
---- a/hw/ipack/ipack.c
-+++ b/hw/ipack/ipack.c
-@@ -55,22 +55,19 @@ static void ipack_device_realize(DeviceState *dev, Error **errp)
-     }
-     bus->free_slot = idev->slot + 1;
- 
--    idev->irq = qemu_allocate_irqs(bus->set_irq, idev, 2);
-+    qemu_init_irqs(idev->irq, ARRAY_SIZE(idev->irq), bus->set_irq, idev);
- 
-     k->realize(dev, errp);
- }
- 
- static void ipack_device_unrealize(DeviceState *dev)
++size_t qemu_plugin_tb_size(const struct qemu_plugin_tb *tb)
++{
++    struct qemu_plugin_insn *last;
++    last = g_ptr_array_index(tb->insns, tb->n - 1);
++    return qemu_plugin_insn_vaddr(last) + qemu_plugin_insn_size(last) - qemu_plugin_tb_vaddr(tb);
++}
++
+ uint64_t qemu_plugin_tb_vaddr(const struct qemu_plugin_tb *tb)
  {
--    IPackDevice *idev = IPACK_DEVICE(dev);
-     IPackDeviceClass *k = IPACK_DEVICE_GET_CLASS(dev);
- 
-     if (k->unrealize) {
-         k->unrealize(dev);
-         return;
-     }
--
--    qemu_free_irqs(idev->irq, 2);
- }
- 
- static const Property ipack_device_props[] = {
-diff --git a/hw/ipack/tpci200.c b/hw/ipack/tpci200.c
-index 88eef4b8308..470a4203ae4 100644
---- a/hw/ipack/tpci200.c
-+++ b/hw/ipack/tpci200.c
-@@ -275,11 +275,11 @@ static void tpci200_write_las0(void *opaque, hwaddr addr, uint64_t val,
-                 if (ip != NULL) {
-                     if (val & STATUS_INT(i, 0)) {
-                         DPRINTF("Clear IP %c INT0# status\n", 'A' + i);
--                        qemu_irq_lower(ip->irq[0]);
-+                        qemu_irq_lower(&ip->irq[0]);
-                     }
-                     if (val & STATUS_INT(i, 1)) {
-                         DPRINTF("Clear IP %c INT1# status\n", 'A' + i);
--                        qemu_irq_lower(ip->irq[1]);
-+                        qemu_irq_lower(&ip->irq[1]);
-                     }
-                 }
- 
-@@ -344,7 +344,7 @@ static uint64_t tpci200_read_las1(void *opaque, hwaddr addr, unsigned size)
-                 bool int_set = s->status & STATUS_INT(ip_n, intno);
-                 bool int_edge_sensitive = s->ctrl[ip_n] & CTRL_INT_EDGE(intno);
-                 if (int_set && !int_edge_sensitive) {
--                    qemu_irq_lower(ip->irq[intno]);
-+                    qemu_irq_lower(&ip->irq[intno]);
-                 }
-             }
- 
+     const DisasContextBase *db = tcg_ctx->plugin_db;
 -- 
-2.47.1
+2.34.1
 
 
