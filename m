@@ -4,86 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1EA60C02192
-	for <qemu-devel@archiver.kernel.org>; Fri, 31 Jan 2025 21:09:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B864DC02192
+	for <qemu-devel@archiver.kernel.org>; Fri, 31 Jan 2025 21:09:50 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tdyE0-0008VD-QB; Fri, 31 Jan 2025 16:06:52 -0500
+	id 1tdyGN-00022d-Ke; Fri, 31 Jan 2025 16:09:19 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tdyDy-0008Es-2v
- for qemu-devel@nongnu.org; Fri, 31 Jan 2025 16:06:50 -0500
-Received: from mail-wm1-x32a.google.com ([2a00:1450:4864:20::32a])
+ (Exim 4.90_1) (envelope-from <onebigemail@gmail.com>)
+ id 1tdyGM-00021F-1N
+ for qemu-devel@nongnu.org; Fri, 31 Jan 2025 16:09:18 -0500
+Received: from mail-ej1-x629.google.com ([2a00:1450:4864:20::629])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tdyDw-0007tR-DX
- for qemu-devel@nongnu.org; Fri, 31 Jan 2025 16:06:49 -0500
-Received: by mail-wm1-x32a.google.com with SMTP id
- 5b1f17b1804b1-43690d4605dso17493785e9.0
- for <qemu-devel@nongnu.org>; Fri, 31 Jan 2025 13:06:48 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <onebigemail@gmail.com>)
+ id 1tdyGJ-000857-Ur
+ for qemu-devel@nongnu.org; Fri, 31 Jan 2025 16:09:17 -0500
+Received: by mail-ej1-x629.google.com with SMTP id
+ a640c23a62f3a-ab6d4810332so38806466b.1
+ for <qemu-devel@nongnu.org>; Fri, 31 Jan 2025 13:09:15 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1738357606; x=1738962406; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=DA1wMZ2yl5z/7wIXRmmiIP3J469q4sqq1JVgdMv1DSg=;
- b=OzPp04JwPKsP48lZcOEtww9TcxmeWQSEjbroAKPougDQstq/WpKbK788B6UVCnZEVc
- WBCQHUv5ZTkgBC4g4W2P3/LNGtv+LeoqNo9KgWydIHlc/MxFEJlT/2+P50p6/cBpnl5g
- ek0LeZpCPy89NFew8kdDF6A+gxbblr8Qz+O0h4tZRjG7PfvW6UsFjHJgcvJlnBggnmtz
- gi5vdoFbRKgFdKtVGIzXWbEX9kAVzZzzFFObaW6rpggVDjUgRNL7H/aChOfz2NpV3/Tz
- RVRluIaea7x0fMWXbJtd+V3BK08v7IUYyXo2zUXZwbSu8rFtvRokwHbn0wkBo6DFNSSG
- J/yA==
+ d=gmail.com; s=20230601; t=1738357754; x=1738962554; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=GHriA1JVBTyLxUQMJn1prS2++unY+un0wHZdtSZ3+Oo=;
+ b=Bspn3K5NtonwYNWK4jP1Q7Eai5hvNSCTTEMIjaq4bvLrjlP2E/pmHVRjPkjXDVzVif
+ SQoVnlLjL0Zh4aMdCikQTGAmaSlG2bSsoKi9XBAz5Qr8x+XeKUKUFIhocaIfg1NjgxK8
+ FHHoT0aIrSX0LqJoOsS6ZUW25hXSdVBmIQLVOBRbfMsA36r+EL9dXvllNsJ0NWJiidDL
+ SFttKwSwx6vZhzyu94shwaKAbcJpJ99ySYILqHtQDfDe9QVToVM8slDmv1FKb0mb/6gh
+ Nee7gikPT8A0dDwsGcmBkfQmlgrgBNukC34mnCXFIPdzNd4qqSl/vKo7MBDB5qGEjfwh
+ +TyQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1738357606; x=1738962406;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=DA1wMZ2yl5z/7wIXRmmiIP3J469q4sqq1JVgdMv1DSg=;
- b=X0nWzolatLk2hs6Zr4pIQj0eGnDgOm0pueiuMBtoKuxp6yemIAW5BFZlBm1w7ds/2Z
- XOGXqPLXSEkAg8HjObbTjLMsTSumdpRtfeK5S4tl7XIPdSCtcJCt5XQryi6ciVKgHlqj
- akO/s49kNYFWexXmOW4IGRNkxFWhpfBcrUheUiMgImhM+6Xl6unRjZpdYX00toZBBbMP
- 2p3jqKKuvxaSOqlxREhWp6coNi72TRVL7ziriAIs7R3MhtDK18QJ7ijuLI9H2FJfHwtn
- 4xWKRz8zdeDclp61nWNaBquPa7YmcuhJ18e31dCEgFs08CMvL08/2OixgGwHf4ivdnnG
- uOIw==
-X-Gm-Message-State: AOJu0YzPByPbf95xKG2xiCc54rC1TfhkTRC2Z15f8muBHqYdTDcOjXjz
- dGMa7vOe6UcAIx89EevzZ8O9tvUewSVuwdbBTN077VTl/3MnF0nLogPoAEc//kY+er48sRtqfbI
- hYWQ=
-X-Gm-Gg: ASbGncuET6JvdpEMsZzZaljzKJQSozFRhmrwKggRb+nY6ZsLAtXCwKOeYLk7aignH3l
- ngeSNntBi5xvsz9lhQGBmxnMdImQvrTXuiE5C45oXRqRYKHQXVA4PsugtDYBJegd3QrIde+3tAB
- vrKwlp9T/COUxnMc0G8bnTKqN6YWlL1vKIfKO1Qyde6LmWRRFCkQjSoHGxnOfXrfgbQ/Siw4NUm
- KtbuSXgbNObfXAmeg5w0OBgzyvKiOejXuusHpVj/qveidocCuVBjbmj6oSbGcg/APEXjWYUMa7g
- VLPWdtlUDsDGbzulLXx587tZF7wyJhUH3X6ZHjJzo/hybO3Jwsh2wiHuWpm7J2e7nQ==
-X-Google-Smtp-Source: AGHT+IEv20jLlcFdxroJHAWxWd4IY4fYv5ROQUbeBab/15PIAzNgQxvqhbQl4l2IRDhMl01oaocC4g==
-X-Received: by 2002:a05:600c:524a:b0:434:9f81:76d5 with SMTP id
- 5b1f17b1804b1-438dc40ffdamr105809035e9.22.1738357606421; 
- Fri, 31 Jan 2025 13:06:46 -0800 (PST)
-Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
- [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-438dcc6dfb5sm103980675e9.31.2025.01.31.13.06.45
- (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Fri, 31 Jan 2025 13:06:46 -0800 (PST)
-From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-To: qemu-devel@nongnu.org
-Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Richard Henderson <richard.henderson@linaro.org>
-Subject: [PULL 17/36] hw/char/pci-multi: Convert legacy qemu_allocate_irqs to
- qemu_init_irq
-Date: Fri, 31 Jan 2025 22:05:00 +0100
-Message-ID: <20250131210520.85874-18-philmd@linaro.org>
-X-Mailer: git-send-email 2.47.1
-In-Reply-To: <20250131210520.85874-1-philmd@linaro.org>
-References: <20250131210520.85874-1-philmd@linaro.org>
+ d=1e100.net; s=20230601; t=1738357754; x=1738962554;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=GHriA1JVBTyLxUQMJn1prS2++unY+un0wHZdtSZ3+Oo=;
+ b=jTEiRDlcEiSQKcWUmTc06qDQW7moyW49kU6EugvnbbdvSWLTDYyRTBfPsPuTCz4aIZ
+ hTu8jxMe/4cV+MQPcSHKNZpslUlWj3TEb72bOibVyXyCvJl0QPqOjXbGzzRWcviLiEXf
+ sZrt/vZSJHjMjAUIsdeT0N1aqZiyOuQ5c8hik5LtQWhWEzBFKyy7Cc6zFbnWVDlJ+w/9
+ YkOEaCG2jkhzVE7nvI1wZwKejzDnwveYbyF78VNTF07pkCx2IuyqYMJ9ZmoHKoRyqg9i
+ YnptLiYS1yPmNG7FmgeqirHijKOxrCPBYQNeADVmlmFRFFp3ziSRrXWA+5L55/5jKhYA
+ Iu4Q==
+X-Gm-Message-State: AOJu0YxPAJca6kPrUSAz7Xf9juI87fJ3g6MtrgGFSyYri+abq8HEGzi1
+ WMhLqTWq7+WHR5UpzchKvolIuEJsn9ILesHoMzs2iJAkl0aD/PSOkmH8ymUbPaMtOUONfr1zoqH
+ /yYoIA9Nq67dNGIEC5lWDCV28myQ=
+X-Gm-Gg: ASbGncsoc7gOsdsN62bSBE1ClD48kHFdPwyvzbq0VICJWBgMgBIDBSEcsc9UjrIbBYX
+ jeZWUuZDPd26UOOO8AeKH8+Byf8uh+bmIkZDTOjopjUwIv+3yw5n059P3iUaKetgS+9JjSgDxnw
+ ==
+X-Google-Smtp-Source: AGHT+IFXqQ935AgJ1WYwbLG009gK3eGSo+lr2VDBkFsoPKtmpBME4Tln+LIAmsoJx1yCZmwgI6Zz3EP8pimbKhwQBiA=
+X-Received: by 2002:a17:907:60d2:b0:ab6:eec4:c9c2 with SMTP id
+ a640c23a62f3a-ab6eec4d883mr279690866b.7.1738357753445; Fri, 31 Jan 2025
+ 13:09:13 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32a;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x32a.google.com
+References: <20250131175716.3218600-1-lacraig3@gmail.com>
+ <1f2ceb5a-e40f-42c3-beb2-e3839e0229fd@linaro.org>
+In-Reply-To: <1f2ceb5a-e40f-42c3-beb2-e3839e0229fd@linaro.org>
+From: Luke Craig <lacraig3@gmail.com>
+Date: Fri, 31 Jan 2025 16:09:03 -0500
+X-Gm-Features: AWEUYZmrdOkIDDQwr1kxeeIwKucaLKMY-hUHAAJjorCHNCMEQ9xvWkdpVQ6uqv4
+Message-ID: <CAHEB4Fi7KRpEwyQ3sw2z4sdS+opjtofb+AKpo9_CEEMiFtmsMQ@mail.gmail.com>
+Subject: Re: [PATCH v2 0/3] plugins: add tb convenience functions
+To: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Cc: qemu-devel@nongnu.org, Alexandre Iooss <erdnaxe@crans.org>, 
+ Mahmoud Mandour <ma.mandourr@gmail.com>,
+ =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>
+Content-Type: multipart/alternative; boundary="00000000000063127f062d06f422"
+Received-SPF: pass client-ip=2a00:1450:4864:20::629;
+ envelope-from=onebigemail@gmail.com; helo=mail-ej1-x629.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -100,65 +94,159 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-There are a fixed number of PCI IRQs, known beforehand.
-Allocate them within PCIMultiSerialState, and initialize
-using qemu_init_irq(), allowing to remove the legacy
-qemu_allocate_irqs() and qemu_free_irqs() calls.
+--00000000000063127f062d06f422
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-Message-Id: <20250121182828.45088-1-philmd@linaro.org>
----
- hw/char/serial-pci-multi.c | 7 +++----
- 1 file changed, 3 insertions(+), 4 deletions(-)
+Hi Pierrick,
 
-diff --git a/hw/char/serial-pci-multi.c b/hw/char/serial-pci-multi.c
-index 7578e863cfe..718ae251317 100644
---- a/hw/char/serial-pci-multi.c
-+++ b/hw/char/serial-pci-multi.c
-@@ -45,7 +45,7 @@ typedef struct PCIMultiSerialState {
-     char         *name[PCI_SERIAL_MAX_PORTS];
-     SerialState  state[PCI_SERIAL_MAX_PORTS];
-     uint32_t     level[PCI_SERIAL_MAX_PORTS];
--    qemu_irq     *irqs;
-+    IRQState     irqs[PCI_SERIAL_MAX_PORTS];
-     uint8_t      prog_if;
- } PCIMultiSerialState;
- 
-@@ -61,7 +61,6 @@ static void multi_serial_pci_exit(PCIDevice *dev)
-         memory_region_del_subregion(&pci->iobar, &s->io);
-         g_free(pci->name[i]);
-     }
--    qemu_free_irqs(pci->irqs, pci->ports);
- }
- 
- static void multi_serial_irq_mux(void *opaque, int n, int level)
-@@ -102,7 +101,6 @@ static void multi_serial_pci_realize(PCIDevice *dev, Error **errp)
-     pci->dev.config[PCI_INTERRUPT_PIN] = 0x01;
-     memory_region_init(&pci->iobar, OBJECT(pci), "multiserial", 8 * nports);
-     pci_register_bar(&pci->dev, 0, PCI_BASE_ADDRESS_SPACE_IO, &pci->iobar);
--    pci->irqs = qemu_allocate_irqs(multi_serial_irq_mux, pci, nports);
- 
-     for (i = 0; i < nports; i++) {
-         s = pci->state + i;
-@@ -110,7 +108,7 @@ static void multi_serial_pci_realize(PCIDevice *dev, Error **errp)
-             multi_serial_pci_exit(dev);
-             return;
-         }
--        s->irq = pci->irqs[i];
-+        s->irq = &pci->irqs[i];
-         pci->name[i] = g_strdup_printf("uart #%zu", i + 1);
-         memory_region_init_io(&s->io, OBJECT(pci), &serial_io_ops, s,
-                               pci->name[i], 8);
-@@ -183,6 +181,7 @@ static void multi_serial_init(Object *o)
-     size_t i, nports = multi_serial_get_port_count(PCI_DEVICE_GET_CLASS(dev));
- 
-     for (i = 0; i < nports; i++) {
-+        qemu_init_irq(&pms->irqs[i], multi_serial_irq_mux, pms, i);
-         object_initialize_child(o, "serial[*]", &pms->state[i], TYPE_SERIAL);
-     }
- }
--- 
-2.47.1
+Thank you for your reply.
 
+I have submitted a new patch series with commits signed off.
+
+Thanks!
+-Luke
+
+On Fri, Jan 31, 2025, 2:53=E2=80=AFPM Pierrick Bouvier <pierrick.bouvier@li=
+naro.org>
+wrote:
+
+> Hi Luke,
+>
+> On 1/31/25 09:57, Luke Craig wrote:
+> > This PR extends the plugin API with two functions which allow convenien=
+t
+> access around tbs.
+> >
+> > The first, qemu_plugin_tb_size, provides a mechanism for determining th=
+e
+> total size of a translation block.
+> >
+> > The second, qemu_plugin_tb_get_insn_by_vaddr, allows users to get a
+> reference to an instruction by its virtual address rather than just its
+> index.
+> >
+> > In response to feedback from Pierrick I have updated the implementation
+> of qemu_plugin_tb_size.
+> >
+> > Additionally, I have added these functions to the insn.c test plugin in
+> response to Alex's feedback.
+> >
+> > Lastly, I'll provide a reply to Alex's feeback (repeated below):
+> >
+> >> But the general comment is this is an example of tying the plugin API
+> >> too deeply with the internals of the translator. Why does a plugin nee=
+d
+> >> to know what is an implementation detail?
+> >
+> > Finding the line between implementation detail and relevant to plugins
+> is challenging, but I submitted this change because I found myself
+> implementing these functions in plugins. If you'd like for me to enumerat=
+e
+> examples where knowing the tb_size is relevant to analysis I'd be happy t=
+o
+> submit some.
+> >
+> > Luke Craig (3):
+> >    plugin: extend API with qemu_plugin_tb_get_insn_by_vaddr
+> >    plugin: extend API with qemu_plugin_tb_size
+> >    plugins: extend insn test for new convenience functions
+> >
+>
+> For all the series,
+> Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+>
+> >   include/qemu/qemu-plugin.h | 21 +++++++++++++++++++++
+> >   plugins/api.c              | 20 ++++++++++++++++++++
+> >   tests/tcg/plugins/insn.c   | 10 ++++++++++
+> >   3 files changed, 51 insertions(+)
+> >
+>
+> To accept this series, commits should be signed off [1].
+>
+> https://www.qemu.org/docs/master/devel/submitting-a-patch.html#patch-emai=
+ls-must-include-a-signed-off-by-line
+>
+> Thanks,
+> Pierrick
+>
+
+--00000000000063127f062d06f422
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+
+<div dir=3D"auto"><div>Hi Pierrick,</div><div dir=3D"auto"><br></div><div d=
+ir=3D"auto">Thank you for your reply.</div><div dir=3D"auto"><br></div><div=
+ dir=3D"auto">I have submitted a new patch series with commits signed off.<=
+/div><div dir=3D"auto"><br></div><div dir=3D"auto">Thanks!</div><div dir=3D=
+"auto">-Luke<br><br><div class=3D"gmail_quote gmail_quote_container" dir=3D=
+"auto"><div dir=3D"ltr" class=3D"gmail_attr">On Fri, Jan 31, 2025, 2:53=E2=
+=80=AFPM Pierrick Bouvier &lt;<a href=3D"mailto:pierrick.bouvier@linaro.org=
+">pierrick.bouvier@linaro.org</a>&gt; wrote:<br></div><blockquote class=3D"=
+gmail_quote" style=3D"margin:0 0 0 .8ex;border-left:1px #ccc solid;padding-=
+left:1ex">Hi Luke,<br>
+<br>
+On 1/31/25 09:57, Luke Craig wrote:<br>
+&gt; This PR extends the plugin API with two functions which allow convenie=
+nt access around tbs.<br>
+&gt; <br>
+&gt; The first, qemu_plugin_tb_size, provides a mechanism for determining t=
+he total size of a translation block.<br>
+&gt; <br>
+&gt; The second, qemu_plugin_tb_get_insn_by_vaddr, allows users to get a re=
+ference to an instruction by its virtual address rather than just its index=
+.<br>
+&gt; <br>
+&gt; In response to feedback from Pierrick I have updated the implementatio=
+n of qemu_plugin_tb_size.<br>
+&gt; <br>
+&gt; Additionally, I have added these functions to the insn.c test plugin i=
+n response to Alex&#39;s feedback.<br>
+&gt; <br>
+&gt; Lastly, I&#39;ll provide a reply to Alex&#39;s feeback (repeated below=
+):<br>
+&gt; <br>
+&gt;&gt; But the general comment is this is an example of tying the plugin =
+API<br>
+&gt;&gt; too deeply with the internals of the translator. Why does a plugin=
+ need<br>
+&gt;&gt; to know what is an implementation detail?<br>
+&gt; <br>
+&gt; Finding the line between implementation detail and relevant to plugins=
+ is challenging, but I submitted this change because I found myself impleme=
+nting these functions in plugins. If you&#39;d like for me to enumerate exa=
+mples where knowing the tb_size is relevant to analysis I&#39;d be happy to=
+ submit some.<br>
+&gt; <br>
+&gt; Luke Craig (3):<br>
+&gt;=C2=A0 =C2=A0 plugin: extend API with qemu_plugin_tb_get_insn_by_vaddr<=
+br>
+&gt;=C2=A0 =C2=A0 plugin: extend API with qemu_plugin_tb_size<br>
+&gt;=C2=A0 =C2=A0 plugins: extend insn test for new convenience functions<b=
+r>
+&gt; <br>
+<br>
+For all the series,<br>
+Reviewed-by: Pierrick Bouvier &lt;<a href=3D"mailto:pierrick.bouvier@linaro=
+.org" target=3D"_blank" rel=3D"noreferrer">pierrick.bouvier@linaro.org</a>&=
+gt;<br>
+<br>
+&gt;=C2=A0 =C2=A0include/qemu/qemu-plugin.h | 21 +++++++++++++++++++++<br>
+&gt;=C2=A0 =C2=A0plugins/api.c=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
+=A0 | 20 ++++++++++++++++++++<br>
+&gt;=C2=A0 =C2=A0tests/tcg/plugins/insn.c=C2=A0 =C2=A0| 10 ++++++++++<br>
+&gt;=C2=A0 =C2=A03 files changed, 51 insertions(+)<br>
+&gt; <br>
+<br>
+To accept this series, commits should be signed off [1].<br>
+<a href=3D"https://www.qemu.org/docs/master/devel/submitting-a-patch.html#p=
+atch-emails-must-include-a-signed-off-by-line" rel=3D"noreferrer noreferrer=
+" target=3D"_blank">https://www.qemu.org/docs/master/devel/submitting-a-pat=
+ch.html#patch-emails-must-include-a-signed-off-by-line</a><br>
+<br>
+Thanks,<br>
+Pierrick<br>
+</blockquote></div></div></div>
+
+--00000000000063127f062d06f422--
 
