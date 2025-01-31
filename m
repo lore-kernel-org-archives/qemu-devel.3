@@ -4,131 +4,140 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6CCB5C02193
-	for <qemu-devel@archiver.kernel.org>; Fri, 31 Jan 2025 09:11:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id EBB83C0218D
+	for <qemu-devel@archiver.kernel.org>; Fri, 31 Jan 2025 09:15:55 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tdn34-0002xb-2K; Fri, 31 Jan 2025 04:10:50 -0500
+	id 1tdn7L-0006TL-2H; Fri, 31 Jan 2025 04:15:15 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <deller@gmx.de>) id 1tdn2z-0002wo-VC
- for qemu-devel@nongnu.org; Fri, 31 Jan 2025 04:10:46 -0500
-Received: from mout.gmx.net ([212.227.17.21])
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1tdn7G-0006Sk-GD
+ for qemu-devel@nongnu.org; Fri, 31 Jan 2025 04:15:10 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <deller@gmx.de>) id 1tdn2x-0008PA-I3
- for qemu-devel@nongnu.org; Fri, 31 Jan 2025 04:10:45 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmx.de;
- s=s31663417; t=1738314637; x=1738919437; i=deller@gmx.de;
- bh=ubx/D6nZaXQqCtSccisp8eGuLg2MVfvE+hjXqAcOWj0=;
- h=X-UI-Sender-Class:Message-ID:Date:MIME-Version:Subject:To:
- References:From:In-Reply-To:Content-Type:
- Content-Transfer-Encoding:cc:content-transfer-encoding:
- content-type:date:from:message-id:mime-version:reply-to:subject:
- to;
- b=mb3YgCtLN6rQ5khZJonyv90eaJPf+P5MDFhBeae9Pw6h//LH7x1qzdK3kMc0sYyK
- K3jyUtaiaGjBUq06Jl9/CduPMF/LJcIfra/KDvSNftNQ4QR4dseVApXn5J8MFeSPS
- QMNNBByeESQWl/y8tNt7IiJqlu4nKbJouFuh2JMnFRbSB3JcY/L1G5PvnPR8N/sdk
- 6p4kXfok/cL/IPxRlk4qE6tgn/gsp2P47c1EgBTEHorB0/JzY0ZKibUIngoLb4Xdw
- k2gZoCE2pMmFJ1aGFORfmShc9KY/uLiZZ7z5jISWqODaMwHvi5BdAcEz5BlzKT2lm
- 6MMKGakBDShFWQAELg==
-X-UI-Sender-Class: 724b4f7f-cbec-4199-ad4e-598c01a50d3a
-Received: from [192.168.20.172] ([109.250.63.6]) by mail.gmx.net (mrgmx104
- [212.227.17.168]) with ESMTPSA (Nemesis) id 1MrQJ5-1t8b6Z3T5b-00bEd1; Fri, 31
- Jan 2025 10:10:36 +0100
-Message-ID: <fc5a2a4a-76d3-420e-8ebe-e8c482ddfa9d@gmx.de>
-Date: Fri, 31 Jan 2025 10:10:35 +0100
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1tdn7E-0001Gp-GU
+ for qemu-devel@nongnu.org; Fri, 31 Jan 2025 04:15:10 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1738314905;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+ bh=32JcsiO2pZwtzx2w59V5DYqgfN1PC9fg8Y3prnOu/uM=;
+ b=QPy+bB82V4Wm++poEPG+ETI0v7+Cay+Zcu7+RYgffoGNpdMv/rJAq+ZTZZrFzKPRcCe5pa
+ 0Ki95jgBgzFBUDXc/JTWf16ajrY6S/bCUZDSR3cL7xeqI5cPLK//nTG5PFyRtvn2Kwm1Ji
+ Pb4kIUHIaoo0WuykYMtu+w8XI5k1BEs=
+Received: from mail-wm1-f72.google.com (mail-wm1-f72.google.com
+ [209.85.128.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-128-MOJp3eH6MGauvEaDbB9mYA-1; Fri, 31 Jan 2025 04:15:02 -0500
+X-MC-Unique: MOJp3eH6MGauvEaDbB9mYA-1
+X-Mimecast-MFC-AGG-ID: MOJp3eH6MGauvEaDbB9mYA
+Received: by mail-wm1-f72.google.com with SMTP id
+ 5b1f17b1804b1-43619b135bcso8269155e9.1
+ for <qemu-devel@nongnu.org>; Fri, 31 Jan 2025 01:15:02 -0800 (PST)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1738314901; x=1738919701;
+ h=content-transfer-encoding:in-reply-to:autocrypt:from
+ :content-language:references:cc:to:subject:user-agent:mime-version
+ :date:message-id:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=32JcsiO2pZwtzx2w59V5DYqgfN1PC9fg8Y3prnOu/uM=;
+ b=nX4ypvaEESwSHsdf8yKNF47tsKn3JhWv7ny+K0AgsNCRj19pRxyFBDVinnDsaj4nt/
+ gt1uV0/lUTLxPr59NeitDl1vvVM8e0QuJkCU/zFgmM3vzQfhLrj/T8WWje864yjM6VP0
+ 8xdtFMfwSN0eKs4/ZDAjOyI7h8J3jovxLhwUI5x0N4KYZTCfeQS+5TCPHf5S/T17t9Cd
+ 6t7WZwuuNHvDft1GjUjMNFuIY/yNzM9E0IlyUfpeoojW4RlvBD4rM+AKO742mP49iSXT
+ 4TNtv2Q0qN4iLaZ9GDzGPFXcYINwq0Pij/uLk1gsRVdGRsDw0hvbGVWxkTsPMAE/qyLq
+ NHIw==
+X-Gm-Message-State: AOJu0YzZahWJTGSPGXKCdxfo37mZo0vHq79zQ9Gp5irePpgZNyHGcV8l
+ 1cLZA4OAyxpN7fMTxd+Oh01YaBnyvyYdIPvocYhmxjnxIOfrjKlXSVOqIHwGUbwbqAQowObwS27
+ QZOr4oFiRrQ8yOpvD81stGPsMYoTrDNYdSKiO7eBx13en1Pe5hd5K1SH1OoQ8
+X-Gm-Gg: ASbGncsyU1Y9tIshQVHlPm2ElFks3RFXC4dFSTpXtgKPPfUrWpgNdnyr+4vwFvYvhzE
+ Zx7L78kYHoTP5gPaMJiZ6TRZRuJypiLFlrbn06+iZGsmKnfLaYZDzr3n4AaYhHmEeAy7wZDwuhz
+ CwMvQDsmUmwTO11FN/g/JOMbABYSLcf1SK2IR2yPMr3hdbbdFeHosssA3sNJJSf5dicCedSaEtd
+ 2pYqttcRFN548tXTnfZZmjegNPyTPhh3OVXUTPdAWNC8WQNUzK4rRrwdwNlfvcZuHB4UvhV/OBN
+ xCLNGVLcfLrTkF4aFlWD9jthy115nuaGMN5MiURrmzc=
+X-Received: by 2002:a05:600c:154a:b0:431:55c1:f440 with SMTP id
+ 5b1f17b1804b1-438dc42bd08mr104659165e9.30.1738314900886; 
+ Fri, 31 Jan 2025 01:15:00 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IEHKkDZtdsXWGEydmb5TaX8iuKKUJvzjkDE+oWURdItqkWdqMsA9qIgUlCF6hEJIiO7lKpvMg==
+X-Received: by 2002:a05:600c:154a:b0:431:55c1:f440 with SMTP id
+ 5b1f17b1804b1-438dc42bd08mr104658875e9.30.1738314900431; 
+ Fri, 31 Jan 2025 01:15:00 -0800 (PST)
+Received: from ?IPV6:2a01:e0a:280:24f0:9db0:474c:ff43:9f5c?
+ ([2a01:e0a:280:24f0:9db0:474c:ff43:9f5c])
+ by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-438dcc81941sm84141775e9.36.2025.01.31.01.14.59
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Fri, 31 Jan 2025 01:14:59 -0800 (PST)
+Message-ID: <009cbf4b-ae21-4bdc-a288-251a6167ff34@redhat.com>
+Date: Fri, 31 Jan 2025 10:14:59 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PULL 8/9] target/hppa: Implement space register hashing for
- 64-bit HP-UX
-To: Michael Tokarev <mjt@tls.msk.ru>, deller@kernel.org,
- qemu-devel@nongnu.org, Stefan Hajnoczi <stefanha@redhat.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- Peter Maydell <peter.maydell@linaro.org>
-References: <20250130132915.16846-1-deller@kernel.org>
- <20250130132915.16846-9-deller@kernel.org>
- <4365fc64-1684-4994-82ad-daedaca3266e@tls.msk.ru>
-Content-Language: en-US
-From: Helge Deller <deller@gmx.de>
-Autocrypt: addr=deller@gmx.de; keydata=
- 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
-In-Reply-To: <4365fc64-1684-4994-82ad-daedaca3266e@tls.msk.ru>
+Subject: Re: [PATCH v2 3/5] vfio/igd: refactor vfio_probe_igd_bar4_quirk()
+ into pci config quirk
+To: Tomita Moeko <tomitamoeko@gmail.com>,
+ Alex Williamson <alex.williamson@redhat.com>
+Cc: qemu-devel@nongnu.org
+References: <20250124191245.12464-1-tomitamoeko@gmail.com>
+ <20250124191245.12464-4-tomitamoeko@gmail.com>
+Content-Language: en-US, fr
+From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
+Autocrypt: addr=clg@redhat.com; keydata=
+ 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
+ uVKe8BVz4atMOoktmt0GWTOC8P4=
+In-Reply-To: <20250124191245.12464-4-tomitamoeko@gmail.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: quoted-printable
-X-Provags-ID: V03:K1:lo8+Uykk+rHfuXKrHxseD59IlFyMx/poQlKz4tfpL41X21tXBaE
- dcDUNfun9u/Zrj1z7In0hBsg2dOAQmczD72sGnjclOPk53tkhptyPInczzYl0xOk4+F755i
- R7b/fcEdrR9R/y66JePGDdBNSZic9UWWdOFljZMdPxxclEfExCtIpKLHcmKMcXhegvTNYbc
- eFw2x4ah5HV9VkfmEcr1Q==
-UI-OutboundReport: notjunk:1;M01:P0:9QP/d1v7iDA=;TOiGH4KX6Ygee6GTNAI3vRJyFm1
- bqP/zJfcrBptclr4D6fWI9qVe5oyLvu3kr0NXPu7OUgAHaSXFx1+IN4fBTwVfWJpVSmPNlFUf
- Ra7ih1VuoZBmrEBJyA3X+04dyaSy+hTYqXU+u1j37c4s0tG/lykY367X0qopdBSk1AdN+jM5Z
- Je5BVxbVtaUwJ48Rwu/TdNockStUsQEyN43RcbmGTvDVDg/GcMSI9rX1RSwLDjL3HjC6unrO5
- R1qb6gJIGQ5jiZXHuUHy+lCKWSsVlMwAgzSXZk0h9G0ZQyNEAiucC3fetu9DQ9ug6OT5gvZ3O
- hUIyImTsSfHzBAssVrc6HBIVxdsP+fvZ8BXI6pv8v99m9Jn5rJCvaq09y4CsoHjapxDyFx4xe
- gUxZ4Tr+TyUqcRyITkpcYkQJPjhC1PThU9k9jxRADWbex5N+dTMuCLpZfntYSjySAdeZzgWV4
- mkKWKUqooOmrHlXoApI1SrzhakA4wc57b038eWaAChQNiIaxhe/jQ4cEUJc6xkw8meOrDQ43d
- xqZTpRXR54MpBttFxy8Ycicy5RprTr/fZef5Tn/4BvBRT8p6LvfQEFYWH4pLcQ3q7PwdghgVo
- f+LAK66d7rPX5WHhugxkRgqve8kUCbzlVXVfR7BP4F/oNqlhRkao4/Jw7oaPsLWujPmrMC5NI
- P3jUPLCY5Helfq0jXfjxmeofwTMdVfPKq4Z+yh4ovrKqegCrYAqgheNegCeym+XApTlSAp3sf
- rwtkSDgfh+A5Jo+IDyI7z3XqxP8FyeYyfNd+KCdKo66XzMtOnaIof2Sqs/7wSpBdxO63NmPln
- LAtN8Nr2Xz8Ok9GglthegHIv5qZJWmCcUuQHXgoHSq2QBMUwr52Q0Zj9wyvwiGDoiYW8EiNh0
- fD190k4YpG9LedOzBIOajDpqYx98IXwM/eZxmYZ4KJj8ZWfUqi6C7uT7EAv8m0/8BYlGZ/0BO
- V/MDvxABaT1dWiJX1zER2X/jhh4p/fFvzKY4f2PVNIJbNCL0lZRgY2zuN4oWD+ZFelOK3nOzj
- AHvh0uwMg32zf8CgW0Lethn3jk0u9b7oWGhKq9RMQuiojNv4sqKlwAYtMV3je1ZjZKUygsM3r
- z68QLS722/Qc5IKYrmR4QQcT/gGFs6t1Ugh0RgaPoMHwnLHpSHyvPkGuJTtLavUtQgHBiaMBU
- ZpWGygHNVQA5l1YH4uV6hJi+eLWZZ09VESnafEkekpOsgAbr3cSd67507HDkT9o9x+wou7zi+
- A4+ixo0fO09dpwq0WhxmsG7nxrLtmbE3/7s6VKmMxOac5RsoAYsSVhAEUS1yMDQJytCX6J0bZ
- GF+b+zRIVujRxMIyeR1u+rC0S6WZWoaKDKnzX53P6OxUnk=
-Received-SPF: pass client-ip=212.227.17.21; envelope-from=deller@gmx.de;
- helo=mout.gmx.net
-X-Spam_score_int: -27
-X-Spam_score: -2.8
-X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=clg@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -33
+X-Spam_score: -3.4
+X-Spam_bar: ---
+X-Spam_report: (-3.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.3,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -146,34 +155,257 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 1/30/25 20:06, Michael Tokarev wrote:
-> 30.01.2025 16:29, deller@kernel.org wrote:
->
->> diff --git a/target/hppa/translate.c b/target/hppa/translate.c
->
->> +=C2=A0=C2=A0=C2=A0 if (ctx->is_pa20 && (a->dr =3D=3D 2)) {
->> +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 /* Update gva_offset_mask f=
-rom the new value of %dr2 */
->> +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 gen_helper_update_gva_offse=
-t_mask(tcg_env);
->> +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 /* Exit to capture the new =
-value for the next TB. */
->> +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 ctx->base.is_jmp =3D DISAS_=
-IAQ_N_STALE_EXIT;
->> +=C2=A0=C2=A0=C2=A0 }
->
-> This fails to build, it looks like:
-> ../target/hppa/translate.c:4621:9: error: nested extern declaration of '=
-gen_helper_update_gva_offset_mask' [-Werror=3Dnested-externs]
+Hello Tomita,
 
-Indeed... there was an
-  #ifndef CONFIG_USER_ONLY
-  #endif
-missing...
+On 1/24/25 20:12, Tomita Moeko wrote:
+> The actual IO BAR4 write quirk in vfio_probe_igd_bar4_quirk() was
+> removed in previous change, leaving the function not matching its name,
+> so move it into the newly introduced vfio_config_quirk_setup(). There
+> is no functional change in this commit. If any failure occurs, the
+> function simply returns and proceeds.
+> 
+> Signed-off-by: Tomita Moeko <tomitamoeko@gmail.com>
+> ---
+>   hw/vfio/igd.c        | 31 +++++++++++++++++--------------
+>   hw/vfio/pci-quirks.c |  6 +++++-
+>   hw/vfio/pci.h        |  2 +-
+>   3 files changed, 23 insertions(+), 16 deletions(-)
+> 
+> diff --git a/hw/vfio/igd.c b/hw/vfio/igd.c
+> index ca3a32f4f2..376a26fbae 100644
+> --- a/hw/vfio/igd.c
+> +++ b/hw/vfio/igd.c
+> @@ -359,7 +359,8 @@ void vfio_probe_igd_bar0_quirk(VFIOPCIDevice *vdev, int nr)
+>       QLIST_INSERT_HEAD(&vdev->bars[nr].quirks, bdsm_quirk, next);
+>   }
+>   
+> -void vfio_probe_igd_bar4_quirk(VFIOPCIDevice *vdev, int nr)
+> +bool vfio_probe_igd_config_quirk(VFIOPCIDevice *vdev,
+> +                                 Error **errp G_GNUC_UNUSED)
 
-Fixed in the new pull request.
+Adding an 'Error **' parameter is in improvement indeed. All the error_report
+of this routine need to be converted too.
 
-Thanks!
-Helge
+>   {
+>       g_autofree struct vfio_region_info *rom = NULL;
+>       g_autofree struct vfio_region_info *opregion = NULL;
+> @@ -378,10 +379,10 @@ void vfio_probe_igd_bar4_quirk(VFIOPCIDevice *vdev, int nr)
+>        * PCI bus address.
+>        */
+>       if (!vfio_pci_is(vdev, PCI_VENDOR_ID_INTEL, PCI_ANY_ID) ||
+> -        !vfio_is_vga(vdev) || nr != 4 ||
+> +        !vfio_is_vga(vdev) ||
+>           &vdev->pdev != pci_find_device(pci_device_root_bus(&vdev->pdev),
+>                                          0, PCI_DEVFN(0x2, 0))) {
+> -        return;
+> +        return true;
+>       }
+>   
+>       /*
+> @@ -395,7 +396,7 @@ void vfio_probe_igd_bar4_quirk(VFIOPCIDevice *vdev, int nr)
+>                                              "vfio-pci-igd-lpc-bridge")) {
+>           error_report("IGD device %s cannot support legacy mode due to existing "
+>                        "devices at address 1f.0", vdev->vbasedev.name);
+> -        return;
+> +        return true;
+
+if there is an error_report, why is this returning true ? It should be false.
+  
+>       }
+>   
+>       /*
+> @@ -407,7 +408,7 @@ void vfio_probe_igd_bar4_quirk(VFIOPCIDevice *vdev, int nr)
+>       if (gen == -1) {
+>           error_report("IGD device %s is unsupported in legacy mode, "
+>                        "try SandyBridge or newer", vdev->vbasedev.name);
+> -        return;
+> +        return true;
+
+same here and else where.
+
+>       }
+>   
+>       /*
+> @@ -420,7 +421,7 @@ void vfio_probe_igd_bar4_quirk(VFIOPCIDevice *vdev, int nr)
+>       if ((ret || !rom->size) && !vdev->pdev.romfile) {
+>           error_report("IGD device %s has no ROM, legacy mode disabled",
+>                        vdev->vbasedev.name);
+> -        return;
+> +        return true;
+>       }
+>   
+>       /*
+> @@ -431,7 +432,7 @@ void vfio_probe_igd_bar4_quirk(VFIOPCIDevice *vdev, int nr)
+>           error_report("IGD device %s hotplugged, ROM disabled, "
+>                        "legacy mode disabled", vdev->vbasedev.name);
+>           vdev->rom_read_failed = true;
+> -        return;
+> +        return true;
+>       }
+>   
+>       /*
+> @@ -444,7 +445,7 @@ void vfio_probe_igd_bar4_quirk(VFIOPCIDevice *vdev, int nr)
+>       if (ret) {
+>           error_report("IGD device %s does not support OpRegion access,"
+>                        "legacy mode disabled", vdev->vbasedev.name);
+> -        return;
+> +        return true;
+>       }
+>   
+>       ret = vfio_get_dev_region_info(&vdev->vbasedev,
+> @@ -453,7 +454,7 @@ void vfio_probe_igd_bar4_quirk(VFIOPCIDevice *vdev, int nr)
+>       if (ret) {
+>           error_report("IGD device %s does not support host bridge access,"
+>                        "legacy mode disabled", vdev->vbasedev.name);
+> -        return;
+> +        return true;
+>       }
+>   
+>       ret = vfio_get_dev_region_info(&vdev->vbasedev,
+> @@ -462,7 +463,7 @@ void vfio_probe_igd_bar4_quirk(VFIOPCIDevice *vdev, int nr)
+>       if (ret) {
+>           error_report("IGD device %s does not support LPC bridge access,"
+>                        "legacy mode disabled", vdev->vbasedev.name);
+> -        return;
+> +        return true;
+>       }
+>   
+>       gmch = vfio_pci_read_config(&vdev->pdev, IGD_GMCH, 4);
+> @@ -476,7 +477,7 @@ void vfio_probe_igd_bar4_quirk(VFIOPCIDevice *vdev, int nr)
+>           error_reportf_err(err, VFIO_MSG_PREFIX, vdev->vbasedev.name);
+>           error_report("IGD device %s failed to enable VGA access, "
+>                        "legacy mode disabled", vdev->vbasedev.name);
+> -        return;
+> +        return true;
+>       }
+>   
+>       /* Create our LPC/ISA bridge */
+> @@ -484,7 +485,7 @@ void vfio_probe_igd_bar4_quirk(VFIOPCIDevice *vdev, int nr)
+>       if (ret) {
+>           error_report("IGD device %s failed to create LPC bridge, "
+>                        "legacy mode disabled", vdev->vbasedev.name);
+> -        return;
+> +        return true;
+>       }
+>   
+>       /* Stuff some host values into the VM PCI host bridge */
+> @@ -492,14 +493,14 @@ void vfio_probe_igd_bar4_quirk(VFIOPCIDevice *vdev, int nr)
+>       if (ret) {
+>           error_report("IGD device %s failed to modify host bridge, "
+>                        "legacy mode disabled", vdev->vbasedev.name);
+> -        return;
+> +        return true;
+>       }
+>   
+>       /* Setup OpRegion access */
+>       if (!vfio_pci_igd_opregion_init(vdev, opregion, &err)) {
+>           error_append_hint(&err, "IGD legacy mode disabled\n");
+>           error_reportf_err(err, VFIO_MSG_PREFIX, vdev->vbasedev.name);
+> -        return;
+> +        return true;
+>       }
+>   
+>       /*
+> @@ -561,4 +562,6 @@ void vfio_probe_igd_bar4_quirk(VFIOPCIDevice *vdev, int nr)
+>   
+>       trace_vfio_pci_igd_bdsm_enabled(vdev->vbasedev.name,
+>                                       (ggms_size + gms_size) / MiB);
+> +
+> +    return true;
+>   }
+> diff --git a/hw/vfio/pci-quirks.c b/hw/vfio/pci-quirks.c
+> index c40e3ca88f..b8379cb512 100644
+> --- a/hw/vfio/pci-quirks.c
+> +++ b/hw/vfio/pci-quirks.c
+> @@ -1169,6 +1169,11 @@ bool vfio_pci_igd_opregion_init(VFIOPCIDevice *vdev,
+>    */
+>   bool vfio_config_quirk_setup(VFIOPCIDevice *vdev, Error **errp)
+>   {
+> +#ifdef CONFIG_VFIO_IGD
+
+oh. We try to avoid such ifdef in QEMU. Only very specific and high level
+configs are discarded at compile time (KVM, LINUX, etc).
+
+One way to adress this case, would be to use QOM. Example below :
+
+  
+Declare a base class :
+     
+     #define TYPE_VFIO_PCI_QUIRK_PROVIDER "vfio-pci-quirk-provider"
+     
+     OBJECT_DECLARE_TYPE(VFIOPCIQuirkProvider, VFIOPCIQuirkProviderClass,
+                         VFIO_PCI_QUIRK_PROVIDER)
+     
+     struct VFIOPCIQuirkProviderClass {
+         ObjectClass parent;
+     
+         bool (*probe)(VFIOPCIDevice *vdev, Error **errp);
+         bool (*setup)(VFIOPCIDevice *vdev, Error **errp);
+     };
+     
+     static const TypeInfo vfio_pci_quirk_info = {
+         .name = TYPE_VFIO_PCI_QUIRK_PROVIDER,
+         .parent = TYPE_OBJECT,
+         .class_size = sizeof(VFIOPCIQuirkClass),
+         .abstract = true,
+     };
+     
+     static void register_vfio_pci_quirk_type(void)
+     {
+         type_register_static(&vfio_pci_quirk_info);
+     }
+     
+     type_init(register_vfio_pci_quirk_type)
+
+
+Declare one for IGD
+     
+     static void vfio_pci_quirk_igd_class_init(ObjectClass *klass, void *data)
+     {
+         VFIOPCIQuirkClass* vpqc = VFIO_PCI_QUIRK_PROVIDER_CLASS(klass);
+     
+         vpqc->setup = vfio_probe_igd_quirk_probe;
+         vpqc->probe = vfio_probe_igd_quirk_probe;
+     }
+     
+     static const TypeInfo vfio_pci_quirk_igd_info = {
+         .name = TYPE_VFIO_PCI_QUIRK_PROVIDER "-igd",
+         .parent = TYPE_VFIO_PCI_QUIRK_PROVIDER,
+         .class_init = vfio_pci_quirk_igd_class_init,
+         .class_size = sizeof(VFIOPCIQuirkClass),
+     };
+     
+     static void vfio_pci_quirk_igd_register_types(void)
+     {
+         type_register_static(&vfio_pci_quirk_igd_info);
+     }
+     
+     type_init(vfio_pci_quirk_igd_register_types)
+
+
+and in the common part, loop on all the classes to probe and setup :
+
+
+     static void vfio_pci_quirk_class_foreach(ObjectClass *klass, void *opaque)
+     {
+         VFIOPCIQuirkProviderClass* vpqc = VFIO_PCI_QUIRK_PROVIDER_CLASS(klass);
+         Error *local_err = NULL;
+     
+         vpqc->setup(opaque, &local_err);
+     }
+     
+     bool vfio_config_quirk_setup(VFIOPCIDevice *vdev, Error **errp)
+     {
+         object_class_foreach(vfio_pci_quirk_class_foreach,
+                              TYPE_VFIO_PCI_QUIRK_PROVIDER, false, vdev);
+        ...
+
+
+
+
+Thanks,
+
+C.
+
 
 
