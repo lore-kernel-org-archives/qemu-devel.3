@@ -4,82 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E30D6C02192
-	for <qemu-devel@archiver.kernel.org>; Fri, 31 Jan 2025 21:09:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D2421C02192
+	for <qemu-devel@archiver.kernel.org>; Fri, 31 Jan 2025 21:09:37 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tdyFS-0005Py-MC; Fri, 31 Jan 2025 16:08:22 -0500
+	id 1tdyFO-0004aO-1m; Fri, 31 Jan 2025 16:08:18 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tdyFO-0004hU-2q
- for qemu-devel@nongnu.org; Fri, 31 Jan 2025 16:08:18 -0500
-Received: from mail-wm1-x32b.google.com ([2a00:1450:4864:20::32b])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tdyEw-0003zA-17
+ for qemu-devel@nongnu.org; Fri, 31 Jan 2025 16:07:53 -0500
+Received: from mail-wr1-x42e.google.com ([2a00:1450:4864:20::42e])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tdyFM-00082E-08
- for qemu-devel@nongnu.org; Fri, 31 Jan 2025 16:08:17 -0500
-Received: by mail-wm1-x32b.google.com with SMTP id
- 5b1f17b1804b1-436345cc17bso18803785e9.0
- for <qemu-devel@nongnu.org>; Fri, 31 Jan 2025 13:08:15 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tdyEt-00080G-UH
+ for qemu-devel@nongnu.org; Fri, 31 Jan 2025 16:07:49 -0500
+Received: by mail-wr1-x42e.google.com with SMTP id
+ ffacd0b85a97d-3862f32a33eso1117190f8f.3
+ for <qemu-devel@nongnu.org>; Fri, 31 Jan 2025 13:07:47 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1738357694; x=1738962494; darn=nongnu.org;
+ d=linaro.org; s=google; t=1738357666; x=1738962466; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=tDN1ii+damKmSXlqt4UdR7pxlDb9QSMG1FV0pXZv6Hg=;
- b=yj+M4P0VGlnUbcHhRR1CNkJvsQdAKUEeVjFVwIz13mbKtRX8IAvYFQsksBTeEBEa9K
- kOMOUka2CYlReOsUGiu6EPqwfIsOgoFyIKyZfmuZp6v8v7SAw9FevOcvnlwY0y9PsjMm
- l+qu7CH6zWD7cW1st1Kk6F8R3P1Uva5AKhxD2gN2uygnxtcgAg2+9zPmJLzLNYKI+4Ca
- w1U7vZU8S7UA2hJvAog78Dj+e2gncQPMOJA6UKHdoNWIvYKcHCPnFc78tggb9BQV3HGj
- 7hz4tzBjglF9FNR04EH7ufa6dtYGE75EUd8JRsBr8WY2idfcXf7vaYmFG//pSsKW2AXt
- ZnHg==
+ bh=q41kF9LgoBzRCfJNt+CSBeq/VMhGxdw7fo0GoRWO1As=;
+ b=NGE+sNmr6JRn4fRmIgAjcn2cGEKKT0IsJsVbLR866NbE27uHMNFYY2ZYeP6JWB4+3f
+ HOjraJY0S6GsRZ+XWSFFUlfnGN8rUyQSOUb3Q9AFdcQsU+NLIZwJuI5ruCNGdI0ctaER
+ Wexa04QqdDZWaS4x+5wcDzvQTK4MIzgnFv1st30kg2vBxz9KOwpkbpw1PPlEBV3ohjP3
+ gg+whBYttgxaw25fXNYTifsbeyxUtcY8aaok7iUAMmC4nL+i9kMGKlr/5GJjUCXC6sn4
+ i6zpQuZEhBYN5kaNZbO0mYnHrM6xc+YAexaSQpxlWa887tRkaSG2DVERIqooK+Vf7qsb
+ ugig==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1738357694; x=1738962494;
+ d=1e100.net; s=20230601; t=1738357666; x=1738962466;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=tDN1ii+damKmSXlqt4UdR7pxlDb9QSMG1FV0pXZv6Hg=;
- b=bprCnGNrmaUVPIAxkVNrVJ9DgR5ABMNGUT304MScbs/XwBHC4UIErxjgjBdy2b0zna
- co3OMbIV3lA5KgOuGLX8VjlRjLnN96afosq1Go7544phLJxZyFlc/SFepVlFnNbJvOow
- 9OIYR5xPyx9KO8aJt9UJdAAs27z45slOOHtTZvN/VOGz0zcyp3GwApSwTMwQj3KLGJ1c
- nfPWQEJxZVgT9gjdIORuPUgeQ7PjfzJfu3z3K6CkmirqIUe+9oeA2AmTEbZsKqpUZSw0
- 3wX1DNETW2xKX6l75Jr4XDYXfkxPMb2uP/tx8l3IsDPqEM0Bzkpn/ak84Bnu0L52WplW
- zLdg==
-X-Gm-Message-State: AOJu0YwETWO7E9TnaaPJ+Lk+DkVe71/xxh3jcKnnnu+UeLFr0YeSn/0u
- CfD3N/z5Q4H8HsqIhMicwpqe1YageVTFjUYwSjN1NcuOX31zJvyKBiFx8lPGCO87H92i7bTec7z
- KRYc=
-X-Gm-Gg: ASbGncs9ZwP/0qTeQmaX2HZDZBggHuwxifFUslx5cPF4JgvUkraZWkrbdIv5NlvSdYm
- PtjeJ4LAdaRRC3J/c2DwdBWDED+KCZodDL5ETCEh1xcmYAcMQJDNdJt5H//jPEqkRD3ncIlJwc6
- /5AElKB+W4WjM497CMWeYcyY36I2GeJHHeLf++V96K93ljru8jsWlVkTj7NajOFSa6d6Cddih47
- DWyU2C+M79ixCmGGFlw0VN5Y/z5yK9nT2gBG15cIe+VY05r6V5ZjHkEFSAvgKBPxfU29e6xZvTz
- uXE/losEmI5CaOAudcRyfYfR2DdSOiQDbuo8I3fbeS3chs+fJp8dFN8e7CcnXhCQlA==
-X-Google-Smtp-Source: AGHT+IG9qIupilbrznjln/sH9wbHLvz7f9wdU6hQY37W+0GrsOiKaB2CMUVk+lbqW5dCwb3oqGaPuA==
-X-Received: by 2002:a05:600c:4e01:b0:435:136:75f6 with SMTP id
- 5b1f17b1804b1-438dc34b179mr133719435e9.0.1738357694143; 
- Fri, 31 Jan 2025 13:08:14 -0800 (PST)
+ bh=q41kF9LgoBzRCfJNt+CSBeq/VMhGxdw7fo0GoRWO1As=;
+ b=t7xTOTTmJ6KlIe11KlqQw4ZT+4uFsohnDHJf9A2jjJZH714u1j5r83YEbzowdKPHr0
+ ET5ASVSg9CPGI/UZCXs6/LUXC5/hlPj9pxqAlJm3JnVX2da+I3nMr8Ard42Ly5GK1KIw
+ Kq3CeOVpj6WAQDksr0YB/ymQNO+wDnqMqpEqQuUugRb3YmqHBzFCaGvuSp78w+bIAtQ1
+ ZYJt4B91N4K98WV7Ah5v0Ah8QTNhGsPpLGkjFfvpLWDKsArBFp1TfHrjetEcg53nHNRh
+ DvsRNyRkl37+QZ6A8MSb1yYHg5IXo6f/h2gwbP8ltuOx5/JWxkIoA16vohIhegH+o0+d
+ Odnw==
+X-Gm-Message-State: AOJu0YyDWPbGbfdihf7P/Mt1d0MzSWsGD2Idx/2wiYPSDY9EOr0BHRG9
+ RksjZEIQCMkNM5n52KihJg9Q5qzXlAvBwVj7DI5KWvV9fZFMFLO+XE/CL3VU/+rNpH6TULQFlJH
+ fM90=
+X-Gm-Gg: ASbGncspfIX6wNxn07NXjHTApbrXKKKQTdb/SHvj3KhRe14ZKo4W7g0u0jicw6HVFVw
+ lJKB0Xac0lC34/WT1QWLObUQnBzXGAf98NSSFNmtL29ZJLtME+M2MOVUM3XgAmJDFsKnPrXYxc5
+ Ev5MWE7TkVeW1A5lZcDoP14X8fYeRcDqB0cmOzdQH+ozBcFnkRTYAy7bQmDTfHkHHGGIP1EnFDS
+ pIDgzzC4R367MGj874/ecCNfQCW9l7sLnNqwrVRGP1Yr/Bp+zMCAtfyj7SkT9M/1NpUwQWGZjgf
+ 1BCLCAVKNey6/DPE/bWq+JmoYq/vlN8UD994Fwl79xPEBIEo2JsQk5Lr3BLh74CTdA==
+X-Google-Smtp-Source: AGHT+IEJ/1Zl7byyR7cLni8lU7uFN5y+imbzzFfaJRVS59j1t2UlYtaM+pGSx2fY8nqSsRJLFQF/ig==
+X-Received: by 2002:a05:6000:188b:b0:385:f2a2:50df with SMTP id
+ ffacd0b85a97d-38c5195f498mr12239186f8f.27.1738357665967; 
+ Fri, 31 Jan 2025 13:07:45 -0800 (PST)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-38c5c102ee0sm5681437f8f.37.2025.01.31.13.08.13
+ ffacd0b85a97d-38c5c139f15sm5640733f8f.59.2025.01.31.13.07.45
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Fri, 31 Jan 2025 13:08:13 -0800 (PST)
+ Fri, 31 Jan 2025 13:07:45 -0800 (PST)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Peter Maydell <peter.maydell@linaro.org>,
- Richard Henderson <richard.henderson@linaro.org>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Markus Armbruster <armbru@redhat.com>
-Subject: [PULL 35/36] hw/sd: Remove unused legacy functions,
- stop killing mammoths
-Date: Fri, 31 Jan 2025 22:05:18 +0100
-Message-ID: <20250131210520.85874-36-philmd@linaro.org>
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Subject: [PULL 29/36] hw/sd/omap_mmc: Convert to SDBus API
+Date: Fri, 31 Jan 2025 22:05:12 +0100
+Message-ID: <20250131210520.85874-30-philmd@linaro.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20250131210520.85874-1-philmd@linaro.org>
 References: <20250131210520.85874-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32b;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x32b.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::42e;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x42e.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -104,235 +101,178 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Peter Maydell <peter.maydell@linaro.org>
 
-The sdcard_legacy.h header defines function prototypes for the "legacy"
-SD card API, which was used by non-qdevified SD controller models.
-We've now converted the only remaining non-qdev SD controller, so
-we can drop the legacy API.
-
-Entirely unused functions:
-  sd_init(), sd_set_cb(), sd_enable()
-
-Functions which now become static inside sd.c (they are the
-underlying implementations of methods on SDCardClass):
-  sd_do_command(), sd_write_byte(), sd_read_byte()
-
-Removal of sd_init() means that we can also remove the
-me_no_qdev_me_kill_mammoth_with_rocks flag, the codepaths that were
-only reachable when it was set, and the inserted_cb and readonly_cb
-qemu_irq lines that went with that.
+Convert the OMAP MMC controller to the new SDBus API:
+ * the controller creates an SDBus bus
+ * instead of sd_foo functions on the SDState object, call
+   sdbus_foo functions on the SDBus
+ * the board code creates a proper TYPE_SD_CARD object and attaches
+   it to the controller's SDBus, instead of the controller creating
+   a card directly via sd_init() that never gets attached to any bus
+ * because the SD card object is on a bus, it gets reset automatically
+   by the "traverse the qbus tree resetting things" code, and we don't
+   need to manually reset the card from the controller reset function
 
 Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Reviewed-by: Markus Armbruster <armbru@redhat.com>
-Message-ID: <20250128104519.3981448-11-peter.maydell@linaro.org>
+Message-ID: <20250128104519.3981448-5-peter.maydell@linaro.org>
+[PMD: Include "hw/sd/sd.h" instead of "hw/sd/sdcard_legacy.h",
+      create bus in omap_mmc_initfn() instead of omap_mmc_realize()]
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 ---
- include/hw/sd/sdcard_legacy.h | 50 -----------------------
- hw/sd/sd.c                    | 77 ++++-------------------------------
- 2 files changed, 8 insertions(+), 119 deletions(-)
- delete mode 100644 include/hw/sd/sdcard_legacy.h
+ include/hw/arm/omap.h |  1 -
+ hw/arm/omap1.c        | 10 +++++++++-
+ hw/sd/omap_mmc.c      | 31 ++++++++++---------------------
+ 3 files changed, 19 insertions(+), 23 deletions(-)
 
-diff --git a/include/hw/sd/sdcard_legacy.h b/include/hw/sd/sdcard_legacy.h
-deleted file mode 100644
-index 0dc38895551..00000000000
---- a/include/hw/sd/sdcard_legacy.h
-+++ /dev/null
-@@ -1,50 +0,0 @@
--/*
-- * SD Memory Card emulation (deprecated legacy API)
-- *
-- * Copyright (c) 2006 Andrzej Zaborowski  <balrog@zabor.org>
-- *
-- * Redistribution and use in source and binary forms, with or without
-- * modification, are permitted provided that the following conditions
-- * are met:
-- *
-- * 1. Redistributions of source code must retain the above copyright
-- *    notice, this list of conditions and the following disclaimer.
-- * 2. Redistributions in binary form must reproduce the above copyright
-- *    notice, this list of conditions and the following disclaimer in
-- *    the documentation and/or other materials provided with the
-- *    distribution.
-- *
-- * THIS SOFTWARE IS PROVIDED BY THE AUTHOR AND CONTRIBUTORS ``AS IS''
-- * AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO,
-- * THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A
-- * PARTICULAR PURPOSE ARE DISCLAIMED.  IN NO EVENT SHALL THE AUTHOR OR
-- * CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL,
-- * EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO,
-- * PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR
-- * PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY
-- * OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
-- * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
-- * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
-- */
--#ifndef HW_SDCARD_LEGACY_H
--#define HW_SDCARD_LEGACY_H
--
--#include "hw/sd/sd.h"
--
--/* Legacy functions to be used only by non-qdevified callers */
--SDState *sd_init(BlockBackend *blk, bool is_spi);
--int sd_do_command(SDState *card, SDRequest *request, uint8_t *response);
--void sd_write_byte(SDState *card, uint8_t value);
--uint8_t sd_read_byte(SDState *card);
--void sd_set_cb(SDState *card, qemu_irq readonly, qemu_irq insert);
--
--/* sd_enable should not be used -- it is only used on the nseries boards,
-- * where it is part of a broken implementation of the MMC card slot switch
-- * (there should be two card slots which are multiplexed to a single MMC
-- * controller, but instead we model it with one card and controller and
-- * disable the card when the second slot is selected, so it looks like the
-- * second slot is always empty).
-- */
--void sd_enable(SDState *card, bool enable);
--
--#endif /* HW_SDCARD_LEGACY_H */
-diff --git a/hw/sd/sd.c b/hw/sd/sd.c
-index f781fd1641d..74bb7f39bbf 100644
---- a/hw/sd/sd.c
-+++ b/hw/sd/sd.c
-@@ -39,7 +39,6 @@
- #include "hw/registerfields.h"
- #include "system/block-backend.h"
- #include "hw/sd/sd.h"
+diff --git a/include/hw/arm/omap.h b/include/hw/arm/omap.h
+index 7d1a1afc4f8..d20c55a8957 100644
+--- a/include/hw/arm/omap.h
++++ b/include/hw/arm/omap.h
+@@ -534,7 +534,6 @@ OBJECT_DECLARE_SIMPLE_TYPE(OMAPMMCState, OMAP_MMC)
+ 
+ DeviceState *omap_mmc_init(hwaddr base,
+                            MemoryRegion *sysmem,
+-                           BlockBackend *blk,
+                            qemu_irq irq, qemu_irq dma[], omap_clk clk);
+ 
+ /* omap_i2c.c */
+diff --git a/hw/arm/omap1.c b/hw/arm/omap1.c
+index ea07b9aa31e..15ba0a0d0c4 100644
+--- a/hw/arm/omap1.c
++++ b/hw/arm/omap1.c
+@@ -29,6 +29,7 @@
+ #include "hw/qdev-properties.h"
+ #include "hw/arm/boot.h"
+ #include "hw/arm/omap.h"
++#include "hw/sd/sd.h"
+ #include "system/blockdev.h"
+ #include "system/system.h"
+ #include "hw/arm/soc_dma.h"
+@@ -3981,11 +3982,18 @@ struct omap_mpu_state_s *omap310_mpu_init(MemoryRegion *dram,
+         warn_report("missing SecureDigital device");
+     }
+     s->mmc = omap_mmc_init(0xfffb7800, system_memory,
+-                           dinfo ? blk_by_legacy_dinfo(dinfo) : NULL,
+                            qdev_get_gpio_in(s->ih[1], OMAP_INT_OQN),
+                            &s->drq[OMAP_DMA_MMC_TX],
+                     omap_findclk(s, "mmc_ck"));
+ 
++    if (dinfo) {
++        DeviceState *card = qdev_new(TYPE_SD_CARD);
++        qdev_prop_set_drive_err(card, "drive", blk_by_legacy_dinfo(dinfo),
++                                &error_fatal);
++        qdev_realize_and_unref(card, qdev_get_child_bus(s->mmc, "sd-bus"),
++                               &error_fatal);
++    }
++
+     s->mpuio = omap_mpuio_init(system_memory, 0xfffb5000,
+                                qdev_get_gpio_in(s->ih[1], OMAP_INT_KEYBOARD),
+                                qdev_get_gpio_in(s->ih[1], OMAP_INT_MPUIO),
+diff --git a/hw/sd/omap_mmc.c b/hw/sd/omap_mmc.c
+index 43203a76c58..1bc8290f9d6 100644
+--- a/hw/sd/omap_mmc.c
++++ b/hw/sd/omap_mmc.c
+@@ -25,18 +25,19 @@
+ #include "hw/irq.h"
+ #include "hw/sysbus.h"
+ #include "hw/arm/omap.h"
 -#include "hw/sd/sdcard_legacy.h"
- #include "migration/vmstate.h"
- #include "qapi/error.h"
- #include "qemu/bitmap.h"
-@@ -120,10 +119,6 @@ typedef struct SDProto {
- struct SDState {
-     DeviceState parent_obj;
++#include "hw/sd/sd.h"
  
--    /* If true, created by sd_init() for a non-qdevified caller */
--    /* TODO purge them with fire */
--    bool me_no_qdev_me_kill_mammoth_with_rocks;
+ typedef struct OMAPMMCState {
+     SysBusDevice parent_obj;
+ 
++    SDBus sdbus;
++
+     qemu_irq irq;
+     qemu_irq dma_tx_gpio;
+     qemu_irq dma_rx_gpio;
+     qemu_irq coverswitch;
+     MemoryRegion iomem;
+     omap_clk clk;
+-    SDState *card;
+     uint16_t last_cmd;
+     uint16_t sdio;
+     uint16_t rsp[8];
+@@ -158,7 +159,7 @@ static void omap_mmc_command(OMAPMMCState *host, int cmd, int dir,
+     request.arg = host->arg;
+     request.crc = 0; /* FIXME */
+ 
+-    rsplen = sd_do_command(host->card, &request, response);
++    rsplen = sdbus_do_command(&host->sdbus, &request, response);
+ 
+     /* TODO: validate CRCs */
+     switch (resptype) {
+@@ -247,10 +248,10 @@ static void omap_mmc_transfer(OMAPMMCState *host)
+             if (host->fifo_len > host->af_level)
+                 break;
+ 
+-            value = sd_read_byte(host->card);
++            value = sdbus_read_byte(&host->sdbus);
+             host->fifo[(host->fifo_start + host->fifo_len) & 31] = value;
+             if (-- host->blen_counter) {
+-                value = sd_read_byte(host->card);
++                value = sdbus_read_byte(&host->sdbus);
+                 host->fifo[(host->fifo_start + host->fifo_len) & 31] |=
+                         value << 8;
+                 host->blen_counter --;
+@@ -262,10 +263,10 @@ static void omap_mmc_transfer(OMAPMMCState *host)
+                 break;
+ 
+             value = host->fifo[host->fifo_start] & 0xff;
+-            sd_write_byte(host->card, value);
++            sdbus_write_byte(&host->sdbus, value);
+             if (-- host->blen_counter) {
+                 value = host->fifo[host->fifo_start] >> 8;
+-                sd_write_byte(host->card, value);
++                sdbus_write_byte(&host->sdbus, value);
+                 host->blen_counter --;
+             }
+ 
+@@ -328,14 +329,6 @@ static void omap_mmc_reset(OMAPMMCState *host)
+     host->clkdiv = 0;
+ 
+     omap_mmc_pseudo_reset(host);
 -
-     /* SD Memory Card Registers */
-     uint32_t ocr;
-     uint8_t scr[8];
-@@ -177,8 +172,6 @@ struct SDState {
-     uint32_t data_offset;
-     size_t data_size;
-     uint8_t data[512];
--    qemu_irq readonly_cb;
--    qemu_irq inserted_cb;
-     QEMUTimer *ocr_power_timer;
-     bool enable;
-     uint8_t dat_lines;
-@@ -892,17 +885,10 @@ static void sd_cardchange(void *opaque, bool load, Error **errp)
-         trace_sdcard_ejected();
-     }
- 
--    if (sd->me_no_qdev_me_kill_mammoth_with_rocks) {
--        qemu_set_irq(sd->inserted_cb, inserted);
--        if (inserted) {
--            qemu_set_irq(sd->readonly_cb, readonly);
--        }
--    } else {
--        sdbus = SD_BUS(qdev_get_parent_bus(dev));
--        sdbus_set_inserted(sdbus, inserted);
--        if (inserted) {
--            sdbus_set_readonly(sdbus, readonly);
--        }
-+    sdbus = SD_BUS(qdev_get_parent_bus(dev));
-+    sdbus_set_inserted(sdbus, inserted);
-+    if (inserted) {
-+        sdbus_set_readonly(sdbus, readonly);
-     }
- }
- 
-@@ -1000,48 +986,6 @@ static const VMStateDescription sd_vmstate = {
-     },
- };
- 
--/* Legacy initialization function for use by non-qdevified callers */
--SDState *sd_init(BlockBackend *blk, bool is_spi)
--{
--    Object *obj;
--    DeviceState *dev;
--    SDState *sd;
--    Error *err = NULL;
--
--    obj = object_new(is_spi ? TYPE_SD_CARD_SPI : TYPE_SD_CARD);
--    dev = DEVICE(obj);
--    if (!qdev_prop_set_drive_err(dev, "drive", blk, &err)) {
--        error_reportf_err(err, "sd_init failed: ");
--        return NULL;
--    }
--
--    /*
--     * Realizing the device properly would put it into the QOM
--     * composition tree even though it is not plugged into an
--     * appropriate bus.  That's a no-no.  Hide the device from
--     * QOM/qdev, and call its qdev realize callback directly.
+-    /* Since we're still using the legacy SD API the card is not plugged
+-     * into any bus, and we must reset it manually. When omap_mmc is
+-     * QOMified this must move into the QOM reset function.
 -     */
--    object_ref(obj);
--    object_unparent(obj);
--    sd_realize(dev, &err);
--    if (err) {
--        error_reportf_err(err, "sd_init failed: ");
--        return NULL;
+-    if (host->card) {
+-        device_cold_reset(DEVICE(host->card));
 -    }
--
--    sd = SD_CARD(dev);
--    sd->me_no_qdev_me_kill_mammoth_with_rocks = true;
--    return sd;
--}
--
--void sd_set_cb(SDState *sd, qemu_irq readonly, qemu_irq insert)
--{
--    sd->readonly_cb = readonly;
--    sd->inserted_cb = insert;
--    qemu_set_irq(readonly, sd->blk ? !blk_is_writable(sd->blk) : 0);
--    qemu_set_irq(insert, sd->blk ? blk_is_inserted(sd->blk) : 0);
--}
--
- static void sd_blk_read(SDState *sd, uint64_t addr, uint32_t len)
+ }
+ 
+ static uint64_t omap_mmc_read(void *opaque, hwaddr offset, unsigned size)
+@@ -592,7 +585,6 @@ static const MemoryRegionOps omap_mmc_ops = {
+ 
+ DeviceState *omap_mmc_init(hwaddr base,
+                            MemoryRegion *sysmem,
+-                           BlockBackend *blk,
+                            qemu_irq irq, qemu_irq dma[], omap_clk clk)
  {
-     trace_sdcard_read_block(addr, len);
-@@ -2196,8 +2140,8 @@ static bool cmd_valid_while_locked(SDState *sd, unsigned cmd)
-     return cmd_class == 0 || cmd_class == 7;
+     DeviceState *dev;
+@@ -610,11 +602,6 @@ DeviceState *omap_mmc_init(hwaddr base,
+     qdev_connect_gpio_out_named(dev, "dma-rx", 0, dma[1]);
+     sysbus_connect_irq(SYS_BUS_DEVICE(dev), 0, irq);
+ 
+-    /* Instantiate the storage */
+-    s->card = sd_init(blk, false);
+-    if (s->card == NULL) {
+-        exit(1);
+-    }
+     return dev;
  }
  
--int sd_do_command(SDState *sd, SDRequest *req,
--                  uint8_t *response) {
-+static int sd_do_command(SDState *sd, SDRequest *req,
-+                         uint8_t *response) {
-     int last_state;
-     sd_rsp_type_t rtype;
-     int rsplen;
-@@ -2349,7 +2293,7 @@ static bool sd_generic_read_byte(SDState *sd, uint8_t *value)
-     return false;
+@@ -639,6 +626,8 @@ static void omap_mmc_initfn(Object *obj)
+     sysbus_init_irq(SYS_BUS_DEVICE(obj), &s->irq);
+     qdev_init_gpio_out_named(DEVICE(obj), &s->dma_tx_gpio, "dma-tx", 1);
+     qdev_init_gpio_out_named(DEVICE(obj), &s->dma_rx_gpio, "dma-rx", 1);
++
++    qbus_init(&s->sdbus, sizeof(s->sdbus), TYPE_SD_BUS, DEVICE(obj), "sd-bus");
  }
  
--void sd_write_byte(SDState *sd, uint8_t value)
-+static void sd_write_byte(SDState *sd, uint8_t value)
- {
-     int i;
- 
-@@ -2478,7 +2422,7 @@ void sd_write_byte(SDState *sd, uint8_t value)
-     }
- }
- 
--uint8_t sd_read_byte(SDState *sd)
-+static uint8_t sd_read_byte(SDState *sd)
- {
-     /* TODO: Append CRCs */
-     const uint8_t dummy_byte = 0x00;
-@@ -2561,11 +2505,6 @@ static bool sd_data_ready(SDState *sd)
-     return sd->state == sd_sendingdata_state;
- }
- 
--void sd_enable(SDState *sd, bool enable)
--{
--    sd->enable = enable;
--}
--
- static const SDProto sd_proto_spi = {
-     .name = "SPI",
-     .cmd = {
+ static void omap_mmc_class_init(ObjectClass *oc, void *data)
 -- 
 2.47.1
 
