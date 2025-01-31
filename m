@@ -4,80 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D2059C0218F
-	for <qemu-devel@archiver.kernel.org>; Fri, 31 Jan 2025 21:10:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 76233C0218F
+	for <qemu-devel@archiver.kernel.org>; Fri, 31 Jan 2025 21:10:44 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tdyEV-0001sP-JN; Fri, 31 Jan 2025 16:07:23 -0500
+	id 1tdyDv-00082o-MH; Fri, 31 Jan 2025 16:06:47 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tdyET-0001e2-Dd
- for qemu-devel@nongnu.org; Fri, 31 Jan 2025 16:07:21 -0500
-Received: from mail-wr1-x431.google.com ([2a00:1450:4864:20::431])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tdyDt-0007q5-Je
+ for qemu-devel@nongnu.org; Fri, 31 Jan 2025 16:06:45 -0500
+Received: from mail-wm1-x331.google.com ([2a00:1450:4864:20::331])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tdyEQ-0007x1-Vl
- for qemu-devel@nongnu.org; Fri, 31 Jan 2025 16:07:21 -0500
-Received: by mail-wr1-x431.google.com with SMTP id
- ffacd0b85a97d-38a34e8410bso1264472f8f.2
- for <qemu-devel@nongnu.org>; Fri, 31 Jan 2025 13:07:18 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tdyDr-0007t7-PC
+ for qemu-devel@nongnu.org; Fri, 31 Jan 2025 16:06:45 -0500
+Received: by mail-wm1-x331.google.com with SMTP id
+ 5b1f17b1804b1-43618283dedso24845715e9.3
+ for <qemu-devel@nongnu.org>; Fri, 31 Jan 2025 13:06:43 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1738357637; x=1738962437; darn=nongnu.org;
+ d=linaro.org; s=google; t=1738357602; x=1738962402; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=FDK+q3FCrguxF8M+fgJqjkVgEsMKiL4tl31vLqfa+ps=;
- b=wV2qjLXWgdyBYf1Xdhv0TwNo86lZWLW48XpYYW0Z7PIII7dGQJmvq4ffpCHZVJo3yC
- VEFKHG4w0ezDSAZerWwo2rQZ8ECgbgFiY7uPzMHUgvWq051NY2r/zQ37opM2lT1vt922
- 7Wl1/ylpzuEHObEMqQ5iVXZXUTuWhp0hCXB+zFTxCnFx/UjfasYG0XvV5+MbxvOq2yzd
- RdV+0BpJJtDvKD4gX95XGOcPVan9wg40ifldm4IQimLsVoEROjUZbD9AwS5bb9rOcAl2
- zwnRkASUO1XiXcJfcrEXG5dQIcVFQNd+LyJKkm+E8mmk9uDlDPAVwJVSMl9WgWWPnSix
- r44Q==
+ bh=mP3QyIe81tPdRVqVU2heOfv/G9r7fIu1+pBAt75OnDs=;
+ b=tENHfI9d/HRmuDYvg4470ecv26GrQ6il/wsSBVFoPlCTJ4GdJvH4uqLjsbPSYPHDy8
+ 7qL3vVgumyxh/ql398oo5CuD1StcxpLFcNk6jVHNRiyyD3v9Yw2crwoxqA2cQlfsA7tX
+ j4ZegJjRIkQQ3W01oqFC8YqUi50kVRH6ChDRtcKjH++CJdlbIRFDRHTb28ymiGnACtIv
+ ROfHv5TUYYHBZgJRvIjEhgtjcn8+lzOgSzrB7kUIgmJW69cHyMdAtQI/jnrW5jTjaFyv
+ YACJC7drMl8wEKqtKKIlcMeW0/KihLhDI+GRJ8EYXxJ8bDk6dtmlI+hE9yqQgGF4fycE
+ xWKA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1738357637; x=1738962437;
+ d=1e100.net; s=20230601; t=1738357602; x=1738962402;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=FDK+q3FCrguxF8M+fgJqjkVgEsMKiL4tl31vLqfa+ps=;
- b=sZV7V7M0rvBHk6Qzjy8f1lFRELqAGi8QiwNz7Wni6AgCvXDelf5jQPrJX6vsu/S+1h
- /Tj3GYRqw1WmJVQQV5AWWzRkAV2/+cPgzjdoB7LybdxnxPSc0G8JaIORvRKfGKurWCIt
- vJ5tJN7V8kjP258bMRAmUUzq7acs0X89P6PZHNZLY9CX1H5hYWdmrOEnmzdncwvH/8XN
- 8Pi8AN6FZZMiNZ00Q7R5r1Prena7QWPnlDRhN5+SLWucgJow2RWE5YxRyYYFOcUbh9Tc
- pBhz16j8ZwQ28NaBoa6AuMQTDtQ2KakF0m5x+nNLmoATA766ORXw47D4aAAEzstoUbe2
- THGQ==
-X-Gm-Message-State: AOJu0YyZGkkyZAp7+/uzptdiKjC8N3ILA5gxTsnpVSbfKbM99oT1qzkc
- hUi6PN7Qw4GZHWxBzLtoM3aLv1IAgDIU/VkXTkWgUWDKNBPbI0+YeVtm3GbK27S7dribyEDLR0+
- l0Rg=
-X-Gm-Gg: ASbGncsxo09fN7Wt5zyBGT3h6icFqdWirI1pETXnCpL4ZD0oWwZo45gFuT1V8Poy7uk
- STngREJih7ENCtsOxU3ZpKS16hd1E6uWwL3i5AyOJZjp+U6btZpMFeU5ZGDgJytKQEtdYiO75bJ
- 53yYvj5eZ9cmSpoMzGGZovA5zzhgx3rMpnjdQeA0kCn0GlydjHiak+ddEtxpODORfJg4QticHdO
- G0rUXVaTQqAHkMDEbRwJpws+9x2itYGBFzfWBFJF3ThorthEBcSiWHCYY61bRSzdIXfAsWV05pC
- iRCz4Tev4JxnBb+VXzTeAEjUTfkPKCbLESEYR6m5fjdEKgC5lWCASPDtLhsJB99YtQ==
-X-Google-Smtp-Source: AGHT+IGn70PK56UbqPsq8soUBKrTkejEltXmX5pF+n+StVs30XYhBSf5gqZTI/B6cLjEk9GFmki7ng==
-X-Received: by 2002:a05:6000:e0a:b0:388:da2a:e48 with SMTP id
- ffacd0b85a97d-38c5197431dmr9361912f8f.23.1738357636671; 
- Fri, 31 Jan 2025 13:07:16 -0800 (PST)
+ bh=mP3QyIe81tPdRVqVU2heOfv/G9r7fIu1+pBAt75OnDs=;
+ b=bgbiBDz5Jy7oxin88h04b1SLJiBCcKngUtlSOGglu8qgO9RTaHdlROuzAf3oDvDhjF
+ r4qMz/nB8EyML6kVi+8sn4cUUDwlHk25XFf+eHPO94vk0ex9V5mXYq/Tzb7WElf3eArt
+ 3jTeosLqhFY4rFNhzBIi+2XOmnifSCJQsehDzAh+x0jaB/q4Lk3H5VnOmPL9Oopz5RJN
+ MNkJmq3A+QSDtnCF2HMB1l13xXUdn7EP476bLRVyjaGOLXKSMQ0DCSSqFe/+BwkV/MEs
+ V7iRqOYJdxxQoR9fNW51ktWBjW5O20RlOzbTpb++HQ+lvRVwA6kGnRwsVZpp1BIN5SOK
+ 9B3A==
+X-Gm-Message-State: AOJu0Ywuvrh68rxqnSN8KRZhD1gEbAiw+DDzkf6BHTWUgl6yDeznLG9r
+ 2AKJMGXFJxx54DWxjQbtwYZ72ZqCxXq+By3Z/AG5dTE9E3kgvv2X7Z+923Jhe9cZw9AEfooBEoC
+ bJNo=
+X-Gm-Gg: ASbGnctcnc8bjWk9FfL22vP/zis42+ak9bTtdq9KAlz2AGnHIZ71Nj3i6eXvhCpqG/6
+ i4KhRMnmv9YzVWGrFCABhdzsx6HGXwFTNUGyN1ex+RTKowXQoYc9Ol65uOmWHDkS8w8nadCXDYu
+ c7kKCKIJMEQtCsLD3LuV9fY0XBtdR7hdA2+Cs6+jFQSeNLDhBXUL+S/lJjVQvm9Hf37FWw94X20
+ kj882vnqgpCGGlJobtbrJYh5UBmxM8uKwrt6Ny3x/ztjRDK4PoIKEehJvTWH/ZogetJMCAuAOUr
+ +5P/eRHHV8+W8lU8Q07fyQKShHT8BsgD4uBegbYZrgCXQ1eLKvCL7s9iFK/usPSemg==
+X-Google-Smtp-Source: AGHT+IHylUD24vD/MV8WvidRNcN8mBde01q6GDOBZ3dPr980AWQWhAt1uZe2I5bG+Yje0BlCEmYncQ==
+X-Received: by 2002:a05:600c:5127:b0:434:f5c0:3288 with SMTP id
+ 5b1f17b1804b1-438dc421393mr119616535e9.29.1738357601798; 
+ Fri, 31 Jan 2025 13:06:41 -0800 (PST)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-38c5c12191dsm5688802f8f.51.2025.01.31.13.07.15
+ 5b1f17b1804b1-438e23d42d4sm68667495e9.6.2025.01.31.13.06.40
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Fri, 31 Jan 2025 13:07:16 -0800 (PST)
+ Fri, 31 Jan 2025 13:06:40 -0800 (PST)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  Richard Henderson <richard.henderson@linaro.org>
-Subject: [PULL 23/36] hw/loader: Pass ELFDATA endian order argument to
- load_elf_ram_sym()
-Date: Fri, 31 Jan 2025 22:05:06 +0100
-Message-ID: <20250131210520.85874-24-philmd@linaro.org>
+Subject: [PULL 16/36] hw/sh4/r2d: Convert legacy qemu_allocate_irqs() to
+ qemu_init_irqs()
+Date: Fri, 31 Jan 2025 22:04:59 +0100
+Message-ID: <20250131210520.85874-17-philmd@linaro.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20250131210520.85874-1-philmd@linaro.org>
 References: <20250131210520.85874-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::431;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x431.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::331;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x331.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -100,110 +100,132 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Rather than passing a boolean 'is_big_endian' argument,
-directly pass the ELFDATA, which can be unspecified using
-the ELFDATANONE value.
+The FPGA exposes a fixed set of IRQs. Hold them in the FPGA
+state and initialize them in place calling qemu_init_irqs().
 
-Update the call sites:
-  0 -> ELFDATA2LSB
+Move r2d_fpga_irq enums earlier so we can use NR_IRQS within
+the r2d_fpga_t structure. r2d_fpga_init() returns r2d_fpga_t,
+and we dereference irq from it in r2d_init().
 
-Suggested-by: Richard Henderson <richard.henderson@linaro.org>
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-Message-Id: <20250127113824.50177-5-philmd@linaro.org>
+Message-Id: <20250121182445.35309-1-philmd@linaro.org>
 ---
- include/hw/loader.h |  4 ++--
- hw/core/loader.c    | 17 +++++++----------
- hw/riscv/boot.c     |  3 ++-
- 3 files changed, 11 insertions(+), 13 deletions(-)
+ hw/sh4/r2d.c | 38 +++++++++++++++++++++-----------------
+ 1 file changed, 21 insertions(+), 17 deletions(-)
 
-diff --git a/include/hw/loader.h b/include/hw/loader.h
-index 9bb34e6f062..8202c376043 100644
---- a/include/hw/loader.h
-+++ b/include/hw/loader.h
-@@ -120,7 +120,7 @@ const char *load_elf_strerror(ssize_t error);
-  * @lowaddr: Populated with lowest loaded address. Ignored if NULL.
-  * @highaddr: Populated with highest loaded address. Ignored if NULL.
-  * @pflags: Populated with ELF processor-specific flags. Ignore if NULL.
-- * @bigendian: Expected ELF endianness. 0 for LE otherwise BE
-+ * @elf_data_order: Expected ELF endianness (ELFDATA2LSB or ELFDATA2MSB).
-  * @elf_machine: Expected ELF machine type
-  * @clear_lsb: Set to mask off LSB of addresses (Some architectures use
-  *             this for non-address data)
-@@ -151,7 +151,7 @@ ssize_t load_elf_ram_sym(const char *filename,
-                          uint64_t (*translate_fn)(void *, uint64_t),
-                          void *translate_opaque, uint64_t *pentry,
-                          uint64_t *lowaddr, uint64_t *highaddr,
--                         uint32_t *pflags, int big_endian, int elf_machine,
-+                         uint32_t *pflags, int elf_data_order, int elf_machine,
-                          int clear_lsb, int data_swab,
-                          AddressSpace *as, bool load_rom, symbol_fn_t sym_cb);
+diff --git a/hw/sh4/r2d.c b/hw/sh4/r2d.c
+index 2fa439819e3..d68c94e82ef 100644
+--- a/hw/sh4/r2d.c
++++ b/hw/sh4/r2d.c
+@@ -63,6 +63,12 @@
+ #define PA_VERREG 0x32
+ #define PA_OUTPORT 0x36
  
-diff --git a/hw/core/loader.c b/hw/core/loader.c
-index de6b173f4a1..f1fab3e91b1 100644
---- a/hw/core/loader.c
-+++ b/hw/core/loader.c
-@@ -428,7 +428,8 @@ ssize_t load_elf_as(const char *filename,
- {
-     return load_elf_ram_sym(filename, elf_note_fn,
-                             translate_fn, translate_opaque,
--                            pentry, lowaddr, highaddr, pflags, big_endian,
-+                            pentry, lowaddr, highaddr, pflags,
-+                            big_endian ? ELFDATA2MSB : ELFDATA2LSB,
-                             elf_machine, clear_lsb, data_swab, as,
-                             true, NULL);
- }
-@@ -439,12 +440,12 @@ ssize_t load_elf_ram_sym(const char *filename,
-                          uint64_t (*translate_fn)(void *, uint64_t),
-                          void *translate_opaque, uint64_t *pentry,
-                          uint64_t *lowaddr, uint64_t *highaddr,
--                         uint32_t *pflags, int big_endian, int elf_machine,
-+                         uint32_t *pflags, int elf_data_order, int elf_machine,
-                          int clear_lsb, int data_swab,
-                          AddressSpace *as, bool load_rom, symbol_fn_t sym_cb)
- {
-     const int host_data_order = HOST_BIG_ENDIAN ? ELFDATA2MSB : ELFDATA2LSB;
--    int fd, target_data_order, must_swab;
-+    int fd, must_swab;
-     ssize_t ret = ELF_LOAD_FAILED;
-     uint8_t e_ident[EI_NIDENT];
- 
-@@ -462,18 +463,14 @@ ssize_t load_elf_ram_sym(const char *filename,
-         ret = ELF_LOAD_NOT_ELF;
-         goto fail;
-     }
--    must_swab = host_data_order != e_ident[EI_DATA];
--    if (big_endian) {
--        target_data_order = ELFDATA2MSB;
--    } else {
--        target_data_order = ELFDATA2LSB;
--    }
- 
--    if (target_data_order != e_ident[EI_DATA]) {
-+    if (elf_data_order != ELFDATANONE && elf_data_order != e_ident[EI_DATA]) {
-         ret = ELF_LOAD_WRONG_ENDIAN;
-         goto fail;
-     }
- 
-+    must_swab = host_data_order != e_ident[EI_DATA];
++enum r2d_fpga_irq {
++    PCI_INTD, CF_IDE, CF_CD, PCI_INTC, SM501, KEY, RTC_A, RTC_T,
++    SDCARD, PCI_INTA, PCI_INTB, EXT, TP,
++    NR_IRQS
++};
 +
-     lseek(fd, 0, SEEK_SET);
-     if (e_ident[EI_CLASS] == ELFCLASS64) {
-         ret = load_elf64(filename, fd, elf_note_fn,
-diff --git a/hw/riscv/boot.c b/hw/riscv/boot.c
-index 90e75c69a04..c309441b7d8 100644
---- a/hw/riscv/boot.c
-+++ b/hw/riscv/boot.c
-@@ -246,7 +246,8 @@ void riscv_load_kernel(MachineState *machine,
-      */
-     kernel_size = load_elf_ram_sym(kernel_filename, NULL, NULL, NULL, NULL,
-                                    &info->image_low_addr, &info->image_high_addr,
--                                   NULL, 0, EM_RISCV, 1, 0, NULL, true, sym_cb);
-+                                   NULL, ELFDATA2LSB, EM_RISCV,
-+                                   1, 0, NULL, true, sym_cb);
-     if (kernel_size > 0) {
-         info->kernel_size = kernel_size;
-         goto out;
+ typedef struct {
+     uint16_t bcr;
+     uint16_t irlmsk;
+@@ -88,15 +94,10 @@ typedef struct {
+ 
+ /* output pin */
+     qemu_irq irl;
++    IRQState irq[NR_IRQS];
+     MemoryRegion iomem;
+ } r2d_fpga_t;
+ 
+-enum r2d_fpga_irq {
+-    PCI_INTD, CF_IDE, CF_CD, PCI_INTC, SM501, KEY, RTC_A, RTC_T,
+-    SDCARD, PCI_INTA, PCI_INTB, EXT, TP,
+-    NR_IRQS
+-};
+-
+ static const struct { short irl; uint16_t msk; } irqtab[NR_IRQS] = {
+     [CF_IDE] =   {  1, 1 << 9 },
+     [CF_CD] =    {  2, 1 << 8 },
+@@ -186,8 +187,8 @@ static const MemoryRegionOps r2d_fpga_ops = {
+     .endianness = DEVICE_NATIVE_ENDIAN,
+ };
+ 
+-static qemu_irq *r2d_fpga_init(MemoryRegion *sysmem,
+-                               hwaddr base, qemu_irq irl)
++static r2d_fpga_t *r2d_fpga_init(MemoryRegion *sysmem,
++                                 hwaddr base, qemu_irq irl)
+ {
+     r2d_fpga_t *s;
+ 
+@@ -197,7 +198,10 @@ static qemu_irq *r2d_fpga_init(MemoryRegion *sysmem,
+ 
+     memory_region_init_io(&s->iomem, NULL, &r2d_fpga_ops, s, "r2d-fpga", 0x40);
+     memory_region_add_subregion(sysmem, base, &s->iomem);
+-    return qemu_allocate_irqs(r2d_fpga_irq_set, s, NR_IRQS);
++
++    qemu_init_irqs(s->irq, NR_IRQS, r2d_fpga_irq_set, s);
++
++    return s;
+ }
+ 
+ typedef struct ResetData {
+@@ -239,13 +243,13 @@ static void r2d_init(MachineState *machine)
+     ResetData *reset_info;
+     struct SH7750State *s;
+     MemoryRegion *sdram = g_new(MemoryRegion, 1);
+-    qemu_irq *irq;
+     DriveInfo *dinfo;
+     DeviceState *dev;
+     SysBusDevice *busdev;
+     MemoryRegion *address_space_mem = get_system_memory();
+     PCIBus *pci_bus;
+     USBBus *usb_bus;
++    r2d_fpga_t *fpga;
+ 
+     cpu = SUPERH_CPU(cpu_create(machine->cpu_type));
+     env = &cpu->env;
+@@ -260,7 +264,7 @@ static void r2d_init(MachineState *machine)
+     memory_region_add_subregion(address_space_mem, SDRAM_BASE, sdram);
+     /* Register peripherals */
+     s = sh7750_init(cpu, address_space_mem);
+-    irq = r2d_fpga_init(address_space_mem, 0x04000000, sh7750_irl(s));
++    fpga = r2d_fpga_init(address_space_mem, 0x04000000, sh7750_irl(s));
+ 
+     dev = qdev_new("sh_pci");
+     busdev = SYS_BUS_DEVICE(dev);
+@@ -268,10 +272,10 @@ static void r2d_init(MachineState *machine)
+     pci_bus = PCI_BUS(qdev_get_child_bus(dev, "pci"));
+     sysbus_mmio_map(busdev, 0, P4ADDR(0x1e200000));
+     sysbus_mmio_map(busdev, 1, A7ADDR(0x1e200000));
+-    sysbus_connect_irq(busdev, 0, irq[PCI_INTA]);
+-    sysbus_connect_irq(busdev, 1, irq[PCI_INTB]);
+-    sysbus_connect_irq(busdev, 2, irq[PCI_INTC]);
+-    sysbus_connect_irq(busdev, 3, irq[PCI_INTD]);
++    sysbus_connect_irq(busdev, 0, &fpga->irq[PCI_INTA]);
++    sysbus_connect_irq(busdev, 1, &fpga->irq[PCI_INTB]);
++    sysbus_connect_irq(busdev, 2, &fpga->irq[PCI_INTC]);
++    sysbus_connect_irq(busdev, 3, &fpga->irq[PCI_INTD]);
+ 
+     dev = qdev_new("sysbus-sm501");
+     busdev = SYS_BUS_DEVICE(dev);
+@@ -281,13 +285,13 @@ static void r2d_init(MachineState *machine)
+     sysbus_realize_and_unref(busdev, &error_fatal);
+     sysbus_mmio_map(busdev, 0, 0x10000000);
+     sysbus_mmio_map(busdev, 1, 0x13e00000);
+-    sysbus_connect_irq(busdev, 0, irq[SM501]);
++    sysbus_connect_irq(busdev, 0, &fpga->irq[SM501]);
+ 
+     /* onboard CF (True IDE mode, Master only). */
+     dinfo = drive_get(IF_IDE, 0, 0);
+     dev = qdev_new("mmio-ide");
+     busdev = SYS_BUS_DEVICE(dev);
+-    sysbus_connect_irq(busdev, 0, irq[CF_IDE]);
++    sysbus_connect_irq(busdev, 0, &fpga->irq[CF_IDE]);
+     qdev_prop_set_uint32(dev, "shift", 1);
+     sysbus_realize_and_unref(busdev, &error_fatal);
+     sysbus_mmio_map(busdev, 0, 0x14001000);
 -- 
 2.47.1
 
