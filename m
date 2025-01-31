@@ -4,80 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 76233C0218F
-	for <qemu-devel@archiver.kernel.org>; Fri, 31 Jan 2025 21:10:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 30729C02194
+	for <qemu-devel@archiver.kernel.org>; Fri, 31 Jan 2025 21:10:45 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tdyDv-00082o-MH; Fri, 31 Jan 2025 16:06:47 -0500
+	id 1tdyD7-00063x-47; Fri, 31 Jan 2025 16:05:57 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tdyDt-0007q5-Je
- for qemu-devel@nongnu.org; Fri, 31 Jan 2025 16:06:45 -0500
-Received: from mail-wm1-x331.google.com ([2a00:1450:4864:20::331])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tdyD4-00063m-8i
+ for qemu-devel@nongnu.org; Fri, 31 Jan 2025 16:05:54 -0500
+Received: from mail-wr1-x431.google.com ([2a00:1450:4864:20::431])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tdyDr-0007t7-PC
- for qemu-devel@nongnu.org; Fri, 31 Jan 2025 16:06:45 -0500
-Received: by mail-wm1-x331.google.com with SMTP id
- 5b1f17b1804b1-43618283dedso24845715e9.3
- for <qemu-devel@nongnu.org>; Fri, 31 Jan 2025 13:06:43 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tdyD2-0007o8-Kz
+ for qemu-devel@nongnu.org; Fri, 31 Jan 2025 16:05:53 -0500
+Received: by mail-wr1-x431.google.com with SMTP id
+ ffacd0b85a97d-3862b40a6e0so1587451f8f.0
+ for <qemu-devel@nongnu.org>; Fri, 31 Jan 2025 13:05:52 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1738357602; x=1738962402; darn=nongnu.org;
+ d=linaro.org; s=google; t=1738357551; x=1738962351; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=mP3QyIe81tPdRVqVU2heOfv/G9r7fIu1+pBAt75OnDs=;
- b=tENHfI9d/HRmuDYvg4470ecv26GrQ6il/wsSBVFoPlCTJ4GdJvH4uqLjsbPSYPHDy8
- 7qL3vVgumyxh/ql398oo5CuD1StcxpLFcNk6jVHNRiyyD3v9Yw2crwoxqA2cQlfsA7tX
- j4ZegJjRIkQQ3W01oqFC8YqUi50kVRH6ChDRtcKjH++CJdlbIRFDRHTb28ymiGnACtIv
- ROfHv5TUYYHBZgJRvIjEhgtjcn8+lzOgSzrB7kUIgmJW69cHyMdAtQI/jnrW5jTjaFyv
- YACJC7drMl8wEKqtKKIlcMeW0/KihLhDI+GRJ8EYXxJ8bDk6dtmlI+hE9yqQgGF4fycE
- xWKA==
+ bh=QIVJQJKGcg0YWEqQO8oUWHaR7BCknrlB7uO1Y3XbfxU=;
+ b=OVjpK5y1pKIIw/QkKzIpMmQKB0ER0fOzShgcYrhL2GVU6ndLzYkrWzpR0xD5K6Mblb
+ RgR2p4nM3IByvgze9JQN/jqIq136PnjgyJb6wlMQB7L9r0es75RcJb4M4a36wH90cE1Z
+ tPem9aJ1+YVy/SO3xZTjs1oVfZh4UE60696PzMR46bVY1nZR0vLVT1mbONl35ZKMsKDC
+ /WTwlphVu2FidoQQ9P9KCAXdGVP6gO0FHa6I+L+XFw94Xt2/qQNtsomTIdNe7vATAu9q
+ WrjRUDtU6kLvs+eJXxAWlHdyiAnbNou2VoZiQEETD4z3BGxvIhsYlaRLycpVPqsXKLPi
+ yrfQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1738357602; x=1738962402;
+ d=1e100.net; s=20230601; t=1738357551; x=1738962351;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=mP3QyIe81tPdRVqVU2heOfv/G9r7fIu1+pBAt75OnDs=;
- b=bgbiBDz5Jy7oxin88h04b1SLJiBCcKngUtlSOGglu8qgO9RTaHdlROuzAf3oDvDhjF
- r4qMz/nB8EyML6kVi+8sn4cUUDwlHk25XFf+eHPO94vk0ex9V5mXYq/Tzb7WElf3eArt
- 3jTeosLqhFY4rFNhzBIi+2XOmnifSCJQsehDzAh+x0jaB/q4Lk3H5VnOmPL9Oopz5RJN
- MNkJmq3A+QSDtnCF2HMB1l13xXUdn7EP476bLRVyjaGOLXKSMQ0DCSSqFe/+BwkV/MEs
- V7iRqOYJdxxQoR9fNW51ktWBjW5O20RlOzbTpb++HQ+lvRVwA6kGnRwsVZpp1BIN5SOK
- 9B3A==
-X-Gm-Message-State: AOJu0Ywuvrh68rxqnSN8KRZhD1gEbAiw+DDzkf6BHTWUgl6yDeznLG9r
- 2AKJMGXFJxx54DWxjQbtwYZ72ZqCxXq+By3Z/AG5dTE9E3kgvv2X7Z+923Jhe9cZw9AEfooBEoC
- bJNo=
-X-Gm-Gg: ASbGnctcnc8bjWk9FfL22vP/zis42+ak9bTtdq9KAlz2AGnHIZ71Nj3i6eXvhCpqG/6
- i4KhRMnmv9YzVWGrFCABhdzsx6HGXwFTNUGyN1ex+RTKowXQoYc9Ol65uOmWHDkS8w8nadCXDYu
- c7kKCKIJMEQtCsLD3LuV9fY0XBtdR7hdA2+Cs6+jFQSeNLDhBXUL+S/lJjVQvm9Hf37FWw94X20
- kj882vnqgpCGGlJobtbrJYh5UBmxM8uKwrt6Ny3x/ztjRDK4PoIKEehJvTWH/ZogetJMCAuAOUr
- +5P/eRHHV8+W8lU8Q07fyQKShHT8BsgD4uBegbYZrgCXQ1eLKvCL7s9iFK/usPSemg==
-X-Google-Smtp-Source: AGHT+IHylUD24vD/MV8WvidRNcN8mBde01q6GDOBZ3dPr980AWQWhAt1uZe2I5bG+Yje0BlCEmYncQ==
-X-Received: by 2002:a05:600c:5127:b0:434:f5c0:3288 with SMTP id
- 5b1f17b1804b1-438dc421393mr119616535e9.29.1738357601798; 
- Fri, 31 Jan 2025 13:06:41 -0800 (PST)
+ bh=QIVJQJKGcg0YWEqQO8oUWHaR7BCknrlB7uO1Y3XbfxU=;
+ b=VsgqqqzjlyIpTiClXz6kHwslvmJUSs1A4Y27KcqkkGgaCMRC3xMXFQpnARucOT113Z
+ 0PQrecwxeYOS+iJP+u52XzwIHNadMtk58Spf8uT1Hi+M/0KrmHsIYBWpVDDBq39tHMbt
+ 0SOJuYjzmi1hmM6yyMgmqk6IyGc/gqmY7JV+T4mSOADJ2dIZ9izZ7T4o+BCkmLGBzTi2
+ rY1VQRnoMqjB7C4eG1D3wF5y7jxvvWimwmkb2L0HEucY8et/5QrcYkxLETFubCp3v/6a
+ A4msA61y0Ji4qqDsr4+X2X5WtFNblxxfTCpEIV2eyclB/4UnkilcxE9o72b04vAcYcol
+ kUUg==
+X-Gm-Message-State: AOJu0Yytj02qmfBs6+IZ9ZBD5QelnRzhiF8PWIK+j1etoVBLEvODZqUv
+ jr8bPQpg6vLeIh6U7ovG14lFvm++LPDj55ZgFo7Gf9QLc2o4nSTVN+9zdYqZik8gGKCgVuede9R
+ C6WU=
+X-Gm-Gg: ASbGncvBbVLGWo14L4SBu5g85nmnHteE246PRm9mBnC8mH5Mb2/4JWb0xDbFRj9NrLR
+ 98Yl0WEm2WesGWqasHn8J8wV4goMkDCmgeCBkpAyMMNKcQB9Ou42t8cXDvVS8Xm/R7D9Ahnq1pT
+ mBntrEsQgTS9QpdwN4vSOjqj3mCozDZ+Wvo3AKPZm15RZKxw8t7Wyh4yFydo/7jxnOWbnd98ptr
+ 6YhCDMvtsS+XS9q2LsdAT35BkumCjhQCO3RSIbKZrQAGOScvfY2Ziig1G0gdw0AraZfHA24MlSB
+ smsf52MgKNVBInFXSwUqs5XqL0B5N4YAF0vBZly5xuKmCv/ffGAvpSvbDW8YZOXo7g==
+X-Google-Smtp-Source: AGHT+IHMYUHsLadZpB8NY6iQ1l994NQVviOZBVf8MHdApFxn5xR0mceVJAnIDyPMi3oraiSD/HiLbw==
+X-Received: by 2002:a5d:6d0c:0:b0:38a:888c:676f with SMTP id
+ ffacd0b85a97d-38c5194a531mr10995878f8f.15.1738357550885; 
+ Fri, 31 Jan 2025 13:05:50 -0800 (PST)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-438e23d42d4sm68667495e9.6.2025.01.31.13.06.40
+ ffacd0b85a97d-38c5c12247esm5765768f8f.53.2025.01.31.13.05.50
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Fri, 31 Jan 2025 13:06:40 -0800 (PST)
+ Fri, 31 Jan 2025 13:05:50 -0800 (PST)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  Richard Henderson <richard.henderson@linaro.org>
-Subject: [PULL 16/36] hw/sh4/r2d: Convert legacy qemu_allocate_irqs() to
- qemu_init_irqs()
-Date: Fri, 31 Jan 2025 22:04:59 +0100
-Message-ID: <20250131210520.85874-17-philmd@linaro.org>
+Subject: [PULL 06/36] hw/mips/loongson3_bootp: Include missing headers
+Date: Fri, 31 Jan 2025 22:04:49 +0100
+Message-ID: <20250131210520.85874-7-philmd@linaro.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20250131210520.85874-1-philmd@linaro.org>
 References: <20250131210520.85874-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::331;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x331.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::431;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x431.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -100,132 +99,38 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The FPGA exposes a fixed set of IRQs. Hold them in the FPGA
-state and initialize them in place calling qemu_init_irqs().
+MemMapEntry is declared in "exec/hwaddr.h", cpu_to_le32() in
+"qemu/bswap.h". These headers are indirectly included via "cpu.h".
+Include them explicitly in order to avoid when removing "cpu.h":
 
-Move r2d_fpga_irq enums earlier so we can use NR_IRQS within
-the r2d_fpga_t structure. r2d_fpga_init() returns r2d_fpga_t,
-and we dereference irq from it in r2d_init().
+  In file included from ../../hw/mips/loongson3_bootp.c:27:
+  hw/mips/loongson3_bootp.h:234:14: error: unknown type name 'MemMapEntry'
+    234 | extern const MemMapEntry virt_memmap[];
+        |              ^
+  hw/mips/loongson3_bootp.c:33:18: error: call to undeclared function 'cpu_to_le32'; ISO C99 and later do not support implicit function declarations [-Wimplicit-function-declaration]
+     33 |     c->cputype = cpu_to_le32(Loongson_3A);
+        |                  ^
 
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-Message-Id: <20250121182445.35309-1-philmd@linaro.org>
+Message-Id: <20250115232952.31166-6-philmd@linaro.org>
 ---
- hw/sh4/r2d.c | 38 +++++++++++++++++++++-----------------
- 1 file changed, 21 insertions(+), 17 deletions(-)
+ hw/mips/loongson3_bootp.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/hw/sh4/r2d.c b/hw/sh4/r2d.c
-index 2fa439819e3..d68c94e82ef 100644
---- a/hw/sh4/r2d.c
-+++ b/hw/sh4/r2d.c
-@@ -63,6 +63,12 @@
- #define PA_VERREG 0x32
- #define PA_OUTPORT 0x36
- 
-+enum r2d_fpga_irq {
-+    PCI_INTD, CF_IDE, CF_CD, PCI_INTC, SM501, KEY, RTC_A, RTC_T,
-+    SDCARD, PCI_INTA, PCI_INTB, EXT, TP,
-+    NR_IRQS
-+};
-+
- typedef struct {
-     uint16_t bcr;
-     uint16_t irlmsk;
-@@ -88,15 +94,10 @@ typedef struct {
- 
- /* output pin */
-     qemu_irq irl;
-+    IRQState irq[NR_IRQS];
-     MemoryRegion iomem;
- } r2d_fpga_t;
- 
--enum r2d_fpga_irq {
--    PCI_INTD, CF_IDE, CF_CD, PCI_INTC, SM501, KEY, RTC_A, RTC_T,
--    SDCARD, PCI_INTA, PCI_INTB, EXT, TP,
--    NR_IRQS
--};
--
- static const struct { short irl; uint16_t msk; } irqtab[NR_IRQS] = {
-     [CF_IDE] =   {  1, 1 << 9 },
-     [CF_CD] =    {  2, 1 << 8 },
-@@ -186,8 +187,8 @@ static const MemoryRegionOps r2d_fpga_ops = {
-     .endianness = DEVICE_NATIVE_ENDIAN,
- };
- 
--static qemu_irq *r2d_fpga_init(MemoryRegion *sysmem,
--                               hwaddr base, qemu_irq irl)
-+static r2d_fpga_t *r2d_fpga_init(MemoryRegion *sysmem,
-+                                 hwaddr base, qemu_irq irl)
- {
-     r2d_fpga_t *s;
- 
-@@ -197,7 +198,10 @@ static qemu_irq *r2d_fpga_init(MemoryRegion *sysmem,
- 
-     memory_region_init_io(&s->iomem, NULL, &r2d_fpga_ops, s, "r2d-fpga", 0x40);
-     memory_region_add_subregion(sysmem, base, &s->iomem);
--    return qemu_allocate_irqs(r2d_fpga_irq_set, s, NR_IRQS);
-+
-+    qemu_init_irqs(s->irq, NR_IRQS, r2d_fpga_irq_set, s);
-+
-+    return s;
- }
- 
- typedef struct ResetData {
-@@ -239,13 +243,13 @@ static void r2d_init(MachineState *machine)
-     ResetData *reset_info;
-     struct SH7750State *s;
-     MemoryRegion *sdram = g_new(MemoryRegion, 1);
--    qemu_irq *irq;
-     DriveInfo *dinfo;
-     DeviceState *dev;
-     SysBusDevice *busdev;
-     MemoryRegion *address_space_mem = get_system_memory();
-     PCIBus *pci_bus;
-     USBBus *usb_bus;
-+    r2d_fpga_t *fpga;
- 
-     cpu = SUPERH_CPU(cpu_create(machine->cpu_type));
-     env = &cpu->env;
-@@ -260,7 +264,7 @@ static void r2d_init(MachineState *machine)
-     memory_region_add_subregion(address_space_mem, SDRAM_BASE, sdram);
-     /* Register peripherals */
-     s = sh7750_init(cpu, address_space_mem);
--    irq = r2d_fpga_init(address_space_mem, 0x04000000, sh7750_irl(s));
-+    fpga = r2d_fpga_init(address_space_mem, 0x04000000, sh7750_irl(s));
- 
-     dev = qdev_new("sh_pci");
-     busdev = SYS_BUS_DEVICE(dev);
-@@ -268,10 +272,10 @@ static void r2d_init(MachineState *machine)
-     pci_bus = PCI_BUS(qdev_get_child_bus(dev, "pci"));
-     sysbus_mmio_map(busdev, 0, P4ADDR(0x1e200000));
-     sysbus_mmio_map(busdev, 1, A7ADDR(0x1e200000));
--    sysbus_connect_irq(busdev, 0, irq[PCI_INTA]);
--    sysbus_connect_irq(busdev, 1, irq[PCI_INTB]);
--    sysbus_connect_irq(busdev, 2, irq[PCI_INTC]);
--    sysbus_connect_irq(busdev, 3, irq[PCI_INTD]);
-+    sysbus_connect_irq(busdev, 0, &fpga->irq[PCI_INTA]);
-+    sysbus_connect_irq(busdev, 1, &fpga->irq[PCI_INTB]);
-+    sysbus_connect_irq(busdev, 2, &fpga->irq[PCI_INTC]);
-+    sysbus_connect_irq(busdev, 3, &fpga->irq[PCI_INTD]);
- 
-     dev = qdev_new("sysbus-sm501");
-     busdev = SYS_BUS_DEVICE(dev);
-@@ -281,13 +285,13 @@ static void r2d_init(MachineState *machine)
-     sysbus_realize_and_unref(busdev, &error_fatal);
-     sysbus_mmio_map(busdev, 0, 0x10000000);
-     sysbus_mmio_map(busdev, 1, 0x13e00000);
--    sysbus_connect_irq(busdev, 0, irq[SM501]);
-+    sysbus_connect_irq(busdev, 0, &fpga->irq[SM501]);
- 
-     /* onboard CF (True IDE mode, Master only). */
-     dinfo = drive_get(IF_IDE, 0, 0);
-     dev = qdev_new("mmio-ide");
-     busdev = SYS_BUS_DEVICE(dev);
--    sysbus_connect_irq(busdev, 0, irq[CF_IDE]);
-+    sysbus_connect_irq(busdev, 0, &fpga->irq[CF_IDE]);
-     qdev_prop_set_uint32(dev, "shift", 1);
-     sysbus_realize_and_unref(busdev, &error_fatal);
-     sysbus_mmio_map(busdev, 0, 0x14001000);
+diff --git a/hw/mips/loongson3_bootp.c b/hw/mips/loongson3_bootp.c
+index b97b81903b7..712439c2575 100644
+--- a/hw/mips/loongson3_bootp.c
++++ b/hw/mips/loongson3_bootp.c
+@@ -21,6 +21,8 @@
+ #include "qemu/osdep.h"
+ #include "qemu/units.h"
+ #include "qemu/cutils.h"
++#include "qemu/bswap.h"
++#include "exec/hwaddr.h"
+ #include "cpu.h"
+ #include "hw/boards.h"
+ #include "hw/mips/loongson3_bootp.h"
 -- 
 2.47.1
 
