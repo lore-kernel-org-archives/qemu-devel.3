@@ -4,86 +4,99 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A2839C0218F
-	for <qemu-devel@archiver.kernel.org>; Fri, 31 Jan 2025 21:46:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 52CC2C0218F
+	for <qemu-devel@archiver.kernel.org>; Fri, 31 Jan 2025 22:03:58 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tdyqW-0007f9-7P; Fri, 31 Jan 2025 16:46:40 -0500
+	id 1tdz6b-0002Lo-IE; Fri, 31 Jan 2025 17:03:17 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <atar4qemu@gmail.com>)
- id 1tdyqP-0007eS-P3
- for qemu-devel@nongnu.org; Fri, 31 Jan 2025 16:46:35 -0500
-Received: from mail-ej1-x634.google.com ([2a00:1450:4864:20::634])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <atar4qemu@gmail.com>)
- id 1tdyqN-0007Ws-VD
- for qemu-devel@nongnu.org; Fri, 31 Jan 2025 16:46:33 -0500
-Received: by mail-ej1-x634.google.com with SMTP id
- a640c23a62f3a-aa68b513abcso431690766b.0
- for <qemu-devel@nongnu.org>; Fri, 31 Jan 2025 13:46:30 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1738359988; x=1738964788; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=66Bo2gEeNzLllo0jczJ1SMGFCw0a04TJcr0F/2HYI5s=;
- b=mVxtucuf7NRR93DQ93KE6YYoBnlpgom6sjYXOpEOk+1VLW75yd9ae8pvZgMp/O1KZD
- KBqCHpJKro2lPYO+0eWybQnH8+7iBngq77f5k0aQkhksOwUmZxgHl+zyAcZxMkIcmsSg
- aqVwib7+k9qijhluwVJP0tLkJQPR8472Q42MWasV+Zjyh4L/3RGjm9MxejcDAM2//rD7
- w53HwDdA52E59ZEfas+er9KZIqK4brTeQ2zwyGBp1UlqQu/J2+t6pIq6f2mPvjYxOEcd
- BZsu4SxeuTyQNaIKczzDG80HaDaooyMqKht+dxG+P5guE8gMuu/GezmZgnwH22/75zY5
- LKZA==
+ (Exim 4.90_1) (envelope-from <alex.williamson@redhat.com>)
+ id 1tdz6a-0002LM-8u
+ for qemu-devel@nongnu.org; Fri, 31 Jan 2025 17:03:16 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <alex.williamson@redhat.com>)
+ id 1tdz6Y-0002LZ-5i
+ for qemu-devel@nongnu.org; Fri, 31 Jan 2025 17:03:15 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1738360992;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=/DSqWvPm5uuod36/74I+gSIdP2xlkiJP+wBOzTwsZ8E=;
+ b=NulTTLIjskdFexB2QRWgVVRabzkIrmW0qwVa6cIzn5lHz2jXWa9056sVNxaobtWUif6vjZ
+ GAcbbEsL2kjAIz0Wlhpznx1zQ7k/+hvsZPyN01uhMZ5VXgdg7FMXjL3PHS+6NE1FdXskvm
+ nkK5NElA4d6hbkC1F5+S5aX6M8dM7v4=
+Received: from mail-il1-f200.google.com (mail-il1-f200.google.com
+ [209.85.166.200]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-155-BqeZ3Zl-O0a2dDS8uxHIkg-1; Fri, 31 Jan 2025 17:02:04 -0500
+X-MC-Unique: BqeZ3Zl-O0a2dDS8uxHIkg-1
+X-Mimecast-MFC-AGG-ID: BqeZ3Zl-O0a2dDS8uxHIkg
+Received: by mail-il1-f200.google.com with SMTP id
+ e9e14a558f8ab-3d0003f4972so2657465ab.2
+ for <qemu-devel@nongnu.org>; Fri, 31 Jan 2025 14:02:04 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1738359988; x=1738964788;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=66Bo2gEeNzLllo0jczJ1SMGFCw0a04TJcr0F/2HYI5s=;
- b=G2SEtEf7nayMzC8YC0RZEXDGG6jJax7XF6FD49i+XMuGu0vAE1tcT2V+7324WP2UN3
- t133xsjGE1t6e0/pNGdxXMiKziQLYLLi4fRJChYmMsnI8D3+ocK287Y94wdAeXgqPM71
- e7BvbQgllyisvYz3r+bMzSII5+7PAiiAMAiIIMpCAQmXc9iavyPNocUABKu4ZMf/l+ln
- YDMrZh8kV+CQtlwuOsyrpyMiRuyiazhuQ43/0t9PaUymMTXBzpFZWsikKzRDPkpjw4A+
- eCooXwHj+ugmfKDFu6qern1dZ0kHr+sKvJNmlPnt767IY5kRCMLMn5gfneU2QBmiJSBg
- up8A==
-X-Gm-Message-State: AOJu0YztHEbuLkrTUEenpSl6iIDm9TcTPnwqBiXnkKG9vLZtWtu4tubG
- VKQmihEYx2Zl1DIFfPYgqSlvi7E5ATeYTdjNw54I0nMOiZ7SIpNDc8jp4hPz
-X-Gm-Gg: ASbGnctP6IQ8bMTY2b22DMA1V1F2NjouBVOVSyJbFWrR5zY3dA12V0z7m8HJIx9fpqx
- zoV2MG6X8wUQowBTWzF5KpAGQY6c9oFselMsVp5MWNkWw9B+WCPhCDs4sfJddfsBeOEY1zZ+lmY
- P2HIjkC5q/6Gpy2VSueT+TqRplo8Zq+QDX5xYZtqSj2DB7ArvFbRtX3uXjslQKxeU3XmRTOpYVu
- cqNkaKiVpHRssDbF6bfHpM8oasxTe/168GirIISLrMiA6OM8vsItL/37WR3pxPXnShcV4/jlBVO
- kUsFHZyg2Yy1V9GpAqdNoDdarNcRf87rqQYXexmkfsCy5i0Pix03cvBu7Y8HBqtDTiyYNtSJbNd
- 1La6RGdticw==
-X-Google-Smtp-Source: AGHT+IHHeAip7CzkWDE7Lz/Aj8Czsh2z1RQ0uelORzqWc+5RrV4p7TZlhJ/bAEk1AXYWorEHSqguJQ==
-X-Received: by 2002:a17:907:2ce3:b0:aa6:6a52:970 with SMTP id
- a640c23a62f3a-ab6cfcb3b92mr1456491966b.1.1738359987612; 
- Fri, 31 Jan 2025 13:46:27 -0800 (PST)
-Received: from localhost.localdomain
- (dynamic-077-179-165-240.77.179.pool.telefonica.de. [77.179.165.240])
- by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-ab7010f4d2asm145444166b.75.2025.01.31.13.46.27
+ d=1e100.net; s=20230601; t=1738360924; x=1738965724;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:subject:cc:to:from:date:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=/DSqWvPm5uuod36/74I+gSIdP2xlkiJP+wBOzTwsZ8E=;
+ b=pyyk9sFfH1HHXhNvz4bARA7Y8odIBJIKgtDpkmvu9jfwZhHZ/mh6WD923jJ40v2vHP
+ aBEgMvcHyjPFVUj6qv591r68ZBNQVAthjcb9G7/19EkCDRhnBv+LGrrDG9dmY3D3qNm7
+ LIlvZSaqzvV8m6fq8XUewP8grTmGYzLzVMz5KKJGJjQjg2ncKTOHlhSNaGrrnR74noDZ
+ 5EoBCMRBOMCpRIDEFrkE+6XIZj8ZLKSG4JauB/zvnM/zu1Tz2Ix9pfy8cr+zUovhf5I0
+ JWt+jzD7dV7ezT3Rs2giDyia6CtyKatOCQvlmZorslrxDDrg5pjx1FwB02CUMOLU3dOu
+ MxJw==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCVyzKSNbZgDvpLqpePTzGntebEACl1dLUlO71fnOi20L+R8fV6wHvVzBNJO8rxAIiKRuCguwABoB1wL@nongnu.org
+X-Gm-Message-State: AOJu0YzuImFfghW3eJ0qLwCiagxxsxsBgjGKtVcaZt4M9uEn/AL72UkI
+ aQjAq6tO8LEXYaEh84sECFzBUl5yAbAUSH1qxBNCrbW6NxxgAV8vvJEoOZeBriWZ+KRnk4T9RbJ
+ OPblokaimkBjtR572Sm14hbFSVPDK9i6kTvjO6rO57roPRLqs8iUD
+X-Gm-Gg: ASbGnctxWXFhOHy3cs5Ns5ZmO5drq9VUB9y/CYBNUj2H4wk6wUmSHzaM1wj3HgK9A1s
+ faulkGiPx6yWTD79xtI0CSsw5u3/OJ8HY272NIJPz+5fv3WixkW8jq3Moj6fDyY5XYdhtwpm7kq
+ Eh8JES/2FDqY0Uu5j6VItyr1eMt8ir1bP9NWu2P/GHAnWM0gPgB+cmoTmiOJiWijA8j/4sxuYa8
+ u5jxaod8UgLewfHl3qEXZ7EvOC5MWclKoOBe9xa04aIwkhURdhBytV9hT4/oPhfSpP8ioRDnZfB
+ HI6XdK75
+X-Received: by 2002:a05:6602:1782:b0:83a:e6b2:be3 with SMTP id
+ ca18e2360f4ac-8549f72e4e9mr208816739f.0.1738360923944; 
+ Fri, 31 Jan 2025 14:02:03 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IHBLsOgCraVbGtXNuqslsyzS03v1aIM/mhRwNzs7ELSZwl9OhK1zR76XTX8Ktx6phlijpmuaA==
+X-Received: by 2002:a05:6602:1782:b0:83a:e6b2:be3 with SMTP id
+ ca18e2360f4ac-8549f72e4e9mr208816039f.0.1738360923543; 
+ Fri, 31 Jan 2025 14:02:03 -0800 (PST)
+Received: from redhat.com ([38.15.36.11]) by smtp.gmail.com with ESMTPSA id
+ ca18e2360f4ac-854a16078a3sm103935639f.19.2025.01.31.14.02.02
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 31 Jan 2025 13:46:27 -0800 (PST)
-From: Artyom Tarasenko <atar4qemu@gmail.com>
-To: qemu-devel@nongnu.org
-Cc: Artyom Tarasenko <atar4qemu@gmail.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
-Subject: [PATCH] target/sparc: fake UltraSPARC T1 PCR and PIC registers
-Date: Fri, 31 Jan 2025 22:44:15 +0100
-Message-ID: <20250131214528.117846-1-atar4qemu@gmail.com>
-X-Mailer: git-send-email 2.43.5
+ Fri, 31 Jan 2025 14:02:03 -0800 (PST)
+Date: Fri, 31 Jan 2025 15:02:01 -0700
+From: Alex Williamson <alex.williamson@redhat.com>
+To: Shivaprasad G Bhat <sbhat@linux.ibm.com>
+Cc: clg@redhat.com, vaibhav@linux.ibm.com, npiggin@gmail.com,
+ harshpb@linux.ibm.com, qemu-ppc@nongnu.org, qemu-devel@nongnu.org
+Subject: Re: [PATCH] vfio/pci: Skip enabling INTx if the IRQ line is also
+ unassgined
+Message-ID: <20250131150201.048aa3bf.alex.williamson@redhat.com>
+In-Reply-To: <173834353589.1880.3587671276264097972.stgit@linux.ibm.com>
+References: <173834353589.1880.3587671276264097972.stgit@linux.ibm.com>
+X-Mailer: Claws Mail 4.3.0 (GTK 3.24.43; x86_64-redhat-linux-gnu)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::634;
- envelope-from=atar4qemu@gmail.com; helo=mail-ej1-x634.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=170.10.129.124;
+ envelope-from=alex.williamson@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -33
+X-Spam_score: -3.4
+X-Spam_bar: ---
+X-Spam_report: (-3.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.3,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -99,85 +112,57 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-fake access to
-PCR Performance Control Register
-and
-PIC Performance Instrumentation Counter.
+On Fri, 31 Jan 2025 17:15:01 +0000
+Shivaprasad G Bhat <sbhat@linux.ibm.com> wrote:
 
-Ignore writes in privileged mode, and return 0 on reads.
+> Currently, the PCI_INTERRUPT_PIN alone is checked before enabling
+> the INTx. Its also necessary to have the IRQ Lines assigned for
+> the INTx to work. So, check the PCI_INTERRUPT_LINE against 0xff
+> indicates no connection.
+> 
+> The problem was observed on Power10 systems which primarily use
+> MSI-X, and LSI lines are not connected on all devices under a
+> PCIe switch. In this configuration where the PIN is non-zero
+> but the LINE was 0xff, the VFIO_DEVICE_SET_IRQS was failing as
+> it was trying to map the irqfd for the LSI of the device.
+> 
+> Signed-off-by: Shivaprasad G Bhat <sbhat@linux.ibm.com>
+> ---
+>  hw/vfio/pci.c |    4 ++--
+>  1 file changed, 2 insertions(+), 2 deletions(-)
+> 
+> diff --git a/hw/vfio/pci.c b/hw/vfio/pci.c
+> index ab17a98ee5..69a519d143 100644
+> --- a/hw/vfio/pci.c
+> +++ b/hw/vfio/pci.c
+> @@ -264,12 +264,12 @@ static void vfio_irqchip_change(Notifier *notify, void *data)
+>  static bool vfio_intx_enable(VFIOPCIDevice *vdev, Error **errp)
+>  {
+>      uint8_t pin = vfio_pci_read_config(&vdev->pdev, PCI_INTERRUPT_PIN, 1);
+> +    uint8_t line = vfio_pci_read_config(&vdev->pdev, PCI_INTERRUPT_LINE, 1);
+>      Error *err = NULL;
+>      int32_t fd;
+>      int ret;
+>  
+> -
+> -    if (!pin) {
+> +    if (!pin || (line == 0xFF)) {
+>          return true;
+>      }
+>  
 
-This allows booting Tribblix, MilaX and v9os under Niagara target.
+vfio_intx_enable() should be the backup that catches users trying to
+configure INTx, but we should also be indicating there's no INTx
+through the IRQ_INFO ioctl.  The value in the line register is also not
+defined by the PCI spec, it's implementation specific, therefore for
+what architectures is this interpretation of the line register valid?
 
-Signed-off-by: Artyom Tarasenko <atar4qemu@gmail.com>
----
- target/sparc/insns.decode |  7 ++++++-
- target/sparc/translate.c  | 20 ++++++++++++++++++++
- 2 files changed, 26 insertions(+), 1 deletion(-)
+Should we at the same time virtualize the pin register as zero?
 
-diff --git a/target/sparc/insns.decode b/target/sparc/insns.decode
-index 989c20b44a..504147563c 100644
---- a/target/sparc/insns.decode
-+++ b/target/sparc/insns.decode
-@@ -96,7 +96,10 @@ CALL    01 i:s30
-     RDTICK          10 rd:5  101000 00100 0 0000000000000
-     RDPC            10 rd:5  101000 00101 0 0000000000000
-     RDFPRS          10 rd:5  101000 00110 0 0000000000000
--    RDASR17         10 rd:5  101000 10001 0 0000000000000
-+    {
-+      RDASR17       10 rd:5  101000 10001 0 0000000000000
-+      RDPIC         10 rd:5  101000 10001 0 0000000000000
-+    }
-     RDGSR           10 rd:5  101000 10011 0 0000000000000
-     RDSOFTINT       10 rd:5  101000 10110 0 0000000000000
-     RDTICK_CMPR     10 rd:5  101000 10111 0 0000000000000
-@@ -114,6 +117,8 @@ CALL    01 i:s30
-     WRCCR           10 00010 110000 ..... . .............  @n_r_ri
-     WRASI           10 00011 110000 ..... . .............  @n_r_ri
-     WRFPRS          10 00110 110000 ..... . .............  @n_r_ri
-+    WRPCR           10 10000 110000 01000 0 0000000000000
-+    WRPIC           10 10001 110000 01000 0 0000000000000
-     {
-       WRGSR         10 10011 110000 ..... . .............  @n_r_ri
-       WRPOWERDOWN   10 10011 110000 ..... . .............  @n_r_ri
-diff --git a/target/sparc/translate.c b/target/sparc/translate.c
-index 7e5c7351cb..285c9b0a59 100644
---- a/target/sparc/translate.c
-+++ b/target/sparc/translate.c
-@@ -2882,6 +2882,15 @@ static TCGv do_rd_leon3_config(DisasContext *dc, TCGv dst)
- 
- TRANS(RDASR17, ASR17, do_rd_special, true, a->rd, do_rd_leon3_config)
- 
-+static TCGv do_rdpic(DisasContext *dc, TCGv dst)
-+{
-+    tcg_gen_movi_tl(dst, 0UL);
-+    return dst;
-+}
-+
-+TRANS(RDPIC, HYPV, do_rd_special, true, a->rd, do_rdpic)
-+
-+
- static TCGv do_rdccr(DisasContext *dc, TCGv dst)
- {
-     gen_helper_rdccr(dst, tcg_env);
-@@ -3315,6 +3324,17 @@ static void do_wrfprs(DisasContext *dc, TCGv src)
- 
- TRANS(WRFPRS, 64, do_wr_special, a, true, do_wrfprs)
- 
-+static bool do_priv_nop(DisasContext *dc, bool priv)
-+{
-+    if (!priv) {
-+        return raise_priv(dc);
-+    }
-+    return advance_pc(dc);
-+}
-+
-+TRANS(WRPCR, HYPV, do_priv_nop, supervisor(dc))
-+TRANS(WRPIC, HYPV, do_priv_nop, supervisor(dc))
-+
- static void do_wrgsr(DisasContext *dc, TCGv src)
- {
-     gen_trap_ifnofpu(dc);
--- 
-2.43.5
+Maybe it's also time to implement similar checking for dev->irq ==
+IRQ_NOTCONNECTED.  Do Power systems make use of the IRQ_NOTCONNECTED
+convention?  Thanks,
+
+Alex
 
 
