@@ -4,77 +4,92 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7076AC0218F
-	for <qemu-devel@archiver.kernel.org>; Fri, 31 Jan 2025 13:33:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7AEF1C0218F
+	for <qemu-devel@archiver.kernel.org>; Fri, 31 Jan 2025 13:36:35 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tdr88-0002gj-C9; Fri, 31 Jan 2025 08:32:20 -0500
+	id 1tdrC0-00045e-AA; Fri, 31 Jan 2025 08:36:20 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kraxel@redhat.com>) id 1tdr7v-0002fq-8r
- for qemu-devel@nongnu.org; Fri, 31 Jan 2025 08:32:17 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kraxel@redhat.com>) id 1tdr7t-0006zM-NM
- for qemu-devel@nongnu.org; Fri, 31 Jan 2025 08:32:06 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1738330322;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=VxldpuGbtOAylxynDZXG+yxBsTR164Rf3IvINXRAy6Y=;
- b=Ka5b5EIHKuGdAqbuohz/7EcLVMTNsM7FGpZHLxo1/go4iPogj+CKMkWu+bB8rtrDAXrFwl
- NJfNt7T14dXxBW1Umc/dQETvryktYKuqlQ+uJ1DQl1PKKyxuwPte9kEDD6UeH/y7MdQDag
- +utvB3qZMnjp/s0uuX0pASD3xwhjJ04=
-Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-64-FTXVPYyFNraW-wYJFuTQjw-1; Fri,
- 31 Jan 2025 08:32:00 -0500
-X-MC-Unique: FTXVPYyFNraW-wYJFuTQjw-1
-X-Mimecast-MFC-AGG-ID: FTXVPYyFNraW-wYJFuTQjw
-Received: from mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.40])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id E2AB31956083
- for <qemu-devel@nongnu.org>; Fri, 31 Jan 2025 13:31:59 +0000 (UTC)
-Received: from dobby.home.kraxel.org (unknown [10.39.193.77])
- by mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 223FA19560AA; Fri, 31 Jan 2025 13:31:59 +0000 (UTC)
-Received: by dobby.home.kraxel.org (Postfix, from userid 1000)
- id 17D712EE2E9; Fri, 31 Jan 2025 14:23:58 +0100 (CET)
-Date: Fri, 31 Jan 2025 14:23:58 +0100
-From: Gerd Hoffmann <kraxel@redhat.com>
-To: =?utf-8?Q?C=C3=A9dric?= Le Goater <clg@redhat.com>
-Cc: Alex Williamson <alex.williamson@redhat.com>, qemu-devel@nongnu.org
-Subject: Re: [PATCH v2 8/9] vfio: Check compatibility of CPU and IOMMU
- address space width
-Message-ID: <24w7fzx5rf2zdnowtjmuvwuirydryc366xumjf3isgzrhei2ty@ymyjyzdbggr2>
-References: <20250130134346.1754143-1-clg@redhat.com>
- <20250130134346.1754143-9-clg@redhat.com>
- <20250130115800.60b7cbe6.alex.williamson@redhat.com>
- <9cfaf81e-d8cc-4ec0-9c56-956b716891e7@redhat.com>
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1tdrBw-00045K-0X
+ for qemu-devel@nongnu.org; Fri, 31 Jan 2025 08:36:16 -0500
+Received: from mail-pl1-x634.google.com ([2607:f8b0:4864:20::634])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1tdrBu-0000hF-EB
+ for qemu-devel@nongnu.org; Fri, 31 Jan 2025 08:36:15 -0500
+Received: by mail-pl1-x634.google.com with SMTP id
+ d9443c01a7336-21619108a6bso34298505ad.3
+ for <qemu-devel@nongnu.org>; Fri, 31 Jan 2025 05:36:13 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1738330572; x=1738935372; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=5MCeK5n+5gJL2xftSosJLZv/AHi2f2ABEnI3IJElVSI=;
+ b=x7MhctkKIK8v968kNT+onyEgoR8rY3/5dkHSTsGR+KASNZ6OKvzf9nYlppZR4TIK3C
+ BPFWWxWtUQA+gr5+PZ6ODx4xYtfM/14Z5NFrh9SfiEQFnSrXX/+LHVasJUxD71zO4XVl
+ Iq/kcw6kOd5QqDjmtJ/iPm1PC9qVTx7152DMKo2PD9QUHn6rGCBOTfeIDrKhRlxfi0xd
+ CiTmf69gcH7LrBJGOFMwDhbTYjjN4hwLNhaVjlFasTeXEviR4tcy0EQDx8BHEvd8ppOB
+ SQz3V1i5wpFCTpDAK54zuomoreSwOmk7ZrhpyWJvPgtJH5jnuXh74WBmJbve+HgS35rL
+ Mq6w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1738330572; x=1738935372;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=5MCeK5n+5gJL2xftSosJLZv/AHi2f2ABEnI3IJElVSI=;
+ b=mDus7hH2RnVq1VxXw4OMmNiTViWGrHv/y50TZ0/VMmt6UfE+SRMBH+uloSakc/8hXx
+ EDXkmYueT1nZJp5IG+BK2FKNfjdIklt3ET5ylQH8CzowU6oNnBV74h1IsaLXvFKo0Iqn
+ A6LMHmko8xr9ySYo7gP6qBC/KkrauKjWxslWI5r2RbcRuE1xyY8779bC4PQEEkLlq7Tz
+ fxLb3x6HgAkhWMhIRcjQPViq+nq7HeNeSErcvfXMEw9LnxgNvSfVdDVy9bwJgnuux5li
+ QNw/B7jyHXANjstq+J6WFlifTFFPtMzL1/lmcMTpDpMFX1cL5d8DGHnGv1TzVx0wSOfH
+ 3nzw==
+X-Gm-Message-State: AOJu0YzEsnqQZ4JkUC0Cw8U5qnsRfD9sop4fbovsM9KZZUIYUFprDjRp
+ B38LnNMiJrbCyZzwxr/a82dFRzO/0nDn8KBEomW4cBilAXe8xaoshhhVrRCcg51PLCakUmmeOKd
+ U
+X-Gm-Gg: ASbGncv5vmGvQgPHCAMvQk2OqJZWqthNAS3kuWJnWKxbtRb9IT94wWEj3iqHXVTKc92
+ eHXwVY7hzxEz2LzFQVUJUQZNel7gnXXAwwEAFJnDs5BiCrOASx7B91CFi4Bi9uW6yQ7LsHHN/G0
+ SIgciI1sb4HKQ4LCFwrlhZC+MKjC0kzeFK5KF+iiEnCqhfFbwogEpqUkpq3cBRJBIwbJrL4cd1t
+ 8yebi1ywwvJ3K9eJ0yb/bK4PVeQ/uUXFH5Sz/VVTAaTcUsA/l2kMrwDxctUaKG9HT1fn4i4Eusv
+ tZGou1hhF8v7X84pocjv01S/ptSZQTfi
+X-Google-Smtp-Source: AGHT+IHuLJY2r8N7NNaWmk1HMrzsiDct5Q6PTZgC7Hi6tcguJzLsgKTny+ittmk3EK3rrsceapd2Cw==
+X-Received: by 2002:a05:6a00:214a:b0:72f:d50a:9084 with SMTP id
+ d2e1a72fcca58-72fd50a9263mr11057521b3a.13.1738330571898; 
+ Fri, 31 Jan 2025 05:36:11 -0800 (PST)
+Received: from [192.168.163.227] ([50.233.235.3])
+ by smtp.gmail.com with ESMTPSA id
+ d2e1a72fcca58-72fe69ba3acsm3197143b3a.111.2025.01.31.05.36.10
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Fri, 31 Jan 2025 05:36:11 -0800 (PST)
+Message-ID: <b79b0416-d387-4dad-aa0e-26acff4369a3@linaro.org>
+Date: Fri, 31 Jan 2025 05:36:06 -0800
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <9cfaf81e-d8cc-4ec0-9c56-956b716891e7@redhat.com>
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.40
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=kraxel@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -33
-X-Spam_score: -3.4
-X-Spam_bar: ---
-X-Spam_report: (-3.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.3,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 24/76] fpu: allow flushing of output denormals to be after
+ rounding
+To: Peter Maydell <peter.maydell@linaro.org>
+Cc: qemu-devel@nongnu.org
+References: <20250124162836.2332150-1-peter.maydell@linaro.org>
+ <20250124162836.2332150-25-peter.maydell@linaro.org>
+ <d8d04708-ddc2-476e-9e17-8493f573d7a5@linaro.org>
+ <CAFEAcA91VD57mPb4y2bzWnf-p6o6O8Q_9HCdM0HGReddBp8WsA@mail.gmail.com>
+Content-Language: en-US
+From: Richard Henderson <richard.henderson@linaro.org>
+In-Reply-To: <CAFEAcA91VD57mPb4y2bzWnf-p6o6O8Q_9HCdM0HGReddBp8WsA@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::634;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x634.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -90,47 +105,43 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, Jan 31, 2025 at 01:42:31PM +0100, Cédric Le Goater wrote:
-> + Gerd for insights regarding vIOMMU support in edk2.
+On 1/29/25 05:04, Peter Maydell wrote:
+> On Sat, 25 Jan 2025 at 16:42, Richard Henderson
+> <richard.henderson@linaro.org> wrote:
+>>
+>> On 1/24/25 08:27, Peter Maydell wrote:
+>>> Currently we handle flushing of output denormals in uncanon_normal
+>>> always before we deal with rounding.  This works for architectures
+>>> that detect tininess before rounding, but is usually not the right
+>>> place when the architecture detects tininess after rounding.  For
+>>> example, for x86 the SDM states that the MXCSR FTZ control bit causes
+>>> outputs to be flushed to zero "when it detects a floating-point
+>>> underflow condition".  This means that we mustn't flush to zero if
+>>> the input is such that after rounding it is no longer tiny.
+>>>
+>>> At least one of our guest architectures does underflow detection
+>>> after rounding but flushing of denormals before rounding (MIPS MSA);
+>>
+>> Whacky, but yes, I see that in the msa docs.
 > 
-> > > +static bool vfio_device_check_address_space(VFIODevice *vbasedev, Error **errp)
-> > > +{
-> > > +    uint32_t cpu_aw_bits = cpu_get_phys_bits(first_cpu);
-> > > +    uint32_t iommu_aw_bits = vfio_device_get_aw_bits(vbasedev);
-> > > +
-> > > +    if (cpu_aw_bits && cpu_aw_bits > iommu_aw_bits) {
-> > 
-> > Should we be testing the 64-bit MMIO window and maximum RAM GPA rather
-> > than the vCPU physical address width?
+>> BTW, I'm not keen on your "detect_*" names, without "float_" prefix like (almost?)
+>> everything else.
+> 
+> Do you have a suggestion for better naming? Maybe
+>   set_float_detect_ftz()
+>   get_float_detect_ftz()
+> to match set/get_float_detect_tininess()? Though "detect"
+> isn't quite the right verb, I feel...
+> 
+> And for the enum
+> 
+> typedef enum __attribute__((__packed__)) {
+>      float_ftz_after_rounding = 0,
+>      float_ftz_before_rounding = 1,
+> } FloatFTZDetection;
 
-Placing the 64-bit  mmio window is done by the guest firmware,
-so this isn't something qemu can check before boot.
+The enum looks good.  The accessors are harder.  Maybe set_ftz_detection, matching the enum?
 
-> > However, we've decided to do exactly that for the 64-bit MMIO window.
-> > It's not that the vCPU width being greater than the IOMMU width is a
-> > fundamental problem, it's that we've chosen a 64-bit MMIO policy that
-> > makes this become a problem and QEMU only has a convenient mechanism to
-> > check the host IOMMU width when a vfio device is present.  Arguably,
-> > when a vIOMMU is present guest firmware should be enlightened to
-> > understand the address width of that vIOMMU when placing the 64-bit
-> > MMIO window.  I'd say the failure to do so is a current firmware bug.
 
-edk2 has no iommu driver ...
-
-Is there some simple way to figure what the iommu width is (inside the
-guest)?
-
-Note that there is a 'guest-phys-bits' property for x86 CPUs, which is a
-hint for the guest what the usable address width is.  It was added
-because there are cases where the guest simply can't figure that it is
-not possible to use the full physical address space of the cpu.  There
-are some non-obvious limitations around 5-level paging.  Intel has some
-CPUs with phys-bits > 48 but only 4-level EPT for example.
-
-So one option to handle this is to make sure guest-phys-bits is not
-larger than the iommu width.
-
-take care,
-  Gerd
-
+r~
 
