@@ -4,61 +4,92 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A6A8CC0218D
-	for <qemu-devel@archiver.kernel.org>; Fri, 31 Jan 2025 09:52:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CD3BEC0218D
+	for <qemu-devel@archiver.kernel.org>; Fri, 31 Jan 2025 09:54:29 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tdnga-0004Yn-JA; Fri, 31 Jan 2025 04:51:40 -0500
+	id 1tdnj9-0008LY-Uk; Fri, 31 Jan 2025 04:54:19 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1tdngZ-0004Xj-CX
- for qemu-devel@nongnu.org; Fri, 31 Jan 2025 04:51:39 -0500
+ (Exim 4.90_1) (envelope-from <imammedo@redhat.com>)
+ id 1tdnj8-0008LQ-5D
+ for qemu-devel@nongnu.org; Fri, 31 Jan 2025 04:54:18 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1tdngW-0002pO-5H
- for qemu-devel@nongnu.org; Fri, 31 Jan 2025 04:51:39 -0500
+ (Exim 4.90_1) (envelope-from <imammedo@redhat.com>)
+ id 1tdnj5-0003lT-G6
+ for qemu-devel@nongnu.org; Fri, 31 Jan 2025 04:54:17 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1738317095;
+ s=mimecast20190719; t=1738317254;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=4BvpgBRGAlHZfsV7fB7YJ2Rsr2+Ztfrnn2l12bnaxrU=;
- b=aiGeEik2K5hkKtTffrFjn+hzNGApISc4/BOZUs12b+6huX4qH2/480vQM0MfRCaNn3PgWv
- 1eA58grOkl5UjtrpdIaDPbx0sn7jd9bosU9E+Vkv/Adf3ssnlRP8O7zs+NemzRPxc2ea5L
- rIyOfV3AxQMKY6oY2fzaaRBjKL+ERRI=
-Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-452-WmDDIW2jN9KpReEtgoKhCg-1; Fri,
- 31 Jan 2025 04:51:33 -0500
-X-MC-Unique: WmDDIW2jN9KpReEtgoKhCg-1
-X-Mimecast-MFC-AGG-ID: WmDDIW2jN9KpReEtgoKhCg
-Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 9AED81800374; Fri, 31 Jan 2025 09:51:32 +0000 (UTC)
-Received: from merkur.fritz.box (unknown [10.39.194.6])
- by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id A65821800975; Fri, 31 Jan 2025 09:51:29 +0000 (UTC)
-From: Kevin Wolf <kwolf@redhat.com>
-To: qemu-block@nongnu.org
-Cc: kwolf@redhat.com, hreitz@redhat.com, stefanha@redhat.com,
- pkrempa@redhat.com, peterx@redhat.com, farosas@suse.de,
- qemu-devel@nongnu.org
-Subject: [PATCH v2 15/15] iotests: Add (NBD-based) tests for inactive nodes
-Date: Fri, 31 Jan 2025 10:50:51 +0100
-Message-ID: <20250131095051.49708-6-kwolf@redhat.com>
-In-Reply-To: <20250130171240.286878-1-kwolf@redhat.com>
-References: <20250130171240.286878-1-kwolf@redhat.com>
+ bh=e1af3kCnsQVg3JPqYTccf9/7n9LejJEJfh8iZBvXx70=;
+ b=jC6tVFJ586mvj2mMMlG+nVofgIxeHuGM1TBuAJIDy56CWooPSuqsQjRMu1iOlyI8ms1JV3
+ kD/xvjI/YqG0YkjJDI9fQ3sTDC/NChFDcQrOeZJFEX20OppvrRSubTfS2AbHshp5TXy0WP
+ UpodP0S6fkviRE3dLbOLRhGdRIdNhwI=
+Received: from mail-wm1-f72.google.com (mail-wm1-f72.google.com
+ [209.85.128.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-296-8AfMOtiaPmqivTLJKaCH8Q-1; Fri, 31 Jan 2025 04:54:12 -0500
+X-MC-Unique: 8AfMOtiaPmqivTLJKaCH8Q-1
+X-Mimecast-MFC-AGG-ID: 8AfMOtiaPmqivTLJKaCH8Q
+Received: by mail-wm1-f72.google.com with SMTP id
+ 5b1f17b1804b1-43621907030so15068325e9.1
+ for <qemu-devel@nongnu.org>; Fri, 31 Jan 2025 01:54:12 -0800 (PST)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1738317251; x=1738922051;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:subject:cc:to:from:date:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=e1af3kCnsQVg3JPqYTccf9/7n9LejJEJfh8iZBvXx70=;
+ b=Tq0BQh+Pt/7CUzoVhH9EZx8iMXxuWHZKCiL1uOmQKZAGZrV8KatomDZk03I8huy3ap
+ UI0yx6lWUPgiNsS95fdc9yOGHAf7ExlJFcKvwd+ATj3AgQITMfINODXwoAjy5QYg4cAx
+ S3dLvGuzcOuzdDoOh/JYgFJKwBoA13O7rQaj7eIhYesTzfSCKxZ7HXdsqn5TTnoXss1I
+ 3PaJ/t725mkor9sQrFwoFauaAWoxWISvRaDF34Vi9cZwaXYs7BFA1AUikwdnVbellTUJ
+ JnldyxrBOIL7FciryKcRJ96lv6oTguHm7LsPEZKXoflTnF/U9t/rPjIl4uKiqW7JgErW
+ 3ExQ==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCW8bgTYDFjJbEgEIXlAUdNmWm6kMInofFRevzNF+TMicRCU6TWGM/jFwqCOc+FG8/IGtACU5g1j52qN@nongnu.org
+X-Gm-Message-State: AOJu0Yz2An4n8TDCAaUSPK0Uzb59b5NadR+/htKp5OYN9A4gWcssEShn
+ c1HGz9EU/ZoquAmFgKKPY2TcCpdcuSobya8mOj4tKYcuAfBUAGrzH6cZZ70sHkGuymE/kChARG6
+ M+5zP8Pyje2R2o/wHqy2wPi1wzx2S7XyZyUN3uIyIUX74sRxXnhAA
+X-Gm-Gg: ASbGncsfo6BcKs2Wgv9MM6XMAPgpRQgBsqqK7fxNctkqaPO8VWaWsmASa8KjzD7tz55
+ OX12r5DJEXlwwJXRy1ujI4x6fPgovSIDkqPfOasSuDpb/3euyQ6fAwwaUmIMVx+B8OC5y6kacXa
+ l06wEdQZTp/yFok9zVnErVvHfKlIUgJPZpRYcS6P6xLJreudst/sAt3UB8IuEHqFzxeGgWu6G+T
+ SVOD4FefjEyYugVDPqnuYffMlbyioyeIEUsV5UIyjvTSEwKw8eLCfD+VQxq9lZg5hYF5cR1G/nv
+ aWVCw7BbJjeb3eNimsRP0gpS+/G4PTnprn4OTd9wQBdzjjg8dlx0
+X-Received: by 2002:a05:600c:4753:b0:434:f817:4492 with SMTP id
+ 5b1f17b1804b1-438dc435842mr110056915e9.31.1738317251256; 
+ Fri, 31 Jan 2025 01:54:11 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IGjyHb98seLyfLB5lriy7trga1JEkRSqyMz2dtdBnNjwTMe+U7huenWA5agIRmnRH2e2rKKYg==
+X-Received: by 2002:a05:600c:4753:b0:434:f817:4492 with SMTP id
+ 5b1f17b1804b1-438dc435842mr110056495e9.31.1738317250666; 
+ Fri, 31 Jan 2025 01:54:10 -0800 (PST)
+Received: from imammedo.users.ipa.redhat.com (nat-pool-brq-t.redhat.com.
+ [213.175.37.10]) by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-438e245f4a8sm50261575e9.37.2025.01.31.01.54.09
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Fri, 31 Jan 2025 01:54:10 -0800 (PST)
+Date: Fri, 31 Jan 2025 10:54:08 +0100
+From: Igor Mammedov <imammedo@redhat.com>
+To: Ani Sinha <anisinha@redhat.com>
+Cc: Sergio Lopez <slp@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
+ "Michael S. Tsirkin" <mst@redhat.com>, Marcel Apfelbaum
+ <marcel.apfelbaum@gmail.com>, Richard Henderson
+ <richard.henderson@linaro.org>, Eduardo Habkost <eduardo@habkost.net>, Zhao
+ Liu <zhao1.liu@intel.com>, qemu-devel@nongnu.org
+Subject: Re: [PATCH v6] hw/i386/cpu: remove default_cpu_version and simplify
+Message-ID: <20250131105408.3c7326da@imammedo.users.ipa.redhat.com>
+In-Reply-To: <20250128035526.3750043-1-anisinha@redhat.com>
+References: <20250128035526.3750043-1-anisinha@redhat.com>
+X-Mailer: Claws Mail 4.3.0 (GTK 3.24.43; x86_64-redhat-linux-gnu)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=kwolf@redhat.com;
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=imammedo@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -33
 X-Spam_score: -3.4
@@ -83,594 +114,473 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This tests different types of operations on inactive block nodes
-(including graph changes, block jobs and NBD exports) to make sure that
-users manually activating and inactivating nodes doesn't break things.
+On Tue, 28 Jan 2025 09:25:26 +0530
+Ani Sinha <anisinha@redhat.com> wrote:
 
-Support for inactive nodes in other export types will have to come with
-separate test cases because they have different dependencies like blkio
-or root permissions and we don't want to disable this basic test when
-they are not fulfilled.
+> commit 0788a56bd1ae3 ("i386: Make unversioned CPU models be aliases")
+> introduced 'default_cpu_version' for PCMachineClass. This created three
+> categories of CPU models:
+>  - Most unversioned CPU models would use version 1 by default.
+>  - For machines 4.0.1 and older that do not support cpu model aliases, a
+>    special default_cpu_version value of CPU_VERSION_LEGACY is used.
+>  - It was thought that future machines would use the latest value of cpu
+>    versions corresponding to default_cpu_version value of
+>    CPU_VERSION_LATEST [1].
+> 
+> All pc machines still use the default cpu version of 1 for
+> unversioned cpu models. CPU_VERSION_LATEST is a moving target and
+> changes with time. Therefore, if machines use CPU_VERSION_LATEST, it would
+> mean that over a period of time, for the same machine type, the cpu version
+> would be different depending on what is latest at that time. This would
+> break guests even when they use a versioned machine type. Therefore, for
+> pc machines, use of CPU_VERSION_LATEST is not possible. Currently, only
+> microvms use CPU_VERSION_LATEST.
+> 
+> This change cleans up the complicated logic around default_cpu_version
+> including getting rid of default_cpu_version property itself. A couple of new
+> flags are introduced, one for the legacy model for machines 4.0.1 and older
+> and other for microvms. For older machines, a new pc machine property is
+> introduced that separates pc machine versions 4.0.1 and older from the newer
+> machines. 4.0.1 and older machines are scheduled to be deleted towards
+> end of 2025 since they would be 6 years old by then. At that time, we can
+> remove all logic around legacy cpus. Microvms are the only machines that
+> continue to use the latest cpu version. If this changes later, we can
+> remove all logic around x86_cpu_model_last_version(). Default cpu version
+> for unversioned cpu models is hardcoded to the value 1 and applies
+> unconditionally for all pc machine types of version 4.1 and above.
+> 
+> This change also removes all complications around CPU_VERSION_AUTO
+> including removal of the value itself.
+> 
+> 1) See commit dcafd1ef0af227 ("i386: Register versioned CPU models")
+> 
+> CC: imammedo@redhat.com
+> Signed-off-by: Ani Sinha <anisinha@redhat.com>
+> Reviewed-by: Zhao Liu <zhao1.liu@intel.com>
+> ---
+>  hw/i386/microvm.c     |  3 +-
+>  hw/i386/pc.c          | 14 +++++++++
+>  hw/i386/pc_piix.c     |  6 ++--
+>  hw/i386/pc_q35.c      |  6 ++--
+>  hw/i386/x86-common.c  |  4 +--
+>  include/hw/i386/pc.h  |  7 +++--
+>  include/hw/i386/x86.h |  2 +-
+>  target/i386/cpu.c     | 69 ++++++++++++++++++++++---------------------
+>  target/i386/cpu.h     | 21 +++----------
+>  9 files changed, 67 insertions(+), 65 deletions(-)
+> 
+> changelog:
+> v2: explain in commit log why use of CPU_VERSION_LATEST for machines
+> is problematic.
+> v3: fix a bug that broke the pipeline
+> https://gitlab.com/mstredhat/qemu/-/pipelines/1626171267
+> when cpu versions are explicitly specified in the command line,
+> respect that and do not enforce legacy (unversioned) cpu logic.
+> The pipeline is green now with the fix:
+> https://gitlab.com/anisinha/qemu/-/pipelines/1626783632
+> v4: made changes as per Zhao's suggestions.
+> Pipeline passes https://gitlab.com/anisinha/qemu/-/pipelines/1635829877
+> v5: adjustment of pc_init_cpus() declaration as per Zhao's suggestion. This
+> simplifies things and also passes compilation.
+> CI still passes https://gitlab.com/anisinha/qemu/-/pipelines/1637657451
+> v6: cosmetic commit log correction as suggested by Igor. rebase, added tags.
+> 
+> diff --git a/hw/i386/microvm.c b/hw/i386/microvm.c
+> index a8d354aabe..ffb1b37fe5 100644
+> --- a/hw/i386/microvm.c
+> +++ b/hw/i386/microvm.c
+> @@ -458,7 +458,8 @@ static void microvm_machine_state_init(MachineState *machine)
+>  
+>      microvm_memory_init(mms);
+>  
+> -    x86_cpus_init(x86ms, CPU_VERSION_LATEST);
+> +    x86_cpu_uses_lastest_version();
 
-Signed-off-by: Kevin Wolf <kwolf@redhat.com>
----
- tests/qemu-iotests/iotests.py                 |   4 +
- tests/qemu-iotests/tests/inactive-node-nbd    | 303 ++++++++++++++++++
- .../qemu-iotests/tests/inactive-node-nbd.out  | 239 ++++++++++++++
- 3 files changed, 546 insertions(+)
- create mode 100755 tests/qemu-iotests/tests/inactive-node-nbd
- create mode 100644 tests/qemu-iotests/tests/inactive-node-nbd.out
+for microvm, we do not have versioned machines,
+hence we are not obliged to keep the same cpu between
+different qemu versions.
 
-diff --git a/tests/qemu-iotests/iotests.py b/tests/qemu-iotests/iotests.py
-index 9c9c908983..7292c8b342 100644
---- a/tests/qemu-iotests/iotests.py
-+++ b/tests/qemu-iotests/iotests.py
-@@ -913,6 +913,10 @@ def add_incoming(self, addr):
-         self._args.append(addr)
-         return self
+I'd prefer to follow arm/virt with no default cpu behavior,
+but that ship has sailed off already. 
+
+Lets try instead of the latest, use cpu model name as is
+(i.e. typically it would be non versioned model) that would keep
+existing CLI work.
+Ones that want a specific version can use explicit versioned name on CLI.
+
+i.e. remove the notion of CPU_VERSION_LATEST 1st (a separate patch).
+if this accepted that would make this patch a bit simpler.
+
+> +    x86_cpus_init(x86ms);
+>  
+>      microvm_devices_init(mms);
+>  }
+> diff --git a/hw/i386/pc.c b/hw/i386/pc.c
+> index b46975c8a4..f97a519573 100644
+> --- a/hw/i386/pc.c
+> +++ b/hw/i386/pc.c
+> @@ -30,6 +30,7 @@
+>  #include "hw/hyperv/hv-balloon.h"
+>  #include "hw/i386/fw_cfg.h"
+>  #include "hw/i386/vmport.h"
+> +#include "target/i386/cpu.h"
+>  #include "system/cpus.h"
+>  #include "hw/ide/ide-bus.h"
+>  #include "hw/timer/hpet.h"
+> @@ -615,6 +616,19 @@ void pc_acpi_smi_interrupt(void *opaque, int irq, int level)
+>      }
+>  }
+>  
+> +void pc_init_cpus(MachineState *ms)
+> +{
+I'd not introduce this function, instead add duplicated
+call x86_cpu_set_legacy_version() to pc_init1/pc_q35_init,
+this way it would be more concise and introduce less code churn
+
+> +    X86MachineState *x86ms = X86_MACHINE(ms);
+> +    PCMachineState *pcms = PC_MACHINE(ms);
+> +    PCMachineClass *pcmc = PC_MACHINE_GET_CLASS(pcms);
+> +
+> +    if (pcmc->no_versioned_cpu_model) {
+> +        /* use legacy cpu as it does not support versions */
+> +        x86_cpu_set_legacy_version();
+> +    }
+> +    x86_cpus_init(x86ms);
+> +}
+> +
+>  static
+>  void pc_machine_done(Notifier *notifier, void *data)
+>  {
+> diff --git a/hw/i386/pc_piix.c b/hw/i386/pc_piix.c
+> index 04d2957adc..dc684cb011 100644
+> --- a/hw/i386/pc_piix.c
+> +++ b/hw/i386/pc_piix.c
+> @@ -181,7 +181,8 @@ static void pc_init1(MachineState *machine, const char *pci_type)
+>      }
+>  
+>      pc_machine_init_sgx_epc(pcms);
+> -    x86_cpus_init(x86ms, pcmc->default_cpu_version);
+> +
+> +    pc_init_cpus(machine);
+>  
+>      if (kvm_enabled()) {
+>          kvmclock_create(pcmc->kvmclock_create_always);
+> @@ -457,7 +458,6 @@ static void pc_i440fx_machine_options(MachineClass *m)
+>      ObjectClass *oc = OBJECT_CLASS(m);
+>      pcmc->default_south_bridge = TYPE_PIIX3_DEVICE;
+>      pcmc->pci_root_uid = 0;
+> -    pcmc->default_cpu_version = 1;
+>  
+>      m->family = "pc_piix";
+>      m->desc = "Standard PC (i440FX + PIIX, 1996)";
+> @@ -669,7 +669,7 @@ static void pc_i440fx_machine_4_0_options(MachineClass *m)
+>  {
+>      PCMachineClass *pcmc = PC_MACHINE_CLASS(m);
+>      pc_i440fx_machine_4_1_options(m);
+> -    pcmc->default_cpu_version = CPU_VERSION_LEGACY;
+> +    pcmc->no_versioned_cpu_model = true;
+>      compat_props_add(m->compat_props, hw_compat_4_0, hw_compat_4_0_len);
+>      compat_props_add(m->compat_props, pc_compat_4_0, pc_compat_4_0_len);
+>  }
+> diff --git a/hw/i386/pc_q35.c b/hw/i386/pc_q35.c
+> index 77536dd697..045b05da64 100644
+> --- a/hw/i386/pc_q35.c
+> +++ b/hw/i386/pc_q35.c
+> @@ -187,7 +187,8 @@ static void pc_q35_init(MachineState *machine)
+>      }
+>  
+>      pc_machine_init_sgx_epc(pcms);
+> -    x86_cpus_init(x86ms, pcmc->default_cpu_version);
+> +
+I'd drop newline
+
+> +    pc_init_cpus(machine);
+>  
+>      if (kvm_enabled()) {
+>          kvmclock_create(pcmc->kvmclock_create_always);
+> @@ -339,7 +340,6 @@ static void pc_q35_machine_options(MachineClass *m)
+>  {
+>      PCMachineClass *pcmc = PC_MACHINE_CLASS(m);
+>      pcmc->pci_root_uid = 0;
+> -    pcmc->default_cpu_version = 1;
+>  
+>      m->family = "pc_q35";
+>      m->desc = "Standard PC (Q35 + ICH9, 2009)";
+> @@ -547,7 +547,7 @@ static void pc_q35_machine_4_0_1_options(MachineClass *m)
+>  {
+>      PCMachineClass *pcmc = PC_MACHINE_CLASS(m);
+>      pc_q35_machine_4_1_options(m);
+> -    pcmc->default_cpu_version = CPU_VERSION_LEGACY;
+> +    pcmc->no_versioned_cpu_model = true;
+>      /*
+>       * This is the default machine for the 4.0-stable branch. It is basically
+>       * a 4.0 that doesn't use split irqchip by default. It MUST hence apply the
+> diff --git a/hw/i386/x86-common.c b/hw/i386/x86-common.c
+> index 008496b5b8..1ed5bc6010 100644
+> --- a/hw/i386/x86-common.c
+> +++ b/hw/i386/x86-common.c
+> @@ -66,15 +66,13 @@ out:
+>      object_unref(cpu);
+>  }
+>  
+> -void x86_cpus_init(X86MachineState *x86ms, int default_cpu_version)
+> +void x86_cpus_init(X86MachineState *x86ms)
+>  {
+>      int i;
+>      const CPUArchIdList *possible_cpus;
+>      MachineState *ms = MACHINE(x86ms);
+>      MachineClass *mc = MACHINE_GET_CLASS(x86ms);
+>  
+> -    x86_cpu_set_default_version(default_cpu_version);
+> -
+>      /*
+>       * Calculates the limit to CPU APIC ID values
+>       *
+> diff --git a/include/hw/i386/pc.h b/include/hw/i386/pc.h
+> index a558705cb9..563f765d7f 100644
+> --- a/include/hw/i386/pc.h
+> +++ b/include/hw/i386/pc.h
+> @@ -92,9 +92,6 @@ struct PCMachineClass {
+>  
+>      /* Compat options: */
+>  
+> -    /* Default CPU model version.  See x86_cpu_set_default_version(). */
+> -    int default_cpu_version;
+> -
+>      /* ACPI compat: */
+>      bool has_acpi_build;
+>      int pci_root_uid;
+> @@ -125,6 +122,9 @@ struct PCMachineClass {
+>       * check for memory.
+>       */
+>      bool broken_32bit_mem_addr_check;
+> +
+> +    /* whether the machine supports versioned cpu models */
+> +    bool no_versioned_cpu_model;
+>  };
+>  
+>  #define TYPE_PC_MACHINE "generic-pc-machine"
+> @@ -136,6 +136,7 @@ GSIState *pc_gsi_create(qemu_irq **irqs, bool pci_enabled);
+>  
+>  /* pc.c */
+>  
+> +void pc_init_cpus(MachineState *ms);
+>  void pc_acpi_smi_interrupt(void *opaque, int irq, int level);
+>  
+>  #define PCI_HOST_PROP_RAM_MEM          "ram-mem"
+> diff --git a/include/hw/i386/x86.h b/include/hw/i386/x86.h
+> index d43cb3908e..2d2b987fa1 100644
+> --- a/include/hw/i386/x86.h
+> +++ b/include/hw/i386/x86.h
+> @@ -114,7 +114,7 @@ void init_topo_info(X86CPUTopoInfo *topo_info, const X86MachineState *x86ms);
+>  uint32_t x86_cpu_apic_id_from_index(X86MachineState *x86ms,
+>                                      unsigned int cpu_index);
+>  
+> -void x86_cpus_init(X86MachineState *pcms, int default_cpu_version);
+> +void x86_cpus_init(X86MachineState *pcms);
+>  void x86_rtc_set_cpus_count(ISADevice *rtc, uint16_t cpus_count);
+>  void x86_cpu_pre_plug(HotplugHandler *hotplug_dev,
+>                        DeviceState *dev, Error **errp);
+> diff --git a/target/i386/cpu.c b/target/i386/cpu.c
+> index 1b9c11022c..c1f868c4dd 100644
+> --- a/target/i386/cpu.c
+> +++ b/target/i386/cpu.c
+> @@ -192,6 +192,9 @@ struct CPUID2CacheDescriptorInfo cpuid2_cache_descriptors[] = {
+>   */
+>  #define CACHE_DESCRIPTOR_UNAVAILABLE 0xFF
+>  
+> +/* default cpu version to use */
+> +#define DEFAULT_CPU_VERSION 1
+> +
+>  /*
+>   * Return a CPUID 2 cache descriptor for a given cache.
+>   * If no known descriptor is found, return CACHE_DESCRIPTOR_UNAVAILABLE
+> @@ -5343,20 +5346,16 @@ static const X86CPUDefinition builtin_x86_defs[] = {
+>      },
+>  };
+>  
+> -/*
+> - * We resolve CPU model aliases using -v1 when using "-machine
+> - * none", but this is just for compatibility while libvirt isn't
+> - * adapted to resolve CPU model versions before creating VMs.
+> - * See "Runnability guarantee of CPU models" at
+> - * docs/about/deprecated.rst.
+> - */
+> -X86CPUVersion default_cpu_version = 1;
+> +static bool use_legacy_cpu;
+> +void x86_cpu_set_legacy_version(void)
+> +{
+> +    use_legacy_cpu = true;
+so all the difference between legacy and not legacy, is alias_of
+in QMP output.
+
+In that case lets be more specific and name it as such
+i.e. something like 'qmp_has_alias'
+
+> +}
+>  
+> -void x86_cpu_set_default_version(X86CPUVersion version)
+> +static bool use_latest_cpu;
+> +void x86_cpu_uses_lastest_version(void)
+>  {
+> -    /* Translating CPU_VERSION_AUTO to CPU_VERSION_AUTO doesn't make sense */
+> -    assert(version != CPU_VERSION_AUTO);
+> -    default_cpu_version = version;
+> +    use_latest_cpu = true;
+>  }
+>  
+>  static X86CPUVersion x86_cpu_model_last_version(const X86CPUModel *model)
+> @@ -5374,14 +5373,11 @@ static X86CPUVersion x86_cpu_model_last_version(const X86CPUModel *model)
+>  /* Return the actual version being used for a specific CPU model */
+>  static X86CPUVersion x86_cpu_model_resolve_version(const X86CPUModel *model)
+>  {
+> -    X86CPUVersion v = model->version;
+> -    if (v == CPU_VERSION_AUTO) {
+> -        v = default_cpu_version;
+> -    }
+> -    if (v == CPU_VERSION_LATEST) {
+> +    if (use_latest_cpu) {
+>          return x86_cpu_model_last_version(model);
+>      }
+> -    return v;
+> +
+I'd drop newline
+
+> +    return model->version;
+>  }
+>  
+>  static const Property max_x86_cpu_properties[] = {
+> @@ -5985,10 +5981,15 @@ static char *x86_cpu_class_get_alias_of(X86CPUClass *cc)
+>      if (!cc->model || !cc->model->is_alias) {
+>          return NULL;
+>      }
+> -    version = x86_cpu_model_resolve_version(cc->model);
+> -    if (version <= 0) {
+> +
+> +    if (use_legacy_cpu) {
+> +        /* legacy cpu models do not support cpu aliases */
+>          return NULL;
+>      }
+> +
+> +    version = x86_cpu_model_resolve_version(cc->model);
+> +    assert(version);
+> +
+>      return x86_cpu_versioned_model_name(cc->model->cpudef, version);
+>  }
+>  
+> @@ -6002,11 +6003,7 @@ static void x86_cpu_list_entry(gpointer data, gpointer user_data)
+>      g_autofree char *model_id = x86_cpu_class_get_model_id(cc);
+>  
+>      if (!desc && alias_of) {
+> -        if (cc->model && cc->model->version == CPU_VERSION_AUTO) {
+> -            desc = g_strdup("(alias configured by machine type)");
+> -        } else {
+>              desc = g_strdup_printf("(alias of %s)", alias_of);
+misaligned wrt 'new' 'if' block?
+
+> -        }
+>      }
+>      if (!desc && cc->model && cc->model->note) {
+>          desc = g_strdup_printf("%s [%s]", model_id, cc->model->note);
+> @@ -6109,13 +6106,8 @@ static void x86_cpu_definition_entry(gpointer data, gpointer user_data)
+>      } else {
+>          info->deprecated = false;
+>      }
+> -    /*
+> -     * Old machine types won't report aliases, so that alias translation
+> -     * doesn't break compatibility with previous QEMU versions.
+> -     */
+> -    if (default_cpu_version != CPU_VERSION_LEGACY) {
+> -        info->alias_of = x86_cpu_class_get_alias_of(cc);
+> -    }
+> +
+> +    info->alias_of = x86_cpu_class_get_alias_of(cc);
+>  
+>      QAPI_LIST_PREPEND(*cpu_list, info);
+>  }
+> @@ -6287,7 +6279,12 @@ static void x86_cpu_apply_version_props(X86CPU *cpu, X86CPUModel *model)
+>      const X86CPUVersionDefinition *vdef;
+>      X86CPUVersion version = x86_cpu_model_resolve_version(model);
+>  
+> -    if (version == CPU_VERSION_LEGACY) {
+> +    /*
+> +     * if the machine uses legacy cpus, use legacy cpus with no versions
+> +     * when no explict CPU versions are specified in the CPU definition
+> +     * passed from the command line.
+> +     */
+> +    if (version == DEFAULT_CPU_VERSION && use_legacy_cpu) {
+>          return;
+>      }
+
+I think we can safely drop this check altogether since followup
+call x86_cpu_def_get_versions will return version 1 if not specified
+and looking at model definitions all existing v1 defs have no property
+overrides. So 'for' loop is effectively would be nop.
  
-+    def add_paused(self):
-+        self._args.append('-S')
-+        return self
-+
-     def hmp(self, command_line: str, use_log: bool = False) -> QMPMessage:
-         cmd = 'human-monitor-command'
-         kwargs: Dict[str, Any] = {'command-line': command_line}
-diff --git a/tests/qemu-iotests/tests/inactive-node-nbd b/tests/qemu-iotests/tests/inactive-node-nbd
-new file mode 100755
-index 0000000000..2279f7c1e1
---- /dev/null
-+++ b/tests/qemu-iotests/tests/inactive-node-nbd
-@@ -0,0 +1,303 @@
-+#!/usr/bin/env python3
-+# group: rw quick
-+#
-+# Copyright (C) Red Hat, Inc.
-+#
-+# This program is free software; you can redistribute it and/or modify
-+# it under the terms of the GNU General Public License as published by
-+# the Free Software Foundation; either version 2 of the License, or
-+# (at your option) any later version.
-+#
-+# This program is distributed in the hope that it will be useful,
-+# but WITHOUT ANY WARRANTY; without even the implied warranty of
-+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-+# GNU General Public License for more details.
-+#
-+# You should have received a copy of the GNU General Public License
-+# along with this program.  If not, see <http://www.gnu.org/licenses/>.
-+#
-+# Creator/Owner: Kevin Wolf <kwolf@redhat.com>
-+
-+import iotests
-+
-+from iotests import QemuIoInteractive
-+from iotests import filter_qemu_io, filter_qtest, filter_qmp_testfiles
-+
-+iotests.script_initialize(supported_fmts=['generic'],
-+                          supported_protocols=['file'],
-+                          supported_platforms=['linux'])
-+
-+def get_export(node_name='disk-fmt', allow_inactive=None):
-+    exp = {
-+        'id': 'exp0',
-+        'type': 'nbd',
-+        'node-name': node_name,
-+        'writable': True,
-+    }
-+
-+    if allow_inactive is not None:
-+        exp['allow-inactive'] = allow_inactive
-+
-+    return exp
-+
-+def node_is_active(_vm, node_name):
-+    nodes = _vm.cmd('query-named-block-nodes', flat=True)
-+    node = next(n for n in nodes if n['node-name'] == node_name)
-+    return node['active']
-+
-+with iotests.FilePath('disk.img') as path, \
-+     iotests.FilePath('snap.qcow2') as snap_path, \
-+     iotests.FilePath('snap2.qcow2') as snap2_path, \
-+     iotests.FilePath('target.img') as target_path, \
-+     iotests.FilePath('nbd.sock', base_dir=iotests.sock_dir) as nbd_sock, \
-+     iotests.VM() as vm:
-+
-+    img_size = '10M'
-+
-+    iotests.log('Preparing disk...')
-+    iotests.qemu_img_create('-f', iotests.imgfmt, path, img_size)
-+    iotests.qemu_img_create('-f', iotests.imgfmt, target_path, img_size)
-+
-+    iotests.qemu_img_create('-f', 'qcow2', '-b', path, '-F', iotests.imgfmt,
-+                            snap_path)
-+    iotests.qemu_img_create('-f', 'qcow2', '-b', snap_path, '-F', 'qcow2',
-+                            snap2_path)
-+
-+    iotests.log('Launching VM...')
-+    vm.add_blockdev(f'file,node-name=disk-file,filename={path}')
-+    vm.add_blockdev(f'{iotests.imgfmt},file=disk-file,node-name=disk-fmt,'
-+                     'active=off')
-+    vm.add_blockdev(f'file,node-name=target-file,filename={target_path}')
-+    vm.add_blockdev(f'{iotests.imgfmt},file=target-file,node-name=target-fmt')
-+    vm.add_blockdev(f'file,node-name=snap-file,filename={snap_path}')
-+    vm.add_blockdev(f'file,node-name=snap2-file,filename={snap2_path}')
-+
-+    # Actually running the VM activates all images
-+    vm.add_paused()
-+
-+    vm.launch()
-+    vm.qmp_log('nbd-server-start',
-+                addr={'type': 'unix', 'data':{'path': nbd_sock}},
-+                filters=[filter_qmp_testfiles])
-+
-+    iotests.log('\n=== Creating export of inactive node ===')
-+
-+    iotests.log('\nExports activate nodes without allow-inactive')
-+    iotests.log('disk-fmt active: %s' % node_is_active(vm, 'disk-fmt'))
-+    vm.qmp_log('block-export-add', **get_export())
-+    iotests.log('disk-fmt active: %s' % node_is_active(vm, 'disk-fmt'))
-+    vm.qmp_log('query-block-exports')
-+    vm.qmp_log('block-export-del', id='exp0')
-+    vm.event_wait('BLOCK_EXPORT_DELETED')
-+    vm.qmp_log('query-block-exports')
-+
-+    iotests.log('\nExports activate nodes with allow-inactive=false')
-+    vm.qmp_log('blockdev-set-active', node_name='disk-fmt', active=False)
-+    iotests.log('disk-fmt active: %s' % node_is_active(vm, 'disk-fmt'))
-+    vm.qmp_log('block-export-add', **get_export(allow_inactive=False))
-+    iotests.log('disk-fmt active: %s' % node_is_active(vm, 'disk-fmt'))
-+    vm.qmp_log('query-block-exports')
-+    vm.qmp_log('block-export-del', id='exp0')
-+    vm.event_wait('BLOCK_EXPORT_DELETED')
-+    vm.qmp_log('query-block-exports')
-+
-+    iotests.log('\nExport leaves nodes inactive with allow-inactive=true')
-+    vm.qmp_log('blockdev-set-active', node_name='disk-fmt', active=False)
-+    iotests.log('disk-fmt active: %s' % node_is_active(vm, 'disk-fmt'))
-+    vm.qmp_log('block-export-add', **get_export(allow_inactive=True))
-+    iotests.log('disk-fmt active: %s' % node_is_active(vm, 'disk-fmt'))
-+    vm.qmp_log('query-block-exports')
-+    vm.qmp_log('block-export-del', id='exp0')
-+    vm.event_wait('BLOCK_EXPORT_DELETED')
-+    vm.qmp_log('query-block-exports')
-+
-+    iotests.log('\n=== Inactivating node with existing export ===')
-+
-+    iotests.log('\nInactivating nodes with an export fails without '
-+                'allow-inactive')
-+    vm.qmp_log('blockdev-set-active', node_name='disk-fmt', active=True)
-+    vm.qmp_log('block-export-add', **get_export(node_name='disk-fmt'))
-+    vm.qmp_log('blockdev-set-active', node_name='disk-fmt', active=False)
-+    iotests.log('disk-fmt active: %s' % node_is_active(vm, 'disk-fmt'))
-+    vm.qmp_log('query-block-exports')
-+    vm.qmp_log('block-export-del', id='exp0')
-+    vm.event_wait('BLOCK_EXPORT_DELETED')
-+    vm.qmp_log('query-block-exports')
-+
-+    iotests.log('\nInactivating nodes with an export fails with '
-+                'allow-inactive=false')
-+    vm.qmp_log('blockdev-set-active', node_name='disk-fmt', active=True)
-+    vm.qmp_log('block-export-add',
-+               **get_export(node_name='disk-fmt', allow_inactive=False))
-+    vm.qmp_log('blockdev-set-active', node_name='disk-fmt', active=False)
-+    iotests.log('disk-fmt active: %s' % node_is_active(vm, 'disk-fmt'))
-+    vm.qmp_log('query-block-exports')
-+    vm.qmp_log('block-export-del', id='exp0')
-+    vm.event_wait('BLOCK_EXPORT_DELETED')
-+    vm.qmp_log('query-block-exports')
-+
-+    iotests.log('\nInactivating nodes with an export works with '
-+                'allow-inactive=true')
-+    vm.qmp_log('blockdev-set-active', node_name='disk-fmt', active=True)
-+    vm.qmp_log('block-export-add',
-+               **get_export(node_name='disk-fmt', allow_inactive=True))
-+    vm.qmp_log('blockdev-set-active', node_name='disk-fmt', active=False)
-+    iotests.log('disk-fmt active: %s' % node_is_active(vm, 'disk-fmt'))
-+    vm.qmp_log('query-block-exports')
-+    vm.qmp_log('block-export-del', id='exp0')
-+    vm.event_wait('BLOCK_EXPORT_DELETED')
-+    vm.qmp_log('query-block-exports')
-+
-+    iotests.log('\n=== Inactive nodes with parent ===')
-+
-+    iotests.log('\nInactivating nodes with an active parent fails')
-+    vm.qmp_log('blockdev-set-active', node_name='disk-fmt', active=True)
-+    vm.qmp_log('blockdev-set-active', node_name='disk-file', active=False)
-+    iotests.log('disk-file active: %s' % node_is_active(vm, 'disk-file'))
-+    iotests.log('disk-fmt active: %s' % node_is_active(vm, 'disk-fmt'))
-+
-+    iotests.log('\nInactivating nodes with an inactive parent works')
-+    vm.qmp_log('blockdev-set-active', node_name='disk-fmt', active=False)
-+    vm.qmp_log('blockdev-set-active', node_name='disk-file', active=False)
-+    iotests.log('disk-file active: %s' % node_is_active(vm, 'disk-file'))
-+    iotests.log('disk-fmt active: %s' % node_is_active(vm, 'disk-fmt'))
-+
-+    iotests.log('\nCreating active parent node with an inactive child fails')
-+    vm.qmp_log('blockdev-add', driver='raw', file='disk-fmt',
-+               node_name='disk-filter')
-+    vm.qmp_log('blockdev-add', driver='raw', file='disk-fmt',
-+               node_name='disk-filter', active=True)
-+
-+    iotests.log('\nCreating inactive parent node with an inactive child works')
-+    vm.qmp_log('blockdev-add', driver='raw', file='disk-fmt',
-+               node_name='disk-filter', active=False)
-+    vm.qmp_log('blockdev-del', node_name='disk-filter')
-+
-+    iotests.log('\n=== Resizing an inactive node ===')
-+    vm.qmp_log('block_resize', node_name='disk-fmt', size=16*1024*1024)
-+
-+    iotests.log('\n=== Taking a snapshot of an inactive node ===')
-+
-+    iotests.log('\nActive overlay over inactive backing file automatically '
-+                'makes both inactive for compatibility')
-+    vm.qmp_log('blockdev-add', driver='qcow2', node_name='snap-fmt',
-+               file='snap-file', backing=None)
-+    iotests.log('disk-fmt active: %s' % node_is_active(vm, 'disk-fmt'))
-+    iotests.log('snap-fmt active: %s' % node_is_active(vm, 'snap-fmt'))
-+    vm.qmp_log('blockdev-snapshot', node='disk-fmt', overlay='snap-fmt')
-+    iotests.log('disk-fmt active: %s' % node_is_active(vm, 'disk-fmt'))
-+    iotests.log('snap-fmt active: %s' % node_is_active(vm, 'snap-fmt'))
-+    vm.qmp_log('blockdev-del', node_name='snap-fmt')
-+
-+    iotests.log('\nInactive overlay over inactive backing file just works')
-+    vm.qmp_log('blockdev-add', driver='qcow2', node_name='snap-fmt',
-+               file='snap-file', backing=None, active=False)
-+    vm.qmp_log('blockdev-snapshot', node='disk-fmt', overlay='snap-fmt')
-+
-+    iotests.log('\n=== Block jobs with inactive nodes ===')
-+
-+    iotests.log('\nStreaming into an inactive node')
-+    vm.qmp_log('block-stream', device='snap-fmt',
-+               filters=[iotests.filter_qmp_generated_node_ids])
-+
-+    iotests.log('\nCommitting an inactive root node (active commit)')
-+    vm.qmp_log('block-commit', job_id='job0', device='snap-fmt',
-+               filters=[iotests.filter_qmp_generated_node_ids])
-+
-+    iotests.log('\nCommitting an inactive intermediate node to inactive base')
-+    vm.qmp_log('blockdev-add', driver='qcow2', node_name='snap2-fmt',
-+               file='snap2-file', backing='snap-fmt', active=False)
-+
-+    iotests.log('disk-fmt active: %s' % node_is_active(vm, 'disk-fmt'))
-+    iotests.log('snap-fmt active: %s' % node_is_active(vm, 'snap-fmt'))
-+    iotests.log('snap2-fmt active: %s' % node_is_active(vm, 'snap2-fmt'))
-+
-+    vm.qmp_log('block-commit', job_id='job0', device='snap2-fmt',
-+               top_node='snap-fmt',
-+               filters=[iotests.filter_qmp_generated_node_ids])
-+
-+    iotests.log('\nCommitting an inactive intermediate node to active base')
-+    vm.qmp_log('blockdev-set-active', node_name='disk-fmt', active=True)
-+    vm.qmp_log('block-commit', job_id='job0', device='snap2-fmt',
-+               top_node='snap-fmt',
-+               filters=[iotests.filter_qmp_generated_node_ids])
-+
-+    iotests.log('\nMirror from inactive source to active target')
-+    vm.qmp_log('blockdev-mirror', job_id='job0', device='snap2-fmt',
-+               target='target-fmt', sync='full',
-+               filters=[iotests.filter_qmp_generated_node_ids])
-+
-+    iotests.log('\nMirror from active source to inactive target')
-+
-+    iotests.log('disk-fmt active: %s' % node_is_active(vm, 'disk-fmt'))
-+    iotests.log('snap-fmt active: %s' % node_is_active(vm, 'snap-fmt'))
-+    iotests.log('snap2-fmt active: %s' % node_is_active(vm, 'snap2-fmt'))
-+    iotests.log('target-fmt active: %s' % node_is_active(vm, 'target-fmt'))
-+
-+    # Activating snap2-fmt recursively activates the whole backing chain
-+    vm.qmp_log('blockdev-set-active', node_name='snap2-fmt', active=True)
-+    vm.qmp_log('blockdev-set-active', node_name='target-fmt', active=False)
-+
-+    iotests.log('disk-fmt active: %s' % node_is_active(vm, 'disk-fmt'))
-+    iotests.log('snap-fmt active: %s' % node_is_active(vm, 'snap-fmt'))
-+    iotests.log('snap2-fmt active: %s' % node_is_active(vm, 'snap2-fmt'))
-+    iotests.log('target-fmt active: %s' % node_is_active(vm, 'target-fmt'))
-+
-+    vm.qmp_log('blockdev-mirror', job_id='job0', device='snap2-fmt',
-+               target='target-fmt', sync='full',
-+               filters=[iotests.filter_qmp_generated_node_ids])
-+
-+    iotests.log('\nBackup from active source to inactive target')
-+
-+    vm.qmp_log('blockdev-backup', job_id='job0', device='snap2-fmt',
-+               target='target-fmt', sync='full',
-+               filters=[iotests.filter_qmp_generated_node_ids])
-+
-+    iotests.log('\nBackup from inactive source to active target')
-+
-+    # Activating snap2-fmt recursively inactivates the whole backing chain
-+    vm.qmp_log('blockdev-set-active', node_name='snap2-fmt', active=False)
-+    vm.qmp_log('blockdev-set-active', node_name='target-fmt', active=True)
-+
-+    iotests.log('disk-fmt active: %s' % node_is_active(vm, 'disk-fmt'))
-+    iotests.log('snap-fmt active: %s' % node_is_active(vm, 'snap-fmt'))
-+    iotests.log('snap2-fmt active: %s' % node_is_active(vm, 'snap2-fmt'))
-+    iotests.log('target-fmt active: %s' % node_is_active(vm, 'target-fmt'))
-+
-+    vm.qmp_log('blockdev-backup', job_id='job0', device='snap2-fmt',
-+               target='target-fmt', sync='full',
-+               filters=[iotests.filter_qmp_generated_node_ids])
-+
-+    iotests.log('\n=== Accessing export on inactive node ===')
-+
-+    # Use the target node because it has the right image format and isn't the
-+    # (read-only) backing file of a qcow2 node
-+    vm.qmp_log('blockdev-set-active', node_name='target-fmt', active=False)
-+    vm.qmp_log('block-export-add',
-+               **get_export(node_name='target-fmt', allow_inactive=True))
-+
-+    # The read should succeed, everything else should fail gracefully
-+    qemu_io = QemuIoInteractive('-f', 'raw',
-+                                f'nbd+unix:///target-fmt?socket={nbd_sock}')
-+    iotests.log(qemu_io.cmd('read 0 64k'), filters=[filter_qemu_io])
-+    iotests.log(qemu_io.cmd('write 0 64k'), filters=[filter_qemu_io])
-+    iotests.log(qemu_io.cmd('write -z 0 64k'), filters=[filter_qemu_io])
-+    iotests.log(qemu_io.cmd('write -zu 0 64k'), filters=[filter_qemu_io])
-+    iotests.log(qemu_io.cmd('discard 0 64k'), filters=[filter_qemu_io])
-+    iotests.log(qemu_io.cmd('flush'), filters=[filter_qemu_io])
-+    iotests.log(qemu_io.cmd('map'), filters=[filter_qemu_io])
-+    qemu_io.close()
-+
-+    iotests.log('\n=== Resuming VM activates all images ===')
-+    vm.qmp_log('cont')
-+
-+    iotests.log('disk-fmt active: %s' % node_is_active(vm, 'disk-fmt'))
-+    iotests.log('snap-fmt active: %s' % node_is_active(vm, 'snap-fmt'))
-+    iotests.log('snap2-fmt active: %s' % node_is_active(vm, 'snap2-fmt'))
-+    iotests.log('target-fmt active: %s' % node_is_active(vm, 'target-fmt'))
-+
-+    iotests.log('\nShutting down...')
-+    vm.shutdown()
-+    log = vm.get_log()
-+    if log:
-+        iotests.log(log, [filter_qtest, filter_qemu_io])
-diff --git a/tests/qemu-iotests/tests/inactive-node-nbd.out b/tests/qemu-iotests/tests/inactive-node-nbd.out
-new file mode 100644
-index 0000000000..a458b4fc05
---- /dev/null
-+++ b/tests/qemu-iotests/tests/inactive-node-nbd.out
-@@ -0,0 +1,239 @@
-+Preparing disk...
-+Launching VM...
-+{"execute": "nbd-server-start", "arguments": {"addr": {"data": {"path": "SOCK_DIR/PID-nbd.sock"}, "type": "unix"}}}
-+{"return": {}}
-+
-+=== Creating export of inactive node ===
-+
-+Exports activate nodes without allow-inactive
-+disk-fmt active: False
-+{"execute": "block-export-add", "arguments": {"id": "exp0", "node-name": "disk-fmt", "type": "nbd", "writable": true}}
-+{"return": {}}
-+disk-fmt active: True
-+{"execute": "query-block-exports", "arguments": {}}
-+{"return": [{"id": "exp0", "node-name": "disk-fmt", "shutting-down": false, "type": "nbd"}]}
-+{"execute": "block-export-del", "arguments": {"id": "exp0"}}
-+{"return": {}}
-+{"execute": "query-block-exports", "arguments": {}}
-+{"return": []}
-+
-+Exports activate nodes with allow-inactive=false
-+{"execute": "blockdev-set-active", "arguments": {"active": false, "node-name": "disk-fmt"}}
-+{"return": {}}
-+disk-fmt active: False
-+{"execute": "block-export-add", "arguments": {"allow-inactive": false, "id": "exp0", "node-name": "disk-fmt", "type": "nbd", "writable": true}}
-+{"return": {}}
-+disk-fmt active: True
-+{"execute": "query-block-exports", "arguments": {}}
-+{"return": [{"id": "exp0", "node-name": "disk-fmt", "shutting-down": false, "type": "nbd"}]}
-+{"execute": "block-export-del", "arguments": {"id": "exp0"}}
-+{"return": {}}
-+{"execute": "query-block-exports", "arguments": {}}
-+{"return": []}
-+
-+Export leaves nodes inactive with allow-inactive=true
-+{"execute": "blockdev-set-active", "arguments": {"active": false, "node-name": "disk-fmt"}}
-+{"return": {}}
-+disk-fmt active: False
-+{"execute": "block-export-add", "arguments": {"allow-inactive": true, "id": "exp0", "node-name": "disk-fmt", "type": "nbd", "writable": true}}
-+{"return": {}}
-+disk-fmt active: False
-+{"execute": "query-block-exports", "arguments": {}}
-+{"return": [{"id": "exp0", "node-name": "disk-fmt", "shutting-down": false, "type": "nbd"}]}
-+{"execute": "block-export-del", "arguments": {"id": "exp0"}}
-+{"return": {}}
-+{"execute": "query-block-exports", "arguments": {}}
-+{"return": []}
-+
-+=== Inactivating node with existing export ===
-+
-+Inactivating nodes with an export fails without allow-inactive
-+{"execute": "blockdev-set-active", "arguments": {"active": true, "node-name": "disk-fmt"}}
-+{"return": {}}
-+{"execute": "block-export-add", "arguments": {"id": "exp0", "node-name": "disk-fmt", "type": "nbd", "writable": true}}
-+{"return": {}}
-+{"execute": "blockdev-set-active", "arguments": {"active": false, "node-name": "disk-fmt"}}
-+{"error": {"class": "GenericError", "desc": "Failed to inactivate node: Operation not permitted"}}
-+disk-fmt active: True
-+{"execute": "query-block-exports", "arguments": {}}
-+{"return": [{"id": "exp0", "node-name": "disk-fmt", "shutting-down": false, "type": "nbd"}]}
-+{"execute": "block-export-del", "arguments": {"id": "exp0"}}
-+{"return": {}}
-+{"execute": "query-block-exports", "arguments": {}}
-+{"return": []}
-+
-+Inactivating nodes with an export fails with allow-inactive=false
-+{"execute": "blockdev-set-active", "arguments": {"active": true, "node-name": "disk-fmt"}}
-+{"return": {}}
-+{"execute": "block-export-add", "arguments": {"allow-inactive": false, "id": "exp0", "node-name": "disk-fmt", "type": "nbd", "writable": true}}
-+{"return": {}}
-+{"execute": "blockdev-set-active", "arguments": {"active": false, "node-name": "disk-fmt"}}
-+{"error": {"class": "GenericError", "desc": "Failed to inactivate node: Operation not permitted"}}
-+disk-fmt active: True
-+{"execute": "query-block-exports", "arguments": {}}
-+{"return": [{"id": "exp0", "node-name": "disk-fmt", "shutting-down": false, "type": "nbd"}]}
-+{"execute": "block-export-del", "arguments": {"id": "exp0"}}
-+{"return": {}}
-+{"execute": "query-block-exports", "arguments": {}}
-+{"return": []}
-+
-+Inactivating nodes with an export works with allow-inactive=true
-+{"execute": "blockdev-set-active", "arguments": {"active": true, "node-name": "disk-fmt"}}
-+{"return": {}}
-+{"execute": "block-export-add", "arguments": {"allow-inactive": true, "id": "exp0", "node-name": "disk-fmt", "type": "nbd", "writable": true}}
-+{"return": {}}
-+{"execute": "blockdev-set-active", "arguments": {"active": false, "node-name": "disk-fmt"}}
-+{"return": {}}
-+disk-fmt active: False
-+{"execute": "query-block-exports", "arguments": {}}
-+{"return": [{"id": "exp0", "node-name": "disk-fmt", "shutting-down": false, "type": "nbd"}]}
-+{"execute": "block-export-del", "arguments": {"id": "exp0"}}
-+{"return": {}}
-+{"execute": "query-block-exports", "arguments": {}}
-+{"return": []}
-+
-+=== Inactive nodes with parent ===
-+
-+Inactivating nodes with an active parent fails
-+{"execute": "blockdev-set-active", "arguments": {"active": true, "node-name": "disk-fmt"}}
-+{"return": {}}
-+{"execute": "blockdev-set-active", "arguments": {"active": false, "node-name": "disk-file"}}
-+{"error": {"class": "GenericError", "desc": "Node has active parent node"}}
-+disk-file active: True
-+disk-fmt active: True
-+
-+Inactivating nodes with an inactive parent works
-+{"execute": "blockdev-set-active", "arguments": {"active": false, "node-name": "disk-fmt"}}
-+{"return": {}}
-+{"execute": "blockdev-set-active", "arguments": {"active": false, "node-name": "disk-file"}}
-+{"return": {}}
-+disk-file active: False
-+disk-fmt active: False
-+
-+Creating active parent node with an inactive child fails
-+{"execute": "blockdev-add", "arguments": {"driver": "raw", "file": "disk-fmt", "node-name": "disk-filter"}}
-+{"error": {"class": "GenericError", "desc": "Inactive 'disk-fmt' can't be a file child of active 'disk-filter'"}}
-+{"execute": "blockdev-add", "arguments": {"active": true, "driver": "raw", "file": "disk-fmt", "node-name": "disk-filter"}}
-+{"error": {"class": "GenericError", "desc": "Inactive 'disk-fmt' can't be a file child of active 'disk-filter'"}}
-+
-+Creating inactive parent node with an inactive child works
-+{"execute": "blockdev-add", "arguments": {"active": false, "driver": "raw", "file": "disk-fmt", "node-name": "disk-filter"}}
-+{"return": {}}
-+{"execute": "blockdev-del", "arguments": {"node-name": "disk-filter"}}
-+{"return": {}}
-+
-+=== Resizing an inactive node ===
-+{"execute": "block_resize", "arguments": {"node-name": "disk-fmt", "size": 16777216}}
-+{"error": {"class": "GenericError", "desc": "Permission 'resize' unavailable on inactive node"}}
-+
-+=== Taking a snapshot of an inactive node ===
-+
-+Active overlay over inactive backing file automatically makes both inactive for compatibility
-+{"execute": "blockdev-add", "arguments": {"backing": null, "driver": "qcow2", "file": "snap-file", "node-name": "snap-fmt"}}
-+{"return": {}}
-+disk-fmt active: False
-+snap-fmt active: True
-+{"execute": "blockdev-snapshot", "arguments": {"node": "disk-fmt", "overlay": "snap-fmt"}}
-+{"return": {}}
-+disk-fmt active: False
-+snap-fmt active: False
-+{"execute": "blockdev-del", "arguments": {"node-name": "snap-fmt"}}
-+{"return": {}}
-+
-+Inactive overlay over inactive backing file just works
-+{"execute": "blockdev-add", "arguments": {"active": false, "backing": null, "driver": "qcow2", "file": "snap-file", "node-name": "snap-fmt"}}
-+{"return": {}}
-+{"execute": "blockdev-snapshot", "arguments": {"node": "disk-fmt", "overlay": "snap-fmt"}}
-+{"return": {}}
-+
-+=== Block jobs with inactive nodes ===
-+
-+Streaming into an inactive node
-+{"execute": "block-stream", "arguments": {"device": "snap-fmt"}}
-+{"error": {"class": "GenericError", "desc": "Could not create node: Inactive 'snap-fmt' can't be a file child of active 'NODE_NAME'"}}
-+
-+Committing an inactive root node (active commit)
-+{"execute": "block-commit", "arguments": {"device": "snap-fmt", "job-id": "job0"}}
-+{"error": {"class": "GenericError", "desc": "Inactive 'snap-fmt' can't be a backing child of active 'NODE_NAME'"}}
-+
-+Committing an inactive intermediate node to inactive base
-+{"execute": "blockdev-add", "arguments": {"active": false, "backing": "snap-fmt", "driver": "qcow2", "file": "snap2-file", "node-name": "snap2-fmt"}}
-+{"return": {}}
-+disk-fmt active: False
-+snap-fmt active: False
-+snap2-fmt active: False
-+{"execute": "block-commit", "arguments": {"device": "snap2-fmt", "job-id": "job0", "top-node": "snap-fmt"}}
-+{"error": {"class": "GenericError", "desc": "Inactive 'snap-fmt' can't be a backing child of active 'NODE_NAME'"}}
-+
-+Committing an inactive intermediate node to active base
-+{"execute": "blockdev-set-active", "arguments": {"active": true, "node-name": "disk-fmt"}}
-+{"return": {}}
-+{"execute": "block-commit", "arguments": {"device": "snap2-fmt", "job-id": "job0", "top-node": "snap-fmt"}}
-+{"error": {"class": "GenericError", "desc": "Inactive 'snap-fmt' can't be a backing child of active 'NODE_NAME'"}}
-+
-+Mirror from inactive source to active target
-+{"execute": "blockdev-mirror", "arguments": {"device": "snap2-fmt", "job-id": "job0", "sync": "full", "target": "target-fmt"}}
-+{"error": {"class": "GenericError", "desc": "Inactive 'snap2-fmt' can't be a backing child of active 'NODE_NAME'"}}
-+
-+Mirror from active source to inactive target
-+disk-fmt active: True
-+snap-fmt active: False
-+snap2-fmt active: False
-+target-fmt active: True
-+{"execute": "blockdev-set-active", "arguments": {"active": true, "node-name": "snap2-fmt"}}
-+{"return": {}}
-+{"execute": "blockdev-set-active", "arguments": {"active": false, "node-name": "target-fmt"}}
-+{"return": {}}
-+disk-fmt active: True
-+snap-fmt active: True
-+snap2-fmt active: True
-+target-fmt active: False
-+{"execute": "blockdev-mirror", "arguments": {"device": "snap2-fmt", "job-id": "job0", "sync": "full", "target": "target-fmt"}}
-+{"error": {"class": "GenericError", "desc": "Permission 'write' unavailable on inactive node"}}
-+
-+Backup from active source to inactive target
-+{"execute": "blockdev-backup", "arguments": {"device": "snap2-fmt", "job-id": "job0", "sync": "full", "target": "target-fmt"}}
-+{"error": {"class": "GenericError", "desc": "Could not create node: Inactive 'target-fmt' can't be a target child of active 'NODE_NAME'"}}
-+
-+Backup from inactive source to active target
-+{"execute": "blockdev-set-active", "arguments": {"active": false, "node-name": "snap2-fmt"}}
-+{"return": {}}
-+{"execute": "blockdev-set-active", "arguments": {"active": true, "node-name": "target-fmt"}}
-+{"return": {}}
-+disk-fmt active: False
-+snap-fmt active: False
-+snap2-fmt active: False
-+target-fmt active: True
-+{"execute": "blockdev-backup", "arguments": {"device": "snap2-fmt", "job-id": "job0", "sync": "full", "target": "target-fmt"}}
-+{"error": {"class": "GenericError", "desc": "Could not create node: Inactive 'snap2-fmt' can't be a file child of active 'NODE_NAME'"}}
-+
-+=== Accessing export on inactive node ===
-+{"execute": "blockdev-set-active", "arguments": {"active": false, "node-name": "target-fmt"}}
-+{"return": {}}
-+{"execute": "block-export-add", "arguments": {"allow-inactive": true, "id": "exp0", "node-name": "target-fmt", "type": "nbd", "writable": true}}
-+{"return": {}}
-+read 65536/65536 bytes at offset 0
-+64 KiB, X ops; XX:XX:XX.X (XXX YYY/sec and XXX ops/sec)
-+
-+write failed: Operation not permitted
-+
-+write failed: Operation not permitted
-+
-+write failed: Operation not permitted
-+
-+discard failed: Operation not permitted
-+
-+
-+qemu-io: Failed to get allocation status: Operation not permitted
-+
-+
-+=== Resuming VM activates all images ===
-+{"execute": "cont", "arguments": {}}
-+{"return": {}}
-+disk-fmt active: True
-+snap-fmt active: True
-+snap2-fmt active: True
-+target-fmt active: True
-+
-+Shutting down...
-+
--- 
-2.48.1
+>  
+> @@ -6317,7 +6314,11 @@ static const CPUCaches *x86_cpu_get_versioned_cache_info(X86CPU *cpu,
+>      X86CPUVersion version = x86_cpu_model_resolve_version(model);
+>      const CPUCaches *cache_info = model->cpudef->cache_info;
+>  
+> -    if (version == CPU_VERSION_LEGACY) {
+> +    /*
+> +     * If machine supports legacy cpus and no explicit cpu versions are
+> +     * specified, use the cache from the unversioned cpu definition.
+> +     */
+> +    if (version == DEFAULT_CPU_VERSION && use_legacy_cpu) {
+>          return cache_info;
+>      }
+
+the same as above comment, only wrt cache_info
+
+>  
+> @@ -6452,7 +6453,7 @@ static void x86_register_cpudef_types(const X86CPUDefinition *def)
+>      /* Unversioned model: */
+>      m = g_new0(X86CPUModel, 1);
+>      m->cpudef = def;
+> -    m->version = CPU_VERSION_AUTO;
+> +    m->version = DEFAULT_CPU_VERSION;
+
+with this being the remaining user of macro just drop it and use 1 directly.
+
+>      m->is_alias = true;
+>      x86_register_cpu_model_type(def->name, m);
+>  
+> diff --git a/target/i386/cpu.h b/target/i386/cpu.h
+> index b26e25ba15..bdbe54b26f 100644
+> --- a/target/i386/cpu.h
+> +++ b/target/i386/cpu.h
+> @@ -2679,27 +2679,14 @@ void cpu_report_tpr_access(CPUX86State *env, TPRAccess access);
+>  void apic_handle_tpr_access_report(DeviceState *d, target_ulong ip,
+>                                     TPRAccess access);
+>  
+> -/* Special values for X86CPUVersion: */
+> -
+> -/* Resolve to latest CPU version */
+> -#define CPU_VERSION_LATEST -1
+> -
+> -/*
+> - * Resolve to version defined by current machine type.
+> - * See x86_cpu_set_default_version()
+> - */
+> -#define CPU_VERSION_AUTO   -2
+> -
+> -/* Don't resolve to any versioned CPU models, like old QEMU versions */
+> -#define CPU_VERSION_LEGACY  0
+> -
+>  typedef int X86CPUVersion;
+>  
+>  /*
+> - * Set default CPU model version for CPU models having
+> - * version == CPU_VERSION_AUTO.
+> + * Set CPU model version to the lastest version.
+> + * Currently, this is only used by microvm.
+>   */
+> -void x86_cpu_set_default_version(X86CPUVersion version);
+> +void x86_cpu_uses_lastest_version(void);
+> +void x86_cpu_set_legacy_version(void);
+>  
+>  #ifndef CONFIG_USER_ONLY
+>  
 
 
