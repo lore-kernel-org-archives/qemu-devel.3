@@ -4,103 +4,115 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 98408C0218F
-	for <qemu-devel@archiver.kernel.org>; Fri, 31 Jan 2025 16:47:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id EA48FC02190
+	for <qemu-devel@archiver.kernel.org>; Fri, 31 Jan 2025 16:55:49 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tduAH-0005xv-9n; Fri, 31 Jan 2025 11:46:45 -0500
+	id 1tduIU-0000BX-1m; Fri, 31 Jan 2025 11:55:14 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1tduAB-0005vF-49
- for qemu-devel@nongnu.org; Fri, 31 Jan 2025 11:46:39 -0500
-Received: from mail-pl1-x62b.google.com ([2607:f8b0:4864:20::62b])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1tduA9-0000Q1-Iv
- for qemu-devel@nongnu.org; Fri, 31 Jan 2025 11:46:38 -0500
-Received: by mail-pl1-x62b.google.com with SMTP id
- d9443c01a7336-216426b0865so40142355ad.0
- for <qemu-devel@nongnu.org>; Fri, 31 Jan 2025 08:46:37 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1738341996; x=1738946796; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=eb9R/potxLbKcWtTBrZYpzuUeavSfgFfRVFByzPaJ5s=;
- b=rP9aET5sDnv3Y5w/nixvFiw5qACMSr/fsL6UpmieDwVBqqT9cmkIg4K2WGkIP1iP+b
- HAOBDYpuqq0x4otEKB/bX5mCvVbaYSay2uqtVFkQBpQuzc/83hETyNNcqsCFsU8IypvF
- +7couaTvbJHV714ShUe1jCiZU106rG7nSNd65Fym6IgyNobPZo7kcIs/shtnG1r2q4QD
- rd0ZOGGSwYyg6eKWngmapSms2PmtjoCKtIRsuub4ZmrZpwPHYZkAYR9aDFixj4cQkdmz
- H2//57R7abJxj/N+ctBZtRj1T+LDqZiTF6qaN2B9z05TAhUYa57GpvmYg1/RSVd0OaAJ
- nxiw==
+ (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
+ id 1tduIN-000081-EP
+ for qemu-devel@nongnu.org; Fri, 31 Jan 2025 11:55:07 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
+ id 1tduIL-0002mI-R2
+ for qemu-devel@nongnu.org; Fri, 31 Jan 2025 11:55:07 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1738342503;
+ h=from:from:reply-to:reply-to:subject:subject:date:date:
+ message-id:message-id:to:to:cc:cc:mime-version:mime-version:
+ content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=NIfRarS1wPOBfQNP8FB1B01Y/eiHGZOK3fB01qQjEp0=;
+ b=LZ3da6tcHSyPEaBrr9nO+TSZnMxpgih/lOl1TOWAiBauJi9s7OmJMFS1iGEEpDXloMUPHo
+ nJVnriZrlUt1R+9+5sDr5v5J0GhLwBEqKQD/dqPvFHSkLCP4QdAKFGMJQRZX4hDdbBmthF
+ OjDAVNOL/Cz6jZ77Ip4EV2by2o/QAGg=
+Received: from mail-qk1-f199.google.com (mail-qk1-f199.google.com
+ [209.85.222.199]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-16-u9oALbY0O6iuMxYn1IiNkQ-1; Fri, 31 Jan 2025 11:55:01 -0500
+X-MC-Unique: u9oALbY0O6iuMxYn1IiNkQ-1
+X-Mimecast-MFC-AGG-ID: u9oALbY0O6iuMxYn1IiNkQ
+Received: by mail-qk1-f199.google.com with SMTP id
+ af79cd13be357-7bb849aa5fbso436052685a.0
+ for <qemu-devel@nongnu.org>; Fri, 31 Jan 2025 08:55:01 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1738341996; x=1738946796;
+ d=1e100.net; s=20230601; t=1738342501; x=1738947301;
  h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=eb9R/potxLbKcWtTBrZYpzuUeavSfgFfRVFByzPaJ5s=;
- b=u8icf+ouCNFTGr6Qkfcy5MqZpLwrspcFobHhubQmN/86tDVSJyqXCQqvo8+6ES3x2A
- +GqTGeIvdPhF0A1z+/vuUptiC8/76dfMcISNhNLpToApMqBZzEMgZ7Ad4FvcZnPPu8Eg
- AI6up6ZRoDAe/kRFUiNUBJeKbkFadf1QVmWaGId2r82iRcsY1WCIQCZeOc0Addbq0KZd
- /GaHY1nt++NKVWThrFqO8welCzDgtyT7hx86gtKFGhz805hlzYLZX5eHgDOpyEJnaooS
- Li/zJGiKMAkf65EhGHPpX/LD/2wmZOT8sYX8rCf+V3sZZpLQH5npgASHPd8iic2FXneO
- fXEw==
+ :references:cc:to:subject:reply-to:user-agent:mime-version:date
+ :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=NIfRarS1wPOBfQNP8FB1B01Y/eiHGZOK3fB01qQjEp0=;
+ b=lGbjhNmK041Fpb/GVVoV3pqvMR75tP/9x5xe6vMasUW9OIToeIh3awy4Zjs4Drd3bu
+ qEzh/Hdikqhqi80GlOqVN+87ibi9r+p7zrU4jR1ZTIC4ku7sQNdD3avZ4Lme7sNmgTJ1
+ nYySWdQJzpXpSUm67vnxOr+IrHddbGk/Hjl06Av1SMWn6EWt12Kw8WF+qFBe7zqKWc5l
+ nPr89XopERQ6yuxRR4cILatKM9Y97zWFyE4NWma5+ChMlq3pvRK3n0ayWcwNWoRfxrr8
+ 7s7NMhJr4mR5l489gSrmnpR4K7e9mU2KzBi5z2G+9uF5ZwOBkikbg/vAcyP86XnTGRvP
+ GFAA==
 X-Forwarded-Encrypted: i=1;
- AJvYcCVf1mB2u53dWh57bdU0T1CoFiGUhoWv7m8SXhv5sKWi1zN+bvae3i9+Cn7XphPhjUBDDh4gIv9L/YLw@nongnu.org
-X-Gm-Message-State: AOJu0YwqzKYKeYkWvO/K2jvlJD9W4i+c7QX5FLb8PcGOBW5cImdiWRe7
- yyCcq6w+nPzRY3DTCvLt0TDSvmf3qp8p+xVignBxwMBsXuHaVpA4a7CVo/NDB1k=
-X-Gm-Gg: ASbGncuGfgSXWWi/BO3JV49hiDLgrljkiADMfRiyp7y0GKg99xx4kvm9WhtDhm7L7Le
- h5R/5VP+OvNQb4AIAWMY5cYNOEdU8BCdmudMPsuPCMx6Rg8Kt736VDX/m8lE4DrBjM+nU3MUydS
- EOPg2KZnnpv+TR/7fqE28OI5nQnqciBi3leDiXWjAVHubQ7Nt2Em5V0EVYRIg3Exo7MiqdKvIcU
- kJ7I3vbg7wVtBkA+0wi9bljlX3FVKqAp1G0h3FJQlemv9gKqlr6UKF9ecg1JqodsfrtdeF8RTrG
- jiN+WrbFfknkmJoAwN+08kXJgokG/Tps
-X-Google-Smtp-Source: AGHT+IFv0hfSYB67wyovVHwxih0a7b9k3zgc1jq5U4oEDjMmxDLzkYQBLjrEqYX2olLX2yGnWIIIbg==
-X-Received: by 2002:a17:902:d2c8:b0:21d:3bd7:afe8 with SMTP id
- d9443c01a7336-21dd7e00b71mr181200665ad.49.1738341995917; 
- Fri, 31 Jan 2025 08:46:35 -0800 (PST)
-Received: from [192.168.163.227] ([50.233.235.3])
+ AJvYcCU02qsH0I8WKUnRXGDuWsJK2pjn+7rTctZ6xYX4lkp2QsRdm+S16LHLjxskq8ngMwYhomotJorkl5u5@nongnu.org
+X-Gm-Message-State: AOJu0YzqWI/WnuT9RFQk0MZb6klittL/2Xk8g/N660WDkntFt3kHp0JB
+ 2HX3Wzl5RvLQrVjXXUmalcSvaA9eVL8ScKyrQ+v0AHHlWrPxLQJ5Q9msSTTYLlFsj7wWMAdckxP
+ mi3+tLYMQCr9krBxS5F0yfOo/CenTTcSaW1bxJRWm0URnoEtQ9DQ8
+X-Gm-Gg: ASbGncurt71TaQO8Or9BjWfyfBNyo6aheC2LTdnmYNORrspdWHmlzYeEIMEBw4X8mEb
+ lrQn9fuT9XZ7A97By5EXZEoXTWS8i9YcRariXzNczUVVgcPfEWZfP2KwQIsGnkgQrIcSCHtRAvS
+ wJjWqD24JY05zcxBuoZs+LXWKELfwzrS7xUs9RJs0aSvDOOuiKGh7ymZisPiIX5qXSeCl7lHFFU
+ wL2Vq6hpHxFef4uTmX+0mrSRXgALoQP9BwVF5zGjplfiQxScOnDoWt57+OtrvMI5tFzX9Ek/GWL
+ QS+ngWS9Wi7Jox5IHZusoUHtqjCFFPdydOweyvlyOmZ3MgzdjDFa
+X-Received: by 2002:a05:620a:371b:b0:7b6:d237:abe5 with SMTP id
+ af79cd13be357-7bffcce5880mr1694512385a.20.1738342501141; 
+ Fri, 31 Jan 2025 08:55:01 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IGblRzfGn4AfzFDMtKUAptTM3/Hj1CwULqrQzBh7Ng49Emie+/8xEHk6BffezqerzitZjRb6w==
+X-Received: by 2002:a05:620a:371b:b0:7b6:d237:abe5 with SMTP id
+ af79cd13be357-7bffcce5880mr1694510485a.20.1738342500867; 
+ Fri, 31 Jan 2025 08:55:00 -0800 (PST)
+Received: from ?IPV6:2a01:e0a:59e:9d80:527b:9dff:feef:3874?
+ ([2a01:e0a:59e:9d80:527b:9dff:feef:3874])
  by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-2f848aa0874sm3870306a91.32.2025.01.31.08.46.34
+ af79cd13be357-7c00a90d3c4sm211636985a.111.2025.01.31.08.54.57
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 31 Jan 2025 08:46:35 -0800 (PST)
-Message-ID: <62449bfd-eb65-41d6-ae53-0333bcb603b3@linaro.org>
-Date: Fri, 31 Jan 2025 08:46:32 -0800
+ Fri, 31 Jan 2025 08:54:59 -0800 (PST)
+Message-ID: <f4e64a3a-5c1d-49f2-ac72-b84ecd353c9d@redhat.com>
+Date: Fri, 31 Jan 2025 17:54:56 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 0/1] meson: Deprecate 32-bit host systems
-To: Paolo Bonzini <pbonzini@redhat.com>,
- Peter Maydell <peter.maydell@linaro.org>, Thomas Huth <thuth@redhat.com>
-Cc: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
- =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
- qemu-devel@nongnu.org, stefanha@redhat.com, mark.cave-ayland@ilande.co.uk,
- Liviu Ionescu <ilg@livius.net>
-References: <20250128004254.33442-1-richard.henderson@linaro.org>
- <9a280789-9248-4eca-b50c-048fc58e3f53@redhat.com>
- <87plk72tvr.fsf@draig.linaro.org>
- <ad6ca73a-c38a-4a9b-bdcb-ab50aa53ccd1@linaro.org>
- <Z5ii-ueFt5-5Brxz@redhat.com>
- <8c0eea44-d0bf-4b86-9b1b-1c2082ab2df9@linaro.org>
- <9bf6d4b0-7a89-4110-a1e1-46bbdb2fc793@linaro.org>
- <c13e207e-06a5-4f40-b319-f4f2e59d919a@redhat.com>
- <CAFEAcA_CfVfypS5yUtT3V34CDxmAqx7wYnDoKPfHq-o=54GgAg@mail.gmail.com>
- <8a54600c-ff3f-42dd-b164-62a57de867df@redhat.com>
+Subject: Re: [RFC PATCH 0/5] hw/arm/virt: Add support for user-creatable
+ nested SMMUv3
+To: Nicolin Chen <nicolinc@nvidia.com>,
+ Shameerali Kolothum Thodi <shameerali.kolothum.thodi@huawei.com>,
+ "ddutile@redhat.com" <ddutile@redhat.com>
+Cc: Peter Maydell <peter.maydell@linaro.org>, Jason Gunthorpe
+ <jgg@nvidia.com>, =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?=
+ <berrange@redhat.com>, "qemu-arm@nongnu.org" <qemu-arm@nongnu.org>,
+ "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>,
+ Linuxarm <linuxarm@huawei.com>, "Wangzhou (B)" <wangzhou1@hisilicon.com>,
+ jiangkunkun <jiangkunkun@huawei.com>,
+ Jonathan Cameron <jonathan.cameron@huawei.com>,
+ "zhangfei.gao@linaro.org" <zhangfei.gao@linaro.org>
+References: <20241108125242.60136-1-shameerali.kolothum.thodi@huawei.com>
+ <Z1wh69_gZ9izr1iU@redhat.com> <Z1wsslDnwlth3A8+@nvidia.com>
+ <CAFEAcA8TW2RKyFnh-TZRpfaKfZipHD5TZy_hymUr41GJ4rs4xA@mail.gmail.com>
+ <329445b2f68a47269292aefb34584375@huawei.com>
+ <Z39Ugx2M+FRFVVpB@Asurada-Nvidia>
 Content-Language: en-US
-From: Richard Henderson <richard.henderson@linaro.org>
-In-Reply-To: <8a54600c-ff3f-42dd-b164-62a57de867df@redhat.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::62b;
- envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x62b.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+From: Eric Auger <eric.auger@redhat.com>
+In-Reply-To: <Z39Ugx2M+FRFVVpB@Asurada-Nvidia>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=170.10.133.124;
+ envelope-from=eric.auger@redhat.com; helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -33
+X-Spam_score: -3.4
+X-Spam_bar: ---
+X-Spam_report: (-3.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.3,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -113,28 +125,42 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: eric.auger@redhat.com
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 1/29/25 04:47, Paolo Bonzini wrote:
-> The difference with TCG of course is that TCG is in active development, and therefore its 
-> 32-bit host support is not surviving passively in the same way that a random device is.  
-> Still, I think we can identify at least three different parts that should be treated 
-> differently: 64-on-32, 32-on-32 system-mode emulation and 32-on-32 user-mode emulation.
-
-Why the user/system split for 32-on-32?
-
-> We could and should remove 64-on-32, maybe even without a deprecation period, but the rest 
-> I'm not so sure.  I don't know enough to understand their maintenance cost (other than the 
-> mere existence of the 32-bit TCG backends), but it's certainly not comparable to 64-on-32.
-
-Ok, lemme see how easy it is to prohibit configuring 64-on-32.
-
-But I also think we should still deprecate 32-bit hosts, sooner rather than later.  Even 
-if we have no immediate plans to remove them.  I think we want interested parties to speak 
-up.  At some point this decade I want to be able to say: we've given you fair warning and 
-time is up.
+Hi Nicolin,
 
 
-r~
+On 1/9/25 5:45 AM, Nicolin Chen wrote:
+> On Mon, Dec 16, 2024 at 10:01:29AM +0000, Shameerali Kolothum Thodi wrote:
+>> And patches prior to this commit adds that support: 
+>> 4ccdbe3: ("cover-letter: Add HW accelerated nesting support for arm
+>> SMMUv3")
+>>
+>> Nicolin is soon going to send out those for review. Or I can include
+>> those in this series so that it gives a complete picture. Nicolin?
+> Just found that I forgot to reply this one...sorry
+>
+> I asked Don/Eric to take over that vSMMU series:
+> https://lore.kernel.org/qemu-devel/Zy0jiPItu8A3wNTL@Asurada-Nvidia/
+> (The majority of my effort has been still on the kernel side:
+>  previously vIOMMU/vDEVICE, and now vEVENTQ/MSI/vCMDQ..)
+>
+> Don/Eric, is there any update from your side?
+To be honest we have not much progressed so far. On my end I can
+dedicate some cycles now. I currently try to understand how and what
+subset I can respin and which test setup can be used. I will come back
+to you next week.
+
+Eric
+
+>
+> I think it's also a good time to align with each other so we
+> can take our next step in the new year :)
+>
+> Thanks
+> Nicolin
+>
+
 
