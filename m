@@ -4,104 +4,133 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3712CC0218D
-	for <qemu-devel@archiver.kernel.org>; Fri, 31 Jan 2025 08:44:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6CCB5C02193
+	for <qemu-devel@archiver.kernel.org>; Fri, 31 Jan 2025 09:11:38 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tdmcy-00063B-37; Fri, 31 Jan 2025 03:43:52 -0500
+	id 1tdn34-0002xb-2K; Fri, 31 Jan 2025 04:10:50 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <harshpb@linux.ibm.com>)
- id 1tdmcv-00062c-P4; Fri, 31 Jan 2025 03:43:49 -0500
-Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
+ (Exim 4.90_1) (envelope-from <deller@gmx.de>) id 1tdn2z-0002wo-VC
+ for qemu-devel@nongnu.org; Fri, 31 Jan 2025 04:10:46 -0500
+Received: from mout.gmx.net ([212.227.17.21])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <harshpb@linux.ibm.com>)
- id 1tdmct-0000wi-GB; Fri, 31 Jan 2025 03:43:49 -0500
-Received: from pps.filterd (m0360072.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 50V7Wdlq009491;
- Fri, 31 Jan 2025 08:43:44 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=pp1; bh=VChqJ4
- oBI2VeQ8RPEMPHX5w0NjXzZjUVNh9/dx4HioQ=; b=AjhbwKUBKd7xL4DgaGTtQc
- OwBpfu2X8WBfbKsMGvbd3K6b/dmNmgZjjWp6eIq1NlnHm3uL/I4TzC/KxM3gb/aw
- Mr8mB2GmFkBhtk07vCpnd3LlZzJeIzyRhYyuX9hMgOPeoITUv3vjuEcLVdCcFtwU
- DvY86n1wAn/V3QP0O9Tz7I2wf7UguRqYbPXkWeXo4ncLSAvfVdcrchOc29lwe+Kl
- a7JUdt4GYfgl8o/NZaph+2pApH0tdEt324PEUeZ0js3Hv+9o994llz9Wuuhmgk8R
- f0KRCHKkGQXnm+PcAhpiLq4nc8JVdZymYgRE61sr269s1KNCt8KBZgPTyp96EKdg
- ==
-Received: from pps.reinject (localhost [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 44gt7n87xc-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Fri, 31 Jan 2025 08:43:43 +0000 (GMT)
-Received: from m0360072.ppops.net (m0360072.ppops.net [127.0.0.1])
- by pps.reinject (8.18.0.8/8.18.0.8) with ESMTP id 50V8hNfF017579;
- Fri, 31 Jan 2025 08:43:43 GMT
-Received: from ppma22.wdc07v.mail.ibm.com
- (5c.69.3da9.ip4.static.sl-reverse.com [169.61.105.92])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 44gt7n87xa-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Fri, 31 Jan 2025 08:43:43 +0000 (GMT)
-Received: from pps.filterd (ppma22.wdc07v.mail.ibm.com [127.0.0.1])
- by ppma22.wdc07v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 50V8PwI2017127;
- Fri, 31 Jan 2025 08:43:42 GMT
-Received: from smtprelay06.wdc07v.mail.ibm.com ([172.16.1.73])
- by ppma22.wdc07v.mail.ibm.com (PPS) with ESMTPS id 44gfaxapw7-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Fri, 31 Jan 2025 08:43:42 +0000
-Received: from smtpav05.dal12v.mail.ibm.com (smtpav05.dal12v.mail.ibm.com
- [10.241.53.104])
- by smtprelay06.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 50V8hgvb27394774
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Fri, 31 Jan 2025 08:43:42 GMT
-Received: from smtpav05.dal12v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 2D03E5805D;
- Fri, 31 Jan 2025 08:43:42 +0000 (GMT)
-Received: from smtpav05.dal12v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id E825358056;
- Fri, 31 Jan 2025 08:43:39 +0000 (GMT)
-Received: from [9.124.214.188] (unknown [9.124.214.188])
- by smtpav05.dal12v.mail.ibm.com (Postfix) with ESMTP;
- Fri, 31 Jan 2025 08:43:39 +0000 (GMT)
-Message-ID: <a6694f39-895e-4b7e-b0fe-2fce054451b7@linux.ibm.com>
-Date: Fri, 31 Jan 2025 14:13:38 +0530
+ (Exim 4.90_1) (envelope-from <deller@gmx.de>) id 1tdn2x-0008PA-I3
+ for qemu-devel@nongnu.org; Fri, 31 Jan 2025 04:10:45 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmx.de;
+ s=s31663417; t=1738314637; x=1738919437; i=deller@gmx.de;
+ bh=ubx/D6nZaXQqCtSccisp8eGuLg2MVfvE+hjXqAcOWj0=;
+ h=X-UI-Sender-Class:Message-ID:Date:MIME-Version:Subject:To:
+ References:From:In-Reply-To:Content-Type:
+ Content-Transfer-Encoding:cc:content-transfer-encoding:
+ content-type:date:from:message-id:mime-version:reply-to:subject:
+ to;
+ b=mb3YgCtLN6rQ5khZJonyv90eaJPf+P5MDFhBeae9Pw6h//LH7x1qzdK3kMc0sYyK
+ K3jyUtaiaGjBUq06Jl9/CduPMF/LJcIfra/KDvSNftNQ4QR4dseVApXn5J8MFeSPS
+ QMNNBByeESQWl/y8tNt7IiJqlu4nKbJouFuh2JMnFRbSB3JcY/L1G5PvnPR8N/sdk
+ 6p4kXfok/cL/IPxRlk4qE6tgn/gsp2P47c1EgBTEHorB0/JzY0ZKibUIngoLb4Xdw
+ k2gZoCE2pMmFJ1aGFORfmShc9KY/uLiZZ7z5jISWqODaMwHvi5BdAcEz5BlzKT2lm
+ 6MMKGakBDShFWQAELg==
+X-UI-Sender-Class: 724b4f7f-cbec-4199-ad4e-598c01a50d3a
+Received: from [192.168.20.172] ([109.250.63.6]) by mail.gmx.net (mrgmx104
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 1MrQJ5-1t8b6Z3T5b-00bEd1; Fri, 31
+ Jan 2025 10:10:36 +0100
+Message-ID: <fc5a2a4a-76d3-420e-8ebe-e8c482ddfa9d@gmx.de>
+Date: Fri, 31 Jan 2025 10:10:35 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2] spapr: nested: Add support for reporting Hostwide
- state counter
-To: Vaibhav Jain <vaibhav@linux.ibm.com>, qemu-devel@nongnu.org,
- kvm-ppc@vger.kernel.org, qemu-ppc@nongnu.org
-Cc: npiggin@gmail.com, shivaprasadbhat@gmail.com
-References: <20250123115538.86821-1-vaibhav@linux.ibm.com>
+Subject: Re: [PULL 8/9] target/hppa: Implement space register hashing for
+ 64-bit HP-UX
+To: Michael Tokarev <mjt@tls.msk.ru>, deller@kernel.org,
+ qemu-devel@nongnu.org, Stefan Hajnoczi <stefanha@redhat.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Peter Maydell <peter.maydell@linaro.org>
+References: <20250130132915.16846-1-deller@kernel.org>
+ <20250130132915.16846-9-deller@kernel.org>
+ <4365fc64-1684-4994-82ad-daedaca3266e@tls.msk.ru>
 Content-Language: en-US
-From: Harsh Prateek Bora <harshpb@linux.ibm.com>
-In-Reply-To: <20250123115538.86821-1-vaibhav@linux.ibm.com>
+From: Helge Deller <deller@gmx.de>
+Autocrypt: addr=deller@gmx.de; keydata=
+ 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
+In-Reply-To: <4365fc64-1684-4994-82ad-daedaca3266e@tls.msk.ru>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-TM-AS-GCONF: 00
-X-Proofpoint-GUID: X7m3jUQ4nyL6ZM8ixUJdAv7IJ-UzuD2M
-X-Proofpoint-ORIG-GUID: 98Fsqd6tQiwNNC46fTVR8p_QLD1E6wZg
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1057,Hydra:6.0.680,FMLib:17.12.68.34
- definitions=2025-01-31_03,2025-01-30_01,2024-11-22_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- impostorscore=0
- malwarescore=0 lowpriorityscore=0 priorityscore=1501 suspectscore=0
- clxscore=1015 mlxscore=0 spamscore=0 bulkscore=0 mlxlogscore=999
- phishscore=0 adultscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2501170000 definitions=main-2501310064
-Received-SPF: pass client-ip=148.163.158.5; envelope-from=harshpb@linux.ibm.com;
- helo=mx0b-001b2d01.pphosted.com
-X-Spam_score_int: -26
-X-Spam_score: -2.7
+Content-Transfer-Encoding: quoted-printable
+X-Provags-ID: V03:K1:lo8+Uykk+rHfuXKrHxseD59IlFyMx/poQlKz4tfpL41X21tXBaE
+ dcDUNfun9u/Zrj1z7In0hBsg2dOAQmczD72sGnjclOPk53tkhptyPInczzYl0xOk4+F755i
+ R7b/fcEdrR9R/y66JePGDdBNSZic9UWWdOFljZMdPxxclEfExCtIpKLHcmKMcXhegvTNYbc
+ eFw2x4ah5HV9VkfmEcr1Q==
+UI-OutboundReport: notjunk:1;M01:P0:9QP/d1v7iDA=;TOiGH4KX6Ygee6GTNAI3vRJyFm1
+ bqP/zJfcrBptclr4D6fWI9qVe5oyLvu3kr0NXPu7OUgAHaSXFx1+IN4fBTwVfWJpVSmPNlFUf
+ Ra7ih1VuoZBmrEBJyA3X+04dyaSy+hTYqXU+u1j37c4s0tG/lykY367X0qopdBSk1AdN+jM5Z
+ Je5BVxbVtaUwJ48Rwu/TdNockStUsQEyN43RcbmGTvDVDg/GcMSI9rX1RSwLDjL3HjC6unrO5
+ R1qb6gJIGQ5jiZXHuUHy+lCKWSsVlMwAgzSXZk0h9G0ZQyNEAiucC3fetu9DQ9ug6OT5gvZ3O
+ hUIyImTsSfHzBAssVrc6HBIVxdsP+fvZ8BXI6pv8v99m9Jn5rJCvaq09y4CsoHjapxDyFx4xe
+ gUxZ4Tr+TyUqcRyITkpcYkQJPjhC1PThU9k9jxRADWbex5N+dTMuCLpZfntYSjySAdeZzgWV4
+ mkKWKUqooOmrHlXoApI1SrzhakA4wc57b038eWaAChQNiIaxhe/jQ4cEUJc6xkw8meOrDQ43d
+ xqZTpRXR54MpBttFxy8Ycicy5RprTr/fZef5Tn/4BvBRT8p6LvfQEFYWH4pLcQ3q7PwdghgVo
+ f+LAK66d7rPX5WHhugxkRgqve8kUCbzlVXVfR7BP4F/oNqlhRkao4/Jw7oaPsLWujPmrMC5NI
+ P3jUPLCY5Helfq0jXfjxmeofwTMdVfPKq4Z+yh4ovrKqegCrYAqgheNegCeym+XApTlSAp3sf
+ rwtkSDgfh+A5Jo+IDyI7z3XqxP8FyeYyfNd+KCdKo66XzMtOnaIof2Sqs/7wSpBdxO63NmPln
+ LAtN8Nr2Xz8Ok9GglthegHIv5qZJWmCcUuQHXgoHSq2QBMUwr52Q0Zj9wyvwiGDoiYW8EiNh0
+ fD190k4YpG9LedOzBIOajDpqYx98IXwM/eZxmYZ4KJj8ZWfUqi6C7uT7EAv8m0/8BYlGZ/0BO
+ V/MDvxABaT1dWiJX1zER2X/jhh4p/fFvzKY4f2PVNIJbNCL0lZRgY2zuN4oWD+ZFelOK3nOzj
+ AHvh0uwMg32zf8CgW0Lethn3jk0u9b7oWGhKq9RMQuiojNv4sqKlwAYtMV3je1ZjZKUygsM3r
+ z68QLS722/Qc5IKYrmR4QQcT/gGFs6t1Ugh0RgaPoMHwnLHpSHyvPkGuJTtLavUtQgHBiaMBU
+ ZpWGygHNVQA5l1YH4uV6hJi+eLWZZ09VESnafEkekpOsgAbr3cSd67507HDkT9o9x+wou7zi+
+ A4+ixo0fO09dpwq0WhxmsG7nxrLtmbE3/7s6VKmMxOac5RsoAYsSVhAEUS1yMDQJytCX6J0bZ
+ GF+b+zRIVujRxMIyeR1u+rC0S6WZWoaKDKnzX53P6OxUnk=
+Received-SPF: pass client-ip=212.227.17.21; envelope-from=deller@gmx.de;
+ helo=mout.gmx.net
+X-Spam_score_int: -27
+X-Spam_score: -2.8
 X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H2=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -117,318 +146,34 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+On 1/30/25 20:06, Michael Tokarev wrote:
+> 30.01.2025 16:29, deller@kernel.org wrote:
+>
+>> diff --git a/target/hppa/translate.c b/target/hppa/translate.c
+>
+>> +=C2=A0=C2=A0=C2=A0 if (ctx->is_pa20 && (a->dr =3D=3D 2)) {
+>> +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 /* Update gva_offset_mask f=
+rom the new value of %dr2 */
+>> +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 gen_helper_update_gva_offse=
+t_mask(tcg_env);
+>> +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 /* Exit to capture the new =
+value for the next TB. */
+>> +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 ctx->base.is_jmp =3D DISAS_=
+IAQ_N_STALE_EXIT;
+>> +=C2=A0=C2=A0=C2=A0 }
+>
+> This fails to build, it looks like:
+> ../target/hppa/translate.c:4621:9: error: nested extern declaration of '=
+gen_helper_update_gva_offset_mask' [-Werror=3Dnested-externs]
 
+Indeed... there was an
+  #ifndef CONFIG_USER_ONLY
+  #endif
+missing...
 
-On 1/23/25 17:25, Vaibhav Jain wrote:
-> Add support for reporting Hostwide state counters for nested KVM pseries
-> guests running with 'cap-nested-papr' on Qemu-TCG acting as
-> L0-hypervisor. sPAPR supports reporting various stats counters for
-> Guest-Management-Area(GMA) thats owned by L0-Hypervisor and are documented
-> at [1]. These stats counters are exposed via a new bit-flag named
-> 'getHostWideState' for the H_GUEST_GET_STATE hcall. Once this flag is set
-> the hcall should populate the Guest-State-Elements in the requested GSB
-> with the stat counter values. Currently following five counters are
-> supported:
-> 
-> * host_heap		: The currently used bytes in the
-> 			  Hypervisor's Guest Management Space
-> 			  associated with the Host Partition.
-> * host_heap_max		: The maximum bytes available in the
-> 			  Hypervisor's Guest Management Space
-> 			  associated with the Host Partition.
-> * host_pagetable	: The currently used bytes in the
-> 			  Hypervisor's Guest Page Table Management
-> 			  Space associated with the Host Partition.
-> * host_pagetable_max	: The maximum bytes available in the
-> 			  Hypervisor's Guest Page Table Management
-> 			  Space associated with the Host Partition.
-> * host_pagetable_reclaim: The amount of space in bytes that has
-> 			  been reclaimed due to overcommit in the
-> 			  Hypervisor's Guest Page Table Management
-> 			  Space associated with the Host Partition.
-> 
-> At the moment '0' is being reported for all these counters as these
-> counters doesnt align with how L0-Qemu manages Guest memory.
-> 
-> The patch implements support for these counters by adding new members to
-> the 'struct SpaprMachineStateNested'. These new members are then plugged
-> into the existing 'guest_state_element_types[]' with the help of a new
-> macro 'GSBE_NESTED_MACHINE_DW' together with a new helper
-> 'get_machine_ptr()'. guest_state_request_check() is updated to ensure
-> correctness of the requested GSB and finally h_guest_getset_state() is
-> updated to handle the newly introduced flag
-> 'GUEST_STATE_REQUEST_HOST_WIDE'.
-> 
-> This patch is tested with the proposed linux-kernel implementation to
-> expose these stat-counter as perf-events at [2].
-> 
-> [1]
-> https://lore.kernel.org/all/20241222140247.174998-2-vaibhav@linux.ibm.com
-> 
-> [2]
-> https://lore.kernel.org/all/20241222140247.174998-1-vaibhav@linux.ibm.com
-> 
-> Signed-off-by: Vaibhav Jain <vaibhav@linux.ibm.com>
-> ---
-> Changelog:
-> 
-> v1->v2:
-> * Introduced new flags to correctly compare hcall flags
->    for H_GUEST_{GET,SET}_STATE [Harsh]
-> * Fixed ordering of new GSB elements in spapr_nested.h [Harsh]
-> * s/GSBE_MACHINE_NESTED_DW/GSBE_NESTED_MACHINE_DW/
-> * Minor tweaks to patch description
-> * Updated recipients list
-> ---
->   hw/ppc/spapr_nested.c         | 82 ++++++++++++++++++++++++++---------
->   include/hw/ppc/spapr_nested.h | 39 ++++++++++++++---
->   2 files changed, 96 insertions(+), 25 deletions(-)
-> 
-> diff --git a/hw/ppc/spapr_nested.c b/hw/ppc/spapr_nested.c
-> index 7def8eb73b..7f484bb3e7 100644
-> --- a/hw/ppc/spapr_nested.c
-> +++ b/hw/ppc/spapr_nested.c
-> @@ -64,10 +64,9 @@ static
->   SpaprMachineStateNestedGuest *spapr_get_nested_guest(SpaprMachineState *spapr,
->                                                        target_ulong guestid)
->   {
-> -    SpaprMachineStateNestedGuest *guest;
-> -
-> -    guest = g_hash_table_lookup(spapr->nested.guests, GINT_TO_POINTER(guestid));
-> -    return guest;
-> +    return spapr->nested.guests ?
-> +        g_hash_table_lookup(spapr->nested.guests,
-> +                            GINT_TO_POINTER(guestid)) : NULL;
->   }
->   
->   bool spapr_get_pate_nested_papr(SpaprMachineState *spapr, PowerPCCPU *cpu,
-> @@ -613,6 +612,13 @@ static void *get_guest_ptr(SpaprMachineStateNestedGuest *guest,
->       return guest; /* for GSBE_NESTED */
->   }
->   
-> +static void *get_machine_ptr(SpaprMachineStateNestedGuest *guest,
-> +                             target_ulong vcpuid)
-> +{
-> +    SpaprMachineState *spapr = SPAPR_MACHINE(qdev_get_machine());
-> +    return &spapr->nested;
-> +}
-> +
->   /*
->    * set=1 means the L1 is trying to set some state
->    * set=0 means the L1 is trying to get some state
-> @@ -1012,7 +1018,12 @@ struct guest_state_element_type guest_state_element_types[] = {
->       GSBE_NESTED_VCPU(GSB_VCPU_OUT_BUFFER, 0x10, runbufout,   copy_state_runbuf),
->       GSBE_NESTED_VCPU(GSB_VCPU_OUT_BUF_MIN_SZ, 0x8, runbufout, out_buf_min_size),
->       GSBE_NESTED_VCPU(GSB_VCPU_HDEC_EXPIRY_TB, 0x8, hdecr_expiry_tb,
-> -                     copy_state_hdecr)
-> +                     copy_state_hdecr),
-> +    GSBE_NESTED_MACHINE_DW(GSB_GUEST_HEAP, current_guest_heap),
-> +    GSBE_NESTED_MACHINE_DW(GSB_GUEST_HEAP_MAX, max_guest_heap),
-> +    GSBE_NESTED_MACHINE_DW(GSB_GUEST_PGTABLE_SIZE, current_pgtable_size),
-> +    GSBE_NESTED_MACHINE_DW(GSB_GUEST_PGTABLE_SIZE_MAX, max_pgtable_size),
-> +    GSBE_NESTED_MACHINE_DW(GSB_GUEST_PGTABLE_RECLAIM, pgtable_reclaim_size),
->   };
->   
->   void spapr_nested_gsb_init(void)
-> @@ -1030,8 +1041,12 @@ void spapr_nested_gsb_init(void)
->           else if (type->id >= GSB_VCPU_IN_BUFFER)
->               /* 0x0c00 - 0xf000 Thread + RW */
->               type->flags = 0;
-> +        else if (type->id >= GSB_GUEST_HEAP)
-> +            /*0x0800 - 0x0804 Hostwide Counters + RO */
-> +            type->flags = GUEST_STATE_ELEMENT_TYPE_FLAG_HOST_WIDE |
-> +                          GUEST_STATE_ELEMENT_TYPE_FLAG_READ_ONLY;
->           else if (type->id >= GSB_VCPU_LPVR)
-> -            /* 0x0003 - 0x0bff Guest + RW */
-> +            /* 0x0003 - 0x07ff Guest + RW */
->               type->flags = GUEST_STATE_ELEMENT_TYPE_FLAG_GUEST_WIDE;
->           else if (type->id >= GSB_HV_VCPU_STATE_SIZE)
->               /* 0x0001 - 0x0002 Guest + RO */
-> @@ -1138,18 +1153,26 @@ static bool guest_state_request_check(struct guest_state_request *gsr)
->               return false;
->           }
->   
-> -        if (type->flags & GUEST_STATE_ELEMENT_TYPE_FLAG_GUEST_WIDE) {
-> +        if (type->flags & GUEST_STATE_ELEMENT_TYPE_FLAG_HOST_WIDE) {
-> +            /* Hostwide elements cant be clubbed with other types */
-> +            if (!(gsr->flags & GUEST_STATE_REQUEST_HOST_WIDE)) {
-> +                qemu_log_mask(LOG_GUEST_ERROR, "trying to get/set a host wide "
-> +                              "Element ID:%04x.\n", id);
-> +                return false;
-> +            }
-> +        } else  if (type->flags & GUEST_STATE_ELEMENT_TYPE_FLAG_GUEST_WIDE) {
->               /* guest wide element type */
->               if (!(gsr->flags & GUEST_STATE_REQUEST_GUEST_WIDE)) {
-> -                qemu_log_mask(LOG_GUEST_ERROR, "trying to set a guest wide "
-> +                qemu_log_mask(LOG_GUEST_ERROR, "trying to get/set a guest wide "
->                                 "Element ID:%04x.\n", id);
->                   return false;
->               }
->           } else {
->               /* thread wide element type */
-> -            if (gsr->flags & GUEST_STATE_REQUEST_GUEST_WIDE) {
-> -                qemu_log_mask(LOG_GUEST_ERROR, "trying to set a thread wide "
-> -                              "Element ID:%04x.\n", id);
-> +            if (gsr->flags & (GUEST_STATE_REQUEST_GUEST_WIDE |
-> +                              GUEST_STATE_ELEMENT_TYPE_FLAG_HOST_WIDE)) {
+Fixed in the new pull request.
 
-Although translate to same value 0x2, I guess we want to use 
-GUEST_STATE_REQUEST_HOST_WIDE here.
+Thanks!
+Helge
 
-> +                qemu_log_mask(LOG_GUEST_ERROR, "trying to get/set a thread wide"
-> +                            " Element ID:%04x.\n", id);
->                   return false;
->               }
->           }
-> @@ -1509,25 +1532,44 @@ static target_ulong h_guest_getset_state(PowerPCCPU *cpu,
->       target_ulong buf = args[3];
->       target_ulong buflen = args[4];
->       struct guest_state_request gsr;
-> -    SpaprMachineStateNestedGuest *guest;
-> +    SpaprMachineStateNestedGuest *guest = NULL;
->   
-> -    guest = spapr_get_nested_guest(spapr, lpid);
-> -    if (!guest) {
-> -        return H_P2;
-> -    }
->       gsr.buf = buf;
->       assert(buflen <= GSB_MAX_BUF_SIZE);
->       gsr.len = buflen;
->       gsr.flags = 0;
-> -    if (flags & H_GUEST_GETSET_STATE_FLAG_GUEST_WIDE) {
-> +
-> +    /* Works for both get/set state */
-> +    if ((flags & H_GUEST_GET_STATE_FLAGS_GUEST_WIDE) ||
-> +        (flags & H_GUEST_SET_STATE_FLAGS_GUEST_WIDE)) {
->           gsr.flags |= GUEST_STATE_REQUEST_GUEST_WIDE;
->       }
-> -    if (flags & ~H_GUEST_GETSET_STATE_FLAG_GUEST_WIDE) {
-> -        return H_PARAMETER; /* flag not supported yet */
-> -    }
->   
->       if (set) {
-> +        if (flags & ~H_GUEST_SET_STATE_FLAGS_MASK) {
-> +            return H_PARAMETER;
-> +        }
->           gsr.flags |= GUEST_STATE_REQUEST_SET;
-> +    } else {
-> +        /*
-> +         * No reserved fields to be set in flags nor both
-> +         * GUEST/HOST wide bits
-
-Nit: Can the comment be updated to mention checks in the same order as 
-being performed i.e.
-- Neither both G/H wide bits be set, nor any reserved field.
-
-> +         */
-> +        if ((flags == H_GUEST_GET_STATE_FLAGS_MASK) ||
-> +            (flags & ~H_GUEST_GET_STATE_FLAGS_MASK)) {
-> +            return H_PARAMETER;
-> +        }
-> +
-> +        if (flags & H_GUEST_GET_STATE_FLAGS_HOST_WIDE) {
-> +            gsr.flags |= GUEST_STATE_REQUEST_HOST_WIDE;
-> +        }
-> +    }
-> +
-> +    if (!(gsr.flags & GUEST_STATE_REQUEST_HOST_WIDE)) {
-> +        guest = spapr_get_nested_guest(spapr, lpid);
-> +        if (!guest) {
-> +            return H_P2;
-> +        }
->       }
->       return map_and_getset_state(cpu, guest, vcpuid, &gsr);
->   }
-> diff --git a/include/hw/ppc/spapr_nested.h b/include/hw/ppc/spapr_nested.h
-> index e420220484..a6d10a1fba 100644
-> --- a/include/hw/ppc/spapr_nested.h
-> +++ b/include/hw/ppc/spapr_nested.h
-> @@ -11,7 +11,13 @@
->   #define GSB_TB_OFFSET           0x0004 /* Timebase Offset */
->   #define GSB_PART_SCOPED_PAGETBL 0x0005 /* Partition Scoped Page Table */
->   #define GSB_PROCESS_TBL         0x0006 /* Process Table */
-> -                    /* RESERVED 0x0007 - 0x0BFF */
-> +                   /* RESERVED 0x0007 - 0x07FF */
-
-Indentation may be corrected for all macro values above and below.
-
-> +#define GSB_GUEST_HEAP          0x0800 /* Guest Management Heap Size */
-> +#define GSB_GUEST_HEAP_MAX      0x0801 /* Guest Management Heap Max Size */
-> +#define GSB_GUEST_PGTABLE_SIZE  0x0802 /* Guest Pagetable Size */
-> +#define GSB_GUEST_PGTABLE_SIZE_MAX   0x0803 /* Guest Pagetable Max Size */
-> +#define GSB_GUEST_PGTABLE_RECLAIM    0x0804 /* Pagetable Reclaim in bytes */
-
-Can these be named GSB_GUEST_PT_* ? Will help with indentation also.
-
-> +                  /* RESERVED 0x0805 - 0xBFF */
->   #define GSB_VCPU_IN_BUFFER      0x0C00 /* Run VCPU Input Buffer */
->   #define GSB_VCPU_OUT_BUFFER     0x0C01 /* Run VCPU Out Buffer */
->   #define GSB_VCPU_VPA            0x0C02 /* HRA to Guest VCPU VPA */
-> @@ -196,6 +202,13 @@ typedef struct SpaprMachineStateNested {
->   #define NESTED_API_PAPR    2
->       bool capabilities_set;
->       uint32_t pvr_base;
-> +    /* Hostwide counters */
-> +    uint64_t current_guest_heap;
-> +    uint64_t max_guest_heap;
-> +    uint64_t current_pgtable_size;
-> +    uint64_t max_pgtable_size;
-> +    uint64_t pgtable_reclaim_size;
-> +
->       GHashTable *guests;
->   } SpaprMachineStateNested;
->   
-> @@ -229,9 +242,15 @@ typedef struct SpaprMachineStateNestedGuest {
->   #define HVMASK_HDEXCR                 0x00000000FFFFFFFF
->   #define HVMASK_TB_OFFSET              0x000000FFFFFFFFFF
->   #define GSB_MAX_BUF_SIZE              (1024 * 1024)
-> -#define H_GUEST_GETSET_STATE_FLAG_GUEST_WIDE 0x8000000000000000
-> -#define GUEST_STATE_REQUEST_GUEST_WIDE       0x1
-> -#define GUEST_STATE_REQUEST_SET              0x2
-> +#define H_GUEST_GET_STATE_FLAGS_MASK   0xC000000000000000ULL
-> +#define H_GUEST_SET_STATE_FLAGS_MASK   0x8000000000000000ULL
-> +#define H_GUEST_SET_STATE_FLAGS_GUEST_WIDE 0x8000000000000000ULL
-> +#define H_GUEST_GET_STATE_FLAGS_GUEST_WIDE 0x8000000000000000ULL
-> +#define H_GUEST_GET_STATE_FLAGS_HOST_WIDE  0x4000000000000000ULL
-
-Can we align the macros values indentation?
-We may also use _GW/_HW instead of _GUEST_WIDE/_HOST_WIDE if helps.
-
-With suggested updates:
-
-Reviewed-by: Harsh Prateek Bora <harshpb@linux.ibm.com>
-
-> +
-> +#define GUEST_STATE_REQUEST_GUEST_WIDE     0x1
-> +#define GUEST_STATE_REQUEST_HOST_WIDE      0x2
-> +#define GUEST_STATE_REQUEST_SET            0x4
->   
->   /*
->    * As per ISA v3.1B, following bits are reserved:
-> @@ -251,6 +270,15 @@ typedef struct SpaprMachineStateNestedGuest {
->       .copy = (c)                                    \
->   }
->   
-> +#define GSBE_NESTED_MACHINE_DW(i, f)  {                             \
-> +        .id = (i),                                                  \
-> +        .size = 8,                                                  \
-> +        .location = get_machine_ptr,                                \
-> +        .offset = offsetof(struct SpaprMachineStateNested, f),     \
-> +        .copy = copy_state_8to8,                                    \
-> +        .mask = HVMASK_DEFAULT                                      \
-> +}
-> +
->   #define GSBE_NESTED(i, sz, f, c) {                             \
->       .id = (i),                                                 \
->       .size = (sz),                                              \
-> @@ -509,7 +537,8 @@ struct guest_state_element_type {
->       uint16_t id;
->       int size;
->   #define GUEST_STATE_ELEMENT_TYPE_FLAG_GUEST_WIDE 0x1
-> -#define GUEST_STATE_ELEMENT_TYPE_FLAG_READ_ONLY  0x2
-> +#define GUEST_STATE_ELEMENT_TYPE_FLAG_HOST_WIDE 0x2
-> +#define GUEST_STATE_ELEMENT_TYPE_FLAG_READ_ONLY 0x4
->      uint16_t flags;
->       void *(*location)(SpaprMachineStateNestedGuest *, target_ulong);
->       size_t offset;
 
