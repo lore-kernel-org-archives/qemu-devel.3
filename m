@@ -4,80 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3D046C0218F
-	for <qemu-devel@archiver.kernel.org>; Fri, 31 Jan 2025 21:09:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2383EC0218F
+	for <qemu-devel@archiver.kernel.org>; Fri, 31 Jan 2025 21:09:29 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tdyDh-00077o-CT; Fri, 31 Jan 2025 16:06:33 -0500
+	id 1tdyFS-0005Nl-AD; Fri, 31 Jan 2025 16:08:22 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tdyDf-00070h-GW
- for qemu-devel@nongnu.org; Fri, 31 Jan 2025 16:06:31 -0500
-Received: from mail-wm1-x333.google.com ([2a00:1450:4864:20::333])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tdyFG-0004EJ-Vb
+ for qemu-devel@nongnu.org; Fri, 31 Jan 2025 16:08:13 -0500
+Received: from mail-wr1-x429.google.com ([2a00:1450:4864:20::429])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tdyDd-0007rd-RY
- for qemu-devel@nongnu.org; Fri, 31 Jan 2025 16:06:31 -0500
-Received: by mail-wm1-x333.google.com with SMTP id
- 5b1f17b1804b1-436a03197b2so16990725e9.2
- for <qemu-devel@nongnu.org>; Fri, 31 Jan 2025 13:06:29 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tdyFD-00081a-MG
+ for qemu-devel@nongnu.org; Fri, 31 Jan 2025 16:08:10 -0500
+Received: by mail-wr1-x429.google.com with SMTP id
+ ffacd0b85a97d-385dece873cso1230032f8f.0
+ for <qemu-devel@nongnu.org>; Fri, 31 Jan 2025 13:08:06 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1738357588; x=1738962388; darn=nongnu.org;
+ d=linaro.org; s=google; t=1738357685; x=1738962485; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=I05cOzS+i3UJgRm0Kn/FK0GGIAGJGVFzC35zyMSTnLU=;
- b=e1+FBAS+wfTEu4p2spqz2avwT+6XCfGxer7wf/n14Cw4rvUk/ZJyQem4Oj4ppPSXA2
- 0KCe6d42KJwbcXpClF/cUQ9ssFBohKTojFYIaBol8UjvxxTtH9I2Y6dTHruVIeWhXUTD
- fKZWD4PXY+rMv53VOKknmNHssSFPg3k2GNwdA+0uouAt4DkuDmPqwgqYQ96UUw7Nlktp
- BPcU7XrR5EgLH25okkZ08LMnWVvrofNxEoa4oSpkqOm6kcLe/3FNTP6yqlgZx6UGsnGj
- K4SgIsKnz4FEAio2SYcgWoEpNt3q4vCEWzNpiGuLPQJjbU7S3pWrVKG7C3nlM1G6j9b7
- OHwA==
+ bh=sv4y1qDnwLVDwhBF6zOkYg6dg7wJIzwFJo+NloWuB10=;
+ b=HSpozAvZ3EaxWXbLuaTKO2mrbKejCUxwNgQTNfJ097oa5kJFR/VyThQI/bJ08M86Kt
+ kscKzZneqcPZj7NaheRdGB/Pz8og+UPA4zNkZHSg3Oui26TWSKICY6NTRW9gKtT8rdgu
+ VT5Ah6K5Z+2OfNdVIEO+gC+U9i2qhNYAU72cVIwJTsSsArSKMFR1E8JCLpSXMCB8bOf/
+ f5J3tyqc0LNZ4Yyhr2yD37SDG1X6DvRqvxxoxhJUJpNAxQ4EPgcD65mkJsh0tIDBjTuJ
+ exFELOC/we3kQ6i0b5eSJr44VdZ/vA0AMJJv/aB2d/hAChja1J+R3flPIwTDBJzflVOo
+ 95Cw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1738357588; x=1738962388;
+ d=1e100.net; s=20230601; t=1738357685; x=1738962485;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=I05cOzS+i3UJgRm0Kn/FK0GGIAGJGVFzC35zyMSTnLU=;
- b=SmewEdAM+pGnEDXkdHKMnJZ0nLoaE7RCXgLSC1GJYpVHINkUVKgLmh7/t/Xm16PeuW
- XPOvBohiMZ0soPiEM5VN/tGbaxQWnBLRBuCjubjvx+sbJS6D5WyJKekoWkIXJ295EDk0
- CjhS9oOGCDwPPA6y11hG9MRkncBZJDrTdTzBI2Nml9oamcAbPPIYUP/QVnybyVz4EvDW
- ixl9aTtT9IXYthXinOjhAOVbfkItdjHSdTr3Eoz6HuOFolSiBxc1gTNkG2jkL2m58ySv
- d8VX0vSrkt02cxdkv8XjcIMSX0NLf0pjVoJwwDn/VC5ToaAsrfi8fyiPR5PaSA0VFshy
- hUGg==
-X-Gm-Message-State: AOJu0YyHUCCOX3ysV36nutqU0TSxwhOJOBzzRYTAkWVEqaL6U4ATuE1h
- XWfgrDz9Zc8KYx4bGEbFwZBqQM6JP1m74nAW+wAqsQLeJ7o1tNjk7I0BZJ7tt8yDvdOo9s+AVpY
- z6TE=
-X-Gm-Gg: ASbGncs7EvHcg54yLwjdJ9xOES7J1B1iVpDIsUpkiclGaIO68q9G8PsnWutq5M+b+ee
- 2Q2BRx9RbBJEzx60bzAqngQaFNJAqYrXHd9prHbn2qWNIJi4ONQlPbzAzEPsMuQ1Or8AHNjLLtt
- jpsZstDRRZNNCX/FeSgbMj1E+biyqkOQBOEledxq6A/BsYOpF7Pc8c41PhXvBVDIAhii06rHW1i
- 0h1AQbJPUqTv9qr35eZ8E7Ktmt10SeP2OkFRtxMTg8NJPdM71TGdn8f2PIRb+vZpBDMAMIBuBZB
- WvjxnHxIOQtaAZqDFqQTQAvWEGDWFUb3wGOJWmsP5AK03qj8xvrRJOlUH9nSocRBRw==
-X-Google-Smtp-Source: AGHT+IGPsdlmXiLGajme3lFITzwINgbO2o7QdPF0oLssVMOAihevY5MAaFQDfh/lUJ0YY4H+eJVYWQ==
-X-Received: by 2002:a05:600c:c17:b0:436:51bb:7a52 with SMTP id
- 5b1f17b1804b1-438dc3bd7e3mr120375475e9.7.1738357586309; 
- Fri, 31 Jan 2025 13:06:26 -0800 (PST)
+ bh=sv4y1qDnwLVDwhBF6zOkYg6dg7wJIzwFJo+NloWuB10=;
+ b=j5vMclVs/Xj+L8YBJHpI8aCiHUe/QMJnCu8rcBgxyAy9krGHA2DzHFdqiRknxm0aNc
+ pQd95w+wq2hY2ZgK3DINeY80Wsl5RTtjfcCiP2OypUDESw8shrAuQvK6jLxJSBLdNEqA
+ QAN0jIzKkBKFrFYH/1STQoazLxtiArofIjygYY6Drk8MO1isrQZia+aiMYS+G0F6RNOV
+ 7ElS2j9yLsQxYQt9is0PxRTfBGqViCBIyUiMImi17ui5bsHYYLnP5wdWxyJrh+KCyGSP
+ U6WxCB6aFKFhutM2I1V85SJeldHr/xSHWytp9f2dA0UmF1/6r6u485De/3ePqNuHGJ3C
+ 97Zg==
+X-Gm-Message-State: AOJu0Yxr2QkVf+ANhOGH2NAxRFZOQaaS+3dtVALs74qDIy+eE8iz7nUb
+ MnQfgc7fdRquERWTS52cOYMMmOAwA/5ci0C+RTYr233rkFSgoM8ixL6bbSPz3QZhOJFhufhcKnD
+ xn2I=
+X-Gm-Gg: ASbGncuQZ6ZHtzrE4aZU7s4RQSNI3vVND7Q9N/RKnlFOMyJDznlFmYrnXFvP7UQg5sT
+ IBI6zyj7t0tySit77tX5YN/0bMCFcygV08K+an5XjkfXnm7iYTXE1nvkDL2VGkVg180+1QqREqa
+ +BA5+KeoJRd5snKt1qcmX4TcAnZIlJMqTxaieAELQwfrznnpLOGTvBI3cHRoqOXTgEKi/+Nhtqb
+ F644QEpRPX3V6Sb1fMJGuq4j6rMl8NmTrau+sIymIWFLsKZM/aOCEqMHPEqxYoMQ8gOqs+0ZGyo
+ /HjVacKoyhJ25LxFyxePomHHba5NOtDmwO8ITsGIDmUfEdco8hbyHbN2vK1yuwrVEA==
+X-Google-Smtp-Source: AGHT+IE6hUPdR/SXyFDHCOa+lFrqDttxrT6bo1Axt4r7eX2LuabN3x1RNkwTs3smACNNejySQB1BfQ==
+X-Received: by 2002:a5d:64a1:0:b0:385:f17b:de54 with SMTP id
+ ffacd0b85a97d-38c5193112amr10794729f8f.5.1738357684885; 
+ Fri, 31 Jan 2025 13:08:04 -0800 (PST)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-438d7aa605asm87406915e9.1.2025.01.31.13.06.25
+ ffacd0b85a97d-38c5c11b363sm5543100f8f.40.2025.01.31.13.08.04
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Fri, 31 Jan 2025 13:06:25 -0800 (PST)
+ Fri, 31 Jan 2025 13:08:04 -0800 (PST)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
-Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Bernhard Beschow <shentey@gmail.com>,
- Richard Henderson <richard.henderson@linaro.org>
-Subject: [PULL 13/36] hw/irq: Introduce qemu_init_irqs() helper
-Date: Fri, 31 Jan 2025 22:04:56 +0100
-Message-ID: <20250131210520.85874-14-philmd@linaro.org>
+Cc: Peter Maydell <peter.maydell@linaro.org>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Subject: [PULL 33/36] hw/sd/omap_mmc: Untabify
+Date: Fri, 31 Jan 2025 22:05:16 +0100
+Message-ID: <20250131210520.85874-34-philmd@linaro.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20250131210520.85874-1-philmd@linaro.org>
 References: <20250131210520.85874-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::333;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x333.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::429;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x429.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -100,59 +100,294 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-While qemu_init_irq() initialize a single IRQ,
-qemu_init_irqs() initialize an array of them.
+From: Peter Maydell <peter.maydell@linaro.org>
 
-Suggested-by: Bernhard Beschow <shentey@gmail.com>
-Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+This is a very old source file, and still has some lingering
+hard-coded tabs; untabify it.
+
+Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
 Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-Message-Id: <20250121155526.29982-2-philmd@linaro.org>
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Message-ID: <20250128104519.3981448-9-peter.maydell@linaro.org>
+Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 ---
- include/hw/irq.h | 11 +++++++++++
- hw/core/irq.c    |  8 ++++++++
- 2 files changed, 19 insertions(+)
+ hw/sd/omap_mmc.c | 124 +++++++++++++++++++++++------------------------
+ 1 file changed, 62 insertions(+), 62 deletions(-)
 
-diff --git a/include/hw/irq.h b/include/hw/irq.h
-index c861c1debda..b3012237acd 100644
---- a/include/hw/irq.h
-+++ b/include/hw/irq.h
-@@ -41,6 +41,17 @@ static inline void qemu_irq_pulse(qemu_irq irq)
- void qemu_init_irq(IRQState *irq, qemu_irq_handler handler, void *opaque,
-                    int n);
+diff --git a/hw/sd/omap_mmc.c b/hw/sd/omap_mmc.c
+index 18016a2f2e2..bbe7b971bbe 100644
+--- a/hw/sd/omap_mmc.c
++++ b/hw/sd/omap_mmc.c
+@@ -109,11 +109,11 @@ static void omap_mmc_fifolevel_update(OMAPMMCState *host)
  
-+/**
-+ * qemu_init_irqs: Initialize an array of IRQs.
-+ *
-+ * @irq: Array of IRQs to initialize
-+ * @count: number of IRQs to initialize
-+ * @handler: handler to assign to each IRQ
-+ * @opaque: opaque data to pass to @handler
-+ */
-+void qemu_init_irqs(IRQState irq[], size_t count,
-+                    qemu_irq_handler handler, void *opaque);
-+
- /* Returns an array of N IRQs. Each IRQ is assigned the argument handler and
-  * opaque data.
-  */
-diff --git a/hw/core/irq.c b/hw/core/irq.c
-index 7d5b0038c12..6dd8d47bd6e 100644
---- a/hw/core/irq.c
-+++ b/hw/core/irq.c
-@@ -49,6 +49,14 @@ void qemu_init_irq(IRQState *irq, qemu_irq_handler handler, void *opaque,
-     init_irq_fields(irq, handler, opaque, n);
+ /* These must match the encoding of the MMC_CMD Response field */
+ typedef enum {
+-    sd_nore = 0,	/* no response */
+-    sd_r1,		/* normal response command */
+-    sd_r2,		/* CID, CSD registers */
+-    sd_r3,		/* OCR register */
+-    sd_r6 = 6,		/* Published RCA response */
++    sd_nore = 0,        /* no response */
++    sd_r1,              /* normal response command */
++    sd_r2,              /* CID, CSD registers */
++    sd_r3,              /* OCR register */
++    sd_r6 = 6,          /* Published RCA response */
+     sd_r1b = -1,
+ } sd_rsp_type_t;
+ 
+@@ -229,7 +229,7 @@ static void omap_mmc_command(OMAPMMCState *host, int cmd, int dir,
+     if (timeout)
+         host->status |= 0x0080;
+     else if (cmd == 12)
+-        host->status |= 0x0005;	/* Makes it more real */
++        host->status |= 0x0005;         /* Makes it more real */
+     else
+         host->status |= 0x0001;
  }
+@@ -338,32 +338,32 @@ static uint64_t omap_mmc_read(void *opaque, hwaddr offset, unsigned size)
+     }
  
-+void qemu_init_irqs(IRQState irq[], size_t count,
-+                    qemu_irq_handler handler, void *opaque)
-+{
-+    for (size_t i = 0; i < count; i++) {
-+        qemu_init_irq(&irq[i], handler, opaque, i);
-+    }
-+}
-+
- qemu_irq *qemu_extend_irqs(qemu_irq *old, int n_old, qemu_irq_handler handler,
-                            void *opaque, int n)
- {
+     switch (offset) {
+-    case 0x00:	/* MMC_CMD */
++    case 0x00:  /* MMC_CMD */
+         return s->last_cmd;
+ 
+-    case 0x04:	/* MMC_ARGL */
++    case 0x04:  /* MMC_ARGL */
+         return s->arg & 0x0000ffff;
+ 
+-    case 0x08:	/* MMC_ARGH */
++    case 0x08:  /* MMC_ARGH */
+         return s->arg >> 16;
+ 
+-    case 0x0c:	/* MMC_CON */
++    case 0x0c:  /* MMC_CON */
+         return (s->dw << 15) | (s->mode << 12) | (s->enable << 11) | 
+                 (s->be << 10) | s->clkdiv;
+ 
+-    case 0x10:	/* MMC_STAT */
++    case 0x10:  /* MMC_STAT */
+         return s->status;
+ 
+-    case 0x14:	/* MMC_IE */
++    case 0x14:  /* MMC_IE */
+         return s->mask;
+ 
+-    case 0x18:	/* MMC_CTO */
++    case 0x18:  /* MMC_CTO */
+         return s->cto;
+ 
+-    case 0x1c:	/* MMC_DTO */
++    case 0x1c:  /* MMC_DTO */
+         return s->dto;
+ 
+-    case 0x20:	/* MMC_DATA */
++    case 0x20:  /* MMC_DATA */
+         /* TODO: support 8-bit access */
+         i = s->fifo[s->fifo_start];
+         if (s->fifo_len == 0) {
+@@ -378,42 +378,42 @@ static uint64_t omap_mmc_read(void *opaque, hwaddr offset, unsigned size)
+         omap_mmc_interrupts_update(s);
+         return i;
+ 
+-    case 0x24:	/* MMC_BLEN */
++    case 0x24:  /* MMC_BLEN */
+         return s->blen_counter;
+ 
+-    case 0x28:	/* MMC_NBLK */
++    case 0x28:  /* MMC_NBLK */
+         return s->nblk_counter;
+ 
+-    case 0x2c:	/* MMC_BUF */
++    case 0x2c:  /* MMC_BUF */
+         return (s->rx_dma << 15) | (s->af_level << 8) |
+             (s->tx_dma << 7) | s->ae_level;
+ 
+-    case 0x30:	/* MMC_SPI */
++    case 0x30:  /* MMC_SPI */
+         return 0x0000;
+-    case 0x34:	/* MMC_SDIO */
++    case 0x34:  /* MMC_SDIO */
+         return (s->cdet_wakeup << 2) | (s->cdet_enable) | s->sdio;
+-    case 0x38:	/* MMC_SYST */
++    case 0x38:  /* MMC_SYST */
+         return 0x0000;
+ 
+-    case 0x3c:	/* MMC_REV */
++    case 0x3c:  /* MMC_REV */
+         return s->rev;
+ 
+-    case 0x40:	/* MMC_RSP0 */
+-    case 0x44:	/* MMC_RSP1 */
+-    case 0x48:	/* MMC_RSP2 */
+-    case 0x4c:	/* MMC_RSP3 */
+-    case 0x50:	/* MMC_RSP4 */
+-    case 0x54:	/* MMC_RSP5 */
+-    case 0x58:	/* MMC_RSP6 */
+-    case 0x5c:	/* MMC_RSP7 */
++    case 0x40:  /* MMC_RSP0 */
++    case 0x44:  /* MMC_RSP1 */
++    case 0x48:  /* MMC_RSP2 */
++    case 0x4c:  /* MMC_RSP3 */
++    case 0x50:  /* MMC_RSP4 */
++    case 0x54:  /* MMC_RSP5 */
++    case 0x58:  /* MMC_RSP6 */
++    case 0x5c:  /* MMC_RSP7 */
+         return s->rsp[(offset - 0x40) >> 2];
+ 
+     /* OMAP2-specific */
+-    case 0x60:	/* MMC_IOSR */
+-    case 0x64:	/* MMC_SYSC */
++    case 0x60:  /* MMC_IOSR */
++    case 0x64:  /* MMC_SYSC */
+         return 0;
+-    case 0x68:	/* MMC_SYSS */
+-        return 1;						/* RSTD */
++    case 0x68:  /* MMC_SYSS */
++        return 1;                                               /* RSTD */
+     }
+ 
+     OMAP_BAD_REG(offset);
+@@ -432,7 +432,7 @@ static void omap_mmc_write(void *opaque, hwaddr offset,
+     }
+ 
+     switch (offset) {
+-    case 0x00:	/* MMC_CMD */
++    case 0x00:  /* MMC_CMD */
+         if (!s->enable)
+             break;
+ 
+@@ -447,17 +447,17 @@ static void omap_mmc_write(void *opaque, hwaddr offset,
+         omap_mmc_update(s);
+         break;
+ 
+-    case 0x04:	/* MMC_ARGL */
++    case 0x04:  /* MMC_ARGL */
+         s->arg &= 0xffff0000;
+         s->arg |= 0x0000ffff & value;
+         break;
+ 
+-    case 0x08:	/* MMC_ARGH */
++    case 0x08:  /* MMC_ARGH */
+         s->arg &= 0x0000ffff;
+         s->arg |= value << 16;
+         break;
+ 
+-    case 0x0c:	/* MMC_CON */
++    case 0x0c:  /* MMC_CON */
+         s->dw = (value >> 15) & 1;
+         s->mode = (value >> 12) & 3;
+         s->enable = (value >> 11) & 1;
+@@ -477,27 +477,27 @@ static void omap_mmc_write(void *opaque, hwaddr offset,
+             omap_mmc_pseudo_reset(s);
+         break;
+ 
+-    case 0x10:	/* MMC_STAT */
++    case 0x10:  /* MMC_STAT */
+         s->status &= ~value;
+         omap_mmc_interrupts_update(s);
+         break;
+ 
+-    case 0x14:	/* MMC_IE */
++    case 0x14:  /* MMC_IE */
+         s->mask = value & 0x7fff;
+         omap_mmc_interrupts_update(s);
+         break;
+ 
+-    case 0x18:	/* MMC_CTO */
++    case 0x18:  /* MMC_CTO */
+         s->cto = value & 0xff;
+         if (s->cto > 0xfd && s->rev <= 1)
+             printf("MMC: CTO of 0xff and 0xfe cannot be used!\n");
+         break;
+ 
+-    case 0x1c:	/* MMC_DTO */
++    case 0x1c:  /* MMC_DTO */
+         s->dto = value & 0xffff;
+         break;
+ 
+-    case 0x20:	/* MMC_DATA */
++    case 0x20:  /* MMC_DATA */
+         /* TODO: support 8-bit access */
+         if (s->fifo_len == 32)
+             break;
+@@ -508,18 +508,18 @@ static void omap_mmc_write(void *opaque, hwaddr offset,
+         omap_mmc_interrupts_update(s);
+         break;
+ 
+-    case 0x24:	/* MMC_BLEN */
++    case 0x24:  /* MMC_BLEN */
+         s->blen = (value & 0x07ff) + 1;
+         s->blen_counter = s->blen;
+         break;
+ 
+-    case 0x28:	/* MMC_NBLK */
++    case 0x28:  /* MMC_NBLK */
+         s->nblk = (value & 0x07ff) + 1;
+         s->nblk_counter = s->nblk;
+         s->blen_counter = s->blen;
+         break;
+ 
+-    case 0x2c:	/* MMC_BUF */
++    case 0x2c:  /* MMC_BUF */
+         s->rx_dma = (value >> 15) & 1;
+         s->af_level = (value >> 8) & 0x1f;
+         s->tx_dma = (value >> 7) & 1;
+@@ -534,38 +534,38 @@ static void omap_mmc_write(void *opaque, hwaddr offset,
+         break;
+ 
+     /* SPI, SDIO and TEST modes unimplemented */
+-    case 0x30:	/* MMC_SPI (OMAP1 only) */
++    case 0x30:  /* MMC_SPI (OMAP1 only) */
+         break;
+-    case 0x34:	/* MMC_SDIO */
++    case 0x34:  /* MMC_SDIO */
+         s->sdio = value & (s->rev >= 2 ? 0xfbf3 : 0x2020);
+         s->cdet_wakeup = (value >> 9) & 1;
+         s->cdet_enable = (value >> 2) & 1;
+         break;
+-    case 0x38:	/* MMC_SYST */
++    case 0x38:  /* MMC_SYST */
+         break;
+ 
+-    case 0x3c:	/* MMC_REV */
+-    case 0x40:	/* MMC_RSP0 */
+-    case 0x44:	/* MMC_RSP1 */
+-    case 0x48:	/* MMC_RSP2 */
+-    case 0x4c:	/* MMC_RSP3 */
+-    case 0x50:	/* MMC_RSP4 */
+-    case 0x54:	/* MMC_RSP5 */
+-    case 0x58:	/* MMC_RSP6 */
+-    case 0x5c:	/* MMC_RSP7 */
++    case 0x3c:  /* MMC_REV */
++    case 0x40:  /* MMC_RSP0 */
++    case 0x44:  /* MMC_RSP1 */
++    case 0x48:  /* MMC_RSP2 */
++    case 0x4c:  /* MMC_RSP3 */
++    case 0x50:  /* MMC_RSP4 */
++    case 0x54:  /* MMC_RSP5 */
++    case 0x58:  /* MMC_RSP6 */
++    case 0x5c:  /* MMC_RSP7 */
+         OMAP_RO_REG(offset);
+         break;
+ 
+     /* OMAP2-specific */
+-    case 0x60:	/* MMC_IOSR */
++    case 0x60:  /* MMC_IOSR */
+         if (value & 0xf)
+             printf("MMC: SDIO bits used!\n");
+         break;
+-    case 0x64:	/* MMC_SYSC */
+-        if (value & (1 << 2))					/* SRTS */
++    case 0x64:  /* MMC_SYSC */
++        if (value & (1 << 2))                                   /* SRTS */
+             omap_mmc_reset(s);
+         break;
+-    case 0x68:	/* MMC_SYSS */
++    case 0x68:  /* MMC_SYSS */
+         OMAP_RO_REG(offset);
+         break;
+ 
 -- 
 2.47.1
 
