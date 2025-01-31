@@ -4,80 +4,86 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B864DC02192
-	for <qemu-devel@archiver.kernel.org>; Fri, 31 Jan 2025 21:09:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B0140C0218F
+	for <qemu-devel@archiver.kernel.org>; Fri, 31 Jan 2025 21:09:53 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tdyGN-00022d-Ke; Fri, 31 Jan 2025 16:09:19 -0500
+	id 1tdyDL-00066I-6O; Fri, 31 Jan 2025 16:06:11 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <onebigemail@gmail.com>)
- id 1tdyGM-00021F-1N
- for qemu-devel@nongnu.org; Fri, 31 Jan 2025 16:09:18 -0500
-Received: from mail-ej1-x629.google.com ([2a00:1450:4864:20::629])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tdyDI-00065x-Sf
+ for qemu-devel@nongnu.org; Fri, 31 Jan 2025 16:06:09 -0500
+Received: from mail-wm1-x332.google.com ([2a00:1450:4864:20::332])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <onebigemail@gmail.com>)
- id 1tdyGJ-000857-Ur
- for qemu-devel@nongnu.org; Fri, 31 Jan 2025 16:09:17 -0500
-Received: by mail-ej1-x629.google.com with SMTP id
- a640c23a62f3a-ab6d4810332so38806466b.1
- for <qemu-devel@nongnu.org>; Fri, 31 Jan 2025 13:09:15 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tdyDH-0007pX-DS
+ for qemu-devel@nongnu.org; Fri, 31 Jan 2025 16:06:08 -0500
+Received: by mail-wm1-x332.google.com with SMTP id
+ 5b1f17b1804b1-43618283d48so18724105e9.1
+ for <qemu-devel@nongnu.org>; Fri, 31 Jan 2025 13:06:06 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1738357754; x=1738962554; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=GHriA1JVBTyLxUQMJn1prS2++unY+un0wHZdtSZ3+Oo=;
- b=Bspn3K5NtonwYNWK4jP1Q7Eai5hvNSCTTEMIjaq4bvLrjlP2E/pmHVRjPkjXDVzVif
- SQoVnlLjL0Zh4aMdCikQTGAmaSlG2bSsoKi9XBAz5Qr8x+XeKUKUFIhocaIfg1NjgxK8
- FHHoT0aIrSX0LqJoOsS6ZUW25hXSdVBmIQLVOBRbfMsA36r+EL9dXvllNsJ0NWJiidDL
- SFttKwSwx6vZhzyu94shwaKAbcJpJ99ySYILqHtQDfDe9QVToVM8slDmv1FKb0mb/6gh
- Nee7gikPT8A0dDwsGcmBkfQmlgrgBNukC34mnCXFIPdzNd4qqSl/vKo7MBDB5qGEjfwh
- +TyQ==
+ d=linaro.org; s=google; t=1738357565; x=1738962365; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=jgIad0rTApohRLqLlD+El5YcpAOLn2SiJIln+lUq5GE=;
+ b=U2QqBmBvMU1HdhH6qF4RUJ23yJjm647sCozDMekwUe4YSWBKMnuO+obrQlaVyfSQ8j
+ AoMuNqUdWAFFYyTstHE90Xk/2nZsuq+sVAhE8w5Pa0/uBkJZBAQ9FZu6zC0AJKjkK/yh
+ Y4SNbBlD+KE8KkHSL6hHS+PftbMbfDhxcXUWdYMFFmEc4Nr046otL8Ucr0bE2B4z5bA1
+ lxWteaHISe/Decyr7m/SOXEkgReE0JeKT4++m/OSgEGNCcDu5xGI66uLIgUdb1yHno+F
+ +/CSrObX8d8SgNPwW4ydi86ml0k1rfQHtIgX5ClgLCq33h2V1AA393aSfYn33mb7E0wh
+ zFdw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1738357754; x=1738962554;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=GHriA1JVBTyLxUQMJn1prS2++unY+un0wHZdtSZ3+Oo=;
- b=jTEiRDlcEiSQKcWUmTc06qDQW7moyW49kU6EugvnbbdvSWLTDYyRTBfPsPuTCz4aIZ
- hTu8jxMe/4cV+MQPcSHKNZpslUlWj3TEb72bOibVyXyCvJl0QPqOjXbGzzRWcviLiEXf
- sZrt/vZSJHjMjAUIsdeT0N1aqZiyOuQ5c8hik5LtQWhWEzBFKyy7Cc6zFbnWVDlJ+w/9
- YkOEaCG2jkhzVE7nvI1wZwKejzDnwveYbyF78VNTF07pkCx2IuyqYMJ9ZmoHKoRyqg9i
- YnptLiYS1yPmNG7FmgeqirHijKOxrCPBYQNeADVmlmFRFFp3ziSRrXWA+5L55/5jKhYA
- Iu4Q==
-X-Gm-Message-State: AOJu0YxPAJca6kPrUSAz7Xf9juI87fJ3g6MtrgGFSyYri+abq8HEGzi1
- WMhLqTWq7+WHR5UpzchKvolIuEJsn9ILesHoMzs2iJAkl0aD/PSOkmH8ymUbPaMtOUONfr1zoqH
- /yYoIA9Nq67dNGIEC5lWDCV28myQ=
-X-Gm-Gg: ASbGncsoc7gOsdsN62bSBE1ClD48kHFdPwyvzbq0VICJWBgMgBIDBSEcsc9UjrIbBYX
- jeZWUuZDPd26UOOO8AeKH8+Byf8uh+bmIkZDTOjopjUwIv+3yw5n059P3iUaKetgS+9JjSgDxnw
- ==
-X-Google-Smtp-Source: AGHT+IFXqQ935AgJ1WYwbLG009gK3eGSo+lr2VDBkFsoPKtmpBME4Tln+LIAmsoJx1yCZmwgI6Zz3EP8pimbKhwQBiA=
-X-Received: by 2002:a17:907:60d2:b0:ab6:eec4:c9c2 with SMTP id
- a640c23a62f3a-ab6eec4d883mr279690866b.7.1738357753445; Fri, 31 Jan 2025
- 13:09:13 -0800 (PST)
+ d=1e100.net; s=20230601; t=1738357565; x=1738962365;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=jgIad0rTApohRLqLlD+El5YcpAOLn2SiJIln+lUq5GE=;
+ b=trc2f38TxEDgizW9/5aTWrU45XyLbJzGdjC5QKwphhGR09r91ygwDS7tONa8ukEoVv
+ 5oCmblvWJggCVbWRRY54ZXGycVjIaNhWScPmzszAcLxKyrMdZhUUHMTGOXTHVQiTCe24
+ uwlm8oC8zGUXGB6xx1tFy4pxezOxHKDwg3LBrZ3f7JF8q8qumgeIsllg+EfrDRQofHzf
+ rdvr0BtobHelTczGHRlBloUltwGZ0S4bf4GeIlJkeDBDHBXHXVefVV5oNMiThcpBeIUL
+ CjbcxCR3hjo3c+dZdfe19Y6CFIqTrgJb4UHP/b/0KPowWpXXP08wsBCZMFaMBUyt7f9c
+ HM2Q==
+X-Gm-Message-State: AOJu0Yw99Z0QgboJj15piBvcgnt+WGzKcG9pOGTYQqGAQt42H/bYC4iU
+ tJswfD/TTcBPck5Vw3GUzdWyaeGunvQIc8XpUhLvtbDTBqL95PuYodsWr0eZ9rSGllzdwikTfF0
+ uyCA=
+X-Gm-Gg: ASbGnctKwULGnwLRkkmvs1eZpoQJyfSht1m1jRXlALNm8Y4TO+h5N4Jv6mKYWHqfWfu
+ XUOLQ2Wd17ViUvhVqLcrJ/Mgda4dNSVmxUgROuGxGFGNZpoLyafM0BZwDSzwcAozSzFn2K4KV/6
+ qMNA5P8BoxA0XUerY3aYrbCyUa9ZO7SghEUe7oQ5Y+ZcsFQau7hsQ0HUtnB+aR6/UtaYDEhAbaP
+ buYARuuHSxC84GeHHTj3Q/ScE6S5sZLrx7xRE0rl5Kezk3SHd8gKcDZ3lr0Vg9twuVgtezNtfCM
+ UHvfmGxImOjn40eCyRoqEox/VTy+bFjMoxLXKUKfEzZHdDkiwOnFp9q4FO3bDdwiqA==
+X-Google-Smtp-Source: AGHT+IFb/zGvBknlLNv7/iy7hM97e3EtaKewrMVFVDku/l6KPKFwV1pXdZi+qFJZ9I4NMUv2jXwE5A==
+X-Received: by 2002:a05:600c:3511:b0:434:f3a1:b214 with SMTP id
+ 5b1f17b1804b1-438dc41ef52mr96164695e9.28.1738357565539; 
+ Fri, 31 Jan 2025 13:06:05 -0800 (PST)
+Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
+ [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-38c5c13a0efsm5658460f8f.60.2025.01.31.13.06.04
+ (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
+ Fri, 31 Jan 2025 13:06:05 -0800 (PST)
+From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+To: qemu-devel@nongnu.org
+Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Richard Henderson <richard.henderson@linaro.org>
+Subject: [PULL 09/36] hw/mips/loongson3_bootp: Propagate processor_id to
+ init_cpu_info()
+Date: Fri, 31 Jan 2025 22:04:52 +0100
+Message-ID: <20250131210520.85874-10-philmd@linaro.org>
+X-Mailer: git-send-email 2.47.1
+In-Reply-To: <20250131210520.85874-1-philmd@linaro.org>
+References: <20250131210520.85874-1-philmd@linaro.org>
 MIME-Version: 1.0
-References: <20250131175716.3218600-1-lacraig3@gmail.com>
- <1f2ceb5a-e40f-42c3-beb2-e3839e0229fd@linaro.org>
-In-Reply-To: <1f2ceb5a-e40f-42c3-beb2-e3839e0229fd@linaro.org>
-From: Luke Craig <lacraig3@gmail.com>
-Date: Fri, 31 Jan 2025 16:09:03 -0500
-X-Gm-Features: AWEUYZmrdOkIDDQwr1kxeeIwKucaLKMY-hUHAAJjorCHNCMEQ9xvWkdpVQ6uqv4
-Message-ID: <CAHEB4Fi7KRpEwyQ3sw2z4sdS+opjtofb+AKpo9_CEEMiFtmsMQ@mail.gmail.com>
-Subject: Re: [PATCH v2 0/3] plugins: add tb convenience functions
-To: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Cc: qemu-devel@nongnu.org, Alexandre Iooss <erdnaxe@crans.org>, 
- Mahmoud Mandour <ma.mandourr@gmail.com>,
- =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>
-Content-Type: multipart/alternative; boundary="00000000000063127f062d06f422"
-Received-SPF: pass client-ip=2a00:1450:4864:20::629;
- envelope-from=onebigemail@gmail.com; helo=mail-ej1-x629.google.com
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::332;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x332.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -94,159 +100,42 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
---00000000000063127f062d06f422
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Message-Id: <20250115232952.31166-9-philmd@linaro.org>
+---
+ hw/mips/loongson3_bootp.c | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-Hi Pierrick,
+diff --git a/hw/mips/loongson3_bootp.c b/hw/mips/loongson3_bootp.c
+index 91b58a71a68..1aab26df69e 100644
+--- a/hw/mips/loongson3_bootp.c
++++ b/hw/mips/loongson3_bootp.c
+@@ -27,12 +27,12 @@
+ #include "hw/mips/loongson3_bootp.h"
+ 
+ static void init_cpu_info(void *g_cpuinfo, uint32_t cpu_count,
+-                          uint64_t cpu_freq)
++                          uint32_t processor_id, uint64_t cpu_freq)
+ {
+     struct efi_cpuinfo_loongson *c = g_cpuinfo;
+ 
+     c->cputype = cpu_to_le32(Loongson_3A);
+-    c->processor_id = cpu_to_le32(MIPS_CPU(first_cpu)->env.CP0_PRid);
++    c->processor_id = cpu_to_le32(processor_id);
+     if (cpu_freq > UINT_MAX) {
+         c->cpu_clock_freq = cpu_to_le32(UINT_MAX);
+     } else {
+@@ -115,7 +115,7 @@ void init_loongson_params(struct loongson_params *lp, void *p,
+                           uint32_t cpu_count,
+                           uint64_t cpu_freq, uint64_t ram_size)
+ {
+-    init_cpu_info(p, cpu_count, cpu_freq);
++    init_cpu_info(p, MIPS_CPU(first_cpu)->env.CP0_PRid, cpu_count, cpu_freq);
+     lp->cpu_offset = cpu_to_le64((uintptr_t)p - (uintptr_t)lp);
+     p += ROUND_UP(sizeof(struct efi_cpuinfo_loongson), 64);
+ 
+-- 
+2.47.1
 
-Thank you for your reply.
-
-I have submitted a new patch series with commits signed off.
-
-Thanks!
--Luke
-
-On Fri, Jan 31, 2025, 2:53=E2=80=AFPM Pierrick Bouvier <pierrick.bouvier@li=
-naro.org>
-wrote:
-
-> Hi Luke,
->
-> On 1/31/25 09:57, Luke Craig wrote:
-> > This PR extends the plugin API with two functions which allow convenien=
-t
-> access around tbs.
-> >
-> > The first, qemu_plugin_tb_size, provides a mechanism for determining th=
-e
-> total size of a translation block.
-> >
-> > The second, qemu_plugin_tb_get_insn_by_vaddr, allows users to get a
-> reference to an instruction by its virtual address rather than just its
-> index.
-> >
-> > In response to feedback from Pierrick I have updated the implementation
-> of qemu_plugin_tb_size.
-> >
-> > Additionally, I have added these functions to the insn.c test plugin in
-> response to Alex's feedback.
-> >
-> > Lastly, I'll provide a reply to Alex's feeback (repeated below):
-> >
-> >> But the general comment is this is an example of tying the plugin API
-> >> too deeply with the internals of the translator. Why does a plugin nee=
-d
-> >> to know what is an implementation detail?
-> >
-> > Finding the line between implementation detail and relevant to plugins
-> is challenging, but I submitted this change because I found myself
-> implementing these functions in plugins. If you'd like for me to enumerat=
-e
-> examples where knowing the tb_size is relevant to analysis I'd be happy t=
-o
-> submit some.
-> >
-> > Luke Craig (3):
-> >    plugin: extend API with qemu_plugin_tb_get_insn_by_vaddr
-> >    plugin: extend API with qemu_plugin_tb_size
-> >    plugins: extend insn test for new convenience functions
-> >
->
-> For all the series,
-> Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
->
-> >   include/qemu/qemu-plugin.h | 21 +++++++++++++++++++++
-> >   plugins/api.c              | 20 ++++++++++++++++++++
-> >   tests/tcg/plugins/insn.c   | 10 ++++++++++
-> >   3 files changed, 51 insertions(+)
-> >
->
-> To accept this series, commits should be signed off [1].
->
-> https://www.qemu.org/docs/master/devel/submitting-a-patch.html#patch-emai=
-ls-must-include-a-signed-off-by-line
->
-> Thanks,
-> Pierrick
->
-
---00000000000063127f062d06f422
-Content-Type: text/html; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-
-<div dir=3D"auto"><div>Hi Pierrick,</div><div dir=3D"auto"><br></div><div d=
-ir=3D"auto">Thank you for your reply.</div><div dir=3D"auto"><br></div><div=
- dir=3D"auto">I have submitted a new patch series with commits signed off.<=
-/div><div dir=3D"auto"><br></div><div dir=3D"auto">Thanks!</div><div dir=3D=
-"auto">-Luke<br><br><div class=3D"gmail_quote gmail_quote_container" dir=3D=
-"auto"><div dir=3D"ltr" class=3D"gmail_attr">On Fri, Jan 31, 2025, 2:53=E2=
-=80=AFPM Pierrick Bouvier &lt;<a href=3D"mailto:pierrick.bouvier@linaro.org=
-">pierrick.bouvier@linaro.org</a>&gt; wrote:<br></div><blockquote class=3D"=
-gmail_quote" style=3D"margin:0 0 0 .8ex;border-left:1px #ccc solid;padding-=
-left:1ex">Hi Luke,<br>
-<br>
-On 1/31/25 09:57, Luke Craig wrote:<br>
-&gt; This PR extends the plugin API with two functions which allow convenie=
-nt access around tbs.<br>
-&gt; <br>
-&gt; The first, qemu_plugin_tb_size, provides a mechanism for determining t=
-he total size of a translation block.<br>
-&gt; <br>
-&gt; The second, qemu_plugin_tb_get_insn_by_vaddr, allows users to get a re=
-ference to an instruction by its virtual address rather than just its index=
-.<br>
-&gt; <br>
-&gt; In response to feedback from Pierrick I have updated the implementatio=
-n of qemu_plugin_tb_size.<br>
-&gt; <br>
-&gt; Additionally, I have added these functions to the insn.c test plugin i=
-n response to Alex&#39;s feedback.<br>
-&gt; <br>
-&gt; Lastly, I&#39;ll provide a reply to Alex&#39;s feeback (repeated below=
-):<br>
-&gt; <br>
-&gt;&gt; But the general comment is this is an example of tying the plugin =
-API<br>
-&gt;&gt; too deeply with the internals of the translator. Why does a plugin=
- need<br>
-&gt;&gt; to know what is an implementation detail?<br>
-&gt; <br>
-&gt; Finding the line between implementation detail and relevant to plugins=
- is challenging, but I submitted this change because I found myself impleme=
-nting these functions in plugins. If you&#39;d like for me to enumerate exa=
-mples where knowing the tb_size is relevant to analysis I&#39;d be happy to=
- submit some.<br>
-&gt; <br>
-&gt; Luke Craig (3):<br>
-&gt;=C2=A0 =C2=A0 plugin: extend API with qemu_plugin_tb_get_insn_by_vaddr<=
-br>
-&gt;=C2=A0 =C2=A0 plugin: extend API with qemu_plugin_tb_size<br>
-&gt;=C2=A0 =C2=A0 plugins: extend insn test for new convenience functions<b=
-r>
-&gt; <br>
-<br>
-For all the series,<br>
-Reviewed-by: Pierrick Bouvier &lt;<a href=3D"mailto:pierrick.bouvier@linaro=
-.org" target=3D"_blank" rel=3D"noreferrer">pierrick.bouvier@linaro.org</a>&=
-gt;<br>
-<br>
-&gt;=C2=A0 =C2=A0include/qemu/qemu-plugin.h | 21 +++++++++++++++++++++<br>
-&gt;=C2=A0 =C2=A0plugins/api.c=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
-=A0 | 20 ++++++++++++++++++++<br>
-&gt;=C2=A0 =C2=A0tests/tcg/plugins/insn.c=C2=A0 =C2=A0| 10 ++++++++++<br>
-&gt;=C2=A0 =C2=A03 files changed, 51 insertions(+)<br>
-&gt; <br>
-<br>
-To accept this series, commits should be signed off [1].<br>
-<a href=3D"https://www.qemu.org/docs/master/devel/submitting-a-patch.html#p=
-atch-emails-must-include-a-signed-off-by-line" rel=3D"noreferrer noreferrer=
-" target=3D"_blank">https://www.qemu.org/docs/master/devel/submitting-a-pat=
-ch.html#patch-emails-must-include-a-signed-off-by-line</a><br>
-<br>
-Thanks,<br>
-Pierrick<br>
-</blockquote></div></div></div>
-
---00000000000063127f062d06f422--
 
