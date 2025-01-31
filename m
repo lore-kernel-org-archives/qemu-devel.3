@@ -4,86 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id AA150C0218F
-	for <qemu-devel@archiver.kernel.org>; Fri, 31 Jan 2025 21:08:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6F780C0218F
+	for <qemu-devel@archiver.kernel.org>; Fri, 31 Jan 2025 21:08:44 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tdyF9-00041H-3k; Fri, 31 Jan 2025 16:08:07 -0500
+	id 1tdyFc-0006WT-6y; Fri, 31 Jan 2025 16:08:33 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <lacraig3@gmail.com>)
- id 1tdyEg-0003F3-BQ
- for qemu-devel@nongnu.org; Fri, 31 Jan 2025 16:07:34 -0500
-Received: from mail-ej1-x62f.google.com ([2a00:1450:4864:20::62f])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tdyFU-0005gm-3t
+ for qemu-devel@nongnu.org; Fri, 31 Jan 2025 16:08:24 -0500
+Received: from mail-wm1-x333.google.com ([2a00:1450:4864:20::333])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <lacraig3@gmail.com>)
- id 1tdyEe-0007ya-RO
- for qemu-devel@nongnu.org; Fri, 31 Jan 2025 16:07:34 -0500
-Received: by mail-ej1-x62f.google.com with SMTP id
- a640c23a62f3a-aaf900cc7fbso530152066b.3
- for <qemu-devel@nongnu.org>; Fri, 31 Jan 2025 13:07:32 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tdyFS-00082f-A9
+ for qemu-devel@nongnu.org; Fri, 31 Jan 2025 16:08:23 -0500
+Received: by mail-wm1-x333.google.com with SMTP id
+ 5b1f17b1804b1-4363ae65100so29304165e9.0
+ for <qemu-devel@nongnu.org>; Fri, 31 Jan 2025 13:08:21 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1738357651; x=1738962451; darn=nongnu.org;
+ d=linaro.org; s=google; t=1738357700; x=1738962500; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=wOiwNYhDbwze8gvC4dinwCwNJ6c5NfBut9RqtRXEoZg=;
- b=M2gE1u/E5yQ4fuX45Vbkh6mO7A/btW3RQyUP8+snnZtk49UdjaI8ImkCh/O00gJPFE
- BVRhoFG/UxqjpT/wlBNU1pR5ZK+gGvcmKH+k1R0LF8dcI6F98cUqZ/RNjNm5zikqNCr1
- GmxrZrcCsdUxpxHMn8GX71PX0fGKepnzLl48tFCwncV4VUrpYTbb/H1LaFzZ74TYA3mk
- z6EHEw38+1NmlACChWDdNxNBx9sNySoM0ejozt86kky0jop4B+L736YCRjJLReR88RSu
- BzYucbexjwn2qNtETQKnNGkzpga8dQ7xMJRI7DHjiTYYJgRzxxx+90w+QA/s/PiEgxAA
- qeDg==
+ bh=b7A36aAFQQQuLpfdth227W6S0BPoJE/W3cgZ7jyQu4k=;
+ b=tyvg2HxaNo4DzRYMzDMp2UcmJq8Cx57PY0001jkdU8f4bVkW+rUyMJkw82SkJ7RSkJ
+ BgYr3xr3lO4f98Hpype78DHoKlReBD/+A2ZZdJz3kAaA1PFSrsvhmxOIPTeA/RU9LlOC
+ J8sn6+FybvT0sYKeQvdAzGwSnM4orBlH+H/iClMJvOpBGnXCFfJaBSWyh7spK1JtCpAL
+ VYJYYMsEUFam97wV79YfLmCxTwioDKl+GOJO6Se3GU2Z8CmAI/gqnZlXXSVzgVTiAl/d
+ hPtr250p8BwT+EnLf73kmnrT4MhDF378sdLU10hypnCrKhOHSv7VmQIt2Vqa0RKJV3Ty
+ ARBw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1738357651; x=1738962451;
+ d=1e100.net; s=20230601; t=1738357700; x=1738962500;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=wOiwNYhDbwze8gvC4dinwCwNJ6c5NfBut9RqtRXEoZg=;
- b=Im4IwsAuTq2IfYCngF1Z9gUJXJetlvMeZ4WK2OXrdbRFmeVdB9dRA5pcnC4lCv/kNe
- EJDVfRcqZqXXyatbZvxs/XM4RMlARCHnDsSR64rWzkDPwpRPf1VDVJtwLnkhRoLCCpEN
- mTOA+281L9tu5QympPPyIaQLKPlfdbl9BGFBJ2sraF/+6BeOJ/no9dgveqbnyU7iQ/ci
- C9EsUvhn/shgv9JdAXxtLZjsOVqxvqJrj2mqsTM/RPAg50p6Rkra2clIczSbpnRxJYEY
- zzUkpteiDJMuwVSTcCY8QzOjY5fNa+Uw5pOsIMnDqlXgh0X4ehYYhXORk0xa0Wwwky1Z
- ++cA==
-X-Gm-Message-State: AOJu0YwK+X9g8e6FGlvE9DWb60qrtHB3TydN/IgFWos4ROUjA6wPawEb
- A1u2w/BRk80/hqgkyW5KWTW/MU9gmmUc+o8kYvFfqYeCpZwlBXE77nyBqA==
-X-Gm-Gg: ASbGncuTmuhufQkwtuo5asFbHsaJjW813a1UyARlteg7ljy5WYKn7/a4C7Wm19eKVIQ
- y7lw6eJ+/L5tK4508z3RO0IKAxLUOkDxfzoIlPl1L+U7F9CBxS1+I2hqq9Xfjd31w2bCxxPqllA
- iBtAePKTt8dz0aj2B0gHTh/n5VwuQjNeySO498ZYLhlEAJBzrsNuyY47+f5gLJPO4PCVquJVggl
- FqxzIYz+QYJ+JYIs8Uudlke4Lt8u9jINYnxCYnuMVGyaAZR2teDWJqbftLSW0xkx/9/h9LdCnZp
- TMSU9Mhv6n4=
-X-Google-Smtp-Source: AGHT+IGK0o2EFZV2uelWHTqvTwMGAWgr5/ThhWq+g9nf5kNDLsjXsnMqgff/WFfW/bJnNNA6WjOizQ==
-X-Received: by 2002:a17:907:6d1f:b0:ab6:f06b:4a26 with SMTP id
- a640c23a62f3a-ab6f06b4c6fmr770176566b.34.1738357650802; 
- Fri, 31 Jan 2025 13:07:30 -0800 (PST)
-Received: from luke-igloo.. ([18.4.85.124]) by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-ab6e4a31624sm347719666b.142.2025.01.31.13.07.29
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 31 Jan 2025 13:07:30 -0800 (PST)
-From: Luke Craig <lacraig3@gmail.com>
+ bh=b7A36aAFQQQuLpfdth227W6S0BPoJE/W3cgZ7jyQu4k=;
+ b=CU5meFbCQoj6WAlpwmiDestAYjvE0atu6P3pnDyP7fQXPDFrFIugv5wxRtmVyuBbQ3
+ rfOKEpYImy0iZUxdEnV4HPI/I++7LRn8Gqv6/tND3xCJOjEc55phERkR4IjlB54PWTXt
+ PkCqrHExYb47xvBDPUPgQ9n7qBBhyADK8KuYIHeEuu19Ys6d5WDYmC288sllmsUKEJ+g
+ Uwunhd+WAJvJU0UfDf+DBde7Z3x7SpDX0MKhsoFM6/Bg5H3vKd8Z44En3duXrFziD4WX
+ DUYHSW15Ge1y/1vjnNLlTsJqY+x/F4cqphgmdGDNCnoP+wEZlKmjfX7oDpqKDcMK0ZY1
+ SlEQ==
+X-Gm-Message-State: AOJu0YxhhRbVmcbhdyToP0sAG86w96Z5TrpZE2VqJxMmA72gs42r73bf
+ SRYFmQjkOdJuhObGU7FC1Mt3QMZtDNA7lio7if7tPUQfKgkZDqnpq4Di0bMbsu+JDTLi8bwe50T
+ oU44=
+X-Gm-Gg: ASbGncuqSf1aJ1uhi51wgcq1nPo5qZboc6mx5EWj7C2osL7q3rGn0nomMtSfEm4V+2W
+ JoxYySOWY9MCGclScj4Cj/IvN1/eE+Q0d2giedankQSzqd4SN/NKs8MA2uD/K04MGt5lGwWhT8A
+ 8DCz/gOl03ZYGCff5AbnkikMEaAH/hT+li//ltDifqlUuuQty24E9bbBLi+ix4GszxJer6hgeJ/
+ R0uG3mOpTYwmamxXdasyKDo6AOT7uTYGbKrYqjibX3OneVwoS9hz852CsSOP6sd/0yABNjPugIH
+ hBFQt8saF3QbTqL5rjoU0SfgyiuyeW8Vd+zFwG7mD8/AEEkvHX3+f2PSTBisySwQQQ==
+X-Google-Smtp-Source: AGHT+IG6lvMBRbSD51w+TbTHf0AbEv1o1/Xl3hj8/zMwsGPeyI4lzbWjMjr7xJaM8TH9s9PPgmYACg==
+X-Received: by 2002:a05:600c:3b0a:b0:434:f753:6012 with SMTP id
+ 5b1f17b1804b1-438dc3cae6cmr141546445e9.17.1738357700244; 
+ Fri, 31 Jan 2025 13:08:20 -0800 (PST)
+Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
+ [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-438e244eb0dsm67206995e9.27.2025.01.31.13.08.17
+ (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
+ Fri, 31 Jan 2025 13:08:19 -0800 (PST)
+From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
-Cc: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Alexandre Iooss <erdnaxe@crans.org>,
- Pierrick Bouvier <pierrick.bouvier@linaro.org>,
- Mahmoud Mandour <ma.mandourr@gmail.com>, Luke Craig <lacraig3@gmail.com>
-Subject: [PATCH v3 2/3] plugin: extend API with qemu_plugin_tb_size
-Date: Fri, 31 Jan 2025 16:07:23 -0500
-Message-Id: <20250131210724.3330110-3-lacraig3@gmail.com>
-X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20250131210724.3330110-1-lacraig3@gmail.com>
-References: <20250131210724.3330110-1-lacraig3@gmail.com>
+Cc: Peter Maydell <peter.maydell@linaro.org>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Subject: [PULL 36/36] hw/sd: Remove unused SDState::enable
+Date: Fri, 31 Jan 2025 22:05:19 +0100
+Message-ID: <20250131210520.85874-37-philmd@linaro.org>
+X-Mailer: git-send-email 2.47.1
+In-Reply-To: <20250131210520.85874-1-philmd@linaro.org>
+References: <20250131210520.85874-1-philmd@linaro.org>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::62f;
- envelope-from=lacraig3@gmail.com; helo=mail-ej1-x62f.google.com
-X-Spam_score_int: -17
-X-Spam_score: -1.8
-X-Spam_bar: -
-X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+Received-SPF: pass client-ip=2a00:1450:4864:20::333;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x333.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -101,52 +100,99 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Signed-off-by: Luke Craig <lacraig3@gmail.com>
----
- include/qemu/qemu-plugin.h | 10 ++++++++++
- plugins/api.c              |  7 +++++++
- 2 files changed, 17 insertions(+)
+From: Peter Maydell <peter.maydell@linaro.org>
 
-diff --git a/include/qemu/qemu-plugin.h b/include/qemu/qemu-plugin.h
-index a1c478c54f..1fa656da82 100644
---- a/include/qemu/qemu-plugin.h
-+++ b/include/qemu/qemu-plugin.h
-@@ -476,6 +476,16 @@ void qemu_plugin_register_vcpu_insn_exec_inline_per_vcpu(
- QEMU_PLUGIN_API
- size_t qemu_plugin_tb_n_insns(const struct qemu_plugin_tb *tb);
+Now that sd_enable() has been removed, SD::enable is set to true in
+sd_instance_init() and then never changed. So we can remove it.
+
+Note that the VMSTATE_UNUSED() size argument should be '1', not
+'sizeof(bool)', as noted in the CAUTION comment in vmstate.h.
+
+Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Message-ID: <20250128104519.3981448-12-peter.maydell@linaro.org>
+Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+---
+ hw/sd/sd.c | 16 ++++++++--------
+ 1 file changed, 8 insertions(+), 8 deletions(-)
+
+diff --git a/hw/sd/sd.c b/hw/sd/sd.c
+index 74bb7f39bbf..e541c57f8c3 100644
+--- a/hw/sd/sd.c
++++ b/hw/sd/sd.c
+@@ -173,7 +173,6 @@ struct SDState {
+     size_t data_size;
+     uint8_t data[512];
+     QEMUTimer *ocr_power_timer;
+-    bool enable;
+     uint8_t dat_lines;
+     bool cmd_line;
+ };
+@@ -292,12 +291,12 @@ static const char *sd_acmd_name(SDState *sd, uint8_t cmd)
  
-+/**
-+ * qemu_plugin_tb_size() - query helper for size of TB
-+ * @tb: opaque handle to TB passed to callback
-+ * 
-+ * Returns: size of block in bytes
-+ */
-+
-+QEMU_PLUGIN_API
-+size_t qemu_plugin_tb_size(const struct qemu_plugin_tb *tb);
-+
- /**
-  * qemu_plugin_tb_vaddr() - query helper for vaddr of TB start
-  * @tb: opaque handle to TB passed to callback
-diff --git a/plugins/api.c b/plugins/api.c
-index a6bd912c56..ae74668c2e 100644
---- a/plugins/api.c
-+++ b/plugins/api.c
-@@ -241,6 +241,13 @@ size_t qemu_plugin_tb_n_insns(const struct qemu_plugin_tb *tb)
-     return tb->n;
+ static uint8_t sd_get_dat_lines(SDState *sd)
+ {
+-    return sd->enable ? sd->dat_lines : 0;
++    return sd->dat_lines;
  }
  
-+size_t qemu_plugin_tb_size(const struct qemu_plugin_tb *tb)
-+{
-+    struct qemu_plugin_insn *last;
-+    last = g_ptr_array_index(tb->insns, tb->n - 1);
-+    return qemu_plugin_insn_vaddr(last) + qemu_plugin_insn_size(last) - qemu_plugin_tb_vaddr(tb);
-+}
-+
- uint64_t qemu_plugin_tb_vaddr(const struct qemu_plugin_tb *tb)
+ static bool sd_get_cmd_line(SDState *sd)
  {
-     const DisasContextBase *db = tcg_ctx->plugin_db;
+-    return sd->enable ? sd->cmd_line : false;
++    return sd->cmd_line;
+ }
+ 
+ static void sd_set_voltage(SDState *sd, uint16_t millivolts)
+@@ -976,7 +975,7 @@ static const VMStateDescription sd_vmstate = {
+         VMSTATE_UINT32(data_offset, SDState),
+         VMSTATE_UINT8_ARRAY(data, SDState, 512),
+         VMSTATE_UNUSED_V(1, 512),
+-        VMSTATE_BOOL(enable, SDState),
++        VMSTATE_UNUSED(1),
+         VMSTATE_END_OF_LIST()
+     },
+     .subsections = (const VMStateDescription * const []) {
+@@ -2146,7 +2145,7 @@ static int sd_do_command(SDState *sd, SDRequest *req,
+     sd_rsp_type_t rtype;
+     int rsplen;
+ 
+-    if (!sd->blk || !blk_is_inserted(sd->blk) || !sd->enable) {
++    if (!sd->blk || !blk_is_inserted(sd->blk)) {
+         return 0;
+     }
+ 
+@@ -2297,8 +2296,9 @@ static void sd_write_byte(SDState *sd, uint8_t value)
+ {
+     int i;
+ 
+-    if (!sd->blk || !blk_is_inserted(sd->blk) || !sd->enable)
++    if (!sd->blk || !blk_is_inserted(sd->blk)) {
+         return;
++    }
+ 
+     if (sd->state != sd_receivingdata_state) {
+         qemu_log_mask(LOG_GUEST_ERROR,
+@@ -2429,8 +2429,9 @@ static uint8_t sd_read_byte(SDState *sd)
+     uint8_t ret;
+     uint32_t io_len;
+ 
+-    if (!sd->blk || !blk_is_inserted(sd->blk) || !sd->enable)
++    if (!sd->blk || !blk_is_inserted(sd->blk)) {
+         return dummy_byte;
++    }
+ 
+     if (sd->state != sd_sendingdata_state) {
+         qemu_log_mask(LOG_GUEST_ERROR,
+@@ -2664,7 +2665,6 @@ static void sd_instance_init(Object *obj)
+ 
+     sd->proto = sc->proto;
+     sd->last_cmd_name = "UNSET";
+-    sd->enable = true;
+     sd->ocr_power_timer = timer_new_ns(QEMU_CLOCK_VIRTUAL, sd_ocr_powerup, sd);
+ }
+ 
 -- 
-2.34.1
+2.47.1
 
 
