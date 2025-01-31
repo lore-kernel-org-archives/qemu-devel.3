@@ -4,79 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D8F40C0218F
-	for <qemu-devel@archiver.kernel.org>; Fri, 31 Jan 2025 21:06:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 077C6C02192
+	for <qemu-devel@archiver.kernel.org>; Fri, 31 Jan 2025 21:06:50 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tdyDb-0006pC-De; Fri, 31 Jan 2025 16:06:27 -0500
+	id 1tdyDl-0007IR-KL; Fri, 31 Jan 2025 16:06:37 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tdyDY-0006ha-WF
- for qemu-devel@nongnu.org; Fri, 31 Jan 2025 16:06:25 -0500
-Received: from mail-wm1-x334.google.com ([2a00:1450:4864:20::334])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tdyDj-0007BO-1W
+ for qemu-devel@nongnu.org; Fri, 31 Jan 2025 16:06:35 -0500
+Received: from mail-wm1-x331.google.com ([2a00:1450:4864:20::331])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tdyDX-0007r9-Du
- for qemu-devel@nongnu.org; Fri, 31 Jan 2025 16:06:24 -0500
-Received: by mail-wm1-x334.google.com with SMTP id
- 5b1f17b1804b1-43626213fffso22827495e9.1
- for <qemu-devel@nongnu.org>; Fri, 31 Jan 2025 13:06:23 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tdyDh-0007rs-44
+ for qemu-devel@nongnu.org; Fri, 31 Jan 2025 16:06:34 -0500
+Received: by mail-wm1-x331.google.com with SMTP id
+ 5b1f17b1804b1-43675b1155bso28074925e9.2
+ for <qemu-devel@nongnu.org>; Fri, 31 Jan 2025 13:06:32 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1738357582; x=1738962382; darn=nongnu.org;
+ d=linaro.org; s=google; t=1738357591; x=1738962391; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=jvpUSNGJl3gdcSZd+8mgaj5Zuz9YSWmGxH935I21O3k=;
- b=Ybs0W1rLMfkR/HR9zun1Y7t/wYmP4zOLtqx1qK/xGuIV6/qurkDLJyFzQ+ngtstnFq
- aS2r+ULQCMpNd8bzwcOAxh2u05w37Jl2yfvq6FIZ98s0y0T9WBpFxFWDGy9/I6rscy95
- gHLF8tsEZ4spX4Tyyo+ppiVMPFdEyRf5hPE1RARFnF6qzm3OlkwdV7jif6E+33LPer6K
- 8CuHuqOiWsMDH+FrK/XqscLjTNYWWJI6K0sz8uBmFPrkCJEVERLPDG07t/gF00UxlRo4
- RfjLweDXXg6dXj6E9XEmbcAtoDoU0Rn6UmGjJv5Xh6K0U96/wrmk9305zXJbqnPlhDSp
- ewEg==
+ bh=i5CNBPU1P4v/ShPK33kQ6y31CBTCaAZhUebKc6WsLh0=;
+ b=lDBic3GQHlcUqS1Qq1rPBqox8DeYIIUGfphf4yxiTi0fpamWW1Qnk+EW4bJNGKyvdL
+ myAqS22CkCEHGm5ys6V2UDirYD2mgJ85L+/RqI4IHGDlZ1+AxqMfdwZCHlf8VzFXZKAZ
+ 7Lh0IfuK46ND3JOB3ZGPyFnaI4LByjG9/AopzNT5av5nzv86Ya5c/0sfOzSZPjJQRJcl
+ THq4/N/UOJitkWoGzcdeeC0PrH48MLtzcpvCTXMKHWpNITqrmEoGahYn105AwfGGWgGn
+ Ies3VqhDUfDvQY45ByCtiK/xINXCHNHJ1erHBW0ab31f/wrywEUqOzdwhuY0u13jLIWD
+ HSiA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1738357582; x=1738962382;
+ d=1e100.net; s=20230601; t=1738357591; x=1738962391;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=jvpUSNGJl3gdcSZd+8mgaj5Zuz9YSWmGxH935I21O3k=;
- b=mGEuANmpKizrfwRVZ+tZPBpDY9HPQJe3Yo5G05hrnLas+4YvSDwkekapjYKgrt2jGR
- T2fARwJa2LQkuhh9vu7tdLImXcgbakcoUEgwx8aqlHmZYM8YVsIJfIyuZ4w2tW2o3qOc
- /fIRffA/BMcLxSGiObBHa9pInMPcjjmm1UMkOeaiAwcl30SoxOTNeX7tmD4acoCBVaWs
- NLfOYeihpKmk4d44CQEMKlV0a4A+4uoglWxKQnLHFI5bS4/WK7rix9RxaXYGGcglRdY0
- vDs+uDRs0i5DTUJaUqlxRjlCl3myF+YPWeScHTz6ewi34KZIN/VlV/H/GCmXvCXsEwgt
- LA0g==
-X-Gm-Message-State: AOJu0YwiSyzU9BizpMuknjjIYUA2lpUeOmq5Ceys5LgLs2lI7YLZ55PS
- n+tBTLTn27HfkykWKkUneZDvppI0NaJgWdWytAU7aPH/ux+vXIGv0PEqYnkd3AmKYr14y9aSMfz
- 49Dc=
-X-Gm-Gg: ASbGncu1AHAPZULAmg2zWPd4qkPpW/e6LCGayztHBaPX7jXZHxRLmemeDli5mgvQi9Z
- aBKmFKm1CgJ9j/ffXh5e2Mb+izwZm8MFEKs/aV4450Kz3unf15FggVoNT6LZ5wHPPHT/9I5hX+5
- 6dT0v7o041z1OocuSWNEG7l5OtCW4NoKDpRF+dHPvoQc9ZL4ymUEZiX7xAKLEfhmfhH4ff66FaI
- qURCExdN6Q7trmyvsKQbi5vShqk7y7XXxGyw/I0LHP0cAfXLHM7X4RhmrSaq5NzqU06KxLaP9Ye
- IqI0USCHb7IqfssRNOmswgroHIUh3lDJa36Uz0zX1VJifms/YT1RxH30FRYDcquvvQ==
-X-Google-Smtp-Source: AGHT+IH24/ceA6j9BDYcLq99bSKXVwD7fQ01/7ennyNdyZqA+lGis9hnurhvp1YKwsPJ+hiGZ7nGmQ==
-X-Received: by 2002:a05:600c:3b05:b0:436:76bf:51cc with SMTP id
- 5b1f17b1804b1-438e6eff2a2mr36132475e9.12.1738357581641; 
- Fri, 31 Jan 2025 13:06:21 -0800 (PST)
+ bh=i5CNBPU1P4v/ShPK33kQ6y31CBTCaAZhUebKc6WsLh0=;
+ b=hHuUjWC/2dP7ERjjMf4Za/8g7AQbm+718z3HEaLxkv4H6H1D817viBLyPwRwWVwltW
+ V5NMn3mnj+GlfX2WfGd5ppapC2m/fjDwR7M2Efb1MZUBt/Adj1ND3Drgbm1DEHGZeV/z
+ DCnabJYSGgb1aOtIXYqP3T3fsgh+oHKJAjboAbmXdWppeD0iKCpqK+fwxHM9x151MEFO
+ ay0+bGuGHlgMmpScwIYKaTDSkZbuovHfn8zozWgxd72Dg4ot/KJ9CXzQF9zS36yc4EYU
+ P6Egoyta6HoNADr3u54OD9JtroRb0LSx4kxNj1ILpnrqrcxidzoNij90rw9wHeFnagIo
+ F5fQ==
+X-Gm-Message-State: AOJu0Yw8UedByQIS90lUNmiAJV22+3R8oIqVrOAcq/NnxfHdL60BCaqe
+ S+K3sDmzwfF/V8PMHJkpnZ60YUpDJ+1tjIKGqIkE+HF6nBsFo+ggNfdfrkohL7K2JCscrkn/10y
+ hi5A=
+X-Gm-Gg: ASbGncu/SGmNaLVutKX0dqj1B3Ey7l2C0qpwRF1qODf60EKvpYDFwsDGmhiSSvR0Qeu
+ SwaCVMMP2TOYYaQiqpF3792uskzQnlNRU8Qc4Df5ZP39sDs4aLiEldt0mtfCWnEPU/a9gAOs5I+
+ kr0WetxBMqSCwhLElP6XFDdoSF0RNWENzYQN9Z5BuiMjCpYQpNz9fsa6R+JXQ6wE5g1pkoLUlu/
+ 3AYryfWe9/8Paxe2vYYIrwSkMB5nt4EppVnzCvZSS8KuGNP7CJophshjhAaXKV2e00txv1wAMXq
+ y3POY0xl0woTFPrmSRVJnKkuqQcXCSTq/JltZediq6tj/z+f0+dKJnICJBA0I++Edg==
+X-Google-Smtp-Source: AGHT+IF6Qss+U0I+UaYYlddIFCecbwVQ+lOYZYhE29hOQPeaaTBCjp6Ahtw+FHD0tNeWv1PvM0jajA==
+X-Received: by 2002:a05:6000:4008:b0:38a:88be:bcb5 with SMTP id
+ ffacd0b85a97d-38c51932095mr10227457f8f.5.1738357590983; 
+ Fri, 31 Jan 2025 13:06:30 -0800 (PST)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-438e245efbcsm65198765e9.33.2025.01.31.13.06.19
+ 5b1f17b1804b1-438dcc6df51sm104244225e9.30.2025.01.31.13.06.30
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Fri, 31 Jan 2025 13:06:20 -0800 (PST)
+ Fri, 31 Jan 2025 13:06:30 -0800 (PST)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Richard Henderson <richard.henderson@linaro.org>
-Subject: [PULL 12/36] hw/mips/loongson3_bootp: Move to common_ss[]
-Date: Fri, 31 Jan 2025 22:04:55 +0100
-Message-ID: <20250131210520.85874-13-philmd@linaro.org>
+ Fabiano Rosas <farosas@suse.de>
+Subject: [PULL 14/36] hw/ipack: Clarify KConfig symbols
+Date: Fri, 31 Jan 2025 22:04:57 +0100
+Message-ID: <20250131210520.85874-15-philmd@linaro.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20250131210520.85874-1-philmd@linaro.org>
 References: <20250131210520.85874-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::334;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x334.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::331;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x331.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -99,30 +99,115 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-loongson3_bootp.c doesn't contain any target-specific code
-and can be build generically, move it to common_ss[].
+Split IPACK Kconfig key as {IPACK, TPCI200, IP_OCTAL_232}
+
+  - IPack is a bus
+  - TPCI200 is a PCI device providing an IPack bus
+  - IP-Octal232 is an IPack device plugged on an IPack bus
 
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-Message-Id: <20250115232952.31166-12-philmd@linaro.org>
+Acked-by: Fabiano Rosas <farosas@suse.de>
+Message-Id: <20250121155526.29982-3-philmd@linaro.org>
 ---
- hw/mips/meson.build | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ hw/char/Kconfig                | 5 +++++
+ hw/char/meson.build            | 2 +-
+ hw/ipack/Kconfig               | 4 ++++
+ hw/ipack/meson.build           | 3 ++-
+ tests/qtest/libqos/meson.build | 4 +++-
+ tests/qtest/meson.build        | 4 +++-
+ 6 files changed, 18 insertions(+), 4 deletions(-)
 
-diff --git a/hw/mips/meson.build b/hw/mips/meson.build
-index fcbee53bb32..31dbd2bf4d9 100644
---- a/hw/mips/meson.build
-+++ b/hw/mips/meson.build
-@@ -1,7 +1,8 @@
- mips_ss = ss.source_set()
- mips_ss.add(files('bootloader.c', 'mips_int.c'))
- common_ss.add(when: 'CONFIG_FW_CFG_MIPS', if_true: files('fw_cfg.c'))
--mips_ss.add(when: 'CONFIG_LOONGSON3V', if_true: files('loongson3_bootp.c', 'loongson3_virt.c'))
-+common_ss.add(when: 'CONFIG_LOONGSON3V', if_true: files('loongson3_bootp.c'))
-+mips_ss.add(when: 'CONFIG_LOONGSON3V', if_true: files('loongson3_virt.c'))
- mips_ss.add(when: 'CONFIG_MALTA', if_true: files('malta.c'))
- mips_ss.add(when: 'CONFIG_MIPS_CPS', if_true: files('cps.c'))
+diff --git a/hw/char/Kconfig b/hw/char/Kconfig
+index 4b73a803bf3..1dc20ee4c2c 100644
+--- a/hw/char/Kconfig
++++ b/hw/char/Kconfig
+@@ -78,3 +78,8 @@ config GOLDFISH_TTY
  
+ config SHAKTI_UART
+     bool
++
++config IP_OCTAL_232
++    bool
++    default y
++    depends on IPACK
+diff --git a/hw/char/meson.build b/hw/char/meson.build
+index 1750834385a..ed3529cbbb7 100644
+--- a/hw/char/meson.build
++++ b/hw/char/meson.build
+@@ -4,7 +4,7 @@ system_ss.add(when: 'CONFIG_ESCC', if_true: files('escc.c'))
+ system_ss.add(when: 'CONFIG_GRLIB', if_true: files('grlib_apbuart.c'))
+ system_ss.add(when: 'CONFIG_IBEX', if_true: files('ibex_uart.c'))
+ system_ss.add(when: 'CONFIG_IMX', if_true: files('imx_serial.c'))
+-system_ss.add(when: 'CONFIG_IPACK', if_true: files('ipoctal232.c'))
++system_ss.add(when: 'CONFIG_IP_OCTAL_232', if_true: files('ipoctal232.c'))
+ system_ss.add(when: 'CONFIG_ISA_BUS', if_true: files('parallel-isa.c'))
+ system_ss.add(when: 'CONFIG_ISA_DEBUG', if_true: files('debugcon.c'))
+ system_ss.add(when: 'CONFIG_NRF51_SOC', if_true: files('nrf51_uart.c'))
+diff --git a/hw/ipack/Kconfig b/hw/ipack/Kconfig
+index f8da24a62be..28d668727c8 100644
+--- a/hw/ipack/Kconfig
++++ b/hw/ipack/Kconfig
+@@ -1,4 +1,8 @@
+ config IPACK
+     bool
++
++config TPCI200
++    bool
++    select IPACK
+     default y if PCI_DEVICES
+ 	    depends on PCI
+diff --git a/hw/ipack/meson.build b/hw/ipack/meson.build
+index 26567f1068e..e4805228926 100644
+--- a/hw/ipack/meson.build
++++ b/hw/ipack/meson.build
+@@ -1 +1,2 @@
+-system_ss.add(when: 'CONFIG_IPACK', if_true: files('ipack.c', 'tpci200.c'))
++system_ss.add(when: 'CONFIG_IPACK', if_true: files('ipack.c'))
++system_ss.add(when: 'CONFIG_TPCI200', if_true: files('tpci200.c'))
+diff --git a/tests/qtest/libqos/meson.build b/tests/qtest/libqos/meson.build
+index 46f130ccfdb..1ddaf7b095b 100644
+--- a/tests/qtest/libqos/meson.build
++++ b/tests/qtest/libqos/meson.build
+@@ -32,7 +32,6 @@ libqos_srcs = files(
+         'i2c-omap.c',
+         'igb.c',
+         'sdhci.c',
+-        'tpci200.c',
+         'virtio.c',
+         'virtio-balloon.c',
+         'virtio-blk.c',
+@@ -70,6 +69,9 @@ endif
+ if config_all_devices.has_key('CONFIG_RISCV_IOMMU')
+   libqos_srcs += files('riscv-iommu.c')
+ endif
++if config_all_devices.has_key('CONFIG_TPCI200')
++  libqos_srcs += files('tpci200.c')
++endif
+ 
+ libqos = static_library('qos', libqos_srcs + genh,
+                         build_by_default: false)
+diff --git a/tests/qtest/meson.build b/tests/qtest/meson.build
+index 94b28e5a534..e60e92fe9de 100644
+--- a/tests/qtest/meson.build
++++ b/tests/qtest/meson.build
+@@ -286,7 +286,6 @@ qos_test_ss.add(
+   'e1000-test.c',
+   'eepro100-test.c',
+   'es1370-test.c',
+-  'ipoctal232-test.c',
+   'lsm303dlhc-mag-test.c',
+   'isl_pmbus_vr-test.c',
+   'max34451-test.c',
+@@ -317,6 +316,9 @@ qos_test_ss.add(
+ if config_all_devices.has_key('CONFIG_VIRTIO_SERIAL')
+   qos_test_ss.add(files('virtio-serial-test.c'))
+ endif
++if config_all_devices.has_key('CONFIG_IP_OCTAL_232')
++  qos_test_ss.add(files('ipoctal232-test.c'))
++endif
+ 
+ if host_os != 'windows'
+   qos_test_ss.add(files('e1000e-test.c'))
 -- 
 2.47.1
 
