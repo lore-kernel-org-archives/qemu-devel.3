@@ -4,114 +4,146 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 12115C0218D
-	for <qemu-devel@archiver.kernel.org>; Fri, 31 Jan 2025 10:08:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 84659C0218D
+	for <qemu-devel@archiver.kernel.org>; Fri, 31 Jan 2025 10:16:22 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tdnvd-00031L-Sd; Fri, 31 Jan 2025 05:07:13 -0500
+	id 1tdo3y-0004o1-Uh; Fri, 31 Jan 2025 05:15:50 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
- id 1tdnvb-00030l-Nu
- for qemu-devel@nongnu.org; Fri, 31 Jan 2025 05:07:11 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1tdo3w-0004nf-VW
+ for qemu-devel@nongnu.org; Fri, 31 Jan 2025 05:15:49 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
- id 1tdnvZ-00088P-QD
- for qemu-devel@nongnu.org; Fri, 31 Jan 2025 05:07:11 -0500
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1tdo3u-0001wN-56
+ for qemu-devel@nongnu.org; Fri, 31 Jan 2025 05:15:48 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1738318029;
- h=from:from:reply-to:reply-to:subject:subject:date:date:
- message-id:message-id:to:to:cc:cc:mime-version:mime-version:
- content-type:content-type:
+ s=mimecast20190719; t=1738318544;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=KHyDsMwarWDHMYvg5PeO6R4q2t1UXs6alHRuUvnp4n4=;
- b=RGyxo0zgl4u2LrInLaXdqnuL5adO9WF1B0lJLyzYlhCFnRcJy23tLtvbgXl7HCz32G6zTW
- JMU2F1G26paBTexywyAaLGrS7uTov4ZG3PqfeLsx+9eDf/P8mls8+pUy94R/W/CiGNG+Vx
- coY2NhHH19reTN31/UjO9hjmOW0tmVw=
-Received: from mail-wm1-f70.google.com (mail-wm1-f70.google.com
- [209.85.128.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+ bh=RAL8I5U5AJvCKe/I/9eCPwKxJIf/F1mhzK4orsq7tb4=;
+ b=AZ6Awrno+k5FQ6D/pZJJdKDUL3g6AlCQ7OpljL3RIA229lApo0kD74SpXAhxbD/5WbwfnL
+ ETiUBum8V1upPHZaXa1u5yb6OYXW2LJu4cJEFMtCR+bTgo8SMCqmLBaiwkgHwTmvUZmmfj
+ 70koFNi5KYa+ElkgthCI4cHn4jiUGDA=
+Received: from mail-wr1-f71.google.com (mail-wr1-f71.google.com
+ [209.85.221.71]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-27-pweSVt7KMXyG8OVEcsuGQQ-1; Fri, 31 Jan 2025 05:07:04 -0500
-X-MC-Unique: pweSVt7KMXyG8OVEcsuGQQ-1
-X-Mimecast-MFC-AGG-ID: pweSVt7KMXyG8OVEcsuGQQ
-Received: by mail-wm1-f70.google.com with SMTP id
- 5b1f17b1804b1-43582d49dacso13130935e9.2
- for <qemu-devel@nongnu.org>; Fri, 31 Jan 2025 02:07:04 -0800 (PST)
+ us-mta-84-IU7vdvmKPGme9lTASQBrjg-1; Fri, 31 Jan 2025 05:15:41 -0500
+X-MC-Unique: IU7vdvmKPGme9lTASQBrjg-1
+X-Mimecast-MFC-AGG-ID: IU7vdvmKPGme9lTASQBrjg
+Received: by mail-wr1-f71.google.com with SMTP id
+ ffacd0b85a97d-385d6ee042eso1077985f8f.0
+ for <qemu-devel@nongnu.org>; Fri, 31 Jan 2025 02:15:41 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1738318023; x=1738922823;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:reply-to:user-agent:mime-version:date
- :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=KHyDsMwarWDHMYvg5PeO6R4q2t1UXs6alHRuUvnp4n4=;
- b=qJjIVTbZvD0PnjEUq8ZwGH+rfoq3g4rU4IFaeInCODRlaUnQLFRI4rshIPJZZoVUyj
- 7aFG8SdD8qW0iYZh1UCm6+eNy26KBOK8G6kDvZZJUKDAr+Pkuh1/IjlCAdeEwpuU/OPb
- xEFankM4NSfNtB5Brbs5iZR3CXcZwwQmiK7B6AiHhNs7zSJtBQ/jjaHcHg5qpff13bUW
- 68YXSNONczOCbs/lbldD8hLXSeEPwu02UcJP3XAjMDpnAiYwefVhUQmdLa7h4R3RwhbV
- PNZ/slGmw4RlThBJ1MGO3RYHL2qkcpR9nAsWJJY9P9lfZI6Ylihs3X3HzlcIHFoOPY+h
- V+Rg==
-X-Forwarded-Encrypted: i=1;
- AJvYcCWTPl5oYYE8I+fA/2rjaV6hx7Fiyh2yZ8j0hhBaQNdAGNc1Cor7IEWqOWUQSezYKse1TD0BfTNgdEjp@nongnu.org
-X-Gm-Message-State: AOJu0YwsS0jdEsx/uA0J+DiPYBRTc5qgya9Jw8bOgJ+50/pAxo9GDDMV
- JXP/oLel9ZoTQZEwGaGnbGfU6yWvZTTWnXvkBewK+0pgYJifQVHwqJ+8uI8CUGYrns2NX+fq6BT
- QRLDuqHy0l6khJvq87xLUTe6KD8hlbmLZ4VbZqdnAdPsb/lxaZEkwlgCOaaU5
-X-Gm-Gg: ASbGncu6/7uxnIE7S/HdMo7FMWHb7sQ2QasQ59YgKAGjic5nf0y6Gpyd9z+fAr0ZHMy
- ogzSjThEjvt022vHX5OkXPX4rOagR4v91ZJ5AwkeUqksfGYawrSPz+5DYSinraGAvQETxcX5hM8
- e0tfxj6aTnh29ShsaRNm4vxy5/YTPONe7jtKssnUR1LKoJ1EyfII2EoEhF5JDxU0ckrYx2JoqGm
- zHQs8FTHiChwAmkk7GQyRVgeUrfIZJGA+DjOXLQYZWIDkfdwwrccMLiCqCBcH1pRu2eVawHxRuL
- qZn/XHE1jHsdTnomxdLxWKmKpXg7/RfAKeqdXCZ02ZIGK6LsT3j/
-X-Received: by 2002:a7b:c356:0:b0:434:f218:e1a8 with SMTP id
- 5b1f17b1804b1-438dd1a5b55mr79086465e9.19.1738318023016; 
- Fri, 31 Jan 2025 02:07:03 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IGwY4nm2L3zzEdct99FA6tAv8g11FpjX0kUPEgzwpDTQaKZ8/sitm3tYrJN/jYDrV+1o7VY+Q==
-X-Received: by 2002:a7b:c356:0:b0:434:f218:e1a8 with SMTP id
- 5b1f17b1804b1-438dd1a5b55mr79086075e9.19.1738318022596; 
- Fri, 31 Jan 2025 02:07:02 -0800 (PST)
-Received: from ?IPV6:2a01:e0a:59e:9d80:527b:9dff:feef:3874?
- ([2a01:e0a:59e:9d80:527b:9dff:feef:3874])
+ d=1e100.net; s=20230601; t=1738318540; x=1738923340;
+ h=content-transfer-encoding:in-reply-to:autocrypt:from
+ :content-language:references:cc:to:subject:user-agent:mime-version
+ :date:message-id:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=RAL8I5U5AJvCKe/I/9eCPwKxJIf/F1mhzK4orsq7tb4=;
+ b=v/oymzdXLS5tqzY1SU9s5UbUNr126pPZfOzECtmiBIXbhQfWwGug1IG7TmHZ79oVCM
+ 5nwjcQHAekzOnWJL24FGqVlVths+VWqd28tUR9610o+Ql6/xTNYNrQoqEqlp1gm+XCX3
+ Kh1MWbPM0cfsjcYl2gzZLqwid7bZF2LOuAdkWOGZB5yxchjZODBtckKUx6ZWZxLQRjHP
+ +yTv0t+EtuRvPxkGwaZ1TcamIEAcIrwvoGkpu6CloQOAimIWEvv3RoKpZSbj9fbinwvX
+ BI3oLNcB3vK/mVZ85AVL7BgasMZ/p1vO/l2P45E8WUvighKiB1L5r7I1E5lnQ/XsKfGF
+ MRkA==
+X-Gm-Message-State: AOJu0Yz8eY+BgbhKQtJd3h2kH+MNDIx4trgbIXW0b5i0G23uLxQ7fSDs
+ xxaqQfH7VzZYKN/JpvrUG8oElo2cOKe4ioZRZleUjPEDiglkx9BhFHIjFew34PDmk0N8TgFgja4
+ 8aVrPEyHaKMKEQ121VnvvOKu8+OiML3j7ZhxxWWhM8PQUtmtYotWj
+X-Gm-Gg: ASbGncsAZfkbxhsSzFQC7QKPK7o/R6owt+rHHbkTEcpkP/Ja0dFvQtQEI0juzx9UhXI
+ ZJ2CHpn2BaXgxi11VheVsjecOOfpZMrcg1/VOcclH9eKmJv2LdBKG05MrLNh/haO/aRU+eEFECo
+ wuj0xJcXT+D8ZFAsqep2BHyZRNyxt5vPUyKXi9rxcII5ZWgTd60khGKb6/sMV7w77Vaat0Vh5+H
+ p9wd2ECRuhCgivzASpX1zTMQiam6dqlU1YimTmGwv8V93GpdQraXSZ0O9HAncq+tbLdIEVgnRbF
+ i0IqA0zprVj5KHuvzdaBa23NXZ9VDRQoSCrcGa/XpTI=
+X-Received: by 2002:a05:6000:2a8:b0:385:efc7:932d with SMTP id
+ ffacd0b85a97d-38c520af4demr9830129f8f.46.1738318540162; 
+ Fri, 31 Jan 2025 02:15:40 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IH3KH5ChqAd7NjCnxUDXFfMx+E8v19mUePpTgNuQmWpQtFAZBnGFtwKGsCAlUdHzerti7L5Zg==
+X-Received: by 2002:a05:6000:2a8:b0:385:efc7:932d with SMTP id
+ ffacd0b85a97d-38c520af4demr9830103f8f.46.1738318539633; 
+ Fri, 31 Jan 2025 02:15:39 -0800 (PST)
+Received: from ?IPV6:2a01:e0a:280:24f0:9db0:474c:ff43:9f5c?
+ ([2a01:e0a:280:24f0:9db0:474c:ff43:9f5c])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-438dcc6df51sm87430955e9.30.2025.01.31.02.07.00
+ ffacd0b85a97d-38c5c1d0bbfsm4333725f8f.98.2025.01.31.02.15.38
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 31 Jan 2025 02:07:01 -0800 (PST)
-Message-ID: <91539aa9-f0f7-4089-836a-ca52df8adb4a@redhat.com>
-Date: Fri, 31 Jan 2025 11:07:00 +0100
+ Fri, 31 Jan 2025 02:15:39 -0800 (PST)
+Message-ID: <6cbfd37a-ce7d-4be0-ac7d-81cb7c805933@redhat.com>
+Date: Fri, 31 Jan 2025 11:15:38 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [RFC PATCH 0/5] hw/arm/virt: Add support for user-creatable
- nested SMMUv3
-Content-Language: en-US
-To: Shameerali Kolothum Thodi <shameerali.kolothum.thodi@huawei.com>,
- =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
-Cc: "qemu-arm@nongnu.org" <qemu-arm@nongnu.org>,
- "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>,
- "peter.maydell@linaro.org" <peter.maydell@linaro.org>,
- "jgg@nvidia.com" <jgg@nvidia.com>, "nicolinc@nvidia.com"
- <nicolinc@nvidia.com>, "ddutile@redhat.com" <ddutile@redhat.com>,
- Linuxarm <linuxarm@huawei.com>, "Wangzhou (B)" <wangzhou1@hisilicon.com>,
- jiangkunkun <jiangkunkun@huawei.com>,
- Jonathan Cameron <jonathan.cameron@huawei.com>,
- "zhangfei.gao@linaro.org" <zhangfei.gao@linaro.org>,
- Nathan Chen <nathanc@nvidia.com>
-References: <20241108125242.60136-1-shameerali.kolothum.thodi@huawei.com>
- <Z5uiGnAxUf4jXTEI@redhat.com> <7ecabe74e0514367baf28d67675e5db8@huawei.com>
- <fc91e1a798324390b2a556fae5d40f46@huawei.com>
-From: Eric Auger <eric.auger@redhat.com>
-In-Reply-To: <fc91e1a798324390b2a556fae5d40f46@huawei.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.129.124;
- envelope-from=eric.auger@redhat.com; helo=us-smtp-delivery-124.mimecast.com
+Subject: Re: [PATCH v2 5/5] vfio/igd: handle x-igd-opregion in
+ vfio_probe_igd_config_quirk()
+To: Alex Williamson <alex.williamson@redhat.com>,
+ Tomita Moeko <tomitamoeko@gmail.com>
+Cc: qemu-devel@nongnu.org
+References: <20250124191245.12464-1-tomitamoeko@gmail.com>
+ <20250124191245.12464-6-tomitamoeko@gmail.com>
+ <20250124141342.255a79d3.alex.williamson@redhat.com>
+ <7cd85e39-88e6-497d-b0b0-41a0a0ece0fb@gmail.com>
+ <377fd72e-6bff-45f4-a9db-413f3565fd75@gmail.com>
+ <20250130134113.5d60442f.alex.williamson@redhat.com>
+Content-Language: en-US, fr
+From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
+Autocrypt: addr=clg@redhat.com; keydata=
+ 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
+ uVKe8BVz4atMOoktmt0GWTOC8P4=
+In-Reply-To: <20250130134113.5d60442f.alex.williamson@redhat.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=clg@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -33
 X-Spam_score: -3.4
 X-Spam_bar: ---
 X-Spam_report: (-3.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.3,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -124,164 +156,321 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: eric.auger@redhat.com
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-
-Hi Shameer,
-
-On 1/31/25 10:33 AM, Shameerali Kolothum Thodi wrote:
->
->> -----Original Message-----
->> From: Shameerali Kolothum Thodi
->> Sent: Thursday, January 30, 2025 6:09 PM
->> To: 'Daniel P. Berrangé' <berrange@redhat.com>
->> Cc: qemu-arm@nongnu.org; qemu-devel@nongnu.org;
->> eric.auger@redhat.com; peter.maydell@linaro.org; jgg@nvidia.com;
->> nicolinc@nvidia.com; ddutile@redhat.com; Linuxarm
->> <linuxarm@huawei.com>; Wangzhou (B) <wangzhou1@hisilicon.com>;
->> jiangkunkun <jiangkunkun@huawei.com>; Jonathan Cameron
->> <jonathan.cameron@huawei.com>; zhangfei.gao@linaro.org
->> Subject: RE: [RFC PATCH 0/5] hw/arm/virt: Add support for user-creatable
->> nested SMMUv3
->>
->> Hi Daniel,
->>
->>> -----Original Message-----
->>> From: Daniel P. Berrangé <berrange@redhat.com>
->>> Sent: Thursday, January 30, 2025 4:00 PM
->>> To: Shameerali Kolothum Thodi
->> <shameerali.kolothum.thodi@huawei.com>
->>> Cc: qemu-arm@nongnu.org; qemu-devel@nongnu.org;
->>> eric.auger@redhat.com; peter.maydell@linaro.org; jgg@nvidia.com;
->>> nicolinc@nvidia.com; ddutile@redhat.com; Linuxarm
->>> <linuxarm@huawei.com>; Wangzhou (B) <wangzhou1@hisilicon.com>;
->>> jiangkunkun <jiangkunkun@huawei.com>; Jonathan Cameron
->>> <jonathan.cameron@huawei.com>; zhangfei.gao@linaro.org
->>> Subject: Re: [RFC PATCH 0/5] hw/arm/virt: Add support for user-creatable
->>> nested SMMUv3
->>>
->>> On Fri, Nov 08, 2024 at 12:52:37PM +0000, Shameer Kolothum via wrote:
->>>> How to use it(Eg:):
+On 1/30/25 21:41, Alex Williamson wrote:
+> On Fri, 31 Jan 2025 02:33:03 +0800
+> Tomita Moeko <tomitamoeko@gmail.com> wrote:
+> 
+>> On 1/25/25 15:42, Tomita Moeko wrote:
+>>> On 1/25/25 05:13, Alex Williamson wrote:
+>>>> On Sat, 25 Jan 2025 03:12:45 +0800
+>>>> Tomita Moeko <tomitamoeko@gmail.com> wrote:
+>>>>   
+>>>>> Both enable opregion option (x-igd-opregion) and legacy mode require
+>>>>> setting up OpRegion copy for IGD devices. Move x-igd-opregion handler
+>>>>> in vfio_realize() to vfio_probe_igd_config_quirk() to elimate duplicate
+>>>>> code. Finally we moved all the IGD-related code into igd.c.
+>>>>>
+>>>>> Signed-off-by: Tomita Moeko <tomitamoeko@gmail.com>
+>>>>> ---
+>>>>>   hw/vfio/igd.c        | 143 +++++++++++++++++++++++++++++++++----------
+>>>>>   hw/vfio/pci-quirks.c |  50 ---------------
+>>>>>   hw/vfio/pci.c        |  25 --------
+>>>>>   hw/vfio/pci.h        |   4 --
+>>>>>   4 files changed, 110 insertions(+), 112 deletions(-)
+>>>>>
+>>>>> diff --git a/hw/vfio/igd.c b/hw/vfio/igd.c
+>>>>> index 6e06dd774a..015beacf5f 100644
+>>>>> --- a/hw/vfio/igd.c
+>>>>> +++ b/hw/vfio/igd.c
+>>>>> @@ -106,6 +106,7 @@ static int igd_gen(VFIOPCIDevice *vdev)
+>>>>>       return -1;
+>>>>>   }
+>>>>>   
+>>>>> +#define IGD_ASLS 0xfc /* ASL Storage Register */
+>>>>>   #define IGD_GMCH 0x50 /* Graphics Control Register */
+>>>>>   #define IGD_BDSM 0x5c /* Base Data of Stolen Memory */
+>>>>>   #define IGD_BDSM_GEN11 0xc0 /* Base Data of Stolen Memory of gen 11 and later */
+>>>>> @@ -138,6 +139,55 @@ static uint64_t igd_stolen_memory_size(int gen, uint32_t gmch)
+>>>>>       return 0;
+>>>>>   }
+>>>>>   
+>>>>> +/*
+>>>>> + * The OpRegion includes the Video BIOS Table, which seems important for
+>>>>> + * telling the driver what sort of outputs it has.  Without this, the device
+>>>>> + * may work in the guest, but we may not get output.  This also requires BIOS
+>>>>> + * support to reserve and populate a section of guest memory sufficient for
+>>>>> + * the table and to write the base address of that memory to the ASLS register
+>>>>> + * of the IGD device.
+>>>>> + */
+>>>>> +static bool vfio_pci_igd_opregion_init(VFIOPCIDevice *vdev,
+>>>>> +                                       struct vfio_region_info *info,
+>>>>> +                                       Error **errp)
+>>>>> +{
+>>>>> +    int ret;
+>>>>> +
+>>>>> +    vdev->igd_opregion = g_malloc0(info->size);
+>>>>> +    ret = pread(vdev->vbasedev.fd, vdev->igd_opregion,
+>>>>> +                info->size, info->offset);
+>>>>> +    if (ret != info->size) {
+>>>>> +        error_setg(errp, "failed to read IGD OpRegion");
+>>>>> +        g_free(vdev->igd_opregion);
+>>>>> +        vdev->igd_opregion = NULL;
+>>>>> +        return false;
+>>>>> +    }
+>>>>> +
+>>>>> +    /*
+>>>>> +     * Provide fw_cfg with a copy of the OpRegion which the VM firmware is to
+>>>>> +     * allocate 32bit reserved memory for, copy these contents into, and write
+>>>>> +     * the reserved memory base address to the device ASLS register at 0xFC.
+>>>>> +     * Alignment of this reserved region seems flexible, but using a 4k page
+>>>>> +     * alignment seems to work well.  This interface assumes a single IGD
+>>>>> +     * device, which may be at VM address 00:02.0 in legacy mode or another
+>>>>> +     * address in UPT mode.
+>>>>> +     *
+>>>>> +     * NB, there may be future use cases discovered where the VM should have
+>>>>> +     * direct interaction with the host OpRegion, in which case the write to
+>>>>> +     * the ASLS register would trigger MemoryRegion setup to enable that.
+>>>>> +     */
+>>>>> +    fw_cfg_add_file(fw_cfg_find(), "etc/igd-opregion",
+>>>>> +                    vdev->igd_opregion, info->size);
+>>>>> +
+>>>>> +    trace_vfio_pci_igd_opregion_enabled(vdev->vbasedev.name);
+>>>>> +
+>>>>> +    pci_set_long(vdev->pdev.config + IGD_ASLS, 0);
+>>>>> +    pci_set_long(vdev->pdev.wmask + IGD_ASLS, ~0);
+>>>>> +    pci_set_long(vdev->emulated_config_bits + IGD_ASLS, ~0);
+>>>>> +
+>>>>> +    return true;
+>>>>> +}
+>>>>> +
+>>>>>   /*
+>>>>>    * The rather short list of registers that we copy from the host devices.
+>>>>>    * The LPC/ISA bridge values are definitely needed to support the vBIOS, the
+>>>>> @@ -339,29 +389,83 @@ void vfio_probe_igd_bar0_quirk(VFIOPCIDevice *vdev, int nr)
+>>>>>       QLIST_INSERT_HEAD(&vdev->bars[nr].quirks, bdsm_quirk, next);
+>>>>>   }
+>>>>>   
+>>>>> +static bool vfio_igd_try_enable_opregion(VFIOPCIDevice *vdev, Error **errp)
+>>>>> +{
+>>>>> +    g_autofree struct vfio_region_info *opregion = NULL;
+>>>>> +    int ret;
+>>>>> +
+>>>>> +    /*
+>>>>> +     * Hotplugging is not supprted for both opregion access and legacy mode.
+>>>>> +     * For legacy mode, we also need to mark the ROM failed.
+>>>>> +     */
 >>>>
->>>> On a HiSilicon platform that has multiple physical SMMUv3s, the ACC
->> ZIP
->>> VF
->>>> devices and HNS VF devices are behind different SMMUv3s. So for a
->>> Guest,
->>>> specify two smmuv3-nested devices each behind a pxb-pcie as below,
+>>>> The explanation was a little better in the removed comment.
+>>>>   
+>>>>> +    if (vdev->pdev.qdev.hotplugged) {
+>>>>> +        vdev->rom_read_failed = true;
+>>>>> +        error_setg(errp,
+>>>>> +                   "IGD OpRegion is not supported on hotplugged device");
 >>>>
->>>> ./qemu-system-aarch64 -machine virt,gic-version=3,default-bus-bypass-
->>> iommu=on \
->>>> -enable-kvm -cpu host -m 4G -smp cpus=8,maxcpus=8 \
->>>> -object iommufd,id=iommufd0 \
->>>> -bios QEMU_EFI.fd \
->>>> -kernel Image \
->>>> -device virtio-blk-device,drive=fs \
->>>> -drive if=none,file=rootfs.qcow2,id=fs \
->>>> -device pxb-pcie,id=pcie.1,bus_nr=8,bus=pcie.0 \
->>>> -device pcie-root-port,id=pcie.port1,bus=pcie.1,chassis=1 \
->>>> -device arm-smmuv3-nested,id=smmuv1,pci-bus=pcie.1 \
->>>> -device vfio-pci,host=0000:7d:02.1,bus=pcie.port1,iommufd=iommufd0 \
->>>> -device pxb-pcie,id=pcie.2,bus_nr=16,bus=pcie.0 \
->>>> -device pcie-root-port,id=pcie.port2,bus=pcie.2,chassis=2 \
->>>> -device arm-smmuv3-nested,id=smmuv2,pci-bus=pcie.2 \
->>>> -device vfio-pci,host=0000:75:00.1,bus=pcie.port2,iommufd=iommufd0 \
->>>> -append "rdinit=init console=ttyAMA0 root=/dev/vda2 rw
->>> earlycon=pl011,0x9000000" \
->>>> -device virtio-9p-pci,fsdev=p9fs2,mount_tag=p9,bus=pcie.0 \
->>>> -fsdev local,id=p9fs2,path=p9root,security_model=mapped \
->>>> -net none \
->>>> -nographic
->>> Above you say the host has 2 SMMUv3 devices, and you've created 2
->>> SMMUv3
->>> guest devices to match.
+>>>> As was the error log.
+>>>>   
+>>>>> +        return false;
+>>>>> +    }
+>>>>> +
+>>>>> +    ret = vfio_get_dev_region_info(&vdev->vbasedev,
+>>>>> +                    VFIO_REGION_TYPE_PCI_VENDOR_TYPE | PCI_VENDOR_ID_INTEL,
+>>>>> +                    VFIO_REGION_SUBTYPE_INTEL_IGD_OPREGION, &opregion);
+>>>>> +    if (ret) {
+>>>>> +        error_setg_errno(errp, -ret,
+>>>>> +                         "device does not supports IGD OpRegion feature");
+>>>>> +        return false;
+>>>>> +    }
+>>>>> +
+>>>>> +    if (!vfio_pci_igd_opregion_init(vdev, opregion, errp)) {
+>>>>> +        return false;
+>>>>> +    }
+>>>>> +
+>>>>> +    return true;
+>>>>> +}
+>>>>> +
+>>>>>   bool vfio_probe_igd_config_quirk(VFIOPCIDevice *vdev,
+>>>>> -                                 Error **errp G_GNUC_UNUSED)
+>>>>> +                                 Error **errp)
+>>>>>   {
+>>>>>       g_autofree struct vfio_region_info *rom = NULL;
+>>>>> -    g_autofree struct vfio_region_info *opregion = NULL;
+>>>>>       g_autofree struct vfio_region_info *host = NULL;
+>>>>>       g_autofree struct vfio_region_info *lpc = NULL;
+>>>>> +    PCIBus *bus;
+>>>>>       PCIDevice *lpc_bridge;
+>>>>>       int ret, gen;
+>>>>> +    bool legacy_mode, enable_opregion;
+>>>>>       uint64_t gms_size;
+>>>>>       uint64_t *bdsm_size;
+>>>>>       uint32_t gmch;
+>>>>>       Error *err = NULL;
+>>>>>   
+>>>>> +    if (!vfio_pci_is(vdev, PCI_VENDOR_ID_INTEL, PCI_ANY_ID) ||
+>>>>> +        !vfio_is_vga(vdev)) {
+>>>>> +        return true;
+>>>>> +    }
+>>>>> +
+>>>>>       /*
+>>>>>        * This must be an Intel VGA device at address 00:02.0 for us to even
+>>>>>        * consider enabling legacy mode.  The vBIOS has dependencies on the
+>>>>>        * PCI bus address.
+>>>>>        */
+>>>>> -    if (!vfio_pci_is(vdev, PCI_VENDOR_ID_INTEL, PCI_ANY_ID) ||
+>>>>> -        !vfio_is_vga(vdev) ||
+>>>>> -        &vdev->pdev != pci_find_device(pci_device_root_bus(&vdev->pdev),
+>>>>> -                                       0, PCI_DEVFN(0x2, 0))) {
+>>>>> +    bus = pci_device_root_bus(&vdev->pdev);
+>>>>> +    legacy_mode = (&vdev->pdev == pci_find_device(bus, 0, PCI_DEVFN(0x2, 0)));
+>>>>> +    enable_opregion = (vdev->features & VFIO_FEATURE_ENABLE_IGD_OPREGION);
+>>>>> +
+>>>>> +    if (!enable_opregion && !legacy_mode) {
+>>>>> +        return true;
+>>>>> +    }
+>>>>> +
+>>>>> +    if (!vfio_igd_try_enable_opregion(vdev, &err)) {
+>>>>> +        if (enable_opregion) {
+>>>>> +            error_propagate(errp, err);
+>>>>> +            return false;
+>>>>> +        } else if (legacy_mode) {
+>>>>> +            error_append_hint(&err, "IGD legacy mode disabled\n");
+>>>>> +            error_report_err(err);
+>>>>> +            return true;
+>>>>> +        }
+>>>>> +    }
+>>>>> +
+>>>>> +    if (!legacy_mode) {
+>>>>>           return true;
+>>>>>       }
+>>>>>   
+>>>>> @@ -404,30 +508,10 @@ bool vfio_probe_igd_config_quirk(VFIOPCIDevice *vdev,
+>>>>>           return true;
+>>>>>       }
+>>>>>   
+>>>>> -    /*
+>>>>> -     * Ignore the hotplug corner case, mark the ROM failed, we can't
+>>>>> -     * create the devices we need for legacy mode in the hotplug scenario.
+>>>>> -     */
+>>>>> -    if (vdev->pdev.qdev.hotplugged) {
+>>>>> -        error_report("IGD device %s hotplugged, ROM disabled, "
+>>>>> -                     "legacy mode disabled", vdev->vbasedev.name);
+>>>>> -        vdev->rom_read_failed = true;
+>>>>> -        return true;
+>>>>> -    }
+>>>>> -
+>>>>>       /*
+>>>>>        * Check whether we have all the vfio device specific regions to
+>>>>>        * support legacy mode (added in Linux v4.6).  If not, bail.
+>>>>>        */
+>>>>> And we're disassociating opregion setup from this useful comment.
+>>>>
+>>>> What are we actually accomplishing here?  What specific code
+>>>> duplication is eliminated?
 >>>
->>> The various emails in this thread & libvirt thread, indicate that each
->>> guest SMMUv3 is associated with a host SMMUv3, but I don't see any
->>> property on the command line for 'arm-ssmv3-nested' that tells it which
->>> host eSMMUv3 it is to be associated with.
+>>> This patch is designed for moving the opregion quirk in vfio_realize()
+>>> to igd.c, for better isolation of the igd-specific code. Legacy mode
+>>> also need to initialize opregion as x-igd-opregion=on option. These
+>>> code are almost the same, except legacy mode continues on error, while
+>>> x-igd-opregion fails.
 >>>
->>> How does this association work ?
->> You are right. The association is not very obvious in Qemu. The association
->> and checking is done implicitly by kernel at the moment.  I will try to
->> explain
->> it here.
+>>> I am going to clearify that in the commit message of v3.
+>>>    
+>>>> Why is it important to move all this code to igd.c?
 >>
->> Each "arm-smmuv3-nested" instance, when the first device gets attached
->> to it, will create a S2 HWPT and a corresponding SMMUv3 domain in kernel
->> SMMUv3 driver. This domain will have a pointer representing the physical
->> SMMUv3 that the device belongs. And any other device which belongs to
->> the same physical SMMUv3 can share this S2 domain.
+>> x-igd-opreqion quirk is currently located in pci-quirks.c, which is not
+>> controlled by CONFIG_VFIO_IGD, moving it to igd.c prevents building
+>> that unnecessary code in certain binaries, for example, non x86 builds.
 >>
->> If a device that belongs to a different physical SMMUv3 gets attached to
->> the above domain, the HWPT attach will eventually fail as the physical
->> smmuv3 in the domains will have a mismatch,
->> https://elixir.bootlin.com/linux/v6.13/source/drivers/iommu/arm/arm-
->> smmu-v3/arm-smmu-v3.c#L2860
+>>>> It's really difficult to untangle this refactor, I think it could be
+>>>> done more iteratively, if it's really even beneficial.  Thanks,
+>>>>
+>>>> Alex
+>>>
+>>> Agreed. Actually I'd like to totally remove the "legacy mode" and "UPT
+>>> mode" concept in future, my proposal is:
+>>> * Emulate and initialize ASLS and BDSM register unconditionally. These
+>>>    registers holds HPA, keeping the old value to guest is not a good
+>>>    idea
+>>> * Make the host bridge and LPC bridge ID quirks optional like OpRegion.
+>>>    Recent Linux kernel and Windows driver seems not relying on it. This
+>>>    enables IGD passthrough on Q35 machines, but probably without UEFI
+>>>    GOP or VBIOS support, as it is observed they require specific LPC
+>>>    bridge DID to work.
+>>> * Remove the requirement of IGD device class being VGA controller, this
+>>>    was previous discussed in my kernel change [1]
+>>> * Update the document
+>>>
+>>> It would time consuming to implement all them, coding is not difficult,
+>>> but I have to verify my change on diffrent platforms. And they are out
+>>> of this patchset's scope I think. I personally perfers doing it in a
+>>> future patchset.
+>>>
+>>> [1] https://lore.kernel.org/all/20250123163416.7653-1-tomitamoeko@gmail.com/
+>>>
+>>> Thanks,
+>>> Moeko
 >>
->> And as I mentioned in cover letter, Qemu will report,
->>
->> "
->> Attempt to add the HNS VF to a different SMMUv3 will result in,
->>
->> -device vfio-pci,host=0000:7d:02.2,bus=pcie.port3,iommufd=iommufd0:
->> Unable to attach viommu
->> -device vfio-pci,host=0000:7d:02.2,bus=pcie.port3,iommufd=iommufd0: vfio
->> 0000:7d:02.2:
->>    Failed to set iommu_device: [iommufd=29] error attach 0000:7d:02.2 (38)
->> to id=11: Invalid argument
->>
->> At present Qemu is not doing any extra validation other than the above
->> failure to make sure the user configuration is correct or not. The
->> assumption is libvirt will take care of this.
->> "
->> So in summary, if the libvirt gets it wrong, Qemu will fail with error.
->>
->> If a more explicit association is required, some help from kernel is required
->> to identify the physical SMMUv3 associated with the device.
-> Again thinking about this, to have an explicit association in the Qemu command 
-> line between the vSMMUv3 and the phys smmuv3,
+>> Please let me know if you have any thoughts or suggestions, in case
+>> you missed the previous mail.
+> 
+> TBH, I'm surprised there's so much interest in direct assignment of
+> igd.  I'd be curious in your motivation, if you can share it.
+> 
+> Regardless, it's nice to see it updated for newer hardware and I don't
+> mind the goal of isolating the code so it can be disabled on other
+> archs, so long as we can do so in small, logical steps that are easy to
+> follow.
+> 
+> At this point, the idea of legacy vs UPT might only exist in QEMU.
+> There are going to be some challenges to avoid breaking existing VM
+> command lines if the host and LPC bridge quirks become optional.  There
+> are a couple x-igd- options that we're free to break as they've always
+> been experimental, but the implicit LPC bridge and host bridge quirks
+> need to be considered carefully.  The fact that "legacy" mode has never
+> previously worked on q35 could mean that we can tie those quirks to a
+> new experimental option that's off by default and only enabled for
+> 440fx machine types.
+> 
+> I'm glad you included the documentation update in your list, it's
+> clearly out of date, as is some of my knowledge regarding guest driver
+> requirements.  
+
+Could we please have an update of docs/igd-assign.txt too ?
+
+As some point, we should consolidate all VFIO documentation under
+one section. That's another topic.
+
+> I hope we can make some progress on uefi support as well,
+> as that's essentially a requirement for newer guests.  If we can't get
+> the code upstream into edk2, maybe we can at least document steps for
+> others to create images.  Thanks,
 >
-> We can possibly add something like,
->
-> -device pxb-pcie,id=pcie.1,bus_nr=8,bus=pcie.0 \
-> -device pcie-root-port,id=pcie.port1,bus=pcie.1,chassis=1 \
-> -device arm-smmuv3-accel,bus=pcie.1,phys-smmuv3= smmu3.0x0000000100000000 \
-> -device vfio-pci,host=0000:7d:02.1,bus=pcie.port1,iommufd=iommufd0 \
->
-> -device pxb-pcie,id=pcie.2,bus_nr=16,bus=pcie.0 \
-> -device pcie-root-port,id=pcie.port2,bus=pcie.2,chassis=2 \
-> -device arm-smmuv3-nested,id=smmuv2,pci-bus=pcie.2, phys-smmuv3= smmu3.0x0000000200000000  \
-> -device vfio-pci,host=0000:75:00.1,bus=pcie.port2,iommufd=iommufd0 \
->
-> etc.
->
-> And Qemu does some checking to make sure that the device is indeed associated
-> with the specified phys-smmuv3.  This can be done going through the sysfs path checking
-> which is what I guess libvirt is currently doing to populate the topology. So basically
-> Qemu is just replicating that to validate again.
->
-> Or another option is extending the IOMMU_GET_HW_INFO IOCTL to return the phys
-> smmuv3 base address which can avoid going through the sysfs.
->
-> The only difference between the current approach(kernel failing the attach implicitly)
-> and the above is, Qemu can provide a validation of inputs and may be report a  better
-> error message than just saying " Unable to attach viommu/: Invalid argument".
->
-> If the command line looks Ok, I will go with the sysfs path validation method first in my
-> next respin.
-The command line looks sensible to me. on vfio we use
-host=6810000.ethernet. Maybe reuse this instead of phys-smmuv3? Thanks Eric
->
-> Please let me know.
->
-> Thanks,
-> Shameer
->
->
->
->
+
+So, I am bit lot here, forgive my ignorance.
+
+I am seeing issues (a black screen and nothing else to report) with :
+
+   00:02.0 VGA compatible controller: Intel Corporation AlderLake-S GT1 (rev 0c)
+
+using uefi, seabios, pc or q35 does not change the result.
+
+
+However, it works fine with a uefi q35 machine using :
+
+   00:02.0 VGA compatible controller: Intel Corporation Alder Lake-N [UHD Graphics]
+
+How can I dig into the first issue ?
+
+
+Also, if we know that there are platform requirements for IGD assignment to work, we
+should try to verify that they are met when the machine boots.
+
+
+Thanks,
+
+C.
+
 
 
