@@ -4,85 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DA409C0218F
-	for <qemu-devel@archiver.kernel.org>; Fri, 31 Jan 2025 21:30:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2BE88C0218F
+	for <qemu-devel@archiver.kernel.org>; Fri, 31 Jan 2025 21:42:59 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tdyZh-0003RH-IC; Fri, 31 Jan 2025 16:29:17 -0500
+	id 1tdymA-0006Ht-8x; Fri, 31 Jan 2025 16:42:10 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1tdyZg-0003Qt-Gt
- for qemu-devel@nongnu.org; Fri, 31 Jan 2025 16:29:16 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ id 1tdym8-0006HT-Qn
+ for qemu-devel@nongnu.org; Fri, 31 Jan 2025 16:42:08 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1tdyZe-00050h-8F
- for qemu-devel@nongnu.org; Fri, 31 Jan 2025 16:29:16 -0500
+ id 1tdym6-0006tg-VA
+ for qemu-devel@nongnu.org; Fri, 31 Jan 2025 16:42:08 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1738358950;
+ s=mimecast20190719; t=1738359724;
  h=from:from:reply-to:reply-to:subject:subject:date:date:
  message-id:message-id:to:to:cc:cc:mime-version:mime-version:
  content-type:content-type:in-reply-to:in-reply-to:  references:references;
- bh=oHmLDy+cP0TKEKGiBFBdrMwxKrR9TDf2AZVLB5a8pvc=;
- b=W4pfK0t4xDeZCtuTJnIXnDCAXnVntSIcKBEAKiNTj12a2W/1oNai1lJ6K+P/limqr7HyO+
- njTG23+0fgyZYnhpkxXXLyjVu6Dc+dn1kaEkEgD9zvsGTkFeaRhIi/s4h+6083L0p/i9hR
- mR0DxamHg76eiaqECdLWbGm97fwahtc=
-Received: from mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ bh=5Bf7CBp1o/bfAswNA9w4yLehk2bzKwAEJ06KBTm5bqw=;
+ b=hFknOkinBQIlAlPRKfh7QrHs0QTURzpsw8cL6RDpckZld0V7ccfsskMz7uvxyMuyx/EAYk
+ +hpIYzCS4qjrF9WnONqU0lIPwa1U975nRB7yHJyD4tu2Nl4iwaMF5b0AUAhuuGpf1h65VP
+ yfeO8iLDU4N4CHL7NBKugn3ZKktzUmE=
+Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-102-o7Bx2ihlOtSN4Lt6sADwKg-1; Fri,
- 31 Jan 2025 16:29:03 -0500
-X-MC-Unique: o7Bx2ihlOtSN4Lt6sADwKg-1
-X-Mimecast-MFC-AGG-ID: o7Bx2ihlOtSN4Lt6sADwKg
-Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-283-oj4hG7dGMLmGtRDhPgmjJA-1; Fri,
+ 31 Jan 2025 16:42:00 -0500
+X-MC-Unique: oj4hG7dGMLmGtRDhPgmjJA-1
+X-Mimecast-MFC-AGG-ID: oj4hG7dGMLmGtRDhPgmjJA
+Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 59C311956087; Fri, 31 Jan 2025 21:29:01 +0000 (UTC)
+ by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 65CB51801F15; Fri, 31 Jan 2025 21:41:58 +0000 (UTC)
 Received: from redhat.com (unknown [10.39.192.44])
- by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 3C30118008F0; Fri, 31 Jan 2025 21:28:56 +0000 (UTC)
-Date: Fri, 31 Jan 2025 21:28:53 +0000
+ by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 6B64119560A3; Fri, 31 Jan 2025 21:41:50 +0000 (UTC)
+Date: Fri, 31 Jan 2025 21:41:46 +0000
 From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
-To: Paolo Bonzini <pbonzini@redhat.com>
-Cc: Richard Henderson <richard.henderson@linaro.org>,
- Peter Maydell <peter.maydell@linaro.org>, Thomas Huth <thuth@redhat.com>,
- Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Alex =?utf-8?Q?Benn=C3=A9e?= <alex.bennee@linaro.org>,
- qemu-devel <qemu-devel@nongnu.org>,
- "Hajnoczi, Stefan" <stefanha@redhat.com>,
- Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>,
- Liviu Ionescu <ilg@livius.net>
-Subject: Re: [PATCH 0/1] meson: Deprecate 32-bit host systems
-Message-ID: <Z51AlWh80Pqou6h_@redhat.com>
-References: <87plk72tvr.fsf@draig.linaro.org>
- <ad6ca73a-c38a-4a9b-bdcb-ab50aa53ccd1@linaro.org>
- <Z5ii-ueFt5-5Brxz@redhat.com>
- <8c0eea44-d0bf-4b86-9b1b-1c2082ab2df9@linaro.org>
- <9bf6d4b0-7a89-4110-a1e1-46bbdb2fc793@linaro.org>
- <c13e207e-06a5-4f40-b319-f4f2e59d919a@redhat.com>
- <CAFEAcA_CfVfypS5yUtT3V34CDxmAqx7wYnDoKPfHq-o=54GgAg@mail.gmail.com>
- <8a54600c-ff3f-42dd-b164-62a57de867df@redhat.com>
- <62449bfd-eb65-41d6-ae53-0333bcb603b3@linaro.org>
- <CABgObfYvYWxua7_TwYzWH99N5pR92Vsmv8Q=57FU_g5wSwmacw@mail.gmail.com>
+To: Shameerali Kolothum Thodi <shameerali.kolothum.thodi@huawei.com>
+Cc: "qemu-arm@nongnu.org" <qemu-arm@nongnu.org>,
+ "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>,
+ "eric.auger@redhat.com" <eric.auger@redhat.com>,
+ "peter.maydell@linaro.org" <peter.maydell@linaro.org>,
+ "jgg@nvidia.com" <jgg@nvidia.com>,
+ "nicolinc@nvidia.com" <nicolinc@nvidia.com>,
+ "ddutile@redhat.com" <ddutile@redhat.com>, Linuxarm <linuxarm@huawei.com>,
+ "Wangzhou (B)" <wangzhou1@hisilicon.com>,
+ jiangkunkun <jiangkunkun@huawei.com>,
+ Jonathan Cameron <jonathan.cameron@huawei.com>,
+ "zhangfei.gao@linaro.org" <zhangfei.gao@linaro.org>
+Subject: Re: [RFC PATCH 0/5] hw/arm/virt: Add support for user-creatable
+ nested SMMUv3
+Message-ID: <Z51DmtP83741RAsb@redhat.com>
+References: <20241108125242.60136-1-shameerali.kolothum.thodi@huawei.com>
+ <Z5uiGnAxUf4jXTEI@redhat.com>
+ <7ecabe74e0514367baf28d67675e5db8@huawei.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <CABgObfYvYWxua7_TwYzWH99N5pR92Vsmv8Q=57FU_g5wSwmacw@mail.gmail.com>
+In-Reply-To: <7ecabe74e0514367baf28d67675e5db8@huawei.com>
 User-Agent: Mutt/2.2.13 (2024-03-09)
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=berrange@redhat.com;
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -33
 X-Spam_score: -3.4
 X-Spam_bar: ---
 X-Spam_report: (-3.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.3,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -101,66 +98,60 @@ Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, Jan 31, 2025 at 06:08:32PM +0100, Paolo Bonzini wrote:
-> Il ven 31 gen 2025, 17:46 Richard Henderson <richard.henderson@linaro.org>
-> ha scritto:
+On Thu, Jan 30, 2025 at 06:09:24PM +0000, Shameerali Kolothum Thodi wrote:
 > 
-> > On 1/29/25 04:47, Paolo Bonzini wrote:
-> > > The difference with TCG of course is that TCG is in active development,
-> > and therefore its
-> > > 32-bit host support is not surviving passively in the same way that a
-> > random device is.
-> > > Still, I think we can identify at least three different parts that
-> > should be treated
-> > > differently: 64-on-32, 32-on-32 system-mode emulation and 32-on-32
-> > user-mode emulation.
-> >
-> > Why the user/system split for 32-on-32?
-> >
-> 
-> Various reasons which overall point at 32-on-32 system emulation being not
-> used very much.
-> 
-> 1) 32-bit has the address space size limitation, which makes it harder to
-> test even moderately sized (2G) guests.
-> 
-> 2) I might be wrong but user mode emulation has no equivalent of the
-> forced-64bit hwaddr or ram_addr_t types; 32 bit is not very 32 bit anyway
-> in the case of system emulation
-> 
-> 3) 32-bit virtualization support only exists on x86 and possibly MIPS
-> 
-> 4) system emulation is used mostly on development systems, whereas user
-> mode emulation might be used on small systems to run short-lived
-> proprietary programs
-> 
-> 5) for those 32-bit hosts that have a completely separate TCG backend
-> (well, that's Arm), getting rid TLB accesses does eliminate a bit of code.
+> Each "arm-smmuv3-nested" instance, when the first device gets attached
+> to it, will create a S2 HWPT and a corresponding SMMUv3 domain in kernel
+> SMMUv3 driver. This domain will have a pointer representing the physical
+> SMMUv3 that the device belongs. And any other device which belongs to
+> the same physical SMMUv3 can share this S2 domain.
 
-These days perhaps one of the more (most?) common "linux-user" scenarios
-I see is foreign arch containers. When telling docker/podman to run a
-non- native container image, it relies on qemu-user to make it all work
-transparently. Users probably don't even realize they're relying on
-QEMU, things just look a little slower.
+Ok, so given two guest SMMUv3s,   A and B, and two host SMMUv3s,
+C and D, we could end up with A&C and B&D paired, or we could
+end up with A&D and B&C paired, depending on whether we plug 
+the first VFIO device into guest SMMUv3  A or B.
 
-Given the prevalence of containers these days, if you have an OS install
-whether 32-bit or 64-bit you're probably relying on podman/docker to some
-extent. Those who need non-native containers is admittedly relatively
-niche, but it wouldn't surprise me to hear of people doing it on 32-bit
-machines.
+This is bad.  Behaviour must not vary depending on the order
+in which we create devices.
 
-In general I think the biggest problem we have is that users that are likely
-to be impacted by our decisions won't pay any attention to QEMU upstream
-at all. IOW they'll never see our deprecation announcement, and thus we
-will never hear any feedback if they want it kept around
+An guest SMMUv3 is paired to a guest PXB. A guest PXB is liable
+to be paired to a guest NUMA node. A guest NUMA node is liable
+to be paired to host NUMA node. The guest/host SMMU pairing
+must be chosen such that it makes conceptual sense wrt to the
+guest PXB NUMA to host NUMA pairing.
 
-So perhaps we need to make a bit more effort to broadcast this particular
-plan, given its more fundamental impact that most deprecations.
+If the kernel picks guest<->host SMMU pairings on a first-device
+first-paired basis, this can end up with incorrect guest NUMA
+configurations.
 
-I'd suggest we should put out a qemu.org blog post post asking for feedback
-on the proposal to drop 32-bit support. Then get people to publicise this
-to their distro forums/mailing lists, and/or CC lwn.net to ask for it to be
-featured it as a news item.
+The mgmt apps needs to be able to tell QEMU exactly which
+host SMMU to pair with each guest SMMU, and QEMU needs to
+then tell the kernel.
+
+> And as I mentioned in cover letter, Qemu will report,
+> 
+> "
+> Attempt to add the HNS VF to a different SMMUv3 will result in,
+> 
+> -device vfio-pci,host=0000:7d:02.2,bus=pcie.port3,iommufd=iommufd0: Unable to attach viommu
+> -device vfio-pci,host=0000:7d:02.2,bus=pcie.port3,iommufd=iommufd0: vfio 0000:7d:02.2:
+>    Failed to set iommu_device: [iommufd=29] error attach 0000:7d:02.2 (38) to id=11: Invalid argument
+> 
+> At present Qemu is not doing any extra validation other than the above 
+> failure to make sure the user configuration is correct or not. The
+> assumption is libvirt will take care of this.
+> "
+> So in summary, if the libvirt gets it wrong, Qemu will fail with error.
+
+That's good error checking, and required, but also insufficient
+as illustrated above IMHO.
+
+> If a more explicit association is required, some help from kernel is required
+> to identify the physical SMMUv3 associated with the device.
+
+Yep, I think SMMUv3 info for devices needs to be exposed to userspace,
+as well as a mechanism for QEMU to tell the kernel the SMMU mapping.
+
 
 With regards,
 Daniel
