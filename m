@@ -4,82 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CD7CBC0218F
-	for <qemu-devel@archiver.kernel.org>; Fri, 31 Jan 2025 18:34:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DAB60C0218F
+	for <qemu-devel@archiver.kernel.org>; Fri, 31 Jan 2025 18:35:46 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tdvqB-0001zj-Vl; Fri, 31 Jan 2025 13:34:08 -0500
+	id 1tdvrF-00034E-TN; Fri, 31 Jan 2025 13:35:13 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tdvq8-0001uy-FX
- for qemu-devel@nongnu.org; Fri, 31 Jan 2025 13:34:05 -0500
-Received: from mail-wm1-x32e.google.com ([2a00:1450:4864:20::32e])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tdvrD-000322-Ji
+ for qemu-devel@nongnu.org; Fri, 31 Jan 2025 13:35:11 -0500
+Received: from mail-wm1-x332.google.com ([2a00:1450:4864:20::332])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tdvq6-0006AP-M3
- for qemu-devel@nongnu.org; Fri, 31 Jan 2025 13:34:04 -0500
-Received: by mail-wm1-x32e.google.com with SMTP id
- 5b1f17b1804b1-436202dd7f6so26896325e9.0
- for <qemu-devel@nongnu.org>; Fri, 31 Jan 2025 10:34:02 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tdvrB-0006gZ-S8
+ for qemu-devel@nongnu.org; Fri, 31 Jan 2025 13:35:11 -0500
+Received: by mail-wm1-x332.google.com with SMTP id
+ 5b1f17b1804b1-43634b570c1so17378955e9.0
+ for <qemu-devel@nongnu.org>; Fri, 31 Jan 2025 10:35:09 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1738348441; x=1738953241; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:content-language:references
- :cc:to:from:subject:user-agent:mime-version:date:message-id:from:to
- :cc:subject:date:message-id:reply-to;
- bh=1D+FCFTB8BtTwBlKT8TVGB9qJrpM7llucuSHbkutsqc=;
- b=T4cKenK7LhqBx38W2NZT5GsF/Amdlrb6DMQAK2fUClYtu1R/KenI0l+/XiQ6+bKOP+
- nHbJxqZi8thIOTozOT18rzWILWRFx7lXEHqyEoRRDk4RMCloJJB650S1eNu+yIVLNbgJ
- CTU/QSXG43yW3Ot48+S2xCf0aa/MhhBULLB80wkfX/re977ZVAdt+uxT2gZKjCMZVFTW
- 29KnfPWGLDO9mvFrQH/6z+yTSZI0M0V8Ph6rNfh0J8t5k5QpUMuPncHT6wsw5nC0Gy9d
- lI64zLrpOu29z56rBuMEeHYUkHAqaJVr6xclA8hV6aASRpQKmNpJCY8jevjIMPCkqQGp
- FJTw==
+ d=linaro.org; s=google; t=1738348508; x=1738953308; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:to:subject:user-agent:mime-version:date:message-id:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=i9UCZy8TyUsrwOWNX3ilWmw5qoD14pkKlKd6Nvuynf0=;
+ b=S9RtXBL82uJUcRjI0gktTrQThJSTm1OX/UESlwfQYZbkZj5LBmgDJnG3TyFAdeIcOV
+ 0P0gxjT3qNa2Bxvk6UHjQ5cVjGoHE2xjUcV5tk+jTESzsvjTfem8njvokse51c5hVBl1
+ BDWCSv0YOKQm9VXoQaNKB90xw0tS7lc87feYnzFsqCdMRx/N51BE2xpnDQU91LTx8waz
+ jVY3hnO1kHQktOC27Sf5LfB5iMttFphnxI2OY9ZL1yWomrkY8KnFqGE1a8PaIFAc6o9F
+ HUaNB39yda8XlStywSP0f1fVKOAX9ipP5zByt1Drupa5k250Wa9tptEWN220vqPOZ19x
+ IIIA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1738348441; x=1738953241;
- h=content-transfer-encoding:in-reply-to:content-language:references
- :cc:to:from:subject:user-agent:mime-version:date:message-id
+ d=1e100.net; s=20230601; t=1738348508; x=1738953308;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=1D+FCFTB8BtTwBlKT8TVGB9qJrpM7llucuSHbkutsqc=;
- b=o0b2SNWnRVp+uJp7WL42xL2WdVewrwExUs3Obn6/EWMLyq4XEQvv+ENMLDjYDpSras
- u9K/5GB6QS6b6rL+2GytPfgzKwso+mNWkc9bvQHPgKr461nTjutSLt2jnUmPzO/YZHzR
- Mz0TvjIty62z5vENDZXMljixJ8mDQyFau9m/uoY+Qcxrg4/tef9g4fCCArr286qTSyua
- hHIW3LOBhelzXKeDMl4ooOkU98z9yy5WoYjgwyEBzOU3Q05KfDp7xbW76AK879qWmjVF
- exkMTAuFnGldlt/05gbY4ehiTGw2KvzrKnSrkgxoZp0JmsOBAM3WwVlG0XODkyFuRJZi
- kFzA==
+ bh=i9UCZy8TyUsrwOWNX3ilWmw5qoD14pkKlKd6Nvuynf0=;
+ b=n69gAXhcYy9ZYCxk5WWr3WoHfBjVGmiEbY4+dbw22bsYM9ZtV17KGUErnFLJAbaMJv
+ A6LF5lavRODtukYPGV6nq0tuXMlXlhL9DQ1YbxwYPurUhA54lVXSZWueXPbt20YetFYc
+ IWPam90O9xkYTh1PwReC3uM+AjzmfeIbHeUX89l0Gb5F527pSyHpRou/p9W795m4Etpq
+ 0PKgByrSw/qffh3wqj1x2NDQhUrQ0K3uHr6W0vJ/PnxhJDQl6pvvsSUIRWhvgxGBIseM
+ ARAS8Ms6bLRkytb1kN9LA/x8oWvIsB1xZhnv2+AnTNXvlKfjspGCyCK75unDKfCOW8iw
+ 7nng==
 X-Forwarded-Encrypted: i=1;
- AJvYcCV/olK512Ib/LUE8eGRVLYvinP0ysi/KPVOR/f6MRcD06KmolEQMX+8/O0vnN25j4LQDWHxjDTH2cKG@nongnu.org
-X-Gm-Message-State: AOJu0Yxm4XPstwZ6xpoW4vU3HiHJ6HQyBCHhM6ZWixhdvKIq9oIlrCeC
- GPpWw4jy3IjbO8ko23vtnEwcH61XBy8RB58YrzaaGqyJJifGvYK3L8byQS+uS38=
-X-Gm-Gg: ASbGncs2Hh4CMfzrqegy/eFOnPO4jncq5DTIortwN6GTCV6DPwthEj88fmUirYINLOe
- v6/1qGNZ2tzn4GHCf22nN2lFPyXUqT//+qLOV9ChsTPr1/PLip7rQCZgWUmn4P1DSSm48bQI/Po
- cxDEXqOziZAS8VT6tA0eB7pJPYm2Ks5dcNTv4cR47M3438CBdLGUNVsdKqOvTN73e9JFkkTqtag
- O0l8sLEbQvwI/bX/VRFW6ijXhbUPmeqOK75k22ObvH6j5/ohz5xDaeOikFbF2QWS60QDydMZOzu
- GqMBvx0/um2K7k59TBHGI/M5GNOa3Ir3t6jd/aFtItEY1wXmrcJ2ChOYVLo=
-X-Google-Smtp-Source: AGHT+IG+R6CwbDMJPuZr7KHT5zR/+ikzI14PcFIX5ca81Oi9vDgmpvd0d2BXZkO2vk2y0dfgsY0Lfg==
-X-Received: by 2002:a5d:6c66:0:b0:38b:d7d2:12f6 with SMTP id
- ffacd0b85a97d-38c51932163mr10470236f8f.2.1738348440961; 
- Fri, 31 Jan 2025 10:34:00 -0800 (PST)
+ AJvYcCWiq7E9lqXAqE2uYu2/zsJjmdGiQZYD6I+yKHtnb1yNKfm4FwKSD58I6b+/TOLISqbeh23iI4rxIvM1@nongnu.org
+X-Gm-Message-State: AOJu0YyD4Q1TavPIekLKXqFSnMnboWPm4GUw0O77a8jLt6O3dNe4mHsF
+ jwDkASgOiH0+snBth+/d9XsL2Js9QzHDjUSMxK+wGOYhAj80qhJaLO/sGydL38M=
+X-Gm-Gg: ASbGncv93CEI85ukgjtm+ItVHECVFgS8z9IRfjUvvCtdfm60Spna1iGmuiOenujxHK7
+ 4UpJJd0fRJm47DV8kRLRkCtwfvPuFenHhyvcCQ02WHcxpPNZz8zjNpmvAdMXeUbJKtMrqG10Maz
+ 9uTMngtV500IXTkT4vD6ef5Q5OHJ08JZFdycG6BG3uKRC7dg+rFPmva0YOfB+xRvktKPShSmTzg
+ uSlYh2YqYU0WgzQgkV0Hp+6a7vK4RBapkf5mTUTTPt7h4eI4wjd/0XxVHgy1ZpSFocUkEdCm/Fs
+ kU/6dOi7CTOGH6E8bj4cXTCXMQrIuZlgrYagdiRYfiH1f5wJ4y3vWXsGJ0M=
+X-Google-Smtp-Source: AGHT+IHw02jbYogO0+BsBx9fiWIitRGBud8wwnEBMHjQjg95m9If90oI2I/BG4HfNPmqbYxB1J0sAw==
+X-Received: by 2002:a05:600c:b89:b0:438:a240:c54 with SMTP id
+ 5b1f17b1804b1-438dc3ae14bmr102274205e9.9.1738348506873; 
+ Fri, 31 Jan 2025 10:35:06 -0800 (PST)
 Received: from [192.168.69.198] (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-38c5c12164dsm5242509f8f.48.2025.01.31.10.34.00
+ 5b1f17b1804b1-438dcc2e384sm101291905e9.19.2025.01.31.10.35.06
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 31 Jan 2025 10:34:00 -0800 (PST)
-Message-ID: <f16985e1-ecc5-4439-ba4c-f9a6a4d06d10@linaro.org>
-Date: Fri, 31 Jan 2025 19:33:59 +0100
+ Fri, 31 Jan 2025 10:35:06 -0800 (PST)
+Message-ID: <562d0891-ef50-46e3-86fe-2d8a0509a7ab@linaro.org>
+Date: Fri, 31 Jan 2025 19:35:05 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 0/2] Add me as the maintainer for ivshmem-pci
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-To: Gustavo Romero <gustavo.romero@linaro.org>, qemu-devel@nongnu.org,
- armbru@redhat.com
-Cc: alex.bennee@linaro.org
-References: <20250123012212.716499-1-gustavo.romero@linaro.org>
- <35e2dcf5-d1d6-4326-90cb-22dc82023bed@linaro.org>
+Subject: Re: [PATCH] MAINTAINERS: Add myself as HPPA maintainer
+To: Helge Deller <deller@gmx.de>, deller@kernel.org,
+ richard.henderson@linaro.org, qemu-devel@nongnu.org
+References: <20250128170914.13353-2-deller@kernel.org>
+ <7484e0d5-66f7-4fb3-9262-7d698b2b1da7@linaro.org>
+ <99c444aa-7acb-471b-81c1-653a924b315e@gmx.de>
 Content-Language: en-US
-In-Reply-To: <35e2dcf5-d1d6-4326-90cb-22dc82023bed@linaro.org>
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <99c444aa-7acb-471b-81c1-653a924b315e@gmx.de>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32e;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x32e.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::332;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x332.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -102,47 +102,27 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 24/1/25 17:22, Philippe Mathieu-Daudé wrote:
-> On 23/1/25 02:22, Gustavo Romero wrote:
->> Add me as the maintainer for the ivshmem-pci.c device, the ivshmem
->> server, and the ivshmem client tool. Also, adjust remaining parts left
->> behind after ivshmem PCI device was renamed from ivshmem.c to
->> ivshmem-pci.c, like header files, Kconfig, docs, and build scripts.
+On 31/1/25 19:30, Helge Deller wrote:
+> On 1/31/25 19:15, Philippe Mathieu-Daudé wrote:
+>> On 28/1/25 18:09, deller@kernel.org wrote:
+>>> From: Helge Deller <deller@gmx.de>
+>>>
+>>> Since I contribute quite some code to hppa, I'd like to step up and
+>>> become the secondary maintainer for HPPA beside Richard.
+>>> Additionally change status of hppa machines to maintained as I will
+>>> take care of them.
+>>>
+>>> Signed-off-by: Helge Deller <deller@gmx.de>
+>>> ---
+>>>   MAINTAINERS | 5 +++--
+>>>   1 file changed, 3 insertions(+), 2 deletions(-)
 >>
->>
->> Cheers,
->> Gustavo
->>
->> Gustavo Romero (2):
->>    hw/misc/ivshmem-pci: Rename remaining parts for consistency
->>    MAINTAINERS: Add me as the maintainer for ivshmem-pci
+>> Patch queued, thanks!
 > 
-> Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-> 
-> and queued, thanks for volunteering!
+> Thank you, Philippe!
+> But actually, I included it already in the series where I sent a pull 
+> request.
+> See mail thread: "[PULL v2 0/9] Hppa system mfdiag for v10 patches"
 
-Failing to build:
-
-docs/specs/ivshmem-spec.rst:17:unknown document: '../system/devices/ivshmem'
-ninja: build stopped: subcommand failed.
-
-docs/specs/ivshmem-spec.rst only mention PCI, so I could squash in the
-first patch:
--- >8 --
-diff --git a/docs/specs/ivshmem-spec.rst b/docs/specs/ivshmem-spec.rst
-index 2d8e80055b0..e326d024487 100644
---- a/docs/specs/ivshmem-spec.rst
-+++ b/docs/specs/ivshmem-spec.rst
-@@ -17,3 +17,3 @@ get interrupted by its peers.
-  For information on configuring the ivshmem device on the QEMU
--command line, see :doc:`../system/devices/ivshmem`.
-+command line, see :doc:`../system/devices/ivshmem-pci`.
----
-But then I wonder if this document shouldn't mention the flat
-device. Since I'm unsure I'm dropping the series (patch 2
-depends on 1).
-
-Regards,
-
-Phil.
+Oops OK :/
 
