@@ -4,73 +4,96 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B1AD7C02190
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 98408C0218F
 	for <qemu-devel@archiver.kernel.org>; Fri, 31 Jan 2025 16:47:12 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tduAB-0005uv-0m; Fri, 31 Jan 2025 11:46:39 -0500
+	id 1tduAH-0005xv-9n; Fri, 31 Jan 2025 11:46:45 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1tduA6-0005sS-Te
- for qemu-devel@nongnu.org; Fri, 31 Jan 2025 11:46:34 -0500
-Received: from mail-yb1-xb29.google.com ([2607:f8b0:4864:20::b29])
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1tduAB-0005vF-49
+ for qemu-devel@nongnu.org; Fri, 31 Jan 2025 11:46:39 -0500
+Received: from mail-pl1-x62b.google.com ([2607:f8b0:4864:20::62b])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1tduA5-0000Pl-BC
- for qemu-devel@nongnu.org; Fri, 31 Jan 2025 11:46:34 -0500
-Received: by mail-yb1-xb29.google.com with SMTP id
- 3f1490d57ef6-e549dd7201cso2772055276.0
- for <qemu-devel@nongnu.org>; Fri, 31 Jan 2025 08:46:32 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1tduA9-0000Q1-Iv
+ for qemu-devel@nongnu.org; Fri, 31 Jan 2025 11:46:38 -0500
+Received: by mail-pl1-x62b.google.com with SMTP id
+ d9443c01a7336-216426b0865so40142355ad.0
+ for <qemu-devel@nongnu.org>; Fri, 31 Jan 2025 08:46:37 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1738341991; x=1738946791; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=JppQovlldchCafF0myyuaZnJyMgp5KkagX6RDlfYEd4=;
- b=FmhYS7O+NDdQFjtiYPSIsPeXOH1rDm1sJnHgJEYiGCmTVy9s7HRfMznCNRNDamyYeP
- Hk8JDs/t68tA2VY7r22vmjbsa2Fq3qHTTDxCQhdABmvbk7IdmeQNUBvCtSHHPPE6zTU1
- 9v2vQrnPEeDxoIIRRIL05bMFc2ywfV+lLEJcF+BI7FO4FnfF1rvTUuJhLE7VjLBxDdaJ
- G1W55DQvMPwWCdmuWnfLJ2GAKVPhrUeXybIl5jaHaScWS1ipbYALt+e025pY6oO4mvmc
- J+Zho3qUfNNDNq9jRCJEa7e772L+Yn5XadqsUwOk6+C7QiDmAQLqqX04KAlc65G4Fgpg
- 6wjg==
+ d=linaro.org; s=google; t=1738341996; x=1738946796; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=eb9R/potxLbKcWtTBrZYpzuUeavSfgFfRVFByzPaJ5s=;
+ b=rP9aET5sDnv3Y5w/nixvFiw5qACMSr/fsL6UpmieDwVBqqT9cmkIg4K2WGkIP1iP+b
+ HAOBDYpuqq0x4otEKB/bX5mCvVbaYSay2uqtVFkQBpQuzc/83hETyNNcqsCFsU8IypvF
+ +7couaTvbJHV714ShUe1jCiZU106rG7nSNd65Fym6IgyNobPZo7kcIs/shtnG1r2q4QD
+ rd0ZOGGSwYyg6eKWngmapSms2PmtjoCKtIRsuub4ZmrZpwPHYZkAYR9aDFixj4cQkdmz
+ H2//57R7abJxj/N+ctBZtRj1T+LDqZiTF6qaN2B9z05TAhUYa57GpvmYg1/RSVd0OaAJ
+ nxiw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1738341991; x=1738946791;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=JppQovlldchCafF0myyuaZnJyMgp5KkagX6RDlfYEd4=;
- b=Z5WhsoqGxeaF7nHXZDKw9mV9h+HJZaZq0MbBOBhB0vLvb4Nu9CcxAIJyHUyn+DVa4S
- kILDoeMFmKSn4U7fTCYYYpVF8/2Uww1rfKtndhnf6c23BI3ab9+BjDdqj3sLijynTWLL
- xcTJVujwMuE4sfpJ0CfvBmv1GMEa9B1L3iOVzqpafBEAmupg+kLEHcn/avvSzIvAdldZ
- LmpjZ7w7cO9NGwF1BvT+X5ngtSWJGTWfeQGnYtOk/v1ZWTy8hV1HZiIA+/gaxwBp/JKV
- xgUV6L94eMRcAQP9MquIwHibJzZKYrnNLKAh6RaAE7+reWF1xXNRi4rnaDtnm15TMR4O
- Ycxw==
-X-Gm-Message-State: AOJu0YzwjVsyeabkJsPmkmJq2v/q7tgBtcADQjuEKKsetymwSbpF7Rbr
- Ovca6g+JVlrqCpDpv6QROab+UwUZfGFFbHFTrOEY+AcdiGOBaQ73VeUPL6Ist2PrTeIjx6JuP6g
- QbzuwFSTpRXRsL8swGTOMrLkGS7vFfM/rjNy56A==
-X-Gm-Gg: ASbGnctGVGWygkdLMgn9RLbIWZxkNS/riBa93ODFaudeQOUwTco25B2vzO5njzKyY/D
- +6GG84GBQuTFmcla/mZ5qJYj4CyeqQ3v3VyUzqkeNqdJdVrRPlYRwCON0wSnp3r0KrKk/GBGOKQ
- ==
-X-Google-Smtp-Source: AGHT+IHl7+7n5n0RrZZTb3zVKAorYARghoJEnfxSyv4OFt7WXaFwttoJyl63gn39E92Mickw0i8REEI4P5kR1XZK1Jg=
-X-Received: by 2002:a05:6902:982:b0:e57:3ddf:4e7b with SMTP id
- 3f1490d57ef6-e58a4adbd87mr9882139276.16.1738341991544; Fri, 31 Jan 2025
- 08:46:31 -0800 (PST)
+ d=1e100.net; s=20230601; t=1738341996; x=1738946796;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=eb9R/potxLbKcWtTBrZYpzuUeavSfgFfRVFByzPaJ5s=;
+ b=u8icf+ouCNFTGr6Qkfcy5MqZpLwrspcFobHhubQmN/86tDVSJyqXCQqvo8+6ES3x2A
+ +GqTGeIvdPhF0A1z+/vuUptiC8/76dfMcISNhNLpToApMqBZzEMgZ7Ad4FvcZnPPu8Eg
+ AI6up6ZRoDAe/kRFUiNUBJeKbkFadf1QVmWaGId2r82iRcsY1WCIQCZeOc0Addbq0KZd
+ /GaHY1nt++NKVWThrFqO8welCzDgtyT7hx86gtKFGhz805hlzYLZX5eHgDOpyEJnaooS
+ Li/zJGiKMAkf65EhGHPpX/LD/2wmZOT8sYX8rCf+V3sZZpLQH5npgASHPd8iic2FXneO
+ fXEw==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCVf1mB2u53dWh57bdU0T1CoFiGUhoWv7m8SXhv5sKWi1zN+bvae3i9+Cn7XphPhjUBDDh4gIv9L/YLw@nongnu.org
+X-Gm-Message-State: AOJu0YwqzKYKeYkWvO/K2jvlJD9W4i+c7QX5FLb8PcGOBW5cImdiWRe7
+ yyCcq6w+nPzRY3DTCvLt0TDSvmf3qp8p+xVignBxwMBsXuHaVpA4a7CVo/NDB1k=
+X-Gm-Gg: ASbGncuGfgSXWWi/BO3JV49hiDLgrljkiADMfRiyp7y0GKg99xx4kvm9WhtDhm7L7Le
+ h5R/5VP+OvNQb4AIAWMY5cYNOEdU8BCdmudMPsuPCMx6Rg8Kt736VDX/m8lE4DrBjM+nU3MUydS
+ EOPg2KZnnpv+TR/7fqE28OI5nQnqciBi3leDiXWjAVHubQ7Nt2Em5V0EVYRIg3Exo7MiqdKvIcU
+ kJ7I3vbg7wVtBkA+0wi9bljlX3FVKqAp1G0h3FJQlemv9gKqlr6UKF9ecg1JqodsfrtdeF8RTrG
+ jiN+WrbFfknkmJoAwN+08kXJgokG/Tps
+X-Google-Smtp-Source: AGHT+IFv0hfSYB67wyovVHwxih0a7b9k3zgc1jq5U4oEDjMmxDLzkYQBLjrEqYX2olLX2yGnWIIIbg==
+X-Received: by 2002:a17:902:d2c8:b0:21d:3bd7:afe8 with SMTP id
+ d9443c01a7336-21dd7e00b71mr181200665ad.49.1738341995917; 
+ Fri, 31 Jan 2025 08:46:35 -0800 (PST)
+Received: from [192.168.163.227] ([50.233.235.3])
+ by smtp.gmail.com with ESMTPSA id
+ 98e67ed59e1d1-2f848aa0874sm3870306a91.32.2025.01.31.08.46.34
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Fri, 31 Jan 2025 08:46:35 -0800 (PST)
+Message-ID: <62449bfd-eb65-41d6-ae53-0333bcb603b3@linaro.org>
+Date: Fri, 31 Jan 2025 08:46:32 -0800
 MIME-Version: 1.0
-References: <20250129013857.135256-1-richard.henderson@linaro.org>
- <20250129013857.135256-29-richard.henderson@linaro.org>
-In-Reply-To: <20250129013857.135256-29-richard.henderson@linaro.org>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Fri, 31 Jan 2025 16:46:20 +0000
-X-Gm-Features: AWEUYZlnJzsQ6BEDHU0twLgJCF3LcxV38giUUmvOirlsNkzbuIazAT1z3HDRljA
-Message-ID: <CAFEAcA8au1rLJdsB8iVKLN0N5eNP7twm=SCVb7zsLpHCqrDusg@mail.gmail.com>
-Subject: Re: [PATCH v2 28/34] target/arm: Split gvec_fmla_idx_* for fmls and
- ah_fmls
-To: Richard Henderson <richard.henderson@linaro.org>
-Cc: qemu-devel@nongnu.org
-Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::b29;
- envelope-from=peter.maydell@linaro.org; helo=mail-yb1-xb29.google.com
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 0/1] meson: Deprecate 32-bit host systems
+To: Paolo Bonzini <pbonzini@redhat.com>,
+ Peter Maydell <peter.maydell@linaro.org>, Thomas Huth <thuth@redhat.com>
+Cc: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
+ =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ qemu-devel@nongnu.org, stefanha@redhat.com, mark.cave-ayland@ilande.co.uk,
+ Liviu Ionescu <ilg@livius.net>
+References: <20250128004254.33442-1-richard.henderson@linaro.org>
+ <9a280789-9248-4eca-b50c-048fc58e3f53@redhat.com>
+ <87plk72tvr.fsf@draig.linaro.org>
+ <ad6ca73a-c38a-4a9b-bdcb-ab50aa53ccd1@linaro.org>
+ <Z5ii-ueFt5-5Brxz@redhat.com>
+ <8c0eea44-d0bf-4b86-9b1b-1c2082ab2df9@linaro.org>
+ <9bf6d4b0-7a89-4110-a1e1-46bbdb2fc793@linaro.org>
+ <c13e207e-06a5-4f40-b319-f4f2e59d919a@redhat.com>
+ <CAFEAcA_CfVfypS5yUtT3V34CDxmAqx7wYnDoKPfHq-o=54GgAg@mail.gmail.com>
+ <8a54600c-ff3f-42dd-b164-62a57de867df@redhat.com>
+Content-Language: en-US
+From: Richard Henderson <richard.henderson@linaro.org>
+In-Reply-To: <8a54600c-ff3f-42dd-b164-62a57de867df@redhat.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::62b;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x62b.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -93,45 +116,25 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, 29 Jan 2025 at 01:39, Richard Henderson
-<richard.henderson@linaro.org> wrote:
->
-> Split negation cases out of gvec_fmla, creating 6 new helpers.
-> We no longer pass 'neg' as a bit in simd_data.
->
-> Handle FPCR.AH=0 via xor and FPCR.AH=1 via muladd flags.
+On 1/29/25 04:47, Paolo Bonzini wrote:
+> The difference with TCG of course is that TCG is in active development, and therefore its 
+> 32-bit host support is not surviving passively in the same way that a random device is.  
+> Still, I think we can identify at least three different parts that should be treated 
+> differently: 64-on-32, 32-on-32 system-mode emulation and 32-on-32 user-mode emulation.
 
->  static bool do_fmla_vector_idx(DisasContext *s, arg_qrrx_e *a, bool neg)
->  {
-> -    static gen_helper_gvec_4_ptr * const fns[3] = {
-> -        gen_helper_gvec_fmla_idx_h,
-> -        gen_helper_gvec_fmla_idx_s,
-> -        gen_helper_gvec_fmla_idx_d,
-> +    static gen_helper_gvec_4_ptr * const fns[3][3] = {
-> +        { gen_helper_gvec_fmla_idx_h,
-> +          gen_helper_gvec_fmla_idx_s,
-> +          gen_helper_gvec_fmla_idx_d },
-> +        { gen_helper_gvec_fmls_idx_h,
-> +          gen_helper_gvec_fmls_idx_s,
-> +          gen_helper_gvec_fmls_idx_d },
-> +        { gen_helper_gvec_ah_fmls_idx_h,
-> +          gen_helper_gvec_ah_fmls_idx_s,
-> +          gen_helper_gvec_ah_fmls_idx_d },
->      };
->      MemOp esz = a->esz;
->      int check = fp_access_check_vector_hsd(s, a->q, esz);
-> @@ -6756,8 +6762,7 @@ static bool do_fmla_vector_idx(DisasContext *s, arg_qrrx_e *a, bool neg)
->
->      gen_gvec_op4_fpst(s, a->q, a->rd, a->rn, a->rm, a->rd,
->                        esz == MO_16 ? FPST_A64_F16 : FPST_A64,
-> -                      (s->fpcr_ah << 5) | (a->idx << 1) | neg,
-> -                      fns[esz - 1]);
-> +                      a->idx, fns[esz - 1][neg ? 1 + s->fpcr_ah : 0]);
+Why the user/system split for 32-on-32?
 
-The indexes into fns[][] here are the wrong way around, so
-if you try to do a FMLA on a double it hands you back
-gen_helper_gvec_ah_fmls_idx_h ...
+> We could and should remove 64-on-32, maybe even without a deprecation period, but the rest 
+> I'm not so sure.  I don't know enough to understand their maintenance cost (other than the 
+> mere existence of the 32-bit TCG backends), but it's certainly not comparable to 64-on-32.
 
-thanks
--- PMM
+Ok, lemme see how easy it is to prohibit configuring 64-on-32.
+
+But I also think we should still deprecate 32-bit hosts, sooner rather than later.  Even 
+if we have no immediate plans to remove them.  I think we want interested parties to speak 
+up.  At some point this decade I want to be able to say: we've given you fair warning and 
+time is up.
+
+
+r~
 
