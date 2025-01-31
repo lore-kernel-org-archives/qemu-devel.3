@@ -4,58 +4,58 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3210EC0218A
-	for <qemu-devel@archiver.kernel.org>; Fri, 31 Jan 2025 02:03:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CCEBDC0218A
+	for <qemu-devel@archiver.kernel.org>; Fri, 31 Jan 2025 02:46:45 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tdgNX-0004NT-05; Thu, 30 Jan 2025 21:03:31 -0500
+	id 1tdh2h-0004at-69; Thu, 30 Jan 2025 21:46:03 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mmorrell@tachyum.com>)
- id 1tdgNV-0004L1-6D
- for qemu-devel@nongnu.org; Thu, 30 Jan 2025 21:03:29 -0500
-Received: from mxa.tachyum.com ([66.160.133.173])
+ (Exim 4.90_1) (envelope-from <sstabellini@kernel.org>)
+ id 1tdh2f-0004al-F9
+ for qemu-devel@nongnu.org; Thu, 30 Jan 2025 21:46:01 -0500
+Received: from dfw.source.kernel.org ([2604:1380:4641:c500::1])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mmorrell@tachyum.com>)
- id 1tdgNT-0005h6-6Z
- for qemu-devel@nongnu.org; Thu, 30 Jan 2025 21:03:28 -0500
-Received: from mxa.tachyum.com (localhost.localdomain [127.0.0.1])
- by mxa.tachyum.com (Proxmox) with ESMTP id 9B9931E76E7
- for <qemu-devel@nongnu.org>; Thu, 30 Jan 2025 18:03:11 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=tachyum.com; h=
- cc:content-type:content-type:date:from:from:message-id
- :mime-version:reply-to:subject:subject:to:to; s=dkim; bh=0t5Jwpy
- AY4cRlBXX81QUB3goyHNS4ORGA+fldBxHj84=; b=sA8/P4unusi1zbDMe/KE+h1
- 521uTNCaemQbNY36pIKk5V/igHJHQal4yHVy0o+qzxHut05PnRAcEJbz5fy0u4ch
- +wIBqcOqiW00De/KqbO1K/TWfOj9XcTGbFTfnuwcucjoFFpsHPnkA3WRcfbT0TOv
- jotSR4PYyOo6V2xJTC5WeRKtHQ/KvlLpVOiRUndqfYQixe/d2FNU/ZEFLgW5lFTk
- btsBsu+//+FeP1rLYb2nENAx3jEkV4d+k1Z7G5jxAmeRNGaWb4P0S+p/+2qz0DhE
- Big+q92DaHtLuMyhHOFoBtyIRAmD/29RCOZNOpEVfvVLITojYQ4t4xciyjqeGAg=
- =
-From: Michael Morrell <mmorrell@tachyum.com>
-To: "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>
-Subject: x86 denormal flag handling
-Thread-Topic: x86 denormal flag handling
-Thread-Index: AdtzgjdbXE/Z+ZiSQg21Zmjyx/dbHA==
-Date: Fri, 31 Jan 2025 02:03:12 +0000
-Message-ID: <96e999333e9b49fcb60f051a29d41c83@tachyum.com>
-Accept-Language: en-US
-Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-Content-Type: multipart/alternative;
- boundary="_000_96e999333e9b49fcb60f051a29d41c83tachyumcom_"
+ (Exim 4.90_1) (envelope-from <sstabellini@kernel.org>)
+ id 1tdh2d-0003dO-QJ
+ for qemu-devel@nongnu.org; Thu, 30 Jan 2025 21:46:01 -0500
+Received: from smtp.kernel.org (transwarp.subspace.kernel.org [100.75.92.58])
+ by dfw.source.kernel.org (Postfix) with ESMTP id 1C1665C607E;
+ Fri, 31 Jan 2025 02:45:14 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 603D9C4CED2;
+ Fri, 31 Jan 2025 02:45:52 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+ s=k20201202; t=1738291553;
+ bh=En/iMtmkKZux8N9VA5uOiTQQrDgmaDnMr02/HapSy+U=;
+ h=Date:From:To:cc:Subject:From;
+ b=ckOc6L4VRZzsaVa7ZLCvhRH8t299g7lK6C3ghotjHLqEhDVBVUSU++AxxKl+yTpAt
+ cU+LgppTM4lbQT6YuhQKRcIwHFiCYuc4Gac9gfjLmTuhwZOKHazQNkvIQjYmFuqG4+
+ uyKbJ79fTxlfW4wesiFN+X2/uMNFYWXK70VP+V+AVN7L8XVtmZRu2zpVhnln8q396/
+ Lx4MKpQFJqAJktKIIVVSge8cyxP5OBBkQbc2sa9T/ghr8xwgDKSUqTB1K+DvW4JdSB
+ R7QTVb2ejExuU9408LtunBhSaZwXAq+pKhkvRgnUoDgYW1WiqOoxMl1I8Lj14vZg0i
+ KMMfxoLtdSMkQ==
+Date: Thu, 30 Jan 2025 18:45:50 -0800 (PST)
+From: Stefano Stabellini <sstabellini@kernel.org>
+X-X-Sender: sstabellini@ubuntu-linux-20-04-desktop
+To: Paolo Bonzini <pbonzini@redhat.com>
+cc: sstabellini@kernel.org, Zhao Liu <zhao1.liu@intel.com>, 
+ richard.henderson@linaro.org, eduardo@habkost.net, qemu-devel@nongnu.org, 
+ Edgar.Iglesias@amd.com, jason.andryuk@amd.com, xenia.ragiadakou@amd.com
+Subject: QEMU TCG AMD64 error running Xen
+Message-ID: <alpine.DEB.2.22.394.2501301825380.11632@ubuntu-linux-20-04-desktop>
+User-Agent: Alpine 2.22 (DEB 394 2020-01-19)
 MIME-Version: 1.0
-Received-SPF: pass client-ip=66.160.133.173; envelope-from=mmorrell@tachyum.com;
- helo=mxa.tachyum.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, HTML_MESSAGE=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Type: text/plain; charset=US-ASCII
+Received-SPF: pass client-ip=2604:1380:4641:c500::1;
+ envelope-from=sstabellini@kernel.org; helo=dfw.source.kernel.org
+X-Spam_score_int: -56
+X-Spam_score: -5.7
+X-Spam_bar: -----
+X-Spam_report: (-5.7 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.3,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -71,131 +71,49 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
---_000_96e999333e9b49fcb60f051a29d41c83tachyumcom_
-Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: quoted-printable
+Hi Paolo,
 
-I've been following the recent changes to better support denormal handling =
-and I don't think they are doing the right thing for x86.
+It has been a long time :-)  Nowadays I work on Xen on both ARM and AMD
+x86, and our x86 configuration has only hardware-assisted guests (PVH
+guests). Even Dom0 is hardware-assisted.
 
-I tried a simple program to convert a denormal float value (0x1.0p-127) to =
-a double.  With the default of DAZ being 0 in MXCSR, x86 sets DE, but QEMU =
-doesn't.  This is the opposite behavior of AARCH64 which sets their denorma=
-l input flag when it flushes a denormal input to 0.
+I am trying to run Xen with Dom0 as PVH guest in QEMU TCG. If I enable
+KVM, it works, but with KVM disabled it does not.
 
-Here's what I tried:
+Xen gets all the way to doing "vmrun" on Dom0, but then it keeps getting
+VMEXITs (svm_vmexit_handler) with vmcb->exitcode=0x60, which is
+VMEXIT_INTR. QEMU is executing
+target/i386/tcg/system/seg_helper.c:x86_cpu_exec_interrupt with
+interrupt_request == CPU_INTERRUPT_HARD.
 
-#include <stdio.h>
-#include <immintrin.h>
+This is my QEMU command line, I am using the staging branch:
 
-volatile float f =3D 0x1.0p-127;
+/local/repos/qemu/build/qemu-system-x86_64 \
+    -cpu EPYC-v3,+svm \
+    -machine q35 \
+    -smp 1 -m 4G \
+    -monitor none -serial stdio \
+    -nographic \
+    -no-reboot \
+    -device virtio-net-pci,netdev=n0 \
+    -netdev user,id=n0,tftp=/local/qemu-x86/binaries,bootfile=/pxelinux.0
 
-int main()
-{
-    double d =3D f;
-    printf("Converting a denormal float to a double %s the DE bit in MXCSR\=
-n",
-           _mm_getcsr() & _MM_EXCEPT_DENORM ? "sets" : "does not set");
-    return 0;
-}
+This is my pxelinux.0 file:
 
-When run on a native machine, it prints:
+#!ipxe
+  
+kernel xen console=com1 dom0=pvh dom0-iommu=none dom0_mem=1G sync_console
+module bzImage console=hvc0
+boot
 
-Converting a denormal float to a double sets the DE bit in MXCSR
+If it helps make things easier, you can even take the Xen and Linux
+bzImage binaries from the Xen CI-loop:
+https://gitlab.com/xen-project/hardware/xen/-/jobs/8980862961/artifacts/browse/binaries/
+https://gitlab.com/xen-project/hardware/xen/-/jobs/8980862959/artifacts/browse/binaries/
 
-But when run using QEMU, it prints:
+Do you have any ideas of what could be the source of the problem?
 
-Converting a denormal float to a double does not set the DE bit in MXCSR
+Cheers,
 
---_000_96e999333e9b49fcb60f051a29d41c83tachyumcom_
-Content-Type: text/html; charset="us-ascii"
-Content-Transfer-Encoding: quoted-printable
-
-<html xmlns:v=3D"urn:schemas-microsoft-com:vml" xmlns:o=3D"urn:schemas-micr=
-osoft-com:office:office" xmlns:w=3D"urn:schemas-microsoft-com:office:word" =
-xmlns:m=3D"http://schemas.microsoft.com/office/2004/12/omml" xmlns=3D"http:=
-//www.w3.org/TR/REC-html40">
-<head>
-<meta http-equiv=3D"Content-Type" content=3D"text/html; charset=3Dus-ascii"=
->
-<meta name=3D"Generator" content=3D"Microsoft Word 15 (filtered medium)">
-<style><!--
-/* Font Definitions */
-@font-face
-	{font-family:"Cambria Math";
-	panose-1:2 4 5 3 5 4 6 3 2 4;}
-@font-face
-	{font-family:Aptos;
-	panose-1:0 0 0 0 0 0 0 0 0 0;}
-/* Style Definitions */
-p.MsoNormal, li.MsoNormal, div.MsoNormal
-	{margin:0in;
-	font-size:12.0pt;
-	font-family:"Aptos",serif;
-	mso-ligatures:standardcontextual;}
-span.EmailStyle17
-	{mso-style-type:personal-compose;
-	font-family:"Aptos",serif;
-	color:windowtext;}
-.MsoChpDefault
-	{mso-style-type:export-only;}
-@page WordSection1
-	{size:8.5in 11.0in;
-	margin:1.0in 1.0in 1.0in 1.0in;}
-div.WordSection1
-	{page:WordSection1;}
---></style><!--[if gte mso 9]><xml>
-<o:shapedefaults v:ext=3D"edit" spidmax=3D"1026" />
-</xml><![endif]--><!--[if gte mso 9]><xml>
-<o:shapelayout v:ext=3D"edit">
-<o:idmap v:ext=3D"edit" data=3D"1" />
-</o:shapelayout></xml><![endif]-->
-</head>
-<body lang=3D"EN-US" link=3D"#467886" vlink=3D"#96607D" style=3D"word-wrap:=
-break-word">
-<div class=3D"WordSection1">
-<p class=3D"MsoNormal">I&#8217;ve been following the recent changes to bett=
-er support denormal handling and I don&#8217;t think they are doing the rig=
-ht thing for x86.<o:p></o:p></p>
-<p class=3D"MsoNormal"><o:p>&nbsp;</o:p></p>
-<p class=3D"MsoNormal">I tried a simple program to convert a denormal float=
- value (0x1.0p-127) to a double.&nbsp; With the default of DAZ being 0 in M=
-XCSR, x86 sets DE, but QEMU doesn&#8217;t.&nbsp; This is the opposite behav=
-ior of AARCH64 which sets their denormal input flag
- when it flushes a denormal input to 0.<o:p></o:p></p>
-<p class=3D"MsoNormal"><o:p>&nbsp;</o:p></p>
-<p class=3D"MsoNormal">Here&#8217;s what I tried:<o:p></o:p></p>
-<p class=3D"MsoNormal"><o:p>&nbsp;</o:p></p>
-<p class=3D"MsoNormal">#include &lt;stdio.h&gt;<o:p></o:p></p>
-<p class=3D"MsoNormal">#include &lt;immintrin.h&gt;<o:p></o:p></p>
-<p class=3D"MsoNormal"><o:p>&nbsp;</o:p></p>
-<p class=3D"MsoNormal">volatile float f =3D 0x1.0p-127;<o:p></o:p></p>
-<p class=3D"MsoNormal"><o:p>&nbsp;</o:p></p>
-<p class=3D"MsoNormal">int main()<o:p></o:p></p>
-<p class=3D"MsoNormal">{<o:p></o:p></p>
-<p class=3D"MsoNormal">&nbsp;&nbsp;&nbsp; double d =3D f;<o:p></o:p></p>
-<p class=3D"MsoNormal">&nbsp;&nbsp;&nbsp; printf(&quot;Converting a denorma=
-l float to a double %s the DE bit in MXCSR\n&quot;,<o:p></o:p></p>
-<p class=3D"MsoNormal">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbs=
-p;&nbsp; _mm_getcsr() &amp; _MM_EXCEPT_DENORM ? &quot;sets&quot; : &quot;do=
-es not set&quot;);<o:p></o:p></p>
-<p class=3D"MsoNormal">&nbsp;&nbsp;&nbsp; return 0;<o:p></o:p></p>
-<p class=3D"MsoNormal">}<o:p></o:p></p>
-<p class=3D"MsoNormal"><o:p>&nbsp;</o:p></p>
-<p class=3D"MsoNormal">When run on a native machine, it prints:<o:p></o:p><=
-/p>
-<p class=3D"MsoNormal"><o:p>&nbsp;</o:p></p>
-<p class=3D"MsoNormal">Converting a denormal float to a double sets the DE =
-bit in MXCSR<o:p></o:p></p>
-<p class=3D"MsoNormal"><o:p>&nbsp;</o:p></p>
-<p class=3D"MsoNormal">But when run using QEMU, it prints:<o:p></o:p></p>
-<p class=3D"MsoNormal"><o:p>&nbsp;</o:p></p>
-<p class=3D"MsoNormal">Converting a denormal float to a double does not set=
- the DE bit in MXCSR<o:p></o:p></p>
-</div>
-</body>
-</html>
-
---_000_96e999333e9b49fcb60f051a29d41c83tachyumcom_--
-
+Stefano
 
