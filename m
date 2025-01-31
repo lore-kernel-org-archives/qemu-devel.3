@@ -4,79 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B1B91C0218F
-	for <qemu-devel@archiver.kernel.org>; Fri, 31 Jan 2025 21:09:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1BFE9C02194
+	for <qemu-devel@archiver.kernel.org>; Fri, 31 Jan 2025 21:09:59 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tdyE5-0000U5-Iz; Fri, 31 Jan 2025 16:06:57 -0500
+	id 1tdyFR-000595-Cp; Fri, 31 Jan 2025 16:08:21 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tdyE3-0000Kk-Jg
- for qemu-devel@nongnu.org; Fri, 31 Jan 2025 16:06:55 -0500
-Received: from mail-wm1-x335.google.com ([2a00:1450:4864:20::335])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tdyF0-00043a-Ov
+ for qemu-devel@nongnu.org; Fri, 31 Jan 2025 16:08:00 -0500
+Received: from mail-wm1-x330.google.com ([2a00:1450:4864:20::330])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tdyE1-0007u4-Rh
- for qemu-devel@nongnu.org; Fri, 31 Jan 2025 16:06:55 -0500
-Received: by mail-wm1-x335.google.com with SMTP id
- 5b1f17b1804b1-43690d4605dso17494065e9.0
- for <qemu-devel@nongnu.org>; Fri, 31 Jan 2025 13:06:53 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tdyEz-00080c-1t
+ for qemu-devel@nongnu.org; Fri, 31 Jan 2025 16:07:54 -0500
+Received: by mail-wm1-x330.google.com with SMTP id
+ 5b1f17b1804b1-436341f575fso29196405e9.1
+ for <qemu-devel@nongnu.org>; Fri, 31 Jan 2025 13:07:52 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1738357612; x=1738962412; darn=nongnu.org;
+ d=linaro.org; s=google; t=1738357671; x=1738962471; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=Yx9zBwtSy3gGrxCYpvjzpuUDny+fjTYjt9csPoUwmf4=;
- b=zxFO5hAcp8+5j6jTtmzp+r+tmo7gGDIrLQv9AZjeV24YCX+kQ+5Cof1vyoV4fPxCSx
- nai6Rk3/+wBYUdn1HpxoUICcAw+eMMQZvkCuH9SNj4x35LVs/GRirVTpgPuPr9LCAOKj
- PUBN+aE2bdIqmBI28yBnZ2QN9B/fHgPG0yQe6yMwqGVOehdK/o1HIw8pzhymt4vPvpu0
- k+DXOxrHVCZZasIvRv18+M2ExKYrlf3esmU6FIlwb+MkSr2YA6PIIzr4X7OTZCz4jL5q
- TExAuF/5iPgDXjSupQMsUzedfsmS1qVW3aTLDQk/2pEjcyLQwV9/GY8BagU72E2ubInN
- WI8A==
+ bh=jevzQmfhYyewLfy6WntyUbmDu2Xn9SdL2qUs7Y2AXlw=;
+ b=AG2dFcQJyvpmc/cGEmqSOh8kYj4IsCpkwowQjoSbb9MXgqBZwwAr/mIVA9w0VGOABd
+ 1eJIi3SsTUrF7jAgT7NuVWRRXqAsYFFyKWf8qN/qBhthbs2OK6TreFmqvNdMbHr7lUF7
+ XGIsBH02AGRnJDxofoxC744GbWb/wQMUdZHECWunWE38dALLO2VWQOcBSdkn/wrqNjsV
+ f0TOdj2rSPiqyiBAt8RArFkE0+M962tgg8hhVHyelf/u6nsmQGP2dNZcXq4Pm1bCu4hw
+ CN1gbl48WTAtnjIztP4NdUfIV94jSOE6gKgMaQOnpGgO4STVZYxvShnJ1YGyrbZ96443
+ saGQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1738357612; x=1738962412;
+ d=1e100.net; s=20230601; t=1738357671; x=1738962471;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=Yx9zBwtSy3gGrxCYpvjzpuUDny+fjTYjt9csPoUwmf4=;
- b=iU3heIAfneJAh7b2T8v/+h0tyV4SmyB5L2Lkq0lPVqmP1eN7lXt86oyl+OR2etVu0u
- xA9TD5vXvOJuNw80MzNZdirlU9uqOh6kMs/HgQma6L2Ou8qiUis7Hr/pLDinRXmZuYqa
- r6BOKSiUAttpINLszf4i1qITDt6wErOJ45S/7CbXjnHQv9ZTvzLJthxxmU5dJ7EBqjS3
- hMhbMktZRZpiPt5U4y89iH/VjunqXNR0i/rfOrqbVcpy+XiD6tP+y3r6FvYRWbi7qsBW
- bgRT0BlYRqvi3kOPqRvVUIayxN0e3/Cc8hByQZwO4M8pORBbBY3mZNNaGhT1kn2MnmKQ
- 5Oow==
-X-Gm-Message-State: AOJu0YwDC2PNJoYdUB52b/IjXIBsGjvX0vKVtjDBG6oNCge69fK/a96k
- /s3Go9hZBKOf6E9k3BodiUPfUIu8S1njNu3eGE5rFu78Plhz4xnG+ZXSSaKZLDqpS6gIyVusnJx
- PBDQ=
-X-Gm-Gg: ASbGncunFVGq/CfLV+tcZC2rE1gyii5BpLb1wqldv6pkXrMIHQejYHgN12vNeSaG3I5
- EtdIQxhtInCsGPNbFuNopRFVBG+WUElaCeIFimzWEC5tkfaI1gmUzpXJxl9N6R0RbhDcZ5HKQLL
- Hbprrqadh2sXpVG6HkJ0cCBsSJxjlENxy+8OgrPfQN5MaEVdnTAz9LY6i0et82ALKC20WZ3vTyo
- DDNuwjf6vkEqewVuvuBttVNVTCJNWWXhM16lx4AUkIHpHz5pS2pijIqfpUEUszYAgrzX1UK+Jom
- BnSRevuuIy2uFXLnP3tqYWpz/wk7lJ8feFFShBMRco1LCqVPQpUtONYVPk4m9wzEZw==
-X-Google-Smtp-Source: AGHT+IFtmVu8oi+o//GaboNDYBJNnpaB/ubHIhDTYcuTLDK1cG+ltJZD3LhM9GLPvE6TbYDaBrNyuQ==
-X-Received: by 2002:a05:600c:1d27:b0:436:5fc9:30ba with SMTP id
- 5b1f17b1804b1-438dc429771mr122794815e9.29.1738357611713; 
- Fri, 31 Jan 2025 13:06:51 -0800 (PST)
+ bh=jevzQmfhYyewLfy6WntyUbmDu2Xn9SdL2qUs7Y2AXlw=;
+ b=wQBaXPP9igA3xflmzQ6XH5vZ2AWSDuxGp3jx6VDNtyAFhVzur/WQx6jKwfJ5M4EWmS
+ EdXRuykAR9LzqRbNnlPBBBveHfV7P79EPWyE9kaMGuKwyhLYakOClDAe+N9l4/GheBXV
+ nVeVt3ap7jtPk/W5IO1PMdoxQh5GvkRn9DIXSP1bgwjjjWHbqLcpxojjzxnuQ0nRJP87
+ RQTb8PafpwqrfobPJMUUkcKbQLQBU2CkMg8cp49sSo3IgvQgbyUGllOcZDzsMNVqUeLV
+ bN7lsAXefuqVHhOC+A+60SRpuQ//A8Tev8g+yQb7zmF/ePeaQlW8Qy6KzLyF8L0hchZh
+ YhbA==
+X-Gm-Message-State: AOJu0YxQPzQYTL7DGuJTLgtJAclNAqrs8w41aAI8MJOgj1WVOVaSE5vf
+ AqmVv751yItfnT1hcDUS7+KnW8vJ73Egi5PARoM0Iwf05vgz0tSu3ADQaub4IThL5rYVffmxs93
+ An4A=
+X-Gm-Gg: ASbGnctVlJougkhnH1RK0F9+k0L2xxyPyEeV9jkHSrYljmV6AvBphcRXnG9D3Ty4Omb
+ hbygbFr3PqFXHUd5XGC940SHutwlVrjV2X9QbgBiJ1p/1HbPZpeQ5Z5dkaAq4VlSOLlxgdOMGvj
+ hLDZYyJJPzJkgpoTVyX3+nZP2aSFJCvV3lfH7thNCRiLrKKYm5+Sng5lT7l03GWPg6XDIeTiYnP
+ RER0HgKk6DNf6krahkjf8dgx3DeHFjZ21hS2cP2hgYYcYBLlQ8+d138a/MdL1Y3GwDBChESbO8a
+ vaXnhwEzopp+rdDByYY9aQoY7mCoFUDg/icS+h5REkoFJd6E7u50dMdhq1b+ZjXZqQ==
+X-Google-Smtp-Source: AGHT+IEk0ehswLHlCiaQeLPChRjj68SToEqjBHwGrk4pW0tyPpNyng4HWDbtl0BAvjiuzZlUFf84Ww==
+X-Received: by 2002:a05:600c:5027:b0:434:a26c:8291 with SMTP id
+ 5b1f17b1804b1-438dc40d36emr127085665e9.24.1738357671249; 
+ Fri, 31 Jan 2025 13:07:51 -0800 (PST)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-438dcc26b15sm102018555e9.11.2025.01.31.13.06.50
+ 5b1f17b1804b1-438dcc6de7csm103590605e9.32.2025.01.31.13.07.49
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Fri, 31 Jan 2025 13:06:50 -0800 (PST)
+ Fri, 31 Jan 2025 13:07:50 -0800 (PST)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
-Cc: Titus Rwantare <titusr@google.com>, Hao Wu <wuhaotsh@google.com>,
+Cc: Peter Maydell <peter.maydell@linaro.org>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PULL 18/36] hw/misc/i2c-echo: add tracing
-Date: Fri, 31 Jan 2025 22:05:01 +0100
-Message-ID: <20250131210520.85874-19-philmd@linaro.org>
+Subject: [PULL 30/36] hw/sd/omap_mmc: Use similar API for "wire up omap_clk"
+ to other OMAP devices
+Date: Fri, 31 Jan 2025 22:05:13 +0100
+Message-ID: <20250131210520.85874-31-philmd@linaro.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20250131210520.85874-1-philmd@linaro.org>
 References: <20250131210520.85874-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::335;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x335.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::330;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x330.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -99,92 +100,64 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Titus Rwantare <titusr@google.com>
+From: Peter Maydell <peter.maydell@linaro.org>
 
-This has been useful when debugging and unsure if the guest is
-generating i2c traffic.
+The approach we've settled on for handling the omap_clk wiring for
+OMAP devices converted to QDev is to have a function omap_foo_set_clk()
+whose implementation just sets the field directly in the device's
+state struct. (See the "TODO" comment near the top of omap.h.)
+Make omap_mmc do the same.
 
-Signed-off-by: Titus Rwantare <titusr@google.com>
-Reviewed-by: Hao Wu <wuhaotsh@google.com>
+Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
 Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Message-ID: <20250121105935.3069035-1-titusr@google.com>
+Message-ID: <20250128104519.3981448-6-peter.maydell@linaro.org>
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 ---
- hw/misc/i2c-echo.c   | 8 ++++++++
- hw/misc/trace-events | 5 +++++
- 2 files changed, 13 insertions(+)
+ include/hw/arm/omap.h | 3 +++
+ hw/sd/omap_mmc.c      | 9 ++++++++-
+ 2 files changed, 11 insertions(+), 1 deletion(-)
 
-diff --git a/hw/misc/i2c-echo.c b/hw/misc/i2c-echo.c
-index 5ae3d0817ea..65d10029dc7 100644
---- a/hw/misc/i2c-echo.c
-+++ b/hw/misc/i2c-echo.c
-@@ -13,6 +13,7 @@
- #include "qemu/main-loop.h"
- #include "block/aio.h"
- #include "hw/i2c/i2c.h"
-+#include "trace.h"
- 
- #define TYPE_I2C_ECHO "i2c-echo"
- OBJECT_DECLARE_SIMPLE_TYPE(I2CEchoState, I2C_ECHO)
-@@ -80,11 +81,13 @@ static int i2c_echo_event(I2CSlave *s, enum i2c_event event)
-     case I2C_START_RECV:
-         state->pos = 0;
- 
-+        trace_i2c_echo_event(DEVICE(s)->canonical_path, "I2C_START_RECV");
-         break;
- 
-     case I2C_START_SEND:
-         state->pos = 0;
- 
-+        trace_i2c_echo_event(DEVICE(s)->canonical_path, "I2C_START_SEND");
-         break;
- 
-     case I2C_FINISH:
-@@ -92,12 +95,15 @@ static int i2c_echo_event(I2CSlave *s, enum i2c_event event)
-         state->state = I2C_ECHO_STATE_START_SEND;
-         i2c_bus_master(state->bus, state->bh);
- 
-+        trace_i2c_echo_event(DEVICE(s)->canonical_path, "I2C_FINISH");
-         break;
- 
-     case I2C_NACK:
-+        trace_i2c_echo_event(DEVICE(s)->canonical_path, "I2C_NACK");
-         break;
- 
-     default:
-+        trace_i2c_echo_event(DEVICE(s)->canonical_path, "UNHANDLED");
-         return -1;
-     }
- 
-@@ -112,6 +118,7 @@ static uint8_t i2c_echo_recv(I2CSlave *s)
-         return 0xff;
-     }
- 
-+    trace_i2c_echo_recv(DEVICE(s)->canonical_path, state->data[state->pos]);
-     return state->data[state->pos++];
- }
- 
-@@ -119,6 +126,7 @@ static int i2c_echo_send(I2CSlave *s, uint8_t data)
- {
-     I2CEchoState *state = I2C_ECHO(s);
- 
-+    trace_i2c_echo_send(DEVICE(s)->canonical_path, data);
-     if (state->pos > 2) {
-         return -1;
-     }
-diff --git a/hw/misc/trace-events b/hw/misc/trace-events
-index cf1abe69285..b35b0e77f7d 100644
---- a/hw/misc/trace-events
-+++ b/hw/misc/trace-events
-@@ -390,3 +390,8 @@ ivshmem_flat_read_write_mmr_invalid(uint64_t addr_offset) "No ivshmem register m
- ivshmem_flat_interrupt_invalid_peer(uint16_t peer_id) "Can't interrupt non-existing peer %u"
- ivshmem_flat_write_mmr(uint64_t addr_offset) "Write access at offset %"PRIu64
- ivshmem_flat_interrupt_peer(uint16_t peer_id, uint16_t vector_id) "Interrupting peer ID %u, vector %u..."
+diff --git a/include/hw/arm/omap.h b/include/hw/arm/omap.h
+index d20c55a8957..7cb87ea89cd 100644
+--- a/include/hw/arm/omap.h
++++ b/include/hw/arm/omap.h
+@@ -535,6 +535,9 @@ OBJECT_DECLARE_SIMPLE_TYPE(OMAPMMCState, OMAP_MMC)
+ DeviceState *omap_mmc_init(hwaddr base,
+                            MemoryRegion *sysmem,
+                            qemu_irq irq, qemu_irq dma[], omap_clk clk);
++/* TODO: clock framework (see above) */
++void omap_mmc_set_clk(DeviceState *dev, omap_clk clk);
 +
-+# i2c-echo.c
-+i2c_echo_event(const char *id, const char *event) "%s: %s"
-+i2c_echo_recv(const char *id, uint8_t data) "%s: recv 0x%02" PRIx8
-+i2c_echo_send(const char *id, uint8_t data) "%s: send 0x%02" PRIx8
+ 
+ /* omap_i2c.c */
+ I2CBus *omap_i2c_bus(DeviceState *omap_i2c);
+diff --git a/hw/sd/omap_mmc.c b/hw/sd/omap_mmc.c
+index 1bc8290f9d6..c6b8cf65d71 100644
+--- a/hw/sd/omap_mmc.c
++++ b/hw/sd/omap_mmc.c
+@@ -583,6 +583,13 @@ static const MemoryRegionOps omap_mmc_ops = {
+     .endianness = DEVICE_NATIVE_ENDIAN,
+ };
+ 
++void omap_mmc_set_clk(DeviceState *dev, omap_clk clk)
++{
++    OMAPMMCState *s = OMAP_MMC(dev);
++
++    s->clk = clk;
++}
++
+ DeviceState *omap_mmc_init(hwaddr base,
+                            MemoryRegion *sysmem,
+                            qemu_irq irq, qemu_irq dma[], omap_clk clk)
+@@ -594,7 +601,7 @@ DeviceState *omap_mmc_init(hwaddr base,
+     s = OMAP_MMC(dev);
+     sysbus_realize_and_unref(SYS_BUS_DEVICE(s), &error_fatal);
+ 
+-    s->clk = clk;
++    omap_mmc_set_clk(dev, clk);
+ 
+     memory_region_add_subregion(sysmem, base,
+                                 sysbus_mmio_get_region(SYS_BUS_DEVICE(s), 0));
 -- 
 2.47.1
 
