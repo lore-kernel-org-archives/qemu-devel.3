@@ -4,79 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0B94FC0218A
-	for <qemu-devel@archiver.kernel.org>; Sat,  1 Feb 2025 16:46:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 20A18C0218A
+	for <qemu-devel@archiver.kernel.org>; Sat,  1 Feb 2025 16:46:56 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1teGYc-0007DZ-77; Sat, 01 Feb 2025 11:41:22 -0500
+	id 1teGY5-0006Dl-SY; Sat, 01 Feb 2025 11:40:49 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1teGYY-00074i-R0
- for qemu-devel@nongnu.org; Sat, 01 Feb 2025 11:41:18 -0500
-Received: from mail-wm1-x32f.google.com ([2a00:1450:4864:20::32f])
+ id 1teGXu-000643-KQ
+ for qemu-devel@nongnu.org; Sat, 01 Feb 2025 11:40:38 -0500
+Received: from mail-wm1-x335.google.com ([2a00:1450:4864:20::335])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1teGYW-0001I8-Vk
- for qemu-devel@nongnu.org; Sat, 01 Feb 2025 11:41:18 -0500
-Received: by mail-wm1-x32f.google.com with SMTP id
- 5b1f17b1804b1-4364a37a1d7so29983605e9.3
- for <qemu-devel@nongnu.org>; Sat, 01 Feb 2025 08:41:16 -0800 (PST)
+ id 1teGXs-00015j-2R
+ for qemu-devel@nongnu.org; Sat, 01 Feb 2025 11:40:38 -0500
+Received: by mail-wm1-x335.google.com with SMTP id
+ 5b1f17b1804b1-436341f575fso35238065e9.1
+ for <qemu-devel@nongnu.org>; Sat, 01 Feb 2025 08:40:34 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1738428075; x=1739032875; darn=nongnu.org;
+ d=linaro.org; s=google; t=1738428033; x=1739032833; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=0fctEsT+vD+ZzpjBa9cl09j7OER8dNmtu6EgkXkTcP0=;
- b=sllqfa7gJMTXak/gocAKxae4e3/+KmIFCuDhUA+cfxShNOej0fCl9sItT8F091tpZm
- kxsgDkQPVkg2xxSubhOdKku8fhk7163eIFuW9XlCBxif3ecXzYYOUNTYbLFAse37K8kR
- rJxOXD8XuRpA8umXPTEes+jh6FxMpTiJJQRqGXouP2VBGFb//7TFSbBjTRB2yFpssk3X
- cvSIXFHtaHQHkl+GKxesmYJTDMiYFE3nFyL8e2EbL4skD1bJ9+iAxFM5jkDoH+0JIm9b
- Z03HptwbWHcBp8pnyuJZlDLAu5LiSg4WLg7XELFda0P7ksHBJJwuNhR033j6T2mIbLoh
- TrTQ==
+ :reply-to; bh=ON/Q5A+D+dYxinxhBdih1LIywvHUNEqZZNcBcHMSebw=;
+ b=ueXaG5doDV0LGTarxoWpR4hQpeQwq/243u+vetdF7vWRZ7ZgveUB+pHm5ROArisJyt
+ ZDJDeFvFLMAFtmr6iv+WOpMvODLyxcXD8hMAQt7Pp6QtmRxL8X3IupChu3i0G4hY0NeJ
+ 4VdAb7hFXVgfSUJ2DwBIPD2xHGWj7zRYxaDBuzZtYL1p+IuWV1CruU2kQYRrYkDi3/es
+ 52jZso2M8yIVIwVzS6OsfHwj+5YoQfnoQE+ipFAVj+O6H9YqRtX2HMWt9QN7l1wVOiOE
+ BeBd6qAT1H07XZsnpnF5knvdgYA0iGPdvoik8w8UdCbOrsIIn+q+bU9jfGnIzDRIm6lG
+ /6Dw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1738428075; x=1739032875;
+ d=1e100.net; s=20230601; t=1738428033; x=1739032833;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=0fctEsT+vD+ZzpjBa9cl09j7OER8dNmtu6EgkXkTcP0=;
- b=M1SbFAo+7g+hm+P7WE2HtUmrRng7h9cXbbbx7srGjftfWVS2JtIKmudmgeDS7UQ0Wh
- fKPVOjK4udfXAMDKlOmWH89ayQuCeGZbn3LGnUKiYnwsL/KnCAjNSOPqiVjeSFvLhBt4
- irASUeUAScNcuFeTSG5DfWAWT7E++0k4685W8/W1wK+NTPI3p3+wyEJmLfHog8ROWyZI
- xPw2Bu7A/1sCzHZfSz/eBn+pm9py0yiFOqo14eH3oKdqHAbXyBz5roHogPk0fq5y/rS5
- QXKq+TVIENpeLiC36PHQ3Ggnkf54KZ0gi7R3ThV4mHFHYOVynz07kn4HxcOFqIugyw9o
- Zaeg==
+ bh=ON/Q5A+D+dYxinxhBdih1LIywvHUNEqZZNcBcHMSebw=;
+ b=OZ/6vgYj9eLEBkUIL0Tuyl4/Kfv4sqEImOqYrHtdnWky91QxuXKd+s1ioRaDKbHtM6
+ jGmCr8w5iKlgYin5t40LIKIrMrOF8U8hyv/GNKrIOtXUfl0ISFDrN1H8PRR3OKeCiJmn
+ Du32EnT5xeD4vkCgErikD9KMQt5uaCaevaavmAEyjmTvRnHkPPeqf3+5SVxx0YPbx9+d
+ Ua5JZ/DriMMPGgD5AXxSmPRhpQD2TTlUKYhs3Gob7PLaGKl0yjXa1Em77L4LgU/hwzzB
+ ZT0qTcuWEQzdkDJ7rtBKrws5PC47Q5dL0wpL2KVsHZNCnVzyi3v1b+RUNWCEm9tPAdR3
+ W0zg==
 X-Forwarded-Encrypted: i=1;
- AJvYcCX+/8UTPQqxDoTeuJ3XigfX0fsNRVlCW3cufY2JhLY8CoiOHAV9Oi04zoDJ2naFPfu0hv2PV2ezv5RS@nongnu.org
-X-Gm-Message-State: AOJu0YwP3uWYyTm3PelYg1q74aukoxdw3SjYa0SAzpqhFYYc80xBKeSB
- LurY6Mxa6SMODpASWm0KcDHJZRyIUUz8EFSzvJpcJNUVYc/irGjY4Oc5rqr07PY=
-X-Gm-Gg: ASbGncs/oHOR4qIMN1ImNE7la9AXFJA4aS3HOTRYDp/xgh9LlUtHa5ALejCN47Jf9q+
- 32tR5cZtaVPoK8+tx2HeNg9FIsvwlhqbOuCrGeegnhWsU8mFRaf7M+oGwQ/OoP12eBiceiNsRPB
- TSJ1W2byRRhMMLsUDK+R2r4ApYdlcky+IiItMcLuwlOAB6hbJxYN0Sv6B3JjZMZj9kTA5dksVkv
- ACxJRfKQjAuZdWaGfb0dyabXWxbGJfsdLrGuVK38ex+HdMqonatN+GfJnrbuOh1d6bI/SEhq/lt
- 8BYYFXYbAj9lqLvYOKZn
-X-Google-Smtp-Source: AGHT+IGm8vZfrhs+Gwe4XLvL2lONTcSzhC6qrytGQVeVfS5jStsj3b0hlPuI2Pg1hSAWQOgo3luUlA==
-X-Received: by 2002:a5d:6c65:0:b0:38a:4b8a:e477 with SMTP id
- ffacd0b85a97d-38c51969b28mr11948655f8f.22.1738428075553; 
- Sat, 01 Feb 2025 08:41:15 -0800 (PST)
+ AJvYcCUwhMBSGoL/2sgjIy2/1enBDofYMX+45ovJolGr3aTIsKJHGErQusbHdUIJIA36jDlFjc3olXgVTfk3@nongnu.org
+X-Gm-Message-State: AOJu0Yw3kQf9P7ERdk4PmOwAXRYgMFfxd3vKb++Jk5hdIXIBU457FjQ3
+ M99V+ksHuOpIh1EuU2ZNoCnLKQJ9xtiBOR5eajCGCQrFPbOWCeLWJuD+N9/7ZoLQ7LrhSJNoYK/
+ e
+X-Gm-Gg: ASbGncsK+qDwAQNopew6jfsZ6NQJGVO0DKbODAp/x74AvQ/f6EZwBwBSIw/KOOVLXAz
+ 8yXRxKDcYwXPAc9T2hmAS8jk8mo0s6b3QRINmQzATMbKgtx3xXbBlwqYI6kUIPcM1Q6rVLnGIvv
+ sxJte/uQX/hrV00JVzfFJVyNe5LRqbh1wOl8W2555qg3Sk+oSO7l612thpKpdOmWi8dd8So4FO6
+ pAZYuaBTvLp8epF0kYfsRk0cnLHQ/sLQTyBlOveO7l2TUcLJNmsmfBiIiJnCPJL/z+G/J0AUf88
+ xYauR/OCvdpjgE7PYm/q
+X-Google-Smtp-Source: AGHT+IFuqUCtcPTq7sn43s4aL31aQs+BtliyTmzofTJzH35ssEA6Ej0jnUj0rczR82MN6BCrUjssWw==
+X-Received: by 2002:a05:600c:3d05:b0:436:18d0:aa6e with SMTP id
+ 5b1f17b1804b1-438dc3ab518mr183893725e9.5.1738428033121; 
+ Sat, 01 Feb 2025 08:40:33 -0800 (PST)
 Received: from orth.archaic.org.uk (orth.archaic.org.uk. [2001:8b0:1d0::2])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-438dcc81d74sm127401525e9.37.2025.02.01.08.41.14
+ 5b1f17b1804b1-438dcc81d74sm127401525e9.37.2025.02.01.08.40.31
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sat, 01 Feb 2025 08:41:14 -0800 (PST)
+ Sat, 01 Feb 2025 08:40:31 -0800 (PST)
 From: Peter Maydell <peter.maydell@linaro.org>
 To: qemu-arm@nongnu.org,
 	qemu-devel@nongnu.org
-Subject: [PATCH v2 46/69] target/arm: Handle FPCR.AH in vector FCMLA
-Date: Sat,  1 Feb 2025 16:39:49 +0000
-Message-Id: <20250201164012.1660228-47-peter.maydell@linaro.org>
+Subject: [PATCH v2 13/69] target/arm: Use FPST_FPCR_AH for BFCVT* insns
+Date: Sat,  1 Feb 2025 16:39:16 +0000
+Message-Id: <20250201164012.1660228-14-peter.maydell@linaro.org>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20250201164012.1660228-1-peter.maydell@linaro.org>
 References: <20250201164012.1660228-1-peter.maydell@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32f;
- envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x32f.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::335;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x335.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -99,148 +100,89 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Richard Henderson <richard.henderson@linaro.org>
+When FPCR.AH is 1, use FPST_FPCR_AH for:
+ * AdvSIMD BFCVT, BFCVTN, BFCVTN2
+ * SVE BFCVT, BFCVTNT
 
-The negation step in FCMLA mustn't negate a NaN when FPCR.AH
-is set. Handle this by passing FPCR.AH to the helper via the
-SIMD data field, and use this to select whether to do the
-negation via XOR or via the muladd negate_product flag.
+so that they get the required behaviour changes.
 
-Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
-Message-id: 20250129013857.135256-26-richard.henderson@linaro.org
-[PMM: Expanded commit message]
-Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
 Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 ---
- target/arm/tcg/translate-a64.c |  2 +-
- target/arm/tcg/vec_helper.c    | 66 ++++++++++++++++++++--------------
- 2 files changed, 40 insertions(+), 28 deletions(-)
+ target/arm/tcg/translate-a64.c | 27 +++++++++++++++++++++------
+ target/arm/tcg/translate-sve.c |  6 ++++--
+ 2 files changed, 25 insertions(+), 8 deletions(-)
 
 diff --git a/target/arm/tcg/translate-a64.c b/target/arm/tcg/translate-a64.c
-index c209ac84228..c45a9822281 100644
+index b01d05fe30e..bb32ccabf0e 100644
 --- a/target/arm/tcg/translate-a64.c
 +++ b/target/arm/tcg/translate-a64.c
-@@ -6175,7 +6175,7 @@ static bool trans_FCMLA_v(DisasContext *s, arg_FCMLA_v *a)
+@@ -8514,7 +8514,7 @@ TRANS(FRINTX_s, do_fp1_scalar, a, &f_scalar_frintx, -1)
+ static const FPScalar1 f_scalar_bfcvt = {
+     .gen_s = gen_helper_bfcvt,
+ };
+-TRANS_FEAT(BFCVT_s, aa64_bf16, do_fp1_scalar, a, &f_scalar_bfcvt, -1)
++TRANS_FEAT(BFCVT_s, aa64_bf16, do_fp1_scalar_ah, a, &f_scalar_bfcvt, -1)
  
-     gen_gvec_op4_fpst(s, a->q, a->rd, a->rn, a->rm, a->rd,
-                       a->esz == MO_16 ? FPST_A64_F16 : FPST_A64,
--                      a->rot, fn[a->esz]);
-+                      a->rot | (s->fpcr_ah << 2), fn[a->esz]);
-     return true;
+ static const FPScalar1 f_scalar_frint32 = {
+     NULL,
+@@ -9290,12 +9290,27 @@ static void gen_bfcvtn_hs(TCGv_i64 d, TCGv_i64 n)
+     tcg_gen_extu_i32_i64(d, tmp);
  }
  
-diff --git a/target/arm/tcg/vec_helper.c b/target/arm/tcg/vec_helper.c
-index fc3e6587b81..630513f00b2 100644
---- a/target/arm/tcg/vec_helper.c
-+++ b/target/arm/tcg/vec_helper.c
-@@ -965,22 +965,26 @@ void HELPER(gvec_fcmlah)(void *vd, void *vn, void *vm, void *va,
-     uintptr_t opr_sz = simd_oprsz(desc);
-     float16 *d = vd, *n = vn, *m = vm, *a = va;
-     intptr_t flip = extract32(desc, SIMD_DATA_SHIFT, 1);
--    uint32_t neg_imag = extract32(desc, SIMD_DATA_SHIFT + 1, 1);
--    uint32_t neg_real = flip ^ neg_imag;
-+    uint32_t fpcr_ah = extract32(desc, SIMD_DATA_SHIFT + 2, 1);
-+    uint32_t negf_imag = extract32(desc, SIMD_DATA_SHIFT + 1, 1);
-+    uint32_t negf_real = flip ^ negf_imag;
-+    float16 negx_imag, negx_real;
-     uintptr_t i;
+-static ArithOneOp * const f_vector_bfcvtn[] = {
+-    NULL,
+-    gen_bfcvtn_hs,
+-    NULL,
++static void gen_bfcvtn_ah_hs(TCGv_i64 d, TCGv_i64 n)
++{
++    TCGv_ptr fpst = fpstatus_ptr(FPST_AH);
++    TCGv_i32 tmp = tcg_temp_new_i32();
++    gen_helper_bfcvt_pair(tmp, n, fpst);
++    tcg_gen_extu_i32_i64(d, tmp);
++}
++
++static ArithOneOp * const f_vector_bfcvtn[2][3] = {
++    {
++        NULL,
++        gen_bfcvtn_hs,
++        NULL,
++    }, {
++        NULL,
++        gen_bfcvtn_ah_hs,
++        NULL,
++    }
+ };
+-TRANS_FEAT(BFCVTN_v, aa64_bf16, do_2misc_narrow_vector, a, f_vector_bfcvtn)
++TRANS_FEAT(BFCVTN_v, aa64_bf16, do_2misc_narrow_vector, a,
++           f_vector_bfcvtn[s->fpcr_ah])
  
--    /* Shift boolean to the sign bit so we can xor to negate.  */
--    neg_real <<= 15;
--    neg_imag <<= 15;
-+    /* With AH=0, use negx; with AH=1 use negf. */
-+    negx_real = (negf_real & ~fpcr_ah) << 15;
-+    negx_imag = (negf_imag & ~fpcr_ah) << 15;
-+    negf_real = (negf_real & fpcr_ah ? float_muladd_negate_product : 0);
-+    negf_imag = (negf_imag & fpcr_ah ? float_muladd_negate_product : 0);
+ static bool trans_SHLL_v(DisasContext *s, arg_qrr_e *a)
+ {
+diff --git a/target/arm/tcg/translate-sve.c b/target/arm/tcg/translate-sve.c
+index c084bb58e7e..be2b5528ba0 100644
+--- a/target/arm/tcg/translate-sve.c
++++ b/target/arm/tcg/translate-sve.c
+@@ -3904,7 +3904,8 @@ TRANS_FEAT(FCVT_hs, aa64_sve, gen_gvec_fpst_arg_zpz,
+            gen_helper_sve_fcvt_hs, a, 0, FPST_A64_F16)
  
-     for (i = 0; i < opr_sz / 2; i += 2) {
-         float16 e2 = n[H2(i + flip)];
--        float16 e1 = m[H2(i + flip)] ^ neg_real;
-+        float16 e1 = m[H2(i + flip)] ^ negx_real;
-         float16 e4 = e2;
--        float16 e3 = m[H2(i + 1 - flip)] ^ neg_imag;
-+        float16 e3 = m[H2(i + 1 - flip)] ^ negx_imag;
+ TRANS_FEAT(BFCVT, aa64_sve_bf16, gen_gvec_fpst_arg_zpz,
+-           gen_helper_sve_bfcvt, a, 0, FPST_A64)
++           gen_helper_sve_bfcvt, a, 0,
++           s->fpcr_ah ? FPST_AH : FPST_A64)
  
--        d[H2(i)] = float16_muladd(e2, e1, a[H2(i)], 0, fpst);
--        d[H2(i + 1)] = float16_muladd(e4, e3, a[H2(i + 1)], 0, fpst);
-+        d[H2(i)] = float16_muladd(e2, e1, a[H2(i)], negf_real, fpst);
-+        d[H2(i + 1)] = float16_muladd(e4, e3, a[H2(i + 1)], negf_imag, fpst);
-     }
-     clear_tail(d, opr_sz, simd_maxsz(desc));
- }
-@@ -1025,22 +1029,26 @@ void HELPER(gvec_fcmlas)(void *vd, void *vn, void *vm, void *va,
-     uintptr_t opr_sz = simd_oprsz(desc);
-     float32 *d = vd, *n = vn, *m = vm, *a = va;
-     intptr_t flip = extract32(desc, SIMD_DATA_SHIFT, 1);
--    uint32_t neg_imag = extract32(desc, SIMD_DATA_SHIFT + 1, 1);
--    uint32_t neg_real = flip ^ neg_imag;
-+    uint32_t fpcr_ah = extract32(desc, SIMD_DATA_SHIFT + 2, 1);
-+    uint32_t negf_imag = extract32(desc, SIMD_DATA_SHIFT + 1, 1);
-+    uint32_t negf_real = flip ^ negf_imag;
-+    float32 negx_imag, negx_real;
-     uintptr_t i;
+ TRANS_FEAT(FCVT_dh, aa64_sve, gen_gvec_fpst_arg_zpz,
+            gen_helper_sve_fcvt_dh, a, 0, FPST_A64)
+@@ -7054,7 +7055,8 @@ TRANS_FEAT(FCVTNT_ds, aa64_sve2, gen_gvec_fpst_arg_zpz,
+            gen_helper_sve2_fcvtnt_ds, a, 0, FPST_A64)
  
--    /* Shift boolean to the sign bit so we can xor to negate.  */
--    neg_real <<= 31;
--    neg_imag <<= 31;
-+    /* With AH=0, use negx; with AH=1 use negf. */
-+    negx_real = (negf_real & ~fpcr_ah) << 31;
-+    negx_imag = (negf_imag & ~fpcr_ah) << 31;
-+    negf_real = (negf_real & fpcr_ah ? float_muladd_negate_product : 0);
-+    negf_imag = (negf_imag & fpcr_ah ? float_muladd_negate_product : 0);
+ TRANS_FEAT(BFCVTNT, aa64_sve_bf16, gen_gvec_fpst_arg_zpz,
+-           gen_helper_sve_bfcvtnt, a, 0, FPST_A64)
++           gen_helper_sve_bfcvtnt, a, 0,
++           s->fpcr_ah ? FPST_AH : FPST_A64)
  
-     for (i = 0; i < opr_sz / 4; i += 2) {
-         float32 e2 = n[H4(i + flip)];
--        float32 e1 = m[H4(i + flip)] ^ neg_real;
-+        float32 e1 = m[H4(i + flip)] ^ negx_real;
-         float32 e4 = e2;
--        float32 e3 = m[H4(i + 1 - flip)] ^ neg_imag;
-+        float32 e3 = m[H4(i + 1 - flip)] ^ negx_imag;
- 
--        d[H4(i)] = float32_muladd(e2, e1, a[H4(i)], 0, fpst);
--        d[H4(i + 1)] = float32_muladd(e4, e3, a[H4(i + 1)], 0, fpst);
-+        d[H4(i)] = float32_muladd(e2, e1, a[H4(i)], negf_real, fpst);
-+        d[H4(i + 1)] = float32_muladd(e4, e3, a[H4(i + 1)], negf_imag, fpst);
-     }
-     clear_tail(d, opr_sz, simd_maxsz(desc));
- }
-@@ -1085,22 +1093,26 @@ void HELPER(gvec_fcmlad)(void *vd, void *vn, void *vm, void *va,
-     uintptr_t opr_sz = simd_oprsz(desc);
-     float64 *d = vd, *n = vn, *m = vm, *a = va;
-     intptr_t flip = extract32(desc, SIMD_DATA_SHIFT, 1);
--    uint64_t neg_imag = extract32(desc, SIMD_DATA_SHIFT + 1, 1);
--    uint64_t neg_real = flip ^ neg_imag;
-+    uint32_t fpcr_ah = extract32(desc, SIMD_DATA_SHIFT + 2, 1);
-+    uint32_t negf_imag = extract32(desc, SIMD_DATA_SHIFT + 1, 1);
-+    uint32_t negf_real = flip ^ negf_imag;
-+    float64 negx_real, negx_imag;
-     uintptr_t i;
- 
--    /* Shift boolean to the sign bit so we can xor to negate.  */
--    neg_real <<= 63;
--    neg_imag <<= 63;
-+    /* With AH=0, use negx; with AH=1 use negf. */
-+    negx_real = (uint64_t)(negf_real & ~fpcr_ah) << 63;
-+    negx_imag = (uint64_t)(negf_imag & ~fpcr_ah) << 63;
-+    negf_real = (negf_real & fpcr_ah ? float_muladd_negate_product : 0);
-+    negf_imag = (negf_imag & fpcr_ah ? float_muladd_negate_product : 0);
- 
-     for (i = 0; i < opr_sz / 8; i += 2) {
-         float64 e2 = n[i + flip];
--        float64 e1 = m[i + flip] ^ neg_real;
-+        float64 e1 = m[i + flip] ^ negx_real;
-         float64 e4 = e2;
--        float64 e3 = m[i + 1 - flip] ^ neg_imag;
-+        float64 e3 = m[i + 1 - flip] ^ negx_imag;
- 
--        d[i] = float64_muladd(e2, e1, a[i], 0, fpst);
--        d[i + 1] = float64_muladd(e4, e3, a[i + 1], 0, fpst);
-+        d[i] = float64_muladd(e2, e1, a[i], negf_real, fpst);
-+        d[i + 1] = float64_muladd(e4, e3, a[i + 1], negf_imag, fpst);
-     }
-     clear_tail(d, opr_sz, simd_maxsz(desc));
- }
+ TRANS_FEAT(FCVTLT_hs, aa64_sve2, gen_gvec_fpst_arg_zpz,
+            gen_helper_sve2_fcvtlt_hs, a, 0, FPST_A64)
 -- 
 2.34.1
 
