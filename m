@@ -4,90 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5830EC0218A
-	for <qemu-devel@archiver.kernel.org>; Sat,  1 Feb 2025 14:46:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A0C2AC0218F
+	for <qemu-devel@archiver.kernel.org>; Sat,  1 Feb 2025 14:55:53 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1teEl3-00035x-21; Sat, 01 Feb 2025 09:46:05 -0500
+	id 1teEu2-0005LW-5A; Sat, 01 Feb 2025 09:55:22 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <shentey@gmail.com>)
- id 1teEkx-00035f-8j; Sat, 01 Feb 2025 09:45:59 -0500
-Received: from mail-ej1-x62f.google.com ([2a00:1450:4864:20::62f])
+ id 1teEu0-0005L8-JQ; Sat, 01 Feb 2025 09:55:20 -0500
+Received: from mail-ej1-x631.google.com ([2a00:1450:4864:20::631])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <shentey@gmail.com>)
- id 1teEkv-0003Tu-Lm; Sat, 01 Feb 2025 09:45:59 -0500
-Received: by mail-ej1-x62f.google.com with SMTP id
- a640c23a62f3a-ab68a4ab074so365363066b.0; 
- Sat, 01 Feb 2025 06:45:56 -0800 (PST)
+ id 1teEty-0004mg-R0; Sat, 01 Feb 2025 09:55:20 -0500
+Received: by mail-ej1-x631.google.com with SMTP id
+ a640c23a62f3a-ab34a170526so470651066b.0; 
+ Sat, 01 Feb 2025 06:55:18 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1738421155; x=1739025955; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1738421716; x=1739026516; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:message-id:references
- :in-reply-to:subject:cc:to:from:date:from:to:cc:subject:date
- :message-id:reply-to;
- bh=dc6T1mf5Ubj6La+wPXu3XB5uKGJhazcpmwJlaVUctho=;
- b=EXby6mr/0/2hRNoV6gVPbN6Nxkh5D0y95VHFbT/8aCpwyYgun18Gy5czi8D4A/2tO5
- 5tTDaqcaekn9sFbJ3/IaJHB+B1exaMKpFpnomSa7xRtfJWCbiPuuehiPemKHWqv4gpE9
- MPI4IcGCYuYRM/Nsw+pYWn71dB7QJATWVJSSFwGioAH0aRwAUtqtYq3lrF8FmmCYfy4v
- dtCEechzdhJd5Y38gBHsS68Rq5Ncc4x8/+atUVCtFbHmMTStQaWMqPxAo7cOK+CycBCx
- nFKTIv5NBmm7JriAdQr8SGbic7kAvlTBdyV4fXLmWuh3kcDRtdMsqlh8wAWE2rv2Wp2c
- GGUA==
+ :in-reply-to:subject:to:from:date:from:to:cc:subject:date:message-id
+ :reply-to; bh=DtYDNjIyBVO1JYqJQblEL+piWSEx3ul++l6uPyRmxz4=;
+ b=WZ78Qyqh2EEmsymb+SHSgX1Ve8NCLADgMLRpLYKM4/v/ghiCuPo8ospombzXmFLryl
+ ZlS1Q0sH/o5QDZ4655bvyZD0DqGrooizUYD5XHTgQttMbJTmylTSHqDujEeSJD/rFPRT
+ 09x/txMf3t2c6JFETIhXQV17th0KHziIKwmmyIhm1fPu5IIhHHyVdy3WRhlB3zw65LmU
+ +MVcMe2evMegO8SJfsMUtQEjvI7OT2qynr5FwBJ94Ar+oNHAmRUcBP8bdwFkDX5kPdtE
+ rvSNBnnoZnBNeS8DBxe+SEEccDg08NesY5gVPeHpAuDsNa8bQS1zTgbYJoPlb2nc6k/m
+ ta7g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1738421155; x=1739025955;
+ d=1e100.net; s=20230601; t=1738421716; x=1739026516;
  h=content-transfer-encoding:mime-version:message-id:references
- :in-reply-to:subject:cc:to:from:date:x-gm-message-state:from:to:cc
+ :in-reply-to:subject:to:from:date:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=dc6T1mf5Ubj6La+wPXu3XB5uKGJhazcpmwJlaVUctho=;
- b=R8rW1eZ8lc6v+g0aj/naeFcUroqTUDEISKxWFeNCYpoT1ml3/PStqRGVz6oBGcd1qV
- JZoteZKdKrVOQrde1EdUTjQacjmwAsI3qF4Nxhthr9awhVcirsAtt21t4OTHMfg6rUix
- C8tJH8EuGcl7yhfBo4nHI50PhZnyl8kW8/2D3U7T4yju3MfcmBjEjJyzzYI5PXv7ed82
- QCvPdtaYOXXIpgZCQQ1sPtZ1j4J4vr3O8xSOGtUMliPrLFxiUMAEi/jPkTLAlDAWbpnD
- lXQJxfPsAFtL5l3yaFIsgax0aGmozqDS7XsbLlvVHq664v2fuyaJZPp9FkIP/mNqwk25
- CTwA==
+ bh=DtYDNjIyBVO1JYqJQblEL+piWSEx3ul++l6uPyRmxz4=;
+ b=j5uFxBmlreHloxwgdkX/XW2xb+9rjOlfeGUC/sEmMIkrH8M1yemElWmnEm85D1PlxT
+ HdyIhbGWeoSHT+9tr1xIj2TMVv+NR3c+AOmL03VpstxcfYXIPHCfadKDDV+18shiDdyo
+ BXy930r9VV4lARXwOgUbsq6SysEAyP+DWYclHvPL+g7Lmm63fCERosoym2Dk0I5tbCsX
+ WW/jYdCXbaHHDeZL2A0BIZVPQWdhhFk8yNaxJxNSyOJ7mjdsSovuhmx6gkWgymDXzywU
+ zvKWhO2cyw1NBGAclD/+oOX2KSyupD0nQt4FvqEiVtuMl1jF48UIZ5DixDfsnEHXGHmK
+ GKzw==
 X-Forwarded-Encrypted: i=1;
- AJvYcCVff/SAETU64OMZbReDVDlNo06kr4mF6wFxae3vC2WhZgfpeStey/8FFMIqyYVZsVt4rsVkmuo4E3X5cQ==@nongnu.org,
- AJvYcCWZgQIAXqiq09eyu0EbrkDTuIh8+QoxL8DG0DVa27NRjBfooPTg1sKjLwIIkkFPyc/zm6dqJHGoZQ==@nongnu.org
-X-Gm-Message-State: AOJu0Yz4a//+C0B9gKcM8f9mh+K9teIexINRFAp+Vcoyx3mYfTfJr182
- MJRn7dx+AkbwJf4/WX6nfAhyuyaap2MWE8UX7/6lInM+MNRxsCxf
-X-Gm-Gg: ASbGncv10bYHVKbyo7U3jynm89UoxfAtRNRZA7N6DNbewfel83d6z9J9Bw6dQ3M5Mx1
- RISoEIbmg3XL2AQ243TMXK4fm0tpVrlr3ts9k3/+X6zyOlCypZ9uynGJG4y8BoWy5q84ITx3Jrw
- G1DQEXhLFNfpzyx8+rkQyHhgZDohxnjrDomn/fZy87Na4oMaktP/RToqsH/uQnjcmI+kMVkyXYC
- KvugAKe9fjTxQhiNV4aSdn6ozjcbkh6yK8/vifuRstoEjIoL/VzMWi3h3ykaXU+mwvyoXlMfWJb
- xmNf/xa0INRD74BORrlItjMSZznpgjWd/809cGUGg3ZSe5TQ42Md/ItiTZaqvNdLeZE=
-X-Google-Smtp-Source: AGHT+IEwvZl598lbigkHa0mYQ3CARLZLCW2ckddVSYmsy8QUoqLxB7yKFv2ueKw3EIZYHSnBtx/zeg==
-X-Received: by 2002:a05:6402:2546:b0:5d0:cfad:f71 with SMTP id
- 4fb4d7f45d1cf-5dc5effe67amr37097466a12.32.1738421154701; 
- Sat, 01 Feb 2025 06:45:54 -0800 (PST)
+ AJvYcCXru5E4qwVPrJxXLYihgxpuuv3D0sgAfDuRSbQ07Wx3A6fReu48MvsGzDMt+32oCfnzij/hItKyPfqC@nongnu.org,
+ AJvYcCXu3qAFKtuzbrjUzjIihsq1ZfSB0hGks0oZE6TWoIEqRxStwToV/07PE8oOxfBcra0QXROtHZvwLZU=@nongnu.org
+X-Gm-Message-State: AOJu0YzOYq8Xk5/KtpxY4uO4gjb2FSSCkTV3ieEybnU94THpXiaVZAja
+ eL+Wzqz0tr+0OW0otUpvXbGxvC5NZ/VUVJjl6Q0mYGcn+7ofa9La
+X-Gm-Gg: ASbGnctOOw1qZC+RbwgrgoiE3kjcufoh2hujbcRHn/5ELNUfF93Xefx6g8saA44OkGl
+ Uxj2Z5+Ttp8ryjGJy5IP47mcm1EMFAkNuMnMU/abokhgS0F9SjavF1Z6qU3LfG1uiglmdMG3rQ2
+ BD6ONFEY9Yzz5anFmcB1Wo4OsD3MSaPPmO+EUWPKBd9JbJlYthrqKkjP9J2z+glG5fmSHdonkoh
+ JymsRsdF1hw4yBjfJEqJiBVaglpJ80K3Z/21a6RpnAE5WMCYdZLdE4I2BPjuA3VUbyWVmZXz/JY
+ fxrCTALwTj3Ybi6nR5wF+n1DSZX0uQyFdhcF0stILY3/G/bb4aKCuoCkTzrGNOb6hDk=
+X-Google-Smtp-Source: AGHT+IHpKYCf3TeL2pSs9qhEydh5AbIT09yHWNtJO21mZ11bvLp/KxNyWmnAOxwZPGNnqtjgK1aFtQ==
+X-Received: by 2002:a17:907:1c16:b0:aab:c78c:a7ed with SMTP id
+ a640c23a62f3a-ab6cfe12c99mr1842404666b.49.1738421716146; 
+ Sat, 01 Feb 2025 06:55:16 -0800 (PST)
 Received: from [127.0.0.1] (dynamic-077-183-083-158.77.183.pool.telefonica.de.
  [77.183.83.158]) by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-ab6e47d1014sm452549866b.66.2025.02.01.06.45.53
+ a640c23a62f3a-ab6e47a8005sm450780566b.32.2025.02.01.06.55.15
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Sat, 01 Feb 2025 06:45:54 -0800 (PST)
-Date: Sat, 01 Feb 2025 14:45:52 +0000
+ Sat, 01 Feb 2025 06:55:15 -0800 (PST)
+Date: Sat, 01 Feb 2025 14:55:15 +0000
 From: Bernhard Beschow <shentey@gmail.com>
-To: BALATON Zoltan <balaton@eik.bme.hu>
-CC: Peter Maydell <peter.maydell@linaro.org>, qemu-devel@nongnu.org,
- Paolo Bonzini <pbonzini@redhat.com>,
- =?ISO-8859-1?Q?Marc-Andr=E9_Lureau?= <marcandre.lureau@redhat.com>,
- Alistair Francis <alistair@alistair23.me>,
- Jean-Christophe Dubois <jcd@tribudubois.net>, qemu-arm@nongnu.org,
- Andrey Smirnov <andrew.smirnov@gmail.com>,
- "Edgar E. Iglesias" <edgar.iglesias@gmail.com>
-Subject: Re: [PATCH 09/21] hw/arm/fsl-imx8mp: Add PCIe support
-In-Reply-To: <f2172469-5935-414e-b4a9-bf61055b6fff@eik.bme.hu>
-References: <20250120203748.4687-1-shentey@gmail.com>
- <20250120203748.4687-10-shentey@gmail.com>
- <CAFEAcA9efWMDxaTCfa6t8MiCgFUEU+nsyurNOqVDxAa9=KS=-Q@mail.gmail.com>
- <137C0579-19AB-4D92-82DC-6CBE2422AD6A@gmail.com>
- <f2172469-5935-414e-b4a9-bf61055b6fff@eik.bme.hu>
-Message-ID: <9FB95B89-404D-49BA-961A-7F860E9C0F95@gmail.com>
+To: BALATON Zoltan <balaton@eik.bme.hu>, qemu-devel@nongnu.org,
+ qemu-ppc@nongnu.org
+Subject: =?US-ASCII?Q?Re=3A_=5BPATCH=5D_hw/ppc/e500=3A_Partial_impleme?=
+ =?US-ASCII?Q?ntation_of_local_access_window_registers?=
+In-Reply-To: <22e114ac-2c3f-76f1-2172-9adf0c50ad5f@eik.bme.hu>
+References: <20250115211544.307124E602F@zero.eik.bme.hu>
+ <22e114ac-2c3f-76f1-2172-9adf0c50ad5f@eik.bme.hu>
+Message-ID: <DE6FAB3B-F994-47B8-95A5-9D1BFD6B621F@gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain;
  charset=utf-8
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::62f;
- envelope-from=shentey@gmail.com; helo=mail-ej1-x62f.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::631;
+ envelope-from=shentey@gmail.com; helo=mail-ej1-x631.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -112,84 +103,160 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 
 
-Am 29=2E Januar 2025 17:54:46 UTC schrieb BALATON Zoltan <balaton@eik=2Ebm=
+Am 30=2E Januar 2025 12:45:58 UTC schrieb BALATON Zoltan <balaton@eik=2Ebm=
 e=2Ehu>:
->On Tue, 28 Jan 2025, Bernhard Beschow wrote:
->> Am 28=2E Januar 2025 14:33:14 UTC schrieb Peter Maydell <peter=2Emaydel=
-l@linaro=2Eorg>:
->>> On Mon, 20 Jan 2025 at 20:38, Bernhard Beschow <shentey@gmail=2Ecom> w=
-rote:
->>>>=20
->>>> Linux checks for the PLLs in the PHY to be locked, so implement a mod=
-el
->>>> emulating that=2E
->>>>=20
->>>> Signed-off-by: Bernhard Beschow <shentey@gmail=2Ecom>
->>>=20
->>>> diff --git a/docs/system/arm/imx8mp-evk=2Erst b/docs/system/arm/imx8m=
-p-evk=2Erst
->>>> index 1514bc5864=2E=2E8d48580cb4 100644
->>>> --- a/docs/system/arm/imx8mp-evk=2Erst
->>>> +++ b/docs/system/arm/imx8mp-evk=2Erst
->>>> @@ -14,6 +14,7 @@ The ``imx8mp-evk`` machine implements the following=
- devices:
->>>>   * Generic Interrupt Controller (GICv3)
->>>>   * 4 UARTs
->>>>   * 3 USDHC Storage Controllers
->>>> + * 1 Designware PCI Express Controller
->>>>   * Secure Non-Volatile Storage (SNVS) including an RTC
->>>>   * Clock Tree
->>>>=20
->>>> @@ -62,3 +63,15 @@ Now that everything is prepared the newly built im=
-age can be run in the QEMU
->>>>        -dtb imx8mp-evk-patched=2Edtb \
->>>>        -append "root=3D/dev/mmcblk2p2" \
->>>>        -drive file=3Dsdcard=2Eimg,if=3Dsd,bus=3D2,format=3Draw,id=3Dm=
-mcblk2
->>>> +
->>>> +Using PCI Devices
->>>> +-----------------
->>>> +
->>>> +The PCI Express controller spawns two PCI buses, of which only one c=
-an be used=2E
->>>> +By default QEMU assigns the wrong bus, so the correct one has to be =
-specified
->>>> +manually by adding ``bus=3Ddw-pcie``=2E For example, when adding an =
-Intel e1000
->>>> +network card, the command line looks like:
->>>> +
->>>> +=2E=2E code-block:: bash
->>>> +
->>>> +  $ qemu-system-aarch64 -M imximp-evk =2E=2E=2E -device virtio-net-p=
-ci,bus=3Ddw-pcie
->>>=20
->>> Why does this happen? Isn't there some way to make QEMU default to
->>> using the right bus? Otherwise there's likely to be a lot of
->>> user confusion because PCI "doesn't work"=2E=2E=2E
->>=20
->> Yeah, this is really confusing and I forget about it myself=2E I'd appr=
-eciate any hints here=2E
+>On Wed, 15 Jan 2025, BALATON Zoltan wrote:
+>> This allows guests to set the CCSR base address=2E Also store and retur=
+n
+>> values of the local access window registers but their functionality
+>> isn't implemented=2E
 >
->I'm not sure but I think the PCI bus created last will be used by default=
- so maybe swapping the order these are created may help=2E
+>Ping?
 
-Turns out there is BusClass::max_dev which is respected when a parent bus =
-for a user-created device is sought=2E I'll draw inspiration from pnv_phb4=
-=2E
+I guess you're trying to boot a real firmware image from SD card? I've imp=
+lemented that in my e500-fdt branch which I want to send as an RFC=2E I sti=
+ll need to clean it up=2E Once it's on the list we could make a plan how to=
+ turn it into a p10xx=2E Would that work for you?
 
 Best regards,
 Bernhard
 
+P=2ES=2E The last commit teaches you how to start a firmware from SD card=
+=2E
+
 >
->Regards,
->BALATON Zoltan
->
->> Best regards,
->> Bernhard
+>> Signed-off-by: BALATON Zoltan <balaton@eik=2Ebme=2Ehu>
+>> ---
+>> hw/ppc/e500-ccsr=2Eh |  4 +++
+>> hw/ppc/e500=2Ec      | 79 ++++++++++++++++++++++++++++++++++++++++++++-=
+-
+>> 2 files changed, 80 insertions(+), 3 deletions(-)
 >>=20
->>>=20
->>> thanks
->>> -- PMM
+>> diff --git a/hw/ppc/e500-ccsr=2Eh b/hw/ppc/e500-ccsr=2Eh
+>> index 249c17be3b=2E=2Ecfbf96e181 100644
+>> --- a/hw/ppc/e500-ccsr=2Eh
+>> +++ b/hw/ppc/e500-ccsr=2Eh
+>> @@ -4,12 +4,16 @@
+>> #include "hw/sysbus=2Eh"
+>> #include "qom/object=2Eh"
 >>=20
+>> +#define NR_LAWS 12
+>> +
+>> struct PPCE500CCSRState {
+>>     /*< private >*/
+>>     SysBusDevice parent;
+>>     /*< public >*/
+>>=20
+>>     MemoryRegion ccsr_space;
+>> +
+>> +    uint32_t law_regs[NR_LAWS * 2];
+>> };
+>>=20
+>> #define TYPE_CCSR "e500-ccsr"
+>> diff --git a/hw/ppc/e500=2Ec b/hw/ppc/e500=2Ec
+>> index 64f8c766b4=2E=2E376cb4cb37 100644
+>> --- a/hw/ppc/e500=2Ec
+>> +++ b/hw/ppc/e500=2Ec
+>> @@ -43,6 +43,7 @@
+>> #include "qemu/host-utils=2Eh"
+>> #include "qemu/option=2Eh"
+>> #include "hw/pci-host/ppce500=2Eh"
+>> +#include "qemu/log=2Eh"
+>> #include "qemu/error-report=2Eh"
+>> #include "hw/platform-bus=2Eh"
+>> #include "hw/net/fsl_etsec/etsec=2Eh"
+>> @@ -1331,11 +1332,83 @@ void ppce500_init(MachineState *machine)
+>>     boot_info->dt_size =3D dt_size;
+>> }
+>>=20
+>> +static int law_idx(hwaddr addr)
+>> +{
+>> +    int idx;
+>> +
+>> +    addr -=3D 0xc08;
+>> +    idx =3D 2 * ((addr >> 5) & 0xf);
+>> +    if (addr & 8) {
+>> +        idx++;
+>> +    }
+>> +    assert(idx < 2 * NR_LAWS);
+>> +    return idx;
+>> +}
+>> +
+>> +static uint64_t law_read(void *opaque, hwaddr addr, unsigned size)
+>> +{
+>> +    PPCE500CCSRState *s =3D opaque;
+>> +    uint64_t val =3D 0;
+>> +
+>> +    switch (addr) {
+>> +    case 0:
+>> +        val =3D s->ccsr_space=2Eaddr >> 12;
+>> +        break;
+>> +    case 0xc08 =2E=2E=2E 0xd70:
+>> +        val =3D s->law_regs[law_idx(addr)];
+>> +        break;
+>> +    default:
+>> +        qemu_log_mask(LOG_GUEST_ERROR, "Invalid local access register =
+read"
+>> +                      "0x%" HWADDR_PRIx "\n", addr);
+>> +    }
+>> +    return val;
+>> +}
+>> +
+>> +static void law_write(void *opaque, hwaddr addr, uint64_t val, unsigne=
+d size)
+>> +{
+>> +    PPCE500CCSRState *s =3D opaque;
+>> +
+>> +    switch (addr) {
+>> +    case 0:
+>> +        val &=3D 0xffff00;
+>> +        memory_region_set_address(&s->ccsr_space, val << 12);
+>> +        break;
+>> +    case 0xc08 =2E=2E=2E 0xd70:
+>> +    {
+>> +        int idx =3D law_idx(addr);
+>> +
+>> +        qemu_log_mask(LOG_UNIMP, "Unimplemented local access register =
+write"
+>> +                      "0x%" HWADDR_PRIx " <- 0x%" PRIx64 "\n", addr, v=
+al);
+>> +        val &=3D (idx & 1) ? 0x80f0003f : 0xffffff;
+>> +        s->law_regs[idx] =3D val;
+>> +        break;
+>> +    }
+>> +    default:
+>> +        qemu_log_mask(LOG_GUEST_ERROR, "Invalid local access register =
+write"
+>> +                      "0x%" HWADDR_PRIx "\n", addr);
+>> +    }
+>> +}
+>> +
+>> +static const MemoryRegionOps law_ops =3D {
+>> +    =2Eread =3D law_read,
+>> +    =2Ewrite =3D law_write,
+>> +    =2Eendianness =3D DEVICE_BIG_ENDIAN,
+>> +    =2Evalid =3D {
+>> +        =2Emin_access_size =3D 4,
+>> +        =2Emax_access_size =3D 4,
+>> +    },
+>> +};
+>> +
+>> static void e500_ccsr_initfn(Object *obj)
+>> {
+>> -    PPCE500CCSRState *ccsr =3D CCSR(obj);
+>> -    memory_region_init(&ccsr->ccsr_space, obj, "e500-ccsr",
+>> -                       MPC8544_CCSRBAR_SIZE);
+>> +    PPCE500CCSRState *s =3D CCSR(obj);
+>> +    MemoryRegion *mr;
+>> +
+>> +    memory_region_init(&s->ccsr_space, obj, "e500-ccsr", MPC8544_CCSRB=
+AR_SIZE);
+>> +
+>> +    mr =3D g_new(MemoryRegion, 1);
+>> +    memory_region_init_io(mr, obj, &law_ops, s, "local-access", 4096);
+>> +    memory_region_add_subregion(&s->ccsr_space, 0, mr);
+>> }
+>>=20
+>> static const TypeInfo e500_ccsr_info =3D {
 >>=20
 
