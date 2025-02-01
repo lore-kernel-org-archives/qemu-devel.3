@@ -4,81 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CE3D8C0218A
-	for <qemu-devel@archiver.kernel.org>; Sat,  1 Feb 2025 16:50:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2320CC0218A
+	for <qemu-devel@archiver.kernel.org>; Sat,  1 Feb 2025 16:50:30 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1teGZ7-0000Fa-4a; Sat, 01 Feb 2025 11:41:53 -0500
+	id 1teGXq-00062G-F4; Sat, 01 Feb 2025 11:40:34 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1teGYn-0007S8-8m
- for qemu-devel@nongnu.org; Sat, 01 Feb 2025 11:41:35 -0500
-Received: from mail-wm1-x32e.google.com ([2a00:1450:4864:20::32e])
+ id 1teGXh-0005zU-Qs
+ for qemu-devel@nongnu.org; Sat, 01 Feb 2025 11:40:26 -0500
+Received: from mail-wr1-x431.google.com ([2a00:1450:4864:20::431])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1teGYk-0001Lo-BU
- for qemu-devel@nongnu.org; Sat, 01 Feb 2025 11:41:32 -0500
-Received: by mail-wm1-x32e.google.com with SMTP id
- 5b1f17b1804b1-4361815b96cso20621345e9.1
- for <qemu-devel@nongnu.org>; Sat, 01 Feb 2025 08:41:29 -0800 (PST)
+ id 1teGXf-00012z-4W
+ for qemu-devel@nongnu.org; Sat, 01 Feb 2025 11:40:25 -0500
+Received: by mail-wr1-x431.google.com with SMTP id
+ ffacd0b85a97d-3862d161947so1545554f8f.3
+ for <qemu-devel@nongnu.org>; Sat, 01 Feb 2025 08:40:22 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1738428089; x=1739032889; darn=nongnu.org;
+ d=linaro.org; s=google; t=1738428021; x=1739032821; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=RfaeHPukqP5/vmbxYrDVYoRgPjTPHLeoO2dTIS1VQiA=;
- b=xrWkNgOYcVskBP5X9rMoJTr4iDpmhzoO5/XzJValMIEGjQSyyGqejLbROqnl4rqmwq
- XtK8epczLegoXMavEaKcX/3vCGQqIc/ZbzBxfs8RPNU8ZH0fDr6knc97wSIW7lygb+do
- vy68CyZLfDRxtCMLD/Pr9+l5BQDIgOfwmzCO7IXjlIvY0lybHegmxM0ookcCAL79+7Xm
- G89G3o4pf4UDDlFFb0fH86HquhCGL0ryLWPcpJF4wl4vt4v5lamRwp1Wl6CunVYS692S
- JTalhlsDThr6OA9W10yThSZS/mZ86Exk5CdJTJ900xzD1RGdehyVUoPMM3pHDGYxYlK/
- JZHg==
+ :reply-to; bh=r+kNBw7Q5R7gLJlZwekFX0v7A+lSgGRnCBQTy4PRgIk=;
+ b=tshZt2q4bSF6ixF/bHHxrm/eFVy96NRUXkEdyIALFQdUdUhEcRk9Qi1SYP/1Ualu1l
+ QzfZXU5kOco2PmQSJdPQ7l1FA90a445UEHKNMcljn6URkWb21YSm8M/wM68FaY/J7F9Q
+ II/p4awBclC6wMkSG5B0p36v01VdA5uEDJBzaB+GZDvM+qrUebF8fmMBQJHC5QDEspYs
+ LvSdgYB/yjj68Wozmm7DRX20NHAHbzUQUaalZ22bbxbn+oyaYSxP6Cx2s7s8L5JvFDG2
+ 649UJSNMBcZYqmBVzGn1l4NcvbTTH7S6eTNsU0g2PtFHDmzRYJy7A1Twn+vqD1YaSp+0
+ nNXQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1738428089; x=1739032889;
+ d=1e100.net; s=20230601; t=1738428021; x=1739032821;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=RfaeHPukqP5/vmbxYrDVYoRgPjTPHLeoO2dTIS1VQiA=;
- b=tVzAfAgx/OMwY3zugFM6m4d7gTPHixbqwyGwK90gijLMbpXj1BCUhmVtogc+bOi2b4
- ZvYs9YCRGUum59RmyJfZyOE0t+0BDw0GPXTBXHhyT5m18mH8TBm+maHr+3YoHHaT/zT/
- bkdXgXnlVTCWWwuYEkpeQyIT4IwohPwf4X10DwS0PnmrC88aTTUoByODqqTQ2EfsDs0P
- aPPi3NWfuIKkHE87UTtfyCr9cJ+G8FVkWz4ZQJ9TdRawMjzfuPjzZFxIS9aV3dq3t440
- B6JvZdooGwSXZlT/9W2LlJJpYAf1Ra5TBIxvWe6/4MFywl4I72K9Llp3PsP+MHj//E8I
- FcTA==
+ bh=r+kNBw7Q5R7gLJlZwekFX0v7A+lSgGRnCBQTy4PRgIk=;
+ b=EXdutevNd57EqxCab5/nlmWdH3bxKLHgWEbMeONgTbQQ9eUW6V+wNuqMgAk7mbfQDN
+ Ie58cM9d+1ZzOAp83xWUc/WJ6ntrEPtNNAiXBCqxlKhb0ItEYS9NpBQvnZYYkeb3eoh6
+ RD+aHKeEEygGSQm0LjAGjE8/eTfS8bS873h91ug+YYmZDgARsuJ/fUA2IPW7VTv3/UOd
+ ww8GZFuuUS675ewLknMkMC70l+b9+EXdvINFN/gIN7wkN2sF66RxHHm1vW+Tvx55xmoW
+ InhxV6p30V8OtWLUyDqfR9xXAczay2Q+dXjKRWfSa25l5LMM1B6YM12ZN9LI1U6E3533
+ njUg==
 X-Forwarded-Encrypted: i=1;
- AJvYcCXNz5vSPAc06zGFSgq8cuRyWHs1fcePSqLyvyh25QGRKUuzCqsa/npzjgQpoaunTRXJDv8MLoHXNBO6@nongnu.org
-X-Gm-Message-State: AOJu0YxhXYzAIxR0XaweDcwJdm/oT1leY99aYfrt0XM5PcnDl6t5lNrJ
- JEul1u20pVea7CXMduE5e8/K1UpcQjCPaIj4txFeSF7Wbqtma+7527EnevzYJ+NgC6wd594/dVN
- b
-X-Gm-Gg: ASbGncsIl8GmrEMfNwxU4k421hudpFYbytuuWH7ZEVolRMzd5kZ8gw1BHkeWYphgAvF
- A9S8lM4QYI32OF2nzFi2GJFW7+b0krgHyNX3oKjncOEXo0LiE6Hq9dtSCaeekJ3f0zjrZTC+ZUg
- VFkGX1kUft+lngRvw+xTjp1FZyCrclOTNDytZsMgt56c0gS86UM6Dr711igrk+07EDxxAGqyklx
- dLLGGiS/SyGj6UNXreK4e64RnPXd8ZScuMDvnCXAamQzbbYOPIt41K5Z31WGAu2Bzn/WmSSPUA6
- Ht3UDZC3bhySu/E6Wy8A
-X-Google-Smtp-Source: AGHT+IH2Jm3CzGZr2u8b/Th4Csts3hz+6VM4hjY4l0NGhThSrGeEgOVroPNgE+IGIbj/H7X6OiCeVw==
-X-Received: by 2002:a05:600c:1d1e:b0:431:5e3c:2ff0 with SMTP id
- 5b1f17b1804b1-438dc3bd896mr142840605e9.8.1738428088887; 
- Sat, 01 Feb 2025 08:41:28 -0800 (PST)
+ AJvYcCXYxA8dDeXn2a18R0fHvnLs3nrt07oZcKSSVt1/kvgL5uliREsdBkTuWQ1O7EcTVuMgbGWGgDo6PET/@nongnu.org
+X-Gm-Message-State: AOJu0YybkDFjToYAkAqr6RyUp8fBiNjQUNAYZWYXrA64oJd3BkCbfWLM
+ KjWBnI26Anyo+YZ9IC5bdVK+cT7XijOBLZO967B/xQ1egn0EfnPSxtTwaIRdr+Y=
+X-Gm-Gg: ASbGncvl3VqqpvwBlEv5frsMspGjPEoEgTAG6DfXUbPYMx/lpp8elGV9Mo3GfEpKgvJ
+ 0xxSfHGI/7pJQzA6Sh76JEYJKlvGI0iqK5n5iLIJ07RYk14CmtARyLHjulC33kACOvBWzuvs02w
+ N50arx35aIlKdsIPDs3ksWPmUr4WlxrqRcYeBXRk/HzHR53drtCGFt0ZOSnOjBHMFRcOSrG/4ep
+ oV0EEr/v08smFYfp0dhiFof1IDfoR1/ZiHxT6xbQCoqZO3joWiPtbQOJuzmJ57xZ+qW80XYBidV
+ XcCdwlneFeflcTEwAaPW
+X-Google-Smtp-Source: AGHT+IHdMK1157bKldsaynB5EYq5D70ftUtzoqnVcYzKScuOKwkMEUaOmwfRGWcr+JVZt+EVFDsLmg==
+X-Received: by 2002:adf:f048:0:b0:388:e2a6:ba81 with SMTP id
+ ffacd0b85a97d-38c520b6639mr9111252f8f.47.1738428021467; 
+ Sat, 01 Feb 2025 08:40:21 -0800 (PST)
 Received: from orth.archaic.org.uk (orth.archaic.org.uk. [2001:8b0:1d0::2])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-438dcc81d74sm127401525e9.37.2025.02.01.08.41.28
+ 5b1f17b1804b1-438dcc81d74sm127401525e9.37.2025.02.01.08.40.20
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sat, 01 Feb 2025 08:41:28 -0800 (PST)
+ Sat, 01 Feb 2025 08:40:20 -0800 (PST)
 From: Peter Maydell <peter.maydell@linaro.org>
 To: qemu-arm@nongnu.org,
 	qemu-devel@nongnu.org
-Subject: [PATCH v2 58/69] target/arm: Remove standard_fp_status_f16
-Date: Sat,  1 Feb 2025 16:40:01 +0000
-Message-Id: <20250201164012.1660228-59-peter.maydell@linaro.org>
+Subject: [PATCH v2 05/69] fpu: allow flushing of output denormals to be after
+ rounding
+Date: Sat,  1 Feb 2025 16:39:08 +0000
+Message-Id: <20250201164012.1660228-6-peter.maydell@linaro.org>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20250201164012.1660228-1-peter.maydell@linaro.org>
 References: <20250201164012.1660228-1-peter.maydell@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32e;
- envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x32e.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::431;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wr1-x431.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -101,201 +100,347 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Richard Henderson <richard.henderson@linaro.org>
+Currently we handle flushing of output denormals in uncanon_normal
+always before we deal with rounding.  This works for architectures
+that detect tininess before rounding, but is usually not the right
+place when the architecture detects tininess after rounding.  For
+example, for x86 the SDM states that the MXCSR FTZ control bit causes
+outputs to be flushed to zero "when it detects a floating-point
+underflow condition".  This means that we mustn't flush to zero if
+the input is such that after rounding it is no longer tiny.
 
-Replace with fp_status[FPST_STD_F16].
+At least one of our guest architectures does underflow detection
+after rounding but flushing of denormals before rounding (MIPS MSA);
+this means we need to have a config knob for this that is separate
+from our existing tininess_before_rounding setting.
 
-Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Message-id: 20250129013857.135256-8-richard.henderson@linaro.org
+Add an ftz_detection flag.  For consistency with
+tininess_before_rounding, we make it default to "detect ftz after
+rounding"; this means that we need to explicitly set the flag to
+"detect ftz before rounding" on every existing architecture that sets
+flush_to_zero, so that this commit has no behaviour change.
+(This means more code change here but for the long term a less
+confusing API.)
+
+For several architectures the current behaviour is either
+definitely or possibly wrong; annotate those with TODO comments.
+These architectures are definitely wrong (and should detect
+ftz after rounding):
+ * x86
+ * Alpha
+
+For these architectures the spec is unclear:
+ * MIPS (for non-MSA)
+ * RX
+ * SH4
+
+PA-RISC makes ftz detection IMPDEF, but we aren't setting the
+"tininess before rounding" setting that we ought to.
+
 Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
 ---
- target/arm/cpu.h            |  1 -
- target/arm/cpu.c            |  4 ++--
- target/arm/tcg/mve_helper.c | 24 ++++++++++++------------
- target/arm/vfp_helper.c     |  8 ++++----
- 4 files changed, 18 insertions(+), 19 deletions(-)
+ include/fpu/softfloat-helpers.h | 11 +++++++++++
+ include/fpu/softfloat-types.h   | 18 ++++++++++++++++++
+ target/mips/fpu_helper.h        |  6 ++++++
+ target/alpha/cpu.c              |  7 +++++++
+ target/arm/cpu.c                |  1 +
+ target/hppa/fpu_helper.c        | 11 +++++++++++
+ target/i386/tcg/fpu_helper.c    |  8 ++++++++
+ target/mips/msa.c               |  9 +++++++++
+ target/ppc/cpu_init.c           |  3 +++
+ target/rx/cpu.c                 |  8 ++++++++
+ target/sh4/cpu.c                |  8 ++++++++
+ target/tricore/helper.c         |  1 +
+ tests/fp/fp-bench.c             |  1 +
+ fpu/softfloat-parts.c.inc       | 21 +++++++++++++++------
+ 14 files changed, 107 insertions(+), 6 deletions(-)
 
-diff --git a/target/arm/cpu.h b/target/arm/cpu.h
-index c025649ff24..893a2cdd0a5 100644
---- a/target/arm/cpu.h
-+++ b/target/arm/cpu.h
-@@ -697,7 +697,6 @@ typedef struct CPUArchState {
-                 float_status ah_fp_status;
-                 float_status ah_fp_status_f16;
-                 float_status standard_fp_status;
--                float_status standard_fp_status_f16;
-             };
-         };
+diff --git a/include/fpu/softfloat-helpers.h b/include/fpu/softfloat-helpers.h
+index 4cb30a48220..8983c2748ec 100644
+--- a/include/fpu/softfloat-helpers.h
++++ b/include/fpu/softfloat-helpers.h
+@@ -109,6 +109,12 @@ static inline void set_flush_inputs_to_zero(bool val, float_status *status)
+     status->flush_inputs_to_zero = val;
+ }
  
++static inline void set_float_ftz_detection(FloatFTZDetection d,
++                                           float_status *status)
++{
++    status->ftz_detection = d;
++}
++
+ static inline void set_default_nan_mode(bool val, float_status *status)
+ {
+     status->default_nan_mode = val;
+@@ -183,4 +189,9 @@ static inline bool get_default_nan_mode(const float_status *status)
+     return status->default_nan_mode;
+ }
+ 
++static inline FloatFTZDetection get_float_ftz_detection(const float_status *status)
++{
++    return status->ftz_detection;
++}
++
+ #endif /* SOFTFLOAT_HELPERS_H */
+diff --git a/include/fpu/softfloat-types.h b/include/fpu/softfloat-types.h
+index b9b4e8e55fc..d910ed1068c 100644
+--- a/include/fpu/softfloat-types.h
++++ b/include/fpu/softfloat-types.h
+@@ -304,6 +304,22 @@ typedef enum __attribute__((__packed__)) {
+     float_infzeronan_suppress_invalid = (1 << 2),
+ } FloatInfZeroNaNRule;
+ 
++/*
++ * When flush_to_zero is set, should we detect denormal results to
++ * be flushed before or after rounding? For most architectures this
++ * should be set to match the tininess_before_rounding setting,
++ * but a few architectures, e.g. MIPS MSA, detect FTZ before
++ * rounding but tininess after rounding.
++ *
++ * This enum is arranged so that the default if the target doesn't
++ * configure it matches the default for tininess_before_rounding
++ * (i.e. "after rounding").
++ */
++typedef enum __attribute__((__packed__)) {
++    float_ftz_after_rounding = 0,
++    float_ftz_before_rounding = 1,
++} FloatFTZDetection;
++
+ /*
+  * Floating Point Status. Individual architectures may maintain
+  * several versions of float_status for different functions. The
+@@ -321,6 +337,8 @@ typedef struct float_status {
+     bool tininess_before_rounding;
+     /* should denormalised results go to zero and set output_denormal_flushed? */
+     bool flush_to_zero;
++    /* do we detect and flush denormal results before or after rounding? */
++    FloatFTZDetection ftz_detection;
+     /* should denormalised inputs go to zero and set input_denormal_flushed? */
+     bool flush_inputs_to_zero;
+     bool default_nan_mode;
+diff --git a/target/mips/fpu_helper.h b/target/mips/fpu_helper.h
+index 6ad1e466cfd..08fb4093904 100644
+--- a/target/mips/fpu_helper.h
++++ b/target/mips/fpu_helper.h
+@@ -84,6 +84,12 @@ static inline void fp_reset(CPUMIPSState *env)
+      */
+     set_float_2nan_prop_rule(float_2nan_prop_s_ab,
+                              &env->active_fpu.fp_status);
++    /*
++     * TODO: the spec does't say clearly whether FTZ happens before
++     * or after rounding for normal FPU operations.
++     */
++    set_float_ftz_detection(float_ftz_before_rounding,
++                            &env->active_fpu.fp_status);
+ }
+ 
+ /* MSA */
+diff --git a/target/alpha/cpu.c b/target/alpha/cpu.c
+index e1b898e5755..f5dd7449876 100644
+--- a/target/alpha/cpu.c
++++ b/target/alpha/cpu.c
+@@ -202,6 +202,13 @@ static void alpha_cpu_initfn(Object *obj)
+     set_float_2nan_prop_rule(float_2nan_prop_x87, &env->fp_status);
+     /* Default NaN: sign bit clear, msb frac bit set */
+     set_float_default_nan_pattern(0b01000000, &env->fp_status);
++    /*
++     * TODO: this is incorrect. The Alpha Architecture Handbook version 4
++     * section 4.7.7.11 says that we flush to zero for underflow cases, so
++     * this should be float_ftz_after_rounding to match the
++     * tininess_after_rounding (which is specified in section 4.7.5).
++     */
++    set_float_ftz_detection(float_ftz_before_rounding, &env->fp_status);
+ #if defined(CONFIG_USER_ONLY)
+     env->flags = ENV_FLAG_PS_USER | ENV_FLAG_FEN;
+     cpu_alpha_store_fpcr(env, (uint64_t)(FPCR_INVD | FPCR_DZED | FPCR_OVFD
 diff --git a/target/arm/cpu.c b/target/arm/cpu.c
-index 8fa220a7165..b887edf1d19 100644
+index 7a83b9ee34f..9ea2080e519 100644
 --- a/target/arm/cpu.c
 +++ b/target/arm/cpu.c
-@@ -549,13 +549,13 @@ static void arm_cpu_reset_hold(Object *obj, ResetType type)
-     set_flush_to_zero(1, &env->vfp.standard_fp_status);
-     set_flush_inputs_to_zero(1, &env->vfp.standard_fp_status);
-     set_default_nan_mode(1, &env->vfp.standard_fp_status);
--    set_default_nan_mode(1, &env->vfp.standard_fp_status_f16);
-+    set_default_nan_mode(1, &env->vfp.fp_status[FPST_STD_F16]);
-     arm_set_default_fp_behaviours(&env->vfp.fp_status_a32);
-     arm_set_default_fp_behaviours(&env->vfp.fp_status_a64);
-     arm_set_default_fp_behaviours(&env->vfp.standard_fp_status);
-     arm_set_default_fp_behaviours(&env->vfp.fp_status_f16_a32);
-     arm_set_default_fp_behaviours(&env->vfp.fp_status_f16_a64);
--    arm_set_default_fp_behaviours(&env->vfp.standard_fp_status_f16);
-+    arm_set_default_fp_behaviours(&env->vfp.fp_status[FPST_STD_F16]);
-     arm_set_ah_fp_behaviours(&env->vfp.ah_fp_status);
-     set_flush_to_zero(1, &env->vfp.ah_fp_status);
-     set_flush_inputs_to_zero(1, &env->vfp.ah_fp_status);
-diff --git a/target/arm/tcg/mve_helper.c b/target/arm/tcg/mve_helper.c
-index 03ebef5ef21..911a53a23a8 100644
---- a/target/arm/tcg/mve_helper.c
-+++ b/target/arm/tcg/mve_helper.c
-@@ -2814,7 +2814,7 @@ DO_VMAXMINA(vminaw, 4, int32_t, uint32_t, DO_MIN)
-             if ((mask & MAKE_64BIT_MASK(0, ESIZE)) == 0) {              \
-                 continue;                                               \
-             }                                                           \
--            fpst = (ESIZE == 2) ? &env->vfp.standard_fp_status_f16 :    \
-+            fpst = (ESIZE == 2) ? &env->vfp.fp_status[FPST_STD_F16] :   \
-                 &env->vfp.standard_fp_status;                           \
-             if (!(mask & 1)) {                                          \
-                 /* We need the result but without updating flags */     \
-@@ -2888,7 +2888,7 @@ DO_2OP_FP_ALL(vminnma, minnuma)
-                 r[e] = 0;                                               \
-                 continue;                                               \
-             }                                                           \
--            fpst = (ESIZE == 2) ? &env->vfp.standard_fp_status_f16 :    \
-+            fpst = (ESIZE == 2) ? &env->vfp.fp_status[FPST_STD_F16] :   \
-                 &env->vfp.standard_fp_status;                           \
-             if (!(tm & 1)) {                                            \
-                 /* We need the result but without updating flags */     \
-@@ -2926,7 +2926,7 @@ DO_VCADD_FP(vfcadd270s, 4, float32, float32_add, float32_sub)
-             if ((mask & MAKE_64BIT_MASK(0, ESIZE)) == 0) {              \
-                 continue;                                               \
-             }                                                           \
--            fpst = (ESIZE == 2) ? &env->vfp.standard_fp_status_f16 :    \
-+            fpst = (ESIZE == 2) ? &env->vfp.fp_status[FPST_STD_F16] :   \
-                 &env->vfp.standard_fp_status;                           \
-             if (!(mask & 1)) {                                          \
-                 /* We need the result but without updating flags */     \
-@@ -2964,7 +2964,7 @@ DO_VFMA(vfmss, 4, float32, true)
-             if ((mask & MAKE_64BIT_MASK(0, ESIZE * 2)) == 0) {          \
-                 continue;                                               \
-             }                                                           \
--            fpst0 = (ESIZE == 2) ? &env->vfp.standard_fp_status_f16 :   \
-+            fpst0 = (ESIZE == 2) ? &env->vfp.fp_status[FPST_STD_F16] :  \
-                 &env->vfp.standard_fp_status;                           \
-             fpst1 = fpst0;                                              \
-             if (!(mask & 1)) {                                          \
-@@ -3049,7 +3049,7 @@ DO_VCMLA(vcmla270s, 4, float32, 3, DO_VCMLAS)
-             if ((mask & MAKE_64BIT_MASK(0, ESIZE)) == 0) {              \
-                 continue;                                               \
-             }                                                           \
--            fpst = (ESIZE == 2) ? &env->vfp.standard_fp_status_f16 :    \
-+            fpst = (ESIZE == 2) ? &env->vfp.fp_status[FPST_STD_F16] :   \
-                 &env->vfp.standard_fp_status;                           \
-             if (!(mask & 1)) {                                          \
-                 /* We need the result but without updating flags */     \
-@@ -3084,7 +3084,7 @@ DO_2OP_FP_SCALAR_ALL(vfmul_scalar, mul)
-             if ((mask & MAKE_64BIT_MASK(0, ESIZE)) == 0) {              \
-                 continue;                                               \
-             }                                                           \
--            fpst = (ESIZE == 2) ? &env->vfp.standard_fp_status_f16 :    \
-+            fpst = (ESIZE == 2) ? &env->vfp.fp_status[FPST_STD_F16] :   \
-                 &env->vfp.standard_fp_status;                           \
-             if (!(mask & 1)) {                                          \
-                 /* We need the result but without updating flags */     \
-@@ -3117,7 +3117,7 @@ DO_2OP_FP_ACC_SCALAR(vfmas_scalars, 4, float32, DO_VFMAS_SCALARS)
-         TYPE *m = vm;                                           \
-         TYPE ra = (TYPE)ra_in;                                  \
-         float_status *fpst = (ESIZE == 2) ?                     \
--            &env->vfp.standard_fp_status_f16 :                  \
-+            &env->vfp.fp_status[FPST_STD_F16] :                 \
-             &env->vfp.standard_fp_status;                       \
-         for (e = 0; e < 16 / ESIZE; e++, mask >>= ESIZE) {      \
-             if (mask & 1) {                                     \
-@@ -3168,7 +3168,7 @@ DO_FP_VMAXMINV(vminnmavs, 4, float32, true, float32_minnum)
-             if ((mask & emask) == 0) {                                  \
-                 continue;                                               \
-             }                                                           \
--            fpst = (ESIZE == 2) ? &env->vfp.standard_fp_status_f16 :    \
-+            fpst = (ESIZE == 2) ? &env->vfp.fp_status[FPST_STD_F16] :   \
-                 &env->vfp.standard_fp_status;                           \
-             if (!(mask & (1 << (e * ESIZE)))) {                         \
-                 /* We need the result but without updating flags */     \
-@@ -3202,7 +3202,7 @@ DO_FP_VMAXMINV(vminnmavs, 4, float32, true, float32_minnum)
-             if ((mask & emask) == 0) {                                  \
-                 continue;                                               \
-             }                                                           \
--            fpst = (ESIZE == 2) ? &env->vfp.standard_fp_status_f16 :    \
-+            fpst = (ESIZE == 2) ? &env->vfp.fp_status[FPST_STD_F16] :   \
-                 &env->vfp.standard_fp_status;                           \
-             if (!(mask & (1 << (e * ESIZE)))) {                         \
-                 /* We need the result but without updating flags */     \
-@@ -3267,7 +3267,7 @@ DO_VCMP_FP_BOTH(vfcmples, vfcmple_scalars, 4, float32, !DO_GT32)
-             if ((mask & MAKE_64BIT_MASK(0, ESIZE)) == 0) {              \
-                 continue;                                               \
-             }                                                           \
--            fpst = (ESIZE == 2) ? &env->vfp.standard_fp_status_f16 :    \
-+            fpst = (ESIZE == 2) ? &env->vfp.fp_status[FPST_STD_F16] :   \
-                 &env->vfp.standard_fp_status;                           \
-             if (!(mask & 1)) {                                          \
-                 /* We need the result but without updating flags */     \
-@@ -3301,7 +3301,7 @@ DO_VCVT_FIXED(vcvt_fu, 4, uint32_t, helper_vfp_touls_round_to_zero)
-         float_status *fpst;                                             \
-         float_status scratch_fpst;                                      \
-         float_status *base_fpst = (ESIZE == 2) ?                        \
--            &env->vfp.standard_fp_status_f16 :                          \
-+            &env->vfp.fp_status[FPST_STD_F16] :                         \
-             &env->vfp.standard_fp_status;                               \
-         uint32_t prev_rmode = get_float_rounding_mode(base_fpst);       \
-         set_float_rounding_mode(rmode, base_fpst);                      \
-@@ -3427,7 +3427,7 @@ void HELPER(mve_vcvtt_hs)(CPUARMState *env, void *vd, void *vm)
-             if ((mask & MAKE_64BIT_MASK(0, ESIZE)) == 0) {              \
-                 continue;                                               \
-             }                                                           \
--            fpst = (ESIZE == 2) ? &env->vfp.standard_fp_status_f16 :    \
-+            fpst = (ESIZE == 2) ? &env->vfp.fp_status[FPST_STD_F16] :   \
-                 &env->vfp.standard_fp_status;                           \
-             if (!(mask & 1)) {                                          \
-                 /* We need the result but without updating flags */     \
-diff --git a/target/arm/vfp_helper.c b/target/arm/vfp_helper.c
-index 66a482a9add..4920afeb012 100644
---- a/target/arm/vfp_helper.c
-+++ b/target/arm/vfp_helper.c
-@@ -122,7 +122,7 @@ static uint32_t vfp_get_fpsr_from_host(CPUARMState *env)
-     /* FZ16 does not generate an input denormal exception.  */
-     a32_flags |= (get_float_exception_flags(&env->vfp.fp_status_f16_a32)
-           & ~float_flag_input_denormal_flushed);
--    a32_flags |= (get_float_exception_flags(&env->vfp.standard_fp_status_f16)
-+    a32_flags |= (get_float_exception_flags(&env->vfp.fp_status[FPST_STD_F16])
-           & ~float_flag_input_denormal_flushed);
- 
-     a64_flags |= get_float_exception_flags(&env->vfp.fp_status_a64);
-@@ -160,7 +160,7 @@ static void vfp_clear_float_status_exc_flags(CPUARMState *env)
-     set_float_exception_flags(0, &env->vfp.fp_status_f16_a32);
-     set_float_exception_flags(0, &env->vfp.fp_status_f16_a64);
-     set_float_exception_flags(0, &env->vfp.standard_fp_status);
--    set_float_exception_flags(0, &env->vfp.standard_fp_status_f16);
-+    set_float_exception_flags(0, &env->vfp.fp_status[FPST_STD_F16]);
-     set_float_exception_flags(0, &env->vfp.ah_fp_status);
-     set_float_exception_flags(0, &env->vfp.ah_fp_status_f16);
+@@ -185,6 +185,7 @@ void arm_register_el_change_hook(ARMCPU *cpu, ARMELChangeHookFn *hook,
+ static void arm_set_default_fp_behaviours(float_status *s)
+ {
+     set_float_detect_tininess(float_tininess_before_rounding, s);
++    set_float_ftz_detection(float_ftz_before_rounding, s);
+     set_float_2nan_prop_rule(float_2nan_prop_s_ab, s);
+     set_float_3nan_prop_rule(float_3nan_prop_s_cab, s);
+     set_float_infzeronan_rule(float_infzeronan_dnan_if_qnan, s);
+diff --git a/target/hppa/fpu_helper.c b/target/hppa/fpu_helper.c
+index 239c027ec52..8ff4b448049 100644
+--- a/target/hppa/fpu_helper.c
++++ b/target/hppa/fpu_helper.c
+@@ -67,6 +67,17 @@ void HELPER(loaded_fr0)(CPUHPPAState *env)
+     set_float_infzeronan_rule(float_infzeronan_dnan_never, &env->fp_status);
+     /* Default NaN: sign bit clear, msb-1 frac bit set */
+     set_float_default_nan_pattern(0b00100000, &env->fp_status);
++    /*
++     * "PA-RISC 2.0 Architecture" says it is IMPDEF whether the flushing
++     * enabled by FPSR.D happens before or after rounding. We pick "before"
++     * for consistency with tininess detection.
++     */
++    set_float_ftz_detection(float_ftz_before_rounding, &env->fp_status);
++    /*
++     * TODO: "PA-RISC 2.0 Architecture" chapter 10 says that we should
++     * detect tininess before rounding, but we don't set that here so we
++     * get the default tininess after rounding.
++     */
  }
-@@ -207,11 +207,11 @@ static void vfp_set_fpcr_to_host(CPUARMState *env, uint32_t val, uint32_t mask)
-         bool ftz_enabled = val & FPCR_FZ16;
-         set_flush_to_zero(ftz_enabled, &env->vfp.fp_status_f16_a32);
-         set_flush_to_zero(ftz_enabled, &env->vfp.fp_status_f16_a64);
--        set_flush_to_zero(ftz_enabled, &env->vfp.standard_fp_status_f16);
-+        set_flush_to_zero(ftz_enabled, &env->vfp.fp_status[FPST_STD_F16]);
-         set_flush_to_zero(ftz_enabled, &env->vfp.ah_fp_status_f16);
-         set_flush_inputs_to_zero(ftz_enabled, &env->vfp.fp_status_f16_a32);
-         set_flush_inputs_to_zero(ftz_enabled, &env->vfp.fp_status_f16_a64);
--        set_flush_inputs_to_zero(ftz_enabled, &env->vfp.standard_fp_status_f16);
-+        set_flush_inputs_to_zero(ftz_enabled, &env->vfp.fp_status[FPST_STD_F16]);
-         set_flush_inputs_to_zero(ftz_enabled, &env->vfp.ah_fp_status_f16);
+ 
+ void cpu_hppa_loaded_fr0(CPUHPPAState *env)
+diff --git a/target/i386/tcg/fpu_helper.c b/target/i386/tcg/fpu_helper.c
+index de6d0b252ec..f112c6c6737 100644
+--- a/target/i386/tcg/fpu_helper.c
++++ b/target/i386/tcg/fpu_helper.c
+@@ -188,6 +188,14 @@ void cpu_init_fp_statuses(CPUX86State *env)
+     set_float_default_nan_pattern(0b11000000, &env->fp_status);
+     set_float_default_nan_pattern(0b11000000, &env->mmx_status);
+     set_float_default_nan_pattern(0b11000000, &env->sse_status);
++    /*
++     * TODO: x86 does flush-to-zero detection after rounding (the SDM
++     * section 10.2.3.3 on the FTZ bit of MXCSR says that we flush
++     * when we detect underflow, which x86 does after rounding).
++     */
++    set_float_ftz_detection(float_ftz_before_rounding, &env->fp_status);
++    set_float_ftz_detection(float_ftz_before_rounding, &env->mmx_status);
++    set_float_ftz_detection(float_ftz_before_rounding, &env->sse_status);
+ }
+ 
+ static inline uint8_t save_exception_flags(CPUX86State *env)
+diff --git a/target/mips/msa.c b/target/mips/msa.c
+index fc77bfc7b9a..32c6acbcc56 100644
+--- a/target/mips/msa.c
++++ b/target/mips/msa.c
+@@ -48,6 +48,15 @@ void msa_reset(CPUMIPSState *env)
+     /* tininess detected after rounding.*/
+     set_float_detect_tininess(float_tininess_after_rounding,
+                               &env->active_tc.msa_fp_status);
++    /*
++     * MSACSR.FS detects tiny results to flush to zero before rounding
++     * (per "MIPS Architecture for Programmers Volume IV-j: The MIPS64 SIMD
++     * Architecture Module, Revision 1.1" section 3.5.4), even though it
++     * detects tininess after rounding for underflow purposes (section 3.4.2
++     * table 3.3).
++     */
++    set_float_ftz_detection(float_ftz_before_rounding,
++                            &env->active_tc.msa_fp_status);
+ 
+     /*
+      * According to MIPS specifications, if one of the two operands is
+diff --git a/target/ppc/cpu_init.c b/target/ppc/cpu_init.c
+index c05c2dc42dc..52bb8e1a62f 100644
+--- a/target/ppc/cpu_init.c
++++ b/target/ppc/cpu_init.c
+@@ -7262,6 +7262,9 @@ static void ppc_cpu_reset_hold(Object *obj, ResetType type)
+     /* tininess for underflow is detected before rounding */
+     set_float_detect_tininess(float_tininess_before_rounding,
+                               &env->fp_status);
++    /* Similarly for flush-to-zero */
++    set_float_ftz_detection(float_ftz_before_rounding, &env->fp_status);
++
+     /*
+      * PowerPC propagation rules:
+      *  1. A if it sNaN or qNaN
+diff --git a/target/rx/cpu.c b/target/rx/cpu.c
+index 8c50c7a1bc8..37a6fdd569b 100644
+--- a/target/rx/cpu.c
++++ b/target/rx/cpu.c
+@@ -103,6 +103,14 @@ static void rx_cpu_reset_hold(Object *obj, ResetType type)
+     set_float_2nan_prop_rule(float_2nan_prop_x87, &env->fp_status);
+     /* Default NaN value: sign bit clear, set frac msb */
+     set_float_default_nan_pattern(0b01000000, &env->fp_status);
++    /*
++     * TODO: "RX Family RXv1 Instruction Set Architecture" is not 100% clear
++     * on whether flush-to-zero should happen before or after rounding, but
++     * section 1.3.2 says that it happens when underflow is detected, and
++     * implies that underflow is detected after rounding. So this may not
++     * be the correct setting.
++     */
++    set_float_ftz_detection(float_ftz_before_rounding, &env->fp_status);
+ }
+ 
+ static ObjectClass *rx_cpu_class_by_name(const char *cpu_model)
+diff --git a/target/sh4/cpu.c b/target/sh4/cpu.c
+index 24a22724c61..4ac693d99bd 100644
+--- a/target/sh4/cpu.c
++++ b/target/sh4/cpu.c
+@@ -130,6 +130,14 @@ static void superh_cpu_reset_hold(Object *obj, ResetType type)
+     set_default_nan_mode(1, &env->fp_status);
+     /* sign bit clear, set all frac bits other than msb */
+     set_float_default_nan_pattern(0b00111111, &env->fp_status);
++    /*
++     * TODO: "SH-4 CPU Core Architecture ADCS 7182230F" doesn't say whether
++     * it detects tininess before or after rounding. Section 6.4 is clear
++     * that flush-to-zero happens when the result underflows, though, so
++     * either this should be "detect ftz after rounding" or else we should
++     * be setting "detect tininess before rounding".
++     */
++    set_float_ftz_detection(float_ftz_before_rounding, &env->fp_status);
+ }
+ 
+ static void superh_cpu_disas_set_info(CPUState *cpu, disassemble_info *info)
+diff --git a/target/tricore/helper.c b/target/tricore/helper.c
+index e8b0ec51611..9898752eb00 100644
+--- a/target/tricore/helper.c
++++ b/target/tricore/helper.c
+@@ -116,6 +116,7 @@ void fpu_set_state(CPUTriCoreState *env)
+     set_flush_inputs_to_zero(1, &env->fp_status);
+     set_flush_to_zero(1, &env->fp_status);
+     set_float_detect_tininess(float_tininess_before_rounding, &env->fp_status);
++    set_float_ftz_detection(float_ftz_before_rounding, &env->fp_status);
+     set_default_nan_mode(1, &env->fp_status);
+     /* Default NaN pattern: sign bit clear, frac msb set */
+     set_float_default_nan_pattern(0b01000000, &env->fp_status);
+diff --git a/tests/fp/fp-bench.c b/tests/fp/fp-bench.c
+index eacb39b99cb..d90f542ea25 100644
+--- a/tests/fp/fp-bench.c
++++ b/tests/fp/fp-bench.c
+@@ -496,6 +496,7 @@ static void run_bench(void)
+     set_float_3nan_prop_rule(float_3nan_prop_s_cab, &soft_status);
+     set_float_infzeronan_rule(float_infzeronan_dnan_if_qnan, &soft_status);
+     set_float_default_nan_pattern(0b01000000, &soft_status);
++    set_float_ftz_detection(float_ftz_before_rounding, &soft_status);
+ 
+     f = bench_funcs[operation][precision];
+     g_assert(f);
+diff --git a/fpu/softfloat-parts.c.inc b/fpu/softfloat-parts.c.inc
+index 0122b35008a..1d09f066c5d 100644
+--- a/fpu/softfloat-parts.c.inc
++++ b/fpu/softfloat-parts.c.inc
+@@ -334,7 +334,8 @@ static void partsN(uncanon_normal)(FloatPartsN *p, float_status *s,
+             p->frac_lo &= ~round_mask;
+         }
+         frac_shr(p, frac_shift);
+-    } else if (s->flush_to_zero) {
++    } else if (s->flush_to_zero &&
++               s->ftz_detection == float_ftz_before_rounding) {
+         flags |= float_flag_output_denormal_flushed;
+         p->cls = float_class_zero;
+         exp = 0;
+@@ -381,11 +382,19 @@ static void partsN(uncanon_normal)(FloatPartsN *p, float_status *s,
+         exp = (p->frac_hi & DECOMPOSED_IMPLICIT_BIT) && !fmt->m68k_denormal;
+         frac_shr(p, frac_shift);
+ 
+-        if (is_tiny && (flags & float_flag_inexact)) {
+-            flags |= float_flag_underflow;
+-        }
+-        if (exp == 0 && frac_eqz(p)) {
+-            p->cls = float_class_zero;
++        if (is_tiny) {
++            if (s->flush_to_zero) {
++                assert(s->ftz_detection == float_ftz_after_rounding);
++                flags |= float_flag_output_denormal_flushed;
++                p->cls = float_class_zero;
++                exp = 0;
++                frac_clear(p);
++            } else if (flags & float_flag_inexact) {
++                flags |= float_flag_underflow;
++            }
++            if (exp == 0 && frac_eqz(p)) {
++                p->cls = float_class_zero;
++            }
+         }
      }
-     if (changed & FPCR_FZ) {
+     p->exp = exp;
 -- 
 2.34.1
 
