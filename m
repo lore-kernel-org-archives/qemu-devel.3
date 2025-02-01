@@ -4,79 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9BB34C0218A
-	for <qemu-devel@archiver.kernel.org>; Sat,  1 Feb 2025 16:42:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 422D3C02192
+	for <qemu-devel@archiver.kernel.org>; Sat,  1 Feb 2025 16:42:16 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1teGXz-000666-C0; Sat, 01 Feb 2025 11:40:43 -0500
+	id 1teGYS-0006o5-KY; Sat, 01 Feb 2025 11:41:12 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1teGXn-00061W-TN
- for qemu-devel@nongnu.org; Sat, 01 Feb 2025 11:40:32 -0500
-Received: from mail-wm1-x32b.google.com ([2a00:1450:4864:20::32b])
+ id 1teGYQ-0006ib-MO
+ for qemu-devel@nongnu.org; Sat, 01 Feb 2025 11:41:11 -0500
+Received: from mail-wm1-x334.google.com ([2a00:1450:4864:20::334])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1teGXl-00014h-Fn
- for qemu-devel@nongnu.org; Sat, 01 Feb 2025 11:40:31 -0500
-Received: by mail-wm1-x32b.google.com with SMTP id
- 5b1f17b1804b1-4361b6f9faeso18601585e9.1
- for <qemu-devel@nongnu.org>; Sat, 01 Feb 2025 08:40:29 -0800 (PST)
+ id 1teGYN-0001Ey-MP
+ for qemu-devel@nongnu.org; Sat, 01 Feb 2025 11:41:09 -0500
+Received: by mail-wm1-x334.google.com with SMTP id
+ 5b1f17b1804b1-43634b570c1so21878555e9.0
+ for <qemu-devel@nongnu.org>; Sat, 01 Feb 2025 08:41:07 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1738428028; x=1739032828; darn=nongnu.org;
+ d=linaro.org; s=google; t=1738428066; x=1739032866; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=4NQtpB/FauH0rtbCX6r0pw974wudG+5NfUJow/nkqw0=;
- b=p7EAfEVyymPhv9f5gIsSuL/c3uJ2d0jO4h/CRlrV9tG1dG2/UgREw7SDuQnRIMX1hv
- L+xXq7ebcMN4nzxUxSrvD6Az+T9RSlEpNFv1BayrdI6IzvfCEE029W6iu8C6PEL7VGAL
- 7QcJLD229gl5rNx3BfkufMGQTsQBSPfUbqOg8LgMain4qEJaYOaiXP3Cauxdu+An1fxn
- MBZUhhm9Cw3c+oPGER+k4cNcdpHHv1a2B1YB9tDmMQW3MKO80Y0Ovzm4WkShyHW0TYbG
- K6tUXaBWyqa1TYnlEFY01aGtMyoCsyoTMzh5SXtmZUV4oNMN1TJ0heY7+vLCWVoCJxe6
- /q3Q==
+ :reply-to; bh=DtbhFC8pE11SMUdv+S1RAxT/ZcF5GGxfsyxqYuDbnFc=;
+ b=i6540+RP3Za2UyD/hUR9oofRxcQhgrr6cx4mSOK91JIExs3NxHoVXR0J5bMlONxmXz
+ 2q+/ujllIFDDJI9k6GYX5f7IVMCQ7R6vNulapTGESdYNW0HokOlm4FUzdha/0eG9C02e
+ yOc0J0JklYENiFaiIy5QwLswhqQ6owqzIpUPKDlM+inYGmDZgAIy4bdsaNZAz1whT8c+
+ tYxgT3lQwqLUKSjT34sdr/UYck5yISyU/RllMK8OOylOS7fnjjgRH0DgYiz9141LvhTk
+ zvmTXamSCHMxgKluXEIL0rSk3Ia0n96Wf6E0ZhxxJA9hkphsxI0rdVMAdCdzk+reeItC
+ Q0/w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1738428028; x=1739032828;
+ d=1e100.net; s=20230601; t=1738428066; x=1739032866;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=4NQtpB/FauH0rtbCX6r0pw974wudG+5NfUJow/nkqw0=;
- b=YDb2XgGa55rTRxd9TzuXTrSz4h5IF4rYEI8uV1M8/ZU44FcLx3XlDz1ZpsFI94Ya4D
- qFJAr8x4xnRHuvsUgCMHk/Lp2+bs2wH5+JbS43pb+amzU6bkWsYjm1tIwptPuCYS1OdS
- 8wLvz7njJcQ0p5dDScdicIXV1KxrZKZPkA/MJfxEbaDSeOTeeT0Bldte0bl/mR7iZOkk
- W7Ifqd4/qLRAo6nwvKzlWc6UuoBKWwrv/72Wt0kszUpgO/ebnwvuJfKYC8+Km63ylY41
- OX4RCXBr+u5T+c4r6lap7DPGfi9ir1KorfMyoyp5NN68Di13tPV4sK0tGuI9hdqUWw+l
- QJDQ==
+ bh=DtbhFC8pE11SMUdv+S1RAxT/ZcF5GGxfsyxqYuDbnFc=;
+ b=qao7GAz59M9vbj7FbJUdEjUSC2FJSIhPsyPDGrhv95QpMiMjGefe6UpBddICUsjKKe
+ ml7xCQe7jQWWwIUzYOsyTyaBWZVOxxJ+r227gI5Fghi+uy9qvzUrRVzZFGezr4/Vl/Tv
+ ORzZt4jL8VsgNd89ReQaBe/2WhIq3lNkphK/hHR5Vrm1YMEereGQQHjwPDtRSXIKeU8z
+ mDcqAymbZMTL0mwev+DUqsKQHW5M5KYKHk86VV1AzyqN+e6Mn5InltKZ2GqdFPoo8pha
+ XTRJ08A4XgPJxoWLbG1MCjsSz0WieZHbw2IpFPSqFUjO4KQZJtH59B5fZse+8WKU7r7E
+ /grw==
 X-Forwarded-Encrypted: i=1;
- AJvYcCUEIX1GUK1LvCG5YE7z8zu79jYhVfy5ZBboVaISiUJMYYikQKhwZRrnXOHDZd2z6rWDPZ5S3EAkmg8T@nongnu.org
-X-Gm-Message-State: AOJu0YzSWsJW/fvmQN86MxNatHldeRb5H1t4zZ1OnE/LfwfiwrJ1Vm1y
- 6rK5HSZgd7h8QAgqdIrUbsf/YcEeLmM4YwrEF7BfLrsnUwNMJ4QBMBHzqwTofvw=
-X-Gm-Gg: ASbGncvz+DDKcDvEeK4q858pDI9y0KuZQDMJLDIXG0symtUkmtk0HTLB9z8JyCUA4Pn
- WPnr2lVbSvdodgx5OEl7tIedj6FY21lPecATTqbbfAYriSw6tF2s1Lk7jgJjLNNTtxeOoksPlin
- +dpoodXZ+qmwdN5JUEGxHDhBfnSnaxgyGkN3ExHGc5/Wo9np2VFL6GQJ9Ac3X7JxiuUHEBWBcar
- Of2uVvxnaBnZ+TFUgKZSZXWv1xUfUSndZS/5nHYGULct11caFTDlBGBGBCumlCtlDf/F65zgrwf
- rLUY5RpyW3h2VJKliDDX
-X-Google-Smtp-Source: AGHT+IFgVt+AayM+4lh85Y1Et851Itva9n2Na7JRAMBaQf66IAGk0J7BexnIDq3JEVSE0nGmdwdv3w==
-X-Received: by 2002:a05:600c:91c:b0:434:9e17:190c with SMTP id
- 5b1f17b1804b1-438e15522bfmr91679435e9.0.1738428028045; 
- Sat, 01 Feb 2025 08:40:28 -0800 (PST)
+ AJvYcCU6ZYJYS5N/c6Ljz95VUxUnjmG34fM+yPIA0txd+NBDQl+4EsNXWabrJz68pKxVGf0DG/vPGfQNZ03O@nongnu.org
+X-Gm-Message-State: AOJu0YxTFJcSrymlmjyrmi7mAxT4qHcbgjFmfpjoZC+vjcS3jE8kZ7/R
+ XUXpCrbsDLQ8B9to87t6ws/jBulzzMSx/s921oJS7cyYvEsYLpd1WSyyr7a5H4Q=
+X-Gm-Gg: ASbGnctqv8/YocdUBGsVmE53gq5Cmbv2ovMo4IyNMeMsM4SabvQq3qifQDNZg7AAZfd
+ ORvNcZ6hjtQvMT/aYVntjRVZRM2H5QrrHp3WPuV1jXCNdpNScTpn5SHvcf2T/oERIv8Ui8eNKOg
+ tfBl2/zCSmJD7DL3V4KsoOS+Fa4MxHrwljFWS1W8LZsbcQjWa7c66P1VjYqraA+uNevXhlO2fif
+ KlKSG5Sjm4yOLIQhjQAF/4u8bNmA/txzklsgkick9N7zMwXt+i0liLdRdGunjbbqfConFfV9cB5
+ nb/Kp7MWvbIbEDrVgggJ
+X-Google-Smtp-Source: AGHT+IEvZOrxPOqqOrTjFaKCxYWSVOYt8aZC0lG2MtwduIYlavFI0h0+Zu22FJLZJykjy4exy4nXQg==
+X-Received: by 2002:a05:600c:3585:b0:435:192:63ca with SMTP id
+ 5b1f17b1804b1-438dc3fc57cmr123491785e9.21.1738428066239; 
+ Sat, 01 Feb 2025 08:41:06 -0800 (PST)
 Received: from orth.archaic.org.uk (orth.archaic.org.uk. [2001:8b0:1d0::2])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-438dcc81d74sm127401525e9.37.2025.02.01.08.40.26
+ 5b1f17b1804b1-438dcc81d74sm127401525e9.37.2025.02.01.08.41.05
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sat, 01 Feb 2025 08:40:27 -0800 (PST)
+ Sat, 01 Feb 2025 08:41:05 -0800 (PST)
 From: Peter Maydell <peter.maydell@linaro.org>
 To: qemu-arm@nongnu.org,
 	qemu-devel@nongnu.org
-Subject: [PATCH v2 09/69] target/arm: Adjust exception flag handling for AH = 1
-Date: Sat,  1 Feb 2025 16:39:12 +0000
-Message-Id: <20250201164012.1660228-10-peter.maydell@linaro.org>
+Subject: [PATCH v2 39/69] target/arm: Handle FPCR.AH in FRECPS and FRSQRTS
+ scalar insns
+Date: Sat,  1 Feb 2025 16:39:42 +0000
+Message-Id: <20250201164012.1660228-40-peter.maydell@linaro.org>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20250201164012.1660228-1-peter.maydell@linaro.org>
 References: <20250201164012.1660228-1-peter.maydell@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32b;
- envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x32b.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::334;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x334.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -99,72 +100,265 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-When FPCR.AH = 1, some of the cumulative exception flags in the FPSR
-behave slightly differently for A64 operations:
- * IDC is set when a denormal input is used without flushing
- * IXC (Inexact) is set when an output denormal is flushed to zero
+Handle the FPCR.AH semantics that we do not change the sign of an
+input NaN in the FRECPS and FRSQRTS scalar insns, by providing
+new helper functions that do the CHS part of the operation
+differently.
 
-Update vfp_get_fpsr_from_host() to do this.
-
-Note that because half-precision operations never set IDC, we now
-need to add float_flag_input_denormal_used to the set we mask out of
-fp_status_f16_a64.
+Since the extra helper functions would be very repetitive if written
+out longhand, we condense them and the existing non-AH helpers into
+being emitted via macros.
 
 Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
 Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 ---
- target/arm/vfp_helper.c | 17 ++++++++++++++---
- 1 file changed, 14 insertions(+), 3 deletions(-)
+v2: squash in patch from RTH to move float*_ah_chs() to vec_internal.h
+---
+ target/arm/tcg/helper-a64.h    |   6 ++
+ target/arm/tcg/vec_internal.h  |  18 ++++++
+ target/arm/tcg/helper-a64.c    | 115 ++++++++++++---------------------
+ target/arm/tcg/translate-a64.c |  25 +++++--
+ 4 files changed, 83 insertions(+), 81 deletions(-)
 
-diff --git a/target/arm/vfp_helper.c b/target/arm/vfp_helper.c
-index 62005e19524..57100e95378 100644
---- a/target/arm/vfp_helper.c
-+++ b/target/arm/vfp_helper.c
-@@ -78,7 +78,7 @@ static void arm_set_ah_fp_behaviours(float_status *s)
- #ifdef CONFIG_TCG
+diff --git a/target/arm/tcg/helper-a64.h b/target/arm/tcg/helper-a64.h
+index ae0424f6de9..85023465b76 100644
+--- a/target/arm/tcg/helper-a64.h
++++ b/target/arm/tcg/helper-a64.h
+@@ -38,9 +38,15 @@ DEF_HELPER_FLAGS_3(neon_cgt_f64, TCG_CALL_NO_RWG, i64, i64, i64, fpst)
+ DEF_HELPER_FLAGS_3(recpsf_f16, TCG_CALL_NO_RWG, f16, f16, f16, fpst)
+ DEF_HELPER_FLAGS_3(recpsf_f32, TCG_CALL_NO_RWG, f32, f32, f32, fpst)
+ DEF_HELPER_FLAGS_3(recpsf_f64, TCG_CALL_NO_RWG, f64, f64, f64, fpst)
++DEF_HELPER_FLAGS_3(recpsf_ah_f16, TCG_CALL_NO_RWG, f16, f16, f16, fpst)
++DEF_HELPER_FLAGS_3(recpsf_ah_f32, TCG_CALL_NO_RWG, f32, f32, f32, fpst)
++DEF_HELPER_FLAGS_3(recpsf_ah_f64, TCG_CALL_NO_RWG, f64, f64, f64, fpst)
+ DEF_HELPER_FLAGS_3(rsqrtsf_f16, TCG_CALL_NO_RWG, f16, f16, f16, fpst)
+ DEF_HELPER_FLAGS_3(rsqrtsf_f32, TCG_CALL_NO_RWG, f32, f32, f32, fpst)
+ DEF_HELPER_FLAGS_3(rsqrtsf_f64, TCG_CALL_NO_RWG, f64, f64, f64, fpst)
++DEF_HELPER_FLAGS_3(rsqrtsf_ah_f16, TCG_CALL_NO_RWG, f16, f16, f16, fpst)
++DEF_HELPER_FLAGS_3(rsqrtsf_ah_f32, TCG_CALL_NO_RWG, f32, f32, f32, fpst)
++DEF_HELPER_FLAGS_3(rsqrtsf_ah_f64, TCG_CALL_NO_RWG, f64, f64, f64, fpst)
+ DEF_HELPER_FLAGS_2(frecpx_f64, TCG_CALL_NO_RWG, f64, f64, fpst)
+ DEF_HELPER_FLAGS_2(frecpx_f32, TCG_CALL_NO_RWG, f32, f32, fpst)
+ DEF_HELPER_FLAGS_2(frecpx_f16, TCG_CALL_NO_RWG, f16, f16, fpst)
+diff --git a/target/arm/tcg/vec_internal.h b/target/arm/tcg/vec_internal.h
+index 826791523a6..6b93b5aeb94 100644
+--- a/target/arm/tcg/vec_internal.h
++++ b/target/arm/tcg/vec_internal.h
+@@ -267,6 +267,24 @@ float32 bfdotadd_ebf(float32 sum, uint32_t e1, uint32_t e2,
+  */
+ bool is_ebf(CPUARMState *env, float_status *statusp, float_status *oddstatusp);
  
- /* Convert host exception flags to vfp form.  */
--static inline uint32_t vfp_exceptbits_from_host(int host_bits)
-+static inline uint32_t vfp_exceptbits_from_host(int host_bits, bool ah)
++/*
++ * Negate as for FPCR.AH=1 -- do not negate NaNs.
++ */
++static inline float16 float16_ah_chs(float16 a)
++{
++    return float16_is_any_nan(a) ? a : float16_chs(a);
++}
++
++static inline float32 float32_ah_chs(float32 a)
++{
++    return float32_is_any_nan(a) ? a : float32_chs(a);
++}
++
++static inline float64 float64_ah_chs(float64 a)
++{
++    return float64_is_any_nan(a) ? a : float64_chs(a);
++}
++
+ static inline float16 float16_maybe_ah_chs(float16 a, bool fpcr_ah)
  {
-     uint32_t target_bits = 0;
+     return fpcr_ah && float16_is_any_nan(a) ? a : float16_chs(a);
+diff --git a/target/arm/tcg/helper-a64.c b/target/arm/tcg/helper-a64.c
+index ed5e4a45997..32f0647ca4f 100644
+--- a/target/arm/tcg/helper-a64.c
++++ b/target/arm/tcg/helper-a64.c
+@@ -38,6 +38,7 @@
+ #ifdef CONFIG_USER_ONLY
+ #include "user/page-protection.h"
+ #endif
++#include "vec_internal.h"
  
-@@ -100,6 +100,16 @@ static inline uint32_t vfp_exceptbits_from_host(int host_bits)
-     if (host_bits & float_flag_input_denormal_flushed) {
-         target_bits |= FPSR_IDC;
-     }
-+    /*
-+     * With FPCR.AH, IDC is set when an input denormal is used,
-+     * and flushing an output denormal to zero sets both IXC and UFC.
-+     */
-+    if (ah && (host_bits & float_flag_input_denormal_used)) {
-+        target_bits |= FPSR_IDC;
-+    }
-+    if (ah && (host_bits & float_flag_output_denormal_flushed)) {
-+        target_bits |= FPSR_IXC;
-+    }
-     return target_bits;
+ /* C2.4.7 Multiply and divide */
+ /* special cases for 0 and LLONG_MIN are mandated by the standard */
+@@ -208,88 +209,52 @@ uint64_t HELPER(neon_cgt_f64)(float64 a, float64 b, float_status *fpst)
+     return -float64_lt(b, a, fpst);
  }
  
-@@ -117,7 +127,7 @@ static uint32_t vfp_get_fpsr_from_host(CPUARMState *env)
- 
-     a64_flags |= get_float_exception_flags(&env->vfp.fp_status_a64);
-     a64_flags |= (get_float_exception_flags(&env->vfp.fp_status_f16_a64)
--          & ~float_flag_input_denormal_flushed);
-+          & ~(float_flag_input_denormal_flushed | float_flag_input_denormal_used));
-     /*
-      * Flushing an input denormal *only* because FPCR.FIZ == 1 does
-      * not set FPSR.IDC; if FPCR.FZ is also set then this takes
-@@ -129,7 +139,8 @@ static uint32_t vfp_get_fpsr_from_host(CPUARMState *env)
-     if ((env->vfp.fpcr & (FPCR_FZ | FPCR_AH)) != FPCR_FZ) {
-         a64_flags &= ~float_flag_input_denormal_flushed;
+-/* Reciprocal step and sqrt step. Note that unlike the A32/T32
++/*
++ * Reciprocal step and sqrt step. Note that unlike the A32/T32
+  * versions, these do a fully fused multiply-add or
+  * multiply-add-and-halve.
++ * The FPCR.AH == 1 versions need to avoid flipping the sign of NaN.
+  */
+-
+-uint32_t HELPER(recpsf_f16)(uint32_t a, uint32_t b, float_status *fpst)
+-{
+-    a = float16_squash_input_denormal(a, fpst);
+-    b = float16_squash_input_denormal(b, fpst);
+-
+-    a = float16_chs(a);
+-    if ((float16_is_infinity(a) && float16_is_zero(b)) ||
+-        (float16_is_infinity(b) && float16_is_zero(a))) {
+-        return float16_two;
++#define DO_RECPS(NAME, CTYPE, FLOATTYPE, CHSFN)                         \
++    CTYPE HELPER(NAME)(CTYPE a, CTYPE b, float_status *fpst)            \
++    {                                                                   \
++        a = FLOATTYPE ## _squash_input_denormal(a, fpst);               \
++        b = FLOATTYPE ## _squash_input_denormal(b, fpst);               \
++        a = FLOATTYPE ## _ ## CHSFN(a);                                 \
++        if ((FLOATTYPE ## _is_infinity(a) && FLOATTYPE ## _is_zero(b)) || \
++            (FLOATTYPE ## _is_infinity(b) && FLOATTYPE ## _is_zero(a))) { \
++            return FLOATTYPE ## _two;                                   \
++        }                                                               \
++        return FLOATTYPE ## _muladd(a, b, FLOATTYPE ## _two, 0, fpst);  \
      }
--    return vfp_exceptbits_from_host(a32_flags | a64_flags);
-+    return vfp_exceptbits_from_host(a64_flags, env->vfp.fpcr & FPCR_AH) |
-+        vfp_exceptbits_from_host(a32_flags, false);
+-    return float16_muladd(a, b, float16_two, 0, fpst);
+-}
+ 
+-float32 HELPER(recpsf_f32)(float32 a, float32 b, float_status *fpst)
+-{
+-    a = float32_squash_input_denormal(a, fpst);
+-    b = float32_squash_input_denormal(b, fpst);
++DO_RECPS(recpsf_f16, uint32_t, float16, chs)
++DO_RECPS(recpsf_f32, float32, float32, chs)
++DO_RECPS(recpsf_f64, float64, float64, chs)
++DO_RECPS(recpsf_ah_f16, uint32_t, float16, ah_chs)
++DO_RECPS(recpsf_ah_f32, float32, float32, ah_chs)
++DO_RECPS(recpsf_ah_f64, float64, float64, ah_chs)
+ 
+-    a = float32_chs(a);
+-    if ((float32_is_infinity(a) && float32_is_zero(b)) ||
+-        (float32_is_infinity(b) && float32_is_zero(a))) {
+-        return float32_two;
+-    }
+-    return float32_muladd(a, b, float32_two, 0, fpst);
+-}
++#define DO_RSQRTSF(NAME, CTYPE, FLOATTYPE, CHSFN)                       \
++    CTYPE HELPER(NAME)(CTYPE a, CTYPE b, float_status *fpst)            \
++    {                                                                   \
++        a = FLOATTYPE ## _squash_input_denormal(a, fpst);               \
++        b = FLOATTYPE ## _squash_input_denormal(b, fpst);               \
++        a = FLOATTYPE ## _ ## CHSFN(a);                                 \
++        if ((FLOATTYPE ## _is_infinity(a) && FLOATTYPE ## _is_zero(b)) || \
++            (FLOATTYPE ## _is_infinity(b) && FLOATTYPE ## _is_zero(a))) { \
++            return FLOATTYPE ## _one_point_five;                        \
++        }                                                               \
++        return FLOATTYPE ## _muladd_scalbn(a, b, FLOATTYPE ## _three,   \
++                                           -1, 0, fpst);                \
++    }                                                                   \
+ 
+-float64 HELPER(recpsf_f64)(float64 a, float64 b, float_status *fpst)
+-{
+-    a = float64_squash_input_denormal(a, fpst);
+-    b = float64_squash_input_denormal(b, fpst);
+-
+-    a = float64_chs(a);
+-    if ((float64_is_infinity(a) && float64_is_zero(b)) ||
+-        (float64_is_infinity(b) && float64_is_zero(a))) {
+-        return float64_two;
+-    }
+-    return float64_muladd(a, b, float64_two, 0, fpst);
+-}
+-
+-uint32_t HELPER(rsqrtsf_f16)(uint32_t a, uint32_t b, float_status *fpst)
+-{
+-    a = float16_squash_input_denormal(a, fpst);
+-    b = float16_squash_input_denormal(b, fpst);
+-
+-    a = float16_chs(a);
+-    if ((float16_is_infinity(a) && float16_is_zero(b)) ||
+-        (float16_is_infinity(b) && float16_is_zero(a))) {
+-        return float16_one_point_five;
+-    }
+-    return float16_muladd_scalbn(a, b, float16_three, -1, 0, fpst);
+-}
+-
+-float32 HELPER(rsqrtsf_f32)(float32 a, float32 b, float_status *fpst)
+-{
+-    a = float32_squash_input_denormal(a, fpst);
+-    b = float32_squash_input_denormal(b, fpst);
+-
+-    a = float32_chs(a);
+-    if ((float32_is_infinity(a) && float32_is_zero(b)) ||
+-        (float32_is_infinity(b) && float32_is_zero(a))) {
+-        return float32_one_point_five;
+-    }
+-    return float32_muladd_scalbn(a, b, float32_three, -1, 0, fpst);
+-}
+-
+-float64 HELPER(rsqrtsf_f64)(float64 a, float64 b, float_status *fpst)
+-{
+-    a = float64_squash_input_denormal(a, fpst);
+-    b = float64_squash_input_denormal(b, fpst);
+-
+-    a = float64_chs(a);
+-    if ((float64_is_infinity(a) && float64_is_zero(b)) ||
+-        (float64_is_infinity(b) && float64_is_zero(a))) {
+-        return float64_one_point_five;
+-    }
+-    return float64_muladd_scalbn(a, b, float64_three, -1, 0, fpst);
+-}
++DO_RSQRTSF(rsqrtsf_f16, uint32_t, float16, chs)
++DO_RSQRTSF(rsqrtsf_f32, float32, float32, chs)
++DO_RSQRTSF(rsqrtsf_f64, float64, float64, chs)
++DO_RSQRTSF(rsqrtsf_ah_f16, uint32_t, float16, ah_chs)
++DO_RSQRTSF(rsqrtsf_ah_f32, float32, float32, ah_chs)
++DO_RSQRTSF(rsqrtsf_ah_f64, float64, float64, ah_chs)
+ 
+ /* Floating-point reciprocal exponent - see FPRecpX in ARM ARM */
+ uint32_t HELPER(frecpx_f16)(uint32_t a, float_status *fpst)
+diff --git a/target/arm/tcg/translate-a64.c b/target/arm/tcg/translate-a64.c
+index 52f93cb905b..a3404c9e68c 100644
+--- a/target/arm/tcg/translate-a64.c
++++ b/target/arm/tcg/translate-a64.c
+@@ -5250,11 +5250,12 @@ static bool do_fp3_scalar(DisasContext *s, arg_rrr_e *a, const FPScalar *f,
+                                        FPST_A64_F16 : FPST_A64);
  }
  
- static void vfp_clear_float_status_exc_flags(CPUARMState *env)
+-static bool do_fp3_scalar_ah(DisasContext *s, arg_rrr_e *a, const FPScalar *f,
+-                             int mergereg)
++static bool do_fp3_scalar_ah_2fn(DisasContext *s, arg_rrr_e *a,
++                                 const FPScalar *fnormal, const FPScalar *fah,
++                                 int mergereg)
+ {
+-    return do_fp3_scalar_with_fpsttype(s, a, f, mergereg,
+-                                       select_ah_fpst(s, a->esz));
++    return do_fp3_scalar_with_fpsttype(s, a, s->fpcr_ah ? fah : fnormal,
++                                       mergereg, select_ah_fpst(s, a->esz));
+ }
+ 
+ /* Some insns need to call different helpers when FPCR.AH == 1 */
+@@ -5475,14 +5476,26 @@ static const FPScalar f_scalar_frecps = {
+     gen_helper_recpsf_f32,
+     gen_helper_recpsf_f64,
+ };
+-TRANS(FRECPS_s, do_fp3_scalar_ah, a, &f_scalar_frecps, a->rn)
++static const FPScalar f_scalar_ah_frecps = {
++    gen_helper_recpsf_ah_f16,
++    gen_helper_recpsf_ah_f32,
++    gen_helper_recpsf_ah_f64,
++};
++TRANS(FRECPS_s, do_fp3_scalar_ah_2fn, a,
++      &f_scalar_frecps, &f_scalar_ah_frecps, a->rn)
+ 
+ static const FPScalar f_scalar_frsqrts = {
+     gen_helper_rsqrtsf_f16,
+     gen_helper_rsqrtsf_f32,
+     gen_helper_rsqrtsf_f64,
+ };
+-TRANS(FRSQRTS_s, do_fp3_scalar_ah, a, &f_scalar_frsqrts, a->rn)
++static const FPScalar f_scalar_ah_frsqrts = {
++    gen_helper_rsqrtsf_ah_f16,
++    gen_helper_rsqrtsf_ah_f32,
++    gen_helper_rsqrtsf_ah_f64,
++};
++TRANS(FRSQRTS_s, do_fp3_scalar_ah_2fn, a,
++      &f_scalar_frsqrts, &f_scalar_ah_frsqrts, a->rn)
+ 
+ static bool do_fcmp0_s(DisasContext *s, arg_rr_e *a,
+                        const FPScalar *f, bool swap)
 -- 
 2.34.1
 
