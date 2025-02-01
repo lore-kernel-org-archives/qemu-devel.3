@@ -4,85 +4,90 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4B74EC02194
-	for <qemu-devel@archiver.kernel.org>; Sat,  1 Feb 2025 13:52:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 31B86C0218A
+	for <qemu-devel@archiver.kernel.org>; Sat,  1 Feb 2025 14:31:29 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1teDuL-0001Mv-P7; Sat, 01 Feb 2025 08:51:37 -0500
+	id 1teEWF-0000Wq-6K; Sat, 01 Feb 2025 09:30:50 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1teDuK-0001ME-5N
- for qemu-devel@nongnu.org; Sat, 01 Feb 2025 08:51:36 -0500
-Received: from mail-yb1-xb30.google.com ([2607:f8b0:4864:20::b30])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1teEVk-0000SD-LE
+ for qemu-devel@nongnu.org; Sat, 01 Feb 2025 09:30:18 -0500
+Received: from mail-wr1-x42a.google.com ([2a00:1450:4864:20::42a])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1teDuI-0004KW-OI
- for qemu-devel@nongnu.org; Sat, 01 Feb 2025 08:51:35 -0500
-Received: by mail-yb1-xb30.google.com with SMTP id
- 3f1490d57ef6-e545c1e8a15so3000717276.1
- for <qemu-devel@nongnu.org>; Sat, 01 Feb 2025 05:51:33 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1teEVi-0008Sk-V2
+ for qemu-devel@nongnu.org; Sat, 01 Feb 2025 09:30:16 -0500
+Received: by mail-wr1-x42a.google.com with SMTP id
+ ffacd0b85a97d-38634c35129so2293381f8f.3
+ for <qemu-devel@nongnu.org>; Sat, 01 Feb 2025 06:30:14 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1738417893; x=1739022693; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=4i+PvaK5XV2ufIOu1FAplCz/JMuNjmtNoAHIltZ7WPw=;
- b=GrcTA0nWxcgfCVyY9VLDKd6mvXK5wf1UlYRAmc9HODW4KbxuZL0YYjcKbpgivhqd3/
- RuhxLZt0Y5wF0bTxkMVN3ua8LN04DXCEjprte5nHcSeMXsyKRMDIi3xzYVEFaFJ3qUFi
- 5wQTSQ8LcYrwxGrUVRSsFMaKKpQzhlM6JrL+so5reiTYuoSAdkFbdBygN7fT6rQbm2NQ
- hcQ54FtWcutE4OXi4PFcIKOJrre8MA+/LoYf23CVHLig2ScJSduGNzFf+sjLeuFRm9z9
- i3xR0am1zRDUPqpqQX+xA998ONF9KlMjYQFIGPkdt/lecMuZPpHJjEiLVyO+3FkkyGGc
- gevQ==
+ d=linaro.org; s=google; t=1738420213; x=1739025013; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=ZecNtASfh7rrAlvwFbfUE2XXOpRJhV4UbpJBSEoNxZc=;
+ b=t5U5PIZ6Slz8Q8c4XYZrdP6LBstWw9fDdYE9bqsViBvLQzN73tLxfv0L3uVwJARKjb
+ 55kEn1KRnM3syJw91nt4SHD0pO7fJwiF5dzBfIXUon7f19WdeFW8Ug7tfv/iZSnHoRRQ
+ qzB9vtFUcUFG7cB+TawwWYWl1uTfoG9eJ0qtNWOqfycSFdghByKjD8WNxb9Od+sotdXG
+ LLE+2LS7gmlblVylBdPCnIxpe4VYpsdhiAZRwJnIzVdPnpfl/m1YakaNYkH5XVhrVSUi
+ JJXNdw/QDglehm4QtliCxc3zEYpiefligJ6SYUETNN1IUIu6EB3MpQEM++ZgkmkXUZVr
+ /xww==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1738417893; x=1739022693;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=4i+PvaK5XV2ufIOu1FAplCz/JMuNjmtNoAHIltZ7WPw=;
- b=ekDKpcBUExkb4iGwY2W7k4fM26UlBTHtESMqI91SJm0TVKfviUi8MNbJ6fiq6G+3Hs
- YyNk1KU5l4fHvPjEzs8/12OtaSkk61zCV1qHdLqQMFOPG3/ccTllfpU0FBKkO1xW7+8g
- Zt4R3AUCibG5DbQ/qqryreONKchfZEazH6wMGJhf3qXdPpRkRnbrqdLrLSxjRMb1Yd8r
- x5gmWgsEK8B/ZkfOApwcdwUbX/CXN1WsUdwdLRL9Y58m3XEh6UQEBVzk9v4gOKSjb2Tt
- 0A3yk9qqGDnBPofmzO7A73n5TXNAdH0FLyX7wnx3iHufrfx1E75OR2RWn+OcZYjubveF
- u0LQ==
-X-Forwarded-Encrypted: i=1;
- AJvYcCUAawQwxgXdm84/upmNWp1fZD4AOU/dSWu1VtZf4exmbcJQ0phqfnkmp2hNZNcYxV6gChaXGyY5NKxE@nongnu.org
-X-Gm-Message-State: AOJu0YxPhYY6wlgjEVRqofh2IJQW2Kxqzvd5raIvepfmqti83WYwTDge
- 5c5Han8LZ36vZ/NEQiOauub/gD2Q56Z7gl4EBwks9wObdbn9u3KauAH5jIuzwd7M5UB3RDWnDAw
- Q9hoaV6PNHyjmLZzXkn45eMOZO69SLRIIyzHVTw==
-X-Gm-Gg: ASbGncvHa8k1c6B6a67NO6S46qJBzTSfG2jfz3D0MPr1zEE8q9A/hVpTmO85qgkF4rC
- RCk/JbaYjLVitZsZi3cH54HkYLjVZB9ABor5trM3AnBRpiKaavyEoPqbSNJodKv9fdUoiSwtNNw
- ==
-X-Google-Smtp-Source: AGHT+IHKZxudV7gohSODJaUkzrhqSeOmNEAlobEJqXzWqq67WQyxyAs3eIQ46BK0cmQIhMWjxAN8TL9uh+MDtaWVNVw=
-X-Received: by 2002:a05:6902:2783:b0:e5a:e88e:b2d5 with SMTP id
- 3f1490d57ef6-e5ae88eb501mr2274374276.9.1738417893051; Sat, 01 Feb 2025
- 05:51:33 -0800 (PST)
+ d=1e100.net; s=20230601; t=1738420213; x=1739025013;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=ZecNtASfh7rrAlvwFbfUE2XXOpRJhV4UbpJBSEoNxZc=;
+ b=G/xlPbaLzqBeVn9d4vgxDoYNsCLWxx6kzcZYITvfSxHgKkTsbB0PwdWX3U8OByHnYK
+ tcvhbtOr3ePceXo/K+x7FoX8ljbLyS6NDouZr7xZW/XcQXZ45qHRZCcY61JVk8J/iNif
+ C+dfkAfc0bAa/OMmBSO/UTbzlxPTbxyp2hvqET48QbFy2LGulBKCcLjJjCM1x5BgJfSX
+ I+WQXdd8KnNw/z3QE8pjjw7R6VM5vzveuny6ST/d5DT3olQv33CzApk9vgF5fApS+eQI
+ 7nvRbxcb++vKZAAjJQkdcXe+zCTr5Hfkj4MMzCe/2Z4mswySB6prRhguwjjH45hBg9E1
+ ry9Q==
+X-Gm-Message-State: AOJu0YzqujwPJECFayGRt92kH66rffm4Iic6Sr+Ek3F5QjfGHGtjh/iB
+ A65R7bwPU6NB78/bJ+SyDszk/6wfDWQgWfeorymbONMcK0Hyatguyd8toCoUPf1t6db2Eo33Et5
+ Oi3o=
+X-Gm-Gg: ASbGncvpvwTgW3td8xRf6EvpHLhnBuW6SrBREgoDapieG3VfbaCGloSdYanG378AnEw
+ +jedcSdVK80aU+qwZNtOC+LzCNyUI8eAkSq9Alugi7x6wVQK8rpkPh4Yn3rXrbZlbPwMoecb3Sg
+ ot2RmaWDXJbohXIESf/EWi+TRzjEgMelec0aJWGl2m3nMWz5+8K24NYBSbPeArgpCRzf8TOekJ3
+ hALAO0gd/aZFb00IJUkmQ4kDbFGFMkttflD3Fk9e9+u+PvzZArmx9FTKsvXFeF430RiJmNiHS+s
+ 84oGDOKcaGibVbMnOa0y8qRWsFOj+MmiDIzBUsqRDkBQdTbax1jEPEy90g==
+X-Google-Smtp-Source: AGHT+IF6vu94R6YJceN1F4aDs46wV2+3WTAR7OYi9ojTz0+CA7jg8xfaRONh1jLyXcfTJ6a6LZnAVg==
+X-Received: by 2002:a05:6000:dc4:b0:385:f44a:a3b with SMTP id
+ ffacd0b85a97d-38c52097596mr10568743f8f.41.1738420212739; 
+ Sat, 01 Feb 2025 06:30:12 -0800 (PST)
+Received: from [10.85.240.213] (217.170.88.92.rev.sfr.net. [92.88.170.217])
+ by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-38c5c1cf571sm7291868f8f.82.2025.02.01.06.30.11
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Sat, 01 Feb 2025 06:30:12 -0800 (PST)
+Message-ID: <4f8886c6-32f8-465b-a243-b5fa510a8f9f@linaro.org>
+Date: Sat, 1 Feb 2025 15:30:11 +0100
 MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 4/7] hw/arm/raspi4b: Rename as raspi4b-1g / raspi4b-2g,
+ deprecating old name
+To: qemu-devel@nongnu.org
+Cc: Jared Mauch <jared+home@puck.nether.net>,
+ Peter Maydell <peter.maydell@linaro.org>, qemu-arm@nongnu.org,
+ devel@lists.libvirt.org
 References: <20250201091528.1177-1-philmd@linaro.org>
- <90d87f0e-56a3-8966-614c-364f3e726d61@eik.bme.hu>
-In-Reply-To: <90d87f0e-56a3-8966-614c-364f3e726d61@eik.bme.hu>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Sat, 1 Feb 2025 13:51:21 +0000
-X-Gm-Features: AWEUYZnQ-7-wNeES8-b6WVpvSE5aD01NRDmR10nIvwaYjT8vzrteghAQ85mB9mU
-Message-ID: <CAFEAcA_mBXO20NhYRHJCgkB0h8uYQQhBMdwVW376R4u-qh51nA@mail.gmail.com>
-Subject: Re: [PATCH 0/7] hw/arm/raspi4b: Add models with 4GB and 8GB of DRAM
-To: BALATON Zoltan <balaton@eik.bme.hu>
-Cc: =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
- qemu-devel@nongnu.org, Jared Mauch <jared+home@puck.nether.net>,
- qemu-arm@nongnu.org, devel@lists.libvirt.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::b30;
- envelope-from=peter.maydell@linaro.org; helo=mail-yb1-xb30.google.com
+ <20250201091528.1177-5-philmd@linaro.org>
+Content-Language: en-US
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <20250201091528.1177-5-philmd@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::42a;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x42a.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -98,22 +103,47 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Sat, 1 Feb 2025 at 12:57, BALATON Zoltan <balaton@eik.bme.hu> wrote:
->
-> On Sat, 1 Feb 2025, Philippe Mathieu-Daud=C3=A9 wrote:
-> > - Deprecate the 'raspi4b' machine name, renaming it as
-> >  'raspi4b-1g' on 32-bit hosts, 'raspi4b-2g' otherwise.
-> > - Add the 'raspi4b-4g' and 'raspi4b-8g' machines, with
-> >  respectively 4GB and 8GB of DRAM.
->
-> IMHO (meaning you can ignore it, just my opinion) if the only difference
-> is the memory size -machine raspi4b -memory 4g would be better user
-> experience than having a lot of different machines.
+On 1/2/25 10:15, Philippe Mathieu-Daudé wrote:
+> On 32-bit hosts, rename 'raspi4b' -> 'raspi4b-1g' to clarify the
+> machine has 1GB of RAM.
+> On 64-bit hosts, rename 'raspi4b' -> 'raspi4b-2g'.
+> Keep the 'raspi4b' alias but deprecate it.
+> 
+> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+> ---
+>   docs/about/deprecated.rst | 6 ++++++
+>   hw/arm/raspi4b.c          | 6 ++++--
+>   2 files changed, 10 insertions(+), 2 deletions(-)
 
-Yes, I think I agree. We have a way for users to specify
-how much memory they want, and I think it makes more sense
-to use that than to have lots of different machine types.
+>   static const TypeInfo raspi4_machine_types[] = {
+>   #if HOST_LONG_BITS == 32
+>       {
+> -        .name           = MACHINE_TYPE_NAME("raspi4b"),
+> +        .name           = MACHINE_TYPE_NAME("raspi4b-1g"),
+>           .parent         = TYPE_RASPI4_MACHINE,
+>           .class_init     = raspi4b_1g_machine_class_init,
+>       },
+>   #else
+>       {
+> -        .name           = MACHINE_TYPE_NAME("raspi4b"),
+> +        .name           = MACHINE_TYPE_NAME("raspi4b-2g"),
+>           .parent         = TYPE_RASPI4_MACHINE,
+>           .class_init     = raspi4b_2g_machine_class_init,
+>       },
 
-thanks
--- PMM
+Forgot to squash here:
+
+-- >8 --
+diff --git a/tests/functional/test_aarch64_raspi4.py 
+b/tests/functional/test_aarch64_raspi4.py
+index 7a4302b0c5a..891a8135b6b 100755
+--- a/tests/functional/test_aarch64_raspi4.py
++++ b/tests/functional/test_aarch64_raspi4.py
+@@ -37 +37 @@ def test_arm_raspi4(self):
+-        self.set_machine('raspi4b')
++        self.set_machine('raspi4b-1g')
+@@ -67 +67 @@ def test_arm_raspi4_initrd(self):
+-        self.set_machine('raspi4b')
++        self.set_machine('raspi4b-1g')
+---
 
