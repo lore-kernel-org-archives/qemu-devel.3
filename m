@@ -4,81 +4,54 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4E7F3C0218A
-	for <qemu-devel@archiver.kernel.org>; Sat,  1 Feb 2025 10:41:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9A282C0218A
+	for <qemu-devel@archiver.kernel.org>; Sat,  1 Feb 2025 12:59:15 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1teAvn-00054b-RE; Sat, 01 Feb 2025 05:40:55 -0500
+	id 1teD4a-0006uK-A6; Sat, 01 Feb 2025 07:58:08 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1teAvm-00054Q-Au
- for qemu-devel@nongnu.org; Sat, 01 Feb 2025 05:40:54 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
+ id 1teD4X-0006tN-Vy; Sat, 01 Feb 2025 07:58:06 -0500
+Received: from zero.eik.bme.hu ([152.66.115.2])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1teAvk-0005A3-Tz
- for qemu-devel@nongnu.org; Sat, 01 Feb 2025 05:40:54 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1738406450;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:resent-to:
- resent-from:resent-message-id:in-reply-to:in-reply-to:  references:references; 
- bh=moJ//3piSwwac4eb7uId50fYmcgBfoxy4mkB5GiCLCA=;
- b=I6FnTeJk1Z48ycgG7/fchoRQcxy6MA6saHxgkuw7VrNMdOIB4HyH1Y4DErTT+Ym4tGRZd/
- Ei2fcLl1tIplT4SXqITXhai8HYoQo++UaLhn3rplkujkjSosYY6pLUBEWkpWN0rt0chsO7
- uPXFZOpb8bIa0ZDf2VQX7nkDZoz3R3Q=
-Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-604-6TstWoYgNdepe3LZanbxvg-1; Sat,
- 01 Feb 2025 05:40:49 -0500
-X-MC-Unique: 6TstWoYgNdepe3LZanbxvg-1
-X-Mimecast-MFC-AGG-ID: 6TstWoYgNdepe3LZanbxvg
-Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 378181956080; Sat,  1 Feb 2025 10:40:48 +0000 (UTC)
-Received: from blackfin.pond.sub.org (unknown [10.39.192.40])
- by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id B87A61800975; Sat,  1 Feb 2025 10:40:47 +0000 (UTC)
-Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
- id B010121E6A28; Sat, 01 Feb 2025 11:40:45 +0100 (CET)
-Resent-To: alex.bennee@linaro.org, gustavo.romero@linaro.org,
- philmd@linaro.org, qemu-devel@nongnu.org
-Resent-From: Markus Armbruster <armbru@redhat.com>
-Resent-Date: Sat, 01 Feb 2025 11:40:45 +0100
-Resent-Message-ID: <87frkyj6c2.fsf@pond.sub.org>
-From: Markus Armbruster <armbru@redhat.com>
-To: Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Cc: Gustavo Romero <gustavo.romero@linaro.org>,  qemu-devel@nongnu.org,
- alex.bennee@linaro.org
-Subject: Re: [PATCH v2 0/2] Add me as the maintainer for ivshmem-pci
-In-Reply-To: <f16985e1-ecc5-4439-ba4c-f9a6a4d06d10@linaro.org> ("Philippe
- =?utf-8?Q?Mathieu-Daud=C3=A9=22's?= message of "Fri, 31 Jan 2025 19:33:59
- +0100")
-References: <20250123012212.716499-1-gustavo.romero@linaro.org>
- <35e2dcf5-d1d6-4326-90cb-22dc82023bed@linaro.org>
- <f16985e1-ecc5-4439-ba4c-f9a6a4d06d10@linaro.org>
-Date: Sat, 01 Feb 2025 08:08:38 +0100
-Message-ID: <87seoyjg5l.fsf@pond.sub.org>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+ (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
+ id 1teD4W-0006jl-7U; Sat, 01 Feb 2025 07:58:05 -0500
+Received: from zero.eik.bme.hu (localhost [127.0.0.1])
+ by zero.eik.bme.hu (Postfix) with ESMTP id 1CB194E6005;
+ Sat, 01 Feb 2025 13:57:58 +0100 (CET)
+X-Virus-Scanned: amavisd-new at eik.bme.hu
+Received: from zero.eik.bme.hu ([127.0.0.1])
+ by zero.eik.bme.hu (zero.eik.bme.hu [127.0.0.1]) (amavisd-new, port 10028)
+ with ESMTP id NbOq-EX56cOw; Sat,  1 Feb 2025 13:57:56 +0100 (CET)
+Received: by zero.eik.bme.hu (Postfix, from userid 432)
+ id 2CC544E6019; Sat, 01 Feb 2025 13:57:56 +0100 (CET)
+Received: from localhost (localhost [127.0.0.1])
+ by zero.eik.bme.hu (Postfix) with ESMTP id 2ABEA74577C;
+ Sat, 01 Feb 2025 13:57:56 +0100 (CET)
+Date: Sat, 1 Feb 2025 13:57:56 +0100 (CET)
+From: BALATON Zoltan <balaton@eik.bme.hu>
+To: =?ISO-8859-15?Q?Philippe_Mathieu-Daud=E9?= <philmd@linaro.org>
+cc: qemu-devel@nongnu.org, Jared Mauch <jared+home@puck.nether.net>, 
+ Peter Maydell <peter.maydell@linaro.org>, qemu-arm@nongnu.org, 
+ devel@lists.libvirt.org
+Subject: Re: [PATCH 0/7] hw/arm/raspi4b: Add models with 4GB and 8GB of
+ DRAM
+In-Reply-To: <20250201091528.1177-1-philmd@linaro.org>
+Message-ID: <90d87f0e-56a3-8966-614c-364f3e726d61@eik.bme.hu>
+References: <20250201091528.1177-1-philmd@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=armbru@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -33
-X-Spam_score: -3.4
-X-Spam_bar: ---
-X-Spam_report: (-3.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.3,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+Content-Type: multipart/mixed;
+ BOUNDARY="3866299591-595375333-1738414184=:33237"
+Content-ID: <41e0dd69-157e-7e24-7b0f-bec2d0eef23c@eik.bme.hu>
+Received-SPF: pass client-ip=152.66.115.2; envelope-from=balaton@eik.bme.hu;
+ helo=zero.eik.bme.hu
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -95,52 +68,48 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org> writes:
+  This message is in MIME format.  The first part should be readable text,
+  while the remaining parts are likely unreadable without MIME-aware tools.
 
-> On 24/1/25 17:22, Philippe Mathieu-Daud=C3=A9 wrote:
->> On 23/1/25 02:22, Gustavo Romero wrote:
->>> Add me as the maintainer for the ivshmem-pci.c device, the ivshmem
->>> server, and the ivshmem client tool. Also, adjust remaining parts left
->>> behind after ivshmem PCI device was renamed from ivshmem.c to
->>> ivshmem-pci.c, like header files, Kconfig, docs, and build scripts.
->>>
->>>
->>> Cheers,
->>> Gustavo
->>>
->>> Gustavo Romero (2):
->>> =C2=A0=C2=A0 hw/misc/ivshmem-pci: Rename remaining parts for consistency
->>> =C2=A0=C2=A0 MAINTAINERS: Add me as the maintainer for ivshmem-pci
->> Reviewed-by: Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org>
->> and queued, thanks for volunteering!
+--3866299591-595375333-1738414184=:33237
+Content-Type: text/plain; CHARSET=ISO-8859-15; format=flowed
+Content-Transfer-Encoding: 8BIT
+Content-ID: <1d22ae7b-5e8f-9543-38b8-cba62d89b36e@eik.bme.hu>
+
+On Sat, 1 Feb 2025, Philippe Mathieu-Daudé wrote:
+> - Deprecate the 'raspi4b' machine name, renaming it as
+>  'raspi4b-1g' on 32-bit hosts, 'raspi4b-2g' otherwise.
+> - Add the 'raspi4b-4g' and 'raspi4b-8g' machines, with
+>  respectively 4GB and 8GB of DRAM.
+
+IMHO (meaning you can ignore it, just my opinion) if the only difference 
+is the memory size -machine raspi4b -memory 4g would be better user 
+experience than having a lot of different machines. Or if you want to 
+emphasize these are tied to revisions maybe -machine raspi4b,revision=1.4 
+could be used. You can say that -machine help listing different versions 
+is easier to find but if it's the same machine with different options then 
+this should be a machine option, then you can use -machine raspi4b,help to 
+find the options specific to the machine. Memory size is normally set with 
+-memory so that could also select the revision as a convenience if this 
+is tied to a specific revision.
+
+Regards,
+BALATON Zoltan
+
+> Philippe Mathieu-Daudé (7):
+>  hw/arm/raspi4b: Declare machine types using DEFINE_TYPES() macro
+>  hw/arm/raspi4b: Introduce abstract raspi4-base machine type
+>  hw/arm/raspi4b: Split raspi4b_machine_class_init() in two (1g and 2g)
+>  hw/arm/raspi4b: Rename as raspi4b-1g / raspi4b-2g, deprecating old
+>    name
+>  hw/arm/raspi4b: Expose the raspi4b-1g machine on 64-bit hosts
+>  hw/arm/raspi4b: Add the raspi4b-4g machine
+>  hw/arm/raspi4b: Add the raspi4b-8g machine
 >
-> Failing to build:
+> docs/about/deprecated.rst |  6 +++
+> hw/arm/raspi4b.c          | 91 +++++++++++++++++++++++++++++++--------
+> 2 files changed, 79 insertions(+), 18 deletions(-)
 >
-> docs/specs/ivshmem-spec.rst:17:unknown document: '../system/devices/ivshm=
-em'
-> ninja: build stopped: subcommand failed.
 >
-> docs/specs/ivshmem-spec.rst only mention PCI, so I could squash in the
-> first patch:
-> -- >8 --
-> diff --git a/docs/specs/ivshmem-spec.rst b/docs/specs/ivshmem-spec.rst
-> index 2d8e80055b0..e326d024487 100644
-> --- a/docs/specs/ivshmem-spec.rst
-> +++ b/docs/specs/ivshmem-spec.rst
-> @@ -17,3 +17,3 @@ get interrupted by its peers.
->  For information on configuring the ivshmem device on the QEMU
-> -command line, see :doc:`../system/devices/ivshmem`.
-> +command line, see :doc:`../system/devices/ivshmem-pci`.
-> ---
-> But then I wonder if this document shouldn't mention the flat
-> device. Since I'm unsure I'm dropping the series (patch 2
-> depends on 1).
-
-Simple oversight in PATCH 1.  It renames docs/system/devices/ivshmem.rst
-to docs/system/devices/ivshmem-pci.rst without updating the reference in
-docs/specs/ivshmem-spec.rst.
-
-Surprisingly, this didn't fail for me in an incremental build, only in a
-full one.
-
+--3866299591-595375333-1738414184=:33237--
 
