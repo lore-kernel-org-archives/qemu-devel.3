@@ -4,88 +4,95 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 31B86C0218A
-	for <qemu-devel@archiver.kernel.org>; Sat,  1 Feb 2025 14:31:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5830EC0218A
+	for <qemu-devel@archiver.kernel.org>; Sat,  1 Feb 2025 14:46:48 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1teEWF-0000Wq-6K; Sat, 01 Feb 2025 09:30:50 -0500
+	id 1teEl3-00035x-21; Sat, 01 Feb 2025 09:46:05 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1teEVk-0000SD-LE
- for qemu-devel@nongnu.org; Sat, 01 Feb 2025 09:30:18 -0500
-Received: from mail-wr1-x42a.google.com ([2a00:1450:4864:20::42a])
+ (Exim 4.90_1) (envelope-from <shentey@gmail.com>)
+ id 1teEkx-00035f-8j; Sat, 01 Feb 2025 09:45:59 -0500
+Received: from mail-ej1-x62f.google.com ([2a00:1450:4864:20::62f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1teEVi-0008Sk-V2
- for qemu-devel@nongnu.org; Sat, 01 Feb 2025 09:30:16 -0500
-Received: by mail-wr1-x42a.google.com with SMTP id
- ffacd0b85a97d-38634c35129so2293381f8f.3
- for <qemu-devel@nongnu.org>; Sat, 01 Feb 2025 06:30:14 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <shentey@gmail.com>)
+ id 1teEkv-0003Tu-Lm; Sat, 01 Feb 2025 09:45:59 -0500
+Received: by mail-ej1-x62f.google.com with SMTP id
+ a640c23a62f3a-ab68a4ab074so365363066b.0; 
+ Sat, 01 Feb 2025 06:45:56 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1738420213; x=1739025013; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=ZecNtASfh7rrAlvwFbfUE2XXOpRJhV4UbpJBSEoNxZc=;
- b=t5U5PIZ6Slz8Q8c4XYZrdP6LBstWw9fDdYE9bqsViBvLQzN73tLxfv0L3uVwJARKjb
- 55kEn1KRnM3syJw91nt4SHD0pO7fJwiF5dzBfIXUon7f19WdeFW8Ug7tfv/iZSnHoRRQ
- qzB9vtFUcUFG7cB+TawwWYWl1uTfoG9eJ0qtNWOqfycSFdghByKjD8WNxb9Od+sotdXG
- LLE+2LS7gmlblVylBdPCnIxpe4VYpsdhiAZRwJnIzVdPnpfl/m1YakaNYkH5XVhrVSUi
- JJXNdw/QDglehm4QtliCxc3zEYpiefligJ6SYUETNN1IUIu6EB3MpQEM++ZgkmkXUZVr
- /xww==
+ d=gmail.com; s=20230601; t=1738421155; x=1739025955; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:references
+ :in-reply-to:subject:cc:to:from:date:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=dc6T1mf5Ubj6La+wPXu3XB5uKGJhazcpmwJlaVUctho=;
+ b=EXby6mr/0/2hRNoV6gVPbN6Nxkh5D0y95VHFbT/8aCpwyYgun18Gy5czi8D4A/2tO5
+ 5tTDaqcaekn9sFbJ3/IaJHB+B1exaMKpFpnomSa7xRtfJWCbiPuuehiPemKHWqv4gpE9
+ MPI4IcGCYuYRM/Nsw+pYWn71dB7QJATWVJSSFwGioAH0aRwAUtqtYq3lrF8FmmCYfy4v
+ dtCEechzdhJd5Y38gBHsS68Rq5Ncc4x8/+atUVCtFbHmMTStQaWMqPxAo7cOK+CycBCx
+ nFKTIv5NBmm7JriAdQr8SGbic7kAvlTBdyV4fXLmWuh3kcDRtdMsqlh8wAWE2rv2Wp2c
+ GGUA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1738420213; x=1739025013;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=ZecNtASfh7rrAlvwFbfUE2XXOpRJhV4UbpJBSEoNxZc=;
- b=G/xlPbaLzqBeVn9d4vgxDoYNsCLWxx6kzcZYITvfSxHgKkTsbB0PwdWX3U8OByHnYK
- tcvhbtOr3ePceXo/K+x7FoX8ljbLyS6NDouZr7xZW/XcQXZ45qHRZCcY61JVk8J/iNif
- C+dfkAfc0bAa/OMmBSO/UTbzlxPTbxyp2hvqET48QbFy2LGulBKCcLjJjCM1x5BgJfSX
- I+WQXdd8KnNw/z3QE8pjjw7R6VM5vzveuny6ST/d5DT3olQv33CzApk9vgF5fApS+eQI
- 7nvRbxcb++vKZAAjJQkdcXe+zCTr5Hfkj4MMzCe/2Z4mswySB6prRhguwjjH45hBg9E1
- ry9Q==
-X-Gm-Message-State: AOJu0YzqujwPJECFayGRt92kH66rffm4Iic6Sr+Ek3F5QjfGHGtjh/iB
- A65R7bwPU6NB78/bJ+SyDszk/6wfDWQgWfeorymbONMcK0Hyatguyd8toCoUPf1t6db2Eo33Et5
- Oi3o=
-X-Gm-Gg: ASbGncvpvwTgW3td8xRf6EvpHLhnBuW6SrBREgoDapieG3VfbaCGloSdYanG378AnEw
- +jedcSdVK80aU+qwZNtOC+LzCNyUI8eAkSq9Alugi7x6wVQK8rpkPh4Yn3rXrbZlbPwMoecb3Sg
- ot2RmaWDXJbohXIESf/EWi+TRzjEgMelec0aJWGl2m3nMWz5+8K24NYBSbPeArgpCRzf8TOekJ3
- hALAO0gd/aZFb00IJUkmQ4kDbFGFMkttflD3Fk9e9+u+PvzZArmx9FTKsvXFeF430RiJmNiHS+s
- 84oGDOKcaGibVbMnOa0y8qRWsFOj+MmiDIzBUsqRDkBQdTbax1jEPEy90g==
-X-Google-Smtp-Source: AGHT+IF6vu94R6YJceN1F4aDs46wV2+3WTAR7OYi9ojTz0+CA7jg8xfaRONh1jLyXcfTJ6a6LZnAVg==
-X-Received: by 2002:a05:6000:dc4:b0:385:f44a:a3b with SMTP id
- ffacd0b85a97d-38c52097596mr10568743f8f.41.1738420212739; 
- Sat, 01 Feb 2025 06:30:12 -0800 (PST)
-Received: from [10.85.240.213] (217.170.88.92.rev.sfr.net. [92.88.170.217])
- by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-38c5c1cf571sm7291868f8f.82.2025.02.01.06.30.11
+ d=1e100.net; s=20230601; t=1738421155; x=1739025955;
+ h=content-transfer-encoding:mime-version:message-id:references
+ :in-reply-to:subject:cc:to:from:date:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=dc6T1mf5Ubj6La+wPXu3XB5uKGJhazcpmwJlaVUctho=;
+ b=R8rW1eZ8lc6v+g0aj/naeFcUroqTUDEISKxWFeNCYpoT1ml3/PStqRGVz6oBGcd1qV
+ JZoteZKdKrVOQrde1EdUTjQacjmwAsI3qF4Nxhthr9awhVcirsAtt21t4OTHMfg6rUix
+ C8tJH8EuGcl7yhfBo4nHI50PhZnyl8kW8/2D3U7T4yju3MfcmBjEjJyzzYI5PXv7ed82
+ QCvPdtaYOXXIpgZCQQ1sPtZ1j4J4vr3O8xSOGtUMliPrLFxiUMAEi/jPkTLAlDAWbpnD
+ lXQJxfPsAFtL5l3yaFIsgax0aGmozqDS7XsbLlvVHq664v2fuyaJZPp9FkIP/mNqwk25
+ CTwA==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCVff/SAETU64OMZbReDVDlNo06kr4mF6wFxae3vC2WhZgfpeStey/8FFMIqyYVZsVt4rsVkmuo4E3X5cQ==@nongnu.org,
+ AJvYcCWZgQIAXqiq09eyu0EbrkDTuIh8+QoxL8DG0DVa27NRjBfooPTg1sKjLwIIkkFPyc/zm6dqJHGoZQ==@nongnu.org
+X-Gm-Message-State: AOJu0Yz4a//+C0B9gKcM8f9mh+K9teIexINRFAp+Vcoyx3mYfTfJr182
+ MJRn7dx+AkbwJf4/WX6nfAhyuyaap2MWE8UX7/6lInM+MNRxsCxf
+X-Gm-Gg: ASbGncv10bYHVKbyo7U3jynm89UoxfAtRNRZA7N6DNbewfel83d6z9J9Bw6dQ3M5Mx1
+ RISoEIbmg3XL2AQ243TMXK4fm0tpVrlr3ts9k3/+X6zyOlCypZ9uynGJG4y8BoWy5q84ITx3Jrw
+ G1DQEXhLFNfpzyx8+rkQyHhgZDohxnjrDomn/fZy87Na4oMaktP/RToqsH/uQnjcmI+kMVkyXYC
+ KvugAKe9fjTxQhiNV4aSdn6ozjcbkh6yK8/vifuRstoEjIoL/VzMWi3h3ykaXU+mwvyoXlMfWJb
+ xmNf/xa0INRD74BORrlItjMSZznpgjWd/809cGUGg3ZSe5TQ42Md/ItiTZaqvNdLeZE=
+X-Google-Smtp-Source: AGHT+IEwvZl598lbigkHa0mYQ3CARLZLCW2ckddVSYmsy8QUoqLxB7yKFv2ueKw3EIZYHSnBtx/zeg==
+X-Received: by 2002:a05:6402:2546:b0:5d0:cfad:f71 with SMTP id
+ 4fb4d7f45d1cf-5dc5effe67amr37097466a12.32.1738421154701; 
+ Sat, 01 Feb 2025 06:45:54 -0800 (PST)
+Received: from [127.0.0.1] (dynamic-077-183-083-158.77.183.pool.telefonica.de.
+ [77.183.83.158]) by smtp.gmail.com with ESMTPSA id
+ a640c23a62f3a-ab6e47d1014sm452549866b.66.2025.02.01.06.45.53
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Sat, 01 Feb 2025 06:30:12 -0800 (PST)
-Message-ID: <4f8886c6-32f8-465b-a243-b5fa510a8f9f@linaro.org>
-Date: Sat, 1 Feb 2025 15:30:11 +0100
+ Sat, 01 Feb 2025 06:45:54 -0800 (PST)
+Date: Sat, 01 Feb 2025 14:45:52 +0000
+From: Bernhard Beschow <shentey@gmail.com>
+To: BALATON Zoltan <balaton@eik.bme.hu>
+CC: Peter Maydell <peter.maydell@linaro.org>, qemu-devel@nongnu.org,
+ Paolo Bonzini <pbonzini@redhat.com>,
+ =?ISO-8859-1?Q?Marc-Andr=E9_Lureau?= <marcandre.lureau@redhat.com>,
+ Alistair Francis <alistair@alistair23.me>,
+ Jean-Christophe Dubois <jcd@tribudubois.net>, qemu-arm@nongnu.org,
+ Andrey Smirnov <andrew.smirnov@gmail.com>,
+ "Edgar E. Iglesias" <edgar.iglesias@gmail.com>
+Subject: Re: [PATCH 09/21] hw/arm/fsl-imx8mp: Add PCIe support
+In-Reply-To: <f2172469-5935-414e-b4a9-bf61055b6fff@eik.bme.hu>
+References: <20250120203748.4687-1-shentey@gmail.com>
+ <20250120203748.4687-10-shentey@gmail.com>
+ <CAFEAcA9efWMDxaTCfa6t8MiCgFUEU+nsyurNOqVDxAa9=KS=-Q@mail.gmail.com>
+ <137C0579-19AB-4D92-82DC-6CBE2422AD6A@gmail.com>
+ <f2172469-5935-414e-b4a9-bf61055b6fff@eik.bme.hu>
+Message-ID: <9FB95B89-404D-49BA-961A-7F860E9C0F95@gmail.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 4/7] hw/arm/raspi4b: Rename as raspi4b-1g / raspi4b-2g,
- deprecating old name
-To: qemu-devel@nongnu.org
-Cc: Jared Mauch <jared+home@puck.nether.net>,
- Peter Maydell <peter.maydell@linaro.org>, qemu-arm@nongnu.org,
- devel@lists.libvirt.org
-References: <20250201091528.1177-1-philmd@linaro.org>
- <20250201091528.1177-5-philmd@linaro.org>
-Content-Language: en-US
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20250201091528.1177-5-philmd@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::42a;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x42a.google.com
+Content-Type: text/plain;
+ charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:20::62f;
+ envelope-from=shentey@gmail.com; helo=mail-ej1-x62f.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -103,47 +110,86 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 1/2/25 10:15, Philippe Mathieu-Daudé wrote:
-> On 32-bit hosts, rename 'raspi4b' -> 'raspi4b-1g' to clarify the
-> machine has 1GB of RAM.
-> On 64-bit hosts, rename 'raspi4b' -> 'raspi4b-2g'.
-> Keep the 'raspi4b' alias but deprecate it.
-> 
-> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-> ---
->   docs/about/deprecated.rst | 6 ++++++
->   hw/arm/raspi4b.c          | 6 ++++--
->   2 files changed, 10 insertions(+), 2 deletions(-)
 
->   static const TypeInfo raspi4_machine_types[] = {
->   #if HOST_LONG_BITS == 32
->       {
-> -        .name           = MACHINE_TYPE_NAME("raspi4b"),
-> +        .name           = MACHINE_TYPE_NAME("raspi4b-1g"),
->           .parent         = TYPE_RASPI4_MACHINE,
->           .class_init     = raspi4b_1g_machine_class_init,
->       },
->   #else
->       {
-> -        .name           = MACHINE_TYPE_NAME("raspi4b"),
-> +        .name           = MACHINE_TYPE_NAME("raspi4b-2g"),
->           .parent         = TYPE_RASPI4_MACHINE,
->           .class_init     = raspi4b_2g_machine_class_init,
->       },
 
-Forgot to squash here:
+Am 29=2E Januar 2025 17:54:46 UTC schrieb BALATON Zoltan <balaton@eik=2Ebm=
+e=2Ehu>:
+>On Tue, 28 Jan 2025, Bernhard Beschow wrote:
+>> Am 28=2E Januar 2025 14:33:14 UTC schrieb Peter Maydell <peter=2Emaydel=
+l@linaro=2Eorg>:
+>>> On Mon, 20 Jan 2025 at 20:38, Bernhard Beschow <shentey@gmail=2Ecom> w=
+rote:
+>>>>=20
+>>>> Linux checks for the PLLs in the PHY to be locked, so implement a mod=
+el
+>>>> emulating that=2E
+>>>>=20
+>>>> Signed-off-by: Bernhard Beschow <shentey@gmail=2Ecom>
+>>>=20
+>>>> diff --git a/docs/system/arm/imx8mp-evk=2Erst b/docs/system/arm/imx8m=
+p-evk=2Erst
+>>>> index 1514bc5864=2E=2E8d48580cb4 100644
+>>>> --- a/docs/system/arm/imx8mp-evk=2Erst
+>>>> +++ b/docs/system/arm/imx8mp-evk=2Erst
+>>>> @@ -14,6 +14,7 @@ The ``imx8mp-evk`` machine implements the following=
+ devices:
+>>>>   * Generic Interrupt Controller (GICv3)
+>>>>   * 4 UARTs
+>>>>   * 3 USDHC Storage Controllers
+>>>> + * 1 Designware PCI Express Controller
+>>>>   * Secure Non-Volatile Storage (SNVS) including an RTC
+>>>>   * Clock Tree
+>>>>=20
+>>>> @@ -62,3 +63,15 @@ Now that everything is prepared the newly built im=
+age can be run in the QEMU
+>>>>        -dtb imx8mp-evk-patched=2Edtb \
+>>>>        -append "root=3D/dev/mmcblk2p2" \
+>>>>        -drive file=3Dsdcard=2Eimg,if=3Dsd,bus=3D2,format=3Draw,id=3Dm=
+mcblk2
+>>>> +
+>>>> +Using PCI Devices
+>>>> +-----------------
+>>>> +
+>>>> +The PCI Express controller spawns two PCI buses, of which only one c=
+an be used=2E
+>>>> +By default QEMU assigns the wrong bus, so the correct one has to be =
+specified
+>>>> +manually by adding ``bus=3Ddw-pcie``=2E For example, when adding an =
+Intel e1000
+>>>> +network card, the command line looks like:
+>>>> +
+>>>> +=2E=2E code-block:: bash
+>>>> +
+>>>> +  $ qemu-system-aarch64 -M imximp-evk =2E=2E=2E -device virtio-net-p=
+ci,bus=3Ddw-pcie
+>>>=20
+>>> Why does this happen? Isn't there some way to make QEMU default to
+>>> using the right bus? Otherwise there's likely to be a lot of
+>>> user confusion because PCI "doesn't work"=2E=2E=2E
+>>=20
+>> Yeah, this is really confusing and I forget about it myself=2E I'd appr=
+eciate any hints here=2E
+>
+>I'm not sure but I think the PCI bus created last will be used by default=
+ so maybe swapping the order these are created may help=2E
 
--- >8 --
-diff --git a/tests/functional/test_aarch64_raspi4.py 
-b/tests/functional/test_aarch64_raspi4.py
-index 7a4302b0c5a..891a8135b6b 100755
---- a/tests/functional/test_aarch64_raspi4.py
-+++ b/tests/functional/test_aarch64_raspi4.py
-@@ -37 +37 @@ def test_arm_raspi4(self):
--        self.set_machine('raspi4b')
-+        self.set_machine('raspi4b-1g')
-@@ -67 +67 @@ def test_arm_raspi4_initrd(self):
--        self.set_machine('raspi4b')
-+        self.set_machine('raspi4b-1g')
----
+Turns out there is BusClass::max_dev which is respected when a parent bus =
+for a user-created device is sought=2E I'll draw inspiration from pnv_phb4=
+=2E
+
+Best regards,
+Bernhard
+
+>
+>Regards,
+>BALATON Zoltan
+>
+>> Best regards,
+>> Bernhard
+>>=20
+>>>=20
+>>> thanks
+>>> -- PMM
+>>=20
+>>=20
 
