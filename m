@@ -4,79 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 40B68C02192
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3729CC0218A
 	for <qemu-devel@archiver.kernel.org>; Sat,  1 Feb 2025 16:49:01 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1teGXv-000641-Oz; Sat, 01 Feb 2025 11:40:40 -0500
+	id 1teGY4-0006CT-4w; Sat, 01 Feb 2025 11:40:48 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1teGXi-0005zV-9H
- for qemu-devel@nongnu.org; Sat, 01 Feb 2025 11:40:26 -0500
-Received: from mail-wr1-x42a.google.com ([2a00:1450:4864:20::42a])
+ id 1teGXv-00064t-OA
+ for qemu-devel@nongnu.org; Sat, 01 Feb 2025 11:40:40 -0500
+Received: from mail-wm1-x32a.google.com ([2a00:1450:4864:20::32a])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1teGXg-00013N-Ko
- for qemu-devel@nongnu.org; Sat, 01 Feb 2025 11:40:26 -0500
-Received: by mail-wr1-x42a.google.com with SMTP id
- ffacd0b85a97d-3862a921123so2087294f8f.3
- for <qemu-devel@nongnu.org>; Sat, 01 Feb 2025 08:40:24 -0800 (PST)
+ id 1teGXt-00016B-7e
+ for qemu-devel@nongnu.org; Sat, 01 Feb 2025 11:40:39 -0500
+Received: by mail-wm1-x32a.google.com with SMTP id
+ 5b1f17b1804b1-43622267b2eso30161555e9.0
+ for <qemu-devel@nongnu.org>; Sat, 01 Feb 2025 08:40:36 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1738428023; x=1739032823; darn=nongnu.org;
+ d=linaro.org; s=google; t=1738428036; x=1739032836; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=hR3/G2BdnpgL0DkgE9KDbKtJdTUbStqQyabHgGIFImE=;
- b=PtLUquyS8c7gxRIVFMhzqoxndWkdZrgMXHDa4NWeiAtk4COmbO3eUHhxKyl/F5SMXR
- LfjT1HshlIvQClvbivqaaqrDNAqr7W+Ea2zG4D4cIUdb1aZRtsPo0f+U7//akItVBIY0
- 5GZuJ7/hfw4UDD+HfV8Uqm37QYiO+ODdSskJfhmp2jmeICu6OJMFG+BTP2+1Bh6HXcp/
- sc6LhzYjuy0ybYDi/L4DabT/6/gYmwgCTDYNEpwIY9e0hpKJt39jcf3wveCADCJc/i8/
- DyaKB1UeI9h+ZkGF+l7Zfa98ode0Pn3EyroI/9/8aqadKA5QzuPaGj8pb7KVlw/vPI88
- JA7w==
+ :reply-to; bh=ABcSaamNLba6tj+/HdzqsCS4/cyL464U3gesfB5gldQ=;
+ b=hPGqWKgeYR6jkUX6YUGNCUkQ1lJLKfVz8pylPwWDXurwSIXqwbOeiSbNOEcCUeyUV0
+ o8MQSbC66LEWTh2g2RYKl8UcOYldWi37h9PJcRNHmr42IcuZbpb4qeIvhfqyggW7nNnP
+ zYgfoNqVGluCmyHeyVhnv4cp3uIFU+yRzaQa6IgXIvn7yxobeLAnjfJrJGw6TghWQ2ky
+ L9i37BcCDXtmK6FX8Ppxz8gF8JAsDgdu+6YtdjemuqB2mNwm6EBg53wxBasbReh9vQlT
+ mcfXYkU3VyU17Ro/3LMM7k9of66THXBP/L+tIKEocT6/Xwlz+oI2m28ydYoHyiknNl24
+ ZAXQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1738428023; x=1739032823;
+ d=1e100.net; s=20230601; t=1738428036; x=1739032836;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=hR3/G2BdnpgL0DkgE9KDbKtJdTUbStqQyabHgGIFImE=;
- b=VSMohBjQvD8WxV88Iu5n/w8ucmuumEQ1/rovvMxBk42TJB/hBo5Udz4OH+dMiytA0+
- V2JFNR2DGnF1hf3DZJqZ2zuQL0QxGy+hBqmqUKYB1tH7jh3E6I42BWO6juPbcTryReis
- z01RNdcN5NA0IXURjt8I6VQyLV79Yr6Ei9lM+mF9PgTBMFvwjz3Yyv4zGCmrpeJLq3PM
- feXV7an6uA8MyMB7j59rQWau/1ITBeN3K92NwRcQdD7Oid5Rg3asszlo5tneXKwH7GZE
- j4AF4ZJ/UX32GdO0oCJULRUiWv6FsUNVMP2rbu2Mf3Wm7fckM1jRTDW7ndCZ2J3B0Lfu
- rQLA==
+ bh=ABcSaamNLba6tj+/HdzqsCS4/cyL464U3gesfB5gldQ=;
+ b=LNJ9xlBQ3UkVEzfhCKVAgjYoV7vwJQo/mh0WEh5M/nFJ5HAHWKVMLFOgo8QI8dvVLS
+ bqrBFV78VGGVWxvw59eeK8i4Qbuk03itgwHH5MKrEFHfrOi7C9b2sxvy05feoBgyZpWg
+ 1ZyAdJHA2WkUVDelGR59ntbmZAKTrcs0zMR3z39Dj4MmRHwcdElPByaQEEiUNaH4BlG1
+ Uu5FCZf//bBlQsmPyQcDZJLEH/3xxHx6Y3DhqBvg5rZofal0boazMmsyVwZTZewaIXMu
+ mKN6qP8Y1gMNaJF0OQblmKJWrCPHr6yHLeg7WYDpvmFSFXTArAUr5ilD005qyjYJKP2u
+ BjlA==
 X-Forwarded-Encrypted: i=1;
- AJvYcCXneiM5t26BO3bhKT3P+NWxT8IH5Agu24XnkvmE1U+Y/OOzkqo8aUdZPHoknKpi2Qliya9hmtwD9Gqy@nongnu.org
-X-Gm-Message-State: AOJu0YyTdpMsWjaWc7Yb0wFu7VuV31fD/z0OAVgHc08fAQVKH3qEb4Ww
- uQ52dI90I8KtXOvwmwCSk6kzESu1sr0dtl52viHM6yJM7Sloa0iIxA4OEhJrBHM=
-X-Gm-Gg: ASbGnctqRtxNyCuZ/HVgpoH6ub2oYTdS8b/w26/PMcWaAHCcsRdGrZblywg7LeAC5Ty
- FmwN8CTpkiGrX5ct1+qvgAiS8aOpthLWDmcnxkat5M1v+79/O+a56ElRR8RpyYdC1WyWmNh4F5p
- 2+tOckiuYcF2ni41rilnw4u2bkQCmfc5oGTAkgXbcPgWA+Mi1nkDe9mHDvxcaReaUI0+bE5bz+P
- KMMA16bKiLdkApRgTshaGNY65uYpI13Uoqgqg4FGWeAIpWAfTWbgKQZA4zo8V03p1SCsK7QHEB5
- qcuAIUH9n1cNGvMLd/FZ
-X-Google-Smtp-Source: AGHT+IEeEpSGXGPtZpSWFpzKjwPcBGV5RzJkSVx3Dn1GH6+LqWhHDOxljpA4lw59rXq/71tFsx8jxg==
-X-Received: by 2002:a05:6000:1788:b0:386:459f:67e0 with SMTP id
- ffacd0b85a97d-38c5194d438mr15108783f8f.21.1738428023064; 
- Sat, 01 Feb 2025 08:40:23 -0800 (PST)
+ AJvYcCV8NggCS0BXlHUpf8gYNNsUWPCRZRSF9OrSrSutxYw4Bu/imRj8aot9y6t8VDAnRL5geINsyBXCk4c4@nongnu.org
+X-Gm-Message-State: AOJu0Ywt8BEaBZA+OAwtIqcq9vemElYwynUzHux834ywOPYAbaZfCMEG
+ vDe+MmsWh21d1xlwCPpiqHwfJV6WeWjZWQohUbq2HO0pyu7n+NZg1rLjEUyDk1A=
+X-Gm-Gg: ASbGncvTRblg8TDnwDyxnHkOklWau+pRMEkGxbkG/nbYTIOfUXt1JsA0qXK6n1vI+rj
+ 479p6yxvhdl19o7ddytkwzLYYDFE11rfeY/a3dyZcvp6tk7Kjh24ZedxnafPfThud/f2fgA2ami
+ 4avnVybM6Q1Xfpauux+Tvu0jCVT67dNcSVaccTJGwWs20qMPRjAFuiwwNOSx0XFQ6yXkTgJEQeu
+ WAHJMLLrfZkBZz/1Ve8p82S7oZDGv7DrqDFG1PUTiuIfWasETkjC1XJ26Qd/iWtcnixENZ1Xz18
+ uKbHlhwp+/t2TbAYy7jk
+X-Google-Smtp-Source: AGHT+IFYfXQpgd8XfnmXugygjfq2R7Q+bMrmr7cgR8Xhi1finlMLK2yBdDcAZCD4eBBfVCIs/woIxg==
+X-Received: by 2002:a05:600c:5119:b0:438:a432:7c44 with SMTP id
+ 5b1f17b1804b1-438dc40b281mr121715665e9.21.1738428035710; 
+ Sat, 01 Feb 2025 08:40:35 -0800 (PST)
 Received: from orth.archaic.org.uk (orth.archaic.org.uk. [2001:8b0:1d0::2])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-438dcc81d74sm127401525e9.37.2025.02.01.08.40.21
+ 5b1f17b1804b1-438dcc81d74sm127401525e9.37.2025.02.01.08.40.34
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sat, 01 Feb 2025 08:40:22 -0800 (PST)
+ Sat, 01 Feb 2025 08:40:35 -0800 (PST)
 From: Peter Maydell <peter.maydell@linaro.org>
 To: qemu-arm@nongnu.org,
 	qemu-devel@nongnu.org
-Subject: [PATCH v2 06/69] target/arm: Define FPCR AH, FIZ, NEP bits
-Date: Sat,  1 Feb 2025 16:39:09 +0000
-Message-Id: <20250201164012.1660228-7-peter.maydell@linaro.org>
+Subject: [PATCH v2 15/69] target/arm: Add FPCR.NEP to TBFLAGS
+Date: Sat,  1 Feb 2025 16:39:18 +0000
+Message-Id: <20250201164012.1660228-16-peter.maydell@linaro.org>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20250201164012.1660228-1-peter.maydell@linaro.org>
 References: <20250201164012.1660228-1-peter.maydell@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::42a;
- envelope-from=peter.maydell@linaro.org; helo=mail-wr1-x42a.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::32a;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x32a.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -99,98 +99,82 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The Armv8.7 FEAT_AFP feature defines three new control bits in
-the FPCR:
- * FPCR.AH: "alternate floating point mode"; this changes floating
-   point behaviour in a variety of ways, including:
-    - the sign of a default NaN is 1, not 0
-    - if FPCR.FZ is also 1, denormals detected after rounding
-      with an unbounded exponent has been applied are flushed to zero
-    - FPCR.FZ does not cause denormalized inputs to be flushed to zero
-    - miscellaneous other corner-case behaviour changes
- * FPCR.FIZ: flush denormalized numbers to zero on input for
-   most instructions
- * FPCR.NEP: makes scalar SIMD operations merge the result with
-   higher vector elements in one of the source registers, instead
-   of zeroing the higher elements of the destination
+For FEAT_AFP, we want to emit different code when FPCR.NEP is set, so
+that instead of zeroing the high elements of a vector register when
+we write the output of a scalar operation to it, we instead merge in
+those elements from one of the source registers.  Since this affects
+the generated code, we need to put FPCR.NEP into the TBFLAGS.
 
-This commit defines the new bits in the FPCR, and allows them to be
-read or written when FEAT_AFP is implemented.  Actual behaviour
-changes will be implemented in subsequent commits.
-
-Note that these are the first FPCR bits which don't appear in the
-AArch32 FPSCR view of the register, and which share bit positions
-with FPSR bits.
+FPCR.NEP is treated as 0 when in streaming SVE mode and FEAT_SME_FA64
+is not implemented or not enabled; we can implement this logic in
+rebuild_hflags_a64().
 
 Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 ---
- target/arm/cpu-features.h |  5 +++++
- target/arm/cpu.h          |  3 +++
- target/arm/vfp_helper.c   | 11 ++++++++---
- 3 files changed, 16 insertions(+), 3 deletions(-)
+ target/arm/cpu.h               | 1 +
+ target/arm/tcg/translate.h     | 2 ++
+ target/arm/tcg/hflags.c        | 9 +++++++++
+ target/arm/tcg/translate-a64.c | 1 +
+ 4 files changed, 13 insertions(+)
 
-diff --git a/target/arm/cpu-features.h b/target/arm/cpu-features.h
-index 30302d6c5b4..7bf24c506b3 100644
---- a/target/arm/cpu-features.h
-+++ b/target/arm/cpu-features.h
-@@ -802,6 +802,11 @@ static inline bool isar_feature_aa64_hcx(const ARMISARegisters *id)
-     return FIELD_EX64(id->id_aa64mmfr1, ID_AA64MMFR1, HCX) != 0;
- }
- 
-+static inline bool isar_feature_aa64_afp(const ARMISARegisters *id)
-+{
-+    return FIELD_EX64(id->id_aa64mmfr1, ID_AA64MMFR1, AFP) != 0;
-+}
-+
- static inline bool isar_feature_aa64_tidcp1(const ARMISARegisters *id)
- {
-     return FIELD_EX64(id->id_aa64mmfr1, ID_AA64MMFR1, TIDCP1) != 0;
 diff --git a/target/arm/cpu.h b/target/arm/cpu.h
-index 2213c277348..7ba227ac4c5 100644
+index cfb16151577..f562e0687c9 100644
 --- a/target/arm/cpu.h
 +++ b/target/arm/cpu.h
-@@ -1713,6 +1713,9 @@ void vfp_set_fpscr(CPUARMState *env, uint32_t val);
-  */
+@@ -3213,6 +3213,7 @@ FIELD(TBFLAG_A64, NV2_MEM_E20, 35, 1)
+ /* Set if FEAT_NV2 RAM accesses are big-endian */
+ FIELD(TBFLAG_A64, NV2_MEM_BE, 36, 1)
+ FIELD(TBFLAG_A64, AH, 37, 1)   /* FPCR.AH */
++FIELD(TBFLAG_A64, NEP, 38, 1)   /* FPCR.NEP */
  
- /* FPCR bits */
-+#define FPCR_FIZ    (1 << 0)    /* Flush Inputs to Zero (FEAT_AFP) */
-+#define FPCR_AH     (1 << 1)    /* Alternate Handling (FEAT_AFP) */
-+#define FPCR_NEP    (1 << 2)    /* SIMD scalar ops preserve elts (FEAT_AFP) */
- #define FPCR_IOE    (1 << 8)    /* Invalid Operation exception trap enable */
- #define FPCR_DZE    (1 << 9)    /* Divide by Zero exception trap enable */
- #define FPCR_OFE    (1 << 10)   /* Overflow exception trap enable */
-diff --git a/target/arm/vfp_helper.c b/target/arm/vfp_helper.c
-index 3c8f3e65887..8c79ab4fc8a 100644
---- a/target/arm/vfp_helper.c
-+++ b/target/arm/vfp_helper.c
-@@ -242,6 +242,9 @@ static void vfp_set_fpcr_masked(CPUARMState *env, uint32_t val, uint32_t mask)
-     if (!cpu_isar_feature(any_fp16, cpu)) {
-         val &= ~FPCR_FZ16;
+ /*
+  * Helpers for using the above. Note that only the A64 accessors use
+diff --git a/target/arm/tcg/translate.h b/target/arm/tcg/translate.h
+index 3be3fcbe728..0dff00015e8 100644
+--- a/target/arm/tcg/translate.h
++++ b/target/arm/tcg/translate.h
+@@ -157,6 +157,8 @@ typedef struct DisasContext {
+     bool nv2_mem_be;
+     /* True if FPCR.AH is 1 (alternate floating point handling) */
+     bool fpcr_ah;
++    /* True if FPCR.NEP is 1 (FEAT_AFP scalar upper-element result handling) */
++    bool fpcr_nep;
+     /*
+      * >= 0, a copy of PSTATE.BTYPE, which will be 0 without v8.5-BTI.
+      *  < 0, set by the current instruction.
+diff --git a/target/arm/tcg/hflags.c b/target/arm/tcg/hflags.c
+index b3a78564ec1..9e6a1869f94 100644
+--- a/target/arm/tcg/hflags.c
++++ b/target/arm/tcg/hflags.c
+@@ -407,6 +407,15 @@ static CPUARMTBFlags rebuild_hflags_a64(CPUARMState *env, int el, int fp_el,
+     if (env->vfp.fpcr & FPCR_AH) {
+         DP_TBFLAG_A64(flags, AH, 1);
      }
-+    if (!cpu_isar_feature(aa64_afp, cpu)) {
-+        val &= ~(FPCR_FIZ | FPCR_AH | FPCR_NEP);
++    if (env->vfp.fpcr & FPCR_NEP) {
++        /*
++         * In streaming-SVE without FA64, NEP behaves as if zero;
++         * compare pseudocode IsMerging()
++         */
++        if (!(EX_TBFLAG_A64(flags, PSTATE_SM) && !sme_fa64(env, el))) {
++            DP_TBFLAG_A64(flags, NEP, 1);
++        }
 +    }
  
-     if (!cpu_isar_feature(aa64_ebf16, cpu)) {
-         val &= ~FPCR_EBF;
-@@ -271,12 +274,14 @@ static void vfp_set_fpcr_masked(CPUARMState *env, uint32_t val, uint32_t mask)
-      * We don't implement trapped exception handling, so the
-      * trap enable bits, IDE|IXE|UFE|OFE|DZE|IOE are all RAZ/WI (not RES0!)
-      *
--     * The FPCR bits we keep in vfp.fpcr are AHP, DN, FZ, RMode, EBF
--     * and FZ16. Len, Stride and LTPSIZE we just handled. Store those bits
-+     * The FPCR bits we keep in vfp.fpcr are AHP, DN, FZ, RMode, EBF, FZ16,
-+     * FIZ, AH, and NEP.
-+     * Len, Stride and LTPSIZE we just handled. Store those bits
-      * there, and zero any of the other FPCR bits and the RES0 and RAZ/WI
-      * bits.
-      */
--    val &= FPCR_AHP | FPCR_DN | FPCR_FZ | FPCR_RMODE_MASK | FPCR_FZ16 | FPCR_EBF;
-+    val &= FPCR_AHP | FPCR_DN | FPCR_FZ | FPCR_RMODE_MASK | FPCR_FZ16 |
-+        FPCR_EBF | FPCR_FIZ | FPCR_AH | FPCR_NEP;
-     env->vfp.fpcr &= ~mask;
-     env->vfp.fpcr |= val;
+     return rebuild_hflags_common(env, fp_el, mmu_idx, flags);
  }
+diff --git a/target/arm/tcg/translate-a64.c b/target/arm/tcg/translate-a64.c
+index 1da6e2b9456..e000ff83cb0 100644
+--- a/target/arm/tcg/translate-a64.c
++++ b/target/arm/tcg/translate-a64.c
+@@ -9753,6 +9753,7 @@ static void aarch64_tr_init_disas_context(DisasContextBase *dcbase,
+     dc->nv2_mem_e20 = EX_TBFLAG_A64(tb_flags, NV2_MEM_E20);
+     dc->nv2_mem_be = EX_TBFLAG_A64(tb_flags, NV2_MEM_BE);
+     dc->fpcr_ah = EX_TBFLAG_A64(tb_flags, AH);
++    dc->fpcr_nep = EX_TBFLAG_A64(tb_flags, NEP);
+     dc->vec_len = 0;
+     dc->vec_stride = 0;
+     dc->cp_regs = arm_cpu->cp_regs;
 -- 
 2.34.1
 
