@@ -4,82 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id ED28CC0218A
-	for <qemu-devel@archiver.kernel.org>; Sat,  1 Feb 2025 09:17:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D4F27C02192
+	for <qemu-devel@archiver.kernel.org>; Sat,  1 Feb 2025 09:17:18 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1te9bb-00012x-0q; Sat, 01 Feb 2025 04:15:59 -0500
+	id 1te9bl-00014i-Aq; Sat, 01 Feb 2025 04:16:09 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1te9bV-00011s-8R
- for qemu-devel@nongnu.org; Sat, 01 Feb 2025 04:15:56 -0500
-Received: from mail-wm1-x32e.google.com ([2a00:1450:4864:20::32e])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1te9bg-00014C-As
+ for qemu-devel@nongnu.org; Sat, 01 Feb 2025 04:16:05 -0500
+Received: from mail-wm1-x329.google.com ([2a00:1450:4864:20::329])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1te9bT-0000bB-LD
- for qemu-devel@nongnu.org; Sat, 01 Feb 2025 04:15:53 -0500
-Received: by mail-wm1-x32e.google.com with SMTP id
- 5b1f17b1804b1-436249df846so19297785e9.3
- for <qemu-devel@nongnu.org>; Sat, 01 Feb 2025 01:15:51 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1te9be-0000ja-U0
+ for qemu-devel@nongnu.org; Sat, 01 Feb 2025 04:16:04 -0500
+Received: by mail-wm1-x329.google.com with SMTP id
+ 5b1f17b1804b1-436345cc17bso20846985e9.0
+ for <qemu-devel@nongnu.org>; Sat, 01 Feb 2025 01:16:02 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1738401350; x=1739006150; darn=nongnu.org;
+ d=linaro.org; s=google; t=1738401361; x=1739006161; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=hEJr+KxKG+5t/x8q8wqYlKjB+Sy8stapfLkWTHUsQNw=;
- b=cf8BDdDf/0SP9XvpiP+c5qJgNkvTn72kZHXN4IF5QDz9S2ypHpdyeNrCaCobVvRNtH
- 4sJqTtQsMOkTA/lXoBz+jhE70dpD5dXZE1d8upp79Th73IXxbfd4sfBKsIpxYhutQ0V9
- jY3eSXFG6JNaqloHjFSM7LIxB3ia6ymbJFFChdKZxIYYWpcHN/EH1Rq0Z0sVaiVe5/32
- cvo1cUjR9+vBaYAOwDYlcCVtxGLxBHlM6p6AGY/FHfnpsRkDpr8Goh//Jp0d/FaMb9OY
- OWl0z+6eNgImJsn52x3OfO4w0XBwerejsgojD2wuJR3DGfkzVc4+gNCY4EpN5neLhUsQ
- hpNA==
+ bh=h0KOfqY1jZzuDBLOoyIvqjDh4dLpYlCKlbjmZKCpncY=;
+ b=Cgql6/QtC1u95c6dcBjJqqWEKbAnv4ORmQ3frkiUrZR0T8c7PWXOVFh+FFbQI/D88U
+ 8KHEv10VmerLvP83375WosyKQmHnfocIT8upHwV4dHWMACWHFwf4wYj/LhYogL/slVbN
+ /XGQXeylVD/eu0UkqMcdsQzeR5qiZShsQueEEUh+fA8KyakjrVY6nbgS+hVp7BPHJTsw
+ zkPbYtFbB+uHkJsBmZrqQ7bKbH9ggT4kQqv81Ok8q19gxr6a/pDMPNnx9970VKhsDaEO
+ PYCJEaX/u2t7E4BbQmzxud3eQh9zHSjY/5WD3/hfwFOTAoJYRFNMq7rn4rL1J2M1FlP6
+ ePXQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1738401350; x=1739006150;
+ d=1e100.net; s=20230601; t=1738401361; x=1739006161;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=hEJr+KxKG+5t/x8q8wqYlKjB+Sy8stapfLkWTHUsQNw=;
- b=hK1epMOXcYNr1kPsXGAVVEm/AN1YWExqElGav0Npw0ISdVepWtJLD3ISbXDyiJTLbk
- 5S/892HMvpfN1ORiXnWf89R79z+FwTmlu98ePQPamnXxLvjkbE0YNbH1LeAadgKCbzjb
- ARdG4XAHXZLpkcNo2vEZ+q2qodPTJKxU1fh0fMqJmx8jPAAeFb1cMqlZ/9WtpFEVaVsH
- zHXWf3AF1rtTNMCrH+aOW2pDyyR5ZHDEQcc3/Dx8OOUDrqKPHnrMnNm1ixsQ6URwsFct
- JngXROQMrzxu0lceoXehSsaX0bA4IT/RvCyJUkFOHJkdN2jHayvJ+lB5L302cY+F6rH5
- GYCA==
-X-Gm-Message-State: AOJu0YwRuyqNrhNPhrmBd1AMnbPDmH8XFpPrTJlsD8leRR/MSO+2E7Yx
- MzbZ63lobxszdjCrb/cnWI7pNeEraMiBfzQAL4pNju8/VV0JfG00Kr+OOT0KQkIHpF0CbvpiIku
- cgUw=
-X-Gm-Gg: ASbGncuNYUFIjxITm/4BbXtNzz5jZCAZb81H6neIZOHKnR3WQgvIn/p6TiQGDdTpRRw
- 3V/Vw0q5uQV8JEJO+Vs4LBFAUZdEtMNexN1lXvoVM9sRsEa0NPpTrHQkmFkFyoj5P22njslvZbl
- fB1YyUYQp4K9Fz9kXJKgGzYqoHEc1pDGWy+Y40S6XDP8QFX1lxPMZ1mlWZQDmbwZH0TNUbAkznC
- 4HIv7ayYQR5SISOKclwyj/i704BA4y25WRhQkmVYR5mOrq3Y5Me8horr+OvHeKmXLSwjKRkhCXR
- tATIT18Es1osfUEmdy51yUVQW6LfiCydzkLwIPbVbLWBCDcxMs9L9DWuZEvicVlbbw==
-X-Google-Smtp-Source: AGHT+IFtxTfKjyY3QOd9aKkfkjZ+Z4/R4gXLu9zWH0ZKWK+E9myYwk8LU+odVAo6pAQqYXWwPoqyQQ==
-X-Received: by 2002:a05:600c:198b:b0:434:a7f1:6545 with SMTP id
- 5b1f17b1804b1-438dc429291mr112652585e9.27.1738401349784; 
- Sat, 01 Feb 2025 01:15:49 -0800 (PST)
+ bh=h0KOfqY1jZzuDBLOoyIvqjDh4dLpYlCKlbjmZKCpncY=;
+ b=LoQOw+4Uz5kj3fB71qguTQ6bePdESPm1mUb8RdzMw3SRT8leJxS0qesuRiT2iph7Mx
+ cJhHu2WAdpnRowW56PibIJVjJB8G6N+xrPa+kAjSD6p4UWKFSU4hX/C0x40ARPzu+fmv
+ gutzN+vsi5d13J0GK8BRpaE3NSHOVC0iP0xlFLKezH8A/Ixsc8rgVGJI07R2POdv1obz
+ AfqOeKUDS6to6fP4/PXC2vD5L+ytuNPToUcx5iu9tSAJuOKrKrN1pVmDZwoq7Rd7Kl1g
+ nX8FA7y4JinG+kEBXr8oHiMmdwvQSHLoe851mUc/ZL0uAnff9abLKimbWgPrb9oTRHHY
+ XdeA==
+X-Gm-Message-State: AOJu0YxUONHTxnvxCyWgTh2KbTisSjY4h587Rn+fgX9ABDTeCrrJwTI4
+ 7nfJzsbjSOwy5RIeEyohEYOOgILGZHX/fNdB6cCBo0y6hROvaQAbaS+aY1PXVJ/qDy2NIrRsE/A
+ 6Uzw=
+X-Gm-Gg: ASbGncvLEiJYeDdyF/i7ETUrlVcAjo3VudUEePIqGeM5OCQWqmvSsYcglzKUVSj29Vv
+ BzfuRQ+YqJgLNLKde6b1bQ/za2HaxGPX/t3t1QiZd6Thv+eMaa5ch1YC7z5+7ruqeKdDcEmDTJD
+ gp2UZa6+YzhyEfVFkTFue3pQvgFnoC0bdeNi9vKwx6y8WRFf6kdci9mI5NHF7b8ko9mImcXXoRu
+ HdueAAqLjFIFwnbItxeC9aVXm/fBudu+JqYuz6Y9s4Yla+eDokQRjkXOerdn5AAe9V5Oe0nZrSo
+ xc/3PnPTv6OCXdr2vk9LRDTQF/6BVbG6f6l/W56lasGAEmK+Px7ry8IbK/YjEkdFVg==
+X-Google-Smtp-Source: AGHT+IHud876BMZ/APlo5xZ+MxstGyVHcTwcYW4a27I3C1chvn9bo3mAf/dbsNnCVUka3qigCD05hw==
+X-Received: by 2002:a05:600c:154f:b0:434:a367:2bd9 with SMTP id
+ 5b1f17b1804b1-438dc3ca79fmr141484875e9.14.1738401361073; 
+ Sat, 01 Feb 2025 01:16:01 -0800 (PST)
 Received: from localhost.localdomain (232.170.88.92.rev.sfr.net.
  [92.88.170.232]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-438dcc80e61sm118252725e9.34.2025.02.01.01.15.46
+ ffacd0b85a97d-38c5c1b5a03sm6766496f8f.71.2025.02.01.01.15.59
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Sat, 01 Feb 2025 01:15:48 -0800 (PST)
+ Sat, 01 Feb 2025 01:16:00 -0800 (PST)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Jared Mauch <jared+home@puck.nether.net>,
  Peter Maydell <peter.maydell@linaro.org>, qemu-arm@nongnu.org,
  devel@lists.libvirt.org,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PATCH 3/7] hw/arm/raspi4b: Split raspi4b_machine_class_init() in two
- (1g and 2g)
-Date: Sat,  1 Feb 2025 10:15:24 +0100
-Message-ID: <20250201091528.1177-4-philmd@linaro.org>
+Subject: [PATCH 5/7] hw/arm/raspi4b: Expose the raspi4b-1g machine on 64-bit
+ hosts
+Date: Sat,  1 Feb 2025 10:15:26 +0100
+Message-ID: <20250201091528.1177-6-philmd@linaro.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20250201091528.1177-1-philmd@linaro.org>
 References: <20250201091528.1177-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32e;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x32e.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::329;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x329.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -102,74 +102,66 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Current raspi4b_machine_class_init() method register 2 distinct
-machines, with different board revision (thus different memory
-size), whether the host is 32-bit or more. Split it as 2 new
-methods, one for the raspi4b with 1GB of memory (on 32-bit hosts)
-and another for the raspi4b with 2GB of memory.
+There is no particular reason to not have the raspi4b-1g machine
+available on 64-bit hosts, so expose it there.
 
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 ---
- hw/arm/raspi4b.c | 33 ++++++++++++++++++++++++++-------
- 1 file changed, 26 insertions(+), 7 deletions(-)
+ hw/arm/raspi4b.c | 13 +++++++------
+ 1 file changed, 7 insertions(+), 6 deletions(-)
 
 diff --git a/hw/arm/raspi4b.c b/hw/arm/raspi4b.c
-index 548059f6d69..4ea79ec7092 100644
+index 713b4693a49..59b0d2ced44 100644
 --- a/hw/arm/raspi4b.c
 +++ b/hw/arm/raspi4b.c
-@@ -107,26 +107,45 @@ static void raspi4b_machine_init(MachineState *machine)
+@@ -107,7 +107,6 @@ static void raspi4b_machine_init(MachineState *machine)
      raspi_base_machine_init(machine, &soc->parent_obj);
  }
  
--static void raspi4b_machine_class_init(ObjectClass *oc, void *data)
-+#if HOST_LONG_BITS == 32
-+static void raspi4b_1g_machine_class_init(ObjectClass *oc, void *data)
+-#if HOST_LONG_BITS == 32
+ static void raspi4b_1g_machine_class_init(ObjectClass *oc, void *data)
  {
      MachineClass *mc = MACHINE_CLASS(oc);
-     RaspiBaseMachineClass *rmc = RASPI_BASE_MACHINE_CLASS(oc);
+@@ -117,9 +116,12 @@ static void raspi4b_1g_machine_class_init(ObjectClass *oc, void *data)
  
--#if HOST_LONG_BITS == 32
-     rmc->board_rev = 0xa03111; /* Revision 1.1, 1 Gb RAM */
--#else
--    rmc->board_rev = 0xb03115; /* Revision 1.5, 2 Gb RAM */
--#endif
-+
      raspi_machine_class_common_init(mc, rmc->board_rev);
      mc->init = raspi4b_machine_init;
- }
-+#else
-+static void raspi4b_2g_machine_class_init(ObjectClass *oc, void *data)
-+{
-+    MachineClass *mc = MACHINE_CLASS(oc);
-+    RaspiBaseMachineClass *rmc = RASPI_BASE_MACHINE_CLASS(oc);
-+
-+
-+    rmc->board_rev = 0xb03115; /* Revision 1.5, 2 Gb RAM */
-+    raspi_machine_class_common_init(mc, rmc->board_rev);
-+    mc->init = raspi4b_machine_init;
-+}
++#if HOST_LONG_BITS == 32
+     mc->alias = "raspi4b";
 +#endif
+ }
+-#else
++
++#if HOST_LONG_BITS > 32
+ static void raspi4b_2g_machine_class_init(ObjectClass *oc, void *data)
+ {
+     MachineClass *mc = MACHINE_CLASS(oc);
+@@ -131,22 +133,21 @@ static void raspi4b_2g_machine_class_init(ObjectClass *oc, void *data)
+     mc->init = raspi4b_machine_init;
+     mc->alias = "raspi4b";
+ }
+-#endif
++#endif /* HOST_LONG_BITS > 32 */
  
  static const TypeInfo raspi4_machine_types[] = {
-+#if HOST_LONG_BITS == 32
+-#if HOST_LONG_BITS == 32
      {
-         .name           = MACHINE_TYPE_NAME("raspi4b"),
+         .name           = MACHINE_TYPE_NAME("raspi4b-1g"),
          .parent         = TYPE_RASPI4_MACHINE,
--        .class_init     = raspi4b_machine_class_init,
--    }, {
-+        .class_init     = raspi4b_1g_machine_class_init,
-+    },
-+#else
-+    {
-+        .name           = MACHINE_TYPE_NAME("raspi4b"),
-+        .parent         = TYPE_RASPI4_MACHINE,
-+        .class_init     = raspi4b_2g_machine_class_init,
-+    },
-+#endif
-+    {
+         .class_init     = raspi4b_1g_machine_class_init,
+     },
+-#else
++#if HOST_LONG_BITS > 32
+     {
+         .name           = MACHINE_TYPE_NAME("raspi4b-2g"),
+         .parent         = TYPE_RASPI4_MACHINE,
+         .class_init     = raspi4b_2g_machine_class_init,
+     },
+-#endif
++#endif /* HOST_LONG_BITS > 32 */
+     {
          .name           = TYPE_RASPI4_MACHINE,
          .parent         = TYPE_RASPI_BASE_MACHINE,
-         .instance_size  = sizeof(Raspi4bMachineState),
 -- 
 2.47.1
 
