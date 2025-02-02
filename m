@@ -4,97 +4,65 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0D7CAC0218F
-	for <qemu-devel@archiver.kernel.org>; Sun,  2 Feb 2025 11:56:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7543BC0218F
+	for <qemu-devel@archiver.kernel.org>; Sun,  2 Feb 2025 12:46:38 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1teYZu-0002ak-1W; Sun, 02 Feb 2025 06:55:54 -0500
+	id 1teZM1-0001Rs-DQ; Sun, 02 Feb 2025 07:45:37 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mhej@vps-ovh.mhejs.net>)
- id 1teYZm-0002aS-Rt
- for qemu-devel@nongnu.org; Sun, 02 Feb 2025 06:55:48 -0500
-Received: from vps-ovh.mhejs.net ([145.239.82.108])
+ (Exim 4.90_1) (envelope-from <dg@treblig.org>) id 1teZLy-0001RU-Ny
+ for qemu-devel@nongnu.org; Sun, 02 Feb 2025 07:45:34 -0500
+Received: from mx.treblig.org ([2a00:1098:5b::1])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mhej@vps-ovh.mhejs.net>)
- id 1teYZk-0000zF-UC
- for qemu-devel@nongnu.org; Sun, 02 Feb 2025 06:55:46 -0500
-Received: from MUA
- by vps-ovh.mhejs.net with esmtpsa  (TLS1.3) tls TLS_AES_128_GCM_SHA256
- (Exim 4.98) (envelope-from <mhej@vps-ovh.mhejs.net>)
- id 1teYZV-00000006iPr-13FI; Sun, 02 Feb 2025 12:55:29 +0100
-Message-ID: <d3a27b10-a7a6-4aa6-97ad-9c39f49df4fc@maciej.szmigiero.name>
-Date: Sun, 2 Feb 2025 12:55:24 +0100
-MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v4 09/33] migration: postcopy_ram_listen_thread() needs to
- take BQL for some calls
-To: "Dr. David Alan Gilbert" <dave@treblig.org>, Peter Xu
- <peterx@redhat.com>, Fabiano Rosas <farosas@suse.de>
-Cc: Alex Williamson <alex.williamson@redhat.com>,
- =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>,
+ (Exim 4.90_1) (envelope-from <dg@treblig.org>) id 1teZLw-0005aD-Fh
+ for qemu-devel@nongnu.org; Sun, 02 Feb 2025 07:45:34 -0500
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=treblig.org
+ ; s=bytemarkmx;
+ h=Content-Type:MIME-Version:Message-ID:Subject:From:Date:From
+ :Subject; bh=X0EzwJCsmnkAVajE0RQn9zpHntN9hVxCElX6MFP7Qgo=; b=XFvBvKAO/imtPSBC
+ Z0d4VZCLP3KQRzLZPaberb+FmG22lLAOY2ALrDBtlHg6ea8MR1D+oBCMfTLfmOLV58J4NXtCkS8KR
+ S06dom2Gp9Ps3kpV9lUaZxCzfx00GWaMr40+O2droe74VpDdC8N6oDn55t7qS2276m1X2be9N6hc0
+ 9kTz7bfIPoz4MgsrkL3o7hCTipD3FLLZlKiYJKsx/SxFIvulYCF+3PZG+zaAExISbCiYhzPDFlHUr
+ A8ZezF3rsvj/kRHXOttvDeHmKd9+uDTZM4OdGRGCfdsQ409IP3TN3y6FdcugIHXvfF0LD6dT9na+n
+ cTlxjYHpN1HK/NSEEQ==;
+Received: from dg by mx.treblig.org with local (Exim 4.96)
+ (envelope-from <dg@treblig.org>) id 1teZLm-00D7Py-0n;
+ Sun, 02 Feb 2025 12:45:22 +0000
+Date: Sun, 2 Feb 2025 12:45:22 +0000
+From: "Dr. David Alan Gilbert" <dave@treblig.org>
+To: "Maciej S. Szmigiero" <mail@maciej.szmigiero.name>
+Cc: Peter Xu <peterx@redhat.com>, Fabiano Rosas <farosas@suse.de>,
+ Alex Williamson <alex.williamson@redhat.com>,
+ =?iso-8859-1?Q?C=E9dric?= Le Goater <clg@redhat.com>,
  Eric Blake <eblake@redhat.com>, Markus Armbruster <armbru@redhat.com>,
- =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
- Avihai Horon <avihaih@nvidia.com>, Joao Martins <joao.m.martins@oracle.com>,
- qemu-devel@nongnu.org
+ Daniel =?iso-8859-1?Q?P=2E_Berrang=E9?= <berrange@redhat.com>,
+ Avihai Horon <avihaih@nvidia.com>,
+ Joao Martins <joao.m.martins@oracle.com>, qemu-devel@nongnu.org
+Subject: Re: [PATCH v4 09/33] migration: postcopy_ram_listen_thread() needs
+ to take BQL for some calls
+Message-ID: <Z59o4u9zui3CPrkm@gallifrey>
 References: <cover.1738171076.git.maciej.szmigiero@oracle.com>
  <139bf266dbd1e25a1e5a050ecb82e3e59120d705.1738171076.git.maciej.szmigiero@oracle.com>
  <Z57TPqhRYY4V14BE@gallifrey>
-Content-Language: en-US, pl-PL
-From: "Maciej S. Szmigiero" <mail@maciej.szmigiero.name>
-Autocrypt: addr=mail@maciej.szmigiero.name; keydata=
- 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
-In-Reply-To: <Z57TPqhRYY4V14BE@gallifrey>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=145.239.82.108;
- envelope-from=mhej@vps-ovh.mhejs.net; helo=vps-ovh.mhejs.net
-X-Spam_score_int: -17
-X-Spam_score: -1.8
-X-Spam_bar: -
-X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9,
- HEADER_FROM_DIFFERENT_DOMAINS=0.066, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_PASS=-0.001,
+ <d3a27b10-a7a6-4aa6-97ad-9c39f49df4fc@maciej.szmigiero.name>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
+In-Reply-To: <d3a27b10-a7a6-4aa6-97ad-9c39f49df4fc@maciej.szmigiero.name>
+X-Chocolate: 70 percent or better cocoa solids preferably
+X-Operating-System: Linux/6.1.0-21-amd64 (x86_64)
+X-Uptime: 12:23:59 up 269 days, 23:38,  2 users,  load average: 0.03, 0.05,
+ 0.01
+User-Agent: Mutt/2.2.12 (2023-09-09)
+Received-SPF: pass client-ip=2a00:1098:5b::1; envelope-from=dg@treblig.org;
+ helo=mx.treblig.org
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -111,84 +79,125 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 2.02.2025 03:06, Dr. David Alan Gilbert wrote:
-> * Maciej S. Szmigiero (mail@maciej.szmigiero.name) wrote:
->> From: "Maciej S. Szmigiero" <maciej.szmigiero@oracle.com>
->>
->> postcopy_ram_listen_thread() is a free running thread, so it needs to
->> take BQL around function calls to migration methods requiring BQL.
->>
->> qemu_loadvm_state_main() needs BQL held since it ultimately calls
->> "load_state" SaveVMHandlers.
->>
->> migration_incoming_state_destroy() needs BQL held since it ultimately calls
->> "load_cleanup" SaveVMHandlers.
->>
->> Signed-off-by: Maciej S. Szmigiero <maciej.szmigiero@oracle.com>
->> ---
->>   migration/savevm.c | 4 ++++
->>   1 file changed, 4 insertions(+)
->>
->> diff --git a/migration/savevm.c b/migration/savevm.c
->> index b0b74140daea..0ceea9638cc1 100644
->> --- a/migration/savevm.c
->> +++ b/migration/savevm.c
->> @@ -2013,7 +2013,9 @@ static void *postcopy_ram_listen_thread(void *opaque)
->>        * in qemu_file, and thus we must be blocking now.
->>        */
->>       qemu_file_set_blocking(f, true);
->> +    bql_lock();
->>       load_res = qemu_loadvm_state_main(f, mis);
->> +    bql_unlock();
+* Maciej S. Szmigiero (mail@maciej.szmigiero.name) wrote:
+> On 2.02.2025 03:06, Dr. David Alan Gilbert wrote:
+> > * Maciej S. Szmigiero (mail@maciej.szmigiero.name) wrote:
+> > > From: "Maciej S. Szmigiero" <maciej.szmigiero@oracle.com>
+> > > 
+> > > postcopy_ram_listen_thread() is a free running thread, so it needs to
+> > > take BQL around function calls to migration methods requiring BQL.
+> > > 
+> > > qemu_loadvm_state_main() needs BQL held since it ultimately calls
+> > > "load_state" SaveVMHandlers.
+> > > 
+> > > migration_incoming_state_destroy() needs BQL held since it ultimately calls
+> > > "load_cleanup" SaveVMHandlers.
+> > > 
+> > > Signed-off-by: Maciej S. Szmigiero <maciej.szmigiero@oracle.com>
+> > > ---
+> > >   migration/savevm.c | 4 ++++
+> > >   1 file changed, 4 insertions(+)
+> > > 
+> > > diff --git a/migration/savevm.c b/migration/savevm.c
+> > > index b0b74140daea..0ceea9638cc1 100644
+> > > --- a/migration/savevm.c
+> > > +++ b/migration/savevm.c
+> > > @@ -2013,7 +2013,9 @@ static void *postcopy_ram_listen_thread(void *opaque)
+> > >        * in qemu_file, and thus we must be blocking now.
+> > >        */
+> > >       qemu_file_set_blocking(f, true);
+> > > +    bql_lock();
+> > >       load_res = qemu_loadvm_state_main(f, mis);
+> > > +    bql_unlock();
+> > 
+> > Doesn't that leave that held for a heck of a long time?
 > 
-> Doesn't that leave that held for a heck of a long time?
-
-Yes, and it effectively broke "postcopy recover" test but I
-think the reason for that is qemu_loadvm_state_main() and
-its children don't drop BQL while waiting for I/O.
-
-I've described this case in more detail in my reply to Fabiano here:
-https://lore.kernel.org/qemu-devel/0a09e627-955e-4f26-8d08-0192ecd250a8@maciej.szmigiero.name/
-
-I still think that "load_state" SaveVMHandlers need to be called
-with BQL held since implementations apparently expect it that way:
-for example, I think PCI device configuration restore calls
-address space manipulation methods which abort() if called
-without BQL held.
-
-I have previously even submitted a patch to explicitly document
-"load_state" SaveVMHandler as requiring BQL (which was also
-included in the previous version of this patch set) and it
-received a "Reviewed-by:" tag:
-https://lore.kernel.org/qemu-devel/6976f129df610c8207da4e531c8c0475ec204fa4.1730203967.git.maciej.szmigiero@oracle.com/
-https://lore.kernel.org/qemu-devel/e1949839932efaa531e2fe63ac13324e5787439c.1731773021.git.maciej.szmigiero@oracle.com/
-https://lore.kernel.org/qemu-devel/87o732bti7.fsf@suse.de/
-
-It's also worth noting that COLO equivalent of postcopy
-incoming thread (colo_process_incoming_thread()) explicitly
-takes BQL around qemu_loadvm_state_main():
->     bql_lock();
->     cpu_synchronize_all_states();
->     ret = qemu_loadvm_state_main(mis->from_src_file, mis);
->     bql_unlock();
-
-
-> That RAM loading has to happen in parallel with the loading of
-> devices doesn't it - especially if one of the devices
-> being loaded touches RAM.
+> Yes, and it effectively broke "postcopy recover" test but I
+> think the reason for that is qemu_loadvm_state_main() and
+> its children don't drop BQL while waiting for I/O.
 > 
-> (I wish this series had a description in the cover letter!)
+> I've described this case in more detail in my reply to Fabiano here:
+> https://lore.kernel.org/qemu-devel/0a09e627-955e-4f26-8d08-0192ecd250a8@maciej.szmigiero.name/
 
-I guess you mean "more detailed description" since there's
-a paragraph about this patch in this series cover letter change log:
-> * postcopy_ram_listen_thread() now takes BQL around function calls that
-> ultimately call migration methods requiring BQL.
-> This fixes one of QEMU tests failing when explicitly BQL-sensitive code
-> is added later to these methods.
+While it might be the cause in this case, my feeling is it's more fundamental
+here - it's the whole reason that postcopy has a separate ram listen
+thread.  As the destination is running, after it loads it's devices
+and as it starts up the destination will be still loading RAM 
+(and other postcopiable devices) potentially for quite a while.
+Holding the bql around the ram listen thread means that the
+execution of the destination won't be able to take that lock
+until the postcopy load has finished; so while that might apparently
+complete, it'll lead to the destination stalling until that's finished
+which defeats the whole point of postcopy.
+That last one probably won't fail a test but it will lead to a long stall
+if you give it a nice big guest with lots of RAM that it's rapidly
+changing.
 
-> Dave
+> I still think that "load_state" SaveVMHandlers need to be called
+> with BQL held since implementations apparently expect it that way:
+> for example, I think PCI device configuration restore calls
+> address space manipulation methods which abort() if called
+> without BQL held.
 
-Thanks,
-Maciej
+However, the only devices that *should* be arriving on the channel
+that the postcopy_ram_listen_thread is reading from are those
+that are postcopiable (i.e. RAM and hmm block's dirty_bitmap).
+Those load handlers are safe to be run while the other devices
+are being changed.   Note the *should* - you could add a check
+to fail if any other device arrives on that channel.
 
+> I have previously even submitted a patch to explicitly document
+> "load_state" SaveVMHandler as requiring BQL (which was also
+> included in the previous version of this patch set) and it
+> received a "Reviewed-by:" tag:
+> https://lore.kernel.org/qemu-devel/6976f129df610c8207da4e531c8c0475ec204fa4.1730203967.git.maciej.szmigiero@oracle.com/
+> https://lore.kernel.org/qemu-devel/e1949839932efaa531e2fe63ac13324e5787439c.1731773021.git.maciej.szmigiero@oracle.com/
+> https://lore.kernel.org/qemu-devel/87o732bti7.fsf@suse.de/
+
+It happens!
+You could make this safer by having a load_state and a load_state_postcopy
+member, and only mark the load_state as requiring the lock.
+
+> It's also worth noting that COLO equivalent of postcopy
+> incoming thread (colo_process_incoming_thread()) explicitly
+> takes BQL around qemu_loadvm_state_main():
+> >     bql_lock();
+> >     cpu_synchronize_all_states();
+> >     ret = qemu_loadvm_state_main(mis->from_src_file, mis);
+> >     bql_unlock();
+> 
+
+It's not a straight equivalent; it's about a decade since I've
+thought about COLO, so I can't quite remember when that thread
+runs.
+
+> > That RAM loading has to happen in parallel with the loading of
+> > devices doesn't it - especially if one of the devices
+> > being loaded touches RAM.
+> > 
+> > (I wish this series had a description in the cover letter!)
+> 
+> I guess you mean "more detailed description" since there's
+> a paragraph about this patch in this series cover letter change log:
+> > * postcopy_ram_listen_thread() now takes BQL around function calls that
+> > ultimately call migration methods requiring BQL.
+> > This fixes one of QEMU tests failing when explicitly BQL-sensitive code
+> > is added later to these methods.
+
+I meant a higher level description of what the series is doing.
+
+Dave
+
+> 
+> > Dave
+> 
+> Thanks,
+> Maciej
+> 
+> 
+-- 
+ -----Open up your eyes, open up your mind, open up your code -------   
+/ Dr. David Alan Gilbert    |       Running GNU/Linux       | Happy  \ 
+\        dave @ treblig.org |                               | In Hex /
+ \ _________________________|_____ http://www.treblig.org   |_______/
 
