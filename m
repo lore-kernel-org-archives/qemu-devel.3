@@ -4,81 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1F274C0218F
-	for <qemu-devel@archiver.kernel.org>; Sun,  2 Feb 2025 14:40:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6F89CC0218F
+	for <qemu-devel@archiver.kernel.org>; Sun,  2 Feb 2025 15:18:56 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1teb87-0007s8-9G; Sun, 02 Feb 2025 09:39:23 -0500
+	id 1tebjm-0007OB-76; Sun, 02 Feb 2025 10:18:18 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <xiaoyao.li@intel.com>)
- id 1teb86-0007s0-Ek
- for qemu-devel@nongnu.org; Sun, 02 Feb 2025 09:39:22 -0500
-Received: from mgamail.intel.com ([192.198.163.15])
+ (Exim 4.90_1) (envelope-from <dmitry.osipenko@collabora.com>)
+ id 1tebjk-0007Nr-OY
+ for qemu-devel@nongnu.org; Sun, 02 Feb 2025 10:18:16 -0500
+Received: from sender4-pp-f112.zoho.com ([136.143.188.112])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <xiaoyao.li@intel.com>)
- id 1teb83-00010l-8S
- for qemu-devel@nongnu.org; Sun, 02 Feb 2025 09:39:22 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
- d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1738507159; x=1770043159;
- h=message-id:date:mime-version:subject:to:cc:references:
- from:in-reply-to:content-transfer-encoding;
- bh=iPIUexgfl/nH+sknvP912xNQqEwXm19jPq4R/uL8ufs=;
- b=axvXmhtpun3C8MNb/yg0zoqsts0SPdNptO3ylmvjW/nWoneNuxG3owf5
- y29wnL/fLMtD+kByO+MXlLwdAevp+mJk/9Db2Xd18uCO5o5ouh0SzFxGU
- RndIgH4+5+8iK/5j1/cChdu7kTqCCBBxhWsMwXqDXLV6/uyvRswVpE0gZ
- 77RMZE5SLae3JWyT+Fs8I1wImofe4mMVIcUq23RlFjrXfbKXOYa2jh2jV
- zanMnHHv58WOCQEsOOyHCkdbT18/cnmur3na8C1ukEG68/9FEws977vNj
- vYabdBw9JS5AOOWQ37ofldXhRQz97RSr0cYjI52mIHyQ+KNChMevZq0E2 A==;
-X-CSE-ConnectionGUID: V9TdbEb0R3+W5Cvz2oy2kQ==
-X-CSE-MsgGUID: VN6EjJfFTOyTl9yOgBvsOA==
-X-IronPort-AV: E=McAfee;i="6700,10204,11334"; a="39167030"
-X-IronPort-AV: E=Sophos;i="6.13,254,1732608000"; d="scan'208";a="39167030"
-Received: from orviesa004.jf.intel.com ([10.64.159.144])
- by fmvoesa109.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 02 Feb 2025 06:39:14 -0800
-X-CSE-ConnectionGUID: B+mnSoiAQZ28uG1kztDMSQ==
-X-CSE-MsgGUID: CMjMRBjdRye/bMKwn2Av7g==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.13,254,1732608000"; d="scan'208";a="115066821"
-Received: from xiaoyaol-hp-g830.ccr.corp.intel.com (HELO [10.124.247.1])
- ([10.124.247.1])
- by orviesa004-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 02 Feb 2025 06:39:10 -0800
-Message-ID: <774945ce-04e2-42d5-83fc-97ad08647101@intel.com>
-Date: Sun, 2 Feb 2025 22:39:07 +0800
+ (Exim 4.90_1) (envelope-from <dmitry.osipenko@collabora.com>)
+ id 1tebjj-0005Dg-1w
+ for qemu-devel@nongnu.org; Sun, 02 Feb 2025 10:18:16 -0500
+ARC-Seal: i=1; a=rsa-sha256; t=1738509477; cv=none; 
+ d=zohomail.com; s=zohoarc; 
+ b=W7LSqBagwBS3HAGzuu4QwcYaxIwoczSnakvNcxw5ILO8sxF2Jj64SsgjM6ZFIOH1vrB33pDXhb2nK3BXFsw8IdSkLQm6DQig76PSUZjfZq3ZhQe+z8HQDh2esd8TD49+/vd/Ry94J8Cxl5ABXVkjQmaTvJ/1B8gIxl7T7/VM+G8=
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=zohomail.com;
+ s=zohoarc; t=1738509477;
+ h=Content-Type:Content-Transfer-Encoding:Cc:Cc:Date:Date:From:From:In-Reply-To:MIME-Version:Message-ID:References:Subject:Subject:To:To:Message-Id:Reply-To;
+ bh=3hsrI6mRMzydWNm3uEhatMh6v0cZiFMmQcKjF74DpiU=; 
+ b=ho/+W9KhJm0YnETDEB63VX6f+FW9CmJRD++ae7HaYlQqQ/NZi2LT+E9dpTsElZvG6KDm5rfp9XibOIdveBhgroi+PVqRU5+UQXfJTSKuGq/I1FGYq3mpoYh4BkAtHgrHIK6wWH1IIj9LSg3+Zd2SY5TFNDrBX5oulWPTlFjQVgI=
+ARC-Authentication-Results: i=1; mx.zohomail.com;
+ dkim=pass  header.i=collabora.com;
+ spf=pass  smtp.mailfrom=dmitry.osipenko@collabora.com;
+ dmarc=pass header.from=<dmitry.osipenko@collabora.com>
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; t=1738509477; 
+ s=zohomail; d=collabora.com; i=dmitry.osipenko@collabora.com; 
+ h=Message-ID:Date:Date:MIME-Version:Subject:Subject:To:To:Cc:Cc:References:From:From:In-Reply-To:Content-Type:Content-Transfer-Encoding:Message-Id:Reply-To;
+ bh=3hsrI6mRMzydWNm3uEhatMh6v0cZiFMmQcKjF74DpiU=;
+ b=SOd3IcqHiMHox1KvfY59X2ywtACVCXVSmhIEuUDxIaoQ5AQQV/tBdWdy5g8qmtfd
+ uJqgkb3+u7Yw6Z/m99qRpsJRkFT3oE/0Fao2pOn3AGQGMfWifBV3bl/iMcEHJ/B+8ap
+ qUxVk5ODRQYmUFIBAkvqfPdxye7RtK4HSv1bnRb8=
+Received: by mx.zohomail.com with SMTPS id 1738509471008785.3601730436333;
+ Sun, 2 Feb 2025 07:17:51 -0800 (PST)
+Message-ID: <5aedf1ad-d9b0-4edb-a050-f3d9bee9bccb@collabora.com>
+Date: Sun, 2 Feb 2025 18:17:43 +0300
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v7 51/52] i386/tdx: Validate phys_bits against host value
-To: Paolo Bonzini <pbonzini@redhat.com>
-Cc: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
+Subject: Re: [PATCH v6 00/10] Support virtio-gpu DRM native context
+To: =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Dongwon Kim <dongwon.kim@intel.com>,
+ Vivek Kasireddy <vivek.kasireddy@intel.com>
+Cc: Akihiko Odaki <akihiko.odaki@daynix.com>, Huang Rui <ray.huang@amd.com>,
+ =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
  =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Igor Mammedov <imammedo@redhat.com>, Zhao Liu <zhao1.liu@intel.com>,
- "Michael S. Tsirkin" <mst@redhat.com>, Eric Blake <eblake@redhat.com>,
- Markus Armbruster <armbru@redhat.com>,
- Peter Maydell <peter.maydell@linaro.org>,
- Marcelo Tosatti <mtosatti@redhat.com>, Huacai Chen <chenhuacai@kernel.org>,
- Rick Edgecombe <rick.p.edgecombe@intel.com>,
- Francesco Lavra <francescolavra.fl@gmail.com>, qemu-devel@nongnu.org,
- kvm@vger.kernel.org
-References: <20250124132048.3229049-1-xiaoyao.li@intel.com>
- <20250124132048.3229049-52-xiaoyao.li@intel.com>
- <CABgObfb5ruVO2sxLCbZobiaqX-3h9Q+UKOZnp_hhxfJA=T-OJA@mail.gmail.com>
+ Gerd Hoffmann <kraxel@redhat.com>, "Michael S . Tsirkin" <mst@redhat.com>,
+ Paolo Bonzini <pbonzini@redhat.com>, Gert Wollny
+ <gert.wollny@collabora.com>, qemu-devel@nongnu.org,
+ Gurchetan Singh <gurchetansingh@chromium.org>, Alyssa Ross <hi@alyssa.is>,
+ =?UTF-8?Q?Roger_Pau_Monn=C3=A9?= <roger.pau@citrix.com>,
+ Alex Deucher <alexander.deucher@amd.com>,
+ Stefano Stabellini <stefano.stabellini@amd.com>,
+ =?UTF-8?Q?Christian_K=C3=B6nig?= <christian.koenig@amd.com>,
+ Xenia Ragiadakou <xenia.ragiadakou@amd.com>,
+ Pierre-Eric Pelloux-Prayer <pierre-eric.pelloux-prayer@amd.com>,
+ Honglei Huang <honglei1.huang@amd.com>, Julia Zhang <julia.zhang@amd.com>,
+ Chen Jiqian <Jiqian.Chen@amd.com>, Rob Clark <robdclark@gmail.com>,
+ Yiwei Zhang <zzyiwei@chromium.org>, Sergio Lopez Pascual <slp@redhat.com>
+References: <20250126201121.470990-1-dmitry.osipenko@collabora.com>
+ <87cyg844fr.fsf@draig.linaro.org>
+From: Dmitry Osipenko <dmitry.osipenko@collabora.com>
 Content-Language: en-US
-From: Xiaoyao Li <xiaoyao.li@intel.com>
-In-Reply-To: <CABgObfb5ruVO2sxLCbZobiaqX-3h9Q+UKOZnp_hhxfJA=T-OJA@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+In-Reply-To: <87cyg844fr.fsf@draig.linaro.org>
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=192.198.163.15; envelope-from=xiaoyao.li@intel.com;
- helo=mgamail.intel.com
-X-Spam_score_int: -33
-X-Spam_score: -3.4
-X-Spam_bar: ---
-X-Spam_report: (-3.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- HK_RANDOM_ENVFROM=0.001, HK_RANDOM_FROM=1, RCVD_IN_DNSWL_MED=-2.3,
+X-ZohoMailClient: External
+Received-SPF: pass client-ip=136.143.188.112;
+ envelope-from=dmitry.osipenko@collabora.com; helo=sender4-pp-f112.zoho.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.01,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -96,97 +98,45 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 2/1/2025 2:27 AM, Paolo Bonzini wrote:
-> On Fri, Jan 24, 2025 at 2:40 PM Xiaoyao Li <xiaoyao.li@intel.com> wrote:
->>
->> For TDX guest, the phys_bits is not configurable and can only be
->> host/native value.
->>
->> Validate phys_bits inside tdx_check_features().
-> 
-> Hi Xiaoyao,
-> 
-> to avoid
-> 
-> qemu-kvm: TDX requires guest CPU physical bits (48) to match host CPU
-> physical bits (52)
-> 
-> I need options like
-> 
-> -cpu host,phys-bits=52,guest-phys-bits=52,host-phys-bits-limit=52,-kvm-asyncpf-int
-> 
-> to start a TDX guest, is that intentional?
+On 1/27/25 19:17, Alex Bennée wrote:
+...
+> I'm still seeing corruption with -display gtk,gl=on on my x86 system
+> BTW. I would like to understand if that is a problem with QEMU, GTK or
+> something else in the stack before we merge.
 
-"-cpu host" should be sufficient and should not hit the error.
+I reproduced the display mirroring/corruption issue and bisected it to
+the following commit. The problem only happens when QEMU/GTK uses
+Wayland display directly, while previously I was running QEMU with
+XWayland that doesn't have the problem. Why this change breaks dmabuf
+displaying with Wayland/GTK is unclear. Reverting commit fixes the bug.
 
-why did you get "guest CPU physical bits (48)"?
++Dongwon Kim +Vivek Kasireddy
 
-> Thanks,
-> 
-> Paolo
-> 
->> Signed-off-by: Xiaoyao Li <xiaoyao.li@intel.com>
->> ---
->>   target/i386/host-cpu.c | 2 +-
->>   target/i386/host-cpu.h | 1 +
->>   target/i386/kvm/tdx.c  | 8 ++++++++
->>   3 files changed, 10 insertions(+), 1 deletion(-)
->>
->> diff --git a/target/i386/host-cpu.c b/target/i386/host-cpu.c
->> index 3e4e85e729c8..8a15af458b05 100644
->> --- a/target/i386/host-cpu.c
->> +++ b/target/i386/host-cpu.c
->> @@ -15,7 +15,7 @@
->>   #include "system/system.h"
->>
->>   /* Note: Only safe for use on x86(-64) hosts */
->> -static uint32_t host_cpu_phys_bits(void)
->> +uint32_t host_cpu_phys_bits(void)
->>   {
->>       uint32_t eax;
->>       uint32_t host_phys_bits;
->> diff --git a/target/i386/host-cpu.h b/target/i386/host-cpu.h
->> index 6a9bc918baa4..b97ec01c9bec 100644
->> --- a/target/i386/host-cpu.h
->> +++ b/target/i386/host-cpu.h
->> @@ -10,6 +10,7 @@
->>   #ifndef HOST_CPU_H
->>   #define HOST_CPU_H
->>
->> +uint32_t host_cpu_phys_bits(void);
->>   void host_cpu_instance_init(X86CPU *cpu);
->>   void host_cpu_max_instance_init(X86CPU *cpu);
->>   bool host_cpu_realizefn(CPUState *cs, Error **errp);
->> diff --git a/target/i386/kvm/tdx.c b/target/i386/kvm/tdx.c
->> index bb75eb06dad9..c906a76c4c0e 100644
->> --- a/target/i386/kvm/tdx.c
->> +++ b/target/i386/kvm/tdx.c
->> @@ -24,6 +24,7 @@
->>
->>   #include "cpu.h"
->>   #include "cpu-internal.h"
->> +#include "host-cpu.h"
->>   #include "hw/i386/e820_memory_layout.h"
->>   #include "hw/i386/x86.h"
->>   #include "hw/i386/tdvf.h"
->> @@ -838,6 +839,13 @@ static int tdx_check_features(X86ConfidentialGuest *cg, CPUState *cs)
->>           return -1;
->>       }
->>
->> +    if (cpu->phys_bits != host_cpu_phys_bits()) {
->> +        error_report("TDX requires guest CPU physical bits (%u) "
->> +                     "to match host CPU physical bits (%u)",
->> +                     cpu->phys_bits, host_cpu_phys_bits());
->> +        exit(1);
->> +    }
->> +
->>       return 0;
->>   }
->>
->> --
->> 2.34.1
->>
-> 
-> 
+commit 77bf310084dad38b3a2badf01766c659056f1cf2
+Author: Dongwon Kim <dongwon.kim@intel.com>
+Date:   Fri Apr 26 15:50:59 2024 -0700
 
+    ui/gtk: Draw guest frame at refresh cycle
+
+    Draw routine needs to be manually invoked in the next refresh
+    if there is a scanout blob from the guest. This is to prevent
+    a situation where there is a scheduled draw event but it won't
+    happen bacause the window is currently in inactive state
+    (minimized or tabified). If draw is not done for a long time,
+    gl_block timeout and/or fence timeout (on the guest) will happen
+    eventually.
+
+    v2: Use gd_gl_area_draw(vc) in gtk-gl-area.c
+
+    Suggested-by: Vivek Kasireddy <vivek.kasireddy@intel.com>
+    Cc: Gerd Hoffmann <kraxel@redhat.com>
+    Cc: Marc-André Lureau <marcandre.lureau@redhat.com>
+    Cc: Daniel P. Berrangé <berrange@redhat.com>
+    Signed-off-by: Dongwon Kim <dongwon.kim@intel.com>
+    Acked-by: Marc-André Lureau <marcandre.lureau@redhat.com>
+    Message-Id: <20240426225059.3871283-1-dongwon.kim@intel.com>
+
+-- 
+Best regards,
+Dmitry
 
