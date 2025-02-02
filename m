@@ -4,54 +4,64 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 24884C0218A
-	for <qemu-devel@archiver.kernel.org>; Sun,  2 Feb 2025 01:26:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 43FC3C0218A
+	for <qemu-devel@archiver.kernel.org>; Sun,  2 Feb 2025 02:08:03 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1teOju-00060s-Jr; Sat, 01 Feb 2025 20:25:36 -0500
+	id 1tePOE-0002kB-Gd; Sat, 01 Feb 2025 21:07:14 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
- id 1teOjr-00060E-VY; Sat, 01 Feb 2025 20:25:32 -0500
-Received: from zero.eik.bme.hu ([152.66.115.2])
+ (Exim 4.90_1) (envelope-from <dg@treblig.org>) id 1tePO7-0002jm-Hz
+ for qemu-devel@nongnu.org; Sat, 01 Feb 2025 21:07:08 -0500
+Received: from mx.treblig.org ([2a00:1098:5b::1])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
- id 1teOjo-00034Q-Qm; Sat, 01 Feb 2025 20:25:31 -0500
-Received: from zero.eik.bme.hu (localhost [127.0.0.1])
- by zero.eik.bme.hu (Postfix) with ESMTP id 0ECF74E6001;
- Sun, 02 Feb 2025 02:25:24 +0100 (CET)
-X-Virus-Scanned: amavisd-new at eik.bme.hu
-Received: from zero.eik.bme.hu ([127.0.0.1])
- by zero.eik.bme.hu (zero.eik.bme.hu [127.0.0.1]) (amavisd-new, port 10028)
- with ESMTP id Abfaa_cQNmQO; Sun,  2 Feb 2025 02:25:22 +0100 (CET)
-Received: by zero.eik.bme.hu (Postfix, from userid 432)
- id 1DEED4E6004; Sun, 02 Feb 2025 02:25:22 +0100 (CET)
-Received: from localhost (localhost [127.0.0.1])
- by zero.eik.bme.hu (Postfix) with ESMTP id 1B84874577C;
- Sun, 02 Feb 2025 02:25:22 +0100 (CET)
-Date: Sun, 2 Feb 2025 02:25:22 +0100 (CET)
-From: BALATON Zoltan <balaton@eik.bme.hu>
-To: Bernhard Beschow <shentey@gmail.com>
-cc: qemu-devel@nongnu.org, qemu-ppc@nongnu.org
-Subject: Re: [PATCH] hw/ppc/e500: Partial implementation of local access
- window registers
-In-Reply-To: <06F97BE3-057D-4D9D-AAAF-2B7438358BB8@gmail.com>
-Message-ID: <69e08a66-b146-4d76-080f-7fa6f4a0a13f@eik.bme.hu>
-References: <20250115211544.307124E602F@zero.eik.bme.hu>
- <22e114ac-2c3f-76f1-2172-9adf0c50ad5f@eik.bme.hu>
- <DE6FAB3B-F994-47B8-95A5-9D1BFD6B621F@gmail.com>
- <06F97BE3-057D-4D9D-AAAF-2B7438358BB8@gmail.com>
+ (Exim 4.90_1) (envelope-from <dg@treblig.org>) id 1tePO5-0007M2-Qv
+ for qemu-devel@nongnu.org; Sat, 01 Feb 2025 21:07:07 -0500
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=treblig.org
+ ; s=bytemarkmx;
+ h=Content-Type:MIME-Version:Message-ID:Subject:From:Date:From
+ :Subject; bh=K5vJnbvji/kFBCvPvGfDwfWjEaAldxVOAjvaVe+F4QU=; b=G21wQApBt/IEVhnF
+ xTUsdi8hnzeBw/1SBYhidHLr0v09PuFCjpWXTStRzqQ/R/bdjHoEp/GfGYXYBLKE97AzIQLb74zia
+ aAboR9mJK80itK93yfTWAUMAWG0ZTHTrurZzOVdmX+dkGVY4oCrxrOT6zTRf7Eh74dtfDsgSnqPrH
+ NDo7ZwpVejBCFVAYk7XD6mvZzQUwSPos2GthJB4b05+yWdAxWjPGPjAHPXRzriPyO17eihZx0zuLT
+ Jh2wr3wy5QcA4dP5MHF5Lq5w+IxdQGAwe0HYJgsFgLzOtM49wCpqoY83b2ZCfI3T7B56abE9gB0p/
+ xLrlgleGbx7dYKf1MA==;
+Received: from dg by mx.treblig.org with local (Exim 4.96)
+ (envelope-from <dg@treblig.org>) id 1tePNu-00D63o-2p;
+ Sun, 02 Feb 2025 02:06:54 +0000
+Date: Sun, 2 Feb 2025 02:06:54 +0000
+From: "Dr. David Alan Gilbert" <dave@treblig.org>
+To: "Maciej S. Szmigiero" <mail@maciej.szmigiero.name>
+Cc: Peter Xu <peterx@redhat.com>, Fabiano Rosas <farosas@suse.de>,
+ Alex Williamson <alex.williamson@redhat.com>,
+ =?iso-8859-1?Q?C=E9dric?= Le Goater <clg@redhat.com>,
+ Eric Blake <eblake@redhat.com>, Markus Armbruster <armbru@redhat.com>,
+ Daniel P =?iso-8859-1?Q?=2E_Berrang=E9?= <berrange@redhat.com>,
+ Avihai Horon <avihaih@nvidia.com>,
+ Joao Martins <joao.m.martins@oracle.com>, qemu-devel@nongnu.org
+Subject: Re: [PATCH v4 09/33] migration: postcopy_ram_listen_thread() needs
+ to take BQL for some calls
+Message-ID: <Z57TPqhRYY4V14BE@gallifrey>
+References: <cover.1738171076.git.maciej.szmigiero@oracle.com>
+ <139bf266dbd1e25a1e5a050ecb82e3e59120d705.1738171076.git.maciej.szmigiero@oracle.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII; format=flowed
-Received-SPF: pass client-ip=152.66.115.2; envelope-from=balaton@eik.bme.hu;
- helo=zero.eik.bme.hu
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
+In-Reply-To: <139bf266dbd1e25a1e5a050ecb82e3e59120d705.1738171076.git.maciej.szmigiero@oracle.com>
+X-Chocolate: 70 percent or better cocoa solids preferably
+X-Operating-System: Linux/6.1.0-21-amd64 (x86_64)
+X-Uptime: 02:03:25 up 269 days, 13:17,  2 users,  load average: 0.07, 0.02,
+ 0.00
+User-Agent: Mutt/2.2.12 (2023-09-09)
+Received-SPF: pass client-ip=2a00:1098:5b::1; envelope-from=dg@treblig.org;
+ helo=mx.treblig.org
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -67,128 +77,61 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Sat, 1 Feb 2025, Bernhard Beschow wrote:
-> Am 1. Februar 2025 14:55:15 UTC schrieb Bernhard Beschow <shentey@gmail.com>:
->> Am 30. Januar 2025 12:45:58 UTC schrieb BALATON Zoltan <balaton@eik.bme.hu>:
->>> On Wed, 15 Jan 2025, BALATON Zoltan wrote:
->>>> This allows guests to set the CCSR base address. Also store and return
->>>> values of the local access window registers but their functionality
->>>> isn't implemented.
->>>
->>> Ping?
->>
->> I guess you're trying to boot a real firmware image from SD card?
+* Maciej S. Szmigiero (mail@maciej.szmigiero.name) wrote:
+> From: "Maciej S. Szmigiero" <maciej.szmigiero@oracle.com>
+> 
+> postcopy_ram_listen_thread() is a free running thread, so it needs to
+> take BQL around function calls to migration methods requiring BQL.
+> 
+> qemu_loadvm_state_main() needs BQL held since it ultimately calls
+> "load_state" SaveVMHandlers.
+> 
+> migration_incoming_state_destroy() needs BQL held since it ultimately calls
+> "load_cleanup" SaveVMHandlers.
+> 
+> Signed-off-by: Maciej S. Szmigiero <maciej.szmigiero@oracle.com>
+> ---
+>  migration/savevm.c | 4 ++++
+>  1 file changed, 4 insertions(+)
+> 
+> diff --git a/migration/savevm.c b/migration/savevm.c
+> index b0b74140daea..0ceea9638cc1 100644
+> --- a/migration/savevm.c
+> +++ b/migration/savevm.c
+> @@ -2013,7 +2013,9 @@ static void *postcopy_ram_listen_thread(void *opaque)
+>       * in qemu_file, and thus we must be blocking now.
+>       */
+>      qemu_file_set_blocking(f, true);
+> +    bql_lock();
+>      load_res = qemu_loadvm_state_main(f, mis);
+> +    bql_unlock();
 
-I'm not trying, I've done it. I only needed these patches and commenting 
-out the page_aligned = true in hw/sd/sdhci.c as I noted in the previous 
-patch. U-Boot works and I can run commands in the firmware prompt but I 
-did not try to boot an OS yet. The amigaos boot loader which U-Boot for 
-Tabor loads by default crashes somewhere but this may be a bug in the 
-patched U-Boot. I think I've seen similar with sam460ex U-Boot before, 
-maybe it's because of not finding some expected devices and not handling 
-the returned NULL value well but I did not debug it.
+Doesn't that leave that held for a heck of a long time?
+That RAM loading has to happen in parallel with the loading of
+devices doesn't it - especially if one of the devices
+being loaded touches RAM.
 
->> I've implemented that in my e500-fdt branch which I want to send as an 
->> RFC. I still need to clean it up. Once it's on the list we could make a 
->> plan how to turn it into a p10xx. Would that work for you?
+(I wish this series had a description in the cover letter!)
 
-Sure, I can try to test your patches once they are submitted to the list 
-and rebase my changes on top if they still needed. I've just submitted 
-these so you can incorporate them in your tree so I have less to rebase 
-but I see you already have most of these. I'm OK to wait until your tree 
-is cleaned and submitted but it seems there are a lot of patches so it 
-might take a while. I don't expect that you can get it merged before the 
-next release. Some of the patches may need several versions or alternative 
-approaches until they can be merged. For example I expect problems with 
-allowing ',' in device names as this is something that was removed before 
-to avoid the need of quoting or something like that. But I'm not in a 
-hurry as I don't have much free time for it anyway so only come back to 
-this time to time and it's far from anything useful yet.
+Dave
 
->>
->> Best regards,
->> Bernhard
->>
->> P.S. The last commit teaches you how to start a firmware from SD card.
 
-I did not try your version but looking at the patch looks like you have 
-some sparse-mem region. (I've added similar one from board code, I did not 
-know about this device.) Isn't that the l2cache as RAM or on-chip SRAM or 
-whatever it's called? You seem to have some emulation of that l2cache in a 
-previous patch so can't that be mapped there? Maybe we'll eventually need 
-to implement reading the BOOT data from the beginning of the SD card or 
-flash ROM which may have some initial register values that set things up 
-that are currently hard coded.
-
-Meanwhile I can cherry pick some patches from your tree and test them. 
-Looks like you have some DDR3 support added, I haven't got to that yet.
-
-For USB I had this for now:
-
-diff --git a/hw/ppc/e500.c b/hw/ppc/e500.c
-index ee17acdb69..54890d25f3 100644
---- a/hw/ppc/e500.c
-+++ b/hw/ppc/e500.c
-@@ -900,6 +900,29 @@ static void ppce500_power_off(void *opaque, int line, int on)
-      }
-  }
-
-+static uint64_t usb_read(void *opaque, hwaddr addr, unsigned size)
-+{
-+    switch (addr) {
-+    case 0:
-+        return BIT(2) | BIT(17);
-+    }
-+    return 0;
-+}
-+
-+static void usb_write(void *opaque, hwaddr addr, uint64_t val, unsigned size)
-+{
-+}
-+
-+static const MemoryRegionOps usb_ops = {
-+    .read = usb_read,
-+    .write = usb_write,
-+    .endianness = DEVICE_BIG_ENDIAN,
-+    .valid = {
-+        .min_access_size = 4,
-+        .max_access_size = 4,
-+    },
-+};
-+
-  void ppce500_init(MachineState *machine)
-  {
-      MemoryRegion *address_space_mem = get_system_memory();
-@@ -1118,6 +1141,19 @@ void ppce500_init(MachineState *machine)
-                                      sysbus_mmio_get_region(s, 0));
-      }
-
-+    /* USB */
-+    dev = qdev_new("tegra2-ehci-usb");
-+    s = SYS_BUS_DEVICE(dev);
-+    sysbus_realize_and_unref(s, &error_fatal);
-+    sysbus_connect_irq(s, 0, qdev_get_gpio_in(mpicdev, 12));
-+    memory_region_add_subregion(ccsr_addr_space, 0x22000,
-+                                sysbus_mmio_get_region(s, 0));
-+    {
-+        MemoryRegion *mr =  g_new(MemoryRegion, 1);
-+        memory_region_init_io(mr, OBJECT(dev), &usb_ops, s, "fsl-ehci", 4);
-+        memory_region_add_subregion(ccsr_addr_space, 0x22500, mr);
-+    }
-+
-      /* General Utility device */
-      dev = qdev_new("mpc8544-guts");
-      s = SYS_BUS_DEVICE(dev);
-
-which is reusing a sufficiently similar existing device just to have 
-minimal changes. This isn't the right way but since most of these just 
-differ in the reg offsets I wonder if we could turn these offsets into 
-properties so we don't need to add a new subclass for every device. I 
-think subclasses came from the pci version where the PCI IDs are different 
-and maybe sysbus was modelled after that but we only need subclasses where 
-additional registers are needed (which may be the case for this fsl device 
-so this property idea is just unrelated clean up).
-
-Regards,
-BALATON Zoltan
+>      /*
+>       * This is tricky, but, mis->from_src_file can change after it
+> @@ -2073,7 +2075,9 @@ static void *postcopy_ram_listen_thread(void *opaque)
+>       * (If something broke then qemu will have to exit anyway since it's
+>       * got a bad migration state).
+>       */
+> +    bql_lock();
+>      migration_incoming_state_destroy();
+> +    bql_unlock();
+>  
+>      rcu_unregister_thread();
+>      mis->have_listen_thread = false;
+> 
+-- 
+ -----Open up your eyes, open up your mind, open up your code -------   
+/ Dr. David Alan Gilbert    |       Running GNU/Linux       | Happy  \ 
+\        dave @ treblig.org |                               | In Hex /
+ \ _________________________|_____ http://www.treblig.org   |_______/
 
