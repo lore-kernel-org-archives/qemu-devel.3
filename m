@@ -4,114 +4,89 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 49919C0218F
-	for <qemu-devel@archiver.kernel.org>; Sun,  2 Feb 2025 17:30:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1F55AC0218F
+	for <qemu-devel@archiver.kernel.org>; Sun,  2 Feb 2025 21:47:37 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tedmN-0001IT-Mz; Sun, 02 Feb 2025 12:29:07 -0500
+	id 1teho1-0002xH-9n; Sun, 02 Feb 2025 16:47:05 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <laurent@vivier.eu>)
- id 1tedmL-0001I0-2F; Sun, 02 Feb 2025 12:29:05 -0500
-Received: from mout.kundenserver.de ([212.227.17.24])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <laurent@vivier.eu>)
- id 1tedmJ-0003GG-Ia; Sun, 02 Feb 2025 12:29:04 -0500
-Received: from [192.168.100.1] ([82.64.211.94]) by mrelayeu.kundenserver.de
- (mreue108 [213.165.67.119]) with ESMTPSA (Nemesis) id
- 1MulyX-1tM93Q0S9b-00zzlA; Sun, 02 Feb 2025 18:28:59 +0100
-Message-ID: <b713bd1a-0cd6-4b30-8ba7-daaa829bfe28@vivier.eu>
-Date: Sun, 2 Feb 2025 18:28:57 +0100
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1tehnz-0002wv-Em
+ for qemu-devel@nongnu.org; Sun, 02 Feb 2025 16:47:03 -0500
+Received: from mail-pl1-x62e.google.com ([2607:f8b0:4864:20::62e])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1tehnx-0003Ac-Ay
+ for qemu-devel@nongnu.org; Sun, 02 Feb 2025 16:47:02 -0500
+Received: by mail-pl1-x62e.google.com with SMTP id
+ d9443c01a7336-216728b1836so60288175ad.0
+ for <qemu-devel@nongnu.org>; Sun, 02 Feb 2025 13:47:00 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1738532819; x=1739137619; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=HfpE/R9iLcGVeARr5s0wabl+HdNGI9pRHFGDnTtin5Y=;
+ b=jgR3WQUraS6RGkqZE5itCm7xAmAS4YaFaFSVrH7+e8diGEd9/b1qBb5UHIs/eglpxD
+ Or3SzG7kBhvnmxBp56K24+V+Peh0/G3/bXDXnjaG+1D/kYJAmouotpJOlJ8W+KfORwEJ
+ CVmUqtNAKTKo6dd2ImbdCYV1sJOq6JLzaP0GrmRdgtGzVzhSpYvGxgJJpHpWe3olrSQ5
+ zZUfeVlu1MEWb9hX+3p9nzCC09yqygUzt8T+v6ScOIKyXMcsnxt4hKOY2xaLhANvPlvO
+ lTY7crHT1eqpT7y9Viq+FZ9YcSYxGpI49gO02OK3b+xEzBLEm/BPdVKuc0OQcy7nzXoS
+ yQ4w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1738532819; x=1739137619;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=HfpE/R9iLcGVeARr5s0wabl+HdNGI9pRHFGDnTtin5Y=;
+ b=wzcXaDZ/WIgpqiXeXrTOC1H3qlJ9aG1aOgpFJpuVIeF81k2S955dokBELSrQPYzSsi
+ YwWwn281s7CzGX9OPo7DlWHutl0XB6cdUehCqB9wraVwM3mYRsHGvAmLaE4glkUonvXf
+ dFH6z+h3LBD1uVe0RJliz/jKpCT7Dlslsdr42cTlEBkv9kp726ib/Z8DxmfGFGNwd1Ln
+ 8H+2tZzB6rGz+NvTPDm1JPZxbro70nZ4dt/EbGzDf3Kf9eQwMo5h55DOb0vjzsyM8kMo
+ hZZGoNiJOV/hBQ3TZQf56zIFwVFPulxQ82aWylxKY4DO4kXvKoqvz08j2HTQJfOCfffY
+ y8Mg==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCV/z9aIHpmALVnaHe5oJ6GkjoxOZ1pLoJJvoMVh/UMsbhdtqgRkBjIIRvfTHdMTJWw4XUe+ftqRIlQH@nongnu.org
+X-Gm-Message-State: AOJu0YwiqcwtHKTXexK69L4Uf/sVRCAsELFbE740Kf1rBjA4TDUTOvZg
+ P6dy5lNjiyf/x+qlG/6ZjM6pHJNMla1YHAfFacsECgkn25rpiCb7bqbs2lnmNUU=
+X-Gm-Gg: ASbGnct+9gLCg9KGyUvs1AUgT27wcvDIbrRMIlAIjet5iXuC07Kw6fch8pdRHuKx+FL
+ EKlYWS6EzkCR+r9igSZn+NbGx6Lj8mPeoxYOGZnEeTrE3vD94lR06oXFoyoMOv4QAsX0leBEcWu
+ vI5TGeRikyUz0EvYpne2Qy3hxADCZSlihax097ItC+yg3m+NccZVMvxDNq9ZaxdF7yUgUDQap0S
+ QMkpBELF8rorm4q6zpsqjvwroSHcRfsWj54l9zJ31ZKzJvQqQGmVTm7oEExzw107H/HkPnzZecZ
+ KygQpFv9FSdApavKVrWbDaQZkrv94vcJ26SDaeM0mxpDFaWDMZhlYJI=
+X-Google-Smtp-Source: AGHT+IE7y2M78+08sErnIBZnhxFQRY9Ki7GVycvbnsIWa2Q+4YBudk5MZZYcTWf7yDypvm9qkema7w==
+X-Received: by 2002:a05:6a00:e8a:b0:72a:bc6a:3a87 with SMTP id
+ d2e1a72fcca58-72fd096a0a5mr29285553b3a.0.1738532819173; 
+ Sun, 02 Feb 2025 13:46:59 -0800 (PST)
+Received: from [192.168.0.4] (71-212-39-66.tukw.qwest.net. [71.212.39.66])
+ by smtp.gmail.com with ESMTPSA id
+ d2e1a72fcca58-72fe69ba322sm6967923b3a.110.2025.02.02.13.46.58
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Sun, 02 Feb 2025 13:46:58 -0800 (PST)
+Message-ID: <99ea71e8-b978-41c6-8ba5-f056935ea39e@linaro.org>
+Date: Sun, 2 Feb 2025 13:46:57 -0800
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 0/2] net: Fix announce_self with vhost
-To: Michael Tokarev <mjt@tls.msk.ru>, Laurent Vivier <lvivier@redhat.com>,
- qemu-devel@nongnu.org
-Cc: Jason Wang <jasowang@redhat.com>, QEMU Trivial <qemu-trivial@nongnu.org>, 
- qemu-stable@nongnu.org
-References: <20250117111709.970789-1-lvivier@redhat.com>
- <fee03f11-bcf5-4586-abc1-2d38ce6a7f9c@redhat.com>
- <9080590d-d823-473e-833e-d726490f1b18@tls.msk.ru>
-Content-Language: fr
-From: Laurent Vivier <laurent@vivier.eu>
-Autocrypt: addr=laurent@vivier.eu; keydata=
- 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
-In-Reply-To: <9080590d-d823-473e-833e-d726490f1b18@tls.msk.ru>
+Subject: Re: [PATCH] target/sparc: fake UltraSPARC T1 PCR and PIC registers
+To: Artyom Tarasenko <atar4qemu@gmail.com>, qemu-devel@nongnu.org
+Cc: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
+References: <20250131214528.117846-1-atar4qemu@gmail.com>
+Content-Language: en-US
+From: Richard Henderson <richard.henderson@linaro.org>
+In-Reply-To: <20250131214528.117846-1-atar4qemu@gmail.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-X-Provags-ID: V03:K1:WifZl44NxP9mQsuvXR20EljXkw49jgRyoEesBSkPjayTCQOhQYn
- ECIRBM8fwPc8Em26fAawUJ4u4UfbjjqF3qGxkgBs9ZFhzyUYS9Gu9+4d6VWTOCsL7QfOjgu
- o/kNpWLA5KZXpSr70zgmtzLGlnbmeOrRcCC11Xd6l7lb0RrEarDwC4KnqlppSBuiwMj7bR5
- c0IapAm4TP/MB1cw9SwUg==
-UI-OutboundReport: notjunk:1;M01:P0:1QkxLZ5M0vo=;zPYyeQxSyozltL9HoJTeiVinhSi
- OP8YKHpyTakyU47lJKoGSzMnxP5kUNcHG5KrlOVeVcYjOVuoymE+Di3tWO3bKJD/blvgMmf8S
- /zsc7Eb9q5rD4iCjGpC/+Uq6WXY0Fuqv0tRH1Uw6HjLah+PeLsFafdFK1QfElPmY7WI13QVjC
- ophJMEL2/TybAHfeehYJfvAKuHfEOXr5ihLEFBiUbGJtDom3rE2V0vAyTXdLn82PNRV/KGWz/
- qxLCRAgCHKGQDo7BkxxlTHNqyTJ82etJXpJ6i65GoPo6yU/P6/+e1ks+Cl0+peKIZNeXIDLUI
- uTBTEYRIIIRP0e0CDBt7qC4mwiAD2zNUum1OEnIwJ2+UmDe91M91TZy7oHx6nX5K4RwxHEYpT
- UmiLRtbm6tDNVZVl9qYvLdiRD1jcddFgnXyhUbyCP0CjQ2LliQgWybTS14FTb2zzgVIBkL2hI
- aYkePHzxVdD6Nz56Kzj48iOD4nsJBWOdRtUeuRzFe3ZkQab5vaS7kAzTjQ4Pkd4bTzoUNyb98
- Trk6ysqB9d0NdHjbKRsWh0bc0nYsgLJhiMmDyC/qHeikRuL4tiQGim3GLe09jCunDBGRe/mAq
- SkUQjFvKJTzQA00o+KU9Zynw+GzNZujCHPFRieYO6juk2YyyAi5aMiKGO0AxuKKdWf0Jc5ZgG
- LGMXh5s3ZsDVPhQmrOOCjYjd/WedVvx3jEl62xxOBUYTAmha9adYHLNjI1KmA1auZ0aos+bXa
- PAFACDthJ91AjHEPtPSpghkuAXaqBCu9dmoxGwcvFCIyCXJTcJ+RcALOXPlkgtRlXhX3AP2bW
- 8cBU+x2p+M0GcmmnWCgm7ig7T3KJMVlvOuSx6Hj3660rScxc9/gkiWaFNvnsxfx4WQ/eLwscD
- qykznZ8vlKdjfT0DF/vS9BJnGJGMkctCwuRTgR9sjUv6U2dzkG9rrUX3gdUe/vDoWYjwHvKh+
- yUOPuaapJ14J3io1kbzQHZ2a1DF8cYyb7kisUBaFbdC7zqBG8Cv+wemJqn0VK77k0GdvxQL65
- uSAodhr4BFL2JxLMo+muQD42YHdg/M5djZtvZAD7/AFpG/gZ4F43UWn+lo1JregFKRP3A6YAD
- L/0OqlwrsnToINgiRjTTn9keUK2MXh5vZsWPj9bnUyk6Px2GFDw+DhVxH4a2oWL6TRIfOinFi
- PW3xceLQUm5rkPhf0DnPcYbZKCgoWm5HALTKTc3JB7IJXzLZtfeOS+CbDO6UvOS/2xey7kloW
- hOayCvJ5tGJuPn6b6au2zFzbxMZBdxjeVhUOXW4hZHEpHbGj2C9xx54=
-Received-SPF: pass client-ip=212.227.17.24; envelope-from=laurent@vivier.eu;
- helo=mout.kundenserver.de
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_NONE=-0.0001,
- RCVD_IN_MSPIKE_H3=-0.01, RCVD_IN_MSPIKE_WL=-0.01,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::62e;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x62e.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -127,34 +102,68 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Le 01/02/2025 à 20:36, Michael Tokarev a écrit :
-> 17.01.2025 17:05, Laurent Vivier wrote:
->> CC: qemu-stable and qemu-trivial.
->>
->> On 17/01/2025 12:17, Laurent Vivier wrote:
->>> announce_self that sends a RARP packet after migration
->>> or with announce_self QMP/HMP command doesn't work with
->>> vhost because of the vnet headers.
->>>
->>> announce_self is the only user of QEMU_NET_PACKET_FLAG_RAW and
->>> this flag is not correctly managed.
->>>
->>> This series fix a problem with this flag in filter-dump and in
->>> qemu_deliver_packet_iov().
->>>
->>> Laurent Vivier (2):
->>>    net: Fix announce_self
->>>    net/dump: Correctly compute Ethernet packet offset
+On 1/31/25 13:44, Artyom Tarasenko wrote:
+> fake access to
+> PCR Performance Control Register
+> and
+> PIC Performance Instrumentation Counter.
 > 
-> Is this one - "Correctly compute Ethernet packet offset" - needed for
-> older stable series too, like 8.2 and 7.2 (currently active ones)?
+> Ignore writes in privileged mode, and return 0 on reads.
 > 
-> Since it doesn't apply without 4b52d63249 (tap: Remove qemu_using_vnet_hdr()).
+> This allows booting Tribblix, MilaX and v9os under Niagara target.
+> 
+> Signed-off-by: Artyom Tarasenko <atar4qemu@gmail.com>
+> ---
+>   target/sparc/insns.decode |  7 ++++++-
+>   target/sparc/translate.c  | 20 ++++++++++++++++++++
+>   2 files changed, 26 insertions(+), 1 deletion(-)
+> 
+> diff --git a/target/sparc/insns.decode b/target/sparc/insns.decode
+> index 989c20b44a..504147563c 100644
+> --- a/target/sparc/insns.decode
+> +++ b/target/sparc/insns.decode
+> @@ -96,7 +96,10 @@ CALL    01 i:s30
+>       RDTICK          10 rd:5  101000 00100 0 0000000000000
+>       RDPC            10 rd:5  101000 00101 0 0000000000000
+>       RDFPRS          10 rd:5  101000 00110 0 0000000000000
+> -    RDASR17         10 rd:5  101000 10001 0 0000000000000
+> +    {
+> +      RDASR17       10 rd:5  101000 10001 0 0000000000000
+> +      RDPIC         10 rd:5  101000 10001 0 0000000000000
+> +    }
+>       RDGSR           10 rd:5  101000 10011 0 0000000000000
+>       RDSOFTINT       10 rd:5  101000 10110 0 0000000000000
+>       RDTICK_CMPR     10 rd:5  101000 10111 0 0000000000000
+> @@ -114,6 +117,8 @@ CALL    01 i:s30
+>       WRCCR           10 00010 110000 ..... . .............  @n_r_ri
+>       WRASI           10 00011 110000 ..... . .............  @n_r_ri
+>       WRFPRS          10 00110 110000 ..... . .............  @n_r_ri
+> +    WRPCR           10 10000 110000 01000 0 0000000000000
+> +    WRPIC           10 10001 110000 01000 0 0000000000000
+>       {
+>         WRGSR         10 10011 110000 ..... . .............  @n_r_ri
+>         WRPOWERDOWN   10 10011 110000 ..... . .............  @n_r_ri
+> diff --git a/target/sparc/translate.c b/target/sparc/translate.c
+> index 7e5c7351cb..285c9b0a59 100644
+> --- a/target/sparc/translate.c
+> +++ b/target/sparc/translate.c
+> @@ -2882,6 +2882,15 @@ static TCGv do_rd_leon3_config(DisasContext *dc, TCGv dst)
+>   
+>   TRANS(RDASR17, ASR17, do_rd_special, true, a->rd, do_rd_leon3_config)
+>   
+> +static TCGv do_rdpic(DisasContext *dc, TCGv dst)
+> +{
+> +    tcg_gen_movi_tl(dst, 0UL);
+> +    return dst;
+> +}
 
-It fixes 481c52320a26 ("net: Strip virtio-net header when dumping") that is only in 8.0.
-But I'm not sure the bug exists without 4b52d63249 (tap: Remove qemu_using_vnet_hdr()), so it should 
-be tested first.
+return tcg_constant_tl(0);
 
-Thanks,
-Laurent
+> +
+> +TRANS(RDPIC, HYPV, do_rd_special, true, a->rd, do_rdpic)
+
+Surely reads are not allowed in user mode.
+
+
+r~
 
