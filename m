@@ -4,104 +4,97 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1DFC0C02194
-	for <qemu-devel@archiver.kernel.org>; Sun,  2 Feb 2025 05:16:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0D7CAC0218F
+	for <qemu-devel@archiver.kernel.org>; Sun,  2 Feb 2025 11:56:49 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1teSKL-0003IL-VU; Sun, 02 Feb 2025 00:15:25 -0500
+	id 1teYZu-0002ak-1W; Sun, 02 Feb 2025 06:55:54 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <midnight@trainwit.ch>)
- id 1teSKJ-0003HM-Os; Sun, 02 Feb 2025 00:15:24 -0500
-Received: from fhigh-b4-smtp.messagingengine.com ([202.12.124.155])
+ (Exim 4.90_1) (envelope-from <mhej@vps-ovh.mhejs.net>)
+ id 1teYZm-0002aS-Rt
+ for qemu-devel@nongnu.org; Sun, 02 Feb 2025 06:55:48 -0500
+Received: from vps-ovh.mhejs.net ([145.239.82.108])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <midnight@trainwit.ch>)
- id 1teSKH-0001jK-Ib; Sun, 02 Feb 2025 00:15:23 -0500
-Received: from phl-compute-08.internal (phl-compute-08.phl.internal
- [10.202.2.48])
- by mailfhigh.stl.internal (Postfix) with ESMTP id D7BCB25400AA;
- Sun,  2 Feb 2025 00:15:19 -0500 (EST)
-Received: from phl-mailfrontend-01 ([10.202.2.162])
- by phl-compute-08.internal (MEProxy); Sun, 02 Feb 2025 00:15:20 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=trainwit.ch; h=
- cc:cc:content-transfer-encoding:content-type:date:date:from:from
- :in-reply-to:in-reply-to:message-id:mime-version:references
- :reply-to:subject:subject:to:to; s=fm2; t=1738473319; x=
- 1738559719; bh=KL4PaRWuVVuptRx33btOLrCCHbGi+MoL6PpakmHIIEQ=; b=E
- pb19CseUf5iD9pyyJOW0iD9T91uNR7YgI9fnMWCS58Tk71tcBGanYg9aNLNBSvSI
- JFCOzpjdgol0lIfDbXyyiCZvdZ38a5kmfuMDJO6zaT7qbiGoRKnCxq519mnLF5XM
- CF2epyuFY/3NezQgZfmLu0Vvo10J8+n848+wpi/XW3tITgzrCVHxVuXYlfsMUj4N
- /1UtEjH1wAO+8UyARU6Ywza4bcI8gLoN94SVz01v/YqPplX2L++OCNPBX5vIqqtM
- Lt6iX6BAwgdaCtYLOBBQAI+QCknL5zxHSu7RBdigBq6YHGNGFzCB1XxZOf5LVCq9
- CP7vfqnlOGxYZSBWC8JTg==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
- messagingengine.com; h=cc:cc:content-transfer-encoding
- :content-type:date:date:feedback-id:feedback-id:from:from
- :in-reply-to:in-reply-to:message-id:mime-version:references
- :reply-to:subject:subject:to:to:x-me-proxy:x-me-sender
- :x-me-sender:x-sasl-enc; s=fm3; t=1738473319; x=1738559719; bh=K
- L4PaRWuVVuptRx33btOLrCCHbGi+MoL6PpakmHIIEQ=; b=zegN21me9iHW4Ro6o
- y1aCnekH+fibl8aIs0KqMQCy7v/0hTha8unA7lpqSfxHeiaBm9u6Jd7iFFqTF2O/
- jP+WRKBCyLZ8m84KUjCotTz76dnuLq0m8qZVGF6mtg69DXbbw8a1cPQir6uIvRZv
- W+2FNZDOLLCs7rdBwR9WPFgp87qUksE+ybTigsMOBT84l/6zAND97PhGamrR0bM/
- Cs25OS8UHdgSdrzo3JpUkADM0WI0Us9PWkY+fNh3iMiVZGkGD4mhd89m/2WYEc7X
- /a1+MO45Ryax8S3WgbPdvQyIOgg4c6LWJR6E/dEyr/nq6xdjkvrETUV83emjji5d
- Q+w3w==
-X-ME-Sender: <xms:Zv-eZ1RLGbrjSmU_Y-XI-hm8YfxNBz4LctCerAX6OCFUtgFR13GcHA>
- <xme:Zv-eZ-ym2Idi4DvP75ki8Kmz2XNqhQ_cZ6ycI0-iF04x13PKTZsNFifw04dgGRHmH
- 9rLEN8wucrXXCYTaDA>
-X-ME-Received: <xmr:Zv-eZ61yJ_5bF7S25yG8_YStbCip2ZIKQCAW-o8cgfd2yAq-zIuDOJYzug2LKvMAjg7oRlaN1mEopdDffMNec5gYLPAWK1E>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgddufeejkecutefuodetggdotefrod
- ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpggftfghnshhusghstghrihgsvgdp
- uffrtefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivg
- hnthhsucdlqddutddtmdenucfjughrpefhvfevufffkffojghfggfgsedtkeertdertddt
- necuhfhrohhmpehjuhhlihgruceomhhiughnihhghhhtsehtrhgrihhnfihithdrtghhqe
- enucggtffrrghtthgvrhhnpeeihffggfelieegieehleeflefhkedttdelhefggfejueev
- tdehledvteekvdetkeenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrih
- hlfhhrohhmpehmihgunhhighhhthesthhrrghinhifihhtrdgthhdpnhgspghrtghpthht
- ohepledpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepqhgvmhhuqdguvghvvghlse
- hnohhnghhnuhdrohhrghdprhgtphhtthhopehlihifvghiudehudeksehgmhgrihhlrdgt
- ohhmpdhrtghpthhtohepsghmvghnghdrtghnsehgmhgrihhlrdgtohhmpdhrtghpthhtoh
- epqhgvmhhuqdhrihhstghvsehnohhnghhnuhdrohhrghdprhgtphhtthhopegusggrrhgs
- ohiirgesvhgvnhhtrghnrghmihgtrhhordgtohhmpdhrtghpthhtohepphgrlhhmvghrse
- gurggssggvlhhtrdgtohhmpdhrtghpthhtoheprghlihhsthgrihhrrdhfrhgrnhgtihhs
- seifuggtrdgtohhmpdhrtghpthhtohepiihhihifvghipghlihhusehlihhnuhigrdgrlh
- hisggrsggrrdgtohhmpdhrtghpthhtohepmhhiughnihhghhhtsehtrhgrihhnfihithdr
- tghh
-X-ME-Proxy: <xmx:Zv-eZ9CtMqoa8PSDL4B7f39uvf9KDS9j_wdp_LbHOEf41yndTwW2kA>
- <xmx:Zv-eZ-ilwNefdKyyxJ0Nf7PmGaFp58EZxzv3gKReYoilXmPoBnUpZg>
- <xmx:Zv-eZxqw25QmXrTnvfgobJcS6BIPPpVmFz4ojePi1TqE1wX9HFBITQ>
- <xmx:Zv-eZ5joVhjR62Ddcga-ntxRUqyllGHDpTGKFqmHsCH4eAYHx0ec5g>
- <xmx:Z_-eZ5PijnseJ_Ftsa8R09dLCF0CGu4urHyA8jsNMMB9JpulCC5BL-hV>
-Feedback-ID: ic5914928:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Sun,
- 2 Feb 2025 00:15:15 -0500 (EST)
-From: julia <midnight@trainwit.ch>
-To: qemu-devel@nongnu.org
-Cc: Weiwei Li <liwei1518@gmail.com>, Bin Meng <bmeng.cn@gmail.com>,
- qemu-riscv@nongnu.org, Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
- Palmer Dabbelt <palmer@dabbelt.com>,
- Alistair Francis <alistair.francis@wdc.com>,
- Liu Zhiwei <zhiwei_liu@linux.alibaba.com>, julia <midnight@trainwit.ch>
-Subject: [PATCH 1/1] target/riscv: log guest errors when reserved bits are set
- in PTEs
-Date: Sun,  2 Feb 2025 16:15:05 +1100
-Message-ID: <20250202051505.1846933-2-midnight@trainwit.ch>
-X-Mailer: git-send-email 2.47.0
-In-Reply-To: <20250202051505.1846933-1-midnight@trainwit.ch>
-References: <20250202051505.1846933-1-midnight@trainwit.ch>
+ (Exim 4.90_1) (envelope-from <mhej@vps-ovh.mhejs.net>)
+ id 1teYZk-0000zF-UC
+ for qemu-devel@nongnu.org; Sun, 02 Feb 2025 06:55:46 -0500
+Received: from MUA
+ by vps-ovh.mhejs.net with esmtpsa  (TLS1.3) tls TLS_AES_128_GCM_SHA256
+ (Exim 4.98) (envelope-from <mhej@vps-ovh.mhejs.net>)
+ id 1teYZV-00000006iPr-13FI; Sun, 02 Feb 2025 12:55:29 +0100
+Message-ID: <d3a27b10-a7a6-4aa6-97ad-9c39f49df4fc@maciej.szmigiero.name>
+Date: Sun, 2 Feb 2025 12:55:24 +0100
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=202.12.124.155; envelope-from=midnight@trainwit.ch;
- helo=fhigh-b4-smtp.messagingengine.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
-X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_PASS=-0.001,
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v4 09/33] migration: postcopy_ram_listen_thread() needs to
+ take BQL for some calls
+To: "Dr. David Alan Gilbert" <dave@treblig.org>, Peter Xu
+ <peterx@redhat.com>, Fabiano Rosas <farosas@suse.de>
+Cc: Alex Williamson <alex.williamson@redhat.com>,
+ =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>,
+ Eric Blake <eblake@redhat.com>, Markus Armbruster <armbru@redhat.com>,
+ =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
+ Avihai Horon <avihaih@nvidia.com>, Joao Martins <joao.m.martins@oracle.com>,
+ qemu-devel@nongnu.org
+References: <cover.1738171076.git.maciej.szmigiero@oracle.com>
+ <139bf266dbd1e25a1e5a050ecb82e3e59120d705.1738171076.git.maciej.szmigiero@oracle.com>
+ <Z57TPqhRYY4V14BE@gallifrey>
+Content-Language: en-US, pl-PL
+From: "Maciej S. Szmigiero" <mail@maciej.szmigiero.name>
+Autocrypt: addr=mail@maciej.szmigiero.name; keydata=
+ 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
+In-Reply-To: <Z57TPqhRYY4V14BE@gallifrey>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=145.239.82.108;
+ envelope-from=mhej@vps-ovh.mhejs.net; helo=vps-ovh.mhejs.net
+X-Spam_score_int: -17
+X-Spam_score: -1.8
+X-Spam_bar: -
+X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9,
+ HEADER_FROM_DIFFERENT_DOMAINS=0.066, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_PASS=-0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -118,91 +111,84 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-For instance, QEMUs newer than b6ecc63c569bb88c0fcadf79fb92bf4b88aefea8
-would silently treat this akin to an unmapped page (as required by the
-RISC-V spec, admittedly). However, not all hardware platforms do (e.g.
-CVA6) which leads to an apparent QEMU bug.
+On 2.02.2025 03:06, Dr. David Alan Gilbert wrote:
+> * Maciej S. Szmigiero (mail@maciej.szmigiero.name) wrote:
+>> From: "Maciej S. Szmigiero" <maciej.szmigiero@oracle.com>
+>>
+>> postcopy_ram_listen_thread() is a free running thread, so it needs to
+>> take BQL around function calls to migration methods requiring BQL.
+>>
+>> qemu_loadvm_state_main() needs BQL held since it ultimately calls
+>> "load_state" SaveVMHandlers.
+>>
+>> migration_incoming_state_destroy() needs BQL held since it ultimately calls
+>> "load_cleanup" SaveVMHandlers.
+>>
+>> Signed-off-by: Maciej S. Szmigiero <maciej.szmigiero@oracle.com>
+>> ---
+>>   migration/savevm.c | 4 ++++
+>>   1 file changed, 4 insertions(+)
+>>
+>> diff --git a/migration/savevm.c b/migration/savevm.c
+>> index b0b74140daea..0ceea9638cc1 100644
+>> --- a/migration/savevm.c
+>> +++ b/migration/savevm.c
+>> @@ -2013,7 +2013,9 @@ static void *postcopy_ram_listen_thread(void *opaque)
+>>        * in qemu_file, and thus we must be blocking now.
+>>        */
+>>       qemu_file_set_blocking(f, true);
+>> +    bql_lock();
+>>       load_res = qemu_loadvm_state_main(f, mis);
+>> +    bql_unlock();
+> 
+> Doesn't that leave that held for a heck of a long time?
 
-Instead, log a guest error so that in future, incorrectly set up page
-tables can be debugged without bisecting QEMU.
+Yes, and it effectively broke "postcopy recover" test but I
+think the reason for that is qemu_loadvm_state_main() and
+its children don't drop BQL while waiting for I/O.
 
-Signed-off-by: julia <midnight@trainwit.ch>
----
- target/riscv/cpu_helper.c | 27 ++++++++++++++++++++++++++-
- 1 file changed, 26 insertions(+), 1 deletion(-)
+I've described this case in more detail in my reply to Fabiano here:
+https://lore.kernel.org/qemu-devel/0a09e627-955e-4f26-8d08-0192ecd250a8@maciej.szmigiero.name/
 
-diff --git a/target/riscv/cpu_helper.c b/target/riscv/cpu_helper.c
-index e1dfc4ecbf..87adf16a49 100644
---- a/target/riscv/cpu_helper.c
-+++ b/target/riscv/cpu_helper.c
-@@ -1226,14 +1226,27 @@ restart:
-             ppn = pte >> PTE_PPN_SHIFT;
-         } else {
-             if (pte & PTE_RESERVED) {
-+                qemu_log_mask(LOG_GUEST_ERROR, "%s: reserved bits set in PTE: "
-+                              "addr: 0x%" HWADDR_PRIx " pte: 0x%" PRIx64 "\n",
-+                              __func__, pte_addr, pte);
-                 return TRANSLATE_FAIL;
-             }
- 
-             if (!pbmte && (pte & PTE_PBMT)) {
-+                /* Reserved without Svpbmt. */
-+                qemu_log_mask(LOG_GUEST_ERROR, "%s: PBMT bits set in PTE, "
-+                              "and Svpbmt extension is disabled: "
-+                              "addr: 0x%" HWADDR_PRIx " pte: 0x%" PRIx64 "\n",
-+                              __func__, pte_addr, pte);
-                 return TRANSLATE_FAIL;
-             }
- 
-             if (!riscv_cpu_cfg(env)->ext_svnapot && (pte & PTE_N)) {
-+                /* Reserved without Svnapot extension */
-+                qemu_log_mask(LOG_GUEST_ERROR, "%s: N bit set in PTE, "
-+                              "and Svnapot extension is disabled: "
-+                              "addr: 0x%" HWADDR_PRIx " pte: 0x%" PRIx64 "\n",
-+                              __func__, pte_addr, pte);
-                 return TRANSLATE_FAIL;
-             }
- 
-@@ -1244,14 +1257,19 @@ restart:
-             /* Invalid PTE */
-             return TRANSLATE_FAIL;
-         }
-+
-         if (pte & (PTE_R | PTE_W | PTE_X)) {
-             goto leaf;
-         }
- 
--        /* Inner PTE, continue walking */
-         if (pte & (PTE_D | PTE_A | PTE_U | PTE_ATTR)) {
-+            /* D, A, and U bits are reserved in non-leaf/inner PTEs */
-+            qemu_log_mask(LOG_GUEST_ERROR, "%s: D, A, or U bits set in non-leaf PTE: "
-+                          "addr: 0x%" HWADDR_PRIx " pte: 0x%" PRIx64 "\n",
-+                          __func__, pte_addr, pte);
-             return TRANSLATE_FAIL;
-         }
-+        /* Inner PTE, continue walking */
-         base = ppn << PGSHIFT;
-     }
- 
-@@ -1261,10 +1279,17 @@ restart:
-  leaf:
-     if (ppn & ((1ULL << ptshift) - 1)) {
-         /* Misaligned PPN */
-+        qemu_log_mask(LOG_GUEST_ERROR, "%s: PPN bits in PTE is misaligned: "
-+                      "addr: 0x%" HWADDR_PRIx " pte: 0x%" PRIx64 "\n",
-+                      __func__, pte_addr, pte);
-         return TRANSLATE_FAIL;
-     }
-     if (!pbmte && (pte & PTE_PBMT)) {
-         /* Reserved without Svpbmt. */
-+        qemu_log_mask(LOG_GUEST_ERROR, "%s: PBMT bits set in PTE, "
-+                      "and Svpbmt extension is disabled: "
-+                      "addr: 0x%" HWADDR_PRIx " pte: 0x%" PRIx64 "\n",
-+                      __func__, pte_addr, pte);
-         return TRANSLATE_FAIL;
-     }
- 
--- 
-2.47.0
+I still think that "load_state" SaveVMHandlers need to be called
+with BQL held since implementations apparently expect it that way:
+for example, I think PCI device configuration restore calls
+address space manipulation methods which abort() if called
+without BQL held.
+
+I have previously even submitted a patch to explicitly document
+"load_state" SaveVMHandler as requiring BQL (which was also
+included in the previous version of this patch set) and it
+received a "Reviewed-by:" tag:
+https://lore.kernel.org/qemu-devel/6976f129df610c8207da4e531c8c0475ec204fa4.1730203967.git.maciej.szmigiero@oracle.com/
+https://lore.kernel.org/qemu-devel/e1949839932efaa531e2fe63ac13324e5787439c.1731773021.git.maciej.szmigiero@oracle.com/
+https://lore.kernel.org/qemu-devel/87o732bti7.fsf@suse.de/
+
+It's also worth noting that COLO equivalent of postcopy
+incoming thread (colo_process_incoming_thread()) explicitly
+takes BQL around qemu_loadvm_state_main():
+>     bql_lock();
+>     cpu_synchronize_all_states();
+>     ret = qemu_loadvm_state_main(mis->from_src_file, mis);
+>     bql_unlock();
+
+
+> That RAM loading has to happen in parallel with the loading of
+> devices doesn't it - especially if one of the devices
+> being loaded touches RAM.
+> 
+> (I wish this series had a description in the cover letter!)
+
+I guess you mean "more detailed description" since there's
+a paragraph about this patch in this series cover letter change log:
+> * postcopy_ram_listen_thread() now takes BQL around function calls that
+> ultimately call migration methods requiring BQL.
+> This fixes one of QEMU tests failing when explicitly BQL-sensitive code
+> is added later to these methods.
+
+> Dave
+
+Thanks,
+Maciej
 
 
