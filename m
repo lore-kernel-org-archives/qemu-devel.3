@@ -4,43 +4,43 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C2B9AC02194
-	for <qemu-devel@archiver.kernel.org>; Sun,  2 Feb 2025 23:28:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id AF9A4C02195
+	for <qemu-devel@archiver.kernel.org>; Sun,  2 Feb 2025 23:28:37 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tejNZ-0003Fd-FF; Sun, 02 Feb 2025 18:27:53 -0500
+	id 1tejNC-0002hJ-DV; Sun, 02 Feb 2025 18:27:30 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <dmitry.osipenko@collabora.com>)
- id 1tejNO-00032I-PX
- for qemu-devel@nongnu.org; Sun, 02 Feb 2025 18:27:45 -0500
+ id 1tejN8-0002go-E0
+ for qemu-devel@nongnu.org; Sun, 02 Feb 2025 18:27:26 -0500
 Received: from sender4-pp-f112.zoho.com ([136.143.188.112])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <dmitry.osipenko@collabora.com>)
- id 1tejNN-0003X3-0t
- for qemu-devel@nongnu.org; Sun, 02 Feb 2025 18:27:42 -0500
-ARC-Seal: i=1; a=rsa-sha256; t=1738538847; cv=none; 
+ id 1tejN6-0003W4-Op
+ for qemu-devel@nongnu.org; Sun, 02 Feb 2025 18:27:26 -0500
+ARC-Seal: i=1; a=rsa-sha256; t=1738538831; cv=none; 
  d=zohomail.com; s=zohoarc; 
- b=UiroQZBeuE9zd/dO9vhlDk5dIz6AkMGZ4x6CXwtJY1x3tGlF6ODGEGfuR8g6QXLqZjVZSGDjmgB1AyLm2hURCd0hTYA8MLspQXIUBbnnW2X/roXk9v06kYX3iCPB+a2xfcaamjffoS+tLMqjNKN9TOphZOlmxhD1gnziF3Fj5u0=
+ b=kTTVdRiLHt8pfHA9UQQi6GB7ga5E5FKQxn3nyaomuEY6Tsdyvoh7kx5ls6Kwjjlh+rz0Jm+flvwiy0XFSEgxx4iUBUxsFkvWA39LUkNmCouMzwq/VE2lJcRxKIUstxdcwKrLSdncNsN/NhiBlhNzefP/8pm4nolEERuwV/jkBVA=
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=zohomail.com;
- s=zohoarc; t=1738538847;
- h=Content-Transfer-Encoding:Cc:Cc:Date:Date:From:From:In-Reply-To:MIME-Version:Message-ID:References:Subject:Subject:To:To:Message-Id:Reply-To;
- bh=zLI3qXwaXKTykWVi8Ns4VL2KGXxkbjbjmoX14lvBsJw=; 
- b=EQM0IHvgbFRr4ClV+dOek5l7YwPW4O347UG+fbW/xgdgerWEup+vlzSjOxLUK0sSk524YNciIn7HnwKgA4Xy1isLP8w58pzwuHz5Yud6/5jvwm5bp07pqvia77M83earM0SB+Dh/aezrLpToRKira2ZjCynUrJ8K0+koFmDlRlE=
+ s=zohoarc; t=1738538831;
+ h=Content-Type:Content-Transfer-Encoding:Cc:Cc:Date:Date:From:From:In-Reply-To:MIME-Version:Message-ID:References:Subject:Subject:To:To:Message-Id:Reply-To;
+ bh=JdP4YWY7n3U2S/2mCBWn6cTil4e3J2qjOIHIQxm4Wqk=; 
+ b=gLVBvNKdkPISx817rnioDwVcKpdJfYtaEpKeJdhNv+KazbFXn+KK32a9bgBYsdKpCw1IYWhCWG6jOGv30s3BEtS3bpzqmdTYwK22vk4h+hJsYSuBXCYzfM44Q4iRhtje7R/28zyLcgSL/MAry7Wq8C3+X+5/Z1b6m737WbpSwSw=
 ARC-Authentication-Results: i=1; mx.zohomail.com;
  dkim=pass  header.i=collabora.com;
  spf=pass  smtp.mailfrom=dmitry.osipenko@collabora.com;
  dmarc=pass header.from=<dmitry.osipenko@collabora.com>
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; t=1738538847; 
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; t=1738538831; 
  s=zohomail; d=collabora.com; i=dmitry.osipenko@collabora.com; 
- h=From:From:To:To:Cc:Cc:Subject:Subject:Date:Date:Message-ID:In-Reply-To:References:MIME-Version:Content-Transfer-Encoding:Message-Id:Reply-To;
- bh=zLI3qXwaXKTykWVi8Ns4VL2KGXxkbjbjmoX14lvBsJw=;
- b=jVgQcbF+SLNwm+ORrJxojBdlV1ugahsaJ3iH+Hdl1HzBQvuFrbgwQzqem1Xii0bO
- TK4tK0ZtXl4CfEHSA1h0oWZo8dW/KDdtt5NMcqv/6WGEkzTMaDoT+LJoHg/xgeOgeBG
- 4ZIb8GJTJVctQu4V3hJ7Hf1sZQpSGkrydQwUkYuU=
-Received: by mx.zohomail.com with SMTPS id 1738538841303396.32918375314944;
- Sun, 2 Feb 2025 15:27:21 -0800 (PST)
+ h=From:From:To:To:Cc:Cc:Subject:Subject:Date:Date:Message-ID:In-Reply-To:References:MIME-Version:Content-Type:Content-Transfer-Encoding:Message-Id:Reply-To;
+ bh=JdP4YWY7n3U2S/2mCBWn6cTil4e3J2qjOIHIQxm4Wqk=;
+ b=fE61p0g8v+MIAndv11W/4qAnGgzFZMOKE308aPxClf/cSv8GujmsZjyrgyprRP5/
+ TrJiAaKEPnCTG0052MxCrAiM0m/OFmULyH07+Es0POYeo1mogxw2HuIfzAKb6gLGzeB
+ EN9nGh11VDMILwmZr4re266LWmxmnnRNIfzvktDM=
+Received: by mx.zohomail.com with SMTPS id 1738538826088701.3040606233654;
+ Sun, 2 Feb 2025 15:27:06 -0800 (PST)
 From: Dmitry Osipenko <dmitry.osipenko@collabora.com>
 To: Akihiko Odaki <akihiko.odaki@daynix.com>, Huang Rui <ray.huang@amd.com>,
  =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
@@ -59,13 +59,15 @@ Cc: Gert Wollny <gert.wollny@collabora.com>, qemu-devel@nongnu.org,
  Honglei Huang <honglei1.huang@amd.com>, Julia Zhang <julia.zhang@amd.com>,
  Chen Jiqian <Jiqian.Chen@amd.com>, Rob Clark <robdclark@gmail.com>,
  Yiwei Zhang <zzyiwei@chromium.org>, Sergio Lopez Pascual <slp@redhat.com>
-Subject: [PATCH v7 08/10] docs/system: virtio-gpu: Add link to Mesa VirGL doc
-Date: Mon,  3 Feb 2025 02:21:34 +0300
-Message-ID: <20250202232136.919342-9-dmitry.osipenko@collabora.com>
+Subject: [PATCH v7 06/10] ui/sdl2: Don't disable scanout when display is
+ refreshed
+Date: Mon,  3 Feb 2025 02:21:32 +0300
+Message-ID: <20250202232136.919342-7-dmitry.osipenko@collabora.com>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20250202232136.919342-1-dmitry.osipenko@collabora.com>
 References: <20250202232136.919342-1-dmitry.osipenko@collabora.com>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 X-ZohoMailClient: External
 Received-SPF: pass client-ip=136.143.188.112;
@@ -93,36 +95,34 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Extend virtio-gpu documentation with a link to the Mesa VirGL
-documentation.
+Display refreshment is invoked by a timer and it erroneously disables
+the active scanout if it happens to be invoked after scanout has been
+enabled. This offending scanout-disable race condition with a timer
+can be easily hit when Qemu runs with a disabled vsync by using SDL or
+GTK displays (with vblank_mode=0 for GTK). Refreshment of display's
+content shouldn't disable the active display. Fix it by keeping the
+scanout's state unchanged when display is redrawn.
 
-Suggested-by: Akihiko Odaki <akihiko.odaki@daynix.com>
+Reviewed-by: Akihiko Odaki <akihiko.odaki@daynix.com>
+Acked-by: Michael S. Tsirkin <mst@redhat.com>
+Tested-by: Alex Bennée <alex.bennee@linaro.org>
 Signed-off-by: Dmitry Osipenko <dmitry.osipenko@collabora.com>
 ---
- docs/system/devices/virtio-gpu.rst | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ ui/sdl2-gl.c | 1 -
+ 1 file changed, 1 deletion(-)
 
-diff --git a/docs/system/devices/virtio-gpu.rst b/docs/system/devices/virtio-gpu.rst
-index f20c60016376..f8963c1f13cf 100644
---- a/docs/system/devices/virtio-gpu.rst
-+++ b/docs/system/devices/virtio-gpu.rst
-@@ -59,7 +59,7 @@ on typical modern Linux distributions.
- virtio-gpu virglrenderer
- ------------------------
+diff --git a/ui/sdl2-gl.c b/ui/sdl2-gl.c
+index 8d53e340d40d..31f8fbe03286 100644
+--- a/ui/sdl2-gl.c
++++ b/ui/sdl2-gl.c
+@@ -53,7 +53,6 @@ static void sdl2_gl_render_surface(struct sdl2_console *scon)
+     int ww, wh;
  
--When using virgl accelerated graphics mode in the guest, OpenGL API calls
-+When using `virgl`_ accelerated graphics mode in the guest, OpenGL API calls
- are translated into an intermediate representation (see `Gallium3D`_). The
- intermediate representation is communicated to the host and the
- `virglrenderer`_ library on the host translates the intermediate
-@@ -68,6 +68,7 @@ representation back to OpenGL API calls.
- .. parsed-literal::
-     -device virtio-gpu-gl
+     SDL_GL_MakeCurrent(scon->real_window, scon->winctx);
+-    sdl2_set_scanout_mode(scon, false);
  
-+.. _virgl: https://docs.mesa3d.org/drivers/virgl.html
- .. _Gallium3D: https://www.freedesktop.org/wiki/Software/gallium/
- .. _virglrenderer: https://gitlab.freedesktop.org/virgl/virglrenderer/
- 
+     SDL_GetWindowSize(scon->real_window, &ww, &wh);
+     surface_gl_setup_viewport(scon->gls, scon->surface, ww, wh);
 -- 
 2.47.1
 
