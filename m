@@ -4,83 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D86D5C0218F
-	for <qemu-devel@archiver.kernel.org>; Sun,  2 Feb 2025 16:50:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C954BC0218F
+	for <qemu-devel@archiver.kernel.org>; Sun,  2 Feb 2025 16:52:03 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tedAq-0004GQ-Bk; Sun, 02 Feb 2025 11:50:20 -0500
+	id 1tedBx-0004d6-BQ; Sun, 02 Feb 2025 11:51:31 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1tedAn-0004Et-4L
- for qemu-devel@nongnu.org; Sun, 02 Feb 2025 11:50:17 -0500
-Received: from mail-pl1-x629.google.com ([2607:f8b0:4864:20::629])
+ id 1tedBc-0004Yc-I4
+ for qemu-devel@nongnu.org; Sun, 02 Feb 2025 11:51:09 -0500
+Received: from mail-pl1-x62d.google.com ([2607:f8b0:4864:20::62d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1tedAl-0006z1-Bz
- for qemu-devel@nongnu.org; Sun, 02 Feb 2025 11:50:16 -0500
-Received: by mail-pl1-x629.google.com with SMTP id
- d9443c01a7336-216728b1836so58451685ad.0
- for <qemu-devel@nongnu.org>; Sun, 02 Feb 2025 08:50:14 -0800 (PST)
+ id 1tedBa-00070W-WE
+ for qemu-devel@nongnu.org; Sun, 02 Feb 2025 11:51:08 -0500
+Received: by mail-pl1-x62d.google.com with SMTP id
+ d9443c01a7336-2163b0c09afso60522905ad.0
+ for <qemu-devel@nongnu.org>; Sun, 02 Feb 2025 08:51:06 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1738515014; x=1739119814; darn=nongnu.org;
+ d=linaro.org; s=google; t=1738515065; x=1739119865; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:to:subject:user-agent:mime-version:date:message-id:from
  :to:cc:subject:date:message-id:reply-to;
- bh=LfWR6CCUkfvwBhowYkTquNCMryS0fJ3GxILx53oTXlk=;
- b=CmlKM1DpFO7kToZbrhP81roILtdVnIXalO+8vQqg+6V3OqXyu/wJDuTW+pklPCxOyq
- Bb9Z4s4dSlvMCqCeeVmLtwaK08CzY0u7Ne2OIhtt+a1BHGechwCQuNy9en0dU1Egcg5t
- 9ezwv63iajBheFrI8LMxXwt+wzA1BAdSVtOiPAYsTR3p13rT29l673qz4zXkOrj9kcZJ
- WoIR5DYy1BGpmeVktnFvQ9y1bm0tk2cmrNBa3nSfjjdTC9gzs7bBtqs2aIgI/rqqG1L7
- kfn008rzszkSpBb/Q6BtkZgclcppkLIzZF2V/v9mZCkoPkB6n1N/rDIm3Bkq/KkdN2Jm
- lqXQ==
+ bh=hnFIu1VcGXuuuNoKPGv510zEbWbGUUZQhEJ0NAhaT4E=;
+ b=gdEpioW9EeP2haJpm3eI2Vuc51CA8/gNViS12qTzA1b3ZWqQdAXNT/gBf6fHwBW+Xz
+ zPqtmciTY+1WiccO2jWEt/Q9Yk1TXyBYMuW3pNQuR0E8n6ad6AX3WTOe3EUOPC5d9bKP
+ WQx8PxH+xu55kAWczi/RuDDXP1ZjF4dFCv7maBNpVFban6ucGDvzTKHBsaUSlBCWElj0
+ 9dfXLMv11pJ58BSTmOYsCGG/YmpH+5xTsikAEbB23xYYQmMgjH6t65c+ZL07KGmpeTb9
+ kJ35b0EgRFQ/kjZv1P254xnLYQenH9uQbpnymT1Or3jchIzE75Rvgx6u6hyIYO2MeiWx
+ sp0w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1738515014; x=1739119814;
+ d=1e100.net; s=20230601; t=1738515065; x=1739119865;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=LfWR6CCUkfvwBhowYkTquNCMryS0fJ3GxILx53oTXlk=;
- b=oZwDORjaM+juWm6bZCYwK+1CrkegQnSuOE23G5oTOLS5cDGvlYKOiZ5QM2VigFmA/Q
- HYyvBNpO6stQKKsoozeUYO7zPRu44PoRF1CGqVEqKS1EqGyJciVk6MvCCXKGnGbTlVls
- fxYZFfJvvQa3HYvTfj9LRIcFKOxHo6UYBlWWhSDDZWRf10IwCOCChSNCM5AzIU4csCk0
- YEn6GIpt27TrG6C2jPz0gn4DYMZwq/omXmJ98WxB7lsdvbafLP41XXzqjtQxzfo+iXlc
- ClLgXee5HK1mqM6P+kbehd8ScmgH5WmUfhi2OQ4YCGpm8mNLZjkgu6LDPVbhqydWD5jY
- P71A==
-X-Gm-Message-State: AOJu0YxU1lpnaz6q6to6JcVJDiaWxAQVKomS1RH60RWusPl3v0f0xd1L
- Umkp+tka9vaSbh5g3hYugKjAkxl/8ykEzQguSlKj53fIchqxryDLU+a24jz6WHyp5Z7hAi0geZw
- j
-X-Gm-Gg: ASbGncs4SMznZ+zfdgSCtLvg63jkc6ny2H3sjdzYWIvF1qWOypeWDwm/VUDerq+jAqC
- 1MGrYfY+CTcp6Sc3yPSaL4Xm8L/3xODgAzTY5Tn6Ii1gtYkx+CMnQp8O8d+BZtA5lIjxxIdelIB
- OUDSb8DJNiF9dvvVliMzGljP6mQ/bwjaB9fZGkZNv4W7U1Q3Rpir4HPQOhAoZFs81rPFRB2vnuO
- rk1fk9Qp9acFqGv++67MTAIHkis7nXanoPHbib/ZkRAkPlU7sqYgrb7Nhz9MZ/EGul3yKXx+fhH
- 8tmx+hV+i22DI67KpFwsq0pVTP4/texTqjomjjAFxnHk0Do5E0tneHc=
-X-Google-Smtp-Source: AGHT+IHjDsWKL3ijKU2EFd3fWxErFgbCnyfqRjsGf0lJEgyUYi9WDNxND/mlPt3EpfNHQ+hXA07EqQ==
-X-Received: by 2002:a17:902:cece:b0:216:282d:c69b with SMTP id
- d9443c01a7336-21dd7dd8116mr286888405ad.50.1738515013687; 
- Sun, 02 Feb 2025 08:50:13 -0800 (PST)
+ bh=hnFIu1VcGXuuuNoKPGv510zEbWbGUUZQhEJ0NAhaT4E=;
+ b=ujkasV/aykved3qCTebMVRhxa1rlY5tB9XQP6TLyu0BlbkciUJm0nB/i1Z4aYe/ziJ
+ URl9bqq+oGaJ707cXraaJyEifN+0w/sE+Ra4s1mfgjrv7Quw+7dHazWeLjV0iIbNtACi
+ B/+FTdiJAURDlr1lphrNab07OQQqOiXPfzRoDXA0cfCZaRVedan9LUsL6j2u1Pxfpe/7
+ f9Zj4jg6oZp9Gp6nq/KrkvxKEPo6fq5ZbHBzhvP46uXa6JfQ8wnsvib7sYbI0Gy3xGM7
+ 5oEMzhTVkzLpvbLLhYZzwNZqRsCjQ0kzcGSZCSaMNUmlMMI/Ta85D9zDXrb2WemZ9PBM
+ UVUQ==
+X-Gm-Message-State: AOJu0YwtqgXpAhfJVN5l0JwF+3W0qfow5OOaq2BIxWfjA05hMmiDtJxJ
+ V8QulOJzoGk09SfHLAo15PQeEoGxES5aQOjjzre9Q8EyeCREa7852qIZ6E4WdDHHxc0mk9WrBIP
+ X
+X-Gm-Gg: ASbGncuL8oQ7bOvelRCuUc9M/823rr+iD4xga+ITaunGA3NzYqUUbkRx8EKlXDX/5RZ
+ wMVzO3M3wHFjmlB7i/i5JUaGdnOSU0AZb2TiKwx4gDFl7VSwrnEkUc9JTtWd3Mt4I1tvps75+ps
+ KH/Q6f3B97aS4JO47rgT7hWlUcPbPfx3tcCeMyovPEaoXUUcEyw2toaI0D0NiPEeHxFl0L+lg3Q
+ sQ7AXoc8sewnrg9dCXD8DckxeZ3JCTakdVryV7r/mIK7qW3MFbVPVKCHP8XkOGhmY5EM3aWRMYY
+ 2BnDG0WQMkW14uoqvq9T+haba1qYTSamDXg0+lSOW19B+gy3xWMUKno=
+X-Google-Smtp-Source: AGHT+IHI3zFycM497sNtdK+L6vLbtmphOOvP4gn3TSh91XCf1TfwUmCi+BuAmgpsBc3iEggyl6gtSQ==
+X-Received: by 2002:a05:6a00:ac8:b0:72d:4d77:ccc with SMTP id
+ d2e1a72fcca58-72fd0bf3b70mr26315099b3a.6.1738515065083; 
+ Sun, 02 Feb 2025 08:51:05 -0800 (PST)
 Received: from [192.168.0.4] (71-212-39-66.tukw.qwest.net. [71.212.39.66])
  by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-2f8489aefc4sm7244647a91.12.2025.02.02.08.50.13
+ d2e1a72fcca58-72fe69cf267sm6929956b3a.147.2025.02.02.08.51.04
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Sun, 02 Feb 2025 08:50:13 -0800 (PST)
-Message-ID: <f912995b-9fdd-4177-b86b-5eb6b5ef03ac@linaro.org>
-Date: Sun, 2 Feb 2025 08:50:12 -0800
+ Sun, 02 Feb 2025 08:51:04 -0800 (PST)
+Message-ID: <281a6120-d7e4-4607-87ba-9594b5c9c22f@linaro.org>
+Date: Sun, 2 Feb 2025 08:51:03 -0800
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 05/69] fpu: allow flushing of output denormals to be
- after rounding
+Subject: Re: [PATCH v2 06/69] target/arm: Define FPCR AH, FIZ, NEP bits
 To: qemu-devel@nongnu.org
 References: <20250201164012.1660228-1-peter.maydell@linaro.org>
- <20250201164012.1660228-6-peter.maydell@linaro.org>
+ <20250201164012.1660228-7-peter.maydell@linaro.org>
 Content-Language: en-US
 From: Richard Henderson <richard.henderson@linaro.org>
-In-Reply-To: <20250201164012.1660228-6-peter.maydell@linaro.org>
+In-Reply-To: <20250201164012.1660228-7-peter.maydell@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::629;
- envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x629.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::62d;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x62d.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -104,60 +103,35 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 2/1/25 08:39, Peter Maydell wrote:
-> Currently we handle flushing of output denormals in uncanon_normal
-> always before we deal with rounding.  This works for architectures
-> that detect tininess before rounding, but is usually not the right
-> place when the architecture detects tininess after rounding.  For
-> example, for x86 the SDM states that the MXCSR FTZ control bit causes
-> outputs to be flushed to zero "when it detects a floating-point
-> underflow condition".  This means that we mustn't flush to zero if
-> the input is such that after rounding it is no longer tiny.
+> The Armv8.7 FEAT_AFP feature defines three new control bits in
+> the FPCR:
+>   * FPCR.AH: "alternate floating point mode"; this changes floating
+>     point behaviour in a variety of ways, including:
+>      - the sign of a default NaN is 1, not 0
+>      - if FPCR.FZ is also 1, denormals detected after rounding
+>        with an unbounded exponent has been applied are flushed to zero
+>      - FPCR.FZ does not cause denormalized inputs to be flushed to zero
+>      - miscellaneous other corner-case behaviour changes
+>   * FPCR.FIZ: flush denormalized numbers to zero on input for
+>     most instructions
+>   * FPCR.NEP: makes scalar SIMD operations merge the result with
+>     higher vector elements in one of the source registers, instead
+>     of zeroing the higher elements of the destination
 > 
-> At least one of our guest architectures does underflow detection
-> after rounding but flushing of denormals before rounding (MIPS MSA);
-> this means we need to have a config knob for this that is separate
-> from our existing tininess_before_rounding setting.
+> This commit defines the new bits in the FPCR, and allows them to be
+> read or written when FEAT_AFP is implemented.  Actual behaviour
+> changes will be implemented in subsequent commits.
 > 
-> Add an ftz_detection flag.  For consistency with
-> tininess_before_rounding, we make it default to "detect ftz after
-> rounding"; this means that we need to explicitly set the flag to
-> "detect ftz before rounding" on every existing architecture that sets
-> flush_to_zero, so that this commit has no behaviour change.
-> (This means more code change here but for the long term a less
-> confusing API.)
-> 
-> For several architectures the current behaviour is either
-> definitely or possibly wrong; annotate those with TODO comments.
-> These architectures are definitely wrong (and should detect
-> ftz after rounding):
->   * x86
->   * Alpha
-> 
-> For these architectures the spec is unclear:
->   * MIPS (for non-MSA)
->   * RX
->   * SH4
-> 
-> PA-RISC makes ftz detection IMPDEF, but we aren't setting the
-> "tininess before rounding" setting that we ought to.
+> Note that these are the first FPCR bits which don't appear in the
+> AArch32 FPSCR view of the register, and which share bit positions
+> with FPSR bits.
 > 
 > Signed-off-by: Peter Maydell<peter.maydell@linaro.org>
 > ---
->   include/fpu/softfloat-helpers.h | 11 +++++++++++
->   include/fpu/softfloat-types.h   | 18 ++++++++++++++++++
->   target/mips/fpu_helper.h        |  6 ++++++
->   target/alpha/cpu.c              |  7 +++++++
->   target/arm/cpu.c                |  1 +
->   target/hppa/fpu_helper.c        | 11 +++++++++++
->   target/i386/tcg/fpu_helper.c    |  8 ++++++++
->   target/mips/msa.c               |  9 +++++++++
->   target/ppc/cpu_init.c           |  3 +++
->   target/rx/cpu.c                 |  8 ++++++++
->   target/sh4/cpu.c                |  8 ++++++++
->   target/tricore/helper.c         |  1 +
->   tests/fp/fp-bench.c             |  1 +
->   fpu/softfloat-parts.c.inc       | 21 +++++++++++++++------
->   14 files changed, 107 insertions(+), 6 deletions(-)
+>   target/arm/cpu-features.h |  5 +++++
+>   target/arm/cpu.h          |  3 +++
+>   target/arm/vfp_helper.c   | 11 ++++++++---
+>   3 files changed, 16 insertions(+), 3 deletions(-)
 
 Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 
