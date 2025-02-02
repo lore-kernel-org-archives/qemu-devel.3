@@ -4,90 +4,114 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 19642C02190
-	for <qemu-devel@archiver.kernel.org>; Sun,  2 Feb 2025 17:18:19 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 49919C0218F
+	for <qemu-devel@archiver.kernel.org>; Sun,  2 Feb 2025 17:30:07 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tedbE-0007S8-4O; Sun, 02 Feb 2025 12:17:36 -0500
+	id 1tedmN-0001IT-Mz; Sun, 02 Feb 2025 12:29:07 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1tedbC-0007Rt-Ma
- for qemu-devel@nongnu.org; Sun, 02 Feb 2025 12:17:34 -0500
-Received: from mail-pl1-x62b.google.com ([2607:f8b0:4864:20::62b])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1tedbB-00026P-6l
- for qemu-devel@nongnu.org; Sun, 02 Feb 2025 12:17:34 -0500
-Received: by mail-pl1-x62b.google.com with SMTP id
- d9443c01a7336-218c8aca5f1so67856695ad.0
- for <qemu-devel@nongnu.org>; Sun, 02 Feb 2025 09:17:32 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1738516651; x=1739121451; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:to:subject:user-agent:mime-version:date:message-id:from
- :to:cc:subject:date:message-id:reply-to;
- bh=mmv2kD/e59NDsf8Ka78HSOPcycVyc5ffIZlOrlAJH38=;
- b=bbegqnIOwSxWLl0EfzHQhYMFMT/TiX+FRAHzeowLBx+r9w46JqiVtzqp47ggsGTvRj
- ML/IUoRYrlUFpDi/gwonDtzfrLm7HOU1MwM3mtGo5/24j/7HHvfs8ozrRD4W5mEZF2O0
- k2bPwWJd0uSprxOh6n6ioCNdUuKA4ZqrGLGsqEeIiGhmTUz03bKxm6mv/3j2cp2iLtTR
- LOz2dip/tgMnNf2jf+lxjGE9JJvvmPaVXXeF0K5ROJx2CRcNO9euBAFeQIHTo0JMEbs5
- 7ol2M9Oafiogi/Rp8L8QSb6eIRxRZHLFHvRfLWI/5vUXk7qliY//cf6xs6xaYKknwZFP
- vZsA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1738516651; x=1739121451;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=mmv2kD/e59NDsf8Ka78HSOPcycVyc5ffIZlOrlAJH38=;
- b=q6VQtYQLe6Xg1xzdD+3B7EsJA62373b5G7FWi6GXgOZFXfGPH0doc/cgTeJhxgnXWE
- F07ZfWI1MNbVLk74ad3qRW3vHV57v4UXPL9orpdehxU/OlZ3xl1zqSBWWqFAj/26jEB6
- TIGY4o7QTlr69NW5yuW+PMx65wGEylh7XRj0FCzyHdei7mQWaJe4rXRtCxisOfWJ9EIb
- lfnKPQHfMJFl/LHRSIji27Lq/UMri+kqSFk+8fSw7yOnHYGa4fJbPm4vxI8Lv8M7sBVS
- RdUubkZyvJPn2nJUeGTQ7sAYAgMA3KNCqJHoLRz8x6ZjTiVaCN5oQpxK5P84sope6dUX
- WkNQ==
-X-Gm-Message-State: AOJu0YzyrXeKoqfn6H8Ma4YqSQx5z9I2w3bQTbQUgKw3qCVQr+kvM6rK
- t/ssaKMRjLL2VE6wHxTg0kSL6bpC0IPvVcgYRhMO+6B291YeVjDM1AUFzicSv5bgvdDOdmfsm0Y
- v
-X-Gm-Gg: ASbGncvTRP0pbISdAUfPGTdjq/Z31B9k5I/m5PK8EQ26bq4JEtOPiANHrXJI26j7DcI
- 6EI+bRT39GrGiS2Kv8kQLCVrWZePdyIwuexZ3zSeFrmcFTnzF2VW97YrmF+xR+HvlMmxYGAkjgV
- ImQ0T/y2VZmx+Ac6X2v7ZzMj3kmLhdaEiaZjZcf9bQBf/Wpp26M6X0z+qcuNKRbbN6ORc+/GqYa
- /LlWI4KrgeCPoTR4YqubSmetzdzPVC9IbkmNAXTfabYy8x16c4UYgpX2lONS7rWBXZfFcm5dqDg
- 5Mrym0+SBm1QgKURYfS9Pvn7HWllRBKeNuEhuZYDi06YVGZwTcNarR0=
-X-Google-Smtp-Source: AGHT+IEn4VMQxKoE+BllIIiyTNJ81AFx0WWsyvCLdzt3FDNEuuYVfKoHZ5K4MwbPosr28KKryHr90A==
-X-Received: by 2002:a17:902:f547:b0:216:31aa:12fc with SMTP id
- d9443c01a7336-21dd7d78f90mr326497815ad.24.1738516651468; 
- Sun, 02 Feb 2025 09:17:31 -0800 (PST)
-Received: from [192.168.0.4] (71-212-39-66.tukw.qwest.net. [71.212.39.66])
- by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-21de31ee753sm60673685ad.3.2025.02.02.09.17.30
- for <qemu-devel@nongnu.org>
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Sun, 02 Feb 2025 09:17:30 -0800 (PST)
-Message-ID: <f5855412-571e-4138-a7f2-53d8b3517c82@linaro.org>
-Date: Sun, 2 Feb 2025 09:17:29 -0800
+ (Exim 4.90_1) (envelope-from <laurent@vivier.eu>)
+ id 1tedmL-0001I0-2F; Sun, 02 Feb 2025 12:29:05 -0500
+Received: from mout.kundenserver.de ([212.227.17.24])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <laurent@vivier.eu>)
+ id 1tedmJ-0003GG-Ia; Sun, 02 Feb 2025 12:29:04 -0500
+Received: from [192.168.100.1] ([82.64.211.94]) by mrelayeu.kundenserver.de
+ (mreue108 [213.165.67.119]) with ESMTPSA (Nemesis) id
+ 1MulyX-1tM93Q0S9b-00zzlA; Sun, 02 Feb 2025 18:28:59 +0100
+Message-ID: <b713bd1a-0cd6-4b30-8ba7-daaa829bfe28@vivier.eu>
+Date: Sun, 2 Feb 2025 18:28:57 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 37/69] target/arm: Handle FPCR.AH in negation steps in
- SVE FCADD
-To: qemu-devel@nongnu.org
-References: <20250201164012.1660228-1-peter.maydell@linaro.org>
- <20250201164012.1660228-38-peter.maydell@linaro.org>
-Content-Language: en-US
-From: Richard Henderson <richard.henderson@linaro.org>
-In-Reply-To: <20250201164012.1660228-38-peter.maydell@linaro.org>
+Subject: Re: [PATCH 0/2] net: Fix announce_self with vhost
+To: Michael Tokarev <mjt@tls.msk.ru>, Laurent Vivier <lvivier@redhat.com>,
+ qemu-devel@nongnu.org
+Cc: Jason Wang <jasowang@redhat.com>, QEMU Trivial <qemu-trivial@nongnu.org>, 
+ qemu-stable@nongnu.org
+References: <20250117111709.970789-1-lvivier@redhat.com>
+ <fee03f11-bcf5-4586-abc1-2d38ce6a7f9c@redhat.com>
+ <9080590d-d823-473e-833e-d726490f1b18@tls.msk.ru>
+Content-Language: fr
+From: Laurent Vivier <laurent@vivier.eu>
+Autocrypt: addr=laurent@vivier.eu; keydata=
+ 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
+In-Reply-To: <9080590d-d823-473e-833e-d726490f1b18@tls.msk.ru>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::62b;
- envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x62b.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Transfer-Encoding: 8bit
+X-Provags-ID: V03:K1:WifZl44NxP9mQsuvXR20EljXkw49jgRyoEesBSkPjayTCQOhQYn
+ ECIRBM8fwPc8Em26fAawUJ4u4UfbjjqF3qGxkgBs9ZFhzyUYS9Gu9+4d6VWTOCsL7QfOjgu
+ o/kNpWLA5KZXpSr70zgmtzLGlnbmeOrRcCC11Xd6l7lb0RrEarDwC4KnqlppSBuiwMj7bR5
+ c0IapAm4TP/MB1cw9SwUg==
+UI-OutboundReport: notjunk:1;M01:P0:1QkxLZ5M0vo=;zPYyeQxSyozltL9HoJTeiVinhSi
+ OP8YKHpyTakyU47lJKoGSzMnxP5kUNcHG5KrlOVeVcYjOVuoymE+Di3tWO3bKJD/blvgMmf8S
+ /zsc7Eb9q5rD4iCjGpC/+Uq6WXY0Fuqv0tRH1Uw6HjLah+PeLsFafdFK1QfElPmY7WI13QVjC
+ ophJMEL2/TybAHfeehYJfvAKuHfEOXr5ihLEFBiUbGJtDom3rE2V0vAyTXdLn82PNRV/KGWz/
+ qxLCRAgCHKGQDo7BkxxlTHNqyTJ82etJXpJ6i65GoPo6yU/P6/+e1ks+Cl0+peKIZNeXIDLUI
+ uTBTEYRIIIRP0e0CDBt7qC4mwiAD2zNUum1OEnIwJ2+UmDe91M91TZy7oHx6nX5K4RwxHEYpT
+ UmiLRtbm6tDNVZVl9qYvLdiRD1jcddFgnXyhUbyCP0CjQ2LliQgWybTS14FTb2zzgVIBkL2hI
+ aYkePHzxVdD6Nz56Kzj48iOD4nsJBWOdRtUeuRzFe3ZkQab5vaS7kAzTjQ4Pkd4bTzoUNyb98
+ Trk6ysqB9d0NdHjbKRsWh0bc0nYsgLJhiMmDyC/qHeikRuL4tiQGim3GLe09jCunDBGRe/mAq
+ SkUQjFvKJTzQA00o+KU9Zynw+GzNZujCHPFRieYO6juk2YyyAi5aMiKGO0AxuKKdWf0Jc5ZgG
+ LGMXh5s3ZsDVPhQmrOOCjYjd/WedVvx3jEl62xxOBUYTAmha9adYHLNjI1KmA1auZ0aos+bXa
+ PAFACDthJ91AjHEPtPSpghkuAXaqBCu9dmoxGwcvFCIyCXJTcJ+RcALOXPlkgtRlXhX3AP2bW
+ 8cBU+x2p+M0GcmmnWCgm7ig7T3KJMVlvOuSx6Hj3660rScxc9/gkiWaFNvnsxfx4WQ/eLwscD
+ qykznZ8vlKdjfT0DF/vS9BJnGJGMkctCwuRTgR9sjUv6U2dzkG9rrUX3gdUe/vDoWYjwHvKh+
+ yUOPuaapJ14J3io1kbzQHZ2a1DF8cYyb7kisUBaFbdC7zqBG8Cv+wemJqn0VK77k0GdvxQL65
+ uSAodhr4BFL2JxLMo+muQD42YHdg/M5djZtvZAD7/AFpG/gZ4F43UWn+lo1JregFKRP3A6YAD
+ L/0OqlwrsnToINgiRjTTn9keUK2MXh5vZsWPj9bnUyk6Px2GFDw+DhVxH4a2oWL6TRIfOinFi
+ PW3xceLQUm5rkPhf0DnPcYbZKCgoWm5HALTKTc3JB7IJXzLZtfeOS+CbDO6UvOS/2xey7kloW
+ hOayCvJ5tGJuPn6b6au2zFzbxMZBdxjeVhUOXW4hZHEpHbGj2C9xx54=
+Received-SPF: pass client-ip=212.227.17.24; envelope-from=laurent@vivier.eu;
+ helo=mout.kundenserver.de
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_NONE=-0.0001,
+ RCVD_IN_MSPIKE_H3=-0.01, RCVD_IN_MSPIKE_WL=-0.01,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -103,35 +127,34 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 2/1/25 08:39, Peter Maydell wrote:
-> The negation steps in FCADD must honour FPCR.AH's "don't change the
-> sign of a NaN" semantics.  Implement this in the same way we did for
-> the base ASIMD FCADD, by encoding FPCR.AH into the SIMD data field
-> passed to the helper and using that to decide whether to negate the
-> values.
+Le 01/02/2025 à 20:36, Michael Tokarev a écrit :
+> 17.01.2025 17:05, Laurent Vivier wrote:
+>> CC: qemu-stable and qemu-trivial.
+>>
+>> On 17/01/2025 12:17, Laurent Vivier wrote:
+>>> announce_self that sends a RARP packet after migration
+>>> or with announce_self QMP/HMP command doesn't work with
+>>> vhost because of the vnet headers.
+>>>
+>>> announce_self is the only user of QEMU_NET_PACKET_FLAG_RAW and
+>>> this flag is not correctly managed.
+>>>
+>>> This series fix a problem with this flag in filter-dump and in
+>>> qemu_deliver_packet_iov().
+>>>
+>>> Laurent Vivier (2):
+>>>    net: Fix announce_self
+>>>    net/dump: Correctly compute Ethernet packet offset
 > 
-> The construction of neg_imag and neg_real were done to make it easy
-> to apply both in parallel with two simple logical operations.  This
-> changed with FPCR.AH, which is more complex than that. Switch to
-> an approach that follows the pseudocode more closely, by extracting
-> the 'rot=1' parameter from the SIMD data field and changing the
-> sign of the appropriate input value.
+> Is this one - "Correctly compute Ethernet packet offset" - needed for
+> older stable series too, like 8.2 and 7.2 (currently active ones)?
 > 
-> Note that there was a naming issue with neg_imag and neg_real.
-> They were named backward, with neg_imag being non-zero for rot=1,
-> and vice versa.  This was combined with reversed usage within the
-> loop, so that the negation in the end turned out correct.
-> 
-> Signed-off-by: Peter Maydell<peter.maydell@linaro.org>
-> ---
-> v2: Squashed in changes from RTH's patchset
-> ---
->   target/arm/tcg/vec_internal.h  | 17 ++++++++++++++
->   target/arm/tcg/sve_helper.c    | 42 ++++++++++++++++++++++++----------
->   target/arm/tcg/translate-sve.c |  2 +-
->   3 files changed, 48 insertions(+), 13 deletions(-)
+> Since it doesn't apply without 4b52d63249 (tap: Remove qemu_using_vnet_hdr()).
 
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+It fixes 481c52320a26 ("net: Strip virtio-net header when dumping") that is only in 8.0.
+But I'm not sure the bug exists without 4b52d63249 (tap: Remove qemu_using_vnet_hdr()), so it should 
+be tested first.
 
-r~
+Thanks,
+Laurent
 
