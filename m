@@ -4,90 +4,52 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4F5DEC0218A
-	for <qemu-devel@archiver.kernel.org>; Sat,  1 Feb 2025 19:38:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 24884C0218A
+	for <qemu-devel@archiver.kernel.org>; Sun,  2 Feb 2025 01:26:12 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1teJJ1-0003Bx-WF; Sat, 01 Feb 2025 14:37:28 -0500
+	id 1teOju-00060s-Jr; Sat, 01 Feb 2025 20:25:36 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1teJIt-0003Ay-3Q; Sat, 01 Feb 2025 14:37:20 -0500
-Received: from isrv.corpit.ru ([86.62.121.231])
+ (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
+ id 1teOjr-00060E-VY; Sat, 01 Feb 2025 20:25:32 -0500
+Received: from zero.eik.bme.hu ([152.66.115.2])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1teJIo-0003vm-D2; Sat, 01 Feb 2025 14:37:17 -0500
-Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 0FCB3E3DD2;
- Sat, 01 Feb 2025 22:36:26 +0300 (MSK)
-Received: from [192.168.177.130] (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id 80F1A1AA2B8;
- Sat,  1 Feb 2025 22:36:58 +0300 (MSK)
-Message-ID: <9080590d-d823-473e-833e-d726490f1b18@tls.msk.ru>
-Date: Sat, 1 Feb 2025 22:36:58 +0300
+ (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
+ id 1teOjo-00034Q-Qm; Sat, 01 Feb 2025 20:25:31 -0500
+Received: from zero.eik.bme.hu (localhost [127.0.0.1])
+ by zero.eik.bme.hu (Postfix) with ESMTP id 0ECF74E6001;
+ Sun, 02 Feb 2025 02:25:24 +0100 (CET)
+X-Virus-Scanned: amavisd-new at eik.bme.hu
+Received: from zero.eik.bme.hu ([127.0.0.1])
+ by zero.eik.bme.hu (zero.eik.bme.hu [127.0.0.1]) (amavisd-new, port 10028)
+ with ESMTP id Abfaa_cQNmQO; Sun,  2 Feb 2025 02:25:22 +0100 (CET)
+Received: by zero.eik.bme.hu (Postfix, from userid 432)
+ id 1DEED4E6004; Sun, 02 Feb 2025 02:25:22 +0100 (CET)
+Received: from localhost (localhost [127.0.0.1])
+ by zero.eik.bme.hu (Postfix) with ESMTP id 1B84874577C;
+ Sun, 02 Feb 2025 02:25:22 +0100 (CET)
+Date: Sun, 2 Feb 2025 02:25:22 +0100 (CET)
+From: BALATON Zoltan <balaton@eik.bme.hu>
+To: Bernhard Beschow <shentey@gmail.com>
+cc: qemu-devel@nongnu.org, qemu-ppc@nongnu.org
+Subject: Re: [PATCH] hw/ppc/e500: Partial implementation of local access
+ window registers
+In-Reply-To: <06F97BE3-057D-4D9D-AAAF-2B7438358BB8@gmail.com>
+Message-ID: <69e08a66-b146-4d76-080f-7fa6f4a0a13f@eik.bme.hu>
+References: <20250115211544.307124E602F@zero.eik.bme.hu>
+ <22e114ac-2c3f-76f1-2172-9adf0c50ad5f@eik.bme.hu>
+ <DE6FAB3B-F994-47B8-95A5-9D1BFD6B621F@gmail.com>
+ <06F97BE3-057D-4D9D-AAAF-2B7438358BB8@gmail.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 0/2] net: Fix announce_self with vhost
-To: Laurent Vivier <lvivier@redhat.com>, qemu-devel@nongnu.org
-Cc: Jason Wang <jasowang@redhat.com>, QEMU Trivial <qemu-trivial@nongnu.org>, 
- qemu-stable@nongnu.org
-References: <20250117111709.970789-1-lvivier@redhat.com>
- <fee03f11-bcf5-4586-abc1-2d38ce6a7f9c@redhat.com>
-Content-Language: en-US, ru-RU
-From: Michael Tokarev <mjt@tls.msk.ru>
-Autocrypt: addr=mjt@tls.msk.ru; keydata=
- xsFNBGYpLkcBEACsajkUXU2lngbm6RyZuCljo19q/XjZTMikctzMoJnBGVSmFV66kylUghxs
- HDQQF2YZJbnhSVt/mP6+V7gG6MKR5gYXYxLmypgu2lJdqelrtGf1XtMrobG6kuKFiD8OqV6l
- 2M5iyOZT3ydIFOUX0WB/B9Lz9WcQ6zYO9Ohm92tiWWORCqhAnwZy4ua/nMZW3RgO7bM6GZKt
- /SFIorK9rVqzv40D6KNnSyeWfqf4WN3EvEOozMfWrXbEqA7kvd6ShjJoe1FzCEQ71Fj9dQHL
- DZG+44QXvN650DqEtQ4RW9ozFk3Du9u8lbrXC5cqaCIO4dx4E3zxIddqf6xFfu4Oa5cotCM6
- /4dgxDoF9udvmC36qYta+zuDsnAXrYSrut5RBb0moez/AR8HD/cs/dS360CLMrl67dpmA+XD
- 7KKF+6g0RH46CD4cbj9c2egfoBOc+N5XYyr+6ejzeZNf40yjMZ9SFLrcWp4yQ7cpLsSz08lk
- a0RBKTpNWJdblviPQaLW5gair3tyJR+J1ER1UWRmKErm+Uq0VgLDBDQoFd9eqfJjCwuWZECp
- z2JUO+zBuGoKDzrDIZH2ErdcPx3oSlVC2VYOk6H4cH1CWr9Ri8i91ClivRAyVTbs67ha295B
- y4XnxIVaZU+jJzNgLvrXrkI1fTg4FJSQfN4W5BLCxT4sq8BDtwARAQABzSBNaWNoYWVsIFRv
- a2FyZXYgPG1qdEB0bHMubXNrLnJ1PsLBlAQTAQoAPhYhBJ2L4U4/Kp3XkZko8WGtPZjs3yyO
- BQJmKS5HAhsDBQkSzAMABQsJCAcCBhUKCQgLAgQWAgMBAh4BAheAAAoJEGGtPZjs3yyOZSAP
- /ibilK1gbHqEI2zR2J59Dc0tjtbByVmQ8IMh0SYU3j1jeUoku2UCgdnGKpwvLXtwZINgdl6Q
- cEaDBRX6drHLJFAi/sdgwVgdnDxaWVJO/ZIN/uJI0Tx7+FSAk8CWSa4IWUOzPNmtrDfb4z6v
- G36rppY8bTNKbX6nWFXuv2LXQr7g6+kKnbwv4QFpD+UFF1CrLm3byMq4ikdBXpZx030qBL61
- b7PrfXcBLao0357kWGH6C2Zu4wBnDUJwGi68pI5rzSRAFyAQsE89sjLdR1yFoBH8NiFnAQXP
- LA8Am9FMsC7D/bi/kwKTJdcZvzdGU1HG6tJvXLWC+nqGpJNBzRdDpjqtxNuL76vVd/JbsFMS
- JchLN+01fNQ5FHglvkd6md7vO+ULq+r9An5hMiDoRbYVUOBN8uiYNk+qKbdgSfbhsgPURqHi
- 1bXkgMeMasqWbGMe7iBW/YH2ePfZ6HuKLNQDCkiWZYPQZvyXHvQHjuJJ5+US81tkqM+Q6Snq
- 0L/O/LD0qLlbinHrcx0abg06VXBoYmGICJpf/3hhWQM4f+B/5w4vpl8q0B6Osz01pBUBfYak
- CiYCNHMWWVZkW9ZnY7FWiiPOu8iE1s5oPYqBljk3FNUk04SDKMF5TxL87I2nMBnVnvp0ZAuY
- k9ojiLqlhaKnZ1+zwmwmPmXzFSwlyMczPUMSzsFNBGYpLkcBEAC0mxV2j5M1x7GiXqxNVyWy
- OnlWqJkbkoyMlWFSErf+RUYlC9qVGwUihgsgEhQMg0nJiSISmU3vsNEx5j0T13pTEyWXWBdS
- XtZpNEW1lZ2DptoGg+6unpvxd2wn+dqzJqlpr4AY3vc95q4Za/NptWtSCsyJebZ7DxCCkzET
- tzbbnCjW1souCETrMy+G916w1gJkz4V1jLlRMEEoJHLrr1XKDdJRk/34AqXPKOzILlWRFK6s
- zOWa80/FNQV5cvjc2eN1HsTMFY5hjG3zOZb60WqwTisJwArjQbWKF49NLHp/6MpiSXIxF/FU
- jcVYrEk9sKHN+pERnLqIjHA8023whDWvJide7f1V9lrVcFt0zRIhZOp0IAE86E3stSJhZRhY
- xyIAx4dpDrw7EURLOhu+IXLeEJbtW89tp2Ydm7TVAt5iqBubpHpGTWV7hwPRQX2w2MBq1hCn
- K5Xx79omukJisbLqG5xUCR1RZBUfBlYnArssIZSOpdJ9wWMK+fl5gn54cs+yziUYU3Tgk0fJ
- t0DzQsgfd2JkxOEzJACjJWti2Gh3szmdgdoPEJH1Og7KeqbOu2mVCJm+2PrNlzCybOZuHOV5
- +vSarkb69qg9nU+4ZGX1m+EFLDqVUt1g0SjY6QmM5yjGBA46G3dwTEV0/u5Wh7idNT0mRg8R
- eP/62iTL55AM6QARAQABwsF8BBgBCgAmFiEEnYvhTj8qndeRmSjxYa09mOzfLI4FAmYpLkcC
- GwwFCRLMAwAACgkQYa09mOzfLI53ag/+ITb3WW9iqvbjDueV1ZHwUXYvebUEyQV7BFofaJbJ
- Sr7ek46iYdV4Jdosvq1FW+mzuzrhT+QzadEfYmLKrQV4EK7oYTyQ5hcch55eX00o+hyBHqM2
- RR/B5HGLYsuyQNv7a08dAUmmi9eAktQ29IfJi+2Y+S1okAEkWFxCUs4EE8YinCrVergB/MG5
- S7lN3XxITIaW00faKbqGtNqij3vNxua7UenN8NHNXTkrCgA+65clqYI3MGwpqkPnXIpTLGl+
- wBI5S540sIjhgrmWB0trjtUNxe9QcTGHoHtLeGX9QV5KgzNKoUNZsyqh++CPXHyvcN3OFJXm
- VUNRs/O3/b1capLdrVu+LPd6Zi7KAyWUqByPkK18+kwNUZvGsAt8WuVQF5telJ6TutfO8xqT
- FUzuTAHE+IaRU8DEnBpqv0LJ4wqqQ2MeEtodT1icXQ/5EDtM7OTH231lJCR5JxXOnWPuG6el
- YPkzzso6HT7rlapB5nulYmplJZSZ4RmE1ATZKf+wUPocDu6N10LtBNbwHWTT5NLtxNJAJAvl
- ojis6H1kRWZE/n5buyPY2NYeyWfjjrerOYt3er55n4C1I88RSCTGeejVmXWuo65QD2epvzE6
- 3GgKngeVm7shlp7+d3D3+fAAHTvulQQqV3jOodz+B4yzuZ7WljkNrmrWrH8aI4uA98c=
-In-Reply-To: <fee03f11-bcf5-4586-abc1-2d38ce6a7f9c@redhat.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=86.62.121.231; envelope-from=mjt@tls.msk.ru;
- helo=isrv.corpit.ru
-X-Spam_score_int: -68
-X-Spam_score: -6.9
-X-Spam_bar: ------
-X-Spam_report: (-6.9 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_HI=-5,
+Content-Type: text/plain; charset=US-ASCII; format=flowed
+Received-SPF: pass client-ip=152.66.115.2; envelope-from=balaton@eik.bme.hu;
+ helo=zero.eik.bme.hu
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -105,30 +67,128 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-17.01.2025 17:05, Laurent Vivier wrote:
-> CC: qemu-stable and qemu-trivial.
-> 
-> On 17/01/2025 12:17, Laurent Vivier wrote:
->> announce_self that sends a RARP packet after migration
->> or with announce_self QMP/HMP command doesn't work with
->> vhost because of the vnet headers.
+On Sat, 1 Feb 2025, Bernhard Beschow wrote:
+> Am 1. Februar 2025 14:55:15 UTC schrieb Bernhard Beschow <shentey@gmail.com>:
+>> Am 30. Januar 2025 12:45:58 UTC schrieb BALATON Zoltan <balaton@eik.bme.hu>:
+>>> On Wed, 15 Jan 2025, BALATON Zoltan wrote:
+>>>> This allows guests to set the CCSR base address. Also store and return
+>>>> values of the local access window registers but their functionality
+>>>> isn't implemented.
+>>>
+>>> Ping?
 >>
->> announce_self is the only user of QEMU_NET_PACKET_FLAG_RAW and
->> this flag is not correctly managed.
+>> I guess you're trying to boot a real firmware image from SD card?
+
+I'm not trying, I've done it. I only needed these patches and commenting 
+out the page_aligned = true in hw/sd/sdhci.c as I noted in the previous 
+patch. U-Boot works and I can run commands in the firmware prompt but I 
+did not try to boot an OS yet. The amigaos boot loader which U-Boot for 
+Tabor loads by default crashes somewhere but this may be a bug in the 
+patched U-Boot. I think I've seen similar with sam460ex U-Boot before, 
+maybe it's because of not finding some expected devices and not handling 
+the returned NULL value well but I did not debug it.
+
+>> I've implemented that in my e500-fdt branch which I want to send as an 
+>> RFC. I still need to clean it up. Once it's on the list we could make a 
+>> plan how to turn it into a p10xx. Would that work for you?
+
+Sure, I can try to test your patches once they are submitted to the list 
+and rebase my changes on top if they still needed. I've just submitted 
+these so you can incorporate them in your tree so I have less to rebase 
+but I see you already have most of these. I'm OK to wait until your tree 
+is cleaned and submitted but it seems there are a lot of patches so it 
+might take a while. I don't expect that you can get it merged before the 
+next release. Some of the patches may need several versions or alternative 
+approaches until they can be merged. For example I expect problems with 
+allowing ',' in device names as this is something that was removed before 
+to avoid the need of quoting or something like that. But I'm not in a 
+hurry as I don't have much free time for it anyway so only come back to 
+this time to time and it's far from anything useful yet.
+
 >>
->> This series fix a problem with this flag in filter-dump and in
->> qemu_deliver_packet_iov().
+>> Best regards,
+>> Bernhard
 >>
->> Laurent Vivier (2):
->>    net: Fix announce_self
->>    net/dump: Correctly compute Ethernet packet offset
+>> P.S. The last commit teaches you how to start a firmware from SD card.
 
-Is this one - "Correctly compute Ethernet packet offset" - needed for
-older stable series too, like 8.2 and 7.2 (currently active ones)?
+I did not try your version but looking at the patch looks like you have 
+some sparse-mem region. (I've added similar one from board code, I did not 
+know about this device.) Isn't that the l2cache as RAM or on-chip SRAM or 
+whatever it's called? You seem to have some emulation of that l2cache in a 
+previous patch so can't that be mapped there? Maybe we'll eventually need 
+to implement reading the BOOT data from the beginning of the SD card or 
+flash ROM which may have some initial register values that set things up 
+that are currently hard coded.
 
-Since it doesn't apply without 4b52d63249 (tap: Remove qemu_using_vnet_hdr()).
+Meanwhile I can cherry pick some patches from your tree and test them. 
+Looks like you have some DDR3 support added, I haven't got to that yet.
 
-Thanks,
+For USB I had this for now:
 
-/mjt
+diff --git a/hw/ppc/e500.c b/hw/ppc/e500.c
+index ee17acdb69..54890d25f3 100644
+--- a/hw/ppc/e500.c
++++ b/hw/ppc/e500.c
+@@ -900,6 +900,29 @@ static void ppce500_power_off(void *opaque, int line, int on)
+      }
+  }
+
++static uint64_t usb_read(void *opaque, hwaddr addr, unsigned size)
++{
++    switch (addr) {
++    case 0:
++        return BIT(2) | BIT(17);
++    }
++    return 0;
++}
++
++static void usb_write(void *opaque, hwaddr addr, uint64_t val, unsigned size)
++{
++}
++
++static const MemoryRegionOps usb_ops = {
++    .read = usb_read,
++    .write = usb_write,
++    .endianness = DEVICE_BIG_ENDIAN,
++    .valid = {
++        .min_access_size = 4,
++        .max_access_size = 4,
++    },
++};
++
+  void ppce500_init(MachineState *machine)
+  {
+      MemoryRegion *address_space_mem = get_system_memory();
+@@ -1118,6 +1141,19 @@ void ppce500_init(MachineState *machine)
+                                      sysbus_mmio_get_region(s, 0));
+      }
+
++    /* USB */
++    dev = qdev_new("tegra2-ehci-usb");
++    s = SYS_BUS_DEVICE(dev);
++    sysbus_realize_and_unref(s, &error_fatal);
++    sysbus_connect_irq(s, 0, qdev_get_gpio_in(mpicdev, 12));
++    memory_region_add_subregion(ccsr_addr_space, 0x22000,
++                                sysbus_mmio_get_region(s, 0));
++    {
++        MemoryRegion *mr =  g_new(MemoryRegion, 1);
++        memory_region_init_io(mr, OBJECT(dev), &usb_ops, s, "fsl-ehci", 4);
++        memory_region_add_subregion(ccsr_addr_space, 0x22500, mr);
++    }
++
+      /* General Utility device */
+      dev = qdev_new("mpc8544-guts");
+      s = SYS_BUS_DEVICE(dev);
+
+which is reusing a sufficiently similar existing device just to have 
+minimal changes. This isn't the right way but since most of these just 
+differ in the reg offsets I wonder if we could turn these offsets into 
+properties so we don't need to add a new subclass for every device. I 
+think subclasses came from the pci version where the PCI IDs are different 
+and maybe sysbus was modelled after that but we only need subclasses where 
+additional registers are needed (which may be the case for this fsl device 
+so this property idea is just unrelated clean up).
+
+Regards,
+BALATON Zoltan
 
