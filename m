@@ -4,73 +4,77 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4492DC0218F
-	for <qemu-devel@archiver.kernel.org>; Mon,  3 Feb 2025 03:19:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8C461C02194
+	for <qemu-devel@archiver.kernel.org>; Mon,  3 Feb 2025 03:19:02 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1temyi-0007wn-2F; Sun, 02 Feb 2025 22:18:28 -0500
+	id 1temyr-00086A-Kp; Sun, 02 Feb 2025 22:18:37 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1temyg-0007wN-UW
- for qemu-devel@nongnu.org; Sun, 02 Feb 2025 22:18:26 -0500
+ id 1temyn-000814-72
+ for qemu-devel@nongnu.org; Sun, 02 Feb 2025 22:18:33 -0500
 Received: from mail-pl1-x631.google.com ([2607:f8b0:4864:20::631])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1temyf-0002dt-04
- for qemu-devel@nongnu.org; Sun, 02 Feb 2025 22:18:26 -0500
+ id 1temyl-0002fz-MN
+ for qemu-devel@nongnu.org; Sun, 02 Feb 2025 22:18:32 -0500
 Received: by mail-pl1-x631.google.com with SMTP id
- d9443c01a7336-2164b1f05caso61920435ad.3
- for <qemu-devel@nongnu.org>; Sun, 02 Feb 2025 19:18:24 -0800 (PST)
+ d9443c01a7336-216634dd574so43914055ad.2
+ for <qemu-devel@nongnu.org>; Sun, 02 Feb 2025 19:18:31 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1738552703; x=1739157503; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=5cafx/ah9BLjqPoyOkGojrZFqdmAACc3Ieww0AHYWvk=;
- b=RHkqD3II5sg2Cc7VHZ/qfWlTm0ww5RPQin4tSLmn4TbMVqvQZbe4gPf5UaRiH8AyGb
- O7IXgF1G7Eb8fBHoaGc21iN4d5hVYQGempsAeCGW60VFFWtP+W+tTG+Txn1clHrwWti6
- oh80TsNu9PPAHNqx5xmwiwGno/PiwUZYfT7BWqPA5vI5zeCJIWEec1jSwiGqk0r4oxZt
- eP5VBciCi8qsgc21MJu17Pn4XUcWXDHSzKSxwfz2SqTurygysCDJxHEJoX8VvBywVKS7
- 0n83kaRMBUSTecs4hbfPOC3kNy1EtPNEZTcFlgb1q2vOwL3AmuCbSW7tQiFfAfFPQnj1
- IH0w==
+ d=linaro.org; s=google; t=1738552710; x=1739157510; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=wgGWKoRbIU40nf+pgjk4xuoPstQyTD/DlLIN5LNZmQ8=;
+ b=SGH+HAnshnpsmxo1zn3XBxSHOlf8mH7a7OeN1XA+Vz8LGosrPb75U3wTdfng9gqpLv
+ IbvSiDiuYuiOqqH5jTdp7gNLHY+2mRIz3TLKLSnu9uz+HFPVBh/yppGHOE9qYbSVAqBJ
+ XsMPJBfhyutJZXuRciOBrD0646PSTHCvR5vVSo58+KlS5huVED7HOuqRd2nD9G7uvPS4
+ lviQDhTiqP7DwdZ4VD6BtUYo3M4toZW/mjbjjj/m7JnFR8PdCNsSmpZiMF9JBG1IGo8A
+ 1CBq78Ux0opLi6S35yQN630MOYFCLaEu8amh7VjXVzacKzq9C+v6q1i0VwwG8FGNJMJm
+ /b4Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1738552703; x=1739157503;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=5cafx/ah9BLjqPoyOkGojrZFqdmAACc3Ieww0AHYWvk=;
- b=uukoLu3COa7kKyWCDD8XNQ8qFoV19It0u6km9Vq6LqVPYAwvhmSwdwnKKjsAcdB/mj
- tSXym8FDE6KQ0J6lwmunNawG3MxDqiNEH0M33e+93Cg2rYML32xgHCq8objjz4wcMuAY
- 0U+di/7qafRgWajd4Hnkft652UpNrz3VEh15fkZ+fWcvawQZ5A9OkNIRvRpxsipkbBiG
- 1JYTT+k2sikFjmlqMmWsUybbqokWFo5eZQO31RRN7EJzB3yBw32NQfbvtQGpAGwpi3/8
- 271J0IzMA45SpqiqGcir5WkBDMouV72mP7XTYzhzXnzZYES+sl3RanPzpbRAO4GmuOBK
- 4ThA==
-X-Gm-Message-State: AOJu0YzX9sxa7D/DuDX3lYcu8gJnTJ6q2x5dKHIc9UtYpcVFL0s0UMip
- s4oBdPV2iSz0U6NsZh5qZvgIHDUVV4Gd8scZSOZ8UbtZdoukzjyeV59LlyrJiB5jMXo5YY67mad
- K
-X-Gm-Gg: ASbGncv1IV2fsOjRQg1Wpet0oNKgw+Srg9ss4RlwFWt4f9Z7sX49oZfZh7BvM81lZ/S
- FQuqBfmNV12BrXzMego309qWw/Pypn73AIpSTJle8Lehrx/XkZUtib5ArvbR8gVbMF9lWAPAW1V
- VxIVKL6hVtpr4sjgag7jvKF8YBA5kENzXXaPw1y7bQo+uX1SbfB74HVmFSgLUSQ1eBaGvI7pHbT
- u6vsYmpnCUfuIZDghqbxzJzw1mn9xAxp/lbNADPhGQP2q8DJmhxDcIlqDpou7f9aQbRzJA1BdJG
- SSgV28kRoeKyjjL4/Kh5BeUOhNAF03KmpSqv0TWswihVBXc=
-X-Google-Smtp-Source: AGHT+IHHcyqMJaLU/rf4tVO+bnwqc6lSJYMPWIIGNQrd/nXcYaYnAHrTo2BocA3sG9wTTuNwT/kQfg==
-X-Received: by 2002:a17:903:1cb:b0:21c:2f41:f4cd with SMTP id
- d9443c01a7336-21dd7dea7b3mr342701635ad.43.1738552703143; 
- Sun, 02 Feb 2025 19:18:23 -0800 (PST)
+ d=1e100.net; s=20230601; t=1738552710; x=1739157510;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=wgGWKoRbIU40nf+pgjk4xuoPstQyTD/DlLIN5LNZmQ8=;
+ b=OCjSfHqfX0+wENbIS0k8YeSc6seV0oRKPKCfgivEl8+ith0Oe6wQGItIY/ysTQ2V1u
+ UVEly58gEQEwnJRzew+/mdzRlmi9VZ7jsrCm8c+tAn7+1zPTHqmeRsN8YpFQx7s9qk/a
+ UmQHqLcSt2ee2MhWxRs8rAW5SiadUk6HqBEu/zPPejTMNyA/R3AiAHSXNA9ArUnJHOER
+ j5B12J6IkOhNtR2VJpuqAbZkDtX5sXseQ4wFOKE2k5FkwXd/WwBQPW15l73hYVBrZSIq
+ 0BW1/991hrODxrG36ie+EpIFT7fTAhkfpB21XZkJzedWeuCMP+lK6Q117u0YmyG6RrTI
+ HJsw==
+X-Gm-Message-State: AOJu0YwMrSGRZ6wl1rm/pKiLC6ewSTLloZrNkMm4ITyWt/8BtMnpOlgG
+ cA16bZ4GVjbrLotFD6sYIxJ7VG/n+EAANwo7SrCyZFvAB/vbfPx9xpskLSwXs9Fv5JtAA7NVUMO
+ 5
+X-Gm-Gg: ASbGncv4wwB4zXGEpkz84w0UAdbWZCw8UKjUgNic1OUepscJTPmGVT2cpgVxVOMXWFM
+ UcnyB0af0RA0InBzHFMjSJksqkvP5tLGWRVmHqQ9OyLz8W6X2/6LeziNrBW/yMNnfshfwZ7ScBC
+ Y0I/TgOwRT5Cu4qwLE9BnlbJItnpaqVnWiMs4ShtakIZzJk8irumr3D4/+5kQ/KLLcRZ1kXIk/K
+ Deima5x0S6uF4ewFyV9wWEfRXpBJlXD9sxmGzXhzfu0RDa/JT6lEHwCxILSaDwvLKARIIDRwcla
+ OYkTO2iez1G9r7t2L5j44tc/A2dxYOv9E8SkkIut9OB1cOQ=
+X-Google-Smtp-Source: AGHT+IGgv7fqmeVYHTK1dkXP9SIR9TaXOuEADw07S8izflkU455myvlhAZTlkelsJH3c4f1Lu6cSFg==
+X-Received: by 2002:a17:902:f54e:b0:215:9470:7e82 with SMTP id
+ d9443c01a7336-21dd7c55e3bmr323465985ad.4.1738552710409; 
+ Sun, 02 Feb 2025 19:18:30 -0800 (PST)
 Received: from stoup.. (71-212-39-66.tukw.qwest.net. [71.212.39.66])
  by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-21de32eb419sm65698135ad.145.2025.02.02.19.18.22
+ d9443c01a7336-21de32eb419sm65698135ad.145.2025.02.02.19.18.29
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sun, 02 Feb 2025 19:18:22 -0800 (PST)
+ Sun, 02 Feb 2025 19:18:30 -0800 (PST)
 From: Richard Henderson <richard.henderson@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: pbonzini@redhat.com, mark.cave-ayland@ilande.co.uk, berrange@redhat.com,
  philmd@linaro.org, thuth@redhat.com
-Subject: [PATCH v2 00/14] meson: Deprecate 32-bit host support
-Date: Sun,  2 Feb 2025 19:18:07 -0800
-Message-ID: <20250203031821.741477-1-richard.henderson@linaro.org>
+Subject: [PATCH v2 09/14] gitlab: Replace aarch64 with arm in cross-i686-tci
+ build
+Date: Sun,  2 Feb 2025 19:18:16 -0800
+Message-ID: <20250203031821.741477-10-richard.henderson@linaro.org>
 X-Mailer: git-send-email 2.43.0
+In-Reply-To: <20250203031821.741477-1-richard.henderson@linaro.org>
+References: <20250203031821.741477-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=2607:f8b0:4864:20::631;
@@ -97,148 +101,27 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-v1: 20250128004254.33442-1-richard.henderson@linaro.org
+Configuration of 64-bit host on 32-bit guest will shortly
+be denied.  Use a 32-bit guest instead.
 
-For v2, immediately disable 64-on-32 TCG.
+Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+---
+ .gitlab-ci.d/crossbuilds.yml | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-I *suspect* that we should disable 64-on-32 for *all* accelerators.
-The idea that an i686 binary on an x86_64 host may be used to spawn
-an x86_64 guest via kvm is silly and a bit more than niche.
-Similarly for mips32 spawning mips64 and ppc32 spawning ppc64.
-
-But in the meantime, jump through a couple of hoops to keep these
-kvm and xen cases building, while disabling tcg in the same binaries.
-
-
-Richard Henderson (14):
-  meson: Drop tcg as a module
-  tcg: Move stubs in tcg/perf.h to tcg/perf-stubs.c
-  plugins: Uninline qemu_plugin_add_opts
-  meson: Introduce CONFIG_TCG_TARGET
-  tcg: Link only when required in system mode
-  plugins: Link only when required in system mode
-  accel/stubs: Expand stubs for TCG
-  target/mips: Protect objects with CONFIG_TCG
-  gitlab: Replace aarch64 with arm in cross-i686-tci build
-  configure: Define TARGET_LONG_BITS in configs/targets/*.mak
-  target/*: Remove TARGET_LONG_BITS from cpu-param.h
-  meson: Disallow 64-bit on 32-bit TCG emulation
-  meson: Deprecate 32-bit host support
-  tcg: Remove TCG_OVERSIZED_GUEST
-
- include/qemu/atomic.h                       | 18 ++------
- include/qemu/osdep.h                        |  7 +++
- include/qemu/plugin.h                       |  9 +---
- include/tcg/oversized-guest.h               | 23 ----------
- include/tcg/perf.h                          | 23 ----------
- target/alpha/cpu-param.h                    |  2 -
- target/arm/cpu-param.h                      |  2 -
- target/avr/cpu-param.h                      |  1 -
- target/hexagon/cpu-param.h                  |  1 -
- target/hppa/cpu-param.h                     |  2 -
- target/i386/cpu-param.h                     |  2 -
- target/loongarch/cpu-param.h                |  1 -
- target/m68k/cpu-param.h                     |  1 -
- target/microblaze/cpu-param.h               |  2 -
- target/mips/cpu-param.h                     |  5 ---
- target/openrisc/cpu-param.h                 |  1 -
- target/ppc/cpu-param.h                      |  2 -
- target/riscv/cpu-param.h                    |  2 -
- target/rx/cpu-param.h                       |  1 -
- target/s390x/cpu-param.h                    |  1 -
- target/sh4/cpu-param.h                      |  1 -
- target/sparc/cpu-param.h                    |  2 -
- target/tricore/cpu-param.h                  |  1 -
- target/xtensa/cpu-param.h                   |  1 -
- accel/stubs/tcg-stub.c                      | 24 ++++++++++
- accel/tcg/cputlb.c                          |  7 ---
- accel/tcg/tcg-all.c                         |  9 ++--
- plugins/loader.c                            |  7 ++-
- plugins/stubs.c                             | 49 +++++++++++++++++++++
- target/arm/ptw.c                            | 34 --------------
- target/riscv/cpu_helper.c                   | 13 +-----
- tcg/perf-stubs.c                            | 26 +++++++++++
- .gitlab-ci.d/crossbuilds.yml                |  2 +-
- accel/tcg/meson.build                       | 11 ++---
- configs/targets/aarch64-bsd-user.mak        |  1 +
- configs/targets/aarch64-linux-user.mak      |  1 +
- configs/targets/aarch64-softmmu.mak         |  1 +
- configs/targets/aarch64_be-linux-user.mak   |  1 +
- configs/targets/alpha-linux-user.mak        |  1 +
- configs/targets/alpha-softmmu.mak           |  1 +
- configs/targets/arm-bsd-user.mak            |  1 +
- configs/targets/arm-linux-user.mak          |  1 +
- configs/targets/arm-softmmu.mak             |  1 +
- configs/targets/armeb-linux-user.mak        |  1 +
- configs/targets/avr-softmmu.mak             |  1 +
- configs/targets/hexagon-linux-user.mak      |  1 +
- configs/targets/hppa-linux-user.mak         |  2 +
- configs/targets/hppa-softmmu.mak            |  1 +
- configs/targets/i386-bsd-user.mak           |  1 +
- configs/targets/i386-linux-user.mak         |  1 +
- configs/targets/i386-softmmu.mak            |  1 +
- configs/targets/loongarch64-linux-user.mak  |  1 +
- configs/targets/loongarch64-softmmu.mak     |  1 +
- configs/targets/m68k-linux-user.mak         |  1 +
- configs/targets/m68k-softmmu.mak            |  1 +
- configs/targets/microblaze-linux-user.mak   |  1 +
- configs/targets/microblaze-softmmu.mak      |  3 ++
- configs/targets/microblazeel-linux-user.mak |  1 +
- configs/targets/microblazeel-softmmu.mak    |  3 ++
- configs/targets/mips-linux-user.mak         |  1 +
- configs/targets/mips-softmmu.mak            |  1 +
- configs/targets/mips64-linux-user.mak       |  1 +
- configs/targets/mips64-softmmu.mak          |  1 +
- configs/targets/mips64el-linux-user.mak     |  1 +
- configs/targets/mips64el-softmmu.mak        |  1 +
- configs/targets/mipsel-linux-user.mak       |  1 +
- configs/targets/mipsel-softmmu.mak          |  1 +
- configs/targets/mipsn32-linux-user.mak      |  1 +
- configs/targets/mipsn32el-linux-user.mak    |  1 +
- configs/targets/or1k-linux-user.mak         |  1 +
- configs/targets/or1k-softmmu.mak            |  1 +
- configs/targets/ppc-linux-user.mak          |  1 +
- configs/targets/ppc-softmmu.mak             |  1 +
- configs/targets/ppc64-linux-user.mak        |  1 +
- configs/targets/ppc64-softmmu.mak           |  1 +
- configs/targets/ppc64le-linux-user.mak      |  1 +
- configs/targets/riscv32-linux-user.mak      |  1 +
- configs/targets/riscv32-softmmu.mak         |  1 +
- configs/targets/riscv64-bsd-user.mak        |  1 +
- configs/targets/riscv64-linux-user.mak      |  1 +
- configs/targets/riscv64-softmmu.mak         |  1 +
- configs/targets/rx-softmmu.mak              |  1 +
- configs/targets/s390x-linux-user.mak        |  1 +
- configs/targets/s390x-softmmu.mak           |  1 +
- configs/targets/sh4-linux-user.mak          |  1 +
- configs/targets/sh4-softmmu.mak             |  1 +
- configs/targets/sh4eb-linux-user.mak        |  1 +
- configs/targets/sh4eb-softmmu.mak           |  1 +
- configs/targets/sparc-linux-user.mak        |  1 +
- configs/targets/sparc-softmmu.mak           |  1 +
- configs/targets/sparc32plus-linux-user.mak  |  1 +
- configs/targets/sparc64-linux-user.mak      |  1 +
- configs/targets/sparc64-softmmu.mak         |  1 +
- configs/targets/tricore-softmmu.mak         |  1 +
- configs/targets/x86_64-bsd-user.mak         |  1 +
- configs/targets/x86_64-linux-user.mak       |  1 +
- configs/targets/x86_64-softmmu.mak          |  1 +
- configs/targets/xtensa-linux-user.mak       |  1 +
- configs/targets/xtensa-softmmu.mak          |  1 +
- configs/targets/xtensaeb-linux-user.mak     |  1 +
- configs/targets/xtensaeb-softmmu.mak        |  1 +
- docs/about/deprecated.rst                   |  7 +++
- docs/devel/multi-thread-tcg.rst             |  1 -
- meson.build                                 | 47 +++++++++-----------
- plugins/meson.build                         |  5 ++-
- target/mips/tcg/meson.build                 |  4 +-
- target/mips/tcg/system/meson.build          |  6 +--
- tcg/meson.build                             |  8 +++-
- 108 files changed, 241 insertions(+), 202 deletions(-)
- delete mode 100644 include/tcg/oversized-guest.h
- create mode 100644 plugins/stubs.c
- create mode 100644 tcg/perf-stubs.c
-
+diff --git a/.gitlab-ci.d/crossbuilds.yml b/.gitlab-ci.d/crossbuilds.yml
+index 95dfc39224..7ae0f966f1 100644
+--- a/.gitlab-ci.d/crossbuilds.yml
++++ b/.gitlab-ci.d/crossbuilds.yml
+@@ -61,7 +61,7 @@ cross-i686-tci:
+   variables:
+     IMAGE: debian-i686-cross
+     ACCEL: tcg-interpreter
+-    EXTRA_CONFIGURE_OPTS: --target-list=i386-softmmu,i386-linux-user,aarch64-softmmu,aarch64-linux-user,ppc-softmmu,ppc-linux-user --disable-plugins --disable-kvm
++    EXTRA_CONFIGURE_OPTS: --target-list=i386-softmmu,i386-linux-user,arm-softmmu,arm-linux-user,ppc-softmmu,ppc-linux-user --disable-plugins --disable-kvm
+     # Force tests to run with reduced parallelism, to see whether this
+     # reduces the flakiness of this CI job. The CI
+     # environment by default shows us 8 CPUs and so we
 -- 
 2.43.0
 
