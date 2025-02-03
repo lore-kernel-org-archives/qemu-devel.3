@@ -4,74 +4,73 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 474B3C02195
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2E93BC02193
 	for <qemu-devel@archiver.kernel.org>; Mon,  3 Feb 2025 06:07:22 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tepbe-0008CP-A9; Mon, 03 Feb 2025 01:06:52 -0500
+	id 1tepbh-0008Jc-Vj; Mon, 03 Feb 2025 01:06:54 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
- id 1tepb9-000894-5g
- for qemu-devel@nongnu.org; Mon, 03 Feb 2025 01:06:21 -0500
-Received: from mail-pl1-x636.google.com ([2607:f8b0:4864:20::636])
+ id 1tepba-0008F1-RI
+ for qemu-devel@nongnu.org; Mon, 03 Feb 2025 01:06:50 -0500
+Received: from mail-pl1-x633.google.com ([2607:f8b0:4864:20::633])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
- id 1tepb6-00027O-92
- for qemu-devel@nongnu.org; Mon, 03 Feb 2025 01:06:18 -0500
-Received: by mail-pl1-x636.google.com with SMTP id
- d9443c01a7336-2166651f752so75966405ad.3
- for <qemu-devel@nongnu.org>; Sun, 02 Feb 2025 22:06:15 -0800 (PST)
+ id 1tepbY-00027u-8f
+ for qemu-devel@nongnu.org; Mon, 03 Feb 2025 01:06:45 -0500
+Received: by mail-pl1-x633.google.com with SMTP id
+ d9443c01a7336-2164b1f05caso63625045ad.3
+ for <qemu-devel@nongnu.org>; Sun, 02 Feb 2025 22:06:43 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=daynix-com.20230601.gappssmtp.com; s=20230601; t=1738562774; x=1739167574;
+ d=daynix-com.20230601.gappssmtp.com; s=20230601; t=1738562803; x=1739167603;
  darn=nongnu.org; 
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=vnMl1M5wNXF5ZrFlpPquQyUKDLC5VeTh3y/GGEQe7aE=;
- b=mNN+8lJFE9VYnv4o78pFEuNwXeetvVpcO6A5V2me33m82bedzmh73T3Z3Sbu2DOsBL
- B5bFU18h+wf0zr/+36Pc6gfeIWEaBQlpLuJVkPsuxl7xLQh3fNwnILp6swQ+xh8qV6XD
- 9LKkOjkTTlQbJPRBzuC4w0DaaNRWez4mRL218hGn9NiHOr7P7YtYwIQlVWCbdRU7srA5
- EztldFe3LmLP0kAp4djxQFCmuJKWV4I1Sj5n06Y/nIgHoj2zq8aNo3pfHiOuXCypiLPi
- 1EAkj0tt7ikfd0VTW3vMfP+RXzzTmIqTVDwcU7w/ImUAxw2bSO+4hWqlqKCtZsIl5mox
- e2hQ==
+ bh=roBDBiMQYWmB2chio1q+U7Go06XhZmL+gvSo6+HYe/4=;
+ b=tLXNOajZQ2wctF18V4OdKrysC97gGvsdsMTUL3hCv6y/75bACAZozBk2CMleKssO9O
+ uY30dZUSeYSUGffHfW3oOIrLocnQppOsQvGq3XAaEpbYzZxGDBizuSWcz/l43ccCKE0p
+ ul4tLJ60kWDkuKfWW2a5O5aen8fkttG4R8rHuU3wmXdqprCNhWvRatPujzwvnGNxHiAg
+ wOzpjuo5ZiyaE+59ALxANeTQP37zkluVJgnkwFNn+5mYixsYzGvAtP7HlnMDSY/pbduv
+ kvGX+ljXcDFwWNqwtwpMY0PXiPWbE3S6Q+hlP+L6ibXdwjjuK4TC7htumHCRCihVM3iA
+ sWxw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1738562774; x=1739167574;
+ d=1e100.net; s=20230601; t=1738562803; x=1739167603;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=vnMl1M5wNXF5ZrFlpPquQyUKDLC5VeTh3y/GGEQe7aE=;
- b=LnCI/68iEgfk2TeRtjDTbtwdUC0o8t5RfLrCH5w5KDWPjmpjy6ppSLbQntoQlCOKv6
- HdMCYBtc8e689ZfzmurreBwHZAbqospiSZXHAloQBifVDQA+wMpktS4vNHT+QB0tLkN3
- MwJQZKdUBdpAf1DMwdX6HOjdZv4GMGTsFkMwGn4OFJzSxoiUxMIBD4vcNcxggrK4cYB9
- Q45A0hQ1R1RFUrQbcAFwC8vskNO0HaTvmTm00jGczLy/fli1/dLpqcd4ULSGFRSZEb41
- 03M8Q4srIdz6wEveNB3MfibxR4vgDtr8StHcJ/lsf0+YVeHABU1n7X190gsYvBNbkJQq
- t/Kw==
+ bh=roBDBiMQYWmB2chio1q+U7Go06XhZmL+gvSo6+HYe/4=;
+ b=oh3URBpPkYQD2cojhESS22rEx+BnORIhkotfPHUC8griYZ95zYbB5uy62kdWu6XRDB
+ Bt0qawKv/Mxr9mPHyIi7fz2zu14AJxlJ7KRfJ2Muv2hsIzyZ9atBvV76xdGnkjHJd8lG
+ 9khidADJBuBZp/kn01IG12HUdjXSbgsjT1Ag0MlmqXUD4mK7PKhWY/k6Z7rPPEYfIW/l
+ ETQmc8IPU0L3Gtd9N8zcXfM3RXshwErVct2N/VYetb4a+zJiWvflMwmi6054rzNkG3tt
+ rYFiCMvg8MFvwv1IlP786pegJMRGIzQ3ZRcx3pSta/CpE5X1VASTliKmeg5SjacKuGDh
+ T4JQ==
 X-Forwarded-Encrypted: i=1;
- AJvYcCXmV4EvU3JdMem614cN/x9cBGimYAWztfVKAr9A9+PHqhHo/ZRj9HlZR2r5MPQdhUKEpTz7E5Y0Yty0@nongnu.org
-X-Gm-Message-State: AOJu0Yz3CCnWlzf/aZ6y2eo58MvFD3uEBpIjY8EBE3PUsWqltcPenncP
- FcmMI/u61Q9BH7RPxDcyuNKeICn5/btA3dPY62tcbQmPVe5OU1ORkhiIuGS/sTg=
-X-Gm-Gg: ASbGncuLME5SSZey6IKxApyxvKOtklRxBXakvDfpKMwaQ4b2pr7Zc1YHbskCLuTxpGw
- XMx5m/wEjaKcYFfED6tJWZBp/c8Av7UqRBKvS6DWYxZ0H3t/+0XtRIEFBUSxv5QCNUILY++XJT3
- IQ7satujXu2BWMRaKJy0noKpx5z0YPe0CLAgqfsnb4YsdTeM6RkJRZGfrsKb/nd2L8sTGR+LxpV
- VR/2z59h2S+SvCDCaVRt8odDK+DaGSyV5+iz351SU7AZfao84/2FY7UHl2PTqD9hexz/wVpC3K9
- vsR4q8hwsevQN+/qN4vJkxZpWGzN
-X-Google-Smtp-Source: AGHT+IE8bZmwO75cLOYbzv4k9Yh8vfI/RcFGEfOplGP7+GCii8epVe4dj0Vgd/Ur18A5DHlnwn/oKg==
-X-Received: by 2002:a17:903:98f:b0:215:3fb9:5201 with SMTP id
- d9443c01a7336-21dd7dff8c1mr384009705ad.44.1738562774548; 
- Sun, 02 Feb 2025 22:06:14 -0800 (PST)
+ AJvYcCU9HIl1ZtujDfa+mBk67yhs21wo3PeQLlB0h5OQh0xGbyl5BdeisY9Psw6SjBdJ0vKeZXgY0BRqPN0P@nongnu.org
+X-Gm-Message-State: AOJu0Yyk8K9w3rr0cMknZ7pS7qfRG6jNVIznwLqe6iknb5XdIKAldkiM
+ nSz2zPWwEXRnsbiH7JWxXD5KLhVUKBnKZ0qQ+3ZxgH7awHANZ+Wk/B2zpBcFXiA=
+X-Gm-Gg: ASbGncu8QUC3O7n5ZltPNn956zc46W6e2QWwak46yhHa5LO+I0+ccE17AYEXbyEb/5A
+ AwR2+4rVN8WFgYH5xEhz2wSb6/zAbPrKgkhgCqJxnsGj71AcyFjQINK4Cff/ka/+dVq0pvSkJ50
+ FVPZqhp6x1Oo3iCQhU8jQ9DzSClQnhmUg79BxnfXr21r0qFQvg5W3ngR94OciC44Q83IUzm7+TO
+ zNjUZ/mmpYco2Iu6+O8SQTLHg58A8c3hfblUwlGbboXLjugFjhwp9D5du/6bUN/07/xph/rnB3Z
+ KbGj/4RKF/xhL3cZKTq/uYG63mfu
+X-Google-Smtp-Source: AGHT+IFChQn0oasUsLTOSA0PR10D4jxXmn223c6yn+Sqfu20/hE1xQSCIeD+fEtH9eT5MB3ApSx6Zg==
+X-Received: by 2002:a05:6a21:3399:b0:1e1:a094:f20e with SMTP id
+ adf61e73a8af0-1ed7a5f06e6mr30487918637.17.1738562802842; 
+ Sun, 02 Feb 2025 22:06:42 -0800 (PST)
 Received: from [157.82.207.107] ([157.82.207.107])
  by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-21de32eba6fsm66936845ad.107.2025.02.02.22.06.08
+ d2e1a72fcca58-72fe69ba380sm7459553b3a.118.2025.02.02.22.06.36
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Sun, 02 Feb 2025 22:06:14 -0800 (PST)
-Message-ID: <9b81ef95-6dec-43cc-9adb-8878ced90c07@daynix.com>
-Date: Mon, 3 Feb 2025 15:06:07 +0900
+ Sun, 02 Feb 2025 22:06:42 -0800 (PST)
+Message-ID: <5bd0c71b-8bd8-4cef-b24b-5842476740a3@daynix.com>
+Date: Mon, 3 Feb 2025 15:06:35 +0900
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v7 08/10] docs/system: virtio-gpu: Add link to Mesa VirGL
- doc
+Subject: Re: [PATCH v7 09/10] docs/system: virtio-gpu: Update Venus link
 To: Dmitry Osipenko <dmitry.osipenko@collabora.com>,
  Huang Rui <ray.huang@amd.com>,
  =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
@@ -91,14 +90,14 @@ Cc: Gert Wollny <gert.wollny@collabora.com>, qemu-devel@nongnu.org,
  Chen Jiqian <Jiqian.Chen@amd.com>, Rob Clark <robdclark@gmail.com>,
  Yiwei Zhang <zzyiwei@chromium.org>, Sergio Lopez Pascual <slp@redhat.com>
 References: <20250202232136.919342-1-dmitry.osipenko@collabora.com>
- <20250202232136.919342-9-dmitry.osipenko@collabora.com>
+ <20250202232136.919342-10-dmitry.osipenko@collabora.com>
 Content-Language: en-US
 From: Akihiko Odaki <akihiko.odaki@daynix.com>
-In-Reply-To: <20250202232136.919342-9-dmitry.osipenko@collabora.com>
+In-Reply-To: <20250202232136.919342-10-dmitry.osipenko@collabora.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::636;
- envelope-from=akihiko.odaki@daynix.com; helo=mail-pl1-x636.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::633;
+ envelope-from=akihiko.odaki@daynix.com; helo=mail-pl1-x633.google.com
 X-Spam_score_int: -18
 X-Spam_score: -1.9
 X-Spam_bar: -
@@ -121,36 +120,12 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 2025/02/03 8:21, Dmitry Osipenko wrote:
-> Extend virtio-gpu documentation with a link to the Mesa VirGL
-> documentation.
+> Change virtio-gpu Venus link, pointing it at the Mesa Venus
+> documentation instead of the protocol. The Mesa doc provides more
+> information and also has a link to the protocol.
 > 
 > Suggested-by: Akihiko Odaki <akihiko.odaki@daynix.com>
 > Signed-off-by: Dmitry Osipenko <dmitry.osipenko@collabora.com>
-> ---
->   docs/system/devices/virtio-gpu.rst | 3 ++-
->   1 file changed, 2 insertions(+), 1 deletion(-)
-> 
-> diff --git a/docs/system/devices/virtio-gpu.rst b/docs/system/devices/virtio-gpu.rst
-> index f20c60016376..f8963c1f13cf 100644
-> --- a/docs/system/devices/virtio-gpu.rst
-> +++ b/docs/system/devices/virtio-gpu.rst
-> @@ -59,7 +59,7 @@ on typical modern Linux distributions.
->   virtio-gpu virglrenderer
->   ------------------------
->   
-> -When using virgl accelerated graphics mode in the guest, OpenGL API calls
-> +When using `virgl`_ accelerated graphics mode in the guest, OpenGL API calls
->   are translated into an intermediate representation (see `Gallium3D`_). The
->   intermediate representation is communicated to the host and the
->   `virglrenderer`_ library on the host translates the intermediate
-> @@ -68,6 +68,7 @@ representation back to OpenGL API calls.
->   .. parsed-literal::
->       -device virtio-gpu-gl
->   
-> +.. _virgl: https://docs.mesa3d.org/drivers/virgl.html
->   .. _Gallium3D: https://www.freedesktop.org/wiki/Software/gallium/
->   .. _virglrenderer: https://gitlab.freedesktop.org/virgl/virglrenderer/
->   
 
 Reviewed-by: Akihiko Odaki <akihiko.odaki@daynix.com>
 
