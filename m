@@ -4,98 +4,73 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7FDDFC02192
-	for <qemu-devel@archiver.kernel.org>; Mon,  3 Feb 2025 18:53:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 60E87C02197
+	for <qemu-devel@archiver.kernel.org>; Mon,  3 Feb 2025 18:53:45 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tf1ZO-0003un-9a; Mon, 03 Feb 2025 13:53:18 -0500
+	id 1tf1ZU-0003wg-2O; Mon, 03 Feb 2025 13:53:24 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mhej@vps-ovh.mhejs.net>)
- id 1tf1ZL-0003uG-7F
- for qemu-devel@nongnu.org; Mon, 03 Feb 2025 13:53:15 -0500
-Received: from vps-ovh.mhejs.net ([145.239.82.108])
+ (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
+ id 1tf1ZT-0003w9-AD
+ for qemu-devel@nongnu.org; Mon, 03 Feb 2025 13:53:23 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mhej@vps-ovh.mhejs.net>)
- id 1tf1ZJ-0005ew-8c
- for qemu-devel@nongnu.org; Mon, 03 Feb 2025 13:53:14 -0500
-Received: from MUA
- by vps-ovh.mhejs.net with esmtpsa  (TLS1.3) tls TLS_AES_128_GCM_SHA256
- (Exim 4.98) (envelope-from <mhej@vps-ovh.mhejs.net>)
- id 1tf1ZB-00000006nrh-3Mvp; Mon, 03 Feb 2025 19:53:05 +0100
-Message-ID: <67a7c2ce-2391-4b8e-a5be-bce370fd2e66@maciej.szmigiero.name>
-Date: Mon, 3 Feb 2025 19:53:00 +0100
+ (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
+ id 1tf1ZR-0005hB-UB
+ for qemu-devel@nongnu.org; Mon, 03 Feb 2025 13:53:23 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1738608800;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=+aIyUtfyEnpRP2Kl4GUKwBE+x6XUwAW4mOj1yqPSqW8=;
+ b=PPucoA6x4cC3gdPjyh5td7stMddISahyan/cA/kVBNX5DrqfQu5IDmwFW5ZrIgDuaglsQe
+ BhorSXVSCgWShoYzLZwMcWxxKUE7vJdwaeSj3YNtt0vgRS4kyBTUPBh0K5FM5DdTxVPuO9
+ 7lRrus6YjvGke6dK0LUASyA7UvOXbaM=
+Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-635-HW0iJn5KNW63Vw8VM-hKgw-1; Mon,
+ 03 Feb 2025 13:53:16 -0500
+X-MC-Unique: HW0iJn5KNW63Vw8VM-hKgw-1
+X-Mimecast-MFC-AGG-ID: HW0iJn5KNW63Vw8VM-hKgw
+Received: from mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.15])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id B8EAA18009C5; Mon,  3 Feb 2025 18:53:15 +0000 (UTC)
+Received: from localhost (unknown [10.2.16.131])
+ by mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 1D9B11956095; Mon,  3 Feb 2025 18:53:14 +0000 (UTC)
+Date: Mon, 3 Feb 2025 13:53:14 -0500
+From: Stefan Hajnoczi <stefanha@redhat.com>
+To: Kevin Wolf <kwolf@redhat.com>
+Cc: qemu-block@nongnu.org, hreitz@redhat.com, pkrempa@redhat.com,
+ peterx@redhat.com, farosas@suse.de, qemu-devel@nongnu.org
+Subject: Re: [PATCH v2 07/15] block: Add option to create inactive nodes
+Message-ID: <20250203185314.GI268514@fedora>
+References: <20250130171240.286878-1-kwolf@redhat.com>
+ <20250130171240.286878-8-kwolf@redhat.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v4 08/33] migration/multifd: Allow premature EOF on TLS
- incoming channels
-To: Peter Xu <peterx@redhat.com>
-Cc: Fabiano Rosas <farosas@suse.de>,
- Alex Williamson <alex.williamson@redhat.com>,
- =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>,
- Eric Blake <eblake@redhat.com>, Markus Armbruster <armbru@redhat.com>,
- =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
- Avihai Horon <avihaih@nvidia.com>, Joao Martins <joao.m.martins@oracle.com>,
- qemu-devel@nongnu.org
-References: <cover.1738171076.git.maciej.szmigiero@oracle.com>
- <baf944c37ead5d30d7e268b2a4074d9acaac2db0.1738171076.git.maciej.szmigiero@oracle.com>
- <Z6EI0V6Cg7aCbzQU@x1.local>
-Content-Language: en-US, pl-PL
-From: "Maciej S. Szmigiero" <mail@maciej.szmigiero.name>
-Autocrypt: addr=mail@maciej.szmigiero.name; keydata=
- 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
-In-Reply-To: <Z6EI0V6Cg7aCbzQU@x1.local>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=145.239.82.108;
- envelope-from=mhej@vps-ovh.mhejs.net; helo=vps-ovh.mhejs.net
-X-Spam_score_int: -17
-X-Spam_score: -1.8
-X-Spam_bar: -
-X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9,
- HEADER_FROM_DIFFERENT_DOMAINS=0.068, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Type: multipart/signed; micalg=pgp-sha256;
+ protocol="application/pgp-signature"; boundary="Et9LXKLqoIlLNwpG"
+Content-Disposition: inline
+In-Reply-To: <20250130171240.286878-8-kwolf@redhat.com>
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.15
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=stefanha@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -111,68 +86,47 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 3.02.2025 19:20, Peter Xu wrote:
-> On Thu, Jan 30, 2025 at 11:08:29AM +0100, Maciej S. Szmigiero wrote:
->> From: "Maciej S. Szmigiero" <maciej.szmigiero@oracle.com>
->>
->> Multifd send channels are terminated by calling
->> qio_channel_shutdown(QIO_CHANNEL_SHUTDOWN_BOTH) in
->> multifd_send_terminate_threads(), which in the TLS case essentially
->> calls shutdown(SHUT_RDWR) on the underlying raw socket.
->>
->> Unfortunately, this does not terminate the TLS session properly and
->> the receive side sees this as a GNUTLS_E_PREMATURE_TERMINATION error.
->>
->> The only reason why this wasn't causing migration failures is because
->> the current migration code apparently does not check for migration
->> error being set after the end of the multifd receive process.
->>
->> However, this will change soon so the multifd receive code has to be
->> prepared to not return an error on such premature TLS session EOF.
->> Use the newly introduced QIOChannelTLS method for that.
->>
->> It's worth noting that even if the sender were to be changed to terminate
->> the TLS connection properly the receive side still needs to remain
->> compatible with older QEMU bit stream which does not do this.
-> 
-> If this is an existing bug, we could add a Fixes.
 
-It is an existing issue but only uncovered by this patch set.
+--Et9LXKLqoIlLNwpG
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-As far as I can see it was always there, so it would need some
-thought where to point that Fixes tag.
-  
-> Two pure questions..
-> 
->    - What is the correct way to terminate the TLS session without this flag?
+On Thu, Jan 30, 2025 at 06:12:38PM +0100, Kevin Wolf wrote:
+> In QEMU, nodes are automatically created inactive while expecting an
+> incoming migration (i.e. RUN_STATE_INMIGRATE). In qemu-storage-daemon,
+> the notion of runstates doesn't exist. It also wouldn't necessarily make
+> sense to introduce it because a single daemon can serve multiple VMs
+> that can be in different states.
+>=20
+> Therefore, allow the user to explicitly open images as inactive with a
+> new option. The default is as before: Nodes are usually active, except
+> when created during RUN_STATE_INMIGRATE.
+>=20
+> Signed-off-by: Kevin Wolf <kwolf@redhat.com>
+> ---
+>  qapi/block-core.json         | 6 ++++++
+>  include/block/block-common.h | 1 +
+>  block.c                      | 9 +++++++++
+>  3 files changed, 16 insertions(+)
 
-I guess one would need to call gnutls_bye() like in this GnuTLS example:
-https://gitlab.com/gnutls/gnutls/-/blob/2b8c3e4c71ad380bbbffb32e6003b34ecad596e3/doc/examples/ex-client-anon.c#L102
+Reviewed-by: Stefan Hajnoczi <stefanha@redhat.com>
 
->    - Why this is only needed by multifd sessions?
+--Et9LXKLqoIlLNwpG
+Content-Type: application/pgp-signature; name="signature.asc"
 
-What uncovered the issue was switching the load threads to using
-migrate_set_error() instead of their own result variable
-(load_threads_ret) which you had requested during the previous
-patch set version review:
-https://lore.kernel.org/qemu-devel/Z1DbH5fwBaxtgrvH@x1n/
+-----BEGIN PGP SIGNATURE-----
 
-Turns out that the multifd receive code always returned
-error in the TLS case, just nothing was previously checking for
-that error presence.
+iQEzBAEBCAAdFiEEhpWov9P5fNqsNXdanKSrs4Grc8gFAmehEJkACgkQnKSrs4Gr
+c8jB3wf+NC+QPsfmI+51aOwBgJQ95EEGuEDSSC01TMlJrRaIBHP5LpFNw+O1lBnW
+Nji/FHo1B+T8iPFeNBJ8JtztRx7zFsK9wU+fTWDaiswylfUoARgIQGeZFdFo7YOV
+rhdk9rC7m0PrmAY+lNDMwaOy4ZVOvJ+8gkl4Yyf3nDTxBIWjhtTF3mMt5paF/W6M
+ceNX31Mm9lAJAnj3H6E8mInmJhhUqdFKpNHoo7t/7vSX1uZqLWzBuRzmqsHeJ5h9
+k8IsGoRusS2UcYaJzIXgtLJsrhX4eWvbo7DoXoWLfuMdmCvsMZ9mNRzHae+emsu9
++BPJx926imCalCQcPhbpVpauOghPng==
+=Ncg8
+-----END PGP SIGNATURE-----
 
-Another option would be to simply return to using
-load_threads_ret like the previous versions did and not
-experiment with touching global migration state because
-as we can see other places can unintentionally break.
-
-If we go this route then these TLS EOF patches could be
-dropped.
-
-> Thanks,
-> 
-
-Thanks,
-Maciej
+--Et9LXKLqoIlLNwpG--
 
 
