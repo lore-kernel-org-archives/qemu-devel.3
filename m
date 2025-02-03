@@ -4,84 +4,86 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id EC8BAC02197
-	for <qemu-devel@archiver.kernel.org>; Mon,  3 Feb 2025 17:49:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 108F6C02192
+	for <qemu-devel@archiver.kernel.org>; Mon,  3 Feb 2025 18:02:29 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tf0Yu-0005jw-HX; Mon, 03 Feb 2025 12:48:44 -0500
+	id 1tf0lM-0000Jw-Dq; Mon, 03 Feb 2025 13:01:36 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tf0Ys-0005jN-ER
- for qemu-devel@nongnu.org; Mon, 03 Feb 2025 12:48:42 -0500
-Received: from mail-wm1-x32f.google.com ([2a00:1450:4864:20::32f])
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1tf0lJ-0000J5-Li
+ for qemu-devel@nongnu.org; Mon, 03 Feb 2025 13:01:35 -0500
+Received: from mail-pl1-x636.google.com ([2607:f8b0:4864:20::636])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tf0Yq-0007Ou-3C
- for qemu-devel@nongnu.org; Mon, 03 Feb 2025 12:48:42 -0500
-Received: by mail-wm1-x32f.google.com with SMTP id
- 5b1f17b1804b1-4368a293339so55053175e9.3
- for <qemu-devel@nongnu.org>; Mon, 03 Feb 2025 09:48:39 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1tf0lG-00007q-RK
+ for qemu-devel@nongnu.org; Mon, 03 Feb 2025 13:01:32 -0500
+Received: by mail-pl1-x636.google.com with SMTP id
+ d9443c01a7336-21644aca3a0so110811215ad.3
+ for <qemu-devel@nongnu.org>; Mon, 03 Feb 2025 10:01:29 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1738604918; x=1739209718; darn=nongnu.org;
+ d=linaro.org; s=google; t=1738605688; x=1739210488; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=SuiXt82jmg07KF4QARlJ6lRA6PyjX9pCZ9OzLu38v+4=;
- b=W4Bz/3R5/MCwEQCzCCvUUGsQn6dMr6ktyewNP6I3qAce6p13kcsLa+9r7OREgf/XTN
- 5LJJ7OdSuqZ0xnfp8yG7hk91QEs2YAGakZEB4aNauxNBcAFiaY4Zudi861gRIF7PM3tP
- QGKydGvikQRvurewUlwnVvR1AFQeuZRrDw0DdVUy7WrCZgHETx5rEl7oz7o8aepEpwk1
- BTn0TxCcQSQNu6rJmqdbSCacGN/6b0uqwtyj60yUQO0468GhmLwLl1CK+aLYJ9eKJEoO
- rUgX4DvhKyezVGCr+waaTViG94LKKmoj+SPmzMhrclCM+ZJGNC0fBj5TmFZ9AI/GtFNv
- /98A==
+ bh=McG6HjAUy8lAtYKTxtpu3r6hB/zczMFHKjbTNSMHuEE=;
+ b=sxiQJgq9NNVN84yScbBYFJW+Yshpgtp+yLzI0McYqv8auX9VEVIR2Y+5PgL6FOxIR0
+ 3cRb6Gs9EG8oDveoScatIbxoBcFdJBIFYO+ffukCrjJz0/qR5WEUF8ndFuxLWDICOJxW
+ xtIyzmU3hFqKhexMEkLSTcDdawN+x/WYt4F+VRi98jraaanku+n2JaZ4qD2dCKpUPF3U
+ UJAxLFwWTa1HBRjAQKvLFiwLq5uonXsYzYicv1WEAFOal23TpTpcSw33vT7ef4KaI9Fi
+ e5IVkI/kqNApwWyHYNl3VeUNqfohirZLGbGq+otrWnXI8uTk1lrt2HhmdWhqi3ZpHBc8
+ MLDw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1738604918; x=1739209718;
+ d=1e100.net; s=20230601; t=1738605688; x=1739210488;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=SuiXt82jmg07KF4QARlJ6lRA6PyjX9pCZ9OzLu38v+4=;
- b=f7tdVHB2FBJLm5IKccZIFazQRGuuASopOBL0W8ATSc32oj5+t41zcVjmTlB0dkS1y5
- eUuHZ7YGd3iBJkDZIQSP8wDJ888R8EYefVXWZYYWU5sOdZwX910d6ne6r99UDxCQT+/a
- 2i9WwsXfiNM+dqhXJ6mtPFERQ6VKBf9vvr4dm/i+oARTCAGu/elWXWDub5F59c5Qeslm
- VVsYaMlFxS+S70R7tIf5p31bCQSbEKZyrLkeOd/M51AkydoVs206ugFR43irEpWbWrhS
- ktzT6Gi1gGqiIoWaZmN3+XSwiFmzqVOZDbRwE5xAMjNnTKbgGffuXYcfR8BY1JXEjP2O
- hvKA==
+ bh=McG6HjAUy8lAtYKTxtpu3r6hB/zczMFHKjbTNSMHuEE=;
+ b=V48peA4qQKmX2HwJzVD12oR6vDCIofkGUJqzMcn15nuM5+UgdSoXSnsJNDO/+nBnKH
+ K14/OIBFXyajFvFWlMdegoQFSOXnHOqZgv9KSg859pA7+PwTKB5r88Jg2X93bnyMy8PI
+ vaatPyv9961+sKRdYBgZL64OyvBpDHWW2kFRkemykcv53AooCGz6n9/D1Jhv1bY6c1Il
+ IMkJnqYvNPCveRGNAjfYcWRbHciQIn8bMWeTe81DaK0rZ+M/37ievVqCCyuQPaXmx67o
+ 201i+PYGFI5B/oNbofC9tmmHprAkTeFoYMq7bBpq5TGIWu0L5/ICgFVAizc3oufBdyk+
+ H/OQ==
 X-Forwarded-Encrypted: i=1;
- AJvYcCWhBCSqQP7702SYzc6EsRp3x26THfaOiKADsyJP+ev5ZKti7KlM2+iMyF5InwVq467wegQrB0zSYEzR@nongnu.org
-X-Gm-Message-State: AOJu0YxUTQIXCyCX6pld74q4+L7QqicmCoTNspJUQwWyhoME2Xw/Us4X
- YiTn4BKjSvSWE86TsVz8YJwMg7W7+I3LEl7YUlQxqCurNdW8jvmFWfdHiU7Ps2A=
-X-Gm-Gg: ASbGncsd46wLc90yRJUgNP5GBawU5FfE/PkqZu+G1yblFrgfCzee5Y/2z15DZen95yL
- r+0VbpWNXQvBRiHK/wBHOmenGMLPQ0Qgj969Jfjzl+d9EBveJ4MC5YlOkZ2YpXFWNToT4mj7nxQ
- AIs/uwhTvEfrDaQMkMU86pEoHjmT3Gz3z5tJL7lWIFWpPhSWosDLB5qUL8/ojP2QoVvJDQAI/Ql
- I2dhYa6gG7/WHs5ACeUsY+QhQxPst4B4BlI8ELSM9cLwU62lNUVdFqczhEi0CDMf15fgfkJqlF6
- UIwXB/fsN+xPSSa/dmOGU+f3Q4q1qf4dXIEslEtBgXnTbSIiJydUBb4NWlE=
-X-Google-Smtp-Source: AGHT+IEZlbWTwOwQWMvh6an2g8qjzbXkzCf0HVAilBdTQ/GYkaZYioCKFV/Y5dwa6WZSCSR3v8U0gw==
-X-Received: by 2002:a05:600c:1e20:b0:438:a1f4:3e9d with SMTP id
- 5b1f17b1804b1-438dc3c405dmr180653705e9.9.1738604917776; 
- Mon, 03 Feb 2025 09:48:37 -0800 (PST)
-Received: from [192.168.69.198] (88-187-86-199.subs.proxad.net.
- [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-38c5c1b547csm13547569f8f.62.2025.02.03.09.48.36
+ AJvYcCVo9VGnDROpouUgd2JpbjszqnbRveA0OniUwesvj7risz3OOQKWgfYFXmG2v7TdeWN/peVIOpMNXuI/@nongnu.org
+X-Gm-Message-State: AOJu0YxuCtRebKLydHkiJVy60cgGxVDyxifw3JCgmQnyD8CserpHVE0+
+ 6PzbwP+VaM/dc64Qc/w2SK9fv+2Hs4DwQsTSKtPdbqi6mVN+SML6BJOMa4+YXlk=
+X-Gm-Gg: ASbGncukRc0yKEf2hLeK4Y+kEqrG30tZMsSP2CGTZoupWwvK8m6vfIaUkEzMhqxzXh/
+ Gr4DNx9hDwBF0/PgrvmDYKiaY21Sf1SkJgLqNMX2Fe91stDRSZuH3hJMj8bpDYRbnYXr/YRITE+
+ RryGJZOSrDx1KilL24ER9qrZhYeGyctJ/l10AfSVdVw60iZJfKkz0hDaN3Nod9dA8+zl/6X9T2y
+ U3+kW9Xyd4b+mBYj/dDJ/l94JlQlSrcSB5h1MBwbyLsAKtyaZm7g0EOmGaCzButQyik0kyBs8Zn
+ 4HrSyAfEYb29az+sczQcaTG/2gaCABVo3Mn3sYyKtV3seAdhc3oNUxs=
+X-Google-Smtp-Source: AGHT+IE2Kr3ZFCuyNQt+xJAhxdq6SvT+aT1P1w9vNu/PzP3HKYxyJFaTNho3xGJm8MfUNJXwj7AmQQ==
+X-Received: by 2002:a05:6a21:178a:b0:1e1:b727:181a with SMTP id
+ adf61e73a8af0-1ed7a640db4mr39341726637.24.1738605688634; 
+ Mon, 03 Feb 2025 10:01:28 -0800 (PST)
+Received: from [192.168.0.4] (71-212-39-66.tukw.qwest.net. [71.212.39.66])
+ by smtp.gmail.com with ESMTPSA id
+ d2e1a72fcca58-72fe69cdfecsm8937791b3a.133.2025.02.03.10.01.27
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 03 Feb 2025 09:48:37 -0800 (PST)
-Message-ID: <840c162c-b949-436b-8929-15cfdd0f94e7@linaro.org>
-Date: Mon, 3 Feb 2025 18:48:36 +0100
+ Mon, 03 Feb 2025 10:01:27 -0800 (PST)
+Message-ID: <8f128095-121c-463a-8a58-18ffe66dd67f@linaro.org>
+Date: Mon, 3 Feb 2025 10:01:26 -0800
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 10/14] configure: Define TARGET_LONG_BITS in
- configs/targets/*.mak
-To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org,
- "Edgar E. Iglesias" <edgar.iglesias@gmail.com>
+Subject: Re: [PATCH v2 08/14] target/mips: Protect objects with CONFIG_TCG
+To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ qemu-devel@nongnu.org
 Cc: pbonzini@redhat.com, mark.cave-ayland@ilande.co.uk, berrange@redhat.com,
  thuth@redhat.com
 References: <20250203031821.741477-1-richard.henderson@linaro.org>
- <20250203031821.741477-11-richard.henderson@linaro.org>
+ <20250203031821.741477-9-richard.henderson@linaro.org>
+ <f5f62fd7-0d42-4f0c-b8bf-cbcdd9dc54ab@linaro.org>
 Content-Language: en-US
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20250203031821.741477-11-richard.henderson@linaro.org>
+From: Richard Henderson <richard.henderson@linaro.org>
+In-Reply-To: <f5f62fd7-0d42-4f0c-b8bf-cbcdd9dc54ab@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32f;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x32f.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::636;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x636.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -104,182 +106,35 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 3/2/25 04:18, Richard Henderson wrote:
-> Define TARGET_LONG_BITS in each target's configure fragment.
-> Do this without removing the define in target/*/cpu-param.h
-> so that errors are caught like so:
+On 2/3/25 09:25, Philippe Mathieu-Daudé wrote:
+> Hi Richard,
 > 
-> In file included from .../src/include/exec/cpu-defs.h:26,
->                   from ../src/target/hppa/cpu.h:24,
->                   from ../src/linux-user/qemu.h:4,
->                   from ../src/linux-user/hppa/cpu_loop.c:21:
-> ../src/target/hppa/cpu-param.h:11: error: "TARGET_LONG_BITS" redefined [-Werror]
->     11 | #define TARGET_LONG_BITS              64
->        |
-> In file included from .../src/include/qemu/osdep.h:36,
->                   from ../src/linux-user/hppa/cpu_loop.c:20:
-> ./hppa-linux-user-config-target.h:32: note: this is the location of the previous definition
->     32 | #define TARGET_LONG_BITS 32
->        |
-> cc1: all warnings being treated as errors
+> On 3/2/25 04:18, Richard Henderson wrote:
+>> Hack around mips32 host allowing kvm acceleration
+>> of mips64 guest, but tcg is disabled.
 > 
-> Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
-> ---
->   configs/targets/aarch64-bsd-user.mak        | 1 +
->   configs/targets/aarch64-linux-user.mak      | 1 +
->   configs/targets/aarch64-softmmu.mak         | 1 +
->   configs/targets/aarch64_be-linux-user.mak   | 1 +
->   configs/targets/alpha-linux-user.mak        | 1 +
->   configs/targets/alpha-softmmu.mak           | 1 +
->   configs/targets/arm-bsd-user.mak            | 1 +
->   configs/targets/arm-linux-user.mak          | 1 +
->   configs/targets/arm-softmmu.mak             | 1 +
->   configs/targets/armeb-linux-user.mak        | 1 +
->   configs/targets/avr-softmmu.mak             | 1 +
->   configs/targets/hexagon-linux-user.mak      | 1 +
->   configs/targets/hppa-linux-user.mak         | 2 ++
->   configs/targets/hppa-softmmu.mak            | 1 +
->   configs/targets/i386-bsd-user.mak           | 1 +
->   configs/targets/i386-linux-user.mak         | 1 +
->   configs/targets/i386-softmmu.mak            | 1 +
->   configs/targets/loongarch64-linux-user.mak  | 1 +
->   configs/targets/loongarch64-softmmu.mak     | 1 +
->   configs/targets/m68k-linux-user.mak         | 1 +
->   configs/targets/m68k-softmmu.mak            | 1 +
->   configs/targets/microblaze-linux-user.mak   | 1 +
->   configs/targets/microblaze-softmmu.mak      | 3 +++
->   configs/targets/microblazeel-linux-user.mak | 1 +
->   configs/targets/microblazeel-softmmu.mak    | 3 +++
->   configs/targets/mips-linux-user.mak         | 1 +
->   configs/targets/mips-softmmu.mak            | 1 +
->   configs/targets/mips64-linux-user.mak       | 1 +
->   configs/targets/mips64-softmmu.mak          | 1 +
->   configs/targets/mips64el-linux-user.mak     | 1 +
->   configs/targets/mips64el-softmmu.mak        | 1 +
->   configs/targets/mipsel-linux-user.mak       | 1 +
->   configs/targets/mipsel-softmmu.mak          | 1 +
->   configs/targets/mipsn32-linux-user.mak      | 1 +
->   configs/targets/mipsn32el-linux-user.mak    | 1 +
->   configs/targets/or1k-linux-user.mak         | 1 +
->   configs/targets/or1k-softmmu.mak            | 1 +
->   configs/targets/ppc-linux-user.mak          | 1 +
->   configs/targets/ppc-softmmu.mak             | 1 +
->   configs/targets/ppc64-linux-user.mak        | 1 +
->   configs/targets/ppc64-softmmu.mak           | 1 +
->   configs/targets/ppc64le-linux-user.mak      | 1 +
->   configs/targets/riscv32-linux-user.mak      | 1 +
->   configs/targets/riscv32-softmmu.mak         | 1 +
->   configs/targets/riscv64-bsd-user.mak        | 1 +
->   configs/targets/riscv64-linux-user.mak      | 1 +
->   configs/targets/riscv64-softmmu.mak         | 1 +
->   configs/targets/rx-softmmu.mak              | 1 +
->   configs/targets/s390x-linux-user.mak        | 1 +
->   configs/targets/s390x-softmmu.mak           | 1 +
->   configs/targets/sh4-linux-user.mak          | 1 +
->   configs/targets/sh4-softmmu.mak             | 1 +
->   configs/targets/sh4eb-linux-user.mak        | 1 +
->   configs/targets/sh4eb-softmmu.mak           | 1 +
->   configs/targets/sparc-linux-user.mak        | 1 +
->   configs/targets/sparc-softmmu.mak           | 1 +
->   configs/targets/sparc32plus-linux-user.mak  | 1 +
->   configs/targets/sparc64-linux-user.mak      | 1 +
->   configs/targets/sparc64-softmmu.mak         | 1 +
->   configs/targets/tricore-softmmu.mak         | 1 +
->   configs/targets/x86_64-bsd-user.mak         | 1 +
->   configs/targets/x86_64-linux-user.mak       | 1 +
->   configs/targets/x86_64-softmmu.mak          | 1 +
->   configs/targets/xtensa-linux-user.mak       | 1 +
->   configs/targets/xtensa-softmmu.mak          | 1 +
->   configs/targets/xtensaeb-linux-user.mak     | 1 +
->   configs/targets/xtensaeb-softmmu.mak        | 1 +
->   67 files changed, 72 insertions(+)
+> We have in target/mips/meson.build:
+> 
+> if 'CONFIG_TCG' in config_all_accel
+>    subdir('tcg')
+> endif
+> 
+> What is the problem you are trying to address here?
 
-Simpler to review split in 2 (32, 64).
+That test is for CONFIG_TCG enabled for *any* target (config_all_accel).
 
-$ git grep -l TARGET_LONG_BITS=32 configs/targets/
-configs/targets/arm-bsd-user.mak
-configs/targets/arm-linux-user.mak
-configs/targets/arm-softmmu.mak
-configs/targets/armeb-linux-user.mak
-configs/targets/avr-softmmu.mak
-configs/targets/hexagon-linux-user.mak
-configs/targets/i386-bsd-user.mak
-configs/targets/i386-linux-user.mak
-configs/targets/i386-softmmu.mak
-configs/targets/m68k-linux-user.mak
-configs/targets/m68k-softmmu.mak
-configs/targets/microblaze-linux-user.mak
-configs/targets/microblazeel-linux-user.mak
-configs/targets/mips-linux-user.mak
-configs/targets/mips-softmmu.mak
-configs/targets/mipsel-linux-user.mak
-configs/targets/mipsel-softmmu.mak
-configs/targets/or1k-linux-user.mak
-configs/targets/or1k-softmmu.mak
-configs/targets/ppc-linux-user.mak
-configs/targets/ppc-softmmu.mak
-configs/targets/riscv32-linux-user.mak
-configs/targets/riscv32-softmmu.mak
-configs/targets/rx-softmmu.mak
-configs/targets/sh4-linux-user.mak
-configs/targets/sh4-softmmu.mak
-configs/targets/sh4eb-linux-user.mak
-configs/targets/sh4eb-softmmu.mak
-configs/targets/sparc-linux-user.mak
-configs/targets/sparc-softmmu.mak
-configs/targets/tricore-softmmu.mak
-configs/targets/xtensa-linux-user.mak
-configs/targets/xtensa-softmmu.mak
-configs/targets/xtensaeb-linux-user.mak
-configs/targets/xtensaeb-softmmu.mak
+E.g. qemu-system-mips on mipsel host has TCG enabled.
 
-OK.
+>> +mips_ss.add(when: 'CONFIG_TCG', if_true: files(
 
-$ git grep -l TARGET_LONG_BITS=64 configs/targets/
-configs/targets/aarch64-bsd-user.mak
-configs/targets/aarch64-linux-user.mak
-configs/targets/aarch64-softmmu.mak
-configs/targets/aarch64_be-linux-user.mak
-configs/targets/alpha-linux-user.mak
-configs/targets/alpha-softmmu.mak
-configs/targets/hppa-linux-user.mak
-configs/targets/hppa-softmmu.mak
-configs/targets/loongarch64-linux-user.mak
-configs/targets/loongarch64-softmmu.mak
-configs/targets/microblaze-softmmu.mak
-configs/targets/microblazeel-softmmu.mak
+This test is for CONFIG_TCG enabled for a specific target (config_target).
 
-Surprising, only 32-bit ISA is implemented.
+E.g. qemu-system-mips64 on mipsel host does not have TCG enabled.
+But it does have kvm enabled, so the target isn't entirely disabled.
 
-Looking at the patch context I see:
+Paolo's reply to the cover suggests this usage might be killable as well, so that we 
+require a mips64el host to spawn mips64el guests, and all of this goes away.
 
-+# System mode can address up to 64 bits via lea/sea instructions.
-+# TODO: These bypass the mmu, so we could emulate these differently.
 
-configs/targets/mips64-linux-user.mak
-configs/targets/mips64-softmmu.mak
-configs/targets/mips64el-linux-user.mak
-configs/targets/mips64el-softmmu.mak
-configs/targets/mipsn32-linux-user.mak
-configs/targets/mipsn32el-linux-user.mak
-configs/targets/ppc64-linux-user.mak
-configs/targets/ppc64-softmmu.mak
-configs/targets/ppc64le-linux-user.mak
-configs/targets/riscv64-bsd-user.mak
-configs/targets/riscv64-linux-user.mak
-configs/targets/riscv64-softmmu.mak
-configs/targets/s390x-linux-user.mak
-configs/targets/s390x-softmmu.mak
-configs/targets/sparc32plus-linux-user.mak
-configs/targets/sparc64-linux-user.mak
-configs/targets/sparc64-softmmu.mak
-configs/targets/x86_64-bsd-user.mak
-configs/targets/x86_64-linux-user.mak
-configs/targets/x86_64-softmmu.mak
-
-OK.
-
-Preferably splitting 32/64:
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-
+r~
 
