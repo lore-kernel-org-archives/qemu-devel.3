@@ -4,85 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 83F59C02192
-	for <qemu-devel@archiver.kernel.org>; Mon,  3 Feb 2025 11:45:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 65A78C02193
+	for <qemu-devel@archiver.kernel.org>; Mon,  3 Feb 2025 11:48:57 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1teusc-0006yc-A7; Mon, 03 Feb 2025 06:44:42 -0500
+	id 1teuw7-0008EM-GO; Mon, 03 Feb 2025 06:48:19 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1teusY-0006yL-9m
- for qemu-devel@nongnu.org; Mon, 03 Feb 2025 06:44:39 -0500
-Received: from mail-ej1-x62b.google.com ([2a00:1450:4864:20::62b])
+ id 1teuw4-0008E6-Ta
+ for qemu-devel@nongnu.org; Mon, 03 Feb 2025 06:48:16 -0500
+Received: from mail-ej1-x62d.google.com ([2a00:1450:4864:20::62d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1teusW-0007fy-KA
- for qemu-devel@nongnu.org; Mon, 03 Feb 2025 06:44:38 -0500
-Received: by mail-ej1-x62b.google.com with SMTP id
- a640c23a62f3a-aaeef97ff02so679348566b.1
- for <qemu-devel@nongnu.org>; Mon, 03 Feb 2025 03:44:36 -0800 (PST)
+ id 1teuw3-00086q-BZ
+ for qemu-devel@nongnu.org; Mon, 03 Feb 2025 06:48:16 -0500
+Received: by mail-ej1-x62d.google.com with SMTP id
+ a640c23a62f3a-aaee2c5ee6eso740240766b.1
+ for <qemu-devel@nongnu.org>; Mon, 03 Feb 2025 03:48:14 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1738583075; x=1739187875; darn=nongnu.org;
+ d=linaro.org; s=google; t=1738583293; x=1739188093; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:message-id:date:user-agent
  :references:in-reply-to:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=Z916Ej0riuhXVXWMhG09twEW09/WoZOqf6vs+3kZL+8=;
- b=Kltqc+liRVSiEvCxDfWYYU609JfOOtsaZsZydBcoRphfJbXz0+aNdmefq8yYbbdo34
- 1eNILXM2/xspoceI8P2bYMqLX46A0hKCHCvXOOASz3G6mr955FEqillRLFqslP0NGfk2
- iI8jL2L+Vu696qeZcdNq4SvhRf/dn6bMHXZTuwnZkPbNMI6N8mdW097Gw2nb0iZ4XXGm
- I2GH7L8JKHWxK1pUqS5iJpGC02QOxuVXZNaLLxTpa1obn8vOYs4JseyTl1GgUVLs1tGZ
- t6HH3l/sHNiu6pqV8jNsorRGn8NY2vKsT3PF5ISzu3XWFrZSFHJWabVuSeoDm8afqJFg
- I9Ww==
+ bh=+QvWE3c0tQCKYVVRxIOKFczQEcf1q5rm8tf1xsWNvEY=;
+ b=mec4273pYUyyvV0Z5wB5RFySt0kZDAZ8BuaZHakE2ykkDcIh5GvJ7DPBf2B+BO9kGD
+ jCWOt8rVVDsWG6BlLfnQQbfCnRYBrl0s1FOkJJJJdf4nBMaqwFtooO+HzpNI+NVJRTNv
+ iNQx2KShC+0+9alL8n2jDnHsue8z/5kKZ8bQMZfmteJ0Cr8//FBbj6QJFusTRHJbhP3n
+ Dl7UvDX3YqWEfKelX9EtBdSjU92Mcm4UJPAMkn+o+NkKonbo/H7GuD1ZIt8Wu4pFJh5N
+ +vcUiUXKGFUFuRFkSh99RqA36WTMmAketmoSaYscWt7R+6PLL5e+URMKx9IhiVI3yiYs
+ M2vg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1738583075; x=1739187875;
+ d=1e100.net; s=20230601; t=1738583293; x=1739188093;
  h=content-transfer-encoding:mime-version:message-id:date:user-agent
  :references:in-reply-to:subject:cc:to:from:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=Z916Ej0riuhXVXWMhG09twEW09/WoZOqf6vs+3kZL+8=;
- b=Ck8joJkd2XbUpsth8/7U5958b3GTcR3lqnmLCZCO+rK/Tt+PbXVMu51px3ekkgjYkH
- bcgjedR+SBw2fdo57KTx1kGTyBdyPu4MaLZ3D4mkFxbDLRDZht2b8q/nQQeiu4gDNhy7
- e5TdU+NyvkbzBONnnPngVhIgn0F2v0vkmYZkjRSo5ibg/W6A6nptJuZUPJ/PJ3m63bj/
- dviYSB6aRKqLcf4e0RVQ4o2nDhXACAhsfi9w1XOsbsYH598+Qm7NWgRzjhKh0XjSC3wI
- w6xnukFDKh5SJ4xgjttEEu6VCDDjLM0oY8MOyr+CoCDVKRFh+20EI/layAHtPmkqJNYp
- 9Jjw==
-X-Gm-Message-State: AOJu0YxoG+bejIt78kAH/IGf3vImvFZnx9Eix7ujIpGPnrBnYk9A5WT2
- TrhyhGoYOC6HA/wYJ2XBkLMTadi3uffHVpzje/WHQGgRoItzKI/Qcku1tTinKDE=
-X-Gm-Gg: ASbGncsFibhb9b7OJbQ6oTi7WGmk7ZQnqBJrIJeSmw3JSgvu9V7gX6aCX8nnhurLQ1p
- 5gOprBFPnv30Ow68SgvSyOc6oCjJswiOLhUvg4EycVEcXbLuTW6w8ZeoWUZwFPnTZjwcl7W3Zsq
- 6DGx5gO7qIQy0SD/RBOxH4sO7/E9pUbfUtjdKgB4ay0txarqllIELLBr9/bN3Z02/78vTMLgk4/
- proL5Xhl/NHyKreAIgJKqHblEypx1rjQ4OqGa9v2CCVsRxuM3r7PlEd6wDaJiCJoQ6ObyWZSKb7
- YcNVxnfS9KgKDiVG6w==
-X-Google-Smtp-Source: AGHT+IFR6gfcDf2fqN1ngUe+rnraxUHlLJQ0ditqTgnUoYvyLJBcW91ICEMPUg7qVVTzq8A7e5563Q==
-X-Received: by 2002:a17:907:868d:b0:ab6:d7c4:fc7d with SMTP id
- a640c23a62f3a-ab6d7c4fee7mr2433123666b.39.1738583074759; 
- Mon, 03 Feb 2025 03:44:34 -0800 (PST)
+ bh=+QvWE3c0tQCKYVVRxIOKFczQEcf1q5rm8tf1xsWNvEY=;
+ b=Cmr3IzabQT7IvAFd+Vtl3FXz3XPbw/0zeOgwivCpxRFx0QYxoUYbyvUR6S2E/J6uR7
+ 0RS0QuDVT9SZMEaRqXxbzjUR7/gje4yiHVZdfrqd4edNUskLke65XbnnWTYhPP69k2dR
+ rtsASNTtBRfB4QWfK6Kqx9+zXxwpMj2y3S2RsIeCzLqo5ElcsiRMcGgg8yPX1/f36FMT
+ RDB7dGb/c6om7PtvMcr/dgKBTpZ53iKXLNfPVJtz6V13ew0xqST8N5fXUfmamGmhgQCt
+ 3LRWC7Hr3A4RrdqREnqGYAXARI3XLMYeTLnMCEINpphj+wLLiGuoGlyyeBLlboslUiv1
+ 0pgg==
+X-Gm-Message-State: AOJu0YxEHDYtJ9sZEmEzTNkiwUBgvswF5s1o832GDRTdAPHMgg1z/Kwi
+ 47xEs+917jjo+ZDVFKy88SwlbuoazPgX5CRd2lG0OPxc9KhR6WIl8/gHotsKSQ8=
+X-Gm-Gg: ASbGncvAUReE+a2o5s3uZjQ7HinSTVxAW3T3eBAJf+DaF/YpUu9oJs4N68TddeWG6wM
+ bqdQvikg2d97NJm+BYxPPv6uGA+Ew8H32Mgo40IvDnDtKsH4GmRgRjYIGN0MAuCNBZldPHQB5W2
+ GF4vlUHG5ufTb2lw7OZ+uXJc6c8VlvM7HJJBY29gETUJaGN11UUDdCe/+kJCEtT09zpAqWB4RQw
+ QmcJV2VnFtUfnhRyab5IEx+P17CBorIhrr0TmveY7lGy4oOOGPMGsGeMjQROUFb/1AZiOIGHZDT
+ lenxOVud7J3h9cDi1g==
+X-Google-Smtp-Source: AGHT+IEXisNCMLKmfOkA1V6+nexxwP4svwMDtI8sdsJQbKSVeXAHfQs4fDyer3tKNnx4KldT8TsLvw==
+X-Received: by 2002:a17:906:4fc7:b0:aab:92bd:1a8f with SMTP id
+ a640c23a62f3a-ab6cfd0839fmr2234277266b.26.1738583293590; 
+ Mon, 03 Feb 2025 03:48:13 -0800 (PST)
 Received: from draig.lan ([185.126.160.109]) by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-ab6e47cfba6sm755335966b.57.2025.02.03.03.44.34
+ a640c23a62f3a-ab6e49ff774sm749792566b.92.2025.02.03.03.48.12
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 03 Feb 2025 03:44:34 -0800 (PST)
+ Mon, 03 Feb 2025 03:48:13 -0800 (PST)
 Received: from draig (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id 5CE925F954;
- Mon,  3 Feb 2025 11:44:33 +0000 (GMT)
+ by draig.lan (Postfix) with ESMTP id 2E3115F954;
+ Mon,  3 Feb 2025 11:48:12 +0000 (GMT)
 From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
 To: Richard Henderson <richard.henderson@linaro.org>
 Cc: qemu-devel@nongnu.org,  pbonzini@redhat.com,
  mark.cave-ayland@ilande.co.uk,  berrange@redhat.com,  philmd@linaro.org,
  thuth@redhat.com
-Subject: Re: [PATCH v2 03/14] plugins: Uninline qemu_plugin_add_opts
-In-Reply-To: <20250203031821.741477-4-richard.henderson@linaro.org> (Richard
- Henderson's message of "Sun, 2 Feb 2025 19:18:10 -0800")
+Subject: Re: [PATCH v2 05/14] tcg: Link only when required in system mode
+In-Reply-To: <20250203031821.741477-6-richard.henderson@linaro.org> (Richard
+ Henderson's message of "Sun, 2 Feb 2025 19:18:12 -0800")
 References: <20250203031821.741477-1-richard.henderson@linaro.org>
- <20250203031821.741477-4-richard.henderson@linaro.org>
+ <20250203031821.741477-6-richard.henderson@linaro.org>
 User-Agent: mu4e 1.12.8; emacs 29.4
-Date: Mon, 03 Feb 2025 11:44:33 +0000
-Message-ID: <87v7trdzha.fsf@draig.linaro.org>
+Date: Mon, 03 Feb 2025 11:48:12 +0000
+Message-ID: <87pljzdzb7.fsf@draig.linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::62b;
- envelope-from=alex.bennee@linaro.org; helo=mail-ej1-x62b.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::62d;
+ envelope-from=alex.bennee@linaro.org; helo=mail-ej1-x62d.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -107,8 +107,9 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 Richard Henderson <richard.henderson@linaro.org> writes:
 
-> No need to expand this function inline.
-> Unexport qemu_plugin_opts to match.
+> Rather than unconditional linkage via system_ss, conditinally
+> include the static library via specific_ss.  This will elide
+> the code when CONFIG_TCG is disabled for a specific target.
 >
 > Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 
