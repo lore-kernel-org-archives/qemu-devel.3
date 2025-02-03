@@ -4,45 +4,50 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id F128DC02192
-	for <qemu-devel@archiver.kernel.org>; Mon,  3 Feb 2025 21:42:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A4C50C02193
+	for <qemu-devel@archiver.kernel.org>; Mon,  3 Feb 2025 21:42:23 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tf4CT-0008TG-BQ; Mon, 03 Feb 2025 16:41:51 -0500
+	id 1tf4Cb-0008UC-SC; Mon, 03 Feb 2025 16:41:58 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mhej@vps-ovh.mhejs.net>)
- id 1tf4CR-0008T7-JT
- for qemu-devel@nongnu.org; Mon, 03 Feb 2025 16:41:47 -0500
+ id 1tf4Ca-0008U3-1C
+ for qemu-devel@nongnu.org; Mon, 03 Feb 2025 16:41:56 -0500
 Received: from vps-ovh.mhejs.net ([145.239.82.108])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mhej@vps-ovh.mhejs.net>)
- id 1tf4CP-0005b7-9a
- for qemu-devel@nongnu.org; Mon, 03 Feb 2025 16:41:47 -0500
+ id 1tf4CW-0005bP-Vn
+ for qemu-devel@nongnu.org; Mon, 03 Feb 2025 16:41:55 -0500
 Received: from MUA
  by vps-ovh.mhejs.net with esmtpsa  (TLS1.3) tls TLS_AES_128_GCM_SHA256
  (Exim 4.98) (envelope-from <mhej@vps-ovh.mhejs.net>)
- id 1tf4CH-00000006oYg-3zj0; Mon, 03 Feb 2025 22:41:37 +0100
-Message-ID: <6b9b4c31-6598-4fd9-9ae2-dbef4cdd7089@maciej.szmigiero.name>
-Date: Mon, 3 Feb 2025 22:41:32 +0100
+ id 1tf4CS-00000006oYq-2CSJ; Mon, 03 Feb 2025 22:41:48 +0100
+Message-ID: <af219c2f-5cbe-4107-a35c-26bb0e2be1a4@maciej.szmigiero.name>
+Date: Mon, 3 Feb 2025 22:41:43 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v4 08/33] migration/multifd: Allow premature EOF on TLS
- incoming channels
+Subject: Re: [PATCH v4 09/33] migration: postcopy_ram_listen_thread() needs to
+ take BQL for some calls
 To: Peter Xu <peterx@redhat.com>
-Cc: Fabiano Rosas <farosas@suse.de>,
- Alex Williamson <alex.williamson@redhat.com>,
- =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>,
- Eric Blake <eblake@redhat.com>, Markus Armbruster <armbru@redhat.com>,
+Cc: "Dr. David Alan Gilbert" <dave@treblig.org>,
+ Fabiano Rosas <farosas@suse.de>, Alex Williamson
+ <alex.williamson@redhat.com>, =?UTF-8?Q?C=C3=A9dric_Le_Goater?=
+ <clg@redhat.com>, Eric Blake <eblake@redhat.com>,
+ Markus Armbruster <armbru@redhat.com>,
  =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
  Avihai Horon <avihaih@nvidia.com>, Joao Martins <joao.m.martins@oracle.com>,
  qemu-devel@nongnu.org
 References: <cover.1738171076.git.maciej.szmigiero@oracle.com>
- <baf944c37ead5d30d7e268b2a4074d9acaac2db0.1738171076.git.maciej.szmigiero@oracle.com>
- <Z6EI0V6Cg7aCbzQU@x1.local>
- <67a7c2ce-2391-4b8e-a5be-bce370fd2e66@maciej.szmigiero.name>
- <Z6ElIlavWHda8YcH@x1.local>
+ <139bf266dbd1e25a1e5a050ecb82e3e59120d705.1738171076.git.maciej.szmigiero@oracle.com>
+ <Z57TPqhRYY4V14BE@gallifrey>
+ <d3a27b10-a7a6-4aa6-97ad-9c39f49df4fc@maciej.szmigiero.name>
+ <Z59o4u9zui3CPrkm@gallifrey>
+ <fafbc505-acee-408e-a2ef-0a62bd30689b@maciej.szmigiero.name>
+ <Z6Ef3iwQs7JSFY3c@x1.local>
+ <afb27de1-d20a-4b0d-b271-ef6eef0e06ed@maciej.szmigiero.name>
+ <Z6Eow-Ei3CvLy1vG@x1.local>
 Content-Language: en-US, pl-PL
 From: "Maciej S. Szmigiero" <mail@maciej.szmigiero.name>
 Autocrypt: addr=mail@maciej.szmigiero.name; keydata=
@@ -86,7 +91,7 @@ Autocrypt: addr=mail@maciej.szmigiero.name; keydata=
  xNT833IQSNqyuEnxG9/M82yYa+9ClBiRKM2JyvgnBEbiWA15rAQkOqZGJfFJ3bmTFePx4R/I
  ZVehUxCRY5IS1FLe16tymf9lCASrPXnkO2+hkHpBCwt75wnccS3DwtIGqwagVVmciCxAFg9E
  WZ4dI5B0IUziKtBxgwJG4xY5rp7WbzywjCeaaKubtcLQ9bSBkkK4U8Fu58g6Hg==
-In-Reply-To: <Z6ElIlavWHda8YcH@x1.local>
+In-Reply-To: <Z6Eow-Ei3CvLy1vG@x1.local>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 Received-SPF: pass client-ip=145.239.82.108;
@@ -113,92 +118,216 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 3.02.2025 21:20, Peter Xu wrote:
-> On Mon, Feb 03, 2025 at 07:53:00PM +0100, Maciej S. Szmigiero wrote:
->> On 3.02.2025 19:20, Peter Xu wrote:
->>> On Thu, Jan 30, 2025 at 11:08:29AM +0100, Maciej S. Szmigiero wrote:
->>>> From: "Maciej S. Szmigiero" <maciej.szmigiero@oracle.com>
+On 3.02.2025 21:36, Peter Xu wrote:
+> On Mon, Feb 03, 2025 at 09:15:52PM +0100, Maciej S. Szmigiero wrote:
+>> On 3.02.2025 20:58, Peter Xu wrote:
+>>> On Mon, Feb 03, 2025 at 02:57:36PM +0100, Maciej S. Szmigiero wrote:
+>>>> On 2.02.2025 13:45, Dr. David Alan Gilbert wrote:
+>>>>> * Maciej S. Szmigiero (mail@maciej.szmigiero.name) wrote:
+>>>>>> On 2.02.2025 03:06, Dr. David Alan Gilbert wrote:
+>>>>>>> * Maciej S. Szmigiero (mail@maciej.szmigiero.name) wrote:
+>>>>>>>> From: "Maciej S. Szmigiero" <maciej.szmigiero@oracle.com>
+>>>>>>>>
+>>>>>>>> postcopy_ram_listen_thread() is a free running thread, so it needs to
+>>>>>>>> take BQL around function calls to migration methods requiring BQL.
+>>>>>>>>
+>>>>>>>> qemu_loadvm_state_main() needs BQL held since it ultimately calls
+>>>>>>>> "load_state" SaveVMHandlers.
+>>>>>>>>
+>>>>>>>> migration_incoming_state_destroy() needs BQL held since it ultimately calls
+>>>>>>>> "load_cleanup" SaveVMHandlers.
+>>>>>>>>
+>>>>>>>> Signed-off-by: Maciej S. Szmigiero <maciej.szmigiero@oracle.com>
+>>>>>>>> ---
+>>>>>>>>      migration/savevm.c | 4 ++++
+>>>>>>>>      1 file changed, 4 insertions(+)
+>>>>>>>>
+>>>>>>>> diff --git a/migration/savevm.c b/migration/savevm.c
+>>>>>>>> index b0b74140daea..0ceea9638cc1 100644
+>>>>>>>> --- a/migration/savevm.c
+>>>>>>>> +++ b/migration/savevm.c
+>>>>>>>> @@ -2013,7 +2013,9 @@ static void *postcopy_ram_listen_thread(void *opaque)
+>>>>>>>>           * in qemu_file, and thus we must be blocking now.
+>>>>>>>>           */
+>>>>>>>>          qemu_file_set_blocking(f, true);
+>>>>>>>> +    bql_lock();
+>>>>>>>>          load_res = qemu_loadvm_state_main(f, mis);
+>>>>>>>> +    bql_unlock();
+>>>>>>>
+>>>>>>> Doesn't that leave that held for a heck of a long time?
+>>>>>>
+>>>>>> Yes, and it effectively broke "postcopy recover" test but I
+>>>>>> think the reason for that is qemu_loadvm_state_main() and
+>>>>>> its children don't drop BQL while waiting for I/O.
+>>>>>>
+>>>>>> I've described this case in more detail in my reply to Fabiano here:
+>>>>>> https://lore.kernel.org/qemu-devel/0a09e627-955e-4f26-8d08-0192ecd250a8@maciej.szmigiero.name/
+>>>>>
+>>>>> While it might be the cause in this case, my feeling is it's more fundamental
+>>>>> here - it's the whole reason that postcopy has a separate ram listen
+>>>>> thread.  As the destination is running, after it loads it's devices
+>>>>> and as it starts up the destination will be still loading RAM
+>>>>> (and other postcopiable devices) potentially for quite a while.
+>>>>> Holding the bql around the ram listen thread means that the
+>>>>> execution of the destination won't be able to take that lock
+>>>>> until the postcopy load has finished; so while that might apparently
+>>>>> complete, it'll lead to the destination stalling until that's finished
+>>>>> which defeats the whole point of postcopy.
+>>>>> That last one probably won't fail a test but it will lead to a long stall
+>>>>> if you give it a nice big guest with lots of RAM that it's rapidly
+>>>>> changing.
 >>>>
->>>> Multifd send channels are terminated by calling
->>>> qio_channel_shutdown(QIO_CHANNEL_SHUTDOWN_BOTH) in
->>>> multifd_send_terminate_threads(), which in the TLS case essentially
->>>> calls shutdown(SHUT_RDWR) on the underlying raw socket.
+>>>> Okay, I understand the postcopy case/flow now.
+>>>> Thanks for explaining it clearly.
 >>>>
->>>> Unfortunately, this does not terminate the TLS session properly and
->>>> the receive side sees this as a GNUTLS_E_PREMATURE_TERMINATION error.
+>>>>>> I still think that "load_state" SaveVMHandlers need to be called
+>>>>>> with BQL held since implementations apparently expect it that way:
+>>>>>> for example, I think PCI device configuration restore calls
+>>>>>> address space manipulation methods which abort() if called
+>>>>>> without BQL held.
+>>>>>
+>>>>> However, the only devices that *should* be arriving on the channel
+>>>>> that the postcopy_ram_listen_thread is reading from are those
+>>>>> that are postcopiable (i.e. RAM and hmm block's dirty_bitmap).
+>>>>> Those load handlers are safe to be run while the other devices
+>>>>> are being changed.   Note the *should* - you could add a check
+>>>>> to fail if any other device arrives on that channel.
 >>>>
->>>> The only reason why this wasn't causing migration failures is because
->>>> the current migration code apparently does not check for migration
->>>> error being set after the end of the multifd receive process.
->>>>
->>>> However, this will change soon so the multifd receive code has to be
->>>> prepared to not return an error on such premature TLS session EOF.
->>>> Use the newly introduced QIOChannelTLS method for that.
->>>>
->>>> It's worth noting that even if the sender were to be changed to terminate
->>>> the TLS connection properly the receive side still needs to remain
->>>> compatible with older QEMU bit stream which does not do this.
+>>>> I think ultimately there should be either an explicit check, or,
+>>>> as you suggest in the paragraph below, a separate SaveVMHandler
+>>>> that runs without BQL held.
 >>>
->>> If this is an existing bug, we could add a Fixes.
->>
->> It is an existing issue but only uncovered by this patch set.
->>
->> As far as I can see it was always there, so it would need some
->> thought where to point that Fixes tag.
-> 
-> If there's no way to trigger a real functional bug anyway, it's also ok we
-> omit the Fixes.
-> 
->>> Two pure questions..
+>>> To me those are bugs happening during postcopy, so those abort()s in
+>>> memory.c are indeed for catching these issues too.
 >>>
->>>     - What is the correct way to terminate the TLS session without this flag?
+>>>> Since the current state of just running these SaveVMHandlers
+>>>> without BQL in this case and hoping that nothing breaks is
+>>>> clearly sub-optimal.
+>>>>
+>>>>>> I have previously even submitted a patch to explicitly document
+>>>>>> "load_state" SaveVMHandler as requiring BQL (which was also
+>>>>>> included in the previous version of this patch set) and it
+>>>>>> received a "Reviewed-by:" tag:
+>>>>>> https://lore.kernel.org/qemu-devel/6976f129df610c8207da4e531c8c0475ec204fa4.1730203967.git.maciej.szmigiero@oracle.com/
+>>>>>> https://lore.kernel.org/qemu-devel/e1949839932efaa531e2fe63ac13324e5787439c.1731773021.git.maciej.szmigiero@oracle.com/
+>>>>>> https://lore.kernel.org/qemu-devel/87o732bti7.fsf@suse.de/
+>>>>>
+>>>>> It happens!
+>>>>> You could make this safer by having a load_state and a load_state_postcopy
+>>>>> member, and only mark the load_state as requiring the lock.
+>>>>
+>>>> To not digress too much from the subject of this patch set
+>>>> (multifd VFIO device state transfer) for now I've just updated the
+>>>> TODO comment around that qemu_loadvm_state_main(), so hopefully this
+>>>> discussion won't get forgotten:
+>>>> https://gitlab.com/maciejsszmigiero/qemu/-/commit/046e3deac5b1dbc406b3e9571f62468bd6743e79
+>>>
+>>> The commit message may still need some touch ups, e.g.:
+>>>
+>>>     postcopy_ram_listen_thread() is a free running thread, so it needs to
+>>>     take BQL around function calls to migration methods requiring BQL.
+>>>
+>>>
+>>> This sentence is still not correct, IMHO. As Dave explained, the ram load
+>>> thread is designed to run without BQL at least for the major workloads it
+>>> runs.
 >>
->> I guess one would need to call gnutls_bye() like in this GnuTLS example:
->> https://gitlab.com/gnutls/gnutls/-/blob/2b8c3e4c71ad380bbbffb32e6003b34ecad596e3/doc/examples/ex-client-anon.c#L102
+>> So what's your proposed wording of this commit then?
+> 
+> Perhaps dropping it? As either it implies qemu_loadvm_state_main() needs to
+> take bql (which could be wrong in case of postcopy at least from
+> design.. not sanity check pov), or it provides no real meaning to suggest
+> where to take it..
+> 
+> Personally I would put the comment as easy as possible - the large portion
+> isn't helping me to understand the code but only made it slightly more
+> confusing..
+> 
+>      /*
+>       * TODO: qemu_loadvm_state_main() could call "load_state" SaveVMHandlers
+>       * that are expecting BQL to be held, which isn't in this case.
+>       *
+>       * In principle, the only devices that should be arriving on this channel
+>       * now are those that are postcopiable and whose load handlers are safe
+>       * to be called without BQL being held.
+>       *
+>       * But nothing currently prevents the source from sending data for "unsafe"
+>       * devices which would cause trouble here.
+>       */
+> 
+> IMHO we could put it very simple if you think we need such sanity check
+> later:
+> 
+>      /* TODO: sanity check that only postcopiable data will be loaded here */
+
+I think I will change that comment wording to the one ^^^^ you suggested above,
+since we still need to have this commit to take BQL around that
+migration_incoming_state_destroy() call in postcopy_ram_listen_thread().
+
 >>
->>>     - Why this is only needed by multifd sessions?
+>>> I don't worry on src sending something that crashes the dest: if that
+>>> happens, that's a bug, we need to fix it..  In that case abort() either in
+>>> memory.c or migration/ would be the same.
 >>
->> What uncovered the issue was switching the load threads to using
->> migrate_set_error() instead of their own result variable
->> (load_threads_ret) which you had requested during the previous
->> patch set version review:
->> https://lore.kernel.org/qemu-devel/Z1DbH5fwBaxtgrvH@x1n/
+>> Yeah, but it would be a bug in the source (or just bit stream corruption for
+>> any reason), yet it's the destination which would abort() or crash.
 >>
->> Turns out that the multifd receive code always returned
->> error in the TLS case, just nothing was previously checking for
->> that error presence.
+>> I think cases like that in principle should be handled more gracefully,
+>> like exiting the destination QEMU with an error.
+>> But that's something outside of the scope of this patch set.
 > 
-> What I was curious is whether this issue also exists for the main migration
-> channel when with tls, especially when e.g. multifd not enabled at all.  As
-> I don't see anywhere that qemu uses gnutls_bye() for any tls session.
+> Yes I agree.  It's just that postcopy normally cannot gracefully quits on
+> dest anyway.. as src QEMU cannot continue with a dead dest QEMU. For
+> obvious programming errors, I think abort() is still ok in this case, on
+> either src or dest if postcopy already started.
 > 
-> I think it's a good to find that we overlooked this before.. and IMHO it's
-> always good we could fix this.
+> For this series, we could always stick with precopy, it could help converge
+> the series.
+
+To be clear I'm messing with postcopy only because without adding that
+BQL lock around migration_incoming_state_destroy() in
+postcopy_ram_listen_thread() other changes in this patch set would break
+postcopy.
+And that's obviously not acceptable.
+
+>>
+>>> We could add some explicit check
+>>> in migration code, but I don't expect it to catch anything real, at least
+>>> such never happened since postcopy introduced.. so it's roughly 10 years
+>>> without anything like that happens.
+>>>
+>>> Taking BQL for migration_incoming_state_destroy() looks all safe.  There's
+>>> one qemu_ram_block_writeback() which made me a bit nervous initially, but
+>>> then looks like RAM backends should be almost noop (for shmem and
+>>> hugetlbfs) but except pmem.
+>>
+>> That's the only part where taking BQL is actually necessary for the
+>> functionality of this patch set to work properly, so it's fine to leave
+>> that call to qemu_loadvm_state_main() as-is (without BQL) for time being.
+>>
+>>>
+>>> The other alternative is we define load_cleanup() to not rely on BQL (which
+>>> I believe is true before this series?), then take it only when VFIO's path
+>>> needs it.
+>>
+>> I think other paths always call load_cleanup() with BQL so it's probably
+>> safer to have consistent semantics here.
 > 
-> Does it mean we need proper gnutls_bye() somewhere?
+> IMHO we don't necessarily need to make it the default that vmstate handler
+> hooks will need BQL by default - we can always properly define them to best
+> suite our need.
+
+But I think consistency is important - if other callers take BQL for
+load_cleanup() then it makes sense to take it in all places (only if to make
+the code simpler).
+
+> For this case I think it's ok either way. But I'm assuming: (1) no serious
+> users run QEMU RAMs on normal file systems (or RAM's cleanup() can do
+> msync() on those, which can flush page caches for a long time to disks),
+> and (2) pmem isn't important.
 > 
-> If we need an explicit gnutls_bye(), then I wonder if that should be done
-> on the main channel as well.
-
-That's a good question and looking at the code qemu_loadvm_state_main() exits
-on receiving "QEMU_VM_EOF" section (that's different from receiving socket EOF)
-and then optionally "QEMU_VM_VMDESCRIPTION" section is read with explicit size
-in qemu_loadvm_state() - so still not until channel EOF.
-
-Then I can't see anything else reading the channel until it is closed in
-migration_incoming_state_destroy().
-
-So most likely the main migration channel will never read far enough to
-reach that GNUTLS_E_PREMATURE_TERMINATION error.
-
-> If we don't need gnutls_bye(), then should we always ignore pre-mature
-> termination of tls no matter if it's multifd or non-multifd channel (or
-> even a tls session that is not migration-related)?
-
-So basically have this patch extended to calling
-qio_channel_tls_set_premature_eof_okay() also on the main migration channel?
-
 > Thanks,
+> 
 
 Thanks,
 Maciej
