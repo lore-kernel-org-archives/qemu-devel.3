@@ -4,66 +4,66 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 74D8AC02192
-	for <qemu-devel@archiver.kernel.org>; Mon,  3 Feb 2025 14:44:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A213EC02192
+	for <qemu-devel@archiver.kernel.org>; Mon,  3 Feb 2025 14:44:43 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1texdg-0003wr-9Z; Mon, 03 Feb 2025 09:41:28 -0500
+	id 1texdg-0003x4-Dq; Mon, 03 Feb 2025 09:41:28 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1texdP-0003ge-FL
- for qemu-devel@nongnu.org; Mon, 03 Feb 2025 09:41:12 -0500
-Received: from mail-ed1-x535.google.com ([2a00:1450:4864:20::535])
+ id 1texdV-0003jf-KM
+ for qemu-devel@nongnu.org; Mon, 03 Feb 2025 09:41:18 -0500
+Received: from mail-ej1-x62a.google.com ([2a00:1450:4864:20::62a])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1texdD-0002Pk-0O
- for qemu-devel@nongnu.org; Mon, 03 Feb 2025 09:41:10 -0500
-Received: by mail-ed1-x535.google.com with SMTP id
- 4fb4d7f45d1cf-5d3cf094768so8281007a12.0
- for <qemu-devel@nongnu.org>; Mon, 03 Feb 2025 06:40:58 -0800 (PST)
+ id 1texdF-0002RV-53
+ for qemu-devel@nongnu.org; Mon, 03 Feb 2025 09:41:17 -0500
+Received: by mail-ej1-x62a.google.com with SMTP id
+ a640c23a62f3a-ab2aea81cd8so804170766b.2
+ for <qemu-devel@nongnu.org>; Mon, 03 Feb 2025 06:41:00 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1738593657; x=1739198457; darn=nongnu.org;
+ d=linaro.org; s=google; t=1738593659; x=1739198459; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=OdEyfb2ARjEb4j0/bYd/22LdLj+HvII9zUuxIjGCbvU=;
- b=SRBmj/RxOfqz8oPg8EUiw1ZAgFWS4JNfdbkZGAUoYF6lqxH6Rwn7aAUFiVjspVd4fN
- CDcsF8KgBHnPbLxe3CIDhHmn+tNOO7BtwEQ1Vf8D4gVzeE3y8fDCHbVLjMNjaVz0udbI
- rh3p5gUcUCBRwrlCB+v9RmI0jiwnfJRRlpiCEOsniIwqIJfe0rerD4G24TOgbWh/s7Ec
- EEbKcMLufKX4AHBOy1j/t3eKD4u/MKREHqInqF5MrHQDjV6xQuyND5LfWOXo+TLR2rNt
- vmnH5edcg+1bFzheT1zri/omD6fhTv8mgvp+3lxOx7SaNz1ycFSAbw8+f/lUGFPdyQbo
- upUw==
+ bh=ss1s/z8UDnfCDTK92VTNTdO4MGHnAPeMCWUHdvvh61s=;
+ b=DbSFy5BJSGk1sOPzs6PdLDs66WCZqVowkG5tqGqmpwLzzLD45pn0Pq3+UTbwqLhhx3
+ Qq1VJX5MOkYyuV+5slr2vUCLj0qPIqMckhPjdc0A3gvZqsvF5r+yjbYlbx9M8KP5uEeP
+ uVvRQU7wm8ZIvzHvltWccd7scYeJXtZf7Mxh73erhOf9o4kvEmBs/vZDAyW8i5ZZc1dZ
+ B/TzJlAf1BceBfxg/YOJvFDpq1bFei1ox7/FNW/5TjVXViZRNHnpV2IA+ochi24bGxRX
+ 4mWe4yvOhfAZ6LS1KFCHbF1ENrvPP4x2/Rr4CYTcLSjUMQ8pbqNdZmDW7KaAfzEdKXuh
+ b0ww==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1738593657; x=1739198457;
+ d=1e100.net; s=20230601; t=1738593659; x=1739198459;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=OdEyfb2ARjEb4j0/bYd/22LdLj+HvII9zUuxIjGCbvU=;
- b=Kz9xImlIMJE5Vmx0NK8QebKTAcZbJiK+bRF40AFzXBm4s/pWAPMV5sRaZ5Bkht+20Q
- GqzQO0dwrLv+PP1d00cqSs1p2xOvnn1w+XkkC/asqYpEjNq9re72YXyMEy6KZgT3qFuF
- CJv7sPTF7Cu3v7iXE5fizQbIsi7AtrMAxZOOBKm5vGbkZOwKyImZMm7Y45joI72yan9p
- gWZq2ap1CmYfYRiFkD3EdIGPJccELK2mZjxruienY7jzwdwFvVnsWfLhwzJg6d1D8/zd
- MPnQao7k4qlwL6AGCNF+D24NWywQT/p+5msw4SHt0QkurRFv+IZbOMBuYpBiJaCa3Ahq
- tCYg==
-X-Gm-Message-State: AOJu0Yx4psWP/dU376aM1zGlHvKF48Pm92f6BUuwCGKQoisYM90GosaS
- xOQbnAjEJ5WLCDiyfhPTV2NeOez+uR0BTwUHkl7kRgdfkMaGTpZfkfV0/UbFTT8=
-X-Gm-Gg: ASbGnctrBq8xs7bK+0m1FdAnmBvu1qeHgfR2umYT5o8Fdli291xplYxCDR+KWkh+iL2
- tQWcoFIJbXl0jBKFrgLIPA1VeZA2vGYGnf7v/etXfiDEcbh/uQf59wLYTq1ABm3GCWG52DCrkGA
- bhwKAMH0SPRHeAfWn2kbKcJ5NrrnN/6t1pQJNjncRrUCLRN7Eb424N1Hi76W/qSGf2LMxKGy45U
- xhV7pqLWd/NWKW86Fm55GAIV9xzzd0rNNcQLMGQ7X4q1bx7lDZJbPS0s6iCzEzTNavan0x6uvbV
- j0iw84lMbxqm7Y3wWA==
-X-Google-Smtp-Source: AGHT+IGWR8d4DI0bOTpt9mK5dktCyya0EOEgqnxIxZI6WD5ySvslKGOe+hbROZIhyOtAFeq4BkoE9Q==
+ bh=ss1s/z8UDnfCDTK92VTNTdO4MGHnAPeMCWUHdvvh61s=;
+ b=t+rh0gCABALKjCHRiE7uHQfRFAENWvao2zRY3JbQ7Fn0AftONRkWk/o6fF+Blk5dsg
+ lS249d1iYNM9PH4PRzsyELuHS0pdY9pB+DRagFxrN9LlOYnWKMTeUyeBdVWI6lBXkuyQ
+ US/Iu4Fz80Nh/ybuLAmEfcuChVs9NGe72X4ppzKxbj83Th8mUN8zLHunycfrxgYx4Iub
+ 10Nlub1vHcXSKLro+QKwo+QXdaYOwcxfdE7vBRqUDUK+tXN2cOwvo7cLrXrMBN68jtDZ
+ ujLgm4d9vrZByWc9sAVqhl8cFaJ0Nhf/zr+nMUs07zmcEwofviuS+J/434Ar7SZirdjT
+ 6jHQ==
+X-Gm-Message-State: AOJu0Yy8E6YEZ6+OhxhNqKB+IQpmFIjp0FDipKpySbuPYqECU0+ez9cb
+ s8kMNaAQJXUryJPBPuUs3Fv46BjtVmunAqQEn/lSfMvPJrBJkuk8GPScbTAEDH8=
+X-Gm-Gg: ASbGncu4deYZK9Kf+Xegc3bYOlFfgp+s4Z2PkiON1tPtbRAsAoX0gqu3mFJDSvGbx1r
+ 9nCsx9rFF7dE0IwnoOi6lKgAxVmCQNf+CI02XbxrbyjeGdkoFIRXGWauLM888UZtDSkF/4IclyS
+ lI8hCbH0/uiAff+agHu6KenGUf+WFtwCFDMn3hiKTXr6NMPf1qWX9LuADkFD/UCBsMq4LwyFXxi
+ jkak5IRpVv/LSyh7Y30Z0jeKrTzhTvBk9pIR14Wgddn0UcGd8d2H0WB32vseJTkLO/+88XtLjuJ
+ 1iRQ9iAjW7mOXrgxSw==
+X-Google-Smtp-Source: AGHT+IGLhAFbzQY2pFe/kg0025PEjjmxOgO9AynPb22U4Zw0Hsiysc+IvnDM1lEEoIfJjXLYZF0q2A==
 X-Received: by 2002:a17:907:9452:b0:ab6:f99f:45e0 with SMTP id
- a640c23a62f3a-ab6f99f5410mr1861971866b.37.1738593657466; 
- Mon, 03 Feb 2025 06:40:57 -0800 (PST)
+ a640c23a62f3a-ab6f99f5410mr1861994166b.37.1738593659460; 
+ Mon, 03 Feb 2025 06:40:59 -0800 (PST)
 Received: from draig.lan ([185.126.160.109]) by smtp.gmail.com with ESMTPSA id
- 4fb4d7f45d1cf-5dc723d0021sm7829264a12.5.2025.02.03.06.40.51
+ a640c23a62f3a-ab6e4a5a26bsm762985066b.183.2025.02.03.06.40.53
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 03 Feb 2025 06:40:53 -0800 (PST)
+ Mon, 03 Feb 2025 06:40:56 -0800 (PST)
 Received: from draig.lan (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id 438F15FB14;
+ by draig.lan (Postfix) with ESMTP id D836C6099F;
  Mon,  3 Feb 2025 14:40:49 +0000 (GMT)
 From: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
 To: qemu-devel@nongnu.org
@@ -85,18 +85,19 @@ Cc: qemu-ppc@nongnu.org, Mahmoud Mandour <ma.mandourr@gmail.com>,
  qemu-riscv@nongnu.org, Fabiano Rosas <farosas@suse.de>,
  Tyrone Ting <kfting@nuvoton.com>, Paolo Bonzini <pbonzini@redhat.com>,
  Nicholas Piggin <npiggin@gmail.com>, Alexandre Iooss <erdnaxe@crans.org>,
- Peter Maydell <peter.maydell@linaro.org>
-Subject: [PATCH 07/18] Revert "util/timer: avoid deadlock when shutting down"
-Date: Mon,  3 Feb 2025 14:40:37 +0000
-Message-Id: <20250203144048.2131117-8-alex.bennee@linaro.org>
+ Ilya Leoshkevich <iii@linux.ibm.com>,
+ Richard Henderson <richard.henderson@linaro.org>
+Subject: [PATCH 12/18] user: Introduce user/signal.h
+Date: Mon,  3 Feb 2025 14:40:42 +0000
+Message-Id: <20250203144048.2131117-13-alex.bennee@linaro.org>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <20250203144048.2131117-1-alex.bennee@linaro.org>
 References: <20250203144048.2131117-1-alex.bennee@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::535;
- envelope-from=alex.bennee@linaro.org; helo=mail-ed1-x535.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::62a;
+ envelope-from=alex.bennee@linaro.org; helo=mail-ej1-x62a.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -119,58 +120,115 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This reverts commit bc02be4508d8753d1f6071b77d10f4661587df6f.
+From: Ilya Leoshkevich <iii@linux.ibm.com>
 
-Now we catch attempts to clock_step to the next timer when none are
-enabled we can revert the previous attempt to prevent deadlock. As
-long as a new target time is given we will move time forward even if
-no timers will fire. This is desirable for tests which are checking
-that nothing changes when things are disabled.
+gdbstub needs target_to_host_signal(), so move its declaration to a
+public header.
 
-Previously most tests got away with it because --enable-slirp always
-has a timer running while the test is active.
-
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Reviewed-by: Warner Losh <imp@bsdimp.com>
+Signed-off-by: Ilya Leoshkevich <iii@linux.ibm.com>
+Message-Id: <20250117001542.8290-4-iii@linux.ibm.com>
 Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
-Cc: Peter Maydell <peter.maydell@linaro.org>
 ---
- util/qemu-timer.c | 16 +++-------------
- 1 file changed, 3 insertions(+), 13 deletions(-)
+ bsd-user/signal-common.h   |  1 -
+ include/user/signal.h      | 23 +++++++++++++++++++++++
+ linux-user/signal-common.h |  1 -
+ bsd-user/signal.c          |  1 +
+ linux-user/signal.c        |  1 +
+ linux-user/syscall.c       |  1 +
+ 6 files changed, 26 insertions(+), 2 deletions(-)
+ create mode 100644 include/user/signal.h
 
-diff --git a/util/qemu-timer.c b/util/qemu-timer.c
-index 0e8a453eaa..3243d2c515 100644
---- a/util/qemu-timer.c
-+++ b/util/qemu-timer.c
-@@ -675,17 +675,10 @@ int64_t qemu_clock_advance_virtual_time(int64_t dest)
- {
-     int64_t clock = qemu_clock_get_ns(QEMU_CLOCK_VIRTUAL);
-     AioContext *aio_context;
--    int64_t deadline;
--
-     aio_context = qemu_get_aio_context();
--
--    deadline = qemu_clock_deadline_ns_all(QEMU_CLOCK_VIRTUAL,
--                                          QEMU_TIMER_ATTR_ALL);
--    /*
--     * A deadline of < 0 indicates this timer is not enabled, so we
--     * won't get far trying to run it forward.
--     */
--    while (deadline >= 0 && clock < dest) {
-+    while (clock < dest) {
-+        int64_t deadline = qemu_clock_deadline_ns_all(QEMU_CLOCK_VIRTUAL,
-+                                                      QEMU_TIMER_ATTR_ALL);
-         int64_t warp = qemu_soonest_timeout(dest - clock, deadline);
+diff --git a/bsd-user/signal-common.h b/bsd-user/signal-common.h
+index 77d7c7a78b..4e634e04a3 100644
+--- a/bsd-user/signal-common.h
++++ b/bsd-user/signal-common.h
+@@ -42,7 +42,6 @@ void process_pending_signals(CPUArchState *env);
+ void queue_signal(CPUArchState *env, int sig, int si_type,
+                   target_siginfo_t *info);
+ void signal_init(void);
+-int target_to_host_signal(int sig);
+ void target_to_host_sigset(sigset_t *d, const target_sigset_t *s);
  
-         qemu_virtual_clock_set_ns(qemu_clock_get_ns(QEMU_CLOCK_VIRTUAL) + warp);
-@@ -693,9 +686,6 @@ int64_t qemu_clock_advance_virtual_time(int64_t dest)
-         qemu_clock_run_timers(QEMU_CLOCK_VIRTUAL);
-         timerlist_run_timers(aio_context->tlg.tl[QEMU_CLOCK_VIRTUAL]);
-         clock = qemu_clock_get_ns(QEMU_CLOCK_VIRTUAL);
--
--        deadline = qemu_clock_deadline_ns_all(QEMU_CLOCK_VIRTUAL,
--                                              QEMU_TIMER_ATTR_ALL);
-     }
-     qemu_clock_notify(QEMU_CLOCK_VIRTUAL);
+ /*
+diff --git a/include/user/signal.h b/include/user/signal.h
+new file mode 100644
+index 0000000000..19b6b9e5dd
+--- /dev/null
++++ b/include/user/signal.h
+@@ -0,0 +1,23 @@
++/*
++ * Signal-related declarations.
++ *
++ * SPDX-License-Identifier: GPL-2.0-or-later
++ */
++#ifndef USER_SIGNAL_H
++#define USER_SIGNAL_H
++
++#ifndef CONFIG_USER_ONLY
++#error Cannot include this header from system emulation
++#endif
++
++/**
++ * target_to_host_signal:
++ * @sig: target signal.
++ *
++ * On success, return the host signal between 0 (inclusive) and NSIG
++ * (exclusive) corresponding to the target signal @sig. Return any other value
++ * on failure.
++ */
++int target_to_host_signal(int sig);
++
++#endif
+diff --git a/linux-user/signal-common.h b/linux-user/signal-common.h
+index 8584d9ecc2..196d2406f8 100644
+--- a/linux-user/signal-common.h
++++ b/linux-user/signal-common.h
+@@ -61,7 +61,6 @@ void queue_signal(CPUArchState *env, int sig, int si_type,
+                   target_siginfo_t *info);
+ void host_to_target_siginfo(target_siginfo_t *tinfo, const siginfo_t *info);
+ void target_to_host_siginfo(siginfo_t *info, const target_siginfo_t *tinfo);
+-int target_to_host_signal(int sig);
+ int host_to_target_signal(int sig);
+ long do_sigreturn(CPUArchState *env);
+ long do_rt_sigreturn(CPUArchState *env);
+diff --git a/bsd-user/signal.c b/bsd-user/signal.c
+index b4e1458237..8c51f6ce65 100644
+--- a/bsd-user/signal.c
++++ b/bsd-user/signal.c
+@@ -24,6 +24,7 @@
+ #include "user/cpu_loop.h"
+ #include "exec/page-protection.h"
+ #include "user/page-protection.h"
++#include "user/signal.h"
+ #include "user/tswap-target.h"
+ #include "gdbstub/user.h"
+ #include "signal-common.h"
+diff --git a/linux-user/signal.c b/linux-user/signal.c
+index 087c4d270e..bffbef235c 100644
+--- a/linux-user/signal.c
++++ b/linux-user/signal.c
+@@ -36,6 +36,7 @@
+ #include "user/cpu_loop.h"
+ #include "user/page-protection.h"
+ #include "user/safe-syscall.h"
++#include "user/signal.h"
+ #include "tcg/tcg.h"
  
+ /* target_siginfo_t must fit in gdbstub's siginfo save area. */
+diff --git a/linux-user/syscall.c b/linux-user/syscall.c
+index 6ee02383da..90afaa4426 100644
+--- a/linux-user/syscall.c
++++ b/linux-user/syscall.c
+@@ -138,6 +138,7 @@
+ #include "user-mmap.h"
+ #include "user/page-protection.h"
+ #include "user/safe-syscall.h"
++#include "user/signal.h"
+ #include "qemu/guest-random.h"
+ #include "qemu/selfmap.h"
+ #include "user/syscall-trace.h"
 -- 
 2.39.5
 
