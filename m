@@ -4,90 +4,60 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CF4D2C02195
-	for <qemu-devel@archiver.kernel.org>; Mon,  3 Feb 2025 15:06:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1A46FC02192
+	for <qemu-devel@archiver.kernel.org>; Mon,  3 Feb 2025 15:07:33 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tey0q-0006kI-5q; Mon, 03 Feb 2025 10:05:24 -0500
+	id 1tey2g-0007ch-TM; Mon, 03 Feb 2025 10:07:19 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1tey0o-0006jk-4T
- for qemu-devel@nongnu.org; Mon, 03 Feb 2025 10:05:22 -0500
-Received: from mail-yb1-xb35.google.com ([2607:f8b0:4864:20::b35])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1tey0m-0004y1-FB
- for qemu-devel@nongnu.org; Mon, 03 Feb 2025 10:05:21 -0500
-Received: by mail-yb1-xb35.google.com with SMTP id
- 3f1490d57ef6-e46ac799015so4298690276.0
- for <qemu-devel@nongnu.org>; Mon, 03 Feb 2025 07:05:19 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1738595118; x=1739199918; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=QVXkE69ZSFKoAYdDsoCLmLnjfkJC0UwvVD2SPxozagY=;
- b=CzB415HFCQ9afbwwZYXaaL61/0zYCwrf4Qph/74WtgzA6gExB5C+ZxJTVZZ5zOH2fD
- rjHrquPT2/wMfsuRyxqOOlCS5RMp+1wL/EipgQpkN234Kb0twHprFa+qgkl5JvxVQ4u3
- Kk2wUnZ4Dy5XQnkpeMZ24BReVYwsIgf7TuZc6mkbjiPN1Rst2gzbKSYY9mD7WaYIoVyd
- z4X43TvqgnDTRYNzyds1VezSfKx7w+H5ck2FL79CMwWs5kdQz5cOiqv7jmT/vvxQejcs
- C2tDtezzuIgYZ9k78x0T58dwAFJFPhyC36EVmPXZ1DSDRMS9LQyzSyK6rTj+0qJhbZql
- VmIg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1738595118; x=1739199918;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=QVXkE69ZSFKoAYdDsoCLmLnjfkJC0UwvVD2SPxozagY=;
- b=N9iYZiVxvNTH1YZ4AP5y9olLwvrOveS/UkxJ+er05PMfx0jR5ExU7ZzVWfW3PdfMzL
- pCeV1jjPbXifXbmY3akdqDdwy9QX1uKvWKCiJiYzW3eql6AuhGnSOeUmfe0Vk2/cRJTY
- ovU/mdkA6a87eXHcwOThmC7sR8LQs5cly22gqlEODrxUOyAKOBu3lbnbokhO142C4hW1
- t50/yRl8yqnkcWu2HgzKfWuxziDTnX1T8obPkrTQFJuktXh/w1m4vavtgCANgNOGjQG2
- LeU7wXxKo9MpmGu14CggMbwiJvgfaR9vqEH+kwbob5PMA7iVE2r3TbbcNxfu/oGZUlCe
- RY5g==
-X-Forwarded-Encrypted: i=1;
- AJvYcCWwhabXdQUn/S1pucBPaHHJTC7TANRpGkI+TMhPdSHw04PExOuUx0sViLuhOdiM37QsmQpG5IEbu6CU@nongnu.org
-X-Gm-Message-State: AOJu0Yzmbf9+PEwd5A2vuZj48lXXp0H+hbslhOraa4nRJUrZtGE1jKHH
- V31zWS0IWQ5zOuP1HzTXmfJ1N5ryTzGMAg9bCX9CpjjuX99jkw0x+JvMH8fuJpwh9W5U/50mDol
- 7pJv+dtfOEsQnZUCrc7j3r/KY/GS3m21xuTECsw==
-X-Gm-Gg: ASbGncttLQr1qNCRvNC64ohy7NtPMGGDkpKfyw47Mq29sy+cLBsbnJdPLFR8pZrGqOi
- yFmmUEWDRVnSQkJuKRdi5yjdSP1kGPpohRxN54EncwjygqWu0voBaV80BxANwR25tU//em54rfQ
- ==
-X-Google-Smtp-Source: AGHT+IGUyveJDajUyI1gSDnHBzFD+4nn9H9kvz9gc8lritIZ4JOP+GysQ8H2YyG0Gah0lF2b7b+rSDbj876DICK/aoI=
-X-Received: by 2002:a05:6902:13cb:b0:e58:33d2:6a12 with SMTP id
- 3f1490d57ef6-e58ac03aa9bmr13820114276.31.1738595118473; Mon, 03 Feb 2025
- 07:05:18 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <jonathan.cameron@huawei.com>)
+ id 1tey2d-0007Yh-Pj
+ for qemu-devel@nongnu.org; Mon, 03 Feb 2025 10:07:15 -0500
+Received: from frasgout.his.huawei.com ([185.176.79.56])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <jonathan.cameron@huawei.com>)
+ id 1tey2b-0005IK-Cs
+ for qemu-devel@nongnu.org; Mon, 03 Feb 2025 10:07:15 -0500
+Received: from mail.maildlp.com (unknown [172.18.186.216])
+ by frasgout.his.huawei.com (SkyGuard) with ESMTP id 4YmqXh46vzz6K5x0;
+ Mon,  3 Feb 2025 23:04:36 +0800 (CST)
+Received: from frapeml500008.china.huawei.com (unknown [7.182.85.71])
+ by mail.maildlp.com (Postfix) with ESMTPS id CE3451400CA;
+ Mon,  3 Feb 2025 23:07:08 +0800 (CST)
+Received: from localhost (10.203.177.66) by frapeml500008.china.huawei.com
+ (7.182.85.71) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.1.2507.39; Mon, 3 Feb
+ 2025 16:07:08 +0100
+Date: Mon, 3 Feb 2025 15:07:06 +0000
+To: Davidlohr Bueso <dave@stgolabs.net>
+CC: <ajay.opensrc@micron.com>, <fan.ni@samsung.com>, <john@jagalactic.com>,
+ <emirakhur@micron.com>, <ajayjoshi@micron.com>, <sthanneeru@micron.com>,
+ <ravis.opensrc@micron.com>, <arramesh@micron.com>, <tmmulgund@micron.com>,
+ <linux-cxl@vger.kernel.org>, <qemu-devel@nongnu.org>
+Subject: Re: [PATCH] hw/cxl: Support aborting background commands
+Message-ID: <20250203150706.00000e23@huawei.com>
+In-Reply-To: <20241022180030.00004f68@Huawei.com>
+References: <20240813221255.179200-1-dave@stgolabs.net>
+ <20240827163357.0000228e@Huawei.com>
+ <jdipjanthgt6atlksngodxjevfb5d43d5rshtxqxxwruszqa3e@vctljs77lg4e>
+ <20241022180030.00004f68@Huawei.com>
+X-Mailer: Claws Mail 4.3.0 (GTK 3.24.42; x86_64-w64-mingw32)
 MIME-Version: 1.0
-References: <20250201091528.1177-1-philmd@linaro.org>
- <90d87f0e-56a3-8966-614c-364f3e726d61@eik.bme.hu>
- <CAFEAcA_mBXO20NhYRHJCgkB0h8uYQQhBMdwVW376R4u-qh51nA@mail.gmail.com>
- <87ed0fayoy.fsf@draig.linaro.org> <Z6DTsdf35ApQ0qLU@redhat.com>
- <CAFEAcA8Qigt1EBVgz1D4hon0x4ukLZbZ-jS_KB+ZBH0yi+QCXw@mail.gmail.com>
- <Z6DXmN-ROswsaDAi@redhat.com>
-In-Reply-To: <Z6DXmN-ROswsaDAi@redhat.com>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Mon, 3 Feb 2025 15:05:07 +0000
-X-Gm-Features: AWEUYZn4HL6DM65HU2Td3KGGhWBaoWo3z4Hvn1BXN9lGTlWIFT9wRml89dN4xy8
-Message-ID: <CAFEAcA8mCt_hPHxDLaOwJUkvk2o9=-20Oy=+eSPFduh0X6Ru7g@mail.gmail.com>
-Subject: Re: [PATCH 0/7] hw/arm/raspi4b: Add models with 4GB and 8GB of DRAM
-To: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
-Cc: =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>, 
- BALATON Zoltan <balaton@eik.bme.hu>,
- =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
- qemu-devel@nongnu.org, Jared Mauch <jared+home@puck.nether.net>,
- qemu-arm@nongnu.org, devel@lists.libvirt.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::b35;
- envelope-from=peter.maydell@linaro.org; helo=mail-yb1-xb35.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+Content-Type: text/plain; charset="US-ASCII"
+Content-Transfer-Encoding: 7bit
+X-Originating-IP: [10.203.177.66]
+X-ClientProxiedBy: lhrpeml500010.china.huawei.com (7.191.174.240) To
+ frapeml500008.china.huawei.com (7.182.85.71)
+Received-SPF: pass client-ip=185.176.79.56;
+ envelope-from=jonathan.cameron@huawei.com; helo=frasgout.his.huawei.com
+X-Spam_score_int: -41
+X-Spam_score: -4.2
+X-Spam_bar: ----
+X-Spam_report: (-4.2 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_MED=-2.3,
+ RCVD_IN_MSPIKE_H2=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -101,26 +71,83 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-to:  Jonathan Cameron <Jonathan.Cameron@huawei.com>
+From:  Jonathan Cameron via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, 3 Feb 2025 at 14:50, Daniel P. Berrang=C3=A9 <berrange@redhat.com> =
-wrote:
->
-> On Mon, Feb 03, 2025 at 02:45:06PM +0000, Peter Maydell wrote:
-> > For Arm embedded boards we mostly tend to "restrict the user
-> > to what you can actually do", except for older boards where
-> > we tended not to write any kind of sanity checking on CPU
-> > type, memory size, etc.
->
-> If we're going to strictly limit memory size that's accepted I wonder
-> how we could information users/mgmt apps about what's permitted?
+On Tue, 22 Oct 2024 18:00:30 +0100
+Jonathan Cameron <Jonathan.Cameron@Huawei.com> wrote:
 
-For users, we inform them by exiting with a hopefully informative
-error message. Management apps presumably need to know already
-because they would want to avoid presenting the guest with
-weird configs that the guest OS might or might not cope with,
-even if QEMU accepted them.
+> On Mon, 21 Oct 2024 20:23:46 -0700
+> Davidlohr Bueso <dave@stgolabs.net> wrote:
+> 
+> > On Tue, 27 Aug 2024, Jonathan Cameron wrote:\n  
+> > >No comments inline and LGTM. I'll queue it on my tree and push
+> > >that out on gitlab sometime soonish.    
+> > 
+> > I don't see this picked up, which is a good thing atm. While testing
+> > the kernel side, I noticed the following is needed, will send a v2
+> > with it folded in.  
+> 
+> Currently just on my cxl-2024-10-15 branch of gitlab.com/jic23/qemu.
+> I'll pick up your v2 and replace that.
 
--- PMM
+Hi Davidlohr,
+
+Did I miss v2, or still to send?
+
+Thanks, 
+
+Jonathan
+> > 
+> > diff --git a/hw/cxl/cxl-device-utils.c b/hw/cxl/cxl-device-utils.c
+> > index 1a9779ed8201..0d429b59aafc 100644
+> > --- a/hw/cxl/cxl-device-utils.c
+> > +++ b/hw/cxl/cxl-device-utils.c
+> > @@ -94,14 +94,15 @@ static uint64_t mailbox_reg_read(void *opaque, hwaddr offset, unsigned size)
+> > 	     cxl_dstate->mbox_reg_state64[offset / size] = bg_status_reg;
+> > 	 }
+> > 	 if (offset == A_CXL_DEV_MAILBOX_STS) {
+> > +            int bgop;
+> > 	     uint64_t status_reg = cxl_dstate->mbox_reg_state64[offset / size];
+> > 
+> > 	     qemu_mutex_lock(&cci->bg.lock);
+> > -            if (cci->bg.complete_pct == 100 || cci->bg.aborted) {
+> > -                status_reg = FIELD_DP64(status_reg, CXL_DEV_MAILBOX_STS, BG_OP,
+> > -                                        0);
+> > -                cxl_dstate->mbox_reg_state64[offset / size] = status_reg;
+> > -            }
+> > +            bgop = !(cci->bg.complete_pct == 100 || cci->bg.aborted);
+> > +
+> > +            status_reg = FIELD_DP64(status_reg, CXL_DEV_MAILBOX_STS, BG_OP,
+> > +                                    bgop);
+> > +            cxl_dstate->mbox_reg_state64[offset / size] = status_reg;
+> > 	     qemu_mutex_unlock(&cci->bg.lock);
+> > 	 }
+> > 	 return cxl_dstate->mbox_reg_state64[offset / size];
+> > diff --git a/hw/cxl/cxl-mailbox-utils.c b/hw/cxl/cxl-mailbox-utils.c
+> > index d5b084388288..760a8571fda6 100644
+> > --- a/hw/cxl/cxl-mailbox-utils.c
+> > +++ b/hw/cxl/cxl-mailbox-utils.c
+> > @@ -2731,9 +2731,11 @@ static const struct cxl_cmd cxl_cmd_set[256][256] = {
+> >       [FIRMWARE_UPDATE][GET_INFO] = { "FIRMWARE_UPDATE_GET_INFO",
+> > 	 cmd_firmware_update_get_info, 0, 0 },
+> >       [FIRMWARE_UPDATE][TRANSFER] = { "FIRMWARE_UPDATE_TRANSFER",
+> > -        cmd_firmware_update_transfer, ~0, CXL_MBOX_BACKGROUND_OPERATION },
+> > +        cmd_firmware_update_transfer, ~0,
+> > +        CXL_MBOX_BACKGROUND_OPERATION | CXL_MBOX_BACKGROUND_OPERATION_ABORT },
+> >       [FIRMWARE_UPDATE][ACTIVATE] = { "FIRMWARE_UPDATE_ACTIVATE",
+> > -        cmd_firmware_update_activate, 2, CXL_MBOX_BACKGROUND_OPERATION },
+> > +        cmd_firmware_update_activate, 2,
+> > +        CXL_MBOX_BACKGROUND_OPERATION | CXL_MBOX_BACKGROUND_OPERATION_ABORT },
+> >       [TIMESTAMP][GET] = { "TIMESTAMP_GET", cmd_timestamp_get, 0, 0 },
+> >       [TIMESTAMP][SET] = { "TIMESTAMP_SET", cmd_timestamp_set,
+> > 			  8, CXL_MBOX_IMMEDIATE_POLICY_CHANGE },
+> > 
+> > Thanks,
+> > Davidlohr  
+> 
+> 
+
 
