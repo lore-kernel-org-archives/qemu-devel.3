@@ -4,85 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 43D51C02196
-	for <qemu-devel@archiver.kernel.org>; Mon,  3 Feb 2025 16:44:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 97013C02192
+	for <qemu-devel@archiver.kernel.org>; Mon,  3 Feb 2025 16:45:48 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tezY4-0007XG-TR; Mon, 03 Feb 2025 11:43:48 -0500
+	id 1tezZM-0008Em-U5; Mon, 03 Feb 2025 11:45:08 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1tezY2-0007X1-UT
- for qemu-devel@nongnu.org; Mon, 03 Feb 2025 11:43:46 -0500
-Received: from mail-pl1-x62f.google.com ([2607:f8b0:4864:20::62f])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tezZL-0008E6-6w
+ for qemu-devel@nongnu.org; Mon, 03 Feb 2025 11:45:07 -0500
+Received: from mail-wm1-x332.google.com ([2a00:1450:4864:20::332])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1tezY1-0007sN-7X
- for qemu-devel@nongnu.org; Mon, 03 Feb 2025 11:43:46 -0500
-Received: by mail-pl1-x62f.google.com with SMTP id
- d9443c01a7336-216281bc30fso13056255ad.0
- for <qemu-devel@nongnu.org>; Mon, 03 Feb 2025 08:43:44 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tezZJ-00086o-LE
+ for qemu-devel@nongnu.org; Mon, 03 Feb 2025 11:45:06 -0500
+Received: by mail-wm1-x332.google.com with SMTP id
+ 5b1f17b1804b1-436a03197b2so31948745e9.2
+ for <qemu-devel@nongnu.org>; Mon, 03 Feb 2025 08:45:05 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1738601023; x=1739205823; darn=nongnu.org;
+ d=linaro.org; s=google; t=1738601104; x=1739205904; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=k2lK/In7iyMrH3mAB9QIf907KTpXr/dTaOTl61QLKMc=;
- b=etGbUuPlNzSpfgAJPYdt6pQyszlUq20vEttVvWT6xnwfd6ui48t6zBJBa+Z3u8/vuJ
- 2C3uvM4xMk8v+KaZe0fV/jGY9mh2BgUtXIV7ml6MkDPpVLSjvLg4I+LjhTBnPO4KegNt
- 3gaMmFQeqBPHUrCwSUDOmoafiuMZQ+ba10OSuCbNWG6fI/GDYNP3nflm5//5JUHqAVd8
- 4odvnYHJ6v9dk7uXsAx4giAMpR66uICI+DHrZzwMRj5d9mZfQOnarHuzWS4TAR/JTfLV
- TD+UIbwGFSJbNerjRqz4IlgYftAlUwgrDH8InSEHWeMHJkVIGNFde0iTLetVv7ZzeAiT
- dNwg==
+ bh=HwTx55omfIwn9vmPW4Ylr0tYSCsYYdwY9ilDwZcljFc=;
+ b=dRd2RCaCX9RC0tYiXZ66Wy4Pj793SFi+BJiDcqcfRYu/HSPkhHXVGQJ8X4B3Bl/RoR
+ H1LczXMirkj1J/ct9SF2WZ84tUvBD7ldiwCnwA/MvEV7+mv1+LY3fx+LZoVL/2covyBK
+ T1aepFrQMrI02ErOrUgRWS4VLucIHv9s0rzV2fZ0iyr5Q0PWq2RgJ/GNliPxtZycbKHj
+ skXQuPjJEPIaTLvHmsn2302iiW6rq2MvTqUUds7Of2CU9EB64hvXw4PTN8Wkg48oeoyG
+ umVOXzxk6elviWJ7jty552wX7g6rRefz2Y4p/sf69w7cOxabMtsF/UF3SDGJTkngaauh
+ zHWQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1738601023; x=1739205823;
+ d=1e100.net; s=20230601; t=1738601104; x=1739205904;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=k2lK/In7iyMrH3mAB9QIf907KTpXr/dTaOTl61QLKMc=;
- b=S31C8adrXXKZPHnD82PERzmyVxmbAAzHpOoXZEVO3r/YOcoRBcBb0UzR/rpOkE6cVi
- vTs4lTf6tbEssI3cwQmmrguNB6EBKlV3GqosDxp7orUYYw1FdtjVbCDE4nChNaDpZ3z8
- IHI0lHUqAWeoWCaTYfvVa8Th1cs4i8CkqLneCx/7MxXxcrPqkeAficSj+V0+/mA2aHhT
- NpK2APzSy6VnvNOCOEYBwXj4+oyPjBfNtoSUGAL+9T7TWwHIKXVnPcWdJZEAWibnYgAK
- 0076nWNoMdEfL6jWc95ZDQbUflK2N3gBq7B6i56dv/X9E/deKEzaC6i1jy8IwSDITtaE
- oTKw==
+ bh=HwTx55omfIwn9vmPW4Ylr0tYSCsYYdwY9ilDwZcljFc=;
+ b=XxVipKoMZqwRv8oaNpoCTmiOxOPBty8IPq5IJLMi1GdnfwI9z3I4BtEVTieQJUMO0H
+ WpgACjn1M9GFPoJ0NQ4Q41AONfQm4Vim0Y45EA2s1zulEqjEfbXBF1f3fHDSwnCmzuiB
+ G5VFZLII80WHxSkvb9DoEGbWzJGKNvotAYvNjRR+0KtVWzTDXv0UEiAUODgmpqt5gjaI
+ PVLT+RVeka6DIszpmbJO6Vk069ep+G10ccM/nmXTZGLutF46/JlAkWQN3HGyRDFhKD+Y
+ iVvv/yHg2+5HEzyhRBO9EnLN5n6oE8elUbtydNtHEB73ZmwGKtTI1apMNyJG3d15iSYm
+ U2pg==
 X-Forwarded-Encrypted: i=1;
- AJvYcCUeLEfJZMBVJrGLYOzTIBYQo+hGxbza96MZQmf+oF0aWofJxNq9G5tfEcOVfo7bq0XS9lzGttI5fug8@nongnu.org
-X-Gm-Message-State: AOJu0YxWlUelA6OOP67JySW2jOMe5FfGpi3NCmF8xsIHv6SVSQUd1U17
- csXbsdKQZsVb6r95pe0queUUwfI9So4y+HaumyD3VZxraMJ3fRlF5qLULdIXCOs=
-X-Gm-Gg: ASbGncvwPmxC6L1RHg7cm34hkU+AkY3DA9ZczYeRdBKlDakBJe13EY9/Iy86JD1fwuh
- HHD8t3SXAST+xnDhvARqSeiaJNED/Sn3U+a/eMWOM/vXD2VW/TbfFrfp8BDL8SOQniKILcoy3Hq
- i2dq6oMBkJqf0dwfkzgCAxokvwj4GDzSwfnsqjxWmWK4o53uLtHVid1AF5aa882D4uOzwAKVlCi
- uXCIegoxhy/HqfZdvegB5ts9TOirmNYxsD9U9WrvMdFdgr6TbRkVmF8rlb6yTW21WDXtnV7LP9s
- i7uMQfOe3Z2cDELwWJLvV36KxmCLqe0W4RZGJAWMEWXUxxOdK9QTJiY=
-X-Google-Smtp-Source: AGHT+IGHo3AcwUUtTt1EFVqj+iBS1LUEbV+MG7k5D2zrQAHzCl//V/tfFIWbXfrCR6q8PGU9GUwTtg==
-X-Received: by 2002:a05:6a00:44c4:b0:72a:8bb6:2963 with SMTP id
- d2e1a72fcca58-72fd0c20951mr33597755b3a.13.1738601023080; 
- Mon, 03 Feb 2025 08:43:43 -0800 (PST)
-Received: from [192.168.0.4] (71-212-39-66.tukw.qwest.net. [71.212.39.66])
- by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-72ffde3d977sm5713206b3a.177.2025.02.03.08.43.42
+ AJvYcCUU2+D0nBH+CjwyVu18sLqEcvuHV+150V466c3U57C4lriR+K8WD9Hv2WGBgvUqOS1ayJMHX+0VCIuF@nongnu.org
+X-Gm-Message-State: AOJu0Yz59VMUrTkw3z/XwOpAfVJhidhsEE6UavHArk/NU7z1cZh2TmGg
+ HKI+iCqlKQCsDqzYOhgHNWclccdF/a7Fa8Hg8i2ZnuUMRy9+/J5ISzOq/v4ht7w=
+X-Gm-Gg: ASbGncvD2RcV7qw9b4e24v8D46N+Q60L/rBaAm8wdiAajf5LGHQ/ljvBOlCheoWnldR
+ dfCnrOlihynXEysrVV8pEHKISkOrbpm2wtScRWG4Q+72Y2wIV5GZl9JsCR0KeZz/JtnbnXve5fG
+ Lt4AWsoQA1rYmqwU+hn1Jcyh7xurKnn/3idMvzTcQERn6WQOfkhh/3wrpjsPKeTtgyfAgyxO/vD
+ LghG0KzUfepo1/pik+/v5YdzQSQULLLtSWWBBIjNGb9fQXwd+KAS8dZqQGaF7wAeG72QIyPVMnV
+ dDt/BkpTYo+ZFHr1+9wGFvwcrn2cpSOORxujSa9brcXEagdbup9mUBcKdoM=
+X-Google-Smtp-Source: AGHT+IH/O0uQRyvhpGuXfc9gJ4kXTe69ZsOfNxUpWc+ECBDc2zpsjT0tmJh4NG8D4a9J6c7DcPOmlQ==
+X-Received: by 2002:a05:600c:1f15:b0:434:f335:83b with SMTP id
+ 5b1f17b1804b1-438dc3a84aamr225539795e9.5.1738601104140; 
+ Mon, 03 Feb 2025 08:45:04 -0800 (PST)
+Received: from [192.168.69.198] (88-187-86-199.subs.proxad.net.
+ [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-38c5c0ec7f1sm13038493f8f.9.2025.02.03.08.45.03
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 03 Feb 2025 08:43:42 -0800 (PST)
-Message-ID: <cfed8291-a3eb-464a-94a6-4d962c46d17a@linaro.org>
-Date: Mon, 3 Feb 2025 08:43:41 -0800
+ Mon, 03 Feb 2025 08:45:03 -0800 (PST)
+Message-ID: <119405b1-d7ba-4d61-bf7a-e2b0bce32d6e@linaro.org>
+Date: Mon, 3 Feb 2025 17:45:02 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 07/14] accel/stubs: Expand stubs for TCG
-To: Thomas Huth <thuth@redhat.com>, qemu-devel@nongnu.org
-Cc: pbonzini@redhat.com, mark.cave-ayland@ilande.co.uk, berrange@redhat.com,
- philmd@linaro.org
-References: <20250203031821.741477-1-richard.henderson@linaro.org>
- <20250203031821.741477-8-richard.henderson@linaro.org>
- <cb6859a5-f4fc-4f7a-8e32-5aa2be3ee7be@redhat.com>
+Subject: Re: [PATCH qemu 4/5] hw/mem/cxl_type3: Ensure errp is set on
+ realization failure
+To: Jonathan Cameron <Jonathan.Cameron@huawei.com>, qemu-devel@nongnu.org,
+ Fan Ni <fan.ni@samsung.com>, mst@redhat.com
+Cc: linux-cxl@vger.kernel.org, linuxarm@huawei.com
+References: <20250203161908.145406-1-Jonathan.Cameron@huawei.com>
+ <20250203161908.145406-5-Jonathan.Cameron@huawei.com>
 Content-Language: en-US
-From: Richard Henderson <richard.henderson@linaro.org>
-In-Reply-To: <cb6859a5-f4fc-4f7a-8e32-5aa2be3ee7be@redhat.com>
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <20250203161908.145406-5-Jonathan.Cameron@huawei.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::62f;
- envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x62f.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::332;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x332.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -105,38 +103,23 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 2/3/25 02:22, Thomas Huth wrote:
-> On 03/02/2025 04.18, Richard Henderson wrote:
->> Add tcg_allowed, qmp_x_query_jit, qmp_x_query_opcount.
->> These are referenced when CONFIG_TCG is enabled globally,
->> but not for a specific target.
->>
->> Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
->> ---
->>   accel/stubs/tcg-stub.c | 24 ++++++++++++++++++++++++
->>   1 file changed, 24 insertions(+)
->>
->> diff --git a/accel/stubs/tcg-stub.c b/accel/stubs/tcg-stub.c
->> index 7f4208fddf..9c2e2dc6e1 100644
->> --- a/accel/stubs/tcg-stub.c
->> +++ b/accel/stubs/tcg-stub.c
->> @@ -13,6 +13,18 @@
->>   #include "qemu/osdep.h"
->>   #include "exec/tb-flush.h"
->>   #include "exec/exec-all.h"
->> +#include "qapi/error.h"
->> +
->> +/*
->> + * This file *ought* to be built once and linked only when required.
->> + * However, it is built per-target, which means qemu/osdep.h has already
->> + * undef'ed CONFIG_TCG, which hides the auto-generated declaration.
+On 3/2/25 17:19, Jonathan Cameron via wrote:
+> From: Li Zhijian <lizhijian@fujitsu.com>
 > 
-> So why don't we only build this file once?
+> Simply pass the errp to its callee which will set errp if needed, to
+> enhance error reporting for CXL Type 3 device initialization by setting
+> the errp when realization functions fail.
+> 
+> Previously, failing to set `errp` could result in errors being overlooked,
+> causing the system to mistakenly treat failure scenarios as successful and
+> potentially leading to redundant cleanup operations in ct3_exit().
+> 
+> Signed-off-by: Li Zhijian <lizhijian@fujitsu.com>
+> Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+> ---
+>   hw/mem/cxl_type3.c | 4 ++--
+>   1 file changed, 2 insertions(+), 2 deletions(-)
 
-I think we'd have to create a static library for it.
-It didn't seem worth the effort at the time.
-I can re-investigate if you like.
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 
-
-r~
 
