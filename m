@@ -4,86 +4,78 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DEDDFC02192
-	for <qemu-devel@archiver.kernel.org>; Mon,  3 Feb 2025 17:20:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 64491C02197
+	for <qemu-devel@archiver.kernel.org>; Mon,  3 Feb 2025 17:20:33 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tf075-0008Q1-1Z; Mon, 03 Feb 2025 12:20:01 -0500
+	id 1tf06q-0008Gs-Fw; Mon, 03 Feb 2025 12:19:44 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <marcandre.lureau@gmail.com>)
- id 1tf06s-0008N0-Ox
- for qemu-devel@nongnu.org; Mon, 03 Feb 2025 12:19:46 -0500
-Received: from mail-qt1-x82b.google.com ([2607:f8b0:4864:20::82b])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <marcandre.lureau@gmail.com>)
- id 1tf06q-00040c-Up
- for qemu-devel@nongnu.org; Mon, 03 Feb 2025 12:19:46 -0500
-Received: by mail-qt1-x82b.google.com with SMTP id
- d75a77b69052e-467b74a1754so59821391cf.1
- for <qemu-devel@nongnu.org>; Mon, 03 Feb 2025 09:19:44 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1738603183; x=1739207983; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=Hz7Qpw8DiAEmNhs73hTo78lZWzySWRHjnujk7zGlscY=;
- b=hYIemv04Q9MRa2xgkstSlpmC9OjTgYdfGVlKLGH9xGtn8Ezk1sooWVik4hHTi/k+ak
- lKf4E6OF1yLjgzsYWn9EOH6fvayhLDhTkNmAbECIdG7jo4FH7yntP788WeVJVMNiSyb4
- oXgGcr2wyU6ghHH8MOogZTazqq6EnPrcnTuJYOmyt/66qjzTCHkV870nFTpeBR3X1QZK
- F7q4t7Sq2A6bqTdZQqLmOD2VqFP402A7+EMnSc2IbLk1Tx02NiohpM+5SRYfEyjCB8UH
- Jw+kuernrDTnWBghna05sS09FppWXvQcmDlrwIzM9bpa83LPMoSmx5Phz2riyR4M4ZQf
- 2fvA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1738603183; x=1739207983;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=Hz7Qpw8DiAEmNhs73hTo78lZWzySWRHjnujk7zGlscY=;
- b=E8uYZIodiIQcZmDtpgVVVmOczaGY4Ag6hCHYDFo3c/kSKmYZTIg75vyjioMr7w662a
- w7DmBWJ8JaG5sbtx83Mtz2SylMqkuS21uXAq5RvSo4sLtMZwymsERwK6oXrFcaOQOhiP
- NDVO3+i3rqJgrsNOoE2yhUtw/2kbheepKlp/XQe9xdOAp/LHXKJPD/5Y2PWzXLk7cW5O
- CpqOxiSa9lZ0yS5bVJLlaxxNst7htcEWSTsUey6I0ZRZy8epNA+fWm2tTdTouQh6f82l
- yVjjEeDO99nIDhbxwZNfVEGwU+NWVg2IbjyxoGWYv2/zVAJ1pQ6RfUhRLfDIwhyeMGBK
- jzqQ==
-X-Gm-Message-State: AOJu0YyNjssmL3h6pA++KOwklMfA9Zra4fbltztrg2c8UF2EOyETi1r6
- wl570rJNB9C5/4k9OCYSe0T378rSPWDgzIuMqYQvwQPwvVqcXZFhd4bQsDapCwc+sEt0nXy9xGs
- TpfD2M4oZhzbCEUUA9Qhw0I/fCKs=
-X-Gm-Gg: ASbGncsyMAQRt247nj0YiwUBSS2uGEspz7C5qMkHL58GQi6AFeXnn3Gz68klkYw4MZa
- EUqIpZKPse8WHK65f3VMQjPG2mJTOIEGMxkdObJ0JFrKQuPj7fGKzD9uqZGW0Ll2PW9DOqR+Sya
- SO2oXSnYrQqiEp4krHAsrWxd9dhdatSg==
-X-Google-Smtp-Source: AGHT+IEoo9SWoVqyDNx5yAEN7cos/yy0Tvh6OZM0ChIWG0d9ot6w207N7xSI4Miu9w6p0aHKFIZX/RCivqwwNyxobdU=
-X-Received: by 2002:a05:622a:1e92:b0:467:6226:bfc1 with SMTP id
- d75a77b69052e-46fd0adcbeamr329809341cf.29.1738603183091; Mon, 03 Feb 2025
- 09:19:43 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
+ id 1tf06p-0008Be-1Z
+ for qemu-devel@nongnu.org; Mon, 03 Feb 2025 12:19:43 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
+ id 1tf06n-00040Q-Ih
+ for qemu-devel@nongnu.org; Mon, 03 Feb 2025 12:19:42 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1738603180;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=8Sy6D4l8WyUvHmgMud7xvjryKWtsqgGZZr6dgDTuBQw=;
+ b=BUJdWFbETQtdPtIbFFnezqpU3P868QFVRSo1SShTaapxE6cPy/q6eZJKAgPErNGs+bqNLz
+ xOMqlhQeSgRfabka62JxhimKX5Dvvf5p+7HoPs/QjxREDc36MTXlp37pCOYnwNyOWhvQ6t
+ 4KB2twhMvWs1NK1QN+DEgj/KVK5tAD4=
+Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-678-VRU_0StkP4-WaYW1thYwyg-1; Mon,
+ 03 Feb 2025 12:19:37 -0500
+X-MC-Unique: VRU_0StkP4-WaYW1thYwyg-1
+X-Mimecast-MFC-AGG-ID: VRU_0StkP4-WaYW1thYwyg
+Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 78D2718009C9; Mon,  3 Feb 2025 17:19:36 +0000 (UTC)
+Received: from localhost (unknown [10.39.208.25])
+ by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 42DD41800975; Mon,  3 Feb 2025 17:19:34 +0000 (UTC)
+From: marcandre.lureau@redhat.com
+To: qemu-devel@nongnu.org
+Cc: Mahmoud Mandour <ma.mandourr@gmail.com>,
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>,
+ =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
+ Markus Armbruster <armbru@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
+ Gerd Hoffmann <kraxel@redhat.com>, Eric Blake <eblake@redhat.com>,
+ =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ peter.maydell@linaro.org, Alexandre Iooss <erdnaxe@crans.org>
+Subject: [PULL v2 7/8] plugins: fix -Werror=maybe-uninitialized false-positive
+Date: Mon,  3 Feb 2025 21:18:47 +0400
+Message-ID: <20250203171848.686582-8-marcandre.lureau@redhat.com>
+In-Reply-To: <20250203171848.686582-1-marcandre.lureau@redhat.com>
+References: <20250203171848.686582-1-marcandre.lureau@redhat.com>
 MIME-Version: 1.0
-References: <20250203125721.640451-1-marcandre.lureau@redhat.com>
- <CAJSP0QX+zW0eenxwdZL4=jrdXB2=dVjpb2hw8BzFM7Ee9EHdrw@mail.gmail.com>
-In-Reply-To: <CAJSP0QX+zW0eenxwdZL4=jrdXB2=dVjpb2hw8BzFM7Ee9EHdrw@mail.gmail.com>
-From: =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@gmail.com>
-Date: Mon, 3 Feb 2025 21:19:31 +0400
-X-Gm-Features: AWEUYZl-taOUzofv75peo87aMeua-83_LLNT4uQsBS9I7Ob8hq21TBnoU1BbH3E
-Message-ID: <CAJ+F1CJifV4Dk_7fCoH6arHZYDRo=eOr-uDGVbDLVVuU8z1Uew@mail.gmail.com>
-Subject: Re: [PULL 0/8] Ui patches
-To: Stefan Hajnoczi <stefanha@gmail.com>
-Cc: qemu-devel@nongnu.org, Eric Blake <eblake@redhat.com>, 
- Paolo Bonzini <pbonzini@redhat.com>, Mahmoud Mandour <ma.mandourr@gmail.com>, 
- Markus Armbruster <armbru@redhat.com>, peter.maydell@linaro.org, 
- Gerd Hoffmann <kraxel@redhat.com>, Alexandre Iooss <erdnaxe@crans.org>, 
- =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>, 
- Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::82b;
- envelope-from=marcandre.lureau@gmail.com; helo=mail-qt1-x82b.google.com
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
+Received-SPF: pass client-ip=170.10.133.124;
+ envelope-from=marcandre.lureau@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -99,53 +91,35 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi
+From: Marc-André Lureau <marcandre.lureau@redhat.com>
 
-On Mon, Feb 3, 2025 at 6:29=E2=80=AFPM Stefan Hajnoczi <stefanha@gmail.com>=
- wrote:
->
-> On Mon, Feb 3, 2025 at 7:58=E2=80=AFAM <marcandre.lureau@redhat.com> wrot=
-e:
-> >
-> > From: Marc-Andr=C3=A9 Lureau <marcandre.lureau@redhat.com>
-> >
-> > The following changes since commit 6fccaa2fba391815308a746d68f7fa197bc9=
-3586:
-> >
-> >   Merge tag 'block-pull-request' of https://gitlab.com/stefanha/qemu in=
-to staging (2025-02-02 11:09:10 -0500)
-> >
-> > are available in the Git repository at:
-> >
-> >   https://gitlab.com/marcandre.lureau/qemu.git tags/ui-pull-request
-> >
-> > for you to fetch changes up to f327a2cea1502a8cad2beb13bc4e2c12b95b10ba=
-:
-> >
-> >   dbus: add -audio dbus nsamples option (2025-02-03 13:58:08 +0400)
-> >
-> > ----------------------------------------------------------------
-> > UI/chardev-related patch queue
-> >
-> > ----------------------------------------------------------------
-> >
-> > Marc-Andr=C3=A9 Lureau (4):
-> >   ui/dbus: on win32, allow ANONYMOUS with p2p
->
-> Hi Marc-Andr=C3=A9,
-> There is an unexpected submodule update in this commit. Although it's
-> not included in the patch email sent to the mailing list, GitLab shows
-> it:
-> https://gitlab.com/marcandre.lureau/qemu/-/commit/31d9023965ba1963afd1e0e=
-0f48c75399a7bc23e
->
-> Please rebase onto qemu.git/master and remove the spurious libvirt-ci
-> submodule update before resending this pull request. Thank you!
->
+../contrib/plugins/cache.c:638:9: error: ‘l2_cache’ may be used uninitialized [-Werror=maybe-uninitialized]
+  638 |         append_stats_line(rep, l1_dmem_accesses, l1_dmisses,
+      |         ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Sorry, bad .gitconfig.. resent, thanks
+Is a false-positive, since cores > 1, so the variable is set in the
+above loop.
 
+Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
+Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+---
+ contrib/plugins/cache.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---=20
-Marc-Andr=C3=A9 Lureau
+diff --git a/contrib/plugins/cache.c b/contrib/plugins/cache.c
+index 7baff86860..7cfd3df249 100644
+--- a/contrib/plugins/cache.c
++++ b/contrib/plugins/cache.c
+@@ -603,7 +603,7 @@ static int l2_cmp(gconstpointer a, gconstpointer b)
+ static void log_stats(void)
+ {
+     int i;
+-    Cache *icache, *dcache, *l2_cache;
++    Cache *icache, *dcache, *l2_cache = NULL;
+ 
+     g_autoptr(GString) rep = g_string_new("core #, data accesses, data misses,"
+                                           " dmiss rate, insn accesses,"
+-- 
+2.47.0
+
 
