@@ -4,85 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 52445C02193
-	for <qemu-devel@archiver.kernel.org>; Mon,  3 Feb 2025 10:44:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id AB93DC02192
+	for <qemu-devel@archiver.kernel.org>; Mon,  3 Feb 2025 10:46:56 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tetw4-0007IK-7M; Mon, 03 Feb 2025 05:44:12 -0500
+	id 1tetyF-00087t-Rn; Mon, 03 Feb 2025 05:46:27 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1tetvv-0007HX-AI
- for qemu-devel@nongnu.org; Mon, 03 Feb 2025 05:44:04 -0500
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1tetyE-00087e-HE
+ for qemu-devel@nongnu.org; Mon, 03 Feb 2025 05:46:26 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1tetvp-0000wY-DK
- for qemu-devel@nongnu.org; Mon, 03 Feb 2025 05:43:59 -0500
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1tetyC-0001Ew-W5
+ for qemu-devel@nongnu.org; Mon, 03 Feb 2025 05:46:26 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1738579436;
+ s=mimecast20190719; t=1738579583;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=MDLBEa7dY2MCIvJO/+0DegNqssWVdj3I4JhsgtmQBN8=;
- b=hEJOaeNGkGw3WQCm5DFrFl2iFigMgBB+FA3ZfBi0Vz0p3+GU2xDgxkNIui1fgAwRqdeKIM
- hnrfsoylF/DK3nbdjN3ew2BImCSa431GSn8Z0baEoYyX1vWkc5j2DbSrXDoyA02D51980s
- 2eSiQn/EMjjzqKBvWGo0LRRu7yWxd20=
-Received: from mail-qt1-f199.google.com (mail-qt1-f199.google.com
- [209.85.160.199]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=AgHt9igjL3bcrvP071fUWdkFJAkijNSWH9yrBRalzY4=;
+ b=UsAqTiDivYKMTiSXOeNYo1ijs4xqIdoE3ZZYvGa+SIUcMDFu+8iQRG45inFJU3n/UuBwTh
+ Msj+L0ZH8F9pTTdC+aiFbD6k66Uq/qCNcShHD+HsXXsZEJGebjfnGYIY5N533Gpa+Z0W2D
+ eImr8YeFq9G4WWmEebtNhUKSfJU4nVQ=
+Received: from mail-wm1-f70.google.com (mail-wm1-f70.google.com
+ [209.85.128.70]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-695-Hj55uHTkNLK9OMBuyOs76Q-1; Mon, 03 Feb 2025 05:43:55 -0500
-X-MC-Unique: Hj55uHTkNLK9OMBuyOs76Q-1
-X-Mimecast-MFC-AGG-ID: Hj55uHTkNLK9OMBuyOs76Q
-Received: by mail-qt1-f199.google.com with SMTP id
- d75a77b69052e-4679fc5c542so80623171cf.0
- for <qemu-devel@nongnu.org>; Mon, 03 Feb 2025 02:43:55 -0800 (PST)
+ us-mta-621-2JjZUyVOMUO41GDYvVSDpw-1; Mon, 03 Feb 2025 05:46:22 -0500
+X-MC-Unique: 2JjZUyVOMUO41GDYvVSDpw-1
+X-Mimecast-MFC-AGG-ID: 2JjZUyVOMUO41GDYvVSDpw
+Received: by mail-wm1-f70.google.com with SMTP id
+ 5b1f17b1804b1-43646b453bcso20404035e9.3
+ for <qemu-devel@nongnu.org>; Mon, 03 Feb 2025 02:46:22 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1738579435; x=1739184235;
+ d=1e100.net; s=20230601; t=1738579581; x=1739184381;
  h=content-transfer-encoding:in-reply-to:autocrypt:content-language
  :from:references:cc:to:subject:user-agent:mime-version:date
  :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=MDLBEa7dY2MCIvJO/+0DegNqssWVdj3I4JhsgtmQBN8=;
- b=hEq3wbHHtgS/m8dYuGgOL/6tu/NGOeVzGMPSUVnodLTZlyAlUrS7TyrYeWbVNmW1xB
- 4QfH3OTHW2cnA26GlVH1Oq1qehp9i8ipo8fNc4omQ6OwIHAqfj48VnT4N7WHNi6WQJnz
- TM6yrBuk5vtHkTJUjYjwQhqk7Py/Iwfc4QrQCX5YGzx8XF/WM88V4+uWuU2CuvdEYmBA
- Fxm+kzBcbzu8yazYpPFBjCovDWt3nhgl5Shvt3EEffr+4MJ0+6/TrmDzvvZhD86cIKKU
- 4uupfPZkQV8xZM/KRTrlUGfX0QBS4j6gMOpnJqQPS5KcELg8gSbtA2+6O8L1yMKZBhug
- CvAQ==
+ bh=AgHt9igjL3bcrvP071fUWdkFJAkijNSWH9yrBRalzY4=;
+ b=e+GJhjuAbG1N8tb/Hb0guPvC34uQiiCmvz5PelHfVy/lPWV86E7uqZErnl0oZTw5ez
+ 1N95wsJmwFkRaek2zJqbLj1t7FdBmU7CINP1F0SUN/+z3xEEiOzOCFmVCKjWS8alFO1o
+ CBusSrJvDUUDVHcYhti7C7QMOfhINHywEt0arF6Zm+8AtTdrtfjq6qh3X4JWKstOiXND
+ 6seDX4sDOzd+/FawSulltpgef3hP4BN1OYu4FA1Etyo9SZ12aowsw845vi34DxJCZAZT
+ NjjzNQlMjCpD0jiQHSwZGpI3iwW9v19hGurIwtNw8pa3ekca98+FfjqATzBFHHzc3sbo
+ I7Ow==
 X-Forwarded-Encrypted: i=1;
- AJvYcCU11TPPSIvHRSun2zCWR0OS8SUXSfc7bUM7Eai13uI046YNMPc4RnoB16W+D83qjwKd8o+dBDY3yWVl@nongnu.org
-X-Gm-Message-State: AOJu0YxjxQ6Q8F6WRUD05SodKpMc9Uiz0D+OxkwCUf4yjIe18KOgaas3
- bR/KerkW5ZtvBIagPQlK2ObSSFQm+oA2FEFKQkxUd90Pq5WtS7OA1BYhCvOQVBWuE+kuV9HF+Zy
- 9ND+vPC4NtMmnb8WYJXFBYtEM1vIRnabFBt3ln3Dlv3nhfeDBE2Rm
-X-Gm-Gg: ASbGncu0kqM8WQAdhhX55dGc97Ju9N3DZtJqNcujKgpjAmkt1p1PB7Prn+pOHpZN0FZ
- YahTwKLw8cEhZCTM2IPbufMjysitDVqVM0Va5SxynTdWpWiuu0Q5F/pXtfRYSiBRVLgMxT8YDCA
- uTZx30aLgJv0tNdDr4LXFzMhMv9Ys6lJXbGmTywdOEek04mrnGDiiyfgTS6v8ZUqL2In6d7hsJZ
- ejlgiCOdGnEyIpw98O5EFsvXc/nv80AhMJDnatuYOQtrvaOEM1OxwTBO+dMCSM/fFRn9+K2jXav
- ry92jomfg5GbblhuBCG2Ik6wdF7VEg==
-X-Received: by 2002:a05:622a:1995:b0:46c:77bc:ce57 with SMTP id
- d75a77b69052e-46fd0ae2a34mr305713051cf.36.1738579434966; 
- Mon, 03 Feb 2025 02:43:54 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IFmibxEJNUXLJfi2hn14mgLUakfcLbeSqsHMyQnzNzJzVaj/swzJBNDjcPeDBzDBpA038qcjg==
-X-Received: by 2002:a05:622a:1995:b0:46c:77bc:ce57 with SMTP id
- d75a77b69052e-46fd0ae2a34mr305712941cf.36.1738579434658; 
- Mon, 03 Feb 2025 02:43:54 -0800 (PST)
+ AJvYcCWywWrXdh7abpNR4d1riWlWZtj2X7vJeYoAc0Tdp02alv5kO4a7UhcdwL/HSXAPVbkFLtUwyjdzIiBu@nongnu.org
+X-Gm-Message-State: AOJu0YxtGqxw0HLyBs1FhNxcmj+h7fxF9zXG6cpTyYiy6u4mxPmE/EsG
+ pxFVeQ7PbE/PwI11npiDmHz005u6RoT20w3dOW88MTtCmwum9YuJAm1J9IkWJF5R1XLwd6IiMCI
+ mJNF9YNPjjSoTwm0NY0jaP+G+CIErTnJ2UEDLfrd0WYt2hhiOufCE
+X-Gm-Gg: ASbGncv0IgE3XCiOuzs/Pmi8SKYVe+BXgm8DMuU5d4/v/IEa4pxVeqtZy72lTcdiGDv
+ 7RtMGY0a9D+VC+U5xJ/koIVd2ZS7BiHXewd4yMZ6nh2yo7L5DXhEboJvnGUfZQmhEojkzTagYX9
+ jt2WkY2lQFCdn6MKQy/PrZcRSh4COV97Hqy6nl90MKYKEkVxmB7ej+iB807vC/NNno0PC8VVJpF
+ ySf6jRsCaSp27C2EqJOeiOYlUMe9BTwwnxlBbJjwNiEY8FGnFi4iwSZ/YwaNrsfaok5bFKmzmqN
+ 6457kH5as9NF7DcAAd2dKvVm0QI7gw==
+X-Received: by 2002:a05:600c:1e0d:b0:436:f960:3427 with SMTP id
+ 5b1f17b1804b1-438dc40ffbbmr164507105e9.22.1738579581337; 
+ Mon, 03 Feb 2025 02:46:21 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IG0//g2kLqdfjWYymrUwf5zOI6Gmsse/+qI7y6UN1PZFAotkUe11KCkZffO/qdexEfFVbiZEA==
+X-Received: by 2002:a05:600c:1e0d:b0:436:f960:3427 with SMTP id
+ 5b1f17b1804b1-438dc40ffbbmr164506875e9.22.1738579580958; 
+ Mon, 03 Feb 2025 02:46:20 -0800 (PST)
 Received: from [10.33.192.228] (nat-pool-str-t.redhat.com. [149.14.88.106])
  by smtp.gmail.com with ESMTPSA id
- d75a77b69052e-46fdf172372sm47272801cf.60.2025.02.03.02.43.53
+ 5b1f17b1804b1-438dcc2e239sm184223365e9.18.2025.02.03.02.46.20
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 03 Feb 2025 02:43:54 -0800 (PST)
-Message-ID: <6aad3678-778a-4e90-912f-d8f4f895ad6e@redhat.com>
-Date: Mon, 3 Feb 2025 11:43:52 +0100
+ Mon, 03 Feb 2025 02:46:20 -0800 (PST)
+Message-ID: <b26810fa-1449-4d36-bfa1-d90de3441a25@redhat.com>
+Date: Mon, 3 Feb 2025 11:46:20 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 11/14] target/*: Remove TARGET_LONG_BITS from
- cpu-param.h
+Subject: Re: [PATCH v2 12/14] meson: Disallow 64-bit on 32-bit TCG emulation
 To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
 Cc: pbonzini@redhat.com, mark.cave-ayland@ilande.co.uk, berrange@redhat.com,
  philmd@linaro.org
 References: <20250203031821.741477-1-richard.henderson@linaro.org>
- <20250203031821.741477-12-richard.henderson@linaro.org>
+ <20250203031821.741477-13-richard.henderson@linaro.org>
 From: Thomas Huth <thuth@redhat.com>
 Content-Language: en-US
 Autocrypt: addr=thuth@redhat.com; keydata=
@@ -127,7 +126,7 @@ Autocrypt: addr=thuth@redhat.com; keydata=
  oiT+z+/E59qj/EKfyce3sbC9XLjXv3mHMrq1tKX4G7IJGnS989E/fg6crv6NHae9Ckm7+lSs
  IQu4bBP2GxiRQ+NV3iV/KU3ebMRzqIC//DCOxzQNFNJAKldPe/bKZMCxEqtVoRkuJtNdp/5a
  yXFZ6TfE1hGKrDBYAm4vrnZ4CXFSBDllL59cFFOJCkn4Xboj/aVxxJxF30bn
-In-Reply-To: <20250203031821.741477-12-richard.henderson@linaro.org>
+In-Reply-To: <20250203031821.741477-13-richard.henderson@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 Received-SPF: pass client-ip=170.10.129.124; envelope-from=thuth@redhat.com;
@@ -156,30 +155,22 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 03/02/2025 04.18, Richard Henderson wrote:
-> This is now handled by the configs/targets/*.mak fragment.
+> For system mode, we can rarely support the amount of RAM that
+> the guest requires. Emulation is restricted to round-robin
+> mode, which solves many of the atomicity issues, but not those
+> associated with virtio.  In any case, round-robin does nothing
+> to help the speed of emulation.
+> 
+> For user mode, most emulation does not succeed at all.  Most
+> of the time we cannot even load 64-bit non-PIE binaries due
+> to lack of a 64-bit address space.  Threads are run in
+> parallel, not round-robin, which means that atomicity
+> is not handled.
 > 
 > Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 > ---
->   target/alpha/cpu-param.h      | 2 --
->   target/arm/cpu-param.h        | 2 --
->   target/avr/cpu-param.h        | 1 -
->   target/hexagon/cpu-param.h    | 1 -
->   target/hppa/cpu-param.h       | 2 --
->   target/i386/cpu-param.h       | 2 --
->   target/loongarch/cpu-param.h  | 1 -
->   target/m68k/cpu-param.h       | 1 -
->   target/microblaze/cpu-param.h | 2 --
->   target/mips/cpu-param.h       | 5 -----
->   target/openrisc/cpu-param.h   | 1 -
->   target/ppc/cpu-param.h        | 2 --
->   target/riscv/cpu-param.h      | 2 --
->   target/rx/cpu-param.h         | 1 -
->   target/s390x/cpu-param.h      | 1 -
->   target/sh4/cpu-param.h        | 1 -
->   target/sparc/cpu-param.h      | 2 --
->   target/tricore/cpu-param.h    | 1 -
->   target/xtensa/cpu-param.h     | 1 -
->   19 files changed, 31 deletions(-)
+>   meson.build | 14 +++++++++++---
+>   1 file changed, 11 insertions(+), 3 deletions(-)
 
 Reviewed-by: Thomas Huth <thuth@redhat.com>
 
