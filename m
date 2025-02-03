@@ -4,74 +4,74 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5412FC02193
-	for <qemu-devel@archiver.kernel.org>; Mon,  3 Feb 2025 06:05:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 474B3C02195
+	for <qemu-devel@archiver.kernel.org>; Mon,  3 Feb 2025 06:07:22 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tepZv-0007ny-WE; Mon, 03 Feb 2025 01:05:04 -0500
+	id 1tepbe-0008CP-A9; Mon, 03 Feb 2025 01:06:52 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
- id 1tepZt-0007nl-Vf
- for qemu-devel@nongnu.org; Mon, 03 Feb 2025 01:05:01 -0500
-Received: from mail-pl1-x62f.google.com ([2607:f8b0:4864:20::62f])
+ id 1tepb9-000894-5g
+ for qemu-devel@nongnu.org; Mon, 03 Feb 2025 01:06:21 -0500
+Received: from mail-pl1-x636.google.com ([2607:f8b0:4864:20::636])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
- id 1tepZr-0001T0-3E
- for qemu-devel@nongnu.org; Mon, 03 Feb 2025 01:05:01 -0500
-Received: by mail-pl1-x62f.google.com with SMTP id
- d9443c01a7336-21619108a6bso65019275ad.3
- for <qemu-devel@nongnu.org>; Sun, 02 Feb 2025 22:04:58 -0800 (PST)
+ id 1tepb6-00027O-92
+ for qemu-devel@nongnu.org; Mon, 03 Feb 2025 01:06:18 -0500
+Received: by mail-pl1-x636.google.com with SMTP id
+ d9443c01a7336-2166651f752so75966405ad.3
+ for <qemu-devel@nongnu.org>; Sun, 02 Feb 2025 22:06:15 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=daynix-com.20230601.gappssmtp.com; s=20230601; t=1738562697; x=1739167497;
+ d=daynix-com.20230601.gappssmtp.com; s=20230601; t=1738562774; x=1739167574;
  darn=nongnu.org; 
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=oXv00d3LkUH8rQAyy8gYfVqFLi2/tU9IZtHYRvOTy/k=;
- b=B1Hjs96NjzAkUxSwFTmT+JMUQuezX5pImbAKqSY1dDSlK119twRi7X+DPcFMH7VAEZ
- TYXyxFFTQ5DYSmr7qv2VJJXfr7BWA++FcfKJh+0csVttOic/dvwSHPyoyIuHMUCggBTL
- Jd/iZIET91pADbQupPhnUQUgWhkWHRvwirBr8hF15YJaaYpUut/Ywi350+KBqficorkP
- hz3lJeo+eSJ+eE6LFLHEzVpXgeMFWavoO+QaHt4Y4PH8k0EvFusAVBWk/y3+9LKvaa3N
- hMESAFdFCfp20Ikrjx83t/u3jZWLCAd2+i39tgPZgHI5sTf7uVsaG7F/Ko9fqyT8UZ7R
- 1itQ==
+ bh=vnMl1M5wNXF5ZrFlpPquQyUKDLC5VeTh3y/GGEQe7aE=;
+ b=mNN+8lJFE9VYnv4o78pFEuNwXeetvVpcO6A5V2me33m82bedzmh73T3Z3Sbu2DOsBL
+ B5bFU18h+wf0zr/+36Pc6gfeIWEaBQlpLuJVkPsuxl7xLQh3fNwnILp6swQ+xh8qV6XD
+ 9LKkOjkTTlQbJPRBzuC4w0DaaNRWez4mRL218hGn9NiHOr7P7YtYwIQlVWCbdRU7srA5
+ EztldFe3LmLP0kAp4djxQFCmuJKWV4I1Sj5n06Y/nIgHoj2zq8aNo3pfHiOuXCypiLPi
+ 1EAkj0tt7ikfd0VTW3vMfP+RXzzTmIqTVDwcU7w/ImUAxw2bSO+4hWqlqKCtZsIl5mox
+ e2hQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1738562697; x=1739167497;
+ d=1e100.net; s=20230601; t=1738562774; x=1739167574;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=oXv00d3LkUH8rQAyy8gYfVqFLi2/tU9IZtHYRvOTy/k=;
- b=ttddTtALIFni1Qin5RHfJMCSvS1zaO5jsO4L/T8TA5JTxYF1vE5UTya5d/fM/e2/0Q
- pFEQPHQ3ochyp7RPfKTscD5FUHV9IVsPNuQjPrSaTFGwbBnKOPVs51sFxMsUfD3YYz7L
- XPBTetmvqgtE7ja1L/9XpM3R6LEYiHUOVOlyvFTt4wwmykyvW78Yb2shHJuog1mS4OvB
- OmmlgoJAqUR1KH6dgIgonwlAQTMhtgnJUnYvCh6ld6DRibYn2e8C0QPKIvM4T+gM5thC
- pcI3cXYqC5XIQIpFU87OtRurzAz6ZyBcfgGjJNsmCKSJ9L6ox1pdS232xrQVOuF9DIJB
- Eo+w==
+ bh=vnMl1M5wNXF5ZrFlpPquQyUKDLC5VeTh3y/GGEQe7aE=;
+ b=LnCI/68iEgfk2TeRtjDTbtwdUC0o8t5RfLrCH5w5KDWPjmpjy6ppSLbQntoQlCOKv6
+ HdMCYBtc8e689ZfzmurreBwHZAbqospiSZXHAloQBifVDQA+wMpktS4vNHT+QB0tLkN3
+ MwJQZKdUBdpAf1DMwdX6HOjdZv4GMGTsFkMwGn4OFJzSxoiUxMIBD4vcNcxggrK4cYB9
+ Q45A0hQ1R1RFUrQbcAFwC8vskNO0HaTvmTm00jGczLy/fli1/dLpqcd4ULSGFRSZEb41
+ 03M8Q4srIdz6wEveNB3MfibxR4vgDtr8StHcJ/lsf0+YVeHABU1n7X190gsYvBNbkJQq
+ t/Kw==
 X-Forwarded-Encrypted: i=1;
- AJvYcCXB2o6PnazJRS1w+UuOba4aJ3MQ8DZLONAONV0CAM0a6f6vTCRNxuSD26CPsk3RA/XO3Gj3QPscQ1Bt@nongnu.org
-X-Gm-Message-State: AOJu0Yxejgd5kgMh6LFvUwCBNY/cEFYyZC9PqpsOghwq6RnG4wPibYFY
- HEP8uNY5PhokgLhW5EUhHiHFyKv5L+iAQ9j2LIR0RoqAUfl32CdTPM6nkSUfPqk=
-X-Gm-Gg: ASbGncvmMV2KB5/dMUjIP7EqmS3zIAymoNGzXSt6U9ExLDqTEEqrht1CPZRUmU80mI9
- QEu0Lm0k6V1dkvGOltsw1GBmcjO303xY3k8JRggN0pi7gHp6INWMuEkLgBwsRySwJrc+PXYKiHh
- MWqFXeuLvEhNqpj+0fevmozvTka1FyW46Tl2Wu0Tmeg2tC9KxZn6m8Ow/TzTq8JsNFMwwyEu4bs
- vT5GG+ORp8DWekrLSRRI5SBtNwfWjRZDYhzwoSFkRuIZWwG3ar3EFEsnfEzlAiTvRjWqd1q51Rl
- JudVeqXnpejHcAAsnH72Ex1GcnLU
-X-Google-Smtp-Source: AGHT+IHTRhZ5ogu9jW2G4yh0ewRb9cnXfBuLpTWp79T2N0fYkGqx/niISCXWNdKU0rlvj/AC7tPXaA==
-X-Received: by 2002:a05:6a20:9e46:b0:1e0:c56f:7db4 with SMTP id
- adf61e73a8af0-1ed7a49a2a4mr37092205637.2.1738562697190; 
- Sun, 02 Feb 2025 22:04:57 -0800 (PST)
+ AJvYcCXmV4EvU3JdMem614cN/x9cBGimYAWztfVKAr9A9+PHqhHo/ZRj9HlZR2r5MPQdhUKEpTz7E5Y0Yty0@nongnu.org
+X-Gm-Message-State: AOJu0Yz3CCnWlzf/aZ6y2eo58MvFD3uEBpIjY8EBE3PUsWqltcPenncP
+ FcmMI/u61Q9BH7RPxDcyuNKeICn5/btA3dPY62tcbQmPVe5OU1ORkhiIuGS/sTg=
+X-Gm-Gg: ASbGncuLME5SSZey6IKxApyxvKOtklRxBXakvDfpKMwaQ4b2pr7Zc1YHbskCLuTxpGw
+ XMx5m/wEjaKcYFfED6tJWZBp/c8Av7UqRBKvS6DWYxZ0H3t/+0XtRIEFBUSxv5QCNUILY++XJT3
+ IQ7satujXu2BWMRaKJy0noKpx5z0YPe0CLAgqfsnb4YsdTeM6RkJRZGfrsKb/nd2L8sTGR+LxpV
+ VR/2z59h2S+SvCDCaVRt8odDK+DaGSyV5+iz351SU7AZfao84/2FY7UHl2PTqD9hexz/wVpC3K9
+ vsR4q8hwsevQN+/qN4vJkxZpWGzN
+X-Google-Smtp-Source: AGHT+IE8bZmwO75cLOYbzv4k9Yh8vfI/RcFGEfOplGP7+GCii8epVe4dj0Vgd/Ur18A5DHlnwn/oKg==
+X-Received: by 2002:a17:903:98f:b0:215:3fb9:5201 with SMTP id
+ d9443c01a7336-21dd7dff8c1mr384009705ad.44.1738562774548; 
+ Sun, 02 Feb 2025 22:06:14 -0800 (PST)
 Received: from [157.82.207.107] ([157.82.207.107])
  by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-72fe653a9f3sm7527305b3a.75.2025.02.02.22.04.51
+ d9443c01a7336-21de32eba6fsm66936845ad.107.2025.02.02.22.06.08
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Sun, 02 Feb 2025 22:04:56 -0800 (PST)
-Message-ID: <2ecfebe3-43a3-4d47-9873-41a8fadf5dcf@daynix.com>
-Date: Mon, 3 Feb 2025 15:04:50 +0900
+ Sun, 02 Feb 2025 22:06:14 -0800 (PST)
+Message-ID: <9b81ef95-6dec-43cc-9adb-8878ced90c07@daynix.com>
+Date: Mon, 3 Feb 2025 15:06:07 +0900
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v7 10/10] docs/system: virtio-gpu: Document host/guest
- requirements
+Subject: Re: [PATCH v7 08/10] docs/system: virtio-gpu: Add link to Mesa VirGL
+ doc
 To: Dmitry Osipenko <dmitry.osipenko@collabora.com>,
  Huang Rui <ray.huang@amd.com>,
  =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
@@ -91,14 +91,14 @@ Cc: Gert Wollny <gert.wollny@collabora.com>, qemu-devel@nongnu.org,
  Chen Jiqian <Jiqian.Chen@amd.com>, Rob Clark <robdclark@gmail.com>,
  Yiwei Zhang <zzyiwei@chromium.org>, Sergio Lopez Pascual <slp@redhat.com>
 References: <20250202232136.919342-1-dmitry.osipenko@collabora.com>
- <20250202232136.919342-11-dmitry.osipenko@collabora.com>
+ <20250202232136.919342-9-dmitry.osipenko@collabora.com>
 Content-Language: en-US
 From: Akihiko Odaki <akihiko.odaki@daynix.com>
-In-Reply-To: <20250202232136.919342-11-dmitry.osipenko@collabora.com>
+In-Reply-To: <20250202232136.919342-9-dmitry.osipenko@collabora.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::62f;
- envelope-from=akihiko.odaki@daynix.com; helo=mail-pl1-x62f.google.com
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::636;
+ envelope-from=akihiko.odaki@daynix.com; helo=mail-pl1-x636.google.com
 X-Spam_score_int: -18
 X-Spam_score: -1.9
 X-Spam_bar: -
@@ -121,179 +121,36 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 2025/02/03 8:21, Dmitry Osipenko wrote:
-> From: Alex Bennée <alex.bennee@linaro.org>
+> Extend virtio-gpu documentation with a link to the Mesa VirGL
+> documentation.
 > 
-> This attempts to tidy up the VirtIO GPU documentation to make the list
-> of requirements clearer. There are still a lot of moving parts and the
-> distros have some catching up to do before this is all handled
-> automatically.
-> 
-> Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
-> Cc: Sergio Lopez Pascual <slp@redhat.com>
+> Suggested-by: Akihiko Odaki <akihiko.odaki@daynix.com>
 > Signed-off-by: Dmitry Osipenko <dmitry.osipenko@collabora.com>
-> [dmitry.osipenko@collabora.com: Extended and corrected doc]
 > ---
->   docs/system/devices/virtio-gpu.rst | 92 +++++++++++++++++++++++++++++-
->   1 file changed, 91 insertions(+), 1 deletion(-)
+>   docs/system/devices/virtio-gpu.rst | 3 ++-
+>   1 file changed, 2 insertions(+), 1 deletion(-)
 > 
 > diff --git a/docs/system/devices/virtio-gpu.rst b/docs/system/devices/virtio-gpu.rst
-> index ea3eb052df3c..56950a76aa2e 100644
+> index f20c60016376..f8963c1f13cf 100644
 > --- a/docs/system/devices/virtio-gpu.rst
 > +++ b/docs/system/devices/virtio-gpu.rst
-> @@ -5,7 +5,9 @@ virtio-gpu
->   ==========
->   
->   This document explains the setup and usage of the virtio-gpu device.
-> -The virtio-gpu device paravirtualizes the GPU and display controller.
-> +The virtio-gpu device provides a GPU and display controller
-> +paravirtualized using VirtIO. It supports a number of different modes
-> +from simple 2D displays to fully accelerated 3D graphics.
->   
->   Linux kernel support
->   --------------------
-> @@ -56,6 +58,17 @@ on typical modern Linux distributions.
->   .. _Mesa: https://www.mesa3d.org/
->   .. _SwiftShader: https://github.com/google/swiftshader
->   
-> +3D acceleration
-> +---------------
-> +
-> +3D acceleration of a virtualized GPU is still an evolving field.
-> +Depending on the 3D mode you are running you may need to override
-> +distribution supplied libraries with more recent versions or enable
-> +build options. There are a number of requirements the host must meet
-> +to be able to be able to support guests. QEMU must be able to access the
-> +host's GPU and for the best performance be able to reliably share GPU
-> +memory with the guest.
-> +
-
-What about having a bigger section for "host requirements" that includes 
-the "Linux kernel support" and "3D acceleration" section?
-
-Also it's better to note that the details of 3D acceleration 
-requirements are described later as this section only contains an 
-abstract description.
-
+> @@ -59,7 +59,7 @@ on typical modern Linux distributions.
 >   virtio-gpu virglrenderer
 >   ------------------------
 >   
-> @@ -94,6 +107,61 @@ of virtio-gpu host memory window. This is typically between 256M and 8G.
+> -When using virgl accelerated graphics mode in the guest, OpenGL API calls
+> +When using `virgl`_ accelerated graphics mode in the guest, OpenGL API calls
+>   are translated into an intermediate representation (see `Gallium3D`_). The
+>   intermediate representation is communicated to the host and the
+>   `virglrenderer`_ library on the host translates the intermediate
+> @@ -68,6 +68,7 @@ representation back to OpenGL API calls.
+>   .. parsed-literal::
+>       -device virtio-gpu-gl
 >   
->   .. _drm: https://gitlab.freedesktop.org/virgl/virglrenderer/-/tree/main/src/drm
+> +.. _virgl: https://docs.mesa3d.org/drivers/virgl.html
+>   .. _Gallium3D: https://www.freedesktop.org/wiki/Software/gallium/
+>   .. _virglrenderer: https://gitlab.freedesktop.org/virgl/virglrenderer/
 >   
-> +.. list-table:: Linux Host Requirements
-> +  :header-rows: 1
-> +
-> +  * - Mode
 
-"Mode" is not a word used elsewhere. Perhaps you may call it "capability".
-
-> +    - Kernel
-> +    - libvirglrenderer build flags
-
-Just "virglrenderer" for consistency.
-
-> +  * - OpenGL pass-through
-> +    - Linux any stable version
-QEMU's support policy is different from Linux's own idea of stable 
-releases. Perhaps you may refer to any Linux version compatible with QEMU.
-
-> +    - N/A
-> +  * - Vulkan pass-through
-> +    - Linux 6.13+
-> +    - -Dvenus=true -Drender-server=true
-> +  * - AMDGPU DRM native context
-> +    - Linux 6.13+
-> +    - -Ddrm-renderers=amdgpu-experimental
-> +  * - Freedreno DRM native context
-> +    - Linux 6.4+
-> +    - -Ddrm-renderers=msm
-> +  * - Intel i915 DRM native context
-> +    - Linux 6.13+
-> +    - -Ddrm-renderers=i915-experimental `mr1384`_
-> +  * - Asahi DRM native context
-> +    - Linux 6.13+
-
-Asahi does not need patches for virglrenderer but requires patches for 
-the kernel too as the upstream kernel doesn't have the GPU support at all.
-
-> +    - -Ddrm-renderers=asahi-experimental `mr1274`_
-> +
-> +.. _mr1384: https://gitlab.freedesktop.org/virgl/virglrenderer/-/merge_requests/1384
-> +.. _mr1274: https://gitlab.freedesktop.org/virgl/virglrenderer/-/merge_requests/1274
-> +
-> +.. list-table:: Linux Guest Requirements
-> +  :header-rows: 1
-> +
-> +  * - Mode
-> +    - Mesa Version
-> +    - Mesa build flags
-> +  * - OpenGL pass-through
-> +    - 16.0.0+
-> +    - -Dgallium-drivers=virgl
-> +  * - Vulkan pass-through
-> +    - 24.2.0+
-> +    - -Dvulkan-drivers=virtio
-> +  * - AMDGPU DRM native context
-> +    - 25.0.0+
-> +    - -Dgallium-drivers=radeonsi -Dvulkan-drivers=amd -Damdgpu-virtio=true
-> +  * - Freedreno DRM native context
-> +    - 23.1.0+
-> +    - -Dgallium-drivers=freedreno -Dvulkan-drivers=freedreno
-> +  * - Intel i915 DRM native context
-> +    - `mr29870`_
-> +    - -Dgallium-drivers=iris -Dvulkan-drivers=intel -Dintel-virtio-experimental=true
-> +  * - Asahi DRM native context
-> +    - 24.2.0+
-> +    - -Dgallium-drivers=asahi -Dvulkan-drivers=asahi
-> +
-> +.. _mr29870: https://gitlab.freedesktop.org/mesa/mesa/-/merge_requests/29870
-> +
->   virtio-gpu rutabaga
->   -------------------
->   
-> @@ -133,3 +201,25 @@ Surfaceless is the default if ``wsi`` is not specified.
->   .. _Wayland display passthrough: https://www.youtube.com/watch?v=OZJiHMtIQ2M
->   .. _gfxstream-enabled rutabaga: https://crosvm.dev/book/appendix/rutabaga_gfx.html
->   .. _guest Wayland proxy: https://crosvm.dev/book/devices/wayland.html
-> +
-> +.. list-table:: Linux Host Requirements
-> +  :header-rows: 1
-> +
-> +  * - Mode
-> +    - Kernel
-> +    - Userspace
-> +  * - rutabaga-gfxstream
-
-This notation is not consistent with the table for virglrenderer.
-Following the description of capsets will allow creating a consistent table.
-
-> +    - Linux 6.13+
-> +    - rutabaga_gfx_ffi or vhost-user client with `gfxstream support`_
-
-rutabaga_gfx_ffi is a crate name but not mentioned in other 
-documentations. This page already contains a link to
-https://crosvm.dev/book/appendix/rutabaga_gfx.html so let's make it 
-consistent with it.
-
-vhost-user is irrelevant with virtio-gpu-rutabaga. Also note that QEMU 
-has its own vhost-user-gpu implementation that doesn't use Rutabaga in 
-contrib/vhost-user-gpu.
-
-Regards,
-Akihiko Odaki
-
-> +
-> +.. _gfxstream support: https://github.com/rust-vmm/vhost-device/tree/main/staging/vhost-device-gpu
-> +
-> +.. list-table:: Linux Guest Requirements
-> +  :header-rows: 1
-> +
-> +  * - Mode
-> +    - Mesa Version
-> +    - Mesa build flags
-> +  * - rutabaga-gfxstream
-> +    - 24.3.0+
-> +    - -Dvulkan-drivers=gfxstream
-
+Reviewed-by: Akihiko Odaki <akihiko.odaki@daynix.com>
 
