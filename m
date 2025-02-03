@@ -4,103 +4,103 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 54F57C02192
-	for <qemu-devel@archiver.kernel.org>; Mon,  3 Feb 2025 20:17:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id AA14BC02192
+	for <qemu-devel@archiver.kernel.org>; Mon,  3 Feb 2025 20:21:48 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tf2rb-0003zG-88; Mon, 03 Feb 2025 15:16:11 -0500
+	id 1tf2wR-0005YL-Fr; Mon, 03 Feb 2025 15:21:11 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mhej@vps-ovh.mhejs.net>)
- id 1tf2rZ-0003yX-GU
- for qemu-devel@nongnu.org; Mon, 03 Feb 2025 15:16:09 -0500
-Received: from vps-ovh.mhejs.net ([145.239.82.108])
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1tf2wK-0005UZ-Pr
+ for qemu-devel@nongnu.org; Mon, 03 Feb 2025 15:21:05 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mhej@vps-ovh.mhejs.net>)
- id 1tf2rV-00057I-IQ
- for qemu-devel@nongnu.org; Mon, 03 Feb 2025 15:16:09 -0500
-Received: from MUA
- by vps-ovh.mhejs.net with esmtpsa  (TLS1.3) tls TLS_AES_128_GCM_SHA256
- (Exim 4.98) (envelope-from <mhej@vps-ovh.mhejs.net>)
- id 1tf2rN-00000006oHm-1qN3; Mon, 03 Feb 2025 21:15:57 +0100
-Message-ID: <afb27de1-d20a-4b0d-b271-ef6eef0e06ed@maciej.szmigiero.name>
-Date: Mon, 3 Feb 2025 21:15:52 +0100
-MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v4 09/33] migration: postcopy_ram_listen_thread() needs to
- take BQL for some calls
-To: Peter Xu <peterx@redhat.com>
-Cc: "Dr. David Alan Gilbert" <dave@treblig.org>,
- Fabiano Rosas <farosas@suse.de>, Alex Williamson
- <alex.williamson@redhat.com>, =?UTF-8?Q?C=C3=A9dric_Le_Goater?=
- <clg@redhat.com>, Eric Blake <eblake@redhat.com>,
- Markus Armbruster <armbru@redhat.com>,
- =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
- Avihai Horon <avihaih@nvidia.com>, Joao Martins <joao.m.martins@oracle.com>,
- qemu-devel@nongnu.org
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1tf2wF-0005wd-CB
+ for qemu-devel@nongnu.org; Mon, 03 Feb 2025 15:21:03 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1738614056;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=qj55R2ox7iX6vbT7q8zR8R1uJaTB0waXOajDePqxAtY=;
+ b=BKMT9MKtrnj+v6H3fR3H8JFa3IkdYGKqT99CEjpum11vAzSspKNKhGNrrQU9Xe/MCM0llB
+ mlNbJ2YcCLjnkul+k40kUuK4d3HVfJs5hMDTUcBn0denOo/voknP+ABpgKIMXxWEARU1rr
+ NU3sruOZR4rSrXuaZnYf9aW2Byi4pjA=
+Received: from mail-qt1-f199.google.com (mail-qt1-f199.google.com
+ [209.85.160.199]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-639-CjHzhs2eM6WH4rMMsd88Pw-1; Mon, 03 Feb 2025 15:20:54 -0500
+X-MC-Unique: CjHzhs2eM6WH4rMMsd88Pw-1
+X-Mimecast-MFC-AGG-ID: CjHzhs2eM6WH4rMMsd88Pw
+Received: by mail-qt1-f199.google.com with SMTP id
+ d75a77b69052e-46dd301a429so102649681cf.1
+ for <qemu-devel@nongnu.org>; Mon, 03 Feb 2025 12:20:54 -0800 (PST)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1738614054; x=1739218854;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=qj55R2ox7iX6vbT7q8zR8R1uJaTB0waXOajDePqxAtY=;
+ b=lHNunxTObjHIl4TgdQXfcbt4WVpD2BMiJ3FxmUDWtiugADyKR1W+AqiCiP407Bkr9y
+ jNnJ9NVKJd3Aijm4wHQlA5IwXX2plpZdsD4LByxGaq/nXIfJAJOCZwjJRXLXx6fi6COH
+ IoyeF3VQ2GNrBAUcomp5vWsC5Yqj0yMoFO23yOKdPOSUlo9l0cXyql5LPqCTBUZrJMJy
+ OS3mCfvXkhp/E/HoYzyx3uVnegCQTehegIRYLkLOA3mPvU49LUq+M1CGBuRK4hcc2BvY
+ krlb4+auS+WL3xR/40yIHWtbNvwrA+U1zDXlAX3xnMmr9VAfbhhOESunzVCqMPoCaJXh
+ pKBw==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCVFbJqDcXVjt+nmkvirmKoYvVOwfNH29eKao9xzJkBHFXoUnEDTMXcV3HCYdcuYO+1yr9P0OFtQXI5b@nongnu.org
+X-Gm-Message-State: AOJu0YyB4M7V9ZtBHT1kMbUxXVycHvG3BLJf8heiCA7+81cBZ+N/JpIr
+ l4bpTxhsonPstZzZZDjqeJIxkwkcHVGlffoZZYOe78t1sCQ4Xn/Okjo6qoVxycni7OuQ5+1CdsE
+ 72Y27Or3YeRtiDjYLYR+3lSJis4z67L4rYyapt6mqJAAiyYDWEObD
+X-Gm-Gg: ASbGncu0bLVYVjUYuYJDt6ScSRCLyxXAgyH2ut0YU+7BfTKnf3MhYGvxXPSuTGE/6U/
+ mpyzdBcIHThqMyNfnjhBj7lSrF3SDfbcSA0Aij6zvtQkWup3mS65GUROC6U7WgNp0UBOygPHlJu
+ 7qHEEnQy6WRVD+JoSb98/QYu9Di3RvdErP9HPwOgGYpANrcmM28k8gPRx9Vc+RnLqefTOePdei2
+ C+DXAzgU5K5g7oSJBjAeJVFDPCwSC26F9S4vpEG6aBMSO7npIWEVlpUU/TgfkQUEQfXImQ7F/Id
+ TUxdOXlNSmJu7oAJbMuCx+ueoqrx+7NMu29n8eUQhWNU6LUv
+X-Received: by 2002:ac8:5893:0:b0:467:5eaf:7d1f with SMTP id
+ d75a77b69052e-46fd0b45623mr379229721cf.50.1738614053829; 
+ Mon, 03 Feb 2025 12:20:53 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IEvWnOQkotEe7o9TLEOE9XxRH/BMavclbjka/VU006GBvQm2+e8VWPBFWR3/cRO90Z4NfAi5g==
+X-Received: by 2002:ac8:5893:0:b0:467:5eaf:7d1f with SMTP id
+ d75a77b69052e-46fd0b45623mr379229311cf.50.1738614053476; 
+ Mon, 03 Feb 2025 12:20:53 -0800 (PST)
+Received: from x1.local (pool-99-254-114-190.cpe.net.cable.rogers.com.
+ [99.254.114.190]) by smtp.gmail.com with ESMTPSA id
+ d75a77b69052e-46fe407195asm49526271cf.0.2025.02.03.12.20.51
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Mon, 03 Feb 2025 12:20:52 -0800 (PST)
+Date: Mon, 3 Feb 2025 15:20:50 -0500
+From: Peter Xu <peterx@redhat.com>
+To: "Maciej S. Szmigiero" <mail@maciej.szmigiero.name>
+Cc: Fabiano Rosas <farosas@suse.de>,
+ Alex Williamson <alex.williamson@redhat.com>,
+ =?utf-8?Q?C=C3=A9dric?= Le Goater <clg@redhat.com>,
+ Eric Blake <eblake@redhat.com>, Markus Armbruster <armbru@redhat.com>,
+ Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>,
+ Avihai Horon <avihaih@nvidia.com>,
+ Joao Martins <joao.m.martins@oracle.com>, qemu-devel@nongnu.org
+Subject: Re: [PATCH v4 08/33] migration/multifd: Allow premature EOF on TLS
+ incoming channels
+Message-ID: <Z6ElIlavWHda8YcH@x1.local>
 References: <cover.1738171076.git.maciej.szmigiero@oracle.com>
- <139bf266dbd1e25a1e5a050ecb82e3e59120d705.1738171076.git.maciej.szmigiero@oracle.com>
- <Z57TPqhRYY4V14BE@gallifrey>
- <d3a27b10-a7a6-4aa6-97ad-9c39f49df4fc@maciej.szmigiero.name>
- <Z59o4u9zui3CPrkm@gallifrey>
- <fafbc505-acee-408e-a2ef-0a62bd30689b@maciej.szmigiero.name>
- <Z6Ef3iwQs7JSFY3c@x1.local>
-Content-Language: en-US, pl-PL
-From: "Maciej S. Szmigiero" <mail@maciej.szmigiero.name>
-Autocrypt: addr=mail@maciej.szmigiero.name; keydata=
- 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
-In-Reply-To: <Z6Ef3iwQs7JSFY3c@x1.local>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=145.239.82.108;
- envelope-from=mhej@vps-ovh.mhejs.net; helo=vps-ovh.mhejs.net
-X-Spam_score_int: -17
-X-Spam_score: -1.8
-X-Spam_bar: -
-X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9,
- HEADER_FROM_DIFFERENT_DOMAINS=0.068, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ <baf944c37ead5d30d7e268b2a4074d9acaac2db0.1738171076.git.maciej.szmigiero@oracle.com>
+ <Z6EI0V6Cg7aCbzQU@x1.local>
+ <67a7c2ce-2391-4b8e-a5be-bce370fd2e66@maciej.szmigiero.name>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <67a7c2ce-2391-4b8e-a5be-bce370fd2e66@maciej.szmigiero.name>
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=peterx@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -116,157 +116,95 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 3.02.2025 20:58, Peter Xu wrote:
-> On Mon, Feb 03, 2025 at 02:57:36PM +0100, Maciej S. Szmigiero wrote:
->> On 2.02.2025 13:45, Dr. David Alan Gilbert wrote:
->>> * Maciej S. Szmigiero (mail@maciej.szmigiero.name) wrote:
->>>> On 2.02.2025 03:06, Dr. David Alan Gilbert wrote:
->>>>> * Maciej S. Szmigiero (mail@maciej.szmigiero.name) wrote:
->>>>>> From: "Maciej S. Szmigiero" <maciej.szmigiero@oracle.com>
->>>>>>
->>>>>> postcopy_ram_listen_thread() is a free running thread, so it needs to
->>>>>> take BQL around function calls to migration methods requiring BQL.
->>>>>>
->>>>>> qemu_loadvm_state_main() needs BQL held since it ultimately calls
->>>>>> "load_state" SaveVMHandlers.
->>>>>>
->>>>>> migration_incoming_state_destroy() needs BQL held since it ultimately calls
->>>>>> "load_cleanup" SaveVMHandlers.
->>>>>>
->>>>>> Signed-off-by: Maciej S. Szmigiero <maciej.szmigiero@oracle.com>
->>>>>> ---
->>>>>>     migration/savevm.c | 4 ++++
->>>>>>     1 file changed, 4 insertions(+)
->>>>>>
->>>>>> diff --git a/migration/savevm.c b/migration/savevm.c
->>>>>> index b0b74140daea..0ceea9638cc1 100644
->>>>>> --- a/migration/savevm.c
->>>>>> +++ b/migration/savevm.c
->>>>>> @@ -2013,7 +2013,9 @@ static void *postcopy_ram_listen_thread(void *opaque)
->>>>>>          * in qemu_file, and thus we must be blocking now.
->>>>>>          */
->>>>>>         qemu_file_set_blocking(f, true);
->>>>>> +    bql_lock();
->>>>>>         load_res = qemu_loadvm_state_main(f, mis);
->>>>>> +    bql_unlock();
->>>>>
->>>>> Doesn't that leave that held for a heck of a long time?
->>>>
->>>> Yes, and it effectively broke "postcopy recover" test but I
->>>> think the reason for that is qemu_loadvm_state_main() and
->>>> its children don't drop BQL while waiting for I/O.
->>>>
->>>> I've described this case in more detail in my reply to Fabiano here:
->>>> https://lore.kernel.org/qemu-devel/0a09e627-955e-4f26-8d08-0192ecd250a8@maciej.szmigiero.name/
->>>
->>> While it might be the cause in this case, my feeling is it's more fundamental
->>> here - it's the whole reason that postcopy has a separate ram listen
->>> thread.  As the destination is running, after it loads it's devices
->>> and as it starts up the destination will be still loading RAM
->>> (and other postcopiable devices) potentially for quite a while.
->>> Holding the bql around the ram listen thread means that the
->>> execution of the destination won't be able to take that lock
->>> until the postcopy load has finished; so while that might apparently
->>> complete, it'll lead to the destination stalling until that's finished
->>> which defeats the whole point of postcopy.
->>> That last one probably won't fail a test but it will lead to a long stall
->>> if you give it a nice big guest with lots of RAM that it's rapidly
->>> changing.
->>
->> Okay, I understand the postcopy case/flow now.
->> Thanks for explaining it clearly.
->>
->>>> I still think that "load_state" SaveVMHandlers need to be called
->>>> with BQL held since implementations apparently expect it that way:
->>>> for example, I think PCI device configuration restore calls
->>>> address space manipulation methods which abort() if called
->>>> without BQL held.
->>>
->>> However, the only devices that *should* be arriving on the channel
->>> that the postcopy_ram_listen_thread is reading from are those
->>> that are postcopiable (i.e. RAM and hmm block's dirty_bitmap).
->>> Those load handlers are safe to be run while the other devices
->>> are being changed.   Note the *should* - you could add a check
->>> to fail if any other device arrives on that channel.
->>
->> I think ultimately there should be either an explicit check, or,
->> as you suggest in the paragraph below, a separate SaveVMHandler
->> that runs without BQL held.
+On Mon, Feb 03, 2025 at 07:53:00PM +0100, Maciej S. Szmigiero wrote:
+> On 3.02.2025 19:20, Peter Xu wrote:
+> > On Thu, Jan 30, 2025 at 11:08:29AM +0100, Maciej S. Szmigiero wrote:
+> > > From: "Maciej S. Szmigiero" <maciej.szmigiero@oracle.com>
+> > > 
+> > > Multifd send channels are terminated by calling
+> > > qio_channel_shutdown(QIO_CHANNEL_SHUTDOWN_BOTH) in
+> > > multifd_send_terminate_threads(), which in the TLS case essentially
+> > > calls shutdown(SHUT_RDWR) on the underlying raw socket.
+> > > 
+> > > Unfortunately, this does not terminate the TLS session properly and
+> > > the receive side sees this as a GNUTLS_E_PREMATURE_TERMINATION error.
+> > > 
+> > > The only reason why this wasn't causing migration failures is because
+> > > the current migration code apparently does not check for migration
+> > > error being set after the end of the multifd receive process.
+> > > 
+> > > However, this will change soon so the multifd receive code has to be
+> > > prepared to not return an error on such premature TLS session EOF.
+> > > Use the newly introduced QIOChannelTLS method for that.
+> > > 
+> > > It's worth noting that even if the sender were to be changed to terminate
+> > > the TLS connection properly the receive side still needs to remain
+> > > compatible with older QEMU bit stream which does not do this.
+> > 
+> > If this is an existing bug, we could add a Fixes.
 > 
-> To me those are bugs happening during postcopy, so those abort()s in
-> memory.c are indeed for catching these issues too.
+> It is an existing issue but only uncovered by this patch set.
 > 
->> Since the current state of just running these SaveVMHandlers
->> without BQL in this case and hoping that nothing breaks is
->> clearly sub-optimal.
->>
->>>> I have previously even submitted a patch to explicitly document
->>>> "load_state" SaveVMHandler as requiring BQL (which was also
->>>> included in the previous version of this patch set) and it
->>>> received a "Reviewed-by:" tag:
->>>> https://lore.kernel.org/qemu-devel/6976f129df610c8207da4e531c8c0475ec204fa4.1730203967.git.maciej.szmigiero@oracle.com/
->>>> https://lore.kernel.org/qemu-devel/e1949839932efaa531e2fe63ac13324e5787439c.1731773021.git.maciej.szmigiero@oracle.com/
->>>> https://lore.kernel.org/qemu-devel/87o732bti7.fsf@suse.de/
->>>
->>> It happens!
->>> You could make this safer by having a load_state and a load_state_postcopy
->>> member, and only mark the load_state as requiring the lock.
->>
->> To not digress too much from the subject of this patch set
->> (multifd VFIO device state transfer) for now I've just updated the
->> TODO comment around that qemu_loadvm_state_main(), so hopefully this
->> discussion won't get forgotten:
->> https://gitlab.com/maciejsszmigiero/qemu/-/commit/046e3deac5b1dbc406b3e9571f62468bd6743e79
+> As far as I can see it was always there, so it would need some
+> thought where to point that Fixes tag.
+
+If there's no way to trigger a real functional bug anyway, it's also ok we
+omit the Fixes.
+
+> > Two pure questions..
+> > 
+> >    - What is the correct way to terminate the TLS session without this flag?
 > 
-> The commit message may still need some touch ups, e.g.:
+> I guess one would need to call gnutls_bye() like in this GnuTLS example:
+> https://gitlab.com/gnutls/gnutls/-/blob/2b8c3e4c71ad380bbbffb32e6003b34ecad596e3/doc/examples/ex-client-anon.c#L102
 > 
->    postcopy_ram_listen_thread() is a free running thread, so it needs to
->    take BQL around function calls to migration methods requiring BQL.
->
->
-> This sentence is still not correct, IMHO. As Dave explained, the ram load
-> thread is designed to run without BQL at least for the major workloads it
-> runs.
-
-So what's your proposed wording of this commit then?
-
-> I don't worry on src sending something that crashes the dest: if that
-> happens, that's a bug, we need to fix it..  In that case abort() either in
-> memory.c or migration/ would be the same.  
-
-Yeah, but it would be a bug in the source (or just bit stream corruption for
-any reason), yet it's the destination which would abort() or crash.
-
-I think cases like that in principle should be handled more gracefully,
-like exiting the destination QEMU with an error.
-But that's something outside of the scope of this patch set.
-
-> We could add some explicit check
-> in migration code, but I don't expect it to catch anything real, at least
-> such never happened since postcopy introduced.. so it's roughly 10 years
-> without anything like that happens.
+> >    - Why this is only needed by multifd sessions?
 > 
-> Taking BQL for migration_incoming_state_destroy() looks all safe.  There's
-> one qemu_ram_block_writeback() which made me a bit nervous initially, but
-> then looks like RAM backends should be almost noop (for shmem and
-> hugetlbfs) but except pmem.
-
-That's the only part where taking BQL is actually necessary for the
-functionality of this patch set to work properly, so it's fine to leave
-that call to qemu_loadvm_state_main() as-is (without BQL) for time being.
-
+> What uncovered the issue was switching the load threads to using
+> migrate_set_error() instead of their own result variable
+> (load_threads_ret) which you had requested during the previous
+> patch set version review:
+> https://lore.kernel.org/qemu-devel/Z1DbH5fwBaxtgrvH@x1n/
 > 
-> The other alternative is we define load_cleanup() to not rely on BQL (which
-> I believe is true before this series?), then take it only when VFIO's path
-> needs it.
+> Turns out that the multifd receive code always returned
+> error in the TLS case, just nothing was previously checking for
+> that error presence.
 
-I think other paths always call load_cleanup() with BQL so it's probably
-safer to have consistent semantics here.
+What I was curious is whether this issue also exists for the main migration
+channel when with tls, especially when e.g. multifd not enabled at all.  As
+I don't see anywhere that qemu uses gnutls_bye() for any tls session.
 
-> Thanks,
-> 
+I think it's a good to find that we overlooked this before.. and IMHO it's
+always good we could fix this.
+
+Does it mean we need proper gnutls_bye() somewhere?
+
+If we need an explicit gnutls_bye(), then I wonder if that should be done
+on the main channel as well.
+
+If we don't need gnutls_bye(), then should we always ignore pre-mature
+termination of tls no matter if it's multifd or non-multifd channel (or
+even a tls session that is not migration-related)?
 
 Thanks,
-Maciej
+
+> 
+> Another option would be to simply return to using
+> load_threads_ret like the previous versions did and not
+> experiment with touching global migration state because
+> as we can see other places can unintentionally break.
+> 
+> If we go this route then these TLS EOF patches could be
+> dropped.
+> 
+> > Thanks,
+> > 
+> 
+> Thanks,
+> Maciej
+> 
+
+-- 
+Peter Xu
 
 
