@@ -4,67 +4,67 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9F58FC02192
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2375DC02196
 	for <qemu-devel@archiver.kernel.org>; Mon,  3 Feb 2025 14:42:20 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1texdp-00043Z-96; Mon, 03 Feb 2025 09:41:38 -0500
+	id 1texdX-0003iv-2f; Mon, 03 Feb 2025 09:41:19 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1texdX-0003nx-Ub
- for qemu-devel@nongnu.org; Mon, 03 Feb 2025 09:41:20 -0500
-Received: from mail-ej1-x635.google.com ([2a00:1450:4864:20::635])
+ id 1texdC-0003Ts-Em
+ for qemu-devel@nongnu.org; Mon, 03 Feb 2025 09:40:59 -0500
+Received: from mail-ed1-x532.google.com ([2a00:1450:4864:20::532])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1texdF-0002S6-N8
- for qemu-devel@nongnu.org; Mon, 03 Feb 2025 09:41:19 -0500
-Received: by mail-ej1-x635.google.com with SMTP id
- a640c23a62f3a-aaf0f1adef8so854345466b.3
- for <qemu-devel@nongnu.org>; Mon, 03 Feb 2025 06:41:01 -0800 (PST)
+ id 1texd7-0002Li-8S
+ for qemu-devel@nongnu.org; Mon, 03 Feb 2025 09:40:57 -0500
+Received: by mail-ed1-x532.google.com with SMTP id
+ 4fb4d7f45d1cf-5d3cf094768so8280784a12.0
+ for <qemu-devel@nongnu.org>; Mon, 03 Feb 2025 06:40:52 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1738593660; x=1739198460; darn=nongnu.org;
+ d=linaro.org; s=google; t=1738593651; x=1739198451; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=M1O482OJIh050UUseeR+bYA6QoGKKDZRGYOAk/RFThQ=;
- b=ZIgKeMFbhbW4z/mtbAu8u2zY1rb+fKzdkxh79pY3Q+WAvCOBZckbdYzoOd+HCwCkPV
- QSmYXn+o9aspZAqFhflXdU5rHo2O5Ffx7suQnmMzp/LJJ8U71269l3tYn8AE1sZDHYql
- 45kFFSnDZhJTjszzUhsqG1K9vCmFWv5jqTxRCQjZtin50pwYCIquNhc74IJz4W4XW/ef
- MYRhbKL+rRYvIvsXRuGVJHzmW/J0WEqZm79fv0XNmtgee0WftZce08JMhOS5Xia8qGs1
- +uob1GzxHR+LXHv16De5ZhyYAyTM9tLPcD+8gi6ai9Ck31+I6D/p/FUhzyrqHFMQXtDb
- AKCw==
+ bh=3UFLMzp9qGvO/TMJfobXhH747ty7fBk8K8S5c0aFteA=;
+ b=OJkpiYtD6E6GEmmqrI9dSgSRSlzrb1j0auefJdyFSeiqYpuBDUasJJj3HwdPcvDSPE
+ 6pEwYe0KAWpsYLshitEQX+N+4YiOn2rMOMB1NFtoCt+FZRvYElZpS2fNZS7ExCP7JY5c
+ XZbP1GFNt8pHc9DPY436eyYtKtU6BxsrKU43mEAnLpf7C6AL2+l4oDEcJrn7nAOUpgdj
+ /7yAZ8AP7qrmOkxjhWGoV3GmVJCrvr4977H1EpNR/kgvmXA+JHJ3VH/ArXjWccPr/nit
+ YzFk4/EQGoQNURCHp0UKHH93ir/V9AsLjTNXh/JtL8g2DMgm4C/40GkxrpDxnfYU7BoW
+ CmxA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1738593660; x=1739198460;
+ d=1e100.net; s=20230601; t=1738593651; x=1739198451;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=M1O482OJIh050UUseeR+bYA6QoGKKDZRGYOAk/RFThQ=;
- b=m/eAA3MPgYNjdge0G9bow5Db7ExF/I/gCLv4Af7FVBKDUleHnPYcG7CoBAHqHfBD3+
- 2tbolFjUAf1n348R3LobxzQnVCnPx+eAAQMgVIShv1ZM0x5ikzvwxHaVbVWXpIFB3fnv
- BZT5e8LHJx4i+CaT4/OcNF0c6oIpA2XgEwHZQADrNJG6v08cdusppVrotmk+C7if61iu
- 8pmSzHf4b53U81hf20C3tnLPknAj+T4ia7uGj2aPLYQBZNG9+OT02aIjCh94TCNNkoOY
- 430GZzRIXqslwcnNZzDzUF49FjHusXWOJn75b8a0PsB2ACpMFYgfZMYdRfxl3z4Wgi++
- +agQ==
-X-Gm-Message-State: AOJu0YyNCQ5zqwhFPPx/pKklQAkAQwSziXHJuMZgA1K941G3TgJP1IPu
- fwcLre/qKMM2gNkahWV0dk8uxk+p0T8H+IE6KInEXPp3Aa539uhcBpgKD4fuBCA=
-X-Gm-Gg: ASbGnctaXliTbc53PgvzU1vBWKONutrwRZoW3An1BZq0iiRGaNBwQAd3Y30pMIGO2Ow
- 4k+9n6PhM1dnT1RZIvUh06ZWPr204+2jyMtcgGUJXTCIv2CO1XuNwTvCPfvAc9fMumJqNvYEqDP
- jYBrsWdxiV3Fj5jLh8WERehd3ro+TrYkH2xbr+5rus9qPek1LhoXaaidN5tus/bLf/JVqZ9Cu7d
- KWvD0ENR0y4SLT2ULpPyDjv66/IrrieL5D29842D8OOPKklJZAmiqG8cO90+ppJtu2ycCLL0u/T
- +eCUxMmXDlKtMzoDPg==
-X-Google-Smtp-Source: AGHT+IGab3SCD85uoPPmeDJwS01muUZc175e7mJc3sQGYUDW3fAkncK2Pzl1jNLZMtqCfhZXqxt+rQ==
-X-Received: by 2002:a17:906:478a:b0:aa6:94c0:f753 with SMTP id
- a640c23a62f3a-ab6cfd096f9mr2288818066b.33.1738593660035; 
- Mon, 03 Feb 2025 06:41:00 -0800 (PST)
+ bh=3UFLMzp9qGvO/TMJfobXhH747ty7fBk8K8S5c0aFteA=;
+ b=kYkD/i1RAZIo6CB/7mi2Y5N86eUGxDbjJzArNzwzw6QxqJzZGpo4EUWu7RT1Q+Z1rA
+ vcK86Ma4cdYh+XvyvQ/7iIFiyZvGprNzBZn9DV1ZFDQKozwmKai12tp3ZdmMThGC5lTi
+ LlZDa44sCUFoN2114w9XhaWrYRgrGlVwKfxptF7NG5AJadkaHyHQ7DEa4QNlZsoX5rhN
+ UKOZRdrfhz4uxc9eZHwk0vR+KkKTVXdzND8/HsZrFe0KgdTkw7ysL4zJaisOlkcVGQh0
+ 7GMMU8BVa8JLbBCfp1k/0doEOV56P6vt6jrKhnQhwKbwLdxcdwfsSupi3uLI46/8/Lhu
+ ychA==
+X-Gm-Message-State: AOJu0Yx9zA+i+Obd3+JaGq6bog/PNPSPK/u8MFWQlJSQAiPLC+vbYDhz
+ 4P/0dXFGKiKsw/Stc4rfxB9CZ8SLixbiwEBl9XDFY9kSDNLj/tdAMaScfYvhGxQ=
+X-Gm-Gg: ASbGnctH7FfEyOce+uuNuW5pN901jwmC8fV5VkpYDJ+jt0q03CH1dk++udsuaoJpoHr
+ YvX/iL34Z2/gYOt7O8TGjd/Cc7kraPYh2vDDct4hOgcCi7vjlRxDzv0EpkGA8Ipg4UkFzCnvUya
+ /63igAfHa7I6P3mTb8ZL9WrGMPJ6ohwFP4V/rLsy5Ge3jEqUGTIcfxm+zPaxgZJEGYwtwWBr0K3
+ Ilb30eQfIHsSyEbH127ZltC++I9mk+xyCdwXzmKziQ8d54xh9lNx3w6K+H2WrLKJzjBk5f1nzjP
+ j2ty0RyCCFW295MjIg==
+X-Google-Smtp-Source: AGHT+IG0zaflt4qSNl3JLzdRpFKBH69FVSs2gb6xQjdVTDOzbslkKT/244mgkH7SbwOCFoGmQQLEcQ==
+X-Received: by 2002:a17:907:72c4:b0:aa6:5eae:7ed6 with SMTP id
+ a640c23a62f3a-ab6cfce8dbbmr2236592666b.13.1738593651441; 
+ Mon, 03 Feb 2025 06:40:51 -0800 (PST)
 Received: from draig.lan ([185.126.160.109]) by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-ab6e4a5621bsm779576466b.172.2025.02.03.06.40.53
+ a640c23a62f3a-ab6e47d21aasm763112666b.74.2025.02.03.06.40.49
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 03 Feb 2025 06:40:57 -0800 (PST)
+ Mon, 03 Feb 2025 06:40:49 -0800 (PST)
 Received: from draig.lan (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id 1DBCA60BD2;
- Mon,  3 Feb 2025 14:40:50 +0000 (GMT)
+ by draig.lan (Postfix) with ESMTP id C3E6D5FA53;
+ Mon,  3 Feb 2025 14:40:48 +0000 (GMT)
 From: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: qemu-ppc@nongnu.org, Mahmoud Mandour <ma.mandourr@gmail.com>,
@@ -84,20 +84,19 @@ Cc: qemu-ppc@nongnu.org, Mahmoud Mandour <ma.mandourr@gmail.com>,
  Liu Zhiwei <zhiwei_liu@linux.alibaba.com>, Weiwei Li <liwei1518@gmail.com>,
  qemu-riscv@nongnu.org, Fabiano Rosas <farosas@suse.de>,
  Tyrone Ting <kfting@nuvoton.com>, Paolo Bonzini <pbonzini@redhat.com>,
- Nicholas Piggin <npiggin@gmail.com>, Alexandre Iooss <erdnaxe@crans.org>,
- Ilya Leoshkevich <iii@linux.ibm.com>,
- Richard Henderson <richard.henderson@linaro.org>
-Subject: [PATCH 14/18] osdep: Introduce qemu_kill_thread()
-Date: Mon,  3 Feb 2025 14:40:44 +0000
-Message-Id: <20250203144048.2131117-15-alex.bennee@linaro.org>
+ Nicholas Piggin <npiggin@gmail.com>, Alexandre Iooss <erdnaxe@crans.org>
+Subject: [PATCH 02/18] tests/qtest: don't attempt to clock_step while waiting
+ for virtio ISR
+Date: Mon,  3 Feb 2025 14:40:32 +0000
+Message-Id: <20250203144048.2131117-3-alex.bennee@linaro.org>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <20250203144048.2131117-1-alex.bennee@linaro.org>
 References: <20250203144048.2131117-1-alex.bennee@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::635;
- envelope-from=alex.bennee@linaro.org; helo=mail-ej1-x635.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::532;
+ envelope-from=alex.bennee@linaro.org; helo=mail-ed1-x532.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -120,68 +119,60 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Ilya Leoshkevich <iii@linux.ibm.com>
+This replicates the changes from 92cb8f8bf6 (tests/qtest: remove
+clock_steps from virtio tests) as there are no timers in the virtio
+code. We still busy wait and timeout though.
 
-Add a function for sending signals to individual threads. It does not make
-sense on Windows, so do not provide an implementation, so that if someone
-uses it by accident, they will get a linker error.
-
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-Reviewed-by: Warner Losh <imp@bsdimp.com>
-Signed-off-by: Ilya Leoshkevich <iii@linux.ibm.com>
-Message-Id: <20250117001542.8290-6-iii@linux.ibm.com>
 Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
----
- include/qemu/osdep.h |  9 +++++++++
- util/oslib-posix.c   | 15 +++++++++++++++
- 2 files changed, 24 insertions(+)
 
-diff --git a/include/qemu/osdep.h b/include/qemu/osdep.h
-index 112ebdff21..4397a90680 100644
---- a/include/qemu/osdep.h
-+++ b/include/qemu/osdep.h
-@@ -631,6 +631,15 @@ bool qemu_write_pidfile(const char *pidfile, Error **errp);
+---
+v2
+  - fix trailing space
+---
+ tests/qtest/libqos/virtio-pci-modern.c | 6 ++----
+ tests/qtest/libqos/virtio-pci.c        | 6 ++----
+ 2 files changed, 4 insertions(+), 8 deletions(-)
+
+diff --git a/tests/qtest/libqos/virtio-pci-modern.c b/tests/qtest/libqos/virtio-pci-modern.c
+index 18d118866f..4e67fcbd5d 100644
+--- a/tests/qtest/libqos/virtio-pci-modern.c
++++ b/tests/qtest/libqos/virtio-pci-modern.c
+@@ -173,13 +173,11 @@ static bool get_config_isr_status(QVirtioDevice *d)
  
- int qemu_get_thread_id(void);
+ static void wait_config_isr_status(QVirtioDevice *d, gint64 timeout_us)
+ {
+-    QVirtioPCIDevice *dev = container_of(d, QVirtioPCIDevice, vdev);
+     gint64 start_time = g_get_monotonic_time();
  
-+/**
-+ * qemu_kill_thread:
-+ * @tid: thread id.
-+ * @sig: host signal.
-+ *
-+ * Send @sig to one of QEMU's own threads with identifier @tid.
-+ */
-+int qemu_kill_thread(int tid, int sig);
-+
- #ifndef CONFIG_IOVEC
- struct iovec {
-     void *iov_base;
-diff --git a/util/oslib-posix.c b/util/oslib-posix.c
-index 2bb34dade3..a697c602c6 100644
---- a/util/oslib-posix.c
-+++ b/util/oslib-posix.c
-@@ -111,6 +111,21 @@ int qemu_get_thread_id(void)
- #endif
+-    do {
++    while (!get_config_isr_status(d)) {
+         g_assert(g_get_monotonic_time() - start_time <= timeout_us);
+-        qtest_clock_step(dev->pdev->bus->qts, 100);
+-    } while (!get_config_isr_status(d));
++    }
  }
  
-+int qemu_kill_thread(int tid, int sig)
-+{
-+#if defined(__linux__)
-+    return syscall(__NR_tgkill, getpid(), tid, sig);
-+#elif defined(__FreeBSD__)
-+    return thr_kill2(getpid(), tid, sig);
-+#elif defined(__NetBSD__)
-+    return _lwp_kill(tid, sig);
-+#elif defined(__OpenBSD__)
-+    return thrkill(tid, sig, NULL);
-+#else
-+    return kill(tid, sig);
-+#endif
-+}
-+
- int qemu_daemon(int nochdir, int noclose)
+ static void queue_select(QVirtioDevice *d, uint16_t index)
+diff --git a/tests/qtest/libqos/virtio-pci.c b/tests/qtest/libqos/virtio-pci.c
+index 485b8f6b7e..002bf8b8c2 100644
+--- a/tests/qtest/libqos/virtio-pci.c
++++ b/tests/qtest/libqos/virtio-pci.c
+@@ -171,13 +171,11 @@ static bool qvirtio_pci_get_config_isr_status(QVirtioDevice *d)
+ static void qvirtio_pci_wait_config_isr_status(QVirtioDevice *d,
+                                                gint64 timeout_us)
  {
-     return daemon(nochdir, noclose);
+-    QVirtioPCIDevice *dev = container_of(d, QVirtioPCIDevice, vdev);
+     gint64 start_time = g_get_monotonic_time();
+ 
+-    do {
++    while (!qvirtio_pci_get_config_isr_status(d)) {
+         g_assert(g_get_monotonic_time() - start_time <= timeout_us);
+-        qtest_clock_step(dev->pdev->bus->qts, 100);
+-    } while (!qvirtio_pci_get_config_isr_status(d));
++    }
+ }
+ 
+ static void qvirtio_pci_queue_select(QVirtioDevice *d, uint16_t index)
 -- 
 2.39.5
 
