@@ -4,80 +4,73 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id AF9A4C02195
-	for <qemu-devel@archiver.kernel.org>; Sun,  2 Feb 2025 23:28:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 65806C0218F
+	for <qemu-devel@archiver.kernel.org>; Mon,  3 Feb 2025 00:53:38 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tejNC-0002hJ-DV; Sun, 02 Feb 2025 18:27:30 -0500
+	id 1tekhl-0002iD-7z; Sun, 02 Feb 2025 19:52:49 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <dmitry.osipenko@collabora.com>)
- id 1tejN8-0002go-E0
- for qemu-devel@nongnu.org; Sun, 02 Feb 2025 18:27:26 -0500
-Received: from sender4-pp-f112.zoho.com ([136.143.188.112])
+ (Exim 4.90_1) (envelope-from <dongli.zhang@oracle.com>)
+ id 1tekhj-0002i4-NI
+ for qemu-devel@nongnu.org; Sun, 02 Feb 2025 19:52:47 -0500
+Received: from mx0a-00069f02.pphosted.com ([205.220.165.32])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <dmitry.osipenko@collabora.com>)
- id 1tejN6-0003W4-Op
- for qemu-devel@nongnu.org; Sun, 02 Feb 2025 18:27:26 -0500
-ARC-Seal: i=1; a=rsa-sha256; t=1738538831; cv=none; 
- d=zohomail.com; s=zohoarc; 
- b=kTTVdRiLHt8pfHA9UQQi6GB7ga5E5FKQxn3nyaomuEY6Tsdyvoh7kx5ls6Kwjjlh+rz0Jm+flvwiy0XFSEgxx4iUBUxsFkvWA39LUkNmCouMzwq/VE2lJcRxKIUstxdcwKrLSdncNsN/NhiBlhNzefP/8pm4nolEERuwV/jkBVA=
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=zohomail.com;
- s=zohoarc; t=1738538831;
- h=Content-Type:Content-Transfer-Encoding:Cc:Cc:Date:Date:From:From:In-Reply-To:MIME-Version:Message-ID:References:Subject:Subject:To:To:Message-Id:Reply-To;
- bh=JdP4YWY7n3U2S/2mCBWn6cTil4e3J2qjOIHIQxm4Wqk=; 
- b=gLVBvNKdkPISx817rnioDwVcKpdJfYtaEpKeJdhNv+KazbFXn+KK32a9bgBYsdKpCw1IYWhCWG6jOGv30s3BEtS3bpzqmdTYwK22vk4h+hJsYSuBXCYzfM44Q4iRhtje7R/28zyLcgSL/MAry7Wq8C3+X+5/Z1b6m737WbpSwSw=
-ARC-Authentication-Results: i=1; mx.zohomail.com;
- dkim=pass  header.i=collabora.com;
- spf=pass  smtp.mailfrom=dmitry.osipenko@collabora.com;
- dmarc=pass header.from=<dmitry.osipenko@collabora.com>
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; t=1738538831; 
- s=zohomail; d=collabora.com; i=dmitry.osipenko@collabora.com; 
- h=From:From:To:To:Cc:Cc:Subject:Subject:Date:Date:Message-ID:In-Reply-To:References:MIME-Version:Content-Type:Content-Transfer-Encoding:Message-Id:Reply-To;
- bh=JdP4YWY7n3U2S/2mCBWn6cTil4e3J2qjOIHIQxm4Wqk=;
- b=fE61p0g8v+MIAndv11W/4qAnGgzFZMOKE308aPxClf/cSv8GujmsZjyrgyprRP5/
- TrJiAaKEPnCTG0052MxCrAiM0m/OFmULyH07+Es0POYeo1mogxw2HuIfzAKb6gLGzeB
- EN9nGh11VDMILwmZr4re266LWmxmnnRNIfzvktDM=
-Received: by mx.zohomail.com with SMTPS id 1738538826088701.3040606233654;
- Sun, 2 Feb 2025 15:27:06 -0800 (PST)
-From: Dmitry Osipenko <dmitry.osipenko@collabora.com>
-To: Akihiko Odaki <akihiko.odaki@daynix.com>, Huang Rui <ray.huang@amd.com>,
- =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Gerd Hoffmann <kraxel@redhat.com>,
- =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Pierre-Eric Pelloux-Prayer <pierre-eric.pelloux-prayer@amd.com>,
- "Michael S . Tsirkin" <mst@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>
-Cc: Gert Wollny <gert.wollny@collabora.com>, qemu-devel@nongnu.org,
- Gurchetan Singh <gurchetansingh@chromium.org>, Alyssa Ross <hi@alyssa.is>,
- =?UTF-8?q?Roger=20Pau=20Monn=C3=A9?= <roger.pau@citrix.com>,
- Alex Deucher <alexander.deucher@amd.com>,
- Stefano Stabellini <stefano.stabellini@amd.com>,
- =?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>,
- Xenia Ragiadakou <xenia.ragiadakou@amd.com>,
- Honglei Huang <honglei1.huang@amd.com>, Julia Zhang <julia.zhang@amd.com>,
- Chen Jiqian <Jiqian.Chen@amd.com>, Rob Clark <robdclark@gmail.com>,
- Yiwei Zhang <zzyiwei@chromium.org>, Sergio Lopez Pascual <slp@redhat.com>
-Subject: [PATCH v7 06/10] ui/sdl2: Don't disable scanout when display is
- refreshed
-Date: Mon,  3 Feb 2025 02:21:32 +0300
-Message-ID: <20250202232136.919342-7-dmitry.osipenko@collabora.com>
-X-Mailer: git-send-email 2.47.1
-In-Reply-To: <20250202232136.919342-1-dmitry.osipenko@collabora.com>
-References: <20250202232136.919342-1-dmitry.osipenko@collabora.com>
+ (Exim 4.90_1) (envelope-from <dongli.zhang@oracle.com>)
+ id 1tekhh-0002Ue-Tj
+ for qemu-devel@nongnu.org; Sun, 02 Feb 2025 19:52:47 -0500
+Received: from pps.filterd (m0246617.ppops.net [127.0.0.1])
+ by mx0b-00069f02.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 51300nEd026153;
+ Mon, 3 Feb 2025 00:52:18 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=oracle.com; h=cc
+ :content-transfer-encoding:date:from:message-id:mime-version
+ :subject:to; s=corp-2023-11-20; bh=FVOnFbyn86J07oR+EqLLtUbDgPJFp
+ jMVmt43pubLEaQ=; b=MtguOyDS8NNpa1NrNCD1iiPI3tJWYSrXFcCsQm7tS+yNa
+ v6JCT13PSOPrL9Z/ioKRngWRj8A57+Ed8kBr4/1fkC+3bGlSt7XVi4M2Bj/4SmoO
+ B7j0r9osnQFbrFigqMnd/3pvo7v+HtuOXLKj48BqZ7UfKk0Jjq470OZdtmbKYpkp
+ 8YND9haPb24bU5VcSGfI0/zH4XoAYYxqJhTS4yzOkBTnZ6dkNgw5gaPdwNtHwcsW
+ v3wzNcghlyKoxSpwNfyLfn4S17AVm8JJ5IyJljidhi6ZlOIwlsGz37hFDrECUdAs
+ fcSNtjVnef0oLvPu2ryhb6/JSxikKa89a0X9JWv5g==
+Received: from phxpaimrmta02.imrmtpd1.prodappphxaev1.oraclevcn.com
+ (phxpaimrmta02.appoci.oracle.com [147.154.114.232])
+ by mx0b-00069f02.pphosted.com (PPS) with ESMTPS id 44hhsv1c5p-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Mon, 03 Feb 2025 00:52:18 +0000 (GMT)
+Received: from pps.filterd
+ (phxpaimrmta02.imrmtpd1.prodappphxaev1.oraclevcn.com [127.0.0.1])
+ by phxpaimrmta02.imrmtpd1.prodappphxaev1.oraclevcn.com (8.18.1.2/8.18.1.2)
+ with ESMTP id 5130KEI1037627; Mon, 3 Feb 2025 00:52:17 GMT
+Received: from localhost.localdomain (ca-dev80.us.oracle.com [10.211.9.80])
+ by phxpaimrmta02.imrmtpd1.prodappphxaev1.oraclevcn.com (PPS) with ESMTP id
+ 44j8gf251h-1; Mon, 03 Feb 2025 00:52:17 +0000
+From: Dongli Zhang <dongli.zhang@oracle.com>
+To: qemu-devel@nongnu.org
+Cc: pbonzini@redhat.com, fam@euphon.net, mst@redhat.com, sgarzare@redhat.com
+Subject: [PATCH 1/1] vhost-scsi: support VIRTIO_SCSI_F_HOTPLUG
+Date: Sun,  2 Feb 2025 16:52:15 -0800
+Message-ID: <20250203005215.1502-1-dongli.zhang@oracle.com>
+X-Mailer: git-send-email 2.43.5
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-ZohoMailClient: External
-Received-SPF: pass client-ip=136.143.188.112;
- envelope-from=dmitry.osipenko@collabora.com; helo=sender4-pp-f112.zoho.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1057,Hydra:6.0.680,FMLib:17.12.68.34
+ definitions=2025-02-02_11,2025-01-31_02,2024-11-22_01
+X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 bulkscore=0
+ malwarescore=0 phishscore=0
+ spamscore=0 mlxscore=0 mlxlogscore=999 suspectscore=0 adultscore=0
+ classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2501170000
+ definitions=main-2502030005
+X-Proofpoint-GUID: FlUdDIZXJeNQa6zI7cbtDBxOBiDnh-RP
+X-Proofpoint-ORIG-GUID: FlUdDIZXJeNQa6zI7cbtDBxOBiDnh-RP
+Received-SPF: pass client-ip=205.220.165.32;
+ envelope-from=dongli.zhang@oracle.com; helo=mx0a-00069f02.pphosted.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.01,
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_MED=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H2=-0.01,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -95,35 +88,51 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Display refreshment is invoked by a timer and it erroneously disables
-the active scanout if it happens to be invoked after scanout has been
-enabled. This offending scanout-disable race condition with a timer
-can be easily hit when Qemu runs with a disabled vsync by using SDL or
-GTK displays (with vblank_mode=0 for GTK). Refreshment of display's
-content shouldn't disable the active display. Fix it by keeping the
-scanout's state unchanged when display is redrawn.
+So far there isn't way to test host kernel vhost-scsi event queue path,
+because VIRTIO_SCSI_F_HOTPLUG isn't supported by QEMU.
 
-Reviewed-by: Akihiko Odaki <akihiko.odaki@daynix.com>
-Acked-by: Michael S. Tsirkin <mst@redhat.com>
-Tested-by: Alex Bennée <alex.bennee@linaro.org>
-Signed-off-by: Dmitry Osipenko <dmitry.osipenko@collabora.com>
+virtio-scsi.c and vhost-user-scsi.c already support VIRTIO_SCSI_F_HOTPLUG
+as property "hotplug".
+
+Add support to vhost-scsi.c to help evaluate and test event queue.
+
+To test the feature:
+
+1. Create vhost-scsi target with targetcli.
+
+targetcli /backstores/fileio create name=storage file_or_dev=disk01.raw
+targetcli /vhost create naa.1123451234512345
+targetcli /vhost/naa.1123451234512345/tpg1/luns create /backstores/fileio/storage
+
+2. Create QEMU instance with vhost-scsi.
+
+-device vhost-scsi-pci,wwpn=naa.1123451234512345,hotplug=true
+
+3. Once guest bootup, hotplug a new LUN from host.
+
+targetcli /backstores/fileio create name=storage02 file_or_dev=disk02.raw
+targetcli /vhost/naa.1123451234512345/tpg1/luns create /backstores/fileio/storage02
+
+Signed-off-by: Dongli Zhang <dongli.zhang@oracle.com>
 ---
- ui/sdl2-gl.c | 1 -
- 1 file changed, 1 deletion(-)
+ hw/scsi/vhost-scsi.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/ui/sdl2-gl.c b/ui/sdl2-gl.c
-index 8d53e340d40d..31f8fbe03286 100644
---- a/ui/sdl2-gl.c
-+++ b/ui/sdl2-gl.c
-@@ -53,7 +53,6 @@ static void sdl2_gl_render_surface(struct sdl2_console *scon)
-     int ww, wh;
- 
-     SDL_GL_MakeCurrent(scon->real_window, scon->winctx);
--    sdl2_set_scanout_mode(scon, false);
- 
-     SDL_GetWindowSize(scon->real_window, &ww, &wh);
-     surface_gl_setup_viewport(scon->gls, scon->surface, ww, wh);
+diff --git a/hw/scsi/vhost-scsi.c b/hw/scsi/vhost-scsi.c
+index 8039d13fd9..d3a260f6a7 100644
+--- a/hw/scsi/vhost-scsi.c
++++ b/hw/scsi/vhost-scsi.c
+@@ -359,6 +359,9 @@ static const Property vhost_scsi_properties[] = {
+     DEFINE_PROP_BIT64("t10_pi", VHostSCSICommon, host_features,
+                                                  VIRTIO_SCSI_F_T10_PI,
+                                                  false),
++    DEFINE_PROP_BIT64("hotplug", VHostSCSICommon, host_features,
++                                                  VIRTIO_SCSI_F_HOTPLUG,
++                                                  false),
+     DEFINE_PROP_BOOL("migratable", VHostSCSICommon, migratable, false),
+     DEFINE_PROP_BOOL("worker_per_virtqueue", VirtIOSCSICommon,
+                      conf.worker_per_virtqueue, false),
 -- 
-2.47.1
+2.39.3
 
 
