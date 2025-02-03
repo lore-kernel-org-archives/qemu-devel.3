@@ -4,97 +4,91 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 48643C02192
-	for <qemu-devel@archiver.kernel.org>; Mon,  3 Feb 2025 21:51:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 11CA2C02192
+	for <qemu-devel@archiver.kernel.org>; Mon,  3 Feb 2025 21:56:15 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tf4Lf-0003HK-FI; Mon, 03 Feb 2025 16:51:19 -0500
+	id 1tf4Q0-0004KO-D7; Mon, 03 Feb 2025 16:55:48 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mhej@vps-ovh.mhejs.net>)
- id 1tf4Lc-0003Gv-T2
- for qemu-devel@nongnu.org; Mon, 03 Feb 2025 16:51:16 -0500
-Received: from vps-ovh.mhejs.net ([145.239.82.108])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mhej@vps-ovh.mhejs.net>)
- id 1tf4La-0006UL-Q4
- for qemu-devel@nongnu.org; Mon, 03 Feb 2025 16:51:16 -0500
-Received: from MUA
- by vps-ovh.mhejs.net with esmtpsa  (TLS1.3) tls TLS_AES_128_GCM_SHA256
- (Exim 4.98) (envelope-from <mhej@vps-ovh.mhejs.net>)
- id 1tf4LV-00000006oao-0dgB; Mon, 03 Feb 2025 22:51:09 +0100
-Message-ID: <d61a8dcb-8505-4b66-8e25-5ef496f50590@maciej.szmigiero.name>
-Date: Mon, 3 Feb 2025 22:51:04 +0100
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1tf4Px-0004KB-J8
+ for qemu-devel@nongnu.org; Mon, 03 Feb 2025 16:55:45 -0500
+Received: from mail-pl1-x62a.google.com ([2607:f8b0:4864:20::62a])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1tf4Pu-0006sw-Qw
+ for qemu-devel@nongnu.org; Mon, 03 Feb 2025 16:55:44 -0500
+Received: by mail-pl1-x62a.google.com with SMTP id
+ d9443c01a7336-21ddab8800bso68512855ad.3
+ for <qemu-devel@nongnu.org>; Mon, 03 Feb 2025 13:55:42 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1738619740; x=1739224540; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=yvaPmVtbJpUbcl8izaOeKH9jF+8Y8qcKsxyN9OiSW1c=;
+ b=tTm0+cKVXa/mCFfHYuic8vxDncAVV5Eb1yU43657SRdXAC5WR0jP8R8zaustQbLTwu
+ 2Q/H9r5m68QngQK0dILVpk4+xgpj+KAt0cGbeoXheegfrgnAwV57W6h1azu1Yh3DUchF
+ UdYOOtc+BIvmMDRwD+tf49KAZDsIYibouhB0rEXLU9PDStgKZ6x7L58O+ZyIK1uI/wo5
+ HGwA/rpdaXzNNTsXleBiLlSG08YUKN3JoqA0/NXH/qDlwJCb00pI/D5soZU6Fy3SZThQ
+ H4roHHFHDcgIBUiXXRBH5MBOchx8apTKSJsKhmBwWWr5PHxpcSoInCnfxDoG0P4Fd3cx
+ 2wog==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1738619740; x=1739224540;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=yvaPmVtbJpUbcl8izaOeKH9jF+8Y8qcKsxyN9OiSW1c=;
+ b=THQyzuR1I4NNUtXwOS/XpuvTT01VWkwmqpm6U37z3O/83IKjQ45dk7ACD+wiFbfRRd
+ RRDvE3f0Qd5ATObMVAhQbo2qmhBtIvGD8UOUQMoJUaS4ajh2qEpT7LUZ9plPiuwn8oMi
+ 2lhL4HwUcE/ZdP8aCCbhYVmQPJva4krIFtc4nfdJtgQTUn2vEq48jfT7bzTH7+l+5Y+H
+ XOiLGn0KV9S4+1HwvEwoJk4LbbHcJWyvVhk33ID2zAqzf9YAmtflNB/68rYu2aLgD2Fb
+ a1eHUXqwC7AXaPADlUtF3nX+W7vzHvCd2MdvwgPPX2/Xlf/YAQQpsEO7FlYixptnYFxY
+ xsbw==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCUhljR6TMrc8mU3rCjtT9AzLAicqEf2fMttb5QyIBwrPuRAXb8qL0/th+0E31wlMQGw+oYWzbKp4JDf@nongnu.org
+X-Gm-Message-State: AOJu0YwNlitLMXqV27eF/8LAL9yxfjLIRwrpYO+zhgs1k9T+YpMTVj9j
+ K4KNZsx1ZSXPDIz3CrfzzxawqlAuoF6EWP8D/mQO9ZtWfUYsdQGdI/hxpQQ0nZg=
+X-Gm-Gg: ASbGncvEyFaiaG8Q7p6BR5CtxK48xhfL7BdoHsZaKluWp8SYcP41JVIR+OA5vaEMp15
+ DVwps8kpGPF8S3mzV9RccVNTHpqtFP+qVIysQwvKw7h4oOh9sGHQi9ke8vS0bHcbD0XDMMlPljR
+ +fGCEjJG+k8zYp9/LXf+xa2ym/1D5vx3S+8pMTW91sD65WAzQea1gRUUXFJJy5DMURxclEnnyoM
+ cg+fYszZUp4h9vceAfD4WwE+cq4B/QX4mVU/0ZiOJ3TT+3JRg9I/d+sraRQh8PX6mLgJkMTcB18
+ rei8dTOCLNT/p4Neldpdvab+M/zGrsqB++Ea6CCyAdhLSEdNjI+BF8Q=
+X-Google-Smtp-Source: AGHT+IHV74xAjQYh5V057MZUZgxd5L5oxF+/XIH9IWZYdFs4eAz1xg8e6V7QUNuaq7+SWOVnnj2U5A==
+X-Received: by 2002:a05:6a00:1411:b0:725:9f02:489a with SMTP id
+ d2e1a72fcca58-72fd0c5ee8cmr33213659b3a.17.1738619740422; 
+ Mon, 03 Feb 2025 13:55:40 -0800 (PST)
+Received: from [192.168.0.4] (71-212-39-66.tukw.qwest.net. [71.212.39.66])
+ by smtp.gmail.com with ESMTPSA id
+ d2e1a72fcca58-72fe64275c4sm9348350b3a.61.2025.02.03.13.55.39
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Mon, 03 Feb 2025 13:55:40 -0800 (PST)
+Message-ID: <e40c39d4-425c-4566-af41-373941894045@linaro.org>
+Date: Mon, 3 Feb 2025 13:55:36 -0800
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v4 10/33] error: define g_autoptr() cleanup function for
- the Error type
-To: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
- Markus Armbruster <armbru@redhat.com>
-Cc: Peter Xu <peterx@redhat.com>, Fabiano Rosas <farosas@suse.de>,
- Alex Williamson <alex.williamson@redhat.com>,
- =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>,
- Eric Blake <eblake@redhat.com>, Markus Armbruster <armbru@redhat.com>,
- Avihai Horon <avihaih@nvidia.com>, Joao Martins <joao.m.martins@oracle.com>,
- qemu-devel@nongnu.org
-References: <cover.1738171076.git.maciej.szmigiero@oracle.com>
- <82edf9cfc5f707be405c48a46a42a42df3611aaf.1738171076.git.maciej.szmigiero@oracle.com>
- <Z6Exbkxn0IOdiqc_@redhat.com>
-Content-Language: en-US, pl-PL
-From: "Maciej S. Szmigiero" <mail@maciej.szmigiero.name>
-Autocrypt: addr=mail@maciej.szmigiero.name; keydata=
- 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
-In-Reply-To: <Z6Exbkxn0IOdiqc_@redhat.com>
+Subject: Re: [PATCH v2 00/14] meson: Deprecate 32-bit host support
+To: Paolo Bonzini <pbonzini@redhat.com>, qemu-devel@nongnu.org,
+ Stefano Stabellini <sstabellini@kernel.org>
+Cc: mark.cave-ayland@ilande.co.uk, berrange@redhat.com, philmd@linaro.org,
+ thuth@redhat.com
+References: <20250203031821.741477-1-richard.henderson@linaro.org>
+ <467a5a58-952e-4930-8e91-744eda6d87d9@redhat.com>
+Content-Language: en-US
+From: Richard Henderson <richard.henderson@linaro.org>
+In-Reply-To: <467a5a58-952e-4930-8e91-744eda6d87d9@redhat.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=145.239.82.108;
- envelope-from=mhej@vps-ovh.mhejs.net; helo=vps-ovh.mhejs.net
-X-Spam_score_int: -17
-X-Spam_score: -1.8
-X-Spam_bar: -
-X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9,
- HEADER_FROM_DIFFERENT_DOMAINS=0.068, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_PASS=-0.001,
+Received-SPF: pass client-ip=2607:f8b0:4864:20::62a;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x62a.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -111,57 +105,27 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 3.02.2025 22:13, Daniel P. Berrangé wrote:
-> On Thu, Jan 30, 2025 at 11:08:31AM +0100, Maciej S. Szmigiero wrote:
->> From: "Maciej S. Szmigiero" <maciej.szmigiero@oracle.com>
+On 2/3/25 04:54, Paolo Bonzini wrote:
+> On 2/3/25 04:18, Richard Henderson wrote:
+>> v1: 20250128004254.33442-1-richard.henderson@linaro.org
 >>
->> Automatic memory management helps avoid memory safety issues.
+>> For v2, immediately disable 64-on-32 TCG.
 >>
->> Signed-off-by: Maciej S. Szmigiero <maciej.szmigiero@oracle.com>
->> ---
->>   include/qapi/error.h | 2 ++
->>   1 file changed, 2 insertions(+)
->>
->> diff --git a/include/qapi/error.h b/include/qapi/error.h
->> index 71f8fb2c50ee..649ec8f1b6a2 100644
->> --- a/include/qapi/error.h
->> +++ b/include/qapi/error.h
->> @@ -437,6 +437,8 @@ Error *error_copy(const Error *err);>
-> q   */
->>   void error_free(Error *err);
->>   
->> +G_DEFINE_AUTOPTR_CLEANUP_FUNC(Error, error_free)
->> +
+>> I *suspect* that we should disable 64-on-32 for *all* accelerators.
+>> The idea that an i686 binary on an x86_64 host may be used to spawn
+>> an x86_64 guest via kvm is silly and a bit more than niche.
 > 
-> This has been rejected by Markus in the past when I proposed. See the
-> rationale at the time here:
-> 
->    https://lists.nongnu.org/archive/html/qemu-devel/2024-07/msg05503.html
+> At least Xen used to be commonly used with 32-bit dom0, because it saved memory and dom0 
+> would map in guest buffers as needed.  I'm not sure how common that is these days, perhaps 
+> Stefano knows.
 
-Thanks for the pointer, I wasn't expecting this change to be controversial.
-  
-> If you want this, the commit message will need to explain the use
-> case and justify why the existing error usage patterns are insufficient.
+As a data-point, debian does not ship libxen-dev for i686.
+We cannot build-test this configuration at all.
 
-In this case it's about giving received Error to migrate_set_error()
-which does *not* take ownership of it.
+I can build-test Xen for armhf, and I guess it would use i386-softmmu; it's unclear 
+whether x86_64-softmmu and aarch64-softmmu are relevant or useful for an armhf host, or as 
+an armhf binary running on an aarch64 host.
 
-And the reason why migrate_set_error() does not take ownership of
-incoming Error is that it might have an Error already set in
-MigrationState, in this case it simply ignores the passed Error
-(almost like being a NOP in this case).
 
-I don't know whether this is enough of a justification for introducing
-g_autoptr(Error).
-I'm happy to drop this commit and change it to manual memory management
-instead if it is not.
-
-@Markus, what's your opinion here?
-
-> With regards,
-> Daniel
-
-Thanks,
-Maciej
-
+r~
 
