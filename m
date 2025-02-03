@@ -4,80 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DCC2BC02192
-	for <qemu-devel@archiver.kernel.org>; Mon,  3 Feb 2025 17:00:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6BE8FC02192
+	for <qemu-devel@archiver.kernel.org>; Mon,  3 Feb 2025 17:00:49 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1teznf-0006Dw-Tz; Mon, 03 Feb 2025 11:59:55 -0500
+	id 1tezne-0006DS-I0; Mon, 03 Feb 2025 11:59:54 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1teznf-0006Dg-4T
- for qemu-devel@nongnu.org; Mon, 03 Feb 2025 11:59:55 -0500
-Received: from smtp-out2.suse.de ([2a07:de40:b251:101:10:150:64:2])
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1teznc-0006D3-Ki
+ for qemu-devel@nongnu.org; Mon, 03 Feb 2025 11:59:52 -0500
+Received: from smtp-out1.suse.de ([195.135.223.130])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1teznd-0001Od-IW
- for qemu-devel@nongnu.org; Mon, 03 Feb 2025 11:59:54 -0500
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1tezna-0001OG-VB
+ for qemu-devel@nongnu.org; Mon, 03 Feb 2025 11:59:52 -0500
 Received: from imap1.dmz-prg2.suse.org (unknown [10.150.64.97])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
  (No client certificate requested)
- by smtp-out2.suse.de (Postfix) with ESMTPS id CFD781F381;
- Mon,  3 Feb 2025 16:59:51 +0000 (UTC)
+ by smtp-out1.suse.de (Postfix) with ESMTPS id A29C82115B;
+ Mon,  3 Feb 2025 16:59:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1738601991; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ t=1738601989; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
  mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=7fBhyOPw+uV+tDm35m3Dodwm2GOVrzdUMocvY919AmQ=;
- b=hXmTMvRyd87zkpwvv5UV5Vu/LFzmrFgGw42mKDguszhWk8ffZ6QzJzV6UA5tK44Wz5drRG
- +w/0QpXB0zWvXs4QuBxcivLBjLY9DPJL13NTcecLHxuC1Fvi35tAKx9GXc4mnk45YOQqeW
- GdyeVmt4CyfvP7c5AAUEhxEE6Gt1Yrc=
+ bh=mwwlVs98Dy6PJeNVxxIIwQOS72rHLpt5ESIJP8J3POc=;
+ b=hfThKutLSqxoHwAbf6KvU8wz88p2r3z1FeeiC1TThoWacN1tL2SPHY58nnYnlDMujpzsiV
+ 9/LQOlhqczClWcCDnHdrejewkPa7w1ebmBqjAOwmm58pPejktYF2Bf4S9K8MEa7zlccsaV
+ cyhcoJDU2mJuUpl3TqwhwGipTUmqlf8=
 DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1738601991;
+ s=susede2_ed25519; t=1738601989;
  h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
  mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=7fBhyOPw+uV+tDm35m3Dodwm2GOVrzdUMocvY919AmQ=;
- b=UsFXYXz8rdGE5CkpbbyE8MS2YommWyT5mA8I3jayTIrs7/ryvwJ2ijOcu1B8cTBv1HdPWe
- s9tpnH5pW+arqcDw==
-Authentication-Results: smtp-out2.suse.de;
+ bh=mwwlVs98Dy6PJeNVxxIIwQOS72rHLpt5ESIJP8J3POc=;
+ b=Wt+QyvXlneL3BZdrhKChnWpJm8yUp+NFGWhykuvuNqbY8zQEpz929C+0nqQb9W6vKFsCjm
+ 8HJVyhcw0TZIZhCg==
+Authentication-Results: smtp-out1.suse.de;
 	none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1738601991; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ t=1738601989; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
  mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=7fBhyOPw+uV+tDm35m3Dodwm2GOVrzdUMocvY919AmQ=;
- b=hXmTMvRyd87zkpwvv5UV5Vu/LFzmrFgGw42mKDguszhWk8ffZ6QzJzV6UA5tK44Wz5drRG
- +w/0QpXB0zWvXs4QuBxcivLBjLY9DPJL13NTcecLHxuC1Fvi35tAKx9GXc4mnk45YOQqeW
- GdyeVmt4CyfvP7c5AAUEhxEE6Gt1Yrc=
+ bh=mwwlVs98Dy6PJeNVxxIIwQOS72rHLpt5ESIJP8J3POc=;
+ b=hfThKutLSqxoHwAbf6KvU8wz88p2r3z1FeeiC1TThoWacN1tL2SPHY58nnYnlDMujpzsiV
+ 9/LQOlhqczClWcCDnHdrejewkPa7w1ebmBqjAOwmm58pPejktYF2Bf4S9K8MEa7zlccsaV
+ cyhcoJDU2mJuUpl3TqwhwGipTUmqlf8=
 DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1738601991;
+ s=susede2_ed25519; t=1738601989;
  h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
  mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=7fBhyOPw+uV+tDm35m3Dodwm2GOVrzdUMocvY919AmQ=;
- b=UsFXYXz8rdGE5CkpbbyE8MS2YommWyT5mA8I3jayTIrs7/ryvwJ2ijOcu1B8cTBv1HdPWe
- s9tpnH5pW+arqcDw==
+ bh=mwwlVs98Dy6PJeNVxxIIwQOS72rHLpt5ESIJP8J3POc=;
+ b=Wt+QyvXlneL3BZdrhKChnWpJm8yUp+NFGWhykuvuNqbY8zQEpz929C+0nqQb9W6vKFsCjm
+ 8HJVyhcw0TZIZhCg==
 Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
  (No client certificate requested)
- by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 29E5D13A78;
- Mon,  3 Feb 2025 16:59:49 +0000 (UTC)
+ by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 0C15513A78;
+ Mon,  3 Feb 2025 16:59:47 +0000 (UTC)
 Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
- by imap1.dmz-prg2.suse.org with ESMTPSA id mDNJNgX2oGfDdgAAD6G6ig
- (envelope-from <farosas@suse.de>); Mon, 03 Feb 2025 16:59:49 +0000
+ by imap1.dmz-prg2.suse.org with ESMTPSA id uM/pLgP2oGfDdgAAD6G6ig
+ (envelope-from <farosas@suse.de>); Mon, 03 Feb 2025 16:59:47 +0000
 From: Fabiano Rosas <farosas@suse.de>
 To: qemu-devel@nongnu.org
 Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  Thomas Huth <thuth@redhat.com>, Akihiko Odaki <akihiko.odaki@daynix.com>
-Subject: [PULL 5/6] tests/qtest: Make qtest_has_accel() generic
-Date: Mon,  3 Feb 2025 13:59:37 -0300
-Message-Id: <20250203165938.14320-6-farosas@suse.de>
+Subject: [PULL 4/6] tests/qtest: Extract qtest_qom_has_concrete_type() helper
+Date: Mon,  3 Feb 2025 13:59:36 -0300
+Message-Id: <20250203165938.14320-5-farosas@suse.de>
 X-Mailer: git-send-email 2.35.3
 In-Reply-To: <20250203165938.14320-1-farosas@suse.de>
 References: <20250203165938.14320-1-farosas@suse.de>
@@ -95,14 +95,15 @@ X-Spamd-Result: default: False [-3.30 / 50.00]; BAYES_HAM(-3.00)[99.99%];
  FROM_EQ_ENVFROM(0.00)[]; TO_MATCH_ENVRCPT_ALL(0.00)[];
  RCVD_COUNT_TWO(0.00)[2];
  DBL_BLOCKED_OPENRESOLVER(0.00)[imap1.dmz-prg2.suse.org:helo]
-Received-SPF: pass client-ip=2a07:de40:b251:101:10:150:64:2;
- envelope-from=farosas@suse.de; helo=smtp-out2.suse.de
+Received-SPF: pass client-ip=195.135.223.130; envelope-from=farosas@suse.de;
+ helo=smtp-out1.suse.de
 X-Spam_score_int: -43
 X-Spam_score: -4.4
 X-Spam_bar: ----
 X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001,
+ RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -121,68 +122,126 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Philippe Mathieu-Daudé <philmd@linaro.org>
 
-Since commit b14a0b7469f ("accel: Use QOM classes for accel types")
-accelerators are registered as QOM objects. Use QOM as a generic
-API to query for available accelerators. This is in particular
-useful to query hardware accelerators such HFV, Xen or WHPX which
-otherwise have their definitions poisoned in "exec/poison.h".
+Extract qtest_qom_has_concrete_type() out of qtest_has_device()
+in order to re-use it in the following commit.
 
 Reviewed-by: Thomas Huth <thuth@redhat.com>
 Reviewed-by: Akihiko Odaki <akihiko.odaki@daynix.com>
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Message-ID: <20250130103728.536-3-philmd@linaro.org>
+Message-ID: <20250130103728.536-2-philmd@linaro.org>
 Signed-off-by: Fabiano Rosas <farosas@suse.de>
 ---
- tests/qtest/libqtest.c | 21 ++++++++++-----------
- 1 file changed, 10 insertions(+), 11 deletions(-)
+ tests/qtest/libqtest.c | 89 ++++++++++++++++++++++++------------------
+ 1 file changed, 51 insertions(+), 38 deletions(-)
 
 diff --git a/tests/qtest/libqtest.c b/tests/qtest/libqtest.c
-index f416cf8a59..fe8606ba6a 100644
+index 437b24fa2e..f416cf8a59 100644
 --- a/tests/qtest/libqtest.c
 +++ b/tests/qtest/libqtest.c
-@@ -30,6 +30,7 @@
- 
- #include "libqtest.h"
- #include "libqmp.h"
-+#include "qemu/accel.h"
- #include "qemu/ctype.h"
- #include "qemu/cutils.h"
- #include "qemu/sockets.h"
-@@ -1063,13 +1064,10 @@ static bool qtest_qom_has_concrete_type(const char *parent_typename,
- 
- bool qtest_has_accel(const char *accel_name)
- {
--    if (g_str_equal(accel_name, "tcg")) {
--#if defined(CONFIG_TCG)
--        return true;
--#else
--        return false;
--#endif
--    } else if (g_str_equal(accel_name, "kvm")) {
-+    static QList *list;
-+    g_autofree char *accel_type = NULL;
-+
-+    if (g_str_equal(accel_name, "kvm")) {
-         int i;
-         const char *arch = qtest_get_arch();
-         const char *targets[] = { CONFIG_KVM_TARGETS };
-@@ -1081,11 +1079,12 @@ bool qtest_has_accel(const char *accel_name)
-                 }
-             }
-         }
--    } else {
--        /* not implemented */
--        g_assert_not_reached();
-+        return false;
-     }
--    return false;
-+
-+    accel_type = g_strconcat(accel_name, ACCEL_CLASS_SUFFIX, NULL);
-+
-+    return qtest_qom_has_concrete_type("accel", accel_type, &list);
+@@ -1011,6 +1011,56 @@ const char *qtest_get_arch(void)
+     return end + 1;
  }
  
- bool qtest_get_irq(QTestState *s, int num)
++static bool qtest_qom_has_concrete_type(const char *parent_typename,
++                                        const char *child_typename,
++                                        QList **cached_list)
++{
++    QList *list = cached_list ? *cached_list : NULL;
++    const QListEntry *p;
++    QObject *qobj;
++    QString *qstr;
++    QDict *devinfo;
++    int idx;
++
++    if (!list) {
++        QDict *resp;
++        QDict *args;
++        QTestState *qts = qtest_init("-machine none");
++
++        args = qdict_new();
++        qdict_put_bool(args, "abstract", false);
++        qdict_put_str(args, "implements", parent_typename);
++
++        resp = qtest_qmp(qts, "{'execute': 'qom-list-types', 'arguments': %p }",
++                         args);
++        g_assert(qdict_haskey(resp, "return"));
++        list = qdict_get_qlist(resp, "return");
++        qobject_ref(list);
++        qobject_unref(resp);
++
++        qtest_quit(qts);
++
++        if (cached_list) {
++            *cached_list = list;
++        }
++    }
++
++    for (p = qlist_first(list), idx = 0; p; p = qlist_next(p), idx++) {
++        devinfo = qobject_to(QDict, qlist_entry_obj(p));
++        g_assert(devinfo);
++
++        qobj = qdict_get(devinfo, "name");
++        g_assert(qobj);
++        qstr = qobject_to(QString, qobj);
++        g_assert(qstr);
++        if (g_str_equal(qstring_get_str(qstr), child_typename)) {
++            return true;
++        }
++    }
++
++    return false;
++}
++
+ bool qtest_has_accel(const char *accel_name)
+ {
+     if (g_str_equal(accel_name, "tcg")) {
+@@ -1790,45 +1840,8 @@ bool qtest_has_machine(const char *machine)
+ bool qtest_has_device(const char *device)
+ {
+     static QList *list;
+-    const QListEntry *p;
+-    QObject *qobj;
+-    QString *qstr;
+-    QDict *devinfo;
+-    int idx;
+ 
+-    if (!list) {
+-        QDict *resp;
+-        QDict *args;
+-        QTestState *qts = qtest_init("-machine none");
+-
+-        args = qdict_new();
+-        qdict_put_bool(args, "abstract", false);
+-        qdict_put_str(args, "implements", "device");
+-
+-        resp = qtest_qmp(qts, "{'execute': 'qom-list-types', 'arguments': %p }",
+-                         args);
+-        g_assert(qdict_haskey(resp, "return"));
+-        list = qdict_get_qlist(resp, "return");
+-        qobject_ref(list);
+-        qobject_unref(resp);
+-
+-        qtest_quit(qts);
+-    }
+-
+-    for (p = qlist_first(list), idx = 0; p; p = qlist_next(p), idx++) {
+-        devinfo = qobject_to(QDict, qlist_entry_obj(p));
+-        g_assert(devinfo);
+-
+-        qobj = qdict_get(devinfo, "name");
+-        g_assert(qobj);
+-        qstr = qobject_to(QString, qobj);
+-        g_assert(qstr);
+-        if (g_str_equal(qstring_get_str(qstr), device)) {
+-            return true;
+-        }
+-    }
+-
+-    return false;
++    return qtest_qom_has_concrete_type("device", device, &list);
+ }
+ 
+ /*
 -- 
 2.35.3
 
