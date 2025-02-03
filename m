@@ -4,81 +4,109 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B9F2AC02192
-	for <qemu-devel@archiver.kernel.org>; Mon,  3 Feb 2025 09:07:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 59AEEC02192
+	for <qemu-devel@archiver.kernel.org>; Mon,  3 Feb 2025 09:08:03 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tesPo-0002fG-7W; Mon, 03 Feb 2025 04:06:48 -0500
+	id 1tesQi-0002xQ-6a; Mon, 03 Feb 2025 04:07:44 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <r.peniaev@gmail.com>)
- id 1tesPm-0002f2-Cz
- for qemu-devel@nongnu.org; Mon, 03 Feb 2025 04:06:46 -0500
-Received: from mail-lj1-x234.google.com ([2a00:1450:4864:20::234])
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1tesQg-0002ti-8I
+ for qemu-devel@nongnu.org; Mon, 03 Feb 2025 04:07:42 -0500
+Received: from mail-wr1-x42a.google.com ([2a00:1450:4864:20::42a])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <r.peniaev@gmail.com>)
- id 1tesPi-0005qi-FG
- for qemu-devel@nongnu.org; Mon, 03 Feb 2025 04:06:44 -0500
-Received: by mail-lj1-x234.google.com with SMTP id
- 38308e7fff4ca-30797730cbdso42785371fa.3
- for <qemu-devel@nongnu.org>; Mon, 03 Feb 2025 01:06:41 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1tesQe-0005uT-Lm
+ for qemu-devel@nongnu.org; Mon, 03 Feb 2025 04:07:42 -0500
+Received: by mail-wr1-x42a.google.com with SMTP id
+ ffacd0b85a97d-3862ca8e0bbso3416889f8f.0
+ for <qemu-devel@nongnu.org>; Mon, 03 Feb 2025 01:07:39 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1738573600; x=1739178400; darn=nongnu.org;
- h=content-transfer-encoding:cc:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
+ d=linaro.org; s=google; t=1738573658; x=1739178458; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:user-agent
+ :references:in-reply-to:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=Jtwq3llZmXYWtqM2FFd5+0UU5eIPPdb5GDBAzqSTPOU=;
- b=FbO4nSt7A0RfuYCHf5aklhh8fOv9pqgx4HwhJzIAFsPdLnGHbKONdMJO2itJ7mQ+ng
- CzRJjI2avtSm+nbLjNsF6HTcNUVr8s4rUc+qpXFGkAirsyrqTcL9kll1vqJftFpcuMUk
- JkouG6jqcUGbEbfOIR+eedi3HMapoOAKyX/G2n15Ox5xVuRhF0BC85MGX8TOqgJhQd3U
- a6mLBLX0WYdPx/tAOfLVUXMsHpUY9LpD+c1MncZJ6+jHITzgUWhHNJNJJxL/vkLIMnA1
- cdg9Z8JfTxemYr8A3Zmnr3YTWYW9a/Dc9WcT3agnex//u2wmoaOWDxqAKoDFGN5S+iJQ
- TWHg==
+ bh=+u7ieSnHPzhbS8BcsPNz7O/BKqonuuqUUAPrQD84W1Y=;
+ b=m+kRg/d9kqZmtSYKEBD0J9KImYyXzvZ0wjZ3EvP4KYR4MeIPMU2QmX9kr/AKUbOmK9
+ 0oeKpxRmIGKE7DEZMW8KyTGQOxfKchM7mGpqwx5UhDnfHYfkyPpV5mUGspmBM4cbhezJ
+ jY7jK/RrwzrbE0bRQAYra5rhh3NKjnuC9FLKVHX1UKzgmI6pnLxV5DK547UNW93KIBib
+ NJAUGOuOHZMV/JUR7VNLygYAYvRtBRB4dRwOskhmwy4cFDCdvfFoEXeOyIZ6MfkMB1ED
+ F5e9zKQ7nW38YH2UI9EJQwi8mqNOuA5WdLuOaUx74MfO1rouYIO7zl6PkfcJmhF1FtXi
+ hntw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1738573600; x=1739178400;
- h=content-transfer-encoding:cc:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=Jtwq3llZmXYWtqM2FFd5+0UU5eIPPdb5GDBAzqSTPOU=;
- b=Y9z5aWi1mRJ+rrAg0XWCasQ1Gd3hxpXbniAXXBCpUCbYVwYh6ovhguS+xgv8i2hdgo
- Ik1HgI803mtklz8AQlMXbJf9WagAMhR9FqksPrvZNO2nWr/v/9mYpPtNX4fRnF+trj0b
- RYXBBdeDAOjkSf0t2I5/djXRuKXhp5/IE6X4zz0vXoHu/KOPY8Bq4/A7eTrT/l3A7tX0
- 4zocF8FC1Nzdr5y05saT1BGqlCEd+cEIP+bz9/oXi20xMDF3p2yrSKx5Y3l1ZRRV0vr1
- fRGqlO030BoHgW8YYVgGwVFNN8gQdV2VDWho144ycDHPUzKOf1SxaDG6cWYgiNtn1IlW
- Ok3Q==
+ d=1e100.net; s=20230601; t=1738573658; x=1739178458;
+ h=content-transfer-encoding:mime-version:message-id:date:user-agent
+ :references:in-reply-to:subject:cc:to:from:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=+u7ieSnHPzhbS8BcsPNz7O/BKqonuuqUUAPrQD84W1Y=;
+ b=OquFdERCEruk+FlctNIb4HPR+wI7dMhrtHyKZfUr0yKLiALjSKa6EJIOUeLqzYNpRv
+ jk2qwL6VQoltgg5/mqWkAvKUSDU7O0Ki9Z/QO2F+emhVr3gxlktDXS1fGWnxLFig5NBh
+ P/Eze2++inRpkTJi+fPjzvIP6829ikpUYI1WxBuBawZSco+jUg3HHQwijbAB/Dqveulo
+ Lxwf0hHaVSxKa1XXuIicvncNfdE/hyQsdtsejbEYwBX/D4oMZ/C8qKjqOy9ClitIN4Tj
+ LRXUP+L/sFZL1ZtaKfdGfD1GaswXnKiIDz4aYOVvNXcbK0eymZ2QhyyYyIsN3Ois0V84
+ nEkw==
 X-Forwarded-Encrypted: i=1;
- AJvYcCUvbJLZfx9X79ZzuHB5g96dye7BKNuF1Cp7xTNfXCa68fazZuunV2F3YRYUoABVk4OvsVNl6TTQjoXp@nongnu.org
-X-Gm-Message-State: AOJu0YyFgk49pGJi4Tt39rqIV0bnA4+5w6y8ASI9TCwdAITuo/cKAdjQ
- o2O660ngtFDaG0JOJSyX+Om0m4ROiGPiEMBdkx44toGelsNJfe/+eH03dRGZprkday0R1tatKw9
- WVyLkdL0XPNpIWgbOc9FmqsOJXcE=
-X-Gm-Gg: ASbGncsYDxEboF36jEZr0Ibp+9ySQOsOrvAF7cM3qYak5WrODO/9FOf9U1li/7uH3vj
- EvDAzEPssQ4XOhJN0ayhkhoWz1f0GfnK3tkhalpvyukhwKm8kZtZtYYL87QelycUjp9DLQtRk
-X-Received: by 2002:a2e:be8e:0:b0:300:41a8:125b with SMTP id
- 38308e7fff4ca-307968ea19dmt68614731fa.37.1738573599415; Mon, 03 Feb 2025
- 01:06:39 -0800 (PST)
+ AJvYcCWd2ZO+a10cBlU03UDnfug6YuAJPBxlmdyRnRiYa83k8y/05/g/yWuLYbBC1uVtIWK/sRV/Vmd2Lpg3@nongnu.org
+X-Gm-Message-State: AOJu0YxcZMnhrrPrO3gZY2SG679GBCkIkCnVNNecCjtpxG+QYRDLfBJP
+ 8elSF1s50uJiLE5EZ+f1xQRJ5QyKJ505iBW/3xNUQhcLS5aT93HEB1cioTW+iZo=
+X-Gm-Gg: ASbGncuzsDyhWXfWqsRBJHXzRSmtzchU/A0sjEQHYGLusyhyyoE6+zcHLaCYqHe2jUK
+ SInIKZYJsla0MIRPWaGPpaxZqD8W7TCwgiHzmGqWEWgJUtztuXWBcFJ3t6PEznhLOAHYhPIQj3l
+ sBv1j6//F2Hb4K1FfCAKCHE+wyhzmR0vmgG0K/GJPnBTtEp1bYAlIzn+AuaJCTY5il4yc+bXm1O
+ PUuIlr+feCIhV41glFX7f79h30HqjDPzDThSJ2bhAXhduyJ1rT6NyxthsD/VxmG8gu0RPa4sHsj
+ GPkUdnRAzm/2vhp8RQ==
+X-Google-Smtp-Source: AGHT+IFAZ5dFeik0mrVs5ZR7N3uhfSOv075Eg9jc80RUuJCDaX48FJymoGDlLWrvO19ByDc87Ds5kQ==
+X-Received: by 2002:a5d:6c65:0:b0:38c:5cd0:ecf3 with SMTP id
+ ffacd0b85a97d-38c5cd0efe3mr13470807f8f.11.1738573658573; 
+ Mon, 03 Feb 2025 01:07:38 -0800 (PST)
+Received: from draig.lan ([185.126.160.109]) by smtp.gmail.com with ESMTPSA id
+ a640c23a62f3a-ab6ffc9eb9dsm516085866b.27.2025.02.03.01.07.37
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Mon, 03 Feb 2025 01:07:37 -0800 (PST)
+Received: from draig (localhost [IPv6:::1])
+ by draig.lan (Postfix) with ESMTP id EA9665F9DD;
+ Mon,  3 Feb 2025 09:07:36 +0000 (GMT)
+From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
+To: Dmitry Osipenko <dmitry.osipenko@collabora.com>
+Cc: Dongwon Kim <dongwon.kim@intel.com>,  Vivek Kasireddy
+ <vivek.kasireddy@intel.com>,  Akihiko Odaki <akihiko.odaki@daynix.com>,
+ Huang Rui <ray.huang@amd.com>,  =?utf-8?Q?Marc-Andr=C3=A9?= Lureau
+ <marcandre.lureau@redhat.com>,  Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?=
+ <philmd@linaro.org>,  Gerd Hoffmann <kraxel@redhat.com>,  "Michael S .
+ Tsirkin" <mst@redhat.com>,  Paolo Bonzini <pbonzini@redhat.com>,  Gert
+ Wollny <gert.wollny@collabora.com>,  qemu-devel@nongnu.org,  Gurchetan
+ Singh <gurchetansingh@chromium.org>,  Alyssa Ross <hi@alyssa.is>,  Roger
+ Pau =?utf-8?Q?Monn=C3=A9?= <roger.pau@citrix.com>,  Alex Deucher
+ <alexander.deucher@amd.com>,  Stefano Stabellini
+ <stefano.stabellini@amd.com>,  Christian =?utf-8?Q?K=C3=B6nig?=
+ <christian.koenig@amd.com>,
+ Xenia Ragiadakou <xenia.ragiadakou@amd.com>,  Pierre-Eric Pelloux-Prayer
+ <pierre-eric.pelloux-prayer@amd.com>,  Honglei Huang
+ <honglei1.huang@amd.com>,  Julia Zhang <julia.zhang@amd.com>,  Chen Jiqian
+ <Jiqian.Chen@amd.com>,  Rob Clark <robdclark@gmail.com>,  Yiwei Zhang
+ <zzyiwei@chromium.org>,  Sergio Lopez Pascual <slp@redhat.com>
+Subject: Re: [PATCH v6 00/10] Support virtio-gpu DRM native context
+In-Reply-To: <5aedf1ad-d9b0-4edb-a050-f3d9bee9bccb@collabora.com> (Dmitry
+ Osipenko's message of "Sun, 2 Feb 2025 18:17:43 +0300")
+References: <20250126201121.470990-1-dmitry.osipenko@collabora.com>
+ <87cyg844fr.fsf@draig.linaro.org>
+ <5aedf1ad-d9b0-4edb-a050-f3d9bee9bccb@collabora.com>
+User-Agent: mu4e 1.12.8; emacs 29.4
+Date: Mon, 03 Feb 2025 09:07:36 +0000
+Message-ID: <87ikprflbb.fsf@draig.linaro.org>
 MIME-Version: 1.0
-References: <20250123085327.965501-1-r.peniaev@gmail.com>
-In-Reply-To: <20250123085327.965501-1-r.peniaev@gmail.com>
-From: Roman Penyaev <r.peniaev@gmail.com>
-Date: Mon, 3 Feb 2025 10:06:28 +0100
-X-Gm-Features: AWEUYZl8snYeHZJhpvQPBH2NRFGceFWi2PC5GGzvSFVkFQDOcMlkseOCSmc_KrU
-Message-ID: <CACZ9PQXCHyt5pmLAkuh0M6dNnZFP7fQ4vx3VZWtYss1k+oGTUA@mail.gmail.com>
-Subject: Re: [PATCH v9 0/4] chardev: implement backend chardev multiplexing
-Cc: =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@redhat.com>, 
- Markus Armbruster <armbru@redhat.com>, Kevin Wolf <kwolf@redhat.com>, 
- "Daniel P . Berrange" <berrange@redhat.com>, qemu-devel@nongnu.org
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::234;
- envelope-from=r.peniaev@gmail.com; helo=mail-lj1-x234.google.com
-X-Spam_score_int: 0
-X-Spam_score: -0.1
-X-Spam_bar: /
-X-Spam_report: (-0.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FORGED_GMAIL_RCVD=1,
- FREEMAIL_FROM=0.001, MISSING_HEADERS=1.021, RCVD_IN_DNSWL_NONE=-0.0001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
+Received-SPF: pass client-ip=2a00:1450:4864:20::42a;
+ envelope-from=alex.bennee@linaro.org; helo=mail-wr1-x42a.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -94,182 +122,58 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Marc-Andre,
+Dmitry Osipenko <dmitry.osipenko@collabora.com> writes:
 
-Do you plan to pull the latest version of this series,
-or is there something which I have to address?
-Please let me know.
+> On 1/27/25 19:17, Alex Benn=C3=A9e wrote:
+> ...
+>> I'm still seeing corruption with -display gtk,gl=3Don on my x86 system
+>> BTW. I would like to understand if that is a problem with QEMU, GTK or
+>> something else in the stack before we merge.
+>
+> I reproduced the display mirroring/corruption issue and bisected it to
+> the following commit. The problem only happens when QEMU/GTK uses
+> Wayland display directly, while previously I was running QEMU with
+> XWayland that doesn't have the problem. Why this change breaks dmabuf
+> displaying with Wayland/GTK is unclear.
 
-Thanks.
+Ahh that makes sense - I obviously forgot to mention I'm running
+sway/wayland across both machines.
 
---
-Roman
+> Reverting commit fixes the bug.
+>
+> +Dongwon Kim +Vivek Kasireddy
+>
+> commit 77bf310084dad38b3a2badf01766c659056f1cf2
+> Author: Dongwon Kim <dongwon.kim@intel.com>
+> Date:   Fri Apr 26 15:50:59 2024 -0700
+>
+>     ui/gtk: Draw guest frame at refresh cycle
+>
+>     Draw routine needs to be manually invoked in the next refresh
+>     if there is a scanout blob from the guest. This is to prevent
+>     a situation where there is a scheduled draw event but it won't
+>     happen bacause the window is currently in inactive state
+>     (minimized or tabified). If draw is not done for a long time,
+>     gl_block timeout and/or fence timeout (on the guest) will happen
+>     eventually.
+>
+>     v2: Use gd_gl_area_draw(vc) in gtk-gl-area.c
+>
+>     Suggested-by: Vivek Kasireddy <vivek.kasireddy@intel.com>
+>     Cc: Gerd Hoffmann <kraxel@redhat.com>
+>     Cc: Marc-Andr=C3=A9 Lureau <marcandre.lureau@redhat.com>
+>     Cc: Daniel P. Berrang=C3=A9 <berrange@redhat.com>
+>     Signed-off-by: Dongwon Kim <dongwon.kim@intel.com>
+>     Acked-by: Marc-Andr=C3=A9 Lureau <marcandre.lureau@redhat.com>
+>     Message-Id: <20240426225059.3871283-1-dongwon.kim@intel.com>
 
-On Thu, Jan 23, 2025 at 9:53=E2=80=AFAM Roman Penyaev <r.peniaev@gmail.com>=
- wrote:
->
-> Mux is a character backend (host side) device, which multiplexes
-> multiple frontends with one backend device. The following is a
-> few lines from the QEMU manpage [1]:
->
->   A multiplexer is a "1:N" device, and here the "1" end is your
->   specified chardev backend, and the "N" end is the various parts
->   of QEMU that can talk to a chardev.
->
-> But sadly multiple backends are not supported.
->
-> This work implements a new chardev backend `hub` device, which
-> aggregates input from multiple backend devices and forwards it to a
-> single frontend device. Additionally, `hub` device takes the output
-> from the frontend device and sends it back to all the connected
-> backend devices. This allows for seamless interaction between
-> different backend devices and a single frontend interface.
->
-> The motivation is the EVE project [2], where it would be very
-> convenient to have a virtio console frontend device on the guest that
-> can be controlled from multiple backend devices, namely VNC and local
-> TTY emulator. The following is an example of the QEMU command line:
->
->     -chardev pty,path=3D/tmp/pty,id=3Dpty0 \
->     -chardev vc,id=3Dvc0 \
->     -chardev hub,id=3Dhub0,chardevs.0=3Dpty0,chardevs.1=3Dvc0 \
->     -device virtconsole,chardev=3Dhub0 \
->     -vnc 0.0.0.0:0
->
-> Which creates two backend devices:
->
-> * Text virtual console (`vc0`)
-> * A pseudo TTY (`pty0`) connected to the single virtio hvc console with t=
-he
->   help of a new backend aggregator (`hub0`)
->
-> `vc0` renders text to an image, which can be shared over the VNC
-> protocol.  `pty0` is a pseudo TTY backend which provides bidirectional
-> communication to the virtio hvc console.
->
-> Once QEMU starts, the VNC client and any TTY emulator can be used to
-> control a single hvc console. For example, these two different
-> consoles should have similar input and output due to the buffer
-> aggregation:
->
->     # Start TTY emulator
->     tio /tmp/pty
->
->     # Start VNC client and switch to virtual console Ctrl-Alt-2
->     vncviewer :0
->
-> 'chardevs.N' list syntax is used for the sake of compatibility with
-> the representation of JSON lists in 'key=3Dval' pairs format of the
-> util/keyval.c, despite the fact that modern QAPI way of parsing,
-> namely qobject_input_visitor_new_str(), is not used. Choice of keeping
-> QAPI list syntax may help to smoothly switch to modern parsing in the
-> future.
->
-> v8 .. v9:
->
-> * Incorporate Reviewed-by tags
->
-> v7 .. v8:
->
-> * No need for a separate `->frontend` pointer in the hub device
->   structure, use `hub->parent.fe` directly.
-> * Remove special handling of !EAGAIN error while serving write
->   to all backends. This should be safe, because detached backends
->   are handled by the `->be_open` flag check.
-> * Combine `hub_chr_write_to_all()` and `hub_chr_write()` calls.
-> * Fix docs generation: no single backtick, but double, so not
->   a `hub` but ``hub`` in qemu-options.hx
->
-> v6 .. v7:
->
-> After discussing v6 it was decided to:
->
-> * Rename "multiplexer" to "aggregator"
-> * Rename "mux-be" device type to "hub"
-> * Drop all changes related to the original multiplexer implementation
->
-> Code changes:
->
-> * Added counting of CHR_EVENT_OPENED and CHR_EVENT_CLOSED events
-> coming from backend devices. This prevents frontend devices from
-> closing if one of the backend devices has been disconnected. The
-> logic is simple: "the last one turns off the light".
->
-> v5 .. v6:
->
-> * Rebased on latest master
-> * Changed how chardev is attached to a multiplexer: with version 6
-> mux should specify list elements with ID of chardevs:
->
->     chardevs.0=3DID[,chardevs.N=3DID]
->
-> 'chardevs.N' list syntax is used for the sake of compatibility with
-> the representation of JSON lists in 'key=3Dval' pairs format of the
-> util/keyval.c, despite the fact that modern QAPI way of parsing,
-> namely qobject_input_visitor_new_str(), is not used. Choice of keeping
-> QAPI list syntax may help to smoothly switch to modern parsing in the
-> future.
->
-> v4 .. v5:
->
-> * Spelling fixes in qemu-options description
-> * Memory leaks fixes in mux-be tests
-> * Add sanity checks to chardev to avoid stacking of mux devices
-> * Add corresponding unit test case to cover the creation of stacked
->   muxers: `-chardev mux-be,mux-id-be=3DID`, which is forbidden
-> * Reflect the fact that stacking is not supported in the documentation
->
-> v3 .. v4:
->
-> * Rebase on latest chardev changes
-> * Add unit tests which test corner cases:
->    * Inability to remove mux with active frontend
->    * Inability to add more chardevs to a mux than `MUX_MAX`
->    * Inability to mix mux-fe and mux-be for the same chardev
->
-> v2 .. v3:
->
-> * Split frontend and backend multiplexer implementations and
->   move them to separate files: char-mux-fe.c and char-mux-be.c
->
-> v1 .. v2:
->
-> * Separate type for the backend multiplexer `mux-be`
-> * Handle EAGAIN on write to the backend device
-> * Support of watch of previously failed backend device
-> * Proper json support of the `mux-be-id` option
-> * Unit test for the `mux-be` multiplexer
->
-> [1] https://www.qemu.org/docs/master/system/qemu-manpage.html#hxtool-6
-> [2] https://github.com/lf-edge/eve
->
-> Signed-off-by: Roman Penyaev <r.peniaev@gmail.com>
-> Reviewed-by: "Marc-Andr=C3=A9 Lureau" <marcandre.lureau@redhat.com>
-> Cc: Markus Armbruster <armbru@redhat.com>
-> Cc: Kevin Wolf <kwolf@redhat.com>
-> Cc: Daniel P. Berrange <berrange@redhat.com>
-> Cc: qemu-devel@nongnu.org
->
-> Roman Penyaev (4):
->   chardev/char-pty: send CHR_EVENT_CLOSED on disconnect
->   chardev/char-hub: implement backend chardev aggregator
->   tests/unit/test-char: add unit tests for hub chardev backend
->   qemu-options.hx: describe hub chardev and aggregation of several
->     backends
->
->  chardev/char-hub.c         | 301 ++++++++++++++++++++++++++++
->  chardev/char-pty.c         |   4 +-
->  chardev/char.c             |  23 ++-
->  chardev/chardev-internal.h |  51 ++++-
->  chardev/meson.build        |   1 +
->  include/chardev/char.h     |   1 +
->  qapi/char.json             |  27 +++
->  qemu-options.hx            |  49 ++++-
->  tests/unit/test-char.c     | 398 +++++++++++++++++++++++++++++++++++++
->  9 files changed, 847 insertions(+), 8 deletions(-)
->  create mode 100644 chardev/char-hub.c
->
-> --
-> 2.43.0
->
+
+Maybe a race on:
+
+    QemuDmaBuf *dmabuf =3D vc->gfx.guest_fb.dmabuf;
+?
+
+--=20
+Alex Benn=C3=A9e
+Virtualisation Tech Lead @ Linaro
 
