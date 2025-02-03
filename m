@@ -4,58 +4,132 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 49518C02193
-	for <qemu-devel@archiver.kernel.org>; Mon,  3 Feb 2025 09:59:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A63FFC02192
+	for <qemu-devel@archiver.kernel.org>; Mon,  3 Feb 2025 10:01:52 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tetDv-0001x3-MU; Mon, 03 Feb 2025 04:58:35 -0500
+	id 1tetGk-0003Uc-Ma; Mon, 03 Feb 2025 05:01:30 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1tetDR-0001rb-Au
- for qemu-devel@nongnu.org; Mon, 03 Feb 2025 04:58:05 -0500
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1tetFw-0003OH-J2
+ for qemu-devel@nongnu.org; Mon, 03 Feb 2025 05:00:55 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1tetDP-0004Rs-Nz
- for qemu-devel@nongnu.org; Mon, 03 Feb 2025 04:58:05 -0500
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1tetFq-0004kW-S9
+ for qemu-devel@nongnu.org; Mon, 03 Feb 2025 05:00:39 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1738576681;
+ s=mimecast20190719; t=1738576832;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding;
- bh=rH8n0TFth9XFgWuQj+K/0kRI4UZNZzY0wtPxFR9Y4R0=;
- b=ZfimdKUsak7ZDRt5ybidaPloti+K+86TSefXUGYWh2AXcDfYdPOdU/LR+TNaUbmCUFRA+n
- 9xDOX+pb1RalgodSXw7hjI6s5538yzlwb7q5XkT84Gpd5Yx0kBgPL+z1MipQQQ4JfH/SwP
- MyOJ5Ep86HEfYoWDMkMRbfmabJAGFbA=
-Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-652-kz7WZhq7OhC0Zy-xsoaucw-1; Mon,
- 03 Feb 2025 04:57:58 -0500
-X-MC-Unique: kz7WZhq7OhC0Zy-xsoaucw-1
-X-Mimecast-MFC-AGG-ID: kz7WZhq7OhC0Zy-xsoaucw
-Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 00EFA19560B0; Mon,  3 Feb 2025 09:57:57 +0000 (UTC)
-Received: from corto.redhat.com (unknown [10.39.192.15])
- by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 46851180099C; Mon,  3 Feb 2025 09:57:54 +0000 (UTC)
-From: =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>
-To: qemu-devel@nongnu.org
-Cc: Thomas Huth <thuth@redhat.com>, Bernhard Beschow <shentey@gmail.com>,
- =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>
-Subject: [PATCH] tests/functional: Extend the ppc64 e500 test
-Date: Mon,  3 Feb 2025 10:57:52 +0100
-Message-ID: <20250203095752.506043-1-clg@redhat.com>
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+ bh=N4eXBdXkDePeLEEspARtRXscZ2PfVvFxzq7SucSX9rU=;
+ b=I3MSLQ2jN+OjwpqktbnpYSH5rceHN99THerdcVPRkCUPA7xKtAJ0ntTqnKx3xeMxH9iczA
+ 1WtIFG7DDSzK3BFYWf9Tkz7WPQ/6rRSCtMeVrV1wwJ6kw1rDP2jKHEP2D8iKY6Phvt9Nyn
+ FUof9ko/p8CodHDHPFL8GVgTLF1jSWI=
+Received: from mail-wr1-f70.google.com (mail-wr1-f70.google.com
+ [209.85.221.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-650-OKXqUUjcPn-hdKiVzg34dA-1; Mon, 03 Feb 2025 05:00:30 -0500
+X-MC-Unique: OKXqUUjcPn-hdKiVzg34dA-1
+X-Mimecast-MFC-AGG-ID: OKXqUUjcPn-hdKiVzg34dA
+Received: by mail-wr1-f70.google.com with SMTP id
+ ffacd0b85a97d-385ded5e92aso1740979f8f.3
+ for <qemu-devel@nongnu.org>; Mon, 03 Feb 2025 02:00:30 -0800 (PST)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1738576829; x=1739181629;
+ h=content-transfer-encoding:in-reply-to:autocrypt:from
+ :content-language:references:cc:to:subject:user-agent:mime-version
+ :date:message-id:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=N4eXBdXkDePeLEEspARtRXscZ2PfVvFxzq7SucSX9rU=;
+ b=bHuiMe0xgFapwREk5VabtbF+gz5PnHQJg/RgjLPYjHsZoBCcGaj7QWYxBMViJF58sF
+ mMhMlHs7DjutiNajsHkWif6hZKR/CypExpoSbTzcbh25WO3gdqSw1bYFRD01gzUOgv3L
+ gFFlXnmATMWY4recQRuqBFlMiL95Jzs1grfXRDY/FguPUWyseOI1aA6Pagevm6N8IdeK
+ bCqGxisNAcaHnTFFwEzHYjJqf71ORHKVc2+FG51AaxZFnvYNYacNBK1Gwvj26RddH9Co
+ Y/HQABiq0SrxAvX08Tor+jFjYxe+sv3K0CFEE8aDEXP+LJ4At5sBvXllXAuGXSRRXRWx
+ a0uA==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCX6SaOh99THTUxACGF4ykIW825S2Y4T/chjj5U0O05i2MCLqA9ocfr1hii/59sa3XEvcIdEHmdXNbwU@nongnu.org
+X-Gm-Message-State: AOJu0YyqG72UpbO/TvSWqU/05gJ8Azd3A3+Gta+DI5Yc9WbMhshGu7Vq
+ ZHCv/6KFbQvkxvuGrSWoIBYRmQKWjasKGzYhBVf3doDrBb7POcofP3oNmDOKRDguNbGcBIBO1x+
+ Aaf30p3hBh6yONDDfg6PcynMqTHxLr4qVw12lf5ZB6Mmk5KRzjwOq
+X-Gm-Gg: ASbGncuCZJzJDnlFCiAjkrPBLYavWDyVlZrUU1giy5eArvA1cKvw9kumIqYPWSfKBZ3
+ MwCzH+URI4IxLcrernRhOP9UUoYHCyVvxxm4bay6A5+5TFQfGFjFGOGBpPxvD2gCzB04+QZ+CwW
+ 1A7xWQN2CUtT9GqTwFsWgKgXsh+dKshmbTiFqwxHRGaQRND+6oPcOdFNATHC8zaeqEcHnBaOt1s
+ vq5bzNWcebabXYtvk6ospcLvJJouzG/zEk0V0mCOLQqvTbr4VQdAjx3kjVUATbEvpxnb0zVqwIT
+ +d6YCDeq1mL5ZmUYUd9Viiho1zUKjg==
+X-Received: by 2002:a5d:5384:0:b0:38a:8ed1:c5c7 with SMTP id
+ ffacd0b85a97d-38c520bdb45mr12952982f8f.46.1738576829219; 
+ Mon, 03 Feb 2025 02:00:29 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IHqhbau6O2dpkJpdxWu+lUKFq9Dbr/3H4MavnzJqQQu8zNGQTSBmPbcPFPTvmCW6EBVp47vwg==
+X-Received: by 2002:a5d:5384:0:b0:38a:8ed1:c5c7 with SMTP id
+ ffacd0b85a97d-38c520bdb45mr12952951f8f.46.1738576828904; 
+ Mon, 03 Feb 2025 02:00:28 -0800 (PST)
+Received: from [10.33.192.228] (nat-pool-str-t.redhat.com. [149.14.88.106])
+ by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-438dcc13151sm183157735e9.1.2025.02.03.02.00.28
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Mon, 03 Feb 2025 02:00:28 -0800 (PST)
+Message-ID: <6260bc3a-c00a-4e46-adaa-3b16dc30cf17@redhat.com>
+Date: Mon, 3 Feb 2025 11:00:27 +0100
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=clg@redhat.com;
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 02/14] tcg: Move stubs in tcg/perf.h to tcg/perf-stubs.c
+To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
+Cc: pbonzini@redhat.com, mark.cave-ayland@ilande.co.uk, berrange@redhat.com,
+ philmd@linaro.org
+References: <20250203031821.741477-1-richard.henderson@linaro.org>
+ <20250203031821.741477-3-richard.henderson@linaro.org>
+Content-Language: en-US
+From: Thomas Huth <thuth@redhat.com>
+Autocrypt: addr=thuth@redhat.com; keydata=
+ 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
+In-Reply-To: <20250203031821.741477-3-richard.henderson@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=thuth@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
@@ -80,63 +154,18 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The test sequence boots a ppce500 machine from kernel and disk.
+On 03/02/2025 04.18, Richard Henderson wrote:
+> These are not called so frequently as to be
+> performance sensitive.
+> 
+> Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+> ---
+>   include/tcg/perf.h | 23 -----------------------
+>   tcg/perf-stubs.c   | 26 ++++++++++++++++++++++++++
+>   tcg/meson.build    |  2 ++
+>   3 files changed, 28 insertions(+), 23 deletions(-)
+>   create mode 100644 tcg/perf-stubs.c
 
-The buildroot is built with the qemu_ppc64_e5500_defconfig config.
-
-Signed-off-by: Cédric Le Goater <clg@redhat.com>
----
- tests/functional/test_ppc64_e500.py | 30 +++++++++++++++++++++++++++++
- 1 file changed, 30 insertions(+)
-
-diff --git a/tests/functional/test_ppc64_e500.py b/tests/functional/test_ppc64_e500.py
-index b92fe0b0e75e..f21d7d84177e 100755
---- a/tests/functional/test_ppc64_e500.py
-+++ b/tests/functional/test_ppc64_e500.py
-@@ -5,6 +5,7 @@
- # SPDX-License-Identifier: GPL-2.0-or-later
- 
- from qemu_test import LinuxKernelTest, Asset
-+from qemu_test import exec_command_and_wait_for_pattern
- 
- 
- class E500Test(LinuxKernelTest):
-@@ -20,5 +21,34 @@ def test_ppc64_e500(self):
-         self.launch_kernel(self.scratch_file('day19', 'uImage'),
-                            wait_for='QEMU advent calendar')
- 
-+    ASSET_BR2_E5500_UIMAGE = Asset(
-+        'https://github.com/legoater/qemu-ppc-boot/raw/refs/heads/main/buildroot/qemu_ppc64_e5500-2023.11-8-gdcd9f0f6eb-20240104/uImage',
-+        '2478187c455d6cca3984e9dfde9c635d824ea16236b85fd6b4809f744706deda')
-+
-+    ASSET_BR2_E5500_ROOTFS = Asset(
-+        'https://github.com/legoater/qemu-ppc-boot/raw/refs/heads/main//buildroot/qemu_ppc64_e5500-2023.11-8-gdcd9f0f6eb-20240104/rootfs.ext2',
-+        '9035ef97237c84c7522baaff17d25cdfca4bb7a053d5e296e902919473423d76')
-+
-+    def test_ppc64_e500_buildroot(self):
-+        self.set_machine('ppce500')
-+        self.cpu = 'e5500'
-+
-+        uimage_path = self.ASSET_BR2_E5500_UIMAGE.fetch()
-+        rootfs_path = self.ASSET_BR2_E5500_ROOTFS.fetch()
-+
-+        self.vm.set_console()
-+        self.vm.add_args('-kernel', uimage_path,
-+                         '-append', 'root=/dev/vda',
-+                         '-drive', f'file={rootfs_path},if=virtio,format=raw',
-+                         '-snapshot', '-no-shutdown')
-+        self.vm.launch()
-+
-+        self.wait_for_console_pattern('Linux version')
-+        self.wait_for_console_pattern('/init as init process')
-+        self.wait_for_console_pattern('lease of 10.0.2.15')
-+        self.wait_for_console_pattern('buildroot login:')
-+        exec_command_and_wait_for_pattern(self, 'root', '#')
-+        exec_command_and_wait_for_pattern(self, 'poweroff', 'Power down')
-+
- if __name__ == '__main__':
-     LinuxKernelTest.main()
--- 
-2.48.1
+Reviewed-by: Thomas Huth <thuth@redhat.com>
 
 
