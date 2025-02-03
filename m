@@ -4,94 +4,71 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A9A30C02192
-	for <qemu-devel@archiver.kernel.org>; Mon,  3 Feb 2025 12:35:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E79E8C02192
+	for <qemu-devel@archiver.kernel.org>; Mon,  3 Feb 2025 12:44:36 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tevfG-0002Sh-1q; Mon, 03 Feb 2025 07:34:58 -0500
+	id 1tevo9-0003nE-Es; Mon, 03 Feb 2025 07:44:09 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1tevfE-0002SQ-3M
- for qemu-devel@nongnu.org; Mon, 03 Feb 2025 07:34:56 -0500
-Received: from mail-ed1-x532.google.com ([2a00:1450:4864:20::532])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1tevfC-0004k4-Jc
- for qemu-devel@nongnu.org; Mon, 03 Feb 2025 07:34:55 -0500
-Received: by mail-ed1-x532.google.com with SMTP id
- 4fb4d7f45d1cf-5d3dce16a3dso8080717a12.1
- for <qemu-devel@nongnu.org>; Mon, 03 Feb 2025 04:34:53 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1738586093; x=1739190893; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:user-agent
- :references:in-reply-to:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=kzhz5l/GvhKS4x619rxmwWi9NvBC9wFxS93MG3dfQdA=;
- b=YdHqeme+i2jhIZt4iu3TOKwenBsE161j41fNmti3x1T1zouaWG0DpxKB0sZnPR0yYz
- nfqPnHlkYAOwmsC8jMTlilC7GeGFwyzpYm07KkLUsOGRAsNfchy0se0qhkAVvAQVsgH9
- 03aSEghNFbPkihh0q9pH2jSF5mUmlB94i41jlfPdvHf6+8B0CLzWknSSBeUAKYXOggpt
- 8MxCIp5E7T3U+r9lZ584Wq5dgeWuBWGg44bYWln5D0vdJ+UOa2nQqR8gSLZMwGDbrmlW
- XYUJOzPpmQtYHkd1gpwHg67XHky4fEGD7F6OoaYHBs7iw+7+XeS0TTnyO/CwaSeoCSrX
- 8Gyg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1738586093; x=1739190893;
- h=content-transfer-encoding:mime-version:message-id:date:user-agent
- :references:in-reply-to:subject:cc:to:from:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=kzhz5l/GvhKS4x619rxmwWi9NvBC9wFxS93MG3dfQdA=;
- b=EzulIXLfQYK7biScdyiJe01KH/D8hhR6eRzcE3xFM3h5wnc2zmSoujpnX2ZEC8p691
- F8jR96l4zfjrh9HkGlAR0jIs9i0+ttMzJ82sUdZeTTx6mY8bS6bANL29ZfOMiKZ8cW6Z
- vmKOtwFf3cw/C/p+XJkdYk/gcN4AOAqNtb8Q9WbrB3v0uvvB6pVquoGnZsXYlTGOaME6
- w3KrenUqJFC6pryvQonZldrlg2yFYg7WluQJov1uQnLMsBlLvGf17NxjwQacVctW+ogd
- H4pDLrwARDUDp2cVHCm2z92JityCABXIpg6B2WslHyGLH7cAQ3p9SuLERY1DTz75EnMt
- KexA==
-X-Gm-Message-State: AOJu0YxDVGGUQdPGA+IPQao/acUcjfleglZoilmDi/e5N/fld1lpU1Ty
- qaul1W82mTn31Fld/eYYnWIoNZ4Qn/JpI7a63JQHJ50+c2IVi/F88RjtVJw4yC2BEmxWzaWOYk3
- 1lis=
-X-Gm-Gg: ASbGncu5CIj7KUtheLbRJXlnNaa0+XESszW4jeOSga1IsAenbRqECVTjLGNloINoCS6
- jMRE89cUk+75VG/er6JP4gkQD1KAbwvRIGpiqvAfIgAsbJUX9TyMyMXhcqjm377Mj1joquWP7y4
- BY1IrYnNqJHYU9GLt2MYINu9Bj6xBhObB7BnyOsOtaiB1xqU7QqHUCCv4azbolV8w1ZT4YqKfIn
- LzqLuQopc2wzaCIQRbq2R529isUaDki8NC6hbGL2U7g8lh7ue2FrKZAXSG2agNyhHx4lVANAmbT
- J0/ZlSIpRsPkomgr1Q==
-X-Google-Smtp-Source: AGHT+IHNWZMPassq9FoIhQsjhC40Nzw2IRehvaI4IhhUCRvuiFcZG7qACGEcWUxZJUtHfirZeWnVZw==
-X-Received: by 2002:a05:6402:2706:b0:5d4:1c66:d783 with SMTP id
- 4fb4d7f45d1cf-5dc6f3bc813mr20222306a12.0.1738586092573; 
- Mon, 03 Feb 2025 04:34:52 -0800 (PST)
-Received: from draig.lan ([185.126.160.109]) by smtp.gmail.com with ESMTPSA id
- 4fb4d7f45d1cf-5dc723e4ceasm7522628a12.21.2025.02.03.04.34.51
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 03 Feb 2025 04:34:51 -0800 (PST)
-Received: from draig (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id B3B2E5F8BF;
- Mon,  3 Feb 2025 12:34:50 +0000 (GMT)
-From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
-To: Richard Henderson <richard.henderson@linaro.org>
-Cc: qemu-devel@nongnu.org,  pbonzini@redhat.com,
- mark.cave-ayland@ilande.co.uk,  berrange@redhat.com,  philmd@linaro.org,
- thuth@redhat.com
-Subject: Re: [PATCH v2 11/14] target/*: Remove TARGET_LONG_BITS from
- cpu-param.h
-In-Reply-To: <20250203031821.741477-12-richard.henderson@linaro.org> (Richard
- Henderson's message of "Sun, 2 Feb 2025 19:18:18 -0800")
-References: <20250203031821.741477-1-richard.henderson@linaro.org>
- <20250203031821.741477-12-richard.henderson@linaro.org>
-User-Agent: mu4e 1.12.8; emacs 29.4
-Date: Mon, 03 Feb 2025 12:34:50 +0000
-Message-ID: <87tt9bcil1.fsf@draig.linaro.org>
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1tevnz-0003mh-Vq
+ for qemu-devel@nongnu.org; Mon, 03 Feb 2025 07:44:01 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1tevny-0005ZZ-Ie
+ for qemu-devel@nongnu.org; Mon, 03 Feb 2025 07:43:59 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1738586636;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:
+ content-transfer-encoding:content-transfer-encoding;
+ bh=7Lfs7wJP83BQzBmaSAw+cjn8Ga3DqKzo1nVZkTERAEc=;
+ b=cZJfJ+sMC8QC2QR0lcCnoK/q6p3yxFF1sYnXiWya8tsjiiZfw++IYCpsmjxmwTPGDELETf
+ doc1I6Db13907AQcWt6FRJO+Me5Ay849MpapCrViv2aXcriK2ISHX4A78CiT1acJRW7MTC
+ xerwSSKWFeDuMVcWlSJwpmZS0ThiVeU=
+Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-257-OktgleVAN3yJgsL-R1WU_Q-1; Mon,
+ 03 Feb 2025 07:43:55 -0500
+X-MC-Unique: OktgleVAN3yJgsL-R1WU_Q-1
+X-Mimecast-MFC-AGG-ID: OktgleVAN3yJgsL-R1WU_Q
+Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id DA4D519560A1; Mon,  3 Feb 2025 12:43:51 +0000 (UTC)
+Received: from thuth-p1g4.str.redhat.com (dhcp-192-228.str.redhat.com
+ [10.33.192.228])
+ by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 35AF7195608E; Mon,  3 Feb 2025 12:43:47 +0000 (UTC)
+From: Thomas Huth <thuth@redhat.com>
+To: Fabiano Rosas <farosas@suse.de>, Laurent Vivier <lvivier@redhat.com>,
+ qemu-devel@nongnu.org, "Michael S . Tsirkin" <mst@redhat.com>
+Cc: Paolo Bonzini <pbonzini@redhat.com>,
+ Stefano Garzarella <sgarzare@redhat.com>,
+ =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Jason Wang <jasowang@redhat.com>, Cornelia Huck <cohuck@redhat.com>
+Subject: [PATCH] tests/qtest/vhost-user-test: Use modern virtio for vhost-user
+ tests
+Date: Mon,  3 Feb 2025 13:43:46 +0100
+Message-ID: <20250203124346.169607-1-thuth@redhat.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::532;
- envelope-from=alex.bennee@linaro.org; helo=mail-ed1-x532.google.com
+Content-Transfer-Encoding: 8bit
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=thuth@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -107,15 +84,29 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Richard Henderson <richard.henderson@linaro.org> writes:
+All other vhost-user tests here use modern virtio, too, so let's
+adjust the vhost-user-net test accordingly.
 
-> This is now handled by the configs/targets/*.mak fragment.
->
-> Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+Signed-off-by: Thomas Huth <thuth@redhat.com>
+---
+ tests/qtest/vhost-user-test.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-Reviewed-by: Alex Benn=C3=A9e <alex.bennee@linaro.org>
+diff --git a/tests/qtest/vhost-user-test.c b/tests/qtest/vhost-user-test.c
+index 76d142a158..bd977ef28d 100644
+--- a/tests/qtest/vhost-user-test.c
++++ b/tests/qtest/vhost-user-test.c
+@@ -1043,7 +1043,8 @@ static void test_multiqueue(void *obj, void *arg, QGuestAllocator *alloc)
+ 
+ static uint64_t vu_net_get_features(TestServer *s)
+ {
+-    uint64_t features = 0x1ULL << VHOST_F_LOG_ALL |
++    uint64_t features = 0x1ULL << VIRTIO_F_VERSION_1 |
++        0x1ULL << VHOST_F_LOG_ALL |
+         0x1ULL << VHOST_USER_F_PROTOCOL_FEATURES;
+ 
+     if (s->queues > 1) {
+-- 
+2.48.1
 
---=20
-Alex Benn=C3=A9e
-Virtualisation Tech Lead @ Linaro
 
