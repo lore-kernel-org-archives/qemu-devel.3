@@ -4,85 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8FD55C02192
-	for <qemu-devel@archiver.kernel.org>; Mon,  3 Feb 2025 13:59:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DA411C02192
+	for <qemu-devel@archiver.kernel.org>; Mon,  3 Feb 2025 14:09:08 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tewyk-0005xK-Ul; Mon, 03 Feb 2025 08:59:10 -0500
+	id 1tex7i-0007fe-4Q; Mon, 03 Feb 2025 09:08:26 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1tewyj-0005wu-Bh
- for qemu-devel@nongnu.org; Mon, 03 Feb 2025 08:59:09 -0500
-Received: from mail-ej1-x636.google.com ([2a00:1450:4864:20::636])
+ id 1tex7h-0007eO-28
+ for qemu-devel@nongnu.org; Mon, 03 Feb 2025 09:08:25 -0500
+Received: from mail-ej1-x630.google.com ([2a00:1450:4864:20::630])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1tewyh-0004um-TU
- for qemu-devel@nongnu.org; Mon, 03 Feb 2025 08:59:09 -0500
-Received: by mail-ej1-x636.google.com with SMTP id
- a640c23a62f3a-ab698eae2d9so891174266b.0
- for <qemu-devel@nongnu.org>; Mon, 03 Feb 2025 05:59:07 -0800 (PST)
+ id 1tex7f-0006qY-Ho
+ for qemu-devel@nongnu.org; Mon, 03 Feb 2025 09:08:24 -0500
+Received: by mail-ej1-x630.google.com with SMTP id
+ a640c23a62f3a-a9e44654ae3so713095266b.1
+ for <qemu-devel@nongnu.org>; Mon, 03 Feb 2025 06:08:23 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1738591146; x=1739195946; darn=nongnu.org;
+ d=linaro.org; s=google; t=1738591701; x=1739196501; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:message-id:date:user-agent
  :references:in-reply-to:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=gt8Rn86AXh6kVZpy4m9lU14y7OqHcZJmxjxjCyF74hs=;
- b=yorblmMQYw+Fq5dcxwdQ4cfsn9p5TL3M/wr78ykS4S5CPXSDQWsSVT52KNe9JkF5l1
- eTnszfZDAaTh5AR+KtAEeS6MqHReYlRyTxn9P/yV4Z3tmgkjpr2HrCZDaZZKAI0J3fUp
- isnyDcsTtuxQWtJNCeMwvdMhch8W3KVHZ3Y4NDXF1DhDbsJzkPvYBaSLtTcjNBcxdRpv
- 3au78ioBVbEOl5VOlsp1f9lmUMT7jvac4mwHjD5Ox9NPCKfbpQHt0FdJfZOpE+3yG6Sl
- 3pwysc49l8MhuD2HQ4K5OZ++mtQYBK7VauEtvlvbCG+X1uxp0rPadBvSSbQLI+dSalrI
- Erpg==
+ bh=WU52AN2OUlZ1qKBo1DH2Ik2TSp35tGJqbGoyklt/ofU=;
+ b=lrNfw1qn/zmUzRSKdLjGe7KIJbZ2nMPP9KuELVqWIldyuKHiKAhZEWakr1sBS38HlM
+ soxGyi8QwCSeco8lt+qRnN/+lkmtFYdYEhy+it7Kwo7LFbGhtBYUXvBL60Zs0eGoa1ZO
+ jVX9UznPOcZmBoA+qzrWUfnFnnM/cnem5cNCm64BFlF0G4T6JfPBhiWzXMw+9yr9ia1f
+ p6UdmCRvmwx1AAE5S2StI8y1pYxsqvHhFoBL/RFRA0B9etkzyijAE77eLOtRkuDWrtky
+ qqO6tOSbMNjJgtD9mgSGBNvG1PXMyz6XWDWxKhp5wTZ8I/B7EZTO56H91yX0xdYakPaJ
+ /JKQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1738591146; x=1739195946;
+ d=1e100.net; s=20230601; t=1738591701; x=1739196501;
  h=content-transfer-encoding:mime-version:message-id:date:user-agent
  :references:in-reply-to:subject:cc:to:from:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=gt8Rn86AXh6kVZpy4m9lU14y7OqHcZJmxjxjCyF74hs=;
- b=tdoY6L5XXofAgUFKRI66rlkLHwp2l+1xYjE0zXaVkmjw1OL3IK+8DzJYcwUs6TReBE
- 5DsOynNzyVzESsJvxI6Xacy6NllylNgNtx71oah5E0I9mN7X653U1RhhxReXfwa6pLBR
- J5yhYwMP7YTRtR17+OAU6wUbi7sSv2RJzgJdzOxHKTewzjhbMXqszXuHgnvqdU7KMyqX
- Jc1AGESiXG+jVeguobgxCqJSF/y07t/iMPmqKV1zaLGNT+cftlq1FghlyDeDHFdztfrt
- UHRisDu72REZpCQzmYDk8x1WNiVBGMe8GYkwgiCWvo+NHjXLBYSjpWJV/6bpQ4guUBic
- aPXw==
-X-Gm-Message-State: AOJu0YyGXx5pbik7mrkL9oW6Gbi8IFSLGs1IiVbhlFOOyyCTvOMjYg3i
- 59ClyfVU+pE5jwDTA8S4sOCKTAgzwOi9peilD+qRGI75ryLj5bjx6hDrpnzWAF4=
-X-Gm-Gg: ASbGncuBpzluIdgtkuZxnvYlwztaqImWRvnbwT4Y04tUPgKBifZbF77f7bu4DO1w2Wz
- Ic3zxZIRli02ZQQjYkm1JjByYsDvlswyL+xLzBEpd6h9iZwgCGU/Soh1v4dUsUw/YuSIg0/wWef
- Gzz8wiC3FiDSG+qqSQLMsAIsTnCKvlrsweaHE6hkB0XAJ9cxNNO6hWDnUJR2cbEHu68CIqtIW8Q
- c0uLxygB0UB45OtZ6jbZNYLNuYPi3B/X9wQu5vQUYby5f9f7QYzKkCU1qHP6uw1N1idZvxkJhIT
- E99JraegDMP0Z/rprA==
-X-Google-Smtp-Source: AGHT+IExS6WPeOJojLQkDYn1avo+StqiYmk7Sn1Nb3vehFXK95hSurh5GZBy9GatB9hBCBugO4tTJQ==
-X-Received: by 2002:a17:907:1c0e:b0:ab2:b936:f110 with SMTP id
- a640c23a62f3a-ab6cfcb8d3emr2430314666b.20.1738591146168; 
- Mon, 03 Feb 2025 05:59:06 -0800 (PST)
+ bh=WU52AN2OUlZ1qKBo1DH2Ik2TSp35tGJqbGoyklt/ofU=;
+ b=mKXnRfHaoOQKFU9gARMUHeBvEkcGqEnUPi4TSboZatUys1Iefg2dkVZ0l89HVGgbGw
+ CcOHi/El4sk2Sb9aTnMExK1G+qrkMAkNvClULupkgQWpv9zM0L2U8H3Aj1hQ4OUoIzJa
+ elrZQSvh9vP6W7xNpgSmMv7967LvBWgf5Q9w9d8HIpVgJRIeBl5sSzkXSqP6pm36xezQ
+ ZkVQvyuMnn0j+blWRx6HV4ItF1l6IPArNkDvs5f+sLVsKR3ysoQeloqCmFzVh/3YkdCg
+ Nhnh8jgWB9dKUClEkeneDtBp82s15X4UhZjM5XOfTRUN5RsQOW9u/serDa4TldFq8iVG
+ k8Wg==
+X-Gm-Message-State: AOJu0YzkF8q1g4MVsaUBEYQZKmzv6FrTFURnDNsm9QkVytJqYJ/DSz5n
+ SdEIwjWTorxFLp0/kU67EwlFpZB35vr8gEEw4f8BVwg7gi0IoayKpXOVBIwqjAU=
+X-Gm-Gg: ASbGncuSfamsdFVqKRGu6VXbAvwUedHwAH4Kve2cOySuiX/T3CA9QcRcFb/zW2Hrnw0
+ F6DbRD1sA4GEZsSxo1vXexdxZFstF6AsHoR/vT/ZBKV3tfifVg9oQVyZnQ7PRI9gKKLa9FnT4Rf
+ bWroLfqKB5s+OsFAdcHjTR+QCg8ZZvYz6hE34nDvk75WuIRp+cnQD8PMTUjsWYa10U20SJy3YL5
+ XmrC0LsZh4Pb0EUklRj+eoAu+Ee3PmevENQvFkMINLcdNPFoMdq4Fvyaq60CVDq+9olVcLQR0Tr
+ PReoc4fI5VmbqnQcfg==
+X-Google-Smtp-Source: AGHT+IGh7IreZa8eW2wqj32gawdJUchpdge5r622aiXwj57S1ABb9+gN/n+0ZOTJ2GEMyp3KWOsQiA==
+X-Received: by 2002:a17:907:97c5:b0:aa6:5d30:d971 with SMTP id
+ a640c23a62f3a-ab6cfcb6979mr2690745666b.11.1738591699716; 
+ Mon, 03 Feb 2025 06:08:19 -0800 (PST)
 Received: from draig.lan ([185.126.160.109]) by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-ab6e47d0fc4sm765013366b.65.2025.02.03.05.59.05
+ a640c23a62f3a-ab6e4a56dadsm764843866b.176.2025.02.03.06.08.19
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 03 Feb 2025 05:59:05 -0800 (PST)
+ Mon, 03 Feb 2025 06:08:19 -0800 (PST)
 Received: from draig (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id EBE505F8BF;
- Mon,  3 Feb 2025 13:59:04 +0000 (GMT)
+ by draig.lan (Postfix) with ESMTP id 442B15F8BF;
+ Mon,  3 Feb 2025 14:08:18 +0000 (GMT)
 From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
-To: Richard Henderson <richard.henderson@linaro.org>
-Cc: qemu-devel@nongnu.org,  pbonzini@redhat.com,
- mark.cave-ayland@ilande.co.uk,  berrange@redhat.com,  philmd@linaro.org,
- thuth@redhat.com
-Subject: Re: [PATCH v2 14/14] tcg: Remove TCG_OVERSIZED_GUEST
-In-Reply-To: <20250203031821.741477-15-richard.henderson@linaro.org> (Richard
- Henderson's message of "Sun, 2 Feb 2025 19:18:21 -0800")
-References: <20250203031821.741477-1-richard.henderson@linaro.org>
- <20250203031821.741477-15-richard.henderson@linaro.org>
+To: Fabiano Rosas <farosas@suse.de>
+Cc: qemu-devel@nongnu.org,  Peter Xu <peterx@redhat.com>,  Peter Maydell
+ <peter.maydell@linaro.org>,  Daniel P . =?utf-8?Q?Berrang=C3=A9?=
+ <berrange@redhat.com>
+Subject: Re: [PATCH 0/2] migration: Reduce migration-test time for non-KVM
+ archs
+In-Reply-To: <20250130184012.5711-1-farosas@suse.de> (Fabiano Rosas's message
+ of "Thu, 30 Jan 2025 15:40:10 -0300")
+References: <20250130184012.5711-1-farosas@suse.de>
 User-Agent: mu4e 1.12.8; emacs 29.4
-Date: Mon, 03 Feb 2025 13:59:04 +0000
-Message-ID: <87cyfzceon.fsf@draig.linaro.org>
+Date: Mon, 03 Feb 2025 14:08:18 +0000
+Message-ID: <877c67ce99.fsf@draig.linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::636;
- envelope-from=alex.bennee@linaro.org; helo=mail-ej1-x636.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::630;
+ envelope-from=alex.bennee@linaro.org; helo=mail-ej1-x630.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -105,21 +105,13 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Richard Henderson <richard.henderson@linaro.org> writes:
+Fabiano Rosas <farosas@suse.de> writes:
 
-> This is now prohibited in configuration.
->
-> Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
-<snip>
-> -#if TARGET_LONG_BITS > TCG_TARGET_REG_BITS
+> Hi, continuing the work from the previous[1] series to reduce the time
+> migration-test takes during make check, here's a couple of patches to
+> create a smaller set of tests.
 
-Is it worth keeping a compile time assert with a comment so if anyone
-attempts to hack 32 bit support back in they will find out quickly?
-
-Otherwise:
-
-Reviewed-by: Alex Benn=C3=A9e <alex.bennee@linaro.org>
-
+Queued to testing/next, thanks.
 
 --=20
 Alex Benn=C3=A9e
