@@ -4,49 +4,49 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 46813C02196
-	for <qemu-devel@archiver.kernel.org>; Mon,  3 Feb 2025 12:59:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9DDF2C02192
+	for <qemu-devel@archiver.kernel.org>; Mon,  3 Feb 2025 12:59:06 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tew1O-00062g-MK; Mon, 03 Feb 2025 07:57:50 -0500
+	id 1tew1X-00064P-Hs; Mon, 03 Feb 2025 07:57:59 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1tew1M-00062Q-LQ
- for qemu-devel@nongnu.org; Mon, 03 Feb 2025 07:57:48 -0500
+ id 1tew1W-00064D-8q
+ for qemu-devel@nongnu.org; Mon, 03 Feb 2025 07:57:58 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1tew1D-0006mm-Br
- for qemu-devel@nongnu.org; Mon, 03 Feb 2025 07:57:40 -0500
+ id 1tew1U-0006o4-HK
+ for qemu-devel@nongnu.org; Mon, 03 Feb 2025 07:57:58 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1738587458;
+ s=mimecast20190719; t=1738587475;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=0+LaoUrRRVG9yVzSBnkrgllxqKCLRevJdbW6h/G6DWo=;
- b=GnVbu1sw7Ghvz9kyFHlhJlqPGfUrop9XsdDUDf0D18Xz8wUF0a0ymmWMQXIT+6NZ29FV6d
- 92urh7NLppvEvVeze4YjEtQ+5cbm65DYd5lUNbxaxjI+R/NLwVuavoNFn5KMV4Vr5dF53M
- m+99Fjm0I9mppxpl4Kf4vmMZkZHQIgU=
-Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
+ bh=S0tI05i+8GGcd69N8Bm/yfybVpUFCQn7IdSKu5mVK94=;
+ b=L7zb2Mb1t4QjGVU0EMB3/e4i2d4Yi6jnGQu3F/myzZE8JlZvZZoHxzv3AxtLkGdCkmZVUw
+ WIwaYA/DoOdR0hCmrUujAn7aS3PvPS60uK7mFN521DQ1BXoD6Sy4WvmQ8q5i41DLR+cG/X
+ kg9uxE7OrsvVvE5dx+S1XTON0Iob+Q4=
+Received: from mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-3-l9wKKQAaMAq6-q9_0Mx2fA-1; Mon,
- 03 Feb 2025 07:57:35 -0500
-X-MC-Unique: l9wKKQAaMAq6-q9_0Mx2fA-1
-X-Mimecast-MFC-AGG-ID: l9wKKQAaMAq6-q9_0Mx2fA
-Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-611-SFue5lKxN3a3cjmY9idMog-1; Mon,
+ 03 Feb 2025 07:57:52 -0500
+X-MC-Unique: SFue5lKxN3a3cjmY9idMog-1
+X-Mimecast-MFC-AGG-ID: SFue5lKxN3a3cjmY9idMog
+Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 362D619560B7; Mon,  3 Feb 2025 12:57:33 +0000 (UTC)
+ by mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 54BBC19560BA; Mon,  3 Feb 2025 12:57:51 +0000 (UTC)
 Received: from localhost (unknown [10.39.208.25])
- by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 60B1730001BE; Mon,  3 Feb 2025 12:57:30 +0000 (UTC)
+ by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 11EB1180035E; Mon,  3 Feb 2025 12:57:49 +0000 (UTC)
 From: marcandre.lureau@redhat.com
 To: qemu-devel@nongnu.org
 Cc: Eric Blake <eblake@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
@@ -57,15 +57,16 @@ Cc: Eric Blake <eblake@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
  Pierrick Bouvier <pierrick.bouvier@linaro.org>,
  =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
  Roman Penyaev <r.peniaev@gmail.com>
-Subject: [PULL 1/8] chardev/char-pty: send CHR_EVENT_CLOSED on disconnect
-Date: Mon,  3 Feb 2025 16:57:13 +0400
-Message-ID: <20250203125721.640451-2-marcandre.lureau@redhat.com>
+Subject: [PULL 4/8] qemu-options.hx: describe hub chardev and aggregation of
+ several backends
+Date: Mon,  3 Feb 2025 16:57:16 +0400
+Message-ID: <20250203125721.640451-5-marcandre.lureau@redhat.com>
 In-Reply-To: <20250203125721.640451-1-marcandre.lureau@redhat.com>
 References: <20250203125721.640451-1-marcandre.lureau@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
 Received-SPF: pass client-ip=170.10.129.124;
  envelope-from=marcandre.lureau@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
@@ -94,43 +95,92 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Roman Penyaev <r.peniaev@gmail.com>
 
-Change makes code symmetric to the code, which handles
-the "connected" state, i.e. send CHR_EVENT_CLOSED when
-state changes from "connected" to "disconnected".
-
-This behavior is similar to char-socket, for example.
+This adds a few lines describing `hub` aggregator configuration
+for aggregation of several backend devices with a single frontend
+device.
 
 Signed-off-by: Roman Penyaev <r.peniaev@gmail.com>
 Reviewed-by: "Marc-André Lureau" <marcandre.lureau@redhat.com>
-Reviewed-by: "Alex Bennée" <alex.bennee@linaro.org>
 Cc: qemu-devel@nongnu.org
-Message-ID: <20250123085327.965501-2-r.peniaev@gmail.com>
+Message-ID: <20250123085327.965501-5-r.peniaev@gmail.com>
 ---
- chardev/char-pty.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ qemu-options.hx | 49 +++++++++++++++++++++++++++++++++++++++++++++----
+ 1 file changed, 45 insertions(+), 4 deletions(-)
 
-diff --git a/chardev/char-pty.c b/chardev/char-pty.c
-index cbb21b76ae..6a2c1dc13a 100644
---- a/chardev/char-pty.c
-+++ b/chardev/char-pty.c
-@@ -181,6 +181,9 @@ static void pty_chr_state(Chardev *chr, int connected)
+diff --git a/qemu-options.hx b/qemu-options.hx
+index d19bf533d6..ec0090dfe2 100644
+--- a/qemu-options.hx
++++ b/qemu-options.hx
+@@ -3733,7 +3733,7 @@ SRST
+ The general form of a character device option is:
  
-     if (!connected) {
-         remove_fd_in_watch(chr);
-+        if (s->connected) {
-+            qemu_chr_be_event(chr, CHR_EVENT_CLOSED);
-+        }
-         s->connected = 0;
-         /* (re-)connect poll interval for idle guests: once per second.
-          * We check more frequently in case the guests sends data to
-@@ -215,7 +218,6 @@ static void char_pty_finalize(Object *obj)
-     pty_chr_state(chr, 0);
-     object_unref(OBJECT(s->ioc));
-     pty_chr_timer_cancel(s);
--    qemu_chr_be_event(chr, CHR_EVENT_CLOSED);
- }
+ ``-chardev backend,id=id[,mux=on|off][,options]``
+-    Backend is one of: ``null``, ``socket``, ``udp``, ``msmouse``,
++    Backend is one of: ``null``, ``socket``, ``udp``, ``msmouse``, ``hub``,
+     ``vc``, ``ringbuf``, ``file``, ``pipe``, ``console``, ``serial``,
+     ``pty``, ``stdio``, ``braille``, ``parallel``,
+     ``spicevmc``, ``spiceport``. The specific backend will determine the
+@@ -3790,9 +3790,10 @@ The general form of a character device option is:
+     the QEMU monitor, and ``-nographic`` also multiplexes the console
+     and the monitor to stdio.
  
- #if defined HAVE_PTY_H
+-    There is currently no support for multiplexing in the other
+-    direction (where a single QEMU front end takes input and output from
+-    multiple chardevs).
++    If you need to aggregate data in the opposite direction (where one
++    QEMU frontend interface receives input and output from multiple
++    backend chardev devices), please refer to the paragraph below
++    regarding chardev ``hub`` aggregator device configuration.
+ 
+     Every backend supports the ``logfile`` option, which supplies the
+     path to a file to record all data transmitted via the backend. The
+@@ -3892,6 +3893,46 @@ The available backends are:
+     Forward QEMU's emulated msmouse events to the guest. ``msmouse``
+     does not take any options.
+ 
++``-chardev hub,id=id,chardevs.0=id[,chardevs.N=id]``
++    Explicitly create chardev backend hub device with the possibility
++    to aggregate input from multiple backend devices and forward it to
++    a single frontend device. Additionally, ``hub`` device takes the
++    output from the frontend device and sends it back to all the
++    connected backend devices. This allows for seamless interaction
++    between different backend devices and a single frontend
++    interface. Aggregation supported for up to 4 chardev
++    devices. (Since 10.0)
++
++    For example, the following is a use case of 2 backend devices:
++    virtual console ``vc0`` and a pseudo TTY ``pty0`` connected to
++    a single virtio hvc console frontend device with a hub ``hub0``
++    help. Virtual console renders text to an image, which can be
++    shared over the VNC protocol. In turn, pty backend provides
++    bidirectional communication to the virtio hvc console over the
++    pseudo TTY file. The example configuration can be as follows:
++
++    ::
++
++       -chardev pty,path=/tmp/pty,id=pty0 \
++       -chardev vc,id=vc0 \
++       -chardev hub,id=hub0,chardevs.0=pty0,chardevs.1=vc0 \
++       -device virtconsole,chardev=hub0 \
++       -vnc 0.0.0.0:0
++
++    Once QEMU starts VNC client and any TTY emulator can be used to
++    control a single hvc console:
++
++    ::
++
++       # Start TTY emulator
++       tio /tmp/pty
++
++       # Start VNC client and switch to virtual console Ctrl-Alt-2
++       vncviewer :0
++
++    Several frontend devices is not supported. Stacking of multiplexers
++    and hub devices is not supported as well.
++
+ ``-chardev vc,id=id[[,width=width][,height=height]][[,cols=cols][,rows=rows]]``
+     Connect to a QEMU text console. ``vc`` may optionally be given a
+     specific size.
 -- 
 2.47.0
 
