@@ -4,97 +4,98 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 67DA7C02192
-	for <qemu-devel@archiver.kernel.org>; Mon,  3 Feb 2025 23:06:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DCFCBC02193
+	for <qemu-devel@archiver.kernel.org>; Mon,  3 Feb 2025 23:07:16 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tf5WL-0004oz-HK; Mon, 03 Feb 2025 18:06:25 -0500
+	id 1tf5WP-0004py-KL; Mon, 03 Feb 2025 18:06:29 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mhej@vps-ovh.mhejs.net>)
- id 1tf5WH-0004oh-Uy
- for qemu-devel@nongnu.org; Mon, 03 Feb 2025 18:06:21 -0500
-Received: from vps-ovh.mhejs.net ([145.239.82.108])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mhej@vps-ovh.mhejs.net>)
- id 1tf5WF-00018I-Og
- for qemu-devel@nongnu.org; Mon, 03 Feb 2025 18:06:21 -0500
-Received: from MUA
- by vps-ovh.mhejs.net with esmtpsa  (TLS1.3) tls TLS_AES_128_GCM_SHA256
- (Exim 4.98) (envelope-from <mhej@vps-ovh.mhejs.net>)
- id 1tf4lk-00000006ogG-29pw; Mon, 03 Feb 2025 23:18:16 +0100
-Message-ID: <c80c298c-b838-4ea3-8b72-48ca8bf6cb44@maciej.szmigiero.name>
-Date: Mon, 3 Feb 2025 23:18:11 +0100
+ (Exim 4.90_1) (envelope-from <shentey@gmail.com>)
+ id 1tf5WO-0004pg-Pf; Mon, 03 Feb 2025 18:06:28 -0500
+Received: from mail-wr1-x436.google.com ([2a00:1450:4864:20::436])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <shentey@gmail.com>)
+ id 1tf5WM-00019V-JH; Mon, 03 Feb 2025 18:06:28 -0500
+Received: by mail-wr1-x436.google.com with SMTP id
+ ffacd0b85a97d-385ddcfc97bso3923043f8f.1; 
+ Mon, 03 Feb 2025 15:06:25 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20230601; t=1738623984; x=1739228784; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:references
+ :in-reply-to:subject:cc:to:from:date:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=Oh+kcSLzxagOppa0kg/pXmqP4HkISRplGCNJdaZ+ec0=;
+ b=N4CeTe9s0HXBVfTG9Vi4zhL3Tw4h6E1hF6cqJpyaPoJDJ6qzKEcTI8ezd9QkVRp/tC
+ u8TBnTSJ5kpqe8HSqiHkLIEPVtFxLM6Pd3GrUXe79Th5yWrehwgjcFpdlr7tAnSWGTeo
+ jjB0IvAfZN8hZxmgXJxGCBq+Jdp0zpzl/JjZsh68Jjp4Gp9PrhBMRVYi0AGMZT1X6MDj
+ +CL84CgVMMncRD8pH4gpoSE8/wwxTAXF8IQRo6Xy+mg8wjXvDN1+IS+wfGQdKuH0HlpM
+ DffPLNaJUIXA4jk5yiyZIpZrjrKsgX6sd9iVkEUHmJsq2yUq9L0ZoTPdS+5pLLqYKJx0
+ bBcw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1738623984; x=1739228784;
+ h=content-transfer-encoding:mime-version:message-id:references
+ :in-reply-to:subject:cc:to:from:date:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=Oh+kcSLzxagOppa0kg/pXmqP4HkISRplGCNJdaZ+ec0=;
+ b=Ys7TGq47KK8Qe+5646LjDvldcJGGfCEbWMi3xBL+wuaAW6y+x2Y8T39qUt5tojL36B
+ Dsht700NlFdwRstsMQPb0ahduqKd6zwp8fXk7IsrVT1/9xJLnC/3acrbQ2t2QNY9mTYS
+ iI0r097SOpeNzfmgznv5aiDWeZjdsJ3U+gXdpm+g8MUBjDh5Tmo0/P9ZutExEt0vYKA+
+ rd4Jc4cS7/Yn8EYs+QlQaJWtrinaaAkqOsGpltViOGe9cIdbKhLlKW9Nz09UG3k9aDBO
+ 9Mg9kPeNwiYYtfK56Xl0TthVUq6ehBiyJavGhEdGP6Uz9whEj6KwOP8MwSusrW+V9v6L
+ cO3w==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCVuAaYQY0azBVU7Fn1zlEep3wT16LlIiD6t4gz1hYh7u4sIrjiOcmSloowlSHUk5wQ4DfhTzlyHiQ==@nongnu.org,
+ AJvYcCW8NgLW1MGGJX3L0cszYl4XPGFo0oZA2a4FievsJrl12BJVMmdAq1/LzXK/Rvy/Pb0AEPULy9Sc29iTyA==@nongnu.org
+X-Gm-Message-State: AOJu0YyBGTfCZ0erMUw6atE2BAVzmq9tGllwLksBgk3ynmsUIJSqWkc/
+ BJs0AjIrwMuW/ia1k2HV5RegoKTAoltDDMNLlNM5nBgVJ0VysrSQ
+X-Gm-Gg: ASbGnctXBa6tn9EqdSL7rqYkKL2IGH3f7KodlDYKYIXzetZCgOWRP9HY45p+wfn0Ro0
+ /aJRAsKhXhhcyWIExM/Lso4ourxPIybAsMmgA3pyjV0d6842z8Jg3UkpPO62uCKhb6Jk8EjAdlZ
+ o95bWyRoPS7hoHphNiFPOKmxY4G1Heqo4xGDojybZ8YLKvjtz2bR+RHGiHwXjZq9kUdEn8xzOjY
+ J/5/0waf6q6tgoekaHpYPIuBwU608tq/Gi2hBIkpdSfYviBU5sMnCLs9P0J69t1Dd5gEWDXbgXY
+ tKKZqBtjAtcCPXDtmJRKVPqRo3/OzFnhDl9fLN8hu5XTLSn9cIeS1xMoU1Q2u8xLe53SPiv63g=
+ =
+X-Google-Smtp-Source: AGHT+IGNwJC3JTfSBeYHxOG9GSvt8GmGnOpUeTDLKpug3IQkS+TsyDoUVrZgiskBoutXAaXCZZhl3A==
+X-Received: by 2002:a5d:5f50:0:b0:386:3918:16b1 with SMTP id
+ ffacd0b85a97d-38c520906e8mr21962545f8f.39.1738623984281; 
+ Mon, 03 Feb 2025 15:06:24 -0800 (PST)
+Received: from ?IPv6:::1?
+ (p200300faaf00430048cf2359cf0b0456.dip0.t-ipconnect.de.
+ [2003:fa:af00:4300:48cf:2359:cf0b:456])
+ by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-38c5c1cf560sm13791709f8f.89.2025.02.03.15.06.23
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Mon, 03 Feb 2025 15:06:23 -0800 (PST)
+Date: Mon, 03 Feb 2025 23:06:22 +0000
+From: Bernhard Beschow <shentey@gmail.com>
+To: Gustavo Romero <gustavo.romero@linaro.org>, qemu-devel@nongnu.org
+CC: Paolo Bonzini <pbonzini@redhat.com>,
+ =?ISO-8859-1?Q?Marc-Andr=E9_Lureau?= <marcandre.lureau@redhat.com>,
+ Alistair Francis <alistair@alistair23.me>,
+ Peter Maydell <peter.maydell@linaro.org>,
+ Jean-Christophe Dubois <jcd@tribudubois.net>, qemu-arm@nongnu.org,
+ Andrey Smirnov <andrew.smirnov@gmail.com>,
+ "Edgar E. Iglesias" <edgar.iglesias@gmail.com>
+Subject: =?US-ASCII?Q?Re=3A_=5BPATCH_21/21=5D_hw/gpio/imx=5Fgpio=3A_Do?=
+ =?US-ASCII?Q?n=27t_clear_input_GPIO_values_upon_reset?=
+In-Reply-To: <bd929bd7-88d7-4808-b801-26a2858ef620@linaro.org>
+References: <20250120203748.4687-1-shentey@gmail.com>
+ <20250120203748.4687-22-shentey@gmail.com>
+ <bd929bd7-88d7-4808-b801-26a2858ef620@linaro.org>
+Message-ID: <03E738D0-1978-4497-AA12-6C38E3112517@gmail.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v4 13/33] migration/multifd: Device state transfer support
- - receive side
-To: Peter Xu <peterx@redhat.com>
-Cc: Fabiano Rosas <farosas@suse.de>,
- Alex Williamson <alex.williamson@redhat.com>,
- =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>,
- Eric Blake <eblake@redhat.com>, Markus Armbruster <armbru@redhat.com>,
- =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
- Avihai Horon <avihaih@nvidia.com>, Joao Martins <joao.m.martins@oracle.com>,
- qemu-devel@nongnu.org
-References: <cover.1738171076.git.maciej.szmigiero@oracle.com>
- <654768fd717b0def70906bf7adfd6739cfd2ecf3.1738171076.git.maciej.szmigiero@oracle.com>
- <Z6E03MMQqTDNFsnX@x1.local>
-Content-Language: en-US, pl-PL
-From: "Maciej S. Szmigiero" <mail@maciej.szmigiero.name>
-Autocrypt: addr=mail@maciej.szmigiero.name; keydata=
- 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
-In-Reply-To: <Z6E03MMQqTDNFsnX@x1.local>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=145.239.82.108;
- envelope-from=mhej@vps-ovh.mhejs.net; helo=vps-ovh.mhejs.net
-X-Spam_score_int: -17
-X-Spam_score: -1.8
-X-Spam_bar: -
-X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9,
- HEADER_FROM_DIFFERENT_DOMAINS=0.068, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_PASS=-0.001,
+Content-Type: text/plain;
+ charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:20::436;
+ envelope-from=shentey@gmail.com; helo=mail-wr1-x436.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -111,51 +112,50 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 3.02.2025 22:27, Peter Xu wrote:
-> On Thu, Jan 30, 2025 at 11:08:34AM +0100, Maciej S. Szmigiero wrote:
->> From: "Maciej S. Szmigiero" <maciej.szmigiero@oracle.com>
->>
->> Add a basic support for receiving device state via multifd channels -
->> channels that are shared with RAM transfers.
->>
->> Depending whether MULTIFD_FLAG_DEVICE_STATE flag is present or not in the
->> packet header either device state (MultiFDPacketDeviceState_t) or RAM
->> data (existing MultiFDPacket_t) is read.
->>
->> The received device state data is provided to
->> qemu_loadvm_load_state_buffer() function for processing in the
->> device's load_state_buffer handler.
->>
->> Signed-off-by: Maciej S. Szmigiero <maciej.szmigiero@oracle.com>
-> 
-> I think I acked this one.  You could keep my R-b if...
-> 
-> [...]
-> 
->> diff --git a/migration/multifd.h b/migration/multifd.h
->> index 9e4baa066312..abf3acdcee40 100644
->> --- a/migration/multifd.h
->> +++ b/migration/multifd.h
->> @@ -62,6 +62,12 @@ MultiFDRecvData *multifd_get_recv_data(void);
->>   #define MULTIFD_FLAG_UADK (8 << 1)
->>   #define MULTIFD_FLAG_QATZIP (16 << 1)
->>   
->> +/*
->> + * If set it means that this packet contains device state
->> + * (MultiFDPacketDeviceState_t), not RAM data (MultiFDPacket_t).
->> + */
->> +#define MULTIFD_FLAG_DEVICE_STATE (1 << 6)
-> 
-> ... if this won't conflict with MULTIFD_FLAG_QATZIP.
 
-Hmm, isn't (16 << 1) = 32 while (1 << 6) = 64?
-  
-> I think we should stick with one way to write it, then when rebase you can
-> see such conflicts - either your patch uses 32 << 1, or perhaps we should
-> start to switch to BIT() for all above instead..
-> 
 
-Thanks,
-Maciej
+Am 28=2E Januar 2025 14:33:27 UTC schrieb Gustavo Romero <gustavo=2Eromero=
+@linaro=2Eorg>:
+>Hi,
+>
+>On 1/20/25 17:37, Bernhard Beschow wrote:
+>> Input GPIO values such as a present SD card may get notified before the=
+ GPIO
+>> controller itself gets reset=2E Claring the input values thus loses dat=
+a=2E Assuming
+>
+>                                ^- nit: Clearing
+>
+>
 
+Peter asked for a three-way reset in inbound devices while keeping the log=
+ic here as is=2E I'd drop this patch then=2E
+
+Best regards,
+Bernhard
+
+>Cheers,
+>Gustavo
+>
+>> that input GPIO events are only fired when the state changes, the input=
+ values
+>> shouldn't be reset=2E
+>>=20
+>> Signed-off-by: Bernhard Beschow <shentey@gmail=2Ecom>
+>> ---
+>>   hw/gpio/imx_gpio=2Ec | 1 -
+>>   1 file changed, 1 deletion(-)
+>>=20
+>> diff --git a/hw/gpio/imx_gpio=2Ec b/hw/gpio/imx_gpio=2Ec
+>> index 549a281ed7=2E=2E25546221e0 100644
+>> --- a/hw/gpio/imx_gpio=2Ec
+>> +++ b/hw/gpio/imx_gpio=2Ec
+>> @@ -298,7 +298,6 @@ static void imx_gpio_reset(DeviceState *dev)
+>>         s->dr       =3D 0;
+>>       s->gdir     =3D 0;
+>> -    s->psr      =3D 0;
+>>       s->icr      =3D 0;
+>>       s->imr      =3D 0;
+>>       s->isr      =3D 0;
+>
 
