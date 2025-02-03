@@ -4,127 +4,69 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id AA011C02192
-	for <qemu-devel@archiver.kernel.org>; Mon,  3 Feb 2025 12:03:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B6EDBC02192
+	for <qemu-devel@archiver.kernel.org>; Mon,  3 Feb 2025 12:05:33 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tevA8-00036e-GS; Mon, 03 Feb 2025 07:02:48 -0500
+	id 1tevCV-0003tY-94; Mon, 03 Feb 2025 07:05:15 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1tevA7-00036I-7v
- for qemu-devel@nongnu.org; Mon, 03 Feb 2025 07:02:47 -0500
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1tevCR-0003pq-08
+ for qemu-devel@nongnu.org; Mon, 03 Feb 2025 07:05:12 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1tevA5-000186-OU
- for qemu-devel@nongnu.org; Mon, 03 Feb 2025 07:02:46 -0500
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1tevCO-0001SH-Ev
+ for qemu-devel@nongnu.org; Mon, 03 Feb 2025 07:05:09 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1738584163;
+ s=mimecast20190719; t=1738584305;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=qVyoyKflWLfh67/Td8mQTMGptH17tmuBSPnE2dyo7II=;
- b=ZFPLZ/917CLHhBEXPz3PSUlqmSJspHzIyOOBuJsAWkt/bzhG3m7SFNHVpC6sOotnob3ujH
- qhaNtm+4GKOk9KbJn81ZvRNFqWVeMq66YFqTHQmZ2Z/ijU/mOeTTLZb47g1TETeQjrOZtL
- MEIeKF2eNSOrQT4M93HKife0l6Rqj9Y=
-Received: from mail-wr1-f72.google.com (mail-wr1-f72.google.com
- [209.85.221.72]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-205-FEXcLHBGNfu7tcXy3XQ4UQ-1; Mon, 03 Feb 2025 07:02:42 -0500
-X-MC-Unique: FEXcLHBGNfu7tcXy3XQ4UQ-1
-X-Mimecast-MFC-AGG-ID: FEXcLHBGNfu7tcXy3XQ4UQ
-Received: by mail-wr1-f72.google.com with SMTP id
- ffacd0b85a97d-38629a685fdso1779045f8f.2
- for <qemu-devel@nongnu.org>; Mon, 03 Feb 2025 04:02:41 -0800 (PST)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1738584161; x=1739188961;
- h=content-transfer-encoding:in-reply-to:autocrypt:content-language
- :from:references:cc:to:subject:user-agent:mime-version:date
- :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=qVyoyKflWLfh67/Td8mQTMGptH17tmuBSPnE2dyo7II=;
- b=ui2XpVNJJ4J28qQf8R8chjR5ekskqKOkUbAOHglXgQ01kKuZ8U++Ee2sOsPqxrkYwf
- LJkAtURFA1Fup6b8SW8kh9MovFuqoVJU+OLBMYmK/LgPHjsUbTOxYQNyxZ2ywWUNRC5/
- F5EBPdLZKUVPi3rOHLOciwZwprqXqDZVtOrWuDcFy/DCGQCn/nS9eGGMrsISJp4NVotf
- 38wHhuuN36SBqJU4H3hDwvkFL1pXi1VIP56JVvX58Y7mcTeT8YDsyI8itVxqwSOT6hty
- +LCRKuzK0HANKCDUJV4A76O3gGx+bN7kAZjfJLP0lVIzelfdExaw4nUon8Ts28rCig6J
- kp4g==
-X-Gm-Message-State: AOJu0YwvhWHDdOLrTU8Nha8ttdhfZIMCzZ+J+Er9G9bKmS0L3zVvtplR
- NyeXqPxxUvgTsczOLvKpVDQkgpNmxFvo6MZtRGLbty++Gm7uT66bhngO0Hkq3WhYZBK10GhbTh8
- KGPIkoX3lc7Kbc5O0OX7mDZtP3yi2Onb0DdBk3kbdpQma1r5wYA2i
-X-Gm-Gg: ASbGncvL/86i+LYkqLx50Kw4IKiOYLOf69eiBjQx6EGqcZKX/9bi6aXNPbg6kTrQwTj
- XTBO7vXblZN8usuySsjFLRDrn/2pCr4pGOkkTIdrnSzbgAIrYV1AK3NXI74cArPMaYWmHZ6RAzH
- gqzJLutHVtC1f7EcXz7gbxN6PbMQXSgIK91fWTujeov6HFthQhuNQreqhaUW0TvKBiH8SZIAANL
- xLbIZwke03dP7w8/L1kx0tEzRHbacf2meslarLWFIfn+AhaZTe6oK3Vt/EXHl5o1RUJ3W4wxhdG
- oSK5RQ==
-X-Received: by 2002:a5d:64ab:0:b0:385:f7a3:fea6 with SMTP id
- ffacd0b85a97d-38c5195f6c9mr18782133f8f.13.1738584160943; 
- Mon, 03 Feb 2025 04:02:40 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IES/YbunIhrEZ5GhJM1YKi6yFGzyij85o7ZkAM5TJHxQbjWdEWKoAEduKL5NU8w1EkbdtJ6iA==
-X-Received: by 2002:a5d:64ab:0:b0:385:f7a3:fea6 with SMTP id
- ffacd0b85a97d-38c5195f6c9mr18782100f8f.13.1738584160618; 
- Mon, 03 Feb 2025 04:02:40 -0800 (PST)
-Received: from [192.168.10.3] ([151.62.97.55])
- by smtp.googlemail.com with ESMTPSA id
- ffacd0b85a97d-38c5c102bc0sm12727276f8f.35.2025.02.03.04.02.39
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 03 Feb 2025 04:02:40 -0800 (PST)
-Message-ID: <a1aceae7-4ab9-490e-897f-8a14992c7341@redhat.com>
-Date: Mon, 3 Feb 2025 13:02:38 +0100
+ in-reply-to:in-reply-to:references:references;
+ bh=ujcnWXfy7t2Bna25z6hz+ytQF0tlWkyCdpuMdrjTMPg=;
+ b=Ef2hlt7TSkD7yFfo81o7oB3pVaerJxEi9/Vy1+S88wGp1rz3i8Nu8YK0F+mgfBQCmBsOJW
+ +ssYhP5BcOvr+5d3Mehkhb4UZFrMUHf2WFc0LC+/0yIw9Ezaj0iKzLdG2up88c5vwbSRna
+ XmQGxkNTVGCYrzeAxnS2gRDDab1W5+c=
+Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-395-9CJeL8mPNhS4wSknhNT3Sg-1; Mon,
+ 03 Feb 2025 07:04:59 -0500
+X-MC-Unique: 9CJeL8mPNhS4wSknhNT3Sg-1
+X-Mimecast-MFC-AGG-ID: 9CJeL8mPNhS4wSknhNT3Sg
+Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id C7F1A195608F; Mon,  3 Feb 2025 12:04:57 +0000 (UTC)
+Received: from blackfin.pond.sub.org (unknown [10.39.192.40])
+ by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 696E718008C0; Mon,  3 Feb 2025 12:04:57 +0000 (UTC)
+Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
+ id 49B2B21E6A28; Mon, 03 Feb 2025 13:04:55 +0100 (CET)
+From: Markus Armbruster <armbru@redhat.com>
+To: Daniel P. =?utf-8?Q?Berrang=C3=A9?= <berrange@redhat.com>
+Cc: qemu-devel@nongnu.org,  Michael Roth <michael.roth@amd.com>,  Paolo
+ Bonzini <pbonzini@redhat.com>,  =?utf-8?Q?Marc-Andr=C3=A9?= Lureau
+ <marcandre.lureau@redhat.com>,  Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?=
+ <philmd@linaro.org>
+Subject: Re: [PATCH v3 4/4] qapi: expose all schema features to code
+In-Reply-To: <20241212110616.3147676-5-berrange@redhat.com> ("Daniel
+ P. =?utf-8?Q?Berrang=C3=A9=22's?= message of "Thu, 12 Dec 2024 11:06:16
+ +0000")
+References: <20241212110616.3147676-1-berrange@redhat.com>
+ <20241212110616.3147676-5-berrange@redhat.com>
+Date: Mon, 03 Feb 2025 13:04:55 +0100
+Message-ID: <87y0yncjyw.fsf@pond.sub.org>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 0/2] target/i386: Fix 0 * Inf + QNaN regression
-To: Peter Maydell <peter.maydell@linaro.org>
-Cc: qemu-devel@nongnu.org, qemu-stable@nongnu.org,
- Richard Henderson <richard.henderson@linaro.org>,
- =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
-References: <20250116112536.4117889-1-peter.maydell@linaro.org>
- <20250124172224.815473-1-pbonzini@redhat.com>
- <CAFEAcA-191pk0zeUP5-=Z6JFJitPzw8cXwcVerYLNFrLGRQa0g@mail.gmail.com>
-From: Paolo Bonzini <pbonzini@redhat.com>
-Content-Language: en-US
-Autocrypt: addr=pbonzini@redhat.com; keydata=
- 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
-In-Reply-To: <CAFEAcA-191pk0zeUP5-=Z6JFJitPzw8cXwcVerYLNFrLGRQa0g@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=pbonzini@redhat.com;
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=armbru@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
@@ -149,16 +91,73 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 2/3/25 12:05, Peter Maydell wrote:
-> On Fri, 24 Jan 2025 at 17:22, Paolo Bonzini <pbonzini@redhat.com> wrote:
->>
->> Queued, thanks.
-> 
-> Thanks; do you plan to send a pullreq with these in soon?
-> I ask because the Arm FEAT_AFP set is now ready to land
-> and it has a dependency on these.
-I do but if you want to send it yourself, feel free to include them.
+Daniel P. Berrang=C3=A9 <berrange@redhat.com> writes:
 
-Paolo
+> This replaces use of the constants from the QapiSpecialFeatures
+> enum, with constants from the auto-generate QapiFeatures enum
+> in qapi-features.h
+>
+> The 'deprecated' and 'unstable' features still have a little bit of
+> special handling, being force defined to be the 1st + 2nd features
+> in the enum, regardless of whether they're used in the schema. This
+> retains compatibility with common code that references the features
+> via the QapiSpecialFeatures constants.
+>
+> Signed-off-by: Daniel P. Berrang=C3=A9 <berrange@redhat.com>
+
+[...]
+
+> diff --git a/scripts/qapi/schema.py b/scripts/qapi/schema.py
+> index e97c978d38..39c91af245 100644
+> --- a/scripts/qapi/schema.py
+> +++ b/scripts/qapi/schema.py
+> @@ -933,8 +933,11 @@ def connect_doc(self, doc: Optional[QAPIDoc]) -> Non=
+e:
+>  class QAPISchemaFeature(QAPISchemaMember):
+>      role =3D 'feature'
+>=20=20
+> +    # Features which are standardized across all schemas
+> +    SPECIAL_NAMES =3D ['deprecated', 'unstable']
+> +
+>      def is_special(self) -> bool:
+> -        return self.name in ('deprecated', 'unstable')
+> +        return self.name in QAPISchemaFeature.SPECIAL_NAMES
+>=20=20
+>=20=20
+>  class QAPISchemaObjectTypeMember(QAPISchemaMember):
+> @@ -1138,6 +1141,16 @@ def __init__(self, fname: str):
+>          self._entity_list: List[QAPISchemaEntity] =3D []
+>          self._entity_dict: Dict[str, QAPISchemaDefinition] =3D {}
+>          self._module_dict: Dict[str, QAPISchemaModule] =3D OrderedDict()
+> +        # NB, values in the dict will identify the first encountered
+> +        #     usage of a named feature only
+
+Unusual indentation within the comment.  Can tidy up in my tree.
+
+> +        self._feature_dict: Dict[str, QAPISchemaFeature] =3D OrderedDict=
+()
+> +
+> +        # All schemas get the names defined in the QapiSpecialFeature en=
+um.
+> +        # Use of OrderedDict ensures they are emitted first when generat=
+ing
+> +        # the enum definition, thus matching QapiSpecialFeature.
+
+Actually, even plain dict ensures that since 3.6 de facto, and since 3.7
+de jure.  OrderedDict additionally permits changing the order, but we
+don't use that.  I have a patch to get rid of OrderedDict as part of a
+not quite finishes series of simplifications for Python 3.8.
+
+Perhaps the easiest way forward is not to worry about this here and now,
+and instead clean it up with along with the other uses of OrderedDict.
+
+> +        for f in QAPISchemaFeature.SPECIAL_NAMES:
+> +            self._feature_dict[f] =3D QAPISchemaFeature(f, None)
+> +
+>          self._schema_dir =3D os.path.dirname(fname)
+>          self._make_module(QAPISchemaModule.BUILTIN_MODULE_NAME)
+>          self._make_module(fname)
+
+[...]
 
 
