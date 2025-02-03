@@ -4,75 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 65806C0218F
-	for <qemu-devel@archiver.kernel.org>; Mon,  3 Feb 2025 00:53:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 74907C0218F
+	for <qemu-devel@archiver.kernel.org>; Mon,  3 Feb 2025 01:32:20 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tekhl-0002iD-7z; Sun, 02 Feb 2025 19:52:49 -0500
+	id 1telJ7-0007SY-Rb; Sun, 02 Feb 2025 20:31:26 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <dongli.zhang@oracle.com>)
- id 1tekhj-0002i4-NI
- for qemu-devel@nongnu.org; Sun, 02 Feb 2025 19:52:47 -0500
-Received: from mx0a-00069f02.pphosted.com ([205.220.165.32])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <dongli.zhang@oracle.com>)
- id 1tekhh-0002Ue-Tj
- for qemu-devel@nongnu.org; Sun, 02 Feb 2025 19:52:47 -0500
-Received: from pps.filterd (m0246617.ppops.net [127.0.0.1])
- by mx0b-00069f02.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 51300nEd026153;
- Mon, 3 Feb 2025 00:52:18 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=oracle.com; h=cc
- :content-transfer-encoding:date:from:message-id:mime-version
- :subject:to; s=corp-2023-11-20; bh=FVOnFbyn86J07oR+EqLLtUbDgPJFp
- jMVmt43pubLEaQ=; b=MtguOyDS8NNpa1NrNCD1iiPI3tJWYSrXFcCsQm7tS+yNa
- v6JCT13PSOPrL9Z/ioKRngWRj8A57+Ed8kBr4/1fkC+3bGlSt7XVi4M2Bj/4SmoO
- B7j0r9osnQFbrFigqMnd/3pvo7v+HtuOXLKj48BqZ7UfKk0Jjq470OZdtmbKYpkp
- 8YND9haPb24bU5VcSGfI0/zH4XoAYYxqJhTS4yzOkBTnZ6dkNgw5gaPdwNtHwcsW
- v3wzNcghlyKoxSpwNfyLfn4S17AVm8JJ5IyJljidhi6ZlOIwlsGz37hFDrECUdAs
- fcSNtjVnef0oLvPu2ryhb6/JSxikKa89a0X9JWv5g==
-Received: from phxpaimrmta02.imrmtpd1.prodappphxaev1.oraclevcn.com
- (phxpaimrmta02.appoci.oracle.com [147.154.114.232])
- by mx0b-00069f02.pphosted.com (PPS) with ESMTPS id 44hhsv1c5p-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Mon, 03 Feb 2025 00:52:18 +0000 (GMT)
-Received: from pps.filterd
- (phxpaimrmta02.imrmtpd1.prodappphxaev1.oraclevcn.com [127.0.0.1])
- by phxpaimrmta02.imrmtpd1.prodappphxaev1.oraclevcn.com (8.18.1.2/8.18.1.2)
- with ESMTP id 5130KEI1037627; Mon, 3 Feb 2025 00:52:17 GMT
-Received: from localhost.localdomain (ca-dev80.us.oracle.com [10.211.9.80])
- by phxpaimrmta02.imrmtpd1.prodappphxaev1.oraclevcn.com (PPS) with ESMTP id
- 44j8gf251h-1; Mon, 03 Feb 2025 00:52:17 +0000
-From: Dongli Zhang <dongli.zhang@oracle.com>
-To: qemu-devel@nongnu.org
-Cc: pbonzini@redhat.com, fam@euphon.net, mst@redhat.com, sgarzare@redhat.com
-Subject: [PATCH 1/1] vhost-scsi: support VIRTIO_SCSI_F_HOTPLUG
-Date: Sun,  2 Feb 2025 16:52:15 -0800
-Message-ID: <20250203005215.1502-1-dongli.zhang@oracle.com>
-X-Mailer: git-send-email 2.43.5
+ (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
+ id 1telJ0-0007Pi-MD; Sun, 02 Feb 2025 20:31:20 -0500
+Received: from mail-vk1-xa34.google.com ([2607:f8b0:4864:20::a34])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
+ id 1telIy-0006D2-Oe; Sun, 02 Feb 2025 20:31:18 -0500
+Received: by mail-vk1-xa34.google.com with SMTP id
+ 71dfb90a1353d-51c7b5f3b8bso1213263e0c.2; 
+ Sun, 02 Feb 2025 17:31:14 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20230601; t=1738546274; x=1739151074; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=SXCJCrSXUkUTp1DmIu0lJK0yfYrll3qT0ys8xvAfP70=;
+ b=iuXrpVXz+WVknmS33U+y1Sb/vYTuK/ptIK+tW7TuVDgmQfA51xPUT6seggIC9AT5wV
+ obnr4wPPowTIRrm90/9SpZedyK3cOUVK3/DCGt5Jwtp8tLAPprCGzcqOou9P2jXs1XIa
+ owxpJKHsxEHvqsdY3P71M2kSLir0XFHshsBzkXZhh8RoEIhVez1gB5Uif5Y2bMAlruW/
+ evYutgRBWkASdWsvjdM94zJPEQk9vpqlvPAchYyiu7D5i6h8Fm+MxlVjXfNOyu2C7j6U
+ 6HeX20z5CpdjXgTwp46q34q5d5Lp8Vy6NfxVSQRaO32HfQ9NLO1K+Rdh51OLAm3tcuGr
+ ojuA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1738546274; x=1739151074;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=SXCJCrSXUkUTp1DmIu0lJK0yfYrll3qT0ys8xvAfP70=;
+ b=of34nSmU3ckZR0Hutr8XHhpVJA9JJoxU8mVZpBqPakKjMalE5Ovieo3ukQhh0HUDsG
+ ipL5SDp3KqDSyss/zBGoNdoCLxSzhOMBAgdef1Me2UMqCJftQGs0rmoEaCu/ik0n7Yl4
+ koHmgGEkFwT5SEm8qoHSqYGz35U2kzLy+zDCR4Y61eKwQbhISxzr0ZhsGc71TgQum7Lf
+ kMM6bvt/nU3AtZZgtvPFtH2kFeDe6PMR4r8SO8YeHA6DqDiV11sjtvY1+C0a5i5VRXdo
+ PiqwgEC9fq34Pjepy2TOnyGaIlzQfc7ON1EBv8usVpbYXiztRdlf5Q2Va6pVJKy9pASW
+ WG1Q==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCX3Tmnuo5MOeZwKCKj10rzvV7zQOSy9rW0b3n/l+Sb2K32jDos3/bMliiKM+2d0+UtVFUS9CmcKiIVW@nongnu.org
+X-Gm-Message-State: AOJu0YxrH0FXiCruBxpdirjVQhm10NKaBvA58gCNbQgb+DUQ7BG0AA4Z
+ dUPoEBeUTJMYTnm95eUW7iBO0BeWXdJlZ6b1XP1IAlcMrjgXbnouTtm2ghxvKMrlvH6omoYW+KJ
+ 8CmTcbj4h30lI1PQpLBegAV5PWmk=
+X-Gm-Gg: ASbGncvpxSIp9M9WLNU3QtBjnogUyUAQrA3jLGP6as649URm/Q8/8/rj3SSud5ifZbE
+ nNi8QpBthL//amC4///kQ9OWJKCnOJCXEU56ygbpsSdT9wMN8leMSOz0h21zZsOXSfX87g+bzpL
+ kWXXHRwHIcLDrKCTifa8XaDFia6A==
+X-Google-Smtp-Source: AGHT+IGuU0+8IQPOweAi1qVqQshNtv+eDZVMGGXd5C6rLZXaDl8oxrz5m7kWMU4w6KwonO3n865JeTNchK2oh88SIc0=
+X-Received: by 2002:a05:6102:2c0f:b0:4b9:c326:f998 with SMTP id
+ ada2fe7eead31-4b9c327004fmr8828119137.24.1738546273638; Sun, 02 Feb 2025
+ 17:31:13 -0800 (PST)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1057,Hydra:6.0.680,FMLib:17.12.68.34
- definitions=2025-02-02_11,2025-01-31_02,2024-11-22_01
-X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 bulkscore=0
- malwarescore=0 phishscore=0
- spamscore=0 mlxscore=0 mlxlogscore=999 suspectscore=0 adultscore=0
- classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2501170000
- definitions=main-2502030005
-X-Proofpoint-GUID: FlUdDIZXJeNQa6zI7cbtDBxOBiDnh-RP
-X-Proofpoint-ORIG-GUID: FlUdDIZXJeNQa6zI7cbtDBxOBiDnh-RP
-Received-SPF: pass client-ip=205.220.165.32;
- envelope-from=dongli.zhang@oracle.com; helo=mx0a-00069f02.pphosted.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
-X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_MED=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H2=-0.01,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+References: <20250128060546.1374394-1-alistair.francis@wdc.com>
+In-Reply-To: <20250128060546.1374394-1-alistair.francis@wdc.com>
+From: Alistair Francis <alistair23@gmail.com>
+Date: Mon, 3 Feb 2025 11:30:47 +1000
+X-Gm-Features: AWEUYZkbWOMIJBcsNqGN-J9KkiS-Fzzn7NKRk1p8arRBpLs6JQ5hOqnY0WRfxSc
+Message-ID: <CAKmqyKNyjq=SdHAefyzVP1wj=o5-FBOLf61MAe0KtbsMO6K0cA@mail.gmail.com>
+Subject: Re: [PATCH] MAINTAINERS: Remove Bin Meng from RISC-V maintainers
+To: palmer@dabbelt.com, liwei1518@gmail.com, dbarboza@ventanamicro.com, 
+ zhiwei_liu@linux.alibaba.com, qemu-riscv@nongnu.org, philmd@linaro.org
+Cc: qemu-devel@nongnu.org, Alistair Francis <alistair.francis@wdc.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2607:f8b0:4864:20::a34;
+ envelope-from=alistair23@gmail.com; helo=mail-vk1-xa34.google.com
+X-Spam_score_int: -17
+X-Spam_score: -1.8
+X-Spam_bar: -
+X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -88,51 +95,68 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-So far there isn't way to test host kernel vhost-scsi event queue path,
-because VIRTIO_SCSI_F_HOTPLUG isn't supported by QEMU.
+On Tue, Jan 28, 2025 at 4:05=E2=80=AFPM Alistair Francis <alistair23@gmail.=
+com> wrote:
+>
+> Bin Meng has been a long time contributor and maintainer for QEMU RISC-V
+> and has been very beneficial to the RISC-V ecosystem.
+>
+> Unfortunately his email has started to bounce so this patch is removing
+> them from MAINTAINERS. If in the future Bin Meng wants to return we will
+> happily re-add them.
+>
+> Note that I'm not removing Bin Meng as a "SD (Secure Card)" maintainer.
+>
+> Signed-off-by: Alistair Francis <alistair.francis@wdc.com>
 
-virtio-scsi.c and vhost-user-scsi.c already support VIRTIO_SCSI_F_HOTPLUG
-as property "hotplug".
+Thanks!
 
-Add support to vhost-scsi.c to help evaluate and test event queue.
+Applied to riscv-to-apply.next
 
-To test the feature:
+Alistair
 
-1. Create vhost-scsi target with targetcli.
-
-targetcli /backstores/fileio create name=storage file_or_dev=disk01.raw
-targetcli /vhost create naa.1123451234512345
-targetcli /vhost/naa.1123451234512345/tpg1/luns create /backstores/fileio/storage
-
-2. Create QEMU instance with vhost-scsi.
-
--device vhost-scsi-pci,wwpn=naa.1123451234512345,hotplug=true
-
-3. Once guest bootup, hotplug a new LUN from host.
-
-targetcli /backstores/fileio create name=storage02 file_or_dev=disk02.raw
-targetcli /vhost/naa.1123451234512345/tpg1/luns create /backstores/fileio/storage02
-
-Signed-off-by: Dongli Zhang <dongli.zhang@oracle.com>
----
- hw/scsi/vhost-scsi.c | 3 +++
- 1 file changed, 3 insertions(+)
-
-diff --git a/hw/scsi/vhost-scsi.c b/hw/scsi/vhost-scsi.c
-index 8039d13fd9..d3a260f6a7 100644
---- a/hw/scsi/vhost-scsi.c
-+++ b/hw/scsi/vhost-scsi.c
-@@ -359,6 +359,9 @@ static const Property vhost_scsi_properties[] = {
-     DEFINE_PROP_BIT64("t10_pi", VHostSCSICommon, host_features,
-                                                  VIRTIO_SCSI_F_T10_PI,
-                                                  false),
-+    DEFINE_PROP_BIT64("hotplug", VHostSCSICommon, host_features,
-+                                                  VIRTIO_SCSI_F_HOTPLUG,
-+                                                  false),
-     DEFINE_PROP_BOOL("migratable", VHostSCSICommon, migratable, false),
-     DEFINE_PROP_BOOL("worker_per_virtqueue", VirtIOSCSICommon,
-                      conf.worker_per_virtqueue, false),
--- 
-2.39.3
-
+> ---
+>  MAINTAINERS | 5 +----
+>  1 file changed, 1 insertion(+), 4 deletions(-)
+>
+> diff --git a/MAINTAINERS b/MAINTAINERS
+> index 7be3d8f431..a0e305aa99 100644
+> --- a/MAINTAINERS
+> +++ b/MAINTAINERS
+> @@ -318,7 +318,6 @@ F: tests/functional/test_ppc_74xx.py
+>  RISC-V TCG CPUs
+>  M: Palmer Dabbelt <palmer@dabbelt.com>
+>  M: Alistair Francis <alistair.francis@wdc.com>
+> -M: Bin Meng <bmeng.cn@gmail.com>
+>  R: Weiwei Li <liwei1518@gmail.com>
+>  R: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
+>  R: Liu Zhiwei <zhiwei_liu@linux.alibaba.com>
+> @@ -1599,7 +1598,6 @@ F: include/hw/riscv/opentitan.h
+>  F: include/hw/*/ibex_*.h
+>
+>  Microchip PolarFire SoC Icicle Kit
+> -M: Bin Meng <bmeng.cn@gmail.com>
+>  L: qemu-riscv@nongnu.org
+>  S: Supported
+>  F: docs/system/riscv/microchip-icicle-kit.rst
+> @@ -1626,7 +1624,6 @@ F: include/hw/char/shakti_uart.h
+>
+>  SiFive Machines
+>  M: Alistair Francis <Alistair.Francis@wdc.com>
+> -M: Bin Meng <bmeng.cn@gmail.com>
+>  M: Palmer Dabbelt <palmer@dabbelt.com>
+>  L: qemu-riscv@nongnu.org
+>  S: Supported
+> @@ -3721,7 +3718,7 @@ S: Orphan
+>  F: hw/i386/amd_iommu.?
+>
+>  OpenSBI Firmware
+> -M: Bin Meng <bmeng.cn@gmail.com>
+> +L: qemu-riscv@nongnu.org
+>  S: Supported
+>  F: pc-bios/opensbi-*
+>  F: .gitlab-ci.d/opensbi.yml
+> --
+> 2.48.1
+>
 
