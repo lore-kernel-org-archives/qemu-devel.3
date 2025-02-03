@@ -4,103 +4,93 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1234DC02192
-	for <qemu-devel@archiver.kernel.org>; Mon,  3 Feb 2025 16:49:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 81DA0C02192
+	for <qemu-devel@archiver.kernel.org>; Mon,  3 Feb 2025 16:50:08 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tezdJ-0001W0-L5; Mon, 03 Feb 2025 11:49:13 -0500
+	id 1tezdn-0001lB-FX; Mon, 03 Feb 2025 11:49:44 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1tezdI-0001VO-Jp
- for qemu-devel@nongnu.org; Mon, 03 Feb 2025 11:49:12 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1tezdG-0008NT-Ti
- for qemu-devel@nongnu.org; Mon, 03 Feb 2025 11:49:12 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1738601348;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=e4VDrKehuLAGI51RmXWgnH+0qzccI0Yp1LPUQsIIE/g=;
- b=NaeS6KYfj3fAey0kSxAK+qpLlqQB8OH5tzzhZNmoBNnipgVoqhL7pDrUZCMYgqkqRqXLzP
- Ie5DC5GSlZT/7zcAppdm6im6QMOJbO9aAbeJkMCRmi4o8rfqAHSCs9XVdaOUkh96MNRHxF
- 8LtPsbD8C7YR/A2Zbr6huEoe3w+r3Ec=
-Received: from mail-qk1-f197.google.com (mail-qk1-f197.google.com
- [209.85.222.197]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-526-gkB3OKHTPFq-pxR06IE92Q-1; Mon, 03 Feb 2025 11:49:03 -0500
-X-MC-Unique: gkB3OKHTPFq-pxR06IE92Q-1
-X-Mimecast-MFC-AGG-ID: gkB3OKHTPFq-pxR06IE92Q
-Received: by mail-qk1-f197.google.com with SMTP id
- af79cd13be357-7b7477f005eso1057299485a.0
- for <qemu-devel@nongnu.org>; Mon, 03 Feb 2025 08:49:03 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1tezdc-0001XW-2A
+ for qemu-devel@nongnu.org; Mon, 03 Feb 2025 11:49:36 -0500
+Received: from mail-pl1-x62f.google.com ([2607:f8b0:4864:20::62f])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1tezdZ-0008QR-Ti
+ for qemu-devel@nongnu.org; Mon, 03 Feb 2025 11:49:31 -0500
+Received: by mail-pl1-x62f.google.com with SMTP id
+ d9443c01a7336-21636268e43so103243575ad.2
+ for <qemu-devel@nongnu.org>; Mon, 03 Feb 2025 08:49:27 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1738601367; x=1739206167; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=MHV6LG/OUMsFlunW558ipXYcurIxuHGfH2zyN5HhCWU=;
+ b=PWqcdsm67tiaudCv64QzosJlh/eCokkyOQ3KQI5LBgxPCKSyXYbqYPLCF6NvQdP3y0
+ 9Gpfs7lsBQtUIwcEXfXnSkaOdRU3YGvS7lEpD3yqbnUgRFQtTrol3MDvB7WEBUv9hoOz
+ 2iD/11u/AyQuycz1ZfLZHlAZnXlvO2RdtvCqE4BJKzER0BrLjjFcRJUOHzC/wKMmR7TC
+ zSTitgJch/wADH5gEZKculiSY4O+uwf+npTfxAhG3WyBF9CM9cO399KlO4m7hGYCZWca
+ AEBPk5xGd2cDX+snM/j0tgToyuF/Ik2ARdagl2eSpFvwmi9kBRGBc3OX0AbB11ytyS+5
+ A/vA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1738601343; x=1739206143;
- h=in-reply-to:content-transfer-encoding:content-disposition
- :mime-version:references:message-id:subject:cc:to:from:date
+ d=1e100.net; s=20230601; t=1738601367; x=1739206167;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=e4VDrKehuLAGI51RmXWgnH+0qzccI0Yp1LPUQsIIE/g=;
- b=R9kYSQ5/tmh5PaPEjpu1T5vPsJo4uavvjCyGM12TqRcsj8Ba8xmcyaSuFMPns8ooRM
- A8w/H4OpIbowoIuxkd1QSJnetkyulU64k0SgvT5MyaH9Hi49SZ1vht4hz6wrIWczKhLE
- VVpybTQC6l3QeXx6gNBy5dUSTuTflqhfGO0tWZiFhbTD6UNJ6ZDnVfUpthvYwUzv/pBb
- igmSw4ZRJmDXqjmD8bJ26WYiB8YBcjYnYMbS7VyAGjD/XpfNmyIsxos0lzyqERpRcjhG
- kYaLvVWPoI/02mkbQwyXJPfZiarl2veNId6YafUV7aggA5MhWSs521TbGETQO1frW1mu
- Gruw==
-X-Gm-Message-State: AOJu0YyR+/Txg0T5Ee+mxm8zYZdrvHljvLifjughBqaTIdqxKv8PHmXh
- 8RYRrMlHBry58qNFnorTscpKBC/VMXfwBR1lsAGnMzbz3m9/MP5L1+VzwsjJwPNtkY+qiszSnT2
- OVe6NvDTIK9w2x9iZfHlS81tJmjZm7eEQzUnRxpKLnC0j7Lm+JjBF
-X-Gm-Gg: ASbGncupr/ii44mRFEZeWJeIxxEQ0FNYfplDIuHM2RqVkhd8jI14JHX2NalJI5gMBMi
- YnotL9YCUygv7U+DBnCu9rCpUZXyAnKko55VFEngJNqNnCHH49zujw6t+btnlVYk9ls+TsYQZxC
- 545k0CC64HFF++lsZZWN1iaY72jiyhq1klKoKeoB+fqpaTbUzHVLtYh3Yjo4/hhBofiIjuoA5hn
- Q3D83GWodTONjGkFH4krqkRQUO3q6FYVYPtRta60Wxr1tlI1y93HK3wkx/1BPzGoMn3Zavwq2mY
- JA1btKS3qmBVALwUwf0MOOknyy1+PF2KjDxEHN4po307ahvR
-X-Received: by 2002:a05:620a:258b:b0:7b6:dac1:cb73 with SMTP id
- af79cd13be357-7bffcda901cmr3555682885a.56.1738601343253; 
- Mon, 03 Feb 2025 08:49:03 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IHYF6qOEQc0EQFVu6XwmdZ+Ax5tss/o45FHYhuyp14IGLKD52QkWfr5F31hm1a1d4SWAU9kFg==
-X-Received: by 2002:a05:620a:258b:b0:7b6:dac1:cb73 with SMTP id
- af79cd13be357-7bffcda901cmr3555676185a.56.1738601342764; 
- Mon, 03 Feb 2025 08:49:02 -0800 (PST)
-Received: from x1.local (pool-99-254-114-190.cpe.net.cable.rogers.com.
- [99.254.114.190]) by smtp.gmail.com with ESMTPSA id
- af79cd13be357-7c00a8d02c9sm544826385a.48.2025.02.03.08.49.01
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 03 Feb 2025 08:49:01 -0800 (PST)
-Date: Mon, 3 Feb 2025 11:49:00 -0500
-From: Peter Xu <peterx@redhat.com>
-To: David Hildenbrand <david@redhat.com>
-Cc: qemu-devel@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>,
- Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Peter Maydell <peter.maydell@linaro.org>,
- Alex =?utf-8?Q?Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Alex Williamson <alex.williamson@redhat.com>,
- Eduardo Habkost <eduardo@habkost.net>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- Elena Ufimtseva <elena.ufimtseva@oracle.com>,
- Jagannathan Raman <jag.raman@oracle.com>,
- "Dr. David Alan Gilbert" <dave@treblig.org>, Stefan Zabka <git@zabka.it>
-Subject: Re: [PATCH v2 0/7] physmem: teach cpu_memory_rw_debug() to write to
- more memory regions
-Message-ID: <Z6DzfFvgXw9AQs8p@x1.local>
-References: <20250124154533.3534250-1-david@redhat.com>
+ bh=MHV6LG/OUMsFlunW558ipXYcurIxuHGfH2zyN5HhCWU=;
+ b=LaQZ+1A9ovjhHfsJY36Dlh9c4Ln7WgjcoBtmhjRvNbObz+cX46DNEGVX/M5psQ5I/B
+ jSddej8rYUaizx+TajBee8WSvE90zoW2xgC+WeAwevCvDoJwpOvL811c0EPm8L6R8EH5
+ 9UmuHfWFvyUBwNUceyhQJImfrQlLfGaX40ms4k9R2MSMTArSI8xK72yGsDoWv3iW9LSv
+ FuSge/klGOSWJST23QPYcuNZuvaPHdPsL9qNeeq4KFGQpcrFKD8/zpE72X1N9MjtMXby
+ e/oxhz00Y8FYEf1M886+hPN17QxeSJ6xftVYhEIc7/PCTRiHQ6juljBj1l+8hEalAQyh
+ YxXA==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCVmFXM8L+PGY08PAOTYW3kk4+SX0NiSd/x7M7iSbEo5r8a6OnP2zYeRLgmaf5hGbcaBzcO9F+ne8Lvo@nongnu.org
+X-Gm-Message-State: AOJu0YxG+tIy25ptxxcTBp4qo3Cio8gbNhGKJL1847bvClMNrHv6ELqK
+ eFsqvOFEDzYgLUewVKcqfg/SzDGDcAOJrrCAQvk7rSvzbA+68BNWZ4AmiAydFxc=
+X-Gm-Gg: ASbGncsvSqaB9/vdHVlZRX4Zm0P0rbC/1M3NFZzYUzP8Ku0VtIm9aLTUPPU578YAVhJ
+ jIX57FrIYD85ervV/kdsB1aNxmEI8f+a0M80DYpVTmWjKqBMs1+iPZEuJIf6uO5nKzh7r7r7nPo
+ PT8Skf4z6AMSHXhrRwQjwnArCaZB/b/Y4sOmZHZI4p1E8xVWP/De6nIrB86qXcxvPsrG7fEtK6T
+ o5McMVLIucYVaj22UC+neDQ6RrWuxTdm7hSZc6dB/Q8rZQgG0SDI3lmJbMTbApiGaaD1S36bSZH
+ HZMOWVql3JOyosgwRYv9lG79C8pDrA3ItxpzIBxeYJ4ggz3+quCVnqU=
+X-Google-Smtp-Source: AGHT+IFZLtbnFqon72r7F8YZQANlP8H/sF7FtzlEgkrZPmoyJH0o6hVXZO7x1aRCDIdb3mI1/RE1Xg==
+X-Received: by 2002:a17:903:24d:b0:21d:cd0c:a1ac with SMTP id
+ d9443c01a7336-21dd7c624e0mr348492845ad.17.1738601366594; 
+ Mon, 03 Feb 2025 08:49:26 -0800 (PST)
+Received: from [192.168.0.4] (71-212-39-66.tukw.qwest.net. [71.212.39.66])
+ by smtp.gmail.com with ESMTPSA id
+ d9443c01a7336-21de32ea80csm79483455ad.140.2025.02.03.08.49.25
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Mon, 03 Feb 2025 08:49:26 -0800 (PST)
+Message-ID: <54d4e11f-75ea-42d7-9d53-0c7d4eb4b239@linaro.org>
+Date: Mon, 3 Feb 2025 08:49:24 -0800
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 10/14] configure: Define TARGET_LONG_BITS in
+ configs/targets/*.mak
+To: Thomas Huth <thuth@redhat.com>, qemu-devel@nongnu.org
+Cc: pbonzini@redhat.com, mark.cave-ayland@ilande.co.uk, berrange@redhat.com,
+ philmd@linaro.org
+References: <20250203031821.741477-1-richard.henderson@linaro.org>
+ <20250203031821.741477-11-richard.henderson@linaro.org>
+ <47d703f2-bee2-4ee1-af13-624f6f0e7ee1@redhat.com>
+Content-Language: en-US
+From: Richard Henderson <richard.henderson@linaro.org>
+In-Reply-To: <47d703f2-bee2-4ee1-af13-624f6f0e7ee1@redhat.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <20250124154533.3534250-1-david@redhat.com>
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=peterx@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::62f;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x62f.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -116,63 +106,63 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, Jan 24, 2025 at 04:45:25PM +0100, David Hildenbrand wrote:
-> This is a follow-up to [1], implementing it by avoiding the use of
-> address_space_write_rom() in cpu_memory_rw_debug() completely, and
-> teaching address_space_write() about debug access instead, the can also
-> write to ROM.
+On 2/3/25 02:39, Thomas Huth wrote:
+> [...]> diff --git a/configs/targets/hppa-linux-user.mak b/configs/targets/hppa-linux-user.mak
+>> index 8e0a80492f..4295cf384e 100644
+>> --- a/configs/targets/hppa-linux-user.mak
+>> +++ b/configs/targets/hppa-linux-user.mak
+>> @@ -3,3 +3,5 @@ TARGET_ABI32=y
+>>   TARGET_SYSTBL_ABI=common,32
+>>   TARGET_SYSTBL=syscall.tbl
+>>   TARGET_BIG_ENDIAN=y
+>> +# Compromise to ease maintainence vs system mode
 > 
-> The goal is to let GDB via cpu_memory_rw_debug() to also properly write to
-> MMIO device regions, not just RAM/ROM.
-> 
-> It's worth noting that other users of address_space_write_rom() are
-> left unchanged. Maybe hw/core/loader.c and friends could now be converted
-> to to a debug access via address_space_write() instead?
-> 
-> Survives a basic gitlab CI build/check.
-> 
-> [1] https://lore.kernel.org/all/20241220195923.314208-1-git@zabka.it/
-> 
-> v1 -> v2:
-> * Split up "physmem: disallow direct access to RAM DEVICE in
->   address_space_write_rom()" into 4 patches
-> 
-> Cc: Paolo Bonzini <pbonzini@redhat.com>
-> Cc: Peter Xu <peterx@redhat.com>
-> Cc: Philippe Mathieu-Daudé <philmd@linaro.org>
-> Cc: Peter Maydell <peter.maydell@linaro.org>
-> Cc: Alex Bennée <alex.bennee@linaro.org>
-> Cc: Alex Williamson <alex.williamson@redhat.com>
-> Cc: Eduardo Habkost <eduardo@habkost.net>
-> Cc: Marcel Apfelbaum <marcel.apfelbaum@gmail.com>
-> Cc: Elena Ufimtseva <elena.ufimtseva@oracle.com>
-> Cc: Jagannathan Raman <jag.raman@oracle.com>
-> Cc: "Dr. David Alan Gilbert" <dave@treblig.org>
-> Cc: Stefan Zabka <git@zabka.it>
-> 
-> David Hildenbrand (7):
->   physmem: factor out memory_region_is_ram_device() check in
->     memory_access_is_direct()
->   physmem: factor out RAM/ROMD check in memory_access_is_direct()
->   physmem: factor out direct access check into
->     memory_region_supports_direct_access()
->   physmem: disallow direct access to RAM DEVICE in
->     address_space_write_rom()
+> s/maintainence/maintenance/
 
-IIUC the last patch will stop using this for debug path anyway, so I'm not
-sure whether this one is still needed.  The hope is it's only used to
-modify real ROMs?
+Oops.
 
->   memory: pass MemTxAttrs to memory_access_is_direct()
->   hmp: use cpu_get_phys_page_debug() in hmp_gva2gpa()
->   physmem: teach cpu_memory_rw_debug() to write to more memory regions
+> 
+>> diff --git a/configs/targets/mipsn32-linux-user.mak b/configs/targets/mipsn32-linux- 
+>> user.mak
+>> index 206095da64..39ae214633 100644
+>> --- a/configs/targets/mipsn32-linux-user.mak
+>> +++ b/configs/targets/mipsn32-linux-user.mak
+>> @@ -5,3 +5,4 @@ TARGET_BASE_ARCH=mips
+>>   TARGET_SYSTBL_ABI=n32
+>>   TARGET_SYSTBL=syscall_n32.tbl
+>>   TARGET_BIG_ENDIAN=y
+>> +TARGET_LONG_BITS=64
+> 
+> Why is this 64 ?
+> 
+>> diff --git a/configs/targets/mipsn32el-linux-user.mak b/configs/targets/mipsn32el-linux- 
+>> user.mak
+>> index ca2a3ed753..d9b61d6990 100644
+>> --- a/configs/targets/mipsn32el-linux-user.mak
+>> +++ b/configs/targets/mipsn32el-linux-user.mak
+>> @@ -4,3 +4,4 @@ TARGET_ABI32=y
+>>   TARGET_BASE_ARCH=mips
+>>   TARGET_SYSTBL_ABI=n32
+>>   TARGET_SYSTBL=syscall_n32.tbl
+>> +TARGET_LONG_BITS=64
+> 
+> dito?
+> 
+>> diff --git a/configs/targets/sparc32plus-linux-user.mak b/configs/targets/sparc32plus- 
+>> linux-user.mak
+>> index 6cc8fa516b..7a16934fd1 100644
+>> --- a/configs/targets/sparc32plus-linux-user.mak
+>> +++ b/configs/targets/sparc32plus-linux-user.mak
+>> @@ -5,3 +5,4 @@ TARGET_ABI_DIR=sparc
+>>   TARGET_SYSTBL_ABI=common,32
+>>   TARGET_SYSTBL=syscall.tbl
+>>   TARGET_BIG_ENDIAN=y
+>> +TARGET_LONG_BITS=64
+> 
+> Same question here: Why 64? If this isn't a mistake, could you maybe add a comment?
 
-Still, I can't think of anything harmful of patch 4.  So nothing I see
-wrong..
+All three are 64-bit cpus using an ABI with 32-bit pointers.
 
-Reviewed-by: Peter Xu <peterx@redhat.com>
 
--- 
-Peter Xu
-
+r~
 
