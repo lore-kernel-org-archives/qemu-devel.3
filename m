@@ -4,82 +4,86 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DB743C02196
-	for <qemu-devel@archiver.kernel.org>; Mon,  3 Feb 2025 17:26:19 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2A2C3C02192
+	for <qemu-devel@archiver.kernel.org>; Mon,  3 Feb 2025 17:31:06 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tf0Ce-0006Cs-DA; Mon, 03 Feb 2025 12:25:44 -0500
+	id 1tf0Gy-0007r2-PG; Mon, 03 Feb 2025 12:30:12 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tf0Ca-00069k-Bk
- for qemu-devel@nongnu.org; Mon, 03 Feb 2025 12:25:40 -0500
-Received: from mail-wm1-x335.google.com ([2a00:1450:4864:20::335])
+ (Exim 4.90_1) (envelope-from <dbarboza@ventanamicro.com>)
+ id 1tf0Gn-0007iw-VS
+ for qemu-devel@nongnu.org; Mon, 03 Feb 2025 12:30:02 -0500
+Received: from mail-pl1-x630.google.com ([2607:f8b0:4864:20::630])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tf0CY-0004mh-BK
- for qemu-devel@nongnu.org; Mon, 03 Feb 2025 12:25:40 -0500
-Received: by mail-wm1-x335.google.com with SMTP id
- 5b1f17b1804b1-4361dc6322fso32256315e9.3
- for <qemu-devel@nongnu.org>; Mon, 03 Feb 2025 09:25:37 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <dbarboza@ventanamicro.com>)
+ id 1tf0Gm-00057E-6c
+ for qemu-devel@nongnu.org; Mon, 03 Feb 2025 12:30:01 -0500
+Received: by mail-pl1-x630.google.com with SMTP id
+ d9443c01a7336-2166651f752so93929615ad.3
+ for <qemu-devel@nongnu.org>; Mon, 03 Feb 2025 09:29:59 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1738603536; x=1739208336; darn=nongnu.org;
+ d=ventanamicro.com; s=google; t=1738603798; x=1739208598; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=f1qk/YkLRT02+ON310wkt9KYiBH+73GAyu2gfxVI1lU=;
- b=GI8VmyXKFnW61G/ZHTiJiy4G5XkEpWtuMmE/f659FHYrDk3nq1IOlZ2a8QtxDyK6wt
- 0czY6EVp18egkIuw7d20VRwXcKF/bOIBEEE/VcfLPKQaM29RF4+2oaIxJBvstBNNXvSB
- f9PK87DrKWq23ENAe43qpRJAs4rLK8Id9ABclz0V99EH2BsxCtCJOovwLONNRSGEaMq9
- hK1z5u3aLmKrpM+iYary2XiqKFqm79Ep9sgeJAexuQZsGtAYEgPKIQDoYaY2i8ZAsHQW
- XC/34DuGmhIySmtFF1jwTJ4pHIhjQtQ/kW4E9IfncegSfOCh/Rg3762TroAQElciqmgi
- eENA==
+ bh=3M/t/6xJsZMRaArLoz+MYFzdKHqDmiLBPzLQqi5LLwM=;
+ b=MgYa6fFuw64POA+hccJeyix87d+IOLLEUN4spBzgje5hX3O34rW4fg4KSlpczITB/J
+ 1nP6Md5LAERgeAEL1AXtoWNIgStu5ey+poEyzXdUzTyqWo2g0EKrrmSm2ctFrLP+bVHC
+ 7ecpoyyn2EHf8UNkb4LFEQjeaCnxncY8lbceiBas8xrfpAzrYR5vQPVGG5+59Un5z2Ii
+ cR0a9kwAwGeFI77yEqyW2C08eHQ0apZhJ6zACy788g8gssk21V8hr1ZbUy9FLbTfQYLi
+ Drw4JmACshtvmetLCDc/q2qmGpFQqCIeqqA6cogM/mgWfhR5Gb8Z5abXwQeEbaXqzBg6
+ KL1Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1738603536; x=1739208336;
+ d=1e100.net; s=20230601; t=1738603798; x=1739208598;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=f1qk/YkLRT02+ON310wkt9KYiBH+73GAyu2gfxVI1lU=;
- b=VEKDDLhu9h/qm3asKrFq9h3p/kUgjc8sZDsOX7V8uwl9O8NprfYU/3SJ1CMEhdT+5y
- x4M6WAHOLiP/NdjW/rudWdPkXeQY8ng2h1lK5+f82RHEkcpKDzSfwSfiEd0oo2JAuF6Q
- vJKuksTwZveoMq6SK2o72r+aeRO2foc6v1MbZdFLSyeWpoFzyH0KFpwnwLmtSnnEQAWJ
- Tw6uB2VurTQp0Bxv12UBLK1vjALgdpkAq93hUWk+RkU+lHs5DtLbAuxf31IMJBQ2xnFl
- yevH7vuXB6Uabj7smxymXVoc0KbWNqFBlsJ7iYnXi/fHlYREITykoJz8t4TjdRGm905C
- ZxNA==
-X-Forwarded-Encrypted: i=1;
- AJvYcCUzNZfnShq2J2HNcZIPnbdr6A1qDfvk11jeNQrvojXlABdxiu90tbZZ8y77D+O7EREEcPr/pmX3hADG@nongnu.org
-X-Gm-Message-State: AOJu0YwcIJtRtP0ZEMgPNi8qPuAfk7H3IjIN/gykfRrd2LZsUImh8YEx
- 8WBU0o0afat0tayDUc62WqCPfUr2YjWUmYQZRjl5zVp8iQULtG0d+7vxjo634oQ=
-X-Gm-Gg: ASbGnctNCmNSeHxPB9u1+9X3WSRW5URzU/gYjB7Z4a/tc8XE90rvnm/iaT9sNWgPC75
- hp0Vr2uLMYUo8O3EXDdwtKhlZRbdk/iBQ24IE1Uay+YCVj8oewBqq/UbvhFaBW4wqng3GZaHifY
- 9h3es6s5NOVLaBpqXEMwnG8+ptIbg92wYxbGlwUVPRHwlbxlbALVWoptJsJYFcHUyB+Rc37pvR6
- G9lLq7PWPwgsGBK4bUNO3Mg/lDR+p3qfN3O2HkOeG711qCXc+NH0AunNBXJcaa/fFT4alexqP5I
- DwLAypxu6g4TcDzme52ce1UQKeWLr3Ys9lmAByxg8hx5j7nov/IE1ATC5U8=
-X-Google-Smtp-Source: AGHT+IEbn+17I6jMeyAyMSX+ojfNGIbof4KeE5G9t45nCYDyrM4EAdbEhRSUfeuwaXXWaeymu4r5pw==
-X-Received: by 2002:a05:6000:1865:b0:386:1cf9:b993 with SMTP id
- ffacd0b85a97d-38c51974311mr17895726f8f.26.1738603536050; 
- Mon, 03 Feb 2025 09:25:36 -0800 (PST)
-Received: from [192.168.69.198] (88-187-86-199.subs.proxad.net.
- [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-438e244eb0dsm163778835e9.27.2025.02.03.09.25.35
+ bh=3M/t/6xJsZMRaArLoz+MYFzdKHqDmiLBPzLQqi5LLwM=;
+ b=dCzIJC8TYkDd4bychUA+3MVJ8iUs3EXWbHCeKZwsMsRwvNE2uhQMcK0dpuJ32t3Q3N
+ GGBk3fFihTg8qztkCA8mje+VqinwY9F0117TusAEX02di/hP7NFtWHGWWTtI1HNh/rZu
+ 7zNJ5oZCV/DmIBgqgUjpcc31iqRs80qdolVZDKJ07t/6RSmjV421s6RkV2GiixMuCVlO
+ 9dJk5s81fpbJbgc/eqde3qh77/Z1ItkJtRGd7KW+93ZRBnWpiHX8M0iBPeCUDZkwfsLh
+ hWTc8PS/22iuyrHaoEVHjVhd8xTQXUO0dBK4Ya/Hv+0EKk+oLmM8mkRmVp2QWVweQTm/
+ UqIw==
+X-Gm-Message-State: AOJu0YzWLvYhMb54b6G0doGFxSwL6A7sGDuqCMZe/ilG6CWVZqN8cNrK
+ kYIvOzQI995hq+2hQsY99ETIWswbCkTV6ETJGHjUVmnse8MjeVL+9BCWYy89rfo=
+X-Gm-Gg: ASbGnct18CAYHx8wMLUUj7ldMxVW6iVbYen1+ReCQgvM07alxiwQO94stp5tOG3rkHL
+ Odn/vqGelOPCs7g6qjvM8dYVLxAmUB6Ngj33SokInioO8O7xg9cKzAa0QvMF11IDQ05SwmSNSCF
+ LmAh5bpjSMApB50ECpofsBSXkC3vp09UQ0XIDX1fYNk8jooP2EBvVygQTbEcWd9w/9TsbUx3k6R
+ wjEAFnJE9o1/f+J1Poy1V89xkrxFxLnHpMNuXHiN5RIMS1z6aJP2okaWu4dgVMDOT9CMBXh+OGP
+ qA4L3TGwkxWZjHCIJOKcAVX5wjy/xhE=
+X-Google-Smtp-Source: AGHT+IGc2dt1fa3fF1Y3CFWUpDn++9E9tNgvvIsbn7nzBDQB/d+gO7IjWLwoI3n+AQibNPjIhivptw==
+X-Received: by 2002:a05:6a21:458a:b0:1e4:8fdd:8c77 with SMTP id
+ adf61e73a8af0-1ed7a479222mr38592037637.8.1738603798373; 
+ Mon, 03 Feb 2025 09:29:58 -0800 (PST)
+Received: from [192.168.68.110] ([177.170.227.211])
+ by smtp.gmail.com with ESMTPSA id
+ d2e1a72fcca58-72fe631bee1sm8692928b3a.2.2025.02.03.09.29.56
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 03 Feb 2025 09:25:35 -0800 (PST)
-Message-ID: <f5f62fd7-0d42-4f0c-b8bf-cbcdd9dc54ab@linaro.org>
-Date: Mon, 3 Feb 2025 18:25:34 +0100
+ Mon, 03 Feb 2025 09:29:57 -0800 (PST)
+Message-ID: <9b09777c-d1a2-43c0-b2cb-d09f4797896f@ventanamicro.com>
+Date: Mon, 3 Feb 2025 14:29:54 -0300
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 08/14] target/mips: Protect objects with CONFIG_TCG
-To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
-Cc: pbonzini@redhat.com, mark.cave-ayland@ilande.co.uk, berrange@redhat.com,
- thuth@redhat.com
-References: <20250203031821.741477-1-richard.henderson@linaro.org>
- <20250203031821.741477-9-richard.henderson@linaro.org>
+Subject: Re: [PATCH 1/1] target/riscv: log guest errors when reserved bits are
+ set in PTEs
+To: =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Julia <midnight@trainwit.ch>
+Cc: qemu-devel@nongnu.org, qemu-riscv@nongnu.org
+References: <20250202051505.1846933-1-midnight@trainwit.ch>
+ <20250202051505.1846933-2-midnight@trainwit.ch>
+ <b76bf940-ff55-4619-a9ae-fa65c47e864f@ventanamicro.com>
+ <8149beba-66b1-4707-93f1-083b8bc5ece0@app.fastmail.com>
+ <87jza7azck.fsf@draig.linaro.org>
 Content-Language: en-US
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20250203031821.741477-9-richard.henderson@linaro.org>
+From: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
+In-Reply-To: <87jza7azck.fsf@draig.linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::335;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x335.google.com
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::630;
+ envelope-from=dbarboza@ventanamicro.com; helo=mail-pl1-x630.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -102,67 +106,51 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Richard,
 
-On 3/2/25 04:18, Richard Henderson wrote:
-> Hack around mips32 host allowing kvm acceleration
-> of mips64 guest, but tcg is disabled.
 
-We have in target/mips/meson.build:
-
-if 'CONFIG_TCG' in config_all_accel
-   subdir('tcg')
-endif
-
-What is the problem you are trying to address here?
-
-> Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
-> ---
->   target/mips/tcg/meson.build        | 4 ++--
->   target/mips/tcg/system/meson.build | 6 +++---
->   2 files changed, 5 insertions(+), 5 deletions(-)
+On 2/3/25 11:15 AM, Alex Bennée wrote:
+> Julia <midnight@trainwit.ch> writes:
 > 
-> diff --git a/target/mips/tcg/meson.build b/target/mips/tcg/meson.build
-> index fff9cd6c7f..e5574f177b 100644
-> --- a/target/mips/tcg/meson.build
-> +++ b/target/mips/tcg/meson.build
-> @@ -10,7 +10,7 @@ gen = [
->   ]
->   
->   mips_ss.add(gen)
-> -mips_ss.add(files(
-> +mips_ss.add(when: 'CONFIG_TCG', if_true: files(
->     'dsp_helper.c',
->     'exception.c',
->     'fpu_helper.c',
-> @@ -26,7 +26,7 @@ mips_ss.add(files(
->     'vr54xx_helper.c',
->     'vr54xx_translate.c',
->   ))
-> -mips_ss.add(when: 'TARGET_MIPS64', if_true: files(
-> +mips_ss.add(when: ['CONFIG_TCG', 'TARGET_MIPS64'], if_true: files(
->     'tx79_translate.c',
->     'octeon_translate.c',
->     'lcsr_translate.c',
-> diff --git a/target/mips/tcg/system/meson.build b/target/mips/tcg/system/meson.build
-> index 911341ac37..606ccacebc 100644
-> --- a/target/mips/tcg/system/meson.build
-> +++ b/target/mips/tcg/system/meson.build
-> @@ -1,12 +1,12 @@
-> -mips_system_ss.add(files(
-> +mips_system_ss.add(when: 'CONFIG_TCG', if_true: files(
->     'cp0_helper.c',
->     'special_helper.c',
->     'tlb_helper.c',
->   ))
-> -mips_system_ss.add(when: ['CONFIG_SEMIHOSTING'],
-> +mips_system_ss.add(when: ['CONFIG_TCG', 'CONFIG_SEMIHOSTING'],
->     if_true: files('mips-semi.c'),
->     if_false: files('semihosting-stub.c')
->   )
-> -mips_system_ss.add(when: 'TARGET_MIPS64', if_true: files(
-> +mips_system_ss.add(when: ['CONFIG_TCG', 'TARGET_MIPS64'], if_true: files(
->     'lcsr_helper.c',
->   ))
+>>> This happens because 'pte' is a 'target_ulong' type that, for riscv32, will be
+>>> interpreted as uint32_t while the FMT being used is PRIx64.
+>>>
+>>> You can fix it by using TARGET_FMT_lx instead of PRIx64:
+>>>
+>>
+>> I've sent a follow-up patch fixing these build errors, it builds on 32 & 64 bit on my system. Cheers
+>>
+>> As for the Signed-off-by, I'd rather not, and the contributing guide
+>> does not require it.
+> 
+> Apologies - I missed the context.
+> 
+>    The name used with “Signed-off-by” does not need to be your legal name,
+>    nor birth name, nor appear on any government ID. It is the identity you
+>    choose to be known by in the community, but should not be anonymous, nor
+>    misrepresent whom you are.
+
+That's correct.
+
+The reason I mentioned about the "git" commands in my reply is that newcomers
+aren't necessarily well versed with git and creating a patch without doing
+a prior setup will, in Linux, use login_name@hostname as author. I saw the
+Signed-off-by of this patch and I figured that could be the case. Apparently
+I was wrong and the git identity used is intention, so we're good.
+
+By the way I wonder if we could amend docs/devel/submitting-a-patch.rst with
+a handful of lines about how to set author in git. We have docs about how to
+send git send-mail, format-patch and so on, but apparently nothing about how
+to set the author.
+
+
+Thanks,
+
+Daniel
+
+> 
+>>
+>> Regards,
+>> Julia
+> 
 
 
