@@ -4,111 +4,100 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 602E3C02192
-	for <qemu-devel@archiver.kernel.org>; Mon,  3 Feb 2025 15:23:25 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B0A17C02195
+	for <qemu-devel@archiver.kernel.org>; Mon,  3 Feb 2025 16:07:30 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1teyHe-0001Xm-AH; Mon, 03 Feb 2025 10:22:47 -0500
+	id 1teyyK-00050d-8j; Mon, 03 Feb 2025 11:06:52 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <imammedo@redhat.com>)
- id 1teyHc-0001XX-D9
- for qemu-devel@nongnu.org; Mon, 03 Feb 2025 10:22:44 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <imammedo@redhat.com>)
- id 1teyHa-0006zf-UC
- for qemu-devel@nongnu.org; Mon, 03 Feb 2025 10:22:44 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1738596161;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=IPyZM1t4JHDpUYVyrdVFxb2Um0jbsvrzJI4R8XaR9uA=;
- b=BT5Y9aKd5DWb2pC8XWGDqUqZcDCFkDqeyyNWbi2szaMBLAarQ7JfOHcl7Ae6KNgpkvewt+
- ixqmLO/73wibcK8JONloz+d3KEA/th3S9gDrrSu1ObaUQlBsgmIHSas4udb3xZRR7I1jRP
- Lme1R+peTPvPdQnYSYwMCQV8JBawZP4=
-Received: from mail-wr1-f72.google.com (mail-wr1-f72.google.com
- [209.85.221.72]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-695-EAkSJ1kKNbKewWzzT0Tvsw-1; Mon, 03 Feb 2025 10:22:39 -0500
-X-MC-Unique: EAkSJ1kKNbKewWzzT0Tvsw-1
-X-Mimecast-MFC-AGG-ID: EAkSJ1kKNbKewWzzT0Tvsw
-Received: by mail-wr1-f72.google.com with SMTP id
- ffacd0b85a97d-3862a49fbdaso1763172f8f.1
- for <qemu-devel@nongnu.org>; Mon, 03 Feb 2025 07:22:39 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1teyyE-00050O-06
+ for qemu-devel@nongnu.org; Mon, 03 Feb 2025 11:06:46 -0500
+Received: from mail-wm1-x32d.google.com ([2a00:1450:4864:20::32d])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1teyyC-0003P1-AQ
+ for qemu-devel@nongnu.org; Mon, 03 Feb 2025 11:06:45 -0500
+Received: by mail-wm1-x32d.google.com with SMTP id
+ 5b1f17b1804b1-436341f575fso54155715e9.1
+ for <qemu-devel@nongnu.org>; Mon, 03 Feb 2025 08:06:42 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1738598801; x=1739203601; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=USJc+LtCJtXYRd9HImYVRsCPsYpW8PlLO42qaPArHQA=;
+ b=qTahIm5fafmfIzzHYSsvQY3stzulGOqi8mAEtaW6rC66AgPYD6bGf1vAH15ru5Eb63
+ 31sPHQwSuII9REhRyln5R8HQ80DZQr+aRtGE0yVyyGbWvxcUSS+yaDxC4ydkuirnz4oB
+ oG+QU/N//DQd86UGh/4wJToBq+IZkIcwlyALuj7tPocy8DkoK2Ddoe8DfiR67YFT2xrq
+ r0HctaTzu7rHRKtrFmPLUq6nJOPAmDBaHwU4Vm++z/jcPA1lKzPo6osPuBptWm4KRcx0
+ qugFsg7ueGT3xi9eF5v/xtd/czTbBdyZIGYQ24KgZOBsc0gRPLGfvXa62R12fqTVIdYB
+ BxVA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1738596158; x=1739200958;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:subject:cc:to:from:date:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=IPyZM1t4JHDpUYVyrdVFxb2Um0jbsvrzJI4R8XaR9uA=;
- b=gwx8UrJ/Wtc1FowFDSA+PE77DAQTi1R2dQm1GJBT2YKftpc2HUTTdUMkJaPky7Weoe
- ggRCmUW0CihegcxHI9MQAzmEGrIifr/dJnUKrtnMaKCazgvWoYass/92HCFH2k24HC0t
- hWkkd0G4dZ7ZXKTJkfRMFIjflQHCM2Xd1YnTsyUM2yrtdAh7tjYZmnmcFMJTZE8nu2w1
- gnhZdvvQgWEUcmIoeRVtBVUIu1J2WZNSaP/PjNx344NimdPkh2/51ycINllNMYcITmis
- iaHZunCfJJ+jq/Xz0M8HwLhi1UxAdCJ1guVfI8ptp1bY1FZrYCWZOoiXkbEECCXu5Ifm
- XNXA==
+ d=1e100.net; s=20230601; t=1738598801; x=1739203601;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=USJc+LtCJtXYRd9HImYVRsCPsYpW8PlLO42qaPArHQA=;
+ b=O2ZgHlMHqbpcTzQScIVdIeN5E7sw2HTBdSTv5g2Lw0l8ujs2t/h3e//Pg26Zk0C2J9
+ x3WU53mYMi/uPXEVr7iCdxA40/zAvLOlXy97GyzySnSbvqYZsZ1RGXEIpkOHsQnXRssD
+ oyy6fmI+SjIQTsF/uzNV+UDy/2qgHXF1+D5RNNDuHZgTk94tSH5J180MegcPgztHxl/F
+ rZP5bQML6O18Qupf+W4nzHWsQwSlC15Cg8L7P1PIpVyPL6TPWn7vtKOE7HVzj2/Q3pjU
+ JnJ3q40kQQA0aDLBGnDAVFdYRigNx1gkeXJwBhYwOdv0a88SYjPswX/OsiGRRcJOgYJ7
+ VGjw==
 X-Forwarded-Encrypted: i=1;
- AJvYcCVnz5/vnG88bj15Fc+NbSpNFTu7WuHfuxi8Qafmcxyhj3oOjJoZEnC+f2jcNt7SoxzZ7eHelnr2rH39@nongnu.org
-X-Gm-Message-State: AOJu0YxaxN/Ox5mK1/Vh/GPJqEhw8V1xoUVyqL/tbnh9PoqfR6IZ3e+R
- xm9x5u2V+kX+GButT9ymhhHoUnE4MuJTFEC0sH5E/Jaz6PD2U4SO67PxX61gRw8PM9+KMkpmTzy
- s4T4ICayv2FWfwjIfGYT+q+8shUdVVMKxXKB9RmfVkJr/7zahwaiu
-X-Gm-Gg: ASbGncsJYR7e+TwHse/Stq9CAf3R/UgoSzcXWaI2+dVXOw30USFokTOaMV0IXdMVByp
- 8BSi3GjUnK1gMFrlpv1jirOX9yfUTmApLRN2+PJlF6Pr3k80756cWd/glu2je7iTlohfWfK2VTz
- bLhCZTd2hhPAYIoklw6ZJPDpQbCwkIHILewks4+rjxOT89gGzgYNJW6/DD7nJ5Cwbrkv0+oHhbN
- i17Nu/sJDZQ9Wh4uKDFGhsvAbL0K8XKkA21tu3FWlPwTaZIipDTyu+27KIi+XjkoWF1dOwWuS0R
- vrLysNIWcWOKHPuPb0WfHnLx+wouD1RK1H+CM8ToBpwoFoRW17ex
-X-Received: by 2002:a05:6000:4011:b0:385:e8b0:df13 with SMTP id
- ffacd0b85a97d-38c52095e20mr20768475f8f.40.1738596158367; 
- Mon, 03 Feb 2025 07:22:38 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IFU8GdTGi8sB7oRmFhV909MaP4kFCPPAe8WiAnv6V5VuMzr3T7UiP99xHMB2JJSil2uW9p+BA==
-X-Received: by 2002:a05:6000:4011:b0:385:e8b0:df13 with SMTP id
- ffacd0b85a97d-38c52095e20mr20768432f8f.40.1738596157876; 
- Mon, 03 Feb 2025 07:22:37 -0800 (PST)
-Received: from imammedo.users.ipa.redhat.com (nat-pool-brq-t.redhat.com.
- [213.175.37.10]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-438e23de772sm157161035e9.13.2025.02.03.07.22.36
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 03 Feb 2025 07:22:37 -0800 (PST)
-Date: Mon, 3 Feb 2025 16:22:36 +0100
-From: Igor Mammedov <imammedo@redhat.com>
-To: Jonathan Cameron <Jonathan.Cameron@huawei.com>
-Cc: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>, "Michael S . Tsirkin"
- <mst@redhat.com>, Shiju Jose <shiju.jose@huawei.com>,
- <qemu-arm@nongnu.org>, <qemu-devel@nongnu.org>, Philippe =?UTF-8?B?TWF0?=
- =?UTF-8?B?aGlldS1EYXVkw6k=?= <philmd@linaro.org>, Ani Sinha
- <anisinha@redhat.com>, Cleber Rosa <crosa@redhat.com>, Dongjiu Geng
- <gengdongjiu1@gmail.com>, Eduardo Habkost <eduardo@habkost.net>, Eric Blake
- <eblake@redhat.com>, John Snow <jsnow@redhat.com>, Marcel Apfelbaum
- <marcel.apfelbaum@gmail.com>, "Markus Armbruster" <armbru@redhat.com>,
- Michael Roth <michael.roth@amd.com>, "Paolo Bonzini" <pbonzini@redhat.com>,
- Peter Maydell <peter.maydell@linaro.org>, Shannon Zhao
- <shannon.zhaosl@gmail.com>, Yanan Wang <wangyanan55@huawei.com>, Zhao Liu
- <zhao1.liu@intel.com>, <kvm@vger.kernel.org>,
- <linux-kernel@vger.kernel.org>
-Subject: Re: [PATCH v3 00/14] Change ghes to use HEST-based offsets and add
- support for error inject
-Message-ID: <20250203162236.7d5872ff@imammedo.users.ipa.redhat.com>
-In-Reply-To: <20250203110934.000038d8@huawei.com>
-References: <cover.1738345063.git.mchehab+huawei@kernel.org>
- <20250203110934.000038d8@huawei.com>
-X-Mailer: Claws Mail 4.3.0 (GTK 3.24.43; x86_64-redhat-linux-gnu)
+ AJvYcCX55Zv86byLP3lImPnfWD/Z7nAUspBlG6XP+eee3TfjvSuoCLd8SU7iUcl+1hwHPFuBdnHzRbBsAERC@nongnu.org
+X-Gm-Message-State: AOJu0Yw+K+USqUPebm0k0IkMjksJzvgZEGdy668wiqaLNhd0cLPZN1D/
+ nM7FkBD8cnNobUaD6aXdzNN3WUCnbQmOULVFTnI/2kXw02ijT5s+R9qTVnfAe2g=
+X-Gm-Gg: ASbGncvirCGWpXhL+owF07M8WK/EpjShrBX6qPiKehiINJ5RmminxGeFG3i9DIngQLR
+ iCoq8v2XPVkXb1N0ssSBh5MzWIi0YeOaHzQa46ZJOYPewlJbUGw60INyoE3BslFv4wRsmNmCRsP
+ xtC4eb4+Z9MaBnjkXoIEvcLTOGo4Ewk7/DZQ61DjSjtThJsI73IdE2BM8fLoeUmGVsi6tsjk5zo
+ HTA6ljxhaUfeLRzNO6lE/YGIzCDAc4a4MzbHRVu5Bij89nEfMQYGpNUtZ3SvJ9GCd7Z893aSXlt
+ 7O4xsLjaOLwhRBK2aVxVHBiNb3xWztK3DLaIUqpilbkws78n2GELi/Z+E4k=
+X-Google-Smtp-Source: AGHT+IG5Qxk0YT/D5p3l2p9G0dPoznJhx1dCZobq2CjIgsJ4/FKswHONPcs99DwMxnyZh59H6zeCew==
+X-Received: by 2002:a05:6000:1548:b0:38c:3f12:64be with SMTP id
+ ffacd0b85a97d-38c51f8a3camr24845302f8f.35.1738598801228; 
+ Mon, 03 Feb 2025 08:06:41 -0800 (PST)
+Received: from [192.168.69.198] (88-187-86-199.subs.proxad.net.
+ [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-38c5c1d0bbfsm13395823f8f.98.2025.02.03.08.06.40
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Mon, 03 Feb 2025 08:06:40 -0800 (PST)
+Message-ID: <6b3a1206-3567-4c21-854b-d3e3ba16bdbf@linaro.org>
+Date: Mon, 3 Feb 2025 17:06:39 +0100
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=imammedo@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 0/1] meson: Deprecate 32-bit host systems
+To: =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Peter Maydell <peter.maydell@linaro.org>
+Cc: Thomas Huth <thuth@redhat.com>, =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?=
+ <berrange@redhat.com>, Richard Henderson <richard.henderson@linaro.org>,
+ qemu-devel@nongnu.org, stefanha@redhat.com, pbonzini@redhat.com,
+ mark.cave-ayland@ilande.co.uk, Liviu Ionescu <ilg@livius.net>
+References: <20250128004254.33442-1-richard.henderson@linaro.org>
+ <9a280789-9248-4eca-b50c-048fc58e3f53@redhat.com>
+ <87plk72tvr.fsf@draig.linaro.org>
+ <ad6ca73a-c38a-4a9b-bdcb-ab50aa53ccd1@linaro.org>
+ <Z5ii-ueFt5-5Brxz@redhat.com>
+ <8c0eea44-d0bf-4b86-9b1b-1c2082ab2df9@linaro.org>
+ <9bf6d4b0-7a89-4110-a1e1-46bbdb2fc793@linaro.org>
+ <c13e207e-06a5-4f40-b319-f4f2e59d919a@redhat.com>
+ <CAFEAcA_CfVfypS5yUtT3V34CDxmAqx7wYnDoKPfHq-o=54GgAg@mail.gmail.com>
+ <87cyfzfl6b.fsf@draig.linaro.org>
+Content-Language: en-US
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <87cyfzfl6b.fsf@draig.linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::32d;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x32d.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -124,57 +113,37 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, 3 Feb 2025 11:09:34 +0000
-Jonathan Cameron <Jonathan.Cameron@huawei.com> wrote:
-
-> On Fri, 31 Jan 2025 18:42:41 +0100
-> Mauro Carvalho Chehab <mchehab+huawei@kernel.org> wrote:
+On 3/2/25 10:10, Alex Bennée wrote:
+> Peter Maydell <peter.maydell@linaro.org> writes:
 > 
-> > Now that the ghes preparation patches were merged, let's add support
-> > for error injection.
-> > 
-> > On this series, the first 6 patches chang to the math used to calculate offsets at HEST
-> > table and hardware_error firmware file, together with its migration code. Migration tested
-> > with both latest QEMU released kernel and upstream, on both directions.
-> > 
-> > The next patches add a new QAPI to allow injecting GHESv2 errors, and a script using such QAPI
-> >    to inject ARM Processor Error records.
-> > 
-> > If I'm counting well, this is the 19th submission of my error inject patches.  
+>> On Wed, 29 Jan 2025 at 06:23, Thomas Huth <thuth@redhat.com> wrote:
+>>> So unless someone complains immediately with a good reason, I'm also in
+>>> favor of marking it as deprecated now. If then someone complains during the
+>>> deprecation period, we still can reconsider and remove the deprecation note
+>>> again.
+>>
+>> Well, I mean the reason would be that I suspect we do still have
+>> users who are using QEMU for some purposes on 32-bit arm hosts.
+>> That doesn't mean they're trying to run massively complex or
+>> high memory guests or that they care that our whole test suite
+>> doesn't run.
+>>
+>> I'm not really strongly opposed to dropping 32-bit host support,
+>> but I don't think a thread on qemu-devel is exactly likely to
+>> get the attention of the people who might be using this
+>> functionality. (You could argue that functionality without
+>> representation among the developer community is fair game
+>> for being dumped even if it has users, of course.)
 > 
-> Looks good to me. All remaining trivial things are in the category
-> of things to consider only if you are doing another spin.  The code
-> ends up how I'd like it at the end of the series anyway, just
-> a question of the precise path to that state!
-
-if you look at series as a whole it's more or less fine (I guess you
-and me got used to it)
-
-however if you take it patch by patch (as if you've never seen it)
-ordering is messed up (the same would apply to everyone after a while
-when it's forgotten)
-
-So I'd strongly suggest to restructure the series (especially 2-6/14).
-re sum up my comments wrt ordering:
-
-0  add testcase for HEST table with current HEST as expected blob
-   (currently missing), so that we can be sure that we haven't messed
-   existing tables during refactoring.
-1. Introduce use_hest_addr (disabled) for now so we could place all
-   legacy code to !use_hest_addr branch
-2. then patches that do the part of switching to HEST addr lookup,
-    * ged lookup (preferably at the place it should end up eventually)
-    * legacy bios_linker/fwcfg fencing patches
-    * on top of that new hest bios_linker/fwcfg ones
-    * and then the rest 
-    (everything that belongs to the 2nd error source should _not_ be a part of that)
-3. add 2nd error source incl. necessary tests procedures introduce
-   and update DSDT/HEST
-
-
-
+> FWIW random internet poll:
 > 
-> Jonathan
+>    https://mastodon.org.uk/deck/@stsquad/113905257703721811
 > 
+> 26% 32 bit
+> 74% 64 bit
+> 
+> with 41 respondents.
 
+Note that some respondents who voted to maintain 32-bit support
+mixed 32-bit host with 32-bit guests.
 
