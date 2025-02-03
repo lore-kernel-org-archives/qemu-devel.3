@@ -4,56 +4,72 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 02955C02192
-	for <qemu-devel@archiver.kernel.org>; Mon,  3 Feb 2025 16:21:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D654FC02196
+	for <qemu-devel@archiver.kernel.org>; Mon,  3 Feb 2025 16:31:24 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tezCo-0001io-9f; Mon, 03 Feb 2025 11:21:50 -0500
+	id 1tezLV-0003zV-6n; Mon, 03 Feb 2025 11:30:49 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jonathan.cameron@huawei.com>)
- id 1tezCl-0001cT-Mh
- for qemu-devel@nongnu.org; Mon, 03 Feb 2025 11:21:47 -0500
-Received: from frasgout.his.huawei.com ([185.176.79.56])
+ (Exim 4.90_1) (envelope-from <eblake@redhat.com>) id 1tezLT-0003z6-GC
+ for qemu-devel@nongnu.org; Mon, 03 Feb 2025 11:30:47 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jonathan.cameron@huawei.com>)
- id 1tezCj-0004v8-Ic
- for qemu-devel@nongnu.org; Mon, 03 Feb 2025 11:21:47 -0500
-Received: from mail.maildlp.com (unknown [172.18.186.31])
- by frasgout.his.huawei.com (SkyGuard) with ESMTP id 4YmsC70fzpz6D97N;
- Tue,  4 Feb 2025 00:19:31 +0800 (CST)
-Received: from frapeml500008.china.huawei.com (unknown [7.182.85.71])
- by mail.maildlp.com (Postfix) with ESMTPS id 118761401F4;
- Tue,  4 Feb 2025 00:21:44 +0800 (CST)
-Received: from SecurePC-101-06.china.huawei.com (10.122.19.247) by
- frapeml500008.china.huawei.com (7.182.85.71) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.1.2507.39; Mon, 3 Feb 2025 17:21:43 +0100
-To: <qemu-devel@nongnu.org>, Fan Ni <fan.ni@samsung.com>, <mst@redhat.com>
-CC: <linux-cxl@vger.kernel.org>, <linuxarm@huawei.com>
-Subject: [PATCH qemu 5/5] mem/cxl_type3: support 3, 6,
- 12 and 16 interleave ways
-Date: Mon, 3 Feb 2025 16:19:08 +0000
-Message-ID: <20250203161908.145406-6-Jonathan.Cameron@huawei.com>
-X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20250203161908.145406-1-Jonathan.Cameron@huawei.com>
-References: <20250203161908.145406-1-Jonathan.Cameron@huawei.com>
+ (Exim 4.90_1) (envelope-from <eblake@redhat.com>) id 1tezLR-0005sE-Vb
+ for qemu-devel@nongnu.org; Mon, 03 Feb 2025 11:30:47 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1738600244;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=hbqxDhojMiJWgGvCvGWPWI3w04+7Xm8kGTX5km9eNUE=;
+ b=Zz55Ntb0h0ChsDW6aMDYPTavmIlof7a2caaKBAkqTyNsBED28YUEVQDFyqFRuHh2ZtV89R
+ ZD9Y70BWDiDPFGknTjQh1Gj9BL4Qcq8FKr7ByaCu2ZToCYt8iwAYxxwFqpNRZwHWDB59fO
+ 9PTnedOlI1hPM2eCczHvBNyoBQt7IF0=
+Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-474-7AM98_QDMpuuR0nKLJQkCA-1; Mon,
+ 03 Feb 2025 11:30:40 -0500
+X-MC-Unique: 7AM98_QDMpuuR0nKLJQkCA-1
+X-Mimecast-MFC-AGG-ID: 7AM98_QDMpuuR0nKLJQkCA
+Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id C8F30195608F; Mon,  3 Feb 2025 16:30:38 +0000 (UTC)
+Received: from redhat.com (unknown [10.2.16.73])
+ by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id E401F18008DC; Mon,  3 Feb 2025 16:30:34 +0000 (UTC)
+Date: Mon, 3 Feb 2025 10:30:32 -0600
+From: Eric Blake <eblake@redhat.com>
+To: Kevin Wolf <kwolf@redhat.com>
+Cc: qemu-block@nongnu.org, hreitz@redhat.com, stefanha@redhat.com, 
+ pkrempa@redhat.com, peterx@redhat.com, farosas@suse.de, qemu-devel@nongnu.org
+Subject: Re: [PATCH v2 10/15] block/export: Don't ignore image activation
+ error in blk_exp_add()
+Message-ID: <briy6fpjcl62d24purobq73bxlm7x7e734tin4rjo76i4d3uxd@amsu5rclwfbz>
+References: <20250130171240.286878-1-kwolf@redhat.com>
+ <20250131095051.49708-1-kwolf@redhat.com>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Content-Type: text/plain
-X-Originating-IP: [10.122.19.247]
-X-ClientProxiedBy: lhrpeml500004.china.huawei.com (7.191.163.9) To
- frapeml500008.china.huawei.com (7.182.85.71)
-Received-SPF: pass client-ip=185.176.79.56;
- envelope-from=jonathan.cameron@huawei.com; helo=frasgout.his.huawei.com
-X-Spam_score_int: -41
-X-Spam_score: -4.2
-X-Spam_bar: ----
-X-Spam_report: (-4.2 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_MED=-2.3,
- RCVD_IN_MSPIKE_H2=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20250131095051.49708-1-kwolf@redhat.com>
+User-Agent: NeoMutt/20250113
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=eblake@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -66,82 +82,24 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-to:  Jonathan Cameron <Jonathan.Cameron@huawei.com>
-From:  Jonathan Cameron via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Yao Xingtao <yaoxt.fnst@fujitsu.com>
+On Fri, Jan 31, 2025 at 10:50:46AM +0100, Kevin Wolf wrote:
+> Currently, block jobs can't handle inactive images correctly. Incoming
+> write requests would run into assertion failures. Make sure that we
+> return an error when creating an export can't activate the image.
+> 
+> Signed-off-by: Kevin Wolf <kwolf@redhat.com>
+> ---
+>  block/export/export.c | 6 +++++-
+>  1 file changed, 5 insertions(+), 1 deletion(-)
 
-Since the kernel does not check the interleave capability, a
-3-way, 6-way, 12-way or 16-way region can be create normally.
+Reviewed-by: Eric Blake <eblake@redhat.com>
 
-Applications can access the memory of 16-way region normally because
-qemu can convert hpa to dpa correctly for the power of 2 interleave
-ways, after kernel implementing the check, this kind of region will
-not be created any more.
-
-For non power of 2 interleave ways, applications could not access the
-memory normally and may occur some unexpected behaviors, such as
-segmentation fault.
-
-So implements this feature is needed.
-
-Link: https://lore.kernel.org/linux-cxl/3e84b919-7631-d1db-3e1d-33000f3f3868@fujitsu.com/
-Signed-off-by: Yao Xingtao <yaoxt.fnst@fujitsu.com>
-Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
----
- hw/cxl/cxl-component-utils.c |  9 +++++++--
- hw/mem/cxl_type3.c           | 15 +++++++++++----
- 2 files changed, 18 insertions(+), 6 deletions(-)
-
-diff --git a/hw/cxl/cxl-component-utils.c b/hw/cxl/cxl-component-utils.c
-index cd116c0401..473895948b 100644
---- a/hw/cxl/cxl-component-utils.c
-+++ b/hw/cxl/cxl-component-utils.c
-@@ -243,8 +243,13 @@ static void hdm_init_common(uint32_t *reg_state, uint32_t *write_msk,
-     ARRAY_FIELD_DP32(reg_state, CXL_HDM_DECODER_CAPABILITY, INTERLEAVE_4K, 1);
-     ARRAY_FIELD_DP32(reg_state, CXL_HDM_DECODER_CAPABILITY,
-                      POISON_ON_ERR_CAP, 0);
--    ARRAY_FIELD_DP32(reg_state, CXL_HDM_DECODER_CAPABILITY, 3_6_12_WAY, 0);
--    ARRAY_FIELD_DP32(reg_state, CXL_HDM_DECODER_CAPABILITY, 16_WAY, 0);
-+    if (type == CXL2_TYPE3_DEVICE) {
-+        ARRAY_FIELD_DP32(reg_state, CXL_HDM_DECODER_CAPABILITY, 3_6_12_WAY, 1);
-+        ARRAY_FIELD_DP32(reg_state, CXL_HDM_DECODER_CAPABILITY, 16_WAY, 1);
-+    } else {
-+        ARRAY_FIELD_DP32(reg_state, CXL_HDM_DECODER_CAPABILITY, 3_6_12_WAY, 0);
-+        ARRAY_FIELD_DP32(reg_state, CXL_HDM_DECODER_CAPABILITY, 16_WAY, 0);
-+    }
-     ARRAY_FIELD_DP32(reg_state, CXL_HDM_DECODER_CAPABILITY, UIO, 0);
-     ARRAY_FIELD_DP32(reg_state, CXL_HDM_DECODER_CAPABILITY,
-                      UIO_DECODER_COUNT, 0);
-diff --git a/hw/mem/cxl_type3.c b/hw/mem/cxl_type3.c
-index d8b45f9bd1..6fffa21ead 100644
---- a/hw/mem/cxl_type3.c
-+++ b/hw/mem/cxl_type3.c
-@@ -1100,10 +1100,17 @@ static bool cxl_type3_dpa(CXLType3Dev *ct3d, hwaddr host_addr, uint64_t *dpa)
-             continue;
-         }
- 
--        *dpa = dpa_base +
--            ((MAKE_64BIT_MASK(0, 8 + ig) & hpa_offset) |
--             ((MAKE_64BIT_MASK(8 + ig + iw, 64 - 8 - ig - iw) & hpa_offset)
--              >> iw));
-+        if (iw < 8) {
-+            *dpa = dpa_base +
-+                ((MAKE_64BIT_MASK(0, 8 + ig) & hpa_offset) |
-+                 ((MAKE_64BIT_MASK(8 + ig + iw, 64 - 8 - ig - iw) & hpa_offset)
-+                  >> iw));
-+        } else {
-+            *dpa = dpa_base +
-+                ((MAKE_64BIT_MASK(0, 8 + ig) & hpa_offset) |
-+                 ((((MAKE_64BIT_MASK(ig + iw, 64 - ig - iw) & hpa_offset)
-+                   >> (ig + iw)) / 3) << (ig + 8)));
-+        }
- 
-         return true;
-     }
 -- 
-2.43.0
+Eric Blake, Principal Software Engineer
+Red Hat, Inc.
+Virtualization:  qemu.org | libguestfs.org
 
 
