@@ -4,59 +4,86 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B4AD0C02190
-	for <qemu-devel@archiver.kernel.org>; Mon,  3 Feb 2025 03:16:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5087DC0218F
+	for <qemu-devel@archiver.kernel.org>; Mon,  3 Feb 2025 03:18:51 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1temvc-00074i-Bx; Sun, 02 Feb 2025 22:15:16 -0500
+	id 1temyj-0007y8-H9; Sun, 02 Feb 2025 22:18:29 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <henk@laaksoft.nl>) id 1temva-00073I-J1
- for qemu-devel@nongnu.org; Sun, 02 Feb 2025 22:15:15 -0500
-Received: from web5.hostingcp.eu ([2a09:8b00:252:5::10])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <henk@laaksoft.nl>) id 1temvX-00025C-Tc
- for qemu-devel@nongnu.org; Sun, 02 Feb 2025 22:15:13 -0500
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=laaksoft.nl
- ; s=x;
- h=Content-Transfer-Encoding:Content-Type:Subject:Cc:From:To:
- MIME-Version:Date:Message-ID:Sender:Reply-To:Content-ID:Content-Description:
- Resent-Date:Resent-From:Resent-Sender:Resent-To:Resent-Cc:Resent-Message-ID:
- In-Reply-To:References:List-Id:List-Help:List-Unsubscribe:List-Subscribe:
- List-Post:List-Owner:List-Archive;
- bh=eGsegL9nmdkSK8/jok+tsKCKg3J7UpoE7TRcQKVTZKs=; b=hyPMNq7DjSQGZIwhMffMJBdGUK
- 2+usBaM2lFIR9Ugyd3+TxkdK0lMSo1IWk2Wvh0PhYRyKibkJ4xitD66V5g7YVw92XW3iFgF2VhMNO
- tLL2zE6JQ6nod/xkbP2N03aV+BuD7HDeSV9fFb73DT5QU5ANe4GzsvKGThwADomC4cUKYPEdIuB1F
- wJCBORqtxejWZcV1dbNSih60447LkHCuoNYlqMWne4aSRjKIJ2a8YOM/92VpajjNTB526amk6c5bi
- 76+YZ0nLDH0h6oG7RSMqPithvjShs+DQr4b9Ws+dYe90Eya5fQXDyGn1/hrD/fxgb36NrzqDNajkE
- 2uTDsIIQ==;
-Received: from 095-096-130-127.static.chello.nl ([95.96.130.127]
- helo=[192.168.178.10])
- by web5.hostingcp.eu with esmtpsa  (TLS1.3) tls TLS_AES_128_GCM_SHA256
- (Exim 4.98) (envelope-from <henk@laaksoft.nl>)
- id 1temvW-00000003cwH-0U1j; Mon, 03 Feb 2025 04:15:10 +0100
-Message-ID: <eb7fe8ed-e885-48c0-a36f-1f700bc692bf@laaksoft.nl>
-Date: Mon, 3 Feb 2025 04:14:59 +0100
-MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1temyh-0007wd-O0
+ for qemu-devel@nongnu.org; Sun, 02 Feb 2025 22:18:27 -0500
+Received: from mail-pl1-x629.google.com ([2607:f8b0:4864:20::629])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1temyf-0002e2-Ov
+ for qemu-devel@nongnu.org; Sun, 02 Feb 2025 22:18:27 -0500
+Received: by mail-pl1-x629.google.com with SMTP id
+ d9443c01a7336-21634338cfdso93106985ad.2
+ for <qemu-devel@nongnu.org>; Sun, 02 Feb 2025 19:18:25 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1738552704; x=1739157504; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=iM3D9a39pGGlsRoa9TrM2icjX42ZQQytV5dtn3gTX+s=;
+ b=eK0wD26H2qSnSrPAVVTzyDGrbThjW6HS+gtLwYzPauEMC7PV7jJMGYWMw92jaL9lwH
+ 9ruxcFs3qtsW6l28xz47nGqinvXFWJxCSUAwK9Mc4qO0YqfcGzFxjE31X+s8WAKOzS0d
+ q2vY3sb4r9H6rKq2zmaaZLhJhLlXsx3a2yMptKG4zuZtpTekaVXVycrRqnF+3QR2ozRJ
+ feX6/g4dLJ6KDfG0TRUeIn1YYV7RIju5BHKpnXhXHldor5uPsbVMECngHJBqqM1AOJNx
+ /0ER57NhkriFiNdk1tbrCbeVRwTicm3+Nair6O23nGSNJOXxkou4VX2Hn2p1+Dn2awn/
+ QXGw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1738552704; x=1739157504;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=iM3D9a39pGGlsRoa9TrM2icjX42ZQQytV5dtn3gTX+s=;
+ b=FXgIkEgY+4CdOQfoxNI55C0HP3Xt53UtE1zORjjpqf3xEyOBUjJujPFr4sxF1whCcb
+ V43YDVnSMv2fXS+yzpALUkh6tXUbPWFIUq0GY6S/NqHcmuTwvxZBMZrnpKC+jH4cOaIH
+ AC0ZDn22f1fWZeMxkHbXqBCTCqsEH0NqVmgL3eEexsUzY4Yoz10gBGSog5P8svPZ064V
+ oOvAErrW34mCuNH3VLOsSb9ROYXpXC0jzjEqiE6mmirrUgd2Sna9xaplEnNqdjETBwdn
+ 2WefPMfbFQIntxMcAXpJqjtvaGzuNRGeuGOmPGxm0Octm72Jdm3RKFumtypN0Y5/P3jk
+ 0zRQ==
+X-Gm-Message-State: AOJu0Yw9BRtGwXwrip2S1k6W+R6Is4nNl1eVCTSLh1obiAPW1Qz2B/q+
+ +mt1gl9h3RtiEQgPrjCXdOihOuDz5WEWAXpdNGfTYD9lR24rRUNSShkjZmVv5UrrOEmj+ZqBkdn
+ 1
+X-Gm-Gg: ASbGncszpRfa7aX41N0toUMt3P3J4dUvMiLQNpfo18DCc+WXDlI5TwhFuXIGh5rdRfo
+ eAZehu6IQjoopzGMQvqXid9oYbvxZVXcnfh/vS54lO+dvWUfDj+7N+QFc9n+Jg40ykTpDR66eeg
+ vQllC3M4SbnyMOnI9n8AZgdzBed2Uya1KlUDvevid7ZkWzkHfRI4FGI4OOL6PBu6Y4/r36DR/rJ
+ mrM7BitAYfzzh3XCJ2DYG/QkxTgaBKtCNDNgkSEBZMtrMGRgZEDpTXryFzysUAVOM8g5ek6r/mk
+ 48HUzmJ6DCcIS/JJPuOFCVazWMPvcVLYu41B02Nw2eVR0yw=
+X-Google-Smtp-Source: AGHT+IFe/FDSd3GJ8+TqxhWOQ+6qcLks6JjI7BJbr0T+ourkfniZBySVXkQKqqUDL748cXOlNlIUuA==
+X-Received: by 2002:a17:903:244f:b0:216:1cfa:2bda with SMTP id
+ d9443c01a7336-21dd7de1d37mr305133645ad.43.1738552703988; 
+ Sun, 02 Feb 2025 19:18:23 -0800 (PST)
+Received: from stoup.. (71-212-39-66.tukw.qwest.net. [71.212.39.66])
+ by smtp.gmail.com with ESMTPSA id
+ d9443c01a7336-21de32eb419sm65698135ad.145.2025.02.02.19.18.23
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Sun, 02 Feb 2025 19:18:23 -0800 (PST)
+From: Richard Henderson <richard.henderson@linaro.org>
 To: qemu-devel@nongnu.org
-Content-Language: en-US
-Cc: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>,
- Artyom Tarasenko <atar4qemu@gmail.com>
-Subject: Patch: Sparc prevent segfault when dumping uninitialzed cpu state
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Cc: pbonzini@redhat.com, mark.cave-ayland@ilande.co.uk, berrange@redhat.com,
+ philmd@linaro.org, thuth@redhat.com
+Subject: [PATCH v2 01/14] meson: Drop tcg as a module
+Date: Sun,  2 Feb 2025 19:18:08 -0800
+Message-ID: <20250203031821.741477-2-richard.henderson@linaro.org>
+X-Mailer: git-send-email 2.43.0
+In-Reply-To: <20250203031821.741477-1-richard.henderson@linaro.org>
+References: <20250203031821.741477-1-richard.henderson@linaro.org>
+MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-MagicSpam-TUUID: 39480960-a2d1-41e6-8964-b89acd8d2e02
-X-MagicSpam-SUUID: 234b6e9d-3dd0-4c7e-bd4d-fdd295376ca6
-X-Authenticated-Id: henk@laaksoft.nl
-Received-SPF: pass client-ip=2a09:8b00:252:5::10;
- envelope-from=henk@laaksoft.nl; helo=web5.hostingcp.eu
+Received-SPF: pass client-ip=2607:f8b0:4864:20::629;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x629.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_PASS=-0.001,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -70,54 +97,94 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-to:  "Henk van der Laak (LaakSoft)" <henk@laaksoft.nl>
-From:  "Henk van der Laak (LaakSoft)" via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi all, my first contribution. I checked code style, patch submission 
-rules and did a manual test (details on request)
+The fact that this is only enabled for x86 probably means it
+was done incorrectly.  Certainly the set of files selected to
+go into the module is woefully incomplete.  Drop it for now.
 
-Synopsis:
-It's a corner case, where a segfault occurs when logging Sparc CPU state 
-in a partially initialized state.
-
-No related bug report.
-
-Open to harsh criticism ;-)
-
-Regards,
-
-Henk van der Laak <henk@laaksoft.nl>
-
-
-Patch is based off 6fccaa2fba391815308a746d68f7fa197bc93586 
-(origin/master) as of Sun Feb 2 11:09:10 2025 -0500
-Signed-off-by: Henk van der Laak <henk@laaksoft.nl>
-
+Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 ---
-  target/sparc/cpu.c | 7 ++++++-
-  1 file changed, 6 insertions(+), 1 deletion(-)
+ accel/tcg/meson.build | 11 ++++-------
+ meson.build           | 18 +-----------------
+ 2 files changed, 5 insertions(+), 24 deletions(-)
 
-diff --git a/target/sparc/cpu.c b/target/sparc/cpu.c
-index fbd38ec334..83aaa456fc 100644
---- a/target/sparc/cpu.c
-+++ b/target/sparc/cpu.c
-@@ -642,7 +642,12 @@ static void sparc_cpu_dump_state(CPUState *cs, FILE 
-*f, int flags)
-                               x == 0 ? 'o' : (x == 1 ? 'l' : 'i'),
-                               i, i + REGS_PER_LINE - 1);
-              }
--            qemu_fprintf(f, TARGET_FMT_lx " ", env->regwptr[i + x * 8]);
-+            /*
-+             * regwptr may not be initialized yet when logging
-+             * e.g. cpu_reset
-+             */
-+            qemu_fprintf(f, TARGET_FMT_lx " ",
-+                env->regwptr ? env->regwptr[i + x * 8] : 0);
-              if (i % REGS_PER_LINE == REGS_PER_LINE - 1) {
-                  qemu_fprintf(f, "\n");
-              }
+diff --git a/accel/tcg/meson.build b/accel/tcg/meson.build
+index aef80de967..69f4808ac4 100644
+--- a/accel/tcg/meson.build
++++ b/accel/tcg/meson.build
+@@ -21,16 +21,13 @@ specific_ss.add_all(when: 'CONFIG_TCG', if_true: tcg_specific_ss)
+ specific_ss.add(when: ['CONFIG_SYSTEM_ONLY', 'CONFIG_TCG'], if_true: files(
+   'cputlb.c',
+   'watchpoint.c',
++  'tcg-accel-ops.c',
++  'tcg-accel-ops-mttcg.c',
++  'tcg-accel-ops-icount.c',
++  'tcg-accel-ops-rr.c',
+ ))
+ 
+ system_ss.add(when: ['CONFIG_TCG'], if_true: files(
+   'icount-common.c',
+   'monitor.c',
+ ))
+-
+-tcg_module_ss.add(when: ['CONFIG_SYSTEM_ONLY', 'CONFIG_TCG'], if_true: files(
+-  'tcg-accel-ops.c',
+-  'tcg-accel-ops-mttcg.c',
+-  'tcg-accel-ops-icount.c',
+-  'tcg-accel-ops-rr.c',
+-))
+diff --git a/meson.build b/meson.build
+index 2c9ac9cfe1..b72114819b 100644
+--- a/meson.build
++++ b/meson.build
+@@ -322,12 +322,6 @@ if cpu in ['x86', 'x86_64']
+   }
+ endif
+ 
+-modular_tcg = []
+-# Darwin does not support references to thread-local variables in modules
+-if host_os != 'darwin'
+-  modular_tcg = ['i386-softmmu', 'x86_64-softmmu']
+-endif
+-
+ ##################
+ # Compiler flags #
+ ##################
+@@ -3279,11 +3273,6 @@ foreach target : target_dirs
+     if sym == 'CONFIG_TCG' or target in accelerator_targets.get(sym, [])
+       config_target += { sym: 'y' }
+       config_all_accel += { sym: 'y' }
+-      if target in modular_tcg
+-        config_target += { 'CONFIG_TCG_MODULAR': 'y' }
+-      else
+-        config_target += { 'CONFIG_TCG_BUILTIN': 'y' }
+-      endif
+       target_kconfig += [ sym + '=y' ]
+     endif
+   endforeach
+@@ -3642,7 +3631,6 @@ util_ss = ss.source_set()
+ 
+ # accel modules
+ qtest_module_ss = ss.source_set()
+-tcg_module_ss = ss.source_set()
+ 
+ modules = {}
+ target_modules = {}
+@@ -3803,11 +3791,7 @@ subdir('tests/qtest/libqos')
+ subdir('tests/qtest/fuzz')
+ 
+ # accel modules
+-tcg_real_module_ss = ss.source_set()
+-tcg_real_module_ss.add_all(when: 'CONFIG_TCG_MODULAR', if_true: tcg_module_ss)
+-specific_ss.add_all(when: 'CONFIG_TCG_BUILTIN', if_true: tcg_module_ss)
+-target_modules += { 'accel' : { 'qtest': qtest_module_ss,
+-                                'tcg': tcg_real_module_ss }}
++target_modules += { 'accel' : { 'qtest': qtest_module_ss }}
+ 
+ ##############################################
+ # Internal static_libraries and dependencies #
 -- 
 2.43.0
 
