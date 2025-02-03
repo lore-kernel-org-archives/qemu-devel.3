@@ -4,107 +4,140 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 425FBC02192
-	for <qemu-devel@archiver.kernel.org>; Mon,  3 Feb 2025 17:01:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E87D5C02196
+	for <qemu-devel@archiver.kernel.org>; Mon,  3 Feb 2025 17:02:38 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1teznb-0006CY-Ux; Mon, 03 Feb 2025 11:59:51 -0500
+	id 1tezps-0008B1-VA; Mon, 03 Feb 2025 12:02:17 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1tezna-0006BI-Lb
- for qemu-devel@nongnu.org; Mon, 03 Feb 2025 11:59:50 -0500
-Received: from smtp-out2.suse.de ([195.135.223.131])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1teznY-0001NT-Ns
- for qemu-devel@nongnu.org; Mon, 03 Feb 2025 11:59:50 -0500
-Received: from imap1.dmz-prg2.suse.org (unknown [10.150.64.97])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (No client certificate requested)
- by smtp-out2.suse.de (Postfix) with ESMTPS id 83FCD1F381;
- Mon,  3 Feb 2025 16:59:47 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1738601987; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=OmHuD75OpXLe1iwiCge0smuv5ceTKz9zfyIrk9gDRa4=;
- b=tGW1sD3yO6lGJ0s0vXsePiHBXprAJDnC8OPbuzklkAfQvZpvARzU924T23rHH2m1s+QhqG
- 2JJSFdQZ0/6KebGuaB1t240cs6mjXSMEu7pbrVMFzLmyUkQSxu5YPpLebJS9SQwB/A93ZK
- hyxEqXASeZDKN1+UNxDub2288wONSCI=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1738601987;
- h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=OmHuD75OpXLe1iwiCge0smuv5ceTKz9zfyIrk9gDRa4=;
- b=WO86BEYykb2tRxDF7D6Nb0S8QpKJlQZoWlf5/caK69Fc2jS+fXDijTCfRNKPAJh4ySl1Uc
- S+9dgfVXS6EOCuBA==
-Authentication-Results: smtp-out2.suse.de;
-	none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1738601987; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=OmHuD75OpXLe1iwiCge0smuv5ceTKz9zfyIrk9gDRa4=;
- b=tGW1sD3yO6lGJ0s0vXsePiHBXprAJDnC8OPbuzklkAfQvZpvARzU924T23rHH2m1s+QhqG
- 2JJSFdQZ0/6KebGuaB1t240cs6mjXSMEu7pbrVMFzLmyUkQSxu5YPpLebJS9SQwB/A93ZK
- hyxEqXASeZDKN1+UNxDub2288wONSCI=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1738601987;
- h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=OmHuD75OpXLe1iwiCge0smuv5ceTKz9zfyIrk9gDRa4=;
- b=WO86BEYykb2tRxDF7D6Nb0S8QpKJlQZoWlf5/caK69Fc2jS+fXDijTCfRNKPAJh4ySl1Uc
- S+9dgfVXS6EOCuBA==
-Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (No client certificate requested)
- by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 6F13813A78;
- Mon,  3 Feb 2025 16:59:46 +0000 (UTC)
-Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
- by imap1.dmz-prg2.suse.org with ESMTPSA id WHd/CwL2oGfDdgAAD6G6ig
- (envelope-from <farosas@suse.de>); Mon, 03 Feb 2025 16:59:46 +0000
-From: Fabiano Rosas <farosas@suse.de>
-To: qemu-devel@nongnu.org
-Cc: Ani Sinha <anisinha@redhat.com>
-Subject: [PULL 3/6] tests/qtest/vmcoreinfo: add a unit test to exercize basic
- vmcoreinfo function
-Date: Mon,  3 Feb 2025 13:59:35 -0300
-Message-Id: <20250203165938.14320-4-farosas@suse.de>
-X-Mailer: git-send-email 2.35.3
-In-Reply-To: <20250203165938.14320-1-farosas@suse.de>
-References: <20250203165938.14320-1-farosas@suse.de>
+ (Exim 4.90_1) (envelope-from <brian.cain@oss.qualcomm.com>)
+ id 1tezp4-0007sa-AN
+ for qemu-devel@nongnu.org; Mon, 03 Feb 2025 12:01:26 -0500
+Received: from mx0a-0031df01.pphosted.com ([205.220.168.131])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <brian.cain@oss.qualcomm.com>)
+ id 1tezp1-0001gD-I6
+ for qemu-devel@nongnu.org; Mon, 03 Feb 2025 12:01:21 -0500
+Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
+ by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 513BESSe002245
+ for <qemu-devel@nongnu.org>; Mon, 3 Feb 2025 17:01:15 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+ content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+ +hU6hTla9/cCvvqx2g78F/3wHmwBtxGxW/UL4sEwgyQ=; b=l7yOVZ0Vp8dfx0mB
+ UZG1yUcfMGJj4NhlfqMYD4Ljqr4h7zi098bbUhij7/SsvzrKbwtycEAJQr8U7ee0
+ QKzpXo/WohJzuya814cSi5ayIeGQEPVTFue660HcbogGklfmKQaxJNtdR2rITrpA
+ DMEe7pNpeNTS5V29vIronGqe9cJ7aUGT1c/Nee3VwWd3kHoFYuARislpV34eHDge
+ fLoE4pne7AmIEEBSZOAtj/OgCF9sFw21PGQvb75eMxsvL51ry0r+nkkuud6SUKlf
+ DuG1dj0c7jCOT8+H4xu3LdwJmsm/5h8BC0wjjhvQt5MCWWCqYyd68rXxzQmbmDOF
+ dq+xWQ==
+Received: from mail-qv1-f70.google.com (mail-qv1-f70.google.com
+ [209.85.219.70])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 44jvrkh067-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
+ for <qemu-devel@nongnu.org>; Mon, 03 Feb 2025 17:01:14 +0000 (GMT)
+Received: by mail-qv1-f70.google.com with SMTP id
+ 6a1803df08f44-6d8e6046f0fso71436456d6.2
+ for <qemu-devel@nongnu.org>; Mon, 03 Feb 2025 09:01:14 -0800 (PST)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1738602074; x=1739206874;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=+hU6hTla9/cCvvqx2g78F/3wHmwBtxGxW/UL4sEwgyQ=;
+ b=ioE1BZ1HuZMhjqk11C/LW5Ji6Djr6VdoA3IrLFf4+wp5/ceQiHaZVHgJVM6A9zVQ5j
+ qyRlqULv8kRA7nDPpkcGX1L5vGQiFPCfULWrXnl2JV+gkA93ov+nKm2aaJI5kEaS4o0K
+ ELQd5vB8S0LduV2HmTcLC0tyaxxwjd9Iaa0+a6+bO3hXk2MzvSN02QhypfgN/r2htYiG
+ SHdfFWS/EI0BW5dgF6CyFlndDZaFQKh2V0sIf5EH66NarjKAlIBMT1V6AQZC0QNkSsp7
+ tHSnfjhQ/599McgUC2gxRLMVp4bN7T0VoA9bPn4L0sP/OCrwZ1H+MoFshqPp2Ap+xRW8
+ aKEw==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCX8zLTmY4QwkBSUJWECmwe4TH8eBaNcmD20jjmcnmvsEPBurKvy4HvEdzYu9JU8e0GkiiEwzQnQ84po@nongnu.org
+X-Gm-Message-State: AOJu0Yyq4APtu9j87cCtL0OfrkmtWcXrSwrS1BgV1Rrt6LFMMKNnVt3S
+ 7XXPH2BifeyzxOkKwD8s+erENsLZTyhAQ2Y6wTEKzyd1MaAY+OsXtX7Pb4UZf0dAWqaOZTVs97k
+ 9/YotaTjC5yTzd2Hzi8lqEjJpKnjdYed2q0OUefA9FqEbnN6H33YgMw==
+X-Gm-Gg: ASbGncsgObqBkK4ePyosRIdj6ycqfMbXirkymwPdAB4Y7sOkya+76LWI6KqJtYuTrYH
+ rxvrj925Qz7WqdsqT7yDTZv+Mb3Ds3H8ZIRjv9jE/obaHgKyKTuWAUXPpDYQ78Sqwcv7QQXGn3W
+ sVMvHrZQ9hfLimjOHW393T+rfhzv1Jyq5aI9mRXhD2udSdzoKLzbJUtzXL2uN8X/BErwKztLHdK
+ X9TNVIVvDzi/H+YBgCJCrTgfuMYHh44hRcX9PqMDVat656mk22JPh3eDDBKnYKnhALDcgPIw0n+
+ ce4Qhe3wkJiSumen6FPPRb8h/bSWV+mU0G4R8Edv+KSAsgrGlE3xIaBqWEN6uog=
+X-Received: by 2002:ad4:5bc7:0:b0:6d8:7e03:c434 with SMTP id
+ 6a1803df08f44-6e243c364c8mr329253726d6.20.1738602073372; 
+ Mon, 03 Feb 2025 09:01:13 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IGppm87JcGFOcrSV92Dl796Gv0kjyHE0YABUWWoFJJzEYUsYNkBJlAkLqa0FObu3S9iGbSTrg==
+X-Received: by 2002:ad4:5bc7:0:b0:6d8:7e03:c434 with SMTP id
+ 6a1803df08f44-6e243c364c8mr329252746d6.20.1738602072534; 
+ Mon, 03 Feb 2025 09:01:12 -0800 (PST)
+Received: from [10.222.168.90] (Global_NAT1_IAD_FW.qualcomm.com.
+ [129.46.232.65]) by smtp.gmail.com with ESMTPSA id
+ 6a1803df08f44-6e2547f3e27sm52357446d6.17.2025.02.03.09.01.08
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Mon, 03 Feb 2025 09:01:12 -0800 (PST)
+Message-ID: <8356e201-6f35-4d61-8a3c-01c94ac475ed@oss.qualcomm.com>
+Date: Mon, 3 Feb 2025 11:01:07 -0600
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+User-Agent: Mozilla Thunderbird
+Subject: Re: KVM/QEMU community call 4/2/2025 agenda items
+To: =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Alessandro Di Federico <ale@rev.ng>,
+ Alistair Francis <alistair.francis@wdc.com>,
+ Anton Johansson <anjo@rev.ng>, Markus Armbruster <armbru@redhat.com>,
+ Brian Cain <bcain@quicinc.com>, "Daniel P. Berrange" <berrange@redhat.com>,
+ Chao Peng <chao.p.peng@linux.intel.com>, cjia@nvidia.com,
+ =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>, cw@f00f.org,
+ dhedde@kalrayinc.com, Eric Blake <eblake@redhat.com>,
+ eblot@rivosinc.com, "Edgar E. Iglesias" <edgar.iglesias@gmail.com>,
+ Eduardo Habkost <eduardo@habkost.net>,
+ Elena Ufimtseva <elena.ufimtseva@oracle.com>,
+ Auger Eric <eric.auger@redhat.com>, felipe@nutanix.com,
+ iggy@theiggy.com, Warner Losh <imp@bsdimp.com>,
+ Jan Kiszka <jan.kiszka@web.de>, Jason Gunthorpe <jgg@nvidia.com>,
+ jidong.xiao@gmail.com, Jim Shu <jim.shu@sifive.com>,
+ Joao Martins <joao.m.martins@oracle.com>,
+ Konrad Rzeszutek Wilk <konrad.wilk@oracle.com>,
+ Luc Michel <luc@lmichel.fr>,
+ Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,
+ Max Chou <max.chou@sifive.com>, Mark Burton <mburton@qti.qualcomm.com>,
+ mdean@redhat.com, mimu@linux.vnet.ibm.com,
+ "Ho, Nelson" <nelson.ho@windriver.com>,
+ Paul Walmsley <paul.walmsley@sifive.com>, Paolo Bonzini
+ <pbonzini@redhat.com>, Peter Maydell <peter.maydell@linaro.org>,
+ =?UTF-8?Q?Phil_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ QEMU Developers <qemu-devel@nongnu.org>, Roberto Campesato <rbc@meta.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Shameerali Kolothum Thodi <shameerali.kolothum.thodi@huawei.com>,
+ Bernhard Beschow <shentey@gmail.com>,
+ Stefan Hajnoczi <stefanha@gmail.com>, Thomas Huth <thuth@redhat.com>,
+ Wei Wang <wei.w.wang@intel.com>, z.huo@139.com,
+ LIU Zhiwei <zhiwei_liu@linux.alibaba.com>, zwu.kernel@gmail.com
+References: <87r04j15ha.fsf@draig.linaro.org>
+Content-Language: en-US
+From: Brian Cain <brian.cain@oss.qualcomm.com>
+In-Reply-To: <87r04j15ha.fsf@draig.linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-X-Spamd-Result: default: False [-3.30 / 50.00]; BAYES_HAM(-3.00)[100.00%];
- MID_CONTAINS_FROM(1.00)[]; NEURAL_HAM_LONG(-1.00)[-1.000];
- NEURAL_HAM_SHORT(-0.20)[-1.000]; MIME_GOOD(-0.10)[text/plain];
- FUZZY_BLOCKED(0.00)[rspamd.com];
- DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
- RCPT_COUNT_TWO(0.00)[2]; MIME_TRACE(0.00)[0:+]; ARC_NA(0.00)[];
- TO_MATCH_ENVRCPT_ALL(0.00)[]; FROM_HAS_DN(0.00)[];
- RCVD_TLS_ALL(0.00)[]; FROM_EQ_ENVFROM(0.00)[];
- TO_DN_SOME(0.00)[]; RCVD_COUNT_TWO(0.00)[2];
- RCVD_VIA_SMTP_AUTH(0.00)[];
- DBL_BLOCKED_OPENRESOLVER(0.00)[imap1.dmz-prg2.suse.org:helo]
-Received-SPF: pass client-ip=195.135.223.131; envelope-from=farosas@suse.de;
- helo=smtp-out2.suse.de
-X-Spam_score_int: -43
-X-Spam_score: -4.4
-X-Spam_bar: ----
-X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Proofpoint-ORIG-GUID: 6GZS4mMF7Y4vUnD0heX_AranwH0qaVo6
+X-Proofpoint-GUID: 6GZS4mMF7Y4vUnD0heX_AranwH0qaVo6
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1057,Hydra:6.0.680,FMLib:17.12.68.34
+ definitions=2025-02-03_07,2025-01-31_02,2024-11-22_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ lowpriorityscore=0
+ spamscore=0 malwarescore=0 bulkscore=0 clxscore=1015 mlxscore=0
+ adultscore=0 impostorscore=0 suspectscore=0 mlxlogscore=779
+ priorityscore=1501 phishscore=0 classifier=spam adjust=0 reason=mlx
+ scancount=1 engine=8.19.0-2501170000 definitions=main-2502030123
+Received-SPF: pass client-ip=205.220.168.131;
+ envelope-from=brian.cain@oss.qualcomm.com; helo=mx0a-0031df01.pphosted.com
+X-Spam_score_int: -26
+X-Spam_score: -2.7
+X-Spam_bar: --
+X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -120,151 +153,22 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Ani Sinha <anisinha@redhat.com>
 
-A new qtest is written that exercizes the fw-cfg DMA based read and write ops
-to write values into vmcoreinfo fw-cfg file and read them back and verify that
-they are the same.
+On 1/31/2025 7:24 AM, Alex Bennée wrote:
+> Hi,
+>
+> The KVM/QEMU community call is at:
+>
+> https://meet.jit.si/kvmcallmeeting
+> @
+> 04/02/2025 14:00 UTC
+>
+> Are there any agenda items for the sync-up?
 
-Signed-off-by: Ani Sinha <anisinha@redhat.com>
-Message-ID: <20250120043847.954881-4-anisinha@redhat.com>
-Signed-off-by: Fabiano Rosas <farosas@suse.de>
----
- MAINTAINERS                   |  2 +
- tests/qtest/meson.build       |  1 +
- tests/qtest/vmcoreinfo-test.c | 90 +++++++++++++++++++++++++++++++++++
- 3 files changed, 93 insertions(+)
- create mode 100644 tests/qtest/vmcoreinfo-test.c
-
-diff --git a/MAINTAINERS b/MAINTAINERS
-index bf737eb6db..0cf37fce7b 100644
---- a/MAINTAINERS
-+++ b/MAINTAINERS
-@@ -3019,6 +3019,7 @@ F: include/system/device_tree.h
- Dump
- S: Supported
- M: Marc-André Lureau <marcandre.lureau@redhat.com>
-+R: Ani Sinha <anisinha@redhat.com>
- F: dump/
- F: hw/misc/vmcoreinfo.c
- F: include/hw/misc/vmcoreinfo.h
-@@ -3029,6 +3030,7 @@ F: qapi/dump.json
- F: scripts/dump-guest-memory.py
- F: stubs/dump.c
- F: docs/specs/vmcoreinfo.rst
-+F: tests/qtest/vmcoreinfo-test.c
- 
- Error reporting
- M: Markus Armbruster <armbru@redhat.com>
-diff --git a/tests/qtest/meson.build b/tests/qtest/meson.build
-index e60e92fe9d..5e062c752a 100644
---- a/tests/qtest/meson.build
-+++ b/tests/qtest/meson.build
-@@ -57,6 +57,7 @@ qtests_i386 = \
-   (config_all_devices.has_key('CONFIG_AHCI_ICH9') ? ['tco-test'] : []) +                    \
-   (config_all_devices.has_key('CONFIG_FDC_ISA') ? ['fdc-test'] : []) +                      \
-   (config_all_devices.has_key('CONFIG_I440FX') ? ['fw_cfg-test'] : []) +                    \
-+  (config_all_devices.has_key('CONFIG_FW_CFG_DMA') ? ['vmcoreinfo-test'] : []) +            \
-   (config_all_devices.has_key('CONFIG_I440FX') ? ['i440fx-test'] : []) +                    \
-   (config_all_devices.has_key('CONFIG_I440FX') ? ['ide-test'] : []) +                       \
-   (config_all_devices.has_key('CONFIG_I440FX') ? ['numa-test'] : []) +                      \
-diff --git a/tests/qtest/vmcoreinfo-test.c b/tests/qtest/vmcoreinfo-test.c
-new file mode 100644
-index 0000000000..dcf3b5ae05
---- /dev/null
-+++ b/tests/qtest/vmcoreinfo-test.c
-@@ -0,0 +1,90 @@
-+/*
-+ * qtest vmcoreinfo test case
-+ *
-+ * Copyright Red Hat. 2025.
-+ *
-+ * Authors:
-+ *  Ani Sinha   <anisinha@redhat.com>
-+ *
-+ * This work is licensed under the terms of the GNU GPL, version 2 or later.
-+ * See the COPYING file in the top-level directory.
-+ */
-+
-+#include "qemu/osdep.h"
-+#include "qemu/units.h"
-+#include "libqos/libqos-pc.h"
-+#include "libqtest.h"
-+#include "standard-headers/linux/qemu_fw_cfg.h"
-+#include "libqos/fw_cfg.h"
-+#include "qemu/bswap.h"
-+#include "hw/misc/vmcoreinfo.h"
-+
-+static void test_vmcoreinfo_write_basic(void)
-+{
-+    QFWCFG *fw_cfg;
-+    QOSState *qs;
-+    FWCfgVMCoreInfo info;
-+    size_t filesize;
-+    uint16_t guest_format;
-+    uint16_t host_format;
-+    uint32_t size;
-+    uint64_t paddr;
-+
-+    qs = qtest_pc_boot("-device vmcoreinfo");
-+    fw_cfg = pc_fw_cfg_init(qs->qts);
-+
-+    memset(&info, 0 , sizeof(info));
-+    /* read vmcoreinfo and read back the host format */
-+    filesize = qfw_cfg_read_file(fw_cfg, qs, FW_CFG_VMCOREINFO_FILENAME,
-+                                &info, sizeof(info));
-+    g_assert_cmpint(filesize, ==, sizeof(info));
-+
-+    host_format = le16_to_cpu(info.host_format);
-+    g_assert_cmpint(host_format, ==, FW_CFG_VMCOREINFO_FORMAT_ELF);
-+
-+    memset(&info, 0 , sizeof(info));
-+    info.guest_format = cpu_to_le16(FW_CFG_VMCOREINFO_FORMAT_ELF);
-+    info.size = cpu_to_le32(1 * MiB);
-+    info.paddr = cpu_to_le64(0xffffff00);
-+    info.host_format = cpu_to_le16(host_format);
-+
-+    /* write the values to the host */
-+    filesize = qfw_cfg_write_file(fw_cfg, qs, FW_CFG_VMCOREINFO_FILENAME,
-+                                  &info, sizeof(info));
-+    g_assert_cmpint(filesize, ==, sizeof(info));
-+
-+    memset(&info, 0 , sizeof(info));
-+
-+    /* now read back the values we wrote and compare that they are the same */
-+    filesize = qfw_cfg_read_file(fw_cfg, qs, FW_CFG_VMCOREINFO_FILENAME,
-+                                &info, sizeof(info));
-+    g_assert_cmpint(filesize, ==, sizeof(info));
-+
-+    size = le32_to_cpu(info.size);
-+    paddr = le64_to_cpu(info.paddr);
-+    guest_format = le16_to_cpu(info.guest_format);
-+
-+    g_assert_cmpint(size, ==, 1 * MiB);
-+    g_assert_cmpint(paddr, ==, 0xffffff00);
-+    g_assert_cmpint(guest_format, ==, FW_CFG_VMCOREINFO_FORMAT_ELF);
-+
-+    pc_fw_cfg_uninit(fw_cfg);
-+    qtest_shutdown(qs);
-+}
-+
-+int main(int argc, char **argv)
-+{
-+    const char *arch = qtest_get_arch();
-+
-+    g_test_init(&argc, &argv, NULL);
-+
-+    if (strcmp(arch, "i386") && strcmp(arch, "x86_64")) {
-+        /* skip for non-x86 */
-+        exit(EXIT_SUCCESS);
-+    }
-+
-+    qtest_add_func("vmcoreinfo/basic-write",
-+                   test_vmcoreinfo_write_basic);
-+
-+    return g_test_run();
-+}
--- 
-2.35.3
+I'd like to discuss the upstreaming of hexagon sysemu - one piece we 
+could use help is the "QTimer." This is a device which was designed by 
+Qualcomm but apparently has the ARMSSE timer as an ancestor.  I'd like 
+to get some advice about whether we should have a separate device with 
+similar behavior or try to abstract the commonalities.
 
 
