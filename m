@@ -4,62 +4,62 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 440A7C02192
-	for <qemu-devel@archiver.kernel.org>; Mon,  3 Feb 2025 18:51:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6058AC02192
+	for <qemu-devel@archiver.kernel.org>; Mon,  3 Feb 2025 18:51:52 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tf1WM-0000Hw-Bo; Mon, 03 Feb 2025 13:50:10 -0500
+	id 1tf1Xa-0001JU-Of; Mon, 03 Feb 2025 13:51:26 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
- id 1tf1W8-00009g-TD
- for qemu-devel@nongnu.org; Mon, 03 Feb 2025 13:49:59 -0500
+ id 1tf1XJ-00018c-C8
+ for qemu-devel@nongnu.org; Mon, 03 Feb 2025 13:51:12 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
- id 1tf1W7-00059R-HJ
- for qemu-devel@nongnu.org; Mon, 03 Feb 2025 13:49:56 -0500
+ id 1tf1XI-0005TP-06
+ for qemu-devel@nongnu.org; Mon, 03 Feb 2025 13:51:09 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1738608594;
+ s=mimecast20190719; t=1738608666;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=Ij84B39uJp93AKrqYtusamGATWW6lauP++sAGcuRCKs=;
- b=dXGe/yML+1IRmrTSiIYKRlbLyY6omk6w0zjs7KCafLyqGx03atapH8J0RrdEFezzaee3pw
- mdG0VB5vxvMJYipxikAdQ6N5WM5mfLMojmMFpIjdQtQjD06BG5999q8seh1v9EQ5Wo7uww
- vH7VsnirvRqyTP5Fd/lDNzEaYrYItyA=
-Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
+ bh=fTqaMtlsi0DAWxFdWwzYAg0IDV1y4Pn3cR+sSj9xGlI=;
+ b=T8lLKTZleF7RMlD/o5ReLAE/rc/LP7/tOtnRmyVVzfs08hRz8r5aIh6tdJa+/XK5jlB+8g
+ 2xbQau7H9DjG0ANdXkqhpaONOjg5sPX/q8qsKCqGAeRNKY8n5Z+ByUCu0sRUdQaCXfys9+
+ 1BsrxaL40zuOMbDulfswchiigePU9T0=
+Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-655-EnIyXS0GP_C5CCkL-RV3rg-1; Mon,
- 03 Feb 2025 13:49:51 -0500
-X-MC-Unique: EnIyXS0GP_C5CCkL-RV3rg-1
-X-Mimecast-MFC-AGG-ID: EnIyXS0GP_C5CCkL-RV3rg
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-515-MFWy9JYSOGyjjnlfrSSvDw-1; Mon,
+ 03 Feb 2025 13:51:03 -0500
+X-MC-Unique: MFWy9JYSOGyjjnlfrSSvDw-1
+X-Mimecast-MFC-AGG-ID: MFWy9JYSOGyjjnlfrSSvDw
 Received: from mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.40])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 6EA4C195608A; Mon,  3 Feb 2025 18:49:50 +0000 (UTC)
+ by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 04C4C19560B0; Mon,  3 Feb 2025 18:51:02 +0000 (UTC)
 Received: from localhost (unknown [10.2.16.131])
  by mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id D1D7F19560AD; Mon,  3 Feb 2025 18:49:49 +0000 (UTC)
-Date: Mon, 3 Feb 2025 13:49:48 -0500
+ id 6BEB219560AD; Mon,  3 Feb 2025 18:51:01 +0000 (UTC)
+Date: Mon, 3 Feb 2025 13:51:00 -0500
 From: Stefan Hajnoczi <stefanha@redhat.com>
 To: Kevin Wolf <kwolf@redhat.com>
 Cc: qemu-block@nongnu.org, hreitz@redhat.com, pkrempa@redhat.com,
  peterx@redhat.com, farosas@suse.de, qemu-devel@nongnu.org
-Subject: Re: [PATCH v2 03/15] migration/block-active: Remove global active flag
-Message-ID: <20250203184948.GE268514@fedora>
+Subject: Re: [PATCH v2 05/15] block: Allow inactivating already inactive nodes
+Message-ID: <20250203185100.GG268514@fedora>
 References: <20250130171240.286878-1-kwolf@redhat.com>
- <20250130171240.286878-4-kwolf@redhat.com>
+ <20250130171240.286878-6-kwolf@redhat.com>
 MIME-Version: 1.0
 Content-Type: multipart/signed; micalg=pgp-sha256;
- protocol="application/pgp-signature"; boundary="+AVar+9pDleK+I2g"
+ protocol="application/pgp-signature"; boundary="HwIw77EnpwgBYheE"
 Content-Disposition: inline
-In-Reply-To: <20250130171240.286878-4-kwolf@redhat.com>
+In-Reply-To: <20250130171240.286878-6-kwolf@redhat.com>
 X-Scanned-By: MIMEDefang 3.0 on 10.30.177.40
 Received-SPF: pass client-ip=170.10.129.124; envelope-from=stefanha@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
@@ -70,7 +70,7 @@ X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -87,45 +87,39 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 
---+AVar+9pDleK+I2g
+--HwIw77EnpwgBYheE
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
 
-On Thu, Jan 30, 2025 at 06:12:34PM +0100, Kevin Wolf wrote:
-> Block devices have an individual active state, a single global flag
-> can't cover this correctly. This becomes more important as we allow
-> users to manually manage which nodes are active or inactive.
->=20
-> Now that it's allowed to call bdrv_inactivate_all() even when some
-> nodes are already inactive, we can remove the flag and just
-> unconditionally call bdrv_inactivate_all() and, more importantly,
-> bdrv_activate_all() before we make use of the nodes.
+On Thu, Jan 30, 2025 at 06:12:36PM +0100, Kevin Wolf wrote:
+> What we wanted to catch with the assertion is cases where the recursion
+> finds that a child was inactive before its parent. This should never
+> happen. But if the user tries to inactivate an image that is already
+> inactive, that's harmless and we don't want to fail the assertion.
 >=20
 > Signed-off-by: Kevin Wolf <kwolf@redhat.com>
 > ---
->  migration/migration.h    |  3 ---
->  migration/block-active.c | 46 ----------------------------------------
->  migration/migration.c    |  8 -------
->  3 files changed, 57 deletions(-)
+>  block.c | 16 ++++++++++++----
+>  1 file changed, 12 insertions(+), 4 deletions(-)
 
 Reviewed-by: Stefan Hajnoczi <stefanha@redhat.com>
 
---+AVar+9pDleK+I2g
+--HwIw77EnpwgBYheE
 Content-Type: application/pgp-signature; name="signature.asc"
 
 -----BEGIN PGP SIGNATURE-----
 
-iQEzBAEBCAAdFiEEhpWov9P5fNqsNXdanKSrs4Grc8gFAmehD8wACgkQnKSrs4Gr
-c8gNKAf/ZNKjp9B4CbXuzjy6JLh7+F4/twPNDOJ47OJkYgetAOsPhUopg62trtJa
-0lFBHHvXUexTocjyvIocGAAUgb6qHqjCJ/a7bXLUPmaabi6vfxQ6FIGK1Shqz3rR
-cmwLnSbuN/coAqz3ziBU8RlCTNGdLBaMe6usPMdnH7aOLZYk+wwdK4O9qm54qrPE
-BjqddZY7ukf8GBbzePjPRMN1u8ETBG/iZC0dqRjb5/trwEUBUiz5syp6LI5ZdZI2
-AEYI6NmPBUKXhypF2hmmTn5GI61bPZYhl4CzZBpZ2p23hybF+QQ5jOyRmq+PuJfS
-axNEQlCzL7FO+a07okwVyv7rAnWgTQ==
-=CgSR
+iQEzBAEBCAAdFiEEhpWov9P5fNqsNXdanKSrs4Grc8gFAmehEBQACgkQnKSrs4Gr
+c8hbnwgAjIM2ZOdrAGUE3ywqK74Bd5RCH7VrBUivkQ4sPqtKW1FCNiGkJc6KIk2C
+Te5W4ynzqLaVm+wV1xsXMw1KYIBDsWll/Xo0HVAvr/GReRWOyU/oFNdPdKQlJY5D
+GDuOBa9+RuEy/fNeIJJ2IjfZhR/jqi317g3cku3hTr3JsaS44/ea4ytA5aQKC/FN
+aSBazvnWoAmsPIcpU7yGWOrty9l79R91YKZowMfRigTE7TybUz7dRWdVC392VbEX
+im5uZrWASCPIjD486RxX9gTpXIMV9MRsaI5T15udxopP4wnhH61//860r20YNUZT
+jWbrwuicJgJDokWquexFKgs16fguPg==
+=z78I
 -----END PGP SIGNATURE-----
 
---+AVar+9pDleK+I2g--
+--HwIw77EnpwgBYheE--
 
 
