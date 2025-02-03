@@ -4,102 +4,92 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id AFDF1C02194
-	for <qemu-devel@archiver.kernel.org>; Mon,  3 Feb 2025 13:42:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id AFA61C02192
+	for <qemu-devel@archiver.kernel.org>; Mon,  3 Feb 2025 13:55:33 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tewi6-0001ks-CD; Mon, 03 Feb 2025 08:41:58 -0500
+	id 1tewuT-0003jg-DB; Mon, 03 Feb 2025 08:54:45 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <imammedo@redhat.com>)
- id 1tewi4-0001kd-RT
- for qemu-devel@nongnu.org; Mon, 03 Feb 2025 08:41:57 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <imammedo@redhat.com>)
- id 1tewi3-0003fm-AJ
- for qemu-devel@nongnu.org; Mon, 03 Feb 2025 08:41:56 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1738590113;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=dhBJ+hCaRcSX/GLOKrl8eXDZTHXwWK2qzC6ZUGkMnLM=;
- b=GXx9BVNjlJCe0baUQwpOMKvnZ2lUAU53iPaHhVSda9o9qpg6HxIx0SQxfN70Z3o9msY3SG
- VCDqBrLQj1BPd74gw9x2tBRvNXE56IkwhbxiHVCzWRCa4j1Ah0hiIdWnBsDss+dUEAdDw2
- VfaRRR8o8RlRvYfXM0rpCnDDFtnUgeM=
-Received: from mail-wr1-f69.google.com (mail-wr1-f69.google.com
- [209.85.221.69]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-659-i03gYJjhNRuZdjQ1Le98ig-1; Mon, 03 Feb 2025 08:41:50 -0500
-X-MC-Unique: i03gYJjhNRuZdjQ1Le98ig-1
-X-Mimecast-MFC-AGG-ID: i03gYJjhNRuZdjQ1Le98ig
-Received: by mail-wr1-f69.google.com with SMTP id
- ffacd0b85a97d-385e03f54d0so1757794f8f.3
- for <qemu-devel@nongnu.org>; Mon, 03 Feb 2025 05:41:49 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1tewuR-0003jI-VA
+ for qemu-devel@nongnu.org; Mon, 03 Feb 2025 08:54:44 -0500
+Received: from mail-ej1-x62f.google.com ([2a00:1450:4864:20::62f])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1tewuQ-0004X1-2h
+ for qemu-devel@nongnu.org; Mon, 03 Feb 2025 08:54:43 -0500
+Received: by mail-ej1-x62f.google.com with SMTP id
+ a640c23a62f3a-aafc9d75f8bso887832366b.2
+ for <qemu-devel@nongnu.org>; Mon, 03 Feb 2025 05:54:41 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1738590879; x=1739195679; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:user-agent
+ :references:in-reply-to:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=ldokr/KBk3hFyfq13vhbUrReVg0Ihk5KXbZeoinvgYU=;
+ b=GVEaha7LjbSf3R/VHUOyhMqsRW0gy9JKPX52Y0CqIJ34EOA0I3AxHyyC36euy1DGZz
+ gNw3HWVV2YJtt59HJmzyFVOxhGHjk5SxrSUFeJfOYNxhfwYSEmkD1FALM0mMQE0O2l+L
+ L8KTKr4+jxs48F2PPDJiS81rV8EZII4u7cnG3xqFuTMXwno6ntyndzbiwKtF8Pk9+yQC
+ HlshShlB1kAkEJ6CATvZxrmWEkhJszuri7wtuyR4sW6TG/zRBtkBTeXLobjCZzqkm8Wi
+ 4V/mThg/ws2x8YWwRzjY55u1XuP5Bj1+D/FXs3aQbucPUWLV9PwEHdDIEFPO53k43ISu
+ 1/Ww==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1738590109; x=1739194909;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:subject:cc:to:from:date:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=dhBJ+hCaRcSX/GLOKrl8eXDZTHXwWK2qzC6ZUGkMnLM=;
- b=XhUvHUq6At/Ht6ZHVnBs/JLbF06Q/hTT6/Y2m1W7lgxofcQQpfxEgVr0A0NLzm9w9O
- RlHvQ+z9bik3jaNGzqtEAPSMPIK8ANVh3XBCwtU8pVRiNPQBH767uvgRDIiHf5QsDoHr
- +IT+NHV0e7hzV91dPlSID5MD9DLrvlfMeIs3VbEUmNaY2m/noU3gXlGH6Q9t+Uo1zs5/
- 8HXuNeraJ1g+NS2X4WJktNDl2AvA/W3niNeYYK8s5bepgus7VMEwv42B9T/LMbnO3MX5
- rneyLHIfJWIwDvf0N0jXuMg9QOd1ncLzEief9NRoAh6nMU/V57Vo1E77oMpgJG1Kh3Bm
- yyMw==
-X-Forwarded-Encrypted: i=1;
- AJvYcCXm/q2fDx817R4A8rVQqkIBW6sfEkXNfXdtEpHdQJSO/7YTG0XDt3XPWxnkoAQE6oO1LqMhNqm0BxSf@nongnu.org
-X-Gm-Message-State: AOJu0YzzZlLBA/rHmMhvCG8LwDwBAzlMsL2shVigZxBvH5cMLKd09Nv4
- ncW1g4T1ecJjUbolZNUspe5aorMf4tVvYXX3UHNW1ZFfcnMF0rdy6osSfc7EReo6Up85S46b7hv
- TJIdeUmqn8pJyVDeW8dSLhJ3n9+lpI4BqAV+RQSnwigVc7xLrTZhG
-X-Gm-Gg: ASbGnctdWNKioKgrZ8ymi/BaXYJAr5Ra6zBGqAcIVVuHdCG5yZbWcNw6vg6ufID+X5B
- TrZpYDT3MGljjottXHL3zQvLBtF0ZBjRmP+PNVYpRynZb1Wt4Lr3wZJUGkJ1WG/CydwakH3kmM1
- ALJmhNQANJS7epXc33hiPfxDx40uHuvMnPGcLCTEGcgL0Q4pDQPmV+4d6UuX/U5E0PhqUDs5swd
- 9xbsLc7eHgzJp2hTNi3/SKAplLGAu19cxB0BM7HTfmQGFS6VLeIyn+kkwz3MebA3Rx2F1tpgiqE
- qdq/LyA6M1N9iPsscR2IpXkrP7nSQXXCLURpyyVYkhcO3NDB+WC3
-X-Received: by 2002:a5d:6c66:0:b0:382:6f3:a20f with SMTP id
- ffacd0b85a97d-38c51930efdmr16806879f8f.11.1738590108838; 
- Mon, 03 Feb 2025 05:41:48 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IFseaFy2uoghFvsLt3OCFWC6qb8SE+SmhTMyVZiVfT94VaAqxVWgt+Vb4X+ABRz55jVdTlA4A==
-X-Received: by 2002:a5d:6c66:0:b0:382:6f3:a20f with SMTP id
- ffacd0b85a97d-38c51930efdmr16806854f8f.11.1738590108485; 
- Mon, 03 Feb 2025 05:41:48 -0800 (PST)
-Received: from imammedo.users.ipa.redhat.com (nat-pool-brq-t.redhat.com.
- [213.175.37.10]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-438e23de772sm154182255e9.13.2025.02.03.05.41.47
+ d=1e100.net; s=20230601; t=1738590879; x=1739195679;
+ h=content-transfer-encoding:mime-version:message-id:date:user-agent
+ :references:in-reply-to:subject:cc:to:from:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=ldokr/KBk3hFyfq13vhbUrReVg0Ihk5KXbZeoinvgYU=;
+ b=J3VTcx9tAnOzOlZHWQz9pKNPr3apCr45iVQGIRQmW1cPlhdpiwW+vfT+4rUfN9XI/8
+ y8lIBScA9HuCQazB3s1uFm4X+F2mLrqjvoNH8TPgQH3xaG3pq7Dvo1bVfYeNrWEnHn+E
+ fnG31GCN0Yq1SaQHqvm2WyZZuAuiuvLuPgwlwUPJkzE/UoEPRKbKcr3coxyfkhgfVkQH
+ dS3TxYoTMESYlKJynEeL1NrF+uWe6awcOIWY0eCSJUiSlGuji7iTab971K1wopv6TJSv
+ ZBYf/t2A/H/T2CKsBd8EG1HN2QFG34k2UnrSXmv/L60lWmhWjd5iSG7jL/Mx64NQEg1u
+ m1Ig==
+X-Gm-Message-State: AOJu0Yxv5T+40Uwavf3rD6U9XBiueosIc8y/Kl1NQgT35gpf581LGrWz
+ bXwBJ4UaMn0aWUvelf0awwE+qbzw8/bWemE1DBbjceR75YhODUVr+LVG3ojKlcA=
+X-Gm-Gg: ASbGncsYtpZr6xZC1Cr8NcKI2bk47i0fog5k5zLaCoU+FkclOTzGS8XjFIKUlYpyii5
+ vbWhXC/FjCmeU80iswADDvA0ngFaD/lcKYXoEcYHzZkIuRLgFuMsvxSue6tGC91k/GmmZLStSrt
+ HosqdNF0zGDtz6EkNgfEMEQjNq6ctywuPSOK3VSPbYgU+QWfkScywnCEJa1q26HT25S4cdI2fLK
+ CSnMbYNtymEO9SNH+K26cscDB1QWw7uiHxrIEHaI3Re7x4qaOkEdfOlW/fxM8KTmvLrgjDEl2ZC
+ m6msZN5QVrVFErd+xQ==
+X-Google-Smtp-Source: AGHT+IFKYbSqFuV2WLP8XV0rVh4N3yalwsoDnWqgsjRMKqr9uymKaH8vJbAbRlQwLYmVXWj9ZIZrvw==
+X-Received: by 2002:a17:907:7fa4:b0:aae:8843:9029 with SMTP id
+ a640c23a62f3a-ab6cfdc6008mr2590040266b.48.1738590878754; 
+ Mon, 03 Feb 2025 05:54:38 -0800 (PST)
+Received: from draig.lan ([185.126.160.109]) by smtp.gmail.com with ESMTPSA id
+ a640c23a62f3a-ab6e47d11a2sm765722566b.64.2025.02.03.05.54.38
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 03 Feb 2025 05:41:47 -0800 (PST)
-Date: Mon, 3 Feb 2025 14:41:46 +0100
-From: Igor Mammedov <imammedo@redhat.com>
-To: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
-Cc: "Michael S . Tsirkin" <mst@redhat.com>, Jonathan Cameron
- <Jonathan.Cameron@huawei.com>, Shiju Jose <shiju.jose@huawei.com>,
- qemu-arm@nongnu.org, qemu-devel@nongnu.org, Ani Sinha
- <anisinha@redhat.com>, Dongjiu Geng <gengdongjiu1@gmail.com>,
- linux-kernel@vger.kernel.org
-Subject: Re: [PATCH v3 02/14] acpi/ghes: add a firmware file with HEST address
-Message-ID: <20250203144146.67655189@imammedo.users.ipa.redhat.com>
-In-Reply-To: <5082df62da57450674413f13c20e937330676a0a.1738345063.git.mchehab+huawei@kernel.org>
-References: <cover.1738345063.git.mchehab+huawei@kernel.org>
- <5082df62da57450674413f13c20e937330676a0a.1738345063.git.mchehab+huawei@kernel.org>
-X-Mailer: Claws Mail 4.3.0 (GTK 3.24.43; x86_64-redhat-linux-gnu)
+ Mon, 03 Feb 2025 05:54:38 -0800 (PST)
+Received: from draig (localhost [IPv6:::1])
+ by draig.lan (Postfix) with ESMTP id 520935F8BF;
+ Mon,  3 Feb 2025 13:54:37 +0000 (GMT)
+From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
+To: Richard Henderson <richard.henderson@linaro.org>
+Cc: qemu-devel@nongnu.org,  pbonzini@redhat.com,
+ mark.cave-ayland@ilande.co.uk,  berrange@redhat.com,  philmd@linaro.org,
+ thuth@redhat.com
+Subject: Re: [PATCH v2 12/14] meson: Disallow 64-bit on 32-bit TCG emulation
+In-Reply-To: <20250203031821.741477-13-richard.henderson@linaro.org> (Richard
+ Henderson's message of "Sun, 2 Feb 2025 19:18:19 -0800")
+References: <20250203031821.741477-1-richard.henderson@linaro.org>
+ <20250203031821.741477-13-richard.henderson@linaro.org>
+User-Agent: mu4e 1.12.8; emacs 29.4
+Date: Mon, 03 Feb 2025 13:54:37 +0000
+Message-ID: <87o6zjcew2.fsf@draig.linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=imammedo@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:20::62f;
+ envelope-from=alex.bennee@linaro.org; helo=mail-ej1-x62f.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -115,83 +105,143 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, 31 Jan 2025 18:42:43 +0100
-Mauro Carvalho Chehab <mchehab+huawei@kernel.org> wrote:
+Richard Henderson <richard.henderson@linaro.org> writes:
 
-> Store HEST table address at GPA, placing its the start of the table at
-> hest_addr_le variable.
-> 
-> Signed-off-by: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
-> Reviewed-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+> For system mode, we can rarely support the amount of RAM that
+> the guest requires. Emulation is restricted to round-robin
+> mode, which solves many of the atomicity issues, but not those
+> associated with virtio.  In any case, round-robin does nothing
+> to help the speed of emulation.
+>
+> For user mode, most emulation does not succeed at all.  Most
+> of the time we cannot even load 64-bit non-PIE binaries due
+> to lack of a 64-bit address space.  Threads are run in
+> parallel, not round-robin, which means that atomicity
+> is not handled.
 
-Reviewed-by: Igor Mammedov <imammedo@redhat.com>
+I think in itself is not enough, on aarch64.ci.org:
 
+  ./../configure --disable-docs --disable-tools --cross-prefix=3Darm-linux-=
+gnueabihf-
+
+Should only build 32 bit binaries. Which it does:
+
+  13:52:57 [alex@aarch64:~/l/q/b/arm32.crossbuild] review/deprecate-64-on-3=
+2-v2|=E2=80=A6 + ls qemu-*
+  qemu-arm         qemu-keymap        qemu-mipsel       qemu-sh4         qe=
+mu-system-i386    qemu-system-ppc      qemu-system-sparc     qemu-xtensa
+  qemu-armeb       qemu-m68k          qemu-options.def  qemu-sh4eb       qe=
+mu-system-m68k    qemu-system-riscv32  qemu-system-tricore   qemu-xtensaeb
+  qemu-hexagon     qemu-microblaze    qemu-or1k         qemu-sparc       qe=
+mu-system-mips    qemu-system-rx       qemu-system-xtensa
+  qemu-i386        qemu-microblazeel  qemu-ppc          qemu-system-arm  qe=
+mu-system-mipsel  qemu-system-sh4      qemu-system-xtensaeb
+  qemu-img-cmds.h  qemu-mips          qemu-riscv32      qemu-system-avr  qe=
+mu-system-or1k    qemu-system-sh4eb    qemu-version.h
+
+However make check-tcg fails because:
+
+  13:53:09 [alex@aarch64:~/l/q/b/arm32.crossbuild] review/deprecate-64-on-3=
+2-v2|=E2=80=A6 + cat config-host.mak=20
+  # Automatically generated by configure - do not modify
+
+  all:
+  SRC_PATH=3D/home/alex/lsrc/qemu.git
+  TARGET_DIRS=3Daarch64-linux-user aarch64_be-linux-user alpha-linux-user a=
+rm-linux-user armeb-linux-user hexagon-linux-user hppa-linux-user i386-linu=
+x-user loongarch64-linux-user m68k-linux-user microblaze-linux-user microbl=
+azeel-linux-user mips-linux-user mips64-linux-user mips64el-linux-user mips=
+el-linux-user mipsn32-linux-user mipsn32el-linux-user or1k-linux-user ppc-l=
+inux-user ppc64-linux-user ppc64le-linux-user riscv32-linux-user riscv64-li=
+nux-user s390x-linux-user sh4-linux-user sh4eb-linux-user sparc-linux-user =
+sparc32plus-linux-user sparc64-linux-user x86_64-linux-user xtensa-linux-us=
+er xtensaeb-linux-user aarch64-softmmu alpha-softmmu arm-softmmu avr-softmm=
+u hppa-softmmu i386-softmmu loongarch64-softmmu m68k-softmmu microblaze-sof=
+tmmu microblazeel-softmmu mips-softmmu mips64-softmmu mips64el-softmmu mips=
+el-softmmu or1k-softmmu ppc-softmmu ppc64-softmmu riscv32-softmmu riscv64-s=
+oftmmu rx-softmmu s390x-softmmu sh4-softmmu sh4eb-softmmu sparc-softmmu spa=
+rc64-softmmu tricore-softmmu x86_64-softmmu xtensa-softmmu xtensaeb-softmmu
+  GDB=3D/usr/bin/gdb-multiarch
+  RUNC=3Ddocker
+  SUBDIRS=3D pc-bios/optionrom pc-bios/s390-ccw
+  PYTHON=3D/home/alex/lsrc/qemu.git/builds/arm32.crossbuild/pyvenv/bin/pyth=
+on3 -B
+  MKVENV_ENSUREGROUP=3D/home/alex/lsrc/qemu.git/builds/arm32.crossbuild/pyv=
+env/bin/python3 -B /home/alex/lsrc/qemu.git/python/scripts/mkvenv.py ensure=
+group  --online
+  GENISOIMAGE=3D/usr/bin/genisoimage
+  MESON=3D/home/alex/lsrc/qemu.git/builds/arm32.crossbuild/pyvenv/bin/meson
+  NINJA=3D/usr/bin/ninja
+  EXESUF=3D
+  CONFIG_DEFAULT_TARGETS=3Dy
+  TCG_TESTS_TARGETS=3D aarch64-linux-user arm-linux-user i386-linux-user mi=
+ps64el-linux-user mipsel-linux-user riscv64-linux-user s390x-linux-user aar=
+ch64-softmmu arm-softmmu i386-softmmu riscv64-softmmu s390x-softmmu
+
+So possible TCG_TESTS_TARGET needs to be merged with the meson code?
+Also do we still use TARGET_DIRS?
+
+>
+> Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 > ---
->  hw/acpi/ghes.c         | 16 ++++++++++++++++
->  include/hw/acpi/ghes.h |  1 +
->  2 files changed, 17 insertions(+)
-> 
-> diff --git a/hw/acpi/ghes.c b/hw/acpi/ghes.c
-> index 4cabb177ad47..27478f2d5674 100644
-> --- a/hw/acpi/ghes.c
-> +++ b/hw/acpi/ghes.c
-> @@ -30,6 +30,7 @@
->  
->  #define ACPI_HW_ERROR_FW_CFG_FILE           "etc/hardware_errors"
->  #define ACPI_HW_ERROR_ADDR_FW_CFG_FILE      "etc/hardware_errors_addr"
-> +#define ACPI_HEST_ADDR_FW_CFG_FILE          "etc/acpi_table_hest_addr"
->  
->  /* The max size in bytes for one error block */
->  #define ACPI_GHES_MAX_RAW_DATA_LENGTH   (1 * KiB)
-> @@ -349,8 +350,11 @@ void acpi_build_hest(GArray *table_data, GArray *hardware_errors,
->  {
->      AcpiTable table = { .sig = "HEST", .rev = 1,
->                          .oem_id = oem_id, .oem_table_id = oem_table_id };
-> +    uint32_t hest_offset;
->      int i;
->  
-> +    hest_offset = table_data->len;
+>  meson.build | 14 +++++++++++---
+>  1 file changed, 11 insertions(+), 3 deletions(-)
+>
+> diff --git a/meson.build b/meson.build
+> index 5ca3cc3f34..866b8ce477 100644
+> --- a/meson.build
+> +++ b/meson.build
+> @@ -3176,6 +3176,9 @@ if host_os =3D=3D 'windows'
+>    endif
+>  endif
+>=20=20
+> +# Detect host pointer size for the target configuration loop.
+> +host_long_bits =3D cc.sizeof('void *') * 8
 > +
->      build_ghes_error_table(hardware_errors, linker, num_sources);
->  
->      acpi_table_begin(&table, table_data);
-> @@ -362,6 +366,15 @@ void acpi_build_hest(GArray *table_data, GArray *hardware_errors,
+>  ########################
+>  # Target configuration #
+>  ########################
+> @@ -3268,11 +3271,18 @@ foreach target : target_dirs
 >      }
->  
->      acpi_table_end(linker, &table);
+>    endif
+>=20=20
+> +  config_target +=3D keyval.load('configs/targets' / target + '.mak')
 > +
-> +    /*
-> +     * Tell firmware to write into GPA the address of HEST via fw_cfg,
-> +     * once initialized.
-> +     */
-> +    bios_linker_loader_write_pointer(linker,
-> +                                     ACPI_HEST_ADDR_FW_CFG_FILE, 0,
-> +                                     sizeof(uint64_t),
-> +                                     ACPI_BUILD_TABLE_FILE, hest_offset);
->  }
->  
->  void acpi_ghes_add_fw_cfg(AcpiGhesState *ags, FWCfgState *s,
-> @@ -375,6 +388,9 @@ void acpi_ghes_add_fw_cfg(AcpiGhesState *ags, FWCfgState *s,
->      fw_cfg_add_file_callback(s, ACPI_HW_ERROR_ADDR_FW_CFG_FILE, NULL, NULL,
->          NULL, &(ags->hw_error_le), sizeof(ags->hw_error_le), false);
->  
-> +    fw_cfg_add_file_callback(s, ACPI_HEST_ADDR_FW_CFG_FILE, NULL, NULL,
-> +        NULL, &(ags->hest_addr_le), sizeof(ags->hest_addr_le), false);
-> +
->      ags->present = true;
->  }
->  
-> diff --git a/include/hw/acpi/ghes.h b/include/hw/acpi/ghes.h
-> index 9f0120d0d596..237721fec0a2 100644
-> --- a/include/hw/acpi/ghes.h
-> +++ b/include/hw/acpi/ghes.h
-> @@ -58,6 +58,7 @@ enum AcpiGhesNotifyType {
->  };
->  
->  typedef struct AcpiGhesState {
-> +    uint64_t hest_addr_le;
->      uint64_t hw_error_le;
->      bool present; /* True if GHES is present at all on this board */
->  } AcpiGhesState;
+>    target_kconfig =3D []
+>    foreach sym: accelerators
+>      if sym =3D=3D 'CONFIG_TCG'
+> +      # Disallow 64-bit on 32-bit TCG emulation.
+> +      if host_long_bits < config_target['TARGET_LONG_BITS'].to_int()
+> +        continue
+> +      endif
+>        config_target +=3D { 'CONFIG_TCG_TARGET': 'y' }
+>      elif target not in accelerator_targets.get(sym, [])
+> +      # Other accelerators are handled by accelerator_targets.
+>        continue
+>      endif
+>      config_target +=3D { sym: 'y' }
+> @@ -3286,9 +3296,6 @@ foreach target : target_dirs
+>      error('No accelerator available for target @0@'.format(target))
+>    endif
+>=20=20
+> -  config_target +=3D keyval.load('configs/targets' / target + '.mak')
+> -  config_target +=3D { 'TARGET_' + config_target['TARGET_ARCH'].to_upper=
+(): 'y' }
+> -
+>    if 'TARGET_NEED_FDT' in config_target and not fdt.found()
+>      if default_targets
+>        warning('Disabling ' + target + ' due to missing libfdt')
+> @@ -3301,6 +3308,7 @@ foreach target : target_dirs
+>    actual_target_dirs +=3D target
+>=20=20
+>    # Add default keys
+> +  config_target +=3D { 'TARGET_' + config_target['TARGET_ARCH'].to_upper=
+(): 'y' }
+>    if 'TARGET_BASE_ARCH' not in config_target
+>      config_target +=3D {'TARGET_BASE_ARCH': config_target['TARGET_ARCH']}
+>    endif
 
+--=20
+Alex Benn=C3=A9e
+Virtualisation Tech Lead @ Linaro
 
