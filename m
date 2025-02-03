@@ -4,80 +4,86 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E20EBC02192
-	for <qemu-devel@archiver.kernel.org>; Mon,  3 Feb 2025 17:20:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DEDDFC02192
+	for <qemu-devel@archiver.kernel.org>; Mon,  3 Feb 2025 17:20:31 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tf06e-00089O-SV; Mon, 03 Feb 2025 12:19:32 -0500
+	id 1tf075-0008Q1-1Z; Mon, 03 Feb 2025 12:20:01 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1tf06Z-00088l-1r
- for qemu-devel@nongnu.org; Mon, 03 Feb 2025 12:19:27 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1tf06W-0003zK-Ty
- for qemu-devel@nongnu.org; Mon, 03 Feb 2025 12:19:26 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1738603164;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=S0tI05i+8GGcd69N8Bm/yfybVpUFCQn7IdSKu5mVK94=;
- b=ipfUduYT2gNQ5jXOUqep2m9vtF4Odx/Ljb546GxLsEFbOdoSBrQeRolJ1mMEHN9hbXnlB5
- d0hL2VViSFMBL6knLjvt7EfBvmQS4dutIe8Ay9HIuqGB4XH4U6W886fon3AyfRkpTPjZ5c
- mL9dGPtcUCZpFulWo4BitjooqBPBxAM=
-Received: from mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-327-KSg7_vKZP7CLHD4m9U_2cw-1; Mon,
- 03 Feb 2025 12:19:20 -0500
-X-MC-Unique: KSg7_vKZP7CLHD4m9U_2cw-1
-X-Mimecast-MFC-AGG-ID: KSg7_vKZP7CLHD4m9U_2cw
-Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id AF83519560B4; Mon,  3 Feb 2025 17:19:18 +0000 (UTC)
-Received: from localhost (unknown [10.39.208.25])
- by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 3E9FA1800267; Mon,  3 Feb 2025 17:19:16 +0000 (UTC)
-From: marcandre.lureau@redhat.com
-To: qemu-devel@nongnu.org
-Cc: Mahmoud Mandour <ma.mandourr@gmail.com>,
- Pierrick Bouvier <pierrick.bouvier@linaro.org>,
- =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
- Markus Armbruster <armbru@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
- Gerd Hoffmann <kraxel@redhat.com>, Eric Blake <eblake@redhat.com>,
- =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
- peter.maydell@linaro.org, Alexandre Iooss <erdnaxe@crans.org>,
- Roman Penyaev <r.peniaev@gmail.com>
-Subject: [PULL v2 4/8] qemu-options.hx: describe hub chardev and aggregation
- of several backends
-Date: Mon,  3 Feb 2025 21:18:44 +0400
-Message-ID: <20250203171848.686582-5-marcandre.lureau@redhat.com>
-In-Reply-To: <20250203171848.686582-1-marcandre.lureau@redhat.com>
-References: <20250203171848.686582-1-marcandre.lureau@redhat.com>
+ (Exim 4.90_1) (envelope-from <marcandre.lureau@gmail.com>)
+ id 1tf06s-0008N0-Ox
+ for qemu-devel@nongnu.org; Mon, 03 Feb 2025 12:19:46 -0500
+Received: from mail-qt1-x82b.google.com ([2607:f8b0:4864:20::82b])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <marcandre.lureau@gmail.com>)
+ id 1tf06q-00040c-Up
+ for qemu-devel@nongnu.org; Mon, 03 Feb 2025 12:19:46 -0500
+Received: by mail-qt1-x82b.google.com with SMTP id
+ d75a77b69052e-467b74a1754so59821391cf.1
+ for <qemu-devel@nongnu.org>; Mon, 03 Feb 2025 09:19:44 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20230601; t=1738603183; x=1739207983; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=Hz7Qpw8DiAEmNhs73hTo78lZWzySWRHjnujk7zGlscY=;
+ b=hYIemv04Q9MRa2xgkstSlpmC9OjTgYdfGVlKLGH9xGtn8Ezk1sooWVik4hHTi/k+ak
+ lKf4E6OF1yLjgzsYWn9EOH6fvayhLDhTkNmAbECIdG7jo4FH7yntP788WeVJVMNiSyb4
+ oXgGcr2wyU6ghHH8MOogZTazqq6EnPrcnTuJYOmyt/66qjzTCHkV870nFTpeBR3X1QZK
+ F7q4t7Sq2A6bqTdZQqLmOD2VqFP402A7+EMnSc2IbLk1Tx02NiohpM+5SRYfEyjCB8UH
+ Jw+kuernrDTnWBghna05sS09FppWXvQcmDlrwIzM9bpa83LPMoSmx5Phz2riyR4M4ZQf
+ 2fvA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1738603183; x=1739207983;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=Hz7Qpw8DiAEmNhs73hTo78lZWzySWRHjnujk7zGlscY=;
+ b=E8uYZIodiIQcZmDtpgVVVmOczaGY4Ag6hCHYDFo3c/kSKmYZTIg75vyjioMr7w662a
+ w7DmBWJ8JaG5sbtx83Mtz2SylMqkuS21uXAq5RvSo4sLtMZwymsERwK6oXrFcaOQOhiP
+ NDVO3+i3rqJgrsNOoE2yhUtw/2kbheepKlp/XQe9xdOAp/LHXKJPD/5Y2PWzXLk7cW5O
+ CpqOxiSa9lZ0yS5bVJLlaxxNst7htcEWSTsUey6I0ZRZy8epNA+fWm2tTdTouQh6f82l
+ yVjjEeDO99nIDhbxwZNfVEGwU+NWVg2IbjyxoGWYv2/zVAJ1pQ6RfUhRLfDIwhyeMGBK
+ jzqQ==
+X-Gm-Message-State: AOJu0YyNjssmL3h6pA++KOwklMfA9Zra4fbltztrg2c8UF2EOyETi1r6
+ wl570rJNB9C5/4k9OCYSe0T378rSPWDgzIuMqYQvwQPwvVqcXZFhd4bQsDapCwc+sEt0nXy9xGs
+ TpfD2M4oZhzbCEUUA9Qhw0I/fCKs=
+X-Gm-Gg: ASbGncsyMAQRt247nj0YiwUBSS2uGEspz7C5qMkHL58GQi6AFeXnn3Gz68klkYw4MZa
+ EUqIpZKPse8WHK65f3VMQjPG2mJTOIEGMxkdObJ0JFrKQuPj7fGKzD9uqZGW0Ll2PW9DOqR+Sya
+ SO2oXSnYrQqiEp4krHAsrWxd9dhdatSg==
+X-Google-Smtp-Source: AGHT+IEoo9SWoVqyDNx5yAEN7cos/yy0Tvh6OZM0ChIWG0d9ot6w207N7xSI4Miu9w6p0aHKFIZX/RCivqwwNyxobdU=
+X-Received: by 2002:a05:622a:1e92:b0:467:6226:bfc1 with SMTP id
+ d75a77b69052e-46fd0adcbeamr329809341cf.29.1738603183091; Mon, 03 Feb 2025
+ 09:19:43 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
-Received-SPF: pass client-ip=170.10.129.124;
- envelope-from=marcandre.lureau@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
+References: <20250203125721.640451-1-marcandre.lureau@redhat.com>
+ <CAJSP0QX+zW0eenxwdZL4=jrdXB2=dVjpb2hw8BzFM7Ee9EHdrw@mail.gmail.com>
+In-Reply-To: <CAJSP0QX+zW0eenxwdZL4=jrdXB2=dVjpb2hw8BzFM7Ee9EHdrw@mail.gmail.com>
+From: =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@gmail.com>
+Date: Mon, 3 Feb 2025 21:19:31 +0400
+X-Gm-Features: AWEUYZl-taOUzofv75peo87aMeua-83_LLNT4uQsBS9I7Ob8hq21TBnoU1BbH3E
+Message-ID: <CAJ+F1CJifV4Dk_7fCoH6arHZYDRo=eOr-uDGVbDLVVuU8z1Uew@mail.gmail.com>
+Subject: Re: [PULL 0/8] Ui patches
+To: Stefan Hajnoczi <stefanha@gmail.com>
+Cc: qemu-devel@nongnu.org, Eric Blake <eblake@redhat.com>, 
+ Paolo Bonzini <pbonzini@redhat.com>, Mahmoud Mandour <ma.mandourr@gmail.com>, 
+ Markus Armbruster <armbru@redhat.com>, peter.maydell@linaro.org, 
+ Gerd Hoffmann <kraxel@redhat.com>, Alexandre Iooss <erdnaxe@crans.org>, 
+ =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>, 
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2607:f8b0:4864:20::82b;
+ envelope-from=marcandre.lureau@gmail.com; helo=mail-qt1-x82b.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -93,95 +99,53 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Roman Penyaev <r.peniaev@gmail.com>
+Hi
 
-This adds a few lines describing `hub` aggregator configuration
-for aggregation of several backend devices with a single frontend
-device.
+On Mon, Feb 3, 2025 at 6:29=E2=80=AFPM Stefan Hajnoczi <stefanha@gmail.com>=
+ wrote:
+>
+> On Mon, Feb 3, 2025 at 7:58=E2=80=AFAM <marcandre.lureau@redhat.com> wrot=
+e:
+> >
+> > From: Marc-Andr=C3=A9 Lureau <marcandre.lureau@redhat.com>
+> >
+> > The following changes since commit 6fccaa2fba391815308a746d68f7fa197bc9=
+3586:
+> >
+> >   Merge tag 'block-pull-request' of https://gitlab.com/stefanha/qemu in=
+to staging (2025-02-02 11:09:10 -0500)
+> >
+> > are available in the Git repository at:
+> >
+> >   https://gitlab.com/marcandre.lureau/qemu.git tags/ui-pull-request
+> >
+> > for you to fetch changes up to f327a2cea1502a8cad2beb13bc4e2c12b95b10ba=
+:
+> >
+> >   dbus: add -audio dbus nsamples option (2025-02-03 13:58:08 +0400)
+> >
+> > ----------------------------------------------------------------
+> > UI/chardev-related patch queue
+> >
+> > ----------------------------------------------------------------
+> >
+> > Marc-Andr=C3=A9 Lureau (4):
+> >   ui/dbus: on win32, allow ANONYMOUS with p2p
+>
+> Hi Marc-Andr=C3=A9,
+> There is an unexpected submodule update in this commit. Although it's
+> not included in the patch email sent to the mailing list, GitLab shows
+> it:
+> https://gitlab.com/marcandre.lureau/qemu/-/commit/31d9023965ba1963afd1e0e=
+0f48c75399a7bc23e
+>
+> Please rebase onto qemu.git/master and remove the spurious libvirt-ci
+> submodule update before resending this pull request. Thank you!
+>
 
-Signed-off-by: Roman Penyaev <r.peniaev@gmail.com>
-Reviewed-by: "Marc-André Lureau" <marcandre.lureau@redhat.com>
-Cc: qemu-devel@nongnu.org
-Message-ID: <20250123085327.965501-5-r.peniaev@gmail.com>
----
- qemu-options.hx | 49 +++++++++++++++++++++++++++++++++++++++++++++----
- 1 file changed, 45 insertions(+), 4 deletions(-)
+Sorry, bad .gitconfig.. resent, thanks
 
-diff --git a/qemu-options.hx b/qemu-options.hx
-index d19bf533d6..ec0090dfe2 100644
---- a/qemu-options.hx
-+++ b/qemu-options.hx
-@@ -3733,7 +3733,7 @@ SRST
- The general form of a character device option is:
- 
- ``-chardev backend,id=id[,mux=on|off][,options]``
--    Backend is one of: ``null``, ``socket``, ``udp``, ``msmouse``,
-+    Backend is one of: ``null``, ``socket``, ``udp``, ``msmouse``, ``hub``,
-     ``vc``, ``ringbuf``, ``file``, ``pipe``, ``console``, ``serial``,
-     ``pty``, ``stdio``, ``braille``, ``parallel``,
-     ``spicevmc``, ``spiceport``. The specific backend will determine the
-@@ -3790,9 +3790,10 @@ The general form of a character device option is:
-     the QEMU monitor, and ``-nographic`` also multiplexes the console
-     and the monitor to stdio.
- 
--    There is currently no support for multiplexing in the other
--    direction (where a single QEMU front end takes input and output from
--    multiple chardevs).
-+    If you need to aggregate data in the opposite direction (where one
-+    QEMU frontend interface receives input and output from multiple
-+    backend chardev devices), please refer to the paragraph below
-+    regarding chardev ``hub`` aggregator device configuration.
- 
-     Every backend supports the ``logfile`` option, which supplies the
-     path to a file to record all data transmitted via the backend. The
-@@ -3892,6 +3893,46 @@ The available backends are:
-     Forward QEMU's emulated msmouse events to the guest. ``msmouse``
-     does not take any options.
- 
-+``-chardev hub,id=id,chardevs.0=id[,chardevs.N=id]``
-+    Explicitly create chardev backend hub device with the possibility
-+    to aggregate input from multiple backend devices and forward it to
-+    a single frontend device. Additionally, ``hub`` device takes the
-+    output from the frontend device and sends it back to all the
-+    connected backend devices. This allows for seamless interaction
-+    between different backend devices and a single frontend
-+    interface. Aggregation supported for up to 4 chardev
-+    devices. (Since 10.0)
-+
-+    For example, the following is a use case of 2 backend devices:
-+    virtual console ``vc0`` and a pseudo TTY ``pty0`` connected to
-+    a single virtio hvc console frontend device with a hub ``hub0``
-+    help. Virtual console renders text to an image, which can be
-+    shared over the VNC protocol. In turn, pty backend provides
-+    bidirectional communication to the virtio hvc console over the
-+    pseudo TTY file. The example configuration can be as follows:
-+
-+    ::
-+
-+       -chardev pty,path=/tmp/pty,id=pty0 \
-+       -chardev vc,id=vc0 \
-+       -chardev hub,id=hub0,chardevs.0=pty0,chardevs.1=vc0 \
-+       -device virtconsole,chardev=hub0 \
-+       -vnc 0.0.0.0:0
-+
-+    Once QEMU starts VNC client and any TTY emulator can be used to
-+    control a single hvc console:
-+
-+    ::
-+
-+       # Start TTY emulator
-+       tio /tmp/pty
-+
-+       # Start VNC client and switch to virtual console Ctrl-Alt-2
-+       vncviewer :0
-+
-+    Several frontend devices is not supported. Stacking of multiplexers
-+    and hub devices is not supported as well.
-+
- ``-chardev vc,id=id[[,width=width][,height=height]][[,cols=cols][,rows=rows]]``
-     Connect to a QEMU text console. ``vc`` may optionally be given a
-     specific size.
--- 
-2.47.0
 
+--=20
+Marc-Andr=C3=A9 Lureau
 
