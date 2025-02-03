@@ -4,103 +4,139 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5573BC02192
-	for <qemu-devel@archiver.kernel.org>; Mon,  3 Feb 2025 10:12:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id F3309C02192
+	for <qemu-devel@archiver.kernel.org>; Mon,  3 Feb 2025 10:14:16 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tetQc-0007ge-Vw; Mon, 03 Feb 2025 05:11:43 -0500
+	id 1tetSm-0008UZ-NR; Mon, 03 Feb 2025 05:13:56 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <vaibhav@linux.ibm.com>)
- id 1tetQZ-0007gR-MW; Mon, 03 Feb 2025 05:11:39 -0500
-Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1tetSl-0008UL-Cj
+ for qemu-devel@nongnu.org; Mon, 03 Feb 2025 05:13:55 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <vaibhav@linux.ibm.com>)
- id 1tetQX-0006Ln-5j; Mon, 03 Feb 2025 05:11:39 -0500
-Received: from pps.filterd (m0360083.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 5131912p027580;
- Mon, 3 Feb 2025 10:11:35 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-type:date:from:in-reply-to:message-id:mime-version
- :references:subject:to; s=pp1; bh=Zop3bfX574f2ZgxeRBn8OI1uEUjFpm
- sIvehIjDwiN3M=; b=AJI5jQI5apq15HzPfzNtD0ORtfJaDrO7JfK1hDs4H1iW0J
- IJtZ/kaqB9xbDNtVOIrBfUgv7UXsOS4nJt8wtCVVGaMsJN2h85xeUQV6qxd25yxU
- 1OhrzbO5RJZnQsLrww8ts3le0t1DcCHp5bmrq7cUq60PCdPL/ri2SR/uG8QKCMHX
- MUiXD4oFKFpCPaPO7tglIMJmbgrgPrMfRQsLJd3brQmlFQU+JNe+qReWpA5688HT
- qz9JxHVZ2KLHlb4EMTTa6Ev5TkuiBrKkp5Vcw8A89ssmeb7h6bqt9Y1NChGb2iTa
- 2+BFgExYT4nUyhGcrjaCmpogikMxIOCa6Cdj1OKQ==
-Received: from pps.reinject (localhost [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 44jkv92424-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Mon, 03 Feb 2025 10:11:34 +0000 (GMT)
-Received: from m0360083.ppops.net (m0360083.ppops.net [127.0.0.1])
- by pps.reinject (8.18.0.8/8.18.0.8) with ESMTP id 513ABYix020374;
- Mon, 3 Feb 2025 10:11:34 GMT
-Received: from ppma22.wdc07v.mail.ibm.com
- (5c.69.3da9.ip4.static.sl-reverse.com [169.61.105.92])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 44jkv9241y-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Mon, 03 Feb 2025 10:11:34 +0000 (GMT)
-Received: from pps.filterd (ppma22.wdc07v.mail.ibm.com [127.0.0.1])
- by ppma22.wdc07v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 513747F0007139;
- Mon, 3 Feb 2025 10:11:33 GMT
-Received: from smtprelay01.fra02v.mail.ibm.com ([9.218.2.227])
- by ppma22.wdc07v.mail.ibm.com (PPS) with ESMTPS id 44hxaydvyn-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Mon, 03 Feb 2025 10:11:32 +0000
-Received: from smtpav01.fra02v.mail.ibm.com (smtpav01.fra02v.mail.ibm.com
- [10.20.54.100])
- by smtprelay01.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 513ABVvw54985036
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Mon, 3 Feb 2025 10:11:31 GMT
-Received: from smtpav01.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id F2BF52005A;
- Mon,  3 Feb 2025 10:11:30 +0000 (GMT)
-Received: from smtpav01.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 30CE52004F;
- Mon,  3 Feb 2025 10:11:28 +0000 (GMT)
-Received: from vaibhav?linux.ibm.com (unknown [9.39.18.190])
- by smtpav01.fra02v.mail.ibm.com (Postfix) with SMTP;
- Mon,  3 Feb 2025 10:11:27 +0000 (GMT)
-Received: by vaibhav@linux.ibm.com (sSMTP sendmail emulation);
- Mon, 03 Feb 2025 15:41:27 +0530
-From: Vaibhav Jain <vaibhav@linux.ibm.com>
-To: Harsh Prateek Bora <harshpb@linux.ibm.com>, qemu-devel@nongnu.org,
- kvm-ppc@vger.kernel.org, qemu-ppc@nongnu.org
-Cc: npiggin@gmail.com, shivaprasadbhat@gmail.com
-Subject: Re: [PATCH v2] spapr: nested: Add support for reporting Hostwide
- state counter
-In-Reply-To: <a6694f39-895e-4b7e-b0fe-2fce054451b7@linux.ibm.com>
-References: <20250123115538.86821-1-vaibhav@linux.ibm.com>
- <a6694f39-895e-4b7e-b0fe-2fce054451b7@linux.ibm.com>
-Date: Mon, 03 Feb 2025 15:41:26 +0530
-Message-ID: <87jza7xrqp.fsf@vajain21.in.ibm.com>
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1tetSj-0006Y8-IW
+ for qemu-devel@nongnu.org; Mon, 03 Feb 2025 05:13:55 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1738577631;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+ bh=0exFmvrS4HhnolaCfK/1SvegP48W+CqUdj3HiGolLUA=;
+ b=F6m1dH1LiTf/0MnbFxewrGMO/lWP8IMQPDZUeQQwjjW8r9rdzJ8xSuCbMl4VAypUxd1Fjm
+ nC8qedpVSnwWyYMX709YxnhTIAV9gmh+zQm6P1eJvv4Onv7427LK6PQD7BW4aNXki5k+Ht
+ 9GqN3XvzcA3aMDapUSe52rrFgHzLJlE=
+Received: from mail-wr1-f72.google.com (mail-wr1-f72.google.com
+ [209.85.221.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-45-ESIlqrbEP2CeHr9ZAllOVA-1; Mon, 03 Feb 2025 05:13:49 -0500
+X-MC-Unique: ESIlqrbEP2CeHr9ZAllOVA-1
+X-Mimecast-MFC-AGG-ID: ESIlqrbEP2CeHr9ZAllOVA
+Received: by mail-wr1-f72.google.com with SMTP id
+ ffacd0b85a97d-385e03f54d0so1654147f8f.3
+ for <qemu-devel@nongnu.org>; Mon, 03 Feb 2025 02:13:48 -0800 (PST)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1738577628; x=1739182428;
+ h=content-transfer-encoding:in-reply-to:autocrypt:content-language
+ :from:references:cc:to:subject:user-agent:mime-version:date
+ :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=0exFmvrS4HhnolaCfK/1SvegP48W+CqUdj3HiGolLUA=;
+ b=VneyzPdhzQQuZu01bm0cWX5sYBJpo7wV/7psRtgxU+gtUZndzirq161QXa6OvN2nO1
+ YhH3n9aebkVnejvVx0xP2tujU+WcI7A9wESkosIO+aU1msrZbA7DgVUYKi9W8VqY/ju6
+ Z6UGQm/y/kGklGlIeAcuQvRx1HnKbcauQl+jXW8uwvHCeZdPBTH7bHiTe9moqQJq9PH7
+ zZuaRz3uG+DnbFOmmrC5aAyZd7Docx40qaLMbi2cN36JIorR9T9l6rSHCd9e0q2Z+4Sv
+ WYtj62+D79jq1kFDswj+7crVolmWevg+VRm+ntkzhD1eTVHgL+EOgvQlYiV8VZ2+JcDz
+ EDGA==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCVZiGL2HVnHI16joDfZb9AQlmnKO4nEwK1J1sNL6LAi4tAm226PinA8qnN4Wg6CIM8k3f7cfkEwlbo1@nongnu.org
+X-Gm-Message-State: AOJu0YxCaDnzEXgto+g7fQmQjEEy1h/9zUvYz01NM0wQS6cbgZTyVmwD
+ k6EOVxqJnqBzfUmxL7XY6VHCmUjAZUxbstk/KU8lpbYep4UaJLYCBjL0oY8y7/CuIOERRrvhhBG
+ tywK2DGje6rT0vhEBteve2KGfTYcKejAjY3BMuBGs+2mxnWdkusUINZ1bIFqJ
+X-Gm-Gg: ASbGncvsaC+0kA6nccOJ5rnyh6dInaIyPmGyenw9LbACPBY9WaWCH1rjo65zpKoitwc
+ d+RoY1uNQbFXsSyZjJOt6ROiAqXvcrn0gmPzhFPNTOFv7c3I4xVkuoKBF5hxG64gu+WGHhUJhJx
+ IP/LCOW/lg2qnzij1UM+mkAYbHP6gepgH3ejkpxoIOaM3z3l8xpE1rZxPaWZpTTvPx2JX5yLbhm
+ PY1jcu4mLlOz+0KHw+KHv9RH0oNTSjzxen8SVHFqKJi4Ur0eqzo6U6peTbo80lsTZ0pSOa5rO4m
+ h2rgi0hWBxHWPLXTWnpYDag7eoUcNQ==
+X-Received: by 2002:a5d:648b:0:b0:385:fc97:9c63 with SMTP id
+ ffacd0b85a97d-38c51930c8dmr15558260f8f.9.1738577627729; 
+ Mon, 03 Feb 2025 02:13:47 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IGj7WUCjGgpLTl6RK5C3frggMkZmmcLP7AalIP1v35OF+w5bc6ubLT2r3/s9HP+6TjJF+TYmw==
+X-Received: by 2002:a5d:648b:0:b0:385:fc97:9c63 with SMTP id
+ ffacd0b85a97d-38c51930c8dmr15558239f8f.9.1738577627377; 
+ Mon, 03 Feb 2025 02:13:47 -0800 (PST)
+Received: from [10.33.192.228] (nat-pool-str-t.redhat.com. [149.14.88.106])
+ by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-38c5c1cf896sm12630909f8f.94.2025.02.03.02.13.46
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Mon, 03 Feb 2025 02:13:47 -0800 (PST)
+Message-ID: <e093ff11-62c3-4ae6-8df8-206997f4862e@redhat.com>
+Date: Mon, 3 Feb 2025 11:13:46 +0100
 MIME-Version: 1.0
-Content-Type: text/plain
-X-TM-AS-GCONF: 00
-X-Proofpoint-GUID: QPKekz4yAFv-FjLRDPzu6SKnTCYxPyOd
-X-Proofpoint-ORIG-GUID: w2Ju0SiZDrACeYN9mP9nPbSf4Wh19FyY
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1057,Hydra:6.0.680,FMLib:17.12.68.34
- definitions=2025-02-03_04,2025-01-31_02,2024-11-22_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- bulkscore=0 mlxlogscore=999
- priorityscore=1501 impostorscore=0 mlxscore=0 suspectscore=0
- malwarescore=0 clxscore=1015 lowpriorityscore=0 spamscore=0 phishscore=0
- adultscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2501170000 definitions=main-2502030078
-Received-SPF: pass client-ip=148.163.156.1; envelope-from=vaibhav@linux.ibm.com;
- helo=mx0a-001b2d01.pphosted.com
-X-Spam_score_int: -26
-X-Spam_score: -2.7
-X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H2=-0.01, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] tests/functional: Extend the ppc64 e500 test
+To: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>, qemu-devel@nongnu.org
+Cc: Bernhard Beschow <shentey@gmail.com>
+References: <20250203095752.506043-1-clg@redhat.com>
+From: Thomas Huth <thuth@redhat.com>
+Content-Language: en-US
+Autocrypt: addr=thuth@redhat.com; keydata=
+ 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
+In-Reply-To: <20250203095752.506043-1-clg@redhat.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=thuth@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -30
+X-Spam_score: -3.1
+X-Spam_bar: ---
+X-Spam_report: (-3.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=-1, RCVD_IN_MSPIKE_WL=-0.01,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -116,294 +152,46 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Harsh Prateek Bora <harshpb@linux.ibm.com> writes:
+On 03/02/2025 10.57, Cédric Le Goater wrote:
+> The test sequence boots a ppce500 machine from kernel and disk.
+> 
+> The buildroot is built with the qemu_ppc64_e5500_defconfig config.
+> 
+> Signed-off-by: Cédric Le Goater <clg@redhat.com>
+> ---
+>   tests/functional/test_ppc64_e500.py | 30 +++++++++++++++++++++++++++++
+>   1 file changed, 30 insertions(+)
+> 
+> diff --git a/tests/functional/test_ppc64_e500.py b/tests/functional/test_ppc64_e500.py
+> index b92fe0b0e75e..f21d7d84177e 100755
+> --- a/tests/functional/test_ppc64_e500.py
+> +++ b/tests/functional/test_ppc64_e500.py
+> @@ -5,6 +5,7 @@
+>   # SPDX-License-Identifier: GPL-2.0-or-later
+>   
+>   from qemu_test import LinuxKernelTest, Asset
+> +from qemu_test import exec_command_and_wait_for_pattern
+>   
+>   
+>   class E500Test(LinuxKernelTest):
+> @@ -20,5 +21,34 @@ def test_ppc64_e500(self):
+>           self.launch_kernel(self.scratch_file('day19', 'uImage'),
+>                              wait_for='QEMU advent calendar')
+>   
+> +    ASSET_BR2_E5500_UIMAGE = Asset(
+> +        'https://github.com/legoater/qemu-ppc-boot/raw/refs/heads/main/buildroot/qemu_ppc64_e5500-2023.11-8-gdcd9f0f6eb-20240104/uImage',
+> +        '2478187c455d6cca3984e9dfde9c635d824ea16236b85fd6b4809f744706deda')
+> +
+> +    ASSET_BR2_E5500_ROOTFS = Asset(
+> +        'https://github.com/legoater/qemu-ppc-boot/raw/refs/heads/main//buildroot/qemu_ppc64_e5500-2023.11-8-gdcd9f0f6eb-20240104/rootfs.ext2',
+> +        '9035ef97237c84c7522baaff17d25cdfca4bb7a053d5e296e902919473423d76')
 
-> On 1/23/25 17:25, Vaibhav Jain wrote:
->> Add support for reporting Hostwide state counters for nested KVM pseries
->> guests running with 'cap-nested-papr' on Qemu-TCG acting as
->> L0-hypervisor. sPAPR supports reporting various stats counters for
->> Guest-Management-Area(GMA) thats owned by L0-Hypervisor and are documented
->> at [1]. These stats counters are exposed via a new bit-flag named
->> 'getHostWideState' for the H_GUEST_GET_STATE hcall. Once this flag is set
->> the hcall should populate the Guest-State-Elements in the requested GSB
->> with the stat counter values. Currently following five counters are
->> supported:
->> 
->> * host_heap		: The currently used bytes in the
->> 			  Hypervisor's Guest Management Space
->> 			  associated with the Host Partition.
->> * host_heap_max		: The maximum bytes available in the
->> 			  Hypervisor's Guest Management Space
->> 			  associated with the Host Partition.
->> * host_pagetable	: The currently used bytes in the
->> 			  Hypervisor's Guest Page Table Management
->> 			  Space associated with the Host Partition.
->> * host_pagetable_max	: The maximum bytes available in the
->> 			  Hypervisor's Guest Page Table Management
->> 			  Space associated with the Host Partition.
->> * host_pagetable_reclaim: The amount of space in bytes that has
->> 			  been reclaimed due to overcommit in the
->> 			  Hypervisor's Guest Page Table Management
->> 			  Space associated with the Host Partition.
->> 
->> At the moment '0' is being reported for all these counters as these
->> counters doesnt align with how L0-Qemu manages Guest memory.
->> 
->> The patch implements support for these counters by adding new members to
->> the 'struct SpaprMachineStateNested'. These new members are then plugged
->> into the existing 'guest_state_element_types[]' with the help of a new
->> macro 'GSBE_NESTED_MACHINE_DW' together with a new helper
->> 'get_machine_ptr()'. guest_state_request_check() is updated to ensure
->> correctness of the requested GSB and finally h_guest_getset_state() is
->> updated to handle the newly introduced flag
->> 'GUEST_STATE_REQUEST_HOST_WIDE'.
->> 
->> This patch is tested with the proposed linux-kernel implementation to
->> expose these stat-counter as perf-events at [2].
->> 
->> [1]
->> https://lore.kernel.org/all/20241222140247.174998-2-vaibhav@linux.ibm.com
->> 
->> [2]
->> https://lore.kernel.org/all/20241222140247.174998-1-vaibhav@linux.ibm.com
->> 
->> Signed-off-by: Vaibhav Jain <vaibhav@linux.ibm.com>
->> ---
->> Changelog:
->> 
->> v1->v2:
->> * Introduced new flags to correctly compare hcall flags
->>    for H_GUEST_{GET,SET}_STATE [Harsh]
->> * Fixed ordering of new GSB elements in spapr_nested.h [Harsh]
->> * s/GSBE_MACHINE_NESTED_DW/GSBE_NESTED_MACHINE_DW/
->> * Minor tweaks to patch description
->> * Updated recipients list
->> ---
->>   hw/ppc/spapr_nested.c         | 82 ++++++++++++++++++++++++++---------
->>   include/hw/ppc/spapr_nested.h | 39 ++++++++++++++---
->>   2 files changed, 96 insertions(+), 25 deletions(-)
->> 
->> diff --git a/hw/ppc/spapr_nested.c b/hw/ppc/spapr_nested.c
->> index 7def8eb73b..7f484bb3e7 100644
->> --- a/hw/ppc/spapr_nested.c
->> +++ b/hw/ppc/spapr_nested.c
->> @@ -64,10 +64,9 @@ static
->>   SpaprMachineStateNestedGuest *spapr_get_nested_guest(SpaprMachineState *spapr,
->>                                                        target_ulong guestid)
->>   {
->> -    SpaprMachineStateNestedGuest *guest;
->> -
->> -    guest = g_hash_table_lookup(spapr->nested.guests, GINT_TO_POINTER(guestid));
->> -    return guest;
->> +    return spapr->nested.guests ?
->> +        g_hash_table_lookup(spapr->nested.guests,
->> +                            GINT_TO_POINTER(guestid)) : NULL;
->>   }
->>   
->>   bool spapr_get_pate_nested_papr(SpaprMachineState *spapr, PowerPCCPU *cpu,
->> @@ -613,6 +612,13 @@ static void *get_guest_ptr(SpaprMachineStateNestedGuest *guest,
->>       return guest; /* for GSBE_NESTED */
->>   }
->>   
->> +static void *get_machine_ptr(SpaprMachineStateNestedGuest *guest,
->> +                             target_ulong vcpuid)
->> +{
->> +    SpaprMachineState *spapr = SPAPR_MACHINE(qdev_get_machine());
->> +    return &spapr->nested;
->> +}
->> +
->>   /*
->>    * set=1 means the L1 is trying to set some state
->>    * set=0 means the L1 is trying to get some state
->> @@ -1012,7 +1018,12 @@ struct guest_state_element_type guest_state_element_types[] = {
->>       GSBE_NESTED_VCPU(GSB_VCPU_OUT_BUFFER, 0x10, runbufout,   copy_state_runbuf),
->>       GSBE_NESTED_VCPU(GSB_VCPU_OUT_BUF_MIN_SZ, 0x8, runbufout, out_buf_min_size),
->>       GSBE_NESTED_VCPU(GSB_VCPU_HDEC_EXPIRY_TB, 0x8, hdecr_expiry_tb,
->> -                     copy_state_hdecr)
->> +                     copy_state_hdecr),
->> +    GSBE_NESTED_MACHINE_DW(GSB_GUEST_HEAP, current_guest_heap),
->> +    GSBE_NESTED_MACHINE_DW(GSB_GUEST_HEAP_MAX, max_guest_heap),
->> +    GSBE_NESTED_MACHINE_DW(GSB_GUEST_PGTABLE_SIZE, current_pgtable_size),
->> +    GSBE_NESTED_MACHINE_DW(GSB_GUEST_PGTABLE_SIZE_MAX, max_pgtable_size),
->> +    GSBE_NESTED_MACHINE_DW(GSB_GUEST_PGTABLE_RECLAIM, pgtable_reclaim_size),
->>   };
->>   
->>   void spapr_nested_gsb_init(void)
->> @@ -1030,8 +1041,12 @@ void spapr_nested_gsb_init(void)
->>           else if (type->id >= GSB_VCPU_IN_BUFFER)
->>               /* 0x0c00 - 0xf000 Thread + RW */
->>               type->flags = 0;
->> +        else if (type->id >= GSB_GUEST_HEAP)
->> +            /*0x0800 - 0x0804 Hostwide Counters + RO */
->> +            type->flags = GUEST_STATE_ELEMENT_TYPE_FLAG_HOST_WIDE |
->> +                          GUEST_STATE_ELEMENT_TYPE_FLAG_READ_ONLY;
->>           else if (type->id >= GSB_VCPU_LPVR)
->> -            /* 0x0003 - 0x0bff Guest + RW */
->> +            /* 0x0003 - 0x07ff Guest + RW */
->>               type->flags = GUEST_STATE_ELEMENT_TYPE_FLAG_GUEST_WIDE;
->>           else if (type->id >= GSB_HV_VCPU_STATE_SIZE)
->>               /* 0x0001 - 0x0002 Guest + RO */
->> @@ -1138,18 +1153,26 @@ static bool guest_state_request_check(struct guest_state_request *gsr)
->>               return false;
->>           }
->>   
->> -        if (type->flags & GUEST_STATE_ELEMENT_TYPE_FLAG_GUEST_WIDE) {
->> +        if (type->flags & GUEST_STATE_ELEMENT_TYPE_FLAG_HOST_WIDE) {
->> +            /* Hostwide elements cant be clubbed with other types */
->> +            if (!(gsr->flags & GUEST_STATE_REQUEST_HOST_WIDE)) {
->> +                qemu_log_mask(LOG_GUEST_ERROR, "trying to get/set a host wide "
->> +                              "Element ID:%04x.\n", id);
->> +                return false;
->> +            }
->> +        } else  if (type->flags & GUEST_STATE_ELEMENT_TYPE_FLAG_GUEST_WIDE) {
->>               /* guest wide element type */
->>               if (!(gsr->flags & GUEST_STATE_REQUEST_GUEST_WIDE)) {
->> -                qemu_log_mask(LOG_GUEST_ERROR, "trying to set a guest wide "
->> +                qemu_log_mask(LOG_GUEST_ERROR, "trying to get/set a guest wide "
->>                                 "Element ID:%04x.\n", id);
->>                   return false;
->>               }
->>           } else {
->>               /* thread wide element type */
->> -            if (gsr->flags & GUEST_STATE_REQUEST_GUEST_WIDE) {
->> -                qemu_log_mask(LOG_GUEST_ERROR, "trying to set a thread wide "
->> -                              "Element ID:%04x.\n", id);
->> +            if (gsr->flags & (GUEST_STATE_REQUEST_GUEST_WIDE |
->> +                              GUEST_STATE_ELEMENT_TYPE_FLAG_HOST_WIDE)) {
->
-> Although translate to same value 0x2, I guess we want to use 
-> GUEST_STATE_REQUEST_HOST_WIDE here.
->
->> +                qemu_log_mask(LOG_GUEST_ERROR, "trying to get/set a thread wide"
->> +                            " Element ID:%04x.\n", id);
->>                   return false;
->>               }
->>           }
->> @@ -1509,25 +1532,44 @@ static target_ulong h_guest_getset_state(PowerPCCPU *cpu,
->>       target_ulong buf = args[3];
->>       target_ulong buflen = args[4];
->>       struct guest_state_request gsr;
->> -    SpaprMachineStateNestedGuest *guest;
->> +    SpaprMachineStateNestedGuest *guest = NULL;
->>   
->> -    guest = spapr_get_nested_guest(spapr, lpid);
->> -    if (!guest) {
->> -        return H_P2;
->> -    }
->>       gsr.buf = buf;
->>       assert(buflen <= GSB_MAX_BUF_SIZE);
->>       gsr.len = buflen;
->>       gsr.flags = 0;
->> -    if (flags & H_GUEST_GETSET_STATE_FLAG_GUEST_WIDE) {
->> +
->> +    /* Works for both get/set state */
->> +    if ((flags & H_GUEST_GET_STATE_FLAGS_GUEST_WIDE) ||
->> +        (flags & H_GUEST_SET_STATE_FLAGS_GUEST_WIDE)) {
->>           gsr.flags |= GUEST_STATE_REQUEST_GUEST_WIDE;
->>       }
->> -    if (flags & ~H_GUEST_GETSET_STATE_FLAG_GUEST_WIDE) {
->> -        return H_PARAMETER; /* flag not supported yet */
->> -    }
->>   
->>       if (set) {
->> +        if (flags & ~H_GUEST_SET_STATE_FLAGS_MASK) {
->> +            return H_PARAMETER;
->> +        }
->>           gsr.flags |= GUEST_STATE_REQUEST_SET;
->> +    } else {
->> +        /*
->> +         * No reserved fields to be set in flags nor both
->> +         * GUEST/HOST wide bits
->
-> Nit: Can the comment be updated to mention checks in the same order as 
-> being performed i.e.
-> - Neither both G/H wide bits be set, nor any reserved field.
->
->> +         */
->> +        if ((flags == H_GUEST_GET_STATE_FLAGS_MASK) ||
->> +            (flags & ~H_GUEST_GET_STATE_FLAGS_MASK)) {
->> +            return H_PARAMETER;
->> +        }
->> +
->> +        if (flags & H_GUEST_GET_STATE_FLAGS_HOST_WIDE) {
->> +            gsr.flags |= GUEST_STATE_REQUEST_HOST_WIDE;
->> +        }
->> +    }
->> +
->> +    if (!(gsr.flags & GUEST_STATE_REQUEST_HOST_WIDE)) {
->> +        guest = spapr_get_nested_guest(spapr, lpid);
->> +        if (!guest) {
->> +            return H_P2;
->> +        }
->>       }
->>       return map_and_getset_state(cpu, guest, vcpuid, &gsr);
->>   }
->> diff --git a/include/hw/ppc/spapr_nested.h b/include/hw/ppc/spapr_nested.h
->> index e420220484..a6d10a1fba 100644
->> --- a/include/hw/ppc/spapr_nested.h
->> +++ b/include/hw/ppc/spapr_nested.h
->> @@ -11,7 +11,13 @@
->>   #define GSB_TB_OFFSET           0x0004 /* Timebase Offset */
->>   #define GSB_PART_SCOPED_PAGETBL 0x0005 /* Partition Scoped Page Table */
->>   #define GSB_PROCESS_TBL         0x0006 /* Process Table */
->> -                    /* RESERVED 0x0007 - 0x0BFF */
->> +                   /* RESERVED 0x0007 - 0x07FF */
->
-> Indentation may be corrected for all macro values above and below.
->
->> +#define GSB_GUEST_HEAP          0x0800 /* Guest Management Heap Size */
->> +#define GSB_GUEST_HEAP_MAX      0x0801 /* Guest Management Heap Max Size */
->> +#define GSB_GUEST_PGTABLE_SIZE  0x0802 /* Guest Pagetable Size */
->> +#define GSB_GUEST_PGTABLE_SIZE_MAX   0x0803 /* Guest Pagetable Max Size */
->> +#define GSB_GUEST_PGTABLE_RECLAIM    0x0804 /* Pagetable Reclaim in bytes */
->
-> Can these be named GSB_GUEST_PT_* ? Will help with indentation also.
->
->> +                  /* RESERVED 0x0805 - 0xBFF */
->>   #define GSB_VCPU_IN_BUFFER      0x0C00 /* Run VCPU Input Buffer */
->>   #define GSB_VCPU_OUT_BUFFER     0x0C01 /* Run VCPU Out Buffer */
->>   #define GSB_VCPU_VPA            0x0C02 /* HRA to Guest VCPU VPA */
->> @@ -196,6 +202,13 @@ typedef struct SpaprMachineStateNested {
->>   #define NESTED_API_PAPR    2
->>       bool capabilities_set;
->>       uint32_t pvr_base;
->> +    /* Hostwide counters */
->> +    uint64_t current_guest_heap;
->> +    uint64_t max_guest_heap;
->> +    uint64_t current_pgtable_size;
->> +    uint64_t max_pgtable_size;
->> +    uint64_t pgtable_reclaim_size;
->> +
->>       GHashTable *guests;
->>   } SpaprMachineStateNested;
->>   
->> @@ -229,9 +242,15 @@ typedef struct SpaprMachineStateNestedGuest {
->>   #define HVMASK_HDEXCR                 0x00000000FFFFFFFF
->>   #define HVMASK_TB_OFFSET              0x000000FFFFFFFFFF
->>   #define GSB_MAX_BUF_SIZE              (1024 * 1024)
->> -#define H_GUEST_GETSET_STATE_FLAG_GUEST_WIDE 0x8000000000000000
->> -#define GUEST_STATE_REQUEST_GUEST_WIDE       0x1
->> -#define GUEST_STATE_REQUEST_SET              0x2
->> +#define H_GUEST_GET_STATE_FLAGS_MASK   0xC000000000000000ULL
->> +#define H_GUEST_SET_STATE_FLAGS_MASK   0x8000000000000000ULL
->> +#define H_GUEST_SET_STATE_FLAGS_GUEST_WIDE 0x8000000000000000ULL
->> +#define H_GUEST_GET_STATE_FLAGS_GUEST_WIDE 0x8000000000000000ULL
->> +#define H_GUEST_GET_STATE_FLAGS_HOST_WIDE  0x4000000000000000ULL
->
-> Can we align the macros values indentation?
-> We may also use _GW/_HW instead of _GUEST_WIDE/_HOST_WIDE if helps.
->
-> With suggested updates:
->
-> Reviewed-by: Harsh Prateek Bora <harshpb@linux.ibm.com>
+Hmm, the advent calendar test that is already available in this file is also 
+based on build root ... so I think we don't need both tests here. IIRC I 
+built most of the advent calendar images without networking stack (to keep 
+them smaller), so your image is likely better suited here, thus I'd suggest 
+to remove the advent calendar image now when you add your new test. WDYT?
 
-Thanks Harsh for reviewing this patch.
+  Thomas
 
-I have addressed most of your review comments and have sent out a v3 at 
-https://lore.kernel.org/all/20250203100912.82560-1-vaibhav@linux.ibm.com
-
-
--- 
-Cheers
-~ Vaibhav
 
