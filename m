@@ -4,80 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5087DC0218F
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id EA7A7C02194
 	for <qemu-devel@archiver.kernel.org>; Mon,  3 Feb 2025 03:18:51 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1temyj-0007y8-H9; Sun, 02 Feb 2025 22:18:29 -0500
+	id 1temym-00080O-Aq; Sun, 02 Feb 2025 22:18:32 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1temyh-0007wd-O0
- for qemu-devel@nongnu.org; Sun, 02 Feb 2025 22:18:27 -0500
-Received: from mail-pl1-x629.google.com ([2607:f8b0:4864:20::629])
+ id 1temyj-0007yS-Jd
+ for qemu-devel@nongnu.org; Sun, 02 Feb 2025 22:18:29 -0500
+Received: from mail-pl1-x62a.google.com ([2607:f8b0:4864:20::62a])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1temyf-0002e2-Ov
- for qemu-devel@nongnu.org; Sun, 02 Feb 2025 22:18:27 -0500
-Received: by mail-pl1-x629.google.com with SMTP id
- d9443c01a7336-21634338cfdso93106985ad.2
- for <qemu-devel@nongnu.org>; Sun, 02 Feb 2025 19:18:25 -0800 (PST)
+ id 1temyh-0002ec-T4
+ for qemu-devel@nongnu.org; Sun, 02 Feb 2025 22:18:29 -0500
+Received: by mail-pl1-x62a.google.com with SMTP id
+ d9443c01a7336-216728b1836so62817875ad.0
+ for <qemu-devel@nongnu.org>; Sun, 02 Feb 2025 19:18:27 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1738552704; x=1739157504; darn=nongnu.org;
+ d=linaro.org; s=google; t=1738552706; x=1739157506; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=iM3D9a39pGGlsRoa9TrM2icjX42ZQQytV5dtn3gTX+s=;
- b=eK0wD26H2qSnSrPAVVTzyDGrbThjW6HS+gtLwYzPauEMC7PV7jJMGYWMw92jaL9lwH
- 9ruxcFs3qtsW6l28xz47nGqinvXFWJxCSUAwK9Mc4qO0YqfcGzFxjE31X+s8WAKOzS0d
- q2vY3sb4r9H6rKq2zmaaZLhJhLlXsx3a2yMptKG4zuZtpTekaVXVycrRqnF+3QR2ozRJ
- feX6/g4dLJ6KDfG0TRUeIn1YYV7RIju5BHKpnXhXHldor5uPsbVMECngHJBqqM1AOJNx
- /0ER57NhkriFiNdk1tbrCbeVRwTicm3+Nair6O23nGSNJOXxkou4VX2Hn2p1+Dn2awn/
- QXGw==
+ bh=wE+iKDowkpEPg8wCdcVqa4FtJfGiWYCtzRF3aZf/Z+U=;
+ b=JxnFg4CJC2E1r8S0r4c0Y3p8q3i39wBXHuQuMd3JEabGLl/jiahBJsIpLVEqjtPpcL
+ 3Pw/Xel8FrIUcVs26kRL7ppAWADbGGmyE+UcjYXHkchudgblvprAp9+hImm3tc+SNwQi
+ AkrNhe/Y8oV73XekrzFpW+kh31ixElrdDaqfyQJLzbPFSXXoVNib7fuC8y/025RIaYPh
+ TxTJC6igjwb9lj1KVtcb/HL+o5T4RlbDFl2iwgBtVB24+lXdz0TlbwfnnQ9kKvPl8CDE
+ g9smIQVfXUgZu8sDaHxXAq5SYn6DFfNaOKu8nfujU/RlnPNS+RBihOrTFyfSnlq7zScB
+ GEGg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1738552704; x=1739157504;
+ d=1e100.net; s=20230601; t=1738552706; x=1739157506;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=iM3D9a39pGGlsRoa9TrM2icjX42ZQQytV5dtn3gTX+s=;
- b=FXgIkEgY+4CdOQfoxNI55C0HP3Xt53UtE1zORjjpqf3xEyOBUjJujPFr4sxF1whCcb
- V43YDVnSMv2fXS+yzpALUkh6tXUbPWFIUq0GY6S/NqHcmuTwvxZBMZrnpKC+jH4cOaIH
- AC0ZDn22f1fWZeMxkHbXqBCTCqsEH0NqVmgL3eEexsUzY4Yoz10gBGSog5P8svPZ064V
- oOvAErrW34mCuNH3VLOsSb9ROYXpXC0jzjEqiE6mmirrUgd2Sna9xaplEnNqdjETBwdn
- 2WefPMfbFQIntxMcAXpJqjtvaGzuNRGeuGOmPGxm0Octm72Jdm3RKFumtypN0Y5/P3jk
- 0zRQ==
-X-Gm-Message-State: AOJu0Yw9BRtGwXwrip2S1k6W+R6Is4nNl1eVCTSLh1obiAPW1Qz2B/q+
- +mt1gl9h3RtiEQgPrjCXdOihOuDz5WEWAXpdNGfTYD9lR24rRUNSShkjZmVv5UrrOEmj+ZqBkdn
- 1
-X-Gm-Gg: ASbGncszpRfa7aX41N0toUMt3P3J4dUvMiLQNpfo18DCc+WXDlI5TwhFuXIGh5rdRfo
- eAZehu6IQjoopzGMQvqXid9oYbvxZVXcnfh/vS54lO+dvWUfDj+7N+QFc9n+Jg40ykTpDR66eeg
- vQllC3M4SbnyMOnI9n8AZgdzBed2Uya1KlUDvevid7ZkWzkHfRI4FGI4OOL6PBu6Y4/r36DR/rJ
- mrM7BitAYfzzh3XCJ2DYG/QkxTgaBKtCNDNgkSEBZMtrMGRgZEDpTXryFzysUAVOM8g5ek6r/mk
- 48HUzmJ6DCcIS/JJPuOFCVazWMPvcVLYu41B02Nw2eVR0yw=
-X-Google-Smtp-Source: AGHT+IFe/FDSd3GJ8+TqxhWOQ+6qcLks6JjI7BJbr0T+ourkfniZBySVXkQKqqUDL748cXOlNlIUuA==
-X-Received: by 2002:a17:903:244f:b0:216:1cfa:2bda with SMTP id
- d9443c01a7336-21dd7de1d37mr305133645ad.43.1738552703988; 
- Sun, 02 Feb 2025 19:18:23 -0800 (PST)
+ bh=wE+iKDowkpEPg8wCdcVqa4FtJfGiWYCtzRF3aZf/Z+U=;
+ b=Mrdu16uli/0d13cAPV5Cd+JodcW9QVJhPSiFXI4rG6i7WUsrd1q7Vd1RVCIGeZe+WX
+ /s1STQlBaxbryJp1oz7bENxK9diGB9xNxNBRz4OUQrCK2a7OPJJZOzpMWmtiGpfMnn2x
+ mbnbNW7Obw41K31G3+v0Pd9dyTueGMsuMBKep4yLP/gEUucKf9q0fjFUVVgCudHD6VvF
+ a+ecOtdqJcg2f/5LFoPxW2la4omOrFeqSta7iO6VgxDg86VjzsDodQq4blOs/cxPlcx2
+ A3Ae2hBB1tXKjHssta3AyeCqqo6rnn1VV0bf5Gg0chYv8Mmt5oEh0yD1e3joipvquUSr
+ HCKg==
+X-Gm-Message-State: AOJu0YynidvR24xsx12WHl7proXex4kptD1saf76Hy/lLVadSerkIOyf
+ jjq8arj0P3wCAxS2XEncTsdo93i41IDXXjrKsg1tB4laiGWykvfjLH+JzB1R+jhv/rnyTe29yv2
+ M
+X-Gm-Gg: ASbGncurwSnommPm/CekFx7EpRlWrPpNF/6Fen5eKHdD7jExRZLUudsna4JYlK3J4FU
+ 6bziZR4A08LikwX/2kWEiqwfB6P92X9NE4Jwet16h7o8r75uI9BWyy1SZmapq4P7rLXGFwOhZew
+ xo0bGstq4qAE3DTsRUSG/cPXrHf9onE0NzS5LXcBRhLz2sU71Oaqu4s7NGGlJNhtzf0oDiMUkyv
+ NxLosMMGRVKEKupr0+M30PJBVnnvApNU9mGkWgFgETxi4vFnUPd8RwoQj8Auv3TaW2v0wVNPJsE
+ VbSIjjeFp3KumK0pSaGyha+qIR2iwuGhR7c11kByREJIBds=
+X-Google-Smtp-Source: AGHT+IF5u+q5KXDz/i7xuSfH/73HPW2zYlOFQRuVwwsPvJOTxYX6nW2eXjSSGCq6oeDWArpu+elPYQ==
+X-Received: by 2002:a17:902:db04:b0:216:4c88:d93a with SMTP id
+ d9443c01a7336-21dd7dd7356mr346151955ad.48.1738552706527; 
+ Sun, 02 Feb 2025 19:18:26 -0800 (PST)
 Received: from stoup.. (71-212-39-66.tukw.qwest.net. [71.212.39.66])
  by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-21de32eb419sm65698135ad.145.2025.02.02.19.18.23
+ d9443c01a7336-21de32eb419sm65698135ad.145.2025.02.02.19.18.26
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sun, 02 Feb 2025 19:18:23 -0800 (PST)
+ Sun, 02 Feb 2025 19:18:26 -0800 (PST)
 From: Richard Henderson <richard.henderson@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: pbonzini@redhat.com, mark.cave-ayland@ilande.co.uk, berrange@redhat.com,
  philmd@linaro.org, thuth@redhat.com
-Subject: [PATCH v2 01/14] meson: Drop tcg as a module
-Date: Sun,  2 Feb 2025 19:18:08 -0800
-Message-ID: <20250203031821.741477-2-richard.henderson@linaro.org>
+Subject: [PATCH v2 04/14] meson: Introduce CONFIG_TCG_TARGET
+Date: Sun,  2 Feb 2025 19:18:11 -0800
+Message-ID: <20250203031821.741477-5-richard.henderson@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20250203031821.741477-1-richard.henderson@linaro.org>
 References: <20250203031821.741477-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::629;
- envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x629.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::62a;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x62a.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -100,91 +100,70 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The fact that this is only enabled for x86 probably means it
-was done incorrectly.  Certainly the set of files selected to
-go into the module is woefully incomplete.  Drop it for now.
+Use CONFIG_TCG as a project-wide flag to indicate that TCG is enabled
+for *some* target.  Use CONFIG_TCG_TARGET to indicate that TCG is
+enabled for a specific target.
+
+Within a specific compilation unit, we can remap CONFIG_TCG based on
+CONFIG_TCG_TARGET.  This allows us to avoid changes to the bulk of
+the code base.
+
+Within meson.build, while CONFIG_TCG may be set in config_host_data,
+it may not be set within config_target.  Thus all references to
+CONFIG_TCG in source_set 'when:' need not be updated.
+
+For the moment, CONFIG_TCG and CONFIG_TCG_TARGET are identical.
 
 Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 ---
- accel/tcg/meson.build | 11 ++++-------
- meson.build           | 18 +-----------------
- 2 files changed, 5 insertions(+), 24 deletions(-)
+ include/qemu/osdep.h |  7 +++++++
+ meson.build          | 11 +++++++----
+ 2 files changed, 14 insertions(+), 4 deletions(-)
 
-diff --git a/accel/tcg/meson.build b/accel/tcg/meson.build
-index aef80de967..69f4808ac4 100644
---- a/accel/tcg/meson.build
-+++ b/accel/tcg/meson.build
-@@ -21,16 +21,13 @@ specific_ss.add_all(when: 'CONFIG_TCG', if_true: tcg_specific_ss)
- specific_ss.add(when: ['CONFIG_SYSTEM_ONLY', 'CONFIG_TCG'], if_true: files(
-   'cputlb.c',
-   'watchpoint.c',
-+  'tcg-accel-ops.c',
-+  'tcg-accel-ops-mttcg.c',
-+  'tcg-accel-ops-icount.c',
-+  'tcg-accel-ops-rr.c',
- ))
+diff --git a/include/qemu/osdep.h b/include/qemu/osdep.h
+index 112ebdff21..1f6f73a148 100644
+--- a/include/qemu/osdep.h
++++ b/include/qemu/osdep.h
+@@ -34,9 +34,16 @@
+ #include "config-host.h"
+ #ifdef COMPILING_PER_TARGET
+ #include CONFIG_TARGET
++# ifdef CONFIG_TCG_TARGET
++#  undef CONFIG_TCG_TARGET
++# else
++#  undef CONFIG_TCG
++# endif
+ #else
+ #include "exec/poison.h"
+ #endif
++#pragma GCC poison CONFIG_TCG_TARGET
++
  
- system_ss.add(when: ['CONFIG_TCG'], if_true: files(
-   'icount-common.c',
-   'monitor.c',
- ))
--
--tcg_module_ss.add(when: ['CONFIG_SYSTEM_ONLY', 'CONFIG_TCG'], if_true: files(
--  'tcg-accel-ops.c',
--  'tcg-accel-ops-mttcg.c',
--  'tcg-accel-ops-icount.c',
--  'tcg-accel-ops-rr.c',
--))
+ /*
+  * HOST_WORDS_BIGENDIAN was replaced with HOST_BIG_ENDIAN. Prevent it from
 diff --git a/meson.build b/meson.build
-index 2c9ac9cfe1..b72114819b 100644
+index b72114819b..5ca3cc3f34 100644
 --- a/meson.build
 +++ b/meson.build
-@@ -322,12 +322,6 @@ if cpu in ['x86', 'x86_64']
-   }
- endif
+@@ -3270,11 +3270,14 @@ foreach target : target_dirs
  
--modular_tcg = []
--# Darwin does not support references to thread-local variables in modules
--if host_os != 'darwin'
--  modular_tcg = ['i386-softmmu', 'x86_64-softmmu']
--endif
--
- ##################
- # Compiler flags #
- ##################
-@@ -3279,11 +3273,6 @@ foreach target : target_dirs
-     if sym == 'CONFIG_TCG' or target in accelerator_targets.get(sym, [])
-       config_target += { sym: 'y' }
-       config_all_accel += { sym: 'y' }
--      if target in modular_tcg
--        config_target += { 'CONFIG_TCG_MODULAR': 'y' }
--      else
--        config_target += { 'CONFIG_TCG_BUILTIN': 'y' }
--      endif
-       target_kconfig += [ sym + '=y' ]
+   target_kconfig = []
+   foreach sym: accelerators
+-    if sym == 'CONFIG_TCG' or target in accelerator_targets.get(sym, [])
+-      config_target += { sym: 'y' }
+-      config_all_accel += { sym: 'y' }
+-      target_kconfig += [ sym + '=y' ]
++    if sym == 'CONFIG_TCG'
++      config_target += { 'CONFIG_TCG_TARGET': 'y' }
++    elif target not in accelerator_targets.get(sym, [])
++      continue
      endif
++    config_target += { sym: 'y' }
++    config_all_accel += { sym: 'y' }
++    target_kconfig += [ sym + '=y' ]
    endforeach
-@@ -3642,7 +3631,6 @@ util_ss = ss.source_set()
- 
- # accel modules
- qtest_module_ss = ss.source_set()
--tcg_module_ss = ss.source_set()
- 
- modules = {}
- target_modules = {}
-@@ -3803,11 +3791,7 @@ subdir('tests/qtest/libqos')
- subdir('tests/qtest/fuzz')
- 
- # accel modules
--tcg_real_module_ss = ss.source_set()
--tcg_real_module_ss.add_all(when: 'CONFIG_TCG_MODULAR', if_true: tcg_module_ss)
--specific_ss.add_all(when: 'CONFIG_TCG_BUILTIN', if_true: tcg_module_ss)
--target_modules += { 'accel' : { 'qtest': qtest_module_ss,
--                                'tcg': tcg_real_module_ss }}
-+target_modules += { 'accel' : { 'qtest': qtest_module_ss }}
- 
- ##############################################
- # Internal static_libraries and dependencies #
+   if target_kconfig.length() == 0
+     if default_targets
 -- 
 2.43.0
 
