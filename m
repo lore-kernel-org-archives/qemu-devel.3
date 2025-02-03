@@ -4,54 +4,108 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6EBAEC02192
-	for <qemu-devel@archiver.kernel.org>; Mon,  3 Feb 2025 16:21:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id F32B9C02192
+	for <qemu-devel@archiver.kernel.org>; Mon,  3 Feb 2025 16:21:46 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tezCT-0001Ge-0v; Mon, 03 Feb 2025 11:21:29 -0500
+	id 1tezCY-0001Ho-FY; Mon, 03 Feb 2025 11:21:35 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jonathan.cameron@huawei.com>)
- id 1tezCI-0001Fs-9M
- for qemu-devel@nongnu.org; Mon, 03 Feb 2025 11:21:19 -0500
-Received: from frasgout.his.huawei.com ([185.176.79.56])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jonathan.cameron@huawei.com>)
- id 1tezCF-0004su-4E
- for qemu-devel@nongnu.org; Mon, 03 Feb 2025 11:21:17 -0500
-Received: from mail.maildlp.com (unknown [172.18.186.231])
- by frasgout.his.huawei.com (SkyGuard) with ESMTP id 4YmsD70QGyz6K8kY;
- Tue,  4 Feb 2025 00:20:23 +0800 (CST)
-Received: from frapeml500008.china.huawei.com (unknown [7.182.85.71])
- by mail.maildlp.com (Postfix) with ESMTPS id 35655140A36;
- Tue,  4 Feb 2025 00:21:13 +0800 (CST)
-Received: from SecurePC-101-06.china.huawei.com (10.122.19.247) by
- frapeml500008.china.huawei.com (7.182.85.71) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.1.2507.39; Mon, 3 Feb 2025 17:21:12 +0100
-To: <qemu-devel@nongnu.org>, Fan Ni <fan.ni@samsung.com>, <mst@redhat.com>
-CC: <linux-cxl@vger.kernel.org>, <linuxarm@huawei.com>
-Subject: [PATCH qemu 4/5] hw/mem/cxl_type3: Ensure errp is set on realization
- failure
-Date: Mon, 3 Feb 2025 16:19:07 +0000
-Message-ID: <20250203161908.145406-5-Jonathan.Cameron@huawei.com>
-X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20250203161908.145406-1-Jonathan.Cameron@huawei.com>
-References: <20250203161908.145406-1-Jonathan.Cameron@huawei.com>
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1tezCW-0001HG-48
+ for qemu-devel@nongnu.org; Mon, 03 Feb 2025 11:21:32 -0500
+Received: from smtp-out1.suse.de ([195.135.223.130])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1tezCS-0004tK-K0
+ for qemu-devel@nongnu.org; Mon, 03 Feb 2025 11:21:31 -0500
+Received: from imap1.dmz-prg2.suse.org (unknown [10.150.64.97])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested)
+ by smtp-out1.suse.de (Postfix) with ESMTPS id 42DFB21160;
+ Mon,  3 Feb 2025 16:21:26 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+ t=1738599686; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=eoY6lKptCx1DQkJ9cyKgzNi/Og1EoLrF4mOGtnjg6X0=;
+ b=MFmksQf8lMf78vxndc0Gy4RYVf6P4Txn0I8C67OCPw2vAZ4kOSEJsSJkoeCyC985O5w+p0
+ VN5rhj1pRp6X0Wz8mkpYYPEb006cwc4Rrbm1Z9VwepbnDdKP0zpEocBPdJ7eaWhd2WPMHS
+ TdKSv60xtS37E+SjlBU5uIJv0txgQwg=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+ s=susede2_ed25519; t=1738599686;
+ h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=eoY6lKptCx1DQkJ9cyKgzNi/Og1EoLrF4mOGtnjg6X0=;
+ b=n2tgiqD0rSezi4GZw/GqQlrd0ja8SqHasHuQZiHbLiHFDK6wtDTrzgsXBDgTV9HzAqH/l8
+ ofwP3/qvijUGWCBw==
+Authentication-Results: smtp-out1.suse.de;
+	none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+ t=1738599686; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=eoY6lKptCx1DQkJ9cyKgzNi/Og1EoLrF4mOGtnjg6X0=;
+ b=MFmksQf8lMf78vxndc0Gy4RYVf6P4Txn0I8C67OCPw2vAZ4kOSEJsSJkoeCyC985O5w+p0
+ VN5rhj1pRp6X0Wz8mkpYYPEb006cwc4Rrbm1Z9VwepbnDdKP0zpEocBPdJ7eaWhd2WPMHS
+ TdKSv60xtS37E+SjlBU5uIJv0txgQwg=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+ s=susede2_ed25519; t=1738599686;
+ h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=eoY6lKptCx1DQkJ9cyKgzNi/Og1EoLrF4mOGtnjg6X0=;
+ b=n2tgiqD0rSezi4GZw/GqQlrd0ja8SqHasHuQZiHbLiHFDK6wtDTrzgsXBDgTV9HzAqH/l8
+ ofwP3/qvijUGWCBw==
+Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested)
+ by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id A707713795;
+ Mon,  3 Feb 2025 16:21:25 +0000 (UTC)
+Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
+ by imap1.dmz-prg2.suse.org with ESMTPSA id pYI4GQXtoGfuawAAD6G6ig
+ (envelope-from <farosas@suse.de>); Mon, 03 Feb 2025 16:21:25 +0000
+From: Fabiano Rosas <farosas@suse.de>
+To: Steve Sistare <steven.sistare@oracle.com>, qemu-devel@nongnu.org
+Cc: Alex Williamson <alex.williamson@redhat.com>, Cedric Le Goater
+ <clg@redhat.com>, Yi Liu <yi.l.liu@intel.com>, Eric Auger
+ <eric.auger@redhat.com>, Zhenzhong Duan <zhenzhong.duan@intel.com>,
+ "Michael S. Tsirkin" <mst@redhat.com>, Marcel Apfelbaum
+ <marcel.apfelbaum@gmail.com>, Peter Xu <peterx@redhat.com>, Steve Sistare
+ <steven.sistare@oracle.com>
+Subject: Re: [PATCH V1 02/26] migration: lower handler priority
+In-Reply-To: <1738161802-172631-3-git-send-email-steven.sistare@oracle.com>
+References: <1738161802-172631-1-git-send-email-steven.sistare@oracle.com>
+ <1738161802-172631-3-git-send-email-steven.sistare@oracle.com>
+Date: Mon, 03 Feb 2025 13:21:22 -0300
+Message-ID: <87y0ynf18d.fsf@suse.de>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
 Content-Type: text/plain
-X-Originating-IP: [10.122.19.247]
-X-ClientProxiedBy: lhrpeml500004.china.huawei.com (7.191.163.9) To
- frapeml500008.china.huawei.com (7.182.85.71)
-Received-SPF: pass client-ip=185.176.79.56;
- envelope-from=jonathan.cameron@huawei.com; helo=frasgout.his.huawei.com
-X-Spam_score_int: -41
-X-Spam_score: -4.2
+X-Spamd-Result: default: False [-2.71 / 50.00]; BAYES_HAM(-2.91)[99.62%];
+ SUSPICIOUS_RECIPS(1.50)[]; NEURAL_HAM_LONG(-1.00)[-1.000];
+ NEURAL_HAM_SHORT(-0.20)[-1.000]; MIME_GOOD(-0.10)[text/plain];
+ FREEMAIL_ENVRCPT(0.00)[gmail.com]; TAGGED_RCPT(0.00)[];
+ RCVD_VIA_SMTP_AUTH(0.00)[]; ARC_NA(0.00)[];
+ MISSING_XM_UA(0.00)[]; RCVD_TLS_ALL(0.00)[];
+ MIME_TRACE(0.00)[0:+]; RCPT_COUNT_SEVEN(0.00)[11];
+ MID_RHS_MATCH_FROM(0.00)[];
+ DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
+ FROM_HAS_DN(0.00)[];
+ FREEMAIL_CC(0.00)[redhat.com,intel.com,gmail.com,oracle.com];
+ TO_DN_SOME(0.00)[]; FROM_EQ_ENVFROM(0.00)[];
+ RCVD_COUNT_TWO(0.00)[2]; TO_MATCH_ENVRCPT_ALL(0.00)[];
+ FUZZY_BLOCKED(0.00)[rspamd.com];
+ DBL_BLOCKED_OPENRESOLVER(0.00)[suse.de:email,suse.de:mid]
+Received-SPF: pass client-ip=195.135.223.130; envelope-from=farosas@suse.de;
+ helo=smtp-out1.suse.de
+X-Spam_score_int: -43
+X-Spam_score: -4.4
 X-Spam_bar: ----
-X-Spam_report: (-4.2 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_MED=-2.3,
- RCVD_IN_MSPIKE_H2=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
  RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -66,50 +120,19 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-to:  Jonathan Cameron <Jonathan.Cameron@huawei.com>
-From:  Jonathan Cameron via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Li Zhijian <lizhijian@fujitsu.com>
+Steve Sistare <steven.sistare@oracle.com> writes:
 
-Simply pass the errp to its callee which will set errp if needed, to
-enhance error reporting for CXL Type 3 device initialization by setting
-the errp when realization functions fail.
+> Define a vmstate priority that is lower than the default, so its handlers
+> run after all default priority handlers.  Since 0 is no longer the default
+> priority, translate an uninitialized priority of 0 to MIG_PRI_DEFAULT.
+>
+> CPR for vfio will use this to install handlers for containers that run
+> after handlers for the devices that they contain.
+>
+> Signed-off-by: Steve Sistare <steven.sistare@oracle.com>
 
-Previously, failing to set `errp` could result in errors being overlooked,
-causing the system to mistakenly treat failure scenarios as successful and
-potentially leading to redundant cleanup operations in ct3_exit().
-
-Signed-off-by: Li Zhijian <lizhijian@fujitsu.com>
-Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
----
- hw/mem/cxl_type3.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
-
-diff --git a/hw/mem/cxl_type3.c b/hw/mem/cxl_type3.c
-index ff6861889b..d8b45f9bd1 100644
---- a/hw/mem/cxl_type3.c
-+++ b/hw/mem/cxl_type3.c
-@@ -891,7 +891,7 @@ static void ct3_realize(PCIDevice *pci_dev, Error **errp)
-                      &ct3d->cxl_dstate.device_registers);
- 
-     /* MSI(-X) Initialization */
--    rc = msix_init_exclusive_bar(pci_dev, CXL_T3_MSIX_VECTOR_NR, 4, NULL);
-+    rc = msix_init_exclusive_bar(pci_dev, CXL_T3_MSIX_VECTOR_NR, 4, errp);
-     if (rc) {
-         goto err_free_special_ops;
-     }
-@@ -912,7 +912,7 @@ static void ct3_realize(PCIDevice *pci_dev, Error **errp)
- 
-     pcie_cap_deverr_init(pci_dev);
-     /* Leave a bit of room for expansion */
--    rc = pcie_aer_init(pci_dev, PCI_ERR_VER, 0x200, PCI_ERR_SIZEOF, NULL);
-+    rc = pcie_aer_init(pci_dev, PCI_ERR_VER, 0x200, PCI_ERR_SIZEOF, errp);
-     if (rc) {
-         goto err_release_cdat;
-     }
--- 
-2.43.0
-
+Reviewed-by: Fabiano Rosas <farosas@suse.de>
 
