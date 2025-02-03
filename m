@@ -4,85 +4,92 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8B608C02192
-	for <qemu-devel@archiver.kernel.org>; Mon,  3 Feb 2025 16:39:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 62FCDC02196
+	for <qemu-devel@archiver.kernel.org>; Mon,  3 Feb 2025 16:41:39 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tezTB-0005P4-Tc; Mon, 03 Feb 2025 11:38:45 -0500
+	id 1tezVW-0006DC-RQ; Mon, 03 Feb 2025 11:41:10 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1tezTA-0005Ov-I8
- for qemu-devel@nongnu.org; Mon, 03 Feb 2025 11:38:44 -0500
-Received: from mail-pj1-x1031.google.com ([2607:f8b0:4864:20::1031])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tezVQ-0006C9-PY
+ for qemu-devel@nongnu.org; Mon, 03 Feb 2025 11:41:04 -0500
+Received: from mail-wm1-x332.google.com ([2a00:1450:4864:20::332])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1tezT8-0007Mh-Up
- for qemu-devel@nongnu.org; Mon, 03 Feb 2025 11:38:44 -0500
-Received: by mail-pj1-x1031.google.com with SMTP id
- 98e67ed59e1d1-2ee989553c1so7560601a91.3
- for <qemu-devel@nongnu.org>; Mon, 03 Feb 2025 08:38:42 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tezVO-0007iq-Gq
+ for qemu-devel@nongnu.org; Mon, 03 Feb 2025 11:41:04 -0500
+Received: by mail-wm1-x332.google.com with SMTP id
+ 5b1f17b1804b1-4361c705434so34462425e9.3
+ for <qemu-devel@nongnu.org>; Mon, 03 Feb 2025 08:41:02 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1738600721; x=1739205521; darn=nongnu.org;
+ d=linaro.org; s=google; t=1738600861; x=1739205661; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=QNp7gVlbU3zX+LYlNqUvYFfAGCndN87uVCN40LrvOTI=;
- b=GMP4ovUphQcA2qAPMe/r1uVvzX/KqLb7b8Z9rzoD0EEDUJ4Xk1yc7pa6xvN6vee3wi
- 26SeD8I+/5WbvPnm6QJ06lyfI8mS2fa+ayajkbJT/Vaai/0fTV2ozsoUVBXcsgaMs/k2
- WEOea+b/aDNV1zqG/sfkqpzuUqqfGG3oTtV5IGmJ2TH2SiULF/d+6zK/xr8qVJZfQJdC
- CUF9DsYZCeX+KRN4tJWcNAqW1qfuqkCpEZoVWyXs9HSIrf1RmyH8YBfsZFBfyuPArKuU
- iAZGAi7e5W5DYgtPrXDr2LUiJi/50DhlI7viyVDdwxnNp7gk8mgDmQzhknfYLB6XZ+yq
- pw/Q==
+ bh=deP0TVM+Uq6KcTITWVx+Nfx0o4bPFnV/VRl8WWgRPGY=;
+ b=GjRjcujm1Vv07EiivoKCPJsJouVrmrA8WjuWnDD/SzJEHCDEFZVbzr6TuTzMeZ53tN
+ QEFzabeGiUDTe3cvl19DPSnm6DzVL0xwIdnB3mLwzVUL/K1BSYznZH/mv/0N9yQqB5K6
+ nMCzxtxH6pXBzo46ELW0lD9sR83DrRktELyauJl+i+cBa2CJxij+KJZC9RfMey4aVoEG
+ jdjdemcwatvlxV+y/S+//P56k7yn3fFzTVVDaX7b2IH7knjcQ7Nyr4a6NDPpG1nY5mKw
+ Tce/CRvRhsIYW9jKhT7V9gty7Yrk67AC5rE/ZeFZAwNBq7csqX/y/YZ1mbE0eBB5hq0D
+ M3+A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1738600721; x=1739205521;
+ d=1e100.net; s=20230601; t=1738600861; x=1739205661;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=QNp7gVlbU3zX+LYlNqUvYFfAGCndN87uVCN40LrvOTI=;
- b=VXqnPSCuxRujJXClIaLW3OJdeFqu9KduLLSqmFLTaU5y9MsZjv1EqLWuNk0AILRJ2m
- H8uAvbfwF2Aw0JdhQYdAjKKAjIeZSe7h7MKyBLDHEgeone1jFTHdSMz0NprtYce+ABzP
- 4IL5wciNsnzqhie1Tm7PnazMJ+Ud/ABxCM1QpdnW3syhOmKBm9QSMDqv4Q40NW/Qczky
- 6I8ccdmEgy/civbk01ciV8RbxYMDS7jXoAcqqPEC832YEPqOEUkK1GSxTDKGxMuplgSU
- sAwt+UbxW8RbCO+ua5Hvfw97DtuuZlVMvV8mQPspvw61VJ0ui2Motm/SsceXI9U5VfKK
- sxFQ==
+ bh=deP0TVM+Uq6KcTITWVx+Nfx0o4bPFnV/VRl8WWgRPGY=;
+ b=gCLWja+TxWCFXgPQ0BSOv0UKG+qs0QO8uqkVO+/CkgAKyx9yBpiFS46T6+MCbdI46U
+ 4PYfs/I1Gago+6b8eEDGeA2ZKqLJwuO1DIDQdeGyOM1dk2PDZoP/URPzY8Qw1rXJckvy
+ q45u6sV5OV7Q99Z67h+Uk6jSl6rZkI/rxOG3/8Kg/nZQh6pOY6Di4X23Fhk+Iludb9Io
+ joftn40N0Ee71q5Xt8SVnSwvyN8dJ7WfwXD47UShBiMF6Dg+AFie7Wa+X/EPdH1A0o2T
+ YWoK4i2EMx//B4RwjZGM5ljWatfMKfH7B1N9zYbMlO1MGPH9lXCBRWuL8WCN1pYbDVZk
+ Awxw==
 X-Forwarded-Encrypted: i=1;
- AJvYcCVgTnHvVR9qI19m4Wc1WTrdpOi2guwJjF4F7ZOBc7VSnBwdOh04/MNiJa2JR9/NVbEM4cCC/CjiffRZ@nongnu.org
-X-Gm-Message-State: AOJu0Yzu8ELh204DDiDwaibWgMK7kfdZuYsBSLkbn0yAxw0iD/EPccHC
- 5J/+/2r+Iq/3MyhNK1qSsFApNCwY83IY3YBp3Ogd1qABOlicGimNJCMpBkJNHjU=
-X-Gm-Gg: ASbGncvCDNCZkSkMknSEpB1ouz8cFu+QqiRRM8aqNPEbsQXtdb43W8kl43py4rKAz9H
- ONRrbwDopbstsxjUfT7iLABZP8MU/aufZwYZ9AeGw8YLR6TGhyuF35l24U5ouFeB0VqkA6UJcem
- 81aYWqMy1aKwworenqLYb9cc5FGXYUeDMlHDkheQJR0y5D3KOrrOgu7R5Or3aZD9W3Yj7o03ZEM
- aDLH1ovqJGRknrqxjw6reJWW9kK+/229ppsDKxcLIgXr7HTLJG8SiipoOnmRYSi1W2vfgzbp3Hb
- /Vb9X1S+9JbCinf2bYW5iLKIswn6Fp19hGeOMny91gtMqCz4huDs6o0=
-X-Google-Smtp-Source: AGHT+IF7fw0oS7BLxN+cS0yF8LLlw993fOrc/d3hMPRXZj3RvM8XsPZpNHd0xy/vZgqUwU12nX3i8A==
-X-Received: by 2002:a05:6a00:1946:b0:72a:aa0f:c86e with SMTP id
- d2e1a72fcca58-72fd0bda6c1mr34493240b3a.4.1738600721126; 
- Mon, 03 Feb 2025 08:38:41 -0800 (PST)
-Received: from [192.168.0.4] (71-212-39-66.tukw.qwest.net. [71.212.39.66])
- by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-72fe6539fc4sm8730451b3a.73.2025.02.03.08.38.40
+ AJvYcCWL+Fg7anBUyAIAITT7/KunCNF86tlpEimbIhvb6bX+5z6X3IE0+34Ufn17v3niRLWdiZqS9VtrACjk@nongnu.org
+X-Gm-Message-State: AOJu0YxHOvzwnr/rBEgVGPtP7IY+7HDKdezE/zvIw6Kf36dx0DykLBwo
+ 69vpzUTUaWB627eWJQsB0l1zWzUyhUlb8RgHOFzylhviMaZZHM8aE+dkF991bLE=
+X-Gm-Gg: ASbGncvDXYY9AKva29SYmHtJDpKfYFDvEYD27HmHnZkLa1YtMI7RXpoTURJ7gSREs5o
+ PF7xt80y/hZejY1SQDpKKfUAoZBSaz6GFmLB/7QtGACFsA1SMUtQ9JzTiYuVym7w8ei3mKOFffO
+ omKpgYKl2iGHNItkcrN0/r1mDX5dqlClra1+oPeAESXopeyNwbhsmXrAyX9suv2b+0nSbAy5/lN
+ LlRK8l5KmbNMPDZQMv6rW/msYn+wimNa8jHr0+epVZPA23f7swG6YKG628efEO+UoNwIqWaYpuY
+ s23Bh6DHg/EVk2KkLsdTGR1dX+bPca6EFyFq633OrbcSUMVFYqF/7FExj/c=
+X-Google-Smtp-Source: AGHT+IE9oISZOeGpRUOLk6H+4lhBkU1WS8Gqtvwq4xeg6wGwGqBQfWlE866HO5CUpLGTLKMJV4PbXg==
+X-Received: by 2002:a05:600c:4e01:b0:435:136:75f6 with SMTP id
+ 5b1f17b1804b1-438dc34b179mr224375625e9.0.1738600860883; 
+ Mon, 03 Feb 2025 08:41:00 -0800 (PST)
+Received: from [192.168.69.198] (88-187-86-199.subs.proxad.net.
+ [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-38c5c1cf2eesm13074468f8f.85.2025.02.03.08.40.59
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 03 Feb 2025 08:38:40 -0800 (PST)
-Message-ID: <3aa0e508-00c8-477f-b5a8-2cf20afb8efd@linaro.org>
-Date: Mon, 3 Feb 2025 08:38:38 -0800
+ Mon, 03 Feb 2025 08:41:00 -0800 (PST)
+Message-ID: <1e8f3190-cf23-4eeb-a5fd-189f61a834b6@linaro.org>
+Date: Mon, 3 Feb 2025 17:40:59 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 04/14] meson: Introduce CONFIG_TCG_TARGET
-To: Thomas Huth <thuth@redhat.com>, qemu-devel@nongnu.org
-Cc: pbonzini@redhat.com, mark.cave-ayland@ilande.co.uk, berrange@redhat.com,
- philmd@linaro.org
-References: <20250203031821.741477-1-richard.henderson@linaro.org>
- <20250203031821.741477-5-richard.henderson@linaro.org>
- <5c118b5d-a943-499c-a0ce-f19c74ab7d94@redhat.com>
+Subject: Re: [PATCH v5 13/17] aspeed/soc: Add AST2700 support
+To: Jamin Lin <jamin_lin@aspeedtech.com>, =?UTF-8?Q?C=C3=A9dric_Le_Goater?=
+ <clg@kaod.org>, Peter Maydell <peter.maydell@linaro.org>,
+ Andrew Jeffery <andrew@codeconstruct.com.au>, Joel Stanley <joel@jms.id.au>,
+ Alistair Francis <alistair@alistair23.me>, Cleber Rosa <crosa@redhat.com>,
+ Wainer dos Santos Moschetta <wainersm@redhat.com>,
+ Beraldo Leal <bleal@redhat.com>, "open list:ASPEED BMCs"
+ <qemu-arm@nongnu.org>, "open list:All patches CC here"
+ <qemu-devel@nongnu.org>, Jinjie Ruan <ruanjinjie@huawei.com>
+Cc: Troy Lee <troy_lee@aspeedtech.com>,
+ Yunlin Tang <yunlin.tang@aspeedtech.com>
+References: <20240604054438.3424349-1-jamin_lin@aspeedtech.com>
+ <20240604054438.3424349-14-jamin_lin@aspeedtech.com>
+ <ffafbec0-db25-478b-8eba-39162f9bce0d@linaro.org>
+ <SI2PR06MB5041F84077718CE5A58B8F54FCF52@SI2PR06MB5041.apcprd06.prod.outlook.com>
+ <SI2PR06MB50417A6E45521504224146A9FCF52@SI2PR06MB5041.apcprd06.prod.outlook.com>
 Content-Language: en-US
-From: Richard Henderson <richard.henderson@linaro.org>
-In-Reply-To: <5c118b5d-a943-499c-a0ce-f19c74ab7d94@redhat.com>
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <SI2PR06MB50417A6E45521504224146A9FCF52@SI2PR06MB5041.apcprd06.prod.outlook.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1031;
- envelope-from=richard.henderson@linaro.org; helo=mail-pj1-x1031.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::332;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x332.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -105,53 +112,167 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 2/3/25 02:08, Thomas Huth wrote:
-> On 03/02/2025 04.18, Richard Henderson wrote:
->> Use CONFIG_TCG as a project-wide flag to indicate that TCG is enabled
->> for *some* target.  Use CONFIG_TCG_TARGET to indicate that TCG is
->> enabled for a specific target.
->>
->> Within a specific compilation unit, we can remap CONFIG_TCG based on
->> CONFIG_TCG_TARGET.  This allows us to avoid changes to the bulk of
->> the code base.
->>
->> Within meson.build, while CONFIG_TCG may be set in config_host_data,
->> it may not be set within config_target.  Thus all references to
->> CONFIG_TCG in source_set 'when:' need not be updated.
->>
->> For the moment, CONFIG_TCG and CONFIG_TCG_TARGET are identical.
->>
->> Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
->> ---
->>   include/qemu/osdep.h |  7 +++++++
->>   meson.build          | 11 +++++++----
->>   2 files changed, 14 insertions(+), 4 deletions(-)
->>
->> diff --git a/include/qemu/osdep.h b/include/qemu/osdep.h
->> index 112ebdff21..1f6f73a148 100644
->> --- a/include/qemu/osdep.h
->> +++ b/include/qemu/osdep.h
->> @@ -34,9 +34,16 @@
->>   #include "config-host.h"
->>   #ifdef COMPILING_PER_TARGET
->>   #include CONFIG_TARGET
->> +# ifdef CONFIG_TCG_TARGET
->> +#  undef CONFIG_TCG_TARGET
->> +# else
->> +#  undef CONFIG_TCG
->> +# endif
->>   #else
->>   #include "exec/poison.h"
->>   #endif
->> +#pragma GCC poison CONFIG_TCG_TARGET
+On 3/2/25 08:43, Jamin Lin wrote:
+> Hi Philippe,
 > 
-> Shouldn't that rather go before the "#endif" instead?
+>> From: Jamin Lin
+>> Sent: Monday, February 3, 2025 3:29 PM
+>> To: Philippe Mathieu-Daudé <philmd@linaro.org>; Cédric Le Goater
+>> <clg@kaod.org>; Peter Maydell <peter.maydell@linaro.org>; Andrew Jeffery
+>> <andrew@codeconstruct.com.au>; Joel Stanley <joel@jms.id.au>; Alistair
+>> Francis <alistair@alistair23.me>; Cleber Rosa <crosa@redhat.com>; Wainer
+>> dos Santos Moschetta <wainersm@redhat.com>; Beraldo Leal
+>> <bleal@redhat.com>; open list:ASPEED BMCs <qemu-arm@nongnu.org>; open
+>> list:All patches CC here <qemu-devel@nongnu.org>; Jinjie Ruan
+>> <ruanjinjie@huawei.com>
+>> Cc: Troy Lee <troy_lee@aspeedtech.com>; Yunlin Tang
+>> <yunlin.tang@aspeedtech.com>
+>> Subject: RE: [PATCH v5 13/17] aspeed/soc: Add AST2700 support
+>>
+>> Hi Philippe,
+>>
+>>> From: Philippe Mathieu-Daudé <philmd@linaro.org>
+>>> Sent: Thursday, January 30, 2025 11:14 PM
+>>> To: Jamin Lin <jamin_lin@aspeedtech.com>; Cédric Le Goater
+>>> <clg@kaod.org>; Peter Maydell <peter.maydell@linaro.org>; Andrew
+>>> Jeffery <andrew@codeconstruct.com.au>; Joel Stanley <joel@jms.id.au>;
+>>> Alistair Francis <alistair@alistair23.me>; Cleber Rosa
+>>> <crosa@redhat.com>; Wainer dos Santos Moschetta
+>> <wainersm@redhat.com>;
+>>> Beraldo Leal <bleal@redhat.com>; open list:ASPEED BMCs
+>>> <qemu-arm@nongnu.org>; open list:All patches CC here
+>>> <qemu-devel@nongnu.org>; Jinjie Ruan <ruanjinjie@huawei.com>
+>>> Cc: Troy Lee <troy_lee@aspeedtech.com>; Yunlin Tang
+>>> <yunlin.tang@aspeedtech.com>
+>>> Subject: Re: [PATCH v5 13/17] aspeed/soc: Add AST2700 support
+>>>
+>>> Hi Jamin,
+>>>
+>>> On 4/6/24 07:44, Jamin Lin wrote:
+>>>> Initial definitions for a simple machine using an AST2700 SOC
+>>>> (Cortex-a35
+>>> CPU).
+>>>>
+>>>> AST2700 SOC and its interrupt controller are too complex to handle
+>>>> in the common Aspeed SoC framework. We introduce a new ast2700 class
+>>>> with instance_init and realize handlers.
+>>>>
+>>>> AST2700 is a 64 bits quad core cpus and support 8 watchdog.
+>>>> Update maximum ASPEED_CPUS_NUM to 4 and ASPEED_WDTS_NUM to 8.
+>>>> In addition, update AspeedSocState to support scuio, sli, sliio and intc.
+>>>>
+>>>> Add TYPE_ASPEED27X0_SOC machine type.
+>>>>
+>>>> The SDMC controller is unlocked at SPL stage.
+>>>> At present, only supports to emulate booting start from u-boot stage.
+>>>> Set SDMC controller unlocked by default.
+>>>>
+>>>> In INTC, each interrupt of INT 128 to INT 136 combines 32 interrupts.
+>>>> It connect GICINT IRQ GPIO-OUTPUT pins to GIC device with irq 128 to 136.
+>>>> And, if a device irq is 128 to 136, its irq GPIO-OUTPUT pin is
+>>>> connected to GICINT or-gates instead of GIC device.
+>>>>
+>>>> Signed-off-by: Troy Lee <troy_lee@aspeedtech.com>
+>>>> Signed-off-by: Jamin Lin <jamin_lin@aspeedtech.com>
+>>>> ---
+>>>>    hw/arm/aspeed_ast27x0.c     | 563
+>>> ++++++++++++++++++++++++++++++++++++
+>>>>    hw/arm/meson.build          |   1 +
+>>>>    include/hw/arm/aspeed_soc.h |  28 +-
+>>>>    3 files changed, 590 insertions(+), 2 deletions(-)
+>>>>    create mode 100644 hw/arm/aspeed_ast27x0.c
+>>>
+>>>
+>>>> +static bool aspeed_soc_ast2700_gic_realize(DeviceState *dev, Error
+>>>> +**errp) {
+>>>> +    Aspeed27x0SoCState *a = ASPEED27X0_SOC(dev);
+>>>> +    AspeedSoCState *s = ASPEED_SOC(dev);
+>>>> +    AspeedSoCClass *sc = ASPEED_SOC_GET_CLASS(s);
+>>>> +    SysBusDevice *gicbusdev;
+>>>> +    DeviceState *gicdev;
+>>>> +    QList *redist_region_count;
+>>>> +    int i;
+>>>> +
+>>>> +    gicbusdev = SYS_BUS_DEVICE(&a->gic);
+>>>> +    gicdev = DEVICE(&a->gic);
+>>>> +    qdev_prop_set_uint32(gicdev, "revision", 3);
+>>>> +    qdev_prop_set_uint32(gicdev, "num-cpu", sc->num_cpus);
+>>>> +    qdev_prop_set_uint32(gicdev, "num-irq", AST2700_MAX_IRQ);
+>>>> +
+>>>> +    redist_region_count = qlist_new();
+>>>> +    qlist_append_int(redist_region_count, sc->num_cpus);
+>>>> +    qdev_prop_set_array(gicdev, "redist-region-count",
+>>>> + redist_region_count);
+>>>> +
+>>>> +    if (!sysbus_realize(gicbusdev, errp)) {
+>>>> +        return false;
+>>>> +    }
+>>>> +    sysbus_mmio_map(gicbusdev, 0, sc->memmap[ASPEED_GIC_DIST]);
+>>>> +    sysbus_mmio_map(gicbusdev, 1,
+>> sc->memmap[ASPEED_GIC_REDIST]);
+>>>> +
+>>>> +    for (i = 0; i < sc->num_cpus; i++) {
+>>>> +        DeviceState *cpudev = DEVICE(&a->cpu[i]);
+>>>> +        int NUM_IRQS = 256, ARCH_GIC_MAINT_IRQ = 9,
+>>> VIRTUAL_PMU_IRQ = 7;
+>>>> +        int ppibase = NUM_IRQS + i * GIC_INTERNAL + GIC_NR_SGIS;
+>>>> +
+>>>> +        const int timer_irq[] = {
+>>>> +            [GTIMER_PHYS] = 14,
+>>>> +            [GTIMER_VIRT] = 11,
+>>>> +            [GTIMER_HYP]  = 10,
+>>>> +            [GTIMER_SEC]  = 13,
+>>>> +        };
+>>>> +        int j;
+>>>> +
+>>>> +        for (j = 0; j < ARRAY_SIZE(timer_irq); j++) {
+>>>> +            qdev_connect_gpio_out(cpudev, j,
+>>>> +                    qdev_get_gpio_in(gicdev, ppibase +
+>> timer_irq[j]));
+>>>> +        }
+>>>> +
+>>>> +        qemu_irq irq = qdev_get_gpio_in(gicdev,
+>>>> +                                        ppibase +
+>>> ARCH_GIC_MAINT_IRQ);
+>>>> +        qdev_connect_gpio_out_named(cpudev,
+>>> "gicv3-maintenance-interrupt",
+>>>> +                                    0, irq);
+>>>> +        qdev_connect_gpio_out_named(cpudev, "pmu-interrupt", 0,
+>>>> +                qdev_get_gpio_in(gicdev, ppibase +
+>>> VIRTUAL_PMU_IRQ));
+>>>> +
+>>>> +        sysbus_connect_irq(gicbusdev, i, qdev_get_gpio_in(cpudev,
+>>> ARM_CPU_IRQ));
+>>>> +        sysbus_connect_irq(gicbusdev, i + sc->num_cpus,
+>>>> +                           qdev_get_gpio_in(cpudev,
+>>> ARM_CPU_FIQ));
+>>>> +        sysbus_connect_irq(gicbusdev, i + 2 * sc->num_cpus,
+>>>> +                           qdev_get_gpio_in(cpudev,
+>>> ARM_CPU_VIRQ));
+>>>> +        sysbus_connect_irq(gicbusdev, i + 3 * sc->num_cpus,
+>>>> +                           qdev_get_gpio_in(cpudev,
+>>> ARM_CPU_VFIQ));
+>>>
+>>> Your patch was merged around the same time Jinjie added NMI support
+>>> (see commit b36a32ead1 "target/arm: Add support for Non-maskable
+>> Interrupt").
+>>>
+>>> Should we add them now?
+
+> I referred to this line, https://github.com/qemu/qemu/blob/master/hw/arm/virt.c#L907, in QEMU's virt.c to add NMI support.
 > 
-> Also, would it be possible to rather adjust scripts/make-config-poison.sh instead of 
-> poisoning this switch manually?
+> Are you suggesting adding the following lines to enable NMI support?
+> It worked as well.
+> 
+> ```
+> sysbus_connect_irq(gicbusdev, i + 4 * sc->num_cpus,
+>                     qdev_get_gpio_in(cpudev, ARM_CPU_NMI));
+> sysbus_connect_irq(gicbusdev, i + 5 * sc->num_cpus,
+>                     qdev_get_gpio_in(cpudev, ARM_CPU_VINMI));
+> ```
 
-No, I want to unconditionally poison it so that no other uses are ever introduced.
+Yes, correct!
 
+Thanks.
 
-r~
 
