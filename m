@@ -4,85 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id AFA61C02192
-	for <qemu-devel@archiver.kernel.org>; Mon,  3 Feb 2025 13:55:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 41404C02194
+	for <qemu-devel@archiver.kernel.org>; Mon,  3 Feb 2025 13:56:33 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tewuT-0003jg-DB; Mon, 03 Feb 2025 08:54:45 -0500
+	id 1tewvy-0004Pg-KZ; Mon, 03 Feb 2025 08:56:18 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1tewuR-0003jI-VA
- for qemu-devel@nongnu.org; Mon, 03 Feb 2025 08:54:44 -0500
-Received: from mail-ej1-x62f.google.com ([2a00:1450:4864:20::62f])
+ id 1tewvp-0004PF-Vu
+ for qemu-devel@nongnu.org; Mon, 03 Feb 2025 08:56:10 -0500
+Received: from mail-ej1-x630.google.com ([2a00:1450:4864:20::630])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1tewuQ-0004X1-2h
- for qemu-devel@nongnu.org; Mon, 03 Feb 2025 08:54:43 -0500
-Received: by mail-ej1-x62f.google.com with SMTP id
- a640c23a62f3a-aafc9d75f8bso887832366b.2
- for <qemu-devel@nongnu.org>; Mon, 03 Feb 2025 05:54:41 -0800 (PST)
+ id 1tewvo-0004mP-85
+ for qemu-devel@nongnu.org; Mon, 03 Feb 2025 08:56:09 -0500
+Received: by mail-ej1-x630.google.com with SMTP id
+ a640c23a62f3a-aaee2c5ee6eso764228866b.1
+ for <qemu-devel@nongnu.org>; Mon, 03 Feb 2025 05:56:07 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1738590879; x=1739195679; darn=nongnu.org;
+ d=linaro.org; s=google; t=1738590966; x=1739195766; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:message-id:date:user-agent
  :references:in-reply-to:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=ldokr/KBk3hFyfq13vhbUrReVg0Ihk5KXbZeoinvgYU=;
- b=GVEaha7LjbSf3R/VHUOyhMqsRW0gy9JKPX52Y0CqIJ34EOA0I3AxHyyC36euy1DGZz
- gNw3HWVV2YJtt59HJmzyFVOxhGHjk5SxrSUFeJfOYNxhfwYSEmkD1FALM0mMQE0O2l+L
- L8KTKr4+jxs48F2PPDJiS81rV8EZII4u7cnG3xqFuTMXwno6ntyndzbiwKtF8Pk9+yQC
- HlshShlB1kAkEJ6CATvZxrmWEkhJszuri7wtuyR4sW6TG/zRBtkBTeXLobjCZzqkm8Wi
- 4V/mThg/ws2x8YWwRzjY55u1XuP5Bj1+D/FXs3aQbucPUWLV9PwEHdDIEFPO53k43ISu
- 1/Ww==
+ bh=L9sjNa607SSLDzSLSQsZL31ngAZKnnASEOFnpnoXo6E=;
+ b=eol+blMvFFlVot+Pxcmiqy7Ij4JbjUs0GqzOESujjaCq6Pcv2/XzthvmxXvQn1V3OB
+ DoabtmI+IewlW2BxkgyJncEjcaMZ6xGWMlB0vhGhyrdV68GHfCYGHPe5Ek6+CxyoRBUk
+ iRDcxkWZO0QWd6Pc3sVPFIjfz3dWub5rdGSeo+UlXzpbE9dHWMPvxz4Q/4VFFDAW7WUl
+ Na1mYfCaBCzpuMGYnyQnL1IuLC7tLnZeoR1SyBaRyaEEaau7S4A8bRVP0urJ9zTbT0Ph
+ p8PnEQtEnE6I02muHhIVfD+9xoIOIs/RkUAg9FdO3A5uBPSrnGuzyclsgOHvc5EALrRM
+ PtEA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1738590879; x=1739195679;
+ d=1e100.net; s=20230601; t=1738590966; x=1739195766;
  h=content-transfer-encoding:mime-version:message-id:date:user-agent
  :references:in-reply-to:subject:cc:to:from:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=ldokr/KBk3hFyfq13vhbUrReVg0Ihk5KXbZeoinvgYU=;
- b=J3VTcx9tAnOzOlZHWQz9pKNPr3apCr45iVQGIRQmW1cPlhdpiwW+vfT+4rUfN9XI/8
- y8lIBScA9HuCQazB3s1uFm4X+F2mLrqjvoNH8TPgQH3xaG3pq7Dvo1bVfYeNrWEnHn+E
- fnG31GCN0Yq1SaQHqvm2WyZZuAuiuvLuPgwlwUPJkzE/UoEPRKbKcr3coxyfkhgfVkQH
- dS3TxYoTMESYlKJynEeL1NrF+uWe6awcOIWY0eCSJUiSlGuji7iTab971K1wopv6TJSv
- ZBYf/t2A/H/T2CKsBd8EG1HN2QFG34k2UnrSXmv/L60lWmhWjd5iSG7jL/Mx64NQEg1u
- m1Ig==
-X-Gm-Message-State: AOJu0Yxv5T+40Uwavf3rD6U9XBiueosIc8y/Kl1NQgT35gpf581LGrWz
- bXwBJ4UaMn0aWUvelf0awwE+qbzw8/bWemE1DBbjceR75YhODUVr+LVG3ojKlcA=
-X-Gm-Gg: ASbGncsYtpZr6xZC1Cr8NcKI2bk47i0fog5k5zLaCoU+FkclOTzGS8XjFIKUlYpyii5
- vbWhXC/FjCmeU80iswADDvA0ngFaD/lcKYXoEcYHzZkIuRLgFuMsvxSue6tGC91k/GmmZLStSrt
- HosqdNF0zGDtz6EkNgfEMEQjNq6ctywuPSOK3VSPbYgU+QWfkScywnCEJa1q26HT25S4cdI2fLK
- CSnMbYNtymEO9SNH+K26cscDB1QWw7uiHxrIEHaI3Re7x4qaOkEdfOlW/fxM8KTmvLrgjDEl2ZC
- m6msZN5QVrVFErd+xQ==
-X-Google-Smtp-Source: AGHT+IFKYbSqFuV2WLP8XV0rVh4N3yalwsoDnWqgsjRMKqr9uymKaH8vJbAbRlQwLYmVXWj9ZIZrvw==
-X-Received: by 2002:a17:907:7fa4:b0:aae:8843:9029 with SMTP id
- a640c23a62f3a-ab6cfdc6008mr2590040266b.48.1738590878754; 
- Mon, 03 Feb 2025 05:54:38 -0800 (PST)
+ bh=L9sjNa607SSLDzSLSQsZL31ngAZKnnASEOFnpnoXo6E=;
+ b=lwqHu45It/Geo3i0/8BE7hSQt/cC84Z5JMjfZ+NBKy26HgNiu6rMfrrOQUqM34QO8q
+ rtmCADb1eD9UEQeheBMmk8VXG9FuYsgOsbPNx97XDEz7rQgLzj89jRGfTO3Q81QvRp02
+ +RO/tMMmyxz/xKGS5BsTpBwdrRYYQI57r3aX9UunFLb9GAeiCc/D+cs2hReOUwFZNT5M
+ +080QCImKa5txyev5QJ1pzt++pKPx9jZFm5defWrQl4O6nnN9t5qXVkAH1fm4gbylGAH
+ tjdd1UTFVKlqIUKplpR1sEikfESOdwRzuBGTQ14xb8BiAor57BRb9pPVQKVEZ1PYurZ2
+ k05Q==
+X-Gm-Message-State: AOJu0YxwUBWmHzxhFzLrJkdCjAroA7uQ3GHJK+h5TP1fXovr3Ey1QXm0
+ i35haFtjFKg9T5vTRAzjWiApBxObZXoi7wOqmvjCMuOvWdXe9d7v9GEkwtch2e4=
+X-Gm-Gg: ASbGncvyR8shvBDLyHYu4PHlXUam4CI2pU3Tt2o8uLG9UWgvkfGZ/GkHFHwZzxR0xM4
+ qpyWedOXN0b/jMZz+ZF3Kos7vb/xLmWCzDvwe21HITwxZvkUu/h8shV4GXS/bbLX79mEBdKUePB
+ KdkDnUXLQdMUBbMtQgFZaQByN7ijRldmB5wXEplqn+lkuQDNqfpAU3QqtuZGXEDUXS9xXkLt+As
+ WCaI25kFztN2t2GlYGJIwzILz9N6uAX2yv35R107gXBm5xMk6CSOkafsvW3mPLMI+JHxezmVpxs
+ Wv3zz1gvuX/E06cpRw==
+X-Google-Smtp-Source: AGHT+IEEhUDVNO+7JvXACbtIQByxGVJQBZ8UCdsdzA9RogUi13WneahnuIoXvcKo+hPk6TnPzvjLqg==
+X-Received: by 2002:a17:907:6ea8:b0:ab3:47cc:a7dc with SMTP id
+ a640c23a62f3a-ab6cfce7330mr2270608266b.22.1738590966319; 
+ Mon, 03 Feb 2025 05:56:06 -0800 (PST)
 Received: from draig.lan ([185.126.160.109]) by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-ab6e47d11a2sm765722566b.64.2025.02.03.05.54.38
+ a640c23a62f3a-ab6e4a320c6sm753858666b.155.2025.02.03.05.56.05
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 03 Feb 2025 05:54:38 -0800 (PST)
+ Mon, 03 Feb 2025 05:56:05 -0800 (PST)
 Received: from draig (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id 520935F8BF;
- Mon,  3 Feb 2025 13:54:37 +0000 (GMT)
+ by draig.lan (Postfix) with ESMTP id E98C85F8BF;
+ Mon,  3 Feb 2025 13:56:04 +0000 (GMT)
 From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
 To: Richard Henderson <richard.henderson@linaro.org>
 Cc: qemu-devel@nongnu.org,  pbonzini@redhat.com,
  mark.cave-ayland@ilande.co.uk,  berrange@redhat.com,  philmd@linaro.org,
  thuth@redhat.com
-Subject: Re: [PATCH v2 12/14] meson: Disallow 64-bit on 32-bit TCG emulation
-In-Reply-To: <20250203031821.741477-13-richard.henderson@linaro.org> (Richard
- Henderson's message of "Sun, 2 Feb 2025 19:18:19 -0800")
+Subject: Re: [PATCH v2 13/14] meson: Deprecate 32-bit host support
+In-Reply-To: <20250203031821.741477-14-richard.henderson@linaro.org> (Richard
+ Henderson's message of "Sun, 2 Feb 2025 19:18:20 -0800")
 References: <20250203031821.741477-1-richard.henderson@linaro.org>
- <20250203031821.741477-13-richard.henderson@linaro.org>
+ <20250203031821.741477-14-richard.henderson@linaro.org>
 User-Agent: mu4e 1.12.8; emacs 29.4
-Date: Mon, 03 Feb 2025 13:54:37 +0000
-Message-ID: <87o6zjcew2.fsf@draig.linaro.org>
+Date: Mon, 03 Feb 2025 13:56:04 +0000
+Message-ID: <87ikprcetn.fsf@draig.linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::62f;
- envelope-from=alex.bennee@linaro.org; helo=mail-ej1-x62f.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::630;
+ envelope-from=alex.bennee@linaro.org; helo=mail-ej1-x630.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -107,139 +107,66 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 Richard Henderson <richard.henderson@linaro.org> writes:
 
-> For system mode, we can rarely support the amount of RAM that
-> the guest requires. Emulation is restricted to round-robin
-> mode, which solves many of the atomicity issues, but not those
-> associated with virtio.  In any case, round-robin does nothing
-> to help the speed of emulation.
->
-> For user mode, most emulation does not succeed at all.  Most
-> of the time we cannot even load 64-bit non-PIE binaries due
-> to lack of a 64-bit address space.  Threads are run in
-> parallel, not round-robin, which means that atomicity
-> is not handled.
-
-I think in itself is not enough, on aarch64.ci.org:
-
-  ./../configure --disable-docs --disable-tools --cross-prefix=3Darm-linux-=
-gnueabihf-
-
-Should only build 32 bit binaries. Which it does:
-
-  13:52:57 [alex@aarch64:~/l/q/b/arm32.crossbuild] review/deprecate-64-on-3=
-2-v2|=E2=80=A6 + ls qemu-*
-  qemu-arm         qemu-keymap        qemu-mipsel       qemu-sh4         qe=
-mu-system-i386    qemu-system-ppc      qemu-system-sparc     qemu-xtensa
-  qemu-armeb       qemu-m68k          qemu-options.def  qemu-sh4eb       qe=
-mu-system-m68k    qemu-system-riscv32  qemu-system-tricore   qemu-xtensaeb
-  qemu-hexagon     qemu-microblaze    qemu-or1k         qemu-sparc       qe=
-mu-system-mips    qemu-system-rx       qemu-system-xtensa
-  qemu-i386        qemu-microblazeel  qemu-ppc          qemu-system-arm  qe=
-mu-system-mipsel  qemu-system-sh4      qemu-system-xtensaeb
-  qemu-img-cmds.h  qemu-mips          qemu-riscv32      qemu-system-avr  qe=
-mu-system-or1k    qemu-system-sh4eb    qemu-version.h
-
-However make check-tcg fails because:
-
-  13:53:09 [alex@aarch64:~/l/q/b/arm32.crossbuild] review/deprecate-64-on-3=
-2-v2|=E2=80=A6 + cat config-host.mak=20
-  # Automatically generated by configure - do not modify
-
-  all:
-  SRC_PATH=3D/home/alex/lsrc/qemu.git
-  TARGET_DIRS=3Daarch64-linux-user aarch64_be-linux-user alpha-linux-user a=
-rm-linux-user armeb-linux-user hexagon-linux-user hppa-linux-user i386-linu=
-x-user loongarch64-linux-user m68k-linux-user microblaze-linux-user microbl=
-azeel-linux-user mips-linux-user mips64-linux-user mips64el-linux-user mips=
-el-linux-user mipsn32-linux-user mipsn32el-linux-user or1k-linux-user ppc-l=
-inux-user ppc64-linux-user ppc64le-linux-user riscv32-linux-user riscv64-li=
-nux-user s390x-linux-user sh4-linux-user sh4eb-linux-user sparc-linux-user =
-sparc32plus-linux-user sparc64-linux-user x86_64-linux-user xtensa-linux-us=
-er xtensaeb-linux-user aarch64-softmmu alpha-softmmu arm-softmmu avr-softmm=
-u hppa-softmmu i386-softmmu loongarch64-softmmu m68k-softmmu microblaze-sof=
-tmmu microblazeel-softmmu mips-softmmu mips64-softmmu mips64el-softmmu mips=
-el-softmmu or1k-softmmu ppc-softmmu ppc64-softmmu riscv32-softmmu riscv64-s=
-oftmmu rx-softmmu s390x-softmmu sh4-softmmu sh4eb-softmmu sparc-softmmu spa=
-rc64-softmmu tricore-softmmu x86_64-softmmu xtensa-softmmu xtensaeb-softmmu
-  GDB=3D/usr/bin/gdb-multiarch
-  RUNC=3Ddocker
-  SUBDIRS=3D pc-bios/optionrom pc-bios/s390-ccw
-  PYTHON=3D/home/alex/lsrc/qemu.git/builds/arm32.crossbuild/pyvenv/bin/pyth=
-on3 -B
-  MKVENV_ENSUREGROUP=3D/home/alex/lsrc/qemu.git/builds/arm32.crossbuild/pyv=
-env/bin/python3 -B /home/alex/lsrc/qemu.git/python/scripts/mkvenv.py ensure=
-group  --online
-  GENISOIMAGE=3D/usr/bin/genisoimage
-  MESON=3D/home/alex/lsrc/qemu.git/builds/arm32.crossbuild/pyvenv/bin/meson
-  NINJA=3D/usr/bin/ninja
-  EXESUF=3D
-  CONFIG_DEFAULT_TARGETS=3Dy
-  TCG_TESTS_TARGETS=3D aarch64-linux-user arm-linux-user i386-linux-user mi=
-ps64el-linux-user mipsel-linux-user riscv64-linux-user s390x-linux-user aar=
-ch64-softmmu arm-softmmu i386-softmmu riscv64-softmmu s390x-softmmu
-
-So possible TCG_TESTS_TARGET needs to be merged with the meson code?
-Also do we still use TARGET_DIRS?
-
+> We deprecated i686 system mode support for qemu 8.0.  However, to
+> make real cleanups to TCG we need to deprecate all 32-bit hosts.
 >
 > Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 > ---
->  meson.build | 14 +++++++++++---
->  1 file changed, 11 insertions(+), 3 deletions(-)
+>  docs/about/deprecated.rst | 7 +++++++
+>  meson.build               | 6 ++----
+>  2 files changed, 9 insertions(+), 4 deletions(-)
 >
+> diff --git a/docs/about/deprecated.rst b/docs/about/deprecated.rst
+> index 4a3c302962..7c61d0ba16 100644
+> --- a/docs/about/deprecated.rst
+> +++ b/docs/about/deprecated.rst
+> @@ -204,6 +204,13 @@ is going to be so much slower it wouldn't make sense=
+ for any serious
+>  instrumentation. Due to implementation differences there will also be
+>  anomalies in things like memory instrumentation.
+>=20=20
+> +32-bit host operating systems (since 10.0)
+> +''''''''''''''''''''''''''''''''''''''''''
+> +
+> +Keeping 32-bit host support alive is a substantial burden for the
+> +QEMU project.  Thus QEMU will in future drop the support for all
+> +32-bit host systems.
+> +
+>  System emulator CPUs
+>  --------------------
+>=20=20
 > diff --git a/meson.build b/meson.build
-> index 5ca3cc3f34..866b8ce477 100644
+> index 866b8ce477..0dae54da0d 100644
 > --- a/meson.build
 > +++ b/meson.build
-> @@ -3176,6 +3176,9 @@ if host_os =3D=3D 'windows'
+> @@ -4833,14 +4833,12 @@ if host_arch =3D=3D 'unknown'
+>      message('configure has succeeded and you can continue to build, but')
+>      message('QEMU will use a slow interpreter to emulate the target CPU.=
+')
 >    endif
+> -elif host_arch =3D=3D 'mips'
+> +elif host_long_bits < 64
+>    message()
+>    warning('DEPRECATED HOST CPU')
+>    message()
+>    message('Support for CPU host architecture ' + cpu + ' is going to
+> be')
+
+ Support for 32 bit host architecture...?
+
+> -  message('dropped as soon as the QEMU project stops supporting Debian 1=
+2')
+> -  message('("Bookworm"). Going forward, the QEMU project will not guaran=
+tee')
+> -  message('that QEMU will compile or work on this host CPU.')
+> +  message('dropped in a future QEMU release.')
 >  endif
 >=20=20
-> +# Detect host pointer size for the target configuration loop.
-> +host_long_bits =3D cc.sizeof('void *') * 8
-> +
->  ########################
->  # Target configuration #
->  ########################
-> @@ -3268,11 +3271,18 @@ foreach target : target_dirs
->      }
->    endif
->=20=20
-> +  config_target +=3D keyval.load('configs/targets' / target + '.mak')
-> +
->    target_kconfig =3D []
->    foreach sym: accelerators
->      if sym =3D=3D 'CONFIG_TCG'
-> +      # Disallow 64-bit on 32-bit TCG emulation.
-> +      if host_long_bits < config_target['TARGET_LONG_BITS'].to_int()
-> +        continue
-> +      endif
->        config_target +=3D { 'CONFIG_TCG_TARGET': 'y' }
->      elif target not in accelerator_targets.get(sym, [])
-> +      # Other accelerators are handled by accelerator_targets.
->        continue
->      endif
->      config_target +=3D { sym: 'y' }
-> @@ -3286,9 +3296,6 @@ foreach target : target_dirs
->      error('No accelerator available for target @0@'.format(target))
->    endif
->=20=20
-> -  config_target +=3D keyval.load('configs/targets' / target + '.mak')
-> -  config_target +=3D { 'TARGET_' + config_target['TARGET_ARCH'].to_upper=
-(): 'y' }
-> -
->    if 'TARGET_NEED_FDT' in config_target and not fdt.found()
->      if default_targets
->        warning('Disabling ' + target + ' due to missing libfdt')
-> @@ -3301,6 +3308,7 @@ foreach target : target_dirs
->    actual_target_dirs +=3D target
->=20=20
->    # Add default keys
-> +  config_target +=3D { 'TARGET_' + config_target['TARGET_ARCH'].to_upper=
-(): 'y' }
->    if 'TARGET_BASE_ARCH' not in config_target
->      config_target +=3D {'TARGET_BASE_ARCH': config_target['TARGET_ARCH']}
->    endif
+>  if not supported_oses.contains(host_os)
+
+Otherwise:
+
+Reviewed-by: Alex Benn=C3=A9e <alex.bennee@linaro.org>
 
 --=20
 Alex Benn=C3=A9e
