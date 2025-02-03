@@ -4,84 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id AB93DC02192
-	for <qemu-devel@archiver.kernel.org>; Mon,  3 Feb 2025 10:46:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C89B0C02192
+	for <qemu-devel@archiver.kernel.org>; Mon,  3 Feb 2025 10:47:17 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tetyF-00087t-Rn; Mon, 03 Feb 2025 05:46:27 -0500
+	id 1tetyz-0000SI-TP; Mon, 03 Feb 2025 05:47:13 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1tetyE-00087e-HE
- for qemu-devel@nongnu.org; Mon, 03 Feb 2025 05:46:26 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1tetyy-0000Rs-HX
+ for qemu-devel@nongnu.org; Mon, 03 Feb 2025 05:47:12 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1tetyC-0001Ew-W5
- for qemu-devel@nongnu.org; Mon, 03 Feb 2025 05:46:26 -0500
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1tetyw-0001Ho-UH
+ for qemu-devel@nongnu.org; Mon, 03 Feb 2025 05:47:12 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1738579583;
+ s=mimecast20190719; t=1738579630;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=AgHt9igjL3bcrvP071fUWdkFJAkijNSWH9yrBRalzY4=;
- b=UsAqTiDivYKMTiSXOeNYo1ijs4xqIdoE3ZZYvGa+SIUcMDFu+8iQRG45inFJU3n/UuBwTh
- Msj+L0ZH8F9pTTdC+aiFbD6k66Uq/qCNcShHD+HsXXsZEJGebjfnGYIY5N533Gpa+Z0W2D
- eImr8YeFq9G4WWmEebtNhUKSfJU4nVQ=
-Received: from mail-wm1-f70.google.com (mail-wm1-f70.google.com
- [209.85.128.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=lALtSnQtuxlCL/Nlxiz3qM1yAryoIjICgGEw53WZg2U=;
+ b=RDBVqS9NXWpL6HLDhZ2j/KsEsRtPmUMk0XsqL3dmSeD5adp3nSBdDGm9fjxYxOQZoXC9of
+ ovoVaTNLwr1r/TSr8itH67eZQ2liKt62H2wqeYiG/rmBizPb3XAUaDj6gD6txwQlkQ/Cld
+ Sxvp951nvyxMokGS78pGZzXRmhMTYac=
+Received: from mail-wr1-f70.google.com (mail-wr1-f70.google.com
+ [209.85.221.70]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-621-2JjZUyVOMUO41GDYvVSDpw-1; Mon, 03 Feb 2025 05:46:22 -0500
-X-MC-Unique: 2JjZUyVOMUO41GDYvVSDpw-1
-X-Mimecast-MFC-AGG-ID: 2JjZUyVOMUO41GDYvVSDpw
-Received: by mail-wm1-f70.google.com with SMTP id
- 5b1f17b1804b1-43646b453bcso20404035e9.3
- for <qemu-devel@nongnu.org>; Mon, 03 Feb 2025 02:46:22 -0800 (PST)
+ us-mta-202-SjgML0NCNSK8jYhVUQRCVg-1; Mon, 03 Feb 2025 05:47:08 -0500
+X-MC-Unique: SjgML0NCNSK8jYhVUQRCVg-1
+X-Mimecast-MFC-AGG-ID: SjgML0NCNSK8jYhVUQRCVg
+Received: by mail-wr1-f70.google.com with SMTP id
+ ffacd0b85a97d-38c5dcb33a5so2658792f8f.2
+ for <qemu-devel@nongnu.org>; Mon, 03 Feb 2025 02:47:08 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1738579581; x=1739184381;
+ d=1e100.net; s=20230601; t=1738579627; x=1739184427;
  h=content-transfer-encoding:in-reply-to:autocrypt:content-language
  :from:references:cc:to:subject:user-agent:mime-version:date
  :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=AgHt9igjL3bcrvP071fUWdkFJAkijNSWH9yrBRalzY4=;
- b=e+GJhjuAbG1N8tb/Hb0guPvC34uQiiCmvz5PelHfVy/lPWV86E7uqZErnl0oZTw5ez
- 1N95wsJmwFkRaek2zJqbLj1t7FdBmU7CINP1F0SUN/+z3xEEiOzOCFmVCKjWS8alFO1o
- CBusSrJvDUUDVHcYhti7C7QMOfhINHywEt0arF6Zm+8AtTdrtfjq6qh3X4JWKstOiXND
- 6seDX4sDOzd+/FawSulltpgef3hP4BN1OYu4FA1Etyo9SZ12aowsw845vi34DxJCZAZT
- NjjzNQlMjCpD0jiQHSwZGpI3iwW9v19hGurIwtNw8pa3ekca98+FfjqATzBFHHzc3sbo
- I7Ow==
+ bh=lALtSnQtuxlCL/Nlxiz3qM1yAryoIjICgGEw53WZg2U=;
+ b=A7wXrd3l4ft4ttqtK4oL+YiHRdYwFVN0Qr9TOhYKyc3VY0Y63NgA+oK+qPo8/7dMbc
+ rgJzz3SvGAbYrJeIsmVuVomxiaAtrvJB5e578DZ2rzVyK8Fq9svE3ntCDgJetQ3hIXyC
+ l9Pn0lDJatwsH9EECIPX6NKdLvuYMLMLLif9ChoFnMS4XifiXD5F+bWIt4IM4ydAFtv6
+ e1KFfy5tkN38cTURQ+JDgi5zx+J/sJ9BHUSc2lDTmcxKV10BMumQcX1rUlr9Zr0+pbb/
+ 28P6wNrrmG52VH/rDqB1mzlHP3HCVKXRCnO9tt5eZZ2jHuN4Ti+13GunVvfOJguAwtPV
+ FmPw==
 X-Forwarded-Encrypted: i=1;
- AJvYcCWywWrXdh7abpNR4d1riWlWZtj2X7vJeYoAc0Tdp02alv5kO4a7UhcdwL/HSXAPVbkFLtUwyjdzIiBu@nongnu.org
-X-Gm-Message-State: AOJu0YxtGqxw0HLyBs1FhNxcmj+h7fxF9zXG6cpTyYiy6u4mxPmE/EsG
- pxFVeQ7PbE/PwI11npiDmHz005u6RoT20w3dOW88MTtCmwum9YuJAm1J9IkWJF5R1XLwd6IiMCI
- mJNF9YNPjjSoTwm0NY0jaP+G+CIErTnJ2UEDLfrd0WYt2hhiOufCE
-X-Gm-Gg: ASbGncv0IgE3XCiOuzs/Pmi8SKYVe+BXgm8DMuU5d4/v/IEa4pxVeqtZy72lTcdiGDv
- 7RtMGY0a9D+VC+U5xJ/koIVd2ZS7BiHXewd4yMZ6nh2yo7L5DXhEboJvnGUfZQmhEojkzTagYX9
- jt2WkY2lQFCdn6MKQy/PrZcRSh4COV97Hqy6nl90MKYKEkVxmB7ej+iB807vC/NNno0PC8VVJpF
- ySf6jRsCaSp27C2EqJOeiOYlUMe9BTwwnxlBbJjwNiEY8FGnFi4iwSZ/YwaNrsfaok5bFKmzmqN
- 6457kH5as9NF7DcAAd2dKvVm0QI7gw==
-X-Received: by 2002:a05:600c:1e0d:b0:436:f960:3427 with SMTP id
- 5b1f17b1804b1-438dc40ffbbmr164507105e9.22.1738579581337; 
- Mon, 03 Feb 2025 02:46:21 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IG0//g2kLqdfjWYymrUwf5zOI6Gmsse/+qI7y6UN1PZFAotkUe11KCkZffO/qdexEfFVbiZEA==
-X-Received: by 2002:a05:600c:1e0d:b0:436:f960:3427 with SMTP id
- 5b1f17b1804b1-438dc40ffbbmr164506875e9.22.1738579580958; 
- Mon, 03 Feb 2025 02:46:20 -0800 (PST)
+ AJvYcCWzh/tSxHOb/db9Z5hm2Rbqi26AOLyWbkdt2425AmBYdcOfhmO+zi3wgzUPQ2c9a26fMwnCHUtvT9eJ@nongnu.org
+X-Gm-Message-State: AOJu0Yxk1p/XvS2VhC4F25XvCr1jCsm6E+FSI/PzBVI+0PEM2hGfE2RQ
+ /a7y2tqGWGHUjSgn+3kkIk9Ppk09KjECJ6Ae67NzQqIdBsJO+Nas54gvgmkIv1VX84WEWjqZ9rL
+ I/F+lizz+Gk5qylYlM6XH68/RoNf1yLUBCeBRX+XWCZOU9zxc4ifm
+X-Gm-Gg: ASbGncv0xRdQ+ASAcksukFbAe9bJ/fEpLaxlt0uNiDwqHqiK+drp7lTQmVebQF86bqC
+ QgXMW/gF3wtl7teplta5+PwnIOyjB2Jk+ce86vZMpUN+1xCvo50+rJmUAB1MCLDr6li8e6cRiXu
+ q9vNtX/WXz7O4NYU+Hl74LDyN1Wi6jJcV4vR4VNqOzewMcQQ46KWfgPXW3c79QP84v30pHKgMUO
+ 6W+6lO+nSy+DFkfYWneZRjZLjhLZf4qh95Jdc2mzQZRKr57p4w/a3dsnXMkrFeS4zUTj36tEZ+N
+ I5IiSQAPDLZTaKhRJpEbmc17Tqxxzg==
+X-Received: by 2002:a5d:5f50:0:b0:386:3918:16b1 with SMTP id
+ ffacd0b85a97d-38c520906e8mr19703217f8f.39.1738579627612; 
+ Mon, 03 Feb 2025 02:47:07 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IE2GdISr/1x1b4HTTaeZEXF/UMpASO43vHfj1iQS0oUW9HYh6/2ld+7v1itrOG8yT73jacTkg==
+X-Received: by 2002:a5d:5f50:0:b0:386:3918:16b1 with SMTP id
+ ffacd0b85a97d-38c520906e8mr19703186f8f.39.1738579627235; 
+ Mon, 03 Feb 2025 02:47:07 -0800 (PST)
 Received: from [10.33.192.228] (nat-pool-str-t.redhat.com. [149.14.88.106])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-438dcc2e239sm184223365e9.18.2025.02.03.02.46.20
+ 5b1f17b1804b1-438d755375bsm145503475e9.0.2025.02.03.02.47.06
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 03 Feb 2025 02:46:20 -0800 (PST)
-Message-ID: <b26810fa-1449-4d36-bfa1-d90de3441a25@redhat.com>
-Date: Mon, 3 Feb 2025 11:46:20 +0100
+ Mon, 03 Feb 2025 02:47:06 -0800 (PST)
+Message-ID: <fa1367c9-3391-40a0-af49-2d7f4ffb82ea@redhat.com>
+Date: Mon, 3 Feb 2025 11:47:06 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 12/14] meson: Disallow 64-bit on 32-bit TCG emulation
+Subject: Re: [PATCH v2 13/14] meson: Deprecate 32-bit host support
 To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
 Cc: pbonzini@redhat.com, mark.cave-ayland@ilande.co.uk, berrange@redhat.com,
  philmd@linaro.org
 References: <20250203031821.741477-1-richard.henderson@linaro.org>
- <20250203031821.741477-13-richard.henderson@linaro.org>
+ <20250203031821.741477-14-richard.henderson@linaro.org>
 From: Thomas Huth <thuth@redhat.com>
 Content-Language: en-US
 Autocrypt: addr=thuth@redhat.com; keydata=
@@ -126,17 +126,17 @@ Autocrypt: addr=thuth@redhat.com; keydata=
  oiT+z+/E59qj/EKfyce3sbC9XLjXv3mHMrq1tKX4G7IJGnS989E/fg6crv6NHae9Ckm7+lSs
  IQu4bBP2GxiRQ+NV3iV/KU3ebMRzqIC//DCOxzQNFNJAKldPe/bKZMCxEqtVoRkuJtNdp/5a
  yXFZ6TfE1hGKrDBYAm4vrnZ4CXFSBDllL59cFFOJCkn4Xboj/aVxxJxF30bn
-In-Reply-To: <20250203031821.741477-13-richard.henderson@linaro.org>
+In-Reply-To: <20250203031821.741477-14-richard.henderson@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=thuth@redhat.com;
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=thuth@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -30
-X-Spam_score: -3.1
-X-Spam_bar: ---
-X-Spam_report: (-3.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=-1, RCVD_IN_MSPIKE_WL=-0.01,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.01,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -155,22 +155,14 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 03/02/2025 04.18, Richard Henderson wrote:
-> For system mode, we can rarely support the amount of RAM that
-> the guest requires. Emulation is restricted to round-robin
-> mode, which solves many of the atomicity issues, but not those
-> associated with virtio.  In any case, round-robin does nothing
-> to help the speed of emulation.
-> 
-> For user mode, most emulation does not succeed at all.  Most
-> of the time we cannot even load 64-bit non-PIE binaries due
-> to lack of a 64-bit address space.  Threads are run in
-> parallel, not round-robin, which means that atomicity
-> is not handled.
+> We deprecated i686 system mode support for qemu 8.0.  However, to
+> make real cleanups to TCG we need to deprecate all 32-bit hosts.
 > 
 > Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 > ---
->   meson.build | 14 +++++++++++---
->   1 file changed, 11 insertions(+), 3 deletions(-)
+>   docs/about/deprecated.rst | 7 +++++++
+>   meson.build               | 6 ++----
+>   2 files changed, 9 insertions(+), 4 deletions(-)
 
 Reviewed-by: Thomas Huth <thuth@redhat.com>
 
