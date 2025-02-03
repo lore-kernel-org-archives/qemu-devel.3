@@ -4,86 +4,87 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0AAD2C02192
-	for <qemu-devel@archiver.kernel.org>; Mon,  3 Feb 2025 17:39:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5DD70C02192
+	for <qemu-devel@archiver.kernel.org>; Mon,  3 Feb 2025 17:40:12 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tf0Pf-0003Z6-2b; Mon, 03 Feb 2025 12:39:11 -0500
+	id 1tf0QO-000416-2g; Mon, 03 Feb 2025 12:39:56 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1tf0Pd-0003Yw-44
- for qemu-devel@nongnu.org; Mon, 03 Feb 2025 12:39:09 -0500
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1tf0QM-0003yV-Ht
+ for qemu-devel@nongnu.org; Mon, 03 Feb 2025 12:39:54 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1tf0Pb-0006a9-AS
- for qemu-devel@nongnu.org; Mon, 03 Feb 2025 12:39:08 -0500
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1tf0QK-0006c7-Qz
+ for qemu-devel@nongnu.org; Mon, 03 Feb 2025 12:39:54 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1738604345;
+ s=mimecast20190719; t=1738604392;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=0sOeY9C/eWdQmQOVDE5YfWqVrx1bXKYnXEDyV+uaeno=;
- b=afxbVu7VI8YG5A/ElI1JdtG3qg4oq6zrEGChLt4K40YMAcLFOSTPbJMtgdLM5nzzrMBfwZ
- fk0D/uR32mDWcmYL+nEv+h+8mOEaelaclxMpVmBrms4LALJFF1UDvAtHePBmqxcVRAfzQD
- FRD+6Lnxa5YdGPsFXAF53A7jl/Faa5I=
-Received: from mail-ed1-f69.google.com (mail-ed1-f69.google.com
- [209.85.208.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=82aS2dSYCbId1sZ4ijpSXXtcZkwpLFe4l+P249gpwsQ=;
+ b=LbPMJcUJDaM0CSMx6XAV0OFNc+p5JkLd13vge34m3HQfb0ax1VgiLFJr3BNSOZrWpjhWMh
+ VmCJbuk8fgggEq9cELeno1pqiimJ5r/0t4u/pd7IymSAd0uOX/f4cnGn37dlECPVXgke0P
+ PtB7sS0xBDS2SpBcSSTO3+HmcSq89js=
+Received: from mail-ej1-f70.google.com (mail-ej1-f70.google.com
+ [209.85.218.70]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-632-sKEtKwtnNsuFwYX25EjAUw-1; Mon, 03 Feb 2025 12:39:04 -0500
-X-MC-Unique: sKEtKwtnNsuFwYX25EjAUw-1
-X-Mimecast-MFC-AGG-ID: sKEtKwtnNsuFwYX25EjAUw
-Received: by mail-ed1-f69.google.com with SMTP id
- 4fb4d7f45d1cf-5d3ff3c1b34so5332999a12.1
- for <qemu-devel@nongnu.org>; Mon, 03 Feb 2025 09:39:04 -0800 (PST)
+ us-mta-602-YiM7tmnTPyOICvQ0lagHBg-1; Mon, 03 Feb 2025 12:39:51 -0500
+X-MC-Unique: YiM7tmnTPyOICvQ0lagHBg-1
+X-Mimecast-MFC-AGG-ID: YiM7tmnTPyOICvQ0lagHBg
+Received: by mail-ej1-f70.google.com with SMTP id
+ a640c23a62f3a-aa67f03ca86so356983866b.2
+ for <qemu-devel@nongnu.org>; Mon, 03 Feb 2025 09:39:50 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1738604341; x=1739209141;
+ d=1e100.net; s=20230601; t=1738604390; x=1739209190;
  h=content-transfer-encoding:in-reply-to:autocrypt:content-language
  :from:references:cc:to:subject:user-agent:mime-version:date
  :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=0sOeY9C/eWdQmQOVDE5YfWqVrx1bXKYnXEDyV+uaeno=;
- b=mh5oNjYATC3T8uAyiEGoAx+GqPYT/7xYmi8DsyP/KkhTOJ/hbtUTK8MGKWe5VTqOCz
- 6dXLi8lnylNB0JP4U/aYJalk4RAh+GkDoycV5CwD5WbrK01T9joKmSvD+Hf5YhXRXaCz
- /IRL0+ZmZHMtrfdD1fFv7+ml4j3rOX2MsLn3DZNItyM6hOQ0BllO5vBtCgG2K6/0wtOt
- /z2xN+SRq/1qkvJECLd8pTJ7NHDu6v1Txf9MYXrjRxpgJtzT0RaGdyVvy8CFc3H9NsEe
- iwUA86h4yMNZXHqIOSr65c7RvLRrGTtT8yozqL8lfwa40A8AKcZEnyzY9au0yONIE0NI
- qI+A==
+ bh=82aS2dSYCbId1sZ4ijpSXXtcZkwpLFe4l+P249gpwsQ=;
+ b=bLZFi/j052TvCMd48yMW69rrtC+Di7ZResf1DbeGULgvNrF4Ih5OiLfD7IILZAmVAA
+ PFX9z3eLpLu3a9E8Da+p5LyuxLHa39RiJYi0oR2ZTvK+RRljo6PhXgS/yVs6RpZ3DzuF
+ Xd2stAyWdE/rn9sF5rNFnJATbhzEmOI9i79FW0XWQzq0bzKMDGC/0EyyXUGsienMh7c1
+ tFsEIopQQDlqfGHd1IxrRCdyzivojCYjGdEWLtsxZ06Bj147FUH7fJ5k7z8MfyodniGT
+ At+IkVDsl/P41U9rCV9bcqbpUENvFnQSeLQaWQEwcfKI8WasPKFGWxaTBFZaK51YGEs9
+ TS9w==
 X-Forwarded-Encrypted: i=1;
- AJvYcCXMcTNP16SiOi/mdqHArpVRnp8mrdD3pYVmzRRnKjXyKggyd9oFUGXva86qB29ea3DKfwAQ07M5Jwvn@nongnu.org
-X-Gm-Message-State: AOJu0YzzPbnL25pvOvWe+wltpcnRkYfKWjlt1i0JD2fj17bfmP+Dmyla
- +vCOPEmUlF0TIue2XebzlR360eBY07h3iQg2xlZdlIgJsCpWgDXiE/F+BUZTuYAXnTzI3C7n4Cu
- j2WDnFUhQ2iEkhQ/5/3DN8shKNOp4Myy1IhcDwVbSSmIwyldRAKO5
-X-Gm-Gg: ASbGnctIiuVpcsjbdgCqLFm03xnLFVP2Mig4hOuKsJMquvHKTO73y2OrvGQSBWcxjrw
- NTz4+vdQqbOw++XmGsbhY9E5zocmLg4oqSvGql1Yl7lA6kpzlBRvr7zsT87ddeZ0n10JUEQbG/x
- nqaV46gK7sb3SYp1xxyT6HTtT79J6KPqjvUOjd/AP5aedXAdAbnjifgz5oDDA/yhFSi36MfylQq
- vNlX0esYGXQTNiG2HxylNJhPp/I55nNXyHL6InxFNvGWQzFG8XbLRQ70DEN/gbIgI/Wwf5qWr7U
- XB0JH9fAtBwJfJOAptI79bzjqD+ZPEJkjSFp
-X-Received: by 2002:a05:6402:51cf:b0:5da:7f7:b9b2 with SMTP id
- 4fb4d7f45d1cf-5dc5efc68fcmr28072792a12.18.1738604341343; 
- Mon, 03 Feb 2025 09:39:01 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IG/FwYia9m8SMp2137ZqS89NKyLAPiyAlIgOqJ73WRuwMpZFBCZ/7/0p6Vi6KRS2pD3T6L9yg==
-X-Received: by 2002:a05:6402:51cf:b0:5da:7f7:b9b2 with SMTP id
- 4fb4d7f45d1cf-5dc5efc68fcmr28072773a12.18.1738604340974; 
- Mon, 03 Feb 2025 09:39:00 -0800 (PST)
+ AJvYcCXPaEyB39Q61DzyARHhjAQrwyf7ijQZD4sx1J8VHzHw2qjY+Alawg/fXMr8y4XoOtqhhXE+bHJ89iJR@nongnu.org
+X-Gm-Message-State: AOJu0YyD08wMi+PDDmBrW9F71QnN/AcbOMt6mELvPZQwlzCNQXD3fwkg
+ /CsDYaESQxOS+xBOp6YPmEZJYv/dkyJMfEBBMxa9eG9ZxNczQdPh/ZbGoBOB1VLd84DmBLo5Iup
+ f6fP4CFYwyHMRwe7ayVKPGUdwOTNVelSRDCyER/AuLGzDSetHo0sL
+X-Gm-Gg: ASbGncuwNytG9ygblhK3GKR1Ih9+L0Pyo1C+f7l0QRA8mOk2L4z4rOR6A/rufdRQ6am
+ geVuTs0mkKWeIX7cJ3ecY1WrYQSuSANzitomRQRkkfugCnAPCSwJdATmG1Bks+JygDsEDx+zvM8
+ ot/s6NQyvpHz8viqUoCp20/Q7on7gebtLacct65QmmDpQtOce2XssH8cepBfq8ImKtcTFdtsFsT
+ ZeQh7Rx8WfItso2jMH7nLykcigoGn1G5N7H0knUYe6bem9kcWM0t/Dwxs4fUpLKUd0nWZ0ZpbJo
+ vJ3WNXrLMW6FFtakDmsNpQIlWX4PRdN0IkFs
+X-Received: by 2002:a05:6402:2803:b0:5dc:100c:1560 with SMTP id
+ 4fb4d7f45d1cf-5dc5efc5d8fmr60492021a12.18.1738604389901; 
+ Mon, 03 Feb 2025 09:39:49 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IGLc+sfJg3ePh/em3i9LkPFuyAbDjco+y/cZTBevDmpos6syTnF1Tenu+qgdSfpFOWs3I+O+A==
+X-Received: by 2002:a05:6402:2803:b0:5dc:100c:1560 with SMTP id
+ 4fb4d7f45d1cf-5dc5efc5d8fmr60491968a12.18.1738604389526; 
+ Mon, 03 Feb 2025 09:39:49 -0800 (PST)
 Received: from [192.168.0.7] (ip-109-42-50-234.web.vodafone.de.
  [109.42.50.234]) by smtp.gmail.com with ESMTPSA id
- 4fb4d7f45d1cf-5dc7240608dsm8305068a12.47.2025.02.03.09.39.00
+ 4fb4d7f45d1cf-5dc724c9da7sm8062889a12.79.2025.02.03.09.39.47
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 03 Feb 2025 09:39:00 -0800 (PST)
-Message-ID: <62edb7e7-5f3f-4f7a-825d-59291117e032@redhat.com>
-Date: Mon, 3 Feb 2025 18:38:58 +0100
+ Mon, 03 Feb 2025 09:39:49 -0800 (PST)
+Message-ID: <f259ce9d-8488-4dd8-88bc-587c858c4448@redhat.com>
+Date: Mon, 3 Feb 2025 18:39:47 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 07/14] accel/stubs: Expand stubs for TCG
+Subject: Re: [PATCH v2 10/14] configure: Define TARGET_LONG_BITS in
+ configs/targets/*.mak
 To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
 Cc: pbonzini@redhat.com, mark.cave-ayland@ilande.co.uk, berrange@redhat.com,
  philmd@linaro.org
 References: <20250203031821.741477-1-richard.henderson@linaro.org>
- <20250203031821.741477-8-richard.henderson@linaro.org>
- <cb6859a5-f4fc-4f7a-8e32-5aa2be3ee7be@redhat.com>
- <cfed8291-a3eb-464a-94a6-4d962c46d17a@linaro.org>
+ <20250203031821.741477-11-richard.henderson@linaro.org>
+ <47d703f2-bee2-4ee1-af13-624f6f0e7ee1@redhat.com>
+ <54d4e11f-75ea-42d7-9d53-0c7d4eb4b239@linaro.org>
 From: Thomas Huth <thuth@redhat.com>
 Content-Language: en-US
 Autocrypt: addr=thuth@redhat.com; keydata=
@@ -128,7 +129,7 @@ Autocrypt: addr=thuth@redhat.com; keydata=
  oiT+z+/E59qj/EKfyce3sbC9XLjXv3mHMrq1tKX4G7IJGnS989E/fg6crv6NHae9Ckm7+lSs
  IQu4bBP2GxiRQ+NV3iV/KU3ebMRzqIC//DCOxzQNFNJAKldPe/bKZMCxEqtVoRkuJtNdp/5a
  yXFZ6TfE1hGKrDBYAm4vrnZ4CXFSBDllL59cFFOJCkn4Xboj/aVxxJxF30bn
-In-Reply-To: <cfed8291-a3eb-464a-94a6-4d962c46d17a@linaro.org>
+In-Reply-To: <54d4e11f-75ea-42d7-9d53-0c7d4eb4b239@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=170.10.133.124; envelope-from=thuth@redhat.com;
@@ -156,60 +157,67 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 03/02/2025 17.43, Richard Henderson wrote:
-> On 2/3/25 02:22, Thomas Huth wrote:
->> On 03/02/2025 04.18, Richard Henderson wrote:
->>> Add tcg_allowed, qmp_x_query_jit, qmp_x_query_opcount.
->>> These are referenced when CONFIG_TCG is enabled globally,
->>> but not for a specific target.
->>>
->>> Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
->>> ---
->>>   accel/stubs/tcg-stub.c | 24 ++++++++++++++++++++++++
->>>   1 file changed, 24 insertions(+)
->>>
->>> diff --git a/accel/stubs/tcg-stub.c b/accel/stubs/tcg-stub.c
->>> index 7f4208fddf..9c2e2dc6e1 100644
->>> --- a/accel/stubs/tcg-stub.c
->>> +++ b/accel/stubs/tcg-stub.c
->>> @@ -13,6 +13,18 @@
->>>   #include "qemu/osdep.h"
->>>   #include "exec/tb-flush.h"
->>>   #include "exec/exec-all.h"
->>> +#include "qapi/error.h"
->>> +
->>> +/*
->>> + * This file *ought* to be built once and linked only when required.
->>> + * However, it is built per-target, which means qemu/osdep.h has already
->>> + * undef'ed CONFIG_TCG, which hides the auto-generated declaration.
+On 03/02/2025 17.49, Richard Henderson wrote:
+> On 2/3/25 02:39, Thomas Huth wrote:
+>> [...]> diff --git a/configs/targets/hppa-linux-user.mak b/configs/targets/ 
+>> hppa-linux-user.mak
+>>> index 8e0a80492f..4295cf384e 100644
+>>> --- a/configs/targets/hppa-linux-user.mak
+>>> +++ b/configs/targets/hppa-linux-user.mak
+>>> @@ -3,3 +3,5 @@ TARGET_ABI32=y
+>>>   TARGET_SYSTBL_ABI=common,32
+>>>   TARGET_SYSTBL=syscall.tbl
+>>>   TARGET_BIG_ENDIAN=y
+>>> +# Compromise to ease maintainence vs system mode
 >>
->> So why don't we only build this file once?
+>> s/maintainence/maintenance/
 > 
-> I think we'd have to create a static library for it.
-> It didn't seem worth the effort at the time.
-> I can re-investigate if you like.
+> Oops.
+> 
+>>
+>>> diff --git a/configs/targets/mipsn32-linux-user.mak b/configs/targets/ 
+>>> mipsn32-linux- user.mak
+>>> index 206095da64..39ae214633 100644
+>>> --- a/configs/targets/mipsn32-linux-user.mak
+>>> +++ b/configs/targets/mipsn32-linux-user.mak
+>>> @@ -5,3 +5,4 @@ TARGET_BASE_ARCH=mips
+>>>   TARGET_SYSTBL_ABI=n32
+>>>   TARGET_SYSTBL=syscall_n32.tbl
+>>>   TARGET_BIG_ENDIAN=y
+>>> +TARGET_LONG_BITS=64
+>>
+>> Why is this 64 ?
+>>
+>>> diff --git a/configs/targets/mipsn32el-linux-user.mak b/configs/targets/ 
+>>> mipsn32el-linux- user.mak
+>>> index ca2a3ed753..d9b61d6990 100644
+>>> --- a/configs/targets/mipsn32el-linux-user.mak
+>>> +++ b/configs/targets/mipsn32el-linux-user.mak
+>>> @@ -4,3 +4,4 @@ TARGET_ABI32=y
+>>>   TARGET_BASE_ARCH=mips
+>>>   TARGET_SYSTBL_ABI=n32
+>>>   TARGET_SYSTBL=syscall_n32.tbl
+>>> +TARGET_LONG_BITS=64
+>>
+>> dito?
+>>
+>>> diff --git a/configs/targets/sparc32plus-linux-user.mak b/configs/ 
+>>> targets/sparc32plus- linux-user.mak
+>>> index 6cc8fa516b..7a16934fd1 100644
+>>> --- a/configs/targets/sparc32plus-linux-user.mak
+>>> +++ b/configs/targets/sparc32plus-linux-user.mak
+>>> @@ -5,3 +5,4 @@ TARGET_ABI_DIR=sparc
+>>>   TARGET_SYSTBL_ABI=common,32
+>>>   TARGET_SYSTBL=syscall.tbl
+>>>   TARGET_BIG_ENDIAN=y
+>>> +TARGET_LONG_BITS=64
+>>
+>> Same question here: Why 64? If this isn't a mistake, could you maybe add a 
+>> comment?
+> 
+> All three are 64-bit cpus using an ABI with 32-bit pointers.
 
-I think something like this might work:
-
-diff --git a/accel/stubs/meson.build b/accel/stubs/meson.build
---- a/accel/stubs/meson.build
-+++ b/accel/stubs/meson.build
-@@ -1,6 +1,9 @@
-  system_stubs_ss = ss.source_set()
--system_stubs_ss.add(when: 'CONFIG_XEN', if_false: files('xen-stub.c'))
--system_stubs_ss.add(when: 'CONFIG_KVM', if_false: files('kvm-stub.c'))
-  system_stubs_ss.add(when: 'CONFIG_TCG', if_false: files('tcg-stub.c'))
-+system_ss.add_all(when: ['CONFIG_SYSTEM_ONLY'], if_true: system_stubs_ss)
-+
-+specific_stubs_ss = ss.source_set()
-+specific_stubs_ss.add(when: 'CONFIG_XEN', if_false: files('xen-stub.c'))
-+specific_stubs_ss.add(when: 'CONFIG_KVM', if_false: files('kvm-stub.c'))
-+specific_ss.add_all(when: ['CONFIG_SYSTEM_ONLY'], if_true: specific_stubs_ss)
-
--specific_ss.add_all(when: ['CONFIG_SYSTEM_ONLY'], if_true: system_stubs_ss)
-
-?
-
-  Thomas
+Ok, thanks, makes sense now. So with the typo fixed:
+Reviewed-by: Thomas Huth <thuth@redhat.com>
 
 
