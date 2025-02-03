@@ -4,86 +4,86 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 51DE5C02192
-	for <qemu-devel@archiver.kernel.org>; Mon,  3 Feb 2025 10:03:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7B6F0C02192
+	for <qemu-devel@archiver.kernel.org>; Mon,  3 Feb 2025 10:09:44 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tetI1-000463-Og; Mon, 03 Feb 2025 05:02:49 -0500
+	id 1tetO6-0006Hn-20; Mon, 03 Feb 2025 05:09:06 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1tetI0-00045Y-6e
- for qemu-devel@nongnu.org; Mon, 03 Feb 2025 05:02:48 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1tetO4-0006Hd-JV
+ for qemu-devel@nongnu.org; Mon, 03 Feb 2025 05:09:04 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1tetHy-0004tl-Qr
- for qemu-devel@nongnu.org; Mon, 03 Feb 2025 05:02:47 -0500
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1tetO2-000622-Uo
+ for qemu-devel@nongnu.org; Mon, 03 Feb 2025 05:09:04 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1738576965;
+ s=mimecast20190719; t=1738577340;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=xw17Z31DNhovS2qpLyh8VbUH9e1UAv2pTKurMTIB9Ts=;
- b=W0zxG21Z0pHa5D3+Xq1lhPUME6hAcJYgaHtHKWu6EshZhyuFFqjcpgvXMZt19txk7vyqj2
- cx1eQl+dFaE48KbfVcYjApart/QtM+3SD7DW/MQZoL1AmZnUyxu504iWxxzpXR4G+lnX6t
- uHyRgBfRYvsAClBlxmFM2gyEWirhTS8=
-Received: from mail-qk1-f198.google.com (mail-qk1-f198.google.com
- [209.85.222.198]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=XT6Dmmx73RiJGQTtMpVkWED7k3bGYEcqfFae0KH8wBA=;
+ b=L8hSnSpPc0Tm/xJ5OsuN1AmxJ2/RAtgbKncK8Do8F6F95VZIKyJJ+SaOaJGpc0n+se64/4
+ 4kf+bDOJ4pLMKR1UifyzZ6QCfK+TdOwIakdKNfG90ePqw0TGcKfHtFdfOlPoIyXsvtuT0D
+ YufY8Ua7PeCdEJqYbEdtKVdT7rowL48=
+Received: from mail-wr1-f69.google.com (mail-wr1-f69.google.com
+ [209.85.221.69]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-619-T8nErXhfNwCuVrDq7BKM_A-1; Mon, 03 Feb 2025 05:02:42 -0500
-X-MC-Unique: T8nErXhfNwCuVrDq7BKM_A-1
-X-Mimecast-MFC-AGG-ID: T8nErXhfNwCuVrDq7BKM_A
-Received: by mail-qk1-f198.google.com with SMTP id
- af79cd13be357-7b6e1b036e9so394842685a.1
- for <qemu-devel@nongnu.org>; Mon, 03 Feb 2025 02:02:42 -0800 (PST)
+ us-mta-396-z4Q9RvBTNw2zdgrtdHiGXA-1; Mon, 03 Feb 2025 05:08:59 -0500
+X-MC-Unique: z4Q9RvBTNw2zdgrtdHiGXA-1
+X-Mimecast-MFC-AGG-ID: z4Q9RvBTNw2zdgrtdHiGXA
+Received: by mail-wr1-f69.google.com with SMTP id
+ ffacd0b85a97d-385ed79291eso2289378f8f.0
+ for <qemu-devel@nongnu.org>; Mon, 03 Feb 2025 02:08:58 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1738576962; x=1739181762;
- h=content-transfer-encoding:in-reply-to:autocrypt:content-language
- :from:references:cc:to:subject:user-agent:mime-version:date
- :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=xw17Z31DNhovS2qpLyh8VbUH9e1UAv2pTKurMTIB9Ts=;
- b=Ja1LTw0giEjhtWnEziUMCAqNLNBnAJKom6vTMgv4zp+XtJKJb3Mj1qgVyrp2EsmyIQ
- kTiAYqa0BMDfpSk0gJGjyhuhGLTFmu6XG2pTXP+r5/UUJTeLlNKzRvFrEGJ7eoSbqODX
- HZfRge2d82RXwKVbNz+4GGS1IsZmzuEFeFpjDHsTeOoGow87+I98P18inAnQMzWie+z4
- OMa95pLVmaEo8fn27OrKdqGKb3Ovd1JEfn479y1WDx6SbElN9siUkl9uRYJ7DUXr/Ixt
- BYJ+aras6VqUxI3M3agg0nsOTSJBNv3YAP14P9bq1ZmXCbW12pDZk646c9TAdoLpIAS1
- 595g==
+ d=1e100.net; s=20230601; t=1738577338; x=1739182138;
+ h=content-transfer-encoding:in-reply-to:autocrypt:from
+ :content-language:references:cc:to:subject:user-agent:mime-version
+ :date:message-id:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=XT6Dmmx73RiJGQTtMpVkWED7k3bGYEcqfFae0KH8wBA=;
+ b=U0WmAlf3/+IOCEADwPlmppyJ7bSz+GZmvaU+7gZMfjX4a2k9UY87U+WOklitaiA0j4
+ 8TnS+LzVwSt9Vo7sEN6kOVQu4obSMbSFm9dXdfMXKnrBfMOjmq6u26iATc31nzYat3dm
+ 51pxTOxUk+xrEk1PRSleWQivK226V7RhFfA2ZjeHh4LR1NWhSYCGZiFFmeoxe1xKvVuQ
+ S6kahJoRlsNq+k/O2gFKEW/g7TaFd0BEy1hv4dIlHhHjqBZ+XXVfELHvTWpGtD2WcvKn
+ xHHnGjBkU7rT5OP+uCITcklsOm92YBOYzjon2yM61hmysJ99l+b2r3+BkUUwYu/q/vtF
+ V3cg==
 X-Forwarded-Encrypted: i=1;
- AJvYcCW8FAiiyzpQ0d6iecRBXhs5O61N3112p46ptACHxrpEMgDkFQts2l8hLNOMK0R39zmAVxHrxvbl+mzq@nongnu.org
-X-Gm-Message-State: AOJu0YwPsz7nbhOf6zR7xCWcKS/qG75RKRQtCJdoZG69B0hI7qlzNSqh
- rK2qniVEUWv0pId2Q5YtiBtOSPL8iPBsryXXqq989fr9YyIvbnHtiC2VPX11oTRHeSk2nWs4GfP
- HX7yszJRKC7BWeKDxFPUprDSMPtO9luWax+IIlGRSGs5li1HDriMy
-X-Gm-Gg: ASbGncscRPWjqBXTeTg5x7Wsorx3dPhAV9cujgrFXlSuS+ejLvf13io67qGPnWr2vpo
- KlNlElKtXtyygJ3Jy3/eWgnWa1hXMbstG+dvfkiN8jfYKDsHQS3MiNPUTb7pCuZh2JhB+6yykvG
- rmOiazLzqDqCjPaC2bNg83p0g1snxdx721LO4Aw4MpK6Jd5qZ1+b957unCJ67TjnwB3nfSSNhde
- Ztj9WwOXwFzlfd5N9ripBIxh8RMbKkyptQWa7smGFXW2953/xHlAX9+MAkN80N18tqQwif736l+
- cADnrQZVD8GAFK3U2UOxnbInSRoGcQ==
-X-Received: by 2002:a05:620a:d85:b0:7b6:dddb:b88 with SMTP id
- af79cd13be357-7bffcd906a3mr2630819885a.38.1738576961877; 
- Mon, 03 Feb 2025 02:02:41 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IHQpW611XZoQLf3BvwvhAntoqNilYlO+TZKVOq3NyIF1Ec1KDj3T0Dfq9UfVK16pZCk/Iwb0A==
-X-Received: by 2002:a05:620a:d85:b0:7b6:dddb:b88 with SMTP id
- af79cd13be357-7bffcd906a3mr2630817785a.38.1738576961555; 
- Mon, 03 Feb 2025 02:02:41 -0800 (PST)
+ AJvYcCWWPTqRpdMLIzsEZ+x6ctaEmKhQP0Fz8y/X7NpJIv5VvvlrQHG/9Wzxvx0lLoK2rT+ok3x6+RkUemE4@nongnu.org
+X-Gm-Message-State: AOJu0YzIWwr1YUiaD+MSrLkT+e7yUz6wF4LkbI5JRtnd4sJK+PWmkftw
+ OIhSz4tB6l12fuch4mEnUhMVDBgG+qiv1a57kzQmos2pHRlSXeeEL/xVarFpQXbHyErVy0QPYDJ
+ 7D6UsDGVjRuSv0dMpX5D8554+tXigHJ0bixDLAJEvtzq1npUVax4J
+X-Gm-Gg: ASbGncs5C52Y7wmObzctyFjykKBNt3LxiPMb7OIxzKLVYTZxWAivOg5h/7ld8BS5kk1
+ lLSh5OCd4XkpzfNaN7wrA7AyAVbrNV28Y0EmzrTtb/yuOxOSXOJBYGgRNgXvG04GjDetv93rWU/
+ YGU/Fx1EK/ECXWSCR4mZxXVp1BgcKFhfBpFsHSbz2LCl55FgGCkGsLwZOwLedVpxorubR9xAnsV
+ l5UHSfd53OhJBFaOwgBI5atF91FJvOvRyOjROv2ZkZ8xkPdGOlKi4Sp12EryVHXzZciizy4X9ik
+ jhCQanmUNAwu3HQVuRJH1DGrs+rZ2Q==
+X-Received: by 2002:a5d:64c4:0:b0:38b:f4e6:21aa with SMTP id
+ ffacd0b85a97d-38c5a956b96mr12199062f8f.5.1738577337899; 
+ Mon, 03 Feb 2025 02:08:57 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IE7uYvYsaPF0aTcSrXEdnfUfABp6+NMeDFn4e+vmfW7fhW5W4M1SzFC3A7yRG83VYkMY2igSw==
+X-Received: by 2002:a5d:64c4:0:b0:38b:f4e6:21aa with SMTP id
+ ffacd0b85a97d-38c5a956b96mr12199040f8f.5.1738577337537; 
+ Mon, 03 Feb 2025 02:08:57 -0800 (PST)
 Received: from [10.33.192.228] (nat-pool-str-t.redhat.com. [149.14.88.106])
  by smtp.gmail.com with ESMTPSA id
- af79cd13be357-7c00a8d96b2sm510808285a.60.2025.02.03.02.02.39
+ ffacd0b85a97d-38c5c102e19sm12490637f8f.36.2025.02.03.02.08.56
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 03 Feb 2025 02:02:41 -0800 (PST)
-Message-ID: <a141ba08-0664-4645-a01e-f2df59b880e1@redhat.com>
-Date: Mon, 3 Feb 2025 11:02:39 +0100
+ Mon, 03 Feb 2025 02:08:57 -0800 (PST)
+Message-ID: <5c118b5d-a943-499c-a0ce-f19c74ab7d94@redhat.com>
+Date: Mon, 3 Feb 2025 11:08:56 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 03/14] plugins: Uninline qemu_plugin_add_opts
+Subject: Re: [PATCH v2 04/14] meson: Introduce CONFIG_TCG_TARGET
 To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
 Cc: pbonzini@redhat.com, mark.cave-ayland@ilande.co.uk, berrange@redhat.com,
  philmd@linaro.org
 References: <20250203031821.741477-1-richard.henderson@linaro.org>
- <20250203031821.741477-4-richard.henderson@linaro.org>
-From: Thomas Huth <thuth@redhat.com>
+ <20250203031821.741477-5-richard.henderson@linaro.org>
 Content-Language: en-US
+From: Thomas Huth <thuth@redhat.com>
 Autocrypt: addr=thuth@redhat.com; keydata=
  xsFNBFH7eUwBEACzyOXKU+5Pcs6wNpKzrlJwzRl3VGZt95VCdb+FgoU9g11m7FWcOafrVRwU
  yYkTm9+7zBUc0sW5AuPGR/dp3pSLX/yFWsA/UB4nJsHqgDvDU7BImSeiTrnpMOTXb7Arw2a2
@@ -126,17 +126,17 @@ Autocrypt: addr=thuth@redhat.com; keydata=
  oiT+z+/E59qj/EKfyce3sbC9XLjXv3mHMrq1tKX4G7IJGnS989E/fg6crv6NHae9Ckm7+lSs
  IQu4bBP2GxiRQ+NV3iV/KU3ebMRzqIC//DCOxzQNFNJAKldPe/bKZMCxEqtVoRkuJtNdp/5a
  yXFZ6TfE1hGKrDBYAm4vrnZ4CXFSBDllL59cFFOJCkn4Xboj/aVxxJxF30bn
-In-Reply-To: <20250203031821.741477-4-richard.henderson@linaro.org>
+In-Reply-To: <20250203031821.741477-5-richard.henderson@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=thuth@redhat.com;
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=thuth@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -30
-X-Spam_score: -3.1
-X-Spam_bar: ---
-X-Spam_report: (-3.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=-1, RCVD_IN_MSPIKE_WL=-0.01,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.01,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -155,15 +155,76 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 03/02/2025 04.18, Richard Henderson wrote:
-> No need to expand this function inline.
-> Unexport qemu_plugin_opts to match.
+> Use CONFIG_TCG as a project-wide flag to indicate that TCG is enabled
+> for *some* target.  Use CONFIG_TCG_TARGET to indicate that TCG is
+> enabled for a specific target.
+> 
+> Within a specific compilation unit, we can remap CONFIG_TCG based on
+> CONFIG_TCG_TARGET.  This allows us to avoid changes to the bulk of
+> the code base.
+> 
+> Within meson.build, while CONFIG_TCG may be set in config_host_data,
+> it may not be set within config_target.  Thus all references to
+> CONFIG_TCG in source_set 'when:' need not be updated.
+> 
+> For the moment, CONFIG_TCG and CONFIG_TCG_TARGET are identical.
 > 
 > Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 > ---
->   include/qemu/plugin.h | 9 +--------
->   plugins/loader.c      | 7 ++++++-
->   2 files changed, 7 insertions(+), 9 deletions(-)
+>   include/qemu/osdep.h |  7 +++++++
+>   meson.build          | 11 +++++++----
+>   2 files changed, 14 insertions(+), 4 deletions(-)
+> 
+> diff --git a/include/qemu/osdep.h b/include/qemu/osdep.h
+> index 112ebdff21..1f6f73a148 100644
+> --- a/include/qemu/osdep.h
+> +++ b/include/qemu/osdep.h
+> @@ -34,9 +34,16 @@
+>   #include "config-host.h"
+>   #ifdef COMPILING_PER_TARGET
+>   #include CONFIG_TARGET
+> +# ifdef CONFIG_TCG_TARGET
+> +#  undef CONFIG_TCG_TARGET
+> +# else
+> +#  undef CONFIG_TCG
+> +# endif
+>   #else
+>   #include "exec/poison.h"
+>   #endif
+> +#pragma GCC poison CONFIG_TCG_TARGET
 
-Reviewed-by: Thomas Huth <thuth@redhat.com>
+Shouldn't that rather go before the "#endif" instead?
+
+Also, would it be possible to rather adjust scripts/make-config-poison.sh 
+instead of poisoning this switch manually?
+
+  Thomas
+
+>   
+>   /*
+>    * HOST_WORDS_BIGENDIAN was replaced with HOST_BIG_ENDIAN. Prevent it from
+> diff --git a/meson.build b/meson.build
+> index b72114819b..5ca3cc3f34 100644
+> --- a/meson.build
+> +++ b/meson.build
+> @@ -3270,11 +3270,14 @@ foreach target : target_dirs
+>   
+>     target_kconfig = []
+>     foreach sym: accelerators
+> -    if sym == 'CONFIG_TCG' or target in accelerator_targets.get(sym, [])
+> -      config_target += { sym: 'y' }
+> -      config_all_accel += { sym: 'y' }
+> -      target_kconfig += [ sym + '=y' ]
+> +    if sym == 'CONFIG_TCG'
+> +      config_target += { 'CONFIG_TCG_TARGET': 'y' }
+> +    elif target not in accelerator_targets.get(sym, [])
+> +      continue
+>       endif
+> +    config_target += { sym: 'y' }
+> +    config_all_accel += { sym: 'y' }
+> +    target_kconfig += [ sym + '=y' ]
+>     endforeach
+>     if target_kconfig.length() == 0
+>       if default_targets
 
 
