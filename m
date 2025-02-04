@@ -4,98 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C4CE4C02193
-	for <qemu-devel@archiver.kernel.org>; Tue,  4 Feb 2025 16:27:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9CE86C02193
+	for <qemu-devel@archiver.kernel.org>; Tue,  4 Feb 2025 16:29:28 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tfLlN-00043I-NC; Tue, 04 Feb 2025 11:27:01 -0500
+	id 1tfLnM-0004ox-JE; Tue, 04 Feb 2025 11:29:04 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1tfLlM-000439-Ls
- for qemu-devel@nongnu.org; Tue, 04 Feb 2025 11:27:00 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1tfLlK-00028G-Ht
- for qemu-devel@nongnu.org; Tue, 04 Feb 2025 11:27:00 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1738686416;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=YkRmWBY4iu90yJebV/B9r/1iCKRTGW8Frh7k2O5yXe0=;
- b=RcURGdIQWQ3xE7TL1c7Ug8v9HvCpjDBxnhG3j7RPTo4rw/lFKal5MXIdalX2z1V9u/G2hF
- HJVEVxDFFfMZ94CuA2GdQijBLC+oMNp7cw16ti/arV7AoprwU86gHSK1TQdS6U7UTr+jqh
- aBmRtpM9c/qtq+NIdg3aXrzgEaB/w6w=
-Received: from mail-qk1-f199.google.com (mail-qk1-f199.google.com
- [209.85.222.199]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-158-MfH7Mb_INu-5l0jWkeX81Q-1; Tue, 04 Feb 2025 11:26:55 -0500
-X-MC-Unique: MfH7Mb_INu-5l0jWkeX81Q-1
-X-Mimecast-MFC-AGG-ID: MfH7Mb_INu-5l0jWkeX81Q
-Received: by mail-qk1-f199.google.com with SMTP id
- af79cd13be357-7b6e5c9ef38so939431285a.1
- for <qemu-devel@nongnu.org>; Tue, 04 Feb 2025 08:26:55 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1tfLnK-0004oU-FO
+ for qemu-devel@nongnu.org; Tue, 04 Feb 2025 11:29:02 -0500
+Received: from mail-yb1-xb2a.google.com ([2607:f8b0:4864:20::b2a])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1tfLnI-0003Az-NA
+ for qemu-devel@nongnu.org; Tue, 04 Feb 2025 11:29:02 -0500
+Received: by mail-yb1-xb2a.google.com with SMTP id
+ 3f1490d57ef6-e545c1e8a15so5227986276.1
+ for <qemu-devel@nongnu.org>; Tue, 04 Feb 2025 08:29:00 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1738686539; x=1739291339; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=T6tpi2uNOPvRexxdyaBtzwIggAYq464uVyRYbQr+Bl4=;
+ b=O9ylUzZAJom8yG0mHyEaV0A8x9qFBH9G8+u9UGr99li/vhqGfEHD2Y9I2SoIERMo8U
+ v7PGuOIdVdAY3yX8u1G1yGbESpTGwB+6eqLMqV7HqZqNG/mi7W0QUIZEud9JTo463ZOD
+ FSVKVBbQL56CSSjm/Dekm+JMiWosR7Csb7UwQ2Y9biK2rfyDj6KDX/hcBw0zFRr6ERzG
+ bz7rPMETzOeVaR372ibrXerN48A8byjOy7/Eab1VMwP+xq2NCE4SREy29t3Grtgh3SuK
+ DS27BEagwUyRKC1w6B2cPD6Flb0ZvOVpbp/7z58IcsjoRU6mfb7F9MPlyGqv6J2Pa196
+ n6dA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1738686414; x=1739291214;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=YkRmWBY4iu90yJebV/B9r/1iCKRTGW8Frh7k2O5yXe0=;
- b=kYwNHaroCgudiGzGmAd0QVXR4S3oHeFfs6jPYo+cVoOQeHRtR/9TgTQe2cuv61IMrI
- eAB8Yo4CZwLZSvpcrPiYgJgobfZpcr807PLX0aH1TBNcdxBi6zH6NeNRR+/hOpso7PkY
- sKfm/uE+DpKVVTKa7qjrzJU6JepLjb1GrHmQ3RX2Cpy23c3YsLWSOcIfWcESijurNPC4
- lGs79Ngu/F1wOgIdOrK0ylrO6EPUjdV1HHEayAcwP2jkSTAV+z8N/KfZrB72ls76xchO
- VgXb0WDU5B0rb2MJpvw8HqQk8PzXS98TANvnUAicG/l9jBH04U0fQgpBu+uAhUZK7FOx
- pdBw==
+ d=1e100.net; s=20230601; t=1738686539; x=1739291339;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=T6tpi2uNOPvRexxdyaBtzwIggAYq464uVyRYbQr+Bl4=;
+ b=O5Knc2ZK2xmj6B7pVSRmjZJTbpbVoBfFA1BuB0gbii2qMm0CJChJVi3dDFhEPHTmzu
+ ZK51CXGChWCvi7o0p2xbInZQeLi4LX8K36zvbA1owHYNsNN5wKUO6LHs2Pc/BbcQI/dk
+ qEdkN14LD1EKg5Xv75M4QI8eoZLSYCvaaErP3oVUnLXYP/bCRwmDwaZkG7b4RegvutXp
+ nf8POyHbcFHxHTBR62rW7uRmVp78duwIHor8vLpiIvk95U69HKenJORJav52pkM+hT5i
+ 1l/CKUOXaeS+g75bmD/tcp3kstDuYoAhDTGNfbK0GHuutJV5+1kHoB56H3sj+7YaTql2
+ l5iw==
 X-Forwarded-Encrypted: i=1;
- AJvYcCU5CcIK884B5mH/SSkedNmrD6GJnHCw1dxSGubsZSGdrndmKiXHdAxVitPqnXndzYyAS8PFt+iJggYk@nongnu.org
-X-Gm-Message-State: AOJu0Yyo9lfIpq6MTL7G1yfmyfqg2BTTafoHh4THCZjnDFUY9nUZv7ld
- Kq4ZfTiNk2ektQ8LWLifxHzvkU2HYcK4F2I3vOFd8YG3x/hDQty7QoFR/JnyDSGkIxLzcItwTc2
- opIdO16hsdg1oTw8IfIDN5Ea+INCkRvrSryfOkWeaJw4qxxrcfOHkoy4qhT4w
-X-Gm-Gg: ASbGncuWjWHjav4aGCeyIiXSCiFSuXr+vHA+YeWFOKYSiSYrN1wm4JL4d+YZIuyg2zW
- 0sLcaXuv6iP6svp6AEA8lvL0p18OQSH9FhnxvEQpQzxHMDQWfUA3AHKac97Q9Cv69Z6zbJ9MR/H
- bpiuuyEIVHW5H7p7HfinZXqc7Y4OFutyYAwH9vCNr2oif26AWusvg5LkTHV5hy0FrokRbJr6HIu
- 3CTkmny5IGkBvhM3H7mHivyZJmACj8P1+OpntubhZvVZIPaXviV2PzuZoegZthfZnJMUS1jCBI3
- hc3O7CBB6GBFZ0qmVKbjGYb2wefv2cDy5/Qcq+lzpU1pkgsX
-X-Received: by 2002:a05:620a:2601:b0:7b6:d5b2:e58 with SMTP id
- af79cd13be357-7c02ec5c60emr680669985a.18.1738686414576; 
- Tue, 04 Feb 2025 08:26:54 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IHyc/OTn/mPJbUE+byY9nRx4Ox7i4uphGaFGCVWc4vD90wnnAG67+kRIlmTbUzaiaezjzjbuA==
-X-Received: by 2002:a05:620a:2601:b0:7b6:d5b2:e58 with SMTP id
- af79cd13be357-7c02ec5c60emr680666985a.18.1738686414212; 
- Tue, 04 Feb 2025 08:26:54 -0800 (PST)
-Received: from x1.local (pool-99-254-114-190.cpe.net.cable.rogers.com.
- [99.254.114.190]) by smtp.gmail.com with ESMTPSA id
- af79cd13be357-7c00a8bbac4sm652503885a.22.2025.02.04.08.26.53
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 04 Feb 2025 08:26:53 -0800 (PST)
-Date: Tue, 4 Feb 2025 11:26:52 -0500
-From: Peter Xu <peterx@redhat.com>
-To: Peter Maydell <peter.maydell@linaro.org>,
- Steve Sistare <steven.sistare@oracle.com>
-Cc: Fabiano Rosas <farosas@suse.de>, qemu-devel@nongnu.org,
- Steve Sistare <steven.sistare@oracle.com>,
- Markus Armbruster <armbru@redhat.com>
-Subject: Re: [PULL 17/42] migration: cpr-transfer mode
-Message-ID: <Z6I_zJF1dljLK-YI@x1.local>
-References: <20250129160059.6987-1-farosas@suse.de>
- <20250129160059.6987-18-farosas@suse.de>
- <CAFEAcA9q+QLJnyVZDAKLsB0i2iBohNwkTXmycpV5CUsWYWZmFw@mail.gmail.com>
+ AJvYcCVSbZ4YFJSls2jIx32+sa3fW8vLHeKVlzwmGqb4Tbh5RuMWUQZJn89Fy4fRCyOpZkaFqjwuo7uttTGF@nongnu.org
+X-Gm-Message-State: AOJu0Yx1U5SRqTqGP6YxfNFA3uZxJmpDlIrkpYQm0ZuE8KAg7FQVnIYg
+ woUrp6TVGhgpZeFzItWFQ736CUE9KO2qWCtWyexEA16CyfU4wDOVxzOKHBrtJoHdPpTDMxDgQfH
+ hryrCCRo+i+CIorQ8JmfSjQxqPd9/Kw/cHQGDKA==
+X-Gm-Gg: ASbGncufa0Ygm/5IcClCh6z2JmQZRIUW6CKJDQwIjzUUS7WKShG4HqeUq0YU0VphHX5
+ cewZDAl8Cn2FI/GF0cp2+ah293m7IXLSAixJ6DG6EqJb1lSTjvU1ppsR8cOGw/JFzADorGMc2+A
+ ==
+X-Google-Smtp-Source: AGHT+IHZeKT6Gxi8xIkhJFHIpLvQ6uw0aeuoENXdWIY2YuAVn9rsmhju9yqWSFCQWvdfCI0gwYS1wlgU5R3ebnlR1+U=
+X-Received: by 2002:a05:6902:2689:b0:e57:87b3:d2e0 with SMTP id
+ 3f1490d57ef6-e58a4a9c29cmr20412651276.3.1738686539428; Tue, 04 Feb 2025
+ 08:28:59 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <CAFEAcA9q+QLJnyVZDAKLsB0i2iBohNwkTXmycpV5CUsWYWZmFw@mail.gmail.com>
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=peterx@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
+References: <20241226082800.2887689-1-wuhaotsh@google.com>
+ <20241226082800.2887689-17-wuhaotsh@google.com>
+In-Reply-To: <20241226082800.2887689-17-wuhaotsh@google.com>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Tue, 4 Feb 2025 16:28:47 +0000
+X-Gm-Features: AWEUYZknXSczvb1F1N6wwI9XXKDYcHuTBITkgb2WGBdKDJU1gx0_CRssaZt1z8U
+Message-ID: <CAFEAcA_0N6hWSxvVRxy476R8qtoBOqT2Nque5Kq9gK8gG_YJ3g@mail.gmail.com>
+Subject: Re: [PATCH v2 16/17] hw/arm: Add NPCM8XX SoC
+To: Hao Wu <wuhaotsh@google.com>
+Cc: qemu-arm@nongnu.org, qemu-devel@nongnu.org, Avi.Fishman@nuvoton.com, 
+ kfting@nuvoton.com, titusr@google.com, hskinnemoen@google.com, 
+ venture@google.com, pbonzini@redhat.com, jasowang@redhat.com, 
+ alistair@alistair23.me
+Content-Type: text/plain; charset="UTF-8"
+Received-SPF: pass client-ip=2607:f8b0:4864:20::b2a;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yb1-xb2a.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -111,135 +97,148 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, Feb 04, 2025 at 01:40:34PM +0000, Peter Maydell wrote:
-> On Wed, 29 Jan 2025 at 16:11, Fabiano Rosas <farosas@suse.de> wrote:
-> >
-> > From: Steve Sistare <steven.sistare@oracle.com>
-> >
-> > Add the cpr-transfer migration mode, which allows the user to transfer
-> > a guest to a new QEMU instance on the same host with minimal guest pause
-> > time, by preserving guest RAM in place, albeit with new virtual addresses
-> > in new QEMU, and by preserving device file descriptors.  Pages that were
-> > locked in memory for DMA in old QEMU remain locked in new QEMU, because the
-> > descriptor of the device that locked them remains open.
-> >
-> > cpr-transfer preserves memory and devices descriptors by sending them to
-> > new QEMU over a unix domain socket using SCM_RIGHTS.  Such CPR state cannot
-> > be sent over the normal migration channel, because devices and backends
-> > are created prior to reading the channel, so this mode sends CPR state
-> > over a second "cpr" migration channel.  New QEMU reads the cpr channel
-> > prior to creating devices or backends.  The user specifies the cpr channel
-> > in the channel arguments on the outgoing side, and in a second -incoming
-> > command-line parameter on the incoming side.
-> >
-> > The user must start old QEMU with the the '-machine aux-ram-share=on' option,
-> > which allows anonymous memory to be transferred in place to the new process
-> > by transferring a memory descriptor for each ram block.  Memory-backend
-> > objects must have the share=on attribute, but memory-backend-epc is not
-> > supported.
-> >
-> > The user starts new QEMU on the same host as old QEMU, with command-line
-> > arguments to create the same machine, plus the -incoming option for the
-> > main migration channel, like normal live migration.  In addition, the user
-> > adds a second -incoming option with channel type "cpr".  This CPR channel
-> > must support file descriptor transfer with SCM_RIGHTS, i.e. it must be a
-> > UNIX domain socket.
-> >
-> > To initiate CPR, the user issues a migrate command to old QEMU, adding
-> > a second migration channel of type "cpr" in the channels argument.
-> > Old QEMU stops the VM, saves state to the migration channels, and enters
-> > the postmigrate state.  New QEMU mmap's memory descriptors, and execution
-> > resumes.
-> >
-> > The implementation splits qmp_migrate into start and finish functions.
-> > Start sends CPR state to new QEMU, which responds by closing the CPR
-> > channel.  Old QEMU detects the HUP then calls finish, which connects the
-> > main migration channel.
-> >
-> > In summary, the usage is:
-> >
-> >   qemu-system-$arch -machine aux-ram-share=on ...
-> >
-> >   start new QEMU with "-incoming <main-uri> -incoming <cpr-channel>"
-> >
-> >   Issue commands to old QEMU:
-> >     migrate_set_parameter mode cpr-transfer
-> >
-> >     {"execute": "migrate", ...
-> >         {"channel-type": "main"...}, {"channel-type": "cpr"...} ... }
-> >
-> > Signed-off-by: Steve Sistare <steven.sistare@oracle.com>
-> > Reviewed-by: Peter Xu <peterx@redhat.com>
-> > Acked-by: Markus Armbruster <armbru@redhat.com>
-> > Link: https://lore.kernel.org/r/1736967650-129648-17-git-send-email-steven.sistare@oracle.com
-> > Signed-off-by: Fabiano Rosas <farosas@suse.de>
-> 
-> Hi; this commit includes some code that has confused
-> Coverity (CID 1590980) and it also confused me, so maybe
-> it could be usefully made clearer?
-> 
-> 
-> >  void qmp_migrate(const char *uri, bool has_channels,
-> >                   MigrationChannelList *channels, bool has_detach, bool detach,
-> >                   bool has_resume, bool resume, Error **errp)
-> > @@ -2056,6 +2118,7 @@ void qmp_migrate(const char *uri, bool has_channels,
-> >      g_autoptr(MigrationChannel) channel = NULL;
-> >      MigrationAddress *addr = NULL;
-> >      MigrationChannel *channelv[MIGRATION_CHANNEL_TYPE__MAX] = { NULL };
-> > +    MigrationChannel *cpr_channel = NULL;
-> >
-> >      /*
-> >       * Having preliminary checks for uri and channel
-> > @@ -2076,6 +2139,7 @@ void qmp_migrate(const char *uri, bool has_channels,
-> >              }
-> >              channelv[type] = channels->value;
-> >          }
-> > +        cpr_channel = channelv[MIGRATION_CHANNEL_TYPE_CPR];
-> >          addr = channelv[MIGRATION_CHANNEL_TYPE_MAIN]->addr;
-> >          if (!addr) {
-> >              error_setg(errp, "Channel list has no main entry");
-> > @@ -2096,12 +2160,52 @@ void qmp_migrate(const char *uri, bool has_channels,
-> >          return;
-> >      }
-> >
-> > +    if (s->parameters.mode == MIG_MODE_CPR_TRANSFER && !cpr_channel) {
-> > +        error_setg(errp, "missing 'cpr' migration channel");
-> > +        return;
-> > +    }
-> 
-> Here in qmp_migrate() we bail out if cpr_channel is NULL,
-> provided that s->parameters.mode is MIG_MODE_CPR_TRANSFER...
-> 
-> > +
-> >      resume_requested = has_resume && resume;
-> >      if (!migrate_prepare(s, resume_requested, errp)) {
-> >          /* Error detected, put into errp */
-> >          return;
-> >      }
-> >
-> > +    if (cpr_state_save(cpr_channel, &local_err)) {
-> 
-> ...but in cpr_state_save() when we decide whether to dereference
-> cpr_channel or not, we aren't checking s->parameters.mode,
-> we call migrate_mode() and check the result of that.
-> And migrate_mode() isn't completely trivial: it calls
-> cpr_get_incoming_mode(), so it's not obvious that it's
-> necessarily going to be the same value as s->parameters.mode.
-> So Coverity complains that it sees a code path where we
-> might dereference cpr_channel even when it's NULL.
-> 
-> Could this be made a bit clearer somehow, do you think?
+On Thu, 26 Dec 2024 at 08:29, Hao Wu <wuhaotsh@google.com> wrote:
+>
+> Signed-off-by: Hao Wu <wuhaotsh@google.com>
+> ---
+>  configs/devices/aarch64-softmmu/default.mak |   1 +
+>  hw/arm/Kconfig                              |  11 +
+>  hw/arm/meson.build                          |   1 +
+>  hw/arm/npcm8xx.c                            | 810 ++++++++++++++++++++
+>  include/hw/arm/npcm8xx.h                    | 107 +++
+>  5 files changed, 930 insertions(+)
+>  create mode 100644 hw/arm/npcm8xx.c
+>  create mode 100644 include/hw/arm/npcm8xx.h
+>
+> diff --git a/configs/devices/aarch64-softmmu/default.mak b/configs/devices/aarch64-softmmu/default.mak
+> index f82a04c27d..5ea1cc2dd1 100644
+> --- a/configs/devices/aarch64-softmmu/default.mak
+> +++ b/configs/devices/aarch64-softmmu/default.mak
+> @@ -8,3 +8,4 @@ include ../arm-softmmu/default.mak
+>  # CONFIG_XLNX_ZYNQMP_ARM=n
+>  # CONFIG_XLNX_VERSAL=n
+>  # CONFIG_SBSA_REF=n
+> +CONFIG_NPCM8XX=y
 
-That migrate_mode() is indeed tricky, and should only be needed for
-incoming side QEMU to workaround current limitation that the migration
-parameter "mode" cannot be set as early as when cpr_state_load() happens..
+This should be a commented-out "n" (the way we arrange
+this has flipped around since you originally wrote
+the board support).
 
-I think we could check s->parameters.mode here before doing
-cpr_state_save(), it can also be more readable.
+> diff --git a/hw/arm/Kconfig b/hw/arm/Kconfig
+> index e779b5af95..4fd5a41739 100644
+> --- a/hw/arm/Kconfig
+> +++ b/hw/arm/Kconfig
+> @@ -481,6 +481,17 @@ config NPCM7XX
+>      select PCA954X
+>      select USB_OHCI_SYSBUS
+>
+> +config NPCM8XX
+> +    bool
+> +    select ARM_GIC
+> +    select SMBUS
+> +    select PL310  # cache controller
+> +    select NPCM7XX
+> +    select SERIAL
+> +    select SSI
+> +    select UNIMP
 
-Steve, do you want to send a patch?
+You want a "depends on TCG && ARM" clause: compare the
+other stanzas in the file.
+(This is the other half of the flipping-around noted above).
 
--- 
-Peter Xu
+>  config FSL_IMX25
+>      bool
+>      default y
+> diff --git a/hw/arm/meson.build b/hw/arm/meson.build
+> index 490234b3b8..d7813c089c 100644
+> --- a/hw/arm/meson.build
+> +++ b/hw/arm/meson.build
+> @@ -12,6 +12,7 @@ arm_ss.add(when: 'CONFIG_MUSICPAL', if_true: files('musicpal.c'))
+>  arm_ss.add(when: 'CONFIG_NETDUINOPLUS2', if_true: files('netduinoplus2.c'))
+>  arm_ss.add(when: 'CONFIG_OLIMEX_STM32_H405', if_true: files('olimex-stm32-h405.c'))
+>  arm_ss.add(when: 'CONFIG_NPCM7XX', if_true: files('npcm7xx.c', 'npcm7xx_boards.c'))
+> +arm_ss.add(when: 'CONFIG_NPCM8XX', if_true: files('npcm8xx.c'))
+>  arm_ss.add(when: 'CONFIG_REALVIEW', if_true: files('realview.c'))
+>  arm_ss.add(when: 'CONFIG_SBSA_REF', if_true: files('sbsa-ref.c'))
+>  arm_ss.add(when: 'CONFIG_STELLARIS', if_true: files('stellaris.c'))
+> diff --git a/hw/arm/npcm8xx.c b/hw/arm/npcm8xx.c
+> new file mode 100644
+> index 0000000000..ed4185f37d
+> --- /dev/null
+> +++ b/hw/arm/npcm8xx.c
+> @@ -0,0 +1,810 @@
+> +/*
+> + * Nuvoton NPCM8xx SoC family.
+> + *
+> + * Copyright 2022 Google LLC
+> + *
+> + * This program is free software; you can redistribute it and/or modify it
+> + * under the terms of the GNU General Public License as published by the
+> + * Free Software Foundation; either version 2 of the License, or
+> + * (at your option) any later version.
+> + *
+> + * This program is distributed in the hope that it will be useful, but WITHOUT
+> + * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
+> + * FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License
+> + * for more details.
+> + */
+> +
+> +#include "qemu/osdep.h"
+> +
+> +#include "hw/arm/boot.h"
+> +#include "hw/arm/npcm8xx.h"
+> +#include "hw/char/serial-mm.h"
+> +#include "hw/intc/arm_gic.h"
+> +#include "hw/loader.h"
+> +#include "hw/misc/unimp.h"
+> +#include "hw/qdev-clock.h"
+> +#include "hw/qdev-properties.h"
+> +#include "qapi/error.h"
+> +#include "qemu/units.h"
+> +#include "system/system.h"
+> +
+> +#define ARM_PHYS_TIMER_PPI  30
+> +#define ARM_VIRT_TIMER_PPI  27
+> +#define ARM_HYP_TIMER_PPI   26
+> +#define ARM_SEC_TIMER_PPI   29
 
+We have defines for these basically-standardized IRQ
+numbers in include/hw/arm/bsa.h now.
+
+> +
+> +/*
+> + * This covers the whole MMIO space. We'll use this to catch any MMIO accesses
+> + * that aren't handled by a device.
+> + */
+> +#define NPCM8XX_MMIO_BA         (0x80000000)
+> +#define NPCM8XX_MMIO_SZ         (0x7ffd0000)
+
+You don't need brackets around simple constants in a #define.
+
+
+> +/* Total number of GIC interrupts, including internal Cortex-A35 interrupts. */
+> +#define NPCM8XX_NUM_IRQ         (288)
+> +#define NPCM8XX_PPI_BASE(cpu)   ((NPCM8XX_NUM_IRQ - 32) + (cpu) * 32)
+
+These "32"s should probably be "GIC_INTERNAL"s.
+
+> +        /* IRQ for watchdogs */
+> +        sysbus_connect_irq(sbd, NPCM7XX_TIMERS_PER_CTRL,
+> +                npcm8xx_irq(s, NPCM8XX_WDG0_IRQ + i));
+> +        /* GPIO that connects clk module with watchdog */
+> +        /* TODO: Check this.*/
+
+Good idea :-)
+
+> +        qdev_connect_gpio_out_named(DEVICE(&s->tim[i]),
+> +                NPCM7XX_WATCHDOG_RESET_GPIO_OUT, 0,
+> +                qdev_get_gpio_in_named(DEVICE(&s->clk),
+> +                        NPCM7XX_WATCHDOG_RESET_GPIO_IN, i));
+> +    }
+
+Otherwise looks OK, but again, review by somebody who
+knows the hardware would be nice.
+
+thanks
+-- PMM
 
