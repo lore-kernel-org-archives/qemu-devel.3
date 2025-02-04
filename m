@@ -4,84 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 98D6AC02194
-	for <qemu-devel@archiver.kernel.org>; Tue,  4 Feb 2025 12:51:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7AD76C02194
+	for <qemu-devel@archiver.kernel.org>; Tue,  4 Feb 2025 12:52:04 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tfIO5-0000F3-Jd; Tue, 04 Feb 2025 07:50:45 -0500
+	id 1tfIO9-0000Ox-MF; Tue, 04 Feb 2025 07:50:49 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1tfINj-0008Lw-6e
+ id 1tfINj-0008Lz-8m
  for qemu-devel@nongnu.org; Tue, 04 Feb 2025 07:50:24 -0500
-Received: from mail-wr1-x431.google.com ([2a00:1450:4864:20::431])
+Received: from mail-wm1-x32a.google.com ([2a00:1450:4864:20::32a])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1tfINd-0002A9-QT
- for qemu-devel@nongnu.org; Tue, 04 Feb 2025 07:50:19 -0500
-Received: by mail-wr1-x431.google.com with SMTP id
- ffacd0b85a97d-38daa53a296so272520f8f.3
- for <qemu-devel@nongnu.org>; Tue, 04 Feb 2025 04:50:16 -0800 (PST)
+ id 1tfINf-0002Aw-DD
+ for qemu-devel@nongnu.org; Tue, 04 Feb 2025 07:50:22 -0500
+Received: by mail-wm1-x32a.google.com with SMTP id
+ 5b1f17b1804b1-4362bae4d7dso39332375e9.1
+ for <qemu-devel@nongnu.org>; Tue, 04 Feb 2025 04:50:18 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1738673416; x=1739278216; darn=nongnu.org;
+ d=linaro.org; s=google; t=1738673417; x=1739278217; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=ZMomNfTKsnHM/3+WLPMScpmOJgfYrLQIKGo4Qy9Se74=;
- b=uwI/jWvqv4T8fiRAK0jbroE+uin/zuR/E36HAVbFAC6dJwLWqUBtYukhuKQCTaNdcG
- 8QnXhdlGL1b6GZaXqq8pGgUGmFg6+9K2Qs87S2Zr80Yb5gDlGF8Otv0Flcc1Pg8t8Yty
- 145e2dRsoAEXXZddIWZoLrhdJ2Gcy2d7uab9nYaAmlc/WOZaiLHd1e2mGbmE11EM4Cu0
- 9oqMIm3F7FuXLIM+WNjr8zgmXg0ESCMmwpmsSMpyaPouNRpE+cixU59DDOwewJFYiVSz
- lYIlMFkstFhcqqCZklY92yriUi59mvMD8SO7MPU0f2JRPnkJLzQdz+U3KwedfKMYhT00
- NIRw==
+ bh=5C04XmL9mrmAcsBNUPKjSrw0Pg8WQ3LqYabnkNL2Gl8=;
+ b=i8GhZJ1kmvc+mfHTJAe4NsUJQKxmLHqfT79ggogPZM9xx261aU+X349hJANXjEJwCX
+ 5Q7DoXsAyClj6Ja4XI9PDpdMS1YmZrDN6UbbTX2IbVivS6kn3fo3Xf7k6CgcZ7vPBKZG
+ ivQ4ryx1MuZ0pEWOX6PvxEFMYQ52d4lF1XE1NVEZayo89VA+IlWeyu5BQAt/efm3adPl
+ 2JF86W/lYMu6RZdV0dNG0pthdusmihDTaLcXdxDjW92D3njPR0qpB2bUiflNgd/JiLrx
+ J4TarOdhLOrzU0K1mpgq7takp3nuLVjuzjq+dJCVUbEiZdNUt+nqLq4JjrL6zyqTiiHy
+ bZbQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1738673416; x=1739278216;
+ d=1e100.net; s=20230601; t=1738673417; x=1739278217;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=ZMomNfTKsnHM/3+WLPMScpmOJgfYrLQIKGo4Qy9Se74=;
- b=rU01HtmdNXunzLUvLIGtLiv9vKzXHqhAABZWBnq2lOAsF6l4ncHP1oypgtn5AdENFx
- 7t7nj40NBDsHZmq/9gQ9ay8hfUQGpCa1g0pObGD3mmphucAyhEhV2K888ocRcFEdR7dB
- rUf5jik00Ouf9lZ8b2kwXLQd3GMqjpiQxVe3RlNd5d2r8Y33ZVIzg66DrDRFkdbfsddx
- 6+MdNVrXtymr1OQ/JFvLsfR9mj+XjL0WAFIX79lo6sdYuR4TbGS5353uRdAKWPZFJMdS
- RHL5ZOg9Fqiy0Dc3nzB6ccw6Bnzyd/ERUg4VN1Nrcxao2hRFOdWo3dfGDjU03gZZF8sw
- u/bw==
+ bh=5C04XmL9mrmAcsBNUPKjSrw0Pg8WQ3LqYabnkNL2Gl8=;
+ b=ndoQwgPC7NycoTZGPVqtcLsJGaARjooyBW9WWT+62e5Qeg5ILuPRD/Eu7w2r42AGHv
+ hLdoCrj4xFPBKh2Xqs3hL4+gIFgB6WjHpWoIqCUSFwIMoDh/BNXy1qljZe/HVdMBVgAs
+ T2oQqz8by7inu1nlwCXZ3pR7D7L9pZswh1mnVU0npxd5mZVRrRj3PCHuKKqTdk+AQqpp
+ fY5bhsfJiF0YAM9Q2zksiCF+3xmuLjMnXxCzso73p/sDcOxnZ7/nmN2he8GqU26gKbfa
+ 7o6wgB/sItwrCWCPqKyFnkLvj6ZIdzT4q8z6fAl+f8tFv65jNsa91OIChYoL4Jy4jvVr
+ BW8g==
 X-Forwarded-Encrypted: i=1;
- AJvYcCXZj3RunoV8oJ8AqcvwmGKhl16c5aPN4G1L9E3NMfxown6c5re2yV6pMQEgGUibKhnr0vpDS7hSTLoK@nongnu.org
-X-Gm-Message-State: AOJu0YxPsmuy+gGK/af6P0QGS1+xwgOwYvPccprOxWt+Ab4o+GXR9CVz
- 9khrjBIfVKZdgW4BL/Ek8hegbXR4l5Dlts7qCDri7Kl3E9lBUT3V6HQ+78RiVKpPQjkYSHtaDj7
- Y
-X-Gm-Gg: ASbGnctSGFD2dxTpSTGHM9TH90QR6TwEVBk6ox25Fk7y1MsFBKmIxk6TYSywbokJamm
- IGypDACqgykbLqPTe4JisDPNpWc9ZcO7Tf73RhoXZ6ghpZMIXk5nBwFERGrUEeR4TaTOD7yy2fa
- j+c7ekhdjVQtBrlK3h5oCvbGqp6dFQOvljOuHx3yzuhnhA4PP4ZuWHzKNToCaeYjXNTPSw5/aH5
- a/aVLupJGUsu02MedZuDD7wIICUYtpWqe171exZjD5M/fpF3PK7bazDK01EkeNIs/8mHP5gTvQG
- A0QacnrgcslCbn0ayHzGEg==
-X-Google-Smtp-Source: AGHT+IH41lar320LQzBf74OfHPI1IKm+o2XdQxdLIEafZ8Oerby+u8AdGTr7nEUfM4oIc5bB9MB/fA==
-X-Received: by 2002:a05:6000:2a3:b0:38d:b099:4546 with SMTP id
- ffacd0b85a97d-38db099463bmr739289f8f.54.1738673415946; 
- Tue, 04 Feb 2025 04:50:15 -0800 (PST)
+ AJvYcCVjq1QhtD6ZQk2diPjik/LGOXXykqY/F2U+6ZuIu0NAfDTVGZ+zUfFOafUiLMFZ93bkm7B1+9wybICk@nongnu.org
+X-Gm-Message-State: AOJu0Yx9LGuX00TR2DjiI97NknVHfA9Vuvt8gw3umbLasB32fXyJPeHS
+ RXJ2eEOY3yJ/Cb1BoUTCPbA0GlNs7tek/C/XC/jxqpCOmuiRId+7dEuF0ukOVPY=
+X-Gm-Gg: ASbGncvPEnHlhV9QSncuxF8bBQHgZVZ0kRfXVPqLszLf+A70u0kYHJ0LN/aVON97ylD
+ X1BkVLIzovic6divZ4fzsW0Rid4MaoV6OVxMg7lgXDF20REV5JCOxL4RSfAbcLIWh4WZMlkbQ54
+ hJCx3xs1rXOuXjWEnLUOr437PLcs70F4NKjHd3pFwdxoc3mmGF5AouuM+Nc7tjKj0C/Mg7zjcit
+ sIaBNOibbQkU59Sq7sPLWPTm+kPBh6N3dxxSgaZBLV2NEw6AVyyFqONZ6r1G2W5NeNWjfHRybeU
+ CSs1GQ7qVEeO4PywHGZMvg==
+X-Google-Smtp-Source: AGHT+IFTiu0seO05C8kwhRsYHHQD9uUyjtaNp+TDBCnSSssLSG+GsXUf1yfFb2Zw0XJaLudjMtU2nw==
+X-Received: by 2002:a5d:5f44:0:b0:385:e411:c894 with SMTP id
+ ffacd0b85a97d-38c520938eemr24335837f8f.43.1738673416878; 
+ Tue, 04 Feb 2025 04:50:16 -0800 (PST)
 Received: from orth.archaic.org.uk (orth.archaic.org.uk. [2001:8b0:1d0::2])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-38c5c122465sm15757919f8f.47.2025.02.04.04.50.15
+ ffacd0b85a97d-38c5c122465sm15757919f8f.47.2025.02.04.04.50.16
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 04 Feb 2025 04:50:15 -0800 (PST)
+ Tue, 04 Feb 2025 04:50:16 -0800 (PST)
 From: Peter Maydell <peter.maydell@linaro.org>
 To: qemu-arm@nongnu.org,
 	qemu-devel@nongnu.org
 Cc: qemu-stable@nongnu.org,
  =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
-Subject: [PATCH v3 4/9] target/arm: Always apply CNTVOFF_EL2 for
- CNTV_TVAL_EL02 accesses
-Date: Tue,  4 Feb 2025 12:50:04 +0000
-Message-Id: <20250204125009.2281315-5-peter.maydell@linaro.org>
+Subject: [PATCH v3 5/9] target/arm: Refactor handling of timer offset for
+ direct register accesses
+Date: Tue,  4 Feb 2025 12:50:05 +0000
+Message-Id: <20250204125009.2281315-6-peter.maydell@linaro.org>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20250204125009.2281315-1-peter.maydell@linaro.org>
 References: <20250204125009.2281315-1-peter.maydell@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::431;
- envelope-from=peter.maydell@linaro.org; helo=mail-wr1-x431.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::32a;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x32a.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -104,98 +103,220 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Currently we handle CNTV_TVAL_EL02 by calling gt_tval_read() for the
-EL1 virt timer.  This is almost correct, but the underlying
-CNTV_TVAL_EL0 register behaves slightly differently.  CNTV_TVAL_EL02
-always applies the CNTVOFF_EL2 offset; CNTV_TVAL_EL0 doesn't do so if
-we're at EL2 and HCR_EL2.E2H is 1.
+When reading or writing the timer registers, sometimes we need to
+apply one of the timer offsets.  Specifically, this happens for
+direct reads of the counter registers CNTPCT_EL0 and CNTVCT_EL0 (and
+their self-synchronized variants CNTVCTSS_EL0 and CNTPCTSS_EL0).  It
+also applies for direct reads and writes of the CNT*_TVAL_EL*
+registers that provide the 32-bit downcounting view of each timer.
 
-We were getting this wrong, because we ended up in
-gt_virt_cnt_offset() and did the E2H check.
+We currently do this with duplicated code in gt_tval_read() and
+gt_tval_write() and a special-case in gt_virt_cnt_read() and
+gt_cnt_read().  Refactor this so that we handle it all in a single
+function gt_direct_access_timer_offset(), to parallel how we handle
+the offset for indirect accesses.
 
-Factor out the tval read/write calculation from the selection of the
-offset, so that we can special case gt_virt_tval_read() and
-gt_virt_tval_write() to unconditionally pass CNTVOFF_EL2.
+The call in the WFIT helper previously to gt_virt_cnt_offset() is
+now to gt_direct_access_timer_offset(); this is the correct
+behaviour, but it's not immediately obvious that it shouldn't be
+considered an indirect access, so we add an explanatory comment.
+
+This commit should make no behavioural changes.
+
+(Cc to stable because the following bugfix commit will
+depend on this one.)
 
 Cc: qemu-stable@nongnu.org
 Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
 ---
- target/arm/helper.c | 36 +++++++++++++++++++++++++++---------
- 1 file changed, 27 insertions(+), 9 deletions(-)
+ target/arm/internals.h     |   5 +-
+ target/arm/helper.c        | 103 +++++++++++++++++++------------------
+ target/arm/tcg/op_helper.c |   8 ++-
+ 3 files changed, 62 insertions(+), 54 deletions(-)
 
+diff --git a/target/arm/internals.h b/target/arm/internals.h
+index 863a84edf81..b4b3d196191 100644
+--- a/target/arm/internals.h
++++ b/target/arm/internals.h
+@@ -1819,9 +1819,10 @@ int delete_hw_watchpoint(target_ulong addr, target_ulong len, int type);
+ uint64_t gt_get_countervalue(CPUARMState *env);
+ /*
+  * Return the currently applicable offset between the system counter
+- * and CNTVCT_EL0 (this will be either 0 or the value of CNTVOFF_EL2).
++ * and the counter for the specified timer, as used for direct register
++ * accesses.
+  */
+-uint64_t gt_virt_cnt_offset(CPUARMState *env);
++uint64_t gt_direct_access_timer_offset(CPUARMState *env, int timeridx);
+ 
+ /*
+  * Return mask of ARMMMUIdxBit values corresponding to an "invalidate
 diff --git a/target/arm/helper.c b/target/arm/helper.c
-index 7ec1e6cfaab..01ca222903d 100644
+index 01ca222903d..c021c237b9b 100644
 --- a/target/arm/helper.c
 +++ b/target/arm/helper.c
-@@ -2600,6 +2600,12 @@ static void gt_cval_write(CPUARMState *env, const ARMCPRegInfo *ri,
-     gt_recalc_timer(env_archcpu(env), timeridx);
+@@ -2455,14 +2455,6 @@ static uint64_t gt_phys_raw_cnt_offset(CPUARMState *env)
+     return 0;
  }
  
-+static uint64_t do_tval_read(CPUARMState *env, int timeridx, uint64_t offset)
+-static uint64_t gt_phys_cnt_offset(CPUARMState *env)
+-{
+-    if (arm_current_el(env) >= 2) {
+-        return 0;
+-    }
+-    return gt_phys_raw_cnt_offset(env);
+-}
+-
+ static uint64_t gt_indirect_access_timer_offset(CPUARMState *env, int timeridx)
+ {
+     /*
+@@ -2489,6 +2481,52 @@ static uint64_t gt_indirect_access_timer_offset(CPUARMState *env, int timeridx)
+     }
+ }
+ 
++uint64_t gt_direct_access_timer_offset(CPUARMState *env, int timeridx)
 +{
-+    return (uint32_t)(env->cp15.c14_timer[timeridx].cval -
-+                      (gt_get_countervalue(env) - offset));
++    /*
++     * Return the timer offset to use for direct accesses to the
++     * counter registers CNTPCT and CNTVCT, and for direct accesses
++     * to the CNT*_TVAL registers.
++     *
++     * This isn't exactly the same as the indirect-access offset,
++     * because here we also care about what EL the register access
++     * is being made from.
++     *
++     * This corresponds to the access pseudocode for the registers.
++     */
++    uint64_t hcr;
++
++    switch (timeridx) {
++    case GTIMER_PHYS:
++        if (arm_current_el(env) >= 2) {
++            return 0;
++        }
++        return gt_phys_raw_cnt_offset(env);
++    case GTIMER_VIRT:
++        switch (arm_current_el(env)) {
++        case 2:
++            hcr = arm_hcr_el2_eff(env);
++            if (hcr & HCR_E2H) {
++                return 0;
++            }
++            break;
++        case 0:
++            hcr = arm_hcr_el2_eff(env);
++            if ((hcr & (HCR_E2H | HCR_TGE)) == (HCR_E2H | HCR_TGE)) {
++                return 0;
++            }
++            break;
++        }
++        return env->cp15.cntvoff_el2;
++    case GTIMER_HYP:
++    case GTIMER_SEC:
++    case GTIMER_HYPVIRT:
++        return 0;
++    default:
++        g_assert_not_reached();
++    }
 +}
 +
+ static void gt_recalc_timer(ARMCPU *cpu, int timeridx)
+ {
+     ARMGenericTimer *gt = &cpu->env.cp15.c14_timer[timeridx];
+@@ -2561,34 +2599,14 @@ static void gt_timer_reset(CPUARMState *env, const ARMCPRegInfo *ri,
+ 
+ static uint64_t gt_cnt_read(CPUARMState *env, const ARMCPRegInfo *ri)
+ {
+-    return gt_get_countervalue(env) - gt_phys_cnt_offset(env);
+-}
+-
+-uint64_t gt_virt_cnt_offset(CPUARMState *env)
+-{
+-    uint64_t hcr;
+-
+-    switch (arm_current_el(env)) {
+-    case 2:
+-        hcr = arm_hcr_el2_eff(env);
+-        if (hcr & HCR_E2H) {
+-            return 0;
+-        }
+-        break;
+-    case 0:
+-        hcr = arm_hcr_el2_eff(env);
+-        if ((hcr & (HCR_E2H | HCR_TGE)) == (HCR_E2H | HCR_TGE)) {
+-            return 0;
+-        }
+-        break;
+-    }
+-
+-    return env->cp15.cntvoff_el2;
++    uint64_t offset = gt_direct_access_timer_offset(env, GTIMER_PHYS);
++    return gt_get_countervalue(env) - offset;
+ }
+ 
+ static uint64_t gt_virt_cnt_read(CPUARMState *env, const ARMCPRegInfo *ri)
+ {
+-    return gt_get_countervalue(env) - gt_virt_cnt_offset(env);
++    uint64_t offset = gt_direct_access_timer_offset(env, GTIMER_VIRT);
++    return gt_get_countervalue(env) - offset;
+ }
+ 
+ static void gt_cval_write(CPUARMState *env, const ARMCPRegInfo *ri,
+@@ -2609,16 +2627,7 @@ static uint64_t do_tval_read(CPUARMState *env, int timeridx, uint64_t offset)
  static uint64_t gt_tval_read(CPUARMState *env, const ARMCPRegInfo *ri,
                               int timeridx)
  {
-@@ -2614,8 +2620,16 @@ static uint64_t gt_tval_read(CPUARMState *env, const ARMCPRegInfo *ri,
-         break;
-     }
- 
--    return (uint32_t)(env->cp15.c14_timer[timeridx].cval -
--                      (gt_get_countervalue(env) - offset));
-+    return do_tval_read(env, timeridx, offset);
-+}
-+
-+static void do_tval_write(CPUARMState *env, int timeridx, uint64_t value,
-+                          uint64_t offset)
-+{
-+    trace_arm_gt_tval_write(timeridx, value);
-+    env->cp15.c14_timer[timeridx].cval = gt_get_countervalue(env) - offset +
-+                                         sextract64(value, 0, 32);
-+    gt_recalc_timer(env_archcpu(env), timeridx);
- }
- 
- static void gt_tval_write(CPUARMState *env, const ARMCPRegInfo *ri,
-@@ -2632,11 +2646,7 @@ static void gt_tval_write(CPUARMState *env, const ARMCPRegInfo *ri,
-         offset = gt_phys_cnt_offset(env);
-         break;
-     }
+-    uint64_t offset = 0;
 -
--    trace_arm_gt_tval_write(timeridx, value);
--    env->cp15.c14_timer[timeridx].cval = gt_get_countervalue(env) - offset +
--                                         sextract64(value, 0, 32);
--    gt_recalc_timer(env_archcpu(env), timeridx);
-+    do_tval_write(env, timeridx, value, offset);
+-    switch (timeridx) {
+-    case GTIMER_VIRT:
+-        offset = gt_virt_cnt_offset(env);
+-        break;
+-    case GTIMER_PHYS:
+-        offset = gt_phys_cnt_offset(env);
+-        break;
+-    }
++    uint64_t offset = gt_direct_access_timer_offset(env, timeridx);
+ 
+     return do_tval_read(env, timeridx, offset);
+ }
+@@ -2636,16 +2645,8 @@ static void gt_tval_write(CPUARMState *env, const ARMCPRegInfo *ri,
+                           int timeridx,
+                           uint64_t value)
+ {
+-    uint64_t offset = 0;
++    uint64_t offset = gt_direct_access_timer_offset(env, timeridx);
+ 
+-    switch (timeridx) {
+-    case GTIMER_VIRT:
+-        offset = gt_virt_cnt_offset(env);
+-        break;
+-    case GTIMER_PHYS:
+-        offset = gt_phys_cnt_offset(env);
+-        break;
+-    }
+     do_tval_write(env, timeridx, value, offset);
  }
  
- static void gt_ctl_write(CPUARMState *env, const ARMCPRegInfo *ri,
-@@ -2768,13 +2778,21 @@ static void gt_virt_cval_write(CPUARMState *env, const ARMCPRegInfo *ri,
- 
- static uint64_t gt_virt_tval_read(CPUARMState *env, const ARMCPRegInfo *ri)
- {
--    return gt_tval_read(env, ri, GTIMER_VIRT);
+diff --git a/target/arm/tcg/op_helper.c b/target/arm/tcg/op_helper.c
+index 02c375d196d..30786fd1ff4 100644
+--- a/target/arm/tcg/op_helper.c
++++ b/target/arm/tcg/op_helper.c
+@@ -427,7 +427,13 @@ void HELPER(wfit)(CPUARMState *env, uint64_t timeout)
+     int target_el = check_wfx_trap(env, false, &excp);
+     /* The WFIT should time out when CNTVCT_EL0 >= the specified value. */
+     uint64_t cntval = gt_get_countervalue(env);
+-    uint64_t offset = gt_virt_cnt_offset(env);
 +    /*
-+     * This is CNTV_TVAL_EL02; unlike the underlying CNTV_TVAL_EL0
-+     * we always apply CNTVOFF_EL2. Special case that here rather
-+     * than going into the generic gt_tval_read() and then having
-+     * to re-detect that it's this register.
-+     * Note that the accessfn/perms mean we know we're at EL2 or EL3 here.
++     * We want the value that we would get if we read CNTVCT_EL0 from
++     * the current exception level, so the direct_access offset, not
++     * the indirect_access one. Compare the pseudocode LocalTimeoutEvent(),
++     * which calls VirtualCounterTimer().
 +     */
-+    return do_tval_read(env, GTIMER_VIRT, env->cp15.cntvoff_el2);
- }
++    uint64_t offset = gt_direct_access_timer_offset(env, GTIMER_VIRT);
+     uint64_t cntvct = cntval - offset;
+     uint64_t nexttick;
  
- static void gt_virt_tval_write(CPUARMState *env, const ARMCPRegInfo *ri,
-                                uint64_t value)
- {
--    gt_tval_write(env, ri, GTIMER_VIRT, value);
-+    /* Similarly for writes to CNTV_TVAL_EL02 */
-+    do_tval_write(env, GTIMER_VIRT, value, env->cp15.cntvoff_el2);
- }
- 
- static void gt_virt_ctl_write(CPUARMState *env, const ARMCPRegInfo *ri,
 -- 
 2.34.1
 
