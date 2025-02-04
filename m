@@ -4,56 +4,110 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E92F9C02193
-	for <qemu-devel@archiver.kernel.org>; Tue,  4 Feb 2025 22:19:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 50306C02194
+	for <qemu-devel@archiver.kernel.org>; Tue,  4 Feb 2025 23:16:20 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tfREl-0005WZ-JZ; Tue, 04 Feb 2025 17:17:43 -0500
+	id 1tfS8t-00044j-EK; Tue, 04 Feb 2025 18:15:43 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <deller@kernel.org>) id 1tfREg-0005UY-HA
- for qemu-devel@nongnu.org; Tue, 04 Feb 2025 17:17:38 -0500
-Received: from nyc.source.kernel.org ([147.75.193.91])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <deller@kernel.org>) id 1tfREe-0005RM-Pj
- for qemu-devel@nongnu.org; Tue, 04 Feb 2025 17:17:38 -0500
-Received: from smtp.kernel.org (transwarp.subspace.kernel.org [100.75.92.58])
- by nyc.source.kernel.org (Postfix) with ESMTP id EAEDFA42E92;
- Tue,  4 Feb 2025 22:15:49 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DDFDEC4CEE2;
- Tue,  4 Feb 2025 22:17:34 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
- s=k20201202; t=1738707455;
- bh=Stz/PkE+RsExG68z0c7Y2GO5tU8XrxTcb9wEAxlyp6M=;
- h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
- b=u4RZI6S4PBqp4LLiwicCvCibHgMKlBoS1EaQFzvtJsNdrSOV5O2JXYdzYBIhI4ZJv
- jNsrPuPEzIoegFlqh4073K+eSHBt2jaV4L+iIUQ+CRAKq9ZR5jaWFd9wAcEMeT1jOV
- S7Az0ySQUtoDi9oyUuEC6FFAM9S/HvvDo8BvJasEPRYes9Ygq17zY/Seeb0NmuqYVL
- u7KHMuoGapizKaqZ3LqTDpaP5JBlBXSW1S+KALxHn5d9XsPjDS2D2W97eAHlXrPmdR
- nv9hld4hD2Gqjsb2nVJe+EteCXBRVpt/K7Aw7zONi4qKh7NPGKT2cetazJPDAn57oU
- SLhpHLTdzaFJA==
-From: deller@kernel.org
-To: Richard Henderson <richard.henderson@linaro.org>,
-	qemu-devel@nongnu.org
-Cc: Helge Deller <deller@gmx.de>
-Subject: [PATCH 5/6] hw/pci-host/astro: Add LMMIO range support
-Date: Tue,  4 Feb 2025 23:17:25 +0100
-Message-ID: <20250204221726.151287-6-deller@kernel.org>
-X-Mailer: git-send-email 2.47.0
-In-Reply-To: <20250204221726.151287-1-deller@kernel.org>
-References: <20250204221726.151287-1-deller@kernel.org>
+ (Exim 4.90_1) (envelope-from <shentey@gmail.com>)
+ id 1tfS8m-00042y-DP; Tue, 04 Feb 2025 18:15:40 -0500
+Received: from mail-wm1-x331.google.com ([2a00:1450:4864:20::331])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <shentey@gmail.com>)
+ id 1tfS8f-0001XF-K3; Tue, 04 Feb 2025 18:15:36 -0500
+Received: by mail-wm1-x331.google.com with SMTP id
+ 5b1f17b1804b1-4361dc6322fso42910195e9.3; 
+ Tue, 04 Feb 2025 15:15:26 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20230601; t=1738710924; x=1739315724; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:references
+ :in-reply-to:subject:cc:to:from:date:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=xY51GZXLmI4xq4N5TaYgDOm2suzKwumQ6T0OX8XNwHA=;
+ b=knynv5ykPXGBGO1HiAPq6yD8OC/Pb/o6FKxy+1CoJk5fi53jxDGfTIhR5VK58QOjDE
+ QDCPt/akIYLIgp/DeB1Y6DFO2fy6rM+mxapMRdefOUQfQ9lql9E5VeX1v4Uisv/qD0Wn
+ KT213W/jVRLQ9eo8pD+w44+Q19mnvAV0sZkM1xmGWyd9ZIXpLbIZlbLvo7En615NKEci
+ 6xynsGV/so6iZ3NQi95qBcncDmRwsIT3ZrWirpue579Zw6+2Ao3ZbDfkyCO489h1Va8q
+ 7toqze11V7YMzOD5aPaZ1OVxH0/gugPHclcf0WFvgUkwRLIQvC95UevgGguez9AplfHJ
+ HfQg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1738710924; x=1739315724;
+ h=content-transfer-encoding:mime-version:message-id:references
+ :in-reply-to:subject:cc:to:from:date:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=xY51GZXLmI4xq4N5TaYgDOm2suzKwumQ6T0OX8XNwHA=;
+ b=Wi+DMPHXklCuqDZpdtiRjTNpR+OT8XsQWxISwG+OYGkAvmSJ/U8Q2VZEsHeT5dd5eM
+ ixuuZe/NVJURCUbCbueBOnC4dssqQgiTlF8TP9quYzZ+FNR0z/Kj+Jwk+ieU4IYUTQJh
+ mfET6HXDPyxKBxc8hNqfZOfdhj/dp0QpYJLJwhXGlrtwl+twiqmbfkghdzpfKW6xcOiw
+ kGX6dTps4gG6ul0WoRkaYkSV3d7PO0WuIj4Nd/FaLuH0FzeK3QksqpoBKB+bhvIhODrU
+ bZ/66A4B4wKJ+9Dn3ni3Yrf7poc52jBdsglhoOJWURKMHZnpudX29h7wECwT6LCn/Uy3
+ w5CA==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCVcREpJbxs/oI7EtZ99X6pAzCVMDfT4EtIm2odDHapz0zPpQ5CE6iFaf3YTj7loYLvtMohsgquh/jwD@nongnu.org,
+ AJvYcCX/UYLMoH3XNQfG3E4pwbvHOD4P9mXzTo+3LzfZ30f9hL1d7SmJnQUc6NsSn/uOOSHIPf8MD4VRkqc=@nongnu.org
+X-Gm-Message-State: AOJu0YxF230MgXcoe6dC0XQfNi6M2LzwWjY2fsnvOe/TcOeHk5xCLKeu
+ RNlyRqgoXz1/AycYKVA9cosOgKG6gZxnbjXQwYimKOPWfZDyj4sJ
+X-Gm-Gg: ASbGncvyshrMIQQCeSPuAQwLQHENanZK4CQ23QsYy1dBS6nMbIWpLsPcNc9w2f19wiZ
+ t6HTfDyPYOFko078ZZPCJTZ33UOarYmT/em7BEbK3QC0h0z88M1L70uKa4CnRky/IC6Y9mDj+Jm
+ uaQgSwlahJpZjaq16BZceYf3xRCv52uGKrmY8ivawx4yS7zH2Xfz1hUS/7I7cYd0BD4aUGpR+jU
+ 8xOoJuwnFyvMhSnhxm6ilxml5QH9z3QzioK1nvIuet4U1Oghvc4B2bkxHba4CKXIMT+kgueb3XD
+ DQC77fZr8p5khR9IzvjYBk7xS1wqqIbrTjIyKt/tzZqolDbQmGm4eScopTZZbV/GajX6DzTRxig
+ =
+X-Google-Smtp-Source: AGHT+IGpMQ51OFgiMVxDmzo5k+RyYk8722hSjNZGSU/Fyo9cYDKZoCLdqGRLlww2BONm7+aTZfQUBA==
+X-Received: by 2002:a05:6000:4020:b0:385:de67:2269 with SMTP id
+ ffacd0b85a97d-38db490e248mr359511f8f.36.1738710923989; 
+ Tue, 04 Feb 2025 15:15:23 -0800 (PST)
+Received: from ?IPv6:::1?
+ (p200300faaf004300f426c70552435424.dip0.t-ipconnect.de.
+ [2003:fa:af00:4300:f426:c705:5243:5424])
+ by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-4390d933a4bsm2660335e9.6.2025.02.04.15.15.23
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Tue, 04 Feb 2025 15:15:23 -0800 (PST)
+Date: Tue, 04 Feb 2025 23:12:03 +0000
+From: Bernhard Beschow <shentey@gmail.com>
+To: =?ISO-8859-1?Q?Philippe_Mathieu-Daud=E9?= <philmd@linaro.org>,
+ qemu-devel@nongnu.org
+CC: Yi Liu <yi.l.liu@intel.com>, Markus Armbruster <armbru@redhat.com>,
+ Eduardo Habkost <eduardo@habkost.net>,
+ Anthony PERARD <anthony@xenproject.org>,
+ Gustavo Romero <gustavo.romero@linaro.org>, Jason Wang <jasowang@redhat.com>, 
+ qemu-ppc@nongnu.org, "Michael S. Tsirkin" <mst@redhat.com>,
+ Paolo Bonzini <pbonzini@redhat.com>, Alexander Graf <graf@amazon.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Stefan Berger <stefanb@linux.vnet.ibm.com>,
+ Stefano Stabellini <sstabellini@kernel.org>,
+ Gerd Hoffmann <kraxel@redhat.com>,
+ =?ISO-8859-1?Q?Daniel_P=2E_Berrang=E9?= <berrange@redhat.com>,
+ "Edgar E. Iglesias" <edgar.iglesias@gmail.com>,
+ xen-devel@lists.xenproject.org,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ Alex Williamson <alex.williamson@redhat.com>, Paul Durrant <paul@xen.org>,
+ =?ISO-8859-1?Q?Cl=E9ment_Mathieu--Drif?= <clement.mathieu--drif@eviden.com>,
+ =?ISO-8859-1?Q?C=E9dric_Le_Goater?= <clg@redhat.com>
+Subject: =?US-ASCII?Q?Re=3A_=5BRFC_PATCH_9/9=5D_hw/xen=3A_Have_legacy_Xen?=
+ =?US-ASCII?Q?_backend_inherit_from_DYNAMIC=5FSYS=5FBUS=5FDEVICE?=
+In-Reply-To: <02ea4b41-3594-4ead-90d3-0ab06f2be7fa@linaro.org>
+References: <20250125181343.59151-1-philmd@linaro.org>
+ <20250125181343.59151-10-philmd@linaro.org>
+ <9A2B297A-6270-4482-B1B6-81F518C07C1E@gmail.com>
+ <02ea4b41-3594-4ead-90d3-0ab06f2be7fa@linaro.org>
+Message-ID: <685742EB-EDAA-488F-852C-C0AA24BD4721@gmail.com>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=147.75.193.91; envelope-from=deller@kernel.org;
- helo=nyc.source.kernel.org
-X-Spam_score_int: -43
-X-Spam_score: -4.4
-X-Spam_bar: ----
-X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+Content-Type: text/plain;
+ charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:20::331;
+ envelope-from=shentey@gmail.com; helo=mail-wm1-x331.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -70,118 +124,82 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Helge Deller <deller@gmx.de>
 
-Each Astro on 64-bit machines supports up to four LMMIO regions.
-Those regions are used by graphic cards and other PCI devices which
-need to map huge memory areas. The LMMIO regions are configured and
-set up by SeaBIOS-hppa and then used as-is by the operating systems
-(Linux, HP-UX).
 
-With this addition it's now possible to add other PCI graphic
-cards on the command line, e.g. with "-device ati-vga".
+Am 4=2E Februar 2025 21:25:46 UTC schrieb "Philippe Mathieu-Daud=C3=A9" <p=
+hilmd@linaro=2Eorg>:
+>Hi Bernhard,
+>
+>On 27/1/25 10:46, Bernhard Beschow wrote:
+>> Am 25=2E Januar 2025 18:13:43 UTC schrieb "Philippe Mathieu-Daud=C3=A9"=
+ <philmd@linaro=2Eorg>:
+>>> Because the legacy Xen backend devices can optionally be plugged on th=
+e
+>>> TYPE_PLATFORM_BUS_DEVICE, have it inherit TYPE_DYNAMIC_SYS_BUS_DEVICE=
+=2E
+>>> Remove the implicit TYPE_XENSYSDEV instance_size=2E
+>>>=20
+>>> Untested, but I'm surprised the legacy devices work because they
+>>> had a broken instance size (QDev instead of Sysbus=2E=2E=2E), so acces=
+ses
+>>> of XenLegacyDevice fields were overwritting sysbus ones=2E
+>>>=20
+>>> Signed-off-by: Philippe Mathieu-Daud=C3=A9 <philmd@linaro=2Eorg>
+>>> ---
+>>> include/hw/xen/xen_pvdev=2Eh  | 3 ++-
+>>> hw/xen/xen-legacy-backend=2Ec | 7 ++-----
+>>> 2 files changed, 4 insertions(+), 6 deletions(-)
+>>>=20
+>>> diff --git a/include/hw/xen/xen_pvdev=2Eh b/include/hw/xen/xen_pvdev=
+=2Eh
+>>> index 0c984440476=2E=2E48950dc2b57 100644
+>>> --- a/include/hw/xen/xen_pvdev=2Eh
+>>> +++ b/include/hw/xen/xen_pvdev=2Eh
+>>> @@ -32,7 +32,8 @@ struct XenDevOps {
+>>> };
+>>>=20
+>>> struct XenLegacyDevice {
+>>> -    DeviceState        qdev;
+>>> +    SysBusDevice parent_obj;
+>>=20
+>> This then needs sysbus=2Eh rather than qdev-core=2Eh include=2E
+>>=20
+>> Moreover, the patch in the reply needs to be inserted into the series b=
+efore this patch=2E
+>>=20
+>> Both are needed for the patch to compile=2E
+>
+>Per your reply on patch #7, might I include your
+>
+>Tested-by: Bernhard Beschow <shentey@gmail=2Ecom>
+>Acked-by: Bernhard Beschow <shentey@gmail=2Ecom>
+>(or R-b)
 
-Signed-off-by: Helge Deller <deller@gmx.de>
----
- hw/pci-host/astro.c         | 52 +++++++++++++++++++++++++++++++++++++
- include/hw/pci-host/astro.h |  6 ++---
- 2 files changed, 55 insertions(+), 3 deletions(-)
+I only did a compile test and I'm not a Xen maintainer, so I guess above t=
+ags don't apply=2E Right?
 
-diff --git a/hw/pci-host/astro.c b/hw/pci-host/astro.c
-index 62e9c8acbf..039cc3ad01 100644
---- a/hw/pci-host/astro.c
-+++ b/hw/pci-host/astro.c
-@@ -521,6 +521,53 @@ static ElroyState *elroy_init(int num)
-  * Astro Runway chip.
-  */
- 
-+static void adjust_LMMIO_DIRECT_mapping(AstroState *s, unsigned int reg_index)
-+{
-+    MemoryRegion *lmmio_alias;
-+    unsigned int lmmio_index, map_route;
-+    hwaddr map_addr;
-+    uint32_t map_size;
-+    struct ElroyState *elroy;
-+
-+    /* pointer to LMMIO_DIRECT entry */
-+    lmmio_index = reg_index / 3;
-+    lmmio_alias = &s->lmmio_direct[lmmio_index];
-+
-+    map_addr  = s->ioc_ranges[3 * lmmio_index + 0];
-+    map_size  = s->ioc_ranges[3 * lmmio_index + 1];
-+    map_route = s->ioc_ranges[3 * lmmio_index + 2];
-+
-+    /* find elroy to which this address is routed */
-+    map_route &= (ELROY_NUM - 1);
-+    elroy = s->elroy[map_route];
-+
-+    if (lmmio_alias->enabled) {
-+        memory_region_set_enabled(lmmio_alias, false);
-+    }
-+
-+    map_addr = F_EXTEND(map_addr);
-+    map_addr &= TARGET_PAGE_MASK;
-+    map_size = (~map_size) + 1;
-+    map_size &= TARGET_PAGE_MASK;
-+
-+    /* exit if disabled or zero map size */
-+    if (!(map_addr & 1) || !map_size) {
-+        return;
-+    }
-+
-+    if (!memory_region_size(lmmio_alias)) {
-+        memory_region_init_alias(lmmio_alias, OBJECT(elroy),
-+                        "pci-lmmmio-alias", &elroy->pci_mmio,
-+                        (uint32_t) map_addr, map_size);
-+        memory_region_add_subregion(get_system_memory(), map_addr,
-+                                 lmmio_alias);
-+    } else {
-+        memory_region_set_alias_offset(lmmio_alias, map_addr);
-+        memory_region_set_size(lmmio_alias, map_size);
-+        memory_region_set_enabled(lmmio_alias, true);
-+    }
-+}
-+
- static MemTxResult astro_chip_read_with_attrs(void *opaque, hwaddr addr,
-                                              uint64_t *data, unsigned size,
-                                              MemTxAttrs attrs)
-@@ -628,6 +675,11 @@ static MemTxResult astro_chip_write_with_attrs(void *opaque, hwaddr addr,
-         break;
-     case 0x0300 ... 0x03d8 - 1: /* LMMIO_DIRECT0_BASE... */
-         put_val_in_arrary(s->ioc_ranges, 0x300, addr, size, val);
-+        unsigned int index = (addr - 0x300) / 8;
-+        /* check if one of the 4 LMMIO_DIRECT regs, each using 3 entries. */
-+        if (index < LMMIO_DIRECT_RANGES * 3) {
-+            adjust_LMMIO_DIRECT_mapping(s, index);
-+        }
-         break;
-     case 0x10200:
-     case 0x10220:
-diff --git a/include/hw/pci-host/astro.h b/include/hw/pci-host/astro.h
-index e2966917cd..832125a05a 100644
---- a/include/hw/pci-host/astro.h
-+++ b/include/hw/pci-host/astro.h
-@@ -24,6 +24,8 @@ OBJECT_DECLARE_SIMPLE_TYPE(ElroyState, ELROY_PCI_HOST_BRIDGE)
- #define LMMIO_DIST_BASE_ADDR      0xf4000000ULL
- #define LMMIO_DIST_BASE_SIZE       0x4000000ULL
- 
-+#define LMMIO_DIRECT_RANGES     4
-+
- #define IOS_DIST_BASE_ADDR      0xfffee00000ULL
- #define IOS_DIST_BASE_SIZE           0x10000ULL
- 
-@@ -83,9 +85,7 @@ struct AstroState {
-     struct ElroyState *elroy[ELROY_NUM];
- 
-     MemoryRegion this_mem;
--
--    MemoryRegion pci_mmio;
--    MemoryRegion pci_io;
-+    MemoryRegion lmmio_direct[LMMIO_DIRECT_RANGES];
- 
-     IOMMUMemoryRegion iommu;
-     AddressSpace iommu_as;
--- 
-2.47.0
 
+>
+>squashing:
+>
+>-- >8 --
+>diff --git a/include/hw/xen/xen_pvdev=2Eh b/include/hw/xen/xen_pvdev=2Eh
+>index 48950dc2b57=2E=2E629bec90d09 100644
+>--- a/include/hw/xen/xen_pvdev=2Eh
+>+++ b/include/hw/xen/xen_pvdev=2Eh
+>@@ -1,7 +1,7 @@
+> #ifndef QEMU_HW_XEN_PVDEV_H
+> #define QEMU_HW_XEN_PVDEV_H
+>
+>-#include "hw/qdev-core=2Eh"
+>+#include "hw/sysbus=2Eh"
+> #include "hw/xen/xen_backend_ops=2Eh"
+>
+> /* ------------------------------------------------------------- */
+>---
+>
+>?
+
+With the squash applied:
+Reviewed-by: Bernhard Beschow <shentey@gmail=2Ecom>
 
