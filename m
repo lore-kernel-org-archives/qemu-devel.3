@@ -4,84 +4,99 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C6D2EC02193
-	for <qemu-devel@archiver.kernel.org>; Tue,  4 Feb 2025 21:23:25 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4A41BC02193
+	for <qemu-devel@archiver.kernel.org>; Tue,  4 Feb 2025 21:26:26 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tfQO3-0000SK-4c; Tue, 04 Feb 2025 16:23:15 -0500
+	id 1tfQQb-0001ck-Rx; Tue, 04 Feb 2025 16:25:53 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tfQO0-0000SC-C3
- for qemu-devel@nongnu.org; Tue, 04 Feb 2025 16:23:12 -0500
-Received: from mail-wr1-x434.google.com ([2a00:1450:4864:20::434])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tfQQZ-0001c8-VV
+ for qemu-devel@nongnu.org; Tue, 04 Feb 2025 16:25:51 -0500
+Received: from mail-wm1-x334.google.com ([2a00:1450:4864:20::334])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tfQNy-0008Vt-KV
- for qemu-devel@nongnu.org; Tue, 04 Feb 2025 16:23:12 -0500
-Received: by mail-wr1-x434.google.com with SMTP id
- ffacd0b85a97d-38a8b35e168so114130f8f.1
- for <qemu-devel@nongnu.org>; Tue, 04 Feb 2025 13:23:09 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tfQQY-0000WI-Av
+ for qemu-devel@nongnu.org; Tue, 04 Feb 2025 16:25:51 -0500
+Received: by mail-wm1-x334.google.com with SMTP id
+ 5b1f17b1804b1-43625c4a50dso42132435e9.0
+ for <qemu-devel@nongnu.org>; Tue, 04 Feb 2025 13:25:49 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1738704188; x=1739308988; darn=nongnu.org;
+ d=linaro.org; s=google; t=1738704348; x=1739309148; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=yn+lx0Ff72ivxp1p+qnbfxeJnBt8j/pOvF6+ZRbIJJI=;
- b=SS463txIZV6s+GOI6+RDAhLNrIX4ZbGQdpfSrtM74B7cIg1rRIiZElYwBArpOOrCNu
- 8eSbzx1gKJlIbujTLgtR7+ahgU6+SrTEh/JlbYTiVjPFx3ACRLuosGLltU2RaZkfWYMd
- jFSDSlJg0TMrmtI9f+nV6EIVSoChlaUrvi0HMMRaQTh1Dd0tu0s4P5zE4OujfqsZ7k8B
- n/tIs8l5p3UiXzU2mp5R1FYiRmy4KRewvdTWPGxbHC/sdI2FZLYJ6BEnEkZ3ftuTUU2D
- UDhFjPSob8ECUqsEpAy+wRoToEL/OvchV3KhSL3DovXyiXsPJ3ExwP/P+zrzY5Pk7D85
- BDcA==
+ bh=0yZ3rGNBWFbwR7tcrMEb20ea+rfzWXUZz9frnWzuoa8=;
+ b=nhlZXk+7w32LOJEonxhiZSoYEKx25j9/aXwnHbBWUXbM/rYWH8yefsf/tyBpAWUrO+
+ 7gUP4FAVw70r2ibCaIi46Q/eTscFIlPlWO9oIC79fdb+08FhAh2vk8Z5TcFjas2FoeLg
+ FDjjTaRT3fR4/6A8ZRLiThemjcyyCZLeXZKrR1pmgFfB0n8DO+jvHgSSRMUnTVBMqCwZ
+ 5xVo2H12WKq0a9JSLUIJcQMJUwPpfA3oq2KerZwCsO4vnbO0JWPUSJ8EuM10s6AJyPQb
+ 8VglJusFRp8Ad6Rqy23Fx1H64w2Qhm39+ImiSttt+ZswjKfFUEhtBcLrLDeaDMKHMIw/
+ yEFg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1738704188; x=1739308988;
+ d=1e100.net; s=20230601; t=1738704348; x=1739309148;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=yn+lx0Ff72ivxp1p+qnbfxeJnBt8j/pOvF6+ZRbIJJI=;
- b=RW4xJkcBtCQvBdNsLIP297RwJz1+v31Ym/CrN0bNdG6KoDqpra24LMhoWK3nxKNDyB
- VJK5+WRn7P2tBYGJe4pArcncNd5BWw/Se8c+2oj/Un3sjYXGdSZckto/q/VVsdJAqadc
- 7DLKXoPJfAkg4weDTsSs7Dkj6XrtHYJ+0+c83jUkgnkuYTOWQA7FUM+iPdERvpmxhz6a
- eEhEwFV6Etc5H82tpvEIhIZ9ZByVq78SarWACAUSXxsUy48lGoDxRxybsmqY8RcKHchN
- IQHb2A7gLlGZE2PgARg0RLSXVsfLSXYT9WA6MdEA4iIIBkR9Jnm0FVn5M9SD9c0morOQ
- PKkw==
+ bh=0yZ3rGNBWFbwR7tcrMEb20ea+rfzWXUZz9frnWzuoa8=;
+ b=idUTSmDDYjn55Pd0YiQg4HwacPBqND2Scivp77HRpHWevHD/Yqj1g4gyXN8zjeJLZr
+ xNfXSyM4p/4Igwb0cyPTXs7Kd1S3PxP6iFOitqrB3cAMbiWfWQ/b5Uij5RZl7AapaGvg
+ 4TkBTlCqZ5RpXASvi5jxkEelY0SBh711fcatjnqMnigiB0PKQiF+7esdPmz/mu1isuq1
+ V8PwPMfQMZ/FMXGPpqcrE8KCkuOsVGLLSnLnlMgoJcNRoWg0QmggDOuzEa7CGYgbNNoD
+ gNeGXnjbV17x3JPlkuLxDTdiMrrTnIq8efP6yeI622kwLiKGjrnEHdYZitmSmolz/tYI
+ JhfQ==
 X-Forwarded-Encrypted: i=1;
- AJvYcCWdkzqez/0ApFZBQw3OOpCn0De+NaRhWmc/+ihN2yfxGczTZWDkHrhKU1r4rvsMCkmvaP0Nrl6KkYlk@nongnu.org
-X-Gm-Message-State: AOJu0YyX7DKhAFcwwculjXmAyPPBNq6tjjZRWdvDsMMGrFbfMdwVsHb4
- 7cgtGIoZPgEU7fYMv+6hSGg9/tOYECK/guoC2sIUQfMLJX0OYJqTRHw7VH6GYzM=
-X-Gm-Gg: ASbGncvE9HfTwt3wCVxLF07cuhnotFEekKCoZQxhRwJeg821P7Bdioz2a33VsOw90zE
- meEi0L+Wfkol1GbQqZ0w9zqUrOoHD+hJ6me0fRN8UaP/ZEZuNTxjR5JNFsnMFG9PUaqAkqIiND2
- Fp/dBwGM2Df2XArguAWfCi//QWo/5ZMUyuDSE12IpQC1tS98LYFY1IK0klzIDA0dAeY+PQxE6B+
- 4sJu8Tu6Z7xkpIcLALGgDDxHHAosmTIJ5UA1/ySFJrd1lO/fKkcH2EgW6aoJwHyV0hgILdkHxlw
- y7YSvst5oQ4T2o8orcLG+gfo6sXrWv5pq4XSBzrhSZL+zjbTc3h8yz/Gc1Q=
-X-Google-Smtp-Source: AGHT+IGRP9ASmGxa2gIONHJIeMtoDj7oJUvBP0OJC4QP6gu30veETmQ2is+YMCAe0VEvAsK8Ub4iQQ==
-X-Received: by 2002:a05:6000:4012:b0:38a:8d32:2707 with SMTP id
- ffacd0b85a97d-38da5404c5emr3942983f8f.26.1738704188204; 
- Tue, 04 Feb 2025 13:23:08 -0800 (PST)
+ AJvYcCXLSUUETYxEwpD68p49467UUgVA+qMTKc0+GD5B14QlctBxRIyIjBCFG2tPb3ITokf1K70qwoSBISFB@nongnu.org
+X-Gm-Message-State: AOJu0YzoKZxXUpf64/iFHAscoZil40dE2h/4zoENBxuLnJqrBGMysQFH
+ tB2WeUyYsmfEYZqBl4XlFppMucyec2i8mCzrcRLTSSz+uk81vIiCcR82pV3jT7M=
+X-Gm-Gg: ASbGncsGlEhFDchqE2UpiVwhOZTOmELffcg4zXKbrdwb7HfmSiD2WNQ7WEfz4ZK0+dR
+ 0YkBRz+xBWPEquKEat2GEUarGX24dwRXUSyvqhrfhFK6gpH8tb9+Ik7/eBIfiKn+K6TNl7z7jgw
+ 2kUA9XCjIxZlZA4UOj6U2cFukz5kgaErpSILfBYU7KMRR3mkvfrIhEXjAevKbd1Swa81tVlwZuA
+ XWrDSG0D9OAVHyvAln13tJ/8BHvuwfjlyOicAL+T4VCujXd8/iiYyJurowLIeTsvN9zoZIDy211
+ 2WXR5lRQDQNMm195q5gXjVhfXA/HKL4oS6CcnhQf3D5DjRhB0EVWZT7nITI=
+X-Google-Smtp-Source: AGHT+IEKxmr8p6Gdjx/D0eeb7pj0vKXisGW1fMr/aKDXpj9R2377FaYU+L0nppkxwZjSdcCGKmolEQ==
+X-Received: by 2002:a05:600c:3c8f:b0:438:e231:d35e with SMTP id
+ 5b1f17b1804b1-4390d34d20cmr1876685e9.0.1738704348532; 
+ Tue, 04 Feb 2025 13:25:48 -0800 (PST)
 Received: from [192.168.69.198] (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4390da712f9sm143965e9.28.2025.02.04.13.23.06
+ 5b1f17b1804b1-4390d966faasm227375e9.23.2025.02.04.13.25.47
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 04 Feb 2025 13:23:06 -0800 (PST)
-Message-ID: <47873abc-2203-4911-8933-c1804abb75bc@linaro.org>
-Date: Tue, 4 Feb 2025 22:23:06 +0100
+ Tue, 04 Feb 2025 13:25:48 -0800 (PST)
+Message-ID: <02ea4b41-3594-4ead-90d3-0ab06f2be7fa@linaro.org>
+Date: Tue, 4 Feb 2025 22:25:46 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] hw/*/xen*: Prefer QOM cast for XenLegacyDevice
+Subject: Re: [RFC PATCH 9/9] hw/xen: Have legacy Xen backend inherit from
+ DYNAMIC_SYS_BUS_DEVICE
 To: Bernhard Beschow <shentey@gmail.com>, qemu-devel@nongnu.org
-Cc: Stefano Stabellini <sstabellini@kernel.org>,
- "Edgar E. Iglesias" <edgar.iglesias@gmail.com>,
- xen-devel@lists.xenproject.org, Paul Durrant <paul@xen.org>,
- Anthony PERARD <anthony@xenproject.org>
-References: <20250125181343.59151-10-philmd@linaro.org>
- <20250127094129.15941-1-shentey@gmail.com>
+Cc: Yi Liu <yi.l.liu@intel.com>, Markus Armbruster <armbru@redhat.com>,
+ Eduardo Habkost <eduardo@habkost.net>,
+ Anthony PERARD <anthony@xenproject.org>,
+ Gustavo Romero <gustavo.romero@linaro.org>, Jason Wang
+ <jasowang@redhat.com>, qemu-ppc@nongnu.org,
+ "Michael S. Tsirkin" <mst@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
+ Alexander Graf <graf@amazon.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Stefan Berger <stefanb@linux.vnet.ibm.com>,
+ Stefano Stabellini <sstabellini@kernel.org>,
+ Gerd Hoffmann <kraxel@redhat.com>, =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?=
+ <berrange@redhat.com>, "Edgar E. Iglesias" <edgar.iglesias@gmail.com>,
+ xen-devel@lists.xenproject.org, Marcel Apfelbaum
+ <marcel.apfelbaum@gmail.com>, Alex Williamson <alex.williamson@redhat.com>,
+ Paul Durrant <paul@xen.org>,
+ =?UTF-8?Q?Cl=C3=A9ment_Mathieu--Drif?= <clement.mathieu--drif@eviden.com>,
+ =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
+References: <20250125181343.59151-1-philmd@linaro.org>
+ <20250125181343.59151-10-philmd@linaro.org>
+ <9A2B297A-6270-4482-B1B6-81F518C07C1E@gmail.com>
 Content-Language: en-US
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20250127094129.15941-1-shentey@gmail.com>
+In-Reply-To: <9A2B297A-6270-4482-B1B6-81F518C07C1E@gmail.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::434;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x434.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::334;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x334.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -104,17 +119,64 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 27/1/25 10:41, Bernhard Beschow wrote:
-> Makes the code less sensitive regarding changes in the class hierarchy which
-> will be performed in the next patch.
+Hi Bernhard,
+
+On 27/1/25 10:46, Bernhard Beschow wrote:
+> Am 25. Januar 2025 18:13:43 UTC schrieb "Philippe Mathieu-Daudé" <philmd@linaro.org>:
+>> Because the legacy Xen backend devices can optionally be plugged on the
+>> TYPE_PLATFORM_BUS_DEVICE, have it inherit TYPE_DYNAMIC_SYS_BUS_DEVICE.
+>> Remove the implicit TYPE_XENSYSDEV instance_size.
+>>
+>> Untested, but I'm surprised the legacy devices work because they
+>> had a broken instance size (QDev instead of Sysbus...), so accesses
+>> of XenLegacyDevice fields were overwritting sysbus ones.
+>>
+>> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+>> ---
+>> include/hw/xen/xen_pvdev.h  | 3 ++-
+>> hw/xen/xen-legacy-backend.c | 7 ++-----
+>> 2 files changed, 4 insertions(+), 6 deletions(-)
+>>
+>> diff --git a/include/hw/xen/xen_pvdev.h b/include/hw/xen/xen_pvdev.h
+>> index 0c984440476..48950dc2b57 100644
+>> --- a/include/hw/xen/xen_pvdev.h
+>> +++ b/include/hw/xen/xen_pvdev.h
+>> @@ -32,7 +32,8 @@ struct XenDevOps {
+>> };
+>>
+>> struct XenLegacyDevice {
+>> -    DeviceState        qdev;
+>> +    SysBusDevice parent_obj;
 > 
-> Signed-off-by: Bernhard Beschow <shentey@gmail.com>
-> ---
->   hw/usb/xen-usb.c            | 6 +++---
->   hw/xen/xen-legacy-backend.c | 2 +-
->   hw/xen/xen_pvdev.c          | 2 +-
->   3 files changed, 5 insertions(+), 5 deletions(-)
+> This then needs sysbus.h rather than qdev-core.h include.
+> 
+> Moreover, the patch in the reply needs to be inserted into the series before this patch.
+> 
+> Both are needed for the patch to compile.
 
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Per your reply on patch #7, might I include your
 
+Tested-by: Bernhard Beschow <shentey@gmail.com>
+Acked-by: Bernhard Beschow <shentey@gmail.com>
+(or R-b)
+
+squashing:
+
+-- >8 --
+diff --git a/include/hw/xen/xen_pvdev.h b/include/hw/xen/xen_pvdev.h
+index 48950dc2b57..629bec90d09 100644
+--- a/include/hw/xen/xen_pvdev.h
++++ b/include/hw/xen/xen_pvdev.h
+@@ -1,7 +1,7 @@
+  #ifndef QEMU_HW_XEN_PVDEV_H
+  #define QEMU_HW_XEN_PVDEV_H
+
+-#include "hw/qdev-core.h"
++#include "hw/sysbus.h"
+  #include "hw/xen/xen_backend_ops.h"
+
+  /* ------------------------------------------------------------- */
+---
+
+?
 
