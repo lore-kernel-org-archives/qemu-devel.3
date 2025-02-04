@@ -4,71 +4,172 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2F98FC02194
-	for <qemu-devel@archiver.kernel.org>; Tue,  4 Feb 2025 09:43:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8E5D0C02194
+	for <qemu-devel@archiver.kernel.org>; Tue,  4 Feb 2025 09:44:34 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tfFRf-0004eg-71; Tue, 04 Feb 2025 04:42:15 -0500
+	id 1tfFTI-0005Sq-Oo; Tue, 04 Feb 2025 04:43:56 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1tfFRd-0004eD-1d
- for qemu-devel@nongnu.org; Tue, 04 Feb 2025 04:42:13 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <jamin_lin@aspeedtech.com>)
+ id 1tfFTF-0005SE-A5; Tue, 04 Feb 2025 04:43:53 -0500
+Received: from mail-koreacentralazlp170130007.outbound.protection.outlook.com
+ ([2a01:111:f403:c40f::7] helo=SEYPR02CU001.outbound.protection.outlook.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1tfFRa-0002Nr-E9
- for qemu-devel@nongnu.org; Tue, 04 Feb 2025 04:42:12 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1738662128;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding;
- bh=nUa6dEGJDxdv5zsWldLwPd28yUerfPDuu/s2y9mHQaU=;
- b=GZuauDjlDelZJ476mUEHHzFYIzRLFm8heoNKb93qRXNd/inJeUxPDQGNU7O6NXjbyi/x+l
- kytWViIzHt29dgyUs6JQaidDzqyDTSLzYEWe5WP5TUB0TeBfTYwAsEaF25m8/zZEtIUNTS
- nAvzqa8T7/fUT5GlCCqSY4UIUxQ4mpg=
-Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-627-O7cgd6CmMAytMG1yPJ5FjQ-1; Tue,
- 04 Feb 2025 04:42:07 -0500
-X-MC-Unique: O7cgd6CmMAytMG1yPJ5FjQ-1
-X-Mimecast-MFC-AGG-ID: O7cgd6CmMAytMG1yPJ5FjQ
-Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 5B3E6195608B
- for <qemu-devel@nongnu.org>; Tue,  4 Feb 2025 09:42:06 +0000 (UTC)
-Received: from toolbx.redhat.com (unknown [10.42.28.60])
- by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 4F0FE1800360; Tue,  4 Feb 2025 09:42:03 +0000 (UTC)
-From: =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
-To: qemu-devel@nongnu.org
-Cc: "Michael S. Tsirkin" <mst@redhat.com>,
- David Hildenbrand <david@redhat.com>,
- =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
-Subject: [PATCH v2] hw/virtio: reset virtio balloon stats on machine reset
-Date: Tue,  4 Feb 2025 09:42:02 +0000
-Message-ID: <20250204094202.2183262-1-berrange@redhat.com>
+ (Exim 4.90_1) (envelope-from <jamin_lin@aspeedtech.com>)
+ id 1tfFTB-0003c8-Jk; Tue, 04 Feb 2025 04:43:52 -0500
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=CxjuKJYjYslFMrI6QajzjKi/klLQ9R3DPaQ5yZ0pw6Z4mzki66F+SW65NjrBTEa1bHO0QHSTTPUtyqiI/eYJJXfXFC6NbS8pNWSxbF1Jg8t4Af6pAR2iCcZsvDwHqnc5oOZjzzzERGhQGExoAYbOJQvnFuY6BXmAvfF0r/wKk+at/oZhpBsqWzJU6WnudGERUDuUts+KOQnwLRyrsdWaot78X439FxVvvja5mHZod4otrcmKJcuwJ7QzOsQhIBzZU50xL02USa4QxtBT77JKY72MXpwqlSn7uSFjSS6dvJsvRm804N1UhwE7jtGXOrWxElDLB/lIvZkggvjDKMHqWw==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=Jb1mLYNrvSgvor+H99c8Mum3GbtU0aBpIG8LzqDGQu4=;
+ b=vqXwD1jt4aMF6jI+TFBzB4GSTo10/MyKiHhVtKTbtbOa+kzXVNcHsg0rG/1u/yQUX5qTRqQA0dSh+1Bs+P7x10yR5pdZdAWomEWvQbhF6clfevN0azDwtwYWTEhn1PLM2I32H+qutOkVuibBnPyMy929G9MWfuv6CvpbGPzq4PbMKcgcVx0/YieDfUWF34g6fs/2tQfRpFpFVrIdt+byTrtCuFx8BB1jqYYxqvG0e5qCAHa62+YO9uC1c03ZAbeAFxkJ5hQuIPJgoiFdf0kjsSmoVZalywH8wYZ/7VoN1L0NYmuWdCxJpEtITjEmd+iY6mfJ2NjGLMTkdn+VxX+s4A==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=aspeedtech.com; dmarc=pass action=none
+ header.from=aspeedtech.com; dkim=pass header.d=aspeedtech.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=aspeedtech.com;
+ s=selector2;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=Jb1mLYNrvSgvor+H99c8Mum3GbtU0aBpIG8LzqDGQu4=;
+ b=Vy2N1mU6vuA5IPtdREZGl3ODk9O2gItCC0hlbDWKwOuZdVyuxO9bGoI+F7TA5P3g+aj3f9lqtDSFxNjI9xvkBcI3Jrfku0vpsddHluHhmIbzu3mpM6KsfQ5/0CunmYPjPDzYBKBrGYCcsb/dgpqlvqz6act5tIuiZ12qKAyFokdwUM90eTF0p5bFBT3FatWSvd2xv6Nez3MaCuQQrJW2GZUHHn8q/nYrrK5HN8BQVm/L3tlnGQNAkwKl/LS1R9epRbjNDkuBlbKNl5+pe6MQctzsRJII5wdzckZw5+TQm/muympEJ+o88spUQilz4aLyS+X7Aj0A4z59lE7Qv45Cyg==
+Received: from SI2PR06MB5041.apcprd06.prod.outlook.com (2603:1096:4:1a4::6) by
+ SEZPR06MB5543.apcprd06.prod.outlook.com (2603:1096:101:cb::7) with
+ Microsoft
+ SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.20.8422.9; Tue, 4 Feb 2025 09:43:38 +0000
+Received: from SI2PR06MB5041.apcprd06.prod.outlook.com
+ ([fe80::705a:352a:7564:8e56]) by SI2PR06MB5041.apcprd06.prod.outlook.com
+ ([fe80::705a:352a:7564:8e56%5]) with mapi id 15.20.8422.005; Tue, 4 Feb 2025
+ 09:43:38 +0000
+From: Jamin Lin <jamin_lin@aspeedtech.com>
+To: Andrew Jeffery <andrew@codeconstruct.com.au>,
+ =?utf-8?B?Q8OpZHJpYyBMZSBHb2F0ZXI=?= <clg@kaod.org>, Peter Maydell
+ <peter.maydell@linaro.org>, Steven Lee <steven_lee@aspeedtech.com>, Troy Lee
+ <leetroy@gmail.com>, Joel Stanley <joel@jms.id.au>, "open list:ASPEED BMCs"
+ <qemu-arm@nongnu.org>, "open list:All patches CC here"
+ <qemu-devel@nongnu.org>
+CC: Troy Lee <troy_lee@aspeedtech.com>, Yunlin Tang
+ <yunlin.tang@aspeedtech.com>
+Subject: RE: [PATCH v1 12/18] hw/arm/aspeed_ast27x0: Support two levels of
+ INTC controllers for AST2700 A1
+Thread-Topic: [PATCH v1 12/18] hw/arm/aspeed_ast27x0: Support two levels of
+ INTC controllers for AST2700 A1
+Thread-Index: AQHba9LAR+6tJtZgg0OzH5hIXoiXmbMuxMkAgAgoeYA=
+Date: Tue, 4 Feb 2025 09:43:38 +0000
+Message-ID: <SI2PR06MB50414F9067112317161AD907FCF42@SI2PR06MB5041.apcprd06.prod.outlook.com>
+References: <20250121070424.2465942-1-jamin_lin@aspeedtech.com>
+ <20250121070424.2465942-13-jamin_lin@aspeedtech.com>
+ <cb18b72dbfce3a606a4bd7ea41732d451fbea0f1.camel@codeconstruct.com.au>
+In-Reply-To: <cb18b72dbfce3a606a4bd7ea41732d451fbea0f1.camel@codeconstruct.com.au>
+Accept-Language: zh-TW, en-US
+Content-Language: zh-TW
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+authentication-results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=aspeedtech.com;
+x-ms-publictraffictype: Email
+x-ms-traffictypediagnostic: SI2PR06MB5041:EE_|SEZPR06MB5543:EE_
+x-ms-office365-filtering-correlation-id: c86fab21-91d5-44c8-b874-08dd450066c0
+x-ms-exchange-senderadcheck: 1
+x-ms-exchange-antispam-relay: 0
+x-microsoft-antispam: BCL:0; ARA:13230040|366016|376014|1800799024|38070700018;
+x-microsoft-antispam-message-info: =?utf-8?B?Q1VNVEFnWUZ6cmNpRWF0ajNVODNwNVB1MTlHVFBVL1FQQ055WmRuV3NqS2Jt?=
+ =?utf-8?B?ZjVGK0hJME10NTRKZ2h1QkxHUVptcmtRMWxHRGwyQ3F6UDJuTkJCWFJoc2Vp?=
+ =?utf-8?B?SW83T1BvWVpaaTVLQjFWclV4cmJveVFNOHlma3FINTFyT0xBQ1cwZjFyMVBr?=
+ =?utf-8?B?SXJHTTJmOWgwaDFKYS9idmJrem5ZZUFuZFJma2lOZ0h0RGxFMUNyTk56YTJW?=
+ =?utf-8?B?S1g0eVpYWjk4MlNRY1RDTSszc2gvVDFVUGw1Z1NQdVA5L00vcTVXRFdXeGZv?=
+ =?utf-8?B?aTdEYmhxR2I1aWhlUU0zaWVjajFaUk9BUE5VM3c4bmh5UTZHam5vdTVselVq?=
+ =?utf-8?B?ZHVDd0o0VHB2QnRZZ0dqSk5pRlpqNzF2Rjk0QldyS011TG90MGNEWk43ZlZK?=
+ =?utf-8?B?QnNCc0dEb0FXWWcvdjg1Nis3Y1o1amp3L3JUdGNDMi9tcW5RczE4L2RqQmZl?=
+ =?utf-8?B?d3hKSUs3Wkpzb0Z3N21rRC95VThYc01mU0JYYW1EZWMzajVZalNRVTdhQTVh?=
+ =?utf-8?B?clpyL0FyZVV6M2xVVnFrYlpweTFYRy9VWWo0MWhmaUYrZjJBM0d5SUo3SGc0?=
+ =?utf-8?B?UHp1TGpyWWVEOXdlMFBVdVh6NlZaTkxkWm1TMWdjMGp5emVnQU4zTFpaTUpF?=
+ =?utf-8?B?R2lDTEZVTTl5d2lpc1o5TWMvTTJRNEZubHVGa0tyWFhQVUNQcE43QXpFMVJV?=
+ =?utf-8?B?Q2MwYTI0WDZYeGlsbjRLbjFmd3BjTlByRi9xdnh4Tk52VEJLazlwcU5XSEZx?=
+ =?utf-8?B?MUkxcjdtR25SbTlJdXprK25BcFowa29PUXZiVms2UE51SnJsSnQybUJLbDg3?=
+ =?utf-8?B?Ui8wM0x2eDRsVzJNeVVFUUhhUmV0MzcwTTE5Zm1DQm1EMVZXeVZCUmo5cHZ0?=
+ =?utf-8?B?R2xxbEFQUlNMcnlMYk9xbndtUWU1OGVQTytPbmhOM1dMam41K3VNTXV2N1dL?=
+ =?utf-8?B?Z0xKQjY3UUhXVFREb2hOaXVvWWdCLzI1Q0M5WWZEbEtoMmNZdWVITGozVHVq?=
+ =?utf-8?B?MjdxV2RzNE5GSDJESFJHNDZYd3Q1RjN4VStyLzRVWHQ2NTR4MUUvVVR1dHlV?=
+ =?utf-8?B?WVUydVBCUkNUakl0ZmN3a1hFMXphNWQzbmQwbTc5b2ZxSWFBL2pNT3p1LzJU?=
+ =?utf-8?B?SEVYMEFWOXVoVll0MENGWlJSQXNKeUZJN2I2OEZXT21UMCt5cXVYYUNGME1T?=
+ =?utf-8?B?V0NNSTl2OUdUUzE4bmplQVBZa3BLc2E1c2F0YkxmN0FVZE45OENxeUVwTU1C?=
+ =?utf-8?B?UzlCem5vQis0a2NDN3pkb1VrZEg2Qm4zTlpGWHVsSkhCTlp6RDV4M0I5RHhM?=
+ =?utf-8?B?WEpOUC9CbVViaHN4Ti9RYkhGMTNVUjZEaDhEaDl1RlpLc0NiZlgzaWJYUy9l?=
+ =?utf-8?B?S0Fhc1hPSjB3LzM2cE45bllOanNMRHNJTnhUUFRuSXdxWHpGSytJTUNYbGh3?=
+ =?utf-8?B?aG5Sc3Fyem1WZDNKU3NjTUN3MmUrdmp6dXhYcmlISjkwQkF5enNYbEdXcktn?=
+ =?utf-8?B?ZnhFT3ZBY1BqbUVkMERGOGVyMzNUUi9SNnlaMDVxNGNTdDB5L3Z1dldPVHk1?=
+ =?utf-8?B?eFllUE80aVZQOGYxQzZadnVaK3FLWWk5dWJTVUh5R1NDLzFJZG0zMGxNLzR1?=
+ =?utf-8?B?OCtSeGY0M0JzRzlJdmcvOUpYTnpNbzE1bGlIem93dXNnQWNzbEJNakVZcnIx?=
+ =?utf-8?B?NUFUOHpMYzFOWm1QS293RS9BTmJzTk43RHpEdkpBdURvbENNZExZQ2JWQ3R0?=
+ =?utf-8?B?RXBYWXZsRDQvMGlhUUJ2am02VEROLzRINUI4S3ByUU4wU1BFcEs3SG43bi9q?=
+ =?utf-8?B?ZmROa3A5NCtKK0lwUHdDNDdBcktEcGp1UEFPZVA3K1VvK3RPVXpuQkY1OTc2?=
+ =?utf-8?Q?umEJ9JvaR+U7z?=
+x-forefront-antispam-report: CIP:255.255.255.255; CTRY:; LANG:zh-tw; SCL:1;
+ SRV:; IPV:NLI; SFV:NSPM; H:SI2PR06MB5041.apcprd06.prod.outlook.com; PTR:;
+ CAT:NONE; SFS:(13230040)(366016)(376014)(1800799024)(38070700018); DIR:OUT;
+ SFP:1102; 
+x-ms-exchange-antispam-messagedata-chunkcount: 1
+x-ms-exchange-antispam-messagedata-0: =?utf-8?B?YkNxbmFiYW9IcTFMZGh1bFlSaUVacEI5ZGVuMU5kZG1ESm9ESTFJSWhZN2JN?=
+ =?utf-8?B?NGg5bEkyWmNVdVVUL1RYMzYralYwT3AxV081TUVDMS9sN3FQMm5jVWhOVWpL?=
+ =?utf-8?B?SStWSlBDcTlSam83czJpbDBwOTBpNDI4T0lmYnJNaitIMzVERTFuQmpUa3RS?=
+ =?utf-8?B?bTNkMVFhUWZmVTljNU40WG5qN2NGZkMyaU83TDluNnZORVdNYTZnQUEzSWs5?=
+ =?utf-8?B?ZE92cUY2UWttZjhBeDVvZjB4R2ZsSTA2N1pSS2FySXZCTllERnk2dUJmTXJS?=
+ =?utf-8?B?c21mWmlSQVkyVCtIbWNOVitkM05ST2N3NHR1Q3hWYXgwOC80cHF0OGQ1b2JT?=
+ =?utf-8?B?blNHQVBTKzhGS0RWQ2d3UWJoUE5wS2tPZ25QMEh5Mk1TRFhqc0htMUpZSmRx?=
+ =?utf-8?B?ZG1OMmRTTjV4UXZRVkpVdXBMNVpxd2JYZjBaQXBWOEN4STYzdjJReGt6VW5V?=
+ =?utf-8?B?Vy9saHJCWU94UVgrWWw2bVVtenh2YWdJS2dqUm1wMGQrNEY0aTU5MmVGZDhQ?=
+ =?utf-8?B?K1dXNjB6ZWhkZHdmalI5TXkwRURmRTl2K3hxR3IrZlZiZ3lFTWpDNWZobU8v?=
+ =?utf-8?B?Z2kySGVEc2prNkxOWk9Jc1dON0JyMVVRTHFWK01EQlNzK1ROdFZQSkl5dHRH?=
+ =?utf-8?B?a0Q5VGx3QzhMcmx6eDgzNml2ZXZjN2xxbFltNmlQUmQzZWltQ01nbk1qVVVR?=
+ =?utf-8?B?K2VSS2RZR2o3WWZxK0d2d2xCVzZoWDR2MjZuWE53OTFPZUlFQW1JOXZmaW9s?=
+ =?utf-8?B?eHQ3akloNU9JY2Uvd2hER1B2djJPSUZWU1RxU01sU0NidU1nTVpwUUNST2NR?=
+ =?utf-8?B?VDdxd1BNazVhNGh0QlJWa3YzMC9HUWxLc2NDdUJrWldQWS9yS2x3dDNNVlF1?=
+ =?utf-8?B?V2E3aExXcDI0Z2t3QVZwTjFaRkpUU3kwOTlLdTlUaVlmTk9tNjUvSlBsQ2Nh?=
+ =?utf-8?B?R3VlMHJ6bCtDL0tESG0wdldEbmt3SUhVM213MkNqZzdJSjRrM3J0NERnZnR0?=
+ =?utf-8?B?KzJrYXhOd05ybzJRQW5rUWZESzFWdzlDTU9QczVxblkrR2wzOXNlS2J6WUlM?=
+ =?utf-8?B?RjNyUVFNMGFBVk5UUWZoQkpxd1BCWlM1LzIwVkFPMzNJYjNRaVpabENJT0dG?=
+ =?utf-8?B?dmdodldrT3EzVXQ5Ykw5Y0ZZWnExNnlJV0JnZWNrQ24zTUZTN0tVOXhsbXFE?=
+ =?utf-8?B?R1VTanNiaGl5WWY3NGt6TGova1YyNmVQaXNGVXd4VlRzZXlzVWdSaXFtbkdn?=
+ =?utf-8?B?bitFTnZud1lxV3ZRVi9TSGtLUEtIVzNCcW81cWpXV0ZIOWN2ckZsRmt4bU5h?=
+ =?utf-8?B?NktvQ3hHWkRIbDFtSXVLS042WmEvUDZhamltdTYrSDAwZWFXMkNLb2E0SmdD?=
+ =?utf-8?B?RXg0a1RVT2NUSU5FaUJCbHIzY3Y5Rmhpcm9Ja2k2U0Z4cmhiVkkza2xvSVlY?=
+ =?utf-8?B?WHA5T3pzN1orRVpvamw2clRsTmJNbDFSNVRmdFk5SWdtaTNhWWQrQ1RxbTVY?=
+ =?utf-8?B?V2JidGJvcUZiZG5IN3hxUzR6MU1VZEErSndVZ1Z0TU5tMmlFY3hoM0M1M0pL?=
+ =?utf-8?B?WTgvUGExcDNhQkJZSGpuY2xVL2FGZFJmQ1RsSmxHVHo5b2NtczJCdTBDeEhU?=
+ =?utf-8?B?K2hkUXRDb1ZNZG1HT004Qkc3UkJxTHRjeXlBdmloRi9XUGJpM2haQkVkMDBp?=
+ =?utf-8?B?bTZRYUtxcFZXMGIzUTA3bkU5OWtQRGttWFhscVFFdHhVT0lDbDQzWGNNdlBl?=
+ =?utf-8?B?NStBTVg2NGdUblgwYVNrQ3dCZ3dZZDBtZHRKU1Q1Q3ZUWk54SjRUbGlCTTFv?=
+ =?utf-8?B?dTI3T3Z4emNaVVpkdW11c2krdWk4aFNuZ3djekkxSDQ4cUswOVdQOUlHS1hm?=
+ =?utf-8?B?K2pMbWZBSFNJeVZ4c0MxMG5FY2l6L011aE5RRVFFL2g2aFBPS2x5TnFLZlpx?=
+ =?utf-8?B?UnhBNlV6N0U0ZTJWNlRIL1paVk5OYU1wK1BSNitiRElPTittOTg5VzRDcnFi?=
+ =?utf-8?B?bXlpSVFxeFpRY1k4VUFBb3pBb2cvU1pacFI1K2h2bW9VSHJmNkRvZzJpTmRs?=
+ =?utf-8?B?em1sMFZ0cjI1QTF2bmNGck0rWVduc2JuQlBXTnBrSHQyeUoxZ2RqQ0F1LzdW?=
+ =?utf-8?Q?bqVlaLDbKfNXb7fmiXpdFSn0u?=
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: base64
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
+X-OriginatorOrg: aspeedtech.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-AuthSource: SI2PR06MB5041.apcprd06.prod.outlook.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: c86fab21-91d5-44c8-b874-08dd450066c0
+X-MS-Exchange-CrossTenant-originalarrivaltime: 04 Feb 2025 09:43:38.2556 (UTC)
+X-MS-Exchange-CrossTenant-fromentityheader: Hosted
+X-MS-Exchange-CrossTenant-id: 43d4aa98-e35b-4575-8939-080e90d5a249
+X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
+X-MS-Exchange-CrossTenant-userprincipalname: 5tqzvOQBM903IgScXgSVSdVXIsF45rSEizcjS7HPJVXJms8WH15R15QbfDalyHKlEjrneEyRe+d+JhcfpSwfv9vyCQT+8dWOU0N3ieQiuvw=
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: SEZPR06MB5543
+Received-SPF: pass client-ip=2a01:111:f403:c40f::7;
+ envelope-from=jamin_lin@aspeedtech.com;
+ helo=SEYPR02CU001.outbound.protection.outlook.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -84,358 +185,164 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-When a machine is first booted, all virtio balloon stats are initialized
-to their default value -1 (18446744073709551615 when represented as
-unsigned).
-
-They remain that way while the firmware is loading, and early phase of
-guest OS boot, until the virtio-balloon driver is activated. Thereafter
-the reported stats reflect the guest OS activity.
-
-When a machine reset is performed, however, the virtio-balloon stats are
-left unchanged by QEMU, despite the guest OS no longer updating them,
-nor indeed even still existing.
-
-IOW, the mgmt app keeps getting stale stats until the guest OS starts
-once more and loads the virtio-balloon driver (if ever). At that point
-the app will see a discontinuity in the reported values as they sudden
-jump from the stale value to the new value. This jump is indigituishable
-from a valid data update.
-
-While there is an "last-updated" field to report on the freshness of
-the stats, that does not unambiguously tell the mgmt app whether the
-stats are still conceptually relevant to the current running workload.
-
-It is more conceptually useful to reset the stats to their default
-values on machine reset, given that the previous guest workload the
-stats reflect no longer exists. The mgmt app can now clearly identify
-that there are is no stats information available from the current
-executing workload.
-
-The 'last-updated' time is also reset back to 0.
-
-IOW, on every machine reset, the virtio stats are in the same clean
-state they were when the macine first powered on.
-
-A functional test is added to validate this behaviour with a real
-world guest OS.
-
-Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
----
-
-In v2:
-
- - Rename virtio_balloon_system_reset_enter to
-   virtio_balloon_reset_enter
- - Adapt for 'reset.h' header moving from 'sysemu' to 'system'
- - Add missing tests/functional/meson.build registration
-
- MAINTAINERS                             |   1 +
- hw/virtio/virtio-balloon.c              |  30 ++++-
- include/hw/virtio/virtio-balloon.h      |   4 +
- tests/functional/meson.build            |   2 +
- tests/functional/test_virtio_balloon.py | 161 ++++++++++++++++++++++++
- 5 files changed, 197 insertions(+), 1 deletion(-)
- create mode 100755 tests/functional/test_virtio_balloon.py
-
-diff --git a/MAINTAINERS b/MAINTAINERS
-index 0cf37fce7b..160c5717e6 100644
---- a/MAINTAINERS
-+++ b/MAINTAINERS
-@@ -2252,6 +2252,7 @@ F: include/hw/virtio/virtio-balloon.h
- F: system/balloon.c
- F: include/system/balloon.h
- F: tests/qtest/virtio-balloon-test.c
-+F: tests/functional/test_virtio_balloon.py
- 
- virtio-9p
- M: Greg Kurz <groug@kaod.org>
-diff --git a/hw/virtio/virtio-balloon.c b/hw/virtio/virtio-balloon.c
-index ad05768ded..2eb5a14fa2 100644
---- a/hw/virtio/virtio-balloon.c
-+++ b/hw/virtio/virtio-balloon.c
-@@ -31,7 +31,7 @@
- #include "trace.h"
- #include "qemu/error-report.h"
- #include "migration/misc.h"
--
-+#include "system/reset.h"
- #include "hw/virtio/virtio-bus.h"
- #include "hw/virtio/virtio-access.h"
- 
-@@ -910,6 +910,8 @@ static void virtio_balloon_device_realize(DeviceState *dev, Error **errp)
-     }
- 
-     reset_stats(s);
-+    s->stats_last_update = 0;
-+    qemu_register_resettable(OBJECT(dev));
- }
- 
- static void virtio_balloon_device_unrealize(DeviceState *dev)
-@@ -917,6 +919,7 @@ static void virtio_balloon_device_unrealize(DeviceState *dev)
-     VirtIODevice *vdev = VIRTIO_DEVICE(dev);
-     VirtIOBalloon *s = VIRTIO_BALLOON(dev);
- 
-+    qemu_unregister_resettable(OBJECT(dev));
-     if (s->free_page_bh) {
-         qemu_bh_delete(s->free_page_bh);
-         object_unref(OBJECT(s->iothread));
-@@ -987,6 +990,27 @@ static void virtio_balloon_set_status(VirtIODevice *vdev, uint8_t status)
-     }
- }
- 
-+static ResettableState *virtio_balloon_get_reset_state(Object *obj)
-+{
-+    VirtIOBalloon *s = VIRTIO_BALLOON(obj);
-+    return &s->reset_state;
-+}
-+
-+static void virtio_balloon_reset_enter(Object *obj, ResetType type)
-+{
-+    VirtIOBalloon *s = VIRTIO_BALLOON(obj);
-+
-+    /*
-+     * When waking up from standby/suspend-to-ram, do not reset stats.
-+     */
-+    if (type == RESET_TYPE_WAKEUP) {
-+        return;
-+    }
-+
-+    reset_stats(s);
-+    s->stats_last_update = 0;
-+}
-+
- static void virtio_balloon_instance_init(Object *obj)
- {
-     VirtIOBalloon *s = VIRTIO_BALLOON(obj);
-@@ -1038,6 +1062,7 @@ static void virtio_balloon_class_init(ObjectClass *klass, void *data)
- {
-     DeviceClass *dc = DEVICE_CLASS(klass);
-     VirtioDeviceClass *vdc = VIRTIO_DEVICE_CLASS(klass);
-+    ResettableClass *rc = RESETTABLE_CLASS(klass);
- 
-     device_class_set_props(dc, virtio_balloon_properties);
-     dc->vmsd = &vmstate_virtio_balloon;
-@@ -1050,6 +1075,9 @@ static void virtio_balloon_class_init(ObjectClass *klass, void *data)
-     vdc->get_features = virtio_balloon_get_features;
-     vdc->set_status = virtio_balloon_set_status;
-     vdc->vmsd = &vmstate_virtio_balloon_device;
-+
-+    rc->get_state = virtio_balloon_get_reset_state;
-+    rc->phases.enter = virtio_balloon_reset_enter;
- }
- 
- static const TypeInfo virtio_balloon_info = {
-diff --git a/include/hw/virtio/virtio-balloon.h b/include/hw/virtio/virtio-balloon.h
-index b12c18a43b..0456c211c6 100644
---- a/include/hw/virtio/virtio-balloon.h
-+++ b/include/hw/virtio/virtio-balloon.h
-@@ -16,6 +16,7 @@
- #define QEMU_VIRTIO_BALLOON_H
- 
- #include "standard-headers/linux/virtio_balloon.h"
-+#include "hw/resettable.h"
- #include "hw/virtio/virtio.h"
- #include "system/iothread.h"
- #include "qom/object.h"
-@@ -71,6 +72,9 @@ struct VirtIOBalloon {
- 
-     bool qemu_4_0_config_size;
-     uint32_t poison_val;
-+
-+    /* State of the resettable container */
-+    ResettableState reset_state;
- };
- 
- #endif
-diff --git a/tests/functional/meson.build b/tests/functional/meson.build
-index 3f085bfbca..9175d7b89d 100644
---- a/tests/functional/meson.build
-+++ b/tests/functional/meson.build
-@@ -47,6 +47,7 @@ test_timeouts = {
-   's390x_ccw_virtio' : 420,
-   'sh4_tuxrun' : 240,
-   'x86_64_kvm_xen' : 180,
-+  'virtio_balloon': 120,
- }
- 
- tests_generic_system = [
-@@ -283,6 +284,7 @@ tests_x86_64_system_thorough = [
-   'linux_initrd',
-   'multiprocess',
-   'netdev_ethtool',
-+  'virtio_balloon',
-   'virtio_gpu',
-   'x86_64_hotplug_cpu',
-   'x86_64_kvm_xen',
-diff --git a/tests/functional/test_virtio_balloon.py b/tests/functional/test_virtio_balloon.py
-new file mode 100755
-index 0000000000..67b48e1b4e
---- /dev/null
-+++ b/tests/functional/test_virtio_balloon.py
-@@ -0,0 +1,161 @@
-+#!/usr/bin/env python3
-+#
-+# virtio-balloon tests
-+#
-+# This work is licensed under the terms of the GNU GPL, version 2 or
-+# later.  See the COPYING file in the top-level directory.
-+
-+import time
-+
-+from qemu_test import QemuSystemTest, Asset
-+from qemu_test import wait_for_console_pattern
-+from qemu_test import exec_command_and_wait_for_pattern
-+
-+UNSET_STATS_VALUE = 18446744073709551615
-+
-+
-+class VirtioBalloonx86(QemuSystemTest):
-+
-+    ASSET_KERNEL = Asset(
-+        ('https://archives.fedoraproject.org/pub/archive/fedora/linux/releases'
-+         '/31/Server/x86_64/os/images/pxeboot/vmlinuz'),
-+        'd4738d03dbbe083ca610d0821d0a8f1488bebbdccef54ce33e3adb35fda00129')
-+
-+    ASSET_INITRD = Asset(
-+        ('https://archives.fedoraproject.org/pub/archive/fedora/linux/releases'
-+         '/31/Server/x86_64/os/images/pxeboot/initrd.img'),
-+        '277cd6c7adf77c7e63d73bbb2cded8ef9e2d3a2f100000e92ff1f8396513cd8b')
-+
-+    ASSET_DISKIMAGE = Asset(
-+        ('https://archives.fedoraproject.org/pub/archive/fedora/linux/releases'
-+         '/31/Cloud/x86_64/images/Fedora-Cloud-Base-31-1.9.x86_64.qcow2'),
-+        'e3c1b309d9203604922d6e255c2c5d098a309c2d46215d8fc026954f3c5c27a0')
-+
-+    DEFAULT_KERNEL_PARAMS = ('root=/dev/vda1 console=ttyS0 net.ifnames=0 '
-+                             'rd.rescue')
-+
-+    def wait_for_console_pattern(self, success_message, vm=None):
-+        wait_for_console_pattern(
-+            self,
-+            success_message,
-+            failure_message="Kernel panic - not syncing",
-+            vm=vm,
-+        )
-+
-+    def mount_root(self):
-+        self.wait_for_console_pattern('Entering emergency mode.')
-+        prompt = '# '
-+        self.wait_for_console_pattern(prompt)
-+
-+        exec_command_and_wait_for_pattern(self, 'mount /dev/vda1 /sysroot',
-+                                          prompt)
-+        exec_command_and_wait_for_pattern(self, 'chroot /sysroot',
-+                                          prompt)
-+        exec_command_and_wait_for_pattern(self, "modprobe virtio-balloon",
-+                                          prompt)
-+
-+    def assert_initial_stats(self):
-+        ret = self.vm.qmp('qom-get',
-+                          {'path': '/machine/peripheral/balloon',
-+                           'property': 'guest-stats'})['return']
-+        when = ret.get('last-update')
-+        assert when == 0
-+        stats = ret.get('stats')
-+        for name, val in stats.items():
-+            assert val == UNSET_STATS_VALUE
-+
-+    def assert_running_stats(self, then):
-+        ret = self.vm.qmp('qom-get',
-+                          {'path': '/machine/peripheral/balloon',
-+                           'property': 'guest-stats'})['return']
-+        when = ret.get('last-update')
-+        now = time.time()
-+
-+        assert when > then and when < now
-+        stats = ret.get('stats')
-+        # Stat we expect this particular Kernel to have set
-+        expectData = [
-+            "stat-available-memory",
-+            "stat-disk-caches",
-+            "stat-free-memory",
-+            "stat-htlb-pgalloc",
-+            "stat-htlb-pgfail",
-+            "stat-major-faults",
-+            "stat-minor-faults",
-+            "stat-swap-in",
-+            "stat-swap-out",
-+            "stat-total-memory",
-+        ]
-+        for name, val in stats.items():
-+            if name in expectData:
-+                assert val != UNSET_STATS_VALUE
-+            else:
-+                assert val == UNSET_STATS_VALUE
-+
-+    def test_virtio_balloon_stats(self):
-+        self.set_machine('q35')
-+        kernel_path = self.ASSET_KERNEL.fetch()
-+        initrd_path = self.ASSET_INITRD.fetch()
-+        diskimage_path = self.ASSET_DISKIMAGE.fetch()
-+
-+        self.vm.set_console()
-+        self.vm.add_args("-S")
-+        self.vm.add_args("-cpu", "max")
-+        self.vm.add_args("-m", "2G")
-+        # Slow down BIOS phase with boot menu, so that after a system
-+        # reset, we can reliably catch the clean stats again in BIOS
-+        # phase before the guest OS launches
-+        self.vm.add_args("-boot", "menu=on")
-+        self.vm.add_args("-machine", "q35,accel=kvm:tcg")
-+        self.vm.add_args("-device", "virtio-balloon,id=balloon")
-+        self.vm.add_args('-drive',
-+                         f'file={diskimage_path},if=none,id=drv0,snapshot=on')
-+        self.vm.add_args('-device', 'virtio-blk-pci,bus=pcie.0,' +
-+                         'drive=drv0,id=virtio-disk0,bootindex=1')
-+
-+        self.vm.add_args(
-+            "-kernel",
-+            kernel_path,
-+            "-initrd",
-+            initrd_path,
-+            "-append",
-+            self.DEFAULT_KERNEL_PARAMS
-+        )
-+        self.vm.launch()
-+
-+        # Poll stats at 100ms
-+        self.vm.qmp('qom-set',
-+                    {'path': '/machine/peripheral/balloon',
-+                     'property': 'guest-stats-polling-interval',
-+                     'value': 100 })
-+
-+        # We've not run any guest code yet, neither BIOS or guest,
-+        # so stats should be all default values
-+        self.assert_initial_stats()
-+
-+        self.vm.qmp('cont')
-+
-+        then = time.time()
-+        self.mount_root()
-+        self.assert_running_stats(then)
-+
-+        # Race window between these two commands, where we
-+        # rely on '-boot menu=on' to (hopefully) ensure we're
-+        # still executing the BIOS when QEMU processes the
-+        # 'stop', and thus have not loaded the virtio-balloon
-+        # driver in the guest
-+        self.vm.qmp('system_reset')
-+        self.vm.qmp('stop')
-+
-+        # If the above assumption held, we're in BIOS now and
-+        # stats should be all back at their default values
-+        self.assert_initial_stats()
-+        self.vm.qmp('cont')
-+
-+        then = time.time()
-+        self.mount_root()
-+        self.assert_running_stats(then)
-+
-+
-+if __name__ == '__main__':
-+    QemuSystemTest.main()
--- 
-2.47.1
-
+SGkgQW5kcmV3LA0KDQo+IC0tLS0tT3JpZ2luYWwgTWVzc2FnZS0tLS0tDQo+IEZyb206IEFuZHJl
+dyBKZWZmZXJ5IDxhbmRyZXdAY29kZWNvbnN0cnVjdC5jb20uYXU+DQo+IFNlbnQ6IFRodXJzZGF5
+LCBKYW51YXJ5IDMwLCAyMDI1IDEyOjIwIFBNDQo+IFRvOiBKYW1pbiBMaW4gPGphbWluX2xpbkBh
+c3BlZWR0ZWNoLmNvbT47IEPDqWRyaWMgTGUgR29hdGVyIDxjbGdAa2FvZC5vcmc+Ow0KPiBQZXRl
+ciBNYXlkZWxsIDxwZXRlci5tYXlkZWxsQGxpbmFyby5vcmc+OyBTdGV2ZW4gTGVlDQo+IDxzdGV2
+ZW5fbGVlQGFzcGVlZHRlY2guY29tPjsgVHJveSBMZWUgPGxlZXRyb3lAZ21haWwuY29tPjsgSm9l
+bCBTdGFubGV5DQo+IDxqb2VsQGptcy5pZC5hdT47IG9wZW4gbGlzdDpBU1BFRUQgQk1DcyA8cWVt
+dS1hcm1Abm9uZ251Lm9yZz47IG9wZW4NCj4gbGlzdDpBbGwgcGF0Y2hlcyBDQyBoZXJlIDxxZW11
+LWRldmVsQG5vbmdudS5vcmc+DQo+IENjOiBUcm95IExlZSA8dHJveV9sZWVAYXNwZWVkdGVjaC5j
+b20+OyBZdW5saW4gVGFuZw0KPiA8eXVubGluLnRhbmdAYXNwZWVkdGVjaC5jb20+DQo+IFN1Ympl
+Y3Q6IFJlOiBbUEFUQ0ggdjEgMTIvMThdIGh3L2FybS9hc3BlZWRfYXN0Mjd4MDogU3VwcG9ydCB0
+d28gbGV2ZWxzIG9mDQo+IElOVEMgY29udHJvbGxlcnMgZm9yIEFTVDI3MDAgQTENCj4gDQo+IE9u
+IFR1ZSwgMjAyNS0wMS0yMSBhdCAxNTowNCArMDgwMCwgSmFtaW4gTGluIHdyb3RlOg0KPiA+IFRo
+ZSBkZXNpZ24gb2YgSU5UQyBjb250cm9sbGVycyBoYXMgc2lnbmlmaWNhbnRseSBjaGFuZ2VkIGlu
+IEFTVDI3MDAgQTEuDQo+ID4NCj4gPiBUaGVyZSBhcmUgYSB0b3RhbCBvZiA0ODAgaW50ZXJydXB0
+IHNvdXJjZXMgaW4gQVNUMjcwMCBBMS4gRm9yDQo+ID4gaW50ZXJydXB0IG51bWJlcnMgZnJvbSAw
+IHRvIDEyNywgdGhleSBjYW4gcm91dGUgZGlyZWN0bHkgdG8gUFNQLCBTU1AsDQo+ID4gYW5kIFRT
+UC4gRHVlIHRvIHRoZSBsaW1pdGF0aW9uIG9mIGludGVycnVwdCBudW1iZXJzIG9mIHByb2Nlc3Nv
+cnMsIHRoZQ0KPiA+IGludGVycnVwdHMgYXJlIG1lcmdlZCBldmVyeQ0KPiA+IDMyIHNvdXJjZXMg
+Zm9yIGludGVycnVwdCBudW1iZXJzIGdyZWF0ZXIgdGhhbiAxMjcuDQo+ID4NCj4gPiBUaGVyZSBh
+cmUgdHdvIGxldmVscyBvZiBpbnRlcnJ1cHQgY29udHJvbGxlcnMsIElOVEMwIGFuZCBJTlRDMS4g
+VGhlDQo+ID4gaW50ZXJydXB0IHNvdXJjZXMgb2YgSU5UQzAgYXJlIHRoZSBpbnRlcnJ1cHQgbnVt
+YmVycyBmcm9tIElOVENfMCB0bw0KPiA+IElOVENfMTI3IGFuZCBpbnRlcnJ1cHRzIGZyb20gSU5U
+QzEuIFRoZSBpbnRlcnJ1cHQgc291cmNlcyBvZiBJTlRDMSBhcmUNCj4gPiB0aGUgaW50ZXJydXB0
+IG51bWJlcnMgZ3JlYXRlciB0aGFuIElOVENfMTI3LiBJTlRDMSBjb250cm9scyB0aGUgaW50ZXJy
+dXB0cw0KPiBJTlRDXzEyOCB0byBJTlRDXzMxOSBvbmx5Lg0KPiA+DQo+ID4gQ3VycmVudGx5LCBv
+bmx5IEdJQyAxOTIgdG8gMjAxIGFyZSBzdXBwb3J0ZWQsIGFuZCB0aGVpciBzb3VyY2UNCj4gPiBp
+bnRlcnJ1cHRzIGFyZSBmcm9tIElOVEMxIGFuZCBjb25uZWN0ZWQgdG8gSU5UQzAgYXQgaW5wdXQg
+cGluIDAgYW5kDQo+ID4gb3V0cHV0IHBpbnMgMCB0byA5IGZvciBHSUMgMTkyLTIwMS4NCj4gPg0K
+PiA+IFRvIHN1cHBvcnQgYm90aCBBU1QyNzAwIEExIGFuZCBBMCwgSU5UQzAgaW5wdXQgcGlucyAx
+IHRvIDkgYW5kIG91dHB1dA0KPiA+IHBpbnMNCj4gPiAxMCB0byAxOCByZW1haW4gdG8gc3VwcG9y
+dCBHSUMgMTI4LTEzNiwgd2hpY2ggc291cmNlIGludGVycnVwdHMgZnJvbSBJTlRDMC4NCj4gPiBU
+aGVzZSB3aWxsIGJlIHJlbW92ZWQgaWYgd2UgZGVjaWRlIG5vdCB0byBzdXBwb3J0IEFTVDI3MDAg
+QTAgaW4gdGhlIGZ1dHVyZS4NCj4gPg0KPiA+ICstLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0t
+LS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0t
+LS0rDQo+ID4gPiDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKg
+wqDCoMKgIEFTVDI3MDAgQTENCj4gRGVzaWduDQo+ID4gPiB8DQo+ID4NCj4gPg0KPiANCj4gPiA+
+IHwNCj4gPg0KPiA+IMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgICstLS0t
+LS0tLS0tLS0tLS0tLS0tLS0tLS0tLSsNCj4gDQo+ID4gPiB8DQo+ID4NCj4gPiDCoMKgwqDCoMKg
+wqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoCB8wqDCoMKgwqDCoMKgwqDCoCBJTlRDMcKgwqDC
+oMKgwqDCoMKgwqDCoMKgwqAgfA0KPiANCj4gPiA+ICstLS0tLS0tLS0tLS0tLS0rwqDCoMKgwqDC
+oMKgwqDCoMKgwqDCoMKgIHwNCj4gPg0KPiA+IMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDC
+oMKgwqDCoMKgIHzCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKg
+wqDCoCB8DQo+IMKgwqDCoMKgwqAgfA0KPiA+ID4gb3JnYXRlc1swXcKgwqAgfMKgwqDCoMKgwqDC
+oMKgwqDCoMKgwqDCoCB8DQo+ID4gPiDCoMKgIG9yZ2F0ZXNbMF0rLS0tLT4gfGlucGluWzBdKy0t
+LS0tLS0+b3V0cGluWzBdKy0tLS0tLT4gfA0KPiAwDQo+ID4gPiB8wqDCoMKgwqDCoMKgwqDCoMKg
+wqDCoMKgIHwNCj4gPiA+IMKgwqAgb3JnYXRlc1sxXXwtLS0tPiB8aW5waW5bMV18LS0tLS0tLT5v
+dXRwaW5bMV18LS0tLS0tPiB8IDHCoMKgIDAtMzENCj4gPiA+IGJpdHMgKy0tK8KgwqDCoMKgwqDC
+oMKgwqDCoCB8DQo+ID4gPiDCoMKgIG9yZ2F0ZXNbMl18LS0tLT4gfGlucGluWzJdfC0tLS0tLS0+
+b3V0cGluWzJdfC0tLS0tLT4gfA0KPiAyDQo+ID4gPiB8wqAgfMKgwqDCoMKgwqDCoMKgwqDCoCB8
+DQo+ID4gPiDCoMKgIG9yZ2F0ZXNbM118LS0tLT4gfGlucGluWzNdfC0tLS0tLS0+b3V0cGluWzNd
+fC0tLS0tLT4gfA0KPiAzDQo+ID4gPiB8wqAgfMKgwqDCoMKgwqDCoMKgwqDCoCB8DQo+ID4gPiDC
+oMKgIG9yZ2F0ZXNbNF18LS0tLT4gfGlucGluWzRdfC0tLS0tLS0+b3V0cGluWzRdfC0tLS0tLT4g
+fA0KPiA0DQo+ID4gPiB8wqAgfMKgwqDCoMKgwqDCoMKgwqDCoCB8DQo+ID4gPiDCoMKgIG9yZ2F0
+ZXNbNV0rLS0tLT4gfGlucGluWzVdKy0tLS0tLS0+b3V0cGluWzVdKy0tLS0tLT4gfA0KPiA1DQo+
+ID4gPiB8wqAgfMKgwqDCoMKgwqDCoMKgwqDCoCB8DQo+ID4NCj4gPiDCoMKgwqDCoMKgwqDCoMKg
+wqDCoMKgwqDCoMKgwqDCoMKgwqDCoCB8wqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDC
+oMKgwqDCoMKgwqDCoMKgwqAgfA0KPiANCj4gPiA+IHwtLS0tLS0tLS0tLS0tLS18wqAgfMKgwqDC
+oMKgwqDCoMKgwqDCoCB8DQo+ID4NCj4gPiDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDC
+oMKgwqDCoCArLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0rDQo+IA0KPiA+ID4gfMKgwqDCoMKg
+wqDCoMKgwqDCoCB8DQo+ID4gPg0KPiA+ID4gKy0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0t
+LS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0NCj4gPiA+IC0tLS18wqDCoMKg
+wqDCoMKgwqDCoMKgIHwNCj4gPg0KPiA+IMKgwqAgfA0KPiANCj4gPiA+IHwNCj4gPg0KPiA+IMKg
+wqAgfA0KPiANCj4gPiA+IHwNCj4gPiA+IMKgwqAgfMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKg
+wqDCoCArLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tKw0KPiA+ID4gKy0tLS0tLS0tLS0t
+LS0tLS0tK8KgwqDCoCB8DQo+ID4NCj4gPiDCoMKgIHzCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDC
+oMKgwqAgfMKgwqDCoMKgwqDCoMKgwqDCoMKgwqAgSU5UQzDCoMKgwqDCoMKgwqDCoMKgwqDCoMKg
+wqAgfA0KPiDCoMKgwqDCoMKgwqDCoMKgwqDCoCB8DQo+ID4gPiBHSUPCoMKgwqDCoMKgwqDCoMKg
+IHzCoMKgwqAgfA0KPiA+ID4gwqDCoCB8wqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgIHxp
+bnBpblswOjBdLS0tLS0tLS0tPm91dHBpblswXSArLS0tLS0tLS0tPg0KPiB8MTkyDQo+ID4gPiB8
+wqDCoMKgIHwNCj4gPiA+IMKgwqAgfMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoCB8aW5w
+aW5bMDoxXXwtLS0tLS0tLT5vdXRwaW5bMV0gfC0tLS0tLS0tLT4NCj4gfDE5Mw0KPiA+ID4gfMKg
+wqDCoCB8DQo+ID4gPiDCoMKgIHzCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqAgfGlucGlu
+WzA6Ml18LS0tLS0tLS0+b3V0cGluWzJdIHwtLS0tLS0tLS0+DQo+IHwxOTQNCj4gPiA+IHzCoMKg
+wqAgfA0KPiA+ID4gwqDCoCB8wqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgIHxpbnBpblsw
+OjNdfC0tLS0tLS0tPm91dHBpblszXSB8LS0tLS0tLS0tPg0KPiB8MTk1DQo+ID4gPiB8wqDCoMKg
+IHwNCj4gPiA+IMKgwqAgPi0tLS0tLS0tLS0tLS0tPiB8aW5waW5bMDo0XXwtLS0tLS0tLT5vdXRw
+aW5bNF0gfC0tLS0tLS0tLT4NCj4gfDE5Ng0KPiA+ID4gfMKgwqDCoCB8DQo+ID4gPiDCoMKgwqDC
+oMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoCB8aW5waW5bMDo1XXwtLS0tLS0tLT5vdXRw
+aW5bNV0gfC0tLS0tLS0tLT4NCj4gfDE5Nw0KPiA+ID4gfMKgwqDCoCB8DQo+ID4gPiDCoMKgwqDC
+oMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoCB8aW5waW5bMDo2XXwtLS0tLS0tLT5vdXRw
+aW5bNl0gfC0tLS0tLS0tLT4NCj4gfDE5OA0KPiA+ID4gfMKgwqDCoCB8DQo+ID4gPiDCoMKgwqDC
+oMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoCB8aW5waW5bMDo3XXwtLS0tLS0tLT5vdXRw
+aW5bN10gfC0tLS0tLS0tLT4NCj4gfDE5OQ0KPiA+ID4gfMKgwqDCoCB8DQo+ID4gPiDCoMKgwqDC
+oMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoCB8aW5waW5bMDo4XXwtLS0tLS0tLT5vdXRw
+aW5bOF0gfC0tLS0tLS0tLT4NCj4gfDIwMA0KPiA+ID4gfMKgwqDCoCB8DQo+ID4gPiDCoMKgwqDC
+oMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoCB8aW5waW5bMDo5XXwtLS0tLS0tLT5vdXRw
+aW5bOV0gfC0tLS0tLS0tLT4NCj4gfDIwMQ0KPiA+ID4gfMKgwqDCoCB8DQo+ID4gKy0tLS0tLS0t
+LS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0t
+LS0tLS0tLS0tLS0tLS0tLS0tLS0tLSsNCj4gPiArLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0t
+LS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0t
+LS0tKw0KPiA+ID4gwqAgb3JnYXRlc1sxXXwtLS0tLT4gfGlucGluWzFdfC0tLS0tLS0tLS0+b3V0
+cGluWzEwXXwtLS0tLS0tLS0+DQo+IHwxMjgNCj4gPiA+IHzCoMKgwqAgfA0KPiA+ID4gwqAgb3Jn
+YXRlc1syXXwtLS0tLT4gfGlucGluWzJdfC0tLS0tLS0tLS0+b3V0cGluWzExXXwtLS0tLS0tLS0+
+DQo+IHwxMjkNCj4gPiA+IHzCoMKgwqAgfA0KPiA+ID4gwqAgb3JnYXRlc1szXXwtLS0tLT4gfGlu
+cGluWzNdfC0tLS0tLS0tLS0+b3V0cGluWzEyXXwtLS0tLS0tLS0+DQo+IHwxMzANCj4gPiA+IHzC
+oMKgwqAgfA0KPiA+ID4gwqAgb3JnYXRlc1s0XXwtLS0tLT4gfGlucGluWzRdfC0tLS0tLS0tLS0+
+b3V0cGluWzEzXXwtLS0tLS0tLS0+DQo+IHwxMzENCj4gPiA+IHzCoMKgwqAgfA0KPiA+ID4gwqAg
+b3JnYXRlc1s1XXwtLS0tLT4gfGlucGluWzVdfC0tLS0tLS0tLS0+b3V0cGluWzE0XXwtLS0tLS0t
+LS0+DQo+IHwxMzINCj4gPiA+IHzCoMKgwqAgfA0KPiA+ID4gwqAgb3JnYXRlc1s2XXwtLS0tLT4g
+fGlucGluWzZdfC0tLS0tLS0tLS0+b3V0cGluWzE1XXwtLS0tLS0tLS0+DQo+IHwxMzMNCj4gPiA+
+IHzCoMKgwqAgfA0KPiA+ID4gwqAgb3JnYXRlc1s3XXwtLS0tLT4gfGlucGluWzddfC0tLS0tLS0t
+LS0+b3V0cGluWzE2XXwtLS0tLS0tLS0+DQo+IHwxMzQNCj4gPiA+IHzCoMKgwqAgfA0KPiA+ID4g
+wqAgb3JnYXRlc1s4XXwtLS0tLT4gfGlucGluWzhdfC0tLS0tLS0tLS0+b3V0cGluWzE3XXwtLS0t
+LS0tLS0+DQo+IHwxMzUNCj4gPiA+IHzCoMKgwqAgfA0KPiA+ID4gwqAgb3JnYXRlc1s5XSstLS0t
+LT4gfGlucGluWzldfC0tLS0tLS0tLS0+b3V0cGluWzE4XSstLS0tLS0tLS0+DQo+IHwxMzYNCj4g
+PiA+IHzCoMKgwqAgfA0KPiA+ID4gwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKg
+wqAgKy0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLSsNCj4gPiA+ICstLS0tLS0tLS0tLS0t
+LS0tLSvCoMKgwqAgfA0KPiA+DQo+ID4NCj4gDQo+ID4gPiB8DQo+ID4gPiDCoMKgwqDCoMKgwqDC
+oMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoCBBU1QyNzAwIEEwDQo+IERlc2lnbg0KPiANCj4gPiA+
+IHwNCj4gPg0KPiA+DQo+IA0KPiA+ID4gfA0KPiA+ICstLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0t
+LS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0t
+LS0tLS0rDQo+ID4NCj4gDQo+IE9rYXksIHNvIEkgdGhpbmsgdGhpcyBpcyB0aGUgZGlhZ3JhbSBh
+bmQgZGlzY3Vzc2lvbiBJIGFza2VkIGZvciBhcyBkb2N1bWVudGF0aW9uDQo+IGVhcmxpZXIuIEkg
+c3RpbGwgcHJlZmVyIGl0IGRvZXNuJ3QganVzdCBsaXZlIGluIGEgY29tbWl0IG1lc3NhZ2UsIHRo
+YXQgeW91IHB1bGwgaXQgb3V0DQo+IHRvIGEgc2VwYXJhdGUgZG9jdW1lbnQgdGhhdCB3ZSBjYW4g
+ZWFzaWx5IHBvaW50IHRvIGFuZCBldm9sdmUuDQo+IA0KSU5UQyBkcml2ZXJzIG93bmVycyB1cGRh
+dGUgRFRTIGJpbmRpbmcgZG9jdW1lbnQgaGVyZSwgDQpodHRwczovL3BhdGNod29yay5rZXJuZWwu
+b3JnL3Byb2plY3QvbGludXgtYXJtLWtlcm5lbC9wYXRjaC8yMDI0MTAxNjAyMjQxMC4xMTU0NTc0
+LTIta2V2aW5fY2hlbkBhc3BlZWR0ZWNoLmNvbS8NCg0KDQo+IEknbSBhIGxpdHRsZSBoYXp5IG9u
+IHNvbWUgb2YgeW91ciBub3RhdGlvbiBpbiBkaWFncmFtIHRob3VnaC4gQ2FuIHlvdSBleHBsYWlu
+DQo+IHlvdXIgdXNlIG9mIHBpcGVzICgifCIpLCBwbHVzc2VzICgiKyIpLCB0aGUgIm9yZ2F0ZXMi
+IHRvIHRoZSBsZWZ0IG9mIElOVEMxICh3aGF0DQo+IGFyZSB0aGV5IE9SaW5nPyksIGFuZCB0aGUg
+Y2hvaWNlIG9mIDUgbGluZXMgaW50byB0aGUgIm9yZ2F0ZXNbMF0iIGJveD8gQWxzbyB3aHkNCj4g
+ZG9lcyB0aGUgIm9yZ2F0ZXNbMF0iIGFycm93IHBvaW50IHdoZXJlIGl0IGRvZXMgb24gSU5UQzA/
+DQo+IA0KSSBjcmVhdGVkIHRoaXMgYmxvY2sgZGlhZ3JhbSB1c2luZyB0aGUgYXNjaWlmbG93IHRv
+b2wgYW5kIGJvdGggKCJJIikgYW5kICIoIisiKSBzeW1ib2xzIGFyZSBpZGVudGljYWwuDQpJIHdp
+bGwgdXBkYXRlIHRoZSBkaWFncmFtIGFuZCByZXBsYWNlICgiKyIpIHdpdGggKCJ8IikuDQpTb3Jy
+eSB0byBtYWtlIHlvdSBjb25mdXNlLg0KDQpUaGUgZGVzaWduIG9mIHRoZSBPUiBnYXRlcyBmb3Ig
+R0lDSU5UIDE5NiBpcyBhcyBmb2xsb3dzOg0KSXQgaGFzIGludGVycnVwdCBzb3VyY2VzIHJhbmdp
+bmcgZnJvbSAwIHRvIDMxLCB3aXRoIGl0cyBvdXRwdXQgcGluIGNvbm5lY3RlZCB0byBJTlRDX0lP
+ICJUMCBHSUNJTlRDXzE5MiIuDQpUaGUgb3V0cHV0IHBpbiBpcyB0aGVuIGNvbm5lY3RlZCB0byBJ
+TlRDX0NQVSAiR0lDXzE5Ml8yMDEiIGF0IGJpdCAwLCBhbmQgaXRzIGJpdCAwIG91dHB1dCBzaG91
+bGQgYmUgY29ubmVjdGVkIHRvIEdJQyAxOTIuDQoNClRoZSBkZXNpZ24gb2YgSU5UQ19DUFUgR0lD
+XzE5Ml8yMDEgaGF2ZSAxMCBvdXRwdXQgcGlucywgbWFwcGVkIGFzIGZvbGxvd2luZzoNCkJpdCAw
+IC0tPiBHSUMgMTkyDQpCSVQgMSAtPiBHSUMgMTkzDQpCSVQgMi0+IEdJQyAxOTQNCg0KT3VyIGZp
+cm13YXJlIG9ubHkgdXRpbGl6ZXMgYml0cyAwIHRvIDUsIHNvIEkgaGF2ZSBvbmx5IGlsbHVzdHJh
+dGVkIGJpdHMgMCB0byA1IGluIHRoZSBkaWFncmFtLiBIb3dldmVyLCBJIGhhdmUgaW1wbGVtZW50
+ZWQgYml0cyAwIHRvIDkgaW4gdGhlIGNvZGUuDQoNClRoZW4sIG9yZ2F0ZXNbMF0gIm9yIiB0aGUg
+b3V0cHV0IHBpbnMgb2YgSU5UQ19JTyAoVG8gR0lDMTkyLCBUbyBHSUMxOTMsIFRvIEdJQzE5NCwg
+VG8gR0lDMTk1LCBUbyBHSUMxOTYpIA0KDQpFVEgxICAgICstLS0tLS0tLS0tLSsNCistLS0tLS0t
+LXYrMCAgICAgICAgIDMrDQogIEVUSDIgICAgfCAgICAgICAgICA0fA0KKy0tLS0tLS0tPisxICAg
+ICAgICAgNXwNCiAgRVRIMyAgICB8ICAgICAgICAgIDZ8DQorLS0tLS0tLS0+KzIgICAgICAgIDE5
+fA0KICBVQVJUMCAgIHwgICAgICAgICAyMHwNCistLS0tLS0tLT4rNyAgICAgICAgMjF8DQogIFVB
+UlQxICAgfCAgICAgICAgIDIyfA0KKy0tLS0tLS0tPis4ICAgICAgICAyM3wNCiAgVUFSVDIgICB8
+ICAgICAgICAgMjR8DQorLS0tLS0tLS0+KzkgICAgICAgIDI1fA0KICBVQVJUMyAgIHwgICAgICAg
+ICAyNnwNCistLS0tLS0tLS0+MTAgICAgICAgMjd8DQogIFVBUlQ1ICAgfCAgICAgICAgIDI4fA0K
+Ky0tLS0tLS0tPisxMSAgICAgICAyOXwNCiAgVUFSVDYgICB8ICAgICAgICAgICB8DQorLS0tLS0t
+LS0+KzEyICAgICAgIDMwfA0KICBVQVJUNyAgIHwgICAgICAgICAzMXwNCistLS0tLS0tLT4rMTMg
+ICAgICAgICB8DQogIFVBUlQ4ICAgfCAgT1JbMDozMV0gfA0KKy0tLS0tLS0tLT4xNCAgICAgICAg
+IHwNCiAgVUFSVDkgICB8ICAgICAgICAgICB8DQorLS0tLS0tLS0+KzE1ICAgICAgICAgfA0KICBV
+QVJUMTAgIHwgICAgICAgICAgIHwNCistLS0tLS0tLT4rMTYgICAgICAgICB8DQogIFVBUlQxMSAg
+fCAgICAgICAgICAgfA0KKy0tLS0tLS0tPisxNyAgICAgICAgIHwNCiAgVUFSVDEyICB8ICAgICAg
+ICAgICB8DQorLS0tLS0tLS0tPjE4ICAgICAgICAgfA0KICAgICAgICAgIHwgICAgICAgICAgIHwN
+CiAgICAgICAgICB8ICAgICAgICAgICB8DQogICAgICAgICAgfCAgICAgICAgICAgfA0KICAgICAg
+ICAgICstLS0tLS0tLS0tLSsNCg0KaHR0cHM6Ly9naXRodWIuY29tL0FzcGVlZFRlY2gtQk1DL2xp
+bnV4L2Jsb2IvYXNwZWVkLW1hc3Rlci12Ni42L2FyY2gvYXJtNjQvYm9vdC9kdHMvYXNwZWVkL2Fz
+cGVlZC1nNy5kdHNpI0w0ODMNCmh0dHBzOi8vZ2l0aHViLmNvbS9Bc3BlZWRUZWNoLUJNQy9saW51
+eC9ibG9iL2FzcGVlZC1tYXN0ZXItdjYuNi9hcmNoL2FybTY0L2Jvb3QvZHRzL2FzcGVlZC9hc3Bl
+ZWQtZzcuZHRzaSNMMTYxMA0KDQpUaGFua3MtSmFtaW4NCj4gQW5kcmV3DQo=
 
