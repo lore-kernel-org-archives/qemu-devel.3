@@ -4,77 +4,78 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 04667C02194
-	for <qemu-devel@archiver.kernel.org>; Tue,  4 Feb 2025 16:04:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2213FC02193
+	for <qemu-devel@archiver.kernel.org>; Tue,  4 Feb 2025 16:05:26 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tfLPC-0005lD-A1; Tue, 04 Feb 2025 11:04:07 -0500
+	id 1tfLPz-0006ox-UP; Tue, 04 Feb 2025 11:04:55 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1tfLP7-0005eq-Ke
- for qemu-devel@nongnu.org; Tue, 04 Feb 2025 11:04:02 -0500
-Received: from mail-yb1-xb2d.google.com ([2607:f8b0:4864:20::b2d])
+ id 1tfLPx-0006kW-Gu
+ for qemu-devel@nongnu.org; Tue, 04 Feb 2025 11:04:53 -0500
+Received: from mail-yb1-xb34.google.com ([2607:f8b0:4864:20::b34])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1tfLP6-0003b7-0W
- for qemu-devel@nongnu.org; Tue, 04 Feb 2025 11:04:01 -0500
-Received: by mail-yb1-xb2d.google.com with SMTP id
- 3f1490d57ef6-e3978c00a5aso5166496276.1
- for <qemu-devel@nongnu.org>; Tue, 04 Feb 2025 08:03:56 -0800 (PST)
+ id 1tfLPu-0004Jw-2O
+ for qemu-devel@nongnu.org; Tue, 04 Feb 2025 11:04:51 -0500
+Received: by mail-yb1-xb34.google.com with SMTP id
+ 3f1490d57ef6-e3983426f80so5068891276.1
+ for <qemu-devel@nongnu.org>; Tue, 04 Feb 2025 08:04:48 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1738685036; x=1739289836; darn=nongnu.org;
+ d=linaro.org; s=google; t=1738685087; x=1739289887; darn=nongnu.org;
  h=cc:to:subject:message-id:date:from:in-reply-to:references
  :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=BZgFwqNHFMpqZkhlnVMdmPCfAbdtWvVTXyS6HvGZ3+g=;
- b=HMdHPn743dbtaQRVxKO8tHivyJPLX4CiWt9zYriRxhH4jHjuwRLJ/s7R6x/e2ZycTl
- 0ixG8//71JtyXjAm8PAUuWHLmu2jz35EtGYdBIJ25hvyqqItJW2BUEYi/WYcWWy3DA5Y
- Y1B74uT2zq7uqHLBlh2mkF5/eZ1pdCBNo9lW5nzLwuHfYS+K76GEZMq5pnDDbX+N9B8S
- 3A3pqU/kx3f84y9PwtplQkKcHY65bcapSEoF+n6UkEpDAE6r7zxQrxEvGoTDvIsDCpIt
- tOZcIm+vksmZQTlDweBk8LM1NQv2Ny+AFfU/5VhvmQD15wWT2kOZGGPzqcJvg6+ZUUC9
- bVjg==
+ bh=Okbtc3zy1ExQAS3dQnXD9WnVhEHm18zS9WJrarGNMh4=;
+ b=Lb4cMpP4uBYd5b30pEAhwdHw9kuNI8DAU1uNqvvnum+fQNWIVDsEi7YXlyLlvNs9Wh
+ XqiJqDbiG32xPbBeJiDfg4jBwUcpNEQ+eLJY40T6HpM4xr3R7LqHsChYw1JAyJc1jEyN
+ 6VUX7FWzrDmexUK8QRqwiMBX6n4yP2E4IOK5aEKOCWfkcFoA5e8Wi1WMXplZ9zdK5eIK
+ ZAqIH0WDGUjJQ7eUKakCD3EgXNkW4hWbGxPuKQJpkVAYxUkY+lp/hDWG5or3xVdfCPny
+ qLfeBZLBnoK1a8uPhv+fPWlu9ENlpcQGLwbYIa5K/vOyPWSJJmLkMYmquM08hD9/dNdZ
+ yEKg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1738685036; x=1739289836;
+ d=1e100.net; s=20230601; t=1738685087; x=1739289887;
  h=cc:to:subject:message-id:date:from:in-reply-to:references
  :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=BZgFwqNHFMpqZkhlnVMdmPCfAbdtWvVTXyS6HvGZ3+g=;
- b=S7ujpwaspomgmTzsyiH4GXRzdXXwnyRlJhcS+jCtmiX8LnR0uQFvEvLw4DR8oHBOUw
- OGC2NhoXFd2zyaqlvoLLifzNy/tqmDJvOut4k59WXjtUbuVJaHSoOoDmUNUcV/76FcPS
- EUD6UChas2j3cPDEUxpuansjDC/8CBEh/+HoeXIGMd/B+zlP8Q7wk21RZhUHMf7h26tx
- /CVOD6OkT7ybKNk+53RPqMVk8YNRrtf3SrOrLfg7ANC6xXMZhA9FqBo4rV2RMm7G/SmI
- bu+xcpULhl4QY8zENZE1KtHlSgEhUEyakOeScuHLukoLXvj7IghA0KpBATRtKqiH61cD
- Riew==
+ bh=Okbtc3zy1ExQAS3dQnXD9WnVhEHm18zS9WJrarGNMh4=;
+ b=LH4kLONTxOrs7G8JR9coGaQJRYSFeO9fWHxQOXtZbvtlw2+W0CXzfYDhprIwAJybKU
+ 0+iixP7la79TR3a+pOQC6k/yPxH5s/cRcIR16Gn0cHt0+5WbcKrYrkNdfvuou17JVu9D
+ kGVgW9nj1l0r1uMpVCUios8Wen+URASLq2YllpCGoZ09RLEWDFZLcQs84idph2RoOR7n
+ g+SebpyWwZrpk7aV2dfweGyeEmNKOncC2OvXkaZBGJc1tzuXgs7K0Fas3Ek0G4WGGrY5
+ pBIS6dfDpGSmPvOlEkukSG0yvVGcnQmiAEUoa/uRtIo2BwOw3hIRrrT9eVBAFSmfQhK0
+ euHQ==
 X-Forwarded-Encrypted: i=1;
- AJvYcCVba8/3pwUso8E/g6yl9aqCckvlaMXmKBcWDjY8j8s7Q3htYC3HM5/RffTSM6KZ70FCAPtOVbund43I@nongnu.org
-X-Gm-Message-State: AOJu0YwcINausj/VzGGq6Tufmao8gemDYvSH/ykCnKxoOGVATszeLLjn
- KVz4JubfIjnjUJiXjRp/Z72girIpftYJUSGFSVXAqSF4f3jelZKkWHhZ7RF1leADIvZjFJ4cFjK
- qlxoXlJkoDdb697jOP/ZpxBej77jVlrShcFqRU5NXYEOsnq0b
-X-Gm-Gg: ASbGncu21d9BGMbzQYLdXeD5r/+8Oad5tsiBu2xyf33TUJcUbxxG9ejJGt4d3RGEQaU
- HVgF9v3UGy44zeU9WzXTp/+edV10E+PSsUn97g1sj92bXf+LFXVuaOKq5KzxUwGsFj/UiiDK/1A
+ AJvYcCXy9ex5dpCm5V2m2tLUGCKZK9jvndX+XHdyV1rvh/myqlc86QgsqNdutP0HMZuLrCHtD6sZ2x0yQg0t@nongnu.org
+X-Gm-Message-State: AOJu0Yx8nOA8ZVUmLsaAx4t18BCXdTuXa2leVfRCymwnzfbUX+Lcjs0r
+ fvmeGEClS1BlaHkNXrhlAlpgP2vb8YpaVY7inyflte4GfMshnbbttXPl2/oZnSbrpExSxNTZDzR
+ makGJ2RnShcYhV8sj7Vdv8FsaRsTgMpY5YoAFv+q98BjREFi+
+X-Gm-Gg: ASbGncu8QkyXjp51NPtoroJAA45LfeaYFoN91n6dvnwYU9YMM2eKIZlgwbR/xNmwJWu
+ 4ngdqNzx8osygpIkBayb/nvYNme4Gxn4gBZ4t4sCfkL5DxfGwrWo5ARcwsBgJFDjuJzjHZ2W8qA
  ==
-X-Google-Smtp-Source: AGHT+IHzW96PnxM50mjCJxykapKjfYKBwLg15PnYNqJ0ymvgBO6JZu5pZqA8HWva4nEk/s1IZ1LFeFAhQlzetTdJqC8=
-X-Received: by 2002:a05:6902:1025:b0:e58:2e75:9f6d with SMTP id
- 3f1490d57ef6-e58a4bc46a8mr19590446276.31.1738685035857; Tue, 04 Feb 2025
- 08:03:55 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IEEPuXDnnOewQr0xl+U+nlqYnqQHCuQoJKkoA04g476BL/7RVYBfIO25KXsdD0kN8J45rvQQAVXMGryMM8H9uU=
+X-Received: by 2002:a05:6902:200b:b0:e5b:229a:f1a3 with SMTP id
+ 3f1490d57ef6-e5b229af773mr501424276.11.1738685087495; Tue, 04 Feb 2025
+ 08:04:47 -0800 (PST)
 MIME-Version: 1.0
 References: <20241226082800.2887689-1-wuhaotsh@google.com>
- <20241226082800.2887689-13-wuhaotsh@google.com>
-In-Reply-To: <20241226082800.2887689-13-wuhaotsh@google.com>
+ <20241226082800.2887689-14-wuhaotsh@google.com>
+In-Reply-To: <20241226082800.2887689-14-wuhaotsh@google.com>
 From: Peter Maydell <peter.maydell@linaro.org>
-Date: Tue, 4 Feb 2025 16:03:44 +0000
-X-Gm-Features: AWEUYZnLr0gYW3uxhUHnEh1EvQBCy-fLMmQC9ATIjcq1zsb0cPd5gQOr6bDNjJk
-Message-ID: <CAFEAcA-s+jvKrypP6W8WUJdaosRgWCnZJaB8t=7Urh7nSFVn0g@mail.gmail.com>
-Subject: Re: [PATCH v2 12/17] hw/misc: Move NPCM7XX CLK to NPCM CLK
+Date: Tue, 4 Feb 2025 16:04:36 +0000
+X-Gm-Features: AWEUYZlvze7u6l_dW4EIGh31GDYXxdpy3GDY_qLGjmmPxokUfJWMi5-FXDWg2L8
+Message-ID: <CAFEAcA9hi0+PDh5RvcsCNe3zJGX1WmHVsu0S3_UeeyuJcWV9dg@mail.gmail.com>
+Subject: Re: [PATCH v2 13/17] hw/misc: Add nr_regs and cold_reset_values to
+ NPCM CLK
 To: Hao Wu <wuhaotsh@google.com>
 Cc: qemu-arm@nongnu.org, qemu-devel@nongnu.org, Avi.Fishman@nuvoton.com, 
- kfting@nuvoton.com, titusr@google.com, hskinnemoen@google.com, 
- venture@google.com, pbonzini@redhat.com, jasowang@redhat.com, 
- alistair@alistair23.me
+ kfting@nuvoton.com, titusr@google.com, mimik-dev@google.com, 
+ hskinnemoen@google.com, venture@google.com, pbonzini@redhat.com, 
+ jasowang@redhat.com, alistair@alistair23.me
 Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::b2d;
- envelope-from=peter.maydell@linaro.org; helo=mail-yb1-xb2d.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::b34;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yb1-xb34.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -99,10 +100,32 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On Thu, 26 Dec 2024 at 08:28, Hao Wu <wuhaotsh@google.com> wrote:
 >
-> A lot of NPCM7XX and NPCM8XX CLK modules share the same code,
-> this commit moves the NPCM7XX CLK to NPCM CLK for these
-> properties.
+> These 2 values are different between NPCM7XX and NPCM8XX
+> CLKs. So we add them to the class and assign different values
+> to them.
+>
+> Signed-off-by: Hao Wu <wuhaotsh@google.com>
+> ---
+>  hw/misc/npcm_clk.c         | 17 +++++++++++------
+>  include/hw/misc/npcm_clk.h |  9 ++++++++-
+>  2 files changed, 19 insertions(+), 7 deletions(-)
+>
 
+
+
+> @@ -870,10 +872,9 @@ static const struct MemoryRegionOps npcm_clk_ops = {
+>  static void npcm_clk_enter_reset(Object *obj, ResetType type)
+>  {
+>      NPCMCLKState *s = NPCM_CLK(obj);
+> +    NPCMCLKClass *c = NPCM_CLK_GET_CLASS(s);
+>
+> -    QEMU_BUILD_BUG_ON(sizeof(s->regs) != sizeof(cold_reset_values));
+> -
+> -    memcpy(s->regs, cold_reset_values, sizeof(cold_reset_values));
+> +    memcpy(s->regs, c->cold_reset_values, sizeof(s->regs));
+
+Same remark about an assert as in the other patch.
+Otherwise
 Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
 
 thanks
