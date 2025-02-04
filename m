@@ -4,70 +4,87 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6765BC02194
-	for <qemu-devel@archiver.kernel.org>; Tue,  4 Feb 2025 14:18:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BC254C02194
+	for <qemu-devel@archiver.kernel.org>; Tue,  4 Feb 2025 14:38:31 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tfJkH-0004bJ-Rr; Tue, 04 Feb 2025 09:17:46 -0500
+	id 1tfK3L-0002Yi-Lt; Tue, 04 Feb 2025 09:37:27 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from
- <BATV+3804d581db0c8b0b41aa+7835+infradead.org+dwmw2@casper.srs.infradead.org>)
- id 1tfJkF-0004b0-4x
- for qemu-devel@nongnu.org; Tue, 04 Feb 2025 09:17:43 -0500
-Received: from casper.infradead.org ([2001:8b0:10b:1236::1])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from
- <BATV+3804d581db0c8b0b41aa+7835+infradead.org+dwmw2@casper.srs.infradead.org>)
- id 1tfJkC-0003pZ-O9
- for qemu-devel@nongnu.org; Tue, 04 Feb 2025 09:17:42 -0500
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
- d=infradead.org; s=casper.20170209; h=MIME-Version:Content-Type:References:
- In-Reply-To:Date:Cc:To:From:Subject:Message-ID:Sender:Reply-To:
- Content-Transfer-Encoding:Content-ID:Content-Description;
- bh=LYj6Q/uUnL0wVa0XUl6BnHNbgKEdXQRa5Cmnaso9o3Q=; b=M6Tzq23AXwsrxxGz/y8CrGIQc1
- kybkVuzLrF7fkwV+lAi03MZ0qUNmcAud8eMJCTF+A3GHNdlEhU95a2EOBQccp3pVpYrGZGZQ2XVOC
- H6dYhRK34jqbzkQMr5XMmbtLkcRqOXd+Xg7tlcCnky/XyI4f6zBnnFgV8qjvY44KgdiI0Npeq/hdn
- qz68iTxnveMpf1Wt9zCLekXyCwiEE3AhdKcg1oIqZWqp6ZiiYs56ZPPWZD/BdcA+RRztXwJlZOpUu
- oQ+6UkLoShxQUXUnChvLLs+xLzoczLS+a/Qyajjf0yGjtO38iYwt03v5ChSOlbgXCzqIHL1BaEHIm
- O40ymTTw==;
-Received: from [54.240.197.235] (helo=u09cd745991455d.ant.amazon.com)
- by casper.infradead.org with esmtpsa (Exim 4.98 #2 (Red Hat Linux))
- id 1tfJk3-00000002q9r-0Ovq; Tue, 04 Feb 2025 14:17:31 +0000
-Message-ID: <2498d8fa34f6503879f99f671b58055bb6a63fdc.camel@infradead.org>
-Subject: Re: [PATCH v7 3/3] hw/acpi: Add vmclock device
-From: David Woodhouse <dwmw2@infradead.org>
-To: Peter Maydell <peter.maydell@linaro.org>
-Cc: qemu-devel@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>, "Michael S.
- Tsirkin" <mst@redhat.com>, Igor Mammedov <imammedo@redhat.com>, Ani Sinha
- <anisinha@redhat.com>,  Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- Richard Henderson <richard.henderson@linaro.org>, Eduardo Habkost
- <eduardo@habkost.net>, Cornelia Huck <cohuck@redhat.com>, Peter Hilber
- <quic_philber@quicinc.com>, "Mohamed Abuelfotoh, Hazem"
- <abuehaze@amazon.com>,  paul <paul@xen.org>
-Date: Tue, 04 Feb 2025 14:17:29 +0000
-In-Reply-To: <CAFEAcA9CKgumt-6V_EjCipm1DYdYw5GETNoSbUKeRsGEVhNv_Q@mail.gmail.com>
-References: <20250116140315.2455143-1-dwmw2@infradead.org>
- <20250116140315.2455143-4-dwmw2@infradead.org>
- <CAFEAcA9CKgumt-6V_EjCipm1DYdYw5GETNoSbUKeRsGEVhNv_Q@mail.gmail.com>
-Content-Type: multipart/signed; micalg="sha-256";
- protocol="application/pkcs7-signature"; 
- boundary="=-XV7OTgt3yG1IFue2dtTT"
-User-Agent: Evolution 3.52.3-0ubuntu1 
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1tfK3J-0002Y2-Lj
+ for qemu-devel@nongnu.org; Tue, 04 Feb 2025 09:37:25 -0500
+Received: from mail-yw1-x1132.google.com ([2607:f8b0:4864:20::1132])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1tfK3H-0001p0-TO
+ for qemu-devel@nongnu.org; Tue, 04 Feb 2025 09:37:25 -0500
+Received: by mail-yw1-x1132.google.com with SMTP id
+ 00721157ae682-6f6ae4846c7so35155087b3.1
+ for <qemu-devel@nongnu.org>; Tue, 04 Feb 2025 06:37:23 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1738679843; x=1739284643; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=xStaCCUZvvadRvtt4KgqZgtZxDLVmqWt85RHs9AVyn0=;
+ b=z01XCcQ11xhNfWLpefunV0JD2Z2B+Tunil1ag8XEOOd0n1yYbuYh10nCflT8E3xacm
+ aMtCwbGAYEmD/jX5T6QQN1J9/0Zcl76gQ4xC6Xfj45RmD3OhdnIgxM70wO6knQQbh4TA
+ cnKcDflKje/4RTilTn1WGSiRKqsOeTbQH7MX/UNxqQjFXgNCLGT3UIwEVtY5O8ndSYoo
+ 4VRpGmo1GAZ+k+9SC2WM30YqmHT+KE1wb7ZfJMDZYLBl+GLIypq6ec07Dmfgl3zkQI+C
+ 7OJRVnsRqZ9jgozrrUv5Ikq69eqT6/r1WUgi/VgxU82K2SpwReXppZsg2qkxbC0EvRqV
+ qk7A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1738679843; x=1739284643;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=xStaCCUZvvadRvtt4KgqZgtZxDLVmqWt85RHs9AVyn0=;
+ b=ajZm5LLsCvlvJC53dm2hTXsPr+pJ3vpvxu01BZxhIYqdfk33EfJQ13Nkx4JwRp6rav
+ XEgdJxPtDNQMIy7ni46JNF0daznuMJUH9suJBH8YXN2vh6KIFpVceCaDli69ly60tqsw
+ ZyiGGenr8XGPcTY3iAzVJHjuOtPmlKSJ/XAqSBE1qHzwNqKieast7bNwXkbb2qXM72XB
+ Zmv/HDA10kd2LzLw2P94L2h+ehqPoD4Ky/XcQqppv0Gyz7ZA5CDP9grhH4/tVlq4zlej
+ 9AypeSOUR/2aX6ZQ92W2PkBt4eHerBETluvqbqxAJcvk6qUDJbaYL5nvLrJBGi+nWsyM
+ eMcw==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCWGiAttOpawtPKv1PG5epRNREaH33tKL9J+Mme6MrTe+b9QzZpKzE93UFVOOOT5rnW3w6CpIjppGjga@nongnu.org
+X-Gm-Message-State: AOJu0YyMsX47zr6wZXUEBfrbmq4jIewQGHrGcVBKaI/F0hA2hcXEvyEx
+ aMn51kDps2LyIHRkexfMV1t5qRPppAuzdGbnGimmRE4R9Xr8XWzYjRw56L/2xQwG53OoYqAjwnK
+ ZT6hG5eMZHDcJxyuM22gXzVm0RzdMpKCdLFLgnw==
+X-Gm-Gg: ASbGncsz28s7bnMeWzgJkw50sNaNHFeXGzCGbGugrtrHAoP3WBP83qzhRz/qhQY6mvE
+ vziZIi9NylebEZ8whwq1ZFe+n9wVSPL7uYSXbqLUtCMHYeXcOn0ox4ZkAouRg8DP2a1M7zYSD/g
+ ==
+X-Google-Smtp-Source: AGHT+IFIz3zp3/SeKr+qbl/436m3TWFmeaKAarcKbOwz1BZPve/D2lfcPbw+lRc4j4aoSiRpoAuvgE6S03TuhfLh974=
+X-Received: by 2002:a05:690c:6d07:b0:6ef:7d1e:bffd with SMTP id
+ 00721157ae682-6f7a8424acbmr220356367b3.37.1738679842769; Tue, 04 Feb 2025
+ 06:37:22 -0800 (PST)
 MIME-Version: 1.0
-X-SRS-Rewrite: SMTP reverse-path rewritten from <dwmw2@infradead.org> by
- casper.infradead.org. See http://www.infradead.org/rpr.html
-Received-SPF: none client-ip=2001:8b0:10b:1236::1;
- envelope-from=BATV+3804d581db0c8b0b41aa+7835+infradead.org+dwmw2@casper.srs.infradead.org;
- helo=casper.infradead.org
-X-Spam_score_int: -43
-X-Spam_score: -4.4
-X-Spam_bar: ----
-X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+References: <20241219061658.805-1-andrew.yuan@jaguarmicro.com>
+ <CAFEAcA96ZLjOhBT9rhNhuk32ve0Qv4hUVuTTtgE=DBApbN98Pg@mail.gmail.com>
+ <CAJy5ezovedShKH=HFbK9uRY44no2ijQocs29CHLt2jKoNL+Vpw@mail.gmail.com>
+In-Reply-To: <CAJy5ezovedShKH=HFbK9uRY44no2ijQocs29CHLt2jKoNL+Vpw@mail.gmail.com>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Tue, 4 Feb 2025 14:37:11 +0000
+X-Gm-Features: AWEUYZmAzwjxcadMUURkTX997SIG-NIF8iCLXYs9UFr5Zjq8L2ymYEyJvDXIWxM
+Message-ID: <CAFEAcA8oaRVs8USMDGHvDW82AtRZGAhRCg189hhWtmRm2Y-YaQ@mail.gmail.com>
+Subject: Re: [PATCH v3] hw/net: cadence_gem: feat: add logic for the
+ DISABLE_MASK bit in type2_compare_x_word_1
+To: "Edgar E. Iglesias" <edgar.iglesias@gmail.com>
+Cc: "Andrew.Yuan" <andrew.yuan@jaguarmicro.com>, philmd@linaro.org,
+ alistair@alistair23.me, 
+ jasowang@redhat.com, qemu-arm@nongnu.org, qemu-devel@nongnu.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1132;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yw1-x1132.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001,
- SPF_NONE=0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -83,176 +100,85 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+On Thu, 30 Jan 2025 at 22:31, Edgar E. Iglesias
+<edgar.iglesias@gmail.com> wrote:
+> On Mon, Jan 27, 2025 at 8:40=E2=80=AFAM Peter Maydell <peter.maydell@lina=
+ro.org> wrote:
+>> On Thu, 19 Dec 2024 at 06:17, Andrew.Yuan <andrew.yuan@jaguarmicro.com> =
+wrote:
+>> > -            rx_cmp =3D rxbuf_ptr[offset] << 8 | rxbuf_ptr[offset];
+>> > -            mask =3D FIELD_EX32(cr0, TYPE2_COMPARE_0_WORD_0, MASK_VAL=
+UE);
+>> > -            compare =3D FIELD_EX32(cr0, TYPE2_COMPARE_0_WORD_0, COMPA=
+RE_VALUE);
+>> > +            disable_mask =3D
+>> > +                FIELD_EX32(cr1, TYPE2_COMPARE_0_WORD_1, DISABLE_MASK)=
+;
+>> > +            if (disable_mask) {
+>> > +                /*
+>> > +                 * If disable_mask is set,
+>> > +                 * mask_value is used as an additional 2 byte Compare=
+ Value.
+>> > +                 * To simple, set mask =3D 0xFFFFFFFF, if disable_mas=
+k is set.
+>> > +                 */
+>> > +                rx_cmp =3D ldl_le_p(rxbuf_ptr + offset);
+>> > +                mask =3D 0xFFFFFFFF;
+>> > +                compare =3D cr0;
+>> > +            } else {
+>> > +                rx_cmp =3D lduw_le_p(rxbuf_ptr + offset);
+>>
+>> Is the change in behaviour in the !disable_mask codepath here
+>> intentional? Previously we use one byte from rxbuf_ptr[offset],
+>> duplicated into both halves of rx_cmp; now we will load two
+>> different bytes from rxbuf_ptr[offset] and rxbuf_ptr[offset + 1].
+>>
+>> If this is intended, we should say so in the commit message.
+>>
+>
+> I agree that it should be mentioned (looks like a correct bugfix).
 
---=-XV7OTgt3yG1IFue2dtTT
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Thanks. I've expanded the commit message:
 
-On Tue, 2025-02-04 at 13:49 +0000, Peter Maydell wrote:
-> On Thu, 16 Jan 2025 at 14:05, David Woodhouse <dwmw2@infradead.org>
-> wrote:
-> >=20
-> > From: David Woodhouse <dwmw@amazon.co.uk>
-> >=20
-> > The vmclock device addresses the problem of live migration with
-> > precision clocks. The tolerances of a hardware counter (e.g. TSC)
-> > are
-> > typically around =C2=B150PPM. A guest will use NTP/PTP/PPS to disciplin=
-e
-> > that
-> > counter against an external source of 'real' time, and track the
-> > precise
-> > frequency of the counter as it changes with environmental
-> > conditions.
->=20
-> Hi; I see this has already gone into git, but:
->=20
-> > +static void vmclock_realize(DeviceState *dev, Error **errp)
-> > +{
-> > +=C2=A0=C2=A0=C2=A0 VmclockState *vms =3D VMCLOCK(dev);
-> > +
-> > +=C2=A0=C2=A0=C2=A0 /*
-> > +=C2=A0=C2=A0=C2=A0=C2=A0 * Given that this function is executing, ther=
-e is at least
-> > one VMCLOCK
-> > +=C2=A0=C2=A0=C2=A0=C2=A0 * device. Check if there are several.
-> > +=C2=A0=C2=A0=C2=A0=C2=A0 */
-> > +=C2=A0=C2=A0=C2=A0 if (!find_vmclock_dev()) {
-> > +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 error_setg(errp, "at most o=
-ne %s device is permitted",
-> > TYPE_VMCLOCK);
-> > +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 return;
-> > +=C2=A0=C2=A0=C2=A0 }
-> > +
-> > +=C2=A0=C2=A0=C2=A0 vms->physaddr =3D VMCLOCK_ADDR;
-> > +
-> > +=C2=A0=C2=A0=C2=A0 e820_add_entry(vms->physaddr, VMCLOCK_SIZE, E820_RE=
-SERVED);
-> > +
-> > +=C2=A0=C2=A0=C2=A0 memory_region_init_ram(&vms->clk_page, OBJECT(dev),
-> > "vmclock_page",
-> > +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
-=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
-=C2=A0=C2=A0 VMCLOCK_SIZE, &error_abort);
-> > +=C2=A0=C2=A0=C2=A0 memory_region_set_enabled(&vms->clk_page, true);
-> > +=C2=A0=C2=A0=C2=A0 vms->clk =3D memory_region_get_ram_ptr(&vms->clk_pa=
-ge);
-> > +=C2=A0=C2=A0=C2=A0 memset(vms->clk, 0, VMCLOCK_SIZE);
-> > +
-> > +=C2=A0=C2=A0=C2=A0 vms->clk->magic =3D cpu_to_le32(VMCLOCK_MAGIC);
-> > +=C2=A0=C2=A0=C2=A0 vms->clk->size =3D cpu_to_le16(VMCLOCK_SIZE);
-> > +=C2=A0=C2=A0=C2=A0 vms->clk->version =3D cpu_to_le16(1);
-> > +
-> > +=C2=A0=C2=A0=C2=A0 /* These are all zero and thus default, but be expl=
-icit */
-> > +=C2=A0=C2=A0=C2=A0 vms->clk->clock_status =3D VMCLOCK_STATUS_UNKNOWN;
-> > +=C2=A0=C2=A0=C2=A0 vms->clk->counter_id =3D VMCLOCK_COUNTER_INVALID;
-> > +
-> > +=C2=A0=C2=A0=C2=A0 qemu_register_reset(vmclock_handle_reset, vms);
->=20
-> No new calls to qemu_register_reset(), please. This is
-> a device, use the device reset API.
+    hw/net/cadence_gem:  Fix the mask/compare/disable-mask logic
 
-Ack. This was cargo-culted from vmgenid; should I fix that too?
+    Our current handling of the mask/compare logic in the Cadence
+    GEM ethernet device is wrong:
+     (1) we load the same byte twice from rx_buf when
+         creating the compare value
+     (2) we ignore the DISABLE_MASK flag
 
-Is commit c009a311e93 the right example to follow?
+    The "Cadence IP for Gigabit Ethernet MAC Part Number: IP7014 IP Rev:
+    R1p12 - Doc Rev: 1.3 User Guide" states that if the DISABLE_MASK bit
+    in type2_compare_x_word_1 is set, the mask_value field in
+    type2_compare_x_word_0 is used as an additional 2 byte Compare Value.
 
+    Correct these bugs:
+     * in the !disable_mask codepath, use lduw_le_p() so we
+       correctly load a 16-bit value for comparison
+     * in the disable_mask codepath, we load a full 4-byte value
+       from rx_buf for the comparison, set the compare value to
+       the whole of the cr0 register (i.e. the concatenation of
+       the mask and compare fields), and set mask to 0xffffffff
+       to force a 32-bit comparison
 
---=-XV7OTgt3yG1IFue2dtTT
-Content-Type: application/pkcs7-signature; name="smime.p7s"
-Content-Disposition: attachment; filename="smime.p7s"
-Content-Transfer-Encoding: base64
+and also tweaked the comment a bit:
 
-MIAGCSqGSIb3DQEHAqCAMIACAQExDzANBglghkgBZQMEAgEFADCABgkqhkiG9w0BBwEAAKCCD9Aw
-ggSOMIIDdqADAgECAhAOmiw0ECVD4cWj5DqVrT9PMA0GCSqGSIb3DQEBCwUAMGUxCzAJBgNVBAYT
-AlVTMRUwEwYDVQQKEwxEaWdpQ2VydCBJbmMxGTAXBgNVBAsTEHd3dy5kaWdpY2VydC5jb20xJDAi
-BgNVBAMTG0RpZ2lDZXJ0IEFzc3VyZWQgSUQgUm9vdCBDQTAeFw0yNDAxMzAwMDAwMDBaFw0zMTEx
-MDkyMzU5NTlaMEExCzAJBgNVBAYTAkFVMRAwDgYDVQQKEwdWZXJva2V5MSAwHgYDVQQDExdWZXJv
-a2V5IFNlY3VyZSBFbWFpbCBHMjCCASIwDQYJKoZIhvcNAQEBBQADggEPADCCAQoCggEBAMjvgLKj
-jfhCFqxYyRiW8g3cNFAvltDbK5AzcOaR7yVzVGadr4YcCVxjKrEJOgi7WEOH8rUgCNB5cTD8N/Et
-GfZI+LGqSv0YtNa54T9D1AWJy08ZKkWvfGGIXN9UFAPMJ6OLLH/UUEgFa+7KlrEvMUupDFGnnR06
-aDJAwtycb8yXtILj+TvfhLFhafxroXrflspavejQkEiHjNjtHnwbZ+o43g0/yxjwnarGI3kgcak7
-nnI9/8Lqpq79tLHYwLajotwLiGTB71AGN5xK+tzB+D4eN9lXayrjcszgbOv2ZCgzExQUAIt98mre
-8EggKs9mwtEuKAhYBIP/0K6WsoMnQCcCAwEAAaOCAVwwggFYMBIGA1UdEwEB/wQIMAYBAf8CAQAw
-HQYDVR0OBBYEFIlICOogTndrhuWByNfhjWSEf/xwMB8GA1UdIwQYMBaAFEXroq/0ksuCMS1Ri6en
-IZ3zbcgPMA4GA1UdDwEB/wQEAwIBhjAdBgNVHSUEFjAUBggrBgEFBQcDBAYIKwYBBQUHAwIweQYI
-KwYBBQUHAQEEbTBrMCQGCCsGAQUFBzABhhhodHRwOi8vb2NzcC5kaWdpY2VydC5jb20wQwYIKwYB
-BQUHMAKGN2h0dHA6Ly9jYWNlcnRzLmRpZ2ljZXJ0LmNvbS9EaWdpQ2VydEFzc3VyZWRJRFJvb3RD
-QS5jcnQwRQYDVR0fBD4wPDA6oDigNoY0aHR0cDovL2NybDMuZGlnaWNlcnQuY29tL0RpZ2lDZXJ0
-QXNzdXJlZElEUm9vdENBLmNybDARBgNVHSAECjAIMAYGBFUdIAAwDQYJKoZIhvcNAQELBQADggEB
-ACiagCqvNVxOfSd0uYfJMiZsOEBXAKIR/kpqRp2YCfrP4Tz7fJogYN4fxNAw7iy/bPZcvpVCfe/H
-/CCcp3alXL0I8M/rnEnRlv8ItY4MEF+2T/MkdXI3u1vHy3ua8SxBM8eT9LBQokHZxGUX51cE0kwa
-uEOZ+PonVIOnMjuLp29kcNOVnzf8DGKiek+cT51FvGRjV6LbaxXOm2P47/aiaXrDD5O0RF5SiPo6
-xD1/ClkCETyyEAE5LRJlXtx288R598koyFcwCSXijeVcRvBB1cNOLEbg7RMSw1AGq14fNe2cH1HG
-W7xyduY/ydQt6gv5r21mDOQ5SaZSWC/ZRfLDuEYwggWbMIIEg6ADAgECAhAH5JEPagNRXYDiRPdl
-c1vgMA0GCSqGSIb3DQEBCwUAMEExCzAJBgNVBAYTAkFVMRAwDgYDVQQKEwdWZXJva2V5MSAwHgYD
-VQQDExdWZXJva2V5IFNlY3VyZSBFbWFpbCBHMjAeFw0yNDEyMzAwMDAwMDBaFw0yODAxMDQyMzU5
-NTlaMB4xHDAaBgNVBAMME2R3bXcyQGluZnJhZGVhZC5vcmcwggIiMA0GCSqGSIb3DQEBAQUAA4IC
-DwAwggIKAoICAQDali7HveR1thexYXx/W7oMk/3Wpyppl62zJ8+RmTQH4yZeYAS/SRV6zmfXlXaZ
-sNOE6emg8WXLRS6BA70liot+u0O0oPnIvnx+CsMH0PD4tCKSCsdp+XphIJ2zkC9S7/yHDYnqegqt
-w4smkqUqf0WX/ggH1Dckh0vHlpoS1OoxqUg+ocU6WCsnuz5q5rzFsHxhD1qGpgFdZEk2/c//ZvUN
-i12vPWipk8TcJwHw9zoZ/ZrVNybpMCC0THsJ/UEVyuyszPtNYeYZAhOJ41vav1RhZJzYan4a1gU0
-kKBPQklcpQEhq48woEu15isvwWh9/+5jjh0L+YNaN0I//nHSp6U9COUG9Z0cvnO8FM6PTqsnSbcc
-0j+GchwOHRC7aP2t5v2stVx3KbptaYEzi4MQHxm/0+HQpMEVLLUiizJqS4PWPU6zfQTOMZ9uLQRR
-ci+c5xhtMEBszlQDOvEQcyEG+hc++fH47K+MmZz21bFNfoBxLP6bjR6xtPXtREF5lLXxp+CJ6KKS
-blPKeVRg/UtyJHeFKAZXO8Zeco7TZUMVHmK0ZZ1EpnZbnAhKE19Z+FJrQPQrlR0gO3lBzuyPPArV
-hvWxjlO7S4DmaEhLzarWi/ze7EGwWSuI2eEa/8zU0INUsGI4ywe7vepQz7IqaAovAX0d+f1YjbmC
-VsAwjhLmveFjNwIDAQABo4IBsDCCAawwHwYDVR0jBBgwFoAUiUgI6iBOd2uG5YHI1+GNZIR//HAw
-HQYDVR0OBBYEFFxiGptwbOfWOtMk5loHw7uqWUOnMDAGA1UdEQQpMCeBE2R3bXcyQGluZnJhZGVh
-ZC5vcmeBEGRhdmlkQHdvb2Rob3Uuc2UwFAYDVR0gBA0wCzAJBgdngQwBBQEBMA4GA1UdDwEB/wQE
-AwIF4DAdBgNVHSUEFjAUBggrBgEFBQcDAgYIKwYBBQUHAwQwewYDVR0fBHQwcjA3oDWgM4YxaHR0
-cDovL2NybDMuZGlnaWNlcnQuY29tL1Zlcm9rZXlTZWN1cmVFbWFpbEcyLmNybDA3oDWgM4YxaHR0
-cDovL2NybDQuZGlnaWNlcnQuY29tL1Zlcm9rZXlTZWN1cmVFbWFpbEcyLmNybDB2BggrBgEFBQcB
-AQRqMGgwJAYIKwYBBQUHMAGGGGh0dHA6Ly9vY3NwLmRpZ2ljZXJ0LmNvbTBABggrBgEFBQcwAoY0
-aHR0cDovL2NhY2VydHMuZGlnaWNlcnQuY29tL1Zlcm9rZXlTZWN1cmVFbWFpbEcyLmNydDANBgkq
-hkiG9w0BAQsFAAOCAQEAQXc4FPiPLRnTDvmOABEzkIumojfZAe5SlnuQoeFUfi+LsWCKiB8Uextv
-iBAvboKhLuN6eG/NC6WOzOCppn4mkQxRkOdLNThwMHW0d19jrZFEKtEG/epZ/hw/DdScTuZ2m7im
-8ppItAT6GXD3aPhXkXnJpC/zTs85uNSQR64cEcBFjjoQDuSsTeJ5DAWf8EMyhMuD8pcbqx5kRvyt
-JPsWBQzv1Dsdv2LDPLNd/JUKhHSgr7nbUr4+aAP2PHTXGcEBh8lTeYea9p4d5k969pe0OHYMV5aL
-xERqTagmSetuIwolkAuBCzA9vulg8Y49Nz2zrpUGfKGOD0FMqenYxdJHgDCCBZswggSDoAMCAQIC
-EAfkkQ9qA1FdgOJE92VzW+AwDQYJKoZIhvcNAQELBQAwQTELMAkGA1UEBhMCQVUxEDAOBgNVBAoT
-B1Zlcm9rZXkxIDAeBgNVBAMTF1Zlcm9rZXkgU2VjdXJlIEVtYWlsIEcyMB4XDTI0MTIzMDAwMDAw
-MFoXDTI4MDEwNDIzNTk1OVowHjEcMBoGA1UEAwwTZHdtdzJAaW5mcmFkZWFkLm9yZzCCAiIwDQYJ
-KoZIhvcNAQEBBQADggIPADCCAgoCggIBANqWLse95HW2F7FhfH9bugyT/danKmmXrbMnz5GZNAfj
-Jl5gBL9JFXrOZ9eVdpmw04Tp6aDxZctFLoEDvSWKi367Q7Sg+ci+fH4KwwfQ8Pi0IpIKx2n5emEg
-nbOQL1Lv/IcNiep6Cq3DiyaSpSp/RZf+CAfUNySHS8eWmhLU6jGpSD6hxTpYKye7PmrmvMWwfGEP
-WoamAV1kSTb9z/9m9Q2LXa89aKmTxNwnAfD3Ohn9mtU3JukwILRMewn9QRXK7KzM+01h5hkCE4nj
-W9q/VGFknNhqfhrWBTSQoE9CSVylASGrjzCgS7XmKy/BaH3/7mOOHQv5g1o3Qj/+cdKnpT0I5Qb1
-nRy+c7wUzo9OqydJtxzSP4ZyHA4dELto/a3m/ay1XHcpum1pgTOLgxAfGb/T4dCkwRUstSKLMmpL
-g9Y9TrN9BM4xn24tBFFyL5znGG0wQGzOVAM68RBzIQb6Fz758fjsr4yZnPbVsU1+gHEs/puNHrG0
-9e1EQXmUtfGn4InoopJuU8p5VGD9S3Ikd4UoBlc7xl5yjtNlQxUeYrRlnUSmdlucCEoTX1n4UmtA
-9CuVHSA7eUHO7I88CtWG9bGOU7tLgOZoSEvNqtaL/N7sQbBZK4jZ4Rr/zNTQg1SwYjjLB7u96lDP
-sipoCi8BfR35/ViNuYJWwDCOEua94WM3AgMBAAGjggGwMIIBrDAfBgNVHSMEGDAWgBSJSAjqIE53
-a4blgcjX4Y1khH/8cDAdBgNVHQ4EFgQUXGIam3Bs59Y60yTmWgfDu6pZQ6cwMAYDVR0RBCkwJ4ET
-ZHdtdzJAaW5mcmFkZWFkLm9yZ4EQZGF2aWRAd29vZGhvdS5zZTAUBgNVHSAEDTALMAkGB2eBDAEF
-AQEwDgYDVR0PAQH/BAQDAgXgMB0GA1UdJQQWMBQGCCsGAQUFBwMCBggrBgEFBQcDBDB7BgNVHR8E
-dDByMDegNaAzhjFodHRwOi8vY3JsMy5kaWdpY2VydC5jb20vVmVyb2tleVNlY3VyZUVtYWlsRzIu
-Y3JsMDegNaAzhjFodHRwOi8vY3JsNC5kaWdpY2VydC5jb20vVmVyb2tleVNlY3VyZUVtYWlsRzIu
-Y3JsMHYGCCsGAQUFBwEBBGowaDAkBggrBgEFBQcwAYYYaHR0cDovL29jc3AuZGlnaWNlcnQuY29t
-MEAGCCsGAQUFBzAChjRodHRwOi8vY2FjZXJ0cy5kaWdpY2VydC5jb20vVmVyb2tleVNlY3VyZUVt
-YWlsRzIuY3J0MA0GCSqGSIb3DQEBCwUAA4IBAQBBdzgU+I8tGdMO+Y4AETOQi6aiN9kB7lKWe5Ch
-4VR+L4uxYIqIHxR7G2+IEC9ugqEu43p4b80LpY7M4KmmfiaRDFGQ50s1OHAwdbR3X2OtkUQq0Qb9
-6ln+HD8N1JxO5nabuKbymki0BPoZcPdo+FeRecmkL/NOzzm41JBHrhwRwEWOOhAO5KxN4nkMBZ/w
-QzKEy4PylxurHmRG/K0k+xYFDO/UOx2/YsM8s138lQqEdKCvudtSvj5oA/Y8dNcZwQGHyVN5h5r2
-nh3mT3r2l7Q4dgxXlovERGpNqCZJ624jCiWQC4ELMD2+6WDxjj03PbOulQZ8oY4PQUyp6djF0keA
-MYIDuzCCA7cCAQEwVTBBMQswCQYDVQQGEwJBVTEQMA4GA1UEChMHVmVyb2tleTEgMB4GA1UEAxMX
-VmVyb2tleSBTZWN1cmUgRW1haWwgRzICEAfkkQ9qA1FdgOJE92VzW+AwDQYJYIZIAWUDBAIBBQCg
-ggE3MBgGCSqGSIb3DQEJAzELBgkqhkiG9w0BBwEwHAYJKoZIhvcNAQkFMQ8XDTI1MDIwNDE0MTcy
-OVowLwYJKoZIhvcNAQkEMSIEID4373HqMXifnNEfIIMC8FTzrsSIVf+U0UHPa172JWjnMGQGCSsG
-AQQBgjcQBDFXMFUwQTELMAkGA1UEBhMCQVUxEDAOBgNVBAoTB1Zlcm9rZXkxIDAeBgNVBAMTF1Zl
-cm9rZXkgU2VjdXJlIEVtYWlsIEcyAhAH5JEPagNRXYDiRPdlc1vgMGYGCyqGSIb3DQEJEAILMVeg
-VTBBMQswCQYDVQQGEwJBVTEQMA4GA1UEChMHVmVyb2tleTEgMB4GA1UEAxMXVmVyb2tleSBTZWN1
-cmUgRW1haWwgRzICEAfkkQ9qA1FdgOJE92VzW+AwDQYJKoZIhvcNAQEBBQAEggIAKIuepQfI6SYn
-nbZWEkB/uWey49xsY6UUFmNb4fFEOfLstnsHJt5LNnewRxHEt3rSdjTE1exVxRfDmofIdCWwfINO
-lH2cwXZaTKkvKwsD3TCmUevcIIQWBMOE1F6noyOQ20//NbSyhaYcmRDtnJSP+BS1iDXRFxzFN/1g
-kRGsoRnknvkynLGS5d5l7taJrO3nyLCEYpbxL9DqMTEVbfUDWa9Td49EctsYpINaQHmhcQRMKdoE
-LxUbzgcSHxyECJRGKXDgoB83zTgW2++qFzQCgIy6Cbp+UIa6Sou+0zYvo4qr1a8aO8fEyx5Lb2E+
-i5Ugr97j/hmk13E1Ix74N4PgFcR0MeN9c5XF1rC9SXCt/EIoYoN7UppyIGHPgFT0ndQR83JDWgUt
-zE5LsKaGtvMe+KGRRjBpUenUQy3T4qt46L50jVnDf7d09cN9/krLIX2s4DcAXeR5PsVpawrwE0BQ
-iID7fgwpAY+P3SAKDMd8bnqwqF58ngMnV1gO/GnJ33wxoDUn4Qo+rXYwfQaBq/GMHsIS8x43b4j7
-LRLn6nl3DfYQVCZ3sYothy15uEekylf+vjIlznhiziUXlx9ZIDOli1b0mFdl1383nvArlpY1lAp3
-Tw0XvdxXtNrYHQj6Z7xv1uRckdy91gEjIkp6e+eqSV4QKJaa4L5+ZP2/hdOok/EAAAAAAAA=
++                /*
++                 * If disable_mask is set, mask_value is used as an
++                 * additional 2 byte Compare Value; that is equivalent
++                 * to using the whole cr0 register as the comparison value=
+.
++                 * Load 32 bits of data from rx_buf, and set mask to
++                 * all-ones so we compare all 32 bits.
++                 */
 
+and applied this to target-arm.next.
 
---=-XV7OTgt3yG1IFue2dtTT--
+> Other than that this patch looks good to me!
+
+Can I call that a Reviewed-by (with the above changes)?
+
+thanks
+-- PMM
 
