@@ -4,84 +4,105 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9CE86C02193
-	for <qemu-devel@archiver.kernel.org>; Tue,  4 Feb 2025 16:29:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 45550C02194
+	for <qemu-devel@archiver.kernel.org>; Tue,  4 Feb 2025 16:29:38 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tfLnM-0004ox-JE; Tue, 04 Feb 2025 11:29:04 -0500
+	id 1tfLng-0004zd-3i; Tue, 04 Feb 2025 11:29:24 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1tfLnK-0004oU-FO
- for qemu-devel@nongnu.org; Tue, 04 Feb 2025 11:29:02 -0500
-Received: from mail-yb1-xb2a.google.com ([2607:f8b0:4864:20::b2a])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1tfLnI-0003Az-NA
- for qemu-devel@nongnu.org; Tue, 04 Feb 2025 11:29:02 -0500
-Received: by mail-yb1-xb2a.google.com with SMTP id
- 3f1490d57ef6-e545c1e8a15so5227986276.1
- for <qemu-devel@nongnu.org>; Tue, 04 Feb 2025 08:29:00 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1738686539; x=1739291339; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=T6tpi2uNOPvRexxdyaBtzwIggAYq464uVyRYbQr+Bl4=;
- b=O9ylUzZAJom8yG0mHyEaV0A8x9qFBH9G8+u9UGr99li/vhqGfEHD2Y9I2SoIERMo8U
- v7PGuOIdVdAY3yX8u1G1yGbESpTGwB+6eqLMqV7HqZqNG/mi7W0QUIZEud9JTo463ZOD
- FSVKVBbQL56CSSjm/Dekm+JMiWosR7Csb7UwQ2Y9biK2rfyDj6KDX/hcBw0zFRr6ERzG
- bz7rPMETzOeVaR372ibrXerN48A8byjOy7/Eab1VMwP+xq2NCE4SREy29t3Grtgh3SuK
- DS27BEagwUyRKC1w6B2cPD6Flb0ZvOVpbp/7z58IcsjoRU6mfb7F9MPlyGqv6J2Pa196
- n6dA==
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1tfLne-0004zD-JQ
+ for qemu-devel@nongnu.org; Tue, 04 Feb 2025 11:29:22 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1tfLnc-0003Cu-U5
+ for qemu-devel@nongnu.org; Tue, 04 Feb 2025 11:29:22 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1738686560;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=Hnn3X+/SLmeN3E5bkVB/AYmwR8UonxAgYsLm6edpWu0=;
+ b=Pjv1ScH7EXcq8lLl1bBgqMAWlsO/w7y1450QC0WztYwWnrFCZ4EkLokL8AxQdYx2AjnKpG
+ lzF9GNURtZRvsiOzF/7x5H0Rn8tPAf0tA8utefb+I6s3GKWKxsJIsWhJnPzKP5WURXG/S0
+ 7XlFbv/OkccEkp+rWNvhClinEskCeN8=
+Received: from mail-qk1-f200.google.com (mail-qk1-f200.google.com
+ [209.85.222.200]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-550-0KcX9tmgNfm68WQi1k_fRQ-1; Tue, 04 Feb 2025 11:29:19 -0500
+X-MC-Unique: 0KcX9tmgNfm68WQi1k_fRQ-1
+X-Mimecast-MFC-AGG-ID: 0KcX9tmgNfm68WQi1k_fRQ
+Received: by mail-qk1-f200.google.com with SMTP id
+ af79cd13be357-7be6ccb09f9so553006385a.2
+ for <qemu-devel@nongnu.org>; Tue, 04 Feb 2025 08:29:18 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1738686539; x=1739291339;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=T6tpi2uNOPvRexxdyaBtzwIggAYq464uVyRYbQr+Bl4=;
- b=O5Knc2ZK2xmj6B7pVSRmjZJTbpbVoBfFA1BuB0gbii2qMm0CJChJVi3dDFhEPHTmzu
- ZK51CXGChWCvi7o0p2xbInZQeLi4LX8K36zvbA1owHYNsNN5wKUO6LHs2Pc/BbcQI/dk
- qEdkN14LD1EKg5Xv75M4QI8eoZLSYCvaaErP3oVUnLXYP/bCRwmDwaZkG7b4RegvutXp
- nf8POyHbcFHxHTBR62rW7uRmVp78duwIHor8vLpiIvk95U69HKenJORJav52pkM+hT5i
- 1l/CKUOXaeS+g75bmD/tcp3kstDuYoAhDTGNfbK0GHuutJV5+1kHoB56H3sj+7YaTql2
- l5iw==
+ d=1e100.net; s=20230601; t=1738686558; x=1739291358;
+ h=in-reply-to:content-transfer-encoding:content-disposition
+ :mime-version:references:message-id:subject:cc:to:from:date
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=Hnn3X+/SLmeN3E5bkVB/AYmwR8UonxAgYsLm6edpWu0=;
+ b=W4Ax8zZ1AoxXemIlE6t00joYln4TYmrJ5LCXiMCOXIDjz1xmGTtLhlMiHmjPusdhcl
+ J7qtaY0Fm2g6yzhhzz8dB3IlurUVV3CbCo3dNTLbnNYm+mOuqhJSjbsM1PMOwSyb5mhZ
+ eoxh4q6tyhSTALjKlqEc7KlaIRmkTQOMvwEbSqcN2MqOxHrMtu6IKUIpykUa/f39Z9n3
+ jNyXCKU1tI1Ax32h94zX9f6MIqmvpxwcikvBglRnUZ82qufQ3QWyLefBhoyvtbKREu0M
+ JNVM++WPybgEwd4hE6dgddGtZBJdYfMmPXKVytACXRmRQ+Lq9/QXEgG5NVINFZFz5b8t
+ onMw==
 X-Forwarded-Encrypted: i=1;
- AJvYcCVSbZ4YFJSls2jIx32+sa3fW8vLHeKVlzwmGqb4Tbh5RuMWUQZJn89Fy4fRCyOpZkaFqjwuo7uttTGF@nongnu.org
-X-Gm-Message-State: AOJu0Yx1U5SRqTqGP6YxfNFA3uZxJmpDlIrkpYQm0ZuE8KAg7FQVnIYg
- woUrp6TVGhgpZeFzItWFQ736CUE9KO2qWCtWyexEA16CyfU4wDOVxzOKHBrtJoHdPpTDMxDgQfH
- hryrCCRo+i+CIorQ8JmfSjQxqPd9/Kw/cHQGDKA==
-X-Gm-Gg: ASbGncufa0Ygm/5IcClCh6z2JmQZRIUW6CKJDQwIjzUUS7WKShG4HqeUq0YU0VphHX5
- cewZDAl8Cn2FI/GF0cp2+ah293m7IXLSAixJ6DG6EqJb1lSTjvU1ppsR8cOGw/JFzADorGMc2+A
- ==
-X-Google-Smtp-Source: AGHT+IHZeKT6Gxi8xIkhJFHIpLvQ6uw0aeuoENXdWIY2YuAVn9rsmhju9yqWSFCQWvdfCI0gwYS1wlgU5R3ebnlR1+U=
-X-Received: by 2002:a05:6902:2689:b0:e57:87b3:d2e0 with SMTP id
- 3f1490d57ef6-e58a4a9c29cmr20412651276.3.1738686539428; Tue, 04 Feb 2025
- 08:28:59 -0800 (PST)
+ AJvYcCW+3h/K8FD2vKeaBM+xnRsnlv2hMwZOaGeUe9V0R+ifGLTPLDLu1xStT8VZGKszDF0cubsKOsSYl/xU@nongnu.org
+X-Gm-Message-State: AOJu0YxVrWN6WD3bxeNeXe70FzGxJI9gOG4QYAISa3pGSwdUUC4CXf3c
+ K6bjd5d7ZUqQDV1WcbDJEai5gw5okpwfl4HqoUvkYhpT3wbFIM8SOmWD58dLlD6ThZc+siywZN1
+ jdXlkBnqNWV6JqFqQFJZuUaG0a5agUjkyTP476kNGW7oGmZCW7SV0
+X-Gm-Gg: ASbGncs9k17fPi+ZqmDjFO4x2A7VWbUUGO8e+lPkhk26QxpH9fzzxbGPOkyq9a3UqNE
+ BdsgKzHyJEFMjNC30edc7Nulid/FHyV5A8mfSWb1OVEzd1fLtOfXkzj9VAlry6+zd9udUe6qyeW
+ fMf2M0gpaJf0kKwfgrs9Hl2SWROFIO2wQ+H1/U67eEJkuC/XVhXoia5iA2sDcH6gLqrM5+Siaeo
+ vb8bGGgxIINLJdQ5FNOrdMN831HzKAkgEYIwxX3tY1dw9FgAhz0FTrwJMJ5oNi1nCRZ9dcucB45
+ vlDF0M49WPswzWNfCJcf7Fj/+3bn1/KqdCK5n6janxYKsdPE
+X-Received: by 2002:a05:620a:4102:b0:7ac:a0a5:9bf4 with SMTP id
+ af79cd13be357-7bffcd90739mr4191694785a.40.1738686558151; 
+ Tue, 04 Feb 2025 08:29:18 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IFqKw4x9Kvao6E76UFAjI7JhL9VNH+x+cECRyfrMTKh0VTlmgjDVpjSZ/OAv81beeZhoJoSkQ==
+X-Received: by 2002:a05:620a:4102:b0:7ac:a0a5:9bf4 with SMTP id
+ af79cd13be357-7bffcd90739mr4191691385a.40.1738686557838; 
+ Tue, 04 Feb 2025 08:29:17 -0800 (PST)
+Received: from x1.local (pool-99-254-114-190.cpe.net.cable.rogers.com.
+ [99.254.114.190]) by smtp.gmail.com with ESMTPSA id
+ af79cd13be357-7c00a8da7d6sm650800685a.65.2025.02.04.08.29.16
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Tue, 04 Feb 2025 08:29:17 -0800 (PST)
+Date: Tue, 4 Feb 2025 11:29:16 -0500
+From: Peter Xu <peterx@redhat.com>
+To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
+Cc: "Maciej S. Szmigiero" <mail@maciej.szmigiero.name>,
+ Fabiano Rosas <farosas@suse.de>,
+ Alex Williamson <alex.williamson@redhat.com>,
+ =?utf-8?Q?C=C3=A9dric?= Le Goater <clg@redhat.com>,
+ Eric Blake <eblake@redhat.com>, Markus Armbruster <armbru@redhat.com>,
+ Avihai Horon <avihaih@nvidia.com>,
+ Joao Martins <joao.m.martins@oracle.com>, qemu-devel@nongnu.org
+Subject: Re: [PATCH v4 08/33] migration/multifd: Allow premature EOF on TLS
+ incoming channels
+Message-ID: <Z6JAXCngS22l0BmL@x1.local>
+References: <cover.1738171076.git.maciej.szmigiero@oracle.com>
+ <baf944c37ead5d30d7e268b2a4074d9acaac2db0.1738171076.git.maciej.szmigiero@oracle.com>
+ <Z6EI0V6Cg7aCbzQU@x1.local> <Z6ItUtb-NhKnn8hy@redhat.com>
+ <Z6I6FF_4r_uVUlWU@x1.local> <Z6I8X94q6Fpimwkn@redhat.com>
 MIME-Version: 1.0
-References: <20241226082800.2887689-1-wuhaotsh@google.com>
- <20241226082800.2887689-17-wuhaotsh@google.com>
-In-Reply-To: <20241226082800.2887689-17-wuhaotsh@google.com>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Tue, 4 Feb 2025 16:28:47 +0000
-X-Gm-Features: AWEUYZknXSczvb1F1N6wwI9XXKDYcHuTBITkgb2WGBdKDJU1gx0_CRssaZt1z8U
-Message-ID: <CAFEAcA_0N6hWSxvVRxy476R8qtoBOqT2Nque5Kq9gK8gG_YJ3g@mail.gmail.com>
-Subject: Re: [PATCH v2 16/17] hw/arm: Add NPCM8XX SoC
-To: Hao Wu <wuhaotsh@google.com>
-Cc: qemu-arm@nongnu.org, qemu-devel@nongnu.org, Avi.Fishman@nuvoton.com, 
- kfting@nuvoton.com, titusr@google.com, hskinnemoen@google.com, 
- venture@google.com, pbonzini@redhat.com, jasowang@redhat.com, 
- alistair@alistair23.me
-Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::b2a;
- envelope-from=peter.maydell@linaro.org; helo=mail-yb1-xb2a.google.com
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <Z6I8X94q6Fpimwkn@redhat.com>
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=peterx@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -97,148 +118,88 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, 26 Dec 2024 at 08:29, Hao Wu <wuhaotsh@google.com> wrote:
->
-> Signed-off-by: Hao Wu <wuhaotsh@google.com>
-> ---
->  configs/devices/aarch64-softmmu/default.mak |   1 +
->  hw/arm/Kconfig                              |  11 +
->  hw/arm/meson.build                          |   1 +
->  hw/arm/npcm8xx.c                            | 810 ++++++++++++++++++++
->  include/hw/arm/npcm8xx.h                    | 107 +++
->  5 files changed, 930 insertions(+)
->  create mode 100644 hw/arm/npcm8xx.c
->  create mode 100644 include/hw/arm/npcm8xx.h
->
-> diff --git a/configs/devices/aarch64-softmmu/default.mak b/configs/devices/aarch64-softmmu/default.mak
-> index f82a04c27d..5ea1cc2dd1 100644
-> --- a/configs/devices/aarch64-softmmu/default.mak
-> +++ b/configs/devices/aarch64-softmmu/default.mak
-> @@ -8,3 +8,4 @@ include ../arm-softmmu/default.mak
->  # CONFIG_XLNX_ZYNQMP_ARM=n
->  # CONFIG_XLNX_VERSAL=n
->  # CONFIG_SBSA_REF=n
-> +CONFIG_NPCM8XX=y
+On Tue, Feb 04, 2025 at 04:12:15PM +0000, Daniel P. Berrangé wrote:
+> On Tue, Feb 04, 2025 at 11:02:28AM -0500, Peter Xu wrote:
+> > On Tue, Feb 04, 2025 at 03:08:02PM +0000, Daniel P. Berrangé wrote:
+> > > On Mon, Feb 03, 2025 at 01:20:01PM -0500, Peter Xu wrote:
+> > > > On Thu, Jan 30, 2025 at 11:08:29AM +0100, Maciej S. Szmigiero wrote:
+> > > > > From: "Maciej S. Szmigiero" <maciej.szmigiero@oracle.com>
+> > > > > 
+> > > > > Multifd send channels are terminated by calling
+> > > > > qio_channel_shutdown(QIO_CHANNEL_SHUTDOWN_BOTH) in
+> > > > > multifd_send_terminate_threads(), which in the TLS case essentially
+> > > > > calls shutdown(SHUT_RDWR) on the underlying raw socket.
+> > > > > 
+> > > > > Unfortunately, this does not terminate the TLS session properly and
+> > > > > the receive side sees this as a GNUTLS_E_PREMATURE_TERMINATION error.
+> > > > > 
+> > > > > The only reason why this wasn't causing migration failures is because
+> > > > > the current migration code apparently does not check for migration
+> > > > > error being set after the end of the multifd receive process.
+> > > > > 
+> > > > > However, this will change soon so the multifd receive code has to be
+> > > > > prepared to not return an error on such premature TLS session EOF.
+> > > > > Use the newly introduced QIOChannelTLS method for that.
+> > > > > 
+> > > > > It's worth noting that even if the sender were to be changed to terminate
+> > > > > the TLS connection properly the receive side still needs to remain
+> > > > > compatible with older QEMU bit stream which does not do this.
+> > > > 
+> > > > If this is an existing bug, we could add a Fixes.
+> > > > 
+> > > > Two pure questions..
+> > > > 
+> > > >   - What is the correct way to terminate the TLS session without this flag?
+> > > > 
+> > > >   - Why this is only needed by multifd sessions?
+> > > 
+> > > Graceful TLS termination (via gnutls_bye()) should only be important to
+> > > security if the QEMU protocol in question does not know how much data it
+> > > is expecting to recieve. ie it cannot otherwise distinguish between an
+> > > expected EOF, and a premature EOF triggered by an attacker.
+> > > 
+> > > If the migration protocol has sufficient info to know when a chanel is
+> > > expected to see EOF, then we should stop trying to read from the TLS
+> > > channel before seeing the underlying EOF.
+> > > 
+> > > Ignoring GNUTLS_E_PREMATURE_TERMINATION would be valid if we know that
+> > > migration will still fail corretly in the case of a malicious attack
+> > > causing premature termination.
+> > > 
+> > > If there's a risk that migration may succeed, but with incomplete data,
+> > > then we would need the full gnutls_bye dance.
+> > 
+> > IIUC that's not required for migration then, because migration should know
+> > exactly how much data to receive, and migration should need to verify that
+> > and fail if the received data didn't match the expectation along the way.
+> > We also have QEMU_VM_EOF as the end mark of stream.
+> > 
+> > Said that, are we sure any pre-mature termination will only happen after
+> > all data read in the receive buffer that was sent?
+> > 
+> > To ask in another way: what happens if the source QEMU sends everything and
+> > shutdown()/close() the channel, meanwhile the dest QEMU sees both (1) rest
+> > data to read, and (2) a pre-mature terminatino of TLS session in a read()
+> > syscall.  Would (2) be reported even before (1), or the order guaranteed
+> > that read of the residue data in (1) always happen before (2) (considering
+> > dest QEMU can be slow sometime on consuming the network buffers)?
+> 
+> That's not logically possible.
+> 
+> In both (1) and (2) you are issuing a read() call to the TLS channel.
+> 
+> The first read call(s) consume all incoming data. Only once the underlying
+> TCP socket read() returns 0, would GNUTLS  see that it hasn't got any
+> TLS "bye" packet, and thus return GNUTLS_E_PREMATURE_TERMINATION from
+> the layered TLS read(). IOW, if you see GNUTLS_E_PREMATURE_TERMINATION
+> you know you have already read all received data off the socket.
 
-This should be a commented-out "n" (the way we arrange
-this has flipped around since you originally wrote
-the board support).
+That looks all OK then.  In that case we could set all migration TLS
+sessions to ignore premature terminations.
 
-> diff --git a/hw/arm/Kconfig b/hw/arm/Kconfig
-> index e779b5af95..4fd5a41739 100644
-> --- a/hw/arm/Kconfig
-> +++ b/hw/arm/Kconfig
-> @@ -481,6 +481,17 @@ config NPCM7XX
->      select PCA954X
->      select USB_OHCI_SYSBUS
->
-> +config NPCM8XX
-> +    bool
-> +    select ARM_GIC
-> +    select SMBUS
-> +    select PL310  # cache controller
-> +    select NPCM7XX
-> +    select SERIAL
-> +    select SSI
-> +    select UNIMP
+Thanks,
 
-You want a "depends on TCG && ARM" clause: compare the
-other stanzas in the file.
-(This is the other half of the flipping-around noted above).
+-- 
+Peter Xu
 
->  config FSL_IMX25
->      bool
->      default y
-> diff --git a/hw/arm/meson.build b/hw/arm/meson.build
-> index 490234b3b8..d7813c089c 100644
-> --- a/hw/arm/meson.build
-> +++ b/hw/arm/meson.build
-> @@ -12,6 +12,7 @@ arm_ss.add(when: 'CONFIG_MUSICPAL', if_true: files('musicpal.c'))
->  arm_ss.add(when: 'CONFIG_NETDUINOPLUS2', if_true: files('netduinoplus2.c'))
->  arm_ss.add(when: 'CONFIG_OLIMEX_STM32_H405', if_true: files('olimex-stm32-h405.c'))
->  arm_ss.add(when: 'CONFIG_NPCM7XX', if_true: files('npcm7xx.c', 'npcm7xx_boards.c'))
-> +arm_ss.add(when: 'CONFIG_NPCM8XX', if_true: files('npcm8xx.c'))
->  arm_ss.add(when: 'CONFIG_REALVIEW', if_true: files('realview.c'))
->  arm_ss.add(when: 'CONFIG_SBSA_REF', if_true: files('sbsa-ref.c'))
->  arm_ss.add(when: 'CONFIG_STELLARIS', if_true: files('stellaris.c'))
-> diff --git a/hw/arm/npcm8xx.c b/hw/arm/npcm8xx.c
-> new file mode 100644
-> index 0000000000..ed4185f37d
-> --- /dev/null
-> +++ b/hw/arm/npcm8xx.c
-> @@ -0,0 +1,810 @@
-> +/*
-> + * Nuvoton NPCM8xx SoC family.
-> + *
-> + * Copyright 2022 Google LLC
-> + *
-> + * This program is free software; you can redistribute it and/or modify it
-> + * under the terms of the GNU General Public License as published by the
-> + * Free Software Foundation; either version 2 of the License, or
-> + * (at your option) any later version.
-> + *
-> + * This program is distributed in the hope that it will be useful, but WITHOUT
-> + * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
-> + * FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License
-> + * for more details.
-> + */
-> +
-> +#include "qemu/osdep.h"
-> +
-> +#include "hw/arm/boot.h"
-> +#include "hw/arm/npcm8xx.h"
-> +#include "hw/char/serial-mm.h"
-> +#include "hw/intc/arm_gic.h"
-> +#include "hw/loader.h"
-> +#include "hw/misc/unimp.h"
-> +#include "hw/qdev-clock.h"
-> +#include "hw/qdev-properties.h"
-> +#include "qapi/error.h"
-> +#include "qemu/units.h"
-> +#include "system/system.h"
-> +
-> +#define ARM_PHYS_TIMER_PPI  30
-> +#define ARM_VIRT_TIMER_PPI  27
-> +#define ARM_HYP_TIMER_PPI   26
-> +#define ARM_SEC_TIMER_PPI   29
-
-We have defines for these basically-standardized IRQ
-numbers in include/hw/arm/bsa.h now.
-
-> +
-> +/*
-> + * This covers the whole MMIO space. We'll use this to catch any MMIO accesses
-> + * that aren't handled by a device.
-> + */
-> +#define NPCM8XX_MMIO_BA         (0x80000000)
-> +#define NPCM8XX_MMIO_SZ         (0x7ffd0000)
-
-You don't need brackets around simple constants in a #define.
-
-
-> +/* Total number of GIC interrupts, including internal Cortex-A35 interrupts. */
-> +#define NPCM8XX_NUM_IRQ         (288)
-> +#define NPCM8XX_PPI_BASE(cpu)   ((NPCM8XX_NUM_IRQ - 32) + (cpu) * 32)
-
-These "32"s should probably be "GIC_INTERNAL"s.
-
-> +        /* IRQ for watchdogs */
-> +        sysbus_connect_irq(sbd, NPCM7XX_TIMERS_PER_CTRL,
-> +                npcm8xx_irq(s, NPCM8XX_WDG0_IRQ + i));
-> +        /* GPIO that connects clk module with watchdog */
-> +        /* TODO: Check this.*/
-
-Good idea :-)
-
-> +        qdev_connect_gpio_out_named(DEVICE(&s->tim[i]),
-> +                NPCM7XX_WATCHDOG_RESET_GPIO_OUT, 0,
-> +                qdev_get_gpio_in_named(DEVICE(&s->clk),
-> +                        NPCM7XX_WATCHDOG_RESET_GPIO_IN, i));
-> +    }
-
-Otherwise looks OK, but again, review by somebody who
-knows the hardware would be nice.
-
-thanks
--- PMM
 
