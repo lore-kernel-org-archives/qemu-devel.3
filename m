@@ -4,86 +4,100 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BC254C02194
-	for <qemu-devel@archiver.kernel.org>; Tue,  4 Feb 2025 14:38:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0098EC02196
+	for <qemu-devel@archiver.kernel.org>; Tue,  4 Feb 2025 14:39:45 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tfK3L-0002Yi-Lt; Tue, 04 Feb 2025 09:37:27 -0500
+	id 1tfK5D-0003XR-4N; Tue, 04 Feb 2025 09:39:23 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1tfK3J-0002Y2-Lj
- for qemu-devel@nongnu.org; Tue, 04 Feb 2025 09:37:25 -0500
-Received: from mail-yw1-x1132.google.com ([2607:f8b0:4864:20::1132])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1tfK3H-0001p0-TO
- for qemu-devel@nongnu.org; Tue, 04 Feb 2025 09:37:25 -0500
-Received: by mail-yw1-x1132.google.com with SMTP id
- 00721157ae682-6f6ae4846c7so35155087b3.1
- for <qemu-devel@nongnu.org>; Tue, 04 Feb 2025 06:37:23 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1738679843; x=1739284643; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=xStaCCUZvvadRvtt4KgqZgtZxDLVmqWt85RHs9AVyn0=;
- b=z01XCcQ11xhNfWLpefunV0JD2Z2B+Tunil1ag8XEOOd0n1yYbuYh10nCflT8E3xacm
- aMtCwbGAYEmD/jX5T6QQN1J9/0Zcl76gQ4xC6Xfj45RmD3OhdnIgxM70wO6knQQbh4TA
- cnKcDflKje/4RTilTn1WGSiRKqsOeTbQH7MX/UNxqQjFXgNCLGT3UIwEVtY5O8ndSYoo
- 4VRpGmo1GAZ+k+9SC2WM30YqmHT+KE1wb7ZfJMDZYLBl+GLIypq6ec07Dmfgl3zkQI+C
- 7OJRVnsRqZ9jgozrrUv5Ikq69eqT6/r1WUgi/VgxU82K2SpwReXppZsg2qkxbC0EvRqV
- qk7A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1738679843; x=1739284643;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=xStaCCUZvvadRvtt4KgqZgtZxDLVmqWt85RHs9AVyn0=;
- b=ajZm5LLsCvlvJC53dm2hTXsPr+pJ3vpvxu01BZxhIYqdfk33EfJQ13Nkx4JwRp6rav
- XEgdJxPtDNQMIy7ni46JNF0daznuMJUH9suJBH8YXN2vh6KIFpVceCaDli69ly60tqsw
- ZyiGGenr8XGPcTY3iAzVJHjuOtPmlKSJ/XAqSBE1qHzwNqKieast7bNwXkbb2qXM72XB
- Zmv/HDA10kd2LzLw2P94L2h+ehqPoD4Ky/XcQqppv0Gyz7ZA5CDP9grhH4/tVlq4zlej
- 9AypeSOUR/2aX6ZQ92W2PkBt4eHerBETluvqbqxAJcvk6qUDJbaYL5nvLrJBGi+nWsyM
- eMcw==
-X-Forwarded-Encrypted: i=1;
- AJvYcCWGiAttOpawtPKv1PG5epRNREaH33tKL9J+Mme6MrTe+b9QzZpKzE93UFVOOOT5rnW3w6CpIjppGjga@nongnu.org
-X-Gm-Message-State: AOJu0YyMsX47zr6wZXUEBfrbmq4jIewQGHrGcVBKaI/F0hA2hcXEvyEx
- aMn51kDps2LyIHRkexfMV1t5qRPppAuzdGbnGimmRE4R9Xr8XWzYjRw56L/2xQwG53OoYqAjwnK
- ZT6hG5eMZHDcJxyuM22gXzVm0RzdMpKCdLFLgnw==
-X-Gm-Gg: ASbGncsz28s7bnMeWzgJkw50sNaNHFeXGzCGbGugrtrHAoP3WBP83qzhRz/qhQY6mvE
- vziZIi9NylebEZ8whwq1ZFe+n9wVSPL7uYSXbqLUtCMHYeXcOn0ox4ZkAouRg8DP2a1M7zYSD/g
- ==
-X-Google-Smtp-Source: AGHT+IFIz3zp3/SeKr+qbl/436m3TWFmeaKAarcKbOwz1BZPve/D2lfcPbw+lRc4j4aoSiRpoAuvgE6S03TuhfLh974=
-X-Received: by 2002:a05:690c:6d07:b0:6ef:7d1e:bffd with SMTP id
- 00721157ae682-6f7a8424acbmr220356367b3.37.1738679842769; Tue, 04 Feb 2025
- 06:37:22 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <mhej@vps-ovh.mhejs.net>)
+ id 1tfK5B-0003VB-HW
+ for qemu-devel@nongnu.org; Tue, 04 Feb 2025 09:39:21 -0500
+Received: from vps-ovh.mhejs.net ([145.239.82.108])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <mhej@vps-ovh.mhejs.net>)
+ id 1tfK59-00020h-00
+ for qemu-devel@nongnu.org; Tue, 04 Feb 2025 09:39:21 -0500
+Received: from MUA
+ by vps-ovh.mhejs.net with esmtpsa  (TLS1.3) tls TLS_AES_128_GCM_SHA256
+ (Exim 4.98) (envelope-from <mhej@vps-ovh.mhejs.net>)
+ id 1tfK4v-00000006qsi-14e5; Tue, 04 Feb 2025 15:39:05 +0100
+Message-ID: <b84071ab-ea49-4c2f-8f8c-6bb9a3d94342@maciej.szmigiero.name>
+Date: Tue, 4 Feb 2025 15:39:00 +0100
 MIME-Version: 1.0
-References: <20241219061658.805-1-andrew.yuan@jaguarmicro.com>
- <CAFEAcA96ZLjOhBT9rhNhuk32ve0Qv4hUVuTTtgE=DBApbN98Pg@mail.gmail.com>
- <CAJy5ezovedShKH=HFbK9uRY44no2ijQocs29CHLt2jKoNL+Vpw@mail.gmail.com>
-In-Reply-To: <CAJy5ezovedShKH=HFbK9uRY44no2ijQocs29CHLt2jKoNL+Vpw@mail.gmail.com>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Tue, 4 Feb 2025 14:37:11 +0000
-X-Gm-Features: AWEUYZmAzwjxcadMUURkTX997SIG-NIF8iCLXYs9UFr5Zjq8L2ymYEyJvDXIWxM
-Message-ID: <CAFEAcA8oaRVs8USMDGHvDW82AtRZGAhRCg189hhWtmRm2Y-YaQ@mail.gmail.com>
-Subject: Re: [PATCH v3] hw/net: cadence_gem: feat: add logic for the
- DISABLE_MASK bit in type2_compare_x_word_1
-To: "Edgar E. Iglesias" <edgar.iglesias@gmail.com>
-Cc: "Andrew.Yuan" <andrew.yuan@jaguarmicro.com>, philmd@linaro.org,
- alistair@alistair23.me, 
- jasowang@redhat.com, qemu-arm@nongnu.org, qemu-devel@nongnu.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1132;
- envelope-from=peter.maydell@linaro.org; helo=mail-yw1-x1132.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v4 08/33] migration/multifd: Allow premature EOF on TLS
+ incoming channels
+To: Peter Xu <peterx@redhat.com>, Fabiano Rosas <farosas@suse.de>
+Cc: Alex Williamson <alex.williamson@redhat.com>,
+ =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>,
+ Eric Blake <eblake@redhat.com>, Markus Armbruster <armbru@redhat.com>,
+ =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
+ Avihai Horon <avihaih@nvidia.com>, Joao Martins <joao.m.martins@oracle.com>,
+ qemu-devel@nongnu.org
+References: <cover.1738171076.git.maciej.szmigiero@oracle.com>
+ <baf944c37ead5d30d7e268b2a4074d9acaac2db0.1738171076.git.maciej.szmigiero@oracle.com>
+ <Z6EI0V6Cg7aCbzQU@x1.local>
+ <67a7c2ce-2391-4b8e-a5be-bce370fd2e66@maciej.szmigiero.name>
+ <Z6ElIlavWHda8YcH@x1.local>
+ <6b9b4c31-6598-4fd9-9ae2-dbef4cdd7089@maciej.szmigiero.name>
+ <Z6FJuK2FVKhI0C2j@x1.local>
+Content-Language: en-US, pl-PL
+From: "Maciej S. Szmigiero" <mail@maciej.szmigiero.name>
+Autocrypt: addr=mail@maciej.szmigiero.name; keydata=
+ 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
+In-Reply-To: <Z6FJuK2FVKhI0C2j@x1.local>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=145.239.82.108;
+ envelope-from=mhej@vps-ovh.mhejs.net; helo=vps-ovh.mhejs.net
+X-Spam_score_int: -17
+X-Spam_score: -1.8
+X-Spam_bar: -
+X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9,
+ HEADER_FROM_DIFFERENT_DOMAINS=0.07, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_PASS=-0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -100,85 +114,123 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, 30 Jan 2025 at 22:31, Edgar E. Iglesias
-<edgar.iglesias@gmail.com> wrote:
-> On Mon, Jan 27, 2025 at 8:40=E2=80=AFAM Peter Maydell <peter.maydell@lina=
-ro.org> wrote:
->> On Thu, 19 Dec 2024 at 06:17, Andrew.Yuan <andrew.yuan@jaguarmicro.com> =
-wrote:
->> > -            rx_cmp =3D rxbuf_ptr[offset] << 8 | rxbuf_ptr[offset];
->> > -            mask =3D FIELD_EX32(cr0, TYPE2_COMPARE_0_WORD_0, MASK_VAL=
-UE);
->> > -            compare =3D FIELD_EX32(cr0, TYPE2_COMPARE_0_WORD_0, COMPA=
-RE_VALUE);
->> > +            disable_mask =3D
->> > +                FIELD_EX32(cr1, TYPE2_COMPARE_0_WORD_1, DISABLE_MASK)=
-;
->> > +            if (disable_mask) {
->> > +                /*
->> > +                 * If disable_mask is set,
->> > +                 * mask_value is used as an additional 2 byte Compare=
- Value.
->> > +                 * To simple, set mask =3D 0xFFFFFFFF, if disable_mas=
-k is set.
->> > +                 */
->> > +                rx_cmp =3D ldl_le_p(rxbuf_ptr + offset);
->> > +                mask =3D 0xFFFFFFFF;
->> > +                compare =3D cr0;
->> > +            } else {
->> > +                rx_cmp =3D lduw_le_p(rxbuf_ptr + offset);
+On 3.02.2025 23:56, Peter Xu wrote:
+> On Mon, Feb 03, 2025 at 10:41:32PM +0100, Maciej S. Szmigiero wrote:
+>> On 3.02.2025 21:20, Peter Xu wrote:
+>>> On Mon, Feb 03, 2025 at 07:53:00PM +0100, Maciej S. Szmigiero wrote:
+>>>> On 3.02.2025 19:20, Peter Xu wrote:
+>>>>> On Thu, Jan 30, 2025 at 11:08:29AM +0100, Maciej S. Szmigiero wrote:
+>>>>>> From: "Maciej S. Szmigiero" <maciej.szmigiero@oracle.com>
+>>>>>>
+>>>>>> Multifd send channels are terminated by calling
+>>>>>> qio_channel_shutdown(QIO_CHANNEL_SHUTDOWN_BOTH) in
+>>>>>> multifd_send_terminate_threads(), which in the TLS case essentially
+>>>>>> calls shutdown(SHUT_RDWR) on the underlying raw socket.
+>>>>>>
+>>>>>> Unfortunately, this does not terminate the TLS session properly and
+>>>>>> the receive side sees this as a GNUTLS_E_PREMATURE_TERMINATION error.
+>>>>>>
+>>>>>> The only reason why this wasn't causing migration failures is because
+>>>>>> the current migration code apparently does not check for migration
+>>>>>> error being set after the end of the multifd receive process.
+>>>>>>
+>>>>>> However, this will change soon so the multifd receive code has to be
+>>>>>> prepared to not return an error on such premature TLS session EOF.
+>>>>>> Use the newly introduced QIOChannelTLS method for that.
+>>>>>>
+>>>>>> It's worth noting that even if the sender were to be changed to terminate
+>>>>>> the TLS connection properly the receive side still needs to remain
+>>>>>> compatible with older QEMU bit stream which does not do this.
+>>>>>
+>>>>> If this is an existing bug, we could add a Fixes.
+>>>>
+>>>> It is an existing issue but only uncovered by this patch set.
+>>>>
+>>>> As far as I can see it was always there, so it would need some
+>>>> thought where to point that Fixes tag.
+>>>
+>>> If there's no way to trigger a real functional bug anyway, it's also ok we
+>>> omit the Fixes.
+>>>
+>>>>> Two pure questions..
+>>>>>
+>>>>>      - What is the correct way to terminate the TLS session without this flag?
+>>>>
+>>>> I guess one would need to call gnutls_bye() like in this GnuTLS example:
+>>>> https://gitlab.com/gnutls/gnutls/-/blob/2b8c3e4c71ad380bbbffb32e6003b34ecad596e3/doc/examples/ex-client-anon.c#L102
+>>>>
+>>>>>      - Why this is only needed by multifd sessions?
+>>>>
+>>>> What uncovered the issue was switching the load threads to using
+>>>> migrate_set_error() instead of their own result variable
+>>>> (load_threads_ret) which you had requested during the previous
+>>>> patch set version review:
+>>>> https://lore.kernel.org/qemu-devel/Z1DbH5fwBaxtgrvH@x1n/
+>>>>
+>>>> Turns out that the multifd receive code always returned
+>>>> error in the TLS case, just nothing was previously checking for
+>>>> that error presence.
+>>>
+>>> What I was curious is whether this issue also exists for the main migration
+>>> channel when with tls, especially when e.g. multifd not enabled at all.  As
+>>> I don't see anywhere that qemu uses gnutls_bye() for any tls session.
+>>>
+>>> I think it's a good to find that we overlooked this before.. and IMHO it's
+>>> always good we could fix this.
+>>>
+>>> Does it mean we need proper gnutls_bye() somewhere?
+>>>
+>>> If we need an explicit gnutls_bye(), then I wonder if that should be done
+>>> on the main channel as well.
 >>
->> Is the change in behaviour in the !disable_mask codepath here
->> intentional? Previously we use one byte from rxbuf_ptr[offset],
->> duplicated into both halves of rx_cmp; now we will load two
->> different bytes from rxbuf_ptr[offset] and rxbuf_ptr[offset + 1].
+>> That's a good question and looking at the code qemu_loadvm_state_main() exits
+>> on receiving "QEMU_VM_EOF" section (that's different from receiving socket EOF)
+>> and then optionally "QEMU_VM_VMDESCRIPTION" section is read with explicit size
+>> in qemu_loadvm_state() - so still not until channel EOF.
+> 
+> I had a closer look, I do feel like such pre-mature termination is caused
+> by explicit shutdown()s of the iochannels, looks like that can cause issue
+> even after everything is sent.  Then I noticed indeed multifd sender
+> iochannels will get explicit shutdown()s since commit 077fbb5942, while we
+> don't do that for the main channel.  Maybe that is a major difference.
+> 
+> Now I wonder whether we should shutdown() the channel at all if migration
+> succeeded, because looks like it can cause tls session to interrupt even if
+> the shutdown() is done after sent everything, and if so it'll explain why
+> you hit the issue with tls.
+> 
 >>
->> If this is intended, we should say so in the commit message.
+>> Then I can't see anything else reading the channel until it is closed in
+>> migration_incoming_state_destroy().
 >>
->
-> I agree that it should be mentioned (looks like a correct bugfix).
+>> So most likely the main migration channel will never read far enough to
+>> reach that GNUTLS_E_PREMATURE_TERMINATION error.
+>>
+>>> If we don't need gnutls_bye(), then should we always ignore pre-mature
+>>> termination of tls no matter if it's multifd or non-multifd channel (or
+>>> even a tls session that is not migration-related)?
+>>
+>> So basically have this patch extended to calling
+>> qio_channel_tls_set_premature_eof_okay() also on the main migration channel?
+> 
+> If above theory can stand, then eof-okay could be a workaround papering
+> over the real problem that we shouldn't always shutdown()..
+> 
+> Could you have a look at below patch and see whether it can fix the problem
+> you hit too, in replace of these two patches (including the previous
+> iochannel change)?
+> 
 
-Thanks. I've expanded the commit message:
+Unfortunately, the patch below does not fix the problem:
+> qemu-system-x86_64: Cannot read from TLS channel: The TLS connection was non-properly terminated.
+> qemu-system-x86_64: Cannot read from TLS channel: The TLS connection was non-properly terminated.
 
-    hw/net/cadence_gem:  Fix the mask/compare/disable-mask logic
+I think that, even in the absence of shutdown(), if the sender does not
+call gnutls_bye() the TLS session is considered improperly terminated.
 
-    Our current handling of the mask/compare logic in the Cadence
-    GEM ethernet device is wrong:
-     (1) we load the same byte twice from rx_buf when
-         creating the compare value
-     (2) we ignore the DISABLE_MASK flag
+> Thanks,
+> 
+Thanks,
+Maciej
 
-    The "Cadence IP for Gigabit Ethernet MAC Part Number: IP7014 IP Rev:
-    R1p12 - Doc Rev: 1.3 User Guide" states that if the DISABLE_MASK bit
-    in type2_compare_x_word_1 is set, the mask_value field in
-    type2_compare_x_word_0 is used as an additional 2 byte Compare Value.
-
-    Correct these bugs:
-     * in the !disable_mask codepath, use lduw_le_p() so we
-       correctly load a 16-bit value for comparison
-     * in the disable_mask codepath, we load a full 4-byte value
-       from rx_buf for the comparison, set the compare value to
-       the whole of the cr0 register (i.e. the concatenation of
-       the mask and compare fields), and set mask to 0xffffffff
-       to force a 32-bit comparison
-
-and also tweaked the comment a bit:
-
-+                /*
-+                 * If disable_mask is set, mask_value is used as an
-+                 * additional 2 byte Compare Value; that is equivalent
-+                 * to using the whole cr0 register as the comparison value=
-.
-+                 * Load 32 bits of data from rx_buf, and set mask to
-+                 * all-ones so we compare all 32 bits.
-+                 */
-
-and applied this to target-arm.next.
-
-> Other than that this patch looks good to me!
-
-Can I call that a Reviewed-by (with the above changes)?
-
-thanks
--- PMM
 
