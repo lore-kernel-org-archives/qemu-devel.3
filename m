@@ -4,97 +4,104 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7FF0BC02193
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C6C72C02197
 	for <qemu-devel@archiver.kernel.org>; Tue,  4 Feb 2025 16:03:12 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tfLNn-0004sR-Em; Tue, 04 Feb 2025 11:02:39 -0500
+	id 1tfLO3-0004tX-Kx; Tue, 04 Feb 2025 11:02:55 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mhej@vps-ovh.mhejs.net>)
- id 1tfLNk-0004s8-P8
- for qemu-devel@nongnu.org; Tue, 04 Feb 2025 11:02:36 -0500
-Received: from vps-ovh.mhejs.net ([145.239.82.108])
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1tfLNy-0004tG-BQ
+ for qemu-devel@nongnu.org; Tue, 04 Feb 2025 11:02:54 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mhej@vps-ovh.mhejs.net>)
- id 1tfLNi-0003H7-Rv
- for qemu-devel@nongnu.org; Tue, 04 Feb 2025 11:02:36 -0500
-Received: from MUA
- by vps-ovh.mhejs.net with esmtpsa  (TLS1.3) tls TLS_AES_128_GCM_SHA256
- (Exim 4.98) (envelope-from <mhej@vps-ovh.mhejs.net>)
- id 1tfLNc-00000006r9o-1ibe; Tue, 04 Feb 2025 17:02:28 +0100
-Message-ID: <493dd3bc-8a3d-4b3c-8eea-08e674c38f40@maciej.szmigiero.name>
-Date: Tue, 4 Feb 2025 17:02:23 +0100
-MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v4 07/33] io: tls: Allow terminating the TLS session
- gracefully with EOF
-To: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
-Cc: Peter Xu <peterx@redhat.com>, Fabiano Rosas <farosas@suse.de>,
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1tfLNw-0003Ho-7D
+ for qemu-devel@nongnu.org; Tue, 04 Feb 2025 11:02:50 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1738684965;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=VHYlBMx7vk9cFFvWfO0Lhj3di4vJog50Rx057mtwD/Y=;
+ b=g9kdHa7TPzc6Ig/qsNopbzc4xoJrpPD+Z8103klqpyAwjpn4Z9OP3mJGb5ORQ8e+M/dyUw
+ Esy7SKZ4yeXbRWErTW7El9rh68GKFJ6xlQhPc7fjPGAvPQE0y7qw9xK0hLYShV4bV8/sUK
+ giugZiChIjxvbWHCG67xSkmSU30hpmY=
+Received: from mail-qk1-f197.google.com (mail-qk1-f197.google.com
+ [209.85.222.197]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-96-IcHBqIJlOq2ZpuswvDk-_w-1; Tue, 04 Feb 2025 11:02:32 -0500
+X-MC-Unique: IcHBqIJlOq2ZpuswvDk-_w-1
+X-Mimecast-MFC-AGG-ID: IcHBqIJlOq2ZpuswvDk-_w
+Received: by mail-qk1-f197.google.com with SMTP id
+ af79cd13be357-7b6d0be4fb8so990412485a.2
+ for <qemu-devel@nongnu.org>; Tue, 04 Feb 2025 08:02:31 -0800 (PST)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1738684951; x=1739289751;
+ h=in-reply-to:content-transfer-encoding:content-disposition
+ :mime-version:references:message-id:subject:cc:to:from:date
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=VHYlBMx7vk9cFFvWfO0Lhj3di4vJog50Rx057mtwD/Y=;
+ b=NtvSqV8I+vvdUa4YSkimVWXQ3TjxYSbJGZTKazTWtvDquZ+aM5BiOC0vZ2kanN1T3w
+ iNNbg5CsjMenI+96CQMq6ct5iqp3T40gW/kNTxA4LesnKJ432S+w525SZGPAZhiHJp46
+ YzqYaQE9C/vlFDOwJxP7F7sM2siwB9tmriXImup60mL0RlqjvTFwKmuowfxZ2rhRyYyY
+ 3dXgDDpzuyZ5HurXUFEcUBNiH/7aSKBhr2YxdfUDuKQm5SeV8vfz44vZNlyLVnraXYex
+ hFiOmdx3f49VJboSCi2oVy1yxDudb2bJ3cAYBlhsWA4vbQ7iGnGNsGAtXZgiF/rw7fV1
+ lHXQ==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCWV+FxiAkZmL/nIn7Q61kl0wDG9hOCYkGJtFWsCwANedAL5Sp5Ge/VkdbEtF680mNie8I7B62g0fn4E@nongnu.org
+X-Gm-Message-State: AOJu0Yx8q3D9CqWjGSxQHhE5Ng+XTWUb8PMsqbPuU4USroHrNSjZrine
+ FasUx9QoJAXukrxZ8KzjyMsxnM/7VdkMDYvy1Nr7XTLrLW1nGujXnSTLGui82SkkchUIq8jvkKA
+ e5C3C9I5/IUD6kQiO1QA/t4L+F6tK/WXmGl/m76fjwLqLHoIaBCHu
+X-Gm-Gg: ASbGncuBewHZRnzbKDTbzV7WZIH+ovNQa905f8oTn7gNJufmSyTvV+qCrBL2gdN7l7o
+ roULJJJxwVMZTF7totH8qRPTNR7qi+7IFBqZ1In+Vnr6kO2ctW4iaPkyG5xQ8pyz1CfhQEXKjFZ
+ uQVMnfwdL3LHidUxNe+n83w47xDAEAvS/7jR3edljXQveHLV+DPHiaD3sC7Jzg8p7tCJRp7yIxx
+ M7ofDx17H0EWolU27/HTcDAwkWsYkGGlx80LSg8rIxhW0SMRkfkjWUsZgmFpshM60Q9rlnBqjor
+ Kcp8NG2rXNj1hgChQavVPxvzgmvn1T3+y8Vt4Fpu3Svu44Uz
+X-Received: by 2002:a05:620a:1921:b0:7b6:e8c3:4b5f with SMTP id
+ af79cd13be357-7bffcce5398mr3390729885a.16.1738684951244; 
+ Tue, 04 Feb 2025 08:02:31 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IGc1Qy4b703xLL/dPclDfo4FumcZjUi08bmzuGPtBS4cHLiluNrGZdk2wGKf7p55N0bcKILmw==
+X-Received: by 2002:a05:620a:1921:b0:7b6:e8c3:4b5f with SMTP id
+ af79cd13be357-7bffcce5398mr3390724585a.16.1738684950873; 
+ Tue, 04 Feb 2025 08:02:30 -0800 (PST)
+Received: from x1.local (pool-99-254-114-190.cpe.net.cable.rogers.com.
+ [99.254.114.190]) by smtp.gmail.com with ESMTPSA id
+ af79cd13be357-7c00a90571csm648400485a.83.2025.02.04.08.02.29
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Tue, 04 Feb 2025 08:02:30 -0800 (PST)
+Date: Tue, 4 Feb 2025 11:02:28 -0500
+From: Peter Xu <peterx@redhat.com>
+To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
+Cc: "Maciej S. Szmigiero" <mail@maciej.szmigiero.name>,
+ Fabiano Rosas <farosas@suse.de>,
  Alex Williamson <alex.williamson@redhat.com>,
- =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>,
+ =?utf-8?Q?C=C3=A9dric?= Le Goater <clg@redhat.com>,
  Eric Blake <eblake@redhat.com>, Markus Armbruster <armbru@redhat.com>,
- Avihai Horon <avihaih@nvidia.com>, Joao Martins <joao.m.martins@oracle.com>,
- qemu-devel@nongnu.org
+ Avihai Horon <avihaih@nvidia.com>,
+ Joao Martins <joao.m.martins@oracle.com>, qemu-devel@nongnu.org
+Subject: Re: [PATCH v4 08/33] migration/multifd: Allow premature EOF on TLS
+ incoming channels
+Message-ID: <Z6I6FF_4r_uVUlWU@x1.local>
 References: <cover.1738171076.git.maciej.szmigiero@oracle.com>
- <fdd9a0a6053ac6aed32e08cc284991a3630bbfec.1738171076.git.maciej.szmigiero@oracle.com>
- <Z6IvAXXfIgDRYV5o@redhat.com>
-Content-Language: en-US, pl-PL
-From: "Maciej S. Szmigiero" <mail@maciej.szmigiero.name>
-Autocrypt: addr=mail@maciej.szmigiero.name; keydata=
- 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
-In-Reply-To: <Z6IvAXXfIgDRYV5o@redhat.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+ <baf944c37ead5d30d7e268b2a4074d9acaac2db0.1738171076.git.maciej.szmigiero@oracle.com>
+ <Z6EI0V6Cg7aCbzQU@x1.local> <Z6ItUtb-NhKnn8hy@redhat.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=145.239.82.108;
- envelope-from=mhej@vps-ovh.mhejs.net; helo=vps-ovh.mhejs.net
-X-Spam_score_int: -17
-X-Spam_score: -1.8
-X-Spam_bar: -
-X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9,
- HEADER_FROM_DIFFERENT_DOMAINS=0.07, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+In-Reply-To: <Z6ItUtb-NhKnn8hy@redhat.com>
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=peterx@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -110,88 +117,73 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 4.02.2025 16:15, Daniel P. Berrangé wrote:
-> On Thu, Jan 30, 2025 at 11:08:28AM +0100, Maciej S. Szmigiero wrote:
->> From: "Maciej S. Szmigiero" <maciej.szmigiero@oracle.com>
->>
->> Currently, hitting EOF on receive without sender terminating the TLS
->> session properly causes the TLS channel to return an error (unless
->> the channel was already shut down for read).
->>
->> Add an optional setting whether we instead just return EOF in that
->> case.
->>
->> This possibility will be soon used by the migration multifd code.
->>
->> Signed-off-by: Maciej S. Szmigiero <maciej.szmigiero@oracle.com>
->> ---
->>   include/io/channel-tls.h | 11 +++++++++++
->>   io/channel-tls.c         |  6 ++++++
->>   2 files changed, 17 insertions(+)
->>
->> diff --git a/include/io/channel-tls.h b/include/io/channel-tls.h
->> index 26c67f17e2d3..8552c0d0266e 100644
->> --- a/include/io/channel-tls.h
->> +++ b/include/io/channel-tls.h
->> @@ -49,6 +49,7 @@ struct QIOChannelTLS {
->>       QCryptoTLSSession *session;
->>       QIOChannelShutdown shutdown;
->>       guint hs_ioc_tag;
->> +    bool premature_eof_okay;
->>   };
->>   
->>   /**
->> @@ -143,4 +144,14 @@ void qio_channel_tls_handshake(QIOChannelTLS *ioc,
->>   QCryptoTLSSession *
->>   qio_channel_tls_get_session(QIOChannelTLS *ioc);
->>   
->> +/**
->> + * qio_channel_tls_set_premature_eof_okay:
->> + * @ioc: the TLS channel object
->> + *
->> + * Sets whether receiving an EOF without terminating the TLS session properly
->> + * by used the other side is considered okay or an error (the
->> + * default behaviour).
->> + */
->> +void qio_channel_tls_set_premature_eof_okay(QIOChannelTLS *ioc, bool enabled);
->> +
->>   #endif /* QIO_CHANNEL_TLS_H */
->> diff --git a/io/channel-tls.c b/io/channel-tls.c
->> index aab630e5ae32..1079d6d10de1 100644
->> --- a/io/channel-tls.c
->> +++ b/io/channel-tls.c
->> @@ -147,6 +147,11 @@ qio_channel_tls_new_client(QIOChannel *master,
->>       return NULL;
->>   }
->>   
->> +void qio_channel_tls_set_premature_eof_okay(QIOChannelTLS *ioc, bool enabled)
->> +{
->> +    ioc->premature_eof_okay = enabled;
->> +}
->> +
->>   struct QIOChannelTLSData {
->>       QIOTask *task;
->>       GMainContext *context;
->> @@ -279,6 +284,7 @@ static ssize_t qio_channel_tls_readv(QIOChannel *ioc,
->>               tioc->session,
->>               iov[i].iov_base,
->>               iov[i].iov_len,
->> +            tioc->premature_eof_okay ||
->>               qatomic_load_acquire(&tioc->shutdown) & QIO_CHANNEL_SHUTDOWN_READ,
->>               errp);
->>           if (ret == QCRYPTO_TLS_SESSION_ERR_BLOCK) {
+On Tue, Feb 04, 2025 at 03:08:02PM +0000, Daniel P. Berrangé wrote:
+> On Mon, Feb 03, 2025 at 01:20:01PM -0500, Peter Xu wrote:
+> > On Thu, Jan 30, 2025 at 11:08:29AM +0100, Maciej S. Szmigiero wrote:
+> > > From: "Maciej S. Szmigiero" <maciej.szmigiero@oracle.com>
+> > > 
+> > > Multifd send channels are terminated by calling
+> > > qio_channel_shutdown(QIO_CHANNEL_SHUTDOWN_BOTH) in
+> > > multifd_send_terminate_threads(), which in the TLS case essentially
+> > > calls shutdown(SHUT_RDWR) on the underlying raw socket.
+> > > 
+> > > Unfortunately, this does not terminate the TLS session properly and
+> > > the receive side sees this as a GNUTLS_E_PREMATURE_TERMINATION error.
+> > > 
+> > > The only reason why this wasn't causing migration failures is because
+> > > the current migration code apparently does not check for migration
+> > > error being set after the end of the multifd receive process.
+> > > 
+> > > However, this will change soon so the multifd receive code has to be
+> > > prepared to not return an error on such premature TLS session EOF.
+> > > Use the newly introduced QIOChannelTLS method for that.
+> > > 
+> > > It's worth noting that even if the sender were to be changed to terminate
+> > > the TLS connection properly the receive side still needs to remain
+> > > compatible with older QEMU bit stream which does not do this.
+> > 
+> > If this is an existing bug, we could add a Fixes.
+> > 
+> > Two pure questions..
+> > 
+> >   - What is the correct way to terminate the TLS session without this flag?
+> > 
+> >   - Why this is only needed by multifd sessions?
 > 
-> IMHO a better way to do this is by defining an new flag for use with
-> the qio_channel_readv_full() method. That makes the ignoring of
-> premature shutdown a contextually scoped behaviour rather than a
-> global behaviour.
+> Graceful TLS termination (via gnutls_bye()) should only be important to
+> security if the QEMU protocol in question does not know how much data it
+> is expecting to recieve. ie it cannot otherwise distinguish between an
+> expected EOF, and a premature EOF triggered by an attacker.
+> 
+> If the migration protocol has sufficient info to know when a chanel is
+> expected to see EOF, then we should stop trying to read from the TLS
+> channel before seeing the underlying EOF.
+> 
+> Ignoring GNUTLS_E_PREMATURE_TERMINATION would be valid if we know that
+> migration will still fail corretly in the case of a malicious attack
+> causing premature termination.
+> 
+> If there's a risk that migration may succeed, but with incomplete data,
+> then we would need the full gnutls_bye dance.
 
-Something named like QIO_CHANNEL_READ_FLAG_TLS_EARLY_EOF_OKAY?
+IIUC that's not required for migration then, because migration should know
+exactly how much data to receive, and migration should need to verify that
+and fail if the received data didn't match the expectation along the way.
+We also have QEMU_VM_EOF as the end mark of stream.
 
-> With regards,
-> Daniel
+Said that, are we sure any pre-mature termination will only happen after
+all data read in the receive buffer that was sent?
+
+To ask in another way: what happens if the source QEMU sends everything and
+shutdown()/close() the channel, meanwhile the dest QEMU sees both (1) rest
+data to read, and (2) a pre-mature terminatino of TLS session in a read()
+syscall.  Would (2) be reported even before (1), or the order guaranteed
+that read of the residue data in (1) always happen before (2) (considering
+dest QEMU can be slow sometime on consuming the network buffers)?
 
 Thanks,
-Maciej
+
+-- 
+Peter Xu
 
 
