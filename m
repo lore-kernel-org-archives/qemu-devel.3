@@ -4,154 +4,89 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E7843C02196
-	for <qemu-devel@archiver.kernel.org>; Tue,  4 Feb 2025 15:05:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id EFB54C02194
+	for <qemu-devel@archiver.kernel.org>; Tue,  4 Feb 2025 15:07:40 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tfKTn-0007lM-NC; Tue, 04 Feb 2025 10:04:54 -0500
+	id 1tfKWJ-0001oP-NH; Tue, 04 Feb 2025 10:07:25 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <david@redhat.com>) id 1tfKTK-0007Oy-18
- for qemu-devel@nongnu.org; Tue, 04 Feb 2025 10:04:18 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <david@redhat.com>) id 1tfKTH-0004VO-G2
- for qemu-devel@nongnu.org; Tue, 04 Feb 2025 10:04:17 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1738681454;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=s0V2c5ZkCEYyk6xNKPw2cPirVEbLq5bjJ4I8B50uhsk=;
- b=RK4FEUTAjWiWiDaEbS8bVsT/2ULYyf8+2WhmlAQylkTYnP67FlfHamXcEwlwH6UBEqu6Qy
- Txy17y7wSYMQpzvk7dz574/dTPFNU+XtLowI6vs88UL6Mj0VG8q+P5QbZqITnOnKCoQ9Ui
- PCwD5ap7Y3dYmLrt22OTNiDOTc5zEzQ=
-Received: from mail-wm1-f70.google.com (mail-wm1-f70.google.com
- [209.85.128.70]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-534-w6Nj9ysPOk2IafSpDmCKFw-1; Tue, 04 Feb 2025 10:04:12 -0500
-X-MC-Unique: w6Nj9ysPOk2IafSpDmCKFw-1
-X-Mimecast-MFC-AGG-ID: w6Nj9ysPOk2IafSpDmCKFw
-Received: by mail-wm1-f70.google.com with SMTP id
- 5b1f17b1804b1-43623bf2a83so45697005e9.0
- for <qemu-devel@nongnu.org>; Tue, 04 Feb 2025 07:04:11 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1tfKVz-0001ml-5L
+ for qemu-devel@nongnu.org; Tue, 04 Feb 2025 10:07:06 -0500
+Received: from mail-yb1-xb34.google.com ([2607:f8b0:4864:20::b34])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1tfKVx-00060M-2t
+ for qemu-devel@nongnu.org; Tue, 04 Feb 2025 10:07:02 -0500
+Received: by mail-yb1-xb34.google.com with SMTP id
+ 3f1490d57ef6-e5b1837d182so549020276.0
+ for <qemu-devel@nongnu.org>; Tue, 04 Feb 2025 07:06:53 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1738681613; x=1739286413; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=DvsUuJWe9RvhXqA747nGDaYATpe2HmzJ5+xRgOBNDec=;
+ b=A5tVO0+a9NbbW7A9oJqnOVmSUkfBJq6wOsAc1z0unpp7QsDt26p3qeQNW51m3rA1Tv
+ VeL5ZutCIylQhtvRL7mzDcSSGPcvgyhnYTCcEcndg++JGIPsFIthfbNq7htZcg2OOyA4
+ cjVVBPqYGYPsDWVVxmuECV8LsTuHo3398nVR1HCtKXhYnFDzR0JJ99Bn2Ez5rOJumxC9
+ l3yFYEbz+lnLMIravVSyf01wVXBpKMTakXUJhJyL8WL33r9Tapf00tiF+QLLL1io/4Xw
+ 8Cj5Pmk69HQtIFUEmQOSJRkG/H8d3nL23pTt4LYQigyPwPiDfHXzpssQEqED3wnIqREh
+ Av6Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1738681451; x=1739286251;
- h=content-transfer-encoding:in-reply-to:organization:autocrypt
- :content-language:from:references:cc:to:subject:user-agent
- :mime-version:date:message-id:x-gm-message-state:from:to:cc:subject
- :date:message-id:reply-to;
- bh=s0V2c5ZkCEYyk6xNKPw2cPirVEbLq5bjJ4I8B50uhsk=;
- b=WiSH8CbW111T14R4K/ibEMMxy1v+8DaqxzbfBYvoabhq/zeJJybAVIU6a3PUabExrn
- q8gbxcY3FcDUpgu1r773Xxp6FFpQxPgUJ/75UXJ5RFbIsvCY0YOKUGPjsK+E3YEfCLlD
- tsf9h3XA4cRO3YeYM1VTxR7zn343wmMk9toD8cKAVUm8BJ5Tcbn2Io5rDr3UDz3DsQ75
- 1mf+FifShsCR6rxTRjY2PMzQeNdR6mQ+AaP7MBze5jgT21fHav8oXEMMrJS01rJT8axU
- qoEDSOJXbgr6p4kR2n0+6oMDPKc+YVPa8wMPieLQ6lMBWxWcW48HYX02947bHOwDfqnH
- zQPw==
-X-Gm-Message-State: AOJu0YyucnlRMuaJ/p06QM+SvjSJwTcD2eHxtls+3J8UcNKYi+0JSEEu
- 0TEMnkFbhkpndRcLdFpkZFrtvA6jdONuFqwIWFjnOOS5Gsj8gl7qsFYuh0IXk4QBdmeS93ok0YU
- pWbYGFH+C+E5xlk9/2EbStfWISaCXAXxADeqhjB85uakM0wJ5ap82
-X-Gm-Gg: ASbGncuky1AbSUodwVPPppLuNNFXWdqVqRtx+JNTr339l3YjYmwNBzTNh6WrVgQGAgU
- 9M2uhJgoIXji6KhJWl8PsF5XbXrFf2juUlxKIQLIN3M4Bs3WL3jriWWLFwlqFhCSlwuYJBwDktD
- dkn2tGqS2AHId0XBdMjyTjNdMx/zvBJFfHgfPXIQpDr+zAUKsuBaQcaG32EGakogLPl5L4m6/qJ
- LlRmva8HPQeGjxLgcUSO9Y8zznD6bzl3H8kL0gnKDjy1cng+a8c1u37TxcKtcils76dtHF+O8iy
- 1gQMeGy2cRkPIYPbO+dPYqR0XVMyCq6KAr2t1M9f9yJttmnaAoVxmlJ3vn1Okw26QGJqoZV+/SA
- i5rFo7jvxnt35azS/bioPUX926/E=
-X-Received: by 2002:a05:600c:1d1c:b0:436:469f:2210 with SMTP id
- 5b1f17b1804b1-438dc3a90f2mr187071955e9.1.1738681450358; 
- Tue, 04 Feb 2025 07:04:10 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IHvtf3TdCaicMFcWlrZwDQ7IHVLMfPLTpQx7k8nbIgn/2BH8hEaSAnqV6T0hfPbM5sHhfPLIg==
-X-Received: by 2002:a05:600c:1d1c:b0:436:469f:2210 with SMTP id
- 5b1f17b1804b1-438dc3a90f2mr187071545e9.1.1738681449952; 
- Tue, 04 Feb 2025 07:04:09 -0800 (PST)
-Received: from ?IPV6:2003:cb:c70a:300:3ae1:c3c0:cef:8413?
- (p200300cbc70a03003ae1c3c00cef8413.dip0.t-ipconnect.de.
- [2003:cb:c70a:300:3ae1:c3c0:cef:8413])
- by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-438dcc2c4ddsm226220665e9.17.2025.02.04.07.04.07
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 04 Feb 2025 07:04:08 -0800 (PST)
-Message-ID: <a0da292d-9728-4a10-b79b-aca54103eed5@redhat.com>
-Date: Tue, 4 Feb 2025 16:04:06 +0100
+ d=1e100.net; s=20230601; t=1738681613; x=1739286413;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=DvsUuJWe9RvhXqA747nGDaYATpe2HmzJ5+xRgOBNDec=;
+ b=jZBOkJBZHLXUFnTpRP/622N+tJWb1BlTMKU9D8GiZmgdKawVzGVfcgLK0MKC0JdItX
+ TQvu/0GFiwr0wV/b1qMPirSlY/NZiM935uNwhIO2izOgxuXXunoFL0qDNScDmEBO2igF
+ PYIGcOQ65Oor/W1/JqlwDTPQHFovME4pLe2sW3ssYpnf16jPBriKHOH8RwooRHW2R5Oq
+ A9FFMhy6Vo6NDAzcULpI2H5r/f83eMspQi+sUGjXSmpqSQcV83BdHZauCi1UL3Z0Dqv4
+ webSx9IMPPgQvO/1lRAD4HI5wEwXbMleeEdrEC40azb9bK169vG1/GAGQznmYeQA+XjB
+ wxLA==
+X-Gm-Message-State: AOJu0YzJS7Q4J+YmJaN1MtMGr/KpKmOE+OSQ7cDQyElK0U4rySjwCU1a
+ 68Y/AHr8OGtvPRqrfKeE+HvCjh75/+0rdaG/EMavWO8hJ1KAiUdpr5W7XhJptmVsG1pbD7RNxup
+ 5oIL7ifHSKvmQM9Z39mPAIMZGQBOZ12f+/9Mrig==
+X-Gm-Gg: ASbGncvxhvRUoJ9nct0oQNBGIymZHkbhJnIyTqtSu+sw14m1qgD8EnNgyywAHfSpXMv
+ yPYHY3k56v63f6qiJRzSu80U2B/s+JGJmUXwx/eSHIO15JiC5HlmKPLeP/OBGq+HCRCbOFUxRFA
+ ==
+X-Google-Smtp-Source: AGHT+IGsjl3ZXwFhDzzL3TR7GiZ5aZhSsdWVUdMkA40VfGIaKQvcRftCjN+55wrCC2qrBvCBxOLQRolyLNO14fhr68E=
+X-Received: by 2002:a05:6902:2481:b0:e58:55be:b0ae with SMTP id
+ 3f1490d57ef6-e5b135baa29mr3250832276.14.1738681612724; Tue, 04 Feb 2025
+ 07:06:52 -0800 (PST)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 0/7] physmem: teach cpu_memory_rw_debug() to write to
- more memory regions
-To: Peter Xu <peterx@redhat.com>
-Cc: qemu-devel@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>,
- =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Peter Maydell <peter.maydell@linaro.org>,
- =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Alex Williamson <alex.williamson@redhat.com>,
- Eduardo Habkost <eduardo@habkost.net>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- Elena Ufimtseva <elena.ufimtseva@oracle.com>,
- Jagannathan Raman <jag.raman@oracle.com>,
- "Dr. David Alan Gilbert" <dave@treblig.org>, Stefan Zabka <git@zabka.it>
-References: <20250124154533.3534250-1-david@redhat.com>
- <Z6IoS9DWj24oZhRV@x1.local>
-From: David Hildenbrand <david@redhat.com>
-Content-Language: en-US
-Autocrypt: addr=david@redhat.com; keydata=
- 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
- WNyWQQ==
-Organization: Red Hat
-In-Reply-To: <Z6IoS9DWj24oZhRV@x1.local>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=david@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
+References: <20250204002240.97830-1-philmd@linaro.org>
+ <20250204002240.97830-4-philmd@linaro.org>
+In-Reply-To: <20250204002240.97830-4-philmd@linaro.org>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Tue, 4 Feb 2025 15:06:41 +0000
+X-Gm-Features: AWEUYZlJeSPpkEmY8V_OFRFE4QwuMGfbLvKpvxPfi8-motuDR53oUNLUaclNfgI
+Message-ID: <CAFEAcA_81PfM3SFTXEgj3c2yBh32XDwbkosM8z+qBY2ZZb2Akw@mail.gmail.com>
+Subject: Re: [PATCH v2 03/12] hw/arm/raspi: Unify RASPI_MACHINE types
+To: =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>
+Cc: qemu-devel@nongnu.org,
+ =?UTF-8?Q?Daniel_P_=2E_Berrang=C3=A9?= <berrange@redhat.com>, 
+ BALATON Zoltan <balaton@eik.bme.hu>, Laurent Vivier <lvivier@redhat.com>, 
+ Ovchinnikov Vitalii <vitalii.ovchinnikov@auriga.com>,
+ Jared Mauch <jared+home@puck.nether.net>, 
+ Fabiano Rosas <farosas@suse.de>, Paolo Bonzini <pbonzini@redhat.com>,
+ qemu-arm@nongnu.org, 
+ =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>, 
+ devel@lists.libvirt.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2607:f8b0:4864:20::b34;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yb1-xb34.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -167,60 +102,55 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 04.02.25 15:46, Peter Xu wrote:
-> On Fri, Jan 24, 2025 at 04:45:25PM +0100, David Hildenbrand wrote:
->> This is a follow-up to [1], implementing it by avoiding the use of
->> address_space_write_rom() in cpu_memory_rw_debug() completely, and
->> teaching address_space_write() about debug access instead, the can also
->> write to ROM.
->>
->> The goal is to let GDB via cpu_memory_rw_debug() to also properly write to
->> MMIO device regions, not just RAM/ROM.
->>
->> It's worth noting that other users of address_space_write_rom() are
->> left unchanged. Maybe hw/core/loader.c and friends could now be converted
->> to to a debug access via address_space_write() instead?
->>
->> Survives a basic gitlab CI build/check.
->>
->> [1] https://lore.kernel.org/all/20241220195923.314208-1-git@zabka.it/
->>
->> v1 -> v2:
->> * Split up "physmem: disallow direct access to RAM DEVICE in
->>    address_space_write_rom()" into 4 patches
->>
->> Cc: Paolo Bonzini <pbonzini@redhat.com>
->> Cc: Peter Xu <peterx@redhat.com>
->> Cc: Philippe Mathieu-Daudé <philmd@linaro.org>
->> Cc: Peter Maydell <peter.maydell@linaro.org>
->> Cc: Alex Bennée <alex.bennee@linaro.org>
->> Cc: Alex Williamson <alex.williamson@redhat.com>
->> Cc: Eduardo Habkost <eduardo@habkost.net>
->> Cc: Marcel Apfelbaum <marcel.apfelbaum@gmail.com>
->> Cc: Elena Ufimtseva <elena.ufimtseva@oracle.com>
->> Cc: Jagannathan Raman <jag.raman@oracle.com>
->> Cc: "Dr. David Alan Gilbert" <dave@treblig.org>
->> Cc: Stefan Zabka <git@zabka.it>
->>
->> David Hildenbrand (7):
->>    physmem: factor out memory_region_is_ram_device() check in
->>      memory_access_is_direct()
->>    physmem: factor out RAM/ROMD check in memory_access_is_direct()
->>    physmem: factor out direct access check into
->>      memory_region_supports_direct_access()
->>    physmem: disallow direct access to RAM DEVICE in
->>      address_space_write_rom()
->>    memory: pass MemTxAttrs to memory_access_is_direct()
->>    hmp: use cpu_get_phys_page_debug() in hmp_gva2gpa()
->>    physmem: teach cpu_memory_rw_debug() to write to more memory regions
-> 
-> David, I think it doesn't apply on master, would you rebase and repost?
+On Tue, 4 Feb 2025 at 00:23, Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org=
+> wrote:
+>
+> Merge Raspi4bMachineState within RaspiMachineState by
+> using an unnamed union.
+>
+> Signed-off-by: Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org>
+> ---
+>  hw/arm/raspi.c | 21 +++++++--------------
+>  1 file changed, 7 insertions(+), 14 deletions(-)
+>
+> diff --git a/hw/arm/raspi.c b/hw/arm/raspi.c
+> index 3fa382d62ce..ef94d57dab5 100644
+> --- a/hw/arm/raspi.c
+> +++ b/hw/arm/raspi.c
+> @@ -38,9 +38,6 @@
+>  #define TYPE_RASPI_MACHINE  MACHINE_TYPE_NAME("raspi-common")
+>  OBJECT_DECLARE_SIMPLE_TYPE(RaspiMachineState, RASPI_MACHINE)
+>
+> -#define TYPE_RASPI4B_MACHINE MACHINE_TYPE_NAME("raspi4b")
+> -OBJECT_DECLARE_SIMPLE_TYPE(Raspi4bMachineState, RASPI4B_MACHINE)
+> -
+>  #define SMPBOOT_ADDR    0x300 /* this should leave enough space for ATAG=
+S */
+>  #define MVBAR_ADDR      0x400 /* secure vectors */
+>  #define BOARDSETUP_ADDR (MVBAR_ADDR + 0x20) /* board setup code */
+> @@ -49,15 +46,12 @@ OBJECT_DECLARE_SIMPLE_TYPE(Raspi4bMachineState, RASPI=
+4B_MACHINE)
+>  #define SPINTABLE_ADDR  0xd8 /* Pi 3 bootloader spintable */
+>
+>  struct RaspiMachineState {
+> -    /*< private >*/
+>      RaspiBaseMachineState parent_obj;
+> -    /*< public >*/
+> -    BCM283XState soc;
+> -};
+>
+> -struct Raspi4bMachineState {
+> -    RaspiBaseMachineState parent_obj;
+> -    BCM2838State soc;
+> +    union {
+> +        BCM283XState soc;
+> +        BCM2838State soc4;
+> +    };
 
-Sure, can do.
+Do we have any other examples of using a union like this?
+I think it's exactly because the components are different
+for raspi4b that it has its own machine state struct.
 
--- 
-Cheers,
-
-David / dhildenb
-
+thanks
+-- PMM
 
