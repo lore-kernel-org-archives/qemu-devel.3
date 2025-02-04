@@ -4,138 +4,89 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C7D72C02193
-	for <qemu-devel@archiver.kernel.org>; Tue,  4 Feb 2025 16:23:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C4CE4C02193
+	for <qemu-devel@archiver.kernel.org>; Tue,  4 Feb 2025 16:27:42 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tfLhG-0001mP-NE; Tue, 04 Feb 2025 11:22:46 -0500
+	id 1tfLlN-00043I-NC; Tue, 04 Feb 2025 11:27:01 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1tfLhE-0001lw-KY
- for qemu-devel@nongnu.org; Tue, 04 Feb 2025 11:22:44 -0500
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1tfLlM-000439-Ls
+ for qemu-devel@nongnu.org; Tue, 04 Feb 2025 11:27:00 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1tfLhC-0001aH-JV
- for qemu-devel@nongnu.org; Tue, 04 Feb 2025 11:22:44 -0500
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1tfLlK-00028G-Ht
+ for qemu-devel@nongnu.org; Tue, 04 Feb 2025 11:27:00 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1738686160;
+ s=mimecast20190719; t=1738686416;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=jPM1lXAGP+RwnNe3KGvidO4XTGPoft9GxE4NGuUMnw8=;
- b=Dsc8A3lr4m9f98GVIbSswbu1gfTBMnMMSjOiK5wXyKHixHW/SXsAYfkffqQH61yb5XKV9V
- ZcvmEMqv4d35ZOljNEzJWFpCG25De6jqWt5qQViUaPCu4+rM5RLVLXcl7M896u8oSPpI49
- W6s2IwWle4z/YmDgaUcOrR5xmpnvVY0=
-Received: from mail-qt1-f200.google.com (mail-qt1-f200.google.com
- [209.85.160.200]) by relay.mimecast.com with ESMTP with STARTTLS
+ in-reply-to:in-reply-to:references:references;
+ bh=YkRmWBY4iu90yJebV/B9r/1iCKRTGW8Frh7k2O5yXe0=;
+ b=RcURGdIQWQ3xE7TL1c7Ug8v9HvCpjDBxnhG3j7RPTo4rw/lFKal5MXIdalX2z1V9u/G2hF
+ HJVEVxDFFfMZ94CuA2GdQijBLC+oMNp7cw16ti/arV7AoprwU86gHSK1TQdS6U7UTr+jqh
+ aBmRtpM9c/qtq+NIdg3aXrzgEaB/w6w=
+Received: from mail-qk1-f199.google.com (mail-qk1-f199.google.com
+ [209.85.222.199]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-512-hrA8qpKzP2WXBK8SYrcPRQ-1; Tue, 04 Feb 2025 11:22:39 -0500
-X-MC-Unique: hrA8qpKzP2WXBK8SYrcPRQ-1
-X-Mimecast-MFC-AGG-ID: hrA8qpKzP2WXBK8SYrcPRQ
-Received: by mail-qt1-f200.google.com with SMTP id
- d75a77b69052e-46c83bc370bso105067321cf.0
- for <qemu-devel@nongnu.org>; Tue, 04 Feb 2025 08:22:39 -0800 (PST)
+ us-mta-158-MfH7Mb_INu-5l0jWkeX81Q-1; Tue, 04 Feb 2025 11:26:55 -0500
+X-MC-Unique: MfH7Mb_INu-5l0jWkeX81Q-1
+X-Mimecast-MFC-AGG-ID: MfH7Mb_INu-5l0jWkeX81Q
+Received: by mail-qk1-f199.google.com with SMTP id
+ af79cd13be357-7b6e5c9ef38so939431285a.1
+ for <qemu-devel@nongnu.org>; Tue, 04 Feb 2025 08:26:55 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1738686158; x=1739290958;
- h=content-transfer-encoding:in-reply-to:autocrypt:from
- :content-language:references:cc:to:subject:user-agent:mime-version
- :date:message-id:x-gm-message-state:from:to:cc:subject:date
+ d=1e100.net; s=20230601; t=1738686414; x=1739291214;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to;
- bh=jPM1lXAGP+RwnNe3KGvidO4XTGPoft9GxE4NGuUMnw8=;
- b=xT6HiI8e5hQ651cDZ7xmDX8Ov1ge8EDU+JEbxMsXypHM8tIIh6P0l1fzVjd+Z+1jQl
- LzSwVC89Sji5B25c2hKTNLd4g1BmBAsMjmJwL0fPbHLAh+Pvd9uM0Jgg4si/9y3glaMn
- WhidLpueR3xHDO5rcYcjmt7qtmn9Y4TvcIoiaUmbIEUlLOZ1/cNM2/BtPdJSyFXPw+8q
- fkZEaYaZ+HfTn8jBAgCeeaMtIc8IZFbw99JeoluuIEqUGgKIm3GdsG0uOXdbRcu9c60x
- OG3R3hAL19BeKLOWyKbc5lMvSyl2bxYmk/2mVCPA8cc9TEmgASDlFOi2tD9i9XYDDC1G
- LpMQ==
+ bh=YkRmWBY4iu90yJebV/B9r/1iCKRTGW8Frh7k2O5yXe0=;
+ b=kYwNHaroCgudiGzGmAd0QVXR4S3oHeFfs6jPYo+cVoOQeHRtR/9TgTQe2cuv61IMrI
+ eAB8Yo4CZwLZSvpcrPiYgJgobfZpcr807PLX0aH1TBNcdxBi6zH6NeNRR+/hOpso7PkY
+ sKfm/uE+DpKVVTKa7qjrzJU6JepLjb1GrHmQ3RX2Cpy23c3YsLWSOcIfWcESijurNPC4
+ lGs79Ngu/F1wOgIdOrK0ylrO6EPUjdV1HHEayAcwP2jkSTAV+z8N/KfZrB72ls76xchO
+ VgXb0WDU5B0rb2MJpvw8HqQk8PzXS98TANvnUAicG/l9jBH04U0fQgpBu+uAhUZK7FOx
+ pdBw==
 X-Forwarded-Encrypted: i=1;
- AJvYcCU4KIAl+9cVRMK1S0GhBdCz+tF2cXzkbm23yZRgrIsJ7iXmEJ9Yi1D2GmLMy6Kz5q2CXnQ0Bd1Iy0t7@nongnu.org
-X-Gm-Message-State: AOJu0YzuITiUjHlrSWX31CF4DQuM8Q2e9CWiAiVWylADedxg7QBVtbDk
- mEWRftYSj18UqWKhtnN4kBkTigPwn/E6QiTdyupccAqPXsQIdzvcOLMghrxc0tFN5oLI4HFVlXi
- 6EZNipIrKPXdlw3RufHSCjedEAlBExkC61YH7ZEy33zSN1O17HzO4
-X-Gm-Gg: ASbGncstXSQPP6SUUcIJ2TZ2F4jFMqhptNyicXJEbZLeOK25j0akXMr++wI+AmZOFnw
- 5lkgsdp6RTNOLmtSYrNEEdpbr34KCi8Y9wYb7aT/3nKPUUJpkzicEIwtR8PvCLla2EfjLacyzgx
- x9PNq0Te/QWxh3P3ESxpPU5a8WevnkeJ1GEKmxABsLmx3C3PlU82qmfgL/PwHzOjkoRNlMtXYn9
- Mmykl5Uh39nXI8J868iapavR97xSjWPhCe0VZ7O5dbtSWZAnleQc2Dm1SSzEkU92rfCT3hq22bp
- C1ny0cbfkG5sSQ1NH4o6TVF204JHeOgFJRZ5QwBIRfo=
-X-Received: by 2002:ac8:5916:0:b0:461:7558:892f with SMTP id
- d75a77b69052e-470186dbaafmr58284101cf.15.1738686158648; 
- Tue, 04 Feb 2025 08:22:38 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IHbEcusCDrGmH1arfzvydzxNbmQCswiROwfJ/y0yiHFOMJF8JrXWIogg8iBTuVl877JfZoKXw==
-X-Received: by 2002:ac8:5916:0:b0:461:7558:892f with SMTP id
- d75a77b69052e-470186dbaafmr58283661cf.15.1738686158244; 
- Tue, 04 Feb 2025 08:22:38 -0800 (PST)
-Received: from ?IPV6:2a01:e0a:280:24f0:9db0:474c:ff43:9f5c?
- ([2a01:e0a:280:24f0:9db0:474c:ff43:9f5c])
- by smtp.gmail.com with ESMTPSA id
- d75a77b69052e-46fdf172362sm60277011cf.52.2025.02.04.08.22.36
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 04 Feb 2025 08:22:37 -0800 (PST)
-Message-ID: <b17064fb-20d5-4879-a4bf-aa57904b2272@redhat.com>
-Date: Tue, 4 Feb 2025 17:22:35 +0100
+ AJvYcCU5CcIK884B5mH/SSkedNmrD6GJnHCw1dxSGubsZSGdrndmKiXHdAxVitPqnXndzYyAS8PFt+iJggYk@nongnu.org
+X-Gm-Message-State: AOJu0Yyo9lfIpq6MTL7G1yfmyfqg2BTTafoHh4THCZjnDFUY9nUZv7ld
+ Kq4ZfTiNk2ektQ8LWLifxHzvkU2HYcK4F2I3vOFd8YG3x/hDQty7QoFR/JnyDSGkIxLzcItwTc2
+ opIdO16hsdg1oTw8IfIDN5Ea+INCkRvrSryfOkWeaJw4qxxrcfOHkoy4qhT4w
+X-Gm-Gg: ASbGncuWjWHjav4aGCeyIiXSCiFSuXr+vHA+YeWFOKYSiSYrN1wm4JL4d+YZIuyg2zW
+ 0sLcaXuv6iP6svp6AEA8lvL0p18OQSH9FhnxvEQpQzxHMDQWfUA3AHKac97Q9Cv69Z6zbJ9MR/H
+ bpiuuyEIVHW5H7p7HfinZXqc7Y4OFutyYAwH9vCNr2oif26AWusvg5LkTHV5hy0FrokRbJr6HIu
+ 3CTkmny5IGkBvhM3H7mHivyZJmACj8P1+OpntubhZvVZIPaXviV2PzuZoegZthfZnJMUS1jCBI3
+ hc3O7CBB6GBFZ0qmVKbjGYb2wefv2cDy5/Qcq+lzpU1pkgsX
+X-Received: by 2002:a05:620a:2601:b0:7b6:d5b2:e58 with SMTP id
+ af79cd13be357-7c02ec5c60emr680669985a.18.1738686414576; 
+ Tue, 04 Feb 2025 08:26:54 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IHyc/OTn/mPJbUE+byY9nRx4Ox7i4uphGaFGCVWc4vD90wnnAG67+kRIlmTbUzaiaezjzjbuA==
+X-Received: by 2002:a05:620a:2601:b0:7b6:d5b2:e58 with SMTP id
+ af79cd13be357-7c02ec5c60emr680666985a.18.1738686414212; 
+ Tue, 04 Feb 2025 08:26:54 -0800 (PST)
+Received: from x1.local (pool-99-254-114-190.cpe.net.cable.rogers.com.
+ [99.254.114.190]) by smtp.gmail.com with ESMTPSA id
+ af79cd13be357-7c00a8bbac4sm652503885a.22.2025.02.04.08.26.53
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Tue, 04 Feb 2025 08:26:53 -0800 (PST)
+Date: Tue, 4 Feb 2025 11:26:52 -0500
+From: Peter Xu <peterx@redhat.com>
+To: Peter Maydell <peter.maydell@linaro.org>,
+ Steve Sistare <steven.sistare@oracle.com>
+Cc: Fabiano Rosas <farosas@suse.de>, qemu-devel@nongnu.org,
+ Steve Sistare <steven.sistare@oracle.com>,
+ Markus Armbruster <armbru@redhat.com>
+Subject: Re: [PULL 17/42] migration: cpr-transfer mode
+Message-ID: <Z6I_zJF1dljLK-YI@x1.local>
+References: <20250129160059.6987-1-farosas@suse.de>
+ <20250129160059.6987-18-farosas@suse.de>
+ <CAFEAcA9q+QLJnyVZDAKLsB0i2iBohNwkTXmycpV5CUsWYWZmFw@mail.gmail.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH V1 18/26] vfio/iommufd: define iommufd_cdev_make_hwpt
-To: Steve Sistare <steven.sistare@oracle.com>, qemu-devel@nongnu.org
-Cc: Alex Williamson <alex.williamson@redhat.com>, Yi Liu
- <yi.l.liu@intel.com>, Eric Auger <eric.auger@redhat.com>,
- Zhenzhong Duan <zhenzhong.duan@intel.com>,
- "Michael S. Tsirkin" <mst@redhat.com>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>, Peter Xu <peterx@redhat.com>,
- Fabiano Rosas <farosas@suse.de>
-References: <1738161802-172631-1-git-send-email-steven.sistare@oracle.com>
- <1738161802-172631-19-git-send-email-steven.sistare@oracle.com>
-Content-Language: en-US, fr
-From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
-Autocrypt: addr=clg@redhat.com; keydata=
- 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
- uVKe8BVz4atMOoktmt0GWTOC8P4=
-In-Reply-To: <1738161802-172631-19-git-send-email-steven.sistare@oracle.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=clg@redhat.com;
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <CAFEAcA9q+QLJnyVZDAKLsB0i2iBohNwkTXmycpV5CUsWYWZmFw@mail.gmail.com>
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=peterx@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
@@ -160,125 +111,135 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 1/29/25 15:43, Steve Sistare wrote:
-> Refactor and define iommufd_cdev_make_hwpt, to be called by CPR in a
-> a later patch.  No functional change.
+On Tue, Feb 04, 2025 at 01:40:34PM +0000, Peter Maydell wrote:
+> On Wed, 29 Jan 2025 at 16:11, Fabiano Rosas <farosas@suse.de> wrote:
+> >
+> > From: Steve Sistare <steven.sistare@oracle.com>
+> >
+> > Add the cpr-transfer migration mode, which allows the user to transfer
+> > a guest to a new QEMU instance on the same host with minimal guest pause
+> > time, by preserving guest RAM in place, albeit with new virtual addresses
+> > in new QEMU, and by preserving device file descriptors.  Pages that were
+> > locked in memory for DMA in old QEMU remain locked in new QEMU, because the
+> > descriptor of the device that locked them remains open.
+> >
+> > cpr-transfer preserves memory and devices descriptors by sending them to
+> > new QEMU over a unix domain socket using SCM_RIGHTS.  Such CPR state cannot
+> > be sent over the normal migration channel, because devices and backends
+> > are created prior to reading the channel, so this mode sends CPR state
+> > over a second "cpr" migration channel.  New QEMU reads the cpr channel
+> > prior to creating devices or backends.  The user specifies the cpr channel
+> > in the channel arguments on the outgoing side, and in a second -incoming
+> > command-line parameter on the incoming side.
+> >
+> > The user must start old QEMU with the the '-machine aux-ram-share=on' option,
+> > which allows anonymous memory to be transferred in place to the new process
+> > by transferring a memory descriptor for each ram block.  Memory-backend
+> > objects must have the share=on attribute, but memory-backend-epc is not
+> > supported.
+> >
+> > The user starts new QEMU on the same host as old QEMU, with command-line
+> > arguments to create the same machine, plus the -incoming option for the
+> > main migration channel, like normal live migration.  In addition, the user
+> > adds a second -incoming option with channel type "cpr".  This CPR channel
+> > must support file descriptor transfer with SCM_RIGHTS, i.e. it must be a
+> > UNIX domain socket.
+> >
+> > To initiate CPR, the user issues a migrate command to old QEMU, adding
+> > a second migration channel of type "cpr" in the channels argument.
+> > Old QEMU stops the VM, saves state to the migration channels, and enters
+> > the postmigrate state.  New QEMU mmap's memory descriptors, and execution
+> > resumes.
+> >
+> > The implementation splits qmp_migrate into start and finish functions.
+> > Start sends CPR state to new QEMU, which responds by closing the CPR
+> > channel.  Old QEMU detects the HUP then calls finish, which connects the
+> > main migration channel.
+> >
+> > In summary, the usage is:
+> >
+> >   qemu-system-$arch -machine aux-ram-share=on ...
+> >
+> >   start new QEMU with "-incoming <main-uri> -incoming <cpr-channel>"
+> >
+> >   Issue commands to old QEMU:
+> >     migrate_set_parameter mode cpr-transfer
+> >
+> >     {"execute": "migrate", ...
+> >         {"channel-type": "main"...}, {"channel-type": "cpr"...} ... }
+> >
+> > Signed-off-by: Steve Sistare <steven.sistare@oracle.com>
+> > Reviewed-by: Peter Xu <peterx@redhat.com>
+> > Acked-by: Markus Armbruster <armbru@redhat.com>
+> > Link: https://lore.kernel.org/r/1736967650-129648-17-git-send-email-steven.sistare@oracle.com
+> > Signed-off-by: Fabiano Rosas <farosas@suse.de>
 > 
-> Signed-off-by: Steve Sistare <steven.sistare@oracle.com>
-> ---
->   hw/vfio/iommufd.c | 69 +++++++++++++++++++++++++++++++++----------------------
->   1 file changed, 41 insertions(+), 28 deletions(-)
+> Hi; this commit includes some code that has confused
+> Coverity (CID 1590980) and it also confused me, so maybe
+> it could be usefully made clearer?
 > 
-> diff --git a/hw/vfio/iommufd.c b/hw/vfio/iommufd.c
-> index 3490a8f..42ba63f 100644
-> --- a/hw/vfio/iommufd.c
-> +++ b/hw/vfio/iommufd.c
-> @@ -275,6 +275,41 @@ static bool iommufd_cdev_detach_ioas_hwpt(VFIODevice *vbasedev, Error **errp)
->       return true;
->   }
->   
-> +static void iommufd_cdev_set_hwpt(VFIODevice *vbasedev, VFIOIOASHwpt *hwpt)
-> +{
-> +    vbasedev->hwpt = hwpt;
-> +    vbasedev->iommu_dirty_tracking = iommufd_hwpt_dirty_tracking(hwpt);
-> +    QLIST_INSERT_HEAD(&hwpt->device_list, vbasedev, hwpt_next);
-> +}
-> +
-> +static VFIOIOASHwpt *iommufd_cdev_make_hwpt(VFIODevice *vbasedev,
-> +                                            VFIOIOMMUFDContainer *container,
-> +                                            uint32_t hwpt_id)
-> +{
-> +    VFIOIOASHwpt *hwpt = g_malloc0(sizeof(*hwpt));
-> +    uint32_t flags = 0;
-> +
-> +    /*
-> +     * This is quite early and VFIO Migration state isn't yet fully
-> +     * initialized, thus rely only on IOMMU hardware capabilities as to
-> +     * whether IOMMU dirty tracking is going to be requested. Later
-> +     * vfio_migration_realize() may decide to use VF dirty tracking
-> +     * instead.
-> +     */
-> +    if (vbasedev->hiod->caps.hw_caps & IOMMU_HW_CAP_DIRTY_TRACKING) {
-> +        flags = IOMMU_HWPT_ALLOC_DIRTY_TRACKING;
-> +    }
-> +
-> +    hwpt->hwpt_id = hwpt_id;
-> +    hwpt->hwpt_flags = flags;
-> +    QLIST_INIT(&hwpt->device_list);
-> +
-> +    QLIST_INSERT_HEAD(&container->hwpt_list, hwpt, next);
-> +    container->bcontainer.dirty_pages_supported |=
-> +                                vbasedev->iommu_dirty_tracking;
-> +    return hwpt;
-> +}
-> +
->   static bool iommufd_cdev_autodomains_get(VFIODevice *vbasedev,
->                                            VFIOIOMMUFDContainer *container,
->                                            Error **errp)
-> @@ -304,24 +339,11 @@ static bool iommufd_cdev_autodomains_get(VFIODevice *vbasedev,
->   
->               return false;
->           } else {
-> -            vbasedev->hwpt = hwpt;
-> -            QLIST_INSERT_HEAD(&hwpt->device_list, vbasedev, hwpt_next);
-> -            vbasedev->iommu_dirty_tracking = iommufd_hwpt_dirty_tracking(hwpt);
-> +            iommufd_cdev_set_hwpt(vbasedev, hwpt);
->               return true;
->           }
->       }
->   
-> -    /*
-> -     * This is quite early and VFIO Migration state isn't yet fully
-> -     * initialized, thus rely only on IOMMU hardware capabilities as to
-> -     * whether IOMMU dirty tracking is going to be requested. Later
-> -     * vfio_migration_realize() may decide to use VF dirty tracking
-> -     * instead.
-> -     */
-> -    if (vbasedev->hiod->caps.hw_caps & IOMMU_HW_CAP_DIRTY_TRACKING) {
-> -        flags = IOMMU_HWPT_ALLOC_DIRTY_TRACKING;
-> -    }
->
+> 
+> >  void qmp_migrate(const char *uri, bool has_channels,
+> >                   MigrationChannelList *channels, bool has_detach, bool detach,
+> >                   bool has_resume, bool resume, Error **errp)
+> > @@ -2056,6 +2118,7 @@ void qmp_migrate(const char *uri, bool has_channels,
+> >      g_autoptr(MigrationChannel) channel = NULL;
+> >      MigrationAddress *addr = NULL;
+> >      MigrationChannel *channelv[MIGRATION_CHANNEL_TYPE__MAX] = { NULL };
+> > +    MigrationChannel *cpr_channel = NULL;
+> >
+> >      /*
+> >       * Having preliminary checks for uri and channel
+> > @@ -2076,6 +2139,7 @@ void qmp_migrate(const char *uri, bool has_channels,
+> >              }
+> >              channelv[type] = channels->value;
+> >          }
+> > +        cpr_channel = channelv[MIGRATION_CHANNEL_TYPE_CPR];
+> >          addr = channelv[MIGRATION_CHANNEL_TYPE_MAIN]->addr;
+> >          if (!addr) {
+> >              error_setg(errp, "Channel list has no main entry");
+> > @@ -2096,12 +2160,52 @@ void qmp_migrate(const char *uri, bool has_channels,
+> >          return;
+> >      }
+> >
+> > +    if (s->parameters.mode == MIG_MODE_CPR_TRANSFER && !cpr_channel) {
+> > +        error_setg(errp, "missing 'cpr' migration channel");
+> > +        return;
+> > +    }
+> 
+> Here in qmp_migrate() we bail out if cpr_channel is NULL,
+> provided that s->parameters.mode is MIG_MODE_CPR_TRANSFER...
+> 
+> > +
+> >      resume_requested = has_resume && resume;
+> >      if (!migrate_prepare(s, resume_requested, errp)) {
+> >          /* Error detected, put into errp */
+> >          return;
+> >      }
+> >
+> > +    if (cpr_state_save(cpr_channel, &local_err)) {
+> 
+> ...but in cpr_state_save() when we decide whether to dereference
+> cpr_channel or not, we aren't checking s->parameters.mode,
+> we call migrate_mode() and check the result of that.
+> And migrate_mode() isn't completely trivial: it calls
+> cpr_get_incoming_mode(), so it's not obvious that it's
+> necessarily going to be the same value as s->parameters.mode.
+> So Coverity complains that it sees a code path where we
+> might dereference cpr_channel even when it's NULL.
+> 
+> Could this be made a bit clearer somehow, do you think?
 
-AFAICT, iommufd_backend_alloc_hwpt() below needs the flag value.
+That migrate_mode() is indeed tricky, and should only be needed for
+incoming side QEMU to workaround current limitation that the migration
+parameter "mode" cannot be set as early as when cpr_state_load() happens..
 
-Thanks,
+I think we could check s->parameters.mode here before doing
+cpr_state_save(), it can also be more readable.
 
-C.
+Steve, do you want to send a patch?
 
-
-
->       if (!iommufd_backend_alloc_hwpt(iommufd, vbasedev->devid,
->                                       container->ioas_id, flags,
->                                       IOMMU_HWPT_DATA_NONE, 0, NULL,
-> @@ -329,24 +351,15 @@ static bool iommufd_cdev_autodomains_get(VFIODevice *vbasedev,
->           return false;
->       }
->   
-> -    hwpt = g_malloc0(sizeof(*hwpt));
-> -    hwpt->hwpt_id = hwpt_id;
-> -    hwpt->hwpt_flags = flags;
-> -    QLIST_INIT(&hwpt->device_list);
-> -
-> -    ret = iommufd_cdev_attach_ioas_hwpt(vbasedev, hwpt->hwpt_id, errp);
-> +    ret = iommufd_cdev_attach_ioas_hwpt(vbasedev, hwpt_id, errp);
->       if (ret) {
-> -        iommufd_backend_free_id(container->be, hwpt->hwpt_id);
-> -        g_free(hwpt);
-> +        iommufd_backend_free_id(container->be, hwpt_id);
->           return false;
->       }
->   
-> -    vbasedev->hwpt = hwpt;
-> -    vbasedev->iommu_dirty_tracking = iommufd_hwpt_dirty_tracking(hwpt);
-> -    QLIST_INSERT_HEAD(&hwpt->device_list, vbasedev, hwpt_next);
-> -    QLIST_INSERT_HEAD(&container->hwpt_list, hwpt, next);
-> -    container->bcontainer.dirty_pages_supported |=
-> -                                vbasedev->iommu_dirty_tracking;
-> +    hwpt = iommufd_cdev_make_hwpt(vbasedev, container, hwpt_id);
-> +    iommufd_cdev_set_hwpt(vbasedev, hwpt);
-> +
->       if (container->bcontainer.dirty_pages_supported &&
->           !vbasedev->iommu_dirty_tracking) {
->           warn_report("IOMMU instance for device %s doesn't support dirty tracking",
+-- 
+Peter Xu
 
 
