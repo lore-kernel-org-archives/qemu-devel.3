@@ -4,84 +4,71 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 812E1C02193
-	for <qemu-devel@archiver.kernel.org>; Tue,  4 Feb 2025 15:43:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 81904C02193
+	for <qemu-devel@archiver.kernel.org>; Tue,  4 Feb 2025 15:45:02 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tfL4k-0000pe-D9; Tue, 04 Feb 2025 10:42:58 -0500
+	id 1tfL6I-0002QK-JP; Tue, 04 Feb 2025 10:44:34 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1tfL4f-0000ot-Ca
- for qemu-devel@nongnu.org; Tue, 04 Feb 2025 10:42:54 -0500
-Received: from mail-yb1-xb34.google.com ([2607:f8b0:4864:20::b34])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1tfL4Y-0007Ty-Aa
- for qemu-devel@nongnu.org; Tue, 04 Feb 2025 10:42:53 -0500
-Received: by mail-yb1-xb34.google.com with SMTP id
- 3f1490d57ef6-e53a5ff2233so5881692276.3
- for <qemu-devel@nongnu.org>; Tue, 04 Feb 2025 07:42:44 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1738683763; x=1739288563; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=DnMZtMniCxINhGi11kvKfO5coLPW3VGFNFzuESVF9m0=;
- b=u2nCrmygS3D8NkbGoz0H+/HagDMpYbJ90hyykyfht/m2CmEH6DVk6CtnDDYMh6hucV
- 1xQ7Gg0bLCzAG16ccf6wRtqML/LgmZz7X3x3g+FPRTDyNr0yDEGjocK+Qm8X/Vl2r9I0
- fo1fX8jVq21UB/dtQHB6Xr9ILvBBRyR1gFOEh4kTErSgbD+F8tKpsnA/zPdjFrXUr/h6
- 2w2a3NHMYPgDqKpVMsdsPUQIEJPD/AQ91WMyhapIdURpIL4DDkxv8uC9vqrz/MIYYgZo
- Muy5cuKDEmMYX8dNgA26ABdp22MZ6mjMibTYiVXPuAvs6v2xs5mc3FlHXRgT3BT2DnnH
- pJGA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1738683763; x=1739288563;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=DnMZtMniCxINhGi11kvKfO5coLPW3VGFNFzuESVF9m0=;
- b=PphH2DuMVEY2hvMf974ztR11QmR5QXg95fZIVPk8+OELCAoiK6RSeLEGQWYG3+0Pw7
- kJkEpqUavmGS4JvkT5+Ue0mMq/K2Fbbb4OR06wpNIJFS9g9bfbDZd3j9YeRdF4v2fYKQ
- ZT5n2fLYe2XDvtbJRfpddUpD1iqqPKsCPqR5BTszl6zAOvFxp2wJphqaGCw7ROmsE5Bm
- HabTZ5AgZu1bMud3bCOAO9xSPsu1qmzw6IgIw9kggCzpdFWr0kHKxsF9gJHSk2CtNBzr
- LGMqM64n3roWnILDovI1O8InzzDSsOXStjqqxrb88s5WiK7Y2KxhOu6dqp+kPXCZUFJF
- e/pg==
-X-Forwarded-Encrypted: i=1;
- AJvYcCUIkqNNjd5YR4VQjOhN3fBdR0qTn82tUmjCJ9G4YoqL7/KWmfMX++97SF8m7yRBgqWLXZlWuLJilzo1@nongnu.org
-X-Gm-Message-State: AOJu0YxbB0xqfqg8iJjYuQUY9sKSPIfw5BKHUjl1JW4oMdBJBT4NV8Qc
- KBrVIEE+sd44FEZl2eZmGeEBFiphXR2R4Z3cL6G4zyQI4pO2rDf5dXDKa+WgortaNpP/U4q8fe7
- M8qCVbgeeeavi2r0rxlR93aRcZnvUntqcZ2hcfw==
-X-Gm-Gg: ASbGncuOIRW+reX2AsfuQROqM4zI4rgxe6sk7wXu3lP6egAP7/m3pTrocQ9CuLz6J5L
- wHpMtHrU8ZrDXWavC6/AfFlDvLiXN9pUJaxqEkivdEh84Fgx+BL7SpMaj/nca5hBJIMTrNx90FQ
- ==
-X-Google-Smtp-Source: AGHT+IHMZbMJ6xpMJ2zfhGCPHrOq021Q7cnx4HS5G1hwDJEjspC8jlK6PPekHZaRlIj7WfbZ9tMdpxEpm+mdsBhyIE0=
-X-Received: by 2002:a05:6902:220f:b0:e58:3565:8ad0 with SMTP id
- 3f1490d57ef6-e58a4bc462cmr20195546276.46.1738683763604; Tue, 04 Feb 2025
- 07:42:43 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1tfL6G-0002Pp-8p
+ for qemu-devel@nongnu.org; Tue, 04 Feb 2025 10:44:32 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1tfL6E-0007m2-GR
+ for qemu-devel@nongnu.org; Tue, 04 Feb 2025 10:44:31 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1738683869;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=Z9PdtwGwx3W+jYp868OHH3hOPHHg7d+MnWubXfQKzPc=;
+ b=ADW12jdjwae+9c7//ZmCjCqyheRaPzRiLpK0CTRiB0bOafg+5MS1HhQZw0mgO6lS1plZ6D
+ wgFro7ZO34PyWLUnBAecAIL8K+QrO0tD3w41y1ufy0IZJAAoyJkIUopA4qjVc+stL2fZ9d
+ TPGfhnM0VZRphl8ZhDxraMjEVTIy7A4=
+Received: from mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-659-_qJqFZb0PYODbPhJiXg0AQ-1; Tue,
+ 04 Feb 2025 10:44:26 -0500
+X-MC-Unique: _qJqFZb0PYODbPhJiXg0AQ-1
+X-Mimecast-MFC-AGG-ID: _qJqFZb0PYODbPhJiXg0AQ
+Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 019221955D80; Tue,  4 Feb 2025 15:44:25 +0000 (UTC)
+Received: from redhat.com (unknown [10.39.194.100])
+ by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 47CD0180035E; Tue,  4 Feb 2025 15:44:21 +0000 (UTC)
+Date: Tue, 4 Feb 2025 16:44:18 +0100
+From: Kevin Wolf <kwolf@redhat.com>
+To: Fabiano Rosas <farosas@suse.de>
+Cc: qemu-block@nongnu.org, hreitz@redhat.com, stefanha@redhat.com,
+ pkrempa@redhat.com, peterx@redhat.com, qemu-devel@nongnu.org
+Subject: Re: [PATCH v2 11/15] block/export: Add option to allow export of
+ inactive nodes
+Message-ID: <Z6I10ir9-ZE3PAyY@redhat.com>
+References: <20250130171240.286878-1-kwolf@redhat.com>
+ <20250131095051.49708-2-kwolf@redhat.com> <87a5b7gkwu.fsf@suse.de>
 MIME-Version: 1.0
-References: <20241226082800.2887689-1-wuhaotsh@google.com>
- <20241226082800.2887689-5-wuhaotsh@google.com>
-In-Reply-To: <20241226082800.2887689-5-wuhaotsh@google.com>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Tue, 4 Feb 2025 15:42:32 +0000
-X-Gm-Features: AWEUYZnJtlKhxZoNMXLeiS0vTX6mNhAO4q7nYO3RAE74kMk4Ycl8zp4rVWwFPLo
-Message-ID: <CAFEAcA92L87bnPaTAXnzEy_pGHoFRkVve6-knTsLYb8PARAz6Q@mail.gmail.com>
-Subject: Re: [PATCH v2 04/17] hw/ssi: Make flash size a property in NPCM7XX FIU
-To: Hao Wu <wuhaotsh@google.com>
-Cc: qemu-arm@nongnu.org, qemu-devel@nongnu.org, Avi.Fishman@nuvoton.com, 
- kfting@nuvoton.com, titusr@google.com, mimik-dev@google.com, 
- hskinnemoen@google.com, venture@google.com, pbonzini@redhat.com, 
- jasowang@redhat.com, alistair@alistair23.me
-Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::b34;
- envelope-from=peter.maydell@linaro.org; helo=mail-yb1-xb34.google.com
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <87a5b7gkwu.fsf@suse.de>
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=kwolf@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -97,20 +84,33 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, 26 Dec 2024 at 08:28, Hao Wu <wuhaotsh@google.com> wrote:
->
-> This allows different FIUs to have different flash sizes, useful
-> in NPCM8XX which has multiple different sized FIU modules.
->
-> Signed-off-by: Hao Wu <wuhaotsh@google.com>
-> ---
->  hw/arm/npcm7xx.c             |  6 ++++++
->  hw/ssi/npcm7xx_fiu.c         | 11 +++++++----
->  include/hw/ssi/npcm7xx_fiu.h |  1 +
->  3 files changed, 14 insertions(+), 4 deletions(-)
+Am 31.01.2025 um 14:41 hat Fabiano Rosas geschrieben:
+> Kevin Wolf <kwolf@redhat.com> writes:
+> 
+> > Add an option in BlockExportOptions to allow creating an export on an
+> > inactive node without activating the node. This mode needs to be
+> > explicitly supported by the export type (so that it doesn't perform any
+> > operations that are forbidden for inactive nodes), so this patch alone
+> > doesn't allow this option to be successfully used yet.
+> >
+> > Signed-off-by: Kevin Wolf <kwolf@redhat.com>
 
-Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
+> > diff --git a/block.c b/block.c
+> > index 61e131e71f..7eeb8d076e 100644
+> > --- a/block.c
+> > +++ b/block.c
+> > @@ -6845,6 +6845,10 @@ void bdrv_init_with_whitelist(void)
+> >      bdrv_init();
+> >  }
+> >  
+> > +bool bdrv_is_inactive(BlockDriverState *bs) {
+> > +    return bs->open_flags & BDRV_O_INACTIVE;
+> > +}
+> 
+> This function is needed by patch 1/15.
 
-thanks
--- PMM
+Thanks, I'll move it there.
+
+Kevin
+
 
