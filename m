@@ -4,98 +4,60 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B6BA8C0218F
-	for <qemu-devel@archiver.kernel.org>; Tue,  4 Feb 2025 05:05:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2ACE1C0218F
+	for <qemu-devel@archiver.kernel.org>; Tue,  4 Feb 2025 05:18:03 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tfB6a-0005Z7-Ua; Tue, 04 Feb 2025 00:04:12 -0500
+	id 1tfBJ6-0007NT-Fz; Tue, 04 Feb 2025 00:17:08 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <gshan@redhat.com>) id 1tfB6Z-0005YV-Jc
- for qemu-devel@nongnu.org; Tue, 04 Feb 2025 00:04:11 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <itaru.kitayama@linux.dev>)
+ id 1tfBJ4-0007NJ-O8
+ for qemu-devel@nongnu.org; Tue, 04 Feb 2025 00:17:06 -0500
+Received: from out-180.mta0.migadu.com ([2001:41d0:1004:224b::b4])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <gshan@redhat.com>) id 1tfB6V-0008Ka-2v
- for qemu-devel@nongnu.org; Tue, 04 Feb 2025 00:04:11 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1738645446;
+ (Exim 4.90_1) (envelope-from <itaru.kitayama@linux.dev>)
+ id 1tfBJ1-0003St-Q8
+ for qemu-devel@nongnu.org; Tue, 04 Feb 2025 00:17:06 -0500
+Content-Type: text/plain;
+	charset=utf-8
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.dev; s=key1;
+ t=1738646206;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=zLwPzCW+9mhMz39XR3eYl9jQT8q9/Q27z70z+ybmEIQ=;
- b=gNPIhyXYqmpZxJ9kKeU2VuHCZoppdRH/CjpGRI5ZQ++7W92l9d1wGhpchcUGEl5SOGuoK3
- 7YKmuCDg8iScp6d9uWFROd6NoHi3xsreNK5QnjQJEba0szsK5eY7p3qatJ66iR5XBT17Ue
- aDQgH6jML8hHbGexSMcXgmXawLYRplI=
-Received: from mail-pj1-f72.google.com (mail-pj1-f72.google.com
- [209.85.216.72]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-252-7LGZXr1lNUWqwLuJS_wDYQ-1; Tue, 04 Feb 2025 00:02:48 -0500
-X-MC-Unique: 7LGZXr1lNUWqwLuJS_wDYQ-1
-X-Mimecast-MFC-AGG-ID: 7LGZXr1lNUWqwLuJS_wDYQ
-Received: by mail-pj1-f72.google.com with SMTP id
- 98e67ed59e1d1-2ef9e4c5343so14716119a91.0
- for <qemu-devel@nongnu.org>; Mon, 03 Feb 2025 21:02:48 -0800 (PST)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1738645368; x=1739250168;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=zLwPzCW+9mhMz39XR3eYl9jQT8q9/Q27z70z+ybmEIQ=;
- b=bLtbo9nFHIOTUIyHeCdrQE4D7xHPYWp9Nl0JJeHS6L1slWLM4gjkfHtEI3VIUIVOFP
- e92oXGABge+FLCQr1Nm+8wXVpXCK+ZglrwQ/9SFrsK3zTfqg1jtVPP7jffer9XDOrw0T
- /drWars3GELVFQ2nZnUBetu0iCzVQ0lm1NbzxKQeCc5wK/uElHjQIY3aIVsvUM/KZK22
- 4Qr0Dgj+8SPyzTBWuSNWMHYlSMCiY+KR7EGVghByE9rEaAx+WzbhFxZtBrKfcj91FEfF
- WhOxspGOrImkqT2BeO0hTRURXokpx2t1QLJ9Cv64JkCD1bAk+ZinTdqhK1Bjzb9+SVTJ
- QObQ==
-X-Forwarded-Encrypted: i=1;
- AJvYcCVT5jsW3gVlpyHumFFr+o9TZ0pFRsCJvHb0zjKly3Eq1GWwQLJROWhR/0qSrloJxLb/pnoh82FcMq8m@nongnu.org
-X-Gm-Message-State: AOJu0Yye7Qu9EZJNrp7MuosLgOaFmR67lDwpjQ2eXG3uKGfxI4PqW6a1
- k1biFHBkF09Pu665N+wlgq5VtgLtfPxsNY3KKQaVfpd6aRYQan8vU720lzGwstwGeCbgqOTBXL7
- touRvd9/PAj8FVMq9EBOv1eqA4JDeIQ1qnCjAU8qOchlhspVGkgV7
-X-Gm-Gg: ASbGnctS2drkV2XdlguHn0uEsH51/yCmTnWtLbMpLQq2N7MHfI/OKkBOKUMwDIECV6J
- YDQ8AOzg6P/wmsP3hRbqZJFn4F8JaEedkKX//KdgC0fuL2clJsA2ta8KLyE7ks5q4+FZNRIgL2f
- 0TbOJBKRxedQwMJnnKm4goig1x9ALIi2sGbYxOEKQOV6/0YkMvsk9YRaW31RaLQlCuNBnmf+8S+
- 68eS0wuFLA9S0ikCI6et6ELrWLQY7QoIQYPSpSWZxeLf0rAZR2Nq0q3ApHGMfiPtU0Ej4QD+mdV
- NofGtw==
-X-Received: by 2002:a05:6a00:3a1d:b0:725:e015:908d with SMTP id
- d2e1a72fcca58-72fd0bce492mr33593465b3a.1.1738645367616; 
- Mon, 03 Feb 2025 21:02:47 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IE8xUd6eo0FwwzZGVQjwRYJZbSZ4GCqFyDUfwtJZ+ou6UCYwIDRIi7CR/KE8ldzOgy2UfIprA==
-X-Received: by 2002:a05:6a00:3a1d:b0:725:e015:908d with SMTP id
- d2e1a72fcca58-72fd0bce492mr33593423b3a.1.1738645367126; 
- Mon, 03 Feb 2025 21:02:47 -0800 (PST)
-Received: from [192.168.68.55] ([180.233.125.64])
- by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-72fe631bf13sm9433909b3a.32.2025.02.03.21.02.43
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 03 Feb 2025 21:02:46 -0800 (PST)
-Message-ID: <abb2bf76-2548-4c2b-a971-502ca623aee2@redhat.com>
-Date: Tue, 4 Feb 2025 15:02:41 +1000
-MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 06/26] target/arm/kvm-rme: Initialize vCPU
-To: Jean-Philippe Brucker <jean-philippe@linaro.org>, peter.maydell@linaro.org
-Cc: richard.henderson@linaro.org, philmd@linaro.org, qemu-arm@nongnu.org,
- qemu-devel@nongnu.org, alex.bennee@linaro.org
-References: <20241125195626.856992-2-jean-philippe@linaro.org>
- <20241125195626.856992-8-jean-philippe@linaro.org>
-Content-Language: en-US
-From: Gavin Shan <gshan@redhat.com>
-In-Reply-To: <20241125195626.856992-8-jean-philippe@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=gshan@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
+ bh=PVqA3UhwBSLXFAm+nMBBwe/jLdLmHRgKTIJvFdPLXKM=;
+ b=JU0dmxieACGhnV5ML+bjn/C+JT95sPl2KEzn8w2beFCJudpIbUmggzJNg6h69F8WzirNe2
+ 1SP9BxoA4Pbgr1fEoRIm0wDI8PfcRaJRKpfY3Kmbpp6fPkDjnmiyk1vnnJDdP25pB75vLs
+ xh+msnG29PdNJEQqYIsyWBwAYaPRhfk=
+Mime-Version: 1.0 (Mac OS X Mail 16.0 \(3826.400.131.1.6\))
+Subject: Re: [RFC PATCH v12 qemu 2/2] qtest/cxl: Add aarch64 virt test for CXL
+X-Report-Abuse: Please report any abuse attempt to abuse@migadu.com and
+ include these headers.
+From: Itaru Kitayama <itaru.kitayama@linux.dev>
+In-Reply-To: <20250203173040.145763-3-Jonathan.Cameron@huawei.com>
+Date: Tue, 4 Feb 2025 14:16:19 +0900
+Cc: qemu-devel@nongnu.org, Fan Ni <fan.ni@samsung.com>,
+ Peter Maydell <peter.maydell@linaro.org>, mst@redhat.com,
+ linux-cxl@vger.kernel.org, linuxarm@huawei.com, qemu-arm@nongnu.org,
+ Yuquan Wang <wangyuquan1236@phytium.com.cn>,
+ =?utf-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Content-Transfer-Encoding: quoted-printable
+Message-Id: <4AEA1355-C6E8-4A9D-8652-607FEBD7EE03@linux.dev>
+References: <20250203173040.145763-1-Jonathan.Cameron@huawei.com>
+ <20250203173040.145763-3-Jonathan.Cameron@huawei.com>
+To: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+X-Migadu-Flow: FLOW_OUT
+Received-SPF: pass client-ip=2001:41d0:1004:224b::b4;
+ envelope-from=itaru.kitayama@linux.dev; helo=out-180.mta0.migadu.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -111,200 +73,191 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 11/26/24 5:56 AM, Jean-Philippe Brucker wrote:
-> The target code calls kvm_arm_vcpu_init() to mark the vCPU as part of a
-> Realm. For a Realm vCPU, only x0-x7 can be set at runtime. Before boot,
-> the PC can also be set, and is ignored at runtime. KVM also accepts a
-> few system register changes during initial configuration, as returned by
-> KVM_GET_REG_LIST.
-> 
-> Signed-off-by: Jean-Philippe Brucker <jean-philippe@linaro.org>
+Jonathan,
+
+> On Feb 4, 2025, at 2:30, Jonathan Cameron =
+<Jonathan.Cameron@huawei.com> wrote:
+>=20
+> Add a single complex case for aarch64 virt machine.
+> Given existing much more comprehensive tests for x86 cover the
+> common functionality, a single test should be enough to verify
+> that the aarch64 part continue to work.
+>=20
+> Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
 > ---
->   target/arm/cpu.h     |  3 +++
->   target/arm/kvm_arm.h | 15 +++++++++++
->   target/arm/kvm-rme.c | 10 ++++++++
->   target/arm/kvm.c     | 61 ++++++++++++++++++++++++++++++++++++++++++++
->   4 files changed, 89 insertions(+)
-> 
-> diff --git a/target/arm/cpu.h b/target/arm/cpu.h
-> index d86e641280..f617591921 100644
-> --- a/target/arm/cpu.h
-> +++ b/target/arm/cpu.h
-> @@ -961,6 +961,9 @@ struct ArchCPU {
->       OnOffAuto kvm_steal_time;
->   #endif /* CONFIG_KVM */
->   
-> +    /* Realm Management Extension */
-> +    bool kvm_rme;
+> tests/qtest/cxl-test.c  | 59 ++++++++++++++++++++++++++++++++---------
+> tests/qtest/meson.build |  1 +
+> 2 files changed, 47 insertions(+), 13 deletions(-)
+>=20
+> diff --git a/tests/qtest/cxl-test.c b/tests/qtest/cxl-test.c
+> index a600331843..c7189d6222 100644
+> --- a/tests/qtest/cxl-test.c
+> +++ b/tests/qtest/cxl-test.c
+> @@ -19,6 +19,12 @@
+>     "-device pxb-cxl,id=3Dcxl.1,bus=3Dpcie.0,bus_nr=3D53 " \
+>     "-M =
+cxl-fmw.0.targets.0=3Dcxl.0,cxl-fmw.0.targets.1=3Dcxl.1,cxl-fmw.0.size=3D4=
+G "
+>=20
+> +#define QEMU_VIRT_2PXB_CMD \
+> +    "-machine virt,cxl=3Don -cpu max " \
+> +    "-device pxb-cxl,id=3Dcxl.0,bus=3Dpcie.0,bus_nr=3D52 " \
+> +    "-device pxb-cxl,id=3Dcxl.1,bus=3Dpcie.0,bus_nr=3D53 " \
+> +    "-M =
+cxl-fmw.0.targets.0=3Dcxl.0,cxl-fmw.0.targets.1=3Dcxl.1,cxl-fmw.0.size=3D4=
+G "
 > +
->       /* Uniprocessor system with MP extensions */
->       bool mp_is_up;
->   
-> diff --git a/target/arm/kvm_arm.h b/target/arm/kvm_arm.h
-> index 9d6a89f9b1..8b52a881b0 100644
-> --- a/target/arm/kvm_arm.h
-> +++ b/target/arm/kvm_arm.h
-> @@ -245,6 +245,16 @@ int kvm_arm_rme_init(MachineState *ms);
->    */
->   int kvm_arm_rme_vm_type(MachineState *ms);
->   
-> +/**
-> + * kvm_arm_rme_vcpu_init
-> + * @cs: the CPU
-> + *
-> + * If the user requested a Realm, setup the given vCPU accordingly. Realm vCPUs
-> + * behave a little differently, for example most of their register state is
-> + * hidden from the host.
-> + */
-> +int kvm_arm_rme_vcpu_init(CPUState *cs);
+> #define QEMU_RP \
+>     "-device cxl-rp,id=3Drp0,bus=3Dcxl.0,chassis=3D0,slot=3D0 "
+>=20
+> @@ -197,25 +203,52 @@ static void cxl_2pxb_4rp_4t3d(void)
+>     qtest_end();
+>     rmdir(tmpfs);
+> }
 > +
->   #else
->   
->   /*
-> @@ -339,6 +349,11 @@ static inline int kvm_arm_rme_vm_type(MachineState *ms)
->       g_assert_not_reached();
->   }
->   
-> +static inline int kvm_arm_rme_vcpu_init(CPUState *cs)
+> +static void cxl_virt_2pxb_4rp_4t3d(void)
 > +{
-> +    g_assert_not_reached();
+> +    g_autoptr(GString) cmdline =3D g_string_new(NULL);
+> +    char template[] =3D "/tmp/cxl-test-XXXXXX";
+> +    const char *tmpfs;
+> +
+> +    tmpfs =3D mkdtemp(template);
+> +
+> +    g_string_printf(cmdline, QEMU_VIRT_2PXB_CMD QEMU_4RP QEMU_4T3D,
+> +                    tmpfs, tmpfs, tmpfs, tmpfs, tmpfs, tmpfs,
+> +                    tmpfs, tmpfs);
+> +
+> +    qtest_start(cmdline->str);
+> +    qtest_end();
+> +    rmdir(tmpfs);
 > +}
-> +
->   #endif
->   
->   #endif
-> diff --git a/target/arm/kvm-rme.c b/target/arm/kvm-rme.c
-> index 60d967a842..e3cc37538a 100644
-> --- a/target/arm/kvm-rme.c
-> +++ b/target/arm/kvm-rme.c
-> @@ -137,6 +137,16 @@ int kvm_arm_rme_init(MachineState *ms)
->       return 0;
->   }
->   
-> +int kvm_arm_rme_vcpu_init(CPUState *cs)
-> +{
-> +    ARMCPU *cpu = ARM_CPU(cs);
-> +
-> +    if (rme_guest) {
-> +        cpu->kvm_rme = true;
-> +    }
-> +    return 0;
-> +}
-> +
->   int kvm_arm_rme_vm_type(MachineState *ms)
->   {
->       if (rme_guest) {
-> diff --git a/target/arm/kvm.c b/target/arm/kvm.c
-> index 0c80992f7c..a0de2efc41 100644
-> --- a/target/arm/kvm.c
-> +++ b/target/arm/kvm.c
-> @@ -1926,6 +1926,11 @@ int kvm_arch_init_vcpu(CPUState *cs)
->           return ret;
->       }
->   
-> +    ret = kvm_arm_rme_vcpu_init(cs);
-> +    if (ret) {
-> +        return ret;
-> +    }
-> +
->       if (cpu_isar_feature(aa64_sve, cpu)) {
->           ret = kvm_arm_sve_set_vls(cpu);
->           if (ret) {
-> @@ -2062,6 +2067,35 @@ static int kvm_arch_put_sve(CPUState *cs)
->       return 0;
->   }
->   
-> +static int kvm_arm_rme_put_core_regs(CPUState *cs, Error **errp)
-> +{
-> +    int i, ret;
-> +    struct kvm_one_reg reg;
-> +    ARMCPU *cpu = ARM_CPU(cs);
-> +    CPUARMState *env = &cpu->env;
-> +
-> +    /*
-> +     * The RME ABI only allows us to set 8 GPRs and the PC
-> +     */
-
-Needn't to span for multiple lines.
-
-> +    for (i = 0; i < 8; i++) {
-> +        reg.id = AARCH64_CORE_REG(regs.regs[i]);
-> +        reg.addr = (uintptr_t) &env->xregs[i];
-> +        ret = kvm_vcpu_ioctl(cs, KVM_SET_ONE_REG, &reg);
-> +        if (ret) {
-> +            return ret;
-> +        }
+> #endif /* CONFIG_POSIX */
+>=20
+> int main(int argc, char **argv)
+> {
+> -    g_test_init(&argc, &argv, NULL);
+> +    const char *arch =3D qtest_get_arch();
+>=20
+> -    qtest_add_func("/pci/cxl/basic_hostbridge", cxl_basic_hb);
+> -    qtest_add_func("/pci/cxl/basic_pxb", cxl_basic_pxb);
+> -    qtest_add_func("/pci/cxl/pxb_with_window", cxl_pxb_with_window);
+> -    qtest_add_func("/pci/cxl/pxb_x2_with_window", =
+cxl_2pxb_with_window);
+> -    qtest_add_func("/pci/cxl/rp", cxl_root_port);
+> -    qtest_add_func("/pci/cxl/rp_x2", cxl_2root_port);
+> +    g_test_init(&argc, &argv, NULL);
+> +    if (strcmp(arch, "i386") =3D=3D 0 || strcmp(arch, "x86_64") =3D=3D =
+0) {
+> +        qtest_add_func("/pci/cxl/basic_hostbridge", cxl_basic_hb);
+> +        qtest_add_func("/pci/cxl/basic_pxb", cxl_basic_pxb);
+> +        qtest_add_func("/pci/cxl/pxb_with_window", =
+cxl_pxb_with_window);
+> +        qtest_add_func("/pci/cxl/pxb_x2_with_window", =
+cxl_2pxb_with_window);
+> +        qtest_add_func("/pci/cxl/rp", cxl_root_port);
+> +        qtest_add_func("/pci/cxl/rp_x2", cxl_2root_port);
+> #ifdef CONFIG_POSIX
+> -    qtest_add_func("/pci/cxl/type3_device", cxl_t3d_deprecated);
+> -    qtest_add_func("/pci/cxl/type3_device_pmem", cxl_t3d_persistent);
+> -    qtest_add_func("/pci/cxl/type3_device_vmem", cxl_t3d_volatile);
+> -    qtest_add_func("/pci/cxl/type3_device_vmem_lsa", =
+cxl_t3d_volatile_lsa);
+> -    qtest_add_func("/pci/cxl/rp_x2_type3_x2", cxl_1pxb_2rp_2t3d);
+> -    qtest_add_func("/pci/cxl/pxb_x2_root_port_x4_type3_x4", =
+cxl_2pxb_4rp_4t3d);
+> +        qtest_add_func("/pci/cxl/type3_device", cxl_t3d_deprecated);
+> +        qtest_add_func("/pci/cxl/type3_device_pmem", =
+cxl_t3d_persistent);
+> +        qtest_add_func("/pci/cxl/type3_device_vmem", =
+cxl_t3d_volatile);
+> +        qtest_add_func("/pci/cxl/type3_device_vmem_lsa", =
+cxl_t3d_volatile_lsa);
+> +        qtest_add_func("/pci/cxl/rp_x2_type3_x2", cxl_1pxb_2rp_2t3d);
+> +        qtest_add_func("/pci/cxl/pxb_x2_root_port_x4_type3_x4",
+> +                       cxl_2pxb_4rp_4t3d);
+> #endif
+> +    } else if (strcmp(arch, "aarch64") =3D=3D 0) {
+> +#ifdef CONFIG_POSIX
+> +        qtest_add_func("/pci/cxl/virt/pxb_x2_root_port_x4_type3_x4",
+> +                       cxl_virt_2pxb_4rp_4t3d);
+> +#endif
 > +    }
 > +
-> +    reg.id = AARCH64_CORE_REG(regs.pc);
-> +    reg.addr = (uintptr_t) &env->pc;
-> +    ret = kvm_vcpu_ioctl(cs, KVM_SET_ONE_REG, &reg);
-> +    if (ret) {
-> +        return ret;
-> +    }
-> +
-> +    return 0;
-> +}
-> +
+>     return g_test_run();
+> }
+> diff --git a/tests/qtest/meson.build b/tests/qtest/meson.build
+> index e60e92fe9d..f5e7fb060e 100644
+> --- a/tests/qtest/meson.build
+> +++ b/tests/qtest/meson.build
+> @@ -257,6 +257,7 @@ qtests_aarch64 =3D \
+>   (config_all_accel.has_key('CONFIG_TCG') and                          =
+                  \
+>    config_all_devices.has_key('CONFIG_TPM_TIS_I2C') ? =
+['tpm-tis-i2c-test'] : []) + \
+>   (config_all_devices.has_key('CONFIG_ASPEED_SOC') ? qtests_aspeed64 : =
+[]) + \
+> +  qtests_cxl +                                                        =
+                          \
+>   ['arm-cpu-features',
+>    'numa-test',
+>    'boot-serial-test',
+> --=20
+> 2.43.0
+>=20
 
-Nice place to use kvm_set_one_reg(). With it, @reg can be dropped.
+In Ubuntu 22.04 LTS, cxl-test applied on top of today=E2=80=99s QEMU =
+upstream master branch cxl-test fails:
 
->   static int kvm_arm_put_core_regs(CPUState *cs, int level, Error **errp)
->   {
->       uint64_t val;
-> @@ -2072,6 +2106,10 @@ static int kvm_arm_put_core_regs(CPUState *cs, int level, Error **errp)
->       ARMCPU *cpu = ARM_CPU(cs);
->       CPUARMState *env = &cpu->env;
->   
-> +    if (cpu->kvm_rme) {
-> +        return kvm_arm_rme_put_core_regs(cs, errp);
-> +    }
-> +
->       /* If we are in AArch32 mode then we need to copy the AArch32 regs to the
->        * AArch64 registers before pushing them out to 64-bit KVM.
->        */
-> @@ -2259,6 +2297,25 @@ static int kvm_arch_get_sve(CPUState *cs)
->       return 0;
->   }
->   
-> +static int kvm_arm_rme_get_core_regs(CPUState *cs, Error **errp)
-> +{
-> +    int i, ret;
-> +    struct kvm_one_reg reg;
-> +    ARMCPU *cpu = ARM_CPU(cs);
-> +    CPUARMState *env = &cpu->env;
-> +
-> +    for (i = 0; i < 8; i++) {
-> +        reg.id = AARCH64_CORE_REG(regs.regs[i]);
-> +        reg.addr = (uintptr_t) &env->xregs[i];
-> +        ret = kvm_vcpu_ioctl(cs, KVM_GET_ONE_REG, &reg);
-> +        if (ret) {
-> +            return ret;
-> +        }
-> +    }
-> +
-> +    return 0;
-> +}
-> +
+$ ./tests/qtest/cxl-test
+# random seed: R02S2a8b02df7b32b79d086ce22f7f8ebeab
+1..1
+# Start of aarch64 tests
+# Start of pci tests
+# Start of cxl tests
+# Start of virt tests
+# starting QEMU: exec qemu-system-aarch64 -qtest =
+unix:/tmp/qtest-568421.sock -qtest-log /dev/null -chardev =
+socket,path=3D/tmp/qtest-568421.qmp,id=3Dchar0 -mon =
+chardev=3Dchar0,mode=3Dcontrol -display none -audio none -machine =
+virt,cxl=3Don -cpu max -device pxb-cxl,id=3Dcxl.0,bus=3Dpcie.0,bus_nr=3D52=
+ -device pxb-cxl,id=3Dcxl.1,bus=3Dpcie.0,bus_nr=3D53 -M =
+cxl-fmw.0.targets.0=3Dcxl.0,cxl-fmw.0.targets.1=3Dcxl.1,cxl-fmw.0.size=3D4=
+G -device cxl-rp,id=3Drp0,bus=3Dcxl.0,chassis=3D0,slot=3D0 -device =
+cxl-rp,id=3Drp1,bus=3Dcxl.0,chassis=3D0,slot=3D1 -device =
+cxl-rp,id=3Drp2,bus=3Dcxl.1,chassis=3D0,slot=3D2 -device =
+cxl-rp,id=3Drp3,bus=3Dcxl.1,chassis=3D0,slot=3D3 -object =
+memory-backend-file,id=3Dcxl-mem0,mem-path=3D/tmp/cxl-test-WdBn4X,size=3D2=
+56M -object =
+memory-backend-file,id=3Dlsa0,mem-path=3D/tmp/cxl-test-WdBn4X,size=3D256M =
+-device cxl-type3,bus=3Drp0,persistent-memdev=3Dcxl-mem0,lsa=3Dlsa0,id=3Dp=
+mem0 -object =
+memory-backend-file,id=3Dcxl-mem1,mem-path=3D/tmp/cxl-test-WdBn4X,size=3D2=
+56M -object =
+memory-backend-file,id=3Dlsa1,mem-path=3D/tmp/cxl-test-WdBn4X,size=3D256M =
+-device cxl-type3,bus=3Drp1,persistent-memdev=3Dcxl-mem1,lsa=3Dlsa1,id=3Dp=
+mem1 -object =
+memory-backend-file,id=3Dcxl-mem2,mem-path=3D/tmp/cxl-test-WdBn4X,size=3D2=
+56M -object =
+memory-backend-file,id=3Dlsa2,mem-path=3D/tmp/cxl-test-WdBn4X,size=3D256M =
+-device cxl-type3,bus=3Drp2,persistent-memdev=3Dcxl-mem2,lsa=3Dlsa2,id=3Dp=
+mem2 -object =
+memory-backend-file,id=3Dcxl-mem3,mem-path=3D/tmp/cxl-test-WdBn4X,size=3D2=
+56M -object =
+memory-backend-file,id=3Dlsa3,mem-path=3D/tmp/cxl-test-WdBn4X,size=3D256M =
+-device cxl-type3,bus=3Drp3,persistent-memdev=3Dcxl-mem3,lsa=3Dlsa3,id=3Dp=
+mem3  -accel qtest
+qemu-system-aarch64: -audio: invalid option
+socket_accept failed: Resource temporarily unavailable
+**
+ERROR:../tests/qtest/libqtest.c:550:qtest_connect: assertion failed: =
+(s->fd >=3D 0 && s->qmp_fd >=3D 0)
+Bail out! ERROR:../tests/qtest/libqtest.c:550:qtest_connect: assertion =
+failed: (s->fd >=3D 0 && s->qmp_fd >=3D 0)
+../tests/qtest/libqtest.c:199: kill_qemu() tried to terminate QEMU =
+process but encountered exit status 1 (expected 0)
+Aborted (core dumped)
 
-Similiarly, kvm_get_one_reg() can be used.
+Do I need set env vars when execute this test?
 
->   static int kvm_arm_get_core_regs(CPUState *cs, Error **errp)
->   {
->       uint64_t val;
-> @@ -2269,6 +2326,10 @@ static int kvm_arm_get_core_regs(CPUState *cs, Error **errp)
->       ARMCPU *cpu = ARM_CPU(cs);
->       CPUARMState *env = &cpu->env;
->   
-> +    if (cpu->kvm_rme) {
-> +        return kvm_arm_rme_get_core_regs(cs, errp);
-> +    }
-> +
->       for (i = 0; i < 31; i++) {
->           ret = kvm_get_one_reg(cs, AARCH64_CORE_REG(regs.regs[i]),
->                                 &env->xregs[i]);
-
-Thanks,
-Gavin
-
+Itaru.=
 
