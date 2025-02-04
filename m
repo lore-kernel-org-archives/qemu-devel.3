@@ -4,55 +4,56 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 78C8BC02193
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 97798C02194
 	for <qemu-devel@archiver.kernel.org>; Tue,  4 Feb 2025 22:18:51 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tfREl-0005Wa-KV; Tue, 04 Feb 2025 17:17:43 -0500
+	id 1tfREj-0005Vh-5U; Tue, 04 Feb 2025 17:17:41 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <deller@kernel.org>) id 1tfREi-0005VZ-AX
- for qemu-devel@nongnu.org; Tue, 04 Feb 2025 17:17:40 -0500
-Received: from dfw.source.kernel.org ([139.178.84.217])
+ (Exim 4.90_1) (envelope-from <deller@kernel.org>) id 1tfREg-0005UG-3L
+ for qemu-devel@nongnu.org; Tue, 04 Feb 2025 17:17:38 -0500
+Received: from nyc.source.kernel.org ([147.75.193.91])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <deller@kernel.org>) id 1tfREg-0005Rj-F0
- for qemu-devel@nongnu.org; Tue, 04 Feb 2025 17:17:39 -0500
+ (Exim 4.90_1) (envelope-from <deller@kernel.org>) id 1tfREe-0005Qx-AG
+ for qemu-devel@nongnu.org; Tue, 04 Feb 2025 17:17:37 -0500
 Received: from smtp.kernel.org (transwarp.subspace.kernel.org [100.75.92.58])
- by dfw.source.kernel.org (Postfix) with ESMTP id 959B75C2BAA;
- Tue,  4 Feb 2025 22:16:57 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 37CA8C4CEDF;
- Tue,  4 Feb 2025 22:17:36 +0000 (UTC)
+ by nyc.source.kernel.org (Postfix) with ESMTP id 9F50DA42D30;
+ Tue,  4 Feb 2025 22:15:48 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 92A63C4CEDF;
+ Tue,  4 Feb 2025 22:17:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
- s=k20201202; t=1738707457;
- bh=mrPagw6SSe5CTtRH8sceU9mjjwvokCW1bYWEL4Kbl3Y=;
+ s=k20201202; t=1738707454;
+ bh=x2atwE4gHU0GpGAhwAVJlP3HgxN8fVPhNglWL/AB3UM=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
- b=XW5KZStI/d3p9wrBOqaIIaj4lKB6hhfqN+2WHthJu0T9XMjn0ohAe5IP4VAxIgBn3
- yXTMyBZPCjoYgj0lsk76ONVDlv1+5y37Sv/7zybaz7Xbv2UrlKKfNUg5EBKfs6iC6Q
- 4hdsLqZhgW/BSXrl91UjMwUMcZGK+6NxR0vC8mKN+13nMG9HPfe29NrHZYpr/7e7W7
- rPlJyBU6MWaL2pzu4gxsXCludLB///BV6mwYFvWGF+JwTZi+221jiyOM3oi/QZltYu
- b34erXllsF/FwG7W4lDXXoCQazwAEkCQlsPa0IXcK0gO9NUsihOwNft7n0sZV/2ErH
- XO0/OkIQDQreQ==
+ b=mSCyAHem5B5MW/V6rUguiXEbGVeOS8kaTWkSZd387PHKNqV6yUjoRKT9aAOfaznrB
+ ejx48euwsZXrlWXFvGcVRcIc+DLwY8gSfWb2VXfJ96n9dw5vrgG7rxGhUw2AEBhqoa
+ UfmibVc3TOv+qpohJXHhkkw29hQN55zTdhkESawJMuflFGGiAZfLteKZMcsgA0K6r7
+ xfCcv0XzjLWoJ5yJH8ZkyLkZQJEyomfs/herl6juvtzovQ3kJ04Kd0KumHu/eRIIqJ
+ jg7aWjBAHLricxXCzKqe/8pCW78C6hBENg7nF+ypiVlrTVZqXA3Ka2arYeYHmQHzgM
+ /ojIKy8hLJ6nQ==
 From: deller@kernel.org
 To: Richard Henderson <richard.henderson@linaro.org>,
 	qemu-devel@nongnu.org
 Cc: Helge Deller <deller@gmx.de>
-Subject: [PATCH 6/6] target/hppa: Update SeaBIOS-hppa
-Date: Tue,  4 Feb 2025 23:17:26 +0100
-Message-ID: <20250204221726.151287-7-deller@kernel.org>
+Subject: [PATCH 4/6] hw/hppa: Avoid creation of artist if disabled on command
+ line
+Date: Tue,  4 Feb 2025 23:17:24 +0100
+Message-ID: <20250204221726.151287-5-deller@kernel.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20250204221726.151287-1-deller@kernel.org>
 References: <20250204221726.151287-1-deller@kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=139.178.84.217; envelope-from=deller@kernel.org;
- helo=dfw.source.kernel.org
-X-Spam_score_int: -70
-X-Spam_score: -7.1
-X-Spam_bar: -------
-X-Spam_report: (-7.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+Received-SPF: pass client-ip=147.75.193.91; envelope-from=deller@kernel.org;
+ helo=nyc.source.kernel.org
+X-Spam_score_int: -43
+X-Spam_score: -4.4
+X-Spam_bar: ----
+X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_HI=-5, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
  RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -72,21 +73,38 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Helge Deller <deller@gmx.de>
 
-Update to lastest SeaBIOS-hppa which sets up the
-LMMIO range for the internal artist graphic card.
+Do not create the artist graphic card if the user disabled it
+with "-global artist.disable=true" on the command line.
 
 Signed-off-by: Helge Deller <deller@gmx.de>
 ---
- roms/seabios-hppa | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ hw/hppa/machine.c | 11 +++++++----
+ 1 file changed, 7 insertions(+), 4 deletions(-)
 
-diff --git a/roms/seabios-hppa b/roms/seabios-hppa
-index 1c516b4813..3391c58096 160000
---- a/roms/seabios-hppa
-+++ b/roms/seabios-hppa
-@@ -1 +1 @@
--Subproject commit 1c516b481339f511d83a4afba9a48d1ac904e93e
-+Subproject commit 3391c580960febcb9fa8f686f9666adaa462c349
+diff --git a/hw/hppa/machine.c b/hw/hppa/machine.c
+index 9c98b4c229..c5f247633e 100644
+--- a/hw/hppa/machine.c
++++ b/hw/hppa/machine.c
+@@ -366,12 +366,15 @@ static void machine_HP_common_init_tail(MachineState *machine, PCIBus *pci_bus,
+ 
+     /* Graphics setup. */
+     if (machine->enable_graphics && vga_interface_type != VGA_NONE) {
+-        vga_interface_created = true;
+         dev = qdev_new("artist");
+         s = SYS_BUS_DEVICE(dev);
+-        sysbus_realize_and_unref(s, &error_fatal);
+-        sysbus_mmio_map(s, 0, translate(NULL, LASI_GFX_HPA));
+-        sysbus_mmio_map(s, 1, translate(NULL, ARTIST_FB_ADDR));
++        bool disabled = object_property_get_bool(OBJECT(dev), "disable", NULL);
++        if (!disabled) {
++            sysbus_realize_and_unref(s, &error_fatal);
++            vga_interface_created = true;
++            sysbus_mmio_map(s, 0, translate(NULL, LASI_GFX_HPA));
++            sysbus_mmio_map(s, 1, translate(NULL, ARTIST_FB_ADDR));
++        }
+     }
+ 
+     /* Network setup. */
 -- 
 2.47.0
 
