@@ -4,203 +4,99 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BE357C02193
-	for <qemu-devel@archiver.kernel.org>; Tue,  4 Feb 2025 16:53:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 970BDC02193
+	for <qemu-devel@archiver.kernel.org>; Tue,  4 Feb 2025 17:04:11 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tfMAX-0006EJ-0W; Tue, 04 Feb 2025 11:53:01 -0500
+	id 1tfMJd-0000FH-Bk; Tue, 04 Feb 2025 12:02:25 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <steven.sistare@oracle.com>)
- id 1tfMAS-0006AE-BZ
- for qemu-devel@nongnu.org; Tue, 04 Feb 2025 11:52:57 -0500
-Received: from mx0b-00069f02.pphosted.com ([205.220.177.32])
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1tfMJD-0008Ml-Uj
+ for qemu-devel@nongnu.org; Tue, 04 Feb 2025 12:02:00 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <steven.sistare@oracle.com>)
- id 1tfMAP-000227-OY
- for qemu-devel@nongnu.org; Tue, 04 Feb 2025 11:52:55 -0500
-Received: from pps.filterd (m0246631.ppops.net [127.0.0.1])
- by mx0b-00069f02.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 514GMpvI018045;
- Tue, 4 Feb 2025 16:52:50 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=oracle.com; h=cc
- :content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=
- corp-2023-11-20; bh=NmfCaKYYmbuUDWDKkUWdEkh06v3hIaCTS5dDDSfqzzk=; b=
- gaJlgg5SdmeDWbTg5NAZy14VgNGg1Zq3lhI76oo2ge/i3CAPdzkd7dg32DH0vngi
- EMMa4uDXsUaRN3ANuN5siM4y9fCxx3Tt55Bguk7cc1Mt7nsnduJlvr+9lk8CzEuu
- aGa4hMfseNyDbKtJceFQZNQRAEDQLriTnStIAQKN4j0sMVvzuxkomjlVju7jWdTM
- 8IprzMdulpCzjM/0TeAoiyY/sYSOsMv9/xLIO0ZxLRV5x0WC8pSC4c/8NbUypEJ5
- U40cs6OJnxQCD/IquA1gOfhBwl/C7u0T3kxmxjNuVjF+z0eaNTh2xW6qozsjfPbc
- 1U7UQpPC31X8aq1pqHcYrg==
-Received: from phxpaimrmta02.imrmtpd1.prodappphxaev1.oraclevcn.com
- (phxpaimrmta02.appoci.oracle.com [147.154.114.232])
- by mx0b-00069f02.pphosted.com (PPS) with ESMTPS id 44kku4rfrf-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Tue, 04 Feb 2025 16:52:49 +0000 (GMT)
-Received: from pps.filterd
- (phxpaimrmta02.imrmtpd1.prodappphxaev1.oraclevcn.com [127.0.0.1])
- by phxpaimrmta02.imrmtpd1.prodappphxaev1.oraclevcn.com (8.18.1.2/8.18.1.2)
- with ESMTP id 514GoZWk037699; Tue, 4 Feb 2025 16:52:48 GMT
-Received: from nam10-dm6-obe.outbound.protection.outlook.com
- (mail-dm6nam10lp2048.outbound.protection.outlook.com [104.47.58.48])
- by phxpaimrmta02.imrmtpd1.prodappphxaev1.oraclevcn.com (PPS) with ESMTPS id
- 44j8gh6hu8-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Tue, 04 Feb 2025 16:52:48 +0000
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=KZy42CG7d+gNIpffw+HEFf+wNWqu1rkeqMv+fPnyF8Kx3TqjveYTQ/N0VC3j+APSpynbl6QIdHyyCL+w6gF4kA5+p9rlM6G/2/DFDF7KZkjpYasRToU7Z5gnSSw2e7wU9l1rNozNUaV00/kBk4UpR5kpNgWrosAbzmCEHAE387u0bqSJlSwMNMoixRJPMVEXQPlx3q6Oxf/YuXzQu2uBY+5zpqeGhDADYSTJqT7u8vrBIaoQow8s6YE7uEeWzn3Zbh9bakH1nAE8ms7Ah1KI+fM6Ub7dVOlMc5c14xPA5sfmLFOu9qgY+pgyk/c6Fkn78SqdzhiWgeN/eSK0af2k9Q==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=NmfCaKYYmbuUDWDKkUWdEkh06v3hIaCTS5dDDSfqzzk=;
- b=HBo7XfkdlTmAM2BR9/qhfL2Ypio6bJj/dLmbWJc0Rt9r7wfforYTwjuSMxAxYJwEgaDubz68UI76NWfzTPz0piILut8SHdZT2NscIRAWoh+/1jspodOiuE7Sg90XbnHX9XUVgzW9P96TwT2ZzbmxF9GiEAwaR0k/V0kr8rf0Xq4ty/Ym5WEpxWG8AQNslEwqBuPkYDf3CQ8Onk2fAoVCZVGkv0zSy/eozg7Ue3wFh3IEBu3tDcqq6SEaWcqhLIJ/cLSl5czQgf8iYPO6X6tn04WA0SMNbaQqGGLmJjb+Kr0UM3nDX9BK3j1k2krnUxmU5M36TG0g1OshvCwoBMZKgA==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=oracle.com; dmarc=pass action=none header.from=oracle.com;
- dkim=pass header.d=oracle.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oracle.onmicrosoft.com; s=selector2-oracle-onmicrosoft-com;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=NmfCaKYYmbuUDWDKkUWdEkh06v3hIaCTS5dDDSfqzzk=;
- b=Jx4caLGVjjgbRD8dO7TfvD66vHPXy8K7Ll1ssnJw55xPm9vO2fJNLFOMTE6lj993VnWbxanO/LfBzEb7p0qc/kS5IJSPwpAK/+xct1i0MmBqfO9paSbG9vtOuxhaqt3hRpHUO8/lxrLzdSm9jUeeIwyK6FCuG1s3l0POIzxIADU=
-Received: from IA1PR10MB7447.namprd10.prod.outlook.com (2603:10b6:208:44c::10)
- by SA1PR10MB6366.namprd10.prod.outlook.com (2603:10b6:806:256::12)
- with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.8398.24; Tue, 4 Feb
- 2025 16:52:46 +0000
-Received: from IA1PR10MB7447.namprd10.prod.outlook.com
- ([fe80::f2fe:d6c6:70c4:4572]) by IA1PR10MB7447.namprd10.prod.outlook.com
- ([fe80::f2fe:d6c6:70c4:4572%6]) with mapi id 15.20.8398.025; Tue, 4 Feb 2025
- 16:52:45 +0000
-Message-ID: <27c6ee8f-d4dd-4ee6-bda8-e9b21289d7d7@oracle.com>
-Date: Tue, 4 Feb 2025 11:52:42 -0500
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PULL 17/42] migration: cpr-transfer mode
-To: Peter Xu <peterx@redhat.com>, Peter Maydell <peter.maydell@linaro.org>
-Cc: Fabiano Rosas <farosas@suse.de>, qemu-devel@nongnu.org,
- Markus Armbruster <armbru@redhat.com>
-References: <20250129160059.6987-1-farosas@suse.de>
- <20250129160059.6987-18-farosas@suse.de>
- <CAFEAcA9q+QLJnyVZDAKLsB0i2iBohNwkTXmycpV5CUsWYWZmFw@mail.gmail.com>
- <Z6I_zJF1dljLK-YI@x1.local>
-Content-Language: en-US
-From: Steven Sistare <steven.sistare@oracle.com>
-In-Reply-To: <Z6I_zJF1dljLK-YI@x1.local>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: BL6PEPF00013E0D.NAMP222.PROD.OUTLOOK.COM
- (2603:10b6:22e:400:0:1001:0:11) To IA1PR10MB7447.namprd10.prod.outlook.com
- (2603:10b6:208:44c::10)
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1tfMJB-0004YF-KI
+ for qemu-devel@nongnu.org; Tue, 04 Feb 2025 12:01:59 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1738688514;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=jmpuwmtNIyVuancbMXxzBE7rmXZl8E7krQ5h0kLqhxc=;
+ b=KOg71zuEBcVbJhkV4d0VOIrEzSrLeBCsSD1zBy6zYDcPOIDefpzrXz1Hg/PBk1DNT0Kmp5
+ UX4ioReYiPTQV+HkfgDfAwz5a4SOw8hHFSRXg8srCNJq7IkGh08cO8ASViPg1r1EZ7/8Z7
+ 76w+JjB32MMvdj/uJyVpHFvW3Mtsvh8=
+Received: from mail-qt1-f199.google.com (mail-qt1-f199.google.com
+ [209.85.160.199]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-427-jRETuyOEOECWtzF-DkQ_zg-1; Tue, 04 Feb 2025 12:01:53 -0500
+X-MC-Unique: jRETuyOEOECWtzF-DkQ_zg-1
+X-Mimecast-MFC-AGG-ID: jRETuyOEOECWtzF-DkQ_zg
+Received: by mail-qt1-f199.google.com with SMTP id
+ d75a77b69052e-467be89d064so63219781cf.3
+ for <qemu-devel@nongnu.org>; Tue, 04 Feb 2025 09:01:53 -0800 (PST)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1738688513; x=1739293313;
+ h=in-reply-to:content-transfer-encoding:content-disposition
+ :mime-version:references:message-id:subject:cc:to:from:date
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=jmpuwmtNIyVuancbMXxzBE7rmXZl8E7krQ5h0kLqhxc=;
+ b=ts+jYBsETEJo5duiR/+MxHQf1LdO96guSPlgdXqU0ZBovvKzAKBGI7UoVA+51yn3Jo
+ gsDk5DVUzTu8XY7JfyFKMxGBZ+cNwRcny/9BgDc79YrB7bvEq9MGmNoev9EwGKx/jPkm
+ d5+A3ThU+Zpp2xmHx9qM9itDXE/G8plxRh/FTHLaZ+MMRC49r05a7t2+mtdncPxZtkEF
+ BbErJJY8IP4D0+i0m9xkG/ZsFygoHEpPDpdUahKwBtShzSvn0+4EDr/Rw1NLAt2+8ayD
+ oTBGFMTtj9/JikUCz2iRAAVLj8znevum5XEfCtSfYHBpKaFhE3OrGNkNib2Rlcu9pS7O
+ mICQ==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCUbhtyB30JfMB30Jh5m7IdbrPmeguDaa0TFisJlo7VJpPtyLkU1nqGSuIsNTilGzxLRsrWpIKmfN1kV@nongnu.org
+X-Gm-Message-State: AOJu0YwrQclRjknap/gJcpaAG3ErSNVVhoMgTqdxyZ65NeH5Xc9SWFuj
+ NzRjZHW8R13u02bFTU4Qmsu9cM5mQlHf/gF9GXAc4X5ya49DN/jo99u3F6OpZfUKyDxEyfg1yhG
+ MB1BbQDJOd2TPFCXMzbL8cv2kUfFdqRvEAhbYKCCTEqMhWIRUss4a
+X-Gm-Gg: ASbGncs2V51xsfnfvzHR2vZ/CM0QYXVQE+6kP+hwQCObIJ7Srl1bYStwU0rPG2k2bCj
+ QAhhXHsngPX38lMEncYrmGTpBkZrtdl2vOuUANwuXIEfJsHlUQnJIpfV9FxkclpOVxZFNr0JBy3
+ MAZW6iUb+AH5874UOp1FukQT4kzl8dkyx8NAvlXMEyXOZErewmjMWtwmNke7bm+m6NELkFhFfYZ
+ iZwSA4tEXulE31CFHLFVVBM1fsCdJttfgNa2cLkLGBMRlHccr8pZnU7NqzGFISZ4ECARv+H2D6N
+ x0oamLt02fqUYT3/JNTartteP3Ht6zOuHoqmgn8wJPW91Abi
+X-Received: by 2002:ac8:5745:0:b0:467:75fa:8c8 with SMTP id
+ d75a77b69052e-46fd0ad89femr403610111cf.31.1738688512150; 
+ Tue, 04 Feb 2025 09:01:52 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IEmiCvI702XSjcGZ8IPiSidjwXwYfVjctXrd6dOhCMaN+Q6fbpH5jw2AZ0XrnixI4d7e81EDw==
+X-Received: by 2002:ac8:5745:0:b0:467:75fa:8c8 with SMTP id
+ d75a77b69052e-46fd0ad89femr403606451cf.31.1738688511250; 
+ Tue, 04 Feb 2025 09:01:51 -0800 (PST)
+Received: from x1.local (pool-99-254-114-190.cpe.net.cable.rogers.com.
+ [99.254.114.190]) by smtp.gmail.com with ESMTPSA id
+ d75a77b69052e-46fdf172372sm60828601cf.60.2025.02.04.09.01.49
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Tue, 04 Feb 2025 09:01:50 -0800 (PST)
+Date: Tue, 4 Feb 2025 12:01:48 -0500
+From: Peter Xu <peterx@redhat.com>
+To: =?utf-8?Q?=E2=80=9CWilliam?= Roche <william.roche@oracle.com>
+Cc: david@redhat.com, kvm@vger.kernel.org, qemu-devel@nongnu.org,
+ qemu-arm@nongnu.org, pbonzini@redhat.com,
+ richard.henderson@linaro.org, philmd@linaro.org,
+ peter.maydell@linaro.org, mtosatti@redhat.com, imammedo@redhat.com,
+ eduardo@habkost.net, marcel.apfelbaum@gmail.com,
+ wangyanan55@huawei.com, zhao1.liu@intel.com, joao.m.martins@oracle.com
+Subject: Re: [PATCH v7 3/6] accel/kvm: Report the loss of a large memory page
+Message-ID: <Z6JH_OyppIA7WFjk@x1.local>
+References: <20250201095726.3768796-1-william.roche@oracle.com>
+ <20250201095726.3768796-4-william.roche@oracle.com>
 MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: IA1PR10MB7447:EE_|SA1PR10MB6366:EE_
-X-MS-Office365-Filtering-Correlation-Id: 50799141-6861-4cfb-1c96-08dd453c5913
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;ARA:13230040|366016|1800799024|376014;
-X-Microsoft-Antispam-Message-Info: =?utf-8?B?TmRnTTVjSnRnUW9QbHhaQUtSME9uMmVqL2xUVWZPazg1UjdwN1BxWW9Na21V?=
- =?utf-8?B?WHh3TmZFTTB6MitUUStHM0k1WU5BQjI5K2tNeXpKaVZmSXZDdUI3UjBiZVpQ?=
- =?utf-8?B?aHZyR0x5OFZRTlY0WFY1UWVCaTdXY3pxUnU1Q1lGRkkzOTJ5Z2F4TXh4T1ZM?=
- =?utf-8?B?TjJLczcvQiszeFBlMTVkWXNFLzhDM2I2cXZYQXRMd3c0WFV5MDdXdzh1M2VB?=
- =?utf-8?B?TzNIQ1RNcElUS3cwQVVqeWx3V2VFZ1k3N1lKbWJxUjJESVZjakNvT3pETzZT?=
- =?utf-8?B?S3MraU84Z3hTanBPNHRKZDN4Y1pGNE1teG9SczFFb0JuNjFVckx6dXl2RzI3?=
- =?utf-8?B?WG1nbWZBbU5ieEhWVmlNcStMTERTNHIxakgxaGEzSTBTOG5pUXVmNnRXd1Rx?=
- =?utf-8?B?V1ZkVWpDVjY4RVJLWkNCZGFIV2F1OXJxVDhGeG1IWGdkWFY1ais0cmtzd1hD?=
- =?utf-8?B?cCtnOWpjY0xpbnFuNEZGSFZVUjUweTFDMEFDM1VBRUlEMHF1S1U3aHNrWjRE?=
- =?utf-8?B?ajdDVlNEUC8zcHErOWxuK0RIN1ptVUZieUpQbC9WOXdEN2swbzY2a0RObFph?=
- =?utf-8?B?K2c1NTBCYUlvZzB3Sm8xNitkdXNxZFBYd3hDTWNYamkrSGxVY2FHaW9SVmdq?=
- =?utf-8?B?akRzZVVSNCt0NllNb3JVbEs1U1c2RDFycXhScFM1Wk45V2dpdks4R3B4Zi9u?=
- =?utf-8?B?SjNOL2U0UXljUklIK3ppRzlzTXNCWUNTL0pBVzZpY05LVEtWbi9VTmFMaUdK?=
- =?utf-8?B?OEtpOWdkVzdXNEdaMGxiZGxTTERBdlVSZFduT29aajBWUTc1R05lTW1ZcWRx?=
- =?utf-8?B?cXJJZVNQYWNjeS9WZUZGS1dyWVg0NlZDekozKzFPSnhGM2VQV0V3OGNhTzdG?=
- =?utf-8?B?Tm5qczQ5UXZPL3c2clgvQXFkRmtlYXJESUh2MlRZWTNqQjF3UER5TVRHNVRs?=
- =?utf-8?B?N2hTaWdCQ0E1WDMwTUhieG1pOWFmMTBWZk5IOG1jUHpWQkgyc3M3VUVvOStO?=
- =?utf-8?B?NjBJSitvSjdGWjJKelNLRk1zY2Q2UzNnUE5ZeGtHT3pjOFJQOGU2allTeWJs?=
- =?utf-8?B?UkNzKzdyYTBicDdsK21oOE5mN0s3TXZET0grZjhjRGU4YXFldHFoM1BRUnZD?=
- =?utf-8?B?K05hZmpZZGpkTWRLVG5hc1AyK25YNW1zVVcrekF3WTA3R1U3V0RKNnY0Ry8v?=
- =?utf-8?B?N3ZtdnMzY2pUb0Q2eTNlM1NPbFhvSnJiN0M5V0pFenkrZ01kSDVuQUhGcXpS?=
- =?utf-8?B?b3FEcHVrZnJnQndYZ3IzbHRwY1lxVUczUGVqSEN2NVpKbU1pb3YrSE9Fdy9B?=
- =?utf-8?B?dUplQW1CSzBGdGdGYWVHZ3RvWVl3TFVMWk8yVUIzQmN3elFHM0NBT2w3RkJS?=
- =?utf-8?B?Rm9ZdUlZM2tTbkdtTUFXUFk4c29WWFdsamhibDVVbXJzdmU1OGNaR2VWU1dn?=
- =?utf-8?B?K25ZeXpxcVhOZElzZHFFSHBtNzgrN2JrYm9mUE8yNnJwdFlCbTlUSUR2dHdV?=
- =?utf-8?B?NnhKTjI5Z01zdElBTU5WT0RaOS8wK1J3NlAwcEJBMkZlVlgxRkNLaTFoK3hx?=
- =?utf-8?B?UytrcGtNdmdOQjRKMGxFMnlWM3BvTDFFY1ZZUVBIZW5NS0UzMy8zeFp5b2xV?=
- =?utf-8?B?bzJncWxMWW12R0N0MTZhd3A3QllDU1QrY1ZzbTM2UlBDaWl2bFNzOG1jNC9L?=
- =?utf-8?B?QXNrdi9nNmFxUGxrVGVzK1krK0RLNmhGSFdlNWZ4Smpib2RYYjEybXdwUlFh?=
- =?utf-8?B?ZmN4UHpOaTFad3RtYzVaNGNUL3psa09Nby93U2J0eTI3bTZwWkZPSmdtVUwz?=
- =?utf-8?B?U25ReDZNV3UxUEwra3B5b2ViYzRBT3krSXM5MmZCcW9US1IxOFpEb25zN3FH?=
- =?utf-8?Q?SL7cZ7Zq2FhxY?=
-X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:IA1PR10MB7447.namprd10.prod.outlook.com; PTR:; CAT:NONE;
- SFS:(13230040)(366016)(1800799024)(376014); DIR:OUT; SFP:1101; 
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?cit4WEw1Vkdsa2V3Q3JWUWhVWXVWYzVRVTlFS21pQXlNc2V3NWhGNk5aQkVs?=
- =?utf-8?B?ZkVxUVRiSXROZWxLWVR4TDBwa1VWb095N09NOUlyMVhaVXNhQURGeWYwRmdM?=
- =?utf-8?B?SDBxa0lzVis0Qm9OQU5sUS9BcFBza3pvOS9YcUtBL0xnTytheFExMm5ucm04?=
- =?utf-8?B?OVNVWWJOR2NkOUNSOFRHQXFiZ2ExOUhJZ1p2Ui9BTHFuUi9vL0hXM1RVZmRV?=
- =?utf-8?B?WmpGVDFlZmsrRlZxeGxxbnhDcjZ4SzltSEFwcDdSTm9RSVphYXB4VWFxRlVZ?=
- =?utf-8?B?S1d1YjMxR243V1dvbEI2RTQyQ1RQUTJXclVwblZPcXluUUhlTWthWXg3c1ZM?=
- =?utf-8?B?VEpvUjBlSURUSWpkS1pTOXdzbjZjWkFYRjdXZFI4SkkrWlFVZzVBNW81UFdi?=
- =?utf-8?B?eU5mbVlxcFlNa3hwbnJGeithMUprWlZHU0dNa1A3dG1tUWRZY215R3UyeTh4?=
- =?utf-8?B?bkgyR0FNU2syUnA5TXk0NU05TGdiekF6RVcyc0I1N3FtTTY3Uy9STXRNZEcy?=
- =?utf-8?B?VnF0aXZYblNpMzB5Y1BGbDBMMVUvQTczK2VxMmUxSVlIcUg4emRpdTJUVjN1?=
- =?utf-8?B?UnNtbXE3T3JuaDFsbm83MlBkWWJ6ZzJnMGJuZ1g0Z0MvVFB2WWxBNVV2N1FU?=
- =?utf-8?B?Z0o1SVRyT2QySnltUENuWXY5OFhLRG1ZMzNwNnRmeGVCNGRxbG0rNjRodmxw?=
- =?utf-8?B?eXRDTXltS0R3RmxXalVJakZ3bm90V2hWSkNHdHFjOUhaN2JET3JTL0NpdHFD?=
- =?utf-8?B?d1JsMzRobjZsMnRWSGpFUng2dGhLVlE1OGFUa3BrcndXQjdwTHFQRk9IbGhO?=
- =?utf-8?B?MmpwV1gzRkxmNXB6ZFYxYytwTE03M0p6VzEyNmFlbk10VnUzRzA2bVE5OG5S?=
- =?utf-8?B?bEhjSTl3UGY1L09xWEF3M1NBdE5wdG01dDJXem55dXloZElLT2RMdjh5Z2Ns?=
- =?utf-8?B?TllsN0cvM0NtLzdkc0NvNk16TG9ydHlacFNObTVsMGRqRlJiZHRTMXZrYlRI?=
- =?utf-8?B?TEZaL0pZOXN3RGN1UjZkVVdNSm9LcEN5RVNBWGFvQS9PNUFYV2RIcWkxMnhl?=
- =?utf-8?B?c0RkRnp1MmtSN2N4Sm5JSlJCeTBxb3hJTU8zMWpiUDRmVkZtRkFVMXpaSzJM?=
- =?utf-8?B?NVFGSm1iU2RrZHFGWWhXQUlrL0RkandzMEFFNmpYRzFSTTFhWGE4TlNUYi9s?=
- =?utf-8?B?OVNRRmNlcUl3UHRyRWtoa29BWTYxdU1uaGd0TEFJbnhHamNoYVgySGZhVnlS?=
- =?utf-8?B?RVl5Q3BYaTllMnZxRURKeldVdlBJVHViQXg4NitxbGUwRTFya0VjVzNiSmc3?=
- =?utf-8?B?N3dyaG9rOXkvRkk3bGxKaitrcVdwbXNTVDJBdUxoNG5JVnNmV2d1NTV4RUFx?=
- =?utf-8?B?S05OelErbm4xTk9JUUdkWHdXanhXcEFjWVY4bGQ1eVF2cktXUTVXS2R5TDJC?=
- =?utf-8?B?ZlVFUGhIdlNwVmwvYTk4dHljSmR6eTJXeWtobkg1UVlPNnJCWUhJRFhQTnE1?=
- =?utf-8?B?Y1RaUi8zMGs1azFkZ3NCR2V5aUxNd2tJT1kxUW9rcHRsOFR1emI2RGJuR21y?=
- =?utf-8?B?UkMxM0VJQ21pZjAxKzFqUFdzd29JTmxHRllJSithanJpaWYyaUpic3RubG83?=
- =?utf-8?B?elc5VE9MVzkwbG9kRU9LZUVFNTdBdGloQ1pEMkVLR1dQdFlidmZnYTBwTUdN?=
- =?utf-8?B?a3hsbUR2UXpKczNVQnVvek8xVlFZVStPQlNGUkhXNURPSTJjd2ZHK2xFRGRR?=
- =?utf-8?B?QVJCb29ZOHlMSi9MTXZ2dFhPdFhERmRiRGNSR0h1SmFiYmptSXVqNVZqOGww?=
- =?utf-8?B?UVVsNFRiWHcxNE9pNUtrbWhZVkduOXRUUmVhSE9kMTJjZEl3MVhQVmpjSmtW?=
- =?utf-8?B?dTE2K1VBWnNZYmhidmQ5cnVNLzNBRkxkbVlZcnJqcWswWjE5bTFUc1pPSEx2?=
- =?utf-8?B?UnR2eVAvdStYWG9zdXBPb3NDRWprd3hDUE83N0JOT3FMR1NJL0U2SXRpU1Z3?=
- =?utf-8?B?Qm9DdnFtaHNHZGFOcTlIQjdrcWVwaXJnRXJxa3FYZ2pVdDd6SEJ1dHBrekx0?=
- =?utf-8?B?UGpOWkJmTXpTN01GeWZUY3FiZWJYblU5Sy9VN28zOFYvVEs0NzNla3dtcXJF?=
- =?utf-8?B?WlJRNm94dEZpbmxUaWFDZ1pwNVZ5LzBTSDFCUmJWeTBNcHFRNzJyRzVtUXZ6?=
- =?utf-8?B?VUE9PQ==?=
-X-MS-Exchange-AntiSpam-ExternalHop-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-ExternalHop-MessageData-0: Gx4AQiqqWQSiAvQTQPxonVO4ACJFI3/LpT1tIzzaMHAgFHtDrf2yHG3zFXz3MzPDtxTeovrVi1IshIYuWUtIGk1PZANobOIIzNc39FGyL5gLuTy09LSMY/ibo90Qv3qazabya5nqdRQDsOzM18TfTIYXlROhko0cQh7X0Kvpal5ZlCtHeEgXcSKRBhRbmlBK9O6QV3NKclW3G9tK7JHFOhd4/hUdKF50lNZyMWA4KhaMVYRxzy/9j7zFDHi/eTCGV0H3oelLEa0/U5xmK7SBFBQHFsqzRqFimtCw4V+fTlhiD4cVN5um+t4yJ5Tc1an5S1VnvzC1SPL5lJj1Fz1wcC21O/0zfuAN2n8s5vjJ+rjR1x71kDuIzM71zWNzXQUPB50YJ3wRERQTORS5tDsQUnNRFEP4Q9jd8utvgY944/pnWqs4dfbJRYbDsa+2jpl8eIgcVFliI9ZM1qZ/Vt449KE1714YEUMxv2Xli+nwJzTCBS47PXoVmtYvcPpcZkOgiBknMLrm/UkT0G4hMAPMIOxupBHVNA4ym8Psh1p+i3lG8QshiaanOM/4LP/Vhfy8XA9P+DPZOOyHkGlcWoYh7nLZmErydvrbJPv0/dAi3hc=
-X-OriginatorOrg: oracle.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 50799141-6861-4cfb-1c96-08dd453c5913
-X-MS-Exchange-CrossTenant-AuthSource: IA1PR10MB7447.namprd10.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 04 Feb 2025 16:52:45.3157 (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 4e2c6054-71cb-48f1-bd6c-3a9705aca71b
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: v+v8YbwKnLsTw+d/cGYwKEoykDQdca5fblSKjv2sU5aX4HJHS4boI2Ilhqjv9FEqPUS0mVypiilIhY60JKRO+FJ9PGX9wLwLHjxXmzsS6CE=
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: SA1PR10MB6366
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1057,Hydra:6.0.680,FMLib:17.12.68.34
- definitions=2025-02-04_08,2025-02-04_01,2024-11-22_01
-X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 bulkscore=0
- malwarescore=0 phishscore=0
- spamscore=0 mlxscore=0 mlxlogscore=999 suspectscore=0 adultscore=0
- classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2501170000
- definitions=main-2502040129
-X-Proofpoint-GUID: cy1or6Qn_DtNNeB_h5daFiSP9RNk4F6N
-X-Proofpoint-ORIG-GUID: cy1or6Qn_DtNNeB_h5daFiSP9RNk4F6N
-Received-SPF: pass client-ip=205.220.177.32;
- envelope-from=steven.sistare@oracle.com; helo=mx0b-00069f02.pphosted.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20250201095726.3768796-4-william.roche@oracle.com>
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=peterx@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -218,139 +114,139 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 2/4/2025 11:26 AM, Peter Xu wrote:
-> On Tue, Feb 04, 2025 at 01:40:34PM +0000, Peter Maydell wrote:
->> On Wed, 29 Jan 2025 at 16:11, Fabiano Rosas <farosas@suse.de> wrote:
->>>
->>> From: Steve Sistare <steven.sistare@oracle.com>
->>>
->>> Add the cpr-transfer migration mode, which allows the user to transfer
->>> a guest to a new QEMU instance on the same host with minimal guest pause
->>> time, by preserving guest RAM in place, albeit with new virtual addresses
->>> in new QEMU, and by preserving device file descriptors.  Pages that were
->>> locked in memory for DMA in old QEMU remain locked in new QEMU, because the
->>> descriptor of the device that locked them remains open.
->>>
->>> cpr-transfer preserves memory and devices descriptors by sending them to
->>> new QEMU over a unix domain socket using SCM_RIGHTS.  Such CPR state cannot
->>> be sent over the normal migration channel, because devices and backends
->>> are created prior to reading the channel, so this mode sends CPR state
->>> over a second "cpr" migration channel.  New QEMU reads the cpr channel
->>> prior to creating devices or backends.  The user specifies the cpr channel
->>> in the channel arguments on the outgoing side, and in a second -incoming
->>> command-line parameter on the incoming side.
->>>
->>> The user must start old QEMU with the the '-machine aux-ram-share=on' option,
->>> which allows anonymous memory to be transferred in place to the new process
->>> by transferring a memory descriptor for each ram block.  Memory-backend
->>> objects must have the share=on attribute, but memory-backend-epc is not
->>> supported.
->>>
->>> The user starts new QEMU on the same host as old QEMU, with command-line
->>> arguments to create the same machine, plus the -incoming option for the
->>> main migration channel, like normal live migration.  In addition, the user
->>> adds a second -incoming option with channel type "cpr".  This CPR channel
->>> must support file descriptor transfer with SCM_RIGHTS, i.e. it must be a
->>> UNIX domain socket.
->>>
->>> To initiate CPR, the user issues a migrate command to old QEMU, adding
->>> a second migration channel of type "cpr" in the channels argument.
->>> Old QEMU stops the VM, saves state to the migration channels, and enters
->>> the postmigrate state.  New QEMU mmap's memory descriptors, and execution
->>> resumes.
->>>
->>> The implementation splits qmp_migrate into start and finish functions.
->>> Start sends CPR state to new QEMU, which responds by closing the CPR
->>> channel.  Old QEMU detects the HUP then calls finish, which connects the
->>> main migration channel.
->>>
->>> In summary, the usage is:
->>>
->>>    qemu-system-$arch -machine aux-ram-share=on ...
->>>
->>>    start new QEMU with "-incoming <main-uri> -incoming <cpr-channel>"
->>>
->>>    Issue commands to old QEMU:
->>>      migrate_set_parameter mode cpr-transfer
->>>
->>>      {"execute": "migrate", ...
->>>          {"channel-type": "main"...}, {"channel-type": "cpr"...} ... }
->>>
->>> Signed-off-by: Steve Sistare <steven.sistare@oracle.com>
->>> Reviewed-by: Peter Xu <peterx@redhat.com>
->>> Acked-by: Markus Armbruster <armbru@redhat.com>
->>> Link: https://lore.kernel.org/r/1736967650-129648-17-git-send-email-steven.sistare@oracle.com
->>> Signed-off-by: Fabiano Rosas <farosas@suse.de>
->>
->> Hi; this commit includes some code that has confused
->> Coverity (CID 1590980) and it also confused me, so maybe
->> it could be usefully made clearer?
->>
->>
->>>   void qmp_migrate(const char *uri, bool has_channels,
->>>                    MigrationChannelList *channels, bool has_detach, bool detach,
->>>                    bool has_resume, bool resume, Error **errp)
->>> @@ -2056,6 +2118,7 @@ void qmp_migrate(const char *uri, bool has_channels,
->>>       g_autoptr(MigrationChannel) channel = NULL;
->>>       MigrationAddress *addr = NULL;
->>>       MigrationChannel *channelv[MIGRATION_CHANNEL_TYPE__MAX] = { NULL };
->>> +    MigrationChannel *cpr_channel = NULL;
->>>
->>>       /*
->>>        * Having preliminary checks for uri and channel
->>> @@ -2076,6 +2139,7 @@ void qmp_migrate(const char *uri, bool has_channels,
->>>               }
->>>               channelv[type] = channels->value;
->>>           }
->>> +        cpr_channel = channelv[MIGRATION_CHANNEL_TYPE_CPR];
->>>           addr = channelv[MIGRATION_CHANNEL_TYPE_MAIN]->addr;
->>>           if (!addr) {
->>>               error_setg(errp, "Channel list has no main entry");
->>> @@ -2096,12 +2160,52 @@ void qmp_migrate(const char *uri, bool has_channels,
->>>           return;
->>>       }
->>>
->>> +    if (s->parameters.mode == MIG_MODE_CPR_TRANSFER && !cpr_channel) {
->>> +        error_setg(errp, "missing 'cpr' migration channel");
->>> +        return;
->>> +    }
->>
->> Here in qmp_migrate() we bail out if cpr_channel is NULL,
->> provided that s->parameters.mode is MIG_MODE_CPR_TRANSFER...
->>
->>> +
->>>       resume_requested = has_resume && resume;
->>>       if (!migrate_prepare(s, resume_requested, errp)) {
->>>           /* Error detected, put into errp */
->>>           return;
->>>       }
->>>
->>> +    if (cpr_state_save(cpr_channel, &local_err)) {
->>
->> ...but in cpr_state_save() when we decide whether to dereference
->> cpr_channel or not, we aren't checking s->parameters.mode,
->> we call migrate_mode() and check the result of that.
->> And migrate_mode() isn't completely trivial: it calls
->> cpr_get_incoming_mode(), so it's not obvious that it's
->> necessarily going to be the same value as s->parameters.mode.
->> So Coverity complains that it sees a code path where we
->> might dereference cpr_channel even when it's NULL.
->>
->> Could this be made a bit clearer somehow, do you think?
+On Sat, Feb 01, 2025 at 09:57:23AM +0000, “William Roche wrote:
+> From: William Roche <william.roche@oracle.com>
 > 
-> That migrate_mode() is indeed tricky, and should only be needed for
-> incoming side QEMU to workaround current limitation that the migration
-> parameter "mode" cannot be set as early as when cpr_state_load() happens..
+> In case of a large page impacted by a memory error, provide an
+> information about the impacted large page before the memory
+> error injection message.
 > 
-> I think we could check s->parameters.mode here before doing
-> cpr_state_save(), it can also be more readable.
+> This message would also appear on ras enabled ARM platforms, with
+> the introduction of an x86 similar error injection message.
 > 
-> Steve, do you want to send a patch?
+> In the case of a large page impacted, we now report:
+> Memory Error on large page from <backend>:<address>+<fd_offset> +<page_size>
+> 
+> The +<fd_offset> information is only provided with a file backend.
+> 
+> Signed-off-by: William Roche <william.roche@oracle.com>
 
-I am busy today but I will submit a patch tomorrow.  cpr_state_save
-is only used on the outgoing side, so internally it can check
-s->parameters.mode instead of migrate_mode().
+This is still pretty kvm / arch relevant patch that needs some reviews.
 
-- Steve
+I wonder do we really need this - we could fetch ramblock mapping
+(e.g. hwaddr -> HVA) via HMP "info ramblock", and also dmesg shows process
+ID + VA.  IIUC we have all below info already as long as we do some math
+based on above.  Would that work too?
+
+> ---
+>  accel/kvm/kvm-all.c       | 18 ++++++++++++++++++
+>  include/exec/cpu-common.h | 10 ++++++++++
+>  system/physmem.c          | 22 ++++++++++++++++++++++
+>  target/arm/kvm.c          |  3 +++
+>  4 files changed, 53 insertions(+)
+> 
+> diff --git a/accel/kvm/kvm-all.c b/accel/kvm/kvm-all.c
+> index f89568bfa3..9a0d970ce1 100644
+> --- a/accel/kvm/kvm-all.c
+> +++ b/accel/kvm/kvm-all.c
+> @@ -1296,6 +1296,24 @@ static void kvm_unpoison_all(void *param)
+>  void kvm_hwpoison_page_add(ram_addr_t ram_addr)
+>  {
+>      HWPoisonPage *page;
+> +    struct RAMBlockInfo rb_info;
+> +
+> +    if (qemu_ram_block_info_from_addr(ram_addr, &rb_info)) {
+> +        size_t ps = rb_info.page_size;
+> +
+> +        if (ps > TARGET_PAGE_SIZE) {
+> +            uint64_t offset = QEMU_ALIGN_DOWN(ram_addr - rb_info.offset, ps);
+> +
+> +            if (rb_info.fd >= 0) {
+> +                error_report("Memory Error on large page from %s:%" PRIx64
+> +                             "+%" PRIx64 " +%zx", rb_info.idstr, offset,
+> +                             rb_info.fd_offset, ps);
+> +            } else {
+> +                error_report("Memory Error on large page from %s:%" PRIx64
+> +                            " +%zx", rb_info.idstr, offset, ps);
+> +            }
+> +        }
+> +    }
+>  
+>      QLIST_FOREACH(page, &hwpoison_page_list, list) {
+>          if (page->ram_addr == ram_addr) {
+> diff --git a/include/exec/cpu-common.h b/include/exec/cpu-common.h
+> index 3771b2130c..190bd4f34a 100644
+> --- a/include/exec/cpu-common.h
+> +++ b/include/exec/cpu-common.h
+> @@ -110,6 +110,16 @@ int qemu_ram_get_fd(RAMBlock *rb);
+>  size_t qemu_ram_pagesize(RAMBlock *block);
+>  size_t qemu_ram_pagesize_largest(void);
+>  
+> +struct RAMBlockInfo {
+> +    char idstr[256];
+> +    ram_addr_t offset;
+> +    int fd;
+> +    uint64_t fd_offset;
+> +    size_t page_size;
+> +};
+> +bool qemu_ram_block_info_from_addr(ram_addr_t ram_addr,
+> +                                   struct RAMBlockInfo *block);
+> +
+>  /**
+>   * cpu_address_space_init:
+>   * @cpu: CPU to add this address space to
+> diff --git a/system/physmem.c b/system/physmem.c
+> index e8ff930bc9..686f569270 100644
+> --- a/system/physmem.c
+> +++ b/system/physmem.c
+> @@ -1678,6 +1678,28 @@ size_t qemu_ram_pagesize_largest(void)
+>      return largest;
+>  }
+>  
+> +/* Copy RAMBlock information associated to the given ram_addr location */
+> +bool qemu_ram_block_info_from_addr(ram_addr_t ram_addr,
+> +                                   struct RAMBlockInfo *b_info)
+> +{
+> +    RAMBlock *rb;
+> +
+> +    assert(b_info);
+> +
+> +    RCU_READ_LOCK_GUARD();
+> +    rb =  qemu_get_ram_block(ram_addr);
+> +    if (!rb) {
+> +        return false;
+> +    }
+> +
+> +    pstrcat(b_info->idstr, sizeof(b_info->idstr), rb->idstr);
+> +    b_info->offset = rb->offset;
+> +    b_info->fd = rb->fd;
+> +    b_info->fd_offset = rb->fd_offset;
+> +    b_info->page_size = rb->page_size;
+> +    return true;
+> +}
+> +
+>  static int memory_try_enable_merging(void *addr, size_t len)
+>  {
+>      if (!machine_mem_merge(current_machine)) {
+> diff --git a/target/arm/kvm.c b/target/arm/kvm.c
+> index da30bdbb23..d9dedc6d74 100644
+> --- a/target/arm/kvm.c
+> +++ b/target/arm/kvm.c
+> @@ -2389,6 +2389,9 @@ void kvm_arch_on_sigbus_vcpu(CPUState *c, int code, void *addr)
+>                  kvm_cpu_synchronize_state(c);
+>                  if (!acpi_ghes_memory_errors(ACPI_HEST_SRC_ID_SEA, paddr)) {
+>                      kvm_inject_arm_sea(c);
+> +                    error_report("Guest Memory Error at QEMU addr %p and "
+> +                        "GUEST addr 0x%" HWADDR_PRIx " of type %s injected",
+> +                        addr, paddr, "BUS_MCEERR_AR");
+>                  } else {
+>                      error_report("failed to record the error");
+>                      abort();
+> -- 
+> 2.43.5
+> 
+
+-- 
+Peter Xu
 
 
