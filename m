@@ -4,88 +4,76 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 306D1C02194
-	for <qemu-devel@archiver.kernel.org>; Tue,  4 Feb 2025 13:52:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3CE22C02194
+	for <qemu-devel@archiver.kernel.org>; Tue,  4 Feb 2025 13:59:16 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tfJM9-0001rm-OY; Tue, 04 Feb 2025 08:52:50 -0500
+	id 1tfJS5-0003Yl-Oh; Tue, 04 Feb 2025 08:58:58 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1tfJM5-0001ow-Af
- for qemu-devel@nongnu.org; Tue, 04 Feb 2025 08:52:45 -0500
-Received: from mail-yb1-xb2e.google.com ([2607:f8b0:4864:20::b2e])
+ id 1tfJS1-0003Xx-8m
+ for qemu-devel@nongnu.org; Tue, 04 Feb 2025 08:58:54 -0500
+Received: from mail-yb1-xb29.google.com ([2607:f8b0:4864:20::b29])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1tfJM3-0005RW-NF
- for qemu-devel@nongnu.org; Tue, 04 Feb 2025 08:52:45 -0500
-Received: by mail-yb1-xb2e.google.com with SMTP id
- 3f1490d57ef6-e455bf1f4d3so5140485276.2
- for <qemu-devel@nongnu.org>; Tue, 04 Feb 2025 05:52:43 -0800 (PST)
+ id 1tfJRz-00073x-3G
+ for qemu-devel@nongnu.org; Tue, 04 Feb 2025 08:58:52 -0500
+Received: by mail-yb1-xb29.google.com with SMTP id
+ 3f1490d57ef6-e545c1e8a15so5037808276.1
+ for <qemu-devel@nongnu.org>; Tue, 04 Feb 2025 05:58:50 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1738677162; x=1739281962; darn=nongnu.org;
+ d=linaro.org; s=google; t=1738677530; x=1739282330; darn=nongnu.org;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:from:to:cc:subject:date
  :message-id:reply-to;
- bh=AEt9zpjV/6Hv9xyAVx5tPHw0X+ZSVILNpYvtBnw7BQs=;
- b=oqFHRNkjowLrlg8beNuLwANcl3JUIwPWjLrYRrp+1Vv+IUqledIa/OBD4gnEKm4bLO
- ZgD8MNjfGOgA0On06Wq9rSVUGbN5S/i7igt4MtG9GfO/oJjftQcesa7TYu/ZZRMhulsn
- NTwDmzvZBDCHKJGQlbwvHEkx3bYsqBdghbvJHlVUKi6vVfrnGgdO0TmFpSIm3tP2n/m2
- rX/D5zReRmYxhd95hBu0EMpl1vBv+ZiBztkGO2L/6wqPFNO5cZdxHTl5kPx4yi0IOnVt
- 1g6re37d8fE8C/sD7a9ZDOthUhAIAYDVDD1giofj9epqhT9ejSzz8VEEzNjb/MjnSkR7
- aX/A==
+ bh=v6efHAvOJyoEpbzEUaqrMfnmPVymr0WckrU7+WiQ2eM=;
+ b=LwJGpv7JabL401AJEfxyP6j1DIdHsqqBQ3GQnFsyon9OBLsjj6dsrg8KVkuNzt3vZY
+ EnaIccgLXyPYjOoLW3lS34q0LlsmYswcUexc59w8b6grzWu8kgwTwA97yUugl+xK2L+W
+ xuPgoV9yK1X38TuNTPT8b4eiCZAxgK0gowwIdRl4x4P/0n+dFLBFgSE0rHdtwtiZa2rk
+ qQ4Dtr4R9D0F4ZxzBkxsvn+vrWmCYzW5wZCYZZ6tzj9IKunJi3AduSnpSdG5o90xHRLu
+ QImVzfkVdYIHwTz4SBqENeVtKRFqhDHsCSveoIql/ADNiqioTfRVJbZcKiGjU2iTfMQC
+ z6Ew==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1738677162; x=1739281962;
+ d=1e100.net; s=20230601; t=1738677530; x=1739282330;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=AEt9zpjV/6Hv9xyAVx5tPHw0X+ZSVILNpYvtBnw7BQs=;
- b=L9CjvByq78Z2xh/P5LN/tI7nv3ojyI/omB7tXK7qfo1QlONvSYQMjpOUnfxranPCPJ
- IMw5icLW4SHUpKH45uD93qPTnG+oA8iaTyEMda2vis/QxJA2gZyrr7WxmH22KD8JOzUc
- d8YUn4n6OxtHhSgLCdFinXreOPH+SAWvsLNiZA38X8PCFWJtxJxm8zpZpoXHVFvRRAFV
- eZ3t9bqyxWdn4Z7hxPqS9BGDUY9yvyqx0kFTy/xtAKqbhzm2+PESkmbSUXrcBzJbx6mE
- aLQFiFH0Bzz1UCs/vEl8E499k+DTgwQdiBpiRCOHGepoN6wF0wMTWNaVPnLAnEr9gJFO
- UblQ==
-X-Forwarded-Encrypted: i=1;
- AJvYcCU0OH2cO/5/Ci2fG+mE/vM6DbhsBuNvlJ4NHCo3Jvx1M94RcIN7riD7Rp4vqdTVkkuR4ZULBTXSZ4Xa@nongnu.org
-X-Gm-Message-State: AOJu0Yx1utfaWqndRqTQcy87OWlCC8c5ASbpMvbiiCiqJ01twipBJh75
- bUlTz+A18wD58F/B7fEHeBJcZE9GBlohQx9S1XyzXXHiy1b7WAL58JQo2iwWHnmGWnnKGnr4Tw3
- VByRIMQBQYOuCfhsSvguiU+yxXGMKGuUwYVxl6w==
-X-Gm-Gg: ASbGnctmfnNQ3TQRz74AyZzVAnKULLnKC4IIx+Km6cd4DuF69Xe9Yf8dmOkEygwofmL
- IAtkPY8dNJbTi3BePS6v065t2MhL7sFneO5LZeXHTDCodBiJMg2c9fDZ4viMUQvlrqkP5ZNzTmQ
+ bh=v6efHAvOJyoEpbzEUaqrMfnmPVymr0WckrU7+WiQ2eM=;
+ b=uKEusB2vG2eNi3P2ZI2619q+mHg1m6W3N2D9Q9wDFllB4AdVmTwvcqJQAO+2lUB8V6
+ Zebep/GTy0vWSAvZVVR46o0H9hCZrn6Z89iG72uIXK4+FfRZnSpObblzH1te9DBC2Gcf
+ IpEsLW600icmM8Mt87gowMIbyHWmhSI7NiJomEjog/4qY1KQCDKbvb35ToZaDXsfsNeA
+ sT2OXKafNmvG/RdCDxxDcZ6cikIiaTWLPmAucu7Fk08j8k8FSgVpX3mptlPR1eRA8DD2
+ bT90REXHos1lsqvC9FashW5vW114lhi+ieoiTyo5U6c4842Lb9KX2Y2tWuZB1pyjrIo1
+ 2Lbg==
+X-Gm-Message-State: AOJu0YyhoGmQZAU3v5Be2Vxr1BXic7QcQILuKEHBv+46cyG4hqVg0CKc
+ qbtnlx0nj7esaVJaJL3KzI7jEqP4kaoQjpG2WDqIga+Z2rBTsHMAN40vqmQVirK5ApqCNdPjnGa
+ qRbwj3YjXFFZSnTV67dAa11KQvXZWXt8uv01SBw==
+X-Gm-Gg: ASbGncuizFWt6FZjXUVx9GVjbIasJQBJvcmSZGHXoSxryXkjAEGtJIAESFnKmbc17+B
+ iOVAuf7YyH3n93txE5PqbFOeQCB9cKJSkV0Pan7r4mGK4JzqCxebGk8QLtgig+mOuYjlFlbE6Jg
  ==
-X-Google-Smtp-Source: AGHT+IHQXPYJSIMuCmFGo7dQDddUknGPE21E1gfS0v88FTV3Fov4MWB07GEI8UjqwiRW0KOX1aXVeSNLQVrHLMRhugU=
-X-Received: by 2002:a05:6902:144c:b0:e57:4b14:6fdb with SMTP id
- 3f1490d57ef6-e58a4baaa4fmr19228443276.34.1738677162289; Tue, 04 Feb 2025
- 05:52:42 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IEs/TMT37UW4yQkWEE31L9bUTwoMnUGXGr2Laf8l5yza9GjLgoQHY5xze/fg/+thwczhRQ/IE6Jq3aproYbkEY=
+X-Received: by 2002:a05:6902:1b0c:b0:e5b:16b3:ed02 with SMTP id
+ 3f1490d57ef6-e5b16b3ee5emr2023106276.30.1738677529893; Tue, 04 Feb 2025
+ 05:58:49 -0800 (PST)
 MIME-Version: 1.0
-References: <20250204002240.97830-1-philmd@linaro.org>
- <20250204002240.97830-12-philmd@linaro.org>
- <CAFEAcA-3JJ1tZAXsik5hAonuSO9sCqDF1xqPQVhAeN-XwAAhDw@mail.gmail.com>
- <e32a54f2-ef46-4964-89d4-a8969b6d1b05@linaro.org>
- <Z6HklNsu0Mzgh7bC@redhat.com>
- <CAFEAcA9m8g=K-0RU31kswbNSKWnUqA78KxNkcXEAqR=BhWc9bA@mail.gmail.com>
- <8616891b-9747-4388-99dc-d6e53e090001@linaro.org>
-In-Reply-To: <8616891b-9747-4388-99dc-d6e53e090001@linaro.org>
+References: <20250113173604.46931-1-philmd@linaro.org>
+ <20250113173604.46931-7-philmd@linaro.org>
+In-Reply-To: <20250113173604.46931-7-philmd@linaro.org>
 From: Peter Maydell <peter.maydell@linaro.org>
-Date: Tue, 4 Feb 2025 13:52:30 +0000
-X-Gm-Features: AWEUYZn_3CWAUkZUH3JDPbb5GNmT6y-tdyOl6D97qpiklq3Pf2FHRLFyCyi0i6s
-Message-ID: <CAFEAcA9weFzHW+kL8W0GD26A+QTWpC7Baf9-=Oc3t2yw77=RCA@mail.gmail.com>
-Subject: Re: [PATCH v2 11/12] hw/arm/raspi: Deprecate old raspiX machine names
+Date: Tue, 4 Feb 2025 13:58:38 +0000
+X-Gm-Features: AWEUYZmhP4eni8W8aF6Lx5IxW8i26lpB8_tW5XkAXZU1zFjgcOQSGCrSw3KVAcE
+Message-ID: <CAFEAcA9aFTCcZTWUJhBisuaKWS5dEDkv1QnU_hgK4+1zPWcH0g@mail.gmail.com>
+Subject: Re: [PULL v2 11/55] hw/qdev: Check machine_hotplug_handler in
+ hotplug_unplug_allowed_common
 To: =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>
-Cc: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>, 
- qemu-devel@nongnu.org, BALATON Zoltan <balaton@eik.bme.hu>, 
- Laurent Vivier <lvivier@redhat.com>,
- Ovchinnikov Vitalii <vitalii.ovchinnikov@auriga.com>, 
- Jared Mauch <jared+home@puck.nether.net>, Fabiano Rosas <farosas@suse.de>, 
- Paolo Bonzini <pbonzini@redhat.com>, qemu-arm@nongnu.org, 
- =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>, 
- devel@lists.libvirt.org
+Cc: qemu-devel@nongnu.org, Akihiko Odaki <akihiko.odaki@daynix.com>, 
+ Igor Mammedov <imammedo@redhat.com>
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::b2e;
- envelope-from=peter.maydell@linaro.org; helo=mail-yb1-xb2e.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::b29;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yb1-xb29.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -108,39 +96,70 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, 4 Feb 2025 at 13:40, Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org=
-> wrote:
+On Mon, 13 Jan 2025 at 17:38, Philippe Mathieu-Daud=C3=A9 <philmd@linaro.or=
+g> wrote:
 >
-> On 4/2/25 12:13, Peter Maydell wrote:
-> > On Tue, 4 Feb 2025 at 09:57, Daniel P. Berrang=C3=A9 <berrange@redhat.c=
-om> wrote:
-> >> IMHO we can have distinct machines for each model, but
-> >> *NOT* have further machines for each RAM size within a
-> >> model.
-> >
-> > Yes, this was what I was intending to suggest. Apologies
-> > if I was confusing with what I said the previous time round.
+> From: Akihiko Odaki <akihiko.odaki@daynix.com>
 >
-> OK, let's see if we understand each other correctly as developer,
-> before explaining to users, taking the 4B model as example.
+> Commit 03fcbd9dc508 ("qdev: Check for the availability of a hotplug
+> controller before adding a device") says:
 >
-> The 4B come in 4 physical variants, depending on the amount of
-> DRAM: 1G, 2G, 4G and 8G.
+>  > The qdev_unplug() function contains a g_assert(hotplug_ctrl)
+>  > statement, so QEMU crashes when the user tries to device_add +
+>  > device_del a device that does not have a corresponding hotplug
+>  > controller.
 >
-> We can not allocate 2G on 32-bit hosts, so to have a reproducible
-> guest behavior on 32/64-bit hosts, it makes sense to takes the
-> model with 1G of DRAM as default for the 'raspi4b' machine.
+>  > The code in qdev_device_add() already checks whether the bus has a
+>  > proper hotplug controller, but for devices that do not have a
+>  > corresponding bus, here is no appropriate check available yet. In that
+>  > case we should check whether the machine itself provides a suitable
+>  > hotplug controller and refuse to plug the device if none is available.
+>
+> However, it forgot to add the corresponding check to qdev_unplug().
+>
+> Check the machine hotplug handler once in the common
+> qdev_hotplug_unplug_allowed_common() helper so both hotplug
+> and hot-unplug path are covered.
 
-At the moment we create the 1GB version on 32-bit hosts and
-the 2GB version on 64-bit hosts. I dunno that that's ideal,
-but I think it's probably best not to change that at this point.
+> diff --git a/system/qdev-monitor.c b/system/qdev-monitor.c
+> index e27d25c5859..861c25c855f 100644
+> --- a/system/qdev-monitor.c
+> +++ b/system/qdev-monitor.c
+> @@ -684,17 +684,9 @@ DeviceState *qdev_device_add_from_qdict(const QDict =
+*opts,
+>      dev =3D qdev_new(driver);
+>
+>      /* Check whether the hotplug is allowed by the machine */
+> -    if (phase_check(PHASE_MACHINE_READY)) {
+> -        if (!qdev_hotplug_allowed(dev, bus, errp)) {
+> -            goto err_del_dev;
+> -        }
+> -
+> -        if (!bus && !qdev_get_machine_hotplug_handler(dev)) {
+> -            /* No bus, no machine hotplug handler --> device is not hotp=
+luggable */
+> -            error_setg(errp, "Device '%s' can not be hotplugged on this =
+machine",
+> -                       driver);
+> -            goto err_del_dev;
+> -        }
+> +    if (phase_check(PHASE_MACHINE_READY) &&
+> +        !qdev_hotplug_allowed(dev, bus, errp)) {
+> +        goto err_del_dev;
+>      }
+>
 
-> If an user specify -m 2G ... 8G, we can adapt the 'board_rev'
-> register to expose the corresponding amount of ram. Now, how /
-> where to tell the users 1/ the default is 1G, and 2/ they can use
-> 2/4/8G?
+Hi; Coverity notices a NULL-check related issue as a
+result of this change. Here we add a call to
+qdev_hotplug_allowed() that assumes that dev is not NULL.
+But in the code at err_del_dev we do check whether
+dev is NULL. So either this code is wrong (and could be
+dereferencing NULL) or the code at err_del_dev is
+doing a pointless NULL check.
 
-In the documentation: docs/system/arm/raspi.rst .
+Since qdev_new() can't fail, it's the err_del_dev
+code that's wrong, I think.
 
+thanks
 -- PMM
 
