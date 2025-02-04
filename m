@@ -4,55 +4,55 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 95961C02193
-	for <qemu-devel@archiver.kernel.org>; Tue,  4 Feb 2025 21:17:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B6510C02193
+	for <qemu-devel@archiver.kernel.org>; Tue,  4 Feb 2025 21:17:24 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tfQG2-0005LV-Qu; Tue, 04 Feb 2025 16:14:58 -0500
+	id 1tfQG2-0005LU-Ph; Tue, 04 Feb 2025 16:14:58 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1tfQFt-0005Ho-Tb
- for qemu-devel@nongnu.org; Tue, 04 Feb 2025 16:14:50 -0500
+ (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1tfQFw-0005Ib-Nh
+ for qemu-devel@nongnu.org; Tue, 04 Feb 2025 16:14:53 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1tfQFs-0005i2-D2
- for qemu-devel@nongnu.org; Tue, 04 Feb 2025 16:14:49 -0500
+ (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1tfQFu-0005iL-Rs
+ for qemu-devel@nongnu.org; Tue, 04 Feb 2025 16:14:52 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1738703687;
+ s=mimecast20190719; t=1738703690;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=qo83n2Rf7uqclm/F3sSbcpT9mUhPLILcAmOypzTGDX0=;
- b=Z9ggnvMRSVC+pGH605HmWZYnLc4bayeaIGDTihqVjFp1XGok6WLZ79893MShDCZshjan73
- rNZagtFwCUE8/ARaz9eSSdSDVt4QPMV6y5Q4FOgptHs8LUcn2003D/OqAfGONIKBtwAf8b
- kyMRF1pDHa3M1p1hbhoEp56+btqTyTk=
-Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ bh=pT1O8tDOEaWjyTPNy8GKrPXIVJIbcvYFCQw8vIynjPY=;
+ b=VLRJMumnsPBfdsf/RotEXctrg5v88fAhTutxZJH+07yF7PHUJBX8g0W9EDazYJtkod0Ay7
+ 8layAS9NkCO3fhFtsWWwmKFfjhVKphbWKUMo5poaEFPAQbkvG4TpXp+T9Zayyc/ybFxZXr
+ /EneuR+kzCSnJfCEqJnndbtVqBa/uig=
+Received: from mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-470-JlJ7wRL1PgC3gbqGXCDTRw-1; Tue,
- 04 Feb 2025 16:14:44 -0500
-X-MC-Unique: JlJ7wRL1PgC3gbqGXCDTRw-1
-X-Mimecast-MFC-AGG-ID: JlJ7wRL1PgC3gbqGXCDTRw
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-454-yI6YOj3PPOmnuu6n0O-SNA-1; Tue,
+ 04 Feb 2025 16:14:46 -0500
+X-MC-Unique: yI6YOj3PPOmnuu6n0O-SNA-1
+X-Mimecast-MFC-AGG-ID: yI6YOj3PPOmnuu6n0O-SNA
 Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 2635E1800370; Tue,  4 Feb 2025 21:14:43 +0000 (UTC)
+ by mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id BD9981955DCF; Tue,  4 Feb 2025 21:14:45 +0000 (UTC)
 Received: from merkur.redhat.com (unknown [10.39.194.100])
  by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id A38411800365; Tue,  4 Feb 2025 21:14:40 +0000 (UTC)
+ id 75C1D1800268; Tue,  4 Feb 2025 21:14:43 +0000 (UTC)
 From: Kevin Wolf <kwolf@redhat.com>
 To: qemu-block@nongnu.org
 Cc: kwolf@redhat.com, hreitz@redhat.com, stefanha@redhat.com,
  pkrempa@redhat.com, peterx@redhat.com, farosas@suse.de,
  qemu-devel@nongnu.org
-Subject: [PATCH v3 07/16] block: Add option to create inactive nodes
-Date: Tue,  4 Feb 2025 22:13:58 +0100
-Message-ID: <20250204211407.381505-8-kwolf@redhat.com>
+Subject: [PATCH v3 08/16] block: Add blockdev-set-active QMP command
+Date: Tue,  4 Feb 2025 22:13:59 +0100
+Message-ID: <20250204211407.381505-9-kwolf@redhat.com>
 In-Reply-To: <20250204211407.381505-1-kwolf@redhat.com>
 References: <20250204211407.381505-1-kwolf@redhat.com>
 MIME-Version: 1.0
@@ -67,7 +67,7 @@ X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -83,89 +83,174 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-In QEMU, nodes are automatically created inactive while expecting an
-incoming migration (i.e. RUN_STATE_INMIGRATE). In qemu-storage-daemon,
-the notion of runstates doesn't exist. It also wouldn't necessarily make
-sense to introduce it because a single daemon can serve multiple VMs
-that can be in different states.
+The system emulator tries to automatically activate and inactivate block
+nodes at the right point during migration. However, there are still
+cases where it's necessary that the user can do this manually.
 
-Therefore, allow the user to explicitly open images as inactive with a
-new option. The default is as before: Nodes are usually active, except
-when created during RUN_STATE_INMIGRATE.
+Images are only activated on the destination VM of a migration when the
+VM is actually resumed. If the VM was paused, this doesn't happen
+automatically. The user may want to perform some operation on a block
+device (e.g. taking a snapshot or starting a block job) without also
+resuming the VM yet. This is an example where a manual command is
+necessary.
+
+Another example is VM migration when the image files are opened by an
+external qemu-storage-daemon instance on each side. In this case, the
+process that needs to hand over the images isn't even part of the
+migration and can't know when the migration completes. Management tools
+need a way to explicitly inactivate images on the source and activate
+them on the destination.
+
+This adds a new blockdev-set-active QMP command that lets the user
+change the status of individual nodes (this is necessary in
+qemu-storage-daemon because it could be serving multiple VMs and only
+one of them migrates at a time). For convenience, operating on all
+devices (like QEMU does automatically during migration) is offered as an
+option, too, and can be used in the context of single VM.
 
 Signed-off-by: Kevin Wolf <kwolf@redhat.com>
 Acked-by: Fabiano Rosas <farosas@suse.de>
 Reviewed-by: Eric Blake <eblake@redhat.com>
 Reviewed-by: Stefan Hajnoczi <stefanha@redhat.com>
 ---
- qapi/block-core.json         | 6 ++++++
- include/block/block-common.h | 1 +
- block.c                      | 9 +++++++++
- 3 files changed, 16 insertions(+)
+ qapi/block-core.json               | 32 ++++++++++++++++++++++++++++++
+ include/block/block-global-state.h |  3 +++
+ block.c                            | 21 ++++++++++++++++++++
+ blockdev.c                         | 32 ++++++++++++++++++++++++++++++
+ 4 files changed, 88 insertions(+)
 
 diff --git a/qapi/block-core.json b/qapi/block-core.json
-index 1296ca8ae2..6029e54889 100644
+index 6029e54889..ee6eccc68c 100644
 --- a/qapi/block-core.json
 +++ b/qapi/block-core.json
-@@ -4683,6 +4683,11 @@
- #
- # @cache: cache-related options
- #
-+# @active: whether the block node should be activated (default: true).
-+#     Having inactive block nodes is useful primarily for migration because it
-+#     allows opening an image on the destination while the source is still
-+#     holding locks for it. (Since 10.0)
+@@ -4945,6 +4945,38 @@
+ { 'command': 'blockdev-del', 'data': { 'node-name': 'str' },
+   'allow-preconfig': true }
+ 
++##
++# @blockdev-set-active:
 +#
- # @read-only: whether the block device should be read-only (default:
- #     false).  Note that some block drivers support only read-only
- #     access, either generally or in certain configurations.  In this
-@@ -4709,6 +4714,7 @@
-             '*node-name': 'str',
-             '*discard': 'BlockdevDiscardOptions',
-             '*cache': 'BlockdevCacheOptions',
-+            '*active': 'bool',
-             '*read-only': 'bool',
-             '*auto-read-only': 'bool',
-             '*force-share': 'bool',
-diff --git a/include/block/block-common.h b/include/block/block-common.h
-index 338fe5ff7a..7030669f04 100644
---- a/include/block/block-common.h
-+++ b/include/block/block-common.h
-@@ -257,6 +257,7 @@ typedef enum {
- #define BDRV_OPT_AUTO_READ_ONLY "auto-read-only"
- #define BDRV_OPT_DISCARD        "discard"
- #define BDRV_OPT_FORCE_SHARE    "force-share"
-+#define BDRV_OPT_ACTIVE         "active"
++# Activate or inactivate a block device. Use this to manage the handover of
++# block devices on migration with qemu-storage-daemon.
++#
++# Activating a node automatically activates all of its child nodes first.
++# Inactivating a node automatically inactivates any of its child nodes that are
++# not in use by a still active node.
++#
++# @node-name: Name of the graph node to activate or inactivate. By default, all
++#     nodes are affected by the operation.
++#
++# @active: true if the nodes should be active when the command returns success,
++#     false if they should be inactive.
++#
++# Since: 10.0
++#
++# .. qmp-example::
++#
++#     -> { "execute": "blockdev-set-active",
++#          "arguments": {
++#               "node-name": "node0",
++#               "active": false
++#          }
++#        }
++#     <- { "return": {} }
++##
++{ 'command': 'blockdev-set-active',
++  'data': { '*node-name': 'str', 'active': 'bool' },
++  'allow-preconfig': true }
++
+ ##
+ # @BlockdevCreateOptionsFile:
+ #
+diff --git a/include/block/block-global-state.h b/include/block/block-global-state.h
+index a826bf5f78..9be34b3c99 100644
+--- a/include/block/block-global-state.h
++++ b/include/block/block-global-state.h
+@@ -184,6 +184,9 @@ bdrv_activate(BlockDriverState *bs, Error **errp);
+ int coroutine_fn no_co_wrapper_bdrv_rdlock
+ bdrv_co_activate(BlockDriverState *bs, Error **errp);
  
++int no_coroutine_fn
++bdrv_inactivate(BlockDriverState *bs, Error **errp);
++
+ void bdrv_activate_all(Error **errp);
+ int bdrv_inactivate_all(void);
  
- #define BDRV_SECTOR_BITS   9
 diff --git a/block.c b/block.c
-index 73d0de12cf..7f6eca392f 100644
+index 7f6eca392f..7eeb8d076e 100644
 --- a/block.c
 +++ b/block.c
-@@ -1573,6 +1573,10 @@ static void update_flags_from_options(int *flags, QemuOpts *opts)
-     if (qemu_opt_get_bool_del(opts, BDRV_OPT_AUTO_READ_ONLY, false)) {
-         *flags |= BDRV_O_AUTO_RDONLY;
-     }
-+
-+    if (!qemu_opt_get_bool_del(opts, BDRV_OPT_ACTIVE, true)) {
-+        *flags |= BDRV_O_INACTIVE;
-+    }
+@@ -7052,6 +7052,27 @@ bdrv_inactivate_recurse(BlockDriverState *bs, bool top_level)
+     return 0;
  }
  
- static void update_options_from_flags(QDict *options, int flags)
-@@ -1799,6 +1803,11 @@ QemuOptsList bdrv_runtime_opts = {
-             .type = QEMU_OPT_BOOL,
-             .help = "Ignore flush requests",
-         },
-+        {
-+            .name = BDRV_OPT_ACTIVE,
-+            .type = QEMU_OPT_BOOL,
-+            .help = "Node is activated",
-+        },
-         {
-             .name = BDRV_OPT_READ_ONLY,
-             .type = QEMU_OPT_BOOL,
++int bdrv_inactivate(BlockDriverState *bs, Error **errp)
++{
++    int ret;
++
++    GLOBAL_STATE_CODE();
++    GRAPH_RDLOCK_GUARD_MAINLOOP();
++
++    if (bdrv_has_bds_parent(bs, true)) {
++        error_setg(errp, "Node has active parent node");
++        return -EPERM;
++    }
++
++    ret = bdrv_inactivate_recurse(bs, true);
++    if (ret < 0) {
++        error_setg_errno(errp, -ret, "Failed to inactivate node");
++        return ret;
++    }
++
++    return 0;
++}
++
+ int bdrv_inactivate_all(void)
+ {
+     BlockDriverState *bs = NULL;
+diff --git a/blockdev.c b/blockdev.c
+index eb2517f1dd..7e0d433712 100644
+--- a/blockdev.c
++++ b/blockdev.c
+@@ -3471,6 +3471,38 @@ void qmp_blockdev_del(const char *node_name, Error **errp)
+     bdrv_unref(bs);
+ }
+ 
++void qmp_blockdev_set_active(const char *node_name, bool active, Error **errp)
++{
++    int ret;
++
++    GLOBAL_STATE_CODE();
++    GRAPH_RDLOCK_GUARD_MAINLOOP();
++
++    if (!node_name) {
++        if (active) {
++            bdrv_activate_all(errp);
++        } else {
++            ret = bdrv_inactivate_all();
++            if (ret < 0) {
++                error_setg_errno(errp, -ret, "Failed to inactivate all nodes");
++            }
++        }
++    } else {
++        BlockDriverState *bs = bdrv_find_node(node_name);
++        if (!bs) {
++            error_setg(errp, "Failed to find node with node-name='%s'",
++                       node_name);
++            return;
++        }
++
++        if (active) {
++            bdrv_activate(bs, errp);
++        } else {
++            bdrv_inactivate(bs, errp);
++        }
++    }
++}
++
+ static BdrvChild * GRAPH_RDLOCK
+ bdrv_find_child(BlockDriverState *parent_bs, const char *child_name)
+ {
 -- 
 2.48.1
 
