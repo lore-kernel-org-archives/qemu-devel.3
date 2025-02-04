@@ -4,103 +4,70 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 45550C02194
-	for <qemu-devel@archiver.kernel.org>; Tue,  4 Feb 2025 16:29:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8B36BC02193
+	for <qemu-devel@archiver.kernel.org>; Tue,  4 Feb 2025 16:31:46 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tfLng-0004zd-3i; Tue, 04 Feb 2025 11:29:24 -0500
+	id 1tfLpL-0006s4-OD; Tue, 04 Feb 2025 11:31:09 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1tfLne-0004zD-JQ
- for qemu-devel@nongnu.org; Tue, 04 Feb 2025 11:29:22 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1tfLp3-0006kj-Fv
+ for qemu-devel@nongnu.org; Tue, 04 Feb 2025 11:30:49 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1tfLnc-0003Cu-U5
- for qemu-devel@nongnu.org; Tue, 04 Feb 2025 11:29:22 -0500
+ (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1tfLp0-0003UZ-3G
+ for qemu-devel@nongnu.org; Tue, 04 Feb 2025 11:30:48 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1738686560;
+ s=mimecast20190719; t=1738686644;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=Hnn3X+/SLmeN3E5bkVB/AYmwR8UonxAgYsLm6edpWu0=;
- b=Pjv1ScH7EXcq8lLl1bBgqMAWlsO/w7y1450QC0WztYwWnrFCZ4EkLokL8AxQdYx2AjnKpG
- lzF9GNURtZRvsiOzF/7x5H0Rn8tPAf0tA8utefb+I6s3GKWKxsJIsWhJnPzKP5WURXG/S0
- 7XlFbv/OkccEkp+rWNvhClinEskCeN8=
-Received: from mail-qk1-f200.google.com (mail-qk1-f200.google.com
- [209.85.222.200]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-550-0KcX9tmgNfm68WQi1k_fRQ-1; Tue, 04 Feb 2025 11:29:19 -0500
-X-MC-Unique: 0KcX9tmgNfm68WQi1k_fRQ-1
-X-Mimecast-MFC-AGG-ID: 0KcX9tmgNfm68WQi1k_fRQ
-Received: by mail-qk1-f200.google.com with SMTP id
- af79cd13be357-7be6ccb09f9so553006385a.2
- for <qemu-devel@nongnu.org>; Tue, 04 Feb 2025 08:29:18 -0800 (PST)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1738686558; x=1739291358;
- h=in-reply-to:content-transfer-encoding:content-disposition
- :mime-version:references:message-id:subject:cc:to:from:date
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=Hnn3X+/SLmeN3E5bkVB/AYmwR8UonxAgYsLm6edpWu0=;
- b=W4Ax8zZ1AoxXemIlE6t00joYln4TYmrJ5LCXiMCOXIDjz1xmGTtLhlMiHmjPusdhcl
- J7qtaY0Fm2g6yzhhzz8dB3IlurUVV3CbCo3dNTLbnNYm+mOuqhJSjbsM1PMOwSyb5mhZ
- eoxh4q6tyhSTALjKlqEc7KlaIRmkTQOMvwEbSqcN2MqOxHrMtu6IKUIpykUa/f39Z9n3
- jNyXCKU1tI1Ax32h94zX9f6MIqmvpxwcikvBglRnUZ82qufQ3QWyLefBhoyvtbKREu0M
- JNVM++WPybgEwd4hE6dgddGtZBJdYfMmPXKVytACXRmRQ+Lq9/QXEgG5NVINFZFz5b8t
- onMw==
-X-Forwarded-Encrypted: i=1;
- AJvYcCW+3h/K8FD2vKeaBM+xnRsnlv2hMwZOaGeUe9V0R+ifGLTPLDLu1xStT8VZGKszDF0cubsKOsSYl/xU@nongnu.org
-X-Gm-Message-State: AOJu0YxVrWN6WD3bxeNeXe70FzGxJI9gOG4QYAISa3pGSwdUUC4CXf3c
- K6bjd5d7ZUqQDV1WcbDJEai5gw5okpwfl4HqoUvkYhpT3wbFIM8SOmWD58dLlD6ThZc+siywZN1
- jdXlkBnqNWV6JqFqQFJZuUaG0a5agUjkyTP476kNGW7oGmZCW7SV0
-X-Gm-Gg: ASbGncs9k17fPi+ZqmDjFO4x2A7VWbUUGO8e+lPkhk26QxpH9fzzxbGPOkyq9a3UqNE
- BdsgKzHyJEFMjNC30edc7Nulid/FHyV5A8mfSWb1OVEzd1fLtOfXkzj9VAlry6+zd9udUe6qyeW
- fMf2M0gpaJf0kKwfgrs9Hl2SWROFIO2wQ+H1/U67eEJkuC/XVhXoia5iA2sDcH6gLqrM5+Siaeo
- vb8bGGgxIINLJdQ5FNOrdMN831HzKAkgEYIwxX3tY1dw9FgAhz0FTrwJMJ5oNi1nCRZ9dcucB45
- vlDF0M49WPswzWNfCJcf7Fj/+3bn1/KqdCK5n6janxYKsdPE
-X-Received: by 2002:a05:620a:4102:b0:7ac:a0a5:9bf4 with SMTP id
- af79cd13be357-7bffcd90739mr4191694785a.40.1738686558151; 
- Tue, 04 Feb 2025 08:29:18 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IFqKw4x9Kvao6E76UFAjI7JhL9VNH+x+cECRyfrMTKh0VTlmgjDVpjSZ/OAv81beeZhoJoSkQ==
-X-Received: by 2002:a05:620a:4102:b0:7ac:a0a5:9bf4 with SMTP id
- af79cd13be357-7bffcd90739mr4191691385a.40.1738686557838; 
- Tue, 04 Feb 2025 08:29:17 -0800 (PST)
-Received: from x1.local (pool-99-254-114-190.cpe.net.cable.rogers.com.
- [99.254.114.190]) by smtp.gmail.com with ESMTPSA id
- af79cd13be357-7c00a8da7d6sm650800685a.65.2025.02.04.08.29.16
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 04 Feb 2025 08:29:17 -0800 (PST)
-Date: Tue, 4 Feb 2025 11:29:16 -0500
-From: Peter Xu <peterx@redhat.com>
-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
-Cc: "Maciej S. Szmigiero" <mail@maciej.szmigiero.name>,
- Fabiano Rosas <farosas@suse.de>,
- Alex Williamson <alex.williamson@redhat.com>,
- =?utf-8?Q?C=C3=A9dric?= Le Goater <clg@redhat.com>,
- Eric Blake <eblake@redhat.com>, Markus Armbruster <armbru@redhat.com>,
- Avihai Horon <avihaih@nvidia.com>,
- Joao Martins <joao.m.martins@oracle.com>, qemu-devel@nongnu.org
-Subject: Re: [PATCH v4 08/33] migration/multifd: Allow premature EOF on TLS
- incoming channels
-Message-ID: <Z6JAXCngS22l0BmL@x1.local>
-References: <cover.1738171076.git.maciej.szmigiero@oracle.com>
- <baf944c37ead5d30d7e268b2a4074d9acaac2db0.1738171076.git.maciej.szmigiero@oracle.com>
- <Z6EI0V6Cg7aCbzQU@x1.local> <Z6ItUtb-NhKnn8hy@redhat.com>
- <Z6I6FF_4r_uVUlWU@x1.local> <Z6I8X94q6Fpimwkn@redhat.com>
+ bh=SIr02J17SDgEl1kjZPMlPFeprgNNQiEsfvb5otj+aJ0=;
+ b=ADRijd5+TlYluQbfRwTybxd30qZi2z3tW/paFaS0O32s4nXzQZ8gW4KrG4CtsJYmOOcJpl
+ CWtnokwgr638KvLyvOauKYgdu6VaHKCx8NKap9MFmmgI9f6ZzItVdjzj3TpWCjGXLjEGIO
+ gAWgyf1IEM5IwccFuaBwszawdwhfwH4=
+Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-245-td5BvcBJOzSzQzMG6yEi-A-1; Tue,
+ 04 Feb 2025 11:30:41 -0500
+X-MC-Unique: td5BvcBJOzSzQzMG6yEi-A-1
+X-Mimecast-MFC-AGG-ID: td5BvcBJOzSzQzMG6yEi-A
+Received: from mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.15])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id AF8AA18009CD; Tue,  4 Feb 2025 16:30:40 +0000 (UTC)
+Received: from redhat.com (unknown [10.39.194.100])
+ by mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id DD56B19560AB; Tue,  4 Feb 2025 16:30:37 +0000 (UTC)
+Date: Tue, 4 Feb 2025 17:30:35 +0100
+From: Kevin Wolf <kwolf@redhat.com>
+To: Eric Blake <eblake@redhat.com>
+Cc: qemu-block@nongnu.org, hreitz@redhat.com, stefanha@redhat.com,
+ pkrempa@redhat.com, peterx@redhat.com, farosas@suse.de,
+ qemu-devel@nongnu.org
+Subject: Re: [PATCH v2 15/15] iotests: Add (NBD-based) tests for inactive nodes
+Message-ID: <Z6JAq17ph8Sih3IB@redhat.com>
+References: <20250130171240.286878-1-kwolf@redhat.com>
+ <20250131095051.49708-6-kwolf@redhat.com>
+ <ifdiezfz5vp54mrpvawgo6dyp24azxajyfyclnidqhfckx3nbd@ol5ql25i7c7w>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <Z6I8X94q6Fpimwkn@redhat.com>
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=peterx@redhat.com;
+In-Reply-To: <ifdiezfz5vp54mrpvawgo6dyp24azxajyfyclnidqhfckx3nbd@ol5ql25i7c7w>
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.15
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=kwolf@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -118,88 +85,80 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, Feb 04, 2025 at 04:12:15PM +0000, Daniel P. Berrangé wrote:
-> On Tue, Feb 04, 2025 at 11:02:28AM -0500, Peter Xu wrote:
-> > On Tue, Feb 04, 2025 at 03:08:02PM +0000, Daniel P. Berrangé wrote:
-> > > On Mon, Feb 03, 2025 at 01:20:01PM -0500, Peter Xu wrote:
-> > > > On Thu, Jan 30, 2025 at 11:08:29AM +0100, Maciej S. Szmigiero wrote:
-> > > > > From: "Maciej S. Szmigiero" <maciej.szmigiero@oracle.com>
-> > > > > 
-> > > > > Multifd send channels are terminated by calling
-> > > > > qio_channel_shutdown(QIO_CHANNEL_SHUTDOWN_BOTH) in
-> > > > > multifd_send_terminate_threads(), which in the TLS case essentially
-> > > > > calls shutdown(SHUT_RDWR) on the underlying raw socket.
-> > > > > 
-> > > > > Unfortunately, this does not terminate the TLS session properly and
-> > > > > the receive side sees this as a GNUTLS_E_PREMATURE_TERMINATION error.
-> > > > > 
-> > > > > The only reason why this wasn't causing migration failures is because
-> > > > > the current migration code apparently does not check for migration
-> > > > > error being set after the end of the multifd receive process.
-> > > > > 
-> > > > > However, this will change soon so the multifd receive code has to be
-> > > > > prepared to not return an error on such premature TLS session EOF.
-> > > > > Use the newly introduced QIOChannelTLS method for that.
-> > > > > 
-> > > > > It's worth noting that even if the sender were to be changed to terminate
-> > > > > the TLS connection properly the receive side still needs to remain
-> > > > > compatible with older QEMU bit stream which does not do this.
-> > > > 
-> > > > If this is an existing bug, we could add a Fixes.
-> > > > 
-> > > > Two pure questions..
-> > > > 
-> > > >   - What is the correct way to terminate the TLS session without this flag?
-> > > > 
-> > > >   - Why this is only needed by multifd sessions?
-> > > 
-> > > Graceful TLS termination (via gnutls_bye()) should only be important to
-> > > security if the QEMU protocol in question does not know how much data it
-> > > is expecting to recieve. ie it cannot otherwise distinguish between an
-> > > expected EOF, and a premature EOF triggered by an attacker.
-> > > 
-> > > If the migration protocol has sufficient info to know when a chanel is
-> > > expected to see EOF, then we should stop trying to read from the TLS
-> > > channel before seeing the underlying EOF.
-> > > 
-> > > Ignoring GNUTLS_E_PREMATURE_TERMINATION would be valid if we know that
-> > > migration will still fail corretly in the case of a malicious attack
-> > > causing premature termination.
-> > > 
-> > > If there's a risk that migration may succeed, but with incomplete data,
-> > > then we would need the full gnutls_bye dance.
+Am 03.02.2025 um 20:49 hat Eric Blake geschrieben:
+> On Fri, Jan 31, 2025 at 10:50:51AM +0100, Kevin Wolf wrote:
+> > This tests different types of operations on inactive block nodes
+> > (including graph changes, block jobs and NBD exports) to make sure that
+> > users manually activating and inactivating nodes doesn't break things.
 > > 
-> > IIUC that's not required for migration then, because migration should know
-> > exactly how much data to receive, and migration should need to verify that
-> > and fail if the received data didn't match the expectation along the way.
-> > We also have QEMU_VM_EOF as the end mark of stream.
+> > Support for inactive nodes in other export types will have to come with
+> > separate test cases because they have different dependencies like blkio
+> > or root permissions and we don't want to disable this basic test when
+> > they are not fulfilled.
 > > 
-> > Said that, are we sure any pre-mature termination will only happen after
-> > all data read in the receive buffer that was sent?
+> > Signed-off-by: Kevin Wolf <kwolf@redhat.com>
+> > ---
+> >  tests/qemu-iotests/iotests.py                 |   4 +
+> >  tests/qemu-iotests/tests/inactive-node-nbd    | 303 ++++++++++++++++++
+> >  .../qemu-iotests/tests/inactive-node-nbd.out  | 239 ++++++++++++++
+> >  3 files changed, 546 insertions(+)
+> >  create mode 100755 tests/qemu-iotests/tests/inactive-node-nbd
+> >  create mode 100644 tests/qemu-iotests/tests/inactive-node-nbd.out
 > > 
-> > To ask in another way: what happens if the source QEMU sends everything and
-> > shutdown()/close() the channel, meanwhile the dest QEMU sees both (1) rest
-> > data to read, and (2) a pre-mature terminatino of TLS session in a read()
-> > syscall.  Would (2) be reported even before (1), or the order guaranteed
-> > that read of the residue data in (1) always happen before (2) (considering
-> > dest QEMU can be slow sometime on consuming the network buffers)?
 > 
-> That's not logically possible.
+> > +    iotests.log('\nMirror from active source to inactive target')
+> > +
+> > +    iotests.log('disk-fmt active: %s' % node_is_active(vm, 'disk-fmt'))
+> > +    iotests.log('snap-fmt active: %s' % node_is_active(vm, 'snap-fmt'))
+> > +    iotests.log('snap2-fmt active: %s' % node_is_active(vm, 'snap2-fmt'))
+> > +    iotests.log('target-fmt active: %s' % node_is_active(vm, 'target-fmt'))
+> > +
+> > +    # Activating snap2-fmt recursively activates the whole backing chain
+> > +    vm.qmp_log('blockdev-set-active', node_name='snap2-fmt', active=True)
+> > +    vm.qmp_log('blockdev-set-active', node_name='target-fmt', active=False)
 > 
-> In both (1) and (2) you are issuing a read() call to the TLS channel.
+> Here, you have "Activating ... recursively activates"...
 > 
-> The first read call(s) consume all incoming data. Only once the underlying
-> TCP socket read() returns 0, would GNUTLS  see that it hasn't got any
-> TLS "bye" packet, and thus return GNUTLS_E_PREMATURE_TERMINATION from
-> the layered TLS read(). IOW, if you see GNUTLS_E_PREMATURE_TERMINATION
-> you know you have already read all received data off the socket.
+> > +
+> > +    iotests.log('disk-fmt active: %s' % node_is_active(vm, 'disk-fmt'))
+> > +    iotests.log('snap-fmt active: %s' % node_is_active(vm, 'snap-fmt'))
+> > +    iotests.log('snap2-fmt active: %s' % node_is_active(vm, 'snap2-fmt'))
+> > +    iotests.log('target-fmt active: %s' % node_is_active(vm, 'target-fmt'))
+> > +
+> > +    vm.qmp_log('blockdev-mirror', job_id='job0', device='snap2-fmt',
+> > +               target='target-fmt', sync='full',
+> > +               filters=[iotests.filter_qmp_generated_node_ids])
+> > +
+> > +    iotests.log('\nBackup from active source to inactive target')
+> > +
+> > +    vm.qmp_log('blockdev-backup', job_id='job0', device='snap2-fmt',
+> > +               target='target-fmt', sync='full',
+> > +               filters=[iotests.filter_qmp_generated_node_ids])
+> > +
+> > +    iotests.log('\nBackup from inactive source to active target')
+> > +
+> > +    # Activating snap2-fmt recursively inactivates the whole backing chain
+> > +    vm.qmp_log('blockdev-set-active', node_name='snap2-fmt', active=False)
+> > +    vm.qmp_log('blockdev-set-active', node_name='target-fmt', active=True)
+> 
+> ...but here, "Activating ... recursively inactivates".  Is one of
+> these statements wrong?
 
-That looks all OK then.  In that case we could set all migration TLS
-sessions to ignore premature terminations.
+Yes, looks like I updated only half of the comment after copying it. As
+you can see in the line after the comment, it sets active=False for
+snap2-fmt, so the comment should say "Inactivating ... recursively
+inactivates".
 
-Thanks,
+Kevin
 
--- 
-Peter Xu
+> Overall a nice barrage of tests, and I can see how adding this many
+> tests caused your v2 to fix some bugs that it discovered in v1.
+> 
+> 
+> -- 
+> Eric Blake, Principal Software Engineer
+> Red Hat, Inc.
+> Virtualization:  qemu.org | libguestfs.org
+> 
 
 
