@@ -4,64 +4,64 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id F0AB8C02193
-	for <qemu-devel@archiver.kernel.org>; Tue,  4 Feb 2025 00:24:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2140AC02193
+	for <qemu-devel@archiver.kernel.org>; Tue,  4 Feb 2025 00:24:50 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tf6jO-0001NP-3Y; Mon, 03 Feb 2025 19:23:58 -0500
+	id 1tf6jH-0000sQ-VV; Mon, 03 Feb 2025 19:23:52 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tf6jL-00018b-8H
- for qemu-devel@nongnu.org; Mon, 03 Feb 2025 19:23:55 -0500
-Received: from mail-wm1-x32e.google.com ([2a00:1450:4864:20::32e])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tf6jC-0000aY-4F
+ for qemu-devel@nongnu.org; Mon, 03 Feb 2025 19:23:47 -0500
+Received: from mail-wm1-x331.google.com ([2a00:1450:4864:20::331])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tf6jJ-00079J-JC
- for qemu-devel@nongnu.org; Mon, 03 Feb 2025 19:23:54 -0500
-Received: by mail-wm1-x32e.google.com with SMTP id
- 5b1f17b1804b1-4363ae65100so58711625e9.0
- for <qemu-devel@nongnu.org>; Mon, 03 Feb 2025 16:23:53 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tf6j9-00077c-2i
+ for qemu-devel@nongnu.org; Mon, 03 Feb 2025 19:23:45 -0500
+Received: by mail-wm1-x331.google.com with SMTP id
+ 5b1f17b1804b1-4361f664af5so58356485e9.1
+ for <qemu-devel@nongnu.org>; Mon, 03 Feb 2025 16:23:42 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1738628632; x=1739233432; darn=nongnu.org;
+ d=linaro.org; s=google; t=1738628621; x=1739233421; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=KA2PPeT4tEXlHcRLWASfffMgNqf9rFhBVYtXHQy1PNU=;
- b=IQrZrO1QrWQfaoU5XjzGAPz4NFl9cUwXdnIIydOX2I38cPlg3857A6inzBBHKStcDC
- 8j5O411HG4VWbsOO1ei2dQEMxomlewl12jWDMu3WRSXKPYkfki90YvfCitLkvikyOVlP
- O4DnkwEJHeRVHAtdUMArDSE8bCLks0p5+l3JkqTsk301ebGa84eDlnR4ox212kk2VzPT
- X7CjXp0ojGukBWANpfQmyi/UDRKn7Wb/4rvN2doT/uJt/rlpqVUoHPOUJCFMCIxHn1Af
- aSmnpO//zZqWhbzla+PZ18JT1ae/2SceacKGgJFTBFaOGeTM1Asx5K21zyd0U6NiZyPS
- z0Gw==
+ bh=4BsHBCpnaPz96xyXgY6FPwDTShzZ0gjgpBf5vsUfhxs=;
+ b=UMQ3YQwLsFy9KCH0bwJv1YJrekfy/X1BdHa8hlo2E73bAvXrclnRhBpyE9yM0iSLSA
+ GZOFM3EhxSzzWDwVtCuh8cUohooSJakVT+/Fvcu3Pu4YfR7mZzmj5p1KLCtCp/i8HT+H
+ 0bDJFNQV/yUo+CXKzN6Tz3wWF9NA/InyWHZzi/2SiYjnGIJANAvy2C2JuKaZhnqUql8v
+ 1ongUyqaub8IZoql9qFw/4eCJysaJ7hojwygCA2DYDu8q0ZfqeFfrGIrd2NjXI0ofmUb
+ +m45ZezlpMiztdHnGRJON34KuuKsQLKa46QFLKk59Roau5N2Gn80vpuAUr9MF19W57R5
+ Hc1g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1738628632; x=1739233432;
+ d=1e100.net; s=20230601; t=1738628621; x=1739233421;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=KA2PPeT4tEXlHcRLWASfffMgNqf9rFhBVYtXHQy1PNU=;
- b=n0D06qWk9wWzQSgwqq9pO/HGqgJcDfJrIenqYB7uqv/gVkAVR5rOixnyPFz92y/fxv
- /y1kmt7ENod9bf4qIKcUkefqTpqWK9jGo0EjqSJxJ5NbQF6GrR8sfWkGxmNRI8zkSNmo
- 67jHIJLhC5Kk9pYjFPz2e7WNOsxp49ESXhUOmEmw6aLIoP51DpqraRM3j6fU655LonRU
- Zqq0hNOia/bPEc02fdlfHwylXry3TofSm5sC2dm9CitVaPLrNbeTqNj0lwBabf7T6CxA
- Oij9qQ3o7MKylkDklwFjo3W9FJ0rJ9TBjEooIBFXW3U7PPEYTriqO2lHvrncssWp42+5
- oKgQ==
-X-Gm-Message-State: AOJu0YyhJdITNI1NyytpSNN5VNQYcDvuKHpDYtGIeMEGjK1eQxpqWdnX
- Y/AHXAcddg7ZJM17wp6mHYnm0geqdk4YsgBvePYeZ87b3YtLKwyxC2aZ/gwweGck0awkeXQngtc
- m4ac=
-X-Gm-Gg: ASbGncto/qiAWJpLtAtdzJwoCBJj/JuTED+0u8yilNGIodtTTr6IzFymi8Rn0iX64/1
- 4l//xJ0OM6Cb7gH1OGkCc4jcd/iG/JBoGKKFGKJ5Yg1rCaPWOetNl9hhnLeZK0Kz1CE8FC7bVdn
- eK9aui/pyL3oBiEkJSbbPnPg/c6XPyqNGJGempEStrKoKCjDMHHfa5ZZhP2JmnDMh2vhrQ4ci9J
- jR3qbqWam3o97eiH0+TszJv5IWzY9+DzsAOGBWkx2ky97+4xftREgYL/3I3NqBu9YfDj6aDhpXz
- eGs6vHS1Vt6ukks9k5YCSKreD136cSpGFX7KGkeu7W9tgu8unIaiSZ6h4sW7ekadwg==
-X-Google-Smtp-Source: AGHT+IE7Rvp8IWHSG8TN0cuLH5HU1vI0hraFlRdcsxcb82PnxgLdH74SRsYB5zKwwE/skHQ3fqKOMw==
-X-Received: by 2002:a05:600c:5486:b0:431:5c3d:1700 with SMTP id
- 5b1f17b1804b1-438dc40d3fdmr219161265e9.21.1738628631843; 
- Mon, 03 Feb 2025 16:23:51 -0800 (PST)
+ bh=4BsHBCpnaPz96xyXgY6FPwDTShzZ0gjgpBf5vsUfhxs=;
+ b=g8qG3fsUC2IJmlpteUUXesj5nDl+14E20MwvHyRWKF4SbRsYXJHLJAcl16A2cFmVvf
+ EDtcxIWOshs+0Bq3SYnLVYtcgLVNBR6DBcOiK1eT8UuYuXBBlwfH86kBkMIlNlhWa3pt
+ 0KMRsKOWmTGI5aZpzE6tZFND6zbTjX6CljmJz2X7x5L0DacQHm3+3MxfwL2jJYzbOpvh
+ n9b1T4gn5bdNHrgJnsU7TlcOeOLOwcOz0RgTIyDQe9KayMBbJaaZl26kfumfnKpCNlYk
+ bb5y8MN9bCVqjA0pIamv/ShiYiLz2fdV1eWPMHX1U4fFTCJxPqTjfddiYcJGI4G6+vCG
+ f73A==
+X-Gm-Message-State: AOJu0YzLkYjXMd4HQ8ByEVCLAalr10jWAZ8/TTl0W20IoP9ozaRUfYL3
+ jq++tN14CvcJ2Q/F1+8MZT+bKK97S/xhwtGeMTtgZVyDqFZDHMtsmUglCRs2IdDEUzF4H9gS3Kh
+ vHsQ=
+X-Gm-Gg: ASbGncsJFT2ufKMHW5yKsTFkn6sxQSqbSq9qru/BFgILI5g7sO1jEROzjbkXp7gqdjw
+ whhDRX4lI3F3wHvqUX/z/YFmDfNfjpD6F6iTrU6cphrkvK0AQ16QbsHTv79DRIfo5MTeMdgEfra
+ YqrO1/3GwRX239dfdF2/NNu8rbvftyqPNWqqTvPLs8EFe2m1R3k3SYQGAc33zpMduz8RHa1+Wee
+ pKWhmwneib5U/lxNkRFOe3uCvy2eSZJ7pLBDM3XOglY0R18dUzgXGpggMFhHsdQK0+ZHBtBfVJc
+ PuFahYzoaFxkRQUIlxc8qysgPaIIrqt1BymG2bEfDuhy73RGlKqvCmBZHuzdGKjh5w==
+X-Google-Smtp-Source: AGHT+IG7jWGrmSQyucvp8cl04A0B6GQvyWzANUSPKFJhjeQG53dan6HWFQx2maj55IYQawVpHdmwxA==
+X-Received: by 2002:a05:600c:1d06:b0:434:fa61:fdfb with SMTP id
+ 5b1f17b1804b1-438e561ceaemr158695135e9.18.1738628620679; 
+ Mon, 03 Feb 2025 16:23:40 -0800 (PST)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-438e23d42dfsm174646505e9.4.2025.02.03.16.23.49
+ ffacd0b85a97d-38c5c1016a1sm14187863f8f.21.2025.02.03.16.23.39
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Mon, 03 Feb 2025 16:23:50 -0800 (PST)
+ Mon, 03 Feb 2025 16:23:40 -0800 (PST)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: =?UTF-8?q?Daniel=20P=20=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
@@ -74,17 +74,18 @@ Cc: =?UTF-8?q?Daniel=20P=20=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
  Paolo Bonzini <pbonzini@redhat.com>, qemu-arm@nongnu.org,
  =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
  devel@lists.libvirt.org
-Subject: [PATCH v2 12/12] hw/arm/raspi: Support more models
-Date: Tue,  4 Feb 2025 01:22:40 +0100
-Message-ID: <20250204002240.97830-13-philmd@linaro.org>
+Subject: [PATCH v2 10/12] hw/arm/raspi: List models creatable by the generic
+ 'raspi' machine
+Date: Tue,  4 Feb 2025 01:22:38 +0100
+Message-ID: <20250204002240.97830-11-philmd@linaro.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20250204002240.97830-1-philmd@linaro.org>
 References: <20250204002240.97830-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32e;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x32e.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::331;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x331.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -107,62 +108,87 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Allow to create the following machines:
+All the following models can be created (with different RAM size):
 
-  - Zero2W
-  - 400
-  - CM4 and CM4S
-
-Fill the arrays with the BCM2712-based machines (raspi5),
-but since we don't model the SoC, these machines can't
-be created (and aren't listed in the 'help' output).
-
-List taken from:
-https://github.com/raspberrypi/documentation/blob/9b126446a5/documentation/asciidoc/computers/raspberry-pi/revision-codes.adoc
+  $ qemu-system-aarch64 -M raspi
+  qemu-system-aarch64: Missing model, try -M raspi,model=help
+  $ qemu-system-aarch64 -M raspi,model=help
+  Available models (processor):
+  - A          (BCM2835)
+  - B          (BCM2835)
+  - A+         (BCM2835)
+  - B+         (BCM2835)
+  - 2B         (BCM2836)
+  - CM1        (BCM2835)
+  - 3B         (BCM2837)
+  - Zero       (BCM2835)
+  - CM3        (BCM2837)
+  - ZeroW      (BCM2835)
+  - 3B+        (BCM2837)
+  - 3A+        (BCM2837)
+  - CM3+       (BCM2837)
+  - 4B         (BCM2838)
 
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 ---
- hw/arm/raspi.c | 13 +++++++++++++
- 1 file changed, 13 insertions(+)
+ hw/arm/raspi.c | 28 +++++++++++++++++++++++++++-
+ 1 file changed, 27 insertions(+), 1 deletion(-)
 
 diff --git a/hw/arm/raspi.c b/hw/arm/raspi.c
-index 86ecc988e06..2346550eec5 100644
+index b184ac3c446..8cae1ff6f93 100644
 --- a/hw/arm/raspi.c
 +++ b/hw/arm/raspi.c
-@@ -71,6 +71,7 @@ typedef enum RaspiProcessorId {
-     PROCESSOR_ID_BCM2837 = 2,
-     PROCESSOR_ID_BCM2838 = 3,
-     PROCESSOR_ID_BCM2711 = 3,
-+    PROCESSOR_ID_BCM2712 = 4,
- } RaspiProcessorId;
+@@ -445,7 +445,7 @@ static void raspi_generic_machine_init(MachineState *ms)
+     uint64_t max_ramsize;
  
- static const struct {
-@@ -82,6 +83,7 @@ static const struct {
-     [PROCESSOR_ID_BCM2836] = {TYPE_BCM2836, BCM283X_NCPUS,  1 * GiB},
-     [PROCESSOR_ID_BCM2837] = {TYPE_BCM2837, BCM283X_NCPUS,  1 * GiB},
-     [PROCESSOR_ID_BCM2838] = {TYPE_BCM2838, BCM283X_NCPUS,  8 * GiB},
-+    [PROCESSOR_ID_BCM2712] = {NULL,         BCM283X_NCPUS,  16 * GiB},
- };
+     if (!board_rev) {
+-        error_report("Missing model");
++        error_report("Missing model, try -M raspi,model=help");
+         exit(1);
+     }
  
- static const struct {
-@@ -106,6 +108,17 @@ static const struct {
-     { },
-     {PROCESSOR_ID_BCM2837, "CM3+"},
-     {PROCESSOR_ID_BCM2711, "4B"},
-+    {PROCESSOR_ID_BCM2837, "Zero2W"},
-+    {PROCESSOR_ID_BCM2711, "400"},
+@@ -500,8 +500,33 @@ static void raspi_update_board_rev(RaspiBaseMachineState *s)
+     ms->smp.max_cpus = soc_property[proc].cores_count;
+ }
+ 
++static void raspi_list_machine_models(void)
++{
++    printf("Available models (processor):\n");
 +
-+    {PROCESSOR_ID_BCM2711, "CM4"},
-+    {PROCESSOR_ID_BCM2711, "CM4S"},
-+    { },
-+    {PROCESSOR_ID_BCM2712, "5"},
-+    {PROCESSOR_ID_BCM2712, "CM5"},
-+    {PROCESSOR_ID_BCM2712, "500"},
-+    {PROCESSOR_ID_BCM2712, "CM5lite"},
-+    { },
- };
++    for (unsigned i = 0; i < ARRAY_SIZE(types); i++) {
++        const char *soc_type;
++
++        if (!types[i].model) {
++            continue;
++        }
++
++        soc_type = soc_property[types[i].proc_id].type;
++        if (!soc_type) {
++            continue;
++        }
++        printf("- %-10s (BCM%s)\n",
++               types[i].model,
++               soc_property[types[i].proc_id].type + 3);
++    }
++}
++
+ static void raspi_set_machine_model(Object *obj, const char *value, Error **errp)
+ {
++    if (!strcmp(value, "help")) {
++        raspi_list_machine_models();
++        exit(0);
++    }
+     for (unsigned i = 0; i < ARRAY_SIZE(types); i++) {
+         if (types[i].model && !strcmp(value, types[i].model)) {
+             RaspiBaseMachineState *s = RASPI_BASE_MACHINE(obj);
+@@ -512,6 +537,7 @@ static void raspi_set_machine_model(Object *obj, const char *value, Error **errp
+         }
+     }
+     error_setg(errp, "Invalid model");
++    error_append_hint(errp, "Use model=help to list models.\n");
+ }
  
- uint64_t board_ram_size(uint32_t board_rev)
+ static char *raspi_get_machine_model(Object *obj, Error **errp)
 -- 
 2.47.1
 
