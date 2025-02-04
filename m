@@ -4,77 +4,77 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0877EC02194
-	for <qemu-devel@archiver.kernel.org>; Tue,  4 Feb 2025 16:32:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 40933C02193
+	for <qemu-devel@archiver.kernel.org>; Tue,  4 Feb 2025 16:32:43 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tfLpx-0007IJ-Tx; Tue, 04 Feb 2025 11:31:47 -0500
+	id 1tfLqS-00081B-0h; Tue, 04 Feb 2025 11:32:16 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1tfLpR-00072p-4Q
- for qemu-devel@nongnu.org; Tue, 04 Feb 2025 11:31:16 -0500
-Received: from mail-yb1-xb33.google.com ([2607:f8b0:4864:20::b33])
+ id 1tfLpl-0007DM-17
+ for qemu-devel@nongnu.org; Tue, 04 Feb 2025 11:31:37 -0500
+Received: from mail-yb1-xb30.google.com ([2607:f8b0:4864:20::b30])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1tfLpP-0003Za-C9
- for qemu-devel@nongnu.org; Tue, 04 Feb 2025 11:31:12 -0500
-Received: by mail-yb1-xb33.google.com with SMTP id
- 3f1490d57ef6-e5addc7b249so3670062276.1
- for <qemu-devel@nongnu.org>; Tue, 04 Feb 2025 08:31:10 -0800 (PST)
+ id 1tfLpi-0003bP-BO
+ for qemu-devel@nongnu.org; Tue, 04 Feb 2025 11:31:32 -0500
+Received: by mail-yb1-xb30.google.com with SMTP id
+ 3f1490d57ef6-e3c8ae3a3b2so5191018276.0
+ for <qemu-devel@nongnu.org>; Tue, 04 Feb 2025 08:31:28 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1738686670; x=1739291470; darn=nongnu.org;
+ d=linaro.org; s=google; t=1738686688; x=1739291488; darn=nongnu.org;
  h=cc:to:subject:message-id:date:from:in-reply-to:references
  :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=6jO3SEdCWmHUg9X6atoMMcR4mM2oH2x4+LOOL6tTUMs=;
- b=j6n7h7jttXLKHv/xKjLA0ybIxBcFCG0ZkWQ7F++MDZfCFuulEluhJ9T81gc9zp2QZK
- cNWhS+MwKPpji3YV4MBUy08xsIjlVz09uMylqiHm/jAmIxcBcs7FFkK0K585jk6RkQuK
- s6cWQMNLGEulLbLyU3V7SgNxhvkjqCCw8GbHkih8Bk7eNUo4va4qVq8oE0ySH5T5T5H5
- 9Kf3udnzQ9pJ02KUui6k4Ir7GtmhIEkBqlVxbt27jq8WOzveqewwhwTafmyIpQSSqDSj
- 1j0BHjLP2ZKwuwsnmat21CPokNU1G1FoRUX4ct8hmfsVt+uylz8+6S+3Nr23gfFU9S2x
- 3G2Q==
+ bh=weNFiOUeXuTkCzNy2Pj0WVjcsbJPxWOUwHhfVmugXdo=;
+ b=MC5uU+2w4y5ufsunKyejsJx9K5ciFSmAEQ+3868s0w7kP+PHNSTha1FQWJpCCwMO9s
+ 1CYCzZo4+xHDE58pHpbI2aSGF6bL0DtVDtx7wPjCPlcJNG9jLPRCFq//a9pnfmMP1imR
+ GS/Jvq24VXgxVPp6HOQMq4EoJNicY5fRY+mLIX4INobodwG+YH8RaLjVqWSAmtd9LIgI
+ EN2Mg3wnyjzSQzK5oUAN2PcnnhR/YCGMJgeV2cg2eR8oty/HoA7UbYtTGgfqObsHOZst
+ 0NPXOHunVU/4VPXN45FwG9P14Xrb0op8J7+TFJdJvHx9vDIAXr43oQarKv1kUnUmX/yc
+ PhTw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1738686670; x=1739291470;
+ d=1e100.net; s=20230601; t=1738686688; x=1739291488;
  h=cc:to:subject:message-id:date:from:in-reply-to:references
  :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=6jO3SEdCWmHUg9X6atoMMcR4mM2oH2x4+LOOL6tTUMs=;
- b=etNEk621Pas4mTCPzbOCkyugqzSulzjRjbNEypfZYlhvjxODLcOzpW2RlbJClk0P8E
- eLlTN2UMoIvqWFIDkKYbnz/8F+8aIvM4Azmtkd2zSVbSvTIbdS7ktUizEc7svM1ngRZT
- QmU36ZUpTqBkjXViIyNu1CwDfcZbZN/rUjl0vm/wfIGbXIiXHM/TIKiorX6JodJF2Ydq
- VlfwYvo0EGF9tid+sAu4Qpd/cMfV5UA8cXqglLYY8VORM10qd16zmycta7BdDjQq+zYO
- G+rPVGZOmAKhVfjariJXCPt8k3/qUJSiPi0iJPuVWeL10i7jwXrdGmBE004TY2rFT0Fs
- RJGA==
+ bh=weNFiOUeXuTkCzNy2Pj0WVjcsbJPxWOUwHhfVmugXdo=;
+ b=kwGpXGzf7rMCopHCRF4xuWE6rqXWveIKt8QrEmGjqajjZ8aGEdutdZ/i3d02KrFDsJ
+ n+KS0XfGnsV88rpX0T79ryuGbGsmfT3xQLuoN5CStHnRL7G9LX5e2NZiViT02hmbCNtb
+ Rq9oVL+j5S4C6s4///8fgNaoKbhohrF3METiwSduMpu7X2OchCydfz75jClkWxIKJdAH
+ p0Cx9bBErxpQyn/1XLuuKfo8h6SRyQjBKx7p3NuOaI2IARJa012UD4gsdISdPxHh53b2
+ ICB33aetM1/ltedeZN8kJdFUdtdv7XxH46BETvJsTQ2G3hebQRv0wa1blTICS1m5X5St
+ 5wDA==
 X-Forwarded-Encrypted: i=1;
- AJvYcCVYkDpOLvB3pG6hQwuL7PG7HLZ4BL0dmDp/N0e8DHhnTef3XEKxAQVOALFaZvTJdnGohFU3m5I2P197@nongnu.org
-X-Gm-Message-State: AOJu0Yy1mVKdXB5Z81Mp/by+ox38kDL59zRH1PuzjryK2VxJp7BHiZ+J
- FF14DtWOB3bizQCSnArIekT09LrkRjtuuzxPnw0DRrTQtKn+rI3bGG55cOnztBvJTC2hg/u1rO4
- sKyUuEJeded2rVrKeY9TjNQybaytM4qQiViLWtQ==
-X-Gm-Gg: ASbGnctYvwkHV6PtItwMME439FCAUM8V+1ZHaGFLiEY6pfPC6vzN5vIdYF/fyQERY2S
- Ib0Ok+8HJ0Ke2S/nEA9TUA/FleX8QxfDT0wAsjxOMaKAOZaGruR905wAz3m9Iky7EUMGAh+XnaQ
+ AJvYcCW9/d9WkUsQ1VJ5lH1oPM81b9wij9SDz2ZqUPrTdUuEoSCn99tvTZSSJi51m8GoaVwLJghLejN/6NV+@nongnu.org
+X-Gm-Message-State: AOJu0Yzlvxe+iFHTDc8YplQydSm0xz7xI+sJM4qes2qpbLm8K5AwjfVA
+ 3/8od647WYcbe0W0Y/Jb1gdyBO1FTxUV7ML/KwF41v12FXh0mZDt9ICM804Pqf3wGaJXMdbWQ6N
+ nswpglcjSANKZgiYtqdEjJCNE9w68P28DNvrnNg==
+X-Gm-Gg: ASbGncucjjXSdfw8TNQI/xptd76q84SxgdbwEEsL6a3M3ceSVtZT4IMOlXaOZ1i9IjV
+ dpmy2kVn6Hn7UNIFwxvwHuBAK/IpCi1IpG+OScdg+yKcaBCx4hi59S6Vdrb5cTvr0cnCaF/i8eQ
  ==
-X-Google-Smtp-Source: AGHT+IEejt4Lt9SFkLT31I4V/o0vH1oAr/66vr8MNNSMH/Nao7QDYMfZugDJxewl+OOWb38eOVxKgClB5A1VhDRlkEk=
-X-Received: by 2002:a05:6902:2191:b0:e5b:fed:7b48 with SMTP id
- 3f1490d57ef6-e5b0fed8ab7mr4921685276.43.1738686669706; Tue, 04 Feb 2025
- 08:31:09 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IHoIW+L64zU0DC7FoWspbjQGR22i9enKmWljsRRtqPfNjwcnPLo9b5RK4/f/gL3RNksxeHRseEOL8nS4aurn9w=
+X-Received: by 2002:a05:6902:1ac9:b0:e58:1112:c3e6 with SMTP id
+ 3f1490d57ef6-e58a4a9c707mr21143927276.2.1738686687935; Tue, 04 Feb 2025
+ 08:31:27 -0800 (PST)
 MIME-Version: 1.0
 References: <20241226082800.2887689-1-wuhaotsh@google.com>
- <20241226082800.2887689-3-wuhaotsh@google.com>
-In-Reply-To: <20241226082800.2887689-3-wuhaotsh@google.com>
+ <20241226082800.2887689-4-wuhaotsh@google.com>
+In-Reply-To: <20241226082800.2887689-4-wuhaotsh@google.com>
 From: Peter Maydell <peter.maydell@linaro.org>
-Date: Tue, 4 Feb 2025 16:30:58 +0000
-X-Gm-Features: AWEUYZkBFhZoIe4sUSyWlrra3qpe3BiyyGLPZGwbmdeUE__VgRy-TWUa5xks4wY
-Message-ID: <CAFEAcA_N0wiJRjLUsJzsXFBvBpnsqTK_-YPb5CK5sqE=2MZ3ew@mail.gmail.com>
-Subject: Re: [PATCH v2 02/17] roms: Update vbootrom to 1287b6e
+Date: Tue, 4 Feb 2025 16:31:16 +0000
+X-Gm-Features: AWEUYZnHcokF_MJBr8VGWEBW9XSBoMAJsmVJArX1QgEeKlBk1cXBPVIP09i_Q8g
+Message-ID: <CAFEAcA9h1P_Z8MX+c9yW1nvbZ1YofPJNoqXf9CoyP5jHVbL5JA@mail.gmail.com>
+Subject: Re: [PATCH v2 03/17] pc-bios: Add NPCM8XX vBootrom
 To: Hao Wu <wuhaotsh@google.com>
 Cc: qemu-arm@nongnu.org, qemu-devel@nongnu.org, Avi.Fishman@nuvoton.com, 
  kfting@nuvoton.com, titusr@google.com, hskinnemoen@google.com, 
  venture@google.com, pbonzini@redhat.com, jasowang@redhat.com, 
  alistair@alistair23.me
 Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::b33;
- envelope-from=peter.maydell@linaro.org; helo=mail-yb1-xb33.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::b30;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yb1-xb30.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -99,13 +99,11 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On Thu, 26 Dec 2024 at 08:28, Hao Wu <wuhaotsh@google.com> wrote:
 >
-> This newer vbootrom supports NPCM8xx. Similar to the NPCM7XX one
-> it supports loading the UBoot from the SPI device and not more.
->
-> We updated the npcm7xx bootrom to be compiled from this version.
+> The bootrom is a minimal bootrom used to load an NPCM8XX image.
+> The source code is located in the same repo as the NPCM7XX one:
+> github.com/google/vbootrom/tree/master/npcm8xx.
 >
 > Signed-off-by: Hao Wu <wuhaotsh@google.com>
-> ---
 
 Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
 
