@@ -4,87 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 052C6C02193
-	for <qemu-devel@archiver.kernel.org>; Tue,  4 Feb 2025 21:35:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DC46EC02193
+	for <qemu-devel@archiver.kernel.org>; Tue,  4 Feb 2025 21:37:56 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tfQZA-0003EV-3h; Tue, 04 Feb 2025 16:34:44 -0500
+	id 1tfQc2-0004Ky-Js; Tue, 04 Feb 2025 16:37:42 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tfQZ7-0003DW-TV
- for qemu-devel@nongnu.org; Tue, 04 Feb 2025 16:34:41 -0500
-Received: from mail-wm1-x32c.google.com ([2a00:1450:4864:20::32c])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tfQc1-0004Kc-D7
+ for qemu-devel@nongnu.org; Tue, 04 Feb 2025 16:37:41 -0500
+Received: from mail-wr1-x42b.google.com ([2a00:1450:4864:20::42b])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tfQZ6-0003Be-4g
- for qemu-devel@nongnu.org; Tue, 04 Feb 2025 16:34:41 -0500
-Received: by mail-wm1-x32c.google.com with SMTP id
- 5b1f17b1804b1-4363dc916ceso1274615e9.0
- for <qemu-devel@nongnu.org>; Tue, 04 Feb 2025 13:34:39 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tfQbz-0003gn-KS
+ for qemu-devel@nongnu.org; Tue, 04 Feb 2025 16:37:41 -0500
+Received: by mail-wr1-x42b.google.com with SMTP id
+ ffacd0b85a97d-385e27c75f4so5093689f8f.2
+ for <qemu-devel@nongnu.org>; Tue, 04 Feb 2025 13:37:39 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1738704878; x=1739309678; darn=nongnu.org;
+ d=linaro.org; s=google; t=1738705058; x=1739309858; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=JZd6lZm3wur9Q2MoFfzKgFC7LsjWq642M+ueUKAtHoM=;
- b=MGl+ZKwwxhRioG0PTZb5hxN5CSH7woJJY+2w9GxepawFmudQlsR1Cbd9+HUPFqRy8h
- d5/gkbv0SzI2MAQRe5l3t/pJKbNeKAFfe+VyKabJaRhmQLeD2GSTcI+UE9sezjmKJxs/
- UwcHXLgoyhWZiZCf1bPOGx68xtP4zssnNceWU1vVBA/FwTY6Rrg0PC+7rgrq3nWI/Ujl
- 9WtgBB6g3Oc53hwMbhZOtW3JAZycxuj8BUKGrAgH95n7l4Ihi2CJeyr/JIGVfDLKGXUD
- CAooLOgv0OKpAGjmu1Q+7QdZRPZvAWlC/Mj/aHU1utduloQk7eX/dMHvRz0chV26+7Ms
- whxg==
+ bh=b+/20tDTP8NTJnxJop7bS90VmUnyU5FskD/ld8HnQGc=;
+ b=oDonpOsR4rTTD9mBIr9G0mP7pM2FMzd+7osGedtaaZb3hEwwzpXYps26AB5YxBCx3Y
+ 2aYs9+Mswfq0C5cypZPJERYhU7p3ULa4bbiIgq8L1qvt0+oEmBN14yalN+5pwdPmzwn0
+ Lwa1jr4ncEKpRznabCzOc6oIXGWLyPXSjlmJJIcqdTWThwMMtiT/N67zUctHqym1QJ14
+ p4FOTUugYDdVEsuO7zL8KikrGaVSC4ixHmSlP6P7Qxs9WrN1TL+Jy7RLVA0fkw94honY
+ 8l5cQQGT1IJaImqttqk85xe3kh5UnmVcim/WLolIY8GTQ1G6OAxaaGyUV6HBh/gfyEMh
+ //HQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1738704878; x=1739309678;
+ d=1e100.net; s=20230601; t=1738705058; x=1739309858;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=JZd6lZm3wur9Q2MoFfzKgFC7LsjWq642M+ueUKAtHoM=;
- b=md/SAh3HbRitxRqaRIbL9f8BdEKd+Poi4YRRwZBsz+l6G0CTdi4N5J7fDC3yUyzntG
- acAg4fz0WA0l5yT7SVtLNwZxKanJIqsNlGbTWQWEi6XaOXtTpeNEuFiZF2bA4RpJJ6jS
- 1Am9RKYcIk+JFZY6xzRpxNRCVyiHeP17QW77RSjexl/3D3S1Upp7ToYnQTSOLUejHPS3
- Qf1ink5sVReM6X6HiLIhHlpjlt2tDiuTHV32+XhBZy0jW9xbRsz2BpM3bBxOnwrcK49u
- nZQZCcUXqBISztITFIrurAxMM9RWWQGCtVzxS4lEFTIdvmd4shmHPOQ5voIbZOu6nuM2
- Drtg==
-X-Gm-Message-State: AOJu0YxbkZVG7VQlo7eBagMTAmvKd912Hfm1KtFqW+KBzi+N51QtxDR+
- F32zkvCuVHhR2CotwgawQh7a6BiRqE9I87/XWjjDcYPa3Sx05Ys9Vv0jBS/b0Wy6EHJ3nwIwHFi
- 7Jg0=
-X-Gm-Gg: ASbGncuC0g2ay/Qh62ILXl151DMoS0oeBw4mR0SllGWHLZLLcf2uVDOIUqJkVEfaVCm
- hDryzOQwx6HoyE3+tuKvk06ToWkUfnRSs1zWVSv/vWgJfxmSMnSDplK4GYExHr5qonqRslz1ot6
- J9MMhuHsjMOkQz61QtM5G886gmJBQ0yqTyUvysEV5W7xJ6qjiD/xMtnzZ8eHLUGBsw9fLJjTHJs
- FmjOUVuLjl31b3xd5ya5JrDMezLTwT6xNP0Z4gUIjZJpN/GUtaE6gSCfyc5cny00jK+hIlYokOe
- 9xPTBMy9MvT7449YF90KfHcc101lcwdtRbxM70ZnutZt9YlgzTdK5p/XOyo=
-X-Google-Smtp-Source: AGHT+IFIFibL+P2/HhtnuupmP4Yq50LcDGGz9X1Pby9gO+eslPcAIWMjGAFcKJRCCWL9x7yzG23rEQ==
-X-Received: by 2002:a05:600c:138b:b0:434:ff08:202e with SMTP id
- 5b1f17b1804b1-4390cf5f8ebmr3133985e9.8.1738704877969; 
- Tue, 04 Feb 2025 13:34:37 -0800 (PST)
+ bh=b+/20tDTP8NTJnxJop7bS90VmUnyU5FskD/ld8HnQGc=;
+ b=BKxvEIxD4n6P4R+CmShfKB3weOheZFNdqlp2rvbI4K5fZlh7QzaUMNBqtsyeoks6Na
+ Uta0DE9IoMCNkHsgPTWjbAehRGL995yw/iL6SKcEHdKwh78R4QzBOYj8iWaS8hmnEwVZ
+ lPv0gw+px4W7ibrbLKQ7Z1U2ybQ2yVOGEVzXS0xJ3F1gq/N3MKYAiWVNm8yY4JHfuOhA
+ QOxdsoJGUnH60opdC7BNO7xsNlBELRPXoEugsoZuaMwl7H8II+3KVIb53lMBF7FKJKfY
+ 4E2Hk0xhLu86RKjg6RZZXHYrd87CiNJVD0MzCz9/DR8qDg1feBmSmDkxORgvizs9ka+S
+ cakw==
+X-Gm-Message-State: AOJu0Yy+XIywiQcPqnmW1DWJH4vBgiTeuPpYQf+toDFXLS88hWSunjvr
+ NFD0vrQexyxGr5Q7wxA954VeFUqRhYLOigoNhT3UlSpK7Xv5Xi45Xvd1fLyLb/k=
+X-Gm-Gg: ASbGncuFjyDAt5F4fbPxDHueSJUVM3CVRcb1asNBRhE/s4L/JSgmr2UmjjKEh7nM6YX
+ xQeUMoFCDLJ7Ul1ERv1QEiQav4Km/1SNXgp4laa5qi//TrZLWV8AgQBlr9cDQuynCdRGDtA0ee4
+ QVYIOl9hynjw/XWOiWoJp8mH+3AFUbrH00cQUgG9w5fT42NuHIdSGn+MKY8Sya99egcGuU6HpCW
+ emp83ce17pzZytzJWKuFKkRimASLawHCu5FWRN3zfFp9j+y52Nf5I8smQgfDuOFAv7WXRldu8Pm
+ BVonOHgttN+VfiSPhnhHbM8BRwuhi1TeSvPtJg6A+aVUts9WEl033vV87pQ=
+X-Google-Smtp-Source: AGHT+IHzPc2WUX8ng3Fg8K3FvRTmG8xXpsTYQ4elDHvByFMB/F4sjZi7IPodrvWaLOc9GVZCTre44w==
+X-Received: by 2002:a05:6000:402b:b0:38b:eb7b:316 with SMTP id
+ ffacd0b85a97d-38db4947bc9mr212668f8f.47.1738705057617; 
+ Tue, 04 Feb 2025 13:37:37 -0800 (PST)
 Received: from [192.168.69.198] (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4390d933789sm500875e9.4.2025.02.04.13.34.36
+ ffacd0b85a97d-38c5c1016easm16869349f8f.24.2025.02.04.13.37.36
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 04 Feb 2025 13:34:37 -0800 (PST)
-Message-ID: <34a2d961-738b-423b-9ef1-5f4a85915e67@linaro.org>
-Date: Tue, 4 Feb 2025 22:34:36 +0100
+ Tue, 04 Feb 2025 13:37:37 -0800 (PST)
+Message-ID: <22242a9b-97b9-49c6-b0f7-57697184e5b8@linaro.org>
+Date: Tue, 4 Feb 2025 22:37:36 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 10/17] hw/arm/xlnx-zynqmp: Use &error_abort for
- programming errors
-To: qemu-devel@nongnu.org, Anton Johansson <anjo@rev.ng>
-Cc: Jason Wang <jasowang@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
- Richard Henderson <richard.henderson@linaro.org>, devel@lists.libvirt.org,
- =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
- "Edgar E. Iglesias" <edgar.iglesias@gmail.com>,
- Thomas Huth <thuth@redhat.com>, qemu-arm@nongnu.org, qemu-ppc@nongnu.org,
- Peter Maydell <peter.maydell@linaro.org>,
- Alistair Francis <alistair@alistair23.me>
-References: <20241108154317.12129-1-philmd@linaro.org>
- <20241108154317.12129-11-philmd@linaro.org>
+Subject: Re: [PATCH] hw/i386/pc: Fix crash that occurs when introspecting
+ TYPE_PC_MACHINE machines
+To: Thomas Huth <thuth@redhat.com>, "Michael S. Tsirkin" <mst@redhat.com>
+Cc: qemu-devel@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Eduardo Habkost <eduardo@habkost.net>
+References: <20250117192106.471029-1-thuth@redhat.com>
+ <7e719e2d-1f89-4f67-b519-3279f18bccd6@redhat.com>
+ <20250129150352-mutt-send-email-mst@kernel.org>
+ <023ea75f-855d-4e95-82e4-05015554a0c6@redhat.com>
 Content-Language: en-US
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20241108154317.12129-11-philmd@linaro.org>
+In-Reply-To: <023ea75f-855d-4e95-82e4-05015554a0c6@redhat.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32c;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x32c.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::42b;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x42b.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -107,101 +105,82 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-ping for trivial review?
-
-On 8/11/24 16:43, Philippe Mathieu-Daudé wrote:
-> When a property value is static (not provided by QMP or CLI),
-> error shouldn't happen, otherwise it is a programming error.
-> Therefore simplify and use &error_abort as this can't fail.
+On 4/2/25 09:57, Thomas Huth wrote:
+> On 29/01/2025 21.04, Michael S. Tsirkin wrote:
+>> On Wed, Jan 29, 2025 at 08:00:40AM +0100, Thomas Huth wrote:
+>>> On 17/01/2025 20.21, Thomas Huth wrote:
+>>>> QEMU currently crashes when you try to inspect the machines based on
+>>>> TYPE_PC_MACHINE for their properties:
+>>>>
+>>>>    $ echo '{ "execute": "qmp_capabilities" }
+>>>>            { "execute": "qom-list-properties","arguments":
+>>>>                         { "typename": "pc-q35-10.0-machine"}}' \
+>>>>      | ./qemu-system-x86_64 -M pc -qmp stdio
+>>>>    {"QMP": {"version": {"qemu": {"micro": 50, "minor": 2, "major": 9},
+>>>>     "package": "v9.2.0-1070-g87e115c122-dirty"}, "capabilities": 
+>>>> ["oob"]}}
+>>>>    {"return": {}}
+>>>>    Segmentation fault (core dumped)
+>>>>
+>>>> This happens because TYPE_PC_MACHINE machines add a machine_init-
+>>>> done_notifier in their instance_init function - but instance_init
+>>>> of machines are not only called for machines that are realized,
+>>>> but also for machines that are introspected, so in this case the
+>>>> listener is added for a q35 machine that is never realized. But
+>>>> since there is already a running pc machine, the listener function
+>>>> is triggered immediately, causing a crash since it was not for the
+>>>> right machine it was meant for.
+>>>>
+>>>> Such listener functions must never be installed from an instance_init
+>>>> function. Let's do it from pc_basic_device_init() instead - this
+>>>> function is called from the MachineClass->init() function instead,
+>>>> i.e. guaranteed to be only called once in the lifetime of a QEMU
+>>>> process.
+>>>>
+>>>> Resolves: https://gitlab.com/qemu-project/qemu/-/issues/2779
+>>>> Signed-off-by: Thomas Huth <thuth@redhat.com>
+>>>> ---
+>>>>    hw/i386/pc.c | 6 +++---
+>>>>    1 file changed, 3 insertions(+), 3 deletions(-)
+>>>>
+>>>> diff --git a/hw/i386/pc.c b/hw/i386/pc.c
+>>>> index b46975c8a4..85b8a76455 100644
+>>>> --- a/hw/i386/pc.c
+>>>> +++ b/hw/i386/pc.c
+>>>> @@ -1241,6 +1241,9 @@ void pc_basic_device_init(struct 
+>>>> PCMachineState *pcms,
+>>>>        /* Super I/O */
+>>>>        pc_superio_init(isa_bus, create_fdctrl, pcms->i8042_enabled,
+>>>>                        pcms->vmport != ON_OFF_AUTO_ON, &error_fatal);
+>>>> +
+>>>> +    pcms->machine_done.notify = pc_machine_done;
+>>>> +    qemu_add_machine_init_done_notifier(&pcms->machine_done);
+>>>>    }
+>>>>    void pc_nic_init(PCMachineClass *pcmc, ISABus *isa_bus, PCIBus 
+>>>> *pci_bus)
+>>>> @@ -1714,9 +1717,6 @@ static void pc_machine_initfn(Object *obj)
+>>>>        if (pcmc->pci_enabled) {
+>>>>            cxl_machine_init(obj, &pcms->cxl_devices_state);
+>>>>        }
+>>>> -
+>>>> -    pcms->machine_done.notify = pc_machine_done;
+>>>> -    qemu_add_machine_init_done_notifier(&pcms->machine_done);
+>>>>    }
+>>>>    static void pc_machine_reset(MachineState *machine, ResetType type)
+>>>
+>>> Friendly ping!
+>>>
+>>>   Thomas
+>>
+>>
+>> donnu how i missed it.  pls address Philip's comment though.
 > 
-> Reported-by: Richard Henderson <richard.henderson@linaro.org>
-> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-> ---
->   hw/arm/xlnx-zynqmp.c | 44 ++++++++++++++------------------------------
->   1 file changed, 14 insertions(+), 30 deletions(-)
+>   Hi Michael,
 > 
-> diff --git a/hw/arm/xlnx-zynqmp.c b/hw/arm/xlnx-zynqmp.c
-> index e735dbdf82..1770fb5402 100644
-> --- a/hw/arm/xlnx-zynqmp.c
-> +++ b/hw/arm/xlnx-zynqmp.c
-> @@ -689,16 +689,10 @@ static void xlnx_zynqmp_realize(DeviceState *dev, Error **errp)
->            * - SDIO Specification Version 3.0
->            * - eMMC Specification Version 4.51
->            */
-> -        if (!object_property_set_uint(sdhci, "sd-spec-version", 3, errp)) {
-> -            return;
-> -        }
-> -        if (!object_property_set_uint(sdhci, "capareg", SDHCI_CAPABILITIES,
-> -                                      errp)) {
-> -            return;
-> -        }
-> -        if (!object_property_set_uint(sdhci, "uhs", UHS_I, errp)) {
-> -            return;
-> -        }
-> +        object_property_set_uint(sdhci, "sd-spec-version", 3, &error_abort);
-> +        object_property_set_uint(sdhci, "capareg", SDHCI_CAPABILITIES,
-> +                                 &error_abort);
-> +        object_property_set_uint(sdhci, "uhs", UHS_I, &error_abort);
->           if (!sysbus_realize(SYS_BUS_DEVICE(sdhci), errp)) {
->               return;
->           }
-> @@ -714,10 +708,8 @@ static void xlnx_zynqmp_realize(DeviceState *dev, Error **errp)
->       for (i = 0; i < XLNX_ZYNQMP_NUM_SPIS; i++) {
->           gchar *bus_name;
->   
-> -        if (!object_property_set_bool(OBJECT(&s->spi[i])), "little-endian",
-> -                                      true, errp)) {
-> -            return;
-> -        }
-> +        object_property_set_bool(OBJECT(&s->spi[i]), "little-endian",
-> +                                 true, &error_abort);
->           if (!sysbus_realize(SYS_BUS_DEVICE(&s->spi[i]), errp)) {
->               return;
->           }
-> @@ -767,14 +759,10 @@ static void xlnx_zynqmp_realize(DeviceState *dev, Error **errp)
->       xlnx_zynqmp_create_unimp_mmio(s);
->   
->       for (i = 0; i < XLNX_ZYNQMP_NUM_GDMA_CH; i++) {
-> -        if (!object_property_set_uint(OBJECT(&s->gdma[i]), "bus-width", 128,
-> -                                      errp)) {
-> -            return;
-> -        }
-> -        if (!object_property_set_link(OBJECT(&s->gdma[i]), "dma",
-> -                                      OBJECT(system_memory), errp)) {
-> -            return;
-> -        }
-> +        object_property_set_uint(OBJECT(&s->gdma[i]), "bus-width", 128,
-> +                                 &error_abort);
-> +        object_property_set_link(OBJECT(&s->gdma[i]), "dma",
-> +                                 OBJECT(system_memory), &error_abort);
->           if (!sysbus_realize(SYS_BUS_DEVICE(&s->gdma[i]), errp)) {
->               return;
->           }
-> @@ -815,10 +803,8 @@ static void xlnx_zynqmp_realize(DeviceState *dev, Error **errp)
->       sysbus_connect_irq(SYS_BUS_DEVICE(&s->qspi_dma), 0,
->                          qdev_get_gpio_in(DEVICE(&s->qspi_irq_orgate), 0));
->   
-> -    if (!object_property_set_link(OBJECT(&s->qspi), "stream-connected-dma",
-> -                                  OBJECT(&s->qspi_dma), errp)) {
-> -         return;
-> -    }
-> +    object_property_set_link(OBJECT(&s->qspi), "stream-connected-dma",
-> +                             OBJECT(&s->qspi_dma), &error_abort);
->       if (!sysbus_realize(SYS_BUS_DEVICE(&s->qspi), errp)) {
->           return;
->       }
-> @@ -837,10 +823,8 @@ static void xlnx_zynqmp_realize(DeviceState *dev, Error **errp)
->       }
->   
->       for (i = 0; i < XLNX_ZYNQMP_NUM_USB; i++) {
-> -        if (!object_property_set_link(OBJECT(&s->usb[i].sysbus_xhci), "dma",
-> -                                      OBJECT(system_memory), errp)) {
-> -            return;
-> -        }
-> +        object_property_set_link(OBJECT(&s->usb[i].sysbus_xhci), "dma",
-> +                                 OBJECT(system_memory), &error_abort);
->   
->           qdev_prop_set_uint32(DEVICE(&s->usb[i].sysbus_xhci), "intrs", 4);
->           qdev_prop_set_uint32(DEVICE(&s->usb[i].sysbus_xhci), "slots", 2);
+> I think we should *not* rename pc_machine_done() since this is about a 
+> "machine_done" notifier, not about a "basic_device_init_done" or 
+> whatever notifier. So I'd prefer if we can keep this patch as it is. 
+> Unless you disagree, could you please pick this up?
 
+I don't have a strong opinion on this, so fine by me!
 
