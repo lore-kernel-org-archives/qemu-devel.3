@@ -4,97 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 56F1DC02194
-	for <qemu-devel@archiver.kernel.org>; Tue,  4 Feb 2025 13:41:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C5515C02194
+	for <qemu-devel@archiver.kernel.org>; Tue,  4 Feb 2025 13:41:47 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tfJA2-00031E-L1; Tue, 04 Feb 2025 08:40:18 -0500
+	id 1tfJAd-0003EY-Ff; Tue, 04 Feb 2025 08:40:55 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tfJ9z-0002zb-5w
- for qemu-devel@nongnu.org; Tue, 04 Feb 2025 08:40:15 -0500
-Received: from mail-wm1-x32b.google.com ([2a00:1450:4864:20::32b])
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1tfJAa-0003Cf-Ju
+ for qemu-devel@nongnu.org; Tue, 04 Feb 2025 08:40:53 -0500
+Received: from mail-yb1-xb2f.google.com ([2607:f8b0:4864:20::b2f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tfJ9x-0001nw-7z
- for qemu-devel@nongnu.org; Tue, 04 Feb 2025 08:40:14 -0500
-Received: by mail-wm1-x32b.google.com with SMTP id
- 5b1f17b1804b1-43622267b2eso55961315e9.0
- for <qemu-devel@nongnu.org>; Tue, 04 Feb 2025 05:40:12 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1tfJAX-0001uR-EV
+ for qemu-devel@nongnu.org; Tue, 04 Feb 2025 08:40:52 -0500
+Received: by mail-yb1-xb2f.google.com with SMTP id
+ 3f1490d57ef6-e5b1c4d14f2so411245276.0
+ for <qemu-devel@nongnu.org>; Tue, 04 Feb 2025 05:40:47 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1738676411; x=1739281211; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=4abu7DgodGgrUEXih3A/ZeH1z0OLewVueM3xF7MKAsI=;
- b=NQHe2YcOrnIg+Bgt41uaOW82zEwzlQ15v3n1R1cHQys9cYsk3JBNBvZ3xT/4mhNr2L
- snW5q17j3LliwbkwhoL69IXOjduUMlZf4woinV4k7VdJ7aVZa0X5GfDK+q2O7eK2y+tf
- Qe6mdzfcvxzmWmSnWw5i6Y/qy25uuVQTB2rBEzJT7bTUPIJp3JzC5ouydpeZ4vU69UUa
- /AVIt11gG3l5vZhI6OWh6SJC0PmKSGokJiVcO7w8+pbZYez7CE38RIFl1SUlcaVJiQDX
- NIBSEMjRZvakZXOD4gZH3Qwcd5oxQlj58f25HfauTuAAd7NC8uGe3puZOTWvTwtb/3Ay
- U3aQ==
+ d=linaro.org; s=google; t=1738676447; x=1739281247; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=rudjwNQeYPUWERrrMB/LNEAE0nfdBbuoEYusxtBz6Hk=;
+ b=qbrdEbwA9HvSTzknY6mwlWIFD3PFpIPyDFFZQfmb255vCobtAA7RjetIHYoCJeoRJM
+ KC1WU3OSGkg5ZeUkb9dYacFW4MIORaPURQfDRXdNTQ8rHHg/zhHJfZuRHWJtOgxKNOff
+ 8MMv39abtPXuMvHe8TxDO80PD3yHM7nipfNMvui+XwggCo797h8JIGDcCpPB80YFnjlb
+ Mo1Myv0n74COgoTkAFvtVev9Py82lzQoGdlItnhuNzCbef5EbRnOnL+kNCaB/jx/hroB
+ H32yLBhVDbIyYdxTMujYVE4JjAAZn756aDdTd6C/O5RWs2Ss+Ec3XAU/eLsByE9pCgg3
+ OC1g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1738676411; x=1739281211;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=4abu7DgodGgrUEXih3A/ZeH1z0OLewVueM3xF7MKAsI=;
- b=P8mLhSrFytAOCeRudc1VHcIH6a6f1wenymivouyd/h7p/KwiTZmaCsO6Y3JMR6ac4b
- nlgXXczaj0Zk0AZuW+Xdbk9F+IAECAWJgyjrUi4cHLZ7YwC/F8Y9grWKDWL/QDyDQXTp
- J9G2K5JzGY47cK/2vfNIB/yamtyGs+Vu64ilxXwS7rY2XMWIKZ6JFGs13+nK/VBAEUgY
- s7Kw2zmyHkzNR/b8fiC9h7XKxx3cjvsV7fXCFtE+XHLJ7vIR3NGbF5HawLnOWXtlHdbF
- DPcfw6S5B70pMl0z5kUKbnJF8dIrgiEbH55ZdkCFLMcg7wUMmhTBtbPFxuvwFKqGmHIQ
- long==
-X-Gm-Message-State: AOJu0Yyg0BypFhu8ReVjYVOFonXM02FlpqMjuMLdT7kv9vINdqHj/Pav
- YXNgCcFXLWVk8tJ9YveZ+To1zvEUTA2lQK5BRUynnIi1yhqWrOnO6JLZ8X6dT40=
-X-Gm-Gg: ASbGncsAEHxnbW2s40hM+MQzaCTOoNMUA12DShN7zHEeCJQr7gm9T7lj/zztNvXnhRj
- 8HPfUuyHmBr0GicC+gBD4BZZ8hPV6JsE+iFAlG2fjMCdaEaCFdeEnqCWB7vWbdWU9sJ1pBDo1xC
- +oRIXN1CDGtEG3xxgN52ft0zqK7SCU7ikJQgND2ieHfLI+MIK2z2IxYCfKZ5V2Jmc97s9InTmu5
- +KzMU7+W0Qj+J4VBV5g7i1jw1QG5ZwC93Csnc7p1IygFPLqKcYbqW7RT/XVFpphYRQS5BOxI+l9
- OjqPo09BNGIzhiF1simsgmqc49V6+9t+74tmo/vu8aBxpEBLcJd5kZCAYHc=
-X-Google-Smtp-Source: AGHT+IEeJDWMdGayWk7JCYoXQIneANAogcQLAXjc6zdz8z0r5MNgtUPRr0BH/wOzOgyk+Ggt2TjPbQ==
-X-Received: by 2002:a05:600c:4f83:b0:436:713b:cb31 with SMTP id
- 5b1f17b1804b1-438dc3a904cmr216578035e9.3.1738676411275; 
- Tue, 04 Feb 2025 05:40:11 -0800 (PST)
-Received: from [192.168.69.198] (88-187-86-199.subs.proxad.net.
- [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-438dcc27125sm223275395e9.15.2025.02.04.05.40.10
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 04 Feb 2025 05:40:10 -0800 (PST)
-Message-ID: <8616891b-9747-4388-99dc-d6e53e090001@linaro.org>
-Date: Tue, 4 Feb 2025 14:40:09 +0100
+ d=1e100.net; s=20230601; t=1738676447; x=1739281247;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=rudjwNQeYPUWERrrMB/LNEAE0nfdBbuoEYusxtBz6Hk=;
+ b=tn5FtCqUdGD7dFOZGAjaA9AOI6PX9gAhnvABMhC+aSXXAA/sE4FIHZWL+jvl6JF1hJ
+ rrnwZZXa378QPAFT1Xy3TPI9Pv5cNpEsYNx66mZpDp4prKD0R6LrmNBJ5rs9qnf/UBRI
+ uWgBIBvEC5z3Be3/pugYijmlKlZxiZtca9h+4q+gWki/dDq3ULDyCRwXSrumGaawN8x7
+ yfwQ/twE4a71KJkem7DAkBU9yHwHHOhNXqE9/56kXpfOT6IO1O/nfdRs3MtHHDm+SZyS
+ rlG4URDZsbeaznIxjsH0a6dnSxNvK5gzTWYL9qIZ9qajRzgFAllx0PrvvLNy5ljzWL3I
+ vm1g==
+X-Gm-Message-State: AOJu0YzqyUXdDGSyLIqZS1d+7LC7NqfGbM4eTK5FhQdQXT1jqorquFl4
+ AB1zQtn7HV2/Z9NOa9/K1mYVZNAVygg1ZXcLA1Ze8V/Ei7H6tGky1l9ipFAV4NV7D2iKuNADTAN
+ b2aWmPNuFBeXfwGIGXlWdxG0sZaklf4oWJvJ2UA==
+X-Gm-Gg: ASbGncvO4zlanYp2K9IUhqLmBaNNrXvXAy7F6cj0lXlKEuqYJ3E71fDh70DnuDzrQJy
+ xzr6geoSRTi9QSrVx3zzdHNJtPCbGD/zTnXpb3dQJA7DZPHC2a6gBGXIj+zGyMW8I6OfJpNbx0w
+ ==
+X-Google-Smtp-Source: AGHT+IHeHRYxr+Swa+BwCou+cErm/FptXK49eojgCJiQUdrsLbWFfnerhYfiOQG6XLkuk+ZFF4/Av/vgoftCdwpFQZ0=
+X-Received: by 2002:a05:6902:2088:b0:e57:2ff6:945a with SMTP id
+ 3f1490d57ef6-e58a4936160mr18704318276.0.1738676445825; Tue, 04 Feb 2025
+ 05:40:45 -0800 (PST)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 11/12] hw/arm/raspi: Deprecate old raspiX machine names
-To: Peter Maydell <peter.maydell@linaro.org>,
- =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
-Cc: qemu-devel@nongnu.org, BALATON Zoltan <balaton@eik.bme.hu>,
- Laurent Vivier <lvivier@redhat.com>,
- Ovchinnikov Vitalii <vitalii.ovchinnikov@auriga.com>,
- Jared Mauch <jared+home@puck.nether.net>, Fabiano Rosas <farosas@suse.de>,
- Paolo Bonzini <pbonzini@redhat.com>, qemu-arm@nongnu.org,
- =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
- devel@lists.libvirt.org
-References: <20250204002240.97830-1-philmd@linaro.org>
- <20250204002240.97830-12-philmd@linaro.org>
- <CAFEAcA-3JJ1tZAXsik5hAonuSO9sCqDF1xqPQVhAeN-XwAAhDw@mail.gmail.com>
- <e32a54f2-ef46-4964-89d4-a8969b6d1b05@linaro.org>
- <Z6HklNsu0Mzgh7bC@redhat.com>
- <CAFEAcA9m8g=K-0RU31kswbNSKWnUqA78KxNkcXEAqR=BhWc9bA@mail.gmail.com>
-Content-Language: en-US
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <CAFEAcA9m8g=K-0RU31kswbNSKWnUqA78KxNkcXEAqR=BhWc9bA@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32b;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x32b.google.com
+References: <20250129160059.6987-1-farosas@suse.de>
+ <20250129160059.6987-18-farosas@suse.de>
+In-Reply-To: <20250129160059.6987-18-farosas@suse.de>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Tue, 4 Feb 2025 13:40:34 +0000
+X-Gm-Features: AWEUYZntsz34b6Zq9iRaewdxvbQ6HhMaOXxOBH-KR6OgjfLmqqOuqkuFDQm7f5Y
+Message-ID: <CAFEAcA9q+QLJnyVZDAKLsB0i2iBohNwkTXmycpV5CUsWYWZmFw@mail.gmail.com>
+Subject: Re: [PULL 17/42] migration: cpr-transfer mode
+To: Fabiano Rosas <farosas@suse.de>
+Cc: qemu-devel@nongnu.org, Peter Xu <peterx@redhat.com>, 
+ Steve Sistare <steven.sistare@oracle.com>,
+ Markus Armbruster <armbru@redhat.com>
+Content-Type: text/plain; charset="UTF-8"
+Received-SPF: pass client-ip=2607:f8b0:4864:20::b2f;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yb1-xb2f.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -110,66 +94,124 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 4/2/25 12:13, Peter Maydell wrote:
-> On Tue, 4 Feb 2025 at 09:57, Daniel P. Berrangé <berrange@redhat.com> wrote:
->>
->> On Tue, Feb 04, 2025 at 10:51:04AM +0100, Philippe Mathieu-Daudé wrote:
->>> On 4/2/25 10:22, Peter Maydell wrote:
->>>> On Tue, 4 Feb 2025 at 00:23, Philippe Mathieu-Daudé <philmd@linaro.org> wrote:
->>>>>
->>>>> All previous raspi machines can be created using the
->>>>> generic machine. Deprecate the old names to maintain
->>>>> a single one. Update the tests.
->>>>>
->>>>> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
->>>>
->>>>> diff --git a/docs/about/deprecated.rst b/docs/about/deprecated.rst
->>>>> index 4a3c302962a..c9a11a52f78 100644
->>>>> --- a/docs/about/deprecated.rst
->>>>> +++ b/docs/about/deprecated.rst
->>>>> @@ -257,6 +257,19 @@ Big-Endian variants of MicroBlaze ``petalogix-ml605`` and ``xlnx-zynqmp-pmu`` ma
->>>>>    Both ``petalogix-ml605`` and ``xlnx-zynqmp-pmu`` were added for little endian
->>>>>    CPUs. Big endian support is not tested.
->>>>>
->>>>> +ARM ``raspi0``, ``raspi1ap``, ``raspi2b``, ``raspi3ap``, ``raspi3b`` and ``raspi4b`` machines (since 10.0)
->>>>> +''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
->>>>> +
->>>>> +The Raspberry Pi machines have been unified under the generic ``raspi`` machine,
->>>>> +which takes the model as argument.
->>>>> +
->>>>> +    - `raspi0`` is now an alias for ``raspi,model=Zero``
->>>>> +    - `raspi1ap`` is now an alias for ``raspi,model=1A+``
->>>>> +    - `raspi2b`` is now an alias for ``raspi,model=2B``
->>>>> +    - `raspi3ap`` is now an alias for ``raspi,model=3A+``
->>>>> +    - `raspi3b`` is now an alias for ``raspi,model=3B``
->>>>> +    - `raspi4b`` is now an alias for ``raspi,model=4B``
->>>>
->>>> This is not how we typically handle "we have a bunch
->>>> of different devboards in one family". What's wrong with the
->>>> existing set of machine names?
->>>
->>> Zoltan and you don't want to add more machine names, then you
->>> don't want a generic machine. This is very confusing.
->>
->> IMHO we can have distinct machines for each model, but
->> *NOT* have further machines for each RAM size within a
->> model.
-> 
-> Yes, this was what I was intending to suggest. Apologies
-> if I was confusing with what I said the previous time round.
+On Wed, 29 Jan 2025 at 16:11, Fabiano Rosas <farosas@suse.de> wrote:
+>
+> From: Steve Sistare <steven.sistare@oracle.com>
+>
+> Add the cpr-transfer migration mode, which allows the user to transfer
+> a guest to a new QEMU instance on the same host with minimal guest pause
+> time, by preserving guest RAM in place, albeit with new virtual addresses
+> in new QEMU, and by preserving device file descriptors.  Pages that were
+> locked in memory for DMA in old QEMU remain locked in new QEMU, because the
+> descriptor of the device that locked them remains open.
+>
+> cpr-transfer preserves memory and devices descriptors by sending them to
+> new QEMU over a unix domain socket using SCM_RIGHTS.  Such CPR state cannot
+> be sent over the normal migration channel, because devices and backends
+> are created prior to reading the channel, so this mode sends CPR state
+> over a second "cpr" migration channel.  New QEMU reads the cpr channel
+> prior to creating devices or backends.  The user specifies the cpr channel
+> in the channel arguments on the outgoing side, and in a second -incoming
+> command-line parameter on the incoming side.
+>
+> The user must start old QEMU with the the '-machine aux-ram-share=on' option,
+> which allows anonymous memory to be transferred in place to the new process
+> by transferring a memory descriptor for each ram block.  Memory-backend
+> objects must have the share=on attribute, but memory-backend-epc is not
+> supported.
+>
+> The user starts new QEMU on the same host as old QEMU, with command-line
+> arguments to create the same machine, plus the -incoming option for the
+> main migration channel, like normal live migration.  In addition, the user
+> adds a second -incoming option with channel type "cpr".  This CPR channel
+> must support file descriptor transfer with SCM_RIGHTS, i.e. it must be a
+> UNIX domain socket.
+>
+> To initiate CPR, the user issues a migrate command to old QEMU, adding
+> a second migration channel of type "cpr" in the channels argument.
+> Old QEMU stops the VM, saves state to the migration channels, and enters
+> the postmigrate state.  New QEMU mmap's memory descriptors, and execution
+> resumes.
+>
+> The implementation splits qmp_migrate into start and finish functions.
+> Start sends CPR state to new QEMU, which responds by closing the CPR
+> channel.  Old QEMU detects the HUP then calls finish, which connects the
+> main migration channel.
+>
+> In summary, the usage is:
+>
+>   qemu-system-$arch -machine aux-ram-share=on ...
+>
+>   start new QEMU with "-incoming <main-uri> -incoming <cpr-channel>"
+>
+>   Issue commands to old QEMU:
+>     migrate_set_parameter mode cpr-transfer
+>
+>     {"execute": "migrate", ...
+>         {"channel-type": "main"...}, {"channel-type": "cpr"...} ... }
+>
+> Signed-off-by: Steve Sistare <steven.sistare@oracle.com>
+> Reviewed-by: Peter Xu <peterx@redhat.com>
+> Acked-by: Markus Armbruster <armbru@redhat.com>
+> Link: https://lore.kernel.org/r/1736967650-129648-17-git-send-email-steven.sistare@oracle.com
+> Signed-off-by: Fabiano Rosas <farosas@suse.de>
 
-OK, let's see if we understand each other correctly as developer,
-before explaining to users, taking the 4B model as example.
+Hi; this commit includes some code that has confused
+Coverity (CID 1590980) and it also confused me, so maybe
+it could be usefully made clearer?
 
-The 4B come in 4 physical variants, depending on the amount of
-DRAM: 1G, 2G, 4G and 8G.
 
-We can not allocate 2G on 32-bit hosts, so to have a reproducible
-guest behavior on 32/64-bit hosts, it makes sense to takes the
-model with 1G of DRAM as default for the 'raspi4b' machine.
+>  void qmp_migrate(const char *uri, bool has_channels,
+>                   MigrationChannelList *channels, bool has_detach, bool detach,
+>                   bool has_resume, bool resume, Error **errp)
+> @@ -2056,6 +2118,7 @@ void qmp_migrate(const char *uri, bool has_channels,
+>      g_autoptr(MigrationChannel) channel = NULL;
+>      MigrationAddress *addr = NULL;
+>      MigrationChannel *channelv[MIGRATION_CHANNEL_TYPE__MAX] = { NULL };
+> +    MigrationChannel *cpr_channel = NULL;
+>
+>      /*
+>       * Having preliminary checks for uri and channel
+> @@ -2076,6 +2139,7 @@ void qmp_migrate(const char *uri, bool has_channels,
+>              }
+>              channelv[type] = channels->value;
+>          }
+> +        cpr_channel = channelv[MIGRATION_CHANNEL_TYPE_CPR];
+>          addr = channelv[MIGRATION_CHANNEL_TYPE_MAIN]->addr;
+>          if (!addr) {
+>              error_setg(errp, "Channel list has no main entry");
+> @@ -2096,12 +2160,52 @@ void qmp_migrate(const char *uri, bool has_channels,
+>          return;
+>      }
+>
+> +    if (s->parameters.mode == MIG_MODE_CPR_TRANSFER && !cpr_channel) {
+> +        error_setg(errp, "missing 'cpr' migration channel");
+> +        return;
+> +    }
 
-If an user specify -m 2G ... 8G, we can adapt the 'board_rev'
-register to expose the corresponding amount of ram. Now, how /
-where to tell the users 1/ the default is 1G, and 2/ they can use
-2/4/8G?
+Here in qmp_migrate() we bail out if cpr_channel is NULL,
+provided that s->parameters.mode is MIG_MODE_CPR_TRANSFER...
+
+> +
+>      resume_requested = has_resume && resume;
+>      if (!migrate_prepare(s, resume_requested, errp)) {
+>          /* Error detected, put into errp */
+>          return;
+>      }
+>
+> +    if (cpr_state_save(cpr_channel, &local_err)) {
+
+...but in cpr_state_save() when we decide whether to dereference
+cpr_channel or not, we aren't checking s->parameters.mode,
+we call migrate_mode() and check the result of that.
+And migrate_mode() isn't completely trivial: it calls
+cpr_get_incoming_mode(), so it's not obvious that it's
+necessarily going to be the same value as s->parameters.mode.
+So Coverity complains that it sees a code path where we
+might dereference cpr_channel even when it's NULL.
+
+Could this be made a bit clearer somehow, do you think?
+
+thanks
+-- PMM
 
