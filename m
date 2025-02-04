@@ -4,85 +4,61 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2E9CDC02194
-	for <qemu-devel@archiver.kernel.org>; Tue,  4 Feb 2025 10:52:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8FE6BC02194
+	for <qemu-devel@archiver.kernel.org>; Tue,  4 Feb 2025 10:54:19 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tfGXR-0005Yt-IT; Tue, 04 Feb 2025 05:52:17 -0500
+	id 1tfGZ8-0006F4-Kj; Tue, 04 Feb 2025 05:54:02 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1tfGXQ-0005YV-Aa
- for qemu-devel@nongnu.org; Tue, 04 Feb 2025 05:52:16 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <jonathan.cameron@huawei.com>)
+ id 1tfGZ5-0006En-7V
+ for qemu-devel@nongnu.org; Tue, 04 Feb 2025 05:53:59 -0500
+Received: from frasgout.his.huawei.com ([185.176.79.56])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1tfGXO-0001Lw-HS
- for qemu-devel@nongnu.org; Tue, 04 Feb 2025 05:52:16 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1738666332;
- h=from:from:reply-to:reply-to:subject:subject:date:date:
- message-id:message-id:to:to:cc:cc:mime-version:mime-version:
- content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=4GlSCs3CxU85WJ5JTuwL2PiTF6MIOBHntqrOayzb2jw=;
- b=Muhu+mIHPSx+98sSf5y5DxvP6DVOvVnrCgV81ho/13L9VY40w73qhXLckw3M2zVzY79Vji
- nd7mCefO+6VzZVTA7uJ0OYcXx+N62xLJk0y7WKTNKjTXb5sWGXnjsMoeZ0gEakqNbpgoHU
- gKp48uGjSvKc6OiLaprLP6bPoDev+30=
-Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-584-TmxiyW06NlGpR9t9lPfZgA-1; Tue,
- 04 Feb 2025 05:52:11 -0500
-X-MC-Unique: TmxiyW06NlGpR9t9lPfZgA-1
-X-Mimecast-MFC-AGG-ID: TmxiyW06NlGpR9t9lPfZgA
-Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 6E35D1800269; Tue,  4 Feb 2025 10:52:08 +0000 (UTC)
-Received: from redhat.com (unknown [10.42.28.60])
- by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 3749318008C8; Tue,  4 Feb 2025 10:52:02 +0000 (UTC)
-Date: Tue, 4 Feb 2025 10:51:59 +0000
-From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
-To: Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Cc: Peter Maydell <peter.maydell@linaro.org>, qemu-devel@nongnu.org,
- BALATON Zoltan <balaton@eik.bme.hu>, Laurent Vivier <lvivier@redhat.com>,
- Ovchinnikov Vitalii <vitalii.ovchinnikov@auriga.com>,
- Jared Mauch <jared+home@puck.nether.net>, Fabiano Rosas <farosas@suse.de>,
- Paolo Bonzini <pbonzini@redhat.com>, qemu-arm@nongnu.org,
- Alex =?utf-8?Q?Benn=C3=A9e?= <alex.bennee@linaro.org>,
- devel@lists.libvirt.org
-Subject: Re: [PATCH v2 11/12] hw/arm/raspi: Deprecate old raspiX machine names
-Message-ID: <Z6HxT6cHJTUNwRbB@redhat.com>
-References: <20250204002240.97830-1-philmd@linaro.org>
- <20250204002240.97830-12-philmd@linaro.org>
- <CAFEAcA-3JJ1tZAXsik5hAonuSO9sCqDF1xqPQVhAeN-XwAAhDw@mail.gmail.com>
- <e32a54f2-ef46-4964-89d4-a8969b6d1b05@linaro.org>
- <Z6HklNsu0Mzgh7bC@redhat.com>
- <18ebe0c3-7ae6-4ba4-92f1-452a613d2c8d@linaro.org>
+ (Exim 4.90_1) (envelope-from <jonathan.cameron@huawei.com>)
+ id 1tfGZ2-0001bG-BM
+ for qemu-devel@nongnu.org; Tue, 04 Feb 2025 05:53:58 -0500
+Received: from mail.maildlp.com (unknown [172.18.186.216])
+ by frasgout.his.huawei.com (SkyGuard) with ESMTP id 4YnKvl421fz6HJc8;
+ Tue,  4 Feb 2025 18:52:51 +0800 (CST)
+Received: from frapeml500008.china.huawei.com (unknown [7.182.85.71])
+ by mail.maildlp.com (Postfix) with ESMTPS id E149A1400CA;
+ Tue,  4 Feb 2025 18:53:43 +0800 (CST)
+Received: from localhost (10.203.177.66) by frapeml500008.china.huawei.com
+ (7.182.85.71) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.1.2507.39; Tue, 4 Feb
+ 2025 11:53:43 +0100
+Date: Tue, 4 Feb 2025 10:53:42 +0000
+To: Arpit Kumar <arpit1.kumar@samsung.com>
+CC: <qemu-devel@nongnu.org>, <gost.dev@samsung.com>,
+ <linux-cxl@vger.kernel.org>, <nifan.cxl@gmail.com>, <dave@stgolabs.net>,
+ <vishak.g@samsung.com>, <krish.reddy@samsung.com>,
+ <a.manzanares@samsung.com>, <alok.rathore@samsung.com>
+Subject: Re: [PATCH 2/3] hw/cxl/cxl-mailbox-utils.c: Added support for Clear
+ Log (Opcode 0403h)
+Message-ID: <20250204105342.00000c31@huawei.com>
+In-Reply-To: <20250203055950.2126627-3-arpit1.kumar@samsung.com>
+References: <20250203055950.2126627-1-arpit1.kumar@samsung.com>
+ <CGME20250203060053epcas5p137fe4cbd5661afdfd2602dbc7facdcb9@epcas5p1.samsung.com>
+ <20250203055950.2126627-3-arpit1.kumar@samsung.com>
+X-Mailer: Claws Mail 4.3.0 (GTK 3.24.42; x86_64-w64-mingw32)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <18ebe0c3-7ae6-4ba4-92f1-452a613d2c8d@linaro.org>
-User-Agent: Mutt/2.2.13 (2024-03-09)
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=berrange@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Type: text/plain; charset="US-ASCII"
+Content-Transfer-Encoding: 7bit
+X-Originating-IP: [10.203.177.66]
+X-ClientProxiedBy: lhrpeml500009.china.huawei.com (7.191.174.84) To
+ frapeml500008.china.huawei.com (7.182.85.71)
+Received-SPF: pass client-ip=185.176.79.56;
+ envelope-from=jonathan.cameron@huawei.com; helo=frasgout.his.huawei.com
+X-Spam_score_int: -41
+X-Spam_score: -4.2
+X-Spam_bar: ----
+X-Spam_report: (-4.2 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_MED=-2.3,
+ RCVD_IN_MSPIKE_H2=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -95,71 +71,109 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
+Reply-to:  Jonathan Cameron <Jonathan.Cameron@huawei.com>
+From:  Jonathan Cameron via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, Feb 04, 2025 at 11:48:10AM +0100, Philippe Mathieu-Daudé wrote:
-> On 4/2/25 10:57, Daniel P. Berrangé wrote:
-> > On Tue, Feb 04, 2025 at 10:51:04AM +0100, Philippe Mathieu-Daudé wrote:
-> > > On 4/2/25 10:22, Peter Maydell wrote:
-> > > > On Tue, 4 Feb 2025 at 00:23, Philippe Mathieu-Daudé <philmd@linaro.org> wrote:
-> > > > > 
-> > > > > All previous raspi machines can be created using the
-> > > > > generic machine. Deprecate the old names to maintain
-> > > > > a single one. Update the tests.
-> > > > > 
-> > > > > Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-> > > > 
-> > > > > diff --git a/docs/about/deprecated.rst b/docs/about/deprecated.rst
-> > > > > index 4a3c302962a..c9a11a52f78 100644
-> > > > > --- a/docs/about/deprecated.rst
-> > > > > +++ b/docs/about/deprecated.rst
-> > > > > @@ -257,6 +257,19 @@ Big-Endian variants of MicroBlaze ``petalogix-ml605`` and ``xlnx-zynqmp-pmu`` ma
-> > > > >    Both ``petalogix-ml605`` and ``xlnx-zynqmp-pmu`` were added for little endian
-> > > > >    CPUs. Big endian support is not tested.
-> > > > > 
-> > > > > +ARM ``raspi0``, ``raspi1ap``, ``raspi2b``, ``raspi3ap``, ``raspi3b`` and ``raspi4b`` machines (since 10.0)
-> > > > > +''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
-> > > > > +
-> > > > > +The Raspberry Pi machines have been unified under the generic ``raspi`` machine,
-> > > > > +which takes the model as argument.
-> > > > > +
-> > > > > +    - `raspi0`` is now an alias for ``raspi,model=Zero``
-> > > > > +    - `raspi1ap`` is now an alias for ``raspi,model=1A+``
-> > > > > +    - `raspi2b`` is now an alias for ``raspi,model=2B``
-> > > > > +    - `raspi3ap`` is now an alias for ``raspi,model=3A+``
-> > > > > +    - `raspi3b`` is now an alias for ``raspi,model=3B``
-> > > > > +    - `raspi4b`` is now an alias for ``raspi,model=4B``
-> > > > 
-> > > > This is not how we typically handle "we have a bunch
-> > > > of different devboards in one family". What's wrong with the
-> > > > existing set of machine names?
-> > > 
-> > > Zoltan and you don't want to add more machine names, then you
-> > > don't want a generic machine. This is very confusing.
-> > 
-> > IMHO we can have distinct machines for each model, but
-> > *NOT* have further machines for each RAM size within a
-> > model.
-> 
-> Got it. Unfortunately I spent more than my hobbyist time credit
-> doing this, so if I find the motivation to revisit, it'll be later.
-> 
-> Still, having machine memory size depending on the host config was
-> a bad design choice IMHO, as we test different setup depending on
-> the host being used, so not really a "reproducible" setup.
+On Mon,  3 Feb 2025 11:29:49 +0530
+Arpit Kumar <arpit1.kumar@samsung.com> wrote:
 
-Yeah that one is a bit ugly. IMHO it would be valid to just leave
-it defaulted to 2GB and ensure we get a nice error message on
-32-bit hosts, letting users override RAM size if they desire. Or
-its just another reason to kill 32-bit hosts
+Add some description of what is being added here.
 
-With regards,
-Daniel
--- 
-|: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
-|: https://libvirt.org         -o-            https://fstop138.berrange.com :|
-|: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
+Key issue in here is that clearing the CEL doesn't make
+sense. It is a description of what the device supports, there
+is no state to clear in it.  To add this command you need
+to pick a different log.
+
+Jonathan
+
+
+> Signed-off-by: Arpit Kumar <arpit1.kumar@samsung.com>
+> Reviewed-by: Alok Rathore <alok.rathore@samsung.com>
+> Reviewed-by: Krishna Kanth Reddy <krish.reddy@samsung.com>
+> ---
+>  hw/cxl/cxl-mailbox-utils.c | 36 ++++++++++++++++++++++++++++++++++++
+>  1 file changed, 36 insertions(+)
+> 
+> diff --git a/hw/cxl/cxl-mailbox-utils.c b/hw/cxl/cxl-mailbox-utils.c
+> index 3d66a425a9..5fd7f850c4 100644
+> --- a/hw/cxl/cxl-mailbox-utils.c
+> +++ b/hw/cxl/cxl-mailbox-utils.c
+> @@ -77,6 +77,7 @@ enum {
+>          #define GET_SUPPORTED 0x0
+>          #define GET_LOG       0x1
+>          #define GET_LOG_CAPABILITIES   0x2
+> +        #define CLEAR_LOG     0x3
+>      FEATURES    = 0x05,
+>          #define GET_SUPPORTED 0x0
+>          #define GET_FEATURE   0x1
+> @@ -1115,6 +1116,39 @@ static CXLRetCode cmd_logs_get_log_capabilities(const struct cxl_cmd *cmd,
+>      return CXL_MBOX_SUCCESS;
+>  }
+>  
+> +/* CXL r3.1 Section 8.2.9.5.4: Clear Log (Opcode 0403h) */
+> +static CXLRetCode cmd_logs_clear_log(const struct cxl_cmd *cmd,
+> +                                     uint8_t *payload_in,
+> +                                     size_t len_in,
+> +                                     uint8_t *payload_out,
+> +                                     size_t *len_out,
+> +                                     CXLCCI *cci)
+> +{
+> +    int32_t cap_id;
+> +    struct {
+> +        QemuUUID uuid;
+> +    } QEMU_PACKED QEMU_ALIGNED(8) * clear_log = (void *)payload_in;
+> +
+> +    cap_id = valid_log_check(&clear_log->uuid, cci);
+> +    if (cap_id == -1) {
+> +        return CXL_MBOX_INVALID_LOG;
+> +    }
+
+Follow on from previous patch, if this returns the cap pointer,
+the following code wont have to index the array and should end up simpler.
+
+> +
+> +    if (cci->supported_log_cap[cap_id].param_flags.clear_log_supported) {
+I would flip this.
+    if (!(cap->param_flags & PARAM_FLAG_CLEAR_LOG_SUPPORTED)) {
+        return CXL_MBOX_UNSUPPORTED;
+    }
+
+    
+> +        switch (cap_id) {
+> +        case CEL:
+
+So if we return the cap as suggested, it will have to reference what it is
+or provide a callback (which might be cleaner as this grows).
+
+However, what does clearly the command effects log mean?
+This makes no sense.  So if you want to implement clear_log you
+need to implement a different log to clear.
+
+> +            memset(cci->cel_log, 0, (1 << 16) * sizeof(struct cel_log));
+> +            cci->cel_size = 0;
+> +            break;
+> +        default:
+> +            return CXL_MBOX_UNSUPPORTED;
+> +        }
+> +    } else {
+> +        return CXL_MBOX_UNSUPPORTED;
+> +    }
+> +    return CXL_MBOX_SUCCESS;
+> +}
+> +
+>  /* CXL r3.1 section 8.2.9.6: Features */
+>  /*
+>   * Get Supported Features output payload
+> @@ -2882,6 +2916,8 @@ static const struct cxl_cmd cxl_cmd_set[256][256] = {
+>      [LOGS][GET_LOG] = { "LOGS_GET_LOG", cmd_logs_get_log, 0x18, 0 },
+>      [LOGS][GET_LOG_CAPABILITIES] = { "LOGS_GET_LOG_CAPABILITIES",
+>                                       cmd_logs_get_log_capabilities, 0x10, 0 },
+> +    [LOGS][CLEAR_LOG] = { "LOGS_CLEAR_LOG", cmd_logs_clear_log, 0x10,
+> +                          CXL_MBOX_IMMEDIATE_LOG_CHANGE},
+>      [FEATURES][GET_SUPPORTED] = { "FEATURES_GET_SUPPORTED",
+>                                    cmd_features_get_supported, 0x8, 0 },
+>      [FEATURES][GET_FEATURE] = { "FEATURES_GET_FEATURE",
 
 
