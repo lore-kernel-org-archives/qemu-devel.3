@@ -4,90 +4,90 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 98E8FC02197
-	for <qemu-devel@archiver.kernel.org>; Tue,  4 Feb 2025 10:45:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5EB69C02194
+	for <qemu-devel@archiver.kernel.org>; Tue,  4 Feb 2025 10:49:00 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tfGQ9-0003Jc-GF; Tue, 04 Feb 2025 05:44:45 -0500
+	id 1tfGTd-0004OU-SI; Tue, 04 Feb 2025 05:48:21 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tfGQ4-0003J2-Pq
- for qemu-devel@nongnu.org; Tue, 04 Feb 2025 05:44:40 -0500
-Received: from mail-wm1-x330.google.com ([2a00:1450:4864:20::330])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tfGTZ-0004MM-4o
+ for qemu-devel@nongnu.org; Tue, 04 Feb 2025 05:48:17 -0500
+Received: from mail-wm1-x32a.google.com ([2a00:1450:4864:20::32a])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tfGQ3-0007ng-5D
- for qemu-devel@nongnu.org; Tue, 04 Feb 2025 05:44:40 -0500
-Received: by mail-wm1-x330.google.com with SMTP id
- 5b1f17b1804b1-43618283d48so39976975e9.1
- for <qemu-devel@nongnu.org>; Tue, 04 Feb 2025 02:44:38 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tfGTW-0008AT-Nv
+ for qemu-devel@nongnu.org; Tue, 04 Feb 2025 05:48:16 -0500
+Received: by mail-wm1-x32a.google.com with SMTP id
+ 5b1f17b1804b1-4368a293339so62719185e9.3
+ for <qemu-devel@nongnu.org>; Tue, 04 Feb 2025 02:48:14 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1738665877; x=1739270677; darn=nongnu.org;
+ d=linaro.org; s=google; t=1738666093; x=1739270893; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=H5EUMoIVHCS3vQgN/YDOuOuwt4Ov3b7qpf3ilUJq/DA=;
- b=Sp+4zeVAmaIEpt39grelWOSs60Fk8GRfIhu5ajVGJRsKoZQgMf4BqEzroxP5UdyWgC
- VmlZoPyQlo36xT6lApLPo6dTHG583fO2jRF6zpFnPAHhmO8qmNHuPtToRcYnij3UYFW+
- 1rjAcakuFIabNxGqdSZDuoTuPi7yyvMc5mr+7n9MWE6RTeK1ezDGue0vIQfpd/sONWZM
- CRO9U5kqjO1jefU6Z5DdSAeL+qd+lodM2P7aXS74blfyXeAqP8JcVxh3EtIJI/EDHtjw
- AdCdK/L/eX+QN9COj68sfSdDkgUnSXLB4+dx0KnNNSV13zHsVaq6EynwAvh92rJveOyN
- H6Nw==
+ bh=4hATsIhAPEZ088vEoX0wRpa5znwmory8rQu1kxTiuaM=;
+ b=A0lLx6D5h+DNJOhilhD3Y/ZfMgluw0FV5sPCZSA4XZQvkrWG0zkow4xhKY/G0cCYbe
+ kIjEMs3KZsTn7WhhJ5NvhPja6CfC5MASIg0cIsELEHrRZxEOCDwppNZd6mgQifGhA3sh
+ 8xLBKBStkKpRYiJlhnyO++mdrNjNuL9+u5D/P7hQHqSD8C5p3qQLB8fv+Xr9oEDxz/Qx
+ 4tSCzaUIxVewKy59YApfDTOvIBqE9ETR9Qo3gFiMLsXHbKYXNYHl7WvTUchYU2oimhuT
+ UuDjrlHz6ubsjO5ecLRYIPF2+zJ9yKtcJxCS+Dl7832+hFyUSoGB7tFHnlpd2bIDNoib
+ R5pg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1738665877; x=1739270677;
+ d=1e100.net; s=20230601; t=1738666093; x=1739270893;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=H5EUMoIVHCS3vQgN/YDOuOuwt4Ov3b7qpf3ilUJq/DA=;
- b=rPVA4nmTGwMzH3pA2C5uXbUPPUBfB50x+u8EvOtDESdozQVCQKI+I5siZKlJgbH5zy
- ubq1yjZQLYD5gjQUr4//ubeUcmVzkgRyOuvsQd0IXAoTPCiO+7zQUxSu4SKF7U2zMFDA
- DJk6n2kRMTVzGBz4jOqCSsOmIWHcrt61TaYq0uyve53J0ZE2VM9XKxBmd7Ws1l72UR34
- AptSzqiApwh5pW97W/m4Pooy/L8Q8fHxUF9tZXTEHSKVOGFAaK/rpm4r62e8iU9NS4aw
- +HLWSjSQLsNbNV77MhzOho/bqY6gXgOC4IC1KXK/ivdFYuAixpjsqnNJLduoO3qjI6y3
- clOg==
+ bh=4hATsIhAPEZ088vEoX0wRpa5znwmory8rQu1kxTiuaM=;
+ b=l6wB9sEGDEJRj6bFqeDjeKwpPladNzSgG/+qigMTSBrFiq+NKLbv90cxUXkn/rDuhy
+ mFmHWvzkzBdrGdnaCtGxbDsj4CEDf0JuGEOj6oAhM/Gx+2kYfqhFvs5aZIPYuY3afGfq
+ t5smsOoOWA65KYGnuOLkk8SAaLnvivNTl3Zu+XO3Y3pRXuUaoo66nHjGlmjlpGWRzQov
+ tHBdMkZr5p7sm1CQN9c/G7Sv4XU3hjEjNM5alri4ABXWJgyDae+1rK9pWzri0RDpZo3d
+ EnE3W5MxrVQCR01mwYa6kOnU0bWg4L5MTFx7EDM3cAuwVlrQUCqSzmMsx5PnTjoLim9t
+ +54Q==
 X-Forwarded-Encrypted: i=1;
- AJvYcCX4uosONtCm1w5H41jxSdT5FYYRMMckjnkf5AaKHKboFEwLA76UziLLK5sXRI2g6f9Erp4pADcZ4zfh@nongnu.org
-X-Gm-Message-State: AOJu0Yx11RBq7nh0uxKN4EnNeypc3a38zjgFklnp2wIR2qtbJkg5u7ka
- 7JwV/KY13tWETHGfgyAziBrjp2h0I3yDR1K3xkLbzI5XJURDlVFx9hdh084+cKI=
-X-Gm-Gg: ASbGnctGOoyD22PZ6PXSe0cZiPucWSmfK3gWvxg09i3rfBDReQW041qFCCoVjufqqV1
- Rpde4S1cdctbvAsplEmRhtdykC65tEnDfR6UW3ddNsAb3rIFxud3lUouyrgBBsXSxlmqGTnVCxE
- /RdAMQOR/6eN1DuTt4tkShkaprJS9JNUg9FAXWAtj3YAUY856G2cwF7IEFBmziUhHBcqwnpCfZG
- od+13AJSzpC+gmjmmL76rr0giEacd+niRP+IRWPFZiDN1jgz0kvRSTWxEabYjO5qph7pZpmMcog
- o9uKTQgkSYZazrG2Oy/6AHdotgz4I8y5olhX2PGppZvxEydpPw4r9Q==
-X-Google-Smtp-Source: AGHT+IECyT3kjLL2IP8jGp5iNhETRyBtF443agFL3cmw5LXdrgO6uC/CEteXeB9Ebs3gykalTJzOTg==
-X-Received: by 2002:a05:600c:5103:b0:434:f131:1e64 with SMTP id
- 5b1f17b1804b1-438dc3c241emr203976655e9.9.1738665877025; 
- Tue, 04 Feb 2025 02:44:37 -0800 (PST)
+ AJvYcCWNfMAYj3dr2Kc+tPzsLOKGsRmt02InTShWkGPX+WVrLJq+OTwRn/nDkJP+ZpVIGjDQ3WuTM4v3U1/M@nongnu.org
+X-Gm-Message-State: AOJu0YznKwwoU2wOf7o+u4CIOZJCcaLI0ADp7gtSFDke7UlpGL4wwgOU
+ bygzeG7a9oqp7/THuZ4FsAnBL2Mc7YCPArWGtXXe6uE7pHr1Z/tNbqKNoyz3zfg=
+X-Gm-Gg: ASbGncuRIK/R1kjD7ENEyAZwERc9nSh8DtgxAORMktaUnXfRKkmJP3TVgMh6WKPqhBq
+ 2bRvqNHR/m6/BTjhAvfKWVE81zlLztIj4q5C6aJduL3UKi4vkykyF49YmLOHt/eMTQ9GnMmWtw/
+ 1TJEV0dnUKiLW48KZXHSp2nvNl9T3WK5JC7lm6NySmFLBN9KneMVyeSu9IUl5+gK24EBH7B/X60
+ METq9lnE/giJzu2ZawtChhp6F2cRFbpvjekjtxYcar52MuGR0VnqqPiO+Hi4CFw/JcNKrK2OE23
+ FDyycgWe7gQmSwyYPeEhqG+3DzVAWbztx9dV0X3b5laGidLOCbmRtA==
+X-Google-Smtp-Source: AGHT+IFFiKgC/r4IEwG8B5YHkgiXLjbxAbGsXv2FjurSHxT9Hqm874wbeDOkDWebiML/nA+8Z0aIeQ==
+X-Received: by 2002:a05:600c:ccc:b0:434:ff25:19a0 with SMTP id
+ 5b1f17b1804b1-438e07cd868mr179529545e9.21.1738666092864; 
+ Tue, 04 Feb 2025 02:48:12 -0800 (PST)
 Received: from [10.53.21.213] (88.171.88.92.rev.sfr.net. [92.88.171.88])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-38c5c1b547csm15581169f8f.62.2025.02.04.02.44.35
+ 5b1f17b1804b1-438e23d42dfsm189380995e9.4.2025.02.04.02.48.10
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 04 Feb 2025 02:44:36 -0800 (PST)
-Message-ID: <c9bc3785-7d0e-493c-99f2-30821dc76b14@linaro.org>
-Date: Tue, 4 Feb 2025 11:44:34 +0100
+ Tue, 04 Feb 2025 02:48:12 -0800 (PST)
+Message-ID: <18ebe0c3-7ae6-4ba4-92f1-452a613d2c8d@linaro.org>
+Date: Tue, 4 Feb 2025 11:48:10 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 00/14] meson: Deprecate 32-bit host support
-To: Jan Beulich <jbeulich@suse.com>, Juergen Gross <jgross@suse.com>
-Cc: Paolo Bonzini <pbonzini@redhat.com>, qemu-devel@nongnu.org,
- mark.cave-ayland@ilande.co.uk, berrange@redhat.com, thuth@redhat.com,
- andrew.cooper3@citrix.com, anthony.perard@vates.tech, michal.orzel@amd.com,
- julien@xen.org, roger.pau@citrix.com, xen-devel@lists.xenproject.org,
- bertrand.marquis@arm.com, Stefano Stabellini <sstabellini@kernel.org>,
- Richard Henderson <richard.henderson@linaro.org>
-References: <20250203031821.741477-1-richard.henderson@linaro.org>
- <467a5a58-952e-4930-8e91-744eda6d87d9@redhat.com>
- <e40c39d4-425c-4566-af41-373941894045@linaro.org>
- <alpine.DEB.2.22.394.2502031438170.11632@ubuntu-linux-20-04-desktop>
- <e7611136-1e90-4f3a-8f37-68244c22c4cc@suse.com>
- <173d18bf-f68c-4bd5-b822-abb1c1f0c51b@suse.com>
+Subject: Re: [PATCH v2 11/12] hw/arm/raspi: Deprecate old raspiX machine names
+To: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
+Cc: Peter Maydell <peter.maydell@linaro.org>, qemu-devel@nongnu.org,
+ BALATON Zoltan <balaton@eik.bme.hu>, Laurent Vivier <lvivier@redhat.com>,
+ Ovchinnikov Vitalii <vitalii.ovchinnikov@auriga.com>,
+ Jared Mauch <jared+home@puck.nether.net>, Fabiano Rosas <farosas@suse.de>,
+ Paolo Bonzini <pbonzini@redhat.com>, qemu-arm@nongnu.org,
+ =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ devel@lists.libvirt.org
+References: <20250204002240.97830-1-philmd@linaro.org>
+ <20250204002240.97830-12-philmd@linaro.org>
+ <CAFEAcA-3JJ1tZAXsik5hAonuSO9sCqDF1xqPQVhAeN-XwAAhDw@mail.gmail.com>
+ <e32a54f2-ef46-4964-89d4-a8969b6d1b05@linaro.org>
+ <Z6HklNsu0Mzgh7bC@redhat.com>
 Content-Language: en-US
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <173d18bf-f68c-4bd5-b822-abb1c1f0c51b@suse.com>
+In-Reply-To: <Z6HklNsu0Mzgh7bC@redhat.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::330;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x330.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::32a;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x32a.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -110,64 +110,53 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Jan,
-
-On 4/2/25 10:11, Jan Beulich wrote:
-> On 04.02.2025 09:19, Juergen Gross wrote:
->> On 03.02.25 23:43, Stefano Stabellini wrote:
->>> +Xen maintainers
->>>
->>>
->>> On Mon, 3 Feb 2025, Richard Henderson wrote:
->>>> On 2/3/25 04:54, Paolo Bonzini wrote:
->>>>> On 2/3/25 04:18, Richard Henderson wrote:
->>>>>> v1: 20250128004254.33442-1-richard.henderson@linaro.org
->>>>>>
->>>>>> For v2, immediately disable 64-on-32 TCG.
->>>>>>
->>>>>> I *suspect* that we should disable 64-on-32 for *all* accelerators.
->>>>>> The idea that an i686 binary on an x86_64 host may be used to spawn
->>>>>> an x86_64 guest via kvm is silly and a bit more than niche.
->>>>>
->>>>> At least Xen used to be commonly used with 32-bit dom0, because it saved
->>>>> memory and dom0 would map in guest buffers as needed.  I'm not sure how
->>>>> common that is these days, perhaps Stefano knows.
+On 4/2/25 10:57, Daniel P. Berrangé wrote:
+> On Tue, Feb 04, 2025 at 10:51:04AM +0100, Philippe Mathieu-Daudé wrote:
+>> On 4/2/25 10:22, Peter Maydell wrote:
+>>> On Tue, 4 Feb 2025 at 00:23, Philippe Mathieu-Daudé <philmd@linaro.org> wrote:
 >>>>
->>>> As a data-point, debian does not ship libxen-dev for i686.
->>>> We cannot build-test this configuration at all.
+>>>> All previous raspi machines can be created using the
+>>>> generic machine. Deprecate the old names to maintain
+>>>> a single one. Update the tests.
 >>>>
->>>> I can build-test Xen for armhf, and I guess it would use i386-softmmu; it's
->>>> unclear whether x86_64-softmmu and aarch64-softmmu are relevant or useful for
->>>> an armhf host, or as an armhf binary running on an aarch64 host.
+>>>> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 >>>
+>>>> diff --git a/docs/about/deprecated.rst b/docs/about/deprecated.rst
+>>>> index 4a3c302962a..c9a11a52f78 100644
+>>>> --- a/docs/about/deprecated.rst
+>>>> +++ b/docs/about/deprecated.rst
+>>>> @@ -257,6 +257,19 @@ Big-Endian variants of MicroBlaze ``petalogix-ml605`` and ``xlnx-zynqmp-pmu`` ma
+>>>>    Both ``petalogix-ml605`` and ``xlnx-zynqmp-pmu`` were added for little endian
+>>>>    CPUs. Big endian support is not tested.
+>>>>
+>>>> +ARM ``raspi0``, ``raspi1ap``, ``raspi2b``, ``raspi3ap``, ``raspi3b`` and ``raspi4b`` machines (since 10.0)
+>>>> +''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+>>>> +
+>>>> +The Raspberry Pi machines have been unified under the generic ``raspi`` machine,
+>>>> +which takes the model as argument.
+>>>> +
+>>>> +    - `raspi0`` is now an alias for ``raspi,model=Zero``
+>>>> +    - `raspi1ap`` is now an alias for ``raspi,model=1A+``
+>>>> +    - `raspi2b`` is now an alias for ``raspi,model=2B``
+>>>> +    - `raspi3ap`` is now an alias for ``raspi,model=3A+``
+>>>> +    - `raspi3b`` is now an alias for ``raspi,model=3B``
+>>>> +    - `raspi4b`` is now an alias for ``raspi,model=4B``
 >>>
->>> On the Xen side, there are two different use cases: x86 32-bit and ARM
->>> 32-bit.
->>>
->>> For x86 32-bit, while it was a very important use case in the past, I
->>> believe it is far less so now. I will let the x86 maintainers comment on
->>> how important it is today.
+>>> This is not how we typically handle "we have a bunch
+>>> of different devboards in one family". What's wrong with the
+>>> existing set of machine names?
 >>
->> As dom0 on x86 is a PV guest per default and Linux doesn't support running as a
->> 32-bit PV guest since a few years now, I guess there is no need to support qemu
->> as 32-bit on x86 for Xen.
+>> Zoltan and you don't want to add more machine names, then you
+>> don't want a generic machine. This is very confusing.
+> 
+> IMHO we can have distinct machines for each model, but
+> *NOT* have further machines for each RAM size within a
+> model.
 
-This community disconnection between QEMU and Xen communities is a bit
-unfortunate, as apparently we have been maintaining for some time
-something that isn't used.
+Got it. Unfortunately I spent more than my hobbyist time credit
+doing this, so if I find the motivation to revisit, it'll be later.
 
-> Yet then, just to mention it, you can run a 64-bit PV Dom0 kernel underneath
-> an otherwise 32-bit distro. I've been doing this successfully for very many
-> years (with a very small kernel adjustment, just to work around an apparent
-> shortcoming in system init scripts).
-
-This discussion is about what is maintained by the mainstream projects.
-
-We don't want to make fork's life harder. If you believe your use case
-is worthwhile, please get it incorporated mainstream so we can test it.
-Otherwise it is too much burden to maintain things we can not even test.
-
-Regards,
-
-Phil.
+Still, having machine memory size depending on the host config was
+a bad design choice IMHO, as we test different setup depending on
+the host being used, so not really a "reproducible" setup.
 
