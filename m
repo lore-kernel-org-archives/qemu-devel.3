@@ -4,91 +4,91 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 950F3C02194
-	for <qemu-devel@archiver.kernel.org>; Tue,  4 Feb 2025 17:54:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 449BBC02194
+	for <qemu-devel@archiver.kernel.org>; Tue,  4 Feb 2025 17:59:16 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tfN7s-000891-22; Tue, 04 Feb 2025 12:54:20 -0500
+	id 1tfNBx-0001aS-K4; Tue, 04 Feb 2025 12:58:33 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1tfN7p-00088K-85
- for qemu-devel@nongnu.org; Tue, 04 Feb 2025 12:54:17 -0500
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1tfNBv-0001a7-Oq
+ for qemu-devel@nongnu.org; Tue, 04 Feb 2025 12:58:31 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1tfN7n-0003F8-3c
- for qemu-devel@nongnu.org; Tue, 04 Feb 2025 12:54:16 -0500
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1tfNBu-0003hM-Ba
+ for qemu-devel@nongnu.org; Tue, 04 Feb 2025 12:58:31 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1738691653;
+ s=mimecast20190719; t=1738691909;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=vzB0PxE/qeAUkS640SpKBR+gsIAMBhWTD3NGVRXPBPI=;
- b=JrIrimOg9BO8QT2hcwyW0OqZ/3PMjMtEoSfCBB/TJcbVeJg+p+/eNbj4WXeWfUF1AG0p2P
- 4XZWewA6YNk3z+JtUVZHl8cKDVTkRRa19wI79mdeLEjm4aJfqbAjVzItu+83SMqbQH/oHW
- XqZ/E963BTJViZW+CVj7fvUivkHQowQ=
-Received: from mail-qk1-f200.google.com (mail-qk1-f200.google.com
- [209.85.222.200]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=owgwA1AqBMYapk1PTsUUK3tzyPfXfho6a/nVAj1EryA=;
+ b=SAkBfgKjRSb6NPVdq4kAHjYeHqinujoRKKG6mCGB9ltjd2z35jxft/CwzJP08kIQkY57bd
+ T1kVJFXw2/OAdlB85MAnzvTy+nrxK2hQ9lTMerH7mEXbQFBtAvRdfteh1JTmUIF07vwOL4
+ hJ9p214s0cfkJevvXPZya94FVX8PlDU=
+Received: from mail-qv1-f72.google.com (mail-qv1-f72.google.com
+ [209.85.219.72]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-331-vPfE9i8TOvu_mZd-uu6nFQ-1; Tue, 04 Feb 2025 12:54:10 -0500
-X-MC-Unique: vPfE9i8TOvu_mZd-uu6nFQ-1
-X-Mimecast-MFC-AGG-ID: vPfE9i8TOvu_mZd-uu6nFQ
-Received: by mail-qk1-f200.google.com with SMTP id
- af79cd13be357-7b6e852eeabso963691285a.0
- for <qemu-devel@nongnu.org>; Tue, 04 Feb 2025 09:54:10 -0800 (PST)
+ us-mta-611-vwjtAyTBP8ODPugBiMHwPQ-1; Tue, 04 Feb 2025 12:58:28 -0500
+X-MC-Unique: vwjtAyTBP8ODPugBiMHwPQ-1
+X-Mimecast-MFC-AGG-ID: vwjtAyTBP8ODPugBiMHwPQ
+Received: by mail-qv1-f72.google.com with SMTP id
+ 6a1803df08f44-6e42d3a0638so6362076d6.1
+ for <qemu-devel@nongnu.org>; Tue, 04 Feb 2025 09:58:27 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1738691650; x=1739296450;
+ d=1e100.net; s=20230601; t=1738691907; x=1739296707;
  h=in-reply-to:content-disposition:mime-version:references:message-id
  :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to;
- bh=vzB0PxE/qeAUkS640SpKBR+gsIAMBhWTD3NGVRXPBPI=;
- b=kwXvoaQmyFv+9H9SNuBNX1zRYYrKZBZKjZG0zeYkk8aT/azvBHH4S9tAa5JV/Xy4ch
- MmFYS5dpyskeYspelyEzHerlOLuBFBTW+DTJh/uTsLMhcaPhQft/2stvZ/coEcw7tv6r
- i+jFiaSXxhAPIeNuV7pmSkt59tuhPOqvitbfrpv6hpFbM+tYkpMlOQJR/2scRsw/+37k
- CDo2I2sB+sFohAnuC5JVBa0jsMsx1H16NrALufL5gJdc9VEyngQc72h+hxBovk5QOsMg
- prMER1avR6BKSHq6dnHh0SQ2zAA5Vy/6vrzb6MZ3kNwCCNmY619DVa1Ej9pBzBPdGU2e
- SFNQ==
+ bh=owgwA1AqBMYapk1PTsUUK3tzyPfXfho6a/nVAj1EryA=;
+ b=XGBDU4ZoA8di72YRPNdLLOYjbhDIoOSSxC7ubEoYs1pj6IpQ+tfjARBVDvuRQA1PP2
+ dL7xUncp1fqLE66wzqxmmTOUEh3BoFQv/smAVCZq7K8EXHypuQbaAA3mVDJXtrmQW2zs
+ QUxKvnVYoAI18vUK1QfzCi7wmKvRXjDzEJ+lTMq6Bmo7lEQ3DeQmhWC0Gvmv5becLeMF
+ 1TNkt/uBIkk1mSIHsBP6Dy6X+ASFDqdVtL935lciXAJtLSEC/S/1QRbQesztK+ILRE4J
+ 0wIRjpT4HReuKCPFAB3ngpE7TtQTYt/J+KYnLF23OhL96RidyvPbAPdNm/BkqCiHAwSH
+ 6oYA==
 X-Forwarded-Encrypted: i=1;
- AJvYcCVPm9KhDUlVV84BSJdoTe+a3T9gM4CYq+MW1mXl1D9hdQGib0TAgVN9YFke0vAXTLq8OV7EvS7Uvgsp@nongnu.org
-X-Gm-Message-State: AOJu0YyRf0JswoG06l1vv+mYVe37Iwj14DA/XesCDdVUNrG+uKFJxpHZ
- H0eBrK1hfNRzzaIQ3FF75Y4voHqsHy3TEv96Y0H5WW/wZnvt09EaMRiVpgEHmDFOqR+nlS8Q/hC
- puQ5P8hPlZX5zvBv+RG8PmRVkDHniQ6zpJTcGLc7QMfyK+wabzDvR
-X-Gm-Gg: ASbGncusMfWVljtC0ymVGC+qpObVnudEUsJfjeVrPFS228+VeIlMltlLpmOfM0r1Lsv
- et9wa3RKgXxHLuPsfBOiOW3axBj9MmAtlHJSeS942FFK2JOC+yNngZR+XVg0LB/uDVzQ8L1XX+z
- ZeFg36eVuFkE1S7ugf6MlpOThpYx2+i7XhZoXCgSGZY/uu2p7glDP6ryLg9bmC9P1DwKOEwboon
- vQBeSPkcwwHOUuOFHNJE8dHTwGmmOvozdhAAcQljrxo7NASJi+o/+VTwdv2uoHwpXxNWZCXtXQ3
- rA7LLs3JJ3RP4zEFtCZgmFxhelVQcNBAEpdLvljVhxrS0xDa
-X-Received: by 2002:a05:620a:284c:b0:7b6:d28b:42b4 with SMTP id
- af79cd13be357-7bffcce1d50mr3845297385a.19.1738691650337; 
- Tue, 04 Feb 2025 09:54:10 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IFSjiC9b9OBiAPpuVHshl4ZrtzJbo8lzAMdQZHET8sQoId5L3gF/z5lSyM0KKS5TzViYcBgGw==
-X-Received: by 2002:a05:620a:284c:b0:7b6:d28b:42b4 with SMTP id
- af79cd13be357-7bffcce1d50mr3845293785a.19.1738691650037; 
- Tue, 04 Feb 2025 09:54:10 -0800 (PST)
+ AJvYcCXsviEjefxhrm6Jek62hKl+6MU+uArOg3WGJGN8O1nRCPUvTazR2bbIFVi14lC1JL02WjEolAUZZ8O7@nongnu.org
+X-Gm-Message-State: AOJu0Yz4rkt0t4/B548StDiOZhjO4gtv9KIVJVR1rsKxQr/G06X2TsJo
+ HeQtaUxfpyw5C6Rj08jRMOSvd9ei71DBggrJsoILpqK2UTjI5YJ8/+wzDhYiSant8u0Rf2fmBzf
+ F8YtCEoBw/MVrLg3hiQeaNj1Q9+2qs23NGe53Hn/3+ChknSdYUZyX
+X-Gm-Gg: ASbGncu9xlZlZG5oz3kWeoNhO+4xdc/DLjz1W86dr20BHqPQPMJVyHMp82fQePXRTQG
+ 9ZC8GOOB/vdnQqswyRhEi/8tXvkLxxNPYcpxSg1ZBpR8y2hHGQjTKJn8aS1uJ7vvYIyAt/ZN2Br
+ Zt16Lj3W8CMggdN+mQboKLL4BEq71s9IowVoex7XjnM6SUqpm3s91uJytYrGPoXn0NWxp9yNihK
+ i0DQneLF+w9hA7PUVVs3qXi0AsHbkvSaxRNecx500uHpzuNftExq8gjEkAswnX1a1Sxhhd6WfL0
+ vNs5ZEoHBa8RS7tla8Z/hYf86Tdtgdbhj5tcIQPKK/0G8UAj
+X-Received: by 2002:a05:6214:412:b0:6d8:a84b:b508 with SMTP id
+ 6a1803df08f44-6e243bb84e7mr355731816d6.12.1738691907532; 
+ Tue, 04 Feb 2025 09:58:27 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IFsBbFLhsCyjIAwuNBepekrivhkbXxnck+KxUvJ5AOfxPYiO0WeaioI/at4/vOf7bsHdBhEqw==
+X-Received: by 2002:a05:6214:412:b0:6d8:a84b:b508 with SMTP id
+ 6a1803df08f44-6e243bb84e7mr355731546d6.12.1738691907241; 
+ Tue, 04 Feb 2025 09:58:27 -0800 (PST)
 Received: from x1.local (pool-99-254-114-190.cpe.net.cable.rogers.com.
  [99.254.114.190]) by smtp.gmail.com with ESMTPSA id
- af79cd13be357-7c00a90ce2esm658244285a.103.2025.02.04.09.54.08
+ 6a1803df08f44-6e2547f3e17sm64619076d6.22.2025.02.04.09.58.25
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 04 Feb 2025 09:54:09 -0800 (PST)
-Date: Tue, 4 Feb 2025 12:54:07 -0500
+ Tue, 04 Feb 2025 09:58:26 -0800 (PST)
+Date: Tue, 4 Feb 2025 12:58:25 -0500
 From: Peter Xu <peterx@redhat.com>
-To: "Maciej S. Szmigiero" <mail@maciej.szmigiero.name>
-Cc: Fabiano Rosas <farosas@suse.de>,
- Alex Williamson <alex.williamson@redhat.com>,
- =?utf-8?Q?C=C3=A9dric?= Le Goater <clg@redhat.com>,
- Eric Blake <eblake@redhat.com>, Markus Armbruster <armbru@redhat.com>,
- Daniel P =?utf-8?B?LiBCZXJyYW5nw6k=?= <berrange@redhat.com>,
- Avihai Horon <avihaih@nvidia.com>,
- Joao Martins <joao.m.martins@oracle.com>, qemu-devel@nongnu.org
-Subject: Re: [PATCH v4 19/33] migration: Add
- save_live_complete_precopy_thread handler
-Message-ID: <Z6JUP2w9u_FQRP6u@x1.local>
-References: <cover.1738171076.git.maciej.szmigiero@oracle.com>
- <7561a5d67e113e166c7d43246d52feec6ca06fb5.1738171076.git.maciej.szmigiero@oracle.com>
+To: David Hildenbrand <david@redhat.com>
+Cc: =?utf-8?Q?=E2=80=9CWilliam?= Roche <william.roche@oracle.com>,
+ kvm@vger.kernel.org, qemu-devel@nongnu.org, qemu-arm@nongnu.org,
+ pbonzini@redhat.com, richard.henderson@linaro.org,
+ philmd@linaro.org, peter.maydell@linaro.org, mtosatti@redhat.com,
+ imammedo@redhat.com, eduardo@habkost.net,
+ marcel.apfelbaum@gmail.com, wangyanan55@huawei.com,
+ zhao1.liu@intel.com, joao.m.martins@oracle.com
+Subject: Re: [PATCH v7 6/6] hostmem: Handle remapping of RAM
+Message-ID: <Z6JVQYDXI2h8Krph@x1.local>
+References: <20250201095726.3768796-1-william.roche@oracle.com>
+ <20250201095726.3768796-7-william.roche@oracle.com>
+ <7a899f00-833e-4472-abc5-b2b9173eb133@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <7561a5d67e113e166c7d43246d52feec6ca06fb5.1738171076.git.maciej.szmigiero@oracle.com>
+In-Reply-To: <7a899f00-833e-4472-abc5-b2b9173eb133@redhat.com>
 Received-SPF: pass client-ip=170.10.129.124; envelope-from=peterx@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
@@ -114,62 +114,43 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, Jan 30, 2025 at 11:08:40AM +0100, Maciej S. Szmigiero wrote:
-> +static int multifd_device_state_save_thread(void *opaque)
-> +{
-> +    struct MultiFDDSSaveThreadData *data = opaque;
-> +    int ret;
-> +
-> +    ret = data->hdlr(data->idstr, data->instance_id, &send_threads_abort,
-> +                     data->handler_opaque);
+On Tue, Feb 04, 2025 at 06:50:17PM +0100, David Hildenbrand wrote:
+> >       /*
+> > @@ -595,6 +628,7 @@ static const TypeInfo host_memory_backend_info = {
+> >       .instance_size = sizeof(HostMemoryBackend),
+> >       .instance_init = host_memory_backend_init,
+> >       .instance_post_init = host_memory_backend_post_init,
+> > +    .instance_finalize = host_memory_backend_finalize,
+> >       .interfaces = (InterfaceInfo[]) {
+> >           { TYPE_USER_CREATABLE },
+> >           { }
+> > diff --git a/include/system/hostmem.h b/include/system/hostmem.h
+> > index 5c21ca55c0..170849e8a4 100644
+> > --- a/include/system/hostmem.h
+> > +++ b/include/system/hostmem.h
+> > @@ -83,6 +83,7 @@ struct HostMemoryBackend {
+> >       HostMemPolicy policy;
+> >       MemoryRegion mr;
+> > +    RAMBlockNotifier ram_notifier;
+> >   };
+> 
+> Thinking about Peters comment, it would be a nice improvement to have a
+> single global memory-backend notifier that looks up the fitting memory
+> backend, instead of having one per memory backend.
 
-I thought we discussed somewhere and the plan was we could use Error** here
-to report errors.  Would that still make sense, or maybe I lost some
-context?
+Yes, this could also avoid O(N**2).
 
-Meanwhile, I still feel uneasy on having these globals (send_threads_abort,
-send_threads_ret).  Can we make MultiFDDSSaveThreadData the only interface
-between migration and the threads impl?  So I wonder if it can be:
+> 
+> A per-ramblock notifier might also be possible, but that's a bit
+> harder/ackward to configure: e.g., the resize callback is passed to
+> memory_region_init_resizeable_ram() right now.
 
-  ret = data->hdlr(data);
+Yes, that can be some fuss on code to be touched up.  We could avoid
+passing that in when create the ramblock, instead we could allow ramblocks
+to opt-in on hooks after ramblock created.  Maybe we could move resize()
+out too like that.
 
-With extended struct like this (I added thread_error and thread_quit):
-
-struct MultiFDDSSaveThreadData {
-    SaveLiveCompletePrecopyThreadHandler hdlr;
-    char *idstr;
-    uint32_t instance_id;
-    void *handler_opaque;
-    /*
-     * Should be NULL when struct passed over to thread, the thread should
-     * set this if the handler would return false.  It must be kept NULL if
-     * the handler returned true / success.
-     */
-    Error *thread_error;
-    /*
-     * Migration core would set this when it wants to notify thread to
-     * quit, for example, when error occured in other threads, or migration is
-     * cancelled by the user.
-     */
-    bool thread_quit;
-};
-
-Then if any multifd_device_state_save_thread() failed, for example, it
-should notify all threads to quit by setting thread_quit, instead of
-relying on yet another global variable to show migration needs to quit.
-
-Thanks,
-
-> +    if (ret && !qatomic_read(&send_threads_ret)) {
-> +        /*
-> +         * Racy with the above read but that's okay - which thread error
-> +         * return we report is purely arbitrary anyway.
-> +         */
-> +        qatomic_set(&send_threads_ret, ret);
-> +    }
-> +
-> +    return 0;
-> +}
+Either way looks good.
 
 -- 
 Peter Xu
