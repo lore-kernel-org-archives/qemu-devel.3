@@ -4,100 +4,98 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CE951C02194
-	for <qemu-devel@archiver.kernel.org>; Tue,  4 Feb 2025 14:41:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 14A3DC02194
+	for <qemu-devel@archiver.kernel.org>; Tue,  4 Feb 2025 14:48:06 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tfK6o-00050H-9T; Tue, 04 Feb 2025 09:41:02 -0500
+	id 1tfKDK-0007vi-7C; Tue, 04 Feb 2025 09:47:46 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mhej@vps-ovh.mhejs.net>)
- id 1tfK6m-0004yF-KJ
- for qemu-devel@nongnu.org; Tue, 04 Feb 2025 09:41:00 -0500
-Received: from vps-ovh.mhejs.net ([145.239.82.108])
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1tfKDI-0007t6-U0
+ for qemu-devel@nongnu.org; Tue, 04 Feb 2025 09:47:45 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mhej@vps-ovh.mhejs.net>)
- id 1tfK6k-0003Qc-Rv
- for qemu-devel@nongnu.org; Tue, 04 Feb 2025 09:41:00 -0500
-Received: from MUA
- by vps-ovh.mhejs.net with esmtpsa  (TLS1.3) tls TLS_AES_128_GCM_SHA256
- (Exim 4.98) (envelope-from <mhej@vps-ovh.mhejs.net>)
- id 1tfK6g-00000006qtE-2549; Tue, 04 Feb 2025 15:40:54 +0100
-Message-ID: <c2e18a90-858f-45c6-b5e4-62b1f56f5f01@maciej.szmigiero.name>
-Date: Tue, 4 Feb 2025 15:40:49 +0100
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1tfKDH-0005lk-0o
+ for qemu-devel@nongnu.org; Tue, 04 Feb 2025 09:47:44 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1738680452;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=Ycb8MdhLNYc68pS4VNjC+5DVI72g9Ja3t1up8hvyurU=;
+ b=VCTxUh4T/YQk2wYVfn9Kl8pfvI/6ms+vacA1Z2lNOZ2SPfTPxHL2vcDF63qTbe3yS5/+YN
+ DHasNBrGSL8PqCazy9ooRprLDSQEZSfeAw2NObajNMk2Utbh/cEHGxly2PBSUbj7cwizvf
+ r24B1s7uuQkg37AhE8utKVCEbbxC+rc=
+Received: from mail-qk1-f199.google.com (mail-qk1-f199.google.com
+ [209.85.222.199]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-80-WETwsLtbNGq_GBQk9s8J_Q-1; Tue, 04 Feb 2025 09:47:30 -0500
+X-MC-Unique: WETwsLtbNGq_GBQk9s8J_Q-1
+X-Mimecast-MFC-AGG-ID: WETwsLtbNGq_GBQk9s8J_Q
+Received: by mail-qk1-f199.google.com with SMTP id
+ af79cd13be357-7b6e6cf6742so1623411185a.3
+ for <qemu-devel@nongnu.org>; Tue, 04 Feb 2025 06:47:29 -0800 (PST)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1738680448; x=1739285248;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=Ycb8MdhLNYc68pS4VNjC+5DVI72g9Ja3t1up8hvyurU=;
+ b=f3mdCxz3i3t0YvYCUTjebEZ6oikzotPSDHI3a29JVsNc2yF/95AMvUblhIQ/LHpK8m
+ x4yPss9CFs1mA5m8LsoQr2kY8Ss//xagEoPCKPNgiENnCa5tGjZSORz94tvKPewxDYP/
+ vy2nd1XAknnVK018iF1POA72j1CVBtMgV2j/PEjUV1jauJMROPn5Q5jHndoxR1nYxYZ6
+ XHqAxGSJBgJiTRtV1h1xysGKjsTp4O4YrP6lw6Nlc8mVdJJcW+2se+R/e7oZ4AnQffKy
+ NTyOUF1rW99P9x8N9omxlWRNANKTTOJJWjvmZERJB2ao5Ez+wFvMF6yhk/32kv0LbtQm
+ 5N3Q==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCVCaGsHnId2zzOOF2a9eSiLFjTV8fEwmYN30WwntwakX85S1NawSlznQ6RX3d3LGNkUPfin/Fe0SM/9@nongnu.org
+X-Gm-Message-State: AOJu0YwYsu+3rHCPLHNeKFhxMxHgt5f1dNyIEoWzuHeXjg9JG2o8zrb7
+ ZG9OzDiuomd7wBkNjvwM8kqhgXrbDGUCuRTIVosTZ8j33kUrvri6Yr8XpplDHm5DfagS5iMSW28
+ 28LaoGLoSBY+bq5v2bcb1Nm4ShYOT3c6f8G1i8tc5a2X9Jo1B9xRb
+X-Gm-Gg: ASbGncvjKBCZlfxmTbf2uv8slw1VLZiuhDYJNMZp6ZQI8DZ5sioOJl9RwG9jOZddZwC
+ HirYLCltf+Ano84Uluk43yBDsC2vMpjjG1PNLddjy6I8z9/EpY4cLiYJ/Yo+dO7ItaAJXZd6Nzc
+ hxW83WseoeWTBbFZx/X5h9yyT7J7jAUjLgysuM/inwSCQ5m0aKlJwUzTVuQ6cA0GY0AS2dgifDj
+ pFz3tRd5D+9koVTBI9gjJPM16xah+ofbJ92lg46XMsJiisq4AB4+QgT7He7zJCkOYvx/jp6OZzn
+ Knmg/zWG6rjF9xVUNbViSwx93KO1G2UKPrIywkS8Rwuvnp8d
+X-Received: by 2002:a05:620a:8088:b0:7b6:d6ff:86ba with SMTP id
+ af79cd13be357-7bffcd99e37mr3762005385a.52.1738680448560; 
+ Tue, 04 Feb 2025 06:47:28 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IGUxti8JHHRpKYeuHGqslWSlWEh1eCWXjv4Q0SgjAL3XOWnHSa4b+64HNM3tG/r0rzRqKfWUw==
+X-Received: by 2002:a05:620a:8088:b0:7b6:d6ff:86ba with SMTP id
+ af79cd13be357-7bffcd99e37mr3762002785a.52.1738680448246; 
+ Tue, 04 Feb 2025 06:47:28 -0800 (PST)
+Received: from x1.local (pool-99-254-114-190.cpe.net.cable.rogers.com.
+ [99.254.114.190]) by smtp.gmail.com with ESMTPSA id
+ af79cd13be357-7c00a8d96ecsm642772285a.62.2025.02.04.06.47.27
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Tue, 04 Feb 2025 06:47:27 -0800 (PST)
+Date: Tue, 4 Feb 2025 09:47:26 -0500
+From: Peter Xu <peterx@redhat.com>
+To: Daniil Tatianin <d-tatianin@yandex-team.ru>
+Cc: Paolo Bonzini <pbonzini@redhat.com>, Stefan Weil <sw@weilnetz.de>,
+ Fabiano Rosas <farosas@suse.de>,
+ Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Peter Maydell <peter.maydell@linaro.org>, qemu-devel@nongnu.org
+Subject: Re: [PATCH v4 0/4] overcommit: introduce mem-lock-onfault
+Message-ID: <Z6Iofl0pp1xDENHz@x1.local>
+References: <20250123131944.391886-1-d-tatianin@yandex-team.ru>
+ <Z5Ju0ZnR6KEEF-Bu@x1n>
+ <1abc7363-21be-4a9e-a946-c50deb266dea@yandex-team.ru>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v4 13/33] migration/multifd: Device state transfer support
- - receive side
-To: Peter Xu <peterx@redhat.com>
-Cc: Fabiano Rosas <farosas@suse.de>,
- Alex Williamson <alex.williamson@redhat.com>,
- =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>,
- Eric Blake <eblake@redhat.com>, Markus Armbruster <armbru@redhat.com>,
- =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
- Avihai Horon <avihaih@nvidia.com>, Joao Martins <joao.m.martins@oracle.com>,
- qemu-devel@nongnu.org
-References: <cover.1738171076.git.maciej.szmigiero@oracle.com>
- <654768fd717b0def70906bf7adfd6739cfd2ecf3.1738171076.git.maciej.szmigiero@oracle.com>
- <Z6E03MMQqTDNFsnX@x1.local>
- <c80c298c-b838-4ea3-8b72-48ca8bf6cb44@maciej.szmigiero.name>
- <Z6FKOKrKZpSmzf68@x1.local>
-Content-Language: en-US, pl-PL
-From: "Maciej S. Szmigiero" <mail@maciej.szmigiero.name>
-Autocrypt: addr=mail@maciej.szmigiero.name; keydata=
- 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
-In-Reply-To: <Z6FKOKrKZpSmzf68@x1.local>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=145.239.82.108;
- envelope-from=mhej@vps-ovh.mhejs.net; helo=vps-ovh.mhejs.net
-X-Spam_score_int: -17
-X-Spam_score: -1.8
-X-Spam_bar: -
-X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9,
- HEADER_FROM_DIFFERENT_DOMAINS=0.07, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <1abc7363-21be-4a9e-a946-c50deb266dea@yandex-team.ru>
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=peterx@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -113,62 +111,100 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 3.02.2025 23:59, Peter Xu wrote:
-> On Mon, Feb 03, 2025 at 11:18:11PM +0100, Maciej S. Szmigiero wrote:
->> On 3.02.2025 22:27, Peter Xu wrote:
->>> On Thu, Jan 30, 2025 at 11:08:34AM +0100, Maciej S. Szmigiero wrote:
->>>> From: "Maciej S. Szmigiero" <maciej.szmigiero@oracle.com>
->>>>
->>>> Add a basic support for receiving device state via multifd channels -
->>>> channels that are shared with RAM transfers.
->>>>
->>>> Depending whether MULTIFD_FLAG_DEVICE_STATE flag is present or not in the
->>>> packet header either device state (MultiFDPacketDeviceState_t) or RAM
->>>> data (existing MultiFDPacket_t) is read.
->>>>
->>>> The received device state data is provided to
->>>> qemu_loadvm_load_state_buffer() function for processing in the
->>>> device's load_state_buffer handler.
->>>>
->>>> Signed-off-by: Maciej S. Szmigiero <maciej.szmigiero@oracle.com>
->>>
->>> I think I acked this one.  You could keep my R-b if...
->>>
->>> [...]
->>>
->>>> diff --git a/migration/multifd.h b/migration/multifd.h
->>>> index 9e4baa066312..abf3acdcee40 100644
->>>> --- a/migration/multifd.h
->>>> +++ b/migration/multifd.h
->>>> @@ -62,6 +62,12 @@ MultiFDRecvData *multifd_get_recv_data(void);
->>>>    #define MULTIFD_FLAG_UADK (8 << 1)
->>>>    #define MULTIFD_FLAG_QATZIP (16 << 1)
->>>> +/*
->>>> + * If set it means that this packet contains device state
->>>> + * (MultiFDPacketDeviceState_t), not RAM data (MultiFDPacket_t).
->>>> + */
->>>> +#define MULTIFD_FLAG_DEVICE_STATE (1 << 6)
->>>
->>> ... if this won't conflict with MULTIFD_FLAG_QATZIP.
->>
->> Hmm, isn't (16 << 1) = 32 while (1 << 6) = 64?
+On Tue, Feb 04, 2025 at 11:23:41AM +0300, Daniil Tatianin wrote:
 > 
-> Oops. :)
+> On 1/23/25 7:31 PM, Peter Xu wrote:
+> > On Thu, Jan 23, 2025 at 04:19:40PM +0300, Daniil Tatianin wrote:
+> > > Currently, passing mem-lock=on to QEMU causes memory usage to grow by
+> > > huge amounts:
+> > > 
+> > > no memlock:
+> > >      $ ./qemu-system-x86_64 -overcommit mem-lock=off
+> > >      $ ps -p $(pidof ./qemu-system-x86_64) -o rss=
+> > >      45652
+> > > 
+> > >      $ ./qemu-system-x86_64 -overcommit mem-lock=off -enable-kvm
+> > >      $ ps -p $(pidof ./qemu-system-x86_64) -o rss=
+> > >      39756
+> > > 
+> > > memlock:
+> > >      $ ./qemu-system-x86_64 -overcommit mem-lock=on
+> > >      $ ps -p $(pidof ./qemu-system-x86_64) -o rss=
+> > >      1309876
+> > > 
+> > >      $ ./qemu-system-x86_64 -overcommit mem-lock=on -enable-kvm
+> > >      $ ps -p $(pidof ./qemu-system-x86_64) -o rss=
+> > >      259956
+> > > 
+> > > This is caused by the fact that mlockall(2) automatically
+> > > write-faults every existing and future anonymous mappings in the
+> > > process right away.
+> > > 
+> > > One of the reasons to enable mem-lock is to protect a QEMU process'
+> > > pages from being compacted and migrated by kcompactd (which does so
+> > > by messing with a live process page tables causing thousands of TLB
+> > > flush IPIs per second) basically stealing all guest time while it's
+> > > active.
+> > > 
+> > > mem-lock=on helps against this (given compact_unevictable_allowed is 0),
+> > > but the memory overhead it introduces is an undesirable side effect,
+> > > which we can completely avoid by passing MCL_ONFAULT to mlockall, which
+> > > is what this series allows to do with a new option for mem-lock called
+> > > on-fault.
+> > > 
+> > > memlock-onfault:
+> > >      $ ./qemu-system-x86_64 -overcommit mem-lock=on-fault
+> > >      $ ps -p $(pidof ./qemu-system-x86_64) -o rss=
+> > >      54004
+> > > 
+> > >      $ ./qemu-system-x86_64 -overcommit mem-lock=on-fault -enable-kvm
+> > >      $ ps -p $(pidof ./qemu-system-x86_64) -o rss=
+> > >      47772
+> > > 
+> > > You may notice the memory usage is still slightly higher, in this case
+> > > by a few megabytes over the mem-lock=off case. I was able to trace this
+> > > down to a bug in the linux kernel with MCL_ONFAULT not being honored for
+> > > the early process heap (with brk(2) etc.) so it is still write-faulted in
+> > > this case, but it's still way less than it was with just the mem-lock=on.
+> > > 
+> > > Changes since v1:
+> > >      - Don't make a separate mem-lock-onfault, add an on-fault option to mem-lock instead
+> > > 
+> > > Changes since v2:
+> > >      - Move overcommit option parsing out of line
+> > >      - Make enable_mlock an enum instead
+> > > 
+> > > Changes since v3:
+> > >      - Rebase to latest master due to the recent sysemu -> system renames
+> > > 
+> > > Daniil Tatianin (4):
+> > >    os: add an ability to lock memory on_fault
+> > >    system/vl: extract overcommit option parsing into a helper
+> > >    system: introduce a new MlockState enum
+> > >    overcommit: introduce mem-lock=on-fault
+> > > 
+> > >   hw/virtio/virtio-mem.c    |  2 +-
+> > >   include/system/os-posix.h |  2 +-
+> > >   include/system/os-win32.h |  3 ++-
+> > >   include/system/system.h   | 12 ++++++++-
+> > >   migration/postcopy-ram.c  |  4 +--
+> > >   os-posix.c                | 10 ++++++--
+> > >   qemu-options.hx           | 14 +++++++----
+> > >   system/globals.c          | 12 ++++++++-
+> > >   system/vl.c               | 52 +++++++++++++++++++++++++++++++--------
+> > >   9 files changed, 87 insertions(+), 24 deletions(-)
+> > Considering it's very mem relevant change and looks pretty benign.. I can
+> > pick this if nobody disagrees (or beats me to it, which I'd appreciate).
+> > 
+> > I'll also provide at least one week for people to stop me.
 > 
->>> I think we should stick with one way to write it, then when rebase you can
->>> see such conflicts - either your patch uses 32 << 1, or perhaps we should
->>> start to switch to BIT() for all above instead..
-> 
-> Still, do you mind switch to "32 << 1" (or use BIT())?
+> I think it's been almost two weeks, so should be good now :)
 
-I will switch to 32 << 1 for consistency with the compression flags
-above.
-  > With either, feel free to take:
-> 
-> Reviewed-by: Peter Xu <peterx@redhat.com>
-> 
+Don't worry, this is in track.  I'll send it maybe in a few days.
 
 Thanks,
-Maciej
+
+-- 
+Peter Xu
 
 
