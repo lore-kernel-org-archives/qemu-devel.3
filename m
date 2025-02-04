@@ -4,43 +4,43 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 96CA5C02193
-	for <qemu-devel@archiver.kernel.org>; Tue,  4 Feb 2025 19:33:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A97D2C02193
+	for <qemu-devel@archiver.kernel.org>; Tue,  4 Feb 2025 19:35:38 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tfOev-0007f0-QQ; Tue, 04 Feb 2025 14:32:34 -0500
+	id 1tfOhN-0001aQ-C3; Tue, 04 Feb 2025 14:35:05 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mhej@vps-ovh.mhejs.net>)
- id 1tfOet-0007dt-4S
- for qemu-devel@nongnu.org; Tue, 04 Feb 2025 14:32:31 -0500
+ id 1tfOhL-0001Zc-SK
+ for qemu-devel@nongnu.org; Tue, 04 Feb 2025 14:35:03 -0500
 Received: from vps-ovh.mhejs.net ([145.239.82.108])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mhej@vps-ovh.mhejs.net>)
- id 1tfOer-0005Gg-9C
- for qemu-devel@nongnu.org; Tue, 04 Feb 2025 14:32:30 -0500
+ id 1tfOhJ-0005Ud-ST
+ for qemu-devel@nongnu.org; Tue, 04 Feb 2025 14:35:03 -0500
 Received: from MUA
  by vps-ovh.mhejs.net with esmtpsa  (TLS1.3) tls TLS_AES_128_GCM_SHA256
  (Exim 4.98) (envelope-from <mhej@vps-ovh.mhejs.net>)
- id 1tfOei-00000006rkP-3u7B; Tue, 04 Feb 2025 20:32:20 +0100
-Message-ID: <4ad3e311-e701-4029-bb51-e69da4f69468@maciej.szmigiero.name>
-Date: Tue, 4 Feb 2025 20:32:15 +0100
+ id 1tfOhE-00000006rqf-00ip; Tue, 04 Feb 2025 20:34:56 +0100
+Message-ID: <275d86e7-8109-45b8-ba94-82d17c87c151@maciej.szmigiero.name>
+Date: Tue, 4 Feb 2025 20:34:50 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v4 19/33] migration: Add save_live_complete_precopy_thread
- handler
-To: Peter Xu <peterx@redhat.com>
-Cc: Fabiano Rosas <farosas@suse.de>,
- Alex Williamson <alex.williamson@redhat.com>,
- =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>,
+Subject: Re: [PATCH v4 08/33] migration/multifd: Allow premature EOF on TLS
+ incoming channels
+To: Fabiano Rosas <farosas@suse.de>
+Cc: Alex Williamson <alex.williamson@redhat.com>, Peter Xu
+ <peterx@redhat.com>, =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?=
+ <berrange@redhat.com>, =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>,
  Eric Blake <eblake@redhat.com>, Markus Armbruster <armbru@redhat.com>,
- =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
  Avihai Horon <avihaih@nvidia.com>, Joao Martins <joao.m.martins@oracle.com>,
  qemu-devel@nongnu.org
 References: <cover.1738171076.git.maciej.szmigiero@oracle.com>
- <7561a5d67e113e166c7d43246d52feec6ca06fb5.1738171076.git.maciej.szmigiero@oracle.com>
- <Z6JUP2w9u_FQRP6u@x1.local>
+ <baf944c37ead5d30d7e268b2a4074d9acaac2db0.1738171076.git.maciej.szmigiero@oracle.com>
+ <Z6EI0V6Cg7aCbzQU@x1.local> <Z6ItUtb-NhKnn8hy@redhat.com>
+ <Z6I6FF_4r_uVUlWU@x1.local> <874j19o9cq.fsf@suse.de>
 Content-Language: en-US, pl-PL
 From: "Maciej S. Szmigiero" <mail@maciej.szmigiero.name>
 Autocrypt: addr=mail@maciej.szmigiero.name; keydata=
@@ -84,9 +84,9 @@ Autocrypt: addr=mail@maciej.szmigiero.name; keydata=
  xNT833IQSNqyuEnxG9/M82yYa+9ClBiRKM2JyvgnBEbiWA15rAQkOqZGJfFJ3bmTFePx4R/I
  ZVehUxCRY5IS1FLe16tymf9lCASrPXnkO2+hkHpBCwt75wnccS3DwtIGqwagVVmciCxAFg9E
  WZ4dI5B0IUziKtBxgwJG4xY5rp7WbzywjCeaaKubtcLQ9bSBkkK4U8Fu58g6Hg==
-In-Reply-To: <Z6JUP2w9u_FQRP6u@x1.local>
+In-Reply-To: <874j19o9cq.fsf@suse.de>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=145.239.82.108;
  envelope-from=mhej@vps-ovh.mhejs.net; helo=vps-ovh.mhejs.net
 X-Spam_score_int: -17
@@ -111,86 +111,75 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 4.02.2025 18:54, Peter Xu wrote:
-> On Thu, Jan 30, 2025 at 11:08:40AM +0100, Maciej S. Szmigiero wrote:
->> +static int multifd_device_state_save_thread(void *opaque)
->> +{
->> +    struct MultiFDDSSaveThreadData *data = opaque;
->> +    int ret;
->> +
->> +    ret = data->hdlr(data->idstr, data->instance_id, &send_threads_abort,
->> +                     data->handler_opaque);
+On 4.02.2025 19:25, Fabiano Rosas wrote:
+> Peter Xu <peterx@redhat.com> writes:
 > 
-> I thought we discussed somewhere and the plan was we could use Error** here
-> to report errors.  Would that still make sense, or maybe I lost some
-> context?
-
-That was about *load* threads, here these are *save* threads.
-
-Save handlers do not return an Error value, neither save_live_iterate, nor
-save_live_complete_precopy or save_state does so.
-
-> Meanwhile, I still feel uneasy on having these globals (send_threads_abort,
-> send_threads_ret).  Can we make MultiFDDSSaveThreadData the only interface
-> between migration and the threads impl?  So I wonder if it can be:
+>> On Tue, Feb 04, 2025 at 03:08:02PM +0000, Daniel P. Berrangé wrote:
+>>> On Mon, Feb 03, 2025 at 01:20:01PM -0500, Peter Xu wrote:
+>>>> On Thu, Jan 30, 2025 at 11:08:29AM +0100, Maciej S. Szmigiero wrote:
+>>>>> From: "Maciej S. Szmigiero" <maciej.szmigiero@oracle.com>
+>>>>>
+>>>>> Multifd send channels are terminated by calling
+>>>>> qio_channel_shutdown(QIO_CHANNEL_SHUTDOWN_BOTH) in
+>>>>> multifd_send_terminate_threads(), which in the TLS case essentially
+>>>>> calls shutdown(SHUT_RDWR) on the underlying raw socket.
+>>>>>
+>>>>> Unfortunately, this does not terminate the TLS session properly and
+>>>>> the receive side sees this as a GNUTLS_E_PREMATURE_TERMINATION error.
+>>>>>
+>>>>> The only reason why this wasn't causing migration failures is because
+>>>>> the current migration code apparently does not check for migration
+>>>>> error being set after the end of the multifd receive process.
+>>>>>
+>>>>> However, this will change soon so the multifd receive code has to be
+>>>>> prepared to not return an error on such premature TLS session EOF.
+>>>>> Use the newly introduced QIOChannelTLS method for that.
+>>>>>
+>>>>> It's worth noting that even if the sender were to be changed to terminate
+>>>>> the TLS connection properly the receive side still needs to remain
+>>>>> compatible with older QEMU bit stream which does not do this.
+>>>>
+>>>> If this is an existing bug, we could add a Fixes.
+>>>>
+>>>> Two pure questions..
+>>>>
+>>>>    - What is the correct way to terminate the TLS session without this flag?
+>>>>
+>>>>    - Why this is only needed by multifd sessions?
+>>>
+>>> Graceful TLS termination (via gnutls_bye()) should only be important to
+>>> security if the QEMU protocol in question does not know how much data it
+>>> is expecting to recieve. ie it cannot otherwise distinguish between an
+>>> expected EOF, and a premature EOF triggered by an attacker.
+>>>
+>>> If the migration protocol has sufficient info to know when a chanel is
+>>> expected to see EOF, then we should stop trying to read from the TLS
+>>> channel before seeing the underlying EOF.
+>>>
+>>> Ignoring GNUTLS_E_PREMATURE_TERMINATION would be valid if we know that
+>>> migration will still fail corretly in the case of a malicious attack
+>>> causing premature termination.
+>>>
+>>> If there's a risk that migration may succeed, but with incomplete data,
+>>> then we would need the full gnutls_bye dance.
+>>
+>> IIUC that's not required for migration then, because migration should know
+>> exactly how much data to receive, and migration should need to verify that
+>> and fail if the received data didn't match the expectation along the way.
+>> We also have QEMU_VM_EOF as the end mark of stream.
 > 
->    ret = data->hdlr(data);
+> The migration overall can detect whether EOF should have been reached,
+> but multifd threads cannot. If one multifd channel experiences an issue
+> and sees a premature termination, but ignores it, then that's a hang in
+> QEMU because nothing provided the syncs needed (p->sem_sync, most
+> likely).
+
+I think allowing premature TLS termination simply makes the TLS case
+function the same as non-TLS case here if the source were to close the
+multifd channel(s) early.
+
+> Aren't we just postponing a bug?
 > 
-> With extended struct like this (I added thread_error and thread_quit):
-> 
-> struct MultiFDDSSaveThreadData {
->      SaveLiveCompletePrecopyThreadHandler hdlr;
->      char *idstr;
->      uint32_t instance_id;
->      void *handler_opaque;
->      /*
->       * Should be NULL when struct passed over to thread, the thread should
->       * set this if the handler would return false.  It must be kept NULL if
->       * the handler returned true / success.
->       */
->      Error *thread_error;
-
-As I mentioned above, these handlers do not generally return Error type,
-so this would need to be an *int;
-
->      /*
->       * Migration core would set this when it wants to notify thread to
->       * quit, for example, when error occured in other threads, or migration is
->       * cancelled by the user.
->       */
->      bool thread_quit;
-
-             ^ I guess that was supposed to be a pointer too (*thread_quit).
-
-> };
-> 
-> Then if any multifd_device_state_save_thread() failed, for example, it
-> should notify all threads to quit by setting thread_quit, instead of
-> relying on yet another global variable to show migration needs to quit.
-
-multifd_abort_device_state_save_threads() needs to access
-send_threads_abort too.
-
-And multifd_join_device_state_save_threads() needs to access
-send_threads_ret.
-
-These variables ultimately will have to be stored somewhere since
-there can be multiple save threads and so multiple instances of
-MultiFDDSSaveThreadData.
-
-So these need to be stored somewhere where
-multifd_spawn_device_state_save_thread() can reach them to assign
-their addresses to MultiFDDSSaveThreadData members.
-
-However, at that point multifd_device_state_save_thread() can
-access them too so it does not need to have them passed via
-MultiFDDSSaveThreadData.
-
-However, nothing prevents putting send_threads* variables
-into a global struct (with internal linkage - "static", just as
-these separate ones are) if you like such construct more.
-
-> Thanks,
 
 Thanks,
 Maciej
