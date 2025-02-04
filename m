@@ -4,55 +4,55 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8CE7EC02196
-	for <qemu-devel@archiver.kernel.org>; Tue,  4 Feb 2025 22:18:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E92F9C02193
+	for <qemu-devel@archiver.kernel.org>; Tue,  4 Feb 2025 22:19:09 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tfREg-0005UM-Ap; Tue, 04 Feb 2025 17:17:38 -0500
+	id 1tfREl-0005WZ-JZ; Tue, 04 Feb 2025 17:17:43 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <deller@kernel.org>) id 1tfREe-0005Tc-Cn
- for qemu-devel@nongnu.org; Tue, 04 Feb 2025 17:17:36 -0500
-Received: from dfw.source.kernel.org ([139.178.84.217])
+ (Exim 4.90_1) (envelope-from <deller@kernel.org>) id 1tfREg-0005UY-HA
+ for qemu-devel@nongnu.org; Tue, 04 Feb 2025 17:17:38 -0500
+Received: from nyc.source.kernel.org ([147.75.193.91])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <deller@kernel.org>) id 1tfREb-0005QI-PO
- for qemu-devel@nongnu.org; Tue, 04 Feb 2025 17:17:36 -0500
+ (Exim 4.90_1) (envelope-from <deller@kernel.org>) id 1tfREe-0005RM-Pj
+ for qemu-devel@nongnu.org; Tue, 04 Feb 2025 17:17:38 -0500
 Received: from smtp.kernel.org (transwarp.subspace.kernel.org [100.75.92.58])
- by dfw.source.kernel.org (Postfix) with ESMTP id 051885C571B;
- Tue,  4 Feb 2025 22:16:51 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A1296C4CEDF;
- Tue,  4 Feb 2025 22:17:29 +0000 (UTC)
+ by nyc.source.kernel.org (Postfix) with ESMTP id EAEDFA42E92;
+ Tue,  4 Feb 2025 22:15:49 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DDFDEC4CEE2;
+ Tue,  4 Feb 2025 22:17:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
- s=k20201202; t=1738707450;
- bh=XqqcKTiqr37pWU6TZ9vOOlIFt2Td5Ilt6/cULAw4RFo=;
+ s=k20201202; t=1738707455;
+ bh=Stz/PkE+RsExG68z0c7Y2GO5tU8XrxTcb9wEAxlyp6M=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
- b=KS1ewTvHHQH8hnUtDTtUSswPQjjLcqtQyqxjLIN5PrAHV+kFMTua9sSFLhdx1Iph8
- P5x4BQirjPXrZgy275BeTP0ka5iYDXsH2Ek/EsCiLBJutAXKs7wKfdI64EooiiW5Sz
- KiXrMlYvlPdKNAKfzt5CLBLyj6aCdC8TRVJ1RZymbX5XMlYrzPCr9cK7hjkOr9tXEp
- +4d4LbofEdti+DFo8t7wE3Ar3cBzc+9Nf62zmXBHrYeYPwTncde/NBM+OE9iJVObFZ
- QlaYxNm5PkggnJ2ucTezvHoiVibeWhOopYCDwqvVOdIPzQzGpsXgUkKWowm3iIOSK7
- g5k7IlOAt/VPw==
+ b=u4RZI6S4PBqp4LLiwicCvCibHgMKlBoS1EaQFzvtJsNdrSOV5O2JXYdzYBIhI4ZJv
+ jNsrPuPEzIoegFlqh4073K+eSHBt2jaV4L+iIUQ+CRAKq9ZR5jaWFd9wAcEMeT1jOV
+ S7Az0ySQUtoDi9oyUuEC6FFAM9S/HvvDo8BvJasEPRYes9Ygq17zY/Seeb0NmuqYVL
+ u7KHMuoGapizKaqZ3LqTDpaP5JBlBXSW1S+KALxHn5d9XsPjDS2D2W97eAHlXrPmdR
+ nv9hld4hD2Gqjsb2nVJe+EteCXBRVpt/K7Aw7zONi4qKh7NPGKT2cetazJPDAn57oU
+ SLhpHLTdzaFJA==
 From: deller@kernel.org
 To: Richard Henderson <richard.henderson@linaro.org>,
 	qemu-devel@nongnu.org
 Cc: Helge Deller <deller@gmx.de>
-Subject: [PATCH 1/6] hw/char: Add emulation of Diva GSP PCI management boards
-Date: Tue,  4 Feb 2025 23:17:21 +0100
-Message-ID: <20250204221726.151287-2-deller@kernel.org>
+Subject: [PATCH 5/6] hw/pci-host/astro: Add LMMIO range support
+Date: Tue,  4 Feb 2025 23:17:25 +0100
+Message-ID: <20250204221726.151287-6-deller@kernel.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20250204221726.151287-1-deller@kernel.org>
 References: <20250204221726.151287-1-deller@kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=139.178.84.217; envelope-from=deller@kernel.org;
- helo=dfw.source.kernel.org
-X-Spam_score_int: -70
-X-Spam_score: -7.1
-X-Spam_bar: -------
-X-Spam_report: (-7.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+Received-SPF: pass client-ip=147.75.193.91; envelope-from=deller@kernel.org;
+ helo=nyc.source.kernel.org
+X-Spam_score_int: -43
+X-Spam_score: -4.4
+X-Spam_bar: ----
+X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_HI=-5, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
  RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -72,364 +72,115 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Helge Deller <deller@gmx.de>
 
-The Diva GSP ("Guardian Service Processor") PCI boards are Remote
-Management cards for PA-RISC machines.  They come with built-in 16550A
-UARTs for serial consoles and modem functionalities, as well as a
-mailbox-like memory area for hardware auto-reboot functionality.
+Each Astro on 64-bit machines supports up to four LMMIO regions.
+Those regions are used by graphic cards and other PCI devices which
+need to map huge memory areas. The LMMIO regions are configured and
+set up by SeaBIOS-hppa and then used as-is by the operating systems
+(Linux, HP-UX).
 
-Latest generation HP PA-RISC server machines use those Diva cards
-for console output.
+With this addition it's now possible to add other PCI graphic
+cards on the command line, e.g. with "-device ati-vga".
 
 Signed-off-by: Helge Deller <deller@gmx.de>
 ---
- MAINTAINERS         |   1 +
- hw/char/Kconfig     |   3 +
- hw/char/diva-gsp.c  | 297 ++++++++++++++++++++++++++++++++++++++++++++
- hw/char/meson.build |   1 +
- 4 files changed, 302 insertions(+)
- create mode 100644 hw/char/diva-gsp.c
+ hw/pci-host/astro.c         | 52 +++++++++++++++++++++++++++++++++++++
+ include/hw/pci-host/astro.h |  6 ++---
+ 2 files changed, 55 insertions(+), 3 deletions(-)
 
-diff --git a/MAINTAINERS b/MAINTAINERS
-index bf737eb6db..e09a8d2791 100644
---- a/MAINTAINERS
-+++ b/MAINTAINERS
-@@ -1193,6 +1193,7 @@ M: Richard Henderson <richard.henderson@linaro.org>
- M: Helge Deller <deller@gmx.de>
- S: Maintained
- F: configs/devices/hppa-softmmu/default.mak
-+F: hw/char/diva-gsp.c
- F: hw/display/artist.c
- F: hw/hppa/
- F: hw/input/lasips2.c
-diff --git a/hw/char/Kconfig b/hw/char/Kconfig
-index 1dc20ee4c2..3f702565e6 100644
---- a/hw/char/Kconfig
-+++ b/hw/char/Kconfig
-@@ -66,6 +66,9 @@ config RENESAS_SCI
- config AVR_USART
-     bool
+diff --git a/hw/pci-host/astro.c b/hw/pci-host/astro.c
+index 62e9c8acbf..039cc3ad01 100644
+--- a/hw/pci-host/astro.c
++++ b/hw/pci-host/astro.c
+@@ -521,6 +521,53 @@ static ElroyState *elroy_init(int num)
+  * Astro Runway chip.
+  */
  
-+config DIVA_GSP
-+    bool
-+
- config MCHP_PFSOC_MMUART
-     bool
-     select SERIAL
-diff --git a/hw/char/diva-gsp.c b/hw/char/diva-gsp.c
-new file mode 100644
-index 0000000000..ecec1f7bb1
---- /dev/null
-+++ b/hw/char/diva-gsp.c
-@@ -0,0 +1,297 @@
-+/*
-+ * HP Diva GSP controller
-+ *
-+ * The Diva PCI boards are Remote Management cards for PA-RISC machines.
-+ * They come with built-in 16550A multi UARTs for serial consoles
-+ * and a mailbox-like memory area for hardware auto-reboot functionality.
-+ * GSP stands for "Guardian Service Processor". Later products were marketed
-+ * "Management Processor" (MP).
-+ *
-+ * Diva cards are multifunctional cards. The first part, the aux port,
-+ * is on physical machines not useable but we still try to mimic it here.
-+ *
-+ * SPDX-License-Identifier: GPL-2.0-or-later
-+ *
-+ * Copyright (c) 2025 Helge Deller <deller@gmx.de>
-+ */
-+
-+#include "qemu/osdep.h"
-+#include "qemu/units.h"
-+#include "hw/char/serial.h"
-+#include "hw/irq.h"
-+#include "hw/pci/pci_device.h"
-+#include "hw/qdev-properties.h"
-+#include "hw/qdev-properties-system.h"
-+#include "migration/vmstate.h"
-+
-+#define PCI_DEVICE_ID_HP_DIVA           0x1048
-+/* various DIVA GSP cards: */
-+#define PCI_DEVICE_ID_HP_DIVA_TOSCA1    0x1049
-+#define PCI_DEVICE_ID_HP_DIVA_TOSCA2    0x104A
-+#define PCI_DEVICE_ID_HP_DIVA_MAESTRO   0x104B
-+#define PCI_DEVICE_ID_HP_REO_IOC        0x10f1
-+#define PCI_DEVICE_ID_HP_DIVA_HALFDOME  0x1223
-+#define PCI_DEVICE_ID_HP_DIVA_KEYSTONE  0x1226
-+#define PCI_DEVICE_ID_HP_DIVA_POWERBAR  0x1227
-+#define PCI_DEVICE_ID_HP_DIVA_EVEREST   0x1282
-+#define PCI_DEVICE_ID_HP_DIVA_AUX       0x1290
-+#define PCI_DEVICE_ID_HP_DIVA_RMP3      0x1301
-+#define PCI_DEVICE_ID_HP_DIVA_HURRICANE 0x132a
-+
-+
-+#define PCI_SERIAL_MAX_PORTS 4
-+
-+typedef struct PCIDivaSerialState {
-+    PCIDevice    dev;
-+    MemoryRegion membar;        /* for serial ports */
-+    MemoryRegion mailboxbar;    /* for hardware mailbox */
-+    uint32_t     subvendor;
-+    uint32_t     ports;
-+    char         *name[PCI_SERIAL_MAX_PORTS];
-+    SerialState  state[PCI_SERIAL_MAX_PORTS];
-+    uint32_t     level[PCI_SERIAL_MAX_PORTS];
-+    qemu_irq     *irqs;
-+    uint8_t      prog_if;
-+    bool         disable;
-+} PCIDivaSerialState;
-+
-+static void diva_pci_exit(PCIDevice *dev)
++static void adjust_LMMIO_DIRECT_mapping(AstroState *s, unsigned int reg_index)
 +{
-+    PCIDivaSerialState *pci = DO_UPCAST(PCIDivaSerialState, dev, dev);
-+    SerialState *s;
-+    int i;
++    MemoryRegion *lmmio_alias;
++    unsigned int lmmio_index, map_route;
++    hwaddr map_addr;
++    uint32_t map_size;
++    struct ElroyState *elroy;
 +
-+    for (i = 0; i < pci->ports; i++) {
-+        s = pci->state + i;
-+        qdev_unrealize(DEVICE(s));
-+        memory_region_del_subregion(&pci->membar, &s->io);
-+        g_free(pci->name[i]);
++    /* pointer to LMMIO_DIRECT entry */
++    lmmio_index = reg_index / 3;
++    lmmio_alias = &s->lmmio_direct[lmmio_index];
++
++    map_addr  = s->ioc_ranges[3 * lmmio_index + 0];
++    map_size  = s->ioc_ranges[3 * lmmio_index + 1];
++    map_route = s->ioc_ranges[3 * lmmio_index + 2];
++
++    /* find elroy to which this address is routed */
++    map_route &= (ELROY_NUM - 1);
++    elroy = s->elroy[map_route];
++
++    if (lmmio_alias->enabled) {
++        memory_region_set_enabled(lmmio_alias, false);
 +    }
-+    qemu_free_irqs(pci->irqs, pci->ports);
++
++    map_addr = F_EXTEND(map_addr);
++    map_addr &= TARGET_PAGE_MASK;
++    map_size = (~map_size) + 1;
++    map_size &= TARGET_PAGE_MASK;
++
++    /* exit if disabled or zero map size */
++    if (!(map_addr & 1) || !map_size) {
++        return;
++    }
++
++    if (!memory_region_size(lmmio_alias)) {
++        memory_region_init_alias(lmmio_alias, OBJECT(elroy),
++                        "pci-lmmmio-alias", &elroy->pci_mmio,
++                        (uint32_t) map_addr, map_size);
++        memory_region_add_subregion(get_system_memory(), map_addr,
++                                 lmmio_alias);
++    } else {
++        memory_region_set_alias_offset(lmmio_alias, map_addr);
++        memory_region_set_size(lmmio_alias, map_size);
++        memory_region_set_enabled(lmmio_alias, true);
++    }
 +}
 +
-+static void multi_serial_irq_mux(void *opaque, int n, int level)
-+{
-+    PCIDivaSerialState *pci = opaque;
-+    int i, pending = 0;
-+
-+    pci->level[n] = level;
-+    for (i = 0; i < pci->ports; i++) {
-+        if (pci->level[i]) {
-+            pending = 1;
+ static MemTxResult astro_chip_read_with_attrs(void *opaque, hwaddr addr,
+                                              uint64_t *data, unsigned size,
+                                              MemTxAttrs attrs)
+@@ -628,6 +675,11 @@ static MemTxResult astro_chip_write_with_attrs(void *opaque, hwaddr addr,
+         break;
+     case 0x0300 ... 0x03d8 - 1: /* LMMIO_DIRECT0_BASE... */
+         put_val_in_arrary(s->ioc_ranges, 0x300, addr, size, val);
++        unsigned int index = (addr - 0x300) / 8;
++        /* check if one of the 4 LMMIO_DIRECT regs, each using 3 entries. */
++        if (index < LMMIO_DIRECT_RANGES * 3) {
++            adjust_LMMIO_DIRECT_mapping(s, index);
 +        }
-+    }
-+    pci_set_irq(&pci->dev, pending);
-+}
-+
-+struct diva_info {
-+    unsigned int nports:4; /* number of serial ports */
-+    unsigned int omask:12; /* offset mask: BIT(1) -> offset 8 */
-+};
-+
-+static struct diva_info diva_get_diva_info(PCIDeviceClass *pc)
-+{
-+    switch (pc->subsystem_id) {
-+    case PCI_DEVICE_ID_HP_DIVA_POWERBAR:
-+    case PCI_DEVICE_ID_HP_DIVA_HURRICANE:
-+        return (struct diva_info) { .nports = 1,
-+                        .omask = BIT(0) };
-+    case PCI_DEVICE_ID_HP_DIVA_TOSCA2:
-+        return (struct diva_info) { .nports = 2,
-+                        .omask = BIT(0) | BIT(1) };
-+    case PCI_DEVICE_ID_HP_DIVA_TOSCA1:
-+    case PCI_DEVICE_ID_HP_DIVA_HALFDOME:
-+    case PCI_DEVICE_ID_HP_DIVA_KEYSTONE:
-+        return (struct diva_info) { .nports = 3,
-+                        .omask = BIT(0) | BIT(1) | BIT(2) };
-+    case PCI_DEVICE_ID_HP_DIVA_EVEREST: /* e.g. in rp3410 */
-+        return (struct diva_info) { .nports = 3,
-+                        .omask = BIT(0) | BIT(2) | BIT(7) };
-+    case PCI_DEVICE_ID_HP_DIVA_MAESTRO:
-+        return (struct diva_info) { .nports = 4,
-+                        .omask = BIT(0) | BIT(1) | BIT(2) | BIT(7) };
-+    }
-+    g_assert_not_reached();
-+}
-+
-+
-+static void diva_pci_realize(PCIDevice *dev, Error **errp)
-+{
-+    PCIDeviceClass *pc = PCI_DEVICE_GET_CLASS(dev);
-+    PCIDivaSerialState *pci = DO_UPCAST(PCIDivaSerialState, dev, dev);
-+    SerialState *s;
-+    struct diva_info di = diva_get_diva_info(pc);
-+    size_t i, offset = 0;
-+    size_t portmask = di.omask;
-+
-+    pci->dev.config[PCI_CLASS_PROG] = pci->prog_if;
-+    pci->dev.config[PCI_INTERRUPT_PIN] = 0x01;
-+    memory_region_init(&pci->membar, OBJECT(pci), "serial_ports", 4096);
-+    pci_register_bar(&pci->dev, 0, PCI_BASE_ADDRESS_SPACE_MEMORY, &pci->membar);
-+    pci->irqs = qemu_allocate_irqs(multi_serial_irq_mux, pci, di.nports);
-+
-+    for (i = 0; i < di.nports; i++) {
-+        s = pci->state + i;
-+        if (!qdev_realize(DEVICE(s), NULL, errp)) {
-+            diva_pci_exit(dev);
-+            return;
-+        }
-+        s->irq = pci->irqs[i];
-+        pci->name[i] = g_strdup_printf("uart #%zu", i + 1);
-+        memory_region_init_io(&s->io, OBJECT(pci), &serial_io_ops, s,
-+                              pci->name[i], 8);
-+
-+        /* calculate offset of given port based on bitmask */
-+        while ((portmask & BIT(0)) == 0) {
-+            offset += 8;
-+            portmask >>= 1;
-+        }
-+        memory_region_add_subregion(&pci->membar, offset, &s->io);
-+        offset += 8;
-+        portmask >>= 1;
-+        pci->ports++;
-+    }
-+
-+    /* mailbox bar */
-+    memory_region_init(&pci->mailboxbar, OBJECT(pci), "mailbox", 128 * KiB);
-+    pci_register_bar(&pci->dev, 1, PCI_BASE_ADDRESS_SPACE_MEMORY |
-+                     PCI_BASE_ADDRESS_MEM_PREFETCH, &pci->mailboxbar);
-+}
-+
-+static const VMStateDescription vmstate_pci_diva = {
-+    .name = "pci-diva-serial",
-+    .version_id = 1,
-+    .minimum_version_id = 1,
-+    .fields = (const VMStateField[]) {
-+        VMSTATE_PCI_DEVICE(dev, PCIDivaSerialState),
-+        VMSTATE_STRUCT_ARRAY(state, PCIDivaSerialState, PCI_SERIAL_MAX_PORTS,
-+                             0, vmstate_serial, SerialState),
-+        VMSTATE_UINT32_ARRAY(level, PCIDivaSerialState, PCI_SERIAL_MAX_PORTS),
-+        VMSTATE_BOOL(disable, PCIDivaSerialState),
-+        VMSTATE_END_OF_LIST()
-+    }
-+};
-+
-+static const Property diva_serial_properties[] = {
-+    DEFINE_PROP_BOOL("disable",  PCIDivaSerialState, disable, false),
-+    DEFINE_PROP_CHR("chardev1",  PCIDivaSerialState, state[0].chr),
-+    DEFINE_PROP_CHR("chardev2",  PCIDivaSerialState, state[1].chr),
-+    DEFINE_PROP_CHR("chardev3",  PCIDivaSerialState, state[2].chr),
-+    DEFINE_PROP_CHR("chardev4",  PCIDivaSerialState, state[3].chr),
-+    DEFINE_PROP_UINT8("prog_if",  PCIDivaSerialState, prog_if, 0x02),
-+    DEFINE_PROP_UINT32("subvendor", PCIDivaSerialState, subvendor,
-+                                    PCI_DEVICE_ID_HP_DIVA_TOSCA1),
-+};
-+
-+static void diva_serial_class_initfn(ObjectClass *klass, void *data)
-+{
-+    DeviceClass *dc = DEVICE_CLASS(klass);
-+    PCIDeviceClass *pc = PCI_DEVICE_CLASS(klass);
-+    pc->realize = diva_pci_realize;
-+    pc->exit = diva_pci_exit;
-+    pc->vendor_id = PCI_VENDOR_ID_HP;
-+    pc->device_id = PCI_DEVICE_ID_HP_DIVA;
-+    pc->subsystem_vendor_id = PCI_VENDOR_ID_HP;
-+    pc->subsystem_id = PCI_DEVICE_ID_HP_DIVA_TOSCA1;
-+    pc->revision = 3;
-+    pc->class_id = PCI_CLASS_COMMUNICATION_SERIAL;
-+    dc->vmsd = &vmstate_pci_diva;
-+    device_class_set_props(dc, diva_serial_properties);
-+    set_bit(DEVICE_CATEGORY_INPUT, dc->categories);
-+}
-+
-+static void diva_serial_init(Object *o)
-+{
-+    PCIDevice *dev = PCI_DEVICE(o);
-+    PCIDivaSerialState *pms = DO_UPCAST(PCIDivaSerialState, dev, dev);
-+    struct diva_info di = diva_get_diva_info(PCI_DEVICE_GET_CLASS(dev));
-+    size_t i;
-+
-+    for (i = 0; i < di.nports; i++) {
-+        object_initialize_child(o, "serial[*]", &pms->state[i], TYPE_SERIAL);
-+    }
-+}
-+
-+
-+/* Diva-aux is the driver for portion 0 of the multifunction PCI device */
-+
-+struct DivaAuxState {
-+    PCIDevice dev;
-+    MemoryRegion mem;
-+    qemu_irq irq;
-+};
-+
-+#define TYPE_DIVA_AUX "diva-aux"
-+OBJECT_DECLARE_SIMPLE_TYPE(DivaAuxState, DIVA_AUX)
-+
-+static void diva_aux_realize(PCIDevice *dev, Error **errp)
-+{
-+    DivaAuxState *pci = DO_UPCAST(DivaAuxState, dev, dev);
-+
-+    pci->dev.config[PCI_CLASS_PROG] = 0x02;
-+    pci->dev.config[PCI_INTERRUPT_PIN] = 0x01;
-+    pci->irq = pci_allocate_irq(&pci->dev);
-+
-+    memory_region_init(&pci->mem, OBJECT(pci), "mem", 16);
-+    pci_register_bar(&pci->dev, 0, PCI_BASE_ADDRESS_SPACE_MEMORY, &pci->mem);
-+}
-+
-+static void diva_aux_exit(PCIDevice *dev)
-+{
-+    DivaAuxState *pci = DO_UPCAST(DivaAuxState, dev, dev);
-+    qemu_free_irq(pci->irq);
-+}
-+
-+static void diva_aux_class_initfn(ObjectClass *klass, void *data)
-+{
-+    DeviceClass *dc = DEVICE_CLASS(klass);
-+    PCIDeviceClass *pc = PCI_DEVICE_CLASS(klass);
-+    pc->realize = diva_aux_realize;
-+    pc->exit = diva_aux_exit;
-+    pc->vendor_id = PCI_VENDOR_ID_HP;
-+    pc->device_id = PCI_DEVICE_ID_HP_DIVA_AUX;
-+    pc->subsystem_vendor_id = PCI_VENDOR_ID_HP;
-+    pc->subsystem_id = 0x1291;
-+    pc->revision = 1;
-+    pc->class_id = PCI_CLASS_COMMUNICATION_MULTISERIAL;
-+    set_bit(DEVICE_CATEGORY_MISC, dc->categories);
-+    dc->user_creatable = false;
-+}
-+
-+static void diva_aux_init(Object *o)
-+{
-+}
-+
-+static const TypeInfo diva_aux_info = {
-+    .name          = TYPE_DIVA_AUX,
-+    .parent        = TYPE_PCI_DEVICE,
-+    .instance_size = sizeof(DivaAuxState),
-+    .instance_init = diva_aux_init,
-+    .class_init    = diva_aux_class_initfn,
-+    .interfaces = (InterfaceInfo[]) {
-+        { INTERFACE_CONVENTIONAL_PCI_DEVICE },
-+        { },
-+    },
-+};
-+
-+
-+
-+static const TypeInfo diva_serial_pci_info = {
-+    .name          = "diva-gsp",
-+    .parent        = TYPE_PCI_DEVICE,
-+    .instance_size = sizeof(PCIDivaSerialState),
-+    .instance_init = diva_serial_init,
-+    .class_init    = diva_serial_class_initfn,
-+    .interfaces = (InterfaceInfo[]) {
-+        { INTERFACE_CONVENTIONAL_PCI_DEVICE },
-+        { },
-+    },
-+};
-+
-+static void diva_pci_register_type(void)
-+{
-+    type_register_static(&diva_serial_pci_info);
-+    type_register_static(&diva_aux_info);
-+}
-+
-+type_init(diva_pci_register_type)
-diff --git a/hw/char/meson.build b/hw/char/meson.build
-index ed3529cbbb..86ee808cae 100644
---- a/hw/char/meson.build
-+++ b/hw/char/meson.build
-@@ -20,6 +20,7 @@ system_ss.add(when: 'CONFIG_SHAKTI_UART', if_true: files('shakti_uart.c'))
- system_ss.add(when: 'CONFIG_VIRTIO_SERIAL', if_true: files('virtio-console.c'))
- system_ss.add(when: 'CONFIG_XEN_BUS', if_true: files('xen_console.c'))
- system_ss.add(when: 'CONFIG_XILINX', if_true: files('xilinx_uartlite.c'))
-+system_ss.add(when: 'CONFIG_DIVA_GSP', if_true: files('diva-gsp.c'))
+         break;
+     case 0x10200:
+     case 0x10220:
+diff --git a/include/hw/pci-host/astro.h b/include/hw/pci-host/astro.h
+index e2966917cd..832125a05a 100644
+--- a/include/hw/pci-host/astro.h
++++ b/include/hw/pci-host/astro.h
+@@ -24,6 +24,8 @@ OBJECT_DECLARE_SIMPLE_TYPE(ElroyState, ELROY_PCI_HOST_BRIDGE)
+ #define LMMIO_DIST_BASE_ADDR      0xf4000000ULL
+ #define LMMIO_DIST_BASE_SIZE       0x4000000ULL
  
- system_ss.add(when: 'CONFIG_AVR_USART', if_true: files('avr_usart.c'))
- system_ss.add(when: 'CONFIG_COLDFIRE', if_true: files('mcf_uart.c'))
++#define LMMIO_DIRECT_RANGES     4
++
+ #define IOS_DIST_BASE_ADDR      0xfffee00000ULL
+ #define IOS_DIST_BASE_SIZE           0x10000ULL
+ 
+@@ -83,9 +85,7 @@ struct AstroState {
+     struct ElroyState *elroy[ELROY_NUM];
+ 
+     MemoryRegion this_mem;
+-
+-    MemoryRegion pci_mmio;
+-    MemoryRegion pci_io;
++    MemoryRegion lmmio_direct[LMMIO_DIRECT_RANGES];
+ 
+     IOMMUMemoryRegion iommu;
+     AddressSpace iommu_as;
 -- 
 2.47.0
 
