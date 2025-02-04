@@ -4,84 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 73013C02196
-	for <qemu-devel@archiver.kernel.org>; Tue,  4 Feb 2025 12:52:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 68A7DC02194
+	for <qemu-devel@archiver.kernel.org>; Tue,  4 Feb 2025 12:52:48 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tfIOA-0000Pv-79; Tue, 04 Feb 2025 07:50:50 -0500
+	id 1tfIO2-00005V-Rb; Tue, 04 Feb 2025 07:50:42 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1tfINo-0008Nv-5M
- for qemu-devel@nongnu.org; Tue, 04 Feb 2025 07:50:29 -0500
-Received: from mail-wr1-x436.google.com ([2a00:1450:4864:20::436])
+ id 1tfINe-0008JM-3y
+ for qemu-devel@nongnu.org; Tue, 04 Feb 2025 07:50:18 -0500
+Received: from mail-wr1-x42f.google.com ([2a00:1450:4864:20::42f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1tfINg-0002Bj-U8
- for qemu-devel@nongnu.org; Tue, 04 Feb 2025 07:50:25 -0500
-Received: by mail-wr1-x436.google.com with SMTP id
- ffacd0b85a97d-38a8b35e168so3312628f8f.1
- for <qemu-devel@nongnu.org>; Tue, 04 Feb 2025 04:50:19 -0800 (PST)
+ id 1tfINa-00029C-VG
+ for qemu-devel@nongnu.org; Tue, 04 Feb 2025 07:50:17 -0500
+Received: by mail-wr1-x42f.google.com with SMTP id
+ ffacd0b85a97d-38632b8ae71so4665268f8f.0
+ for <qemu-devel@nongnu.org>; Tue, 04 Feb 2025 04:50:14 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1738673419; x=1739278219; darn=nongnu.org;
+ d=linaro.org; s=google; t=1738673413; x=1739278213; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=+/BkF7oHf/xZr0+f8qz/0hceFUupsWr4MwchLEbF1vs=;
- b=qxwQyeWS1uy9jkjxU2eQr48GV4uo+iddewszvXdyFc9ySkYthH+zLUVUH9RFV3KrwM
- 9sbKnHCzIBLF6H/8u/vCVTIS972wuvNPyyQNA4M8uYYsrS4CZY8mYm2Z7ryydZ98vs87
- v5iaZ0sDu3DlLvZrdngEZTJlPRsURDzTQlVdf4zMljuYDCbT++LUNf+IwNTU6PAF46OM
- j+qhA0BPudSv94xeNbcJBgCzPjc4AFswcmwNchid2ZzyyxAjXAIAUPijKe0i6gtmfuc+
- FznX6N4w3KwcFwDFqvIxdYnheGavJz8biL8zS2FHzkc0x7UZW7+XoF6m2/CTSu/8M691
- llQQ==
+ bh=5cl2nmICirpIXVtF8Zl43t73+3pCHJ4PZJWOB63ih4s=;
+ b=YqfVa9dpzxiR8jRkudOrwWJJEpan3CBqJbKh2m3p7sYaH1ftLVJSa4G/qg4VYKOp3w
+ DEYXmVDp1kMyT/3BSGzBrST10kYa57WSUqmZkczFgCeC6yU5nM3ekZgcb2iqENkHpkoK
+ dpyvtb15vvr/Xoc7YwDz3BvS5UvdoSvp1kN5T9PES13G4CAWjSjexybLQo23TRHuaIPG
+ oQqKPvX3vhUpS9ou/cM5VVlhXb4PtahUt/jF8ii8SeQwPG2XRb+CnVnuuGxSpr2Xd2Uv
+ Z6FbSJ3F9gnF7WnNhYb3AfqRU5TiAXofZP7jhtVhAeXJmNAJSA5lRX5iBzTnL3bM8dL1
+ tweA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1738673419; x=1739278219;
+ d=1e100.net; s=20230601; t=1738673413; x=1739278213;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=+/BkF7oHf/xZr0+f8qz/0hceFUupsWr4MwchLEbF1vs=;
- b=qJWA2EmIuyZlLLhIo4lbCFeflP+9ZJlHTITXFc9MhuhTX591UL27DBdVMmPopfFUap
- ibJ2kU2zqfTWvC9SYb0E+Wze4c9AIUtCEixSDR6NjQB3fGiRxijCEHeSFWzA7DQNlZmV
- fmxoo7BrNC6eztydsgr3oiQA5EQ+cqxsq1wu8RFRKeUfO8MGebGKAULVsS6ChSHadnYS
- Akz+Qz0LhzGxAfw2VlCD/F7gyxufEluddl+RbzIijB7dvnRko0tlJ8nsQIBncucUHI/E
- 7Sa0eehSBCZwGUXlLLBzjoQ7JxnLoChuxNquq9jWw0RbQCdEOUj1BZRk5Gq5rN1i4JeH
- IZAg==
+ bh=5cl2nmICirpIXVtF8Zl43t73+3pCHJ4PZJWOB63ih4s=;
+ b=v0Lpm980fSGDSdUUfg+CmNM3s7r/RSmPik0yI+0oLFWZpjd4BN8i3bMJruVRpEgM4O
+ PeFhkqAjCC7UlquLD5umzzIClLykjhYeCFmT87uftqrOlbyuqW5f4TQjcga8JzULRwm/
+ wSKK+qIXjVb7pYZZkRD4PU2HpSbx4YkEBdwb0cw80v8vYSBlAi78t1SmhaS+TRyCKZte
+ x53YLa7snQcdmw20kCJ0xDYW5RBwQ2wLep2FKIJgg2pnrBTQy72gcjLbzRu2OJnQbPf5
+ BK3sRuYTnmpQAvDOh9UdGKGjBQdj36PeSTeVDwkFpvbWERVaWj7e/kSAILsz756mncRH
+ FHHQ==
 X-Forwarded-Encrypted: i=1;
- AJvYcCWjHUg6vR2OZNZB6I+DwUiJkOJVDue9jWtRMgN0kBh17tJSB8zVS8aMRnYoKL/Nmq6qqPgnGS43fCWL@nongnu.org
-X-Gm-Message-State: AOJu0YzRo3iPrnomHeRKnJ36b+6jQNqnW0gZTyupaF3P2ABKwRkoeJOV
- F1KhGnGpMjsGaAfuhOzXteKo+1x32A3eJS0LUb+V1pMOKB3sNNOrPcLEmti7Cfw=
-X-Gm-Gg: ASbGncsrxKz9bM8VbNTOOUdntfnyyaVZ1y2J6Y0TfIpEXs7Z6BzbgSQLTvks5ZysJ9t
- r/M1plNMBLriwKrX6zrxNF8hsONSXOqP3FZmhbM7zJG0HW9UJyopIsNOdxyzR42kn9FOz5Hc1xg
- CagDZPbSQOa8cQcEpo1/4Jf3EiN62BhOQesqKPGnaXUVKY3uqXrZYJX0RerjmQ3pS+yEypEVj2y
- BnjD/9yeYtfh1OkFAylTtKDfWDd77EC5RBV/qunM0jXlV97+mYaO9nbDNGDQIZ5tti4fy/TcFeO
- YqvmF6t5XzpMaS0IdcWuqw==
-X-Google-Smtp-Source: AGHT+IFPtxEvx565bOiiwHo/qxME4TNBFj6Fwm855XBGv0XfOM+j12lnOJeHgG+QZfljwrZKb8/htQ==
-X-Received: by 2002:a5d:64a8:0:b0:38b:d807:f3be with SMTP id
- ffacd0b85a97d-38da5386429mr2278587f8f.3.1738673418819; 
- Tue, 04 Feb 2025 04:50:18 -0800 (PST)
+ AJvYcCVbKBgOdooK90kNw2KKXv+ayD79TZstltXP1g85cOb0Mkcfn8bGIoIm/rBriPZU3Dq0NydfpzTx17Fo@nongnu.org
+X-Gm-Message-State: AOJu0YyKjVa723n1S49AOSeu88i8QzZTKEQKFlZ6AYGNBhA2L/Hs4GD9
+ eD9npkMB7Bhll+SUiyRiYS6hoQTnB8tf6VSOKLOmhexXiQRxEkjfrOZsV08Ht+0=
+X-Gm-Gg: ASbGncv5yaWAOtWM/hc3O1e+BPyba1CUcxTkd8AvPk/jZUDl2tvvpzeX0pvnR/4Xnw6
+ T0T7RVCjKseD5qhbUb/AqeKb68J8tQO/0Hq60/Imn8V4Wecf8y9KUBXSL65cX+cge7BBjE++AZ2
+ rGwYh6zTOHfhfGnmZKUVzOi5yhlkeUW92hJX4DjnHCa6I2hvEnLQLyt2k78U7HPP23xmpkHiFk1
+ f8UAtkjLFO49ArYgJU43ko/FVRjMYz6a9fPPVpZxS5lgpsyAplDn12C8xtJh3uk5N4X3EM6KfHn
+ UPGW5Xr6UnaNheK+2VrPZw==
+X-Google-Smtp-Source: AGHT+IGNOP9780Zm3sXo3On9fKjhQUBV6/nFYl3NSUhLd17mMupuDNqsLTtIcFXUHBXL/9AK0iYzSA==
+X-Received: by 2002:a05:6000:50c:b0:38a:8906:6b66 with SMTP id
+ ffacd0b85a97d-38c52097153mr17445706f8f.38.1738673413147; 
+ Tue, 04 Feb 2025 04:50:13 -0800 (PST)
 Received: from orth.archaic.org.uk (orth.archaic.org.uk. [2001:8b0:1d0::2])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-38c5c122465sm15757919f8f.47.2025.02.04.04.50.17
+ ffacd0b85a97d-38c5c122465sm15757919f8f.47.2025.02.04.04.50.11
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 04 Feb 2025 04:50:18 -0800 (PST)
+ Tue, 04 Feb 2025 04:50:12 -0800 (PST)
 From: Peter Maydell <peter.maydell@linaro.org>
 To: qemu-arm@nongnu.org,
 	qemu-devel@nongnu.org
 Cc: qemu-stable@nongnu.org,
  =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
-Subject: [PATCH v3 7/9] target/arm: document the architectural names of our
- GTIMERs
-Date: Tue,  4 Feb 2025 12:50:07 +0000
-Message-Id: <20250204125009.2281315-8-peter.maydell@linaro.org>
+Subject: [PATCH v3 1/9] target/arm: Apply correct timer offset when
+ calculating deadlines
+Date: Tue,  4 Feb 2025 12:50:01 +0000
+Message-Id: <20250204125009.2281315-2-peter.maydell@linaro.org>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20250204125009.2281315-1-peter.maydell@linaro.org>
 References: <20250204125009.2281315-1-peter.maydell@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::436;
- envelope-from=peter.maydell@linaro.org; helo=mail-wr1-x436.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::42f;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wr1-x42f.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -104,40 +103,73 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Alex Bennée <alex.bennee@linaro.org>
+When we are calculating timer deadlines, the correct definition of
+whether or not to apply an offset to the physical count is described
+in the Arm ARM DDI4087 rev L.a section D12.2.4.1.  This is different
+from when the offset should be applied for a direct read of the
+counter sysreg.
 
-As we are about to add more physical and virtual timers lets make it
-clear what each timer does.
+We got this right for the EL1 physical timer and for the EL1 virtual
+timer, but got all the rest wrong: they should be using a zero offset
+always.
 
-Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
-[PMM: Add timer register name prefix to each comment]
-Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
+Factor the offset calculation out into a function that has a comment
+documenting exactly which offset it is calculating and which gets the
+HYP, SEC, and HYPVIRT cases right.
+
+Cc: qemu-stable@nongnu.org
 Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
 ---
- target/arm/gtimer.h | 10 +++++-----
- 1 file changed, 5 insertions(+), 5 deletions(-)
+ target/arm/helper.c | 29 +++++++++++++++++++++++++++--
+ 1 file changed, 27 insertions(+), 2 deletions(-)
 
-diff --git a/target/arm/gtimer.h b/target/arm/gtimer.h
-index 0e89b8e58d0..d49c63cbf87 100644
---- a/target/arm/gtimer.h
-+++ b/target/arm/gtimer.h
-@@ -10,11 +10,11 @@
- #define TARGET_ARM_GTIMER_H
+diff --git a/target/arm/helper.c b/target/arm/helper.c
+index 1fee8fae127..049362a5500 100644
+--- a/target/arm/helper.c
++++ b/target/arm/helper.c
+@@ -2460,6 +2460,32 @@ static uint64_t gt_phys_cnt_offset(CPUARMState *env)
+     return gt_phys_raw_cnt_offset(env);
+ }
  
- enum {
--    GTIMER_PHYS     = 0,
--    GTIMER_VIRT     = 1,
--    GTIMER_HYP      = 2,
--    GTIMER_SEC      = 3,
--    GTIMER_HYPVIRT  = 4,
-+    GTIMER_PHYS     = 0, /* CNTP_* ; EL1 physical timer */
-+    GTIMER_VIRT     = 1, /* CNTV_* ; EL1 virtual timer */
-+    GTIMER_HYP      = 2, /* CNTHP_* ; EL2 physical timer */
-+    GTIMER_SEC      = 3, /* CNTPS_* ; EL3 physical timer */
-+    GTIMER_HYPVIRT  = 4, /* CNTHV_* ; EL2 virtual timer ; only if FEAT_VHE */
-     GTIMER_S_EL2_PHYS = 5, /* CNTHPS_* ; only if FEAT_SEL2 */
-     GTIMER_S_EL2_VIRT = 6, /* CNTHVS_* ; only if FEAT_SEL2 */
- #define NUM_GTIMERS   7
++static uint64_t gt_indirect_access_timer_offset(CPUARMState *env, int timeridx)
++{
++    /*
++     * Return the timer offset to use for indirect accesses to the timer.
++     * This is the Offset value as defined in D12.2.4.1 "Operation of the
++     * CompareValue views of the timers".
++     *
++     * The condition here is not always the same as the condition for
++     * whether to apply an offset register when doing a direct read of
++     * the counter sysreg; those conditions are described in the
++     * access pseudocode for each counter register.
++     */
++    switch (timeridx) {
++    case GTIMER_PHYS:
++        return gt_phys_raw_cnt_offset(env);
++    case GTIMER_VIRT:
++        return env->cp15.cntvoff_el2;
++    case GTIMER_HYP:
++    case GTIMER_SEC:
++    case GTIMER_HYPVIRT:
++        return 0;
++    default:
++        g_assert_not_reached();
++    }
++}
++
+ static void gt_recalc_timer(ARMCPU *cpu, int timeridx)
+ {
+     ARMGenericTimer *gt = &cpu->env.cp15.c14_timer[timeridx];
+@@ -2469,8 +2495,7 @@ static void gt_recalc_timer(ARMCPU *cpu, int timeridx)
+          * Timer enabled: calculate and set current ISTATUS, irq, and
+          * reset timer to when ISTATUS next has to change
+          */
+-        uint64_t offset = timeridx == GTIMER_VIRT ?
+-            cpu->env.cp15.cntvoff_el2 : gt_phys_raw_cnt_offset(&cpu->env);
++        uint64_t offset = gt_indirect_access_timer_offset(&cpu->env, timeridx);
+         uint64_t count = gt_get_countervalue(&cpu->env);
+         /* Note that this must be unsigned 64 bit arithmetic: */
+         int istatus = count - offset >= gt->cval;
 -- 
 2.34.1
 
