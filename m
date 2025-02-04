@@ -4,78 +4,86 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7F3B1C02194
-	for <qemu-devel@archiver.kernel.org>; Tue,  4 Feb 2025 15:15:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BFE72C02194
+	for <qemu-devel@archiver.kernel.org>; Tue,  4 Feb 2025 15:19:17 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tfKeM-0008G2-PA; Tue, 04 Feb 2025 10:15:44 -0500
+	id 1tfKhb-0000hN-5Q; Tue, 04 Feb 2025 10:19:03 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1tfKeA-0008Dz-T1
- for qemu-devel@nongnu.org; Tue, 04 Feb 2025 10:15:32 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1tfKe9-0007KN-8V
- for qemu-devel@nongnu.org; Tue, 04 Feb 2025 10:15:30 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1738682128;
- h=from:from:reply-to:reply-to:subject:subject:date:date:
- message-id:message-id:to:to:cc:cc:mime-version:mime-version:
- content-type:content-type:in-reply-to:in-reply-to:  references:references;
- bh=WT/S80S7ib23qPdxnGGhvYVT+vNcHO/qRDiX4dY3REE=;
- b=E64V8QTy2wvnvvBCR94LTre10OXLW4fMbb6wKQbZysDk5/DWVotUNOUsK7PDZBALrvYzm5
- VgvMmwL6se0OjUoYZdWRCk4YjsqWU+7Ef57KdvqN93mwn4yw7+gszHvBaoD9mYbxzrpXET
- w+zNm+gQ5+xL38kO5QSrgE4VuNiMQtk=
-Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-678-GfCFNpCJNay3S7ALx_n4BA-1; Tue,
- 04 Feb 2025 10:15:24 -0500
-X-MC-Unique: GfCFNpCJNay3S7ALx_n4BA-1
-X-Mimecast-MFC-AGG-ID: GfCFNpCJNay3S7ALx_n4BA
-Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id AC8CE1805ED6; Tue,  4 Feb 2025 15:15:21 +0000 (UTC)
-Received: from redhat.com (unknown [10.42.28.60])
- by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 4A7FA18009AC; Tue,  4 Feb 2025 15:15:16 +0000 (UTC)
-Date: Tue, 4 Feb 2025 15:15:13 +0000
-From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
-To: "Maciej S. Szmigiero" <mail@maciej.szmigiero.name>
-Cc: Peter Xu <peterx@redhat.com>, Fabiano Rosas <farosas@suse.de>,
- Alex Williamson <alex.williamson@redhat.com>,
- =?utf-8?Q?C=C3=A9dric?= Le Goater <clg@redhat.com>,
- Eric Blake <eblake@redhat.com>, Markus Armbruster <armbru@redhat.com>,
- Avihai Horon <avihaih@nvidia.com>,
- Joao Martins <joao.m.martins@oracle.com>, qemu-devel@nongnu.org
-Subject: Re: [PATCH v4 07/33] io: tls: Allow terminating the TLS session
- gracefully with EOF
-Message-ID: <Z6IvAXXfIgDRYV5o@redhat.com>
-References: <cover.1738171076.git.maciej.szmigiero@oracle.com>
- <fdd9a0a6053ac6aed32e08cc284991a3630bbfec.1738171076.git.maciej.szmigiero@oracle.com>
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1tfKhY-0000hB-0g
+ for qemu-devel@nongnu.org; Tue, 04 Feb 2025 10:19:01 -0500
+Received: from mail-yb1-xb2c.google.com ([2607:f8b0:4864:20::b2c])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1tfKhW-0000vb-3I
+ for qemu-devel@nongnu.org; Tue, 04 Feb 2025 10:18:59 -0500
+Received: by mail-yb1-xb2c.google.com with SMTP id
+ 3f1490d57ef6-e53a91756e5so5740531276.1
+ for <qemu-devel@nongnu.org>; Tue, 04 Feb 2025 07:18:56 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1738682335; x=1739287135; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=RjYgOI+9qDfnBC7XXaqJktPREuHx70VJdecWMGw1GhU=;
+ b=aGXBnS65qy9s05e/SYhixinqcCkzlcZJJ4cU7VlK24kMmCWtwwIHb3okQE0d26yfFe
+ eS6JfyRvI3RRKdrEmp6VyB/FGv98wfROjsbCpRPCLbvvr2QR2/HjnC2Si6ZG8viC9HsY
+ 9rdGshTFed4vK+pND8dvNkfhnguvrOqjuV2wEXQmUHJZ0g2mqRE0AQ9xHVg0hDmliaXp
+ gh4kshD4WWteAYttUQ3QPdehpU3N/TztBSTvDxm/WtnP4HkZ1+MJ3hqmNuFJi8TE4Yd5
+ 0XrOKIRfJXM+R8AuS7DNMg9yU+P3CJCvmEHlTNGnMn+q8iF6JfmMU/4BRXegw454G3BO
+ TtVA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1738682335; x=1739287135;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=RjYgOI+9qDfnBC7XXaqJktPREuHx70VJdecWMGw1GhU=;
+ b=MoVDv2YWZeGnZlkvea4luBZpLEAWfIpP3/M2T2NQ340kYZPWOk4KxIQ01hLeosmD2t
+ FEZ8TrfXigQoNPHatFrQ3xlCdqGhcgd/jjFfQb0Y7zXmzTv+b9P/Hkm3k9j5yHyfDv51
+ LIbp1srBygbrA7MUfhMGpSw4D2YHm3FayVLKq3grY/xkdGk/24ZqZbFhGI9wMNmm8F1/
+ hnmDtDE1xungH6pZzZnfpR8nDUtCDfGL79RTSGZG3HhS/RMyAXgaR7sBIFR9+SKFBkd/
+ ePQdU/AzYTGDgG0BBzlMqsG6z9Mi3abx+cwVjtntx6YjEaOLxiE3zC4Y4EupJzEqhmYj
+ ILsA==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCXfD6iSQqaJ6mQL1eub52J+KV93CszI7lJaMhFXWr66C9Wb78GtZzb5H9xmQ4bNmF2P/dVz7Oj/nN70@nongnu.org
+X-Gm-Message-State: AOJu0YxwgJXo7J3Y+1eoPVCgEKbHLKrsNizTFO19SjQOfilUerbbpeBp
+ m3MFay4PhSWsZuLY0a47lryAbJsQ1Pj4hlFyczj2/p6pc2MqqW9RFGxIwLKf/SHzpcd6ibYMSan
+ Ffom9kevs6+FbRzc2T9JLxazNAdkBRpmuLuEGgg==
+X-Gm-Gg: ASbGncuOQIyIAqYEQ9DrxOf8Dj0SeLo1Qu1UNYsLa4f0vmsYxDZNEiyG+OGU03dp3u9
+ bt3CZr56kybntwadwQNQi/HLKfiQ2sNp9MEvgaCSvUKbi706qh5VKT9Trn7fHfZAq34YUoUajZQ
+ ==
+X-Google-Smtp-Source: AGHT+IFnWqAslT3HJvleVqlLXGAskL5Yd39KgA0ntp7bmClM+WC73tDCQkNsVg6B4Nz01PpJn5z759eWrcDQ6cIlwRI=
+X-Received: by 2002:a05:6902:c10:b0:e58:11f6:db86 with SMTP id
+ 3f1490d57ef6-e58a4ab07e9mr19679460276.7.1738682335306; Tue, 04 Feb 2025
+ 07:18:55 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <fdd9a0a6053ac6aed32e08cc284991a3630bbfec.1738171076.git.maciej.szmigiero@oracle.com>
-User-Agent: Mutt/2.2.13 (2024-03-09)
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=berrange@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
+References: <20250203114132.259155-1-pbonzini@redhat.com>
+ <bd5ccffc-5e8c-4b87-9168-01a964dd6f0a@linaro.org>
+In-Reply-To: <bd5ccffc-5e8c-4b87-9168-01a964dd6f0a@linaro.org>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Tue, 4 Feb 2025 15:18:43 +0000
+X-Gm-Features: AWEUYZleqCQUFjdqasREF12FALgtPPi5TkL2XbKAEj1uUfu5PpI10k1YvhyzO2I
+Message-ID: <CAFEAcA8pjBD7cM9BwgGWLjSW-TUqXvnGMOJrkp8wY2PqaV7RdQ@mail.gmail.com>
+Subject: Re: [PATCH] qom: reverse order of instance_post_init calls
+To: =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>
+Cc: Paolo Bonzini <pbonzini@redhat.com>, qemu-devel@nongnu.org, 
+ Eduardo Habkost <eduardo@habkost.net>, mst@redhat.com, alistair.francis@wdc.com,
+ xiaoyao.li@intel.com, Markus Armbruster <armbru@redhat.com>, 
+ Bernhard Beschow <shentey@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2607:f8b0:4864:20::b2c;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yb1-xb2c.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -88,90 +96,75 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, Jan 30, 2025 at 11:08:28AM +0100, Maciej S. Szmigiero wrote:
-> From: "Maciej S. Szmigiero" <maciej.szmigiero@oracle.com>
-> 
-> Currently, hitting EOF on receive without sender terminating the TLS
-> session properly causes the TLS channel to return an error (unless
-> the channel was already shut down for read).
-> 
-> Add an optional setting whether we instead just return EOF in that
-> case.
-> 
-> This possibility will be soon used by the migration multifd code.
-> 
-> Signed-off-by: Maciej S. Szmigiero <maciej.szmigiero@oracle.com>
-> ---
->  include/io/channel-tls.h | 11 +++++++++++
->  io/channel-tls.c         |  6 ++++++
->  2 files changed, 17 insertions(+)
-> 
-> diff --git a/include/io/channel-tls.h b/include/io/channel-tls.h
-> index 26c67f17e2d3..8552c0d0266e 100644
-> --- a/include/io/channel-tls.h
-> +++ b/include/io/channel-tls.h
-> @@ -49,6 +49,7 @@ struct QIOChannelTLS {
->      QCryptoTLSSession *session;
->      QIOChannelShutdown shutdown;
->      guint hs_ioc_tag;
-> +    bool premature_eof_okay;
->  };
->  
->  /**
-> @@ -143,4 +144,14 @@ void qio_channel_tls_handshake(QIOChannelTLS *ioc,
->  QCryptoTLSSession *
->  qio_channel_tls_get_session(QIOChannelTLS *ioc);
->  
-> +/**
-> + * qio_channel_tls_set_premature_eof_okay:
-> + * @ioc: the TLS channel object
-> + *
-> + * Sets whether receiving an EOF without terminating the TLS session properly
-> + * by used the other side is considered okay or an error (the
-> + * default behaviour).
-> + */
-> +void qio_channel_tls_set_premature_eof_okay(QIOChannelTLS *ioc, bool enabled);
-> +
->  #endif /* QIO_CHANNEL_TLS_H */
-> diff --git a/io/channel-tls.c b/io/channel-tls.c
-> index aab630e5ae32..1079d6d10de1 100644
-> --- a/io/channel-tls.c
-> +++ b/io/channel-tls.c
-> @@ -147,6 +147,11 @@ qio_channel_tls_new_client(QIOChannel *master,
->      return NULL;
->  }
->  
-> +void qio_channel_tls_set_premature_eof_okay(QIOChannelTLS *ioc, bool enabled)
-> +{
-> +    ioc->premature_eof_okay = enabled;
-> +}
-> +
->  struct QIOChannelTLSData {
->      QIOTask *task;
->      GMainContext *context;
-> @@ -279,6 +284,7 @@ static ssize_t qio_channel_tls_readv(QIOChannel *ioc,
->              tioc->session,
->              iov[i].iov_base,
->              iov[i].iov_len,
-> +            tioc->premature_eof_okay ||
->              qatomic_load_acquire(&tioc->shutdown) & QIO_CHANNEL_SHUTDOWN_READ,
->              errp);
->          if (ret == QCRYPTO_TLS_SESSION_ERR_BLOCK) {
+On Tue, 4 Feb 2025 at 15:08, Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org=
+> wrote:
+>
+> Hi Paolo,
+>
+> On 3/2/25 12:41, Paolo Bonzini wrote:
+> > Currently, the instance_post_init calls are performed from the leaf
+> > class and all the way up to Object.  This is incorrect because the
+> > leaf class cannot observe property values applied by the superclasses;
+> > for example, a compat property will be set on a device *after*
+> > the class's post_init callback has run.
+> >
+> > In particular this makes it impossible for implementations of
+> > accel_cpu_instance_init() to operate based on the actual values of
+> > the properties, though it seems that cxl_dsp_instance_post_init and
+> > rp_instance_post_init might have similar issues.
+> >
+> > Follow instead the same order as instance_init, starting with Object
+> > and running the child class's instance_post_init after the parent.
+> >
+> > Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
+> > ---
+> >   qom/object.c | 8 ++++----
+> >   1 file changed, 4 insertions(+), 4 deletions(-)
+> >
+> > diff --git a/qom/object.c b/qom/object.c
+> > index 157a45c5f8b..c03cd3c7339 100644
+> > --- a/qom/object.c
+> > +++ b/qom/object.c
+> > @@ -423,13 +423,13 @@ static void object_init_with_type(Object *obj, Ty=
+peImpl *ti)
+> >
+> >   static void object_post_init_with_type(Object *obj, TypeImpl *ti)
+> >   {
+> > -    if (ti->instance_post_init) {
+> > -        ti->instance_post_init(obj);
+> > -    }
+> > -
+> >       if (type_has_parent(ti)) {
+> >           object_post_init_with_type(obj, type_get_parent(ti));
+> >       }
+> > +
+> > +    if (ti->instance_post_init) {
+> > +        ti->instance_post_init(obj);
+> > +    }
+> >   }
+>
+> I'm not opposed to this change as I had a similar issue there few weeks
+> ago, but I feel we are changing one problem by another. IIRC some class
+> post_init() handlers check the instance correctly did something. But I
+> don't recall any example in particular. The documentation isn't clear
+> about order (include/qom/object.h):
+>
+>    * @instance_post_init: This function is called to finish
+>    *                      initialization of an object, after
+>    *                      all @instance_init functions were
+>    *                      called.
 
-IMHO a better way to do this is by defining an new flag for use with
-the qio_channel_readv_full() method. That makes the ignoring of
-premature shutdown a contextually scoped behaviour rather than a
-global behaviour.
+We have five users of instance_post_init in the tree, if I'm not
+miscounting. So we should be able to audit them all for whether they
+care about the order and/or are currently doing things in the wrong
+order.
 
-With regards,
-Daniel
--- 
-|: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
-|: https://libvirt.org         -o-            https://fstop138.berrange.com :|
-|: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
+And yes, we should update the documentation if we're picking
+a specific ordering :-)
 
+thanks
+-- PMM
 
