@@ -4,111 +4,101 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D2913C02197
-	for <qemu-devel@archiver.kernel.org>; Tue,  4 Feb 2025 14:58:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8E702C02194
+	for <qemu-devel@archiver.kernel.org>; Tue,  4 Feb 2025 14:59:52 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tfKNi-0003Wv-6L; Tue, 04 Feb 2025 09:58:30 -0500
+	id 1tfKOq-0004fG-FN; Tue, 04 Feb 2025 09:59:40 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1tfKNd-0003UE-TU
- for qemu-devel@nongnu.org; Tue, 04 Feb 2025 09:58:26 -0500
-Received: from smtp-out2.suse.de ([195.135.223.131])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tfKOf-0004dT-Q6
+ for qemu-devel@nongnu.org; Tue, 04 Feb 2025 09:59:32 -0500
+Received: from mail-wm1-x331.google.com ([2a00:1450:4864:20::331])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1tfKNc-0002mb-6v
- for qemu-devel@nongnu.org; Tue, 04 Feb 2025 09:58:25 -0500
-Received: from imap1.dmz-prg2.suse.org (unknown [10.150.64.97])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (No client certificate requested)
- by smtp-out2.suse.de (Postfix) with ESMTPS id 651F31F387;
- Tue,  4 Feb 2025 14:58:22 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1738681102; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=MbDOBoNaEfUtMsTiD6Y3lyn4lABLpGWonNFb3iIqgNQ=;
- b=n2BJVpI2boKO8nrAkZqn7u/+lcLXdR3jI1TYcX3BqF8u9oHAYLJItuK7Q2TkAXXgVr9I+P
- Djyzvcb0lnpG1gxcZnwAxe1JuZCvQQZlAb376Vx7RpNnhryUspjaYdmWDXlUWHt7mprPda
- CCWmhqFpEgB7wPaAx/Um1oaTtG///Dk=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1738681102;
- h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=MbDOBoNaEfUtMsTiD6Y3lyn4lABLpGWonNFb3iIqgNQ=;
- b=OFUBtAmbFkQIpKUs0rtWDXGd0Dl853J1aZm285DmQpxyys+jS4T0d6HzHi8NobG/NBTiK3
- 2KHeBccG/4KhK+BA==
-Authentication-Results: smtp-out2.suse.de;
-	none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1738681102; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=MbDOBoNaEfUtMsTiD6Y3lyn4lABLpGWonNFb3iIqgNQ=;
- b=n2BJVpI2boKO8nrAkZqn7u/+lcLXdR3jI1TYcX3BqF8u9oHAYLJItuK7Q2TkAXXgVr9I+P
- Djyzvcb0lnpG1gxcZnwAxe1JuZCvQQZlAb376Vx7RpNnhryUspjaYdmWDXlUWHt7mprPda
- CCWmhqFpEgB7wPaAx/Um1oaTtG///Dk=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1738681102;
- h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=MbDOBoNaEfUtMsTiD6Y3lyn4lABLpGWonNFb3iIqgNQ=;
- b=OFUBtAmbFkQIpKUs0rtWDXGd0Dl853J1aZm285DmQpxyys+jS4T0d6HzHi8NobG/NBTiK3
- 2KHeBccG/4KhK+BA==
-Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (No client certificate requested)
- by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id DE25413795;
- Tue,  4 Feb 2025 14:58:21 +0000 (UTC)
-Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
- by imap1.dmz-prg2.suse.org with ESMTPSA id 7eCgKA0romf6cgAAD6G6ig
- (envelope-from <farosas@suse.de>); Tue, 04 Feb 2025 14:58:21 +0000
-From: Fabiano Rosas <farosas@suse.de>
-To: Steven Sistare <steven.sistare@oracle.com>, =?utf-8?Q?C=C3=A9dric?= Le
- Goater <clg@redhat.com>, qemu-devel@nongnu.org
-Cc: Peter Xu <peterx@redhat.com>
-Subject: Re: [PATCH] MAINTAINER: Add a maintainer for CPR
-In-Reply-To: <9295d5cc-775d-408f-8554-1ef5db823748@oracle.com>
-References: <20250204082859.846886-1-clg@redhat.com>
- <8599e016-4ea4-4c1d-b4d2-c583c57a9558@oracle.com>
- <8638674e-5a79-4405-9063-89ba78112c8f@redhat.com>
- <9295d5cc-775d-408f-8554-1ef5db823748@oracle.com>
-Date: Tue, 04 Feb 2025 11:58:19 -0300
-Message-ID: <874j19ah9w.fsf@suse.de>
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tfKOe-0002tb-9E
+ for qemu-devel@nongnu.org; Tue, 04 Feb 2025 09:59:29 -0500
+Received: by mail-wm1-x331.google.com with SMTP id
+ 5b1f17b1804b1-436202dd7f6so66073585e9.0
+ for <qemu-devel@nongnu.org>; Tue, 04 Feb 2025 06:59:27 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1738681166; x=1739285966; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=G8anBbyMT55oA4TitLuKWWu2XDaUG1CFB4kIBNGpbGw=;
+ b=YLJkkFlOldn4I0SyT8Xbdou0zQTy1gOjj7wmU1TG8rviyyKwy+HPkccDsJWMecb78I
+ upjZOiNln1M+1sNlfrvghU3tG76tADDstTh1YXlOHgvHYQaTT0hUFKcX0m5i6TJAVUQ/
+ XYrdIfZI9fbvCdyTIEXHND2ya09ydvROP9ygDeJyvf6N0BUVt5MkWH/28wbzrok2tcCf
+ 5T4wE9DG7WHo8nIvx7zUgUqnL+qM1PH7aYSiX/2FZbEIAyejdlr4rFH76QWX74LHLzB2
+ O4CjPdWceyd8LaA95YLdl/mLvSHEq9FOfY58Zde/aGolnlHCA/YBEdcZL7vM87qdfuLv
+ 5Bzw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1738681166; x=1739285966;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=G8anBbyMT55oA4TitLuKWWu2XDaUG1CFB4kIBNGpbGw=;
+ b=wmfwqjTSJTsG+louYmgrBv0Be4SgOKXhdJ+vrU1VPBOc7heZOJzCOGuF7nDF+kbjj1
+ Uz5yPkfeDr4MOwbwnk6ckB29gW0ihcRkrHtPbwDWMu/auuzSdc12oAw/XbICNL4aC6Ru
+ VtyTlbRpdfkjguSTx2kyGDgHYFZ1YeH4iEd4CeQVxXkl7eJrCB84ZUSCqcmgxs2jgexl
+ G63sw0U7CuFg9VABHgi9dW1i68bgcsmow5oNZLkGOSeHytPtk33iUDxr946il8pjyZZi
+ 9ajcYSMywsOG6g4JMscQ2Kac6D5F6/DvRlrrKug5s7QFH8tcRI+a+eZ1umUzhrhE0Paj
+ q8LA==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCWTtFgqdaq99DX6Tuaz5UT98vBNeF4B3RUapzVeonDsEDuut4sbyOX8Yb3qOo/7sP5iesW46vqtyFTb@nongnu.org
+X-Gm-Message-State: AOJu0Yy2ZQrRTYyjPxcM24nVkXZsY4UWgusDYzUsHPtUaw/0a7KS7Czb
+ kbaQtjSDlgdWhI6FDcZ4SRlo0I5aarEQvpCWIawZo6EHC4EgPsj+aVn8Sy2G2q8=
+X-Gm-Gg: ASbGnctj84qr/Zck86zg4H1/rka+PrTgs2Tv2GqpEWvWBM4sbB0UTNlRjFT5JRO4y8G
+ 5hVV1z42QNy7XTU1eY4EO9DeBtvhwQOhotX1oiJZYp76FimEqMnIumz6BOCIs/6NJNIPV/xyceZ
+ IKNnq0PRFGThNaw+6dqSGx06D4/tzVvk4SD37JXGu2X4Ybb1p32xKl4gQngxe592fC2QrgRAZ9U
+ 3S694eY09Eu07t2SbddXLCyvQszNnAGSgQO0uyz8HrrTufczZ1WVKEIYf8s5NPirWe2NUfqPyXY
+ VHN7fsNu9h4CMTQmGAEXzQb1Tl2dop7aWBLZZ5+DAWF7ltctHkg71g3i+t8=
+X-Google-Smtp-Source: AGHT+IEu5vViV42ffKjJRwQusiGEU2jHEczefEeY2w30sljGmqFRrYksEhjWr66LJJC4E5zny08+5w==
+X-Received: by 2002:a05:600c:500b:b0:436:fa4f:a1cf with SMTP id
+ 5b1f17b1804b1-438dc42551fmr232683835e9.29.1738681165971; 
+ Tue, 04 Feb 2025 06:59:25 -0800 (PST)
+Received: from [192.168.69.198] (88-187-86-199.subs.proxad.net.
+ [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-438e245f41esm193956215e9.36.2025.02.04.06.59.25
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Tue, 04 Feb 2025 06:59:25 -0800 (PST)
+Message-ID: <e368b476-5958-404a-98e0-591e8f638d34@linaro.org>
+Date: Tue, 4 Feb 2025 15:59:24 +0100
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-X-Spamd-Result: default: False [-4.30 / 50.00]; BAYES_HAM(-3.00)[99.99%];
- NEURAL_HAM_LONG(-1.00)[-1.000];
- NEURAL_HAM_SHORT(-0.20)[-1.000]; MIME_GOOD(-0.10)[text/plain];
- RCVD_VIA_SMTP_AUTH(0.00)[]; ARC_NA(0.00)[];
- MIME_TRACE(0.00)[0:+]; MISSING_XM_UA(0.00)[];
- TO_DN_SOME(0.00)[]; MID_RHS_MATCH_FROM(0.00)[];
- RCVD_TLS_ALL(0.00)[];
- DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
- FROM_EQ_ENVFROM(0.00)[]; FROM_HAS_DN(0.00)[];
- RCPT_COUNT_THREE(0.00)[4]; RCVD_COUNT_TWO(0.00)[2];
- FUZZY_BLOCKED(0.00)[rspamd.com]; TO_MATCH_ENVRCPT_ALL(0.00)[];
- DBL_BLOCKED_OPENRESOLVER(0.00)[suse.de:mid, imap1.dmz-prg2.suse.org:helo,
- oracle.com:email]
-Received-SPF: pass client-ip=195.135.223.131; envelope-from=farosas@suse.de;
- helo=smtp-out2.suse.de
-X-Spam_score_int: -43
-X-Spam_score: -4.4
-X-Spam_bar: ----
-X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 11/12] hw/arm/raspi: Deprecate old raspiX machine names
+To: Peter Maydell <peter.maydell@linaro.org>
+Cc: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
+ qemu-devel@nongnu.org, BALATON Zoltan <balaton@eik.bme.hu>,
+ Laurent Vivier <lvivier@redhat.com>,
+ Ovchinnikov Vitalii <vitalii.ovchinnikov@auriga.com>,
+ Jared Mauch <jared+home@puck.nether.net>, Fabiano Rosas <farosas@suse.de>,
+ Paolo Bonzini <pbonzini@redhat.com>, qemu-arm@nongnu.org,
+ =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ devel@lists.libvirt.org
+References: <20250204002240.97830-1-philmd@linaro.org>
+ <20250204002240.97830-12-philmd@linaro.org>
+ <CAFEAcA-3JJ1tZAXsik5hAonuSO9sCqDF1xqPQVhAeN-XwAAhDw@mail.gmail.com>
+ <e32a54f2-ef46-4964-89d4-a8969b6d1b05@linaro.org>
+ <Z6HklNsu0Mzgh7bC@redhat.com>
+ <CAFEAcA9m8g=K-0RU31kswbNSKWnUqA78KxNkcXEAqR=BhWc9bA@mail.gmail.com>
+ <8616891b-9747-4388-99dc-d6e53e090001@linaro.org>
+ <CAFEAcA9weFzHW+kL8W0GD26A+QTWpC7Baf9-=Oc3t2yw77=RCA@mail.gmail.com>
+Content-Language: en-US
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <CAFEAcA9weFzHW+kL8W0GD26A+QTWpC7Baf9-=Oc3t2yw77=RCA@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::331;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x331.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -124,65 +114,56 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Steven Sistare <steven.sistare@oracle.com> writes:
-
-> On 2/4/2025 8:42 AM, C=C3=A9dric Le Goater wrote:
->> On 2/4/25 14:31, Steven Sistare wrote:
->>> Hi Cedric, CPR is a mode of live migration, integrated so closely that
->>> it makes more sense for the migration maintainers to maintain it, and
->>> consult me if/when necessary.=C2=A0 "migration" appears in 4 of the 5 p=
-aths
->>> you list below.
->>=20
->> CPR is growing with the recent proposal and it is a large enough
->> feature to have its own maintainer IMHO.
->>=20
->> Should we add cpr* files under the migration subsystem then ?
->
-> Sure, I'll do that in V2 for the vfio series.
->
-> - Steve
->
->>> On 2/4/2025 3:28 AM, C=C3=A9dric Le Goater wrote:
->>>> The CPR feature was added in QEMU 9.0 and it lacks a maintainer.
->>>> Propose the main contributor to become one.
->>>>
->>>> Cc: Steve Sistare <steven.sistare@oracle.com>
->>>> Signed-off-by: C=C3=A9dric Le Goater <clg@redhat.com>
->>>> ---
->>>> =C2=A0 MAINTAINERS | 9 +++++++++
->>>> =C2=A0 1 file changed, 9 insertions(+)
->>>>
->>>> diff --git a/MAINTAINERS b/MAINTAINERS
->>>> index db8c41fbe0f9..efb9da02f142 100644
->>>> --- a/MAINTAINERS
->>>> +++ b/MAINTAINERS
->>>> @@ -2943,6 +2943,15 @@ F: include/qemu/co-shared-resource.h
->>>> =C2=A0 T: git https://gitlab.com/jsnow/qemu.git jobs
->>>> =C2=A0 T: git https://gitlab.com/vsementsov/qemu.git block
->>>> +CheckPoint and Restart (CPR)
->>>> +M: Steve Sistare <steven.sistare@oracle.com>
->>>> +S: Supported
->>>> +F: hw/vfio/cpr*
->>>> +F: include/migration/cpr.h
->>>> +F: migration/cpr*
->>>> +F: tests/qtest/migration/cpr*
->>>> +F: docs/devel/migration/CPR.rst
->>>> +
->>>> =C2=A0 Compute Express Link
->>>> =C2=A0 M: Jonathan Cameron <jonathan.cameron@huawei.com>
->>>> =C2=A0 R: Fan Ni <fan.ni@samsung.com>
+On 4/2/25 14:52, Peter Maydell wrote:
+> On Tue, 4 Feb 2025 at 13:40, Philippe Mathieu-Daudé <philmd@linaro.org> wrote:
+>>
+>> On 4/2/25 12:13, Peter Maydell wrote:
+>>> On Tue, 4 Feb 2025 at 09:57, Daniel P. Berrangé <berrange@redhat.com> wrote:
+>>>> IMHO we can have distinct machines for each model, but
+>>>> *NOT* have further machines for each RAM size within a
+>>>> model.
 >>>
->>=20
+>>> Yes, this was what I was intending to suggest. Apologies
+>>> if I was confusing with what I said the previous time round.
+>>
+>> OK, let's see if we understand each other correctly as developer,
+>> before explaining to users, taking the 4B model as example.
+>>
+>> The 4B come in 4 physical variants, depending on the amount of
+>> DRAM: 1G, 2G, 4G and 8G.
+>>
+>> We can not allocate 2G on 32-bit hosts, so to have a reproducible
+>> guest behavior on 32/64-bit hosts, it makes sense to takes the
+>> model with 1G of DRAM as default for the 'raspi4b' machine.
+> 
+> At the moment we create the 1GB version on 32-bit hosts and
+> the 2GB version on 64-bit hosts. I dunno that that's ideal,
+> but I think it's probably best not to change that at this point.
 
-We've made our bed years ago when it was decided that cpr should use
-migration facilities. I wasn't even around at the time, but I tend to
-honor decisions made by previous maintainers. So I'm ok with leaving CPR
-under the migration tree.
+Well this is annoying in my "unify qemu-system-{arm/aarch64}" effort,
+but not a blocker.
 
-However I agree with the general sentiment of C=C3=A9dric's email. CPR is
-becoming a big thing and we might run into resource issues for its
-maintenance. As always, we do this on a best-effort basis and if the
-workload starts to become an issue we'll have to ask for help or
-reconsider the feature's status in the codebase.
+>> If an user specify -m 2G ... 8G, we can adapt the 'board_rev'
+>> register to expose the corresponding amount of ram. Now, how /
+>> where to tell the users 1/ the default is 1G, and 2/ they can use
+>> 2/4/8G?
+> 
+> In the documentation: docs/system/arm/raspi.rst .
+
+OK.
+
+Back to this series, please tell me if patches 1-7 aren't useful or
+if you prefer them in a separate series:
+
+   hw/arm/raspi: Access SoC parent object using  BCM283X_BASE() macro
+   hw/arm/raspi: Merge model 4B with other models
+   hw/arm/raspi: Unify RASPI_MACHINE types
+   hw/arm/raspi: Pass board_rev as argument to raspi_base_machine_init()
+   hw/arm/raspi: Consider processor id in types[] array
+   hw/arm/raspi: Consider network interface for B models
+   hw/arm/raspi: Check ramsize is within chipset aperture
+
+Thanks,
+
+Phil.
 
