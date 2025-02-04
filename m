@@ -4,35 +4,34 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DAB9EC0218F
-	for <qemu-devel@archiver.kernel.org>; Tue,  4 Feb 2025 07:30:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E0C79C02197
+	for <qemu-devel@archiver.kernel.org>; Tue,  4 Feb 2025 07:35:40 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tfDNO-0000X8-PL; Tue, 04 Feb 2025 02:29:42 -0500
+	id 1tfDSL-000253-Gp; Tue, 04 Feb 2025 02:34:49 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <SRS0=Xvsd=U3=kaod.org=clg@ozlabs.org>)
- id 1tfDNN-0000Ws-Lp; Tue, 04 Feb 2025 02:29:41 -0500
+ id 1tfDSH-000245-Lk; Tue, 04 Feb 2025 02:34:45 -0500
 Received: from mail.ozlabs.org ([2404:9400:2221:ea00::3])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <SRS0=Xvsd=U3=kaod.org=clg@ozlabs.org>)
- id 1tfDNL-000485-JW; Tue, 04 Feb 2025 02:29:41 -0500
+ id 1tfDSE-0004lE-SC; Tue, 04 Feb 2025 02:34:44 -0500
 Received: from mail.ozlabs.org (mail.ozlabs.org [IPv6:2404:9400:2221:ea00::3])
- by gandalf.ozlabs.org (Postfix) with ESMTP id 4YnFNz2R2yz4wvb;
- Tue,  4 Feb 2025 18:29:23 +1100 (AEDT)
+ by gandalf.ozlabs.org (Postfix) with ESMTP id 4YnFVq6sXPz4wxm;
+ Tue,  4 Feb 2025 18:34:27 +1100 (AEDT)
 Received: from authenticated.ozlabs.org (localhost [127.0.0.1])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits))
  (Client did not present a certificate)
- by mail.ozlabs.org (Postfix) with ESMTPSA id 4YnFNv5P0Xz4wc2;
- Tue,  4 Feb 2025 18:29:19 +1100 (AEDT)
-Message-ID: <fcef18d9-ba0e-4883-878c-8e51f325cf55@kaod.org>
-Date: Tue, 4 Feb 2025 08:29:26 +0100
+ by mail.ozlabs.org (Postfix) with ESMTPSA id 4YnFVm2jmxz4wc2;
+ Tue,  4 Feb 2025 18:34:24 +1100 (AEDT)
+Message-ID: <fd8bd633-947b-4bb6-be64-eb3bce60babb@kaod.org>
+Date: Tue, 4 Feb 2025 08:34:31 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v1 11/18] hw/misc/aspeed_scu: Add Support for
- AST2700/AST2750 A1 Silicon Revisions
+Subject: Re: [PATCH v1 01/18] hw/intc/aspeed: Rename INTC to INTC0
 To: Jamin Lin <jamin_lin@aspeedtech.com>,
  Andrew Jeffery <andrew@codeconstruct.com.au>,
  Peter Maydell <peter.maydell@linaro.org>,
@@ -43,9 +42,10 @@ To: Jamin Lin <jamin_lin@aspeedtech.com>,
 Cc: Troy Lee <troy_lee@aspeedtech.com>,
  Yunlin Tang <yunlin.tang@aspeedtech.com>
 References: <20250121070424.2465942-1-jamin_lin@aspeedtech.com>
- <20250121070424.2465942-12-jamin_lin@aspeedtech.com>
- <64382a15c40b33fcfeeecee5489e0a034313b7ec.camel@codeconstruct.com.au>
- <SI2PR06MB504178B509BA4944D0C274AAFCF42@SI2PR06MB5041.apcprd06.prod.outlook.com>
+ <20250121070424.2465942-2-jamin_lin@aspeedtech.com>
+ <2d9247ab-34dd-4dde-a9c0-c04c2d8a1a18@kaod.org>
+ <d9575d2cec122e41e11d84667f4d7cc63848b3ce.camel@codeconstruct.com.au>
+ <SI2PR06MB504109C5631AD551E2542802FCF42@SI2PR06MB5041.apcprd06.prod.outlook.com>
 Content-Language: en-US, fr
 From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>
 Autocrypt: addr=clg@kaod.org; keydata=
@@ -90,7 +90,7 @@ Autocrypt: addr=clg@kaod.org; keydata=
  3GlqivBNkmYsHYSlFsbxc37E1HpTEaSWsGfAHQoPn9qrDJgsgcbBVc1gkUT6hnxShKPp4Pls
  ZVMNjvPAnr5TEBgHkk54HQRhhwcYv1T2QumQizDiU6iOrUzBThaMhZO3i927SG2DwWDVzZlt
  KrCMD1aMPvb3NU8FOYRhNmIFR3fcalYr+9gDuVKe8BVz4atMOoktmt0GWTOC8P4=
-In-Reply-To: <SI2PR06MB504178B509BA4944D0C274AAFCF42@SI2PR06MB5041.apcprd06.prod.outlook.com>
+In-Reply-To: <SI2PR06MB504109C5631AD551E2542802FCF42@SI2PR06MB5041.apcprd06.prod.outlook.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=2404:9400:2221:ea00::3;
@@ -116,43 +116,70 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hello Jamin,
-
->>> --- a/hw/misc/aspeed_scu.c
->>> +++ b/hw/misc/aspeed_scu.c
->>> @@ -559,6 +559,8 @@ static uint32_t aspeed_silicon_revs[] = {
->>>       AST2700_A0_SILICON_REV,
->>>       AST2720_A0_SILICON_REV,
->>>       AST2750_A0_SILICON_REV,
->>> +    AST2700_A1_SILICON_REV,
->>> +    AST2750_A1_SILICON_REV,
->>>   };
->>>
->>>   bool is_supported_silicon_rev(uint32_t silicon_rev) @@ -938,6 +940,7
->>> @@ static void aspeed_ast2700_scu_reset(DeviceState
->>> *dev)
->>>       AspeedSCUClass *asc = ASPEED_SCU_GET_CLASS(dev);
->>>
->>>       memcpy(s->regs, asc->resets, asc->nr_regs * 4);
->>> +    s->regs[AST2700_SILICON_REV] = s->silicon_rev;
->>
->> Has s->silicon_rev been set?
->>
->> Should we now remove the AST2700_SILICON_REV entry from asc->resets?
->>
-> The value of s->silicon_rev is set at the SoC layer.
-> If we remove this line, the system will display " UnKnow-SOC".
+On 2/4/25 07:50, Jamin Lin wrote:
+> Hi Cedric, Andrew
 > 
->> This seems like a fix regardless. Perhaps separate it from the addition of the
->> new silicon IDs?
+>> From: Andrew Jeffery <andrew@codeconstruct.com.au>
+>> Sent: Thursday, January 30, 2025 11:22 AM
+>> To: Cédric Le Goater <clg@kaod.org>; Jamin Lin <jamin_lin@aspeedtech.com>;
+>> Peter Maydell <peter.maydell@linaro.org>; Steven Lee
+>> <steven_lee@aspeedtech.com>; Troy Lee <leetroy@gmail.com>; Joel Stanley
+>> <joel@jms.id.au>; open list:ASPEED BMCs <qemu-arm@nongnu.org>; open
+>> list:All patches CC here <qemu-devel@nongnu.org>
+>> Cc: Troy Lee <troy_lee@aspeedtech.com>; Yunlin Tang
+>> <yunlin.tang@aspeedtech.com>
+>> Subject: Re: [PATCH v1 01/18] hw/intc/aspeed: Rename INTC to INTC0
 >>
-> Yes, I noticed that s->silicon_rev cannot be set at the SOC layer.
-> For example: I am unable to set silicon_rev for AST2700 A0 and A1 in hw/arm/aspeed_ast27x0.c.
-> I will split this into two separate patches.
-> One patch to fix silicon_rev and another patch for A1 silicon revision definition.
+>> On Wed, 2025-01-29 at 18:03 +0100, Cédric Le Goater wrote:
+>>> On 1/21/25 08:04, Jamin Lin wrote:
+>>>> The design of the INTC has significant changes in the AST2700 A1.
+>>>> In the
+>>>> AST2700 A0, there was one INTC controller, whereas in the AST2700
+>>>> A1, there were two INTC controllers: INTC0 (CPU DIE) and INTC1 (I/O
+>>>> DIE).
+>>>>
+>>>> The previous INTC model only supported the AST2700 A0 and was
+>>>> implemented for the INTC0 (CPU DIE). To support the future INTC1
+>>>> (I/O DIE) model, rename INTC to INTC0.
+>>>
+>>>
+>>> Why not introduce definitions with _INTC_IO_ and leave alone the
+>>> current instead ? Do we expect to have more than 2 INTC controllers ?
+>>>
+>>
+>> There was similar discussion on the devicetree bindings for the SCU a
+>> while back:
+>>
+>> https://lore.kernel.org/all/94efc2d4ff280a112b869124fc9d7e35ac031596.cam
+>> el@codeconstruct.com.au/
+>>
+>> Ryan didn't like deviating from their internal documentation :(
+>>
+>> Andrew
+> 
+> 
+> Thanks for your suggestion.
+> 
+> Last year, Troy and I implemented the SCU(CPU Die) and SCU_IO(IO Die) models to support the AST2700.
+> https://github.com/qemu/qemu/blob/master/hw/misc/aspeed_scu.c#L1073
+> https://github.com/qemu/qemu/blob/master/hw/misc/aspeed_scu.c#L1080
+> > I am fine with keeping the INTC(CPU Die) naming and creating a new INTC_IO(IO Die) model to support the AST2700 A1.
 
-Is the AST2700 SoC different from the other SoCs AST 2[456]00 ?
-If not please check the _scu_reset routines.
+Good. I think this will reduce the changes and clarify the models.
+  
+> I have a question regarding the INTC_IO model implementation:
+> Can I define separate "intc_io_class_init" and "intcio_class_realize" functions for INTC_IO, similar to the SCU/SCU_IO models?
+
+Looks OK to me.
+
+> If yes, I think the patch “2 Support different memory region ops” can be omitted.
+> Additionally, I suggest that both INTC and INTC_IO have their own MMIO callback functions, as their register addresses are different.
+
+Do you mean the register offset in the MMIO aperture ? We try
+to avoid duplication unless the code becomes too complex.
+
+Please send a v2, splitting your series in 3 as requested in
+the other email.
 
 Thanks,
 
