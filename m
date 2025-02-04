@@ -4,146 +4,106 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 44F5AC02194
-	for <qemu-devel@archiver.kernel.org>; Tue,  4 Feb 2025 10:02:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id AFE2DC02194
+	for <qemu-devel@archiver.kernel.org>; Tue,  4 Feb 2025 10:27:54 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tfFl6-0002VC-4q; Tue, 04 Feb 2025 05:02:20 -0500
+	id 1tfG8p-0006ux-9J; Tue, 04 Feb 2025 05:26:51 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <david@redhat.com>) id 1tfFkr-0002UF-4K
- for qemu-devel@nongnu.org; Tue, 04 Feb 2025 05:02:07 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <SRS0=Xvsd=U3=kaod.org=clg@ozlabs.org>)
+ id 1tfG8m-0006tz-Dz; Tue, 04 Feb 2025 05:26:48 -0500
+Received: from gandalf.ozlabs.org ([150.107.74.76] helo=mail.ozlabs.org)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <david@redhat.com>) id 1tfFko-0008DK-9s
- for qemu-devel@nongnu.org; Tue, 04 Feb 2025 05:02:03 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1738663321;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=Gufh9BgMW7zzImGAMMh/3KSW8DeCQPp3pwQV52D97ec=;
- b=cxPhyIukPCUzLAA6N5hQOLIR5Alj0GBsNS2y8T9dsq0ZH3JCR8UylT46ccnzkXRUwMHO1v
- /ih62UDZKtSjImI0GXyCfelEO852e07/fjfj4M56MWuqPiubg4krrZtFdb7su0/5XoV+Kg
- +vByhnbvURzAYAH3tXmbkLnVLu0HduU=
-Received: from mail-wm1-f69.google.com (mail-wm1-f69.google.com
- [209.85.128.69]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-637-0NLFGUdHPbKRbDnRsslXVw-1; Tue, 04 Feb 2025 05:01:58 -0500
-X-MC-Unique: 0NLFGUdHPbKRbDnRsslXVw-1
-X-Mimecast-MFC-AGG-ID: 0NLFGUdHPbKRbDnRsslXVw
-Received: by mail-wm1-f69.google.com with SMTP id
- 5b1f17b1804b1-43673af80a6so37885155e9.1
- for <qemu-devel@nongnu.org>; Tue, 04 Feb 2025 02:01:58 -0800 (PST)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1738663318; x=1739268118;
- h=content-transfer-encoding:in-reply-to:organization:autocrypt
- :content-language:from:references:cc:to:subject:user-agent
- :mime-version:date:message-id:x-gm-message-state:from:to:cc:subject
- :date:message-id:reply-to;
- bh=Gufh9BgMW7zzImGAMMh/3KSW8DeCQPp3pwQV52D97ec=;
- b=m90os58C8Dt0ARnOe7tqKfWYEkqpDlAWTPQdNPsOrTjU/BXcVoHLCCHY60YTX35aMb
- IGHnIkdZbKwbUPxjvXcTrVg4RhJ9aoDuRw1p2UtxHDJydgjGc6jhN+zURvU+BH658Mbd
- 8T6An7xjvpmUzmD5BPVmrwiRWuq0vTTmy6rbmb76qUZxGUaUQLUl98WCfMkM/rcYKuxR
- Ur1nsCPGwdVVrp3L5P6gGjTOA53MpQhLHW5PKnX5eIU2T802gBFeRHudki1iY4VhjWWi
- mW1vEBfBmAkpuwFmjQoNNngC+fWc3mSpkv1ay4KpqoykUm+OFDLD0HQIg9Lf3rc3YMYp
- wSWg==
-X-Forwarded-Encrypted: i=1;
- AJvYcCXXRoP7bL0JWxB13hAccZrhswiMu5KYGGT88xTyPsUPPfgAHGUqyQPgu1sexlgIz7j9m5PQHC+SXERt@nongnu.org
-X-Gm-Message-State: AOJu0Ywkc0palEabEbx7EZpNqQkvrYIhKoIYWsp/aKAduo2n0PNLhd1x
- /pZy+pWdWrKCazaeqchMmJp0sTxpzz9HCrNxzziVJMf8XIua0XKvuKEB1xR9MY2pn3fTdbf3rjJ
- cylPjfFMWm9z5Oeyol+lZ1DH48J3UZU2Ef/Q/fg3Fp8ZdopzQCdAM
-X-Gm-Gg: ASbGnctA8nbvR1CZ4U+OEg7Onuir4nokjfU2z73E6PYxCiDsqYR4Ln275q168RhaZ+T
- k7lc5Xxh0FVu9pFZHvcKKmZTWFMM45oVpeoUwlY6Qes1xZEHUH+IYvpgMshSkQqOyYdVoIy0ieC
- BshWnqL/CN6sy9l0cZ5/NAzioEIocK7dLJnSox/07W1liyhxrMhgYaxlq9GTJfHOcYavN5+VEt8
- ByhhqqSb+CzqKVrKtUjrGIfyVUc/YwnTzU/zu5RmI3s9k8KFPntQtOZTIX1/aIYIO7kYwoDDTs5
- uxuvatakEfQn88JNRfZT2QDTnwviEvw0yDfL/H5fBxLRGjqBLRPZtl23HCWBCnaso4wtihHAXwy
- CDZFbxp6anm8Sv/EGChEaN1i4JP8=
-X-Received: by 2002:a05:600c:4f55:b0:434:a746:9c82 with SMTP id
- 5b1f17b1804b1-438dc3aa6c4mr242310885e9.5.1738663317719; 
- Tue, 04 Feb 2025 02:01:57 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IG0qmWN8ZZSM7ZDRgOYeag/ADHFJYXgjua1gN1m7OpPujUqnmAQys8+h7pkV0jYuTBJIt6VHA==
-X-Received: by 2002:a05:600c:4f55:b0:434:a746:9c82 with SMTP id
- 5b1f17b1804b1-438dc3aa6c4mr242310655e9.5.1738663317357; 
- Tue, 04 Feb 2025 02:01:57 -0800 (PST)
-Received: from ?IPV6:2003:cb:c70a:300:3ae1:c3c0:cef:8413?
- (p200300cbc70a03003ae1c3c00cef8413.dip0.t-ipconnect.de.
- [2003:cb:c70a:300:3ae1:c3c0:cef:8413])
- by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-438e23de772sm182796375e9.13.2025.02.04.02.01.55
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 04 Feb 2025 02:01:56 -0800 (PST)
-Message-ID: <03289d6a-97b6-40da-bd64-9a7175957e1c@redhat.com>
-Date: Tue, 4 Feb 2025 11:01:54 +0100
+ (Exim 4.90_1) (envelope-from <SRS0=Xvsd=U3=kaod.org=clg@ozlabs.org>)
+ id 1tfG8j-0007xl-MW; Tue, 04 Feb 2025 05:26:48 -0500
+Received: from mail.ozlabs.org (mail.ozlabs.org [IPv6:2404:9400:2221:ea00::3])
+ by gandalf.ozlabs.org (Postfix) with ESMTP id 4YnKKH3WSwz4wy9;
+ Tue,  4 Feb 2025 21:26:27 +1100 (AEDT)
+Received: from authenticated.ozlabs.org (localhost [127.0.0.1])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (Client did not present a certificate)
+ by mail.ozlabs.org (Postfix) with ESMTPSA id 4YnKK91v7wz4wc2;
+ Tue,  4 Feb 2025 21:26:20 +1100 (AEDT)
+Message-ID: <e50b062a-2c93-483a-94d9-0b9fa152b09d@kaod.org>
+Date: Tue, 4 Feb 2025 11:26:27 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2] hw/virtio: reset virtio balloon stats on machine reset
-To: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
- qemu-devel@nongnu.org
-Cc: "Michael S. Tsirkin" <mst@redhat.com>
-References: <20250204094202.2183262-1-berrange@redhat.com>
-From: David Hildenbrand <david@redhat.com>
-Content-Language: en-US
-Autocrypt: addr=david@redhat.com; keydata=
- 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
- WNyWQQ==
-Organization: Red Hat
-In-Reply-To: <20250204094202.2183262-1-berrange@redhat.com>
+Subject: Re: [PATCH v1 01/18] hw/intc/aspeed: Rename INTC to INTC0
+To: Jamin Lin <jamin_lin@aspeedtech.com>,
+ Andrew Jeffery <andrew@codeconstruct.com.au>,
+ Peter Maydell <peter.maydell@linaro.org>,
+ Steven Lee <steven_lee@aspeedtech.com>, Troy Lee <leetroy@gmail.com>,
+ Joel Stanley <joel@jms.id.au>, "open list:ASPEED BMCs"
+ <qemu-arm@nongnu.org>, "open list:All patches CC here"
+ <qemu-devel@nongnu.org>
+Cc: Troy Lee <troy_lee@aspeedtech.com>,
+ Yunlin Tang <yunlin.tang@aspeedtech.com>
+References: <20250121070424.2465942-1-jamin_lin@aspeedtech.com>
+ <20250121070424.2465942-2-jamin_lin@aspeedtech.com>
+ <2d9247ab-34dd-4dde-a9c0-c04c2d8a1a18@kaod.org>
+ <d9575d2cec122e41e11d84667f4d7cc63848b3ce.camel@codeconstruct.com.au>
+ <SI2PR06MB504109C5631AD551E2542802FCF42@SI2PR06MB5041.apcprd06.prod.outlook.com>
+ <fd8bd633-947b-4bb6-be64-eb3bce60babb@kaod.org>
+ <SI2PR06MB5041FC0F7F84B3D9031D0111FCF42@SI2PR06MB5041.apcprd06.prod.outlook.com>
+Content-Language: en-US, fr
+From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>
+Autocrypt: addr=clg@kaod.org; keydata=
+ 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
+In-Reply-To: <SI2PR06MB5041FC0F7F84B3D9031D0111FCF42@SI2PR06MB5041.apcprd06.prod.outlook.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=david@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+Received-SPF: pass client-ip=150.107.74.76;
+ envelope-from=SRS0=Xvsd=U3=kaod.org=clg@ozlabs.org; helo=mail.ozlabs.org
+X-Spam_score_int: -40
+X-Spam_score: -4.1
+X-Spam_bar: ----
+X-Spam_report: (-4.1 / 5.0 requ) BAYES_00=-1.9,
+ HEADER_FROM_DIFFERENT_DOMAINS=0.068, RCVD_IN_DNSWL_MED=-2.3,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -159,51 +119,191 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 04.02.25 10:42, Daniel P. Berrangé wrote:
-> When a machine is first booted, all virtio balloon stats are initialized
-> to their default value -1 (18446744073709551615 when represented as
-> unsigned).
+On 2/4/25 09:22, Jamin Lin wrote:
+> Hi Cedric,
 > 
-> They remain that way while the firmware is loading, and early phase of
-> guest OS boot, until the virtio-balloon driver is activated. Thereafter
-> the reported stats reflect the guest OS activity.
+>> From: Cédric Le Goater <clg@kaod.org>
+>> Sent: Tuesday, February 4, 2025 3:35 PM
+>> To: Jamin Lin <jamin_lin@aspeedtech.com>; Andrew Jeffery
+>> <andrew@codeconstruct.com.au>; Peter Maydell <peter.maydell@linaro.org>;
+>> Steven Lee <steven_lee@aspeedtech.com>; Troy Lee <leetroy@gmail.com>;
+>> Joel Stanley <joel@jms.id.au>; open list:ASPEED BMCs
+>> <qemu-arm@nongnu.org>; open list:All patches CC here
+>> <qemu-devel@nongnu.org>
+>> Cc: Troy Lee <troy_lee@aspeedtech.com>; Yunlin Tang
+>> <yunlin.tang@aspeedtech.com>
+>> Subject: Re: [PATCH v1 01/18] hw/intc/aspeed: Rename INTC to INTC0
+>>
+>> On 2/4/25 07:50, Jamin Lin wrote:
+>>> Hi Cedric, Andrew
+>>>
+>>>> From: Andrew Jeffery <andrew@codeconstruct.com.au>
+>>>> Sent: Thursday, January 30, 2025 11:22 AM
+>>>> To: Cédric Le Goater <clg@kaod.org>; Jamin Lin
+>>>> <jamin_lin@aspeedtech.com>; Peter Maydell <peter.maydell@linaro.org>;
+>>>> Steven Lee <steven_lee@aspeedtech.com>; Troy Lee
+>> <leetroy@gmail.com>;
+>>>> Joel Stanley <joel@jms.id.au>; open list:ASPEED BMCs
+>>>> <qemu-arm@nongnu.org>; open list:All patches CC here
+>>>> <qemu-devel@nongnu.org>
+>>>> Cc: Troy Lee <troy_lee@aspeedtech.com>; Yunlin Tang
+>>>> <yunlin.tang@aspeedtech.com>
+>>>> Subject: Re: [PATCH v1 01/18] hw/intc/aspeed: Rename INTC to INTC0
+>>>>
+>>>> On Wed, 2025-01-29 at 18:03 +0100, Cédric Le Goater wrote:
+>>>>> On 1/21/25 08:04, Jamin Lin wrote:
+>>>>>> The design of the INTC has significant changes in the AST2700 A1.
+>>>>>> In the
+>>>>>> AST2700 A0, there was one INTC controller, whereas in the AST2700
+>>>>>> A1, there were two INTC controllers: INTC0 (CPU DIE) and INTC1 (I/O
+>>>>>> DIE).
+>>>>>>
+>>>>>> The previous INTC model only supported the AST2700 A0 and was
+>>>>>> implemented for the INTC0 (CPU DIE). To support the future INTC1
+>>>>>> (I/O DIE) model, rename INTC to INTC0.
+>>>>>
+>>>>>
+>>>>> Why not introduce definitions with _INTC_IO_ and leave alone the
+>>>>> current instead ? Do we expect to have more than 2 INTC controllers ?
+>>>>>
+>>>>
+>>>> There was similar discussion on the devicetree bindings for the SCU a
+>>>> while back:
+>>>>
+>>>> https://lore.kernel.org/all/94efc2d4ff280a112b869124fc9d7e35ac031596.
+>>>> cam
+>>>> el@codeconstruct.com.au/
+>>>>
+>>>> Ryan didn't like deviating from their internal documentation :(
+>>>>
+>>>> Andrew
+>>>
+>>>
+>>> Thanks for your suggestion.
+>>>
+>>> Last year, Troy and I implemented the SCU(CPU Die) and SCU_IO(IO Die)
+>> models to support the AST2700.
+>>> https://github.com/qemu/qemu/blob/master/hw/misc/aspeed_scu.c#L1073
+>>> https://github.com/qemu/qemu/blob/master/hw/misc/aspeed_scu.c#L1080
+>>>> I am fine with keeping the INTC(CPU Die) naming and creating a new
+>> INTC_IO(IO Die) model to support the AST2700 A1.
+>>
+>> Good. I think this will reduce the changes and clarify the models.
+>>
+>>> I have a question regarding the INTC_IO model implementation:
+>>> Can I define separate "intc_io_class_init" and "intcio_class_realize" functions
+>> for INTC_IO, similar to the SCU/SCU_IO models?
+>>
+>> Looks OK to me.
+>>
+>>> If yes, I think the patch “2 Support different memory region ops” can be
+>> omitted.
+>>> Additionally, I suggest that both INTC and INTC_IO have their own MMIO
+>> callback functions, as their register addresses are different.
+>>
+>> Do you mean the register offset in the MMIO aperture ? We try to avoid
+>> duplication unless the code becomes too complex.
 > 
-> When a machine reset is performed, however, the virtio-balloon stats are
-> left unchanged by QEMU, despite the guest OS no longer updating them,
-> nor indeed even still existing.
 > 
-> IOW, the mgmt app keeps getting stale stats until the guest OS starts
-> once more and loads the virtio-balloon driver (if ever). At that point
-> the app will see a discontinuity in the reported values as they sudden
-> jump from the stale value to the new value. This jump is indigituishable
-> from a valid data update.
+> I means both INTC_IO and INTC_CPU use the same offset but different register definitions.
 > 
-> While there is an "last-updated" field to report on the freshness of
-> the stats, that does not unambiguously tell the mgmt app whether the
-> stats are still conceptually relevant to the current running workload.
+> INTC0:
+> INTC0_10
+> INTC0_14
 > 
-> It is more conceptually useful to reset the stats to their default
-> values on machine reset, given that the previous guest workload the
-> stats reflect no longer exists. The mgmt app can now clearly identify
-> that there are is no stats information available from the current
-> executing workload.
-> 
-> The 'last-updated' time is also reset back to 0.
-> 
-> IOW, on every machine reset, the virtio stats are in the same clean
-> state they were when the macine first powered on.
-> 
-> A functional test is added to validate this behaviour with a real
-> world guest OS.
-> 
-> Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
-> ---
+> INTC1:
+> INTC1_10
+> INTC1_14
 
-Acked-by: David Hildenbrand <david@redhat.com>
+can you define them as
 
--- 
-Cheers,
+INTC_xxx
 
-David / dhildenb
+to avoid all the duplication below ?
+
+
+Thanks,
+
+C.
+
+
+
+> I will implement as following
+> 
+> static void aspeed_intc_register_types(void)
+> {
+>      type_register_static(&aspeed_intc_info);
+>      type_register_static(&aspeed_2700_intc_info);
+>      type_register_static(&aspeed_intcio_info);
+>      type_register_static(&aspeed_2700_intcio_info);
+> }
+> 
+> static void aspeed_2700_intcio_class_init(ObjectClass *klass, void *data)
+> {
+>      DeviceClass *dc = DEVICE_CLASS(klass);
+>      AspeedINTCClass *aic = ASPEED_INTC_CLASS(klass);
+> 
+>      dc->desc = "ASPEED 2700 INTC IO Controller";
+> }
+> 
+> static const TypeInfo aspeed_2700_intcio_info = {
+>      .name = TYPE_ASPEED_2700_INTCIO,
+>      .parent = TYPE_ASPEED_INTCIO,
+>      .class_init = aspeed_2700_intcio_class_init,
+> };
+> 
+> static void aspeed_intcio_class_init(ObjectClass *klass, void *data)
+> {
+>      DeviceClass *dc = DEVICE_CLASS(klass);
+> 
+>      dc->desc = "ASPEED INTC IO Controller";
+>      dc->realize = aspeed_intcio_realize;
+>      device_class_set_legacy_reset(dc, aspeed_intcio_reset);
+>      dc->vmsd = NULL;
+> }
+> 
+> static const TypeInfo aspeed_intcio_info = {
+>      .name = TYPE_ASPEED_INTCIO,
+>      .parent = TYPE_SYS_BUS_DEVICE,
+>      .instance_init = aspeed_intcio_instance_init,
+>      .instance_size = sizeof(AspeedINTCIOState),
+>      .class_init = aspeed_intcio_class_init,
+>      .class_size = sizeof(AspeedINTCIOClass),
+>      .abstract = true,
+> };
+> 
+> static void aspeed_intcio_realize(DeviceState *dev, Error **errp)
+> {
+>   memory_region_init_io(&s->iomem, OBJECT(s), &aspeed_intcio_ops, s,
+>                            TYPE_ASPEED_INTCIO ".regs", ASPEED_INTC_NR_REGS << 2);
+> }
+> static void aspeed_intcio_reset(DeviceState *dev)
+> {
+> }
+> static void aspeed_intcio_instance_init(Object *obj)
+> {
+> }
+> 
+> I want to create aspeed_intcio_read and aspeed_intcio_write call back functions.
+> 
+> static const MemoryRegionOps aspeed_intcio_ops = {
+>      .read = aspeed_intcio_read,
+>      .write = aspeed_intcio_write,
+>      .endianness = DEVICE_LITTLE_ENDIAN,
+>      .valid = {
+>          .min_access_size = 4,
+>          .max_access_size = 4,
+>      }
+> };
+> 
+> Thanks-Jamin
+>>
+>> Please send a v2, splitting your series in 3 as requested in the other email.
+>>
+> Will resend
+>> Thanks,
+>>
+>> C.
+> 
 
 
