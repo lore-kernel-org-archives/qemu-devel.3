@@ -4,77 +4,77 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 82838C02194
-	for <qemu-devel@archiver.kernel.org>; Tue,  4 Feb 2025 16:16:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2BC7DC02194
+	for <qemu-devel@archiver.kernel.org>; Tue,  4 Feb 2025 16:19:46 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tfLbF-0006iT-3l; Tue, 04 Feb 2025 11:16:33 -0500
+	id 1tfLeB-0000ZJ-Av; Tue, 04 Feb 2025 11:19:35 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1tfLb5-0006ZW-VM
- for qemu-devel@nongnu.org; Tue, 04 Feb 2025 11:16:24 -0500
-Received: from mail-yb1-xb35.google.com ([2607:f8b0:4864:20::b35])
+ id 1tfLe7-0000YW-9Q
+ for qemu-devel@nongnu.org; Tue, 04 Feb 2025 11:19:32 -0500
+Received: from mail-yw1-x112b.google.com ([2607:f8b0:4864:20::112b])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1tfLb3-0007g6-VK
- for qemu-devel@nongnu.org; Tue, 04 Feb 2025 11:16:23 -0500
-Received: by mail-yb1-xb35.google.com with SMTP id
- 3f1490d57ef6-e46ac799015so5364483276.0
- for <qemu-devel@nongnu.org>; Tue, 04 Feb 2025 08:16:21 -0800 (PST)
+ id 1tfLe4-00012G-J6
+ for qemu-devel@nongnu.org; Tue, 04 Feb 2025 11:19:31 -0500
+Received: by mail-yw1-x112b.google.com with SMTP id
+ 00721157ae682-6f6ae4846c7so36269107b3.1
+ for <qemu-devel@nongnu.org>; Tue, 04 Feb 2025 08:19:28 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1738685780; x=1739290580; darn=nongnu.org;
+ d=linaro.org; s=google; t=1738685967; x=1739290767; darn=nongnu.org;
  h=cc:to:subject:message-id:date:from:in-reply-to:references
  :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=cN5v5WX4Jvg+QKU02xZK5mgsO2zG9IePeE/6vqvKS7M=;
- b=JaMew2qRauw2GeINZ4QYghpxiyk/ndVpNQZ0xssOoCcWMtY+R1FuBMG92VMJVkPdEn
- pvhx1q5yA7nsESMia4cCYwMIyKzM0F5uy83OfZy3uDSbTcDdga3FTx74SU0H09w8lz5Y
- /l7X+u3XHeUH+PE76i5Zua5vnJHQtbd0Xub38Vzn5/UcYfdZSHjVoVSlr6p13FW0Uik1
- CZyhej751odirMeFunpSZm3IYT2xHb43lbKJdeg6rXqDfRtQn6AThxQmresAL8Z9aUvR
- acVpKK2GLqsLoja4+xgamUtl7qUwGp2UXBtNbovHeDYr+xzyTHrfRi0Q4uy47D2q5URo
- X50w==
+ bh=8MW5tuW2gKGotYFpUS5F9VTI/Y9qqqDQDzPWrbVRau8=;
+ b=e2cloNvYqp2XfZJm16Psc6iPSYe3t4lD+D8aSZTNcqmnredNADwoahnza+tFcyVHO4
+ M/T6W5lCTkuo550coLSwDVQozhFM0fQyRWA9svgAzChg/zbepM5IE0ZUkD1U772U2RBk
+ ouxdSaBA4fiaZTBD4n9l0rcb5FOUNFXU+6KVKsWnrpIE8PgyRdoWq9qmhA//vDunlzl9
+ nLnL2teLoc64x+xycjaZ+5o/Ywegz48mOLi3E8kgJSZC+zG4ZG75rU7QA2Ldkq08RxfH
+ L6s91/b5mJNufvSYAiHsAwqrOhzS1R9eJURhS6mxhEslscLHkP5bUq2QvNkwKt7adC7c
+ mfwA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1738685780; x=1739290580;
+ d=1e100.net; s=20230601; t=1738685967; x=1739290767;
  h=cc:to:subject:message-id:date:from:in-reply-to:references
  :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=cN5v5WX4Jvg+QKU02xZK5mgsO2zG9IePeE/6vqvKS7M=;
- b=P0wzzJBmGePZ/qryuqE9Wu5BVR9tpkZtEFR046DBChIHFZ8D6k11YMDHKyMPSPJb11
- Dn1HT534FiZzW9a6geAq0a/dU+Pacld0Y7RRkP8QGpo1Z22rEWFwxHQaFs+lxoF49utn
- dhs6Z+YayAVo/BGMdvGKcNTsS97VcVdRP/KD2rigj+Yv1uR0wnmQaPDL/+cvwAIdS64D
- Qlc54c55UP+5Bu9vPAfvyt0/bMulOnf+2InrKh+AvE0Fd/hs9rTshDtEb7E4Shc4DrG4
- C3sefIRCMhJlKdNrSiMpjfBO2rA31lVELRWEkArep3uOYTFSyiShwkF/uCzOtWv1WHZz
- FfKw==
+ bh=8MW5tuW2gKGotYFpUS5F9VTI/Y9qqqDQDzPWrbVRau8=;
+ b=my4W8pFPdw1Gs45/0JtlYrZlrXoVWK7spyow9SQ6J7jOVfVrjfU99bD5ZnFMIWi4Ml
+ 3Q6FZUrdotb4rcmusUJl1Y778w2p27sKGHm9oeidD7IFjGpLsnKUnaV428hqIcZuDMNU
+ v3x2Bei9RGWI46Mu45ZtOeXV1TBJ8gL33e4TRKj6vFEL/GRkhO89CzW6E0GRbjaiDp25
+ J8EKRub0pFbu1Sq99wp0ZZuAnrhl/DJXLYqLrrSX0cen0nFz9sa/7WBo/BihHeE0u/dX
+ /cyrinAEThRhnoVxLEZrOHl5SAqD8E/pdefYYBCVv1f6ZrjCtHH3lOla5WvhOhbzq0E2
+ +6nw==
 X-Forwarded-Encrypted: i=1;
- AJvYcCX64k+dy81ecHQZuhtcg3svdEXK1TZCFB2/VefoHPRJ0SL/PfmiAAB3hu+umYE9zAS1Vh5/+VzKB9XZ@nongnu.org
-X-Gm-Message-State: AOJu0YwJ5BxFF5NbA5i19Wwr99Ln7rTULtH1h88kkRWwaGpVwtLBWJnG
- +9X+7jSfseNcwabxzB0C0SK/H7o02acJqzwhVOdE9gqY8e7TRFZO/hSOOmncwDwu9QijEDBY3wd
- G1V8FSXimeL/AgI0exdZhTmDkRrXFt2s8JqZNrg==
-X-Gm-Gg: ASbGncvL2WeKUMzq+CR0BfP79WDC8ST9vKqLoEkRBiHR4rbr5TU85dIoGBL3yc74eep
- 65BAALQ5Y/OfJUnF2z9p1XqOkApn6QNaFo1074dLi0qper/mtq9QMChC/hfizNg6xLQJx06pGIA
+ AJvYcCXWKXTuxrWZLiAmh6mMbWUkovgW+vMq51LkMMC0yKCaCM9obwHBs3DdSmML/b8SRvGvCZg+qifLWEnE@nongnu.org
+X-Gm-Message-State: AOJu0YxiiOPE0MhapiVf7TSxdwDbZ+iL8bn41RISIcsXbW4/z2r/cVq+
+ YXcfyowpXqT0+oO+5JE7eBiQZICTjsCZvgmH98zti1jihtkGPn8Zn7bb+ChgpM38j2cnLdmjx93
+ 6LIkIoGaJ9xpdbBBsUmlq0V0WKAoYOpMAO4GS1w==
+X-Gm-Gg: ASbGncvjODPPIccH4q2si9HPBGJtJfiLSCdV9M6J1dnroc2EIjeFcbxt2v9j+V56Nhl
+ qdQRCUCEqTNCUtFQrDnvYD40c0TmVsUcmypvy3g/5UgAB/C18zqSX0+Kp0PZENFVKzFVs00SRtA
  ==
-X-Google-Smtp-Source: AGHT+IHyRA3uq3x7aCAAYP7L/06eXDB/ObRucobfOuKwIajZTgOYNYvrExmr8+JC4D4M/mvrOn8lCCUnlc4r9W0j1II=
-X-Received: by 2002:a05:6902:118d:b0:e30:ebdf:9643 with SMTP id
- 3f1490d57ef6-e58a4a9a3ecmr20690911276.8.1738685780466; Tue, 04 Feb 2025
- 08:16:20 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IGjN34GP+lTReTclDofjMTkXRkl8KjIhx7anA8mG99dgY86aarWLoJ1Wx2iIRtrC8JDube/3PV7gqFC7slx5yo=
+X-Received: by 2002:a05:6902:1703:b0:e5b:1746:7fa2 with SMTP id
+ 3f1490d57ef6-e5b174681f3mr2265570276.47.1738685967167; Tue, 04 Feb 2025
+ 08:19:27 -0800 (PST)
 MIME-Version: 1.0
 References: <20241226082800.2887689-1-wuhaotsh@google.com>
- <20241226082800.2887689-2-wuhaotsh@google.com>
-In-Reply-To: <20241226082800.2887689-2-wuhaotsh@google.com>
+ <20241226082800.2887689-16-wuhaotsh@google.com>
+In-Reply-To: <20241226082800.2887689-16-wuhaotsh@google.com>
 From: Peter Maydell <peter.maydell@linaro.org>
-Date: Tue, 4 Feb 2025 16:16:08 +0000
-X-Gm-Features: AWEUYZluLquo9Dd8GO82kC-rfniy6KI9xmm5PPwFTxxCAO4yfjSDlj6XtvJirJo
-Message-ID: <CAFEAcA_LO0N2vkyx30gLKY9EyVzsA7xZ+Z2oJrvgJ8_XHVw_eQ@mail.gmail.com>
-Subject: Re: [PATCH v2 01/17] docs/system/arm: Add Description for NPCM8XX SoC
+Date: Tue, 4 Feb 2025 16:19:15 +0000
+X-Gm-Features: AWEUYZm-5RmDaqWTDbReZw7uVeALP41h8Gx2Boup1-geX_D0aipJU6zT34pfxio
+Message-ID: <CAFEAcA-dRMcUL2oHygJOnGZvzT4yWPUgBDYhkfPOgexB9w7_Tg@mail.gmail.com>
+Subject: Re: [PATCH v2 15/17] hw/net: Add NPCM8XX PCS Module
 To: Hao Wu <wuhaotsh@google.com>
 Cc: qemu-arm@nongnu.org, qemu-devel@nongnu.org, Avi.Fishman@nuvoton.com, 
  kfting@nuvoton.com, titusr@google.com, hskinnemoen@google.com, 
  venture@google.com, pbonzini@redhat.com, jasowang@redhat.com, 
  alistair@alistair23.me
 Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::b35;
- envelope-from=peter.maydell@linaro.org; helo=mail-yb1-xb35.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::112b;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yw1-x112b.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -99,82 +99,28 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On Thu, 26 Dec 2024 at 08:28, Hao Wu <wuhaotsh@google.com> wrote:
 >
-> NPCM8XX SoC is the successor of the NPCM7XX. It features quad-core
-> Cortex-A35 (Armv8, 64-bit) CPUs and some additional peripherals.
-
-This should go at the end of the series, once you've added
-the new machine types it documents.
-
+> The PCS exists in NPCM8XX's GMAC1 and is used to control the SGMII
+> PHY. This implementation contains all the default registers and
+> the soft reset feature that are required to load the Linux kernel
+> driver. Further features have not been implemented yet.
+>
 > Signed-off-by: Hao Wu <wuhaotsh@google.com>
 > ---
->  docs/system/arm/nuvoton.rst | 20 +++++++++++++++-----
->  1 file changed, 15 insertions(+), 5 deletions(-)
+>  hw/net/meson.build        |   1 +
+>  hw/net/npcm_pcs.c         | 410 ++++++++++++++++++++++++++++++++++++++
+>  hw/net/trace-events       |   4 +-
+>  include/hw/net/npcm_pcs.h |  42 ++++
+>  4 files changed, 455 insertions(+), 2 deletions(-)
+>  create mode 100644 hw/net/npcm_pcs.c
+>  create mode 100644 include/hw/net/npcm_pcs.h
 >
-> diff --git a/docs/system/arm/nuvoton.rst b/docs/system/arm/nuvoton.rst
-> index 05059378e5..0a1916fb99 100644
-> --- a/docs/system/arm/nuvoton.rst
-> +++ b/docs/system/arm/nuvoton.rst
-> @@ -1,12 +1,13 @@
->  Nuvoton iBMC boards (``kudo-bmc``, ``mori-bmc``, ``npcm750-evb``, ``quanta-gbs-bmc``, ``quanta-gsj``)
->  =====================================================================================================
 
-You should add the names of the new boards in the title.
+Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
 
-> -The `Nuvoton iBMC`_ chips (NPCM7xx) are a family of ARM-based SoCs that are
-> +The `Nuvoton iBMC`_ chips are a family of ARM-based SoCs that are
->  designed to be used as Baseboard Management Controllers (BMCs) in various
-> -servers. They all feature one or two ARM Cortex-A9 CPU cores, as well as an
-> -assortment of peripherals targeted for either Enterprise or Data Center /
-> -Hyperscale applications. The former is a superset of the latter, so NPCM750 has
-> -all the peripherals of NPCM730 and more.
-> +servers. Currently there are two families: NPCM7XX series and
-> +NPCM8XX series. NPCM7XX series feature one or two ARM Cortex-A9 CPU cores,
-> +while NPCM8XX feature 4 ARM Cortex-A35 CPU cores. Both series contain a
-> +different assortment of peripherals targeted for either Enterprise or Data
-> +Center / Hyperscale applications.
+for basic structure, but it would be good if somebody
+who knows the hardware reviewed it for whether it's
+actually implementing the right thing.
 
-The correct capitalization for "Arm" is "Arm".
-
->
->  .. _Nuvoton iBMC: https://www.nuvoton.com/products/cloud-computing/ibmc/
->
-> @@ -27,6 +28,8 @@ There are also two more SoCs, NPCM710 and NPCM705, which are single-core
->  variants of NPCM750 and NPCM730, respectively. These are currently not
->  supported by QEMU.
->
-> +The NPCM8xx SoC is the successor of the NPCM7xx SoC.
-
-There should be a bullet-point list below here which
-lists the new machine types.
-
-> +
->  Supported devices
->  -----------------
->
-> @@ -62,6 +65,8 @@ Missing devices
->     * System Wake-up Control (SWC)
->     * Shared memory (SHM)
->     * eSPI slave interface
-> +   * Block-tranfer interface (8XX only)
-
-Typo: "transfer"
-
-> +   * Virtual UART (8XX only)
->
->   * Ethernet controller (GMAC)
->   * USB device (USBD)
-> @@ -76,6 +81,11 @@ Missing devices
->   * Video capture
->   * Encoding compression engine
->   * Security features
-> + * I3C buses (8XX only)
-> + * Temperator sensor interface (8XX only)
-
-Typo: "Temperature"
-
-> + * Virtual UART (8XX only)
-> + * Flash monitor (8XX only)
-> + * JTAG master (8XX only)
 
 thanks
 -- PMM
