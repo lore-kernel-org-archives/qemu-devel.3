@@ -4,91 +4,142 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 650AEC02197
-	for <qemu-devel@archiver.kernel.org>; Tue,  4 Feb 2025 09:24:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7378CC0218F
+	for <qemu-devel@archiver.kernel.org>; Tue,  4 Feb 2025 09:24:32 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tfF7d-0004nH-UT; Tue, 04 Feb 2025 04:21:33 -0500
+	id 1tfF94-0000sF-OS; Tue, 04 Feb 2025 04:23:03 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <shentey@gmail.com>)
- id 1tfF7c-0004ml-M8; Tue, 04 Feb 2025 04:21:32 -0500
-Received: from mail-wm1-x32c.google.com ([2a00:1450:4864:20::32c])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <shentey@gmail.com>)
- id 1tfF7a-00053l-Sg; Tue, 04 Feb 2025 04:21:32 -0500
-Received: by mail-wm1-x32c.google.com with SMTP id
- 5b1f17b1804b1-43635796b48so32681335e9.0; 
- Tue, 04 Feb 2025 01:21:30 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1738660888; x=1739265688; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=tANkBi6sQeQ6AT/ajHf/OcJmWhoX7n1olSXdynh3fXk=;
- b=LBf5Ex4MUiEeiB1RX0DnCA8sDBtWY3m27X/IJyW3WCwVDaloSLF9DAaDTnn/OPHwuK
- HuOPpCFhZQyEXmapWKh3B9/492y43bBExqij5RLGkiQv9i/A8/Zeo3G4+8x4W2rePgGF
- IVwLLuUkCXIr+9qe00w7T0iUVpXR0gHVxbmNbtZn9gNL5eIr4xHFxySJKWHxCNog7ZH2
- QlunYHiZJjwjsU4j++/KAJXmAJSA9MTt66vvSycQLPUK0OdLbQenAdITQtRy4UAdlsv1
- XAmWNSstaI6tfUbSwj2ui7P3W5N/7FirWSVJZYZZEHgN0U6jKZ7vogHOwf3QWRCYonym
- UIJA==
+ (Exim 4.90_1) (envelope-from <david@redhat.com>) id 1tfF8z-0000Ur-L6
+ for qemu-devel@nongnu.org; Tue, 04 Feb 2025 04:22:57 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <david@redhat.com>) id 1tfF8x-0005DD-Az
+ for qemu-devel@nongnu.org; Tue, 04 Feb 2025 04:22:57 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1738660973;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+ bh=b/Ku1EYx+KuWQQKuJvy69ICVE/NhQK7jM86K8vQXSHU=;
+ b=iP9H/uxqb2zFq60hAG5QLnGXz5VrFtvd/G1QrfCiGXmJRqEE405S9cqU9sFXj6RS5pK60i
+ xa/1r/b/+UFvWcRiKZCGE6PfMNEzj7sUBAaGkxE9fL0X8B15Xvu9H9wwN+w18Jf3QrfTMm
+ SfQcECwGHLhJeZfOctlMQOvmJHJejrg=
+Received: from mail-wr1-f70.google.com (mail-wr1-f70.google.com
+ [209.85.221.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-185-PE622HBbPJuMHkdAYDu-fQ-1; Tue, 04 Feb 2025 04:22:52 -0500
+X-MC-Unique: PE622HBbPJuMHkdAYDu-fQ-1
+X-Mimecast-MFC-AGG-ID: PE622HBbPJuMHkdAYDu-fQ
+Received: by mail-wr1-f70.google.com with SMTP id
+ ffacd0b85a97d-3862e986d17so2136095f8f.3
+ for <qemu-devel@nongnu.org>; Tue, 04 Feb 2025 01:22:52 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1738660888; x=1739265688;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=tANkBi6sQeQ6AT/ajHf/OcJmWhoX7n1olSXdynh3fXk=;
- b=GQxoguvFydfnoYO1LapDWYNIW6UagkyiQSFK1YFkwY3UyFsM6j/M8DF8aehGF9Unsh
- kk5hMfUckTxepx/WO1jgyAV4W57Jbf+rOGBOnvi0VnkjbIK2HSBsTBjx8IBE41ybd8qQ
- 5KISLzyPOTG+sj4Oph3jm6QGNKGPDq+1qoLL8quRRxIBl4bqUg32rYYsvYI3m1Zp9EMQ
- jqm1aOT76IRUJ/IDRP9icfgFdcrfLYZJXmgJa54NcEMHyzPBY/HtPk6Db8/u6ukgmJB7
- MzqNXt9XGfZbQ+u8FBymjPLShWea1TJvAC5aQcX089BcGwKuO1jN9mCIPyXtNooKtcU0
- xQCw==
-X-Forwarded-Encrypted: i=1;
- AJvYcCVzb9Zao73qP9PocFAZiWYSYnlFcb5YinpjMA/UAIPErDOxlWxJ4C3NxU1vBylKgJ1LKATvRA6Miw==@nongnu.org
-X-Gm-Message-State: AOJu0YzJNZvFGekfNuHPAjI26h1eEOFREnfqDCD05nYIcZ3Ae/UMTVgT
- tC2cYpmPkopRxjdGT6Xn2UtLB/rERCQ+DOXlEyDOQqHXWL3RwAIcFXXugw==
-X-Gm-Gg: ASbGnctiFwWP7RPD5y9y2Gl2715GioGkD1f2oTRvH1ktqx7Q9msvIIooEqqy7d7i/ao
- /Wnw33nG405O/NR1sRFapNwhKr6LfoWRyUAO7Pv9THAFcbol7qwGQynqJX9u9hYwO7zBkjxNi8A
- gCCLxE++GCo3D6AbJReVQcr94XkFOZxhCn3WSf8q5O9K0oacMQPzfnCqzDKoagSggbEJXWvbenb
- QXztH1+Rkcu6+qYglXgOST8MlV8KRUT+ZYdtJQEQEH86uj1A08ckyeklms+IC5cDbLpZk0bAjOI
- P6Unl/P04u612B5wEwmt9gi3TTw6wV7SYqqs8DbjQ58Xns05wM7TGA65Cr+zhiG2m32+0koVYz2
- W6a/T7WH/nw==
-X-Google-Smtp-Source: AGHT+IFf/sxVEWMwe35o7megJ+cwKxfjY13H0PjjI2gTJnfpzDLNEHodIxpwKdaOe2uQbMrumFTzMQ==
-X-Received: by 2002:a05:600c:4d98:b0:436:1b86:f05 with SMTP id
- 5b1f17b1804b1-43905f844d1mr17928905e9.11.1738660888391; 
- Tue, 04 Feb 2025 01:21:28 -0800 (PST)
-Received: from Georg-PC.fritz.box
- (p200300faaf0043006a2cae69f03f1c85.dip0.t-ipconnect.de.
- [2003:fa:af00:4300:6a2c:ae69:f03f:1c85])
+ d=1e100.net; s=20230601; t=1738660971; x=1739265771;
+ h=content-transfer-encoding:in-reply-to:organization:autocrypt
+ :content-language:from:references:cc:to:subject:user-agent
+ :mime-version:date:message-id:x-gm-message-state:from:to:cc:subject
+ :date:message-id:reply-to;
+ bh=b/Ku1EYx+KuWQQKuJvy69ICVE/NhQK7jM86K8vQXSHU=;
+ b=vpG65rs4tND/5OpO348grd/G/RI+0klEPzm9by6gf4uGL811SFQsHo5gMoUdiKq9Ne
+ rnPRmjgTGl2SfIJY5gx4/86myEE7waAbOjCEiun/NyeMXPl1uC2GjPY5NnRJHiqqirUl
+ FMRiXj+3zo9YnUkj2Jy8mlCLDxb/zhiBDQqU1DKVyWMxvq5xtXhidRLTpedmMU8LaOwq
+ hTLqNPj/jRFKDRi6/QeavOyMBT14zOHkHTpJjNvqN3IkgAzIO4Bdsrb7rg3AKyqIlwlv
+ 4rI+Ob45/OAPr3fgp+Ux/5j/AS3dx/d3pgH02SOMk/DKtMsBxbXX6ftGV9H5CRHQEy6f
+ dPyg==
+X-Gm-Message-State: AOJu0YwRSzyIu6V7gd0L/n4QlwOla+Insokd7K81HX9O+69dqYsut4zT
+ 6yTsnwRjcjLPXr/ErKib457btz26C/9WFOkZ/ahtwpF03EhB06SsTNuoWKTkHz5f7jMNt/x4zi/
+ ZTzFi4XBLE0pJWTPJHfwUM5T3a95gI7QDPJlUdf/vq7Kv/bOd0M8G
+X-Gm-Gg: ASbGncvCyrye9Cn8TNb5oLnBsBVL1ARHu1idDiAzA7b9GKXFqRRGmO9FGnPML3NVfyI
+ hSsEl50DUWVwHid7Hts9UAKEBEKSBDo6oxM6JGUEkcAQfixF4EGRpgCGwEVulceD7LiazYC5xqH
+ elPoyBYkSI2PpGf1IkNc8ducxoMQFzbrDAIWdsZ2lVtVa8ugxsvVUc31C8d0abK+UglF0/L40gQ
+ i8duNuqzmrYMn+WsuyelmctxZqxh6I++qakGEGQ4jdEDLE+D4dkl76kLtLYeN10er5DA+OtSV5s
+ +gRVTsUbQTthKbP2Zgwknw1zpy1cGLtk
+X-Received: by 2002:a05:6000:1f86:b0:38c:5b62:9fdf with SMTP id
+ ffacd0b85a97d-38c5b62a3b2mr15115741f8f.31.1738660971301; 
+ Tue, 04 Feb 2025 01:22:51 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IFqMhSIO4onYt1yEg/PyCjTc46juRXkuLlzqVxZAsz5JjuJL/OTiz/m6HQnGPlgOns6IXDwOQ==
+X-Received: by 2002:a05:6000:1f86:b0:38c:5b62:9fdf with SMTP id
+ ffacd0b85a97d-38c5b62a3b2mr15115727f8f.31.1738660970905; 
+ Tue, 04 Feb 2025 01:22:50 -0800 (PST)
+Received: from [192.168.3.141] (p5b0c6602.dip0.t-ipconnect.de. [91.12.102.2])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-438e23d42c7sm187233595e9.3.2025.02.04.01.21.26
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 04 Feb 2025 01:21:26 -0800 (PST)
-From: Bernhard Beschow <shentey@gmail.com>
-To: qemu-devel@nongnu.org
-Cc: Bernhard Beschow <shentey@gmail.com>, qemu-arm@nongnu.org,
- Peter Maydell <peter.maydell@linaro.org>,
- Andrey Smirnov <andrew.smirnov@gmail.com>,
- Paolo Bonzini <pbonzini@redhat.com>
-Subject: [PATCH v2 06/18] hw/arm/fsl-imx8mp: Add SNVS
-Date: Tue,  4 Feb 2025 10:21:00 +0100
-Message-ID: <20250204092112.26957-7-shentey@gmail.com>
-X-Mailer: git-send-email 2.48.1
-In-Reply-To: <20250204092112.26957-1-shentey@gmail.com>
-References: <20250204092112.26957-1-shentey@gmail.com>
+ ffacd0b85a97d-38c5c1cf831sm15439760f8f.90.2025.02.04.01.22.48
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Tue, 04 Feb 2025 01:22:49 -0800 (PST)
+Message-ID: <d8d1e39c-961a-4c29-8275-5936f3c32752@redhat.com>
+Date: Tue, 4 Feb 2025 10:22:48 +0100
 MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] hw/virtio: reset virtio balloon stats on machine reset
+To: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
+Cc: qemu-devel@nongnu.org, "Michael S. Tsirkin" <mst@redhat.com>
+References: <20241218172912.4170899-1-berrange@redhat.com>
+ <d2730488-8468-4639-876c-18a860c6469e@redhat.com>
+ <Z6Hb4dX1nK0wgyE0@redhat.com>
+From: David Hildenbrand <david@redhat.com>
+Content-Language: en-US
+Autocrypt: addr=david@redhat.com; keydata=
+ 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
+ WNyWQQ==
+Organization: Red Hat
+In-Reply-To: <Z6Hb4dX1nK0wgyE0@redhat.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32c;
- envelope-from=shentey@gmail.com; helo=mail-wm1-x32c.google.com
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=david@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -104,86 +155,123 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-SNVS contains an RTC which allows Linux to deal correctly with time. This is
-particularly useful when handling persistent storage which will be done in the
-next patch.
+On 04.02.25 10:20, Daniel P. Berrangé wrote:
+> On Thu, Dec 19, 2024 at 02:51:21PM +0100, David Hildenbrand wrote:
+>> On 18.12.24 18:29, Daniel P. Berrangé wrote:
+>>> When a machine is first booted, all virtio balloon stats are initialized
+>>> to their default value -1 (18446744073709551615 when represented as
+>>> unsigned).
+>>>
+>>> They remain that way while the firmware is loading, and early phase of
+>>> guest OS boot, until the virtio-balloon driver is activated. Thereafter
+>>> the reported stats reflect the guest OS activity.
+>>>
+>>> When a machine reset is performed, however, the virtio-balloon stats are
+>>> left unchanged by QEMU, despite the guest OS no longer updating them,
+>>> nor indeed even still existing.
+>>>
+>>> IOW, the mgmt app keeps getting stale stats until the guest OS starts
+>>> once more and loads the virtio-balloon driver (if ever). At that point
+>>> the app will see a discontinuity in the reported values as they sudden
+>>> jump from the stale value to the new value. This jump is indigituishable
+>>> from a valid data update.
+>>>
+>>> While there is an "last-updated" field to report on the freshness of
+>>> the stats, that does not unambiguously tell the mgmt app whether the
+>>> stats are still conceptually relevant to the current running workload.
+>>>
+>>> It is more conceptually useful to reset the stats to their default
+>>> values on machine reset, given that the previous guest workload the
+>>> stats reflect no longer exists. The mgmt app can now clearly identify
+>>> that there are is no stats information available from the current
+>>> executing workload.
+>>>
+>>> The 'last-updated' time is also reset back to 0.
+>>>
+>>> IOW, on every machine reset, the virtio stats are in the same clean
+>>> state they were when the macine first powered on.
+>>>
+>>> A functional test is added to validate this behaviour with a real
+>>> world guest OS.
+>>>> Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
+>>> ---
+>>>
+>>> One side-thought I have, is whether it makes sense to add a
+>>> 'reset-count' field in the virtio stats, alongside the
+>>> 'last-updated' field. While apps can infer a reset from seeing
+>>> the stats all go back to their defaults, an explicit flag is
+>>> simpler...
+>>>
+>>>    MAINTAINERS                             |   1 +
+>>>    hw/virtio/virtio-balloon.c              |  30 ++++-
+>>>    include/hw/virtio/virtio-balloon.h      |   4 +
+>>>    tests/functional/test_virtio_balloon.py | 161 ++++++++++++++++++++++++
+>>>    4 files changed, 195 insertions(+), 1 deletion(-)
+>>>    create mode 100755 tests/functional/test_virtio_balloon.py
+>>>
+>>> diff --git a/MAINTAINERS b/MAINTAINERS
+>>> index 822f34344b..1380d53d03 100644
+>>> --- a/MAINTAINERS
+>>> +++ b/MAINTAINERS
+>>> @@ -2234,6 +2234,7 @@ F: include/hw/virtio/virtio-balloon.h
+>>>    F: system/balloon.c
+>>>    F: include/sysemu/balloon.h
+>>>    F: tests/qtest/virtio-balloon-test.c
+>>> +F: tests/functional/test_virtio_balloon.py
+>>>    virtio-9p
+>>>    M: Greg Kurz <groug@kaod.org>
+>>> diff --git a/hw/virtio/virtio-balloon.c b/hw/virtio/virtio-balloon.c
+>>> index ab2ee30475..fe0854e198 100644
+>>> --- a/hw/virtio/virtio-balloon.c
+>>> +++ b/hw/virtio/virtio-balloon.c
+>>> @@ -31,7 +31,7 @@
+>>>    #include "trace.h"
+>>>    #include "qemu/error-report.h"
+>>>    #include "migration/misc.h"
+>>> -
+>>> +#include "sysemu/reset.h"
+>>>    #include "hw/virtio/virtio-bus.h"
+>>>    #include "hw/virtio/virtio-access.h"
+>>> @@ -910,6 +910,8 @@ static void virtio_balloon_device_realize(DeviceState *dev, Error **errp)
+>>>        }
+>>>        reset_stats(s);
+>>> +    s->stats_last_update = 0;
+>>> +    qemu_register_resettable(OBJECT(dev));
+>>>    }
+>>>    static void virtio_balloon_device_unrealize(DeviceState *dev)
+>>> @@ -917,6 +919,7 @@ static void virtio_balloon_device_unrealize(DeviceState *dev)
+>>>        VirtIODevice *vdev = VIRTIO_DEVICE(dev);
+>>>        VirtIOBalloon *s = VIRTIO_BALLOON(dev);
+>>> +    qemu_unregister_resettable(OBJECT(dev));
+>>>        if (s->free_page_bh) {
+>>>            qemu_bh_delete(s->free_page_bh);
+>>>            object_unref(OBJECT(s->iothread));
+>>> @@ -987,6 +990,27 @@ static void virtio_balloon_set_status(VirtIODevice *vdev, uint8_t status)
+>>>        }
+>>>    }
+>>
+>> Using qemu_register_resettable() can have unfortunate side effects that this
+>> code is triggered when the device is reset, not necessarily when the
+>> complete machine.
+>>
+>> For virtio-mem at least that's an issue, and here is how I'll fix it:
+>>
+>> https://lore.kernel.org/qemu-devel/20241218105303.1966303-2-david@redhat.com/
+> 
+> So having looked at it, I'm not convinced this is a problem for the
+> virtio-balloon scenario.
+> 
+> Is there anything you'd like changed on this patch, or is it acceptable
+> as is ?
 
-Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
-Signed-off-by: Bernhard Beschow <shentey@gmail.com>
----
- docs/system/arm/imx8mp-evk.rst |  1 +
- include/hw/arm/fsl-imx8mp.h    |  2 ++
- hw/arm/fsl-imx8mp.c            | 10 ++++++++++
- 3 files changed, 13 insertions(+)
+Probably "_system_reset" should be called differently, to make it 
+clearer that there are other cases.
 
-diff --git a/docs/system/arm/imx8mp-evk.rst b/docs/system/arm/imx8mp-evk.rst
-index e5039fc8c4..8f1237c74e 100644
---- a/docs/system/arm/imx8mp-evk.rst
-+++ b/docs/system/arm/imx8mp-evk.rst
-@@ -13,6 +13,7 @@ The ``imx8mp-evk`` machine implements the following devices:
-  * Up to 4 Cortex-A53 Cores
-  * Generic Interrupt Controller (GICv3)
-  * 4 UARTs
-+ * Secure Non-Volatile Storage (SNVS) including an RTC
-  * Clock Tree
- 
- Boot options
-diff --git a/include/hw/arm/fsl-imx8mp.h b/include/hw/arm/fsl-imx8mp.h
-index ce5188e7f2..26e24e99a1 100644
---- a/include/hw/arm/fsl-imx8mp.h
-+++ b/include/hw/arm/fsl-imx8mp.h
-@@ -12,6 +12,7 @@
- #include "cpu.h"
- #include "hw/char/imx_serial.h"
- #include "hw/intc/arm_gicv3_common.h"
-+#include "hw/misc/imx7_snvs.h"
- #include "hw/misc/imx8mp_analog.h"
- #include "hw/misc/imx8mp_ccm.h"
- #include "qom/object.h"
-@@ -36,6 +37,7 @@ struct FslImx8mpState {
-     GICv3State         gic;
-     IMX8MPCCMState     ccm;
-     IMX8MPAnalogState  analog;
-+    IMX7SNVSState      snvs;
-     IMXSerialState     uart[FSL_IMX8MP_NUM_UARTS];
- };
- 
-diff --git a/hw/arm/fsl-imx8mp.c b/hw/arm/fsl-imx8mp.c
-index a1a8843b3b..32ca76c671 100644
---- a/hw/arm/fsl-imx8mp.c
-+++ b/hw/arm/fsl-imx8mp.c
-@@ -204,6 +204,8 @@ static void fsl_imx8mp_init(Object *obj)
- 
-     object_initialize_child(obj, "analog", &s->analog, TYPE_IMX8MP_ANALOG);
- 
-+    object_initialize_child(obj, "snvs", &s->snvs, TYPE_IMX7_SNVS);
-+
-     for (i = 0; i < FSL_IMX8MP_NUM_UARTS; i++) {
-         snprintf(name, NAME_SIZE, "uart%d", i + 1);
-         object_initialize_child(obj, name, &s->uart[i], TYPE_IMX_SERIAL);
-@@ -348,6 +350,13 @@ static void fsl_imx8mp_realize(DeviceState *dev, Error **errp)
-                            qdev_get_gpio_in(gicdev, serial_table[i].irq));
-     }
- 
-+    /* SNVS */
-+    if (!sysbus_realize(SYS_BUS_DEVICE(&s->snvs), errp)) {
-+        return;
-+    }
-+    sysbus_mmio_map(SYS_BUS_DEVICE(&s->snvs), 0,
-+                    fsl_imx8mp_memmap[FSL_IMX8MP_SNVS_HP].addr);
-+
-     /* Unimplemented devices */
-     for (i = 0; i < ARRAY_SIZE(fsl_imx8mp_memmap); i++) {
-         switch (i) {
-@@ -356,6 +365,7 @@ static void fsl_imx8mp_realize(DeviceState *dev, Error **errp)
-         case FSL_IMX8MP_GIC_DIST:
-         case FSL_IMX8MP_GIC_REDIST:
-         case FSL_IMX8MP_RAM:
-+        case FSL_IMX8MP_SNVS_HP:
-         case FSL_IMX8MP_UART1 ... FSL_IMX8MP_UART4:
-             /* device implemented and treated above */
-             break;
+Apart from that, I agree that virtio-balloon is likely fine.
+
 -- 
-2.48.1
+Cheers,
+
+David / dhildenb
 
 
