@@ -4,77 +4,77 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A2B6BC02194
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 812E1C02193
 	for <qemu-devel@archiver.kernel.org>; Tue,  4 Feb 2025 15:43:50 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tfL5B-0000z9-MA; Tue, 04 Feb 2025 10:43:25 -0500
+	id 1tfL4k-0000pe-D9; Tue, 04 Feb 2025 10:42:58 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1tfL58-0000y5-LL
- for qemu-devel@nongnu.org; Tue, 04 Feb 2025 10:43:22 -0500
-Received: from mail-yb1-xb35.google.com ([2607:f8b0:4864:20::b35])
+ id 1tfL4f-0000ot-Ca
+ for qemu-devel@nongnu.org; Tue, 04 Feb 2025 10:42:54 -0500
+Received: from mail-yb1-xb34.google.com ([2607:f8b0:4864:20::b34])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1tfL57-0007Wf-6X
- for qemu-devel@nongnu.org; Tue, 04 Feb 2025 10:43:22 -0500
-Received: by mail-yb1-xb35.google.com with SMTP id
- 3f1490d57ef6-e580d6211c8so5810778276.1
- for <qemu-devel@nongnu.org>; Tue, 04 Feb 2025 07:43:20 -0800 (PST)
+ id 1tfL4Y-0007Ty-Aa
+ for qemu-devel@nongnu.org; Tue, 04 Feb 2025 10:42:53 -0500
+Received: by mail-yb1-xb34.google.com with SMTP id
+ 3f1490d57ef6-e53a5ff2233so5881692276.3
+ for <qemu-devel@nongnu.org>; Tue, 04 Feb 2025 07:42:44 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1738683800; x=1739288600; darn=nongnu.org;
+ d=linaro.org; s=google; t=1738683763; x=1739288563; darn=nongnu.org;
  h=cc:to:subject:message-id:date:from:in-reply-to:references
  :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=qdHfe0Uk43sFsa7hqxlIZdLKy67gdQ4KBBaUPlCyPOY=;
- b=F8Huk1FBxsgqim2c2izkgTSvvC26QxBCbptx1EJID5RLrSV8EPU5sL+4ngKFyuWfJv
- orznkB87pDutHDAk/6PTgjUAm6EX9T5EPzyV/yHiY6PfmIF5UTcsRpqIcr7BsXU/dpHD
- JI6ULBlSHaguOYFwE4yFjmw9etdk1b1F38ckr+IEVIzCK4kgXgvTkZh/LXFc+aUmypIk
- pQuG2wg1SIe+TAbfHx7fSCt4SwM6kIbf+OJtxK23sg728PsDt+PObfxZIrA9UsCGkq2J
- 0Wg/OEF2f5idCH6s5HjSVPYXPtzusBWWrGrp2mv7q5X/lAgv6kACY22Xh8GGKyW8XuQE
- elDw==
+ bh=DnMZtMniCxINhGi11kvKfO5coLPW3VGFNFzuESVF9m0=;
+ b=u2nCrmygS3D8NkbGoz0H+/HagDMpYbJ90hyykyfht/m2CmEH6DVk6CtnDDYMh6hucV
+ 1xQ7Gg0bLCzAG16ccf6wRtqML/LgmZz7X3x3g+FPRTDyNr0yDEGjocK+Qm8X/Vl2r9I0
+ fo1fX8jVq21UB/dtQHB6Xr9ILvBBRyR1gFOEh4kTErSgbD+F8tKpsnA/zPdjFrXUr/h6
+ 2w2a3NHMYPgDqKpVMsdsPUQIEJPD/AQ91WMyhapIdURpIL4DDkxv8uC9vqrz/MIYYgZo
+ Muy5cuKDEmMYX8dNgA26ABdp22MZ6mjMibTYiVXPuAvs6v2xs5mc3FlHXRgT3BT2DnnH
+ pJGA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1738683800; x=1739288600;
+ d=1e100.net; s=20230601; t=1738683763; x=1739288563;
  h=cc:to:subject:message-id:date:from:in-reply-to:references
  :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=qdHfe0Uk43sFsa7hqxlIZdLKy67gdQ4KBBaUPlCyPOY=;
- b=Xtqd+BUGF32ZkXrC6n23A+9Lyac7XY4tKk1vbDrBobma1/HD7iZWFDDf6M4dC8+Wtb
- XP44CRAvfhFBYnu9KU5qTffLhHxsRXDVnenyT+Dxjto9fFY+cRPDJkVsBuu0v0dNjm1Y
- hk2lt1Q0FzVA8Uol523YO7/eTw8zRM+MknehAz9q3n19SUimXVb7q7yYhGKMzdFMryCr
- C78EAGoOkX5XVm5PVTGGOuP12JzH4CSfsH7aLUbi0cVvET6DP+Ky4RvnASzTuNVYlOTb
- zrNV3ixKw7R3V8pWus6b3DE5/kLcorpH6tUMrxDAqucEM+luzn90FhJT78hopbBXAMVF
- t+6g==
+ bh=DnMZtMniCxINhGi11kvKfO5coLPW3VGFNFzuESVF9m0=;
+ b=PphH2DuMVEY2hvMf974ztR11QmR5QXg95fZIVPk8+OELCAoiK6RSeLEGQWYG3+0Pw7
+ kJkEpqUavmGS4JvkT5+Ue0mMq/K2Fbbb4OR06wpNIJFS9g9bfbDZd3j9YeRdF4v2fYKQ
+ ZT5n2fLYe2XDvtbJRfpddUpD1iqqPKsCPqR5BTszl6zAOvFxp2wJphqaGCw7ROmsE5Bm
+ HabTZ5AgZu1bMud3bCOAO9xSPsu1qmzw6IgIw9kggCzpdFWr0kHKxsF9gJHSk2CtNBzr
+ LGMqM64n3roWnILDovI1O8InzzDSsOXStjqqxrb88s5WiK7Y2KxhOu6dqp+kPXCZUFJF
+ e/pg==
 X-Forwarded-Encrypted: i=1;
- AJvYcCUXqDmLtBkfovtG3QYo9+rzrfGZ6x4IUAdQiYakvqsIGTIeEOeWpXUWzSA1qYeRnNd/XSZ870YJVWwd@nongnu.org
-X-Gm-Message-State: AOJu0YxmRacdAF4CTyrN4ci4+Ul1XP9oWCOVdkQhvXYf86hsEZzz+zai
- 9j66ugtXD59mItZlnfAOdAEhzbA9uiwMk9YigHhT04oef41De5gPqI386J/kKlY89ltCioVfzLi
- H548W8b3QSvBgXKb28d6avAopukXmGQ/7iEA+dQ==
-X-Gm-Gg: ASbGnctc1kLgewRyV6McJrNjVR+Wa9yWVheKrJqEAWyw6OC0QPuHHlQj17Vier8XdLZ
- 9xgyA2yg5NprfzY0tLbW62Dq5YejfECPGELdrzQBxNk3rbQGV5wu+LLC9X+82UiL8p/Q+LhxwGw
+ AJvYcCUIkqNNjd5YR4VQjOhN3fBdR0qTn82tUmjCJ9G4YoqL7/KWmfMX++97SF8m7yRBgqWLXZlWuLJilzo1@nongnu.org
+X-Gm-Message-State: AOJu0YxbB0xqfqg8iJjYuQUY9sKSPIfw5BKHUjl1JW4oMdBJBT4NV8Qc
+ KBrVIEE+sd44FEZl2eZmGeEBFiphXR2R4Z3cL6G4zyQI4pO2rDf5dXDKa+WgortaNpP/U4q8fe7
+ M8qCVbgeeeavi2r0rxlR93aRcZnvUntqcZ2hcfw==
+X-Gm-Gg: ASbGncuOIRW+reX2AsfuQROqM4zI4rgxe6sk7wXu3lP6egAP7/m3pTrocQ9CuLz6J5L
+ wHpMtHrU8ZrDXWavC6/AfFlDvLiXN9pUJaxqEkivdEh84Fgx+BL7SpMaj/nca5hBJIMTrNx90FQ
  ==
-X-Google-Smtp-Source: AGHT+IGvwzeP2weLuWg3iK6BmZCY5P5Ro+Wywd01a++/U4Qk7PGDyw74qZupq74w+1pjH4E98HVpCiXJbxksfr6apfk=
-X-Received: by 2002:a05:6902:220d:b0:e44:e084:52c0 with SMTP id
- 3f1490d57ef6-e58a4b1aea9mr20537180276.23.1738683800117; Tue, 04 Feb 2025
- 07:43:20 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IHMZbMJ6xpMJ2zfhGCPHrOq021Q7cnx4HS5G1hwDJEjspC8jlK6PPekHZaRlIj7WfbZ9tMdpxEpm+mdsBhyIE0=
+X-Received: by 2002:a05:6902:220f:b0:e58:3565:8ad0 with SMTP id
+ 3f1490d57ef6-e58a4bc462cmr20195546276.46.1738683763604; Tue, 04 Feb 2025
+ 07:42:43 -0800 (PST)
 MIME-Version: 1.0
 References: <20241226082800.2887689-1-wuhaotsh@google.com>
- <20241226082800.2887689-6-wuhaotsh@google.com>
-In-Reply-To: <20241226082800.2887689-6-wuhaotsh@google.com>
+ <20241226082800.2887689-5-wuhaotsh@google.com>
+In-Reply-To: <20241226082800.2887689-5-wuhaotsh@google.com>
 From: Peter Maydell <peter.maydell@linaro.org>
-Date: Tue, 4 Feb 2025 15:43:08 +0000
-X-Gm-Features: AWEUYZnbP7Ny17e2vKnQzkXN03gJ6193JxkCFYhQ0AnHTyZG-C-oZTgKK4l7lJI
-Message-ID: <CAFEAcA_bwhiPo6Ye17GKoVE7RpjpHBm29Kw9EvRUVY6DgF71iQ@mail.gmail.com>
-Subject: Re: [PATCH v2 05/17] hw/misc: Rename npcm7xx_gcr to npcm_gcr
+Date: Tue, 4 Feb 2025 15:42:32 +0000
+X-Gm-Features: AWEUYZnJtlKhxZoNMXLeiS0vTX6mNhAO4q7nYO3RAE74kMk4Ycl8zp4rVWwFPLo
+Message-ID: <CAFEAcA92L87bnPaTAXnzEy_pGHoFRkVve6-knTsLYb8PARAz6Q@mail.gmail.com>
+Subject: Re: [PATCH v2 04/17] hw/ssi: Make flash size a property in NPCM7XX FIU
 To: Hao Wu <wuhaotsh@google.com>
 Cc: qemu-arm@nongnu.org, qemu-devel@nongnu.org, Avi.Fishman@nuvoton.com, 
  kfting@nuvoton.com, titusr@google.com, mimik-dev@google.com, 
  hskinnemoen@google.com, venture@google.com, pbonzini@redhat.com, 
  jasowang@redhat.com, alistair@alistair23.me
 Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::b35;
- envelope-from=peter.maydell@linaro.org; helo=mail-yb1-xb35.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::b34;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yb1-xb34.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -97,23 +97,17 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-q
-
 On Thu, 26 Dec 2024 at 08:28, Hao Wu <wuhaotsh@google.com> wrote:
 >
-> NPCM7XX and NPCM8XX have a different set of GCRs and the GCR module
-> needs to fit both. This commit changes the name of the GCR module.
-> Future commits will add the support for NPCM8XX GCRs.
+> This allows different FIUs to have different flash sizes, useful
+> in NPCM8XX which has multiple different sized FIU modules.
 >
 > Signed-off-by: Hao Wu <wuhaotsh@google.com>
 > ---
->  hw/misc/meson.build                           | 2 +-
->  hw/misc/{npcm7xx_gcr.c => npcm_gcr.c}         | 2 +-
->  include/hw/arm/npcm7xx.h                      | 2 +-
->  include/hw/misc/{npcm7xx_gcr.h => npcm_gcr.h} | 6 +++---
->  4 files changed, 6 insertions(+), 6 deletions(-)
->  rename hw/misc/{npcm7xx_gcr.c => npcm_gcr.c} (99%)
->  rename include/hw/misc/{npcm7xx_gcr.h => npcm_gcr.h} (96%)
+>  hw/arm/npcm7xx.c             |  6 ++++++
+>  hw/ssi/npcm7xx_fiu.c         | 11 +++++++----
+>  include/hw/ssi/npcm7xx_fiu.h |  1 +
+>  3 files changed, 14 insertions(+), 4 deletions(-)
 
 Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
 
