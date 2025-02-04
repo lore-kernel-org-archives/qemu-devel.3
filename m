@@ -4,86 +4,86 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 97600C0218F
-	for <qemu-devel@archiver.kernel.org>; Tue,  4 Feb 2025 05:31:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 62454C0218F
+	for <qemu-devel@archiver.kernel.org>; Tue,  4 Feb 2025 05:33:59 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tfBVs-0001LD-Fh; Tue, 04 Feb 2025 00:30:20 -0500
+	id 1tfBYo-00026c-E9; Tue, 04 Feb 2025 00:33:22 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <gshan@redhat.com>) id 1tfBVo-0001Kp-PT
- for qemu-devel@nongnu.org; Tue, 04 Feb 2025 00:30:17 -0500
+ (Exim 4.90_1) (envelope-from <gshan@redhat.com>) id 1tfBYn-00026U-60
+ for qemu-devel@nongnu.org; Tue, 04 Feb 2025 00:33:21 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <gshan@redhat.com>) id 1tfBVm-0007zQ-UH
- for qemu-devel@nongnu.org; Tue, 04 Feb 2025 00:30:16 -0500
+ (Exim 4.90_1) (envelope-from <gshan@redhat.com>) id 1tfBYl-0008D0-IP
+ for qemu-devel@nongnu.org; Tue, 04 Feb 2025 00:33:20 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1738647011;
+ s=mimecast20190719; t=1738647198;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=fsh1mX2fTPgCm5zaVVBg/eCP2E3sojwW1XaxhbF3L2g=;
- b=a0lV6LwJpLFDCsW1cf3zvQOWT6L57llyd5v4QRfvxBYZC+a284WAhut8G+5nB0gOOLcfyA
- S4sq+AvtH8H5QW0P2YpykqHs8dHf1xJG7A9DrFn5Ip2MiJjxN2xxWUU8qTTTvbpY/BgXFz
- rsutnT6po5e6ybiR6gOoOb5swhkLeq0=
-Received: from mail-pj1-f69.google.com (mail-pj1-f69.google.com
- [209.85.216.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=vEeOlsnYhDiPSKrDSj6BPfhNFyCgIkg6bjkXUXrEpug=;
+ b=DTfkWIjXkKIJ8rpZi6+v9KywpJ6aVSse9MYpdqgFYVLZtNXx1kNTCwbDs9J/cXNqE9GVDM
+ H3Xm8jRB0Sjcba9pet/e/r8tLzRdw1NbPu6BGUi7LVGXU5VZgZtz5ReuK+lIIAInrzflhC
+ 9et49kTSB0x7nozUSi57iT+PelHCR30=
+Received: from mail-pl1-f200.google.com (mail-pl1-f200.google.com
+ [209.85.214.200]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-361-odm9t31kPxKG4Q9bMtvHog-1; Tue, 04 Feb 2025 00:30:07 -0500
-X-MC-Unique: odm9t31kPxKG4Q9bMtvHog-1
-X-Mimecast-MFC-AGG-ID: odm9t31kPxKG4Q9bMtvHog
-Received: by mail-pj1-f69.google.com with SMTP id
- 98e67ed59e1d1-2ef9e38b0cfso9603088a91.0
- for <qemu-devel@nongnu.org>; Mon, 03 Feb 2025 21:30:07 -0800 (PST)
+ us-mta-685-Hu8fc8ULMNChhcX-NIWizw-1; Tue, 04 Feb 2025 00:33:16 -0500
+X-MC-Unique: Hu8fc8ULMNChhcX-NIWizw-1
+X-Mimecast-MFC-AGG-ID: Hu8fc8ULMNChhcX-NIWizw
+Received: by mail-pl1-f200.google.com with SMTP id
+ d9443c01a7336-2166f9f52fbso172385495ad.2
+ for <qemu-devel@nongnu.org>; Mon, 03 Feb 2025 21:33:16 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1738647007; x=1739251807;
+ d=1e100.net; s=20230601; t=1738647195; x=1739251995;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=fsh1mX2fTPgCm5zaVVBg/eCP2E3sojwW1XaxhbF3L2g=;
- b=axTcaEIMEkjx2X2R5IRccoxMhTrz/HNsafk3ZkX1mbfNHDJ8fySD8kAwYLj5xp9vaF
- ItloQC/VOLPWSYlXNrd8wuziZpJlobovFcPc0HIToEovo2UCTTrBmpQ/bibuzZ3mfNNG
- VEMBzM9O09ND2vaR3GGWfgCgyFIms9/qCtg2HmFj2V5Rsa2B8HEjB3RLxEtP9mJaAET8
- R5lVGFkbWLZFlneV4RqEJ1b4XXAsudH5Imrb16sXfryaJkGDgVLdFLWLTTSgB5hnsX6K
- 425/XZY9XEXYJraLkKVKybxt7X1tw9FyVoEXdxGAMPmxBWdZHYO5bTNxLC1C11WZ7bhw
- yzcA==
+ bh=vEeOlsnYhDiPSKrDSj6BPfhNFyCgIkg6bjkXUXrEpug=;
+ b=HqvqttFz3sWW+DQQOaNyLzy8qp+5oGZcsmSurWDFF51b03Nb/qlY9j1ffAHZFlTmg9
+ AugM+NDnhO/Ft2wLoa9o9t0aeb9Y3z0zP/x19to96qnQXgtg9sW9Si1Exb5vLNALwl+J
+ 3kGTWLfu0QgHdGDbcERJ/xK7fshojv5nX7J5yVd/34ynh42I4OfRJ/C+IKVLoVPjNx7f
+ p4ILl2kSgn28zwppfUwmpErWY0NsgK+z1zMJHEeOUZH+ekE7xtonb+sRBMkMUWeBtMAR
+ 7lD1RKVKvrDna7yTc5vJGvWEDPSRXgI18DlXkTC4uqHQfS+AJ4sOAxOgysBIbWQG8NuB
+ 7Gfw==
 X-Forwarded-Encrypted: i=1;
- AJvYcCVZihBnzHnU14qJaki1EPI0Q7wCiCNWqXtdU6v9L5MAZXJkE8I6WtFBg8C392JUbOD8eEQR6s6cxrWW@nongnu.org
-X-Gm-Message-State: AOJu0Yw+lJN1+JNE9UqtyF2tkmMDK0tqiV9VixUy+zYMxeABWy/ZXJpm
- 2YEjO1su2SwjlKIFeRQhtNU0FKdJyO62+Xcoa8pxn5pr9S1ecHTudErjV+uRENMEcyL5qqo0mHz
- MQ3uGgLk85ivBDiDjD/ztAjht5+5HHZJXAMMNPpD7/fFVeE9GzW4S
-X-Gm-Gg: ASbGncuhbO5y3SYSRCtkIAUlvdL1t/8UBZixq5hokvl3v8e9EgpD2UAZ1qhBzjf3X2S
- fuG76qnry/WzFY19HLoDnxTAEi6Bglw2GD4LsnWpbcdKFJulOqhET1mMfv7RXCfy70uJqRlsBYy
- CyUFtZ9+G3lQORQJtOw+ZJi8TT9kmfCY5+5eOJhUFuMd/JMMdkcDX2FIojZFoBzSOnuQevwq5tc
- r6YTdT/xFXB/x+Z3shIZR6QIGLBhWTOOzm8qXBLA/XBPutlNciT3iWc5lWN97arTLzmB0Xfup43
- QrV9Yw==
-X-Received: by 2002:aa7:9306:0:b0:725:d956:aa6f with SMTP id
- d2e1a72fcca58-72fd0bc2572mr35091220b3a.5.1738647006643; 
- Mon, 03 Feb 2025 21:30:06 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IFX8TG2NZ8uSDcMCSgMub9IoZWHA/P90vj6Tk2tiMmjQmudlUGhjo1dKupSiVmSkpMbWLgAjA==
-X-Received: by 2002:aa7:9306:0:b0:725:d956:aa6f with SMTP id
- d2e1a72fcca58-72fd0bc2572mr35091174b3a.5.1738647006219; 
- Mon, 03 Feb 2025 21:30:06 -0800 (PST)
+ AJvYcCXtQzhRmaPTNaKfuo1RZl9k0Ryg5GgX2fxS9EHkIAW3wfQcgWk2tUsa2g3JmCdI1Fj6E9ypl17QEhQE@nongnu.org
+X-Gm-Message-State: AOJu0YwcqfkIryJ9/3xc2hQtgXD3B/GhcHeTpvoydzOQKepqNzGLcsOG
+ be46nFYipzE1S1FEBznLQiaQ4hALxtfNh1yiFpho4s5hZp/54HVXzlDqCI3BHZGiMnsA1HVR1jF
+ /XKGYoDPIGJQ18X6iZGQ0yfO8SV74HxHMeqyNIYKNGgLnxWkowI/2
+X-Gm-Gg: ASbGncty5AEIaAB0Cmt4OzxNzkngceAx8olD0pgtVHtQwQpYthBffjR8gwKu7FY+Ce/
+ bFBi7bZmTV7qds4WQJU5L3Fx0lvv3qk8YUKY/cqLHlIlL5Ju6+SRNxqfxISw+D1vesWQMQ8CJ14
+ Vg3GmiIMYswrTMgGLiG3dUdFP1KwpK568obb7nt8jcqotEoZZazeiAbMo39UKGfnGk5/koEooTC
+ R01JpLkqkYz7udztthpn+gyew5SmAxkJgrqMOiAnFsAzkDSjMSbtrBVQXmd3DCMiK8zD+jep6VV
+ CZicHw==
+X-Received: by 2002:a17:903:2a8b:b0:215:97c5:52b4 with SMTP id
+ d9443c01a7336-21dd7dccd5amr357030845ad.39.1738647195369; 
+ Mon, 03 Feb 2025 21:33:15 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IE3PiKYz+xeuQMFbzwH8Y4y6LEnFc7wLbHvS1/oKyzEyDMwwVYIPRn3XPbY+vSc9yx50dEf5g==
+X-Received: by 2002:a17:903:2a8b:b0:215:97c5:52b4 with SMTP id
+ d9443c01a7336-21dd7dccd5amr357030655ad.39.1738647195075; 
+ Mon, 03 Feb 2025 21:33:15 -0800 (PST)
 Received: from [192.168.68.55] ([180.233.125.64])
  by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-72fe69ba44fsm9914108b3a.100.2025.02.03.21.30.03
+ d9443c01a7336-21de32ea5bbsm86914565ad.150.2025.02.03.21.33.11
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 03 Feb 2025 21:30:05 -0800 (PST)
-Message-ID: <91b825c4-462f-4663-8412-effa84c0863d@redhat.com>
-Date: Tue, 4 Feb 2025 15:30:00 +1000
+ Mon, 03 Feb 2025 21:33:14 -0800 (PST)
+Message-ID: <73f81e95-7636-4a55-aa29-d288b20005b1@redhat.com>
+Date: Tue, 4 Feb 2025 15:33:10 +1000
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 09/26] target/arm/kvm-rme: Initialize Realm memory
+Subject: Re: [PATCH v3 08/26] hw/core/loader: Add ROM loader notifier
 To: Jean-Philippe Brucker <jean-philippe@linaro.org>, peter.maydell@linaro.org
 Cc: richard.henderson@linaro.org, philmd@linaro.org, qemu-arm@nongnu.org,
  qemu-devel@nongnu.org, alex.bennee@linaro.org
 References: <20241125195626.856992-2-jean-philippe@linaro.org>
- <20241125195626.856992-11-jean-philippe@linaro.org>
+ <20241125195626.856992-10-jean-philippe@linaro.org>
 Content-Language: en-US
 From: Gavin Shan <gshan@redhat.com>
-In-Reply-To: <20241125195626.856992-11-jean-philippe@linaro.org>
+In-Reply-To: <20241125195626.856992-10-jean-philippe@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 Received-SPF: pass client-ip=170.10.129.124; envelope-from=gshan@redhat.com;
@@ -112,246 +112,96 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 11/26/24 5:56 AM, Jean-Philippe Brucker wrote:
-> Initialize the IPA state of RAM. Collect the images copied into guest
-> RAM into a sorted list, and issue POPULATE_REALM KVM ioctls once we've
-> created the Realm Descriptor. The images are part of the Realm Initial
-> Measurement.
+> Add a function to register a notifier, that is invoked after a ROM gets
+> loaded into guest memory.
+> 
+> It will be used by Arm confidential guest support, in order to register
+> all blobs loaded into memory with KVM, so that their content is moved
+> into Realm state and measured into the initial VM state.
 > 
 > Signed-off-by: Jean-Philippe Brucker <jean-philippe@linaro.org>
 > ---
-> v2->v3: RIPAS is now initialized separately
-> ---
->   target/arm/kvm_arm.h |  14 +++++
->   target/arm/kvm-rme.c | 128 +++++++++++++++++++++++++++++++++++++++++++
->   2 files changed, 142 insertions(+)
+>   include/hw/loader.h | 15 +++++++++++++++
+>   hw/core/loader.c    | 15 +++++++++++++++
+>   2 files changed, 30 insertions(+)
 > 
-> diff --git a/target/arm/kvm_arm.h b/target/arm/kvm_arm.h
-> index 8b52a881b0..67db09a424 100644
-> --- a/target/arm/kvm_arm.h
-> +++ b/target/arm/kvm_arm.h
-> @@ -255,6 +255,16 @@ int kvm_arm_rme_vm_type(MachineState *ms);
->    */
->   int kvm_arm_rme_vcpu_init(CPUState *cs);
+> diff --git a/include/hw/loader.h b/include/hw/loader.h
+> index 7f6d06b956..0cd9905f97 100644
+> --- a/include/hw/loader.h
+> +++ b/include/hw/loader.h
+> @@ -353,6 +353,21 @@ void *rom_ptr_for_as(AddressSpace *as, hwaddr addr, size_t size);
+>   ssize_t rom_add_vga(const char *file);
+>   ssize_t rom_add_option(const char *file, int32_t bootindex);
 >   
-> +/*
-> + * kvm_arm_rme_init_guest_ram
-> + * @base: base address of RAM
-> + * @size: size of RAM
+> +typedef struct RomLoaderNotify {
+> +    /* Parameters passed to rom_add_blob() */
+> +    hwaddr addr;
+> +    size_t len;
+> +    size_t max_len;
+> +} RomLoaderNotify;
+> +
+
+I would suggest to rename it to RomLoaderNotifyData since it's the
+data passed to the notifier.
+
+> +/**
+> + * rom_add_load_notifier - Add a notifier for loaded images
 > + *
-> + * If the user requested a Realm, set the base and size of guest RAM, in order
-> + * to initialize the Realm IPA space.
+> + * Add a notifier that will be invoked with a RomLoaderNotify structure for each
+> + * blob loaded into guest memory, after the blob is loaded.
 > + */
-> +void kvm_arm_rme_init_guest_ram(hwaddr base, size_t size);
+> +void rom_add_load_notifier(Notifier *notifier);
 > +
->   #else
+>   /* This is the usual maximum in uboot, so if a uImage overflows this, it would
+>    * overflow on real hardware too. */
+>   #define UBOOT_MAX_GUNZIP_BYTES (64 << 20)
+> diff --git a/hw/core/loader.c b/hw/core/loader.c
+> index 31593a1171..759a62cf58 100644
+> --- a/hw/core/loader.c
+> +++ b/hw/core/loader.c
+> @@ -67,6 +67,8 @@
+>   #include <zlib.h>
 >   
->   /*
-> @@ -281,6 +291,10 @@ static inline bool kvm_arm_mte_supported(void)
->       return false;
+>   static int roms_loaded;
+> +static NotifierList rom_loader_notifier =
+> +    NOTIFIER_LIST_INITIALIZER(rom_loader_notifier);
+>   
+>   /* return the size or -1 if error */
+>   int64_t get_image_size(const char *filename)
+> @@ -1179,6 +1181,11 @@ MemoryRegion *rom_add_blob(const char *name, const void *blob, size_t len,
+>       return mr;
 >   }
 >   
-> +static inline void kvm_arm_rme_init_guest_ram(hwaddr base, size_t size)
+> +void rom_add_load_notifier(Notifier *notifier)
 > +{
+> +    notifier_list_add(&rom_loader_notifier, notifier);
 > +}
 > +
->   /*
->    * These functions should never actually be called without KVM support.
->    */
-> diff --git a/target/arm/kvm-rme.c b/target/arm/kvm-rme.c
-> index e3cc37538a..83a29421df 100644
-> --- a/target/arm/kvm-rme.c
-> +++ b/target/arm/kvm-rme.c
-> @@ -9,6 +9,7 @@
->   #include "exec/confidential-guest-support.h"
->   #include "hw/boards.h"
->   #include "hw/core/cpu.h"
-> +#include "hw/loader.h"
->   #include "kvm_arm.h"
->   #include "migration/blocker.h"
->   #include "qapi/error.h"
-> @@ -20,16 +21,85 @@
->   #define TYPE_RME_GUEST "rme-guest"
->   OBJECT_DECLARE_SIMPLE_TYPE(RmeGuest, RME_GUEST)
->   
-> +#define RME_PAGE_SIZE qemu_real_host_page_size()
-> +
->   struct RmeGuest {
->       ConfidentialGuestSupport parent_obj;
-> +    Notifier rom_load_notifier;
-> +    GSList *ram_regions;
-> +
-> +    hwaddr ram_base;
-> +    size_t ram_size;
->   };
->   
-
-s/size_t/hwaddr. To be consistent with RmeRamRegion, we may reuse
-it like below.
-
-struct RmeGuest {
-     :
-     GSlist *populate_ram_regions;
-     RmeRamRegion init_ram_region;
-};
-
->   OBJECT_DEFINE_SIMPLE_TYPE_WITH_INTERFACES(RmeGuest, rme_guest, RME_GUEST,
->                                             CONFIDENTIAL_GUEST_SUPPORT,
->                                             { TYPE_USER_CREATABLE }, { })
->   
-> +typedef struct {
-> +    hwaddr base;
-> +    hwaddr size;
-> +} RmeRamRegion;
-> +
->   static RmeGuest *rme_guest;
->   
-> +static int rme_init_ram(hwaddr base, size_t size, Error **errp)
-> +{
-> +    int ret;
-> +    uint64_t start = QEMU_ALIGN_DOWN(base, RME_PAGE_SIZE);
-> +    uint64_t end = QEMU_ALIGN_UP(base + size, RME_PAGE_SIZE);
-> +    struct kvm_cap_arm_rme_init_ipa_args init_args = {
-> +        .init_ipa_base = start,
-> +        .init_ipa_size = end - start,
-> +    };
-> +
-> +    ret = kvm_vm_enable_cap(kvm_state, KVM_CAP_ARM_RME, 0,
-> +                            KVM_CAP_ARM_RME_INIT_IPA_REALM,
-> +                            (intptr_t)&init_args);
-> +    if (ret) {
-> +        error_setg_errno(errp, -ret,
-> +                         "failed to init RAM [0x%"HWADDR_PRIx", 0x%"HWADDR_PRIx")",
-                                                      ^^^^^^^^^^        ^^^^^^^^^^^
-The type for 'start' and 'end' would be 'hwaddr'.
-
-> +                         start, end);
-> +    }
-> +
-> +    return ret;
-> +}
-> +
-> +static int rme_populate_range(hwaddr base, size_t size, bool measure,
-> +                              Error **errp)
-> +{
-> +    int ret;
-> +    uint64_t start = QEMU_ALIGN_DOWN(base, RME_PAGE_SIZE);
-> +    uint64_t end = QEMU_ALIGN_UP(base + size, RME_PAGE_SIZE);
-> +    struct kvm_cap_arm_rme_populate_realm_args populate_args = {
-> +        .populate_ipa_base = start,
-> +        .populate_ipa_size = end - start,
-> +        .flags = measure ? KVM_ARM_RME_POPULATE_FLAGS_MEASURE : 0,
-> +    };
-> +
-> +    ret = kvm_vm_enable_cap(kvm_state, KVM_CAP_ARM_RME, 0,
-> +                            KVM_CAP_ARM_RME_POPULATE_REALM,
-> +                            (intptr_t)&populate_args);
-> +    if (ret) {
-> +        error_setg_errno(errp, -ret,
-> +                   "failed to populate realm [0x%"HWADDR_PRIx", 0x%"HWADDR_PRIx")",
-> +                   start, end);
-> +    }
-> +    return ret;
-> +}
-> +
-> +static void rme_populate_ram_region(gpointer data, gpointer err)
-> +{
-> +    Error **errp = err;
-> +    const RmeRamRegion *region = data;
-> +
-> +    if (*errp) {
-> +        return;
-> +    }
-> +
-> +    rme_populate_range(region->base, region->size, /* measure */ true, errp);
-> +}
-> +
->   static int rme_init_cpus(Error **errp)
+>   /* This function is specific for elf program because we don't need to allocate
+>    * all the rom. We just allocate the first part and the rest is just zeros. This
+>    * is why romsize and datasize are different. Also, this function takes its own
+> @@ -1220,6 +1227,7 @@ ssize_t rom_add_option(const char *file, int32_t bootindex)
+>   static void rom_reset(void *unused)
 >   {
->       int ret;
-> @@ -60,6 +130,16 @@ static int rme_create_realm(Error **errp)
->           return -1;
+>       Rom *rom;
+> +    RomLoaderNotify notify;
+>   
+>       QTAILQ_FOREACH(rom, &roms, next) {
+>           if (rom->fw_file) {
+> @@ -1268,6 +1276,13 @@ static void rom_reset(void *unused)
+>           cpu_flush_icache_range(rom->addr, rom->datasize);
+>   
+>           trace_loader_write_rom(rom->name, rom->addr, rom->datasize, rom->isrom);
+> +
+> +        notify = (RomLoaderNotify) {
+> +            .addr = rom->addr,
+> +            .len = rom->datasize,
+> +            .max_len = rom->romsize,
+> +        };
+> +        notifier_list_notify(&rom_loader_notifier, &notify);
 >       }
->   
-> +    if (rme_init_ram(rme_guest->ram_base, rme_guest->ram_size, errp)) {
-> +        return -1;
-> +    }
-> +
-> +    g_slist_foreach(rme_guest->ram_regions, rme_populate_ram_region, errp);
-> +    g_slist_free_full(g_steal_pointer(&rme_guest->ram_regions), g_free);
-> +    if (*errp) {
-> +        return -1;
-> +    }
-> +
->       if (rme_init_cpus(errp)) {
->           return -1;
->       }
-> @@ -105,6 +185,43 @@ static void rme_guest_finalize(Object *obj)
->   {
 >   }
 >   
-> +static gint rme_compare_ram_regions(gconstpointer a, gconstpointer b)
-> +{
-> +        const RmeRamRegion *ra = a;
-> +        const RmeRamRegion *rb = b;
-> +
-> +        g_assert(ra->base != rb->base);
-> +        return ra->base < rb->base ? -1 : 1;
-> +}
-> +
-> +static void rme_rom_load_notify(Notifier *notifier, void *data)
-> +{
-> +    RmeRamRegion *region;
-> +    RomLoaderNotify *rom = data;
-> +
-> +    if (rom->addr == -1) {
-> +        /*
-> +         * These blobs (ACPI tables) are not loaded into guest RAM at reset.
-> +         * Instead the firmware will load them via fw_cfg and measure them
-> +         * itself.
-> +         */
-> +        return;
-> +    }
-> +
-> +    region = g_new0(RmeRamRegion, 1);
-> +    region->base = rom->addr;
-> +    region->size = rom->len;
-> +
-> +    /*
-> +     * The Realm Initial Measurement (RIM) depends on the order in which we
-> +     * initialize and populate the RAM regions. To help a verifier
-> +     * independently calculate the RIM, sort regions by GPA.
-> +     */
-> +    rme_guest->ram_regions = g_slist_insert_sorted(rme_guest->ram_regions,
-> +                                                   region,
-> +                                                   rme_compare_ram_regions);
-> +}
-> +
->   int kvm_arm_rme_init(MachineState *ms)
->   {
->       static Error *rme_mig_blocker;
-> @@ -132,11 +249,22 @@ int kvm_arm_rme_init(MachineState *ms)
->        */
->       qemu_add_vm_change_state_handler(rme_vm_state_change, NULL);
->   
-> +    rme_guest->rom_load_notifier.notify = rme_rom_load_notify;
-> +    rom_add_load_notifier(&rme_guest->rom_load_notifier);
-> +
->       cgs->require_guest_memfd = true;
->       cgs->ready = true;
->       return 0;
->   }
->   
-> +void kvm_arm_rme_init_guest_ram(hwaddr base, size_t size)
-> +{
-> +    if (rme_guest) {
-> +        rme_guest->ram_base = base;
-> +        rme_guest->ram_size = size;
-> +    }
-> +}
-> +
->   int kvm_arm_rme_vcpu_init(CPUState *cs)
->   {
->       ARMCPU *cpu = ARM_CPU(cs);
 
 Thanks,
 Gavin
