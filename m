@@ -4,59 +4,71 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 03EC9C02194
-	for <qemu-devel@archiver.kernel.org>; Tue,  4 Feb 2025 09:30:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2F98FC02194
+	for <qemu-devel@archiver.kernel.org>; Tue,  4 Feb 2025 09:43:17 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tfFFj-0002b1-AP; Tue, 04 Feb 2025 04:29:55 -0500
+	id 1tfFRf-0004eg-71; Tue, 04 Feb 2025 04:42:15 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jonathan.cameron@huawei.com>)
- id 1tfFFh-0002aD-FY; Tue, 04 Feb 2025 04:29:53 -0500
-Received: from frasgout.his.huawei.com ([185.176.79.56])
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1tfFRd-0004eD-1d
+ for qemu-devel@nongnu.org; Tue, 04 Feb 2025 04:42:13 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jonathan.cameron@huawei.com>)
- id 1tfFFe-0006j3-ES; Tue, 04 Feb 2025 04:29:53 -0500
-Received: from mail.maildlp.com (unknown [172.18.186.31])
- by frasgout.his.huawei.com (SkyGuard) with ESMTP id 4YnJ0v3Pbpz6L4tw;
- Tue,  4 Feb 2025 17:27:11 +0800 (CST)
-Received: from frapeml500008.china.huawei.com (unknown [7.182.85.71])
- by mail.maildlp.com (Postfix) with ESMTPS id 3309414011B;
- Tue,  4 Feb 2025 17:29:46 +0800 (CST)
-Received: from localhost (10.203.177.66) by frapeml500008.china.huawei.com
- (7.182.85.71) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.1.2507.39; Tue, 4 Feb
- 2025 10:29:45 +0100
-Date: Tue, 4 Feb 2025 09:29:44 +0000
-To: Itaru Kitayama <itaru.kitayama@linux.dev>
-CC: <qemu-devel@nongnu.org>, Fan Ni <fan.ni@samsung.com>, Peter Maydell
- <peter.maydell@linaro.org>, <mst@redhat.com>, <linux-cxl@vger.kernel.org>,
- <linuxarm@huawei.com>, <qemu-arm@nongnu.org>, Yuquan Wang
- <wangyuquan1236@phytium.com.cn>, Philippe =?ISO-8859-1?Q?Mathieu-Daud=E9?=
- <philmd@linaro.org>
-Subject: Re: [RFC PATCH v12 qemu 2/2] qtest/cxl: Add aarch64 virt test for CXL
-Message-ID: <20250204092944.00004d3c@huawei.com>
-In-Reply-To: <4AEA1355-C6E8-4A9D-8652-607FEBD7EE03@linux.dev>
-References: <20250203173040.145763-1-Jonathan.Cameron@huawei.com>
- <20250203173040.145763-3-Jonathan.Cameron@huawei.com>
- <4AEA1355-C6E8-4A9D-8652-607FEBD7EE03@linux.dev>
-X-Mailer: Claws Mail 4.3.0 (GTK 3.24.42; x86_64-w64-mingw32)
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1tfFRa-0002Nr-E9
+ for qemu-devel@nongnu.org; Tue, 04 Feb 2025 04:42:12 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1738662128;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding;
+ bh=nUa6dEGJDxdv5zsWldLwPd28yUerfPDuu/s2y9mHQaU=;
+ b=GZuauDjlDelZJ476mUEHHzFYIzRLFm8heoNKb93qRXNd/inJeUxPDQGNU7O6NXjbyi/x+l
+ kytWViIzHt29dgyUs6JQaidDzqyDTSLzYEWe5WP5TUB0TeBfTYwAsEaF25m8/zZEtIUNTS
+ nAvzqa8T7/fUT5GlCCqSY4UIUxQ4mpg=
+Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-627-O7cgd6CmMAytMG1yPJ5FjQ-1; Tue,
+ 04 Feb 2025 04:42:07 -0500
+X-MC-Unique: O7cgd6CmMAytMG1yPJ5FjQ-1
+X-Mimecast-MFC-AGG-ID: O7cgd6CmMAytMG1yPJ5FjQ
+Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 5B3E6195608B
+ for <qemu-devel@nongnu.org>; Tue,  4 Feb 2025 09:42:06 +0000 (UTC)
+Received: from toolbx.redhat.com (unknown [10.42.28.60])
+ by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 4F0FE1800360; Tue,  4 Feb 2025 09:42:03 +0000 (UTC)
+From: =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
+To: qemu-devel@nongnu.org
+Cc: "Michael S. Tsirkin" <mst@redhat.com>,
+ David Hildenbrand <david@redhat.com>,
+ =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
+Subject: [PATCH v2] hw/virtio: reset virtio balloon stats on machine reset
+Date: Tue,  4 Feb 2025 09:42:02 +0000
+Message-ID: <20250204094202.2183262-1-berrange@redhat.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: quoted-printable
-X-Originating-IP: [10.203.177.66]
-X-ClientProxiedBy: lhrpeml500001.china.huawei.com (7.191.163.213) To
- frapeml500008.china.huawei.com (7.182.85.71)
-Received-SPF: pass client-ip=185.176.79.56;
- envelope-from=jonathan.cameron@huawei.com; helo=frasgout.his.huawei.com
-X-Spam_score_int: -41
-X-Spam_score: -4.2
-X-Spam_bar: ----
-X-Spam_report: (-4.2 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_MED=-2.3,
- RCVD_IN_MSPIKE_H2=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -69,199 +81,361 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-to:  Jonathan Cameron <Jonathan.Cameron@huawei.com>
-From:  Jonathan Cameron via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, 4 Feb 2025 14:16:19 +0900
-Itaru Kitayama <itaru.kitayama@linux.dev> wrote:
+When a machine is first booted, all virtio balloon stats are initialized
+to their default value -1 (18446744073709551615 when represented as
+unsigned).
 
-> Jonathan,
->=20
-> > On Feb 4, 2025, at 2:30, Jonathan Cameron <Jonathan.Cameron@huawei.com>=
- wrote:
-> >=20
-> > Add a single complex case for aarch64 virt machine.
-> > Given existing much more comprehensive tests for x86 cover the
-> > common functionality, a single test should be enough to verify
-> > that the aarch64 part continue to work.
-> >=20
-> > Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
-> > ---
-> > tests/qtest/cxl-test.c  | 59 ++++++++++++++++++++++++++++++++---------
-> > tests/qtest/meson.build |  1 +
-> > 2 files changed, 47 insertions(+), 13 deletions(-)
-> >=20
-> > diff --git a/tests/qtest/cxl-test.c b/tests/qtest/cxl-test.c
-> > index a600331843..c7189d6222 100644
-> > --- a/tests/qtest/cxl-test.c
-> > +++ b/tests/qtest/cxl-test.c
-> > @@ -19,6 +19,12 @@
-> >     "-device pxb-cxl,id=3Dcxl.1,bus=3Dpcie.0,bus_nr=3D53 " \
-> >     "-M cxl-fmw.0.targets.0=3Dcxl.0,cxl-fmw.0.targets.1=3Dcxl.1,cxl-fmw=
-.0.size=3D4G "
-> >=20
-> > +#define QEMU_VIRT_2PXB_CMD \
-> > +    "-machine virt,cxl=3Don -cpu max " \
-> > +    "-device pxb-cxl,id=3Dcxl.0,bus=3Dpcie.0,bus_nr=3D52 " \
-> > +    "-device pxb-cxl,id=3Dcxl.1,bus=3Dpcie.0,bus_nr=3D53 " \
-> > +    "-M cxl-fmw.0.targets.0=3Dcxl.0,cxl-fmw.0.targets.1=3Dcxl.1,cxl-fm=
-w.0.size=3D4G "
-> > +
-> > #define QEMU_RP \
-> >     "-device cxl-rp,id=3Drp0,bus=3Dcxl.0,chassis=3D0,slot=3D0 "
-> >=20
-> > @@ -197,25 +203,52 @@ static void cxl_2pxb_4rp_4t3d(void)
-> >     qtest_end();
-> >     rmdir(tmpfs);
-> > }
-> > +
-> > +static void cxl_virt_2pxb_4rp_4t3d(void)
-> > +{
-> > +    g_autoptr(GString) cmdline =3D g_string_new(NULL);
-> > +    char template[] =3D "/tmp/cxl-test-XXXXXX";
-> > +    const char *tmpfs;
-> > +
-> > +    tmpfs =3D mkdtemp(template);
-> > +
-> > +    g_string_printf(cmdline, QEMU_VIRT_2PXB_CMD QEMU_4RP QEMU_4T3D,
-> > +                    tmpfs, tmpfs, tmpfs, tmpfs, tmpfs, tmpfs,
-> > +                    tmpfs, tmpfs);
-> > +
-> > +    qtest_start(cmdline->str);
-> > +    qtest_end();
-> > +    rmdir(tmpfs);
-> > +}
-> > #endif /* CONFIG_POSIX */
-> >=20
-> > int main(int argc, char **argv)
-> > {
-> > -    g_test_init(&argc, &argv, NULL);
-> > +    const char *arch =3D qtest_get_arch();
-> >=20
-> > -    qtest_add_func("/pci/cxl/basic_hostbridge", cxl_basic_hb);
-> > -    qtest_add_func("/pci/cxl/basic_pxb", cxl_basic_pxb);
-> > -    qtest_add_func("/pci/cxl/pxb_with_window", cxl_pxb_with_window);
-> > -    qtest_add_func("/pci/cxl/pxb_x2_with_window", cxl_2pxb_with_window=
-);
-> > -    qtest_add_func("/pci/cxl/rp", cxl_root_port);
-> > -    qtest_add_func("/pci/cxl/rp_x2", cxl_2root_port);
-> > +    g_test_init(&argc, &argv, NULL);
-> > +    if (strcmp(arch, "i386") =3D=3D 0 || strcmp(arch, "x86_64") =3D=3D=
- 0) {
-> > +        qtest_add_func("/pci/cxl/basic_hostbridge", cxl_basic_hb);
-> > +        qtest_add_func("/pci/cxl/basic_pxb", cxl_basic_pxb);
-> > +        qtest_add_func("/pci/cxl/pxb_with_window", cxl_pxb_with_window=
-);
-> > +        qtest_add_func("/pci/cxl/pxb_x2_with_window", cxl_2pxb_with_wi=
-ndow);
-> > +        qtest_add_func("/pci/cxl/rp", cxl_root_port);
-> > +        qtest_add_func("/pci/cxl/rp_x2", cxl_2root_port);
-> > #ifdef CONFIG_POSIX
-> > -    qtest_add_func("/pci/cxl/type3_device", cxl_t3d_deprecated);
-> > -    qtest_add_func("/pci/cxl/type3_device_pmem", cxl_t3d_persistent);
-> > -    qtest_add_func("/pci/cxl/type3_device_vmem", cxl_t3d_volatile);
-> > -    qtest_add_func("/pci/cxl/type3_device_vmem_lsa", cxl_t3d_volatile_=
-lsa);
-> > -    qtest_add_func("/pci/cxl/rp_x2_type3_x2", cxl_1pxb_2rp_2t3d);
-> > -    qtest_add_func("/pci/cxl/pxb_x2_root_port_x4_type3_x4", cxl_2pxb_4=
-rp_4t3d);
-> > +        qtest_add_func("/pci/cxl/type3_device", cxl_t3d_deprecated);
-> > +        qtest_add_func("/pci/cxl/type3_device_pmem", cxl_t3d_persisten=
-t);
-> > +        qtest_add_func("/pci/cxl/type3_device_vmem", cxl_t3d_volatile);
-> > +        qtest_add_func("/pci/cxl/type3_device_vmem_lsa", cxl_t3d_volat=
-ile_lsa);
-> > +        qtest_add_func("/pci/cxl/rp_x2_type3_x2", cxl_1pxb_2rp_2t3d);
-> > +        qtest_add_func("/pci/cxl/pxb_x2_root_port_x4_type3_x4",
-> > +                       cxl_2pxb_4rp_4t3d);
-> > #endif
-> > +    } else if (strcmp(arch, "aarch64") =3D=3D 0) {
-> > +#ifdef CONFIG_POSIX
-> > +        qtest_add_func("/pci/cxl/virt/pxb_x2_root_port_x4_type3_x4",
-> > +                       cxl_virt_2pxb_4rp_4t3d);
-> > +#endif
-> > +    }
-> > +
-> >     return g_test_run();
-> > }
-> > diff --git a/tests/qtest/meson.build b/tests/qtest/meson.build
-> > index e60e92fe9d..f5e7fb060e 100644
-> > --- a/tests/qtest/meson.build
-> > +++ b/tests/qtest/meson.build
-> > @@ -257,6 +257,7 @@ qtests_aarch64 =3D \
-> >   (config_all_accel.has_key('CONFIG_TCG') and                          =
-                  \
-> >    config_all_devices.has_key('CONFIG_TPM_TIS_I2C') ? ['tpm-tis-i2c-tes=
-t'] : []) + \
-> >   (config_all_devices.has_key('CONFIG_ASPEED_SOC') ? qtests_aspeed64 : =
-[]) + \
-> > +  qtests_cxl +                                                        =
-                          \
-> >   ['arm-cpu-features',
-> >    'numa-test',
-> >    'boot-serial-test',
-> > --=20
-> > 2.43.0
-> >  =20
->=20
-> In Ubuntu 22.04 LTS, cxl-test applied on top of today=E2=80=99s QEMU upst=
-ream master branch cxl-test fails:
->=20
-> $ ./tests/qtest/cxl-test
-> # random seed: R02S2a8b02df7b32b79d086ce22f7f8ebeab
-> 1..1
-> # Start of aarch64 tests
-> # Start of pci tests
-> # Start of cxl tests
-> # Start of virt tests
-> # starting QEMU: exec qemu-system-aarch64 -qtest unix:/tmp/qtest-568421.s=
-ock -qtest-log /dev/null -chardev socket,path=3D/tmp/qtest-568421.qmp,id=3D=
-char0 -mon chardev=3Dchar0,mode=3Dcontrol -display none -audio none -machin=
-e virt,cxl=3Don -cpu max -device pxb-cxl,id=3Dcxl.0,bus=3Dpcie.0,bus_nr=3D5=
-2 -device pxb-cxl,id=3Dcxl.1,bus=3Dpcie.0,bus_nr=3D53 -M cxl-fmw.0.targets.=
-0=3Dcxl.0,cxl-fmw.0.targets.1=3Dcxl.1,cxl-fmw.0.size=3D4G -device cxl-rp,id=
-=3Drp0,bus=3Dcxl.0,chassis=3D0,slot=3D0 -device cxl-rp,id=3Drp1,bus=3Dcxl.0=
-,chassis=3D0,slot=3D1 -device cxl-rp,id=3Drp2,bus=3Dcxl.1,chassis=3D0,slot=
-=3D2 -device cxl-rp,id=3Drp3,bus=3Dcxl.1,chassis=3D0,slot=3D3 -object memor=
-y-backend-file,id=3Dcxl-mem0,mem-path=3D/tmp/cxl-test-WdBn4X,size=3D256M -o=
-bject memory-backend-file,id=3Dlsa0,mem-path=3D/tmp/cxl-test-WdBn4X,size=3D=
-256M -device cxl-type3,bus=3Drp0,persistent-memdev=3Dcxl-mem0,lsa=3Dlsa0,id=
-=3Dpmem0 -object memory-backend-file,id=3Dcxl-mem1,mem-path=3D/tmp/cxl-test=
--WdBn4X,size=3D256M -object memory-backend-file,id=3Dlsa1,mem-path=3D/tmp/c=
-xl-test-WdBn4X,size=3D256M -device cxl-type3,bus=3Drp1,persistent-memdev=3D=
-cxl-mem1,lsa=3Dlsa1,id=3Dpmem1 -object memory-backend-file,id=3Dcxl-mem2,me=
-m-path=3D/tmp/cxl-test-WdBn4X,size=3D256M -object memory-backend-file,id=3D=
-lsa2,mem-path=3D/tmp/cxl-test-WdBn4X,size=3D256M -device cxl-type3,bus=3Drp=
-2,persistent-memdev=3Dcxl-mem2,lsa=3Dlsa2,id=3Dpmem2 -object memory-backend=
--file,id=3Dcxl-mem3,mem-path=3D/tmp/cxl-test-WdBn4X,size=3D256M -object mem=
-ory-backend-file,id=3Dlsa3,mem-path=3D/tmp/cxl-test-WdBn4X,size=3D256M -dev=
-ice cxl-type3,bus=3Drp3,persistent-memdev=3Dcxl-mem3,lsa=3Dlsa3,id=3Dpmem3 =
- -accel qtest
-> qemu-system-aarch64: -audio: invalid option
-> socket_accept failed: Resource temporarily unavailable
-> **
-> ERROR:../tests/qtest/libqtest.c:550:qtest_connect: assertion failed: (s->=
-fd >=3D 0 && s->qmp_fd >=3D 0)
-> Bail out! ERROR:../tests/qtest/libqtest.c:550:qtest_connect: assertion fa=
-iled: (s->fd >=3D 0 && s->qmp_fd >=3D 0)
-> ../tests/qtest/libqtest.c:199: kill_qemu() tried to terminate QEMU proces=
-s but encountered exit status 1 (expected 0)
-> Aborted (core dumped)
->=20
-> Do I need set env vars when execute this test?
+They remain that way while the firmware is loading, and early phase of
+guest OS boot, until the virtio-balloon driver is activated. Thereafter
+the reported stats reflect the guest OS activity.
 
-I've just been running it with make check-qtest and not seeing anything sim=
-ilar.
+When a machine reset is performed, however, the virtio-balloon stats are
+left unchanged by QEMU, despite the guest OS no longer updating them,
+nor indeed even still existing.
 
-I'm not sure what infrastructure qtest puts round these but I guess it sets
-up that socket.
+IOW, the mgmt app keeps getting stale stats until the guest OS starts
+once more and loads the virtio-balloon driver (if ever). At that point
+the app will see a discontinuity in the reported values as they sudden
+jump from the stale value to the new value. This jump is indigituishable
+from a valid data update.
 
-Jonathan
+While there is an "last-updated" field to report on the freshness of
+the stats, that does not unambiguously tell the mgmt app whether the
+stats are still conceptually relevant to the current running workload.
 
+It is more conceptually useful to reset the stats to their default
+values on machine reset, given that the previous guest workload the
+stats reflect no longer exists. The mgmt app can now clearly identify
+that there are is no stats information available from the current
+executing workload.
 
+The 'last-updated' time is also reset back to 0.
 
->=20
-> Itaru.
+IOW, on every machine reset, the virtio stats are in the same clean
+state they were when the macine first powered on.
+
+A functional test is added to validate this behaviour with a real
+world guest OS.
+
+Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
+---
+
+In v2:
+
+ - Rename virtio_balloon_system_reset_enter to
+   virtio_balloon_reset_enter
+ - Adapt for 'reset.h' header moving from 'sysemu' to 'system'
+ - Add missing tests/functional/meson.build registration
+
+ MAINTAINERS                             |   1 +
+ hw/virtio/virtio-balloon.c              |  30 ++++-
+ include/hw/virtio/virtio-balloon.h      |   4 +
+ tests/functional/meson.build            |   2 +
+ tests/functional/test_virtio_balloon.py | 161 ++++++++++++++++++++++++
+ 5 files changed, 197 insertions(+), 1 deletion(-)
+ create mode 100755 tests/functional/test_virtio_balloon.py
+
+diff --git a/MAINTAINERS b/MAINTAINERS
+index 0cf37fce7b..160c5717e6 100644
+--- a/MAINTAINERS
++++ b/MAINTAINERS
+@@ -2252,6 +2252,7 @@ F: include/hw/virtio/virtio-balloon.h
+ F: system/balloon.c
+ F: include/system/balloon.h
+ F: tests/qtest/virtio-balloon-test.c
++F: tests/functional/test_virtio_balloon.py
+ 
+ virtio-9p
+ M: Greg Kurz <groug@kaod.org>
+diff --git a/hw/virtio/virtio-balloon.c b/hw/virtio/virtio-balloon.c
+index ad05768ded..2eb5a14fa2 100644
+--- a/hw/virtio/virtio-balloon.c
++++ b/hw/virtio/virtio-balloon.c
+@@ -31,7 +31,7 @@
+ #include "trace.h"
+ #include "qemu/error-report.h"
+ #include "migration/misc.h"
+-
++#include "system/reset.h"
+ #include "hw/virtio/virtio-bus.h"
+ #include "hw/virtio/virtio-access.h"
+ 
+@@ -910,6 +910,8 @@ static void virtio_balloon_device_realize(DeviceState *dev, Error **errp)
+     }
+ 
+     reset_stats(s);
++    s->stats_last_update = 0;
++    qemu_register_resettable(OBJECT(dev));
+ }
+ 
+ static void virtio_balloon_device_unrealize(DeviceState *dev)
+@@ -917,6 +919,7 @@ static void virtio_balloon_device_unrealize(DeviceState *dev)
+     VirtIODevice *vdev = VIRTIO_DEVICE(dev);
+     VirtIOBalloon *s = VIRTIO_BALLOON(dev);
+ 
++    qemu_unregister_resettable(OBJECT(dev));
+     if (s->free_page_bh) {
+         qemu_bh_delete(s->free_page_bh);
+         object_unref(OBJECT(s->iothread));
+@@ -987,6 +990,27 @@ static void virtio_balloon_set_status(VirtIODevice *vdev, uint8_t status)
+     }
+ }
+ 
++static ResettableState *virtio_balloon_get_reset_state(Object *obj)
++{
++    VirtIOBalloon *s = VIRTIO_BALLOON(obj);
++    return &s->reset_state;
++}
++
++static void virtio_balloon_reset_enter(Object *obj, ResetType type)
++{
++    VirtIOBalloon *s = VIRTIO_BALLOON(obj);
++
++    /*
++     * When waking up from standby/suspend-to-ram, do not reset stats.
++     */
++    if (type == RESET_TYPE_WAKEUP) {
++        return;
++    }
++
++    reset_stats(s);
++    s->stats_last_update = 0;
++}
++
+ static void virtio_balloon_instance_init(Object *obj)
+ {
+     VirtIOBalloon *s = VIRTIO_BALLOON(obj);
+@@ -1038,6 +1062,7 @@ static void virtio_balloon_class_init(ObjectClass *klass, void *data)
+ {
+     DeviceClass *dc = DEVICE_CLASS(klass);
+     VirtioDeviceClass *vdc = VIRTIO_DEVICE_CLASS(klass);
++    ResettableClass *rc = RESETTABLE_CLASS(klass);
+ 
+     device_class_set_props(dc, virtio_balloon_properties);
+     dc->vmsd = &vmstate_virtio_balloon;
+@@ -1050,6 +1075,9 @@ static void virtio_balloon_class_init(ObjectClass *klass, void *data)
+     vdc->get_features = virtio_balloon_get_features;
+     vdc->set_status = virtio_balloon_set_status;
+     vdc->vmsd = &vmstate_virtio_balloon_device;
++
++    rc->get_state = virtio_balloon_get_reset_state;
++    rc->phases.enter = virtio_balloon_reset_enter;
+ }
+ 
+ static const TypeInfo virtio_balloon_info = {
+diff --git a/include/hw/virtio/virtio-balloon.h b/include/hw/virtio/virtio-balloon.h
+index b12c18a43b..0456c211c6 100644
+--- a/include/hw/virtio/virtio-balloon.h
++++ b/include/hw/virtio/virtio-balloon.h
+@@ -16,6 +16,7 @@
+ #define QEMU_VIRTIO_BALLOON_H
+ 
+ #include "standard-headers/linux/virtio_balloon.h"
++#include "hw/resettable.h"
+ #include "hw/virtio/virtio.h"
+ #include "system/iothread.h"
+ #include "qom/object.h"
+@@ -71,6 +72,9 @@ struct VirtIOBalloon {
+ 
+     bool qemu_4_0_config_size;
+     uint32_t poison_val;
++
++    /* State of the resettable container */
++    ResettableState reset_state;
+ };
+ 
+ #endif
+diff --git a/tests/functional/meson.build b/tests/functional/meson.build
+index 3f085bfbca..9175d7b89d 100644
+--- a/tests/functional/meson.build
++++ b/tests/functional/meson.build
+@@ -47,6 +47,7 @@ test_timeouts = {
+   's390x_ccw_virtio' : 420,
+   'sh4_tuxrun' : 240,
+   'x86_64_kvm_xen' : 180,
++  'virtio_balloon': 120,
+ }
+ 
+ tests_generic_system = [
+@@ -283,6 +284,7 @@ tests_x86_64_system_thorough = [
+   'linux_initrd',
+   'multiprocess',
+   'netdev_ethtool',
++  'virtio_balloon',
+   'virtio_gpu',
+   'x86_64_hotplug_cpu',
+   'x86_64_kvm_xen',
+diff --git a/tests/functional/test_virtio_balloon.py b/tests/functional/test_virtio_balloon.py
+new file mode 100755
+index 0000000000..67b48e1b4e
+--- /dev/null
++++ b/tests/functional/test_virtio_balloon.py
+@@ -0,0 +1,161 @@
++#!/usr/bin/env python3
++#
++# virtio-balloon tests
++#
++# This work is licensed under the terms of the GNU GPL, version 2 or
++# later.  See the COPYING file in the top-level directory.
++
++import time
++
++from qemu_test import QemuSystemTest, Asset
++from qemu_test import wait_for_console_pattern
++from qemu_test import exec_command_and_wait_for_pattern
++
++UNSET_STATS_VALUE = 18446744073709551615
++
++
++class VirtioBalloonx86(QemuSystemTest):
++
++    ASSET_KERNEL = Asset(
++        ('https://archives.fedoraproject.org/pub/archive/fedora/linux/releases'
++         '/31/Server/x86_64/os/images/pxeboot/vmlinuz'),
++        'd4738d03dbbe083ca610d0821d0a8f1488bebbdccef54ce33e3adb35fda00129')
++
++    ASSET_INITRD = Asset(
++        ('https://archives.fedoraproject.org/pub/archive/fedora/linux/releases'
++         '/31/Server/x86_64/os/images/pxeboot/initrd.img'),
++        '277cd6c7adf77c7e63d73bbb2cded8ef9e2d3a2f100000e92ff1f8396513cd8b')
++
++    ASSET_DISKIMAGE = Asset(
++        ('https://archives.fedoraproject.org/pub/archive/fedora/linux/releases'
++         '/31/Cloud/x86_64/images/Fedora-Cloud-Base-31-1.9.x86_64.qcow2'),
++        'e3c1b309d9203604922d6e255c2c5d098a309c2d46215d8fc026954f3c5c27a0')
++
++    DEFAULT_KERNEL_PARAMS = ('root=/dev/vda1 console=ttyS0 net.ifnames=0 '
++                             'rd.rescue')
++
++    def wait_for_console_pattern(self, success_message, vm=None):
++        wait_for_console_pattern(
++            self,
++            success_message,
++            failure_message="Kernel panic - not syncing",
++            vm=vm,
++        )
++
++    def mount_root(self):
++        self.wait_for_console_pattern('Entering emergency mode.')
++        prompt = '# '
++        self.wait_for_console_pattern(prompt)
++
++        exec_command_and_wait_for_pattern(self, 'mount /dev/vda1 /sysroot',
++                                          prompt)
++        exec_command_and_wait_for_pattern(self, 'chroot /sysroot',
++                                          prompt)
++        exec_command_and_wait_for_pattern(self, "modprobe virtio-balloon",
++                                          prompt)
++
++    def assert_initial_stats(self):
++        ret = self.vm.qmp('qom-get',
++                          {'path': '/machine/peripheral/balloon',
++                           'property': 'guest-stats'})['return']
++        when = ret.get('last-update')
++        assert when == 0
++        stats = ret.get('stats')
++        for name, val in stats.items():
++            assert val == UNSET_STATS_VALUE
++
++    def assert_running_stats(self, then):
++        ret = self.vm.qmp('qom-get',
++                          {'path': '/machine/peripheral/balloon',
++                           'property': 'guest-stats'})['return']
++        when = ret.get('last-update')
++        now = time.time()
++
++        assert when > then and when < now
++        stats = ret.get('stats')
++        # Stat we expect this particular Kernel to have set
++        expectData = [
++            "stat-available-memory",
++            "stat-disk-caches",
++            "stat-free-memory",
++            "stat-htlb-pgalloc",
++            "stat-htlb-pgfail",
++            "stat-major-faults",
++            "stat-minor-faults",
++            "stat-swap-in",
++            "stat-swap-out",
++            "stat-total-memory",
++        ]
++        for name, val in stats.items():
++            if name in expectData:
++                assert val != UNSET_STATS_VALUE
++            else:
++                assert val == UNSET_STATS_VALUE
++
++    def test_virtio_balloon_stats(self):
++        self.set_machine('q35')
++        kernel_path = self.ASSET_KERNEL.fetch()
++        initrd_path = self.ASSET_INITRD.fetch()
++        diskimage_path = self.ASSET_DISKIMAGE.fetch()
++
++        self.vm.set_console()
++        self.vm.add_args("-S")
++        self.vm.add_args("-cpu", "max")
++        self.vm.add_args("-m", "2G")
++        # Slow down BIOS phase with boot menu, so that after a system
++        # reset, we can reliably catch the clean stats again in BIOS
++        # phase before the guest OS launches
++        self.vm.add_args("-boot", "menu=on")
++        self.vm.add_args("-machine", "q35,accel=kvm:tcg")
++        self.vm.add_args("-device", "virtio-balloon,id=balloon")
++        self.vm.add_args('-drive',
++                         f'file={diskimage_path},if=none,id=drv0,snapshot=on')
++        self.vm.add_args('-device', 'virtio-blk-pci,bus=pcie.0,' +
++                         'drive=drv0,id=virtio-disk0,bootindex=1')
++
++        self.vm.add_args(
++            "-kernel",
++            kernel_path,
++            "-initrd",
++            initrd_path,
++            "-append",
++            self.DEFAULT_KERNEL_PARAMS
++        )
++        self.vm.launch()
++
++        # Poll stats at 100ms
++        self.vm.qmp('qom-set',
++                    {'path': '/machine/peripheral/balloon',
++                     'property': 'guest-stats-polling-interval',
++                     'value': 100 })
++
++        # We've not run any guest code yet, neither BIOS or guest,
++        # so stats should be all default values
++        self.assert_initial_stats()
++
++        self.vm.qmp('cont')
++
++        then = time.time()
++        self.mount_root()
++        self.assert_running_stats(then)
++
++        # Race window between these two commands, where we
++        # rely on '-boot menu=on' to (hopefully) ensure we're
++        # still executing the BIOS when QEMU processes the
++        # 'stop', and thus have not loaded the virtio-balloon
++        # driver in the guest
++        self.vm.qmp('system_reset')
++        self.vm.qmp('stop')
++
++        # If the above assumption held, we're in BIOS now and
++        # stats should be all back at their default values
++        self.assert_initial_stats()
++        self.vm.qmp('cont')
++
++        then = time.time()
++        self.mount_root()
++        self.assert_running_stats(then)
++
++
++if __name__ == '__main__':
++    QemuSystemTest.main()
+-- 
+2.47.1
+
 
