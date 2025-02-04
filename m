@@ -4,80 +4,90 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 52450C02194
-	for <qemu-devel@archiver.kernel.org>; Tue,  4 Feb 2025 15:09:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 62A21C02196
+	for <qemu-devel@archiver.kernel.org>; Tue,  4 Feb 2025 15:10:11 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tfKXY-0002bH-Ky; Tue, 04 Feb 2025 10:08:40 -0500
+	id 1tfKYd-0004au-S3; Tue, 04 Feb 2025 10:09:48 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1tfKXI-0002Sp-SV
- for qemu-devel@nongnu.org; Tue, 04 Feb 2025 10:08:24 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1tfKXH-00069M-1n
- for qemu-devel@nongnu.org; Tue, 04 Feb 2025 10:08:24 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1738681700;
- h=from:from:reply-to:reply-to:subject:subject:date:date:
- message-id:message-id:to:to:cc:cc:mime-version:mime-version:
- content-type:content-type:in-reply-to:in-reply-to:  references:references;
- bh=keZBIl0/0awBotjv5j4SRgwARa3vGEEioByNSZzPpzM=;
- b=Efsa37YUQzi4K8hoGBGDTIr0WvO0M+HTd7w1t9JFqz15R2OhXC3s5Xem9hMvXWUB5lH5SL
- CzolpmzZgQq8EM4NYrUYxSMmC3RIazXieYIWjK4bh05y5VAff9Kb2fpl6ShHFCZOLnvO9l
- 4uml2jCU7APHhcNv/uQnyqRv6faYCVs=
-Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-648-NrEqGT3OOLON_CaqTSBfVw-1; Tue,
- 04 Feb 2025 10:08:16 -0500
-X-MC-Unique: NrEqGT3OOLON_CaqTSBfVw-1
-X-Mimecast-MFC-AGG-ID: NrEqGT3OOLON_CaqTSBfVw
-Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 99A4A183134A; Tue,  4 Feb 2025 15:08:11 +0000 (UTC)
-Received: from redhat.com (unknown [10.42.28.60])
- by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 82A9718009AF; Tue,  4 Feb 2025 15:08:05 +0000 (UTC)
-Date: Tue, 4 Feb 2025 15:08:02 +0000
-From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
-To: Peter Xu <peterx@redhat.com>
-Cc: "Maciej S. Szmigiero" <mail@maciej.szmigiero.name>,
- Fabiano Rosas <farosas@suse.de>,
- Alex Williamson <alex.williamson@redhat.com>,
- =?utf-8?Q?C=C3=A9dric?= Le Goater <clg@redhat.com>,
- Eric Blake <eblake@redhat.com>, Markus Armbruster <armbru@redhat.com>,
- Avihai Horon <avihaih@nvidia.com>,
- Joao Martins <joao.m.martins@oracle.com>, qemu-devel@nongnu.org
-Subject: Re: [PATCH v4 08/33] migration/multifd: Allow premature EOF on TLS
- incoming channels
-Message-ID: <Z6ItUtb-NhKnn8hy@redhat.com>
-References: <cover.1738171076.git.maciej.szmigiero@oracle.com>
- <baf944c37ead5d30d7e268b2a4074d9acaac2db0.1738171076.git.maciej.szmigiero@oracle.com>
- <Z6EI0V6Cg7aCbzQU@x1.local>
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1tfKYb-0004UK-7F
+ for qemu-devel@nongnu.org; Tue, 04 Feb 2025 10:09:45 -0500
+Received: from mail-yb1-xb31.google.com ([2607:f8b0:4864:20::b31])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1tfKYZ-0006Ke-KS
+ for qemu-devel@nongnu.org; Tue, 04 Feb 2025 10:09:44 -0500
+Received: by mail-yb1-xb31.google.com with SMTP id
+ 3f1490d57ef6-e573136107bso6084137276.3
+ for <qemu-devel@nongnu.org>; Tue, 04 Feb 2025 07:09:43 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1738681782; x=1739286582; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=dWNSQGL5aJVYEVZQCGlkPNzok/EZiOoyN3zu02wGQv0=;
+ b=JrKBQICUghgYNwOzuf3kPWx6OgWKqK5YfJJ4sUQDMlDVXYnQ0Os8wmOtVTEVkieujE
+ Ugt+MHWVVfDK77+/tKetP9QXAamQ6yr3jRuP+SfsAgx+PpAEuq/X9vAKcSQ8ezmejtl2
+ At9QRgUV+tsXzoTd8jQc5aEatrk37wJOSXkfqAbsRXn0L4P8I2ucn0zCwxygYAk+SmRV
+ 6Yy3qcAX4bDhSctRHm6vEz5C0gdPwYXMx7vBDKypVsxzBMrLkTqF5HY4zJXGBzfd8xVw
+ +4T73j2jj28AI5k2J0mNmJSaAiSujN7eBxXDwOQht1LH9QrK8a5mll54Dh+0oVeMQJKJ
+ YcgA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1738681782; x=1739286582;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=dWNSQGL5aJVYEVZQCGlkPNzok/EZiOoyN3zu02wGQv0=;
+ b=ARx+ggaUzME3v83JWBuUFedsPFAjR+mQJliIp7LEH427ms5oRUmfhG5AQcsDYXMZ76
+ 5rg4UmFhasCCPCkkGRsqTClzmmw3P94SdF0ciuWvqHLp5QTD+9G8R3Tc6JC0x0k7C4uM
+ AtnZt1R0p+SCGr1dgX2rITm4Ki65dGJCDh1tNVAa2nvNgMr+ztPg93pyD36GowxdVGOI
+ vcmwMJoDqHO641MfwFQm9Hun4zfl2+I5NZxtShuKlVNmeRBVh6KTHulrOURDr8FWBAgC
+ yYzEbEUaFCCWcgrfW7LDHKL+Op3WGeDr4ygS48tSOTRVJAkwr6L7wx943oORzSYkDEkJ
+ DIUg==
+X-Gm-Message-State: AOJu0YxH7wDu1hnYkQT46BSHBYHJ1uDxq7iq5cnvPvC4fWqVPsGJWuJo
+ JCly2F5WcrHKWZgRFPk+3s3N7fO94dt+Dr4jb/poleLwBZQ83Nw6TvewazeOSt5im14QGdMmNHF
+ 1BYi0nH6fLtuznfX1k/9vaXs/7PoJTLiqO8Iw/y/bGi/wtQ0/
+X-Gm-Gg: ASbGncvlCj/JFwHs3Qq2Ylx7HtgW8+ebWR3EKJ/1CIZXr2Ok/U8zAs2WerU4aisoyH8
+ ROmopUw4zD0mgoiHmXNQxucA1VrFDwqxQ5RqXduRzSHY0CCva+Ek+M3KSS//m6uOtNKXRHr888Q
+ ==
+X-Google-Smtp-Source: AGHT+IFV3CLZLrcg6yKFRfqJpKchyZ+s55CDDOdvQ/gFRpfuN0lQJElqAB2GNFgl+zJCJD00LNfzMD/d+OQ/9orlcS0=
+X-Received: by 2002:a05:6902:c0e:b0:e57:2e8f:b682 with SMTP id
+ 3f1490d57ef6-e58a4ae916fmr20177983276.22.1738681782386; Tue, 04 Feb 2025
+ 07:09:42 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <Z6EI0V6Cg7aCbzQU@x1.local>
-User-Agent: Mutt/2.2.13 (2024-03-09)
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=berrange@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
+References: <20250204002240.97830-1-philmd@linaro.org>
+ <20250204002240.97830-7-philmd@linaro.org>
+In-Reply-To: <20250204002240.97830-7-philmd@linaro.org>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Tue, 4 Feb 2025 15:09:31 +0000
+X-Gm-Features: AWEUYZmlqKw2QuC9sIS36HGrtHZoqOk4Aq0vSmGaRqN_5Mc9jW2YfXvm-rWnzsE
+Message-ID: <CAFEAcA-YXwa9ZQWiV+nBC2p8chq2NkDfksiADNh540nLZYeMCw@mail.gmail.com>
+Subject: Re: [PATCH v2 06/12] hw/arm/raspi: Consider network interface for B
+ models
+To: =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>
+Cc: qemu-devel@nongnu.org,
+ =?UTF-8?Q?Daniel_P_=2E_Berrang=C3=A9?= <berrange@redhat.com>, 
+ BALATON Zoltan <balaton@eik.bme.hu>, Laurent Vivier <lvivier@redhat.com>, 
+ Ovchinnikov Vitalii <vitalii.ovchinnikov@auriga.com>,
+ Jared Mauch <jared+home@puck.nether.net>, 
+ Fabiano Rosas <farosas@suse.de>, Paolo Bonzini <pbonzini@redhat.com>,
+ qemu-arm@nongnu.org, 
+ =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>, 
+ devel@lists.libvirt.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2607:f8b0:4864:20::b31;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yb1-xb31.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -90,63 +100,54 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, Feb 03, 2025 at 01:20:01PM -0500, Peter Xu wrote:
-> On Thu, Jan 30, 2025 at 11:08:29AM +0100, Maciej S. Szmigiero wrote:
-> > From: "Maciej S. Szmigiero" <maciej.szmigiero@oracle.com>
-> > 
-> > Multifd send channels are terminated by calling
-> > qio_channel_shutdown(QIO_CHANNEL_SHUTDOWN_BOTH) in
-> > multifd_send_terminate_threads(), which in the TLS case essentially
-> > calls shutdown(SHUT_RDWR) on the underlying raw socket.
-> > 
-> > Unfortunately, this does not terminate the TLS session properly and
-> > the receive side sees this as a GNUTLS_E_PREMATURE_TERMINATION error.
-> > 
-> > The only reason why this wasn't causing migration failures is because
-> > the current migration code apparently does not check for migration
-> > error being set after the end of the multifd receive process.
-> > 
-> > However, this will change soon so the multifd receive code has to be
-> > prepared to not return an error on such premature TLS session EOF.
-> > Use the newly introduced QIOChannelTLS method for that.
-> > 
-> > It's worth noting that even if the sender were to be changed to terminate
-> > the TLS connection properly the receive side still needs to remain
-> > compatible with older QEMU bit stream which does not do this.
-> 
-> If this is an existing bug, we could add a Fixes.
-> 
-> Two pure questions..
-> 
->   - What is the correct way to terminate the TLS session without this flag?
-> 
->   - Why this is only needed by multifd sessions?
+On Tue, 4 Feb 2025 at 00:23, Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org=
+> wrote:
+>
+> Raspberry Pi 'B' models have an ethernet chipset (the LAN9512).
+> Since we don't yet model it, add a /* TODO */ comment.
+>
+> Signed-off-by: Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org>
+> ---
+>  hw/arm/raspi.c | 14 ++++++++++++++
+>  1 file changed, 14 insertions(+)
+>
+> diff --git a/hw/arm/raspi.c b/hw/arm/raspi.c
+> index 1a6a1f8ff22..68332fba027 100644
+> --- a/hw/arm/raspi.c
+> +++ b/hw/arm/raspi.c
+> @@ -143,6 +143,16 @@ static const char *board_type(uint32_t board_rev)
+>      return types[bt].model;
+>  }
+>
+> +static bool is_model_b(uint32_t board_rev)
+> +{
+> +    return !!strchr(board_type(board_rev), 'B');
+> +}
+> +
+> +static bool has_enet(uint32_t board_rev)
+> +{
+> +    return is_model_b(board_rev);
+> +}
+> +
+>  static void write_smpboot(ARMCPU *cpu, const struct arm_boot_info *info)
+>  {
+>      static const ARMInsnFixup smpboot[] =3D {
+> @@ -304,6 +314,10 @@ void raspi_base_machine_init(MachineState *machine,
+>                              machine->kernel_cmdline, &error_abort);
+>      qdev_realize(DEVICE(soc), NULL, &error_fatal);
+>
+> +    if (has_enet(board_rev)) {
+> +        /* TODO: model LAN9512 and wire over USB2 */
+> +    }
+> +
 
-Graceful TLS termination (via gnutls_bye()) should only be important to
-security if the QEMU protocol in question does not know how much data it
-is expecting to recieve. ie it cannot otherwise distinguish between an
-expected EOF, and a premature EOF triggered by an attacker.
+Why bother, if we don't do anything anyway? We can
+say in the TODO comment
+ /* TODO: "B" models have a LAN9512 on the USB bus */
 
-If the migration protocol has sufficient info to know when a chanel is
-expected to see EOF, then we should stop trying to read from the TLS
-channel before seeing the underlying EOF.
-
-Ignoring GNUTLS_E_PREMATURE_TERMINATION would be valid if we know that
-migration will still fail corretly in the case of a malicious attack
-causing premature termination.
-
-If there's a risk that migration may succeed, but with incomplete data,
-then we would need the full gnutls_bye dance.
-
-With regards,
-Daniel
--- 
-|: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
-|: https://libvirt.org         -o-            https://fstop138.berrange.com :|
-|: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
-
+thanks
+-- PMM
 
