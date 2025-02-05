@@ -4,99 +4,91 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C99B9C02192
-	for <qemu-devel@archiver.kernel.org>; Wed,  5 Feb 2025 17:39:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C8B40C02192
+	for <qemu-devel@archiver.kernel.org>; Wed,  5 Feb 2025 17:41:26 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tfjMN-00067j-GA; Wed, 05 Feb 2025 12:38:48 -0500
+	id 1tfjOb-0007Vo-R0; Wed, 05 Feb 2025 12:41:06 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <rreyes@linux.ibm.com>)
- id 1tfjMK-00067D-EE; Wed, 05 Feb 2025 12:38:44 -0500
-Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
+ (Exim 4.90_1) (envelope-from <dmitry.osipenko@collabora.com>)
+ id 1tfjOM-0007Of-5c
+ for qemu-devel@nongnu.org; Wed, 05 Feb 2025 12:40:50 -0500
+Received: from sender4-pp-f112.zoho.com ([136.143.188.112])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <rreyes@linux.ibm.com>)
- id 1tfjMI-0001dP-PB; Wed, 05 Feb 2025 12:38:44 -0500
-Received: from pps.filterd (m0356517.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 515F1laW001815;
- Wed, 5 Feb 2025 17:38:39 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=pp1; bh=9b1eS1
- F0KiE9G0EB/RzDRg//BB7W5NuD730cIcebpWE=; b=AG5rCRlWx9YSoKN6s251Wu
- GYaWhiqZ/RKFDrT4ZQOr2ris2fUipAzY58/vaP3R90Qf8UsCQzZKvw976+KwrSrh
- pXr1rf1Trs+htCcFctB299E4PdQZmAMfAGXah647TsrrS6/S40HoJQnXNeDE99A3
- ZA3w8P+15UQOA3yX6oIGkqZJUW7mxCHSDelFYLvkBLm0nQz4XxBZcfDwmzBE1eqx
- Z1qojV0OeHPu4yr0Rnzu5EvjCmeL086NOp5KnFf9jpJJ8c7W/fvNHcivkJC8WDab
- u6sx8YZOfeK9Amb/OFpbD/n4KkcbwxGuR9nCrNuWJQG7SS5gRLVxYTVTxO7DBvEg
- ==
-Received: from ppma11.dal12v.mail.ibm.com
- (db.9e.1632.ip4.static.sl-reverse.com [50.22.158.219])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 44ma8yrwph-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Wed, 05 Feb 2025 17:38:38 +0000 (GMT)
-Received: from pps.filterd (ppma11.dal12v.mail.ibm.com [127.0.0.1])
- by ppma11.dal12v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 515HYBtu021477;
- Wed, 5 Feb 2025 17:38:38 GMT
-Received: from smtprelay02.wdc07v.mail.ibm.com ([172.16.1.69])
- by ppma11.dal12v.mail.ibm.com (PPS) with ESMTPS id 44j0n1hnk1-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Wed, 05 Feb 2025 17:38:38 +0000
-Received: from smtpav03.wdc07v.mail.ibm.com (smtpav03.wdc07v.mail.ibm.com
- [10.39.53.230])
- by smtprelay02.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 515Hca4632309972
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Wed, 5 Feb 2025 17:38:36 GMT
-Received: from smtpav03.wdc07v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 8CCC958054;
- Wed,  5 Feb 2025 17:38:36 +0000 (GMT)
-Received: from smtpav03.wdc07v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 2201E5805A;
- Wed,  5 Feb 2025 17:38:35 +0000 (GMT)
-Received: from [9.61.244.212] (unknown [9.61.244.212])
- by smtpav03.wdc07v.mail.ibm.com (Postfix) with ESMTP;
- Wed,  5 Feb 2025 17:38:35 +0000 (GMT)
-Message-ID: <8633a62e-eb18-4b87-ae35-600c076034b5@linux.ibm.com>
-Date: Wed, 5 Feb 2025 12:38:34 -0500
+ (Exim 4.90_1) (envelope-from <dmitry.osipenko@collabora.com>)
+ id 1tfjOK-00025J-6y
+ for qemu-devel@nongnu.org; Wed, 05 Feb 2025 12:40:49 -0500
+ARC-Seal: i=1; a=rsa-sha256; t=1738777228; cv=none; 
+ d=zohomail.com; s=zohoarc; 
+ b=L3uwJMIaxaDd1uW0MBjiCHikbbLHYY5ZGP+jZCoNHab8FeL8r1IBmEwyFHBhLQCwVrNpB69699M0JCrKA4q3bbs4SNuuYufFVHVA1E8CJ/9zjCnYoich4R84IMjdPe7hOZ7hpRSjefJ82mHsnqExvoDk6C73GnR8+slMqV0jIfI=
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=zohomail.com;
+ s=zohoarc; t=1738777228;
+ h=Content-Type:Content-Transfer-Encoding:Cc:Cc:Date:Date:From:From:In-Reply-To:MIME-Version:Message-ID:References:Subject:Subject:To:To:Message-Id:Reply-To;
+ bh=j6CvKxbTaUekiYQgeogkb9i0eCN1TkTlqJDcoDBpLOw=; 
+ b=M3DhyTkh24Qqw3w9fbQc83A6S98jTiBB1qZD/7cc+WIg3d6gTsnsbF5fSyT+H6R6IOmVwRBCy/mZdKJnaZG4DkH0eEiMe04k6uWXy4xUS0ba0odvJUgXmaRhN3JWJlmw97EbQ7YhR0JrYthDsfPcF1yQISNt4b97wiF1sO7hW1s=
+ARC-Authentication-Results: i=1; mx.zohomail.com;
+ dkim=pass  header.i=collabora.com;
+ spf=pass  smtp.mailfrom=dmitry.osipenko@collabora.com;
+ dmarc=pass header.from=<dmitry.osipenko@collabora.com>
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; t=1738777228; 
+ s=zohomail; d=collabora.com; i=dmitry.osipenko@collabora.com; 
+ h=Message-ID:Date:Date:MIME-Version:Subject:Subject:To:To:Cc:Cc:References:From:From:In-Reply-To:Content-Type:Content-Transfer-Encoding:Message-Id:Reply-To;
+ bh=j6CvKxbTaUekiYQgeogkb9i0eCN1TkTlqJDcoDBpLOw=;
+ b=cS8RmlkzdkWdcgFeNzPTyA0BOnX54oo2zzp/mAeZn8rgPcLYQjEL5p5S6VW2TaAA
+ CI8vuU7tfcbMTWF1HubOoXjmVGuB5znj0XePqua+2FsEEzlAlcUdA8W+X6l096M7L3+
+ UpLjcbLB/OyBkrbnarrhPLPa53EzkZO3mYeenhWc=
+Received: by mx.zohomail.com with SMTPS id 1738777224730339.9543923077673;
+ Wed, 5 Feb 2025 09:40:24 -0800 (PST)
+Message-ID: <d85f6669-8c46-4678-85d6-59240935d197@collabora.com>
+Date: Wed, 5 Feb 2025 20:40:17 +0300
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v1 0/5] Report vfio-ap configuration changes
-To: Alex Williamson <alex.williamson@redhat.com>
-Cc: qemu-devel@nongnu.org, qemu-s390x@nongnu.org, pbonzini@redhat.com,
- cohuck@redhat.com, pasic@linux.ibm.com, jjherne@linux.ibm.com,
- borntraeger@linux.ibm.com, clg@redhat.com, thuth@redhat.com,
- akrowiak@linux.ibm.com
-References: <20250107184354.91079-1-rreyes@linux.ibm.com>
- <20250107140634.35cb33ba.alex.williamson@redhat.com>
+Subject: Re: [PATCH v5 8/8] docs/system: Expand the virtio-gpu documentation
+To: Akihiko Odaki <akihiko.odaki@daynix.com>,
+ =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
+Cc: Huang Rui <ray.huang@amd.com>,
+ =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
+ =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Gerd Hoffmann <kraxel@redhat.com>, "Michael S . Tsirkin" <mst@redhat.com>,
+ Paolo Bonzini <pbonzini@redhat.com>, Gert Wollny
+ <gert.wollny@collabora.com>, qemu-devel@nongnu.org,
+ Gurchetan Singh <gurchetansingh@chromium.org>, Alyssa Ross <hi@alyssa.is>,
+ =?UTF-8?Q?Roger_Pau_Monn=C3=A9?= <roger.pau@citrix.com>,
+ Alex Deucher <alexander.deucher@amd.com>,
+ Stefano Stabellini <stefano.stabellini@amd.com>,
+ =?UTF-8?Q?Christian_K=C3=B6nig?= <christian.koenig@amd.com>,
+ Xenia Ragiadakou <xenia.ragiadakou@amd.com>,
+ Pierre-Eric Pelloux-Prayer <pierre-eric.pelloux-prayer@amd.com>,
+ Honglei Huang <honglei1.huang@amd.com>, Julia Zhang <julia.zhang@amd.com>,
+ Chen Jiqian <Jiqian.Chen@amd.com>, Rob Clark <robdclark@gmail.com>,
+ Yiwei Zhang <zzyiwei@chromium.org>, Sergio Lopez Pascual <slp@redhat.com>
+References: <20250119220050.15167-1-dmitry.osipenko@collabora.com>
+ <20250119220050.15167-9-dmitry.osipenko@collabora.com>
+ <c2e1c362-5d02-488e-b849-d0b14781a60f@daynix.com>
+ <87ikq9r7wj.fsf@draig.linaro.org>
+ <171b1cd3-1077-438c-a27c-3b9b3ce25f0f@daynix.com>
+ <ea866d19-90f6-4bb9-a3f6-f84b2ea2c457@collabora.com>
+ <86dce86b-03bf-4abe-b825-1341e93eb88d@daynix.com>
+ <920043a8-9294-4b40-8d8e-3611727e4cd2@collabora.com>
+ <0f88994f-1a93-4049-addc-a62e8ca49904@daynix.com>
 Content-Language: en-US
-From: Rorie Reyes <rreyes@linux.ibm.com>
-In-Reply-To: <20250107140634.35cb33ba.alex.williamson@redhat.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+From: Dmitry Osipenko <dmitry.osipenko@collabora.com>
+In-Reply-To: <0f88994f-1a93-4049-addc-a62e8ca49904@daynix.com>
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-X-TM-AS-GCONF: 00
-X-Proofpoint-ORIG-GUID: wJF2OZ8Z0-L7v0wMVIY2aFBkxzqEdLyx
-X-Proofpoint-GUID: wJF2OZ8Z0-L7v0wMVIY2aFBkxzqEdLyx
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1057,Hydra:6.0.680,FMLib:17.12.68.34
- definitions=2025-02-05_06,2025-02-05_03,2024-11-22_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- clxscore=1015 impostorscore=0
- malwarescore=0 phishscore=0 mlxlogscore=846 spamscore=0 mlxscore=0
- lowpriorityscore=0 suspectscore=0 adultscore=0 priorityscore=1501
- bulkscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2501170000 definitions=main-2502050134
-Received-SPF: pass client-ip=148.163.156.1; envelope-from=rreyes@linux.ibm.com;
- helo=mx0a-001b2d01.pphosted.com
-X-Spam_score_int: -26
-X-Spam_score: -2.7
+X-ZohoMailClient: External
+Received-SPF: pass client-ip=136.143.188.112;
+ envelope-from=dmitry.osipenko@collabora.com; helo=sender4-pp-f112.zoho.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H2=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -112,43 +104,54 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+On 2/3/25 08:31, Akihiko Odaki wrote:
+...
+>> Requirements don't vary much. For example virglrenderer minigbm support
+>> is mandatory for crosvm, while for QEMU it's not.
+> 
+> Is that true? It seems that virglrenderer uses builds without minigbm
+> support to run tests on GitLab CI.
 
-On 1/7/25 2:06 PM, Alex Williamson wrote:
-> On Tue,  7 Jan 2025 13:43:49 -0500
-> Rorie Reyes <rreyes@linux.ibm.com> wrote:
->
->> This patch series creates and registers a handler that is called when
->> userspace is notified by the kernel that a guest's AP configuration has
->> changed. The handler in turn notifies the guest that its AP configuration
->> has changed. This allows the guest to immediately respond to AP
->> configuration changes rather than relying on polling or some other
->> inefficient mechanism for detecting config changes.
-> Why are configuration changes to the device allowed while the device is
-> in use?
->
-> Would a uevent be considered an inefficient mechanism?  Why?
->
-> Thanks,
-> Alex
->
-Hey Alex,
+CI is running in a headless mode using software renderer. For a
+full-featured crosvm support running on a baremetal, minigbm should be
+needed, along with other downstream features.
 
-Sorry for the long delay, but to answer your question, the VFIO device 
-is typically used to pass through a single I/O
+> Anyway, if there is any variance in the build procedure, that may
+> justify having a separate build instruction in QEMU tree to avoid
+> confusion. Otherwise, it's better to have a documentation shared with
+> other VMMs.
+> 
+>>
+>>> I'm not entirely sure the documentation will stay as is for that long.
+>>> The requirements of Intel native context refer to merge requests that
+>>> can be merged sooner or later. Asahi may need more updates if you
+>>> document it too because its DRM ABI is still unstable.
+>>
+>> The unstable parts of course will need to be updated sooner, but the
+>> stable should be solid for years. I expect that about a year later
+>> requirements will need to be revisited.
+>>
+> 
+> It will be some burden in the future. Now you are adding this
+> documentation just for QEMU, but crosvm and libkrun may gain similar
+> documentation. The DRM native context support for Intel and Asahi is in
+> development, and I guess nvk will support it someday.
+> 
+> So, a very rough estimation of future documentation updates will be:
+> (number of VMMs) * (number of DRM native contexts in development)
+> = 3 * 3
+> = 9
+> 
+> That's manageable but suboptimal.
 
-device, like a VGPU or PCI device. VFIO allows direct access to the 
-memory of the underlying device to perofrm the I/O.
+I don't mind deferring the doc addition if that's preferred. Either way
+is fine with me. Yet it's better to have doc than not.
 
-Our VFIO device does not follow that model and it represents a guest's 
-AP configuration, not an individual AP device. Granting
+In my view crosvm and libkrun exist separately from QEMU, they serve a
+different purpose. Majority of QEMU users likely never heard about those
+other VMMs. A unified doc won't be a worthwhile effort, IMO.
 
-guest access to AP devices in the configuration is controlled outside of 
-the VFIO. The purpose of the mdev is to provide
-
-a means for specifying the AP configuration for the guest. When the mdev 
-is attached to the guest, the vfio_ap device driver
-
-set the AP configuration assigned to the mdev into the control blocks 
-used to start the guest.
-
+-- 
+Best regards,
+Dmitry
 
