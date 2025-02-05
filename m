@@ -4,82 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CB80CC02198
-	for <qemu-devel@archiver.kernel.org>; Wed,  5 Feb 2025 18:25:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 09C40C02192
+	for <qemu-devel@archiver.kernel.org>; Wed,  5 Feb 2025 18:26:00 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tfk4W-00042d-7T; Wed, 05 Feb 2025 13:24:24 -0500
+	id 1tfk5u-00051j-EV; Wed, 05 Feb 2025 13:25:50 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1tfk4U-000427-Ha
- for qemu-devel@nongnu.org; Wed, 05 Feb 2025 13:24:22 -0500
-Received: from mail-pj1-x102d.google.com ([2607:f8b0:4864:20::102d])
+ id 1tfk5s-00051M-BV
+ for qemu-devel@nongnu.org; Wed, 05 Feb 2025 13:25:48 -0500
+Received: from mail-pl1-x636.google.com ([2607:f8b0:4864:20::636])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1tfk4K-00006O-54
- for qemu-devel@nongnu.org; Wed, 05 Feb 2025 13:24:14 -0500
-Received: by mail-pj1-x102d.google.com with SMTP id
- 98e67ed59e1d1-2f9d627b5fbso2988757a91.2
- for <qemu-devel@nongnu.org>; Wed, 05 Feb 2025 10:24:11 -0800 (PST)
+ id 1tfk5q-0000cY-Ie
+ for qemu-devel@nongnu.org; Wed, 05 Feb 2025 13:25:48 -0500
+Received: by mail-pl1-x636.google.com with SMTP id
+ d9443c01a7336-21f20666e72so2677285ad.1
+ for <qemu-devel@nongnu.org>; Wed, 05 Feb 2025 10:25:45 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1738779850; x=1739384650; darn=nongnu.org;
+ d=linaro.org; s=google; t=1738779945; x=1739384745; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:to:subject:user-agent:mime-version:date:message-id:from
  :to:cc:subject:date:message-id:reply-to;
- bh=yGGavXi3UNEcY6VrRAtJoSSirlQQH7uuuHAbhVgoFaQ=;
- b=azhn7/laWz8gOdITWDo4wgwnjwZ7KXlZyOIXsAMLbO19LoJiyVwSK+WLVW1DeLO+wz
- Pf7MPsKiq8rcqxTgeohzBxeIbEWUHq5sk9YyiCzqX73xdhlM0+12zRumv3QGxBIO0kto
- SsKC7BNyYPyDvGrzUaFGwd0KAXKOwjRlGuRbmATjsDch84kX7sMGhTFrixOfiAQyqyg8
- kVZtYjLaa37NMhfAthG6OdbSGmIbUp31zOj0tK9C/AaoW3XvnCsl6EJ0VXWRZ3AfxMpb
- XxSf59oKpDOKdsmCZnbDEZbINW7F06FxpaxUWH9QSDH3/gE6y4VsAcjJiQVjNSx/LcTV
- +0Aw==
+ bh=w6NHmnVDKKp3ZtGQSeQWU7CqxkSE/9v9r9iFEFiXHQ8=;
+ b=HLGRM1RBbAUL7Ncp3zPuFCsZKBkKn9nn+RUuEu9Mc+dr2A9CUzqwHlc271rzg3BgoM
+ ehfflYkjzjJfgQILc5clzSr0EpxWKMjjFHARBd9w1XlD1t7M4H1qejySI/U+5CloI8uz
+ dFrlPagxo8glUL671iiOh0m5rZYVPjH3QscO1ZUpfLoP1gGhTZ6cOly5Vu7KMZrylecX
+ 8mE2cWBOUcrsAh9GY13ctBfQjZs4tQRfZOhfWzxLyRJZ2oOfYzDVsywrf9gDOK9ttT+Q
+ IUzLUqbeB34wsf96Om3vlfRwT3eAMKgBKQOa8lKGRbdmPycZn2gpbo1lyaJWIA6Dyvp8
+ rDkA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1738779850; x=1739384650;
+ d=1e100.net; s=20230601; t=1738779945; x=1739384745;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=yGGavXi3UNEcY6VrRAtJoSSirlQQH7uuuHAbhVgoFaQ=;
- b=o9l5xiPMXcm5qe6FpVk6jjLhCbybJQeTroQ3EkJXVF2kSm6DGBPFPFX43wVseFE2B0
- yb4Fnwt6mahybpHGrbezXPrWTf+FhwNlacN/0mdSC14P+LJxng/+YUZQ/faTA5BAC/sz
- hcxb9OlyiooIYOXmWKZjXY5uPkVZ8QTNBU0nJopUacJQMpQ9nPdarYkmCMThRDqn0c1J
- soSeyEmp540mzcXZ5egzQ0Vq3ya6l5ezcM0KVOMJHih4SKnuofyyrQyL6d2BXmBZG2oX
- OrUj3yR05fLDaaGYqbwwKZf55gOPwwjT71og4OB2pL1eEeYyGO6vK0FQ3X6Z8CneGTwl
- 0vyQ==
-X-Gm-Message-State: AOJu0YwRnQieJbDzrck7/jVe6pS1IkBLiPvcN/Q6D4g7IhKSeuMsnB4L
- wgE9T5VoWvtkiHFGNJGvOEv9CwSL7YBxqMulAOWJSrtohk4t8RMBAUmLxCVRZtCUb93U1XTySHA
- K
-X-Gm-Gg: ASbGncvRD8DMW95ZHlkAWBxaUGnx9kYVon3hmSRRFTZMLRY66nHoAaKF2dkDoTbfau2
- SnMWKErSBVJZKgpKrNELFs1RkBYiV51UZb8hPvP8x8MlmFHzlK5jCgA8I+yxrOVkbLJJV5cJ136
- xGmGs2fv/Hfptiu/hUB32HRyLt+RS9t9tpd3D29ulXvRWOcy8wzC41pPNJwGaz4lTUP+K/uRGEy
- cIZ1LY1fDDUIdQFrm03KPKFaQRSRbrs5Ipoh2xRPjX7C0IpxiSeexKI8E99rlS2EcUXbqauLpLa
- 9upRpuqgStQDoq3YDrCWvKRPVlasO6As/an3Z5u1V+EG4U6vXC8I3+I=
-X-Google-Smtp-Source: AGHT+IGjaohE/LDET8mf8iNXbL+rYxTIsEvZnIJu39ZQhgKHiPl7tMYSWvOhArYzClqW6kquPtrovA==
-X-Received: by 2002:a05:6a00:3393:b0:725:973f:9d53 with SMTP id
- d2e1a72fcca58-730351ead83mr5691731b3a.15.1738779850190; 
- Wed, 05 Feb 2025 10:24:10 -0800 (PST)
+ bh=w6NHmnVDKKp3ZtGQSeQWU7CqxkSE/9v9r9iFEFiXHQ8=;
+ b=t1w5stCr7CnFBoIahy5LWI7tHqnxOlA7gkCt48h2wcdTN89XrA8rS9IpL24kgjJAnk
+ o7D/+dzoz2c6b/Mjlu1pUCApWhN1PwlyNBy2zjIfVn60bS+LRUrURtMmyRSxjekhL9Zc
+ Dxk33DscE4NksyLKzO+lKe5KAeR0Jp5xJcazRh5WKOAlBmOOd4b8ay4S7Huyi3xebEQ+
+ iwupFqxC9pDYd6aE3b34g3Fl4DbKq+VSjS2m0dqstiHLYfGgoCyhWesbrRrpFERgHB2M
+ BnIHR80TL4n/Mcx6VVt4aFn+fV+0x0adYwyz4FCzIX8IVJX0iVzxvOip+w5o92Zb/5/c
+ t6Kg==
+X-Gm-Message-State: AOJu0YyglcDP4R2KdH84bzWJ2cOG5e7gspXDq1MEEJ3vDrrxIfeeQ9Ii
+ ZcO22Fbi7TjZAZkoUuDYTYAxWX7Oxn2dC6zhSSJIPp0Ky4N9J+HKtkJGk1pE62NgL1z54/Z7L42
+ 6
+X-Gm-Gg: ASbGncv2uAJQO+616FChzQcBCE4Bcb1TJHxYM3wyN299BNN4DloTB3JkLxeAL5Nbx48
+ XzrzUa68k/5XdDnYeA0QmwfSyRt/e6hWvSQ/U73FwHypuOt54+XHDdpSMUt/N+QONVrUZC8xdQM
+ ySLbdY14cnSvsRQKkHSz099FYXBRLY55R8ZAR9oz8v9+LZRfYsr8F76k7Pj2u3ZOpdSiiDXRrlL
+ pcTPOknx4b14XcIaqziJXOMGoRIACVtSdChy3JkBPHASeSIA+6VS1LxB/9MhjvJhDLrImcJB0o1
+ Oon4g7L69nuVDo594rQ3Kk4RDugh3elG/jVRiVJm4HDnVzXshZGniaw=
+X-Google-Smtp-Source: AGHT+IFkhv2Vd+Iwfg+vVRh2IjBxU/cOrtvwuWP/Iw/6fKjoxh6ybqkm4tdx7Cc2/ZqHoxsaJYVuVA==
+X-Received: by 2002:a05:6a20:d70a:b0:1ea:ee89:5d9b with SMTP id
+ adf61e73a8af0-1ede88453c2mr7678959637.21.1738779944797; 
+ Wed, 05 Feb 2025 10:25:44 -0800 (PST)
 Received: from [192.168.0.4] (71-212-39-66.tukw.qwest.net. [71.212.39.66])
  by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-72fe69ba3e4sm12847853b3a.85.2025.02.05.10.24.09
+ d2e1a72fcca58-72fe64275c4sm13358102b3a.61.2025.02.05.10.25.44
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 05 Feb 2025 10:24:09 -0800 (PST)
-Message-ID: <18acac8d-271a-4641-893e-93096f31a2ac@linaro.org>
-Date: Wed, 5 Feb 2025 10:24:08 -0800
+ Wed, 05 Feb 2025 10:25:44 -0800 (PST)
+Message-ID: <23032dd9-063e-49b3-a6b8-25d0c8f72cef@linaro.org>
+Date: Wed, 5 Feb 2025 10:25:43 -0800
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
 Subject: Re: [PATCH 5/5] tests/functional: skip mem addr test on 32-bit hosts
 To: qemu-devel@nongnu.org
 References: <20250205155946.2811296-1-berrange@redhat.com>
  <20250205155946.2811296-6-berrange@redhat.com>
+ <9edd3138-3411-4459-96c3-d48c30e197e0@linaro.org>
+ <Z6OXlPu0fw_S9iy6@redhat.com>
 Content-Language: en-US
 From: Richard Henderson <richard.henderson@linaro.org>
-In-Reply-To: <20250205155946.2811296-6-berrange@redhat.com>
+In-Reply-To: <Z6OXlPu0fw_S9iy6@redhat.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::102d;
- envelope-from=richard.henderson@linaro.org; helo=mail-pj1-x102d.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::636;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x636.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -102,22 +104,22 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 2/5/25 07:59, Daniel P. Berrangé wrote:
-> +
-> +'''
-> +Decorator to skip execution of a test on 32-bit targets
-> +Example:
-> +
-> +  @skipIf32BitTarget()
-> +'''
-> +def skipIf32BitTarget():
-> +    enoughBits = sys.maxsize > 2**32
+On 2/5/25 08:53, Daniel P. Berrangé wrote:
+>>> +Decorator to skip execution of a test on 32-bit targets
+>>> +Example:
+>>> +
+>>> +  @skipIf32BitTarget()
+>>> +'''
+>>> +def skipIf32BitTarget():
+>>> +    enoughBits = sys.maxsize > 2**32
+>>> +    return skipUnless(enoughBits,
+>>> +                      'Test requires a host with 64-bit address space')
+>>
+>> skipIf32BitHost?
+> 
+> I don't mind either way.
 
-This will work for true 32-bit hosts, and possibly for containers running emulation, but 
-it won't work for cross-compilation (x86_64 to i686 or aarch64 to arm).
-
-Perhaps "file qemu-system-foo" | grep "ELF 32-bit" ?
-I don't know that we've actually selected the executable at this point though...
+Definitely host.
 
 
 r~
