@@ -4,95 +4,99 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 97481C02192
-	for <qemu-devel@archiver.kernel.org>; Wed,  5 Feb 2025 11:22:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2DB74C02192
+	for <qemu-devel@archiver.kernel.org>; Wed,  5 Feb 2025 11:54:35 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tfdRV-0004UQ-DR; Wed, 05 Feb 2025 06:19:41 -0500
+	id 1tfdyP-0007T8-9r; Wed, 05 Feb 2025 06:53:41 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <rkanwal@rivosinc.com>)
- id 1tfdRS-0004Sw-LE
- for qemu-devel@nongnu.org; Wed, 05 Feb 2025 06:19:38 -0500
-Received: from mail-wm1-x332.google.com ([2a00:1450:4864:20::332])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <rkanwal@rivosinc.com>)
- id 1tfdRO-0003zE-Qd
- for qemu-devel@nongnu.org; Wed, 05 Feb 2025 06:19:38 -0500
-Received: by mail-wm1-x332.google.com with SMTP id
- 5b1f17b1804b1-4361c705434so49185785e9.3
- for <qemu-devel@nongnu.org>; Wed, 05 Feb 2025 03:19:34 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=rivosinc-com.20230601.gappssmtp.com; s=20230601; t=1738754373; x=1739359173;
- darn=nongnu.org; 
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=P94eG0VOuEPk8R4fjGcXAJQJgEEmsouLFxymCXAgKiA=;
- b=lcTeDQa4JzTHEwWWxtcKbDyL1bjnhjN7ikKBtjBHM2TVpsY9OCN0MRhHpGCsTBmUbq
- bVVjA9odVil43QKleyynfOC7OfQn7laXohT/c8Fh6dB7ynAwYk+qpIXPeVOuj90wCI64
- xcBynmF3OXf+zPi7nS4EpCxFXcEeTVr4QUU6ziwuGl9OyOVxJtPXW3+8bBruHvPu1QM7
- Y4rTaVsB/qowM6iNJ8Y79EtAWpa6TiDXZULB5jAMdO7zsICOAzyeULQvLIxvNR88zcZa
- WLh8ojGXfM5FthmbQyxKIiJxbUKTFYCDbaOr83Rr/j0j8HyKgkPbUKp0ZFug++XujSQc
- FcTg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1738754373; x=1739359173;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=P94eG0VOuEPk8R4fjGcXAJQJgEEmsouLFxymCXAgKiA=;
- b=Wjv4SqtkB0wdtkLd2B2eSMnFjEpM5aP0HMbL79/tnU5n++QDJoRU4FpWuxReXNx+tn
- zcR4BmdER4/r1befwfWxI/4vTiOuUvPCuwBj7831xgDcew74FQIoQbFjo6GaHDe/h0aI
- RbKePuDdjZaCKMQNIsVOmS5wvSthTJ833YAoh0jQyyW2H7JXSIRKk8LAqlPIQOFBUNhk
- mrw86YozmxkIJCDJb3qE9sWpjwf5wFtk9PHLVTsiAU8+q936e+D/eDld2woFZYFo0bT6
- cajydxSa35NaoCtVT+ZelQ1FIIuaTvTcVT/bvkFEx/azoUjPNnrC1KU5dvs1j2mQUXWy
- itnA==
-X-Forwarded-Encrypted: i=1;
- AJvYcCUwRHIgrO5bDAnQF21EtYjH7AdyQN/1SheVvZCgJdytOdewbspDi3xpMVS6VxiDpgh2Mb4QM3Ek+znR@nongnu.org
-X-Gm-Message-State: AOJu0YxgI6Qg9sfSPrsKK6S64fWX1TLrNAN5zgCnXkzRvwS0l2rxuQ6P
- lErJe5yXSNwTRBogpVLFLrU4nGtTTIXmtZSglHYdSgIGEpJ9JBcwKF286Gn1vkbWC2UO+0J6txa
- i
-X-Gm-Gg: ASbGncsJvWwRzMCHPc9PHOD7qHTg4ZyR9WJSlRxwV62eTgwtSSrs1DbWF4OMifCd9vE
- mnI1Y+OlEWOuttpMzfgFXbu2E8IecawJ0xclv2VUGcba84jHvkdKH6zFb2H627YHofCTQ1B4YOY
- k1dT4CArFM5Y0tOShIEXP+35yqulniPfbTKRKD0AELXzp0DHlKiZBO5vltMHUBNqp4tr1sxJweq
- UrNG9dow8EMu/uMrutUPE+5/5z52iiQZ/e+0tNKNXuQY5aFa/0mqkJZajjMob2OqwBXKB8NjpqI
- ZLCzjp3guJwxpu1Iv1bMTPFddgo=
-X-Google-Smtp-Source: AGHT+IHChnHaIDS2LRdgOzwuDm1BRVo1OONl+v7zCQ0cLmnnZBXN4oT20z79gfp3DgVLzRgjUGmIuQ==
-X-Received: by 2002:a05:600c:3c8e:b0:436:f3f6:9582 with SMTP id
- 5b1f17b1804b1-4390d433bbamr15770985e9.8.1738754373219; 
- Wed, 05 Feb 2025 03:19:33 -0800 (PST)
-Received: from localhost.localdomain ([51.52.155.79])
- by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4390d93382dsm18256575e9.4.2025.02.05.03.19.32
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 05 Feb 2025 03:19:32 -0800 (PST)
-From: Rajnesh Kanwal <rkanwal@rivosinc.com>
-To: qemu-riscv@nongnu.org,
-	qemu-devel@nongnu.org
-Cc: alistair.francis@wdc.com, bin.meng@windriver.com, liweiwei@iscas.ac.cn,
- dbarboza@ventanamicro.com, zhiwei_liu@linux.alibaba.com,
- atishp@rivosinc.com, apatel@ventanamicro.com, rkanwal@rivosinc.com,
- beeman@rivosinc.com, jason.chien@sifive.com, frank.chang@sifive.com,
- richard.henderson@linaro.org, bmeng.cn@gmail.com
-Subject: [PATCH v6 7/7] target/riscv: Add support to access ctrsource,
- ctrtarget, ctrdata regs.
-Date: Wed,  5 Feb 2025 11:18:51 +0000
-Message-Id: <20250205-b4-ctr_upstream_v6-v6-7-439d8e06c8ef@rivosinc.com>
-X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20250205-b4-ctr_upstream_v6-v6-0-439d8e06c8ef@rivosinc.com>
-References: <20250205-b4-ctr_upstream_v6-v6-0-439d8e06c8ef@rivosinc.com>
+ (Exim 4.90_1) (envelope-from <mhej@vps-ovh.mhejs.net>)
+ id 1tfdyL-0007RY-NA
+ for qemu-devel@nongnu.org; Wed, 05 Feb 2025 06:53:37 -0500
+Received: from vps-ovh.mhejs.net ([145.239.82.108])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <mhej@vps-ovh.mhejs.net>)
+ id 1tfdyI-0002nA-T8
+ for qemu-devel@nongnu.org; Wed, 05 Feb 2025 06:53:37 -0500
+Received: from MUA
+ by vps-ovh.mhejs.net with esmtpsa  (TLS1.3) tls TLS_AES_128_GCM_SHA256
+ (Exim 4.98) (envelope-from <mhej@vps-ovh.mhejs.net>)
+ id 1tfdyB-00000006uWP-13s4; Wed, 05 Feb 2025 12:53:27 +0100
+Message-ID: <c107d827-6913-4af5-8a63-c71000060fec@maciej.szmigiero.name>
+Date: Wed, 5 Feb 2025 12:53:21 +0100
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-X-Mailer: b4 0.14.2
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::332;
- envelope-from=rkanwal@rivosinc.com; helo=mail-wm1-x332.google.com
-X-Spam_score_int: -18
-X-Spam_score: -1.9
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v4 19/33] migration: Add save_live_complete_precopy_thread
+ handler
+To: Peter Xu <peterx@redhat.com>
+Cc: Fabiano Rosas <farosas@suse.de>,
+ Alex Williamson <alex.williamson@redhat.com>,
+ =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>,
+ Eric Blake <eblake@redhat.com>, Markus Armbruster <armbru@redhat.com>,
+ =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
+ Avihai Horon <avihaih@nvidia.com>, Joao Martins <joao.m.martins@oracle.com>,
+ qemu-devel@nongnu.org
+References: <cover.1738171076.git.maciej.szmigiero@oracle.com>
+ <7561a5d67e113e166c7d43246d52feec6ca06fb5.1738171076.git.maciej.szmigiero@oracle.com>
+ <Z6JUP2w9u_FQRP6u@x1.local>
+ <4ad3e311-e701-4029-bb51-e69da4f69468@maciej.szmigiero.name>
+ <Z6J5vyd1_gdWlYAB@x1.local>
+Content-Language: en-US, pl-PL
+From: "Maciej S. Szmigiero" <mail@maciej.szmigiero.name>
+Autocrypt: addr=mail@maciej.szmigiero.name; keydata=
+ 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
+In-Reply-To: <Z6J5vyd1_gdWlYAB@x1.local>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=145.239.82.108;
+ envelope-from=mhej@vps-ovh.mhejs.net; helo=vps-ovh.mhejs.net
+X-Spam_score_int: -17
+X-Spam_score: -1.8
 X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9,
+ HEADER_FROM_DIFFERENT_DOMAINS=0.069, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_PASS=-0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -109,295 +113,196 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-CTR entries are accessed using ctrsource, ctrtarget and ctrdata
-registers using smcsrind/sscsrind extension. This commits extends
-the csrind extension to support CTR registers.
+On 4.02.2025 21:34, Peter Xu wrote:
+> On Tue, Feb 04, 2025 at 08:32:15PM +0100, Maciej S. Szmigiero wrote:
+>> On 4.02.2025 18:54, Peter Xu wrote:
+>>> On Thu, Jan 30, 2025 at 11:08:40AM +0100, Maciej S. Szmigiero wrote:
+>>>> +static int multifd_device_state_save_thread(void *opaque)
+>>>> +{
+>>>> +    struct MultiFDDSSaveThreadData *data = opaque;
+>>>> +    int ret;
+>>>> +
+>>>> +    ret = data->hdlr(data->idstr, data->instance_id, &send_threads_abort,
+>>>> +                     data->handler_opaque);
+>>>
+>>> I thought we discussed somewhere and the plan was we could use Error** here
+>>> to report errors.  Would that still make sense, or maybe I lost some
+>>> context?
+>>
+>> That was about *load* threads, here these are *save* threads.
+> 
+> Ah OK.
+> 
+>>
+>> Save handlers do not return an Error value, neither save_live_iterate, nor
+>> save_live_complete_precopy or save_state does so.
+> 
+> Let's try to make new APIs work with Error* if possible.
 
-ctrsource is accessible through xireg CSR, ctrtarget is accessible
-through xireg1 and ctrdata is accessible through xireg2 CSR.
+Let's assume that these threads return an Error object.
 
-CTR supports maximum depth of 256 entries which are accessed using
-xiselect range 0x200 to 0x2ff.
+What's qemu_savevm_state_complete_precopy_iterable() supposed to do with it?
+Both it and its caller qemu_savevm_state_complete_precopy() only handle int
+errors.
 
-This commits also adds properties to enable CTR extension. CTR can be
-enabled using smctr=true and ssctr=true now.
+qemu_savevm_state_complete_precopy() in turn has 4 callers, half of which (2)
+also would need to be enlightened with Error handling somehow.
 
-Signed-off-by: Rajnesh Kanwal <rkanwal@rivosinc.com>
-Acked-by: Alistair Francis <alistair.francis@wdc.com>
----
- target/riscv/cpu.c         |  26 +++++++-
- target/riscv/csr.c         | 150 ++++++++++++++++++++++++++++++++++++++++++++-
- target/riscv/tcg/tcg-cpu.c |  11 ++++
- 3 files changed, 185 insertions(+), 2 deletions(-)
+> 
+>>
+>>> Meanwhile, I still feel uneasy on having these globals (send_threads_abort,
+>>> send_threads_ret).  Can we make MultiFDDSSaveThreadData the only interface
+>>> between migration and the threads impl?  So I wonder if it can be:
+>>>
+>>>     ret = data->hdlr(data);
+>>>
+>>> With extended struct like this (I added thread_error and thread_quit):
+>>>
+>>> struct MultiFDDSSaveThreadData {
+>>>       SaveLiveCompletePrecopyThreadHandler hdlr;
+>>>       char *idstr;
+>>>       uint32_t instance_id;
+>>>       void *handler_opaque;
+>>>       /*
+>>>        * Should be NULL when struct passed over to thread, the thread should
+>>>        * set this if the handler would return false.  It must be kept NULL if
+>>>        * the handler returned true / success.
+>>>        */
+>>>       Error *thread_error;
+>>
+>> As I mentioned above, these handlers do not generally return Error type,
+>> so this would need to be an *int;
+>>
+>>>       /*
+>>>        * Migration core would set this when it wants to notify thread to
+>>>        * quit, for example, when error occured in other threads, or migration is
+>>>        * cancelled by the user.
+>>>        */
+>>>       bool thread_quit;
+>>
+>>              ^ I guess that was supposed to be a pointer too (*thread_quit).
+> 
+> It's my intention to make this bool, to make everything managed per-thread.
 
-diff --git a/target/riscv/cpu.c b/target/riscv/cpu.c
-index 3d4bd157d2cc56ca67eac10a7b62089ea8252b7d..b37769567e88b0221733ef180d9559119c1ecba4 100644
---- a/target/riscv/cpu.c
-+++ b/target/riscv/cpu.c
-@@ -215,6 +215,8 @@ const RISCVIsaExtData isa_edata_arr[] = {
-     ISA_EXT_DATA_ENTRY(sstvecd, PRIV_VERSION_1_12_0, has_priv_1_12),
-     ISA_EXT_DATA_ENTRY(supm, PRIV_VERSION_1_13_0, ext_supm),
-     ISA_EXT_DATA_ENTRY(svade, PRIV_VERSION_1_11_0, ext_svade),
-+    ISA_EXT_DATA_ENTRY(smctr, PRIV_VERSION_1_12_0, ext_smctr),
-+    ISA_EXT_DATA_ENTRY(ssctr, PRIV_VERSION_1_12_0, ext_ssctr),
-     ISA_EXT_DATA_ENTRY(svadu, PRIV_VERSION_1_12_0, ext_svadu),
-     ISA_EXT_DATA_ENTRY(svinval, PRIV_VERSION_1_12_0, ext_svinval),
-     ISA_EXT_DATA_ENTRY(svnapot, PRIV_VERSION_1_12_0, ext_svnapot),
-@@ -1598,6 +1600,8 @@ const RISCVCPUMultiExtConfig riscv_cpu_extensions[] = {
-     MULTI_EXT_CFG_BOOL("smcdeleg", ext_smcdeleg, false),
-     MULTI_EXT_CFG_BOOL("sscsrind", ext_sscsrind, false),
-     MULTI_EXT_CFG_BOOL("ssccfg", ext_ssccfg, false),
-+    MULTI_EXT_CFG_BOOL("smctr", ext_smctr, false),
-+    MULTI_EXT_CFG_BOOL("ssctr", ext_ssctr, false),
-     MULTI_EXT_CFG_BOOL("zifencei", ext_zifencei, true),
-     MULTI_EXT_CFG_BOOL("zicfilp", ext_zicfilp, false),
-     MULTI_EXT_CFG_BOOL("zicfiss", ext_zicfiss, false),
-@@ -2803,6 +2807,26 @@ static RISCVCPUImpliedExtsRule SSPM_IMPLIED = {
-     },
- };
- 
-+static RISCVCPUImpliedExtsRule SMCTR_IMPLIED = {
-+    .ext = CPU_CFG_OFFSET(ext_smctr),
-+    .implied_misa_exts = RVS,
-+    .implied_multi_exts = {
-+        CPU_CFG_OFFSET(ext_sscsrind),
-+
-+        RISCV_IMPLIED_EXTS_RULE_END
-+    },
-+};
-+
-+static RISCVCPUImpliedExtsRule SSCTR_IMPLIED = {
-+    .ext = CPU_CFG_OFFSET(ext_ssctr),
-+    .implied_misa_exts = RVS,
-+    .implied_multi_exts = {
-+        CPU_CFG_OFFSET(ext_sscsrind),
-+
-+        RISCV_IMPLIED_EXTS_RULE_END
-+    },
-+};
-+
- RISCVCPUImpliedExtsRule *riscv_misa_ext_implied_rules[] = {
-     &RVA_IMPLIED, &RVD_IMPLIED, &RVF_IMPLIED,
-     &RVM_IMPLIED, &RVV_IMPLIED, NULL
-@@ -2821,7 +2845,7 @@ RISCVCPUImpliedExtsRule *riscv_multi_ext_implied_rules[] = {
-     &ZVFH_IMPLIED, &ZVFHMIN_IMPLIED, &ZVKN_IMPLIED,
-     &ZVKNC_IMPLIED, &ZVKNG_IMPLIED, &ZVKNHB_IMPLIED,
-     &ZVKS_IMPLIED,  &ZVKSC_IMPLIED, &ZVKSG_IMPLIED, &SSCFG_IMPLIED,
--    &SUPM_IMPLIED, &SSPM_IMPLIED,
-+    &SUPM_IMPLIED, &SSPM_IMPLIED, &SMCTR_IMPLIED, &SSCTR_IMPLIED,
-     NULL
- };
- 
-diff --git a/target/riscv/csr.c b/target/riscv/csr.c
-index 07a591fc90a8a516888dd465292f4e4b4178524d..e2754ac7778a28dc38307da7bb6726ea3025cb4d 100644
---- a/target/riscv/csr.c
-+++ b/target/riscv/csr.c
-@@ -2431,6 +2431,13 @@ static bool xiselect_cd_range(target_ulong isel)
-     return (ISELECT_CD_FIRST <= isel && isel <= ISELECT_CD_LAST);
- }
- 
-+static bool xiselect_ctr_range(int csrno, target_ulong isel)
-+{
-+    /* MIREG-MIREG6 for the range 0x200-0x2ff are not used by CTR. */
-+    return CTR_ENTRIES_FIRST <= isel && isel <= CTR_ENTRIES_LAST &&
-+           csrno < CSR_MIREG;
-+}
-+
- static int rmw_iprio(target_ulong xlen,
-                      target_ulong iselect, uint8_t *iprio,
-                      target_ulong *val, target_ulong new_val,
-@@ -2476,6 +2483,124 @@ static int rmw_iprio(target_ulong xlen,
-     return 0;
- }
- 
-+static int rmw_ctrsource(CPURISCVState *env, int isel, target_ulong *val,
-+                          target_ulong new_val, target_ulong wr_mask)
-+{
-+    /*
-+     * CTR arrays are treated as circular buffers and TOS always points to next
-+     * empty slot, keeping TOS - 1 always pointing to latest entry. Given entry
-+     * 0 is always the latest one, traversal is a bit different here. See the
-+     * below example.
-+     *
-+     * Depth = 16.
-+     *
-+     * idx    [0] [1] [2] [3] [4] [5] [6] [7] [8] [9] [A] [B] [C] [D] [E] [F]
-+     * TOS                                 H
-+     * entry   6   5   4   3   2   1   0   F   E   D   C   B   A   9   8   7
-+     */
-+    const uint64_t entry = isel - CTR_ENTRIES_FIRST;
-+    const uint64_t depth = 16 << get_field(env->sctrdepth, SCTRDEPTH_MASK);
-+    uint64_t idx;
-+
-+    /* Entry greater than depth-1 is read-only zero */
-+    if (entry >= depth) {
-+        if (val) {
-+            *val = 0;
-+        }
-+        return 0;
-+    }
-+
-+    idx = get_field(env->sctrstatus, SCTRSTATUS_WRPTR_MASK);
-+    idx = (idx - entry - 1) & (depth - 1);
-+
-+    if (val) {
-+        *val = env->ctr_src[idx];
-+    }
-+
-+    env->ctr_src[idx] = (env->ctr_src[idx] & ~wr_mask) | (new_val & wr_mask);
-+
-+    return 0;
-+}
-+
-+static int rmw_ctrtarget(CPURISCVState *env, int isel, target_ulong *val,
-+                          target_ulong new_val, target_ulong wr_mask)
-+{
-+    /*
-+     * CTR arrays are treated as circular buffers and TOS always points to next
-+     * empty slot, keeping TOS - 1 always pointing to latest entry. Given entry
-+     * 0 is always the latest one, traversal is a bit different here. See the
-+     * below example.
-+     *
-+     * Depth = 16.
-+     *
-+     * idx    [0] [1] [2] [3] [4] [5] [6] [7] [8] [9] [A] [B] [C] [D] [E] [F]
-+     * head                                H
-+     * entry   6   5   4   3   2   1   0   F   E   D   C   B   A   9   8   7
-+     */
-+    const uint64_t entry = isel - CTR_ENTRIES_FIRST;
-+    const uint64_t depth = 16 << get_field(env->sctrdepth, SCTRDEPTH_MASK);
-+    uint64_t idx;
-+
-+    /* Entry greater than depth-1 is read-only zero */
-+    if (entry >= depth) {
-+        if (val) {
-+            *val = 0;
-+        }
-+        return 0;
-+    }
-+
-+    idx = get_field(env->sctrstatus, SCTRSTATUS_WRPTR_MASK);
-+    idx = (idx - entry - 1) & (depth - 1);
-+
-+    if (val) {
-+        *val = env->ctr_dst[idx];
-+    }
-+
-+    env->ctr_dst[idx] = (env->ctr_dst[idx] & ~wr_mask) | (new_val & wr_mask);
-+
-+    return 0;
-+}
-+
-+static int rmw_ctrdata(CPURISCVState *env, int isel, target_ulong *val,
-+                        target_ulong new_val, target_ulong wr_mask)
-+{
-+    /*
-+     * CTR arrays are treated as circular buffers and TOS always points to next
-+     * empty slot, keeping TOS - 1 always pointing to latest entry. Given entry
-+     * 0 is always the latest one, traversal is a bit different here. See the
-+     * below example.
-+     *
-+     * Depth = 16.
-+     *
-+     * idx    [0] [1] [2] [3] [4] [5] [6] [7] [8] [9] [A] [B] [C] [D] [E] [F]
-+     * head                                H
-+     * entry   6   5   4   3   2   1   0   F   E   D   C   B   A   9   8   7
-+     */
-+    const uint64_t entry = isel - CTR_ENTRIES_FIRST;
-+    const uint64_t mask = wr_mask & CTRDATA_MASK;
-+    const uint64_t depth = 16 << get_field(env->sctrdepth, SCTRDEPTH_MASK);
-+    uint64_t idx;
-+
-+    /* Entry greater than depth-1 is read-only zero */
-+    if (entry >= depth) {
-+        if (val) {
-+            *val = 0;
-+        }
-+        return 0;
-+    }
-+
-+    idx = get_field(env->sctrstatus, SCTRSTATUS_WRPTR_MASK);
-+    idx = (idx - entry - 1) & (depth - 1);
-+
-+    if (val) {
-+        *val = env->ctr_data[idx];
-+    }
-+
-+    env->ctr_data[idx] = (env->ctr_data[idx] & ~mask) | (new_val & mask);
-+
-+    return 0;
-+}
-+
- static RISCVException rmw_xireg_aia(CPURISCVState *env, int csrno,
-                          target_ulong isel, target_ulong *val,
-                          target_ulong new_val, target_ulong wr_mask)
-@@ -2628,6 +2753,27 @@ done:
-     return ret;
- }
- 
-+static int rmw_xireg_ctr(CPURISCVState *env, int csrno,
-+                        target_ulong isel, target_ulong *val,
-+                        target_ulong new_val, target_ulong wr_mask)
-+{
-+    if (!riscv_cpu_cfg(env)->ext_smctr && !riscv_cpu_cfg(env)->ext_ssctr) {
-+        return -EINVAL;
-+    }
-+
-+    if (csrno == CSR_SIREG || csrno == CSR_VSIREG) {
-+        return rmw_ctrsource(env, isel, val, new_val, wr_mask);
-+    } else if (csrno == CSR_SIREG2 || csrno == CSR_VSIREG2) {
-+        return rmw_ctrtarget(env, isel, val, new_val, wr_mask);
-+    } else if (csrno == CSR_SIREG3 || csrno == CSR_VSIREG3) {
-+        return rmw_ctrdata(env, isel, val, new_val, wr_mask);
-+    } else if (val) {
-+        *val = 0;
-+    }
-+
-+    return 0;
-+}
-+
- /*
-  * rmw_xireg_csrind: Perform indirect access to xireg and xireg2-xireg6
-  *
-@@ -2639,11 +2785,13 @@ static int rmw_xireg_csrind(CPURISCVState *env, int csrno,
-                               target_ulong isel, target_ulong *val,
-                               target_ulong new_val, target_ulong wr_mask)
- {
--    int ret = -EINVAL;
-     bool virt = csrno == CSR_VSIREG ? true : false;
-+    int ret = -EINVAL;
- 
-     if (xiselect_cd_range(isel)) {
-         ret = rmw_xireg_cd(env, csrno, isel, val, new_val, wr_mask);
-+    } else if (xiselect_ctr_range(csrno, isel)) {
-+        ret = rmw_xireg_ctr(env, csrno, isel, val, new_val, wr_mask);
-     } else {
-         /*
-          * As per the specification, access to unimplented region is undefined
-diff --git a/target/riscv/tcg/tcg-cpu.c b/target/riscv/tcg/tcg-cpu.c
-index 0a137281de15f030678aae034c24ca2382ca6e3a..96b586fe3c0b573076f1af061911dcafe06f129f 100644
---- a/target/riscv/tcg/tcg-cpu.c
-+++ b/target/riscv/tcg/tcg-cpu.c
-@@ -681,6 +681,17 @@ void riscv_cpu_validate_set_extensions(RISCVCPU *cpu, Error **errp)
-         return;
-     }
- 
-+    if ((cpu->cfg.ext_smctr || cpu->cfg.ext_ssctr) &&
-+        (!riscv_has_ext(env, RVS) || !cpu->cfg.ext_sscsrind)) {
-+        if (cpu_cfg_ext_is_user_set(CPU_CFG_OFFSET(ext_smctr)) ||
-+            cpu_cfg_ext_is_user_set(CPU_CFG_OFFSET(ext_ssctr))) {
-+            error_setg(errp, "Smctr and Ssctr require S-mode and Sscsrind");
-+            return;
-+        }
-+        cpu->cfg.ext_smctr = false;
-+        cpu->cfg.ext_ssctr = false;
-+    }
-+
-     /*
-      * Disable isa extensions based on priv spec after we
-      * validated and set everything we need.
+But that's unnecessary since this flag is common to all these threads.
 
--- 
-2.34.1
+> It's actually what we do with multifd, these are a bunch of extra threads
+> to differeciate from the "IO threads" / "multifd threads".
+> 
+>>
+>>> };
+>>>
+>>> Then if any multifd_device_state_save_thread() failed, for example, it
+>>> should notify all threads to quit by setting thread_quit, instead of
+>>> relying on yet another global variable to show migration needs to quit.
+>>
+>> multifd_abort_device_state_save_threads() needs to access
+>> send_threads_abort too.
+> 
+> This may need to become something like:
+> 
+>    QLIST_FOREACH() {
+>        MultiFDDSSaveThreadData *data = ...;
+>        data->thread_quit = true;
+>    }
+
+At the most basic level that's turning O(1) operation into O(n).
+
+Besides, it creates a question now who now owns these MultiFDDSSaveThreadData
+structures - they could be owned by either thread pool or the
+multifd_device_state code.
+
+Currently the ownership is simple - the multifd_device_state code
+allocates such per-thread structure in multifd_spawn_device_state_save_thread()
+and immediately passes its ownership to the thread pool which
+takes care to free it once it no longer needs it.
+
+Now, with the list implementation if the thread pool were to free
+that MultiFDDSSaveThreadData it would also need to release it from
+the list.
+
+Which in turn would need appropriate locking around this removal
+operation and probably also each time the list is iterated over.
+
+On the other hand if the multifd_device_state code were to own
+that MultiFDDSSaveThreadData then it would linger around until
+multifd_device_state_send_cleanup() cleans it up even though its
+associated thread might be long gone.
+
+> We may want to double check qmp 'migrate_cancel' will work when save
+> threads are running, but this can also be done for later.
+
+>>
+>> And multifd_join_device_state_save_threads() needs to access
+>> send_threads_ret.
+> 
+> Then this one becomes:
+> 
+>    thread_pool_wait(send_threads);
+>    QLIST_FOREACH() {
+>        MultiFDDSSaveThreadData *data = ...;
+>        if (data->thread_error) {
+>           return false;
+>        }
+>    }
+>    return true;
+
+Same here, having a common error return would save us from having
+to iterate over a list (or having a list in the first place).
+
+>>
+>> These variables ultimately will have to be stored somewhere since
+>> there can be multiple save threads and so multiple instances of
+>> MultiFDDSSaveThreadData.
+>>
+>> So these need to be stored somewhere where
+>> multifd_spawn_device_state_save_thread() can reach them to assign
+>> their addresses to MultiFDDSSaveThreadData members.
+> 
+> Then multifd_spawn_device_state_save_thread() will need to manage the
+> qlist, making sure migration core remembers what jobs it submitted.  It
+> sounds good to have that bookkeeping when I think about it, instead of
+> throw the job to the thread pool and forget it..
+
+It's not "forgetting" about the job but rather letting thread pool
+manage it - I think thread pool was introduced so these details
+(thread management) are abstracted from the migration code.
+Now they would be effectively duplicated in the migration code.
+
+>>
+>> However, at that point multifd_device_state_save_thread() can
+>> access them too so it does not need to have them passed via
+>> MultiFDDSSaveThreadData.
+>>
+>> However, nothing prevents putting send_threads* variables
+>> into a global struct (with internal linkage - "static", just as
+>> these separate ones are) if you like such construct more.
+> 
+> This should be better than the current global vars indeed, but less
+> favoured if the per-thread way could work above.
+
+You still need that list to be a global variable,
+so it's the same amount of global variables as just putting
+the existing variables in a struct (which could be even allocated
+in multifd_device_state_send_setup() and deallocated in
+multifd_device_state_send_cleanup() for extra memory savings).
+
+These variables are having internal linkage limited to (relatively
+small) multifd-device-state.c, so it's not like they are polluting
+namespace in some major migration translation unit.
+
+Taking into consideration having to manage an extra data structure
+(list), needing more code to do so, having worse algorithms I don't
+really see a point of using that list.
+
+(This is orthogonal to whether the thread return type is changed to
+Error which could be easily done on the existing save threads pool
+implementation).
+
+> Thanks,
+> 
+
+Thanks,
+Maciej
 
 
