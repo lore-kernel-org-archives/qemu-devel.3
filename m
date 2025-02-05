@@ -4,103 +4,147 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9D7FEC02192
-	for <qemu-devel@archiver.kernel.org>; Wed,  5 Feb 2025 17:08:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CB071C02192
+	for <qemu-devel@archiver.kernel.org>; Wed,  5 Feb 2025 17:14:21 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tfisA-0005pw-Cc; Wed, 05 Feb 2025 12:07:34 -0500
+	id 1tfiy9-0007eW-Pj; Wed, 05 Feb 2025 12:13:45 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1tfiry-0005m8-O9
- for qemu-devel@nongnu.org; Wed, 05 Feb 2025 12:07:28 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1tfiy8-0007eJ-KZ
+ for qemu-devel@nongnu.org; Wed, 05 Feb 2025 12:13:44 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1tfirw-00053w-4I
- for qemu-devel@nongnu.org; Wed, 05 Feb 2025 12:07:22 -0500
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1tfiy3-0005oh-AS
+ for qemu-devel@nongnu.org; Wed, 05 Feb 2025 12:13:44 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1738775237;
+ s=mimecast20190719; t=1738775616;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=p+OLTbGqj/iIpCK8/1CkoJoVzjfpKlls86EfJDj73zs=;
- b=dk4PLvEq8BFyT0NOSqlo1edr+OQooIYMhfuX+FFDt5VKoxR5y37ZYqF2YUlR0CnZTnRtnU
- mOg+zTNBdaxhcChtWat1v8hM3JV8dJAo13GW98Z6bF8Ir6cd6AJt25CoXsicy9lp8iDOcM
- srm/AxtC/xcWjeOnmeU7KwQ2IdGXmJE=
-Received: from mail-qt1-f199.google.com (mail-qt1-f199.google.com
- [209.85.160.199]) by relay.mimecast.com with ESMTP with STARTTLS
+ in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+ bh=uKQuKspoy51kZVHT4fsopiy1n4RLUnMW1sIYLVnPI+k=;
+ b=EhETE1AGlirevR91qn2kVW/EEIep1dmRxCW+rGar9av1mYn60d+teEB9GcwOd8+Y9y7y2v
+ 2csiS6G0jPwpq7W6s+kiFKs/akzySMEacFo4oM3ZwjBa3zYfdGEC467iDLJOfKwXnkDFFo
+ ngwr7CHAt8OkLkeiXMGKn9z2qOc8YMk=
+Received: from mail-qk1-f199.google.com (mail-qk1-f199.google.com
+ [209.85.222.199]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-189-2DH8HkmpNea1bhIWyUnETw-1; Wed, 05 Feb 2025 12:07:15 -0500
-X-MC-Unique: 2DH8HkmpNea1bhIWyUnETw-1
-X-Mimecast-MFC-AGG-ID: 2DH8HkmpNea1bhIWyUnETw
-Received: by mail-qt1-f199.google.com with SMTP id
- d75a77b69052e-468f6f2f57aso594421cf.0
- for <qemu-devel@nongnu.org>; Wed, 05 Feb 2025 09:07:15 -0800 (PST)
+ us-mta-62-9VKQMxLwNoCdK4xUQn4u4w-1; Wed, 05 Feb 2025 12:13:35 -0500
+X-MC-Unique: 9VKQMxLwNoCdK4xUQn4u4w-1
+X-Mimecast-MFC-AGG-ID: 9VKQMxLwNoCdK4xUQn4u4w
+Received: by mail-qk1-f199.google.com with SMTP id
+ af79cd13be357-7b6f2515eb3so678494085a.0
+ for <qemu-devel@nongnu.org>; Wed, 05 Feb 2025 09:13:35 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1738775234; x=1739380034;
- h=in-reply-to:content-transfer-encoding:content-disposition
- :mime-version:references:message-id:subject:cc:to:from:date
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=p+OLTbGqj/iIpCK8/1CkoJoVzjfpKlls86EfJDj73zs=;
- b=UWrpOpHGYUHG5qfKvgYgb8Ci2LvHSyhWBMCpeac4UFaHc/cK9bsWhw9c1Zxqj6gQow
- wuG5P7dFgmpqYizLiuUtzOLRKpuKH/qzrh2N2wuxH6D3FPr79aoohlUNQNcqvJC3dETj
- 4MFl6RBtoiye11ugyQFPxf7Lvbsqe5J4vDiaEsugp0Xl3oLoXDh+HZ24MRSHlSMyeZWb
- NuYvGAjpVOQJJbM6eDki4KjJ2sxliMIcvpZT+JABYu4Mxe/Enyk6/3eiAix7CbeLYz9I
- MJLdLG/PeCF8BnHk8skxNl3oeyitHiST0giydzKdJuPZu/T2n6QKn5LeEfOItKG0Hy8A
- IeIQ==
+ d=1e100.net; s=20230601; t=1738775615; x=1739380415;
+ h=content-transfer-encoding:in-reply-to:autocrypt:from
+ :content-language:references:cc:to:subject:user-agent:mime-version
+ :date:message-id:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=uKQuKspoy51kZVHT4fsopiy1n4RLUnMW1sIYLVnPI+k=;
+ b=ZRer2cj7JOwEVubtxgLacMZoZHq3AeJLjnwvFSqQ4c+TBo1zJXgaSVwghzYwChUzMi
+ 8KduDNNyQmhIN3lrn3RgWVSsAnZ+J7oQSSXMoXnAwtrQyaIMv7Y8FaPKehmQDwJtDDiZ
+ ATx5lVPBMy7MBZn2tAmFTjFEhHBd3GAw6zPYUaAuqlADwnGDpE4egzbXbdQckhmFeZk9
+ ccTemBmsIelLLI6ifEtLa9/ZeNubnQ2oI/oIFIyj9XMpKrDThWx3vyvR0zSMXEPMUHe+
+ eSUoae5FRI7tJw6cstuFQRwsqvI8uEOk3Ybn1Zrg5sjdZXI0NdLLQZA24SCxPgqVxwm/
+ xRhQ==
 X-Forwarded-Encrypted: i=1;
- AJvYcCUHMNEOZQXEW6hhcR5zINC7voc205SiXiuloNO/RvbmfcB0Whr+5uMX8vbfVmF0o68z2wXp6NOBSjeM@nongnu.org
-X-Gm-Message-State: AOJu0YzU/Wo4eG3GLCFdZge2QIv1vrEkthHGpLRwc3y55Zq4+7MSnusl
- 563UCUnpAG2nrV647+t0gRcieVXabfQBVJdA2uAK8LbBAoiQAjnEB0Xp4upZy8q73FKoOD2LSit
- BC5bSneD5MHPd0W5FcqainEg9R4e/qq3BpU+CbigFnyHQFrEaebox
-X-Gm-Gg: ASbGncsbmLTAU7mpmiXhMIf86jw8Pd4bm8nJEHLgdydUpIP9PT+En9xGR5S2ZJD6HJj
- s2w+Rm3YvuFy3/9PsE1SF5fqfBLoqqBbMvhmWoI9efxMIuf2H6Qdo/MKMza++t0wO/nZ2fhwuRu
- Kf++/w3dLbRUhtCmgRtthrck/u1HKwJVkfP/rvC+4Zk8Xx7z9rmmVBSyb/R67ByWZg4fRioKoMo
- 1cl4ZhmtRTa+iUE/ngSvHTg2ga1f50AHE6+jd1YUa+dOEZlnNtE3K7+IoiyiiR7t64bz0Wt4o0L
- Pa9dHKMD3j7q5qF3RhCvhiYvf7YxVVqi5OgBVM0Mc5CxojKS
-X-Received: by 2002:a05:622a:1209:b0:46c:791f:bf56 with SMTP id
- d75a77b69052e-47028165422mr48419621cf.1.1738775233118; 
- Wed, 05 Feb 2025 09:07:13 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IGNGLRnYZoS1UgT/2Mlhu7VtZTHtccZq6PiOeVKuWhKLh5AjDf5uPjAXZsK81s9NHRvVVzhpQ==
-X-Received: by 2002:a05:622a:1209:b0:46c:791f:bf56 with SMTP id
- d75a77b69052e-47028165422mr48419311cf.1.1738775232822; 
- Wed, 05 Feb 2025 09:07:12 -0800 (PST)
-Received: from x1.local (pool-99-254-114-190.cpe.net.cable.rogers.com.
- [99.254.114.190]) by smtp.gmail.com with ESMTPSA id
- d75a77b69052e-46fdf0a74c6sm72351171cf.6.2025.02.05.09.07.10
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 05 Feb 2025 09:07:12 -0800 (PST)
-Date: Wed, 5 Feb 2025 12:07:06 -0500
-From: Peter Xu <peterx@redhat.com>
-To: William Roche <william.roche@oracle.com>
-Cc: david@redhat.com, kvm@vger.kernel.org, qemu-devel@nongnu.org,
- qemu-arm@nongnu.org, pbonzini@redhat.com,
- richard.henderson@linaro.org, philmd@linaro.org,
- peter.maydell@linaro.org, mtosatti@redhat.com, imammedo@redhat.com,
- eduardo@habkost.net, marcel.apfelbaum@gmail.com,
- wangyanan55@huawei.com, zhao1.liu@intel.com, joao.m.martins@oracle.com
-Subject: Re: [PATCH v7 3/6] accel/kvm: Report the loss of a large memory page
-Message-ID: <Z6Oaukumli1eIEDB@x1.local>
-References: <20250201095726.3768796-1-william.roche@oracle.com>
- <20250201095726.3768796-4-william.roche@oracle.com>
- <Z6JH_OyppIA7WFjk@x1.local>
- <3f3ebbe8-be97-4827-a8c5-6777dea08707@oracle.com>
+ AJvYcCUzMn8Ip65NnVX7XSZtJCMOYcrE3FDBmTFlwBFyEx1tZ8oADiU/FD/l405IqontE6Q7eCHWzdXAG2du@nongnu.org
+X-Gm-Message-State: AOJu0Yx9UvoFEbcPAl44UB1pkMkBWMVFccjk7wLAi3g8RB2QROh3Y7ni
+ wO8PCDo81uVJ9x4UXi4MsS9F/R6oZ+fDqn6tlJYMR5LAv1eu0+z++ovfQxTJO0lZJq+ZBQw58gV
+ j04l5mvUDKTzYtm8uX/UCGUJSNwt6fvCwJVkv04CUk0CQbSfBr7Cp
+X-Gm-Gg: ASbGncv3a0Was8ycyofny+9yKIrDF83qDU7HY9iiP6OYdOCXR69qoNaqGsaEuf+RWpZ
+ CBBsFrREqn64NQRRuABWJhlSsV4/vhW2anWt3tPYUw2Oj9gOMb84G3WEborLsQ+LlAqXliY8lEa
+ Xb8JmVZE1RDVisNB6DSy63mc3Mf4Z60gqsQX1zOrdlFzQ6A3iiqqHsjoWl1yzCzLpz+NR+dlAL/
+ lAtK4mBrA/ewq7ibx/QkC0NeLtTNV/dxYJwSfeYSU0gkdq1iJ36PFc3mMIYZ3ttHQbWL8MFkLDT
+ vxBtRONG7Me6VLRbjG1ucNUdZCy+ccxcKbzNl7jb0LM=
+X-Received: by 2002:a05:620a:198a:b0:7b6:5d83:123e with SMTP id
+ af79cd13be357-7c03a0419camr685735885a.54.1738775614661; 
+ Wed, 05 Feb 2025 09:13:34 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IFoKHfBEmguHM1GeQ+qjb1GSsWXlCQI6byoAzcwniOIcT23/HHZfNngVKVeYJVPnLBosNVkOg==
+X-Received: by 2002:a05:620a:198a:b0:7b6:5d83:123e with SMTP id
+ af79cd13be357-7c03a0419camr685731285a.54.1738775614306; 
+ Wed, 05 Feb 2025 09:13:34 -0800 (PST)
+Received: from ?IPV6:2a01:e0a:280:24f0:9db0:474c:ff43:9f5c?
+ ([2a01:e0a:280:24f0:9db0:474c:ff43:9f5c])
+ by smtp.gmail.com with ESMTPSA id
+ af79cd13be357-7c00a9055adsm778395385a.73.2025.02.05.09.13.32
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Wed, 05 Feb 2025 09:13:33 -0800 (PST)
+Message-ID: <219faed4-284c-430c-8410-d2af398f588d@redhat.com>
+Date: Wed, 5 Feb 2025 18:13:31 +0100
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <3f3ebbe8-be97-4827-a8c5-6777dea08707@oracle.com>
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=peterx@redhat.com;
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH V1 13/26] vfio-pci: preserve INTx
+To: Steve Sistare <steven.sistare@oracle.com>, qemu-devel@nongnu.org
+Cc: Alex Williamson <alex.williamson@redhat.com>, Yi Liu
+ <yi.l.liu@intel.com>, Eric Auger <eric.auger@redhat.com>,
+ Zhenzhong Duan <zhenzhong.duan@intel.com>,
+ "Michael S. Tsirkin" <mst@redhat.com>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>, Peter Xu <peterx@redhat.com>,
+ Fabiano Rosas <farosas@suse.de>
+References: <1738161802-172631-1-git-send-email-steven.sistare@oracle.com>
+ <1738161802-172631-14-git-send-email-steven.sistare@oracle.com>
+Content-Language: en-US, fr
+From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
+Autocrypt: addr=clg@redhat.com; keydata=
+ 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
+ uVKe8BVz4atMOoktmt0GWTOC8P4=
+In-Reply-To: <1738161802-172631-14-git-send-email-steven.sistare@oracle.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=clg@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -116,72 +160,191 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, Feb 05, 2025 at 05:27:13PM +0100, William Roche wrote:
-> On 2/4/25 18:01, Peter Xu wrote:
-> > On Sat, Feb 01, 2025 at 09:57:23AM +0000, “William Roche wrote:
-> > > From: William Roche <william.roche@oracle.com>
-> > > 
-> > > In case of a large page impacted by a memory error, provide an
-> > > information about the impacted large page before the memory
-> > > error injection message.
-> > > 
-> > > This message would also appear on ras enabled ARM platforms, with
-> > > the introduction of an x86 similar error injection message.
-> > > 
-> > > In the case of a large page impacted, we now report:
-> > > Memory Error on large page from <backend>:<address>+<fd_offset> +<page_size>
-> > > 
-> > > The +<fd_offset> information is only provided with a file backend.
-> > > 
-> > > Signed-off-by: William Roche <william.roche@oracle.com>
-> > 
-> > This is still pretty kvm / arch relevant patch that needs some reviews.
-> > 
-> > I wonder do we really need this - we could fetch ramblock mapping
-> > (e.g. hwaddr -> HVA) via HMP "info ramblock", and also dmesg shows process
-> > ID + VA.  IIUC we have all below info already as long as we do some math
-> > based on above.  Would that work too?
+On 1/29/25 15:43, Steve Sistare wrote:
+> Preserve vfio INTx state across cpr-transfer.  Preserve VFIOINTx fields as
+> follows:
+>    pin : Recover this from the vfio config in kernel space
+>    interrupt : Preserve its eventfd descriptor across exec.
+>    unmask : Ditto
+>    route.irq : This could perhaps be recovered in vfio_pci_post_load by
+>      calling pci_device_route_intx_to_irq(pin), whose implementation reads
+>      config space for a bridge device such as ich9.  However, there is no
+>      guarantee that the bridge vmstate is read before vfio vmstate.  Rather
+>      than fiddling with MigrationPriority for vmstate handlers, explicitly
+>      save route.irq in vfio vmstate.
+>    pending : save in vfio vmstate.
+>    mmap_timeout, mmap_timer : Re-initialize
+>    bool kvm_accel : Re-initialize
 > 
-> The HMP command "info ramblock" is implemented with the ram_block_format()
-> function which returns a message buffer built with a string for each
-> ramblock (protected by the RCU_READ_LOCK_GUARD). Our new function copies a
-> struct with the necessary information.
+> In vfio_realize, defer calling vfio_intx_enable until the vmstate
+> is available, in vfio_pci_post_load.  Modify vfio_intx_enable and
+> vfio_intx_kvm_enable to skip vfio initialization, but still perform
+> kvm initialization.
 > 
-> Relaying on the buffer format to retrieve the information doesn't seem
-> reasonable, and more importantly, this buffer doesn't provide all the needed
-> data, like fd and fd_offset.
+> Signed-off-by: Steve Sistare <steven.sistare@oracle.com>
+> ---
+>   hw/vfio/pci.c | 51 +++++++++++++++++++++++++++++++++++++++++++++++----
+>   1 file changed, 47 insertions(+), 4 deletions(-)
 > 
-> I would say that ram_block_format() and qemu_ram_block_info_from_addr()
-> serve 2 different goals.
-> 
-> (a reimplementation of ram_block_format() with an adapted version of
-> qemu_ram_block_info_from_addr() taking the extra information needed could be
-> doable for example, but may not be worth doing for now)
+> diff --git a/hw/vfio/pci.c b/hw/vfio/pci.c
+> index df6e298..c50dbef 100644
+> --- a/hw/vfio/pci.c
+> +++ b/hw/vfio/pci.c
+> @@ -184,12 +184,17 @@ static bool vfio_intx_enable_kvm(VFIOPCIDevice *vdev, Error **errp)
+>           return true;
+>       }
+>   
+> +    if (vdev->vbasedev.reused) {
 
-IIUC admin should be aware of fd_offset because the admin should be fully
-aware of the start offset of FDs to specify in qemu cmdlines, or in
-Libvirt. But yes, we can always add fd_offset into ram_block_format() if
-it's helpful.
+1 x vdev->vbasedev.reused
 
-Besides, the existing issues on this patch:
+> +        goto skip_state;
+> +    }
+> +
+>       /* Get to a known interrupt state */
+>       qemu_set_fd_handler(irq_fd, NULL, NULL, vdev);
+>       vfio_mask_single_irqindex(&vdev->vbasedev, VFIO_PCI_INTX_IRQ_INDEX);
+>       vdev->intx.pending = false;
+>       pci_irq_deassert(&vdev->pdev);
+>   
+> +skip_state:
 
-  - From outcome of this patch, it introduces one ramblock API (which is ok
-    to me, so far), to do some error_report()s.  It looks pretty much for
-    debugging rather than something serious (e.g. report via QMP queries,
-    QMP events etc.).  From debug POV, I still don't see why this is
-    needed.. per discussed above.
 
-  - From merge POV, this patch isn't a pure memory change, so I'll need to
-    get ack from other maintainers, at least that should be how it works..
+hmm, this skip_state label and  ...
 
-I feel like when hwpoison becomes a serious topic, we need some more
-serious reporting facility than error reports.  So that we could have this
-as separate topic to be revisited.  It might speed up your prior patches
-from not being blocked on this.
+>       /* Get an eventfd for resample/unmask */
+>       if (vfio_notifier_init(vdev, &vdev->intx.unmask, "intx-unmask", 0)) {
+>           error_setg(errp, "vfio_notifier_init intx-unmask failed");
+> @@ -204,6 +209,10 @@ static bool vfio_intx_enable_kvm(VFIOPCIDevice *vdev, Error **errp)
+>           goto fail_irqfd;
+>       }
+>   
+> +    if (vdev->vbasedev.reused) {
+
+2 x vdev->vbasedev.reused
+
+> +        goto skip_irq;
+> +    }
+> +
+>       if (!vfio_set_irq_signaling(&vdev->vbasedev, VFIO_PCI_INTX_IRQ_INDEX, 0,
+>                                   VFIO_IRQ_SET_ACTION_UNMASK,
+>                                   event_notifier_get_fd(&vdev->intx.unmask),
+> @@ -214,6 +223,7 @@ static bool vfio_intx_enable_kvm(VFIOPCIDevice *vdev, Error **errp)
+>       /* Let'em rip */
+>       vfio_unmask_single_irqindex(&vdev->vbasedev, VFIO_PCI_INTX_IRQ_INDEX);
+>   
+> +skip_irq:
+
+... this skip_irq label are one "very quick" way to get things done :)
+
+>       vdev->intx.kvm_accel = true;
+>   
+>       trace_vfio_intx_enable_kvm(vdev->vbasedev.name);
+> @@ -329,7 +339,13 @@ static bool vfio_intx_enable(VFIOPCIDevice *vdev, Error **errp)
+>           return true;
+>       }
+>   
+> -    vfio_disable_interrupts(vdev);
+> +    /*
+> +     * Do not alter interrupt state during vfio_realize and cpr load.  The
+> +     * reused flag is cleared thereafter.
+> +     */
+> +    if (!vdev->vbasedev.reused) {
+
+3 x vdev->vbasedev.reused
+
+> +        vfio_disable_interrupts(vdev);
+> +    }
+>   
+>       vdev->intx.pin = pin - 1; /* Pin A (1) -> irq[0] */
+>       pci_config_set_interrupt_pin(vdev->pdev.config, pin);
+> @@ -351,7 +367,8 @@ static bool vfio_intx_enable(VFIOPCIDevice *vdev, Error **errp)
+>       fd = event_notifier_get_fd(&vdev->intx.interrupt);
+>       qemu_set_fd_handler(fd, vfio_intx_interrupt, NULL, vdev);
+>   
+> -    if (!vfio_set_irq_signaling(&vdev->vbasedev, VFIO_PCI_INTX_IRQ_INDEX, 0,
+> +    if (!vdev->vbasedev.reused &&
+
+4 x vdev->vbasedev.reused
+
+> +        !vfio_set_irq_signaling(&vdev->vbasedev, VFIO_PCI_INTX_IRQ_INDEX, 0,
+>                                   VFIO_IRQ_SET_ACTION_TRIGGER, fd, errp)) {
+>           qemu_set_fd_handler(fd, NULL, NULL, vdev);
+>           vfio_notifier_cleanup(vdev, &vdev->intx.interrupt, "intx-interrupt", 0);
+
+> @@ -3256,7 +3273,8 @@ static void vfio_realize(PCIDevice *pdev, Error **errp)
+>                                                vfio_intx_routing_notifier);
+>           vdev->irqchip_change_notifier.notify = vfio_irqchip_change;
+>           kvm_irqchip_add_change_notifier(&vdev->irqchip_change_notifier);
+> -        if (!vfio_intx_enable(vdev, errp)) {
+> +        /* Wait until cpr load reads intx routing data to enable */
+> +        if (!vdev->vbasedev.reused && !vfio_intx_enable(vdev, errp)) {
+
+5 x vdev->vbasedev.reused
+
+This patch already adds a test on vdev->vbasedev.reused at the top of
+vfio_intx_enable(). This one seems redudant.
+
+Please duplicate the whole vfio_intx_enable() routine and move it
+under a cpr file.
+
+>               goto out_deregister;
+>           }
+>       }
+> @@ -3578,12 +3596,36 @@ static int vfio_pci_post_load(void *opaque, int version_id)
+>           vfio_claim_vectors(vdev, nr_vectors, false);>   
+>       } else if (vfio_pci_read_config(pdev, PCI_INTERRUPT_PIN, 1)) {
+> -        g_assert_not_reached();      /* completed in a subsequent patch */
+> +        Error *err = NULL;
+> +        if (!vfio_intx_enable(vdev, &err)) {
+> +            error_report_err(err);
+> +            return -1;> +        }
+>       }
+>   
+>       return 0;
+>   }
+>   
+> +static const VMStateDescription vfio_intx_vmstate = {
+> +    .name = "vfio-intx",
+> +    .version_id = 0,
+> +    .minimum_version_id = 0,
+> +    .fields = (VMStateField[]) {
+> +        VMSTATE_BOOL(pending, VFIOINTx),
+> +        VMSTATE_UINT32(route.mode, VFIOINTx),
+> +        VMSTATE_INT32(route.irq, VFIOINTx),
+> +        VMSTATE_END_OF_LIST()
+> +    }
+> +};
+> +
+> +#define VMSTATE_VFIO_INTX(_field, _state) {                         \
+> +    .name       = (stringify(_field)),                              \
+> +    .size       = sizeof(VFIOINTx),                                 \
+> +    .vmsd       = &vfio_intx_vmstate,                               \
+> +    .flags      = VMS_STRUCT,                                       \
+> +    .offset     = vmstate_offset_value(_state, _field, VFIOINTx),   \
+> +}
+> +
+
+move these to cpr file please.
+
 
 Thanks,
 
--- 
-Peter Xu
+C.
+
+
+
+
+>   static const VMStateDescription vfio_pci_vmstate = {
+>       .name = "vfio-pci",
+>       .version_id = 0,
+> @@ -3594,6 +3636,7 @@ static const VMStateDescription vfio_pci_vmstate = {
+>       .fields = (VMStateField[]) {
+>           VMSTATE_PCI_DEVICE(pdev, VFIOPCIDevice),
+>           VMSTATE_MSIX_TEST(pdev, VFIOPCIDevice, vfio_msix_present),
+> +        VMSTATE_VFIO_INTX(intx, VFIOPCIDevice),
+>           VMSTATE_END_OF_LIST()
+>       }
+>   };
 
 
