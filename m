@@ -4,47 +4,47 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CFC7FC02192
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CFCB9C02199
 	for <qemu-devel@archiver.kernel.org>; Wed,  5 Feb 2025 23:17:55 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tfoZg-0001IP-B8; Wed, 05 Feb 2025 18:12:54 -0500
+	id 1tfocg-0002SH-1k; Wed, 05 Feb 2025 18:15:58 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1tfoZY-0001Hn-Vi
- for qemu-devel@nongnu.org; Wed, 05 Feb 2025 18:12:46 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1tfocU-0002By-8c
+ for qemu-devel@nongnu.org; Wed, 05 Feb 2025 18:15:46 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1tfoZW-0005bq-Lw
- for qemu-devel@nongnu.org; Wed, 05 Feb 2025 18:12:43 -0500
+ (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1tfocQ-000663-IL
+ for qemu-devel@nongnu.org; Wed, 05 Feb 2025 18:15:45 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1738797161;
+ s=mimecast20190719; t=1738797338;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=idbJdwJ8CDyE+xVdzPTbisC279pESEqsJVDljvElmiw=;
- b=LdW/5qON/ZdtRFHnAYcMvjOFKcohf5VsbB75ogcuQybPUuQsYDf4bTP4SOzW7ZWpRek+Ig
- QcB5vHvmgBOxkz6TUJLGj352PCDYJODzTgDj9FLj4eF+9XCr68yNS9YwyQMDFIpyXVbXJQ
- ZNxZXs5RHD1MPDpdFy8aOKY02+D1sB4=
-Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ bh=HGQzUOGkYPNjVTBU4zzr+Xt4CX1F1lTyaUAlIivtS+c=;
+ b=gNoZUS/SD06LG40y6Z3AEksRW3IXDpoiwCPUj7O6Y20pM2x1np4HuwvuDpJ9BTO4K7Ct5I
+ 0AAJIEP3aKK4iOJ5cq3pKEeuU2ni8EZ3QQ3r961+jvR61s1SyU0nWHDuF0bhnuXFuCqEWA
+ Z9MgrEoDT5qojiwy1M/P9IQY+dNGk+Y=
+Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-116-u6sy38uLMwilO3-bmKIMVw-1; Wed,
- 05 Feb 2025 18:12:36 -0500
-X-MC-Unique: u6sy38uLMwilO3-bmKIMVw-1
-X-Mimecast-MFC-AGG-ID: u6sy38uLMwilO3-bmKIMVw
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-377-kww7hkHTPIGqXBQ1Gt_gLw-1; Wed,
+ 05 Feb 2025 18:15:34 -0500
+X-MC-Unique: kww7hkHTPIGqXBQ1Gt_gLw-1
+X-Mimecast-MFC-AGG-ID: kww7hkHTPIGqXBQ1Gt_gLw
 Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 25C761800878; Wed,  5 Feb 2025 23:12:34 +0000 (UTC)
+ by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 9CBD419560BC; Wed,  5 Feb 2025 23:15:32 +0000 (UTC)
 Received: from jsnow-thinkpadp16vgen1.westford.csb (unknown [10.22.66.104])
  by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 45A4B1800267; Wed,  5 Feb 2025 23:12:28 +0000 (UTC)
+ id 24E481800265; Wed,  5 Feb 2025 23:15:25 +0000 (UTC)
 From: John Snow <jsnow@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Peter Maydell <peter.maydell@linaro.org>, Thomas Huth <thuth@redhat.com>,
@@ -59,22 +59,23 @@ Cc: Peter Maydell <peter.maydell@linaro.org>, Thomas Huth <thuth@redhat.com>,
  Jason Wang <jasowang@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  John Snow <jsnow@redhat.com>
-Subject: [PATCH 03/42] docs/qapidoc: remove example section support
-Date: Wed,  5 Feb 2025 18:11:29 -0500
-Message-ID: <20250205231208.1480762-4-jsnow@redhat.com>
+Subject: [PATCH 32/42] docs/qapidoc: Add generated returns documentation to
+ inliner
+Date: Wed,  5 Feb 2025 18:11:58 -0500
+Message-ID: <20250205231208.1480762-33-jsnow@redhat.com>
 In-Reply-To: <20250205231208.1480762-1-jsnow@redhat.com>
 References: <20250205231208.1480762-1-jsnow@redhat.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=jsnow@redhat.com;
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=jsnow@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -92,40 +93,33 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Since commit 3c5f6114 (qapi: remove "Example" doc section), Example
-sections no longer exist, so this support in qapidoc is now dead code.
+Generate "empty" returns sections for undocumented returns values in the
+inliner: the transmogrifier will pick these up and document them
+specially.
 
 Signed-off-by: John Snow <jsnow@redhat.com>
 ---
- docs/sphinx/qapidoc.py | 9 +--------
- 1 file changed, 1 insertion(+), 8 deletions(-)
+ docs/sphinx/qapidoc.py | 8 ++++++++
+ 1 file changed, 8 insertions(+)
 
 diff --git a/docs/sphinx/qapidoc.py b/docs/sphinx/qapidoc.py
-index 5a4d7388b29..61997fd21af 100644
+index b9fe2f476cb..5c65f3a8025 100644
 --- a/docs/sphinx/qapidoc.py
 +++ b/docs/sphinx/qapidoc.py
-@@ -254,10 +254,6 @@ def _nodes_for_features(self, doc):
-         section += dlnode
-         return [section]
+@@ -243,6 +243,14 @@ def _get_inline_target(
  
--    def _nodes_for_example(self, exampletext):
--        """Return list of doctree nodes for a code example snippet"""
--        return [nodes.literal_block(exampletext, exampletext)]
--
-     def _nodes_for_sections(self, doc):
-         """Return list of doctree nodes for additional sections"""
-         nodelist = []
-@@ -275,10 +271,7 @@ def _nodes_for_sections(self, doc):
-                 continue
+     # FIXME: Branches should be handled about here O:-)
  
-             snode = self._make_section(section.tag)
--            if section.tag.startswith('Example'):
--                snode += self._nodes_for_example(dedent(section.text))
--            else:
--                self._parse_text_into_node(dedent(section.text), snode)
-+            self._parse_text_into_node(dedent(section.text), snode)
-             nodelist.append(snode)
-         return nodelist
++    # Generated "returns" statement.
++    if isinstance(ent, QAPISchemaCommand) and not any(
++        s.kind == QAPIDoc.Kind.RETURNS
++        for s in sections.partitions[DocRegion.OTHER]
++    ):
++        sect = QAPIDoc.Section(ent.info, QAPIDoc.Kind.RETURNS)
++        sections.partitions[DocRegion.OTHER].append(sect)
++
+     # Return the combined list of sections.
+     return list(sections)
  
 -- 
 2.48.1
