@@ -4,84 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9C901C02192
-	for <qemu-devel@archiver.kernel.org>; Wed,  5 Feb 2025 18:06:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D6852C02192
+	for <qemu-devel@archiver.kernel.org>; Wed,  5 Feb 2025 18:08:31 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tfjmH-0006Ji-8A; Wed, 05 Feb 2025 13:05:33 -0500
+	id 1tfjou-00084y-0p; Wed, 05 Feb 2025 13:08:16 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tfjmE-0006Iv-Mc
- for qemu-devel@nongnu.org; Wed, 05 Feb 2025 13:05:30 -0500
-Received: from mail-wm1-x331.google.com ([2a00:1450:4864:20::331])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tfjos-00084W-Ky
+ for qemu-devel@nongnu.org; Wed, 05 Feb 2025 13:08:14 -0500
+Received: from mail-wm1-x32a.google.com ([2a00:1450:4864:20::32a])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tfjmC-00061I-Lj
- for qemu-devel@nongnu.org; Wed, 05 Feb 2025 13:05:30 -0500
-Received: by mail-wm1-x331.google.com with SMTP id
- 5b1f17b1804b1-4361b6f9faeso143465e9.1
- for <qemu-devel@nongnu.org>; Wed, 05 Feb 2025 10:05:27 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tfjor-0006H9-1u
+ for qemu-devel@nongnu.org; Wed, 05 Feb 2025 13:08:14 -0500
+Received: by mail-wm1-x32a.google.com with SMTP id
+ 5b1f17b1804b1-4361f664af5so669595e9.1
+ for <qemu-devel@nongnu.org>; Wed, 05 Feb 2025 10:08:12 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1738778726; x=1739383526; darn=nongnu.org;
+ d=linaro.org; s=google; t=1738778890; x=1739383690; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=zo9/m3xCEAnKO4BT4XNjB0k3jHWQwkUwoQ6UogUx5iA=;
- b=N49C8RPnzmq3J71peROqw6lLqxsUjX9c+eqO5tJC9tk5Eaibl1+BFA1FGFqIs2bZ/w
- ocbHaV33hYTXpTCGxNwwmUlZipMGuDr5dyDOTViAa0LgVsiHGBvBYO49Lh3Poeb/Zdha
- 00oiFGGH4Ak0cWxnWXOy/8tOAiOPcv6hmLSKWQ0cMiQrIwklBk6E80Alg3OMFEeObDU2
- 7rMFZ+R4qepSEdBnQpSsDQf4WiLVoQDHXByv7v0+P5hFd/xhUzO1N5LqEYWSrnIF/L6n
- lvDKUS5Io4mTlZz/HZH9JvPSqMpX64E2oNXwFUDlV0IpYefIHY3BSCxa4qTVIGo43xIm
- vjhw==
+ bh=mWJQmQRcwc8WnmUyWA8MbmjMCgK5S+qqP4CD7PcxmEk=;
+ b=kEfWDwrMVXVImXDwSoRM4xCPTmIncuQKYNZPQM/JA9SbqRbkAHYEpwFdPcjcUr9LPP
+ nuZHoNlrUogcR3i7HHt7advYfsNtql5wwQOfiZyCSOwlzrBaBloM/W88+ktqJbPt5B/J
+ fIuDrrHOGQoSRFle4nyGHsEuGbCgTzKGwu9Gat7tkzXBWvL++TQXXlGPgejXUo3f02n0
+ QM/xAedvCV78PDLdY4QSq/n56IU/KIRb1Fphtr+7ieb8v9RN7DdZ38FDEDHOlBEUOOTN
+ 1STnx3jboX8unvfHIy0kXFAxX7pL/vexSmXnyWaDlsidMdE2T6OCFBz0Vr7GlSo/poip
+ dVlw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1738778726; x=1739383526;
+ d=1e100.net; s=20230601; t=1738778890; x=1739383690;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=zo9/m3xCEAnKO4BT4XNjB0k3jHWQwkUwoQ6UogUx5iA=;
- b=hM0AJv1Zynd2J3AZPi2T1hogcby62GRElfjN+UQ4UYDiAIvusCpEqa7n1iyU7Tt89E
- LZod1QhrdVF9bgEkJ4bP/2nuNX+bOpR7F7yAq4ty5aCI42q8QtUiLgO1R+F++tVCNr0U
- uyNIjMzyie5gajZc/qgoAiBB8hBA6WUX9EW/YP/cfOaY0NWTDEN3Tcc9HDTQqmqb+19/
- ItCCm7CeKqRGQxgFiZTK+82tKo9PcD+tkhcmmzvuuOe6g0WjGOfKRb1k0uqvC0y+ICEG
- zvgnwgls0cdlKp7CB6X/cdMoJRRGXghThfhdAkI3njyQuTfU8fzHvNqzN8PYGGMzPqec
- /tgw==
-X-Forwarded-Encrypted: i=1;
- AJvYcCVA44qFrRxWi5+JOalt/N/ITqureXj35TnNZCm5hJScZjJG4MY63n+C9SVOHd1H7o2lZiP32OU32ZFn@nongnu.org
-X-Gm-Message-State: AOJu0YzfDg/GpYLSXqcSkM1V+1u/Fz0YmHx4oOAfeYnTeItO9FzlgJkf
- YV0DJobMn4CRbrZxZTCBpJi+gmdZpiHR1y7Y949+5NUoKwhcxW/X3ucyMf248JuqO7zpnOj31Dg
- tzx8=
-X-Gm-Gg: ASbGnct3UnDYHM3xM1tC0JW4RBTcQ6C8BYaUhwSvgXTt25le8SzWgHimijAe1SLcjoJ
- nIsSNrW2iRP9HZmpBpSUPCsZ01EfZTZ9+3LjOu5lTRmGrfYJjIdzYCULGr3eDVNNckjzC2ZXfPo
- 5dtn7fMb9WnfuszXiiyEbeQvxWvTwIhle56mz1TzRPJAqC1bilnWQjwdjj1ggmCpRJwl/verZtS
- EtU1XOSTIJJWWdoJ9RKjaEuMBb5FXHdSgywWOwGMh9KTW43pIYZgRgv0Xf1Z3s1BkFcWO29NxGN
- rdoSXh2cWmq54zXl8IPA4srlQ8JOEJVXh/1k4ng7f/PrIkFBbHLUivP5M5s=
-X-Google-Smtp-Source: AGHT+IFhUgxX7tufinqtLSA7XT13ZmZrW5xE1Pi3Aee4vCmtpfO/Z2bCEXzcSjduNtOx9cpDltga5A==
-X-Received: by 2002:a05:600c:5249:b0:434:fddf:5c06 with SMTP id
- 5b1f17b1804b1-43912d10a71mr2598995e9.1.1738778726075; 
- Wed, 05 Feb 2025 10:05:26 -0800 (PST)
+ bh=mWJQmQRcwc8WnmUyWA8MbmjMCgK5S+qqP4CD7PcxmEk=;
+ b=g6RhD3IT8wFi5eDPjmBcyzjDFEwGlSN3KPVXegralffgxGH++x2Q3wq1q4a4bBKgOK
+ T0+k0i9ZU7hXdMFAQr3/yekEaF2a0UQCU/Z/D9894RHFBV/siGpT0m31c8/2A/oomIwH
+ aBMCkss2n6INb1wcY0M0wGbDm+c+A3zacQ/hxPCsqUngqBPtla4aZExNLtoJb7golw0I
+ 2iTiz8X98kh9of1qqZuS1uWs19K/KaYezy3YstrcmRgWXX12jAtn+NDrda2miibH+CDv
+ otZrltNNAH1QZywnGF9cQ5aT3g6Q9st5YslIBNMDf4FbDZE8JaweXN0y0dDv1XP8Vpu+
+ rv6g==
+X-Gm-Message-State: AOJu0YwM7BhQsdu8svWjvUx7GFkoDMHHj2yZ6gJ6hqd6BZpYLsgUrMpa
+ oW60dnPtPQoHoVo4cuQyGfZTpZZWDYcQYqNPTToR2WWwjtDce7MHtX4DI7+SrVzvgR45x1ilixy
+ +Ac8=
+X-Gm-Gg: ASbGncvnZrnbD+hvAYWkA9OZNXoy0/UhLtavhEXUPcy8ppnhzuukkWwXFYQh+RYufIb
+ z9HPPaWhO4oT+00OUMWWYEgPZUddjaRTyMEvyABWNKFS96ZA8OnjtWC93no/cxEIQT3QOiHm7xt
+ u/G3ir6GATtu2EjiaeZWtQrUvMud6VTSLv+9FFPjnoxJ5WLULEQa8vYrgYaG8XFFZfoTinoXaja
+ krpccky79GnCgRBSFWDTOlFiCWwmOhjXNixqgjomogi/L0QXZtb7qOxCKHqUQ5il0ulB7OA2f/A
+ ff1kZKAqRDdXpkORX1XlXCfWLZqrFTUs3V2Xks1QDpF6enfAeGC2zBE9Dbk=
+X-Google-Smtp-Source: AGHT+IExPEHTQqTiZ3zozb5otO7ZlIGHGmbH2Cp93VQ8MjbmBcQ+zn5Iaff0zmRhH3F09Td/wB6Oug==
+X-Received: by 2002:a05:600c:1c1e:b0:436:6ddf:7a27 with SMTP id
+ 5b1f17b1804b1-4390d56980emr31130065e9.23.1738778890623; 
+ Wed, 05 Feb 2025 10:08:10 -0800 (PST)
 Received: from [192.168.69.198] (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4390db110dfsm29635305e9.36.2025.02.05.10.05.24
+ 5b1f17b1804b1-4390da89207sm28176145e9.32.2025.02.05.10.08.09
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 05 Feb 2025 10:05:25 -0800 (PST)
-Message-ID: <adce8772-d473-4b1d-b0f4-1f921ce89932@linaro.org>
-Date: Wed, 5 Feb 2025 19:05:23 +0100
+ Wed, 05 Feb 2025 10:08:10 -0800 (PST)
+Message-ID: <7819efab-9a19-434c-a48f-82f32a3ada0a@linaro.org>
+Date: Wed, 5 Feb 2025 19:08:09 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 11/12] meson: Deprecate 32-bit host support
-To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org,
- berrange@redhat.com
-Cc: pbonzini@redhat.com, mark.cave-ayland@ilande.co.uk, thuth@redhat.com,
- =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
-References: <20250204215359.1238808-1-richard.henderson@linaro.org>
- <20250204215359.1238808-12-richard.henderson@linaro.org>
+Subject: Re: [PATCH 5/5] tests/functional: skip mem addr test on 32-bit hosts
+To: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
+Cc: qemu-devel@nongnu.org, "Michael S. Tsirkin" <mst@redhat.com>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>, Thomas Huth <thuth@redhat.com>
+References: <20250205155946.2811296-1-berrange@redhat.com>
+ <20250205155946.2811296-6-berrange@redhat.com>
+ <9edd3138-3411-4459-96c3-d48c30e197e0@linaro.org>
+ <Z6OXlPu0fw_S9iy6@redhat.com>
 Content-Language: en-US
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20250204215359.1238808-12-richard.henderson@linaro.org>
+In-Reply-To: <Z6OXlPu0fw_S9iy6@redhat.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::331;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x331.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::32a;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x32a.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -104,57 +103,56 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 4/2/25 22:53, Richard Henderson wrote:
-> We deprecated i686 system mode support for qemu 8.0.  However, to
-> make real cleanups to TCG we need to deprecate all 32-bit hosts.
-> 
-> Reviewed-by: Thomas Huth <thuth@redhat.com>
-> Reviewed-by: Alex Bennée <alex.bennee@linaro.org>
-> Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
-> ---
->   docs/about/deprecated.rst | 7 +++++++
->   meson.build               | 8 +++-----
->   2 files changed, 10 insertions(+), 5 deletions(-)
-> 
-> diff --git a/docs/about/deprecated.rst b/docs/about/deprecated.rst
-> index 4a3c302962..7c61d0ba16 100644
-> --- a/docs/about/deprecated.rst
-> +++ b/docs/about/deprecated.rst
-> @@ -204,6 +204,13 @@ is going to be so much slower it wouldn't make sense for any serious
->   instrumentation. Due to implementation differences there will also be
->   anomalies in things like memory instrumentation.
->   
-> +32-bit host operating systems (since 10.0)
-> +''''''''''''''''''''''''''''''''''''''''''
-> +
-> +Keeping 32-bit host support alive is a substantial burden for the
-> +QEMU project.  Thus QEMU will in future drop the support for all
-> +32-bit host systems.
-> +
->   System emulator CPUs
->   --------------------
->   
-> diff --git a/meson.build b/meson.build
-> index aa1ca8355d..3347b0a553 100644
-> --- a/meson.build
-> +++ b/meson.build
-> @@ -4843,14 +4843,12 @@ if host_arch == 'unknown'
->       message('configure has succeeded and you can continue to build, but')
->       message('QEMU will use a slow interpreter to emulate the target CPU.')
->     endif
-> -elif host_arch == 'mips'
-> +elif host_long_bits < 64
->     message()
->     warning('DEPRECATED HOST CPU')
->     message()
-> -  message('Support for CPU host architecture ' + cpu + ' is going to be')
-> -  message('dropped as soon as the QEMU project stops supporting Debian 12')
-> -  message('("Bookworm"). Going forward, the QEMU project will not guarantee')
-> -  message('that QEMU will compile or work on this host CPU.')
-> +  message('Support for 32-bit CPU host architecture ' + cpu + ' is going')
-> +  message('to be dropped in a future QEMU release.')
+On 5/2/25 17:53, Daniel P. Berrangé wrote:
+> On Wed, Feb 05, 2025 at 05:40:48PM +0100, Philippe Mathieu-Daudé wrote:
+>> On 5/2/25 16:59, Daniel P. Berrangé wrote:
+>>> The test_mem_addr_space is validating handling of QEMU with various
+>>> memory address settings. All of the test cases are setting 'maxmem'
+>>> to a value that exceeds the 32-bit address space, so these must all
+>>> be skipped on 32-bit hosts.
+>>>
+>>> Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
+>>> ---
+>>>    tests/functional/qemu_test/__init__.py   |  2 +-
+>>>    tests/functional/qemu_test/decorators.py | 12 ++++++++++++
+>>>    tests/functional/test_mem_addr_space.py  | 17 ++++++++++++++++-
+>>>    3 files changed, 29 insertions(+), 2 deletions(-)
+>>
+>>
+>>> diff --git a/tests/functional/qemu_test/decorators.py b/tests/functional/qemu_test/decorators.py
+>>> index 1651eb739a..d3a8cf0483 100644
+>>> --- a/tests/functional/qemu_test/decorators.py
+>>> +++ b/tests/functional/qemu_test/decorators.py
+>>> @@ -5,6 +5,7 @@
+>>>    import importlib
+>>>    import os
+>>>    import platform
+>>> +import sys
+>>>    from unittest import skipUnless
+>>>    from .cmd import which
+>>> @@ -118,3 +119,14 @@ def skipIfMissingImports(*args):
+>>>        return skipUnless(has_imports, 'required import(s) "%s" not installed' %
+>>>                                       ", ".join(args))
+>>> +
+>>> +'''
+>>> +Decorator to skip execution of a test on 32-bit targets
 
-This change still allows us to remove 32-bit mips host support before
-the other architectures, right?
+"hosts"
+
+>>> +Example:
+>>> +
+>>> +  @skipIf32BitTarget()
+>>> +'''
+>>> +def skipIf32BitTarget():
+>>> +    enoughBits = sys.maxsize > 2**32
+>>> +    return skipUnless(enoughBits,
+>>> +                      'Test requires a host with 64-bit address space')
+>>
+>> skipIf32BitHost?
+> 
+> I don't mind either way.
+
+Preferably using skipIf32BitHost to match the error message:
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 
 
