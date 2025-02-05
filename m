@@ -4,89 +4,92 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 28CE9C02192
-	for <qemu-devel@archiver.kernel.org>; Wed,  5 Feb 2025 21:16:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3C6FDC02192
+	for <qemu-devel@archiver.kernel.org>; Wed,  5 Feb 2025 21:29:23 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tfmkw-0000AT-9t; Wed, 05 Feb 2025 16:16:26 -0500
+	id 1tfmwo-0003Jm-6h; Wed, 05 Feb 2025 16:28:38 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tfmkb-0008U2-GQ
- for qemu-devel@nongnu.org; Wed, 05 Feb 2025 16:16:07 -0500
-Received: from mail-wr1-x435.google.com ([2a00:1450:4864:20::435])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tfmkY-00068D-Hr
- for qemu-devel@nongnu.org; Wed, 05 Feb 2025 16:16:01 -0500
-Received: by mail-wr1-x435.google.com with SMTP id
- ffacd0b85a97d-38db10ab86cso139352f8f.3
- for <qemu-devel@nongnu.org>; Wed, 05 Feb 2025 13:15:57 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1738790156; x=1739394956; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=fB7oBBMNYqFF9UVX1VnLN9On1lXy2OqeBwDGd4G7qis=;
- b=LwWUysEa3gskgGwxDEWGQ7Xj2X+Eb3KIJf+UwI0r6gb1l1InmQQA4Pa4JeG+HfGrDj
- j1L0Bcl05vP0fMQw3LSEQmiDSGQFSS+QPH5KDL4AdbJ9ccSERFNWDn88N4U+ACZGJh8y
- E/lF7MnVCJa8dojOQlIAAxzvc6p/yPWyEinqYfaFsW46HRbpCIAOebA+EJMqfZKn56Hx
- JlcbFaOWJKhLM+3HJAVL8xmQ2GCPaaU2cyt1zJdRIYndoq+0a1wHVy64acv3B7+0P5/i
- cFfG6UJ2NZb8bO0zuy676/hKVlL3xrh87YCjPxfayVD2628s6zWpYIs0YXDH+AZYDshD
- qwkQ==
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1tfmwm-0003HX-Ue
+ for qemu-devel@nongnu.org; Wed, 05 Feb 2025 16:28:36 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1tfmwl-0000hA-8u
+ for qemu-devel@nongnu.org; Wed, 05 Feb 2025 16:28:36 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1738790911;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=xp/UdexfbeGTePAm9p5ljBLF3ZkTipyYEfiIbxs6n/4=;
+ b=jTZTeWsthhfkMJxw97qqI0e1zcou/0kk1M9cUzV3PulsVLOZVNYImZxbwxk1LYIZKxi6Ps
+ 2lPuvNo2en4Rahn/tLUo/MdFR0t6XZiQIaOC/AHIpH1VuuJkEDc0cl40E91qerGMhDJoDa
+ 3cahcwUw7VtrSFNL9IpsfAVCdRspHZU=
+Received: from mail-qt1-f197.google.com (mail-qt1-f197.google.com
+ [209.85.160.197]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-612-o0NKVgFRPNmxXrha8NJDrw-1; Wed, 05 Feb 2025 16:28:30 -0500
+X-MC-Unique: o0NKVgFRPNmxXrha8NJDrw-1
+X-Mimecast-MFC-AGG-ID: o0NKVgFRPNmxXrha8NJDrw
+Received: by mail-qt1-f197.google.com with SMTP id
+ d75a77b69052e-4679becb47eso6610551cf.3
+ for <qemu-devel@nongnu.org>; Wed, 05 Feb 2025 13:28:30 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1738790156; x=1739394956;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=fB7oBBMNYqFF9UVX1VnLN9On1lXy2OqeBwDGd4G7qis=;
- b=SHgGPCkPNGPZJ2hxKrTfrPxdtaqbGqpDiT72gZLjxxzblhgjWMkm4bUOFYNiIl7Ajy
- TV/Jyf3XQ2tFPyoJEgcqvc1swp+CSg6I23rZncqxW0PIfjFDLESiIluOFdeVwZyvKsHF
- drMFiBeq3rqPOplHXNgSKaSwBm81eaQSy3uAR2gDjc8EzZoqQw4L28XM5iST3aPu5NX3
- tMIFiLmFUGmsJm0SDFg0MgPjtSyHehtNckVmIC4N02Yyckb8681DlE0KSbOVVPpv7cW7
- k0wgPzO2msLFXOmp7NH+9ogWZOPUzyr1qtME8aLCVVN7JQYY7U7kOxuEVtQXI5kJkV3s
- 9QPA==
-X-Forwarded-Encrypted: i=1;
- AJvYcCXh8z3FTjCr/7nTV7FIo1rkD2IX270a85FVCXyUPiQ4ObrAIjyXQkJHNfIO432ENRDdujqvAd+1bRxi@nongnu.org
-X-Gm-Message-State: AOJu0YxcXOJOLWvB9CxVj9WzhoFJt0ee0nsm8qBUHjLr702xsVJCJ+sI
- uiq2eHx38D1hfVkBqE7u/76ZvHDPBAMD4JFnBSNh4z0+lfXb0lbhytjmpTd0ln4=
-X-Gm-Gg: ASbGncv3nra4BfEyEpTzQi8K31h7YWnR9aZbtHBeX7U3Faq3V1mvPGwyE4M56XdQL66
- NvpatN6dtWS+8lmWu00NzRaWZg2R0W7m+zMJ0R5ePCO891uBGdavMicQ95SQSoDVS6UgOOrXI2C
- 4ugwG6UyMM9a0Wc0pakehNqWzypT7aW6vjSrzwhD4WMMfsgt0Rfsbz/qBYsx7nKmlUr90saMuyl
- /GE+YTIQCEADmbtv5p79iK4Irx22DUJcvtMBtLlIY5oyfjIntl9Z1BxNh4pYkSw10JomaZlDl7N
- s85ya1OdhU6LHURfHCCma2jvOpBvrvY4BZKBKkiInodvH4T39vaIaAZrCmk=
-X-Google-Smtp-Source: AGHT+IFQEug11VFjt9/OFnCrcgf1M+CZ+vdH68fFgk6TUrBnTCnUjuak83bhzbB+zjY0gx6+YuxXWw==
-X-Received: by 2002:a5d:5887:0:b0:38c:5d42:152a with SMTP id
- ffacd0b85a97d-38db493f635mr3974852f8f.35.1738790156675; 
- Wed, 05 Feb 2025 13:15:56 -0800 (PST)
-Received: from [192.168.69.198] (88-187-86-199.subs.proxad.net.
- [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-38c5c0ebfdasm20052660f8f.17.2025.02.05.13.15.55
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 05 Feb 2025 13:15:56 -0800 (PST)
-Message-ID: <1b058aa2-5156-467f-939d-010c339bfc55@linaro.org>
-Date: Wed, 5 Feb 2025 22:15:55 +0100
+ d=1e100.net; s=20230601; t=1738790909; x=1739395709;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=xp/UdexfbeGTePAm9p5ljBLF3ZkTipyYEfiIbxs6n/4=;
+ b=c3KN1GPKVnKYxHp4vIxKpsyRcRTxr9bULJtN4jQnb91DhETUwsVH38ByvlMDDOSs4k
+ SSuCKkO2A1+Q94I/B+ex8+g8FOoS6uQ3zRiXv0sdeRtr6n6jSIXVkcl5pC0aq4WfwNWu
+ BKPx/uaHcLkL++U0oTCGPO4kGgaZYxuHh/6XUlq8bnAA08e7TRmCxq8a4ZauspgmhlIc
+ TOHqyEhU74Vy3L7iAbyDwGcak9owFyPce2CzQHDn0BbzD21BAKT6ThDRjOIiGwuVLlVX
+ IcTZEx+Q08hN7ZlG8w80Fxj8Zhu3AjEMjE7H0Xd2WA/yLhJ7kbrmpEy2WltEf3bLlP88
+ Gezw==
+X-Gm-Message-State: AOJu0YxFqqTOsJvIIjrxcm4J/m7Byqnu898PfIFP2fUA9O8hiZZlz2fN
+ 5On5ILT4xG8xF8QkBYEfcdTHI2FEBewIBAFnJm8BpCHwogFB/x9p0vtmO1L4J/rWrlUCri0pvty
+ NggGkQzL+mE9bawxpmvBuzqdsUf4j4hV6C/RJT4XoI8/exej1uy0fAP9U9sBZ
+X-Gm-Gg: ASbGnctZxfq7ld2NUCQE3J0JxNEvT4+SaxbBjJrM0A9t6RvIFYxFEMwfV8PEQ502/JM
+ gjp69nMSoo4/zt9tdJzNGlLEYAZZi4Xvcl3PUmJwWwPI5axR77t6ZTrSEh6A7wfQdjm7ogQK8Gm
+ 2QxzIYf+n7gcmkPCBOSr3A8/3W9G+QL/C3a+aJh+JpJFS06PJcAtmj/Z7R4oiKEmQCf++x3cAr3
+ KXaUf3gxCwwtlBoGd17FfPcxVJaIx8hXrz44n7fYpY3mqvuZgFmEuB0FEvcg2rMcwaRRw1dqMw5
+ txhet4pxgzkLuJr0q63iphOIrrF7s2hGCVTA6pRRnHczWJ8s
+X-Received: by 2002:a05:622a:7c91:b0:467:b7de:da8a with SMTP id
+ d75a77b69052e-470303cfc2dmr24326581cf.6.1738790909503; 
+ Wed, 05 Feb 2025 13:28:29 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IEGarPdTmxD3Ww7hnoYHSaJYBokkUYN2DYA9uvcW+HmTjfYOuZB8QU2qvh84h0ZYeycn9L+fQ==
+X-Received: by 2002:a05:622a:7c91:b0:467:b7de:da8a with SMTP id
+ d75a77b69052e-470303cfc2dmr24326441cf.6.1738790909248; 
+ Wed, 05 Feb 2025 13:28:29 -0800 (PST)
+Received: from x1.local (pool-99-254-114-190.cpe.net.cable.rogers.com.
+ [99.254.114.190]) by smtp.gmail.com with ESMTPSA id
+ d75a77b69052e-46fdf1728c8sm74451961cf.56.2025.02.05.13.28.27
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Wed, 05 Feb 2025 13:28:28 -0800 (PST)
+Date: Wed, 5 Feb 2025 16:28:25 -0500
+From: Peter Xu <peterx@redhat.com>
+To: Steve Sistare <steven.sistare@oracle.com>
+Cc: qemu-devel@nongnu.org, Fabiano Rosas <farosas@suse.de>,
+ Peter Maydell <peter.maydell@linaro.org>
+Subject: Re: [PATCH] migration: use parameters.mode in cpr_state_save
+Message-ID: <Z6PX-Shf7UREfLD7@x1.local>
+References: <1738788841-211843-1-git-send-email-steven.sistare@oracle.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 03/12] plugins: Uninline qemu_plugin_add_opts
-To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
-Cc: pbonzini@redhat.com, mark.cave-ayland@ilande.co.uk, berrange@redhat.com,
- thuth@redhat.com, =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
-References: <20250204215359.1238808-1-richard.henderson@linaro.org>
- <20250204215359.1238808-4-richard.henderson@linaro.org>
-Content-Language: en-US
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20250204215359.1238808-4-richard.henderson@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::435;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x435.google.com
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <1738788841-211843-1-git-send-email-steven.sistare@oracle.com>
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=peterx@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -102,18 +105,68 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 4/2/25 22:53, Richard Henderson wrote:
-> No need to expand this function inline.
-> Unexport qemu_plugin_opts to match.
+On Wed, Feb 05, 2025 at 12:54:01PM -0800, Steve Sistare wrote:
+> qmp_migrate guarantees that cpr_channel is not null for
+> MIG_MODE_CPR_TRANSFER when cpr_state_save is called:
 > 
-> Reviewed-by: Thomas Huth <thuth@redhat.com>
-> Reviewed-by: Alex Bennée <alex.bennee@linaro.org>
-> Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+>     qmp_migrate()
+>         if (s->parameters.mode == MIG_MODE_CPR_TRANSFER && !cpr_channel) {
+>             return;
+>         }
+>         cpr_state_save(cpr_channel)
+> 
+> but cpr_state_save checks for mode differently before using channel,
+> and Coverity cannot infer that they are equivalent in outgoing QEMU,
+> and warns that channel may be NULL:
+> 
+>     cpr_state_save(channel)
+>         MigMode mode = migrate_mode();
+>         if (mode == MIG_MODE_CPR_TRANSFER) {
+>             f = cpr_transfer_output(channel, errp);
+> 
+> To make Coverity happy, use parameters.mode in cpr_state_save.
+> 
+> Resolves: Coverity CID 1590980
+> Reported-by: Peter Maydell <peter.maydell@linaro.org>
+> Signed-off-by: Steve Sistare <steven.sistare@oracle.com>
 > ---
->   include/qemu/plugin.h | 9 +--------
->   plugins/loader.c      | 7 ++++++-
->   2 files changed, 7 insertions(+), 9 deletions(-)
+>  migration/cpr.c | 3 ++-
+>  1 file changed, 2 insertions(+), 1 deletion(-)
+> 
+> diff --git a/migration/cpr.c b/migration/cpr.c
+> index 584b0b9..7f20bd5 100644
+> --- a/migration/cpr.c
+> +++ b/migration/cpr.c
+> @@ -8,6 +8,7 @@
+>  #include "qemu/osdep.h"
+>  #include "qapi/error.h"
+>  #include "migration/cpr.h"
+> +#include "migration/migration.h"
+>  #include "migration/misc.h"
+>  #include "migration/options.h"
+>  #include "migration/qemu-file.h"
+> @@ -132,7 +133,7 @@ int cpr_state_save(MigrationChannel *channel, Error **errp)
+>  {
+>      int ret;
+>      QEMUFile *f;
+> -    MigMode mode = migrate_mode();
+> +    MigMode mode = migrate_get_current()->parameters.mode;
 
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Are we sure this can make coverity happy?
+
+Another more straightforward change is caching migrate mode in
+qmp_migrate() and also check that before invoking cpr_state_save().
+
+Thanks,
+
+>  
+>      trace_cpr_state_save(MigMode_str(mode));
+>  
+> -- 
+> 1.8.3.1
+> 
+
+-- 
+Peter Xu
 
 
