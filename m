@@ -4,91 +4,62 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id F40F2C02192
-	for <qemu-devel@archiver.kernel.org>; Wed,  5 Feb 2025 14:43:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A9973C02192
+	for <qemu-devel@archiver.kernel.org>; Wed,  5 Feb 2025 14:49:23 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tfgce-0003SV-0m; Wed, 05 Feb 2025 09:43:24 -0500
+	id 1tfghT-0005FD-Iw; Wed, 05 Feb 2025 09:48:23 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1tfgcc-0003S2-T6
- for qemu-devel@nongnu.org; Wed, 05 Feb 2025 09:43:22 -0500
-Received: from mail-ej1-x62b.google.com ([2a00:1450:4864:20::62b])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1tfgcb-00061B-Dl
- for qemu-devel@nongnu.org; Wed, 05 Feb 2025 09:43:22 -0500
-Received: by mail-ej1-x62b.google.com with SMTP id
- a640c23a62f3a-ab7515df1faso323487466b.2
- for <qemu-devel@nongnu.org>; Wed, 05 Feb 2025 06:43:20 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1738766600; x=1739371400; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:user-agent
- :references:in-reply-to:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=weVsRZqqPDY73JXORY8ZDDRRCBcZnbP8mOLmyNiHeLI=;
- b=qX9Qs8yIEj+doNUDYrsASS6LmmIQaMPRxdo505KQ8bELaRd2eoaZsFJIQv01ggm/g9
- /YwFBN0fUsttfN/g2PNEwDvuhfkbqkNX6eO/b2jaqoqTjxsmVak5y2L1Fynn6dpevuG/
- 8G7NlKG7wDHy4DrcgOZSkBK1z5Az8oIU1lXaTZit9fljttBDEJvxpwP/Q7cWhZ2/mOgN
- FS+rRQLRu7phSEy7+655bYg/FfE2BbcDVxwdV2LhmBjaRDK9vK8rvRf4SSKO6p7HW/CR
- mxe9t6o64SF4WEWbY9CtcGhKssvJ2cBtAv+1GUFoLanZIIeFyGNHu6JZsEZEH3r17NG5
- 6yDw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1738766600; x=1739371400;
- h=content-transfer-encoding:mime-version:message-id:date:user-agent
- :references:in-reply-to:subject:cc:to:from:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=weVsRZqqPDY73JXORY8ZDDRRCBcZnbP8mOLmyNiHeLI=;
- b=g2vSz0sc58LsVl8dyVTxTFaXyVALGIFfTydW3MZeeLFZprJDMLMp9sxvZj5DGD83ef
- BMYDAszv6XY0KMNvn1zsaVaVY85DAVxKB74808S4IJDCJRYwMbNEtRlM6r+KNfSKLiTA
- qEqiSksNVFDhXDqfVDHABCjvxB95csV/B8YK0l3Rw6wZOucDtCahQwTHfUtGsN5tjW9x
- uejHdMgJwuLypxl1XEPR5ktyufgjCsBMauoCMorCrI+58HVYVtYxrPkLH5bPoHzE0J0w
- 0Q1UB44b1gD/pq6Jbcl4Gey7GkDcLpW4q9ikw8g4NmDjtvyZJIE4ILYQW4PhQjwLB364
- MPcg==
-X-Gm-Message-State: AOJu0YyJByBFrQoaUYJudoiT8gPtada2IRY0F7r/qNWfiY1IdW8oMNeI
- YGGP/qAsO06A1ObJwFlg5JTBspynE6ug/wz7/PDrmVFyw6ccb3vMFXQydpZ7Hh4=
-X-Gm-Gg: ASbGncs2KqyKwNLFjM9zR1wXGkQXi0F5zM0YnmTOIc9vS2VIimG3oDVnelNa3VmGraG
- T4kmt54fcQzv3hrN2TvXviEjPtWx6bQB2+uNfELP7uPUyKy2JnaqY551MNODasww8/r3jVAwjad
- d32qZk3CmGIyAZOnbgywXrGvXfeUVepzPuZyLuSaxjJc3l82hV640kk8wXGVDFrrwKjF1etctk+
- 0S1feiFnwIfJVOT+BtGf16v8SUbFMBVsNstghaUzUVSVgurHycmQcvPNWagr7IwUtLX/D1mhsCC
- Me0vOWLfZSeW/6Pj7w==
-X-Google-Smtp-Source: AGHT+IFkoa7vIEjTE3iVCX1YX1Yn1PV5Bf1cCDYyaOsc0oayi9Ng9jitmrQWZIRg8gzA01wzlfjplg==
-X-Received: by 2002:a17:907:6ea3:b0:aa6:a844:8791 with SMTP id
- a640c23a62f3a-ab75e346a37mr292318666b.45.1738766599986; 
- Wed, 05 Feb 2025 06:43:19 -0800 (PST)
-Received: from draig.lan ([185.126.160.109]) by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-ab6e47f1dbfsm1109979266b.78.2025.02.05.06.43.19
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 05 Feb 2025 06:43:19 -0800 (PST)
-Received: from draig (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id E080D5F90B;
- Wed,  5 Feb 2025 14:43:18 +0000 (GMT)
-From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
-To: Thomas Huth <thuth@redhat.com>
-Cc: qemu-devel@nongnu.org,  qemu-arm@nongnu.org,  Peter Maydell
- <peter.maydell@linaro.org>,  Cornelia Huck <cohuck@redhat.com>
-Subject: Re: [PATCH] tests/functional/test_aarch64_virt: Fix vulkan test
- without egl-headless
-In-Reply-To: <20250205141140.97437-1-thuth@redhat.com> (Thomas Huth's message
- of "Wed, 5 Feb 2025 15:11:40 +0100")
-References: <20250205141140.97437-1-thuth@redhat.com>
-User-Agent: mu4e 1.12.8; emacs 29.4
-Date: Wed, 05 Feb 2025 14:43:18 +0000
-Message-ID: <87h6588nax.fsf@draig.linaro.org>
+ (Exim 4.90_1) (envelope-from <zenghui.yu@linux.dev>)
+ id 1tfghR-0005F3-Sq
+ for qemu-devel@nongnu.org; Wed, 05 Feb 2025 09:48:21 -0500
+Received: from out-177.mta0.migadu.com ([2001:41d0:1004:224b::b1])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <zenghui.yu@linux.dev>)
+ id 1tfghO-0006vQ-Ds
+ for qemu-devel@nongnu.org; Wed, 05 Feb 2025 09:48:21 -0500
+Message-ID: <1080d4d7-81d0-4497-bef9-22191a4b999e@linux.dev>
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.dev; s=key1;
+ t=1738766888;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=GihMlY52E+tqDtb6LBuVtlIjkxOQON6Oh7+f0QSJ3Pw=;
+ b=kP1rKkkXr8nGIaYn4J+fedd8GACJSCJFvgDMssOB0NOiwMS22cCLkJpsKbFI58PhYRBl/S
+ ifTss1Q7wnzoFgOIpb22i6QOioyIRyQPW2WJdkCQgrU2eWOtIic3jvmvEIYK8gQbZyInXm
+ X0lg0qPyUn9nZIug7heoJUMOBeCSD2c=
+Date: Wed, 5 Feb 2025 22:47:48 +0800
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::62b;
- envelope-from=alex.bennee@linaro.org; helo=mail-ej1-x62b.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Subject: Re: [PATCH 02/11] arm/hvf: Initialise GICv3 state just before first
+ vCPU run
+To: phil@philjordan.eu
+Cc: qemu-devel@nongnu.org, Cameron Esfahani <dirty@apple.com>,
+ Roman Bolshakov <rbolshakov@ddn.com>, "Michael S. Tsirkin" <mst@redhat.com>,
+ Paolo Bonzini <pbonzini@redhat.com>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ Alexander Graf <agraf@csgraf.de>, Peter Maydell <peter.maydell@linaro.org>,
+ qemu-arm@nongnu.org
+References: <20241209203629.74436-1-phil@philjordan.eu>
+ <20241209203629.74436-3-phil@philjordan.eu>
+Content-Language: en-US
+X-Report-Abuse: Please report any abuse attempt to abuse@migadu.com and
+ include these headers.
+From: Zenghui Yu <zenghui.yu@linux.dev>
+In-Reply-To: <20241209203629.74436-3-phil@philjordan.eu>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Migadu-Flow: FLOW_OUT
+Received-SPF: pass client-ip=2001:41d0:1004:224b::b1;
+ envelope-from=zenghui.yu@linux.dev; helo=out-177.mta0.migadu.com
+X-Spam_score_int: -16
+X-Spam_score: -1.7
+X-Spam_bar: -
+X-Spam_report: (-1.7 / 5.0 requ) BAYES_00=-1.9, DKIM_INVALID=0.1,
+ DKIM_SIGNED=0.1, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -104,19 +75,22 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Thomas Huth <thuth@redhat.com> writes:
+On 2024/12/10 04:36, phil@philjordan.eu wrote:
+> From: Phil Dennis-Jordan <phil@philjordan.eu>
+> 
+> Initialising the vCPU PFR0_EL1 system register with the GIC flag in
+> hvf_arch_init_vcpu() does not actually work because the GIC state is
+> not yet available at that time.
+> 
+> If we set this flag just before running each vCPU for the first time,
+> the GIC will definitely be fully initialised at that point.
+> 
+> Signed-off-by: Phil Dennis-Jordan <phil@philjordan.eu>
+> ---
+>  target/arm/hvf/hvf.c | 17 ++++++++++-------
+>  1 file changed, 10 insertions(+), 7 deletions(-)
 
-> The vulkan test currently fails if the egl-headless device is not
-> available. Let's add a proper check to skip the test in this case.
->
-> Fixes: 3d30f882ce ("tests/functional: extend test_aarch64_virt with vulka=
-n test")
-> Reported-by: Cornelia Huck <cohuck@redhat.com>
-> Signed-off-by: Thomas Huth <thuth@redhat.com>
+Tested-by: Zenghui Yu <zenghui.yu@linux.dev>
 
-Acked-by: Alex Benn=C3=A9e <alex.bennee@linaro.org>
-
---=20
-Alex Benn=C3=A9e
-Virtualisation Tech Lead @ Linaro
+Thanks!
 
