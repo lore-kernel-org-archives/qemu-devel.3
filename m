@@ -4,98 +4,71 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4A42BC02192
-	for <qemu-devel@archiver.kernel.org>; Wed,  5 Feb 2025 07:32:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id AC601C02192
+	for <qemu-devel@archiver.kernel.org>; Wed,  5 Feb 2025 08:09:49 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tfZsl-0002EP-FQ; Wed, 05 Feb 2025 02:31:35 -0500
+	id 1tfaT2-00013k-Fn; Wed, 05 Feb 2025 03:09:04 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <SRS0=1SSW=U4=kaod.org=clg@ozlabs.org>)
- id 1tfZsg-0002D4-VQ; Wed, 05 Feb 2025 02:31:31 -0500
-Received: from gandalf.ozlabs.org ([150.107.74.76] helo=mail.ozlabs.org)
+ (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
+ id 1tfaSt-000126-Rq; Wed, 05 Feb 2025 03:08:58 -0500
+Received: from mgamail.intel.com ([192.198.163.15])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <SRS0=1SSW=U4=kaod.org=clg@ozlabs.org>)
- id 1tfZse-0002iT-JH; Wed, 05 Feb 2025 02:31:30 -0500
-Received: from mail.ozlabs.org (mail.ozlabs.org [IPv6:2404:9400:2221:ea00::3])
- by gandalf.ozlabs.org (Postfix) with ESMTP id 4YnsNd0wB8z4wnp;
- Wed,  5 Feb 2025 18:31:13 +1100 (AEDT)
-Received: from authenticated.ozlabs.org (localhost [127.0.0.1])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits))
- (Client did not present a certificate)
- by mail.ozlabs.org (Postfix) with ESMTPSA id 4YnsNY69Xcz4wcD;
- Wed,  5 Feb 2025 18:31:09 +1100 (AEDT)
-Message-ID: <8b33436d-6fda-4fc8-b9ae-9eb32b284337@kaod.org>
-Date: Wed, 5 Feb 2025 08:31:17 +0100
+ (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
+ id 1tfaSr-0001E9-I6; Wed, 05 Feb 2025 03:08:55 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+ d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+ t=1738742934; x=1770278934;
+ h=date:from:to:cc:subject:message-id:references:
+ mime-version:content-transfer-encoding:in-reply-to;
+ bh=Yb1GwAcOa0aO1yeLYu4Yq+LWNnT1bGHQr+oZVW53MYc=;
+ b=LDwMwv033+RUAlTkQTHJF5ST2/mxJGegg5w/a4NH0pg+iE2YS88t+q+e
+ K11z1D09byA/KV/tZig44Ipvwcqw0WBr5JjEYObi/amQAETr7kDF4refI
+ 3Pzvx8fKJu2XRwLwWPZdjNhJu/x5JsWPSOvekE4WlaT4QtyU93FKE0QBB
+ ZeoMK2H0SfJWR9LCXpblR80iFMDAfmGZdtjMow8kRy8yKX2Gt6hYLB81m
+ szu59IDqUP/Tnjky9dZeZ3g94TRJlUseZy1eokNVqP+Sq4G6L4f0lFdcB
+ lMsiVXGSbLCk0V/FnE/NuRbiQlHOiyW8YMQMSIFCfVMF/tOQNQYDyKINW Q==;
+X-CSE-ConnectionGUID: 1L7kc7atS7Wpa4NTULgV6g==
+X-CSE-MsgGUID: e7zjKvnsTjOWy3CiMvAP1A==
+X-IronPort-AV: E=McAfee;i="6700,10204,11336"; a="39453697"
+X-IronPort-AV: E=Sophos;i="6.13,260,1732608000"; d="scan'208";a="39453697"
+Received: from fmviesa001.fm.intel.com ([10.60.135.141])
+ by fmvoesa109.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 05 Feb 2025 00:08:48 -0800
+X-CSE-ConnectionGUID: rUnbGF3FQSKH6IK5Zl6p9w==
+X-CSE-MsgGUID: HnYJ6bSwQKSiTIElndhnsQ==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.12,224,1728975600"; d="scan'208";a="141720847"
+Received: from liuzhao-optiplex-7080.sh.intel.com (HELO localhost)
+ ([10.239.160.39])
+ by fmviesa001.fm.intel.com with ESMTP; 05 Feb 2025 00:08:46 -0800
+Date: Wed, 5 Feb 2025 16:28:15 +0800
+From: Zhao Liu <zhao1.liu@intel.com>
+To: Paolo Bonzini <pbonzini@redhat.com>
+Cc: qemu-devel@nongnu.org, qemu-rust@nongnu.org
+Subject: Re: [PATCH 02/10] rust: qom: add reference counting functionality
+Message-ID: <Z6MhH0bLVRw8O/8c@intel.com>
+References: <20250117194003.1173231-1-pbonzini@redhat.com>
+ <20250117194003.1173231-3-pbonzini@redhat.com>
+ <Z5ZRnYDZdZcgyCsR@intel.com>
+ <CABgObfZ1659K9TrAAa3HYfhr0vf31eveoN-=33rSmpJnLo1RKg@mail.gmail.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 0/5] tests/functional: Update Aspeed OpenBMC images
- (resend)
-To: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>, qemu-arm@nongnu.org,
- qemu-devel@nongnu.org
-Cc: Joel Stanley <joel@jms.id.au>,
- Andrew Jeffery <andrew@codeconstruct.com.au>,
- Troy Lee <troy_lee@aspeedtech.com>, Jamin Lin <jamin_lin@aspeedtech.com>,
- Steven Lee <steven_lee@aspeedtech.com>, Thomas Huth <thuth@redhat.com>
-References: <20250129071820.1258133-1-clg@redhat.com>
-Content-Language: en-US, fr
-From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>
-Autocrypt: addr=clg@kaod.org; keydata=
- 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
-In-Reply-To: <20250129071820.1258133-1-clg@redhat.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=150.107.74.76;
- envelope-from=SRS0=1SSW=U4=kaod.org=clg@ozlabs.org; helo=mail.ozlabs.org
-X-Spam_score_int: -40
-X-Spam_score: -4.1
+In-Reply-To: <CABgObfZ1659K9TrAAa3HYfhr0vf31eveoN-=33rSmpJnLo1RKg@mail.gmail.com>
+Received-SPF: pass client-ip=192.198.163.15; envelope-from=zhao1.liu@intel.com;
+ helo=mgamail.intel.com
+X-Spam_score_int: -43
+X-Spam_score: -4.4
 X-Spam_bar: ----
-X-Spam_report: (-4.1 / 5.0 requ) BAYES_00=-1.9,
- HEADER_FROM_DIFFERENT_DOMAINS=0.07, RCVD_IN_DNSWL_MED=-2.3,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -111,41 +84,130 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 1/29/25 08:18, Cédric Le Goater wrote:
-> Hello,
+On Wed, Jan 29, 2025 at 11:03:31AM +0100, Paolo Bonzini wrote:
+> Date: Wed, 29 Jan 2025 11:03:31 +0100
+> From: Paolo Bonzini <pbonzini@redhat.com>
+> Subject: Re: [PATCH 02/10] rust: qom: add reference counting functionality
 > 
-> This series updates the OpenBMC firmware images to the latest version
-> for existing tests and also adds 2 new tests for Aspeed machines which
-> were not tested before : witherspoon and bletchley.
+> On Sun, Jan 26, 2025 at 3:56 PM Zhao Liu <zhao1.liu@intel.com> wrote:
+> >
+> > Hi Paolo,
+> >
+> > On Fri, Jan 17, 2025 at 08:39:55PM +0100, Paolo Bonzini wrote:
+> > > Date: Fri, 17 Jan 2025 20:39:55 +0100
+> > > From: Paolo Bonzini <pbonzini@redhat.com>
+> > > Subject: [PATCH 02/10] rust: qom: add reference counting functionality
+> > > X-Mailer: git-send-email 2.47.1
+> > >
+> > > Add a smart pointer that allows to add and remove references from
+> > > QOM objects.  It's important to note that while all QOM objects have a
+> > > reference count, in practice not all of them have their lifetime guarded
+> > > by it.
+> >
+> > About the background, I have a maybe common question...why Rust needs
+> > extra reference count guarding?
 > 
-> Thanks,
+> Children properties are removed, and thus their reference is dropped,
+> before instance_finalize() is called (see object_finalize() in
+> qom/object.c). This is not valid in Rust, you need to keep the object
+> alive until the last line of Rust code has run - which is after
+> Drop::drop() has run.
+
+I see, this is also a typical effort to eliminate unsafe crossing of FFI
+boundaries.
+
+> > Additionally, I felt that the ref count may be a bit confusing. After
+> > creating Child<> property, the child object's ref count is sometimes 1,
+> > and other times it's 2:
+> >
+> >  * With object_initialize_child(), child's ref count is 1.
+> >
+> >  * With object_property_add_child() (usually after a object_new() to
+> >    create child first):
+> >
+> >    - sometimes user will call object_unref(), and then the ref count is 1.
+> >      E.g., x86_cpu_apic_create() in target/i386/cpu-apic.c.
+> >
+> >    - sometimes no object_unref(), then ref count is 2.
+> >      E.g., exynos4210_realize() in hw/arm/exynos4210.c, creats "cortex-a9".
 > 
-> C.
+> In C, having a ref count of 2 is usually a latent memory leak (because
+> most of the time there's not going to be an object_unref() in the
+> instance_finalize() method). In this case the leak is latent, because
+> TYPE_EXYNOS4210_SOC is not hot-unpluggable and thus will never really
+> go away once realized.
+
+Further, what about doing object_unref() in object_property_add_child()
+or object_property_try_add_child()?
+
+Then we can ensure the object will have ref count of 1 on the exit of
+object_property_add_child() and people will no longer miss
+object_unref().
+
+Although, there are a few more devices involved to fix similar issues.
+
+> In Rust, this class of leaks simply does not exist with the right API.
+> ObjectMethods::property_add_child() could either:
 > 
-> Cédric Le Goater (5):
->    tests/functional: Introduce a new test routine for OpenBMC images
->    tests/functional: Update OpenBMC image of palmetto machine
->    tests/functional: Update OpenBMC image of romulus machine
->    tests/functional: Introduce a witherspoon machine test
->    tests/functional: Introduce a bletchley machine test
+> - take an Owned<T> and consume it, thus always giving a ref count of 1
+> on exit. If you want to keep the object you would have to clone it.
+>
+> - take "&'owner self, &'child T where 'owner: 'child", then you can
+> pass an embedded object like object_initialize_child().
 > 
->   tests/functional/aspeed.py                    | 20 +++++++++-------
->   tests/functional/meson.build                  |  4 ++++
->   tests/functional/test_arm_aspeed_bletchley.py | 24 +++++++++++++++++++
->   tests/functional/test_arm_aspeed_palmetto.py  | 12 +++++-----
->   tests/functional/test_arm_aspeed_romulus.py   | 12 +++++-----
->   .../functional/test_arm_aspeed_witherspoon.py | 24 +++++++++++++++++++
->   6 files changed, 75 insertions(+), 21 deletions(-)
->   create mode 100755 tests/functional/test_arm_aspeed_bletchley.py
->   create mode 100755 tests/functional/test_arm_aspeed_witherspoon.py
+> In the latter case however you *still* need to keep the reference
+> count elevated until Drop runs. That is, unlike C, Rust code will
+> always have a ref count of 2 for children. For this reason, instead of
+> having a "T" in the struct you would have another wrapper---something
+> like Child<'owner, T>. This wrapper cannot be cloned but it does an
+> unref when dropped.
+
+Thanks, the whole picture is nice.
+
+> My expectation is that property_add_child() will be used exclusivel
+> for the first case, i.e. it will take an Owned<T>. If you want to
+> create a child property from an embedded object, something like
+> object_initialize_child() can be used once pinned-init is used to
+> rewrite how instance_init is used. It will look something like
+> 
+> pin_init! {
+>   &this in MyClass {
+>     ...,
+>     iomem <- MemoryRegion::init_io(
+>             this,
+>             &MY_MR_OPS,
+>             "memory-region-name",
+>             0x1000,
+>     ),
+>     child_obj <- ChildClass::init().to_child(this, "prop-name")
+>   }
+> }
+> 
+> where to_child() wraps an "impl PinInit<T>" and turns it into an "impl
+> PinInit<Child<'a, T>>". Or something like that. :)
+
+Elegant code design, looking forward to pin_init.
+
+> > From this description, I understand your goal is:
+> >
+> >  * For embedded child object, its lifetimer is managed by its parent
+> >    object, through Child<> for the most cases.
+> >
+> >  * For non-embedded child - a pointer/reference in parent object, its
+> >    lifetimer is managed by `Owned<>` (and with Child<>).
+> >
+> > Am I right?
+> 
+> Yes, you're right.
+> 
+> I am not sure if you meant Child<> as the QOM concept, or as a Rust
+> struct. If the latter, you're really really right.
 > 
 
+Thank you :-) It seems virtio device will have an embedded case to adopt
+Child<> struct (virtio_instance_init_common()).
 
-Applied to aspeed-next.
-
-Thanks,
-
-C.
-
+Regards,
+Zhao
 
 
