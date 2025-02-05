@@ -4,93 +4,64 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E32F0C02197
-	for <qemu-devel@archiver.kernel.org>; Wed,  5 Feb 2025 09:00:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4FCD3C02194
+	for <qemu-devel@archiver.kernel.org>; Wed,  5 Feb 2025 09:04:43 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tfbFp-0004LK-JG; Wed, 05 Feb 2025 03:59:29 -0500
+	id 1tfbKF-0006FN-Vi; Wed, 05 Feb 2025 04:04:03 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1tfbFn-0004Kf-G9
- for qemu-devel@nongnu.org; Wed, 05 Feb 2025 03:59:27 -0500
-Received: from mail-ej1-x62c.google.com ([2a00:1450:4864:20::62c])
+ (Exim 4.90_1)
+ (envelope-from <SRS0=dc2d=U4=miszr.win=git@fe-bounces.miszr.win>)
+ id 1tfbKB-0006E0-RH
+ for qemu-devel@nongnu.org; Wed, 05 Feb 2025 04:04:00 -0500
+Received: from smtp.forwardemail.net ([207.246.76.47])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1tfbFl-00022g-Ko
- for qemu-devel@nongnu.org; Wed, 05 Feb 2025 03:59:27 -0500
-Received: by mail-ej1-x62c.google.com with SMTP id
- a640c23a62f3a-ab6ed8a5a04so1089547166b.3
- for <qemu-devel@nongnu.org>; Wed, 05 Feb 2025 00:59:24 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1738745963; x=1739350763; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:user-agent
- :references:in-reply-to:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=hRy5QSxkB50liNc7fDoBvuhg0TDSaVBd/TizOuLSEh4=;
- b=ac7Nrjp/d3LTzVyksR8mORtdkhcqOAy5Sqo1YYp/pz4bFbSm7nmIPfg2w7a6ey2Wpx
- sHjos5VsTEFsnPsBAszf1clkduAlv7J8nPg/B5STPYEWSFNhPLiLrA9FSsnwCfP3jt0+
- wjHGIAEjlz+qvCYcLTM0EVaDCJsMxB2Sx9qFK7Q5CB6NI91yUh6hPg1JxSq2pUt0yT6Q
- MXxL/+teyLSJnZSxcOxrNQ2xTuPRtC6OM4hVKbj0tmsfVuLK0+QqOulRGew7q3wTHSrs
- vEbKk0vZzT1rVtdRrOrB9jqPp9EVvE1cJN2NNH74F0SFOOrog9aRFu3XPf9rpxA3oC+o
- MOiQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1738745963; x=1739350763;
- h=content-transfer-encoding:mime-version:message-id:date:user-agent
- :references:in-reply-to:subject:cc:to:from:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=hRy5QSxkB50liNc7fDoBvuhg0TDSaVBd/TizOuLSEh4=;
- b=spkyp0wVk0tJDCv7nHyc4v2juOljre1aZ+xzYt1PQt5AmVlo1H7boKx3Yg9gdjrKex
- Ux+oVZvHxsg4Uo0AQrJgFJaOCF+2uRbos7ebygwoPnf//0uzim7Ay2cQJ7i+20VqBuhT
- otg3UwPoh6n/5yfVvE+h/QK1pbg37oO57ds4DdvmrGNj9oR9PEy5jDIIYUy3lYjpnS7R
- uTmcD5PDra+A2nVn2PeHTDit2K+HSTFj6jrBBFpoc5yAWcRU1kOrodeMQbs2EGVBVvgl
- 12G5HN3VgnGLGHUhLl5tPQi4wVOaEHmx+7shQ3tHkMngO2iY+TodpYKIapzb5uzakE5k
- iNyA==
-X-Forwarded-Encrypted: i=1;
- AJvYcCVfHmwsq3PJNdL8CtRM+FOguZkrWSmZzm5DK8D4dCypLDqW8/xkjHPnlRLtx7U+1Z80OZUH1IS55tbf@nongnu.org
-X-Gm-Message-State: AOJu0YybazBzsBn7MENoL38iEpt4WS/s8cBpnYPt0kgIZV6FuC5gyQTD
- x00wtx6APFx76kCuAjUMN2ipOzByJ5ZRa4oanuqt6CF60qy2LnbkiBICw580iTU=
-X-Gm-Gg: ASbGnctz7PbSh8eE7ayRa8fQfkXV1Tz6oENQaVVhYZZCPE5eP8Lr9QX9AxrKyAQ41C1
- PAiS0u9FjNgFk49wqVRE2Y8f/7rjGx/ZSiwZu10JrukyrwJRIw1RTVF/vzNBrsxrxABeg6HCOsg
- tv9BDyVOIzEQV0oGMsavevB7JTffA5fA/Kx8Es1HPLVi4rNjrtTEE+J3NTqoYo/0SS6VTm6axJq
- UThVY7R3JRZy11+6n3AdAm0MBsaGim80LJ2ShLq+Y72dU08KD/dLByll2eMAd5nD7taTsl4iW8S
- hSJdz0FkhFMXsOaC6Q==
-X-Google-Smtp-Source: AGHT+IEm/OY7UR98FfWXp/5NAGxLke08KHfHgfFdL/PDGA910+G909QHuKbArPQMHhG1nU94G/tu3g==
-X-Received: by 2002:a17:907:da0:b0:a9e:b150:a99d with SMTP id
- a640c23a62f3a-ab75e212f20mr199017966b.5.1738745963427; 
- Wed, 05 Feb 2025 00:59:23 -0800 (PST)
-Received: from draig.lan ([185.126.160.109]) by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-ab6e47cf88esm1056076066b.46.2025.02.05.00.59.22
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 05 Feb 2025 00:59:22 -0800 (PST)
-Received: from draig (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id 35DE55F90B;
- Wed,  5 Feb 2025 08:59:22 +0000 (GMT)
-From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
-To: Peter Maydell <peter.maydell@linaro.org>
-Cc: qemu-arm@nongnu.org,  qemu-devel@nongnu.org
-Subject: Re: [PATCH 01/14] target/arm: Report correct syndrome for UNDEFINED
- CNTPS_*_EL1 from EL2 and NS EL1
-In-Reply-To: <20250130182309.717346-2-peter.maydell@linaro.org> (Peter
- Maydell's message of "Thu, 30 Jan 2025 18:22:56 +0000")
-References: <20250130182309.717346-1-peter.maydell@linaro.org>
- <20250130182309.717346-2-peter.maydell@linaro.org>
-User-Agent: mu4e 1.12.8; emacs 29.4
-Date: Wed, 05 Feb 2025 08:59:22 +0000
-Message-ID: <87ldukahsl.fsf@draig.linaro.org>
+ (Exim 4.90_1)
+ (envelope-from <SRS0=dc2d=U4=miszr.win=git@fe-bounces.miszr.win>)
+ id 1tfbK8-0002ly-NB
+ for qemu-devel@nongnu.org; Wed, 05 Feb 2025 04:03:59 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=miszr.win;
+ h=Content-Transfer-Encoding: MIME-Version: References: In-Reply-To:
+ Message-ID: Date: Subject: Cc: To: From; q=dns/txt; s=fe-257304d8b2;
+ t=1738746235; bh=Tq+fp2HWyDXK3lzVFWHzHmixXBdrlEjZq2eKJn1cqcY=;
+ b=FeKPFuh3RH594ta5cxe1xB6FF/bDK7VTRv5nu/o6U2OPMRISi+1xB0fU3nzw4+iKhgMq2JJFk
+ zZixfD2GxVaz1MVh3qG35h1pJie3vhPjxaKusLK4yfmYnBSjFxGjT+ie5xR3XYHWkWxqDRGT/kc
+ GMtR93u9Uuzy19eDd0kOsto=
+X-Forward-Email-ID: 67a32979f2c6eba601968091
+X-Forward-Email-Sender: rfc822; git@miszr.win, smtp.forwardemail.net,
+ 207.246.76.47
+X-Forward-Email-Version: 0.4.40
+X-Forward-Email-Website: https://forwardemail.net
+X-Complaints-To: abuse@forwardemail.net
+X-Report-Abuse: abuse@forwardemail.net
+X-Report-Abuse-To: abuse@forwardemail.net
+From: Mikael Szreder <git@miszr.win>
+To: qemu-devel@nongnu.org
+Cc: Richard Henderson <richard.henderson@linaro.org>,
+ Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>,
+ Artyom Tarasenko <atar4qemu@gmail.com>, Mikael Szreder <git@miszr.win>
+Subject: [PATCH v2 2/2] target/sparc: Fix register selection for all F*TOx and
+ FxTO* instructions
+Date: Wed,  5 Feb 2025 10:03:33 +0100
+Message-ID: <20250205090333.19626-3-git@miszr.win>
+X-Mailer: git-send-email 2.48.1
+In-Reply-To: <20250205090333.19626-1-git@miszr.win>
+References: <20250205090333.19626-1-git@miszr.win>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::62c;
- envelope-from=alex.bennee@linaro.org; helo=mail-ej1-x62c.google.com
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=207.246.76.47;
+ envelope-from=SRS0=dc2d=U4=miszr.win=git@fe-bounces.miszr.win;
+ helo=smtp.forwardemail.net
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ FROM_FMBLA_NEWDOM=0.001, RCVD_IN_DNSWL_NONE=-0.0001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -106,25 +77,39 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Peter Maydell <peter.maydell@linaro.org> writes:
+Fixed a mistake I made in the FqTOx instruction.
+Fixed issues in the FsTOx, FxTOs, FxTOd, FxTOq instructions.
 
-> The access pseudocode for the CNTPS_TVAL_EL1, CNTPS_CTL_EL1 and
-> CNTPS_CVAL_EL1 secure timer registers says that they are UNDEFINED
-> from EL2 or NS EL1.  We incorrectly return CP_ACCESS_TRAP from the
-> access function in these cases, which means that we report the wrong
-> syndrome value to the target EL.
->
-> Use CP_ACCESS_TRAP_UNCATEGORIZED, which reports the correct syndrome
-> value for an UNDEFINED instruction.
->
-> Cc: qemu-stable@nongnu.org
-> Fixes: b4d3978c2fd ("target-arm: Add the AArch64 view of the Secure physi=
-cal timer")
-> Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+Fixes: 0bba7572d40d ("target/sparc: Perform DFPREG/QFPREG in decodetree")
+Resolves: https://gitlab.com/qemu-project/qemu/-/issues/2802
+Signed-off-by: Mikael Szreder <git@miszr.win>
+---
+ target/sparc/insns.decode | 10 +++++-----
+ 1 file changed, 5 insertions(+), 5 deletions(-)
 
-Reviewed-by: Alex Benn=C3=A9e <alex.bennee@linaro.org>
+diff --git a/target/sparc/insns.decode b/target/sparc/insns.decode
+index 694a28d88c..cfcdf6690e 100644
+--- a/target/sparc/insns.decode
++++ b/target/sparc/insns.decode
+@@ -321,12 +321,12 @@ FdMULq      10 ..... 110100 ..... 0 0110 1110 .....        @q_d_d
+ FNHADDs     10 ..... 110100 ..... 0 0111 0001 .....        @r_r_r
+ FNHADDd     10 ..... 110100 ..... 0 0111 0010 .....        @d_d_d
+ FNsMULd     10 ..... 110100 ..... 0 0111 1001 .....        @d_r_r
+-FsTOx       10 ..... 110100 00000 0 1000 0001 .....        @r_r2
++FsTOx       10 ..... 110100 00000 0 1000 0001 .....        @d_r2
+ FdTOx       10 ..... 110100 00000 0 1000 0010 .....        @d_d2
+-FqTOx       10 ..... 110100 00000 0 1000 0011 .....        @q_q2
+-FxTOs       10 ..... 110100 00000 0 1000 0100 .....        @r_r2
+-FxTOd       10 ..... 110100 00000 0 1000 1000 .....        @d_r2
+-FxTOq       10 ..... 110100 00000 0 1000 1100 .....        @q_r2
++FqTOx       10 ..... 110100 00000 0 1000 0011 .....        @d_q2
++FxTOs       10 ..... 110100 00000 0 1000 0100 .....        @r_d2
++FxTOd       10 ..... 110100 00000 0 1000 1000 .....        @d_d2
++FxTOq       10 ..... 110100 00000 0 1000 1100 .....        @q_d2
+ FiTOs       10 ..... 110100 00000 0 1100 0100 .....        @r_r2
+ FdTOs       10 ..... 110100 00000 0 1100 0110 .....        @r_d2
+ FqTOs       10 ..... 110100 00000 0 1100 0111 .....        @r_q2
+-- 
+2.48.1
 
---=20
-Alex Benn=C3=A9e
-Virtualisation Tech Lead @ Linaro
 
