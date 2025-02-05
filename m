@@ -4,104 +4,98 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D5E22C02192
-	for <qemu-devel@archiver.kernel.org>; Wed,  5 Feb 2025 04:57:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7B20CC02192
+	for <qemu-devel@archiver.kernel.org>; Wed,  5 Feb 2025 05:09:38 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tfXSY-0004mM-Tm; Tue, 04 Feb 2025 23:56:22 -0500
+	id 1tfXeT-0007oG-WF; Wed, 05 Feb 2025 00:08:42 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <dave@stgolabs.net>) id 1tfXSO-0004lF-PU
- for qemu-devel@nongnu.org; Tue, 04 Feb 2025 23:56:12 -0500
-Received: from siberian.tulip.relay.mailchannels.net ([23.83.218.246])
+ (Exim 4.90_1) (envelope-from <gshan@redhat.com>) id 1tfXeO-0007n2-Lz
+ for qemu-devel@nongnu.org; Wed, 05 Feb 2025 00:08:36 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <dave@stgolabs.net>) id 1tfXSJ-0003vw-0q
- for qemu-devel@nongnu.org; Tue, 04 Feb 2025 23:56:10 -0500
-X-Sender-Id: dreamhost|x-authsender|dave@stgolabs.net
-Received: from relay.mailchannels.net (localhost [127.0.0.1])
- by relay.mailchannels.net (Postfix) with ESMTP id B651C781EBD;
- Wed,  5 Feb 2025 04:47:54 +0000 (UTC)
-Received: from pdx1-sub0-mail-a274.dreamhost.com
- (100-119-13-85.trex-nlb.outbound.svc.cluster.local [100.119.13.85])
- (Authenticated sender: dreamhost)
- by relay.mailchannels.net (Postfix) with ESMTPA id 52028781812;
- Wed,  5 Feb 2025 04:47:53 +0000 (UTC)
-ARC-Seal: i=1; s=arc-2022; d=mailchannels.net; t=1738730874; a=rsa-sha256;
- cv=none;
- b=MTItOaBc7CM2aS9Pzpi0Pk6a1+8XFYMzDgAeJOfQa7jkYpJ7tqjgXBjW1ZIRMf/nKyCML9
- MXCtE2R73Bn9Y7OwoqUP2QD9pYl2lVS6En+yVMxV4rp5Z7fodUc7yF8X0NoXUzNAPhIysK
- spON+lObZZUJ74pEfw9qHvt6DV4Ie6CMzdBO01QN5BjG95zrUB7gpk8Q40CJd2VWDof9zU
- lfjt0CgNCehUIo2WkDnsbmCaXm5EzPyh10L+LkLnkWtVfOtlbFtkyLkkwaQ8nBHVX8lPR5
- mImLWNRRKIlF0jLqgN1IWXhR43lpaqk1I9F8NvziROMFdHGEo0ApCCIUKIgukQ==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed;
- d=mailchannels.net; s=arc-2022; t=1738730874;
+ (Exim 4.90_1) (envelope-from <gshan@redhat.com>) id 1tfXeN-00075v-6L
+ for qemu-devel@nongnu.org; Wed, 05 Feb 2025 00:08:36 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1738732114;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references:dkim-signature;
- bh=vWUPnHEXth515geAjdIMDxlMbrsPj3lmjTwoFs8iR98=;
- b=aqYCZIrd+Z0aT9Enc2mJz7RWmkKLTRTZhZCMnHi4W6+xCv6hjPstDYNiSXGI61//Y5USig
- eMnmVAzT+3vZ+wULgisakqnmk+a4B64XBMbv0Fj0e26EKvZrrED5IKT8VTGTvSKugSPeXh
- XfGRMasrbri2XHCbeW0AQL/FT5Be8T7lJC7d9rZchm18sYR4OnQfI15CjRkG8jJgdamexL
- eRdgYxXKumeSWwOuhLA9k+rWK8gbtYAXxD36X2L70HfUvVSRDqeKmi685+reDpJpNIvhm5
- +HIS58h5lRKuNhI0V3EdyS1CJxfuw/KbE1ZON+cwpitS123ICtSbTj+w/F4k4Q==
-ARC-Authentication-Results: i=1; rspamd-854f7f575d-l97bm;
- auth=pass smtp.auth=dreamhost smtp.mailfrom=dave@stgolabs.net
-X-Sender-Id: dreamhost|x-authsender|dave@stgolabs.net
-X-MC-Relay: Neutral
-X-MailChannels-SenderId: dreamhost|x-authsender|dave@stgolabs.net
-X-MailChannels-Auth-Id: dreamhost
-X-Whispering-Tasty: 1c271af40ec7e8c9_1738730874513_2852093803
-X-MC-Loop-Signature: 1738730874513:4256381980
-X-MC-Ingress-Time: 1738730874513
-Received: from pdx1-sub0-mail-a274.dreamhost.com (pop.dreamhost.com
- [64.90.62.162]) (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384)
- by 100.119.13.85 (trex/7.0.2); Wed, 05 Feb 2025 04:47:54 +0000
-Received: from offworld (ip72-199-50-187.sd.sd.cox.net [72.199.50.187])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange ECDHE (P-256) server-signature RSA-PSS (2048 bits) server-digest
- SHA256) (No client certificate requested)
- (Authenticated sender: dave@stgolabs.net)
- by pdx1-sub0-mail-a274.dreamhost.com (Postfix) with ESMTPSA id 4Ynnm83X3mzSJ; 
- Tue,  4 Feb 2025 20:47:52 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=stgolabs.net;
- s=dreamhost; t=1738730873;
- bh=vWUPnHEXth515geAjdIMDxlMbrsPj3lmjTwoFs8iR98=;
- h=Date:From:To:Cc:Subject:Content-Type;
- b=eYF6CbseqzUHYbuwA2CulTZ8K/563KyqpOhqtnh067nVX5LmPObb2HIX6k93gC3Pv
- G8pdw+4uvwO9VqVN+lgSaxjCApm+m7+PMHl266SOVg2+1fE/ifNXpu2ZxBMMaFNmPA
- SzEF3q23K4sQ4nxIz2vWAPqX4xTCb6/KLVCpyYvHHXVeRFIi/OvbsmMPSZaqD/Equ9
- iUB0kxDd9/D7l05erjqcFn4E35zGRruRnkugexT1Qfkg7CFBgEhFVvG3gYwL5SZHVz
- Ob/8kqwWh57NBq55OIcr2kO7Jk1+ho/bCt2ML2KQD4xoWhZ22kRwIkd2XzYLhEwCE0
- CjYOfJjHdJvAA==
-Date: Tue, 4 Feb 2025 20:47:49 -0800
-From: Davidlohr Bueso <dave@stgolabs.net>
-To: Jonathan Cameron <Jonathan.Cameron@huawei.com>
-Cc: ajay.opensrc@micron.com, fan.ni@samsung.com, john@jagalactic.com,
- emirakhur@micron.com, ajayjoshi@micron.com, sthanneeru@micron.com,
- ravis.opensrc@micron.com, arramesh@micron.com, tmmulgund@micron.com,
- linux-cxl@vger.kernel.org, qemu-devel@nongnu.org
-Subject: Re: [PATCH] hw/cxl: Support aborting background commands
-Message-ID: <20250205044749.xoo73gewwjahxj6k@offworld>
-References: <20240813221255.179200-1-dave@stgolabs.net>
- <20240827163357.0000228e@Huawei.com>
- <jdipjanthgt6atlksngodxjevfb5d43d5rshtxqxxwruszqa3e@vctljs77lg4e>
- <20241022180030.00004f68@Huawei.com>
- <20250203150706.00000e23@huawei.com>
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=lYWuJH78uIjdeN05kZXHZ/y58aB8vgywJCx5R5RlS1U=;
+ b=g1sDEAh6DfHEtW3l/HmKgf7nDoXcknoOHo4/n6s+BoiaXC6NcYCglnDOLVPb5b+V4jb1F6
+ FutllxNoBZ6E3lftpy4QP3KSSiHl+aCy/4xG7VHRb3/JRcnF9RWmd+qzGv/4KX4QlMzgJp
+ 3p1Zj2/YZpzIfDKHQmzhPhOmkb0Vwi0=
+Received: from mail-pj1-f70.google.com (mail-pj1-f70.google.com
+ [209.85.216.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-468-J-RsyJaoOJ-s9XqUZge-sg-1; Wed, 05 Feb 2025 00:08:28 -0500
+X-MC-Unique: J-RsyJaoOJ-s9XqUZge-sg-1
+X-Mimecast-MFC-AGG-ID: J-RsyJaoOJ-s9XqUZge-sg
+Received: by mail-pj1-f70.google.com with SMTP id
+ 98e67ed59e1d1-2ee86953aeaso11891910a91.2
+ for <qemu-devel@nongnu.org>; Tue, 04 Feb 2025 21:08:28 -0800 (PST)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1738732108; x=1739336908;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=lYWuJH78uIjdeN05kZXHZ/y58aB8vgywJCx5R5RlS1U=;
+ b=D6965WfBtnUiJnivG+3jhwcmzQQfhMabGy3DJEmMSdLf9ZwbW0EzHunbAKaXdQ9TrA
+ fRrTLnaRaBqHLiWcCbz/zlfb21eJnGvqUVoEZZ6f3U157AzvrYLHxM018PrtU54dra/t
+ Ajr7BqYjM+jOLIstfNcUCYj4lgkF3AhSKNt9o1ELtsingYearK3vI4S7Yytabx3XU9xS
+ 4Zc9WKt3mP3++Zu/GRWvhTNw2L1xWWG+WhETHC0frFmLxdhPODaPp75TaUsRppiU9NMo
+ kE+BOOjZ/myIRrlWuN+3ThMuEmH4b/yoLcbvxnxTNXC7mf0I5L1fpWcFbc/qGSyvgOSF
+ E33Q==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCWeP3HKI9QCXo/QEZfjDZYQIR6aqaX0LB9mhxeXkeFrDd2HoKnmutADmgVcez/LFBBraNB3WLBhg3J7@nongnu.org
+X-Gm-Message-State: AOJu0YwC5FNUFg+F43mZTXtBAbM4dNtIJJhwUgP2ZN/XB95qsxb2lZvp
+ heA8xManILVvd0dWvoIrY0Awv2/vSHTkrQ4gTpYBty0MPkB5nGCL6yuBrgECxg+eIyjdOSI1gID
+ LpepfRlVly71PRtsxs8CcSeuGdBOEPDWoSFDUmmYl9Z3ynt0fM0q9
+X-Gm-Gg: ASbGncuh74DevMBzRfaqpP3LswSoZwWoOV7aH/+MGIsZn2SdYLCAvcHN7KMPbz9Ell/
+ /ajo4sVIJQdlezQcHovIjwbxVbCVGkGJ0ODPW3HC09cvodcw117AC0ZSAj8yZsVBVz1oUPYapJE
+ +VY8RHr5HZrtEgl/fMUuANNpNVX4sl68CHmFr9dgNiEVWTk3WjqL35LQYcB0h0VZbXb9ZoUeOaD
+ FfSQauqLQYFkvZWk5kJAkBdxSD8SfBunLfZaz0z59C0kbbnpwybHxXsMbaDCIjfpGlWbHAqNgU6
+ mBqdfA==
+X-Received: by 2002:a05:6a00:28cc:b0:725:f1b1:cbc5 with SMTP id
+ d2e1a72fcca58-730350f96demr2999425b3a.3.1738732107811; 
+ Tue, 04 Feb 2025 21:08:27 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IHL4EVXfQs7ldqqSvTneYj0zFp+EBcIFaaBzFXtFT/lffzlrSaryfHflYyNRu2CO1DCfJ5XYw==
+X-Received: by 2002:a05:6a00:28cc:b0:725:f1b1:cbc5 with SMTP id
+ d2e1a72fcca58-730350f96demr2999400b3a.3.1738732107463; 
+ Tue, 04 Feb 2025 21:08:27 -0800 (PST)
+Received: from [192.168.68.55] ([180.233.125.64])
+ by smtp.gmail.com with ESMTPSA id
+ d2e1a72fcca58-72fe631c1f3sm11533598b3a.35.2025.02.04.21.08.23
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Tue, 04 Feb 2025 21:08:26 -0800 (PST)
+Message-ID: <04b9198a-9b50-4ad5-8495-8ed4c44aa9eb@redhat.com>
+Date: Wed, 5 Feb 2025 15:08:21 +1000
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii; format=flowed
-Content-Disposition: inline
-In-Reply-To: <20250203150706.00000e23@huawei.com>
-User-Agent: NeoMutt/20220429
-Received-SPF: pass client-ip=23.83.218.246; envelope-from=dave@stgolabs.net;
- helo=siberian.tulip.relay.mailchannels.net
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2] hw/arm/virt: Support larger highmem MMIO regions
+To: "Matthew R. Ochs" <mochs@nvidia.com>, qemu-devel@nongnu.org,
+ shameerali.kolothum.thodi@huawei.com, nathanc@nvidia.com
+Cc: qemu-arm@nongnu.org, peter.maydell@linaro.org, ddutile@redhat.com,
+ eric.auger@redhat.com, nicolinc@nvidia.com, ankita@nvidia.com
+References: <20250205041918.2340237-1-mochs@nvidia.com>
+Content-Language: en-US
+From: Gavin Shan <gshan@redhat.com>
+In-Reply-To: <20250205041918.2340237-1-mochs@nvidia.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=gshan@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -117,36 +111,116 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, 03 Feb 2025, Jonathan Cameron wrote:
+On 2/5/25 2:19 PM, Matthew R. Ochs wrote:
+> The MMIO region size required to support virtualized environments with
+> large PCI BAR regions can exceed the hardcoded limit configured in QEMU.
+> For example, a VM with multiple NVIDIA Grace-Hopper GPUs passed through
+> requires more MMIO memory than the amount provided by VIRT_HIGH_PCIE_MMIO
+> (currently 512GB). Instead of updating VIRT_HIGH_PCIE_MMIO, introduce a
+> new parameter, highmem-mmio-size, that specifies the MMIO size required
+> to support the VM configuration.
+> 
+> Example usage with 1TB MMIO region size:
+> 	-machine virt,gic-version=3,highmem-mmio-size=1T
+> 
+> Signed-off-by: Matthew R. Ochs <mochs@nvidia.com>
+> ---
+> v2: - Add unit suffix to example in commit message
+>      - Use existing "high memory region" terminology
+>      - Resolve minor braces nit
+> 
+>   docs/system/arm/virt.rst |  4 ++++
+>   hw/arm/virt.c            | 38 ++++++++++++++++++++++++++++++++++++++
+>   2 files changed, 42 insertions(+)
+> 
 
->On Tue, 22 Oct 2024 18:00:30 +0100
->Jonathan Cameron <Jonathan.Cameron@Huawei.com> wrote:
->
->> On Mon, 21 Oct 2024 20:23:46 -0700
->> Davidlohr Bueso <dave@stgolabs.net> wrote:
->>
->> > On Tue, 27 Aug 2024, Jonathan Cameron wrote:\n
->> > >No comments inline and LGTM. I'll queue it on my tree and push
->> > >that out on gitlab sometime soonish.
->> >
->> > I don't see this picked up, which is a good thing atm. While testing
->> > the kernel side, I noticed the following is needed, will send a v2
->> > with it folded in.
->>
->> Currently just on my cxl-2024-10-15 branch of gitlab.com/jic23/qemu.
->> I'll pick up your v2 and replace that.
->
->Hi Davidlohr,
->
->Did I miss v2, or still to send?
+With the following nitpick addressed:
 
-Ah, thanks for the reminder, I had forgotten to send it out.
+Reviewed-by: Gavin Shan <gshan@redhat.com>
 
-Actually, considering you have been carrying v1 for a while now,
-would it not be cleaner/better just rebasing the diff and sending you
-that instead of a whole new v2? Otherwise, I'm not sure what to do
-when working on your latest 2025-01-24 branch.
+> diff --git a/docs/system/arm/virt.rst b/docs/system/arm/virt.rst
+> index e67e7f0f7c50..f96cf4da2a78 100644
+> --- a/docs/system/arm/virt.rst
+> +++ b/docs/system/arm/virt.rst
+> @@ -138,6 +138,10 @@ highmem-mmio
+>     Set ``on``/``off`` to enable/disable the high memory region for PCI MMIO.
+>     The default is ``on``.
+>   
+> +highmem-mmio-size
+> +  Set the high memory region size for PCI MMIO. Must be a power-of-2 and
+> +  greater than the default size.
+> +
+
+The description doesn't match with the code changes because it's acceptable
+when the specified size is equal to the default one. I think the description
+needs to be improved for this.
+
+>   gic-version
+>     Specify the version of the Generic Interrupt Controller (GIC) to provide.
+>     Valid values are:
+> diff --git a/hw/arm/virt.c b/hw/arm/virt.c
+> index 49eb0355ef0c..d8d62df43f04 100644
+> --- a/hw/arm/virt.c
+> +++ b/hw/arm/virt.c
+> @@ -2773,6 +2773,36 @@ static void virt_set_highmem_mmio(Object *obj, bool value, Error **errp)
+>       vms->highmem_mmio = value;
+>   }
+>   
+> +static void virt_get_highmem_mmio_size(Object *obj, Visitor *v, const char *name,
+> +                          void *opaque, Error **errp)
+> +{
+> +    uint64_t size = extended_memmap[VIRT_HIGH_PCIE_MMIO].size;
+> +
+> +    visit_type_size(v, name, &size, errp);
+> +}
+> +
+> +static void virt_set_highmem_mmio_size(Object *obj, Visitor *v, const char *name,
+> +                          void *opaque, Error **errp)
+> +{
+> +    uint64_t size;
+> +
+> +    if (!visit_type_size(v, name, &size, errp)) {
+> +        return;
+> +    }
+> +
+> +    if (!is_power_of_2(size)) {
+> +        error_setg(errp, "highmem_mmio_size is not a power-of-2");
+> +        return;
+> +    }
+> +
+> +    if (size < extended_memmap[VIRT_HIGH_PCIE_MMIO].size) {
+> +        error_setg(errp, "highmem_mmio_size is less than the default (%lu)",
+> +                   extended_memmap[VIRT_HIGH_PCIE_MMIO].size);
+> +        return;
+> +    }
+> +
+
+It's acceptable when the specified size is equal to the default one, slightly
+conflicting with the description in docs/system/arm/virt.rst
+
+
+> +    extended_memmap[VIRT_HIGH_PCIE_MMIO].size = size;
+> +}
+>   
+>   static bool virt_get_its(Object *obj, Error **errp)
+>   {
+> @@ -3446,6 +3476,14 @@ static void virt_machine_class_init(ObjectClass *oc, void *data)
+>                                             "Set on/off to enable/disable high "
+>                                             "memory region for PCI MMIO");
+>   
+> +    object_class_property_add(oc, "highmem-mmio-size", "size",
+> +                                   virt_get_highmem_mmio_size,
+> +                                   virt_set_highmem_mmio_size,
+> +                                   NULL, NULL);
+> +    object_class_property_set_description(oc, "highmem-mmio-size",
+> +                                          "Set the high memory region size "
+> +                                          "for PCI MMIO");
+> +
+>       object_class_property_add_str(oc, "gic-version", virt_get_gic_version,
+>                                     virt_set_gic_version);
+>       object_class_property_set_description(oc, "gic-version",
 
 Thanks,
-Davidlohr
+Gavin
+
 
