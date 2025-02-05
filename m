@@ -4,89 +4,88 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E5E71C02192
-	for <qemu-devel@archiver.kernel.org>; Wed,  5 Feb 2025 20:59:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9D8B3C02192
+	for <qemu-devel@archiver.kernel.org>; Wed,  5 Feb 2025 21:03:18 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tfmTt-0003xC-Vk; Wed, 05 Feb 2025 15:58:46 -0500
+	id 1tfmXy-0005Hu-Qi; Wed, 05 Feb 2025 16:02:59 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tfmTp-0003wg-Md
- for qemu-devel@nongnu.org; Wed, 05 Feb 2025 15:58:42 -0500
-Received: from mail-wm1-x331.google.com ([2a00:1450:4864:20::331])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tfmXr-0005Gi-Qd
+ for qemu-devel@nongnu.org; Wed, 05 Feb 2025 16:02:51 -0500
+Received: from mail-wm1-x330.google.com ([2a00:1450:4864:20::330])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tfmTm-0001zX-S2
- for qemu-devel@nongnu.org; Wed, 05 Feb 2025 15:58:40 -0500
-Received: by mail-wm1-x331.google.com with SMTP id
- 5b1f17b1804b1-435f8f29f8aso1243135e9.2
- for <qemu-devel@nongnu.org>; Wed, 05 Feb 2025 12:58:37 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tfmXq-00039M-6H
+ for qemu-devel@nongnu.org; Wed, 05 Feb 2025 16:02:51 -0500
+Received: by mail-wm1-x330.google.com with SMTP id
+ 5b1f17b1804b1-4361e89b6daso1243245e9.3
+ for <qemu-devel@nongnu.org>; Wed, 05 Feb 2025 13:02:49 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1738789117; x=1739393917; darn=nongnu.org;
+ d=linaro.org; s=google; t=1738789368; x=1739394168; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=TLm2ppVsFo2/1libVsce/JP0/uSNGilp75aSCiyo5hM=;
- b=fYLwN8544i/NKf3hamPZXVZElUAbF7eUTB3ZSzkbHhHRtc0FBcfegN3AvEoNdGRgsB
- 3jaUoF/rio21ealGJUyycXn8FZiniGfL19NsxheHwL/Ulj9PfiB4/oHUfepba9BOhXQP
- j3wFZK9AuWNkEhun/puO7YrpFeWz4qRb2cIWMAfWVc8pUQUtFdyxEw1iANuFH0y7zYOr
- 9rcnfNC7L9pE7YHfYK2mLZE1X8qNoHzT7RtrYMDxIFTbY4omR+/FlN/WTcfMesMoIlyz
- tAdD3iPo6+NxBkT1XmIlT3H4QpkCAZK6ibV5L7Z6GaLzA7AloHw8hlNi/YqoppJNAci1
- ohsw==
+ bh=kVTTRuKxiK4eclC7iB33EPkPJ9W261XxA792rlYhJ4I=;
+ b=DZ4plyuHCk4Xj6Tq6Eb5nkUNVgU4o345nLA6CSmOQ2YunmZCPjBTHb4Kv1NEZTVbER
+ MGTrahrGx9CVjPigBlne/fhrSJFMsntxVmO+weADFauy3h4sUYwZQNwaT9G+qtOYTQqL
+ hyrhkYFfoR/IHFC5lwmLclo4Kx2A9WxVlvfdlLLPjwNn0ozK0hql38OuMyD8zfNTyaEK
+ WWb/1OZNfWcdu2x2uBvijDYxHO2fV+5kzItDFl/qrhzJIOnlJM8RezzoXqN7wNjMtH9n
+ tyJVoXp+GdNWJL9rjc71/iJFa/eJibJr3yqAgB5Bywvv1W86ROK18SoB743L87ZOAvAE
+ 87aQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1738789117; x=1739393917;
+ d=1e100.net; s=20230601; t=1738789368; x=1739394168;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=TLm2ppVsFo2/1libVsce/JP0/uSNGilp75aSCiyo5hM=;
- b=uBds8/WdZNSl9qN0NTYFdjo7UJ6ztrwPuN9tqEcRZ2OOJNFXbZKUwHPv9DBoAe82iI
- iEQeizBfunOUkLzoheOclWhpd45q49CIpp6ow/XoWInZYmZQA/Tz3BQBiEjrPIxFEUk7
- 1dULkvP2cbNhyYl13EIt/YFv9vXUx6Oh5eYA3p/Q9a72TcGpn7A/6FBjjzwyjB8TgPiU
- Cxp3caYSwQExHDDJvqlr7GTZPJ/QOwmHlVmR1H9qXRdqt/Ia/3WJ08/MTxRKp7tYf50V
- 5SQSopG8HZzl6JhP1azV7Tf6UXfalNFiNvpXKozMViU4v+QOmCTB6BPH7hiQlWgoE4xQ
- K8sQ==
-X-Gm-Message-State: AOJu0YyTvm+g9WpgPBE3GoiUyk9H8yJnwqpYw7kxDRBt4XjByIypMt8w
- 5y6hQCNR3sbEbSjX8lzpN2bkM0vRC2xWwQBJ+9PlBvNnicHh/d2cn++Y+N4uotU=
-X-Gm-Gg: ASbGnctD09hKSYhRmIpeaNFNnsAPeuhCa4APo0TGC/CaQixiTVZUs4u/b2PIzA4Mjf3
- Azl+RaCozL5Pgz7D5LsauKUcAXybs5Pc3CJgnf5jVhte4DG5USX7XscAcvkWTwQXGyNJ8lFn6io
- Vc9mVcSVjrHl7AmoObusTcd4QLFqv3C/8R8ZaGr6zpTFuG1B06emARgT1HYa8NLE7BPemwmgZmN
- qTUFsa+eR8T+zruSR4ynMXCPWZPynkI1aC3qVJF90s3Ncd9zPVxbBaXTiitnFV1z7ng5kuawWPz
- +4SqY66AzaMArgkLGWMVQlVrzF7I5VVZLGcJnQ7p7xFAljaJviK5PT05OCM=
-X-Google-Smtp-Source: AGHT+IFXQC7Z/Y91/tfsHm/vHi+WxlWHSon3912Qa5c0WE6qATWEhMl+trPEHjbrKXaYOTeQFpXqlA==
-X-Received: by 2002:a05:6000:1a8b:b0:38c:5d42:1529 with SMTP id
- ffacd0b85a97d-38db491fa85mr2879708f8f.36.1738789116601; 
- Wed, 05 Feb 2025 12:58:36 -0800 (PST)
+ bh=kVTTRuKxiK4eclC7iB33EPkPJ9W261XxA792rlYhJ4I=;
+ b=DXn2wHvu1EmXqS3sll+9akpdNaU2hwew4fTS/0sucbVL+6G9VtlAxVfJ79s9R39557
+ vOT197WiOQ1hE6T72d6BQMzq0mRS0wKC1JBS2otFHl0wnqPn5O3AnoU/MMqIu/0IkDH/
+ ezal4b4H3mosxAhGthp3bhjJELviYk2yeeDiYKLdIp0hL+HTzNILv58lEj8Qvmtb9G5b
+ QAHkDZP3ArpVtNgOzVDrm9gv1ZwA10CP3Q3c2kTH/oun6RgTuG7fiGqltAjkXtkzq0gO
+ Nx8W+HIbvowAumPzmv1v8YnaLIUNuXQzSeXyAH5RTXJVrGtA/+CHQ1ZZMu0PHJBHZASO
+ +Uqg==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCWdQj0tSioUse7QsPBTqO/k/96u4Zc1Me0z/gIQlXTos9xqtvJJBuTtQ3LhkAUBK6gkKD35eV5mAmbC@nongnu.org
+X-Gm-Message-State: AOJu0Yy4tDe+gLJG0UQ+dxEupYjMq9lyuhrT3ac1YqPeHfDo/kEmTXTv
+ PsbAi9XeFGxLvqrkZdr1nRRqoy32iLxaKMPrvIr0ELNGtnjBTQ4qPwkV3wQ3TBc=
+X-Gm-Gg: ASbGncttqghd7MPlAALwKlJf7gGxurjIFaVwOS/txcZxgtFGZ56kMjRO6yuVGWM/5BN
+ RlFJi/KcBkMEc12O3DvYXTPH6a7x/SXPvCQrvxWfqkcunSpLLByJENsd5gK/mjtVScFa7cU4CMx
+ 3kKGnGGTizlJLwoezuQJgIPYYXRgClFh7kEJutxH+9qZlQQlWcCkONhHh2qHVywI5CBJX/jc4G8
+ Odvk8MQ9xE22tt5S2Dp4ASr+i5HgV0UlLX9m95PcQn/4BhpuJ7pbU7LJSfmn+6VpPTU6ialh7Hn
+ 10A3IzYFkLAk4rqW87niV02AKU73MtlGDnHFBTSqdCoGgotO+tY659agnRI=
+X-Google-Smtp-Source: AGHT+IFTm7e/p+gCQ6rcKLnXGePmLjqvH1tKLKGI6n02NSO/EkLo+jiErptJIs3rfry/IvaFqw94cA==
+X-Received: by 2002:a05:600c:4fcf:b0:434:f623:9fe3 with SMTP id
+ 5b1f17b1804b1-4390d43f12cmr43210915e9.16.1738789368560; 
+ Wed, 05 Feb 2025 13:02:48 -0800 (PST)
 Received: from [192.168.69.198] (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-38dae1a1e4bsm5556090f8f.55.2025.02.05.12.58.34
+ ffacd0b85a97d-38dac89b519sm5559913f8f.100.2025.02.05.13.02.47
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 05 Feb 2025 12:58:36 -0800 (PST)
-Message-ID: <efbf797d-b426-4c33-aba6-e463880ae667@linaro.org>
-Date: Wed, 5 Feb 2025 21:58:34 +0100
+ Wed, 05 Feb 2025 13:02:47 -0800 (PST)
+Message-ID: <64671a22-a1d3-4d76-839c-287e5cf2390b@linaro.org>
+Date: Wed, 5 Feb 2025 22:02:47 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 03/11] i386/hvf: Don't send signal to thread when kicking
-To: Phil Dennis-Jordan <phil@philjordan.eu>,
- Roman Bolshakov <rbolshakov@ddn.com>
-Cc: "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>,
- Cameron Esfahani <dirty@apple.com>, "Michael S. Tsirkin" <mst@redhat.com>,
- Paolo Bonzini <pbonzini@redhat.com>,
+Subject: Re: [PATCH 01/11] hvf: Add facility for initialisation code prior to
+ first vCPU run
+To: phil@philjordan.eu, qemu-devel@nongnu.org,
+ Igor Mammedov <imammedo@redhat.com>,
+ Richard Henderson <richard.henderson@linaro.org>
+Cc: Cameron Esfahani <dirty@apple.com>, Roman Bolshakov <rbolshakov@ddn.com>, 
+ "Michael S. Tsirkin" <mst@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
  Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
  Alexander Graf <agraf@csgraf.de>, Peter Maydell <peter.maydell@linaro.org>,
- "qemu-arm@nongnu.org" <qemu-arm@nongnu.org>,
- Richard Henderson <richard.henderson@linaro.org>
+ qemu-arm@nongnu.org
 References: <20241209203629.74436-1-phil@philjordan.eu>
- <20241209203629.74436-4-phil@philjordan.eu>
- <c401b320-b382-4887-82bc-0252dd9f8c98@linaro.org>
- <0aa33648-5a30-4302-bf7a-f31cab0b327e@ddn.com>
- <CAAibmn0zwbsniR2bLcvhqTuTdPZTRkQPDv9v9==gyMpPNELLLA@mail.gmail.com>
+ <20241209203629.74436-2-phil@philjordan.eu>
 Content-Language: en-US
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <CAAibmn0zwbsniR2bLcvhqTuTdPZTRkQPDv9v9==gyMpPNELLLA@mail.gmail.com>
+In-Reply-To: <20241209203629.74436-2-phil@philjordan.eu>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::331;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x331.google.com
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::330;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x330.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -109,54 +108,41 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 10/12/24 10:52, Phil Dennis-Jordan wrote:
-> 
-> 
-> On Tue 10. Dec 2024 at 10:21, Roman Bolshakov <rbolshakov@ddn.com 
-> <mailto:rbolshakov@ddn.com>> wrote:
-> 
->     On 10.12.2024 04:22, Philippe Mathieu-Daudé wrote:
->      > On 9/12/24 21:36, phil@philjordan.eu <mailto:phil@philjordan.eu>
->     wrote:
->      >> From: Phil Dennis-Jordan <phil@philjordan.eu
->     <mailto:phil@philjordan.eu>>
->      >>
->      >> This seems to be entirely superfluous and is costly enough to
->     show up in
->      >
->      > So the pthread_kill(cpu->thread, SIG_IPI) is entirely superfluous?
->      >
->      >> profiling. hv_vcpu_interrupt() has been demonstrated to very
->     reliably
->      >> cause VM exits - even if the target vCPU isn't even running, it will
->      >> immediately exit on entry.
->      >>
->      >> Signed-off-by: Phil Dennis-Jordan <phil@philjordan.eu
->     <mailto:phil@philjordan.eu>>
->      >> ---
->      >>   target/i386/hvf/hvf.c | 2 +-
->      >>   1 file changed, 1 insertion(+), 1 deletion(-)
->      >>
->      >> diff --git a/target/i386/hvf/hvf.c b/target/i386/hvf/hvf.c
->      >> index 3b6ee79fb2..936c31dbdd 100644
->      >> --- a/target/i386/hvf/hvf.c
->      >> +++ b/target/i386/hvf/hvf.c
->      >> @@ -214,7 +214,7 @@ static inline bool
->      >> apic_bus_freq_is_known(CPUX86State *env)
->      >>     void hvf_kick_vcpu_thread(CPUState *cpu)
->      >>   {
->      >> -    cpus_kick_thread(cpu);
->      >> +    cpu->thread_kicked = true;
->      >>       hv_vcpu_interrupt(&cpu->accel->fd, 1);
->      >>   }
->      >
->     SIG_IPI is macOS crutch handled in XNU kernel that was essential until
->     Phil submitted proper kick support with hv_vcpu_interrupt().
-> 
-> Ah yes, perhaps it allowed exit from hv_vcpu_run(). hv_vcpu_run_until() 
-> definitely does not exit early upon receiving SIG_IPI (USR1).
++Igor
 
-Maybe worth explaining and mentioning commit bf9bf2306cc ("i386/hvf:
-In kick_vcpu use hv_vcpu_interrupt to force exit") in this patch
-description?
+On 9/12/24 21:36, phil@philjordan.eu wrote:
+> From: Phil Dennis-Jordan <phil@philjordan.eu>
+> 
+> Some VM state required for fully configuring vCPUs is only available
+> after all devices have been through their init phase. This extra
+> function, called just before each vCPU makes its first VM entry,
+> allows us to perform such architecture-specific initialisation.
+> 
+> Signed-off-by: Phil Dennis-Jordan <phil@philjordan.eu>
+> ---
+>   accel/hvf/hvf-accel-ops.c | 5 +++++
+>   include/sysemu/hvf_int.h  | 1 +
+>   target/arm/hvf/hvf.c      | 4 ++++
+>   target/i386/hvf/hvf.c     | 4 ++++
+>   4 files changed, 14 insertions(+)
+> 
+> diff --git a/accel/hvf/hvf-accel-ops.c b/accel/hvf/hvf-accel-ops.c
+> index d60874d3e6..c17a9a10de 100644
+> --- a/accel/hvf/hvf-accel-ops.c
+> +++ b/accel/hvf/hvf-accel-ops.c
+> @@ -442,6 +442,11 @@ static void *hvf_cpu_thread_fn(void *arg)
+>       cpu_thread_signal_created(cpu);
+>       qemu_guest_random_seed_thread_part2(cpu->random_seed);
+>   
+> +    if (!cpu_can_run(cpu)) {
+> +        qemu_wait_io_event(cpu);
+> +    }
+> +    hvf_vcpu_before_first_run(cpu);
+
+Could this be fixed by the cpu_list_add() split?
+https://lore.kernel.org/qemu-devel/20250128142152.9889-1-philmd@linaro.org/
+
+>       do {
+>           if (cpu_can_run(cpu)) {
+>               r = hvf_vcpu_exec(cpu);
 
