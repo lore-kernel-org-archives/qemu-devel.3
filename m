@@ -4,47 +4,47 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2C7BEC02192
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 43E20C0219B
 	for <qemu-devel@archiver.kernel.org>; Wed,  5 Feb 2025 23:18:42 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tfocn-0002mk-9e; Wed, 05 Feb 2025 18:16:05 -0500
+	id 1tfobj-0007aE-TZ; Wed, 05 Feb 2025 18:15:00 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1tfocf-0002WM-CH
- for qemu-devel@nongnu.org; Wed, 05 Feb 2025 18:15:58 -0500
+ (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1tfobY-00079w-SZ
+ for qemu-devel@nongnu.org; Wed, 05 Feb 2025 18:14:50 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1tfocd-0006GF-Ow
- for qemu-devel@nongnu.org; Wed, 05 Feb 2025 18:15:57 -0500
+ (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1tfobX-0005ou-3z
+ for qemu-devel@nongnu.org; Wed, 05 Feb 2025 18:14:48 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1738797355;
+ s=mimecast20190719; t=1738797286;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=IHIxoPvKeLIyYkefng7YSQobtR2GjSRxfS7Jhn3AbE8=;
- b=cIL0RUB3a2sSX0YlkqgagwI1FaM1lNtomv8nmNz0dN4bRHVd0DyIE2A9T6JCdw09uf8SQu
- nnY6e7qmZ4RgFF6yWZLqdJz/+YB+/JPs/V3bnTxk3aRYHhXBfCyjR1+lGnKg1ke74zUKH5
- j7SqKyTJ+d1NTtpLBrzW7LUSMCCSzC0=
-Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
+ bh=74Z3rjfmLCK5MKWoQQ9msNIaheYuoK/rIVoIzOZKnX8=;
+ b=VokAtYj8Cn9Ey0ERKLBoTtus3BzxsBzU8+m7UY24LAVdYZQAzmPE8m9A/cqUqSQOwfH/UP
+ 8uPUz6hVf3fTBGVZNjqRBB7EE/ggZZAGSfETd+U5HuAmnVs7N89G9pq2nLX5RpNfiMebLq
+ frdMC8m/eRbbJgoUUf6L5Dcjm3hgGi8=
+Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-90-LYEq5sQoOkCEXY3X1l_WUw-1; Wed,
- 05 Feb 2025 18:15:52 -0500
-X-MC-Unique: LYEq5sQoOkCEXY3X1l_WUw-1
-X-Mimecast-MFC-AGG-ID: LYEq5sQoOkCEXY3X1l_WUw
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-630-0Jqo_CvEOgGY7BRezMMVsA-1; Wed,
+ 05 Feb 2025 18:14:44 -0500
+X-MC-Unique: 0Jqo_CvEOgGY7BRezMMVsA-1
+X-Mimecast-MFC-AGG-ID: 0Jqo_CvEOgGY7BRezMMVsA
 Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 460CA1800264; Wed,  5 Feb 2025 23:15:50 +0000 (UTC)
+ by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 1EABA180087E; Wed,  5 Feb 2025 23:14:42 +0000 (UTC)
 Received: from jsnow-thinkpadp16vgen1.westford.csb (unknown [10.22.66.104])
  by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id C0F9E1800570; Wed,  5 Feb 2025 23:15:44 +0000 (UTC)
+ id 659EE1800265; Wed,  5 Feb 2025 23:14:36 +0000 (UTC)
 From: John Snow <jsnow@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Peter Maydell <peter.maydell@linaro.org>, Thomas Huth <thuth@redhat.com>,
@@ -59,10 +59,9 @@ Cc: Peter Maydell <peter.maydell@linaro.org>, Thomas Huth <thuth@redhat.com>,
  Jason Wang <jasowang@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  John Snow <jsnow@redhat.com>
-Subject: [PATCH 35/42] docs/qapidoc: generate out-of-band pseudofeature
- sections
-Date: Wed,  5 Feb 2025 18:12:01 -0500
-Message-ID: <20250205231208.1480762-36-jsnow@redhat.com>
+Subject: [PATCH 24/42] docs/qapidoc: add transmogrifier test document
+Date: Wed,  5 Feb 2025 18:11:50 -0500
+Message-ID: <20250205231208.1480762-25-jsnow@redhat.com>
 In-Reply-To: <20250205231208.1480762-1-jsnow@redhat.com>
 References: <20250205231208.1480762-1-jsnow@redhat.com>
 MIME-Version: 1.0
@@ -93,32 +92,81 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-For QMP commands with the oob flag set, insert a dummy feature
-("pseudofeature") representing this behavior so that it can be
-documented.
-
 Signed-off-by: John Snow <jsnow@redhat.com>
 ---
- docs/sphinx/qapidoc.py | 6 ++++++
- 1 file changed, 6 insertions(+)
+ docs/index.rst      |  1 +
+ docs/qapi/index.rst | 53 +++++++++++++++++++++++++++++++++++++++++++++
+ 2 files changed, 54 insertions(+)
+ create mode 100644 docs/qapi/index.rst
 
-diff --git a/docs/sphinx/qapidoc.py b/docs/sphinx/qapidoc.py
-index e70a85a6403..81133b9b441 100644
---- a/docs/sphinx/qapidoc.py
-+++ b/docs/sphinx/qapidoc.py
-@@ -243,6 +243,12 @@ def _get_inline_target(
- 
-     # FIXME: Branches should be handled about here O:-)
- 
-+    # Pseudo-feature: document the OOB property.
-+    if isinstance(ent, QAPISchemaCommand) and ent.allow_oob:
-+        feat = QAPIDoc.ArgSection(ent.info, QAPIDoc.Kind.FEATURE, "allow-oob")
-+        feat.append_line("This command supports `out-of-band execution`.")
-+        sections.partitions[DocRegion.FEATURE].append(feat)
+diff --git a/docs/index.rst b/docs/index.rst
+index 5665de85cab..4364f9f1618 100644
+--- a/docs/index.rst
++++ b/docs/index.rst
+@@ -21,3 +21,4 @@ Welcome to QEMU's documentation!
+    specs/index
+    devel/index
+    glossary
++   qapi/index
+diff --git a/docs/qapi/index.rst b/docs/qapi/index.rst
+new file mode 100644
+index 00000000000..e40dce09119
+--- /dev/null
++++ b/docs/qapi/index.rst
+@@ -0,0 +1,53 @@
++########################
++QAPI Transmogrifier Test
++########################
 +
-     # Generated "returns" statement.
-     if isinstance(ent, QAPISchemaCommand) and not any(
-         s.kind == QAPIDoc.Kind.RETURNS
++This is a test render of the QEMU QMP reference manual using the new
++"transmogrifier" generator in qapidoc.py in conjunction with the
++qapi-domain.py sphinx extension.
++
++Some notable features:
++
++ * Every QAPI definition visible below is available to be
++   cross-referenced from anywhere else in the Sphinx docs; for example
++   ```blockdev-add``` will render to `blockdev-add`.
++
++ * There are type-specific cross-referencing roles available for
++   alternates, commands, events, enums, structs, unions and modules. for
++   example, ``:qapi:cmd:`block-dirty-bitmap-add``` resolves to
++   :qapi:cmd:`block-dirty-bitmap-add`, and only works for commands. The
++   roles available are ``cmd``, ``alt``, ``event``, ``enum``,
++   ``struct``, ``union``, and ``mod``; with two meta-roles available:
++   ``obj`` for absolutely any QAPI definition, and ``type`` for
++   everything except commands, events, and modules.
++
++ * There is a new `qapi-index` page which can be linked to with
++   ```qapi-index```. There, you can browse a list of all QAPI
++   definitions by type or alphabetically.
++
++ * QAPI definitions are also added to the existing `genindex` page.
++
++ * All member/argument/return types are now cross-references to that
++   type's definition. `chardev-add` is a good example.
++
++ * This work-in-progress version does not perform any inlining.
++
++ * This work-in-progress version actually also ignores branches entirely
++   right now!
++
++ * This version currently does not "prune" unnecessary docs.
++
++ * This version does not add undocumented members or return values.
++
++ * This version does not handle ifcond for anything other than top-level
++   entity definitions.
++
++ * This version renders sections in precisely the order they appear in
++   source, even if that winds up looking silly.
++
++
++.. contents::
++   :depth: 2
++
++.. qapi-doc:: qapi/qapi-schema.json
++   :transmogrify:
 -- 
 2.48.1
 
