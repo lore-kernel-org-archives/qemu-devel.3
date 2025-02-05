@@ -4,206 +4,90 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4693AC02192
-	for <qemu-devel@archiver.kernel.org>; Wed,  5 Feb 2025 16:29:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 71D2AC02192
+	for <qemu-devel@archiver.kernel.org>; Wed,  5 Feb 2025 16:41:47 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tfiGS-0000u5-Ku; Wed, 05 Feb 2025 11:28:36 -0500
+	id 1tfiSO-0005PI-J5; Wed, 05 Feb 2025 11:40:56 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <william.roche@oracle.com>)
- id 1tfiG1-0000fZ-Qo; Wed, 05 Feb 2025 11:28:12 -0500
-Received: from mx0b-00069f02.pphosted.com ([205.220.177.32])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <william.roche@oracle.com>)
- id 1tfiFz-0006zN-VF; Wed, 05 Feb 2025 11:28:09 -0500
-Received: from pps.filterd (m0246631.ppops.net [127.0.0.1])
- by mx0b-00069f02.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 515GMrn6009585;
- Wed, 5 Feb 2025 16:27:58 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=oracle.com; h=cc
- :content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=
- corp-2023-11-20; bh=Z3+wq/XzcvID8tnMNMx0zuwE9w7+2G9w4zLOnqs2U2A=; b=
- KF/LoWzb1zRQ44DLlwCgY6+LJjTRHBsqyddAWjtri4YN7yY7MD08KPR7A9R74etM
- xsEv7Dh221qcmKDGR6FN8lNOULYTtwKdLTPSwyakv/bQcKrZGnjvj+19afkllULT
- bIpBe8OAiH0JIemZQXQ+WJc0iiMl05Y7i8D5m4t44oAbnRQwSYoZ0EB7y9QH9tGL
- X26yCqmhdj/b7aQyPYEfDq3wy5lXyBQRvDxP5sLv2OP7sGug3NHqXqsTBrJqY13u
- jdl28FMxoKglmN6BYqO1K8mcskeAZdsiEhjWE5tXPjok6rqgM+p67t69CUs6cnI/
- 7aFp3F98kbSi91E0dAsiCQ==
-Received: from phxpaimrmta03.imrmtpd1.prodappphxaev1.oraclevcn.com
- (phxpaimrmta03.appoci.oracle.com [138.1.37.129])
- by mx0b-00069f02.pphosted.com (PPS) with ESMTPS id 44kku4tqva-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Wed, 05 Feb 2025 16:27:58 +0000 (GMT)
-Received: from pps.filterd
- (phxpaimrmta03.imrmtpd1.prodappphxaev1.oraclevcn.com [127.0.0.1])
- by phxpaimrmta03.imrmtpd1.prodappphxaev1.oraclevcn.com (8.18.1.2/8.18.1.2)
- with ESMTP id 515EkMeI027028; Wed, 5 Feb 2025 16:27:57 GMT
-Received: from nam12-dm6-obe.outbound.protection.outlook.com
- (mail-dm6nam12lp2172.outbound.protection.outlook.com [104.47.59.172])
- by phxpaimrmta03.imrmtpd1.prodappphxaev1.oraclevcn.com (PPS) with ESMTPS id
- 44j8fnsr5x-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Wed, 05 Feb 2025 16:27:57 +0000
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=EwMdtebbsypk5SN8ksvzv0sog0Cv9GR63JQiMIg8viY1s3UXUqeSEClF1V2U1YMAnvybGPcCETgrEKV0nJB7kDaQBjgxPKcNXq7PdAqNrX/6cH3r/80fIlinGCWndF5mpUGKhuAVnTTkER5sqbdUon6Z3kOtHO8QkLCIgDdMcXl1F4fzHxh9NDZa3QHQsgGNqBZztFqhX4Hcs7FVY82YW0U4R9ncspsi8qiaUTOZDvbqQ+AXx/OZ163s0uHb9oUWNLQ9B3/vTP0sRAcKDkz0wd6gu8fmpnxh4q2Qku51giLGFgQKlQqyNeKBVZnjcFOTjvIuAH6NXjk4ch9YboJbpg==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=Z3+wq/XzcvID8tnMNMx0zuwE9w7+2G9w4zLOnqs2U2A=;
- b=t/gkllsryVDKko3GqCbvsP2p3REh50/rBX2Evd0WpbjMpyXU5zaG7/byKr2yvpJ1qRhgrKFZEN+Vkb8TlLjCZrHx4aWtHF09p7paX8ShAKfmAupzdKQ4DHddPrvlBOEhRKj7pHkIsJIJx+lbWbBcgcA+sJe0DYvJh6jAya94ylMSem8/zo07WkpdFXGIWn+3CJjd+ELWwXbI2TSKE8WbEH3odRkMDXGczmIfwlfGVQQWPbMJeJ1WaAihFbo1iaMNYm/1G2X0pVCgxXeiPIRbXhwxlP6+cHLNXTijgtqdoPsjxiG3l4V4s7dTSqnM8q61cwN9VJWSgfpna3Si01qQQg==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=oracle.com; dmarc=pass action=none header.from=oracle.com;
- dkim=pass header.d=oracle.com; arc=none
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tfiSL-0005Od-Gj
+ for qemu-devel@nongnu.org; Wed, 05 Feb 2025 11:40:53 -0500
+Received: from mail-wr1-x42e.google.com ([2a00:1450:4864:20::42e])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tfiSJ-0001GW-TR
+ for qemu-devel@nongnu.org; Wed, 05 Feb 2025 11:40:53 -0500
+Received: by mail-wr1-x42e.google.com with SMTP id
+ ffacd0b85a97d-38a8b17d7a7so3702196f8f.2
+ for <qemu-devel@nongnu.org>; Wed, 05 Feb 2025 08:40:51 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oracle.onmicrosoft.com; s=selector2-oracle-onmicrosoft-com;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=Z3+wq/XzcvID8tnMNMx0zuwE9w7+2G9w4zLOnqs2U2A=;
- b=K2TSLPgQ0pSWysYGV648B8mlKC8VNs+5kTThnNt4SAco/3Ziw9fGZXs9JOg7Cel1FHoHA+SgZGdkQc/uf+nlsjAFkeUyjWAr6I9RUw8lJCD3TEkhkMaAa1u1ToHw9aC/SyJLGT0QcUkKUBZrOgSdo2WRLNi0nb2yyRcOyk4E0pY=
-Received: from CH3PR10MB7329.namprd10.prod.outlook.com (2603:10b6:610:12c::16)
- by SJ1PR10MB6001.namprd10.prod.outlook.com (2603:10b6:a03:488::19)
- with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.8398.25; Wed, 5 Feb
- 2025 16:27:54 +0000
-Received: from CH3PR10MB7329.namprd10.prod.outlook.com
- ([fe80::f238:6143:104c:da23]) by CH3PR10MB7329.namprd10.prod.outlook.com
- ([fe80::f238:6143:104c:da23%6]) with mapi id 15.20.8398.025; Wed, 5 Feb 2025
- 16:27:54 +0000
-Message-ID: <a3d7a8cc-aad8-4d98-a5ba-79fad20b9df6@oracle.com>
-Date: Wed, 5 Feb 2025 17:27:50 +0100
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v7 6/6] hostmem: Handle remapping of RAM
-To: Peter Xu <peterx@redhat.com>, David Hildenbrand <david@redhat.com>
-Cc: kvm@vger.kernel.org, qemu-devel@nongnu.org, qemu-arm@nongnu.org,
- pbonzini@redhat.com, richard.henderson@linaro.org, philmd@linaro.org,
- peter.maydell@linaro.org, mtosatti@redhat.com, imammedo@redhat.com,
- eduardo@habkost.net, marcel.apfelbaum@gmail.com,
- wangyanan55@huawei.com, zhao1.liu@intel.com, joao.m.martins@oracle.com
-References: <20250201095726.3768796-1-william.roche@oracle.com>
- <20250201095726.3768796-7-william.roche@oracle.com>
- <7a899f00-833e-4472-abc5-b2b9173eb133@redhat.com> <Z6JVQYDXI2h8Krph@x1.local>
- <a6f08213-e4a3-41af-9625-a88417a9d527@redhat.com> <Z6J1hFuAvpA78Ram@x1.local>
-Content-Language: en-US, fr
-From: William Roche <william.roche@oracle.com>
-In-Reply-To: <Z6J1hFuAvpA78Ram@x1.local>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: LO4P265CA0258.GBRP265.PROD.OUTLOOK.COM
- (2603:10a6:600:37c::13) To CH3PR10MB7329.namprd10.prod.outlook.com
- (2603:10b6:610:12c::16)
+ d=linaro.org; s=google; t=1738773650; x=1739378450; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=6hcpfla+JH/ONcyGxMA8WeagzmFNCui9cGjaDBGmZTQ=;
+ b=yYHtyPGcjiMTTEpmuUJYhK7UN/QWaRfZSYTF95uINFTR1vKB29/++ff5/08jTU27IA
+ 8Mpa7m+RAYu+degGVNHR19lujgYwyJM6JhYcrOgYXvrlb5EB5Y9MnmY5OcBNsumVU58O
+ yKL2f7fDw6wkFbFjYCPINmhUXL37ydoqfOYV4VnFyS57w3bvjsxKOoQImlOlXrx96qq0
+ 7FScLJPBRnVhZ3bhIi8LdTKBAwq9eVI0PjGOLaZOejDfUhNt69O6gaS2VP7YpS67z67u
+ prIOwJlOOER8wwwudigkHwrrN6qf5pCIZ2TesCRjc8vFfNW+CcAYTFuQlNVzWPdFz/2x
+ /N1w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1738773650; x=1739378450;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=6hcpfla+JH/ONcyGxMA8WeagzmFNCui9cGjaDBGmZTQ=;
+ b=Kz9edbH78OrVQTbDNHgfWwFPux0FPdgQy+ruQ5TvQI1PaNsEi6397BenIW7mVQQRG9
+ 9HEn/bqaWyG/MK4/QrJm1x1Bw/IVD9WuKzUSFqY0rZR01GlVOCOxvU3dq8e/7H04g4iU
+ 6lxclbuxr4hJpPD8CRM/mejTXKWvYCfGT0nxjldk2pDfCSFg9rBNqn42ntxMnRgxw+Pn
+ TKkZIT1PBkkGaT37+xNBUGmX/veCUYcBygpVdOig59eb7D5ZJ70ip168bDOuWkUclE+8
+ BbYRngqD4XymW2DUR4GCPnpLYMk7PChFEuYKnwXnIMrfnKSlkzSSxd3zO6w/DOWMP3JO
+ q9sQ==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCXtp+G5pkUTX3FnUwLhtlkFs7C+ZJ9PHmU4svbKFDFZuG+tBwJ3GgEUdxyFZDe5fMUB0BWcHkuKe2BV@nongnu.org
+X-Gm-Message-State: AOJu0Yx6FP3ASCadrKOkiDCrSW3Cmiq466Z82zthP36E1IHKTpdn7mOS
+ tTFAWBCpHbPdvLVyP4feoDb52cwSaSMZZswHa5bTgc7A7I5Tg3ucgr2LOJyxTCU=
+X-Gm-Gg: ASbGncv708Gk9Rc7Hn0XaiKkgdQkA2JOLUCI8/UPvv9r+7Mh/4bDvqE2sRMRvbr7wVv
+ t4P8YNyyLpBrRNFVw82bIianEwTL36WpTbjndguqPamadosaxGcgYIemxPHRrBUR27vLB9LHkje
+ DxbZ2JarhNEb2q93IfxTn7Nl+WvJlYGv42OQwVU4X5WyvxU1eh7CAZn4yc6FU+pNfAsHN6c8Lnp
+ jxcVwxVKY/gWXS7s3uPVyshWf+f+n+c5vSY26HlZ+YTAyplerkJ4f+A04M4CiDiA2gR4jmkIVUw
+ 1jrrbs20fmJ6ijYFhiK3v0h2DSky+9EGMIrP21wEJUBZfRNfyjnzK+ppEew=
+X-Google-Smtp-Source: AGHT+IEb4Wj8/W+0jhpWMeWGEtXteqE6da0CaWZh4RnR54g++oUfaHPrJKJh+b0U5SnXLFzsHj1gxQ==
+X-Received: by 2002:a5d:4dc1:0:b0:38b:f4dc:4483 with SMTP id
+ ffacd0b85a97d-38db489fbd3mr2049060f8f.29.1738773649762; 
+ Wed, 05 Feb 2025 08:40:49 -0800 (PST)
+Received: from [192.168.69.198] (88-187-86-199.subs.proxad.net.
+ [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-4390db11200sm25933995e9.38.2025.02.05.08.40.48
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Wed, 05 Feb 2025 08:40:49 -0800 (PST)
+Message-ID: <9edd3138-3411-4459-96c3-d48c30e197e0@linaro.org>
+Date: Wed, 5 Feb 2025 17:40:48 +0100
 MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: CH3PR10MB7329:EE_|SJ1PR10MB6001:EE_
-X-MS-Office365-Filtering-Correlation-Id: f0c9dacd-ee2d-49bb-3799-08dd46020ae8
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;ARA:13230040|1800799024|376014|7416014|366016;
-X-Microsoft-Antispam-Message-Info: =?utf-8?B?ZlZLdlRCVFlkMmJJeDBqb2ord0RDZ0xtQlI3VmZJY2grT3FvdDZvUlV4bWFO?=
- =?utf-8?B?dGd1NktodnpHNnN1V3hJK3RTaENYdkFLZ1BQeUREbVBTTzQzaXFRbW4wYlhy?=
- =?utf-8?B?NUxPcTh4bjhpQmlhVWtHaHpPcjhxQ3ZSK0d4TEdKT1ZvSVhCWFJGbEhZZWVi?=
- =?utf-8?B?NzZjRW1ZZ1JHcFFyTHhJTEF1WE1MWnA5M0hPVStRQkFqakoyWVdDbnhHRDlv?=
- =?utf-8?B?cEVoQVBsWWw2S1RVc2szM1dudWlXRXVzMHhDMTJRRjFETk0vbVRLVTVaS3lz?=
- =?utf-8?B?Y2dNV1lUSU1VcFZpdzdpWmtDZlhlZlhCNnZIbnkrczlaaDVUZWhyckR4MDIw?=
- =?utf-8?B?ejJhUEpBeVMwZktJUHNGRUkxcjkvaGZxS1Q3VVdVSGhmeVl4a3BTTURvZllM?=
- =?utf-8?B?YkxtMnBzUlcyclllZTBPTmVTckVqRFFOVjhMQ0kwaTB6aUU1TmxmTXJEMmd2?=
- =?utf-8?B?UFpDQWZUL3p4VURUUGxVREN6a25rZmlsa056T0ZhOE1tMEphK2N4dE1VZ2xx?=
- =?utf-8?B?aVYvcFdxbzRPaW9wOHFoaVBaYlhjNmZsdE1aalVQWmRDY0ZGSHg1K3hoeklM?=
- =?utf-8?B?S1lsNFMzZURFS1ZYUS9HU3E5WUJ3ZStRYThUMmZqTTF0cFAzVVR1b2xJU0M4?=
- =?utf-8?B?amZSUlM1RXg5MTlRSlJ3YTBWa0QzU0hoSHJZMmtLMXAyeHREdVhjL1M1SC9x?=
- =?utf-8?B?ODUvSWQySWNOR3pGM25ZbVF2enJaWXUwNFNSanlUV1N4VUVxTFVXYU1lUE5v?=
- =?utf-8?B?RW5LMGlIV1BDMUxZdS9uSHdQU1JLSDRzbkgzSmF0U2s1dHVwbTBvWU5XU2xB?=
- =?utf-8?B?ZGxlT2ZKMjdEQys1QUVrYmpPdEx6UlFteXlmbExGQ2dob2lsTERUd0luUG0y?=
- =?utf-8?B?bEFMaHBpbnlMS2hVUjQwVThJSWhkVnFMTUE5VkxUa1JsUlR4WCtlbXRNWWc0?=
- =?utf-8?B?bExORU9HdlVMZ1RJTGZNa0NkZEJhNVFpbDhIb2ZtM0pKWjc2MDc3LzI2Qml6?=
- =?utf-8?B?Z2U1WEJYbVNYbzZUTVhTQWV5ZHNFaUlFQ0lTRGxINkFTenpSa2pPcFd5bEVm?=
- =?utf-8?B?aEx5eEdQUTlmUDB2c3puRFlRb2NKMzRlWFMxc3BEenhNdmxmdFFqUjdVVktw?=
- =?utf-8?B?TDBXdjBaSXMxRThuZkZDUVViMExVdmwwaHNJSXA2YjZLWjNEY0ZSRVBIL1Fm?=
- =?utf-8?B?d2FLbjBESGZXOXFVYzBKWjVMZGl2K0lHbVBYYm9MYndBeWhlbVBkKy9pLzBP?=
- =?utf-8?B?dWh3MkxFY29VNVBTRnhYTUhpVEtEUTY3OTh2aVRhUVU3VTVMWmdqWGRGZzBw?=
- =?utf-8?B?OFIraGZpT3JYRlZCNWxZcy9sYk56UUN4c1kwNGFMOXZJTW9WeWJLZmx6VHhW?=
- =?utf-8?B?aWlPQXVOeXV2c21RYURlTnR6RVlhV0N6YzZKYmMybVhRV1Y3MVowQzFJMTRo?=
- =?utf-8?B?cngxWGJwZDRMVDYySGJwUXg3K3JWaU5rMTZXalNGbDlVUEhpdWtzVi90SVpK?=
- =?utf-8?B?M2hhTkpwRGZOMkV5VkZFYkxEcmN4dHJjc1N2YWZqY0xhVjRqSCtXZGIwYVZj?=
- =?utf-8?B?U0t1Qm9RRjFNeTM3RmZYRFlnTzBHTkovN0plNGVJdG1Zb01sY1Z0dW5yODht?=
- =?utf-8?B?a3M2VTZhUmczVkJUVFhUWldUU2ZLS0NZY2hRT1M3SVpLT1J3Sm9hTG16TkdZ?=
- =?utf-8?B?OFdKMG0rS0xjVEF6SlJJbjA0anZLSDU5ZVZYQ0dwNFQyTmd6Y3NEYTFQcnhh?=
- =?utf-8?B?dm40Vjg3T2h6dHUrRWdCRHFxR3hJWll5TTg3Y1pEc1VTbmRQM1VSN0ZoYklh?=
- =?utf-8?B?N0hUSEVFZDdrVDJFOUI5NERLYkJtbGxCcUp2RjU5RWZqVDM4djMraEZINnhv?=
- =?utf-8?Q?Hu3lAwZ3XyDJM?=
-X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:CH3PR10MB7329.namprd10.prod.outlook.com; PTR:; CAT:NONE;
- SFS:(13230040)(1800799024)(376014)(7416014)(366016); DIR:OUT; SFP:1101; 
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?WHZZTjlwMnVMenpabjVUOVh4aEhoZkxLM0RvTHJCSXNBWGhBK0RPSWNMR1N3?=
- =?utf-8?B?bUlzemphdTdlZGVWSFI0Vm43Z25rRDliRVRDTDFQRXI3SmNOeE1NdHFVMTlv?=
- =?utf-8?B?VE1mMWk2ZTZkVDBmNVA0eEI4TkJ4cXNCcitXWjhDSWlRM1AxYnNWemdoTFNh?=
- =?utf-8?B?Qlp2QnIvWWlXbXBWTXROdkdLV0JTYmZMdDlNOHFQdnFiQjhrWjYvOGhwNTBX?=
- =?utf-8?B?UHNNYzE5bDZlMTAxSk1MYW1yazhjWHdXcllxTmx5bW9GMFAwd2Ewd2loOTZl?=
- =?utf-8?B?cW9LbXJ6UVFqa2FpZVl5enRsWlJjSDZzRUdQcjlMdXJOT20rRHZYRng5Nm1V?=
- =?utf-8?B?NGZGUm5hTWtuUnVvQXlHSStnRW1vZ21BcCs4elo0akdlOUNiekcvM3VJVHky?=
- =?utf-8?B?MHhsaEJqRGtDZURUc0F6Qy9qWUtZanloUURuM3g2dG9Dbmp3WnJ1VElQOUtZ?=
- =?utf-8?B?ZktiZkFMbVJZV0lMcTZxZFpVSHQ0dFlSeUtFa0NUVWs5dVRwaWNrQzdZeUh3?=
- =?utf-8?B?ZXF6RjU1VzZWNUVsWVplbythMzN2Rlp3Qkk2S3hFQkFMSlkweG5Pb2M1NkQ5?=
- =?utf-8?B?RkRhNkp4UUNkam1ZR1VGdStsWEdqUEV2c2U1SVBGZFBkWWVPdU1mMTgxeWZM?=
- =?utf-8?B?a25PUG1oRkxPczdlVDYrSGJxNjVSN1E2d25icVVOanN0bUxlenFSZmRNRzVN?=
- =?utf-8?B?ekt4RWZKN0ZTNmJDY1I3MmN3N3lIWkltcVdMeHNSMi9MTHRKaS9TektEalow?=
- =?utf-8?B?UzgzNmdQSWlIa01tdVBSMnozUSt3L0MwUklLTGV3MkRmV0RBYVZaYXZVTDQ2?=
- =?utf-8?B?UEdha0I0eXZ0TEVjZmlsQ0ltTW5PTzBKU3ZjWUk0TlZxbU1QYXhtbENiNlQ3?=
- =?utf-8?B?NUFqeXJqRlVEeDV4MjkzcGFZQkNDSTJiYVgrR1JIRlEwVUQ3RkZ1U3Y2UG85?=
- =?utf-8?B?ZWRSUnR2N2g2ZGFZejMzaDdnT3lLSHgwcTI1ZHdkVDRVTW55U2ZOdEtCUVRi?=
- =?utf-8?B?YkhvZWhTZHRIU05qdlpmb3M5R29UV2U0QnI5MWJBUUEzTDYyR0F1QlVVWC9j?=
- =?utf-8?B?ZVhCQ0o3SXUybFZDbUpqc1Jna0oyYkV1eWc2MU5yY2pzSTEzcXFWYlV2QjFY?=
- =?utf-8?B?clAzQlJ1bWNUd0thRE5heXduaDFaVkJHSGRNL1RnVXJLM1JCUkdjOFdPZXJC?=
- =?utf-8?B?REpnUk1yRitDejdBVzZPOWNsOURhYWxwMmZ5RjJRWnZWcjNwOHdUZThDVGp6?=
- =?utf-8?B?a1p1UFNOZlZLOCtXWE9wNVNNZnBBczhpUS9mditubVRBNFlGTlBYQWxudXBw?=
- =?utf-8?B?S1R3TFFYZ1hvdm9QeXRtQ1NyUHVxTVZJVE9hRGhUZ3FuRjI4dXJLR0lhOEJ0?=
- =?utf-8?B?dit5ZGJrNjJ2a3k1ZmZKUE5wWDg5SldNTTJGek1KVFM0NGhieVk3RXJqeEJh?=
- =?utf-8?B?UlVYVHRzaWJsbjMwYVZSaTFQaXhGd1QvU2FUOWtyUXh1ZDh6L1dnTXZJbXUr?=
- =?utf-8?B?Y0FlVHdIczVFdDR1eFNUZ0VWK1M5UzBWVEJxcUhBWlRKSXBhaVE0U3VsS0Rl?=
- =?utf-8?B?NS9wQzR2VDk3dXpoQ3I1OXhuSFl4SDhQM3Qvd0lNREdLck1NeHE1aEtwcWp0?=
- =?utf-8?B?cUIyZEFNQmtEaEViUVdSZUd6aTltNkZtVGk5VWFCMVpMdmhkcHRGbWVBbjdT?=
- =?utf-8?B?cC9wcllEWnlZeUJYZEtQUEYzenFFeTF2eVBHV3V6Q1pHUFRSeXRnT1J3VjZX?=
- =?utf-8?B?cmtDRGdwMGVURW1Pb3kzdDlBZDhTYWRUdjVrK01BbDNGaGwweVlrVFdsTGRv?=
- =?utf-8?B?dFdQSkN4Ym96U3p4a3NMZXcxeEJMOVhvVEhTUG1ITlJRaVh0Y3RXV0NWOUdF?=
- =?utf-8?B?SlJHeGFQWVJWSlVYeThMR1djMjJxVUYvT29WbHBLOVlxTVp5UUtQMVJ6ZHYv?=
- =?utf-8?B?SHhMa0NiUDUrM2cyc3A2Qkt5dUVvVTZRbW14ODhmMytSS3dZUm1sWTV6RUdq?=
- =?utf-8?B?OVpwMENHcHVkR244U0NiUVdhdGhRa0hhZFpEMTllV2t0VGlLRDFjbldNSEdL?=
- =?utf-8?B?SzQxYkNtMEVYMGtjMm55VGt2aFZFR3ZuNHBCbkhhdC9CeUhlZ1VIVlVycHFC?=
- =?utf-8?B?YXlDcnNlcklVWld5OURKRXBtc2s1UTB3NmcwOXcvVTJObDFrQldhM1NNN3dI?=
- =?utf-8?B?cEE9PQ==?=
-X-MS-Exchange-AntiSpam-ExternalHop-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-ExternalHop-MessageData-0: XeCQjphZ5Qratm/AiO+1xmgf0e3Z4hRlUr8GsRDt0uhaxiuDrVikmQssRtxHNulr2YAmIMwDDumwBJ2dv+rCJ/KwXVa6xjARG1ttDfOOgtlZJH3HTMgtHxoFOQHtXXcvZ5obP3ijgi0adBGbUeRlXIOULmj7KjHHYnZqyGpR3ei2eTCtARMMD48DEvdPMCHGM/lsFh9jw9HGWNntzCyqv3wLQOwmy5T5QUU3dFvqdSUtOelc7XGiDa2O6dqkbbQrC0Kzf9/sP0/c/EvVGusxAx2/wbT9pY/ooZb+6Pj/5PrN6SaZDd9HwNQg/BXr0qJjj+borW/2Mw4P0XzM9WvAsiy7Kun/i7dKRlRIeymv9TGIdxW2/FX0fQ+HkgPY7LqWRPzgBlYd+u7ZgJm4zM1gRt26bmQvFu+HDYAnquyI3NmvUa9T0zVwoQDbnKyUxqqZQ3vrg3x5QQwBUm7q6p6kn1XzHo4NSSG6jei0tNh1oZ9jzjB/k8PJQK0corGN+FVJaZIiAY7cTkJA+tCZ9gS2IKBD+lhZBGhPoeebVj7h4XXP8j0CpHs3czqB65cogVDdK4cXeUBm/7yyOelPKAHMAVsJyrNFhSrpcRdEHs5B4x4=
-X-OriginatorOrg: oracle.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: f0c9dacd-ee2d-49bb-3799-08dd46020ae8
-X-MS-Exchange-CrossTenant-AuthSource: CH3PR10MB7329.namprd10.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 05 Feb 2025 16:27:54.5549 (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 4e2c6054-71cb-48f1-bd6c-3a9705aca71b
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: yB7Slil2Y8gNMrd0mBENKjUKZK47xE1ANHPt+OiWlOohMbPcy7af6tDoCZetMTQmah+upXrjBczDe4q3Y8CMgkZtntatDhAwh3EkbDiMMhQ=
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: SJ1PR10MB6001
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1057,Hydra:6.0.680,FMLib:17.12.68.34
- definitions=2025-02-05_06,2025-02-05_03,2024-11-22_01
-X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 malwarescore=0
- mlxscore=0 phishscore=0
- suspectscore=0 adultscore=0 bulkscore=0 mlxlogscore=999 spamscore=0
- classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2501170000
- definitions=main-2502050127
-X-Proofpoint-GUID: T2fHF81ViLURGeljuMdnj2wLlsnoGVpq
-X-Proofpoint-ORIG-GUID: T2fHF81ViLURGeljuMdnj2wLlsnoGVpq
-Received-SPF: pass client-ip=205.220.177.32;
- envelope-from=william.roche@oracle.com; helo=mx0b-00069f02.pphosted.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 5/5] tests/functional: skip mem addr test on 32-bit hosts
+To: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
+ qemu-devel@nongnu.org
+Cc: "Michael S. Tsirkin" <mst@redhat.com>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>, Thomas Huth <thuth@redhat.com>
+References: <20250205155946.2811296-1-berrange@redhat.com>
+ <20250205155946.2811296-6-berrange@redhat.com>
+Content-Language: en-US
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <20250205155946.2811296-6-berrange@redhat.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::42e;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x42e.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -219,82 +103,48 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 2/4/25 21:16, Peter Xu wrote:
-> On Tue, Feb 04, 2025 at 07:55:52PM +0100, David Hildenbrand wrote:
->> Ah, and now I remember where these 3 patches originate from: virtio-mem
->> handling.
->>
->> For virtio-mem I want to register also a remap handler, for example, to
->> perform the custom preallocation handling.
->>
->> So there will be at least two instances getting notified (memory backend,
->> virtio-mem), and the per-ramblock one would have only allowed to trigger one
->> (at least with a simple callback as we have today for ->resize).
+On 5/2/25 16:59, Daniel P. Berrangé wrote:
+> The test_mem_addr_space is validating handling of QEMU with various
+> memory address settings. All of the test cases are setting 'maxmem'
+> to a value that exceeds the 32-bit address space, so these must all
+> be skipped on 32-bit hosts.
 > 
-> I see, we can put something into commit log with such on decisions, then
-> we'll remember.
-> 
-> Said that, this still sounds like a per-ramblock thing, so instead of one
-> hook function we can also have per-ramblock notifier lists.
-> 
-> But I agree the perf issue isn't some immediate concern, so I'll leave that
-> to you and William.  If so I think we should discuss that in the commit log
-> too, so we decide to not care about perf until necessary (or we just make
-> it per-ramblock..).
-> 
-> Thanks,
-> 
+> Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
+> ---
+>   tests/functional/qemu_test/__init__.py   |  2 +-
+>   tests/functional/qemu_test/decorators.py | 12 ++++++++++++
+>   tests/functional/test_mem_addr_space.py  | 17 ++++++++++++++++-
+>   3 files changed, 29 insertions(+), 2 deletions(-)
 
 
-I agree that we could split this fix in 2 parts: The one fixing the 
-hugetlbfs (ignoring the preallocation setting for the moment), and the 
-notification mechanism as a second set of patches.
+> diff --git a/tests/functional/qemu_test/decorators.py b/tests/functional/qemu_test/decorators.py
+> index 1651eb739a..d3a8cf0483 100644
+> --- a/tests/functional/qemu_test/decorators.py
+> +++ b/tests/functional/qemu_test/decorators.py
+> @@ -5,6 +5,7 @@
+>   import importlib
+>   import os
+>   import platform
+> +import sys
+>   from unittest import skipUnless
+>   
+>   from .cmd import which
+> @@ -118,3 +119,14 @@ def skipIfMissingImports(*args):
+>   
+>       return skipUnless(has_imports, 'required import(s) "%s" not installed' %
+>                                      ", ".join(args))
+> +
+> +'''
+> +Decorator to skip execution of a test on 32-bit targets
+> +Example:
+> +
+> +  @skipIf32BitTarget()
+> +'''
+> +def skipIf32BitTarget():
+> +    enoughBits = sys.maxsize > 2**32
+> +    return skipUnless(enoughBits,
+> +                      'Test requires a host with 64-bit address space')
 
-The first part would be the 3 first patches (including a corrected 
-version of patch 2)  and the second part could be an adaptation of the 
-next 3 patches, with their notification implementation dealing with 
-merging, dump *and* preallocation setup.
-
-
-But I'd be happy to help with the implementation of this 2nd aspect too:
-
-In order to apply settings like preallocation to a RAMBLock we need to 
-find its associated HostMemoryBackend (where we have the 'prealloc' flag).
-To do so, we record a RAMBlockNotifier in the HostMemoryBackend struct, 
-so that the notification triggered by the remap action:
-    ram_block_notify_remap(block->host, offset, page_size);
-will go through the list of notifiers ram_list.ramblock_notifiers to run 
-the not NULL ram_block_remapped entries on all of them.
-
-For each of them, we know the associated HostMemoryBackend (as it 
-contains the RAMBlockNotifier), and we verify which one corresponds to 
-the host address given, so that we can apply the appropriate settings.
-
-IIUC, my proposal (with David's code) currently has a 
-per-HostMemoryBackend notification.
-
-Now if I want to implement a per-RAMBlock notification, would you 
-suggest to consider that the 'mr' attibute of a RAMBlock always points 
-to a HostMemoryBackend.mr, so that we could get the HostMemoryBackend 
-associated to the block from a
-     container_of(block->mr, HostMemoryBackend, mr) ?
-
-If this is valid, than we could apply the appropriate settings from 
-there, but can't we have RAMBlocks not pointing to a HostMemoryBackend.mr ?
-
-
-I'm probably confused about what you are referring to.
-So how would you suggest that I make the notification per-ramblock ?
-Thanks in advance for your feedback.
-
-
-I'll send a corrected version of the first 3 patches, unless you want to 
-go with the current version of the patches 4/6, 5/6 and 6/6, so that we 
-can deal with preallocation.
-
-Please let me know.
-
-Thanks,
-William.
+skipIf32BitHost?
 
 
