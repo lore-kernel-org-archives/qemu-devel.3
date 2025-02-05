@@ -4,126 +4,73 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E3917C02192
-	for <qemu-devel@archiver.kernel.org>; Wed,  5 Feb 2025 09:10:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7F2E8C02192
+	for <qemu-devel@archiver.kernel.org>; Wed,  5 Feb 2025 09:21:10 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tfbQ8-0000mw-U5; Wed, 05 Feb 2025 04:10:08 -0500
+	id 1tfbZu-0002cI-DG; Wed, 05 Feb 2025 04:20:14 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1tfbQ7-0000mZ-Vn
- for qemu-devel@nongnu.org; Wed, 05 Feb 2025 04:10:07 -0500
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1tfbZq-0002bc-Jn
+ for qemu-devel@nongnu.org; Wed, 05 Feb 2025 04:20:11 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1tfbQ6-0004rD-Cm
- for qemu-devel@nongnu.org; Wed, 05 Feb 2025 04:10:07 -0500
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1tfbZo-0005zM-Ts
+ for qemu-devel@nongnu.org; Wed, 05 Feb 2025 04:20:10 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1738746605;
+ s=mimecast20190719; t=1738747207;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=WKrlfm/+d/CdMVNMzj8FaOxnUO20Zo764K/5ifjn7Z4=;
- b=cgPZk9RRBzNVZcgrZyizSOloWnx+2WXHP9Nnluhehtc9BJBNio+ZFDeMerqXWFy8WWpCaD
- kotgWWP0TFGt8dUQVLbG1kTABmSY/3FjXXZdff99jrqFYLF8ZifNJ8zEfRbWMXV7KwM4Zt
- qEw3uRc5etLCI7JBZ4JtHMQ5Ydijbyw=
-Received: from mail-ej1-f71.google.com (mail-ej1-f71.google.com
- [209.85.218.71]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-605-opcg-Qy5NMihySfECdjW7w-1; Wed, 05 Feb 2025 04:10:04 -0500
-X-MC-Unique: opcg-Qy5NMihySfECdjW7w-1
-X-Mimecast-MFC-AGG-ID: opcg-Qy5NMihySfECdjW7w
-Received: by mail-ej1-f71.google.com with SMTP id
- a640c23a62f3a-aa67f18cb95so265312166b.1
- for <qemu-devel@nongnu.org>; Wed, 05 Feb 2025 01:10:03 -0800 (PST)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1738746603; x=1739351403;
- h=content-transfer-encoding:in-reply-to:autocrypt:content-language
- :from:references:cc:to:subject:user-agent:mime-version:date
- :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=WKrlfm/+d/CdMVNMzj8FaOxnUO20Zo764K/5ifjn7Z4=;
- b=Q6W742frT/M2UC2yer97tAlzd5qPbu8fmLfvIY9tYxsnK3GQ2+V4AJemnNbGolCCmM
- OEWs8Z9PP/xqBUWNa/x5dyZChwbOnRLFzwjzMDH1nvCvpAifv8K0gWdQpFCYBOr0cktc
- XB6iEOPIJlom6V4gl3i39nDTygibN9yDb+GeKrQyAeH9ffApDCKSKRv/sczFBXztw23i
- 2laEAMO0heJtbgxR7FKHnBASZkdyq3PIFuBHughPSSI85xXwq74jel6DXv5ShKGv7Yv7
- mKg6j7LSJYE7V1KazC4bGtXKpcv3NiHlbs+8qYz5oxiJr3tNLFPuJjdD4tN1+lPB8otZ
- 4ytA==
-X-Gm-Message-State: AOJu0Ywysbl2XhFBUgqW3HxCSAM62DdgkxGG44fIx8+ZAzenQ2ufBALJ
- B5zjp5awMHYDie+QQ9a7H36bv7Nw4wnYliGf1rjGY+9TSnCPLvfvPCaOrY9EjIo7s//XxMmJvNh
- ra9LVl/39VQ9MOsLOtMAuKmjRhTbq48wuznG8wmJen71Y2cU/YWJU
-X-Gm-Gg: ASbGncvCBu09RPDZUkI5vxt36sFol0IjZSZMSDj1qIhPFpWEoJmvveGWCyVR8O/R6xT
- WajR/+0zriMtPtUU2bUkpNXFC/W5wTIHk8kTQwMa1ORsSIVa6IVCnmgiViaQh5dmOgqTWfhZDUy
- t5MeO4V/bspjWpOeC1ragJ3Pfyqsk50A9Xf2LXPcj99ytLgl9AIZ07ow8I2pmGiT47XgDkh/LYa
- g/H+yQzDG0R+67q3peioywx1fdmW+207Kln//XjQPY47GWJNj1bT2YeJNVtM7GyjMiMaslwwSLG
- bz9EDxI=
-X-Received: by 2002:a17:906:856:b0:ab7:6606:a8d5 with SMTP id
- a640c23a62f3a-ab76606b5camr61081266b.48.1738746602704; 
- Wed, 05 Feb 2025 01:10:02 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IEhxUarvvq/pT+83r1XhU4K7PYi9op6FrjEuegFqwI14CILdjg9pXr21lcnI9aggfILvxFPNA==
-X-Received: by 2002:a17:906:856:b0:ab7:6606:a8d5 with SMTP id
- a640c23a62f3a-ab76606b5camr61078566b.48.1738746602341; 
- Wed, 05 Feb 2025 01:10:02 -0800 (PST)
-Received: from [192.168.10.81] ([151.62.97.55])
- by smtp.googlemail.com with ESMTPSA id
- a640c23a62f3a-ab6e47a7be3sm1057297266b.20.2025.02.05.01.10.01
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 05 Feb 2025 01:10:01 -0800 (PST)
-Message-ID: <8e5cbee9-4a37-4a7f-948d-52dccb27ddd6@redhat.com>
-Date: Wed, 5 Feb 2025 10:10:01 +0100
+ in-reply-to:in-reply-to:references:references;
+ bh=RDDuMojfzA3TtjMm7/XpBRWReWktry4qKIVeq2mwHM4=;
+ b=hyl2bIZ9pgCstsYTmU47qfC7iXeAOjZ/CnEKhjLjmacPfeZv/NdpCx1oWN/veXNF1BoTWh
+ hx65VoE+A186SaHMZpSlTFaBAoLDUzyEbwHnBmyTz3L5HRX55w3WK1U+E1PEnHR1fcJiUa
+ jYLs+C2S8R5ZBQgGjhCmmjhgnlizYnA=
+Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-55-096-Yk1wOR6Ql3cHg0YnXQ-1; Wed,
+ 05 Feb 2025 04:20:04 -0500
+X-MC-Unique: 096-Yk1wOR6Ql3cHg0YnXQ-1
+X-Mimecast-MFC-AGG-ID: 096-Yk1wOR6Ql3cHg0YnXQ
+Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 6239A1800264; Wed,  5 Feb 2025 09:20:02 +0000 (UTC)
+Received: from blackfin.pond.sub.org (unknown [10.39.192.40])
+ by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 9384818004A7; Wed,  5 Feb 2025 09:20:01 +0000 (UTC)
+Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
+ id 3D4EF21E6A28; Wed, 05 Feb 2025 10:19:59 +0100 (CET)
+From: Markus Armbruster <armbru@redhat.com>
+To: Xiaoyao Li <xiaoyao.li@intel.com>
+Cc: Paolo Bonzini <pbonzini@redhat.com>,  Daniel P. =?utf-8?Q?Berrang?=
+ =?utf-8?Q?=C3=A9?=
+ <berrange@redhat.com>,  Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?=
+ <philmd@linaro.org>,  Igor
+ Mammedov <imammedo@redhat.com>,  Zhao Liu <zhao1.liu@intel.com>,  "Michael
+ S. Tsirkin" <mst@redhat.com>,  Eric Blake <eblake@redhat.com>,  Peter
+ Maydell <peter.maydell@linaro.org>,  Marcelo Tosatti
+ <mtosatti@redhat.com>,  Huacai Chen <chenhuacai@kernel.org>,  Rick
+ Edgecombe <rick.p.edgecombe@intel.com>,  Francesco Lavra
+ <francescolavra.fl@gmail.com>,  qemu-devel@nongnu.org, kvm@vger.kernel.org
+Subject: Re: [PATCH v7 28/52] i386/tdx: Wire TDX_REPORT_FATAL_ERROR with
+ GuestPanic facility
+In-Reply-To: <20250124132048.3229049-29-xiaoyao.li@intel.com> (Xiaoyao Li's
+ message of "Fri, 24 Jan 2025 08:20:24 -0500")
+References: <20250124132048.3229049-1-xiaoyao.li@intel.com>
+ <20250124132048.3229049-29-xiaoyao.li@intel.com>
+Date: Wed, 05 Feb 2025 10:19:59 +0100
+Message-ID: <874j184ukg.fsf@pond.sub.org>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 02/10] rust: qom: add reference counting functionality
-To: Zhao Liu <zhao1.liu@intel.com>
-Cc: qemu-devel@nongnu.org, qemu-rust@nongnu.org
-References: <20250117194003.1173231-1-pbonzini@redhat.com>
- <20250117194003.1173231-3-pbonzini@redhat.com> <Z5c8gVcUn4rzVpID@intel.com>
- <CABgObfbLaHXtoGAkUVW9CUXio-N_1A=Awq0=ZCY3G8sAO+9NXQ@mail.gmail.com>
- <Z6Mrs4l+fRF7jcay@intel.com>
-From: Paolo Bonzini <pbonzini@redhat.com>
-Content-Language: en-US
-Autocrypt: addr=pbonzini@redhat.com; keydata=
- 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
-In-Reply-To: <Z6Mrs4l+fRF7jcay@intel.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=pbonzini@redhat.com;
+Content-Type: text/plain
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=armbru@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
@@ -148,61 +95,99 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 2/5/25 10:13, Zhao Liu wrote:
->>> * The use of from():
->>>
->>>                  let clk = bindings::qdev_init_clock_in(...)
->>>                  Owned::from(&*clk)
->>
->> In this case the C side wants to manage the reference that
->> qdev_init_clock_in() returns; it is dropped in
->> qdev_finalize_clocklist(). So Rust code needs to increase the
->> refcount.
-> 
-> Pls forgive me for one more question about qdev_init_clock_in() on the C
-> side. :-)
-> 
-> qdev_init_clock_in() didn't unref `clk` after object_property_add_child(),
-> so it is intentional, to make the ref count of `clk` be 2:
->   * 1 count is held by clocklist until qdev_finalize_clocklist().
->   * another 1 is held by its parent via QOM Child<>.
-> 
-> Am I understanding it correctly?
+Xiaoyao Li <xiaoyao.li@intel.com> writes:
 
-Yes, that's more precise.  In Rust it will be 3, the two above plus the 
-Owned<Clock>.
+> Integrate TDX's TDX_REPORT_FATAL_ERROR into QEMU GuestPanic facility
+>
+> Originated-from: Isaku Yamahata <isaku.yamahata@intel.com>
+> Signed-off-by: Xiaoyao Li <xiaoyao.li@intel.com>
+> ---
+> Changes in v6:
+> - change error_code of GuestPanicInformationTdx from uint64_t to
+>   uint32_t, to only contains the bit 31:0 returned in r12.
+>
+> Changes in v5:
+> - mention additional error information in gpa when it presents;
+> - refine the documentation; (Markus)
+>
+> Changes in v4:
+> - refine the documentation; (Markus)
+>
+> Changes in v3:
+> - Add docmentation of new type and struct; (Daniel)
+> - refine the error message handling; (Daniel)
+> ---
+>  qapi/run-state.json   | 31 ++++++++++++++++++--
+>  system/runstate.c     | 67 +++++++++++++++++++++++++++++++++++++++++++
+>  target/i386/kvm/tdx.c | 24 +++++++++++++++-
+>  3 files changed, 119 insertions(+), 3 deletions(-)
+>
+> diff --git a/qapi/run-state.json b/qapi/run-state.json
+> index ce95cfa46b73..e63611780a2c 100644
+> --- a/qapi/run-state.json
+> +++ b/qapi/run-state.json
+> @@ -501,10 +501,12 @@
+>  #
+>  # @s390: s390 guest panic information type (Since: 2.12)
+>  #
+> +# @tdx: tdx guest panic information type (Since: 9.0)
 
-Ah wait... qdev_finalize_clocklist() is only called _after_ the Rust 
-struct is Drop::drop-ped, because device_finalize() is called after the 
-subclass's instance_finalize.
+Since: 10.0
 
-So the result of qdev_init_clock_in(), strictly speaking, does not have 
-to be an Owned<Clock>.  It can also be a &'device Clock; either is 
-possible.  Would you prefer that, or do you think it's enough to add a 
-comment?
+> +#
+>  # Since: 2.9
+>  ##
+>  { 'enum': 'GuestPanicInformationType',
+> -  'data': [ 'hyper-v', 's390' ] }
+> +  'data': [ 'hyper-v', 's390', 'tdx' ] }
+>  
+>  ##
+>  # @GuestPanicInformation:
+> @@ -519,7 +521,8 @@
+>   'base': {'type': 'GuestPanicInformationType'},
+>   'discriminator': 'type',
+>   'data': {'hyper-v': 'GuestPanicInformationHyperV',
+> -          's390': 'GuestPanicInformationS390'}}
+> +          's390': 'GuestPanicInformationS390',
+> +          'tdx' : 'GuestPanicInformationTdx'}}
+>  
+>  ##
+>  # @GuestPanicInformationHyperV:
+> @@ -598,6 +601,30 @@
+>            'psw-addr': 'uint64',
+>            'reason': 'S390CrashReason'}}
+>  
+> +##
+> +# @GuestPanicInformationTdx:
+> +#
+> +# TDX Guest panic information specific to TDX, as specified in the
+> +# "Guest-Hypervisor Communication Interface (GHCI) Specification",
+> +# section TDG.VP.VMCALL<ReportFatalError>.
+> +#
+> +# @error-code: TD-specific error code
+> +#
+> +# @message: Human-readable error message provided by the guest. Not
+> +#     to be trusted.
+> +#
+> +# @gpa: guest-physical address of a page that contains more verbose
+> +#     error information, as zero-terminated string.  Present when the
+> +#     "GPA valid" bit (bit 63) is set in @error-code.
+> +#
+> +#
+> +# Since: 10.0
+> +##
+> +{'struct': 'GuestPanicInformationTdx',
+> + 'data': {'error-code': 'uint32',
+> +          'message': 'str',
+> +          '*gpa': 'uint64'}}
+> +
+>  ##
+>  # @MEMORY_FAILURE:
+>  #
 
-Paolo
+With the since information corrected
+Acked-by: Markus Armbruster <armbru@redhat.com>
 
->>> Then the comment "the clock is heap allocated and does not have
->>> a reference" sounds like a conflict. I'm sure I'm missing something. :-(
->>
->> Changed:
->>
->>        // SAFETY: the clock is heap allocated, but qdev_init_clock_in()
->>        // does not gift the reference to its caller; so use Owned::from to
->>        // add one.  the callback is disabled automatically when the clock
->>        // is unparented, which happens before the device is finalized.
-> 
-> LGTM.
-> 
-> Thank you very much for your patience. I think I understand ref count
-> now.
-> 
-> Regards,
-> Zhao
-> 
-> 
-> 
-> 
+[...]
 
 
