@@ -4,179 +4,104 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5E9A9C02196
-	for <qemu-devel@archiver.kernel.org>; Wed,  5 Feb 2025 20:54:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BECFBC02192
+	for <qemu-devel@archiver.kernel.org>; Wed,  5 Feb 2025 20:55:40 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tfmPM-0000zp-AX; Wed, 05 Feb 2025 15:54:06 -0500
+	id 1tfmQh-0002Pz-SM; Wed, 05 Feb 2025 15:55:28 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <nathanc@nvidia.com>)
- id 1tfmPG-0000zJ-Mq; Wed, 05 Feb 2025 15:53:58 -0500
-Received: from mail-mw2nam12on20602.outbound.protection.outlook.com
- ([2a01:111:f403:200a::602]
- helo=NAM12-MW2-obe.outbound.protection.outlook.com)
+ (Exim 4.90_1) (envelope-from <mhej@vps-ovh.mhejs.net>)
+ id 1tfmQe-0002Lo-98
+ for qemu-devel@nongnu.org; Wed, 05 Feb 2025 15:55:24 -0500
+Received: from vps-ovh.mhejs.net ([145.239.82.108])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <nathanc@nvidia.com>)
- id 1tfmPC-0001M2-A8; Wed, 05 Feb 2025 15:53:58 -0500
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=TIWpS016te4UbvR503u9BN05tCfoswd/0R3Cnd6/LcpwlHuxHrjTGcTxyoWm9WxfTNSQMHQWE7HhPg5Ib5dBxIvmUIbVHcjDcOJ9344rCzAMgpihRWMYal8fOMcv7Qx0P7cphydCrPoRKpK3inb75bCxUPeK5Jx35GwrfRfnasHLn/CLqKxOYOhX1RkXTl/o+zP/uQi6dAdlxO6SuufVU5U1gbMApoI5d/Wgb/BMP0DWGPfCd8ZZg2UrPHoLq2Qbhr4vMRCS08IuBY5H91xzhSDFAST+O/EfTJISFHHwVj9XcyM3KUnn+pVQE0moW9/lAHYQxDj1wwDixtSQ3BewFw==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=aPULv/lJNHtmObMrUUwdiz6PNj0ACmBIsOxWMmPZ5Nk=;
- b=whfQbgv4khhBUTuk0ThbhChDiNXjnMKxRg67VD2wRyxRK5S5e2/N2eBWSLxuh5VNlTQ7CWmYnZ0XPOvDQEl/6dAhmAneJRlrU1paR4Xde35Uz/5GDxv1DyL231r1OFt9gal6gLGEyiZO1k1kprnCgfUkLX32GKl7+z2Ul7CgiN1xr7Etn/z5l4Tuf5iI78lPAw0AwiQB50+vw4b2qUhQYOxpmR+/5A6gA+u5067uCDs8gG6ARqTM32HWAuV9dQUsCIgYAIhteFQQp3ZnbYpq/yXrn/CBhOSUI/f62Yu/UqRuWXv248laub8Wre4GU1g7sUfK3cEAjyGpSSKFI40qqw==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=nvidia.com; dmarc=pass action=none header.from=nvidia.com;
- dkim=pass header.d=nvidia.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
- s=selector2;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=aPULv/lJNHtmObMrUUwdiz6PNj0ACmBIsOxWMmPZ5Nk=;
- b=DTcKYPnE8kbhfPg5gaSae2C4k6d8anpQAnBYfIa+ik+lWK9UeHTGNI75hO7vIdfrSkTBVP4T5MkJQ1H8w7/qjOPjkofOt5afe7F0ehINdoikKOKjji0ByV2JzuHjsBhggNLR/2DsLqRpuJI1zX9dE7R9LTR6LHPxD1+15psCPr08Vb8ucXr4p8v+LHn8F5CTqxtl+KjMjbDjbwkcwyFngm2Xww7hOyhyU8jj2td/sdduRNBbmGwBuPXgxgHpaSDKcsiUub8JLlUw+o38Ec2Pte5UqcUdhmlvvRIk0UGFJ4dqtS3VfbmGlFxK6aOcJDxOOEpSHtXUwsI7RJFJIW7tBQ==
-Authentication-Results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=nvidia.com;
-Received: from SN7PR12MB6838.namprd12.prod.outlook.com (2603:10b6:806:266::18)
- by SA1PR12MB7247.namprd12.prod.outlook.com (2603:10b6:806:2bb::6)
- with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.8398.23; Wed, 5 Feb
- 2025 20:53:47 +0000
-Received: from SN7PR12MB6838.namprd12.prod.outlook.com
- ([fe80::529d:478:bc5d:b400]) by SN7PR12MB6838.namprd12.prod.outlook.com
- ([fe80::529d:478:bc5d:b400%7]) with mapi id 15.20.8398.021; Wed, 5 Feb 2025
- 20:53:47 +0000
-Message-ID: <5709592d-cd1c-4894-a1d4-c0c4c61a2e07@nvidia.com>
-Date: Wed, 5 Feb 2025 12:53:42 -0800
+ (Exim 4.90_1) (envelope-from <mhej@vps-ovh.mhejs.net>)
+ id 1tfmQa-0001dS-O9
+ for qemu-devel@nongnu.org; Wed, 05 Feb 2025 15:55:23 -0500
+Received: from MUA
+ by vps-ovh.mhejs.net with esmtpsa  (TLS1.3) tls TLS_AES_128_GCM_SHA256
+ (Exim 4.98) (envelope-from <mhej@vps-ovh.mhejs.net>)
+ id 1tfmQL-00000006vhJ-3oyb; Wed, 05 Feb 2025 21:55:05 +0100
+Message-ID: <192db6a6-f3ff-4cf9-8537-b849fb3a97b3@maciej.szmigiero.name>
+Date: Wed, 5 Feb 2025 21:55:00 +0100
+MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [RFC PATCH 0/5] hw/arm/virt: Add support for user-creatable
- nested SMMUv3
-To: eric.auger@redhat.com
-Cc: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
- "qemu-arm@nongnu.org" <qemu-arm@nongnu.org>,
- "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>,
- "peter.maydell@linaro.org" <peter.maydell@linaro.org>,
- "nicolinc@nvidia.com" <nicolinc@nvidia.com>,
- "ddutile@redhat.com" <ddutile@redhat.com>, Linuxarm <linuxarm@huawei.com>,
- "Wangzhou (B)" <wangzhou1@hisilicon.com>,
- jiangkunkun <jiangkunkun@huawei.com>,
- Jonathan Cameron <jonathan.cameron@huawei.com>,
- "zhangfei.gao@linaro.org" <zhangfei.gao@linaro.org>,
- Shameer Kolothum <shameerali.kolothum.thodi@huawei.com>,
- Jason Gunthorpe <jgg@nvidia.com>
-References: <20241108125242.60136-1-shameerali.kolothum.thodi@huawei.com>
- <Z5uiGnAxUf4jXTEI@redhat.com> <7ecabe74e0514367baf28d67675e5db8@huawei.com>
- <fc91e1a798324390b2a556fae5d40f46@huawei.com>
- <20250131142404.GP5556@nvidia.com>
- <3efcea1171af4b2f81be842f2c55fe51@huawei.com>
- <20250131145411.GR5556@nvidia.com>
- <20039bbc40df453a8a41a863d74b9ff9@huawei.com>
- <c292ab40-3620-4e72-b043-4e3cbd7fd297@redhat.com>
-Content-Language: en-US
-From: Nathan Chen <nathanc@nvidia.com>
-In-Reply-To: <c292ab40-3620-4e72-b043-4e3cbd7fd297@redhat.com>
+Subject: Re: [PATCH v4 08/33] migration/multifd: Allow premature EOF on TLS
+ incoming channels
+To: Fabiano Rosas <farosas@suse.de>
+Cc: Alex Williamson <alex.williamson@redhat.com>,
+ =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
+ Peter Xu <peterx@redhat.com>, =?UTF-8?Q?C=C3=A9dric_Le_Goater?=
+ <clg@redhat.com>, Eric Blake <eblake@redhat.com>,
+ Markus Armbruster <armbru@redhat.com>, Avihai Horon <avihaih@nvidia.com>,
+ Joao Martins <joao.m.martins@oracle.com>, qemu-devel@nongnu.org
+References: <cover.1738171076.git.maciej.szmigiero@oracle.com>
+ <baf944c37ead5d30d7e268b2a4074d9acaac2db0.1738171076.git.maciej.szmigiero@oracle.com>
+ <Z6EI0V6Cg7aCbzQU@x1.local>
+ <67a7c2ce-2391-4b8e-a5be-bce370fd2e66@maciej.szmigiero.name>
+ <Z6ElIlavWHda8YcH@x1.local>
+ <6b9b4c31-6598-4fd9-9ae2-dbef4cdd7089@maciej.szmigiero.name>
+ <Z6FJuK2FVKhI0C2j@x1.local>
+ <b84071ab-ea49-4c2f-8f8c-6bb9a3d94342@maciej.szmigiero.name>
+ <Z6Iy0wY-lsx3M71M@x1.local> <Z6I0mzWEsl5y57Zj@redhat.com>
+ <87zfj0mcmy.fsf@suse.de> <87wme4m8ci.fsf@suse.de>
+Content-Language: en-US, pl-PL
+From: "Maciej S. Szmigiero" <mail@maciej.szmigiero.name>
+Autocrypt: addr=mail@maciej.szmigiero.name; keydata=
+ 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
+In-Reply-To: <87wme4m8ci.fsf@suse.de>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-X-ClientProxiedBy: SJ0PR05CA0159.namprd05.prod.outlook.com
- (2603:10b6:a03:339::14) To SN7PR12MB6838.namprd12.prod.outlook.com
- (2603:10b6:806:266::18)
-MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: SN7PR12MB6838:EE_|SA1PR12MB7247:EE_
-X-MS-Office365-Filtering-Correlation-Id: d78a34a8-697b-42da-d7b3-08dd46272f6a
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;ARA:13230040|1800799024|366016|7416014|376014;
-X-Microsoft-Antispam-Message-Info: =?utf-8?B?SDFVeDYrenUyY2tvR25NbEUrT25HSlBmcTgxUjhaT1U5NDQwL3FHcVNJQ0hq?=
- =?utf-8?B?cHRweFBXTm9Rc1NsNkNlMGw3aHNIQWptSEpvS3NHSFI2WW5Td3gzUmJ0MzRK?=
- =?utf-8?B?dDNvVldoZ0lrMDJxSzhGQjhWc3M4Z2RsVmpKTTAyVytENjhDRUR5U0JsWGJC?=
- =?utf-8?B?Y29NQzFMOERCWW1QQVhrcVNDL1JaTmlwWnVZMnZQSWNnWXhaT0g1MDB4SHds?=
- =?utf-8?B?YWZKcUtKbk9kc0NiK3dOVVFIZWFoZWhXc1NOL205TTduZ3RuQUZyd2p0OXo1?=
- =?utf-8?B?Sk5CWUQ4QXN5ekJiTW9mRHVmMThkWEhwVHRzMzUvRXAweHR0Y1dqZkJzclZG?=
- =?utf-8?B?ejBXL0s2dzhOSTdKb3VxU09LQlRYdXY3b1NJK0dVdzhjMzlyZDhPUUVSVm1I?=
- =?utf-8?B?NTNneXQ3ZEJoRUprTTdHVmpzZStMYm9OWXR1WjJNNjl1NnB6alh0VW43dFhB?=
- =?utf-8?B?OVdSanpXWXN4QXZMakRhVWRMMjZZSTh2c0NiYjRCS2JBR1JxWTJwUVJtd2pk?=
- =?utf-8?B?VlM0R0xLL3o5NHNMOFU1R0I1QnBjMmI4TEtBT3EzWFhIYjZpZ3R5Qndab3lj?=
- =?utf-8?B?OEhGT2tRMlZKV1RhSVJjUGdwZXdoNXI3UFVKZk9CcGRLSkZXV01ZMEQ4QUhG?=
- =?utf-8?B?MkNxMjNCSW5CZ203NEkzYm93L2NIZ3U0Y3RKRk5BRGh3ejdMWGdud0ZlNHBr?=
- =?utf-8?B?ZkNkSXV4b1M3OHRvbGxRdXY3YzZnWGMydDVzck1KMzdGREl4S21aQmovcko4?=
- =?utf-8?B?QitiaXVzSFF6NFVqUnB0VUFYeHZwbTY2N0w2d1dUd1JObjNoQmRSelZsZnRD?=
- =?utf-8?B?b3BmY3BTaFNlbTlvYmJodlByODdqMjJvUTZXWWFRN09iSFVWalBqcmQvMjd5?=
- =?utf-8?B?UDFyc3Fpckw4NGtqMHlUL3R2QlpyM1hjRGwxQ2p6c1d4QXVnNDJnc1lDRWYx?=
- =?utf-8?B?NlZKOG1VNy85d1lxeUU3R3UzQXo0eTdmK3ovOTBiTUFUalI2dm9DVTd2QXJk?=
- =?utf-8?B?cVJYbHUxRXl4bmQ0dFRsT2toS09NMHQ3ME1UbHBxL3hQNUoxT0tmOTZMNEtn?=
- =?utf-8?B?bWVVWWt0U3R2Y3lEaE9BOUdPN2x4TGRMcVZHYkpxb3RYdHVvQUhxU0M0cHdY?=
- =?utf-8?B?UVh0eHBJNUJ2RUtrT21jZ1Zha1k5ak4wTWVQWWZFdnFaZ1RTTGI1bEVKWjhL?=
- =?utf-8?B?RW9iaHFyWDlxV2F6ZzlsdnkwNEwzUkhhR2dJOTUzV3lxSktlNU43QTdEOXhI?=
- =?utf-8?B?WkhxeEJQR1QzdGlMdzdSZXBnWS9MWTJvNVd2aFJhU3lTVzBHQ1NOMkJpUFMv?=
- =?utf-8?B?SUFiVk1UaGhtTkRLM29OOUNXSGYzMFJZQ0IzWkxJczhBNkwxOG1sa2M0NnlJ?=
- =?utf-8?B?MkJIajFWaDBYb1BFWldvaHJPOTdJeXd2OVNHZHVVMEgwaXdteTRjdUJOMEUz?=
- =?utf-8?B?UzgzenRURjZaTTcvVnBaVk0yak95clBFVml1RmpyNVNnN0dHajJubDkwT1JK?=
- =?utf-8?B?L0dlRjU4UUNaRlhCSUVOdys2Z3ZWeVZxZU9BU0tIUmI1MmFXQ1NvS3dQVnpS?=
- =?utf-8?B?Q2JEZzc5QTE2akdCMVkxOVlpSDdMR1NEUU9UaHE2ZDZ2TkNaWUl3S3R2QWRz?=
- =?utf-8?B?dmNleGF0S0RmZ1lwYS9aMlR5UEJnUzE0T3NzSmZZcm50YjI5OGpXcXFhMElP?=
- =?utf-8?B?T0tVMzZkRmZSKzRXbTBCZ29xaUxQVU5LVjY2M3NBcUx1bXU1V0VRYVFFeVJV?=
- =?utf-8?B?R0gya1p6ZGU4cFdiVElyV2QyV24wN2VFTWJHR3diNno5RVQ2MGdCQmQ3OW9x?=
- =?utf-8?B?dVUrNDIvSzZ6WWM5eUJ6Zz09?=
-X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:SN7PR12MB6838.namprd12.prod.outlook.com; PTR:; CAT:NONE;
- SFS:(13230040)(1800799024)(366016)(7416014)(376014); DIR:OUT; SFP:1101; 
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?eEt3N2ZuNjh6WGxFMVI2NjJtRjZRdnRlMGdPQkc5MjJjT0JrbjRpWUV0ams2?=
- =?utf-8?B?LzZ5c2dBUWplZ0tjRzV1bHVYR0VEQ3hCdzdQNkRtN3ROVU9QOVllM3hOM2Fa?=
- =?utf-8?B?T1M1b3VUNmRvMlBnVjBTSTFJeDQvSXJHTUM5ZExWZnlaYkhXeDRPUmsvQ2FS?=
- =?utf-8?B?dno3QjgyS1N3Zm5mV2RsRWNxeFI1Q2JpZzRzTlVZYisrQ0g3akpvM3FpR1dJ?=
- =?utf-8?B?djdnT1lxYzFuTnlhQU03SHZROVNVa0FLZlBjSTczWmo5Zk5QNUlXK0NubU9F?=
- =?utf-8?B?b2lZTnJwYVNOUDZGeDBQelAzd3daOTNiK241eG00RWhvVGZSY01SMUUwWUE2?=
- =?utf-8?B?R28xcEd6aWxzSmZyVVJQWkVyWWxuYnNjMjlPUGovbWhpOUtxTWJDaC9PYWd5?=
- =?utf-8?B?RHI5RGxqc2pQS1d5VTMvRXJPV1NKYUQ0bXl0VnpVOFRlTkxOSmR0YkRaWFM1?=
- =?utf-8?B?MzVWNjg5alNGaXN5QzdQL21mMmc3R2JJbVBrczV6ZDVTbzJ6eHRMT1N0Tnds?=
- =?utf-8?B?MVhLSmwrRTBMc1FWY0cwa1YzTzlEUHVuc21WMkplL013WXI1Y0VkcytKT2lE?=
- =?utf-8?B?WmdYaUxaOWt0UkV3Ymx4L2M5TzhTbU8zcjQ0Zm9aNXYyb1pPZWlLYzUyQTVx?=
- =?utf-8?B?SmJaQWZROXJic0YyeXRicXNVTDdNTWNCd3YydkIyQmtCZnR2UHRhd0I3NjR0?=
- =?utf-8?B?Ri9xcngxbEdHRkhkeldLT3phUms4U1o2WGdpaFJTS2FnUUp1c1l5SEUvSkw4?=
- =?utf-8?B?Ni9MbjdFbFBEKzR1cXJpd3VXeVBaK3I3eWx3NnNWdmhaY04wZzVJd3hGc0c0?=
- =?utf-8?B?a2JKV0tYRkk1cHZPeW5rQ2Z6RitTNjQveVF0eTBPVkR2ekFuSUgyU1I1WlMw?=
- =?utf-8?B?VCtBNEkvZWkxbXJNTjVYU1Q3cE9UT2l0VVBLK3N0QnJacUI1QzRjRXl3SnUz?=
- =?utf-8?B?T0ZoenJnYm11THRhaGhIWTVGbDRJd1VxQm83YjdsWnY0RExQa2RKUUpZeEl3?=
- =?utf-8?B?L0M5dzB4OFQvRTBXSkV3OHg4Tnc3SVNkZDR3OTkxTkJOMk00Q1lzdGVUS1Vs?=
- =?utf-8?B?UmxkUWNzczI3YVNYa3hlYW9Jak8wSDBBTHh3NkJwZUhZUE9VMk8vNWcwd3gr?=
- =?utf-8?B?MUk5bG9UMzJDM0dyUzJzU0VmQ0g3eEJKQVNVMml3V1FaajNiSnRLQ2xMZXdG?=
- =?utf-8?B?RHBVSU12YkxxN2k1Z2t1U1pkaE5nM1cxNzAzMStOM2h6RXlBWUJuczR5bmtJ?=
- =?utf-8?B?UThlMHA2VmRWNkRkaGxlcm4yQXpoMjJDV1RZQkwwMktYOFYwUmpicUpMWUEx?=
- =?utf-8?B?Mzh5a0UzdEhCQ0lTbXdyc29RU0drOEZtdTN6S2xsNjlhR0dicGxTeWVwdjZv?=
- =?utf-8?B?bW90RzZqUWg3U3ZaZ0FxUVA4QTJlNVpZbGhHL3VBSS9pTCtVeHZjb2ZjREo3?=
- =?utf-8?B?VkRuTktCeFNkcWwyYmI0b1diVndxSkd6S0xSazFsbytGeW1CVDhocDZnYjh0?=
- =?utf-8?B?R1BGc20wbTl5dE8wQ3F5ZXlTdDlOcHpBbSsyRU1NTk5KQURENzN2eldEcWxv?=
- =?utf-8?B?VzJqaDdOMzJSYUdoWFk4cmV3b1NvT1RuMnNmaXFzc2UrMXFpMDBhVHozbXVX?=
- =?utf-8?B?bnk3dlpxcFJMU0g3L0hpNDIrK0VYQks0bFg4L2lLcUZmd0EycXZqd2d3dE5H?=
- =?utf-8?B?ck40TmV4VnY2dTJpdlBBNTk4U0tvYytZaDdYOTNNMmdzNjUvNXQrdWgyWERy?=
- =?utf-8?B?bmRXendmbXZaNFVtcEgvSjg2S3Z1RVJBZ25XSzVXRUtacUtvMGlvZ21nUFM4?=
- =?utf-8?B?eVJobVdEVjFDTCtnMGZBeHNBZDNuSWl3RndHMytqSnpMQWVHNGpZeEFFb1Rv?=
- =?utf-8?B?VThkbVNQUnI2eDJpU3l3WkxTOGx6Zm1kaStlaU1EdEdtM3dwV1d5MnJTejBw?=
- =?utf-8?B?VW81bGp2TlZJRVNlbXY2eE1LWXNUYkg4aTJ0eHdWSlYwWEJGZ0hoVlVwcDV6?=
- =?utf-8?B?WDk1T2dwL1FYMFEyTVFJUWRHYzFXT2VmY3ZnTzB2Z1FiSSsxUmdXNmM2cFdn?=
- =?utf-8?B?UE5DZHYwc2RRSXFhS3Y5aGYrZFYzczhCNmlRcDNVWEUxSWc2c2tMUjlkdGZl?=
- =?utf-8?Q?qEFrEXgRVekyjRGa5kAuaP6bI?=
-X-OriginatorOrg: Nvidia.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: d78a34a8-697b-42da-d7b3-08dd46272f6a
-X-MS-Exchange-CrossTenant-AuthSource: SN7PR12MB6838.namprd12.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 05 Feb 2025 20:53:47.1271 (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: UlAAPirAEsWVk9WVJdDoLBiOONsVfQ5LPgdgx1rTQo3pr14BejhQsGWlDpsx2+wo/gD+++/xqA7UX8YeVP1SGQ==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: SA1PR12MB7247
-Received-SPF: softfail client-ip=2a01:111:f403:200a::602;
- envelope-from=nathanc@nvidia.com;
- helo=NAM12-MW2-obe.outbound.protection.outlook.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Received-SPF: pass client-ip=145.239.82.108;
+ envelope-from=mhej@vps-ovh.mhejs.net; helo=vps-ovh.mhejs.net
+X-Spam_score_int: -17
+X-Spam_score: -1.8
+X-Spam_bar: -
+X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9,
+ HEADER_FROM_DIFFERENT_DOMAINS=0.069, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -192,69 +117,183 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-
-
-On 1/31/2025 8:08 AM, Eric Auger wrote:
->>>>>> And Qemu does some checking to make sure that the device is indeed
->>>>> associated
->>>>>> with the specified phys-smmuv3.  This can be done going through the
->>>>> sysfs path checking
->>>>>> which is what I guess libvirt is currently doing to populate the
->>> topology.
->>>>> So basically
->>>>>> Qemu is just replicating that to validate again.
->>>>> I would prefer that iommufd users not have to go out to sysfs..
->>>>>
->>>>>> Or another option is extending the IOMMU_GET_HW_INFO IOCTL to
->>>>> return the phys
->>>>>> smmuv3 base address which can avoid going through the sysfs.
->>>>> It also doesn't seem great to expose a physical address. But we could
->>>>> have an 'iommu instance id' that was a unique small integer?
->>>> Ok. But how the user space can map that to the device?
->>> Why does it need to?
->>>
->>> libvirt picks some label for the vsmmu instance, it doesn't matter
->>> what the string is.
->>>
->>> qemu validates that all of the vsmmu instances are only linked to PCI
->>> device that have the same iommu ID. This is already happening in the
->>> kernel, it will fail attaches to mismatched instances.
->>>
->>> Nothing further is needed?
->> -device pxb-pcie,id=pcie.1,bus_nr=8,bus=pcie.0 \
->> -device pcie-root-port,id=pcie.port1,bus=pcie.1,chassis=1 \
->> -device arm-smmuv3-accel,bus=pcie.1,id=smmuv1 \
-> I don't get what is the point of adding such an id if it is not
-> referenced anywhere?
+On 5.02.2025 21:42, Fabiano Rosas wrote:
+> Fabiano Rosas <farosas@suse.de> writes:
 > 
-> Eric
+>> Daniel P. Berrangé <berrange@redhat.com> writes:
+>>
+>>> On Tue, Feb 04, 2025 at 10:31:31AM -0500, Peter Xu wrote:
+>>>> On Tue, Feb 04, 2025 at 03:39:00PM +0100, Maciej S. Szmigiero wrote:
+>>>>> On 3.02.2025 23:56, Peter Xu wrote:
+>>>>>> On Mon, Feb 03, 2025 at 10:41:32PM +0100, Maciej S. Szmigiero wrote:
+>>>>>>> On 3.02.2025 21:20, Peter Xu wrote:
+>>>>>>>> On Mon, Feb 03, 2025 at 07:53:00PM +0100, Maciej S. Szmigiero wrote:
+>>>>>>>>> On 3.02.2025 19:20, Peter Xu wrote:
+>>>>>>>>>> On Thu, Jan 30, 2025 at 11:08:29AM +0100, Maciej S. Szmigiero wrote:
+>>>>>>>>>>> From: "Maciej S. Szmigiero" <maciej.szmigiero@oracle.com>
+>>>>>>>>>>>
+>>>>>>>>>>> Multifd send channels are terminated by calling
+>>>>>>>>>>> qio_channel_shutdown(QIO_CHANNEL_SHUTDOWN_BOTH) in
+>>>>>>>>>>> multifd_send_terminate_threads(), which in the TLS case essentially
+>>>>>>>>>>> calls shutdown(SHUT_RDWR) on the underlying raw socket.
+>>>>>>>>>>>
+>>>>>>>>>>> Unfortunately, this does not terminate the TLS session properly and
+>>>>>>>>>>> the receive side sees this as a GNUTLS_E_PREMATURE_TERMINATION error.
+>>>>>>>>>>>
+>>>>>>>>>>> The only reason why this wasn't causing migration failures is because
+>>>>>>>>>>> the current migration code apparently does not check for migration
+>>>>>>>>>>> error being set after the end of the multifd receive process.
+>>>>>>>>>>>
+>>>>>>>>>>> However, this will change soon so the multifd receive code has to be
+>>>>>>>>>>> prepared to not return an error on such premature TLS session EOF.
+>>>>>>>>>>> Use the newly introduced QIOChannelTLS method for that.
+>>>>>>>>>>>
+>>>>>>>>>>> It's worth noting that even if the sender were to be changed to terminate
+>>>>>>>>>>> the TLS connection properly the receive side still needs to remain
+>>>>>>>>>>> compatible with older QEMU bit stream which does not do this.
+>>>>>>>>>>
+>>>>>>>>>> If this is an existing bug, we could add a Fixes.
+>>>>>>>>>
+>>>>>>>>> It is an existing issue but only uncovered by this patch set.
+>>>>>>>>>
+>>>>>>>>> As far as I can see it was always there, so it would need some
+>>>>>>>>> thought where to point that Fixes tag.
+>>>>>>>>
+>>>>>>>> If there's no way to trigger a real functional bug anyway, it's also ok we
+>>>>>>>> omit the Fixes.
+>>>>>>>>
+>>>>>>>>>> Two pure questions..
+>>>>>>>>>>
+>>>>>>>>>>       - What is the correct way to terminate the TLS session without this flag?
+>>>>>>>>>
+>>>>>>>>> I guess one would need to call gnutls_bye() like in this GnuTLS example:
+>>>>>>>>> https://gitlab.com/gnutls/gnutls/-/blob/2b8c3e4c71ad380bbbffb32e6003b34ecad596e3/doc/examples/ex-client-anon.c#L102
+>>>>>>>>>
+>>>>>>>>>>       - Why this is only needed by multifd sessions?
+>>>>>>>>>
+>>>>>>>>> What uncovered the issue was switching the load threads to using
+>>>>>>>>> migrate_set_error() instead of their own result variable
+>>>>>>>>> (load_threads_ret) which you had requested during the previous
+>>>>>>>>> patch set version review:
+>>>>>>>>> https://lore.kernel.org/qemu-devel/Z1DbH5fwBaxtgrvH@x1n/
+>>>>>>>>>
+>>>>>>>>> Turns out that the multifd receive code always returned
+>>>>>>>>> error in the TLS case, just nothing was previously checking for
+>>>>>>>>> that error presence.
+>>>>>>>>
+>>>>>>>> What I was curious is whether this issue also exists for the main migration
+>>>>>>>> channel when with tls, especially when e.g. multifd not enabled at all.  As
+>>>>>>>> I don't see anywhere that qemu uses gnutls_bye() for any tls session.
+>>>>>>>>
+>>>>>>>> I think it's a good to find that we overlooked this before.. and IMHO it's
+>>>>>>>> always good we could fix this.
+>>>>>>>>
+>>>>>>>> Does it mean we need proper gnutls_bye() somewhere?
+>>>>>>>>
+>>>>>>>> If we need an explicit gnutls_bye(), then I wonder if that should be done
+>>>>>>>> on the main channel as well.
+>>>>>>>
+>>>>>>> That's a good question and looking at the code qemu_loadvm_state_main() exits
+>>>>>>> on receiving "QEMU_VM_EOF" section (that's different from receiving socket EOF)
+>>>>>>> and then optionally "QEMU_VM_VMDESCRIPTION" section is read with explicit size
+>>>>>>> in qemu_loadvm_state() - so still not until channel EOF.
+>>>>>>
+>>>>>> I had a closer look, I do feel like such pre-mature termination is caused
+>>>>>> by explicit shutdown()s of the iochannels, looks like that can cause issue
+>>>>>> even after everything is sent.  Then I noticed indeed multifd sender
+>>>>>> iochannels will get explicit shutdown()s since commit 077fbb5942, while we
+>>>>>> don't do that for the main channel.  Maybe that is a major difference.
+>>>>>>
+>>>>>> Now I wonder whether we should shutdown() the channel at all if migration
+>>>>>> succeeded, because looks like it can cause tls session to interrupt even if
+>>>>>> the shutdown() is done after sent everything, and if so it'll explain why
+>>>>>> you hit the issue with tls.
+>>>>>>
+>>>>>>>
+>>>>>>> Then I can't see anything else reading the channel until it is closed in
+>>>>>>> migration_incoming_state_destroy().
+>>>>>>>
+>>>>>>> So most likely the main migration channel will never read far enough to
+>>>>>>> reach that GNUTLS_E_PREMATURE_TERMINATION error.
+>>>>>>>
+>>>>>>>> If we don't need gnutls_bye(), then should we always ignore pre-mature
+>>>>>>>> termination of tls no matter if it's multifd or non-multifd channel (or
+>>>>>>>> even a tls session that is not migration-related)?
+>>>>>>>
+>>>>>>> So basically have this patch extended to calling
+>>>>>>> qio_channel_tls_set_premature_eof_okay() also on the main migration channel?
+>>>>>>
+>>>>>> If above theory can stand, then eof-okay could be a workaround papering
+>>>>>> over the real problem that we shouldn't always shutdown()..
+>>>>>>
+>>>>>> Could you have a look at below patch and see whether it can fix the problem
+>>>>>> you hit too, in replace of these two patches (including the previous
+>>>>>> iochannel change)?
+>>>>>>
+>>>>>
+>>>>> Unfortunately, the patch below does not fix the problem:
+>>>>>> qemu-system-x86_64: Cannot read from TLS channel: The TLS connection was non-properly terminated.
+>>>>>> qemu-system-x86_64: Cannot read from TLS channel: The TLS connection was non-properly terminated.
+>>>>>
+>>>>> I think that, even in the absence of shutdown(), if the sender does not
+>>>>> call gnutls_bye() the TLS session is considered improperly terminated.
+>>>>
+>>>> Ah..
+>>>>
+>>>> How about one more change on top of above change to disconnect properly for
+>>>> TLS?  Something like gnutls_bye() in qio_channel_tls_close(), would that
+>>>> make sense to you?
+>>>
+>>> Calling gnutls_bye from qio_channel_tls_close is not viable for the
+>>> API contract of qio_channel_close. gnutls_bye needs to be able to
+>>> perform I/O, which means we need to be able to tell the caller
+>>> whether it needs to perform an event loop wait for POLLIN or POLLOUT.
+>>>
+>>> This is the same API design scenario as the gnutls_handshake method.
+>>> As such I tdon't think it is practical to abstract it inside any
+>>> existing QIOChannel API call, it'll have to be standalone like
+>>> qio_channel_tls_handshake() is.
+>>>
+>>
+>> I implemented the call to gnutls_bye:
+>> https://gitlab.com/farosas/qemu/-/commits/migration-tls-bye
+>>
+>> Then while testing it I realised we actually have a regression from 9.2:
+>>
+>> 1d457daf86 ("migration/multifd: Further remove the SYNC on complete")
+>>
+>> It seems that patch somehow affected the ordering between src shutdown
+>> vs. recv shutdown and now the recv channels are staying around to see
+>> the connection being broken. Or something... I'm still looking into it.
+>>
+> 
+> Ok, so the issue is that the recv side would previously be stuck at the
+> sync semaphore and multifd_recv_terminate_threads() would kick it only
+> after 'exiting' was set, so no further recv() would happen.
+> 
+> After the patch, there's no final sync anymore, so the recv thread loops
+> around and waits at the recv() until multifd_send_terminate_threads()
+> closes the connection.
+> 
+> Waiting on sem_sync as before would lead to a cleaner termination
+> process IMO, but I don't think it's worth the extra complexity of
+> introducing a sync to the device state migration.
+> 
+> So I think we'll have to go with one of the approaches suggested on this
+> thread (gnutls_bye or premature_ok). I'm fine either way, but let's make
+> sure we add a reference to the patch above and some words explaining the
+> situation.
 
-Daniel mentions that the host-to-guest SMMU pairing must be chosen such 
-that it makes conceptual sense w.r.t. the guest NUMA to host NUMA 
-pairing [0]. The current implementation allows for incorrect host to 
-guest numa node pairings, e.g. pSMMU has affinity to host numa node 0, 
-but it’s paired with a vSMMU paired with a guest numa node pinned to 
-host numa node 1.
+We still need premature_ok for handling older QEMU versions that do not
+terminate the TLS stream correctly since the TLS test regression happens
+even without device state transfer being enabled.
 
-By specifying the host SMMU id, we can explicitly pair a host SMMU with 
-a guest SMMU associated with the correct PXB NUMA node, vs. implying the 
-host-to-guest SMMU pairing based on what devices are attached to the 
-PXB. While it would not completely prevent the incorrect pSMMU/vSMMU 
-pairing w.r.t. host to guest numa node pairings, specifying the pSMMU id 
-would make the implications of host to guest numa node pairings more 
-clear when specifying a vSMMU instance.
-
- From the libvirt discussion with Daniel [1], he also states "libvirt's 
-goal has always been to make everything that's functionally impacting a 
-guest device be 100% explicit. So I don't think we should be implying 
-mappings to the host SMMU in QEMU at all, QEMU must be told what to map 
-to." Specifying the id would be a means of explicitly specifying host to 
-guest SMMU mapping instead of implying the mapping.
-
-[0] https://lore.kernel.org/qemu-devel/Z51DmtP83741RAsb@redhat.com/
-[1] 
-https://lists.libvirt.org/archives/list/devel@lists.libvirt.org/thread/7GDT6RX5LPAJMPP4ZSC4ACME6GVMG236/#X6R52JRBYDFZ5PSJFR534A655UZ3RHKN
+So I think that's what we should use generally.
+  
+> (let me know if anyone prefers the gnutls_bye approach I have implemented
+> and I can send a proper series)
 
 Thanks,
-Nathan
+Maciej
+
 
