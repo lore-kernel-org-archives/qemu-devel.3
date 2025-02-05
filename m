@@ -4,78 +4,94 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E58BFC02192
-	for <qemu-devel@archiver.kernel.org>; Wed,  5 Feb 2025 10:45:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 44E96C02194
+	for <qemu-devel@archiver.kernel.org>; Wed,  5 Feb 2025 11:20:54 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tfctK-0006Sn-64; Wed, 05 Feb 2025 05:44:22 -0500
+	id 1tfdRS-0004QG-0H; Wed, 05 Feb 2025 06:19:38 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <shameerali.kolothum.thodi@huawei.com>)
- id 1tfctF-0006RK-Pd; Wed, 05 Feb 2025 05:44:17 -0500
-Received: from frasgout.his.huawei.com ([185.176.79.56])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <shameerali.kolothum.thodi@huawei.com>)
- id 1tfctB-0005zA-SY; Wed, 05 Feb 2025 05:44:16 -0500
-Received: from mail.maildlp.com (unknown [172.18.186.231])
- by frasgout.his.huawei.com (SkyGuard) with ESMTP id 4YnxcR1jRmz6D8X1;
- Wed,  5 Feb 2025 18:41:43 +0800 (CST)
-Received: from frapeml500008.china.huawei.com (unknown [7.182.85.71])
- by mail.maildlp.com (Postfix) with ESMTPS id B0895140CB1;
- Wed,  5 Feb 2025 18:43:58 +0800 (CST)
-Received: from frapeml500008.china.huawei.com (7.182.85.71) by
- frapeml500008.china.huawei.com (7.182.85.71) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.1.2507.39; Wed, 5 Feb 2025 11:43:53 +0100
-Received: from frapeml500008.china.huawei.com ([7.182.85.71]) by
- frapeml500008.china.huawei.com ([7.182.85.71]) with mapi id 15.01.2507.039;
- Wed, 5 Feb 2025 11:43:53 +0100
-To: Nicolin Chen <nicolinc@nvidia.com>, Eric Auger <eric.auger@redhat.com>
-CC: "ddutile@redhat.com" <ddutile@redhat.com>, Peter Maydell
- <peter.maydell@linaro.org>, Jason Gunthorpe <jgg@nvidia.com>,
- =?iso-8859-1?Q?Daniel_P=2E_Berrang=E9?= <berrange@redhat.com>,
- "qemu-arm@nongnu.org" <qemu-arm@nongnu.org>, "qemu-devel@nongnu.org"
- <qemu-devel@nongnu.org>, Linuxarm <linuxarm@huawei.com>, "Wangzhou (B)"
- <wangzhou1@hisilicon.com>, jiangkunkun <jiangkunkun@huawei.com>, "Jonathan
- Cameron" <jonathan.cameron@huawei.com>, "zhangfei.gao@linaro.org"
- <zhangfei.gao@linaro.org>
-Subject: RE: [RFC PATCH 0/5] hw/arm/virt: Add support for user-creatable
- nested SMMUv3
-Thread-Topic: [RFC PATCH 0/5] hw/arm/virt: Add support for user-creatable
- nested SMMUv3
-Thread-Index: AQHbMeB0+Q5BEZc9JkeH/U6Jz+dF4rLkOMCAgAAM2QCAAAz2gIAEhqeggCVVAYCAI176AIAE12cAgAGBGYCAAGn5AIAAwbpw
-Date: Wed, 5 Feb 2025 10:43:53 +0000
-Message-ID: <b0ba9582d8bb431da39c115e4c5f1ffb@huawei.com>
-References: <20241108125242.60136-1-shameerali.kolothum.thodi@huawei.com>
- <Z1wh69_gZ9izr1iU@redhat.com> <Z1wsslDnwlth3A8+@nvidia.com>
- <CAFEAcA8TW2RKyFnh-TZRpfaKfZipHD5TZy_hymUr41GJ4rs4xA@mail.gmail.com>
- <329445b2f68a47269292aefb34584375@huawei.com>
- <Z39Ugx2M+FRFVVpB@Asurada-Nvidia>
- <f4e64a3a-5c1d-49f2-ac72-b84ecd353c9d@redhat.com>
- <Z6EQENkHJy7TrkYy@Asurada-Nvidia>
- <77f736f6-9ef9-462b-916e-c8cfff279044@redhat.com>
- <Z6KsAE9wnjWU0xMs@Asurada-Nvidia>
-In-Reply-To: <Z6KsAE9wnjWU0xMs@Asurada-Nvidia>
-Accept-Language: en-GB, en-US
-Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-x-originating-ip: [10.203.177.241]
-Content-Type: text/plain; charset="iso-8859-1"
-Content-Transfer-Encoding: quoted-printable
+ (Exim 4.90_1) (envelope-from <rkanwal@rivosinc.com>)
+ id 1tfdRM-0004OK-I2
+ for qemu-devel@nongnu.org; Wed, 05 Feb 2025 06:19:32 -0500
+Received: from mail-wm1-x329.google.com ([2a00:1450:4864:20::329])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <rkanwal@rivosinc.com>)
+ id 1tfdRK-0003xi-52
+ for qemu-devel@nongnu.org; Wed, 05 Feb 2025 06:19:32 -0500
+Received: by mail-wm1-x329.google.com with SMTP id
+ 5b1f17b1804b1-437a92d7b96so65860815e9.2
+ for <qemu-devel@nongnu.org>; Wed, 05 Feb 2025 03:19:29 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=rivosinc-com.20230601.gappssmtp.com; s=20230601; t=1738754368; x=1739359168;
+ darn=nongnu.org; 
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=BGS+kPJk1Sts3OT6jlvRg0wUW3GBgfwYTQ1dwaloTKE=;
+ b=whZS2HIuk0NNvAceCsi1vh35fpjRANf+8v+hpokttvF03yLnmAQ3C07xx8yx/1ZqqZ
+ iJyo7dojrNOrGCLZ1zNC0/IquATfn6P7KXhHi7n5mICA+2ZuOSDjBQ1wO25Ew+hsXqzr
+ h7VPYFU0ByhQZ/rmzXrEGKpE7rDbbxhKWFSKIl5H551GSvCuFLzUlN4VY4289nGQIlI9
+ dlV/5ilxwdnA7M+34TaJL7dYLCdqipb3GPgVXCs+LR5YMPR6H7MNhbnCfOKoui4VY3M8
+ mTXk/Jj+JWNh2yrbIi67p9V2gJKilzmSmE+wbciml0JfgNYSvZQQRnF2hhNWAheYhB9c
+ WJkg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1738754368; x=1739359168;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=BGS+kPJk1Sts3OT6jlvRg0wUW3GBgfwYTQ1dwaloTKE=;
+ b=mNOhthhD6KbNETGPw0KyNCn1noz6ZlYCTyendUp48w/rCJu0wxIAmnyyouLdLLun7s
+ 6xxN9UHU2FjvSswna+Ao5PtEg+fPbnpGr8BmKQPNYL70MqoiZ67bO3NNUuMnhXFkkqE+
+ DOo+EUBEXn594JbbRXOYQ6ZcXUeyPxpoIB8jAOAmU9ngl/MGvuKJ8VZGBCfjNcKZFWZv
+ nzj7yWeSgi6EXCHimME8XK2n6CGX/mKpmnTzGLT9WuD/AZ5XsWMDI4+kq4WapTV5W8pb
+ imyIHxPN3t4ys4v4wU46yUovzFgwBARDWTSrQYIS6bQcI3t4z+JSaS3Z3ZCDWOq8YHRa
+ WivQ==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCXI9LchNFbBhkTpWeTyfXPceXu99JSlb9bstnKjTHUhwMeMOzLQMcKP2XH6KfIu9MrCQd0EUS2KZDe7@nongnu.org
+X-Gm-Message-State: AOJu0YzCLl8qHEddxQavs9YQpDI9/s17BB0au3PnMCeH7BTL2BtJbi4j
+ Z/eJsVEYqIJgw6SfZQm+K4GM5FiaIGRwNvvSgL3p/AgVJnO+x5jfMqOo6D9839w=
+X-Gm-Gg: ASbGnctb4cq26iiGZfwv3MgFG8MlqS21tc8SnI5VvPECMBi+VNput57LcEBqDQfXz+K
+ 6M9F8XjQE18SztBFNA8cseNE8ihuJsZJbKU1/mjGLtWtX0/QISLJEFEE6ROal1oMPr9V/+XOJrD
+ l5qvYjhFlSOWolexiEr4HC9dM6G8bHkRymjpnWpsAZybpU2RwcjdWUxNi3zQpYwhf1vJFKBD5hj
+ tq5yLEu4rPGEgcTUq4GasP+ry6/7HhlYp15wjhzl70JP47ro/jXg2gwTsvO4vNv3s8zp0giJ6kX
+ WJzvi6d1o7+PDjT5DriAoDABLrs=
+X-Google-Smtp-Source: AGHT+IHwdKoaV1yKVeMYh37lk4+zMRCEXjbfqrAxHthH+3zBtc4auU1Svcg3sNO4Com7qMBsmfTlww==
+X-Received: by 2002:a05:600c:1e02:b0:434:fa73:a907 with SMTP id
+ 5b1f17b1804b1-4390d43d465mr16630465e9.13.1738754368441; 
+ Wed, 05 Feb 2025 03:19:28 -0800 (PST)
+Received: from localhost.localdomain ([51.52.155.79])
+ by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-4390d93382dsm18256575e9.4.2025.02.05.03.19.27
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Wed, 05 Feb 2025 03:19:28 -0800 (PST)
+From: Rajnesh Kanwal <rkanwal@rivosinc.com>
+To: qemu-riscv@nongnu.org,
+	qemu-devel@nongnu.org
+Cc: alistair.francis@wdc.com, bin.meng@windriver.com, liweiwei@iscas.ac.cn,
+ dbarboza@ventanamicro.com, zhiwei_liu@linux.alibaba.com,
+ atishp@rivosinc.com, apatel@ventanamicro.com, rkanwal@rivosinc.com,
+ beeman@rivosinc.com, jason.chien@sifive.com, frank.chang@sifive.com,
+ richard.henderson@linaro.org, bmeng.cn@gmail.com
+Subject: [PATCH v6 1/7] target/riscv: Remove obsolete sfence.vm instruction
+Date: Wed,  5 Feb 2025 11:18:45 +0000
+Message-Id: <20250205-b4-ctr_upstream_v6-v6-1-439d8e06c8ef@rivosinc.com>
+X-Mailer: git-send-email 2.34.1
+In-Reply-To: <20250205-b4-ctr_upstream_v6-v6-0-439d8e06c8ef@rivosinc.com>
+References: <20250205-b4-ctr_upstream_v6-v6-0-439d8e06c8ef@rivosinc.com>
 MIME-Version: 1.0
-Received-SPF: pass client-ip=185.176.79.56;
- envelope-from=shameerali.kolothum.thodi@huawei.com;
- helo=frasgout.his.huawei.com
-X-Spam_score_int: -4
-X-Spam_score: -0.5
-X-Spam_bar: /
-X-Spam_report: (-0.5 / 5.0 requ) BAYES_00=-1.9, PDS_BTC_ID=0.499,
- RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_MSPIKE_H2=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- THREAD_INDEX_BAD=3.199 autolearn=no autolearn_force=no
+Content-Type: text/plain; charset="utf-8"
+X-Mailer: b4 0.14.2
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::329;
+ envelope-from=rkanwal@rivosinc.com; helo=mail-wm1-x329.google.com
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -88,83 +104,44 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-to:  Shameerali Kolothum Thodi <shameerali.kolothum.thodi@huawei.com>
-From:  Shameerali Kolothum Thodi via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+Signed-off-by: Rajnesh Kanwal <rkanwal@rivosinc.com>
+Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
+Reviewed-by: Jason Chien <jason.chien@sifive.com>
+---
+ target/riscv/insn32.decode                     | 1 -
+ target/riscv/insn_trans/trans_privileged.c.inc | 5 -----
+ 2 files changed, 6 deletions(-)
 
+diff --git a/target/riscv/insn32.decode b/target/riscv/insn32.decode
+index 942c434c6e8c0596d686263f5eba064feba28022..a98dab02057648d9dae28eaf9f9ddb00079211e2 100644
+--- a/target/riscv/insn32.decode
++++ b/target/riscv/insn32.decode
+@@ -119,7 +119,6 @@ sret        0001000    00010 00000 000 00000 1110011
+ mret        0011000    00010 00000 000 00000 1110011
+ wfi         0001000    00101 00000 000 00000 1110011
+ sfence_vma  0001001    ..... ..... 000 00000 1110011 @sfence_vma
+-sfence_vm   0001000    00100 ..... 000 00000 1110011 @sfence_vm
+ 
+ # *** NMI ***
+ mnret       0111000    00010 00000 000 00000 1110011
+diff --git a/target/riscv/insn_trans/trans_privileged.c.inc b/target/riscv/insn_trans/trans_privileged.c.inc
+index 73f940d406135a9b346d66120321e35cf424ec40..27d5558d63edf10a516c068a69023ad9035414fd 100644
+--- a/target/riscv/insn_trans/trans_privileged.c.inc
++++ b/target/riscv/insn_trans/trans_privileged.c.inc
+@@ -147,8 +147,3 @@ static bool trans_sfence_vma(DisasContext *ctx, arg_sfence_vma *a)
+ #endif
+     return false;
+ }
+-
+-static bool trans_sfence_vm(DisasContext *ctx, arg_sfence_vm *a)
+-{
+-    return false;
+-}
 
-> -----Original Message-----
-> From: Nicolin Chen <nicolinc@nvidia.com>
-> Sent: Wednesday, February 5, 2025 12:09 AM
-> To: Shameerali Kolothum Thodi
-> <shameerali.kolothum.thodi@huawei.com>; Eric Auger
-> <eric.auger@redhat.com>
-> Cc: ddutile@redhat.com; Peter Maydell <peter.maydell@linaro.org>; Jason
-> Gunthorpe <jgg@nvidia.com>; Daniel P. Berrang=E9 <berrange@redhat.com>;
-> qemu-arm@nongnu.org; qemu-devel@nongnu.org; Linuxarm
-> <linuxarm@huawei.com>; Wangzhou (B) <wangzhou1@hisilicon.com>;
-> jiangkunkun <jiangkunkun@huawei.com>; Jonathan Cameron
-> <jonathan.cameron@huawei.com>; zhangfei.gao@linaro.org
-> Subject: Re: [RFC PATCH 0/5] hw/arm/virt: Add support for user-creatable
-> nested SMMUv3
->=20
-> On Tue, Feb 04, 2025 at 06:49:15PM +0100, Eric Auger wrote:
-> > > In summary, we will have the following series:
-> > > 1) HWPT uAPI patches in backends/iommufd.c (Zhenzhong or Shameer)
-> > >    https://lore.kernel.org/qemu-
-> devel/SJ0PR11MB6744943702EB5798EC9B3B9992E02@SJ0PR11MB6744.nam
-> prd11.prod.outlook.com/
-> > > 2) vIOMMU uAPI patches in backends/iommufd.c (I will rebase/send)
->=20
-> > for 1 and 2, are you taking about the "Add VIOMMU infrastructure
-> support
-> > " series in Shameer's branch: private-smmuv3-nested-dev-rfc-v1.
-> > Sorry I may instead refer to NVidia or Intel's branch but I am not sure
-> > about the last ones.
->=20
-> That "vIOMMU infrastructure" is for 2, yes.
->=20
-> For 1, it's inside the Intel's series:
-> "cover-letter: intel_iommu: Enable stage-1 translation for passthrough
-> device"
->=20
-> So, we need to extract them out and make it separately..
->=20
-> > > 3) vSMMUv3 patches for HW-acc/nesting (Hoping Don/you could take
-> over)
-> > We can start sending it upstream assuming we have a decent test
-> environment.
-> >
-> > However in
-> >
-> https://lore.kernel.org/all/329445b2f68a47269292aefb34584375@huawei.c
-> om/
-> >
-> > Shameer suggested he may include it in his SMMU multi instance series.
-> > What do you both prefer?
->=20
-> Sure, I think it's good to include those patches, though I believe
-> we need to build a new shared branch as Shameer's branch might not
-> reflect the latest kernel uAPI header.
->=20
-> Here is a new branch on top of latest master tree (v9.2.50):
-> https://github.com/nicolinc/qemu/commits/wip/for_shameer_02042025
->=20
-> I took HWPT patches from Zhenzhong's series and rebased all related
-> changes from my tree. I did some sanity and it should work with RMR.
->=20
-> Shameer, would you please try this branch and then integrate your
-> series on top of the following series?
->    cover-letter: Add HW accelerated nesting support for arm SMMUv3
->    cover-letter: Add vIOMMU-based nesting infrastructure support
->    cover-letter: Add HWPT-based nesting infrastructure support
-> Basically, just replace my old multi-instance series with yours, to
-> create a shared branch for all of us.
+-- 
+2.34.1
 
-Ok. I will take a look at that and rebase.
-
-Thanks,
-Shameer
 
