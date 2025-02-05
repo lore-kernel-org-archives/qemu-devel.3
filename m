@@ -4,54 +4,54 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 83FF5C02194
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8D77BC02196
 	for <qemu-devel@archiver.kernel.org>; Wed,  5 Feb 2025 10:30:04 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tfcer-0001Os-Ks; Wed, 05 Feb 2025 05:29:25 -0500
+	id 1tfcf0-0001Pl-AH; Wed, 05 Feb 2025 05:29:34 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <xiaoyao.li@intel.com>)
- id 1tfceo-0001OC-MH
- for qemu-devel@nongnu.org; Wed, 05 Feb 2025 05:29:22 -0500
+ id 1tfcew-0001PF-Lx
+ for qemu-devel@nongnu.org; Wed, 05 Feb 2025 05:29:32 -0500
 Received: from mgamail.intel.com ([198.175.65.11])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <xiaoyao.li@intel.com>)
- id 1tfcem-0002tm-Mx
- for qemu-devel@nongnu.org; Wed, 05 Feb 2025 05:29:22 -0500
+ id 1tfceu-0002ur-R9
+ for qemu-devel@nongnu.org; Wed, 05 Feb 2025 05:29:30 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1738751360; x=1770287360;
+ t=1738751369; x=1770287369;
  h=message-id:date:mime-version:subject:to:cc:references:
  from:in-reply-to:content-transfer-encoding;
- bh=334KkDC7EyuQcwN7ovyQW7RvcYBsNBgMLnTEYSz5aYc=;
- b=TuyUGvqwY6nXvZxxU9ocaIoBIXmqnQU/TLGZ8dBKKZd4ieSb4YAPbNVK
- A1yIxTkWPbsP10HRi0vPnafQCiqsfS9wBUUf6b08tdWnftqObztR2OQfN
- wS3A2BPFuwMRehko2Jf5ztgfDNgvDGHUmrbvlsZdAN7/g3+JyihV4ARoM
- p6GT+n/N2n1ZEHG/7x09Xh+CnkQn+SXbeJaaLSOBc6zvr/9e8lAKmi3Rs
- uToBhHzcTl+orXPu9HeZqCt1TJW9BaPTiiCMxmRUfX+TD2Oto98LwnWhQ
- FivDDzk54Mba21uUUdXE8r8C/EUw4JRUddTA/lK+VEalXvtUXCJov77P6 A==;
-X-CSE-ConnectionGUID: ZosbysBdRbqY9xWff4O68A==
-X-CSE-MsgGUID: MmZlxl0WSXOgTRrvpWoFPQ==
-X-IronPort-AV: E=McAfee;i="6700,10204,11336"; a="49561778"
-X-IronPort-AV: E=Sophos;i="6.13,261,1732608000"; d="scan'208";a="49561778"
+ bh=XTPxn9WRGlrKBXY4J7ul9HEN574LaZ3V1oKkkycRmZQ=;
+ b=hasZRsX5UznNCcCFvXu/BCOanbs6gdeKj3Ap86EwJJNGfcaM3LZRroLc
+ /mL2NaptvhwJX3pcDrbY5FD8CYgVvPROpJzlzkHmp+jvGzLoreP8M1fU1
+ 1P/HCJnHRTcHjUE7anZE4exGn4vlWpN7I0Z670naKQkQuzRLmzSA3v787
+ /Xoz1GAguhxd23pfqKXyAT8WKUfvI/EKXoah0qdeJ8IzIUh/KF5t73twP
+ TPK0KSw/c9cv8RbQ037k+rLsEhZH711xJPlLddTpXYouAlPY0M8QiINmj
+ UR624koxuAI1licjBXHimI7Nbpse8J3TIWErHqycJS+5Er4jH0WCGo3Ou g==;
+X-CSE-ConnectionGUID: WDgb7cuxRFOu47T2fldpzg==
+X-CSE-MsgGUID: 9bvu+tYCQL2P7DvOL1/MtA==
+X-IronPort-AV: E=McAfee;i="6700,10204,11336"; a="49561801"
+X-IronPort-AV: E=Sophos;i="6.13,261,1732608000"; d="scan'208";a="49561801"
 Received: from fmviesa007.fm.intel.com ([10.60.135.147])
  by orvoesa103.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 05 Feb 2025 02:29:18 -0800
-X-CSE-ConnectionGUID: o2XfOx7NSpW4ShZBReTJZw==
-X-CSE-MsgGUID: JhG4VD9PTDa2CLDctdCpBA==
+ 05 Feb 2025 02:29:27 -0800
+X-CSE-ConnectionGUID: 0eTPcpoOR5C+FjvqLlBKmg==
+X-CSE-MsgGUID: FTmLxHUGSa2Wf0Otyey+dA==
 X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.13,261,1732608000"; d="scan'208";a="110758692"
+X-IronPort-AV: E=Sophos;i="6.13,261,1732608000"; d="scan'208";a="110758770"
 Received: from xiaoyaol-hp-g830.ccr.corp.intel.com (HELO [10.124.247.1])
  ([10.124.247.1])
  by fmviesa007-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 05 Feb 2025 02:29:14 -0800
-Message-ID: <931df5b6-beeb-49dc-9f3f-c8a06522d632@intel.com>
-Date: Wed, 5 Feb 2025 18:29:11 +0800
+ 05 Feb 2025 02:29:22 -0800
+Message-ID: <3633ee44-1e16-4e87-8f6d-4fed9e1f3a29@intel.com>
+Date: Wed, 5 Feb 2025 18:29:22 +0800
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v7 12/52] i386/tdx: Validate TD attributes
+Subject: Re: [PATCH v7 48/52] i386/tdx: Fetch and validate CPUID of TD guest
 To: Markus Armbruster <armbru@redhat.com>
 Cc: Paolo Bonzini <pbonzini@redhat.com>,
  =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
@@ -64,11 +64,11 @@ Cc: Paolo Bonzini <pbonzini@redhat.com>,
  Francesco Lavra <francescolavra.fl@gmail.com>, qemu-devel@nongnu.org,
  kvm@vger.kernel.org
 References: <20250124132048.3229049-1-xiaoyao.li@intel.com>
- <20250124132048.3229049-13-xiaoyao.li@intel.com>
- <878qqk4v6i.fsf@pond.sub.org>
+ <20250124132048.3229049-49-xiaoyao.li@intel.com>
+ <87o6zg3fl2.fsf@pond.sub.org>
 Content-Language: en-US
 From: Xiaoyao Li <xiaoyao.li@intel.com>
-In-Reply-To: <878qqk4v6i.fsf@pond.sub.org>
+In-Reply-To: <87o6zg3fl2.fsf@pond.sub.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=198.175.65.11; envelope-from=xiaoyao.li@intel.com;
@@ -96,80 +96,95 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 2/5/2025 5:06 PM, Markus Armbruster wrote:
+On 2/5/2025 5:28 PM, Markus Armbruster wrote:
 > Xiaoyao Li <xiaoyao.li@intel.com> writes:
 > 
->> Validate TD attributes with tdx_caps that only supported bits arer
->> allowed by KVM.
+>> Use KVM_TDX_GET_CPUID to get the CPUIDs that are managed and enfored
+>> by TDX module for TD guest. Check QEMU's configuration against the
+>> fetched data.
 >>
->> Besides, sanity check the attribute bits that have not been supported by
->> QEMU yet. e.g., debug bit, it will be allowed in the future when debug
->> TD support lands in QEMU.
+>> Print wanring  message when 1. a feature is not supported but requested
+>> by QEMU or 2. QEMU doesn't want to expose a feature while it is enforced
+>> enabled.
+>>
+>> - If cpu->enforced_cpuid is not set, prints the warning message of both
+>> 1) and 2) and tweak QEMU's configuration.
+>>
+>> - If cpu->enforced_cpuid is set, quit if any case of 1) or 2).
 >>
 >> Signed-off-by: Xiaoyao Li <xiaoyao.li@intel.com>
->> Acked-by: Gerd Hoffmann <kraxel@redhat.com>
 >> ---
->> Changes in v7:
->> - Define TDX_SUPPORTED_TD_ATTRS as QEMU supported mask, to validates
->>    user's request. (Rick)
+>>   target/i386/cpu.c     | 33 ++++++++++++++-
+>>   target/i386/cpu.h     |  7 +++
+>>   target/i386/kvm/tdx.c | 99 +++++++++++++++++++++++++++++++++++++++++++
+>>   3 files changed, 137 insertions(+), 2 deletions(-)
 >>
->> Changes in v3:
->> - using error_setg() for error report; (Daniel)
->> ---
->>   qapi/qom.json         |  16 +++++-
->>   target/i386/kvm/tdx.c | 118 +++++++++++++++++++++++++++++++++++++++++-
->>   target/i386/kvm/tdx.h |   3 ++
->>   3 files changed, 134 insertions(+), 3 deletions(-)
->>
->> diff --git a/qapi/qom.json b/qapi/qom.json
->> index 8740626c4ee6..a53000ca6fb4 100644
->> --- a/qapi/qom.json
->> +++ b/qapi/qom.json
->> @@ -1060,11 +1060,25 @@
->>   #     pages.  Some guest OS (e.g., Linux TD guest) may require this to
->>   #     be set, otherwise they refuse to boot.
->>   #
->> +# @mrconfigid: ID for non-owner-defined configuration of the guest TD,
->> +#     e.g., run-time or OS configuration (base64 encoded SHA384 digest).
->> +#     Defaults to all zeros.
->> +#
->> +# @mrowner: ID for the guest TD’s owner (base64 encoded SHA384 digest).
->> +#     Defaults to all zeros.
->> +#
->> +# @mrownerconfig: ID for owner-defined configuration of the guest TD,
->> +#     e.g., specific to the workload rather than the run-time or OS
->> +#     (base64 encoded SHA384 digest).  Defaults to all zeros.
-> 
-> All three members are IDs, but only the first one has "id" in its name.
-> Odd.  Any particular reason for that?
-> 
->> +#
->>   # Since: 10.0
->>   ##
->>   { 'struct': 'TdxGuestProperties',
->>     'data': { '*attributes': 'uint64',
->> -            '*sept-ve-disable': 'bool' } }
->> +            '*sept-ve-disable': 'bool',
->> +            '*mrconfigid': 'str',
->> +            '*mrowner': 'str',
->> +            '*mrownerconfig': 'str' } }
-> 
-> The member names are abbreviations all run together, wheras QAPI/QMP
-> favors words-separated-with-dashes.  If you invented them, please change
-> them to QAPI/QMP style.  If they are established TDX terminology, keep
-> them as they are, but please show us your evidence.
-
-The names are defined in TDX spec. Table 3.13 "TD_PARAMS definition" in 
-TDX Module ABI spec[1]. And they are used for attestation, please refer 
-to section 12 "Measurement and Attestation" in TDX Module Base spec[2].
-
-[1] https://cdrdv2.intel.com/v1/dl/getContent/733579
-[2] https://cdrdv2.intel.com/v1/dl/getContent/733575
-
-
+>> diff --git a/target/i386/cpu.c b/target/i386/cpu.c
+>> index f1330627adbb..a948fd0bd674 100644
+>> --- a/target/i386/cpu.c
+>> +++ b/target/i386/cpu.c
+>> @@ -5482,8 +5482,8 @@ static bool x86_cpu_have_filtered_features(X86CPU *cpu)
+>>       return false;
+>>   }
 >>   
->>   ##
->>   # @ThreadContextProperties:
+>> -static void mark_unavailable_features(X86CPU *cpu, FeatureWord w, uint64_t mask,
+>> -                                      const char *verbose_prefix)
+>> +void mark_unavailable_features(X86CPU *cpu, FeatureWord w, uint64_t mask,
+>> +                               const char *verbose_prefix)
+>>   {
+>>       CPUX86State *env = &cpu->env;
+>>       FeatureWordInfo *f = &feature_word_info[w];
+>> @@ -5510,6 +5510,35 @@ static void mark_unavailable_features(X86CPU *cpu, FeatureWord w, uint64_t mask,
+>>       }
+>>   }
+>>   
+>> +void mark_forced_on_features(X86CPU *cpu, FeatureWord w, uint64_t mask,
+>> +                             const char *verbose_prefix)
+>> +{
+>> +    CPUX86State *env = &cpu->env;
+>> +    FeatureWordInfo *f = &feature_word_info[w];
+>> +    int i;
+>> +
+>> +    if (!cpu->force_features) {
+>> +        env->features[w] |= mask;
+>> +    }
+>> +
+>> +    cpu->forced_on_features[w] |= mask;
+>> +
+>> +    if (!verbose_prefix) {
+>> +        return;
+>> +    }
+>> +
+>> +    for (i = 0; i < 64; ++i) {
+>> +        if ((1ULL << i) & mask) {
+>> +            g_autofree char *feat_word_str = feature_word_description(f);
+> 
+> Does not compile for me:
+> 
+>      ../target/i386/cpu.c: In function ‘mark_forced_on_features’:
+>      ../target/i386/cpu.c:5531:46: error: too few arguments to function ‘feature_word_description’
+>       5531 |             g_autofree char *feat_word_str = feature_word_description(f);
+>            |                                              ^~~~~~~~~~~~~~~~~~~~~~~~
+>      ../target/i386/cpu.c:5451:14: note: declared here
+>       5451 | static char *feature_word_description(FeatureWordInfo *f, uint32_t bit)
+>            |              ^~~~~~~~~~~~~~~~~~~~~~~~
+
+As mentioned in the cover letter, this series depends on a minor one:
+
+https://lore.kernel.org/qemu-devel/20241217123932.948789-1-xiaoyao.li@intel.com/
+
+>> +            warn_report("%s: %s%s%s [bit %d]",
+>> +                        verbose_prefix,
+>> +                        feat_word_str,
+>> +                        f->feat_names[i] ? "." : "",
+>> +                        f->feat_names[i] ? f->feat_names[i] : "", i);
+>> +        }
+>> +    }
+>> +}
+>> +
+>>   static void x86_cpuid_version_get_family(Object *obj, Visitor *v,
+>>                                            const char *name, void *opaque,
+>>                                            Error **errp)
 > 
 > [...]
 > 
