@@ -4,80 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CB071C02192
-	for <qemu-devel@archiver.kernel.org>; Wed,  5 Feb 2025 17:14:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id AC633C02192
+	for <qemu-devel@archiver.kernel.org>; Wed,  5 Feb 2025 17:24:23 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tfiy9-0007eW-Pj; Wed, 05 Feb 2025 12:13:45 -0500
+	id 1tfj7n-0001Hw-6t; Wed, 05 Feb 2025 12:23:44 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1tfiy8-0007eJ-KZ
- for qemu-devel@nongnu.org; Wed, 05 Feb 2025 12:13:44 -0500
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1tfj7k-0001Hm-Bc
+ for qemu-devel@nongnu.org; Wed, 05 Feb 2025 12:23:40 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1tfiy3-0005oh-AS
- for qemu-devel@nongnu.org; Wed, 05 Feb 2025 12:13:44 -0500
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1tfj7h-0007WU-E2
+ for qemu-devel@nongnu.org; Wed, 05 Feb 2025 12:23:40 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1738775616;
+ s=mimecast20190719; t=1738776215;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=uKQuKspoy51kZVHT4fsopiy1n4RLUnMW1sIYLVnPI+k=;
- b=EhETE1AGlirevR91qn2kVW/EEIep1dmRxCW+rGar9av1mYn60d+teEB9GcwOd8+Y9y7y2v
- 2csiS6G0jPwpq7W6s+kiFKs/akzySMEacFo4oM3ZwjBa3zYfdGEC467iDLJOfKwXnkDFFo
- ngwr7CHAt8OkLkeiXMGKn9z2qOc8YMk=
-Received: from mail-qk1-f199.google.com (mail-qk1-f199.google.com
- [209.85.222.199]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=FPv5AN7yZB1BDmWN7HGAS1m573WuuoQs+0/z/TJbm2k=;
+ b=NwowvTuc8Bysj3sEUR/BErPwitUL5rbDOVjb9BJ8uj1xslQMxhCYpiphnhaU7Hbz1bo9Po
+ h5MN8sd5nIeoWFBCN0EmK2r6TlUqA267rI701Plty726xydnyd+KnCdBWX5J5MZHkCEFAl
+ i3N/ChngEzKCXs6TSy3Q/iwdyfzqcbs=
+Received: from mail-qk1-f198.google.com (mail-qk1-f198.google.com
+ [209.85.222.198]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-62-9VKQMxLwNoCdK4xUQn4u4w-1; Wed, 05 Feb 2025 12:13:35 -0500
-X-MC-Unique: 9VKQMxLwNoCdK4xUQn4u4w-1
-X-Mimecast-MFC-AGG-ID: 9VKQMxLwNoCdK4xUQn4u4w
-Received: by mail-qk1-f199.google.com with SMTP id
- af79cd13be357-7b6f2515eb3so678494085a.0
- for <qemu-devel@nongnu.org>; Wed, 05 Feb 2025 09:13:35 -0800 (PST)
+ us-mta-580-cziYz4r8P9W9Ta_6GPYzUQ-1; Wed, 05 Feb 2025 12:23:33 -0500
+X-MC-Unique: cziYz4r8P9W9Ta_6GPYzUQ-1
+X-Mimecast-MFC-AGG-ID: cziYz4r8P9W9Ta_6GPYzUQ
+Received: by mail-qk1-f198.google.com with SMTP id
+ af79cd13be357-7b6e1b036e9so657405785a.1
+ for <qemu-devel@nongnu.org>; Wed, 05 Feb 2025 09:23:33 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1738775615; x=1739380415;
+ d=1e100.net; s=20230601; t=1738776213; x=1739381013;
  h=content-transfer-encoding:in-reply-to:autocrypt:from
  :content-language:references:cc:to:subject:user-agent:mime-version
  :date:message-id:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to;
- bh=uKQuKspoy51kZVHT4fsopiy1n4RLUnMW1sIYLVnPI+k=;
- b=ZRer2cj7JOwEVubtxgLacMZoZHq3AeJLjnwvFSqQ4c+TBo1zJXgaSVwghzYwChUzMi
- 8KduDNNyQmhIN3lrn3RgWVSsAnZ+J7oQSSXMoXnAwtrQyaIMv7Y8FaPKehmQDwJtDDiZ
- ATx5lVPBMy7MBZn2tAmFTjFEhHBd3GAw6zPYUaAuqlADwnGDpE4egzbXbdQckhmFeZk9
- ccTemBmsIelLLI6ifEtLa9/ZeNubnQ2oI/oIFIyj9XMpKrDThWx3vyvR0zSMXEPMUHe+
- eSUoae5FRI7tJw6cstuFQRwsqvI8uEOk3Ybn1Zrg5sjdZXI0NdLLQZA24SCxPgqVxwm/
- xRhQ==
+ bh=FPv5AN7yZB1BDmWN7HGAS1m573WuuoQs+0/z/TJbm2k=;
+ b=vSXO2q1NZvVL9jOarPPUcxDBeXBYNw9+3jwT2wMB7aiwHoLqud0IATJWBzlUBhjDZ/
+ RDp9obh3Dx2Q2QnuHxdIAJcu7qXyWIWVAXtv5Ol9NnWtvpf41SqxpAkEM6aRw3ENP7Rk
+ 8TFAwDwq86L40+s6cMXmrl0Z3s5h4gsQN37hlU7SvFtsJpPYE7BPvl3Pk0pGf+IvWoys
+ CRO+BSGmV2dV3BpOyEvwLebOHp4udFrk+XJkOG83OXOcXCa1M2MXcMdJFLsHvxLNOcEL
+ U3y/aDn6BQF6MrmlPKAtdpFlZZDBLHHosf7U0Um4FC6YEJTwjk6zV0QYPxuDavscZp0u
+ ceiQ==
 X-Forwarded-Encrypted: i=1;
- AJvYcCUzMn8Ip65NnVX7XSZtJCMOYcrE3FDBmTFlwBFyEx1tZ8oADiU/FD/l405IqontE6Q7eCHWzdXAG2du@nongnu.org
-X-Gm-Message-State: AOJu0Yx9UvoFEbcPAl44UB1pkMkBWMVFccjk7wLAi3g8RB2QROh3Y7ni
- wO8PCDo81uVJ9x4UXi4MsS9F/R6oZ+fDqn6tlJYMR5LAv1eu0+z++ovfQxTJO0lZJq+ZBQw58gV
- j04l5mvUDKTzYtm8uX/UCGUJSNwt6fvCwJVkv04CUk0CQbSfBr7Cp
-X-Gm-Gg: ASbGncv3a0Was8ycyofny+9yKIrDF83qDU7HY9iiP6OYdOCXR69qoNaqGsaEuf+RWpZ
- CBBsFrREqn64NQRRuABWJhlSsV4/vhW2anWt3tPYUw2Oj9gOMb84G3WEborLsQ+LlAqXliY8lEa
- Xb8JmVZE1RDVisNB6DSy63mc3Mf4Z60gqsQX1zOrdlFzQ6A3iiqqHsjoWl1yzCzLpz+NR+dlAL/
- lAtK4mBrA/ewq7ibx/QkC0NeLtTNV/dxYJwSfeYSU0gkdq1iJ36PFc3mMIYZ3ttHQbWL8MFkLDT
- vxBtRONG7Me6VLRbjG1ucNUdZCy+ccxcKbzNl7jb0LM=
-X-Received: by 2002:a05:620a:198a:b0:7b6:5d83:123e with SMTP id
- af79cd13be357-7c03a0419camr685735885a.54.1738775614661; 
- Wed, 05 Feb 2025 09:13:34 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IFoKHfBEmguHM1GeQ+qjb1GSsWXlCQI6byoAzcwniOIcT23/HHZfNngVKVeYJVPnLBosNVkOg==
-X-Received: by 2002:a05:620a:198a:b0:7b6:5d83:123e with SMTP id
- af79cd13be357-7c03a0419camr685731285a.54.1738775614306; 
- Wed, 05 Feb 2025 09:13:34 -0800 (PST)
+ AJvYcCX7ObPnRojIkYBt2oN3zsqP7Je5o0IxKDf8tn/ufCpH9IZ09k2sWFCKMxfPiJpPuyUpiI0gx4YlkzmH@nongnu.org
+X-Gm-Message-State: AOJu0Yw++U8MP7BXP2oHjjxtt/XMfV90dnQU0n8RIgpMXFKmZQbuspYW
+ +UYKzHwu7wkExmczf3BRkhSybooPpd72ET89swShaKvgcbCyS8UDN0fQgXZsPX6WLESPQfzDVsR
+ aZLMlcyS+KFnxI+p7ryKEUNuYuMfpcTLXDrZ4raQ7vMH7sl4horDj
+X-Gm-Gg: ASbGncuezZKI1y7+yiyfDn/cX5mQzdmbakZf8nEqJEpbQ1jQ8mLTeGQNms6qJfoLNZo
+ myPNmF+yuhgAOGpbAAwFCb6rPBPBpPRvD8p7lkXZa8J0qlFiBrKYnrBdXCVervnb1pcmcXaNXzP
+ OMVwBCr+xSUCpuKXRiR/LRxL3YFd0I5y3i6FbBRiQ7ryLxA2T/PiilfZ4ptLHp8fgdoWp0usX3s
+ 0daWsUPYapVJTtzjHS1aNS00H4FDaML7S3ojJzuz8/FYbViScJYzEZT0R4+YzfTg/WefFI7zFCS
+ fKkNFTQqlS1A/P8kSiNfpG42myO0MsOR1mN+ZwfOkO0=
+X-Received: by 2002:a05:620a:278e:b0:7b6:d8da:9095 with SMTP id
+ af79cd13be357-7c039fc3d82mr528452485a.13.1738776213154; 
+ Wed, 05 Feb 2025 09:23:33 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IEM0ArnMXFZYtgrk2WoWuak8mLMytdhTMnXOEPDrKi+TdY3c6oVTm7hme9xyjMrtGNpwNI2YA==
+X-Received: by 2002:a05:620a:278e:b0:7b6:d8da:9095 with SMTP id
+ af79cd13be357-7c039fc3d82mr528449185a.13.1738776212799; 
+ Wed, 05 Feb 2025 09:23:32 -0800 (PST)
 Received: from ?IPV6:2a01:e0a:280:24f0:9db0:474c:ff43:9f5c?
  ([2a01:e0a:280:24f0:9db0:474c:ff43:9f5c])
  by smtp.gmail.com with ESMTPSA id
- af79cd13be357-7c00a9055adsm778395385a.73.2025.02.05.09.13.32
+ af79cd13be357-7c00a8bcaf1sm772454785a.10.2025.02.05.09.23.30
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 05 Feb 2025 09:13:33 -0800 (PST)
-Message-ID: <219faed4-284c-430c-8410-d2af398f588d@redhat.com>
-Date: Wed, 5 Feb 2025 18:13:31 +0100
+ Wed, 05 Feb 2025 09:23:32 -0800 (PST)
+Message-ID: <94093d0a-f9bb-4327-b793-2f3145c7cba2@redhat.com>
+Date: Wed, 5 Feb 2025 18:23:29 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH V1 13/26] vfio-pci: preserve INTx
+Subject: Re: [PATCH V1 19/26] vfio/iommufd: use IOMMU_IOAS_MAP_FILE
 To: Steve Sistare <steven.sistare@oracle.com>, qemu-devel@nongnu.org
 Cc: Alex Williamson <alex.williamson@redhat.com>, Yi Liu
  <yi.l.liu@intel.com>, Eric Auger <eric.auger@redhat.com>,
@@ -86,7 +86,7 @@ Cc: Alex Williamson <alex.williamson@redhat.com>, Yi Liu
  Marcel Apfelbaum <marcel.apfelbaum@gmail.com>, Peter Xu <peterx@redhat.com>,
  Fabiano Rosas <farosas@suse.de>
 References: <1738161802-172631-1-git-send-email-steven.sistare@oracle.com>
- <1738161802-172631-14-git-send-email-steven.sistare@oracle.com>
+ <1738161802-172631-20-git-send-email-steven.sistare@oracle.com>
 Content-Language: en-US, fr
 From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
 Autocrypt: addr=clg@redhat.com; keydata=
@@ -132,7 +132,7 @@ Autocrypt: addr=clg@redhat.com; keydata=
  HQoPn9qrDJgsgcbBVc1gkUT6hnxShKPp4PlsZVMNjvPAnr5TEBgHkk54HQRhhwcYv1T2QumQ
  izDiU6iOrUzBThaMhZO3i927SG2DwWDVzZltKrCMD1aMPvb3NU8FOYRhNmIFR3fcalYr+9gD
  uVKe8BVz4atMOoktmt0GWTOC8P4=
-In-Reply-To: <1738161802-172631-14-git-send-email-steven.sistare@oracle.com>
+In-Reply-To: <1738161802-172631-20-git-send-email-steven.sistare@oracle.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 Received-SPF: pass client-ip=170.10.133.124; envelope-from=clg@redhat.com;
@@ -161,190 +161,214 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 1/29/25 15:43, Steve Sistare wrote:
-> Preserve vfio INTx state across cpr-transfer.  Preserve VFIOINTx fields as
-> follows:
->    pin : Recover this from the vfio config in kernel space
->    interrupt : Preserve its eventfd descriptor across exec.
->    unmask : Ditto
->    route.irq : This could perhaps be recovered in vfio_pci_post_load by
->      calling pci_device_route_intx_to_irq(pin), whose implementation reads
->      config space for a bridge device such as ich9.  However, there is no
->      guarantee that the bridge vmstate is read before vfio vmstate.  Rather
->      than fiddling with MigrationPriority for vmstate handlers, explicitly
->      save route.irq in vfio vmstate.
->    pending : save in vfio vmstate.
->    mmap_timeout, mmap_timer : Re-initialize
->    bool kvm_accel : Re-initialize
-> 
-> In vfio_realize, defer calling vfio_intx_enable until the vmstate
-> is available, in vfio_pci_post_load.  Modify vfio_intx_enable and
-> vfio_intx_kvm_enable to skip vfio initialization, but still perform
-> kvm initialization.
+> Use IOMMU_IOAS_MAP_FILE when the mapped region is backed by a file.
+> Such a mapping can be preserved without modification during CPR,
+> because it depends on the file's address space, which does not change,
+> rather than on the process's address space, which does change.
 > 
 > Signed-off-by: Steve Sistare <steven.sistare@oracle.com>
 > ---
->   hw/vfio/pci.c | 51 +++++++++++++++++++++++++++++++++++++++++++++++----
->   1 file changed, 47 insertions(+), 4 deletions(-)
+>   backends/iommufd.c                    | 36 +++++++++++++++++++++++++++++++++++
+>   backends/trace-events                 |  1 +
+>   hw/vfio/container-base.c              |  9 +++++++++
+>   hw/vfio/iommufd.c                     | 13 +++++++++++++
+>   include/exec/cpu-common.h             |  1 +
+>   include/hw/vfio/vfio-container-base.h |  3 +++
+>   include/system/iommufd.h              |  3 +++
+>   system/physmem.c                      |  5 +++++
+>   8 files changed, 71 insertions(+)
 > 
-> diff --git a/hw/vfio/pci.c b/hw/vfio/pci.c
-> index df6e298..c50dbef 100644
-> --- a/hw/vfio/pci.c
-> +++ b/hw/vfio/pci.c
-> @@ -184,12 +184,17 @@ static bool vfio_intx_enable_kvm(VFIOPCIDevice *vdev, Error **errp)
->           return true;
->       }
->   
-> +    if (vdev->vbasedev.reused) {
-
-1 x vdev->vbasedev.reused
-
-> +        goto skip_state;
-> +    }
-> +
->       /* Get to a known interrupt state */
->       qemu_set_fd_handler(irq_fd, NULL, NULL, vdev);
->       vfio_mask_single_irqindex(&vdev->vbasedev, VFIO_PCI_INTX_IRQ_INDEX);
->       vdev->intx.pending = false;
->       pci_irq_deassert(&vdev->pdev);
->   
-> +skip_state:
-
-
-hmm, this skip_state label and  ...
-
->       /* Get an eventfd for resample/unmask */
->       if (vfio_notifier_init(vdev, &vdev->intx.unmask, "intx-unmask", 0)) {
->           error_setg(errp, "vfio_notifier_init intx-unmask failed");
-> @@ -204,6 +209,10 @@ static bool vfio_intx_enable_kvm(VFIOPCIDevice *vdev, Error **errp)
->           goto fail_irqfd;
->       }
->   
-> +    if (vdev->vbasedev.reused) {
-
-2 x vdev->vbasedev.reused
-
-> +        goto skip_irq;
-> +    }
-> +
->       if (!vfio_set_irq_signaling(&vdev->vbasedev, VFIO_PCI_INTX_IRQ_INDEX, 0,
->                                   VFIO_IRQ_SET_ACTION_UNMASK,
->                                   event_notifier_get_fd(&vdev->intx.unmask),
-> @@ -214,6 +223,7 @@ static bool vfio_intx_enable_kvm(VFIOPCIDevice *vdev, Error **errp)
->       /* Let'em rip */
->       vfio_unmask_single_irqindex(&vdev->vbasedev, VFIO_PCI_INTX_IRQ_INDEX);
->   
-> +skip_irq:
-
-... this skip_irq label are one "very quick" way to get things done :)
-
->       vdev->intx.kvm_accel = true;
->   
->       trace_vfio_intx_enable_kvm(vdev->vbasedev.name);
-> @@ -329,7 +339,13 @@ static bool vfio_intx_enable(VFIOPCIDevice *vdev, Error **errp)
->           return true;
->       }
->   
-> -    vfio_disable_interrupts(vdev);
-> +    /*
-> +     * Do not alter interrupt state during vfio_realize and cpr load.  The
-> +     * reused flag is cleared thereafter.
-> +     */
-> +    if (!vdev->vbasedev.reused) {
-
-3 x vdev->vbasedev.reused
-
-> +        vfio_disable_interrupts(vdev);
-> +    }
->   
->       vdev->intx.pin = pin - 1; /* Pin A (1) -> irq[0] */
->       pci_config_set_interrupt_pin(vdev->pdev.config, pin);
-> @@ -351,7 +367,8 @@ static bool vfio_intx_enable(VFIOPCIDevice *vdev, Error **errp)
->       fd = event_notifier_get_fd(&vdev->intx.interrupt);
->       qemu_set_fd_handler(fd, vfio_intx_interrupt, NULL, vdev);
->   
-> -    if (!vfio_set_irq_signaling(&vdev->vbasedev, VFIO_PCI_INTX_IRQ_INDEX, 0,
-> +    if (!vdev->vbasedev.reused &&
-
-4 x vdev->vbasedev.reused
-
-> +        !vfio_set_irq_signaling(&vdev->vbasedev, VFIO_PCI_INTX_IRQ_INDEX, 0,
->                                   VFIO_IRQ_SET_ACTION_TRIGGER, fd, errp)) {
->           qemu_set_fd_handler(fd, NULL, NULL, vdev);
->           vfio_notifier_cleanup(vdev, &vdev->intx.interrupt, "intx-interrupt", 0);
-
-> @@ -3256,7 +3273,8 @@ static void vfio_realize(PCIDevice *pdev, Error **errp)
->                                                vfio_intx_routing_notifier);
->           vdev->irqchip_change_notifier.notify = vfio_irqchip_change;
->           kvm_irqchip_add_change_notifier(&vdev->irqchip_change_notifier);
-> -        if (!vfio_intx_enable(vdev, errp)) {
-> +        /* Wait until cpr load reads intx routing data to enable */
-> +        if (!vdev->vbasedev.reused && !vfio_intx_enable(vdev, errp)) {
-
-5 x vdev->vbasedev.reused
-
-This patch already adds a test on vdev->vbasedev.reused at the top of
-vfio_intx_enable(). This one seems redudant.
-
-Please duplicate the whole vfio_intx_enable() routine and move it
-under a cpr file.
-
->               goto out_deregister;
->           }
->       }
-> @@ -3578,12 +3596,36 @@ static int vfio_pci_post_load(void *opaque, int version_id)
->           vfio_claim_vectors(vdev, nr_vectors, false);>   
->       } else if (vfio_pci_read_config(pdev, PCI_INTERRUPT_PIN, 1)) {
-> -        g_assert_not_reached();      /* completed in a subsequent patch */
-> +        Error *err = NULL;
-> +        if (!vfio_intx_enable(vdev, &err)) {
-> +            error_report_err(err);
-> +            return -1;> +        }
->       }
->   
->       return 0;
+> diff --git a/backends/iommufd.c b/backends/iommufd.c
+> index 7b4fc8e..6d29221 100644
+> --- a/backends/iommufd.c
+> +++ b/backends/iommufd.c
+> @@ -174,6 +174,42 @@ int iommufd_backend_map_dma(IOMMUFDBackend *be, uint32_t ioas_id, hwaddr iova,
+>       return ret;
 >   }
 >   
-> +static const VMStateDescription vfio_intx_vmstate = {
-> +    .name = "vfio-intx",
-> +    .version_id = 0,
-> +    .minimum_version_id = 0,
-> +    .fields = (VMStateField[]) {
-> +        VMSTATE_BOOL(pending, VFIOINTx),
-> +        VMSTATE_UINT32(route.mode, VFIOINTx),
-> +        VMSTATE_INT32(route.irq, VFIOINTx),
-> +        VMSTATE_END_OF_LIST()
-> +    }
-> +};
+> +int iommufd_backend_map_file_dma(IOMMUFDBackend *be, uint32_t ioas_id,
+> +                                 hwaddr iova, ram_addr_t size,
+> +                                 int mfd, unsigned long start, bool readonly)
+
+Please introduce a patch for this new routine.
+
+> +{
+> +    int ret, fd = be->fd;
+> +    struct iommu_ioas_map_file map = {
+> +        .size = sizeof(map),
+> +        .flags = IOMMU_IOAS_MAP_READABLE |
+> +                 IOMMU_IOAS_MAP_FIXED_IOVA,
+> +        .ioas_id = ioas_id,
+> +        .fd = mfd,
+> +        .start = start,
+> +        .iova = iova,
+> +        .length = size,
+> +    };
 > +
-> +#define VMSTATE_VFIO_INTX(_field, _state) {                         \
-> +    .name       = (stringify(_field)),                              \
-> +    .size       = sizeof(VFIOINTx),                                 \
-> +    .vmsd       = &vfio_intx_vmstate,                               \
-> +    .flags      = VMS_STRUCT,                                       \
-> +    .offset     = vmstate_offset_value(_state, _field, VFIOINTx),   \
+> +    if (!readonly) {
+> +        map.flags |= IOMMU_IOAS_MAP_WRITEABLE;
+> +    }
+> +
+> +    ret = ioctl(fd, IOMMU_IOAS_MAP_FILE, &map);
+> +    trace_iommufd_backend_map_file_dma(fd, ioas_id, iova, size, mfd, start,
+> +                                       readonly, ret);
+> +    if (ret) {
+> +        ret = -errno;
+> +
+> +        /* TODO: Not support mapping hardware PCI BAR region for now. */
+> +        if (errno == EFAULT) {
+> +            warn_report("IOMMU_IOAS_MAP_FILE failed: %m, PCI BAR?");
+
+I am not sure this warning can occur when the PCI BARs are mmaped
+in an VM with incompatible address spaces. My attempts produced EINVAL.
+Let's keep it for now until it is clarified.
+
+
+> +        } else {
+> +            error_report("IOMMU_IOAS_MAP_FILE failed: %m");
+
+please remove this error report. It's redundant with the callers which
+will report the same.
+
+> +        }
+> +    }
+> +    return ret;
 > +}
 > +
+>   int iommufd_backend_unmap_dma(IOMMUFDBackend *be, uint32_t ioas_id,
+>                                 hwaddr iova, ram_addr_t size)
+>   {
+> diff --git a/backends/trace-events b/backends/trace-events
+> index 40811a3..f478e18 100644
+> --- a/backends/trace-events
+> +++ b/backends/trace-events
+> @@ -11,6 +11,7 @@ iommufd_backend_connect(int fd, bool owned, uint32_t users) "fd=%d owned=%d user
+>   iommufd_backend_disconnect(int fd, uint32_t users) "fd=%d users=%d"
+>   iommu_backend_set_fd(int fd) "pre-opened /dev/iommu fd=%d"
+>   iommufd_backend_map_dma(int iommufd, uint32_t ioas, uint64_t iova, uint64_t size, void *vaddr, bool readonly, int ret) " iommufd=%d ioas=%d iova=0x%"PRIx64" size=0x%"PRIx64" addr=%p readonly=%d (%d)"
+> +iommufd_backend_map_file_dma(int iommufd, uint32_t ioas, uint64_t iova, uint64_t size, int fd, unsigned long start, bool readonly, int ret) " iommufd=%d ioas=%d iova=0x%"PRIx64" size=0x%"PRIx64" fd=%d start=%ld readonly=%d (%d)"
+>   iommufd_backend_unmap_dma_non_exist(int iommufd, uint32_t ioas, uint64_t iova, uint64_t size, int ret) " Unmap nonexistent mapping: iommufd=%d ioas=%d iova=0x%"PRIx64" size=0x%"PRIx64" (%d)"
+>   iommufd_backend_unmap_dma(int iommufd, uint32_t ioas, uint64_t iova, uint64_t size, int ret) " iommufd=%d ioas=%d iova=0x%"PRIx64" size=0x%"PRIx64" (%d)"
+>   iommufd_backend_alloc_ioas(int iommufd, uint32_t ioas) " iommufd=%d ioas=%d"
+> diff --git a/hw/vfio/container-base.c b/hw/vfio/container-base.c
+> index 302cd4c..fbaf04a 100644
+> --- a/hw/vfio/container-base.c
+> +++ b/hw/vfio/container-base.c
+> @@ -21,7 +21,16 @@ int vfio_container_dma_map(VFIOContainerBase *bcontainer,
+>                              RAMBlock *rb)
+>   {
+>       VFIOIOMMUClass *vioc = VFIO_IOMMU_GET_CLASS(bcontainer);
+> +    int mfd = rb ? qemu_ram_get_fd(rb) : -1;
+>   
+> +    if (mfd >= 0 && vioc->dma_map_file) {
+> +        unsigned long start = vaddr - qemu_ram_get_host_addr(rb);
+> +        unsigned long offset = qemu_ram_get_fd_offset(rb);
+> +
+> +        vioc->dma_map_file(bcontainer, iova, size, mfd, start + offset,
+> +                           readonly);
+> +        return 0;
 
-move these to cpr file please.
+This is CPR related. Please add a dma_map_file helper and move the
+code abolve to a cpr file.
+
+> +    }
+>       g_assert(vioc->dma_map);
+>       return vioc->dma_map(bcontainer, iova, size, vaddr, readonly);
+>   }
+> diff --git a/hw/vfio/iommufd.c b/hw/vfio/iommufd.c
+> index 42ba63f..a3e7edb 100644
+> --- a/hw/vfio/iommufd.c
+> +++ b/hw/vfio/iommufd.c
+> @@ -38,6 +38,18 @@ static int iommufd_cdev_map(const VFIOContainerBase *bcontainer, hwaddr iova,
+>                                      iova, size, vaddr, readonly);
+>   }
+>   
+> +static int iommufd_cdev_map_file(const VFIOContainerBase *bcontainer,
+> +                                 hwaddr iova, ram_addr_t size,
+> +                                 int fd, unsigned long start, bool readonly)
+> +{
+> +    const VFIOIOMMUFDContainer *container =
+> +        container_of(bcontainer, VFIOIOMMUFDContainer, bcontainer);
+> +
+> +    return iommufd_backend_map_file_dma(container->be,
+> +                                        container->ioas_id,
+> +                                        iova, size, fd, start, readonly);
+> +}
+> +
+>   static int iommufd_cdev_unmap(const VFIOContainerBase *bcontainer,
+>                                 hwaddr iova, ram_addr_t size,
+>                                 IOMMUTLBEntry *iotlb)
+> @@ -806,6 +818,7 @@ static void vfio_iommu_iommufd_class_init(ObjectClass *klass, void *data)
+>       vioc->hiod_typename = TYPE_HOST_IOMMU_DEVICE_IOMMUFD_VFIO;
+>   
+>       vioc->dma_map = iommufd_cdev_map;
+> +    vioc->dma_map_file = iommufd_cdev_map_file;
+>       vioc->dma_unmap = iommufd_cdev_unmap;
+>       vioc->attach_device = iommufd_cdev_attach;
+>       vioc->detach_device = iommufd_cdev_detach;
+> diff --git a/include/exec/cpu-common.h b/include/exec/cpu-common.h
+> index b1d76d6..0cab252 100644
+> --- a/include/exec/cpu-common.h
+> +++ b/include/exec/cpu-common.h
+> @@ -95,6 +95,7 @@ void qemu_ram_unset_idstr(RAMBlock *block);
+>   const char *qemu_ram_get_idstr(RAMBlock *rb);
+>   void *qemu_ram_get_host_addr(RAMBlock *rb);
+>   ram_addr_t qemu_ram_get_offset(RAMBlock *rb);
+> +ram_addr_t qemu_ram_get_fd_offset(RAMBlock *rb);
+>   ram_addr_t qemu_ram_get_used_length(RAMBlock *rb);
+>   ram_addr_t qemu_ram_get_max_length(RAMBlock *rb);
+>   bool qemu_ram_is_shared(RAMBlock *rb);
+> diff --git a/include/hw/vfio/vfio-container-base.h b/include/hw/vfio/vfio-container-base.h
+> index d82e256..4daa5f8 100644
+> --- a/include/hw/vfio/vfio-container-base.h
+> +++ b/include/hw/vfio/vfio-container-base.h
+> @@ -115,6 +115,9 @@ struct VFIOIOMMUClass {
+>       int (*dma_map)(const VFIOContainerBase *bcontainer,
+>                      hwaddr iova, ram_addr_t size,
+>                      void *vaddr, bool readonly);
+> +    int (*dma_map_file)(const VFIOContainerBase *bcontainer,
+> +                        hwaddr iova, ram_addr_t size,
+> +                        int fd, unsigned long start, bool readonly);
+>       int (*dma_unmap)(const VFIOContainerBase *bcontainer,
+>                        hwaddr iova, ram_addr_t size,
+>                        IOMMUTLBEntry *iotlb);
+> diff --git a/include/system/iommufd.h b/include/system/iommufd.h
+> index cbab75b..ac700b8 100644
+> --- a/include/system/iommufd.h
+> +++ b/include/system/iommufd.h
+> @@ -43,6 +43,9 @@ void iommufd_backend_disconnect(IOMMUFDBackend *be);
+>   bool iommufd_backend_alloc_ioas(IOMMUFDBackend *be, uint32_t *ioas_id,
+>                                   Error **errp);
+>   void iommufd_backend_free_id(IOMMUFDBackend *be, uint32_t id);
+> +int iommufd_backend_map_file_dma(IOMMUFDBackend *be, uint32_t ioas_id,
+> +                                 hwaddr iova, ram_addr_t size, int fd,
+> +                                 unsigned long start, bool readonly);
+>   int iommufd_backend_map_dma(IOMMUFDBackend *be, uint32_t ioas_id, hwaddr iova,
+>                               ram_addr_t size, void *vaddr, bool readonly);
+>   int iommufd_backend_unmap_dma(IOMMUFDBackend *be, uint32_t ioas_id,
+> diff --git a/system/physmem.c b/system/physmem.c
+> index 0bcfc6c..c41a80b 100644
+> --- a/system/physmem.c
+> +++ b/system/physmem.c
+> @@ -1569,6 +1569,11 @@ ram_addr_t qemu_ram_get_offset(RAMBlock *rb)
+>       return rb->offset;
+>   }
+>   
+> +ram_addr_t qemu_ram_get_fd_offset(RAMBlock *rb)
+> +{
+> +    return rb->fd_offset;
+> +}
+
+Should go in its own patch.
+
+>   ram_addr_t qemu_ram_get_used_length(RAMBlock *rb)
+>   {
+>       return rb->used_length;
 
 
 Thanks,
 
 C.
 
-
-
-
->   static const VMStateDescription vfio_pci_vmstate = {
->       .name = "vfio-pci",
->       .version_id = 0,
-> @@ -3594,6 +3636,7 @@ static const VMStateDescription vfio_pci_vmstate = {
->       .fields = (VMStateField[]) {
->           VMSTATE_PCI_DEVICE(pdev, VFIOPCIDevice),
->           VMSTATE_MSIX_TEST(pdev, VFIOPCIDevice, vfio_msix_present),
-> +        VMSTATE_VFIO_INTX(intx, VFIOPCIDevice),
->           VMSTATE_END_OF_LIST()
->       }
->   };
 
 
