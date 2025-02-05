@@ -4,47 +4,47 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 249F3C02199
-	for <qemu-devel@archiver.kernel.org>; Wed,  5 Feb 2025 23:13:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 12300C02199
+	for <qemu-devel@archiver.kernel.org>; Wed,  5 Feb 2025 23:13:48 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tfoa9-0001Tj-12; Wed, 05 Feb 2025 18:13:21 -0500
+	id 1tfoaC-0001XL-GY; Wed, 05 Feb 2025 18:13:24 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1tfoa7-0001Mz-Le
- for qemu-devel@nongnu.org; Wed, 05 Feb 2025 18:13:19 -0500
+ (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1tfoa9-0001VY-EW
+ for qemu-devel@nongnu.org; Wed, 05 Feb 2025 18:13:21 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1tfoa1-0005ep-81
- for qemu-devel@nongnu.org; Wed, 05 Feb 2025 18:13:19 -0500
+ (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1tfoa7-0005fI-Ow
+ for qemu-devel@nongnu.org; Wed, 05 Feb 2025 18:13:21 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1738797192;
+ s=mimecast20190719; t=1738797198;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=YPdQhhY7g06QSI0CNsj/3j2/Jxzig/2jc44tgQnvFOg=;
- b=Iji/HyAEEvuPv8ao16OG8TidSoe/KyOCZlr7h0ipTJn4olrYrR8+7KwX/JSbBZK2OLVABZ
- D3e5xhe+YVv0YyUi78VuNF2FzFgrv3KKvRDfHZIiEin1v70sD44Y8/RcXu3my0wMFne532
- 9N+w3WYfh6upift8t+DIATx3tRl0dDI=
-Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
+ bh=FhNc4XlKtZhVDqpp/h1XYzOnc0rVdthJ98dnkqQG2fU=;
+ b=P/IyIcId5JgaUWoI4Yk7QWxYxupoGNcTeA6dpzz+tJd3jgkEJa1Q4I10SygIGuDuYxuLZN
+ FSj2qQHKe0DkkN1L1xxK3+G6U09cQP1wq2dySpEqFXjjT5B+td5jebWUh2eva23GDKpRH3
+ tfG3GlVug9RlsWp1k0aMuiSkd8tLdIg=
+Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-540-COValA7COb6ttUn_032CFA-1; Wed,
- 05 Feb 2025 18:13:08 -0500
-X-MC-Unique: COValA7COb6ttUn_032CFA-1
-X-Mimecast-MFC-AGG-ID: COValA7COb6ttUn_032CFA
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-356-6fKgh3RmPbSxYoPs9pfWzw-1; Wed,
+ 05 Feb 2025 18:13:14 -0500
+X-MC-Unique: 6fKgh3RmPbSxYoPs9pfWzw-1
+X-Mimecast-MFC-AGG-ID: 6fKgh3RmPbSxYoPs9pfWzw
 Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id B32801800871; Wed,  5 Feb 2025 23:13:06 +0000 (UTC)
+ by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 403C91800879; Wed,  5 Feb 2025 23:13:12 +0000 (UTC)
 Received: from jsnow-thinkpadp16vgen1.westford.csb (unknown [10.22.66.104])
  by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 694731800570; Wed,  5 Feb 2025 23:13:01 +0000 (UTC)
+ id 4DAF41800570; Wed,  5 Feb 2025 23:13:07 +0000 (UTC)
 From: John Snow <jsnow@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Peter Maydell <peter.maydell@linaro.org>, Thomas Huth <thuth@redhat.com>,
@@ -59,9 +59,9 @@ Cc: Peter Maydell <peter.maydell@linaro.org>, Thomas Huth <thuth@redhat.com>,
  Jason Wang <jasowang@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  John Snow <jsnow@redhat.com>
-Subject: [PATCH 08/42] docs/qapidoc: add visit_module() method
-Date: Wed,  5 Feb 2025 18:11:34 -0500
-Message-ID: <20250205231208.1480762-9-jsnow@redhat.com>
+Subject: [PATCH 09/42] qapi/source: allow multi-line QAPISourceInfo advancing
+Date: Wed,  5 Feb 2025 18:11:35 -0500
+Message-ID: <20250205231208.1480762-10-jsnow@redhat.com>
 In-Reply-To: <20250205231208.1480762-1-jsnow@redhat.com>
 References: <20250205231208.1480762-1-jsnow@redhat.com>
 MIME-Version: 1.0
@@ -92,41 +92,65 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This method annotates the start of a new module, crediting the source
-location to the first line of the module file.
+This is for the sake of the new rST generator (the "transmogrifier") so
+we can advance multiple lines on occasion while keeping the
+generated<-->source mappings accurate.
+
+next_line now simply takes an optional n parameter which chooses the
+number of lines to advance.
+
+RFC: Here's the exorbitant detail on why I want this:
+
+This is used mainly when converting section syntax in free-form
+documentation to more traditional rST section header syntax, which
+does not always line up 1:1 for line counts.
+
+For example:
+
+```
+ ##
+ # = Section     <-- Info is pointing here, "L1"
+ #
+ # Lorem Ipsum
+ ##
+```
+
+would be transformed to rST as:
+
+```
+=======        <-- L1
+Section        <-- L1
+=======        <-- L1
+               <-- L2
+Lorem Ipsum    <-- L3
+```
+
+After consuming the single "Section" line from the source, we want to
+advance the source pointer to the next non-empty line which requires
+jumping by more than one line.
 
 Signed-off-by: John Snow <jsnow@redhat.com>
+Reviewed-by: Markus Armbruster <armbru@redhat.com>
 ---
- docs/sphinx/qapidoc.py | 9 +++++++++
- 1 file changed, 9 insertions(+)
+ scripts/qapi/source.py | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/docs/sphinx/qapidoc.py b/docs/sphinx/qapidoc.py
-index 6593c3f28cd..658eae3e386 100644
---- a/docs/sphinx/qapidoc.py
-+++ b/docs/sphinx/qapidoc.py
-@@ -26,6 +26,7 @@
+diff --git a/scripts/qapi/source.py b/scripts/qapi/source.py
+index 7b379fdc925..ffdc3f482ac 100644
+--- a/scripts/qapi/source.py
++++ b/scripts/qapi/source.py
+@@ -47,9 +47,9 @@ def set_defn(self, meta: str, name: str) -> None:
+         self.defn_meta = meta
+         self.defn_name = name
  
- from contextlib import contextmanager
- import os
-+from pathlib import Path
- import re
- import sys
- import textwrap
-@@ -124,6 +125,14 @@ def ensure_blank_line(self) -> None:
-             # +2: correct for zero/one index, then increment by one.
-             self.add_line_raw("", fname, line + 2)
+-    def next_line(self: T) -> T:
++    def next_line(self: T, n: int = 1) -> T:
+         info = copy.copy(self)
+-        info.line += 1
++        info.line += n
+         return info
  
-+    # Transmogrification core methods
-+
-+    def visit_module(self, path: str) -> None:
-+        name = Path(path).stem
-+        # module directives are credited to the first line of a module file.
-+        self.add_line_raw(f".. qapi:module:: {name}", path, 1)
-+        self.ensure_blank_line()
-+
- 
- # Disable black auto-formatter until re-enabled:
- # fmt: off
+     def loc(self) -> str:
 -- 
 2.48.1
 
