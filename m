@@ -4,83 +4,101 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D6852C02192
-	for <qemu-devel@archiver.kernel.org>; Wed,  5 Feb 2025 18:08:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0F2B0C02192
+	for <qemu-devel@archiver.kernel.org>; Wed,  5 Feb 2025 18:11:47 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tfjou-00084y-0p; Wed, 05 Feb 2025 13:08:16 -0500
+	id 1tfjrd-0000cP-DY; Wed, 05 Feb 2025 13:11:05 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tfjos-00084W-Ky
- for qemu-devel@nongnu.org; Wed, 05 Feb 2025 13:08:14 -0500
-Received: from mail-wm1-x32a.google.com ([2a00:1450:4864:20::32a])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tfjrb-0000bp-M3
+ for qemu-devel@nongnu.org; Wed, 05 Feb 2025 13:11:03 -0500
+Received: from mail-wm1-x331.google.com ([2a00:1450:4864:20::331])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tfjor-0006H9-1u
- for qemu-devel@nongnu.org; Wed, 05 Feb 2025 13:08:14 -0500
-Received: by mail-wm1-x32a.google.com with SMTP id
- 5b1f17b1804b1-4361f664af5so669595e9.1
- for <qemu-devel@nongnu.org>; Wed, 05 Feb 2025 10:08:12 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tfjra-0006mR-2P
+ for qemu-devel@nongnu.org; Wed, 05 Feb 2025 13:11:03 -0500
+Received: by mail-wm1-x331.google.com with SMTP id
+ 5b1f17b1804b1-4361b0ec57aso777915e9.0
+ for <qemu-devel@nongnu.org>; Wed, 05 Feb 2025 10:11:01 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1738778890; x=1739383690; darn=nongnu.org;
+ d=linaro.org; s=google; t=1738779060; x=1739383860; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=mWJQmQRcwc8WnmUyWA8MbmjMCgK5S+qqP4CD7PcxmEk=;
- b=kEfWDwrMVXVImXDwSoRM4xCPTmIncuQKYNZPQM/JA9SbqRbkAHYEpwFdPcjcUr9LPP
- nuZHoNlrUogcR3i7HHt7advYfsNtql5wwQOfiZyCSOwlzrBaBloM/W88+ktqJbPt5B/J
- fIuDrrHOGQoSRFle4nyGHsEuGbCgTzKGwu9Gat7tkzXBWvL++TQXXlGPgejXUo3f02n0
- QM/xAedvCV78PDLdY4QSq/n56IU/KIRb1Fphtr+7ieb8v9RN7DdZ38FDEDHOlBEUOOTN
- 1STnx3jboX8unvfHIy0kXFAxX7pL/vexSmXnyWaDlsidMdE2T6OCFBz0Vr7GlSo/poip
- dVlw==
+ bh=y6wtcydVQZupMutRL0JRwISF7OXd17oMzRlS5uxaleE=;
+ b=BpxcXs6rNlwZv1Atv7mEC7aCD/y0HM3yU7I9p/AP3lsfV5I0EkRUc8BDD0r3q1njyT
+ naTSQ1KgFWdD6Gx+HNfwhRyblMQtt94jAQQkjZreELlM3M0VlVz/uUK3vB2PKvuzXlaQ
+ o4YnHyFsEEEb4B91MQB+oREMBBWK6vQNN3IOSKrRmow87xpkum/N9oQG3W3/8MGacpAf
+ lKQ+/NE9YlmOeB3+E7Cd5SXlzVVhq6Uff4Y4VmzcF37cmU96BORNrF93X0Ncs1VeEYUP
+ hO3SqUX0wyJGR9xooUPWBupWquIjDTEjwYd5TbvRYdK9oUwx6AHL8eD4yxJPzpXWEU3v
+ A4Fw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1738778890; x=1739383690;
+ d=1e100.net; s=20230601; t=1738779060; x=1739383860;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=mWJQmQRcwc8WnmUyWA8MbmjMCgK5S+qqP4CD7PcxmEk=;
- b=g6RhD3IT8wFi5eDPjmBcyzjDFEwGlSN3KPVXegralffgxGH++x2Q3wq1q4a4bBKgOK
- T0+k0i9ZU7hXdMFAQr3/yekEaF2a0UQCU/Z/D9894RHFBV/siGpT0m31c8/2A/oomIwH
- aBMCkss2n6INb1wcY0M0wGbDm+c+A3zacQ/hxPCsqUngqBPtla4aZExNLtoJb7golw0I
- 2iTiz8X98kh9of1qqZuS1uWs19K/KaYezy3YstrcmRgWXX12jAtn+NDrda2miibH+CDv
- otZrltNNAH1QZywnGF9cQ5aT3g6Q9st5YslIBNMDf4FbDZE8JaweXN0y0dDv1XP8Vpu+
- rv6g==
-X-Gm-Message-State: AOJu0YwM7BhQsdu8svWjvUx7GFkoDMHHj2yZ6gJ6hqd6BZpYLsgUrMpa
- oW60dnPtPQoHoVo4cuQyGfZTpZZWDYcQYqNPTToR2WWwjtDce7MHtX4DI7+SrVzvgR45x1ilixy
- +Ac8=
-X-Gm-Gg: ASbGncvnZrnbD+hvAYWkA9OZNXoy0/UhLtavhEXUPcy8ppnhzuukkWwXFYQh+RYufIb
- z9HPPaWhO4oT+00OUMWWYEgPZUddjaRTyMEvyABWNKFS96ZA8OnjtWC93no/cxEIQT3QOiHm7xt
- u/G3ir6GATtu2EjiaeZWtQrUvMud6VTSLv+9FFPjnoxJ5WLULEQa8vYrgYaG8XFFZfoTinoXaja
- krpccky79GnCgRBSFWDTOlFiCWwmOhjXNixqgjomogi/L0QXZtb7qOxCKHqUQ5il0ulB7OA2f/A
- ff1kZKAqRDdXpkORX1XlXCfWLZqrFTUs3V2Xks1QDpF6enfAeGC2zBE9Dbk=
-X-Google-Smtp-Source: AGHT+IExPEHTQqTiZ3zozb5otO7ZlIGHGmbH2Cp93VQ8MjbmBcQ+zn5Iaff0zmRhH3F09Td/wB6Oug==
-X-Received: by 2002:a05:600c:1c1e:b0:436:6ddf:7a27 with SMTP id
- 5b1f17b1804b1-4390d56980emr31130065e9.23.1738778890623; 
- Wed, 05 Feb 2025 10:08:10 -0800 (PST)
+ bh=y6wtcydVQZupMutRL0JRwISF7OXd17oMzRlS5uxaleE=;
+ b=M/+MYyTqUnLRHSJb6r4CxVmdIazKCwwRtruuhEd46bCfeQWVDSRn2wCTBJKPZUnFjl
+ Vy/wpzaOKNd09m8l8ayfBTiwceVhOVkvkJ3Gw0IF7+lCPStzC2VWNDO9yl/2njRDCNcn
+ 2MKd3HQStsWZRSAAxO2hkh7kpgErEhI70A1jlO/nPMMALLHJAYWHjPzn4ip69Nau5U08
+ FwZFHup3Ko+s1srUGyQjAcdiigBUU1mISIKwTMiDrem1PIdbFNRcKywGooSV+7Pbv1ZB
+ Xe/obz6rN8XuMewmBzjgUkApLyhdjxM8sAMgUJ3He4XXU50cL0ofMA1KToN5B1lwjGJJ
+ 4uHg==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCUel2nxs3mR3RheoySEwjqYFqMsvA5t8/JMuQ2NXLgBLyyreV3mxhG2UhMrD8MQ227wgGre18ihZxeM@nongnu.org
+X-Gm-Message-State: AOJu0YwUzaL33cNWz8NMa+/c5z2yN/VDpFM3+kopqhM7jRIKGvqQiO01
+ DoyulzpuAgpsIpoWI3/kJWIwIMHFvnbKBqX1sq2kDi0WiKv2O8x6uBj/k8Rz3RM=
+X-Gm-Gg: ASbGncva8u6q3yCKGPQOItsgbPEDcGzZZnAOc8CjYPrnxE2nw9C8FXiEZE/aqJhkjiB
+ A6gm3NaT/1fgJmBJi49A2g0MfS9TJan+ehgfW1co92Zzyqo+OF7ce0jttu7mIFdSCi4ZCmSItVc
+ Z2HbRz4qEkiB8WVJqzsnFAF6DiclUPJsyP74KEDucgTqiR5OM+JjaO2jtapaQCzlLvO79XJ0Wf1
+ nGyaDfv97AglFLF4yXQK0wBzeyhpbyGqlkSdvz4tyAtPt+JsFN02XBJ2OvCJlqveeHqb61ROlRT
+ TGUT4OAShH0pW7GFMK/7MeqOoH3+sqlwFHG4cuha0OImfPQ1/ht3T/L9Yno=
+X-Google-Smtp-Source: AGHT+IFnv0aQDAroYKHV0WlbZak+DYoyNJhn9GfH4RpXovF9yXI8P57n/XQBgNdq18r4PamglUQdNQ==
+X-Received: by 2002:a05:600c:1f83:b0:435:d22:9c9e with SMTP id
+ 5b1f17b1804b1-4390d55fda2mr27471935e9.19.1738779060330; 
+ Wed, 05 Feb 2025 10:11:00 -0800 (PST)
 Received: from [192.168.69.198] (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4390da89207sm28176145e9.32.2025.02.05.10.08.09
+ ffacd0b85a97d-38c5c1b57a8sm19737179f8f.61.2025.02.05.10.10.58
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 05 Feb 2025 10:08:10 -0800 (PST)
-Message-ID: <7819efab-9a19-434c-a48f-82f32a3ada0a@linaro.org>
-Date: Wed, 5 Feb 2025 19:08:09 +0100
+ Wed, 05 Feb 2025 10:10:59 -0800 (PST)
+Message-ID: <cc846f3c-ca84-4acf-a4f6-bb1685e91b6c@linaro.org>
+Date: Wed, 5 Feb 2025 19:10:58 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 5/5] tests/functional: skip mem addr test on 32-bit hosts
-To: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
-Cc: qemu-devel@nongnu.org, "Michael S. Tsirkin" <mst@redhat.com>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>, Thomas Huth <thuth@redhat.com>
-References: <20250205155946.2811296-1-berrange@redhat.com>
- <20250205155946.2811296-6-berrange@redhat.com>
- <9edd3138-3411-4459-96c3-d48c30e197e0@linaro.org>
- <Z6OXlPu0fw_S9iy6@redhat.com>
+Subject: Re: [RFC PATCH 9/9] hw/xen: Have legacy Xen backend inherit from
+ DYNAMIC_SYS_BUS_DEVICE
+To: Bernhard Beschow <shentey@gmail.com>, qemu-devel@nongnu.org
+Cc: Yi Liu <yi.l.liu@intel.com>, Markus Armbruster <armbru@redhat.com>,
+ Eduardo Habkost <eduardo@habkost.net>,
+ Anthony PERARD <anthony@xenproject.org>,
+ Gustavo Romero <gustavo.romero@linaro.org>, Jason Wang
+ <jasowang@redhat.com>, qemu-ppc@nongnu.org,
+ "Michael S. Tsirkin" <mst@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
+ Alexander Graf <graf@amazon.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Stefan Berger <stefanb@linux.vnet.ibm.com>,
+ Stefano Stabellini <sstabellini@kernel.org>,
+ Gerd Hoffmann <kraxel@redhat.com>, =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?=
+ <berrange@redhat.com>, "Edgar E. Iglesias" <edgar.iglesias@gmail.com>,
+ xen-devel@lists.xenproject.org, Marcel Apfelbaum
+ <marcel.apfelbaum@gmail.com>, Alex Williamson <alex.williamson@redhat.com>,
+ Paul Durrant <paul@xen.org>,
+ =?UTF-8?Q?Cl=C3=A9ment_Mathieu--Drif?= <clement.mathieu--drif@eviden.com>,
+ =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
+References: <20250125181343.59151-1-philmd@linaro.org>
+ <20250125181343.59151-10-philmd@linaro.org>
+ <9A2B297A-6270-4482-B1B6-81F518C07C1E@gmail.com>
+ <02ea4b41-3594-4ead-90d3-0ab06f2be7fa@linaro.org>
+ <685742EB-EDAA-488F-852C-C0AA24BD4721@gmail.com>
 Content-Language: en-US
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <Z6OXlPu0fw_S9iy6@redhat.com>
+In-Reply-To: <685742EB-EDAA-488F-852C-C0AA24BD4721@gmail.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32a;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x32a.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::331;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x331.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -103,56 +121,84 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 5/2/25 17:53, Daniel P. Berrangé wrote:
-> On Wed, Feb 05, 2025 at 05:40:48PM +0100, Philippe Mathieu-Daudé wrote:
->> On 5/2/25 16:59, Daniel P. Berrangé wrote:
->>> The test_mem_addr_space is validating handling of QEMU with various
->>> memory address settings. All of the test cases are setting 'maxmem'
->>> to a value that exceeds the 32-bit address space, so these must all
->>> be skipped on 32-bit hosts.
->>>
->>> Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
->>> ---
->>>    tests/functional/qemu_test/__init__.py   |  2 +-
->>>    tests/functional/qemu_test/decorators.py | 12 ++++++++++++
->>>    tests/functional/test_mem_addr_space.py  | 17 ++++++++++++++++-
->>>    3 files changed, 29 insertions(+), 2 deletions(-)
->>
->>
->>> diff --git a/tests/functional/qemu_test/decorators.py b/tests/functional/qemu_test/decorators.py
->>> index 1651eb739a..d3a8cf0483 100644
->>> --- a/tests/functional/qemu_test/decorators.py
->>> +++ b/tests/functional/qemu_test/decorators.py
->>> @@ -5,6 +5,7 @@
->>>    import importlib
->>>    import os
->>>    import platform
->>> +import sys
->>>    from unittest import skipUnless
->>>    from .cmd import which
->>> @@ -118,3 +119,14 @@ def skipIfMissingImports(*args):
->>>        return skipUnless(has_imports, 'required import(s) "%s" not installed' %
->>>                                       ", ".join(args))
->>> +
->>> +'''
->>> +Decorator to skip execution of a test on 32-bit targets
-
-"hosts"
-
->>> +Example:
->>> +
->>> +  @skipIf32BitTarget()
->>> +'''
->>> +def skipIf32BitTarget():
->>> +    enoughBits = sys.maxsize > 2**32
->>> +    return skipUnless(enoughBits,
->>> +                      'Test requires a host with 64-bit address space')
->>
->> skipIf32BitHost?
+On 5/2/25 00:12, Bernhard Beschow wrote:
 > 
-> I don't mind either way.
+> 
+> Am 4. Februar 2025 21:25:46 UTC schrieb "Philippe Mathieu-Daudé" <philmd@linaro.org>:
+>> Hi Bernhard,
+>>
+>> On 27/1/25 10:46, Bernhard Beschow wrote:
+>>> Am 25. Januar 2025 18:13:43 UTC schrieb "Philippe Mathieu-Daudé" <philmd@linaro.org>:
+>>>> Because the legacy Xen backend devices can optionally be plugged on the
+>>>> TYPE_PLATFORM_BUS_DEVICE, have it inherit TYPE_DYNAMIC_SYS_BUS_DEVICE.
+>>>> Remove the implicit TYPE_XENSYSDEV instance_size.
+>>>>
+>>>> Untested, but I'm surprised the legacy devices work because they
+>>>> had a broken instance size (QDev instead of Sysbus...), so accesses
+>>>> of XenLegacyDevice fields were overwritting sysbus ones.
+>>>>
+>>>> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+>>>> ---
+>>>> include/hw/xen/xen_pvdev.h  | 3 ++-
+>>>> hw/xen/xen-legacy-backend.c | 7 ++-----
+>>>> 2 files changed, 4 insertions(+), 6 deletions(-)
+>>>>
+>>>> diff --git a/include/hw/xen/xen_pvdev.h b/include/hw/xen/xen_pvdev.h
+>>>> index 0c984440476..48950dc2b57 100644
+>>>> --- a/include/hw/xen/xen_pvdev.h
+>>>> +++ b/include/hw/xen/xen_pvdev.h
+>>>> @@ -32,7 +32,8 @@ struct XenDevOps {
+>>>> };
+>>>>
+>>>> struct XenLegacyDevice {
+>>>> -    DeviceState        qdev;
+>>>> +    SysBusDevice parent_obj;
+>>>
+>>> This then needs sysbus.h rather than qdev-core.h include.
+>>>
+>>> Moreover, the patch in the reply needs to be inserted into the series before this patch.
+>>>
+>>> Both are needed for the patch to compile.
+>>
+>> Per your reply on patch #7, might I include your
+>>
+>> Tested-by: Bernhard Beschow <shentey@gmail.com>
+>> Acked-by: Bernhard Beschow <shentey@gmail.com>
+>> (or R-b)
+> 
+> I only did a compile test and I'm not a Xen maintainer, so I guess above tags don't apply. Right?
 
-Preferably using skipIf32BitHost to match the error message:
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Indeed, A-b is preferable for maintainers, but its meaning depends.
 
+Xen maintainers have been Cc'ed for 2 weeks. If they report a problem,
+we can still revert.
+
+
+> 
+> 
+>>
+>> squashing:
+>>
+>> -- >8 --
+>> diff --git a/include/hw/xen/xen_pvdev.h b/include/hw/xen/xen_pvdev.h
+>> index 48950dc2b57..629bec90d09 100644
+>> --- a/include/hw/xen/xen_pvdev.h
+>> +++ b/include/hw/xen/xen_pvdev.h
+>> @@ -1,7 +1,7 @@
+>> #ifndef QEMU_HW_XEN_PVDEV_H
+>> #define QEMU_HW_XEN_PVDEV_H
+>>
+>> -#include "hw/qdev-core.h"
+>> +#include "hw/sysbus.h"
+>> #include "hw/xen/xen_backend_ops.h"
+>>
+>> /* ------------------------------------------------------------- */
+>> ---
+>>
+>> ?
+> 
+> With the squash applied:
+> Reviewed-by: Bernhard Beschow <shentey@gmail.com>
+
+Thanks!
 
