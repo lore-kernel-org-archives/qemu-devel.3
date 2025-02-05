@@ -4,68 +4,68 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 334BBC02192
-	for <qemu-devel@archiver.kernel.org>; Wed,  5 Feb 2025 11:21:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6F51AC02192
+	for <qemu-devel@archiver.kernel.org>; Wed,  5 Feb 2025 11:21:24 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tfdRk-0004g5-OD; Wed, 05 Feb 2025 06:19:56 -0500
+	id 1tfdRU-0004UI-Su; Wed, 05 Feb 2025 06:19:40 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <rkanwal@rivosinc.com>)
- id 1tfdRR-0004R5-TC
+ id 1tfdRR-0004R3-TT
  for qemu-devel@nongnu.org; Wed, 05 Feb 2025 06:19:37 -0500
-Received: from mail-wm1-x32f.google.com ([2a00:1450:4864:20::32f])
+Received: from mail-wm1-x333.google.com ([2a00:1450:4864:20::333])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <rkanwal@rivosinc.com>)
- id 1tfdRN-0003yx-OU
- for qemu-devel@nongnu.org; Wed, 05 Feb 2025 06:19:36 -0500
-Received: by mail-wm1-x32f.google.com with SMTP id
- 5b1f17b1804b1-4361c705434so49185625e9.3
- for <qemu-devel@nongnu.org>; Wed, 05 Feb 2025 03:19:33 -0800 (PST)
+ id 1tfdRM-0003yL-Hl
+ for qemu-devel@nongnu.org; Wed, 05 Feb 2025 06:19:37 -0500
+Received: by mail-wm1-x333.google.com with SMTP id
+ 5b1f17b1804b1-4361b6f9faeso4429315e9.1
+ for <qemu-devel@nongnu.org>; Wed, 05 Feb 2025 03:19:32 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=rivosinc-com.20230601.gappssmtp.com; s=20230601; t=1738754372; x=1739359172;
+ d=rivosinc-com.20230601.gappssmtp.com; s=20230601; t=1738754371; x=1739359171;
  darn=nongnu.org; 
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=GKMFjIgxVL3VZsT6p8l1ocQBfJI6oRsr6VGKtkFAZvk=;
- b=Ok+2U0Krwx19GDHDs6qsVaMgTxZ0rkN2PYplyLuuqCyq3IFFdgmyzAZ41oYzmdtiEc
- gqvcdPJ4mxX508n22IuHlKWNd1ZXti/dipW1v8Kk6cZPEyq1U9wMoMAx8fMYM0ubhxRf
- icwZhXw0Io8hjPB627lOw1wqCUHxVN4HN0KYjRxpnbBt0Z6D7XxTbOkHTwbHJNyCHkZf
- b6JYu07Xhh0cirs2YkTDv64G7MzymDGdtNorqcT1zYNnXx9LrDlMlNWZ0WE2jBXzvK2R
- wQ9no4J7WyS0etY0OgmIdeN2cDwcI8Ld+K6o1DBJ5CFNeg37VJveHV/4Ws7+DJ45uPVa
- +5Jg==
+ bh=xsv8OTxNBbAm6aqdb0W3B09cV5UTwY9Ck6BkBSDYH3w=;
+ b=ceIiwpn/xI0tIA3PJfrYcg9Omo+mSwWXOsbfMpvvd/XjpnolzWdDEc8K2Q7Pg0nbDO
+ V1CJK75Epz/C2sSZBcsTGySZeWBQHMbWIS6PS+y7L1k+dwSpirrfA1WftkQ73VM2WyyA
+ bBJGabyakksjVOPfDMyltq2BYbsyK9Eh+lvjTA60cszAZ8Toby+TX64tHEgldeHWZWZ+
+ ictZhw0uBKZKJpbwcYJv6tVdIi3OQ97TAsw8KQo9jRy61dYwwB3TWpadACDsZiMeJQ5q
+ NvrV1ji3bkl/aaXD2Ov+X0ngm81h6+aULmvVbhfxqO27Wr21g9EIICEcAznCler0hQRW
+ GhYw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1738754372; x=1739359172;
+ d=1e100.net; s=20230601; t=1738754371; x=1739359171;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=GKMFjIgxVL3VZsT6p8l1ocQBfJI6oRsr6VGKtkFAZvk=;
- b=Zl/SDMNRK7nZO3VB7CBjuem5jVzpRRQs04V8PVeDpf8nnwh3wc4xmvzbbxJgPG6mxB
- JRShvRrM9wKxtDCi6RWSNyeoMrv8RSHHhwRI6/Dt1SXHFwcK1Nr3MDraE/QbSzs65oUC
- CEIFCYgfNe+MQ9768w07aBZ2d7cRbpLO2FqORsTxTQvQNWE9rsYwIhKZd3KwccTqkBBs
- 6D9BkPMggmffyerKKj9/Sn5JkSpGWNsgI6vmh9/uolmEzRVagt+UaRH3P7E1VrdjqAXO
- qQtpDBHDZ6QxmSgQfkfFOUSD8OfjHnHLuMof/C8lzgFHsVQr0yte518Gd3kNLeK3iMFK
- 7IIg==
+ bh=xsv8OTxNBbAm6aqdb0W3B09cV5UTwY9Ck6BkBSDYH3w=;
+ b=PVbSGdQI9AZ5hE4i9dnW/GfmppWOah7D4cHSAt1gyjwbTMoGXPnLejnbKnZKFSMrmS
+ jJ0h4OeB8EaNW0gkliy1UHzYZcpbhyAOWSWW5xAZTQ4w/w8FTcU0mtFzhhgZBnDkpefw
+ ctj806SWQBk1UQ91ZFK4VjE0Bn6NlZZXs6yWKShUtUp0kz6K8feZi6VHdYAThqz+cT4d
+ XTJHje6AZ6FKg6kXDagX/t+MUCA/BGjiRKmD9luaggfjIrDNvMjob6ZaME2HkfpiDrTo
+ K1TvUyQNDgMV45MXa4At5Eu2GY5OaTwGnpuwPJUa4LA5ROCBcUd4tC/pLdUxlU0lozU+
+ oBVQ==
 X-Forwarded-Encrypted: i=1;
- AJvYcCVE2TacGatDl6u3KwKdSFi6Q0Hb7uMXWkP8rbPrJYhbcVGJ9E2IWmLhwksVu1zbT2Max4sK2hIP2BeC@nongnu.org
-X-Gm-Message-State: AOJu0Yxs9fmd1DXW5fmeeLvn/wLVvyodrbbu8q1DaCNGZ72sXjU0Z5gm
- AW/ZmRg4Xb4lBaBmSVSd+cHYB4yxKbTLP6wPUxu41YmJL2wcWkuscdtGry4gp1o=
-X-Gm-Gg: ASbGncuDs/mxEpRTMMA2j/jtk2dKT+/THUjT89gDxpk99GoklhKK8qi8vyDxjzi3hFV
- mE4lfdlY5hscL+Sm1c4Ose+SNEyAcKnfP6Qu6hlf7vBr72Rs0juxephTXL8Kw/5WeBtx/6Q7xEq
- wYlxvEnRlj1vXHyJO1ndRe8GkeDFhusxyHxy1mGshm6sKvkpjGi6gDebRLMJo92sIj5uYiMhxa5
- 7tQZ0XVH1HDYrWWiXtMELGt8xFTjPvN9562V6euGBLVo2WFz7L80YC7Sqa2WI9v0VdevNuqcB7H
- OSjwznfTlciJRZiDGjeBskbEL8k=
-X-Google-Smtp-Source: AGHT+IGwS7Bh3clFyeFg8O3LWv/Oj1m6GM+zuCbfu6TGDJ/LANzdRrIpFXcgwzOCO0Ud/qXWYJsP9A==
-X-Received: by 2002:a05:600c:4586:b0:434:f623:9ff3 with SMTP id
- 5b1f17b1804b1-4390d43da00mr18586955e9.15.1738754372146; 
- Wed, 05 Feb 2025 03:19:32 -0800 (PST)
+ AJvYcCWZBDacF4rS68y5kcAqmy7WaDJqD3rXs2BhPb0VEY/KAQ7IFSopwXdOc/JWN3P+yStv8uSAgBoD+mZL@nongnu.org
+X-Gm-Message-State: AOJu0YwLoI2rl27jhTujzx9Pq3kCCyACcnJTFUqZTHB5yEcOQ5r5CbMb
+ vIGRi9UfGXsGPbcMDiwh3Iv9ZmQJq8O/gjBoImz9dzX9arv1sLaeN4qLk3L8BxY=
+X-Gm-Gg: ASbGncst7YQnvZHAboRdcZ0JntpRtEjd5GCLFTNRzm0ppqbAnw5Cbph/ZBwX29xmqXN
+ Lj0tPRrheW/Je0e22l9ops6Qvqtf1+biMlBhj74i5dKPEJ8JnEmi0WK4nkY6jd8YCyNyyuZaD5l
+ Jb4rZJop6gdvPkV28+0909b0+7uQnEMrUKLDT12WsELUdlx4K90I4IaHBQMZauY3RcV7IsIJwRJ
+ I8yVmUqzYM6XjIV4Zig3+GaDbmdmYG2YEEZXinzcVOfzKMqlCjBI3sj2/7eWFbwyDqJWIqixhWe
+ ze2V3C22+eIei6NH4Qhg5+iTddE=
+X-Google-Smtp-Source: AGHT+IEXUM7/wrps9L4m2xPudggNZDtLiD7P1OCd9L26Yn8a+oqo8NygoAoC3vfjXSjeHIGNANdokA==
+X-Received: by 2002:a05:600c:4589:b0:436:e3ea:64dd with SMTP id
+ 5b1f17b1804b1-43905f8da7fmr53600845e9.11.1738754370659; 
+ Wed, 05 Feb 2025 03:19:30 -0800 (PST)
 Received: from localhost.localdomain ([51.52.155.79])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4390d93382dsm18256575e9.4.2025.02.05.03.19.31
+ 5b1f17b1804b1-4390d93382dsm18256575e9.4.2025.02.05.03.19.30
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 05 Feb 2025 03:19:31 -0800 (PST)
+ Wed, 05 Feb 2025 03:19:30 -0800 (PST)
 From: Rajnesh Kanwal <rkanwal@rivosinc.com>
 To: qemu-riscv@nongnu.org,
 	qemu-devel@nongnu.org
@@ -74,10 +74,9 @@ Cc: alistair.francis@wdc.com, bin.meng@windriver.com, liweiwei@iscas.ac.cn,
  atishp@rivosinc.com, apatel@ventanamicro.com, rkanwal@rivosinc.com,
  beeman@rivosinc.com, jason.chien@sifive.com, frank.chang@sifive.com,
  richard.henderson@linaro.org, bmeng.cn@gmail.com
-Subject: [PATCH v6 6/7] target/riscv: machine: Add Control Transfer Record
- state description
-Date: Wed,  5 Feb 2025 11:18:50 +0000
-Message-Id: <20250205-b4-ctr_upstream_v6-v6-6-439d8e06c8ef@rivosinc.com>
+Subject: [PATCH v6 4/7] target/riscv: Add support to record CTR entries.
+Date: Wed,  5 Feb 2025 11:18:48 +0000
+Message-Id: <20250205-b4-ctr_upstream_v6-v6-4-439d8e06c8ef@rivosinc.com>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20250205-b4-ctr_upstream_v6-v6-0-439d8e06c8ef@rivosinc.com>
 References: <20250205-b4-ctr_upstream_v6-v6-0-439d8e06c8ef@rivosinc.com>
@@ -85,8 +84,8 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 X-Mailer: b4 0.14.2
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32f;
- envelope-from=rkanwal@rivosinc.com; helo=mail-wm1-x32f.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::333;
+ envelope-from=rkanwal@rivosinc.com; helo=mail-wm1-x333.google.com
 X-Spam_score_int: -18
 X-Spam_score: -1.9
 X-Spam_bar: -
@@ -108,57 +107,639 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Add a subsection to machine.c to migrate CTR CSR state
+This commit adds logic to records CTR entries of different types
+and adds required hooks in TCG and interrupt/Exception logic to
+record events.
+
+This commit also adds support to invoke freeze CTR logic for breakpoint
+exceptions and counter overflow interrupts.
 
 Signed-off-by: Rajnesh Kanwal <rkanwal@rivosinc.com>
 Acked-by: Alistair Francis <alistair.francis@wdc.com>
 ---
- target/riscv/machine.c | 25 +++++++++++++++++++++++++
- 1 file changed, 25 insertions(+)
+ target/riscv/cpu.h                             |   7 +
+ target/riscv/cpu_helper.c                      | 259 +++++++++++++++++++++++++
+ target/riscv/helper.h                          |   1 +
+ target/riscv/insn_trans/trans_privileged.c.inc |   2 +
+ target/riscv/insn_trans/trans_rvi.c.inc        |  75 +++++++
+ target/riscv/insn_trans/trans_rvzce.c.inc      |  21 ++
+ target/riscv/op_helper.c                       |  19 ++
+ target/riscv/translate.c                       |  46 +++++
+ 8 files changed, 430 insertions(+)
 
-diff --git a/target/riscv/machine.c b/target/riscv/machine.c
-index d8445244ab251e23c07877d9f2a7c1c08f09d736..889e2b6570132950c25df6395794875df604cd11 100644
---- a/target/riscv/machine.c
-+++ b/target/riscv/machine.c
-@@ -300,6 +300,30 @@ static const VMStateDescription vmstate_envcfg = {
-     }
- };
+diff --git a/target/riscv/cpu.h b/target/riscv/cpu.h
+index e51a4bc4a535276d1b348f9ed50443be898d538f..2d8212e2fefe21defb4ca007d894f02592ed3c89 100644
+--- a/target/riscv/cpu.h
++++ b/target/riscv/cpu.h
+@@ -317,6 +317,10 @@ struct CPUArchState {
+     uint32_t sctrstatus;
+     uint64_t vsctrctl;
  
-+static bool ctr_needed(void *opaque)
-+{
-+    RISCVCPU *cpu = opaque;
++    uint64_t ctr_src[16 << SCTRDEPTH_MAX];
++    uint64_t ctr_dst[16 << SCTRDEPTH_MAX];
++    uint64_t ctr_data[16 << SCTRDEPTH_MAX];
 +
-+    return cpu->cfg.ext_smctr || cpu->cfg.ext_ssctr;
+     /* Machine and Supervisor interrupt priorities */
+     uint8_t miprio[64];
+     uint8_t siprio[64];
+@@ -612,6 +616,9 @@ RISCVException smstateen_acc_ok(CPURISCVState *env, int index, uint64_t bit);
+ 
+ void riscv_cpu_set_mode(CPURISCVState *env, target_ulong newpriv, bool virt_en);
+ 
++void riscv_ctr_add_entry(CPURISCVState *env, target_long src, target_long dst,
++    enum CTRType type, target_ulong prev_priv, bool prev_virt);
++
+ void riscv_translate_init(void);
+ void riscv_translate_code(CPUState *cs, TranslationBlock *tb,
+                           int *max_insns, vaddr pc, void *host_pc);
+diff --git a/target/riscv/cpu_helper.c b/target/riscv/cpu_helper.c
+index e1dfc4ecbfc5da5204b261cb24d1afa312dba323..afecc822ae7d07a0904f1ec8c223845bbac92523 100644
+--- a/target/riscv/cpu_helper.c
++++ b/target/riscv/cpu_helper.c
+@@ -875,6 +875,247 @@ void riscv_cpu_set_aia_ireg_rmw_fn(CPURISCVState *env, uint32_t priv,
+     }
+ }
+ 
++static void riscv_ctr_freeze(CPURISCVState *env, uint64_t freeze_mask,
++                             bool virt)
++{
++    uint64_t ctl = virt ? env->vsctrctl : env->mctrctl;
++
++    assert((freeze_mask & (~(XCTRCTL_BPFRZ | XCTRCTL_LCOFIFRZ))) == 0);
++
++    if (ctl & freeze_mask) {
++        env->sctrstatus |= SCTRSTATUS_FROZEN;
++    }
 +}
 +
-+static const VMStateDescription vmstate_ctr = {
-+    .name = "cpu/ctr",
-+    .version_id = 1,
-+    .minimum_version_id = 1,
-+    .needed = ctr_needed,
-+    .fields = (const VMStateField[]) {
-+        VMSTATE_UINT64(env.mctrctl, RISCVCPU),
-+        VMSTATE_UINT32(env.sctrdepth, RISCVCPU),
-+        VMSTATE_UINT32(env.sctrstatus, RISCVCPU),
-+        VMSTATE_UINT64(env.vsctrctl, RISCVCPU),
-+        VMSTATE_UINT64_ARRAY(env.ctr_src, RISCVCPU, 16 << SCTRDEPTH_MAX),
-+        VMSTATE_UINT64_ARRAY(env.ctr_dst, RISCVCPU, 16 << SCTRDEPTH_MAX),
-+        VMSTATE_UINT64_ARRAY(env.ctr_data, RISCVCPU, 16 << SCTRDEPTH_MAX),
-+        VMSTATE_END_OF_LIST()
++static uint64_t riscv_ctr_priv_to_mask(target_ulong priv, bool virt)
++{
++    switch (priv) {
++    case PRV_M:
++        return MCTRCTL_M;
++    case PRV_S:
++        if (virt) {
++            return XCTRCTL_S;
++        }
++        return XCTRCTL_S;
++    case PRV_U:
++        if (virt) {
++            return XCTRCTL_U;
++        }
++        return XCTRCTL_U;
 +    }
-+};
 +
- static bool pmu_needed(void *opaque)
++    g_assert_not_reached();
++}
++
++static uint64_t riscv_ctr_get_control(CPURISCVState *env, target_long priv,
++                                      bool virt)
++{
++    switch (priv) {
++    case PRV_M:
++        return env->mctrctl;
++    case PRV_S:
++    case PRV_U:
++        if (virt) {
++            return env->vsctrctl;
++        }
++        return env->mctrctl;
++    }
++
++    g_assert_not_reached();
++}
++
++/*
++ * This function assumes that src privilege and target privilege are not same
++ * and src privilege is less than target privilege. This includes the virtual
++ * state as well.
++ */
++static bool riscv_ctr_check_xte(CPURISCVState *env, target_long src_prv,
++                                bool src_virt)
++{
++    target_long tgt_prv = env->priv;
++    bool res = true;
++
++    /*
++     * VS and U mode are same in terms of xTE bits required to record an
++     * external trap. See 6.1.2. External Traps, table 8 External Trap Enable
++     * Requirements. This changes VS to U to simplify the logic a bit.
++     */
++    if (src_virt && src_prv == PRV_S) {
++        src_prv = PRV_U;
++    } else if (env->virt_enabled && tgt_prv == PRV_S) {
++        tgt_prv = PRV_U;
++    }
++
++    /* VU mode is an outlier here. */
++    if (src_virt && src_prv == PRV_U) {
++        res &= !!(env->vsctrctl & XCTRCTL_STE);
++    }
++
++    switch (src_prv) {
++    case PRV_U:
++        if (tgt_prv == PRV_U) {
++            break;
++        }
++        res &= !!(env->mctrctl & XCTRCTL_STE);
++        /* fall-through */
++    case PRV_S:
++        if (tgt_prv == PRV_S) {
++            break;
++        }
++        res &= !!(env->mctrctl & MCTRCTL_MTE);
++        /* fall-through */
++    case PRV_M:
++        break;
++    }
++
++    return res;
++}
++
++/*
++ * Special cases for traps and trap returns:
++ *
++ * 1- Traps, and trap returns, between enabled modes are recorded as normal.
++ * 2- Traps from an inhibited mode to an enabled mode, and trap returns from an
++ * enabled mode back to an inhibited mode, are partially recorded.  In such
++ * cases, the PC from the inhibited mode (source PC for traps, and target PC
++ * for trap returns) is 0.
++ *
++ * 3- Trap returns from an inhibited mode to an enabled mode are not recorded.
++ * Traps from an enabled mode to an inhibited mode, known as external traps,
++ * receive special handling.
++ * By default external traps are not recorded, but a handshake mechanism exists
++ * to allow partial recording.  Software running in the target mode of the trap
++ * can opt-in to allowing CTR to record traps into that mode even when the mode
++ * is inhibited.  The MTE, STE, and VSTE bits allow M-mode, S-mode, and VS-mode,
++ * respectively, to opt-in. When an External Trap occurs, and xTE=1, such that
++ * x is the target privilege mode of the trap, will CTR record the trap. In such
++ * cases, the target PC is 0.
++ */
++/*
++ * CTR arrays are implemented as circular buffers and new entry is stored at
++ * sctrstatus.WRPTR, but they are presented to software as moving circular
++ * buffers. Which means, software get's the illusion that whenever a new entry
++ * is added the whole buffer is moved by one place and the new entry is added at
++ * the start keeping new entry at idx 0 and older ones follow.
++ *
++ * Depth = 16.
++ *
++ * buffer [0] [1] [2] [3] [4] [5] [6] [7] [8] [9] [A] [B] [C] [D] [E] [F]
++ * WRPTR                                   W
++ * entry   7   6   5   4   3   2   1   0   F   E   D   C   B   A   9   8
++ *
++ * When a new entry is added:
++ * buffer [0] [1] [2] [3] [4] [5] [6] [7] [8] [9] [A] [B] [C] [D] [E] [F]
++ * WRPTR                                       W
++ * entry   8   7   6   5   4   3   2   1   0   F   E   D   C   B   A   9
++ *
++ * entry here denotes the logical entry number that software can access
++ * using ctrsource, ctrtarget and ctrdata registers. So xiselect 0x200
++ * will return entry 0 i-e buffer[8] and 0x201 will return entry 1 i-e
++ * buffer[7]. Here is how we convert entry to buffer idx.
++ *
++ *    entry = isel - CTR_ENTRIES_FIRST;
++ *    idx = (sctrstatus.WRPTR - entry - 1) & (depth - 1);
++ */
++void riscv_ctr_add_entry(CPURISCVState *env, target_long src, target_long dst,
++    enum CTRType type, target_ulong src_priv, bool src_virt)
++{
++    bool tgt_virt = env->virt_enabled;
++    uint64_t src_mask = riscv_ctr_priv_to_mask(src_priv, src_virt);
++    uint64_t tgt_mask = riscv_ctr_priv_to_mask(env->priv, tgt_virt);
++    uint64_t src_ctrl = riscv_ctr_get_control(env, src_priv, src_virt);
++    uint64_t tgt_ctrl = riscv_ctr_get_control(env, env->priv, tgt_virt);
++    uint64_t depth, head;
++    bool ext_trap = false;
++
++    /*
++     * Return immediately if both target and src recording is disabled or if
++     * CTR is in frozen state.
++     */
++    if ((!(src_ctrl & src_mask) && !(tgt_ctrl & tgt_mask)) ||
++        env->sctrstatus & SCTRSTATUS_FROZEN) {
++        return;
++    }
++
++    /*
++     * With RAS Emul enabled, only allow Indirect, direct calls, Function
++     * returns and Co-routine swap types.
++     */
++    if (tgt_ctrl & XCTRCTL_RASEMU &&
++        type != CTRDATA_TYPE_INDIRECT_CALL &&
++        type != CTRDATA_TYPE_DIRECT_CALL &&
++        type != CTRDATA_TYPE_RETURN &&
++        type != CTRDATA_TYPE_CO_ROUTINE_SWAP) {
++        return;
++    }
++
++    if (type == CTRDATA_TYPE_EXCEPTION || type == CTRDATA_TYPE_INTERRUPT) {
++        /* Case 2 for traps. */
++        if (!(src_ctrl & src_mask)) {
++            src = 0;
++        } else if (!(tgt_ctrl & tgt_mask)) {
++            /* Check if target priv-mode has allowed external trap recording. */
++            if (!riscv_ctr_check_xte(env, src_priv, src_virt)) {
++                return;
++            }
++
++            ext_trap = true;
++            dst = 0;
++        }
++    } else if (type == CTRDATA_TYPE_EXCEP_INT_RET) {
++        /*
++         * Case 3 for trap returns.  Trap returns from inhibited mode are not
++         * recorded.
++         */
++        if (!(src_ctrl & src_mask)) {
++            return;
++        }
++
++        /* Case 2 for trap returns. */
++        if (!(tgt_ctrl & tgt_mask)) {
++            dst = 0;
++        }
++    }
++
++    /* Ignore filters in case of RASEMU mode or External trap. */
++    if (!(tgt_ctrl & XCTRCTL_RASEMU) && !ext_trap) {
++        /*
++         * Check if the specific type is inhibited. Not taken branch filter is
++         * an enable bit and needs to be checked separatly.
++         */
++        bool check = tgt_ctrl & BIT_ULL(type + XCTRCTL_INH_START);
++        if ((type == CTRDATA_TYPE_NONTAKEN_BRANCH && !check) ||
++            (type != CTRDATA_TYPE_NONTAKEN_BRANCH && check)) {
++            return;
++        }
++    }
++
++    head = get_field(env->sctrstatus, SCTRSTATUS_WRPTR_MASK);
++
++    depth = 16 << get_field(env->sctrdepth, SCTRDEPTH_MASK);
++    if (tgt_ctrl & XCTRCTL_RASEMU && type == CTRDATA_TYPE_RETURN) {
++        head = (head - 1) & (depth - 1);
++
++        env->ctr_src[head] &= ~CTRSOURCE_VALID;
++        env->sctrstatus =
++            set_field(env->sctrstatus, SCTRSTATUS_WRPTR_MASK, head);
++        return;
++    }
++
++    /* In case of Co-routine SWAP we overwrite latest entry. */
++    if (tgt_ctrl & XCTRCTL_RASEMU && type == CTRDATA_TYPE_CO_ROUTINE_SWAP) {
++        head = (head - 1) & (depth - 1);
++    }
++
++    env->ctr_src[head] = src | CTRSOURCE_VALID;
++    env->ctr_dst[head] = dst & ~CTRTARGET_MISP;
++    env->ctr_data[head] = set_field(0, CTRDATA_TYPE_MASK, type);
++
++    head = (head + 1) & (depth - 1);
++
++    env->sctrstatus = set_field(env->sctrstatus, SCTRSTATUS_WRPTR_MASK, head);
++}
++
+ void riscv_cpu_set_mode(CPURISCVState *env, target_ulong newpriv, bool virt_en)
  {
-     RISCVCPU *cpu = opaque;
-@@ -450,6 +474,7 @@ const VMStateDescription vmstate_riscv_cpu = {
-         &vmstate_jvt,
-         &vmstate_elp,
-         &vmstate_ssp,
-+        &vmstate_ctr,
-         NULL
+     g_assert(newpriv <= PRV_M && newpriv != PRV_RESERVED);
+@@ -1986,10 +2227,13 @@ void riscv_cpu_do_interrupt(CPUState *cs)
+         !(env->mip & (1ULL << cause));
+     bool smode_double_trap = false;
+     uint64_t hdeleg = async ? env->hideleg : env->hedeleg;
++    const bool prev_virt = env->virt_enabled;
++    const target_ulong prev_priv = env->priv;
+     target_ulong tval = 0;
+     target_ulong tinst = 0;
+     target_ulong htval = 0;
+     target_ulong mtval2 = 0;
++    target_ulong src;
+     int sxlen = 0;
+     int mxlen = 16 << riscv_cpu_mxl(env);
+     bool nnmi_excep = false;
+@@ -2173,6 +2417,8 @@ void riscv_cpu_do_interrupt(CPUState *cs)
+         env->pc = (env->stvec >> 2 << 2) +
+                   ((async && (env->stvec & 3) == 1) ? cause * 4 : 0);
+         riscv_cpu_set_mode(env, PRV_S, virt);
++
++        src = env->sepc;
+     } else {
+         /*
+          * If the hart encounters an exception while executing in M-mode
+@@ -2257,6 +2503,19 @@ void riscv_cpu_do_interrupt(CPUState *cs)
+                       ((async && (env->mtvec & 3) == 1) ? cause * 4 : 0);
+         }
+         riscv_cpu_set_mode(env, PRV_M, virt);
++        src = env->mepc;
++    }
++
++    if (riscv_cpu_cfg(env)->ext_smctr || riscv_cpu_cfg(env)->ext_ssctr) {
++        if (async && cause == IRQ_PMU_OVF) {
++            riscv_ctr_freeze(env, XCTRCTL_LCOFIFRZ, virt);
++        } else if (!async && cause == RISCV_EXCP_BREAKPOINT) {
++            riscv_ctr_freeze(env, XCTRCTL_BPFRZ, virt);
++        }
++
++        riscv_ctr_add_entry(env, src, env->pc,
++                        async ? CTRDATA_TYPE_INTERRUPT : CTRDATA_TYPE_EXCEPTION,
++                        prev_priv, prev_virt);
      }
- };
+ 
+     /*
+diff --git a/target/riscv/helper.h b/target/riscv/helper.h
+index 16ea240d26d31b103dd5da0ac4c7f7d67869af71..163121ade599f5ec2682ecea25a59b664593fba3 100644
+--- a/target/riscv/helper.h
++++ b/target/riscv/helper.h
+@@ -136,6 +136,7 @@ DEF_HELPER_1(wfi, void, env)
+ DEF_HELPER_1(wrs_nto, void, env)
+ DEF_HELPER_1(tlb_flush, void, env)
+ DEF_HELPER_1(tlb_flush_all, void, env)
++DEF_HELPER_4(ctr_add_entry, void, env, tl, tl, tl)
+ /* Native Debug */
+ DEF_HELPER_1(itrigger_match, void, env)
+ #endif
+diff --git a/target/riscv/insn_trans/trans_privileged.c.inc b/target/riscv/insn_trans/trans_privileged.c.inc
+index 27d5558d63edf10a516c068a69023ad9035414fd..ca52405d7da411907f1d52234df955940efdc25d 100644
+--- a/target/riscv/insn_trans/trans_privileged.c.inc
++++ b/target/riscv/insn_trans/trans_privileged.c.inc
+@@ -86,6 +86,7 @@ static bool trans_sret(DisasContext *ctx, arg_sret *a)
+     if (has_ext(ctx, RVS)) {
+         decode_save_opc(ctx, 0);
+         translator_io_start(&ctx->base);
++        gen_update_pc(ctx, 0);
+         gen_helper_sret(cpu_pc, tcg_env);
+         exit_tb(ctx); /* no chaining */
+         ctx->base.is_jmp = DISAS_NORETURN;
+@@ -103,6 +104,7 @@ static bool trans_mret(DisasContext *ctx, arg_mret *a)
+ #ifndef CONFIG_USER_ONLY
+     decode_save_opc(ctx, 0);
+     translator_io_start(&ctx->base);
++    gen_update_pc(ctx, 0);
+     gen_helper_mret(cpu_pc, tcg_env);
+     exit_tb(ctx); /* no chaining */
+     ctx->base.is_jmp = DISAS_NORETURN;
+diff --git a/target/riscv/insn_trans/trans_rvi.c.inc b/target/riscv/insn_trans/trans_rvi.c.inc
+index 96c218a9d7875c6419287ac3aa9746251be3f442..b55f56a5eb2c72eee004e16817a6df13c60446de 100644
+--- a/target/riscv/insn_trans/trans_rvi.c.inc
++++ b/target/riscv/insn_trans/trans_rvi.c.inc
+@@ -93,6 +93,51 @@ static bool trans_jal(DisasContext *ctx, arg_jal *a)
+     return true;
+ }
+ 
++#ifndef CONFIG_USER_ONLY
++/*
++ * Indirect calls
++ * - jalr x1, rs where rs != x5;
++ * - jalr x5, rs where rs != x1;
++ * - c.jalr rs1 where rs1 != x5;
++ *
++ * Indirect jumps
++ * - jalr x0, rs where rs != x1 and rs != x5;
++ * - c.jr rs1 where rs1 != x1 and rs1 != x5.
++ *
++ * Returns
++ * - jalr rd, rs where (rs == x1 or rs == x5) and rd != x1 and rd != x5;
++ * - c.jr rs1 where rs1 == x1 or rs1 == x5.
++ *
++ * Co-routine swap
++ * - jalr x1, x5;
++ * - jalr x5, x1;
++ * - c.jalr x5.
++ *
++ * Other indirect jumps
++ * - jalr rd, rs where rs != x1, rs != x5, rd != x0, rd != x1 and rd != x5.
++ */
++static void gen_ctr_jalr(DisasContext *ctx, arg_jalr *a, TCGv dest)
++{
++    TCGv src = tcg_temp_new();
++    TCGv type;
++
++    if ((a->rd == 1 && a->rs1 != 5) || (a->rd == 5 && a->rs1 != 1)) {
++        type = tcg_constant_tl(CTRDATA_TYPE_INDIRECT_CALL);
++    } else if (a->rd == 0 && a->rs1 != 1 && a->rs1 != 5) {
++        type = tcg_constant_tl(CTRDATA_TYPE_INDIRECT_JUMP);
++    } else if ((a->rs1 == 1 || a->rs1 == 5) && (a->rd != 1 && a->rd != 5)) {
++        type = tcg_constant_tl(CTRDATA_TYPE_RETURN);
++    } else if ((a->rs1 == 1 && a->rd == 5) || (a->rs1 == 5 && a->rd == 1)) {
++        type = tcg_constant_tl(CTRDATA_TYPE_CO_ROUTINE_SWAP);
++    } else {
++        type = tcg_constant_tl(CTRDATA_TYPE_OTHER_INDIRECT_JUMP);
++    }
++
++    gen_pc_plus_diff(src, ctx, 0);
++    gen_helper_ctr_add_entry(tcg_env, src, dest, type);
++}
++#endif
++
+ static bool trans_jalr(DisasContext *ctx, arg_jalr *a)
+ {
+     TCGLabel *misaligned = NULL;
+@@ -117,6 +162,12 @@ static bool trans_jalr(DisasContext *ctx, arg_jalr *a)
+     gen_pc_plus_diff(succ_pc, ctx, ctx->cur_insn_len);
+     gen_set_gpr(ctx, a->rd, succ_pc);
+ 
++#ifndef CONFIG_USER_ONLY
++    if (ctx->cfg_ptr->ext_smctr || ctx->cfg_ptr->ext_ssctr) {
++        gen_ctr_jalr(ctx, a, target_pc);
++    }
++#endif
++
+     tcg_gen_mov_tl(cpu_pc, target_pc);
+     if (ctx->fcfi_enabled) {
+         /*
+@@ -231,6 +282,19 @@ static bool gen_branch(DisasContext *ctx, arg_b *a, TCGCond cond)
+     } else {
+         tcg_gen_brcond_tl(cond, src1, src2, l);
+     }
++
++#ifndef CONFIG_USER_ONLY
++    if (ctx->cfg_ptr->ext_smctr || ctx->cfg_ptr->ext_ssctr) {
++        TCGv type = tcg_constant_tl(CTRDATA_TYPE_NONTAKEN_BRANCH);
++        TCGv dest = tcg_temp_new();
++        TCGv src = tcg_temp_new();
++
++        gen_pc_plus_diff(src, ctx, 0);
++        gen_pc_plus_diff(dest, ctx, ctx->cur_insn_len);
++        gen_helper_ctr_add_entry(tcg_env, src, dest, type);
++    }
++#endif
++
+     gen_goto_tb(ctx, 1, ctx->cur_insn_len);
+     ctx->pc_save = orig_pc_save;
+ 
+@@ -243,6 +307,17 @@ static bool gen_branch(DisasContext *ctx, arg_b *a, TCGCond cond)
+         gen_pc_plus_diff(target_pc, ctx, a->imm);
+         gen_exception_inst_addr_mis(ctx, target_pc);
+     } else {
++#ifndef CONFIG_USER_ONLY
++        if (ctx->cfg_ptr->ext_smctr || ctx->cfg_ptr->ext_ssctr) {
++            TCGv type = tcg_constant_tl(CTRDATA_TYPE_TAKEN_BRANCH);
++            TCGv dest = tcg_temp_new();
++            TCGv src = tcg_temp_new();
++
++            gen_pc_plus_diff(src, ctx, 0);
++            gen_pc_plus_diff(dest, ctx, a->imm);
++            gen_helper_ctr_add_entry(tcg_env, src, dest, type);
++        }
++#endif
+         gen_goto_tb(ctx, 0, a->imm);
+     }
+     ctx->pc_save = -1;
+diff --git a/target/riscv/insn_trans/trans_rvzce.c.inc b/target/riscv/insn_trans/trans_rvzce.c.inc
+index cd234ad960724c936b92afb6fd1f3c7c2a37cb80..c77c2b927b0cfdf7d21dca7657712015494e1b46 100644
+--- a/target/riscv/insn_trans/trans_rvzce.c.inc
++++ b/target/riscv/insn_trans/trans_rvzce.c.inc
+@@ -203,6 +203,14 @@ static bool gen_pop(DisasContext *ctx, arg_cmpp *a, bool ret, bool ret_val)
+ 
+     if (ret) {
+         TCGv ret_addr = get_gpr(ctx, xRA, EXT_SIGN);
++#ifndef CONFIG_USER_ONLY
++        if (ctx->cfg_ptr->ext_smctr || ctx->cfg_ptr->ext_ssctr) {
++            TCGv type = tcg_constant_tl(CTRDATA_TYPE_RETURN);
++            TCGv src = tcg_temp_new();
++            gen_pc_plus_diff(src, ctx, 0);
++            gen_helper_ctr_add_entry(tcg_env, src, ret_addr, type);
++        }
++#endif
+         tcg_gen_mov_tl(cpu_pc, ret_addr);
+         tcg_gen_lookup_and_goto_ptr();
+         ctx->base.is_jmp = DISAS_NORETURN;
+@@ -309,6 +317,19 @@ static bool trans_cm_jalt(DisasContext *ctx, arg_cm_jalt *a)
+         gen_set_gpr(ctx, xRA, succ_pc);
+     }
+ 
++#ifndef CONFIG_USER_ONLY
++    if (ctx->cfg_ptr->ext_smctr || ctx->cfg_ptr->ext_ssctr) {
++        if (a->index >= 32) {
++            TCGv type = tcg_constant_tl(CTRDATA_TYPE_DIRECT_CALL);
++            gen_helper_ctr_add_entry(tcg_env, cpu_pc, addr, type);
++        } else {
++            TCGv type = tcg_constant_tl(CTRDATA_TYPE_DIRECT_JUMP);
++            gen_helper_ctr_add_entry(tcg_env, cpu_pc, addr, type);
++        }
++    }
++#endif
++
++
+     tcg_gen_mov_tl(cpu_pc, addr);
+ 
+     tcg_gen_lookup_and_goto_ptr();
+diff --git a/target/riscv/op_helper.c b/target/riscv/op_helper.c
+index ce1256f439c69c32335193dcdcb98f0c38b10b39..5a99c47b128caf847df76cd1b534f9fdf15a28a8 100644
+--- a/target/riscv/op_helper.c
++++ b/target/riscv/op_helper.c
+@@ -270,6 +270,8 @@ target_ulong helper_sret(CPURISCVState *env)
+ {
+     uint64_t mstatus;
+     target_ulong prev_priv, prev_virt = env->virt_enabled;
++    const target_ulong src_priv = env->priv;
++    const bool src_virt = env->virt_enabled;
+ 
+     if (!(env->priv >= PRV_S)) {
+         riscv_raise_exception(env, RISCV_EXCP_ILLEGAL_INST, GETPC());
+@@ -339,6 +341,11 @@ target_ulong helper_sret(CPURISCVState *env)
+     }
+     env->mstatus = set_field(env->mstatus, MSTATUS_SPELP, 0);
+ 
++    if (riscv_cpu_cfg(env)->ext_smctr || riscv_cpu_cfg(env)->ext_ssctr) {
++        riscv_ctr_add_entry(env, env->pc, retpc, CTRDATA_TYPE_EXCEP_INT_RET,
++                            src_priv, src_virt);
++    }
++
+     return retpc;
+ }
+ 
+@@ -416,6 +423,11 @@ target_ulong helper_mret(CPURISCVState *env)
+     }
+     env->mstatus = set_field(env->mstatus, MSTATUS_MPELP, 0);
+ 
++    if (riscv_cpu_cfg(env)->ext_smctr || riscv_cpu_cfg(env)->ext_ssctr) {
++        riscv_ctr_add_entry(env, env->pc, retpc, CTRDATA_TYPE_EXCEP_INT_RET,
++                            PRV_M, false);
++    }
++
+     return retpc;
+ }
+ 
+@@ -466,6 +478,13 @@ target_ulong helper_mnret(CPURISCVState *env)
+     return retpc;
+ }
+ 
++void helper_ctr_add_entry(CPURISCVState *env, target_ulong src,
++                          target_ulong dest, target_ulong type)
++{
++    riscv_ctr_add_entry(env, src, dest, (enum CTRType)type,
++                        env->priv, env->virt_enabled);
++}
++
+ void helper_wfi(CPURISCVState *env)
+ {
+     CPUState *cs = env_cpu(env);
+diff --git a/target/riscv/translate.c b/target/riscv/translate.c
+index 698b74f7a8fab0b55616dedb06e46805b34a3743..eaa5d86eaeedd53b2bc27142124129b0fb23674f 100644
+--- a/target/riscv/translate.c
++++ b/target/riscv/translate.c
+@@ -561,6 +561,46 @@ static void gen_set_fpr_d(DisasContext *ctx, int reg_num, TCGv_i64 t)
+     }
+ }
+ 
++#ifndef CONFIG_USER_ONLY
++/*
++ * Direct calls
++ * - jal x1;
++ * - jal x5;
++ * - c.jal.
++ * - cm.jalt.
++ *
++ * Direct jumps
++ * - jal x0;
++ * - c.j;
++ * - cm.jt.
++ *
++ * Other direct jumps
++ * - jal rd where rd != x1 and rd != x5 and rd != x0;
++ */
++static void gen_ctr_jal(DisasContext *ctx, int rd, target_ulong imm)
++{
++    TCGv dest = tcg_temp_new();
++    TCGv src = tcg_temp_new();
++    TCGv type;
++
++    /*
++     * If rd is x1 or x5 link registers, treat this as direct call otherwise
++     * its a direct jump.
++     */
++    if (rd == 1 || rd == 5) {
++        type = tcg_constant_tl(CTRDATA_TYPE_DIRECT_CALL);
++    } else if (rd == 0) {
++        type = tcg_constant_tl(CTRDATA_TYPE_DIRECT_JUMP);
++    } else {
++        type = tcg_constant_tl(CTRDATA_TYPE_OTHER_DIRECT_JUMP);
++    }
++
++    gen_pc_plus_diff(dest, ctx, imm);
++    gen_pc_plus_diff(src, ctx, 0);
++    gen_helper_ctr_add_entry(tcg_env, src, dest, type);
++}
++#endif
++
+ static void gen_jal(DisasContext *ctx, int rd, target_ulong imm)
+ {
+     TCGv succ_pc = dest_gpr(ctx, rd);
+@@ -575,6 +615,12 @@ static void gen_jal(DisasContext *ctx, int rd, target_ulong imm)
+         }
+     }
+ 
++#ifndef CONFIG_USER_ONLY
++    if (ctx->cfg_ptr->ext_smctr || ctx->cfg_ptr->ext_ssctr) {
++        gen_ctr_jal(ctx, rd, imm);
++    }
++#endif
++
+     gen_pc_plus_diff(succ_pc, ctx, ctx->cur_insn_len);
+     gen_set_gpr(ctx, rd, succ_pc);
+ 
 
 -- 
 2.34.1
