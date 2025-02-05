@@ -4,74 +4,73 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8D77BC02196
-	for <qemu-devel@archiver.kernel.org>; Wed,  5 Feb 2025 10:30:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 23782C02192
+	for <qemu-devel@archiver.kernel.org>; Wed,  5 Feb 2025 10:31:54 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tfcf0-0001Pl-AH; Wed, 05 Feb 2025 05:29:34 -0500
+	id 1tfcgr-0002o4-5J; Wed, 05 Feb 2025 05:31:29 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <xiaoyao.li@intel.com>)
- id 1tfcew-0001PF-Lx
- for qemu-devel@nongnu.org; Wed, 05 Feb 2025 05:29:32 -0500
-Received: from mgamail.intel.com ([198.175.65.11])
+ id 1tfcgp-0002nn-Qt
+ for qemu-devel@nongnu.org; Wed, 05 Feb 2025 05:31:28 -0500
+Received: from mgamail.intel.com ([198.175.65.18])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <xiaoyao.li@intel.com>)
- id 1tfceu-0002ur-R9
- for qemu-devel@nongnu.org; Wed, 05 Feb 2025 05:29:30 -0500
+ id 1tfcgn-0003Gg-L9
+ for qemu-devel@nongnu.org; Wed, 05 Feb 2025 05:31:27 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1738751369; x=1770287369;
+ t=1738751486; x=1770287486;
  h=message-id:date:mime-version:subject:to:cc:references:
  from:in-reply-to:content-transfer-encoding;
- bh=XTPxn9WRGlrKBXY4J7ul9HEN574LaZ3V1oKkkycRmZQ=;
- b=hasZRsX5UznNCcCFvXu/BCOanbs6gdeKj3Ap86EwJJNGfcaM3LZRroLc
- /mL2NaptvhwJX3pcDrbY5FD8CYgVvPROpJzlzkHmp+jvGzLoreP8M1fU1
- 1P/HCJnHRTcHjUE7anZE4exGn4vlWpN7I0Z670naKQkQuzRLmzSA3v787
- /Xoz1GAguhxd23pfqKXyAT8WKUfvI/EKXoah0qdeJ8IzIUh/KF5t73twP
- TPK0KSw/c9cv8RbQ037k+rLsEhZH711xJPlLddTpXYouAlPY0M8QiINmj
- UR624koxuAI1licjBXHimI7Nbpse8J3TIWErHqycJS+5Er4jH0WCGo3Ou g==;
-X-CSE-ConnectionGUID: WDgb7cuxRFOu47T2fldpzg==
-X-CSE-MsgGUID: 9bvu+tYCQL2P7DvOL1/MtA==
-X-IronPort-AV: E=McAfee;i="6700,10204,11336"; a="49561801"
-X-IronPort-AV: E=Sophos;i="6.13,261,1732608000"; d="scan'208";a="49561801"
-Received: from fmviesa007.fm.intel.com ([10.60.135.147])
- by orvoesa103.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 05 Feb 2025 02:29:27 -0800
-X-CSE-ConnectionGUID: 0eTPcpoOR5C+FjvqLlBKmg==
-X-CSE-MsgGUID: FTmLxHUGSa2Wf0Otyey+dA==
+ bh=TNAzw3o/NIZLjRAHMrS5gP30UAJcmwOQbSBj0kcq68w=;
+ b=aSDt9ex3aNTparmyB5kQtQmjk9DBZX6exmULOMwR0f26IEydW2aBcjKc
+ 3jjhMXvsDihQw5oho06ilsXfwfowMeW/XncgUClujxprg1qpre8UD2VXz
+ Dcg3Xl7mjw1bNSC9H7hbR5URuWdiL7toNLVG5MmnNr9/TBPfETMb/QYkq
+ 2Uz45jJ6+K7xdrtmydaMGp4RirfSJZs+l1OAP7uHeTbe+ABg9hUhTfj2f
+ /M3101edakpKgunIIgSG+B2ylimOp2bFNzugunuoZdP99qs3RtmBKAgi+
+ RtssULu9PLVJfhD6TDR7c4CJqSyqq+aeYA39zVbx2SunXqwEp26n6MSxF g==;
+X-CSE-ConnectionGUID: rMfzbkZtQhOcM/6rT11hHg==
+X-CSE-MsgGUID: UcAazK+ARQ2jQdpqgFvcZg==
+X-IronPort-AV: E=McAfee;i="6700,10204,11314"; a="39421119"
+X-IronPort-AV: E=Sophos;i="6.12,310,1728975600"; d="scan'208";a="39421119"
+Received: from fmviesa001.fm.intel.com ([10.60.135.141])
+ by orvoesa110.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 05 Feb 2025 02:31:22 -0800
+X-CSE-ConnectionGUID: ErDfk7sLQgei1uW6dxXz3A==
+X-CSE-MsgGUID: p8IvxN+rQd+lLaqYHnzkaA==
 X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.13,261,1732608000"; d="scan'208";a="110758770"
+X-IronPort-AV: E=Sophos;i="6.12,224,1728975600"; d="scan'208";a="141757522"
 Received: from xiaoyaol-hp-g830.ccr.corp.intel.com (HELO [10.124.247.1])
  ([10.124.247.1])
- by fmviesa007-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 05 Feb 2025 02:29:22 -0800
-Message-ID: <3633ee44-1e16-4e87-8f6d-4fed9e1f3a29@intel.com>
-Date: Wed, 5 Feb 2025 18:29:22 +0800
+ by smtpauth.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 05 Feb 2025 02:31:18 -0800
+Message-ID: <ebedb603-ee42-4db6-86b9-edb270970935@intel.com>
+Date: Wed, 5 Feb 2025 18:31:15 +0800
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v7 48/52] i386/tdx: Fetch and validate CPUID of TD guest
-To: Markus Armbruster <armbru@redhat.com>
-Cc: Paolo Bonzini <pbonzini@redhat.com>,
+Subject: Re: [PATCH v7 12/52] i386/tdx: Validate TD attributes
+To: Paolo Bonzini <pbonzini@redhat.com>,
  =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
  =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Igor Mammedov <imammedo@redhat.com>, Zhao Liu <zhao1.liu@intel.com>,
- "Michael S. Tsirkin" <mst@redhat.com>, Eric Blake <eblake@redhat.com>,
+ Igor Mammedov <imammedo@redhat.com>
+Cc: Zhao Liu <zhao1.liu@intel.com>, "Michael S. Tsirkin" <mst@redhat.com>,
+ Eric Blake <eblake@redhat.com>, Markus Armbruster <armbru@redhat.com>,
  Peter Maydell <peter.maydell@linaro.org>,
  Marcelo Tosatti <mtosatti@redhat.com>, Huacai Chen <chenhuacai@kernel.org>,
  Rick Edgecombe <rick.p.edgecombe@intel.com>,
  Francesco Lavra <francescolavra.fl@gmail.com>, qemu-devel@nongnu.org,
  kvm@vger.kernel.org
 References: <20250124132048.3229049-1-xiaoyao.li@intel.com>
- <20250124132048.3229049-49-xiaoyao.li@intel.com>
- <87o6zg3fl2.fsf@pond.sub.org>
+ <20250124132048.3229049-13-xiaoyao.li@intel.com>
 Content-Language: en-US
 From: Xiaoyao Li <xiaoyao.li@intel.com>
-In-Reply-To: <87o6zg3fl2.fsf@pond.sub.org>
+In-Reply-To: <20250124132048.3229049-13-xiaoyao.li@intel.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=198.175.65.11; envelope-from=xiaoyao.li@intel.com;
+Received-SPF: pass client-ip=198.175.65.18; envelope-from=xiaoyao.li@intel.com;
  helo=mgamail.intel.com
 X-Spam_score_int: -33
 X-Spam_score: -3.4
@@ -96,97 +95,259 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 2/5/2025 5:28 PM, Markus Armbruster wrote:
-> Xiaoyao Li <xiaoyao.li@intel.com> writes:
+On 1/24/2025 9:20 PM, Xiaoyao Li wrote:
+> Validate TD attributes with tdx_caps that only supported bits arer
+> allowed by KVM.
 > 
->> Use KVM_TDX_GET_CPUID to get the CPUIDs that are managed and enfored
->> by TDX module for TD guest. Check QEMU's configuration against the
->> fetched data.
->>
->> Print wanring  message when 1. a feature is not supported but requested
->> by QEMU or 2. QEMU doesn't want to expose a feature while it is enforced
->> enabled.
->>
->> - If cpu->enforced_cpuid is not set, prints the warning message of both
->> 1) and 2) and tweak QEMU's configuration.
->>
->> - If cpu->enforced_cpuid is set, quit if any case of 1) or 2).
->>
->> Signed-off-by: Xiaoyao Li <xiaoyao.li@intel.com>
->> ---
->>   target/i386/cpu.c     | 33 ++++++++++++++-
->>   target/i386/cpu.h     |  7 +++
->>   target/i386/kvm/tdx.c | 99 +++++++++++++++++++++++++++++++++++++++++++
->>   3 files changed, 137 insertions(+), 2 deletions(-)
->>
->> diff --git a/target/i386/cpu.c b/target/i386/cpu.c
->> index f1330627adbb..a948fd0bd674 100644
->> --- a/target/i386/cpu.c
->> +++ b/target/i386/cpu.c
->> @@ -5482,8 +5482,8 @@ static bool x86_cpu_have_filtered_features(X86CPU *cpu)
->>       return false;
->>   }
->>   
->> -static void mark_unavailable_features(X86CPU *cpu, FeatureWord w, uint64_t mask,
->> -                                      const char *verbose_prefix)
->> +void mark_unavailable_features(X86CPU *cpu, FeatureWord w, uint64_t mask,
->> +                               const char *verbose_prefix)
->>   {
->>       CPUX86State *env = &cpu->env;
->>       FeatureWordInfo *f = &feature_word_info[w];
->> @@ -5510,6 +5510,35 @@ static void mark_unavailable_features(X86CPU *cpu, FeatureWord w, uint64_t mask,
->>       }
->>   }
->>   
->> +void mark_forced_on_features(X86CPU *cpu, FeatureWord w, uint64_t mask,
->> +                             const char *verbose_prefix)
->> +{
->> +    CPUX86State *env = &cpu->env;
->> +    FeatureWordInfo *f = &feature_word_info[w];
->> +    int i;
->> +
->> +    if (!cpu->force_features) {
->> +        env->features[w] |= mask;
->> +    }
->> +
->> +    cpu->forced_on_features[w] |= mask;
->> +
->> +    if (!verbose_prefix) {
->> +        return;
->> +    }
->> +
->> +    for (i = 0; i < 64; ++i) {
->> +        if ((1ULL << i) & mask) {
->> +            g_autofree char *feat_word_str = feature_word_description(f);
-> 
-> Does not compile for me:
-> 
->      ../target/i386/cpu.c: In function ‘mark_forced_on_features’:
->      ../target/i386/cpu.c:5531:46: error: too few arguments to function ‘feature_word_description’
->       5531 |             g_autofree char *feat_word_str = feature_word_description(f);
->            |                                              ^~~~~~~~~~~~~~~~~~~~~~~~
->      ../target/i386/cpu.c:5451:14: note: declared here
->       5451 | static char *feature_word_description(FeatureWordInfo *f, uint32_t bit)
->            |              ^~~~~~~~~~~~~~~~~~~~~~~~
+> Besides, sanity check the attribute bits that have not been supported by
+> QEMU yet. e.g., debug bit, it will be allowed in the future when debug
+> TD support lands in QEMU.
 
-As mentioned in the cover letter, this series depends on a minor one:
+This patches got squashed with next one "i386/tdx: Support user 
+configurable mrconfigid/mrowner/mrownerconfig" in v6 by accident.
 
-https://lore.kernel.org/qemu-devel/20241217123932.948789-1-xiaoyao.li@intel.com/
+I'll fix it in the next version.
 
->> +            warn_report("%s: %s%s%s [bit %d]",
->> +                        verbose_prefix,
->> +                        feat_word_str,
->> +                        f->feat_names[i] ? "." : "",
->> +                        f->feat_names[i] ? f->feat_names[i] : "", i);
->> +        }
->> +    }
->> +}
->> +
->>   static void x86_cpuid_version_get_family(Object *obj, Visitor *v,
->>                                            const char *name, void *opaque,
->>                                            Error **errp)
+> Signed-off-by: Xiaoyao Li <xiaoyao.li@intel.com>
+> Acked-by: Gerd Hoffmann <kraxel@redhat.com>
+> ---
+> Changes in v7:
+> - Define TDX_SUPPORTED_TD_ATTRS as QEMU supported mask, to validates
+>    user's request. (Rick)
 > 
-> [...]
+> Changes in v3:
+> - using error_setg() for error report; (Daniel)
+> ---
+>   qapi/qom.json         |  16 +++++-
+>   target/i386/kvm/tdx.c | 118 +++++++++++++++++++++++++++++++++++++++++-
+>   target/i386/kvm/tdx.h |   3 ++
+>   3 files changed, 134 insertions(+), 3 deletions(-)
 > 
+> diff --git a/qapi/qom.json b/qapi/qom.json
+> index 8740626c4ee6..a53000ca6fb4 100644
+> --- a/qapi/qom.json
+> +++ b/qapi/qom.json
+> @@ -1060,11 +1060,25 @@
+>   #     pages.  Some guest OS (e.g., Linux TD guest) may require this to
+>   #     be set, otherwise they refuse to boot.
+>   #
+> +# @mrconfigid: ID for non-owner-defined configuration of the guest TD,
+> +#     e.g., run-time or OS configuration (base64 encoded SHA384 digest).
+> +#     Defaults to all zeros.
+> +#
+> +# @mrowner: ID for the guest TD’s owner (base64 encoded SHA384 digest).
+> +#     Defaults to all zeros.
+> +#
+> +# @mrownerconfig: ID for owner-defined configuration of the guest TD,
+> +#     e.g., specific to the workload rather than the run-time or OS
+> +#     (base64 encoded SHA384 digest).  Defaults to all zeros.
+> +#
+>   # Since: 10.0
+>   ##
+>   { 'struct': 'TdxGuestProperties',
+>     'data': { '*attributes': 'uint64',
+> -            '*sept-ve-disable': 'bool' } }
+> +            '*sept-ve-disable': 'bool',
+> +            '*mrconfigid': 'str',
+> +            '*mrowner': 'str',
+> +            '*mrownerconfig': 'str' } }
+>   
+>   ##
+>   # @ThreadContextProperties:
+> diff --git a/target/i386/kvm/tdx.c b/target/i386/kvm/tdx.c
+> index 653942d83bcb..ed843af1d0b6 100644
+> --- a/target/i386/kvm/tdx.c
+> +++ b/target/i386/kvm/tdx.c
+> @@ -11,17 +11,24 @@
+>   
+>   #include "qemu/osdep.h"
+>   #include "qemu/error-report.h"
+> +#include "qemu/base64.h"
+>   #include "qapi/error.h"
+>   #include "qom/object_interfaces.h"
+> +#include "crypto/hash.h"
+>   
+>   #include "hw/i386/x86.h"
+>   #include "kvm_i386.h"
+>   #include "tdx.h"
+>   
+> +#define TDX_TD_ATTRIBUTES_DEBUG             BIT_ULL(0)
+>   #define TDX_TD_ATTRIBUTES_SEPT_VE_DISABLE   BIT_ULL(28)
+>   #define TDX_TD_ATTRIBUTES_PKS               BIT_ULL(30)
+>   #define TDX_TD_ATTRIBUTES_PERFMON           BIT_ULL(63)
+>   
+> +#define TDX_SUPPORTED_TD_ATTRS  (TDX_TD_ATTRIBUTES_SEPT_VE_DISABLE |\
+> +                                 TDX_TD_ATTRIBUTES_PKS | \
+> +                                 TDX_TD_ATTRIBUTES_PERFMON)
+> +
+>   static TdxGuest *tdx_guest;
+>   
+>   static struct kvm_tdx_capabilities *tdx_caps;
+> @@ -153,13 +160,33 @@ static int tdx_kvm_type(X86ConfidentialGuest *cg)
+>       return KVM_X86_TDX_VM;
+>   }
+>   
+> -static void setup_td_guest_attributes(X86CPU *x86cpu)
+> +static int tdx_validate_attributes(TdxGuest *tdx, Error **errp)
+> +{
+> +    if ((tdx->attributes & ~tdx_caps->supported_attrs)) {
+> +        error_setg(errp, "Invalid attributes 0x%lx for TDX VM "
+> +                   "(KVM supported: 0x%llx)", tdx->attributes,
+> +                   tdx_caps->supported_attrs);
+> +        return -1;
+> +    }
+> +
+> +    if (tdx->attributes & ~TDX_SUPPORTED_TD_ATTRS) {
+> +        warn_report("Some QEMU unsupported TD attribute bits being requested:"
+> +                    "requested: 0x%lx QEMU supported: 0x%llx",
+> +                    tdx->attributes, TDX_SUPPORTED_TD_ATTRS);
+> +    }
+> +
+> +    return 0;
+> +}
+> +
+> +static int setup_td_guest_attributes(X86CPU *x86cpu, Error **errp)
+>   {
+>       CPUX86State *env = &x86cpu->env;
+>   
+>       tdx_guest->attributes |= (env->features[FEAT_7_0_ECX] & CPUID_7_0_ECX_PKS) ?
+>                                TDX_TD_ATTRIBUTES_PKS : 0;
+>       tdx_guest->attributes |= x86cpu->enable_pmu ? TDX_TD_ATTRIBUTES_PERFMON : 0;
+> +
+> +    return tdx_validate_attributes(tdx_guest, errp);
+>   }
+>   
+>   static int setup_td_xfam(X86CPU *x86cpu, Error **errp)
+> @@ -214,6 +241,7 @@ int tdx_pre_create_vcpu(CPUState *cpu, Error **errp)
+>       CPUX86State *env = &x86cpu->env;
+>       g_autofree struct kvm_tdx_init_vm *init_vm = NULL;
+>       Error *local_err = NULL;
+> +    size_t data_len;
+>       int retry = 10000;
+>       int r = 0;
+>   
+> @@ -225,7 +253,40 @@ int tdx_pre_create_vcpu(CPUState *cpu, Error **errp)
+>       init_vm = g_malloc0(sizeof(struct kvm_tdx_init_vm) +
+>                           sizeof(struct kvm_cpuid_entry2) * KVM_MAX_CPUID_ENTRIES);
+>   
+> -    setup_td_guest_attributes(x86cpu);
+> +    if (tdx_guest->mrconfigid) {
+> +        g_autofree uint8_t *data = qbase64_decode(tdx_guest->mrconfigid,
+> +                              strlen(tdx_guest->mrconfigid), &data_len, errp);
+> +        if (!data || data_len != QCRYPTO_HASH_DIGEST_LEN_SHA384) {
+> +            error_setg(errp, "TDX: failed to decode mrconfigid");
+> +            return -1;
+> +        }
+> +        memcpy(init_vm->mrconfigid, data, data_len);
+> +    }
+> +
+> +    if (tdx_guest->mrowner) {
+> +        g_autofree uint8_t *data = qbase64_decode(tdx_guest->mrowner,
+> +                              strlen(tdx_guest->mrowner), &data_len, errp);
+> +        if (!data || data_len != QCRYPTO_HASH_DIGEST_LEN_SHA384) {
+> +            error_setg(errp, "TDX: failed to decode mrowner");
+> +            return -1;
+> +        }
+> +        memcpy(init_vm->mrowner, data, data_len);
+> +    }
+> +
+> +    if (tdx_guest->mrownerconfig) {
+> +        g_autofree uint8_t *data = qbase64_decode(tdx_guest->mrownerconfig,
+> +                            strlen(tdx_guest->mrownerconfig), &data_len, errp);
+> +        if (!data || data_len != QCRYPTO_HASH_DIGEST_LEN_SHA384) {
+> +            error_setg(errp, "TDX: failed to decode mrownerconfig");
+> +            return -1;
+> +        }
+> +        memcpy(init_vm->mrownerconfig, data, data_len);
+> +    }
+> +
+> +    r = setup_td_guest_attributes(x86cpu, errp);
+> +    if (r) {
+> +        return r;
+> +    }
+>   
+>       r = setup_td_xfam(x86cpu, errp);
+>       if (r) {
+> @@ -283,6 +344,51 @@ static void tdx_guest_set_sept_ve_disable(Object *obj, bool value, Error **errp)
+>       }
+>   }
+>   
+> +static char *tdx_guest_get_mrconfigid(Object *obj, Error **errp)
+> +{
+> +    TdxGuest *tdx = TDX_GUEST(obj);
+> +
+> +    return g_strdup(tdx->mrconfigid);
+> +}
+> +
+> +static void tdx_guest_set_mrconfigid(Object *obj, const char *value, Error **errp)
+> +{
+> +    TdxGuest *tdx = TDX_GUEST(obj);
+> +
+> +    g_free(tdx->mrconfigid);
+> +    tdx->mrconfigid = g_strdup(value);
+> +}
+> +
+> +static char *tdx_guest_get_mrowner(Object *obj, Error **errp)
+> +{
+> +    TdxGuest *tdx = TDX_GUEST(obj);
+> +
+> +    return g_strdup(tdx->mrowner);
+> +}
+> +
+> +static void tdx_guest_set_mrowner(Object *obj, const char *value, Error **errp)
+> +{
+> +    TdxGuest *tdx = TDX_GUEST(obj);
+> +
+> +    g_free(tdx->mrowner);
+> +    tdx->mrowner = g_strdup(value);
+> +}
+> +
+> +static char *tdx_guest_get_mrownerconfig(Object *obj, Error **errp)
+> +{
+> +    TdxGuest *tdx = TDX_GUEST(obj);
+> +
+> +    return g_strdup(tdx->mrownerconfig);
+> +}
+> +
+> +static void tdx_guest_set_mrownerconfig(Object *obj, const char *value, Error **errp)
+> +{
+> +    TdxGuest *tdx = TDX_GUEST(obj);
+> +
+> +    g_free(tdx->mrownerconfig);
+> +    tdx->mrownerconfig = g_strdup(value);
+> +}
+> +
+>   /* tdx guest */
+>   OBJECT_DEFINE_TYPE_WITH_INTERFACES(TdxGuest,
+>                                      tdx_guest,
+> @@ -306,6 +412,14 @@ static void tdx_guest_init(Object *obj)
+>       object_property_add_bool(obj, "sept-ve-disable",
+>                                tdx_guest_get_sept_ve_disable,
+>                                tdx_guest_set_sept_ve_disable);
+> +    object_property_add_str(obj, "mrconfigid",
+> +                            tdx_guest_get_mrconfigid,
+> +                            tdx_guest_set_mrconfigid);
+> +    object_property_add_str(obj, "mrowner",
+> +                            tdx_guest_get_mrowner, tdx_guest_set_mrowner);
+> +    object_property_add_str(obj, "mrownerconfig",
+> +                            tdx_guest_get_mrownerconfig,
+> +                            tdx_guest_set_mrownerconfig);
+>   }
+>   
+>   static void tdx_guest_finalize(Object *obj)
+> diff --git a/target/i386/kvm/tdx.h b/target/i386/kvm/tdx.h
+> index 4e2b5c61ff5b..e472b11fb0dd 100644
+> --- a/target/i386/kvm/tdx.h
+> +++ b/target/i386/kvm/tdx.h
+> @@ -24,6 +24,9 @@ typedef struct TdxGuest {
+>       bool initialized;
+>       uint64_t attributes;    /* TD attributes */
+>       uint64_t xfam;
+> +    char *mrconfigid;       /* base64 encoded sha348 digest */
+> +    char *mrowner;          /* base64 encoded sha348 digest */
+> +    char *mrownerconfig;    /* base64 encoded sha348 digest */
+>   } TdxGuest;
+>   
+>   #ifdef CONFIG_TDX
 
 
