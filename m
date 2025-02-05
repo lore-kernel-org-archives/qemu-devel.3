@@ -4,91 +4,90 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 09C40C02192
-	for <qemu-devel@archiver.kernel.org>; Wed,  5 Feb 2025 18:26:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 29E94C02192
+	for <qemu-devel@archiver.kernel.org>; Wed,  5 Feb 2025 18:39:37 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tfk5u-00051j-EV; Wed, 05 Feb 2025 13:25:50 -0500
+	id 1tfkIM-0000pT-2U; Wed, 05 Feb 2025 13:38:42 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1tfk5s-00051M-BV
- for qemu-devel@nongnu.org; Wed, 05 Feb 2025 13:25:48 -0500
-Received: from mail-pl1-x636.google.com ([2607:f8b0:4864:20::636])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1tfk5q-0000cY-Ie
- for qemu-devel@nongnu.org; Wed, 05 Feb 2025 13:25:48 -0500
-Received: by mail-pl1-x636.google.com with SMTP id
- d9443c01a7336-21f20666e72so2677285ad.1
- for <qemu-devel@nongnu.org>; Wed, 05 Feb 2025 10:25:45 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1738779945; x=1739384745; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:to:subject:user-agent:mime-version:date:message-id:from
- :to:cc:subject:date:message-id:reply-to;
- bh=w6NHmnVDKKp3ZtGQSeQWU7CqxkSE/9v9r9iFEFiXHQ8=;
- b=HLGRM1RBbAUL7Ncp3zPuFCsZKBkKn9nn+RUuEu9Mc+dr2A9CUzqwHlc271rzg3BgoM
- ehfflYkjzjJfgQILc5clzSr0EpxWKMjjFHARBd9w1XlD1t7M4H1qejySI/U+5CloI8uz
- dFrlPagxo8glUL671iiOh0m5rZYVPjH3QscO1ZUpfLoP1gGhTZ6cOly5Vu7KMZrylecX
- 8mE2cWBOUcrsAh9GY13ctBfQjZs4tQRfZOhfWzxLyRJZ2oOfYzDVsywrf9gDOK9ttT+Q
- IUzLUqbeB34wsf96Om3vlfRwT3eAMKgBKQOa8lKGRbdmPycZn2gpbo1lyaJWIA6Dyvp8
- rDkA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1738779945; x=1739384745;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=w6NHmnVDKKp3ZtGQSeQWU7CqxkSE/9v9r9iFEFiXHQ8=;
- b=t1w5stCr7CnFBoIahy5LWI7tHqnxOlA7gkCt48h2wcdTN89XrA8rS9IpL24kgjJAnk
- o7D/+dzoz2c6b/Mjlu1pUCApWhN1PwlyNBy2zjIfVn60bS+LRUrURtMmyRSxjekhL9Zc
- Dxk33DscE4NksyLKzO+lKe5KAeR0Jp5xJcazRh5WKOAlBmOOd4b8ay4S7Huyi3xebEQ+
- iwupFqxC9pDYd6aE3b34g3Fl4DbKq+VSjS2m0dqstiHLYfGgoCyhWesbrRrpFERgHB2M
- BnIHR80TL4n/Mcx6VVt4aFn+fV+0x0adYwyz4FCzIX8IVJX0iVzxvOip+w5o92Zb/5/c
- t6Kg==
-X-Gm-Message-State: AOJu0YyglcDP4R2KdH84bzWJ2cOG5e7gspXDq1MEEJ3vDrrxIfeeQ9Ii
- ZcO22Fbi7TjZAZkoUuDYTYAxWX7Oxn2dC6zhSSJIPp0Ky4N9J+HKtkJGk1pE62NgL1z54/Z7L42
- 6
-X-Gm-Gg: ASbGncv2uAJQO+616FChzQcBCE4Bcb1TJHxYM3wyN299BNN4DloTB3JkLxeAL5Nbx48
- XzrzUa68k/5XdDnYeA0QmwfSyRt/e6hWvSQ/U73FwHypuOt54+XHDdpSMUt/N+QONVrUZC8xdQM
- ySLbdY14cnSvsRQKkHSz099FYXBRLY55R8ZAR9oz8v9+LZRfYsr8F76k7Pj2u3ZOpdSiiDXRrlL
- pcTPOknx4b14XcIaqziJXOMGoRIACVtSdChy3JkBPHASeSIA+6VS1LxB/9MhjvJhDLrImcJB0o1
- Oon4g7L69nuVDo594rQ3Kk4RDugh3elG/jVRiVJm4HDnVzXshZGniaw=
-X-Google-Smtp-Source: AGHT+IFkhv2Vd+Iwfg+vVRh2IjBxU/cOrtvwuWP/Iw/6fKjoxh6ybqkm4tdx7Cc2/ZqHoxsaJYVuVA==
-X-Received: by 2002:a05:6a20:d70a:b0:1ea:ee89:5d9b with SMTP id
- adf61e73a8af0-1ede88453c2mr7678959637.21.1738779944797; 
- Wed, 05 Feb 2025 10:25:44 -0800 (PST)
-Received: from [192.168.0.4] (71-212-39-66.tukw.qwest.net. [71.212.39.66])
- by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-72fe64275c4sm13358102b3a.61.2025.02.05.10.25.44
- for <qemu-devel@nongnu.org>
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 05 Feb 2025 10:25:44 -0800 (PST)
-Message-ID: <23032dd9-063e-49b3-a6b8-25d0c8f72cef@linaro.org>
-Date: Wed, 5 Feb 2025 10:25:43 -0800
+ (Exim 4.90_1) (envelope-from <dmitry.osipenko@collabora.com>)
+ id 1tfkIK-0000pG-IZ
+ for qemu-devel@nongnu.org; Wed, 05 Feb 2025 13:38:40 -0500
+Received: from sender4-pp-f112.zoho.com ([136.143.188.112])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <dmitry.osipenko@collabora.com>)
+ id 1tfkIG-0003ML-RV
+ for qemu-devel@nongnu.org; Wed, 05 Feb 2025 13:38:40 -0500
+ARC-Seal: i=1; a=rsa-sha256; t=1738780685; cv=none; 
+ d=zohomail.com; s=zohoarc; 
+ b=euUoQ/v8MPJdF4bI6jy0GN610A/5fvt4RNSuyNo9qDkINSwPRAfVVrG7/OVipaGdLbOVyRE/ir48Dwp3yYss8rOHW2JR9YLwnqc4VCNfQRXw6DQnQ2s6fDBvaHUDnVhNoNL21poqPjx2bh+hfVi+S45ZcbVSlso87JT9tjVHEtc=
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=zohomail.com;
+ s=zohoarc; t=1738780685;
+ h=Content-Type:Content-Transfer-Encoding:Cc:Cc:Date:Date:From:From:In-Reply-To:MIME-Version:Message-ID:References:Subject:Subject:To:To:Message-Id:Reply-To;
+ bh=uD2bROOLjrjM9UAI7X+wjpvuQ5sq1vhxcYtMgNFrFes=; 
+ b=fYaKqYfgK5rqTZNt37a4GXYz16J6EWtUQkBL327kslMhoUG9z65fTWu+36nVif4Skbm2e5bDCg2R5x9yJsRoX9zkUDSFZiQA2fF2A5NtT6Q/dPQyHSmZrwQgBH+JWrk5fMrSz1+ek1yjQCLf2FzA48S9DloENUummE9QvDsAQIQ=
+ARC-Authentication-Results: i=1; mx.zohomail.com;
+ dkim=pass  header.i=collabora.com;
+ spf=pass  smtp.mailfrom=dmitry.osipenko@collabora.com;
+ dmarc=pass header.from=<dmitry.osipenko@collabora.com>
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; t=1738780685; 
+ s=zohomail; d=collabora.com; i=dmitry.osipenko@collabora.com; 
+ h=Message-ID:Date:Date:MIME-Version:Subject:Subject:To:To:Cc:Cc:References:From:From:In-Reply-To:Content-Type:Content-Transfer-Encoding:Message-Id:Reply-To;
+ bh=uD2bROOLjrjM9UAI7X+wjpvuQ5sq1vhxcYtMgNFrFes=;
+ b=h9E/Sxt53jHgGIQIogl70gCavRGQxBGAvL1+alUTatct70pybaYABGdiC2kLXmRQ
+ a/m+T+s+DyiiXdQCBrRBFfT7Pl4hq0YgAWx3A56fAZr8lln8YHlnlKng4VbiuBXcVoJ
+ oLIeymPb+baoyZilkGuzr3HAKlK5z6SP9ykoDggU=
+Received: by mx.zohomail.com with SMTPS id 1738780681688914.4547461864809;
+ Wed, 5 Feb 2025 10:38:01 -0800 (PST)
+Message-ID: <63a991d6-dfb5-4a7d-80d0-4c31673d3251@collabora.com>
+Date: Wed, 5 Feb 2025 21:37:55 +0300
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 5/5] tests/functional: skip mem addr test on 32-bit hosts
-To: qemu-devel@nongnu.org
-References: <20250205155946.2811296-1-berrange@redhat.com>
- <20250205155946.2811296-6-berrange@redhat.com>
- <9edd3138-3411-4459-96c3-d48c30e197e0@linaro.org>
- <Z6OXlPu0fw_S9iy6@redhat.com>
+Subject: Re: [PATCH v6 00/10] Support virtio-gpu DRM native context
+To: "Kim, Dongwon" <dongwon.kim@intel.com>,
+ =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
+Cc: "Kasireddy, Vivek" <vivek.kasireddy@intel.com>,
+ Akihiko Odaki <akihiko.odaki@daynix.com>, Huang Rui <ray.huang@amd.com>,
+ =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
+ =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Gerd Hoffmann <kraxel@redhat.com>, "Michael S . Tsirkin" <mst@redhat.com>,
+ Paolo Bonzini <pbonzini@redhat.com>, Gert Wollny
+ <gert.wollny@collabora.com>, "qemu-devel@nongnu.org"
+ <qemu-devel@nongnu.org>, Gurchetan Singh <gurchetansingh@chromium.org>,
+ Alyssa Ross <hi@alyssa.is>, =?UTF-8?Q?Pau_Monn=C3=A9=2C_Roger?=
+ <roger.pau@citrix.com>, Alex Deucher <alexander.deucher@amd.com>,
+ Stefano Stabellini <stefano.stabellini@amd.com>,
+ =?UTF-8?Q?Christian_K=C3=B6nig?= <christian.koenig@amd.com>,
+ Xenia Ragiadakou <xenia.ragiadakou@amd.com>,
+ Pierre-Eric Pelloux-Prayer <pierre-eric.pelloux-prayer@amd.com>,
+ Honglei Huang <honglei1.huang@amd.com>, Julia Zhang <julia.zhang@amd.com>,
+ Chen Jiqian <Jiqian.Chen@amd.com>, Rob Clark <robdclark@gmail.com>,
+ Yiwei Zhang <zzyiwei@chromium.org>, Sergio Lopez Pascual <slp@redhat.com>
+References: <20250126201121.470990-1-dmitry.osipenko@collabora.com>
+ <87cyg844fr.fsf@draig.linaro.org>
+ <5aedf1ad-d9b0-4edb-a050-f3d9bee9bccb@collabora.com>
+ <87ikprflbb.fsf@draig.linaro.org>
+ <PH8PR11MB6879D81CAA931B0718DF3B1EFAF52@PH8PR11MB6879.namprd11.prod.outlook.com>
+ <878qqmbzb9.fsf@draig.linaro.org>
+ <SA1PR11MB6870F6C4479128EA3CBF9543FAF42@SA1PR11MB6870.namprd11.prod.outlook.com>
+From: Dmitry Osipenko <dmitry.osipenko@collabora.com>
 Content-Language: en-US
-From: Richard Henderson <richard.henderson@linaro.org>
-In-Reply-To: <Z6OXlPu0fw_S9iy6@redhat.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::636;
- envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x636.google.com
+In-Reply-To: <SA1PR11MB6870F6C4479128EA3CBF9543FAF42@SA1PR11MB6870.namprd11.prod.outlook.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-ZohoMailClient: External
+Received-SPF: pass client-ip=136.143.188.112;
+ envelope-from=dmitry.osipenko@collabora.com; helo=sender4-pp-f112.zoho.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -104,23 +103,35 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 2/5/25 08:53, Daniel P. Berrangé wrote:
->>> +Decorator to skip execution of a test on 32-bit targets
->>> +Example:
->>> +
->>> +  @skipIf32BitTarget()
->>> +'''
->>> +def skipIf32BitTarget():
->>> +    enoughBits = sys.maxsize > 2**32
->>> +    return skipUnless(enoughBits,
->>> +                      'Test requires a host with 64-bit address space')
+On 2/4/25 04:51, Kim, Dongwon wrote:
+>> Subject: Re: [PATCH v6 00/10] Support virtio-gpu DRM native context
 >>
->> skipIf32BitHost?
+>> "Kim, Dongwon" <dongwon.kim@intel.com> writes:
+>>
+>>> Hi,
+>>>
+>>> The commit below could change the timing of drawing by making the
+>>> drawing done at refresh cycle instead of via drawing event. So it
+>>> looks like either dmabuf or client's framebuffer is being written and
+>>> read at the same time. Hey, can you describe how the corruption looks
+>>> like? Is it just garbage image with random noise or the actual frame with some
+>> defects like tearing...?
+>>
+>> The terminal gets mirrored upside down and the mouse creates damage as it
+>> moves about.
 > 
-> I don't mind either way.
+> I am wondering if this is reproducible without virgl and drm native context (like w/
+> sw rasterizer on the guest) as well. 
 
-Definitely host.
+It looks like a problem with redraw areas, see video sample [1].
 
+[1]
+https://drive.google.com/file/d/13PN2sFoPsM2ox6_gf9GLXStbsZ27xlLy/view?usp=sharing
 
-r~
+It's reproducible without native context with a SW render using '-device
+virtio-vga,hostmem=8G,blob=on'
+
+-- 
+Best regards,
+Dmitry
 
