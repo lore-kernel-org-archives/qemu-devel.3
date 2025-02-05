@@ -4,101 +4,86 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0F2B0C02192
-	for <qemu-devel@archiver.kernel.org>; Wed,  5 Feb 2025 18:11:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 24C23C02192
+	for <qemu-devel@archiver.kernel.org>; Wed,  5 Feb 2025 18:13:43 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tfjrd-0000cP-DY; Wed, 05 Feb 2025 13:11:05 -0500
+	id 1tfjtm-0001vt-BB; Wed, 05 Feb 2025 13:13:18 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tfjrb-0000bp-M3
- for qemu-devel@nongnu.org; Wed, 05 Feb 2025 13:11:03 -0500
-Received: from mail-wm1-x331.google.com ([2a00:1450:4864:20::331])
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1tfjtf-0001vY-R9
+ for qemu-devel@nongnu.org; Wed, 05 Feb 2025 13:13:12 -0500
+Received: from mail-pj1-x1035.google.com ([2607:f8b0:4864:20::1035])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tfjra-0006mR-2P
- for qemu-devel@nongnu.org; Wed, 05 Feb 2025 13:11:03 -0500
-Received: by mail-wm1-x331.google.com with SMTP id
- 5b1f17b1804b1-4361b0ec57aso777915e9.0
- for <qemu-devel@nongnu.org>; Wed, 05 Feb 2025 10:11:01 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1tfjtX-00070k-5C
+ for qemu-devel@nongnu.org; Wed, 05 Feb 2025 13:13:04 -0500
+Received: by mail-pj1-x1035.google.com with SMTP id
+ 98e67ed59e1d1-2f9d3d0f55dso2734834a91.1
+ for <qemu-devel@nongnu.org>; Wed, 05 Feb 2025 10:13:01 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1738779060; x=1739383860; darn=nongnu.org;
+ d=linaro.org; s=google; t=1738779180; x=1739383980; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=y6wtcydVQZupMutRL0JRwISF7OXd17oMzRlS5uxaleE=;
- b=BpxcXs6rNlwZv1Atv7mEC7aCD/y0HM3yU7I9p/AP3lsfV5I0EkRUc8BDD0r3q1njyT
- naTSQ1KgFWdD6Gx+HNfwhRyblMQtt94jAQQkjZreELlM3M0VlVz/uUK3vB2PKvuzXlaQ
- o4YnHyFsEEEb4B91MQB+oREMBBWK6vQNN3IOSKrRmow87xpkum/N9oQG3W3/8MGacpAf
- lKQ+/NE9YlmOeB3+E7Cd5SXlzVVhq6Uff4Y4VmzcF37cmU96BORNrF93X0Ncs1VeEYUP
- hO3SqUX0wyJGR9xooUPWBupWquIjDTEjwYd5TbvRYdK9oUwx6AHL8eD4yxJPzpXWEU3v
- A4Fw==
+ bh=WdM1+Mlmlw/7q1fz2L115JqpGnkud5UgwC7sjxwk2r4=;
+ b=BKoWug4rTqnCyeEL9+zYgTO+4s9KEETTTUYaK1EikHTwkFhvg2HyPw1KPp6UDEbS9P
+ ut3nltxvJATkp0+Xe5uDyZ1IfdaWG1nh4MY08UyPft3jnt04H/pqt7mUMCF4lN8mWs6E
+ IGHOnf6l27CeE0S56ZnVoY0oUsDrJu+Uzh4tQ5y0vGHV4fdV6Ywypf8f1hEcdkwx/S0e
+ TWGdDs0eWx30SG16E6s4Ch+dyildbu13dErDDg9HGgJLocDvhHy+/aaBv5TwJXeK5wdg
+ jzvLPeBhsQN0TemxWJnhxSHdNrdhMpVry5Wg3pivAAdhwYRUIgNLSmp5E36qFGmyrYO5
+ Hmxg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1738779060; x=1739383860;
+ d=1e100.net; s=20230601; t=1738779180; x=1739383980;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=y6wtcydVQZupMutRL0JRwISF7OXd17oMzRlS5uxaleE=;
- b=M/+MYyTqUnLRHSJb6r4CxVmdIazKCwwRtruuhEd46bCfeQWVDSRn2wCTBJKPZUnFjl
- Vy/wpzaOKNd09m8l8ayfBTiwceVhOVkvkJ3Gw0IF7+lCPStzC2VWNDO9yl/2njRDCNcn
- 2MKd3HQStsWZRSAAxO2hkh7kpgErEhI70A1jlO/nPMMALLHJAYWHjPzn4ip69Nau5U08
- FwZFHup3Ko+s1srUGyQjAcdiigBUU1mISIKwTMiDrem1PIdbFNRcKywGooSV+7Pbv1ZB
- Xe/obz6rN8XuMewmBzjgUkApLyhdjxM8sAMgUJ3He4XXU50cL0ofMA1KToN5B1lwjGJJ
- 4uHg==
+ bh=WdM1+Mlmlw/7q1fz2L115JqpGnkud5UgwC7sjxwk2r4=;
+ b=YaQOP7KNMIe5D7/cj7NKVIgZ+KDL2iDtD2TG0gnUcYxbwHBZC6dMHEIsW95xaIP/1k
+ SBwrUspezLV3sDMnJZ59MuhdsdpOb5aqDhGeXo5Mv1B3wxFOCfgCAYPqKO073nZyEqJE
+ 8Uof/mltJnZqFFvx1X0OP+1S9xNHDnk6D5STDhikH2VLRz8viJ+Emndx+oag0yRAurO4
+ /e013+FrfLHqstLGmgyZxAS1hxUbiCiqsTBzAQJYSnOptYZ41oZfcYhb3R4oZUWOL84r
+ 0VRcdn8NM2RqR+cvadr119jDvTv5zu3Hgm+0EbLEslgZK1SKhT3Jia8D8l60jHT2CDXJ
+ /U6w==
 X-Forwarded-Encrypted: i=1;
- AJvYcCUel2nxs3mR3RheoySEwjqYFqMsvA5t8/JMuQ2NXLgBLyyreV3mxhG2UhMrD8MQ227wgGre18ihZxeM@nongnu.org
-X-Gm-Message-State: AOJu0YwUzaL33cNWz8NMa+/c5z2yN/VDpFM3+kopqhM7jRIKGvqQiO01
- DoyulzpuAgpsIpoWI3/kJWIwIMHFvnbKBqX1sq2kDi0WiKv2O8x6uBj/k8Rz3RM=
-X-Gm-Gg: ASbGncva8u6q3yCKGPQOItsgbPEDcGzZZnAOc8CjYPrnxE2nw9C8FXiEZE/aqJhkjiB
- A6gm3NaT/1fgJmBJi49A2g0MfS9TJan+ehgfW1co92Zzyqo+OF7ce0jttu7mIFdSCi4ZCmSItVc
- Z2HbRz4qEkiB8WVJqzsnFAF6DiclUPJsyP74KEDucgTqiR5OM+JjaO2jtapaQCzlLvO79XJ0Wf1
- nGyaDfv97AglFLF4yXQK0wBzeyhpbyGqlkSdvz4tyAtPt+JsFN02XBJ2OvCJlqveeHqb61ROlRT
- TGUT4OAShH0pW7GFMK/7MeqOoH3+sqlwFHG4cuha0OImfPQ1/ht3T/L9Yno=
-X-Google-Smtp-Source: AGHT+IFnv0aQDAroYKHV0WlbZak+DYoyNJhn9GfH4RpXovF9yXI8P57n/XQBgNdq18r4PamglUQdNQ==
-X-Received: by 2002:a05:600c:1f83:b0:435:d22:9c9e with SMTP id
- 5b1f17b1804b1-4390d55fda2mr27471935e9.19.1738779060330; 
- Wed, 05 Feb 2025 10:11:00 -0800 (PST)
-Received: from [192.168.69.198] (88-187-86-199.subs.proxad.net.
- [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-38c5c1b57a8sm19737179f8f.61.2025.02.05.10.10.58
+ AJvYcCX0RXCl5lXRZkjeaVYDL+dM8AJR05vDKx7Y1sYnDQDom9sgZ4+ZwxHGmmCsrDEro4S7jDODyXrGwIJS@nongnu.org
+X-Gm-Message-State: AOJu0YwkURs12ekBuQUpl69fFvZVapeUjyhKJpLv9DD0ZvA33DR1JrGe
+ tf5BFJBon2l7PDzrvDsCiF9e5yxpb6Nn2IVq0Hc6KNQadPTRWH4CEHXVZ2nGU2U=
+X-Gm-Gg: ASbGncvB1/GJC1RjdcpH8n2bzS32Q9n42YjaOWwqVWo1tl7F3pdP69PkqKBUghW5M0v
+ +rSo2WzqMFPHGIrHbTlNdcHFlTTFRC3l1KN1IidOd6L9WrkbltDk84rKEEhuj/UlxAnN2TLbAkq
+ /kcm9I4St0Q/LkBjSy1+IaM9jIcCsH+FK05Q+Z41c4b4NA1nQpvs3r2H+9OPsJatbpBByYVYS/L
+ NxrpwcNvhXSr4n4KxUq4F6ZKo9zWpOtLHi8kd48zf8WuylNxE7+uV2Bgz7fHIIVOMsTruTDpxw/
+ wYEg+ONp4tYbKAHv3IFv5CZgJFjsTG1h6HvVpVLcGOmOVjxQ/7tXKeo=
+X-Google-Smtp-Source: AGHT+IFkzEnZy2OpTHxupxcEldsfzpRUJt2BnpkhlTvfb8Bc7rv5mmpaAlT8rnr1esJy49T9xww+aQ==
+X-Received: by 2002:a17:90b:4cd2:b0:2ee:c918:cd60 with SMTP id
+ 98e67ed59e1d1-2f9e078b720mr5947260a91.20.1738779179964; 
+ Wed, 05 Feb 2025 10:12:59 -0800 (PST)
+Received: from [192.168.0.4] (71-212-39-66.tukw.qwest.net. [71.212.39.66])
+ by smtp.gmail.com with ESMTPSA id
+ 98e67ed59e1d1-2f9e1d7a61esm1901567a91.19.2025.02.05.10.12.59
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 05 Feb 2025 10:10:59 -0800 (PST)
-Message-ID: <cc846f3c-ca84-4acf-a4f6-bb1685e91b6c@linaro.org>
-Date: Wed, 5 Feb 2025 19:10:58 +0100
+ Wed, 05 Feb 2025 10:12:59 -0800 (PST)
+Message-ID: <502c72da-9079-46d8-9d1c-4a63d2da86c4@linaro.org>
+Date: Wed, 5 Feb 2025 10:12:58 -0800
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [RFC PATCH 9/9] hw/xen: Have legacy Xen backend inherit from
- DYNAMIC_SYS_BUS_DEVICE
-To: Bernhard Beschow <shentey@gmail.com>, qemu-devel@nongnu.org
-Cc: Yi Liu <yi.l.liu@intel.com>, Markus Armbruster <armbru@redhat.com>,
- Eduardo Habkost <eduardo@habkost.net>,
- Anthony PERARD <anthony@xenproject.org>,
- Gustavo Romero <gustavo.romero@linaro.org>, Jason Wang
- <jasowang@redhat.com>, qemu-ppc@nongnu.org,
- "Michael S. Tsirkin" <mst@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
- Alexander Graf <graf@amazon.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- Stefan Berger <stefanb@linux.vnet.ibm.com>,
- Stefano Stabellini <sstabellini@kernel.org>,
- Gerd Hoffmann <kraxel@redhat.com>, =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?=
- <berrange@redhat.com>, "Edgar E. Iglesias" <edgar.iglesias@gmail.com>,
- xen-devel@lists.xenproject.org, Marcel Apfelbaum
- <marcel.apfelbaum@gmail.com>, Alex Williamson <alex.williamson@redhat.com>,
- Paul Durrant <paul@xen.org>,
- =?UTF-8?Q?Cl=C3=A9ment_Mathieu--Drif?= <clement.mathieu--drif@eviden.com>,
- =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
-References: <20250125181343.59151-1-philmd@linaro.org>
- <20250125181343.59151-10-philmd@linaro.org>
- <9A2B297A-6270-4482-B1B6-81F518C07C1E@gmail.com>
- <02ea4b41-3594-4ead-90d3-0ab06f2be7fa@linaro.org>
- <685742EB-EDAA-488F-852C-C0AA24BD4721@gmail.com>
+Subject: Re: [PATCH v3 11/12] meson: Deprecate 32-bit host support
+To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ qemu-devel@nongnu.org, berrange@redhat.com
+Cc: pbonzini@redhat.com, mark.cave-ayland@ilande.co.uk, thuth@redhat.com,
+ =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
+References: <20250204215359.1238808-1-richard.henderson@linaro.org>
+ <20250204215359.1238808-12-richard.henderson@linaro.org>
+ <adce8772-d473-4b1d-b0f4-1f921ce89932@linaro.org>
 Content-Language: en-US
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <685742EB-EDAA-488F-852C-C0AA24BD4721@gmail.com>
+From: Richard Henderson <richard.henderson@linaro.org>
+In-Reply-To: <adce8772-d473-4b1d-b0f4-1f921ce89932@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::331;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x331.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1035;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pj1-x1035.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -121,84 +106,60 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 5/2/25 00:12, Bernhard Beschow wrote:
-> 
-> 
-> Am 4. Februar 2025 21:25:46 UTC schrieb "Philippe Mathieu-Daudé" <philmd@linaro.org>:
->> Hi Bernhard,
+On 2/5/25 10:05, Philippe Mathieu-Daudé wrote:
+> On 4/2/25 22:53, Richard Henderson wrote:
+>> We deprecated i686 system mode support for qemu 8.0.  However, to
+>> make real cleanups to TCG we need to deprecate all 32-bit hosts.
 >>
->> On 27/1/25 10:46, Bernhard Beschow wrote:
->>> Am 25. Januar 2025 18:13:43 UTC schrieb "Philippe Mathieu-Daudé" <philmd@linaro.org>:
->>>> Because the legacy Xen backend devices can optionally be plugged on the
->>>> TYPE_PLATFORM_BUS_DEVICE, have it inherit TYPE_DYNAMIC_SYS_BUS_DEVICE.
->>>> Remove the implicit TYPE_XENSYSDEV instance_size.
->>>>
->>>> Untested, but I'm surprised the legacy devices work because they
->>>> had a broken instance size (QDev instead of Sysbus...), so accesses
->>>> of XenLegacyDevice fields were overwritting sysbus ones.
->>>>
->>>> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
->>>> ---
->>>> include/hw/xen/xen_pvdev.h  | 3 ++-
->>>> hw/xen/xen-legacy-backend.c | 7 ++-----
->>>> 2 files changed, 4 insertions(+), 6 deletions(-)
->>>>
->>>> diff --git a/include/hw/xen/xen_pvdev.h b/include/hw/xen/xen_pvdev.h
->>>> index 0c984440476..48950dc2b57 100644
->>>> --- a/include/hw/xen/xen_pvdev.h
->>>> +++ b/include/hw/xen/xen_pvdev.h
->>>> @@ -32,7 +32,8 @@ struct XenDevOps {
->>>> };
->>>>
->>>> struct XenLegacyDevice {
->>>> -    DeviceState        qdev;
->>>> +    SysBusDevice parent_obj;
->>>
->>> This then needs sysbus.h rather than qdev-core.h include.
->>>
->>> Moreover, the patch in the reply needs to be inserted into the series before this patch.
->>>
->>> Both are needed for the patch to compile.
->>
->> Per your reply on patch #7, might I include your
->>
->> Tested-by: Bernhard Beschow <shentey@gmail.com>
->> Acked-by: Bernhard Beschow <shentey@gmail.com>
->> (or R-b)
-> 
-> I only did a compile test and I'm not a Xen maintainer, so I guess above tags don't apply. Right?
-
-Indeed, A-b is preferable for maintainers, but its meaning depends.
-
-Xen maintainers have been Cc'ed for 2 weeks. If they report a problem,
-we can still revert.
-
-
-> 
-> 
->>
->> squashing:
->>
->> -- >8 --
->> diff --git a/include/hw/xen/xen_pvdev.h b/include/hw/xen/xen_pvdev.h
->> index 48950dc2b57..629bec90d09 100644
->> --- a/include/hw/xen/xen_pvdev.h
->> +++ b/include/hw/xen/xen_pvdev.h
->> @@ -1,7 +1,7 @@
->> #ifndef QEMU_HW_XEN_PVDEV_H
->> #define QEMU_HW_XEN_PVDEV_H
->>
->> -#include "hw/qdev-core.h"
->> +#include "hw/sysbus.h"
->> #include "hw/xen/xen_backend_ops.h"
->>
->> /* ------------------------------------------------------------- */
+>> Reviewed-by: Thomas Huth <thuth@redhat.com>
+>> Reviewed-by: Alex Bennée <alex.bennee@linaro.org>
+>> Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 >> ---
+>>   docs/about/deprecated.rst | 7 +++++++
+>>   meson.build               | 8 +++-----
+>>   2 files changed, 10 insertions(+), 5 deletions(-)
 >>
->> ?
+>> diff --git a/docs/about/deprecated.rst b/docs/about/deprecated.rst
+>> index 4a3c302962..7c61d0ba16 100644
+>> --- a/docs/about/deprecated.rst
+>> +++ b/docs/about/deprecated.rst
+>> @@ -204,6 +204,13 @@ is going to be so much slower it wouldn't make sense for any serious
+>>   instrumentation. Due to implementation differences there will also be
+>>   anomalies in things like memory instrumentation.
+>> +32-bit host operating systems (since 10.0)
+>> +''''''''''''''''''''''''''''''''''''''''''
+>> +
+>> +Keeping 32-bit host support alive is a substantial burden for the
+>> +QEMU project.  Thus QEMU will in future drop the support for all
+>> +32-bit host systems.
+>> +
+>>   System emulator CPUs
+>>   --------------------
+>> diff --git a/meson.build b/meson.build
+>> index aa1ca8355d..3347b0a553 100644
+>> --- a/meson.build
+>> +++ b/meson.build
+>> @@ -4843,14 +4843,12 @@ if host_arch == 'unknown'
+>>       message('configure has succeeded and you can continue to build, but')
+>>       message('QEMU will use a slow interpreter to emulate the target CPU.')
+>>     endif
+>> -elif host_arch == 'mips'
+>> +elif host_long_bits < 64
+>>     message()
+>>     warning('DEPRECATED HOST CPU')
+>>     message()
+>> -  message('Support for CPU host architecture ' + cpu + ' is going to be')
+>> -  message('dropped as soon as the QEMU project stops supporting Debian 12')
+>> -  message('("Bookworm"). Going forward, the QEMU project will not guarantee')
+>> -  message('that QEMU will compile or work on this host CPU.')
+>> +  message('Support for 32-bit CPU host architecture ' + cpu + ' is going')
+>> +  message('to be dropped in a future QEMU release.')
 > 
-> With the squash applied:
-> Reviewed-by: Bernhard Beschow <shentey@gmail.com>
+> This change still allows us to remove 32-bit mips host support before
+> the other architectures, right?
+No, bookworm goes into LTS in June 2026, which would match QEMU 11.1 release.
+If we add this now, we could (selectively) remove 32-bit support earlier than that.
 
-Thanks!
+
+r~
 
