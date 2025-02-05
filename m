@@ -4,92 +4,74 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CE7A4C02192
-	for <qemu-devel@archiver.kernel.org>; Wed,  5 Feb 2025 20:09:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2A7D3C02192
+	for <qemu-devel@archiver.kernel.org>; Wed,  5 Feb 2025 20:37:26 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tflhK-0005El-Cd; Wed, 05 Feb 2025 15:08:34 -0500
+	id 1tfm8K-0003iZ-Mo; Wed, 05 Feb 2025 15:36:28 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <dmitry.osipenko@collabora.com>)
- id 1tflhI-0005Ed-CE
- for qemu-devel@nongnu.org; Wed, 05 Feb 2025 15:08:32 -0500
-Received: from sender4-pp-f112.zoho.com ([136.143.188.112])
+ (Exim 4.90_1) (envelope-from <eblake@redhat.com>) id 1tfm8H-0003iI-UW
+ for qemu-devel@nongnu.org; Wed, 05 Feb 2025 15:36:25 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <dmitry.osipenko@collabora.com>)
- id 1tflhG-0001dw-FX
- for qemu-devel@nongnu.org; Wed, 05 Feb 2025 15:08:32 -0500
-ARC-Seal: i=1; a=rsa-sha256; t=1738786093; cv=none; 
- d=zohomail.com; s=zohoarc; 
- b=j48lG7OuTeb/n2gZZaOeXpu3tQFaKNJvmSMCS0ahHgkCIB53DVyGPJEsZdf+9016SlV3Lh5qkJkF5CBXQwQ0xKN0HGG6xhYKbIAicF5h20R+tUD385VONniRXPMMbkoE5P6jjC00YmHLT2YWrtUbhAjE/QHhBkz9dN3iLdB9iQk=
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=zohomail.com;
- s=zohoarc; t=1738786093;
- h=Content-Type:Content-Transfer-Encoding:Cc:Cc:Date:Date:From:From:In-Reply-To:MIME-Version:Message-ID:References:Subject:Subject:To:To:Message-Id:Reply-To;
- bh=Oxpa9QqI016jNflBym9USoEhlSxOEJUbtVOVpqvSJtM=; 
- b=nsWxGo7uZbh3jA7ckpB+Snc312iR48moyRQlDapbt5TVKH1OWQPqpUGIie8LM+poRjFjwZGb4Xx9JBm1ctXXjMjd5EsWps7n7ENJFacDr5HQSjuJLPjqyuX1W3jtG2nO91T/qjAb6zOZL7D7eXUVufHbOvNKqLZu1VRz2ZhUKHg=
-ARC-Authentication-Results: i=1; mx.zohomail.com;
- dkim=pass  header.i=collabora.com;
- spf=pass  smtp.mailfrom=dmitry.osipenko@collabora.com;
- dmarc=pass header.from=<dmitry.osipenko@collabora.com>
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; t=1738786093; 
- s=zohomail; d=collabora.com; i=dmitry.osipenko@collabora.com; 
- h=Message-ID:Date:Date:MIME-Version:Subject:Subject:To:To:Cc:Cc:References:From:From:In-Reply-To:Content-Type:Content-Transfer-Encoding:Message-Id:Reply-To;
- bh=Oxpa9QqI016jNflBym9USoEhlSxOEJUbtVOVpqvSJtM=;
- b=Ee8HqoVTKPImWAa2xxuv5fNT55wJUNIHrclqJMwFyCRwJ8tiNsmxIGMXU5Wh2lKd
- 0p0axn9MDxem69bVE0kQMlda/XWmlp1rPJZuXBilBRG9daE5IY2aaOd7jEAqLmaP//P
- utAyTG+PQV+BlLHK5eP+YL2DBu7i1bMktaraAmQs=
-Received: by mx.zohomail.com with SMTPS id 1738786090024514.4967380560064;
- Wed, 5 Feb 2025 12:08:10 -0800 (PST)
-Message-ID: <4250091a-d823-4bcc-89ce-80f3f26f3be4@collabora.com>
-Date: Wed, 5 Feb 2025 23:08:03 +0300
+ (Exim 4.90_1) (envelope-from <eblake@redhat.com>) id 1tfm8E-0006f4-Ir
+ for qemu-devel@nongnu.org; Wed, 05 Feb 2025 15:36:25 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1738787777;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=dTtu97mYPDT6lt01NgndwdaNszNX/rDl8Gxuw8TjIi4=;
+ b=VJj3sMQSHc8TyYetibGUJqEfMGCXNhmHrPxG6h1Tq3FLHsgJ7h6V29LoTcuxXu/M8Fzfl/
+ NZ3F0u6WtmcxN8dji+/PvyM0JfDwuLawZTWAC8g6nkCXQR7HfBbkrHYidour4S7KJN+1FO
+ wtu/sVTPKSoc+TsJQTsrUDMR2BmLjuo=
+Received: from mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-553-TlBe0M0xNq6X3iRk1RUYpg-1; Wed,
+ 05 Feb 2025 15:36:13 -0500
+X-MC-Unique: TlBe0M0xNq6X3iRk1RUYpg-1
+X-Mimecast-MFC-AGG-ID: TlBe0M0xNq6X3iRk1RUYpg
+Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id AACA31955DB8; Wed,  5 Feb 2025 20:36:11 +0000 (UTC)
+Received: from redhat.com (unknown [10.2.16.50])
+ by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 0C8C9195608D; Wed,  5 Feb 2025 20:36:08 +0000 (UTC)
+Date: Wed, 5 Feb 2025 14:36:05 -0600
+From: Eric Blake <eblake@redhat.com>
+To: Markus Armbruster <armbru@redhat.com>
+Cc: qemu-devel@nongnu.org, qemu-block@nongnu.org, 
+ Kevin Wolf <kwolf@redhat.com>, Hanna Reitz <hreitz@redhat.com>, 
+ Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
+Subject: Re: [PATCH 2/2] nbd/server: Allow users to adjust handshake limit in
+ QMP
+Message-ID: <ia55sowaqjkpwbq7yum42m5vuw5octffzx6sqsvwsnsueqaf54@cetnceyik5op>
+References: <20250203222722.650694-4-eblake@redhat.com>
+ <20250203222722.650694-6-eblake@redhat.com>
+ <87h6587udf.fsf@pond.sub.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v6 00/10] Support virtio-gpu DRM native context
-To: "Kim, Dongwon" <dongwon.kim@intel.com>,
- =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
-Cc: "Kasireddy, Vivek" <vivek.kasireddy@intel.com>,
- Akihiko Odaki <akihiko.odaki@daynix.com>, Huang Rui <ray.huang@amd.com>,
- =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
- =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Gerd Hoffmann <kraxel@redhat.com>, "Michael S . Tsirkin" <mst@redhat.com>,
- Paolo Bonzini <pbonzini@redhat.com>, Gert Wollny
- <gert.wollny@collabora.com>, "qemu-devel@nongnu.org"
- <qemu-devel@nongnu.org>, Gurchetan Singh <gurchetansingh@chromium.org>,
- Alyssa Ross <hi@alyssa.is>, =?UTF-8?Q?Pau_Monn=C3=A9=2C_Roger?=
- <roger.pau@citrix.com>, Alex Deucher <alexander.deucher@amd.com>,
- Stefano Stabellini <stefano.stabellini@amd.com>,
- =?UTF-8?Q?Christian_K=C3=B6nig?= <christian.koenig@amd.com>,
- Xenia Ragiadakou <xenia.ragiadakou@amd.com>,
- Pierre-Eric Pelloux-Prayer <pierre-eric.pelloux-prayer@amd.com>,
- Honglei Huang <honglei1.huang@amd.com>, Julia Zhang <julia.zhang@amd.com>,
- Chen Jiqian <Jiqian.Chen@amd.com>, Rob Clark <robdclark@gmail.com>,
- Yiwei Zhang <zzyiwei@chromium.org>, Sergio Lopez Pascual <slp@redhat.com>
-References: <20250126201121.470990-1-dmitry.osipenko@collabora.com>
- <87cyg844fr.fsf@draig.linaro.org>
- <5aedf1ad-d9b0-4edb-a050-f3d9bee9bccb@collabora.com>
- <87ikprflbb.fsf@draig.linaro.org>
- <PH8PR11MB6879D81CAA931B0718DF3B1EFAF52@PH8PR11MB6879.namprd11.prod.outlook.com>
- <878qqmbzb9.fsf@draig.linaro.org>
- <SA1PR11MB6870F6C4479128EA3CBF9543FAF42@SA1PR11MB6870.namprd11.prod.outlook.com>
- <63a991d6-dfb5-4a7d-80d0-4c31673d3251@collabora.com>
- <PH8PR11MB687958C8B4F275CA4D9BD614FAF72@PH8PR11MB6879.namprd11.prod.outlook.com>
-From: Dmitry Osipenko <dmitry.osipenko@collabora.com>
-Content-Language: en-US
-In-Reply-To: <PH8PR11MB687958C8B4F275CA4D9BD614FAF72@PH8PR11MB6879.namprd11.prod.outlook.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-ZohoMailClient: External
-Received-SPF: pass client-ip=136.143.188.112;
- envelope-from=dmitry.osipenko@collabora.com; helo=sender4-pp-f112.zoho.com
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <87h6587udf.fsf@pond.sub.org>
+User-Agent: NeoMutt/20250113
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=eblake@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -105,23 +87,50 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 2/5/25 21:53, Kim, Dongwon wrote:
-> Thanks for showing me the video. I will take a look and check what would go wrong here. I kinda understand corruption may happen
-> in some scenario but I don't know what could cause the upside down image. Do you have any idea?? Maybe the frame was temporarily replaced with
-> a mishandled texture that QEMU creates from the surface temporarily but I am not sure..
+On Wed, Feb 05, 2025 at 07:55:56AM +0100, Markus Armbruster wrote:
+> Eric Blake <eblake@redhat.com> writes:
+> 
+> > Although defaulting the handshake limit to 10 seconds was a nice QoI
+> > change to weed out intentionally slow clients, it can interfere with
+> > integration testing done with manual NBD_OPT commands over 'nbdsh
+> > --opt-mode'.  Expose a QMP knob 'handshake-max-secs' to allow the user
+> > to alter the timeout away from the default.
+> >
+> > The parameter name here intentionally matches the spelling of the
+> > constant added in commit fb1c2aaa98, and not the command-line spelling
+> > added in the previous patch for qemu-nbd; that's because in QMP,
+> > longer names serve as good self-documentation, and unlike the command
+> > line, machines don't have problems generating longer spellings.
+> >
 
-No clue. Could be anything. Could be a GTK/Wayland bug, could be an
-obscure QEMU bug. GTK expert wanted here.
+> >  { 'struct': 'NbdServerOptions',
+> >    'data': { 'addr': 'SocketAddress',
+> > +            '*handshake-max-secs': 'uint32',
+> >              '*tls-creds': 'str',
+> >              '*tls-authz': 'str',
+> >              '*max-connections': 'uint32' } }
+> 
+> Standard question on time: are we confident the granularity will
+> suffice?
 
-> In the worst case scenario, I think we may have to revert the change from gtk-gl-area.c for now until the problem is root-caused.
+The default if this is unspecified is 10 seconds.  Anything subsecond
+requires a fast negotiation between client and server; the more likely
+use of this parameter is setting it extremely large (or to 0 to
+disable) in order to allow lengthy gdb sessions without the timeout
+cutting things short.  So I think seconds is okay.
 
-Good to me
+> 
+> On naming...  We use "seconds" (StatsUnit in qapi/stats.json), and "sec"
+> (SnapshotInfo in qapi/block-core.json), but not "secs".  Do we care?
 
-> But you would see some rendering timeout in case the GTK window is in invisible state (like minimization).
-
-No timeouts observed
+Avoiding abbreviations and using 'seconds' is fine by me, especially
+since this won't be typed by many users but remains more of a tool for
+use in a debugging arsenel.  I can respin with the longer name, but
+will wait for any other review comments first.
 
 -- 
-Best regards,
-Dmitry
+Eric Blake, Principal Software Engineer
+Red Hat, Inc.
+Virtualization:  qemu.org | libguestfs.org
+
 
