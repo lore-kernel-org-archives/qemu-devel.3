@@ -4,47 +4,47 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 17EA0C0219B
-	for <qemu-devel@archiver.kernel.org>; Wed,  5 Feb 2025 23:16:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 39646C02192
+	for <qemu-devel@archiver.kernel.org>; Wed,  5 Feb 2025 23:17:04 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tfobo-0007oz-Hn; Wed, 05 Feb 2025 18:15:08 -0500
+	id 1tfodL-0004H7-WD; Wed, 05 Feb 2025 18:16:40 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1tfobh-0007XL-GY
- for qemu-devel@nongnu.org; Wed, 05 Feb 2025 18:14:57 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1tfodA-00032S-Cn
+ for qemu-devel@nongnu.org; Wed, 05 Feb 2025 18:16:28 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1tfobd-0005pn-Mv
- for qemu-devel@nongnu.org; Wed, 05 Feb 2025 18:14:55 -0500
+ (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1tfod8-0006cR-PG
+ for qemu-devel@nongnu.org; Wed, 05 Feb 2025 18:16:28 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1738797292;
+ s=mimecast20190719; t=1738797386;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=m9futkH/ebd24DorEZYDcyRn0hD00MnyYySGtGvW7lc=;
- b=eaMqDax9fP30KN+V0Vhc+OgJMeZvyEYwMqXooDcFHlHd0B30pfN0rTCE7ssu4vvJ4K4usH
- 7kjCm6PiinJDCbdBU0yW+psqWzJPz+sCGjRc3zbaox0+Ay0Fe2OwypeT2VQXllGNVDnQti
- Q0tr/w2YxLYsHn0vIzwdwWO1ExUYgDI=
-Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ bh=t/9paVO1pxyYJ28kkMcOqfaSWRKUzMpG7ObtwDsDFz4=;
+ b=ebaQuPNCEXx37rp9o+KiS4QjHryuGvTPF5aWybi8OvCxCxMQCDCssXkwMS6tOf7LfudKew
+ I1YT76uHgYkstH+MXVqumnZeAYbtt4R8J2FTeoySfAaRj2ZB1o0LrrYrBb7R5nEdRUHDku
+ t/n/jntHsWhjTAg1QhVPmAvbkyOlNHE=
+Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-230-O_x7xatMNxejC_Za19dAKA-1; Wed,
- 05 Feb 2025 18:14:49 -0500
-X-MC-Unique: O_x7xatMNxejC_Za19dAKA-1
-X-Mimecast-MFC-AGG-ID: O_x7xatMNxejC_Za19dAKA
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-327-i4VCLBLQOO6UrHVfXJVynA-1; Wed,
+ 05 Feb 2025 18:16:24 -0500
+X-MC-Unique: i4VCLBLQOO6UrHVfXJVynA-1
+X-Mimecast-MFC-AGG-ID: i4VCLBLQOO6UrHVfXJVynA
 Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id E2DEB1956094; Wed,  5 Feb 2025 23:14:47 +0000 (UTC)
+ by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 0DB9C1800981; Wed,  5 Feb 2025 23:16:23 +0000 (UTC)
 Received: from jsnow-thinkpadp16vgen1.westford.csb (unknown [10.22.66.104])
  by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 8BDF21800265; Wed,  5 Feb 2025 23:14:42 +0000 (UTC)
+ id 8EC9D1800570; Wed,  5 Feb 2025 23:16:16 +0000 (UTC)
 From: John Snow <jsnow@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Peter Maydell <peter.maydell@linaro.org>, Thomas Huth <thuth@redhat.com>,
@@ -59,22 +59,22 @@ Cc: Peter Maydell <peter.maydell@linaro.org>, Thomas Huth <thuth@redhat.com>,
  Jason Wang <jasowang@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  John Snow <jsnow@redhat.com>
-Subject: [PATCH 25/42] docs/qapidoc: generate entries for undocumented members
-Date: Wed,  5 Feb 2025 18:11:51 -0500
-Message-ID: <20250205231208.1480762-26-jsnow@redhat.com>
+Subject: [PATCH 40/42] docs/qapidoc: cull (most) un-named entities from docs
+Date: Wed,  5 Feb 2025 18:12:06 -0500
+Message-ID: <20250205231208.1480762-41-jsnow@redhat.com>
 In-Reply-To: <20250205231208.1480762-1-jsnow@redhat.com>
 References: <20250205231208.1480762-1-jsnow@redhat.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=jsnow@redhat.com;
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=jsnow@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -92,36 +92,33 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Presently, we never have any empty text entries for members. The next
-patch will explicitly generate such sections, so enable support for it
-in advance.
-
-The parser will generate placeholder sections to indicate undocumented
-members, but it's the qapidoc generator that's responsible for deciding
-what to do with that stub section.
+This patch excludes any items not marked visible from the transmogrifier
+output. The legacy qapidoc mechanism continues to ignore this flag, so
+the existing docs are not effected.
 
 Signed-off-by: John Snow <jsnow@redhat.com>
 ---
- docs/sphinx/qapidoc.py | 3 +--
- 1 file changed, 1 insertion(+), 2 deletions(-)
+ docs/sphinx/qapidoc.py | 7 +++++++
+ 1 file changed, 7 insertions(+)
 
 diff --git a/docs/sphinx/qapidoc.py b/docs/sphinx/qapidoc.py
-index 5d946a46637..2d83556629d 100644
+index 86c13520d94..e7da5b2225f 100644
 --- a/docs/sphinx/qapidoc.py
 +++ b/docs/sphinx/qapidoc.py
-@@ -221,11 +221,10 @@ def visit_member(self, section: QAPIDoc.ArgSection) -> None:
-         # TODO?: features for members (documented at entity-level,
-         # but sometimes defined per-member. Should we add such
-         # information to member descriptions when we can?)
--        assert section.text
-         self.generate_field(
-             self.member_field_type,
-             section.member,
--            section.text,
-+            section.text if section.text else "(Not Documented.)",
-             section.info,
-         )
+@@ -616,6 +616,13 @@ def visit_freeform(self, doc) -> None:
+     def visit_entity(self, ent):
+         assert ent is not None
  
++        # Some entities need not be rendered; they are not exposed via
++        # introspection and are only relevant for purposes of
++        # inlining/inheritance. They don't need their own entries and
++        # don't need to be in the index.
++        if not ent.doc_visible:
++            return
++
+         try:
+             self._curr_ent = ent
+             # This line gets credited to the start of the /definition/.
 -- 
 2.48.1
 
