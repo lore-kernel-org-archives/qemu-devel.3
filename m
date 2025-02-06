@@ -4,90 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 129E1C02194
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 23BA7C3DA4A
 	for <qemu-devel@archiver.kernel.org>; Thu,  6 Feb 2025 12:14:38 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tg0lk-0003UQ-U0; Thu, 06 Feb 2025 07:14:09 -0500
+	id 1tg0lE-0003QO-NP; Thu, 06 Feb 2025 07:13:36 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <corvin.koehne@gmail.com>)
- id 1tg0li-0003Tn-FH
- for qemu-devel@nongnu.org; Thu, 06 Feb 2025 07:14:06 -0500
-Received: from mail-ed1-x52f.google.com ([2a00:1450:4864:20::52f])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <corvin.koehne@gmail.com>)
- id 1tg0lf-0004UB-LY
- for qemu-devel@nongnu.org; Thu, 06 Feb 2025 07:14:06 -0500
-Received: by mail-ed1-x52f.google.com with SMTP id
- 4fb4d7f45d1cf-5dcd8d6f130so1724144a12.1
- for <qemu-devel@nongnu.org>; Thu, 06 Feb 2025 04:13:59 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1738844038; x=1739448838; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=RI3fpWvES9nsmK1npycauoVJ3MRfZujDLujPDGvVXx4=;
- b=E2iCUAJ3ss+1jP/6s+4fHHVfRu3VX8oGGwdvX2JVGOTfon29EVUFeTMxLkYP1LKAaq
- v3rRd3CrixBl1NwTxi7qkaH9sfX5y1pN58x+Q1zCC9x7rTVKy+LFZU1eJMeiY4yxqRy6
- HuyVpwWBZAAfG583TpXpuWxbY0ur56l/OalwhOT57DdpWeQndFA7jJOn3P9fbrfZb51Z
- 9zC2dY6YOmwuCZ3TJnQUNTRqmQUw3M1kA4RbCUq12KmvPjGGheFNnGfNbKWSEsK7o26o
- eaaIgrvZfKVxLarJfnYj++TJ3AX7nlm6SJ1nRjqY1caT/x8/c5ebxJWH5aL6CLAT57Yr
- l+sw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1738844038; x=1739448838;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=RI3fpWvES9nsmK1npycauoVJ3MRfZujDLujPDGvVXx4=;
- b=XlW4SKrEeaaktEtm8NsXgXBYf3wVZa3VUBMtSKWFLMgf6cqxPJNFJ2BefIS+Urg49r
- 3AW1UwZQpBNMop9T56GoWV7brr36bxl3yTfE4Say/hbp6t9ZLZRQJKRPnONibnsUxqsm
- Y8DjpQcxFUh3peXLaVq3SNja4fpeoorLJEiSIj5EQ9kgKIWjKwuAbLL7POUjo/3xmfHI
- zzfrNJPfw9Pz5JeLyRBRnFr1kDoj7Aa0N4sPVTfpAGgfFPHJ1REJau3HreovLwxCGCmI
- NlU7pToVzof9hSG/GjLIIu7lvUOZ7J3ILASOYWimTPk4xShTZP+XRlqYMejwaGmZ0/yi
- 8LDw==
-X-Gm-Message-State: AOJu0YwuUnvwiDsHUiqdHoa1xE7yw8QujfyTKB3ql/8vt8dAkRWAyHA1
- F3Xdd+5JUfhF+xCIjMIPPVNOaS1UpjEW4b9LXUW+TFyMW9mXDkpExxqzHfCuG/4=
-X-Gm-Gg: ASbGncs19mFKMs3c8YpETcW1xew0jocrIeJnAMBmSpU/tVIhCc7Byqc/4twrQa4GR6w
- psjIV78jo7QzrDwQesgNhNPX7T7ILFkPvS/UVe8BA89kAd5Moz7QfrzOR0VguiPKRHtQk/rHdou
- rpFPVfpMnzUgsY4yPdjmwC9AsWKDBw2gOMjvI0es7tUvN3CsA1MaEunvqS9lyatriDQ/evWaPXZ
- 48tiK3sTS3AjPrg8lY9VGHweICcF3yutvU6DulT5ApzePt1bN+hCTBiPoZwBlsTKZk2JBiA6Z4L
- kDzDwT5wXL3SxEYi/h6C2vSJ060bmjGMiNhrTVr+/Fw=
-X-Google-Smtp-Source: AGHT+IG2BWYp9o1ybtcBhvSn8/nVOb6YVvkETf8bCmJs87YYrsk25K8RI10lDIzzQPf9SDjM8L7FQQ==
-X-Received: by 2002:a05:6402:2397:b0:5dc:ebf3:b967 with SMTP id
- 4fb4d7f45d1cf-5dcebf3be3amr2206612a12.23.1738844037812; 
- Thu, 06 Feb 2025 04:13:57 -0800 (PST)
-Received: from corvink-nb.tail0f5ff.ts.net ([195.226.174.194])
- by smtp.gmail.com with ESMTPSA id
- 4fb4d7f45d1cf-5dcf1b7ade9sm772388a12.25.2025.02.06.04.13.56
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 06 Feb 2025 04:13:57 -0800 (PST)
-From: =?UTF-8?q?Corvin=20K=C3=B6hne?= <corvin.koehne@gmail.com>
-To: qemu-devel@nongnu.org
-Cc: Alex Williamson <alex.williamson@redhat.com>,
- Cornelia Huck <cohuck@redhat.com>,
- =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>,
- "Michael S. Tsirkin" <mst@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
- =?UTF-8?q?Corvin=20K=C3=B6hne?= <c.koehne@beckhoff.com>
-Subject: [PATCH 3/4] vfio/igd: use PCI ID defines to detect IGD gen
-Date: Thu,  6 Feb 2025 13:13:39 +0100
-Message-ID: <20250206121341.118337-4-corvin.koehne@gmail.com>
-X-Mailer: git-send-email 2.48.1
-In-Reply-To: <20250206121341.118337-1-corvin.koehne@gmail.com>
-References: <20250206121341.118337-1-corvin.koehne@gmail.com>
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1tg0l1-0003PA-46
+ for qemu-devel@nongnu.org; Thu, 06 Feb 2025 07:13:26 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1tg0kx-0004RY-1V
+ for qemu-devel@nongnu.org; Thu, 06 Feb 2025 07:13:21 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1738843996;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=QbaGyGBhUSjBumJijeigRGmqZB/oIS5ICSFxiOZSqrQ=;
+ b=Bq2C20rlG/QDLm98ogGa+VTgWodFmjJLDGr8V11EI+VuLn9LuW4LjQJ9Smwo9ovytk3SCR
+ GyFxi+D2E4qYrCcu5UUzSSffcqsZLLGMg5IPhwunRodPc8rmhXJtn6MqvN+QepT2LuYCh/
+ cgLjNo4Zkpc1lkZ+Bbrj2beegQyAOMo=
+Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-459-tBgfEbVwPb-ADGZjCYreww-1; Thu,
+ 06 Feb 2025 07:13:14 -0500
+X-MC-Unique: tBgfEbVwPb-ADGZjCYreww-1
+X-Mimecast-MFC-AGG-ID: tBgfEbVwPb-ADGZjCYreww
+Received: from mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.40])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 2B60C1956096; Thu,  6 Feb 2025 12:13:11 +0000 (UTC)
+Received: from blackfin.pond.sub.org (unknown [10.39.192.40])
+ by mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 08A3119560A3; Thu,  6 Feb 2025 12:13:10 +0000 (UTC)
+Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
+ id B11F921E6A28; Thu, 06 Feb 2025 13:13:07 +0100 (CET)
+From: Markus Armbruster <armbru@redhat.com>
+To: Zhao Liu <zhao1.liu@intel.com>
+Cc: Paolo Bonzini <pbonzini@redhat.com>,  Eric Blake <eblake@redhat.com>,
+ Michael Roth <michael.roth@amd.com>,  Daniel P . =?utf-8?Q?Berrang=C3=A9?=
+ <berrange@redhat.com>,  Eduardo Habkost <eduardo@habkost.net>,  Marcelo
+ Tosatti <mtosatti@redhat.com>,  Shaoqin Huang <shahuang@redhat.com>,  Eric
+ Auger <eauger@redhat.com>,  Peter Maydell <peter.maydell@linaro.org>,
+ Laurent Vivier <lvivier@redhat.com>,  Thomas Huth <thuth@redhat.com>,
+ Sebastian Ott <sebott@redhat.com>,  Gavin Shan <gshan@redhat.com>,
+ qemu-devel@nongnu.org,  kvm@vger.kernel.org,  qemu-arm@nongnu.org,
+ Dapeng Mi <dapeng1.mi@intel.com>,  Yi Lai <yi1.lai@intel.com>
+Subject: Re: [RFC v2 1/5] qapi/qom: Introduce kvm-pmu-filter object
+In-Reply-To: <Z6SMxlWhHgronott@intel.com> (Zhao Liu's message of "Thu, 6 Feb
+ 2025 18:19:50 +0800")
+References: <20250122090517.294083-1-zhao1.liu@intel.com>
+ <20250122090517.294083-2-zhao1.liu@intel.com>
+ <871pwc3dyw.fsf@pond.sub.org> <Z6SMxlWhHgronott@intel.com>
+Date: Thu, 06 Feb 2025 13:13:07 +0100
+Message-ID: <87h657p8z0.fsf@pond.sub.org>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::52f;
- envelope-from=corvin.koehne@gmail.com; helo=mail-ed1-x52f.google.com
+Content-Type: text/plain
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.40
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=armbru@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -103,121 +94,64 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Corvin Köhne <c.koehne@beckhoff.com>
+Zhao Liu <zhao1.liu@intel.com> writes:
 
-We've recently imported the PCI ID list of knwon Intel GPU devices from
-Linux. It allows us to properly match GPUs to their generation without
-maintaining an own list of PCI IDs.
+> On Wed, Feb 05, 2025 at 11:03:51AM +0100, Markus Armbruster wrote:
+>> Date: Wed, 05 Feb 2025 11:03:51 +0100
+>> From: Markus Armbruster <armbru@redhat.com>
+>> Subject: Re: [RFC v2 1/5] qapi/qom: Introduce kvm-pmu-filter object
+>> 
+>> Quick & superficial review for now.
+>
+> Thanks!
+>
+>> > diff --git a/qapi/kvm.json b/qapi/kvm.json
+>> > new file mode 100644
+>> > index 000000000000..d51aeeba7cd8
+>> > --- /dev/null
+>> > +++ b/qapi/kvm.json
+>> > @@ -0,0 +1,116 @@
+>> > +# -*- Mode: Python -*-
+>> > +# vim: filetype=python
+>> > +
+>> > +##
+>> > +# = KVM based feature API
+>> 
+>> This is a top-level section.  It ends up between sections "QMP
+>> introspection" and "QEMU Object Model (QOM)".  Is this what we want?  Or
+>> should it be a sub-section of something?  Or next to something else?
+>
+> Do you mean it's not in the right place in the qapi-schema.json?
+>
+> diff --git a/qapi/qapi-schema.json b/qapi/qapi-schema.json
+> index b1581988e4eb..742818d16e45 100644
+> --- a/qapi/qapi-schema.json
+> +++ b/qapi/qapi-schema.json
+> @@ -64,6 +64,7 @@
+>  { 'include': 'compat.json' }
+>  { 'include': 'control.json' }
+>  { 'include': 'introspect.json' }
+> +{ 'include': 'kvm.json' }
+>  { 'include': 'qom.json' }
+>  { 'include': 'qdev.json' }
+>  { 'include': 'machine-common.json' }
+>
+> Because qom.json includes kvm.json, so I have to place it before
+> qom.json.
+>
+> It doesn't have any dependencies itself, so placing it in the previous
+> position should be fine, where do you prefer?
 
-Signed-off-by: Corvin Köhne <c.koehne@beckhoff.com>
----
- hw/vfio/igd.c | 77 ++++++++++++++++++++++++++++-----------------------
- 1 file changed, 42 insertions(+), 35 deletions(-)
+Let's ignore how to place it for now, and focus on where we would *like*
+to place it.
 
-diff --git a/hw/vfio/igd.c b/hw/vfio/igd.c
-index 0740a5dd8c..e5d7006ce2 100644
---- a/hw/vfio/igd.c
-+++ b/hw/vfio/igd.c
-@@ -18,6 +18,7 @@
- #include "hw/hw.h"
- #include "hw/nvram/fw_cfg.h"
- #include "pci.h"
-+#include "standard-headers/drm/intel/pciids.h"
- #include "trace.h"
- 
- /*
-@@ -51,6 +52,42 @@
-  * headless setup is desired, the OpRegion gets in the way of that.
-  */
- 
-+struct igd_device {
-+    const uint32_t device_id;
-+    const int gen;
-+};
-+
-+#define IGD_DEVICE(_id, _gen) { \
-+    .device_id = (_id), \
-+    .gen = (_gen), \
-+}
-+
-+static const struct igd_device igd_devices[] = {
-+    INTEL_SNB_IDS(IGD_DEVICE, 6),
-+    INTEL_IVB_IDS(IGD_DEVICE, 6),
-+    INTEL_HSW_IDS(IGD_DEVICE, 7),
-+    INTEL_VLV_IDS(IGD_DEVICE, 7),
-+    INTEL_BDW_IDS(IGD_DEVICE, 8),
-+    INTEL_CHV_IDS(IGD_DEVICE, 8),
-+    INTEL_SKL_IDS(IGD_DEVICE, 9),
-+    INTEL_BXT_IDS(IGD_DEVICE, 9),
-+    INTEL_KBL_IDS(IGD_DEVICE, 9),
-+    INTEL_CFL_IDS(IGD_DEVICE, 9),
-+    INTEL_CML_IDS(IGD_DEVICE, 9),
-+    INTEL_GLK_IDS(IGD_DEVICE, 9),
-+    INTEL_ICL_IDS(IGD_DEVICE, 11),
-+    INTEL_EHL_IDS(IGD_DEVICE, 11),
-+    INTEL_JSL_IDS(IGD_DEVICE, 11),
-+    INTEL_TGL_IDS(IGD_DEVICE, 12),
-+    INTEL_RKL_IDS(IGD_DEVICE, 12),
-+    INTEL_ADLS_IDS(IGD_DEVICE, 12),
-+    INTEL_ADLP_IDS(IGD_DEVICE, 12),
-+    INTEL_ADLN_IDS(IGD_DEVICE, 12),
-+    INTEL_RPLS_IDS(IGD_DEVICE, 12),
-+    INTEL_RPLU_IDS(IGD_DEVICE, 12),
-+    INTEL_RPLP_IDS(IGD_DEVICE, 12),
-+};
-+
- /*
-  * This presumes the device is already known to be an Intel VGA device, so we
-  * take liberties in which device ID bits match which generation.  This should
-@@ -60,42 +97,12 @@
-  */
- static int igd_gen(VFIOPCIDevice *vdev)
- {
--    /*
--     * Device IDs for Broxton/Apollo Lake are 0x0a84, 0x1a84, 0x1a85, 0x5a84
--     * and 0x5a85, match bit 11:1 here
--     * Prefix 0x0a is taken by Haswell, this rule should be matched first.
--     */
--    if ((vdev->device_id & 0xffe) == 0xa84) {
--        return 9;
--    }
-+    for (int i = 0; i < ARRAY_SIZE(igd_devices); i++) {
-+        if (igd_devices[i].device_id != vdev->device_id) {
-+            continue;
-+        }
- 
--    switch (vdev->device_id & 0xff00) {
--    case 0x0100:    /* SandyBridge, IvyBridge */
--        return 6;
--    case 0x0400:    /* Haswell */
--    case 0x0a00:    /* Haswell */
--    case 0x0c00:    /* Haswell */
--    case 0x0d00:    /* Haswell */
--    case 0x0f00:    /* Valleyview/Bay Trail */
--        return 7;
--    case 0x1600:    /* Broadwell */
--    case 0x2200:    /* Cherryview */
--        return 8;
--    case 0x1900:    /* Skylake */
--    case 0x3100:    /* Gemini Lake */
--    case 0x5900:    /* Kaby Lake */
--    case 0x3e00:    /* Coffee Lake */
--    case 0x9B00:    /* Comet Lake */
--        return 9;
--    case 0x8A00:    /* Ice Lake */
--    case 0x4500:    /* Elkhart Lake */
--    case 0x4E00:    /* Jasper Lake */
--        return 11;
--    case 0x9A00:    /* Tiger Lake */
--    case 0x4C00:    /* Rocket Lake */
--    case 0x4600:    /* Alder Lake */
--    case 0xA700:    /* Raptor Lake */
--        return 12;
-+        return igd_devices[i].gen;
-     }
- 
-     /*
--- 
-2.48.1
+Is it related to anything other than ObjectType / ObjectOptions in the
+QMP reference manual?
+
+I guess qapi/kvm.json is for KVM-specific stuff in general, not just the
+KVM PMU filter.  Should we have a section for accelerator-specific
+stuff, with subsections for the various accelerators?
+
+[...]
 
 
