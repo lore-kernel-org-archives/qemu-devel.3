@@ -4,85 +4,113 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 32118C02196
-	for <qemu-devel@archiver.kernel.org>; Thu,  6 Feb 2025 05:40:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E10EEC02196
+	for <qemu-devel@archiver.kernel.org>; Thu,  6 Feb 2025 05:41:31 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tfubX-000650-Sz; Thu, 06 Feb 2025 00:39:11 -0500
+	id 1tfudW-0006wr-RY; Thu, 06 Feb 2025 00:41:14 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1tfubT-00064A-0p; Thu, 06 Feb 2025 00:39:07 -0500
-Received: from mail-ua1-x92f.google.com ([2607:f8b0:4864:20::92f])
+ (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
+ id 1tfudV-0006wE-5M
+ for qemu-devel@nongnu.org; Thu, 06 Feb 2025 00:41:13 -0500
+Received: from mail-pl1-x631.google.com ([2607:f8b0:4864:20::631])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1tfubQ-0001Hx-Sd; Thu, 06 Feb 2025 00:39:06 -0500
-Received: by mail-ua1-x92f.google.com with SMTP id
- a1e0cc1a2514c-866e57ec274so248506241.2; 
- Wed, 05 Feb 2025 21:39:03 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
+ id 1tfudR-0001jU-Uf
+ for qemu-devel@nongnu.org; Thu, 06 Feb 2025 00:41:12 -0500
+Received: by mail-pl1-x631.google.com with SMTP id
+ d9443c01a7336-21f2f1181f2so13911355ad.2
+ for <qemu-devel@nongnu.org>; Wed, 05 Feb 2025 21:41:09 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1738820343; x=1739425143; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=6Hh91lkJH4G2v2stBYhiTwErWA85jHVrA2A1cY0dyIA=;
- b=TOsIHrRlc3La/9TSSMWM5cgthOPiqpfUPOuFpwH8YSs61mKH0yNO5SXd7j9AMGuLOK
- YPVDogwlNDjqMaHIin674GOCYwUdg6ov3nKdoJybLer07yLj9wc2TtxlMSksNLUyWkKM
- GPjWNIVR5/gfrOzqN+MIiCfueEK0fhY8Q+ICbQgcixIp6sIt/OlRUIhru6je1jqP03Gs
- K7vyRi2P6wh9tiUUj26+yGNb8mZsOCf3x63RhtwCdVnwPTKLazeqx9f8Kb8DcdDBPJX1
- Cok+vRPKjWwdsotM6wTL/sY+1fydOH4fQhQcWCduFZTDAiNKRtZ1/wxk/3WRMoAHr0ez
- S9WQ==
+ d=daynix-com.20230601.gappssmtp.com; s=20230601; t=1738820468; x=1739425268;
+ darn=nongnu.org; 
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=tk+whhgQdU2crP21b52SML7lDrcn2Y0NC9ahdwL/208=;
+ b=qlMIGVjOYuaMbkiO6XuL+A0WQ71HsoS5g/NHXeJvZpG1qxo56O3N8lXhD5OU8tfivV
+ xl1Mihg3LI8S48fojq6yI7gX98Sy4xSAH8ai9Q/zWHdm0QNyrtSVbkWC++DMJ9/EfMCf
+ 6pBiw8hfwhyZSKcg/p/zS+QFpQeGF02qI/ic37R89x/wt49NuoJVi9k+hGfoR75zIi3G
+ F1uZ7DYh2KDWJHBTF5cW/3Q1bTxLJ0Aq1GXrHsjVD7df36v9L6tOXoCPK1+F9o7LQx62
+ /kNQh0yX2bATdahmw9wTcSHh12hsiZgVNrSiwLmEPKIY+o8RyLoF62N4vf6J/zrec+zv
+ 1Kgg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1738820343; x=1739425143;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=6Hh91lkJH4G2v2stBYhiTwErWA85jHVrA2A1cY0dyIA=;
- b=hFx5qpayk9LOBLlqwLf7ifXT68mS4vMs7LKr5L1oW2n7qNNVoaNlu3bXU55Cs7/Da9
- JfDXSoMEt3MaO21c7FBxu+kFALT4EcNYekUs+2gfl49O8DVUz9xeNDvw6gLh4jA6OEkF
- SKjFR7zVNlDvlx5O05cF9Lf1eqYv8zxzxsWTgZsygl3s1ckp2R2znDg5/2HvgD0n/jQL
- V49LpyWbDfHiU7SAFvadD0Qu99Xq0C400GJm+XIu0/pdXncETwyKLQCFWi/qBe7FAmQ0
- wV/4C0nxh4OEkWP5Ovk58ELQjFVrmEQH1+pNKetY/+gsNGmwSf45kKSVbrAEcNhW94lc
- tKzA==
+ d=1e100.net; s=20230601; t=1738820468; x=1739425268;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=tk+whhgQdU2crP21b52SML7lDrcn2Y0NC9ahdwL/208=;
+ b=uGjnxEoJzbth0GFd1jzvkDkgLTEOfFmaZw73Qg489LFrF0iCRYsQ//UbrFa0aaDuBW
+ 6GPOs456t+e5t/JS6RgmrwWbNzdoVfJJ8zbljRXPxpOr6QWqsAh+ao+/A47ixwlXAbG7
+ Fe3GCO1GMdAy+05WhWn0bWn8ILvCz/WKQoRIWKNL87FMRCxZMOVTeSahmHwdoSpmc0cq
+ jfM3ZpsxKypmgAqxr0OJz7G/S/zRLxTc/d+zPPb3hS1i3c6Z3uxh4m6sRDnZMI+pdgDA
+ QqFwzefbfHLcc3/v5wnkt1bxkOm5CqO8/Tr3nSEaCfn8Pk/VFIzzZRYpvhOkZWygb65v
+ vLvw==
 X-Forwarded-Encrypted: i=1;
- AJvYcCVCTXL5+v/bwRVfwpRz9+VwBdSlVnMJds3EDc74hPX754TRPhPO+47FyxQN1Jl8LfrvHriqNjCiJv5k@nongnu.org
-X-Gm-Message-State: AOJu0Yx3TnsFNZohYzJZ76nvGCyBg5XBHEFaLNIA8uriqIGH9A7PCZLn
- salGrdCcu3bWlNL3yk4Cef80MABW9PED1LFolmJOgMehXrwTn/hmuExMgtwd5THiTvCcdkDnxQo
- iEJihcaJtXwIgkTDlnv7Rem5+rM4=
-X-Gm-Gg: ASbGncsBBWiKAgIHn+HzDeMDfsXYftVC+Vru+7Z/E0JGbbv9p56mSprmwE8QCubsPum
- pcvcIhfMmMP3RDG/vjLl/jeAw6tnieXLInWrwNIO0OMRjUbNAeDMShyeV/AvlGWmfTCO890DkU3
- vLSRtofM1mDA0njqvkhsiGpfZ0cw==
-X-Google-Smtp-Source: AGHT+IH5d0z1eLd2gPgvVo+vnnhWGEHacAlrrtEL4GC8lj2GwgCrXLGtMsmZOZugdoFHbB97JmW/J9QsQxeU9aFAU0k=
-X-Received: by 2002:a05:6102:41ac:b0:4b1:f3e:882f with SMTP id
- ada2fe7eead31-4ba478b35f0mr3730409137.1.1738820342654; Wed, 05 Feb 2025
- 21:39:02 -0800 (PST)
+ AJvYcCXWqcqIa4sM6KsD1YDqBEPXY8ipxyPC8Rea9S/eLhyb/l4fPubNh0ls+2Zyi5Pny+aEQEA67Ov4Jrdz@nongnu.org
+X-Gm-Message-State: AOJu0YzIzH95THwjYeV9ttTQfjSKALAfXhfNtwJwM97cq6WyvDDsJC10
+ XluGyODslgKgLOoSNBpWpbCuBojbgbghRjrLXKoL5s/PvRn+W+JaxWeBQ+5CFMA=
+X-Gm-Gg: ASbGnctmb7RK0U/8QLyvnYiSE1+JtnzBt59+rpBG93yl8VMGntn88P3f2Z537hD015h
+ nGK0bv9O+ydJ9wGeEbgsC1ghGthbF+0hqL1pyBhOvjI+Vfu0lEml0dBl5wCtKjStO9m9IL9uSa8
+ anJRs0a7G0u/kHiF87IruI83FDWI4nrOoKPH7n0axLtrxGuHAlLjYIT1dtZ/aVx3ZJKfEVy7aTY
+ 0O+MbmvbMr++fT59M06MxhvIeR50dGcrPRar+wVxLl9qAwwPJ+85gcCA/M5QLGvGy221eBswUL1
+ cr+HUMES/7kXpe9+FHZhs4Hva7Q7
+X-Google-Smtp-Source: AGHT+IFWxH0Xo0pgjcc8/5dB4vTnZ4/hD5puMRnUss8SjXcMymfQLusS20x9mzj3ycRMN1Zg3TSckA==
+X-Received: by 2002:a17:903:18f:b0:21f:75c:f7d3 with SMTP id
+ d9443c01a7336-21f17ec7bd9mr99856615ad.38.1738820467900; 
+ Wed, 05 Feb 2025 21:41:07 -0800 (PST)
+Received: from [157.82.207.107] ([157.82.207.107])
+ by smtp.gmail.com with ESMTPSA id
+ d9443c01a7336-21f36561397sm3690685ad.89.2025.02.05.21.41.02
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Wed, 05 Feb 2025 21:41:07 -0800 (PST)
+Message-ID: <fdd8b7ca-e4ad-405d-a58e-fbcb82183ec8@daynix.com>
+Date: Thu, 6 Feb 2025 14:41:00 +0900
 MIME-Version: 1.0
-References: <20250205-b4-ctr_upstream_v6-v6-0-439d8e06c8ef@rivosinc.com>
-In-Reply-To: <20250205-b4-ctr_upstream_v6-v6-0-439d8e06c8ef@rivosinc.com>
-From: Alistair Francis <alistair23@gmail.com>
-Date: Thu, 6 Feb 2025 15:38:36 +1000
-X-Gm-Features: AWEUYZm5mV7vgJdT8_NcFMMFv4aWMhBxeKIg3qEMhfyBCxsHbrgLZSfVqA3MEOU
-Message-ID: <CAKmqyKMhV8Nj2oUmD_vWCnZBjJgYcw=8CQ86P2jihy0S09TXTQ@mail.gmail.com>
-Subject: Re: [PATCH v6 0/7] target/riscv: Add support for Control Transfer
- Records Ext.
-To: Rajnesh Kanwal <rkanwal@rivosinc.com>
-Cc: qemu-riscv@nongnu.org, qemu-devel@nongnu.org, alistair.francis@wdc.com, 
- bin.meng@windriver.com, liweiwei@iscas.ac.cn, dbarboza@ventanamicro.com, 
- zhiwei_liu@linux.alibaba.com, atishp@rivosinc.com, apatel@ventanamicro.com, 
- beeman@rivosinc.com, jason.chien@sifive.com, frank.chang@sifive.com, 
- richard.henderson@linaro.org, bmeng.cn@gmail.com
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::92f;
- envelope-from=alistair23@gmail.com; helo=mail-ua1-x92f.google.com
-X-Spam_score_int: -17
-X-Spam_score: -1.8
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v5 8/8] docs/system: Expand the virtio-gpu documentation
+To: Dmitry Osipenko <dmitry.osipenko@collabora.com>,
+ =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
+Cc: Huang Rui <ray.huang@amd.com>,
+ =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
+ =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Gerd Hoffmann <kraxel@redhat.com>, "Michael S . Tsirkin" <mst@redhat.com>,
+ Paolo Bonzini <pbonzini@redhat.com>, Gert Wollny
+ <gert.wollny@collabora.com>, qemu-devel@nongnu.org,
+ Gurchetan Singh <gurchetansingh@chromium.org>, Alyssa Ross <hi@alyssa.is>,
+ =?UTF-8?Q?Roger_Pau_Monn=C3=A9?= <roger.pau@citrix.com>,
+ Alex Deucher <alexander.deucher@amd.com>,
+ Stefano Stabellini <stefano.stabellini@amd.com>,
+ =?UTF-8?Q?Christian_K=C3=B6nig?= <christian.koenig@amd.com>,
+ Xenia Ragiadakou <xenia.ragiadakou@amd.com>,
+ Pierre-Eric Pelloux-Prayer <pierre-eric.pelloux-prayer@amd.com>,
+ Honglei Huang <honglei1.huang@amd.com>, Julia Zhang <julia.zhang@amd.com>,
+ Chen Jiqian <Jiqian.Chen@amd.com>, Rob Clark <robdclark@gmail.com>,
+ Yiwei Zhang <zzyiwei@chromium.org>, Sergio Lopez Pascual <slp@redhat.com>
+References: <20250119220050.15167-1-dmitry.osipenko@collabora.com>
+ <20250119220050.15167-9-dmitry.osipenko@collabora.com>
+ <c2e1c362-5d02-488e-b849-d0b14781a60f@daynix.com>
+ <87ikq9r7wj.fsf@draig.linaro.org>
+ <171b1cd3-1077-438c-a27c-3b9b3ce25f0f@daynix.com>
+ <ea866d19-90f6-4bb9-a3f6-f84b2ea2c457@collabora.com>
+ <86dce86b-03bf-4abe-b825-1341e93eb88d@daynix.com>
+ <920043a8-9294-4b40-8d8e-3611727e4cd2@collabora.com>
+ <0f88994f-1a93-4049-addc-a62e8ca49904@daynix.com>
+ <d85f6669-8c46-4678-85d6-59240935d197@collabora.com>
+Content-Language: en-US
+From: Akihiko Odaki <akihiko.odaki@daynix.com>
+In-Reply-To: <d85f6669-8c46-4678-85d6-59240935d197@collabora.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::631;
+ envelope-from=akihiko.odaki@daynix.com; helo=mail-pl1-x631.google.com
+X-Spam_score_int: -18
+X-Spam_score: -1.9
 X-Spam_bar: -
-X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -99,141 +127,81 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, Feb 5, 2025 at 9:21=E2=80=AFPM Rajnesh Kanwal <rkanwal@rivosinc.com=
-> wrote:
->
-> This series enables Control Transfer Records extension support on riscv
-> platform. This extension is similar to Arch LBR in x86 and BRBE in ARM.
-> The Extension has been ratified and this series is based on v1.0 [0]
->
-> CTR extension depends on both the implementation of S-mode and Sscsrind
-> extension v1.0.0 [1]. CTR access ctrsource, ctrtartget and ctrdata CSRs u=
-sing
-> sscsrind extension.
->
-> The series is based on Smcdeleg/Ssccfg counter delegation extension [2]
-> patches [3]. CTR itself doesn't depend on counter delegation support. Thi=
-s
-> rebase is basically to include the Smcsrind patches.
->
-> Here is the link to a quick start guide [4] to setup and run a basic perf=
- demo
-> on Linux to use CTR Ext.
->
-> Qemu patches can be found here:
-> https://github.com/rajnesh-kanwal/qemu/tree/b4/ctr_upstream_v6
->
-> Opensbi patch can be found here:
-> https://github.com/rajnesh-kanwal/opensbi/tree/ctr_upstream_v2
->
-> Linux kernel patches can be found here:
-> https://github.com/rajnesh-kanwal/linux/tree/b4/ctr_upstream_v2
->
-> [0]: https://github.com/riscv/riscv-control-transfer-records/releases/tag=
-/v1.0
-> [1]: https://github.com/riscvarchive/riscv-indirect-csr-access/releases/t=
-ag/v1.0.0
-> [2]: https://github.com/riscvarchive/riscv-smcdeleg-ssccfg/releases/tag/v=
-1.0.0
-> [3]: https://lore.kernel.org/qemu-riscv/20241203-counter_delegation-v4-0-=
-c12a89baed86@rivosinc.com/
-> [4]: https://github.com/rajnesh-kanwal/linux/wiki/Running-CTR-basic-demo-=
-on-QEMU-RISC%E2%80%90V-Virt-machine
->
-> Signed-off-by: Rajnesh Kanwal <rkanwal@rivosinc.com>
-> ---
-> Changelog:
-> v6: Rebased on latest riscv-to-apply.for-upstream.
+On 2025/02/06 2:40, Dmitry Osipenko wrote:
+> On 2/3/25 08:31, Akihiko Odaki wrote:
+> ...
+>>> Requirements don't vary much. For example virglrenderer minigbm support
+>>> is mandatory for crosvm, while for QEMU it's not.
+>>
+>> Is that true? It seems that virglrenderer uses builds without minigbm
+>> support to run tests on GitLab CI.
+> 
+> CI is running in a headless mode using software renderer. For a
+> full-featured crosvm support running on a baremetal, minigbm should be
+> needed, along with other downstream features.
 
-It should be rebased on
-https://github.com/alistair23/qemu/tree/riscv-to-apply.next
+That makes sense.
 
-I applied the first 6 patches as they apply cleanly
+Based on your input, for QEMU, I don't think we need a separate 
+documentation to describe libvirglrenderer's build flags though crosvm 
+should have some documentation saying it requires minigbm.
 
-Alistair
+> 
+>> Anyway, if there is any variance in the build procedure, that may
+>> justify having a separate build instruction in QEMU tree to avoid
+>> confusion. Otherwise, it's better to have a documentation shared with
+>> other VMMs.
+>>
+>>>
+>>>> I'm not entirely sure the documentation will stay as is for that long.
+>>>> The requirements of Intel native context refer to merge requests that
+>>>> can be merged sooner or later. Asahi may need more updates if you
+>>>> document it too because its DRM ABI is still unstable.
+>>>
+>>> The unstable parts of course will need to be updated sooner, but the
+>>> stable should be solid for years. I expect that about a year later
+>>> requirements will need to be revisited.
+>>>
+>>
+>> It will be some burden in the future. Now you are adding this
+>> documentation just for QEMU, but crosvm and libkrun may gain similar
+>> documentation. The DRM native context support for Intel and Asahi is in
+>> development, and I guess nvk will support it someday.
+>>
+>> So, a very rough estimation of future documentation updates will be:
+>> (number of VMMs) * (number of DRM native contexts in development)
+>> = 3 * 3
+>> = 9
+>>
+>> That's manageable but suboptimal.
+> 
+> I don't mind deferring the doc addition if that's preferred. Either way
+> is fine with me. Yet it's better to have doc than not.
 
->
-> v5: Improvements based on Richard Henderson's feedback.
->   - Fixed code gen logic to use gen_update_pc() instead of
->     tcg_constant_tl().
->   - Some function renaming.
->   - Rebased onto v4 of counter delegation series.
->   - https://lore.kernel.org/qemu-riscv/20241205-b4-ctr_upstream_v3-v5-0-6=
-0b993aa567d@rivosinc.com/
->
-> v4: Improvements based on Richard Henderson's feedback.
->   - Refactored CTR related code generation to move more code into
->     translation side and avoid unnecessary code execution in generated
->     code.
->   - Added missing code in machine.c to migrate the new state.
->   - https://lore.kernel.org/r/20241204-b4-ctr_upstream_v3-v4-0-d3ce6bef94=
-32@rivosinc.com
->
-> v3: Improvements based on Jason Chien and Frank Chang's feedback.
->   - Created single set of MACROs for CTR CSRs in cpu_bit.h
->   - Some fixes in riscv_ctr_add_entry.
->   - Return zero for vs/sireg4-6 for CTR 0x200 to 0x2ff range.
->   - Improved extension dependency check.
->   - Fixed invalid ctrctl csr selection bug in riscv_ctr_freeze.
->   - Added implied rules for Smctr and Ssctr.
->   - Added missing SMSTATEEN0_CTR bit in mstateen0 and hstateen0 write ops=
-.
->   - Some more cosmetic changes.
->   - https://lore.kernel.org/qemu-riscv/20241104-b4-ctr_upstream_v3-v3-0-3=
-2fd3c48205f@rivosinc.com/
->
-> v2: Lots of improvements based on Jason Chien's feedback including:
->   - Added CTR recording for cm.jalt, cm.jt, cm.popret, cm.popretz.
->   - Fixed and added more CTR extension enable checks.
->   - Fixed CTR CSR predicate functions.
->   - Fixed external trap xTE bit checks.
->   - One fix in freeze function for VS-mode.
->   - Lots of minor code improvements.
->   - Added checks in sctrclr instruction helper.
->   - https://lore.kernel.org/qemu-riscv/20240619152708.135991-1-rkanwal@ri=
-vosinc.com/
->
-> v1:
->   - https://lore.kernel.org/qemu-riscv/20240529160950.132754-1-rkanwal@ri=
-vosinc.com/
->
-> ---
-> Rajnesh Kanwal (7):
->       target/riscv: Remove obsolete sfence.vm instruction
->       target/riscv: Add Control Transfer Records CSR definitions.
->       target/riscv: Add support for Control Transfer Records extension CS=
-Rs.
->       target/riscv: Add support to record CTR entries.
->       target/riscv: Add CTR sctrclr instruction.
->       target/riscv: machine: Add Control Transfer Record state descriptio=
-n
->       target/riscv: Add support to access ctrsource, ctrtarget, ctrdata r=
-egs.
->
->  target/riscv/cpu.c                             |  26 ++-
->  target/riscv/cpu.h                             |  13 ++
->  target/riscv/cpu_bits.h                        | 145 ++++++++++++
->  target/riscv/cpu_cfg.h                         |   2 +
->  target/riscv/cpu_helper.c                      | 266 +++++++++++++++++++=
-+++
->  target/riscv/csr.c                             | 294 +++++++++++++++++++=
-+++++-
->  target/riscv/helper.h                          |   2 +
->  target/riscv/insn32.decode                     |   2 +-
->  target/riscv/insn_trans/trans_privileged.c.inc |  18 +-
->  target/riscv/insn_trans/trans_rvi.c.inc        |  75 +++++++
->  target/riscv/insn_trans/trans_rvzce.c.inc      |  21 ++
->  target/riscv/machine.c                         |  25 +++
->  target/riscv/op_helper.c                       |  48 ++++
->  target/riscv/tcg/tcg-cpu.c                     |  11 +
->  target/riscv/translate.c                       |  46 ++++
->  15 files changed, 986 insertions(+), 8 deletions(-)
-> ---
-> base-commit: 699291ba7774f1580584cd96f84ceda8cc4edb7e
-> change-id: 20250205-b4-ctr_upstream_v6-71418cd245ee
-> --
-> Best Regards,
-> Rajnesh Kanwal
->
->
+My suggestion is not to defer the addition, but to add it to Mesa, which 
+does not require deferring.
+
+> 
+> In my view crosvm and libkrun exist separately from QEMU, they serve a
+> different purpose. Majority of QEMU users likely never heard about those
+> other VMMs. A unified doc won't be a worthwhile effort, IMO.
+> 
+
+When evaluating the utility of a unified documentation, Whether the 
+majority of Mesa/Virgl users care VMMs other than QEMU matters more. And 
+I think it is true; libkrun and crosvm are excellent options for 
+graphics-accelerated VMs.
+
+If we have a unified documentation, any VM can point to it for the build 
+instruction of Mesa and virglrenderer. Once that's done, QEMU users who 
+want graphics acceleration can take the following steps:
+1. See docs/system/devices/virtio-gpu.rst
+2. Figure out that they need Mesa and virglrenderer
+3. Click the link to the unified documentation
+4. Build Mesa and virglrenderer accordingly
+
+No other VMMs will bother them in this procedure.
+
+Regards,
+Akihiko Odaki
 
