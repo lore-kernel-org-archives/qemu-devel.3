@@ -4,83 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 68E1EC02196
-	for <qemu-devel@archiver.kernel.org>; Thu,  6 Feb 2025 09:02:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E86CCC02196
+	for <qemu-devel@archiver.kernel.org>; Thu,  6 Feb 2025 09:07:24 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tfxmJ-0004YT-MP; Thu, 06 Feb 2025 04:02:32 -0500
+	id 1tfxqU-0006qU-3A; Thu, 06 Feb 2025 04:06:50 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tfxm3-0004SZ-P4
- for qemu-devel@nongnu.org; Thu, 06 Feb 2025 04:02:18 -0500
-Received: from mail-wr1-x42b.google.com ([2a00:1450:4864:20::42b])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tfxqQ-0006q8-OC
+ for qemu-devel@nongnu.org; Thu, 06 Feb 2025 04:06:47 -0500
+Received: from mail-wr1-x431.google.com ([2a00:1450:4864:20::431])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tfxm1-0004xI-Hw
- for qemu-devel@nongnu.org; Thu, 06 Feb 2025 04:02:15 -0500
-Received: by mail-wr1-x42b.google.com with SMTP id
- ffacd0b85a97d-38db34a5c5fso262614f8f.2
- for <qemu-devel@nongnu.org>; Thu, 06 Feb 2025 01:02:12 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tfxqO-0008Cc-Mp
+ for qemu-devel@nongnu.org; Thu, 06 Feb 2025 04:06:46 -0500
+Received: by mail-wr1-x431.google.com with SMTP id
+ ffacd0b85a97d-38dae9a0566so266286f8f.3
+ for <qemu-devel@nongnu.org>; Thu, 06 Feb 2025 01:06:43 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1738832530; x=1739437330; darn=nongnu.org;
+ d=linaro.org; s=google; t=1738832803; x=1739437603; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=y40mJMvxcD4zpanaxsb2tzkFSO+mRwuFjGcCX/RZUwM=;
- b=dC3WvUU2PMqkU2wY2FImPfSvUa05LPzWhRJEg8igR/Xiy267liFAPWumDkOZXoi5Z4
- Itpre5YB12xdi2Y7SrBWpMz6xzxDP5eoaSK1zbIHSikX77JYXyF4XGLsu2xB18p6caOg
- qXmvlo0QUnyebDXrMZiAg9GKVIUsOxsUd+jddJSnnuMFQAjsb5GHYy58zw4iCl0QZYiJ
- hIeEgqFspACF1YKa8cFDBWrBOvF00BTQHSpAev9nPgMJ8FLdtL5N5qtXlfTDisdTLAI0
- eHoLQJx7AwqdR3tN8+kYPQJaKa3SIpAgRZcnsMQvvA+Cz+eLZijzZrU8HFwlMI7RYzae
- UNNg==
+ bh=IzCJVvvfB1EaRb4n7nTPbLIP0W9cumDbV+oH5GXptgs=;
+ b=Wfl2z4jaKejKQjxVllFulSmaqfsKLnTJOao8meIdEzl/d+ssvfPg71Ixorpq4HO6Lk
+ 2Md1mlsXw1Tl/KNM/sx2O/5W0wCfy3BSS573qeBMGpJJOMX3BJoe9A3oiphHvH5uXuIX
+ GnMapvGTk4kPLeJisZ1qCHUrTl4Firvcrhn+rbnjU3rME88bEpTgg1oo366cGmTHhq3w
+ DORghthnrr+ERTUBG6cUvGgzRRbKPPg1MRl6lHx8eeT+MAMltESf1m1dhZqX2jv2PZ8X
+ u0whhFs4HZdqE9r4ozcv+oFRSxMKzoKPDjV9vqMqpmHeJNCynRZUZ2fifnKZkYcEhu06
+ H1Lg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1738832530; x=1739437330;
+ d=1e100.net; s=20230601; t=1738832803; x=1739437603;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=y40mJMvxcD4zpanaxsb2tzkFSO+mRwuFjGcCX/RZUwM=;
- b=vYW9fysxGi2sL/ojlOZj4DxufJPRNm/Ryez0a19TwvJM/U6WAtoPOOBgYkWEn49tLl
- uGKEiedgRdIZp4NwpHCl2YLc4uAzhbVLc+mM+bXevM7LKMj1E8/QoqY4TS1Kdv0c6vBg
- FDGShAO0gPdpCY7Lp48KVV4efKeMcjYDAsz4EwbRLgpxiP0ErjLXswa16CdcBq4bgVdi
- p0wrRNAlqT/cllJIWIL1qcGR+SvDEj8sKt79BMzqW0bK8dmZgpU3piugHMg2DGB3+995
- ZVi0+lElkPol0snzxh5LBAgbAd1CHnY/gkZTD82X1gZkP2hg25UpB1gfJaFsfWsULGjv
- JQ2A==
+ bh=IzCJVvvfB1EaRb4n7nTPbLIP0W9cumDbV+oH5GXptgs=;
+ b=iOO5N/ufA5B1EKZ8GcwbpWV8rqV8QsYQlvZ6ODnmSfMJc2z42qWfiVfdWgs3WXCUbP
+ 7YQoZ154o7UUmGz8g7H8QN7Ds0UbDVNUaK6WuN7zkaZZBiU3R2B7nlTG70zG3Lj4yKt5
+ Ck/p3NvPByQdDkVUndoiwR2oBaa6pOphKize5dMlQCPsM+DyI7WgwUtlSXHEf9pj2dH9
+ 1ozIp5iJgLXRqEIz5nl6uTrVmQrSkLC/WAUJxgVPFh7eR0hwhJ2tVpcknV5+1QZu/e+i
+ AqS4rmsjxxhR1CxvoUAdMtMR64ZusMreoXmR2/bMpTwlEwF1ED9l9iO00Uz8YftjoHU0
+ MJVA==
 X-Forwarded-Encrypted: i=1;
- AJvYcCWjIwvy+T2i3yhxMqy3Gkhq7OjZySijbHhVWLGv3fRAOerkGfO7sB4w5uQ+IZuUV/3wjn0wCPxqBvdh@nongnu.org
-X-Gm-Message-State: AOJu0YysvVzFTBAlKUx35Y9fxBMB091KSKnePzCja8l9fvJJWncayPfK
- rChQbvEUJ885Nfj2BBIzdG0joGUr9DjsPoO+MYQ+7BW0jVPcqbETO0zGnfhA83RLs9x21FGnRo6
- iPkA=
-X-Gm-Gg: ASbGncv8bXnSX6FUC80/NWVBouBERjRJi1MRg3xTc0VJo97ChWrKfssoW0yjzeko2Ng
- g+OLnGO6Nkv8cPCSzpOiNiTsvlHkYrkLQkA9wQepEpNM7d8xKcHRkTl38QcmYGaUPldcA5UA0Vx
- z5cTolWVn0p8jxSLqZ+1XFONEzYiI/IFdcViDiJldAkDeXevSN3R2CDxhag2XrdOmY/h6Rnk5TF
- nnZpLBZhC8Om36jtKzhAs6HyaoQRQy7o3dAITehgZIs/en6k4py0toOeIUuS8kVO+eRNaYjeykS
- ysM8T2SEOcrkKzErPj1tDiPiwfqeNAEphWL6XsePGau8kwdutN86cfF1Qd8=
-X-Google-Smtp-Source: AGHT+IFPREV3y8i2qHU/in0o6MqoqS/Fv9O8aTBuGLkJbXmU4o6CSMqFrlEs0q1c6VD3QW2+eH+IDA==
-X-Received: by 2002:a05:6000:1a89:b0:38d:b57e:7202 with SMTP id
- ffacd0b85a97d-38db57eab02mr4663731f8f.31.1738832530266; 
- Thu, 06 Feb 2025 01:02:10 -0800 (PST)
+ AJvYcCVJVLHrhyV1SJzwSQDUuhSKU8Bq+wjeh01Q5iuYFkkmVOZGHiGgZMng7RUTZLbRlqVJlw+AG5TB0L1g@nongnu.org
+X-Gm-Message-State: AOJu0YxqozWp21fkaEQy7OowNO1VLJZeKPN8slpsYrvigcrcShtF0uVl
+ K/tLb/pnmP0UEfjPEZGUtcSIUdxpDjJimecGlKVywbsCImWD6EGHs8Kr1gJo2R4=
+X-Gm-Gg: ASbGncuKjC+xkv2yYrep476oITC6jpdclDFdt42MTcQucERpoaTjIc+6/fC4TIzEtM1
+ ztaSZD46UEHmPz3fRoCgzvShOJkx2V4U4e52ZffeAZwPprdJ4qt3E0NwgF02MUP0w4lHMkbdh5R
+ niNbLZA+MQw89Yusylqbl99Zy1PGbbyDvGBqtZVb9MaXmRXiZ44EauZKSkDgotfbOcjA68us/Vv
+ zxBjdYzkT9W4rZF7LB6+s2h2x7wmIZHgI9wRld7/5j1cA+efIOTHPFTdh9JnFGg53RV7M9H99dF
+ kp5+r/Ovr/5zDZAxpfsEKiLAKeZbFhydtP/Qrdk0vqxr3P0ek34ybOAbVzY=
+X-Google-Smtp-Source: AGHT+IFbMv9XKV1GETfc05io7Kbe/qY9nyLARm8SIgneOGEa6PLUau6IEQaR3iG5eRZXRnBigTDGIQ==
+X-Received: by 2002:a05:6000:1fa4:b0:38d:b125:3787 with SMTP id
+ ffacd0b85a97d-38db48bcac1mr3965207f8f.17.1738832802699; 
+ Thu, 06 Feb 2025 01:06:42 -0800 (PST)
 Received: from [192.168.69.198] (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-38dbdd54f2fsm1158964f8f.49.2025.02.06.01.02.09
+ ffacd0b85a97d-38dbde31ccesm1176186f8f.98.2025.02.06.01.06.41
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 06 Feb 2025 01:02:09 -0800 (PST)
-Message-ID: <a8ee0227-8385-4907-b24b-efddaf907165@linaro.org>
-Date: Thu, 6 Feb 2025 10:02:08 +0100
+ Thu, 06 Feb 2025 01:06:42 -0800 (PST)
+Message-ID: <20258263-a231-45be-b0f4-f6499d613640@linaro.org>
+Date: Thu, 6 Feb 2025 10:06:40 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] target/loongarch: fix vcpu reset command word issue
-To: bibo mao <maobibo@loongson.cn>, Xianglai Li <lixianglai@loongson.cn>,
- qemu-devel@nongnu.org
-Cc: Song Gao <gaosong@loongson.cn>
-References: <20250205120635.2516406-1-lixianglai@loongson.cn>
- <3e857bbf-834b-3ae5-f9c4-35d858db5108@loongson.cn>
+Subject: Re: [PATCH v3 03/17] hw/ssi: Make flash size a property in NPCM7XX FIU
+To: Hao Wu <wuhaotsh@google.com>, peter.maydell@linaro.org
+Cc: qemu-arm@nongnu.org, qemu-devel@nongnu.org, venture@google.com,
+ Avi.Fishman@nuvoton.com, kfting@nuvoton.com, hskinnemoen@google.com,
+ titusr@google.com, chli30@nuvoton.corp-partner.google.com
+References: <20250206013105.3228344-1-wuhaotsh@google.com>
+ <20250206013105.3228344-4-wuhaotsh@google.com>
 Content-Language: en-US
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <3e857bbf-834b-3ae5-f9c4-35d858db5108@loongson.cn>
+In-Reply-To: <20250206013105.3228344-4-wuhaotsh@google.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::42b;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x42b.google.com
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::431;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x431.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -103,55 +103,115 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 6/2/25 03:34, bibo mao wrote:
-> On 2025/2/5 下午8:06, Xianglai Li wrote:
->> When the KVM_REG_LOONGARCH_VCPU_RESET command word
->> is sent to the kernel through the kvm_set_one_reg interface,
->> the parameter source needs to be a legal address,
->> otherwise the kernel will return an error and the command word
->> will fail to be sent.
-> Hi Xianglai,
-> 
-> Good catch, it is actually one problem and thanks for reporting it.
-> 
->>
->> Signed-off-by: Xianglai Li <lixianglai@loongson.cn>
->> ---
->> Cc: Bibo Mao <Maobibo@loongson.cn>
->> Cc: Song Gao <gaosong@loongson.cn>
->>
->>   target/loongarch/kvm/kvm.c | 3 ++-
->>   1 file changed, 2 insertions(+), 1 deletion(-)
->>
->> diff --git a/target/loongarch/kvm/kvm.c b/target/loongarch/kvm/kvm.c
->> index a3f55155b0..01cddb7012 100644
->> --- a/target/loongarch/kvm/kvm.c
->> +++ b/target/loongarch/kvm/kvm.c
->> @@ -581,9 +581,10 @@ static int kvm_loongarch_get_lbt(CPUState *cs)
->>   void kvm_arch_reset_vcpu(CPUState *cs)
->>   {
->>       CPULoongArchState *env = cpu_env(cs);
->> +    uint64_t val;
-> How about set initial value here although it is not used? such as
->         uint64_t val = 0;
+Hi Hao,
 
-Or        uint64_t unused = 0;
+On 6/2/25 02:30, Hao Wu wrote:
+> This allows different FIUs to have different flash sizes, useful
+> in NPCM8XX which has multiple different sized FIU modules.
+> 
+> Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
+> Signed-off-by: Hao Wu <wuhaotsh@google.com>
+> ---
+>   hw/arm/npcm7xx.c             |  6 ++++++
+>   hw/ssi/npcm7xx_fiu.c         | 11 +++++++----
+>   include/hw/ssi/npcm7xx_fiu.h |  1 +
+>   3 files changed, 14 insertions(+), 4 deletions(-)
+> 
+> diff --git a/hw/arm/npcm7xx.c b/hw/arm/npcm7xx.c
+> index 386b2c35e9..2d6e08b72b 100644
+> --- a/hw/arm/npcm7xx.c
+> +++ b/hw/arm/npcm7xx.c
+> @@ -292,17 +292,21 @@ static const struct {
+>       hwaddr regs_addr;
+>       int cs_count;
+>       const hwaddr *flash_addr;
+> +    size_t flash_size;
+>   } npcm7xx_fiu[] = {
+>       {
+>           .name = "fiu0",
+>           .regs_addr = 0xfb000000,
+>           .cs_count = ARRAY_SIZE(npcm7xx_fiu0_flash_addr),
+>           .flash_addr = npcm7xx_fiu0_flash_addr,
+> +        .flash_size = 128 * MiB,
+> +
+>       }, {
+>           .name = "fiu3",
+>           .regs_addr = 0xc0000000,
+>           .cs_count = ARRAY_SIZE(npcm7xx_fiu3_flash_addr),
+>           .flash_addr = npcm7xx_fiu3_flash_addr,
+> +        .flash_size = 128 * MiB,
+>       },
+>   };
+>   
+> @@ -735,6 +739,8 @@ static void npcm7xx_realize(DeviceState *dev, Error **errp)
+>   
+>           object_property_set_int(OBJECT(sbd), "cs-count",
+>                                   npcm7xx_fiu[i].cs_count, &error_abort);
+> +        object_property_set_int(OBJECT(sbd), "flash-size",
+> +                                npcm7xx_fiu[i].flash_size, &error_abort);
+>           sysbus_realize(sbd, &error_abort);
+>   
+>           sysbus_mmio_map(sbd, 0, npcm7xx_fiu[i].regs_addr);
+> diff --git a/hw/ssi/npcm7xx_fiu.c b/hw/ssi/npcm7xx_fiu.c
+> index 21fc489038..ccdce67fa9 100644
+> --- a/hw/ssi/npcm7xx_fiu.c
+> +++ b/hw/ssi/npcm7xx_fiu.c
+> @@ -28,9 +28,6 @@
+>   
+>   #include "trace.h"
+>   
+> -/* Up to 128 MiB of flash may be accessed directly as memory. */
+> -#define NPCM7XX_FIU_FLASH_WINDOW_SIZE (128 * MiB)
+> -
+>   /* Each module has 4 KiB of register space. Only a fraction of it is used. */
+>   #define NPCM7XX_FIU_CTRL_REGS_SIZE (4 * KiB)
+>   
+> @@ -507,6 +504,11 @@ static void npcm7xx_fiu_realize(DeviceState *dev, Error **errp)
+>           return;
+>       }
+>   
+> +    if (s->flash_size == 0) {
+> +        error_setg(errp, "%s: flash size must be set", dev->canonical_path);
+> +        return;
+> +    }
+> +
+>       s->spi = ssi_create_bus(dev, "spi");
+>       s->cs_lines = g_new0(qemu_irq, s->cs_count);
+>       qdev_init_gpio_out_named(DEVICE(s), s->cs_lines, "cs", s->cs_count);
+> @@ -525,7 +527,7 @@ static void npcm7xx_fiu_realize(DeviceState *dev, Error **errp)
+>           flash->fiu = s;
+>           memory_region_init_io(&flash->direct_access, OBJECT(s),
+>                                 &npcm7xx_fiu_flash_ops, &s->flash[i], "flash",
+> -                              NPCM7XX_FIU_FLASH_WINDOW_SIZE);
+> +                              s->flash_size);
 
->>       env->mp_state = KVM_MP_STATE_RUNNABLE;
->> -    kvm_set_one_reg(cs, KVM_REG_LOONGARCH_VCPU_RESET, 0);
->> +    kvm_set_one_reg(cs, KVM_REG_LOONGARCH_VCPU_RESET, &val);
-> Can we add return value checking here? such as
->         ret = kvm_set_one_reg(cs, KVM_REG_LOONGARCH_VCPU_RESET, &val);
->         if (ret) {
->             error_report("... %s", strerror(errno));
->         }
-> 
-> Regards
-> Bibo Mao
->>   }
->>   static int kvm_loongarch_get_mpstate(CPUState *cs)
->>
-> 
-> 
+Per the comment, this is the device aperture.
+
+Either add a check whether size is always <= 128 * MiB, or use
+MIN(s->flash_size, NPCM7XX_FIU_FLASH_WINDOW_SIZE)?
+
+>           sysbus_init_mmio(sbd, &flash->direct_access);
+>       }
+>   }
+> @@ -543,6 +545,7 @@ static const VMStateDescription vmstate_npcm7xx_fiu = {
+>   
+>   static const Property npcm7xx_fiu_properties[] = {
+>       DEFINE_PROP_INT32("cs-count", NPCM7xxFIUState, cs_count, 0),
+> +    DEFINE_PROP_SIZE("flash-size", NPCM7xxFIUState, flash_size, 0),
+>   };
+>   
+>   static void npcm7xx_fiu_class_init(ObjectClass *klass, void *data)
+> diff --git a/include/hw/ssi/npcm7xx_fiu.h b/include/hw/ssi/npcm7xx_fiu.h
+> index a3a1704289..1785ea16f4 100644
+> --- a/include/hw/ssi/npcm7xx_fiu.h
+> +++ b/include/hw/ssi/npcm7xx_fiu.h
+> @@ -60,6 +60,7 @@ struct NPCM7xxFIUState {
+>       int32_t cs_count;
+>       int32_t active_cs;
+>       qemu_irq *cs_lines;
+> +    size_t flash_size;
+>       NPCM7xxFIUFlash *flash;
+>   
+>       SSIBus *spi;
 
 
