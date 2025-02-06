@@ -4,79 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 57D93C0219B
-	for <qemu-devel@archiver.kernel.org>; Thu,  6 Feb 2025 20:05:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9D7E4C02199
+	for <qemu-devel@archiver.kernel.org>; Thu,  6 Feb 2025 20:07:00 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tg84A-0008Ug-Iy; Thu, 06 Feb 2025 15:01:39 -0500
+	id 1tg80r-000864-IJ; Thu, 06 Feb 2025 14:58:13 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1tg83m-0007vq-7b
- for qemu-devel@nongnu.org; Thu, 06 Feb 2025 15:01:19 -0500
-Received: from mail-pj1-x1032.google.com ([2607:f8b0:4864:20::1032])
+ id 1tg80P-0007Ig-B2
+ for qemu-devel@nongnu.org; Thu, 06 Feb 2025 14:57:45 -0500
+Received: from mail-pj1-x1029.google.com ([2607:f8b0:4864:20::1029])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1tg83h-0001Ak-Ro
- for qemu-devel@nongnu.org; Thu, 06 Feb 2025 15:01:13 -0500
-Received: by mail-pj1-x1032.google.com with SMTP id
- 98e67ed59e1d1-2f9b91dff71so2092950a91.2
- for <qemu-devel@nongnu.org>; Thu, 06 Feb 2025 12:01:00 -0800 (PST)
+ id 1tg80K-0000Zz-SG
+ for qemu-devel@nongnu.org; Thu, 06 Feb 2025 14:57:43 -0500
+Received: by mail-pj1-x1029.google.com with SMTP id
+ 98e67ed59e1d1-2fa0c039d47so1607489a91.1
+ for <qemu-devel@nongnu.org>; Thu, 06 Feb 2025 11:57:39 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1738872059; x=1739476859; darn=nongnu.org;
+ d=linaro.org; s=google; t=1738871858; x=1739476658; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=qkxX/VEuH0lk4mcloNlmwb8LyjRKWn+RhZVCreY26EE=;
- b=qaimZG1yTk+zrWERt7CZasmrqDYmn9eKFUzlK4+zg/k6JhmxTe8ZqXz7DySx07fXg0
- nrEGU3XAgQEJKne91lJw586T4ocOaVTt5GcgWMZeyGDyOqdOpQ1yLFVlLF7gO7AnRD62
- QWDaZ1Z5fVjYfgvvOsWZsOfEJ2CCll4By8IVwVA/57gKuGIQwLBcXrmQSXQNrwdEA4Z/
- 7CuQ97wo5CWK7IkMY6kMmfZlhcaBAdJ6+G7RnXq5ahwR85VWcQi+edTVvkhg7UT7Utep
- UL4+UZnw46AnmKdt2lJsSRA1b8+nzXlA1+JXkclnagu0VmBGJTatrOlT6FsElQe/sVid
- RjHw==
+ bh=TQCjgYiJ38m/dRuOCrueWQOvHfQiGoL/F0IUorE2POg=;
+ b=bQIBIpcR5BQBU7pmWcM/u2DNZD68+t4gdm6IVWIqLKE77pcqLs1XmkcH3iW/luRmhP
+ J3a3dUez9HODzATjsFkmsdmT9hfkw8cUmzgjZhXlyUTpBXrXKJn+AxcFKLerkPsaf8oE
+ 1sPO5ljQI4/WwpTGZzhw7Nu0u8VFMI/3QPJX2MXo488gNQ+lRJnmPJI1EKad9rb789aA
+ WbBobEWeRBmXfRjKjSAvf5fySEv2y8CswR8MTVLxVF14xTd0jD/rrJIOpZClflQkrRm0
+ +hZ/+NI1mqYArNLSqKjL3e9P5eNlGv2SSD8A28UoZmxsnuguEGxIxf+ESeuNsEGYMgXH
+ oK5g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1738872059; x=1739476859;
+ d=1e100.net; s=20230601; t=1738871858; x=1739476658;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=qkxX/VEuH0lk4mcloNlmwb8LyjRKWn+RhZVCreY26EE=;
- b=wA9FM5jsk6fYiGZYnEdC8FWWAs8RgrxsZ8Ur+UEbe1YiteLgZDnb101VvVQdmqpP7s
- d9ZiNq4b+/XHIT8M1zSNEi7a7qeKWkbSnl9T/PyGmWYyErYz0JLJoTjM0xdDxsj/TFxv
- vxlyk4Tl4hMOWKbB4DzyS82QLqRkncSRLy1o0MjGpvfG5ORhP5DlBFxwdAclc3EUnRo0
- pymv8H5ioYbHb7+1WMcG9T0abM1f6AhMtFB7ql1R8rigRJ6TT/UqpEDds90IhGCjTzcS
- ZleSCY3z7Gy4BGDccbj/OUKkNiPqj0287L+Y5h9ACbhsh9WY444kvlV2b0Yz4s3JwgwO
- ++0g==
-X-Gm-Message-State: AOJu0YzO3zZHHluOfDIbLHaiTIWaoaaj1Yk1wWzlJcGByzgsjbXWF7ba
- YvWedTU3YfkwMxdopIri8i1sWio73az4/DZcLTnxXLoTkagyUQE/v3We/IuvtGrRnaCXzBsx1H8
- S
-X-Gm-Gg: ASbGncuFuYT2bjTezw+TWIrl+skSYrYmdA3c2318BTDEm5VFwME2A569dHzlZgi+Atl
- pgdlb987CfmAGt13itClRgwEt/+GvrPL85BPp7D7qbjjlM7KIhir8PThyG+RPQFPce/r4KBG0ac
- 4xFrAx/YyZD9kP5gN5MgOZTfb5xdGCvwny2IYCPa16I3RlaQ1t8wmLshdwWa7otp3HcOccgPNGu
- /V2jrCWtUmcETWB6wZ73ybURTh+N5oMrOBJLaP7FbOVvrS1k7XafQOJZAryNCDQDqcwBhunjvjf
- nt1MQZE6J4Z9uJBuaio7uPG2lDrNRxi0soouPHZNY1zQhHE=
-X-Google-Smtp-Source: AGHT+IFfr7wlsbDctiNoY+DnprR8Jv5fR1itc20ZK0BTKQ9V1PpvBVZ7nVYqhGZN3bqhNXPOSxAA8A==
-X-Received: by 2002:a17:90b:4b8c:b0:2fa:20f4:d27a with SMTP id
- 98e67ed59e1d1-2fa23f5330dmr547813a91.7.1738872059081; 
- Thu, 06 Feb 2025 12:00:59 -0800 (PST)
+ bh=TQCjgYiJ38m/dRuOCrueWQOvHfQiGoL/F0IUorE2POg=;
+ b=SLy0ld7Aa9uOj37iGK0hMPvIl7as/13YT8QUJSJEXqUjJpQV5QEtEMLeXzyo+4h6XW
+ NyRq4EMsicPtUASBmYaabRjWbLH14DTyBgrdXTRVc5EXeIZ9Xbg3CpP9aJRaYswp8ZdI
+ 7d2Fn87dUrb87fTMDq2WpUu6cJaVLZsTITUz9H9Cu9LsJbDNTBqSVcU4UFoQSLyUo9d8
+ v2kMrsWSwpO6reQ5uH1/XTdSVJ29+sNM/H8WBFGQhyCOwwDgAZOa22XSsC7r7cEKwW42
+ 64JxEd3gYFKcdLzdqmESvXegaDJVTyxTix9asNYgoldXMFSCrB23v0KYMhBto4WM0wEW
+ Q10Q==
+X-Gm-Message-State: AOJu0YxSJQANuSYkFzeV/TixeGttGCbswlcU/LTXcFEhpGuEkWOEeLI6
+ +bDdLOGBowIcaL9E247GELi3cqRidrN/e0twgoezQmCNfY5QJIIglG8p+nQezGhqPwVVsW1rslI
+ J
+X-Gm-Gg: ASbGncu2qV7bUB9iXO8JJEoPsK5eoqrndDk3QKS03AtZfq5yiMSSSye8S2dE2T12+Lb
+ UHkt2TTRrujRcSjvJotf2gr0xwnVpZTozMMMHO9FyBEXf1kXcvZ3K7KSVBPsmk9yGBCMl9fIHmJ
+ NsfKuKGw1n06wlwQ1yEIgB3kaiGhPV4lK/mFKxE1GIHrZYxstDHgierNMdbYHvU4hk+wszcwOGx
+ zNRjjE4srqNmwd8jPR8n/O3I5IIKBNmQ6kkh7Ds8SdzAeQ0MWdjZN3gbapnpE14OT3Y5vuOLBeW
+ z3UzbiCUVEnHpJxmZztlzA4XB4D+MB/52mkzb3yg6aziu/U=
+X-Google-Smtp-Source: AGHT+IHm9BJOYqkJ9m4jn26b8TZ7ivvOshdZUBAKbfPY4HqFdxvSmhFAB6M2dDYiE5jD7HG1OlgS0Q==
+X-Received: by 2002:a05:6a00:1f1a:b0:725:a78c:6c31 with SMTP id
+ d2e1a72fcca58-7305d4135demr1005204b3a.3.1738871858455; 
+ Thu, 06 Feb 2025 11:57:38 -0800 (PST)
 Received: from stoup.. (71-212-39-66.tukw.qwest.net. [71.212.39.66])
  by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-2fa09b3ee24sm1808857a91.36.2025.02.06.12.00.58
+ d2e1a72fcca58-73048c16370sm1666993b3a.152.2025.02.06.11.57.38
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 06 Feb 2025 12:00:58 -0800 (PST)
+ Thu, 06 Feb 2025 11:57:38 -0800 (PST)
 From: Richard Henderson <richard.henderson@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: qemu-arm@nongnu.org
-Subject: [PATCH 57/61] target/arm: Implement SME2 SQRSHR, UQRSHR, SQRSHRN
-Date: Thu,  6 Feb 2025 11:57:11 -0800
-Message-ID: <20250206195715.2150758-58-richard.henderson@linaro.org>
+Subject: [PATCH 29/61] target/arm: Implement SME2 ADD/SUB (array results,
+ multiple vectors)
+Date: Thu,  6 Feb 2025 11:56:43 -0800
+Message-ID: <20250206195715.2150758-30-richard.henderson@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20250206195715.2150758-1-richard.henderson@linaro.org>
 References: <20250206195715.2150758-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1032;
- envelope-from=richard.henderson@linaro.org; helo=mail-pj1-x1032.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1029;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pj1-x1029.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -101,228 +102,84 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 ---
- target/arm/tcg/helper-sme.h    | 18 +++++++
- target/arm/tcg/sme_helper.c    | 94 ++++++++++++++++++++++++++++++++++
- target/arm/tcg/translate-sme.c | 29 +++++++++++
- target/arm/tcg/sme.decode      | 33 ++++++++++++
- 4 files changed, 174 insertions(+)
+ target/arm/tcg/translate-sme.c | 31 +++++++++++++++++++++++++++++++
+ target/arm/tcg/sme.decode      | 20 ++++++++++++++++++++
+ 2 files changed, 51 insertions(+)
 
-diff --git a/target/arm/tcg/helper-sme.h b/target/arm/tcg/helper-sme.h
-index 1438a2a5b8..b9e1de63e6 100644
---- a/target/arm/tcg/helper-sme.h
-+++ b/target/arm/tcg/helper-sme.h
-@@ -263,3 +263,21 @@ DEF_HELPER_FLAGS_3(sme2_uzp4_h, TCG_CALL_NO_RWG, void, ptr, ptr, i32)
- DEF_HELPER_FLAGS_3(sme2_uzp4_s, TCG_CALL_NO_RWG, void, ptr, ptr, i32)
- DEF_HELPER_FLAGS_3(sme2_uzp4_d, TCG_CALL_NO_RWG, void, ptr, ptr, i32)
- DEF_HELPER_FLAGS_3(sme2_uzp4_q, TCG_CALL_NO_RWG, void, ptr, ptr, i32)
-+
-+DEF_HELPER_FLAGS_3(sme2_sqrshr_sh, TCG_CALL_NO_RWG, void, ptr, ptr, i32)
-+DEF_HELPER_FLAGS_3(sme2_uqrshr_sh, TCG_CALL_NO_RWG, void, ptr, ptr, i32)
-+DEF_HELPER_FLAGS_3(sme2_sqrshru_sh, TCG_CALL_NO_RWG, void, ptr, ptr, i32)
-+
-+DEF_HELPER_FLAGS_3(sme2_sqrshr_sb, TCG_CALL_NO_RWG, void, ptr, ptr, i32)
-+DEF_HELPER_FLAGS_3(sme2_uqrshr_sb, TCG_CALL_NO_RWG, void, ptr, ptr, i32)
-+DEF_HELPER_FLAGS_3(sme2_sqrshru_sb, TCG_CALL_NO_RWG, void, ptr, ptr, i32)
-+DEF_HELPER_FLAGS_3(sme2_sqrshr_dh, TCG_CALL_NO_RWG, void, ptr, ptr, i32)
-+DEF_HELPER_FLAGS_3(sme2_uqrshr_dh, TCG_CALL_NO_RWG, void, ptr, ptr, i32)
-+DEF_HELPER_FLAGS_3(sme2_sqrshru_dh, TCG_CALL_NO_RWG, void, ptr, ptr, i32)
-+
-+DEF_HELPER_FLAGS_3(sme2_sqrshrn_sb, TCG_CALL_NO_RWG, void, ptr, ptr, i32)
-+DEF_HELPER_FLAGS_3(sme2_uqrshrn_sb, TCG_CALL_NO_RWG, void, ptr, ptr, i32)
-+DEF_HELPER_FLAGS_3(sme2_sqrshrun_sb, TCG_CALL_NO_RWG, void, ptr, ptr, i32)
-+DEF_HELPER_FLAGS_3(sme2_sqrshrn_dh, TCG_CALL_NO_RWG, void, ptr, ptr, i32)
-+DEF_HELPER_FLAGS_3(sme2_uqrshrn_dh, TCG_CALL_NO_RWG, void, ptr, ptr, i32)
-+DEF_HELPER_FLAGS_3(sme2_sqrshrun_dh, TCG_CALL_NO_RWG, void, ptr, ptr, i32)
-diff --git a/target/arm/tcg/sme_helper.c b/target/arm/tcg/sme_helper.c
-index de0fec272d..9a92302b8b 100644
---- a/target/arm/tcg/sme_helper.c
-+++ b/target/arm/tcg/sme_helper.c
-@@ -1590,6 +1590,66 @@ SQCVT4(sme2_sqcvtu_dh, int64_t, uint16_t, H8, H2, do_usat_h)
- 
- #undef SQCVT4
- 
-+#define SQRSHR2(NAME, TW, TN, HW, HN, RSHR, SAT)                \
-+void HELPER(NAME)(void *vd, void *vs, uint32_t desc)            \
-+{                                                               \
-+    ARMVectorReg scratch __attribute__((uninitialized));        \
-+    size_t oprsz = simd_oprsz(desc), n = oprsz / sizeof(TW);    \
-+    int shift = simd_data(desc);                                \
-+    TW *s0 = vs, *s1 = vs + sizeof(ARMVectorReg);               \
-+    TN *d = vd;                                                 \
-+    if ((vd - vs) < 2 * sizeof(ARMVectorReg)) {                 \
-+        d = (TN *)&scratch;                                     \
-+    }                                                           \
-+    for (size_t i = 0; i < n; ++i) {                            \
-+        d[HN(i)] = SAT(RSHR(s0[HW(i)], shift));                 \
-+        d[HN(i) + n] = SAT(RSHR(s1[HW(i)], shift));             \
-+    }                                                           \
-+    if (d != vd) {                                              \
-+        memcpy(vd, d, oprsz);                                   \
-+    }                                                           \
-+}
-+
-+SQRSHR2(sme2_sqrshr_sh, int32_t, int16_t, H4, H2, do_srshr, do_ssat_b)
-+SQRSHR2(sme2_uqrshr_sh, uint32_t, uint16_t, H4, H2, do_urshr, do_usat_b)
-+SQRSHR2(sme2_sqrshru_sh, int32_t, uint16_t, H4, H2, do_srshr, do_usat_b)
-+
-+#undef SQRSHR2
-+
-+#define SQRSHR4(NAME, TW, TN, HW, HN, RSHR, SAT)                \
-+void HELPER(NAME)(void *vd, void *vs, uint32_t desc)            \
-+{                                                               \
-+    ARMVectorReg scratch __attribute__((uninitialized));        \
-+    size_t oprsz = simd_oprsz(desc), n = oprsz / sizeof(TW);    \
-+    int shift = simd_data(desc);                                \
-+    TW *s0 = vs, *s1 = vs + sizeof(ARMVectorReg);               \
-+    TW *s2 = vs + 2 * sizeof(ARMVectorReg);                     \
-+    TW *s3 = vs + 3 * sizeof(ARMVectorReg);                     \
-+    TN *d = vd;                                                 \
-+    if ((vd - vs) < 4 * sizeof(ARMVectorReg)) {                 \
-+        d = (TN *)&scratch;                                     \
-+    }                                                           \
-+    for (size_t i = 0; i < n; ++i) {                            \
-+        d[HN(i)] = SAT(RSHR(s0[HW(i)], shift));                 \
-+        d[HN(i) + n] = SAT(RSHR(s1[HW(i)], shift));             \
-+        d[HN(i) + 2 * n] = SAT(RSHR(s2[HW(i)], shift));         \
-+        d[HN(i) + 3 * n] = SAT(RSHR(s3[HW(i)], shift));         \
-+    }                                                           \
-+    if (d != vd) {                                              \
-+        memcpy(vd, d, oprsz);                                   \
-+    }                                                           \
-+}
-+
-+SQRSHR4(sme2_sqrshr_sb, int32_t, int8_t, H4, H2, do_srshr, do_ssat_b)
-+SQRSHR4(sme2_uqrshr_sb, uint32_t, uint8_t, H4, H2, do_urshr, do_usat_b)
-+SQRSHR4(sme2_sqrshru_sb, int32_t, uint8_t, H4, H2, do_srshr, do_usat_b)
-+
-+SQRSHR4(sme2_sqrshr_dh, int64_t, int16_t, H8, H2, do_srshr, do_ssat_h)
-+SQRSHR4(sme2_uqrshr_dh, uint64_t, uint16_t, H8, H2, do_urshr, do_usat_h)
-+SQRSHR4(sme2_sqrshru_dh, int64_t, uint16_t, H8, H2, do_srshr, do_usat_h)
-+
-+#undef SQRSHR4
-+
- /* Convert and interleave */
- void HELPER(sme2_bfcvtn)(void *vd, void *vs, float_status *fpst, uint32_t desc)
- {
-@@ -1654,6 +1714,40 @@ SQCVTN4(sme2_sqcvtun_dh, int64_t, uint16_t, H8, H2, do_usat_h)
- 
- #undef SQCVTN4
- 
-+#define SQRSHRN4(NAME, TW, TN, HW, HN, RSHR, SAT)               \
-+void HELPER(NAME)(void *vd, void *vs, uint32_t desc)            \
-+{                                                               \
-+    ARMVectorReg scratch __attribute__((uninitialized));        \
-+    size_t oprsz = simd_oprsz(desc), n = oprsz / sizeof(TW);    \
-+    int shift = simd_data(desc);                                \
-+    TW *s0 = vs, *s1 = vs + sizeof(ARMVectorReg);               \
-+    TW *s2 = vs + 2 * sizeof(ARMVectorReg);                     \
-+    TW *s3 = vs + 3 * sizeof(ARMVectorReg);                     \
-+    TN *d = vd;                                                 \
-+    if ((vd - vs) < 4 * sizeof(ARMVectorReg)) {                 \
-+        d = (TN *)&scratch;                                     \
-+    }                                                           \
-+    for (size_t i = 0; i < n; ++i) {                            \
-+        d[HN(4 * i + 0)] = SAT(RSHR(s0[HW(i)], shift));         \
-+        d[HN(4 * i + 1)] = SAT(RSHR(s1[HW(i)], shift));         \
-+        d[HN(4 * i + 2)] = SAT(RSHR(s2[HW(i)], shift));         \
-+        d[HN(4 * i + 3)] = SAT(RSHR(s3[HW(i)], shift));         \
-+    }                                                           \
-+    if (d != vd) {                                              \
-+        memcpy(vd, d, oprsz);                                   \
-+    }                                                           \
-+}
-+
-+SQRSHRN4(sme2_sqrshrn_sb, int32_t, int8_t, H4, H1, do_srshr, do_ssat_b)
-+SQRSHRN4(sme2_uqrshrn_sb, uint32_t, uint8_t, H4, H1, do_urshr, do_usat_b)
-+SQRSHRN4(sme2_sqrshrun_sb, int32_t, uint8_t, H4, H1, do_srshr, do_usat_b)
-+
-+SQRSHRN4(sme2_sqrshrn_dh, int64_t, int16_t, H8, H2, do_srshr, do_ssat_h)
-+SQRSHRN4(sme2_uqrshrn_dh, uint64_t, uint16_t, H8, H2, do_urshr, do_usat_h)
-+SQRSHRN4(sme2_sqrshrun_dh, int64_t, uint16_t, H8, H2, do_srshr, do_usat_h)
-+
-+#undef SQRSHRN4
-+
- /* Expand and convert */
- void HELPER(sme2_fcvt_w)(void *vd, void *vs, float_status *fpst, uint32_t desc)
- {
 diff --git a/target/arm/tcg/translate-sme.c b/target/arm/tcg/translate-sme.c
-index 01542e5330..55c3310e9b 100644
+index 09a4da1725..8aae70201c 100644
 --- a/target/arm/tcg/translate-sme.c
 +++ b/target/arm/tcg/translate-sme.c
-@@ -1398,3 +1398,32 @@ static gen_helper_gvec_2 * const uzp4_fns[] = {
-     gen_helper_sme2_uzp4_q,
- };
- TRANS_FEAT(UZP_4, aa64_sme2, do_zipuzp_4, a, uzp4_fns)
+@@ -692,6 +692,7 @@ static gen_helper_gvec_3_ptr * const f_vector_fminnm[4] = {
+ TRANS_FEAT(FMINNM_n1, aa64_sme2, do_z2z_n1_fpst, a, f_vector_fminnm)
+ TRANS_FEAT(FMINNM_nn, aa64_sme2, do_z2z_nn_fpst, a, f_vector_fminnm)
+ 
++/* Add/Sub vector Z[m] to each Z[n*N] with result in ZA[d*N]. */
+ static bool do_azz_n1(DisasContext *s, arg_azz_n *a, int esz,
+                       GVecGen3FnVar *fn)
+ {
+@@ -720,3 +721,33 @@ TRANS_FEAT(ADD_azz_n1_s, aa64_sme2, do_azz_n1, a, MO_32, tcg_gen_gvec_add_var)
+ TRANS_FEAT(SUB_azz_n1_s, aa64_sme2, do_azz_n1, a, MO_32, tcg_gen_gvec_sub_var)
+ TRANS_FEAT(ADD_azz_n1_d, aa64_sme2_i16i64, do_azz_n1, a, MO_64, tcg_gen_gvec_add_var)
+ TRANS_FEAT(SUB_azz_n1_d, aa64_sme2_i16i64, do_azz_n1, a, MO_64, tcg_gen_gvec_sub_var)
 +
-+static bool do_zz_rshr(DisasContext *s, arg_rshr *a, gen_helper_gvec_2 *fn)
++/* Add/Sub each vector Z[m*N] to each Z[n*N] with result in ZA[d*N]. */
++static bool do_azz_nn(DisasContext *s, arg_azz_n *a, int esz,
++                      GVecGen3FnVar *fn)
 +{
-+    if (sme_sm_enabled_check(s)) {
-+        int svl = streaming_vec_reg_size(s);
-+        tcg_gen_gvec_2_ool(vec_full_reg_offset(s, a->zd),
-+                           vec_full_reg_offset(s, a->zn),
-+                           svl, svl, a->shift, fn);
++    TCGv_ptr t_za;
++    int svl, n;
++
++    if (!sme_smza_enabled_check(s)) {
++        return true;
++    }
++
++    n = a->n;
++    t_za = get_zarray(s, a->rv, a->off, n);
++    svl = streaming_vec_reg_size(s);
++
++    for (int i = 0; i < n; ++i) {
++        int o_za = (svl / n * sizeof(ARMVectorReg)) * i;
++        int o_zn = vec_full_reg_offset(s, a->zn + i);
++        int o_zm = vec_full_reg_offset(s, a->zm + i);
++
++        fn(esz, t_za, o_za, tcg_env, o_zn, tcg_env, o_zm, svl, svl);
 +    }
 +    return true;
 +}
 +
-+TRANS_FEAT(SQRSHR_sh, aa64_sme2, do_zz_rshr, a, gen_helper_sme2_sqrshr_sh)
-+TRANS_FEAT(UQRSHR_sh, aa64_sme2, do_zz_rshr, a, gen_helper_sme2_uqrshr_sh)
-+TRANS_FEAT(SQRSHRU_sh, aa64_sme2, do_zz_rshr, a, gen_helper_sme2_sqrshru_sh)
-+
-+TRANS_FEAT(SQRSHR_sb, aa64_sme2, do_zz_rshr, a, gen_helper_sme2_sqrshr_sb)
-+TRANS_FEAT(SQRSHR_dh, aa64_sme2, do_zz_rshr, a, gen_helper_sme2_sqrshr_dh)
-+TRANS_FEAT(UQRSHR_sb, aa64_sme2, do_zz_rshr, a, gen_helper_sme2_uqrshr_sb)
-+TRANS_FEAT(UQRSHR_dh, aa64_sme2, do_zz_rshr, a, gen_helper_sme2_uqrshr_dh)
-+TRANS_FEAT(SQRSHRU_sb, aa64_sme2, do_zz_rshr, a, gen_helper_sme2_sqrshru_sb)
-+TRANS_FEAT(SQRSHRU_dh, aa64_sme2, do_zz_rshr, a, gen_helper_sme2_sqrshru_dh)
-+
-+TRANS_FEAT(SQRSHRN_sb, aa64_sme2, do_zz_rshr, a, gen_helper_sme2_sqrshrn_sb)
-+TRANS_FEAT(SQRSHRN_dh, aa64_sme2, do_zz_rshr, a, gen_helper_sme2_sqrshrn_dh)
-+TRANS_FEAT(UQRSHRN_sb, aa64_sme2, do_zz_rshr, a, gen_helper_sme2_uqrshrn_sb)
-+TRANS_FEAT(UQRSHRN_dh, aa64_sme2, do_zz_rshr, a, gen_helper_sme2_uqrshrn_dh)
-+TRANS_FEAT(SQRSHRUN_sb, aa64_sme2, do_zz_rshr, a, gen_helper_sme2_sqrshrun_sb)
-+TRANS_FEAT(SQRSHRUN_dh, aa64_sme2, do_zz_rshr, a, gen_helper_sme2_sqrshrun_dh)
++TRANS_FEAT(ADD_azz_nn_s, aa64_sme2, do_azz_nn, a, MO_32, tcg_gen_gvec_add_var)
++TRANS_FEAT(SUB_azz_nn_s, aa64_sme2, do_azz_nn, a, MO_32, tcg_gen_gvec_sub_var)
++TRANS_FEAT(ADD_azz_nn_d, aa64_sme2_i16i64, do_azz_nn, a, MO_64, tcg_gen_gvec_add_var)
++TRANS_FEAT(SUB_azz_nn_d, aa64_sme2_i16i64, do_azz_nn, a, MO_64, tcg_gen_gvec_sub_var)
 diff --git a/target/arm/tcg/sme.decode b/target/arm/tcg/sme.decode
-index a43edb625c..b28113a883 100644
+index 8b81c0a0ce..a6dee08661 100644
 --- a/target/arm/tcg/sme.decode
 +++ b/target/arm/tcg/sme.decode
-@@ -810,3 +810,36 @@ UZP_4           11000001 esz:2 1 10110 111000 ...00 ... 10   \
-                 &zz_e zd=%zd_ax4 zn=%zn_ax4
- UZP_4           11000001 001     10111 111000 ...00 ... 10   \
-                 &zz_e esz=4 zd=%zd_ax4 zn=%zn_ax4
+@@ -260,3 +260,23 @@ SUB_azz_n1_s    11000001 0010 .... 0 .. 110 ..... 11 ...    @azz_nx1_o3 n=2
+ SUB_azz_n1_s    11000001 0011 .... 0 .. 110 ..... 11 ...    @azz_nx1_o3 n=4
+ SUB_azz_n1_d    11000001 0110 .... 0 .. 110 ..... 11 ...    @azz_nx1_o3 n=2
+ SUB_azz_n1_d    11000001 0111 .... 0 .. 110 ..... 11 ...    @azz_nx1_o3 n=4
 +
-+### SME2 Multi-vector SVE Constructive Binary
++### SME2 Multi-vector Multiple Array Vectors
 +
-+&rshr           zd zn shift
++%zn_ax2         6:4 !function=times_2
++%zn_ax4         7:3 !function=times_4
 +
-+%rshr_sh_shift  16:4 !function=rsub_16
-+%rshr_sb_shift  16:5 !function=rsub_32
-+%rshr_dh_shift  22:1 16:5 !function=rsub_64
++@azz_2x2_o3     ........ ... ..... . .. ... ..... .. off:3  \
++                &azz_n n=2 rv=%mova_rv zn=%zn_ax2 zm=%zm_ax2
++@azz_4x4_o3     ........ ... ..... . .. ... ..... .. off:3  \
++                &azz_n n=4 rv=%mova_rv zn=%zn_ax4 zm=%zm_ax4
 +
-+@rshr_sh        ........ .... .... ...... ..... zd:5        \
-+                &rshr zn=%zn_ax2 shift=%rshr_sh_shift
-+@rshr_sb        ........ ... ..... ...... ..... zd:5        \
-+                &rshr zn=%zn_ax4 shift=%rshr_sb_shift
-+@rshr_dh        ........ ... ..... ...... ..... zd:5        \
-+                &rshr zn=%zn_ax4 shift=%rshr_dh_shift
++ADD_azz_nn_s    11000001 101 ....0 0 .. 110 ....0 10 ...    @azz_2x2_o3
++ADD_azz_nn_s    11000001 101 ...01 0 .. 110 ...00 10 ...    @azz_4x4_o3
++ADD_azz_nn_d    11000001 111 ....0 0 .. 110 ....0 10 ...    @azz_2x2_o3
++ADD_azz_nn_d    11000001 111 ...01 0 .. 110 ...00 10 ...    @azz_4x4_o3
 +
-+SQRSHR_sh       11000001 1110 .... 110101 ....0 .....       @rshr_sh
-+UQRSHR_sh       11000001 1110 .... 110101 ....1 .....       @rshr_sh
-+SQRSHRU_sh      11000001 1111 .... 110101 ....0 .....       @rshr_sh
-+
-+SQRSHR_sb       11000001 011 ..... 110110 ...00 .....       @rshr_sb
-+SQRSHR_dh       11000001 1.1 ..... 110110 ...00 .....       @rshr_dh
-+UQRSHR_sb       11000001 011 ..... 110110 ...01 .....       @rshr_sb
-+UQRSHR_dh       11000001 1.1 ..... 110110 ...01 .....       @rshr_dh
-+SQRSHRU_sb      11000001 011 ..... 110110 ...10 .....       @rshr_sb
-+SQRSHRU_dh      11000001 1.1 ..... 110110 ...10 .....       @rshr_dh
-+
-+SQRSHRN_sb      11000001 011 ..... 110111 ...00 .....       @rshr_sb
-+SQRSHRN_dh      11000001 1.1 ..... 110111 ...00 .....       @rshr_dh
-+UQRSHRN_sb      11000001 011 ..... 110111 ...01 .....       @rshr_sb
-+UQRSHRN_dh      11000001 1.1 ..... 110111 ...01 .....       @rshr_dh
-+SQRSHRUN_sb     11000001 011 ..... 110111 ...10 .....       @rshr_sb
-+SQRSHRUN_dh     11000001 1.1 ..... 110111 ...10 .....       @rshr_dh
++SUB_azz_nn_s    11000001 101 ....0 0 .. 110 ....0 11 ...    @azz_2x2_o3
++SUB_azz_nn_s    11000001 101 ...01 0 .. 110 ...00 11 ...    @azz_4x4_o3
++SUB_azz_nn_d    11000001 111 ....0 0 .. 110 ....0 11 ...    @azz_2x2_o3
++SUB_azz_nn_d    11000001 111 ...01 0 .. 110 ...00 11 ...    @azz_4x4_o3
 -- 
 2.43.0
 
