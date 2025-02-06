@@ -4,136 +4,139 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D12B0C02198
-	for <qemu-devel@archiver.kernel.org>; Thu,  6 Feb 2025 05:25:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 78156C02196
+	for <qemu-devel@archiver.kernel.org>; Thu,  6 Feb 2025 05:26:41 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tfuNl-0002YV-SY; Thu, 06 Feb 2025 00:24:57 -0500
+	id 1tfuPI-0003R6-52; Thu, 06 Feb 2025 00:26:32 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <Suravee.Suthikulpanit@amd.com>)
- id 1tfuNe-0002Xt-IN
- for qemu-devel@nongnu.org; Thu, 06 Feb 2025 00:24:52 -0500
-Received: from mail-dm6nam11on2044.outbound.protection.outlook.com
- ([40.107.223.44] helo=NAM11-DM6-obe.outbound.protection.outlook.com)
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <Suravee.Suthikulpanit@amd.com>)
- id 1tfuNa-0004tf-Mj
- for qemu-devel@nongnu.org; Thu, 06 Feb 2025 00:24:50 -0500
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=OyAAqDBMS8BgvcFpPO6C/Y3+snlv4IydcaHw5ZnnMGcVu7s5KdlyM9V7WbzUM+Pt1O/monS8JJb7d1OL0pMqZdKeT7Y57UL8glH3xHC8CJO/ePBAAm9raS4U9bhXrP5xff6eBIiuhmGlgXRWHYVQMS1mXG8PZdTTstbqx/cgFab3b2DIziNJp8OLw5wAqyRAbCrarjKORiyZvfs59hgn7hHsz/5fGTcgpMaoew79nZUOmQgVtCtLuxYyDZdDQaRUBOpo1HrBs2G5Gfvv0Q1SvOsEumZFMqZ23wqoqgwSv0V7iOvcTeYUTJ0R12wq3uWZmY67leCyHPlUOFZszKslcQ==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=08FxTHvSQlUcHs5WuPSyPSaC+krpMLjB6dqZ/wni0Hg=;
- b=Y/xUHXcc7qitCP4L3ZKTJcknaP4J3tDPbvpzn+z4edQmSlbp9f24r2cPMUqShtC1jizdpGgZ6O6yV01/fcrgDPkz/nSTNyDrNk8Y6/yeT6yL8S0JVmDK4RiE0oGyFmEqq40j9ndWUppip1QGnkAykRKqnxSAqJXGARdNgvB0xBGMbgozp9z7jtJBJedpvBTeWaSgZ55hy5aFkVV4PZeOfIapkhTluzlE8g8CIMxmeqD9W3uxDu/ISSqO1AAMiVlgJ0P5/LjSfKwypx27H5gs4LpXZFOo2WzyjU3wqe8M9RgalTcvPW4fK2zHGYbvPEPY9d6kHXLmjWbu7doyNGyLJw==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
- 165.204.84.17) smtp.rcpttodomain=nongnu.org smtp.mailfrom=amd.com; dmarc=pass
- (p=quarantine sp=quarantine pct=100) action=none header.from=amd.com;
- dkim=none (message not signed); arc=none (0)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=amd.com; s=selector1; 
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=08FxTHvSQlUcHs5WuPSyPSaC+krpMLjB6dqZ/wni0Hg=;
- b=GLdgBwLdcOoi/b/0v8aXEO22jU+JnzqQ4qmm2psQm7TivuRuDSQkRMxV6CAXsSzH+uGU1VD4PmbTzOySIliEkpCWgfpgoV15+On4wcJqu3sZ3IaOb47wNKMDS3IckEBGeKXfAOzi8fqf32PhYGySKZ93NNMUKkKkahtyPq4Z0v0=
-Received: from SJ0PR03CA0353.namprd03.prod.outlook.com (2603:10b6:a03:39c::28)
- by CY5PR12MB6082.namprd12.prod.outlook.com (2603:10b6:930:2a::6) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.8422.11; Thu, 6 Feb
- 2025 05:19:37 +0000
-Received: from SJ1PEPF00001CE0.namprd05.prod.outlook.com
- (2603:10b6:a03:39c:cafe::a3) by SJ0PR03CA0353.outlook.office365.com
- (2603:10b6:a03:39c::28) with Microsoft SMTP Server (version=TLS1_3,
- cipher=TLS_AES_256_GCM_SHA384) id 15.20.8398.27 via Frontend Transport; Thu,
- 6 Feb 2025 05:19:36 +0000
-X-MS-Exchange-Authentication-Results: spf=pass (sender IP is 165.204.84.17)
- smtp.mailfrom=amd.com; dkim=none (message not signed)
- header.d=none;dmarc=pass action=none header.from=amd.com;
-Received-SPF: Pass (protection.outlook.com: domain of amd.com designates
- 165.204.84.17 as permitted sender) receiver=protection.outlook.com;
- client-ip=165.204.84.17; helo=SATLEXMB04.amd.com; pr=C
-Received: from SATLEXMB04.amd.com (165.204.84.17) by
- SJ1PEPF00001CE0.mail.protection.outlook.com (10.167.242.8) with Microsoft
- SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
- 15.20.8398.14 via Frontend Transport; Thu, 6 Feb 2025 05:19:36 +0000
-Received: from purico-ed03host.amd.com (10.180.168.240) by SATLEXMB04.amd.com
- (10.181.40.145) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id 15.1.2507.39; Wed, 5 Feb
- 2025 23:19:09 -0600
-From: Suravee Suthikulpanit <suravee.suthikulpanit@amd.com>
-To: <qemu-devel@nongnu.org>
-CC: <pbonzini@redhat.com>, <mtosatti@redhat.com>, <mst@redhat.com>,
- <marcel.apfelbaum@gmail.com>, <jon.grimm@amd.com>, <santosh.shukla@amd.com>,
- <vasant.hegde@amd.com>, <Wei.Huang2@amd.com>, <bsd@redhat.com>,
- <berrange@redhat.com>, Suravee Suthikulpanit <suravee.suthikulpanit@amd.com>
-Subject: [PATCH v2] hw/i386/amd_iommu: Allow migration
-Date: Thu, 6 Feb 2025 05:18:56 +0000
-Message-ID: <20250206051856.323651-1-suravee.suthikulpanit@amd.com>
-X-Mailer: git-send-email 2.34.1
+ (Exim 4.90_1) (envelope-from <icegambit91@gmail.com>)
+ id 1tfuPF-0003Py-IV
+ for qemu-devel@nongnu.org; Thu, 06 Feb 2025 00:26:29 -0500
+Received: from mail-pl1-x62e.google.com ([2607:f8b0:4864:20::62e])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <icegambit91@gmail.com>)
+ id 1tfuPD-0005PU-0M
+ for qemu-devel@nongnu.org; Thu, 06 Feb 2025 00:26:29 -0500
+Received: by mail-pl1-x62e.google.com with SMTP id
+ d9443c01a7336-2165cb60719so9882715ad.0
+ for <qemu-devel@nongnu.org>; Wed, 05 Feb 2025 21:26:25 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20230601; t=1738819585; x=1739424385; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:autocrypt:from
+ :content-language:references:cc:to:subject:user-agent:mime-version
+ :date:message-id:from:to:cc:subject:date:message-id:reply-to;
+ bh=pCs4Sx/bL9rzfjsM15hlIw0fny26FK0xMuSxQPLrFcQ=;
+ b=Jyo/YnKfPM5qz5uMwMi4Ju04BSv3mhpqYYf2lP5lL8Pi3y/r+cPAV9fp6EAMLHpBr8
+ Vtd+2oO44GaePeWlL7wKf+BWzdbRCMcntCAMv9NY52tlml950IP/f+nJP7aUYwDbdn6N
+ U85hGBxk+dehaO4Bq11iLgIxSGBpvA313p/+37POvuqLnYoFMC2NxJcKcWDh/ubMd2eI
+ fX7kTrwy7ibzzZB3236mr1lIoAI+uLxavBYLnoDub81+11vOxFNBTt2HY6/G2lRsMA8T
+ jdUcKY1yP5vPV18vIKCbPb7fDN47veo+10YO2PHy0aU1+WuOmwuIMYF4+vD5Of+OiyVm
+ gXnA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1738819585; x=1739424385;
+ h=content-transfer-encoding:in-reply-to:autocrypt:from
+ :content-language:references:cc:to:subject:user-agent:mime-version
+ :date:message-id:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=pCs4Sx/bL9rzfjsM15hlIw0fny26FK0xMuSxQPLrFcQ=;
+ b=IjBsmhhzMxosrrnycPFi+wty3/PQBoo1ywOBR/mhrdJHl6OIvabAcxcsFRpsHV3L4W
+ kcqWN6LUd2gnz9iddlxz34yzdFkqu3tERXr21z7hNIaoEXEZTKTbpPP5QngbZlvk/Kx3
+ vd1Xma/hhQx+KzoWGghuh2XPinYPthT023ZH72nbLU7Ct2/+B2+fq4lfht2reL5FfXcv
+ HKSCwPQWtKixtJNLBV784BkTIa6BRhAqkbxjNcFSvbTjaUkeofckm3n1GdmQcrniyOuh
+ UG7tjy+CrjYoA0mYW+WaqZRjiYp13ixDZ22dSJLRI7Mx3wVXqaMS3j9iJ5dHcOSVKMcA
+ c9lg==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCXkDfTwPe/N1pKT2xIN8pQ2AZxUvOAA/FbCFoq+0Q7VsiD5UqLOap+t7aOZ17cmq/qmIBJeEs+KjLcq@nongnu.org
+X-Gm-Message-State: AOJu0Yyb2lTcbci/afXdpoQFHe0W8wHJy3ydlNyLptx/9TCD3dij3xdv
+ ME17EL5bkgYCNv06lkmXHlNuXXJkKW7+TQqfWQffvvfHh0o86/0J
+X-Gm-Gg: ASbGnctCTDsj0OMARSqUkbA2W6a1XJdhQvNTRIK3CkdVXICVpm+Tk68PjJQ1yqrFLyF
+ UK6/bfkWML+tXJZ6IUR/3LcQOcWMIWmuS8dkDS8r+0zYIdZ+8y9dpkUK/ZqiC+tIg9vwVLQ0X7f
+ R9fQqLuB4Qc9a0S89eWolujBYVaB/OvPLBp0MtwrXQzlIBsnjTkwGXx6g8TN/Vnp/y8A5I9tifg
+ /IxHq2uQWCUwY/Pcn9i7YpwPOUYI3h+WNlLtiv/FWe7edCCtuY5GC3t3FB9
+X-Google-Smtp-Source: AGHT+IEn7zLmBN3NIxSuQ+Pi3MrLLtXxQf6gJSnCyxB48cUwr5sMWQ0w3//RyE5Dgj/jWkNuArivZA==
+X-Received: by 2002:a05:6a21:4a4a:b0:1e1:a693:d623 with SMTP id
+ adf61e73a8af0-1ede8847604mr9623762637.25.1738819584436; 
+ Wed, 05 Feb 2025 21:26:24 -0800 (PST)
+Received: from [192.168.1.18] ([223.233.85.39])
+ by smtp.gmail.com with ESMTPSA id
+ d2e1a72fcca58-73048e1e7bcsm390335b3a.158.2025.02.05.21.26.21
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Wed, 05 Feb 2025 21:26:23 -0800 (PST)
+Message-ID: <5ada25cb-405e-4587-b230-b6a3ce7dbdc2@gmail.com>
+Date: Thu, 6 Feb 2025 10:56:14 +0530
 MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [RFC v4 0/5] Add packed virtqueue to shadow virtqueue
+To: Eugenio Perez Martin <eperezma@redhat.com>
+Cc: sgarzare@redhat.com, mst@redhat.com, qemu-devel@nongnu.org,
+ Sahil Siddiq <sahilcdq@proton.me>
+References: <20241205203430.76251-1-sahilcdq@proton.me>
+ <CAJaqyWdx6GGrQ8-Pm9k9jE11djdk3B1OHda+uGTQqYbq5tyX7w@mail.gmail.com>
+ <d747027b-4c59-4f01-bb36-b9a00aa7d3a9@gmail.com>
+ <CAJaqyWeKW3VVATqdWMrRUxCZxsrCUur7uwiyDqk2Y2W1wqZusQ@mail.gmail.com>
+ <9b20ffc4-b55b-42c8-9847-a677c30c0051@gmail.com>
+ <CAJaqyWf_9btBAtZ1TrUDpCh-eTD47ELHO5jxWJW3gOAZO0tMCw@mail.gmail.com>
+ <f670a48e-73ab-4027-9d2b-d4fafa54cd16@gmail.com>
+ <CAJaqyWftS8angT2=XUUFiR_5yjxNOmV4WXHe3cxkb4t6KbQdDw@mail.gmail.com>
+ <4ee57bd3-5ea0-49a7-969e-c3fe902d8246@gmail.com>
+ <CAJaqyWf9g_yAb6oYf_bJ5st9owKOzJDKbcWh6k+ZYZ3-mRSaVg@mail.gmail.com>
+ <b5e90abd-9fa0-4ab8-9ad2-2b673f1c0784@gmail.com>
+ <CAJaqyWcgEefe8EKeuY_hxPuPfdOk6yPiFw1gaY5fvKYc7vPo5g@mail.gmail.com>
+ <91d6b4b3-be87-462c-9a0a-4f3fc8ebe4c1@gmail.com>
+ <CAJaqyWfL9sWRgk-zMyW_+K0dAp18iDNw1AxJLoLHoSN=GA5_sg@mail.gmail.com>
+ <dd634f4f-1539-44dd-8f97-6d1173dcd626@gmail.com>
+ <CAJaqyWe3qTJhQrkP2gkmCeand_63O_R6ZNvWSgGJQpE-3Qz3aw@mail.gmail.com>
+Content-Language: en-US
+From: Sahil Siddiq <icegambit91@gmail.com>
+Autocrypt: addr=icegambit91@gmail.com; keydata=
+ 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
+ rPgMe6IIvn24UuW2f6fIt0AaqOWq
+In-Reply-To: <CAJaqyWe3qTJhQrkP2gkmCeand_63O_R6ZNvWSgGJQpE-3Qz3aw@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Content-Type: text/plain
-X-Originating-IP: [10.180.168.240]
-X-ClientProxiedBy: SATLEXMB03.amd.com (10.181.40.144) To SATLEXMB04.amd.com
- (10.181.40.145)
-X-EOPAttributedMessage: 0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: SJ1PEPF00001CE0:EE_|CY5PR12MB6082:EE_
-X-MS-Office365-Filtering-Correlation-Id: 6e5830f8-6a1d-43cb-ddfb-08dd466dd8f1
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;
- ARA:13230040|376014|82310400026|36860700013|1800799024; 
-X-Microsoft-Antispam-Message-Info: =?us-ascii?Q?+1/gvLbsx+p4YxE4KHt5x8/5LcdTzHRwBxz2PeQdkF4MopK0kmbeV6c03tt3?=
- =?us-ascii?Q?Cg5gLCLS31/zak04Eeb/n+p1QecxTwzVTLudQ3AjhVtZbWpbHCwAv0Ty6yN1?=
- =?us-ascii?Q?RKY2qenH4RHLzvg1kHJXP92c3zIG47c1zEbeNvzi6JcMUKP9CWbroH+886na?=
- =?us-ascii?Q?ORYYUo39c/aahou0ZndsUjRrc/gI/m1sP0REW3KVkOdbWPkNzaq2nHchn6Qn?=
- =?us-ascii?Q?7GTPtV/VqLLbLTr4g6+ZsYWwMgBVcGO3u4dfAuURpexaAVwA5dXR7v9K7VGh?=
- =?us-ascii?Q?JxY6aU9yRLjh2bhXCy35rs4CnDnnpxSq1oIfxHFBmlBPyjM9TOTAIkJz+5jv?=
- =?us-ascii?Q?b4j5HYAdBLugXDZq0n8ouZrUU+1W3auexsnJ7FetXeoHTRkH1v1Cu116zNED?=
- =?us-ascii?Q?ptfUqk8IblkoHj79llbkyFUe2PYE/7ZkBYyQXm912qGQAR0YE7jEfdDhYhF1?=
- =?us-ascii?Q?uB0fgyn6JD5I6P8mCx+F/1mk7c1yN9RJS/Jy0csKNqfKALyaHg5JeJ2P79oM?=
- =?us-ascii?Q?/TczCjVsm73aM0FkjrHkH6Dc05mLipI0BxBBuLV9EJnzzTbe3DfjLmFFLeBF?=
- =?us-ascii?Q?NC45X2w+FdCKenTDfjDE0N9HbXiNtGGMO9jj1Wcx3a18n1KYiEOhq/RkXi8x?=
- =?us-ascii?Q?XE+hyT0LHw78vHJ/NjlFRVJT0t1x6J1J9LdvzPMQgxCwGJ1+WH00LgAlmYue?=
- =?us-ascii?Q?SmD0hIzqGe7chmEp0PTKEZidabQ40mLW/h9NwVAMyLvXQELQnwh1eF0Oofwn?=
- =?us-ascii?Q?UyPfJhGAXHa7DhBvMDL7AynDO/ce5SmLEEkOsbvLqJpRr9DFsRwr1BQAZnHc?=
- =?us-ascii?Q?GFysEq25DQ8E63k4cCX23VtHm1WOZWczc1Tm9AoG0WyE3zZUPt+rP1iLt1iv?=
- =?us-ascii?Q?VuxjYToZd2E+yVjQL35bvsoFyckmp7hr25G/qY/Wsq3xKu+3Lr12A+NU0AA1?=
- =?us-ascii?Q?vUfN/oonKCvSd+Pbn3gp01bS+zf3kfMssafT0krm/7vLs/0Zdj3i62FyFL9x?=
- =?us-ascii?Q?kphpzMyNsiOkjehRkuHc3rpYwuh3h62ewaNydKEZxsPlu/hhdHlgTkwZv1lc?=
- =?us-ascii?Q?mgGG/vtC+FA9WmIcTf2HUk5BS5oJhZ/ejKyJAsGQs3g0uYR8ukUki+0lE35n?=
- =?us-ascii?Q?g5yIPrIudG23LmB4WWUL8bdPl++0rDl/vWrxm4D0S5MBOozWAKlgJU6UsUkq?=
- =?us-ascii?Q?6WQ7LZTV9M2Rze+zR58l9I5wzV5WyWyn5mR0YlG1xMSUIKDZ0ZUaUJ9fCf7j?=
- =?us-ascii?Q?9UNF/LtSTrlVg2jiA0ze31DQG6hvdugETJrvsTZY6lxIkiX1aH54Wd1BQIgC?=
- =?us-ascii?Q?YXKzukephGsLb3fwhhJaaHeOaU8kiqAOb//vxHCKnv7eRM7igM3kq6o4FWF+?=
- =?us-ascii?Q?1zmHUDAhm8R91HpEBYSUs/CBdzKCFZ0IWJzaCUSIecFUsRbJdTUWDkL33buu?=
- =?us-ascii?Q?MGfwMH0aSQ4VXIHShD8DshpDc8Hi+kfD?=
-X-Forefront-Antispam-Report: CIP:165.204.84.17; CTRY:US; LANG:en; SCL:1; SRV:;
- IPV:CAL; SFV:NSPM; H:SATLEXMB04.amd.com; PTR:InfoDomainNonexistent; CAT:NONE;
- SFS:(13230040)(376014)(82310400026)(36860700013)(1800799024); DIR:OUT;
- SFP:1101; 
-X-OriginatorOrg: amd.com
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 06 Feb 2025 05:19:36.0025 (UTC)
-X-MS-Exchange-CrossTenant-Network-Message-Id: 6e5830f8-6a1d-43cb-ddfb-08dd466dd8f1
-X-MS-Exchange-CrossTenant-Id: 3dd8961f-e488-4e60-8e11-a82d994e183d
-X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=3dd8961f-e488-4e60-8e11-a82d994e183d; Ip=[165.204.84.17];
- Helo=[SATLEXMB04.amd.com]
-X-MS-Exchange-CrossTenant-AuthSource: SJ1PEPF00001CE0.namprd05.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Anonymous
-X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: CY5PR12MB6082
-Received-SPF: permerror client-ip=40.107.223.44;
- envelope-from=Suravee.Suthikulpanit@amd.com;
- helo=NAM11-DM6-obe.outbound.protection.outlook.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_MSPIKE_H2=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Received-SPF: pass client-ip=2607:f8b0:4864:20::62e;
+ envelope-from=icegambit91@gmail.com; helo=mail-pl1-x62e.google.com
+X-Spam_score_int: 1
+X-Spam_score: 0.1
+X-Spam_bar: /
+X-Spam_report: (0.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1, DKIM_VALID=-0.1,
+ DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_ENVFROM_END_DIGIT=0.25,
+ FREEMAIL_FROM=0.001, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001, URI_DOTEDU=1.999 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -149,74 +152,251 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Add migration support for AMD IOMMU model by saving necessary AMDVIState
-parameters for MMIO registers, device table, command buffer, and event
-buffers.
+Hi,
 
-Signed-off-by: Suravee Suthikulpanit <suravee.suthikulpanit@amd.com>
----
-Changes from v1:
-(https://lore.kernel.org/all/9ecffa7a-f4c6-45a5-a066-84826ccb55dd@amd.com/T/)
-* Include ppr_log, pprlog_len, pprlog_head, pprlog_tail per Joao.
+On 2/4/25 11:40 PM, Eugenio Perez Martin wrote:
+> On Tue, Feb 4, 2025 at 1:49 PM Sahil Siddiq <icegambit91@gmail.com> wrote:
+>> On 1/31/25 12:27 PM, Eugenio Perez Martin wrote:
+>>> On Fri, Jan 31, 2025 at 6:04 AM Sahil Siddiq <icegambit91@gmail.com> wrote:
+>>>> On 1/24/25 1:04 PM, Eugenio Perez Martin wrote:
+>>>>> On Fri, Jan 24, 2025 at 6:47 AM Sahil Siddiq <icegambit91@gmail.com> wrote:
+>>>>>> On 1/21/25 10:07 PM, Eugenio Perez Martin wrote:
+>>>>>>> On Sun, Jan 19, 2025 at 7:37 AM Sahil Siddiq <icegambit91@gmail.com> wrote:
+>>>>>>>> On 1/7/25 1:35 PM, Eugenio Perez Martin wrote:
+>>>>>>>> [...]
+>>>>>>>> Apologies for the delay in replying. It took me a while to figure
+>>>>>>>> this out, but I have now understood why this doesn't work. L1 is
+>>>>>>>> unable to receive messages from L0 because they get filtered out
+>>>>>>>> by hw/net/virtio-net.c:receive_filter [1]. There's an issue with
+>>>>>>>> the MAC addresses.
+>>>>>>>>
+>>>>>>>> In L0, I have:
+>>>>>>>>
+>>>>>>>> $ ip a show tap0
+>>>>>>>> 6: tap0: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc fq_codel state UNKNOWN group default qlen 1000
+>>>>>>>>          link/ether d2:6d:b9:61:e1:9a brd ff:ff:ff:ff:ff:ff
+>>>>>>>>          inet 111.1.1.1/24 scope global tap0
+>>>>>>>>             valid_lft forever preferred_lft forever
+>>>>>>>>          inet6 fe80::d06d:b9ff:fe61:e19a/64 scope link proto kernel_ll
+>>>>>>>>             valid_lft forever preferred_lft forever
+>>>>>>>>
+>>>>>>>> In L1:
+>>>>>>>>
+>>>>>>>> # ip a show eth0
+>>>>>>>> 2: eth0: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc fq_codel state UP group default qlen 1000
+>>>>>>>>          link/ether 52:54:00:12:34:56 brd ff:ff:ff:ff:ff:ff
+>>>>>>>>          altname enp0s2
+>>>>>>>>          inet 10.0.2.15/24 brd 10.0.2.255 scope global dynamic noprefixroute eth0
+>>>>>>>>             valid_lft 83455sec preferred_lft 83455sec
+>>>>>>>>          inet6 fec0::7bd2:265e:3b8e:5acc/64 scope site dynamic noprefixroute
+>>>>>>>>             valid_lft 86064sec preferred_lft 14064sec
+>>>>>>>>          inet6 fe80::50e7:5bf6:fff8:a7b0/64 scope link noprefixroute
+>>>>>>>>             valid_lft forever preferred_lft forever
+>>>>>>>>
+>>>>>>>> I'll call this L1-eth0.
+>>>>>>>>
+>>>>>>>> In L2:
+>>>>>>>> # ip a show eth0
+>>>>>>>> 2: eth0: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc fq_codel state UP gro0
+>>>>>>>>          link/ether 52:54:00:12:34:57 brd ff:ff:ff:ff:ff:ff
+>>>>>>>>          altname enp0s7
+>>>>>>>>          inet 111.1.1.2/24 scope global eth0
+>>>>>>>>             valid_lft forever preferred_lft forever
+>>>>>>>>
+>>>>>>>> I'll call this L2-eth0.
+>>>>>>>>
+>>>>>>>> Apart from eth0, lo is the only other device in both L1 and L2.
+>>>>>>>>
+>>>>>>>> A frame that L1 receives from L0 has L2-eth0's MAC address (LSB = 57)
+>>>>>>>> as its destination address. When booting L2 with x-svq=false, the
+>>>>>>>> value of n->mac in VirtIONet is also L2-eth0. So, L1 accepts
+>>>>>>>> the frames and passes them on to L2 and pinging works [2].
+>>>>>>>>
+>>>>>>>
+>>>>>>> So this behavior is interesting by itself. But L1's kernel net system
+>>>>>>> should not receive anything. As I read it, even if it receives it, it
+>>>>>>> should not forward the frame to L2 as it is in a different subnet. Are
+>>>>>>> you able to read it using tcpdump on L1?
+>>>>>>
+>>>>>> I ran "tcpdump -i eth0" in L1. It didn't capture any of the packets
+>>>>>> that were directed at L2 even though L2 was able to receive them.
+>>>>>> Similarly, it didn't capture any packets that were sent from L2 to
+>>>>>> L0. This is when L2 is launched with x-svq=false.
+>>>>>> [...]
+>>>>>> With x-svq=true, forcibly setting the LSB of n->mac to 0x57 in
+>>>>>> receive_filter allows L2 to receive packets from L0. I added
+>>>>>> the following line just before line 1771 [1] to check this out.
+>>>>>>
+>>>>>> n->mac[5] = 0x57;
+>>>>>>
+>>>>>
+>>>>> That's very interesting. Let me answer all the gdb questions below and
+>>>>> we can debug it deeper :).
+>>>>>
+>>>>
+>>>> Thank you for the primer on using gdb with QEMU. I am able to debug
+>>>> QEMU now.
+>>>>
+>>>>>>> Maybe we can make the scenario clearer by telling which virtio-net
+>>>>>>> device is which with virtio_net_pci,mac=XX:... ?
+>>>>>>>
+>>>>>>>> However, when booting L2 with x-svq=true, n->mac is set to L1-eth0
+>>>>>>>> (LSB = 56) in virtio_net_handle_mac() [3].
+>>>>>>>
+>>>>>>> Can you tell with gdb bt if this function is called from net or the
+>>>>>>> SVQ subsystem?
+>>>>>>
+>>>>
+>>>> It looks like the function is being called from net.
+>>>>
+>>>> (gdb) bt
+>>>> #0  virtio_net_handle_mac (n=0x15622425e, cmd=85 'U', iov=0x555558865980, iov_cnt=1476792840) at ../hw/net/virtio-net.c:1098
+>>>> #1  0x0000555555e5920b in virtio_net_handle_ctrl_iov (vdev=0x555558fdacd0, in_sg=0x5555580611f8, in_num=1, out_sg=0x555558061208,
+>>>>         out_num=1) at ../hw/net/virtio-net.c:1581
+>>>> #2  0x0000555555e593a0 in virtio_net_handle_ctrl (vdev=0x555558fdacd0, vq=0x555558fe7730) at ../hw/net/virtio-net.c:1610
+>>>> #3  0x0000555555e9a7d8 in virtio_queue_notify_vq (vq=0x555558fe7730) at ../hw/virtio/virtio.c:2484
+>>>> #4  0x0000555555e9dffb in virtio_queue_host_notifier_read (n=0x555558fe77a4) at ../hw/virtio/virtio.c:3869
+>>>> #5  0x000055555620329f in aio_dispatch_handler (ctx=0x555557d9f840, node=0x7fffdca7ba80) at ../util/aio-posix.c:373
+>>>> #6  0x000055555620346f in aio_dispatch_handlers (ctx=0x555557d9f840) at ../util/aio-posix.c:415
+>>>> #7  0x00005555562034cb in aio_dispatch (ctx=0x555557d9f840) at ../util/aio-posix.c:425
+>>>> #8  0x00005555562242b5 in aio_ctx_dispatch (source=0x555557d9f840, callback=0x0, user_data=0x0) at ../util/async.c:361
+>>>> #9  0x00007ffff6d86559 in ?? () from /usr/lib/libglib-2.0.so.0
+>>>> #10 0x00007ffff6d86858 in g_main_context_dispatch () from /usr/lib/libglib-2.0.so.0
+>>>> #11 0x0000555556225bf9 in glib_pollfds_poll () at ../util/main-loop.c:287
+>>>> #12 0x0000555556225c87 in os_host_main_loop_wait (timeout=294672) at ../util/main-loop.c:310
+>>>> #13 0x0000555556225db6 in main_loop_wait (nonblocking=0) at ../util/main-loop.c:589
+>>>> #14 0x0000555555c0c1a3 in qemu_main_loop () at ../system/runstate.c:835
+>>>> #15 0x000055555612bd8d in qemu_default_main (opaque=0x0) at ../system/main.c:48
+>>>> #16 0x000055555612be3d in main (argc=23, argv=0x7fffffffe508) at ../system/main.c:76
+>>>>
+>>>> virtio_queue_notify_vq at hw/virtio/virtio.c:2484 [2] calls
+>>>> vq->handle_output(vdev, vq). I see "handle_output" is a function
+>>>> pointer and in this case it seems to be pointing to
+>>>> virtio_net_handle_ctrl.
+>>>>
+>>>>>>>> [...]
+>>>>>>>> With x-svq=true, I see that n->mac is set by virtio_net_handle_mac()
+>>>>>>>> [3] when L1 receives VIRTIO_NET_CTRL_MAC_ADDR_SET. With x-svq=false,
+>>>>>>>> virtio_net_handle_mac() doesn't seem to be getting called. I haven't
+>>>>>>>> understood how the MAC address is set in VirtIONet when x-svq=false.
+>>>>>>>> Understanding this might help see why n->mac has different values
+>>>>>>>> when x-svq is false vs when it is true.
+>>>>>>>
+>>>>>>> Ok this makes sense, as x-svq=true is the one that receives the set
+>>>>>>> mac message. You should see it in L0's QEMU though, both in x-svq=on
+>>>>>>> and x-svq=off scenarios. Can you check it?
+>>>>>>
+>>>>>> L0's QEMU seems to be receiving the "set mac" message only when L1
+>>>>>> is launched with x-svq=true. With x-svq=off, I don't see any call
+>>>>>> to virtio_net_handle_mac with cmd == VIRTIO_NET_CTRL_MAC_ADDR_SET
+>>>>>> in L0.
+>>>>>>
+>>>>>
+>>>>> Ok this is interesting. Let's disable control virtqueue to start with
+>>>>> something simpler:
+>>>>> device virtio-net-pci,netdev=net0,ctrl_vq=off,...
+>>>>>
+>>>>> QEMU will start complaining about features that depend on ctrl_vq,
+>>>>> like ctrl_rx. Let's disable all of them and check this new scenario.
+>>>>>
+>>>>
+>>>> I am still investigating this part. I set ctrl_vq=off and ctrl_rx=off.
+>>>> I didn't get any errors as such about features that depend on ctrl_vq.
+>>>> However, I did notice that after booting L2 (x-svq=true as well as
+>>>> x-svq=false), no eth0 device was created. There was only a "lo" interface
+>>>> in L2. An eth0 interface is present only when L1 (L0 QEMU) is booted
+>>>> with ctrl_vq=on and ctrl_rx=on.
+>>>>
+>>>
+>>> Any error messages on the nested guest's dmesg?
+>>
+>> Oh, yes, there were error messages in the output of dmesg related to
+>> ctrl_vq. After adding the following args, there were no error messages
+>> in dmesg.
+>>
+>> -device virtio-net-pci,ctrl_vq=off,ctrl_rx=off,ctrl_vlan=off,ctrl_mac_addr=off
+>>
+>> I see that the eth0 interface is also created. I am able to ping L0
+>> from L2 and vice versa as well (even with x-svq=true). This is because
+>> n->promisc is set when these features are disabled and receive_filter() [1]
+>> always returns 1.
+>>
+>>> Is it fixed when you set the same mac address on L0
+>>> virtio-net-pci and L1's?
+>>>
+>>
+>> I didn't have to set the same mac address in this case since promiscuous
+>> mode seems to be getting enabled which allows pinging to work.
+>>
+>> There is another concept that I am a little confused about. In the case
+>> where L2 is booted with x-svq=false (and all ctrl features such as ctrl_vq,
+>> ctrl_rx, etc. are on), I am able to ping L0 from L2. When tracing
+>> receive_filter() in L0-QEMU, I see the values of n->mac and the destination
+>> mac address in the ICMP packet match [2].
+>>
+> 
+> SVQ makes an effort to set the mac address at the beginning of
+> operation. The L0 interpret it as "filter out all MACs except this
+> one". But SVQ cannot set the mac if ctrl_mac_addr=off, so the nic
+> receives all packets and the guest kernel needs to filter out by
+> itself.
+> 
+>> I haven't understood what n->mac refers to over here. MAC addresses are
+>> globally unique and so the mac address of the device in L1 should be
+>> different from that in L2.
+> 
+> With vDPA, they should be the same device even if they are declared in
+> different cmdlines or layers of virtualizations. If it were a physical
+> NIC, QEMU should declare the MAC of the physical NIC too.
 
- hw/i386/amd_iommu.c | 43 ++++++++++++++++++++++++++++++++++++++++++-
- 1 file changed, 42 insertions(+), 1 deletion(-)
+Understood. I guess the issue with x-svq=true is that the MAC address
+set in L0-QEMU's n->mac is different from the device in L2. That's why
+the packets get filtered out with x-svq=true but pinging works with
+x-svq=false.
 
-diff --git a/hw/i386/amd_iommu.c b/hw/i386/amd_iommu.c
-index 13af7211e1..a1940a0ab3 100644
---- a/hw/i386/amd_iommu.c
-+++ b/hw/i386/amd_iommu.c
-@@ -1673,7 +1673,48 @@ static Property amdvi_properties[] = {
- 
- static const VMStateDescription vmstate_amdvi_sysbus = {
-     .name = "amd-iommu",
--    .unmigratable = 1
-+    .version_id = 1,
-+    .minimum_version_id = 1,
-+    .priority = MIG_PRI_IOMMU,
-+    .fields = (VMStateField[]) {
-+      /* Updated in  amdvi_handle_control_write() */
-+      VMSTATE_BOOL(enabled, AMDVIState),
-+      VMSTATE_BOOL(ga_enabled, AMDVIState),
-+      VMSTATE_BOOL(ats_enabled, AMDVIState),
-+      VMSTATE_BOOL(cmdbuf_enabled, AMDVIState),
-+      VMSTATE_BOOL(completion_wait_intr, AMDVIState),
-+      VMSTATE_BOOL(evtlog_enabled, AMDVIState),
-+      VMSTATE_BOOL(evtlog_intr, AMDVIState),
-+      /* Updated in amdvi_handle_devtab_write() */
-+      VMSTATE_UINT64(devtab, AMDVIState),
-+      VMSTATE_UINT64(devtab_len, AMDVIState),
-+      /* Updated in amdvi_handle_cmdbase_write() */
-+      VMSTATE_UINT64(cmdbuf, AMDVIState),
-+      VMSTATE_UINT64(cmdbuf_len, AMDVIState),
-+      /* Updated in amdvi_handle_cmdhead_write() */
-+      VMSTATE_UINT32(cmdbuf_head, AMDVIState),
-+      /* Updated in amdvi_handle_cmdtail_write() */
-+      VMSTATE_UINT32(cmdbuf_tail, AMDVIState),
-+      /* Updated in amdvi_handle_evtbase_write() */
-+      VMSTATE_UINT64(evtlog, AMDVIState),
-+      VMSTATE_UINT32(evtlog_len, AMDVIState),
-+      /* Updated in amdvi_handle_evthead_write() */
-+      VMSTATE_UINT32(evtlog_head, AMDVIState),
-+      /* Updated in amdvi_handle_evttail_write() */
-+      VMSTATE_UINT32(evtlog_tail, AMDVIState),
-+      /* Updated in amdvi_handle_pprbase_write() */
-+      VMSTATE_UINT64(ppr_log, AMDVIState),
-+      VMSTATE_UINT32(pprlog_len, AMDVIState),
-+      /* Updated in amdvi_handle_pprhead_write() */
-+      VMSTATE_UINT32(pprlog_head, AMDVIState),
-+      /* Updated in amdvi_handle_tailhead_write() */
-+      VMSTATE_UINT32(pprlog_tail, AMDVIState),
-+      /* MMIO registers */
-+      VMSTATE_UINT8_ARRAY(mmior, AMDVIState, AMDVI_MMIO_SIZE),
-+      VMSTATE_UINT8_ARRAY(romask, AMDVIState, AMDVI_MMIO_SIZE),
-+      VMSTATE_UINT8_ARRAY(w1cmask, AMDVIState, AMDVI_MMIO_SIZE),
-+      VMSTATE_END_OF_LIST()
-+    }
- };
- 
- static void amdvi_sysbus_instance_init(Object *klass)
--- 
-2.34.1
+> There is a thread in QEMU maul list where how QEMU should influence
+> the control plane is discussed, and maybe it would be easier if QEMU
+> just checks the device's MAC and ignores cmdline. But then, that
+> behavior would be surprising for the rest of vhosts like vhost-kernel.
+> Or just emit a warning if the MAC is different than the one that the
+> device reports.
+> 
+
+Got it.
+
+>> But I see L0-QEMU's n->mac is set to the mac
+>> address of the device in L2 (allowing receive_filter to accept the packet).
+>>
+> 
+> That's interesting, can you check further what does receive_filter and
+> virtio_net_receive_rcu do with gdb? As long as virtio_net_receive_rcu
+> flushes the packet on the receive queue, SVQ should receive it.
+> 
+The control flow irrespective of the value of x-svq is the same up till
+the MAC address comparison in receive_filter() [1]. For x-svq=true,
+the equality check between n->mac and the packet's destination MAC address
+fails and the packet is filtered out. It is not flushed to the receive
+queue. With x-svq=false, this is not the case.
+
+On 2/4/25 11:45 PM, Eugenio Perez Martin wrote:
+> PS: Please note that you can check packed_vq SVQ implementation
+> already without CVQ, as these features are totally orthogonal :).
+> 
+
+Right. Now that I can ping with the ctrl features turned off, I think
+this should take precedence. There's another issue specific to the
+packed virtqueue case. It causes the kernel to crash. I have been
+investigating this and the situation here looks very similar to what's
+explained in Jason Wang's mail [2]. My plan of action is to apply his
+changes in L2's kernel and check if that resolves the problem.
+
+The details of the crash can be found in this mail [3].
+
+Thanks,
+Sahil
+
+[1] https://gitlab.com/qemu-project/qemu/-/blob/master/hw/net/virtio-net.c#L1775
+[2] https://lkml.iu.edu/hypermail/linux/kernel/1307.0/01455.html
+[3] https://lists.nongnu.org/archive/html/qemu-devel/2024-12/msg01134.html
 
 
