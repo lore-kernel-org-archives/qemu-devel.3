@@ -4,72 +4,93 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B7E9BC02194
-	for <qemu-devel@archiver.kernel.org>; Thu,  6 Feb 2025 13:52:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 41B4FC02194
+	for <qemu-devel@archiver.kernel.org>; Thu,  6 Feb 2025 13:54:33 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tg2I0-0007YK-2W; Thu, 06 Feb 2025 08:51:32 -0500
+	id 1tg2KV-0000ML-NK; Thu, 06 Feb 2025 08:54:07 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <shameerali.kolothum.thodi@huawei.com>)
- id 1tg2Hx-0007SP-5R; Thu, 06 Feb 2025 08:51:29 -0500
-Received: from frasgout.his.huawei.com ([185.176.79.56])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <shameerali.kolothum.thodi@huawei.com>)
- id 1tg2Hv-0003n1-05; Thu, 06 Feb 2025 08:51:28 -0500
-Received: from mail.maildlp.com (unknown [172.18.186.216])
- by frasgout.his.huawei.com (SkyGuard) with ESMTP id 4YpdlY3TwGz6HJcC;
- Thu,  6 Feb 2025 21:50:17 +0800 (CST)
-Received: from frapeml100005.china.huawei.com (unknown [7.182.85.132])
- by mail.maildlp.com (Postfix) with ESMTPS id D37FC1404FC;
- Thu,  6 Feb 2025 21:51:15 +0800 (CST)
-Received: from frapeml500008.china.huawei.com (7.182.85.71) by
- frapeml100005.china.huawei.com (7.182.85.132) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.1.2507.39; Thu, 6 Feb 2025 14:51:15 +0100
-Received: from frapeml500008.china.huawei.com ([7.182.85.71]) by
- frapeml500008.china.huawei.com ([7.182.85.71]) with mapi id 15.01.2507.039;
- Thu, 6 Feb 2025 14:51:15 +0100
-To: =?utf-8?B?RGFuaWVsIFAuIEJlcnJhbmfDqQ==?= <berrange@redhat.com>
-CC: "qemu-arm@nongnu.org" <qemu-arm@nongnu.org>, "qemu-devel@nongnu.org"
- <qemu-devel@nongnu.org>, "eric.auger@redhat.com" <eric.auger@redhat.com>,
- "peter.maydell@linaro.org" <peter.maydell@linaro.org>, "jgg@nvidia.com"
- <jgg@nvidia.com>, "nicolinc@nvidia.com" <nicolinc@nvidia.com>,
- "ddutile@redhat.com" <ddutile@redhat.com>, Linuxarm <linuxarm@huawei.com>,
- "Wangzhou (B)" <wangzhou1@hisilicon.com>, jiangkunkun
- <jiangkunkun@huawei.com>, Jonathan Cameron <jonathan.cameron@huawei.com>,
- "zhangfei.gao@linaro.org" <zhangfei.gao@linaro.org>, "nathanc@nvidia.com"
- <nathanc@nvidia.com>
-Subject: RE: [RFC PATCH 0/5] hw/arm/virt: Add support for user-creatable
- nested SMMUv3
-Thread-Topic: [RFC PATCH 0/5] hw/arm/virt: Add support for user-creatable
- nested SMMUv3
-Thread-Index: AQHbMeB0+Q5BEZc9JkeH/U6Jz+dF4rMv66IAgAA0HqCAAb2VAIAIsUnQgAADD4CAAB6MsA==
-Date: Thu, 6 Feb 2025 13:51:15 +0000
-Message-ID: <f898b6de4a664fe8810b06b7741e3120@huawei.com>
-References: <20241108125242.60136-1-shameerali.kolothum.thodi@huawei.com>
- <Z5uiGnAxUf4jXTEI@redhat.com> <7ecabe74e0514367baf28d67675e5db8@huawei.com>
- <Z51DmtP83741RAsb@redhat.com> <47d2c2556d794d87abf440263b2f7cd8@huawei.com>
- <Z6SQ3_5bcqseyzVa@redhat.com>
-In-Reply-To: <Z6SQ3_5bcqseyzVa@redhat.com>
-Accept-Language: en-GB, en-US
-Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-x-originating-ip: [10.203.177.241]
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: base64
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tg2KT-0000LI-8e
+ for qemu-devel@nongnu.org; Thu, 06 Feb 2025 08:54:05 -0500
+Received: from mail-wm1-x32f.google.com ([2a00:1450:4864:20::32f])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tg2KQ-0004dQ-E0
+ for qemu-devel@nongnu.org; Thu, 06 Feb 2025 08:54:05 -0500
+Received: by mail-wm1-x32f.google.com with SMTP id
+ 5b1f17b1804b1-437a92d7b96so9241605e9.2
+ for <qemu-devel@nongnu.org>; Thu, 06 Feb 2025 05:54:01 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1738850041; x=1739454841; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=ASzU1/31udRekav0LredBl1zTrkGZo/IyaNINrQ1nRw=;
+ b=ilMMGvOrfhyrnbmb4TSSKwO5vy98Xmoit4MlDDE3/lbpNkgQbcclYGstTTrm5j9/bY
+ ZJ68pmmCjk9e4ul0lQLiLY5rG+H87aFR0zzyvXrTTqOawh49Sf1w4JV5Q/9Gwxlm+qze
+ 0/5fjEoLfJLdBPw1RGyuXf6Ay2MzO/M40knmnW2GESekrMcL0vCZ9VbSVboxcQADftFX
+ Thx5BZ/0lPjG4ECFxlrIsLbeS288c1hcM4WhWrkG3MekCe7aTHNAohTc/inaqhZwKNzD
+ 0AoRgnfU2UGSV1nXUm3MckDtn34EloNo/ZCNrqr5X6jOs153nCCE68QYOqiABZNP+KrP
+ d6VA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1738850041; x=1739454841;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=ASzU1/31udRekav0LredBl1zTrkGZo/IyaNINrQ1nRw=;
+ b=UsrcdDOkAE6OLpNP0opvGXd9NqBJ9cySgGhDIAyYgpYJLLNMTe8xlpx0Pia6EgVvac
+ QGYc/DbrNZMHVoIbDz86llI+yPAVLJFZlPZu8Wezsap6RPq1Hj0GmA8a1baQxI+Bx2og
+ 1S6DypNkXdxjs1Pq6dVeuRETcMuzp3zRJggOuh7ZazgUx9SAcKBZMGJLlOkyDPLvGi5q
+ BXFxScbhPqcs6PDR/gVhdBvYO6t+STFpldrqpJJKtgqUhPzBRgGKh6Wh7N7Ray51rnRQ
+ ZdjuqNvojDcJDS5BNe5tRL1A25S5JAethKCfOKk117lk58oMGV9aIwYg0kXE8gZ6krL3
+ wxlg==
+X-Gm-Message-State: AOJu0Yzoeco1TWz/tx4ze/eDhicfassVJwgfFF96R1/oHGo/MVNkFL0q
+ ol18ImFHrJbVD8IwB9VF1PkeUgmy2bd3g+U7fu8vc98qxk9tIu+WaJ3PqZdVNKE=
+X-Gm-Gg: ASbGncvxnE1171iafpgBjL0SXHRTtaXMPdia1vx8aMKVR114wIUWX/BRFC7g6PUasuj
+ iOGORcId5QLDCBOVP1vCvbMxjZgPT4Be7aRTcpQeJvfXdaMfu0qt1Q3BqtmXjKnVn5qx1wRJADS
+ cijpc7ZxSMG005hZN3kpC9Dqe+46QUCB2eC5nY0s4lid1mGtIXuaBtpBuZ4UUF1lA6qmlwwM3PP
+ ILsgFdjoZFywh04KZHnBb/6E5p6SpFYImeqyU04ffpt0iagXQNVbmLIDyPQd5Aqq9H7NmvWwpU8
+ ahuOT0cYy2jbLyFgZa/cv8/v80Cwk/p+l/Bppnhua8hJfTtxPSpzB8swfvU=
+X-Google-Smtp-Source: AGHT+IF1bF2Y6o6WrgrDO2nOAr+RKu1Skrd+Sxr+4Yc3GuPCQGfxFcPT6VyJdYoTnzH5KQ2CwDzoxg==
+X-Received: by 2002:a05:600c:568d:b0:438:a290:3ce0 with SMTP id
+ 5b1f17b1804b1-4390ef6aaadmr47753945e9.8.1738850040531; 
+ Thu, 06 Feb 2025 05:54:00 -0800 (PST)
+Received: from [192.168.69.198] (88-187-86-199.subs.proxad.net.
+ [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-4391dfc87desm19748475e9.25.2025.02.06.05.53.59
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Thu, 06 Feb 2025 05:54:00 -0800 (PST)
+Message-ID: <4624f149-76d0-4da5-8f13-8c015043c335@linaro.org>
+Date: Thu, 6 Feb 2025 14:53:58 +0100
 MIME-Version: 1.0
-Received-SPF: pass client-ip=185.176.79.56;
- envelope-from=shameerali.kolothum.thodi@huawei.com;
- helo=frasgout.his.huawei.com
-X-Spam_score_int: -41
-X-Spam_score: -4.2
-X-Spam_bar: ----
-X-Spam_report: (-4.2 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_MED=-2.3,
- RCVD_IN_MSPIKE_H2=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v5 11/16] hw/microblaze: Support various endianness for
+ s3adsp1800 machines
+To: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
+Cc: qemu-devel@nongnu.org, qemu-arm@nongnu.org, Anton Johansson
+ <anjo@rev.ng>, Jason Wang <jasowang@redhat.com>,
+ Paolo Bonzini <pbonzini@redhat.com>,
+ Alistair Francis <alistair@alistair23.me>, Thomas Huth <thuth@redhat.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Peter Maydell <peter.maydell@linaro.org>,
+ "Edgar E. Iglesias" <edgar.iglesias@gmail.com>,
+ Markus Armbruster <armbru@redhat.com>
+References: <20250206131052.30207-1-philmd@linaro.org>
+ <20250206131052.30207-12-philmd@linaro.org> <Z6S3Mgt1G7fIjeBB@redhat.com>
+Content-Language: en-US
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <Z6S3Mgt1G7fIjeBB@redhat.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::32f;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x32f.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -83,161 +104,208 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-to:  Shameerali Kolothum Thodi <shameerali.kolothum.thodi@huawei.com>
-From:  Shameerali Kolothum Thodi via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-DQoNCj4gLS0tLS1PcmlnaW5hbCBNZXNzYWdlLS0tLS0NCj4gRnJvbTogRGFuaWVsIFAuIEJlcnJh
-bmfDqSA8YmVycmFuZ2VAcmVkaGF0LmNvbT4NCj4gU2VudDogVGh1cnNkYXksIEZlYnJ1YXJ5IDYs
-IDIwMjUgMTA6MzcgQU0NCj4gVG86IFNoYW1lZXJhbGkgS29sb3RodW0gVGhvZGkgPHNoYW1lZXJh
-bGkua29sb3RodW0udGhvZGlAaHVhd2VpLmNvbT4NCj4gQ2M6IHFlbXUtYXJtQG5vbmdudS5vcmc7
-IHFlbXUtZGV2ZWxAbm9uZ251Lm9yZzsNCj4gZXJpYy5hdWdlckByZWRoYXQuY29tOyBwZXRlci5t
-YXlkZWxsQGxpbmFyby5vcmc7IGpnZ0BudmlkaWEuY29tOw0KPiBuaWNvbGluY0BudmlkaWEuY29t
-OyBkZHV0aWxlQHJlZGhhdC5jb207IExpbnV4YXJtDQo+IDxsaW51eGFybUBodWF3ZWkuY29tPjsg
-V2FuZ3pob3UgKEIpIDx3YW5nemhvdTFAaGlzaWxpY29uLmNvbT47DQo+IGppYW5na3Vua3VuIDxq
-aWFuZ2t1bmt1bkBodWF3ZWkuY29tPjsgSm9uYXRoYW4gQ2FtZXJvbg0KPiA8am9uYXRoYW4uY2Ft
-ZXJvbkBodWF3ZWkuY29tPjsgemhhbmdmZWkuZ2FvQGxpbmFyby5vcmc7DQo+IG5hdGhhbmNAbnZp
-ZGlhLmNvbQ0KPiBTdWJqZWN0OiBSZTogW1JGQyBQQVRDSCAwLzVdIGh3L2FybS92aXJ0OiBBZGQg
-c3VwcG9ydCBmb3IgdXNlci1jcmVhdGFibGUNCj4gbmVzdGVkIFNNTVV2Mw0KPiANCj4gT24gVGh1
-LCBGZWIgMDYsIDIwMjUgYXQgMTA6MDI6MjVBTSArMDAwMCwgU2hhbWVlcmFsaSBLb2xvdGh1bSBU
-aG9kaQ0KPiB3cm90ZToNCj4gPiBIaSBEYW5pZWwsDQo+ID4NCj4gPiA+IC0tLS0tT3JpZ2luYWwg
-TWVzc2FnZS0tLS0tDQo+ID4gPiBGcm9tOiBEYW5pZWwgUC4gQmVycmFuZ8OpIDxiZXJyYW5nZUBy
-ZWRoYXQuY29tPg0KPiA+ID4gU2VudDogRnJpZGF5LCBKYW51YXJ5IDMxLCAyMDI1IDk6NDIgUE0N
-Cj4gPiA+IFRvOiBTaGFtZWVyYWxpIEtvbG90aHVtIFRob2RpDQo+IDxzaGFtZWVyYWxpLmtvbG90
-aHVtLnRob2RpQGh1YXdlaS5jb20+DQo+ID4gPiBDYzogcWVtdS1hcm1Abm9uZ251Lm9yZzsgcWVt
-dS1kZXZlbEBub25nbnUub3JnOw0KPiA+ID4gZXJpYy5hdWdlckByZWRoYXQuY29tOyBwZXRlci5t
-YXlkZWxsQGxpbmFyby5vcmc7IGpnZ0BudmlkaWEuY29tOw0KPiA+ID4gbmljb2xpbmNAbnZpZGlh
-LmNvbTsgZGR1dGlsZUByZWRoYXQuY29tOyBMaW51eGFybQ0KPiA+ID4gPGxpbnV4YXJtQGh1YXdl
-aS5jb20+OyBXYW5nemhvdSAoQikgPHdhbmd6aG91MUBoaXNpbGljb24uY29tPjsNCj4gPiA+IGpp
-YW5na3Vua3VuIDxqaWFuZ2t1bmt1bkBodWF3ZWkuY29tPjsgSm9uYXRoYW4gQ2FtZXJvbg0KPiA+
-ID4gPGpvbmF0aGFuLmNhbWVyb25AaHVhd2VpLmNvbT47IHpoYW5nZmVpLmdhb0BsaW5hcm8ub3Jn
-DQo+ID4gPiBTdWJqZWN0OiBSZTogW1JGQyBQQVRDSCAwLzVdIGh3L2FybS92aXJ0OiBBZGQgc3Vw
-cG9ydCBmb3IgdXNlci0NCj4gY3JlYXRhYmxlDQo+ID4gPiBuZXN0ZWQgU01NVXYzDQo+ID4gPg0K
-PiA+ID4gT24gVGh1LCBKYW4gMzAsIDIwMjUgYXQgMDY6MDk6MjRQTSArMDAwMCwgU2hhbWVlcmFs
-aSBLb2xvdGh1bSBUaG9kaQ0KPiA+ID4gd3JvdGU6DQo+ID4gPiA+DQo+ID4gPiA+IEVhY2ggImFy
-bS1zbW11djMtbmVzdGVkIiBpbnN0YW5jZSwgd2hlbiB0aGUgZmlyc3QgZGV2aWNlIGdldHMNCj4g
-YXR0YWNoZWQNCj4gPiA+ID4gdG8gaXQsIHdpbGwgY3JlYXRlIGEgUzIgSFdQVCBhbmQgYSBjb3Jy
-ZXNwb25kaW5nIFNNTVV2MyBkb21haW4gaW4NCj4gPiA+IGtlcm5lbA0KPiA+ID4gPiBTTU1VdjMg
-ZHJpdmVyLiBUaGlzIGRvbWFpbiB3aWxsIGhhdmUgYSBwb2ludGVyIHJlcHJlc2VudGluZyB0aGUN
-Cj4gcGh5c2ljYWwNCj4gPiA+ID4gU01NVXYzIHRoYXQgdGhlIGRldmljZSBiZWxvbmdzLiBBbmQg
-YW55IG90aGVyIGRldmljZSB3aGljaCBiZWxvbmdzDQo+IHRvDQo+ID4gPiA+IHRoZSBzYW1lIHBo
-eXNpY2FsIFNNTVV2MyBjYW4gc2hhcmUgdGhpcyBTMiBkb21haW4uDQo+ID4gPg0KPiA+ID4gT2ss
-IHNvIGdpdmVuIHR3byBndWVzdCBTTU1VdjNzLCAgIEEgYW5kIEIsIGFuZCB0d28gaG9zdCBTTU1V
-djNzLA0KPiA+ID4gQyBhbmQgRCwgd2UgY291bGQgZW5kIHVwIHdpdGggQSZDIGFuZCBCJkQgcGFp
-cmVkLCBvciB3ZSBjb3VsZA0KPiA+ID4gZW5kIHVwIHdpdGggQSZEIGFuZCBCJkMgcGFpcmVkLCBk
-ZXBlbmRpbmcgb24gd2hldGhlciB3ZSBwbHVnDQo+ID4gPiB0aGUgZmlyc3QgVkZJTyBkZXZpY2Ug
-aW50byBndWVzdCBTTU1VdjMgIEEgb3IgQi4NCj4gPiA+DQo+ID4gPiBUaGlzIGlzIGJhZC4gIEJl
-aGF2aW91ciBtdXN0IG5vdCB2YXJ5IGRlcGVuZGluZyBvbiB0aGUgb3JkZXINCj4gPiA+IGluIHdo
-aWNoIHdlIGNyZWF0ZSBkZXZpY2VzLg0KPiA+ID4NCj4gPiA+IEFuIGd1ZXN0IFNNTVV2MyBpcyBw
-YWlyZWQgdG8gYSBndWVzdCBQWEIuIEEgZ3Vlc3QgUFhCIGlzIGxpYWJsZQ0KPiA+ID4gdG8gYmUg
-cGFpcmVkIHRvIGEgZ3Vlc3QgTlVNQSBub2RlLiBBIGd1ZXN0IE5VTUEgbm9kZSBpcyBsaWFibGUN
-Cj4gPiA+IHRvIGJlIHBhaXJlZCB0byBob3N0IE5VTUEgbm9kZS4gVGhlIGd1ZXN0L2hvc3QgU01N
-VSBwYWlyaW5nDQo+ID4gPiBtdXN0IGJlIGNob3NlbiBzdWNoIHRoYXQgaXQgbWFrZXMgY29uY2Vw
-dHVhbCBzZW5zZSB3cnQgdG8gdGhlDQo+ID4gPiBndWVzdCBQWEIgTlVNQSB0byBob3N0IE5VTUEg
-cGFpcmluZy4NCj4gPiA+DQo+ID4gPiBJZiB0aGUga2VybmVsIHBpY2tzIGd1ZXN0PC0+aG9zdCBT
-TU1VIHBhaXJpbmdzIG9uIGEgZmlyc3QtZGV2aWNlDQo+ID4gPiBmaXJzdC1wYWlyZWQgYmFzaXMs
-IHRoaXMgY2FuIGVuZCB1cCB3aXRoIGluY29ycmVjdCBndWVzdCBOVU1BDQo+ID4gPiBjb25maWd1
-cmF0aW9ucy4NCj4gPg0KPiA+IE9rLiBJIGFtIHRyeWluZyB0byB1bmRlcnN0YW5kIGhvdyB0aGlz
-IGNhbiBoYXBwZW4gYXMgSSBhc3N1bWUgdGhlDQo+ID4gR3Vlc3QgUFhCIG51bWEgbm9kZSBpcyBw
-aWNrZWQgdXAgYnkgd2hhdGV2ZXIgZGV2aWNlIHdlIGFyZQ0KPiA+IGF0dGFjaGluZyB0byBpdCBh
-bmQgYmFzZWQgb24gd2hpY2ggbnVtYV9pZCB0aGF0IGRldmljZSBiZWxvbmdzIHRvDQo+ID4gaW4g
-cGh5c2ljYWwgaG9zdC4NCj4gPg0KPiA+IEFuZCB0aGUgcGh5c2ljYWwgc21tdXYzIG51bWEgaWQg
-d2lsbCBiZSB0aGUgc2FtZSB0byB0aGF0IG9mIHRoZQ0KPiA+IGRldmljZSBudW1hX2lkICBpdCBp
-cyBhc3NvY2lhdGVkIHdpdGguIElzbid0IGl0Pw0KPiA+DQo+ID4gRm9yIGV4YW1wbGUgSSBoYXZl
-IGEgc3lzdGVtIGhlcmUsIHRoYXQgaGFzIDggcGh5cyBTTU1VdjNzIGFuZCBudW1hDQo+ID4gYXNz
-aWdubWVudHMgb24gdGhpcyBpcyBzb21ldGhpbmcgbGlrZSBiZWxvdywNCj4gPg0KPiA+IFBoeXMg
-U01NVXYzLjAgLS0+IG5vZGUgMA0KPiA+ICAgXC4uZGV2MSAtLT4gbm9kZTANCj4gPiBQaHlzIFNN
-TVV2My4xIC0tPiBub2RlIDANCj4gPiBcLi5kZXYyIC0tPm5vZGUwDQo+ID4gUGh5cyBTTU1VdjMu
-MiAtLT4gbm9kZSAwDQo+ID4gUGh5cyBTTU1VdjMuMyAtLT4gbm9kZSAwDQo+ID4NCj4gPiBQaHlz
-IFNNTVV2My40IC0tPiBub2RlIDENCj4gPiBQaHlzIFNNTVV2My41IC0tPiBub2RlIDENCj4gPiBc
-Li5kZXY1IC0tPiBub2RlMQ0KPiA+IFBoeXMgU01NVXYzLjYgLS0+IG5vZGUgMQ0KPiA+IFBoeXMg
-U01NVXYzLjcgLS0+IG5vZGUgMQ0KPiA+DQo+ID4NCj4gPiBJZiBJIGhhdmUgdG8gYXNzaWduIHNh
-eSBkZXYgMSwgMiBhbmQgNSB0byBhIEd1ZXN0LCB3ZSBuZWVkIHRvIHNwZWNpZnkgMw0KPiA+ICAi
-YXJtLXNtbXV2My1hY2NlbCIgaW5zdGFuY2VzIGFzIHRoZXkgYmVsb25nIHRvIGRpZmZlcmVudCBw
-aHlzDQo+IFNNTVV2M3MuDQo+ID4NCj4gPiAtZGV2aWNlIHB4Yi1wY2llLGlkPXBjaWUuMSxidXNf
-bnI9MSxidXM9cGNpZS4wLG51bWFfaWQ9MCBcDQo+ID4gLWRldmljZSBweGItcGNpZSxpZD1wY2ll
-LjIsYnVzX25yPTIsYnVzPXBjaWUuMCxudW1hX2lkPTAgXA0KPiA+IC1kZXZpY2UgcHhiLXBjaWUs
-aWQ9cGNpZS4zLGJ1c19ucj0zLGJ1cz1wY2llLjAsbnVtYV9pZD0xIFwNCj4gPiAtZGV2aWNlIGFy
-bS1zbW11djMtYWNjZWwsaWQ9c21tdXYxLGJ1cz1wY2llLjEgXA0KPiA+IC1kZXZpY2UgYXJtLXNt
-bXV2My1hY2NlbCxpZD1zbW11djIsYnVzPXBjaWUuMiBcDQo+ID4gLWRldmljZSBhcm0tc21tdXYz
-LWFjY2VsLGlkPXNtbXV2MyxidXM9cGNpZS4zIFwNCj4gPiAtZGV2aWNlIHBjaWUtcm9vdC1wb3J0
-LGlkPXBjaWUucG9ydDEsYnVzPXBjaWUuMSxjaGFzc2lzPTEgXA0KPiA+IC1kZXZpY2UgcGNpZS1y
-b290LXBvcnQsaWQ9cGNpZS5wb3J0MixidXM9cGNpZS4zLGNoYXNzaXM9MiBcDQo+ID4gLWRldmlj
-ZSBwY2llLXJvb3QtcG9ydCxpZD1wY2llLnBvcnQzLGJ1cz1wY2llLjIsY2hhc3Npcz0zIFwNCj4g
-PiAtZGV2aWNlIHZmaW8tcGNpLGhvc3Q9MDAwMDpkZXYxLGJ1cz1wY2llLnBvcnQxLGlvbW11ZmQ9
-aW9tbXVmZDAgXA0KPiA+IC1kZXZpY2UgdmZpby1wY2ksaG9zdD0wMDAwOiBkZXYyLGJ1cz1wY2ll
-LnBvcnQyLGlvbW11ZmQ9aW9tbXVmZDAgXA0KPiA+IC1kZXZpY2UgdmZpby1wY2ksaG9zdD0wMDAw
-OiBkZXY1LGJ1cz1wY2llLnBvcnQzLGlvbW11ZmQ9aW9tbXVmZDANCj4gPg0KPiA+IFNvIEkgZ3Vl
-c3MgZXZlbiBpZiB3ZSBkb24ndCBzcGVjaWZ5IHRoZSBwaHlzaWNhbCBTTU1VdjMgYXNzb2NpYXRp
-b24NCj4gPiBleHBsaWNpdGx5LCB0aGUga2VybmVsIHdpbGwgY2hlY2sgdGhhdCBiYXNlZCBvbiB0
-aGUgZGV2aWNlcyB0aGUgR3Vlc3QNCj4gPiBTTU1VdjMgaXMgYXR0YWNoZWQgdG8gKGFuZCBoZW5j
-ZSB0aGUgTnVtYSBhc3NvY2lhdGlvbiksIHJpZ2h0Pw0KPiANCj4gSXQgaXNuJ3QgYWJvdXQgY2hl
-Y2tpbmcgdGhlIGRldmljZXMsIGl0IGlzIGFib3V0IHRoZSBndWVzdCBTTU1VDQo+IGdldHRpbmcg
-ZGlmZmVyaW5nIGhvc3QgU01NVSBhc3NvY2lhdGlvbnMuDQo+IA0KPiA+IEluIG90aGVyIHdvcmRz
-IGhvdyBhbiBleHBsaWNpdCBhc3NvY2lhdGlvbiBoZWxwcyB1cyBoZXJlPw0KPiA+DQo+ID4gT3Ig
-aXMgaXQgdGhhdCB0aGUgR3Vlc3QgUFhCIG51bWFfaWQgYWxsb2NhdGlvbiBpcyBub3QgYWx3YXlz
-IGJhc2VkDQo+ID4gb24gZGV2aWNlIG51bWFfaWQ/DQo+IA0KPiBMZXRzIHNpbXBsaWZ5IHRvIDIg
-U01NVXMgZm9yIHNob3J0ZXIgQ0xJcy4NCj4gDQo+IFNvIHRvIHN0YXJ0IHdpdGggd2UgYXNzdW1l
-IHBoeXNpY2FsIGhvc3Qgd2l0aCB0d28gU01NVXMsIGFuZA0KPiB0d28gUENJIGRldmljZXMgd2Ug
-d2FudCB0byBhc3NpZ24NCj4gDQo+ICAgMDAwMDpkZXYxIC0gYXNzb2NpYXRlZCB3aXRoIGhvc3Qg
-U01NVSAxLCBhbmQgaG9zdCBOVU1BIG5vZGUgMA0KPiAgIDAwMDA6ZGV2MiAtIGFzc29jaWF0ZWQg
-d2l0aCBob3N0IFNNTVUgMiwgYW5kIGhvc3QgTlVNQSBub2RlIDENCj4gDQo+IFNvIG5vdyB3ZSBj
-b25maWd1cmUgUUVNVSBsaWtlIHRoaXM6DQo+IA0KPiAgLWRldmljZSBweGItcGNpZSxpZD1wY2ll
-LjEsYnVzX25yPTEsYnVzPXBjaWUuMCxudW1hX2lkPTANCj4gIC1kZXZpY2UgcHhiLXBjaWUsaWQ9
-cGNpZS4yLGJ1c19ucj0yLGJ1cz1wY2llLjAsbnVtYV9pZD0xDQo+ICAtZGV2aWNlIGFybS1zbW11
-djMtYWNjZWwsaWQ9c21tdXYxLGJ1cz1wY2llLjENCj4gIC1kZXZpY2UgYXJtLXNtbXV2My1hY2Nl
-bCxpZD1zbW11djIsYnVzPXBjaWUuMg0KPiAgLWRldmljZSBwY2llLXJvb3QtcG9ydCxpZD1wY2ll
-LnBvcnQxLGJ1cz1wY2llLjEsY2hhc3Npcz0xDQo+ICAtZGV2aWNlIHBjaWUtcm9vdC1wb3J0LGlk
-PXBjaWUucG9ydDIsYnVzPXBjaWUuMixjaGFzc2lzPTINCj4gIC1kZXZpY2UgdmZpby1wY2ksaG9z
-dD0wMDAwOmRldjEsYnVzPXBjaWUucG9ydDEsaW9tbXVmZD1pb21tdWZkMA0KPiAgLWRldmljZSB2
-ZmlvLXBjaSxob3N0PTAwMDA6ZGV2MixidXM9cGNpZS5wb3J0Mixpb21tdWZkPWlvbW11ZmQwDQo+
-IA0KPiBGb3IgYnJldml0eSBJJ20gbm90IGdvaW5nIHRvIHNob3cgdGhlIGNvbmZpZyBmb3IgaG9z
-dC9ndWVzdCBOVU1BDQo+IG1hcHBpbmdzLA0KPiBidXQgYXNzdW1lIHRoYXQgZ3Vlc3QgTlVNQSBu
-b2RlIDAgaGFzIGJlZW4gY29uZmlndXJlZCB0byBtYXAgdG8gaG9zdA0KPiBOVU1BDQo+IG5vZGUg
-MCBhbmQgZ3Vlc3Qgbm9kZSAxIHRvIGhvc3Qgbm9kZSAxLg0KPiANCj4gSW4gdGhpcyBvcmRlciBv
-ZiBRRU1VIENMSSBhcmdzIHdlIGdldA0KPiANCj4gICBWRklPIGRldmljZSAwMDAwOmRldjEgY2F1
-c2VzIHRoZSBrZXJuZWwgdG8gYXNzb2NpYXRlIGd1ZXN0IHNtbXV2MSB3aXRoDQo+ICAgaG9zdCBT
-U01VIDEuDQo+IA0KPiAgIFZGSU8gZGV2aWNlIDAwMDA6ZGV2MiBjYXVzZXMgdGhlIGtlcm5lbCB0
-byBhc3NvY2lhdGUgZ3Vlc3Qgc21tdXYyIHdpdGgNCj4gICBob3N0IFNTTVUgMi4NCj4gDQo+IE5v
-dyBjb25zaWRlciB3ZSBzd2FwIHRoZSBvcmRlcmluZyBvZiB0aGUgVkZJTyBEZXZpY2VzIG9uIHRo
-ZSBRRU1VIGNsaQ0KPiANCj4gDQo+ICAtZGV2aWNlIHB4Yi1wY2llLGlkPXBjaWUuMSxidXNfbnI9
-MSxidXM9cGNpZS4wLG51bWFfaWQ9MA0KPiAgLWRldmljZSBweGItcGNpZSxpZD1wY2llLjIsYnVz
-X25yPTIsYnVzPXBjaWUuMCxudW1hX2lkPTENCj4gIC1kZXZpY2UgYXJtLXNtbXV2My1hY2NlbCxp
-ZD1zbW11djEsYnVzPXBjaWUuMQ0KPiAgLWRldmljZSBhcm0tc21tdXYzLWFjY2VsLGlkPXNtbXV2
-MixidXM9cGNpZS4yDQo+ICAtZGV2aWNlIHBjaWUtcm9vdC1wb3J0LGlkPXBjaWUucG9ydDEsYnVz
-PXBjaWUuMSxjaGFzc2lzPTENCj4gIC1kZXZpY2UgcGNpZS1yb290LXBvcnQsaWQ9cGNpZS5wb3J0
-MixidXM9cGNpZS4yLGNoYXNzaXM9Mg0KPiAgLWRldmljZSB2ZmlvLXBjaSxob3N0PTAwMDA6ZGV2
-MixidXM9cGNpZS5wb3J0Mixpb21tdWZkPWlvbW11ZmQwDQo+ICAtZGV2aWNlIHZmaW8tcGNpLGhv
-c3Q9MDAwMDpkZXYxLGJ1cz1wY2llLnBvcnQxLGlvbW11ZmQ9aW9tbXVmZDANCj4gDQo+IEluIHRo
-aXMgb3JkZXIgb2YgUUVNVSBDTEkgYXJncyB3ZSBnZXQNCj4gDQo+ICAgVkZJTyBkZXZpY2UgMDAw
-MDpkZXYyIGNhdXNlcyB0aGUga2VybmVsIHRvIGFzc29jaWF0ZSBndWVzdCBzbW11djEgd2l0aA0K
-PiAgIGhvc3QgU1NNVSAyLg0KPiANCj4gICBWRklPIGRldmljZSAwMDAwOmRldjEgY2F1c2VzIHRo
-ZSBrZXJuZWwgdG8gYXNzb2NpYXRlIGd1ZXN0IHNtbXV2MiB3aXRoDQo+ICAgaG9zdCBTU01VIDEu
-DQo+IA0KPiBUaGlzIGlzIGJyb2tlbiwgYXMgbm93IHdlIGhhdmUgaW5jb25zaXN0ZW50IE5VTUEg
-bWFwcGluZ3MgYmV0d2VlbiBob3N0DQo+IGFuZCBndWVzdC4gMDAwMDpkZXYyIGlzIGFzc29jaWF0
-ZWQgd2l0aCBhIFBYQiBvbiBOVU1BIG5vZGUgMSwgYnV0DQo+IGFzc29jaWF0ZWQgd2l0aCBhIGd1
-ZXN0IFNNTVUgdGhhdCB3YXMgcGFpcmVkIHdpdGggYSBQWEIgb24gTlVNQSBub2RlDQo+IDAuDQoN
-CkhtbS4uSSBkb27igJl0IHRoaW5rIGp1c3Qgc3dhcHBpbmcgdGhlIG9yZGVyIHdpbGwgY2hhbmdl
-IHRoZSBhc3NvY2lhdGlvbiB3aXRoDQpHdWVzdCBTTU1VIGhlcmUuIEJlY2F1c2UsIHdlIGhhdmUs
-DQoNCj4gIC1kZXZpY2UgYXJtLXNtbXV2My1hY2NlbCxpZD1zbW11djIsYnVzPXBjaWUuMg0KDQpE
-dXJpbmcgc21tdXYzLWFjY2VsIHJlYWxpemUgdGltZSwgdGhpcyB3aWxsIHJlc3VsdCBpbiwgDQog
-cGNpX3NldHVwX2lvbW11KHByaW1hcnlfYnVzLCBvcHMsIHNtbXVfc3RhdGUpOw0KDQpBbmQgd2hl
-biB0aGUgdmZpbyBkZXYgcmVhbGl6YXRpb24gaGFwcGVucywNCiBzZXRfaW9tbXVfZGV2aWNlKCkg
-DQogICBzbW11X2Rldl9zZXRfaW9tbXVfZGV2aWNlKGJ1cywgc21tdV9zdGF0ZSwgLCkNCiAgICAg
-IC0tPiB0aGlzIGlzIHdoZXJlIHRoZSBndWVzdCBzbW11djMtLT5ob3N0IHNtbXV2MyBhc3NvY2lh
-dGlvbiBpcyBmaXJzdA0KICAgICAgICAgICAgZXN0YWJsaXNoZWQuIEFuZCBhbnkgZnVydGhlciB2
-ZmlvIGRldiB0byB0aGlzIEd1ZXN0IFNNTVUgd2lsbA0KICAgICAgICAgICAgb25seSBzdWNjZWVk
-cyBpZiBpdCBiZWxvbmdzIHRvIHRoZSBzYW1lIHBoeXMgU01NVS4NCg0KaWUsIHRoZSBHdWVzdCBT
-TU1VIHRvIHBjaSBidXMgYXNzb2NpYXRpb24sIGFjdHVhbGx5IG1ha2Ugc3VyZSB5b3UgaGF2ZSB0
-aGUNCnNhbWUgR3Vlc3QgU01NVSBmb3IgdGhlIGRldmljZS4NCg0Kc21tdXYyIC0tPiBwY2llLjIg
-LS0+IChweGItcGNpZSwgbnVtYV9pZCA9IDEpDQowMDAwOmRldjIgLS0+ICBwY2llLnBvcnQyIC0t
-PiBwY2llLjIgLS0+IHNtbXV2MiAocHhiLXBjaWUsIG51bWFfaWQgPSAxKQ0KDQpIZW5jZSB0aGUg
-YXNzb2NpYXRpb24gb2YgMDAwMDpkZXYyIHRvIEd1ZXN0IFNNTVV2MiByZW1haW4gc2FtZS4NCg0K
-SSBob3BlIHRoaXMgaXMgY2xlYXIuIEFuZCBJIGFtIG5vdCBzdXJlIHRoZSBhc3NvY2lhdGlvbiB3
-aWxsIGJlIGJyb2tlbiBpbiBhbnkNCm90aGVyIHdheSB1bmxlc3MgUWVtdSBDTEkgc3BlY2lmeSB0
-aGUgZGV2IHRvIGEgZGlmZmVyZW50IFBYQi4NCg0KTWF5IGJlIGl0IGlzIHRoYXQgb25lIG9mIG15
-IGVhcmxpZXIgcmVwbGllcyBjYXVzZWQgdGhpcyBjb25mdXNpb24gdGhhdCANCm9yZGVyaW5nIG9m
-IHRoZSBWRklPIERldmljZXMgb24gdGhlIFFFTVUgY2xpIHdpbGwgYWZmZWN0IHRoZSBhc3NvY2lh
-dGlvbi4NCg0KVGhhbmtzLA0KU2hhbWVlcg0KDQo=
+Hi Daniel,
+
+On 6/2/25 14:20, Daniel P. Berrangé wrote:
+> On Thu, Feb 06, 2025 at 02:10:47PM +0100, Philippe Mathieu-Daudé wrote:
+>> Introduce an abstract machine parent class which defines
+>> the 'little_endian' property. Duplicate the current machine,
+>> which endian is tied to the binary endianness, to one big
+>> endian and a little endian machine; updating the machine
+>> description. Keep the current default machine for each binary.
+>>
+>> 'petalogix-s3adsp1800' machine is aliased as:
+>> - 'petalogix-s3adsp1800-be' on big-endian binary,
+>> - 'petalogix-s3adsp1800-le' on little-endian one.
+> 
+> Does it makes sense to expose these as different machine types ?
+> 
+> If all the HW is identical in both cases, it feels like the
+> endianness could just be a bool property of the machine type,
+> rather than a new machine type.
+
+Our test suites expect "qemu-system-foo -M bar" to work out of
+the box, we can not have non-default properties.
+
+(This is related to the raspberry pi discussion in
+https://lore.kernel.org/qemu-devel/20250204002240.97830-1-philmd@linaro.org/).
+
+My plan is to deprecate 'petalogix-s3adsp1800', so once we
+remove it we can merge both qemu-system-microblaze and
+qemu-system-microblazeel into a single binary.
+
+If you don't want to add more machines, what should be the
+endianness of the 'petalogix-s3adsp1800' machine in a binary
+with no particular endianness? Either we add for explicit
+endianness (fixing test suites) or we add one machine for
+each endianness; I fail to see other options not too
+confusing for our users.
+
+This approach is the same I took to merge MIPS*, SH4* and
+Xtensa* machines in endianness-agnostic binaries.
+
+Also the same I'm using to merge 32/64-bit targets into the
+same binaries.
+Assuming we have a qemu-system-x86 binary able to run i386 and
+x86_64 machines, what do you expect when starting '-M pc'? How
+to not confuse users wanting to run FreeDOS in 32-bit mode?
+
+Again, IMO having '-M pc,mode=32' is simpler, but that breaks
+the test suites assumptions than machines can start with no
+default values (see QOM introspection tests for example).
+
+> 
+>>
+>> Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+>> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+>> ---
+>>   hw/microblaze/petalogix_s3adsp1800_mmu.c | 62 +++++++++++++++++++-----
+>>   1 file changed, 51 insertions(+), 11 deletions(-)
+>>
+>> diff --git a/hw/microblaze/petalogix_s3adsp1800_mmu.c b/hw/microblaze/petalogix_s3adsp1800_mmu.c
+>> index 96aed4ed1a3..aea727eb7ee 100644
+>> --- a/hw/microblaze/petalogix_s3adsp1800_mmu.c
+>> +++ b/hw/microblaze/petalogix_s3adsp1800_mmu.c
+>> @@ -55,8 +55,17 @@
+>>   #define ETHLITE_IRQ         1
+>>   #define UARTLITE_IRQ        3
+>>   
+>> +typedef struct PetalogixS3adsp1800MachineClass {
+>> +    MachineClass parent_obj;
+>> +
+>> +    bool little_endian;
+>> +} PetalogixS3adsp1800MachineClass;
+>> +
+>>   #define TYPE_PETALOGIX_S3ADSP1800_MACHINE \
+>> -            MACHINE_TYPE_NAME("petalogix-s3adsp1800")
+>> +            MACHINE_TYPE_NAME("petalogix-s3adsp1800-common")
+>> +DECLARE_CLASS_CHECKERS(PetalogixS3adsp1800MachineClass,
+>> +                       PETALOGIX_S3ADSP1800_MACHINE,
+>> +                       TYPE_PETALOGIX_S3ADSP1800_MACHINE)
+>>   
+>>   static void
+>>   petalogix_s3adsp1800_init(MachineState *machine)
+>> @@ -71,11 +80,13 @@ petalogix_s3adsp1800_init(MachineState *machine)
+>>       MemoryRegion *phys_ram = g_new(MemoryRegion, 1);
+>>       qemu_irq irq[32];
+>>       MemoryRegion *sysmem = get_system_memory();
+>> +    PetalogixS3adsp1800MachineClass *pmc;
+>>   
+>> +    pmc = PETALOGIX_S3ADSP1800_MACHINE_GET_CLASS(machine);
+>>       cpu = MICROBLAZE_CPU(object_new(TYPE_MICROBLAZE_CPU));
+>>       object_property_set_str(OBJECT(cpu), "version", "7.10.d", &error_abort);
+>>       object_property_set_bool(OBJECT(cpu), "little-endian",
+>> -                             !TARGET_BIG_ENDIAN, &error_abort);
+>> +                             pmc->little_endian, &error_abort);
+>>       qdev_realize(DEVICE(cpu), NULL, &error_abort);
+>>   
+>>       /* Attach emulated BRAM through the LMB.  */
+>> @@ -95,7 +106,7 @@ petalogix_s3adsp1800_init(MachineState *machine)
+>>                             64 * KiB, 1, 0x89, 0x18, 0x0000, 0x0, 1);
+>>   
+>>       dev = qdev_new("xlnx.xps-intc");
+>> -    qdev_prop_set_bit(dev, "little-endian", !TARGET_BIG_ENDIAN);
+>> +    qdev_prop_set_bit(dev, "little-endian", pmc->little_endian);
+>>       qdev_prop_set_uint32(dev, "kind-of-intr",
+>>                            1 << ETHLITE_IRQ | 1 << UARTLITE_IRQ);
+>>       sysbus_realize_and_unref(SYS_BUS_DEVICE(dev), &error_fatal);
+>> @@ -107,7 +118,7 @@ petalogix_s3adsp1800_init(MachineState *machine)
+>>       }
+>>   
+>>       dev = qdev_new(TYPE_XILINX_UARTLITE);
+>> -    qdev_prop_set_bit(dev, "little-endian", !TARGET_BIG_ENDIAN);
+>> +    qdev_prop_set_bit(dev, "little-endian", pmc->little_endian);
+>>       qdev_prop_set_chr(dev, "chardev", serial_hd(0));
+>>       sysbus_realize_and_unref(SYS_BUS_DEVICE(dev), &error_fatal);
+>>       sysbus_mmio_map(SYS_BUS_DEVICE(dev), 0, UARTLITE_BASEADDR);
+>> @@ -115,7 +126,7 @@ petalogix_s3adsp1800_init(MachineState *machine)
+>>   
+>>       /* 2 timers at irq 2 @ 62 Mhz.  */
+>>       dev = qdev_new("xlnx.xps-timer");
+>> -    qdev_prop_set_bit(dev, "little-endian", !TARGET_BIG_ENDIAN);
+>> +    qdev_prop_set_bit(dev, "little-endian", pmc->little_endian);
+>>       qdev_prop_set_uint32(dev, "one-timer-only", 0);
+>>       qdev_prop_set_uint32(dev, "clock-frequency", 62 * 1000000);
+>>       sysbus_realize_and_unref(SYS_BUS_DEVICE(dev), &error_fatal);
+>> @@ -123,7 +134,7 @@ petalogix_s3adsp1800_init(MachineState *machine)
+>>       sysbus_connect_irq(SYS_BUS_DEVICE(dev), 0, irq[TIMER_IRQ]);
+>>   
+>>       dev = qdev_new("xlnx.xps-ethernetlite");
+>> -    qdev_prop_set_bit(dev, "little-endian", !TARGET_BIG_ENDIAN);
+>> +    qdev_prop_set_bit(dev, "little-endian", pmc->little_endian);
+>>       qemu_configure_nic_device(dev, true, NULL);
+>>       qdev_prop_set_uint32(dev, "tx-ping-pong", 0);
+>>       qdev_prop_set_uint32(dev, "rx-ping-pong", 0);
+>> @@ -133,26 +144,55 @@ petalogix_s3adsp1800_init(MachineState *machine)
+>>   
+>>       create_unimplemented_device("xps_gpio", GPIO_BASEADDR, 0x10000);
+>>   
+>> -    microblaze_load_kernel(cpu, !TARGET_BIG_ENDIAN, ddr_base, ram_size,
+>> +    microblaze_load_kernel(cpu, pmc->little_endian, ddr_base, ram_size,
+>>                              machine->initrd_filename,
+>>                              BINARY_DEVICE_TREE_FILE,
+>>                              NULL);
+>>   }
+>>   
+>> -static void petalogix_s3adsp1800_machine_class_init(ObjectClass *oc, void *data)
+>> +static void petalogix_s3adsp1800_machine_class_init(ObjectClass *oc,
+>> +                                                    bool little_endian)
+>>   {
+>>       MachineClass *mc = MACHINE_CLASS(oc);
+>> +    PetalogixS3adsp1800MachineClass *pmc = PETALOGIX_S3ADSP1800_MACHINE_CLASS(oc);
+>>   
+>> -    mc->desc = "PetaLogix linux refdesign for xilinx Spartan 3ADSP1800";
+>>       mc->init = petalogix_s3adsp1800_init;
+>> -    mc->is_default = true;
+>> +    pmc->little_endian = little_endian;
+>> +    mc->desc = little_endian
+>> +        ? "PetaLogix linux refdesign for xilinx Spartan 3ADSP1800 (little endian)"
+>> +        : "PetaLogix linux refdesign for xilinx Spartan 3ADSP1800 (big endian)";
+>> +    if (little_endian == !TARGET_BIG_ENDIAN) {
+>> +        mc->is_default = true;
+>> +        mc->alias = "petalogix-s3adsp1800";
+>> +    }
+>> +}
+>> +
+>> +static void petalogix_s3adsp1800_machine_class_init_be(ObjectClass *oc, void *data)
+>> +{
+>> +    petalogix_s3adsp1800_machine_class_init(oc, false);
+>> +}
+>> +
+>> +static void petalogix_s3adsp1800_machine_class_init_le(ObjectClass *oc, void *data)
+>> +{
+>> +    petalogix_s3adsp1800_machine_class_init(oc, true);
+>>   }
+>>   
+>>   static const TypeInfo petalogix_s3adsp1800_machine_types[] = {
+>>       {
+>>           .name           = TYPE_PETALOGIX_S3ADSP1800_MACHINE,
+>>           .parent         = TYPE_MACHINE,
+>> -        .class_init     = petalogix_s3adsp1800_machine_class_init,
+>> +        .abstract       = true,
+>> +        .class_size     = sizeof(PetalogixS3adsp1800MachineClass),
+>> +    },
+>> +    {
+>> +        .name           = MACHINE_TYPE_NAME("petalogix-s3adsp1800-be"),
+>> +        .parent         = TYPE_PETALOGIX_S3ADSP1800_MACHINE,
+>> +        .class_init     = petalogix_s3adsp1800_machine_class_init_be,
+>> +    },
+>> +    {
+>> +        .name           = MACHINE_TYPE_NAME("petalogix-s3adsp1800-le"),
+>> +        .parent         = TYPE_PETALOGIX_S3ADSP1800_MACHINE,
+>> +        .class_init     = petalogix_s3adsp1800_machine_class_init_le,
+>>       },
+>>   };
+>>   
+>> -- 
+>> 2.47.1
+>>
+>>
+> 
+> With regards,
+> Daniel
+
 
