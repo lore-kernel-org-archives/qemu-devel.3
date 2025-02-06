@@ -4,139 +4,69 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5C01DC02194
-	for <qemu-devel@archiver.kernel.org>; Thu,  6 Feb 2025 09:30:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4FC97C02194
+	for <qemu-devel@archiver.kernel.org>; Thu,  6 Feb 2025 09:30:37 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tfyCn-0000I4-VM; Thu, 06 Feb 2025 04:29:53 -0500
+	id 1tfyDM-0000cR-3D; Thu, 06 Feb 2025 04:30:29 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1tfyCi-0000H5-MI
- for qemu-devel@nongnu.org; Thu, 06 Feb 2025 04:29:49 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1tfyCh-0005nK-49
- for qemu-devel@nongnu.org; Thu, 06 Feb 2025 04:29:48 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1738834185;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=am4iMHLtBYq6QIfw4BK+y7dS1PsroeK3j91cjc7MSy0=;
- b=PUznXp+7IBeaF7quqLtLlV8c/oQkzDtMapitSicF8SA3UH/0+YAwflnnLfkW5FZabLGMQv
- TXTSQcMgdIvFR8+VYIrdymA/lsqni96uO8/RmCPAA2R3WnS6Rk2yZZ7CRXqZsLJHxEtfPj
- 9IIFLbuYTCSoum9sxB63eDqKvwfiagI=
-Received: from mail-wr1-f71.google.com (mail-wr1-f71.google.com
- [209.85.221.71]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-589-UkUZUJP6N56iDgx6Sso8YQ-1; Thu, 06 Feb 2025 04:29:42 -0500
-X-MC-Unique: UkUZUJP6N56iDgx6Sso8YQ-1
-X-Mimecast-MFC-AGG-ID: UkUZUJP6N56iDgx6Sso8YQ
-Received: by mail-wr1-f71.google.com with SMTP id
- ffacd0b85a97d-38dc32f753dso48306f8f.3
- for <qemu-devel@nongnu.org>; Thu, 06 Feb 2025 01:29:42 -0800 (PST)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1738834181; x=1739438981;
- h=content-transfer-encoding:in-reply-to:autocrypt:content-language
- :from:references:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=am4iMHLtBYq6QIfw4BK+y7dS1PsroeK3j91cjc7MSy0=;
- b=Xz86zOlBXehIdRV9gilAYmOPcQkR3Hco/V57wMxxX/6AtIMelufQ4Si98wyl7D1Ll1
- w7wFtm4Bgsz1il3HXY5CW4dE6yz2y3HLG/Ibb5AYiSVKE0BAkYtOW613pcHfLfTre1Hj
- Aim6+iyYYpioFu+44zvgaYJ6dVeCeytOUZcmsDOKzwVmXsey3gi/QjLOJ3LcEVs99dFs
- vL/NMzcB4ufF6/d0CAP5hOBOTU69eUQTIq3Q7CgDSEgvGxlfF04gyyc0OT/BkzTgq5BK
- qidkOduk7hPgwrMeP0GeX/aDHinrq8t7sfwDH9XTcvJTPQ2kKg/PzlW4o6ftqPjnexWp
- z7gg==
-X-Forwarded-Encrypted: i=1;
- AJvYcCVhR91mNOrZlx1QhYYBKIfQjX+SFAHU3mJynPZfonJA4qucCY+/Zv8HJnn6rkbXu8/JwnwxE1HNAmi4@nongnu.org
-X-Gm-Message-State: AOJu0YxNfFQibjZLP0jtOH2pWBJQPhFk/5AHRm8WVa2YPWnbdgd1lTP2
- MyaEPlm+zb4jK8RoP/h0fUpt2zgfXxiJXpeVxd1c06yH1sEfmhrCPaX8DnksENlmuBTNRYYQUa2
- /s6EV0lk8hCIRzLxbdLj+4oT/EwrXhB/1z8UYRNZ0yh16iNiioGdp
-X-Gm-Gg: ASbGnct1M3r8bVVEoUXrfLPXNs44+lE1UjEFIhTUN8OOJAh/j5zwgCKrgD2SdqFefk9
- CxL+YqjI+VsoRS9JZ0oqgNHHPce4DtQGcp6L/7gln+rxwwXhjxeCLbsYfW53ueTlasO49m4LsDH
- VEC71zVP5Cc7RnBMVEDKkQGxniFtKqG8icnuCRMsAEhGy1R6p48qrt/XKv9K7s5ucc1nO5t6aUe
- /mlMkDjB1cq7ty0EgfBg6GiWCCxysK7nWxbfF615ZjWkhuPfKZPfr9NfFk7r0TPe8wQWx6DPNPr
- hJQwi7pF4x8PpYDpQiM138kh1P18tJlveC55
-X-Received: by 2002:a5d:6c61:0:b0:38d:b1a5:3f74 with SMTP id
- ffacd0b85a97d-38db48a9705mr4970066f8f.6.1738834181382; 
- Thu, 06 Feb 2025 01:29:41 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IF0Kb65TWBEXhYscaUU/FZO/3+5YUPqYhYyv+5t+lVR3c2W1o9jXW71j/3SqtlD95DXQIEU0Q==
-X-Received: by 2002:a5d:6c61:0:b0:38d:b1a5:3f74 with SMTP id
- ffacd0b85a97d-38db48a9705mr4970051f8f.6.1738834181048; 
- Thu, 06 Feb 2025 01:29:41 -0800 (PST)
-Received: from [192.168.0.7] (ip-109-42-48-132.web.vodafone.de.
- [109.42.48.132]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-38dbdd1aee5sm1244144f8f.19.2025.02.06.01.29.40
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 06 Feb 2025 01:29:40 -0800 (PST)
-Message-ID: <397d0afe-675f-4c21-b782-75e795a93491@redhat.com>
-Date: Thu, 6 Feb 2025 10:29:39 +0100
+ (Exim 4.90_1) (envelope-from <maobibo@loongson.cn>)
+ id 1tfyD7-0000OC-6H
+ for qemu-devel@nongnu.org; Thu, 06 Feb 2025 04:30:15 -0500
+Received: from mail.loongson.cn ([114.242.206.163])
+ by eggs.gnu.org with esmtp (Exim 4.90_1)
+ (envelope-from <maobibo@loongson.cn>) id 1tfyD1-0005o8-LL
+ for qemu-devel@nongnu.org; Thu, 06 Feb 2025 04:30:11 -0500
+Received: from loongson.cn (unknown [10.20.42.62])
+ by gateway (Coremail) with SMTP id _____8Cx73MKgaRn3DltAA--.27881S3;
+ Thu, 06 Feb 2025 17:29:47 +0800 (CST)
+Received: from [10.20.42.62] (unknown [10.20.42.62])
+ by front1 (Coremail) with SMTP id qMiowMCxbsUHgaRnat8BAA--.8594S3;
+ Thu, 06 Feb 2025 17:29:46 +0800 (CST)
+Subject: Re: [PATCH] target/loongarch: fix vcpu reset command word issue
+To: =?UTF-8?Q?Philippe_Mathieu-Daud=c3=a9?= <philmd@linaro.org>,
+ Xianglai Li <lixianglai@loongson.cn>, qemu-devel@nongnu.org
+Cc: Song Gao <gaosong@loongson.cn>
+References: <20250205120635.2516406-1-lixianglai@loongson.cn>
+ <3e857bbf-834b-3ae5-f9c4-35d858db5108@loongson.cn>
+ <a8ee0227-8385-4907-b24b-efddaf907165@linaro.org>
+From: bibo mao <maobibo@loongson.cn>
+Message-ID: <3bad0c4a-0fa0-a35f-d400-d0d38c22057b@loongson.cn>
+Date: Thu, 6 Feb 2025 17:29:10 +0800
+User-Agent: Mozilla/5.0 (X11; Linux loongarch64; rv:68.0) Gecko/20100101
+ Thunderbird/68.7.0
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 5/5] tests/functional: skip mem addr test on 32-bit hosts
-To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
-References: <20250205155946.2811296-1-berrange@redhat.com>
- <20250205155946.2811296-6-berrange@redhat.com>
- <9edd3138-3411-4459-96c3-d48c30e197e0@linaro.org>
- <Z6OXlPu0fw_S9iy6@redhat.com>
- <23032dd9-063e-49b3-a6b8-25d0c8f72cef@linaro.org>
-From: Thomas Huth <thuth@redhat.com>
+In-Reply-To: <a8ee0227-8385-4907-b24b-efddaf907165@linaro.org>
+Content-Type: text/plain; charset=utf-8; format=flowed
 Content-Language: en-US
-Autocrypt: addr=thuth@redhat.com; keydata=
- xsFNBFH7eUwBEACzyOXKU+5Pcs6wNpKzrlJwzRl3VGZt95VCdb+FgoU9g11m7FWcOafrVRwU
- yYkTm9+7zBUc0sW5AuPGR/dp3pSLX/yFWsA/UB4nJsHqgDvDU7BImSeiTrnpMOTXb7Arw2a2
- 4CflIyFqjCpfDM4MuTmzTjXq4Uov1giGE9X6viNo1pxyEpd7PanlKNnf4PqEQp06X4IgUacW
- tSGj6Gcns1bCuHV8OPWLkf4hkRnu8hdL6i60Yxz4E6TqlrpxsfYwLXgEeswPHOA6Mn4Cso9O
- 0lewVYfFfsmokfAVMKWzOl1Sr0KGI5T9CpmRfAiSHpthhHWnECcJFwl72NTi6kUcUzG4se81
- O6n9d/kTj7pzTmBdfwuOZ0YUSqcqs0W+l1NcASSYZQaDoD3/SLk+nqVeCBB4OnYOGhgmIHNW
- 0CwMRO/GK+20alxzk//V9GmIM2ACElbfF8+Uug3pqiHkVnKqM7W9/S1NH2qmxB6zMiJUHlTH
- gnVeZX0dgH27mzstcF786uPcdEqS0KJuxh2kk5IvUSL3Qn3ZgmgdxBMyCPciD/1cb7/Ahazr
- 3ThHQXSHXkH/aDXdfLsKVuwDzHLVSkdSnZdt5HHh75/NFHxwaTlydgfHmFFwodK8y/TjyiGZ
- zg2Kje38xnz8zKn9iesFBCcONXS7txENTzX0z80WKBhK+XSFJwARAQABzR5UaG9tYXMgSHV0
- aCA8dGh1dGhAcmVkaGF0LmNvbT7CwXgEEwECACIFAlVgX6oCGwMGCwkIBwMCBhUIAgkKCwQW
- AgMBAh4BAheAAAoJEC7Z13T+cC21EbIP/ii9cvT2HHGbFRl8HqGT6+7Wkb+XLMqJBMAIGiQK
- QIP3xk1HPTsLfVG0ao4hy/oYkGNOP8+ubLnZen6Yq3zAFiMhQ44lvgigDYJo3Ve59gfe99KX
- EbtB+X95ODARkq0McR6OAsPNJ7gpEUzfkQUUJTXRDQXfG/FX303Gvk+YU0spm2tsIKPl6AmV
- 1CegDljzjycyfJbk418MQmMu2T82kjrkEofUO2a24ed3VGC0/Uz//XCR2ZTo+vBoBUQl41BD
- eFFtoCSrzo3yPFS+w5fkH9NT8ChdpSlbNS32NhYQhJtr9zjWyFRf0Zk+T/1P7ECn6gTEkp5k
- ofFIA4MFBc/fXbaDRtBmPB0N9pqTFApIUI4vuFPPO0JDrII9dLwZ6lO9EKiwuVlvr1wwzsgq
- zJTPBU3qHaUO4d/8G+gD7AL/6T4zi8Jo/GmjBsnYaTzbm94lf0CjXjsOX3seMhaE6WAZOQQG
- tZHAO1kAPWpaxne+wtgMKthyPLNwelLf+xzGvrIKvLX6QuLoWMnWldu22z2ICVnLQChlR9d6
- WW8QFEpo/FK7omuS8KvvopFcOOdlbFMM8Y/8vBgVMSsK6fsYUhruny/PahprPbYGiNIhKqz7
- UvgyZVl4pBFjTaz/SbimTk210vIlkDyy1WuS8Zsn0htv4+jQPgo9rqFE4mipJjy/iboDzsFN
- BFH7eUwBEAC2nzfUeeI8dv0C4qrfCPze6NkryUflEut9WwHhfXCLjtvCjnoGqFelH/PE9NF4
- 4VPSCdvD1SSmFVzu6T9qWdcwMSaC+e7G/z0/AhBfqTeosAF5XvKQlAb9ZPkdDr7YN0a1XDfa
- +NgA+JZB4ROyBZFFAwNHT+HCnyzy0v9Sh3BgJJwfpXHH2l3LfncvV8rgFv0bvdr70U+On2XH
- 5bApOyW1WpIG5KPJlDdzcQTyptOJ1dnEHfwnABEfzI3dNf63rlxsGouX/NFRRRNqkdClQR3K
- gCwciaXfZ7ir7fF0u1N2UuLsWA8Ei1JrNypk+MRxhbvdQC4tyZCZ8mVDk+QOK6pyK2f4rMf/
- WmqxNTtAVmNuZIwnJdjRMMSs4W4w6N/bRvpqtykSqx7VXcgqtv6eqoDZrNuhGbekQA0sAnCJ
- VPArerAZGArm63o39me/bRUQeQVSxEBmg66yshF9HkcUPGVeC4B0TPwz+HFcVhheo6hoJjLq
- knFOPLRj+0h+ZL+D0GenyqD3CyuyeTT5dGcNU9qT74bdSr20k/CklvI7S9yoQje8BeQAHtdV
- cvO8XCLrpGuw9SgOS7OP5oI26a0548M4KldAY+kqX6XVphEw3/6U1KTf7WxW5zYLTtadjISB
- X9xsRWSU+Yqs3C7oN5TIPSoj9tXMoxZkCIHWvnqGwZ7JhwARAQABwsFfBBgBAgAJBQJR+3lM
- AhsMAAoJEC7Z13T+cC21hPAQAIsBL9MdGpdEpvXs9CYrBkd6tS9mbaSWj6XBDfA1AEdQkBOn
- ZH1Qt7HJesk+qNSnLv6+jP4VwqK5AFMrKJ6IjE7jqgzGxtcZnvSjeDGPF1h2CKZQPpTw890k
- fy18AvgFHkVk2Oylyexw3aOBsXg6ukN44vIFqPoc+YSU0+0QIdYJp/XFsgWxnFIMYwDpxSHS
- 5fdDxUjsk3UBHZx+IhFjs2siVZi5wnHIqM7eK9abr2cK2weInTBwXwqVWjsXZ4tq5+jQrwDK
- cvxIcwXdUTLGxc4/Z/VRH1PZSvfQxdxMGmNTGaXVNfdFZjm4fz0mz+OUi6AHC4CZpwnsliGV
- ODqwX8Y1zic9viSTbKS01ZNp175POyWViUk9qisPZB7ypfSIVSEULrL347qY/hm9ahhqmn17
- Ng255syASv3ehvX7iwWDfzXbA0/TVaqwa1YIkec+/8miicV0zMP9siRcYQkyTqSzaTFBBmqD
- oiT+z+/E59qj/EKfyce3sbC9XLjXv3mHMrq1tKX4G7IJGnS989E/fg6crv6NHae9Ckm7+lSs
- IQu4bBP2GxiRQ+NV3iV/KU3ebMRzqIC//DCOxzQNFNJAKldPe/bKZMCxEqtVoRkuJtNdp/5a
- yXFZ6TfE1hGKrDBYAm4vrnZ4CXFSBDllL59cFFOJCkn4Xboj/aVxxJxF30bn
-In-Reply-To: <23032dd9-063e-49b3-a6b8-25d0c8f72cef@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=thuth@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+X-CM-TRANSID: qMiowMCxbsUHgaRnat8BAA--.8594S3
+X-CM-SenderInfo: xpdruxter6z05rqj20fqof0/
+X-Coremail-Antispam: 1Uk129KBj93XoW7CrykAF4kCw15Cr1ftw4fWFX_yoW8Zry3pr
+ ykAFWDKFyFkrykJ3sFq34qq34UAr47Gwn7XFyIqFyIyrs0qry0g3W0qrsI9F98Aw4xGF4Y
+ yr1Fkr1UZFW7JwcCm3ZEXasCq-sJn29KB7ZKAUJUUUU8529EdanIXcx71UUUUU7KY7ZEXa
+ sCq-sGcSsGvfJ3Ic02F40EFcxC0VAKzVAqx4xG6I80ebIjqfuFe4nvWSU5nxnvy29KBjDU
+ 0xBIdaVrnRJUUU9Yb4IE77IF4wAFF20E14v26r1j6r4UM7CY07I20VC2zVCF04k26cxKx2
+ IYs7xG6rWj6s0DM7CIcVAFz4kK6r1j6r18M28lY4IEw2IIxxk0rwA2F7IY1VAKz4vEj48v
+ e4kI8wA2z4x0Y4vE2Ix0cI8IcVAFwI0_Xr0_Ar1l84ACjcxK6xIIjxv20xvEc7CjxVAFwI
+ 0_Gr0_Cr1l84ACjcxK6I8E87Iv67AKxVW0oVCq3wA2z4x0Y4vEx4A2jsIEc7CjxVAFwI0_
+ GcCE3s1le2I262IYc4CY6c8Ij28IcVAaY2xG8wAqjxCEc2xF0cIa020Ex4CE44I27wAqx4
+ xG64xvF2IEw4CE5I8CrVC2j2WlYx0E2Ix0cI8IcVAFwI0_JrI_JrylYx0Ex4A2jsIE14v2
+ 6r1j6r4UMcvjeVCFs4IE7xkEbVWUJVW8JwACjcxG0xvEwIxGrwCYjI0SjxkI62AI1cAE67
+ vIY487MxAIw28IcxkI7VAKI48JMxC20s026xCaFVCjc4AY6r1j6r4UMxCIbckI1I0E14v2
+ 6r126r1DMI8I3I0E5I8CrVAFwI0_Jr0_Jr4lx2IqxVCjr7xvwVAFwI0_JrI_JrWlx4CE17
+ CEb7AF67AKxVWUAVWUtwCIc40Y0x0EwIxGrwCI42IY6xIIjxv20xvE14v26r1j6r1xMIIF
+ 0xvE2Ix0cI8IcVCY1x0267AKxVWUJVW8JwCI42IY6xAIw20EY4v20xvaj40_Jr0_JF4lIx
+ AIcVC2z280aVAFwI0_Jr0_Gr1lIxAIcVC2z280aVCY1x0267AKxVWUJVW8JbIYCTnIWIev
+ Ja73UjIFyTuYvjxUrNtxDUUUU
+Received-SPF: pass client-ip=114.242.206.163; envelope-from=maobibo@loongson.cn;
+ helo=mail.loongson.cn
+X-Spam_score_int: -46
+X-Spam_score: -4.7
+X-Spam_bar: ----
+X-Spam_report: (-4.7 / 5.0 requ) BAYES_00=-1.9, NICE_REPLY_A=-2.838,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -154,26 +84,60 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 05/02/2025 19.25, Richard Henderson wrote:
-> On 2/5/25 08:53, Daniel P. Berrangé wrote:
->>>> +Decorator to skip execution of a test on 32-bit targets
->>>> +Example:
->>>> +
->>>> +  @skipIf32BitTarget()
->>>> +'''
->>>> +def skipIf32BitTarget():
->>>> +    enoughBits = sys.maxsize > 2**32
->>>> +    return skipUnless(enoughBits,
->>>> +                      'Test requires a host with 64-bit address space')
->>>
->>> skipIf32BitHost?
+
+
+On 2025/2/6 下午5:02, Philippe Mathieu-Daudé wrote:
+> On 6/2/25 03:34, bibo mao wrote:
+>> On 2025/2/5 下午8:06, Xianglai Li wrote:
+>>> When the KVM_REG_LOONGARCH_VCPU_RESET command word
+>>> is sent to the kernel through the kvm_set_one_reg interface,
+>>> the parameter source needs to be a legal address,
+>>> otherwise the kernel will return an error and the command word
+>>> will fail to be sent.
+>> Hi Xianglai,
 >>
->> I don't mind either way.
+>> Good catch, it is actually one problem and thanks for reporting it.
+>>
+>>>
+>>> Signed-off-by: Xianglai Li <lixianglai@loongson.cn>
+>>> ---
+>>> Cc: Bibo Mao <Maobibo@loongson.cn>
+>>> Cc: Song Gao <gaosong@loongson.cn>
+>>>
+>>>   target/loongarch/kvm/kvm.c | 3 ++-
+>>>   1 file changed, 2 insertions(+), 1 deletion(-)
+>>>
+>>> diff --git a/target/loongarch/kvm/kvm.c b/target/loongarch/kvm/kvm.c
+>>> index a3f55155b0..01cddb7012 100644
+>>> --- a/target/loongarch/kvm/kvm.c
+>>> +++ b/target/loongarch/kvm/kvm.c
+>>> @@ -581,9 +581,10 @@ static int kvm_loongarch_get_lbt(CPUState *cs)
+>>>   void kvm_arch_reset_vcpu(CPUState *cs)
+>>>   {
+>>>       CPULoongArchState *env = cpu_env(cs);
+>>> +    uint64_t val;
+>> How about set initial value here although it is not used? such as
+>>         uint64_t val = 0;
 > 
-> Definitely host.
+> Or        uint64_t unused = 0;
+yes, that is better and easier to understand -:)
 
-+1 for host. Otherwise this gets confused with "qemu-system-i386" etc.
-
-  Thomas
+> 
+>>>       env->mp_state = KVM_MP_STATE_RUNNABLE;
+>>> -    kvm_set_one_reg(cs, KVM_REG_LOONGARCH_VCPU_RESET, 0);
+>>> +    kvm_set_one_reg(cs, KVM_REG_LOONGARCH_VCPU_RESET, &val);
+>> Can we add return value checking here? such as
+>>         ret = kvm_set_one_reg(cs, KVM_REG_LOONGARCH_VCPU_RESET, &val);
+>>         if (ret) {
+>>             error_report("... %s", strerror(errno));
+>>         }
+>>
+>> Regards
+>> Bibo Mao
+>>>   }
+>>>   static int kvm_loongarch_get_mpstate(CPUState *cs)
+>>>
+>>
+>>
 
 
