@@ -4,82 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 14CDAC02198
-	for <qemu-devel@archiver.kernel.org>; Thu,  6 Feb 2025 15:35:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3DABAC02194
+	for <qemu-devel@archiver.kernel.org>; Thu,  6 Feb 2025 15:35:29 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tg3tf-0002Zr-Fb; Thu, 06 Feb 2025 10:34:31 -0500
+	id 1tg3th-0002bh-UI; Thu, 06 Feb 2025 10:34:34 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <rbradford@rivosinc.com>)
- id 1tg3tS-0002Sr-5N
+ id 1tg3tS-0002So-5A
  for qemu-devel@nongnu.org; Thu, 06 Feb 2025 10:34:18 -0500
-Received: from mail-wr1-x431.google.com ([2a00:1450:4864:20::431])
+Received: from mail-wr1-x436.google.com ([2a00:1450:4864:20::436])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <rbradford@rivosinc.com>)
- id 1tg3tO-0001Ff-UF
- for qemu-devel@nongnu.org; Thu, 06 Feb 2025 10:34:17 -0500
-Received: by mail-wr1-x431.google.com with SMTP id
- ffacd0b85a97d-38daf14018eso796600f8f.1
- for <qemu-devel@nongnu.org>; Thu, 06 Feb 2025 07:34:14 -0800 (PST)
+ id 1tg3tO-0001FE-Fe
+ for qemu-devel@nongnu.org; Thu, 06 Feb 2025 10:34:16 -0500
+Received: by mail-wr1-x436.google.com with SMTP id
+ ffacd0b85a97d-38db909acc9so785742f8f.0
+ for <qemu-devel@nongnu.org>; Thu, 06 Feb 2025 07:34:13 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=rivosinc-com.20230601.gappssmtp.com; s=20230601; t=1738856053; x=1739460853;
+ d=rivosinc-com.20230601.gappssmtp.com; s=20230601; t=1738856052; x=1739460852;
  darn=nongnu.org; 
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=MLa9j9BRIMQd3YANNi07ZIrVb3mXVRrpXwVepk0Wa18=;
- b=N9EBwGZOD4evHAgfC4aE0CngHrv63tPSt0zz5gxbVgw78x6riR88Zs/Js7/xOi3nbi
- vwP8HXIPY5cTOVZxOm7D9QpZj92TNLQuKBgsTkVSTlOYeQhvj8FhmWXZJ6QyiUJEKVvp
- 9/RkdZBI8qEEKbp41GPNReXZX8zgb3sZlRis5EwGhOM5pD9N6Y2SAUAxE6Do6Rvs34to
- lp6C/Mmuo2n45eYPgNtsdmVKjTcfKmLpmiNt6yzwCs6QIRJutdUS/SwTS/eHGlYkg9DS
- 5A/RW+HDU+dItFq1y4RnigLC2hAs6Wtoo5b2uoBWhSQtz6MmjS2NSXJWfIHBc74Hc35o
- o2+Q==
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=aN+4417yj64sAq5Mfzi8lgKD4spgoqn16QT2UJqP7ak=;
+ b=GuL8sH704V6WvClEuwczeh3UnNTFW7jSbPQyXADSnQjyWw45ddgwE8VbaN8GoKON65
+ ZU/jnkkXboOoNNW1Ea4VI5uvz4ZBYNpNFB7hj3dSr4fPFCjWYV3HIWHC4ficDbn2MgA/
+ 9yY8te0oeq5y+e3jV11mSOcin/YXoO8nfv12Uuyhg21wA9fwrSwcjNd0MppWDDgj2UCQ
+ 6IjvGDMUNJ6vSs4G0T75pTZYDxLA4Lyy2Ndntzr/c5POh/aLZfgOsLw4nQAFr2vMphqD
+ LVP51JiuF0pDYJuRbDm5QdOfyMUONGkYJ1KsEz+zD6ieR3T5TCD6T3cFUq+9leKZpObC
+ WvLw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1738856053; x=1739460853;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=MLa9j9BRIMQd3YANNi07ZIrVb3mXVRrpXwVepk0Wa18=;
- b=fMjinH7bwXR/eNkAMX5WthiNgQPnYao7MfSOzOTzkq2mdOYUjhD2FqcUdOQSbrsROK
- TRobbGGIC4RGxz1d6f0COT6i3iaTkos7ON13aTlfG/g3oo1sEzrTz2zL9t6Cx4DloT0y
- GsyfIC0bxIjBBTug2d3JJdVyEYSzfjHckjNTbuM8ETcf7/VLMEihj20gQiLSTox/GsBn
- NtBRez4OxxhlgUEfZ5SmHGi4qI6d1+OAoewedZN3XHY4/9PFKjVP4bSHHHSO9hjJMHgk
- v6f4Ih4zjlqJ1IlyhCIST4MZoSDoT9pY9pldS1GtB4n1P+6RQRUzIgY7JXL/E9IgNoFm
- FIOA==
-X-Gm-Message-State: AOJu0YwMO67lyd9DrIekz+GK7dLFCrTMkfBdAvJkFLNIpBYMDorEUHwx
- 9bJWUzfZsWvJBLKkcSwy3ROvPfGc9tUWnVK9fROYwbLUPzYP/Lp9y3BRM8fUepgV85dBN35mlmd
- Y
-X-Gm-Gg: ASbGncvn4Ras8j+eaWq9KjrAi3likfj8UNHuxIej46vW9Hb9SLbhkNHNqP/UE63xJsX
- jpp8rrSkAQTXkxkWOp6jnuMhfajvEWBY/QZxCSWPDZEuiM5ZeaipoodSJl7GwBrfXDnpm0PAAXt
- 6561r8p9Dhz5l0qQxu8K6SYpBUtjvRjOKiijvnOnIZpxOn/EdyYHHz3mkk2XqZagQRJtY6hqjwg
- Bv2Xs0pk++6qOziHRT8diFl3o+qETIG2kycB9Xt99Hyvm3pwQN/FIO6ePoX8BtNLQkskcd6657Y
- WkhhN3PSwIh1yKG111rptNzHmoVIjU/kOfArWuvE2sf+ND4jLy6lTKvkk0IOSIBaetM=
-X-Google-Smtp-Source: AGHT+IGaH4XvtHjiWnSV1VeXVxRH5mlsweNfU3GeF1BF5UHi5pYiqkPi/6r1xql6iMBU6JjtutmMtQ==
-X-Received: by 2002:a5d:6d8e:0:b0:385:faf5:eba6 with SMTP id
- ffacd0b85a97d-38db48b42c0mr5010299f8f.1.1738856052983; 
- Thu, 06 Feb 2025 07:34:12 -0800 (PST)
+ d=1e100.net; s=20230601; t=1738856052; x=1739460852;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=aN+4417yj64sAq5Mfzi8lgKD4spgoqn16QT2UJqP7ak=;
+ b=Aeyq2v1bghv0r0UPuIOaxYvHdnKq25vsExzqRbQDArB+JlUeDy2n+hI/3Qj/kQ5h8h
+ KdFXkkqVSNoEjobb516mfaewa1SqhVTwMnuUrMNfN6vn5hIuRnM48Wo8SPBB+FPg+rmL
+ IoDOIZMfTlPaJaCO8Ka4Q8P3NY+LzLESNrxFBFYjb+0H9dAyKAbJigGogWrC69MDECAi
+ UxftuVGHPtLoA6U4NrAJMvL8HqqGmo+2G7/nuxaAdS+ZjK4hhpiwe/nvLZ9JVG4SU52x
+ 1iYUOOEkFDP7r2AnugBFa5v5eeC23/Mb1woHWyM3HCNfoq1KTfb4FF1zeQuZhLGr6Khf
+ GUFw==
+X-Gm-Message-State: AOJu0YzDd4DX2Fkn7JP7VcHiUDqrJPfdWQxKlPPjqDZonnLip4WAv+lh
+ O5H5medahBcCT87Or6a9EX7CnntiI2VTiBt4sjPtcaNTEDWVFOeJ/i3367EIk1AkoPIPOZPD6HY
+ i
+X-Gm-Gg: ASbGnctu9zGjRn/MNPVUPo4sAbdClWbLSuTImnoIjqjF8VK367ZywkovipjWDMckoZy
+ hXXfSmIWB2p6FDXL4jl2VKMO1H+vbKpF1WAhAMvqOcxBMpNT4SaHS11r6WpHNi7MmM0hUHT7pxz
+ 7Qkv+G7MBuJEf1i1Aq63a0qa7zkJvWfWqQwNN49RtTRPeMqihJNRA9/dfSJBUFJMaAp/OrN2IcA
+ d5I2yY2IFoG3yUCYhMR01MAznpQk6LM0ey1cr/zyxQuX0Jm/IoMo3Ab4sOjezHIy95t6OCscYeO
+ 7A40wPY4HWNxV6EfoRV8MjIvsTwATF7IYoeDv2lLKoTgetKDM0v/HYyvC0E4gkFptOE=
+X-Google-Smtp-Source: AGHT+IH/SU0aKmqTVXvQ+cZeS/9H8mZRfCBkZM0ZzmshlWRCdPmNOcRrJHFMjdIsmMuylEbuUqbB1A==
+X-Received: by 2002:a05:6000:1543:b0:385:faaa:9d1d with SMTP id
+ ffacd0b85a97d-38db4929c07mr6349270f8f.35.1738856051781; 
+ Thu, 06 Feb 2025 07:34:11 -0800 (PST)
 Received: from rockhopper.ba.rivosinc.com (214.11.169.217.in-addr.arpa.
  [217.169.11.214]) by smtp.gmail.com with ESMTPSA id
  ffacd0b85a97d-38dc45c26f2sm850516f8f.51.2025.02.06.07.34.11
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 06 Feb 2025 07:34:12 -0800 (PST)
+ Thu, 06 Feb 2025 07:34:11 -0800 (PST)
 From: Rob Bradford <rbradford@rivosinc.com>
 To: qemu-devel@nongnu.org
 Cc: Palmer Dabbelt <palmer@dabbelt.com>, qemu-riscv@nongnu.org,
  Alistair Francis <Alistair.Francis@wdc.com>,
  Rob Bradford <rbradford@rivosinc.com>
-Subject: [PATCH 1/2] disas/riscv: Fix minor whitespace issues
-Date: Thu,  6 Feb 2025 15:34:09 +0000
-Message-ID: <20250206153410.236636-2-rbradford@rivosinc.com>
+Subject: [PATCH 0/2] disas/riscv: Add missing Sdtrig CSRs
+Date: Thu,  6 Feb 2025 15:34:08 +0000
+Message-ID: <20250206153410.236636-1-rbradford@rivosinc.com>
 X-Mailer: git-send-email 2.48.1
-In-Reply-To: <20250206153410.236636-1-rbradford@rivosinc.com>
-References: <20250206153410.236636-1-rbradford@rivosinc.com>
+Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::431;
- envelope-from=rbradford@rivosinc.com; helo=mail-wr1-x431.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::436;
+ envelope-from=rbradford@rivosinc.com; helo=mail-wr1-x436.google.com
 X-Spam_score_int: -18
 X-Spam_score: -1.9
 X-Spam_bar: -
@@ -101,43 +99,16 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Some extra spaces made into into the RISC-V opcode data table.
+Add missing Sdtrig CSRs per the latest RISC-V Debug specification. (+ minor
+whitespace fix)
 
-Signed-off-by: Rob Bradford <rbradford@rivosinc.com>
----
- disas/riscv.c | 12 ++++++------
- 1 file changed, 6 insertions(+), 6 deletions(-)
+Rob Bradford (2):
+  disas/riscv: Fix minor whitespace issues
+  disas/riscv: Add missing Sdtrig CSRs
 
-diff --git a/disas/riscv.c b/disas/riscv.c
-index 4075ed6bfe..305dd40ac4 100644
---- a/disas/riscv.c
-+++ b/disas/riscv.c
-@@ -1662,7 +1662,7 @@ const rv_opcode_data rvi_opcode_data[] = {
-     { "aes32esi", rv_codec_k_bs, rv_fmt_rs1_rs2_bs, NULL, 0, 0, 0 },
-     { "aes32dsmi", rv_codec_k_bs, rv_fmt_rs1_rs2_bs, NULL, 0, 0, 0 },
-     { "aes32dsi", rv_codec_k_bs, rv_fmt_rs1_rs2_bs, NULL, 0, 0, 0 },
--    { "aes64ks1i", rv_codec_k_rnum,  rv_fmt_rd_rs1_rnum, NULL, 0, 0, 0 },
-+    { "aes64ks1i", rv_codec_k_rnum, rv_fmt_rd_rs1_rnum, NULL, 0, 0, 0 },
-     { "aes64ks2", rv_codec_r, rv_fmt_rd_rs1_rs2, NULL, 0, 0, 0 },
-     { "aes64im", rv_codec_r, rv_fmt_rd_rs1, NULL, 0, 0 },
-     { "aes64esm", rv_codec_r, rv_fmt_rd_rs1_rs2, NULL, 0, 0, 0 },
-@@ -2214,11 +2214,11 @@ const rv_opcode_data rvi_opcode_data[] = {
-     { "mop.rr.5", rv_codec_r, rv_fmt_rd_rs1_rs2, NULL, 0, 0, 0 },
-     { "mop.rr.6", rv_codec_r, rv_fmt_rd_rs1_rs2, NULL, 0, 0, 0 },
-     { "mop.rr.7", rv_codec_r, rv_fmt_rd_rs1_rs2, NULL, 0, 0, 0 },
--    { "c.mop.1",  rv_codec_ci_none, rv_fmt_none, NULL, 0, 0, 0 },
--    { "c.mop.3",  rv_codec_ci_none, rv_fmt_none, NULL, 0, 0, 0 },
--    { "c.mop.5",  rv_codec_ci_none, rv_fmt_none, NULL, 0, 0, 0 },
--    { "c.mop.7",  rv_codec_ci_none, rv_fmt_none, NULL, 0, 0, 0 },
--    { "c.mop.9",  rv_codec_ci_none, rv_fmt_none, NULL, 0, 0, 0 },
-+    { "c.mop.1", rv_codec_ci_none, rv_fmt_none, NULL, 0, 0, 0 },
-+    { "c.mop.3", rv_codec_ci_none, rv_fmt_none, NULL, 0, 0, 0 },
-+    { "c.mop.5", rv_codec_ci_none, rv_fmt_none, NULL, 0, 0, 0 },
-+    { "c.mop.7", rv_codec_ci_none, rv_fmt_none, NULL, 0, 0, 0 },
-+    { "c.mop.9", rv_codec_ci_none, rv_fmt_none, NULL, 0, 0, 0 },
-     { "c.mop.11", rv_codec_ci_none, rv_fmt_none, NULL, 0, 0, 0 },
-     { "c.mop.13", rv_codec_ci_none, rv_fmt_none, NULL, 0, 0, 0 },
-     { "c.mop.15", rv_codec_ci_none, rv_fmt_none, NULL, 0, 0, 0 },
+ disas/riscv.c | 16 +++++++++-------
+ 1 file changed, 9 insertions(+), 7 deletions(-)
+
 -- 
 2.48.1
 
