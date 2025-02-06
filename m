@@ -4,79 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 40199C02194
-	for <qemu-devel@archiver.kernel.org>; Thu,  6 Feb 2025 20:14:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 92C2DC0219B
+	for <qemu-devel@archiver.kernel.org>; Thu,  6 Feb 2025 20:14:42 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tg807-0007A0-Du; Thu, 06 Feb 2025 14:57:27 -0500
+	id 1tg80x-0000Bi-Pe; Thu, 06 Feb 2025 14:58:19 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1tg802-00076Y-Ms
- for qemu-devel@nongnu.org; Thu, 06 Feb 2025 14:57:22 -0500
-Received: from mail-pl1-x633.google.com ([2607:f8b0:4864:20::633])
+ id 1tg80S-0007K8-98
+ for qemu-devel@nongnu.org; Thu, 06 Feb 2025 14:57:48 -0500
+Received: from mail-pl1-x62b.google.com ([2607:f8b0:4864:20::62b])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1tg800-0000RH-Fb
- for qemu-devel@nongnu.org; Thu, 06 Feb 2025 14:57:22 -0500
-Received: by mail-pl1-x633.google.com with SMTP id
- d9443c01a7336-21661be2c2dso25999155ad.1
- for <qemu-devel@nongnu.org>; Thu, 06 Feb 2025 11:57:19 -0800 (PST)
+ id 1tg80O-0000bg-Uv
+ for qemu-devel@nongnu.org; Thu, 06 Feb 2025 14:57:47 -0500
+Received: by mail-pl1-x62b.google.com with SMTP id
+ d9443c01a7336-21f48ab13d5so13349285ad.0
+ for <qemu-devel@nongnu.org>; Thu, 06 Feb 2025 11:57:43 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1738871839; x=1739476639; darn=nongnu.org;
+ d=linaro.org; s=google; t=1738871863; x=1739476663; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=lGhhjzHgdaB2j6jJXVcSFxfC86zQCbWbwi8vUso1KsA=;
- b=RfW81hvVnhYZRj88K0U70Xy0H5f6VVU4l33p2vPXigV7hRpt3vLPQIcxfIsCMbEy9H
- 5Tj8VjwleFoyJIyXYIBfbCCcHihQIiNguarUcrAsECK8cdOjYb3WTL69Z7dAFaefuKBF
- wBB3So0dpO+YgSv5igL3+ZEzroDZDtGeAZqf3+0T5/1qHBdqKEKQxuFP6xBC8fivL6CY
- PVEaYk/9vKIF00hEfAKQWCLS+tal+0iWGKVOfkRIOuJ9z+MDSSikLrf2TU8tugaLV4n7
- 5EIygKdFr7RFM2/JCb16smTRGowtLARYJjQegnR8jtp3JXqHICs8fRZgUNdo5AIga/C0
- bkYQ==
+ bh=lwujLuKrAT016DsMtaUp3yJjszEy26zde2eg4IVLOrI=;
+ b=I5sySLi8aTXg6WBP2GvCqkXrwdfWg42FzkcYcBJX9IA53NwMBx/FgEpxk+ed5a3oI7
+ picR74VX0JzuHKymIDFQz4bSfzyNWFuJPZkrg7eN3dJ2KzZAoAIaO46lHSZOHnGoNZnU
+ hBli8pls1EsdaaNaku0bNJ/5RSsq3YQ9XF37F7WyKJwfE7CzvYlKAXdnTXew05UJHpRS
+ x90swS7W9oes7BKg2vOeh70T+gPKttl6RDTm/gfT1TWwLIY70qQwkwuGCDtnpPDqh+rF
+ 77UdGdr97/dflVHQ8Lf0zSAGkZqGjI+OL6hNk6Yf+b0PbPk26/K/VV+miXZ/00FJoVL5
+ 2vdA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1738871839; x=1739476639;
+ d=1e100.net; s=20230601; t=1738871863; x=1739476663;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=lGhhjzHgdaB2j6jJXVcSFxfC86zQCbWbwi8vUso1KsA=;
- b=GCDmrB0i3UOnb+q/LdA2tPK7W9tT07SxrrJr7IKzwT7Z1MmN8Sqi0E7E4QtmMaEfmS
- Jit+vZO1KF73NdFe0IG7dSRLb1+LDhCbLvs2M1xSogxvka79R0ICwzb9MmmaKm9UwE+4
- E01nh6b6vlvXe7W5JWKLdo4FcWfRRHgsvAx/yfV+HTZ8MMvI0pSuYdrUydk42qL7//sk
- /3QUwTDXRvipUPDQj+v5FmhRldS129xxkrBrk3Z6me5mtECXFU91muJZvFjSP9LPEEdw
- wVb2M/sB9J42+2ad0ozVv5HnM2Cbh/GlE66v5RAj1kvgu4esHci7jZ8cqEzSSxJqsho5
- MWFQ==
-X-Gm-Message-State: AOJu0YzVYDc/3FU/mISilsFvbTCMGvRXXefs6h7LcXcAHS1USh27Cjk+
- YcCp/cJSh+iQ8TFFg7nQMiDqt7mX1BUhDCg4a+UTl7J+Sw2eKshNevTVQcEnLZOGBmVmxl/lP2H
- 3
-X-Gm-Gg: ASbGncuFCh39XG5RwnJShhVNIxWd8lkUgi7PuD0LCofUKCAyme6Ko8d4G61g1m67KUK
- g5uAMe4g1XwPrgz1oPqmXQ+wlNlsC6vHvnqenNznXhYNi25wUtpgeEOH3P6Yt7fEfbsAyXCv2qb
- 3jMkscP9rADYhBkyqPQAhfy2kim7jdC5p5XX3Z2BmLrIYYOciJWY5tGgxsgXCxNlqEaJ16cUuGn
- CUlxoCKXDUDERxMa0VI+vphzjnffdVwBgWac6+bdOsCSbAehLwXQiSUkcHzKkJdPvApymsIiY6N
- 0XYrrqzzG+c0XyGKudemEZTtlTGNDP+nt1gjFh6JOF0d9eQ=
-X-Google-Smtp-Source: AGHT+IHdd4BNQ5318PitYz2BS02gdYee2AnPhRL7+hqmvbCDpMZ3u+r3EDFipGz/IwN7b6+HO3hiEg==
-X-Received: by 2002:a05:6a20:c706:b0:1e1:af74:a235 with SMTP id
- adf61e73a8af0-1ee03a6b2d6mr1145133637.24.1738871838918; 
- Thu, 06 Feb 2025 11:57:18 -0800 (PST)
+ bh=lwujLuKrAT016DsMtaUp3yJjszEy26zde2eg4IVLOrI=;
+ b=gP3C6QZGP5KxcdRj00cq36DBRovyDKi6lQ4SVAtP/LZIHXce9397gXa8Y/9OrVeaQS
+ F3aGKf5OG587Mn4gXTr36PicCZoErXoUDCslfkbreSJwRrLVmdL5IQTbp772xe+6CeC8
+ 4yNTfvzCpFoRbRXicrJh/dA9jKyVYayuyWcYONFFGmY/QXyacZhTNX/PZS7e+eCuopBJ
+ Ms9VVZPcjlMuUnb/8U1Df7MyyPPkWibXZDOX2lAsXoRIeN5vw7u2tVd3UiR6oFsRv42Y
+ T02zHh0qRx1oRjS4pqtVz7TGFecax4B0uUukUNagXz18xfkkAZKuqLI6KffVrqxzZ2jp
+ 1XEw==
+X-Gm-Message-State: AOJu0YyIJLj2A9HCyGD2eohucwetAsSnS24pajEXUQJwB9rcQMGpXQii
+ IVyAPTve4jNJvfLezyM7i/+Y0RfFFPkLwZgWQH2oKCt33j0wWSGkBizBIVLLEck3X/J2DcxOHkQ
+ m
+X-Gm-Gg: ASbGnctOogtRij+JUhv37TfP5mqKA5es2aEavBDBSIGRx75VrbcSmWRCgHLqXq1uawj
+ hjOF+JY/Ro6EzgXwfFXX2oun+5dA61wTb5wVHIG4H/rgl+ttUNHruPbF2LQovzXXjkbgZBJwuWY
+ Sq2XTbbrnvg4HNwlvqRagOK9R8j8i/Mo20ynP9X4ntdtUK9lAWioFY7FwAiZe5zw+fT7NfRtNXN
+ PKQqeWfInsnQw41W/FtFosWrrHgsLoMUhSZyNUgzqy2H2b3/IZgnX7vx4JIGrHcPcPDE7dRZykp
+ dj+BgXXA0/2VkMMqby1VyYF4mZD5X7tTcZfWw7W6fYEVTgs=
+X-Google-Smtp-Source: AGHT+IG0VrWJSCQhzYqIPPVs/EJR3EDVWhSN+To7rzwLPVUhkC/Q+TRGJ93RyyWQj9+0z2AWtb9Axg==
+X-Received: by 2002:a05:6a00:420b:b0:725:e499:5b8a with SMTP id
+ d2e1a72fcca58-7305d505b69mr866939b3a.15.1738871862695; 
+ Thu, 06 Feb 2025 11:57:42 -0800 (PST)
 Received: from stoup.. (71-212-39-66.tukw.qwest.net. [71.212.39.66])
  by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-73048c16370sm1666993b3a.152.2025.02.06.11.57.18
+ d2e1a72fcca58-73048c16370sm1666993b3a.152.2025.02.06.11.57.42
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 06 Feb 2025 11:57:18 -0800 (PST)
+ Thu, 06 Feb 2025 11:57:42 -0800 (PST)
 From: Richard Henderson <richard.henderson@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: qemu-arm@nongnu.org
-Subject: [PATCH 03/61] tcg: Add dbase argument to expand_clr
-Date: Thu,  6 Feb 2025 11:56:17 -0800
-Message-ID: <20250206195715.2150758-4-richard.henderson@linaro.org>
+Subject: [PATCH 35/61] target/arm: Rename helper_gvec_*dot_[bh] to *_4[bh]
+Date: Thu,  6 Feb 2025 11:56:49 -0800
+Message-ID: <20250206195715.2150758-36-richard.henderson@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20250206195715.2150758-1-richard.henderson@linaro.org>
 References: <20250206195715.2150758-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::633;
- envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x633.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::62b;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x62b.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -99,168 +99,246 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+Emphasize that these are 4-way dot products.
+
 Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 ---
- tcg/tcg-op-gvec.c | 36 ++++++++++++++++++------------------
- 1 file changed, 18 insertions(+), 18 deletions(-)
+ target/arm/helper.h             | 22 +++++++++++-----------
+ target/arm/tcg/translate-a64.c  | 14 +++++++-------
+ target/arm/tcg/translate-neon.c | 14 +++++++-------
+ target/arm/tcg/translate-sve.c  | 18 +++++++++---------
+ target/arm/tcg/vec_helper.c     | 22 +++++++++++-----------
+ 5 files changed, 45 insertions(+), 45 deletions(-)
 
-diff --git a/tcg/tcg-op-gvec.c b/tcg/tcg-op-gvec.c
-index 451091753d..c26cfb24cc 100644
---- a/tcg/tcg-op-gvec.c
-+++ b/tcg/tcg-op-gvec.c
-@@ -380,7 +380,7 @@ static inline bool check_size_impl(uint32_t oprsz, uint32_t lnsz)
-     return q <= MAX_UNROLL;
+diff --git a/target/arm/helper.h b/target/arm/helper.h
+index e64ddd68b2..5772ea98bd 100644
+--- a/target/arm/helper.h
++++ b/target/arm/helper.h
+@@ -606,23 +606,23 @@ DEF_HELPER_FLAGS_5(sve2_sqrdmlah_d, TCG_CALL_NO_RWG,
+ DEF_HELPER_FLAGS_5(sve2_sqrdmlsh_d, TCG_CALL_NO_RWG,
+                    void, ptr, ptr, ptr, ptr, i32)
+ 
+-DEF_HELPER_FLAGS_5(gvec_sdot_b, TCG_CALL_NO_RWG, void, ptr, ptr, ptr, ptr, i32)
+-DEF_HELPER_FLAGS_5(gvec_udot_b, TCG_CALL_NO_RWG, void, ptr, ptr, ptr, ptr, i32)
+-DEF_HELPER_FLAGS_5(gvec_sdot_h, TCG_CALL_NO_RWG, void, ptr, ptr, ptr, ptr, i32)
+-DEF_HELPER_FLAGS_5(gvec_udot_h, TCG_CALL_NO_RWG, void, ptr, ptr, ptr, ptr, i32)
+-DEF_HELPER_FLAGS_5(gvec_usdot_b, TCG_CALL_NO_RWG, void, ptr, ptr, ptr, ptr, i32)
++DEF_HELPER_FLAGS_5(gvec_sdot_4b, TCG_CALL_NO_RWG, void, ptr, ptr, ptr, ptr, i32)
++DEF_HELPER_FLAGS_5(gvec_udot_4b, TCG_CALL_NO_RWG, void, ptr, ptr, ptr, ptr, i32)
++DEF_HELPER_FLAGS_5(gvec_sdot_4h, TCG_CALL_NO_RWG, void, ptr, ptr, ptr, ptr, i32)
++DEF_HELPER_FLAGS_5(gvec_udot_4h, TCG_CALL_NO_RWG, void, ptr, ptr, ptr, ptr, i32)
++DEF_HELPER_FLAGS_5(gvec_usdot_4b, TCG_CALL_NO_RWG, void, ptr, ptr, ptr, ptr, i32)
+ 
+-DEF_HELPER_FLAGS_5(gvec_sdot_idx_b, TCG_CALL_NO_RWG,
++DEF_HELPER_FLAGS_5(gvec_sdot_idx_4b, TCG_CALL_NO_RWG,
+                    void, ptr, ptr, ptr, ptr, i32)
+-DEF_HELPER_FLAGS_5(gvec_udot_idx_b, TCG_CALL_NO_RWG,
++DEF_HELPER_FLAGS_5(gvec_udot_idx_4b, TCG_CALL_NO_RWG,
+                    void, ptr, ptr, ptr, ptr, i32)
+-DEF_HELPER_FLAGS_5(gvec_sdot_idx_h, TCG_CALL_NO_RWG,
++DEF_HELPER_FLAGS_5(gvec_sdot_idx_4h, TCG_CALL_NO_RWG,
+                    void, ptr, ptr, ptr, ptr, i32)
+-DEF_HELPER_FLAGS_5(gvec_udot_idx_h, TCG_CALL_NO_RWG,
++DEF_HELPER_FLAGS_5(gvec_udot_idx_4h, TCG_CALL_NO_RWG,
+                    void, ptr, ptr, ptr, ptr, i32)
+-DEF_HELPER_FLAGS_5(gvec_sudot_idx_b, TCG_CALL_NO_RWG,
++DEF_HELPER_FLAGS_5(gvec_sudot_idx_4b, TCG_CALL_NO_RWG,
+                    void, ptr, ptr, ptr, ptr, i32)
+-DEF_HELPER_FLAGS_5(gvec_usdot_idx_b, TCG_CALL_NO_RWG,
++DEF_HELPER_FLAGS_5(gvec_usdot_idx_4b, TCG_CALL_NO_RWG,
+                    void, ptr, ptr, ptr, ptr, i32)
+ 
+ DEF_HELPER_FLAGS_5(gvec_fcaddh, TCG_CALL_NO_RWG,
+diff --git a/target/arm/tcg/translate-a64.c b/target/arm/tcg/translate-a64.c
+index bc96cee273..46c378fd08 100644
+--- a/target/arm/tcg/translate-a64.c
++++ b/target/arm/tcg/translate-a64.c
+@@ -6118,9 +6118,9 @@ static bool do_dot_vector_env(DisasContext *s, arg_qrrr_e *a,
+     return true;
  }
  
--static void expand_clr(uint32_t dofs, uint32_t maxsz);
-+static void expand_clr(TCGv_ptr dbase, uint32_t dofs, uint32_t maxsz);
- 
- /* Duplicate C as per VECE.  */
- uint64_t (dup_const)(unsigned vece, uint64_t c)
-@@ -526,7 +526,7 @@ static void do_dup_store(TCGType type, TCGv_ptr dbase, uint32_t dofs,
-     }
- 
-     if (oprsz < maxsz) {
--        expand_clr(dofs + oprsz, maxsz - oprsz);
-+        expand_clr(dbase, dofs + oprsz, maxsz - oprsz);
-     }
+-TRANS_FEAT(SDOT_v, aa64_dp, do_dot_vector, a, gen_helper_gvec_sdot_b)
+-TRANS_FEAT(UDOT_v, aa64_dp, do_dot_vector, a, gen_helper_gvec_udot_b)
+-TRANS_FEAT(USDOT_v, aa64_i8mm, do_dot_vector, a, gen_helper_gvec_usdot_b)
++TRANS_FEAT(SDOT_v, aa64_dp, do_dot_vector, a, gen_helper_gvec_sdot_4b)
++TRANS_FEAT(UDOT_v, aa64_dp, do_dot_vector, a, gen_helper_gvec_udot_4b)
++TRANS_FEAT(USDOT_v, aa64_i8mm, do_dot_vector, a, gen_helper_gvec_usdot_4b)
+ TRANS_FEAT(BFDOT_v, aa64_bf16, do_dot_vector_env, a, gen_helper_gvec_bfdot)
+ TRANS_FEAT(BFMMLA, aa64_bf16, do_dot_vector_env, a, gen_helper_gvec_bfmmla)
+ TRANS_FEAT(SMMLA, aa64_i8mm, do_dot_vector, a, gen_helper_gvec_smmla_b)
+@@ -6880,12 +6880,12 @@ static bool do_dot_vector_idx_env(DisasContext *s, arg_qrrx_e *a,
+     return true;
  }
  
-@@ -703,14 +703,14 @@ static void do_dup(unsigned vece, TCGv_ptr dbase, uint32_t dofs,
+-TRANS_FEAT(SDOT_vi, aa64_dp, do_dot_vector_idx, a, gen_helper_gvec_sdot_idx_b)
+-TRANS_FEAT(UDOT_vi, aa64_dp, do_dot_vector_idx, a, gen_helper_gvec_udot_idx_b)
++TRANS_FEAT(SDOT_vi, aa64_dp, do_dot_vector_idx, a, gen_helper_gvec_sdot_idx_4b)
++TRANS_FEAT(UDOT_vi, aa64_dp, do_dot_vector_idx, a, gen_helper_gvec_udot_idx_4b)
+ TRANS_FEAT(SUDOT_vi, aa64_i8mm, do_dot_vector_idx, a,
+-           gen_helper_gvec_sudot_idx_b)
++           gen_helper_gvec_sudot_idx_4b)
+ TRANS_FEAT(USDOT_vi, aa64_i8mm, do_dot_vector_idx, a,
+-           gen_helper_gvec_usdot_idx_b)
++           gen_helper_gvec_usdot_idx_4b)
+ TRANS_FEAT(BFDOT_vi, aa64_bf16, do_dot_vector_idx_env, a,
+            gen_helper_gvec_bfdot_idx)
  
-  done:
-     if (oprsz < maxsz) {
--        expand_clr(dofs + oprsz, maxsz - oprsz);
-+        expand_clr(dbase, dofs + oprsz, maxsz - oprsz);
+diff --git a/target/arm/tcg/translate-neon.c b/target/arm/tcg/translate-neon.c
+index c4fecb8fd6..ea04336797 100644
+--- a/target/arm/tcg/translate-neon.c
++++ b/target/arm/tcg/translate-neon.c
+@@ -271,7 +271,7 @@ static bool trans_VSDOT(DisasContext *s, arg_VSDOT *a)
+         return false;
      }
+     return do_neon_ddda(s, a->q * 7, a->vd, a->vn, a->vm, 0,
+-                        gen_helper_gvec_sdot_b);
++                        gen_helper_gvec_sdot_4b);
  }
  
- /* Likewise, but with zero.  */
--static void expand_clr(uint32_t dofs, uint32_t maxsz)
-+static void expand_clr(TCGv_ptr dbase, uint32_t dofs, uint32_t maxsz)
- {
--    do_dup(MO_8, tcg_env, dofs, maxsz, maxsz, NULL, NULL, 0);
-+    do_dup(MO_8, dbase, dofs, maxsz, maxsz, NULL, NULL, 0);
+ static bool trans_VUDOT(DisasContext *s, arg_VUDOT *a)
+@@ -280,7 +280,7 @@ static bool trans_VUDOT(DisasContext *s, arg_VUDOT *a)
+         return false;
+     }
+     return do_neon_ddda(s, a->q * 7, a->vd, a->vn, a->vm, 0,
+-                        gen_helper_gvec_udot_b);
++                        gen_helper_gvec_udot_4b);
  }
  
- /* Expand OPSZ bytes worth of two-operand operations using i32 elements.  */
-@@ -1255,7 +1255,7 @@ void tcg_gen_gvec_2(uint32_t dofs, uint32_t aofs,
-     tcg_swap_vecop_list(hold_list);
- 
-     if (oprsz < maxsz) {
--        expand_clr(dofs + oprsz, maxsz - oprsz);
-+        expand_clr(tcg_env, dofs + oprsz, maxsz - oprsz);
+ static bool trans_VUSDOT(DisasContext *s, arg_VUSDOT *a)
+@@ -289,7 +289,7 @@ static bool trans_VUSDOT(DisasContext *s, arg_VUSDOT *a)
+         return false;
      }
+     return do_neon_ddda(s, a->q * 7, a->vd, a->vn, a->vm, 0,
+-                        gen_helper_gvec_usdot_b);
++                        gen_helper_gvec_usdot_4b);
  }
  
-@@ -1324,7 +1324,7 @@ void tcg_gen_gvec_2i(uint32_t dofs, uint32_t aofs, uint32_t oprsz,
-     tcg_swap_vecop_list(hold_list);
- 
-     if (oprsz < maxsz) {
--        expand_clr(dofs + oprsz, maxsz - oprsz);
-+        expand_clr(tcg_env, dofs + oprsz, maxsz - oprsz);
+ static bool trans_VDOT_b16(DisasContext *s, arg_VDOT_b16 *a)
+@@ -356,7 +356,7 @@ static bool trans_VSDOT_scalar(DisasContext *s, arg_VSDOT_scalar *a)
+         return false;
      }
+     return do_neon_ddda(s, a->q * 6, a->vd, a->vn, a->vm, a->index,
+-                        gen_helper_gvec_sdot_idx_b);
++                        gen_helper_gvec_sdot_idx_4b);
  }
  
-@@ -1401,7 +1401,7 @@ void tcg_gen_gvec_2s(uint32_t dofs, uint32_t aofs, uint32_t oprsz,
+ static bool trans_VUDOT_scalar(DisasContext *s, arg_VUDOT_scalar *a)
+@@ -365,7 +365,7 @@ static bool trans_VUDOT_scalar(DisasContext *s, arg_VUDOT_scalar *a)
+         return false;
      }
- 
-     if (oprsz < maxsz) {
--        expand_clr(dofs + oprsz, maxsz - oprsz);
-+        expand_clr(tcg_env, dofs + oprsz, maxsz - oprsz);
-     }
+     return do_neon_ddda(s, a->q * 6, a->vd, a->vn, a->vm, a->index,
+-                        gen_helper_gvec_udot_idx_b);
++                        gen_helper_gvec_udot_idx_4b);
  }
  
-@@ -1467,7 +1467,7 @@ void tcg_gen_gvec_3(uint32_t dofs, uint32_t aofs, uint32_t bofs,
-     tcg_swap_vecop_list(hold_list);
- 
-     if (oprsz < maxsz) {
--        expand_clr(dofs + oprsz, maxsz - oprsz);
-+        expand_clr(tcg_env, dofs + oprsz, maxsz - oprsz);
+ static bool trans_VUSDOT_scalar(DisasContext *s, arg_VUSDOT_scalar *a)
+@@ -374,7 +374,7 @@ static bool trans_VUSDOT_scalar(DisasContext *s, arg_VUSDOT_scalar *a)
+         return false;
      }
+     return do_neon_ddda(s, a->q * 6, a->vd, a->vn, a->vm, a->index,
+-                        gen_helper_gvec_usdot_idx_b);
++                        gen_helper_gvec_usdot_idx_4b);
  }
  
-@@ -1536,7 +1536,7 @@ void tcg_gen_gvec_3i(uint32_t dofs, uint32_t aofs, uint32_t bofs,
-     tcg_swap_vecop_list(hold_list);
- 
-     if (oprsz < maxsz) {
--        expand_clr(dofs + oprsz, maxsz - oprsz);
-+        expand_clr(tcg_env, dofs + oprsz, maxsz - oprsz);
+ static bool trans_VSUDOT_scalar(DisasContext *s, arg_VSUDOT_scalar *a)
+@@ -383,7 +383,7 @@ static bool trans_VSUDOT_scalar(DisasContext *s, arg_VSUDOT_scalar *a)
+         return false;
      }
+     return do_neon_ddda(s, a->q * 6, a->vd, a->vn, a->vm, a->index,
+-                        gen_helper_gvec_sudot_idx_b);
++                        gen_helper_gvec_sudot_idx_4b);
  }
  
-@@ -1605,7 +1605,7 @@ void tcg_gen_gvec_4(uint32_t dofs, uint32_t aofs, uint32_t bofs, uint32_t cofs,
-     tcg_swap_vecop_list(hold_list);
+ static bool trans_VDOT_b16_scal(DisasContext *s, arg_VDOT_b16_scal *a)
+diff --git a/target/arm/tcg/translate-sve.c b/target/arm/tcg/translate-sve.c
+index e56ef6ad68..3c8c018af3 100644
+--- a/target/arm/tcg/translate-sve.c
++++ b/target/arm/tcg/translate-sve.c
+@@ -3385,8 +3385,8 @@ DO_ZZI(UMIN, umin)
+ #undef DO_ZZI
  
-     if (oprsz < maxsz) {
--        expand_clr(dofs + oprsz, maxsz - oprsz);
-+        expand_clr(tcg_env, dofs + oprsz, maxsz - oprsz);
-     }
+ static gen_helper_gvec_4 * const dot_fns[2][2] = {
+-    { gen_helper_gvec_sdot_b, gen_helper_gvec_sdot_h },
+-    { gen_helper_gvec_udot_b, gen_helper_gvec_udot_h }
++    { gen_helper_gvec_sdot_4b, gen_helper_gvec_sdot_4h },
++    { gen_helper_gvec_udot_4b, gen_helper_gvec_udot_4h }
+ };
+ TRANS_FEAT(DOT_zzzz, aa64_sve, gen_gvec_ool_zzzz,
+            dot_fns[a->u][a->sz], a->rd, a->rn, a->rm, a->ra, 0)
+@@ -3396,18 +3396,18 @@ TRANS_FEAT(DOT_zzzz, aa64_sve, gen_gvec_ool_zzzz,
+  */
+ 
+ TRANS_FEAT(SDOT_zzxw_s, aa64_sve, gen_gvec_ool_arg_zzxz,
+-           gen_helper_gvec_sdot_idx_b, a)
++           gen_helper_gvec_sdot_idx_4b, a)
+ TRANS_FEAT(SDOT_zzxw_d, aa64_sve, gen_gvec_ool_arg_zzxz,
+-           gen_helper_gvec_sdot_idx_h, a)
++           gen_helper_gvec_sdot_idx_4h, a)
+ TRANS_FEAT(UDOT_zzxw_s, aa64_sve, gen_gvec_ool_arg_zzxz,
+-           gen_helper_gvec_udot_idx_b, a)
++           gen_helper_gvec_udot_idx_4b, a)
+ TRANS_FEAT(UDOT_zzxw_d, aa64_sve, gen_gvec_ool_arg_zzxz,
+-           gen_helper_gvec_udot_idx_h, a)
++           gen_helper_gvec_udot_idx_4h, a)
+ 
+ TRANS_FEAT(SUDOT_zzxw_s, aa64_sve_i8mm, gen_gvec_ool_arg_zzxz,
+-           gen_helper_gvec_sudot_idx_b, a)
++           gen_helper_gvec_sudot_idx_4b, a)
+ TRANS_FEAT(USDOT_zzxw_s, aa64_sve_i8mm, gen_gvec_ool_arg_zzxz,
+-           gen_helper_gvec_usdot_idx_b, a)
++           gen_helper_gvec_usdot_idx_4b, a)
+ 
+ #define DO_SVE2_RRX(NAME, FUNC) \
+     TRANS_FEAT(NAME, aa64_sve, gen_gvec_ool_zzz, FUNC,          \
+@@ -7106,7 +7106,7 @@ TRANS_FEAT(SQRDCMLAH_zzzz, aa64_sve2, gen_gvec_ool_zzzz,
+            sqrdcmlah_fns[a->esz], a->rd, a->rn, a->rm, a->ra, a->rot)
+ 
+ TRANS_FEAT(USDOT_zzzz, aa64_sve_i8mm, gen_gvec_ool_arg_zzzz,
+-           a->esz == 2 ? gen_helper_gvec_usdot_b : NULL, a, 0)
++           a->esz == 2 ? gen_helper_gvec_usdot_4b : NULL, a, 0)
+ 
+ TRANS_FEAT_NONSTREAMING(AESMC, aa64_sve2_aes, gen_gvec_ool_zz,
+                         gen_helper_crypto_aesmc, a->rd, a->rd, 0)
+diff --git a/target/arm/tcg/vec_helper.c b/target/arm/tcg/vec_helper.c
+index cfd219ed13..8beace8147 100644
+--- a/target/arm/tcg/vec_helper.c
++++ b/target/arm/tcg/vec_helper.c
+@@ -825,11 +825,11 @@ void HELPER(NAME)(void *vd, void *vn, void *vm, void *va, uint32_t desc)  \
+     clear_tail(d, opr_sz, simd_maxsz(desc));                              \
  }
  
-@@ -1674,7 +1674,7 @@ void tcg_gen_gvec_4i(uint32_t dofs, uint32_t aofs, uint32_t bofs, uint32_t cofs,
-     tcg_swap_vecop_list(hold_list);
+-DO_DOT(gvec_sdot_b, int32_t, int8_t, int8_t)
+-DO_DOT(gvec_udot_b, uint32_t, uint8_t, uint8_t)
+-DO_DOT(gvec_usdot_b, uint32_t, uint8_t, int8_t)
+-DO_DOT(gvec_sdot_h, int64_t, int16_t, int16_t)
+-DO_DOT(gvec_udot_h, uint64_t, uint16_t, uint16_t)
++DO_DOT(gvec_sdot_4b, int32_t, int8_t, int8_t)
++DO_DOT(gvec_udot_4b, uint32_t, uint8_t, uint8_t)
++DO_DOT(gvec_usdot_4b, uint32_t, uint8_t, int8_t)
++DO_DOT(gvec_sdot_4h, int64_t, int16_t, int16_t)
++DO_DOT(gvec_udot_4h, uint64_t, uint16_t, uint16_t)
  
-     if (oprsz < maxsz) {
--        expand_clr(dofs + oprsz, maxsz - oprsz);
-+        expand_clr(tcg_env, dofs + oprsz, maxsz - oprsz);
-     }
+ #define DO_DOT_IDX(NAME, TYPED, TYPEN, TYPEM, HD) \
+ void HELPER(NAME)(void *vd, void *vn, void *vm, void *va, uint32_t desc)  \
+@@ -865,12 +865,12 @@ void HELPER(NAME)(void *vd, void *vn, void *vm, void *va, uint32_t desc)  \
+     clear_tail(d, opr_sz, simd_maxsz(desc));                              \
  }
  
-@@ -1701,7 +1701,7 @@ void tcg_gen_gvec_mov(unsigned vece, uint32_t dofs, uint32_t aofs,
-     } else {
-         check_size_align(oprsz, maxsz, dofs);
-         if (oprsz < maxsz) {
--            expand_clr(dofs + oprsz, maxsz - oprsz);
-+            expand_clr(tcg_env, dofs + oprsz, maxsz - oprsz);
-         }
-     }
- }
-@@ -1779,7 +1779,7 @@ void tcg_gen_gvec_dup_mem(unsigned vece, uint32_t dofs, uint32_t aofs,
-             tcg_temp_free_i64(in1);
-         }
-         if (oprsz < maxsz) {
--            expand_clr(dofs + oprsz, maxsz - oprsz);
-+            expand_clr(tcg_env, dofs + oprsz, maxsz - oprsz);
-         }
-     } else if (vece == 5) {
-         /* 256-bit duplicate.  */
-@@ -1822,7 +1822,7 @@ void tcg_gen_gvec_dup_mem(unsigned vece, uint32_t dofs, uint32_t aofs,
-             }
-         }
-         if (oprsz < maxsz) {
--            expand_clr(dofs + oprsz, maxsz - oprsz);
-+            expand_clr(tcg_env, dofs + oprsz, maxsz - oprsz);
-         }
-     } else {
-         g_assert_not_reached();
-@@ -3255,7 +3255,7 @@ do_gvec_shifts(unsigned vece, uint32_t dofs, uint32_t aofs, TCGv_i32 shift,
+-DO_DOT_IDX(gvec_sdot_idx_b, int32_t, int8_t, int8_t, H4)
+-DO_DOT_IDX(gvec_udot_idx_b, uint32_t, uint8_t, uint8_t, H4)
+-DO_DOT_IDX(gvec_sudot_idx_b, int32_t, int8_t, uint8_t, H4)
+-DO_DOT_IDX(gvec_usdot_idx_b, int32_t, uint8_t, int8_t, H4)
+-DO_DOT_IDX(gvec_sdot_idx_h, int64_t, int16_t, int16_t, H8)
+-DO_DOT_IDX(gvec_udot_idx_h, uint64_t, uint16_t, uint16_t, H8)
++DO_DOT_IDX(gvec_sdot_idx_4b, int32_t, int8_t, int8_t, H4)
++DO_DOT_IDX(gvec_udot_idx_4b, uint32_t, uint8_t, uint8_t, H4)
++DO_DOT_IDX(gvec_sudot_idx_4b, int32_t, int8_t, uint8_t, H4)
++DO_DOT_IDX(gvec_usdot_idx_4b, int32_t, uint8_t, int8_t, H4)
++DO_DOT_IDX(gvec_sdot_idx_4h, int64_t, int16_t, int16_t, H8)
++DO_DOT_IDX(gvec_udot_idx_4h, uint64_t, uint16_t, uint16_t, H8)
  
-  clear_tail:
-     if (oprsz < maxsz) {
--        expand_clr(dofs + oprsz, maxsz - oprsz);
-+        expand_clr(tcg_env, dofs + oprsz, maxsz - oprsz);
-     }
- }
- 
-@@ -3834,7 +3834,7 @@ void tcg_gen_gvec_cmp(TCGCond cond, unsigned vece, uint32_t dofs,
-     tcg_swap_vecop_list(hold_list);
- 
-     if (oprsz < maxsz) {
--        expand_clr(dofs + oprsz, maxsz - oprsz);
-+        expand_clr(tcg_env, dofs + oprsz, maxsz - oprsz);
-     }
- }
- 
-@@ -3975,7 +3975,7 @@ void tcg_gen_gvec_cmps(TCGCond cond, unsigned vece, uint32_t dofs,
-     }
- 
-     if (oprsz < maxsz) {
--        expand_clr(dofs + oprsz, maxsz - oprsz);
-+        expand_clr(tcg_env, dofs + oprsz, maxsz - oprsz);
-     }
- }
- 
+ void HELPER(gvec_fcaddh)(void *vd, void *vn, void *vm,
+                          float_status *fpst, uint32_t desc)
 -- 
 2.43.0
 
