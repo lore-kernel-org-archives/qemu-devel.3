@@ -4,66 +4,66 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E1C52C02198
-	for <qemu-devel@archiver.kernel.org>; Thu,  6 Feb 2025 15:13:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4981DC02194
+	for <qemu-devel@archiver.kernel.org>; Thu,  6 Feb 2025 15:13:41 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tg3YG-0000Wn-Id; Thu, 06 Feb 2025 10:12:24 -0500
+	id 1tg3YH-0000Xr-J6; Thu, 06 Feb 2025 10:12:25 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1tg3YE-0000Vk-64
+ id 1tg3YF-0000W7-Dm
  for qemu-devel@nongnu.org; Thu, 06 Feb 2025 10:12:23 -0500
 Received: from mail-wm1-x32a.google.com ([2a00:1450:4864:20::32a])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1tg3YB-00013e-KL
- for qemu-devel@nongnu.org; Thu, 06 Feb 2025 10:12:21 -0500
+ id 1tg3YD-000141-Uf
+ for qemu-devel@nongnu.org; Thu, 06 Feb 2025 10:12:23 -0500
 Received: by mail-wm1-x32a.google.com with SMTP id
- 5b1f17b1804b1-436a03197b2so7093045e9.2
- for <qemu-devel@nongnu.org>; Thu, 06 Feb 2025 07:12:19 -0800 (PST)
+ 5b1f17b1804b1-4364a37a1d7so10210475e9.3
+ for <qemu-devel@nongnu.org>; Thu, 06 Feb 2025 07:12:20 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1738854738; x=1739459538; darn=nongnu.org;
+ d=linaro.org; s=google; t=1738854739; x=1739459539; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=OBNYNjCfYi4QoRh0F+kJieima3x5PkzU8IjA7dU/mlo=;
- b=GytINZ5AHEP0t42WDUKymQ538wjb8A3XJZ2YYKgwXJ+ne5Mf9/QGr5zS/Gj5o4ORTm
- dRDeyGxlOIy72q7hKg+Jj83+pvrIO+oKocx6qlVjoxu7YViu27KQQJcfDi+bM6Zh4YR+
- vsLrWb1SoiEsSTyKJ9yvFP4YJEZhvPGVDu1RDO0niNQe74w6TRulWYY1rWgqO5PlNDVK
- mbQg3yMq2YiBAWr6bT5F3waykfW4bbxmZCG6tIglJG8q1zozjCgigD7iq7xf3X0F2zWR
- lGzi+Dm6RNiGjFYhYqFNxiIn1WMBY9/4LMWUZsxS4t5LOKDr6bJApLSqRdnrobw88zd2
- W3YA==
+ bh=hLhEoOyFDF+F7bcPTogQbyGAms0Psz74NYqAb/clUUs=;
+ b=qgm+1LDfG3UStZruvs5BDwWEQ1DejSAfwY1E5NAnp7zPgh8HRMtSNKQeWJhCzU4TQb
+ 7PlNJcIPJkNelz1JF8t+3qgPdTLyBpXglaqAKsuwqdvYfhKv69jP8r4zU524PuKPo+ru
+ Cm7SA3S7WVRppYSC/MFH1LOoM0iRu/2hAdIlSlTayipHXNirX2zd60YLNm+YRbOE34Fd
+ JBFlE1RnXA8jrl/wnTyGKt1bANhSkk8h0HeF9UdzOAcFwV/7MuxkEKNSnp0mpITfeV4R
+ fXyAyY3i4BcccTOkqBQtO0qT5AY0f4bPzspoaEwVvIWpSYP/VhcbttUbVKROAsLweI0e
+ mmXg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1738854738; x=1739459538;
+ d=1e100.net; s=20230601; t=1738854739; x=1739459539;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=OBNYNjCfYi4QoRh0F+kJieima3x5PkzU8IjA7dU/mlo=;
- b=DKqLso4gi3JfGehQChp+E2B7Yn1Ag7vW5VvNeu1Xckl64kJ8kJFDwcokIJu2LJ59ep
- xevUY+C8+Orvl9OOfd5Yzml/JX8OYH+QFtlNkhO4U01fStv8VncHyq1HZDMqCZR4rYWS
- LA1DL8eYTovN4ebfKvlfS/vIz70rLDhj7xe9+fmeOGF83t5lCfiK1rqq47gtITmlqehz
- mXAhSeIpeHxgNb3rdh8oFtptTjySkwGFh8WIQVSLKTmBfTuHjt0ULH93j2/hmwZVQGpO
- WMCh56E1GvoIM0RtDMTRahumZ9gdTvb92wzKCbvBfu8H4wfeXzV/UIm9sVkp1SAJ3YPe
- lHrA==
-X-Gm-Message-State: AOJu0YzgN+JKIlfixu/TzOBt/hWzWRTGAOynVbVCG7ypDJv5T33Cki+b
- OxA99sKEwVqyu0IM3Z2GN6E+U8HuK5bsX/41xQ2aHtqX+ceLIcnQtxg2teY8ppN6BswBHmCXkGN
- D
-X-Gm-Gg: ASbGncvW3nS3ItIM3TMPYX0qQimR7VYwd2lNpJDg4WVHLV315wXm9Br4ZCMkwFZ+Wb8
- G8dD/DVgPzBI/ntjRVbVVR5TGVJNikaZE4QKiiClIBb8f5KDJegplm3GIzULOfDyM3a8ZqpYVvW
- 03Od2vWlq9gEzWwdbJcOFCo62PZOIEcpzYgqqHfjhcm0qVzuuACiU3Ty5lxBzoMct7Kf6b7EldZ
- iEmcm4BAV8sKXjGDLVtvo45AwJs4EKmLKwnTVAWG8hSyJ7iEvhloX95ninOFX0cLaH7ylIpszNl
- z/41Xy73I+d9S+I8O21mLQ==
-X-Google-Smtp-Source: AGHT+IHMltcPEBSo8w545oIWF6WyrP9Sdw05FDStv1AXJB4R7C7ouNNrds8H9xIC6Num/QHIUcnfTg==
-X-Received: by 2002:a05:600c:1d1e:b0:436:faeb:2a1b with SMTP id
- 5b1f17b1804b1-4390d43e579mr58801755e9.13.1738854737474; 
- Thu, 06 Feb 2025 07:12:17 -0800 (PST)
+ bh=hLhEoOyFDF+F7bcPTogQbyGAms0Psz74NYqAb/clUUs=;
+ b=svIKMYZiuAXXbQoF1Z3nwj3vzE7/k+e3Ko85FWe06i+GX81ntFkRomhRARhjX4NW3e
+ AUzN5HOjTW0rs53hufJ/+XZ7mjk/BZkyHBF2ygrF8Ao1jzapRkxoKTkReDirrkV7k6Ga
+ nizcLrz/xqlXs9U3SDrW8gy4ZIynLwOqZEZmC+QErRPlxx4aAhQfxqSTd1Jy2Ha2kgHk
+ weu4x0r7P10WlnVeIqFE+oVjrH938IZlu3OghcrrIDGMAjnNjgBvP9qmlZDIppYXWnRM
+ LOnffUp1q7yAc7WuLJRROTHaWyE3toa0/YGUKdpmtr8LxeVTTFQrwZ5TilbCUB4hTtA0
+ etuA==
+X-Gm-Message-State: AOJu0Yw2X0aFcUdGjUWlmXKjUCEyN0z9QDp9p/nP369s4HCTQhnGKQCn
+ LTzoeJWOoWDz5oGv9imLWlM+ftymUvhPzifrcldFqQNRXCd44yQTC/EPXpDjNPZNBPD2OcISEeN
+ C
+X-Gm-Gg: ASbGncuASd3RJJ3VV2d9rs1JTVYva1M/wdSBBo7YhN8B+E1btYYaJT8+H1O8f8BcmaJ
+ OkVbH8twDswA46qP/2aE8WC3B+nbIPNXJOLxMZyVUmQkwBT/Gj0Nual+FMJJqfY0R2D6YjF9LK5
+ eXWjTOg7O80bSoPY40KqWnO1hQDLzrPeed+f6aCsv4tl2p7TmSUYlgVGbPP/N47oj0M4ZPb20KO
+ VMmuXbfw637chC5ZU1fdJegStuWHLLt4bWOe5oc/rwOZxpmS4QFu538/HUeeFtIwmQY60CrEP9X
+ 1AZE0ruAORJBQOk4djD2Ag==
+X-Google-Smtp-Source: AGHT+IFNiiluCcBcvn5wfBpGsV6qswWaBJ5R2BTekarhWsuYsZfyFDcuckwhxD96VmFl/4PtH27vrQ==
+X-Received: by 2002:a05:600c:4f8b:b0:436:469f:2210 with SMTP id
+ 5b1f17b1804b1-4390d42d7efmr49857045e9.1.1738854739471; 
+ Thu, 06 Feb 2025 07:12:19 -0800 (PST)
 Received: from orth.archaic.org.uk (orth.archaic.org.uk. [2001:8b0:1d0::2])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4391d5283b2sm23591535e9.0.2025.02.06.07.12.16
+ 5b1f17b1804b1-4391d5283b2sm23591535e9.0.2025.02.06.07.12.18
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 06 Feb 2025 07:12:16 -0800 (PST)
+ Thu, 06 Feb 2025 07:12:18 -0800 (PST)
 From: Peter Maydell <peter.maydell@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Paul Burton <paulburton@kernel.org>, Aleksandar Rikalo <arikalo@gmail.com>,
@@ -72,9 +72,10 @@ Cc: Paul Burton <paulburton@kernel.org>, Aleksandar Rikalo <arikalo@gmail.com>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  Yanan Wang <wangyanan55@huawei.com>, Zhao Liu <zhao1.liu@intel.com>,
  Jia Liu <proljc@gmail.com>
-Subject: [PATCH 1/6] monitor/hmp-cmds.c: Clean up hmp_dumpdtb printf
-Date: Thu,  6 Feb 2025 15:12:09 +0000
-Message-Id: <20250206151214.2947842-2-peter.maydell@linaro.org>
+Subject: [PATCH 3/6] hw/mips/boston: Check for error return from
+ boston_fdt_filter()
+Date: Thu,  6 Feb 2025 15:12:11 +0000
+Message-Id: <20250206151214.2947842-4-peter.maydell@linaro.org>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20250206151214.2947842-1-peter.maydell@linaro.org>
 References: <20250206151214.2947842-1-peter.maydell@linaro.org>
@@ -104,28 +105,32 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-In hmp_dumpdtb(), we print a message when the command succeeds.  This
-message is missing the trailing \n, so the HMP command prompt is
-printed immediately after it.  We also weren't capitalizing 'DTB', or
-quoting the filename in the message.  Fix these nits.
+The function boston_fdt_filter() can return NULL on errors (in which
+case it will print an error message).  When we call this from the
+non-FIT-image codepath, we aren't checking the return value, so we
+will plough on with a NULL pointer, and segfault in fdt_totalsize().
+Check for errors here.
 
 Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
 ---
- monitor/hmp-cmds.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ hw/mips/boston.c | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-diff --git a/monitor/hmp-cmds.c b/monitor/hmp-cmds.c
-index 0aa22e1ae27..ff87fd89e4d 100644
---- a/monitor/hmp-cmds.c
-+++ b/monitor/hmp-cmds.c
-@@ -431,6 +431,6 @@ void hmp_dumpdtb(Monitor *mon, const QDict *qdict)
-         return;
-     }
+diff --git a/hw/mips/boston.c b/hw/mips/boston.c
+index 364c328032a..f0e9a2461a0 100644
+--- a/hw/mips/boston.c
++++ b/hw/mips/boston.c
+@@ -810,6 +810,10 @@ static void boston_mach_init(MachineState *machine)
  
--    monitor_printf(mon, "dtb dumped to %s", filename);
-+    monitor_printf(mon, "DTB dumped to '%s'\n", filename);
- }
- #endif
+             dtb_load_data = boston_fdt_filter(s, dtb_file_data,
+                                               NULL, &dtb_vaddr);
++            if (!dtb_load_data) {
++                /* boston_fdt_filter() already printed the error for us */
++                exit(1);
++            }
+ 
+             /* Calculate real fdt size after filter */
+             dt_size = fdt_totalsize(dtb_load_data);
 -- 
 2.34.1
 
