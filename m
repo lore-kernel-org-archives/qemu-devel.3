@@ -4,67 +4,68 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 924A3C02194
-	for <qemu-devel@archiver.kernel.org>; Thu,  6 Feb 2025 22:13:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 20637C02196
+	for <qemu-devel@archiver.kernel.org>; Thu,  6 Feb 2025 22:13:35 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tgA70-0005x2-PD; Thu, 06 Feb 2025 17:12:42 -0500
+	id 1tgA6n-0005hX-Lf; Thu, 06 Feb 2025 17:12:29 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from
- <30TOlZwgKChIECzs6BAzy66y3w.u648w4C-vwDw3565y5C.69y@flex--wuhaotsh.bounces.google.com>)
- id 1tgA6v-0005sV-Tm
- for qemu-devel@nongnu.org; Thu, 06 Feb 2025 17:12:37 -0500
-Received: from mail-pj1-x104a.google.com ([2607:f8b0:4864:20::104a])
+ <3vDOlZwgKCvszxkdrwvkjrrjoh.frpthpx-ghyhoqrqjqx.ruj@flex--wuhaotsh.bounces.google.com>)
+ id 1tgA6a-0005ab-8Y
+ for qemu-devel@nongnu.org; Thu, 06 Feb 2025 17:12:16 -0500
+Received: from mail-pl1-x649.google.com ([2607:f8b0:4864:20::649])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from
- <30TOlZwgKChIECzs6BAzy66y3w.u648w4C-vwDw3565y5C.69y@flex--wuhaotsh.bounces.google.com>)
- id 1tgA6t-0001WP-6P
- for qemu-devel@nongnu.org; Thu, 06 Feb 2025 17:12:37 -0500
-Received: by mail-pj1-x104a.google.com with SMTP id
- 98e67ed59e1d1-2f9dc7916adso3009503a91.1
- for <qemu-devel@nongnu.org>; Thu, 06 Feb 2025 14:12:34 -0800 (PST)
+ <3vDOlZwgKCvszxkdrwvkjrrjoh.frpthpx-ghyhoqrqjqx.ruj@flex--wuhaotsh.bounces.google.com>)
+ id 1tgA6Y-0001Pj-Cy
+ for qemu-devel@nongnu.org; Thu, 06 Feb 2025 17:12:15 -0500
+Received: by mail-pl1-x649.google.com with SMTP id
+ d9443c01a7336-21f37eaef03so17805305ad.0
+ for <qemu-devel@nongnu.org>; Thu, 06 Feb 2025 14:12:13 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=google.com; s=20230601; t=1738879954; x=1739484754; darn=nongnu.org;
+ d=google.com; s=20230601; t=1738879932; x=1739484732; darn=nongnu.org;
  h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
  :date:from:to:cc:subject:date:message-id:reply-to;
- bh=GLk2hehk9h3VoRAdtdvKy4XHsfFoRZXxKybYzd7vkCU=;
- b=TqHdlkmClKtUoBmlJnA7MgJaLgwv/g/rIW7AMaZoCxkNfKZtR3B7PuvzXnz1Ow/9f1
- QNDo7NB2MYu9AOo3ADbDNIrwfopZ/eXPc5UpkDUJKcc5Q9hrrB06f1JBo2kRj99lOUL/
- VgZiKbZT6GlKkdblUIwY4vvWsqdK7nkZDTJvGcERgay89WRgd15H3PSKLbPNj56h/iMc
- of8FCuCUZQHis1n/FRcmjXqlNt0sITPBW/Tm0H4M6c48t2NaDdL5xCZw/S4F+ZMR3q1k
- czZ8iYHs6Ggr05oF/OLoty31lNh325kuIz9Y9Gw0yx7Q/hxCb/OulfzYCpXxifQ+O87J
- 1xEQ==
+ bh=2548+wS4SpVlfIQMzodXs7r5TmvHPEN3hvBGgeEdGms=;
+ b=nJzgoWzcyplLjfw2mxcOWJB0S7B0gBl7Ezq2gSvKNYJlsFLaB8hqT/yaC+tp+rJd04
+ yTojR/VJts/q0VkFcR4ABmzG9yyUQZvsNh/BxvuQryh+0BkTm5W/CtBdOIzgprtu/sVu
+ 4P6yJCyyebywmaozeLUx31kRv9UhEesMu/5hxDxIEKdnCQR/DRZaDEMO1V79wcrQfJAq
+ KL/kgAJzbVWyaORGWaaHElImZWBuZH1H8ox5K9JaLqOH52B0icKML4h7uLkyt4fnb4CB
+ 137Zg4TRT4f1Focwlf+5nq010mfMupB5NUCeb+3Z7XfLX8KmdafexEczrNSp1PmERBwC
+ Nx5w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1738879954; x=1739484754;
+ d=1e100.net; s=20230601; t=1738879932; x=1739484732;
  h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
  :date:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=GLk2hehk9h3VoRAdtdvKy4XHsfFoRZXxKybYzd7vkCU=;
- b=Rv8Uk+nJkERDEY2QlVXQC+zMnpPxAupbxdG912OUBpH7yWQAqb5hGKaNg+6/fWWGVW
- HhfcWMr6yx0SbUf2UCdqj2EhFALf7q0mdJzgr/ZDPnFNS98Vv1a4wAggQUdSrQZOgZ6G
- iAVOz90jZp6o4SI8UX1CJC+JEgwxrt/Ti7/rktuQVdS9IQxRDmkLrjJLNNORUsk5Rd46
- 8jrhR6J53tK7WtWkqbruoHyT7EFIXfd1EhQdJ4eqEF6UmAQ2Cgm4iLqeAjXk2ZyBesgi
- hOj3tCSVmkSFxWTx1KxcO/Ugbj2z6A4HjR5qoh/ZwZloFeZLmsqN6sedFYsp0eV2xr3L
- HkBQ==
+ bh=2548+wS4SpVlfIQMzodXs7r5TmvHPEN3hvBGgeEdGms=;
+ b=uNJ8pCdzXwX9dwXHTEf62aNogRTMt2+7uPlxAiw/23+e14dePcJvTA6j4k3d4i5H0W
+ wvcVW2MRyY0W4otbhZEFLxEWf7510raRpZyDOq0jCFse5WygZyfcLoe9OAMJXa0ukR35
+ NE/fE212x2p60n2YtR7MAI15dil00M5onfjS3Z+zk7V1ObDCDY15MKVxqmH9zb45V/6+
+ C+upFAHEHCo5vpTXXE3lm25ba3Hgna23oeCM4xS9Qso6kQznOyq0yDQjd9+p10gqSbF7
+ hocs2wyyDWwwC8bfZWsobYn1rTRwShNCys9ZumD2kqbamQiXaHPGvCiG35hKI1PKzsZx
+ 5+MA==
 X-Forwarded-Encrypted: i=1;
- AJvYcCUtYR0a2QeJ2yfD0/Tnnthbmx58jM/I8uA5MktDC/lrJ+r53meDDmJLGxVuru0VTnlYn+53KewH5fHH@nongnu.org
-X-Gm-Message-State: AOJu0Yz3OY61ER9ifZI3dsf8undX91h+VyqKu10hwwVTbLijBfB98Q2f
- UFsAgpa1RBNSiUdE2AQ8p5BZL7pllZUs64i+eyNIymGf1T3dsdKlEyGoklMFZO1De0SyeQIzscF
- 01HBUz08LIg==
-X-Google-Smtp-Source: AGHT+IHsMdP6q3GTrOaH2RXRwDoJErTZO7RE0Sde+lHGJlk/fbfcUKnbYyht3cMJnjlwuCkM4RRxe2sVJ+v4fw==
-X-Received: from pjur16.prod.google.com ([2002:a17:90a:d410:b0:2f9:c3f4:dd36])
+ AJvYcCWvtNx1/NWGjgrnJVir4xS3xZ2Zj3ohW0Anh7Jpcre4YwFt8S0W7khFVwV3ZpQ90Tr04pbwM+feVXz5@nongnu.org
+X-Gm-Message-State: AOJu0YzRcQg8IpSbry37mrgSSt4kfa6pKkmOUEjW5pFXTOdjwGBC3UOk
+ htKms8oS7e7hGkTN5i879DrgBt+j5qQd7L/9AxjdW2SooXKSjZi0T+mlbUx3bz9Byb7kR7yGHZE
+ c7TInuoziTA==
+X-Google-Smtp-Source: AGHT+IG2MhjukvGlwSTbKZh8yQxGQsgfezRxZbn66p+NhuUcTxqtJ3M5g35ThHhGqPXGgKYCF7sQb2tNunCg3w==
+X-Received: from pgbcx10.prod.google.com
+ ([2002:a05:6a02:220a:b0:86c:1a7f:d25c])
  (user=wuhaotsh job=prod-delivery.src-stubby-dispatcher) by
- 2002:a17:90b:1d52:b0:2ee:8358:385 with SMTP id
- 98e67ed59e1d1-2fa23f55dc2mr1242786a91.4.1738879953735; 
- Thu, 06 Feb 2025 14:12:33 -0800 (PST)
-Date: Thu,  6 Feb 2025 14:12:02 -0800
+ 2002:a05:6a20:9f4a:b0:1e8:bd15:6819 with SMTP id
+ adf61e73a8af0-1ee03a5f141mr1877001637.22.1738879932414; 
+ Thu, 06 Feb 2025 14:12:12 -0800 (PST)
+Date: Thu,  6 Feb 2025 14:11:49 -0800
 In-Reply-To: <20250206221203.4187217-1-wuhaotsh@google.com>
 Mime-Version: 1.0
 References: <20250206221203.4187217-1-wuhaotsh@google.com>
 X-Mailer: git-send-email 2.48.1.502.g6dc24dfdaf-goog
-Message-ID: <20250206221203.4187217-17-wuhaotsh@google.com>
-Subject: [PATCH v4 16/17] hw/arm: Add NPCM845 Evaluation board
+Message-ID: <20250206221203.4187217-4-wuhaotsh@google.com>
+Subject: [PATCH v4 03/17] hw/ssi: Make flash size a property in NPCM7XX FIU
 From: Hao Wu <wuhaotsh@google.com>
 To: peter.maydell@linaro.org
 Cc: qemu-arm@nongnu.org, qemu-devel@nongnu.org, wuhaotsh@google.com, 
@@ -73,16 +74,16 @@ Cc: qemu-arm@nongnu.org, qemu-devel@nongnu.org, wuhaotsh@google.com,
  chli30@nuvoton.corp-partner.google.com, pbonzini@redhat.com, 
  jasowang@redhat.com, alistair@alistair23.me, philmd@linaro.org
 Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::104a;
- envelope-from=30TOlZwgKChIECzs6BAzy66y3w.u648w4C-vwDw3565y5C.69y@flex--wuhaotsh.bounces.google.com;
- helo=mail-pj1-x104a.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::649;
+ envelope-from=3vDOlZwgKCvszxkdrwvkjrrjoh.frpthpx-ghyhoqrqjqx.ruj@flex--wuhaotsh.bounces.google.com;
+ helo=mail-pl1-x649.google.com
 X-Spam_score_int: -95
 X-Spam_score: -9.6
 X-Spam_bar: ---------
 X-Spam_report: (-9.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_MED=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- USER_IN_DEF_DKIM_WL=-7.5 autolearn=ham autolearn_force=no
+ USER_IN_DEF_DKIM_WL=-7.5 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -98,319 +99,112 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+This allows different FIUs to have different flash sizes, useful
+in NPCM8XX which has multiple different sized FIU modules.
+
 Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
 Signed-off-by: Hao Wu <wuhaotsh@google.com>
 ---
- hw/arm/meson.build       |   2 +-
- hw/arm/npcm8xx_boards.c  | 253 +++++++++++++++++++++++++++++++++++++++
- include/hw/arm/npcm8xx.h |  21 ++++
- 3 files changed, 275 insertions(+), 1 deletion(-)
- create mode 100644 hw/arm/npcm8xx_boards.c
+ hw/arm/npcm7xx.c             |  6 ++++++
+ hw/ssi/npcm7xx_fiu.c         | 16 ++++++++++++++--
+ include/hw/ssi/npcm7xx_fiu.h |  1 +
+ 3 files changed, 21 insertions(+), 2 deletions(-)
 
-diff --git a/hw/arm/meson.build b/hw/arm/meson.build
-index d7813c089c..465c757f97 100644
---- a/hw/arm/meson.build
-+++ b/hw/arm/meson.build
-@@ -12,7 +12,7 @@ arm_ss.add(when: 'CONFIG_MUSICPAL', if_true: files('musicpal.c'))
- arm_ss.add(when: 'CONFIG_NETDUINOPLUS2', if_true: files('netduinoplus2.c'))
- arm_ss.add(when: 'CONFIG_OLIMEX_STM32_H405', if_true: files('olimex-stm32-h405.c'))
- arm_ss.add(when: 'CONFIG_NPCM7XX', if_true: files('npcm7xx.c', 'npcm7xx_boards.c'))
--arm_ss.add(when: 'CONFIG_NPCM8XX', if_true: files('npcm8xx.c'))
-+arm_ss.add(when: 'CONFIG_NPCM8XX', if_true: files('npcm8xx.c', 'npcm8xx_boards.c'))
- arm_ss.add(when: 'CONFIG_REALVIEW', if_true: files('realview.c'))
- arm_ss.add(when: 'CONFIG_SBSA_REF', if_true: files('sbsa-ref.c'))
- arm_ss.add(when: 'CONFIG_STELLARIS', if_true: files('stellaris.c'))
-diff --git a/hw/arm/npcm8xx_boards.c b/hw/arm/npcm8xx_boards.c
-new file mode 100644
-index 0000000000..19610483f9
---- /dev/null
-+++ b/hw/arm/npcm8xx_boards.c
-@@ -0,0 +1,253 @@
-+/*
-+ * Machine definitions for boards featuring an NPCM8xx SoC.
-+ *
-+ * Copyright 2021 Google LLC
-+ *
-+ * This program is free software; you can redistribute it and/or modify it
-+ * under the terms of the GNU General Public License as published by the
-+ * Free Software Foundation; either version 2 of the License, or
-+ * (at your option) any later version.
-+ *
-+ * This program is distributed in the hope that it will be useful, but WITHOUT
-+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
-+ * FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License
-+ * for more details.
-+ */
+diff --git a/hw/arm/npcm7xx.c b/hw/arm/npcm7xx.c
+index 386b2c35e9..2d6e08b72b 100644
+--- a/hw/arm/npcm7xx.c
++++ b/hw/arm/npcm7xx.c
+@@ -292,17 +292,21 @@ static const struct {
+     hwaddr regs_addr;
+     int cs_count;
+     const hwaddr *flash_addr;
++    size_t flash_size;
+ } npcm7xx_fiu[] = {
+     {
+         .name = "fiu0",
+         .regs_addr = 0xfb000000,
+         .cs_count = ARRAY_SIZE(npcm7xx_fiu0_flash_addr),
+         .flash_addr = npcm7xx_fiu0_flash_addr,
++        .flash_size = 128 * MiB,
 +
-+#include "qemu/osdep.h"
-+
-+#include "chardev/char.h"
-+#include "hw/arm/npcm8xx.h"
-+#include "hw/core/cpu.h"
-+#include "hw/loader.h"
-+#include "hw/qdev-core.h"
-+#include "hw/qdev-properties.h"
-+#include "qapi/error.h"
-+#include "qemu/error-report.h"
-+#include "qemu/datadir.h"
-+#include "qemu/units.h"
-+
-+#define NPCM845_EVB_POWER_ON_STRAPS 0x000017ff
-+
-+static const char npcm8xx_default_bootrom[] = "npcm8xx_bootrom.bin";
-+
-+static void npcm8xx_load_bootrom(MachineState *machine, NPCM8xxState *soc)
-+{
-+    const char *bios_name = machine->firmware ?: npcm8xx_default_bootrom;
-+    g_autofree char *filename = NULL;
-+    int ret;
-+
-+    filename = qemu_find_file(QEMU_FILE_TYPE_BIOS, bios_name);
-+    if (!filename) {
-+        error_report("Could not find ROM image '%s'", bios_name);
-+        if (!machine->kernel_filename) {
-+            /* We can't boot without a bootrom or a kernel image. */
-+            exit(1);
-+        }
+     }, {
+         .name = "fiu3",
+         .regs_addr = 0xc0000000,
+         .cs_count = ARRAY_SIZE(npcm7xx_fiu3_flash_addr),
+         .flash_addr = npcm7xx_fiu3_flash_addr,
++        .flash_size = 128 * MiB,
+     },
+ };
+ 
+@@ -735,6 +739,8 @@ static void npcm7xx_realize(DeviceState *dev, Error **errp)
+ 
+         object_property_set_int(OBJECT(sbd), "cs-count",
+                                 npcm7xx_fiu[i].cs_count, &error_abort);
++        object_property_set_int(OBJECT(sbd), "flash-size",
++                                npcm7xx_fiu[i].flash_size, &error_abort);
+         sysbus_realize(sbd, &error_abort);
+ 
+         sysbus_mmio_map(sbd, 0, npcm7xx_fiu[i].regs_addr);
+diff --git a/hw/ssi/npcm7xx_fiu.c b/hw/ssi/npcm7xx_fiu.c
+index 21fc489038..8df4bec3f1 100644
+--- a/hw/ssi/npcm7xx_fiu.c
++++ b/hw/ssi/npcm7xx_fiu.c
+@@ -29,7 +29,7 @@
+ #include "trace.h"
+ 
+ /* Up to 128 MiB of flash may be accessed directly as memory. */
+-#define NPCM7XX_FIU_FLASH_WINDOW_SIZE (128 * MiB)
++#define NPCM7XX_FIU_MAX_FLASH_WINDOW_SIZE (128 * MiB)
+ 
+ /* Each module has 4 KiB of register space. Only a fraction of it is used. */
+ #define NPCM7XX_FIU_CTRL_REGS_SIZE (4 * KiB)
+@@ -507,6 +507,17 @@ static void npcm7xx_fiu_realize(DeviceState *dev, Error **errp)
+         return;
+     }
+ 
++    if (s->flash_size == 0) {
++        error_setg(errp, "%s: flash size must be set", dev->canonical_path);
 +        return;
 +    }
-+    ret = load_image_mr(filename, machine->ram);
-+    if (ret < 0) {
-+        error_report("Failed to load ROM image '%s'", filename);
-+        exit(1);
-+    }
-+}
 +
-+static void npcm8xx_connect_flash(NPCM7xxFIUState *fiu, int cs_no,
-+                                  const char *flash_type, DriveInfo *dinfo)
-+{
-+    DeviceState *flash;
-+    qemu_irq flash_cs;
-+
-+    flash = qdev_new(flash_type);
-+    if (dinfo) {
-+        qdev_prop_set_drive(flash, "drive", blk_by_legacy_dinfo(dinfo));
-+    }
-+    qdev_realize_and_unref(flash, BUS(fiu->spi), &error_fatal);
-+
-+    flash_cs = qdev_get_gpio_in_named(flash, SSI_GPIO_CS, 0);
-+    qdev_connect_gpio_out_named(DEVICE(fiu), "cs", cs_no, flash_cs);
-+}
-+
-+static void npcm8xx_connect_dram(NPCM8xxState *soc, MemoryRegion *dram)
-+{
-+    memory_region_add_subregion(get_system_memory(), NPCM8XX_DRAM_BA, dram);
-+
-+    object_property_set_link(OBJECT(soc), "dram-mr", OBJECT(dram),
-+                             &error_abort);
-+}
-+
-+static NPCM8xxState *npcm8xx_create_soc(MachineState *machine,
-+                                        uint32_t hw_straps)
-+{
-+    NPCM8xxMachineClass *nmc = NPCM8XX_MACHINE_GET_CLASS(machine);
-+    Object *obj;
-+
-+    obj = object_new_with_props(nmc->soc_type, OBJECT(machine), "soc",
-+                                &error_abort, NULL);
-+    object_property_set_uint(obj, "power-on-straps", hw_straps, &error_abort);
-+
-+    return NPCM8XX(obj);
-+}
-+
-+static I2CBus *npcm8xx_i2c_get_bus(NPCM8xxState *soc, uint32_t num)
-+{
-+    g_assert(num < ARRAY_SIZE(soc->smbus));
-+    return I2C_BUS(qdev_get_child_bus(DEVICE(&soc->smbus[num]), "i2c-bus"));
-+}
-+
-+static void npcm8xx_init_pwm_splitter(NPCM8xxMachine *machine,
-+                                      NPCM8xxState *soc, const int *fan_counts)
-+{
-+    SplitIRQ *splitters = machine->fan_splitter;
-+
-+    /*
-+     * PWM 0~3 belong to module 0 output 0~3.
-+     * PWM 4~7 belong to module 1 output 0~3.
-+     */
-+    for (int i = 0; i < NPCM8XX_NR_PWM_MODULES; ++i) {
-+        for (int j = 0; j < NPCM7XX_PWM_PER_MODULE; ++j) {
-+            int splitter_no = i * NPCM7XX_PWM_PER_MODULE + j;
-+            DeviceState *splitter;
-+
-+            if (fan_counts[splitter_no] < 1) {
-+                continue;
-+            }
-+            object_initialize_child(OBJECT(machine), "fan-splitter[*]",
-+                                    &splitters[splitter_no], TYPE_SPLIT_IRQ);
-+            splitter = DEVICE(&splitters[splitter_no]);
-+            qdev_prop_set_uint16(splitter, "num-lines",
-+                                 fan_counts[splitter_no]);
-+            qdev_realize(splitter, NULL, &error_abort);
-+            qdev_connect_gpio_out_named(DEVICE(&soc->pwm[i]), "duty-gpio-out",
-+                                        j, qdev_get_gpio_in(splitter, 0));
-+        }
-+    }
-+}
-+
-+static void npcm8xx_connect_pwm_fan(NPCM8xxState *soc, SplitIRQ *splitter,
-+                                    int fan_no, int output_no)
-+{
-+    DeviceState *fan;
-+    int fan_input;
-+    qemu_irq fan_duty_gpio;
-+
-+    g_assert(fan_no >= 0 && fan_no <= NPCM7XX_MFT_MAX_FAN_INPUT);
-+    /*
-+     * Fan 0~1 belong to module 0 input 0~1.
-+     * Fan 2~3 belong to module 1 input 0~1.
-+     * ...
-+     * Fan 14~15 belong to module 7 input 0~1.
-+     * Fan 16~17 belong to module 0 input 2~3.
-+     * Fan 18~19 belong to module 1 input 2~3.
-+     */
-+    if (fan_no < 16) {
-+        fan = DEVICE(&soc->mft[fan_no / 2]);
-+        fan_input = fan_no % 2;
-+    } else {
-+        fan = DEVICE(&soc->mft[(fan_no - 16) / 2]);
-+        fan_input = fan_no % 2 + 2;
++    if (s->flash_size > NPCM7XX_FIU_MAX_FLASH_WINDOW_SIZE) {
++        error_setg(errp, "%s: flash size should not exceed 128 MiB",
++                   dev->canonical_path);
++        return;
 +    }
 +
-+    /* Connect the Fan to PWM module */
-+    fan_duty_gpio = qdev_get_gpio_in_named(fan, "duty", fan_input);
-+    qdev_connect_gpio_out(DEVICE(splitter), output_no, fan_duty_gpio);
-+}
-+
-+static void npcm845_evb_i2c_init(NPCM8xxState *soc)
-+{
-+    /* tmp100 temperature sensor on SVB, tmp105 is compatible */
-+    i2c_slave_create_simple(npcm8xx_i2c_get_bus(soc, 6), "tmp105", 0x48);
-+}
-+
-+static void npcm845_evb_fan_init(NPCM8xxMachine *machine, NPCM8xxState *soc)
-+{
-+    SplitIRQ *splitter = machine->fan_splitter;
-+    static const int fan_counts[] = {2, 2, 2, 2, 2, 2, 2, 2, 0, 0, 0, 0};
-+
-+    npcm8xx_init_pwm_splitter(machine, soc, fan_counts);
-+    npcm8xx_connect_pwm_fan(soc, &splitter[0], 0x00, 0);
-+    npcm8xx_connect_pwm_fan(soc, &splitter[0], 0x01, 1);
-+    npcm8xx_connect_pwm_fan(soc, &splitter[1], 0x02, 0);
-+    npcm8xx_connect_pwm_fan(soc, &splitter[1], 0x03, 1);
-+    npcm8xx_connect_pwm_fan(soc, &splitter[2], 0x04, 0);
-+    npcm8xx_connect_pwm_fan(soc, &splitter[2], 0x05, 1);
-+    npcm8xx_connect_pwm_fan(soc, &splitter[3], 0x06, 0);
-+    npcm8xx_connect_pwm_fan(soc, &splitter[3], 0x07, 1);
-+    npcm8xx_connect_pwm_fan(soc, &splitter[4], 0x08, 0);
-+    npcm8xx_connect_pwm_fan(soc, &splitter[4], 0x09, 1);
-+    npcm8xx_connect_pwm_fan(soc, &splitter[5], 0x0a, 0);
-+    npcm8xx_connect_pwm_fan(soc, &splitter[5], 0x0b, 1);
-+    npcm8xx_connect_pwm_fan(soc, &splitter[6], 0x0c, 0);
-+    npcm8xx_connect_pwm_fan(soc, &splitter[6], 0x0d, 1);
-+    npcm8xx_connect_pwm_fan(soc, &splitter[7], 0x0e, 0);
-+    npcm8xx_connect_pwm_fan(soc, &splitter[7], 0x0f, 1);
-+}
-+
-+static void npcm845_evb_init(MachineState *machine)
-+{
-+    NPCM8xxState *soc;
-+
-+    soc = npcm8xx_create_soc(machine, NPCM845_EVB_POWER_ON_STRAPS);
-+    npcm8xx_connect_dram(soc, machine->ram);
-+    qdev_realize(DEVICE(soc), NULL, &error_fatal);
-+
-+    npcm8xx_load_bootrom(machine, soc);
-+    npcm8xx_connect_flash(&soc->fiu[0], 0, "w25q256", drive_get(IF_MTD, 0, 0));
-+    npcm845_evb_i2c_init(soc);
-+    npcm845_evb_fan_init(NPCM8XX_MACHINE(machine), soc);
-+    npcm8xx_load_kernel(machine, soc);
-+}
-+
-+static void npcm8xx_set_soc_type(NPCM8xxMachineClass *nmc, const char *type)
-+{
-+    NPCM8xxClass *sc = NPCM8XX_CLASS(object_class_by_name(type));
-+    MachineClass *mc = MACHINE_CLASS(nmc);
-+
-+    nmc->soc_type = type;
-+    mc->default_cpus = mc->min_cpus = mc->max_cpus = sc->num_cpus;
-+}
-+
-+static void npcm8xx_machine_class_init(ObjectClass *oc, void *data)
-+{
-+    MachineClass *mc = MACHINE_CLASS(oc);
-+    static const char * const valid_cpu_types[] = {
-+        ARM_CPU_TYPE_NAME("cortex-a9"),
-+        NULL
-+    };
-+
-+    mc->no_floppy = 1;
-+    mc->no_cdrom = 1;
-+    mc->no_parallel = 1;
-+    mc->default_ram_id = "ram";
-+    mc->valid_cpu_types = valid_cpu_types;
-+}
-+
-+static void npcm845_evb_machine_class_init(ObjectClass *oc, void *data)
-+{
-+    NPCM8xxMachineClass *nmc = NPCM8XX_MACHINE_CLASS(oc);
-+    MachineClass *mc = MACHINE_CLASS(oc);
-+
-+    npcm8xx_set_soc_type(nmc, TYPE_NPCM8XX);
-+
-+    mc->desc = "Nuvoton NPCM845 Evaluation Board (Cortex-A35)";
-+    mc->init = npcm845_evb_init;
-+    mc->default_ram_size = 1 * GiB;
-+};
-+
-+static const TypeInfo npcm8xx_machine_types[] = {
-+    {
-+        .name           = TYPE_NPCM8XX_MACHINE,
-+        .parent         = TYPE_MACHINE,
-+        .instance_size  = sizeof(NPCM8xxMachine),
-+        .class_size     = sizeof(NPCM8xxMachineClass),
-+        .class_init     = npcm8xx_machine_class_init,
-+        .abstract       = true,
-+    }, {
-+        .name           = MACHINE_TYPE_NAME("npcm845-evb"),
-+        .parent         = TYPE_NPCM8XX_MACHINE,
-+        .class_init     = npcm845_evb_machine_class_init,
-+    },
-+};
-+
-+DEFINE_TYPES(npcm8xx_machine_types)
-diff --git a/include/hw/arm/npcm8xx.h b/include/hw/arm/npcm8xx.h
-index 2c8cfb1289..02cd51286a 100644
---- a/include/hw/arm/npcm8xx.h
-+++ b/include/hw/arm/npcm8xx.h
-@@ -52,6 +52,27 @@
+     s->spi = ssi_create_bus(dev, "spi");
+     s->cs_lines = g_new0(qemu_irq, s->cs_count);
+     qdev_init_gpio_out_named(DEVICE(s), s->cs_lines, "cs", s->cs_count);
+@@ -525,7 +536,7 @@ static void npcm7xx_fiu_realize(DeviceState *dev, Error **errp)
+         flash->fiu = s;
+         memory_region_init_io(&flash->direct_access, OBJECT(s),
+                               &npcm7xx_fiu_flash_ops, &s->flash[i], "flash",
+-                              NPCM7XX_FIU_FLASH_WINDOW_SIZE);
++                              s->flash_size);
+         sysbus_init_mmio(sbd, &flash->direct_access);
+     }
+ }
+@@ -543,6 +554,7 @@ static const VMStateDescription vmstate_npcm7xx_fiu = {
  
- #define NPCM8XX_NR_PWM_MODULES 3
+ static const Property npcm7xx_fiu_properties[] = {
+     DEFINE_PROP_INT32("cs-count", NPCM7xxFIUState, cs_count, 0),
++    DEFINE_PROP_SIZE("flash-size", NPCM7xxFIUState, flash_size, 0),
+ };
  
-+struct NPCM8xxMachine {
-+    MachineState        parent_obj;
-+
-+    /*
-+     * PWM fan splitter. each splitter connects to one PWM output and
-+     * multiple MFT inputs.
-+     */
-+    SplitIRQ            fan_splitter[NPCM8XX_NR_PWM_MODULES *
-+                                     NPCM7XX_PWM_PER_MODULE];
-+};
-+
-+
-+struct NPCM8xxMachineClass {
-+    MachineClass        parent_class;
-+
-+    const char          *soc_type;
-+};
-+
-+#define TYPE_NPCM8XX_MACHINE MACHINE_TYPE_NAME("npcm8xx")
-+OBJECT_DECLARE_TYPE(NPCM8xxMachine, NPCM8xxMachineClass, NPCM8XX_MACHINE)
-+
- struct NPCM8xxState {
-     DeviceState         parent_obj;
+ static void npcm7xx_fiu_class_init(ObjectClass *klass, void *data)
+diff --git a/include/hw/ssi/npcm7xx_fiu.h b/include/hw/ssi/npcm7xx_fiu.h
+index a3a1704289..1785ea16f4 100644
+--- a/include/hw/ssi/npcm7xx_fiu.h
++++ b/include/hw/ssi/npcm7xx_fiu.h
+@@ -60,6 +60,7 @@ struct NPCM7xxFIUState {
+     int32_t cs_count;
+     int32_t active_cs;
+     qemu_irq *cs_lines;
++    size_t flash_size;
+     NPCM7xxFIUFlash *flash;
  
+     SSIBus *spi;
 -- 
 2.48.1.502.g6dc24dfdaf-goog
 
