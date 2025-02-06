@@ -4,68 +4,67 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 86B1CC02194
-	for <qemu-devel@archiver.kernel.org>; Thu,  6 Feb 2025 01:32:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9B7B8C02192
+	for <qemu-devel@archiver.kernel.org>; Thu,  6 Feb 2025 01:33:17 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tfqkR-0005Kj-IW; Wed, 05 Feb 2025 20:32:07 -0500
+	id 1tfqkU-0005Mg-OT; Wed, 05 Feb 2025 20:32:10 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from
- <36BCkZwgKCt0VTG9NSRGFNNFKD.BNLPDLT-CDUDKMNMFMT.NQF@flex--wuhaotsh.bounces.google.com>)
- id 1tfqk0-0005De-JN
- for qemu-devel@nongnu.org; Wed, 05 Feb 2025 20:31:41 -0500
-Received: from mail-pl1-x64a.google.com ([2607:f8b0:4864:20::64a])
+ <38BCkZwgKCuUdbOHVaZONVVNSL.JVTXLTb-KLcLSUVUNUb.VYN@flex--wuhaotsh.bounces.google.com>)
+ id 1tfqk2-0005E6-LR
+ for qemu-devel@nongnu.org; Wed, 05 Feb 2025 20:31:44 -0500
+Received: from mail-pj1-x104a.google.com ([2607:f8b0:4864:20::104a])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from
- <36BCkZwgKCt0VTG9NSRGFNNFKD.BNLPDLT-CDUDKMNMFMT.NQF@flex--wuhaotsh.bounces.google.com>)
- id 1tfqjv-0006u8-Ri
- for qemu-devel@nongnu.org; Wed, 05 Feb 2025 20:31:38 -0500
-Received: by mail-pl1-x64a.google.com with SMTP id
- d9443c01a7336-216387ddda8so9162825ad.3
- for <qemu-devel@nongnu.org>; Wed, 05 Feb 2025 17:31:21 -0800 (PST)
+ <38BCkZwgKCuUdbOHVaZONVVNSL.JVTXLTb-KLcLSUVUNUb.VYN@flex--wuhaotsh.bounces.google.com>)
+ id 1tfqjy-0006vL-1c
+ for qemu-devel@nongnu.org; Wed, 05 Feb 2025 20:31:41 -0500
+Received: by mail-pj1-x104a.google.com with SMTP id
+ 98e67ed59e1d1-2f9e3a00fcdso808091a91.0
+ for <qemu-devel@nongnu.org>; Wed, 05 Feb 2025 17:31:29 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=google.com; s=20230601; t=1738805480; x=1739410280; darn=nongnu.org;
+ d=google.com; s=20230601; t=1738805488; x=1739410288; darn=nongnu.org;
  h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
  :date:from:to:cc:subject:date:message-id:reply-to;
- bh=z0kl2sTAfUAYHfR7aOBFC1Vgr+ao9ueSldc9tL7ZTEM=;
- b=dy7tNYl1o0YcT14NcgjM4A7emrlAbMvw2B4GTtdnWE3vMqKi95Ue+ADvB9y/nomnsT
- nf3COpcaL4gi4BEbWmw9UPYz4IyJ+i3qn01RW9RwwnarsttRKYU+UOqVxB0fW7MgXVH4
- E0Ev8xQ2VvmxIzqLeNhxZbbg4ZewfT4AiOjynMdNy1+tdh1eU9DnsvVGarCYQUdl/dMe
- gI96CHRtrwICmHR3cmJb0wKqc7I6plqcRVyAG6sRCCJe41dVL4/CCKsIErlfU/aAC4Fr
- zlHejE1VBEKTusIcBqnfcAnu5hjAeTQHQVF4rB5P8/1nkpEZcfpApFXjo+oLsa+fPBGv
- d2YQ==
+ bh=uOsECseKKbZnNa9QrdeU2jKrWSsJ0/U7FSmpvJDSpRU=;
+ b=nPGg+ntDbFN0oiYcvIjrymi9gTnIFEtyUz5clj8QJuBg0vGSvYevYUFMagJCYCzE72
+ iv8eM2nWm40v+13CKAra9sNA9ZhW4lrehfzZFthjB13kAZVAUhKHRoNPKX/8h/0cFe2m
+ uqe/kLiKUnqtqh6lccFVq+pMh6kRVvRLxqtBB2u72OUUusEU9PbiSdT11skqXlfbgCUP
+ 0k/lm6852SGV9P/7r69wnXS29qrtAsVCYeh5cESDGxY45GFA8DqtXUfuQYsR6IDBsAGy
+ O5jx0wca/rl88hSfgcncI0lQBgsTNnvO7vtF4guZwialgsiF8gDhEm791kwBhUHfigjh
+ QI1A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1738805480; x=1739410280;
+ d=1e100.net; s=20230601; t=1738805488; x=1739410288;
  h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
  :date:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=z0kl2sTAfUAYHfR7aOBFC1Vgr+ao9ueSldc9tL7ZTEM=;
- b=UhlSyHXZ+YGGOkuG+LygkoNemNeiEj0VitLK1RCVSzXaKp1Qy0pLbfuLQn1PxI88sz
- uG90WUJu4EsG5SpodsIOdxTuGra/Of0SPCneWGAwpijjRc39+/F2whERa3HUM3Cn6p82
- 2eKbkPesn1z6PTf9DvUR7NkySrDFYPgZty2o6KzeaqWcZf3vYWJyC1Y+I+VnnquasKZ/
- sq9YAzcNEFSx261kgyZ9aZdrxmW9cWK85N+RCt2EloVNNethucNJKQgJKGiXLYIDJyG1
- t7kztdKTPNj1j6fU0rx4TnFWeiQTQkBEvs1NvDeh42y8Tn9w0HaTi948OL3VLR2Nw2hH
- LWrw==
+ bh=uOsECseKKbZnNa9QrdeU2jKrWSsJ0/U7FSmpvJDSpRU=;
+ b=CtevT+N6pGqF6lNHhd7zeFzfFg6FdN6/ci7EnRXKlag7Av6rpamdPGDTALGqdWj2XO
+ fCZTkaw5LOqJLGpfXNi8fYUOSpLWK9YLegoa0TezUzT7lvzfvNCka2sbaogbjgQoT1pi
+ hEh/xgsCMck5mjLfxh0i7ot0ZOu74ZiHBnBDhWb4xrHE1wKgFb2/r4LYn9rjUuwYlc5f
+ KcuzwHidKrY//5+zNPAvMsHqe7EczB+VMGC0DGbqF6Qzh0R6x9dTTo8jKmuZbGOjUVAV
+ aSKDy9y4lgDMSMCIR7etvo5LcdhhrHbI1VI2HsT7p9mhlOVhLEy9Txm3e8GwG6JhCC3J
+ sGWw==
 X-Forwarded-Encrypted: i=1;
- AJvYcCVQPgsW/4ErsxHk363GkNfGk0x9YF8aPSPDx+DoMcEegG3Nt6vR3VB5EcqbGHBWkTGLi2tRo/wGR6MI@nongnu.org
-X-Gm-Message-State: AOJu0YxMKWqfnTL9TYh6xjHK2y3u5uC8wbkv1hHWagN7w3haGUDKefvP
- 3fEad9i54l8IRSQ9D/OxUdQWBiUwY9TlkHJBccui8X9vFqbPHDVFHTQSsBzXYV1/ap1W5eqQso6
- +mcoiwIG88Q==
-X-Google-Smtp-Source: AGHT+IEwQrYdtradIJoCK9uWJwKeH4D2RClfbxyUCZB2oC30iLVCwZD6cOhXUWJLt/jIOdwh+diwDM6vDuMb3Q==
-X-Received: from pjbqo16.prod.google.com ([2002:a17:90b:3dd0:b0:2ea:5469:76c2])
+ AJvYcCU2m4nXTgNBM7N2DNavRnMakG/Ef048xOwwUlM07w74RsUY2Z3iFBGzfV85VomTDgU5Dh2i6ueC/4DV@nongnu.org
+X-Gm-Message-State: AOJu0Yz8e65Gq7kTNindKZnvyGtXGONOd4YKJXhNlbEmwJWMN7gq165i
+ oAgtWMwxvuZG/NO1sa+C4rRnyCPAmAjBMXykGbt7VYmWPC0Dz6MIVpux4Ewkgk0Ko0n0oG8aK0+
+ w2bnoqBY5TA==
+X-Google-Smtp-Source: AGHT+IGmEoe+IJ9e7aOHvCTuBad4Jfs7RdFZDVGkD/SvyKw3Y/iyt2gRSzeb9ut4eP0RKb1syD3RTyElql6luw==
+X-Received: from pfiy15.prod.google.com ([2002:a05:6a00:190f:b0:725:e05b:5150])
  (user=wuhaotsh job=prod-delivery.src-stubby-dispatcher) by
- 2002:a17:902:cf12:b0:216:48f4:4f1a with SMTP id
- d9443c01a7336-21f17e4ca85mr88460635ad.16.1738805480580; 
- Wed, 05 Feb 2025 17:31:20 -0800 (PST)
-Date: Wed,  5 Feb 2025 17:30:54 -0800
+ 2002:a05:6a00:3c83:b0:725:90f9:daf9 with SMTP id
+ d2e1a72fcca58-730351db326mr7344235b3a.15.1738805488327; 
+ Wed, 05 Feb 2025 17:31:28 -0800 (PST)
+Date: Wed,  5 Feb 2025 17:30:59 -0800
 In-Reply-To: <20250206013105.3228344-1-wuhaotsh@google.com>
 Mime-Version: 1.0
 References: <20250206013105.3228344-1-wuhaotsh@google.com>
 X-Mailer: git-send-email 2.48.1.362.g079036d154-goog
-Message-ID: <20250206013105.3228344-7-wuhaotsh@google.com>
-Subject: [PATCH v3 06/17] hw/misc: Add nr_regs and cold_reset_values to NPCM
- GCR
+Message-ID: <20250206013105.3228344-12-wuhaotsh@google.com>
+Subject: [PATCH v3 11/17] hw/misc: Move NPCM7XX CLK to NPCM CLK
 From: Hao Wu <wuhaotsh@google.com>
 To: peter.maydell@linaro.org
 Cc: qemu-arm@nongnu.org, qemu-devel@nongnu.org, wuhaotsh@google.com, 
@@ -73,16 +72,16 @@ Cc: qemu-arm@nongnu.org, qemu-devel@nongnu.org, wuhaotsh@google.com,
  hskinnemoen@google.com, titusr@google.com, 
  chli30@nuvoton.corp-partner.google.com
 Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::64a;
- envelope-from=36BCkZwgKCt0VTG9NSRGFNNFKD.BNLPDLT-CDUDKMNMFMT.NQF@flex--wuhaotsh.bounces.google.com;
- helo=mail-pl1-x64a.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::104a;
+ envelope-from=38BCkZwgKCuUdbOHVaZONVVNSL.JVTXLTb-KLcLSUVUNUb.VYN@flex--wuhaotsh.bounces.google.com;
+ helo=mail-pj1-x104a.google.com
 X-Spam_score_int: -95
 X-Spam_score: -9.6
 X-Spam_bar: ---------
 X-Spam_report: (-9.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_MED=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- USER_IN_DEF_DKIM_WL=-7.5 autolearn=unavailable autolearn_force=no
+ USER_IN_DEF_DKIM_WL=-7.5 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -98,160 +97,420 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-These 2 values are different between NPCM7XX and NPCM8XX
-GCRs. So we add them to the class and assign different values
-to them.
+A lot of NPCM7XX and NPCM8XX CLK modules share the same code,
+this commit moves the NPCM7XX CLK to NPCM CLK for these
+properties.
 
 Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
 Signed-off-by: Hao Wu <wuhaotsh@google.com>
 ---
- hw/misc/npcm_gcr.c         | 26 +++++++++++++++++---------
- include/hw/misc/npcm_gcr.h | 13 +++++++++++--
- 2 files changed, 28 insertions(+), 11 deletions(-)
+ hw/misc/npcm_clk.c         | 106 +++++++++++++++++++++----------------
+ hw/misc/trace-events       |   6 +--
+ include/hw/arm/npcm7xx.h   |   2 +-
+ include/hw/misc/npcm_clk.h |  22 ++++----
+ 4 files changed, 76 insertions(+), 60 deletions(-)
 
-diff --git a/hw/misc/npcm_gcr.c b/hw/misc/npcm_gcr.c
-index 0959f2e5c4..7edad9e7d7 100644
---- a/hw/misc/npcm_gcr.c
-+++ b/hw/misc/npcm_gcr.c
-@@ -69,7 +69,7 @@ enum NPCM7xxGCRRegisters {
-     NPCM7XX_GCR_REGS_END,
- };
+diff --git a/hw/misc/npcm_clk.c b/hw/misc/npcm_clk.c
+index 2bcb731099..0ecf0df3bb 100644
+--- a/hw/misc/npcm_clk.c
++++ b/hw/misc/npcm_clk.c
+@@ -198,7 +198,7 @@ static NPCM7xxClockPLL find_pll_by_reg(enum NPCM7xxCLKRegisters reg)
+     }
+ }
  
--static const uint32_t cold_reset_values[NPCM7XX_GCR_NR_REGS] = {
-+static const uint32_t npcm7xx_cold_reset_values[NPCM7XX_GCR_NR_REGS] = {
-     [NPCM7XX_GCR_PDID]          = 0x04a92750,   /* Poleg A1 */
-     [NPCM7XX_GCR_MISCPE]        = 0x0000ffff,
-     [NPCM7XX_GCR_SPSWC]         = 0x00000003,
-@@ -88,8 +88,9 @@ static uint64_t npcm_gcr_read(void *opaque, hwaddr offset, unsigned size)
+-static void npcm7xx_clk_update_all_plls(NPCM7xxCLKState *clk)
++static void npcm7xx_clk_update_all_plls(NPCMCLKState *clk)
+ {
+     int i;
+ 
+@@ -207,7 +207,7 @@ static void npcm7xx_clk_update_all_plls(NPCM7xxCLKState *clk)
+     }
+ }
+ 
+-static void npcm7xx_clk_update_all_sels(NPCM7xxCLKState *clk)
++static void npcm7xx_clk_update_all_sels(NPCMCLKState *clk)
+ {
+     int i;
+ 
+@@ -216,7 +216,7 @@ static void npcm7xx_clk_update_all_sels(NPCM7xxCLKState *clk)
+     }
+ }
+ 
+-static void npcm7xx_clk_update_all_dividers(NPCM7xxCLKState *clk)
++static void npcm7xx_clk_update_all_dividers(NPCMCLKState *clk)
+ {
+     int i;
+ 
+@@ -225,7 +225,7 @@ static void npcm7xx_clk_update_all_dividers(NPCM7xxCLKState *clk)
+     }
+ }
+ 
+-static void npcm7xx_clk_update_all_clocks(NPCM7xxCLKState *clk)
++static void npcm7xx_clk_update_all_clocks(NPCMCLKState *clk)
+ {
+     clock_update_hz(clk->clkref, NPCM7XX_CLOCK_REF_HZ);
+     npcm7xx_clk_update_all_plls(clk);
+@@ -635,7 +635,7 @@ static void npcm7xx_clk_divider_init(Object *obj)
+ }
+ 
+ static void npcm7xx_init_clock_pll(NPCM7xxClockPLLState *pll,
+-        NPCM7xxCLKState *clk, const PLLInitInfo *init_info)
++        NPCMCLKState *clk, const PLLInitInfo *init_info)
+ {
+     pll->name = init_info->name;
+     pll->clk = clk;
+@@ -647,7 +647,7 @@ static void npcm7xx_init_clock_pll(NPCM7xxClockPLLState *pll,
+ }
+ 
+ static void npcm7xx_init_clock_sel(NPCM7xxClockSELState *sel,
+-        NPCM7xxCLKState *clk, const SELInitInfo *init_info)
++        NPCMCLKState *clk, const SELInitInfo *init_info)
+ {
+     int input_size = init_info->input_size;
+ 
+@@ -664,7 +664,7 @@ static void npcm7xx_init_clock_sel(NPCM7xxClockSELState *sel,
+ }
+ 
+ static void npcm7xx_init_clock_divider(NPCM7xxClockDividerState *div,
+-        NPCM7xxCLKState *clk, const DividerInitInfo *init_info)
++        NPCMCLKState *clk, const DividerInitInfo *init_info)
+ {
+     div->name = init_info->name;
+     div->clk = clk;
+@@ -683,7 +683,7 @@ static void npcm7xx_init_clock_divider(NPCM7xxClockDividerState *div,
+     }
+ }
+ 
+-static Clock *npcm7xx_get_clock(NPCM7xxCLKState *clk, ClockSrcType type,
++static Clock *npcm7xx_get_clock(NPCMCLKState *clk, ClockSrcType type,
+         int index)
+ {
+     switch (type) {
+@@ -700,7 +700,7 @@ static Clock *npcm7xx_get_clock(NPCM7xxCLKState *clk, ClockSrcType type,
+     }
+ }
+ 
+-static void npcm7xx_connect_clocks(NPCM7xxCLKState *clk)
++static void npcm7xx_connect_clocks(NPCMCLKState *clk)
+ {
+     int i, j;
+     Clock *src;
+@@ -724,10 +724,10 @@ static void npcm7xx_connect_clocks(NPCM7xxCLKState *clk)
+     }
+ }
+ 
+-static uint64_t npcm7xx_clk_read(void *opaque, hwaddr offset, unsigned size)
++static uint64_t npcm_clk_read(void *opaque, hwaddr offset, unsigned size)
  {
      uint32_t reg = offset / sizeof(uint32_t);
-     NPCMGCRState *s = opaque;
-+    NPCMGCRClass *c = NPCM_GCR_GET_CLASS(s);
+-    NPCM7xxCLKState *s = opaque;
++    NPCMCLKState *s = opaque;
+     int64_t now_ns;
+     uint32_t value = 0;
  
--    if (reg >= NPCM7XX_GCR_NR_REGS) {
-+    if (reg >= c->nr_regs) {
-         qemu_log_mask(LOG_GUEST_ERROR,
-                       "%s: offset 0x%04" HWADDR_PRIx " out of range\n",
-                       __func__, offset);
-@@ -106,11 +107,12 @@ static void npcm_gcr_write(void *opaque, hwaddr offset,
+@@ -766,19 +766,19 @@ static uint64_t npcm7xx_clk_read(void *opaque, hwaddr offset, unsigned size)
+         break;
+     };
+ 
+-    trace_npcm7xx_clk_read(offset, value);
++    trace_npcm_clk_read(offset, value);
+ 
+     return value;
+ }
+ 
+-static void npcm7xx_clk_write(void *opaque, hwaddr offset,
++static void npcm_clk_write(void *opaque, hwaddr offset,
+                               uint64_t v, unsigned size)
  {
      uint32_t reg = offset / sizeof(uint32_t);
-     NPCMGCRState *s = opaque;
-+    NPCMGCRClass *c = NPCM_GCR_GET_CLASS(s);
+-    NPCM7xxCLKState *s = opaque;
++    NPCMCLKState *s = opaque;
      uint32_t value = v;
  
--    trace_npcm_gcr_write(offset, value);
-+    trace_npcm_gcr_write(offset, v);
+-    trace_npcm7xx_clk_write(offset, value);
++    trace_npcm_clk_write(offset, value);
  
--    if (reg >= NPCM7XX_GCR_NR_REGS) {
-+    if (reg >= c->nr_regs) {
+     if (reg >= NPCM7XX_CLK_NR_REGS) {
          qemu_log_mask(LOG_GUEST_ERROR,
-                       "%s: offset 0x%04" HWADDR_PRIx " out of range\n",
-                       __func__, offset);
-@@ -156,10 +158,12 @@ static const struct MemoryRegionOps npcm_gcr_ops = {
- static void npcm7xx_gcr_enter_reset(Object *obj, ResetType type)
+@@ -842,7 +842,7 @@ static void npcm7xx_clk_write(void *opaque, hwaddr offset,
+ static void npcm7xx_clk_perform_watchdog_reset(void *opaque, int n,
+         int level)
  {
-     NPCMGCRState *s = NPCM_GCR(obj);
-+    NPCMGCRClass *c = NPCM_GCR_GET_CLASS(obj);
+-    NPCM7xxCLKState *clk = NPCM7XX_CLK(opaque);
++    NPCMCLKState *clk = NPCM_CLK(opaque);
+     uint32_t rcr;
  
--    QEMU_BUILD_BUG_ON(sizeof(s->regs) != sizeof(cold_reset_values));
--
--    memcpy(s->regs, cold_reset_values, sizeof(s->regs));
-+    g_assert(sizeof(s->regs) >= sizeof(c->cold_reset_values));
-+    g_assert(sizeof(s->regs) >= c->nr_regs * sizeof(uint32_t));
-+    memcpy(s->regs, c->cold_reset_values, c->nr_regs * sizeof(uint32_t));
-+    /* These 3 registers are at the same location in both 7xx and 8xx. */
-     s->regs[NPCM7XX_GCR_PWRON] = s->reset_pwron;
-     s->regs[NPCM7XX_GCR_MDLR] = s->reset_mdlr;
-     s->regs[NPCM7XX_GCR_INTCR3] = s->reset_intcr3;
-@@ -224,7 +228,7 @@ static const VMStateDescription vmstate_npcm_gcr = {
-     .version_id = 1,
-     .minimum_version_id = 1,
+     g_assert(n >= 0 && n <= NPCM7XX_NR_WATCHDOGS);
+@@ -856,9 +856,9 @@ static void npcm7xx_clk_perform_watchdog_reset(void *opaque, int n,
+     }
+ }
+ 
+-static const struct MemoryRegionOps npcm7xx_clk_ops = {
+-    .read       = npcm7xx_clk_read,
+-    .write      = npcm7xx_clk_write,
++static const struct MemoryRegionOps npcm_clk_ops = {
++    .read       = npcm_clk_read,
++    .write      = npcm_clk_write,
+     .endianness = DEVICE_LITTLE_ENDIAN,
+     .valid      = {
+         .min_access_size        = 4,
+@@ -867,9 +867,9 @@ static const struct MemoryRegionOps npcm7xx_clk_ops = {
+     },
+ };
+ 
+-static void npcm7xx_clk_enter_reset(Object *obj, ResetType type)
++static void npcm_clk_enter_reset(Object *obj, ResetType type)
+ {
+-    NPCM7xxCLKState *s = NPCM7XX_CLK(obj);
++    NPCMCLKState *s = NPCM_CLK(obj);
+ 
+     QEMU_BUILD_BUG_ON(sizeof(s->regs) != sizeof(cold_reset_values));
+ 
+@@ -882,7 +882,7 @@ static void npcm7xx_clk_enter_reset(Object *obj, ResetType type)
+      */
+ }
+ 
+-static void npcm7xx_clk_init_clock_hierarchy(NPCM7xxCLKState *s)
++static void npcm7xx_clk_init_clock_hierarchy(NPCMCLKState *s)
+ {
+     int i;
+ 
+@@ -918,19 +918,19 @@ static void npcm7xx_clk_init_clock_hierarchy(NPCM7xxCLKState *s)
+     clock_update_hz(s->clkref, NPCM7XX_CLOCK_REF_HZ);
+ }
+ 
+-static void npcm7xx_clk_init(Object *obj)
++static void npcm_clk_init(Object *obj)
+ {
+-    NPCM7xxCLKState *s = NPCM7XX_CLK(obj);
++    NPCMCLKState *s = NPCM_CLK(obj);
+ 
+-    memory_region_init_io(&s->iomem, obj, &npcm7xx_clk_ops, s,
+-                          TYPE_NPCM7XX_CLK, 4 * KiB);
++    memory_region_init_io(&s->iomem, obj, &npcm_clk_ops, s,
++                          TYPE_NPCM_CLK, 4 * KiB);
+     sysbus_init_mmio(SYS_BUS_DEVICE(s), &s->iomem);
+ }
+ 
+-static int npcm7xx_clk_post_load(void *opaque, int version_id)
++static int npcm_clk_post_load(void *opaque, int version_id)
+ {
+     if (version_id >= 1) {
+-        NPCM7xxCLKState *clk = opaque;
++        NPCMCLKState *clk = opaque;
+ 
+         npcm7xx_clk_update_all_clocks(clk);
+     }
+@@ -938,10 +938,10 @@ static int npcm7xx_clk_post_load(void *opaque, int version_id)
+     return 0;
+ }
+ 
+-static void npcm7xx_clk_realize(DeviceState *dev, Error **errp)
++static void npcm_clk_realize(DeviceState *dev, Error **errp)
+ {
+     int i;
+-    NPCM7xxCLKState *s = NPCM7XX_CLK(dev);
++    NPCMCLKState *s = NPCM_CLK(dev);
+ 
+     qdev_init_gpio_in_named(DEVICE(s), npcm7xx_clk_perform_watchdog_reset,
+             NPCM7XX_WATCHDOG_RESET_GPIO_IN, NPCM7XX_NR_WATCHDOGS);
+@@ -996,15 +996,15 @@ static const VMStateDescription vmstate_npcm7xx_clk_divider = {
+     },
+ };
+ 
+-static const VMStateDescription vmstate_npcm7xx_clk = {
+-    .name = "npcm7xx-clk",
+-    .version_id = 1,
+-    .minimum_version_id = 1,
+-    .post_load = npcm7xx_clk_post_load,
++static const VMStateDescription vmstate_npcm_clk = {
++    .name = "npcm-clk",
++    .version_id = 2,
++    .minimum_version_id = 2,
++    .post_load = npcm_clk_post_load,
      .fields = (const VMStateField[]) {
--        VMSTATE_UINT32_ARRAY(regs, NPCMGCRState, NPCM7XX_GCR_NR_REGS),
-+        VMSTATE_UINT32_ARRAY(regs, NPCMGCRState, NPCM_GCR_MAX_NR_REGS),
+-        VMSTATE_UINT32_ARRAY(regs, NPCM7xxCLKState, NPCM7XX_CLK_NR_REGS),
+-        VMSTATE_INT64(ref_ns, NPCM7xxCLKState),
+-        VMSTATE_CLOCK(clkref, NPCM7xxCLKState),
++        VMSTATE_UINT32_ARRAY(regs, NPCMCLKState, NPCM_CLK_MAX_NR_REGS),
++        VMSTATE_INT64(ref_ns, NPCMCLKState),
++        VMSTATE_CLOCK(clkref, NPCMCLKState),
          VMSTATE_END_OF_LIST(),
      },
  };
-@@ -238,7 +242,6 @@ static void npcm_gcr_class_init(ObjectClass *klass, void *data)
- {
-     DeviceClass *dc = DEVICE_CLASS(klass);
- 
--    QEMU_BUILD_BUG_ON(NPCM7XX_GCR_REGS_END > NPCM7XX_GCR_NR_REGS);
-     dc->realize = npcm_gcr_realize;
-     dc->vmsd = &vmstate_npcm_gcr;
- 
-@@ -247,13 +250,17 @@ static void npcm_gcr_class_init(ObjectClass *klass, void *data)
- 
- static void npcm7xx_gcr_class_init(ObjectClass *klass, void *data)
- {
-+    NPCMGCRClass *c = NPCM_GCR_CLASS(klass);
-     DeviceClass *dc = DEVICE_CLASS(klass);
-     ResettableClass *rc = RESETTABLE_CLASS(klass);
- 
-+    QEMU_BUILD_BUG_ON(NPCM7XX_GCR_REGS_END > NPCM_GCR_MAX_NR_REGS);
-     QEMU_BUILD_BUG_ON(NPCM7XX_GCR_REGS_END != NPCM7XX_GCR_NR_REGS);
-     dc->desc = "NPCM7xx System Global Control Registers";
-     rc->phases.enter = npcm7xx_gcr_enter_reset;
- 
-+    c->nr_regs = NPCM7XX_GCR_NR_REGS;
-+    c->cold_reset_values = npcm7xx_cold_reset_values;
+@@ -1033,17 +1033,23 @@ static void npcm7xx_clk_divider_class_init(ObjectClass *klass, void *data)
+     dc->vmsd = &vmstate_npcm7xx_clk_divider;
  }
  
- static const TypeInfo npcm_gcr_info[] = {
-@@ -262,6 +269,7 @@ static const TypeInfo npcm_gcr_info[] = {
-         .parent             = TYPE_SYS_BUS_DEVICE,
-         .instance_size      = sizeof(NPCMGCRState),
-         .instance_init      = npcm_gcr_init,
-+        .class_size         = sizeof(NPCMGCRClass),
-         .class_init         = npcm_gcr_class_init,
-         .abstract           = true,
-     },
-diff --git a/include/hw/misc/npcm_gcr.h b/include/hw/misc/npcm_gcr.h
-index 6d3d00d260..9af24e5cdc 100644
---- a/include/hw/misc/npcm_gcr.h
-+++ b/include/hw/misc/npcm_gcr.h
-@@ -18,6 +18,7 @@
+-static void npcm7xx_clk_class_init(ObjectClass *klass, void *data)
++static void npcm_clk_class_init(ObjectClass *klass, void *data)
+ {
+     ResettableClass *rc = RESETTABLE_CLASS(klass);
+     DeviceClass *dc = DEVICE_CLASS(klass);
  
- #include "exec/memory.h"
+-    QEMU_BUILD_BUG_ON(NPCM7XX_CLK_REGS_END > NPCM7XX_CLK_NR_REGS);
++    dc->vmsd = &vmstate_npcm_clk;
++    dc->realize = npcm_clk_realize;
++    rc->phases.enter = npcm_clk_enter_reset;
++}
++
++static void npcm7xx_clk_class_init(ObjectClass *klass, void *data)
++{
++    DeviceClass *dc = DEVICE_CLASS(klass);
+ 
++    QEMU_BUILD_BUG_ON(NPCM7XX_CLK_REGS_END > NPCM_CLK_MAX_NR_REGS);
++    QEMU_BUILD_BUG_ON(NPCM7XX_CLK_REGS_END != NPCM7XX_CLK_NR_REGS);
+     dc->desc = "NPCM7xx Clock Control Registers";
+-    dc->vmsd = &vmstate_npcm7xx_clk;
+-    dc->realize = npcm7xx_clk_realize;
+-    rc->phases.enter = npcm7xx_clk_enter_reset;
+ }
+ 
+ static const TypeInfo npcm7xx_clk_pll_info = {
+@@ -1070,11 +1076,18 @@ static const TypeInfo npcm7xx_clk_divider_info = {
+     .class_init         = npcm7xx_clk_divider_class_init,
+ };
+ 
++static const TypeInfo npcm_clk_info = {
++    .name               = TYPE_NPCM_CLK,
++    .parent             = TYPE_SYS_BUS_DEVICE,
++    .instance_size      = sizeof(NPCMCLKState),
++    .instance_init      = npcm_clk_init,
++    .class_init         = npcm_clk_class_init,
++    .abstract           = true,
++};
++
+ static const TypeInfo npcm7xx_clk_info = {
+     .name               = TYPE_NPCM7XX_CLK,
+-    .parent             = TYPE_SYS_BUS_DEVICE,
+-    .instance_size      = sizeof(NPCM7xxCLKState),
+-    .instance_init      = npcm7xx_clk_init,
++    .parent             = TYPE_NPCM_CLK,
+     .class_init         = npcm7xx_clk_class_init,
+ };
+ 
+@@ -1083,6 +1096,7 @@ static void npcm7xx_clk_register_type(void)
+     type_register_static(&npcm7xx_clk_pll_info);
+     type_register_static(&npcm7xx_clk_sel_info);
+     type_register_static(&npcm7xx_clk_divider_info);
++    type_register_static(&npcm_clk_info);
+     type_register_static(&npcm7xx_clk_info);
+ }
+ type_init(npcm7xx_clk_register_type);
+diff --git a/hw/misc/trace-events b/hw/misc/trace-events
+index f25dbd6030..4383808d7a 100644
+--- a/hw/misc/trace-events
++++ b/hw/misc/trace-events
+@@ -130,9 +130,9 @@ mos6522_set_sr_int(void) "set sr_int"
+ mos6522_write(uint64_t addr, const char *name, uint64_t val) "reg=0x%"PRIx64 " [%s] val=0x%"PRIx64
+ mos6522_read(uint64_t addr, const char *name, unsigned val) "reg=0x%"PRIx64 " [%s] val=0x%x"
+ 
+-# npcm7xx_clk.c
+-npcm7xx_clk_read(uint64_t offset, uint32_t value) " offset: 0x%04" PRIx64 " value: 0x%08" PRIx32
+-npcm7xx_clk_write(uint64_t offset, uint32_t value) "offset: 0x%04" PRIx64 " value: 0x%08" PRIx32
++# npcm_clk.c
++npcm_clk_read(uint64_t offset, uint32_t value) " offset: 0x%04" PRIx64 " value: 0x%08" PRIx32
++npcm_clk_write(uint64_t offset, uint32_t value) "offset: 0x%04" PRIx64 " value: 0x%08" PRIx32
+ 
+ # npcm_gcr.c
+ npcm_gcr_read(uint64_t offset, uint64_t value) " offset: 0x%04" PRIx64 " value: 0x%08" PRIx64
+diff --git a/include/hw/arm/npcm7xx.h b/include/hw/arm/npcm7xx.h
+index e80fd91f20..56536565b7 100644
+--- a/include/hw/arm/npcm7xx.h
++++ b/include/hw/arm/npcm7xx.h
+@@ -90,7 +90,7 @@ struct NPCM7xxState {
+     MemoryRegion        *dram;
+ 
+     NPCMGCRState        gcr;
+-    NPCM7xxCLKState     clk;
++    NPCMCLKState     clk;
+     NPCM7xxTimerCtrlState tim[3];
+     NPCM7xxADCState     adc;
+     NPCM7xxPWMState     pwm[NPCM7XX_NR_PWM_MODULES];
+diff --git a/include/hw/misc/npcm_clk.h b/include/hw/misc/npcm_clk.h
+index 0aef81e10c..db03b46a52 100644
+--- a/include/hw/misc/npcm_clk.h
++++ b/include/hw/misc/npcm_clk.h
+@@ -20,11 +20,12 @@
+ #include "hw/clock.h"
  #include "hw/sysbus.h"
-+#include "qom/object.h"
  
++#define NPCM7XX_CLK_NR_REGS             (0x70 / sizeof(uint32_t))
  /*
-  * NPCM7XX PWRON STRAP bit fields
-@@ -53,6 +54,7 @@
-  * Number of registers in our device state structure. Don't change this without
-  * incrementing the version_id in the vmstate.
+- * Number of registers in our device state structure. Don't change this without
+- * incrementing the version_id in the vmstate.
++ * Number of maximum registers in NPCM device state structure. Don't change
++ * this without incrementing the version_id in the vmstate.
   */
-+#define NPCM_GCR_MAX_NR_REGS NPCM7XX_GCR_NR_REGS
- #define NPCM7XX_GCR_NR_REGS (0x148 / sizeof(uint32_t))
+-#define NPCM7XX_CLK_NR_REGS             (0x70 / sizeof(uint32_t))
++#define NPCM_CLK_MAX_NR_REGS            NPCM7XX_CLK_NR_REGS
  
- typedef struct NPCMGCRState {
-@@ -60,15 +62,22 @@ typedef struct NPCMGCRState {
+ #define NPCM7XX_WATCHDOG_RESET_GPIO_IN "npcm7xx-clk-watchdog-reset-gpio-in"
+ 
+@@ -80,7 +81,7 @@ typedef enum NPCM7xxClockDivider {
+     NPCM7XX_CLOCK_NR_DIVIDERS,
+ } NPCM7xxClockConverter;
+ 
+-typedef struct NPCM7xxCLKState NPCM7xxCLKState;
++typedef struct NPCMCLKState NPCMCLKState;
+ 
+ /**
+  * struct NPCM7xxClockPLLState - A PLL module in CLK module.
+@@ -94,7 +95,7 @@ typedef struct NPCM7xxClockPLLState {
+     DeviceState parent;
+ 
+     const char *name;
+-    NPCM7xxCLKState *clk;
++    NPCMCLKState *clk;
+     Clock *clock_in;
+     Clock *clock_out;
+ 
+@@ -115,7 +116,7 @@ typedef struct NPCM7xxClockSELState {
+     DeviceState parent;
+ 
+     const char *name;
+-    NPCM7xxCLKState *clk;
++    NPCMCLKState *clk;
+     uint8_t input_size;
+     Clock *clock_in[NPCM7XX_CLK_SEL_MAX_INPUT];
+     Clock *clock_out;
+@@ -140,7 +141,7 @@ typedef struct NPCM7xxClockDividerState {
+     DeviceState parent;
+ 
+     const char *name;
+-    NPCM7xxCLKState *clk;
++    NPCMCLKState *clk;
+     Clock *clock_in;
+     Clock *clock_out;
+ 
+@@ -155,7 +156,7 @@ typedef struct NPCM7xxClockDividerState {
+     };
+ } NPCM7xxClockDividerState;
+ 
+-struct NPCM7xxCLKState {
++struct NPCMCLKState {
+     SysBusDevice parent;
  
      MemoryRegion iomem;
+@@ -165,7 +166,7 @@ struct NPCM7xxCLKState {
+     NPCM7xxClockSELState sels[NPCM7XX_CLOCK_NR_SELS];
+     NPCM7xxClockDividerState dividers[NPCM7XX_CLOCK_NR_DIVIDERS];
  
--    uint32_t regs[NPCM7XX_GCR_NR_REGS];
-+    uint32_t regs[NPCM_GCR_MAX_NR_REGS];
+-    uint32_t regs[NPCM7XX_CLK_NR_REGS];
++    uint32_t regs[NPCM_CLK_MAX_NR_REGS];
  
-     uint32_t reset_pwron;
-     uint32_t reset_mdlr;
-     uint32_t reset_intcr3;
- } NPCMGCRState;
+     /* Time reference for SECCNT and CNTR25M, initialized by power on reset */
+     int64_t ref_ns;
+@@ -174,7 +175,8 @@ struct NPCM7xxCLKState {
+     Clock *clkref;
+ };
  
-+typedef struct NPCMGCRClass {
-+    SysBusDeviceClass parent;
-+
-+    size_t nr_regs;
-+    const uint32_t *cold_reset_values;
-+} NPCMGCRClass;
-+
- #define TYPE_NPCM_GCR "npcm-gcr"
- #define TYPE_NPCM7XX_GCR "npcm7xx-gcr"
--OBJECT_DECLARE_SIMPLE_TYPE(NPCMGCRState, NPCM_GCR)
-+OBJECT_DECLARE_TYPE(NPCMGCRState, NPCMGCRClass, NPCM_GCR)
++#define TYPE_NPCM_CLK "npcm-clk"
++OBJECT_DECLARE_SIMPLE_TYPE(NPCMCLKState, NPCM_CLK)
+ #define TYPE_NPCM7XX_CLK "npcm7xx-clk"
+-OBJECT_DECLARE_SIMPLE_TYPE(NPCM7xxCLKState, NPCM7XX_CLK)
  
- #endif /* NPCM_GCR_H */
+ #endif /* NPCM_CLK_H */
 -- 
 2.48.1.362.g079036d154-goog
 
