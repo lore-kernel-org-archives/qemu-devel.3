@@ -4,66 +4,66 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 871C7C02194
-	for <qemu-devel@archiver.kernel.org>; Thu,  6 Feb 2025 15:13:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9D7C4C02198
+	for <qemu-devel@archiver.kernel.org>; Thu,  6 Feb 2025 15:13:09 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tg3YP-0000Zk-F3; Thu, 06 Feb 2025 10:12:33 -0500
+	id 1tg3YJ-0000YQ-4N; Thu, 06 Feb 2025 10:12:27 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1tg3YM-0000Yq-5Y
- for qemu-devel@nongnu.org; Thu, 06 Feb 2025 10:12:30 -0500
-Received: from mail-wm1-x331.google.com ([2a00:1450:4864:20::331])
+ id 1tg3YG-0000Wl-98
+ for qemu-devel@nongnu.org; Thu, 06 Feb 2025 10:12:24 -0500
+Received: from mail-wm1-x332.google.com ([2a00:1450:4864:20::332])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1tg3YK-00015t-4k
- for qemu-devel@nongnu.org; Thu, 06 Feb 2025 10:12:29 -0500
-Received: by mail-wm1-x331.google.com with SMTP id
- 5b1f17b1804b1-4361dc6322fso7082895e9.3
- for <qemu-devel@nongnu.org>; Thu, 06 Feb 2025 07:12:27 -0800 (PST)
+ id 1tg3YE-00014M-9L
+ for qemu-devel@nongnu.org; Thu, 06 Feb 2025 10:12:24 -0500
+Received: by mail-wm1-x332.google.com with SMTP id
+ 5b1f17b1804b1-4361c705434so7412275e9.3
+ for <qemu-devel@nongnu.org>; Thu, 06 Feb 2025 07:12:21 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1738854746; x=1739459546; darn=nongnu.org;
+ d=linaro.org; s=google; t=1738854741; x=1739459541; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=xHepygSTQPvUisviVKnRnZ056x3g9J+9ojwVkl7r+jE=;
- b=w39CDkRrNfp3UBBvB43S4xJ/J2OShWEnci5cs9MrpYyD482ikugbqxAKI2Sss/5nhk
- uNfhsYcaBsWcasxnsslb/e0jGFd1QTj+YvMcj7xtMDNzXV6cAtj2PfycJ+SfA0sW+i9m
- Wbs7BOHop5N4MnC1sij6FZO9d67ofluGVQwGISAMvnZb1DVa4DuyyWLLMWSEnhmy88Dt
- mzQFqCTGZ8isZvW2YutiSOUcTM6OX7Uy/yKKf3OMZMjq8I1JLm7keVrb4qlwkUioLn55
- xYCwZwc3Re4Lk/LSO48tKpagnMgmEVrGjgtWCQtZF8YGEIR2ZHrvYLEuth7x7/bW5byh
- LNKQ==
+ bh=g8TxGdxGszXK4FnFTNRsRq5az6WiULq+qEDjSEW/1ZY=;
+ b=setECVruKR1HOl+JXJpuGKXNfIiZxafK+Nrhv1U2M8pfUAsLEOJXTf2s+Ut4y8ygkD
+ cc2jxYQKW83QWs/jMHCctzJ4x2AtRlgcHBTd9B3PFQG1tUjRBPHsLvkjTPgGex48/Lp2
+ 4SvtL04HaBhLQwpcPHQA0ISbFpJr5A42vA0iYLTPvlWF9PcD4ZlI8Z347Cv4wQI4vKWk
+ 6r4Dcm6uv1jffJTrvIr916HfjQ/DKxiNFfoPehNykzZmm7hCDE280Vs6DeHfAtyDMSXa
+ xa01syM8K0MaGXNopBIPnSO7yLqG0AxGwWn84pQSOMUoL41qd2DjFPkqSvQZviPt7JC+
+ hCHg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1738854746; x=1739459546;
+ d=1e100.net; s=20230601; t=1738854741; x=1739459541;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=xHepygSTQPvUisviVKnRnZ056x3g9J+9ojwVkl7r+jE=;
- b=fHTnFjWMaS3C7igVhsSdPUhbDVTqllOais911fBWG8ruaG6wCs8pV5fL9iR1G5fO8t
- G4JbiSh6/kU9zwQc6YuYk8pzd1syMaxhBhdMxDhg9mxE3FQ9a6n9ljm+NTJl6WnXZTCS
- /8Twk9ofsnspMA4eQ+rhp6eiARqpWarqv8Q6ceU+DgD+fTbX7/WGHGscpS007v7+4R6C
- wx+oQg4jPil30+52NKDKtWTKr3CV3chhRlAWUbBMpr4N7gEA7X2U3kVAfwlQGRv3cPZ5
- HaWeeMCHMTteBOG2yXyHWEZufCynspzU3DszsuW3HwPr8RX1tQYFzvyhcLtn2x7w7ZfJ
- TQyw==
-X-Gm-Message-State: AOJu0YwfoUmHgQXu5KcugCRUdCHHQBfUXEV/4aSl/t9YmfbG40nwcsVe
- kVDTCvCqGvmodazm1XzCwRKbfmd0n3bpAaYe2qj1Jwem/d/E1ysFgDcJADtyfkd+Kd5n+V9J0os
- L
-X-Gm-Gg: ASbGncu2xKqPdmsJmSES+M4Qo5o7e005M4fCgx7p9+do4zi7px0WNmMRZrjMnSPhIZ8
- 6K3BXVMJiJHl4PWepo4iiGhfj3fopi1nU5jXtCZ6ElSW9//CcN6YI46S5DMfeW/ieXfXkwYn1MQ
- R75UgZXOTrfsioyj8GJB/a5JObQI8qfqxa+kkUgFdQuO+krK5AVQtNlHww9klcEy1o2Q/QfEPJ/
- 8Uci9yM76Va8Vazi1qUMtL/QcUzZmqcrb3QRgE30qjKonMgT5hqNHCmW/5MXQyQDEzoD64OehJZ
- p0dmULdB+thZOHNlkuD9WA==
-X-Google-Smtp-Source: AGHT+IGltjcEiJzKtyFhBuzcTM9FTBBsT6c8Iz681X4mia7nbFbis3sqG3SrhKUkUhfdM69JN0flYg==
-X-Received: by 2002:a05:600c:46d0:b0:434:e9ee:c1e with SMTP id
- 5b1f17b1804b1-4390d57762amr65606665e9.31.1738854746320; 
- Thu, 06 Feb 2025 07:12:26 -0800 (PST)
+ bh=g8TxGdxGszXK4FnFTNRsRq5az6WiULq+qEDjSEW/1ZY=;
+ b=H5PK7sGxFwO3KvTkgvuAzqp3wVwOPv5x728lNCEOHj1wOZd1vajQH+j/MJ/9USbhwQ
+ UipA8BBVoW5QeBcsAvdUdIWYJxBc5AFjouFegwKRybaWWBorLdvYZlAl+FujB600dMvA
+ P50F5S+fRAqKt00v3GvTkyTh15UM7o468ygg9fZcjJqPR4jWqnKRe5jzpF/Qjamo9niZ
+ bSmagBs88imGfbKvGlZlJNF/lzucWDQuhNj5pUZh2okosdM/07jRd/4JFAfGJnbpliCH
+ 2caCwsI5WE2ZB046eqn849L4QijUWdoqcmaLfE5DpwC3aphHKevbENepBmzV/DfJPw1c
+ dOQA==
+X-Gm-Message-State: AOJu0YyfPSIC7lf2PG+RN5+ABoRbIEcVwFYczY1bgRyh8jAWkGzBlun0
+ ac8ALsy5f8DWFgh5BxipE7y+mT02mLRywrA8gg9WMOIjHT/jyLyMnPUnNqCl85CZDG6Zfdbtamc
+ K
+X-Gm-Gg: ASbGncu/y/wP+zTo9DDBcGW6aK7v+YV1jdkNbINClUsYHznTPLwGjTPVaKBNYvLvyAu
+ yt2xhXMZPWWL0ULm/Sa5iaJSXU1QF9AdeWH/NougB2WUnaLM8ALxOyamwQlpfxIX+Zm0C3pZReO
+ hoTWGwX/a840mvOZOlQKyqkP6kElBEx8mcOKgchvQRcUzAt96o5lVZZM0SFu5fSQ82XjhikFgtH
+ DXAUpabzNB/2WhLYIj/g+na8o8nOgXA+88c1RU2NU6d0QISFNJY5eg1QbVqzvF90+2YI9D56I/l
+ jxuri8NkT6sUyY7QVs77qg==
+X-Google-Smtp-Source: AGHT+IFHXNgymQoB6pzpHR8ah9PLCQlZ9Xm0KlAUCxRTk9nNuZvKQIFifP5/1+ksY4P8z9zeJvqnag==
+X-Received: by 2002:a05:600c:3c8e:b0:436:f3f6:9582 with SMTP id
+ 5b1f17b1804b1-4390d433bbamr54549495e9.8.1738854740547; 
+ Thu, 06 Feb 2025 07:12:20 -0800 (PST)
 Received: from orth.archaic.org.uk (orth.archaic.org.uk. [2001:8b0:1d0::2])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4391d5283b2sm23591535e9.0.2025.02.06.07.12.24
+ 5b1f17b1804b1-4391d5283b2sm23591535e9.0.2025.02.06.07.12.19
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 06 Feb 2025 07:12:25 -0800 (PST)
+ Thu, 06 Feb 2025 07:12:19 -0800 (PST)
 From: Peter Maydell <peter.maydell@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Paul Burton <paulburton@kernel.org>, Aleksandar Rikalo <arikalo@gmail.com>,
@@ -72,17 +72,16 @@ Cc: Paul Burton <paulburton@kernel.org>, Aleksandar Rikalo <arikalo@gmail.com>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  Yanan Wang <wangyanan55@huawei.com>, Zhao Liu <zhao1.liu@intel.com>,
  Jia Liu <proljc@gmail.com>
-Subject: [PATCH 6/6] hw/core/machine.c: Make -machine dumpdtb=file.dtb with no
- DTB an error
-Date: Thu,  6 Feb 2025 15:12:14 +0000
-Message-Id: <20250206151214.2947842-7-peter.maydell@linaro.org>
+Subject: [PATCH 4/6] hw/mips/boston: Support dumpdtb monitor commands
+Date: Thu,  6 Feb 2025 15:12:12 +0000
+Message-Id: <20250206151214.2947842-5-peter.maydell@linaro.org>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20250206151214.2947842-1-peter.maydell@linaro.org>
 References: <20250206151214.2947842-1-peter.maydell@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::331;
- envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x331.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::332;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x332.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -105,110 +104,213 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Currently if the user requests via -machine dumpdtb=file.dtb that we
-dump the DTB, but the machine doesn't have a DTB, we silently ignore
-the option.  This is confusing to users, and is a legacy of the old
-board-specific implementation of the option, where if the execution
-codepath didn't go via a call to qemu_fdt_dumpdtb() we would never
-handle the option.
+The boston machine doesn't set MachineState::fdt to the DTB blob that
+it has loaded or created, which means that the QMP/HMP dumpdtb
+monitor commands don't work.
 
-Now we handle the option in one place in machine.c, we can provide
-the user with a useful message if they asked us to dump a DTB when
-none exists.  qmp_dumpdtb() already produces this error; remove the
-logic in handle_machine_dumpdtb() that was there specifically to
-avoid hitting it.
+Setting MachineState::fdt is easy in the non-FIT codepath: we can
+simply do so immediately before loading the DTB into guest memory.
+The FIT codepath is a bit more awkward as currently the FIT loader
+throws away the memory that the FDT was in after it loads it into
+guest memory.  So we add a void *pfdt argument to load_fit() for it
+to store the FDT pointer into.
 
-While we're here, beef up the error message a bit with a hint, and
-make it consistent about "an FDT" rather than "a FDT".  (In the
-qmp_dumpdtb() case this needs an ERRP_GUARD to make
-error_append_hint() work when the caller passes error_fatal.)
+There is some readjustment required of the pointer handling in
+loader-fit.c, so that it applies 'const' only where it should (e.g.
+the data pointer we get back from fdt_getprop() is const, because
+it's into the middle of the input FDT data, but the pointer that
+fit_load_image_alloc() should not be const, because it's freshly
+allocated memory that the caller can change if it likes).
 
-Note that the three places where we might report "doesn't have an
-FDT" are hit in different situations:
-
-(1) in handle_machine_dumpdtb(), if CONFIG_FDT is not set: this is
-because the QEMU binary was built without libfdt at all. The
-build system will not let you build with a machine type that
-needs an FDT but no libfdt, so here we know both that the machine
-doesn't use FDT and that QEMU doesn't have the support:
-
-(2) in the device_tree-stub.c qmp_dumpdtb(): this is used when
-we had libfdt at build time but the target architecture didn't
-enable any machines which did "select DEVICE_TREE", so here we
-know that the machine doesn't use FDT.
-
-(3) in qmp_dumpdtb(), if current_machine->fdt is NULL all we know
-is that this machine never set it. That might be because it doesn't
-use FDT, or it might be because the user didn't pass an FDT
-on the command line and the machine doesn't autogenerate an FDT.
-
-Resolves: https://gitlab.com/qemu-project/qemu/-/issues/2733
 Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
 ---
- hw/core/machine.c         | 6 ++----
- system/device_tree-stub.c | 5 ++++-
- system/device_tree.c      | 7 ++++++-
- 3 files changed, 12 insertions(+), 6 deletions(-)
+ include/hw/loader-fit.h | 21 ++++++++++++++++++---
+ hw/core/loader-fit.c    | 38 +++++++++++++++++++++-----------------
+ hw/mips/boston.c        | 11 +++++++----
+ 3 files changed, 46 insertions(+), 24 deletions(-)
 
-diff --git a/hw/core/machine.c b/hw/core/machine.c
-index 1b740071ac7..f0e45fbad9d 100644
---- a/hw/core/machine.c
-+++ b/hw/core/machine.c
-@@ -1701,15 +1701,13 @@ static void handle_machine_dumpdtb(MachineState *ms)
-     if (!ms->dumpdtb) {
-         return;
+diff --git a/include/hw/loader-fit.h b/include/hw/loader-fit.h
+index 0832e379dc9..9a43490ed63 100644
+--- a/include/hw/loader-fit.h
++++ b/include/hw/loader-fit.h
+@@ -30,12 +30,27 @@ struct fit_loader_match {
+ struct fit_loader {
+     const struct fit_loader_match *matches;
+     hwaddr (*addr_to_phys)(void *opaque, uint64_t addr);
+-    const void *(*fdt_filter)(void *opaque, const void *fdt,
+-                              const void *match_data, hwaddr *load_addr);
++    void *(*fdt_filter)(void *opaque, const void *fdt,
++                        const void *match_data, hwaddr *load_addr);
+     const void *(*kernel_filter)(void *opaque, const void *kernel,
+                                  hwaddr *load_addr, hwaddr *entry_addr);
+ };
+ 
+-int load_fit(const struct fit_loader *ldr, const char *filename, void *opaque);
++/**
++ * load_fit: load a FIT format image
++ * @ldr: structure defining board specific properties and hooks
++ * @filename: image to load
++ * @pfdt: pointer to update with address of FDT blob
++ * @opaque: opaque value passed back to the hook functions in @ldr
++ * Returns: 0 on success, or a negative errno on failure
++ *
++ * @pfdt is used to tell the caller about the FDT blob. On return, it
++ * has been set to point to the FDT blob, and it is now the caller's
++ * responsibility to free that memory with g_free(). Usually the caller
++ * will want to pass in &machine->fdt here, to record the FDT blob for
++ * the dumpdtb option and QMP/HMP commands.
++ */
++int load_fit(const struct fit_loader *ldr, const char *filename, void **pfdt,
++             void *opaque);
+ 
+ #endif /* HW_LOADER_FIT_H */
+diff --git a/hw/core/loader-fit.c b/hw/core/loader-fit.c
+index 9bdd4fa17c6..6eb66406b07 100644
+--- a/hw/core/loader-fit.c
++++ b/hw/core/loader-fit.c
+@@ -32,8 +32,8 @@
+ 
+ #define FIT_LOADER_MAX_PATH (128)
+ 
+-static const void *fit_load_image_alloc(const void *itb, const char *name,
+-                                        int *poff, size_t *psz, Error **errp)
++static void *fit_load_image_alloc(const void *itb, const char *name,
++                                  int *poff, size_t *psz, Error **errp)
+ {
+     const void *data;
+     const char *comp;
+@@ -80,11 +80,11 @@ static const void *fit_load_image_alloc(const void *itb, const char *name,
+             return NULL;
+         }
+ 
+-        data = g_realloc(uncomp_data, uncomp_len);
++        uncomp_data = g_realloc(uncomp_data, uncomp_len);
+         if (psz) {
+             *psz = uncomp_len;
+         }
+-        return data;
++        return uncomp_data;
      }
--    if (!ms->fdt) {
--        /* Silently ignore dumpdtb option if there is nothing to dump */
--        return;
+ 
+     error_setg(errp, "unknown compression '%s'", comp);
+@@ -177,13 +177,12 @@ out:
+ 
+ static int fit_load_fdt(const struct fit_loader *ldr, const void *itb,
+                         int cfg, void *opaque, const void *match_data,
+-                        hwaddr kernel_end, Error **errp)
++                        hwaddr kernel_end, void **pfdt, Error **errp)
+ {
+     ERRP_GUARD();
+     Error *err = NULL;
+     const char *name;
+-    const void *data;
+-    const void *load_data;
++    void *data;
+     hwaddr load_addr;
+     int img_off;
+     size_t sz;
+@@ -194,7 +193,7 @@ static int fit_load_fdt(const struct fit_loader *ldr, const void *itb,
+         return 0;
+     }
+ 
+-    load_data = data = fit_load_image_alloc(itb, name, &img_off, &sz, errp);
++    data = fit_load_image_alloc(itb, name, &img_off, &sz, errp);
+     if (!data) {
+         error_prepend(errp, "unable to load FDT image from FIT: ");
+         return -EINVAL;
+@@ -211,19 +210,23 @@ static int fit_load_fdt(const struct fit_loader *ldr, const void *itb,
+     }
+ 
+     if (ldr->fdt_filter) {
+-        load_data = ldr->fdt_filter(opaque, data, match_data, &load_addr);
++        void *filtered_data;
++
++        filtered_data = ldr->fdt_filter(opaque, data, match_data, &load_addr);
++        if (filtered_data != data) {
++            g_free(data);
++            data = filtered_data;
++        }
+     }
+ 
+     load_addr = ldr->addr_to_phys(opaque, load_addr);
+-    sz = fdt_totalsize(load_data);
+-    rom_add_blob_fixed(name, load_data, sz, load_addr);
++    sz = fdt_totalsize(data);
++    rom_add_blob_fixed(name, data, sz, load_addr);
+ 
+-    ret = 0;
++    *pfdt = data;
++    return 0;
+ out:
+     g_free((void *) data);
+-    if (data != load_data) {
+-        g_free((void *) load_data);
 -    }
- #ifdef CONFIG_FDT
-     qmp_dumpdtb(ms->dumpdtb, &error_fatal);
-     exit(0);
- #else
-     error_report("This machine doesn't have an FDT");
-+    error_printf("(this machine type definitely doesn't use FDT, and "
-+                 "this QEMU doesn't have FDT support compiled in)\n");
-     exit(1);
- #endif
+     return ret;
  }
-diff --git a/system/device_tree-stub.c b/system/device_tree-stub.c
-index bddda6fa37a..428330b0fec 100644
---- a/system/device_tree-stub.c
-+++ b/system/device_tree-stub.c
-@@ -5,6 +5,9 @@
- #ifdef CONFIG_FDT
- void qmp_dumpdtb(const char *filename, Error **errp)
- {
--    error_setg(errp, "This machine doesn't have a FDT");
-+    ERRP_GUARD();
-+
-+    error_setg(errp, "This machine doesn't have an FDT");
-+    error_append_hint(errp, "(this machine type definitely doesn't use FDT)\n");
+ 
+@@ -259,7 +262,8 @@ out:
+     return ret;
  }
- #endif
-diff --git a/system/device_tree.c b/system/device_tree.c
-index 56d4ac5650a..0d554240f93 100644
---- a/system/device_tree.c
-+++ b/system/device_tree.c
-@@ -635,11 +635,16 @@ out:
  
- void qmp_dumpdtb(const char *filename, Error **errp)
+-int load_fit(const struct fit_loader *ldr, const char *filename, void *opaque)
++int load_fit(const struct fit_loader *ldr, const char *filename,
++             void **pfdt, void *opaque)
  {
-+    ERRP_GUARD();
-+
-     g_autoptr(GError) err = NULL;
-     uint32_t size;
- 
-     if (!current_machine->fdt) {
--        error_setg(errp, "This machine doesn't have a FDT");
-+        error_setg(errp, "This machine doesn't have an FDT");
-+        error_append_hint(errp,
-+                          "(Perhaps it doesn't support FDT at all, or perhaps "
-+                          "you need to provide an FDT with the -fdt option?)\n");
-         return;
+     Error *err = NULL;
+     const struct fit_loader_match *match;
+@@ -323,7 +327,7 @@ int load_fit(const struct fit_loader *ldr, const char *filename, void *opaque)
+         goto out;
      }
  
+-    ret = fit_load_fdt(ldr, itb, cfg_off, opaque, match_data, kernel_end,
++    ret = fit_load_fdt(ldr, itb, cfg_off, opaque, match_data, kernel_end, pfdt,
+                        &err);
+     if (ret) {
+         error_report_err(err);
+diff --git a/hw/mips/boston.c b/hw/mips/boston.c
+index f0e9a2461a0..99e65f9fafb 100644
+--- a/hw/mips/boston.c
++++ b/hw/mips/boston.c
+@@ -358,8 +358,8 @@ static void gen_firmware(void *p, hwaddr kernel_entry, hwaddr fdt_addr)
+                        kernel_entry);
+ }
+ 
+-static const void *boston_fdt_filter(void *opaque, const void *fdt_orig,
+-                                     const void *match_data, hwaddr *load_addr)
++static void *boston_fdt_filter(void *opaque, const void *fdt_orig,
++                               const void *match_data, hwaddr *load_addr)
+ {
+     BostonState *s = BOSTON(opaque);
+     MachineState *machine = s->mach;
+@@ -797,7 +797,7 @@ static void boston_mach_init(MachineState *machine)
+         if (kernel_size > 0) {
+             int dt_size;
+             g_autofree const void *dtb_file_data = NULL;
+-            g_autofree const void *dtb_load_data = NULL;
++            void *dtb_load_data = NULL;
+             hwaddr dtb_paddr = QEMU_ALIGN_UP(kernel_high, 64 * KiB);
+             hwaddr dtb_vaddr = cpu_mips_phys_to_kseg0(NULL, dtb_paddr);
+ 
+@@ -815,6 +815,8 @@ static void boston_mach_init(MachineState *machine)
+                 exit(1);
+             }
+ 
++            machine->fdt = dtb_load_data;
++
+             /* Calculate real fdt size after filter */
+             dt_size = fdt_totalsize(dtb_load_data);
+             rom_add_blob_fixed("dtb", dtb_load_data, dt_size, dtb_paddr);
+@@ -822,7 +824,8 @@ static void boston_mach_init(MachineState *machine)
+                                 rom_ptr(dtb_paddr, dt_size));
+         } else {
+             /* Try to load file as FIT */
+-            fit_err = load_fit(&boston_fit_loader, machine->kernel_filename, s);
++            fit_err = load_fit(&boston_fit_loader, machine->kernel_filename,
++                               &machine->fdt, s);
+             if (fit_err) {
+                 error_report("unable to load kernel image");
+                 exit(1);
 -- 
 2.34.1
 
