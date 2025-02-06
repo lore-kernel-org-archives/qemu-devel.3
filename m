@@ -4,84 +4,86 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id F1794C02199
-	for <qemu-devel@archiver.kernel.org>; Thu,  6 Feb 2025 18:21:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 76172C02194
+	for <qemu-devel@archiver.kernel.org>; Thu,  6 Feb 2025 18:21:43 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tg6Sr-0007tD-Hv; Thu, 06 Feb 2025 13:19:01 -0500
+	id 1tg6Tr-00014H-6p; Thu, 06 Feb 2025 13:20:03 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tg6Sp-0007s8-Mi
- for qemu-devel@nongnu.org; Thu, 06 Feb 2025 13:18:59 -0500
-Received: from mail-wm1-x32c.google.com ([2a00:1450:4864:20::32c])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tg6TY-0000aI-MT
+ for qemu-devel@nongnu.org; Thu, 06 Feb 2025 13:19:49 -0500
+Received: from mail-wr1-x433.google.com ([2a00:1450:4864:20::433])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tg6Sn-0006qW-7f
- for qemu-devel@nongnu.org; Thu, 06 Feb 2025 13:18:59 -0500
-Received: by mail-wm1-x32c.google.com with SMTP id
- 5b1f17b1804b1-436345cc17bso9209535e9.0
- for <qemu-devel@nongnu.org>; Thu, 06 Feb 2025 10:18:56 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tg6TV-0006uu-Pp
+ for qemu-devel@nongnu.org; Thu, 06 Feb 2025 13:19:44 -0500
+Received: by mail-wr1-x433.google.com with SMTP id
+ ffacd0b85a97d-385dece873cso573851f8f.0
+ for <qemu-devel@nongnu.org>; Thu, 06 Feb 2025 10:19:39 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1738865935; x=1739470735; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=3chV6Syf4UgzPYrc3klqldaIF78PGsSbuVaW5fDvGGY=;
- b=mM3fr7aYsRzvJJGqOTAiU7R7OJHjyzO640aF3yItt6Ixb5Lw/QiuDw0I0bUs4dIZ0T
- XVH5Hz5Wy1gJApwoq5mkonhazpCpu49bVM8elitA7HY85cKaD3o087TvdGgoFkpFnGHx
- cXa4KWk4FqolvrNO6v38Qxo/2dH4sMBCuEFh1un4UiJ/7hw1lErRWPA5XlaKVJGoEN1M
- /nK2cu46sKyC5Wb2pthuvTBwsHyXzznGHM3DN5vxybT+LdB/KTkO9nWSk81ia0lcXduT
- M5pxZA4/wyxhccDOjz/CTDjgmoRDU25XXpJoBGnQK25+cZx52diQNJrWNSQrkTplsD3N
- hH5g==
+ d=linaro.org; s=google; t=1738865978; x=1739470778; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=rLMKHfpwsmRq9cvK/Unfd2Atjehb+xWOik9/MUFQQbw=;
+ b=vp4SXV++8vmekOwKO32h5DTjIf+HIbah9BXCwbUeShvYbP4NwsVWX0AT0CuADCMBkb
+ 6sCzEsXuM3WvGa+VC0RdzfCbJHywXNOK/YnjtdTYS+qH+DyGafP28NktrU9MjSYIc4hI
+ gUMX+joAIPTqTMSRwrSmHYp0Wf/Zwy2zNJ10tweV6q33P5VsFiM85cnRSqJxxF7rkm3y
+ NH5p25wx5F7XjnPP7GA05TPdfQ0sEpl+kzj6Fsy1wWyanlrR+FH/U7lxkIT1/waC4/YJ
+ pH0RaAcB7yVOi7v76JQO15Zso0VA5+fz1z2Uv3nsRon9X2IaE2xZO2abjrx6phtMZp6w
+ IEgw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1738865935; x=1739470735;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=3chV6Syf4UgzPYrc3klqldaIF78PGsSbuVaW5fDvGGY=;
- b=LOimC4Ibi1skTF+RyzbEA1DHiiV5IbDsXDILq35OQNRWSKUzQJYh0Shm+F6MUg22cq
- n9yRtNgYRp7Lsl4XJbMC9QK7AnX2y3KNqVKMwZGl/sMoYJY1+/AiLov+uhjVWHU8azyy
- yliKv+sSJLZTjg5nkp/Cfx3YREVGI5+xAKUze0APfkx4tIzV3msTqcXX1/H55FvNPtX7
- yRfM0quNU3E3WuYNefROSWP2y0hLiWWv/ExiD+QwpPEWSnDe+z/491dSrFEi9I8nAXW6
- oqHk/hXLGWE/tH2GHWzEgpjoDaK+tctFxlBiPaxw/4AZL25CKnqv0cnqjt9fFrNJSnD1
- /NSQ==
-X-Gm-Message-State: AOJu0Yztvb/THXpXNr9mkEoQ2l9gLtRPZFfK4uyufkhA8NSYl+fKNzKk
- cshd7/saEMtdJ+KARziRNddLbkj+dBJttvfgLr23/axHpuTqaybSlkp1LPKMYkaIkEh+rpuqpOG
- oEEw=
-X-Gm-Gg: ASbGncvd3jfwG3CE7WdHlcK55v1CggOspTBQwr34ovsW3KABvr44Yg8G4jUEPAW09D2
- 5SIbQA2RcFw4rFwPXMKcXaGtV5FJTuddt5VwOdi1EbIuFJpsinME10sRz+WBSPjkkVXYR/0WBVZ
- f4s4i+nAS506DYCYT5ALHu4cu8+clnBgIcEip3Bwm6ArCSBX/x3UOekUKRm90zd2LbQw8CeuKKD
- /Hi9BDjs3h98eu51qvjzLd2RFx+HUNiqJdHQT7qVXCSOKxQ/ZHyiy2jw+EfyNv9OQgbcm9qX98G
- 0L8mx5ScUqC+sq0CX7Om3gP6bVztIpkxBS9zrBPmjRrATmSjPTMYmiv16eGkMFXPtg==
-X-Google-Smtp-Source: AGHT+IEA0DMN4iOBz9G2FC5ueovoYaZq2D4m+00UatsLM9qrQKFf6i0Vnv5yiTPmm2//MFKpTDLJHQ==
-X-Received: by 2002:a05:600c:1e0e:b0:436:f3f6:9582 with SMTP id
- 5b1f17b1804b1-43924988870mr3600075e9.8.1738865935183; 
- Thu, 06 Feb 2025 10:18:55 -0800 (PST)
-Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
+ d=1e100.net; s=20230601; t=1738865978; x=1739470778;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=rLMKHfpwsmRq9cvK/Unfd2Atjehb+xWOik9/MUFQQbw=;
+ b=DdUqcmPImpf7NCJVIRcaGkUDXgpDTrgnoID153KJG7+FrglSy7h4UGCMYQvEBSsmMO
+ VJV/AjUxjGZ/4X3AcEuUekn0JSVfb7tbXXGAD8hmfy9QxsvhoSuZmiyhjycnGMTlz0FJ
+ ZwgsyOmGwHOSQnVH+JVeHFTnyY9FDq3GFPxicBzNYY0eiiQltahYALRjgn+IXatWvEaf
+ 0Q7D5RrsjuQ/WEKUpfPHe+lcPDumaVNO/ygHj6f2bxXVxvJ4MprTA3VooFo+H92Wgx2F
+ 6p5MlE91oifKjby567EMtdRmi4pLzsx7+41+rZ6KeziUv4vkWlAazokODLfz43OmEO1r
+ a8dA==
+X-Gm-Message-State: AOJu0YyObKPHoDQklHXCrCPB+L8M9rwE9O8GFUjM4953zUbJLIZI8iX0
+ dOEImULXUS34ZqNsarWSKUyygtQ6CR8p2xlXDRsL68344V3sQbTHi9uRUuOEgyE2nlxkL/IaPrV
+ KXZI=
+X-Gm-Gg: ASbGncuDJtSHFImNNN1PpUyvSaiFUVbfrEBCSjgTGE8hm4kGdBtaNcEpDuracGdJU1c
+ n/OAiNadtdhRoBgZKriuTKLOHdADvSeVilEJBU7TTPYTl+kW0i4jZCeRyoMuMRN/bfRWXZX9kX9
+ VTiILN4mzwLFE+y/jJszCcF+DhECr3AnXxlirN4EDXhpMIRAC3mhwKYOax6OfRC7Mdq+CHCRQPr
+ ZsgERZnuVtcq0obY/TSEIA2f3CP58y6pnEGMWmRJCURCqwmpk0/2s4M0pI7Rhuyxh6JOR2PKj7R
+ ZxWrDY7NTltuQ1Q/ssJZd12FyL4x5PYqAHUxpBgq2l4I9PQdmUd5sA4G/qA=
+X-Google-Smtp-Source: AGHT+IEX9XgRQKxCwwoo+fjKGwF6p4g6vZiIw0RmtERh0y0RhN08POvBePfkazta5gkMmeyikgSoSg==
+X-Received: by 2002:a05:6000:1865:b0:38c:5fbf:10d6 with SMTP id
+ ffacd0b85a97d-38dc90e19e9mr8592f8f.7.1738865978389; 
+ Thu, 06 Feb 2025 10:19:38 -0800 (PST)
+Received: from [192.168.69.198] (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-43907f16ffasm58795995e9.1.2025.02.06.10.18.53
- (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Thu, 06 Feb 2025 10:18:54 -0800 (PST)
-From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+ ffacd0b85a97d-38dbdd35bd6sm2317204f8f.22.2025.02.06.10.19.36
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Thu, 06 Feb 2025 10:19:37 -0800 (PST)
+Message-ID: <5574afe4-191b-454f-bbd2-cd7b26a0d581@linaro.org>
+Date: Thu, 6 Feb 2025 19:19:36 +0100
+MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 1/7] MAINTAINERS: Unify Alistair's professional email
+ address
 To: qemu-devel@nongnu.org
 Cc: Palmer Dabbelt <palmer@dabbelt.com>, qemu-riscv@nongnu.org,
  Alistair Francis <alistair.francis@wdc.com>,
  Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
  Bin Meng <bmeng.cn@gmail.com>, Weiwei Li <liwei1518@gmail.com>,
  Sunil V L <sunilvl@ventanamicro.com>,
- Liu Zhiwei <zhiwei_liu@linux.alibaba.com>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PATCH 5/7] hw/riscv/iommu: Reduce needs for target-specific code
-Date: Thu,  6 Feb 2025 19:18:25 +0100
-Message-ID: <20250206181827.41557-6-philmd@linaro.org>
-X-Mailer: git-send-email 2.47.1
-In-Reply-To: <20250206181827.41557-1-philmd@linaro.org>
+ Liu Zhiwei <zhiwei_liu@linux.alibaba.com>
 References: <20250206181827.41557-1-philmd@linaro.org>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+ <20250206181827.41557-2-philmd@linaro.org>
+Content-Language: en-US
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <20250206181827.41557-2-philmd@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32c;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x32c.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::433;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x433.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -104,71 +106,31 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Use the qemu_target_page_size() runtime function instead
-of the TARGET_PAGE_SIZE definition, remove unnecessary
-"exec/exec-all.h" header.
+On 6/2/25 19:18, Philippe Mathieu-Daudé wrote:
+> Alistair's email is typed differently, so the get_maintainer.pl
+> script add it twice :) Unify to reduce traffic.
+> 
+>    $ git grep -h 'Alistair Francis' -- MAINTAINERS | sort -u
+>    M: Alistair Francis <Alistair.Francis@wdc.com>
+>    M: Alistair Francis <alistair.francis@wdc.com>
+>    M: Alistair Francis <alistair@alistair23.me>
+> 
+> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+> ---
+>   MAINTAINERS | 12 ++++++------
+>   1 file changed, 6 insertions(+), 6 deletions(-)
+> 
+> diff --git a/MAINTAINERS b/MAINTAINERS
+> index 0cf37fce7b5..b7ac1519ee3 100644
+> --- a/MAINTAINERS
+> +++ b/MAINTAINERS
+> @@ -318,7 +318,7 @@ F: tests/functional/test_ppc_74xx.py
+>   
+>   RISC-V TCG CPUs
+>   M: Palmer Dabbelt <palmer@dabbelt.com>
+> -M: Alistair Francis <alistair.francis@wdc.com>
+> +M: alistair.francis <alistair.francis@wdc.com>
 
-Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
----
- hw/riscv/riscv-iommu-pci.c | 5 +++--
- hw/riscv/riscv-iommu-sys.c | 1 -
- hw/riscv/riscv-iommu.c     | 1 +
- 3 files changed, 4 insertions(+), 3 deletions(-)
-
-diff --git a/hw/riscv/riscv-iommu-pci.c b/hw/riscv/riscv-iommu-pci.c
-index 12451869e41..d8779481421 100644
---- a/hw/riscv/riscv-iommu-pci.c
-+++ b/hw/riscv/riscv-iommu-pci.c
-@@ -22,13 +22,13 @@
- #include "hw/pci/pci_bus.h"
- #include "hw/qdev-properties.h"
- #include "hw/riscv/riscv_hart.h"
-+#include "exec/target_page.h"
- #include "migration/vmstate.h"
- #include "qapi/error.h"
- #include "qemu/error-report.h"
- #include "qemu/host-utils.h"
- #include "qom/object.h"
- 
--#include "cpu_bits.h"
- #include "riscv-iommu.h"
- #include "riscv-iommu-bits.h"
- #include "trace.h"
-@@ -102,7 +102,8 @@ static void riscv_iommu_pci_realize(PCIDevice *dev, Error **errp)
-     qdev_realize(DEVICE(iommu), NULL, errp);
- 
-     memory_region_init(&s->bar0, OBJECT(s), "riscv-iommu-bar0",
--        QEMU_ALIGN_UP(memory_region_size(&iommu->regs_mr), TARGET_PAGE_SIZE));
-+        QEMU_ALIGN_UP(memory_region_size(&iommu->regs_mr),
-+                      qemu_target_page_size()));
-     memory_region_add_subregion(&s->bar0, 0, &iommu->regs_mr);
- 
-     pcie_endpoint_cap_init(dev, 0);
-diff --git a/hw/riscv/riscv-iommu-sys.c b/hw/riscv/riscv-iommu-sys.c
-index 65b24fb07de..bbe839ed241 100644
---- a/hw/riscv/riscv-iommu-sys.c
-+++ b/hw/riscv/riscv-iommu-sys.c
-@@ -26,7 +26,6 @@
- #include "qemu/host-utils.h"
- #include "qemu/module.h"
- #include "qom/object.h"
--#include "exec/exec-all.h"
- #include "trace.h"
- 
- #include "riscv-iommu.h"
-diff --git a/hw/riscv/riscv-iommu.c b/hw/riscv/riscv-iommu.c
-index e7568ca227a..fb763e6e69d 100644
---- a/hw/riscv/riscv-iommu.c
-+++ b/hw/riscv/riscv-iommu.c
-@@ -26,6 +26,7 @@
- #include "qapi/error.h"
- #include "qemu/timer.h"
- 
-+#include "target/riscv/cpu.h"
- #include "cpu_bits.h"
- #include "riscv-iommu.h"
- #include "riscv-iommu-bits.h"
--- 
-2.47.1
+Grr this isn't the version I wanted to post, sorry for the noise...
 
 
