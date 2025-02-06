@@ -4,87 +4,133 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A4A82C02194
-	for <qemu-devel@archiver.kernel.org>; Thu,  6 Feb 2025 11:45:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 521CFC02194
+	for <qemu-devel@archiver.kernel.org>; Thu,  6 Feb 2025 11:50:30 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tg0K0-0004Z1-Qb; Thu, 06 Feb 2025 06:45:28 -0500
+	id 1tg0O4-0005o6-QJ; Thu, 06 Feb 2025 06:49:40 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <rkanwal@rivosinc.com>)
- id 1tg0Ju-0004YP-Pr
- for qemu-devel@nongnu.org; Thu, 06 Feb 2025 06:45:24 -0500
-Received: from mail-wr1-x431.google.com ([2a00:1450:4864:20::431])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <rkanwal@rivosinc.com>)
- id 1tg0Jr-0005bI-AI
- for qemu-devel@nongnu.org; Thu, 06 Feb 2025 06:45:21 -0500
-Received: by mail-wr1-x431.google.com with SMTP id
- ffacd0b85a97d-38a8b17d7a7so343695f8f.2
- for <qemu-devel@nongnu.org>; Thu, 06 Feb 2025 03:45:18 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=rivosinc-com.20230601.gappssmtp.com; s=20230601; t=1738842317; x=1739447117;
- darn=nongnu.org; 
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=kZS5RcFLkVoy5OiPEmK/LufMWy48rpCL81gYGwgas8Q=;
- b=VwQZOU5ZLTjeGM+O9IKaSnjVWacMa9e53SLps2Ls8B49Sx2NsIiIhvW5/A8mVu2YbW
- rVN3Olq1d8U8+nFOEJKrmMuzOKnAHVDc609mw6BonzgTz9va3wFjl5VVgEWdgFANE6LP
- dYzP0lW+08I/DPEFSRp0S56m5Jb5OBPH6WLPkrz+hdINHSgkmym6PNDq7E9Wm4z1OPfy
- vfkaw626t5hSBY7Bjve/toI4Dl45YGeGCubnZJDpsgiqPan+ka0zMZsnv+jx8B3XLTG4
- 4ThB2YhX2VUOLrymeJ/3BMff6QTztSELNIK5jKT36n5ZPaLMZ5tN3uftlu2ZID1B7Wfy
- NYrg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1738842317; x=1739447117;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=kZS5RcFLkVoy5OiPEmK/LufMWy48rpCL81gYGwgas8Q=;
- b=og3ihHICIeaoQs6A7avuCGIZJRBbuXQBOwG6XMhaiOozGa/eqEE9F/UrAHDL2lhCjx
- NnBV/qShWUIAVrqpzAkz4xhh7q7SoxpSQwaVPQ75mAtIQrxe8r70oY/oM4/3Yd2sy8YJ
- etrc7I0BNuhiIIivA6jfl7tyxINgG/+AHdlvbdN3t+f9+eLuHPvj+oqjNP6ZeltZe5b4
- owpc0carl21rvYMDFcOiSfxKZFJG4KXce8sJZxkfCGY6+At/h8ywUM7ZsQnwEIoTvVEe
- xRl+lfSASU7ZMZZNIaLzZs/v6ZqHYi4ESAaRq003MWUBh2U9C7FKB57dPd+kvpwcpKWf
- t6Bg==
-X-Forwarded-Encrypted: i=1;
- AJvYcCWF4CPF9+CwlrZ0isDMJ9TYNBR2p4F7j9nZupKTrmYbwq2vcB6IEIwStvRybDDVAPhvl3FsKoQmbErJ@nongnu.org
-X-Gm-Message-State: AOJu0YzQ8q9Oxs7uInnbOXhlZbuajDH6AC7GuXyvUcBxH9N0vaJFXHje
- pnXnKTutt17RQO23phvCg76FFncqfUfH0/mwhILrGAkUsNF5PJ8Z2DdcEqlTqRImyvFSCS8OHzN
- YwwBxF0Y0pYIeuIc91puag5iDZb7vp6S+QYkKpA==
-X-Gm-Gg: ASbGnctzEmz2L2CB0KI76MknGdOz+K8ZDNJHbvNt6QXt/zaXGkCZLF0nHBsvJJOSNFm
- 7vVqTCkSlymRcJFKLlyJZ+bT97PTrxMuEMG0N/0enmrRXRI3MkNUM9I6BVJn7moGxrLwa92I=
-X-Google-Smtp-Source: AGHT+IG1q15/1AMRIV5KmUFZSp7PRvVaOSRYQ3WlHUBKeV3hTokKsmh3dE5OQKNsWOC5+C96qU/h92vM2qAfgLXHlr8=
-X-Received: by 2002:a05:6000:154c:b0:385:ec6e:e872 with SMTP id
- ffacd0b85a97d-38db48fdf9bmr6021992f8f.38.1738842316660; Thu, 06 Feb 2025
- 03:45:16 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <vinayak.kh@samsung.com>)
+ id 1tg0O1-0005mi-Od
+ for qemu-devel@nongnu.org; Thu, 06 Feb 2025 06:49:38 -0500
+Received: from mailout3.samsung.com ([203.254.224.33])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <vinayak.kh@samsung.com>)
+ id 1tg0Nx-0005uD-Th
+ for qemu-devel@nongnu.org; Thu, 06 Feb 2025 06:49:37 -0500
+Received: from epcas5p1.samsung.com (unknown [182.195.41.39])
+ by mailout3.samsung.com (KnoxPortal) with ESMTP id
+ 20250206114924epoutp03979717fce5d009b8cf7413fc4ad8cb97~hnBlwMnvB1703317033epoutp03r
+ for <qemu-devel@nongnu.org>; Thu,  6 Feb 2025 11:49:24 +0000 (GMT)
+DKIM-Filter: OpenDKIM Filter v2.11.0 mailout3.samsung.com
+ 20250206114924epoutp03979717fce5d009b8cf7413fc4ad8cb97~hnBlwMnvB1703317033epoutp03r
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=samsung.com;
+ s=mail20170921; t=1738842564;
+ bh=m7yJ9+izlaHmkk5Z2LA5XUP2er7VaaaSK923WNmaDng=;
+ h=Date:From:To:Cc:Subject:In-Reply-To:References:From;
+ b=bgo9jMlmStmGNjfxxaB8ee7uGvjDrHRxSt3rt3wqbHUZvkF6FtIiMwEyzHv5kMEJ9
+ ak6kJU6EFL6DHPLQFY9uyyixI/nBoMhSY2cxirFnumuBcupkW8uqLNy4pX830TnbjM
+ cd4fGrgelmJR8m5TdoQZoqJ/8ozvR1LDOB3b0CWc=
+Received: from epsnrtp1.localdomain (unknown [182.195.42.162]) by
+ epcas5p1.samsung.com (KnoxPortal) with ESMTP id
+ 20250206114923epcas5p193853e1daed43301c1d6fbcfa7d48c57~hnBlRhza92074720747epcas5p1t;
+ Thu,  6 Feb 2025 11:49:23 +0000 (GMT)
+Received: from epsmgec5p1new.samsung.com (unknown [182.195.38.175]) by
+ epsnrtp1.localdomain (Postfix) with ESMTP id 4Ypb412H4Tz4x9Py; Thu,  6 Feb
+ 2025 11:49:21 +0000 (GMT)
+Received: from epcas5p4.samsung.com ( [182.195.41.42]) by
+ epsmgec5p1new.samsung.com (Symantec Messaging Gateway) with SMTP id
+ 71.43.19710.1C1A4A76; Thu,  6 Feb 2025 20:49:21 +0900 (KST)
+Received: from epsmtrp2.samsung.com (unknown [182.195.40.14]) by
+ epcas5p4.samsung.com (KnoxPortal) with ESMTPA id
+ 20250206092940epcas5p4f08fe221d311a959c66215bcd6d6c92a~hlHlef8yf0102101021epcas5p4w;
+ Thu,  6 Feb 2025 09:29:40 +0000 (GMT)
+Received: from epsmgms1p1new.samsung.com (unknown [182.195.42.41]) by
+ epsmtrp2.samsung.com (KnoxPortal) with ESMTP id
+ 20250206092940epsmtrp21352d24f541a98b020ad383fda2d19e8~hlHlc5XpO2836828368epsmtrp2s;
+ Thu,  6 Feb 2025 09:29:40 +0000 (GMT)
+X-AuditID: b6c32a44-363dc70000004cfe-6f-67a4a1c11034
+Received: from epsmtip2.samsung.com ( [182.195.34.31]) by
+ epsmgms1p1new.samsung.com (Symantec Messaging Gateway) with SMTP id
+ EE.7E.18729.30184A76; Thu,  6 Feb 2025 18:29:39 +0900 (KST)
+Received: from test-PowerEdge-R740xd (unknown [107.99.41.79]) by
+ epsmtip2.samsung.com (KnoxPortal) with ESMTPA id
+ 20250206092938epsmtip24b3d909cd901e0e60b4975a18b6c7c7e~hlHkMsWA22698626986epsmtip2U;
+ Thu,  6 Feb 2025 09:29:38 +0000 (GMT)
+Date: Thu, 6 Feb 2025 14:59:33 +0530
+From: Vinayak Holikatti <vinayak.kh@samsung.com>
+To: Adam Manzanares <a.manzanares@samsung.com>
+Cc: Jonathan Cameron <Jonathan.Cameron@huawei.com>, "qemu-devel@nongnu.org"
+ <qemu-devel@nongnu.org>, "krish.reddy@samsung.com"
+ <krish.reddy@samsung.com>, "vishak.g@samsung.com" <vishak.g@samsung.com>,
+ "alok.rathore@samsung.com" <alok.rathore@samsung.com>,
+ "s5.kumari@samsung.com" <s5.kumari@samsung.com>, "linux-cxl@vger.kernel.org"
+ <linux-cxl@vger.kernel.org>
+Subject: Re: [PATCH 2/2] hw/cxl/cxl-mailbox-utils: Add support for Media
+ operations Sanitize and Write Zeros commands (8.2.9.9.5.3)
+Message-ID: <20250206092933.a6tk53cuzhvyhwep@test-PowerEdge-R740xd>
 MIME-Version: 1.0
-References: <20250205-b4-ctr_upstream_v6-v6-0-439d8e06c8ef@rivosinc.com>
- <CAKmqyKMhV8Nj2oUmD_vWCnZBjJgYcw=8CQ86P2jihy0S09TXTQ@mail.gmail.com>
-In-Reply-To: <CAKmqyKMhV8Nj2oUmD_vWCnZBjJgYcw=8CQ86P2jihy0S09TXTQ@mail.gmail.com>
-From: Rajnesh Kanwal <rkanwal@rivosinc.com>
-Date: Thu, 6 Feb 2025 11:45:04 +0000
-X-Gm-Features: AWEUYZldt30CwD5qEPxoU1nF5WRji2cs23OHaSFb2KCRzw4kyYfRuBZbHHcrVu8
-Message-ID: <CAECbVCubhhy4y8oJPGiW5r322Uv02oOyKY4e+qWSMFNfbgx8yQ@mail.gmail.com>
-Subject: Re: [PATCH v6 0/7] target/riscv: Add support for Control Transfer
- Records Ext.
-To: Alistair Francis <alistair23@gmail.com>
-Cc: qemu-riscv@nongnu.org, qemu-devel@nongnu.org, alistair.francis@wdc.com, 
- bin.meng@windriver.com, liweiwei@iscas.ac.cn, dbarboza@ventanamicro.com, 
- zhiwei_liu@linux.alibaba.com, atishp@rivosinc.com, apatel@ventanamicro.com, 
- beeman@rivosinc.com, jason.chien@sifive.com, frank.chang@sifive.com, 
- richard.henderson@linaro.org, bmeng.cn@gmail.com
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::431;
- envelope-from=rkanwal@rivosinc.com; helo=mail-wr1-x431.google.com
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+In-Reply-To: <Z6D2jT6lp6tABnDL@sjvm-adma01.eng.stellus.in>
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFuplk+LIzCtJLcpLzFFi42LZdlhTS/fgwiXpBv+2cFlMP6xo8eX0HjaL
+ VQuvsVks3LiMyeL8rFMsFsd7d7BYrDn3mQXIncPuwOHRcuQtq8eTa5uZPPq2rGL0+LxJLoAl
+ KtsmIzUxJbVIITUvOT8lMy/dVsk7ON453tTMwFDX0NLCXEkhLzE31VbJxSdA1y0zB+gKJYWy
+ xJxSoFBAYnGxkr6dTVF+aUmqQkZ+cYmtUmpBSk6BSYFecWJucWleul5eaomVoYGBkSlQYUJ2
+ xpGOf0wFK6QqXm75w9zAuEiki5GTQ0LARGLRkWMsXYxcHEICuxkldq5czgrhfGKUuLB5NzuE
+ 841R4vr5FiaYli8HVkBV7WWU2LDvCgtcy53uo2BVLAIqEnsnTWUBsdkEDCQeNB9nB7FFBPQk
+ Tp78wwzSwCzwiUli2p4eZpCEsEAro8SHVfkgNq+As8TdG3eZIGxBiZMzn4AN4hSwkji4vosN
+ pFlC4CO7xImju9ggbnKRaNh0iBnCFpZ4dXwLO4QtJfH53V6ommKJcxc/MULYNRKvu1ZA1dtL
+ tJ7qB7I5gC7KkDi7SxwiLCsx9dQ6sBuYBfgken8/gXqfV2LHPBCbA8hWkVj6NhNm05dnzVDT
+ PSTm7F0HdoGQwHsmiQOLKiYwys1C8s0shGWzwBZYSXR+aGKFCEtLLP/HAWFqSqzfpb+AkXUV
+ o2RqQXFuemqyaYFhXmo5PI6T83M3MYLTpZbLDsYb8//pHWJk4mA8xCjBwawkwnt6+4J0Id6U
+ xMqq1KL8+KLSnNTiQ4ymwNiZyCwlmpwPTNh5JfGGJpYGJmZmZiaWxmaGSuK8zTtb0oUE0hNL
+ UrNTUwtSi2D6mDg4pRqY5Nus3q83bgj8e/ds1ZuSohPvP9Ws9NHiONn3k1WrvmxHm+7VF89d
+ jqfvfRZw2PyH17ft4f1537hfchq/n99wN/viijkiXXOTFFf46cnZPSnQ+p1e/2FnxD+//Ihb
+ azaZOJ3maFp4kf1xantkmJassIR9zerXicWPsjJPtpoGzH3zvblhJevxnAnzBb7+rfr+RcWV
+ u8Ukd9lX2SymyyXLW+6KGCecUVBOjA6bson54b/pSrZJCaoM+1ZoTQtOvOtXY7xnztEd8ydV
+ PTnbePkfa7SMz4WUO4ndW1mX7NgrL/HyqfwXKb0KifnV+yY+tHJrE9UuL1p1X259Z+smvwcP
+ xS1KHrFmid9Njt/UfFhfiaU4I9FQi7moOBEAtebTSyAEAAA=
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFrrELMWRmVeSWpSXmKPExsWy7bCSvC5z45J0g8OTbSymH1a0+HJ6D5vF
+ qoXX2CwWblzGZHF+1ikWi+O9O1gs1pz7zALkzmF34PBoOfKW1ePJtc1MHn1bVjF6fN4kF8AS
+ xWWTkpqTWZZapG+XwJVx8Mwh5oJb4hWX+z4zNjC+E+xi5OSQEDCR+HJgBWsXIxeHkMBuRonW
+ RVeZIBJSEsd2/mSDsIUlVv57zg5R9IFR4vSsTlaQBIuAisTeSVNZQGw2AQOJB83H2UFsEQE9
+ iZMn/zCDNDALfGGS+LjkOCNIQliglVHiw6p8EJtXwFni7o27TBBT3zNJ9Oz6xQKREJQ4OfMJ
+ mM0sYCYxb/NDoEkcQLa0xPJ/HCBhTgEriYPru9gmMArMQtIxC0nHLISOBYzMqxglUwuKc9Nz
+ iw0LDPNSy/WKE3OLS/PS9ZLzczcxgoNdS3MH4/ZVH/QOMTJxMB5ilOBgVhLhPb19QboQb0pi
+ ZVVqUX58UWlOavEhRmkOFiVxXvEXvSlCAumJJanZqakFqUUwWSYOTqkGphnJlipVDx9bThbb
+ tmjCzgP1q+uLv1rsOmM+5XLWlv23duwwaNbWu+v7cqJZ8JPXl5yV5DbrnyhTNOCKC7n5JTpq
+ c7jLueoZz/imxxr3ydpr9tkqxEWoXzRu/3NfeUKdniVP+TWx/1efXsg0eJcyjfcLY9w57icv
+ d8/7eVxznfLU+Oj9BZb2y352Rk+zPm9vpOLNqWmxTLqbK+q78L96M3dl37gb4vp3TDb8cMlz
+ iP29ucvT9IQsy6nbTjMXqbZWM+Yqi/zbtfVmylmWv0v2m/IxC3Q+Vcs9Lfkuw7dltrXwk71f
+ /ijumBqdYiF6/EFOqM32l41LnVsZmPjWHvj5R9HMkXlG2p53b3Xb5wXpKLEUZyQaajEXFScC
+ AGH+tM/lAgAA
+X-CMS-MailID: 20250206092940epcas5p4f08fe221d311a959c66215bcd6d6c92a
+X-Msg-Generator: CA
+Content-Type: multipart/mixed;
+ boundary="----MTAFpDJBIS7x0DorxmyomC-IKR7RHdtq514vGN5lDcSFRf5o=_32c31_"
+X-Sendblock-Type: REQ_APPROVE
+CMS-TYPE: 105P
+DLP-Filter: Pass
+X-CFilter-Loop: Reflected
+X-CMS-RootMailID: 20250123050913epcas5p45fb9a638e62f436076da283e86e54ea2
+References: <20250123050903.92336-1-vinayak.kh@samsung.com>
+ <CGME20250123050913epcas5p45fb9a638e62f436076da283e86e54ea2@epcas5p4.samsung.com>
+ <20250123050903.92336-3-vinayak.kh@samsung.com>
+ <20250124151946.0000134f@huawei.com>
+ <Z503EpvqMczHIZqF@sjvm-adma01.eng.stellus.in>
+ <20250203113354.00007cd7@huawei.com>
+ <Z6D2jT6lp6tABnDL@sjvm-adma01.eng.stellus.in>
+Received-SPF: pass client-ip=203.254.224.33;
+ envelope-from=vinayak.kh@samsung.com; helo=mailout3.samsung.com
+X-Spam_score_int: -43
+X-Spam_score: -4.4
+X-Spam_bar: ----
+X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -100,167 +146,99 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, Feb 6, 2025 at 5:39=E2=80=AFAM Alistair Francis <alistair23@gmail.c=
-om> wrote:
+------MTAFpDJBIS7x0DorxmyomC-IKR7RHdtq514vGN5lDcSFRf5o=_32c31_
+Content-Type: text/plain; charset="utf-8"; format="flowed"
+Content-Disposition: inline
+
+On 03/02/25 05:02PM, Adam Manzanares wrote:
+>On Mon, Feb 03, 2025 at 11:33:54AM +0000, Jonathan Cameron wrote:
+>>
+>> > >
+>> > > > +    int dpa_range_count = san_info->dpa_range_count;
+>> > > > +    int rc = 0;
+>> > > > +
+>> > > > +    for (int i = 0; i < dpa_range_count; i++) {
+>> > > > +        rc = sanitize_range(ct3d, san_info->dpa_range_list[i].starting_dpa,
+>> > > > +                san_info->dpa_range_list[i].length, san_info->fill_value);
+>> > > > +        if (rc) {
+>> > > > +            goto exit;
+>> > > > +        }
+>> > > > +    }
+>> > > > +    cxl_discard_all_event_records(&ct3d->cxl_dstate);
+>> > >
+>> > > Add a comment on why we are deleting event records when sanitizing a small
+>> > > part of memory?
+>> > >
+>> >
+>> > See response below for disabling the media state. Same section referenced
+>> > below, 8.2.10.9.5.1 states all event logs should be deleted. Outcome
+>> > depends on how we interpret "follow the method described in 8.2.10.9.5.1".
+>> >
+>>
+>> This also sounds like reading too much into that comment.
+>>
 >
-> On Wed, Feb 5, 2025 at 9:21=E2=80=AFPM Rajnesh Kanwal <rkanwal@rivosinc.c=
-om> wrote:
-> >
-> > This series enables Control Transfer Records extension support on riscv
-> > platform. This extension is similar to Arch LBR in x86 and BRBE in ARM.
-> > The Extension has been ratified and this series is based on v1.0 [0]
-> >
-> > CTR extension depends on both the implementation of S-mode and Sscsrind
-> > extension v1.0.0 [1]. CTR access ctrsource, ctrtartget and ctrdata CSRs=
- using
-> > sscsrind extension.
-> >
-> > The series is based on Smcdeleg/Ssccfg counter delegation extension [2]
-> > patches [3]. CTR itself doesn't depend on counter delegation support. T=
-his
-> > rebase is basically to include the Smcsrind patches.
-> >
-> > Here is the link to a quick start guide [4] to setup and run a basic pe=
-rf demo
-> > on Linux to use CTR Ext.
-> >
-> > Qemu patches can be found here:
-> > https://github.com/rajnesh-kanwal/qemu/tree/b4/ctr_upstream_v6
-> >
-> > Opensbi patch can be found here:
-> > https://github.com/rajnesh-kanwal/opensbi/tree/ctr_upstream_v2
-> >
-> > Linux kernel patches can be found here:
-> > https://github.com/rajnesh-kanwal/linux/tree/b4/ctr_upstream_v2
-> >
-> > [0]: https://github.com/riscv/riscv-control-transfer-records/releases/t=
-ag/v1.0
-> > [1]: https://github.com/riscvarchive/riscv-indirect-csr-access/releases=
-/tag/v1.0.0
-> > [2]: https://github.com/riscvarchive/riscv-smcdeleg-ssccfg/releases/tag=
-/v1.0.0
-> > [3]: https://lore.kernel.org/qemu-riscv/20241203-counter_delegation-v4-=
-0-c12a89baed86@rivosinc.com/
-> > [4]: https://github.com/rajnesh-kanwal/linux/wiki/Running-CTR-basic-dem=
-o-on-QEMU-RISC%E2%80%90V-Virt-machine
-> >
-> > Signed-off-by: Rajnesh Kanwal <rkanwal@rivosinc.com>
-> > ---
-> > Changelog:
-> > v6: Rebased on latest riscv-to-apply.for-upstream.
+>Agreed, Vinayak let's drop the discard of all event records
+>from this patch.
+
+Ok Adam will drop the discard of all event records
+
 >
-> It should be rebased on
-> https://github.com/alistair23/qemu/tree/riscv-to-apply.next
+>> > > > +    }
+>> > > > +
+>> > > > +start_bg:
+>> > > > +    /* EBUSY other bg cmds as of now */
+>> > > > +    cci->bg.runtime = secs * 1000UL;
+>> > > > +    *len_out = 0;
+>> > > > +    /* sanitize when done */
+>> > > > +    cxl_dev_disable_media(&ct3d->cxl_dstate);
+>> > > Why?  This is santizing part of the device. As I undestand it the
+>> > > main aim is to offload cleanup when the device is in use. Definitely
+>> > > don't want to disable media.  If I'm missing a reason please give
+>> > > a spec reference.
+>> >
+>> > Table 8-164, sanitize description mentions to follow method
+>> > in 8.2.10.9.5.1, which does call out placing device in disabled
+>> > state, but I'm not sure if method refers to all text in 8.2.10.9.5.1
+>> > or the method devices uses to sanitize internally.
+>>
+>> I think it is meant to just be the method of sanitizing.
+>>
 >
-> I applied the first 6 patches as they apply cleanly
+>Ok, let's use this interpretation. Vinayak, can you remove this as well
+>and then we put a comment in the patch that media op sanitize is targeted
+>so no need to disable media or clear event logs.
+
+ok Adam, will remove this as well and comment as needed
+
 >
-> Alistair
 >
+>> >
+>> > I would imagine since sanitize is destructive we would not want to return
+>> > any data from device ranges impacted by sanitize. I believe a simple
+>> > way to achieve this is to disable entire device.
+>>
+>> Hmm.  That rather destroys the main use case I'm aware of for this
+>> (unlike the general santize commands from earlier CXL versions)/
+>> Superficially sounds like we need a spec clarification as
+>> clearly not super clear!
+>>
+>
+>For this series, let's drive the work with the use case you have in
+>mind. We will start a thread with the consortium, but I don't think
+>that should delay this work.
+>
+>> >
+>>
+>> Jonathan
+>>
+>>
+Vinayak Holikatti
 
-Sorry for the inconvenience. Strangely cherry-pick, patch and git am -3
-all seem to work fine but git am seems to be failing.
 
-I looked into the conflict and it looks like am expects
-ISA_EXT_DATA_ENTRY(sstvecd, PRIV_VERSION_1_12_0, has_priv_1_12),
-but gets this in cpu.c.
-ISA_EXT_DATA_ENTRY(ssu64xl, PRIV_VERSION_1_12_0, has_priv_1_12),
+------MTAFpDJBIS7x0DorxmyomC-IKR7RHdtq514vGN5lDcSFRf5o=_32c31_
+Content-Type: text/plain; charset="utf-8"
 
-I have tried following cmds on top of riscv-to-apply.next and these
-fetch the last patch
-only and apply the last patch perfectly fine.
 
-b4 am -i  -P=3D"-1" 20250205-b4-ctr_upstream_v6-v6-0-439d8e06c8ef@rivosinc.=
-com
-git am -3 ./v6_20250205_rkanwal_target_riscv_add_support_for_control_transf=
-er_records_ext.mbx
-
-If you want I can send v7 as well rebased on top of riscv-to-apply.next.
-
-Thanks
-Rajnesh
-
-> >
-> > v5: Improvements based on Richard Henderson's feedback.
-> >   - Fixed code gen logic to use gen_update_pc() instead of
-> >     tcg_constant_tl().
-> >   - Some function renaming.
-> >   - Rebased onto v4 of counter delegation series.
-> >   - https://lore.kernel.org/qemu-riscv/20241205-b4-ctr_upstream_v3-v5-0=
--60b993aa567d@rivosinc.com/
-> >
-> > v4: Improvements based on Richard Henderson's feedback.
-> >   - Refactored CTR related code generation to move more code into
-> >     translation side and avoid unnecessary code execution in generated
-> >     code.
-> >   - Added missing code in machine.c to migrate the new state.
-> >   - https://lore.kernel.org/r/20241204-b4-ctr_upstream_v3-v4-0-d3ce6bef=
-9432@rivosinc.com
-> >
-> > v3: Improvements based on Jason Chien and Frank Chang's feedback.
-> >   - Created single set of MACROs for CTR CSRs in cpu_bit.h
-> >   - Some fixes in riscv_ctr_add_entry.
-> >   - Return zero for vs/sireg4-6 for CTR 0x200 to 0x2ff range.
-> >   - Improved extension dependency check.
-> >   - Fixed invalid ctrctl csr selection bug in riscv_ctr_freeze.
-> >   - Added implied rules for Smctr and Ssctr.
-> >   - Added missing SMSTATEEN0_CTR bit in mstateen0 and hstateen0 write o=
-ps.
-> >   - Some more cosmetic changes.
-> >   - https://lore.kernel.org/qemu-riscv/20241104-b4-ctr_upstream_v3-v3-0=
--32fd3c48205f@rivosinc.com/
-> >
-> > v2: Lots of improvements based on Jason Chien's feedback including:
-> >   - Added CTR recording for cm.jalt, cm.jt, cm.popret, cm.popretz.
-> >   - Fixed and added more CTR extension enable checks.
-> >   - Fixed CTR CSR predicate functions.
-> >   - Fixed external trap xTE bit checks.
-> >   - One fix in freeze function for VS-mode.
-> >   - Lots of minor code improvements.
-> >   - Added checks in sctrclr instruction helper.
-> >   - https://lore.kernel.org/qemu-riscv/20240619152708.135991-1-rkanwal@=
-rivosinc.com/
-> >
-> > v1:
-> >   - https://lore.kernel.org/qemu-riscv/20240529160950.132754-1-rkanwal@=
-rivosinc.com/
-> >
-> > ---
-> > Rajnesh Kanwal (7):
-> >       target/riscv: Remove obsolete sfence.vm instruction
-> >       target/riscv: Add Control Transfer Records CSR definitions.
-> >       target/riscv: Add support for Control Transfer Records extension =
-CSRs.
-> >       target/riscv: Add support to record CTR entries.
-> >       target/riscv: Add CTR sctrclr instruction.
-> >       target/riscv: machine: Add Control Transfer Record state descript=
-ion
-> >       target/riscv: Add support to access ctrsource, ctrtarget, ctrdata=
- regs.
-> >
-> >  target/riscv/cpu.c                             |  26 ++-
-> >  target/riscv/cpu.h                             |  13 ++
-> >  target/riscv/cpu_bits.h                        | 145 ++++++++++++
-> >  target/riscv/cpu_cfg.h                         |   2 +
-> >  target/riscv/cpu_helper.c                      | 266 +++++++++++++++++=
-+++++
-> >  target/riscv/csr.c                             | 294 +++++++++++++++++=
-+++++++-
-> >  target/riscv/helper.h                          |   2 +
-> >  target/riscv/insn32.decode                     |   2 +-
-> >  target/riscv/insn_trans/trans_privileged.c.inc |  18 +-
-> >  target/riscv/insn_trans/trans_rvi.c.inc        |  75 +++++++
-> >  target/riscv/insn_trans/trans_rvzce.c.inc      |  21 ++
-> >  target/riscv/machine.c                         |  25 +++
-> >  target/riscv/op_helper.c                       |  48 ++++
-> >  target/riscv/tcg/tcg-cpu.c                     |  11 +
-> >  target/riscv/translate.c                       |  46 ++++
-> >  15 files changed, 986 insertions(+), 8 deletions(-)
-> > ---
-> > base-commit: 699291ba7774f1580584cd96f84ceda8cc4edb7e
-> > change-id: 20250205-b4-ctr_upstream_v6-71418cd245ee
-> > --
-> > Best Regards,
-> > Rajnesh Kanwal
-> >
-> >
+------MTAFpDJBIS7x0DorxmyomC-IKR7RHdtq514vGN5lDcSFRf5o=_32c31_--
 
