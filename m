@@ -4,76 +4,90 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 578AEC02194
-	for <qemu-devel@archiver.kernel.org>; Thu,  6 Feb 2025 18:05:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0B2A5C02194
+	for <qemu-devel@archiver.kernel.org>; Thu,  6 Feb 2025 18:06:50 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tg6FN-0002Rw-Bv; Thu, 06 Feb 2025 13:05:05 -0500
+	id 1tg6Gd-0003IL-Fu; Thu, 06 Feb 2025 13:06:23 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <shameerali.kolothum.thodi@huawei.com>)
- id 1tg6FJ-0002R2-1n; Thu, 06 Feb 2025 13:05:01 -0500
-Received: from frasgout.his.huawei.com ([185.176.79.56])
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1tg6GZ-0003Hk-EW
+ for qemu-devel@nongnu.org; Thu, 06 Feb 2025 13:06:19 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <shameerali.kolothum.thodi@huawei.com>)
- id 1tg6FH-0002xj-E4; Thu, 06 Feb 2025 13:05:00 -0500
-Received: from mail.maildlp.com (unknown [172.18.186.31])
- by frasgout.his.huawei.com (SkyGuard) with ESMTP id 4YplNG3Mxnz6K8nW;
- Fri,  7 Feb 2025 02:03:58 +0800 (CST)
-Received: from frapeml500005.china.huawei.com (unknown [7.182.85.13])
- by mail.maildlp.com (Postfix) with ESMTPS id 5B6BF1400DB;
- Fri,  7 Feb 2025 02:04:57 +0800 (CST)
-Received: from frapeml500008.china.huawei.com (7.182.85.71) by
- frapeml500005.china.huawei.com (7.182.85.13) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.1.2507.39; Thu, 6 Feb 2025 19:04:57 +0100
-Received: from frapeml500008.china.huawei.com ([7.182.85.71]) by
- frapeml500008.china.huawei.com ([7.182.85.71]) with mapi id 15.01.2507.039;
- Thu, 6 Feb 2025 19:04:57 +0100
-To: Jason Gunthorpe <jgg@nvidia.com>, =?utf-8?B?RGFuaWVsIFAuIEJlcnJhbmfDqQ==?=
- <berrange@redhat.com>
-CC: "qemu-arm@nongnu.org" <qemu-arm@nongnu.org>, "qemu-devel@nongnu.org"
- <qemu-devel@nongnu.org>, "eric.auger@redhat.com" <eric.auger@redhat.com>,
- "peter.maydell@linaro.org" <peter.maydell@linaro.org>, "nicolinc@nvidia.com"
- <nicolinc@nvidia.com>, "ddutile@redhat.com" <ddutile@redhat.com>, Linuxarm
- <linuxarm@huawei.com>, "Wangzhou (B)" <wangzhou1@hisilicon.com>, jiangkunkun
- <jiangkunkun@huawei.com>, Jonathan Cameron <jonathan.cameron@huawei.com>,
- "zhangfei.gao@linaro.org" <zhangfei.gao@linaro.org>, "nathanc@nvidia.com"
- <nathanc@nvidia.com>
-Subject: RE: [RFC PATCH 0/5] hw/arm/virt: Add support for user-creatable
- nested SMMUv3
-Thread-Topic: [RFC PATCH 0/5] hw/arm/virt: Add support for user-creatable
- nested SMMUv3
-Thread-Index: AQHbMeB0+Q5BEZc9JkeH/U6Jz+dF4rMv66IAgAA0HqCAAb2VAIAIsUnQgAADD4CAAB6MsIAAJxaAgAATMvCAABLUAIAAAjUAgAAKIYCAAAJIgIAAAQ2AgAARRyA=
-Date: Thu, 6 Feb 2025 18:04:57 +0000
-Message-ID: <13b1d8b97a314cb28b87563fa9b45299@huawei.com>
-References: <Z51DmtP83741RAsb@redhat.com>
- <47d2c2556d794d87abf440263b2f7cd8@huawei.com> <Z6SQ3_5bcqseyzVa@redhat.com>
- <f898b6de4a664fe8810b06b7741e3120@huawei.com> <Z6TLSdwgajmHVmGH@redhat.com>
- <71116749d1234ab48a205fd2588151ec@huawei.com>
- <20250206170238.GG2960738@nvidia.com> <Z6TtCLQ35UI12T77@redhat.com>
- <20250206174647.GA3480821@nvidia.com> <Z6T3cX_fM-aeYbMI@redhat.com>
- <20250206175843.GI2960738@nvidia.com>
-In-Reply-To: <20250206175843.GI2960738@nvidia.com>
-Accept-Language: en-GB, en-US
-Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-x-originating-ip: [10.48.156.189]
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: base64
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1tg6GX-0003HF-5P
+ for qemu-devel@nongnu.org; Thu, 06 Feb 2025 13:06:18 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1738865175;
+ h=from:from:reply-to:reply-to:subject:subject:date:date:
+ message-id:message-id:to:to:cc:cc:mime-version:mime-version:
+ content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=v6wrJkl8iD3Af1SvsGrx5XFdEu+raOiX0r3Usn+dwDA=;
+ b=gL4RFGhIUgHmvjeS5zDqBWPvoyXCIKtnFtj+6UiCoSy+DWaT/k7ssCFhei2xvIQjFQWO5e
+ 70pVBXPcI0ewOySbJsQopO229D6jNBf2jkmriTZDBvciEJ9e6xOkEQmCHjfVt2QN48y6Q2
+ exnJL8HkdCYJmwwAcFVFz8gW4ELtmz4=
+Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-404-46Sb7WBqO6iiJZO5xcyPPQ-1; Thu,
+ 06 Feb 2025 13:06:12 -0500
+X-MC-Unique: 46Sb7WBqO6iiJZO5xcyPPQ-1
+X-Mimecast-MFC-AGG-ID: 46Sb7WBqO6iiJZO5xcyPPQ
+Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 9BBC7195608E; Thu,  6 Feb 2025 18:06:10 +0000 (UTC)
+Received: from redhat.com (unknown [10.42.28.33])
+ by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id C7F3A1955BCB; Thu,  6 Feb 2025 18:06:05 +0000 (UTC)
+Date: Thu, 6 Feb 2025 18:06:02 +0000
+From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
+To: Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Cc: qemu-devel@nongnu.org, qemu-arm@nongnu.org,
+ Anton Johansson <anjo@rev.ng>, Jason Wang <jasowang@redhat.com>,
+ Paolo Bonzini <pbonzini@redhat.com>,
+ Alistair Francis <alistair@alistair23.me>, Thomas Huth <thuth@redhat.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Peter Maydell <peter.maydell@linaro.org>,
+ "Edgar E. Iglesias" <edgar.iglesias@gmail.com>,
+ Markus Armbruster <armbru@redhat.com>,
+ Alex =?utf-8?Q?Benn=C3=A9e?= <alex.bennee@linaro.org>
+Subject: Re: [PATCH v5 11/16] hw/microblaze: Support various endianness for
+ s3adsp1800 machines
+Message-ID: <Z6T6CiL_F-LvLGel@redhat.com>
+References: <20250206131052.30207-1-philmd@linaro.org>
+ <20250206131052.30207-12-philmd@linaro.org>
+ <Z6S3Mgt1G7fIjeBB@redhat.com>
+ <4624f149-76d0-4da5-8f13-8c015043c335@linaro.org>
+ <Z6THtfjL6UVhBiW7@redhat.com>
+ <3156dc3b-9553-4b5f-a934-f29ee0601887@linaro.org>
+ <Z6TtisO7JGAMGILH@redhat.com>
+ <63f1130e-a30d-4416-ae74-374f1fd94dbe@linaro.org>
 MIME-Version: 1.0
-Received-SPF: pass client-ip=185.176.79.56;
- envelope-from=shameerali.kolothum.thodi@huawei.com;
- helo=frasgout.his.huawei.com
-X-Spam_score_int: -41
-X-Spam_score: -4.2
-X-Spam_bar: ----
-X-Spam_report: (-4.2 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_MED=-2.3,
- RCVD_IN_MSPIKE_H2=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <63f1130e-a30d-4416-ae74-374f1fd94dbe@linaro.org>
+User-Agent: Mutt/2.2.13 (2024-03-09)
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=berrange@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -86,46 +100,89 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-to:  Shameerali Kolothum Thodi <shameerali.kolothum.thodi@huawei.com>
-From:  Shameerali Kolothum Thodi via <qemu-devel@nongnu.org>
+Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-DQoNCj4gLS0tLS1PcmlnaW5hbCBNZXNzYWdlLS0tLS0NCj4gRnJvbTogSmFzb24gR3VudGhvcnBl
-IDxqZ2dAbnZpZGlhLmNvbT4NCj4gU2VudDogVGh1cnNkYXksIEZlYnJ1YXJ5IDYsIDIwMjUgNTo1
-OSBQTQ0KPiBUbzogRGFuaWVsIFAuIEJlcnJhbmfDqSA8YmVycmFuZ2VAcmVkaGF0LmNvbT4NCj4g
-Q2M6IFNoYW1lZXJhbGkgS29sb3RodW0gVGhvZGkNCj4gPHNoYW1lZXJhbGkua29sb3RodW0udGhv
-ZGlAaHVhd2VpLmNvbT47IHFlbXUtYXJtQG5vbmdudS5vcmc7DQo+IHFlbXUtZGV2ZWxAbm9uZ251
-Lm9yZzsgZXJpYy5hdWdlckByZWRoYXQuY29tOw0KPiBwZXRlci5tYXlkZWxsQGxpbmFyby5vcmc7
-IG5pY29saW5jQG52aWRpYS5jb207IGRkdXRpbGVAcmVkaGF0LmNvbTsNCj4gTGludXhhcm0gPGxp
-bnV4YXJtQGh1YXdlaS5jb20+OyBXYW5nemhvdSAoQikNCj4gPHdhbmd6aG91MUBoaXNpbGljb24u
-Y29tPjsgamlhbmdrdW5rdW4gPGppYW5na3Vua3VuQGh1YXdlaS5jb20+Ow0KPiBKb25hdGhhbiBD
-YW1lcm9uIDxqb25hdGhhbi5jYW1lcm9uQGh1YXdlaS5jb20+Ow0KPiB6aGFuZ2ZlaS5nYW9AbGlu
-YXJvLm9yZzsgbmF0aGFuY0BudmlkaWEuY29tDQo+IFN1YmplY3Q6IFJlOiBbUkZDIFBBVENIIDAv
-NV0gaHcvYXJtL3ZpcnQ6IEFkZCBzdXBwb3J0IGZvciB1c2VyLWNyZWF0YWJsZQ0KPiBuZXN0ZWQg
-U01NVXYzDQo+IA0KPiBPbiBUaHUsIEZlYiAwNiwgMjAyNSBhdCAwNTo1NDo1N1BNICswMDAwLCBE
-YW5pZWwgUC4gQmVycmFuZ8OpIHdyb3RlOg0KPiA+ID4gPiBXZSBzaG91bGRuJ3QgYXNzdW1lIGFu
-eSBWRklPIGRldmljZSBleGlzdHMgaW4gdGhlIFFFTVUgY25vZmlnIGF0IHRoZQ0KPiB0aW1lDQo+
-ID4gPiA+IHdlIHJlYWxpemUgdGhlIHZpcnR1YWwgc3NtdS4gSSBleHBlY3QgdGhlIFNNTVUgbWF5
-IGJlIGNvbGQgcGx1Z2dlZCwNCj4gd2hpbGUNCj4gPiA+ID4gdGhlIFZGSU8gZGV2aWNlcyBtYXkg
-YmUgaG90IHBsdWdnZWQgYXJiaXRyYXJseSBsYXRlciwgYW5kIHdlIHNob3VsZA0KPiBoYXZlDQo+
-ID4gPiA+IHRoZSBhc3NvY2lhdGlvbiBpbml0aWFsaXplZCB0aGUgU01NVSBpcyByZWFsaXplZC4N
-Cj4gPiA+DQo+ID4gPiBUaGlzIGlzIG5vdCBzdXBwb3J0ZWQga2VybmVsIHNpZGUsIHlvdSBjYW4n
-dCBpbnN0YW50aWF0ZSBhIHZJT01NVQ0KPiA+ID4gd2l0aG91dCBhIFZGSU8gZGV2aWNlIHRoYXQg
-dXNlcyBpdC4gRm9yIHNlY3VyaXR5Lg0KPiA+DQo+ID4gV2hhdCBhcmUgdGhlIHNlY3VyaXR5IGNv
-bmNlcm5zIGhlcmUgPw0KPiANCj4gWW91IHNob3VsZCBub3QgYmUgYWJsZSB0byBvcGVuIGlvbW11
-ZmQgYW5kIG1hbmlwdWxhdGUgaW9tbXUgSFcgdGhhdA0KPiB5b3UgZG9uJ3QgaGF2ZSBhIFZGSU8g
-ZGVzY3JpcHRvciBmb3IsIGluY2x1ZGluZyBjcmVhdGluZyBwaHlzaWNhbA0KPiB2SU9NTVUgcmVz
-b3VyY2VzLCBhbGxvY2F0aW5nIGNvbW1hbmQgcXVldWVzIGFuZCB3aGF0ZXZlciBlbHNlLg0KPiAN
-Cj4gU29tZSBraW5kIG9mIGhvdCBwbHVnIHNtbXUgd291bGQgaGF2ZSB0byBjcmVhdGUgYSB2U01N
-VSB3aXRob3V0IGFueQ0KPiBrZXJuZWwgYmFja2luZyBhbmQgdGhlbiBsYXRlciBiaW5kIGl0IHRv
-IGEga2VybmVsIGltcGxlbWVudGF0aW9uLg0KDQpOb3Qgc3VyZSBJIGdldCB0aGUgcHJvYmxlbSB3
-aXRoIGFzc29jaWF0aW5nIHZTTU1VIHdpdGggYSBwU01NVS4gU29tZXRoaW5nDQpsaWtlIGFuIGlv
-bW11IGluc3RhbmNlIGlkIG1lbnRpb25lZCBiZWZvcmUsDQoNCi1kZXZpY2UgYXJtLXNtbXV2My1h
-Y2NlbCxpZD1zbW11djIsYnVzPXBjaWUuMixob3N0LXNtbXU9aW9tbXUuMQ0KDQpUaGlzIGNhbiBy
-ZWFsaXplIHRoZSB2U01NVSB3aXRob3V0IGFjdHVhbGx5IGNyZWF0aW5nIGEgdklPTU1VIGluIGtl
-cm5lbC4NCkFuZCB3aGVuIHRoZSBkZXYgZ2V0cyBhdHRhY2hlZC9yZWFsaXplZCwgY2hlY2sgKEdF
-VF9IV19JTkZPKXRoZSBzcGVjaWZpZWQNCmlvbW11IGluc3RhbmNlIGlkIG1hdGNoZXMgb3Igbm90
-Lg0KDQpPciB0aGUgY29uY2VybiBoZXJlIGlzIGV4cG9ydGluZyBhbiBpb21tdSBpbnN0YW5jZSBp
-ZCB0byB1c2VyIHNwYWNlPw0KDQpUaGFua3MsDQpTaGFtZWVyDQogDQo=
+On Thu, Feb 06, 2025 at 06:49:38PM +0100, Philippe Mathieu-Daudé wrote:
+> On 6/2/25 18:12, Daniel P. Berrangé wrote:
+> > On Thu, Feb 06, 2025 at 04:04:20PM +0100, Philippe Mathieu-Daudé wrote:
+> > > On 6/2/25 15:31, Daniel P. Berrangé wrote:
+> > > > On Thu, Feb 06, 2025 at 02:53:58PM +0100, Philippe Mathieu-Daudé wrote:
+> > > > > Hi Daniel,
+> > > > > 
+> > > > > On 6/2/25 14:20, Daniel P. Berrangé wrote:
+> > > > > > On Thu, Feb 06, 2025 at 02:10:47PM +0100, Philippe Mathieu-Daudé wrote:
+> > > > > > > Introduce an abstract machine parent class which defines
+> > > > > > > the 'little_endian' property. Duplicate the current machine,
+> > > > > > > which endian is tied to the binary endianness, to one big
+> > > > > > > endian and a little endian machine; updating the machine
+> > > > > > > description. Keep the current default machine for each binary.
+> > > > > > > 
+> > > > > > > 'petalogix-s3adsp1800' machine is aliased as:
+> > > > > > > - 'petalogix-s3adsp1800-be' on big-endian binary,
+> > > > > > > - 'petalogix-s3adsp1800-le' on little-endian one.
+> > > > > > 
+> > > > > > Does it makes sense to expose these as different machine types ?
+> > > > > > 
+> > > > > > If all the HW is identical in both cases, it feels like the
+> > > > > > endianness could just be a bool property of the machine type,
+> > > > > > rather than a new machine type.
+> > > > > 
+> > > > > Our test suites expect "qemu-system-foo -M bar" to work out of
+> > > > > the box, we can not have non-default properties.
+> > > > > 
+> > > > > (This is related to the raspberry pi discussion in
+> > > > > https://lore.kernel.org/qemu-devel/20250204002240.97830-1-philmd@linaro.org/).
+> > > > > 
+> > > > > My plan is to deprecate 'petalogix-s3adsp1800', so once we
+> > > > > remove it we can merge both qemu-system-microblaze and
+> > > > > qemu-system-microblazeel into a single binary.
+> > > > > 
+> > > > > If you don't want to add more machines, what should be the
+> > > > > endianness of the 'petalogix-s3adsp1800' machine in a binary
+> > > > > with no particular endianness? Either we add for explicit
+> > > > > endianness (fixing test suites) or we add one machine for
+> > > > > each endianness; I fail to see other options not too
+> > > > > confusing for our users.
+> > > > 
+> > > > We would pick an arbitrary endianness of our choosing
+> > > > I guess. How does this work in physical machines ? Is
+> > > > the choice of endianess a firmware setting, or a choice
+> > > > by the vendor when manufacturing in some way ?
+> > > 
+> > > Like MIPS*, SH4* and Xtensa*, it is a jumper on the board
+> > > (wired to a CPU pin which is sampled once at cold reset).
+> > 
+> > That makes me thing even more it is just a machine type property.
+> 
+> I'm happy with a machine property, this was even my first approach
+> using OnOffAuto until I ran the test-suite and have qom-introspection
+> failing.
+> 
+> What should be the default?
+> 
+> Per the SH4 datasheet:
+> 
+>   Bit 31—Endian Flag (ENDIAN): Samples the value of the endian
+>   specification external pin (MD5) in a power-on reset by the
+>   RESET pin. The endian mode of all spaces is determined by this
+>   bit. ENDIAN is a read-only bit.
+> 
+> There is no default per the spec, and I believe using one is
+> a mistake.
+
+If it is left as an unspecified choice in the spec, then I would
+presume HW vendors are picking an option based on what they
+expect "most" common usage to be amongst their customers. IOW,
+if we know of typically used guest OS prefer big or little, that
+could influence our choice.
+
+With regards,
+Daniel
+-- 
+|: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
+|: https://libvirt.org         -o-            https://fstop138.berrange.com :|
+|: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
+
 
