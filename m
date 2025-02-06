@@ -4,64 +4,64 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 60A81C0219D
-	for <qemu-devel@archiver.kernel.org>; Thu,  6 Feb 2025 11:35:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 95038C0219C
+	for <qemu-devel@archiver.kernel.org>; Thu,  6 Feb 2025 11:35:20 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tg09d-000064-JR; Thu, 06 Feb 2025 06:34:45 -0500
+	id 1tg08t-00078S-3X; Thu, 06 Feb 2025 06:33:59 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tg09R-0008Ho-Dx
- for qemu-devel@nongnu.org; Thu, 06 Feb 2025 06:34:33 -0500
-Received: from mail-wr1-x434.google.com ([2a00:1450:4864:20::434])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tg08q-00077S-0N
+ for qemu-devel@nongnu.org; Thu, 06 Feb 2025 06:33:57 -0500
+Received: from mail-wr1-x431.google.com ([2a00:1450:4864:20::431])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tg09P-0000tw-GN
- for qemu-devel@nongnu.org; Thu, 06 Feb 2025 06:34:33 -0500
-Received: by mail-wr1-x434.google.com with SMTP id
- ffacd0b85a97d-38633b5dbcfso730232f8f.2
- for <qemu-devel@nongnu.org>; Thu, 06 Feb 2025 03:34:31 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tg08o-0000r9-2j
+ for qemu-devel@nongnu.org; Thu, 06 Feb 2025 06:33:55 -0500
+Received: by mail-wr1-x431.google.com with SMTP id
+ ffacd0b85a97d-38633b5dbcfso729594f8f.2
+ for <qemu-devel@nongnu.org>; Thu, 06 Feb 2025 03:33:53 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1738841670; x=1739446470; darn=nongnu.org;
+ d=linaro.org; s=google; t=1738841632; x=1739446432; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=ppn20+OdDHYYHHj4mqusBuIEfs+xIwJ4iZjJotRYm4c=;
- b=joyjvxsv1FwPqbbxHnp8XsD7VhcOfbq2J5bYGl5bd5XeUKsB5+S3/u/M6A9YPsy15b
- fXL0OBFwv19sV0kpTghiq+cb6ActYw49vIwSvRNUHrY/IMsksuSChK5Ln8O8Pyn/OV/t
- iveYCVCztd8wfhePCqUOakfgEkjUEKwjcV9wiDp/tv1RiqymyS+o6OeI8FZNDBv1Jzlq
- lEo4djVp5PQQRh9i5c8FMD0FSksrolfy1eHrOhHuCDBuuSlFRJ+h0x8iCc6MRx0bdWbV
- FIZ+vYvuSKwM+Dh15DipiplAEum8N4jDZia+/veBmr11Xk2YuPKZh8kyz8EhaIC0Vboy
- zJIA==
+ bh=r3g08ohEQSqeyZw6xIdCyqqo2uAlLNUZF1ZoGaNfqHI=;
+ b=Url+ahEy7QcrotHgUKoim5FB7zHgrwYSoZjsNExJYryOH5+07kdiYZmHB9uotfSlzN
+ fuhEdA+Zv2JIDgWmf/QwICkkYZLzcGCu9FHtmSGArCmOPBJXoHGpUA9sQG8ydOauTUQb
+ eMPpyuqKoYqedcxCmhlt3MzATTdKPTONhneS139DSLuVpjrRZWfVqYedkXBwJxhbbWl6
+ SksWm6A4z6WrtGukoAjXFy7qUu3zO+e1M6NKTq1bw8lHbwn4io2JFctWHQmGnPO/ryL4
+ sG/0JcQkHAmslxKycIxZ5mKI7X6V7FlUKwgbWyQK/luuhghNg32TGU1hbu+RBTpa8/Dc
+ HRzA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1738841670; x=1739446470;
+ d=1e100.net; s=20230601; t=1738841632; x=1739446432;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=ppn20+OdDHYYHHj4mqusBuIEfs+xIwJ4iZjJotRYm4c=;
- b=szedkpDSxboNvmujDpqN2iiehS3Wd8t1CrBFDps5QnH8v3fyXH0YNAQSohdMaK6Oil
- WBajM7Osw+lGo1MQRNTcAWG+Hh3+8Z8k6b0cEeKLevpT5CSMcfqA4zbjJqO4nBY3K6eL
- YPoTKlQPffb4mCgCOykimLcbgBXlc52qkRrm/dmED1ibhuyoafAP6pfNPJ9mdM28I3Xn
- oHR78agK+9gHh2A1AuuLG01ejkdiSmAnqrvzuS+CtWN6mqf3k7aRMjqWiQ/HlzwDStpS
- 4x8ctzPdPlpsYgG8O9MzRD2ig2HUDfEUIM6GZJMYgzqCmKtFMW4IIe/PGGE23QBuinu6
- yZOw==
-X-Gm-Message-State: AOJu0YzOMGlMeMyz8OgXhHbX4xhvSohVtgKjS/mXMKi6/9dVd+/Pt+yY
- nRuHaKS7rA7hcJJrEdjz8i8bRAL8FMXYfZgO+JguY6kNp65gXnaPQ9xxl7nITxkCc+q0HdB2t5h
- PgYA=
-X-Gm-Gg: ASbGnctHpHtGYpeDfg4CLxNLnX7YVT7dnkLI5G9Z2AQItXJLVnjAVbEntTa41VL+tpU
- N8yc65xHO7NrEuQkn/96W607DFtT9jrNAsmlv97gUkeHzDIl3PexlY75x6l5c+GIFTqmdPZdLQt
- FKK48OyaPKZ4eUleHPshUWs+w8dy64QZqYrTim9RoFUwzZIl6gdoNKv2pBQ9wAzlCkdFa8KwhqZ
- 1k+u+RKdl9rWfXUKsWXvH4WFLvOq+31y9nOmYDcoPwcps+KohAuqyLm/u1rKHM+gqrDRc1s/U6E
- uNKzVtdcShYCWSuZ0SpWz97EZ8AqkWsg6Dj/eytMKn56OaaD+8CqCDrUG+gzzv3Kng==
-X-Google-Smtp-Source: AGHT+IHAQRrSCi+tR7QES1pKdhLqPnDoWgG/vvnnGvNajO00fDOm4PEIVaV1vFhM1MIrTvHxeIrp/g==
-X-Received: by 2002:a05:6000:144f:b0:38a:88ac:ed14 with SMTP id
- ffacd0b85a97d-38db489322dmr6016167f8f.19.1738841669620; 
- Thu, 06 Feb 2025 03:34:29 -0800 (PST)
+ bh=r3g08ohEQSqeyZw6xIdCyqqo2uAlLNUZF1ZoGaNfqHI=;
+ b=hSwQSoIDRIivzunGt7qnMrZmPpHdDQbdUtMbsJzn09pr7ARZMHjtoRzs8uXrtwwMme
+ xvOs7ROTlZ8xAom9p7ioO49q9py1vFvtSHwnvQTpKF8PbFCVjUEGiFMHMzCaU16gNtbK
+ fY1MPTLRGOIfYCtXvP9/vGUTV71BBXsDi1/U7LF9pCt2gzr3dvlF1MKAxsq+9fniNRG5
+ 25xdVafnP1IISic/t9L/pODQzI+3kyryZsgz58NOKYzEO2gzdw5tVTqVvOuRtZ2A913t
+ 2VwJOmAHJ53E4vRtUiHbOQpJryKjOc/Jj72UL4SAUmTLGWiv6sIJrvvvvIh5CtwKHac3
+ e6Dw==
+X-Gm-Message-State: AOJu0YxbXuEk4dCxDwoHGR+ZIRLjLecIFYcNbi8baaVsrdo2DOss9UBb
+ 0CpCmJl0rFk9tuDJij9ULyw2cODJXLIDfpgcvx/0aeQFhSlV198VdY6C7D1al/9327jDAct2MNS
+ wh2U=
+X-Gm-Gg: ASbGnctINOcvwlVzfVukYdIcpSh0vcVSKIDknN9A9V6pgvr77jdOES47g2D42NJ8qKx
+ Y9u4DaQ0iZHzGrby7b7SHYXVF0fB8v2gG5XPOCcS4oehWSfmefxqGLWF9r3AmWmFdJLF3GsdsCD
+ LKRh9oOlthvjCe6uywIs/E9dC+8ppqqob+wpTiapKu8mfhKwaAKA/qpI3DAOFQEgJkD1ShwkXY8
+ mDydFxDZ+bZucDAUubm/Nm0aKAr4PPmcA2aHgcq5IDBASQGWbc/rLAUUSaLR9E5FZ+SuTA6d82C
+ SholqflhAYvg5r0/tl5mlWvv1z6stFg1eTC2XMz/wu0Rwr4OsoZheNCgqzDBc7dfnQ==
+X-Google-Smtp-Source: AGHT+IHiXyM3N0b/uEwdDeta0+L9OO8pcOGqeWgZHpFc+i/ERL5NW4dSrEIbEWOvj0Kd2MPmmHFUPQ==
+X-Received: by 2002:a5d:64a1:0:b0:38a:888c:7df0 with SMTP id
+ ffacd0b85a97d-38db4869c52mr6084553f8f.1.1738841632026; 
+ Thu, 06 Feb 2025 03:33:52 -0800 (PST)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-38dbdd5c87csm1531231f8f.52.2025.02.06.03.34.28
+ ffacd0b85a97d-38dbde31ccesm1506012f8f.98.2025.02.06.03.33.51
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Thu, 06 Feb 2025 03:34:29 -0800 (PST)
+ Thu, 06 Feb 2025 03:33:51 -0800 (PST)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Anton Johansson <anjo@rev.ng>, Alistair Francis <alistair@alistair23.me>,
@@ -69,18 +69,18 @@ Cc: Anton Johansson <anjo@rev.ng>, Alistair Francis <alistair@alistair23.me>,
  Thomas Huth <thuth@redhat.com>, Jason Wang <jasowang@redhat.com>,
  "Edgar E. Iglesias" <edgar.iglesias@gmail.com>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PATCH v4 14/16] tests/functional: Have microblaze tests inherit
- common parent class
-Date: Thu,  6 Feb 2025 12:33:19 +0100
-Message-ID: <20250206113321.94906-15-philmd@linaro.org>
+Subject: [PATCH v4 06/16] hw/arm/xlnx-zynqmp: Use &error_abort for programming
+ errors
+Date: Thu,  6 Feb 2025 12:33:11 +0100
+Message-ID: <20250206113321.94906-7-philmd@linaro.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20250206113321.94906-1-philmd@linaro.org>
 References: <20250206113321.94906-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::434;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x434.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::431;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x431.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -103,46 +103,87 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Have the MicroblazeMachine class being common to both
-MicroblazeBigEndianMachine and MicroblazeLittleEndianMachine
-classes.
+When a property value is static (not provided by QMP or CLI),
+error shouldn't happen, otherwise it is a programming error.
+Therefore simplify and use &error_abort as this can't fail.
 
+Reported-by: Richard Henderson <richard.henderson@linaro.org>
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Reviewed-by: Anton Johansson <anjo@rev.ng>
 ---
- tests/functional/test_microblaze_s3adsp1800.py   | 2 ++
- tests/functional/test_microblazeel_s3adsp1800.py | 5 ++---
- 2 files changed, 4 insertions(+), 3 deletions(-)
+ hw/arm/xlnx-zynqmp.c | 38 ++++++++++++--------------------------
+ 1 file changed, 12 insertions(+), 26 deletions(-)
 
-diff --git a/tests/functional/test_microblaze_s3adsp1800.py b/tests/functional/test_microblaze_s3adsp1800.py
-index c4226f49cf3..2eff31f13a7 100755
---- a/tests/functional/test_microblaze_s3adsp1800.py
-+++ b/tests/functional/test_microblaze_s3adsp1800.py
-@@ -15,6 +15,8 @@ class MicroblazeMachine(QemuSystemTest):
+diff --git a/hw/arm/xlnx-zynqmp.c b/hw/arm/xlnx-zynqmp.c
+index bd5b0dd5e76..d6022ff2d3d 100644
+--- a/hw/arm/xlnx-zynqmp.c
++++ b/hw/arm/xlnx-zynqmp.c
+@@ -689,16 +689,10 @@ static void xlnx_zynqmp_realize(DeviceState *dev, Error **errp)
+          * - SDIO Specification Version 3.0
+          * - eMMC Specification Version 4.51
+          */
+-        if (!object_property_set_uint(sdhci, "sd-spec-version", 3, errp)) {
+-            return;
+-        }
+-        if (!object_property_set_uint(sdhci, "capareg", SDHCI_CAPABILITIES,
+-                                      errp)) {
+-            return;
+-        }
+-        if (!object_property_set_uint(sdhci, "uhs", UHS_I, errp)) {
+-            return;
+-        }
++        object_property_set_uint(sdhci, "sd-spec-version", 3, &error_abort);
++        object_property_set_uint(sdhci, "capareg", SDHCI_CAPABILITIES,
++                                 &error_abort);
++        object_property_set_uint(sdhci, "uhs", UHS_I, &error_abort);
+         if (!sysbus_realize(SYS_BUS_DEVICE(sdhci), errp)) {
+             return;
+         }
+@@ -763,14 +757,10 @@ static void xlnx_zynqmp_realize(DeviceState *dev, Error **errp)
+     xlnx_zynqmp_create_unimp_mmio(s);
  
-     timeout = 90
+     for (i = 0; i < XLNX_ZYNQMP_NUM_GDMA_CH; i++) {
+-        if (!object_property_set_uint(OBJECT(&s->gdma[i]), "bus-width", 128,
+-                                      errp)) {
+-            return;
+-        }
+-        if (!object_property_set_link(OBJECT(&s->gdma[i]), "dma",
+-                                      OBJECT(system_memory), errp)) {
+-            return;
+-        }
++        object_property_set_uint(OBJECT(&s->gdma[i]), "bus-width", 128,
++                                 &error_abort);
++        object_property_set_link(OBJECT(&s->gdma[i]), "dma",
++                                 OBJECT(system_memory), &error_abort);
+         if (!sysbus_realize(SYS_BUS_DEVICE(&s->gdma[i]), errp)) {
+             return;
+         }
+@@ -811,10 +801,8 @@ static void xlnx_zynqmp_realize(DeviceState *dev, Error **errp)
+     sysbus_connect_irq(SYS_BUS_DEVICE(&s->qspi_dma), 0,
+                        qdev_get_gpio_in(DEVICE(&s->qspi_irq_orgate), 0));
  
-+class MicroblazeBigEndianMachine(MicroblazeMachine):
-+
-     ASSET_IMAGE_BE = Asset(
-         ('https://qemu-advcal.gitlab.io/qac-best-of-multiarch/download/'
-          'day17.tar.xz'),
-diff --git a/tests/functional/test_microblazeel_s3adsp1800.py b/tests/functional/test_microblazeel_s3adsp1800.py
-index 715ef3f79ac..a3e8d7ca48e 100755
---- a/tests/functional/test_microblazeel_s3adsp1800.py
-+++ b/tests/functional/test_microblazeel_s3adsp1800.py
-@@ -12,10 +12,9 @@
- from qemu_test import QemuSystemTest, Asset
- from qemu_test import wait_for_console_pattern
+-    if (!object_property_set_link(OBJECT(&s->qspi), "stream-connected-dma",
+-                                  OBJECT(&s->qspi_dma), errp)) {
+-         return;
+-    }
++    object_property_set_link(OBJECT(&s->qspi), "stream-connected-dma",
++                             OBJECT(&s->qspi_dma), &error_abort);
+     if (!sysbus_realize(SYS_BUS_DEVICE(&s->qspi), errp)) {
+         return;
+     }
+@@ -833,10 +821,8 @@ static void xlnx_zynqmp_realize(DeviceState *dev, Error **errp)
+     }
  
-+from test_microblaze_s3adsp1800 import MicroblazeMachine
+     for (i = 0; i < XLNX_ZYNQMP_NUM_USB; i++) {
+-        if (!object_property_set_link(OBJECT(&s->usb[i].sysbus_xhci), "dma",
+-                                      OBJECT(system_memory), errp)) {
+-            return;
+-        }
++        object_property_set_link(OBJECT(&s->usb[i].sysbus_xhci), "dma",
++                                 OBJECT(system_memory), &error_abort);
  
--class MicroblazeelMachine(QemuSystemTest):
--
--    timeout = 90
-+class MicroblazeLittleEndianMachine(MicroblazeMachine):
- 
-     ASSET_IMAGE_LE = Asset(
-         ('http://www.qemu-advent-calendar.org/2023/download/day13.tar.gz'),
+         qdev_prop_set_uint32(DEVICE(&s->usb[i].sysbus_xhci), "intrs", 4);
+         qdev_prop_set_uint32(DEVICE(&s->usb[i].sysbus_xhci), "slots", 2);
 -- 
 2.47.1
 
