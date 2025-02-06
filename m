@@ -4,83 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 84DB4C02196
-	for <qemu-devel@archiver.kernel.org>; Thu,  6 Feb 2025 11:35:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0643CC02194
+	for <qemu-devel@archiver.kernel.org>; Thu,  6 Feb 2025 11:35:19 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tg08w-00079G-LS; Thu, 06 Feb 2025 06:34:02 -0500
+	id 1tg09R-0008GV-9E; Thu, 06 Feb 2025 06:34:33 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tg08u-00078u-L0
- for qemu-devel@nongnu.org; Thu, 06 Feb 2025 06:34:00 -0500
-Received: from mail-wr1-x42c.google.com ([2a00:1450:4864:20::42c])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tg09N-00089L-B3
+ for qemu-devel@nongnu.org; Thu, 06 Feb 2025 06:34:29 -0500
+Received: from mail-wr1-x42e.google.com ([2a00:1450:4864:20::42e])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tg08s-0000re-MZ
- for qemu-devel@nongnu.org; Thu, 06 Feb 2025 06:34:00 -0500
-Received: by mail-wr1-x42c.google.com with SMTP id
- ffacd0b85a97d-38db0146117so331253f8f.3
- for <qemu-devel@nongnu.org>; Thu, 06 Feb 2025 03:33:58 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tg09L-0000tQ-4L
+ for qemu-devel@nongnu.org; Thu, 06 Feb 2025 06:34:28 -0500
+Received: by mail-wr1-x42e.google.com with SMTP id
+ ffacd0b85a97d-38db6e13947so613845f8f.2
+ for <qemu-devel@nongnu.org>; Thu, 06 Feb 2025 03:34:26 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1738841637; x=1739446437; darn=nongnu.org;
+ d=linaro.org; s=google; t=1738841665; x=1739446465; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=O4Wc+wPX9caPrybWTx+kUBv1XRxmKkHkBF0nt6GWIO0=;
- b=iJYlcKiV5dbG2xBRPwzMx3xkDjdSwlyLI2RR6OHWr+KHzJ7DlhieWl/2NzVxHAGO0Y
- siB2kIPHVHqgPrulijugHAUJqw8TYgBFSIlI1z5DVqIppVYzmI2kdew/zgBP2MuNZKaA
- qb6rscahlCElfurDi0ywv0dYlB7IJEHWzAv77qxv3SuN/u1DZLX1tNOKad6cbxi97NGU
- XamxZGgg95ZVUL7LTtaCFHyPicPs9cgiMWtrrVNfR7cIS/o6QIe34uEIkiRiYXHXDDD4
- cmiz7hetPfX79Iam8Pdu6ZSvWRUMWYYF0a3qhkTngGPHT9Th9hTqrrr/PXN/k2g5P7CF
- gReA==
+ bh=zUtqHHDNY10ErvkSPLlzoR4cOpr1l8H4w8NugOOncxc=;
+ b=gejhkmtELhwS6HCPVTvXkI1X8n5TYWGrteYyBJ5d+e6NE/YfuIbuwZwPQsFRN0mixZ
+ oZykHXuyHSlpJOpjJ2AYMeCSuLN/EuTEgygbYlRXih00fQ+H7oT1l/6Oo9jUpdQdwChb
+ sTec+3SdLsI1FG3Dt9RypDvXcJ+GFGi0tNC5ImM+3+fTUkFzARR2BbP4M1aVoGwMagyM
+ g17hFQLxuRyw2K+Z+sRHcsBSFiI+3cXmbbv35NpMRpbSoc7zCrbF/aFx2OPc0bFu4ZcC
+ EATU8V5jIPLzw2Ro63Go7sazSOTbBCgz20DBiqkD8pEOKGg1DIHrzkpOA9+RBdrI9A3u
+ AWCQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1738841637; x=1739446437;
+ d=1e100.net; s=20230601; t=1738841665; x=1739446465;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=O4Wc+wPX9caPrybWTx+kUBv1XRxmKkHkBF0nt6GWIO0=;
- b=ExNrONFHgqwsRKkXiKQkuPnrJYvujHj4Y44CN1w0QFFcQPBCOZ0Yd1+Mbvb1Y63lp5
- NlBWLqU7XJg61PaDsp6ZujCy3rS+SJYcxu8uvouDUqzlovo+qw1SS/MobEw3HVJzQsDt
- ffKUBpTUXCYGNV+7qd+49CbkFFomRZjWnR2n3YfEmymEvel6Hkd8BeUUGzFEN77/7M4w
- yOubztGDPbUYQt1VK+/ZYlE8mdENHyiRqAyn3Dz7rK5rbjMEuixsJAi55uHhPsbtal+6
- AbEzraisyNSA8L0jNfZnVeWDnU13zODWr550CsouvCp6/3TP8BnKPtK6giV61Ku0MYA6
- 4OTQ==
-X-Gm-Message-State: AOJu0Yz+GxbLiStM5f5FijZLfkzjEbNFVkyV1qvO/xeBA1bc+RQvjdxA
- U8HyEL0ISFHDwXrRuKRTcsKKFinXU93Tq8fisPy0iwHQK6VjeAG5vRvIVjajBNc8w/y0gD7LMPZ
- /Z6E=
-X-Gm-Gg: ASbGnctWpBw2r5tZexqZydmn47ziM82LSuQD11ybNMOzeVT6JnMa8uX4N9tiwxSUr9T
- Krs1XYe+MMrnuxcSh81vx9AaVwLEss/UGLg+tHkZI2IoKYa1hUzqDOgQrPuJqpIT5aPTTUFHKTD
- xtfLLZdpnaD7Sp9dPSJMLSUxacRg8fsTvYUiJRg+dMCprA5YNcd5QzsSJwKbwLJeIvDCec+fjLN
- 16WAfE0HqPOpQpJzD84Mj+u5oIpAvio036U9Kox81O9ADZcJox6hp8Mxj4rPpJwyda13XoF4rwm
- 3+utZ7c6tddMq/16YiV7ODjHinmLkoXxkta8SK8HlMQYaaGGyWceQ0hqwuPrHpwZcw==
-X-Google-Smtp-Source: AGHT+IFrRrL1/ADSCElgcEDRUnK+/ct9RAbZfh/qMLopC5PLhgK+Cm+mPuJ40vmg+Oss2Z/x+IbFtQ==
-X-Received: by 2002:a05:6000:1fae:b0:38d:bf09:aa2b with SMTP id
- ffacd0b85a97d-38dbf09adb7mr1007083f8f.54.1738841636836; 
- Thu, 06 Feb 2025 03:33:56 -0800 (PST)
+ bh=zUtqHHDNY10ErvkSPLlzoR4cOpr1l8H4w8NugOOncxc=;
+ b=ph24uteMuk1/BNxufKYUAA8I62GCpApzMLzWAeofQKIx+TWZRdZCsDaq2uRHkHgii8
+ pxzlgGe625f2kqn96s7UR6mDoh7d+iq+PgdVUaCtTAFleszs1Zuha0+OosPaOwJR6PzS
+ xZg/3N8HlZCrA/FQ3kD+cW7IxgTKB5lsY6MRTb7TFhcM0SJ25Pz6+VXPaojQ1DMdaBUT
+ NnUDU4oACPMaXRxQYeaagZTKGgKigqL2g8dZRMeuN2NUWuUaxgbu6fHsizkFhnuPjmoW
+ 5tVmU0HR5xB38zodOT3f/5Ayw8ots/Zs7U9LpJWMnPrl3ZBGnvaHrkyHuNxD26/DvNzH
+ YQXA==
+X-Gm-Message-State: AOJu0YzupCP/9MaY5VHF4flCaOufk2ErTjmztjwnPrj2xjmXbpVqRKjB
+ upyXW83YiGyPVgMYPpoS960Zw5rxWE3pXVAUcHl+ICho3FxyQF92rEmosJg2b0v5TwhO8RiSy1K
+ OPWU=
+X-Gm-Gg: ASbGnctTzYDWJ3ARPjWmpY8tPYnaQm2O63dLnsz1D5YUFdxH5dD5ELHdzarcLkgi5L3
+ BZo3dy62RX1W52TwLVe2t/CKVHaJZBUWqUivQ4NBIbRQB7EUrwkP1XA+WiEvi2gs2lLPFVt60DP
+ hBHAjIBdZnsERmdNqUvt8bVQPancBbDRANB6MVaey3pbBEb5O586s8cG02Vr0/u8uSQuRYbC45e
+ bStbqlx+IbD6thWzbfCZ3MTFPOe1fXTNB7rGNLA2ueh+TR8HY8G9Od5Lscug+OHtcQVudkB8Gfy
+ ZL0pMx24ci/iAjCPV+O3SdyU3X1xQH6ogVNSmAnCgKczUPrI9nTaZlQVKUrTjuskWA==
+X-Google-Smtp-Source: AGHT+IGbtCscjOwCjd3nVLy6xHl3L4GiHn41ULVvzBX/38XOdy1DspZ8V0B2KQRzs+b95GmLSOEpQA==
+X-Received: by 2002:a5d:4f11:0:b0:38a:41a3:ac4 with SMTP id
+ ffacd0b85a97d-38db4945801mr3939469f8f.45.1738841664926; 
+ Thu, 06 Feb 2025 03:34:24 -0800 (PST)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4391dca34a8sm16320255e9.16.2025.02.06.03.33.55
+ ffacd0b85a97d-38dbdd4b154sm1521480f8f.38.2025.02.06.03.34.24
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Thu, 06 Feb 2025 03:33:56 -0800 (PST)
+ Thu, 06 Feb 2025 03:34:24 -0800 (PST)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Anton Johansson <anjo@rev.ng>, Alistair Francis <alistair@alistair23.me>,
  Richard Henderson <richard.henderson@linaro.org>,
  Thomas Huth <thuth@redhat.com>, Jason Wang <jasowang@redhat.com>,
  "Edgar E. Iglesias" <edgar.iglesias@gmail.com>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Alistair Francis <alistair.francis@wdc.com>
-Subject: [PATCH v4 07/16] target/microblaze: Explode MO_TExx -> MO_TE | MO_xx
-Date: Thu,  6 Feb 2025 12:33:12 +0100
-Message-ID: <20250206113321.94906-8-philmd@linaro.org>
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Subject: [PATCH v4 13/16] tests/functional: Allow microblaze tests to take a
+ machine name argument
+Date: Thu,  6 Feb 2025 12:33:18 +0100
+Message-ID: <20250206113321.94906-14-philmd@linaro.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20250206113321.94906-1-philmd@linaro.org>
 References: <20250206113321.94906-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::42c;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x42c.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::42e;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x42e.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -103,173 +103,63 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Extract the implicit MO_TE definition in order to replace
-it by runtime variable in the next commit.
-
-Mechanical change using:
-
-  $ for n in UW UL UQ UO SW SL SQ; do \
-      sed -i -e "s/MO_TE$n/MO_TE | MO_$n/" \
-           $(git grep -l MO_TE$n target/microblaze); \
-    done
+Make microblaze tests a bit more generic.
 
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
 ---
- target/microblaze/translate.c | 36 +++++++++++++++++------------------
- 1 file changed, 18 insertions(+), 18 deletions(-)
+ tests/functional/test_microblaze_s3adsp1800.py   | 7 +++++--
+ tests/functional/test_microblazeel_s3adsp1800.py | 7 +++++--
+ 2 files changed, 10 insertions(+), 4 deletions(-)
 
-diff --git a/target/microblaze/translate.c b/target/microblaze/translate.c
-index 24005f05b21..86efabb83b5 100644
---- a/target/microblaze/translate.c
-+++ b/target/microblaze/translate.c
-@@ -780,13 +780,13 @@ static bool trans_lbui(DisasContext *dc, arg_typeb *arg)
- static bool trans_lhu(DisasContext *dc, arg_typea *arg)
- {
-     TCGv addr = compute_ldst_addr_typea(dc, arg->ra, arg->rb);
--    return do_load(dc, arg->rd, addr, MO_TEUW, dc->mem_index, false);
-+    return do_load(dc, arg->rd, addr, MO_TE | MO_UW, dc->mem_index, false);
- }
+diff --git a/tests/functional/test_microblaze_s3adsp1800.py b/tests/functional/test_microblaze_s3adsp1800.py
+index fac364b1ea9..c4226f49cf3 100755
+--- a/tests/functional/test_microblaze_s3adsp1800.py
++++ b/tests/functional/test_microblaze_s3adsp1800.py
+@@ -20,8 +20,8 @@ class MicroblazeMachine(QemuSystemTest):
+          'day17.tar.xz'),
+         '3ba7439dfbea7af4876662c97f8e1f0cdad9231fc166e4861d17042489270057')
  
- static bool trans_lhur(DisasContext *dc, arg_typea *arg)
- {
-     TCGv addr = compute_ldst_addr_typea(dc, arg->ra, arg->rb);
--    return do_load(dc, arg->rd, addr, MO_TEUW, dc->mem_index, true);
-+    return do_load(dc, arg->rd, addr, MO_TE | MO_UW, dc->mem_index, true);
- }
+-    def test_microblaze_s3adsp1800_be(self):
+-        self.set_machine('petalogix-s3adsp1800')
++    def do_ballerina_be_test(self, machine):
++        self.set_machine(machine)
+         self.archive_extract(self.ASSET_IMAGE_BE)
+         self.vm.set_console()
+         self.vm.add_args('-kernel',
+@@ -34,5 +34,8 @@ def test_microblaze_s3adsp1800_be(self):
+         # message, that's why we don't test for a later string here. This
+         # needs some investigation by a microblaze wizard one day...
  
- static bool trans_lhuea(DisasContext *dc, arg_typea *arg)
-@@ -798,26 +798,26 @@ static bool trans_lhuea(DisasContext *dc, arg_typea *arg)
-     return true;
- #else
-     TCGv addr = compute_ldst_addr_ea(dc, arg->ra, arg->rb);
--    return do_load(dc, arg->rd, addr, MO_TEUW, MMU_NOMMU_IDX, false);
-+    return do_load(dc, arg->rd, addr, MO_TE | MO_UW, MMU_NOMMU_IDX, false);
- #endif
- }
++    def test_microblaze_s3adsp1800_legacy_be(self):
++        self.do_ballerina_be_test('petalogix-s3adsp1800')
++
+ if __name__ == '__main__':
+     QemuSystemTest.main()
+diff --git a/tests/functional/test_microblazeel_s3adsp1800.py b/tests/functional/test_microblazeel_s3adsp1800.py
+index 5d353dba5d2..715ef3f79ac 100755
+--- a/tests/functional/test_microblazeel_s3adsp1800.py
++++ b/tests/functional/test_microblazeel_s3adsp1800.py
+@@ -21,9 +21,9 @@ class MicroblazeelMachine(QemuSystemTest):
+         ('http://www.qemu-advent-calendar.org/2023/download/day13.tar.gz'),
+         'b9b3d43c5dd79db88ada495cc6e0d1f591153fe41355e925d791fbf44de50c22')
  
- static bool trans_lhui(DisasContext *dc, arg_typeb *arg)
- {
-     TCGv addr = compute_ldst_addr_typeb(dc, arg->ra, arg->imm);
--    return do_load(dc, arg->rd, addr, MO_TEUW, dc->mem_index, false);
-+    return do_load(dc, arg->rd, addr, MO_TE | MO_UW, dc->mem_index, false);
- }
+-    def test_microblazeel_s3adsp1800_le(self):
++    def do_xmaton_le_test(self, machine):
+         self.require_netdev('user')
+-        self.set_machine('petalogix-s3adsp1800')
++        self.set_machine(machine)
+         self.archive_extract(self.ASSET_IMAGE_LE)
+         self.vm.set_console()
+         self.vm.add_args('-kernel', self.scratch_file('day13', 'xmaton.bin'))
+@@ -38,5 +38,8 @@ def test_microblazeel_s3adsp1800_le(self):
+                 'tftp -g -r xmaton.png 10.0.2.2 ; md5sum xmaton.png',
+                 '821cd3cab8efd16ad6ee5acc3642a8ea')
  
- static bool trans_lw(DisasContext *dc, arg_typea *arg)
- {
-     TCGv addr = compute_ldst_addr_typea(dc, arg->ra, arg->rb);
--    return do_load(dc, arg->rd, addr, MO_TEUL, dc->mem_index, false);
-+    return do_load(dc, arg->rd, addr, MO_TE | MO_UL, dc->mem_index, false);
- }
- 
- static bool trans_lwr(DisasContext *dc, arg_typea *arg)
- {
-     TCGv addr = compute_ldst_addr_typea(dc, arg->ra, arg->rb);
--    return do_load(dc, arg->rd, addr, MO_TEUL, dc->mem_index, true);
-+    return do_load(dc, arg->rd, addr, MO_TE | MO_UL, dc->mem_index, true);
- }
- 
- static bool trans_lwea(DisasContext *dc, arg_typea *arg)
-@@ -829,14 +829,14 @@ static bool trans_lwea(DisasContext *dc, arg_typea *arg)
-     return true;
- #else
-     TCGv addr = compute_ldst_addr_ea(dc, arg->ra, arg->rb);
--    return do_load(dc, arg->rd, addr, MO_TEUL, MMU_NOMMU_IDX, false);
-+    return do_load(dc, arg->rd, addr, MO_TE | MO_UL, MMU_NOMMU_IDX, false);
- #endif
- }
- 
- static bool trans_lwi(DisasContext *dc, arg_typeb *arg)
- {
-     TCGv addr = compute_ldst_addr_typeb(dc, arg->ra, arg->imm);
--    return do_load(dc, arg->rd, addr, MO_TEUL, dc->mem_index, false);
-+    return do_load(dc, arg->rd, addr, MO_TE | MO_UL, dc->mem_index, false);
- }
- 
- static bool trans_lwx(DisasContext *dc, arg_typea *arg)
-@@ -846,7 +846,7 @@ static bool trans_lwx(DisasContext *dc, arg_typea *arg)
-     /* lwx does not throw unaligned access errors, so force alignment */
-     tcg_gen_andi_tl(addr, addr, ~3);
- 
--    tcg_gen_qemu_ld_i32(cpu_res_val, addr, dc->mem_index, MO_TEUL);
-+    tcg_gen_qemu_ld_i32(cpu_res_val, addr, dc->mem_index, MO_TE | MO_UL);
-     tcg_gen_mov_tl(cpu_res_addr, addr);
- 
-     if (arg->rd) {
-@@ -930,13 +930,13 @@ static bool trans_sbi(DisasContext *dc, arg_typeb *arg)
- static bool trans_sh(DisasContext *dc, arg_typea *arg)
- {
-     TCGv addr = compute_ldst_addr_typea(dc, arg->ra, arg->rb);
--    return do_store(dc, arg->rd, addr, MO_TEUW, dc->mem_index, false);
-+    return do_store(dc, arg->rd, addr, MO_TE | MO_UW, dc->mem_index, false);
- }
- 
- static bool trans_shr(DisasContext *dc, arg_typea *arg)
- {
-     TCGv addr = compute_ldst_addr_typea(dc, arg->ra, arg->rb);
--    return do_store(dc, arg->rd, addr, MO_TEUW, dc->mem_index, true);
-+    return do_store(dc, arg->rd, addr, MO_TE | MO_UW, dc->mem_index, true);
- }
- 
- static bool trans_shea(DisasContext *dc, arg_typea *arg)
-@@ -948,26 +948,26 @@ static bool trans_shea(DisasContext *dc, arg_typea *arg)
-     return true;
- #else
-     TCGv addr = compute_ldst_addr_ea(dc, arg->ra, arg->rb);
--    return do_store(dc, arg->rd, addr, MO_TEUW, MMU_NOMMU_IDX, false);
-+    return do_store(dc, arg->rd, addr, MO_TE | MO_UW, MMU_NOMMU_IDX, false);
- #endif
- }
- 
- static bool trans_shi(DisasContext *dc, arg_typeb *arg)
- {
-     TCGv addr = compute_ldst_addr_typeb(dc, arg->ra, arg->imm);
--    return do_store(dc, arg->rd, addr, MO_TEUW, dc->mem_index, false);
-+    return do_store(dc, arg->rd, addr, MO_TE | MO_UW, dc->mem_index, false);
- }
- 
- static bool trans_sw(DisasContext *dc, arg_typea *arg)
- {
-     TCGv addr = compute_ldst_addr_typea(dc, arg->ra, arg->rb);
--    return do_store(dc, arg->rd, addr, MO_TEUL, dc->mem_index, false);
-+    return do_store(dc, arg->rd, addr, MO_TE | MO_UL, dc->mem_index, false);
- }
- 
- static bool trans_swr(DisasContext *dc, arg_typea *arg)
- {
-     TCGv addr = compute_ldst_addr_typea(dc, arg->ra, arg->rb);
--    return do_store(dc, arg->rd, addr, MO_TEUL, dc->mem_index, true);
-+    return do_store(dc, arg->rd, addr, MO_TE | MO_UL, dc->mem_index, true);
- }
- 
- static bool trans_swea(DisasContext *dc, arg_typea *arg)
-@@ -979,14 +979,14 @@ static bool trans_swea(DisasContext *dc, arg_typea *arg)
-     return true;
- #else
-     TCGv addr = compute_ldst_addr_ea(dc, arg->ra, arg->rb);
--    return do_store(dc, arg->rd, addr, MO_TEUL, MMU_NOMMU_IDX, false);
-+    return do_store(dc, arg->rd, addr, MO_TE | MO_UL, MMU_NOMMU_IDX, false);
- #endif
- }
- 
- static bool trans_swi(DisasContext *dc, arg_typeb *arg)
- {
-     TCGv addr = compute_ldst_addr_typeb(dc, arg->ra, arg->imm);
--    return do_store(dc, arg->rd, addr, MO_TEUL, dc->mem_index, false);
-+    return do_store(dc, arg->rd, addr, MO_TE | MO_UL, dc->mem_index, false);
- }
- 
- static bool trans_swx(DisasContext *dc, arg_typea *arg)
-@@ -1015,7 +1015,7 @@ static bool trans_swx(DisasContext *dc, arg_typea *arg)
- 
-     tcg_gen_atomic_cmpxchg_i32(tval, cpu_res_addr, cpu_res_val,
-                                reg_for_write(dc, arg->rd),
--                               dc->mem_index, MO_TEUL);
-+                               dc->mem_index, MO_TE | MO_UL);
- 
-     tcg_gen_brcond_i32(TCG_COND_NE, cpu_res_val, tval, swx_fail);
- 
++    def test_microblaze_s3adsp1800_legacy_le(self):
++        self.do_xmaton_le_test('petalogix-s3adsp1800')
++
+ if __name__ == '__main__':
+     QemuSystemTest.main()
 -- 
 2.47.1
 
