@@ -4,78 +4,91 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4E47BC02194
-	for <qemu-devel@archiver.kernel.org>; Thu,  6 Feb 2025 15:41:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 315D6C02198
+	for <qemu-devel@archiver.kernel.org>; Thu,  6 Feb 2025 15:52:12 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tg40Q-0006KB-I8; Thu, 06 Feb 2025 10:41:30 -0500
+	id 1tg49o-0001Fk-T7; Thu, 06 Feb 2025 10:51:13 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1tg40O-0006Jj-RI
- for qemu-devel@nongnu.org; Thu, 06 Feb 2025 10:41:29 -0500
-Received: from mail-yb1-xb32.google.com ([2607:f8b0:4864:20::b32])
+ id 1tg49n-0001FF-0r
+ for qemu-devel@nongnu.org; Thu, 06 Feb 2025 10:51:11 -0500
+Received: from mail-yb1-xb2d.google.com ([2607:f8b0:4864:20::b2d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1tg40M-0002gB-H5
- for qemu-devel@nongnu.org; Thu, 06 Feb 2025 10:41:28 -0500
-Received: by mail-yb1-xb32.google.com with SMTP id
- 3f1490d57ef6-e5b1c4d14f2so926182276.0
- for <qemu-devel@nongnu.org>; Thu, 06 Feb 2025 07:41:26 -0800 (PST)
+ id 1tg49k-0005fG-EO
+ for qemu-devel@nongnu.org; Thu, 06 Feb 2025 10:51:10 -0500
+Received: by mail-yb1-xb2d.google.com with SMTP id
+ 3f1490d57ef6-e549b0f8d57so951842276.3
+ for <qemu-devel@nongnu.org>; Thu, 06 Feb 2025 07:51:07 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1738856484; x=1739461284; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=MUmIUl+7CiZDD1nVfbNvHDoplWKLvo/NAi2M7/ioT+8=;
- b=s6e0nHDnAesWEOZMfaAO/WETLNT/fJzFnauXMiH1qKYHd3s/BB+usNhcsIK+CZUYNB
- 6Va34xp5EojKsinKx3cGGSnHP02XQ4MC2lBp5wpcKD7fQIBWc8gvybue67iB6yDm0h5L
- n5Anji1rwJLe06HEpVMHwDMBZxIQFtF/BQYlampXIQ4S9AftWrm0aN14gfp1M6PukQxK
- LxXUBVIAKY6qxT75WdWBJdb6iYruWXl7FIekbrpHB06uKSXPbz+ZvKZLWZ9duq5cZvca
- XTdHUmPdYYIBsi9k5jnT2BpxcGLWykoX0J3vTj4agvg6VOxEa7lk3jtM6sj/hX92n8RI
- h7Lw==
+ d=linaro.org; s=google; t=1738857066; x=1739461866; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=ASDW0A2tZEwrvkv7i8MRxtiQwCq0H8EN+WLjmcNfDFM=;
+ b=VLa4q/JigSAPLjAtP6BBtS6K8fal+6B/n9MTeOK2V/o4RlNdfSANP0IzkTi9OZQajN
+ 96D4JfuxtlNxeZ+vDKE0h5Q1571M0G/WXPCFVk2yBlOXkDT7dsgB8LXP7keJHPfSqRSh
+ 9PURKvDKqz+3hS5OKy6jxOzQLRl73ac4CaS6sylrm/BwWKhflVxSiIDfPWKsRoMjtyCd
+ NY6UkRScvi4D1sGBA2KI6Hi6rSjloyQAxJP5+UckjjVSGn1Fsnt6XWM+5Mb29Q38JNSs
+ d/q5LOu/oA5/zWjn4L7WUsARe9q6HLgUD2BWJZro5/96aJZBRnzb7mJtGXAziEo+hnQG
+ B80Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1738856484; x=1739461284;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=MUmIUl+7CiZDD1nVfbNvHDoplWKLvo/NAi2M7/ioT+8=;
- b=vvRAtZV6TjKeHLPBlryzrLF9WXRAuZALDPWAud2HF3zc0JtjQ+mV0YXZAI77oTVwcf
- JSkWxlfNZpXcOhYuAdpY8p/hvsMCc1ZGzACSHWdNlIMmLI0tJeoKjFV7JuHPKSlUZwan
- i+oj2sdmfXhK2cjzqjSdgKsHfMbd5JTjqxj/mkFs6KQgnQoAO+lKWtOMm64DxWnD0VYw
- xcPw/97m/tGlr/0uVAM/IrqmBQu68kyHJIHIpjotKiVkHkdPP2AjEzthnlu7/n9t3CJ9
- umxpuRjkjQDlLAKubcP4UQqMnV/n+7RpGOO2Q3EUEqJZjb8n6vMITY/CK9sE/ecZ5+77
- ZdOg==
-X-Gm-Message-State: AOJu0YxjsFJQI6WJSPzOWktN+0cPRhHgSScTVabL0sbdPfEVpqCcsitz
- Oku2xV3ZgGJj//GMJU3W/cOfKO27fMk2ZO3H9oRy9jB3FRasU9KmLdKAmI4Swv85LyZi9wjmoPU
- oAMaI9LWwd79zaTuRgQB/jcMcWdLeL5bMCs+tEw==
-X-Gm-Gg: ASbGncsPayZVPC3bpNeHIrCY0cj8UjQ+CUnzYMclxQM2rcgfQA1zxtuya4l3Qn7lRV4
- tbjCsx7WXFvbpkDk6Ln2PPO2BAe+sGD5Yrn2l063viyyzHeRSk8NK17aDs8b89eKWV082fDSS1Q
+ d=1e100.net; s=20230601; t=1738857066; x=1739461866;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=ASDW0A2tZEwrvkv7i8MRxtiQwCq0H8EN+WLjmcNfDFM=;
+ b=vbrkgp2Ho+lFWhMx/LpS5f8Ry6gt/u/zcUBdWPjtm+SSRJva9PDO6NMbBtRrObAHtq
+ xo92lLV9umHzWpLK95jNtfD4sw/38jqSpFNHehNHZATOLkzE5GyhpoomoMk7bWYlOn8N
+ ZZCzTb8B+i3eHt8ppVOg+ESwFos8x8PsH8sASvv1LqlJXZ9dk47qUue6yCU4Sb8uvWqK
+ 4pJaIK05rWktRIgXYOiZh+UGeUUg5rv29skPEqK4oBWiyC02Cn/oATpqadPWm/WPW31b
+ SaCECj5HsiaPuO5bzOX4gjHGgg/hDmK7byUA1uGt2Y9DTh6OUToFxXt1cKzjfrwQoFxH
+ Os5Q==
+X-Gm-Message-State: AOJu0YyeDFYHRPiDH660TvbVfm1OaUXZJqTs2aCuC7+lURxX7rp31jnO
+ hbbvZltGXE9oKMKWIBU54Bj8E1AkplJO3PM95DAJ4tTfSjGdjtyP+vztjoZDEcW4i2kNmJ/g4Bf
+ toU/IkHYxbqIDwjGRqhadg0+9ekLDpSpglv7JiAxinlt+GXK1
+X-Gm-Gg: ASbGncuTdEriI0oEqRFyHekrGUXStiXTYeKTdCdqR2Z2uqP5dY2eKv721NWTCTwEhfI
+ zfpNrQZ5FkZDG0VHCXXfBuCqR8JjQ4YCbNbOwli6qmIlUTOBmB6Rfa/5jkTtwhWnv40Evnli2Vw
  ==
-X-Google-Smtp-Source: AGHT+IEQYoK7m6ukCkfWVtPyPECRjxZZMSwxIDjatSWlNpaDxigHgRH/AMt8wmr96H2m5vZvnYXyNlAL/Wc5S6BUKpc=
-X-Received: by 2002:a05:6902:cc9:b0:e5b:257e:c3b1 with SMTP id
- 3f1490d57ef6-e5b259d1967mr5605889276.8.1738856484213; Thu, 06 Feb 2025
- 07:41:24 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IEVply1qiNn7znAT8fQMFvgeU86wRbWjC73n9GgoJ6MafGCxRH+1m00cw4BFE1qriSGZOIZY/VTW8vN2rZ7ZSM=
+X-Received: by 2002:a05:6902:2210:b0:e5b:1746:7fa3 with SMTP id
+ 3f1490d57ef6-e5b25bc6f9amr5963299276.23.1738857066557; Thu, 06 Feb 2025
+ 07:51:06 -0800 (PST)
 MIME-Version: 1.0
-References: <20240615185423.49474-1-florian.lugou@provenrun.com>
- <CAFEAcA_+WrzM4fXQMUxMi3L5yiUWMrUGTSZH=NDdYDKUCP+8NQ@mail.gmail.com>
- <20240620135627.qxcrkdx5v7wdurx4@flugou-latitude5401>
- <CAFEAcA-ngrrEUDD7eA_sOLGF+_wRCuQVxTwuCA4pXjRcuJucmA@mail.gmail.com>
- <20240621140725.f4hsasmhrhh4joxm@flugou-latitude5401>
- <CAFEAcA9c9hbpsdyc7+=QEOZGrNY2m-urk6VrWdwCdfk9ipkwpw@mail.gmail.com>
- <20240820113024.53tmzejw2omm6bbx@flugou-latitude5401>
-In-Reply-To: <20240820113024.53tmzejw2omm6bbx@flugou-latitude5401>
+References: <20250203144048.2131117-1-alex.bennee@linaro.org>
+ <20250203144048.2131117-5-alex.bennee@linaro.org>
+In-Reply-To: <20250203144048.2131117-5-alex.bennee@linaro.org>
 From: Peter Maydell <peter.maydell@linaro.org>
-Date: Thu, 6 Feb 2025 15:41:12 +0000
-X-Gm-Features: AWEUYZmahiK2qpuPa0z3RYfenGXJ3dinOUgdtOsO67P154Uz5jEB1MLc-NVKMig
-Message-ID: <CAFEAcA9X0w5QW2qnnhF2k72ZrS8SALWiXV7uNr1e=jQnZvrQ7Q@mail.gmail.com>
-Subject: Re: [PATCH] target/arm/helper: Fix timer interrupt masking when
- HCR_EL2.E2H == 0
-To: Florian Lugou <florian.lugou@provenrun.com>
-Cc: qemu-devel@nongnu.org, "open list:ARM TCG CPUs" <qemu-arm@nongnu.org>
+Date: Thu, 6 Feb 2025 15:50:55 +0000
+X-Gm-Features: AWEUYZmb9iLML0ZpPW3OB0h1I8Pz0Rcl4bMdig2uKDsyMoFyCdpxYC5JLddP9OM
+Message-ID: <CAFEAcA-SRrdyeBExuCruVd-CuDdosyQKG98stELvkV-EM9q-Tw@mail.gmail.com>
+Subject: Re: [PATCH 04/18] tests/qtest: simplify qtest_process_inbuf
+To: =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>
+Cc: qemu-devel@nongnu.org, qemu-ppc@nongnu.org, 
+ Mahmoud Mandour <ma.mandourr@gmail.com>, Thomas Huth <thuth@redhat.com>, 
+ Daniel Henrique Barboza <danielhb413@gmail.com>,
+ Alistair Francis <alistair.francis@wdc.com>, 
+ Hao Wu <wuhaotsh@google.com>, Peter Xu <peterx@redhat.com>,
+ Warner Losh <imp@bsdimp.com>, 
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>, qemu-arm@nongnu.org, 
+ Harsh Prateek Bora <harshpb@linux.ibm.com>,
+ =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
+ Palmer Dabbelt <palmer@dabbelt.com>, Kyle Evans <kevans@freebsd.org>, 
+ Laurent Vivier <laurent@vivier.eu>, Riku Voipio <riku.voipio@iki.fi>,
+ Bin Meng <bmeng.cn@gmail.com>, 
+ qemu-rust@nongnu.org, Laurent Vivier <lvivier@redhat.com>, 
+ Liu Zhiwei <zhiwei_liu@linux.alibaba.com>, Weiwei Li <liwei1518@gmail.com>, 
+ qemu-riscv@nongnu.org, Fabiano Rosas <farosas@suse.de>,
+ Tyrone Ting <kfting@nuvoton.com>, 
+ Paolo Bonzini <pbonzini@redhat.com>, Nicholas Piggin <npiggin@gmail.com>, 
+ Alexandre Iooss <erdnaxe@crans.org>
 Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::b32;
- envelope-from=peter.maydell@linaro.org; helo=mail-yb1-xb32.google.com
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2607:f8b0:4864:20::b2d;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yb1-xb2d.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -98,62 +111,18 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, 20 Aug 2024 at 12:30, Florian Lugou <florian.lugou@provenrun.com> wrote:
+On Mon, 3 Feb 2025 at 14:41, Alex Benn=C3=A9e <alex.bennee@linaro.org> wrot=
+e:
 >
-> > > $ aarch64-none-elf-gcc -ffreestanding -nostdlib -T qemu/tests/tcg/aarch64/system/kernel.ld -o test test.S
-> > >
-> > > $ qemu-system-aarch64 \
-> > >         -machine virt,secure=on,gic-version=3 \
-> > >         -cpu cortex-a57 \
-> > >         -kernel test \
-> > >         -display none \
-> > >         -semihosting
-> > >
-> > > $ # Exits after ~1s
-> > >
-> > > $ qemu-system-aarch64 \
-> > >         -machine virt,secure=on,gic-version=3 \
-> > >         -cpu cortex-a57 \
-> > >         -kernel test \
-> > >         -display none \
-> > >         -semihosting \
-> > >         -icount shift=0,sleep=off
-> > >
-> > > ... (hangs until QEMU is killed)
-> >
-> > For me, with QEMU commit 9eb51530c12ae645b, this test case
-> > exits (doesn't hang) with both these command lines. Do you
-> > still see this bug? I guess it's possible we fixed it in
-> > the last month or so, though I can't see anything obviously
-> > relevant in the git logs.
+> Don't both creating a GString to temporarily hold our qtest command.
+> Instead do a simpler g_strndup and use autofree to clean up
+> afterwards.
 >
-> Thank you for taking the time to test it.
->
-> On my machine (Ubuntu 22.04), with QEMU configuration options
-> "--target-list=aarch64-softmmu --enable-debug", running the provided test case
-> with "-icount shift=0,sleep=off" still makes QEMU hang forever on commit
-> 9eb51530c12ae645b.
->
-> The issue was initially reported by a colleague of mine so I was hoping it would
-> be somehow reliably reproducible. But apparently it is not.
+> Signed-off-by: Alex Benn=C3=A9e <alex.bennee@linaro.org>
+> ---
 
-Somebody else reported a similar issue to this to me this week,
-which reminded me of a different bug that we'd found and fixed
-in the interim, which was enough of a hint that I figured out
-why this wasn't reproducible for me.
 
-This bug only reproduces if your QEMU binary isn't compiled
-with slirp support (which will happen if your host system
-doesn't have libslirp-dev or libslirp-devel installed).
-If slirp is present then the usermode networking backend
-will be present and it always has an active timer. Without
-slirp, the problem manifests when there are no active timers.
-
-You can also repro it on a with-slirp compile by adding
-"-net none" to the command line.
-
-I'll have a look at what the underlying bug is... thanks again
-for the handy test case.
+Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
 
 thanks
 -- PMM
