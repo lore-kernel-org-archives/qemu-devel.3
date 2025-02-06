@@ -4,86 +4,86 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1DA59C02199
-	for <qemu-devel@archiver.kernel.org>; Thu,  6 Feb 2025 20:15:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2781EC02199
+	for <qemu-devel@archiver.kernel.org>; Thu,  6 Feb 2025 20:16:20 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tg88H-00057e-Lv; Thu, 06 Feb 2025 15:05:54 -0500
+	id 1tg80X-0007RP-Nv; Thu, 06 Feb 2025 14:57:53 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1tg83i-0007uD-AB
- for qemu-devel@nongnu.org; Thu, 06 Feb 2025 15:01:15 -0500
-Received: from mail-pj1-x1030.google.com ([2607:f8b0:4864:20::1030])
+ id 1tg80A-0007CT-QF
+ for qemu-devel@nongnu.org; Thu, 06 Feb 2025 14:57:30 -0500
+Received: from mail-pl1-x634.google.com ([2607:f8b0:4864:20::634])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1tg83b-0001A1-VH
- for qemu-devel@nongnu.org; Thu, 06 Feb 2025 15:01:08 -0500
-Received: by mail-pj1-x1030.google.com with SMTP id
- 98e67ed59e1d1-2f9cd8ecbceso2433346a91.0
- for <qemu-devel@nongnu.org>; Thu, 06 Feb 2025 12:00:56 -0800 (PST)
+ id 1tg808-0000V4-Os
+ for qemu-devel@nongnu.org; Thu, 06 Feb 2025 14:57:30 -0500
+Received: by mail-pl1-x634.google.com with SMTP id
+ d9443c01a7336-21ddab8800bso19535915ad.3
+ for <qemu-devel@nongnu.org>; Thu, 06 Feb 2025 11:57:28 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1738872056; x=1739476856; darn=nongnu.org;
+ d=linaro.org; s=google; t=1738871847; x=1739476647; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=shYE/Y8mwYtFi4H64vM/dgi1ISDOHkuqNvG1Cjnz438=;
- b=Fn+J59TDwo2+rWiTnoOzo3ub4MesMhbmn0Q4XLc+S7vzra5BvavVhdHLTX9GE5aTCa
- KWjllS5Q8rlijl68xI/PHisbXy1OR9WxcYP8tJCpNS7NgzVV4prfmOyAYw3O5NBMu8DF
- OWwF5u3nr+UKfEQ3mNLZ3ITkvPFbQEDhbyjyFNE1CHI3tzMIOYYz04g9WARgF+azrG5z
- IKv9855YjgMyjXVCzvFUGrBSv2SQMEbTrSTcmh7GhrfYY7hq5ORzGb4yZjrGpd6iKK0m
- k5SQFV7JKbrkG3p3wIGVTtoRQtrCnNgTvppJSpZxyoOQ6gVi/dJWV+CA6GJqmkjOo4Ql
- FUaw==
+ bh=TDH/8N+x01y22FOds0NZm9KcrEUf3p/25H8MY3Hpnm0=;
+ b=j4/eAC70Nfz4e2RPRH0q4MFIwvhFe18ljC7tol+Pi/TRYWmfi7QA7mAPZos8SUEY/N
+ Sp+jRH+97it8OlbD174wuwyKfSOSodx0fNmx4NoQuI5VDrKDjZMEx5vicbaEPqiACuPd
+ 8foviLWh9/IrAbrf5X2uPv/PDElTyJB8uTZFUAbNxSZwdzBZvsBgwFMVgxfucShRPM4t
+ 5Yt0K8Bqa5yDC0M77hsUF30/nYa/5SKh/68L6LmOdROmqNjWpOWevDLHS8+bCvcK3+nS
+ JTwpOjZ9HI9qt8onNLTKreLQEjJieko8U7JfNzr/obG7nBMcs7QvukyPfXrEnQO+xcJ7
+ uq3g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1738872056; x=1739476856;
+ d=1e100.net; s=20230601; t=1738871847; x=1739476647;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=shYE/Y8mwYtFi4H64vM/dgi1ISDOHkuqNvG1Cjnz438=;
- b=FOf4usrH/OXQyiEIiJvV2GNmt8cpRe1RHPTJSq7ItY1J/mrQDtt1rJe0j2Tyc8d1LS
- 6KPCEAk2SjvZXvMjOD0PGlettjwzClN9rs5k1HVkb3uVSZe+2Ugddfwzx8rArh0xu3dC
- JmDEOqQjzjtmAoucb8bUOSWwyyyGsR+mfx+uZFuaTkqsSuJJGNbOV+cS+HPrD3CqwssC
- RDmbNiK0z1NUVxqJ9NtCepVN87jNNZ25/CntlKSfQOFaGEBdGks/FW3w22K36pevzgLr
- yluYfItRQNr6RvxtLSl8NRsfqVz3qSqw1KcUPehGdbt79876pz0a0mkJtM0/ph9tRV/p
- lQGw==
-X-Gm-Message-State: AOJu0YyeCCLOwnnMCNALNyWM6XIcp1Lk6f27uys7s/aQLDp2R388sNlX
- Js+CXWrgFZyZ3JmQBepqGQsekw+jSoWPkDx9n4PBuXtldP8/eKb0utd2M01N3p4Z5I2XD4A/6xR
- X
-X-Gm-Gg: ASbGnctSVPFRsppfnvti1JuWLuOAdCBr0XtBXf1vQiuy/4KW5Gnc59Mvit9Qcun6das
- VZ8/B4Gn/KkWBsqKLHMGRSk4BqyDxTX+MmB26tkf+cIV3r47R1CO+ystHTQvnY2mbEEVRvdGMpX
- T2bzC9Ja33PnyIy59nZ5ZWBXzEzLTP3lnx/iEvz/qAMT6BiObF1h0CyUAQRVtneLhjwCSx7z9vx
- pD5dydbVPIl8ON2AMEwY7MPdxNONthMiUZyEfdGVY37dvLyXfSRwhpIjjC5G+h/fDl8gIi/48CV
- LoVSN716PR3k3hbYxLMDRNYD4RwicQCXmoEbdz21GWUmdlM=
-X-Google-Smtp-Source: AGHT+IGTOZGErPNrO1PISSNwNzM/AG9Whnq9oYuxSWrao8bKWSvpCdI5MXOiOVHuWFRp6FEqa6dZ9Q==
-X-Received: by 2002:a17:90b:2ec5:b0:2fa:2252:f438 with SMTP id
- 98e67ed59e1d1-2fa2450cf33mr538528a91.30.1738872055821; 
- Thu, 06 Feb 2025 12:00:55 -0800 (PST)
+ bh=TDH/8N+x01y22FOds0NZm9KcrEUf3p/25H8MY3Hpnm0=;
+ b=Gb9DsIAgVFoCHFOAQ3rHFwr+gJtXT6SyNJr6zaWMG1RmxDonwrHRNIFVJYo71QZp78
+ hQNNpHUXSjknnvKl+QkTii753/DmG+I8s42hnbZNlcEfpCsLfAwn8zu8FSNUbABKrloB
+ Br3K9UV44rU7Apm3SX7FXPwPZkJhaT/p63CZIy7thK6hdLIjJMyyI13/npl3IzTnghX+
+ vaQWn9t6HSYtDUssMSZ1w3Ic6/Opict3fEalpZrrbaYLNqh5qvjO46aixlZQYmiEJ3te
+ 3zhGRl649moeeRliPF70kBr2k6eATHcP1Q4jGOCaOuyrhLyaSU66QiVeAbseoPYBLiWu
+ MTxQ==
+X-Gm-Message-State: AOJu0YwjkrACabyoXw1S/vpsGZz9ycpYYjPl6wkVCd78v92mbfKg+WjX
+ I7NQ7w/7bt8e4KZmb70lITSCRKQKRmMPfvCaj2aMmKZIVR/797tgu5ou0R1ORi2GCs4u5ioTday
+ q
+X-Gm-Gg: ASbGncvJqF37U2qNtIpPFQ3P9wgKWpYRgLvnf0frJIEswtbeuL1hJluXo1JWlPXs85+
+ e4nDU6KXdRwqUVG5D26m6JBeDEXoII0mliYODw6QsNB+LBL1/WcxCXAZapTJmpC3y63F6bnllCi
+ z13lfTwqrm5ihx46MY5AHUz8n2esTPGORoBFBjwOPGvX7bD+vObGZWqk1iDfgoMdzPuF8FOVTun
+ h2QdB9f7rWbCTouKSjgIEcqh080wRbksPMPzLKctsInvllr4wnVLWG25vgJaXHxhKe/ckqwnluB
+ ORKR4Gq0b32B8HVGU4CAfHmFaXx+3I8jbh3meE3dVCPmMhM=
+X-Google-Smtp-Source: AGHT+IF4+r/aDnsb7/UHoC4XX9rDoOi165GEESPhF75ANUEaJ7I5s7n4xIHJDovnrsLOlYJ8e8d/hQ==
+X-Received: by 2002:a05:6a00:1884:b0:730:5c3e:8f0 with SMTP id
+ d2e1a72fcca58-7305d44979amr917760b3a.6.1738871847151; 
+ Thu, 06 Feb 2025 11:57:27 -0800 (PST)
 Received: from stoup.. (71-212-39-66.tukw.qwest.net. [71.212.39.66])
  by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-2fa09b3ee24sm1808857a91.36.2025.02.06.12.00.55
+ d2e1a72fcca58-73048c16370sm1666993b3a.152.2025.02.06.11.57.26
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 06 Feb 2025 12:00:55 -0800 (PST)
+ Thu, 06 Feb 2025 11:57:26 -0800 (PST)
 From: Richard Henderson <richard.henderson@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: qemu-arm@nongnu.org
-Subject: [PATCH 52/61] target/arm: Use do_[us]sat_[bhs] in sve_helper.c
-Date: Thu,  6 Feb 2025 11:57:06 -0800
-Message-ID: <20250206195715.2150758-53-richard.henderson@linaro.org>
+Subject: [PATCH 14/61] target/arm: Add zt0_excp_el to DisasContext
+Date: Thu,  6 Feb 2025 11:56:28 -0800
+Message-ID: <20250206195715.2150758-15-richard.henderson@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20250206195715.2150758-1-richard.henderson@linaro.org>
 References: <20250206195715.2150758-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1030;
- envelope-from=richard.henderson@linaro.org; helo=mail-pj1-x1030.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::634;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x634.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -99,216 +99,128 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Replace and remove do_sat_bhs.
-This avoids multiple repetitions of INT*_MIN/MAX.
+Pipe the value through from SMCR_ELx through hflags
+and into the disassembly context.
 
 Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 ---
- target/arm/tcg/sve_helper.c | 116 +++++++++++++++---------------------
- 1 file changed, 48 insertions(+), 68 deletions(-)
+ target/arm/cpu.h               |  2 ++
+ target/arm/tcg/translate.h     |  1 +
+ target/arm/cpu.c               |  3 +++
+ target/arm/tcg/hflags.c        | 34 +++++++++++++++++++++++++++++++++-
+ target/arm/tcg/translate-a64.c |  1 +
+ 5 files changed, 40 insertions(+), 1 deletion(-)
 
-diff --git a/target/arm/tcg/sve_helper.c b/target/arm/tcg/sve_helper.c
-index c206ca65ce..e84cffd0b0 100644
---- a/target/arm/tcg/sve_helper.c
-+++ b/target/arm/tcg/sve_helper.c
-@@ -523,14 +523,9 @@ DO_ZPZZ(sve2_uhsub_zpzz_h, uint16_t, H1_2, DO_HSUB_BHS)
- DO_ZPZZ(sve2_uhsub_zpzz_s, uint32_t, H1_4, DO_HSUB_BHS)
- DO_ZPZZ_D(sve2_uhsub_zpzz_d, uint64_t, DO_HSUB_D)
+diff --git a/target/arm/cpu.h b/target/arm/cpu.h
+index 091a517a93..61f959af8b 100644
+--- a/target/arm/cpu.h
++++ b/target/arm/cpu.h
+@@ -1531,6 +1531,7 @@ FIELD(SVCR, ZA, 1, 1)
  
--static inline int32_t do_sat_bhs(int64_t val, int64_t min, int64_t max)
--{
--    return val >= max ? max : val <= min ? min : val;
--}
--
--#define DO_SQADD_B(n, m) do_sat_bhs((int64_t)n + m, INT8_MIN, INT8_MAX)
--#define DO_SQADD_H(n, m) do_sat_bhs((int64_t)n + m, INT16_MIN, INT16_MAX)
--#define DO_SQADD_S(n, m) do_sat_bhs((int64_t)n + m, INT32_MIN, INT32_MAX)
-+#define DO_SQADD_B(n, m) do_ssat_b((int64_t)n + m)
-+#define DO_SQADD_H(n, m) do_ssat_h((int64_t)n + m)
-+#define DO_SQADD_S(n, m) do_ssat_s((int64_t)n + m)
+ /* Fields for SMCR_ELx. */
+ FIELD(SMCR, LEN, 0, 4)
++FIELD(SMCR, EZT0, 30, 1)
+ FIELD(SMCR, FA64, 31, 1)
  
- static inline int64_t do_sqadd_d(int64_t n, int64_t m)
- {
-@@ -547,9 +542,9 @@ DO_ZPZZ(sve2_sqadd_zpzz_h, int16_t, H1_2, DO_SQADD_H)
- DO_ZPZZ(sve2_sqadd_zpzz_s, int32_t, H1_4, DO_SQADD_S)
- DO_ZPZZ_D(sve2_sqadd_zpzz_d, int64_t, do_sqadd_d)
+ /* Write a new value to v7m.exception, thus transitioning into or out
+@@ -3240,6 +3241,7 @@ FIELD(TBFLAG_A64, NV2_MEM_E20, 35, 1)
+ FIELD(TBFLAG_A64, NV2_MEM_BE, 36, 1)
+ FIELD(TBFLAG_A64, AH, 37, 1)   /* FPCR.AH */
+ FIELD(TBFLAG_A64, NEP, 38, 1)   /* FPCR.NEP */
++FIELD(TBFLAG_A64, ZT0EXC_EL, 39, 2)
  
--#define DO_UQADD_B(n, m) do_sat_bhs((int64_t)n + m, 0, UINT8_MAX)
--#define DO_UQADD_H(n, m) do_sat_bhs((int64_t)n + m, 0, UINT16_MAX)
--#define DO_UQADD_S(n, m) do_sat_bhs((int64_t)n + m, 0, UINT32_MAX)
-+#define DO_UQADD_B(n, m) do_usat_b((int64_t)n + m)
-+#define DO_UQADD_H(n, m) do_usat_h((int64_t)n + m)
-+#define DO_UQADD_S(n, m) do_usat_s((int64_t)n + m)
- 
- static inline uint64_t do_uqadd_d(uint64_t n, uint64_t m)
- {
-@@ -562,9 +557,9 @@ DO_ZPZZ(sve2_uqadd_zpzz_h, uint16_t, H1_2, DO_UQADD_H)
- DO_ZPZZ(sve2_uqadd_zpzz_s, uint32_t, H1_4, DO_UQADD_S)
- DO_ZPZZ_D(sve2_uqadd_zpzz_d, uint64_t, do_uqadd_d)
- 
--#define DO_SQSUB_B(n, m) do_sat_bhs((int64_t)n - m, INT8_MIN, INT8_MAX)
--#define DO_SQSUB_H(n, m) do_sat_bhs((int64_t)n - m, INT16_MIN, INT16_MAX)
--#define DO_SQSUB_S(n, m) do_sat_bhs((int64_t)n - m, INT32_MIN, INT32_MAX)
-+#define DO_SQSUB_B(n, m) do_ssat_b((int64_t)n - m)
-+#define DO_SQSUB_H(n, m) do_ssat_h((int64_t)n - m)
-+#define DO_SQSUB_S(n, m) do_ssat_s((int64_t)n - m)
- 
- static inline int64_t do_sqsub_d(int64_t n, int64_t m)
- {
-@@ -581,9 +576,9 @@ DO_ZPZZ(sve2_sqsub_zpzz_h, int16_t, H1_2, DO_SQSUB_H)
- DO_ZPZZ(sve2_sqsub_zpzz_s, int32_t, H1_4, DO_SQSUB_S)
- DO_ZPZZ_D(sve2_sqsub_zpzz_d, int64_t, do_sqsub_d)
- 
--#define DO_UQSUB_B(n, m) do_sat_bhs((int64_t)n - m, 0, UINT8_MAX)
--#define DO_UQSUB_H(n, m) do_sat_bhs((int64_t)n - m, 0, UINT16_MAX)
--#define DO_UQSUB_S(n, m) do_sat_bhs((int64_t)n - m, 0, UINT32_MAX)
-+#define DO_UQSUB_B(n, m) do_usat_b((int64_t)n - m)
-+#define DO_UQSUB_H(n, m) do_usat_h((int64_t)n - m)
-+#define DO_UQSUB_S(n, m) do_usat_s((int64_t)n - m)
- 
- static inline uint64_t do_uqsub_d(uint64_t n, uint64_t m)
- {
-@@ -595,12 +590,9 @@ DO_ZPZZ(sve2_uqsub_zpzz_h, uint16_t, H1_2, DO_UQSUB_H)
- DO_ZPZZ(sve2_uqsub_zpzz_s, uint32_t, H1_4, DO_UQSUB_S)
- DO_ZPZZ_D(sve2_uqsub_zpzz_d, uint64_t, do_uqsub_d)
- 
--#define DO_SUQADD_B(n, m) \
--    do_sat_bhs((int64_t)(int8_t)n + m, INT8_MIN, INT8_MAX)
--#define DO_SUQADD_H(n, m) \
--    do_sat_bhs((int64_t)(int16_t)n + m, INT16_MIN, INT16_MAX)
--#define DO_SUQADD_S(n, m) \
--    do_sat_bhs((int64_t)(int32_t)n + m, INT32_MIN, INT32_MAX)
-+#define DO_SUQADD_B(n, m) do_ssat_b((int64_t)(int8_t)n + m)
-+#define DO_SUQADD_H(n, m) do_ssat_h((int64_t)(int16_t)n + m)
-+#define DO_SUQADD_S(n, m) do_ssat_s((int64_t)(int32_t)n + m)
- 
- static inline int64_t do_suqadd_d(int64_t n, uint64_t m)
- {
-@@ -630,12 +622,9 @@ DO_ZPZZ(sve2_suqadd_zpzz_h, uint16_t, H1_2, DO_SUQADD_H)
- DO_ZPZZ(sve2_suqadd_zpzz_s, uint32_t, H1_4, DO_SUQADD_S)
- DO_ZPZZ_D(sve2_suqadd_zpzz_d, uint64_t, do_suqadd_d)
- 
--#define DO_USQADD_B(n, m) \
--    do_sat_bhs((int64_t)n + (int8_t)m, 0, UINT8_MAX)
--#define DO_USQADD_H(n, m) \
--    do_sat_bhs((int64_t)n + (int16_t)m, 0, UINT16_MAX)
--#define DO_USQADD_S(n, m) \
--    do_sat_bhs((int64_t)n + (int32_t)m, 0, UINT32_MAX)
-+#define DO_USQADD_B(n, m) do_usat_b((int64_t)n + (int8_t)m)
-+#define DO_USQADD_H(n, m) do_usat_h((int64_t)n + (int16_t)m)
-+#define DO_USQADD_S(n, m) do_usat_s((int64_t)n + (int32_t)m)
- 
- static inline uint64_t do_usqadd_d(uint64_t n, int64_t m)
- {
-@@ -1222,37 +1211,29 @@ void HELPER(NAME)(void *vd, void *vn, uint32_t desc)                    \
-     }                                                                   \
+ /*
+  * Helpers for using the above. Note that only the A64 accessors use
+diff --git a/target/arm/tcg/translate.h b/target/arm/tcg/translate.h
+index f8dc2f0d4b..3021902ce1 100644
+--- a/target/arm/tcg/translate.h
++++ b/target/arm/tcg/translate.h
+@@ -71,6 +71,7 @@ typedef struct DisasContext {
+     int fp_excp_el; /* FP exception EL or 0 if enabled */
+     int sve_excp_el; /* SVE exception EL or 0 if enabled */
+     int sme_excp_el; /* SME exception EL or 0 if enabled */
++    int zt0_excp_el; /* ZT0 exception EL or 0 if enabled */
+     int vl;          /* current vector length in bytes */
+     int svl;         /* current streaming vector length in bytes */
+     bool vfp_enabled; /* FP enabled via FPSCR.EN */
+diff --git a/target/arm/cpu.c b/target/arm/cpu.c
+index 813cb45276..0cbc3b10c2 100644
+--- a/target/arm/cpu.c
++++ b/target/arm/cpu.c
+@@ -631,6 +631,9 @@ void arm_emulate_firmware_reset(CPUState *cpustate, int target_el)
+                 env->cp15.cptr_el[3] |= R_CPTR_EL3_ESM_MASK;
+                 env->cp15.scr_el3 |= SCR_ENTP2;
+                 env->vfp.smcr_el[3] = 0xf;
++                if (cpu_isar_feature(aa64_sme2, cpu)) {
++                    env->vfp.smcr_el[3] |= R_SMCR_EZT0_MASK;
++                }
+             }
+             if (cpu_isar_feature(aa64_hcx, cpu)) {
+                 env->cp15.scr_el3 |= SCR_HXEN;
+diff --git a/target/arm/tcg/hflags.c b/target/arm/tcg/hflags.c
+index 9e6a1869f9..e8823c380f 100644
+--- a/target/arm/tcg/hflags.c
++++ b/target/arm/tcg/hflags.c
+@@ -201,6 +201,31 @@ static CPUARMTBFlags rebuild_hflags_a32(CPUARMState *env, int fp_el,
+     return rebuild_hflags_common_32(env, fp_el, mmu_idx, flags);
  }
  
--#define DO_SQXTN_H(n)  do_sat_bhs(n, INT8_MIN, INT8_MAX)
--#define DO_SQXTN_S(n)  do_sat_bhs(n, INT16_MIN, INT16_MAX)
--#define DO_SQXTN_D(n)  do_sat_bhs(n, INT32_MIN, INT32_MAX)
-+DO_XTNB(sve2_sqxtnb_h, int16_t, do_ssat_b)
-+DO_XTNB(sve2_sqxtnb_s, int32_t, do_ssat_h)
-+DO_XTNB(sve2_sqxtnb_d, int64_t, do_ssat_s)
++/*
++ * Return the exception level to which exceptions should be taken for ZT0.
++ * C.f. the ARM pseudocode function CheckSMEZT0Enabled, after the ZA check.
++ */
++static int zt0_exception_el(CPUARMState *env, int el)
++{
++#ifndef CONFIG_USER_ONLY
++    if (el <= 1
++        && !el_is_in_host(env, el)
++        && !FIELD_EX64(env->vfp.smcr_el[1], SMCR, EZT0)) {
++        return 1;
++    }
++    if (el <= 2
++        && arm_is_el2_enabled(env)
++        && !FIELD_EX64(env->vfp.smcr_el[2], SMCR, EZT0)) {
++        return 2;
++    }
++    if (arm_feature(env, ARM_FEATURE_EL3)
++        && !FIELD_EX64(env->vfp.smcr_el[3], SMCR, EZT0)) {
++        return 3;
++    }
++#endif
++    return 0;
++}
++
+ static CPUARMTBFlags rebuild_hflags_a64(CPUARMState *env, int el, int fp_el,
+                                         ARMMMUIdx mmu_idx)
+ {
+@@ -256,7 +281,14 @@ static CPUARMTBFlags rebuild_hflags_a64(CPUARMState *env, int el, int fp_el,
+             DP_TBFLAG_A64(flags, PSTATE_SM, 1);
+             DP_TBFLAG_A64(flags, SME_TRAP_NONSTREAMING, !sme_fa64(env, el));
+         }
+-        DP_TBFLAG_A64(flags, PSTATE_ZA, FIELD_EX64(env->svcr, SVCR, ZA));
++
++        if (FIELD_EX64(env->svcr, SVCR, ZA)) {
++            DP_TBFLAG_A64(flags, PSTATE_ZA, 1);
++            if (cpu_isar_feature(aa64_sme2, env_archcpu(env))) {
++                int zt0_el = zt0_exception_el(env, el);
++                DP_TBFLAG_A64(flags, ZT0EXC_EL, zt0_el);
++            }
++        }
+     }
  
--DO_XTNB(sve2_sqxtnb_h, int16_t, DO_SQXTN_H)
--DO_XTNB(sve2_sqxtnb_s, int32_t, DO_SQXTN_S)
--DO_XTNB(sve2_sqxtnb_d, int64_t, DO_SQXTN_D)
-+DO_XTNT(sve2_sqxtnt_h, int16_t, int8_t, H1, do_ssat_b)
-+DO_XTNT(sve2_sqxtnt_s, int32_t, int16_t, H1_2, do_ssat_h)
-+DO_XTNT(sve2_sqxtnt_d, int64_t, int32_t, H1_4, do_ssat_s)
- 
--DO_XTNT(sve2_sqxtnt_h, int16_t, int8_t, H1, DO_SQXTN_H)
--DO_XTNT(sve2_sqxtnt_s, int32_t, int16_t, H1_2, DO_SQXTN_S)
--DO_XTNT(sve2_sqxtnt_d, int64_t, int32_t, H1_4, DO_SQXTN_D)
-+DO_XTNB(sve2_uqxtnb_h, uint16_t, do_usat_b)
-+DO_XTNB(sve2_uqxtnb_s, uint32_t, do_usat_h)
-+DO_XTNB(sve2_uqxtnb_d, uint64_t, do_usat_s)
- 
--#define DO_UQXTN_H(n)  do_sat_bhs(n, 0, UINT8_MAX)
--#define DO_UQXTN_S(n)  do_sat_bhs(n, 0, UINT16_MAX)
--#define DO_UQXTN_D(n)  do_sat_bhs(n, 0, UINT32_MAX)
-+DO_XTNT(sve2_uqxtnt_h, uint16_t, uint8_t, H1, do_usat_b)
-+DO_XTNT(sve2_uqxtnt_s, uint32_t, uint16_t, H1_2, do_usat_h)
-+DO_XTNT(sve2_uqxtnt_d, uint64_t, uint32_t, H1_4, do_usat_s)
- 
--DO_XTNB(sve2_uqxtnb_h, uint16_t, DO_UQXTN_H)
--DO_XTNB(sve2_uqxtnb_s, uint32_t, DO_UQXTN_S)
--DO_XTNB(sve2_uqxtnb_d, uint64_t, DO_UQXTN_D)
-+DO_XTNB(sve2_sqxtunb_h, int16_t, do_usat_b)
-+DO_XTNB(sve2_sqxtunb_s, int32_t, do_usat_h)
-+DO_XTNB(sve2_sqxtunb_d, int64_t, do_usat_s)
- 
--DO_XTNT(sve2_uqxtnt_h, uint16_t, uint8_t, H1, DO_UQXTN_H)
--DO_XTNT(sve2_uqxtnt_s, uint32_t, uint16_t, H1_2, DO_UQXTN_S)
--DO_XTNT(sve2_uqxtnt_d, uint64_t, uint32_t, H1_4, DO_UQXTN_D)
--
--DO_XTNB(sve2_sqxtunb_h, int16_t, DO_UQXTN_H)
--DO_XTNB(sve2_sqxtunb_s, int32_t, DO_UQXTN_S)
--DO_XTNB(sve2_sqxtunb_d, int64_t, DO_UQXTN_D)
--
--DO_XTNT(sve2_sqxtunt_h, int16_t, int8_t, H1, DO_UQXTN_H)
--DO_XTNT(sve2_sqxtunt_s, int32_t, int16_t, H1_2, DO_UQXTN_S)
--DO_XTNT(sve2_sqxtunt_d, int64_t, int32_t, H1_4, DO_UQXTN_D)
-+DO_XTNT(sve2_sqxtunt_h, int16_t, int8_t, H1, do_usat_b)
-+DO_XTNT(sve2_sqxtunt_s, int32_t, int16_t, H1_2, do_usat_h)
-+DO_XTNT(sve2_sqxtunt_d, int64_t, int32_t, H1_4, do_usat_s)
- 
- #undef DO_XTNB
- #undef DO_XTNT
-@@ -2183,10 +2164,9 @@ DO_SHRNT(sve2_rshrnt_h, uint16_t, uint8_t, H1_2, H1, do_urshr)
- DO_SHRNT(sve2_rshrnt_s, uint32_t, uint16_t, H1_4, H1_2, do_urshr)
- DO_SHRNT(sve2_rshrnt_d, uint64_t, uint32_t, H1_8, H1_4, do_urshr)
- 
--#define DO_SQSHRUN_H(x, sh) do_sat_bhs((int64_t)(x) >> sh, 0, UINT8_MAX)
--#define DO_SQSHRUN_S(x, sh) do_sat_bhs((int64_t)(x) >> sh, 0, UINT16_MAX)
--#define DO_SQSHRUN_D(x, sh) \
--    do_sat_bhs((int64_t)(x) >> (sh < 64 ? sh : 63), 0, UINT32_MAX)
-+#define DO_SQSHRUN_H(x, sh) do_usat_b((int64_t)(x) >> sh)
-+#define DO_SQSHRUN_S(x, sh) do_usat_h((int64_t)(x) >> sh)
-+#define DO_SQSHRUN_D(x, sh) do_usat_s((int64_t)(x) >> (sh < 64 ? sh : 63))
- 
- DO_SHRNB(sve2_sqshrunb_h, int16_t, uint8_t, DO_SQSHRUN_H)
- DO_SHRNB(sve2_sqshrunb_s, int32_t, uint16_t, DO_SQSHRUN_S)
-@@ -2196,9 +2176,9 @@ DO_SHRNT(sve2_sqshrunt_h, int16_t, uint8_t, H1_2, H1, DO_SQSHRUN_H)
- DO_SHRNT(sve2_sqshrunt_s, int32_t, uint16_t, H1_4, H1_2, DO_SQSHRUN_S)
- DO_SHRNT(sve2_sqshrunt_d, int64_t, uint32_t, H1_8, H1_4, DO_SQSHRUN_D)
- 
--#define DO_SQRSHRUN_H(x, sh) do_sat_bhs(do_srshr(x, sh), 0, UINT8_MAX)
--#define DO_SQRSHRUN_S(x, sh) do_sat_bhs(do_srshr(x, sh), 0, UINT16_MAX)
--#define DO_SQRSHRUN_D(x, sh) do_sat_bhs(do_srshr(x, sh), 0, UINT32_MAX)
-+#define DO_SQRSHRUN_H(x, sh) do_usat_b(do_srshr(x, sh))
-+#define DO_SQRSHRUN_S(x, sh) do_usat_h(do_srshr(x, sh))
-+#define DO_SQRSHRUN_D(x, sh) do_usat_s(do_srshr(x, sh))
- 
- DO_SHRNB(sve2_sqrshrunb_h, int16_t, uint8_t, DO_SQRSHRUN_H)
- DO_SHRNB(sve2_sqrshrunb_s, int32_t, uint16_t, DO_SQRSHRUN_S)
-@@ -2208,9 +2188,9 @@ DO_SHRNT(sve2_sqrshrunt_h, int16_t, uint8_t, H1_2, H1, DO_SQRSHRUN_H)
- DO_SHRNT(sve2_sqrshrunt_s, int32_t, uint16_t, H1_4, H1_2, DO_SQRSHRUN_S)
- DO_SHRNT(sve2_sqrshrunt_d, int64_t, uint32_t, H1_8, H1_4, DO_SQRSHRUN_D)
- 
--#define DO_SQSHRN_H(x, sh) do_sat_bhs(x >> sh, INT8_MIN, INT8_MAX)
--#define DO_SQSHRN_S(x, sh) do_sat_bhs(x >> sh, INT16_MIN, INT16_MAX)
--#define DO_SQSHRN_D(x, sh) do_sat_bhs(x >> sh, INT32_MIN, INT32_MAX)
-+#define DO_SQSHRN_H(x, sh) do_ssat_b(x >> sh)
-+#define DO_SQSHRN_S(x, sh) do_ssat_h(x >> sh)
-+#define DO_SQSHRN_D(x, sh) do_ssat_s(x >> sh)
- 
- DO_SHRNB(sve2_sqshrnb_h, int16_t, uint8_t, DO_SQSHRN_H)
- DO_SHRNB(sve2_sqshrnb_s, int32_t, uint16_t, DO_SQSHRN_S)
-@@ -2220,9 +2200,9 @@ DO_SHRNT(sve2_sqshrnt_h, int16_t, uint8_t, H1_2, H1, DO_SQSHRN_H)
- DO_SHRNT(sve2_sqshrnt_s, int32_t, uint16_t, H1_4, H1_2, DO_SQSHRN_S)
- DO_SHRNT(sve2_sqshrnt_d, int64_t, uint32_t, H1_8, H1_4, DO_SQSHRN_D)
- 
--#define DO_SQRSHRN_H(x, sh) do_sat_bhs(do_srshr(x, sh), INT8_MIN, INT8_MAX)
--#define DO_SQRSHRN_S(x, sh) do_sat_bhs(do_srshr(x, sh), INT16_MIN, INT16_MAX)
--#define DO_SQRSHRN_D(x, sh) do_sat_bhs(do_srshr(x, sh), INT32_MIN, INT32_MAX)
-+#define DO_SQRSHRN_H(x, sh) do_ssat_b(do_srshr(x, sh))
-+#define DO_SQRSHRN_S(x, sh) do_ssat_h(do_srshr(x, sh))
-+#define DO_SQRSHRN_D(x, sh) do_ssat_s(do_srshr(x, sh))
- 
- DO_SHRNB(sve2_sqrshrnb_h, int16_t, uint8_t, DO_SQRSHRN_H)
- DO_SHRNB(sve2_sqrshrnb_s, int32_t, uint16_t, DO_SQRSHRN_S)
+     sctlr = regime_sctlr(env, stage1);
+diff --git a/target/arm/tcg/translate-a64.c b/target/arm/tcg/translate-a64.c
+index 1ee57ebf66..bc96cee273 100644
+--- a/target/arm/tcg/translate-a64.c
++++ b/target/arm/tcg/translate-a64.c
+@@ -10143,6 +10143,7 @@ static void aarch64_tr_init_disas_context(DisasContextBase *dcbase,
+     dc->trap_eret = EX_TBFLAG_A64(tb_flags, TRAP_ERET);
+     dc->sve_excp_el = EX_TBFLAG_A64(tb_flags, SVEEXC_EL);
+     dc->sme_excp_el = EX_TBFLAG_A64(tb_flags, SMEEXC_EL);
++    dc->zt0_excp_el = EX_TBFLAG_A64(tb_flags, ZT0EXC_EL);
+     dc->vl = (EX_TBFLAG_A64(tb_flags, VL) + 1) * 16;
+     dc->svl = (EX_TBFLAG_A64(tb_flags, SVL) + 1) * 16;
+     dc->pauth_active = EX_TBFLAG_A64(tb_flags, PAUTH_ACTIVE);
 -- 
 2.43.0
 
