@@ -4,134 +4,86 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 11B69C02194
-	for <qemu-devel@archiver.kernel.org>; Thu,  6 Feb 2025 19:34:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DCB55C02194
+	for <qemu-devel@archiver.kernel.org>; Thu,  6 Feb 2025 19:50:37 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tg7dS-0008Uq-68; Thu, 06 Feb 2025 14:34:06 -0500
+	id 1tg7sN-000444-UH; Thu, 06 Feb 2025 14:49:28 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <Babu.Moger@amd.com>)
- id 1tg7dM-0008Qq-Qt
- for qemu-devel@nongnu.org; Thu, 06 Feb 2025 14:33:57 -0500
-Received: from mail-dm6nam12on2087.outbound.protection.outlook.com
- ([40.107.243.87] helo=NAM12-DM6-obe.outbound.protection.outlook.com)
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <Babu.Moger@amd.com>)
- id 1tg7dK-000373-IN
- for qemu-devel@nongnu.org; Thu, 06 Feb 2025 14:33:56 -0500
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=RMWNtW7j+5XxlytcmswIndVKM6jGOxlnvECp7dOUtp29U+izgkdzDqniH/uCkr6pUuHgjvR1lYF3qfqxa5QwxFz7w03V2Gc4k3U5gQgVaWhtK5/UCTuAFfEf+IP4raonoOH2wOfprt+9ZMsO/YWnAHzh46NNXdxZuwAqJXbn5Uw3kKqoESYY6PYHYFjing/6ntcjv4EYrdeGXnt4gCXUzf8svEz1G4Z63bOvKycvY9/R0m4OKKgYjZhubbNt7caaIHtkYRzvyhn18vHuTYcG4gDMAFCiGuZ33WMghqJnBz6bGSay++yCOpd2v8cdN1EboSisZbo2OIB0MhQNiGMEsA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=oTl03S4dzjIOc24j49r7KWzJqmNMAxawXxN2EqRv3Po=;
- b=p5zFxCUrviuVLmvSIZHBbdaVWys7ailsJtXNsZkA6z6I+9C65bHYJI9jJUREDdekVPMxIOItxRxdKA5ugCrNRIp6zzGw/67kpbxo10uqSBQO6Z2cAfcxQPRA46crpqOvqbc//no+gmXJ2DPYPxdWMWNAaGf4L5Rq58Aj3HkQjdUw8Z5vuZ2ITPQWQfLrrggdOBoJnmF7+k6NCrh/N4J+o9AhdbAdyKCezP29WGgcaSU8rVLv8v2CTwr/oCJ+mQUgTvoUC4qQW+vAOcCEwfS9BLqN+0lY31enl21QXFwmbQtB8w9MxXd3/UEUQFtrqrSF2Hyx2KbpOxXRn/S8U9eRSQ==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
- 165.204.84.17) smtp.rcpttodomain=redhat.com smtp.mailfrom=amd.com; dmarc=pass
- (p=quarantine sp=quarantine pct=100) action=none header.from=amd.com;
- dkim=none (message not signed); arc=none (0)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=amd.com; s=selector1; 
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=oTl03S4dzjIOc24j49r7KWzJqmNMAxawXxN2EqRv3Po=;
- b=mUmFriZ7OHeqQhAOlkwOkz++PWPw92Wbq3mTVG/E967/XuBObXMoRpTpT3wpSosOgvwtMvLCbHTulKb3sLimqwrgfGXYCFaEEzrb8h9ophkHcKNs5RkZ2flJL1aubDJdE/s6hJQR3Q5cK3soAELBpsdFQMtGjtl77tUUWf7NfyM=
-Received: from CH0PR03CA0212.namprd03.prod.outlook.com (2603:10b6:610:e7::7)
- by BY5PR12MB4115.namprd12.prod.outlook.com (2603:10b6:a03:20f::20) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.8422.10; Thu, 6 Feb
- 2025 19:28:46 +0000
-Received: from CH3PEPF00000017.namprd21.prod.outlook.com
- (2603:10b6:610:e7:cafe::32) by CH0PR03CA0212.outlook.office365.com
- (2603:10b6:610:e7::7) with Microsoft SMTP Server (version=TLS1_3,
- cipher=TLS_AES_256_GCM_SHA384) id 15.20.8398.28 via Frontend Transport; Thu,
- 6 Feb 2025 19:28:46 +0000
-X-MS-Exchange-Authentication-Results: spf=pass (sender IP is 165.204.84.17)
- smtp.mailfrom=amd.com; dkim=none (message not signed)
- header.d=none;dmarc=pass action=none header.from=amd.com;
-Received-SPF: Pass (protection.outlook.com: domain of amd.com designates
- 165.204.84.17 as permitted sender) receiver=protection.outlook.com;
- client-ip=165.204.84.17; helo=SATLEXMB04.amd.com; pr=C
-Received: from SATLEXMB04.amd.com (165.204.84.17) by
- CH3PEPF00000017.mail.protection.outlook.com (10.167.244.122) with Microsoft
- SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
- 15.20.8445.2 via Frontend Transport; Thu, 6 Feb 2025 19:28:46 +0000
-Received: from bmoger-ubuntu.amd.com (10.180.168.240) by SATLEXMB04.amd.com
- (10.181.40.145) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id 15.1.2507.39; Thu, 6 Feb
- 2025 13:28:45 -0600
-From: Babu Moger <babu.moger@amd.com>
-To: <pbonzini@redhat.com>
-CC: <zhao1.liu@intel.com>, <qemu-devel@nongnu.org>, <kvm@vger.kernel.org>,
- <davydov-max@yandex-team.ru>
-Subject: [PATCH v5 0/6] target/i386: Update EPYC CPU models for Cache property, RAS,
- SVM feature and add EPYC-Turin CPU model
-Date: Thu, 6 Feb 2025 13:28:33 -0600
-Message-ID: <cover.1738869208.git.babu.moger@amd.com>
-X-Mailer: git-send-email 2.34.1
+ (Exim 4.90_1) (envelope-from <edgar.iglesias@gmail.com>)
+ id 1tg7sL-00043e-3M; Thu, 06 Feb 2025 14:49:25 -0500
+Received: from mail-vs1-xe32.google.com ([2607:f8b0:4864:20::e32])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <edgar.iglesias@gmail.com>)
+ id 1tg7sJ-0005eI-Nr; Thu, 06 Feb 2025 14:49:24 -0500
+Received: by mail-vs1-xe32.google.com with SMTP id
+ ada2fe7eead31-4ba7787f128so269790137.1; 
+ Thu, 06 Feb 2025 11:49:23 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20230601; t=1738871361; x=1739476161; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=FFQm2ZHwyxo8JuKx8Z7FDry0rxBkb9nMIXnYNGZwf9o=;
+ b=SUJlM6Vb14+m083sabWIxXkdU7wKV9WMw1W1V7Vecyu9WCKgmhwDhekxbHjiKlHgoz
+ z6vW8U17DSAB29LruaJ96DhZxZ/+C3vhaEQKVw6PcjdlIFfmL/d9UsIJrYsAMAIuKIRS
+ FjbUdIfMeMLMDUHd0en5taW1teGG+Cuoq2yVG8DLoU/G45chRyLGJQb3aLmvZ0fiCxma
+ ob+aNSwDX29HoQDISw3YWux95HPlTN+AfREoQayOeE8jG0Stt+57McOSoARV+7WxlipQ
+ UcnIE0jHWFbYQSEaqEe7MQ4sOkcwB9pAr76Li911gfR7U33Z4eBbZUHHLv8gN5oFcbC3
+ QM+Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1738871361; x=1739476161;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=FFQm2ZHwyxo8JuKx8Z7FDry0rxBkb9nMIXnYNGZwf9o=;
+ b=gmBoZTct6odqyeG4L/Kkf48oJQ44Cfv2hwFU5A2nrhyP3Pwsijx0jdxeAIQoSKB0Ec
+ zsAEjxtH4rLPL53uqYsRUQi9cVgSzx07udtDJQ6dPyKPDu35AgUUNW5qLdcmNfabG2l/
+ oMYISv8uouLwrDTlC1tW3P4o99qVBYXzQMTP6lYkvpPu0/PTE8Dhx9gW7uJdOjMRbCou
+ b1wOOkPaFmOhiY616ZSysW846G6mqzmtFl20SfyYD/DVN5nA+EGtcosVqreOk9Ud72i2
+ CU3dTaAdDWP7eTpaZyOmz8ltzvx6mqPwilGi4J91aLSQm/NqLT515QZNVDehEII1Px9r
+ cYYg==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCW19CwbcO8IKTiLKH0ZyWvBw+81ioC0Hhtou0fejdLndwgC2wOy5gi2V+upvDaqi5FcR6bKJQkWprOrbg==@nongnu.org
+X-Gm-Message-State: AOJu0YwJjpSz+Y4KDiLs63jz8sUNwk/7uagchOsirQZRlQ2//wvynu3P
+ f3/nsFQupivE1W+PLoI+qRX3OrGp4s1NOeThDs6j8XBYBJOrOtRkJD2V1lqL
+X-Gm-Gg: ASbGncv6M6Gpk+cZJXMmM8buBm6oY849yYyxwXzsC1/tYZVibVBb5u9zd1QkMIiGBBj
+ XyPqaKe3jREZjWxam7c2c8szYU1IpEEH/m1DwR72Mj4x5J2MAVcfyko7UJCWc6RHH8hJtFp7iaf
+ pqeAwP5FpEUtjnVRK//lnGRT/EmRrGlDLyCfpH42xAzNwie5gHcUAKQdz/32AuP6qb8ecOVxaox
+ vlSfareVwBJWpKiRjoaFEphNLeX9qcDvp8nTTLYx+Yc4WhQIvD1FuhxaTkLLKErmnRmyc3fagTm
+ KvPawsjaS+0sIHzbMEMz+T802mEYhpZ6nT1baQ+IEY+ughNzOfpRJx0n7xy3cA==
+X-Google-Smtp-Source: AGHT+IHV88cKMntCdzuDGpUdmPinFfIc/Ky9C7BHZqj5IxcpPHEM7cX9qegjV0hcK9kFR/d78G+5AA==
+X-Received: by 2002:a05:6102:94e:b0:4af:f3bd:51cd with SMTP id
+ ada2fe7eead31-4ba85eeccfbmr429451137.16.1738871361324; 
+ Thu, 06 Feb 2025 11:49:21 -0800 (PST)
+Received: from gmail.com (ip190-5-140-142.intercom.com.sv. [190.5.140.142])
+ by smtp.gmail.com with ESMTPSA id
+ a1e0cc1a2514c-866f97d8c6asm294265241.21.2025.02.06.11.49.19
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Thu, 06 Feb 2025 11:49:20 -0800 (PST)
+From: "Edgar E. Iglesias" <edgar.iglesias@gmail.com>
+To: qemu-devel@nongnu.org,
+	qemu-stable@nongnu.org
+Cc: sstabellini@kernel.org, anthony@xenproject.org, paul@xen.org,
+ olaf@aepfle.de, edgar.iglesias@amd.com, xen-devel@lists.xenproject.org
+Subject: [PATCH v1 1/1] xen: No need to flush the mapcache for grants
+Date: Thu,  6 Feb 2025 20:49:15 +0100
+Message-ID: <20250206194915.3357743-2-edgar.iglesias@gmail.com>
+X-Mailer: git-send-email 2.43.0
+In-Reply-To: <20250206194915.3357743-1-edgar.iglesias@gmail.com>
+References: <20250206194915.3357743-1-edgar.iglesias@gmail.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Content-Type: text/plain
-X-Originating-IP: [10.180.168.240]
-X-ClientProxiedBy: SATLEXMB04.amd.com (10.181.40.145) To SATLEXMB04.amd.com
- (10.181.40.145)
-X-EOPAttributedMessage: 0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: CH3PEPF00000017:EE_|BY5PR12MB4115:EE_
-X-MS-Office365-Filtering-Correlation-Id: 759e4cde-2ea1-4441-a24c-08dd46e4799f
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;
- ARA:13230040|376014|82310400026|36860700013|1800799024; 
-X-Microsoft-Antispam-Message-Info: =?us-ascii?Q?Us5IuhTLteOvXdsDvk9IKGHM2yI+QibTFiG09a1ysN7CF6O2fEAbHE96UQMJ?=
- =?us-ascii?Q?yR26opT2sVW/1hKUGH9az5MmNO90OWORap83BOaheEd3pXHpL2QbSyEuuEdu?=
- =?us-ascii?Q?Imn4BV5RZETC1gySqcLcmUQx3bsPZn+QJxOtu5RZLn2cs/4RwcVcR3TcbuiV?=
- =?us-ascii?Q?qkclhoTt7fKHq+qOgRBGPFgjiTDTqCGZIygY8acyw6KtTMIIM2IqPhh+qaJn?=
- =?us-ascii?Q?nH4cLJgRn7kQV6B8HJOIPQ7NZt3hjwHmiNfKK3PYUivAOYc6d1tCnWamZrwo?=
- =?us-ascii?Q?kEWZd9+y/BJY2uUR9ym0WYoQswj4n5psVhaw8+h/+orJBRZ6N3trW9Igq11K?=
- =?us-ascii?Q?2Lq1qO/MqjL/+jZNPUWqWMjP1lN4Eszhy7YV6HQlkbpPxG1V+23RQIwIZlQc?=
- =?us-ascii?Q?axvPk6TIc5NkaGaq4mVAHJbX+tG/gIhavJQljyL35gD3T18FMUdggyfIwMA9?=
- =?us-ascii?Q?BL+U+NNYxsNUuDlmn93QC7ubeSBMjtAIUJAjfNpdfYOdGmLZgPK29E4wMalv?=
- =?us-ascii?Q?1Khl8p+nJ6xs82kIcJ2wdNNAavcjCFxGtkcur6n7mKRQ1xvLUAFr2KjByNSr?=
- =?us-ascii?Q?8ejwTKG1qKf/dUtWa1pu1LbMDjxqT5E7NwQI7y52CGBQqStDdpNZqgPRj/gh?=
- =?us-ascii?Q?jbG7+Y9F+7B5kXAjHaheCEFOlTWOifYPTOUpW3dW5296gUq0UVZqVawfkVVX?=
- =?us-ascii?Q?QKpkWTIaU8wqNRHYBgvfj0Y4EQzj5Fnej0bgV8OHakj87cJZq5GD0GVeH/to?=
- =?us-ascii?Q?Ku1jl/vqIbJuaBVnwuCFD9IgpssTDhRYIoy3FAA2Bjb2AOZ3biHAUllJO0Zd?=
- =?us-ascii?Q?fIMRfvt3YoDLcBwpQfeXzdkXGiMkPJJjZXnLvJyvchrB/P3WJPDjH31cJB+U?=
- =?us-ascii?Q?4hWjrBCqL7U2gb9gCrJbUd5uZfoTeW4N73deLqsgxlZkTEFKfzkYp0cXPI0j?=
- =?us-ascii?Q?T2aCLTbMdC7joPBD5vusBatlkzFEEihn6ecCh4MHM3PiMBNrWsCp4mSEk21b?=
- =?us-ascii?Q?pRMg9lfV30tgIKnGB+rV67YWivvL/kAUNnC0evMY95cH2Q5QoTeHSpv3/XZR?=
- =?us-ascii?Q?hrBtErVxmjrawMI7hNXn5oPjvCCGWxHCsfkcOrN07fa6c/WCH/gEcvU8vqti?=
- =?us-ascii?Q?7xRxRQ/7txLyqcjifNX7xt6ZNA/tQSdTCPeO3ROuqJexqA/Eut9Qfj16k/Uj?=
- =?us-ascii?Q?1Z3tJszh9ayNW7f/6Q1cPTIGZLFzTpNt28zEJYIyOjQ7/OgvGOCocI/nzb/Q?=
- =?us-ascii?Q?35hwqkwLTar2zWfafWKbffth5UfXe+EP7XzkiG7c3OgUx/kb5+jYkIg5ri7Z?=
- =?us-ascii?Q?Ir4EbVunZ0zeYFK8O4CQE0vwe0aY26fK11GqOIJ/Wg5taXFPXb1cbMzw4eBp?=
- =?us-ascii?Q?UOznU6rFtdjSLW1gioqKYlQs7K+xmrKEZkH5OXa9HDVjGKJlliLZ7yqvDFvf?=
- =?us-ascii?Q?8ARunvsPRSN0TYoBLyCUqO/k0Dr2LLTx?=
-X-Forefront-Antispam-Report: CIP:165.204.84.17; CTRY:US; LANG:en; SCL:1; SRV:;
- IPV:CAL; SFV:NSPM; H:SATLEXMB04.amd.com; PTR:InfoDomainNonexistent; CAT:NONE;
- SFS:(13230040)(376014)(82310400026)(36860700013)(1800799024); DIR:OUT;
- SFP:1101; 
-X-OriginatorOrg: amd.com
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 06 Feb 2025 19:28:46.2533 (UTC)
-X-MS-Exchange-CrossTenant-Network-Message-Id: 759e4cde-2ea1-4441-a24c-08dd46e4799f
-X-MS-Exchange-CrossTenant-Id: 3dd8961f-e488-4e60-8e11-a82d994e183d
-X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=3dd8961f-e488-4e60-8e11-a82d994e183d; Ip=[165.204.84.17];
- Helo=[SATLEXMB04.amd.com]
-X-MS-Exchange-CrossTenant-AuthSource: CH3PEPF00000017.namprd21.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Anonymous
-X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: BY5PR12MB4115
-Received-SPF: permerror client-ip=40.107.243.87;
- envelope-from=Babu.Moger@amd.com;
- helo=NAM12-DM6-obe.outbound.protection.outlook.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::e32;
+ envelope-from=edgar.iglesias@gmail.com; helo=mail-vs1-xe32.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_MSPIKE_H2=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_PASS=-0.001,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -148,68 +100,37 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+From: Stefano Stabellini <stefano.stabellini@amd.com>
 
-Following changes are implemented in this series.
+On IOREQ_TYPE_INVALIDATE we need to invalidate the mapcache for regular
+mappings. Since recently we started reusing the mapcache also to keep
+track of grants mappings. However, there is no need to remove grant
+mappings on IOREQ_TYPE_INVALIDATE requests, we shouldn't do that. So
+remove the function call.
 
-1. Fixed the cache(L2,L3) property details in all the EPYC models.
-2. Add RAS feature bits (SUCCOR, McaOverflowRecov) on all EPYC models
-3. Add missing SVM feature bits required for nested guests on all EPYC models
-4. Add the missing feature bit fs-gs-base-ns(WRMSR to {FS,GS,KERNEL_G}S_BASE is
-   non-serializing). This bit is added in EPYC-Genoa and EPYC-Turin models.
-5. Add RAS, SVM, fs-gs-base-ns and perfmon-v2 on EPYC-Genoa and EPYC-Turin models.
-6. Add support for EPYC-Turin. 
-   (Add all the above feature bits and few additional bits movdiri, movdir64b,
-    avx512-vp2intersect, avx-vnni, sbpb, ibpb-brtype, srso-user-kernel-no).
-
-Link: https://www.amd.com/content/dam/amd/en/documents/epyc-technical-docs/programmer-references/57238.zip
-Link: https://www.amd.com/content/dam/amd/en/documents/corporate/cr/speculative-return-stack-overflow-whitepaper.pdf
+Fixes: 9ecdd4bf08 (xen: mapcache: Add support for grant mappings)
+Cc: qemu-stable@nongnu.org
+Reported-by: Olaf Hering <olaf@aepfle.de>
+Reviewed-by: Edgar E. Iglesias <edgar.iglesias@amd.com>
+Signed-off-by: Stefano Stabellini <stefano.stabellini@amd.com>
+Signed-off-by: Edgar E. Iglesias <edgar.iglesias@amd.com>
 ---
-v5: Add EPYC-Turin CPU model
-    Dropped ERAPS and RAPSIZE bits from EPYC-Turin models as kernel support for
-    these bits are not done yet. Users can still use the options +eraps,+rapsize
-    to test these featers.
-    Add Reviewed-by tag from Maksim for the patches already reviewed.
+ hw/xen/xen-mapcache.c | 1 -
+ 1 file changed, 1 deletion(-)
 
-v4: Some of the patches in v3 are already merged. Posting the rest of the patches.
-    Dropped EPYC-Turin model for now. Will post them later.
-    Added SVM feature bit as discussed in
-    https://lore.kernel.org/kvm/b4b7abae-669a-4a86-81d3-d1f677a82929@redhat.com/
-    Fixed the cache property details as discussed in
-    https://lore.kernel.org/kvm/20230504205313.225073-8-babu.moger@amd.com/
-    Thanks to Maksim and Paolo for their feedback.
-
-v3: Added SBPB, IBPB_BRTYPE, SRSO_USER_KERNEL_NO, ERAPS and RAPSIZE bits
-    to EPYC-Turin.
-    Added new patch(1) to fix a minor typo.
-
-v2: Fixed couple of typos.
-    Added Reviewed-by tag from Zhao.
-    Rebased on top of 6d00c6f98256 ("Merge tag 'for-upstream' of https://repo.or.cz/qemu/kevin into staging")
-
-Previous revisions:
-v4: https://lore.kernel.org/kvm/cover.1731616198.git.babu.moger@amd.com/
-v3: https://lore.kernel.org/kvm/cover.1729807947.git.babu.moger@amd.com/
-v2: https://lore.kernel.org/kvm/cover.1723068946.git.babu.moger@amd.com/
-v1: https://lore.kernel.org/qemu-devel/cover.1718218999.git.babu.moger@amd.com/
-
-Babu Moger (6):
-  target/i386: Update EPYC CPU model for Cache property, RAS, SVM
-    feature bits
-  target/i386: Update EPYC-Rome CPU model for Cache property, RAS, SVM
-    feature bits
-  target/i386: Update EPYC-Milan CPU model for Cache property, RAS, SVM
-    feature bits
-  target/i386: Add feature that indicates WRMSR to BASE reg is
-    non-serializing
-  target/i386: Update EPYC-Genoa for Cache property, perfmon-v2, RAS and
-    SVM feature bits
-  target/i386: Add support for EPYC-Turin model
-
- target/i386/cpu.c | 437 +++++++++++++++++++++++++++++++++++++++++++++-
- target/i386/cpu.h |   2 +
- 2 files changed, 438 insertions(+), 1 deletion(-)
-
+diff --git a/hw/xen/xen-mapcache.c b/hw/xen/xen-mapcache.c
+index 00bfbcc6fb..698b5c53ed 100644
+--- a/hw/xen/xen-mapcache.c
++++ b/hw/xen/xen-mapcache.c
+@@ -700,7 +700,6 @@ void xen_invalidate_map_cache(void)
+     bdrv_drain_all();
+ 
+     xen_invalidate_map_cache_single(mapcache);
+-    xen_invalidate_map_cache_single(mapcache_grants);
+ }
+ 
+ static uint8_t *xen_replace_cache_entry_unlocked(MapCache *mc,
 -- 
-2.34.1
+2.43.0
 
 
