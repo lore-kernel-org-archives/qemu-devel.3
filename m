@@ -4,90 +4,88 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CCB3FC02196
-	for <qemu-devel@archiver.kernel.org>; Thu,  6 Feb 2025 14:13:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0FB75C02199
+	for <qemu-devel@archiver.kernel.org>; Thu,  6 Feb 2025 14:20:06 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tg2dL-0007Gi-QT; Thu, 06 Feb 2025 09:13:35 -0500
+	id 1tg2j2-0000xS-BP; Thu, 06 Feb 2025 09:19:28 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1tg2dK-0007GY-Np
- for qemu-devel@nongnu.org; Thu, 06 Feb 2025 09:13:34 -0500
-Received: from smtp-out2.suse.de ([195.135.223.131])
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1tg2j0-0000wc-Bu
+ for qemu-devel@nongnu.org; Thu, 06 Feb 2025 09:19:26 -0500
+Received: from smtp-out2.suse.de ([2a07:de40:b251:101:10:150:64:2])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1tg2dI-0000g9-Am
- for qemu-devel@nongnu.org; Thu, 06 Feb 2025 09:13:34 -0500
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1tg2ix-0004br-Ok
+ for qemu-devel@nongnu.org; Thu, 06 Feb 2025 09:19:26 -0500
 Received: from imap1.dmz-prg2.suse.org (imap1.dmz-prg2.suse.org
  [IPv6:2a07:de40:b281:104:10:150:64:97])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
  (No client certificate requested)
- by smtp-out2.suse.de (Postfix) with ESMTPS id 676121F381;
- Thu,  6 Feb 2025 14:13:30 +0000 (UTC)
+ by smtp-out2.suse.de (Postfix) with ESMTPS id EDCC31F381;
+ Thu,  6 Feb 2025 14:19:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1738851210; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ t=1738851559; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
  mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=1T3IBCgnLtFQJTKath5WnkiWTvmpml18kgjze8GQpGk=;
- b=TMDWRlNNEut9at8Zu7HF/wlwC6RF5KUe2KK2J8pDdEYX2sygn/x+PGcvxknjruBnv9nzhM
- I3b5Wum8fzl43w/XBChxNA+p4PcN5avoJjjlZPsZ4UntWle6UEP6BdRlXztWJvfCqGCYYJ
- K5PiqMQPRYAf8INBlc46Yq/6mXmuUnA=
+ bh=wL6OOyP0faEfqHEao1paift5TqrnsiLbGvd8gKQitYM=;
+ b=WyD7RH4sXPdlD/Vx9iyTw/eBZCAnczKXtF+BMNeHdyJSc3VJ1FmUlvwtbvI/g31x6t3dfl
+ II07IGosia+AK0yRApesnwsNummQgy4UMIPqiwkU/8JKY2Xu/94tbp25cUwq491c9shdMZ
+ Qlx5W4Z68pq4uCwMt1ZFmoFxUKHGYi4=
 DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1738851210;
+ s=susede2_ed25519; t=1738851559;
  h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
  mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=1T3IBCgnLtFQJTKath5WnkiWTvmpml18kgjze8GQpGk=;
- b=QjEXY5dUM5I9RQDVoaEkX5/dDUITeNeoKk2fsNpSoG2QtgUzyqzxkOopw239UVdSmW7nLx
- Pj8xCHdaYsdelpDw==
+ bh=wL6OOyP0faEfqHEao1paift5TqrnsiLbGvd8gKQitYM=;
+ b=otd6VgwvSnsnPMRHy1eKZFuPymZK8jLsYBMm6fXw4cSCuG+DpD7w/vY/uSX3Cmtu/H5d2A
+ EeQ+W0aV2VSy6pDw==
 Authentication-Results: smtp-out2.suse.de;
- dkim=pass header.d=suse.de header.s=susede2_rsa header.b=TMDWRlNN;
- dkim=pass header.d=suse.de header.s=susede2_ed25519 header.b=QjEXY5dU
+ dkim=pass header.d=suse.de header.s=susede2_rsa header.b=Bp6AhIOY;
+ dkim=pass header.d=suse.de header.s=susede2_ed25519 header.b=Vqclr3WS
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1738851210; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ t=1738851558; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
  mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=1T3IBCgnLtFQJTKath5WnkiWTvmpml18kgjze8GQpGk=;
- b=TMDWRlNNEut9at8Zu7HF/wlwC6RF5KUe2KK2J8pDdEYX2sygn/x+PGcvxknjruBnv9nzhM
- I3b5Wum8fzl43w/XBChxNA+p4PcN5avoJjjlZPsZ4UntWle6UEP6BdRlXztWJvfCqGCYYJ
- K5PiqMQPRYAf8INBlc46Yq/6mXmuUnA=
+ bh=wL6OOyP0faEfqHEao1paift5TqrnsiLbGvd8gKQitYM=;
+ b=Bp6AhIOYffLPLF9Grgcx33+Bqds1ubkiv38ldmtccGRLjQ3ZP6TMolcfYHctsvwd7iajJ4
+ bx7sV+B2ORBPHQ7HTWvxN7mCM8ar8ZH1tztDmdUfm44o7LYKjMjJ36oPP/ZxENLrH7Ekxb
+ BsjdbsTObc66/ja7F4V/HjfUPW1HnJE=
 DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1738851210;
+ s=susede2_ed25519; t=1738851558;
  h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
  mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=1T3IBCgnLtFQJTKath5WnkiWTvmpml18kgjze8GQpGk=;
- b=QjEXY5dUM5I9RQDVoaEkX5/dDUITeNeoKk2fsNpSoG2QtgUzyqzxkOopw239UVdSmW7nLx
- Pj8xCHdaYsdelpDw==
+ bh=wL6OOyP0faEfqHEao1paift5TqrnsiLbGvd8gKQitYM=;
+ b=Vqclr3WSm2BMewuGsPIMi7/OaSs2gN1NTsYbajmBOsHHUaUOlU6qC/5X7f+0ZMqgev60WY
+ 9tIb/6NI0Lc2kzBw==
 Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
  (No client certificate requested)
- by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id C124713697;
- Thu,  6 Feb 2025 14:13:29 +0000 (UTC)
+ by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 63A5613697;
+ Thu,  6 Feb 2025 14:19:18 +0000 (UTC)
 Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
- by imap1.dmz-prg2.suse.org with ESMTPSA id Ct8iH4nDpGcPIQAAD6G6ig
- (envelope-from <farosas@suse.de>); Thu, 06 Feb 2025 14:13:29 +0000
+ by imap1.dmz-prg2.suse.org with ESMTPSA id /XVqCObEpGcBIwAAD6G6ig
+ (envelope-from <farosas@suse.de>); Thu, 06 Feb 2025 14:19:18 +0000
 From: Fabiano Rosas <farosas@suse.de>
-To: "Maciej S. Szmigiero" <mail@maciej.szmigiero.name>
-Cc: Alex Williamson <alex.williamson@redhat.com>, =?utf-8?Q?Daniel_P=2E_Be?=
- =?utf-8?Q?rrang=C3=A9?=
- <berrange@redhat.com>, Peter Xu <peterx@redhat.com>, =?utf-8?Q?C=C3=A9dri?=
- =?utf-8?Q?c?= Le Goater
- <clg@redhat.com>, Eric Blake <eblake@redhat.com>, Markus Armbruster
- <armbru@redhat.com>, Avihai Horon <avihaih@nvidia.com>, Joao Martins
- <joao.m.martins@oracle.com>, qemu-devel@nongnu.org
+To: Peter Xu <peterx@redhat.com>
+Cc: =?utf-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>, "Maciej S.
+ Szmigiero" <mail@maciej.szmigiero.name>, Alex Williamson
+ <alex.williamson@redhat.com>, =?utf-8?Q?C=C3=A9dric?= Le Goater
+ <clg@redhat.com>, Eric
+ Blake <eblake@redhat.com>, Markus Armbruster <armbru@redhat.com>, Avihai
+ Horon <avihaih@nvidia.com>, Joao Martins <joao.m.martins@oracle.com>,
+ qemu-devel@nongnu.org
 Subject: Re: [PATCH v4 08/33] migration/multifd: Allow premature EOF on TLS
  incoming channels
-In-Reply-To: <192db6a6-f3ff-4cf9-8537-b849fb3a97b3@maciej.szmigiero.name>
-References: <cover.1738171076.git.maciej.szmigiero@oracle.com>
- <baf944c37ead5d30d7e268b2a4074d9acaac2db0.1738171076.git.maciej.szmigiero@oracle.com>
- <Z6EI0V6Cg7aCbzQU@x1.local>
+In-Reply-To: <Z6PUZmA9Tv3yOA8F@x1.local>
+References: <Z6EI0V6Cg7aCbzQU@x1.local>
  <67a7c2ce-2391-4b8e-a5be-bce370fd2e66@maciej.szmigiero.name>
  <Z6ElIlavWHda8YcH@x1.local>
  <6b9b4c31-6598-4fd9-9ae2-dbef4cdd7089@maciej.szmigiero.name>
@@ -95,13 +93,13 @@ References: <cover.1738171076.git.maciej.szmigiero@oracle.com>
  <b84071ab-ea49-4c2f-8f8c-6bb9a3d94342@maciej.szmigiero.name>
  <Z6Iy0wY-lsx3M71M@x1.local> <Z6I0mzWEsl5y57Zj@redhat.com>
  <87zfj0mcmy.fsf@suse.de> <87wme4m8ci.fsf@suse.de>
- <192db6a6-f3ff-4cf9-8537-b849fb3a97b3@maciej.szmigiero.name>
-Date: Thu, 06 Feb 2025 11:13:26 -0300
-Message-ID: <87tt97ma9l.fsf@suse.de>
+ <Z6PUZmA9Tv3yOA8F@x1.local>
+Date: Thu, 06 Feb 2025 11:19:15 -0300
+Message-ID: <87r04bm9zw.fsf@suse.de>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: quoted-printable
-X-Rspamd-Queue-Id: 676121F381
+X-Rspamd-Queue-Id: EDCC31F381
 X-Rspamd-Action: no action
 X-Spamd-Result: default: False [-4.51 / 50.00]; BAYES_HAM(-3.00)[100.00%];
  NEURAL_HAM_LONG(-1.00)[-1.000];
@@ -114,19 +112,18 @@ X-Spamd-Result: default: False [-4.51 / 50.00]; BAYES_HAM(-3.00)[100.00%];
  FROM_EQ_ENVFROM(0.00)[]; FROM_HAS_DN(0.00)[];
  FUZZY_BLOCKED(0.00)[rspamd.com]; RCVD_COUNT_TWO(0.00)[2];
  TO_MATCH_ENVRCPT_ALL(0.00)[];
- DBL_BLOCKED_OPENRESOLVER(0.00)[oracle.com:email,suse.de:dkim,suse.de:mid,suse.de:email];
+ DBL_BLOCKED_OPENRESOLVER(0.00)[suse.de:dkim,suse.de:mid,suse.de:email,gitlab.com:url,oracle.com:email];
  DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
  DKIM_TRACE(0.00)[suse.de:+]
 X-Rspamd-Server: rspamd1.dmz-prg2.suse.org
-Received-SPF: pass client-ip=195.135.223.131; envelope-from=farosas@suse.de;
- helo=smtp-out2.suse.de
+Received-SPF: pass client-ip=2a07:de40:b251:101:10:150:64:2;
+ envelope-from=farosas@suse.de; helo=smtp-out2.suse.de
 X-Spam_score_int: -43
 X-Spam_score: -4.4
 X-Spam_bar: ----
 X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+ RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -143,200 +140,212 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-"Maciej S. Szmigiero" <mail@maciej.szmigiero.name> writes:
+Peter Xu <peterx@redhat.com> writes:
 
-> On 5.02.2025 21:42, Fabiano Rosas wrote:
+> On Wed, Feb 05, 2025 at 05:42:37PM -0300, Fabiano Rosas wrote:
 >> Fabiano Rosas <farosas@suse.de> writes:
 >>=20
->>> Daniel P. Berrang=C3=A9 <berrange@redhat.com> writes:
->>>
->>>> On Tue, Feb 04, 2025 at 10:31:31AM -0500, Peter Xu wrote:
->>>>> On Tue, Feb 04, 2025 at 03:39:00PM +0100, Maciej S. Szmigiero wrote:
->>>>>> On 3.02.2025 23:56, Peter Xu wrote:
->>>>>>> On Mon, Feb 03, 2025 at 10:41:32PM +0100, Maciej S. Szmigiero wrote:
->>>>>>>> On 3.02.2025 21:20, Peter Xu wrote:
->>>>>>>>> On Mon, Feb 03, 2025 at 07:53:00PM +0100, Maciej S. Szmigiero wro=
-te:
->>>>>>>>>> On 3.02.2025 19:20, Peter Xu wrote:
->>>>>>>>>>> On Thu, Jan 30, 2025 at 11:08:29AM +0100, Maciej S. Szmigiero w=
-rote:
->>>>>>>>>>>> From: "Maciej S. Szmigiero" <maciej.szmigiero@oracle.com>
->>>>>>>>>>>>
->>>>>>>>>>>> Multifd send channels are terminated by calling
->>>>>>>>>>>> qio_channel_shutdown(QIO_CHANNEL_SHUTDOWN_BOTH) in
->>>>>>>>>>>> multifd_send_terminate_threads(), which in the TLS case essent=
-ially
->>>>>>>>>>>> calls shutdown(SHUT_RDWR) on the underlying raw socket.
->>>>>>>>>>>>
->>>>>>>>>>>> Unfortunately, this does not terminate the TLS session properl=
-y and
->>>>>>>>>>>> the receive side sees this as a GNUTLS_E_PREMATURE_TERMINATION=
- error.
->>>>>>>>>>>>
->>>>>>>>>>>> The only reason why this wasn't causing migration failures is =
-because
->>>>>>>>>>>> the current migration code apparently does not check for migra=
-tion
->>>>>>>>>>>> error being set after the end of the multifd receive process.
->>>>>>>>>>>>
->>>>>>>>>>>> However, this will change soon so the multifd receive code has=
- to be
->>>>>>>>>>>> prepared to not return an error on such premature TLS session =
-EOF.
->>>>>>>>>>>> Use the newly introduced QIOChannelTLS method for that.
->>>>>>>>>>>>
->>>>>>>>>>>> It's worth noting that even if the sender were to be changed t=
-o terminate
->>>>>>>>>>>> the TLS connection properly the receive side still needs to re=
-main
->>>>>>>>>>>> compatible with older QEMU bit stream which does not do this.
->>>>>>>>>>>
->>>>>>>>>>> If this is an existing bug, we could add a Fixes.
->>>>>>>>>>
->>>>>>>>>> It is an existing issue but only uncovered by this patch set.
->>>>>>>>>>
->>>>>>>>>> As far as I can see it was always there, so it would need some
->>>>>>>>>> thought where to point that Fixes tag.
->>>>>>>>>
->>>>>>>>> If there's no way to trigger a real functional bug anyway, it's a=
-lso ok we
->>>>>>>>> omit the Fixes.
->>>>>>>>>
->>>>>>>>>>> Two pure questions..
->>>>>>>>>>>
->>>>>>>>>>>       - What is the correct way to terminate the TLS session wi=
-thout this flag?
->>>>>>>>>>
->>>>>>>>>> I guess one would need to call gnutls_bye() like in this GnuTLS =
-example:
->>>>>>>>>> https://gitlab.com/gnutls/gnutls/-/blob/2b8c3e4c71ad380bbbffb32e=
-6003b34ecad596e3/doc/examples/ex-client-anon.c#L102
->>>>>>>>>>
->>>>>>>>>>>       - Why this is only needed by multifd sessions?
->>>>>>>>>>
->>>>>>>>>> What uncovered the issue was switching the load threads to using
->>>>>>>>>> migrate_set_error() instead of their own result variable
->>>>>>>>>> (load_threads_ret) which you had requested during the previous
->>>>>>>>>> patch set version review:
->>>>>>>>>> https://lore.kernel.org/qemu-devel/Z1DbH5fwBaxtgrvH@x1n/
->>>>>>>>>>
->>>>>>>>>> Turns out that the multifd receive code always returned
->>>>>>>>>> error in the TLS case, just nothing was previously checking for
->>>>>>>>>> that error presence.
->>>>>>>>>
->>>>>>>>> What I was curious is whether this issue also exists for the main=
- migration
->>>>>>>>> channel when with tls, especially when e.g. multifd not enabled a=
-t all.  As
->>>>>>>>> I don't see anywhere that qemu uses gnutls_bye() for any tls sess=
-ion.
->>>>>>>>>
->>>>>>>>> I think it's a good to find that we overlooked this before.. and =
-IMHO it's
->>>>>>>>> always good we could fix this.
->>>>>>>>>
->>>>>>>>> Does it mean we need proper gnutls_bye() somewhere?
->>>>>>>>>
->>>>>>>>> If we need an explicit gnutls_bye(), then I wonder if that should=
- be done
->>>>>>>>> on the main channel as well.
->>>>>>>>
->>>>>>>> That's a good question and looking at the code qemu_loadvm_state_m=
-ain() exits
->>>>>>>> on receiving "QEMU_VM_EOF" section (that's different from receivin=
-g socket EOF)
->>>>>>>> and then optionally "QEMU_VM_VMDESCRIPTION" section is read with e=
-xplicit size
->>>>>>>> in qemu_loadvm_state() - so still not until channel EOF.
->>>>>>>
->>>>>>> I had a closer look, I do feel like such pre-mature termination is =
-caused
->>>>>>> by explicit shutdown()s of the iochannels, looks like that can caus=
-e issue
->>>>>>> even after everything is sent.  Then I noticed indeed multifd sender
->>>>>>> iochannels will get explicit shutdown()s since commit 077fbb5942, w=
-hile we
->>>>>>> don't do that for the main channel.  Maybe that is a major differen=
-ce.
->>>>>>>
->>>>>>> Now I wonder whether we should shutdown() the channel at all if mig=
-ration
->>>>>>> succeeded, because looks like it can cause tls session to interrupt=
- even if
->>>>>>> the shutdown() is done after sent everything, and if so it'll expla=
-in why
->>>>>>> you hit the issue with tls.
->>>>>>>
->>>>>>>>
->>>>>>>> Then I can't see anything else reading the channel until it is clo=
-sed in
->>>>>>>> migration_incoming_state_destroy().
->>>>>>>>
->>>>>>>> So most likely the main migration channel will never read far enou=
-gh to
->>>>>>>> reach that GNUTLS_E_PREMATURE_TERMINATION error.
->>>>>>>>
->>>>>>>>> If we don't need gnutls_bye(), then should we always ignore pre-m=
-ature
->>>>>>>>> termination of tls no matter if it's multifd or non-multifd chann=
-el (or
->>>>>>>>> even a tls session that is not migration-related)?
->>>>>>>>
->>>>>>>> So basically have this patch extended to calling
->>>>>>>> qio_channel_tls_set_premature_eof_okay() also on the main migratio=
-n channel?
->>>>>>>
->>>>>>> If above theory can stand, then eof-okay could be a workaround pape=
-ring
->>>>>>> over the real problem that we shouldn't always shutdown()..
->>>>>>>
->>>>>>> Could you have a look at below patch and see whether it can fix the=
- problem
->>>>>>> you hit too, in replace of these two patches (including the previous
->>>>>>> iochannel change)?
->>>>>>>
->>>>>>
->>>>>> Unfortunately, the patch below does not fix the problem:
->>>>>>> qemu-system-x86_64: Cannot read from TLS channel: The TLS connectio=
-n was non-properly terminated.
->>>>>>> qemu-system-x86_64: Cannot read from TLS channel: The TLS connectio=
-n was non-properly terminated.
->>>>>>
->>>>>> I think that, even in the absence of shutdown(), if the sender does =
-not
->>>>>> call gnutls_bye() the TLS session is considered improperly terminate=
-d.
->>>>>
->>>>> Ah..
->>>>>
->>>>> How about one more change on top of above change to disconnect proper=
-ly for
->>>>> TLS?  Something like gnutls_bye() in qio_channel_tls_close(), would t=
-hat
->>>>> make sense to you?
->>>>
->>>> Calling gnutls_bye from qio_channel_tls_close is not viable for the
->>>> API contract of qio_channel_close. gnutls_bye needs to be able to
->>>> perform I/O, which means we need to be able to tell the caller
->>>> whether it needs to perform an event loop wait for POLLIN or POLLOUT.
->>>>
->>>> This is the same API design scenario as the gnutls_handshake method.
->>>> As such I tdon't think it is practical to abstract it inside any
->>>> existing QIOChannel API call, it'll have to be standalone like
->>>> qio_channel_tls_handshake() is.
->>>>
->>>
->>> I implemented the call to gnutls_bye:
->>> https://gitlab.com/farosas/qemu/-/commits/migration-tls-bye
->>>
->>> Then while testing it I realised we actually have a regression from 9.2:
->>>
->>> 1d457daf86 ("migration/multifd: Further remove the SYNC on complete")
->>>
->>> It seems that patch somehow affected the ordering between src shutdown
->>> vs. recv shutdown and now the recv channels are staying around to see
->>> the connection being broken. Or something... I'm still looking into it.
->>>
+>> > Daniel P. Berrang=C3=A9 <berrange@redhat.com> writes:
+>> >
+>> >> On Tue, Feb 04, 2025 at 10:31:31AM -0500, Peter Xu wrote:
+>> >>> On Tue, Feb 04, 2025 at 03:39:00PM +0100, Maciej S. Szmigiero wrote:
+>> >>> > On 3.02.2025 23:56, Peter Xu wrote:
+>> >>> > > On Mon, Feb 03, 2025 at 10:41:32PM +0100, Maciej S. Szmigiero wr=
+ote:
+>> >>> > > > On 3.02.2025 21:20, Peter Xu wrote:
+>> >>> > > > > On Mon, Feb 03, 2025 at 07:53:00PM +0100, Maciej S. Szmigier=
+o wrote:
+>> >>> > > > > > On 3.02.2025 19:20, Peter Xu wrote:
+>> >>> > > > > > > On Thu, Jan 30, 2025 at 11:08:29AM +0100, Maciej S. Szmi=
+giero wrote:
+>> >>> > > > > > > > From: "Maciej S. Szmigiero" <maciej.szmigiero@oracle.c=
+om>
+>> >>> > > > > > > >=20
+>> >>> > > > > > > > Multifd send channels are terminated by calling
+>> >>> > > > > > > > qio_channel_shutdown(QIO_CHANNEL_SHUTDOWN_BOTH) in
+>> >>> > > > > > > > multifd_send_terminate_threads(), which in the TLS cas=
+e essentially
+>> >>> > > > > > > > calls shutdown(SHUT_RDWR) on the underlying raw socket.
+>> >>> > > > > > > >=20
+>> >>> > > > > > > > Unfortunately, this does not terminate the TLS session=
+ properly and
+>> >>> > > > > > > > the receive side sees this as a GNUTLS_E_PREMATURE_TER=
+MINATION error.
+>> >>> > > > > > > >=20
+>> >>> > > > > > > > The only reason why this wasn't causing migration fail=
+ures is because
+>> >>> > > > > > > > the current migration code apparently does not check f=
+or migration
+>> >>> > > > > > > > error being set after the end of the multifd receive p=
+rocess.
+>> >>> > > > > > > >=20
+>> >>> > > > > > > > However, this will change soon so the multifd receive =
+code has to be
+>> >>> > > > > > > > prepared to not return an error on such premature TLS =
+session EOF.
+>> >>> > > > > > > > Use the newly introduced QIOChannelTLS method for that.
+>> >>> > > > > > > >=20
+>> >>> > > > > > > > It's worth noting that even if the sender were to be c=
+hanged to terminate
+>> >>> > > > > > > > the TLS connection properly the receive side still nee=
+ds to remain
+>> >>> > > > > > > > compatible with older QEMU bit stream which does not d=
+o this.
+>> >>> > > > > > >=20
+>> >>> > > > > > > If this is an existing bug, we could add a Fixes.
+>> >>> > > > > >=20
+>> >>> > > > > > It is an existing issue but only uncovered by this patch s=
+et.
+>> >>> > > > > >=20
+>> >>> > > > > > As far as I can see it was always there, so it would need =
+some
+>> >>> > > > > > thought where to point that Fixes tag.
+>> >>> > > > >=20
+>> >>> > > > > If there's no way to trigger a real functional bug anyway, i=
+t's also ok we
+>> >>> > > > > omit the Fixes.
+>> >>> > > > >=20
+>> >>> > > > > > > Two pure questions..
+>> >>> > > > > > >=20
+>> >>> > > > > > >      - What is the correct way to terminate the TLS sess=
+ion without this flag?
+>> >>> > > > > >=20
+>> >>> > > > > > I guess one would need to call gnutls_bye() like in this G=
+nuTLS example:
+>> >>> > > > > > https://gitlab.com/gnutls/gnutls/-/blob/2b8c3e4c71ad380bbb=
+ffb32e6003b34ecad596e3/doc/examples/ex-client-anon.c#L102
+>> >>> > > > > >=20
+>> >>> > > > > > >      - Why this is only needed by multifd sessions?
+>> >>> > > > > >=20
+>> >>> > > > > > What uncovered the issue was switching the load threads to=
+ using
+>> >>> > > > > > migrate_set_error() instead of their own result variable
+>> >>> > > > > > (load_threads_ret) which you had requested during the prev=
+ious
+>> >>> > > > > > patch set version review:
+>> >>> > > > > > https://lore.kernel.org/qemu-devel/Z1DbH5fwBaxtgrvH@x1n/
+>> >>> > > > > >=20
+>> >>> > > > > > Turns out that the multifd receive code always returned
+>> >>> > > > > > error in the TLS case, just nothing was previously checkin=
+g for
+>> >>> > > > > > that error presence.
+>> >>> > > > >=20
+>> >>> > > > > What I was curious is whether this issue also exists for the=
+ main migration
+>> >>> > > > > channel when with tls, especially when e.g. multifd not enab=
+led at all.  As
+>> >>> > > > > I don't see anywhere that qemu uses gnutls_bye() for any tls=
+ session.
+>> >>> > > > >=20
+>> >>> > > > > I think it's a good to find that we overlooked this before..=
+ and IMHO it's
+>> >>> > > > > always good we could fix this.
+>> >>> > > > >=20
+>> >>> > > > > Does it mean we need proper gnutls_bye() somewhere?
+>> >>> > > > >=20
+>> >>> > > > > If we need an explicit gnutls_bye(), then I wonder if that s=
+hould be done
+>> >>> > > > > on the main channel as well.
+>> >>> > > >=20
+>> >>> > > > That's a good question and looking at the code qemu_loadvm_sta=
+te_main() exits
+>> >>> > > > on receiving "QEMU_VM_EOF" section (that's different from rece=
+iving socket EOF)
+>> >>> > > > and then optionally "QEMU_VM_VMDESCRIPTION" section is read wi=
+th explicit size
+>> >>> > > > in qemu_loadvm_state() - so still not until channel EOF.
+>> >>> > >=20
+>> >>> > > I had a closer look, I do feel like such pre-mature termination =
+is caused
+>> >>> > > by explicit shutdown()s of the iochannels, looks like that can c=
+ause issue
+>> >>> > > even after everything is sent.  Then I noticed indeed multifd se=
+nder
+>> >>> > > iochannels will get explicit shutdown()s since commit 077fbb5942=
+, while we
+>> >>> > > don't do that for the main channel.  Maybe that is a major diffe=
+rence.
+>> >>> > >=20
+>> >>> > > Now I wonder whether we should shutdown() the channel at all if =
+migration
+>> >>> > > succeeded, because looks like it can cause tls session to interr=
+upt even if
+>> >>> > > the shutdown() is done after sent everything, and if so it'll ex=
+plain why
+>> >>> > > you hit the issue with tls.
+>> >>> > >=20
+>> >>> > > >=20
+>> >>> > > > Then I can't see anything else reading the channel until it is=
+ closed in
+>> >>> > > > migration_incoming_state_destroy().
+>> >>> > > >=20
+>> >>> > > > So most likely the main migration channel will never read far =
+enough to
+>> >>> > > > reach that GNUTLS_E_PREMATURE_TERMINATION error.
+>> >>> > > >=20
+>> >>> > > > > If we don't need gnutls_bye(), then should we always ignore =
+pre-mature
+>> >>> > > > > termination of tls no matter if it's multifd or non-multifd =
+channel (or
+>> >>> > > > > even a tls session that is not migration-related)?
+>> >>> > > >=20
+>> >>> > > > So basically have this patch extended to calling
+>> >>> > > > qio_channel_tls_set_premature_eof_okay() also on the main migr=
+ation channel?
+>> >>> > >=20
+>> >>> > > If above theory can stand, then eof-okay could be a workaround p=
+apering
+>> >>> > > over the real problem that we shouldn't always shutdown()..
+>> >>> > >=20
+>> >>> > > Could you have a look at below patch and see whether it can fix =
+the problem
+>> >>> > > you hit too, in replace of these two patches (including the prev=
+ious
+>> >>> > > iochannel change)?
+>> >>> > >=20
+>> >>> >=20
+>> >>> > Unfortunately, the patch below does not fix the problem:
+>> >>> > > qemu-system-x86_64: Cannot read from TLS channel: The TLS connec=
+tion was non-properly terminated.
+>> >>> > > qemu-system-x86_64: Cannot read from TLS channel: The TLS connec=
+tion was non-properly terminated.
+>> >>> >=20
+>> >>> > I think that, even in the absence of shutdown(), if the sender doe=
+s not
+>> >>> > call gnutls_bye() the TLS session is considered improperly termina=
+ted.
+>> >>>=20
+>> >>> Ah..
+>> >>>=20
+>> >>> How about one more change on top of above change to disconnect prope=
+rly for
+>> >>> TLS?  Something like gnutls_bye() in qio_channel_tls_close(), would =
+that
+>> >>> make sense to you?
+>> >>
+>> >> Calling gnutls_bye from qio_channel_tls_close is not viable for the
+>> >> API contract of qio_channel_close. gnutls_bye needs to be able to
+>> >> perform I/O, which means we need to be able to tell the caller
+>> >> whether it needs to perform an event loop wait for POLLIN or POLLOUT.
+>> >>
+>> >> This is the same API design scenario as the gnutls_handshake method.
+>> >> As such I tdon't think it is practical to abstract it inside any
+>> >> existing QIOChannel API call, it'll have to be standalone like
+>> >> qio_channel_tls_handshake() is.
+>> >>
+>> >
+>> > I implemented the call to gnutls_bye:
+>> > https://gitlab.com/farosas/qemu/-/commits/migration-tls-bye
+>> >
+>> > Then while testing it I realised we actually have a regression from 9.=
+2:
+>> >
+>> > 1d457daf86 ("migration/multifd: Further remove the SYNC on complete")
+>> >
+>> > It seems that patch somehow affected the ordering between src shutdown
+>> > vs. recv shutdown and now the recv channels are staying around to see
+>> > the connection being broken. Or something... I'm still looking into it.
+>> >
 >>=20
 >> Ok, so the issue is that the recv side would previously be stuck at the
 >> sync semaphore and multifd_recv_terminate_threads() would kick it only
@@ -354,40 +363,25 @@ hat
 >> thread (gnutls_bye or premature_ok). I'm fine either way, but let's make
 >> sure we add a reference to the patch above and some words explaining the
 >> situation.
->
-> We still need premature_ok for handling older QEMU versions that do not
-> terminate the TLS stream correctly since the TLS test regression happens
-> even without device state transfer being enabled.
-
-What exactly is the impact of this issue to the device state series?
-From the cover letter:
-
-  * qemu_loadvm_load_thread_pool now reports error via migrate_set_error()
-  instead of dedicated load_threads_ret variable.
-
-  * Since the change above uncovered an issue with respect to multifd send
-  channels not terminating TLS session properly QIOChannelTLS now allows
-  gracefully handling this situation.
-
-I understand qemu_loadvm_load_thread_pool() is attempting to use
-migrate_set_error() but an error is already set by the recv_thread. Is
-that the issue? I wonder if we could isolate somehow this so it doesn't
-impact this series.
-
->
-> So I think that's what we should use generally.
->=20=20=20
-
-For premature_ok, we need to make sure it will not hang QEMU if the
-connection gets unexpectedly closed. The current code checks for
-shutdown() having already happened, which is fine because it means we're
-already on the way out. However, if any ol' recv() can now ignore a
-premature termination error, then the recv_thread will not trigger
-cleanup of the multifd_recv threads.
-
+>>=20
 >> (let me know if anyone prefers the gnutls_bye approach I have implemented
 >> and I can send a proper series)
 >
+> Good to know the progress.
+>
+> If that doesn't take a lot of time to provide a formal patch, IMO you
+> should go for it at least with an RFC; RFC is less likely to be completely
+> forgotten from thread discussions in all cases.
+>
+
+I'll send it. But let's try to avoid making it a dependency for this
+series like the last time. That didn't work out so well I think. I'd
+suggest we prepare a simple fix to go along with the device state code,
+ideally something that doesn't interact with TLS at all.
+
+> Migration is not the only one using tls channels, so even if migration can
+> avoid depending on it, I wonder if gnutls_bye is a must if we want to make
+> sure QEMU is free from pre-mature termination attacks on other users.
+>
 > Thanks,
-> Maciej
 
