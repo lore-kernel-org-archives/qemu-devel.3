@@ -4,73 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 022B0C02194
-	for <qemu-devel@archiver.kernel.org>; Thu,  6 Feb 2025 17:26:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 24EEAC0219B
+	for <qemu-devel@archiver.kernel.org>; Thu,  6 Feb 2025 17:26:20 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tg5d5-0003Jw-1c; Thu, 06 Feb 2025 12:25:32 -0500
+	id 1tg5dS-0003OD-Ui; Thu, 06 Feb 2025 12:25:56 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1tg5cz-0003Ib-6p
- for qemu-devel@nongnu.org; Thu, 06 Feb 2025 12:25:25 -0500
-Received: from mail-yb1-xb32.google.com ([2607:f8b0:4864:20::b32])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tg5dQ-0003No-1J
+ for qemu-devel@nongnu.org; Thu, 06 Feb 2025 12:25:52 -0500
+Received: from mail-wm1-x330.google.com ([2a00:1450:4864:20::330])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1tg5cx-0000CF-EH
- for qemu-devel@nongnu.org; Thu, 06 Feb 2025 12:25:24 -0500
-Received: by mail-yb1-xb32.google.com with SMTP id
- 3f1490d57ef6-e3983426f80so930391276.1
- for <qemu-devel@nongnu.org>; Thu, 06 Feb 2025 09:25:22 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tg5dO-0000I4-Dl
+ for qemu-devel@nongnu.org; Thu, 06 Feb 2025 12:25:51 -0500
+Received: by mail-wm1-x330.google.com with SMTP id
+ 5b1f17b1804b1-436341f575fso14143885e9.1
+ for <qemu-devel@nongnu.org>; Thu, 06 Feb 2025 09:25:49 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1738862721; x=1739467521; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=8hBbwUu0fn6MeAYbv6ppKP6HaGN0VsGK/e1ezloXiG0=;
- b=IYxGnNyqWAQ++O4R7XFAcqEObboJI9QwydZbr0pB2uFbr4PK6srb1g12atqfT7/G3T
- iNCndLUAnACqkBz5gRKwWUGWJunZagemVgVJh5o4098EGQ1daiFYVw3CylGRth1gKkXB
- XF9/doovmCu8IC2kHBy7+vB0slom9ZDkJ3Mhgy1FaNhfUrTvi0x4+8Pbp+QdvQ9fjahN
- UEzcUfAKCwY/oDSAdMT/Z4Phx7YAIGsP5noOJ+GVjn6xYBFwh+KL+AHiI8I8y74HJAYY
- XO59BrvwW5Nn9TGeviNlnwQym3lbmZFGD40g1v8JnslLHalKgVI1zZmfTr4Lv8ZyWp6m
- XpRQ==
+ d=linaro.org; s=google; t=1738862749; x=1739467549; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=DFpY6lhLsuESMDGK6xSczhaIErXsE/jTHzElGG+l1VI=;
+ b=BvzflDvY3i4HGTDikcKEOf5CF+MDJ5ct4+xMk8t7v5SdkU3GkYatUSzm8QLR4kqmBp
+ Bk3eKO9zaIIsSrI/IkwQVadglWeYIe2jWMCoIMasTybtrrwT+eHzCEfvhGH8vVUpJhqq
+ PtBgyua+7VL7KttZn5hZCi00eUXHIO4jvnHfIdJkYkqZ8z2bFU7fVNebAbpsgNG6Itgm
+ aRVenipq7Caer51+O+xfn4/dwpDQXb/dkA1xRIAnIWCFG31SidKajzhX2t3zng2W3y8m
+ RtxgZbWr5L1ZfRJsl9LvRFsrwrLfcOr5y38nS99xet0fNDuTe0+F/+ELumnC2XdS4dZ2
+ 9SIw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1738862721; x=1739467521;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=8hBbwUu0fn6MeAYbv6ppKP6HaGN0VsGK/e1ezloXiG0=;
- b=QvLRWeBrICRyHCM/BmmkQs3wEJJMPYWSDKa08h0X86eDCKPCXlx90yKdIJedmdQE21
- GtAAQN+MvFba545Qj+LzS1RkJrFANMadj8uum06eJHIPoeAjo+ozq4lDZMl1xdq03bM5
- OZ34FtDTucG7IKgxmdNuFRduKoldOd82T9v6jsbMXGGAcRnf52/vTDiRGJk6OcjgBRtZ
- 303+AoSfJBwPxBKwNi8DE/9D/BPt0VpMAASBemFXAb65psTVjlUTanhr2poIhp4p6HdV
- 3mm10Ry0Y/EdOD0SoMU2ZZAP47E6WtyAX6/bB6Sq7hWy0Eqt4ICLgZpOwfgb6m+/Tnz+
- 3kJw==
-X-Gm-Message-State: AOJu0YwMNHtfLfm9XoTeGM8voxJQPXBPb9MLMr9L5sEyBu/df7EjPgv7
- aGKmKpjJd3J+fpRd1VzMJma8DRLI0XP2qxlHx7gmhk0gWB7KkkeN0C5RP2UdIYBDsvPg5kd0yvG
- 0o9ys9RkZRkAx1/E9F02mBpj/GfXHUbfqFQWZGQ==
-X-Gm-Gg: ASbGnctpx+syr5/BIOzk9BUH3i5IyC8ICisSKTYLMgi3fdf1O5y4HGyOdTVEPapl2EF
- 9TouKfbVYvoPeRE1Pahh2mudav8xanbeO+TwoU1flb8PhOZaxvi9n207Bsm3sy1euJE37gRJ8nw
- ==
-X-Google-Smtp-Source: AGHT+IEuGH3drC3P02fylXVvYDJEbjG7EJVTZCqJo3yTJFcNX7WlSCLq2Y2+bkJ4Rs70UxWF1H+o0JaU0ob/9EqwTJc=
-X-Received: by 2002:a5b:d48:0:b0:e5b:3af0:d4b5 with SMTP id
- 3f1490d57ef6-e5b3af0d646mr1608649276.34.1738862721266; Thu, 06 Feb 2025
- 09:25:21 -0800 (PST)
+ d=1e100.net; s=20230601; t=1738862749; x=1739467549;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=DFpY6lhLsuESMDGK6xSczhaIErXsE/jTHzElGG+l1VI=;
+ b=fI1QeilBxCbAOH8QCvz9A6AJ+9AzGIzwMoG3dYm1BAfqkGeUCYUWmsvfGX2agSN+nW
+ br5z8rFLGmrL1f4PPeS5JqlCBDlNsn2Yx/8aqij+90eCGl8Un/KjteX2NL3kagflyK3/
+ HaBy3HhxtLWS3hM3wmX1zzs/jVoWq0pec+TnUepSztvsUQSdNHMkw8vuYkq+UCle0SpL
+ h2e1Pd/RfM/q2adruEX3kaQXd+vhKNCM6TyyaT/EQaNPJd5Mim1zl/p91mNJ4IOtyIvh
+ 2MwHJzGVSzf4DqaoXmTEW1foPL5cPg0m8ImwtCEFgBJYdgVTOfiEIiD/9k9D8u1pVpOt
+ uRyg==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCXGmlZjqWiCNriyMvwM7Cc+UL9s6IfmSa2H/0qUVMopXgIzHKtHB3Le2koYI3a3zzdWG8NRcYC2YbMO@nongnu.org
+X-Gm-Message-State: AOJu0YyasXUMMqdRXQf3OtlmIgaMOYqvBHhCXOjCZOV5+O/mJOLO8KkK
+ MLEb8j3cqWOT/Ol7G+BJ4ckR52Vn8ui9TSeXxe+gB1GJMameAErnOPzMq2imfXrAxYo3bOtxXTp
+ P7JA=
+X-Gm-Gg: ASbGnctGhf9Wz17VNaOAnDVILCeNnmVzW4XfTNhsfpEW3AhOksyoOeCBeTE/i9W3iHM
+ jmSyJt/7ojzSGrKj1F9v1xu2KHk6KQTUYps4Cuw+ydwIN8WY9JfTMrzkLlZZO10jbuaBaoXT4Gv
+ sQX0GmXtc0LZLgfD10c7Aeo8Yy1AWUNSgabo8MDGUsxpPWxhg9F9iODkD3YADwB31AkMP7Dt3K6
+ QTOTbcdq0b4UASR82qpoMGoGnqsJryXHEm5seMQcUpEXKRlnMvcfv39ZpvfoO3DCwz9Bs8fFFwW
+ 4yqj4VLmnSQPeS4cBs0K0h1RmgFvKGfMaqjJE0TD6IXLl72BFLVz9fHJ/wk=
+X-Google-Smtp-Source: AGHT+IH11EZFL8bQoatL+ho/0lB6Cf1QbjU9Dx7Czit9Zj/scPNOGViFz+c5zb6Xo88V1Mis2hoRPw==
+X-Received: by 2002:a05:600c:1547:b0:434:f5c0:329f with SMTP id
+ 5b1f17b1804b1-439249918aamr3567865e9.14.1738862748688; 
+ Thu, 06 Feb 2025 09:25:48 -0800 (PST)
+Received: from [192.168.69.198] (88-187-86-199.subs.proxad.net.
+ [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-4390d94dd1esm62768155e9.16.2025.02.06.09.25.47
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Thu, 06 Feb 2025 09:25:48 -0800 (PST)
+Message-ID: <b46b9348-0f28-4714-8b39-13cf2e62a649@linaro.org>
+Date: Thu, 6 Feb 2025 18:25:47 +0100
 MIME-Version: 1.0
-References: <20250204092112.26957-1-shentey@gmail.com>
- <20250204092112.26957-8-shentey@gmail.com>
-In-Reply-To: <20250204092112.26957-8-shentey@gmail.com>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Thu, 6 Feb 2025 17:25:10 +0000
-X-Gm-Features: AWEUYZnzzvwxN47FLZpOw3kYwzVTT5r1VCrJutji2PKNOIupwlQNbe7f3hbIGq0
-Message-ID: <CAFEAcA9dGSSOhAXE-Tu1hwgJUakkWe139LE3ORmXt=8jJd9HWg@mail.gmail.com>
-Subject: Re: [PATCH v2 07/18] hw/arm/fsl-imx8mp: Add USDHC storage controllers
-To: Bernhard Beschow <shentey@gmail.com>
-Cc: qemu-devel@nongnu.org, qemu-arm@nongnu.org, 
- Andrey Smirnov <andrew.smirnov@gmail.com>, Paolo Bonzini <pbonzini@redhat.com>
-Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::b32;
- envelope-from=peter.maydell@linaro.org; helo=mail-yb1-xb32.google.com
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] block: Remove unused blk_op_is_blocked()
+To: Kevin Wolf <kwolf@redhat.com>, qemu-block@nongnu.org
+Cc: stefanha@redhat.com, qemu-devel@nongnu.org
+References: <20250206165331.379033-1-kwolf@redhat.com>
+Content-Language: en-US
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <20250206165331.379033-1-kwolf@redhat.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::330;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x330.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -93,23 +101,56 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, 4 Feb 2025 at 09:21, Bernhard Beschow <shentey@gmail.com> wrote:
->
-> The USDHC emulation allows for running real-world images such as those generated
-> by Buildroot. Convert the board documentation accordingly instead of running a
-> Linux kernel with ephemeral storage.
->
-> Signed-off-by: Bernhard Beschow <shentey@gmail.com>
+On 6/2/25 17:53, Kevin Wolf wrote:
+> Commit fc4e394b28 removed the last caller of blk_op_is_blocked(). Remove
+> the now unused function.
+
+fatal: ambiguous argument 'fc4e394b28': unknown revision or path not in 
+the working tree.
+
+Is there a patch on the list?
+
+> 
+> Signed-off-by: Kevin Wolf <kwolf@redhat.com>
 > ---
->  docs/system/arm/imx8mp-evk.rst | 16 +++++++++++-----
->  include/hw/arm/fsl-imx8mp.h    |  7 +++++++
->  hw/arm/fsl-imx8mp.c            | 28 ++++++++++++++++++++++++++++
->  hw/arm/imx8mp-evk.c            | 18 ++++++++++++++++++
->  hw/arm/Kconfig                 |  1 +
->  5 files changed, 65 insertions(+), 5 deletions(-)
+>   include/system/block-backend-global-state.h |  1 -
+>   block/block-backend.c                       | 12 ------------
+>   2 files changed, 13 deletions(-)
+> 
+> diff --git a/include/system/block-backend-global-state.h b/include/system/block-backend-global-state.h
+> index 9cc9b008ec..35b5e8380b 100644
+> --- a/include/system/block-backend-global-state.h
+> +++ b/include/system/block-backend-global-state.h
+> @@ -86,7 +86,6 @@ bool blk_supports_write_perm(BlockBackend *blk);
+>   bool blk_is_sg(BlockBackend *blk);
+>   void blk_set_enable_write_cache(BlockBackend *blk, bool wce);
+>   int blk_get_flags(BlockBackend *blk);
+> -bool blk_op_is_blocked(BlockBackend *blk, BlockOpType op, Error **errp);
+>   int blk_set_aio_context(BlockBackend *blk, AioContext *new_context,
+>                           Error **errp);
+>   void blk_add_aio_context_notifier(BlockBackend *blk,
+> diff --git a/block/block-backend.c b/block/block-backend.c
+> index 9288f7e1c6..a402db13f2 100644
+> --- a/block/block-backend.c
+> +++ b/block/block-backend.c
+> @@ -2357,18 +2357,6 @@ void *blk_blockalign(BlockBackend *blk, size_t size)
+>       return qemu_blockalign(blk ? blk_bs(blk) : NULL, size);
+>   }
+>   
+> -bool blk_op_is_blocked(BlockBackend *blk, BlockOpType op, Error **errp)
+> -{
+> -    BlockDriverState *bs = blk_bs(blk);
+> -    GLOBAL_STATE_CODE();
+> -    GRAPH_RDLOCK_GUARD_MAINLOOP();
+> -
+> -    if (!bs) {
+> -        return false;
+> -    }
+> -
+> -    return bdrv_op_is_blocked(bs, op, errp);
+> -}
+>   
+>   /**
+>    * Return BB's current AioContext.  Note that this context may change
 
-Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
-
-thanks
--- PMM
 
