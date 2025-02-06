@@ -4,71 +4,97 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8FFB6C02194
-	for <qemu-devel@archiver.kernel.org>; Thu,  6 Feb 2025 15:07:25 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 34BFAC02199
+	for <qemu-devel@archiver.kernel.org>; Thu,  6 Feb 2025 15:07:39 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tg3TJ-0004sQ-RS; Thu, 06 Feb 2025 10:07:17 -0500
+	id 1tg3TU-0004wO-Fi; Thu, 06 Feb 2025 10:07:28 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <shameerali.kolothum.thodi@huawei.com>)
- id 1tg3TG-0004rA-Dk; Thu, 06 Feb 2025 10:07:14 -0500
-Received: from frasgout.his.huawei.com ([185.176.79.56])
+ (Exim 4.90_1) (envelope-from <harshpb@linux.ibm.com>)
+ id 1tg3TQ-0004u2-3O
+ for qemu-devel@nongnu.org; Thu, 06 Feb 2025 10:07:24 -0500
+Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <shameerali.kolothum.thodi@huawei.com>)
- id 1tg3TD-0008Bq-QB; Thu, 06 Feb 2025 10:07:14 -0500
-Received: from mail.maildlp.com (unknown [172.18.186.31])
- by frasgout.his.huawei.com (SkyGuard) with ESMTP id 4YpgP53nmqz6L55V;
- Thu,  6 Feb 2025 23:04:25 +0800 (CST)
-Received: from frapeml500007.china.huawei.com (unknown [7.182.85.172])
- by mail.maildlp.com (Postfix) with ESMTPS id 4FB71140534;
- Thu,  6 Feb 2025 23:07:07 +0800 (CST)
-Received: from frapeml500008.china.huawei.com (7.182.85.71) by
- frapeml500007.china.huawei.com (7.182.85.172) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.1.2507.39; Thu, 6 Feb 2025 16:07:07 +0100
-Received: from frapeml500008.china.huawei.com ([7.182.85.71]) by
- frapeml500008.china.huawei.com ([7.182.85.71]) with mapi id 15.01.2507.039;
- Thu, 6 Feb 2025 16:07:07 +0100
-To: =?utf-8?B?RGFuaWVsIFAuIEJlcnJhbmfDqQ==?= <berrange@redhat.com>
-CC: "qemu-arm@nongnu.org" <qemu-arm@nongnu.org>, "qemu-devel@nongnu.org"
- <qemu-devel@nongnu.org>, "eric.auger@redhat.com" <eric.auger@redhat.com>,
- "peter.maydell@linaro.org" <peter.maydell@linaro.org>, "jgg@nvidia.com"
- <jgg@nvidia.com>, "nicolinc@nvidia.com" <nicolinc@nvidia.com>,
- "ddutile@redhat.com" <ddutile@redhat.com>, Linuxarm <linuxarm@huawei.com>,
- "Wangzhou (B)" <wangzhou1@hisilicon.com>, jiangkunkun
- <jiangkunkun@huawei.com>, Jonathan Cameron <jonathan.cameron@huawei.com>,
- "zhangfei.gao@linaro.org" <zhangfei.gao@linaro.org>, "nathanc@nvidia.com"
- <nathanc@nvidia.com>
-Subject: RE: [RFC PATCH 0/5] hw/arm/virt: Add support for user-creatable
- nested SMMUv3
-Thread-Topic: [RFC PATCH 0/5] hw/arm/virt: Add support for user-creatable
- nested SMMUv3
-Thread-Index: AQHbMeB0+Q5BEZc9JkeH/U6Jz+dF4rMv66IAgAA0HqCAAb2VAIAIsUnQgAADD4CAAB6MsIAAJxaAgAATMvA=
-Date: Thu, 6 Feb 2025 15:07:06 +0000
-Message-ID: <71116749d1234ab48a205fd2588151ec@huawei.com>
-References: <20241108125242.60136-1-shameerali.kolothum.thodi@huawei.com>
- <Z5uiGnAxUf4jXTEI@redhat.com> <7ecabe74e0514367baf28d67675e5db8@huawei.com>
- <Z51DmtP83741RAsb@redhat.com> <47d2c2556d794d87abf440263b2f7cd8@huawei.com>
- <Z6SQ3_5bcqseyzVa@redhat.com> <f898b6de4a664fe8810b06b7741e3120@huawei.com>
- <Z6TLSdwgajmHVmGH@redhat.com>
-In-Reply-To: <Z6TLSdwgajmHVmGH@redhat.com>
-Accept-Language: en-GB, en-US
-Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-x-originating-ip: [10.203.177.241]
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: base64
+ (Exim 4.90_1) (envelope-from <harshpb@linux.ibm.com>)
+ id 1tg3TO-0008G7-F9
+ for qemu-devel@nongnu.org; Thu, 06 Feb 2025 10:07:23 -0500
+Received: from pps.filterd (m0356516.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 516ESKiW020846;
+ Thu, 6 Feb 2025 15:07:20 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+ :content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=pp1; bh=gi5PSf
+ OFKapwHlcPVN+fLgIcAmdNWSdW1jxURSZtMPI=; b=VLLBHDX9haf8k8jAJv1IgF
+ 9Y4DIxXU7QqSXF+B9ssJcJP+cZvVqxatHk8/+Pi07BTJR7RUArbE+kM8VYlblnzm
+ gJek5cW6OiZ8Vtjij14Kjnt16t7UYPGvjo2IcUTUERX9pH9TnjfB+6mruyP4k3Td
+ vkeqRM9qoXrjwpAbol11mY6zr6n5iQWcswjX3wqcR6NtU/3mjyxlfzL14pD32awU
+ 9Iythlq6HBZiWCC3BROvAtWu7t/2hgpxQteEQ9lEniH92mBt2/Bi1R9VJCYXes5w
+ XcRw8S099cH7y+JAbk9731jMJuV1/IwjDeNN7+IMfXI9uAQMLnGLBcTEqbY8jmAA
+ ==
+Received: from ppma21.wdc07v.mail.ibm.com
+ (5b.69.3da9.ip4.static.sl-reverse.com [169.61.105.91])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 44matte8nv-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Thu, 06 Feb 2025 15:07:20 +0000 (GMT)
+Received: from pps.filterd (ppma21.wdc07v.mail.ibm.com [127.0.0.1])
+ by ppma21.wdc07v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 516BbHjm024492;
+ Thu, 6 Feb 2025 15:07:19 GMT
+Received: from smtprelay07.dal12v.mail.ibm.com ([172.16.1.9])
+ by ppma21.wdc07v.mail.ibm.com (PPS) with ESMTPS id 44hxxnewww-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Thu, 06 Feb 2025 15:07:19 +0000
+Received: from smtpav05.dal12v.mail.ibm.com (smtpav05.dal12v.mail.ibm.com
+ [10.241.53.104])
+ by smtprelay07.dal12v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 516F7Ifc32375408
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Thu, 6 Feb 2025 15:07:18 GMT
+Received: from smtpav05.dal12v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id B5ABD5805D;
+ Thu,  6 Feb 2025 15:07:18 +0000 (GMT)
+Received: from smtpav05.dal12v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id B095158052;
+ Thu,  6 Feb 2025 15:07:16 +0000 (GMT)
+Received: from [9.124.218.154] (unknown [9.124.218.154])
+ by smtpav05.dal12v.mail.ibm.com (Postfix) with ESMTP;
+ Thu,  6 Feb 2025 15:07:16 +0000 (GMT)
+Message-ID: <861e43f2-aac5-457d-bb11-bb6fe1f44dec@linux.ibm.com>
+Date: Thu, 6 Feb 2025 20:37:14 +0530
 MIME-Version: 1.0
-Received-SPF: pass client-ip=185.176.79.56;
- envelope-from=shameerali.kolothum.thodi@huawei.com;
- helo=frasgout.his.huawei.com
-X-Spam_score_int: -41
-X-Spam_score: -4.2
-X-Spam_bar: ----
-X-Spam_report: (-4.2 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_MED=-2.3,
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v3 7/7] vfio: Remove superfluous error report in
+ vfio_listener_region_add()
+To: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>, qemu-devel@nongnu.org
+Cc: Alex Williamson <alex.williamson@redhat.com>,
+ Shivaprasad G Bhat <sbhat@linux.ibm.com>
+References: <20250206131438.1505542-1-clg@redhat.com>
+ <20250206131438.1505542-8-clg@redhat.com>
+Content-Language: en-US
+From: Harsh Prateek Bora <harshpb@linux.ibm.com>
+In-Reply-To: <20250206131438.1505542-8-clg@redhat.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+X-TM-AS-GCONF: 00
+X-Proofpoint-GUID: UlAh9dgs0lmTa1hvKPX2c-Xq25NhbGCs
+X-Proofpoint-ORIG-GUID: UlAh9dgs0lmTa1hvKPX2c-Xq25NhbGCs
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1057,Hydra:6.0.680,FMLib:17.12.68.34
+ definitions=2025-02-06_03,2025-02-05_03,2024-11-22_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ priorityscore=1501
+ spamscore=0 suspectscore=0 adultscore=0 mlxscore=0 clxscore=1011
+ mlxlogscore=999 bulkscore=0 phishscore=0 malwarescore=0 impostorscore=0
+ lowpriorityscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2501170000 definitions=main-2502060123
+Received-SPF: pass client-ip=148.163.158.5; envelope-from=harshpb@linux.ibm.com;
+ helo=mx0b-001b2d01.pphosted.com
+X-Spam_score_int: -26
+X-Spam_score: -2.7
+X-Spam_bar: --
+X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
  RCVD_IN_MSPIKE_H2=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
  RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
@@ -84,91 +110,74 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-to:  Shameerali Kolothum Thodi <shameerali.kolothum.thodi@huawei.com>
-From:  Shameerali Kolothum Thodi via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-DQoNCj4gLS0tLS1PcmlnaW5hbCBNZXNzYWdlLS0tLS0NCj4gRnJvbTogRGFuaWVsIFAuIEJlcnJh
-bmfDqSA8YmVycmFuZ2VAcmVkaGF0LmNvbT4NCj4gU2VudDogVGh1cnNkYXksIEZlYnJ1YXJ5IDYs
-IDIwMjUgMjo0NyBQTQ0KPiBUbzogU2hhbWVlcmFsaSBLb2xvdGh1bSBUaG9kaSA8c2hhbWVlcmFs
-aS5rb2xvdGh1bS50aG9kaUBodWF3ZWkuY29tPg0KPiBDYzogcWVtdS1hcm1Abm9uZ251Lm9yZzsg
-cWVtdS1kZXZlbEBub25nbnUub3JnOw0KPiBlcmljLmF1Z2VyQHJlZGhhdC5jb207IHBldGVyLm1h
-eWRlbGxAbGluYXJvLm9yZzsgamdnQG52aWRpYS5jb207DQo+IG5pY29saW5jQG52aWRpYS5jb207
-IGRkdXRpbGVAcmVkaGF0LmNvbTsgTGludXhhcm0NCj4gPGxpbnV4YXJtQGh1YXdlaS5jb20+OyBX
-YW5nemhvdSAoQikgPHdhbmd6aG91MUBoaXNpbGljb24uY29tPjsNCj4gamlhbmdrdW5rdW4gPGpp
-YW5na3Vua3VuQGh1YXdlaS5jb20+OyBKb25hdGhhbiBDYW1lcm9uDQo+IDxqb25hdGhhbi5jYW1l
-cm9uQGh1YXdlaS5jb20+OyB6aGFuZ2ZlaS5nYW9AbGluYXJvLm9yZzsNCj4gbmF0aGFuY0Budmlk
-aWEuY29tDQo+IFN1YmplY3Q6IFJlOiBbUkZDIFBBVENIIDAvNV0gaHcvYXJtL3ZpcnQ6IEFkZCBz
-dXBwb3J0IGZvciB1c2VyLWNyZWF0YWJsZQ0KPiBuZXN0ZWQgU01NVXYzDQo+IA0KPiBPbiBUaHUs
-IEZlYiAwNiwgMjAyNSBhdCAwMTo1MToxNVBNICswMDAwLCBTaGFtZWVyYWxpIEtvbG90aHVtIFRo
-b2RpDQo+IHdyb3RlOg0KPiA+IEhtbS4uSSBkb27igJl0IHRoaW5rIGp1c3Qgc3dhcHBpbmcgdGhl
-IG9yZGVyIHdpbGwgY2hhbmdlIHRoZSBhc3NvY2lhdGlvbg0KPiB3aXRoDQo+ID4gR3Vlc3QgU01N
-VSBoZXJlLiBCZWNhdXNlLCB3ZSBoYXZlLA0KPiA+DQo+ID4gPiAgLWRldmljZSBhcm0tc21tdXYz
-LWFjY2VsLGlkPXNtbXV2MixidXM9cGNpZS4yDQo+ID4NCj4gPiBEdXJpbmcgc21tdXYzLWFjY2Vs
-IHJlYWxpemUgdGltZSwgdGhpcyB3aWxsIHJlc3VsdCBpbiwNCj4gPiAgcGNpX3NldHVwX2lvbW11
-KHByaW1hcnlfYnVzLCBvcHMsIHNtbXVfc3RhdGUpOw0KPiA+DQo+ID4gQW5kIHdoZW4gdGhlIHZm
-aW8gZGV2IHJlYWxpemF0aW9uIGhhcHBlbnMsDQo+ID4gIHNldF9pb21tdV9kZXZpY2UoKQ0KPiA+
-ICAgIHNtbXVfZGV2X3NldF9pb21tdV9kZXZpY2UoYnVzLCBzbW11X3N0YXRlLCAsKQ0KPiA+ICAg
-ICAgIC0tPiB0aGlzIGlzIHdoZXJlIHRoZSBndWVzdCBzbW11djMtLT5ob3N0IHNtbXV2MyBhc3Nv
-Y2lhdGlvbiBpcyBmaXJzdA0KPiA+ICAgICAgICAgICAgIGVzdGFibGlzaGVkLiBBbmQgYW55IGZ1
-cnRoZXIgdmZpbyBkZXYgdG8gdGhpcyBHdWVzdCBTTU1VIHdpbGwNCj4gPiAgICAgICAgICAgICBv
-bmx5IHN1Y2NlZWRzIGlmIGl0IGJlbG9uZ3MgdG8gdGhlIHNhbWUgcGh5cyBTTU1VLg0KPiA+DQo+
-ID4gaWUsIHRoZSBHdWVzdCBTTU1VIHRvIHBjaSBidXMgYXNzb2NpYXRpb24sIGFjdHVhbGx5IG1h
-a2Ugc3VyZSB5b3UgaGF2ZQ0KPiB0aGUNCj4gPiBzYW1lIEd1ZXN0IFNNTVUgZm9yIHRoZSBkZXZp
-Y2UuDQo+IA0KPiBPaywgc28gYXQgdGltZSBvZiBWRklPIGRldmljZSByZWFsaXplLCBRRU1VIGlz
-IHRlbGxpbmcgdGhlIGtlcm5lbA0KPiB0byBhc3NvY2lhdGUgYSBwaHlzaWNhbCBTTU1VLCBhbmQg
-aXRzIGRvaW5nIHRoaXMgd2l0aCB0aGUgdmlydHVhbA0KPiBTTU1VIGF0dGFjaGVkIHRvIFBYQiBw
-YXJlbnRpbmcgdGhlIFZGSU8gZGV2aWNlLg0KPiANCj4gPiBzbW11djIgLS0+IHBjaWUuMiAtLT4g
-KHB4Yi1wY2llLCBudW1hX2lkID0gMSkNCj4gPiAwMDAwOmRldjIgLS0+ICBwY2llLnBvcnQyIC0t
-PiBwY2llLjIgLS0+IHNtbXV2MiAocHhiLXBjaWUsIG51bWFfaWQgPSAxKQ0KPiA+DQo+ID4gSGVu
-Y2UgdGhlIGFzc29jaWF0aW9uIG9mIDAwMDA6ZGV2MiB0byBHdWVzdCBTTU1VdjIgcmVtYWluIHNh
-bWUuDQo+IA0KPiBZZXMsIEkgY29uY3VyIHRoZSBTTU1VIHBoeXNpY2FsIDwtPiB2aXJ0dWFsIGFz
-c29jaWF0aW9uIHNob3VsZA0KPiBiZSBmaXhlZCwgYXMgbG9uZyBhcyB0aGUgc2FtZSBWRklPIGRl
-dmljZSBpcyBhbHdheXMgYWRkZWQgdG8NCj4gdGhlIHNhbWUgdmlydHVhbCBTTU1VLg0KPiANCj4g
-PiBJIGhvcGUgdGhpcyBpcyBjbGVhci4gQW5kIEkgYW0gbm90IHN1cmUgdGhlIGFzc29jaWF0aW9u
-IHdpbGwgYmUgYnJva2VuIGluDQo+IGFueQ0KPiA+IG90aGVyIHdheSB1bmxlc3MgUWVtdSBDTEkg
-c3BlY2lmeSB0aGUgZGV2IHRvIGEgZGlmZmVyZW50IFBYQi4NCj4gDQo+IEFsdGhvdWdoIHRoZSBv
-cmRlcmluZyBpcyBhdCBsZWFzdCBwcmVkaWN0YWJsZSwgSSByZW1haW4gdW5jb21mb3J0YWJsZQ0K
-PiBhYm91dCB0aGUgaWRlYSBvZiB0aGUgdmlydHVhbCBTTU1VIGFzc29jaWF0aW9uIHdpdGggdGhl
-IHBoeXNpY2FsIFNNTVUNCj4gYmVpbmcgYSBzaWRlIGVmZmVjdCBvZiB0aGUgVkZJTyBkZXZpY2Ug
-cGxhY2VtZW50Lg0KPiANCj4gVGhlcmUgaXMgc3RpbGwgdGhlIG9wZW4gZG9vciBmb3IgYWRtaW4g
-bWlzLWNvbmZpZ3VyYXRpb24gdGhhdCB3aWxsIG5vdA0KPiBiZSBkaWFnbm9zZWQuIGVnIGNvbnNp
-ZGVyIHdlIGF0dGFjaGVkIFZGSU8gZGV2aWNlIDEgZnJvbSB0aGUgaG9zdCBOVU1BDQo+IG5vZGUg
-MSB0byAgYSBQWEIgYXNzb2NpYXRlZCB3aXRoIGhvc3QgTlVNQSBub2RlIDAuIEFzIGxvbmcgYXMg
-dGhhdCdzDQo+IHRoZSBmaXJzdCBWRklPIGRldmljZSwgdGhlIGtlcm5lbCB3aWxsIGhhcHBpbHkg
-YXNzb2NpYXRlIHRoZSBwaHlzaWNhbA0KPiBhbmQgZ3Vlc3QgU01NVXMuDQoNClllcy4gQSBtaXMt
-Y29uZmlndXJhdGlvbiBjYW4gcGxhY2UgaXQgb24gYSB3cm9uZyBvbmUuIA0KIA0KPiBJZiB3ZSBz
-ZXQgdGhlIHBoeXNpY2FsL2d1ZXN0IFNNTVUgcmVsYXRpb25zaGlwIGRpcmVjdGx5LCB0aGVuIGF0
-IHRoZQ0KPiB0aW1lIHRoZSBWRklPIGRldmljZSBpcyBwbHVnZ2VkLCB3ZSBjYW4gZGlhZ25vc2Ug
-dGhlIGluY29ycmVjdGx5DQo+IHBsYWNlZCBWRklPIGRldmljZSwgYW5kIGJldHRlciByZWFzb24g
-YWJvdXQgYmVoYXZpb3VyLg0KDQpBZ3JlZS4NCg0KPiBJJ3ZlIGFub3RoZXIgcXVlc3Rpb24gYWJv
-dXQgdW5wbHVnIGJlaGF2aW91ci4uDQo+IA0KPiAgMS4gUGx1ZyBhIFZGSU8gZGV2aWNlIGZvciBo
-b3N0IFNNTVUgMSBpbnRvIGEgUFhCIHdpdGggZ3Vlc3QgU01NVSAxLg0KPiAgICAgICA9PiBLZXJu
-ZWwgYXNzb2NpYXRlcyBob3N0IFNNTVUgMSBhbmQgZ3Vlc3QgU01NVSAxIHRvZ2V0aGVyDQo+ICAy
-LiBVbnBsdWcgdGhpcyBWRklPIGRldmljZQ0KPiAgMy4gUGx1ZyBhIFZGSU8gZGV2aWNlIGZvciBo
-b3N0IFNNTVUgMiBpbnRvIGEgUFhCIHdpdGggZ3Vlc3QgU01NVSAxLg0KPiANCj4gRG9lcyB0aGUg
-aG9zdC9ndWVzdCBTTU1VIDE8LT4gMSBhc3NvY2lhdGlvbiByZW1haW4gc2V0IGFmdGVyIHN0ZXAg
-MiwNCj4gaW1wbHlpbmcgc3RlcCAzIHdpbGwgZmFpbCA/IE9yIGRvZXMgaXQgZ2V0IHVuc2V0LCBh
-bGxvd2luZyBzdGVwIDMNCj4gdG8gc3VjY2VlZCwgYW5kIGVzdGFibGlzaCBhIG5ldyBtYXBwaW5n
-IGhvc3QgU01NVSAyIHRvIGd1ZXN0IFNNTVUgMS4NCg0KQXQgdGhlIG1vbWVudCB0aGUgZmlyc3Qg
-YXNzb2NpYXRpb24gaXMgbm90IHBlcnNpc3RlbnQuIFNvIGEgbmV3IG1hcHBpbmcgDQppcyBwb3Nz
-aWJsZS4NCiANCj4gSWYgc3RlcCAyIGRvZXMgTk9UIGJyZWFrIHRoZSBhc3NvY2lhdGlvbiwgZG8g
-d2UgcHJlc2VydmUgdGhhdA0KPiBhY3Jvc3MgYSBzYXZldm0rbG9hZHZtIHNlcXVlbmNlIG9mIFFF
-TVUuIElmIHdlIGRvbid0LCB0aGVuIHN0ZXANCj4gMyB3b3VsZCBmYWlsIGJlZm9yZSB0aGUgc2F2
-ZXZtLCBidXQgc3VjY2VlZCBhZnRlciB0aGUgbG9hZHZtLg0KDQpSaWdodC4gSSBoYXZlbid0IGF0
-dGVtcHRlZCBtaWdyYXRpb24gdGVzdHMgeWV0LiBCdXQgYWdyZWUgdGhhdCBhbiANCmV4cGxpY2l0
-IGFzc29jaWF0aW9uIGlzIGJldHRlciB0byBtYWtlIG1pZ3JhdGlvbiBjb21wYXRpYmxlLiBBbHNv
-DQpJIGFtIG5vdCBzdXJlIGlmIHRoZSB0YXJnZXQgaGFzIGEgZGlmZmVyZW50IHBoeXMgU01NVVYz
-PC0tPiBkZXYNCm1hcHBpbmcgaG93IHdlIGhhbmRsZSB0aGF0Lg0KDQo+IEV4cGxpY2l0bHkgcmVw
-cmVzZW50aW5nIHRoZSBob3N0IFNNTVUgYXNzb2NpYXRpb24gb24gdGhlIGd1ZXN0IFNNTVUNCj4g
-Y29uZmlnIG1ha2VzIHRoaXMgYmVoYXZpb3VyIHVuYW1iaWd1b3VzLiBUaGUgaG9zdCAvIGd1ZXN0
-IFNNTVUNCj4gcmVsYXRpb25zaGlwIGlzIGZpeGVkIGZvciB0aGUgbGlmZXRpbWUgb2YgdGhlIFZN
-IGFuZCBpbnZhcmlhbnQgb2YNCj4gd2hhdGV2ZXIgVkZJTyBkZXZpY2UgaXMgKG9yIHdhcyBwcmV2
-aW91c2x5KSBwbHVnZ2VkLg0KPiANCj4gU28gSSBzdGlsbCBnbyBiYWNrIHRvIG15IGdlbmVyYWwg
-cHJpbmNpcGxlIHRoYXQgYXV0b21hdGljIHNpZGUgZWZmZWN0cw0KPiBhcmUgYW4gdW5kZXNpcmFi
-bGUgaWRlYSBpbiBRRU1VIGNvbmZpZ3VyYXRpb24uIFdlIGhhdmUgYSBsb25nIHRyYWRpdGlvbg0K
-PiBvZiBtYWtpbmcgZXZlcnl0aGluZyBlbnRpcmVseSBleHBsaWNpdCB0byBwcm9kdWNlIGVhc2ls
-eSBwcmVkaWN0YWJsZQ0KPiBiZWhhdmlvdXIuDQoNCk9rLiBDb252aW5jZWQg8J+Yii4gVGhhbmtz
-IGZvciBleHBsYWluaW5nLg0KDQpTaGFtZWVyDQo=
+
+
+On 2/6/25 18:44, Cédric Le Goater wrote:
+> For pseries machines, commit 567b5b309abe ("vfio/pci: Relax DMA map
+> errors for MMIO regions") introduced 2 error reports to notify the
+> user of MMIO mapping errors. Consolidate both code paths under one.
+> 
+> Cc: Harsh Prateek Bora <harshpb@linux.ibm.com>
+> Cc: Shivaprasad G Bhat <sbhat@linux.ibm.com>
+> Signed-off-by: Cédric Le Goater <clg@redhat.com>
+> ---
+>   hw/vfio/common.c | 10 ++++------
+>   1 file changed, 4 insertions(+), 6 deletions(-)
+> 
+> diff --git a/hw/vfio/common.c b/hw/vfio/common.c
+> index 4fca4c6166f761acceb7b57b52e379603ea53876..abbdc56b6dbb5eed22e7a2d2d55ee5695279661e 100644
+> --- a/hw/vfio/common.c
+> +++ b/hw/vfio/common.c
+> @@ -594,8 +594,9 @@ static void vfio_listener_region_add(MemoryListener *listener,
+>           return;
+>       }
+>   
+> +    /* PPC64/pseries machine only */
+>       if (!vfio_container_add_section_window(bcontainer, section, &err)) {
+> -        goto fail;
+> +        goto mmio_dma_error;
+>       }
+>   
+>       memory_region_ref(section->mr);
+> @@ -680,6 +681,7 @@ static void vfio_listener_region_add(MemoryListener *listener,
+>                      "0x%"HWADDR_PRIx", %p) = %d (%s)",
+>                      bcontainer, iova, int128_get64(llsize), vaddr, ret,
+>                      strerror(-ret));
+> +    mmio_dma_error:
+>           if (memory_region_is_ram_device(section->mr)) {
+>               /* Allow unexpected mappings not to be fatal for RAM devices */
+>               VFIODevice *vbasedev =
+> @@ -694,11 +696,6 @@ static void vfio_listener_region_add(MemoryListener *listener,
+>       return;
+>   
+>   fail:
+> -    if (memory_region_is_ram_device(section->mr)) {
+> -        error_reportf_err(err, "PCI p2p may not work: ");
+
+Not sure if this specific error msg was intended for a specific case, 
+but since both ifs check for same condition before returning with error, 
+looks logically same.
+
+Shiva, any concerns here from vfio perspective?
+
+Otherwise,
+Reviewed-by: Harsh Prateek Bora <harshpb@linux.ibm.com>
+
+> -        return;
+> -    }
+> -
+>       if (!bcontainer->initialized) {
+>           /*
+>            * At machine init time or when the device is attached to the
+> @@ -806,6 +803,7 @@ static void vfio_listener_region_del(MemoryListener *listener,
+>   
+>       memory_region_unref(section->mr);
+>   
+> +    /* PPC64/pseries machine only */
+>       vfio_container_del_section_window(bcontainer, section);
+>   }
+>   
 
