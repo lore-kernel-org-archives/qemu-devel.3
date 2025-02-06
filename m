@@ -4,64 +4,64 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E6867C02196
-	for <qemu-devel@archiver.kernel.org>; Thu,  6 Feb 2025 13:12:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 651E2C02196
+	for <qemu-devel@archiver.kernel.org>; Thu,  6 Feb 2025 13:12:47 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tg1fc-0005gZ-CC; Thu, 06 Feb 2025 08:11:52 -0500
+	id 1tg1es-0004z1-Dg; Thu, 06 Feb 2025 08:11:06 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tg1fZ-0005UE-O5
- for qemu-devel@nongnu.org; Thu, 06 Feb 2025 08:11:49 -0500
-Received: from mail-wm1-x329.google.com ([2a00:1450:4864:20::329])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tg1eq-0004yI-Me
+ for qemu-devel@nongnu.org; Thu, 06 Feb 2025 08:11:04 -0500
+Received: from mail-wm1-x331.google.com ([2a00:1450:4864:20::331])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tg1fY-0008Bc-0D
- for qemu-devel@nongnu.org; Thu, 06 Feb 2025 08:11:49 -0500
-Received: by mail-wm1-x329.google.com with SMTP id
- 5b1f17b1804b1-436341f575fso9966805e9.1
- for <qemu-devel@nongnu.org>; Thu, 06 Feb 2025 05:11:47 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tg1eo-00080O-P6
+ for qemu-devel@nongnu.org; Thu, 06 Feb 2025 08:11:04 -0500
+Received: by mail-wm1-x331.google.com with SMTP id
+ 5b1f17b1804b1-43690d4605dso5890725e9.0
+ for <qemu-devel@nongnu.org>; Thu, 06 Feb 2025 05:11:02 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1738847505; x=1739452305; darn=nongnu.org;
+ d=linaro.org; s=google; t=1738847460; x=1739452260; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=kVKpviLMTY/xpsQ4Un5x7Zpm8oUwtOVraYJxurTn7aE=;
- b=O/rH5PaKAAxRes30yKUK3bnXR3DoMWE8Fo9RdQlNKIpYPCyvm9GDEhrRWkWGICB0ed
- FvuxO/0BhhkUlYkmXmJKwNmS0mJ/p5sIHywpAMlW3EkRbk1Cm8TKhKdb5zag/e8NaGif
- SXPV2An6t9kBT0inlhC/5RCt2SAZOFS8rmdPJ7owJpb/m8RK9d8a9bh2n7Ejw4+MRsfY
- dYTX1c4g+nRal+qFRqzBwsjRV3MZSfJB20w1+KjK58DVnDAXENKLi3J+g8n1zK6a61rP
- 9EUXyj4IKwwkZ7TezI56sReIct/Cda30PQJI6DFwcQczPUCeySmy8SMdbdr7hC4eVzkr
- VlRw==
+ bh=503eeF5KhCNoQH5RB4G8vUQc3vp07cA9yV4AIGoAB5A=;
+ b=Of55DvB6vd+SPEzGdUwkBcgo7J8Nav2wQvUKPeQsIDYWx+PRr6iNZ8tCKqwFxDWqTi
+ 1Fyysh14Ee+2FfJtIEMrovg6VQAZXswYSw4r5eIdEPZj1oxPhwMsCDqKO/HbfpPRLUGc
+ kS50brSJTW+wr6x5xGq2Byb73GhiUBq4g4n4tmnZiNgsBnRD6QnMqM2I6NbY30FB8LBJ
+ pazOejYnyhN2hukS0+oPgTcwebgEWE0TrtVD7y8o5hdNbbGfmj8NuC+J0QJTZRt/O1yX
+ cJQ2R++uqqAQer9Pwlo71Xh3wKbv5DE3VzH9iUANsdNtPN1V6aqVtISxYI7QZqcH5JAY
+ RTcQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1738847505; x=1739452305;
+ d=1e100.net; s=20230601; t=1738847460; x=1739452260;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=kVKpviLMTY/xpsQ4Un5x7Zpm8oUwtOVraYJxurTn7aE=;
- b=hUT5PRn5uvTokdJRK4oP1xlqLTg0FHJrppgEaWaVEFEff5mYEj0SvcRDkqhLCnb5xk
- srw0UjD+pI+Ddwlmc5dYiVi6LbSp1z+x1ij39JYdHF4pvzppH0a5Ijq8+/H/7hMQevRt
- vV2rxp7oxYk1aGWeAPISCvRL4w94q+vIJ4adLMyb9tYDZMaeYcQ6X6RJDhZTgVoQ4+z0
- zaxDu0ytfQ9s3WWZsg/V9V6UtsZ9TqoRC38JCyITQn84FPrmOVfVL+q+TGpquCJNKvmW
- xM10izsyQL/xqfODLWhblAFuG9WF07x8264UioSAl7uvrdSL0QHmwMws/UJ8WXGijzJS
- dnnA==
-X-Gm-Message-State: AOJu0YwA4KwmH8OiBYUNbZqc5ClGrl7KGWzdfjFRk1MeBf/snQOw58g1
- PDhow4GPNKwm8R9NfjfXJxYBcy0gJ5RVUu/0bCYd2LP0U+SQfWkHqSiJUsSdj7sT0Oum7cmbINm
- bCE0=
-X-Gm-Gg: ASbGnctT+/MaNlGT72xkothtaN6Cant+pYMb3hRjrkcyEwedm+4WncPWUATBMe/1k9+
- fC4ONtojiaz9SyWYS51KwcZ5p9hcAUlskOhUvbXwABiD2WFXrbRDhW34LGol/q3qed1mDmHBHIQ
- ju5svhxz2otGxfVzgOjjOXkhjmhzvZ4+Y8VIGv2bZ5Yb2qDr8tYsFXVSoEaUzKtdojZAPj38sQD
- BMfZTxctH0GAHOUlfLFQ4vc6S+af60TfLtrlz9/u6jJt3AbywS3B3JOJljIxGqCAu5r7K4+Da20
- yFK4xyLCdcvzushK6TvIR3uhYM9NydBZfAkwUhJn10EWilFUmsxZnjIT/0TUSAO1Ew==
-X-Google-Smtp-Source: AGHT+IEm4GB0Jr03Paz21Ocek5BXIDAwomihezpBNk8unkXWnGDjOV82gA9oJfqLKqlc0h6etC8peg==
-X-Received: by 2002:a05:600c:4514:b0:430:57e8:3c7e with SMTP id
- 5b1f17b1804b1-4390d576214mr59974545e9.28.1738847505262; 
- Thu, 06 Feb 2025 05:11:45 -0800 (PST)
+ bh=503eeF5KhCNoQH5RB4G8vUQc3vp07cA9yV4AIGoAB5A=;
+ b=rlYy/VrX6RBaRfhVaA+497Z4CzKZJEeo2yC45z3CkPJcU2dy+pNvb3+QRJSkag3+Gg
+ 8VP/KXMXNr1uHIWrgaX1xJm0JENTOu39KRC1iPb7TpxsSz7hk4q3tSA8DPksMnOa0m0H
+ wb6MC0NhB3jSCgtnBBe03zPjKBgMOI5ETQnJA1pPersxXI4vtX7HXIpT5T6FY2MBKSHo
+ DGvY3K0MOeTRUu5r0fLc66UGTRP7OTXkIaPB0kKhLh5xLVBgIAd6+gIFQP6NYA3tjat9
+ EZs/Ypcp7BTtRgPeWNc3+N3CZtrnAUhRvNEmv4+Z7mC9ppo25QDp1JNX6tc/ImtIyf7d
+ xJMg==
+X-Gm-Message-State: AOJu0YwAiWhMf33w08QnGSgZdp+xHxKUceUmREq5sIUMY9+ZnEC/z6SD
+ 5f0YkX33dtJLN9MOHOhruFt2Nfqmnp4S8rPp6gGYRMSz28J8cDqWY8/46ZPO+ZkebSF91mnxkNA
+ DX3A=
+X-Gm-Gg: ASbGncuNZTLloXJHtsWak6BOOqArte2m7bCc6lBljDzE7beeeWCLgxCbUgQ32OFjCl/
+ kCPZzU/MOyvyigVNoR0sUTRJLPO5zNd3+HfHYcgRpe0+sQHDQydr0hy8689C8BruiI1Ngyzy/px
+ 7ACgfscVijyCFdGsP9vm9gaBevuFoBDxhIZ2wIjCQFYPLzv9hofDX8g0cO3itq1WGPLkRcg9t4l
+ hqPK3WpB5DlA6SE/d+iysh5QSf4XPbNU/7Of4PCBXhldPMKjNdZcxK3pTbxAPQeETzLPcigaVgU
+ Dyyzr/o7zqsmlTK/fzCKYlofmqw7I714oQ2EA4lTRV2MzX/lxvBeptV2lRiA9oGXGw==
+X-Google-Smtp-Source: AGHT+IHKlu2o4uRkJKB+8J5veGT8Lc19gu0iqnznoKxVLLB90TPa1KMg2rn51WCVtERc21hvXep+Qg==
+X-Received: by 2002:a05:600c:3595:b0:430:563a:b20a with SMTP id
+ 5b1f17b1804b1-4390d4347ddmr70713625e9.11.1738847459396; 
+ Thu, 06 Feb 2025 05:10:59 -0800 (PST)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4391dfd84b9sm18709055e9.39.2025.02.06.05.11.44
+ ffacd0b85a97d-38dbdd35742sm1685808f8f.21.2025.02.06.05.10.58
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Thu, 06 Feb 2025 05:11:44 -0800 (PST)
+ Thu, 06 Feb 2025 05:10:58 -0800 (PST)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: qemu-arm@nongnu.org, Anton Johansson <anjo@rev.ng>,
@@ -71,18 +71,18 @@ Cc: qemu-arm@nongnu.org, Anton Johansson <anjo@rev.ng>,
  Peter Maydell <peter.maydell@linaro.org>,
  "Edgar E. Iglesias" <edgar.iglesias@gmail.com>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PATCH v5 10/16] target/microblaze: Consider endianness while
- translating code
-Date: Thu,  6 Feb 2025 14:10:46 +0100
-Message-ID: <20250206131052.30207-11-philmd@linaro.org>
+Subject: [PATCH v5 01/16] hw/intc/xilinx_intc: Make device endianness
+ configurable
+Date: Thu,  6 Feb 2025 14:10:37 +0100
+Message-ID: <20250206131052.30207-2-philmd@linaro.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20250206131052.30207-1-philmd@linaro.org>
 References: <20250206131052.30207-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::329;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x329.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::331;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x331.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -105,57 +105,140 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Consider the CPU ENDI bit, swap instructions when the CPU
-endianness doesn't match the binary one.
+Replace the DEVICE_NATIVE_ENDIAN MemoryRegionOps by a pair
+of DEVICE_LITTLE_ENDIAN / DEVICE_BIG_ENDIAN.
+Add the "little-endian" property to select the device
+endianness, defaulting to little endian.
+Set the proper endianness for each machine using the device.
 
-Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 ---
- target/microblaze/cpu.h       | 7 +++++++
- target/microblaze/translate.c | 5 +++--
- 2 files changed, 10 insertions(+), 2 deletions(-)
+ hw/intc/xilinx_intc.c                    | 52 +++++++++++++++++-------
+ hw/microblaze/petalogix_ml605_mmu.c      |  1 +
+ hw/microblaze/petalogix_s3adsp1800_mmu.c |  1 +
+ 3 files changed, 40 insertions(+), 14 deletions(-)
 
-diff --git a/target/microblaze/cpu.h b/target/microblaze/cpu.h
-index f6879eee352..e44ddd53078 100644
---- a/target/microblaze/cpu.h
-+++ b/target/microblaze/cpu.h
-@@ -414,6 +414,13 @@ void mb_translate_code(CPUState *cs, TranslationBlock *tb,
- /* Ensure there is no overlap between the two masks. */
- QEMU_BUILD_BUG_ON(MSR_TB_MASK & IFLAGS_TB_MASK);
- 
-+static inline bool mb_cpu_is_big_endian(CPUState *cs)
-+{
-+    MicroBlazeCPU *cpu = MICROBLAZE_CPU(cs);
-+
-+    return !cpu->cfg.endi;
-+}
-+
- static inline void cpu_get_tb_cpu_state(CPUMBState *env, vaddr *pc,
-                                         uint64_t *cs_base, uint32_t *flags)
+diff --git a/hw/intc/xilinx_intc.c b/hw/intc/xilinx_intc.c
+index 6930f83907a..cd79ac4d4ff 100644
+--- a/hw/intc/xilinx_intc.c
++++ b/hw/intc/xilinx_intc.c
+@@ -3,6 +3,9 @@
+  *
+  * Copyright (c) 2009 Edgar E. Iglesias.
+  *
++ * https://docs.amd.com/v/u/en-US/xps_intc
++ * DS572: LogiCORE IP XPS Interrupt Controller (v2.01a)
++ *
+  * Permission is hereby granted, free of charge, to any person obtaining a copy
+  * of this software and associated documentation files (the "Software"), to deal
+  * in the Software without restriction, including without limitation the rights
+@@ -49,6 +52,7 @@ struct XpsIntc
  {
-diff --git a/target/microblaze/translate.c b/target/microblaze/translate.c
-index b5389d65b2e..b54e5ac4b2f 100644
---- a/target/microblaze/translate.c
-+++ b/target/microblaze/translate.c
-@@ -710,7 +710,7 @@ static void record_unaligned_ess(DisasContext *dc, int rd,
+     SysBusDevice parent_obj;
  
- static inline MemOp mo_endian(DisasContext *dc)
- {
--    return MO_TE;
-+    return dc->cfg->endi ? MO_LE : MO_BE;
++    bool little_endian_model;
+     MemoryRegion mmio;
+     qemu_irq parent_irq;
+ 
+@@ -140,18 +144,29 @@ static void pic_write(void *opaque, hwaddr addr,
+     update_irq(p);
  }
  
- static bool do_load(DisasContext *dc, int rd, TCGv addr, MemOp mop,
-@@ -1647,7 +1647,8 @@ static void mb_tr_translate_insn(DisasContextBase *dcb, CPUState *cs)
+-static const MemoryRegionOps pic_ops = {
+-    .read = pic_read,
+-    .write = pic_write,
+-    .endianness = DEVICE_NATIVE_ENDIAN,
+-    .impl = {
+-        .min_access_size = 4,
+-        .max_access_size = 4,
++static const MemoryRegionOps pic_ops[2] = {
++    [0 ... 1] = {
++        .read = pic_read,
++        .write = pic_write,
++        .endianness = DEVICE_BIG_ENDIAN,
++        .impl = {
++            .min_access_size = 4,
++            .max_access_size = 4,
++        },
++        .valid = {
++            /*
++             * All XPS INTC registers are accessed through the PLB interface.
++             * The base address for these registers is provided by the
++             * configuration parameter, C_BASEADDR. Each register is 32 bits
++             * although some bits may be unused and is accessed on a 4-byte
++             * boundary offset from the base address.
++             */
++            .min_access_size = 4,
++            .max_access_size = 4,
++        },
+     },
+-    .valid = {
+-        .min_access_size = 4,
+-        .max_access_size = 4
+-    }
++    [0].endianness = DEVICE_BIG_ENDIAN,
++    [1].endianness = DEVICE_LITTLE_ENDIAN,
+ };
  
-     dc->tb_flags_to_set = 0;
+ static void irq_handler(void *opaque, int irq, int level)
+@@ -174,13 +189,21 @@ static void xilinx_intc_init(Object *obj)
  
--    ir = translator_ldl(cpu_env(cs), &dc->base, dc->base.pc_next);
-+    ir = translator_ldl_swap(cpu_env(cs), &dc->base, dc->base.pc_next,
-+                             mb_cpu_is_big_endian(cs) != TARGET_BIG_ENDIAN);
-     if (!decode(dc, ir)) {
-         trap_illegal(dc, true);
-     }
+     qdev_init_gpio_in(DEVICE(obj), irq_handler, 32);
+     sysbus_init_irq(SYS_BUS_DEVICE(obj), &p->parent_irq);
+-
+-    memory_region_init_io(&p->mmio, obj, &pic_ops, p, "xlnx.xps-intc",
+-                          R_MAX * 4);
+     sysbus_init_mmio(SYS_BUS_DEVICE(obj), &p->mmio);
+ }
+ 
++static void xilinx_intc_realize(DeviceState *dev, Error **errp)
++{
++    XpsIntc *p = XILINX_INTC(dev);
++
++    memory_region_init_io(&p->mmio, OBJECT(dev),
++                          &pic_ops[p->little_endian_model],
++                          p, "xlnx.xps-intc",
++                          R_MAX * 4);
++}
++
+ static const Property xilinx_intc_properties[] = {
++    DEFINE_PROP_BOOL("little-endian", XpsIntc, little_endian_model, true),
+     DEFINE_PROP_UINT32("kind-of-intr", XpsIntc, c_kind_of_intr, 0),
+ };
+ 
+@@ -188,6 +211,7 @@ static void xilinx_intc_class_init(ObjectClass *klass, void *data)
+ {
+     DeviceClass *dc = DEVICE_CLASS(klass);
+ 
++    dc->realize = xilinx_intc_realize;
+     device_class_set_props(dc, xilinx_intc_properties);
+ }
+ 
+diff --git a/hw/microblaze/petalogix_ml605_mmu.c b/hw/microblaze/petalogix_ml605_mmu.c
+index 8b44be75a22..cf3b9574db3 100644
+--- a/hw/microblaze/petalogix_ml605_mmu.c
++++ b/hw/microblaze/petalogix_ml605_mmu.c
+@@ -111,6 +111,7 @@ petalogix_ml605_init(MachineState *machine)
+ 
+ 
+     dev = qdev_new("xlnx.xps-intc");
++    qdev_prop_set_bit(dev, "little-endian", true);
+     qdev_prop_set_uint32(dev, "kind-of-intr", 1 << TIMER_IRQ);
+     sysbus_realize_and_unref(SYS_BUS_DEVICE(dev), &error_fatal);
+     sysbus_mmio_map(SYS_BUS_DEVICE(dev), 0, INTC_BASEADDR);
+diff --git a/hw/microblaze/petalogix_s3adsp1800_mmu.c b/hw/microblaze/petalogix_s3adsp1800_mmu.c
+index 2c0d8c34cd2..0506497ad0a 100644
+--- a/hw/microblaze/petalogix_s3adsp1800_mmu.c
++++ b/hw/microblaze/petalogix_s3adsp1800_mmu.c
+@@ -95,6 +95,7 @@ petalogix_s3adsp1800_init(MachineState *machine)
+                           64 * KiB, 1, 0x89, 0x18, 0x0000, 0x0, 1);
+ 
+     dev = qdev_new("xlnx.xps-intc");
++    qdev_prop_set_bit(dev, "little-endian", !TARGET_BIG_ENDIAN);
+     qdev_prop_set_uint32(dev, "kind-of-intr",
+                          1 << ETHLITE_IRQ | 1 << UARTLITE_IRQ);
+     sysbus_realize_and_unref(SYS_BUS_DEVICE(dev), &error_fatal);
 -- 
 2.47.1
 
