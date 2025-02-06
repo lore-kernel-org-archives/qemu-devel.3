@@ -4,79 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 87B77C02199
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 87B07C02194
 	for <qemu-devel@archiver.kernel.org>; Thu,  6 Feb 2025 20:00:18 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tg80G-0007F2-DG; Thu, 06 Feb 2025 14:57:39 -0500
+	id 1tg806-00079l-Uk; Thu, 06 Feb 2025 14:57:26 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1tg807-0007AF-Hj
- for qemu-devel@nongnu.org; Thu, 06 Feb 2025 14:57:27 -0500
-Received: from mail-pl1-x630.google.com ([2607:f8b0:4864:20::630])
+ id 1tg802-00076H-El
+ for qemu-devel@nongnu.org; Thu, 06 Feb 2025 14:57:22 -0500
+Received: from mail-pj1-x102a.google.com ([2607:f8b0:4864:20::102a])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1tg805-0000Tc-Hj
- for qemu-devel@nongnu.org; Thu, 06 Feb 2025 14:57:27 -0500
-Received: by mail-pl1-x630.google.com with SMTP id
- d9443c01a7336-216728b1836so22592025ad.0
- for <qemu-devel@nongnu.org>; Thu, 06 Feb 2025 11:57:25 -0800 (PST)
+ id 1tg7zz-0000RB-Li
+ for qemu-devel@nongnu.org; Thu, 06 Feb 2025 14:57:22 -0500
+Received: by mail-pj1-x102a.google.com with SMTP id
+ 98e67ed59e1d1-2efe25558ddso1886484a91.2
+ for <qemu-devel@nongnu.org>; Thu, 06 Feb 2025 11:57:19 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1738871844; x=1739476644; darn=nongnu.org;
+ d=linaro.org; s=google; t=1738871838; x=1739476638; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=5Q7cXwghROfN3epkOy5NpR9R9wlHVJGHAzzuq527brk=;
- b=JfEDnXZ8L26LTr88aLdV9yECCyLsZcQH4qv3yBCTuXb8xZK8/fphftYSIxVC5ssXbz
- iztsQGcNLG8VN20Zd28eftzl8cLD4EuXnZRhgc13n+Zc3+9j71rnV1JpJDp2aS/z65nB
- uL0gU9/mcG/6gwKzoyAOrHzl2+yKE3/bdKVmblYMqGPOxqX7hDxn22echwZrN3jH4gNN
- 04Z9nyxPj1cmi3hE5hsJCHYlxOsdrjzKrA71QeObx9G7uPihmdREvYA+tts7XqobGf5C
- mbD3bdOBQPFzBXdm20FFOWqiMhF5oz4MX6qzO+1MiLRuOmknPaa/3LUycZMWODe09x7s
- RnBw==
+ bh=PdvwNl7JiFORoJKfG82WHoJWKQvzz977qK5CdHrmdQk=;
+ b=bYNmus+A/tGnDLhFYxZglXmMieUUR14Fkg2KZ+LjsYl6rDs46iB1O44+6ugKlDlWss
+ ijadoSO3AvLGCHLx3sZY06PRs2pDlfr+7Zi2YoS/abz/sCdIdIfDCOKBMWjNKEW3+bhV
+ wAMOauCNLsnE9nYsjbpgJwZDivdJYPbk5ekeh3jV1RyrPEQUf70ZsJNbM/NSaBJNQl1P
+ nwXGErettlmykLtMyceR3x5R78BFQUFwdmtr+zo6V2kJDhqXuqE0bj05baF3KEfqjLCh
+ RBfC0RUSu0L8wZS2Zc89XRduM4Lp1tZED7IPOOVv2aL5JvEBXVL4OkWqB45O28szCUyp
+ nvjg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1738871844; x=1739476644;
+ d=1e100.net; s=20230601; t=1738871838; x=1739476638;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=5Q7cXwghROfN3epkOy5NpR9R9wlHVJGHAzzuq527brk=;
- b=nYLT53Yv9Q9n4VNzv9NA8Nx08E3bYN/yvE3y/13dR9gkyz8V45f5rK7waRQS/kGeQG
- fyuyzeq00vIYZVJOiaYkPR7q9qRXPQADl6lQe+a3JtTZkKvH/Do5sh7MetI4KSRrA3/9
- ZNc/l9ZL3tUprJPIhPoxnWQddTWUJaejE2nFD6zEhox5DwMtKL4MDLUdqpTciOuFsJPp
- l0IduAd7WBUgzSKw7qsP9vjOhyN108xvYXdo8PqPvtSkRLaX0DMbSOd67Y7nSAYJ2sxg
- D4H7L+W3S3iZxADb4xuwIpGUhm5Wji+26VOWZGQSdVqo9O5lFuNf6oP8Loz+poDf+CgI
- EFJw==
-X-Gm-Message-State: AOJu0YxI0ATCtdq94M5NJ2l+iUrnK3P4i4uhe/5FZr2sFxtB+5ONJp6I
- aVbs5KVb4u5QL5gTUCELvCNRtec2nh8pOltQWC48UqFiPmSwGTqZxXmsPMfqZj894Z9Zz3Guqct
- v
-X-Gm-Gg: ASbGncup0m8GV55j4EX9JQWrek1UusSuSD5TD9qY+Vydu3lO1Dpn9ECem7n96xNA33x
- R+eVGWL1+uWj9KNmpNTSpGzrTme6b8XXfGZ5a3w3OQfXrQeABPVqistDDlOkGjNCddNrsNVS3uG
- EEmrB74szcjzrKrx+0LQTjguquhkOYtRz8vMHtARCfkPTYYI7OAS/DKprNlzSwi1v1aUPr67tn5
- WRhQV1T5oHsBKoc6KhJ4i0+gs/mUI7UrqyB/BZZIny6vmH6MD8NZpPPB7KPWLW7uEOj76ZbIbhK
- Z1FCDcJVQKuX6Z9IkbY0rdIKPdsV+2g6L+bVogxLEBjPIGA=
-X-Google-Smtp-Source: AGHT+IFYsbi2oViZY2ZlN9Po68S7GKhejrGzPxSZJKh5E2HndpgUBhWiFwiYWu9lr8uvikzPqfbY0w==
-X-Received: by 2002:a05:6a00:848:b0:728:b601:86ee with SMTP id
- d2e1a72fcca58-7305d549ebbmr884776b3a.16.1738871844261; 
- Thu, 06 Feb 2025 11:57:24 -0800 (PST)
+ bh=PdvwNl7JiFORoJKfG82WHoJWKQvzz977qK5CdHrmdQk=;
+ b=gNAwCMIKAD1K9WElUX1pnnZAXHLaexxs98SkE2jf2iqPIrlRwBTM3oIKvFy6GyFGPL
+ Dy9a1XdFiNk5W+eYHXWMKpiYhKxSRpRzCc7v0pEaZOI6ark/KGdtvx9OuoFevPwNT8LY
+ pAFuj1lWMARCb1e7wrlyBcUeBlb2u+viWhlXPpbQOe6+DUQFKeQhwHHXeBPE1keXIClb
+ A2dpwaD/nZWMSM+Jeu4nI7ZNeJkWzCWTu3Tq8v8d3yDAap8oiubChR1FjAIMKWCp0ndJ
+ 18oWWakyBKTPFa+bKLOrc9RKli0HZbMbY1WpIpwOEL06xVCkpy4dvZTd4fzZyEcVFrfJ
+ h0Xg==
+X-Gm-Message-State: AOJu0Ywwgb0JwVnyw76y48BfgkZQOj7vZnF1CaG8kddQN3SQgVY6j1Ty
+ Vxf+umi5eYGhkRzRq+tDMlgJGK3Zm29EQSK6bZooKtuMaUYxVlJcdmiG7WbWvuiOLuobjcynIys
+ Z
+X-Gm-Gg: ASbGncvMNUAgVtLnl4vXfrRrfq7Y6VIrxnZt61Ch1YH9ahnfd2t3Q2SFEJ1p/I3iK5V
+ OEhmqGuwS9Gl1NQF5HzA+Ct8vXIpLQFqPCig6Djz8/NEw8maB39bbQiL6EfYuKAQMGW/1nU0+Cm
+ Nf0HPcdN7ByOZZM7Uh08z1LuL+NpskqZEMc5QUIasQtcZ7lVcB5pQOGLSvoPL1EbGa7me2LsvYZ
+ N+mqcaP9YkFFQijwM9M31Cefh0BTrQxKeuYHqXpEjqQyixsuPdJsWM4/TwdAqW/E0GNgVU3dNau
+ ZWB7cSCcK0yRLW0wisLMdYTVdkxWopG0AMPAILopM6PW46w=
+X-Google-Smtp-Source: AGHT+IGGt5Jz9OlzIKxzacwBptSVPT0FdPcyElFGFmV063rD2MSRje04WCFfXTRvUZtjYuQLsInC3w==
+X-Received: by 2002:a05:6a00:1da9:b0:72a:bc6a:3a87 with SMTP id
+ d2e1a72fcca58-7305d2d04f0mr986172b3a.0.1738871838254; 
+ Thu, 06 Feb 2025 11:57:18 -0800 (PST)
 Received: from stoup.. (71-212-39-66.tukw.qwest.net. [71.212.39.66])
  by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-73048c16370sm1666993b3a.152.2025.02.06.11.57.23
+ d2e1a72fcca58-73048c16370sm1666993b3a.152.2025.02.06.11.57.17
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 06 Feb 2025 11:57:23 -0800 (PST)
+ Thu, 06 Feb 2025 11:57:17 -0800 (PST)
 From: Richard Henderson <richard.henderson@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: qemu-arm@nongnu.org
-Subject: [PATCH 10/61] target/arm: Use FPST_ZA for sme_fmopa_[hsd]
-Date: Thu,  6 Feb 2025 11:56:24 -0800
-Message-ID: <20250206195715.2150758-11-richard.henderson@linaro.org>
+Subject: [PATCH 02/61] tcg: Add dbase argument to do_dup
+Date: Thu,  6 Feb 2025 11:56:16 -0800
+Message-ID: <20250206195715.2150758-3-richard.henderson@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20250206195715.2150758-1-richard.henderson@linaro.org>
 References: <20250206195715.2150758-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::630;
- envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x630.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::102a;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pj1-x102a.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -101,119 +101,130 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 ---
- target/arm/tcg/sme_helper.c    | 37 ++++++++--------------------------
- target/arm/tcg/translate-sme.c |  4 ++--
- 2 files changed, 10 insertions(+), 31 deletions(-)
+ tcg/tcg-op-gvec.c | 30 +++++++++++++++---------------
+ 1 file changed, 15 insertions(+), 15 deletions(-)
 
-diff --git a/target/arm/tcg/sme_helper.c b/target/arm/tcg/sme_helper.c
-index dcc48e43db..d4562502dd 100644
---- a/target/arm/tcg/sme_helper.c
-+++ b/target/arm/tcg/sme_helper.c
-@@ -904,20 +904,11 @@ void HELPER(sme_addva_d)(void *vzda, void *vzn, void *vpn,
- }
- 
- void HELPER(sme_fmopa_s)(void *vza, void *vzn, void *vzm, void *vpn,
--                         void *vpm, float_status *fpst_in, uint32_t desc)
-+                         void *vpm, float_status *fpst, uint32_t desc)
+diff --git a/tcg/tcg-op-gvec.c b/tcg/tcg-op-gvec.c
+index 1aad7b0864..451091753d 100644
+--- a/tcg/tcg-op-gvec.c
++++ b/tcg/tcg-op-gvec.c
+@@ -534,9 +534,9 @@ static void do_dup_store(TCGType type, TCGv_ptr dbase, uint32_t dofs,
+  * Only one of IN_32 or IN_64 may be set;
+  * IN_C is used if IN_32 and IN_64 are unset.
+  */
+-static void do_dup(unsigned vece, uint32_t dofs, uint32_t oprsz,
+-                   uint32_t maxsz, TCGv_i32 in_32, TCGv_i64 in_64,
+-                   uint64_t in_c)
++static void do_dup(unsigned vece, TCGv_ptr dbase, uint32_t dofs,
++                   uint32_t oprsz, uint32_t maxsz,
++                   TCGv_i32 in_32, TCGv_i64 in_64, uint64_t in_c)
  {
-     intptr_t row, col, oprsz = simd_maxsz(desc);
-     uint32_t neg = simd_data(desc) << 31;
-     uint16_t *pn = vpn, *pm = vpm;
--    float_status fpst;
--
--    /*
--     * Make a copy of float_status because this operation does not
--     * update the cumulative fp exception status.  It also produces
--     * default nans.
--     */
--    fpst = *fpst_in;
--    set_default_nan_mode(true, &fpst);
- 
-     for (row = 0; row < oprsz; ) {
-         uint16_t pa = pn[H2(row >> 4)];
-@@ -932,7 +923,7 @@ void HELPER(sme_fmopa_s)(void *vza, void *vzn, void *vzm, void *vpn,
-                         if (pb & 1) {
-                             uint32_t *a = vza_row + H1_4(col);
-                             uint32_t *m = vzm + H1_4(col);
--                            *a = float32_muladd(n, *m, *a, 0, &fpst);
-+                            *a = float32_muladd(n, *m, *a, 0, fpst);
-                         }
-                         col += 4;
-                         pb >>= 4;
-@@ -946,15 +937,12 @@ void HELPER(sme_fmopa_s)(void *vza, void *vzn, void *vzm, void *vpn,
- }
- 
- void HELPER(sme_fmopa_d)(void *vza, void *vzn, void *vzm, void *vpn,
--                         void *vpm, float_status *fpst_in, uint32_t desc)
-+                         void *vpm, float_status *fpst, uint32_t desc)
- {
-     intptr_t row, col, oprsz = simd_oprsz(desc) / 8;
-     uint64_t neg = (uint64_t)simd_data(desc) << 63;
-     uint64_t *za = vza, *zn = vzn, *zm = vzm;
-     uint8_t *pn = vpn, *pm = vpm;
--    float_status fpst = *fpst_in;
--
--    set_default_nan_mode(true, &fpst);
- 
-     for (row = 0; row < oprsz; ++row) {
-         if (pn[H1(row)] & 1) {
-@@ -964,7 +952,7 @@ void HELPER(sme_fmopa_d)(void *vza, void *vzn, void *vzm, void *vpn,
-             for (col = 0; col < oprsz; ++col) {
-                 if (pm[H1(col)] & 1) {
-                     uint64_t *a = &za_row[col];
--                    *a = float64_muladd(n, zm[col], *a, 0, &fpst);
-+                    *a = float64_muladd(n, zm[col], *a, 0, fpst);
-                 }
-             }
+     TCGType type;
+     TCGv_i64 t_64;
+@@ -574,7 +574,7 @@ static void do_dup(unsigned vece, uint32_t dofs, uint32_t oprsz,
+         } else {
+             tcg_gen_dupi_vec(vece, t_vec, in_c);
          }
-@@ -1035,19 +1023,8 @@ void HELPER(sme_fmopa_h)(void *vza, void *vzn, void *vzm, void *vpn,
-     intptr_t row, col, oprsz = simd_maxsz(desc);
-     uint32_t neg = simd_data(desc) * 0x80008000u;
-     uint16_t *pn = vpn, *pm = vpm;
--    float_status fpst_odd, fpst_std, fpst_f16;
-+    float_status fpst_odd = env->vfp.fp_status[FPST_ZA];
+-        do_dup_store(type, tcg_env, dofs, oprsz, maxsz, t_vec);
++        do_dup_store(type, dbase, dofs, oprsz, maxsz, t_vec);
+         return;
+     }
  
--    /*
--     * Make copies of the fp status fields we use, because this operation
--     * does not update the cumulative fp exception status.  It also
--     * produces default NaNs. We also need a second copy of fp_status with
--     * round-to-odd -- see above.
--     */
--    fpst_f16 = env->vfp.fp_status[FPST_A64_F16];
--    fpst_std = env->vfp.fp_status[FPST_A64];
--    set_default_nan_mode(true, &fpst_std);
--    set_default_nan_mode(true, &fpst_f16);
--    fpst_odd = fpst_std;
-     set_float_rounding_mode(float_round_to_odd, &fpst_odd);
+@@ -618,14 +618,14 @@ static void do_dup(unsigned vece, uint32_t dofs, uint32_t oprsz,
+         /* Implement inline if we picked an implementation size above.  */
+         if (t_32) {
+             for (i = 0; i < oprsz; i += 4) {
+-                tcg_gen_st_i32(t_32, tcg_env, dofs + i);
++                tcg_gen_st_i32(t_32, dbase, dofs + i);
+             }
+             tcg_temp_free_i32(t_32);
+             goto done;
+         }
+         if (t_64) {
+             for (i = 0; i < oprsz; i += 8) {
+-                tcg_gen_st_i64(t_64, tcg_env, dofs + i);
++                tcg_gen_st_i64(t_64, dbase, dofs + i);
+             }
+             tcg_temp_free_i64(t_64);
+             goto done;
+@@ -634,7 +634,7 @@ static void do_dup(unsigned vece, uint32_t dofs, uint32_t oprsz,
  
-     for (row = 0; row < oprsz; ) {
-@@ -1067,7 +1044,9 @@ void HELPER(sme_fmopa_h)(void *vza, void *vzn, void *vzm, void *vpn,
+     /* Otherwise implement out of line.  */
+     t_ptr = tcg_temp_ebb_new_ptr();
+-    tcg_gen_addi_ptr(t_ptr, tcg_env, dofs);
++    tcg_gen_addi_ptr(t_ptr, dbase, dofs);
  
-                         m = f16mop_adj_pair(m, pcol, 0);
-                         *a = f16_dotadd(*a, n, m,
--                                        &fpst_f16, &fpst_std, &fpst_odd);
-+                                        &env->vfp.fp_status[FPST_ZA_F16],
-+                                        &env->vfp.fp_status[FPST_ZA],
-+                                        &fpst_odd);
-                     }
-                     col += 4;
-                     pcol >>= 4;
-diff --git a/target/arm/tcg/translate-sme.c b/target/arm/tcg/translate-sme.c
-index fcbb350016..51175c923e 100644
---- a/target/arm/tcg/translate-sme.c
-+++ b/target/arm/tcg/translate-sme.c
-@@ -358,9 +358,9 @@ static bool do_outprod_env(DisasContext *s, arg_op *a, MemOp esz,
- TRANS_FEAT(FMOPA_h, aa64_sme, do_outprod_env, a,
-            MO_32, gen_helper_sme_fmopa_h)
- TRANS_FEAT(FMOPA_s, aa64_sme, do_outprod_fpst, a,
--           MO_32, FPST_A64, gen_helper_sme_fmopa_s)
-+           MO_32, FPST_ZA, gen_helper_sme_fmopa_s)
- TRANS_FEAT(FMOPA_d, aa64_sme_f64f64, do_outprod_fpst, a,
--           MO_64, FPST_A64, gen_helper_sme_fmopa_d)
-+           MO_64, FPST_ZA, gen_helper_sme_fmopa_d)
+     /*
+      * This may be expand_clr for the tail of an operation, e.g.
+@@ -710,7 +710,7 @@ static void do_dup(unsigned vece, uint32_t dofs, uint32_t oprsz,
+ /* Likewise, but with zero.  */
+ static void expand_clr(uint32_t dofs, uint32_t maxsz)
+ {
+-    do_dup(MO_8, dofs, maxsz, maxsz, NULL, NULL, 0);
++    do_dup(MO_8, tcg_env, dofs, maxsz, maxsz, NULL, NULL, 0);
+ }
  
- TRANS_FEAT(BFMOPA, aa64_sme, do_outprod_env, a, MO_32, gen_helper_sme_bfmopa)
+ /* Expand OPSZ bytes worth of two-operand operations using i32 elements.  */
+@@ -1711,7 +1711,7 @@ void tcg_gen_gvec_dup_i32(unsigned vece, uint32_t dofs, uint32_t oprsz,
+ {
+     check_size_align(oprsz, maxsz, dofs);
+     tcg_debug_assert(vece <= MO_32);
+-    do_dup(vece, dofs, oprsz, maxsz, in, NULL, 0);
++    do_dup(vece, tcg_env, dofs, oprsz, maxsz, in, NULL, 0);
+ }
  
+ void tcg_gen_gvec_dup_i64(unsigned vece, uint32_t dofs, uint32_t oprsz,
+@@ -1719,7 +1719,7 @@ void tcg_gen_gvec_dup_i64(unsigned vece, uint32_t dofs, uint32_t oprsz,
+ {
+     check_size_align(oprsz, maxsz, dofs);
+     tcg_debug_assert(vece <= MO_64);
+-    do_dup(vece, dofs, oprsz, maxsz, NULL, in, 0);
++    do_dup(vece, tcg_env, dofs, oprsz, maxsz, NULL, in, 0);
+ }
+ 
+ void tcg_gen_gvec_dup_mem(unsigned vece, uint32_t dofs, uint32_t aofs,
+@@ -1745,12 +1745,12 @@ void tcg_gen_gvec_dup_mem(unsigned vece, uint32_t dofs, uint32_t aofs,
+                 tcg_gen_ld_i32(in, tcg_env, aofs);
+                 break;
+             }
+-            do_dup(vece, dofs, oprsz, maxsz, in, NULL, 0);
++            do_dup(vece, tcg_env, dofs, oprsz, maxsz, in, NULL, 0);
+             tcg_temp_free_i32(in);
+         } else {
+             TCGv_i64 in = tcg_temp_ebb_new_i64();
+             tcg_gen_ld_i64(in, tcg_env, aofs);
+-            do_dup(vece, dofs, oprsz, maxsz, NULL, in, 0);
++            do_dup(vece, tcg_env, dofs, oprsz, maxsz, NULL, in, 0);
+             tcg_temp_free_i64(in);
+         }
+     } else if (vece == 4) {
+@@ -1833,7 +1833,7 @@ void tcg_gen_gvec_dup_imm(unsigned vece, uint32_t dofs, uint32_t oprsz,
+                           uint32_t maxsz, uint64_t x)
+ {
+     check_size_align(oprsz, maxsz, dofs);
+-    do_dup(vece, dofs, oprsz, maxsz, NULL, NULL, x);
++    do_dup(vece, tcg_env, dofs, oprsz, maxsz, NULL, NULL, x);
+ }
+ 
+ void tcg_gen_gvec_not(unsigned vece, uint32_t dofs, uint32_t aofs,
+@@ -3772,7 +3772,7 @@ void tcg_gen_gvec_cmp(TCGCond cond, unsigned vece, uint32_t dofs,
+     check_overlap_3(dofs, aofs, bofs, maxsz);
+ 
+     if (cond == TCG_COND_NEVER || cond == TCG_COND_ALWAYS) {
+-        do_dup(MO_8, dofs, oprsz, maxsz,
++        do_dup(MO_8, tcg_env, dofs, oprsz, maxsz,
+                NULL, NULL, -(cond == TCG_COND_ALWAYS));
+         return;
+     }
+@@ -3892,7 +3892,7 @@ void tcg_gen_gvec_cmps(TCGCond cond, unsigned vece, uint32_t dofs,
+     check_overlap_2(dofs, aofs, maxsz);
+ 
+     if (cond == TCG_COND_NEVER || cond == TCG_COND_ALWAYS) {
+-        do_dup(MO_8, dofs, oprsz, maxsz,
++        do_dup(MO_8, tcg_env, dofs, oprsz, maxsz,
+                NULL, NULL, -(cond == TCG_COND_ALWAYS));
+         return;
+     }
 -- 
 2.43.0
 
