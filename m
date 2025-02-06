@@ -4,139 +4,86 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 78156C02196
-	for <qemu-devel@archiver.kernel.org>; Thu,  6 Feb 2025 05:26:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 32118C02196
+	for <qemu-devel@archiver.kernel.org>; Thu,  6 Feb 2025 05:40:18 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tfuPI-0003R6-52; Thu, 06 Feb 2025 00:26:32 -0500
+	id 1tfubX-000650-Sz; Thu, 06 Feb 2025 00:39:11 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <icegambit91@gmail.com>)
- id 1tfuPF-0003Py-IV
- for qemu-devel@nongnu.org; Thu, 06 Feb 2025 00:26:29 -0500
-Received: from mail-pl1-x62e.google.com ([2607:f8b0:4864:20::62e])
+ (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
+ id 1tfubT-00064A-0p; Thu, 06 Feb 2025 00:39:07 -0500
+Received: from mail-ua1-x92f.google.com ([2607:f8b0:4864:20::92f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <icegambit91@gmail.com>)
- id 1tfuPD-0005PU-0M
- for qemu-devel@nongnu.org; Thu, 06 Feb 2025 00:26:29 -0500
-Received: by mail-pl1-x62e.google.com with SMTP id
- d9443c01a7336-2165cb60719so9882715ad.0
- for <qemu-devel@nongnu.org>; Wed, 05 Feb 2025 21:26:25 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
+ id 1tfubQ-0001Hx-Sd; Thu, 06 Feb 2025 00:39:06 -0500
+Received: by mail-ua1-x92f.google.com with SMTP id
+ a1e0cc1a2514c-866e57ec274so248506241.2; 
+ Wed, 05 Feb 2025 21:39:03 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1738819585; x=1739424385; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:autocrypt:from
- :content-language:references:cc:to:subject:user-agent:mime-version
- :date:message-id:from:to:cc:subject:date:message-id:reply-to;
- bh=pCs4Sx/bL9rzfjsM15hlIw0fny26FK0xMuSxQPLrFcQ=;
- b=Jyo/YnKfPM5qz5uMwMi4Ju04BSv3mhpqYYf2lP5lL8Pi3y/r+cPAV9fp6EAMLHpBr8
- Vtd+2oO44GaePeWlL7wKf+BWzdbRCMcntCAMv9NY52tlml950IP/f+nJP7aUYwDbdn6N
- U85hGBxk+dehaO4Bq11iLgIxSGBpvA313p/+37POvuqLnYoFMC2NxJcKcWDh/ubMd2eI
- fX7kTrwy7ibzzZB3236mr1lIoAI+uLxavBYLnoDub81+11vOxFNBTt2HY6/G2lRsMA8T
- jdUcKY1yP5vPV18vIKCbPb7fDN47veo+10YO2PHy0aU1+WuOmwuIMYF4+vD5Of+OiyVm
- gXnA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1738819585; x=1739424385;
- h=content-transfer-encoding:in-reply-to:autocrypt:from
- :content-language:references:cc:to:subject:user-agent:mime-version
- :date:message-id:x-gm-message-state:from:to:cc:subject:date
+ d=gmail.com; s=20230601; t=1738820343; x=1739425143; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
  :message-id:reply-to;
- bh=pCs4Sx/bL9rzfjsM15hlIw0fny26FK0xMuSxQPLrFcQ=;
- b=IjBsmhhzMxosrrnycPFi+wty3/PQBoo1ywOBR/mhrdJHl6OIvabAcxcsFRpsHV3L4W
- kcqWN6LUd2gnz9iddlxz34yzdFkqu3tERXr21z7hNIaoEXEZTKTbpPP5QngbZlvk/Kx3
- vd1Xma/hhQx+KzoWGghuh2XPinYPthT023ZH72nbLU7Ct2/+B2+fq4lfht2reL5FfXcv
- HKSCwPQWtKixtJNLBV784BkTIa6BRhAqkbxjNcFSvbTjaUkeofckm3n1GdmQcrniyOuh
- UG7tjy+CrjYoA0mYW+WaqZRjiYp13ixDZ22dSJLRI7Mx3wVXqaMS3j9iJ5dHcOSVKMcA
- c9lg==
+ bh=6Hh91lkJH4G2v2stBYhiTwErWA85jHVrA2A1cY0dyIA=;
+ b=TOsIHrRlc3La/9TSSMWM5cgthOPiqpfUPOuFpwH8YSs61mKH0yNO5SXd7j9AMGuLOK
+ YPVDogwlNDjqMaHIin674GOCYwUdg6ov3nKdoJybLer07yLj9wc2TtxlMSksNLUyWkKM
+ GPjWNIVR5/gfrOzqN+MIiCfueEK0fhY8Q+ICbQgcixIp6sIt/OlRUIhru6je1jqP03Gs
+ K7vyRi2P6wh9tiUUj26+yGNb8mZsOCf3x63RhtwCdVnwPTKLazeqx9f8Kb8DcdDBPJX1
+ Cok+vRPKjWwdsotM6wTL/sY+1fydOH4fQhQcWCduFZTDAiNKRtZ1/wxk/3WRMoAHr0ez
+ S9WQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1738820343; x=1739425143;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=6Hh91lkJH4G2v2stBYhiTwErWA85jHVrA2A1cY0dyIA=;
+ b=hFx5qpayk9LOBLlqwLf7ifXT68mS4vMs7LKr5L1oW2n7qNNVoaNlu3bXU55Cs7/Da9
+ JfDXSoMEt3MaO21c7FBxu+kFALT4EcNYekUs+2gfl49O8DVUz9xeNDvw6gLh4jA6OEkF
+ SKjFR7zVNlDvlx5O05cF9Lf1eqYv8zxzxsWTgZsygl3s1ckp2R2znDg5/2HvgD0n/jQL
+ V49LpyWbDfHiU7SAFvadD0Qu99Xq0C400GJm+XIu0/pdXncETwyKLQCFWi/qBe7FAmQ0
+ wV/4C0nxh4OEkWP5Ovk58ELQjFVrmEQH1+pNKetY/+gsNGmwSf45kKSVbrAEcNhW94lc
+ tKzA==
 X-Forwarded-Encrypted: i=1;
- AJvYcCXkDfTwPe/N1pKT2xIN8pQ2AZxUvOAA/FbCFoq+0Q7VsiD5UqLOap+t7aOZ17cmq/qmIBJeEs+KjLcq@nongnu.org
-X-Gm-Message-State: AOJu0Yyb2lTcbci/afXdpoQFHe0W8wHJy3ydlNyLptx/9TCD3dij3xdv
- ME17EL5bkgYCNv06lkmXHlNuXXJkKW7+TQqfWQffvvfHh0o86/0J
-X-Gm-Gg: ASbGnctCTDsj0OMARSqUkbA2W6a1XJdhQvNTRIK3CkdVXICVpm+Tk68PjJQ1yqrFLyF
- UK6/bfkWML+tXJZ6IUR/3LcQOcWMIWmuS8dkDS8r+0zYIdZ+8y9dpkUK/ZqiC+tIg9vwVLQ0X7f
- R9fQqLuB4Qc9a0S89eWolujBYVaB/OvPLBp0MtwrXQzlIBsnjTkwGXx6g8TN/Vnp/y8A5I9tifg
- /IxHq2uQWCUwY/Pcn9i7YpwPOUYI3h+WNlLtiv/FWe7edCCtuY5GC3t3FB9
-X-Google-Smtp-Source: AGHT+IEn7zLmBN3NIxSuQ+Pi3MrLLtXxQf6gJSnCyxB48cUwr5sMWQ0w3//RyE5Dgj/jWkNuArivZA==
-X-Received: by 2002:a05:6a21:4a4a:b0:1e1:a693:d623 with SMTP id
- adf61e73a8af0-1ede8847604mr9623762637.25.1738819584436; 
- Wed, 05 Feb 2025 21:26:24 -0800 (PST)
-Received: from [192.168.1.18] ([223.233.85.39])
- by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-73048e1e7bcsm390335b3a.158.2025.02.05.21.26.21
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 05 Feb 2025 21:26:23 -0800 (PST)
-Message-ID: <5ada25cb-405e-4587-b230-b6a3ce7dbdc2@gmail.com>
-Date: Thu, 6 Feb 2025 10:56:14 +0530
+ AJvYcCVCTXL5+v/bwRVfwpRz9+VwBdSlVnMJds3EDc74hPX754TRPhPO+47FyxQN1Jl8LfrvHriqNjCiJv5k@nongnu.org
+X-Gm-Message-State: AOJu0Yx3TnsFNZohYzJZ76nvGCyBg5XBHEFaLNIA8uriqIGH9A7PCZLn
+ salGrdCcu3bWlNL3yk4Cef80MABW9PED1LFolmJOgMehXrwTn/hmuExMgtwd5THiTvCcdkDnxQo
+ iEJihcaJtXwIgkTDlnv7Rem5+rM4=
+X-Gm-Gg: ASbGncsBBWiKAgIHn+HzDeMDfsXYftVC+Vru+7Z/E0JGbbv9p56mSprmwE8QCubsPum
+ pcvcIhfMmMP3RDG/vjLl/jeAw6tnieXLInWrwNIO0OMRjUbNAeDMShyeV/AvlGWmfTCO890DkU3
+ vLSRtofM1mDA0njqvkhsiGpfZ0cw==
+X-Google-Smtp-Source: AGHT+IH5d0z1eLd2gPgvVo+vnnhWGEHacAlrrtEL4GC8lj2GwgCrXLGtMsmZOZugdoFHbB97JmW/J9QsQxeU9aFAU0k=
+X-Received: by 2002:a05:6102:41ac:b0:4b1:f3e:882f with SMTP id
+ ada2fe7eead31-4ba478b35f0mr3730409137.1.1738820342654; Wed, 05 Feb 2025
+ 21:39:02 -0800 (PST)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [RFC v4 0/5] Add packed virtqueue to shadow virtqueue
-To: Eugenio Perez Martin <eperezma@redhat.com>
-Cc: sgarzare@redhat.com, mst@redhat.com, qemu-devel@nongnu.org,
- Sahil Siddiq <sahilcdq@proton.me>
-References: <20241205203430.76251-1-sahilcdq@proton.me>
- <CAJaqyWdx6GGrQ8-Pm9k9jE11djdk3B1OHda+uGTQqYbq5tyX7w@mail.gmail.com>
- <d747027b-4c59-4f01-bb36-b9a00aa7d3a9@gmail.com>
- <CAJaqyWeKW3VVATqdWMrRUxCZxsrCUur7uwiyDqk2Y2W1wqZusQ@mail.gmail.com>
- <9b20ffc4-b55b-42c8-9847-a677c30c0051@gmail.com>
- <CAJaqyWf_9btBAtZ1TrUDpCh-eTD47ELHO5jxWJW3gOAZO0tMCw@mail.gmail.com>
- <f670a48e-73ab-4027-9d2b-d4fafa54cd16@gmail.com>
- <CAJaqyWftS8angT2=XUUFiR_5yjxNOmV4WXHe3cxkb4t6KbQdDw@mail.gmail.com>
- <4ee57bd3-5ea0-49a7-969e-c3fe902d8246@gmail.com>
- <CAJaqyWf9g_yAb6oYf_bJ5st9owKOzJDKbcWh6k+ZYZ3-mRSaVg@mail.gmail.com>
- <b5e90abd-9fa0-4ab8-9ad2-2b673f1c0784@gmail.com>
- <CAJaqyWcgEefe8EKeuY_hxPuPfdOk6yPiFw1gaY5fvKYc7vPo5g@mail.gmail.com>
- <91d6b4b3-be87-462c-9a0a-4f3fc8ebe4c1@gmail.com>
- <CAJaqyWfL9sWRgk-zMyW_+K0dAp18iDNw1AxJLoLHoSN=GA5_sg@mail.gmail.com>
- <dd634f4f-1539-44dd-8f97-6d1173dcd626@gmail.com>
- <CAJaqyWe3qTJhQrkP2gkmCeand_63O_R6ZNvWSgGJQpE-3Qz3aw@mail.gmail.com>
-Content-Language: en-US
-From: Sahil Siddiq <icegambit91@gmail.com>
-Autocrypt: addr=icegambit91@gmail.com; keydata=
- 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
- rPgMe6IIvn24UuW2f6fIt0AaqOWq
-In-Reply-To: <CAJaqyWe3qTJhQrkP2gkmCeand_63O_R6ZNvWSgGJQpE-3Qz3aw@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::62e;
- envelope-from=icegambit91@gmail.com; helo=mail-pl1-x62e.google.com
-X-Spam_score_int: 1
-X-Spam_score: 0.1
-X-Spam_bar: /
-X-Spam_report: (0.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1, DKIM_VALID=-0.1,
- DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_ENVFROM_END_DIGIT=0.25,
- FREEMAIL_FROM=0.001, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001, URI_DOTEDU=1.999 autolearn=no autolearn_force=no
+References: <20250205-b4-ctr_upstream_v6-v6-0-439d8e06c8ef@rivosinc.com>
+In-Reply-To: <20250205-b4-ctr_upstream_v6-v6-0-439d8e06c8ef@rivosinc.com>
+From: Alistair Francis <alistair23@gmail.com>
+Date: Thu, 6 Feb 2025 15:38:36 +1000
+X-Gm-Features: AWEUYZm5mV7vgJdT8_NcFMMFv4aWMhBxeKIg3qEMhfyBCxsHbrgLZSfVqA3MEOU
+Message-ID: <CAKmqyKMhV8Nj2oUmD_vWCnZBjJgYcw=8CQ86P2jihy0S09TXTQ@mail.gmail.com>
+Subject: Re: [PATCH v6 0/7] target/riscv: Add support for Control Transfer
+ Records Ext.
+To: Rajnesh Kanwal <rkanwal@rivosinc.com>
+Cc: qemu-riscv@nongnu.org, qemu-devel@nongnu.org, alistair.francis@wdc.com, 
+ bin.meng@windriver.com, liweiwei@iscas.ac.cn, dbarboza@ventanamicro.com, 
+ zhiwei_liu@linux.alibaba.com, atishp@rivosinc.com, apatel@ventanamicro.com, 
+ beeman@rivosinc.com, jason.chien@sifive.com, frank.chang@sifive.com, 
+ richard.henderson@linaro.org, bmeng.cn@gmail.com
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2607:f8b0:4864:20::92f;
+ envelope-from=alistair23@gmail.com; helo=mail-ua1-x92f.google.com
+X-Spam_score_int: -17
+X-Spam_score: -1.8
+X-Spam_bar: -
+X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -152,251 +99,141 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi,
+On Wed, Feb 5, 2025 at 9:21=E2=80=AFPM Rajnesh Kanwal <rkanwal@rivosinc.com=
+> wrote:
+>
+> This series enables Control Transfer Records extension support on riscv
+> platform. This extension is similar to Arch LBR in x86 and BRBE in ARM.
+> The Extension has been ratified and this series is based on v1.0 [0]
+>
+> CTR extension depends on both the implementation of S-mode and Sscsrind
+> extension v1.0.0 [1]. CTR access ctrsource, ctrtartget and ctrdata CSRs u=
+sing
+> sscsrind extension.
+>
+> The series is based on Smcdeleg/Ssccfg counter delegation extension [2]
+> patches [3]. CTR itself doesn't depend on counter delegation support. Thi=
+s
+> rebase is basically to include the Smcsrind patches.
+>
+> Here is the link to a quick start guide [4] to setup and run a basic perf=
+ demo
+> on Linux to use CTR Ext.
+>
+> Qemu patches can be found here:
+> https://github.com/rajnesh-kanwal/qemu/tree/b4/ctr_upstream_v6
+>
+> Opensbi patch can be found here:
+> https://github.com/rajnesh-kanwal/opensbi/tree/ctr_upstream_v2
+>
+> Linux kernel patches can be found here:
+> https://github.com/rajnesh-kanwal/linux/tree/b4/ctr_upstream_v2
+>
+> [0]: https://github.com/riscv/riscv-control-transfer-records/releases/tag=
+/v1.0
+> [1]: https://github.com/riscvarchive/riscv-indirect-csr-access/releases/t=
+ag/v1.0.0
+> [2]: https://github.com/riscvarchive/riscv-smcdeleg-ssccfg/releases/tag/v=
+1.0.0
+> [3]: https://lore.kernel.org/qemu-riscv/20241203-counter_delegation-v4-0-=
+c12a89baed86@rivosinc.com/
+> [4]: https://github.com/rajnesh-kanwal/linux/wiki/Running-CTR-basic-demo-=
+on-QEMU-RISC%E2%80%90V-Virt-machine
+>
+> Signed-off-by: Rajnesh Kanwal <rkanwal@rivosinc.com>
+> ---
+> Changelog:
+> v6: Rebased on latest riscv-to-apply.for-upstream.
 
-On 2/4/25 11:40 PM, Eugenio Perez Martin wrote:
-> On Tue, Feb 4, 2025 at 1:49 PM Sahil Siddiq <icegambit91@gmail.com> wrote:
->> On 1/31/25 12:27 PM, Eugenio Perez Martin wrote:
->>> On Fri, Jan 31, 2025 at 6:04 AM Sahil Siddiq <icegambit91@gmail.com> wrote:
->>>> On 1/24/25 1:04 PM, Eugenio Perez Martin wrote:
->>>>> On Fri, Jan 24, 2025 at 6:47 AM Sahil Siddiq <icegambit91@gmail.com> wrote:
->>>>>> On 1/21/25 10:07 PM, Eugenio Perez Martin wrote:
->>>>>>> On Sun, Jan 19, 2025 at 7:37 AM Sahil Siddiq <icegambit91@gmail.com> wrote:
->>>>>>>> On 1/7/25 1:35 PM, Eugenio Perez Martin wrote:
->>>>>>>> [...]
->>>>>>>> Apologies for the delay in replying. It took me a while to figure
->>>>>>>> this out, but I have now understood why this doesn't work. L1 is
->>>>>>>> unable to receive messages from L0 because they get filtered out
->>>>>>>> by hw/net/virtio-net.c:receive_filter [1]. There's an issue with
->>>>>>>> the MAC addresses.
->>>>>>>>
->>>>>>>> In L0, I have:
->>>>>>>>
->>>>>>>> $ ip a show tap0
->>>>>>>> 6: tap0: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc fq_codel state UNKNOWN group default qlen 1000
->>>>>>>>          link/ether d2:6d:b9:61:e1:9a brd ff:ff:ff:ff:ff:ff
->>>>>>>>          inet 111.1.1.1/24 scope global tap0
->>>>>>>>             valid_lft forever preferred_lft forever
->>>>>>>>          inet6 fe80::d06d:b9ff:fe61:e19a/64 scope link proto kernel_ll
->>>>>>>>             valid_lft forever preferred_lft forever
->>>>>>>>
->>>>>>>> In L1:
->>>>>>>>
->>>>>>>> # ip a show eth0
->>>>>>>> 2: eth0: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc fq_codel state UP group default qlen 1000
->>>>>>>>          link/ether 52:54:00:12:34:56 brd ff:ff:ff:ff:ff:ff
->>>>>>>>          altname enp0s2
->>>>>>>>          inet 10.0.2.15/24 brd 10.0.2.255 scope global dynamic noprefixroute eth0
->>>>>>>>             valid_lft 83455sec preferred_lft 83455sec
->>>>>>>>          inet6 fec0::7bd2:265e:3b8e:5acc/64 scope site dynamic noprefixroute
->>>>>>>>             valid_lft 86064sec preferred_lft 14064sec
->>>>>>>>          inet6 fe80::50e7:5bf6:fff8:a7b0/64 scope link noprefixroute
->>>>>>>>             valid_lft forever preferred_lft forever
->>>>>>>>
->>>>>>>> I'll call this L1-eth0.
->>>>>>>>
->>>>>>>> In L2:
->>>>>>>> # ip a show eth0
->>>>>>>> 2: eth0: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc fq_codel state UP gro0
->>>>>>>>          link/ether 52:54:00:12:34:57 brd ff:ff:ff:ff:ff:ff
->>>>>>>>          altname enp0s7
->>>>>>>>          inet 111.1.1.2/24 scope global eth0
->>>>>>>>             valid_lft forever preferred_lft forever
->>>>>>>>
->>>>>>>> I'll call this L2-eth0.
->>>>>>>>
->>>>>>>> Apart from eth0, lo is the only other device in both L1 and L2.
->>>>>>>>
->>>>>>>> A frame that L1 receives from L0 has L2-eth0's MAC address (LSB = 57)
->>>>>>>> as its destination address. When booting L2 with x-svq=false, the
->>>>>>>> value of n->mac in VirtIONet is also L2-eth0. So, L1 accepts
->>>>>>>> the frames and passes them on to L2 and pinging works [2].
->>>>>>>>
->>>>>>>
->>>>>>> So this behavior is interesting by itself. But L1's kernel net system
->>>>>>> should not receive anything. As I read it, even if it receives it, it
->>>>>>> should not forward the frame to L2 as it is in a different subnet. Are
->>>>>>> you able to read it using tcpdump on L1?
->>>>>>
->>>>>> I ran "tcpdump -i eth0" in L1. It didn't capture any of the packets
->>>>>> that were directed at L2 even though L2 was able to receive them.
->>>>>> Similarly, it didn't capture any packets that were sent from L2 to
->>>>>> L0. This is when L2 is launched with x-svq=false.
->>>>>> [...]
->>>>>> With x-svq=true, forcibly setting the LSB of n->mac to 0x57 in
->>>>>> receive_filter allows L2 to receive packets from L0. I added
->>>>>> the following line just before line 1771 [1] to check this out.
->>>>>>
->>>>>> n->mac[5] = 0x57;
->>>>>>
->>>>>
->>>>> That's very interesting. Let me answer all the gdb questions below and
->>>>> we can debug it deeper :).
->>>>>
->>>>
->>>> Thank you for the primer on using gdb with QEMU. I am able to debug
->>>> QEMU now.
->>>>
->>>>>>> Maybe we can make the scenario clearer by telling which virtio-net
->>>>>>> device is which with virtio_net_pci,mac=XX:... ?
->>>>>>>
->>>>>>>> However, when booting L2 with x-svq=true, n->mac is set to L1-eth0
->>>>>>>> (LSB = 56) in virtio_net_handle_mac() [3].
->>>>>>>
->>>>>>> Can you tell with gdb bt if this function is called from net or the
->>>>>>> SVQ subsystem?
->>>>>>
->>>>
->>>> It looks like the function is being called from net.
->>>>
->>>> (gdb) bt
->>>> #0  virtio_net_handle_mac (n=0x15622425e, cmd=85 'U', iov=0x555558865980, iov_cnt=1476792840) at ../hw/net/virtio-net.c:1098
->>>> #1  0x0000555555e5920b in virtio_net_handle_ctrl_iov (vdev=0x555558fdacd0, in_sg=0x5555580611f8, in_num=1, out_sg=0x555558061208,
->>>>         out_num=1) at ../hw/net/virtio-net.c:1581
->>>> #2  0x0000555555e593a0 in virtio_net_handle_ctrl (vdev=0x555558fdacd0, vq=0x555558fe7730) at ../hw/net/virtio-net.c:1610
->>>> #3  0x0000555555e9a7d8 in virtio_queue_notify_vq (vq=0x555558fe7730) at ../hw/virtio/virtio.c:2484
->>>> #4  0x0000555555e9dffb in virtio_queue_host_notifier_read (n=0x555558fe77a4) at ../hw/virtio/virtio.c:3869
->>>> #5  0x000055555620329f in aio_dispatch_handler (ctx=0x555557d9f840, node=0x7fffdca7ba80) at ../util/aio-posix.c:373
->>>> #6  0x000055555620346f in aio_dispatch_handlers (ctx=0x555557d9f840) at ../util/aio-posix.c:415
->>>> #7  0x00005555562034cb in aio_dispatch (ctx=0x555557d9f840) at ../util/aio-posix.c:425
->>>> #8  0x00005555562242b5 in aio_ctx_dispatch (source=0x555557d9f840, callback=0x0, user_data=0x0) at ../util/async.c:361
->>>> #9  0x00007ffff6d86559 in ?? () from /usr/lib/libglib-2.0.so.0
->>>> #10 0x00007ffff6d86858 in g_main_context_dispatch () from /usr/lib/libglib-2.0.so.0
->>>> #11 0x0000555556225bf9 in glib_pollfds_poll () at ../util/main-loop.c:287
->>>> #12 0x0000555556225c87 in os_host_main_loop_wait (timeout=294672) at ../util/main-loop.c:310
->>>> #13 0x0000555556225db6 in main_loop_wait (nonblocking=0) at ../util/main-loop.c:589
->>>> #14 0x0000555555c0c1a3 in qemu_main_loop () at ../system/runstate.c:835
->>>> #15 0x000055555612bd8d in qemu_default_main (opaque=0x0) at ../system/main.c:48
->>>> #16 0x000055555612be3d in main (argc=23, argv=0x7fffffffe508) at ../system/main.c:76
->>>>
->>>> virtio_queue_notify_vq at hw/virtio/virtio.c:2484 [2] calls
->>>> vq->handle_output(vdev, vq). I see "handle_output" is a function
->>>> pointer and in this case it seems to be pointing to
->>>> virtio_net_handle_ctrl.
->>>>
->>>>>>>> [...]
->>>>>>>> With x-svq=true, I see that n->mac is set by virtio_net_handle_mac()
->>>>>>>> [3] when L1 receives VIRTIO_NET_CTRL_MAC_ADDR_SET. With x-svq=false,
->>>>>>>> virtio_net_handle_mac() doesn't seem to be getting called. I haven't
->>>>>>>> understood how the MAC address is set in VirtIONet when x-svq=false.
->>>>>>>> Understanding this might help see why n->mac has different values
->>>>>>>> when x-svq is false vs when it is true.
->>>>>>>
->>>>>>> Ok this makes sense, as x-svq=true is the one that receives the set
->>>>>>> mac message. You should see it in L0's QEMU though, both in x-svq=on
->>>>>>> and x-svq=off scenarios. Can you check it?
->>>>>>
->>>>>> L0's QEMU seems to be receiving the "set mac" message only when L1
->>>>>> is launched with x-svq=true. With x-svq=off, I don't see any call
->>>>>> to virtio_net_handle_mac with cmd == VIRTIO_NET_CTRL_MAC_ADDR_SET
->>>>>> in L0.
->>>>>>
->>>>>
->>>>> Ok this is interesting. Let's disable control virtqueue to start with
->>>>> something simpler:
->>>>> device virtio-net-pci,netdev=net0,ctrl_vq=off,...
->>>>>
->>>>> QEMU will start complaining about features that depend on ctrl_vq,
->>>>> like ctrl_rx. Let's disable all of them and check this new scenario.
->>>>>
->>>>
->>>> I am still investigating this part. I set ctrl_vq=off and ctrl_rx=off.
->>>> I didn't get any errors as such about features that depend on ctrl_vq.
->>>> However, I did notice that after booting L2 (x-svq=true as well as
->>>> x-svq=false), no eth0 device was created. There was only a "lo" interface
->>>> in L2. An eth0 interface is present only when L1 (L0 QEMU) is booted
->>>> with ctrl_vq=on and ctrl_rx=on.
->>>>
->>>
->>> Any error messages on the nested guest's dmesg?
->>
->> Oh, yes, there were error messages in the output of dmesg related to
->> ctrl_vq. After adding the following args, there were no error messages
->> in dmesg.
->>
->> -device virtio-net-pci,ctrl_vq=off,ctrl_rx=off,ctrl_vlan=off,ctrl_mac_addr=off
->>
->> I see that the eth0 interface is also created. I am able to ping L0
->> from L2 and vice versa as well (even with x-svq=true). This is because
->> n->promisc is set when these features are disabled and receive_filter() [1]
->> always returns 1.
->>
->>> Is it fixed when you set the same mac address on L0
->>> virtio-net-pci and L1's?
->>>
->>
->> I didn't have to set the same mac address in this case since promiscuous
->> mode seems to be getting enabled which allows pinging to work.
->>
->> There is another concept that I am a little confused about. In the case
->> where L2 is booted with x-svq=false (and all ctrl features such as ctrl_vq,
->> ctrl_rx, etc. are on), I am able to ping L0 from L2. When tracing
->> receive_filter() in L0-QEMU, I see the values of n->mac and the destination
->> mac address in the ICMP packet match [2].
->>
-> 
-> SVQ makes an effort to set the mac address at the beginning of
-> operation. The L0 interpret it as "filter out all MACs except this
-> one". But SVQ cannot set the mac if ctrl_mac_addr=off, so the nic
-> receives all packets and the guest kernel needs to filter out by
-> itself.
-> 
->> I haven't understood what n->mac refers to over here. MAC addresses are
->> globally unique and so the mac address of the device in L1 should be
->> different from that in L2.
-> 
-> With vDPA, they should be the same device even if they are declared in
-> different cmdlines or layers of virtualizations. If it were a physical
-> NIC, QEMU should declare the MAC of the physical NIC too.
+It should be rebased on
+https://github.com/alistair23/qemu/tree/riscv-to-apply.next
 
-Understood. I guess the issue with x-svq=true is that the MAC address
-set in L0-QEMU's n->mac is different from the device in L2. That's why
-the packets get filtered out with x-svq=true but pinging works with
-x-svq=false.
+I applied the first 6 patches as they apply cleanly
 
-> There is a thread in QEMU maul list where how QEMU should influence
-> the control plane is discussed, and maybe it would be easier if QEMU
-> just checks the device's MAC and ignores cmdline. But then, that
-> behavior would be surprising for the rest of vhosts like vhost-kernel.
-> Or just emit a warning if the MAC is different than the one that the
-> device reports.
-> 
+Alistair
 
-Got it.
-
->> But I see L0-QEMU's n->mac is set to the mac
->> address of the device in L2 (allowing receive_filter to accept the packet).
->>
-> 
-> That's interesting, can you check further what does receive_filter and
-> virtio_net_receive_rcu do with gdb? As long as virtio_net_receive_rcu
-> flushes the packet on the receive queue, SVQ should receive it.
-> 
-The control flow irrespective of the value of x-svq is the same up till
-the MAC address comparison in receive_filter() [1]. For x-svq=true,
-the equality check between n->mac and the packet's destination MAC address
-fails and the packet is filtered out. It is not flushed to the receive
-queue. With x-svq=false, this is not the case.
-
-On 2/4/25 11:45 PM, Eugenio Perez Martin wrote:
-> PS: Please note that you can check packed_vq SVQ implementation
-> already without CVQ, as these features are totally orthogonal :).
-> 
-
-Right. Now that I can ping with the ctrl features turned off, I think
-this should take precedence. There's another issue specific to the
-packed virtqueue case. It causes the kernel to crash. I have been
-investigating this and the situation here looks very similar to what's
-explained in Jason Wang's mail [2]. My plan of action is to apply his
-changes in L2's kernel and check if that resolves the problem.
-
-The details of the crash can be found in this mail [3].
-
-Thanks,
-Sahil
-
-[1] https://gitlab.com/qemu-project/qemu/-/blob/master/hw/net/virtio-net.c#L1775
-[2] https://lkml.iu.edu/hypermail/linux/kernel/1307.0/01455.html
-[3] https://lists.nongnu.org/archive/html/qemu-devel/2024-12/msg01134.html
-
+>
+> v5: Improvements based on Richard Henderson's feedback.
+>   - Fixed code gen logic to use gen_update_pc() instead of
+>     tcg_constant_tl().
+>   - Some function renaming.
+>   - Rebased onto v4 of counter delegation series.
+>   - https://lore.kernel.org/qemu-riscv/20241205-b4-ctr_upstream_v3-v5-0-6=
+0b993aa567d@rivosinc.com/
+>
+> v4: Improvements based on Richard Henderson's feedback.
+>   - Refactored CTR related code generation to move more code into
+>     translation side and avoid unnecessary code execution in generated
+>     code.
+>   - Added missing code in machine.c to migrate the new state.
+>   - https://lore.kernel.org/r/20241204-b4-ctr_upstream_v3-v4-0-d3ce6bef94=
+32@rivosinc.com
+>
+> v3: Improvements based on Jason Chien and Frank Chang's feedback.
+>   - Created single set of MACROs for CTR CSRs in cpu_bit.h
+>   - Some fixes in riscv_ctr_add_entry.
+>   - Return zero for vs/sireg4-6 for CTR 0x200 to 0x2ff range.
+>   - Improved extension dependency check.
+>   - Fixed invalid ctrctl csr selection bug in riscv_ctr_freeze.
+>   - Added implied rules for Smctr and Ssctr.
+>   - Added missing SMSTATEEN0_CTR bit in mstateen0 and hstateen0 write ops=
+.
+>   - Some more cosmetic changes.
+>   - https://lore.kernel.org/qemu-riscv/20241104-b4-ctr_upstream_v3-v3-0-3=
+2fd3c48205f@rivosinc.com/
+>
+> v2: Lots of improvements based on Jason Chien's feedback including:
+>   - Added CTR recording for cm.jalt, cm.jt, cm.popret, cm.popretz.
+>   - Fixed and added more CTR extension enable checks.
+>   - Fixed CTR CSR predicate functions.
+>   - Fixed external trap xTE bit checks.
+>   - One fix in freeze function for VS-mode.
+>   - Lots of minor code improvements.
+>   - Added checks in sctrclr instruction helper.
+>   - https://lore.kernel.org/qemu-riscv/20240619152708.135991-1-rkanwal@ri=
+vosinc.com/
+>
+> v1:
+>   - https://lore.kernel.org/qemu-riscv/20240529160950.132754-1-rkanwal@ri=
+vosinc.com/
+>
+> ---
+> Rajnesh Kanwal (7):
+>       target/riscv: Remove obsolete sfence.vm instruction
+>       target/riscv: Add Control Transfer Records CSR definitions.
+>       target/riscv: Add support for Control Transfer Records extension CS=
+Rs.
+>       target/riscv: Add support to record CTR entries.
+>       target/riscv: Add CTR sctrclr instruction.
+>       target/riscv: machine: Add Control Transfer Record state descriptio=
+n
+>       target/riscv: Add support to access ctrsource, ctrtarget, ctrdata r=
+egs.
+>
+>  target/riscv/cpu.c                             |  26 ++-
+>  target/riscv/cpu.h                             |  13 ++
+>  target/riscv/cpu_bits.h                        | 145 ++++++++++++
+>  target/riscv/cpu_cfg.h                         |   2 +
+>  target/riscv/cpu_helper.c                      | 266 +++++++++++++++++++=
++++
+>  target/riscv/csr.c                             | 294 +++++++++++++++++++=
++++++-
+>  target/riscv/helper.h                          |   2 +
+>  target/riscv/insn32.decode                     |   2 +-
+>  target/riscv/insn_trans/trans_privileged.c.inc |  18 +-
+>  target/riscv/insn_trans/trans_rvi.c.inc        |  75 +++++++
+>  target/riscv/insn_trans/trans_rvzce.c.inc      |  21 ++
+>  target/riscv/machine.c                         |  25 +++
+>  target/riscv/op_helper.c                       |  48 ++++
+>  target/riscv/tcg/tcg-cpu.c                     |  11 +
+>  target/riscv/translate.c                       |  46 ++++
+>  15 files changed, 986 insertions(+), 8 deletions(-)
+> ---
+> base-commit: 699291ba7774f1580584cd96f84ceda8cc4edb7e
+> change-id: 20250205-b4-ctr_upstream_v6-71418cd245ee
+> --
+> Best Regards,
+> Rajnesh Kanwal
+>
+>
 
