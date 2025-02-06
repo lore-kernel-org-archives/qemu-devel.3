@@ -4,82 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A0FCFC02199
-	for <qemu-devel@archiver.kernel.org>; Thu,  6 Feb 2025 15:35:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 14CDAC02198
+	for <qemu-devel@archiver.kernel.org>; Thu,  6 Feb 2025 15:35:13 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tg3td-0002Z6-KW; Thu, 06 Feb 2025 10:34:29 -0500
+	id 1tg3tf-0002Zr-Fb; Thu, 06 Feb 2025 10:34:31 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <rbradford@rivosinc.com>)
- id 1tg3tS-0002Sm-4T
+ id 1tg3tS-0002Sr-5N
  for qemu-devel@nongnu.org; Thu, 06 Feb 2025 10:34:18 -0500
-Received: from mail-wr1-x42e.google.com ([2a00:1450:4864:20::42e])
+Received: from mail-wr1-x431.google.com ([2a00:1450:4864:20::431])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <rbradford@rivosinc.com>)
- id 1tg3tQ-0001Fw-7w
+ id 1tg3tO-0001Ff-UF
  for qemu-devel@nongnu.org; Thu, 06 Feb 2025 10:34:17 -0500
-Received: by mail-wr1-x42e.google.com with SMTP id
- ffacd0b85a97d-38a8b17d7a7so494695f8f.2
- for <qemu-devel@nongnu.org>; Thu, 06 Feb 2025 07:34:15 -0800 (PST)
+Received: by mail-wr1-x431.google.com with SMTP id
+ ffacd0b85a97d-38daf14018eso796600f8f.1
+ for <qemu-devel@nongnu.org>; Thu, 06 Feb 2025 07:34:14 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=rivosinc-com.20230601.gappssmtp.com; s=20230601; t=1738856054; x=1739460854;
+ d=rivosinc-com.20230601.gappssmtp.com; s=20230601; t=1738856053; x=1739460853;
  darn=nongnu.org; 
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=O4fAi/WFyk5fUA9AqpTcM5pdirl0mVctIzxsel8zKVc=;
- b=RCactgeaRbwb7gMcVIE6DIG4QrZlN3XtBDGEHIh16M6G9hst6StOBQdFVldo7w/r50
- z2PQa+Hk8AKVSM8Zy1Sh+yqUtRSQdNDjqazPEuVsNYt2JnL9+Whnw6q933Ia/LuAiFfj
- C7Ey3/sAtKSEjULsfRSkYiPNCj/4vgPs4/ua/MvoEHtv9dHZfKCQ8isOkDnHMtPQL5VU
- syeQM8GEsfU/VTV5yC/mYXk6FHX6K3VBz55PM9srJ7TG9XLP7wmozODt51geHU4ZU5Yw
- t8J34KMD9Bg7zNnDRE6VLwCmc8/Blv7d6CiS6WM8+yxlcG51H/WOORvjikNJ0pi43Clm
- SSaw==
+ bh=MLa9j9BRIMQd3YANNi07ZIrVb3mXVRrpXwVepk0Wa18=;
+ b=N9EBwGZOD4evHAgfC4aE0CngHrv63tPSt0zz5gxbVgw78x6riR88Zs/Js7/xOi3nbi
+ vwP8HXIPY5cTOVZxOm7D9QpZj92TNLQuKBgsTkVSTlOYeQhvj8FhmWXZJ6QyiUJEKVvp
+ 9/RkdZBI8qEEKbp41GPNReXZX8zgb3sZlRis5EwGhOM5pD9N6Y2SAUAxE6Do6Rvs34to
+ lp6C/Mmuo2n45eYPgNtsdmVKjTcfKmLpmiNt6yzwCs6QIRJutdUS/SwTS/eHGlYkg9DS
+ 5A/RW+HDU+dItFq1y4RnigLC2hAs6Wtoo5b2uoBWhSQtz6MmjS2NSXJWfIHBc74Hc35o
+ o2+Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1738856054; x=1739460854;
+ d=1e100.net; s=20230601; t=1738856053; x=1739460853;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=O4fAi/WFyk5fUA9AqpTcM5pdirl0mVctIzxsel8zKVc=;
- b=EK9zr2Lgi39g0dm5bgi1Yi5lFjlVp7jcOo2DFVU57wQWTkirYPY/t0DdzmMhTgA+Z/
- PTtH0WBzQmGSx2kzgbJZoWNrWy6319mbpPEQZ9VuWIr+IQTMY4UEngZlJvM9kA8HYWai
- fyLujcNjBmrw3rd9DcgV3qVHZa3pRSgLbR5nRyg7OBvp4EsBV5hUXh2jrn+i2W31mwms
- 1Suk60Xg7ZW/OFVQY22m5ibJ8prUgID43dI0SDigc9ciJVgYZev2YpoOw0mgbEMrWkUD
- OyAfVDGZ9Q6H+ERXchIAzGUopM7bQW0LNC0+IFWrW0JXssaIKmsXb8+UuvyOPddUBPOL
- 55fQ==
-X-Gm-Message-State: AOJu0YzXu7qyzuT0EA8VDT36iGu6d+9c3PNAmqo6H0PgV1OX+nvYGRrX
- bJ4NGKI9SjxtTlOrfV8IhFOtWwYhvLm8OGdUmPjy0vPtbjlCJB8/+lUUHiNKC7OBaInb6LD4JvB
- V
-X-Gm-Gg: ASbGncs6DhdrPEQjDCNQldFH5KkWliYwKe3c2TCDXrauJrd2PuLXIeJ9JJS0KF3y5jo
- h6EfkOJxQdI3QhpFvIWwO2XbX9yBVoT82tvgxglxe/+UM8VbmAKjv8Fmq80JVJhvlAitDlxwvUn
- YqX7oBbyH37JsbeR1qWnc2RzgdJHWqMVZ5kQgOFtgsDhMt46kKKHzqF0Yeh6ir+PujBC/NGTyUj
- aMKeHdkrljcTlo0hWlI1/4wVYMUk3u0zec7c8II2A1K8GxtmVXRU+7D8lBw85ZSGC28neKytINz
- gM/S9IZqWCXb6DvuvU5bVCvYMp2haPSJlfPgXYAhBIKwA1q815Pf0FC0K4cP7xScY9A=
-X-Google-Smtp-Source: AGHT+IE+lIqtmzQFCpof9gOpI5qAce29bO2n7sMxfQ6jcqolHCidIieIJjlkCp49engQ87U8LkLoZQ==
-X-Received: by 2002:a05:6000:18a4:b0:38d:bf56:8658 with SMTP id
- ffacd0b85a97d-38dbf568bb3mr1841968f8f.24.1738856053891; 
- Thu, 06 Feb 2025 07:34:13 -0800 (PST)
+ bh=MLa9j9BRIMQd3YANNi07ZIrVb3mXVRrpXwVepk0Wa18=;
+ b=fMjinH7bwXR/eNkAMX5WthiNgQPnYao7MfSOzOTzkq2mdOYUjhD2FqcUdOQSbrsROK
+ TRobbGGIC4RGxz1d6f0COT6i3iaTkos7ON13aTlfG/g3oo1sEzrTz2zL9t6Cx4DloT0y
+ GsyfIC0bxIjBBTug2d3JJdVyEYSzfjHckjNTbuM8ETcf7/VLMEihj20gQiLSTox/GsBn
+ NtBRez4OxxhlgUEfZ5SmHGi4qI6d1+OAoewedZN3XHY4/9PFKjVP4bSHHHSO9hjJMHgk
+ v6f4Ih4zjlqJ1IlyhCIST4MZoSDoT9pY9pldS1GtB4n1P+6RQRUzIgY7JXL/E9IgNoFm
+ FIOA==
+X-Gm-Message-State: AOJu0YwMO67lyd9DrIekz+GK7dLFCrTMkfBdAvJkFLNIpBYMDorEUHwx
+ 9bJWUzfZsWvJBLKkcSwy3ROvPfGc9tUWnVK9fROYwbLUPzYP/Lp9y3BRM8fUepgV85dBN35mlmd
+ Y
+X-Gm-Gg: ASbGncvn4Ras8j+eaWq9KjrAi3likfj8UNHuxIej46vW9Hb9SLbhkNHNqP/UE63xJsX
+ jpp8rrSkAQTXkxkWOp6jnuMhfajvEWBY/QZxCSWPDZEuiM5ZeaipoodSJl7GwBrfXDnpm0PAAXt
+ 6561r8p9Dhz5l0qQxu8K6SYpBUtjvRjOKiijvnOnIZpxOn/EdyYHHz3mkk2XqZagQRJtY6hqjwg
+ Bv2Xs0pk++6qOziHRT8diFl3o+qETIG2kycB9Xt99Hyvm3pwQN/FIO6ePoX8BtNLQkskcd6657Y
+ WkhhN3PSwIh1yKG111rptNzHmoVIjU/kOfArWuvE2sf+ND4jLy6lTKvkk0IOSIBaetM=
+X-Google-Smtp-Source: AGHT+IGaH4XvtHjiWnSV1VeXVxRH5mlsweNfU3GeF1BF5UHi5pYiqkPi/6r1xql6iMBU6JjtutmMtQ==
+X-Received: by 2002:a5d:6d8e:0:b0:385:faf5:eba6 with SMTP id
+ ffacd0b85a97d-38db48b42c0mr5010299f8f.1.1738856052983; 
+ Thu, 06 Feb 2025 07:34:12 -0800 (PST)
 Received: from rockhopper.ba.rivosinc.com (214.11.169.217.in-addr.arpa.
  [217.169.11.214]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-38dc45c26f2sm850516f8f.51.2025.02.06.07.34.13
+ ffacd0b85a97d-38dc45c26f2sm850516f8f.51.2025.02.06.07.34.11
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 06 Feb 2025 07:34:13 -0800 (PST)
+ Thu, 06 Feb 2025 07:34:12 -0800 (PST)
 From: Rob Bradford <rbradford@rivosinc.com>
 To: qemu-devel@nongnu.org
 Cc: Palmer Dabbelt <palmer@dabbelt.com>, qemu-riscv@nongnu.org,
  Alistair Francis <Alistair.Francis@wdc.com>,
  Rob Bradford <rbradford@rivosinc.com>
-Subject: [PATCH 2/2] disas/riscv: Add missing Sdtrig CSRs
-Date: Thu,  6 Feb 2025 15:34:10 +0000
-Message-ID: <20250206153410.236636-3-rbradford@rivosinc.com>
+Subject: [PATCH 1/2] disas/riscv: Fix minor whitespace issues
+Date: Thu,  6 Feb 2025 15:34:09 +0000
+Message-ID: <20250206153410.236636-2-rbradford@rivosinc.com>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250206153410.236636-1-rbradford@rivosinc.com>
 References: <20250206153410.236636-1-rbradford@rivosinc.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::42e;
- envelope-from=rbradford@rivosinc.com; helo=mail-wr1-x42e.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::431;
+ envelope-from=rbradford@rivosinc.com; helo=mail-wr1-x431.google.com
 X-Spam_score_int: -18
 X-Spam_score: -1.9
 X-Spam_bar: -
@@ -101,31 +101,43 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This reflects the latest frozen version of the RISC-V Debug
-specification (1.0.0-rc4) which includes the Sdtrig extension.
+Some extra spaces made into into the RISC-V opcode data table.
 
 Signed-off-by: Rob Bradford <rbradford@rivosinc.com>
 ---
- disas/riscv.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ disas/riscv.c | 12 ++++++------
+ 1 file changed, 6 insertions(+), 6 deletions(-)
 
 diff --git a/disas/riscv.c b/disas/riscv.c
-index 305dd40ac4..85cd2a9c2a 100644
+index 4075ed6bfe..305dd40ac4 100644
 --- a/disas/riscv.c
 +++ b/disas/riscv.c
-@@ -2438,9 +2438,11 @@ static const char *csr_name(int csrno)
-     case 0x07a1: return "tdata1";
-     case 0x07a2: return "tdata2";
-     case 0x07a3: return "tdata3";
-+    case 0x07a4: return "tinfo";
-     case 0x07b0: return "dcsr";
-     case 0x07b1: return "dpc";
--    case 0x07b2: return "dscratch";
-+    case 0x07b2: return "dscratch0";
-+    case 0x07b3: return "dscratch1";
-     case 0x0b00: return "mcycle";
-     case 0x0b01: return "mtime";
-     case 0x0b02: return "minstret";
+@@ -1662,7 +1662,7 @@ const rv_opcode_data rvi_opcode_data[] = {
+     { "aes32esi", rv_codec_k_bs, rv_fmt_rs1_rs2_bs, NULL, 0, 0, 0 },
+     { "aes32dsmi", rv_codec_k_bs, rv_fmt_rs1_rs2_bs, NULL, 0, 0, 0 },
+     { "aes32dsi", rv_codec_k_bs, rv_fmt_rs1_rs2_bs, NULL, 0, 0, 0 },
+-    { "aes64ks1i", rv_codec_k_rnum,  rv_fmt_rd_rs1_rnum, NULL, 0, 0, 0 },
++    { "aes64ks1i", rv_codec_k_rnum, rv_fmt_rd_rs1_rnum, NULL, 0, 0, 0 },
+     { "aes64ks2", rv_codec_r, rv_fmt_rd_rs1_rs2, NULL, 0, 0, 0 },
+     { "aes64im", rv_codec_r, rv_fmt_rd_rs1, NULL, 0, 0 },
+     { "aes64esm", rv_codec_r, rv_fmt_rd_rs1_rs2, NULL, 0, 0, 0 },
+@@ -2214,11 +2214,11 @@ const rv_opcode_data rvi_opcode_data[] = {
+     { "mop.rr.5", rv_codec_r, rv_fmt_rd_rs1_rs2, NULL, 0, 0, 0 },
+     { "mop.rr.6", rv_codec_r, rv_fmt_rd_rs1_rs2, NULL, 0, 0, 0 },
+     { "mop.rr.7", rv_codec_r, rv_fmt_rd_rs1_rs2, NULL, 0, 0, 0 },
+-    { "c.mop.1",  rv_codec_ci_none, rv_fmt_none, NULL, 0, 0, 0 },
+-    { "c.mop.3",  rv_codec_ci_none, rv_fmt_none, NULL, 0, 0, 0 },
+-    { "c.mop.5",  rv_codec_ci_none, rv_fmt_none, NULL, 0, 0, 0 },
+-    { "c.mop.7",  rv_codec_ci_none, rv_fmt_none, NULL, 0, 0, 0 },
+-    { "c.mop.9",  rv_codec_ci_none, rv_fmt_none, NULL, 0, 0, 0 },
++    { "c.mop.1", rv_codec_ci_none, rv_fmt_none, NULL, 0, 0, 0 },
++    { "c.mop.3", rv_codec_ci_none, rv_fmt_none, NULL, 0, 0, 0 },
++    { "c.mop.5", rv_codec_ci_none, rv_fmt_none, NULL, 0, 0, 0 },
++    { "c.mop.7", rv_codec_ci_none, rv_fmt_none, NULL, 0, 0, 0 },
++    { "c.mop.9", rv_codec_ci_none, rv_fmt_none, NULL, 0, 0, 0 },
+     { "c.mop.11", rv_codec_ci_none, rv_fmt_none, NULL, 0, 0, 0 },
+     { "c.mop.13", rv_codec_ci_none, rv_fmt_none, NULL, 0, 0, 0 },
+     { "c.mop.15", rv_codec_ci_none, rv_fmt_none, NULL, 0, 0, 0 },
 -- 
 2.48.1
 
