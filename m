@@ -4,79 +4,89 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 04AEEC02196
-	for <qemu-devel@archiver.kernel.org>; Thu,  6 Feb 2025 08:23:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 59AAFC02196
+	for <qemu-devel@archiver.kernel.org>; Thu,  6 Feb 2025 08:38:14 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tfx9f-0000gB-O1; Thu, 06 Feb 2025 03:22:35 -0500
+	id 1tfxO8-0004RN-R3; Thu, 06 Feb 2025 03:37:32 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kraxel@redhat.com>) id 1tfx9d-0000f8-Me
- for qemu-devel@nongnu.org; Thu, 06 Feb 2025 03:22:33 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kraxel@redhat.com>) id 1tfx9b-0001RZ-I4
- for qemu-devel@nongnu.org; Thu, 06 Feb 2025 03:22:33 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1738830150;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=4hSOjLuiAqpLnr8aX/VaXpIcTXR3Yg6HvNHNQMKBovI=;
- b=XOXodYDCXQ/EajgsYgJkkAr+o0wst+O8b0qbQeTJmne5zEJgSPd6ELSabMy94HuO6KDUhY
- C3iDRH2qGrgeKbIQM4DaMHD9SsdZcf9FI5x7c6LuU2xM5vMveeZ0FtnjvHwSeU62AxYHfH
- RDnXYyX5sMLvBc/sqA5mAnuI2P/PYU0=
-Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-658-6jGghw-EPa6f1dli9skKIQ-1; Thu,
- 06 Feb 2025 03:22:26 -0500
-X-MC-Unique: 6jGghw-EPa6f1dli9skKIQ-1
-X-Mimecast-MFC-AGG-ID: 6jGghw-EPa6f1dli9skKIQ
-Received: from mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.40])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 23454180087F
- for <qemu-devel@nongnu.org>; Thu,  6 Feb 2025 08:22:25 +0000 (UTC)
-Received: from sirius.home.kraxel.org (unknown [10.45.224.57])
- by mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 51BBC19560A3; Thu,  6 Feb 2025 08:22:24 +0000 (UTC)
-Received: by sirius.home.kraxel.org (Postfix, from userid 1000)
- id A24131800396; Thu, 06 Feb 2025 09:22:21 +0100 (CET)
-Date: Thu, 6 Feb 2025 09:22:21 +0100
-From: Gerd Hoffmann <kraxel@redhat.com>
-To: Alex Williamson <alex.williamson@redhat.com>
-Cc: =?utf-8?Q?C=C3=A9dric?= Le Goater <clg@redhat.com>, qemu-devel@nongnu.org
-Subject: Re: [PATCH v2 8/9] vfio: Check compatibility of CPU and IOMMU
- address space width
-Message-ID: <l6mgyhwaexnvndcigvwxen2hidq5hlxlf7ed6fgvr3gs77n5mp@ezwgvkthdley>
-References: <20250130134346.1754143-1-clg@redhat.com>
- <20250130134346.1754143-9-clg@redhat.com>
- <20250130115800.60b7cbe6.alex.williamson@redhat.com>
- <9cfaf81e-d8cc-4ec0-9c56-956b716891e7@redhat.com>
- <24w7fzx5rf2zdnowtjmuvwuirydryc366xumjf3isgzrhei2ty@ymyjyzdbggr2>
- <20250131151829.6461eeb0.alex.williamson@redhat.com>
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tfxNv-0004Ol-7Q
+ for qemu-devel@nongnu.org; Thu, 06 Feb 2025 03:37:20 -0500
+Received: from mail-wr1-x429.google.com ([2a00:1450:4864:20::429])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tfxNt-0005iE-DR
+ for qemu-devel@nongnu.org; Thu, 06 Feb 2025 03:37:18 -0500
+Received: by mail-wr1-x429.google.com with SMTP id
+ ffacd0b85a97d-38da713b9daso489821f8f.3
+ for <qemu-devel@nongnu.org>; Thu, 06 Feb 2025 00:37:16 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1738831035; x=1739435835; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=9OCOaRltNue5Ngv30f5dYaLHviUSZEC0cNjJfmBP3lY=;
+ b=nkVxqp5Aah17fEc80yJ1mL/ttNGqJLpuMlUV30ril45sQkxDkiezENTJzq/QxKqPfY
+ ps+NyB/QFbi1cZogUt3UKY2hTe6G4y8c2fBJoysBPHaYUgnfwIDJVD21lGK+voMCZRH3
+ raSoJzt0zku1FrIFpS8X6/7BU19dV1PUUOfC9eeqpMGY0H4l6ttiPkniOpZsPYf6YfLd
+ /5P3LL8s87oWD+RtvltbuXqdnoMKnFGk2GQ4fDVVrkUeKYAbTcAR1RLA7u237TL+duc0
+ V9F+yUK7ZX/IOSFo89WlSZvxftr36vbVus5lU5/wqqkaOmzpx/OB8O7rPWMEbo3uq7G/
+ guOw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1738831035; x=1739435835;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=9OCOaRltNue5Ngv30f5dYaLHviUSZEC0cNjJfmBP3lY=;
+ b=GFcXZciei+IUdd02D0KLeg31BBUyF014+miXyjgXUfNzCwbOy2PIvUrE7QGhkCbK26
+ N60N6ScDiTblhz1IDniCj2p7Ex6q4n4tG27tNIu9Ld1+UYqQ/guy7PUNLNlMfjii82RR
+ dXDEEayh38jTtG3YNSt1VLvkpwtEOtJS6/v2lCdVqqh7jXLZRqnAzrKQgi7anHfwWFQo
+ QZJHvKw7hAZ8bxF8KJ5encBx2MmIZpTi/un6ZWGDOCd924WFig/x0YtH1JZlVyiHmmBV
+ b1dvtBbCUv/bw2pwzPv60MjTR+eM2MHEIOui0ffacgyEpoBznVNaNCWihpzhMcnSMR80
+ tg1g==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCV4fV5n4QNtBAi8PrLWHBvCwj1a/Nfxx+8qTERUNJm4XtMQELARSEb9Z3C6lTM5HImYzIrlgTxMHl26@nongnu.org
+X-Gm-Message-State: AOJu0YzYgC9Mo+psTYFjpW6vC3Wkfbl3gm8nRRlGa9aY98ET/8IHIIkB
+ YCnQSJ5BGp4cF+6ZM5pCz2DYB6w9WVTZzysphrGWbNZ/OWNPqdcWzxHwHC797Po=
+X-Gm-Gg: ASbGncuDYP3xH5oIZh09NiaLwLMlUZVGNEBK0K0ovN5ujAgHJ/Mgb3IIoh/03ihI1vw
+ 6P51HXD6JCSSyjOv68W6Xd2XSuXtoR1HWsJwcfkiulR7+kFSLe+0TcH6M+De8Liv9fLlzCkZubf
+ smTY6n2ima5j47AbH/0fuEYJ+foXw2gjfDSZTo+v+Eo1RJAJTKJNuG89bMrVKcZMJS7tg+UxJR5
+ o6b1YJus8twAEP2L1kd5aEHbpe2EYQI0N5rVw4M6m/6aVxoAvpZyRjbyyyuLU7ZoBFHJyyH3/Xx
+ awE6c8euK44Flvohb3TfvJD4PQcNhFJMcrPEomV+r+sc6J7vGFhMvtpMt10=
+X-Google-Smtp-Source: AGHT+IGX9l2Ei3H3nwhlummAg9aYuRGdBKC3ztY+UjetgIiKNmf953A75YsCG2S7j8effw7LLqqdlQ==
+X-Received: by 2002:a5d:6acb:0:b0:385:d7f9:f16c with SMTP id
+ ffacd0b85a97d-38db4912832mr4152331f8f.46.1738831035200; 
+ Thu, 06 Feb 2025 00:37:15 -0800 (PST)
+Received: from [192.168.69.198] (88-187-86-199.subs.proxad.net.
+ [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-38dbde2fc01sm1101935f8f.93.2025.02.06.00.37.14
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Thu, 06 Feb 2025 00:37:14 -0800 (PST)
+Message-ID: <3de1e53e-e36d-404c-bab4-a648bb7fdbe1@linaro.org>
+Date: Thu, 6 Feb 2025 09:37:13 +0100
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 07/10] rust: qdev: make ObjectImpl a supertrait of
+ DeviceImpl
+To: Paolo Bonzini <pbonzini@redhat.com>, qemu-devel@nongnu.org
+Cc: qemu-rust@nongnu.org
+References: <20250117194003.1173231-1-pbonzini@redhat.com>
+ <20250117194003.1173231-8-pbonzini@redhat.com>
+Content-Language: en-US
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <20250117194003.1173231-8-pbonzini@redhat.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <20250131151829.6461eeb0.alex.williamson@redhat.com>
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.40
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=kraxel@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::429;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x429.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -92,44 +102,16 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-  Hi,
-
-> > Is there some simple way to figure what the iommu width is (inside the
-> > guest)?
+On 17/1/25 20:40, Paolo Bonzini wrote:
+> In practice it has to be implemented always in order to access an
+> implementation of ClassInitImpl<ObjectClass>.  Make the relationship
+> explicit in the code.
 > 
-> If the guest firmware is exposing a DMAR table (VT-d), there's a host
-> address width field in that table.  Otherwise there are capability
-> registers on the DRHD units that could be queried.  AMD-Vi seems to
-> have similar information in the IVinfo table linked from the IVRS
-> table.  Maybe an iterative solution is ok, starting with the most
-> common IOMMU types and assuming others are 64-bits wide until proven
-> otherwise.
+> Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
+> ---
+>   rust/qemu-api/src/qdev.rs | 2 +-
+>   1 file changed, 1 insertion(+), 1 deletion(-)
 
-Hmm.  The guest firmware simply exposes the tables it gets from qemu
-(without parsing it).  Also the acpi tables are loaded after the
-firmware created the address space layout, because qemu adjusts them
-according to the programming done by the firmware (set pci bus ranges
-according to bridge windows etc).
-
-So checking ACPI tables for that information doesn't look very
-attractive.  The firmware would have to load the tables twice (once
-early to parse DMAR, once late for the final tables).
-
-Going for the capability registers might be possible.  Can the hardware
-be probed for safely?  Has AMD capability registers too?
-
-Third option would be using another channel to communicate the
-information from qemu to firmware, where using 'guest-phys-bits' would
-be one candidate.
-
-> Right, as CÈdric notes that's sort of what happens here, but my concern
-> was that the we're kind of incorrectly linking the cpu address width to
-> the platform address width, which isn't specifically the requirement.
-
-There is a separate 'guest-phys-bits' property for that reason.  The
-phys-bits of the CPU are not changed.
-
-take care,
-  Gerd
+Reviewed-by: Philippe Mathieu-Daud√© <philmd@linaro.org>
 
 
