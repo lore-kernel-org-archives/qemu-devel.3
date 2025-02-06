@@ -4,89 +4,99 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 53234C02194
-	for <qemu-devel@archiver.kernel.org>; Thu,  6 Feb 2025 17:47:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0D3E8C02194
+	for <qemu-devel@archiver.kernel.org>; Thu,  6 Feb 2025 17:50:03 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tg5yO-0000jl-NB; Thu, 06 Feb 2025 12:47:32 -0500
+	id 1tg60X-0001rp-9B; Thu, 06 Feb 2025 12:49:45 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1tg5yN-0000hO-Cm
- for qemu-devel@nongnu.org; Thu, 06 Feb 2025 12:47:31 -0500
-Received: from mail-pl1-x62f.google.com ([2607:f8b0:4864:20::62f])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tg60V-0001r6-Bl
+ for qemu-devel@nongnu.org; Thu, 06 Feb 2025 12:49:43 -0500
+Received: from mail-wm1-x32f.google.com ([2a00:1450:4864:20::32f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1tg5yL-0006hI-Nj
- for qemu-devel@nongnu.org; Thu, 06 Feb 2025 12:47:31 -0500
-Received: by mail-pl1-x62f.google.com with SMTP id
- d9443c01a7336-21f0444b478so18259495ad.0
- for <qemu-devel@nongnu.org>; Thu, 06 Feb 2025 09:47:29 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tg60T-0006vg-Cr
+ for qemu-devel@nongnu.org; Thu, 06 Feb 2025 12:49:43 -0500
+Received: by mail-wm1-x32f.google.com with SMTP id
+ 5b1f17b1804b1-436202dd730so8589665e9.2
+ for <qemu-devel@nongnu.org>; Thu, 06 Feb 2025 09:49:40 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1738864048; x=1739468848; darn=nongnu.org;
+ d=linaro.org; s=google; t=1738864180; x=1739468980; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
- :references:to:subject:user-agent:mime-version:date:message-id:from
- :to:cc:subject:date:message-id:reply-to;
- bh=tSmxV1ScoJXs7z0KqNQ+7RFQYS/mpWtXU/9WFsEVWiU=;
- b=KwfMT2JULiXl86VnS81kCO0CNG32GFNN75VY78QuW/vBcv1YYTd1ibvsY26xJckUVK
- T+/X5e4Zj4HGeP57UmvgRfYMtZfH7xy7D/5WUhWdfxDZpc9D/Ds/sY8LO1z+CXBJQLCZ
- m+8Xg2MhzjQq+BQy4D2FpgZvepLVUibhjOGUD1FpVdwNA9PVsL4BJa7jFqte9kGzusxZ
- eeELUFTWEG9YPolxQK6RMh/SCDoHQCHCmd93OKu2TPEubelsyRk48orG7KFTk9x4gra+
- MRNw5uDY1V57K/QsZC6x31vFUTkUHKqmgAJol2lkyb6/+oaCgG0Q1ZUE8H9kOmTgDKnl
- EBTg==
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=1qbATPXaShk6uHSkyuikGuAhkTLp1PYYgNhbuymCQ74=;
+ b=pgZXedWCe7kQcFZG3LVXg2dbyA+MbUowLiwacbITtprWBicobVpgbt5lIkiHSlvtX0
+ X+uWhbxX7bq4gRQUpxlCv8HQf/w53Pi8SY9tvYtB854RBcsl9+vPefJZLF8y+FTbe2ct
+ FuXBrxtIJfYugcAAktp0hVmhJWIlwYHD8Ar89XNCAs+VtqKx87rduvPnu0WgmHb/+CKj
+ U6hi3AvReFQB9OXKLA79SZDaVeW5xv3L7a6bucA5HSif3ukF2VLntuz1lPYCy4RG+1ai
+ M7m4PO+gWl6yvvGkJQoDr5DmBV1JIgLLlsMeb7vCySwkByJZ3bA+Yxf+6seViovoGc+X
+ OEXQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1738864048; x=1739468848;
+ d=1e100.net; s=20230601; t=1738864180; x=1739468980;
  h=content-transfer-encoding:in-reply-to:from:content-language
- :references:to:subject:user-agent:mime-version:date:message-id
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=tSmxV1ScoJXs7z0KqNQ+7RFQYS/mpWtXU/9WFsEVWiU=;
- b=kGkits+QWL1UigH9sg7wrDh4oiWXcrjbVd0RjKRy9QWX/aclbV3kmT/URrBIFoaBPL
- d3/LOjZAKOCcklFhrCWwkw14cYVKOWBU+G25nRT7IHX9Ay4nkuhK0Z93ttd+W1pPyOeM
- mn44pm3xloXlzSPHvNnMck4tL3ic4jt4y+y5SFA/HjURlhjKD/XNCvElOE9TYAvokEPc
- OT9ruTw0BwghQWnF2iLE4F8QAV8YY3PWVf+8w8HszT81R4FIlCjSAlpAfk5jKeG7Mnal
- fv1XiIC/YD7l99jRdKBVw5xa3pD+fA8b5vumpZzthjArFPBaQYzDZhz+F89iFUOkRuGT
- ZgYQ==
-X-Gm-Message-State: AOJu0YwPFbAgsWgRzEfRfhGFyE1KlFtsARPTVXDVjSwpKhHcxAiMTRZU
- SpBahuCOI9QwgWHF2/tL8dLgukT9kCmN9+lo0VVSWfxca37KB0YKWARi114JwAA2yLd79Vk75iE
- c
-X-Gm-Gg: ASbGnctP2mKEhzXOG9jz8p9tYzx4euq/s+sZIYx7COj7df/kolaZSchZzis3bVyKKOX
- jahrjx8Nqv0UFUMGZaoRp9mlfJCg9HvLKlMI5G3NskDR9QQwl8BQ87y0oRmDJ/TlvZ6/BiZcxhP
- G5vBzAlBjVQ47hJLWgdfGDLTcG1xWHngPX8mv4Vmd1i6qV5M5MMbO+0XRiC8qndylYumtlsSYxG
- kcXSzhxVwbSEmwCtOKv8dvIojzGpsTF2Pw5V1qjsSiPocollWN7SB015Y5zCx4YkR6DAG7HJeQz
- KmhlEqMew3993lFtgC6Vc5uhNHiVj6Q+IVNWqep/N1+plowzJkU876E=
-X-Google-Smtp-Source: AGHT+IHZbn++HBmWgbDGPMMZLM3CVd3OCalMUs9XBA5VhosR3Pyj5SrkXagCWeqLB/2MxmyHLIKUaw==
-X-Received: by 2002:a17:902:cecf:b0:216:410d:4c67 with SMTP id
- d9443c01a7336-21f17edf13dmr124716245ad.41.1738864048157; 
- Thu, 06 Feb 2025 09:47:28 -0800 (PST)
-Received: from [192.168.0.4] (71-212-39-66.tukw.qwest.net. [71.212.39.66])
- by smtp.gmail.com with ESMTPSA id
- 41be03b00d2f7-ad51aee5ca8sm1391664a12.43.2025.02.06.09.47.27
- for <qemu-devel@nongnu.org>
+ bh=1qbATPXaShk6uHSkyuikGuAhkTLp1PYYgNhbuymCQ74=;
+ b=pHdtr7J0WHhSlYrX8WMi4QqpCL915bsgA9XiAATo3sfHx+EZFq0qUB7Ey0L2P1E2Em
+ GwvDJDYa22ZACpOp4qghgBkN77yOc7t9tX38cS6jZPMiY0L8eIU6Tbml3ah2mVyOb5mZ
+ s4E7wecCxZG8XImLL319gGwy6E47fkd3NenZPm6xOlUWV+pcZEo08GidWJdmB0e+tAKL
+ FrrU1R10BSArLBq4bvkUtkBhxqM5h4HxDI4CD6aBHM9N1nNkzeaizcEdQF/CBt9N5mWi
+ N1saUomcX0ue0ESKWHWXkTNzYVXxDF2H7pNQIOlGl0/1zq9WsW8QCPVu+4m6UUfDGyAu
+ iUzg==
+X-Gm-Message-State: AOJu0Yyi3QlQgVYVMn39OgviMSamhGFm/hLXi+ELkYOggY96wT3Zcq58
+ FTTQXr14E/ROrOKAVNzBzNZ9CgGoMNthYXg4k+JJDzkYAOhdRqWuSQK6PKUQwaA=
+X-Gm-Gg: ASbGncuyEVQYSSUSr3Yd/3BGahQJndS1NuSQ/Sj53A1YeC1oRNo6yHjDEWZmGFHVPEh
+ hXPFtwRVPGt6gHBAuvFNZNkBBU9CucW3wOcjKX6SVu206H+7lvr4vMDuFszd3awZ3Jg4gnUwgq9
+ WRI1uuEt8XbDYY86W/baTeA69ukYsVXte/lKsfLwLDvNCfHieojoCrHmJu+OtXtr7ztKJ/mvHkS
+ aLxGllxSIPCgcL4MJ6xg3G+7KtmXvrNeIP5teHUmxvQ+QFr5UM6uR5xtXtF78jcyJYW/2O9IuIm
+ CZQ4S7i++ksfdMdh0ltSzqFcCKLa3tluZm/jVBrHZmkbG8WTn8ybn/zRgYo=
+X-Google-Smtp-Source: AGHT+IHGwiA08zihX48ND/VhtsouPRB1vY98R0v9pH2fOXaRNWTVoOUqMhvwPWkq8cNmhk8ESV7Szg==
+X-Received: by 2002:a05:600c:218f:b0:436:fbe0:cebe with SMTP id
+ 5b1f17b1804b1-43924aca5c4mr2326755e9.30.1738864179625; 
+ Thu, 06 Feb 2025 09:49:39 -0800 (PST)
+Received: from [192.168.69.198] (88-187-86-199.subs.proxad.net.
+ [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-38dbde1deebsm2253959f8f.86.2025.02.06.09.49.38
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 06 Feb 2025 09:47:27 -0800 (PST)
-Message-ID: <7f6fc0ae-6cdd-4996-b411-762019efb003@linaro.org>
-Date: Thu, 6 Feb 2025 09:47:26 -0800
+ Thu, 06 Feb 2025 09:49:39 -0800 (PST)
+Message-ID: <63f1130e-a30d-4416-ae74-374f1fd94dbe@linaro.org>
+Date: Thu, 6 Feb 2025 18:49:38 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] target/tricore: Inline TARGET_LONG_BITS in
- decode_rr_logical_shift()
-To: qemu-devel@nongnu.org
-References: <20250206173258.36624-1-philmd@linaro.org>
+Subject: Re: [PATCH v5 11/16] hw/microblaze: Support various endianness for
+ s3adsp1800 machines
+To: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
+Cc: qemu-devel@nongnu.org, qemu-arm@nongnu.org, Anton Johansson
+ <anjo@rev.ng>, Jason Wang <jasowang@redhat.com>,
+ Paolo Bonzini <pbonzini@redhat.com>,
+ Alistair Francis <alistair@alistair23.me>, Thomas Huth <thuth@redhat.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Peter Maydell <peter.maydell@linaro.org>,
+ "Edgar E. Iglesias" <edgar.iglesias@gmail.com>,
+ Markus Armbruster <armbru@redhat.com>, =?UTF-8?Q?Alex_Benn=C3=A9e?=
+ <alex.bennee@linaro.org>
+References: <20250206131052.30207-1-philmd@linaro.org>
+ <20250206131052.30207-12-philmd@linaro.org> <Z6S3Mgt1G7fIjeBB@redhat.com>
+ <4624f149-76d0-4da5-8f13-8c015043c335@linaro.org>
+ <Z6THtfjL6UVhBiW7@redhat.com>
+ <3156dc3b-9553-4b5f-a934-f29ee0601887@linaro.org>
+ <Z6TtisO7JGAMGILH@redhat.com>
 Content-Language: en-US
-From: Richard Henderson <richard.henderson@linaro.org>
-In-Reply-To: <20250206173258.36624-1-philmd@linaro.org>
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <Z6TtisO7JGAMGILH@redhat.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::62f;
- envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x62f.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::32f;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x32f.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -102,39 +112,81 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 2/6/25 09:32, Philippe Mathieu-Daudé wrote:
-> We only support 32-bit TriCore architecture.
+On 6/2/25 18:12, Daniel P. Berrangé wrote:
+> On Thu, Feb 06, 2025 at 04:04:20PM +0100, Philippe Mathieu-Daudé wrote:
+>> On 6/2/25 15:31, Daniel P. Berrangé wrote:
+>>> On Thu, Feb 06, 2025 at 02:53:58PM +0100, Philippe Mathieu-Daudé wrote:
+>>>> Hi Daniel,
+>>>>
+>>>> On 6/2/25 14:20, Daniel P. Berrangé wrote:
+>>>>> On Thu, Feb 06, 2025 at 02:10:47PM +0100, Philippe Mathieu-Daudé wrote:
+>>>>>> Introduce an abstract machine parent class which defines
+>>>>>> the 'little_endian' property. Duplicate the current machine,
+>>>>>> which endian is tied to the binary endianness, to one big
+>>>>>> endian and a little endian machine; updating the machine
+>>>>>> description. Keep the current default machine for each binary.
+>>>>>>
+>>>>>> 'petalogix-s3adsp1800' machine is aliased as:
+>>>>>> - 'petalogix-s3adsp1800-be' on big-endian binary,
+>>>>>> - 'petalogix-s3adsp1800-le' on little-endian one.
+>>>>>
+>>>>> Does it makes sense to expose these as different machine types ?
+>>>>>
+>>>>> If all the HW is identical in both cases, it feels like the
+>>>>> endianness could just be a bool property of the machine type,
+>>>>> rather than a new machine type.
+>>>>
+>>>> Our test suites expect "qemu-system-foo -M bar" to work out of
+>>>> the box, we can not have non-default properties.
+>>>>
+>>>> (This is related to the raspberry pi discussion in
+>>>> https://lore.kernel.org/qemu-devel/20250204002240.97830-1-philmd@linaro.org/).
+>>>>
+>>>> My plan is to deprecate 'petalogix-s3adsp1800', so once we
+>>>> remove it we can merge both qemu-system-microblaze and
+>>>> qemu-system-microblazeel into a single binary.
+>>>>
+>>>> If you don't want to add more machines, what should be the
+>>>> endianness of the 'petalogix-s3adsp1800' machine in a binary
+>>>> with no particular endianness? Either we add for explicit
+>>>> endianness (fixing test suites) or we add one machine for
+>>>> each endianness; I fail to see other options not too
+>>>> confusing for our users.
+>>>
+>>> We would pick an arbitrary endianness of our choosing
+>>> I guess. How does this work in physical machines ? Is
+>>> the choice of endianess a firmware setting, or a choice
+>>> by the vendor when manufacturing in some way ?
+>>
+>> Like MIPS*, SH4* and Xtensa*, it is a jumper on the board
+>> (wired to a CPU pin which is sampled once at cold reset).
 > 
-> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-> ---
->   target/tricore/translate.c | 4 ++--
->   1 file changed, 2 insertions(+), 2 deletions(-)
+> That makes me thing even more it is just a machine type property.
+
+I'm happy with a machine property, this was even my first approach
+using OnOffAuto until I ran the test-suite and have qom-introspection
+failing.
+
+What should be the default?
+
+Per the SH4 datasheet:
+
+   Bit 31—Endian Flag (ENDIAN): Samples the value of the endian
+   specification external pin (MD5) in a power-on reset by the
+   RESET pin. The endian mode of all spaces is determined by this
+   bit. ENDIAN is a read-only bit.
+
+There is no default per the spec, and I believe using one is
+a mistake.
+
+> None the less, since you've already taken this pattern of
+> dual machine types for BE & LE on  MIPS/SH4/XTensa, I think
+> we should stick with your precedent. Consistent modelling
+> of endian handling across all machine types is most important
+> IMHO
 > 
-> diff --git a/target/tricore/translate.c b/target/tricore/translate.c
-> index 6819b776686..c5b783b6a70 100644
-> --- a/target/tricore/translate.c
-> +++ b/target/tricore/translate.c
-> @@ -5936,7 +5936,7 @@ static void decode_rr_logical_shift(DisasContext *ctx)
->           break;
->       case OPC2_32_RR_CLO:
->           tcg_gen_not_tl(cpu_gpr_d[r3], cpu_gpr_d[r1]);
-> -        tcg_gen_clzi_tl(cpu_gpr_d[r3], cpu_gpr_d[r3], TARGET_LONG_BITS);
-> +        tcg_gen_clzi_tl(cpu_gpr_d[r3], cpu_gpr_d[r3], 32);
->           break;
->       case OPC2_32_RR_CLO_H:
->           gen_helper_clo_h(cpu_gpr_d[r3], cpu_gpr_d[r1]);
-> @@ -5948,7 +5948,7 @@ static void decode_rr_logical_shift(DisasContext *ctx)
->           gen_helper_cls_h(cpu_gpr_d[r3], cpu_gpr_d[r1]);
->           break;
->       case OPC2_32_RR_CLZ:
-> -        tcg_gen_clzi_tl(cpu_gpr_d[r3], cpu_gpr_d[r1], TARGET_LONG_BITS);
-> +        tcg_gen_clzi_tl(cpu_gpr_d[r3], cpu_gpr_d[r1], 32);
->           break;
->       case OPC2_32_RR_CLZ_H:
->           gen_helper_clz_h(cpu_gpr_d[r3], cpu_gpr_d[r1]);
+> 
+> With regards,
+> Daniel
 
-Leave it alone unless you swap /_tl/_i32/ ?
-
-
-r~
 
