@@ -4,67 +4,67 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 27F0EC02194
-	for <qemu-devel@archiver.kernel.org>; Thu,  6 Feb 2025 22:13:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5979AC02196
+	for <qemu-devel@archiver.kernel.org>; Thu,  6 Feb 2025 22:14:05 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tgA75-00060s-Ro; Thu, 06 Feb 2025 17:12:48 -0500
+	id 1tgA6w-0005sY-2g; Thu, 06 Feb 2025 17:12:38 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from
- <30zOlZwgKChQGE1u8DC108805y.w86Ay6E-xyFy578707E.8B0@flex--wuhaotsh.bounces.google.com>)
- id 1tgA6x-0005uX-MP
- for qemu-devel@nongnu.org; Thu, 06 Feb 2025 17:12:39 -0500
-Received: from mail-pl1-x64a.google.com ([2607:f8b0:4864:20::64a])
+ <3xzOlZwgKCgg42piw10powwotm.kwuymu2-lm3mtvwvov2.wzo@flex--wuhaotsh.bounces.google.com>)
+ id 1tgA6n-0005jg-Sh
+ for qemu-devel@nongnu.org; Thu, 06 Feb 2025 17:12:29 -0500
+Received: from mail-pl1-x649.google.com ([2607:f8b0:4864:20::649])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from
- <30zOlZwgKChQGE1u8DC108805y.w86Ay6E-xyFy578707E.8B0@flex--wuhaotsh.bounces.google.com>)
- id 1tgA6v-0001Ww-HT
- for qemu-devel@nongnu.org; Thu, 06 Feb 2025 17:12:39 -0500
-Received: by mail-pl1-x64a.google.com with SMTP id
- d9443c01a7336-216311faa51so27151185ad.0
- for <qemu-devel@nongnu.org>; Thu, 06 Feb 2025 14:12:36 -0800 (PST)
+ <3xzOlZwgKCgg42piw10powwotm.kwuymu2-lm3mtvwvov2.wzo@flex--wuhaotsh.bounces.google.com>)
+ id 1tgA6l-0001Ss-SV
+ for qemu-devel@nongnu.org; Thu, 06 Feb 2025 17:12:29 -0500
+Received: by mail-pl1-x649.google.com with SMTP id
+ d9443c01a7336-21f3aad4e0bso15778255ad.3
+ for <qemu-devel@nongnu.org>; Thu, 06 Feb 2025 14:12:24 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=google.com; s=20230601; t=1738879955; x=1739484755; darn=nongnu.org;
+ d=google.com; s=20230601; t=1738879944; x=1739484744; darn=nongnu.org;
  h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
  :date:from:to:cc:subject:date:message-id:reply-to;
- bh=T/InBvBeBSuPehQy0FZ7ql+eBOm3DOFnaxnrJsbjG5E=;
- b=kHVKRrELMt5VC1YHCxgLeD9JIoGQk2ezJgLPNq7zecaW+seopNRUi0tDVUUacdAgqt
- 7c4CK8PTGOfwmJpOoGyLKCCnJFy0FuZOSg45l41psVsasOMLdL/0nTwotC2/KKprN8Mp
- /24TFvIFRdfrXQPGMo9Fsn9AcpNnbozZN+M8R0CNTUBsYMX3g6X2HxqVKkCb1eAj0Wa6
- NTmDDImVYvoiM9C3ReodxF7QYUJGPfKKRZA/3EWaEgIAvG2YPUpc5IplcecYccHnUtUX
- gaHe0LFW4L1esOjpoiIMy5QzBcfBo5+bR/5p6NsIBtBxz20S+K7MPptlRkZ323231tJ4
- HD4w==
+ bh=dxX6imhWZ2mg4ZjjitY6mh/e3sKQjimnzWB10ozPo74=;
+ b=Q0T+U5zMkpTJVEenrITLIc3qFUaXFkrgUhkYKBRnZvkJDTN2mt0w0Oj4KJQvXQ2tse
+ TZaSoeqJ+GNKPVqAw11sq7pQEaVb6B8o/CVH+iTzR3Rbg32Ykh+x6ZMSPqYr/oAdYRv5
+ gIJqot/W8lvnUVsYFhQFmaDDSQRU7M1xVQhwhfMy6Ul1PnPUzAT3+bBRHyR9pdu4TehG
+ Fp3aODPtRwBT4zm03AkxQQrgaI1DMySnCvwV9rW0BMwdSDNuj+CHrv4HK/cqwlt8vRRC
+ bPrsxJoJXrK+4hwo5VZXv8K02BwICtVs4lVMqRtJtqj07iGFHFBv1SOeCIYN9vqXJJHT
+ Z5Ig==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1738879955; x=1739484755;
+ d=1e100.net; s=20230601; t=1738879944; x=1739484744;
  h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
  :date:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=T/InBvBeBSuPehQy0FZ7ql+eBOm3DOFnaxnrJsbjG5E=;
- b=i4Dw8NgVGEEoD03sbTI64zcfQd56pBnc22EMNmV+nQOajZ6iujDDwpPy2npN9aAa3t
- BMbxkoR7J1RtKMJ0fNhisQQUHTUYlH55//fDQJf3Y1wcQpVgt2FboBdiCCDwnxRKUdS1
- zf26vFx7B+wpTUjLdm3OeJLNzuL9RVgdgwS0lxnXwyCfNVD1VZlCbwLoIvwGN+Z05ASg
- 8aSrHtC6HjuLRPQgxiX2uNAbL7MVCBFYGljXx0c0lB4dhsKuOmTh4J1cMrP3qwST6RkT
- kTybdn4ahGIbhK3GPj2f/nBHncxPjnJrH7Y2FQOphVbpfvujBqWD1adEARrTDTNRcGyn
- i9tw==
+ bh=dxX6imhWZ2mg4ZjjitY6mh/e3sKQjimnzWB10ozPo74=;
+ b=KREKNpiSyfMLg5kfEBXB+5MUwUvwzIsdOH6DHf+52j5ZSveIH9BwQqrNVtf4FO6YJs
+ Ggi/5hV3CxJqFXC8dK3lUppUNcBUP64vTBc+KMUTop1RzIvJgt5jpB5AUiw9JEjuLJgD
+ gY9lUfLSj+c+SttdvnvBBDfUjq2TdgX8S5O7fsyBZHmI7+jHB7+sohaAmMY4qxI6y+BC
+ 9kmDNXGe9+qpSwfjNfTU08jnrWspNQ8wx8BXlRsHYKOxA2vBs65LY+/1T+CmsBSyHGzm
+ Yx7U62jvKdM7UPwa3FPWmgCKTl8VoXKlpbIX2FkDjXkiq+q8pnug0tL7SdorptoYVTFu
+ ctjg==
 X-Forwarded-Encrypted: i=1;
- AJvYcCWysFfNLG5eHt3KInBfIVxaKZQbQT49UrjTbFJshSLwteIJ0OgPVBrLXyC+0e7qctn+otw40CdV0Oqd@nongnu.org
-X-Gm-Message-State: AOJu0Yx933MzBw9+fVCwoPARnNxAxtXLQ01A0nGy9xfVfF1McrBvMDGp
- ZgaQDclhPhdlP0UqGZ6H2GM1KBiJxrtlSByCYPNYP1sJxTDus5e5eQDG4+Lh02unICnrYWKWKRO
- VPAO/uw2VTw==
-X-Google-Smtp-Source: AGHT+IHy7oqCfFA+j35yify/M4B8zxh5z41GpRswWi/ERaqi7mDDvWQWV1NujWXY4Dm3agLr0HbxYlPgyOQovw==
-X-Received: from plgp1.prod.google.com ([2002:a17:902:ebc1:b0:216:271b:1b41])
+ AJvYcCXBkg1ruRDSRbBBZBNWfTSMysxjM3GsiNraixWWOtUNGaWINFbueta/a8jR76en2zg/0NVNKrqpkg2Y@nongnu.org
+X-Gm-Message-State: AOJu0YxgqSO1eKZW0BDJiKDJd/NBp240gbtnDpUx5rMcved0PRSZXgaH
+ MbhKRzPJt6IVX2ySimUjNnjoxQsXfDf9L0Cvm3fFIYOokZvTzbcAfM7gc/Q4DreO9QTgkv5jxT1
+ DD6EeCIyzbg==
+X-Google-Smtp-Source: AGHT+IGVoOEmyJs4I9rn9/wdD8pWiEqvTZY/RZFGej0twbFkVaXylFzxv5VMbBjKDNLBWEgFP8WlSQXg6OEAOw==
+X-Received: from plbmq6.prod.google.com ([2002:a17:902:fd46:b0:212:48d4:bf16])
  (user=wuhaotsh job=prod-delivery.src-stubby-dispatcher) by
- 2002:a17:902:f64b:b0:216:14fb:d277 with SMTP id
- d9443c01a7336-21f2f20d241mr90871695ad.22.1738879955123; 
- Thu, 06 Feb 2025 14:12:35 -0800 (PST)
-Date: Thu,  6 Feb 2025 14:12:03 -0800
+ 2002:a17:902:e547:b0:212:996:3536 with SMTP id
+ d9443c01a7336-21f4e1cb73fmr15396815ad.10.1738879943875; 
+ Thu, 06 Feb 2025 14:12:23 -0800 (PST)
+Date: Thu,  6 Feb 2025 14:11:56 -0800
 In-Reply-To: <20250206221203.4187217-1-wuhaotsh@google.com>
 Mime-Version: 1.0
 References: <20250206221203.4187217-1-wuhaotsh@google.com>
 X-Mailer: git-send-email 2.48.1.502.g6dc24dfdaf-goog
-Message-ID: <20250206221203.4187217-18-wuhaotsh@google.com>
-Subject: [PATCH v4 17/17] docs/system/arm: Add Description for NPCM8XX SoC
+Message-ID: <20250206221203.4187217-11-wuhaotsh@google.com>
+Subject: [PATCH v4 10/17] hw/misc: Rename npcm7xx_clk to npcm_clk
 From: Hao Wu <wuhaotsh@google.com>
 To: peter.maydell@linaro.org
 Cc: qemu-arm@nongnu.org, qemu-devel@nongnu.org, wuhaotsh@google.com, 
@@ -73,9 +73,9 @@ Cc: qemu-arm@nongnu.org, qemu-devel@nongnu.org, wuhaotsh@google.com,
  chli30@nuvoton.corp-partner.google.com, pbonzini@redhat.com, 
  jasowang@redhat.com, alistair@alistair23.me, philmd@linaro.org
 Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::64a;
- envelope-from=30zOlZwgKChQGE1u8DC108805y.w86Ay6E-xyFy578707E.8B0@flex--wuhaotsh.bounces.google.com;
- helo=mail-pl1-x64a.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::649;
+ envelope-from=3xzOlZwgKCgg42piw10powwotm.kwuymu2-lm3mtvwvov2.wzo@flex--wuhaotsh.bounces.google.com;
+ helo=mail-pl1-x649.google.com
 X-Spam_score_int: -95
 X-Spam_score: -9.6
 X-Spam_bar: ---------
@@ -98,75 +98,87 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-NPCM8XX SoC is the successor of the NPCM7XX. It features quad-core
-Cortex-A35 (Armv8, 64-bit) CPUs and some additional peripherals.
+NPCM7XX and NPCM8XX have a different set of CLK registers. This
+commit changes the name of the clk files to be used by both
+NPCM7XX and NPCM8XX CLK modules.
 
-This document describes the NPCM8XX SoC and an evaluation board
-(NPCM 845 EVB).
-
+Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
 Signed-off-by: Hao Wu <wuhaotsh@google.com>
 ---
- docs/system/arm/nuvoton.rst | 27 ++++++++++++++++++++-------
- 1 file changed, 20 insertions(+), 7 deletions(-)
+ hw/misc/meson.build                           | 2 +-
+ hw/misc/{npcm7xx_clk.c => npcm_clk.c}         | 2 +-
+ include/hw/arm/npcm7xx.h                      | 2 +-
+ include/hw/misc/{npcm7xx_clk.h => npcm_clk.h} | 6 +++---
+ 4 files changed, 6 insertions(+), 6 deletions(-)
+ rename hw/misc/{npcm7xx_clk.c => npcm_clk.c} (99%)
+ rename include/hw/misc/{npcm7xx_clk.h => npcm_clk.h} (98%)
 
-diff --git a/docs/system/arm/nuvoton.rst b/docs/system/arm/nuvoton.rst
-index 05059378e5..e4827fb43a 100644
---- a/docs/system/arm/nuvoton.rst
-+++ b/docs/system/arm/nuvoton.rst
-@@ -1,12 +1,13 @@
--Nuvoton iBMC boards (``kudo-bmc``, ``mori-bmc``, ``npcm750-evb``, ``quanta-gbs-bmc``, ``quanta-gsj``)
--=====================================================================================================
-+Nuvoton iBMC boards (``kudo-bmc``, ``mori-bmc``, ``npcm750-evb``, ``quanta-gbs-bmc``, ``quanta-gsj``, ``npcm845-evb``)
-+======================================================================================================================
+diff --git a/hw/misc/meson.build b/hw/misc/meson.build
+index 554eb8df5b..edd36a334d 100644
+--- a/hw/misc/meson.build
++++ b/hw/misc/meson.build
+@@ -69,7 +69,7 @@ system_ss.add(when: 'CONFIG_IMX', if_true: files(
+   'imx_rngc.c',
+ ))
+ system_ss.add(when: 'CONFIG_NPCM7XX', if_true: files(
+-  'npcm7xx_clk.c',
++  'npcm_clk.c',
+   'npcm_gcr.c',
+   'npcm7xx_mft.c',
+   'npcm7xx_pwm.c',
+diff --git a/hw/misc/npcm7xx_clk.c b/hw/misc/npcm_clk.c
+similarity index 99%
+rename from hw/misc/npcm7xx_clk.c
+rename to hw/misc/npcm_clk.c
+index 46f907b61c..2bcb731099 100644
+--- a/hw/misc/npcm7xx_clk.c
++++ b/hw/misc/npcm_clk.c
+@@ -16,7 +16,7 @@
  
--The `Nuvoton iBMC`_ chips (NPCM7xx) are a family of ARM-based SoCs that are
-+The `Nuvoton iBMC`_ chips are a family of Arm-based SoCs that are
- designed to be used as Baseboard Management Controllers (BMCs) in various
--servers. They all feature one or two ARM Cortex-A9 CPU cores, as well as an
--assortment of peripherals targeted for either Enterprise or Data Center /
--Hyperscale applications. The former is a superset of the latter, so NPCM750 has
--all the peripherals of NPCM730 and more.
-+servers. Currently there are two families: NPCM7XX series and
-+NPCM8XX series. NPCM7XX series feature one or two Arm Cortex-A9 CPU cores,
-+while NPCM8XX feature 4 Arm Cortex-A35 CPU cores. Both series contain a
-+different assortment of peripherals targeted for either Enterprise or Data
-+Center / Hyperscale applications.
+ #include "qemu/osdep.h"
  
- .. _Nuvoton iBMC: https://www.nuvoton.com/products/cloud-computing/ibmc/
+-#include "hw/misc/npcm7xx_clk.h"
++#include "hw/misc/npcm_clk.h"
+ #include "hw/timer/npcm7xx_timer.h"
+ #include "hw/qdev-clock.h"
+ #include "migration/vmstate.h"
+diff --git a/include/hw/arm/npcm7xx.h b/include/hw/arm/npcm7xx.h
+index 2e708471ec..e80fd91f20 100644
+--- a/include/hw/arm/npcm7xx.h
++++ b/include/hw/arm/npcm7xx.h
+@@ -23,7 +23,7 @@
+ #include "hw/gpio/npcm7xx_gpio.h"
+ #include "hw/i2c/npcm7xx_smbus.h"
+ #include "hw/mem/npcm7xx_mc.h"
+-#include "hw/misc/npcm7xx_clk.h"
++#include "hw/misc/npcm_clk.h"
+ #include "hw/misc/npcm_gcr.h"
+ #include "hw/misc/npcm7xx_mft.h"
+ #include "hw/misc/npcm7xx_pwm.h"
+diff --git a/include/hw/misc/npcm7xx_clk.h b/include/hw/misc/npcm_clk.h
+similarity index 98%
+rename from include/hw/misc/npcm7xx_clk.h
+rename to include/hw/misc/npcm_clk.h
+index 5ed4a4672b..0aef81e10c 100644
+--- a/include/hw/misc/npcm7xx_clk.h
++++ b/include/hw/misc/npcm_clk.h
+@@ -13,8 +13,8 @@
+  * FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License
+  * for more details.
+  */
+-#ifndef NPCM7XX_CLK_H
+-#define NPCM7XX_CLK_H
++#ifndef NPCM_CLK_H
++#define NPCM_CLK_H
  
-@@ -27,6 +28,11 @@ There are also two more SoCs, NPCM710 and NPCM705, which are single-core
- variants of NPCM750 and NPCM730, respectively. These are currently not
- supported by QEMU.
+ #include "exec/memory.h"
+ #include "hw/clock.h"
+@@ -177,4 +177,4 @@ struct NPCM7xxCLKState {
+ #define TYPE_NPCM7XX_CLK "npcm7xx-clk"
+ OBJECT_DECLARE_SIMPLE_TYPE(NPCM7xxCLKState, NPCM7XX_CLK)
  
-+The NPCM8xx SoC is the successor of the NPCM7xx SoC. It has 4 Cortex-A35 cores.
-+The following machines are based on this chip :
-+
-+- ``npcm845-evb``       Nuvoton NPCM845 Evaluation board
-+
- Supported devices
- -----------------
- 
-@@ -62,6 +68,8 @@ Missing devices
-    * System Wake-up Control (SWC)
-    * Shared memory (SHM)
-    * eSPI slave interface
-+   * Block-transfer interface (8XX only)
-+   * Virtual UART (8XX only)
- 
-  * Ethernet controller (GMAC)
-  * USB device (USBD)
-@@ -76,6 +84,11 @@ Missing devices
-  * Video capture
-  * Encoding compression engine
-  * Security features
-+ * I3C buses (8XX only)
-+ * Temperature sensor interface (8XX only)
-+ * Virtual UART (8XX only)
-+ * Flash monitor (8XX only)
-+ * JTAG master (8XX only)
- 
- Boot options
- ------------
+-#endif /* NPCM7XX_CLK_H */
++#endif /* NPCM_CLK_H */
 -- 
 2.48.1.502.g6dc24dfdaf-goog
 
