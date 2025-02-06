@@ -4,86 +4,86 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id EAB81C02194
-	for <qemu-devel@archiver.kernel.org>; Thu,  6 Feb 2025 19:58:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BBDB4C02199
+	for <qemu-devel@archiver.kernel.org>; Thu,  6 Feb 2025 19:58:43 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tg805-00078Q-9k; Thu, 06 Feb 2025 14:57:25 -0500
+	id 1tg80U-0007NT-L3; Thu, 06 Feb 2025 14:57:50 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1tg804-000772-1x
- for qemu-devel@nongnu.org; Thu, 06 Feb 2025 14:57:24 -0500
-Received: from mail-pl1-x633.google.com ([2607:f8b0:4864:20::633])
+ id 1tg807-0007A4-EV
+ for qemu-devel@nongnu.org; Thu, 06 Feb 2025 14:57:27 -0500
+Received: from mail-pl1-x636.google.com ([2607:f8b0:4864:20::636])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1tg801-0000Rt-UG
- for qemu-devel@nongnu.org; Thu, 06 Feb 2025 14:57:23 -0500
-Received: by mail-pl1-x633.google.com with SMTP id
- d9443c01a7336-21f48ebaadfso12071805ad.2
- for <qemu-devel@nongnu.org>; Thu, 06 Feb 2025 11:57:21 -0800 (PST)
+ id 1tg804-0000TM-Sn
+ for qemu-devel@nongnu.org; Thu, 06 Feb 2025 14:57:27 -0500
+Received: by mail-pl1-x636.google.com with SMTP id
+ d9443c01a7336-21f49bd087cso9131315ad.0
+ for <qemu-devel@nongnu.org>; Thu, 06 Feb 2025 11:57:24 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1738871840; x=1739476640; darn=nongnu.org;
+ d=linaro.org; s=google; t=1738871843; x=1739476643; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=RfMF2F0u1KO0UNQVblc+TNx0Vp4TbWKK/lW8gV/9m78=;
- b=Qmc97TnJGNpHnzcB927XzFlQKxRtWa8AwawN0uKirxluzCLarH330YK2kAy1MSPvew
- jHjqsEv8M3K2SpVkXxApUmalyb2mFleORw4l98oj02AmWyp8+grp+14gz3UbZ6GfTe/e
- eWbl25TlwmqYrOBMsYIeXtu5KukQPIHh+zS3OJbdBai/DqyoxtyGg6nePp+phoW75tWa
- ge+dgVHy3RfHYR7+V2yFJR+qJ99trfjEj+THNReNBjMbj8f82XT6IBbqao65L5GuIEx2
- /kl66fkxDjQvmdKkaLBJz/J6CDNKA+TXfsjnUEi8nluHhE3HJYFr9vbJ7c3wfUV5PdEU
- wuBA==
+ bh=2gdYxBdEqJ0uWnKxFXykRwPyqfo99tq7h+X2aYPXavI=;
+ b=RpqfLlq5Zgv0hEiGc1/z9nZazSJDw9X8wN515rlCDp+4UD1fXiZCZ5ZFks1+3Xhqqq
+ AGfvW7zoJ59vKHoxflM5Jx9Plju7eKrkMyg5wMXMU3Y2L/zJfuIDrOanJpNhXFF7EeuB
+ Re5l/B+XRZkWrvdo5z7QRHTNpjK8DA+X+OmoVcPNU9k96/gTCmJrUT7cUHUM46nvr4oT
+ fBbRcWCShPCQmieMNvTyHjlM+tI5WocJoGaUR892izDqkm4meSbM0sGeqaZiD1KYtzJ/
+ cTYoFV0s4B8yOZ/XVBy7o0Yp0LGZi5O59P9ka5a55JgzP0flRjTZ/qnVR1UkNr+R8YBa
+ VuLg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1738871840; x=1739476640;
+ d=1e100.net; s=20230601; t=1738871843; x=1739476643;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=RfMF2F0u1KO0UNQVblc+TNx0Vp4TbWKK/lW8gV/9m78=;
- b=LO1pqaoS+3tfPpHqqjFcVSniVOvdHQvjzNexPHKCedsC8JrrsQrV0XqXYvkWwWYTrG
- gBg6B/IUgFhUt18GUU24ThHgFSgirgF+5fRy2wx1/LNmmI+bqaTYKtLFp+OfgPdyObwr
- A8IxlewXc/G+xSNDBUTo9jPU0P0uRzs7aNih6VpRttwUIHvgen99AmfVbG0j/ifI7W9W
- iXcmwKwPcD4RICs/Uwx5hC4anHE5Q6fN8kfJlVFsQkSAdUWcc048M0DJNk5r9BRhfZip
- OncEjyXnSmrN66vYdlfkJJgxMP/YkWnLimUX7YiS8wXwXaH+cUrFgucEiFCO/yTMOEtc
- DTAw==
-X-Gm-Message-State: AOJu0YwIae/RDFceKdFLusZca+8wb8ZZ+u6nxyS2mZnw+gHHn7i9XBAP
- lnZNDL8kwX0WwLcEy3xy3LpAX0TwoPE0dEa1dX6OU6YEOBx5tB4o+gThJgSz4ayJQ6Od3u03qHU
- s
-X-Gm-Gg: ASbGnctAbZ1GqAuEZfk5KtNsOWroJLFwdGr8W3s+Fe+LnqOraVYUQviEb3c/3rJqJIE
- +7zSYiFTYaL01RwT7p0CjpeIEwrPl07/DvnzGZ3+2HmE9d8B6TmXNkOaHvnh2PFYh05E69ScqmB
- SKo0HCSPLX8qAjSrDq9WXUn1SMwicSLEm8Qn4VutJDr5bOEdPr60/cFRuZHvvvwlCaruRk98/jr
- Dkfp5d7H5h9SKmrO/a8uvvCNBzkea4S2o+2QNiAZ28oTl4+shmZUEotnCw4CTz9lLy7/+FNF0Bf
- 9Nr8x5QEbck5XSTbpcOD+IanYqWvDj60ynVkwnnHSz1kARI=
-X-Google-Smtp-Source: AGHT+IEiXlXeYDXvHZnNpbF62Q661oxYhEiax5pJtHec4AR8pzJzTNrn4y1mCNsW1OxgiuKnwYwKSA==
-X-Received: by 2002:a05:6a00:148d:b0:724:e75b:22d1 with SMTP id
- d2e1a72fcca58-7305d4f0349mr940057b3a.16.1738871840376; 
- Thu, 06 Feb 2025 11:57:20 -0800 (PST)
+ bh=2gdYxBdEqJ0uWnKxFXykRwPyqfo99tq7h+X2aYPXavI=;
+ b=QRL7ROhVizQmHN8r2o1tODZ2iUVFXwOuuiWcG+hkgeMJ+Tc8DbhSiBS9KFNz7kx8IW
+ qA5bn1N5HSN6ZgHE75jljXOxPMr2TtHIR+v4lNheOGROxtkQaeajFg3HkJGq3ttQTL4H
+ rtKvJWqX9Sp5/CHEj+CMqByVSDZuApY+JQyXqz+qe39Pj7H+O609GUJwpv8LyPm/fWy6
+ wdcjNyZmFl4H3/OiPW5onRrnqwfjal7AuMG/U74am3k1EOpd25Ydc8Aq6PBZGGERBRtG
+ DxquMw1dAgXNuFOOkrKUx9o1WOeD2BBRyEtv9MB8xBx1jou8ihJNTL12E8Z5QQUkbnVB
+ F40g==
+X-Gm-Message-State: AOJu0Yz9et4kRe1FWFS1jj8lNmM4ocevcn2EjG4JvI4/bUIhFjksGzSu
+ rCGdI2LmeNJTx4UWcDh8qCaqZex2hn2ghjScIogjOKfI0z7CB4ZrL1oCUUdbw1bAJdOsiCEx0Qx
+ b
+X-Gm-Gg: ASbGncsqv5mDDR8u3laCyX9FqUGUuRmfaVB9AAVpGDidKWskQYYFpkqFd/6x68WOwFE
+ CriAgNjMAXs5CiJNEeC+AdfHouw/dLCXnmGEqcNG4gSBUxb91UYegWnHSHgHi1+Tt/gjjdC7qEy
+ ecsy04ROk8ffnA4XJM4Dqij8rWdJyOiuK6TGgNR3El1SrX9CoEHD0+SNhy75yYeCz4rvvxQaY8N
+ G+B+uxzd7xXtsDn5VhVWe4g76Bo3CArja79jYP4KFBMxKxMolYUJtiiUcu1aVXmHg10y0RIVzYy
+ JnI12g6DtQtYO4pnO/o/QARIA3of0OuTJi/0vkdtqx9pdzI=
+X-Google-Smtp-Source: AGHT+IGGILMxv070Lvy1mY8cP8CGQ25IqbLwZWKBHY9M6Ob5l6GkJtAV14dtNzoEpiVAEEfe6TFcQQ==
+X-Received: by 2002:a05:6a00:420b:b0:71e:e4f:3e58 with SMTP id
+ d2e1a72fcca58-7305d4e7461mr850654b3a.17.1738871843516; 
+ Thu, 06 Feb 2025 11:57:23 -0800 (PST)
 Received: from stoup.. (71-212-39-66.tukw.qwest.net. [71.212.39.66])
  by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-73048c16370sm1666993b3a.152.2025.02.06.11.57.19
+ d2e1a72fcca58-73048c16370sm1666993b3a.152.2025.02.06.11.57.22
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 06 Feb 2025 11:57:20 -0800 (PST)
+ Thu, 06 Feb 2025 11:57:23 -0800 (PST)
 From: Richard Henderson <richard.henderson@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: qemu-arm@nongnu.org
-Subject: [PATCH 05/61] tcg: Split out tcg_gen_gvec_2_var
-Date: Thu,  6 Feb 2025 11:56:19 -0800
-Message-ID: <20250206195715.2150758-6-richard.henderson@linaro.org>
+Subject: [PATCH 09/61] target/arm: Introduce FPST_ZA, FPST_ZA_F16
+Date: Thu,  6 Feb 2025 11:56:23 -0800
+Message-ID: <20250206195715.2150758-10-richard.henderson@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20250206195715.2150758-1-richard.henderson@linaro.org>
 References: <20250206195715.2150758-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::633;
- envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x633.google.com
-X-Spam_score_int: -10
-X-Spam_score: -1.1
-X-Spam_bar: -
-X-Spam_report: (-1.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, OBFU_UNSUB_UL=1,
+Received-SPF: pass client-ip=2607:f8b0:4864:20::636;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x636.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -99,232 +99,130 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+Rather than repeatedly copying FPST_FPCR to locals
+and setting default nan mode, create dedicated float_status.
+
 Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 ---
- include/tcg/tcg-op-gvec-common.h |  3 ++
- tcg/tcg-op-gvec.c                | 85 ++++++++++++++++++++------------
- 2 files changed, 56 insertions(+), 32 deletions(-)
+ target/arm/cpu.h        | 12 +++++++++++-
+ target/arm/cpu.c        |  4 ++++
+ target/arm/vfp_helper.c | 10 ++++++++++
+ 3 files changed, 25 insertions(+), 1 deletion(-)
 
-diff --git a/include/tcg/tcg-op-gvec-common.h b/include/tcg/tcg-op-gvec-common.h
-index 65553f5f97..877871c101 100644
---- a/include/tcg/tcg-op-gvec-common.h
-+++ b/include/tcg/tcg-op-gvec-common.h
-@@ -227,6 +227,9 @@ typedef struct {
-     bool prefer_i64;
- } GVecGen4i;
+diff --git a/target/arm/cpu.h b/target/arm/cpu.h
+index e6513ef1e5..42c39ac6bd 100644
+--- a/target/arm/cpu.h
++++ b/target/arm/cpu.h
+@@ -219,6 +219,8 @@ typedef struct NVICState NVICState;
+  *       when FPCR.AH == 1 (bfloat16 conversions and multiplies,
+  *       and the reciprocal and square root estimate/step insns);
+  *       for half-precision
++ * ZA: the "streaming sve" fp status.
++ * ZA_F16: likewise for half-precision.
+  *
+  * Half-precision operations are governed by a separate
+  * flush-to-zero control bit in FPSCR:FZ16. We pass a separate
+@@ -239,6 +241,12 @@ typedef struct NVICState NVICState;
+  * they ignore FPCR.RMode. But they don't ignore FPCR.FZ16,
+  * which means we need an FPST_AH_F16 as well.
+  *
++ * The "ZA" float_status are for Streaming SVE operations which use
++ * default-NaN and do not generate fp exceptions, which means that they
++ * do not accumulate exception bits back into FPCR.
++ * See e.g. FPAdd vs FPAdd_ZA pseudocode functions, and the setting
++ * of fpcr.DN and fpexec parameters.
++ *
+  * To avoid having to transfer exception bits around, we simply
+  * say that the FPSCR cumulative exception flags are the logical
+  * OR of the flags in the four fp statuses. This relies on the
+@@ -252,10 +260,12 @@ typedef enum ARMFPStatusFlavour {
+     FPST_A64_F16,
+     FPST_AH,
+     FPST_AH_F16,
++    FPST_ZA,
++    FPST_ZA_F16,
+     FPST_STD,
+     FPST_STD_F16,
+ } ARMFPStatusFlavour;
+-#define FPST_COUNT  8
++#define FPST_COUNT  10
  
-+void tcg_gen_gvec_2_var(TCGv_ptr dbase, uint32_t dofs,
-+                        TCGv_ptr abase, uint32_t aofs,
-+                        uint32_t oprsz, uint32_t maxsz, const GVecGen2 *);
- void tcg_gen_gvec_2(uint32_t dofs, uint32_t aofs,
-                     uint32_t oprsz, uint32_t maxsz, const GVecGen2 *);
- void tcg_gen_gvec_2i(uint32_t dofs, uint32_t aofs, uint32_t oprsz,
-diff --git a/tcg/tcg-op-gvec.c b/tcg/tcg-op-gvec.c
-index 54304d08cc..08019421f2 100644
---- a/tcg/tcg-op-gvec.c
-+++ b/tcg/tcg-op-gvec.c
-@@ -129,9 +129,10 @@ uint32_t simd_desc(uint32_t oprsz, uint32_t maxsz, int32_t data)
- }
- 
- /* Generate a call to a gvec-style helper with two vector operands.  */
--void tcg_gen_gvec_2_ool(uint32_t dofs, uint32_t aofs,
--                        uint32_t oprsz, uint32_t maxsz, int32_t data,
--                        gen_helper_gvec_2 *fn)
-+static void expand_2_ool(TCGv_ptr dbase, uint32_t dofs,
-+                         TCGv_ptr abase, uint32_t aofs,
-+                         uint32_t oprsz, uint32_t maxsz,
-+                         int32_t data, gen_helper_gvec_2 *fn)
- {
-     TCGv_ptr a0, a1;
-     TCGv_i32 desc = tcg_constant_i32(simd_desc(oprsz, maxsz, data));
-@@ -139,8 +140,8 @@ void tcg_gen_gvec_2_ool(uint32_t dofs, uint32_t aofs,
-     a0 = tcg_temp_ebb_new_ptr();
-     a1 = tcg_temp_ebb_new_ptr();
- 
--    tcg_gen_addi_ptr(a0, tcg_env, dofs);
--    tcg_gen_addi_ptr(a1, tcg_env, aofs);
-+    tcg_gen_addi_ptr(a0, dbase, dofs);
-+    tcg_gen_addi_ptr(a1, abase, aofs);
- 
-     fn(a0, a1, desc);
- 
-@@ -148,6 +149,13 @@ void tcg_gen_gvec_2_ool(uint32_t dofs, uint32_t aofs,
-     tcg_temp_free_ptr(a1);
- }
- 
-+void tcg_gen_gvec_2_ool(uint32_t dofs, uint32_t aofs,
-+                        uint32_t oprsz, uint32_t maxsz, int32_t data,
-+                        gen_helper_gvec_2 *fn)
-+{
-+    expand_2_ool(tcg_env, dofs, tcg_env, aofs, oprsz, maxsz, data, fn);
-+}
-+
- /* Generate a call to a gvec-style helper with two vector operands
-    and one scalar operand.  */
- void tcg_gen_gvec_2i_ool(uint32_t dofs, uint32_t aofs, TCGv_i64 c,
-@@ -719,20 +727,21 @@ static void expand_clr(TCGv_ptr dbase, uint32_t dofs, uint32_t maxsz)
- }
- 
- /* Expand OPSZ bytes worth of two-operand operations using i32 elements.  */
--static void expand_2_i32(uint32_t dofs, uint32_t aofs, uint32_t oprsz,
--                         bool load_dest, void (*fni)(TCGv_i32, TCGv_i32))
-+static void expand_2_i32(TCGv_ptr dbase, uint32_t dofs, TCGv_ptr abase,
-+                         uint32_t aofs, uint32_t oprsz, bool load_dest,
-+                         void (*fni)(TCGv_i32, TCGv_i32))
- {
-     TCGv_i32 t0 = tcg_temp_new_i32();
-     TCGv_i32 t1 = tcg_temp_new_i32();
-     uint32_t i;
- 
-     for (i = 0; i < oprsz; i += 4) {
--        tcg_gen_ld_i32(t0, tcg_env, aofs + i);
-+        tcg_gen_ld_i32(t0, abase, aofs + i);
-         if (load_dest) {
--            tcg_gen_ld_i32(t1, tcg_env, dofs + i);
-+            tcg_gen_ld_i32(t1, dbase, dofs + i);
-         }
-         fni(t1, t0);
--        tcg_gen_st_i32(t1, tcg_env, dofs + i);
-+        tcg_gen_st_i32(t1, dbase, dofs + i);
+ typedef struct CPUArchState {
+     /* Regs for current mode.  */
+diff --git a/target/arm/cpu.c b/target/arm/cpu.c
+index 180e11c5d7..ba08c05ec6 100644
+--- a/target/arm/cpu.c
++++ b/target/arm/cpu.c
+@@ -550,11 +550,15 @@ static void arm_cpu_reset_hold(Object *obj, ResetType type)
+     set_flush_inputs_to_zero(1, &env->vfp.fp_status[FPST_STD]);
+     set_default_nan_mode(1, &env->vfp.fp_status[FPST_STD]);
+     set_default_nan_mode(1, &env->vfp.fp_status[FPST_STD_F16]);
++    set_default_nan_mode(1, &env->vfp.fp_status[FPST_ZA]);
++    set_default_nan_mode(1, &env->vfp.fp_status[FPST_ZA_F16]);
+     arm_set_default_fp_behaviours(&env->vfp.fp_status[FPST_A32]);
+     arm_set_default_fp_behaviours(&env->vfp.fp_status[FPST_A64]);
++    arm_set_default_fp_behaviours(&env->vfp.fp_status[FPST_ZA]);
+     arm_set_default_fp_behaviours(&env->vfp.fp_status[FPST_STD]);
+     arm_set_default_fp_behaviours(&env->vfp.fp_status[FPST_A32_F16]);
+     arm_set_default_fp_behaviours(&env->vfp.fp_status[FPST_A64_F16]);
++    arm_set_default_fp_behaviours(&env->vfp.fp_status[FPST_ZA_F16]);
+     arm_set_default_fp_behaviours(&env->vfp.fp_status[FPST_STD_F16]);
+     arm_set_ah_fp_behaviours(&env->vfp.fp_status[FPST_AH]);
+     set_flush_to_zero(1, &env->vfp.fp_status[FPST_AH]);
+diff --git a/target/arm/vfp_helper.c b/target/arm/vfp_helper.c
+index ff4b25bf28..f26c0d211e 100644
+--- a/target/arm/vfp_helper.c
++++ b/target/arm/vfp_helper.c
+@@ -202,6 +202,8 @@ static void vfp_set_fpcr_to_host(CPUARMState *env, uint32_t val, uint32_t mask)
+         set_float_rounding_mode(i, &env->vfp.fp_status[FPST_A64]);
+         set_float_rounding_mode(i, &env->vfp.fp_status[FPST_A32_F16]);
+         set_float_rounding_mode(i, &env->vfp.fp_status[FPST_A64_F16]);
++        set_float_rounding_mode(i, &env->vfp.fp_status[FPST_ZA]);
++        set_float_rounding_mode(i, &env->vfp.fp_status[FPST_ZA_F16]);
      }
-     tcg_temp_free_i32(t0);
-     tcg_temp_free_i32(t1);
-@@ -882,20 +891,21 @@ static void expand_4i_i32(uint32_t dofs, uint32_t aofs, uint32_t bofs,
- }
- 
- /* Expand OPSZ bytes worth of two-operand operations using i64 elements.  */
--static void expand_2_i64(uint32_t dofs, uint32_t aofs, uint32_t oprsz,
--                         bool load_dest, void (*fni)(TCGv_i64, TCGv_i64))
-+static void expand_2_i64(TCGv_ptr dbase, uint32_t dofs, TCGv_ptr abase,
-+                         uint32_t aofs, uint32_t oprsz, bool load_dest,
-+                         void (*fni)(TCGv_i64, TCGv_i64))
- {
-     TCGv_i64 t0 = tcg_temp_new_i64();
-     TCGv_i64 t1 = tcg_temp_new_i64();
-     uint32_t i;
- 
-     for (i = 0; i < oprsz; i += 8) {
--        tcg_gen_ld_i64(t0, tcg_env, aofs + i);
-+        tcg_gen_ld_i64(t0, abase, aofs + i);
-         if (load_dest) {
--            tcg_gen_ld_i64(t1, tcg_env, dofs + i);
-+            tcg_gen_ld_i64(t1, dbase, dofs + i);
-         }
-         fni(t1, t0);
--        tcg_gen_st_i64(t1, tcg_env, dofs + i);
-+        tcg_gen_st_i64(t1, dbase, dofs + i);
+     if (changed & FPCR_FZ16) {
+         bool ftz_enabled = val & FPCR_FZ16;
+@@ -209,15 +211,18 @@ static void vfp_set_fpcr_to_host(CPUARMState *env, uint32_t val, uint32_t mask)
+         set_flush_to_zero(ftz_enabled, &env->vfp.fp_status[FPST_A64_F16]);
+         set_flush_to_zero(ftz_enabled, &env->vfp.fp_status[FPST_STD_F16]);
+         set_flush_to_zero(ftz_enabled, &env->vfp.fp_status[FPST_AH_F16]);
++        set_flush_to_zero(ftz_enabled, &env->vfp.fp_status[FPST_ZA_F16]);
+         set_flush_inputs_to_zero(ftz_enabled, &env->vfp.fp_status[FPST_A32_F16]);
+         set_flush_inputs_to_zero(ftz_enabled, &env->vfp.fp_status[FPST_A64_F16]);
+         set_flush_inputs_to_zero(ftz_enabled, &env->vfp.fp_status[FPST_STD_F16]);
+         set_flush_inputs_to_zero(ftz_enabled, &env->vfp.fp_status[FPST_AH_F16]);
++        set_flush_inputs_to_zero(ftz_enabled, &env->vfp.fp_status[FPST_ZA_F16]);
      }
-     tcg_temp_free_i64(t0);
-     tcg_temp_free_i64(t1);
-@@ -1045,7 +1055,8 @@ static void expand_4i_i64(uint32_t dofs, uint32_t aofs, uint32_t bofs,
- }
- 
- /* Expand OPSZ bytes worth of two-operand operations using host vectors.  */
--static void expand_2_vec(unsigned vece, uint32_t dofs, uint32_t aofs,
-+static void expand_2_vec(unsigned vece, TCGv_ptr dbase, uint32_t dofs,
-+                         TCGv_ptr abase, uint32_t aofs,
-                          uint32_t oprsz, uint32_t tysz, TCGType type,
-                          bool load_dest,
-                          void (*fni)(unsigned, TCGv_vec, TCGv_vec))
-@@ -1054,12 +1065,12 @@ static void expand_2_vec(unsigned vece, uint32_t dofs, uint32_t aofs,
-         TCGv_vec t0 = tcg_temp_new_vec(type);
-         TCGv_vec t1 = tcg_temp_new_vec(type);
- 
--        tcg_gen_ld_vec(t0, tcg_env, aofs + i);
-+        tcg_gen_ld_vec(t0, abase, aofs + i);
-         if (load_dest) {
--            tcg_gen_ld_vec(t1, tcg_env, dofs + i);
-+            tcg_gen_ld_vec(t1, dbase, dofs + i);
-         }
-         fni(vece, t1, t0);
--        tcg_gen_st_vec(t1, tcg_env, dofs + i);
-+        tcg_gen_st_vec(t1, dbase, dofs + i);
+     if (changed & FPCR_FZ) {
+         bool ftz_enabled = val & FPCR_FZ;
+         set_flush_to_zero(ftz_enabled, &env->vfp.fp_status[FPST_A32]);
+         set_flush_to_zero(ftz_enabled, &env->vfp.fp_status[FPST_A64]);
++        set_flush_to_zero(ftz_enabled, &env->vfp.fp_status[FPST_ZA]);
+         /* FIZ is A64 only so FZ always makes A32 code flush inputs to zero */
+         set_flush_inputs_to_zero(ftz_enabled, &env->vfp.fp_status[FPST_A32]);
      }
- }
- 
-@@ -1201,8 +1212,9 @@ static void expand_4i_vec(unsigned vece, uint32_t dofs, uint32_t aofs,
- }
- 
- /* Expand a vector two-operand operation.  */
--void tcg_gen_gvec_2(uint32_t dofs, uint32_t aofs,
--                    uint32_t oprsz, uint32_t maxsz, const GVecGen2 *g)
-+void tcg_gen_gvec_2_var(TCGv_ptr dbase, uint32_t dofs,
-+                        TCGv_ptr abase, uint32_t aofs,
-+                        uint32_t oprsz, uint32_t maxsz, const GVecGen2 *g)
- {
-     const TCGOpcode *this_list = g->opt_opc ? : vecop_list_empty;
-     const TCGOpcode *hold_list = tcg_swap_vecop_list(this_list);
-@@ -1210,7 +1222,7 @@ void tcg_gen_gvec_2(uint32_t dofs, uint32_t aofs,
-     uint32_t some;
- 
-     check_size_align(oprsz, maxsz, dofs | aofs);
--    check_overlap_2(tcg_env, dofs, tcg_env, aofs, maxsz);
-+    check_overlap_2(dbase, dofs, abase, aofs, maxsz);
- 
-     type = 0;
-     if (g->fniv) {
-@@ -1223,8 +1235,8 @@ void tcg_gen_gvec_2(uint32_t dofs, uint32_t aofs,
-          * that e.g. size == 80 would be expanded with 2x32 + 1x16.
-          */
-         some = QEMU_ALIGN_DOWN(oprsz, 32);
--        expand_2_vec(g->vece, dofs, aofs, some, 32, TCG_TYPE_V256,
--                     g->load_dest, g->fniv);
-+        expand_2_vec(g->vece, dbase, dofs, abase, aofs, some, 32,
-+                     TCG_TYPE_V256, g->load_dest, g->fniv);
-         if (some == oprsz) {
-             break;
-         }
-@@ -1234,22 +1246,25 @@ void tcg_gen_gvec_2(uint32_t dofs, uint32_t aofs,
-         maxsz -= some;
-         /* fallthru */
-     case TCG_TYPE_V128:
--        expand_2_vec(g->vece, dofs, aofs, oprsz, 16, TCG_TYPE_V128,
--                     g->load_dest, g->fniv);
-+        expand_2_vec(g->vece, dbase, dofs, abase, aofs, oprsz, 16,
-+                     TCG_TYPE_V128, g->load_dest, g->fniv);
-         break;
-     case TCG_TYPE_V64:
--        expand_2_vec(g->vece, dofs, aofs, oprsz, 8, TCG_TYPE_V64,
--                     g->load_dest, g->fniv);
-+        expand_2_vec(g->vece, dbase, dofs, abase, aofs, oprsz, 8,
-+                     TCG_TYPE_V64, g->load_dest, g->fniv);
-         break;
- 
-     case 0:
-         if (g->fni8 && check_size_impl(oprsz, 8)) {
--            expand_2_i64(dofs, aofs, oprsz, g->load_dest, g->fni8);
-+            expand_2_i64(dbase, dofs, abase, aofs,
-+                         oprsz, g->load_dest, g->fni8);
-         } else if (g->fni4 && check_size_impl(oprsz, 4)) {
--            expand_2_i32(dofs, aofs, oprsz, g->load_dest, g->fni4);
-+            expand_2_i32(dbase, dofs, abase, aofs,
-+                         oprsz, g->load_dest, g->fni4);
+@@ -229,6 +234,7 @@ static void vfp_set_fpcr_to_host(CPUARMState *env, uint32_t val, uint32_t mask)
+         bool fitz_enabled = (val & FPCR_FIZ) ||
+             (val & (FPCR_FZ | FPCR_AH)) == FPCR_FZ;
+         set_flush_inputs_to_zero(fitz_enabled, &env->vfp.fp_status[FPST_A64]);
++        set_flush_inputs_to_zero(fitz_enabled, &env->vfp.fp_status[FPST_ZA]);
+     }
+     if (changed & FPCR_DN) {
+         bool dnan_enabled = val & FPCR_DN;
+@@ -246,9 +252,13 @@ static void vfp_set_fpcr_to_host(CPUARMState *env, uint32_t val, uint32_t mask)
+             /* Change behaviours for A64 FP operations */
+             arm_set_ah_fp_behaviours(&env->vfp.fp_status[FPST_A64]);
+             arm_set_ah_fp_behaviours(&env->vfp.fp_status[FPST_A64_F16]);
++            arm_set_ah_fp_behaviours(&env->vfp.fp_status[FPST_ZA]);
++            arm_set_ah_fp_behaviours(&env->vfp.fp_status[FPST_ZA_F16]);
          } else {
-             assert(g->fno != NULL);
--            tcg_gen_gvec_2_ool(dofs, aofs, oprsz, maxsz, g->data, g->fno);
-+            expand_2_ool(dbase, dofs, abase, aofs,
-+                         oprsz, maxsz, g->data, g->fno);
-             oprsz = maxsz;
+             arm_set_default_fp_behaviours(&env->vfp.fp_status[FPST_A64]);
+             arm_set_default_fp_behaviours(&env->vfp.fp_status[FPST_A64_F16]);
++            arm_set_default_fp_behaviours(&env->vfp.fp_status[FPST_ZA]);
++            arm_set_default_fp_behaviours(&env->vfp.fp_status[FPST_ZA_F16]);
          }
-         break;
-@@ -1260,10 +1275,16 @@ void tcg_gen_gvec_2(uint32_t dofs, uint32_t aofs,
-     tcg_swap_vecop_list(hold_list);
- 
-     if (oprsz < maxsz) {
--        expand_clr(tcg_env, dofs + oprsz, maxsz - oprsz);
-+        expand_clr(dbase, dofs + oprsz, maxsz - oprsz);
      }
- }
- 
-+void tcg_gen_gvec_2(uint32_t dofs, uint32_t aofs,
-+                    uint32_t oprsz, uint32_t maxsz, const GVecGen2 *g)
-+{
-+    tcg_gen_gvec_2_var(tcg_env, dofs, tcg_env, aofs, oprsz, maxsz, g);
-+}
-+
- /* Expand a vector operation with two vectors and an immediate.  */
- void tcg_gen_gvec_2i(uint32_t dofs, uint32_t aofs, uint32_t oprsz,
-                      uint32_t maxsz, int64_t c, const GVecGen2i *g)
+     /*
 -- 
 2.43.0
 
