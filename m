@@ -4,64 +4,64 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1A063C02194
-	for <qemu-devel@archiver.kernel.org>; Thu,  6 Feb 2025 18:21:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id F1794C02199
+	for <qemu-devel@archiver.kernel.org>; Thu,  6 Feb 2025 18:21:38 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tg6Sv-000841-NG; Thu, 06 Feb 2025 13:19:05 -0500
+	id 1tg6Sr-0007tD-Hv; Thu, 06 Feb 2025 13:19:01 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tg6St-00081S-NQ
- for qemu-devel@nongnu.org; Thu, 06 Feb 2025 13:19:03 -0500
-Received: from mail-wr1-x431.google.com ([2a00:1450:4864:20::431])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tg6Sp-0007s8-Mi
+ for qemu-devel@nongnu.org; Thu, 06 Feb 2025 13:18:59 -0500
+Received: from mail-wm1-x32c.google.com ([2a00:1450:4864:20::32c])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tg6Ss-0006rC-4N
- for qemu-devel@nongnu.org; Thu, 06 Feb 2025 13:19:03 -0500
-Received: by mail-wr1-x431.google.com with SMTP id
- ffacd0b85a97d-38dc5b8ed86so250405f8f.1
- for <qemu-devel@nongnu.org>; Thu, 06 Feb 2025 10:19:01 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tg6Sn-0006qW-7f
+ for qemu-devel@nongnu.org; Thu, 06 Feb 2025 13:18:59 -0500
+Received: by mail-wm1-x32c.google.com with SMTP id
+ 5b1f17b1804b1-436345cc17bso9209535e9.0
+ for <qemu-devel@nongnu.org>; Thu, 06 Feb 2025 10:18:56 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1738865940; x=1739470740; darn=nongnu.org;
+ d=linaro.org; s=google; t=1738865935; x=1739470735; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=5Rk4bXft0s/BXA9vpR8jU6qA4/CSXx2ZYQlNSJ5gsvQ=;
- b=QjSLcK4Zl4wZIrLlHM1PKf2geh0rzVeMmfoaHDm4hKnPQdaOqrP21wBiV+6iFN3Mm2
- k+/5tOIRLu4TCiV9hSwvsCOhj6lAnwl5sX66HREyTEq6YyiVhoRtITFQn7yAYOIMKfBT
- zYk/kldzeWF4HDD4/W7hE9hzulSOHnB6GlXbYmCVmZIe6STzHFLSML4mt/UkqBdiwwYd
- VWIfIM/lzPP+wAQlUjsLcntq+IvgDWv84RLNN2vgPu1kHScp4tAXyOFc8VhRuzCT//D+
- E/pIF8Dcc2hif0wV2pl5IUTZUGbQQnY5mQ6rEKsr9Rkd1K0tfSWUAdQEOQ3N/TQeS7/G
- RRwA==
+ bh=3chV6Syf4UgzPYrc3klqldaIF78PGsSbuVaW5fDvGGY=;
+ b=mM3fr7aYsRzvJJGqOTAiU7R7OJHjyzO640aF3yItt6Ixb5Lw/QiuDw0I0bUs4dIZ0T
+ XVH5Hz5Wy1gJApwoq5mkonhazpCpu49bVM8elitA7HY85cKaD3o087TvdGgoFkpFnGHx
+ cXa4KWk4FqolvrNO6v38Qxo/2dH4sMBCuEFh1un4UiJ/7hw1lErRWPA5XlaKVJGoEN1M
+ /nK2cu46sKyC5Wb2pthuvTBwsHyXzznGHM3DN5vxybT+LdB/KTkO9nWSk81ia0lcXduT
+ M5pxZA4/wyxhccDOjz/CTDjgmoRDU25XXpJoBGnQK25+cZx52diQNJrWNSQrkTplsD3N
+ hH5g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1738865940; x=1739470740;
+ d=1e100.net; s=20230601; t=1738865935; x=1739470735;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=5Rk4bXft0s/BXA9vpR8jU6qA4/CSXx2ZYQlNSJ5gsvQ=;
- b=WXeYkqNQR9TMu7D+nwyPPO/xy7UlYP+ApEmNQcujJ5H/NmglTEOQBNbNwgMZL0Dewv
- IsvRJizlSMGBULJBPjZLagoxnahFKkd3u88qtfAxXwpGIKSMeQBtEk2Jhx1MbzLx7Drd
- grDEuR19xdrhYctvErCtYC3Dri4sgWu6agKJukwUJa2S0fE8ctBj8+d9dS488CRzQKCq
- IhrNWAqxDuG3nfIrclNNqZQqY5jsGFKA+rUG/iS8itaSWCd2tKO7QmpuXjaQyKOKd1BW
- e1OOj1nKLnjCnRUP3qwPtC5aPdsiPokrzoR+5XaVqSMm0ALXSDEi14r9hulEOQUIVDhV
- k8VA==
-X-Gm-Message-State: AOJu0Yz7WT5xJIYMYe7PCZhakstjVobQ3VquQsHQ8WLwX2lwK04Jr0Kj
- qsqByZulC5VnRQSBnQ/NB36DDyLGfE79jV68hWDR2XKQG82epdUlqnfTRb0yewzdjOnKk6EaLk/
- DKtw=
-X-Gm-Gg: ASbGncss24ZtRqGTmiUr9SAxAMkGmgcZl7QOqgSK0Arvc1+Iu2rJXySqVSCTwqcbNXP
- jKoQd9P0utdFt9EUJMQ/jR2Iwcz30NfrJHRpMTfryPUZd8HLyOCzHjtwQics4sJ6LQHOesViRRD
- BnkYbTK4U2Mi3CbNS9W9rFyTTAekl5H/UM+swbAyTZa7lqh7MZ+mFdj/fFPcTE6rudSDMblqQ+W
- qdSI+PQfkFAbnS3OBUsRNQAMhrgQ0HW80XMng+dpHY7RgIITb2doSswp77/v+LUFRAhl8friost
- VLbycQlTggyNvwbl6K/B3NfrqYIMhv3fw72REEqP3mQAYjB4e6wlXVASFmK+KcFF4g==
-X-Google-Smtp-Source: AGHT+IE/1lQWPvojDSp4YKi4o595AHTqMFnURwEpiv2mdh2Nf9nSCBYB9pEzJYPH6M6RAwhKN+Tauw==
-X-Received: by 2002:a05:6000:4c1:b0:38d:a910:b4d5 with SMTP id
- ffacd0b85a97d-38db494e5fcmr4870954f8f.54.1738865940138; 
- Thu, 06 Feb 2025 10:19:00 -0800 (PST)
+ bh=3chV6Syf4UgzPYrc3klqldaIF78PGsSbuVaW5fDvGGY=;
+ b=LOimC4Ibi1skTF+RyzbEA1DHiiV5IbDsXDILq35OQNRWSKUzQJYh0Shm+F6MUg22cq
+ n9yRtNgYRp7Lsl4XJbMC9QK7AnX2y3KNqVKMwZGl/sMoYJY1+/AiLov+uhjVWHU8azyy
+ yliKv+sSJLZTjg5nkp/Cfx3YREVGI5+xAKUze0APfkx4tIzV3msTqcXX1/H55FvNPtX7
+ yRfM0quNU3E3WuYNefROSWP2y0hLiWWv/ExiD+QwpPEWSnDe+z/491dSrFEi9I8nAXW6
+ oqHk/hXLGWE/tH2GHWzEgpjoDaK+tctFxlBiPaxw/4AZL25CKnqv0cnqjt9fFrNJSnD1
+ /NSQ==
+X-Gm-Message-State: AOJu0Yztvb/THXpXNr9mkEoQ2l9gLtRPZFfK4uyufkhA8NSYl+fKNzKk
+ cshd7/saEMtdJ+KARziRNddLbkj+dBJttvfgLr23/axHpuTqaybSlkp1LPKMYkaIkEh+rpuqpOG
+ oEEw=
+X-Gm-Gg: ASbGncvd3jfwG3CE7WdHlcK55v1CggOspTBQwr34ovsW3KABvr44Yg8G4jUEPAW09D2
+ 5SIbQA2RcFw4rFwPXMKcXaGtV5FJTuddt5VwOdi1EbIuFJpsinME10sRz+WBSPjkkVXYR/0WBVZ
+ f4s4i+nAS506DYCYT5ALHu4cu8+clnBgIcEip3Bwm6ArCSBX/x3UOekUKRm90zd2LbQw8CeuKKD
+ /Hi9BDjs3h98eu51qvjzLd2RFx+HUNiqJdHQT7qVXCSOKxQ/ZHyiy2jw+EfyNv9OQgbcm9qX98G
+ 0L8mx5ScUqC+sq0CX7Om3gP6bVztIpkxBS9zrBPmjRrATmSjPTMYmiv16eGkMFXPtg==
+X-Google-Smtp-Source: AGHT+IEA0DMN4iOBz9G2FC5ueovoYaZq2D4m+00UatsLM9qrQKFf6i0Vnv5yiTPmm2//MFKpTDLJHQ==
+X-Received: by 2002:a05:600c:1e0e:b0:436:f3f6:9582 with SMTP id
+ 5b1f17b1804b1-43924988870mr3600075e9.8.1738865935183; 
+ Thu, 06 Feb 2025 10:18:55 -0800 (PST)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4390d94d802sm65995685e9.12.2025.02.06.10.18.59
+ 5b1f17b1804b1-43907f16ffasm58795995e9.1.2025.02.06.10.18.53
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Thu, 06 Feb 2025 10:18:59 -0800 (PST)
+ Thu, 06 Feb 2025 10:18:54 -0800 (PST)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Palmer Dabbelt <palmer@dabbelt.com>, qemu-riscv@nongnu.org,
@@ -71,17 +71,17 @@ Cc: Palmer Dabbelt <palmer@dabbelt.com>, qemu-riscv@nongnu.org,
  Sunil V L <sunilvl@ventanamicro.com>,
  Liu Zhiwei <zhiwei_liu@linux.alibaba.com>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PATCH 6/7] hw/riscv/hart: Make 'riscv_hart.h' header target-agnostic
-Date: Thu,  6 Feb 2025 19:18:26 +0100
-Message-ID: <20250206181827.41557-7-philmd@linaro.org>
+Subject: [PATCH 5/7] hw/riscv/iommu: Reduce needs for target-specific code
+Date: Thu,  6 Feb 2025 19:18:25 +0100
+Message-ID: <20250206181827.41557-6-philmd@linaro.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20250206181827.41557-1-philmd@linaro.org>
 References: <20250206181827.41557-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::431;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x431.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::32c;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x32c.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -104,48 +104,70 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hardware code using HART rarely needs to knows its internals.
+Use the qemu_target_page_size() runtime function instead
+of the TARGET_PAGE_SIZE definition, remove unnecessary
+"exec/exec-all.h" header.
 
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 ---
- include/hw/riscv/riscv_hart.h | 4 ++--
- hw/riscv/virt-acpi-build.c    | 1 +
- 2 files changed, 3 insertions(+), 2 deletions(-)
+ hw/riscv/riscv-iommu-pci.c | 5 +++--
+ hw/riscv/riscv-iommu-sys.c | 1 -
+ hw/riscv/riscv-iommu.c     | 1 +
+ 3 files changed, 4 insertions(+), 3 deletions(-)
 
-diff --git a/include/hw/riscv/riscv_hart.h b/include/hw/riscv/riscv_hart.h
-index a6ed73a1956..a2ca455d8b1 100644
---- a/include/hw/riscv/riscv_hart.h
-+++ b/include/hw/riscv/riscv_hart.h
-@@ -22,7 +22,7 @@
- #define HW_RISCV_HART_H
- 
- #include "hw/sysbus.h"
--#include "target/riscv/cpu.h"
-+#include "target/riscv/cpu-qom.h"
- #include "qom/object.h"
- 
- #define TYPE_RISCV_HART_ARRAY "riscv.hart_array"
-@@ -42,7 +42,7 @@ struct RISCVHartArrayState {
-     uint64_t *rnmi_irqvec;
-     uint32_t num_rnmi_excpvec;
-     uint64_t *rnmi_excpvec;
--    RISCVCPU *harts;
-+    ArchCPU *harts;
- };
- 
- #endif
-diff --git a/hw/riscv/virt-acpi-build.c b/hw/riscv/virt-acpi-build.c
-index 1ad68005085..0030c21bc41 100644
---- a/hw/riscv/virt-acpi-build.c
-+++ b/hw/riscv/virt-acpi-build.c
-@@ -39,6 +39,7 @@
+diff --git a/hw/riscv/riscv-iommu-pci.c b/hw/riscv/riscv-iommu-pci.c
+index 12451869e41..d8779481421 100644
+--- a/hw/riscv/riscv-iommu-pci.c
++++ b/hw/riscv/riscv-iommu-pci.c
+@@ -22,13 +22,13 @@
+ #include "hw/pci/pci_bus.h"
+ #include "hw/qdev-properties.h"
+ #include "hw/riscv/riscv_hart.h"
++#include "exec/target_page.h"
+ #include "migration/vmstate.h"
  #include "qapi/error.h"
  #include "qemu/error-report.h"
- #include "system/reset.h"
-+#include "target/riscv/cpu.h"
+ #include "qemu/host-utils.h"
+ #include "qom/object.h"
  
- #define ACPI_BUILD_TABLE_SIZE             0x20000
- #define ACPI_BUILD_INTC_ID(socket, index) ((socket << 24) | (index))
+-#include "cpu_bits.h"
+ #include "riscv-iommu.h"
+ #include "riscv-iommu-bits.h"
+ #include "trace.h"
+@@ -102,7 +102,8 @@ static void riscv_iommu_pci_realize(PCIDevice *dev, Error **errp)
+     qdev_realize(DEVICE(iommu), NULL, errp);
+ 
+     memory_region_init(&s->bar0, OBJECT(s), "riscv-iommu-bar0",
+-        QEMU_ALIGN_UP(memory_region_size(&iommu->regs_mr), TARGET_PAGE_SIZE));
++        QEMU_ALIGN_UP(memory_region_size(&iommu->regs_mr),
++                      qemu_target_page_size()));
+     memory_region_add_subregion(&s->bar0, 0, &iommu->regs_mr);
+ 
+     pcie_endpoint_cap_init(dev, 0);
+diff --git a/hw/riscv/riscv-iommu-sys.c b/hw/riscv/riscv-iommu-sys.c
+index 65b24fb07de..bbe839ed241 100644
+--- a/hw/riscv/riscv-iommu-sys.c
++++ b/hw/riscv/riscv-iommu-sys.c
+@@ -26,7 +26,6 @@
+ #include "qemu/host-utils.h"
+ #include "qemu/module.h"
+ #include "qom/object.h"
+-#include "exec/exec-all.h"
+ #include "trace.h"
+ 
+ #include "riscv-iommu.h"
+diff --git a/hw/riscv/riscv-iommu.c b/hw/riscv/riscv-iommu.c
+index e7568ca227a..fb763e6e69d 100644
+--- a/hw/riscv/riscv-iommu.c
++++ b/hw/riscv/riscv-iommu.c
+@@ -26,6 +26,7 @@
+ #include "qapi/error.h"
+ #include "qemu/timer.h"
+ 
++#include "target/riscv/cpu.h"
+ #include "cpu_bits.h"
+ #include "riscv-iommu.h"
+ #include "riscv-iommu-bits.h"
 -- 
 2.47.1
 
