@@ -4,82 +4,88 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BAD56C02194
-	for <qemu-devel@archiver.kernel.org>; Thu,  6 Feb 2025 15:22:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A0FCFC02199
+	for <qemu-devel@archiver.kernel.org>; Thu,  6 Feb 2025 15:35:07 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tg3hZ-0008Mt-Fq; Thu, 06 Feb 2025 10:22:01 -0500
+	id 1tg3td-0002Z6-KW; Thu, 06 Feb 2025 10:34:29 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <cohuck@redhat.com>) id 1tg3hX-0008MD-Fb
- for qemu-devel@nongnu.org; Thu, 06 Feb 2025 10:21:59 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <cohuck@redhat.com>) id 1tg3hV-000599-O7
- for qemu-devel@nongnu.org; Thu, 06 Feb 2025 10:21:59 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1738855316;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=DpV63lmlHFTW8rPxsUNo3ZqcDK3KgCRBJFh9ATs0+OM=;
- b=Dz0LVlz4oE1I72HoXWKvbh10z60vNWEv3VTLICSNscBevwaEIlR4IxSVMYSHGzTuUGccr+
- HKR+vAW2KY0PwNhjmWH12bbBJtiDQzRWmhgvXxRo2LHLM1ciEzLnYrt//YkjVfAAnZTGmm
- ckmqMhnNx4SZhLsfNii2XBSDoO9jOKE=
-Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-171-LkKsof9NPEy64FIWWHC5ew-1; Thu,
- 06 Feb 2025 10:21:51 -0500
-X-MC-Unique: LkKsof9NPEy64FIWWHC5ew-1
-X-Mimecast-MFC-AGG-ID: LkKsof9NPEy64FIWWHC5ew
-Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id B30BC19560AA; Thu,  6 Feb 2025 15:21:50 +0000 (UTC)
-Received: from localhost (unknown [10.44.33.231])
- by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 22B7C1800872; Thu,  6 Feb 2025 15:21:48 +0000 (UTC)
-From: Cornelia Huck <cohuck@redhat.com>
-To: Corvin =?utf-8?Q?K=C3=B6hne?= <corvin.koehne@gmail.com>,
- qemu-devel@nongnu.org
-Cc: Alex Williamson <alex.williamson@redhat.com>, =?utf-8?Q?C=C3=A9dric?= Le
- Goater
- <clg@redhat.com>, "Michael S. Tsirkin" <mst@redhat.com>, Paolo Bonzini
- <pbonzini@redhat.com>, Corvin =?utf-8?Q?K=C3=B6hne?=
- <c.koehne@beckhoff.com>
-Subject: Re: [PATCH 2/4] scripts/update-linux-headers: include PCI ID header
- for Intel GPUs
-In-Reply-To: <20250206121341.118337-3-corvin.koehne@gmail.com>
-Organization: "Red Hat GmbH, Sitz: Werner-von-Siemens-Ring 12, D-85630
- Grasbrunn, Handelsregister: Amtsgericht =?utf-8?Q?M=C3=BCnchen=2C?= HRB
- 153243,
- =?utf-8?Q?Gesch=C3=A4ftsf=C3=BChrer=3A?= Ryan Barnhart, Charles Cachera,
- Michael O'Neill, Amy Ross"
-References: <20250206121341.118337-1-corvin.koehne@gmail.com>
- <20250206121341.118337-3-corvin.koehne@gmail.com>
-User-Agent: Notmuch/0.38.3 (https://notmuchmail.org)
-Date: Thu, 06 Feb 2025 16:21:46 +0100
-Message-ID: <87ikpn6qut.fsf@redhat.com>
+ (Exim 4.90_1) (envelope-from <rbradford@rivosinc.com>)
+ id 1tg3tS-0002Sm-4T
+ for qemu-devel@nongnu.org; Thu, 06 Feb 2025 10:34:18 -0500
+Received: from mail-wr1-x42e.google.com ([2a00:1450:4864:20::42e])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <rbradford@rivosinc.com>)
+ id 1tg3tQ-0001Fw-7w
+ for qemu-devel@nongnu.org; Thu, 06 Feb 2025 10:34:17 -0500
+Received: by mail-wr1-x42e.google.com with SMTP id
+ ffacd0b85a97d-38a8b17d7a7so494695f8f.2
+ for <qemu-devel@nongnu.org>; Thu, 06 Feb 2025 07:34:15 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=rivosinc-com.20230601.gappssmtp.com; s=20230601; t=1738856054; x=1739460854;
+ darn=nongnu.org; 
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=O4fAi/WFyk5fUA9AqpTcM5pdirl0mVctIzxsel8zKVc=;
+ b=RCactgeaRbwb7gMcVIE6DIG4QrZlN3XtBDGEHIh16M6G9hst6StOBQdFVldo7w/r50
+ z2PQa+Hk8AKVSM8Zy1Sh+yqUtRSQdNDjqazPEuVsNYt2JnL9+Whnw6q933Ia/LuAiFfj
+ C7Ey3/sAtKSEjULsfRSkYiPNCj/4vgPs4/ua/MvoEHtv9dHZfKCQ8isOkDnHMtPQL5VU
+ syeQM8GEsfU/VTV5yC/mYXk6FHX6K3VBz55PM9srJ7TG9XLP7wmozODt51geHU4ZU5Yw
+ t8J34KMD9Bg7zNnDRE6VLwCmc8/Blv7d6CiS6WM8+yxlcG51H/WOORvjikNJ0pi43Clm
+ SSaw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1738856054; x=1739460854;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=O4fAi/WFyk5fUA9AqpTcM5pdirl0mVctIzxsel8zKVc=;
+ b=EK9zr2Lgi39g0dm5bgi1Yi5lFjlVp7jcOo2DFVU57wQWTkirYPY/t0DdzmMhTgA+Z/
+ PTtH0WBzQmGSx2kzgbJZoWNrWy6319mbpPEQZ9VuWIr+IQTMY4UEngZlJvM9kA8HYWai
+ fyLujcNjBmrw3rd9DcgV3qVHZa3pRSgLbR5nRyg7OBvp4EsBV5hUXh2jrn+i2W31mwms
+ 1Suk60Xg7ZW/OFVQY22m5ibJ8prUgID43dI0SDigc9ciJVgYZev2YpoOw0mgbEMrWkUD
+ OyAfVDGZ9Q6H+ERXchIAzGUopM7bQW0LNC0+IFWrW0JXssaIKmsXb8+UuvyOPddUBPOL
+ 55fQ==
+X-Gm-Message-State: AOJu0YzXu7qyzuT0EA8VDT36iGu6d+9c3PNAmqo6H0PgV1OX+nvYGRrX
+ bJ4NGKI9SjxtTlOrfV8IhFOtWwYhvLm8OGdUmPjy0vPtbjlCJB8/+lUUHiNKC7OBaInb6LD4JvB
+ V
+X-Gm-Gg: ASbGncs6DhdrPEQjDCNQldFH5KkWliYwKe3c2TCDXrauJrd2PuLXIeJ9JJS0KF3y5jo
+ h6EfkOJxQdI3QhpFvIWwO2XbX9yBVoT82tvgxglxe/+UM8VbmAKjv8Fmq80JVJhvlAitDlxwvUn
+ YqX7oBbyH37JsbeR1qWnc2RzgdJHWqMVZ5kQgOFtgsDhMt46kKKHzqF0Yeh6ir+PujBC/NGTyUj
+ aMKeHdkrljcTlo0hWlI1/4wVYMUk3u0zec7c8II2A1K8GxtmVXRU+7D8lBw85ZSGC28neKytINz
+ gM/S9IZqWCXb6DvuvU5bVCvYMp2haPSJlfPgXYAhBIKwA1q815Pf0FC0K4cP7xScY9A=
+X-Google-Smtp-Source: AGHT+IE+lIqtmzQFCpof9gOpI5qAce29bO2n7sMxfQ6jcqolHCidIieIJjlkCp49engQ87U8LkLoZQ==
+X-Received: by 2002:a05:6000:18a4:b0:38d:bf56:8658 with SMTP id
+ ffacd0b85a97d-38dbf568bb3mr1841968f8f.24.1738856053891; 
+ Thu, 06 Feb 2025 07:34:13 -0800 (PST)
+Received: from rockhopper.ba.rivosinc.com (214.11.169.217.in-addr.arpa.
+ [217.169.11.214]) by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-38dc45c26f2sm850516f8f.51.2025.02.06.07.34.13
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Thu, 06 Feb 2025 07:34:13 -0800 (PST)
+From: Rob Bradford <rbradford@rivosinc.com>
+To: qemu-devel@nongnu.org
+Cc: Palmer Dabbelt <palmer@dabbelt.com>, qemu-riscv@nongnu.org,
+ Alistair Francis <Alistair.Francis@wdc.com>,
+ Rob Bradford <rbradford@rivosinc.com>
+Subject: [PATCH 2/2] disas/riscv: Add missing Sdtrig CSRs
+Date: Thu,  6 Feb 2025 15:34:10 +0000
+Message-ID: <20250206153410.236636-3-rbradford@rivosinc.com>
+X-Mailer: git-send-email 2.48.1
+In-Reply-To: <20250206153410.236636-1-rbradford@rivosinc.com>
+References: <20250206153410.236636-1-rbradford@rivosinc.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=cohuck@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::42e;
+ envelope-from=rbradford@rivosinc.com; helo=mail-wr1-x42e.google.com
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -95,46 +101,32 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, Feb 06 2025, Corvin K=C3=B6hne <corvin.koehne@gmail.com> wrote:
+This reflects the latest frozen version of the RISC-V Debug
+specification (1.0.0-rc4) which includes the Sdtrig extension.
 
-> From: Corvin K=C3=B6hne <c.koehne@beckhoff.com>
->
-> We've recently imported the PCI ID header for Intel GPUs into our tree.
-> Add it to our helper script to make it easier for us to sync this file
-> in the future.
->
-> Signed-off-by: Corvin K=C3=B6hne <c.koehne@beckhoff.com>
-> ---
->  scripts/update-linux-headers.sh | 6 ++++++
->  1 file changed, 6 insertions(+)
->
-> diff --git a/scripts/update-linux-headers.sh b/scripts/update-linux-heade=
-rs.sh
-> index 8913e4fb99..a4ff5a8fe9 100755
-> --- a/scripts/update-linux-headers.sh
-> +++ b/scripts/update-linux-headers.sh
-> @@ -269,6 +269,12 @@ mkdir -p "$output/include/standard-headers/drm"
->  cp_portable "$hdrdir/include/drm/drm_fourcc.h" \
->              "$output/include/standard-headers/drm"
->=20=20
-> +# Linux does not install the PCI IDs header for i915 devices, so we have=
- to
-> +# pick it up from the source tree itself.
-> +mkdir -p "$output/include/standard-headers/drm/intel"
-> +cp_portable "$linux/include/drm/intel/pciids.h" \
-> +            "$output/include/standard-headers/drm/intel"
-> +
->  cat <<EOF >$output/include/standard-headers/linux/types.h
->  /* For QEMU all types are already defined via osdep.h, so this
->   * header does not need to do anything.
+Signed-off-by: Rob Bradford <rbradford@rivosinc.com>
+---
+ disas/riscv.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-The correct process here would be:
-1. update the script (this patch)
-2. run a full headers update against Linux v.13 (replaces patch 1)
-
-I'll leave discussion of the whole series to the others :)
-
-Thanks,
-Cornelia
+diff --git a/disas/riscv.c b/disas/riscv.c
+index 305dd40ac4..85cd2a9c2a 100644
+--- a/disas/riscv.c
++++ b/disas/riscv.c
+@@ -2438,9 +2438,11 @@ static const char *csr_name(int csrno)
+     case 0x07a1: return "tdata1";
+     case 0x07a2: return "tdata2";
+     case 0x07a3: return "tdata3";
++    case 0x07a4: return "tinfo";
+     case 0x07b0: return "dcsr";
+     case 0x07b1: return "dpc";
+-    case 0x07b2: return "dscratch";
++    case 0x07b2: return "dscratch0";
++    case 0x07b3: return "dscratch1";
+     case 0x0b00: return "mcycle";
+     case 0x0b01: return "mtime";
+     case 0x0b02: return "minstret";
+-- 
+2.48.1
 
 
