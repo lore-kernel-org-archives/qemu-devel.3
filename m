@@ -4,64 +4,64 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id EE0D6C02194
-	for <qemu-devel@archiver.kernel.org>; Thu,  6 Feb 2025 11:34:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B0D9FC02196
+	for <qemu-devel@archiver.kernel.org>; Thu,  6 Feb 2025 11:34:50 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tg09L-00080Y-3Y; Thu, 06 Feb 2025 06:34:27 -0500
+	id 1tg096-0007QC-BX; Thu, 06 Feb 2025 06:34:12 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tg09I-0007qo-BH
- for qemu-devel@nongnu.org; Thu, 06 Feb 2025 06:34:24 -0500
-Received: from mail-wr1-x436.google.com ([2a00:1450:4864:20::436])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tg094-0007J3-8E
+ for qemu-devel@nongnu.org; Thu, 06 Feb 2025 06:34:10 -0500
+Received: from mail-wm1-x331.google.com ([2a00:1450:4864:20::331])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tg09G-0000tB-E6
- for qemu-devel@nongnu.org; Thu, 06 Feb 2025 06:34:24 -0500
-Received: by mail-wr1-x436.google.com with SMTP id
- ffacd0b85a97d-38dc5764fc0so38130f8f.3
- for <qemu-devel@nongnu.org>; Thu, 06 Feb 2025 03:34:21 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tg092-0000s4-Dd
+ for qemu-devel@nongnu.org; Thu, 06 Feb 2025 06:34:09 -0500
+Received: by mail-wm1-x331.google.com with SMTP id
+ 5b1f17b1804b1-4362f61757fso7571105e9.2
+ for <qemu-devel@nongnu.org>; Thu, 06 Feb 2025 03:34:07 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1738841660; x=1739446460; darn=nongnu.org;
+ d=linaro.org; s=google; t=1738841646; x=1739446446; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=2lrz/Z9U2Uf5jpDeQ6Q5rMzyggw9C9+W1C5t50i9qAk=;
- b=NAz9wARYgv/PzUKvKwRbyaH1JfknC+PQJclHCGM1CtTMSN4vqMwsk0LpLLI1XRrhvU
- yHDtsejuQjcXdxOM6PydYZU9vvBDplEYKobN6m+55jbyEalsThTTyv9i9cTdGpZUZO9e
- gLWAaibqvp2SoNO8wS8MTgQSOFC6ZnORmh6ParBbud3hNhH/CDOe0/cvGhSrrXO2TWN1
- 4qfO4XfLgaCOGARzQaQvRILgn0+MqE2Nhi77K4TLbeXUv+dwRpKUA3WxEpE84hBwCQOB
- Jrog7xvjtoq5yBxwBnaSXFITzIZl7PBJc/vsi5F9jhjUVCTPl8GuTp4S51kvxdUoR6VT
- fiQw==
+ bh=RCLsw1b6jyw8lyUUykKTmpsXr484uY+OOog3P2Qta5M=;
+ b=FeSiwfT7dtCPPsRvumF4nJCMV964oV4o7b6JK7H+9nKakfn6hVp92vR5YtjO/rPwo7
+ I1rZdHBaPafeewcUOM6mqCgm5yTNcuFPW1flIMSYwE3kokBUjqE5YE5LeZm61bmfxmTt
+ EPJSsM1b+H9tXBl2bR2SdonWYQiZTnjbens6tTJoF/uNgk72gUsc4pB0UyTsEu8+2Qw4
+ wbU/mvSrVdazYcqif0UMdDt4TPcCuM2haXzI44JYZHFMHnviFtUWJMVTkqXwwRTOf1xG
+ 8Nd470IVkrDY6wyqUA+J7M6B0/WRqWS3Of25OMwDXniMDqtZvJV3mN8MtuxFhiV4hy3a
+ DWrQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1738841660; x=1739446460;
+ d=1e100.net; s=20230601; t=1738841646; x=1739446446;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=2lrz/Z9U2Uf5jpDeQ6Q5rMzyggw9C9+W1C5t50i9qAk=;
- b=Wi5V24IS5BQIs9lwIvT7bk4XnKo1k4CqwE6l212xk0WCQAJXUDAecwvqdwZp+qn7w3
- /tawJuAL2pk2e+k1GL+KXUuCgOUryTeI76iK4VL/1+xBhSudfjb/g6LESpeLvuppbtVw
- nBWo1jAiu8NVcB/UueDYY4HEBQn32PqAWdPpffTlMCOGDBP05TkPgJaT9Fa7CB/9iC18
- VLd2SW1GGxdR4rEqNY3i2PC8RGmSUEdb2fHETWpUeKq1/VU9cE4J/KKJkhc6BRertT/h
- op9Bpie9KYY5Bj6yyvfdzzXorPb+1N/3Ld5DWLQ2W+Dco3d1gnUVcsqGKNff/aeqBBls
- fTIg==
-X-Gm-Message-State: AOJu0Yw7xbst/HO/dG8iaAXpA4Pl4Tax9xjdkn/lPRnHRd87pLNF8Jsz
- m/ZGBd2lrPKFiAcVl+2ZWbs63pwEJWuTcDvDcb9FlY0JdheWLTCMzeMrT7gGe95giPYjGtX5Ctl
- oBtU=
-X-Gm-Gg: ASbGncv5P5IeWpRQDvItU8j9pWuy3pUAzVaJ2iN+J+5fCEIN/ZyGaQMa470gFy0Ar/M
- qXJymgOZKuY1E6jTiTGKa7ntFj9wpOJtCg64FEayIpWg/wfn//TYAH+PQiJXcgc5+uGI3XCp1WG
- ZEqYs4PbW3VivKrn74CR0sd+G5uAO3rWpoEY7+IX1AcSkvdx4jztG3Jjdg15RGISN+AKG+z9fAE
- f0qnle1SY+iL/bT1b2/Xt7V7aq7tjglasx31g97kZvPxd/IvnEH8IyipP0T5JikTk5NSiFEsAUO
- YMyzmiQb0/m/f3Qv/Lrd/fT21RmzjwmlbwcVNxUtS2NUyOEIQdMHRqe9kJryqZlCmw==
-X-Google-Smtp-Source: AGHT+IHSDN8kBjQRCQ5mSO3oLw9OrLEYqGdwuk01GVJ2tJpjZEe4C415ElC+Zz1peCauC4IwLvRW7A==
-X-Received: by 2002:a5d:64a1:0:b0:38c:5e03:5d9 with SMTP id
- ffacd0b85a97d-38db48bce45mr5672009f8f.16.1738841660255; 
- Thu, 06 Feb 2025 03:34:20 -0800 (PST)
+ bh=RCLsw1b6jyw8lyUUykKTmpsXr484uY+OOog3P2Qta5M=;
+ b=lJ1+L+PIctfu1Yrhi3+/bWXV9OPHf7A7ocJMKCqUtFvL3WqNtg6sAElVV8Y8CpgYUL
+ bLtjaNzLhW4FNmKfUxCkY5QR2TaAvJnrVY0eu68bTKEN0+VoqwtMRmH5qEva9qJzjQFX
+ udvHz7/Tzv2QcvesY0yHPotGQ3ULrn96OJHjFPhRpGCpjEjbAmfGeTsK27OHlqVqcr3n
+ fqTQ0Qs0XV/RyU0WeVkFfOaX7jIqaJ9XIynbArmR6XPaNeZR2LdQwnLo8wOGKzkPhJmi
+ UtHXeaSEAd3G/aZdD9d9Y/HaDnbRxppWhU1Gxr7BVg+6w0Lpb/8DDpPeO4AlluWRqpdX
+ 0HmA==
+X-Gm-Message-State: AOJu0YzJ2WJSqv0ILcGSE33QtJFGFA7o+FOKZbIIbIr/SQPtjo4Vu+1u
+ zYnlnY4inj6erCrA0ry88VNC5+4BUC6j9i6MKJL5ey6BVm3KoKw/jPaOwxmiokdhT+vn744iBHc
+ G7GY=
+X-Gm-Gg: ASbGnctkko34hk+SLxyNKmRMNMzChe2xabp5/4j8Jdc8EuYGk/L6CkTkO8RkJC2XhdM
+ iMm9749UNk3jQpp+XtK53T5kQLUiGFCX32xo94VgkB3x0hwjOD5gAx4onN0rm6n4/QkFRU+K2/f
+ cd1N7QAcla63ZK919TexLt/OFTywx/KGV3BLxV//ahAi/aqh2RsDXvUHRt3YOIxFAKaoHEOBGZX
+ 0FtDW7fQ5j3oyIh18LEvuUgKxIO52mfJvSsT5XbO11VHlb5dvYze9qKrhyoSYD3cY8lJddnZT9h
+ EeDCQ3VZMtuQf/cSmEGJVcyVcifrIQapFKMf39qvGfdntSlEpzWuhaTwzZkANzdlFQ==
+X-Google-Smtp-Source: AGHT+IHbiUV1AIizIz2l2WR3PMewvnrCQJ0Q0iw21yckdJwBo/WQskrqRe3F/iPngpN7L30DSxhf3w==
+X-Received: by 2002:a05:600c:3b24:b0:435:1b:65ee with SMTP id
+ 5b1f17b1804b1-4390d55fcd0mr49019445e9.24.1738841646302; 
+ Thu, 06 Feb 2025 03:34:06 -0800 (PST)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-38dc33939f3sm487320f8f.17.2025.02.06.03.34.19
+ 5b1f17b1804b1-4391dc9ffd8sm16200085e9.10.2025.02.06.03.34.05
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Thu, 06 Feb 2025 03:34:19 -0800 (PST)
+ Thu, 06 Feb 2025 03:34:05 -0800 (PST)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Anton Johansson <anjo@rev.ng>, Alistair Francis <alistair@alistair23.me>,
@@ -69,18 +69,17 @@ Cc: Anton Johansson <anjo@rev.ng>, Alistair Francis <alistair@alistair23.me>,
  Thomas Huth <thuth@redhat.com>, Jason Wang <jasowang@redhat.com>,
  "Edgar E. Iglesias" <edgar.iglesias@gmail.com>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PATCH v4 12/16] tests/functional: Explicit endianness of microblaze
- assets
-Date: Thu,  6 Feb 2025 12:33:17 +0100
-Message-ID: <20250206113321.94906-13-philmd@linaro.org>
+Subject: [PATCH v4 09/16] target/microblaze: Introduce mo_endian() helper
+Date: Thu,  6 Feb 2025 12:33:14 +0100
+Message-ID: <20250206113321.94906-10-philmd@linaro.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20250206113321.94906-1-philmd@linaro.org>
 References: <20250206113321.94906-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::436;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x436.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::331;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x331.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -103,68 +102,65 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The archive used in test_microblaze_s3adsp1800.py (testing a
-big-endian target) contains a big-endian kernel. Rename using
-the _BE suffix.
-
-Similarly, the archive in test_microblazeel_s3adsp1800 (testing
-a little-endian target) contains a little-endian kernel. Rename
-using _LE suffix.
-
-These changes will help when adding cross-endian kernel tests.
+mo_endian() returns the target endianness, currently static.
 
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-Reviewed-by: Thomas Huth <thuth@redhat.com>
 ---
- tests/functional/test_microblaze_s3adsp1800.py   | 6 +++---
- tests/functional/test_microblazeel_s3adsp1800.py | 6 +++---
- 2 files changed, 6 insertions(+), 6 deletions(-)
+ target/microblaze/translate.c | 14 ++++++++++----
+ 1 file changed, 10 insertions(+), 4 deletions(-)
 
-diff --git a/tests/functional/test_microblaze_s3adsp1800.py b/tests/functional/test_microblaze_s3adsp1800.py
-index 2c4464bd05a..fac364b1ea9 100755
---- a/tests/functional/test_microblaze_s3adsp1800.py
-+++ b/tests/functional/test_microblaze_s3adsp1800.py
-@@ -15,14 +15,14 @@ class MicroblazeMachine(QemuSystemTest):
+diff --git a/target/microblaze/translate.c b/target/microblaze/translate.c
+index 0d51b2c468c..b5389d65b2e 100644
+--- a/target/microblaze/translate.c
++++ b/target/microblaze/translate.c
+@@ -708,12 +708,17 @@ static void record_unaligned_ess(DisasContext *dc, int rd,
+ }
+ #endif
  
-     timeout = 90
++static inline MemOp mo_endian(DisasContext *dc)
++{
++    return MO_TE;
++}
++
+ static bool do_load(DisasContext *dc, int rd, TCGv addr, MemOp mop,
+                     int mem_index, bool rev)
+ {
+     MemOp size = mop & MO_SIZE;
  
--    ASSET_IMAGE = Asset(
-+    ASSET_IMAGE_BE = Asset(
-         ('https://qemu-advcal.gitlab.io/qac-best-of-multiarch/download/'
-          'day17.tar.xz'),
-         '3ba7439dfbea7af4876662c97f8e1f0cdad9231fc166e4861d17042489270057')
+-    mop |= MO_TE;
++    mop |= mo_endian(dc);
  
--    def test_microblaze_s3adsp1800(self):
-+    def test_microblaze_s3adsp1800_be(self):
-         self.set_machine('petalogix-s3adsp1800')
--        self.archive_extract(self.ASSET_IMAGE)
-+        self.archive_extract(self.ASSET_IMAGE_BE)
-         self.vm.set_console()
-         self.vm.add_args('-kernel',
-                          self.scratch_file('day17', 'ballerina.bin'))
-diff --git a/tests/functional/test_microblazeel_s3adsp1800.py b/tests/functional/test_microblazeel_s3adsp1800.py
-index c382afe6bfa..5d353dba5d2 100755
---- a/tests/functional/test_microblazeel_s3adsp1800.py
-+++ b/tests/functional/test_microblazeel_s3adsp1800.py
-@@ -17,14 +17,14 @@ class MicroblazeelMachine(QemuSystemTest):
+     /*
+      * When doing reverse accesses we need to do two things.
+@@ -848,7 +853,8 @@ static bool trans_lwx(DisasContext *dc, arg_typea *arg)
+     /* lwx does not throw unaligned access errors, so force alignment */
+     tcg_gen_andi_tl(addr, addr, ~3);
  
-     timeout = 90
+-    tcg_gen_qemu_ld_i32(cpu_res_val, addr, dc->mem_index, MO_TE | MO_UL);
++    tcg_gen_qemu_ld_i32(cpu_res_val, addr, dc->mem_index,
++                        mo_endian(dc) | MO_UL);
+     tcg_gen_mov_tl(cpu_res_addr, addr);
  
--    ASSET_IMAGE = Asset(
-+    ASSET_IMAGE_LE = Asset(
-         ('http://www.qemu-advent-calendar.org/2023/download/day13.tar.gz'),
-         'b9b3d43c5dd79db88ada495cc6e0d1f591153fe41355e925d791fbf44de50c22')
+     if (arg->rd) {
+@@ -865,7 +871,7 @@ static bool do_store(DisasContext *dc, int rd, TCGv addr, MemOp mop,
+ {
+     MemOp size = mop & MO_SIZE;
  
--    def test_microblazeel_s3adsp1800(self):
-+    def test_microblazeel_s3adsp1800_le(self):
-         self.require_netdev('user')
-         self.set_machine('petalogix-s3adsp1800')
--        self.archive_extract(self.ASSET_IMAGE)
-+        self.archive_extract(self.ASSET_IMAGE_LE)
-         self.vm.set_console()
-         self.vm.add_args('-kernel', self.scratch_file('day13', 'xmaton.bin'))
-         tftproot = self.scratch_file('day13')
+-    mop |= MO_TE;
++    mop |= mo_endian(dc);
+ 
+     /*
+      * When doing reverse accesses we need to do two things.
+@@ -1019,7 +1025,7 @@ static bool trans_swx(DisasContext *dc, arg_typea *arg)
+ 
+     tcg_gen_atomic_cmpxchg_i32(tval, cpu_res_addr, cpu_res_val,
+                                reg_for_write(dc, arg->rd),
+-                               dc->mem_index, MO_TE | MO_UL);
++                               dc->mem_index, mo_endian(dc) | MO_UL);
+ 
+     tcg_gen_brcond_i32(TCG_COND_NE, cpu_res_val, tval, swx_fail);
+ 
 -- 
 2.47.1
 
