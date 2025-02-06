@@ -4,94 +4,70 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6CE77C02196
-	for <qemu-devel@archiver.kernel.org>; Thu,  6 Feb 2025 08:55:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DED41C02198
+	for <qemu-devel@archiver.kernel.org>; Thu,  6 Feb 2025 08:56:51 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tfxfS-0001SQ-6Z; Thu, 06 Feb 2025 03:55:26 -0500
+	id 1tfxga-0002Fu-OR; Thu, 06 Feb 2025 03:56:37 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1tfxfD-0001PA-3s
- for qemu-devel@nongnu.org; Thu, 06 Feb 2025 03:55:12 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
+ id 1tfxgD-0002Bl-H1; Thu, 06 Feb 2025 03:56:18 -0500
+Received: from mgamail.intel.com ([192.198.163.15])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1tfxf8-0002q4-Mt
- for qemu-devel@nongnu.org; Thu, 06 Feb 2025 03:55:10 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1738832104;
- h=from:from:reply-to:reply-to:subject:subject:date:date:
- message-id:message-id:to:to:cc:cc:mime-version:mime-version:
- content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=/7DMP8RCz4MtWOgriPg2r75pBWlGZv8A4jVtyT4iTTM=;
- b=KzlikL7NligxBy+tws/ONDnB7zjv0AvcY2IMjglF+XQIZRGGjvdtY/GLqP1xzsms/HwQDB
- KT8WEqhVV0Vr9DYb+wh3Fn80cqrUN0GpaW0eTEVgUJl2+dUs7LHqkHC6EIPZF9rJSalD/M
- HIMHg79uXqGSpkMxNaSHnpFoeqq2wfE=
-Received: from mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-562-tJbHVk_wPJapAgkX5lJ0Nw-1; Thu,
- 06 Feb 2025 03:54:58 -0500
-X-MC-Unique: tJbHVk_wPJapAgkX5lJ0Nw-1
-X-Mimecast-MFC-AGG-ID: tJbHVk_wPJapAgkX5lJ0Nw
-Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id C70941955DDD; Thu,  6 Feb 2025 08:54:54 +0000 (UTC)
-Received: from redhat.com (unknown [10.42.28.33])
- by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 9027D1800570; Thu,  6 Feb 2025 08:54:50 +0000 (UTC)
-Date: Thu, 6 Feb 2025 08:54:46 +0000
-From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
-To: Nathan Chen <nathanc@nvidia.com>
-Cc: eric.auger@redhat.com, "qemu-arm@nongnu.org" <qemu-arm@nongnu.org>,
- "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>,
- "peter.maydell@linaro.org" <peter.maydell@linaro.org>,
- "nicolinc@nvidia.com" <nicolinc@nvidia.com>,
- "ddutile@redhat.com" <ddutile@redhat.com>, Linuxarm <linuxarm@huawei.com>,
- "Wangzhou (B)" <wangzhou1@hisilicon.com>,
- jiangkunkun <jiangkunkun@huawei.com>,
- Jonathan Cameron <jonathan.cameron@huawei.com>,
- "zhangfei.gao@linaro.org" <zhangfei.gao@linaro.org>,
- Shameer Kolothum <shameerali.kolothum.thodi@huawei.com>,
- Jason Gunthorpe <jgg@nvidia.com>
-Subject: Re: [RFC PATCH 0/5] hw/arm/virt: Add support for user-creatable
- nested SMMUv3
-Message-ID: <Z6R41tYpGR-mofbT@redhat.com>
-References: <20241108125242.60136-1-shameerali.kolothum.thodi@huawei.com>
- <Z5uiGnAxUf4jXTEI@redhat.com>
- <7ecabe74e0514367baf28d67675e5db8@huawei.com>
- <fc91e1a798324390b2a556fae5d40f46@huawei.com>
- <20250131142404.GP5556@nvidia.com>
- <3efcea1171af4b2f81be842f2c55fe51@huawei.com>
- <20250131145411.GR5556@nvidia.com>
- <20039bbc40df453a8a41a863d74b9ff9@huawei.com>
- <c292ab40-3620-4e72-b043-4e3cbd7fd297@redhat.com>
- <5709592d-cd1c-4894-a1d4-c0c4c61a2e07@nvidia.com>
+ (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
+ id 1tfxg8-0002ul-Rp; Thu, 06 Feb 2025 03:56:11 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+ d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+ t=1738832169; x=1770368169;
+ h=date:from:to:cc:subject:message-id:references:
+ mime-version:in-reply-to;
+ bh=fQR0TLXvClroks2hWUKN6sdJ/ANfiOsQYzy7EqbMrBY=;
+ b=JQ2KBkOORLW4UabyNk565UpRPkb6jXtT3u4hge9Cz/lc2dK1JmWDW97+
+ 6PYRYocENKvfTDlLXFF1PINhHMjavY4gqK/7N4xRKoqBZnn9oECycv2Ed
+ Rv7UjYq1NTEkftKz+nKwmZ0WfroFyEHuARe8VBhyioRlMDujdBMzpLeYP
+ ouDiY6MUZXfJVMV0X1zyPaslWV3rjsDvI3a7A/R/WuM8WA3W/oBwpYdcq
+ uOnjBs2e+ujPiqpjXC1IAfyJCX8LuHTxVEln4Neqwsm6szhjG8O2k7znq
+ Mxi/1BbDUrYopCM34PwIyDf7moPNlve7qal3v6D4SYRqm+bK3BpIO/viD Q==;
+X-CSE-ConnectionGUID: SB2dIfk6TJK3n5E22BoOpQ==
+X-CSE-MsgGUID: gX+Wl2UcS3CJvr3PHYrCHQ==
+X-IronPort-AV: E=McAfee;i="6700,10204,11336"; a="39581772"
+X-IronPort-AV: E=Sophos;i="6.13,264,1732608000"; d="scan'208";a="39581772"
+Received: from fmviesa008.fm.intel.com ([10.60.135.148])
+ by fmvoesa109.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 06 Feb 2025 00:56:05 -0800
+X-CSE-ConnectionGUID: tKe42gNZRVW18Dv+i0Xeog==
+X-CSE-MsgGUID: ikoylS+lScihDs/eA7etcg==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.13,264,1732608000"; d="scan'208";a="111350079"
+Received: from liuzhao-optiplex-7080.sh.intel.com (HELO localhost)
+ ([10.239.160.39])
+ by fmviesa008.fm.intel.com with ESMTP; 06 Feb 2025 00:56:03 -0800
+Date: Thu, 6 Feb 2025 17:15:33 +0800
+From: Zhao Liu <zhao1.liu@intel.com>
+To: Paolo Bonzini <pbonzini@redhat.com>
+Cc: qemu-devel@nongnu.org, qemu-rust@nongnu.org
+Subject: Re: [PATCH 10/10] rust: bindings for MemoryRegionOps
+Message-ID: <Z6R9tSD5T5tkCYsP@intel.com>
+References: <20250117194003.1173231-1-pbonzini@redhat.com>
+ <20250117194003.1173231-11-pbonzini@redhat.com>
+ <Z5d4PTtIRhgZ0tss@intel.com>
+ <CABgObfYc5ccC16=K7KVmdLP-jmvwVbxqv1L6c4Oe55MSK4ndng@mail.gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <5709592d-cd1c-4894-a1d4-c0c4c61a2e07@nvidia.com>
-User-Agent: Mutt/2.2.13 (2024-03-09)
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=berrange@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+In-Reply-To: <CABgObfYc5ccC16=K7KVmdLP-jmvwVbxqv1L6c4Oe55MSK4ndng@mail.gmail.com>
+Received-SPF: pass client-ip=192.198.163.15; envelope-from=zhao1.liu@intel.com;
+ helo=mgamail.intel.com
+X-Spam_score_int: -43
+X-Spam_score: -4.4
+X-Spam_bar: ----
+X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -104,76 +80,56 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, Feb 05, 2025 at 12:53:42PM -0800, Nathan Chen wrote:
+> > > +pub struct MemoryRegionOps<T>(
+> > > +    bindings::MemoryRegionOps,
+> > > +    // Note: quite often you'll see PhantomData<fn(&T)> mentioned when discussing
+> > > +    // covariance and contravariance; you don't need any of those to understand
+> > > +    // this usage of PhantomData.  Quite simply, MemoryRegionOps<T> *logically*
+> > > +    // holds callbacks that take an argument of type &T, except the type is erased
+> > > +    // before the callback is stored in the bindings::MemoryRegionOps field.
+> > > +    // The argument of PhantomData is a function pointer in order to represent
+> > > +    // that relationship; while that will also provide desirable and safe variance
+> > > +    // for T, variance is not the point but just a consequence.
+> > > +    PhantomData<fn(&T)>,
+> > > +);
+> >
+> > Wow, it can be wrapped like this!
 > 
+> I like your enthusiasm but I'm not sure what you refer to. ;) Maybe
+> it's worth documenting this pattern, so please tell me more (after
+> your holidays).
+
+Throughout the entire holiday, I couldn't think of a better way to
+express this. I find it particularly useful when wrapping multiple
+callbacks. In the future, I want to explore more use cases where this
+pattern can be applied.
+
+> > > +impl MemoryRegion {
+> > > +    // inline to ensure that it is not included in tests, which only
+> > > +    // link to hwcore and qom.  FIXME: inlining is actually the opposite
+> > > +    // of what we want, since this is the type-erased version of the
+> > > +    // init_io function below.  Look into splitting the qemu_api crate.
+> >
+> > Ah, I didn't understand the issue described in this comment. Why would
+> > inlining affect the linking of tests?
 > 
-> On 1/31/2025 8:08 AM, Eric Auger wrote:
-> > > > > > > And Qemu does some checking to make sure that the device is indeed
-> > > > > > associated
-> > > > > > > with the specified phys-smmuv3.  This can be done going through the
-> > > > > > sysfs path checking
-> > > > > > > which is what I guess libvirt is currently doing to populate the
-> > > > topology.
-> > > > > > So basically
-> > > > > > > Qemu is just replicating that to validate again.
-> > > > > > I would prefer that iommufd users not have to go out to sysfs..
-> > > > > > 
-> > > > > > > Or another option is extending the IOMMU_GET_HW_INFO IOCTL to
-> > > > > > return the phys
-> > > > > > > smmuv3 base address which can avoid going through the sysfs.
-> > > > > > It also doesn't seem great to expose a physical address. But we could
-> > > > > > have an 'iommu instance id' that was a unique small integer?
-> > > > > Ok. But how the user space can map that to the device?
-> > > > Why does it need to?
-> > > > 
-> > > > libvirt picks some label for the vsmmu instance, it doesn't matter
-> > > > what the string is.
-> > > > 
-> > > > qemu validates that all of the vsmmu instances are only linked to PCI
-> > > > device that have the same iommu ID. This is already happening in the
-> > > > kernel, it will fail attaches to mismatched instances.
-> > > > 
-> > > > Nothing further is needed?
-> > > -device pxb-pcie,id=pcie.1,bus_nr=8,bus=pcie.0 \
-> > > -device pcie-root-port,id=pcie.port1,bus=pcie.1,chassis=1 \
-> > > -device arm-smmuv3-accel,bus=pcie.1,id=smmuv1 \
-> > I don't get what is the point of adding such an id if it is not
-> > referenced anywhere?
-> > 
-> > Eric
-> 
-> Daniel mentions that the host-to-guest SMMU pairing must be chosen such that
-> it makes conceptual sense w.r.t. the guest NUMA to host NUMA pairing [0].
-> The current implementation allows for incorrect host to guest numa node
-> pairings, e.g. pSMMU has affinity to host numa node 0, but it’s paired with
-> a vSMMU paired with a guest numa node pinned to host numa node 1.
-> 
-> By specifying the host SMMU id, we can explicitly pair a host SMMU with a
-> guest SMMU associated with the correct PXB NUMA node, vs. implying the
-> host-to-guest SMMU pairing based on what devices are attached to the PXB.
-> While it would not completely prevent the incorrect pSMMU/vSMMU pairing
-> w.r.t. host to guest numa node pairings, specifying the pSMMU id would make
-> the implications of host to guest numa node pairings more clear when
-> specifying a vSMMU instance.
+> If you don't inline it, do_init_io will always be linked into the
+> tests because it is a non-generic function. The tests then fail to
+> link, because memory_region_init_io is undefined.
 
-You've not specified any host SMMU id in the above CLI args though,
-only the PXB association.
+I find even if I drop the `inline` attribution, the test.rs can still be
+compiled (by `make check`), I think it's because test.rs hasn't involved
+memory related tests so that do_init_io isn't linked into test.rs.
 
-It needs something like
+> This is ugly because do_init_io exists *exactly* to extract the part
+> that is not generic. (See
+> https://users.rust-lang.org/t/soft-question-significantly-improve-rust-compile-time-via-minimizing-generics/103632/8
+> for an example of this; I think there's even a procedural macro crate
+> that does that for you, but I can't find it right now).
 
- -device arm-smmuv3-accel,bus=pcie.1,id=smmuv1,host-smmu=XXXXX
-
-where 'XXXX' is some value to identify the host SMMU
-
-With regards,
-Daniel
--- 
-|: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
-|: https://libvirt.org         -o-            https://fstop138.berrange.com :|
-|: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
+Thanks! I see. I agree to keep `inline` anyway.
 
 
