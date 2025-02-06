@@ -4,73 +4,73 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id F1F92C02194
-	for <qemu-devel@archiver.kernel.org>; Thu,  6 Feb 2025 17:31:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4C691C02194
+	for <qemu-devel@archiver.kernel.org>; Thu,  6 Feb 2025 17:32:22 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tg5it-0000nt-4S; Thu, 06 Feb 2025 12:31:31 -0500
+	id 1tg5jI-0000y7-TJ; Thu, 06 Feb 2025 12:31:57 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1tg5ir-0000nW-J2
- for qemu-devel@nongnu.org; Thu, 06 Feb 2025 12:31:29 -0500
-Received: from mail-yb1-xb31.google.com ([2607:f8b0:4864:20::b31])
+ id 1tg5jG-0000w6-4m
+ for qemu-devel@nongnu.org; Thu, 06 Feb 2025 12:31:54 -0500
+Received: from mail-yb1-xb29.google.com ([2607:f8b0:4864:20::b29])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1tg5iq-0002XR-4R
- for qemu-devel@nongnu.org; Thu, 06 Feb 2025 12:31:29 -0500
-Received: by mail-yb1-xb31.google.com with SMTP id
- 3f1490d57ef6-e5b3391b033so985529276.1
- for <qemu-devel@nongnu.org>; Thu, 06 Feb 2025 09:31:27 -0800 (PST)
+ id 1tg5jE-0002ZC-Kk
+ for qemu-devel@nongnu.org; Thu, 06 Feb 2025 12:31:53 -0500
+Received: by mail-yb1-xb29.google.com with SMTP id
+ 3f1490d57ef6-e5b32f64ffeso1032718276.3
+ for <qemu-devel@nongnu.org>; Thu, 06 Feb 2025 09:31:52 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1738863087; x=1739467887; darn=nongnu.org;
+ d=linaro.org; s=google; t=1738863111; x=1739467911; darn=nongnu.org;
  h=cc:to:subject:message-id:date:from:in-reply-to:references
  :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=dfU5V4zjdma7aQoc+LWVG7ZW26tugMNTUQmoXgCYcZM=;
- b=JVl4dvI4BPZc2uErHK+ORnJa4LdD2g18vAn3/WXzVMr1h7waFqiCr5OFAylqKB6/WO
- A3ZLn9oRwHWbiV5Qo1Uw7fbt1HF2brvhcffkS8/Nf0D67ILocY/tNQRatxfiBimKr6NF
- 0TqCdwLA0xLHhdHcJEyxc0MkRdz19/oqPy1WkHbNhRMaDubWrOaoCQTn8IeYVc0K6lBW
- g6yp20UPgIAo75GBBweP6EZmJ3oV3TnVn8+8kf+57KDufnL5yJsnEaB8PhVeEjeY+faM
- /ozq4gsPLJJXuA+c+3ofyCGtiUWMdU//dtmB1UEfCEIGJn/bnvtaJyYUkKs5b5W8pddN
- KAbQ==
+ bh=idp8YagOT72BvAuzPg0RgX1NZKUc5vKVHQTzZYr8yAg=;
+ b=XoVEuxB0Y3RgqsqnrbbwCy3HJBToBhQ/5g1ePSiSq60JLi+coc6EbiQKiaEey4opBz
+ JNUbv2mj5r2ZV6msBwSo37sDDE47ou4Zy0Y/fGBckY99AUkYpDhBJ4DCfb4dzskEONtJ
+ bPTFzmW5wX51T3GCy5CBd4WE/HNoLa74VvJxKzSt4NI4OF6U3fLhWtlatjKw6KSkaq38
+ orXkpkRf3xJh6BUwTY4dKcqlRFYzeyEYX9q2F9oopiyKMuw6C5iObENY1PNRdwANzjK2
+ lG6LVLRj3Fp19hI58ptogsbvyNux26ezDKqiagRn+74lfYmPz3wwYVDDw7GWgZp3zJcY
+ YzzQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1738863087; x=1739467887;
+ d=1e100.net; s=20230601; t=1738863111; x=1739467911;
  h=cc:to:subject:message-id:date:from:in-reply-to:references
  :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=dfU5V4zjdma7aQoc+LWVG7ZW26tugMNTUQmoXgCYcZM=;
- b=YobMShIvXoujfD7NRfLngaNtZ0pI5jczZd1Z16dh9P3ID4gAHklyQY3OFTpGNvS8IY
- /98FcF2qW/lxLyr8wOmDeqbPriXpKXAFWmC5xmUtJ3TvOlkgsryv9KSkXg/Vx4mjNhBf
- WYY4mn7Hbh4OLEGkJjGDbCKiqNjfMnvcw8910X1znLPoq/6tAVh1+m22aGd5eHNre2FR
- Ysjdu/qvIrQgMODvEtE9yC/QFIwpwxnkC+XU4YZig1p6X9fxt1GlC7nsM5vr8jcb94z1
- 2lrHGZtTgy8Ho/lhtjPGRLNDNzlD9FZc6tKkJI+D9tH73BhGlBZDU1jpPPqwKINNrh85
- X6zw==
-X-Gm-Message-State: AOJu0YxCNi15iNtCsIVNjc+LslZFxlhazJIhJ7AWWn5Bt+QF/XoH3UuH
- i7/r9FWcUAkv0y9whLNCB1prDMAhdYvOQqrJ0UWfmUlVhLjWkhGaXUb5u3q33jd/mQDuQbszxid
- w9barPIpNTfycmL4AX9rEvw/v6K9khpge5JatbmvC6NKvuSko
-X-Gm-Gg: ASbGncvkpv8XzjGKCV3cl48wTXIGlpQYwSzmbNcAZBANHDaeJkreps/Dwqc9Q2rvsK+
- xf6pyM9lZCfe0Gc2ZD2CZ0o/v9FF+F2hC6mGcdPmKcWNrxOblZ1JIe+CuZrJzDD7xJ+qPRqIYYw
+ bh=idp8YagOT72BvAuzPg0RgX1NZKUc5vKVHQTzZYr8yAg=;
+ b=wyuwyuXhuBen3Ak/M9CCkYfUfxcHz3sB2xGDExYakvMH0WvVYUSwltHAuj92hnXpih
+ 0TRpHhBTQMl0cJp59ENcwDUJH08RcszA3dv7IPIAj2qotibCvQyIUZYpKEHkB/WI6MEJ
+ wyk1U+SUp01eHkgQkvUZqpfSfuYjEtLJZwNGvrVUnbzNzFDRjchuJ6MeJg7mWf+6dm4B
+ gqTBGlrQCxHuifgF+Zwj2Vpkc3WB+5QdMO0RjPqUURRzv6qkUewBl79LfjH7v+ScEbBH
+ 0gCZrxhQyLhpTk29yTdSpivEOo4ZnN328rwLqDDYz+hHJMG8nxRQCbpvsgx2osiBvycN
+ rIbA==
+X-Gm-Message-State: AOJu0YzUSx8ImiZC1uVIXr07jVSp3UA66UARZhrEgJC3U40KuYdlqwKP
+ ktm9n0+F62OCvS7dKj7Za+t9SzVeItv59RwL6SkTTwQt+h+jJdlDoDrEulLwkCRLwmuXZJk3JPm
+ gKjZB9dDgYDBOCNv3SiF+qR2HV5ho+2GaoFjq8w==
+X-Gm-Gg: ASbGncvxQ9Qbuau6ajQosww8JJn4jheh4gkwq44finAp/jTSySuTn3aThswnU/S2bnd
+ n37TqhXQjc5lVS/jcPfsfivPBoGWYu+XFBTqh8ATgrYnaR7R5+7bPK9odgNeI2oWvpZS74KPQvQ
  ==
-X-Google-Smtp-Source: AGHT+IFghz/VehSaPyNbvFNioixfKO2sfjBiIuJt2uo6Sqqdulb8EWirDXj3yEvbzo+SEWqHVPeRwleTv3z9e8r39AU=
-X-Received: by 2002:a05:6902:18c1:b0:e5b:42c7:8f21 with SMTP id
- 3f1490d57ef6-e5b42c79005mr1374693276.7.1738863086841; Thu, 06 Feb 2025
- 09:31:26 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IE1nZLSX+P/4ihTYO5/YZFdgD7OmYyJjhGHhTJZjP/BWKOl2N4nrAvBizblccNqGdW6UJfV11gtLDQMEswKm+E=
+X-Received: by 2002:a05:6902:2484:b0:e5a:e6eb:d44f with SMTP id
+ 3f1490d57ef6-e5b259cd477mr7119331276.6.1738863111469; Thu, 06 Feb 2025
+ 09:31:51 -0800 (PST)
 MIME-Version: 1.0
 References: <20250204092112.26957-1-shentey@gmail.com>
- <20250204092112.26957-16-shentey@gmail.com>
-In-Reply-To: <20250204092112.26957-16-shentey@gmail.com>
+ <20250204092112.26957-18-shentey@gmail.com>
+In-Reply-To: <20250204092112.26957-18-shentey@gmail.com>
 From: Peter Maydell <peter.maydell@linaro.org>
-Date: Thu, 6 Feb 2025 17:31:14 +0000
-X-Gm-Features: AWEUYZn70VInlOTWSxL-cdW3Siy61BHBoAkILP2bDGcQQ2mpJrJXoFMZzqcBEMQ
-Message-ID: <CAFEAcA__+Y_zQpeAck-EUB38z3OdRvDPxnD_KZewOqTApfR9OQ@mail.gmail.com>
-Subject: Re: [PATCH v2 15/18] hw/arm/fsl-imx8mp: Add USB support
+Date: Thu, 6 Feb 2025 17:31:39 +0000
+X-Gm-Features: AWEUYZkNvJQHpOvvbvz9bYLCSlaCYZZuFmWYkOzOsjd2fmF2SAGxMy1cBxklw_0
+Message-ID: <CAFEAcA-U8dmCVfD8n+Gc1D7z1gGyUa8ZXqWN0cMmUG1cxHreWg@mail.gmail.com>
+Subject: Re: [PATCH v2 17/18] hw/arm/fsl-imx8mp: Add on-chip RAM
 To: Bernhard Beschow <shentey@gmail.com>
 Cc: qemu-devel@nongnu.org, qemu-arm@nongnu.org, 
  Andrey Smirnov <andrew.smirnov@gmail.com>, Paolo Bonzini <pbonzini@redhat.com>
 Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::b31;
- envelope-from=peter.maydell@linaro.org; helo=mail-yb1-xb31.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::b29;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yb1-xb29.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -95,16 +95,12 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On Tue, 4 Feb 2025 at 09:21, Bernhard Beschow <shentey@gmail.com> wrote:
 >
-> Split the USB MMIO regions to better keep track of the implemented vs.
-> unimplemented regions.
->
 > Signed-off-by: Bernhard Beschow <shentey@gmail.com>
 > ---
->  docs/system/arm/imx8mp-evk.rst |  1 +
->  include/hw/arm/fsl-imx8mp.h    | 12 +++++++++++
->  hw/arm/fsl-imx8mp.c            | 37 ++++++++++++++++++++++++++++++++--
->  hw/arm/Kconfig                 |  1 +
->  4 files changed, 49 insertions(+), 2 deletions(-)
+>  include/hw/arm/fsl-imx8mp.h |  1 +
+>  hw/arm/fsl-imx8mp.c         | 11 +++++++++++
+>  2 files changed, 12 insertions(+)
+>
 
 Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
 
