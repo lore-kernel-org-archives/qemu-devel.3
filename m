@@ -4,77 +4,104 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 25F76C02198
-	for <qemu-devel@archiver.kernel.org>; Thu,  6 Feb 2025 05:55:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3DF08C02196
+	for <qemu-devel@archiver.kernel.org>; Thu,  6 Feb 2025 06:02:41 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tfuqz-0000lc-9h; Thu, 06 Feb 2025 00:55:09 -0500
+	id 1tfuxb-0002AI-22; Thu, 06 Feb 2025 01:01:59 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1tfuqu-0000hX-9h
- for qemu-devel@nongnu.org; Thu, 06 Feb 2025 00:55:05 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1tfuqq-0007vS-Es
- for qemu-devel@nongnu.org; Thu, 06 Feb 2025 00:55:02 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1738821298;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=dIYDusc2XcNruvmjjRc5suAl1eeNqwdGNMyK8ZsRFEg=;
- b=L/R0yUPqJzhQ/xjUNakRIDIOb4K5p/v6PSsd7EgJpLwpOvLR9UXE9MLnIhH4w1AdZfeoNn
- 55hTnP4x6FZXogFy46fQi+33iFWj7NQUOawv9SYbrbzbquJWDoXe67gFlAKOSBOOn3Sa3W
- 6qN9PoRlaqgD5Vt83EzhnXFW+dpezZE=
-Received: from mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-103-vFEVTo55OgKUCExPPCipNA-1; Thu,
- 06 Feb 2025 00:54:54 -0500
-X-MC-Unique: vFEVTo55OgKUCExPPCipNA-1
-X-Mimecast-MFC-AGG-ID: vFEVTo55OgKUCExPPCipNA
-Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id DC1ED1955D82; Thu,  6 Feb 2025 05:54:52 +0000 (UTC)
-Received: from blackfin.pond.sub.org (unknown [10.39.192.40])
- by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 20026195608D; Thu,  6 Feb 2025 05:54:51 +0000 (UTC)
-Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
- id 056DF21E6A28; Thu, 06 Feb 2025 06:54:49 +0100 (CET)
-From: Markus Armbruster <armbru@redhat.com>
-To: Eric Blake <eblake@redhat.com>
-Cc: qemu-devel@nongnu.org,  qemu-block@nongnu.org,  Kevin Wolf
- <kwolf@redhat.com>,  Hanna Reitz <hreitz@redhat.com>,  Vladimir
- Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
-Subject: Re: [PATCH 2/2] nbd/server: Allow users to adjust handshake limit
- in QMP
-In-Reply-To: <ia55sowaqjkpwbq7yum42m5vuw5octffzx6sqsvwsnsueqaf54@cetnceyik5op>
- (Eric Blake's message of "Wed, 5 Feb 2025 14:36:05 -0600")
-References: <20250203222722.650694-4-eblake@redhat.com>
- <20250203222722.650694-6-eblake@redhat.com>
- <87h6587udf.fsf@pond.sub.org>
- <ia55sowaqjkpwbq7yum42m5vuw5octffzx6sqsvwsnsueqaf54@cetnceyik5op>
-Date: Thu, 06 Feb 2025 06:54:48 +0100
-Message-ID: <87ikpnvcrb.fsf@pond.sub.org>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+ (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
+ id 1tfuxP-00028m-CV
+ for qemu-devel@nongnu.org; Thu, 06 Feb 2025 01:01:49 -0500
+Received: from mail-pl1-x635.google.com ([2607:f8b0:4864:20::635])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
+ id 1tfuxN-0000NQ-0m
+ for qemu-devel@nongnu.org; Thu, 06 Feb 2025 01:01:47 -0500
+Received: by mail-pl1-x635.google.com with SMTP id
+ d9443c01a7336-21f11b0e580so11482505ad.1
+ for <qemu-devel@nongnu.org>; Wed, 05 Feb 2025 22:01:44 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=daynix-com.20230601.gappssmtp.com; s=20230601; t=1738821703; x=1739426503;
+ darn=nongnu.org; 
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=eniVEduT0ZKIKFpU+5+JfUDYGtY7H1aYn6MCC6+wZTQ=;
+ b=Z7nkKsGfTkB1B55ebn3pf4jyA00KpYY8u6vaCbwNtS9RNqAshHn8xmaAIi6Ra9xjYy
+ uqM/4uv4t9JUdCtrvuyI4uWfILF+lZQGwDnJxMTjA8mAAkVsEAeWnNaztGl8glgSMjEI
+ oGgGmpotIC+Az4RokAGzrlVQ1youGhHSE8w98OYqfeKkpvncJnDkmwfFZLteyeIabGMj
+ PFTlECcpr0zpASRhbMDvH/AHCdiT9lE0/QHdiU6WZKyqTPFpWwFAanTdI4vVXQOYMTme
+ 4JIDthFWLSMO6w6BYpPjMLPFXEMtMoxDB+UC9UjLp9ergSzcQU+Ia1EP7o2nIiibBp/c
+ heLQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1738821703; x=1739426503;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=eniVEduT0ZKIKFpU+5+JfUDYGtY7H1aYn6MCC6+wZTQ=;
+ b=d4xNFrr22sJvMnT20VejB/m8ib359hlVDb7aL8e4JHgdHKY/YmTiQt91AjBsx/xZdN
+ yR+lMKuP2VXFHlOyganmV/51gYMhok1YMRVCkwpBi+bZC3hs3Pno4htjVlvrMC0xOtUa
+ Rkz18nE1ZSc3LxR1QuQJ87BrPpsit1/fEHZJznUjlELNtCYXA7wPPZFxrN8QLfqnIZyg
+ CPHr6a2xgKKRz4bx7Em7Rw8araqKd6sL/68SZBZPLAmqnf4/vBAdIbikJo38csMIB8iw
+ 6AN3QLmtftGogMi8ZxVhI0AdgQuspUduritYy7Pfvp5be0pb99dg5rgIwYRw5+xuV4qC
+ 3cpA==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCXUY9CLhgHekeoSH+59d8aBYE5o/W3REPy1VZvG7QzUFePdit2no2sA8Eche8dz9gKEx4KE1JmHE5+U@nongnu.org
+X-Gm-Message-State: AOJu0YykOLIBvLeexxIKrkEpSu1KLackaFOWYodqGrsyqToQIiehY8Em
+ 4xAfBO9FBsd9V9JqLP+P65p8NxOOMiRuKCS1gXy/w1AhvAqGDyD28TTOsNk7dFg=
+X-Gm-Gg: ASbGncukJ5YhX4lmLYPqp7cLeFhT46/FIkRzVFR2v7qFWTnUHV502R/Ia2o43NUAPtK
+ T+sbtGXux23wRN6imEv2Y84wqQNx+Ix9AHEZqaj9a3l4+zKlgEmx/kPIWE2ZxI9I2ISeBIpVDdb
+ 0DecKxfNSWOIL0wEka8Yo6kwG1bbylCyFOifAHF6IGh+toFX8XlZTFxGfZ6xszKQArQhXD9v+z5
+ ld3ZaK8RYxm4zdSorHQcsFGTFdu/PRo50Gq82tzcnJabyJVte2/E3qJZ1p+OcBWOd/ZLKu1aB5c
+ BQi2fO8OmVrIEd0hDCVqsLFtJePl
+X-Google-Smtp-Source: AGHT+IHe67iEggMKI40cJyL5Bwv/gfl4M3u9q+e/ScdIb5Md431zfJKqlEYic9kKigxjFLTkoDHcAQ==
+X-Received: by 2002:a17:902:e5c7:b0:21f:b6f:3f39 with SMTP id
+ d9443c01a7336-21f17ef010bmr98045995ad.34.1738821703327; 
+ Wed, 05 Feb 2025 22:01:43 -0800 (PST)
+Received: from [157.82.207.107] ([157.82.207.107])
+ by smtp.gmail.com with ESMTPSA id
+ 98e67ed59e1d1-2fa09a183c8sm511520a91.14.2025.02.05.22.01.38
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Wed, 05 Feb 2025 22:01:42 -0800 (PST)
+Message-ID: <44b21e4c-b076-41bb-9564-1e7a8cf4a450@daynix.com>
+Date: Thu, 6 Feb 2025 15:01:36 +0900
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=armbru@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v4 2/4] qdev-properties: Accept bool for OnOffAuto
+To: Markus Armbruster <armbru@redhat.com>
+Cc: Jason Wang <jasowang@redhat.com>,
+ Dmitry Fleytman <dmitry.fleytman@gmail.com>,
+ Sriram Yagnaraman <sriram.yagnaraman@ericsson.com>,
+ "Michael S. Tsirkin" <mst@redhat.com>, Luigi Rizzo <rizzo@iet.unipi.it>,
+ Giuseppe Lettieri <g.lettieri@iet.unipi.it>,
+ Vincenzo Maffione <v.maffione@gmail.com>,
+ Andrew Melnychenko <andrew@daynix.com>,
+ Yuri Benditovich <yuri.benditovich@daynix.com>,
+ Paolo Bonzini <pbonzini@redhat.com>, =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?=
+ <berrange@redhat.com>, Eduardo Habkost <eduardo@habkost.net>,
+ Michael Roth <michael.roth@amd.com>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Yanan Wang <wangyanan55@huawei.com>, Zhao Liu <zhao1.liu@intel.com>,
+ Lei Yang <leiyang@redhat.com>, qemu-devel@nongnu.org
+References: <20250108-virtio-v4-0-cbf0aa04c9f9@daynix.com>
+ <20250108-virtio-v4-2-cbf0aa04c9f9@daynix.com> <87cyfwxveo.fsf@pond.sub.org>
+Content-Language: en-US
+From: Akihiko Odaki <akihiko.odaki@daynix.com>
+In-Reply-To: <87cyfwxveo.fsf@pond.sub.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::635;
+ envelope-from=akihiko.odaki@daynix.com; helo=mail-pl1-x635.google.com
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -90,52 +117,109 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Eric Blake <eblake@redhat.com> writes:
+On 2025/02/06 0:29, Markus Armbruster wrote:
+> Akihiko Odaki <akihiko.odaki@daynix.com> writes:
+> 
+>> Accept bool literals for OnOffAuto properties for consistency with bool
+>> properties. This enables users to set the "on" or "off" value in a
+>> uniform syntax without knowing whether the "auto" value is accepted.
+>> This behavior is especially useful when converting an existing bool
+>> property to OnOffAuto or vice versa.
+>>
+>> Signed-off-by: Akihiko Odaki <akihiko.odaki@daynix.com>
+>> ---
+>>   hw/core/qdev-properties.c | 17 ++++++++++++++++-
+>>   1 file changed, 16 insertions(+), 1 deletion(-)
+>>
+>> diff --git a/hw/core/qdev-properties.c b/hw/core/qdev-properties.c
+>> index 434a76f5036e..0081d79f9b7b 100644
+>> --- a/hw/core/qdev-properties.c
+>> +++ b/hw/core/qdev-properties.c
+>> @@ -491,6 +491,21 @@ const PropertyInfo qdev_prop_string = {
+>>       .set   = set_string,
+>>   };
+>>   
+>> +static void set_on_off_auto(Object *obj, Visitor *v, const char *name,
+>> +                            void *opaque, Error **errp)
+>> +{
+>> +    Property *prop = opaque;
+>> +    int *ptr = object_field_prop_ptr(obj, prop);
+>> +    bool value;
+>> +
+>> +    if (visit_type_bool(v, name, &value, NULL)) {
+>> +        *ptr = value ? ON_OFF_AUTO_ON : ON_OFF_AUTO_OFF;
+>> +        return;
+>> +    }
+>> +
+>> +    qdev_propinfo_set_enum(obj, v, name, opaque, errp);
+>> +}
+>> +
+>>   /* --- on/off/auto --- */
+>>   
+>>   const PropertyInfo qdev_prop_on_off_auto = {
+>> @@ -498,7 +513,7 @@ const PropertyInfo qdev_prop_on_off_auto = {
+>>       .description = "on/off/auto",
+>>       .enum_table = &OnOffAuto_lookup,
+>>       .get = qdev_propinfo_get_enum,
+>> -    .set = qdev_propinfo_set_enum,
+>> +    .set = set_on_off_auto,
+>>       .set_default_value = qdev_propinfo_set_default_value_enum,
+>>   };
+> 
+> The qdev properties defined with DEFINE_PROP_ON_OFF_AUTO() now
+> additionally accept bool.
+> 
+> The commit message tries to explain why this change is useful, but it
+> leaves me confused.
+> 
+> Does this solve a problem with existing properties?  If yes, what
+> exactly is the problem?
+> 
+> Or does this enable new uses of DEFINE_PROP_ON_OFF_AUTO()?
+> 
+> I'm trying to understand, but my gut feeling is "bad idea".
+> 
+> Having multiple ways to express the same thing is generally undesirable.
+> In this case, "foo": "on" and "foo": true, as well as "foo": "off" and
+> "foo": false.
+> 
+> Moreover, OnOffAuto then has two meanings: straightfoward enum as
+> defined in the QAPI schema, and the funny qdev property.  This is
+> definitely a bad idea.  DEFINE_PROP_T(), where T is some QAPI type,
+> should accept *exactly* the values of T.  If these properties need to
+> accept something else, use another name to not invite confusion.
+> 
+> If I understand the cover letter correctly, you want to make certain
+> bool properties tri-state for some reason.  I haven't looked closely
+> enough to judge whether that makes sense.  But do you really have to
+> change a whole bunch of unrelated properties to solve your problem?
+> This is going to be a very hard sell.
+> 
 
-> On Wed, Feb 05, 2025 at 07:55:56AM +0100, Markus Armbruster wrote:
->> Eric Blake <eblake@redhat.com> writes:
->> 
->> > Although defaulting the handshake limit to 10 seconds was a nice QoI
->> > change to weed out intentionally slow clients, it can interfere with
->> > integration testing done with manual NBD_OPT commands over 'nbdsh
->> > --opt-mode'.  Expose a QMP knob 'handshake-max-secs' to allow the user
->> > to alter the timeout away from the default.
->> >
->> > The parameter name here intentionally matches the spelling of the
->> > constant added in commit fb1c2aaa98, and not the command-line spelling
->> > added in the previous patch for qemu-nbd; that's because in QMP,
->> > longer names serve as good self-documentation, and unlike the command
->> > line, machines don't have problems generating longer spellings.
->> >
->
->> >  { 'struct': 'NbdServerOptions',
->> >    'data': { 'addr': 'SocketAddress',
->> > +            '*handshake-max-secs': 'uint32',
->> >              '*tls-creds': 'str',
->> >              '*tls-authz': 'str',
->> >              '*max-connections': 'uint32' } }
->> 
->> Standard question on time: are we confident the granularity will
->> suffice?
->
-> The default if this is unspecified is 10 seconds.  Anything subsecond
-> requires a fast negotiation between client and server; the more likely
-> use of this parameter is setting it extremely large (or to 0 to
-> disable) in order to allow lengthy gdb sessions without the timeout
-> cutting things short.  So I think seconds is okay.
+I change various virtio properties because they all have a common 
+problem. The problem is, when the host does not support a virtio 
+capability, virtio devices automatically set capability properties false 
+even if the user explicitly sets them true. This problem can be solved 
+using an existing mechanism, OnOffAuto, which differentiates the "auto" 
+state and explicit the "on" state.
 
-ACK
+However, converting bool to OnOffAuto surfaces another problem: they 
+disagree how "on" and "off" should be written. Please note that the 
+disagreement already exists and so it is nice to solve anyway.
 
->> On naming...  We use "seconds" (StatsUnit in qapi/stats.json), and "sec"
->> (SnapshotInfo in qapi/block-core.json), but not "secs".  Do we care?
->
-> Avoiding abbreviations and using 'seconds' is fine by me, especially
-> since this won't be typed by many users but remains more of a tool for
-> use in a debugging arsenel.  I can respin with the longer name, but
-> will wait for any other review comments first.
+This patch tries to solve it by tolerating bool values for OnOffAuto. As 
+you pointed out, this approach has a downside: it makes OnOffAuto more 
+complicated by having multiple ways to express the same thing.
 
-I like "seconds".
+Another approach is to have one unified way to express "on"/"off" for 
+bool and OnOffAuto. This will give three options in total:
 
-Thanks!
+1. Let OnOffAuto accept JSON bool and "on"/"off" (what this patch does)
+2. Let OnOffAuto and bool accept JSON bool and deprecate "on"/"off"
+3. Let OnOffAuto and bool accept "on"/"off" and deprecate JSON bool
 
+I'm fine with either of these approaches; they are at least better than 
+the current situation where users need to care if the value is OnOffAuto 
+or bool when they just want to express on/off. Please tell me what you 
+prefer.
 
