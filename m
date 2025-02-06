@@ -4,89 +4,93 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 57EC1C02196
-	for <qemu-devel@archiver.kernel.org>; Thu,  6 Feb 2025 22:32:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 20CA7C0219B
+	for <qemu-devel@archiver.kernel.org>; Thu,  6 Feb 2025 22:43:14 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tgAPI-00057v-M1; Thu, 06 Feb 2025 17:31:36 -0500
+	id 1tgAZZ-0008Dj-AL; Thu, 06 Feb 2025 17:42:13 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1tgAPG-000574-MR
- for qemu-devel@nongnu.org; Thu, 06 Feb 2025 17:31:34 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1tgAZX-0008DJ-M9
+ for qemu-devel@nongnu.org; Thu, 06 Feb 2025 17:42:11 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1tgAPE-0006Sc-WE
- for qemu-devel@nongnu.org; Thu, 06 Feb 2025 17:31:34 -0500
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1tgAZU-0002uJ-VH
+ for qemu-devel@nongnu.org; Thu, 06 Feb 2025 17:42:11 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1738881090;
+ s=mimecast20190719; t=1738881725;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=XvErDAAX4wr7158SLDmAc7o4gbw3Wspkwfwb2P9AaSM=;
- b=MXjP4K8Sp0+q5ITGnDuiygECFeJBOJC2fb8LeEvp2IMimSjQG1TBG/lVMCKmlFgA/m5PmK
- G1akp46AzfRogsQOTN53AJ95Ug4c3v/CXXm15WyZ/IUC9HPTs11OYK1HvvBSAJa6JHAv3U
- LOo+uaNb0ssewcI9wp3Vi7FpH3klB+o=
-Received: from mail-wr1-f72.google.com (mail-wr1-f72.google.com
- [209.85.221.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=At1cjzSc+MFqeYl6Dpt8v4mTIuc9DPU3kGWKLkuRVZ8=;
+ b=cGZBx9Opj3eK6H1sY761leiRS3nL7EDKnR0H9UhGpvMoE8aAXaxPAegWGeDG8LkdzPRKOC
+ /yDPECwR31ElthLfeuPRQf+5r9x6ebZ2bk9Y2nbyIIX6lURlfghYTbPhYELK19ziyUwzbX
+ HFFX/ayjMA/a/IBuEmVLkURLwsZPtdE=
+Received: from mail-qv1-f70.google.com (mail-qv1-f70.google.com
+ [209.85.219.70]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-459-_YOlDbzfMleORec-Bx1zRw-1; Thu, 06 Feb 2025 17:31:28 -0500
-X-MC-Unique: _YOlDbzfMleORec-Bx1zRw-1
-X-Mimecast-MFC-AGG-ID: _YOlDbzfMleORec-Bx1zRw
-Received: by mail-wr1-f72.google.com with SMTP id
- ffacd0b85a97d-38db0ec5adfso531349f8f.1
- for <qemu-devel@nongnu.org>; Thu, 06 Feb 2025 14:31:28 -0800 (PST)
+ us-mta-408-kH3xFnK2PY6p_ZnIc_vzGA-1; Thu, 06 Feb 2025 17:42:01 -0500
+X-MC-Unique: kH3xFnK2PY6p_ZnIc_vzGA-1
+X-Mimecast-MFC-AGG-ID: kH3xFnK2PY6p_ZnIc_vzGA
+Received: by mail-qv1-f70.google.com with SMTP id
+ 6a1803df08f44-6e425770413so29216086d6.3
+ for <qemu-devel@nongnu.org>; Thu, 06 Feb 2025 14:42:01 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1738881087; x=1739485887;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=XvErDAAX4wr7158SLDmAc7o4gbw3Wspkwfwb2P9AaSM=;
- b=KHohufwrLe3m4k5DWR2GTmkJMu5boG1sv/lHGWs8uSw8M+r7om1wZRdHHrx9tP2DxO
- 5q0AYOCGH88o8e+8vMLpoHH6XU02CKYR1vdQm0jSIJcPvm7vuVPlTRJYgsac36oFVYG0
- Q1v8ZrwaJBW3JJA1T+zLjBazEnT6yJ89FJT2tKWU/LT809ul7vHhOdT1B/c3kCscU9Kd
- KPIirI/z8HoQR0gwxsSz5lzcPTLOmLQGGIXBwiYcVaxfQEXxE3+gJIFD6c0CHEHcdOkM
- UcbYeU30TRa4jlPqUCD9TUDsOjbA4+MzTBLSdvSHDZNMsFLkbQ6pNDWosrJT1/4rwTn+
- uiyg==
-X-Gm-Message-State: AOJu0YzZN0nAJzQS6IK9PUrBsj5wVfvzvg5TTlLBMkMDmnUZZAi2fWrj
- 3f2DRBMWk/C8YvqCbwOX2QlXLvn/NRQi+TJ2A4q+XWeYIiwiT74MUY8AZOJMR4VzHiLy5HIC9Kf
- cHa0frhS7/l7wTEgevEWX+c3J6j7exkzUahTN0oncEjHr8G/FMhp15lnk8tq0Z77/LbQnyIfc2M
- KiTZ2nHBsdmxS0WTEOdSuYt756ycY=
-X-Gm-Gg: ASbGncsQXmyIZ8sh1x+c4nPEEBMwUqvND9fCFSZufyPb1v+dyiiXeXK1BJcaQ6vbdZo
- YLi6J9riu4TC+JYpOMYn3q0txSwY4Lmcu1NnxWfZO7HIUBX57PIrdC5YBoWcI
-X-Received: by 2002:a05:6000:4029:b0:38c:4a05:c25f with SMTP id
- ffacd0b85a97d-38dc9333a68mr395227f8f.42.1738881087175; 
- Thu, 06 Feb 2025 14:31:27 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IHOy4wfnIaa7P8x8MkhA12rcAAalDSd0dGxRBPaJibAfFMzhJf7FfKErLp4zQC3lRhQmB/vT4U0jNqjiA3RUrU=
-X-Received: by 2002:a05:6000:4029:b0:38c:4a05:c25f with SMTP id
- ffacd0b85a97d-38dc9333a68mr395195f8f.42.1738881085883; Thu, 06 Feb 2025
- 14:31:25 -0800 (PST)
+ d=1e100.net; s=20230601; t=1738881721; x=1739486521;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=At1cjzSc+MFqeYl6Dpt8v4mTIuc9DPU3kGWKLkuRVZ8=;
+ b=QBk3k+gnrOT6twN8kE1qUy/ImSesDkmr0KjWryHYsoTQT92glUT7LmgvEPurY9wG6e
+ tumnCMMbvLfR0o3LumHB/UBJoAI6a8V6VBEdy7VSDDRbdjDih9epEsF5PcWCuH6LGqQY
+ G4atXa9PJfG/UNxagY/xWQI+0AN6RbLCRfLd4moPDOGiO5KHKUg0AO8kLRjV2/5hDUXz
+ +CdLiQKBpZWKZ/x0qI2prSKNnjYNc308zxKQhJbKwO2r12nkMFgSd//KqlldPQfGLzS1
+ QYn5RPEZJ/bY6aluVcka58d5KZ8der6d5RfbxTSkt8ni99wqm6KlF9njGyp6HHQ5kLqP
+ t3kw==
+X-Gm-Message-State: AOJu0YwgIu63zsAFeHTx2jg9zZJDiKWdeW+KVjzTM2O/GdMYRqTdeFYr
+ tQwjZqvLOXEsNpKxqSPofhAHjzkPdy6MCAecSnS72+3yZ8/MtTyLbGBkvylo9fqno0mWj7TRw61
+ VyaJFXi5PtdX3G3DMN1lNjqLdGZBFWO+xTNz+Xx1+9tvFxh86uNzq
+X-Gm-Gg: ASbGnctG8GF4Ccz5uUzCpN7DU5n37myLF9H52zNteX0y9vLMEtUoxI6KIOs0EIuaByc
+ L8lttfUo3fkC7Gt4eWPUVSmxgsJU7pTelgXzPthB+ssyWCr83O8YhxmpPLacLQcVFUByQJ9GeEx
+ iUI+6jMyT6OJtxAHMNrJLehouuw0Nr7VQQL553s+cEh6MZ6+ebqGtRb7pDoEMIVPhb0R3jzXFYv
+ VRVlQ415Cb8yPbYj3luDKavGFKvpBvndMnsHqXR8MSboRSGSBGxSghO0o21X3VdAo32jmMPRpT1
+ U9PYdMMXds9yvoSrfWM3YsrLI3PEM2Vyrt5MgOtWRyknLCyr
+X-Received: by 2002:ad4:5fca:0:b0:6e2:117d:e67 with SMTP id
+ 6a1803df08f44-6e4455f1f18mr11090066d6.14.1738881721149; 
+ Thu, 06 Feb 2025 14:42:01 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IG93JvtF13nm2n13WAu0zFV0sQ7aqO1tz2UZU4/qVyj2XfzDD3qBJdiq0LmIBjgQKouWcFVNA==
+X-Received: by 2002:ad4:5fca:0:b0:6e2:117d:e67 with SMTP id
+ 6a1803df08f44-6e4455f1f18mr11089916d6.14.1738881720917; 
+ Thu, 06 Feb 2025 14:42:00 -0800 (PST)
+Received: from x1.local (pool-99-254-114-190.cpe.net.cable.rogers.com.
+ [99.254.114.190]) by smtp.gmail.com with ESMTPSA id
+ 6a1803df08f44-6e44194ac0asm5508426d6.117.2025.02.06.14.41.59
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Thu, 06 Feb 2025 14:42:00 -0800 (PST)
+Date: Thu, 6 Feb 2025 17:41:59 -0500
+From: Peter Xu <peterx@redhat.com>
+To: Prasad Pandit <ppandit@redhat.com>
+Cc: qemu-devel@nongnu.org, farosas@suse.de, berrange@redhat.com,
+ Prasad Pandit <pjp@fedoraproject.org>
+Subject: Re: [PATCH v5 1/5] migration/multifd: move macros to multifd header
+Message-ID: <Z6U6t_IyL4fQ3M5z@x1.local>
+References: <20250205122712.229151-1-ppandit@redhat.com>
+ <20250205122712.229151-2-ppandit@redhat.com>
 MIME-Version: 1.0
-References: <20250129083705.1321407-1-pbonzini@redhat.com>
- <20250129083705.1321407-3-pbonzini@redhat.com>
- <Z6SWrSZ1HSyIc52q@intel.com>
-In-Reply-To: <Z6SWrSZ1HSyIc52q@intel.com>
-From: Paolo Bonzini <pbonzini@redhat.com>
-Date: Thu, 6 Feb 2025 23:31:16 +0100
-X-Gm-Features: AWEUYZnTRKxcyfdNPEv_IW8PyHlfW-3hZiC6--bsJzb0rAz74EmK2qpizNxq8xA
-Message-ID: <CABgObfaKLUmbRwgvm0AkeAdJG5BCeQKO2TWfXz_1g1zcPAY6gQ@mail.gmail.com>
-Subject: Re: [PATCH 2/2] rust: include rust_version in Cargo.toml
-To: Zhao Liu <zhao1.liu@intel.com>
-Cc: qemu-devel <qemu-devel@nongnu.org>, qemu-rust@nongnu.org
-Content-Type: multipart/alternative; boundary="0000000000006e5901062d80cdf6"
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=pbonzini@redhat.com;
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20250205122712.229151-2-ppandit@redhat.com>
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=peterx@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001,
- RCVD_IN_MSPIKE_WL=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -102,84 +106,18 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
---0000000000006e5901062d80cdf6
-Content-Type: text/plain; charset="UTF-8"
+On Wed, Feb 05, 2025 at 05:57:08PM +0530, Prasad Pandit wrote:
+> From: Prasad Pandit <pjp@fedoraproject.org>
+> 
+> Move MULTIFD_ macros to the header file so that
+> they are accessible from other source files.
+> 
+> Reviewed-by: Fabiano Rosas <farosas@suse.de>
+> Signed-off-by: Prasad Pandit <pjp@fedoraproject.org>
 
-Il gio 6 feb 2025, 11:42 Zhao Liu <zhao1.liu@intel.com> ha scritto:
+Reviewed-by: Peter Xu <peterx@redhat.com>
 
-> > diff --git a/rust/hw/char/pl011/src/device_class.rs
-> b/rust/hw/char/pl011/src/device_class.rs
-> > index 8a157a663fb..dbef93f6cb3 100644
-> > --- a/rust/hw/char/pl011/src/device_class.rs
-> > +++ b/rust/hw/char/pl011/src/device_class.rs
-> > @@ -12,7 +12,6 @@
-> >
-> >  use crate::device::{PL011Registers, PL011State};
-> >
-> > -#[allow(clippy::missing_const_for_fn)]
->
-> It seems like a rebase nit since the commit 7d0520398f7f ("rust: prefer
-> NonNull::new to assertions"), which is not worth an extra commit either.
->
-
-It's not; adding rust_version let's Clippy know that this function cannot
-be const in all supported versions of the standard library.
-
-Paolo
-
->  extern "C" fn pl011_clock_needed(opaque: *mut c_void) -> bool {
-> >      let state = NonNull::new(opaque).unwrap().cast::<PL011State>();
-> >      unsafe { state.as_ref().migrate_clock }
->
-> Reviewed-by: Zhao Liu <zhao1.liu@intel.com>
->
->
-
---0000000000006e5901062d80cdf6
-Content-Type: text/html; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-
-<div dir=3D"auto"><div><br><br><div class=3D"gmail_quote gmail_quote_contai=
-ner"><div dir=3D"ltr" class=3D"gmail_attr">Il gio 6 feb 2025, 11:42 Zhao Li=
-u &lt;<a href=3D"mailto:zhao1.liu@intel.com">zhao1.liu@intel.com</a>&gt; ha=
- scritto:<br></div><blockquote class=3D"gmail_quote" style=3D"margin:0px 0p=
-x 0px 0.8ex;border-left:1px solid rgb(204,204,204);padding-left:1ex">&gt; d=
-iff --git a/rust/hw/char/pl011/src/<a href=3D"http://device_class.rs" rel=
-=3D"noreferrer noreferrer" target=3D"_blank">device_class.rs</a> b/rust/hw/=
-char/pl011/src/<a href=3D"http://device_class.rs" rel=3D"noreferrer norefer=
-rer" target=3D"_blank">device_class.rs</a><br>
-&gt; index 8a157a663fb..dbef93f6cb3 100644<br>
-&gt; --- a/rust/hw/char/pl011/src/<a href=3D"http://device_class.rs" rel=3D=
-"noreferrer noreferrer" target=3D"_blank">device_class.rs</a><br>
-&gt; +++ b/rust/hw/char/pl011/src/<a href=3D"http://device_class.rs" rel=3D=
-"noreferrer noreferrer" target=3D"_blank">device_class.rs</a><br>
-&gt; @@ -12,7 +12,6 @@<br>
-&gt;=C2=A0 <br>
-&gt;=C2=A0 use crate::device::{PL011Registers, PL011State};<br>
-&gt;=C2=A0 <br>
-&gt; -#[allow(clippy::missing_const_for_fn)]<br>
-<br>
-It seems like a rebase nit since the commit 7d0520398f7f (&quot;rust: prefe=
-r<br>
-NonNull::new to assertions&quot;), which is not worth an extra commit eithe=
-r.<br></blockquote></div></div><div dir=3D"auto"><br></div><div dir=3D"auto=
-">It&#39;s not; adding rust_version let&#39;s Clippy know that this functio=
-n cannot be const in all supported versions of the standard library.</div><=
-div dir=3D"auto"><br></div><div dir=3D"auto">Paolo</div><div dir=3D"auto"><=
-br></div><div dir=3D"auto"><div class=3D"gmail_quote gmail_quote_container"=
-><blockquote class=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8ex;border=
--left:1px solid rgb(204,204,204);padding-left:1ex">
-&gt;=C2=A0 extern &quot;C&quot; fn pl011_clock_needed(opaque: *mut c_void) =
--&gt; bool {<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 let state =3D NonNull::new(opaque).unwrap().cast::=
-&lt;PL011State&gt;();<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 unsafe { state.as_ref().migrate_clock }<br>
-<br>
-Reviewed-by: Zhao Liu &lt;<a href=3D"mailto:zhao1.liu@intel.com" target=3D"=
-_blank" rel=3D"noreferrer">zhao1.liu@intel.com</a>&gt;<br>
-<br>
-</blockquote></div></div></div>
-
---0000000000006e5901062d80cdf6--
+-- 
+Peter Xu
 
 
