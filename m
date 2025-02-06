@@ -4,82 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D9FA0C02194
-	for <qemu-devel@archiver.kernel.org>; Thu,  6 Feb 2025 20:47:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D1285C02194
+	for <qemu-devel@archiver.kernel.org>; Thu,  6 Feb 2025 20:48:50 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tg8lm-00085t-S2; Thu, 06 Feb 2025 15:46:42 -0500
+	id 1tg8nT-0000hl-LY; Thu, 06 Feb 2025 15:48:27 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1tg8lj-00085C-5k
- for qemu-devel@nongnu.org; Thu, 06 Feb 2025 15:46:40 -0500
-Received: from mail-pl1-x633.google.com ([2607:f8b0:4864:20::633])
+ id 1tg8nR-0000h6-JG
+ for qemu-devel@nongnu.org; Thu, 06 Feb 2025 15:48:25 -0500
+Received: from mail-pj1-x1034.google.com ([2607:f8b0:4864:20::1034])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1tg8lh-0004Dg-GR
- for qemu-devel@nongnu.org; Thu, 06 Feb 2025 15:46:38 -0500
-Received: by mail-pl1-x633.google.com with SMTP id
- d9443c01a7336-2166f1e589cso34866925ad.3
- for <qemu-devel@nongnu.org>; Thu, 06 Feb 2025 12:46:36 -0800 (PST)
+ id 1tg8nQ-0004Jo-13
+ for qemu-devel@nongnu.org; Thu, 06 Feb 2025 15:48:25 -0500
+Received: by mail-pj1-x1034.google.com with SMTP id
+ 98e67ed59e1d1-2f9d627b5fbso2392600a91.2
+ for <qemu-devel@nongnu.org>; Thu, 06 Feb 2025 12:48:22 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1738874795; x=1739479595; darn=nongnu.org;
+ d=linaro.org; s=google; t=1738874902; x=1739479702; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:to:subject:user-agent:mime-version:date:message-id:from
  :to:cc:subject:date:message-id:reply-to;
- bh=5GRup5ROKgyQDpJmIzSbu8dIfXd8csqbh9/bDVrBuq4=;
- b=P+wdnoxOrgWGRVm1g/s+vdSdDCHYeH4mVf2jcsz8UJUThjyGWFkShYDbaM7MfuGC9J
- F9fePhOSczR4yKf0eCdVQ3+7pG3SCFOcKnNBzHYnm9SWieUb2WXP4gQbuXCG0GSKrzAe
- 2wGZy4ksThUVgpAbdTpipupoYssy8dG0427/aPO3MdyNhran6/rw4WVQsTrqit/s2BjZ
- k0KsV/oTaCQEOSxJJFXWAY0cMf7KK+msoj4QYILK1zNPBCnNHQpho3BW2Uo500kMqY8f
- 8HURYc0nmf4Y6BEtluzlR7eEVMqQUfWE+3TTxiT8uQr2Cml2RSEDjuAL3jmgTM1zUT7h
- HhWw==
+ bh=4yMuK96oSzFEvLcXBa/MIupHQHR0YlYv9/iA5+NQqjw=;
+ b=i+igSp6toS9iL7WvisxAVPr4+XN2MRmExpyjetK8RdanePnncewvtQVMboH2TcQxml
+ tyav6HcU46l1vsQSI3CUBMMzbxX5I8npDjzQ0qsSf/tNcJD9QTx9VP8uN93pLXB6Eup+
+ QOgfrZDhFs5fsbNGEHNfiaizAl2a8gmbvUsZG+2o9+0HFmuF/7XvV0a6Puc5CkV3tz3g
+ Wkag4/0xD4VDJo2sTxCzVVqfm9LoFwAvQyu8OmCjFRFYAzw1f2oOJuHcX6fllz6aTDUp
+ GhnLgaInYtdVOHcvV5ByWEGTjaQzTuxXxn1LGXAtjO5AdRZHwLGYHK4wN1zR3XmZOnlf
+ bzGA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1738874795; x=1739479595;
+ d=1e100.net; s=20230601; t=1738874902; x=1739479702;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=5GRup5ROKgyQDpJmIzSbu8dIfXd8csqbh9/bDVrBuq4=;
- b=skpg+TgadheSHoDvKCrBVdQSpG93jis6Twwjehk6uZgPl0UybehY8ZtErGOR2owKZb
- FcJe+Ub1ay+poo2pAUHe4wVfi7anFIYQcbrdW/OWN8qaAkpSoYaOShwCbq3hXN2x1EMB
- kl3ES+HD8gTggxHauxzvfBNlvCqy/lkbx9hKznhv3B4T5tmBVFCPgZ2cXo1wcssLbGnE
- dgPpHWgchWWW/xL9T/uw3drhIBLXb/clgdi+MA3sVkK0zdJdFD1V3VDANjI5vUSiB79F
- syRTicc1Vzt7Rfsg95gJYLVvi6eWGK/3hlR3fsGM2ahz3YKl4h7WvRn266I5n7f6isWL
- 9tHw==
-X-Gm-Message-State: AOJu0YxijfgHGUewf24RXQuHTWBLPkjeIh8gOKknSS8wAYji6ldT6qPl
- tJOIlBjysR8Mm7zefT2jg0IHZ2YdK2kYh7GYGGatMNu520k1jSRTzLz+zM1kLkxz0G6rDKd0zXY
- 2
-X-Gm-Gg: ASbGncvxSzmLX2aUmzVa1xZCFAzWLevtrS98PQ+bFS6by7dlGkKc5ZK3vkr+HFStDNC
- Hpw05qLFf62IiyjZTEYzLK3kNNxeEucNiWUd+0Vk4qz/S40JYwWXa6zRmdvDc1vGiKih743FFsM
- eq17SUcjIr6xr5iDTJl225LFjXyRX5GyWOMlROac7Z0XV+IAz0c8YAE1BO1y7zmUxIGC/KkMQpz
- f8/3kcigu33GChHRofWbglOQ2afbJ4kY7Z+AVs2mbdnYhVpxoKh0ojjHnRnJQGem4Rl6/TXWjJS
- 70ERbOWDgE76z6iG6LaFhvPdDuR2lBGx+bEHfyprFqh56XLs/OT6ksU=
-X-Google-Smtp-Source: AGHT+IE9XkigiFY0eu9pawJbBBnhNnpxj7Mvsj0Jj1Ll0uSD1kbdrIVzTcZcBuLLlSNBh5s3QXrYZA==
-X-Received: by 2002:a17:903:1a06:b0:21b:d105:26b8 with SMTP id
- d9443c01a7336-21f4e1c89cfmr7823965ad.7.1738874795489; 
- Thu, 06 Feb 2025 12:46:35 -0800 (PST)
+ bh=4yMuK96oSzFEvLcXBa/MIupHQHR0YlYv9/iA5+NQqjw=;
+ b=opFTmIRQsP61FaT6oNr3idJwxW1lgikAM3W1mu45nkCOqaQnvQZq991la/zCyd9Kxu
+ BmOigmzvOt3JJO+HTmVRRaOrjASnrf08k03JqmlY6l+80o1K3dovCiL/BpqEtbL6CsFb
+ UIbPxI25aGhN5jEGL6sfx0Lx5nUc67wDE47A/ykw2DUeMXn6gwwCsLhECN1cdZiNTMbn
+ +lnECFjoOf/EtxzP/DdhjI/+8vDxCKDZwaqVogJxVaI90XiVuAPDmHap8Vc2+gJUCS/1
+ V/4KMmCWc5jOhzepFTu6chKPDNZBmLi3f8MmBcWYJ5grS4ekg1VlH+liPk+S6a32ZcA8
+ DWyg==
+X-Gm-Message-State: AOJu0Ywws0kkBsTbWT65Z+5Jk9AMLAwJYOWUebf6vdP+PiNy4bj0Zvzt
+ mr5kizmphEEuRT6cljOVe1V9GFP09beGNaolrB+xzRiCQ7DqKAws7WIzzYHCfxZnQ7a88W8mtN1
+ /
+X-Gm-Gg: ASbGncv26oe004oOUZ6hDIzBKGxl/sBV6ejLZBUIuuQWT8idIlx8Fr8Zj4ziNeqk4Jt
+ tF9l5v3qMgKxS89cBTexdl1kAHhpP7cKzYCacd1cMDv5rVP5Wa8rFe70HB7Jtmu0nEs93c/jQMm
+ VjzUo2ymDIWZBYzv8bOB1/BX/ttksWsnthZMBF3jSuIsVsa5f7WcIcYja0oppJ52vkv9qBedtJz
+ OkIvI4BOFCgudYziUlXiwph4GE5xrVgH398PkBgzu303L/ivI5Ti2SeVeFsRy7M9FVxYUypGUOH
+ VFd5h/L9M50igxUUAUH74Bd44Jkua642fmAoon6udVtQDoJqAkEiXpQ=
+X-Google-Smtp-Source: AGHT+IGCwlM5vceIEQMNaIBsEMa3o/kYUc+Uz7ddP16PQv5gcJqA2RQKoKHhZ8Lwfob4/qugrNe1hw==
+X-Received: by 2002:a17:90b:38c3:b0:2f4:434d:c7ed with SMTP id
+ 98e67ed59e1d1-2fa24177361mr870178a91.16.1738874901851; 
+ Thu, 06 Feb 2025 12:48:21 -0800 (PST)
 Received: from [192.168.0.4] (71-212-39-66.tukw.qwest.net. [71.212.39.66])
  by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-2fa08268f47sm1866250a91.13.2025.02.06.12.46.35
+ 98e67ed59e1d1-2f9e1e23766sm4071434a91.33.2025.02.06.12.48.21
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 06 Feb 2025 12:46:35 -0800 (PST)
-Message-ID: <bfadcd17-3a3d-4fe2-a352-f0bcdd830177@linaro.org>
-Date: Thu, 6 Feb 2025 12:46:33 -0800
+ Thu, 06 Feb 2025 12:48:21 -0800 (PST)
+Message-ID: <2164915c-89f2-432a-abdd-1b131894f48c@linaro.org>
+Date: Thu, 6 Feb 2025 12:48:20 -0800
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 1/6] monitor/hmp-cmds.c: Clean up hmp_dumpdtb printf
+Subject: Re: [PATCH 2/6] hw/openrisc: Support monitor dumpdtb command
 To: qemu-devel@nongnu.org
 References: <20250206151214.2947842-1-peter.maydell@linaro.org>
- <20250206151214.2947842-2-peter.maydell@linaro.org>
+ <20250206151214.2947842-3-peter.maydell@linaro.org>
 Content-Language: en-US
 From: Richard Henderson <richard.henderson@linaro.org>
-In-Reply-To: <20250206151214.2947842-2-peter.maydell@linaro.org>
+In-Reply-To: <20250206151214.2947842-3-peter.maydell@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::633;
- envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x633.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1034;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pj1-x1034.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -103,28 +103,22 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 2/6/25 07:12, Peter Maydell wrote:
-> In hmp_dumpdtb(), we print a message when the command succeeds.  This
-> message is missing the trailing \n, so the HMP command prompt is
-> printed immediately after it.  We also weren't capitalizing 'DTB', or
-> quoting the filename in the message.  Fix these nits.
+> The openrisc machines don't setMachineState::fdt to point to their
+> DTB blob.  This means that although the command line '-machine
+> dumpdtb=file.dtb' option works, the equivalent QMP and HMP monitor
+> commands do not, but instead produce the error "This machine doesn't
+> have a FDT".
 > 
-> Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+> SetMachineState::fdt in openrisc_load_fdt(), when we write it to
+> guest memory.
+> 
+> Signed-off-by: Peter Maydell<peter.maydell@linaro.org>
 > ---
->   monitor/hmp-cmds.c | 2 +-
->   1 file changed, 1 insertion(+), 1 deletion(-)
-> 
-> diff --git a/monitor/hmp-cmds.c b/monitor/hmp-cmds.c
-> index 0aa22e1ae27..ff87fd89e4d 100644
-> --- a/monitor/hmp-cmds.c
-> +++ b/monitor/hmp-cmds.c
-> @@ -431,6 +431,6 @@ void hmp_dumpdtb(Monitor *mon, const QDict *qdict)
->           return;
->       }
->   
-> -    monitor_printf(mon, "dtb dumped to %s", filename);
-> +    monitor_printf(mon, "DTB dumped to '%s'\n", filename);
->   }
->   #endif
+>   include/hw/openrisc/boot.h | 3 ++-
+>   hw/openrisc/boot.c         | 7 +++++--
+>   hw/openrisc/openrisc_sim.c | 2 +-
+>   hw/openrisc/virt.c         | 2 +-
+>   4 files changed, 9 insertions(+), 5 deletions(-)
 
 Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 
