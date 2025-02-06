@@ -4,67 +4,67 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 34DE6C02192
-	for <qemu-devel@archiver.kernel.org>; Thu,  6 Feb 2025 01:34:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 68ADEC02192
+	for <qemu-devel@archiver.kernel.org>; Thu,  6 Feb 2025 01:34:37 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tfqku-0005oD-Fj; Wed, 05 Feb 2025 20:32:36 -0500
+	id 1tfqkh-0005UF-TT; Wed, 05 Feb 2025 20:32:25 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from
- <39RCkZwgKCuoigTMafeTSaaSXQ.OaYcQYg-PQhQXZaZSZg.adS@flex--wuhaotsh.bounces.google.com>)
- id 1tfqk7-0005GI-Em
- for qemu-devel@nongnu.org; Wed, 05 Feb 2025 20:31:55 -0500
-Received: from mail-pl1-x649.google.com ([2607:f8b0:4864:20::649])
+ <3-hCkZwgKCu8nlYRfkjYXffXcV.TfdhVdl-UVmVcefeXel.fiX@flex--wuhaotsh.bounces.google.com>)
+ id 1tfqkD-0005GX-4K
+ for qemu-devel@nongnu.org; Wed, 05 Feb 2025 20:31:59 -0500
+Received: from mail-pj1-x1049.google.com ([2607:f8b0:4864:20::1049])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from
- <39RCkZwgKCuoigTMafeTSaaSXQ.OaYcQYg-PQhQXZaZSZg.adS@flex--wuhaotsh.bounces.google.com>)
- id 1tfqk0-0006vx-LH
- for qemu-devel@nongnu.org; Wed, 05 Feb 2025 20:31:43 -0500
-Received: by mail-pl1-x649.google.com with SMTP id
- d9443c01a7336-21f075a828bso7247615ad.2
- for <qemu-devel@nongnu.org>; Wed, 05 Feb 2025 17:31:34 -0800 (PST)
+ <3-hCkZwgKCu8nlYRfkjYXffXcV.TfdhVdl-UVmVcefeXel.fiX@flex--wuhaotsh.bounces.google.com>)
+ id 1tfqk3-0006wu-3J
+ for qemu-devel@nongnu.org; Wed, 05 Feb 2025 20:31:45 -0500
+Received: by mail-pj1-x1049.google.com with SMTP id
+ 98e67ed59e1d1-2f816a85facso768852a91.3
+ for <qemu-devel@nongnu.org>; Wed, 05 Feb 2025 17:31:38 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=google.com; s=20230601; t=1738805493; x=1739410293; darn=nongnu.org;
+ d=google.com; s=20230601; t=1738805498; x=1739410298; darn=nongnu.org;
  h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
  :date:from:to:cc:subject:date:message-id:reply-to;
- bh=fIFHrUvOAQ5e0X0dEKbgFV5ZD//YRNHzx0gFFVt55So=;
- b=y090rinXKzQiPQFLpndgM6l9SOIupUCs246iznnAcCQPAo8dKPcHvFLCOEuJepB3rJ
- ffsTD7plMxEQnfm8pgqA2ntdLHzxeg4XUnsrXkyEN6lbeT2x5A1yRj39sHnce8p00QI7
- OlrnO31JpMertfvoBbjHuccR/jgyXOtE/D+T0c34ZRqFSHT2fuR2eZmqlbqVUolsVs6M
- X9pzLuyEAEKD2owr6yfKr7ljhNG2tJKKxs2jx1bf4L7Zy/i1r7k7xAFqVP2eMJew48c5
- Aw0BSUqDD1P0l5x6krZF1E+dhIx2Ouqnr2oI91BMEf+At/5yuIzyXWRWr+UiZq28pyZz
- 2G2g==
+ bh=EMwJqO0GVwvNpTJ+WKNZl+C56TmDUIgVRx3/tC2n9ds=;
+ b=yNyVYLVD6En4DINC36obiUZ6MlDsncvsylWXXulO5gGwY2Fq4PRqb/0+Zq+A892N1C
+ iDIh/yVwKpRm32Ivi9kG4Z3bx3+mzwGDhXqnTw5DwJsNtO0es0SQgNGTZZz66sAh+zkv
+ jQ4ROuwVczsv3wcrp6Um2i9ae797hLNe4FjZLK2Q7z2Ks/LqqMTPSFC59+RiAAw93Cnj
+ b2sPp/Op1MpaKrjQpFLJmuFFZQfv6WyjNN366F/E2Hl7VUVoTUCYaXmem+7yCcvfVnC0
+ FtAnbowR/oJwMMP38LAgarC8uFLDuaioCd9WJ1Qvai9MvD/cr7oq3G8ozp5PyRHd52jR
+ trcw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1738805493; x=1739410293;
+ d=1e100.net; s=20230601; t=1738805498; x=1739410298;
  h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
  :date:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=fIFHrUvOAQ5e0X0dEKbgFV5ZD//YRNHzx0gFFVt55So=;
- b=XnkRJsBQ8uuIZV1/yyJJBAqeJdarjzXsy77rKn+anJqx4mbaS4FlqkR+vmu/NYjlTt
- FZbWBTDkFh5SYMLNI34XiXXM8+Afu5hcdO6KBK/naTQ9IMOfCrZPh/JlpCTY5x4FKXwV
- bOW5g3dp6u0u6y3kJmTQJf/0XrVnIH3KJC32pnZ9p5fmsFiVhX1vVAwqBleO+1gPhMPQ
- akYQ9zqIhQEkoNFcVTJrwaFQkTMrtGdEYeOA40MBsw4RUbacr+lF5jS78fN3mF4t+vSK
- Uc7SCKmvd3IiGdhzSQwOLRRO3O3v/5XFxZ66034yORSGPyepHKA3FDYonweDhZXSsQel
- Va9g==
+ bh=EMwJqO0GVwvNpTJ+WKNZl+C56TmDUIgVRx3/tC2n9ds=;
+ b=RzTo1IWz63aOi5+md+WgkK5UbVK4I2AJrT5xOMcAwm2pmi2PMQwKAbeeJXnOy7mj10
+ Lvct5TZcvLZD3ePztQpeiL4lnb9QP16n9WVSzI0gfDzs5aaDYSNiZICPXHYNZbzWk7YL
+ OfdSp9v3yY1PUkY1M3tR37iScyd1j+CrQbC77qmx6vOk9pQf6T4IacMl1L8Rf7ffYIaO
+ VDeGBL6xzDsgNIU4RsBFPN7yODzTPmYDhCupgHsRjjCzDbGt81BATwoeaCwpj9roAzn+
+ 7FJ/j5KLNMlEu1naNXrpeemr50IvsxOzh9cCRX+L+aD4LnmjshU60aYdzsnYFjrd9tRJ
+ aY9Q==
 X-Forwarded-Encrypted: i=1;
- AJvYcCUrNAw3rG7EzozBmOtTJT1Zd7f6ufzeIXhSqPcphV5/x1cgG3EeH4ues8pD0zQ2r22D27k3WLP50vdg@nongnu.org
-X-Gm-Message-State: AOJu0YyL6pu6353K4FDpQreceJnPOJMz4zNXiELcKpTB2cyLRnKJLjfh
- w5NLsd11Y7SbPof2o9LQTFBiiIdvBDjzoLZpwP3TuPZ8MR7S2wB7CXUmxR8h/3BMm6cGkXWkUHI
- RbAV9K3noFg==
-X-Google-Smtp-Source: AGHT+IHWIk7+PLhRtuIQQei6xGp9eHD8GiVw1nLTKAUnq0N4zPYfiz3y4EHZfSp/KosQOuyAGcEBADuLQa/vJQ==
-X-Received: from pfm16.prod.google.com ([2002:a05:6a00:730:b0:727:2d74:d385])
+ AJvYcCVFdSFzNLsIc4vuVdBLvGA8ZfvtypuHBEFkQ8MKzqXywSapWuvelmfLgoveFQqFIMM1tT75sN5qU0s2@nongnu.org
+X-Gm-Message-State: AOJu0YwE1xxP6vV0aPSMF9CSrF0yWY2V4sFLjZTbkzXmHPJ/eAvfYeTn
+ ENRuTiRY24XTXlvV4q40XkGsMWcBNivhew45r3lFR2Fm5Z+V7NEg0DAtlaju++BoQdm+w/etSRE
+ PZ4Im83A8LQ==
+X-Google-Smtp-Source: AGHT+IEVuqWqwNuFze/Qa8TeL/yzlKHDkGRvqwswpw3Ydt1bZdOCk8hwLazAc/dA72TT+61Ppr1tBgfwkQnPFQ==
+X-Received: from pjbli9.prod.google.com ([2002:a17:90b:48c9:b0:2e0:52d7:183e])
  (user=wuhaotsh job=prod-delivery.src-stubby-dispatcher) by
- 2002:a05:6a20:728f:b0:1eb:22e0:a583 with SMTP id
- adf61e73a8af0-1ede88ceaf2mr9261883637.42.1738805493345; 
- Wed, 05 Feb 2025 17:31:33 -0800 (PST)
-Date: Wed,  5 Feb 2025 17:31:02 -0800
+ 2002:a17:90b:4f4b:b0:2ee:aed2:c15c with SMTP id
+ 98e67ed59e1d1-2f9e083cc9cmr7802162a91.28.1738805498106; 
+ Wed, 05 Feb 2025 17:31:38 -0800 (PST)
+Date: Wed,  5 Feb 2025 17:31:05 -0800
 In-Reply-To: <20250206013105.3228344-1-wuhaotsh@google.com>
 Mime-Version: 1.0
 References: <20250206013105.3228344-1-wuhaotsh@google.com>
 X-Mailer: git-send-email 2.48.1.362.g079036d154-goog
-Message-ID: <20250206013105.3228344-15-wuhaotsh@google.com>
-Subject: [PATCH v3 14/17] hw/net: Add NPCM8XX PCS Module
+Message-ID: <20250206013105.3228344-18-wuhaotsh@google.com>
+Subject: [PATCH v3 17/17] docs/system/arm: Add Description for NPCM8XX SoC
 From: Hao Wu <wuhaotsh@google.com>
 To: peter.maydell@linaro.org
 Cc: qemu-arm@nongnu.org, qemu-devel@nongnu.org, wuhaotsh@google.com, 
@@ -72,16 +72,16 @@ Cc: qemu-arm@nongnu.org, qemu-devel@nongnu.org, wuhaotsh@google.com,
  hskinnemoen@google.com, titusr@google.com, 
  chli30@nuvoton.corp-partner.google.com
 Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::649;
- envelope-from=39RCkZwgKCuoigTMafeTSaaSXQ.OaYcQYg-PQhQXZaZSZg.adS@flex--wuhaotsh.bounces.google.com;
- helo=mail-pl1-x649.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1049;
+ envelope-from=3-hCkZwgKCu8nlYRfkjYXffXcV.TfdhVdl-UVmVcefeXel.fiX@flex--wuhaotsh.bounces.google.com;
+ helo=mail-pj1-x1049.google.com
 X-Spam_score_int: -95
 X-Spam_score: -9.6
 X-Spam_bar: ---------
 X-Spam_report: (-9.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_MED=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- USER_IN_DEF_DKIM_WL=-7.5 autolearn=unavailable autolearn_force=no
+ USER_IN_DEF_DKIM_WL=-7.5 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -97,513 +97,75 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The PCS exists in NPCM8XX's GMAC1 and is used to control the SGMII
-PHY. This implementation contains all the default registers and
-the soft reset feature that are required to load the Linux kernel
-driver. Further features have not been implemented yet.
+NPCM8XX SoC is the successor of the NPCM7XX. It features quad-core
+Cortex-A35 (Armv8, 64-bit) CPUs and some additional peripherals.
+
+This document describes the NPCM8XX SoC and an evaluation board
+(NPCM 845 EVB).
 
 Signed-off-by: Hao Wu <wuhaotsh@google.com>
-Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
 ---
- hw/net/meson.build        |   1 +
- hw/net/npcm_pcs.c         | 410 ++++++++++++++++++++++++++++++++++++++
- hw/net/trace-events       |   4 +-
- include/hw/net/npcm_pcs.h |  42 ++++
- 4 files changed, 455 insertions(+), 2 deletions(-)
- create mode 100644 hw/net/npcm_pcs.c
- create mode 100644 include/hw/net/npcm_pcs.h
+ docs/system/arm/nuvoton.rst | 27 ++++++++++++++++++++-------
+ 1 file changed, 20 insertions(+), 7 deletions(-)
 
-diff --git a/hw/net/meson.build b/hw/net/meson.build
-index 3bb5d749a8..e6759e26ca 100644
---- a/hw/net/meson.build
-+++ b/hw/net/meson.build
-@@ -40,6 +40,7 @@ system_ss.add(when: 'CONFIG_SUNHME', if_true: files('sunhme.c'))
- system_ss.add(when: 'CONFIG_FTGMAC100', if_true: files('ftgmac100.c'))
- system_ss.add(when: 'CONFIG_SUNGEM', if_true: files('sungem.c'))
- system_ss.add(when: 'CONFIG_NPCM7XX', if_true: files('npcm7xx_emc.c', 'npcm_gmac.c'))
-+system_ss.add(when: 'CONFIG_NPCM8XX', if_true: files('npcm_pcs.c'))
+diff --git a/docs/system/arm/nuvoton.rst b/docs/system/arm/nuvoton.rst
+index 05059378e5..e4827fb43a 100644
+--- a/docs/system/arm/nuvoton.rst
++++ b/docs/system/arm/nuvoton.rst
+@@ -1,12 +1,13 @@
+-Nuvoton iBMC boards (``kudo-bmc``, ``mori-bmc``, ``npcm750-evb``, ``quanta-gbs-bmc``, ``quanta-gsj``)
+-=====================================================================================================
++Nuvoton iBMC boards (``kudo-bmc``, ``mori-bmc``, ``npcm750-evb``, ``quanta-gbs-bmc``, ``quanta-gsj``, ``npcm845-evb``)
++======================================================================================================================
  
- system_ss.add(when: 'CONFIG_COLDFIRE', if_true: files('mcf_fec.c'))
- specific_ss.add(when: 'CONFIG_PSERIES', if_true: files('spapr_llan.c'))
-diff --git a/hw/net/npcm_pcs.c b/hw/net/npcm_pcs.c
-new file mode 100644
-index 0000000000..ce5034e234
---- /dev/null
-+++ b/hw/net/npcm_pcs.c
-@@ -0,0 +1,410 @@
-+/*
-+ * Nuvoton NPCM8xx PCS Module
-+ *
-+ * Copyright 2022 Google LLC
-+ *
-+ * This program is free software; you can redistribute it and/or modify it
-+ * under the terms of the GNU General Public License as published by the
-+ * Free Software Foundation; either version 2 of the License, or
-+ * (at your option) any later version.
-+ *
-+ * This program is distributed in the hope that it will be useful, but WITHOUT
-+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
-+ * FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License
-+ * for more details.
-+ */
-+
-+/*
-+ * Disclaimer:
-+ * Currently we only implemented the default values of the registers and
-+ * the soft reset feature. These are required to boot up the GMAC module
-+ * in Linux kernel for NPCM845 boards. Other functionalities are not modeled.
-+ */
-+
-+#include "qemu/osdep.h"
-+
-+#include "exec/hwaddr.h"
-+#include "hw/registerfields.h"
-+#include "hw/net/npcm_pcs.h"
-+#include "migration/vmstate.h"
-+#include "qemu/log.h"
-+#include "qemu/units.h"
-+#include "trace.h"
-+
-+#define NPCM_PCS_IND_AC_BA      0x1fe
-+#define NPCM_PCS_IND_SR_CTL     0x1e00
-+#define NPCM_PCS_IND_SR_MII     0x1f00
-+#define NPCM_PCS_IND_SR_TIM     0x1f07
-+#define NPCM_PCS_IND_VR_MII     0x1f80
-+
-+REG16(NPCM_PCS_SR_CTL_ID1, 0x08)
-+REG16(NPCM_PCS_SR_CTL_ID2, 0x0a)
-+REG16(NPCM_PCS_SR_CTL_STS, 0x10)
-+
-+REG16(NPCM_PCS_SR_MII_CTRL, 0x00)
-+REG16(NPCM_PCS_SR_MII_STS, 0x02)
-+REG16(NPCM_PCS_SR_MII_DEV_ID1, 0x04)
-+REG16(NPCM_PCS_SR_MII_DEV_ID2, 0x06)
-+REG16(NPCM_PCS_SR_MII_AN_ADV, 0x08)
-+REG16(NPCM_PCS_SR_MII_LP_BABL, 0x0a)
-+REG16(NPCM_PCS_SR_MII_AN_EXPN, 0x0c)
-+REG16(NPCM_PCS_SR_MII_EXT_STS, 0x1e)
-+
-+REG16(NPCM_PCS_SR_TIM_SYNC_ABL, 0x10)
-+REG16(NPCM_PCS_SR_TIM_SYNC_TX_MAX_DLY_LWR, 0x12)
-+REG16(NPCM_PCS_SR_TIM_SYNC_TX_MAX_DLY_UPR, 0x14)
-+REG16(NPCM_PCS_SR_TIM_SYNC_TX_MIN_DLY_LWR, 0x16)
-+REG16(NPCM_PCS_SR_TIM_SYNC_TX_MIN_DLY_UPR, 0x18)
-+REG16(NPCM_PCS_SR_TIM_SYNC_RX_MAX_DLY_LWR, 0x1a)
-+REG16(NPCM_PCS_SR_TIM_SYNC_RX_MAX_DLY_UPR, 0x1c)
-+REG16(NPCM_PCS_SR_TIM_SYNC_RX_MIN_DLY_LWR, 0x1e)
-+REG16(NPCM_PCS_SR_TIM_SYNC_RX_MIN_DLY_UPR, 0x20)
-+
-+REG16(NPCM_PCS_VR_MII_MMD_DIG_CTRL1, 0x000)
-+REG16(NPCM_PCS_VR_MII_AN_CTRL, 0x002)
-+REG16(NPCM_PCS_VR_MII_AN_INTR_STS, 0x004)
-+REG16(NPCM_PCS_VR_MII_TC, 0x006)
-+REG16(NPCM_PCS_VR_MII_DBG_CTRL, 0x00a)
-+REG16(NPCM_PCS_VR_MII_EEE_MCTRL0, 0x00c)
-+REG16(NPCM_PCS_VR_MII_EEE_TXTIMER, 0x010)
-+REG16(NPCM_PCS_VR_MII_EEE_RXTIMER, 0x012)
-+REG16(NPCM_PCS_VR_MII_LINK_TIMER_CTRL, 0x014)
-+REG16(NPCM_PCS_VR_MII_EEE_MCTRL1, 0x016)
-+REG16(NPCM_PCS_VR_MII_DIG_STS, 0x020)
-+REG16(NPCM_PCS_VR_MII_ICG_ERRCNT1, 0x022)
-+REG16(NPCM_PCS_VR_MII_MISC_STS, 0x030)
-+REG16(NPCM_PCS_VR_MII_RX_LSTS, 0x040)
-+REG16(NPCM_PCS_VR_MII_MP_TX_BSTCTRL0, 0x070)
-+REG16(NPCM_PCS_VR_MII_MP_TX_LVLCTRL0, 0x074)
-+REG16(NPCM_PCS_VR_MII_MP_TX_GENCTRL0, 0x07a)
-+REG16(NPCM_PCS_VR_MII_MP_TX_GENCTRL1, 0x07c)
-+REG16(NPCM_PCS_VR_MII_MP_TX_STS, 0x090)
-+REG16(NPCM_PCS_VR_MII_MP_RX_GENCTRL0, 0x0b0)
-+REG16(NPCM_PCS_VR_MII_MP_RX_GENCTRL1, 0x0b2)
-+REG16(NPCM_PCS_VR_MII_MP_RX_LOS_CTRL0, 0x0ba)
-+REG16(NPCM_PCS_VR_MII_MP_MPLL_CTRL0, 0x0f0)
-+REG16(NPCM_PCS_VR_MII_MP_MPLL_CTRL1, 0x0f2)
-+REG16(NPCM_PCS_VR_MII_MP_MPLL_STS, 0x110)
-+REG16(NPCM_PCS_VR_MII_MP_MISC_CTRL2, 0x126)
-+REG16(NPCM_PCS_VR_MII_MP_LVL_CTRL, 0x130)
-+REG16(NPCM_PCS_VR_MII_MP_MISC_CTRL0, 0x132)
-+REG16(NPCM_PCS_VR_MII_MP_MISC_CTRL1, 0x134)
-+REG16(NPCM_PCS_VR_MII_DIG_CTRL2, 0x1c2)
-+REG16(NPCM_PCS_VR_MII_DIG_ERRCNT_SEL, 0x1c4)
-+
-+/* Register Fields */
-+#define NPCM_PCS_SR_MII_CTRL_RST            BIT(15)
-+
-+static const uint16_t npcm_pcs_sr_ctl_cold_reset_values[NPCM_PCS_NR_SR_CTLS] = {
-+    [R_NPCM_PCS_SR_CTL_ID1]                 = 0x699e,
-+    [R_NPCM_PCS_SR_CTL_STS]                 = 0x8000,
-+};
-+
-+static const uint16_t npcm_pcs_sr_mii_cold_reset_values[NPCM_PCS_NR_SR_MIIS] = {
-+    [R_NPCM_PCS_SR_MII_CTRL]                = 0x1140,
-+    [R_NPCM_PCS_SR_MII_STS]                 = 0x0109,
-+    [R_NPCM_PCS_SR_MII_DEV_ID1]             = 0x699e,
-+    [R_NPCM_PCS_SR_MII_DEV_ID2]             = 0xced0,
-+    [R_NPCM_PCS_SR_MII_AN_ADV]              = 0x0020,
-+    [R_NPCM_PCS_SR_MII_EXT_STS]             = 0xc000,
-+};
-+
-+static const uint16_t npcm_pcs_sr_tim_cold_reset_values[NPCM_PCS_NR_SR_TIMS] = {
-+    [R_NPCM_PCS_SR_TIM_SYNC_ABL]            = 0x0003,
-+    [R_NPCM_PCS_SR_TIM_SYNC_TX_MAX_DLY_LWR] = 0x0038,
-+    [R_NPCM_PCS_SR_TIM_SYNC_TX_MIN_DLY_LWR] = 0x0038,
-+    [R_NPCM_PCS_SR_TIM_SYNC_RX_MAX_DLY_LWR] = 0x0058,
-+    [R_NPCM_PCS_SR_TIM_SYNC_RX_MIN_DLY_LWR] = 0x0048,
-+};
-+
-+static const uint16_t npcm_pcs_vr_mii_cold_reset_values[NPCM_PCS_NR_VR_MIIS] = {
-+    [R_NPCM_PCS_VR_MII_MMD_DIG_CTRL1]         = 0x2400,
-+    [R_NPCM_PCS_VR_MII_AN_INTR_STS]           = 0x000a,
-+    [R_NPCM_PCS_VR_MII_EEE_MCTRL0]            = 0x899c,
-+    [R_NPCM_PCS_VR_MII_DIG_STS]               = 0x0010,
-+    [R_NPCM_PCS_VR_MII_MP_TX_BSTCTRL0]        = 0x000a,
-+    [R_NPCM_PCS_VR_MII_MP_TX_LVLCTRL0]        = 0x007f,
-+    [R_NPCM_PCS_VR_MII_MP_TX_GENCTRL0]        = 0x0001,
-+    [R_NPCM_PCS_VR_MII_MP_RX_GENCTRL0]        = 0x0100,
-+    [R_NPCM_PCS_VR_MII_MP_RX_GENCTRL1]        = 0x1100,
-+    [R_NPCM_PCS_VR_MII_MP_RX_LOS_CTRL0]       = 0x000e,
-+    [R_NPCM_PCS_VR_MII_MP_MPLL_CTRL0]         = 0x0100,
-+    [R_NPCM_PCS_VR_MII_MP_MPLL_CTRL1]         = 0x0032,
-+    [R_NPCM_PCS_VR_MII_MP_MPLL_STS]           = 0x0001,
-+    [R_NPCM_PCS_VR_MII_MP_LVL_CTRL]           = 0x0019,
-+};
-+
-+static void npcm_pcs_soft_reset(NPCMPCSState *s)
-+{
-+    memcpy(s->sr_ctl, npcm_pcs_sr_ctl_cold_reset_values,
-+           NPCM_PCS_NR_SR_CTLS * sizeof(uint16_t));
-+    memcpy(s->sr_mii, npcm_pcs_sr_mii_cold_reset_values,
-+           NPCM_PCS_NR_SR_MIIS * sizeof(uint16_t));
-+    memcpy(s->sr_tim, npcm_pcs_sr_tim_cold_reset_values,
-+           NPCM_PCS_NR_SR_TIMS * sizeof(uint16_t));
-+    memcpy(s->vr_mii, npcm_pcs_vr_mii_cold_reset_values,
-+           NPCM_PCS_NR_VR_MIIS * sizeof(uint16_t));
-+}
-+
-+static uint16_t npcm_pcs_read_sr_ctl(NPCMPCSState *s, hwaddr offset)
-+{
-+    hwaddr regno = offset / sizeof(uint16_t);
-+
-+    if (regno >= NPCM_PCS_NR_SR_CTLS) {
-+        qemu_log_mask(LOG_GUEST_ERROR,
-+                      "%s: SR_CTL read offset 0x%04" HWADDR_PRIx
-+                      " is out of range.\n",
-+                      DEVICE(s)->canonical_path, offset);
-+        return 0;
-+    }
-+
-+    return s->sr_ctl[regno];
-+}
-+
-+static uint16_t npcm_pcs_read_sr_mii(NPCMPCSState *s, hwaddr offset)
-+{
-+    hwaddr regno = offset / sizeof(uint16_t);
-+
-+    if (regno >= NPCM_PCS_NR_SR_MIIS) {
-+        qemu_log_mask(LOG_GUEST_ERROR,
-+                      "%s: SR_MII read offset 0x%04" HWADDR_PRIx
-+                      " is out of range.\n",
-+                      DEVICE(s)->canonical_path, offset);
-+        return 0;
-+    }
-+
-+    return s->sr_mii[regno];
-+}
-+
-+static uint16_t npcm_pcs_read_sr_tim(NPCMPCSState *s, hwaddr offset)
-+{
-+    hwaddr regno = offset / sizeof(uint16_t);
-+
-+    if (regno >= NPCM_PCS_NR_SR_TIMS) {
-+        qemu_log_mask(LOG_GUEST_ERROR,
-+                      "%s: SR_TIM read offset 0x%04" HWADDR_PRIx
-+                      " is out of range.\n",
-+                      DEVICE(s)->canonical_path, offset);
-+        return 0;
-+    }
-+
-+    return s->sr_tim[regno];
-+}
-+
-+static uint16_t npcm_pcs_read_vr_mii(NPCMPCSState *s, hwaddr offset)
-+{
-+    hwaddr regno = offset / sizeof(uint16_t);
-+
-+    if (regno >= NPCM_PCS_NR_VR_MIIS) {
-+        qemu_log_mask(LOG_GUEST_ERROR,
-+                      "%s: VR_MII read offset 0x%04" HWADDR_PRIx
-+                      " is out of range.\n",
-+                      DEVICE(s)->canonical_path, offset);
-+        return 0;
-+    }
-+
-+    return s->vr_mii[regno];
-+}
-+
-+static void npcm_pcs_write_sr_ctl(NPCMPCSState *s, hwaddr offset, uint16_t v)
-+{
-+    hwaddr regno = offset / sizeof(uint16_t);
-+
-+    if (regno >= NPCM_PCS_NR_SR_CTLS) {
-+        qemu_log_mask(LOG_GUEST_ERROR,
-+                      "%s: SR_CTL write offset 0x%04" HWADDR_PRIx
-+                      " is out of range.\n",
-+                      DEVICE(s)->canonical_path, offset);
-+        return;
-+    }
-+
-+    s->sr_ctl[regno] = v;
-+}
-+
-+static void npcm_pcs_write_sr_mii(NPCMPCSState *s, hwaddr offset, uint16_t v)
-+{
-+    hwaddr regno = offset / sizeof(uint16_t);
-+
-+    if (regno >= NPCM_PCS_NR_SR_MIIS) {
-+        qemu_log_mask(LOG_GUEST_ERROR,
-+                      "%s: SR_MII write offset 0x%04" HWADDR_PRIx
-+                      " is out of range.\n",
-+                      DEVICE(s)->canonical_path, offset);
-+        return;
-+    }
-+
-+    s->sr_mii[regno] = v;
-+
-+    if ((offset == A_NPCM_PCS_SR_MII_CTRL) && (v & NPCM_PCS_SR_MII_CTRL_RST)) {
-+        /* Trigger a soft reset */
-+        npcm_pcs_soft_reset(s);
-+    }
-+}
-+
-+static void npcm_pcs_write_sr_tim(NPCMPCSState *s, hwaddr offset, uint16_t v)
-+{
-+    hwaddr regno = offset / sizeof(uint16_t);
-+
-+    if (regno >= NPCM_PCS_NR_SR_TIMS) {
-+        qemu_log_mask(LOG_GUEST_ERROR,
-+                      "%s: SR_TIM write offset 0x%04" HWADDR_PRIx
-+                      " is out of range.\n",
-+                      DEVICE(s)->canonical_path, offset);
-+        return;
-+    }
-+
-+    s->sr_tim[regno] = v;
-+}
-+
-+static void npcm_pcs_write_vr_mii(NPCMPCSState *s, hwaddr offset, uint16_t v)
-+{
-+    hwaddr regno = offset / sizeof(uint16_t);
-+
-+    if (regno >= NPCM_PCS_NR_VR_MIIS) {
-+        qemu_log_mask(LOG_GUEST_ERROR,
-+                      "%s: VR_MII write offset 0x%04" HWADDR_PRIx
-+                      " is out of range.\n",
-+                      DEVICE(s)->canonical_path, offset);
-+        return;
-+    }
-+
-+    s->vr_mii[regno] = v;
-+}
-+
-+static uint64_t npcm_pcs_read(void *opaque, hwaddr offset, unsigned size)
-+{
-+    NPCMPCSState *s = opaque;
-+    uint16_t v = 0;
-+
-+    if (offset == NPCM_PCS_IND_AC_BA) {
-+        v = s->indirect_access_base;
-+    } else {
-+        switch (s->indirect_access_base) {
-+        case NPCM_PCS_IND_SR_CTL:
-+            v = npcm_pcs_read_sr_ctl(s, offset);
-+            break;
-+
-+        case NPCM_PCS_IND_SR_MII:
-+            v = npcm_pcs_read_sr_mii(s, offset);
-+            break;
-+
-+        case NPCM_PCS_IND_SR_TIM:
-+            v = npcm_pcs_read_sr_tim(s, offset);
-+            break;
-+
-+        case NPCM_PCS_IND_VR_MII:
-+            v = npcm_pcs_read_vr_mii(s, offset);
-+            break;
-+
-+        default:
-+            qemu_log_mask(LOG_GUEST_ERROR,
-+                          "%s: Read with invalid indirect address base: 0x%"
-+                          PRIx16 "\n", DEVICE(s)->canonical_path,
-+                          s->indirect_access_base);
-+        }
-+    }
-+
-+    trace_npcm_pcs_reg_read(DEVICE(s)->canonical_path, s->indirect_access_base,
-+                            offset, v);
-+    return v;
-+}
-+
-+static void npcm_pcs_write(void *opaque, hwaddr offset,
-+                              uint64_t v, unsigned size)
-+{
-+    NPCMPCSState *s = opaque;
-+
-+    trace_npcm_pcs_reg_write(DEVICE(s)->canonical_path, s->indirect_access_base,
-+                             offset, v);
-+    if (offset == NPCM_PCS_IND_AC_BA) {
-+        s->indirect_access_base = v;
-+    } else {
-+        switch (s->indirect_access_base) {
-+        case NPCM_PCS_IND_SR_CTL:
-+            npcm_pcs_write_sr_ctl(s, offset, v);
-+            break;
-+
-+        case NPCM_PCS_IND_SR_MII:
-+            npcm_pcs_write_sr_mii(s, offset, v);
-+            break;
-+
-+        case NPCM_PCS_IND_SR_TIM:
-+            npcm_pcs_write_sr_tim(s, offset, v);
-+            break;
-+
-+        case NPCM_PCS_IND_VR_MII:
-+            npcm_pcs_write_vr_mii(s, offset, v);
-+            break;
-+
-+        default:
-+            qemu_log_mask(LOG_GUEST_ERROR,
-+                          "%s: Write with invalid indirect address base: 0x%02"
-+                          PRIx16 "\n", DEVICE(s)->canonical_path,
-+                          s->indirect_access_base);
-+        }
-+    }
-+}
-+
-+static void npcm_pcs_enter_reset(Object *obj, ResetType type)
-+{
-+    NPCMPCSState *s = NPCM_PCS(obj);
-+
-+    npcm_pcs_soft_reset(s);
-+}
-+
-+static const struct MemoryRegionOps npcm_pcs_ops = {
-+    .read = npcm_pcs_read,
-+    .write = npcm_pcs_write,
-+    .endianness = DEVICE_LITTLE_ENDIAN,
-+    .valid = {
-+        .min_access_size = 2,
-+        .max_access_size = 2,
-+        .unaligned = false,
-+    },
-+};
-+
-+static void npcm_pcs_realize(DeviceState *dev, Error **errp)
-+{
-+    NPCMPCSState *pcs = NPCM_PCS(dev);
-+    SysBusDevice *sbd = SYS_BUS_DEVICE(dev);
-+
-+    memory_region_init_io(&pcs->iomem, OBJECT(pcs), &npcm_pcs_ops, pcs,
-+                          TYPE_NPCM_PCS, 8 * KiB);
-+    sysbus_init_mmio(sbd, &pcs->iomem);
-+}
-+
-+static const VMStateDescription vmstate_npcm_pcs = {
-+    .name = TYPE_NPCM_PCS,
-+    .version_id = 0,
-+    .minimum_version_id = 0,
-+    .fields = (VMStateField[]) {
-+        VMSTATE_UINT16(indirect_access_base, NPCMPCSState),
-+        VMSTATE_UINT16_ARRAY(sr_ctl, NPCMPCSState, NPCM_PCS_NR_SR_CTLS),
-+        VMSTATE_UINT16_ARRAY(sr_mii, NPCMPCSState, NPCM_PCS_NR_SR_MIIS),
-+        VMSTATE_UINT16_ARRAY(sr_tim, NPCMPCSState, NPCM_PCS_NR_SR_TIMS),
-+        VMSTATE_UINT16_ARRAY(vr_mii, NPCMPCSState, NPCM_PCS_NR_VR_MIIS),
-+        VMSTATE_END_OF_LIST(),
-+    },
-+};
-+
-+static void npcm_pcs_class_init(ObjectClass *klass, void *data)
-+{
-+    ResettableClass *rc = RESETTABLE_CLASS(klass);
-+    DeviceClass *dc = DEVICE_CLASS(klass);
-+
-+    set_bit(DEVICE_CATEGORY_MISC, dc->categories);
-+    dc->desc = "NPCM PCS Controller";
-+    dc->realize = npcm_pcs_realize;
-+    dc->vmsd = &vmstate_npcm_pcs;
-+    rc->phases.enter = npcm_pcs_enter_reset;
-+}
-+
-+static const TypeInfo npcm_pcs_types[] = {
-+    {
-+        .name = TYPE_NPCM_PCS,
-+        .parent = TYPE_SYS_BUS_DEVICE,
-+        .instance_size = sizeof(NPCMPCSState),
-+        .class_init = npcm_pcs_class_init,
-+    },
-+};
-+DEFINE_TYPES(npcm_pcs_types)
-diff --git a/hw/net/trace-events b/hw/net/trace-events
-index c35bfb2eb8..72b69c4a8b 100644
---- a/hw/net/trace-events
-+++ b/hw/net/trace-events
-@@ -483,8 +483,8 @@ npcm_gmac_packet_tx_desc_data(const char* name, uint32_t tdes0, uint32_t tdes1)
- npcm_gmac_tx_desc_owner(const char* name, uint32_t desc_addr) "%s: TX Descriptor @0x%04" PRIX32 " is owned by software"
+-The `Nuvoton iBMC`_ chips (NPCM7xx) are a family of ARM-based SoCs that are
++The `Nuvoton iBMC`_ chips are a family of Arm-based SoCs that are
+ designed to be used as Baseboard Management Controllers (BMCs) in various
+-servers. They all feature one or two ARM Cortex-A9 CPU cores, as well as an
+-assortment of peripherals targeted for either Enterprise or Data Center /
+-Hyperscale applications. The former is a superset of the latter, so NPCM750 has
+-all the peripherals of NPCM730 and more.
++servers. Currently there are two families: NPCM7XX series and
++NPCM8XX series. NPCM7XX series feature one or two Arm Cortex-A9 CPU cores,
++while NPCM8XX feature 4 Arm Cortex-A35 CPU cores. Both series contain a
++different assortment of peripherals targeted for either Enterprise or Data
++Center / Hyperscale applications.
  
- # npcm_pcs.c
--npcm_pcs_reg_read(const char *name, uint16_t indirect_access_baes, uint64_t offset, uint16_t value) "%s: IND: 0x%02" PRIx16 " offset: 0x%04" PRIx64 " value: 0x%04" PRIx16
--npcm_pcs_reg_write(const char *name, uint16_t indirect_access_baes, uint64_t offset, uint16_t value) "%s: IND: 0x%02" PRIx16 " offset: 0x%04" PRIx64 " value: 0x%04" PRIx16
-+npcm_pcs_reg_read(const char *name, uint16_t indirect_access_base, uint64_t offset, uint16_t value) "%s: IND: 0x%02" PRIx16 " offset: 0x%04" PRIx64 " value: 0x%04" PRIx16
-+npcm_pcs_reg_write(const char *name, uint16_t indirect_access_base, uint64_t offset, uint16_t value) "%s: IND: 0x%02" PRIx16 " offset: 0x%04" PRIx64 " value: 0x%04" PRIx16
+ .. _Nuvoton iBMC: https://www.nuvoton.com/products/cloud-computing/ibmc/
  
- # dp8398x.c
- dp8393x_raise_irq(int isr) "raise irq, isr is 0x%04x"
-diff --git a/include/hw/net/npcm_pcs.h b/include/hw/net/npcm_pcs.h
-new file mode 100644
-index 0000000000..d5c481ad70
---- /dev/null
-+++ b/include/hw/net/npcm_pcs.h
-@@ -0,0 +1,42 @@
-+/*
-+ * Nuvoton NPCM8xx PCS Module
-+ *
-+ * Copyright 2022 Google LLC
-+ *
-+ * This program is free software; you can redistribute it and/or modify it
-+ * under the terms of the GNU General Public License as published by the
-+ * Free Software Foundation; either version 2 of the License, or
-+ * (at your option) any later version.
-+ *
-+ * This program is distributed in the hope that it will be useful, but WITHOUT
-+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
-+ * FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License
-+ * for more details.
-+ */
+@@ -27,6 +28,11 @@ There are also two more SoCs, NPCM710 and NPCM705, which are single-core
+ variants of NPCM750 and NPCM730, respectively. These are currently not
+ supported by QEMU.
+ 
++The NPCM8xx SoC is the successor of the NPCM7xx SoC. It has 4 Cortex-A35 cores.
++The following machines are based on this chip :
 +
-+#ifndef NPCM_PCS_H
-+#define NPCM_PCS_H
++- ``npcm845-evb``       Nuvoton NPCM845 Evaluation board
 +
-+#include "hw/sysbus.h"
-+
-+#define NPCM_PCS_NR_SR_CTLS     (0x12 / sizeof(uint16_t))
-+#define NPCM_PCS_NR_SR_MIIS     (0x20 / sizeof(uint16_t))
-+#define NPCM_PCS_NR_SR_TIMS     (0x22 / sizeof(uint16_t))
-+#define NPCM_PCS_NR_VR_MIIS     (0x1c6 / sizeof(uint16_t))
-+
-+struct NPCMPCSState {
-+    SysBusDevice parent;
-+
-+    MemoryRegion iomem;
-+
-+    uint16_t indirect_access_base;
-+    uint16_t sr_ctl[NPCM_PCS_NR_SR_CTLS];
-+    uint16_t sr_mii[NPCM_PCS_NR_SR_MIIS];
-+    uint16_t sr_tim[NPCM_PCS_NR_SR_TIMS];
-+    uint16_t vr_mii[NPCM_PCS_NR_VR_MIIS];
-+};
-+
-+#define TYPE_NPCM_PCS "npcm-pcs"
-+OBJECT_DECLARE_SIMPLE_TYPE(NPCMPCSState, NPCM_PCS)
-+
-+#endif /* NPCM_PCS_H */
+ Supported devices
+ -----------------
+ 
+@@ -62,6 +68,8 @@ Missing devices
+    * System Wake-up Control (SWC)
+    * Shared memory (SHM)
+    * eSPI slave interface
++   * Block-transfer interface (8XX only)
++   * Virtual UART (8XX only)
+ 
+  * Ethernet controller (GMAC)
+  * USB device (USBD)
+@@ -76,6 +84,11 @@ Missing devices
+  * Video capture
+  * Encoding compression engine
+  * Security features
++ * I3C buses (8XX only)
++ * Temperature sensor interface (8XX only)
++ * Virtual UART (8XX only)
++ * Flash monitor (8XX only)
++ * JTAG master (8XX only)
+ 
+ Boot options
+ ------------
 -- 
 2.48.1.362.g079036d154-goog
 
