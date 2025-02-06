@@ -4,82 +4,78 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E291FC02194
-	for <qemu-devel@archiver.kernel.org>; Thu,  6 Feb 2025 17:11:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6B8C2C02194
+	for <qemu-devel@archiver.kernel.org>; Thu,  6 Feb 2025 17:13:31 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tg5Oz-0006hQ-2O; Thu, 06 Feb 2025 12:10:57 -0500
+	id 1tg5R3-0008Qq-58; Thu, 06 Feb 2025 12:13:05 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1tg5Ow-0006gZ-Dz
- for qemu-devel@nongnu.org; Thu, 06 Feb 2025 12:10:54 -0500
+ id 1tg5R0-0008QA-Oh
+ for qemu-devel@nongnu.org; Thu, 06 Feb 2025 12:13:02 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1tg5Ot-0004RF-O6
- for qemu-devel@nongnu.org; Thu, 06 Feb 2025 12:10:53 -0500
+ id 1tg5Qx-0004jG-FU
+ for qemu-devel@nongnu.org; Thu, 06 Feb 2025 12:13:02 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1738861848;
+ s=mimecast20190719; t=1738861978;
  h=from:from:reply-to:reply-to:subject:subject:date:date:
  message-id:message-id:to:to:cc:cc:mime-version:mime-version:
- content-type:content-type:in-reply-to:in-reply-to:  references:references;
- bh=LglHgr0lsXDlbzgGphMlzEv4WCmtuXYv3KPndrrocok=;
- b=Id3IgoKa4KmovzYA/M5zowbwyGF7z+6SBPAHcTqrpENO82UO6wt4fJ3/4fq+q/9Sd7Q8pj
- ylmocwQ9XxZUS1W8u68YdZgDiCWcxaoxYuZrk9jphFJY914CEYLxgW89M0cZQDRp+ISp4n
- bEeD9emZtBtyn+efN7As6edwLOIiqMk=
-Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=a9D14+ttmEpbIjxxs+8RIc6XcrX92xYxztdX0W95HbA=;
+ b=ia3zpU3g4pr+dCdBp+I4PkV1mDGzGpi5l4XUtl2UYJFP09RyIuMqAJizNhxBaz8mFhD4gv
+ B4zjZy+8oIJ6ymtsMXMm5s7/5Bd7jqEFfgvvQMb94H+Y1/RMXE95E3uyM2+3HZzWiic0v+
+ l+yTg1uMQYLoB50UUC8W6j6a1gTfRys=
+Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-671-GYxGmMsYNySXKbiBq7Qo4A-1; Thu,
- 06 Feb 2025 12:10:44 -0500
-X-MC-Unique: GYxGmMsYNySXKbiBq7Qo4A-1
-X-Mimecast-MFC-AGG-ID: GYxGmMsYNySXKbiBq7Qo4A
-Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-61-cxgIoaijOxOqJSkwXVbYJA-1; Thu,
+ 06 Feb 2025 12:12:52 -0500
+X-MC-Unique: cxgIoaijOxOqJSkwXVbYJA-1
+X-Mimecast-MFC-AGG-ID: cxgIoaijOxOqJSkwXVbYJA
+Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 67D041800875; Thu,  6 Feb 2025 17:10:42 +0000 (UTC)
+ by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 82551195604F; Thu,  6 Feb 2025 17:12:50 +0000 (UTC)
 Received: from redhat.com (unknown [10.42.28.33])
- by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id B59981955BD4; Thu,  6 Feb 2025 17:10:35 +0000 (UTC)
-Date: Thu, 6 Feb 2025 17:10:32 +0000
+ by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id C7D721800360; Thu,  6 Feb 2025 17:12:45 +0000 (UTC)
+Date: Thu, 6 Feb 2025 17:12:42 +0000
 From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
-To: Jason Gunthorpe <jgg@nvidia.com>
-Cc: Shameerali Kolothum Thodi <shameerali.kolothum.thodi@huawei.com>,
- "qemu-arm@nongnu.org" <qemu-arm@nongnu.org>,
- "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>,
- "eric.auger@redhat.com" <eric.auger@redhat.com>,
- "peter.maydell@linaro.org" <peter.maydell@linaro.org>,
- "nicolinc@nvidia.com" <nicolinc@nvidia.com>,
- "ddutile@redhat.com" <ddutile@redhat.com>, Linuxarm <linuxarm@huawei.com>,
- "Wangzhou (B)" <wangzhou1@hisilicon.com>,
- jiangkunkun <jiangkunkun@huawei.com>,
- Jonathan Cameron <jonathan.cameron@huawei.com>,
- "zhangfei.gao@linaro.org" <zhangfei.gao@linaro.org>,
- "nathanc@nvidia.com" <nathanc@nvidia.com>
-Subject: Re: [RFC PATCH 0/5] hw/arm/virt: Add support for user-creatable
- nested SMMUv3
-Message-ID: <Z6TtCLQ35UI12T77@redhat.com>
-References: <20241108125242.60136-1-shameerali.kolothum.thodi@huawei.com>
- <Z5uiGnAxUf4jXTEI@redhat.com>
- <7ecabe74e0514367baf28d67675e5db8@huawei.com>
- <Z51DmtP83741RAsb@redhat.com>
- <47d2c2556d794d87abf440263b2f7cd8@huawei.com>
- <Z6SQ3_5bcqseyzVa@redhat.com>
- <f898b6de4a664fe8810b06b7741e3120@huawei.com>
- <Z6TLSdwgajmHVmGH@redhat.com>
- <71116749d1234ab48a205fd2588151ec@huawei.com>
- <20250206170238.GG2960738@nvidia.com>
+To: Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Cc: qemu-devel@nongnu.org, qemu-arm@nongnu.org,
+ Anton Johansson <anjo@rev.ng>, Jason Wang <jasowang@redhat.com>,
+ Paolo Bonzini <pbonzini@redhat.com>,
+ Alistair Francis <alistair@alistair23.me>, Thomas Huth <thuth@redhat.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Peter Maydell <peter.maydell@linaro.org>,
+ "Edgar E. Iglesias" <edgar.iglesias@gmail.com>,
+ Markus Armbruster <armbru@redhat.com>,
+ Alex =?utf-8?Q?Benn=C3=A9e?= <alex.bennee@linaro.org>
+Subject: Re: [PATCH v5 11/16] hw/microblaze: Support various endianness for
+ s3adsp1800 machines
+Message-ID: <Z6TtisO7JGAMGILH@redhat.com>
+References: <20250206131052.30207-1-philmd@linaro.org>
+ <20250206131052.30207-12-philmd@linaro.org>
+ <Z6S3Mgt1G7fIjeBB@redhat.com>
+ <4624f149-76d0-4da5-8f13-8c015043c335@linaro.org>
+ <Z6THtfjL6UVhBiW7@redhat.com>
+ <3156dc3b-9553-4b5f-a934-f29ee0601887@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20250206170238.GG2960738@nvidia.com>
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <3156dc3b-9553-4b5f-a934-f29ee0601887@linaro.org>
 User-Agent: Mutt/2.2.13 (2024-03-09)
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
 Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
@@ -89,7 +85,7 @@ X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -106,24 +102,62 @@ Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, Feb 06, 2025 at 01:02:38PM -0400, Jason Gunthorpe wrote:
-> On Thu, Feb 06, 2025 at 03:07:06PM +0000, Shameerali Kolothum Thodi wrote:
-> > > If we set the physical/guest SMMU relationship directly, then at the
-> > > time the VFIO device is plugged, we can diagnose the incorrectly
-> > > placed VFIO device, and better reason about behaviour.
+On Thu, Feb 06, 2025 at 04:04:20PM +0100, Philippe Mathieu-Daudé wrote:
+> On 6/2/25 15:31, Daniel P. Berrangé wrote:
+> > On Thu, Feb 06, 2025 at 02:53:58PM +0100, Philippe Mathieu-Daudé wrote:
+> > > Hi Daniel,
+> > > 
+> > > On 6/2/25 14:20, Daniel P. Berrangé wrote:
+> > > > On Thu, Feb 06, 2025 at 02:10:47PM +0100, Philippe Mathieu-Daudé wrote:
+> > > > > Introduce an abstract machine parent class which defines
+> > > > > the 'little_endian' property. Duplicate the current machine,
+> > > > > which endian is tied to the binary endianness, to one big
+> > > > > endian and a little endian machine; updating the machine
+> > > > > description. Keep the current default machine for each binary.
+> > > > > 
+> > > > > 'petalogix-s3adsp1800' machine is aliased as:
+> > > > > - 'petalogix-s3adsp1800-be' on big-endian binary,
+> > > > > - 'petalogix-s3adsp1800-le' on little-endian one.
+> > > > 
+> > > > Does it makes sense to expose these as different machine types ?
+> > > > 
+> > > > If all the HW is identical in both cases, it feels like the
+> > > > endianness could just be a bool property of the machine type,
+> > > > rather than a new machine type.
+> > > 
+> > > Our test suites expect "qemu-system-foo -M bar" to work out of
+> > > the box, we can not have non-default properties.
+> > > 
+> > > (This is related to the raspberry pi discussion in
+> > > https://lore.kernel.org/qemu-devel/20250204002240.97830-1-philmd@linaro.org/).
+> > > 
+> > > My plan is to deprecate 'petalogix-s3adsp1800', so once we
+> > > remove it we can merge both qemu-system-microblaze and
+> > > qemu-system-microblazeel into a single binary.
+> > > 
+> > > If you don't want to add more machines, what should be the
+> > > endianness of the 'petalogix-s3adsp1800' machine in a binary
+> > > with no particular endianness? Either we add for explicit
+> > > endianness (fixing test suites) or we add one machine for
+> > > each endianness; I fail to see other options not too
+> > > confusing for our users.
 > > 
-> > Agree.
+> > We would pick an arbitrary endianness of our choosing
+> > I guess. How does this work in physical machines ? Is
+> > the choice of endianess a firmware setting, or a choice
+> > by the vendor when manufacturing in some way ?
 > 
-> Can you just take in a VFIO cdev FD reference on this command line:
-> 
->  -device arm-smmuv3-accel,id=smmuv2,bus=pcie.2
-> 
-> And that will lock the pSMMU/vSMMU relationship?
+> Like MIPS*, SH4* and Xtensa*, it is a jumper on the board
+> (wired to a CPU pin which is sampled once at cold reset).
 
-We shouldn't assume any VFIO device exists in the QEMU cnofig at the time
-we realize the virtual ssmu. I expect the SMMU may be cold plugged, while
-the VFIO devices may be hot plugged arbitrarly later, and we should have
-the association initialized the SMMU is realized.
+That makes me thing even more it is just a machine type property.
+
+None the less, since you've already taken this pattern of
+dual machine types for BE & LE on  MIPS/SH4/XTensa, I think
+we should stick with your precedent. Consistent modelling
+of endian handling across all machine types is most important
+IMHO
+
 
 With regards,
 Daniel
