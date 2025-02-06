@@ -4,90 +4,74 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 389AEC02194
-	for <qemu-devel@archiver.kernel.org>; Thu,  6 Feb 2025 15:06:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8FFB6C02194
+	for <qemu-devel@archiver.kernel.org>; Thu,  6 Feb 2025 15:07:25 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tg3Ry-00047H-EF; Thu, 06 Feb 2025 10:05:54 -0500
+	id 1tg3TJ-0004sQ-RS; Thu, 06 Feb 2025 10:07:17 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tg3Rr-00045n-Qp
- for qemu-devel@nongnu.org; Thu, 06 Feb 2025 10:05:48 -0500
-Received: from mail-wr1-x431.google.com ([2a00:1450:4864:20::431])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tg3Ro-0006eM-U3
- for qemu-devel@nongnu.org; Thu, 06 Feb 2025 10:05:46 -0500
-Received: by mail-wr1-x431.google.com with SMTP id
- ffacd0b85a97d-38dae9a0566so483488f8f.3
- for <qemu-devel@nongnu.org>; Thu, 06 Feb 2025 07:05:44 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1738854343; x=1739459143; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=suklDlITHQcChgPwi6vR1PzjOXyN+avaT+qTX5br7Eg=;
- b=O1nH8ZDbt9nhmad1nZEZt5OqAiFbNBTh+rHA4yj9MJ6MTODzJIJyL/kpOQBI3Tt3qk
- UWxL53XUMpdLI/GZ/J6brPIfeFCUsWA0+5tljxnelpPHqWDRZqGFUWAkemsVAPV6kwwE
- SHs/JvnC7nWuh87jL6s6kNGwWizx2yYLJ1ySsjyQ0DmTtnehZpEbrhvM/5bj+gKKEp6q
- L8+Isd59zGCZIixqXdOi22WgtMHWCOkHAdr04slAxJ/FFdZFIWUTrp/6EO2n54m//EQE
- 8aH4BEwAjQTus3ifh0L/hWhihiep9KVAfZvkaPo0htjpQAZIKLlMFd4kcQpHTeSIRvU+
- W4Tw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1738854343; x=1739459143;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=suklDlITHQcChgPwi6vR1PzjOXyN+avaT+qTX5br7Eg=;
- b=JBMlV2YlZa1UrrF0frQaTujMyyL8Yp6ypcydXD+zI7ueLyczHLpTZiIN95dGT0hoL4
- /O3kBPreZY45maY7pJE9EV0feF1X2R3xCRHvMFnyvNd6H1/wfhsQ1FuM7qtIw1WDgTpO
- u5ShW7ZZw1kgiDNS5APB83FIvgMVv3sAdoJJwWfp9KKUok7cMmmmhgUPQOmfktTVNJr0
- p6ARTBNk5GUMd/xP5Hl/gw8qfj2t9aAfdob5okQWK8V7tdHKYlfivEkje5rtWcMvfv0S
- CUWw+LQ2Jmkgc9lUNEYZJzNJiHeZA0N53b9afBuQ39w+aCOCAO9agBlq3lY3A8k+QCdO
- +sgw==
-X-Gm-Message-State: AOJu0YzvaWU/j6XJoy2RRiPHxlJVHLZIesKWedFopd+ZpNG1k2J4RGmE
- b0kIdbElT6HvhHUceVOOfjT8VkPWgc5FxX9QmLXy3v3XyhNV6UjeIDu/eFuhu2A=
-X-Gm-Gg: ASbGncsJDmyV7khla7NSIHyTqR31ojHRfzfLsZT2MAGHC7d5OE2JW3R9Vu9p6L/ml8c
- zMnhRmsvAxQQvFtyKEsjh0ySl/8KlOGhRhKjsup2CVZDpjGbftyBiLpIRV4bCMYKpiTJwJ1wYj7
- a4hD86lbSM7iYwgzY4+qCgfrh0t3ePN396cwJAMftOuCptiUuwaA+/esNrTQyew4s60HKlip/9C
- ulsZwF8lG/rJ31cO2tRCUPu3RPx/zRcVCgZ6sd0xErQGnYg8gbRrSK4gYDtueGjNK4PZDF7RZND
- jwalynh2tdkjGUtaqSKtx3JoGYdGRtLlKfbUGBXdPfxSU7JFSYq5CBqQK7E=
-X-Google-Smtp-Source: AGHT+IEZ7HmGU66nD1sJ+9HlHaSLd4kl4AeaeYhevJUj6vgAwjPy/0SJCeNcE/7CAFW94giwbQMHQw==
-X-Received: by 2002:a05:6000:1842:b0:38d:bd41:2f8b with SMTP id
- ffacd0b85a97d-38dbd4132c2mr1921017f8f.44.1738854342642; 
- Thu, 06 Feb 2025 07:05:42 -0800 (PST)
-Received: from [192.168.69.198] (88-187-86-199.subs.proxad.net.
- [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-38dbde1e197sm1974484f8f.91.2025.02.06.07.05.41
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 06 Feb 2025 07:05:42 -0800 (PST)
-Message-ID: <35c7e20e-2bfb-4523-8685-edcb753db7dc@linaro.org>
-Date: Thu, 6 Feb 2025 16:05:41 +0100
-MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] hw/sd/sdhci: Set reset value of interrupt registers
-To: BALATON Zoltan <balaton@eik.bme.hu>
-Cc: qemu-devel@nongnu.org, qemu-block@nongnu.org,
- Bernhard Beschow <shentey@gmail.com>, Jamin Lin <jamin_lin@aspeedtech.com>
-References: <20250115190422.5F0FA4E6030@zero.eik.bme.hu>
- <8cbad5be-e67b-46bd-9198-f7c90ad5ff56@linaro.org>
- <cc92e02b-c20d-974e-8b6d-bb30ea5af452@eik.bme.hu>
- <800dcc1b-8bf6-48e5-843a-99e630d4b494@linaro.org>
- <bd8e216d-df13-4842-9a5a-5f274237359c@eik.bme.hu>
+ (Exim 4.90_1) (envelope-from <shameerali.kolothum.thodi@huawei.com>)
+ id 1tg3TG-0004rA-Dk; Thu, 06 Feb 2025 10:07:14 -0500
+Received: from frasgout.his.huawei.com ([185.176.79.56])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <shameerali.kolothum.thodi@huawei.com>)
+ id 1tg3TD-0008Bq-QB; Thu, 06 Feb 2025 10:07:14 -0500
+Received: from mail.maildlp.com (unknown [172.18.186.31])
+ by frasgout.his.huawei.com (SkyGuard) with ESMTP id 4YpgP53nmqz6L55V;
+ Thu,  6 Feb 2025 23:04:25 +0800 (CST)
+Received: from frapeml500007.china.huawei.com (unknown [7.182.85.172])
+ by mail.maildlp.com (Postfix) with ESMTPS id 4FB71140534;
+ Thu,  6 Feb 2025 23:07:07 +0800 (CST)
+Received: from frapeml500008.china.huawei.com (7.182.85.71) by
+ frapeml500007.china.huawei.com (7.182.85.172) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.1.2507.39; Thu, 6 Feb 2025 16:07:07 +0100
+Received: from frapeml500008.china.huawei.com ([7.182.85.71]) by
+ frapeml500008.china.huawei.com ([7.182.85.71]) with mapi id 15.01.2507.039;
+ Thu, 6 Feb 2025 16:07:07 +0100
+To: =?utf-8?B?RGFuaWVsIFAuIEJlcnJhbmfDqQ==?= <berrange@redhat.com>
+CC: "qemu-arm@nongnu.org" <qemu-arm@nongnu.org>, "qemu-devel@nongnu.org"
+ <qemu-devel@nongnu.org>, "eric.auger@redhat.com" <eric.auger@redhat.com>,
+ "peter.maydell@linaro.org" <peter.maydell@linaro.org>, "jgg@nvidia.com"
+ <jgg@nvidia.com>, "nicolinc@nvidia.com" <nicolinc@nvidia.com>,
+ "ddutile@redhat.com" <ddutile@redhat.com>, Linuxarm <linuxarm@huawei.com>,
+ "Wangzhou (B)" <wangzhou1@hisilicon.com>, jiangkunkun
+ <jiangkunkun@huawei.com>, Jonathan Cameron <jonathan.cameron@huawei.com>,
+ "zhangfei.gao@linaro.org" <zhangfei.gao@linaro.org>, "nathanc@nvidia.com"
+ <nathanc@nvidia.com>
+Subject: RE: [RFC PATCH 0/5] hw/arm/virt: Add support for user-creatable
+ nested SMMUv3
+Thread-Topic: [RFC PATCH 0/5] hw/arm/virt: Add support for user-creatable
+ nested SMMUv3
+Thread-Index: AQHbMeB0+Q5BEZc9JkeH/U6Jz+dF4rMv66IAgAA0HqCAAb2VAIAIsUnQgAADD4CAAB6MsIAAJxaAgAATMvA=
+Date: Thu, 6 Feb 2025 15:07:06 +0000
+Message-ID: <71116749d1234ab48a205fd2588151ec@huawei.com>
+References: <20241108125242.60136-1-shameerali.kolothum.thodi@huawei.com>
+ <Z5uiGnAxUf4jXTEI@redhat.com> <7ecabe74e0514367baf28d67675e5db8@huawei.com>
+ <Z51DmtP83741RAsb@redhat.com> <47d2c2556d794d87abf440263b2f7cd8@huawei.com>
+ <Z6SQ3_5bcqseyzVa@redhat.com> <f898b6de4a664fe8810b06b7741e3120@huawei.com>
+ <Z6TLSdwgajmHVmGH@redhat.com>
+In-Reply-To: <Z6TLSdwgajmHVmGH@redhat.com>
+Accept-Language: en-GB, en-US
 Content-Language: en-US
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <bd8e216d-df13-4842-9a5a-5f274237359c@eik.bme.hu>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::431;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x431.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+x-originating-ip: [10.203.177.241]
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: base64
+MIME-Version: 1.0
+Received-SPF: pass client-ip=185.176.79.56;
+ envelope-from=shameerali.kolothum.thodi@huawei.com;
+ helo=frasgout.his.huawei.com
+X-Spam_score_int: -41
+X-Spam_score: -4.2
+X-Spam_bar: ----
+X-Spam_report: (-4.2 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_MED=-2.3,
+ RCVD_IN_MSPIKE_H2=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -100,88 +84,91 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-to:  Shameerali Kolothum Thodi <shameerali.kolothum.thodi@huawei.com>
+From:  Shameerali Kolothum Thodi via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 6/2/25 14:49, BALATON Zoltan wrote:
-> On Thu, 6 Feb 2025, Philippe Mathieu-Daudé wrote:
->> On 6/2/25 13:49, BALATON Zoltan wrote:
->>> On Thu, 6 Feb 2025, Philippe Mathieu-Daudé wrote:
->>>> On 15/1/25 20:04, BALATON Zoltan wrote:
->>>>> The interrupt enable registers are not reset to 0 but some bits are
->>>>> enabled on reset. At least some U-Boot versions seem to expect this
->>>>> and not initialise these registers before expecting interrupts. The
->>>>> numbers in this patch match what QorIQ P1022 has on reset and fix
->>>>> U-Boot for this SoC and should not break other drivers that initialise
->>>>> (and thus overwrite) these reset values.
->>>>>
->>>>> Signed-off-by: BALATON Zoltan <balaton@eik.bme.hu>
->>>>> ---
->>>>> I've also noticed that the work around marked with an XXX comment near
->>>>> line 600 breaks the U-Boot I've tested so I need to disable it:
->>>>> if ((s->sdmasysad % boundary_chk) == 0) {
->>>>> -        page_aligned = true;
->>>>> +//        page_aligned = true;
->>>>> }
->>>>> What should this hack fix and could it be now removed or somehow
->>>>> restricted to cases where it's needed?
->>>>
->>>> Cc'ing Jamin for
->>>> https://lore.kernel.org/qemu-devel/20241213031205.641009-2- 
->>>> jamin_lin@aspeedtech.com/
->>>>
->>>>>
->>>>> hw/sd/sdhci.c | 2 ++
->>>>>   1 file changed, 2 insertions(+)
->>>>>
->>>>> diff --git a/hw/sd/sdhci.c b/hw/sd/sdhci.c
->>>>> index 58375483e3..88eb0bfcb2 100644
->>>>> --- a/hw/sd/sdhci.c
->>>>> +++ b/hw/sd/sdhci.c
->>>>> @@ -303,6 +303,8 @@ static void sdhci_reset(SDHCIState *s)
->>>>>       s->data_count = 0;
->>>>>       s->stopped_state = sdhc_not_stopped;
->>>>>       s->pending_insert_state = false;
->>>>> +    s->norintstsen = 0x013f;
->>>>> +    s->errintstsen = 0x117f;
->>>>
->>>> I guess the problem is earlier:
->>>>
->>>>    /*
->>>>     * Set all registers to 0. Capabilities/Version registers are not 
->>>> cleared
->>>>     * and assumed to always preserve their value, given to them during
->>>>     * initialization
->>>>     */
->>>>    memset(&s->sdmasysad, 0, (uintptr_t)&s->capareg - (uintptr_t)&s- 
->>>> >sdmasysad);
->>>>
->>>> Not all registers have to be reset.
->>>
->>> Nothing seems to program those registers before reset but the reset 
->>> values are documented (for Freescale eSDHCI) to be the above so just 
->>> not zeroing them does not seem to be enough. Bernhard has similar 
->>> patch in his branch, not sure if he came up with that separately or 
->>> took this one. Do you have some docs on which regs should not be reset?
->>
->> The header precises what is being modeled here:
->>
->> * SD Association Host Standard Specification v2.0 controller emulation
->> *
->> * Datasheet: 
->> PartA2_SD_Host_Controller_Simplified_Specification_Ver2.00.pdf
->>
->> I can not see the reset values you mentioned there.
->>
->> What is wrong with adding a TYPE_FREESCALE_ESDHC, like the
->> TYPE_IMX_USDHC / TYPE_S3C_SDHCI types? Then you can add your
->> reset handler fixing your fields after sdhci_poweron_reset().
-> 
-> Nothing's wrong with that, I just did not notice those existing 
-> variants. Maybe that's the way to go then with this too. Bernhard, do 
-> you plan to do that when cleaning up your tree or should I do another 
-> version?
-
-I'm not sure this is the best way to do what you need, but it'd be one
-with less impacts on other SDHCI-based models IMO.
+DQoNCj4gLS0tLS1PcmlnaW5hbCBNZXNzYWdlLS0tLS0NCj4gRnJvbTogRGFuaWVsIFAuIEJlcnJh
+bmfDqSA8YmVycmFuZ2VAcmVkaGF0LmNvbT4NCj4gU2VudDogVGh1cnNkYXksIEZlYnJ1YXJ5IDYs
+IDIwMjUgMjo0NyBQTQ0KPiBUbzogU2hhbWVlcmFsaSBLb2xvdGh1bSBUaG9kaSA8c2hhbWVlcmFs
+aS5rb2xvdGh1bS50aG9kaUBodWF3ZWkuY29tPg0KPiBDYzogcWVtdS1hcm1Abm9uZ251Lm9yZzsg
+cWVtdS1kZXZlbEBub25nbnUub3JnOw0KPiBlcmljLmF1Z2VyQHJlZGhhdC5jb207IHBldGVyLm1h
+eWRlbGxAbGluYXJvLm9yZzsgamdnQG52aWRpYS5jb207DQo+IG5pY29saW5jQG52aWRpYS5jb207
+IGRkdXRpbGVAcmVkaGF0LmNvbTsgTGludXhhcm0NCj4gPGxpbnV4YXJtQGh1YXdlaS5jb20+OyBX
+YW5nemhvdSAoQikgPHdhbmd6aG91MUBoaXNpbGljb24uY29tPjsNCj4gamlhbmdrdW5rdW4gPGpp
+YW5na3Vua3VuQGh1YXdlaS5jb20+OyBKb25hdGhhbiBDYW1lcm9uDQo+IDxqb25hdGhhbi5jYW1l
+cm9uQGh1YXdlaS5jb20+OyB6aGFuZ2ZlaS5nYW9AbGluYXJvLm9yZzsNCj4gbmF0aGFuY0Budmlk
+aWEuY29tDQo+IFN1YmplY3Q6IFJlOiBbUkZDIFBBVENIIDAvNV0gaHcvYXJtL3ZpcnQ6IEFkZCBz
+dXBwb3J0IGZvciB1c2VyLWNyZWF0YWJsZQ0KPiBuZXN0ZWQgU01NVXYzDQo+IA0KPiBPbiBUaHUs
+IEZlYiAwNiwgMjAyNSBhdCAwMTo1MToxNVBNICswMDAwLCBTaGFtZWVyYWxpIEtvbG90aHVtIFRo
+b2RpDQo+IHdyb3RlOg0KPiA+IEhtbS4uSSBkb27igJl0IHRoaW5rIGp1c3Qgc3dhcHBpbmcgdGhl
+IG9yZGVyIHdpbGwgY2hhbmdlIHRoZSBhc3NvY2lhdGlvbg0KPiB3aXRoDQo+ID4gR3Vlc3QgU01N
+VSBoZXJlLiBCZWNhdXNlLCB3ZSBoYXZlLA0KPiA+DQo+ID4gPiAgLWRldmljZSBhcm0tc21tdXYz
+LWFjY2VsLGlkPXNtbXV2MixidXM9cGNpZS4yDQo+ID4NCj4gPiBEdXJpbmcgc21tdXYzLWFjY2Vs
+IHJlYWxpemUgdGltZSwgdGhpcyB3aWxsIHJlc3VsdCBpbiwNCj4gPiAgcGNpX3NldHVwX2lvbW11
+KHByaW1hcnlfYnVzLCBvcHMsIHNtbXVfc3RhdGUpOw0KPiA+DQo+ID4gQW5kIHdoZW4gdGhlIHZm
+aW8gZGV2IHJlYWxpemF0aW9uIGhhcHBlbnMsDQo+ID4gIHNldF9pb21tdV9kZXZpY2UoKQ0KPiA+
+ICAgIHNtbXVfZGV2X3NldF9pb21tdV9kZXZpY2UoYnVzLCBzbW11X3N0YXRlLCAsKQ0KPiA+ICAg
+ICAgIC0tPiB0aGlzIGlzIHdoZXJlIHRoZSBndWVzdCBzbW11djMtLT5ob3N0IHNtbXV2MyBhc3Nv
+Y2lhdGlvbiBpcyBmaXJzdA0KPiA+ICAgICAgICAgICAgIGVzdGFibGlzaGVkLiBBbmQgYW55IGZ1
+cnRoZXIgdmZpbyBkZXYgdG8gdGhpcyBHdWVzdCBTTU1VIHdpbGwNCj4gPiAgICAgICAgICAgICBv
+bmx5IHN1Y2NlZWRzIGlmIGl0IGJlbG9uZ3MgdG8gdGhlIHNhbWUgcGh5cyBTTU1VLg0KPiA+DQo+
+ID4gaWUsIHRoZSBHdWVzdCBTTU1VIHRvIHBjaSBidXMgYXNzb2NpYXRpb24sIGFjdHVhbGx5IG1h
+a2Ugc3VyZSB5b3UgaGF2ZQ0KPiB0aGUNCj4gPiBzYW1lIEd1ZXN0IFNNTVUgZm9yIHRoZSBkZXZp
+Y2UuDQo+IA0KPiBPaywgc28gYXQgdGltZSBvZiBWRklPIGRldmljZSByZWFsaXplLCBRRU1VIGlz
+IHRlbGxpbmcgdGhlIGtlcm5lbA0KPiB0byBhc3NvY2lhdGUgYSBwaHlzaWNhbCBTTU1VLCBhbmQg
+aXRzIGRvaW5nIHRoaXMgd2l0aCB0aGUgdmlydHVhbA0KPiBTTU1VIGF0dGFjaGVkIHRvIFBYQiBw
+YXJlbnRpbmcgdGhlIFZGSU8gZGV2aWNlLg0KPiANCj4gPiBzbW11djIgLS0+IHBjaWUuMiAtLT4g
+KHB4Yi1wY2llLCBudW1hX2lkID0gMSkNCj4gPiAwMDAwOmRldjIgLS0+ICBwY2llLnBvcnQyIC0t
+PiBwY2llLjIgLS0+IHNtbXV2MiAocHhiLXBjaWUsIG51bWFfaWQgPSAxKQ0KPiA+DQo+ID4gSGVu
+Y2UgdGhlIGFzc29jaWF0aW9uIG9mIDAwMDA6ZGV2MiB0byBHdWVzdCBTTU1VdjIgcmVtYWluIHNh
+bWUuDQo+IA0KPiBZZXMsIEkgY29uY3VyIHRoZSBTTU1VIHBoeXNpY2FsIDwtPiB2aXJ0dWFsIGFz
+c29jaWF0aW9uIHNob3VsZA0KPiBiZSBmaXhlZCwgYXMgbG9uZyBhcyB0aGUgc2FtZSBWRklPIGRl
+dmljZSBpcyBhbHdheXMgYWRkZWQgdG8NCj4gdGhlIHNhbWUgdmlydHVhbCBTTU1VLg0KPiANCj4g
+PiBJIGhvcGUgdGhpcyBpcyBjbGVhci4gQW5kIEkgYW0gbm90IHN1cmUgdGhlIGFzc29jaWF0aW9u
+IHdpbGwgYmUgYnJva2VuIGluDQo+IGFueQ0KPiA+IG90aGVyIHdheSB1bmxlc3MgUWVtdSBDTEkg
+c3BlY2lmeSB0aGUgZGV2IHRvIGEgZGlmZmVyZW50IFBYQi4NCj4gDQo+IEFsdGhvdWdoIHRoZSBv
+cmRlcmluZyBpcyBhdCBsZWFzdCBwcmVkaWN0YWJsZSwgSSByZW1haW4gdW5jb21mb3J0YWJsZQ0K
+PiBhYm91dCB0aGUgaWRlYSBvZiB0aGUgdmlydHVhbCBTTU1VIGFzc29jaWF0aW9uIHdpdGggdGhl
+IHBoeXNpY2FsIFNNTVUNCj4gYmVpbmcgYSBzaWRlIGVmZmVjdCBvZiB0aGUgVkZJTyBkZXZpY2Ug
+cGxhY2VtZW50Lg0KPiANCj4gVGhlcmUgaXMgc3RpbGwgdGhlIG9wZW4gZG9vciBmb3IgYWRtaW4g
+bWlzLWNvbmZpZ3VyYXRpb24gdGhhdCB3aWxsIG5vdA0KPiBiZSBkaWFnbm9zZWQuIGVnIGNvbnNp
+ZGVyIHdlIGF0dGFjaGVkIFZGSU8gZGV2aWNlIDEgZnJvbSB0aGUgaG9zdCBOVU1BDQo+IG5vZGUg
+MSB0byAgYSBQWEIgYXNzb2NpYXRlZCB3aXRoIGhvc3QgTlVNQSBub2RlIDAuIEFzIGxvbmcgYXMg
+dGhhdCdzDQo+IHRoZSBmaXJzdCBWRklPIGRldmljZSwgdGhlIGtlcm5lbCB3aWxsIGhhcHBpbHkg
+YXNzb2NpYXRlIHRoZSBwaHlzaWNhbA0KPiBhbmQgZ3Vlc3QgU01NVXMuDQoNClllcy4gQSBtaXMt
+Y29uZmlndXJhdGlvbiBjYW4gcGxhY2UgaXQgb24gYSB3cm9uZyBvbmUuIA0KIA0KPiBJZiB3ZSBz
+ZXQgdGhlIHBoeXNpY2FsL2d1ZXN0IFNNTVUgcmVsYXRpb25zaGlwIGRpcmVjdGx5LCB0aGVuIGF0
+IHRoZQ0KPiB0aW1lIHRoZSBWRklPIGRldmljZSBpcyBwbHVnZ2VkLCB3ZSBjYW4gZGlhZ25vc2Ug
+dGhlIGluY29ycmVjdGx5DQo+IHBsYWNlZCBWRklPIGRldmljZSwgYW5kIGJldHRlciByZWFzb24g
+YWJvdXQgYmVoYXZpb3VyLg0KDQpBZ3JlZS4NCg0KPiBJJ3ZlIGFub3RoZXIgcXVlc3Rpb24gYWJv
+dXQgdW5wbHVnIGJlaGF2aW91ci4uDQo+IA0KPiAgMS4gUGx1ZyBhIFZGSU8gZGV2aWNlIGZvciBo
+b3N0IFNNTVUgMSBpbnRvIGEgUFhCIHdpdGggZ3Vlc3QgU01NVSAxLg0KPiAgICAgICA9PiBLZXJu
+ZWwgYXNzb2NpYXRlcyBob3N0IFNNTVUgMSBhbmQgZ3Vlc3QgU01NVSAxIHRvZ2V0aGVyDQo+ICAy
+LiBVbnBsdWcgdGhpcyBWRklPIGRldmljZQ0KPiAgMy4gUGx1ZyBhIFZGSU8gZGV2aWNlIGZvciBo
+b3N0IFNNTVUgMiBpbnRvIGEgUFhCIHdpdGggZ3Vlc3QgU01NVSAxLg0KPiANCj4gRG9lcyB0aGUg
+aG9zdC9ndWVzdCBTTU1VIDE8LT4gMSBhc3NvY2lhdGlvbiByZW1haW4gc2V0IGFmdGVyIHN0ZXAg
+MiwNCj4gaW1wbHlpbmcgc3RlcCAzIHdpbGwgZmFpbCA/IE9yIGRvZXMgaXQgZ2V0IHVuc2V0LCBh
+bGxvd2luZyBzdGVwIDMNCj4gdG8gc3VjY2VlZCwgYW5kIGVzdGFibGlzaCBhIG5ldyBtYXBwaW5n
+IGhvc3QgU01NVSAyIHRvIGd1ZXN0IFNNTVUgMS4NCg0KQXQgdGhlIG1vbWVudCB0aGUgZmlyc3Qg
+YXNzb2NpYXRpb24gaXMgbm90IHBlcnNpc3RlbnQuIFNvIGEgbmV3IG1hcHBpbmcgDQppcyBwb3Nz
+aWJsZS4NCiANCj4gSWYgc3RlcCAyIGRvZXMgTk9UIGJyZWFrIHRoZSBhc3NvY2lhdGlvbiwgZG8g
+d2UgcHJlc2VydmUgdGhhdA0KPiBhY3Jvc3MgYSBzYXZldm0rbG9hZHZtIHNlcXVlbmNlIG9mIFFF
+TVUuIElmIHdlIGRvbid0LCB0aGVuIHN0ZXANCj4gMyB3b3VsZCBmYWlsIGJlZm9yZSB0aGUgc2F2
+ZXZtLCBidXQgc3VjY2VlZCBhZnRlciB0aGUgbG9hZHZtLg0KDQpSaWdodC4gSSBoYXZlbid0IGF0
+dGVtcHRlZCBtaWdyYXRpb24gdGVzdHMgeWV0LiBCdXQgYWdyZWUgdGhhdCBhbiANCmV4cGxpY2l0
+IGFzc29jaWF0aW9uIGlzIGJldHRlciB0byBtYWtlIG1pZ3JhdGlvbiBjb21wYXRpYmxlLiBBbHNv
+DQpJIGFtIG5vdCBzdXJlIGlmIHRoZSB0YXJnZXQgaGFzIGEgZGlmZmVyZW50IHBoeXMgU01NVVYz
+PC0tPiBkZXYNCm1hcHBpbmcgaG93IHdlIGhhbmRsZSB0aGF0Lg0KDQo+IEV4cGxpY2l0bHkgcmVw
+cmVzZW50aW5nIHRoZSBob3N0IFNNTVUgYXNzb2NpYXRpb24gb24gdGhlIGd1ZXN0IFNNTVUNCj4g
+Y29uZmlnIG1ha2VzIHRoaXMgYmVoYXZpb3VyIHVuYW1iaWd1b3VzLiBUaGUgaG9zdCAvIGd1ZXN0
+IFNNTVUNCj4gcmVsYXRpb25zaGlwIGlzIGZpeGVkIGZvciB0aGUgbGlmZXRpbWUgb2YgdGhlIFZN
+IGFuZCBpbnZhcmlhbnQgb2YNCj4gd2hhdGV2ZXIgVkZJTyBkZXZpY2UgaXMgKG9yIHdhcyBwcmV2
+aW91c2x5KSBwbHVnZ2VkLg0KPiANCj4gU28gSSBzdGlsbCBnbyBiYWNrIHRvIG15IGdlbmVyYWwg
+cHJpbmNpcGxlIHRoYXQgYXV0b21hdGljIHNpZGUgZWZmZWN0cw0KPiBhcmUgYW4gdW5kZXNpcmFi
+bGUgaWRlYSBpbiBRRU1VIGNvbmZpZ3VyYXRpb24uIFdlIGhhdmUgYSBsb25nIHRyYWRpdGlvbg0K
+PiBvZiBtYWtpbmcgZXZlcnl0aGluZyBlbnRpcmVseSBleHBsaWNpdCB0byBwcm9kdWNlIGVhc2ls
+eSBwcmVkaWN0YWJsZQ0KPiBiZWhhdmlvdXIuDQoNCk9rLiBDb252aW5jZWQg8J+Yii4gVGhhbmtz
+IGZvciBleHBsYWluaW5nLg0KDQpTaGFtZWVyDQo=
 
