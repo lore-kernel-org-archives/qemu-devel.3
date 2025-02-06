@@ -4,88 +4,86 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1D703C02194
-	for <qemu-devel@archiver.kernel.org>; Thu,  6 Feb 2025 09:28:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5C01DC02194
+	for <qemu-devel@archiver.kernel.org>; Thu,  6 Feb 2025 09:30:20 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tfyAi-0007KY-5I; Thu, 06 Feb 2025 04:27:44 -0500
+	id 1tfyCn-0000I4-VM; Thu, 06 Feb 2025 04:29:53 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1tfyAg-0007JY-Dq
- for qemu-devel@nongnu.org; Thu, 06 Feb 2025 04:27:43 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1tfyCi-0000H5-MI
+ for qemu-devel@nongnu.org; Thu, 06 Feb 2025 04:29:49 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1tfyAe-0004Te-CF
- for qemu-devel@nongnu.org; Thu, 06 Feb 2025 04:27:41 -0500
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1tfyCh-0005nK-49
+ for qemu-devel@nongnu.org; Thu, 06 Feb 2025 04:29:48 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1738834059;
+ s=mimecast20190719; t=1738834185;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ to:to:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=Kraiodq5yodhpoLdZHjfkXkvAzl7YznfAux4sffab/k=;
- b=RU9cxX1VkrVpp6ZthP2yq892nXIt83mK0iOeuNjJOal5QTrxwT8DOs6NbWiLVkYm2up95q
- jqhxsgaTSKD62GNmU0G7tATrxULnQmbpJK1rUx/gzcAn3VQWjmCXHW8FBZFh0YJLonGHds
- DJjsP1N18eDyScKtA2t33CvFqqDjB2w=
-Received: from mail-wm1-f70.google.com (mail-wm1-f70.google.com
- [209.85.128.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=am4iMHLtBYq6QIfw4BK+y7dS1PsroeK3j91cjc7MSy0=;
+ b=PUznXp+7IBeaF7quqLtLlV8c/oQkzDtMapitSicF8SA3UH/0+YAwflnnLfkW5FZabLGMQv
+ TXTSQcMgdIvFR8+VYIrdymA/lsqni96uO8/RmCPAA2R3WnS6Rk2yZZ7CRXqZsLJHxEtfPj
+ 9IIFLbuYTCSoum9sxB63eDqKvwfiagI=
+Received: from mail-wr1-f71.google.com (mail-wr1-f71.google.com
+ [209.85.221.71]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-60-MnLTds7WNfKNLQ2TJUosuQ-1; Thu, 06 Feb 2025 04:27:37 -0500
-X-MC-Unique: MnLTds7WNfKNLQ2TJUosuQ-1
-X-Mimecast-MFC-AGG-ID: MnLTds7WNfKNLQ2TJUosuQ
-Received: by mail-wm1-f70.google.com with SMTP id
- 5b1f17b1804b1-4361efc9dc6so3936095e9.3
- for <qemu-devel@nongnu.org>; Thu, 06 Feb 2025 01:27:37 -0800 (PST)
+ us-mta-589-UkUZUJP6N56iDgx6Sso8YQ-1; Thu, 06 Feb 2025 04:29:42 -0500
+X-MC-Unique: UkUZUJP6N56iDgx6Sso8YQ-1
+X-Mimecast-MFC-AGG-ID: UkUZUJP6N56iDgx6Sso8YQ
+Received: by mail-wr1-f71.google.com with SMTP id
+ ffacd0b85a97d-38dc32f753dso48306f8f.3
+ for <qemu-devel@nongnu.org>; Thu, 06 Feb 2025 01:29:42 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1738834056; x=1739438856;
- h=content-transfer-encoding:in-reply-to:autocrypt:from
- :content-language:references:cc:to:subject:user-agent:mime-version
- :date:message-id:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=Kraiodq5yodhpoLdZHjfkXkvAzl7YznfAux4sffab/k=;
- b=eAbb5V3WYaOoU6YgQqrlX8Ixdi7iPOP01kqTqN4IunuwqK4c4hj15Vrln686fUjcAS
- AWUYkb9+HjK4GPjeohlSLoWLaGTw+JW8h2mHDvLEVLAdgsjSaXZLZvAwEHX1PMw97KOW
- lDMO1dso9ccP0x6Lfc1NHiJDfcS0TK66yFAl4v5tA2CfbAUjbHu5YNClxtwNe3o17LdZ
- 3XE9hkkZV03jkBVLFcLhE2vRndxu3S20ewn+A37dDtevObujFx5BSyHum7dVx6CXQZ6V
- 87/4WVibOdfLx9ifJHko4ZwQiHC7rkwwKjBKyw0gjmrCqi+ph1Nc7xBaum4dVnvi7x8K
- 9bWg==
+ d=1e100.net; s=20230601; t=1738834181; x=1739438981;
+ h=content-transfer-encoding:in-reply-to:autocrypt:content-language
+ :from:references:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=am4iMHLtBYq6QIfw4BK+y7dS1PsroeK3j91cjc7MSy0=;
+ b=Xz86zOlBXehIdRV9gilAYmOPcQkR3Hco/V57wMxxX/6AtIMelufQ4Si98wyl7D1Ll1
+ w7wFtm4Bgsz1il3HXY5CW4dE6yz2y3HLG/Ibb5AYiSVKE0BAkYtOW613pcHfLfTre1Hj
+ Aim6+iyYYpioFu+44zvgaYJ6dVeCeytOUZcmsDOKzwVmXsey3gi/QjLOJ3LcEVs99dFs
+ vL/NMzcB4ufF6/d0CAP5hOBOTU69eUQTIq3Q7CgDSEgvGxlfF04gyyc0OT/BkzTgq5BK
+ qidkOduk7hPgwrMeP0GeX/aDHinrq8t7sfwDH9XTcvJTPQ2kKg/PzlW4o6ftqPjnexWp
+ z7gg==
 X-Forwarded-Encrypted: i=1;
- AJvYcCVg5ExoDqB6uIhRqTYVDFHeF8U3NTfompBJ8VjBXRapVyfy4xdIf4jpcVDor9VdVq2j8cyPHwfPFC5w@nongnu.org
-X-Gm-Message-State: AOJu0Ywq4yqWzNQAf47gcKS+F4hxuOAv+kEBlEOdV6DqUcgzXljozrPR
- /OwqFrpzvOf4I27n8/Zb32peqr5wDTrQIllZqpfjLjpyxJlIGb4Ylojcg06VYOHgfkR/57xRpXr
- /o9s891lnmKh7AYVTqJqX3aJZCheeqPFPE/jPihJrVu8dGPX0xtgo
-X-Gm-Gg: ASbGnct6XVDvnx1Skh+c6Nr9swdKcDZ+ABAFriJ4TaB0DMmJtBj+NQx6rrmHUyPExDq
- Gu5JuS5kJ/TGPEvY5wgnwQBsHd8tBRKBREkx4FKdVJoG4M804SX3MoobJhH9xTUONuj0R14Ksin
- NuFi2lXMBQLvQU8xpjFgzodSJAWgC9zcDGutFtgyH2ljXLCs5FjEFHRSP3dNwCMps9xeK8a9IGt
- ebQ5UEaUcdAVSh3aaOWZRvp1p0kDA93WEAP9a7nt9z8uMLG8DbPvwIVbyazAMlU/phuS8YAcGLD
- xDiNgh9zF9nkJNecoxQtcwdSWTD46HuFVN9R
-X-Received: by 2002:a05:600c:46c9:b0:434:e8cf:6390 with SMTP id
- 5b1f17b1804b1-4390d42ce2bmr45913805e9.6.1738834056222; 
- Thu, 06 Feb 2025 01:27:36 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IGtRswpHQWTFBCljDoM7AJTYEa45eaqkX5V4jufPhGMn9XTilcvvvMEIWtm99NfGNhaespP+g==
-X-Received: by 2002:a05:600c:46c9:b0:434:e8cf:6390 with SMTP id
- 5b1f17b1804b1-4390d42ce2bmr45913625e9.6.1738834055824; 
- Thu, 06 Feb 2025 01:27:35 -0800 (PST)
+ AJvYcCVhR91mNOrZlx1QhYYBKIfQjX+SFAHU3mJynPZfonJA4qucCY+/Zv8HJnn6rkbXu8/JwnwxE1HNAmi4@nongnu.org
+X-Gm-Message-State: AOJu0YxNfFQibjZLP0jtOH2pWBJQPhFk/5AHRm8WVa2YPWnbdgd1lTP2
+ MyaEPlm+zb4jK8RoP/h0fUpt2zgfXxiJXpeVxd1c06yH1sEfmhrCPaX8DnksENlmuBTNRYYQUa2
+ /s6EV0lk8hCIRzLxbdLj+4oT/EwrXhB/1z8UYRNZ0yh16iNiioGdp
+X-Gm-Gg: ASbGnct1M3r8bVVEoUXrfLPXNs44+lE1UjEFIhTUN8OOJAh/j5zwgCKrgD2SdqFefk9
+ CxL+YqjI+VsoRS9JZ0oqgNHHPce4DtQGcp6L/7gln+rxwwXhjxeCLbsYfW53ueTlasO49m4LsDH
+ VEC71zVP5Cc7RnBMVEDKkQGxniFtKqG8icnuCRMsAEhGy1R6p48qrt/XKv9K7s5ucc1nO5t6aUe
+ /mlMkDjB1cq7ty0EgfBg6GiWCCxysK7nWxbfF615ZjWkhuPfKZPfr9NfFk7r0TPe8wQWx6DPNPr
+ hJQwi7pF4x8PpYDpQiM138kh1P18tJlveC55
+X-Received: by 2002:a5d:6c61:0:b0:38d:b1a5:3f74 with SMTP id
+ ffacd0b85a97d-38db48a9705mr4970066f8f.6.1738834181382; 
+ Thu, 06 Feb 2025 01:29:41 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IF0Kb65TWBEXhYscaUU/FZO/3+5YUPqYhYyv+5t+lVR3c2W1o9jXW71j/3SqtlD95DXQIEU0Q==
+X-Received: by 2002:a5d:6c61:0:b0:38d:b1a5:3f74 with SMTP id
+ ffacd0b85a97d-38db48a9705mr4970051f8f.6.1738834181048; 
+ Thu, 06 Feb 2025 01:29:41 -0800 (PST)
 Received: from [192.168.0.7] (ip-109-42-48-132.web.vodafone.de.
  [109.42.48.132]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-38dbde0fc1asm1222832f8f.67.2025.02.06.01.27.35
+ ffacd0b85a97d-38dbdd1aee5sm1244144f8f.19.2025.02.06.01.29.40
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 06 Feb 2025 01:27:35 -0800 (PST)
-Message-ID: <370f5393-e19e-4dfd-a627-05a60ba80bbb@redhat.com>
-Date: Thu, 6 Feb 2025 10:27:34 +0100
+ Thu, 06 Feb 2025 01:29:40 -0800 (PST)
+Message-ID: <397d0afe-675f-4c21-b782-75e795a93491@redhat.com>
+Date: Thu, 6 Feb 2025 10:29:39 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 4/5] tests/functional: remove all class level fields
-To: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
- qemu-devel@nongnu.org
-Cc: "Michael S. Tsirkin" <mst@redhat.com>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Subject: Re: [PATCH 5/5] tests/functional: skip mem addr test on 32-bit hosts
+To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
 References: <20250205155946.2811296-1-berrange@redhat.com>
- <20250205155946.2811296-5-berrange@redhat.com>
-Content-Language: en-US
+ <20250205155946.2811296-6-berrange@redhat.com>
+ <9edd3138-3411-4459-96c3-d48c30e197e0@linaro.org>
+ <Z6OXlPu0fw_S9iy6@redhat.com>
+ <23032dd9-063e-49b3-a6b8-25d0c8f72cef@linaro.org>
 From: Thomas Huth <thuth@redhat.com>
+Content-Language: en-US
 Autocrypt: addr=thuth@redhat.com; keydata=
  xsFNBFH7eUwBEACzyOXKU+5Pcs6wNpKzrlJwzRl3VGZt95VCdb+FgoU9g11m7FWcOafrVRwU
  yYkTm9+7zBUc0sW5AuPGR/dp3pSLX/yFWsA/UB4nJsHqgDvDU7BImSeiTrnpMOTXb7Arw2a2
@@ -128,17 +126,17 @@ Autocrypt: addr=thuth@redhat.com; keydata=
  oiT+z+/E59qj/EKfyce3sbC9XLjXv3mHMrq1tKX4G7IJGnS989E/fg6crv6NHae9Ckm7+lSs
  IQu4bBP2GxiRQ+NV3iV/KU3ebMRzqIC//DCOxzQNFNJAKldPe/bKZMCxEqtVoRkuJtNdp/5a
  yXFZ6TfE1hGKrDBYAm4vrnZ4CXFSBDllL59cFFOJCkn4Xboj/aVxxJxF30bn
-In-Reply-To: <20250205155946.2811296-5-berrange@redhat.com>
+In-Reply-To: <23032dd9-063e-49b3-a6b8-25d0c8f72cef@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=thuth@redhat.com;
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=thuth@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -156,33 +154,26 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 05/02/2025 16.59, Daniel P. Berrangé wrote:
-> A number of fields are set at the class level on QemuBaseTest, even
-> though the exact same named field is then set at the object level
-> later in most cases.
+On 05/02/2025 19.25, Richard Henderson wrote:
+> On 2/5/25 08:53, Daniel P. Berrangé wrote:
+>>>> +Decorator to skip execution of a test on 32-bit targets
+>>>> +Example:
+>>>> +
+>>>> +  @skipIf32BitTarget()
+>>>> +'''
+>>>> +def skipIf32BitTarget():
+>>>> +    enoughBits = sys.maxsize > 2**32
+>>>> +    return skipUnless(enoughBits,
+>>>> +                      'Test requires a host with 64-bit address space')
+>>>
+>>> skipIf32BitHost?
+>>
+>> I don't mind either way.
 > 
-> Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
-> ---
->   tests/functional/qemu_test/testcase.py | 6 ------
->   1 file changed, 6 deletions(-)
-> 
-> diff --git a/tests/functional/qemu_test/testcase.py b/tests/functional/qemu_test/testcase.py
-> index 574c1942f2..531d6393ad 100644
-> --- a/tests/functional/qemu_test/testcase.py
-> +++ b/tests/functional/qemu_test/testcase.py
-> @@ -33,12 +33,6 @@
->   
->   class QemuBaseTest(unittest.TestCase):
->   
-> -    arch = None
-> -
-> -    workdir = None
-> -    log = None
-> -    logdir = None
+> Definitely host.
 
-That's what you get when a Python ignorant like me tries to write object 
-oriented Python code ;-) Thanks for cleaning up my mess!
++1 for host. Otherwise this gets confused with "qemu-system-i386" etc.
 
-Reviewed-by: Thomas Huth <thuth@redhat.com>
+  Thomas
 
 
