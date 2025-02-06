@@ -4,68 +4,67 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 20637C02196
-	for <qemu-devel@archiver.kernel.org>; Thu,  6 Feb 2025 22:13:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 27F0EC02194
+	for <qemu-devel@archiver.kernel.org>; Thu,  6 Feb 2025 22:13:52 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tgA6n-0005hX-Lf; Thu, 06 Feb 2025 17:12:29 -0500
+	id 1tgA75-00060s-Ro; Thu, 06 Feb 2025 17:12:48 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from
- <3vDOlZwgKCvszxkdrwvkjrrjoh.frpthpx-ghyhoqrqjqx.ruj@flex--wuhaotsh.bounces.google.com>)
- id 1tgA6a-0005ab-8Y
- for qemu-devel@nongnu.org; Thu, 06 Feb 2025 17:12:16 -0500
-Received: from mail-pl1-x649.google.com ([2607:f8b0:4864:20::649])
+ <30zOlZwgKChQGE1u8DC108805y.w86Ay6E-xyFy578707E.8B0@flex--wuhaotsh.bounces.google.com>)
+ id 1tgA6x-0005uX-MP
+ for qemu-devel@nongnu.org; Thu, 06 Feb 2025 17:12:39 -0500
+Received: from mail-pl1-x64a.google.com ([2607:f8b0:4864:20::64a])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from
- <3vDOlZwgKCvszxkdrwvkjrrjoh.frpthpx-ghyhoqrqjqx.ruj@flex--wuhaotsh.bounces.google.com>)
- id 1tgA6Y-0001Pj-Cy
- for qemu-devel@nongnu.org; Thu, 06 Feb 2025 17:12:15 -0500
-Received: by mail-pl1-x649.google.com with SMTP id
- d9443c01a7336-21f37eaef03so17805305ad.0
- for <qemu-devel@nongnu.org>; Thu, 06 Feb 2025 14:12:13 -0800 (PST)
+ <30zOlZwgKChQGE1u8DC108805y.w86Ay6E-xyFy578707E.8B0@flex--wuhaotsh.bounces.google.com>)
+ id 1tgA6v-0001Ww-HT
+ for qemu-devel@nongnu.org; Thu, 06 Feb 2025 17:12:39 -0500
+Received: by mail-pl1-x64a.google.com with SMTP id
+ d9443c01a7336-216311faa51so27151185ad.0
+ for <qemu-devel@nongnu.org>; Thu, 06 Feb 2025 14:12:36 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=google.com; s=20230601; t=1738879932; x=1739484732; darn=nongnu.org;
+ d=google.com; s=20230601; t=1738879955; x=1739484755; darn=nongnu.org;
  h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
  :date:from:to:cc:subject:date:message-id:reply-to;
- bh=2548+wS4SpVlfIQMzodXs7r5TmvHPEN3hvBGgeEdGms=;
- b=nJzgoWzcyplLjfw2mxcOWJB0S7B0gBl7Ezq2gSvKNYJlsFLaB8hqT/yaC+tp+rJd04
- yTojR/VJts/q0VkFcR4ABmzG9yyUQZvsNh/BxvuQryh+0BkTm5W/CtBdOIzgprtu/sVu
- 4P6yJCyyebywmaozeLUx31kRv9UhEesMu/5hxDxIEKdnCQR/DRZaDEMO1V79wcrQfJAq
- KL/kgAJzbVWyaORGWaaHElImZWBuZH1H8ox5K9JaLqOH52B0icKML4h7uLkyt4fnb4CB
- 137Zg4TRT4f1Focwlf+5nq010mfMupB5NUCeb+3Z7XfLX8KmdafexEczrNSp1PmERBwC
- Nx5w==
+ bh=T/InBvBeBSuPehQy0FZ7ql+eBOm3DOFnaxnrJsbjG5E=;
+ b=kHVKRrELMt5VC1YHCxgLeD9JIoGQk2ezJgLPNq7zecaW+seopNRUi0tDVUUacdAgqt
+ 7c4CK8PTGOfwmJpOoGyLKCCnJFy0FuZOSg45l41psVsasOMLdL/0nTwotC2/KKprN8Mp
+ /24TFvIFRdfrXQPGMo9Fsn9AcpNnbozZN+M8R0CNTUBsYMX3g6X2HxqVKkCb1eAj0Wa6
+ NTmDDImVYvoiM9C3ReodxF7QYUJGPfKKRZA/3EWaEgIAvG2YPUpc5IplcecYccHnUtUX
+ gaHe0LFW4L1esOjpoiIMy5QzBcfBo5+bR/5p6NsIBtBxz20S+K7MPptlRkZ323231tJ4
+ HD4w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1738879932; x=1739484732;
+ d=1e100.net; s=20230601; t=1738879955; x=1739484755;
  h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
  :date:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=2548+wS4SpVlfIQMzodXs7r5TmvHPEN3hvBGgeEdGms=;
- b=uNJ8pCdzXwX9dwXHTEf62aNogRTMt2+7uPlxAiw/23+e14dePcJvTA6j4k3d4i5H0W
- wvcVW2MRyY0W4otbhZEFLxEWf7510raRpZyDOq0jCFse5WygZyfcLoe9OAMJXa0ukR35
- NE/fE212x2p60n2YtR7MAI15dil00M5onfjS3Z+zk7V1ObDCDY15MKVxqmH9zb45V/6+
- C+upFAHEHCo5vpTXXE3lm25ba3Hgna23oeCM4xS9Qso6kQznOyq0yDQjd9+p10gqSbF7
- hocs2wyyDWwwC8bfZWsobYn1rTRwShNCys9ZumD2kqbamQiXaHPGvCiG35hKI1PKzsZx
- 5+MA==
+ bh=T/InBvBeBSuPehQy0FZ7ql+eBOm3DOFnaxnrJsbjG5E=;
+ b=i4Dw8NgVGEEoD03sbTI64zcfQd56pBnc22EMNmV+nQOajZ6iujDDwpPy2npN9aAa3t
+ BMbxkoR7J1RtKMJ0fNhisQQUHTUYlH55//fDQJf3Y1wcQpVgt2FboBdiCCDwnxRKUdS1
+ zf26vFx7B+wpTUjLdm3OeJLNzuL9RVgdgwS0lxnXwyCfNVD1VZlCbwLoIvwGN+Z05ASg
+ 8aSrHtC6HjuLRPQgxiX2uNAbL7MVCBFYGljXx0c0lB4dhsKuOmTh4J1cMrP3qwST6RkT
+ kTybdn4ahGIbhK3GPj2f/nBHncxPjnJrH7Y2FQOphVbpfvujBqWD1adEARrTDTNRcGyn
+ i9tw==
 X-Forwarded-Encrypted: i=1;
- AJvYcCWvtNx1/NWGjgrnJVir4xS3xZ2Zj3ohW0Anh7Jpcre4YwFt8S0W7khFVwV3ZpQ90Tr04pbwM+feVXz5@nongnu.org
-X-Gm-Message-State: AOJu0YzRcQg8IpSbry37mrgSSt4kfa6pKkmOUEjW5pFXTOdjwGBC3UOk
- htKms8oS7e7hGkTN5i879DrgBt+j5qQd7L/9AxjdW2SooXKSjZi0T+mlbUx3bz9Byb7kR7yGHZE
- c7TInuoziTA==
-X-Google-Smtp-Source: AGHT+IG2MhjukvGlwSTbKZh8yQxGQsgfezRxZbn66p+NhuUcTxqtJ3M5g35ThHhGqPXGgKYCF7sQb2tNunCg3w==
-X-Received: from pgbcx10.prod.google.com
- ([2002:a05:6a02:220a:b0:86c:1a7f:d25c])
+ AJvYcCWysFfNLG5eHt3KInBfIVxaKZQbQT49UrjTbFJshSLwteIJ0OgPVBrLXyC+0e7qctn+otw40CdV0Oqd@nongnu.org
+X-Gm-Message-State: AOJu0Yx933MzBw9+fVCwoPARnNxAxtXLQ01A0nGy9xfVfF1McrBvMDGp
+ ZgaQDclhPhdlP0UqGZ6H2GM1KBiJxrtlSByCYPNYP1sJxTDus5e5eQDG4+Lh02unICnrYWKWKRO
+ VPAO/uw2VTw==
+X-Google-Smtp-Source: AGHT+IHy7oqCfFA+j35yify/M4B8zxh5z41GpRswWi/ERaqi7mDDvWQWV1NujWXY4Dm3agLr0HbxYlPgyOQovw==
+X-Received: from plgp1.prod.google.com ([2002:a17:902:ebc1:b0:216:271b:1b41])
  (user=wuhaotsh job=prod-delivery.src-stubby-dispatcher) by
- 2002:a05:6a20:9f4a:b0:1e8:bd15:6819 with SMTP id
- adf61e73a8af0-1ee03a5f141mr1877001637.22.1738879932414; 
- Thu, 06 Feb 2025 14:12:12 -0800 (PST)
-Date: Thu,  6 Feb 2025 14:11:49 -0800
+ 2002:a17:902:f64b:b0:216:14fb:d277 with SMTP id
+ d9443c01a7336-21f2f20d241mr90871695ad.22.1738879955123; 
+ Thu, 06 Feb 2025 14:12:35 -0800 (PST)
+Date: Thu,  6 Feb 2025 14:12:03 -0800
 In-Reply-To: <20250206221203.4187217-1-wuhaotsh@google.com>
 Mime-Version: 1.0
 References: <20250206221203.4187217-1-wuhaotsh@google.com>
 X-Mailer: git-send-email 2.48.1.502.g6dc24dfdaf-goog
-Message-ID: <20250206221203.4187217-4-wuhaotsh@google.com>
-Subject: [PATCH v4 03/17] hw/ssi: Make flash size a property in NPCM7XX FIU
+Message-ID: <20250206221203.4187217-18-wuhaotsh@google.com>
+Subject: [PATCH v4 17/17] docs/system/arm: Add Description for NPCM8XX SoC
 From: Hao Wu <wuhaotsh@google.com>
 To: peter.maydell@linaro.org
 Cc: qemu-arm@nongnu.org, qemu-devel@nongnu.org, wuhaotsh@google.com, 
@@ -74,9 +73,9 @@ Cc: qemu-arm@nongnu.org, qemu-devel@nongnu.org, wuhaotsh@google.com,
  chli30@nuvoton.corp-partner.google.com, pbonzini@redhat.com, 
  jasowang@redhat.com, alistair@alistair23.me, philmd@linaro.org
 Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::649;
- envelope-from=3vDOlZwgKCvszxkdrwvkjrrjoh.frpthpx-ghyhoqrqjqx.ruj@flex--wuhaotsh.bounces.google.com;
- helo=mail-pl1-x649.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::64a;
+ envelope-from=30zOlZwgKChQGE1u8DC108805y.w86Ay6E-xyFy578707E.8B0@flex--wuhaotsh.bounces.google.com;
+ helo=mail-pl1-x64a.google.com
 X-Spam_score_int: -95
 X-Spam_score: -9.6
 X-Spam_bar: ---------
@@ -99,112 +98,75 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This allows different FIUs to have different flash sizes, useful
-in NPCM8XX which has multiple different sized FIU modules.
+NPCM8XX SoC is the successor of the NPCM7XX. It features quad-core
+Cortex-A35 (Armv8, 64-bit) CPUs and some additional peripherals.
 
-Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
+This document describes the NPCM8XX SoC and an evaluation board
+(NPCM 845 EVB).
+
 Signed-off-by: Hao Wu <wuhaotsh@google.com>
 ---
- hw/arm/npcm7xx.c             |  6 ++++++
- hw/ssi/npcm7xx_fiu.c         | 16 ++++++++++++++--
- include/hw/ssi/npcm7xx_fiu.h |  1 +
- 3 files changed, 21 insertions(+), 2 deletions(-)
+ docs/system/arm/nuvoton.rst | 27 ++++++++++++++++++++-------
+ 1 file changed, 20 insertions(+), 7 deletions(-)
 
-diff --git a/hw/arm/npcm7xx.c b/hw/arm/npcm7xx.c
-index 386b2c35e9..2d6e08b72b 100644
---- a/hw/arm/npcm7xx.c
-+++ b/hw/arm/npcm7xx.c
-@@ -292,17 +292,21 @@ static const struct {
-     hwaddr regs_addr;
-     int cs_count;
-     const hwaddr *flash_addr;
-+    size_t flash_size;
- } npcm7xx_fiu[] = {
-     {
-         .name = "fiu0",
-         .regs_addr = 0xfb000000,
-         .cs_count = ARRAY_SIZE(npcm7xx_fiu0_flash_addr),
-         .flash_addr = npcm7xx_fiu0_flash_addr,
-+        .flash_size = 128 * MiB,
+diff --git a/docs/system/arm/nuvoton.rst b/docs/system/arm/nuvoton.rst
+index 05059378e5..e4827fb43a 100644
+--- a/docs/system/arm/nuvoton.rst
++++ b/docs/system/arm/nuvoton.rst
+@@ -1,12 +1,13 @@
+-Nuvoton iBMC boards (``kudo-bmc``, ``mori-bmc``, ``npcm750-evb``, ``quanta-gbs-bmc``, ``quanta-gsj``)
+-=====================================================================================================
++Nuvoton iBMC boards (``kudo-bmc``, ``mori-bmc``, ``npcm750-evb``, ``quanta-gbs-bmc``, ``quanta-gsj``, ``npcm845-evb``)
++======================================================================================================================
+ 
+-The `Nuvoton iBMC`_ chips (NPCM7xx) are a family of ARM-based SoCs that are
++The `Nuvoton iBMC`_ chips are a family of Arm-based SoCs that are
+ designed to be used as Baseboard Management Controllers (BMCs) in various
+-servers. They all feature one or two ARM Cortex-A9 CPU cores, as well as an
+-assortment of peripherals targeted for either Enterprise or Data Center /
+-Hyperscale applications. The former is a superset of the latter, so NPCM750 has
+-all the peripherals of NPCM730 and more.
++servers. Currently there are two families: NPCM7XX series and
++NPCM8XX series. NPCM7XX series feature one or two Arm Cortex-A9 CPU cores,
++while NPCM8XX feature 4 Arm Cortex-A35 CPU cores. Both series contain a
++different assortment of peripherals targeted for either Enterprise or Data
++Center / Hyperscale applications.
+ 
+ .. _Nuvoton iBMC: https://www.nuvoton.com/products/cloud-computing/ibmc/
+ 
+@@ -27,6 +28,11 @@ There are also two more SoCs, NPCM710 and NPCM705, which are single-core
+ variants of NPCM750 and NPCM730, respectively. These are currently not
+ supported by QEMU.
+ 
++The NPCM8xx SoC is the successor of the NPCM7xx SoC. It has 4 Cortex-A35 cores.
++The following machines are based on this chip :
 +
-     }, {
-         .name = "fiu3",
-         .regs_addr = 0xc0000000,
-         .cs_count = ARRAY_SIZE(npcm7xx_fiu3_flash_addr),
-         .flash_addr = npcm7xx_fiu3_flash_addr,
-+        .flash_size = 128 * MiB,
-     },
- };
- 
-@@ -735,6 +739,8 @@ static void npcm7xx_realize(DeviceState *dev, Error **errp)
- 
-         object_property_set_int(OBJECT(sbd), "cs-count",
-                                 npcm7xx_fiu[i].cs_count, &error_abort);
-+        object_property_set_int(OBJECT(sbd), "flash-size",
-+                                npcm7xx_fiu[i].flash_size, &error_abort);
-         sysbus_realize(sbd, &error_abort);
- 
-         sysbus_mmio_map(sbd, 0, npcm7xx_fiu[i].regs_addr);
-diff --git a/hw/ssi/npcm7xx_fiu.c b/hw/ssi/npcm7xx_fiu.c
-index 21fc489038..8df4bec3f1 100644
---- a/hw/ssi/npcm7xx_fiu.c
-+++ b/hw/ssi/npcm7xx_fiu.c
-@@ -29,7 +29,7 @@
- #include "trace.h"
- 
- /* Up to 128 MiB of flash may be accessed directly as memory. */
--#define NPCM7XX_FIU_FLASH_WINDOW_SIZE (128 * MiB)
-+#define NPCM7XX_FIU_MAX_FLASH_WINDOW_SIZE (128 * MiB)
- 
- /* Each module has 4 KiB of register space. Only a fraction of it is used. */
- #define NPCM7XX_FIU_CTRL_REGS_SIZE (4 * KiB)
-@@ -507,6 +507,17 @@ static void npcm7xx_fiu_realize(DeviceState *dev, Error **errp)
-         return;
-     }
- 
-+    if (s->flash_size == 0) {
-+        error_setg(errp, "%s: flash size must be set", dev->canonical_path);
-+        return;
-+    }
++- ``npcm845-evb``       Nuvoton NPCM845 Evaluation board
 +
-+    if (s->flash_size > NPCM7XX_FIU_MAX_FLASH_WINDOW_SIZE) {
-+        error_setg(errp, "%s: flash size should not exceed 128 MiB",
-+                   dev->canonical_path);
-+        return;
-+    }
-+
-     s->spi = ssi_create_bus(dev, "spi");
-     s->cs_lines = g_new0(qemu_irq, s->cs_count);
-     qdev_init_gpio_out_named(DEVICE(s), s->cs_lines, "cs", s->cs_count);
-@@ -525,7 +536,7 @@ static void npcm7xx_fiu_realize(DeviceState *dev, Error **errp)
-         flash->fiu = s;
-         memory_region_init_io(&flash->direct_access, OBJECT(s),
-                               &npcm7xx_fiu_flash_ops, &s->flash[i], "flash",
--                              NPCM7XX_FIU_FLASH_WINDOW_SIZE);
-+                              s->flash_size);
-         sysbus_init_mmio(sbd, &flash->direct_access);
-     }
- }
-@@ -543,6 +554,7 @@ static const VMStateDescription vmstate_npcm7xx_fiu = {
+ Supported devices
+ -----------------
  
- static const Property npcm7xx_fiu_properties[] = {
-     DEFINE_PROP_INT32("cs-count", NPCM7xxFIUState, cs_count, 0),
-+    DEFINE_PROP_SIZE("flash-size", NPCM7xxFIUState, flash_size, 0),
- };
+@@ -62,6 +68,8 @@ Missing devices
+    * System Wake-up Control (SWC)
+    * Shared memory (SHM)
+    * eSPI slave interface
++   * Block-transfer interface (8XX only)
++   * Virtual UART (8XX only)
  
- static void npcm7xx_fiu_class_init(ObjectClass *klass, void *data)
-diff --git a/include/hw/ssi/npcm7xx_fiu.h b/include/hw/ssi/npcm7xx_fiu.h
-index a3a1704289..1785ea16f4 100644
---- a/include/hw/ssi/npcm7xx_fiu.h
-+++ b/include/hw/ssi/npcm7xx_fiu.h
-@@ -60,6 +60,7 @@ struct NPCM7xxFIUState {
-     int32_t cs_count;
-     int32_t active_cs;
-     qemu_irq *cs_lines;
-+    size_t flash_size;
-     NPCM7xxFIUFlash *flash;
+  * Ethernet controller (GMAC)
+  * USB device (USBD)
+@@ -76,6 +84,11 @@ Missing devices
+  * Video capture
+  * Encoding compression engine
+  * Security features
++ * I3C buses (8XX only)
++ * Temperature sensor interface (8XX only)
++ * Virtual UART (8XX only)
++ * Flash monitor (8XX only)
++ * JTAG master (8XX only)
  
-     SSIBus *spi;
+ Boot options
+ ------------
 -- 
 2.48.1.502.g6dc24dfdaf-goog
 
