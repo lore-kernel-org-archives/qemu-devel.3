@@ -4,73 +4,145 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5F1FDC02196
-	for <qemu-devel@archiver.kernel.org>; Thu,  6 Feb 2025 13:57:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6DA43C02194
+	for <qemu-devel@archiver.kernel.org>; Thu,  6 Feb 2025 14:03:15 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tg2NV-0001bk-Ei; Thu, 06 Feb 2025 08:57:13 -0500
+	id 1tg2Sq-0003rf-1q; Thu, 06 Feb 2025 09:02:44 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1tg2NT-0001b5-FD
- for qemu-devel@nongnu.org; Thu, 06 Feb 2025 08:57:11 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1tg2Sm-0003pD-4x
+ for qemu-devel@nongnu.org; Thu, 06 Feb 2025 09:02:41 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1tg2NS-0006G2-1n
- for qemu-devel@nongnu.org; Thu, 06 Feb 2025 08:57:11 -0500
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1tg2Sk-0006s6-Ni
+ for qemu-devel@nongnu.org; Thu, 06 Feb 2025 09:02:39 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1738850229;
+ s=mimecast20190719; t=1738850556;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=QM55rJnlW0KfBWwmNwRGshhYG2LoNYfdkcXgz4DdSAs=;
- b=XP+DKL3ONEm0LPiPVn7qvTty++/XCXSvO3sm/N0VY8oHBXmowQFOVF0ulFxitjWHjN8jac
- 5ecIFFZnIPWCovC6Tm+thnpsSDINpipmb7UQ2yEULJXsuf47ZiJP4KVYdQfM89cfg1ED8H
- dE5JGfmVCnjLkq5XdGZS39UWOI3A0J8=
-Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-288-KBTNeyb8MpugFP1pizxyxg-1; Thu,
- 06 Feb 2025 08:57:04 -0500
-X-MC-Unique: KBTNeyb8MpugFP1pizxyxg-1
-X-Mimecast-MFC-AGG-ID: KBTNeyb8MpugFP1pizxyxg
-Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 3E767185FBD6; Thu,  6 Feb 2025 13:56:47 +0000 (UTC)
-Received: from redhat.com (unknown [10.45.225.251])
- by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id E09281956052; Thu,  6 Feb 2025 13:56:42 +0000 (UTC)
-Date: Thu, 6 Feb 2025 14:56:40 +0100
-From: Kevin Wolf <kwolf@redhat.com>
-To: Stefan Hajnoczi <stefanha@redhat.com>
-Cc: qemu-block@nongnu.org, qemu-devel@nongnu.org,
- Paolo Bonzini <pbonzini@redhat.com>, Fam Zheng <fam@euphon.net>,
- Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>,
- Wen Congyang <wencongyang2@huawei.com>,
- John Snow <jsnow@redhat.com>, "Michael S. Tsirkin" <mst@redhat.com>,
- Xie Changlong <xiechanglong.d@gmail.com>, Hanna Reitz <hreitz@redhat.com>
-Subject: Re: [PATCH] block: remove unused BLOCK_OP_TYPE_DATAPLANE
-Message-ID: <Z6S_mA0kRs1OFget@redhat.com>
-References: <20250203182529.269066-1-stefanha@redhat.com>
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+ bh=uTfV84G3ykd/UdF8Tex0lOaRk2R9Xgmon2HAY9eca48=;
+ b=cF9LFmM4QjlLBBSMRx3i3yLId84wI/cvaETK+WO6xWqF+qOJiaJQ/OXUADBnoai5WIluUX
+ LW6Dv/+dDxcFLcj/P+HQY8Dls0e+5KcSDUGkbp/Qj6B73V7qhm7OLps2VQa6I02fcP4LIj
+ HOUgkQsiXI0ZumM1F3EsU2oHBTUmSaw=
+Received: from mail-wr1-f72.google.com (mail-wr1-f72.google.com
+ [209.85.221.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-589-Z5m36DCpNvyNonel7P1yYw-1; Thu, 06 Feb 2025 09:02:35 -0500
+X-MC-Unique: Z5m36DCpNvyNonel7P1yYw-1
+X-Mimecast-MFC-AGG-ID: Z5m36DCpNvyNonel7P1yYw
+Received: by mail-wr1-f72.google.com with SMTP id
+ ffacd0b85a97d-38dbe6a1ba6so274311f8f.0
+ for <qemu-devel@nongnu.org>; Thu, 06 Feb 2025 06:02:34 -0800 (PST)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1738850554; x=1739455354;
+ h=content-transfer-encoding:in-reply-to:autocrypt:content-language
+ :from:references:cc:to:subject:user-agent:mime-version:date
+ :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=uTfV84G3ykd/UdF8Tex0lOaRk2R9Xgmon2HAY9eca48=;
+ b=WO4NTNXl6rLezBQAGDjkzqoRenTb6b3Zj4nT5Td5DFCOUb9GQS6w3X/6/jBTlGA0nf
+ wL34XwVj31l18IE3FAQgMbrcTYYFOS8Ag1ydU6K1xo5fAALWx1YS/oXjdtGmYkG+PsoQ
+ z49BHqsMHeS0nlduXns9VA5hzFFGNts2NcWYXS87LXwF/41J3LcevllCiYjsvO+e6YQf
+ 4nWcJQmIXqaWENFiY88QNsscxQcb0PGH6Itce1oXbMgkTj7ZgO0qaOoxjvG6nYNKo8zt
+ PAi6RqgGXfoBiwJ6yeU1i8AwqvUWayy5gJqc7x7+oDGZfrmIblRFx5AwTwXpq89uS0Wk
+ bmYg==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCW2qOm1ZfWqi+y0/EnVlBn1u4D6rMprR/INwVRK5OBORTJ8yvxz9EgD/DEjFdEeHOk/tu2W4RSCDcST@nongnu.org
+X-Gm-Message-State: AOJu0YwlJzbUqQwe0PGLGJYTdt84Z9GlNMIT3atxa6h9B13nPHVynErK
+ dYsE3UNUWBlLBEGRZI6m4gUYApiAV2NzeP56Yn3ysQ2XEuLf2LyLgKz5CXI9LgfZyiGuDvuq0+E
+ wT4t5Xg6BZXScuYe7org4EWGgYfRfkxs1/lFIBp6ou8U733PMD4s6
+X-Gm-Gg: ASbGncuoqqE0qdhyRcc4DMncfQ25O6dk2T/KYaR//mUPtCH3Hq6Q+vACM+S+eN3MV3K
+ InatqmUyAecco2YaGBd2t1jQ0kunRoV+fIDAHAPGCTjjuBpL6XzF8aq1XSd7Zea6T81buQABQRi
+ Yr3cg3Mkf5AqKIVxiRTCwpb4zNyN40yL4Dp4bDbHVYAr/RblDr2NkxKlKn1cMSa1BkGD6Shk9HU
+ OlulhtM7EoKutm0s+1LmNOsmaEQ+Ql87uNzUi17mZe+Z7ZEACBAv5JcWgsewLrbp6CehVvN1wam
+ d63gh9Kkf1FfZrGHFBvNrkw9i7CPg51feibu
+X-Received: by 2002:a5d:64ab:0:b0:386:4a16:dad7 with SMTP id
+ ffacd0b85a97d-38db48867c7mr5161107f8f.10.1738850553681; 
+ Thu, 06 Feb 2025 06:02:33 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IGwsZNdXY69WhhbzipfYXO+00FJsR6yMiIx/gTy2K9xPJgW6yPn+QUrwUlMA1xOSbB+TMtkgw==
+X-Received: by 2002:a5d:64ab:0:b0:386:4a16:dad7 with SMTP id
+ ffacd0b85a97d-38db48867c7mr5160991f8f.10.1738850552648; 
+ Thu, 06 Feb 2025 06:02:32 -0800 (PST)
+Received: from [192.168.0.7] (ip-109-42-48-132.web.vodafone.de.
+ [109.42.48.132]) by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-38dbde1ddaesm1788201f8f.85.2025.02.06.06.02.31
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Thu, 06 Feb 2025 06:02:32 -0800 (PST)
+Message-ID: <a327bfb0-99ba-4f31-83f3-cc42faae90b7@redhat.com>
+Date: Thu, 6 Feb 2025 15:02:25 +0100
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20250203182529.269066-1-stefanha@redhat.com>
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=kwolf@redhat.com;
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v4 16/16] tests/functional: Run cross-endian microblaze
+ tests
+To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ qemu-devel@nongnu.org
+Cc: Anton Johansson <anjo@rev.ng>, Alistair Francis <alistair@alistair23.me>, 
+ Richard Henderson <richard.henderson@linaro.org>,
+ Jason Wang <jasowang@redhat.com>,
+ "Edgar E. Iglesias" <edgar.iglesias@gmail.com>
+References: <20250206113321.94906-1-philmd@linaro.org>
+ <20250206113321.94906-17-philmd@linaro.org>
+From: Thomas Huth <thuth@redhat.com>
+Content-Language: en-US
+Autocrypt: addr=thuth@redhat.com; keydata=
+ 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
+In-Reply-To: <20250206113321.94906-17-philmd@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=thuth@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -86,38 +158,16 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Am 03.02.2025 um 19:25 hat Stefan Hajnoczi geschrieben:
-> BLOCK_OP_TYPE_DATAPLANE prevents BlockDriverState from being used by
-> virtio-blk/virtio-scsi with IOThread. Commit b112a65c52aa ("block:
-> declare blockjobs and dataplane friends!") eliminated the main reason
-> for this blocker in 2014.
+On 06/02/2025 12.33, Philippe Mathieu-Daudé wrote:
+> Ensure microblaze machines can run cross-endianness by
+> running all tests on all machines.
 > 
-> Nowadays the block layer supports I/O from multiple AioContexts, so
-> there is even less reason to block IOThread users. Any legitimate
-> reasons related to interference would probably also apply to
-> non-IOThread users.
-> 
-> The only remaining users are bdrv_op_unblock(BLOCK_OP_TYPE_DATAPLANE)
-> calls after bdrv_op_block_all(). If we remove BLOCK_OP_TYPE_DATAPLANE
-> their behavior doesn't change.
-> 
-> Existing bdrv_op_block_all() callers that don't explicitly unblock
-> BLOCK_OP_TYPE_DATAPLANE seem to do so simply because no one bothered to
-> rather than because it is necessary to keep BLOCK_OP_TYPE_DATAPLANE
-> blocked.
-> 
-> Signed-off-by: Stefan Hajnoczi <stefanha@redhat.com>
+> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+> ---
+>   tests/functional/test_microblaze_s3adsp1800.py   | 6 ++++++
+>   tests/functional/test_microblazeel_s3adsp1800.py | 6 ++++++
+>   2 files changed, 12 insertions(+)
 
-Thanks, applied to the block branch.
-
-I've actually had pretty much the same patch lying around for.. *checks*
-five years, but never sent it because I intended it to be part of a more
-general op blocker removal series. I don't think we actually rely on any
-of them any more, but proving it was still hard when I tried.
-
-One additional part my patch had is removing blk_op_is_blocked() because
-it's now unused. I'll send this as a separate patch.
-
-Kevin
+Reviewed-by: Thomas Huth <thuth@redhat.com>
 
 
