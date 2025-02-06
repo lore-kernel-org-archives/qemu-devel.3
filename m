@@ -4,143 +4,90 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7EC8DC02196
-	for <qemu-devel@archiver.kernel.org>; Thu,  6 Feb 2025 09:23:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 84BC8C02194
+	for <qemu-devel@archiver.kernel.org>; Thu,  6 Feb 2025 09:24:47 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tfy6o-0004wt-Sm; Thu, 06 Feb 2025 04:23:43 -0500
+	id 1tfy7e-0005n5-4O; Thu, 06 Feb 2025 04:24:34 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1tfy6n-0004ul-BK
- for qemu-devel@nongnu.org; Thu, 06 Feb 2025 04:23:41 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1tfy6l-0002au-J2
- for qemu-devel@nongnu.org; Thu, 06 Feb 2025 04:23:41 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1738833818;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=Z6SZuuILFAfFaC/XRwySlhlTVSeAti5btC0OO4mWGGo=;
- b=hh/hW2LdCi9nZecB1M0MtgwSR68GgmuG+cFzH7xhs5JXfRIB1MZlgfNqDz2ZiSqTHYPQTR
- 2PyzPrFCFCBpsRspgWmBEeX8NdioWDNUo4eWYNYARo1L3ZhiqIzJkn128pDsrGh3CQEgWr
- VavaWXMn6SXF/wCcea84IqM/NEhG+CE=
-Received: from mail-wr1-f70.google.com (mail-wr1-f70.google.com
- [209.85.221.70]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-639-IlNM4MwINMW_yGn_A_xdaA-1; Thu, 06 Feb 2025 04:23:36 -0500
-X-MC-Unique: IlNM4MwINMW_yGn_A_xdaA-1
-X-Mimecast-MFC-AGG-ID: IlNM4MwINMW_yGn_A_xdaA
-Received: by mail-wr1-f70.google.com with SMTP id
- ffacd0b85a97d-38db3cbd289so480102f8f.0
- for <qemu-devel@nongnu.org>; Thu, 06 Feb 2025 01:23:36 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tfy7c-0005mB-0x
+ for qemu-devel@nongnu.org; Thu, 06 Feb 2025 04:24:32 -0500
+Received: from mail-wm1-x333.google.com ([2a00:1450:4864:20::333])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tfy7a-0002fn-E4
+ for qemu-devel@nongnu.org; Thu, 06 Feb 2025 04:24:31 -0500
+Received: by mail-wm1-x333.google.com with SMTP id
+ 5b1f17b1804b1-43625c4a50dso3993165e9.0
+ for <qemu-devel@nongnu.org>; Thu, 06 Feb 2025 01:24:29 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1738833869; x=1739438669; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=fKNhj6bAZJIRl/H2MLmtIBXk+VXz7QFWq/juP1WJVu8=;
+ b=GffoifZaQU03dHooxwU6ncupDYXdzBvzRrCCvYf4Zo8urGgqedvvtPTHcaQPEa92lL
+ VTd6xIIKrq/c3MiU8kwo4XbAp/eZQS/WtGOAo5Ju432v0fiCwYsCb1CkikQydgocq6Nl
+ Rv1j99PxYnvokczw3lDaX7tQD5ieDtHfT4ASyAVTs8VK8IKTMqfbckfS72FK1ersQqMY
+ Rz5ip5ncORiypd2UUcmdVlUZf+WDxEjheRvXfc5wO9qNGajXwQYltHY8887BXgeLY5Rp
+ GrjN3oHjdNY1+dy+gifwCMUSvUFNVRSdGUu0j3ZiplqhJRugz2UiQ0BytPkaetMYOBcQ
+ pxoQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1738833816; x=1739438616;
- h=content-transfer-encoding:in-reply-to:autocrypt:from
- :content-language:references:cc:to:subject:user-agent:mime-version
- :date:message-id:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=Z6SZuuILFAfFaC/XRwySlhlTVSeAti5btC0OO4mWGGo=;
- b=LjeCV39FaDZXWWFP/MgjHU3UDpOpbISvtMrobCD6JPjjTpa3NPjbARMCGAppb5xfSm
- OxxANZ6wvU7rLGnWiun4iUAwk3vtdKia+hWnGfFz6jdu3wjbU4+eGgBfRN+qZFh/vqhe
- j1rXxIamvoQB662Vn2iwtJL2te368RYBA+AAJtl057Q7pxOY+P9qMGcKc1a5WtBVzAFH
- QJeoN5++QoGs2KQd1a1L/aR8IfDQkZAS9nM6twHUJ1lsPqbezjiAaYWT5eRVAkAHZCxT
- LhejsbpSZKIhrtNqg1Rfz3jxg8drbMVJkukrGDOgNl6RoO8kgONh1XdQ49r7W9MvGkNu
- Okeg==
+ d=1e100.net; s=20230601; t=1738833869; x=1739438669;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=fKNhj6bAZJIRl/H2MLmtIBXk+VXz7QFWq/juP1WJVu8=;
+ b=gq5koOhQjQ8OoZattzewSe5Q4KVCrEjy0G10UT4aa567AT+kn/HkMF0Kzgm2yfKKJv
+ COFCY/K6u6Dh+ARyxp3fC7ti8QA6gFZE5xGrE1I96+sFf+txyGmxeBIU/vnahsoDaDcB
+ 6bKBUL+rs75LQe0UMlaa3ofYoq1aQxLUDdMA80L6idxZSmOkm1j740+tjlXHaUJ9nSxH
+ cJvgQje0tJgK9nW3Y98lL9ssqvEGR/bOTi8PIufXehMBz5BXWG2QUWph7AlxkovNgJT0
+ uJku/R9Ga2N8IN1cnDEiuj2YvIsmq4kSuXOBs2LIuuCvo0+ZYQbp2AqpHEhKNF/uKjhY
+ PMbA==
 X-Forwarded-Encrypted: i=1;
- AJvYcCUBgZAomh8H26A4HqnKueRGh7yu5zzeNbJrOEKfGmEqFdHwsILLff69MDPcujrzlxQvqXs9UZGyR9WK@nongnu.org
-X-Gm-Message-State: AOJu0YzOAKzm0y6D3r/5aDgqqxajsLUr9oqAgBiwzyL1NwUXhswt2Tvo
- J34WTsSYorvvBW1GgJUMV4xfy1qvJVUdSF/PaZ4PfZhUvSmYMJOK17STwIeBwBPuxJRrA0ZFjq7
- eylae1irPNdt4+MOh37Ncb9JsXx6oLJi1X3dXyainOytW9zs+fIIi
-X-Gm-Gg: ASbGncsTooTGN/gcG2Zbroahku+8gLqlXE0nDbDx42jj/VxyX8V09Lxdb3gg1OntZ19
- NnsUbv5e/gOdU+6wTojRGLBt2e0uZX1+ZiIr7scUoQE5Sleb2LuJlCQ89MIpzjze49syrRHdvsV
- c/S+O02F9TLmwOUkBtXPujznVgXzDKI4eO6AKTMbihoeFWfsUthHhJR7qLv39Sgmgq9+zArjI76
- 9rIdPtIFgHorkyICL3SYickH1k4KE09428nlhZblq+pMs4emJCq7+z0z+69JnjXSVglEGJHyT63
- My8lqnyCmRCCOXPScMQ/lQK4zFYPsJGcgFsJ
-X-Received: by 2002:a5d:6da8:0:b0:382:4ab4:b428 with SMTP id
- ffacd0b85a97d-38db48b4201mr4308626f8f.8.1738833815772; 
- Thu, 06 Feb 2025 01:23:35 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IH1r8RO8l8pGQhtEP17QjzgjagZ5nRLgVz49q40wvjM7dPC7/2X7Xvdc+ncnG6XOJdZ4mRaxw==
-X-Received: by 2002:a5d:6da8:0:b0:382:4ab4:b428 with SMTP id
- ffacd0b85a97d-38db48b4201mr4308605f8f.8.1738833815431; 
- Thu, 06 Feb 2025 01:23:35 -0800 (PST)
-Received: from [192.168.0.7] (ip-109-42-48-132.web.vodafone.de.
- [109.42.48.132]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-38dc0c5a894sm624389f8f.95.2025.02.06.01.23.34
+ AJvYcCWfmWtifOEj35brzz5++R43662Lb84mCj8X81844Tww2D72IF79x1+w5I0yaQSxgZG/xxbiFApzr61O@nongnu.org
+X-Gm-Message-State: AOJu0YzVT4sT9ZSgHohio3IH+JvQV9REvrlBRjGGRaxN1Pj8p0JqHoIN
+ 6SUoMCIlbmTp5h4cd7Z0VfIq7KSjC2/daEXsl0ualVxMPJ3eZVRVAVhDD9OfGJE=
+X-Gm-Gg: ASbGncsqcZoKTMzTTSIJ7urYSignuZKx09J2q6WX8ctq1eHtkiLpqThDU7y8caWwCKD
+ rHdECOunrFNFxQgiLLfJ9PMMPAXsawDKlQa8HBF/iPCWXW9nBKellHesEicVIL8NYExiuzTZMQW
+ LT1KYFME6Di64Od0fQjFguW5+Ylwj2mHpMTG8D83N8HNe1RJ8UsOiOtBiWOWRkLGRRbze9WE8jd
+ OXnP01VEEju963hssMShVHcB3Jfi6nhB1l7ApKBfeN6hhyknr17q5aV8Q2FXuz5pmPSbMqmVQfB
+ +dH0c/A1L5qwQNZZOR+gGSLT+xCsoRejox2BL2bqhDkwxmxU7194iKJvrjU=
+X-Google-Smtp-Source: AGHT+IE4yi180CS03alw6Ui59YoRkduMQd7rHaLwGiXX12QxikHUPnFMDlZzsVn+ABcCZtNJJ6QMGA==
+X-Received: by 2002:a05:600c:1393:b0:434:fd01:2e5f with SMTP id
+ 5b1f17b1804b1-4390d56f60amr48358185e9.29.1738833868893; 
+ Thu, 06 Feb 2025 01:24:28 -0800 (PST)
+Received: from [192.168.69.198] (88-187-86-199.subs.proxad.net.
+ [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-4390d966faasm49362345e9.23.2025.02.06.01.24.27
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 06 Feb 2025 01:23:35 -0800 (PST)
-Message-ID: <40b3a90a-0f42-4804-ae00-48927c89b37e@redhat.com>
-Date: Thu, 6 Feb 2025 10:23:33 +0100
+ Thu, 06 Feb 2025 01:24:28 -0800 (PST)
+Message-ID: <5b1a3d9a-e898-4dca-bc7a-9a182556b519@linaro.org>
+Date: Thu, 6 Feb 2025 10:24:27 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 2/5] tests/functional: remove unused 'bin_prefix' variable
-To: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
- qemu-devel@nongnu.org
-Cc: "Michael S. Tsirkin" <mst@redhat.com>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-References: <20250205155946.2811296-1-berrange@redhat.com>
- <20250205155946.2811296-3-berrange@redhat.com>
+Subject: Re: [PATCH v3 13/17] hw/misc: Support NPCM8XX CLK Module Registers
+To: Hao Wu <wuhaotsh@google.com>, peter.maydell@linaro.org
+Cc: qemu-arm@nongnu.org, qemu-devel@nongnu.org, venture@google.com,
+ Avi.Fishman@nuvoton.com, kfting@nuvoton.com, hskinnemoen@google.com,
+ titusr@google.com, chli30@nuvoton.corp-partner.google.com
+References: <20250206013105.3228344-1-wuhaotsh@google.com>
+ <20250206013105.3228344-14-wuhaotsh@google.com>
 Content-Language: en-US
-From: Thomas Huth <thuth@redhat.com>
-Autocrypt: addr=thuth@redhat.com; keydata=
- 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
-In-Reply-To: <20250205155946.2811296-3-berrange@redhat.com>
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <20250206013105.3228344-14-wuhaotsh@google.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=thuth@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::333;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x333.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ UPPERCASE_50_75=0.008 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -156,47 +103,81 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 05/02/2025 16.59, Daniel P. Berrangé wrote:
-> This was copied over from avocado but has not been used in the new
-> functional tests.
+On 6/2/25 02:31, Hao Wu wrote:
+> NPCM8XX adds a few new registers and have a different set of reset
+> values to the CLK modules. This patch supports them.
 > 
-> Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
+> This patch doesn't support the new clock values generated by these
+> registers. Currently no modules use these new clock values so they
+> are not necessary at this point.
+> Implementation of these clocks might be required when implementing
+> these modules.
+> 
+> Reviewed-by: Titus Rwantare <titusr@google.com>
+> Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
+> Signed-off-by: Hao Wu <wuhaotsh@google.com>
 > ---
->   tests/functional/qemu_test/testcase.py | 6 +++---
->   1 file changed, 3 insertions(+), 3 deletions(-)
-> 
-> diff --git a/tests/functional/qemu_test/testcase.py b/tests/functional/qemu_test/testcase.py
-> index 94541e8bfb..332c782ebc 100644
-> --- a/tests/functional/qemu_test/testcase.py
-> +++ b/tests/functional/qemu_test/testcase.py
-> @@ -192,7 +192,7 @@ def assets_available(self):
->                       return False
->           return True
->   
-> -    def setUp(self, bin_prefix):
-> +    def setUp(self):
->           if self.qemu_bin is None:
->               self.skipTest("QEMU_TEST_QEMU_BINARY env variable is not set")
->   
-> @@ -256,7 +256,7 @@ def main():
->   class QemuUserTest(QemuBaseTest):
->   
->       def setUp(self):
-> -        super().setUp('qemu-')
-> +        super().setUp()
->           self._ldpath = []
->   
->       def add_ldpath(self, ldpath):
-> @@ -279,7 +279,7 @@ class QemuSystemTest(QemuBaseTest):
->       def setUp(self):
->           self._vms = {}
->   
-> -        super().setUp('qemu-system-')
-> +        super().setUp()
+>   hw/misc/npcm_clk.c         | 113 ++++++++++++++++++++++++++++++++++++-
+>   include/hw/misc/npcm_clk.h |  10 +++-
+>   2 files changed, 120 insertions(+), 3 deletions(-)
 
-We might still need it in case we try to add auto-detection of the QEMU 
-binary again, but yes, for the time being:
 
-Reviewed-by: Thomas Huth <thuth@redhat.com>
+> +enum NPCM8xxCLKRegisters {
+> +    NPCM8XX_CLK_CLKEN1,
+> +    NPCM8XX_CLK_CLKSEL,
+> +    NPCM8XX_CLK_CLKDIV1,
+> +    NPCM8XX_CLK_PLLCON0,
+> +    NPCM8XX_CLK_PLLCON1,
+> +    NPCM8XX_CLK_SWRSTR,
+> +    NPCM8XX_CLK_IPSRST1         = 0x20 / sizeof(uint32_t),
+> +    NPCM8XX_CLK_IPSRST2,
+> +    NPCM8XX_CLK_CLKEN2,
+> +    NPCM8XX_CLK_CLKDIV2,
+> +    NPCM8XX_CLK_CLKEN3,
+> +    NPCM8XX_CLK_IPSRST3,
+> +    NPCM8XX_CLK_WD0RCR,
+> +    NPCM8XX_CLK_WD1RCR,
+> +    NPCM8XX_CLK_WD2RCR,
+> +    NPCM8XX_CLK_SWRSTC1,
+> +    NPCM8XX_CLK_SWRSTC2,
+> +    NPCM8XX_CLK_SWRSTC3,
+> +    NPCM8XX_CLK_TIPRSTC,
+> +    NPCM8XX_CLK_PLLCON2,
+> +    NPCM8XX_CLK_CLKDIV3,
+> +    NPCM8XX_CLK_CORSTC,
+> +    NPCM8XX_CLK_PLLCONG,
+> +    NPCM8XX_CLK_AHBCKFI,
+> +    NPCM8XX_CLK_SECCNT,
+> +    NPCM8XX_CLK_CNTR25M,
+> +    /* Registers unique to NPCM8XX SoC */
+> +    NPCM8XX_CLK_CLKEN4,
+> +    NPCM8XX_CLK_IPSRST4,
+> +    NPCM8XX_CLK_BUSTO,
+> +    NPCM8XX_CLK_CLKDIV4,
+> +    NPCM8XX_CLK_WD0RCRB,
+> +    NPCM8XX_CLK_WD1RCRB,
+> +    NPCM8XX_CLK_WD2RCRB,
+> +    NPCM8XX_CLK_SWRSTC1B,
+> +    NPCM8XX_CLK_SWRSTC2B,
+> +    NPCM8XX_CLK_SWRSTC3B,
+> +    NPCM8XX_CLK_TIPRSTCB,
+> +    NPCM8XX_CLK_CORSTCB,
+> +    NPCM8XX_CLK_IPSRSTDIS1,
+> +    NPCM8XX_CLK_IPSRSTDIS2,
+> +    NPCM8XX_CLK_IPSRSTDIS3,
+> +    NPCM8XX_CLK_IPSRSTDIS4,
+> +    NPCM8XX_CLK_CLKENDIS1,
+> +    NPCM8XX_CLK_CLKENDIS2,
+> +    NPCM8XX_CLK_CLKENDIS3,
+> +    NPCM8XX_CLK_CLKENDIS4,
+> +    NPCM8XX_CLK_THRTL_CNT,
+> +    NPCM8XX_CLK_REGS_END,
 
+I suppose by '_END' you mean '_COUNT'. Better define
+unrelated to the enum, to avoid confusing static
+analyzers:
+
+#define NPCM8XX_CLK_REGS_COUNT (NPCM8XX_CLK_THRTL_CNT + 1)
+
+> +};
 
