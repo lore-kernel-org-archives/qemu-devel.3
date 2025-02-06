@@ -4,105 +4,93 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 14616C02194
-	for <qemu-devel@archiver.kernel.org>; Thu,  6 Feb 2025 21:54:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BBAFAC02194
+	for <qemu-devel@archiver.kernel.org>; Thu,  6 Feb 2025 21:59:15 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tg9og-0000dj-Bk; Thu, 06 Feb 2025 16:53:46 -0500
+	id 1tg9tX-0001u8-TX; Thu, 06 Feb 2025 16:58:49 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1tg9od-0000dJ-Nf
- for qemu-devel@nongnu.org; Thu, 06 Feb 2025 16:53:44 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1tg9oc-0003jT-Bj
- for qemu-devel@nongnu.org; Thu, 06 Feb 2025 16:53:43 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1738878820;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=IlgzKcttoQ9X1JAT0VsIPyP5fedcMG0eRUVyYwc6NHQ=;
- b=d2GjynUWCav/gxoWncaqjVInAjveV12u0Kq6gfQWPA5SpsFpx6w1QMffHpmzwAtLGWgqlR
- jcGjt1ioealrWo3nqO8cslwowjprDb3kmJEFEZQmiBxB9S+7XWXiNkDrlpTN3kw9T/12ja
- 3evqPZwllo3IgQPdwWbizJ6UgdvelU4=
-Received: from mail-qt1-f199.google.com (mail-qt1-f199.google.com
- [209.85.160.199]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-439-ujZ8WIOiMFmoNf_GaZqB-g-1; Thu, 06 Feb 2025 16:53:39 -0500
-X-MC-Unique: ujZ8WIOiMFmoNf_GaZqB-g-1
-X-Mimecast-MFC-AGG-ID: ujZ8WIOiMFmoNf_GaZqB-g
-Received: by mail-qt1-f199.google.com with SMTP id
- d75a77b69052e-46fa764f79cso26221081cf.1
- for <qemu-devel@nongnu.org>; Thu, 06 Feb 2025 13:53:39 -0800 (PST)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1738878819; x=1739483619;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+ (Exim 4.90_1) (envelope-from <shentey@gmail.com>)
+ id 1tg9tU-0001sh-FA; Thu, 06 Feb 2025 16:58:44 -0500
+Received: from mail-wm1-x333.google.com ([2a00:1450:4864:20::333])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <shentey@gmail.com>)
+ id 1tg9tR-0005bs-LI; Thu, 06 Feb 2025 16:58:43 -0500
+Received: by mail-wm1-x333.google.com with SMTP id
+ 5b1f17b1804b1-43675b1155bso15581145e9.2; 
+ Thu, 06 Feb 2025 13:58:40 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20230601; t=1738879119; x=1739483919; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:references
+ :in-reply-to:subject:cc:to:from:date:from:to:cc:subject:date
  :message-id:reply-to;
- bh=IlgzKcttoQ9X1JAT0VsIPyP5fedcMG0eRUVyYwc6NHQ=;
- b=Z4nfeUC3WaS6PRWSK6Vp5wYrFCelqcNkitlbdDUawtsIIf34PRAUbRUBN68Ssn24nD
- 5w17m6qVOzwydwPrm9lAWj6uSi9jC4NvNGPvXfV/HrmZhVpg19nnPHO9KpvuQV5xYQWg
- gQ3yEDiWYrqncP/Wm1qIXtmWMC4zn/W/78F72Pwh78nUCF5a1Xn2nvHfN9T9bcQnrhIO
- t9WQhgPOABDHKNmsrbRr+6Yk74J9btjz+bWw9uQASyIjtfJFunx3ipt6ZxAhNpwaUyCW
- arbxgcW2Wz07VOSBy0cegGT+Zb+uTTa21CGBU4ZnByt2rYp1uEOOe86pF+v7HnzXF58d
- VezA==
+ bh=X2Skdp5mZeofOm3hGlZb3ZjlKwAN+fYGqXKmxjqSURU=;
+ b=aFNSFDft+mM2K49Lbk/povlXgvUIdijxwzqeE7Tk2hrSt44u+FawOOfhUKxKVDY57F
+ eRhmUSx+XxqtXZiUmpHj+CwjMRTL16f0tyn7y52ci/AXICt4cbisBG/TxAxRjZETHool
+ EZdL2ECPsrDSj+a/cAydGjABejYd22HuEl9bGfqfhuBoHjpf+yai503ox1hRf15Wya4A
+ WRcCA2tat7EpZDZMGCSD5Lc01+hf8+yrn7L3xIxxdkpjOPUrNJr4HVMdo7At08ExzTWM
+ jAywZGyef9rGpJXwpr1APXKJkIJrmpGckSqdw2UhxrxedNLkK9T9mdVRXdct7afoyp8y
+ FBqQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1738879119; x=1739483919;
+ h=content-transfer-encoding:mime-version:message-id:references
+ :in-reply-to:subject:cc:to:from:date:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=X2Skdp5mZeofOm3hGlZb3ZjlKwAN+fYGqXKmxjqSURU=;
+ b=XVYxpn0SijntLIVZveMkViqU020/9ebstVUxEL0zWFnoImrZAcaBxpoCYD69WVMmdn
+ SGqfY8mSUSK8RtUvUnobp1A12LaN8NpfuBFO2/rMU3hHupHWDRanbgM+3nqLE7nlm7ZF
+ b7ipnt+nKyqIi4VsDSCMcbku3FIvGWdIxj+asd+aLv/8tL7CXcz+BfVwsUcni78gTMZc
+ KFmJqQJT6kl4VKWoJHb0LuH93dNQaLdga9X0G3vs8NfQZ6okuTkL43GkayamiW4YZzqa
+ EN2z5s4ZfrvCz00vXceGYWaPPFp5IwQpHdUBgphMCbhsFmpzgwAAzYhxZsI+PzyRpfsN
+ TBHw==
 X-Forwarded-Encrypted: i=1;
- AJvYcCV3ibse0HJUHRQn95L5xO7XXt5lhUR2dIYTWmlNnf5hTWzvCy8ZVrli5FFZThB8Zx+i0xr4ar2mdFAA@nongnu.org
-X-Gm-Message-State: AOJu0YxFV+D9qsql9bDKoxSI78RdnpWBGw5gH/fhs6gMrU2OopTjtslU
- 9jHXl/ntHh6C06NuDFGhyYnhhZmxn90GcwiSO7USkx/LpYmldu2ucwouH9sno/0W9aEVMSfOa1C
- 4Rzu35/tQ25+7EBNkbPolc1k/hxcygR80fCZx5IcrUZIcXHZ7Qsh4
-X-Gm-Gg: ASbGncuKcFpu+uu/kYuE60RZtg/OCT3TSbRugWzFY8I+a6IU0t2L8dE44z+coKQjC2h
- UjTEfou8JcxnQeNKKSrrzcoyA/gpq2z8Kb5/sE6bAkPiO/OV4TOAbDcC/GGrYhcYQi3ZaJ9oTa+
- i1Yn7eeLkrB4CzHki/MTW7+yB058aZof7NRNfakXr8jm1rYbQJIbijj9PLK9ZoBNRntmcRChSq6
- 6P75S2CUFn1REpxQB50oi+23MhSvYcWlImv2xPdDs8YSbpPV8qovnB7swm3DLTKycdGYQu23rGi
- dMZYh+LnbGf1TLJLgS/dnLrqwv8JYunkHHtVOumjNIcKe4CG
-X-Received: by 2002:a05:622a:258f:b0:467:83f1:71d2 with SMTP id
- d75a77b69052e-47167b02618mr13963571cf.45.1738878818916; 
- Thu, 06 Feb 2025 13:53:38 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IGN35ipjbyDf2UzNAgFoTnybC/+AyXxsdKMNE4oL69Ppxb/WCUNuj+bBjqgDlZf6LIe8KWssQ==
-X-Received: by 2002:a05:622a:258f:b0:467:83f1:71d2 with SMTP id
- d75a77b69052e-47167b02618mr13963441cf.45.1738878818681; 
- Thu, 06 Feb 2025 13:53:38 -0800 (PST)
-Received: from x1.local (pool-99-254-114-190.cpe.net.cable.rogers.com.
- [99.254.114.190]) by smtp.gmail.com with ESMTPSA id
- d75a77b69052e-47149276049sm9549951cf.5.2025.02.06.13.53.37
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 06 Feb 2025 13:53:38 -0800 (PST)
-Date: Thu, 6 Feb 2025 16:53:36 -0500
-From: Peter Xu <peterx@redhat.com>
-To: "Maciej S. Szmigiero" <mail@maciej.szmigiero.name>
-Cc: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>,
- Fabiano Rosas <farosas@suse.de>,
- Alex Williamson <alex.williamson@redhat.com>,
- =?utf-8?Q?C=C3=A9dric?= Le Goater <clg@redhat.com>,
- Eric Blake <eblake@redhat.com>, Markus Armbruster <armbru@redhat.com>,
- Avihai Horon <avihaih@nvidia.com>,
- Joao Martins <joao.m.martins@oracle.com>, qemu-devel@nongnu.org
-Subject: Re: [PATCH v4 07/33] io: tls: Allow terminating the TLS session
- gracefully with EOF
-Message-ID: <Z6UvYEeewuvZQmMl@x1.local>
-References: <cover.1738171076.git.maciej.szmigiero@oracle.com>
- <fdd9a0a6053ac6aed32e08cc284991a3630bbfec.1738171076.git.maciej.szmigiero@oracle.com>
- <Z6IvAXXfIgDRYV5o@redhat.com>
- <493dd3bc-8a3d-4b3c-8eea-08e674c38f40@maciej.szmigiero.name>
- <Z6I86e-hzJAlxk0r@redhat.com>
- <150a9741-daab-4724-add0-f35257e862f9@maciej.szmigiero.name>
+ AJvYcCXz0HmJIDa3y7COc3JvEPGBdcVw9e8+3LlApp5HrWPg/5TsqFv341IXodl3FNNKYqnnqT9wAM0oMA==@nongnu.org
+X-Gm-Message-State: AOJu0Yx2Zimm7R8tXQTntS9nxiVmCVNB20KIhKg4IZGAB1OUl9lLbn5x
+ Vg2EUyRXZyNfYx4Dq44Pbv4YWDbweEAUG8Tcv93A5zchMpwDO5da
+X-Gm-Gg: ASbGnctclcvhw7Bgn53RU/L3sPu6iJXvGnVxKphLAGzH7BpRxe0iKkJGNim5KdPJLjh
+ tGQONutMdIIcLdgl//KhA7iocBW8q7M+bUsvdJXEGwGCy5plmk90relD9OxhkA7tRuCQAF0uOOd
+ V2bU9nIP513R+F1z6V8N8p+eBmFyo/Twv4DnslQFJTEZ1rgE37mXRTTJsD1EO5jOmqPLDfeCnWD
+ tV5UjqypJdoTwN1CnAhtJqhxxG4XQwC/emRY9OGtH/HKt/hAYjUmkyiaaXm3KTyVKAxA/E5dmxD
+ 1J75Ld5g5ucHfkb4U76cLb7aBE7t9qaGU0WRAfMMpO+XL09AsqrSYseFdDaL/LbH2VpJX/6zr64
+ =
+X-Google-Smtp-Source: AGHT+IFHblDwg3I+uAEl2cOTrhdgEhqmeb8V4/12DC4tebtsOYxwbA60SsZVEfXyQ2dDMVWeJRuDUA==
+X-Received: by 2002:a05:600c:3556:b0:434:f586:753c with SMTP id
+ 5b1f17b1804b1-43924988001mr9169945e9.7.1738879118631; 
+ Thu, 06 Feb 2025 13:58:38 -0800 (PST)
+Received: from ?IPv6:::1?
+ (p200300faaf004300ecd7bea232a7e2ce.dip0.t-ipconnect.de.
+ [2003:fa:af00:4300:ecd7:bea2:32a7:e2ce])
+ by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-38dbdd55656sm2772248f8f.50.2025.02.06.13.58.37
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Thu, 06 Feb 2025 13:58:38 -0800 (PST)
+Date: Thu, 06 Feb 2025 21:58:36 +0000
+From: Bernhard Beschow <shentey@gmail.com>
+To: Peter Maydell <peter.maydell@linaro.org>
+CC: qemu-devel@nongnu.org, qemu-arm@nongnu.org,
+ Andrey Smirnov <andrew.smirnov@gmail.com>,
+ Paolo Bonzini <pbonzini@redhat.com>
+Subject: Re: [PATCH v2 18/18] hw/rtc: Add Ricoh RS5C372 RTC emulation
+In-Reply-To: <CAFEAcA_gxGWivT7byZh9gYc2QHfsTqbJ8vtxPDToOxLMdMvwQg@mail.gmail.com>
+References: <20250204092112.26957-1-shentey@gmail.com>
+ <20250204092112.26957-19-shentey@gmail.com>
+ <CAFEAcA_gxGWivT7byZh9gYc2QHfsTqbJ8vtxPDToOxLMdMvwQg@mail.gmail.com>
+Message-ID: <F8650CD9-AA03-4462-A74E-7A068820F1A2@gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <150a9741-daab-4724-add0-f35257e862f9@maciej.szmigiero.name>
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=peterx@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
+Content-Type: text/plain;
+ charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:20::333;
+ envelope-from=shentey@gmail.com; helo=mail-wm1-x333.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -118,19 +106,38 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, Feb 04, 2025 at 07:25:12PM +0100, Maciej S. Szmigiero wrote:
-> That's for the multifd channel recv thread main loop only, if @Peter
-> wants to patch also the mid-stream page receive methods and the main
-> migration channel receive then qio_channel_read(), qio_channel_read_all(),
-> qio_channel_readv_all() and qio_channel_readv_full_all() would need
-> such treatment too.
 
-No matter which way we go with the multifd part - I'm ok we ignore the main
-channel completely if it's not prone to any pre-mature terminations anyway.
 
-Thanks,
+Am 6=2E Februar 2025 17:32:31 UTC schrieb Peter Maydell <peter=2Emaydell@l=
+inaro=2Eorg>:
+>On Tue, 4 Feb 2025 at 09:21, Bernhard Beschow <shentey@gmail=2Ecom> wrote=
+:
+>>
+>> The implementation just allows Linux to determine date and time=2E
+>>
+>> Signed-off-by: Bernhard Beschow <shentey@gmail=2Ecom>
+>> ---
+>>  MAINTAINERS         |   1 +
+>>  hw/rtc/rs5c372=2Ec    | 227 ++++++++++++++++++++++++++++++++++++++++++=
+++
+>>  hw/rtc/Kconfig      |   5 +
+>>  hw/rtc/meson=2Ebuild  |   1 +
+>>  hw/rtc/trace-events |   4 +
+>>  5 files changed, 238 insertions(+)
+>>  create mode 100644 hw/rtc/rs5c372=2Ec
+>
+>Should there be a patch after this one that adds this device
+>to your board ?
 
--- 
-Peter Xu
+As per Kconfig the board selects I2C_DEVICES and this device is "default y=
+ if I2C_DEVICES"=2E I've deliberately not hardcoded this device to the boar=
+d to make it emulate a plain i=2EMX 8M Plus SoC (see also board documentati=
+on)=2E
 
+Best regards,
+Bernhard
+=20
+>
+>thanks
+>-- PMM
 
