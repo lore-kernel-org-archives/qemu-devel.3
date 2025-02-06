@@ -4,71 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4FC97C02194
-	for <qemu-devel@archiver.kernel.org>; Thu,  6 Feb 2025 09:30:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5DB90C02196
+	for <qemu-devel@archiver.kernel.org>; Thu,  6 Feb 2025 09:36:10 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tfyDM-0000cR-3D; Thu, 06 Feb 2025 04:30:29 -0500
+	id 1tfyI1-0002NK-Rh; Thu, 06 Feb 2025 04:35:18 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <maobibo@loongson.cn>)
- id 1tfyD7-0000OC-6H
- for qemu-devel@nongnu.org; Thu, 06 Feb 2025 04:30:15 -0500
-Received: from mail.loongson.cn ([114.242.206.163])
- by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <maobibo@loongson.cn>) id 1tfyD1-0005o8-LL
- for qemu-devel@nongnu.org; Thu, 06 Feb 2025 04:30:11 -0500
-Received: from loongson.cn (unknown [10.20.42.62])
- by gateway (Coremail) with SMTP id _____8Cx73MKgaRn3DltAA--.27881S3;
- Thu, 06 Feb 2025 17:29:47 +0800 (CST)
-Received: from [10.20.42.62] (unknown [10.20.42.62])
- by front1 (Coremail) with SMTP id qMiowMCxbsUHgaRnat8BAA--.8594S3;
- Thu, 06 Feb 2025 17:29:46 +0800 (CST)
-Subject: Re: [PATCH] target/loongarch: fix vcpu reset command word issue
-To: =?UTF-8?Q?Philippe_Mathieu-Daud=c3=a9?= <philmd@linaro.org>,
- Xianglai Li <lixianglai@loongson.cn>, qemu-devel@nongnu.org
-Cc: Song Gao <gaosong@loongson.cn>
-References: <20250205120635.2516406-1-lixianglai@loongson.cn>
- <3e857bbf-834b-3ae5-f9c4-35d858db5108@loongson.cn>
- <a8ee0227-8385-4907-b24b-efddaf907165@linaro.org>
-From: bibo mao <maobibo@loongson.cn>
-Message-ID: <3bad0c4a-0fa0-a35f-d400-d0d38c22057b@loongson.cn>
-Date: Thu, 6 Feb 2025 17:29:10 +0800
-User-Agent: Mozilla/5.0 (X11; Linux loongarch64; rv:68.0) Gecko/20100101
- Thunderbird/68.7.0
+ (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
+ id 1tfyHy-0002Lw-QG; Thu, 06 Feb 2025 04:35:14 -0500
+Received: from mgamail.intel.com ([198.175.65.9])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
+ id 1tfyHv-0007qb-Q2; Thu, 06 Feb 2025 04:35:14 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+ d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+ t=1738834512; x=1770370512;
+ h=date:from:to:cc:subject:message-id:references:
+ mime-version:in-reply-to;
+ bh=SbzsFpxSlqt0LRVCVphwfchnZcpRBWTRP4V0UBxDljg=;
+ b=KtNH0nNEz4WS/0uh7TOqmTQh+JIRSdNSdBm3lfcQ64I6NFHvClIZcyaC
+ LfRTkg4AhquK1SQ69NNDM6vRUy/t4W0EG0rKdfaecvDwSPFHrRN0zoJ2b
+ ARKrU61gYqlpvaui/NDbFSwQJSGZMHK3Bn6FG4DVk1MjewwQi1a7J+2vY
+ oc9JSPqVzit8WIdAOcxsqQWWarxTcf/YJnj7P+XEv8Xu6hnUkIgQJNzg8
+ 5FdXfd5z/Ei0RxRaOgcyRrWyFVKAQiiUFE+YsC+ItUXpCZaRQtJDB1Car
+ 85vBuLqdsmJvtcbSwn8zFvWVCD6nOS4iXSlsSf3ziM7QkaEkTXHg09e0Z w==;
+X-CSE-ConnectionGUID: f2qfNfpmTUO5SmaRTc3PSg==
+X-CSE-MsgGUID: OIxj/snRRxeBba9W5XksNQ==
+X-IronPort-AV: E=McAfee;i="6700,10204,11336"; a="61905380"
+X-IronPort-AV: E=Sophos;i="6.13,264,1732608000"; d="scan'208";a="61905380"
+Received: from fmviesa001.fm.intel.com ([10.60.135.141])
+ by orvoesa101.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 06 Feb 2025 01:35:08 -0800
+X-CSE-ConnectionGUID: 2gIBkdsDS86vB5dYK1Hsqw==
+X-CSE-MsgGUID: Mm5+m0RnTiC1gkfud4HxFg==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.12,224,1728975600"; d="scan'208";a="142041740"
+Received: from liuzhao-optiplex-7080.sh.intel.com (HELO localhost)
+ ([10.239.160.39])
+ by fmviesa001.fm.intel.com with ESMTP; 06 Feb 2025 01:35:03 -0800
+Date: Thu, 6 Feb 2025 17:54:32 +0800
+From: Zhao Liu <zhao1.liu@intel.com>
+To: Markus Armbruster <armbru@redhat.com>
+Cc: Paolo Bonzini <pbonzini@redhat.com>, Eric Blake <eblake@redhat.com>,
+ Michael Roth <michael.roth@amd.com>,
+ Daniel P =?iso-8859-1?Q?=2E_Berrang=E9?= <berrange@redhat.com>,
+ Eduardo Habkost <eduardo@habkost.net>,
+ Marcelo Tosatti <mtosatti@redhat.com>,
+ Shaoqin Huang <shahuang@redhat.com>, Eric Auger <eauger@redhat.com>,
+ Peter Maydell <peter.maydell@linaro.org>,
+ Laurent Vivier <lvivier@redhat.com>, Thomas Huth <thuth@redhat.com>,
+ Sebastian Ott <sebott@redhat.com>, Gavin Shan <gshan@redhat.com>,
+ qemu-devel@nongnu.org, kvm@vger.kernel.org, qemu-arm@nongnu.org,
+ Dapeng Mi <dapeng1.mi@intel.com>, Yi Lai <yi1.lai@intel.com>
+Subject: Re: [RFC v2 3/5] i386/kvm: Support event with select & umask format
+ in KVM PMU filter
+Message-ID: <Z6SG2NLxxhz4adlV@intel.com>
+References: <20250122090517.294083-1-zhao1.liu@intel.com>
+ <20250122090517.294083-4-zhao1.liu@intel.com>
+ <87zfj01z8x.fsf@pond.sub.org>
 MIME-Version: 1.0
-In-Reply-To: <a8ee0227-8385-4907-b24b-efddaf907165@linaro.org>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
-Content-Transfer-Encoding: 8bit
-X-CM-TRANSID: qMiowMCxbsUHgaRnat8BAA--.8594S3
-X-CM-SenderInfo: xpdruxter6z05rqj20fqof0/
-X-Coremail-Antispam: 1Uk129KBj93XoW7CrykAF4kCw15Cr1ftw4fWFX_yoW8Zry3pr
- ykAFWDKFyFkrykJ3sFq34qq34UAr47Gwn7XFyIqFyIyrs0qry0g3W0qrsI9F98Aw4xGF4Y
- yr1Fkr1UZFW7JwcCm3ZEXasCq-sJn29KB7ZKAUJUUUU8529EdanIXcx71UUUUU7KY7ZEXa
- sCq-sGcSsGvfJ3Ic02F40EFcxC0VAKzVAqx4xG6I80ebIjqfuFe4nvWSU5nxnvy29KBjDU
- 0xBIdaVrnRJUUU9Yb4IE77IF4wAFF20E14v26r1j6r4UM7CY07I20VC2zVCF04k26cxKx2
- IYs7xG6rWj6s0DM7CIcVAFz4kK6r1j6r18M28lY4IEw2IIxxk0rwA2F7IY1VAKz4vEj48v
- e4kI8wA2z4x0Y4vE2Ix0cI8IcVAFwI0_Xr0_Ar1l84ACjcxK6xIIjxv20xvEc7CjxVAFwI
- 0_Gr0_Cr1l84ACjcxK6I8E87Iv67AKxVW0oVCq3wA2z4x0Y4vEx4A2jsIEc7CjxVAFwI0_
- GcCE3s1le2I262IYc4CY6c8Ij28IcVAaY2xG8wAqjxCEc2xF0cIa020Ex4CE44I27wAqx4
- xG64xvF2IEw4CE5I8CrVC2j2WlYx0E2Ix0cI8IcVAFwI0_JrI_JrylYx0Ex4A2jsIE14v2
- 6r1j6r4UMcvjeVCFs4IE7xkEbVWUJVW8JwACjcxG0xvEwIxGrwCYjI0SjxkI62AI1cAE67
- vIY487MxAIw28IcxkI7VAKI48JMxC20s026xCaFVCjc4AY6r1j6r4UMxCIbckI1I0E14v2
- 6r126r1DMI8I3I0E5I8CrVAFwI0_Jr0_Jr4lx2IqxVCjr7xvwVAFwI0_JrI_JrWlx4CE17
- CEb7AF67AKxVWUAVWUtwCIc40Y0x0EwIxGrwCI42IY6xIIjxv20xvE14v26r1j6r1xMIIF
- 0xvE2Ix0cI8IcVCY1x0267AKxVWUJVW8JwCI42IY6xAIw20EY4v20xvaj40_Jr0_JF4lIx
- AIcVC2z280aVAFwI0_Jr0_Gr1lIxAIcVC2z280aVCY1x0267AKxVWUJVW8JbIYCTnIWIev
- Ja73UjIFyTuYvjxUrNtxDUUUU
-Received-SPF: pass client-ip=114.242.206.163; envelope-from=maobibo@loongson.cn;
- helo=mail.loongson.cn
-X-Spam_score_int: -46
-X-Spam_score: -4.7
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <87zfj01z8x.fsf@pond.sub.org>
+Received-SPF: pass client-ip=198.175.65.9; envelope-from=zhao1.liu@intel.com;
+ helo=mgamail.intel.com
+X-Spam_score_int: -43
+X-Spam_score: -4.4
 X-Spam_bar: ----
-X-Spam_report: (-4.7 / 5.0 requ) BAYES_00=-1.9, NICE_REPLY_A=-2.838,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -84,60 +93,116 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-
-
-On 2025/2/6 下午5:02, Philippe Mathieu-Daudé wrote:
-> On 6/2/25 03:34, bibo mao wrote:
->> On 2025/2/5 下午8:06, Xianglai Li wrote:
->>> When the KVM_REG_LOONGARCH_VCPU_RESET command word
->>> is sent to the kernel through the kvm_set_one_reg interface,
->>> the parameter source needs to be a legal address,
->>> otherwise the kernel will return an error and the command word
->>> will fail to be sent.
->> Hi Xianglai,
->>
->> Good catch, it is actually one problem and thanks for reporting it.
->>
->>>
->>> Signed-off-by: Xianglai Li <lixianglai@loongson.cn>
->>> ---
->>> Cc: Bibo Mao <Maobibo@loongson.cn>
->>> Cc: Song Gao <gaosong@loongson.cn>
->>>
->>>   target/loongarch/kvm/kvm.c | 3 ++-
->>>   1 file changed, 2 insertions(+), 1 deletion(-)
->>>
->>> diff --git a/target/loongarch/kvm/kvm.c b/target/loongarch/kvm/kvm.c
->>> index a3f55155b0..01cddb7012 100644
->>> --- a/target/loongarch/kvm/kvm.c
->>> +++ b/target/loongarch/kvm/kvm.c
->>> @@ -581,9 +581,10 @@ static int kvm_loongarch_get_lbt(CPUState *cs)
->>>   void kvm_arch_reset_vcpu(CPUState *cs)
->>>   {
->>>       CPULoongArchState *env = cpu_env(cs);
->>> +    uint64_t val;
->> How about set initial value here although it is not used? such as
->>         uint64_t val = 0;
+On Wed, Feb 05, 2025 at 11:07:10AM +0100, Markus Armbruster wrote:
+> Date: Wed, 05 Feb 2025 11:07:10 +0100
+> From: Markus Armbruster <armbru@redhat.com>
+> Subject: Re: [RFC v2 3/5] i386/kvm: Support event with select & umask
+>  format in KVM PMU filter
 > 
-> Or        uint64_t unused = 0;
-yes, that is better and easier to understand -:)
-
+> Zhao Liu <zhao1.liu@intel.com> writes:
 > 
->>>       env->mp_state = KVM_MP_STATE_RUNNABLE;
->>> -    kvm_set_one_reg(cs, KVM_REG_LOONGARCH_VCPU_RESET, 0);
->>> +    kvm_set_one_reg(cs, KVM_REG_LOONGARCH_VCPU_RESET, &val);
->> Can we add return value checking here? such as
->>         ret = kvm_set_one_reg(cs, KVM_REG_LOONGARCH_VCPU_RESET, &val);
->>         if (ret) {
->>             error_report("... %s", strerror(errno));
->>         }
->>
->> Regards
->> Bibo Mao
->>>   }
->>>   static int kvm_loongarch_get_mpstate(CPUState *cs)
->>>
->>
->>
+> > The select&umask is the common way for x86 to identify the PMU event,
+> > so support this way as the "x86-default" format in kvm-pmu-filter
+> > object.
+> 
+> So, format 'raw' lets you specify the PMU event code as a number, wheras
+> 'x86-default' lets you specify it as select and umask, correct?
+
+Yes!
+
+> Why do we want both?
+
+This 2 formats are both wildly used in x86(for example, in perf tool).
+
+x86 documents usually specify the umask and select fields.
+
+But raw format could also be applied for ARM since ARM just uses a number
+to encode event.
+
+> > Signed-off-by: Zhao Liu <zhao1.liu@intel.com>
+> 
+> [...]
+> 
+> > diff --git a/qapi/kvm.json b/qapi/kvm.json
+> > index d51aeeba7cd8..93b869e3f90c 100644
+> > --- a/qapi/kvm.json
+> > +++ b/qapi/kvm.json
+> > @@ -27,11 +27,13 @@
+> >  #
+> >  # @raw: the encoded event code that KVM can directly consume.
+> >  #
+> > +# @x86-default: standard x86 encoding format with select and umask.
+> 
+> Why is this named -default?
+
+Intel and AMD both use umask+select to encode events, but this format
+doesn't have a name... so I call it `default`, or what about
+"x86-umask-select"?
+
+> > +#
+> >  # Since 10.0
+> >  ##
+> >  { 'enum': 'KVMPMUEventEncodeFmt',
+> >    'prefix': 'KVM_PMU_EVENT_FMT',
+> > -  'data': ['raw'] }
+> > +  'data': ['raw', 'x86-default'] }
+> >  
+> >  ##
+> >  # @KVMPMURawEvent:
+> > @@ -46,6 +48,25 @@
+> >  { 'struct': 'KVMPMURawEvent',
+> >    'data': { 'code': 'uint64' } }
+> >  
+> > +##
+> > +# @KVMPMUX86DefalutEvent:
+> 
+> Default, I suppose.
+
+Thanks!
+
+> > +#
+> > +# x86 PMU event encoding with select and umask.
+> > +# raw_event = ((select & 0xf00UL) << 24) | \
+> > +#              (select) & 0xff) | \
+> > +#              ((umask) & 0xff) << 8)
+> 
+> Sphinx rejects this with "Unexpected indentation."
+> 
+> Is the formula needed here?
+
+I tried to explain the relationship between raw format and umask+select.
+
+Emm, where do you think is the right place to put the document like
+this?
+
+...
+
+> > +##
+> > +# @KVMPMUX86DefalutEventVariant:
+> > +#
+> > +# The variant of KVMPMUX86DefalutEvent with the string, rather than
+> > +# the numeric value.
+> > +#
+> > +# @select: x86 PMU event select field.  This field is a 12-bit
+> > +#     unsigned number string.
+> > +#
+> > +# @umask: x86 PMU event umask field. This field is a uint8 string.
+> 
+> Why are these strings?  How are they parsed into numbers?
+
+In practice, the values associated with PMU events (code for arm, select&
+umask for x86) are often expressed in hexadecimal. Further, from linux
+perf related information (tools/perf/pmu-events/arch/*/*/*.json), x86/
+arm64/riscv/nds32/powerpc all prefer the hexadecimal numbers and only
+s390 uses decimal value.
+
+Therefore, it is necessary to support hexadecimal in order to honor PMU
+conventions.
+
+However, unfortunately, standard JSON (RFC 8259) does not support
+hexadecimal numbers. So I can only consider using the numeric string in
+the QAPI and then parsing it to a number.
+
+I parse this string into number by qemu_strtou64().
 
 
